@@ -22,7 +22,7 @@ import checkpkg
 
 # Defining checking functions.
 
-def CheckForMissingSymbols(pkg):
+def CheckForMissingSymbols(pkg, debug):
   """Looks for "symbol not found" in ldd -r output."""
   errors = []
   binaries = pkg.ListBinaries()
@@ -37,9 +37,13 @@ def CheckForMissingSymbols(pkg):
     stdout, stderr = ldd_proc.communicate()
     retcode = ldd_proc.wait()
     lines = stdout.splitlines()
+    missing_symbols = False
     for line in lines:
       if re.search(symbol_re, line):
-        errors.append(checkpkg.PackageError("%s: %s" % (pkg.pkgname, line)))
+      	missing_symbols = True
+    binary_base = os.path.basename(binary)
+    if missing_symbols:
+    	errors.append(checkpkg.CheckpkgTag("symbol-not-found", binary_base))
   return errors
 
 
@@ -55,8 +59,11 @@ def main():
   # Registering functions defined above.
   check_manager.RegisterIndividualCheck(CheckForMissingSymbols)
   # Running the checks, reporting and exiting.
-  exit_code, report = check_manager.Run()
-  print report.strip()
+  exit_code, screen_report, tags_report = check_manager.Run()
+  f = open(options.output, "w")
+  f.write(tags_report)
+  f.close()
+  print screen_report.strip()
   sys.exit(exit_code)
 
 

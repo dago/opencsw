@@ -11,6 +11,8 @@ import os.path
 import sys
 import re
 
+CHECKPKG_MODULE_NAME = "class action scripts / prototype integrity"
+
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
 path_list = [os.path.dirname(__file__),
@@ -20,7 +22,7 @@ import checkpkg
 import opencsw
 
 
-def CheckActionClasses(pkg):
+def CheckActionClasses(pkg, debug):
   """Checks the consistency between classes in the prototype and pkginfo."""
   errors = []
   pkginfo = pkg.GetParsedPkginfo()
@@ -29,29 +31,33 @@ def CheckActionClasses(pkg):
   pkgmap_classes = pkgmap.GetClasses()
   only_in_pkginfo = pkginfo_classes.difference(pkgmap_classes)
   only_in_pkgmap = pkgmap_classes.difference(pkginfo_classes)
-  for cls in only_in_pkginfo:
-    print "Class %s of %s is only in pkginfo" % (repr(cls), pkg.pkgname)
-    print "This shouldn't cause any problems, but it might be not necessary."
-  for cls in only_in_pkgmap:
+  for action_class in only_in_pkginfo:
+    error = checkpkg.CheckpkgTag(
+        "action-class-only-in-pkginfo",
+        action_class,
+        msg="This shouldn't cause any problems, but it might be not necessary.")
+    errors.append(error)
+  for action_class in only_in_pkgmap:
     errors.append(
-        opencsw.PackageError("Class %s is only in pkgmap" % repr(cls)))
-  if only_in_pkginfo or only_in_pkgmap:
-    print ("pkginfo_classes: %s, pkgmap classes: %s"
-           % (pkginfo_classes, pkgmap_classes))
+        checkpkg.CheckpkgTag("action-class-only-in-pkgmap", action_class))
   return errors
 
 
 def main():
   options, args = checkpkg.GetOptions()
   pkgnames = args
-  check_manager = checkpkg.CheckpkgManager(
-      "class action scripts / prototype integrity",
-      options.extractdir,
-      pkgnames,
-      options.debug)
+  check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
+                                           options.extractdir,
+                                           pkgnames,
+                                           options.debug)
+  # Registering functions defined above.
   check_manager.RegisterIndividualCheck(CheckActionClasses)
-  exit_code, report = check_manager.Run()
-  print report.strip()
+  # Running the checks, reporting and exiting.
+  exit_code, screen_report, tags_report = check_manager.Run()
+  f = open(options.output, "w")
+  f.write(tags_report)
+  f.close()
+  print screen_report.strip()
   sys.exit(exit_code)
 
 

@@ -5,6 +5,7 @@ import unittest
 import mox
 import difflib
 import checkpkg
+import opencsw
 import testdata.checkpkg_test_data_CSWmysql51rt as d1
 import testdata.checkpkg_test_data_CSWmysql51client as d2
 import testdata.checkpkg_test_data_CSWmysql51 as d3
@@ -556,8 +557,8 @@ class FormatDepsReportUnitTest(unittest.TestCase):
     missing_deps = set([u'SUNWgss', u'*SUNWlxsl'])
     surplus_deps = set(['CSWsudo', 'CSWlibxslt'])
     orphan_sonames = set([u'libm.so.2'])
-    testdata = (missing_deps, surplus_deps, orphan_sonames)
-    checker = checkpkg.CheckpkgBase("/tmp/nonexistent", "CSWfoo")
+    testdata = ("CSWfoo", missing_deps, surplus_deps, orphan_sonames)
+    checker = opencsw.DirectoryFormatPackage("/tmp/nonexistent/CSWfoo")
     expected = u"""# CSWfoo:
 # SUGGESTION: you may want to add some or all of the following as depends:
 #    (Feel free to ignore SUNW or SPRO packages)
@@ -569,18 +570,150 @@ RUNTIME_DEP_PKGS_CSWfoo += SUNWgss
 # The following required sonames would not be found at runtime:
 # ! libm.so.2
 """
-    result = checker.FormatDepsReport(*testdata)
+    result = checkpkg.FormatDepsReport(*testdata)
     self.AssertTextEqual(result, expected)
 
   def testNone(self):
     missing_deps = set([])
     surplus_deps = set([])
     orphan_sonames = set([])
-    testdata = (missing_deps, surplus_deps, orphan_sonames)
-    checker = checkpkg.CheckpkgBase("/tmp/nonexistent", "CSWfoo")
+    testdata = ("CSWfoo", missing_deps, surplus_deps, orphan_sonames)
+    checker = opencsw.DirectoryFormatPackage("/tmp/nonexistent/CSWfoo")
     expected = u""
-    result = checker.FormatDepsReport(*testdata)
+    result = checkpkg.FormatDepsReport(*testdata)
     self.AssertTextEqual(result, expected)
+
+
+class CheckpkgTagsUnitTest(unittest.TestCase):
+  
+  def test_1(self):
+    m = checkpkg.CheckpkgManager("testname", "/tmp", ["CSWfoo"])
+    tags = {
+        "CSWfoo": [
+          checkpkg.CheckpkgTag("foo-tag", "foo-info"),
+        ],
+    }
+    screen_report, tags_report = m.FormatReports(tags)
+    expected = u'# Tags reported by testname module\nCSWfoo: foo-tag foo-info\n'
+    self.assertEqual(expected, tags_report)
+
+  def test_2(self):
+    m = checkpkg.CheckpkgManager("testname", "/tmp", ["CSWfoo"])
+    tags = {
+        "CSWfoo": [
+          checkpkg.CheckpkgTag("foo-tag", "foo-info"),
+          checkpkg.CheckpkgTag("bar-tag", "bar-info"),
+          checkpkg.CheckpkgTag("baz-tag"),
+        ],
+    }
+    screen_report, tags_report = m.FormatReports(tags)
+    expected = (u'# Tags reported by testname module\n'
+                u'CSWfoo: foo-tag foo-info\n'
+                u'CSWfoo: bar-tag bar-info\n'
+                u'CSWfoo: baz-tag\n')
+    self.assertEqual(expected, tags_report)
+
+  def testParseTagLine1(self):
+    line = "foo-tag"
+    self.assertEquals((None, "foo-tag", None), checkpkg.ParseTagLine(line))
+
+  def testParseTagLine2(self):
+    line = "CSWfoo: foo-tag"
+    self.assertEquals(("CSWfoo", "foo-tag", None), checkpkg.ParseTagLine(line))
+
+  def testParseTagLine3(self):
+    line = "CSWfoo: foo-tag foo-info"
+    self.assertEquals(("CSWfoo", "foo-tag", "foo-info"), checkpkg.ParseTagLine(line))
+
+  def testParseTagLine4(self):
+    line = "CSWfoo: foo-tag foo-info1 foo-info2"
+    self.assertEquals(("CSWfoo", "foo-tag", "foo-info1 foo-info2"), checkpkg.ParseTagLine(line))
+
+
+class ParseOverrideLineUnitTest(unittest.TestCase):
+  
+  def setUp(self):
+    line1 = "CSWfoo: foo-override"
+    line2 = "CSWfoo: foo-override foo-info"
+    line3 = "CSWfoo: foo-override foo-info-1 foo-info-2"
+    self.o1 = checkpkg.ParseOverrideLine(line1)
+    self.o2 = checkpkg.ParseOverrideLine(line2)
+    self.o3 = checkpkg.ParseOverrideLine(line3)
+
+  def test_ParseOverridesLine1(self):
+    self.assertEqual("CSWfoo", self.o1.pkgname)
+
+  def test_ParseOverridesLine2(self):
+    self.assertEqual("foo-override", self.o1.tag_name)
+
+  def test_ParseOverridesLine3(self):
+    self.assertEqual(None, self.o1.tag_info)
+
+  def test_ParseOverridesLine4(self):
+    self.assertEqual("foo-info", self.o2.tag_info)
+
+  def test_ParseOverridesLine5(self):
+    self.assertEqual("CSWfoo", self.o3.pkgname)
+
+  def test_ParseOverridesLine6(self):
+    self.assertEqual("foo-override", self.o3.tag_name)
+
+  def test_ParseOverridesLine7(self):
+    self.assertEqual("foo-info-1 foo-info-2", self.o3.tag_info)
+
+
+class ApplyOverridesUnitTest(unittest.TestCase):
+
+  # This would be better, more terse. But requires metaclasses.
+  DATA_1 = (
+      (None, 'tag1', 'info1', None, 'tag1', 'info1', None),
+  )
+
+  def test_1a(self):
+    """One tag, no overrides."""
+    tags = [(None, checkpkg.CheckpkgTag("foo-tag"))]
+    overrides = []
+    self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
+
+  def test_1b(self):
+    """One override, matching by tag name only."""
+    tags = [(None, checkpkg.CheckpkgTag("foo-tag"))]
+    overrides = [checkpkg.Override(None, "foo-tag", None)]
+    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+
+  def test_1c(self):
+    """One override, matching by tag name only, no pkgname."""
+    tags = [(None, checkpkg.CheckpkgTag("foo-tag"))]
+    overrides = [checkpkg.Override(None, "foo-tag", None)]
+    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+
+  def test_2(self):
+    """One override, matching by tag name and tag info, no pkgname."""
+    tags = [(None, checkpkg.CheckpkgTag("foo-tag", "tag-info-1"))]
+    overrides = [checkpkg.Override(None, "foo-tag", None)]
+    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+
+  def test_3(self):
+    """One override, matching by tag name, mismatching tag info, no pkgname."""
+    tags = [(None, checkpkg.CheckpkgTag("foo-tag", "tag-info-1"))]
+    overrides = [checkpkg.Override(None, "foo-tag", "tag-info-2")]
+    self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
+
+  def test_4(self):
+    tags = [("CSWfoo", checkpkg.CheckpkgTag("foo-tag", "tag-info-1"))]
+    overrides = [checkpkg.Override(None, "foo-tag", "tag-info-1")]
+    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+
+  def test_5(self):
+    tags = [("CSWfoo", checkpkg.CheckpkgTag("foo-tag", "tag-info-1"))]
+    overrides = [checkpkg.Override("CSWfoo", "foo-tag", "tag-info-1")]
+    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+
+  def test_5(self):
+    """Pkgname mismatch."""
+    tags = [("CSWfoo", checkpkg.CheckpkgTag("foo-tag", "tag-info-1"))]
+    overrides = [checkpkg.Override("CSWbar", "foo-tag", "tag-info-1")]
+    self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
 
 
 if __name__ == '__main__':

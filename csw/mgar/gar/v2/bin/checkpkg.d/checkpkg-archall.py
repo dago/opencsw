@@ -1,4 +1,5 @@
 #!/opt/csw/bin/python2.6
+#
 # $Id$
 
 """Verifies the architecture of the package."""
@@ -15,15 +16,15 @@ path_list = [os.path.dirname(__file__),
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 
-def CheckArchitectureVsContents(pkg):
+def CheckArchitectureVsContents(pkg, debug):
   """Verifies the relationship between package contents and architecture."""
   errors = []
   binaries = pkg.ListBinaries()
   pkginfo = pkg.GetParsedPkginfo()
   arch = pkginfo["ARCH"]
   if binaries and arch == "all":
-    errors.append(checkpkg.PackageError(
-      "The package can't be ARCHALL = 1 and contain binaries."))
+    for binary in binaries:
+    	errors.append(checkpkg.CheckpkgTag("archall-with-binaries"), binary)
   elif not binaries and arch != "all":
     # This is not a clean way of handling messages for the user, but there's
     # not better way at the moment.
@@ -42,11 +43,18 @@ def main():
                                            options.extractdir,
                                            pkgnames,
                                            options.debug)
+
   check_manager.RegisterIndividualCheck(CheckArchitectureVsContents)
-  exit_code, report = check_manager.Run()
-  print report.strip()
+
+  exit_code, screen_report, tags_report = check_manager.Run()
+  f = open(options.output, "w")
+  f.write(tags_report)
+  f.close()
+  print screen_report.strip()
   sys.exit(exit_code)
 
 
 if __name__ == '__main__':
   main()
+
+# vim:set sw=2 ts=2 sts=2 expandtab:

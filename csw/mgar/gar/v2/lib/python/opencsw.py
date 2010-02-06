@@ -23,6 +23,7 @@ import shutil
 import subprocess
 import tempfile
 import urllib2
+import checkpkg
 
 ARCHITECTURES = ["i386", "sparc", "all"]
 MAJOR_VERSION = "major version"
@@ -536,6 +537,7 @@ class DirectoryFormatPackage(ShellMixin, object):
   def __init__(self, directory):
     self.directory = directory
     self.pkgname = os.path.split(directory)[1]
+    self.pkgpath = self.directory
     self.pkginfo_dict = None
 
   def GetCatalogname(self):
@@ -693,6 +695,36 @@ class DirectoryFormatPackage(ShellMixin, object):
     for root, dirs, files in os.walk(self.pkgpath):
       file_basenames.extend(files)
     return file_basenames
+
+  def _GetOverridesStream(self):
+    catalogname = self.GetCatalogname()
+    file_path = os.path.join(self.directory,
+                             "root",
+                             "opt/csw/share/checkpkg/overrides",
+                             catalogname)
+    # This might potentially cause a file descriptor leak, but I'm not going to
+    # worry about that at this stage.
+    logging.debug("Trying to open %s", repr(file_path))
+    if os.path.isfile(file_path):
+    	return open(file_path, "r")
+    else:
+    	return None
+
+  def _ParseOverridesStream(self, stream):
+    overrides = []
+    for line in stream:
+      if line.startswith("#"):
+      	continue
+      overrides.append(checkpkg.ParseOverrideLine(line))
+    return overrides
+
+  def GetOverrides(self):
+    """Returns overrides, a list of checkpkg.Override instances."""
+    stream = self._GetOverridesStream()
+    if stream:
+    	return self._ParseOverridesStream(stream)
+    else:
+    	return list()
 
 
 class Pkgmap(object):

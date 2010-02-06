@@ -19,7 +19,7 @@ import opencsw
 
 LICENSE_TMPL = "/opt/csw/share/doc/%s/license"
 
-def CheckLicenseFile(pkg):
+def CheckLicenseFile(pkg, debug):
   """Checks for the presence of the license file."""
   errors = []
   pkgmap = pkg.GetPkgmap()
@@ -27,12 +27,9 @@ def CheckLicenseFile(pkg):
   license_path = LICENSE_TMPL % catalogname
   if license_path not in pkgmap.entries_by_path:
     errors.append(
-        opencsw.PackageError(
-          "%s file not present in the %s package"
-          % (repr(license_path), pkg.pkgname)))
-    errors.append(
-        opencsw.PackageError(
-          "See also: http://sourceforge.net/apps/trac/gar/wiki/CopyRight"))
+        checkpkg.CheckpkgTag(
+          "license-missing",
+          msg="See http://sourceforge.net/apps/trac/gar/wiki/CopyRight"))
   return errors
 
 
@@ -45,8 +42,12 @@ def main():
                                            options.debug)
   # Registering functions defined above.
   check_manager.RegisterIndividualCheck(CheckLicenseFile)
-  exit_code, report = check_manager.Run()
-  print report.strip()
+  # Running the checks, reporting and exiting.
+  exit_code, screen_report, tags_report = check_manager.Run()
+  f = open(options.output, "w")
+  f.write(tags_report)
+  f.close()
+  print screen_report.strip()
   sys.exit(exit_code)
 
 

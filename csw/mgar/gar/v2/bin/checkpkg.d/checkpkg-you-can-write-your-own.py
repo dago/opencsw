@@ -18,16 +18,19 @@ path_list = [os.path.dirname(__file__),
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 
-# Defining checking functions.
+# Defining the checking functions.  They come in two flavors: individual
+# package checks and set checks.
 
-def MyCheckForAsinglePackage(pkg):
+def MyCheckForAsinglePackage(pkg, debug):
   """Checks an individual package.
   
   Gets a DirctoryFormatPackage as an argument, and returns a list of errors.
 
-  Errors should be a list of checkpkg.PackageError objects:
+  Errors should be a list of checkpkg.CheckpkgTag objects:
+  errors.append(checkpkg.CheckpkgTag("tag-name"))
 
-  errors.append(checkpkg.PackageError("There's something wrong."))
+  You can also add a parameter:
+  errors.append(checkpkg.CheckpkgTag("tag-name", "/opt/csw/bin/problem"))
   """
   errors = []
   # Checking code for an individual package goes here.  See the
@@ -37,11 +40,11 @@ def MyCheckForAsinglePackage(pkg):
   # Here's how to report an error:
   something_is_wrong = False
   if something_is_wrong:
-    errors.append(checkpkg.PackageError("There's something wrong."))
+    errors.append(checkpkg.CheckpkgTag("example-problem", "thing"))
   return errors
 
 
-def MyCheckForAsetOfPackages(pkgs):
+def MyCheckForAsetOfPackages(pkgs, debug):
   """Checks a set of packages.
 
   Sometimes individual checks aren't enough. If you need to write code which
@@ -67,8 +70,11 @@ def main():
   check_manager.RegisterIndividualCheck(MyCheckForAsinglePackage)
   check_manager.RegisterSetCheck(MyCheckForAsetOfPackages)
   # Running the checks, reporting and exiting.
-  exit_code, report = check_manager.Run()
-  print report.strip()
+  exit_code, screen_report, tags_report = check_manager.Run()
+  f = open(options.output, "w")
+  f.write(tags_report)
+  f.close()
+  print screen_report.strip()
   sys.exit(exit_code)
 
 

@@ -1,12 +1,12 @@
 #!/opt/csw/bin/python2.6
 #
 # $Id$
-#
-# A check for dependencies between shared libraries.
-#
-# This is currently more of a prototype than a mature program, but it has some
-# unit tests and it appears to be working.  The main problem is that it's not
-# divided into smaller testable sections.
+
+"""A check for dependencies between shared libraries.
+This is currently more of a prototype than a mature program, but it has some
+unit tests and it appears to be working.  The main problem is that it's not
+divided into smaller testable sections.
+"""
 
 import os
 import os.path
@@ -16,6 +16,9 @@ import subprocess
 import logging
 import sys
 import textwrap
+from Cheetah import Template
+
+CHECKPKG_MODULE_NAME = "shared library linking consistency"
 
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
@@ -38,24 +41,14 @@ def GetIsalist():
   return isalist
 
 
-def main():
+def CheckSharedLibraryConsistency(pkgs, debug):
   result_ok = True
   errors = []
-  options, args = checkpkg.GetOptions()
-  pkgnames = args
-  if options.debug:
-    logging.basicConfig(level=logging.DEBUG)
-  else:
-    logging.basicConfig(level=logging.INFO)
-  checkers = []
-  for pkgname in pkgnames:
-    checker = checkpkg.CheckpkgBase(options.extractdir, pkgname)
-    checkers.append(checker)
   binaries = []
   binaries_by_pkgname = {}
   sonames_by_pkgname = {}
   pkg_by_any_filename = {}
-  for checker in checkers:
+  for checker in pkgs:
     pkg_binary_paths = checker.ListBinaries()
     binaries_base = [os.path.split(x)[1] for x in pkg_binary_paths]
     binaries_by_pkgname[checker.pkgname] = binaries_base
@@ -128,7 +121,7 @@ def main():
   # same bit of code with do checking and reporting.
   #
   # TODO: Rewrite this using cheetah templates
-  if options.debug and needed_sonames:
+  if debug and needed_sonames:
     print "Analysis of sonames needed by the package set:"
     binaries_with_missing_sonames = set([])
     for soname in needed_sonames:
@@ -150,10 +143,13 @@ def main():
         if soname in checkpkg.ALLOWED_ORPHAN_SONAMES:
           print "However, it's a whitelisted soname."
         else:
-          errors.append(
-              checkpkg.Error("%s is required by %s, but "
-                             "we don't know what provides it."
-                             % (soname, binaries_by_soname[soname])))
+          pass
+          # The error checking needs to be unified: done in one place only.
+          # errors.append(
+          #     checkpkg.CheckpkgTag(
+          #       "%s is required by %s, but "
+          #       "we don't know what provides it."
+          #       % (soname, binaries_by_soname[soname])))
     if binaries_with_missing_sonames:
       print "The following are binaries with missing sonames:"
       binary_lines = " ".join(sorted(binaries_with_missing_sonames))
@@ -162,11 +158,11 @@ def main():
     print
 
   dependent_pkgs = {}
-  for checker in checkers:
+  for checker in pkgs:
     pkgname = checker.pkgname
     dir_format_pkg = opencsw.DirectoryFormatPackage(checker.pkgpath)
     declared_dependencies = dir_format_pkg.GetDependencies()
-    if options.debug:
+    if debug:
       sanitized_pkgname = pkgname.replace("-", "_")
       data_file_name = "/var/tmp/checkpkg_test_data_%s.py" % sanitized_pkgname
       logging.warn("Saving test data to %s." % repr(data_file_name))
@@ -194,20 +190,44 @@ def main():
         pkgs_by_filename,
         filenames_by_soname,
         pkg_by_any_filename)
-    print checker.FormatDepsReport(missing_deps,
-                                   surplus_deps,
-                                   orphan_sonames)
+    namespace = {
+        "pkgname": checker.pkgname,
+        "missing_deps": missing_deps,
+        "surplus_deps": surplus_deps,
+        "orphan_sonames": orphan_sonames,
+    }
+    t = Template.Template(checkpkg.REPORT_TMPL, searchList=[namespace])
+    print unicode(t)
 
     for soname in orphan_sonames:
-      errors.append(checkpkg.Error("The following soname does't belong to "
-                                   "any package: %s" % soname))
+      errors.append(
+          checkpkg.CheckpkgTag(
+            "orphan-soname",
+            soname))
+    for missing_dep in missing_deps:
+    	errors.append(
+    	    checkpkg.CheckpkgTag(
+    	      "missing-dependency",
+    	      missing_dep))
+  return errors
 
-  if errors:
-    for error in errors:
-      logging.error(error)
-    sys.exit(1)
-  else:
-    sys.exit(0)
+
+def main():
+  options, args = checkpkg.GetOptions()
+  pkgnames = args
+  check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
+                                           options.extractdir,
+                                           pkgnames,
+                                           options.debug)
+
+  check_manager.RegisterSetCheck(CheckSharedLibraryConsistency)
+
+  exit_code, screen_report, tags_report = check_manager.Run()
+  f = open(options.output, "w")
+  f.write(tags_report)
+  f.close()
+  print screen_report.strip()
+  sys.exit(exit_code)
 
 
 if __name__ == '__main__':

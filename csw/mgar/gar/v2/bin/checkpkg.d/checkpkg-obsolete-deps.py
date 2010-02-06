@@ -26,23 +26,24 @@ OBSOLETE_DEPS = {
     },
 }
 
-def CheckObsoleteDeps(pkg):
+def CheckObsoleteDeps(pkg, debug):
   """Checks for obsolete dependencies."""
   errors = []
   deps = set(pkg.GetDependencies())
   obsolete_pkg_deps = deps.intersection(set(OBSOLETE_DEPS))
   if obsolete_pkg_deps:
     for obsolete_pkg in obsolete_pkg_deps:
-      errors.append(
-          checkpkg.PackageError(
-            "Package %s should not depend on %s."
-             % (pkg.pkgname, obsolete_pkg)))
+      msg = ""
       if "hint" in OBSOLETE_DEPS[obsolete_pkg]:
-        errors.append(
-            checkpkg.PackageError("Hint: %s" % OBSOLETE_DEPS[obsolete_pkg]["hint"]))
+        msg += "Hint: %s" % OBSOLETE_DEPS[obsolete_pkg]["hint"]
       if "url" in OBSOLETE_DEPS[obsolete_pkg]:
-      	errors.append(
-      	    checkpkg.PackageError("URL: %s" % OBSOLETE_DEPS[obsolete_pkg]["url"]))
+        if msg:
+          msg += ", "
+        msg += "URL: %s" % OBSOLETE_DEPS[obsolete_pkg]["url"]
+      if not msg:
+        msg = None
+      errors.append(
+          checkpkg.CheckpkgTag("obsolete-dependency", obsolete_pkg, msg=msg))
   return errors
 
 
@@ -54,8 +55,12 @@ def main():
                                            pkgnames,
                                            options.debug)
   check_manager.RegisterIndividualCheck(CheckObsoleteDeps)
-  exit_code, report = check_manager.Run()
-  print report.strip()
+  # Running the checks, reporting and exiting.
+  exit_code, screen_report, tags_report = check_manager.Run()
+  f = open(options.output, "w")
+  f.write(tags_report)
+  f.close()
+  print screen_report.strip()
   sys.exit(exit_code)
 
 

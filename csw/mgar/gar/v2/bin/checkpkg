@@ -569,6 +569,7 @@ test_suite_ok=1
 checkpkg_scriptname=`basename $0`
 checkpkg_basedir=${0%/${checkpkg_scriptname}}
 plugindir=${checkpkg_basedir}/checkpkg.d
+checkpkg_module_tag="checkpkg-"
 
 # Cleaning up old *.pyc files which can cause grief.  This is because of the
 # move of Python libraries.
@@ -591,21 +592,26 @@ log_files=""
 module_name_format="%-40s"
 if [[ -d "$plugindir" ]]; then
 	echo "Running modular tests"
-	# echo plugin dir exists
-	for plugin in "${plugindir}"/checkpkg-*; do
+	for plugin in "${plugindir}/${checkpkg_module_tag}"*; do
 		if [[ -x "${plugin}" ]]; then
-			debugmsg "Executing: ${plugin} $extra_options -e \"${EXTRACTDIR}\" ${pkgnames}"
 			plugin_base_name=`basename ${plugin}`
 			plugin_log="${EXTRACTDIR}/${plugin_base_name}.log"
 			log_files="${log_files} ${plugin_log}"
 			plugin_name="`echo ${plugin} | sed -e 's+.*/checkpkg-++' | sed -e 's+\.py$++'`"
+			error_tag_file="tags.${plugin_name}"
 			printf "${BOLD}${module_name_format}${COLOR_RESET} running..." "${plugin_name}"
-			${plugin} $extra_options -e "${EXTRACTDIR}" ${pkgnames} > "${plugin_log}" 2>&1
+			debugmsg "Executing: ${plugin} $extra_options -e \"${EXTRACTDIR}\" ${pkgnames}"
+			${plugin} \
+				$extra_options \
+				-e "${EXTRACTDIR}" \
+				-o "${EXTRACTDIR}/${error_tag_file}" \
+				${pkgnames} \
+				> "${plugin_log}" 2>&1
 			if [[ "$?" -ne 0 ]]; then
-				printf "\r${module_name_format} ${RED}[FAIL]${COLOR_RESET}        \\n" "${plugin_name}"
+				printf "\r${module_name_format} ${RED}[ERROR]${COLOR_RESET}        \\n" "${plugin_name}"
 				test_suite_ok=0
 			else
-				printf "\r${module_name_format} ${GREEN}[OK]${COLOR_RESET}        \\n" "${plugin_name}"
+				printf "\r${module_name_format} [Done]        \\n" "${plugin_name}"
 			fi
 		else
 			debugmsg "'${plugin}' is not executable"
@@ -626,9 +632,32 @@ for log_file in ${log_files}; do
 done
 
 if [[ ${test_suite_ok} -ne 1 ]]; then
-	errmsg "One or more modular tests have failed."
+	errmsg "One or more modular tests have finished with an error."
 else
-	print "All modular tests were successful."
+	print "All modular tests completed.  Analyzing the reports."
+fi
+
+override_info_printed=0
+for tagfile in ${EXTRACTDIR}/tags.*; do
+	if [[ -s "${tagfile}" ]]; then
+		if [[ "${override_info_printed}" -ne 1 ]]; then
+			echo "# You can use the following lines to create overrides"
+			echo "# See http://wiki.opencsw.org/checkpkg"
+			override_info_printed=1
+		fi
+		echo "# ${tagfile}:"
+		cat "${tagfile}"
+	fi
+done
+
+# Collecting errors and applying the overrides.
+${checkpkg_basedir}/analyze_module_results.py \
+	-e "${EXTRACTDIR}" \
+	${pkgnames}
+if [[ "$?" -ne 0 ]]; then
+	errmsg "${RED}Modular checks are reporting errors.${COLOR_RESET}"
+else
+	print "${GREEN}All modular tests were successful.${COLOR_RESET}"
 fi
 
 print ""

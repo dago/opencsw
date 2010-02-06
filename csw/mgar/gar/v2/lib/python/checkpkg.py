@@ -80,6 +80,18 @@ OK: $name found no problems.
 #end if
 """
 
+# http://www.cheetahtemplate.org/docs/users_guide_html_multipage/language.directives.closures.html
+TAG_REPORT_TMPL = u"""#if $errors
+# Tags reported by $name module
+#for $pkgname in $errors
+#for $tag in $errors[$pkgname]
+$pkgname: ${tag.tag_name}#if $tag.tag_info# $tag.tag_info#end if#
+#end for
+#end for
+#end if
+"""
+
+
 class Error(Exception):
   pass
 
@@ -99,6 +111,8 @@ def GetOptions():
   parser.add_option("-d", "--debug", dest="debug",
                     default=False, action="store_true",
                     help="Turn on debugging messages")
+  parser.add_option("-o", "--output", dest="output",
+                    help="Output error tag file")
   (options, args) = parser.parse_args()
   if not options.extractdir:
     raise ConfigurationError("ERROR: -e option is missing.")
@@ -106,27 +120,16 @@ def GetOptions():
   return options, set(args)
 
 
-class CheckpkgBase(opencsw.DirectoryFormatPackage):
-  """This class has functionality overlapping with DirectoryFormatPackage
-  from the opencsw.py library. The classes should be merged.
-  """
-
-  def __init__(self, extractdir, pkgname):
-    self.extractdir = extractdir
-    self.pkgname = pkgname
-    self.pkgpath = os.path.join(self.extractdir, self.pkgname)
-    super(CheckpkgBase, self).__init__(self.pkgpath)
-
-  def FormatDepsReport(self, missing_deps, surplus_deps, orphan_sonames):
-    """To be removed."""
-    namespace = {
-        "pkgname": self.pkgname,
-        "missing_deps": missing_deps,
-        "surplus_deps": surplus_deps,
-        "orphan_sonames": orphan_sonames,
-    }
-    t = Template.Template(REPORT_TMPL, searchList=[namespace])
-    return unicode(t)
+def FormatDepsReport(pkgname, missing_deps, surplus_deps, orphan_sonames):
+  """To be removed."""
+  namespace = {
+      "pkgname": pkgname,
+      "missing_deps": missing_deps,
+      "surplus_deps": surplus_deps,
+      "orphan_sonames": orphan_sonames,
+  }
+  t = Template.Template(REPORT_TMPL, searchList=[namespace])
+  return unicode(t)
 
 
 class SystemPkgmap(object):
@@ -534,6 +537,20 @@ def ParseDumpOutput(dump_output):
   return binary_data
 
 
+class CheckpkgTag(object):
+  """Represents a tag to be written to the checkpkg tag file."""
+
+  def __init__(self, tag_name, tag_info=None, severity=None, msg=None):
+    self.tag_name = tag_name
+    self.tag_info = tag_info
+    self.severity = severity
+    self.msg = msg
+
+  def __repr__(self):
+    return (u"CheckpkgTag(%s, %s, ...)"
+            % (repr(self.tag_name), repr(self.tag_info)))
+
+
 class CheckpkgManager(object):
   """Takes care of calling checking functions"""
 
@@ -553,31 +570,130 @@ class CheckpkgManager(object):
   def RegisterSetCheck(self, function):
     self.set_checks.append(function)
 
-  def Run(self):
-    """Runs all the checks
-
-    Returns a tuple of an exit code and a report.
-    """
+  def GetDirectoryFormatPackages(self):
     packages = []
-    errors = {}
     for pkgname in self.pkgname_list:
         pkg_path = os.path.join(self.extractdir, pkgname)
         packages.append(opencsw.DirectoryFormatPackage(pkg_path))
+    return packages
+
+  def GetAllTags(self, packages):
+    errors = {}
     for pkg in packages:
       for function in self.individual_checks:
-        errors_for_pkg = function(pkg)
+        errors_for_pkg = function(pkg, debug=self.debug)
         if errors_for_pkg:
           errors[pkg.pkgname] = errors_for_pkg
     # Set checks
     for function in self.set_checks:
-      set_errors = function(packages)
+      set_errors = function(packages, debug=self.debug)
       if set_errors:
-        errors["The package set"] = set_errors
+        errors["package-set"] = set_errors
+    return errors
+
+  def FormatReports(self, errors):
     namespace = {
         "name": self.name,
         "errors": errors,
         "debug": self.debug,
     }
-    t = Template.Template(ERROR_REPORT_TMPL, searchList=[namespace])
-    exit_code = bool(errors)
-    return (exit_code, unicode(t))
+    screen_t = Template.Template(ERROR_REPORT_TMPL, searchList=[namespace])
+    tags_report_t = Template.Template(TAG_REPORT_TMPL, searchList=[namespace])
+    screen_report = unicode(screen_t)
+    tags_report = unicode(tags_report_t)
+    return screen_report, tags_report
+
+  def Run(self):
+    """Runs all the checks
+
+    Returns a tuple of an exit code and a report.
+    """
+    packages = self.GetDirectoryFormatPackages()
+    errors = self.GetAllTags(packages)
+    screen_report, tags_report = self.FormatReports(errors)
+    exit_code = 0
+    return (exit_code, screen_report, tags_report)
+
+
+def ParseTagLine(line):
+  """Parses a line from the tag.${module} file.
+
+  Returns a triplet of pkgname, tagname, tag_info.
+  """
+  level_1 = line.strip().split(":")
+  if len(level_1) > 1:
+    data_1 = level_1[1]
+    pkgname = level_1[0]
+  else:
+    data_1 = level_1[0]
+    pkgname = None
+  level_2 = re.split(WS_RE, data_1.strip())
+  tag_name = level_2[0]
+  if len(level_2) > 1:
+    tag_info = " ".join(level_2[1:])
+  else:
+    tag_info = None
+  return (pkgname, tag_name, tag_info)
+
+
+class Override(object):
+  """Represents an override of a certain checkpkg tag.
+
+  It's similar to checkpkg.CheckpkgTag, but serves a different purpose.
+  """
+
+  def __init__(self, pkgname, tag_name, tag_info):
+    self.pkgname = pkgname
+    self.tag_name = tag_name
+    self.tag_info = tag_info
+
+  def __repr__(self):
+    return (u"Override(%s, %s, %s)"
+            % (self.pkgname, self.tag_name, self.tag_info))
+
+  def DoesApply(self, pkgname, tag):
+    """Figures out if this override applies to the given tag."""
+    basket_a = {}
+    basket_b = {}
+    if self.pkgname:
+      basket_a["pkgname"] = self.pkgname
+      basket_b["pkgname"] = pkgname
+    if self.tag_info:
+      basket_a["tag_info"] = self.tag_info
+      basket_b["tag_info"] = tag.tag_info
+    basket_a["tag_name"] = self.tag_name
+    basket_b["tag_name"] = tag.tag_name
+    # print "comparing", basket_a, basket_b
+    return basket_a == basket_b
+
+def ParseOverrideLine(line):
+  level_1 = line.split(":")
+  if len(level_1) > 1:
+    pkgname = level_1[0]
+    data_1 = level_1[1]
+  else:
+    pkgname = None
+    data_1 = level_1[0]
+  level_2 = re.split(WS_RE, data_1.strip())
+  if len(level_2) > 1:
+    tag_name = level_2[0]
+    tag_info = " ".join(level_2[1:])
+  else:
+    tag_name = level_2[0]
+    tag_info = None
+  return Override(pkgname, tag_name, tag_info)
+
+
+def ApplyOverrides(error_tags, overrides):
+  """Filters out all the error tags that overrides apply to."""
+  tags_after_overrides = []
+  # This can be done more efficiently after creating indexes, but I'm going to
+  # do an O(N*M) as if I didn't know anything about programming. :-P
+  for pkgname, tag in error_tags:
+    override_applies = False
+    for override in overrides:
+      if override.DoesApply(pkgname, tag):
+        override_applies = True
+    if not override_applies:
+      tags_after_overrides.append((pkgname, tag))
+  return tags_after_overrides
