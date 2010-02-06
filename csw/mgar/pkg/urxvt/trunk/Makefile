@@ -1,9 +1,9 @@
 # Copyright 2009 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 GARNAME = rxvt-unicode
-GARVERSION = 9.06
+GARVERSION = 9.07
 CATEGORIES = apps
 
 DESCRIPTION = (ouR XVT, unicode) - a VT102 emulator for the X window system
@@ -18,29 +18,21 @@ define BLURB
   http://pod.tst.eu/http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.1.pod
 endef
 
-MASTER_SITES = http://dist.schmorp.de/rxvt-unicode/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += urxvt-wrapper
-# PATCHFILES = $(GARNAME)-$(GARVERSION)-solaris8.patch
-
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-SPKG_SOURCEURL = http://software.schmorp.de/pkg/rxvt-unicode.html
-
-PACKAGES = CSWurxvt
+MASTER_SITES         = http://dist.schmorp.de/rxvt-unicode/
+DISTFILES            = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES            += urxvt-wrapper
+UFILES_REGEX         = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+SPKG_SOURCEURL       = http://software.schmorp.de/pkg/rxvt-unicode.html
+PACKAGING_PLATFORMS  = solaris10-sparc solaris10-i386
+PACKAGES             = CSWurxvt
 CATALOGNAME_CSWurxvt = urxvt
-
-CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-perl
-
-GARCOMPILER = GNU
-
+CONFIGURE_ARGS       = $(DIRPATHS)
+CONFIGURE_ARGS      += --disable-perl
 RUNTIME_DEP_PKGS_CSWurxvt  = CSWbash
-RUNTIME_DEP_PKGS_CSWurxvt += CSWfconfig
-RUNTIME_DEP_PKGS_CSWurxvt += CSWftype2
-RUNTIME_DEP_PKGS_CSWurxvt += CSWlibxft2
-RUNTIME_DEP_PKGS_CSWurxvt += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWurxvt += CSWzlib
+GARCOMPILER = GNU
 TEST_SCRIPTS =
+
+include gar/category.mk
 
 post-install-modulated:
 	ginstall -m 755 -d $(DESTDIR)$(libexecdir)
@@ -50,5 +42,3 @@ post-install-modulated:
 	done
 	ginstall -m 755 $(FILEDIR)/urxvt-wrapper $(DESTDIR)$(libexecdir)
 	@$(MAKECOOKIE)
-
-include gar/category.mk
