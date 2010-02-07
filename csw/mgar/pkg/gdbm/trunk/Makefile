@@ -11,9 +11,7 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWgdbm,)
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Makefile install permissions patch
@@ -26,5 +24,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 INSTALL_ROOT = $(DESTDIR)
 export INSTALL_ROOT
+EXTRA_COMMON_EXPORTS = INSTALL_ROOT
+
+BUILD64 = 1
 
 include gar/category.mk
