@@ -17,22 +17,39 @@ SPKG_SOURCEURL = http://libiptcdata.sourceforge.net
 
 LICENSE = COPYING
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
+PACKAGES = CSWlibiptcdata CSWlibiptcdatadevel CSWlibiptcdatadoc
+#PACKAGES += CSWpy-libiptcdata
+CATALOGNAME_CSWlibiptcdata = libiptcdata
+CATALOGNAME_CSWlibiptcdatadevel = libiptcdata_devel
+CATALOGNAME_CSWlibiptcdatadoc = libiptcdata_doc
+#CATALOGNAME_CSWpy-libiptcdata = py_libiptcdata
+SPKG_DESC_CSWlibiptcdata = $(DESCRIPTION)
+SPKG_DESC_CSWlibiptcdatadevel = $(DESCRIPTION) - developer package
+SPKG_DESC_CSWlibiptcdatadoc = $(DESCRIPTION) - documentation package
+#SPKG_DESC_CSWpy-libiptcdata = $(DESCRIPTION) - Python bindings
 
-# We define upstream file regex so we can be notifed of new upstream software release
+RUNTIME_DEP_PKGS_CSWlibiptcdata = CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS_CSWlibiptcdatadevel = CSWlibiptcdata
+RUNTIME_DEP_PKGS_CSWlibiptcdatadoc = CSWlibiptcdata
+#RUNTIME_DEP_PKGS_CSWpy-libiptcdata = CSWlibiptcdata CSWpython
+
+PKGFILES_CSWlibiptcdatadevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibiptcdatadoc = $(sharedstatedir)/gtk-doc/.*
+#PKGFILES_CSWpy-libiptcdata = $(libdir).*/python/site-packages/.*
+
+ARCHALL_CSWlibiptcdatadoc = 1
+
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=130582
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+BUILD64 = 1
 
-# Patch submitted to upstream, pending new release
-#PATCHFILES = iptc-dataset.patch
+CONFIGURE_ARGS  = $(DIRPATHS)
+# Python isn't 64-bit yet
+#CONFIGURE_ARGS += --enable-python
+CONFIGURE_ARGS += --enable-gtk-doc
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_SCRIPTS =
+TEST_TARGET = check
 
 include gar/category.mk
