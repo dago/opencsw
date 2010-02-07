@@ -28,6 +28,7 @@ def CheckLicenseFile(pkg, debug):
   if license_path not in pkgmap.entries_by_path:
     errors.append(
         checkpkg.CheckpkgTag(
+          pkg.pkgname,
           "license-missing",
           msg="See http://sourceforge.net/apps/trac/gar/wiki/CopyRight"))
   return errors

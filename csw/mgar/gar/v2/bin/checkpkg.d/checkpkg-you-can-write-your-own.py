@@ -27,10 +27,10 @@ def MyCheckForAsinglePackage(pkg, debug):
   Gets a DirctoryFormatPackage as an argument, and returns a list of errors.
 
   Errors should be a list of checkpkg.CheckpkgTag objects:
-  errors.append(checkpkg.CheckpkgTag("tag-name"))
+  errors.append(checkpkg.CheckpkgTag(pkg.pkgname, "tag-name"))
 
   You can also add a parameter:
-  errors.append(checkpkg.CheckpkgTag("tag-name", "/opt/csw/bin/problem"))
+  errors.append(checkpkg.CheckpkgTag(pkg.pkgname, "tag-name", "/opt/csw/bin/problem"))
   """
   errors = []
   # Checking code for an individual package goes here.  See the
@@ -40,7 +40,7 @@ def MyCheckForAsinglePackage(pkg, debug):
   # Here's how to report an error:
   something_is_wrong = False
   if something_is_wrong:
-    errors.append(checkpkg.CheckpkgTag("example-problem", "thing"))
+    errors.append(checkpkg.CheckpkgTag(pkg.pkgname, "example-problem", "thing"))
   return errors
 
 

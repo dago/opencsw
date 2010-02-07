@@ -43,7 +43,7 @@ def CheckForMissingSymbols(pkg, debug):
       	missing_symbols = True
     binary_base = os.path.basename(binary)
     if missing_symbols:
-    	errors.append(checkpkg.CheckpkgTag("symbol-not-found", binary_base))
+    	errors.append(checkpkg.CheckpkgTag(pkg.pkgname, "symbol-not-found", binary_base))
   return errors
 
 

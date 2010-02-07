@@ -590,7 +590,7 @@ class CheckpkgTagsUnitTest(unittest.TestCase):
     m = checkpkg.CheckpkgManager("testname", "/tmp", ["CSWfoo"])
     tags = {
         "CSWfoo": [
-          checkpkg.CheckpkgTag("foo-tag", "foo-info"),
+          checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "foo-info"),
         ],
     }
     screen_report, tags_report = m.FormatReports(tags)
@@ -601,9 +601,9 @@ class CheckpkgTagsUnitTest(unittest.TestCase):
     m = checkpkg.CheckpkgManager("testname", "/tmp", ["CSWfoo"])
     tags = {
         "CSWfoo": [
-          checkpkg.CheckpkgTag("foo-tag", "foo-info"),
-          checkpkg.CheckpkgTag("bar-tag", "bar-info"),
-          checkpkg.CheckpkgTag("baz-tag"),
+          checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "foo-info"),
+          checkpkg.CheckpkgTag("CSWfoo", "bar-tag", "bar-info"),
+          checkpkg.CheckpkgTag("CSWfoo", "baz-tag"),
         ],
     }
     screen_report, tags_report = m.FormatReports(tags)
@@ -671,47 +671,47 @@ class ApplyOverridesUnitTest(unittest.TestCase):
 
   def test_1a(self):
     """One tag, no overrides."""
-    tags = [(None, checkpkg.CheckpkgTag("foo-tag"))]
+    tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = []
     self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
 
   def test_1b(self):
     """One override, matching by tag name only."""
-    tags = [(None, checkpkg.CheckpkgTag("foo-tag"))]
+    tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = [checkpkg.Override(None, "foo-tag", None)]
     self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
 
   def test_1c(self):
     """One override, matching by tag name only, no pkgname."""
-    tags = [(None, checkpkg.CheckpkgTag("foo-tag"))]
+    tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = [checkpkg.Override(None, "foo-tag", None)]
     self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
 
   def test_2(self):
     """One override, matching by tag name and tag info, no pkgname."""
-    tags = [(None, checkpkg.CheckpkgTag("foo-tag", "tag-info-1"))]
+    tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = [checkpkg.Override(None, "foo-tag", None)]
     self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
 
   def test_3(self):
     """One override, matching by tag name, mismatching tag info, no pkgname."""
-    tags = [(None, checkpkg.CheckpkgTag("foo-tag", "tag-info-1"))]
+    tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override(None, "foo-tag", "tag-info-2")]
     self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
 
   def test_4(self):
-    tags = [("CSWfoo", checkpkg.CheckpkgTag("foo-tag", "tag-info-1"))]
+    tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override(None, "foo-tag", "tag-info-1")]
     self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
 
   def test_5(self):
-    tags = [("CSWfoo", checkpkg.CheckpkgTag("foo-tag", "tag-info-1"))]
+    tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override("CSWfoo", "foo-tag", "tag-info-1")]
     self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
 
   def test_5(self):
     """Pkgname mismatch."""
-    tags = [("CSWfoo", checkpkg.CheckpkgTag("foo-tag", "tag-info-1"))]
+    tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override("CSWbar", "foo-tag", "tag-info-1")]
     self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
 

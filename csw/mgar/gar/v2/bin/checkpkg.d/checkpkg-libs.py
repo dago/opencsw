@@ -202,11 +202,13 @@ def CheckSharedLibraryConsistency(pkgs, debug):
     for soname in orphan_sonames:
       errors.append(
           checkpkg.CheckpkgTag(
+            pkgname,
             "orphan-soname",
             soname))
     for missing_dep in missing_deps:
     	errors.append(
     	    checkpkg.CheckpkgTag(
+    	      pkgname,
     	      "missing-dependency",
     	      missing_dep))
   return errors
