@@ -14,6 +14,10 @@
 # TODO: nss-config
 # TODO: a better nss.pc
 
+# the package does not compile on solaris8
+# so make it for solaris10 only at the moment
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 # For DBG builds
 PATCHFILES  = whoami.patch
 # I'll let Wan-Teh decide what and where to patch
