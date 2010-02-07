@@ -14,22 +14,37 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
 SPKG_SOURCEURL = http://libexif.sourceforge.net
 
+PACKAGES = CSWlibexif CSWlibexifdevel CSWlibexifdoc
+CATALOGNAME_CSWlibexif = libexif
+CATALOGNAME_CSWlibexifdevel = libexif_devel
+CATALOGNAME_CSWlibexifdoc = libexif_doc
+SPKG_DESC_CSWlibexif = $(DESCRIPTION)
+SPKG_DESC_CSWlibexifdevel = $(DESCRIPTION) - developer package
+SPKG_DESC_CSWlibexifdoc = $(DESCRIPTION) - API documentation package
+
+PKGFILES_CSWlibexifdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibexifdoc = $(sharedstatedir)/doc/libexif/libexif-api.html/.*
+
+RUNTIME_DEP_PKGS_CSWlibexif += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWlibexifdevel += CSWlibexif
+RUNTIME_DEP_PKGS_CSWlibexifdoc += CSWlibexif
+
+ARCHALL_CSWlibexifdoc = 1
+
 LICENSE = COPYING
 
-RUNTIME_DEP_PKGS += CSWggettextrt
-
-# We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=12272
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
+# Compatibility for Solaris find/tar
 PATCHFILES = Makefile.patch
+# 
 PATCHFILES += exif-tag.patch
 
-CONFIGURE_ARGS = $(DIRPATHS)
+BUILD64 = 1
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-docs
 
 include gar/category.mk
