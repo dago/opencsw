@@ -3,12 +3,53 @@ GARVERSION = 1.9.1
 PATCHLEVEL = p376
 CATEGORIES = lang
 
+TEST_SCRIPTS =
+
 DISTNAME = ruby-$(GARVERSION)-$(PATCHLEVEL)
 
-DESCRIPTION = Brief description
+DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
-  Long description
+  Ruby is a language for quick and easy programming. Similar in scope to Perl
+  and Python, it has high-level data types, automatic memory management,
+  dynamic typing, a module system, exceptions, and a rich standard library.
+  What sets Ruby apart is a clean and consistent language design where
+  everything is an object. Other distinguishing features are CLU-style
+  iterators for loop abstraction, singleton classes/methods and lexical
+  closures.
 endef
+
+PACKAGES = CSWruby19 CSWruby19doc CSWruby19tk CSWruby19dev CSWruby19mode CSWruby19modeel
+
+ARCHALL_CSWruby19doc = 1
+ARCHALL_CSWruby19mode = 1
+ARCHALL_CSWruby19modeel = 1
+
+RUNTIME_DEP_PKGS_CSWruby19doc = CSWruby19
+RUNTIME_DEP_PKGS_CSWruby19tk = CSWruby19 CSWtk CSWtcl
+RUNTIME_DEP_PKGS_CSWruby19mode = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWruby19modeel = CSWemacscommon
+
+CATALOGNAME_CSWruby19modeel = ruby19mode_el
+
+SPKG_DESC_CSWruby19doc = Documentation for Ruby 1.9
+
+SPKG_DESC_CSWruby19tk = Ruby 1.9 Tcl/TK Extension
+
+SPKG_DESC_CSWruby19dev = Ruby 1.9 Extension Development Files
+
+SPKG_DESC_CSWruby19mode = Ruby 1.9 major mode for Emacs
+
+SPKG_DESC_CSWruby19modeel = Elisp source for ruby 1.9 mode
+
+PKGFILES_CSWruby19doc = $(datadir)/ri/.* $(docdir)/ruby19/sample.*
+
+PKGFILES_CSWruby19tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
+
+PKGFILES_CSWruby19dev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
+
+PKGFILES_CSWruby19mode = $(datadir)/emacs/site-lisp/.*elc$
+
+PKGFILES_CSWruby19modeel = $(datadir)/emacs/site-lisp/.*el$
 
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
@@ -34,3 +75,54 @@ RUNTIME_DEP_PKGS_CSWruby19 += CSWgcc4corert
 else
 SOS11_LD_FLAGS =
 endif
+
+MERGE_EXCLUDE_STATICLIBS = 
+
+COMPILE_ELISP = 1
+
+PI_TARGETS  = samples rbconfig rbscripts rubymode
+
+post-install-modulated: $(PI_TARGETS)
+	@$(MAKECOOKIE)
+
+multiconfig:
+	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
+	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).SOS11
+	@gcp $(FILEDIR)/rbconfig.rb.GCC4.$(GARCH) $(DESTDIR)/$(RBCONFIG).GCC4
+	@gln -n -s $(RBCONFIG).SOS11 $(DESTDIR)$(RBCONFIG)
+	@gcp $(FILEDIR)/cswrbconfig $(DESTDIR)/opt/csw/bin/
+	@chmod 755 $(DESTDIR)/opt/csw/bin/cswrbconfig
+	@ginstall -c -d -m 0755 $(DESTDIR)$(docdir)/ruby/
+	@ginstall -c -m 0644 $(FILEDIR)/README.csw $(DESTDIR)$(docdir)/ruby/
+	@$(MAKECONFIG)
+
+rubymode: RMDIR=$(DESTDIR)/$(datadir)/emacs/site-lisp/ruby-mode
+rubymode:
+	@echo " ===> Installing and Compilingn ruby-mode elisp"
+	@(mkdir -p $(RMDIR); \
+		cp $(WORKSRC)/misc/*el $(RMDIR))
+	@$(MAKECOOKIE)
+
+# Fix up rbconfig
+rbconfig:
+	@gsed -i -e s,$(DESTDIR),, \
+		$(DESTDIR)$(libdir)/$(GARNAME)/$(GARVERSION)/$(GARCH)-solaris2.8/rbconfig.rb
+	@$(MAKECOOKIE)
+
+# Copy samples
+samples:
+	@mkdir -p $(DESTDIR)$(docdir)/ruby/
+	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/ruby/
+	@for ext in bigdecimal dl tk ; do \
+		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/ruby/sample/$$ext ; \
+	done
+	@$(MAKECOOKIE)
+
+# Some scripts come with /usr/local/bin/ruby hard coded.
+rbscripts:
+	@echo " ==> Fixing shebang path in distributed ruby scripts"
+	@find $(DESTDIR)$(prefix) -type f -name '*.rb' -exec \
+		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/ruby}g" {} \;
+	@$(MAKECOOKIE)
+
+
