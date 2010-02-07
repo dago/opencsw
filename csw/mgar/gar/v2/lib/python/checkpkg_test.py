@@ -151,7 +151,7 @@ class DependenciesUnitTest_5(unittest.TestCase):
 
   def testMissingDeps(self):
     # This tends to report itself...
-    expected = set([u'SUNWgss'])
+    expected = set([])
     self.assertEquals(expected, self.missing_deps)
 
 

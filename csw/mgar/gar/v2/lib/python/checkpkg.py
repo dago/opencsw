@@ -22,9 +22,9 @@ RUNPATH = "runpath"
 SONAME = "soname"
 CONFIG_MTIME = "mtime"
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
-DO_NOT_REPORT_MISSING = set([u"SUNWlibC", u"SUNWcsl", u"SUNWlibms",
-                             u"*SUNWcslr", u"*SUNWlibC", u"*SUNWlibms",
-                             u"SUNWcslx"])
+DO_NOT_REPORT_MISSING = set([])
+DO_NOT_REPORT_MISSING_RE = [r"SUNW.*", r"\*SUNW.*"]
+
 SYSTEM_SYMLINKS = (
     ("/opt/csw/bdb4", ["/opt/csw/bdb42"]),
     ("/64", ["/amd64", "/sparcv9"]),
@@ -405,6 +405,11 @@ def AnalyzeDependencies(pkgname,
   # Don't report itself as a suggested dependency.
   missing_deps = missing_deps.difference(set([pkgname]))
   missing_deps = missing_deps.difference(set(DO_NOT_REPORT_MISSING))
+  for re_str in DO_NOT_REPORT_MISSING_RE:
+    padded_re = "^%s$" % re_str
+    missing_deps = filter(lambda x: not re.match(padded_re, x),
+                          missing_deps)
+  missing_deps = set(missing_deps)
   surplus_deps = declared_dependencies_set.difference(auto_dependencies)
   surplus_deps = surplus_deps.difference(DO_NOT_REPORT_SURPLUS)
   orphan_sonames = orphan_sonames.difference(ALLOWED_ORPHAN_SONAMES)
@@ -594,11 +599,11 @@ class CheckpkgManager(object):
         for tag in set_errors:
           if tag.pkgname:
             if not tag.pkgname in errors:
-            	errors[tag.pkgname] = []
+              errors[tag.pkgname] = []
             errors[tag.pkgname].append(tag)
           else:
             if "package-set" not in errors:
-            	errors["package-set"] = []
+              errors["package-set"] = []
             errors["package-set"].append(error)
     return errors
 
