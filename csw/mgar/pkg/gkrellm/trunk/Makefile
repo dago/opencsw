@@ -1,5 +1,5 @@
 GARNAME = gkrellm
-GARVERSION = 2.2.9
+GARVERSION = 2.3.4
 CATEGORIES = gnome
 
 DESCRIPTION = System monitor package
@@ -17,12 +17,13 @@ endef
 
 MASTER_SITES = http://members.dslextreme.com/users/billw/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+#DISTFILES += $(call admfiles,CSWgkrellm, )
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Patch up makefile to honor environment variables
-PATCHFILES = suncc.diff
+#PATCHFILES = suncc.diff
 
 # Disable configure scripts step
 CONFIGURE_SCRIPTS =
@@ -34,11 +35,12 @@ BUILD_ARGS   += INCLUDEDIR=$(includedir)
 BUILD_ARGS   += LOCALEDIR=$(sharedstatedir)/locale
 BUILD_ARGS   += enable_nls=0 solaris
 
-INSTALL_ARGS  = INSTALLROOT=$(prefix)
-INSTALL_ARGS += INSTALLDIR=$(bindir)
-INSTALL_ARGS += MANDIR=$(mandir)
-INSTALL_ARGS += INCLUDEDIR=$(includedir)
-INSTALL_ARGS += LOCALEDIR=$(sharedstatedir)/locale
+INSTALL_ARGS  = INSTALLROOT=$(DESTDIR)
+INSTALL_ARGS += INSTALLDIR=$(DESTDIR)$(bindir)
+INSTALL_ARGS += MANDIR=$(DESTDIR)$(mandir)
+INSTALL_ARGS += INCLUDEDIR=$(DESTDIR)$(includedir)
+INSTALL_ARGS += LOCALEDIR=$(DESTDIR)$(sharedstatedir)/locale
+INSTALL_ARGS += enable_nls=0 install_solaris
 
 # No test suite
 TEST_SCRIPTS =
