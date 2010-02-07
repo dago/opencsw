@@ -12,9 +12,10 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = $(GARNAME)$(GARVERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
 
-# Patch to use libsunmath on x86 from
-#   http://sourceforge.net/tracker/index.php?func=detail&aid=1839067&group_id=10894&atid=110894
-PATCHFILES = patch-libsunmath-amd64.diff
+# Fix for finding libsunmath on i386 and amd64
+PATCHFILES += configure.patch
+PATCHFILES += tcl.m4.patch
+
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
 
 SPKG_SOURCEURL = http://www.tcl.tk/
@@ -29,6 +30,8 @@ NOISAEXEC = 1
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
 
+LICENSE = license.terms
+
 INCLUDE_FLAGS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -40,3 +43,8 @@ include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
 DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
+
+pre-configure-modulated:
+	@echo " ==> Regenerating build tools..."
+	@(cd $(WORKSRC) ; cp -p ../license.terms .; autoconf)
+	@$(MAKECOOKIE)
