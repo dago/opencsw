@@ -56,6 +56,8 @@ BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 TEST_SCRIPTS = $(WORKSRC)/src/Makefile
 TEST_TARGET = check
 
+SKIPTEST ?= 1
+
 INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile
 
 PKGFILES_CSWkrb5lib = $(PKGFILES_RT)
