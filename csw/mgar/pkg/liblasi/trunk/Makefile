@@ -25,10 +25,30 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(SOURCENAME)-$(GARVERSION).tar.gz
+DISTNAME = $(SOURCENAME)-$(GARVERSION)
+
+SPKG_SOURCEURL = http://unifont.org/lasi/
 
 PATCHFILES = liblasi-consts.diff
 
 RUNTIME_DEP_PKGS = CSWftype2 CSWggettextrt CSWglib2 CSWpango CSWzlib
+
+PACKAGES = CSWliblasi CSWliblasidevel CSWliblasidoc
+CATALOGNAME_CSWliblasi = liblasi
+CATALOGNAME_CSWliblasidevel = liblasi_devel
+CATALOGNAME_CSWliblasidoc = liblasi_doc
+
+SPKG_DESC_CSWliblasi = C++ Unicode support for PostScript
+SPKG_DESC_CSWliblasidevel = C++ Unicode support for PostScript - developer package
+SPKG_DESC_CSWliblasidoc = C++ Unicode support for PostScript - documentation package
+
+RUNTIME_DEP_PKGS_CSWliblasi += CSWftype2 CSWggettextrt CSWglib2 CSWpango
+RUNTIME_DEP_PKGS_CSWliblasi += CSWfconfig
+RUNTIME_DEP_PKGS_CSWliblasidevel += CSWliblasi
+RUNTIME_DEP_PKGS_CSWliblasidoc = 
+
+PKGFILES_CSWliblasidevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWliblasidoc    = $(sharedstatedir)/doc/.*
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
@@ -43,16 +63,29 @@ UFILES_REGEX = $(SOURCENAME)-(\d+(?:\.\d+)*).tar.gz
 # 187113 is the group_id for the liblasi project on sourceforge
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE) = 187113
 
+BUILD64 = 1
+
+CMAKE_CXX_FLAGS = $(CXXFLAGS)
+EXTRA_COMMON_EXPORTS = CMAKE_CXX_FLAGS
+
 include gar/category.mk
 
-WORKSRC = $(WORKDIR)/$(SOURCENAME)-$(GARVERSION)
+#WORKSRC = $(WORKDIR)/$(SOURCENAME)-$(GARVERSION)
 
 
 configure-custom:
 	@echo " ==> Configuring $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
-		cmake	-DCMAKE_INSTALL_PREFIX=/opt/csw \
+		cmake	-DCMAKE_INSTALL_PREFIX="$(prefix)" \
+      -DCMAKE_INSTALL_EXEC_PREFIX:PATH="$(exec_prefix)" \
+      -DCMAKE_INSTALL_BINDIR:PATH="$(bindir)" \
+      -DCMAKE_INSTALL_DATADIR:PATH="$(datadir)" \
+      -DCMAKE_INSTALL_LIBDIR:PATH="$(libdir)" \
+      -DCMAKE_INSTALL_INCLUDEDIR:PATH="$(includedir)" \
+      -DCMAKE_INSTALL_INFODIR:PATH="$(infodir)" \
+      -DCMAKE_INSTALL_MANDIR:PATH="$(mandir)" \
 			-DCMAKE_VERBOSE_MAKEFILE=ON \
+      -DCMAKE_CXX_FLAGS:STRING="$(CXXFLAGS)" \
 			. )
 	@$(MAKECOOKIE)
 
@@ -70,7 +103,7 @@ install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@( cd $(WORKSRC) ; \
 		gmake install DESTDIR=$(DESTDIR) ; \
-		mv $(DESTDIR)/opt/csw/share/doc/$(SOURCENAME)-$(GARVERSION) $(DESTDIR)/opt/csw/share/doc/$(GARNAME) ; \
+		mv $(DESTDIR)/opt/csw/share/doc/$(DISTNAME) $(DESTDIR)/opt/csw/share/doc/$(GARNAME) ; \
 		mv $(DESTDIR)/opt/csw/share/lasi$(GARVERSION)/* $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/ ; \
 		rmdir $(DESTDIR)/opt/csw/share/lasi$(GARVERSION) )
 	@$(MAKECOOKIE)
