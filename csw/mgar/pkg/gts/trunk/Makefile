@@ -16,13 +16,15 @@ endef
 MASTER_SITES = $(SF_MIRRORS) 
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 
+SPKG_SOURCEURL = http://gts.sourceforge.net/
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # 1343 is the group_id for the gts project on sourceforge
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE) = 1343
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=1343
 UPSTREAM_USE_SF = 1
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2
@@ -30,5 +32,7 @@ RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2
 CONFIGURE_ARGS = $(DIRPATHS) --disable-glibtest
 
 PATCHFILES = gts-fabsf.diff
+
+BUILD64 = 1
 
 include gar/category.mk
