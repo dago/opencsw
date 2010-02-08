@@ -16,7 +16,7 @@ endef
 MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
 SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tgz)
 DISTFILES  = $(SOURCEFILES)
-DISTFILES += $(call admfiles,CSWoldap)
+DISTFILES += CSWoldap.postinstall
 DISTFILES += README.CSW openldaprc
 DISTFILES += cswopenldap openldap.xml svc-openldap
 
@@ -92,6 +92,7 @@ CONFIGURE_ARGS += --enable-overlays=mod
 # Disable MySQL Cluster
 CONFIGURE_ARGS += --disable-ndb
 
+SKIPTEST ?= 1
 TEST_TARGET = check
 
 MERGE_SCRIPTS_isa-default-garversion-2.3.43 = copy-only
