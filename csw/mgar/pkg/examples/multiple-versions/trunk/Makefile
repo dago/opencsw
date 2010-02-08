@@ -43,3 +43,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64 = 1
 
 include gar/category.mk
+
+post-merge:
+	ginstall -m 755 -d $(PKGROOT)$(prefix)/share/checkpkg/overrides
+	echo "CSWmultiple-versions: license-missing" \
+	  > $(PKGROOT)$(prefix)/share/checkpkg/overrides/$(CATALOGNAME)
+	@$(MAKECOOKIE)
