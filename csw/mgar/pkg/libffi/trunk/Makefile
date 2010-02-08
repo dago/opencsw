@@ -1,5 +1,5 @@
 GARNAME = libffi
-GARVERSION = 3.0.8
+GARVERSION = 3.0.9
 CATEGORIES = lib
 
 DESCRIPTION = A portable foreign function interface library
@@ -16,22 +16,43 @@ endef
 MASTER_SITES = ftp://sourceware.org/pub/libffi/
 SPKG_SOURCEURL = http://sourceware.org/libffi/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = sun.patch
 
-PACKAGES = CSWlibffi
+PACKAGES = CSWlibffi CSWlibffidevel
 CATALOGNAME_CSWlibffi = libffi
+CATALOGNAME_CSWlibffidevel = libffi_devel
 SPKG_DESC_CSWlibffi = $(DESCRIPTION)
+SPKG_DESC_CSWlibffidevel = $(DESCRIPTION) - developer package
 
+PKGFILES_CSWlibffidevel = $(PKGFILES_DEVEL)
 
-RUNTIME_DEP_PKGS_CSWlibffi = CSWgcc4corert
+LICENSE = LICENSE
 
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
+RUNTIME_DEP_PKGS_CSWlibffidevel += CSWlibffi
+#RUNTIME_DEP_PKGS_CSWlibffi = CSWgcc4corert
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-GARCOMPILER = GCC4
+GARCOMPILER = SOS12
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-TEST_SCRIPTS =
-TEST_TARGET = check
+
+# Tests fail since they are written for gcc only
+#TEST_TARGET = check
+TEST_TARGET = 
+
 include gar/category.mk
+
+
+# v9.S is not needed when building 32-bit
+pre-configure-isa-sparcv8:
+	@( cd $(WORKSRC); gsed -e "s|src/sparc/v9.S||" -e "s/AM_CFLAGS = .*/AM_CFLAGS = /" -i Makefile.am ; \
+		aclocal; \
+		automake)
+
+# v8.S will not build when building 64-bit
+pre-configure-isa-sparcv9:
+	@( cd $(WORKSRC); gsed -e "s|src/sparc/v8.S||" -e "s/AM_CFLAGS = .*/AM_CFLAGS = /" -i Makefile.am ; \
+		aclocal; \
+		automake)
