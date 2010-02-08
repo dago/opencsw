@@ -60,7 +60,8 @@ SKIPTEST ?= 1
 
 INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile
 
-PKGFILES_CSWkrb5lib = $(PKGFILES_RT)
+PKGFILES_CSWkrb5lib  = $(PKGFILES_RT)
+PKGFILES_CSWkrb5lib += $(datadir)/checkpkg/overrides/krb5_lib
 
 PKGFILES_CSWkrb5libdev  = $(mandir)/man8/sserver.8
 PKGFILES_CSWkrb5libdev += $(mandir)/man1/(sclient|krb5-config|compile_et)\.1
@@ -82,3 +83,27 @@ post-extract-modulated:
 	@# TODO: Check signature
 	@cd $(WORKDIR) && (gzip -c -d $(GARNAME)-$(GARVERSION).tar.gz | tar xf -)
 	@$(MAKECOOKIE)
+
+post-merge:
+	ginstall -m 755 -d $(PKGROOT)$(datadir)/checkpkg/overrides
+	(echo "CSWkrb5lib: symbol-not-found"; \
+	 echo "CSWkrb5libdev: symbol-not-found sclient"; \
+	) > $(PKGROOT)$(datadir)/checkpkg/overrides/krb5_lib
+	@$(MAKECOOKIE)
+
+# Notes: Potential solutions for the overrides integration in GAR:
+#
+# OVERRIDES_CSWkrb5lib = a_name
+# OVERRIDES_CSWkrb5lib_a_name = symbol-not-found
+#
+# Or:
+#
+# define OVERRIDES_CSWkrb5lib
+# symbol-not-found
+# endef
+#
+# Note: In either case, the result content should be:
+#
+# CSWkrb5lib: symbol-not-found
+#
+# ...placed in /opt/csw/share/checkpkg/overrides/krb5_lib
