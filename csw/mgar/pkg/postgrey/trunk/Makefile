@@ -10,10 +10,11 @@ endef
 MASTER_SITES = http://postgrey.schweikert.ch/pub/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-RUNTIME_DEP_PKGS = CSWperl CSWpmiomultiplex CSWpmnetserver CSWbdb48 CSWpostfix
+RUNTIME_DEP_PKGS  = CSWperl CSWpmiomultiplex CSWpmnetserver
+RUNTIME_DEP_PKGS += CSWbdb48 CSWpostfix CSWpmberkeleydb
+
 ARCHALL = 1
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
@@ -24,6 +25,8 @@ INSTALL_SCRIPTS = custom
 INITSMF = /etc/opt/csw/init.d/cswpostgrey
 USERGROUP = /etc/opt/csw/pkg/CSWpostgrey/cswusergroup
 SAMPLECONF = /etc/opt/csw/postfix/postgrey_whitelist_clients /etc/opt/csw/postfix/postgrey_whitelist_recipients
+
+PATCHFILES = postgrey.p
 
 include gar/category.mk
 
