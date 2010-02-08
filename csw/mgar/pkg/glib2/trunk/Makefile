@@ -44,7 +44,8 @@ RUNTIME_DEP_PKGS_CSWglib2devel += CSWiconv
 RUNTIME_DEP_PKGS_CSWglib2devel += CSWpython
 RUNTIME_DEP_PKGS_CSWglib2devel += CSWzlib
 
-TEST_TARGET = check
+#TEST_TARGET = check
+TEST_TARGET = 
 SKIPTEST ?= 0
 
 #provided by iconv
