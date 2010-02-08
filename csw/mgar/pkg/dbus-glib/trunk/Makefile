@@ -30,11 +30,13 @@ PKGFILES_CSWdbusglibdev  = $(PKGFILES_DEVEL)
 # PKGFILES_CSWdbusglibdev += $(prefix)/lib/.*\.a
 # PKGFILES_CSWdbusglibdev += $(prefix)/lib/pkgconfig/.*
 
-CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
-CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include
+#CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
+#CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-tests 
+
+BUILD64 = 1
 
 include gar/category.mk
 
