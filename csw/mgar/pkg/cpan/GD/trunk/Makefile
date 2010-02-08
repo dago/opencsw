@@ -15,6 +15,10 @@ CATALOGNAME = pm_gd
 
 RUNTIME_DEP_PKGS = CSWftype2 CSWgd CSWiconv CSWjpeg CSWpng
 RUNTIME_DEP_PKGS += CSWxpm CSWzlib CSWfconfig
+BUILD_DEP_PKGS = CSWgd
+
+# if we build against libjpeg7, we need to patch one test
+# PATCHFILES = diff-GD.t
 
 CONFIGURE_ARGS  = lib_gd_path $(libdir)
 CONFIGURE_ARGS += lib_ft_path $(libdir)
@@ -27,3 +31,5 @@ CONFIGURE_ARGS += lib_zlib_path $(libdir)
 BUILD_OVERRIDE_DIRS = CCFLAGS
 
 include gar/category.mk
+pre-build-modulated:
+	gsed -i'' 's,-ljpeg,/opt/csw/lib/libjpeg.so.62,' $(WORKSRC)/Makefile
