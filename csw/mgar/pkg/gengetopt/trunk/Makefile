@@ -1,5 +1,5 @@
 GARNAME = gengetopt
-GARVERSION = 2.22.3
+GARVERSION = 2.22.4
 CATEGORIES = utils
 
 DESCRIPTION = parses the command line options
