@@ -26,4 +26,9 @@ TEST_TARGET = check
 
 PACKAGES = CSWlibidl
 
+CPP = /usr/lib/cpp
+EXTRA_COMMON_EXPORTS += CPP
+CXXCPP = /usr/lib/cpp
+EXTRA_COMMON_EXPORTS += CXXCPP
+
 include gar/category.mk
