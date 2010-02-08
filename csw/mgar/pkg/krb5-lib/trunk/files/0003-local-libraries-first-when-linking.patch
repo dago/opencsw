@@ -1,0 +1,25 @@
+From 3dca19491123f37817e84742ff802ec07cde24e7 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 5 Feb 2010 10:32:00 +0100
+Subject: [PATCH 3/4] local libraries first when linking
+
+---
+ src/config/shlib.conf |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/config/shlib.conf b/src/config/shlib.conf
+index 6972ff0..f680210 100644
+--- a/src/config/shlib.conf
++++ b/src/config/shlib.conf
+@@ -373,7 +373,7 @@ mips-*-netbsd*)
+ 	else
+ 		PICFLAGS=-KPIC
+ 		# Solaris cc doesn't default to stuffing the SONAME field...
+-		LDCOMBINE='$(CC) $(CFLAGS) -dy -G -z text -h $(LIBPREFIX)$(LIBBASE)$(SHLIBSEXT) $$initfini'
++		LDCOMBINE='$(CC) $(PROG_LIBPATH) $(CFLAGS) -dy -G -z text -h $(LIBPREFIX)$(LIBBASE)$(SHLIBSEXT) $$initfini'
+ 		#
+ 		case $krb5_cv_host in
+ 		*-*-solaris2.[1-7] | *-*-solaris2.[1-7].*)
+-- 
+1.6.6
+
