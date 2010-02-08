@@ -36,4 +36,7 @@ install-custom:
 		-d $(DESTDIR)$(prefix)/$(dir $F) \
 		&& ginstall $(WORKDIR)/$(notdir $F) \
 		$(DESTDIR)$(prefix)/$(dir $F);)
+	ginstall -m 755 -d $(DESTDIR)$(datadir)/checkpkg/overrides
+	echo "CSWloosefilesexa: license-missing" \
+	  > $(DESTDIR)$(datadir)/checkpkg/overrides/loose_files_example
 	@$(MAKECOOKIE)
