@@ -22,8 +22,8 @@ BUILD_DEP_PKGS = CSWchrpath
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/tech/oci/instantclient/index.html
 
-PACKAGES = CSWoracleinstclient102
-CATALOGNAME = oracleinstclient102
+PACKAGES = CSWorainstclient102
+CATALOGNAME = orainstclient102
 
 # LICENSE = LICENSE
 
