@@ -8,8 +8,8 @@ define BLURB
 endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+DISTNAME = $(GNOME_PROJ)-$(GARVERSION)
+DISTFILES = $(DISTNAME).tar.bz2
 
 PACKAGES = CSWgnomevfs2 CSWgnomevfs2devel CSWgnomevfs2doc
 CATALOGNAME_CSWgnomevfs2 = gnomevfs2
@@ -63,4 +63,3 @@ CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 TEST_TARGET = check
 
 include gar/category.mk
-
