@@ -22,7 +22,7 @@ CATALOGNAME_CSWpangodoc   = libpango_doc
 
 BUILD_DEP_PKGS = CSWgtk-doc CSWlibxslt CSWglib2devel CSWlibxft2devel
 RUNTIME_DEP_PKGS_CSWpango  = CSWggettextrt CSWglib2 CSWfconfig CSWftype2
-RUNTIME_DEP_PKGS_CSWpango += CSWlibcairo CSWlibxft2 CSWlibxrender CSWzlib CSWlibx11
+RUNTIME_DEP_PKGS_CSWpango += CSWlibcairo CSWlibxft2 CSWlibxrender CSWlibx11
 RUNTIME_DEP_PKGS_CSWpangodevel = CSWpango
 
 SPKG_DESC_CSWpango = Pango, a framework for the layout and rendering of international text
