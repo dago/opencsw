@@ -23,6 +23,12 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
+
+CPP = /usr/lib/cpp
+EXTRA_COMMON_EXPORTS += CPP
+CXXCPP = /usr/lib/cpp
+EXTRA_COMMON_EXPORTS += CXXCPP
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
