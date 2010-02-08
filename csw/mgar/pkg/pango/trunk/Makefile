@@ -38,6 +38,8 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 BUILD64 = 1
 NOISALIST = 1
@@ -60,6 +62,13 @@ ARCHALL_CSWpangodoc = 1
 TEST_SCRIPTS   = 
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/preload\.1\.gz
+
+sysconfdir_isa-sparcv9 = $(prefix)/etc/64
+sysconfdir_isa-sparcv8 = $(prefix)/etc
+sysconfdir_isa-i386    = $(prefix)/etc
+sysconfdir_global      = $(prefix)/etc
+sysconfdir_isa-amd64   = $(prefix)/etc/64
+sysconfdir         = $(sysconfdir_$(MODULATION))
 
 include gar/category.mk
 
