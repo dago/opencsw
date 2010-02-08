@@ -2,15 +2,8 @@ GARNAME = gnome-mime-data
 GARVERSION = 2.18.0
 CATEGORIES = gnome
 
-DESCRIPTION = Library for writing single instance application
+DESCRIPTION = Contains the base set of file types and applications for GNOME-2
 define BLURB
-	Unique is a library for writing single instance application. If you launch
-	a single instance application twice, the second instance will either just
-	quit or will send a message to the running instance.
-
-	Unique makes it easy to write this kind of applications, by providing a
-	base class, taking care of all the IPC machinery needed to send messages
-	to a running instance, and also handling the startup notification side. 
 endef
 
 GNOME_PROJ = gnome-mime-data
@@ -23,15 +16,12 @@ CATALOGNAME_CSWgmimedata = gmimedata
 CATALOGNAME_CSWgmimedatadevel = gmimedata_devel
 CATALOGNAME_CSWgmimedatadoc = gmimedata_doc
 
-SPKG_DESC_CSWgmimedata += Library for writing single instance application
-SPKG_DESC_CSWgmimedatadevel += Library for writing single instance application - developer package
-SPKG_DESC_CSWgmimedatadoc += Library for writing single instance application - documentation
+SPKG_DESC_CSWgmimedata += $(DESCRIPTION)
+SPKG_DESC_CSWgmimedatadevel += $(DESCRIPTION) - developer package
+SPKG_DESC_CSWgmimedatadoc += $(DESCRIPTION) - documentation
 
-#REQUIRED_PKGS_CSWgmimedata += CSWfconfig CSWftype2 CSWggettextrt CSWglib2
-#REQUIRED_PKGS_CSWgmimedata += CSWgtk2 CSWlibatk CSWlibcairo CSWlibx11 CSWpango
-#REQUIRED_PKGS_CSWgmimedata += CSWdbusglib CSWlibdbus CSWlibxext
-REQUIRED_PKGS_CSWgmimedatadevel += CSWgmimedata
-REQUIRED_PKGS_CSWgmimedatadoc += CSWgmimedata
+RUNTIME_DEP_PKGS_CSWgmimedatadevel += CSWgmimedata
+RUNTIME_DEP_PKGS_CSWgmimedatadoc += CSWgmimedata
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -55,3 +45,5 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 include gar/category.mk
+
+PATH := /opt/csw/gnu:$(PATH)
