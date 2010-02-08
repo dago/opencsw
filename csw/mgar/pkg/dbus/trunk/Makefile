@@ -18,9 +18,14 @@ SPKG_DESC_CSWdbus         = $(DESCRIPTION)
 SPKG_DESC_CSWlibdbus      = $(DESCRIPTION) libraries
 SPKG_DESC_CSWlibdbusdev   = $(DESCRIPTION) development package
 
-DISTFILES    += $(call admfiles,CSWdbus, preinstall, )
-DISTFILES    += $(call admfiles,CSWlibdbusdev, )
-DISTFILES    += $(call admfiles,CSWlibdbus, )
+PACKAGES = CSWdbus CSWlibdbus CSWlibdbusdev
+CATALOGNAME_CSWdbus = dbus
+CATALOGNAME_CSWlibdbus = libdbus
+CATALOGNAME_CSWlibdbusdev = libdbusdev
+#DISTFILES    += $(call admfiles,CSWdbus, preinstall, )
+#DISTFILES    += $(call admfiles,CSWlibdbusdev, )
+#DISTFILES    += $(call admfiles,CSWlibdbus, )
+DISTFILES    += CSWdbus.preinstall
 DISTFILES    += cswdbus
 
 # Dynamic CSWlibdbusdev prototype
@@ -41,8 +46,12 @@ PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdbus$$$$/ { $$$$2 = "cswinitsmf" 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-tests --with-xml=expat 
 
+BUILD64 = 1
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+include gar/category.mk
 
 # moving configuration file & installing init script
 post-install:
@@ -54,5 +63,4 @@ post-install:
 	  ln -s ../init.d/cswdbus $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))/etc/rc3.d/S52cswdbus  ; )
 	@$(MAKECOOKIE)
 
-include gar/category.mk
 
