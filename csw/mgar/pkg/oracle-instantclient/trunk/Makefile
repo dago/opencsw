@@ -60,8 +60,8 @@ $(foreach A,sparc i386,$(foreach S,32 64,$(foreach F,$(DISTFILES_$A-$S),$(eval $
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
 	ginstall -d $(DESTDIR)$(bindir)
-	ginstall $(WORKDIR)/$(GARCH)-$(MEMORYMODEL)/instantclient_10_2/genezi $(DESTDIR)$(bindir)
-	chrpath -r $(libdir) $(DESTDIR)$(bindir)/genezi
+	#ginstall $(WORKDIR)/$(GARCH)-$(MEMORYMODEL)/instantclient_10_2/genezi $(DESTDIR)$(bindir)
+	#chrpath -r $(libdir) $(DESTDIR)$(bindir)/genezi
 	ginstall -d $(DESTDIR)$(libdir)
 	ginstall $(WORKDIR)/$(GARCH)-$(MEMORYMODEL)/instantclient_10_2/*.so* $(DESTDIR)$(libdir)
 	ginstall $(WORKDIR)/$(GARCH)-$(MEMORYMODEL)/instantclient_10_2/*.jar $(DESTDIR)$(libdir)
