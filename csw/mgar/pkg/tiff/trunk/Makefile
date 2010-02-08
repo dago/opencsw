@@ -21,7 +21,7 @@ SPKG_DESC_CSWtiffrt += lib and tools for Tag Image File Format - runtime package
 SPKG_DESC_CSWtiffdevel += lib and tools for Tag Image File Format - developer package
 SPKG_DESC_CSWtiffdoc += lib and tools for Tag Image File Format - documentation
 
-RUNTIME_DEP_PKGS_CSWtiff += CSWtiffrtCSWjbigkit CSWjpeg CSWzlib
+RUNTIME_DEP_PKGS_CSWtiff += CSWtiffrt CSWjbigkit CSWjpeg CSWzlib
 RUNTIME_DEP_PKGS_CSWtiffrt += CSWjbigkit CSWjpeg CSWzlib
 RUNTIME_DEP_PKGS_CSWtiffdevel += CSWtiffrt
 RUNTIME_DEP_PKGS_CSWtiffdoc += 
@@ -31,6 +31,8 @@ PKGFILES_CSWtiffdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWtiffdoc = $(sharedstatedir)/doc/.*
 
 ARCHALL_CSWtiffdoc = 1
+
+LICENSE = COPYRIGHT
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
