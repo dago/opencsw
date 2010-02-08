@@ -15,8 +15,8 @@ PACKAGES = CSWiso-codes
 CATALOGNAME = iso_codes
 SPKG_SOURCEURL = http://alioth.debian.org/projects/pkg-isocodes/
  
+LICENSE = LICENSE
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
