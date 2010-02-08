@@ -32,6 +32,8 @@ RUNTIME_DEP_PKGS_CSWlibunique += CSWdbusglib CSWlibdbus CSWlibxext
 RUNTIME_DEP_PKGS_CSWlibuniquedevel += CSWlibunique
 RUNTIME_DEP_PKGS_CSWlibuniquedoc += CSWlibunique
 
+PREREQUISITE_PKGS += CSWdbusglibdev
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://live.gnome.org/LibUnique
@@ -39,12 +41,7 @@ SPKG_SOURCEURL = http://live.gnome.org/LibUnique
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-#This is ugly, should be EXTRA_LINKER_FLAGS, but due to libtool it doesn't work
-EXTRA_LD_FLAGS_isa-i386    = -L/usr/openwin/lib -lXext
-EXTRA_LD_FLAGS_isa-sparcv8 = -L/usr/openwin/lib -lXext
-EXTRA_LD_FLAGS_isa-amd64   = -L/usr/openwin/lib/amd64 -lXext
-EXTRA_LD_FLAGS_isa-sparcv9 = -L/usr/openwin/lib/sparcv9 -lXext
-EXTRA_LD_FLAGS += $(EXTRA_LD_FLAGS_$(MODULATION))
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 #NOISAEXEC = 1
 #NOISALIST = 1
@@ -62,6 +59,10 @@ export LIBS
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-static=no
+CONFIGURE_ARGS += --enable-gtk-doc
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 TEST_TARGET = check
 
