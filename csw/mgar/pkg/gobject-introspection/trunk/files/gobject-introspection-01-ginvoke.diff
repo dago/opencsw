@@ -1,0 +1,11 @@
+--- gobject-introspection-0.6.7/girepository/ginvoke.c-orig	2009-12-18 22:16:56.046770405 -0600
++++ gobject-introspection-0.6.7/girepository/ginvoke.c	2009-12-18 22:18:57.863210834 -0600
+@@ -436,7 +436,7 @@ gi_cclosure_marshal_generic (GClosure *c
+   if (ffi_prep_cif (&cif, FFI_DEFAULT_ABI, n_args, rtype, atypes) != FFI_OK)
+     return;
+ 
+-  g_return_val_if_fail (rvalue, FALSE);
++  g_return_if_fail (rvalue);
+   ffi_call (&cif, marshal_data ? marshal_data : cc->callback, rvalue, args);
+ 
+   if (return_gvalue && G_VALUE_TYPE (return_gvalue))

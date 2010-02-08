@@ -17,9 +17,18 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 #CATALOGNAME_CSWgobjectintrospectiondevel = gobject_introspection_devel
 #CATALOGNAME_CSWgobjectintrospectiondoc = gobject_introspection_doc
 
+#PKGFILES_CSWgobjectintrospectiondevel = $(PKGFILES_DEVEL)
+#PKGFILES_CSWgobjectintrospectiondoc = $(sharedstatedir)/gtk-doc/.*
+
+#ARCHALL_CSWgobjectintrospectiondoc = 1
+
 BUILD_DEP_PKGS += CSWbison CSWlibffi
 
-RUNTIME_DEP_PKGS += CSWgcc4corert
+PATCHFILES += gobject-introspection-01-ginvoke.diff
+PATCHFILES += gobject-introspection-02-glib-compilation.diff
+PATCHFILES += gobject-introspection-03-ginfo.diff
+PATCHFILES += gobject-introspection-04-big-ending.diff
+PATCHFILES += sunstudio.patch
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -30,22 +39,28 @@ EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 NOISAEXEC = 1
-NOISALIST = 1
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
-SHELL = /opt/csw/bin/bash
-
-#PKGFILES_CSWgobjectintrospectiondevel = $(PKGFILES_DEVEL)
-#PKGFILES_CSWgobjectintrospectiondoc = $(sharedstatedir)/gtk-doc/.*
-
-#ARCHALL_CSWgobjectintrospectiondoc = 1
+#SHELL = /opt/csw/bin/bash
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-#PATH := /opt/csw/gnu:$(PATH)
+pre-configure-modulated:
+	( cd $(WORKSRC); 						\
+		rm -f m4/lt~obsolete.m4	;	\
+		rm -f m4/ltoptions.m4 	;	\
+		rm -f m4/libtool.m4 		;	\
+		rm -f m4/ltsugar.m4 		;	\
+		rm -f m4/ltversion.m4 	;	\
+		libtoolize --copy --force	;	\
+		aclocal -I m4	;	\
+		autoheader	;	\
+		automake -a -c -f	;	\
+		autoconf	;	\
+	)

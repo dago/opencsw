@@ -1,0 +1,23 @@
+commit 2bab940ad9dd947379188cfa6f5990352660cd25
+Author: Halton Huo <halton.huo@sun.com>
+Date:   Wed Dec 23 16:27:40 2009 +0800
+
+    Add -DGLIB_COMPILATION for GLib-2.0.gir.
+    
+    Otherwise, suncc reports error when parsing /usr/include/glib-2.0/glib/ghostutils.h,
+    and stops parsing rest headers.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=605108
+
+diff --git a/gir/Makefile.am b/gir/Makefile.am
+index db182f8..d7c32ca 100644
+--- a/gir/Makefile.am
++++ b/gir/Makefile.am
+@@ -36,6 +36,7 @@ GLib_2_0_gir_CFLAGS = $(CPPFLAGS) \
+             -I$(GLIB_INCLUDEDIR) \
+             -I$(GLIB_LIBDIR)/glib-2.0/include \
+             -DGETTEXT_PACKAGE=Dummy \
++            -DGLIB_COMPILATION \
+             -D__G_I18N_LIB_H__
+ GLib_2_0_gir_ASSERTIONS = $(srcdir)/GLib-2.0.xpath
+ GLib_2_0_gir_FILES =  \

@@ -1,0 +1,22 @@
+--- gobject-introspection-0.6.7/tools/compiler.c.orig	2009-06-21 23:37:38.000000000 +0200
++++ gobject-introspection-0.6.7/tools/compiler.c	2010-01-31 19:38:06.048768753 +0100
+@@ -77,10 +77,19 @@
+   if (!no_init)
+     {
+       g_string_append_printf (result,
++#if (defined(__SUNPRO_CC) && (__SUNPRO_CC != 0x510)) || (defined(__SUNPRO_C) && (__SUNPRO_C != 0x510))
++			      "void register_typelib (void);\n\n"
++			      "#pragma init(register_typelib)\n");
++#else
+ 			      "__attribute__((constructor)) void "
+ 			      "register_typelib (void);\n\n");
++#endif
+       g_string_append_printf (result,
++#if (defined(__SUNPRO_CC) && (__SUNPRO_CC != 0x510)) || (defined(__SUNPRO_C) && (__SUNPRO_C != 0x510))
++			      "void\n"
++#else
+ 			      "__attribute__((constructor)) void\n"
++#endif
+ 			      "register_typelib (void)\n"
+ 			      "{\n"
+ 			      "\tGTypelib *typelib;\n"
