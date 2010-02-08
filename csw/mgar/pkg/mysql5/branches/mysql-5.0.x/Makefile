@@ -57,6 +57,7 @@ CATALOGNAME_CSW$(GARNAME)test   = $(GARNAME)test
 
 
 ARCHALL_CSWmysql5bench = 1
+ARCHALL_CSWmysql5test  = 1
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
@@ -108,6 +109,8 @@ PKGFILES_CSW$(GARNAME)devel  += /opt/csw/include/mysql
 
 PKGFILES_CSW$(GARNAME)rt      = $(libdir)
 PKGFILES_CSW$(GARNAME)rt     += $(libdir)/.*
+# http://www.opencsw.org/bugtrack/view.php?id=4149
+PKGFILES_CSW$(GARNAME)rt     += /opt/csw/lib/mysql
 PKGFILES_CSW$(GARNAME)test    = $(prefix)/mysql-test.*
 
 RUNTIME_DEP_PKGS_CSW$(GARNAME)            = CSW$(GARNAME)client
@@ -216,4 +219,7 @@ post-merge:
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/mysql/64
 	gln -s . $(PKGROOT)$(libdir)/$(ISA_DEFAULT)
 	gln -s . $(PKGROOT)$(libdir)/mysql/$(ISA_DEFAULT)
+	# http://www.opencsw.org/bugtrack/view.php?id=4149
+	ginstall -m 755 -d $(PKGROOT)/opt/csw/lib
+	gln -s ../../mysql5/lib/mysql $(PKGROOT)/opt/csw/lib/mysql 
 	@$(MAKECOOKIE)
