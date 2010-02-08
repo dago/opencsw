@@ -11,17 +11,10 @@ MASTER_SITES =  $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTNAME  = $(GNOME_PROJ)-$(GARVERSION)
 
-PACKAGES = CSWgmimedata CSWgmimedatadevel CSWgmimedatadoc
+PACKAGES = CSWgmimedata 
 CATALOGNAME_CSWgmimedata = gmimedata
-CATALOGNAME_CSWgmimedatadevel = gmimedata_devel
-CATALOGNAME_CSWgmimedatadoc = gmimedata_doc
 
 SPKG_DESC_CSWgmimedata += $(DESCRIPTION)
-SPKG_DESC_CSWgmimedatadevel += $(DESCRIPTION) - developer package
-SPKG_DESC_CSWgmimedatadoc += $(DESCRIPTION) - documentation
-
-RUNTIME_DEP_PKGS_CSWgmimedatadevel += CSWgmimedata
-RUNTIME_DEP_PKGS_CSWgmimedatadoc += CSWgmimedata
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -31,12 +24,7 @@ EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-BUILD64 = 1
-
-PKGFILES_CSWgmimedatadevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWgmimedatadoc = $(sharedstatedir)/gtk-doc/.*
-
-ARCHALL_CSWgmimedatadoc = 1
+ARCHALL_CSWgmimedata = 1
 
 STRIP_LIBTOOL = 1
 
