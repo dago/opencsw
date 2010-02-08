@@ -1,0 +1,11 @@
+--- graphviz-2.24.0/configure.orig	2009-06-17 01:24:55.000000000 +0200
++++ graphviz-2.24.0/configure	2010-01-28 02:57:28.658585976 +0100
+@@ -3425,7 +3425,7 @@
+ if test "x${prefix}" != "x/usr"; then
+ 	CPPFLAGS="$CPPFLAGS -I${prefix}/include"
+ 	LDFLAGS="$LDFLAGS -L${prefix}/lib"
+-	PKG_CONFIG_PATH="$prefix/lib/pkgconfig$PATHSEPARATOR$PKG_CONFIG_PATH"
++	PKG_CONFIG_PATH="$PKG_CONFIG_PATH$PATHSEPARATOR$prefix/lib/pkgconfig"
+ 	export PKG_CONFIG_PATH
+ fi
+ 

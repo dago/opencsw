@@ -14,7 +14,8 @@ MASTER_SITES = http://www.graphviz.org/pub/graphviz/stable/SOURCES/
 # disable dependency checks because plugins depend on libs from base package
 ENABLE_CHECK = 0
 
-PATCHFILES =  Draw.c.diff
+PATCHFILES += configure.patch
+PATCHFILES +=  Draw.c.diff
 
 PACKAGES = CSWgraphviz \
 	CSWgraphvizdevel \
@@ -49,7 +50,7 @@ ARCHALL_CSWgraphvizdoc = 1
 ARCHALL_CSWgraphvizgraphs = 1
 ARCHALL_CSWgraphviz2 = 1
 
-# Sun's CC is broken on 64bit architectures!
+# Waiting for liblasi, gts, gd, ghostscript and tcl/tk
 #BUILD64 = 1
 
 BUILD_DEP_PKGS = 
@@ -216,7 +217,13 @@ CONFIGURE_ARGS += --disable-ocaml
 CONFIGURE_ARGS += --disable-php
 CONFIGURE_ARGS += --disable-r
 CONFIGURE_ARGS += --enable-static --enable-shared
-CONFIGURE_ARGS += PKG_CONFIG_PATH=/opt/csw/lib/pkgconfig:/opt/csw/X11/lib/pkgconfig
+
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_LD_FLAGS = -lm
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 STRIP_LIBTOOL=1
 
