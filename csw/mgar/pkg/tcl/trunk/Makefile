@@ -16,6 +16,8 @@ DISTFILES  = $(DISTNAME)-src.tar.gz
 PATCHFILES += configure.patch
 PATCHFILES += tcl.m4.patch
 
+RUNTIME_DEP_PKGS_CSWtcl += CSWsunmath
+
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
 
 SPKG_SOURCEURL = http://www.tcl.tk/
