@@ -14,7 +14,21 @@ endef
 PACKAGES = CSWpmgtk2
 CATALOGNAME = pm_gtk2
 
-PKGS_REQUIRED = CSWpmglib CSWgtk2 CSWpmcairo
-#PKGS_REQUIRED += CSWpmpango
+LICENSE = LICENSE
+
+RUNTIME_DEP_PKGS = CSWpmglib CSWgtk2 CSWpmpango CSWpmcairo CSWfconfig CSWftype2 CSWggettextrt
+RUNTIME_DEP_PKGS += CSWglib2 CSWlibatk CSWlibcairo CSWpango
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 include gar/category.mk
+
+post-merge:
+	ginstall -m 755 -d $(PKGROOT)$(prefix)/share/checkpkg/overrides
+	echo "CSWpmgtk2: symbol-not-found" \
+	  > $(PKGROOT)$(prefix)/share/checkpkg/overrides/$(CATALOGNAME)
+	@$(MAKECOOKIE)
+
