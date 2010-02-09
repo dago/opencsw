@@ -92,6 +92,11 @@ do
     FMRI=
     if [ "`grep '^#FMRI' $dest`" ]; then
       FMRI=`grep '^#FMRI' $dest | awk '{print $2}'`
+      if [ "`echo $FMRI | grep '.'`" ]; then
+        echo "WARNING! FMRI path contained an illegal dot (removed)"
+        FMRI=`echo $FMRI | sed 's/\.//g'`
+        echo "New FMRI path: $FMRI"
+      fi
     fi
     if [ ! "$FMRI" ]; then
       FMRI=network

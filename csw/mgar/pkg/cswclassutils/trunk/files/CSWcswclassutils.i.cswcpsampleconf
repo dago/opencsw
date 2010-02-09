@@ -32,7 +32,8 @@ while read src dest ; do
 	else
 		echo Copying sample config to $confdest
 		[ -x /usr/bin/pkgadm ] && /usr/bin/pkgadm sync > /dev/null 2>&1
-		contents=`grep "^$dest" /var/sadm/install/contents`
+		file=`echo $dest | sed -e "s,$PKG_INSTALL_ROOT,,"`
+		contents=`grep "^$file" $PKG_INSTALL_ROOT/var/sadm/install/contents`
 		mode=`echo $contents | awk '{print $4}'`
 		user=`echo $contents | awk '{print $5}'`
 		group=`echo $contents | awk '{print $6}'`
