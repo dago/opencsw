@@ -22,6 +22,7 @@ ARCHALL_CSWperldoc = 1
 RUNTIME_DEP_PKGS_CSWperl = CSWbdb47 CSWgdbm
 RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
 INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
+
 SPKG_DESC_CSWperl = $(DESCRIPTION)
 SPKG_DESC_CSWperldoc = Perl documentation
 
@@ -111,7 +112,7 @@ EXTRA_LIB += $(prefix)/bdb47/lib
 EXTRA_INC += $(prefix)/bdb47/include
 
 #EXTRA_LDFLAGS = -lperl
-EXTRA_LDFLAGS = -L/opt/csw/lib/libperl.so
+EXTRA_LDFLAGS = -L$(libdir) -lperl
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
 PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
@@ -132,6 +133,11 @@ IGNORE_DESTDIR = 1
 MERGE_EXCLUDE_STATICLIBS =
 
 include gar/category.mk
+
+post-extract-modulated:
+	mkdir -p $(WORKSRC)
+	gln -s libperl.so.5.10.1 $(WORKSRC)/libperl.so
+	@$(MAKECOOKIE)
 
 ifneq ($(CORE_UPDATES),)
 POST_TARGETS = install-core-updates
