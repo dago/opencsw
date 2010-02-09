@@ -16,6 +16,7 @@
 # ! path to /etc/shadow in set_user_nologin() are not PKG_ISNTALL_ROOT aware
 # ! on failure to determine UID/GID it might be more robust to not exit_error
 #   but instead only display a warning
+#
 
 DEBUG=${DEBUG:-}		# set via environment to enable debugging
 
