@@ -1,0 +1,102 @@
+#!/bin/sh
+#
+# r.cswinitsmf - Class action script for CSW SMF support
+#
+# $Id$
+#
+# Original concept by Philip Brown
+# Written by Peter Bonivart
+#
+# 2008-04-21 First release
+# 2008-11-23 Fixed grep bug for FMRI
+# 2009-01-07 Fixed bug with multiple services per package
+# 2009-04-21 Added -s to svcadm disable, removed sleep (Bug ID 0003632),
+#            Persistent state across upgrades (Bug ID 0003634)
+# 2009-04-23 Fixed bug when stopping non-SMF services
+# 2009-04-24 Temporarily disabled the "persistent state" code until it can be used
+#            per service, not just per package
+# 2009-05-28 Enabled persistent state code again after receiving patch from Yann.
+
+DEBUG=		# clear to disable debug, set to anything to enable
+
+# The following file is used to save the state of smf service upon
+# package removal
+# This allows to restore the service state across package upgrades.
+SMF_STATE_DIR="$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG"
+SMF_STATE_FILE="$SMF_STATE_DIR/smf.state"
+
+# The smf state file shouldn't be there at this time but we
+# delete it to be sure
+rm -f "$SMF_STATE_FILE"
+
+# save the current service state for the given frmi
+save_smf_state ()
+{
+    SMF_STATE=`/usr/sbin/svccfg -s "$1:default" listprop general/enabled | /usr/bin/awk '{ print $3 }'`
+    if [ "$SMF_STATE" != "true" ]; then
+        SMF_STATE="disabled"
+    else
+        SMF_STATE="enabled"
+    fi
+    [ -d "$SMF_STATE_DIR" ] || mkdir -p "$SMF_STATE_DIR"
+    echo "$1 $SMF_STATE" >> "$SMF_STATE_FILE"
+}
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# Determine if SMF should be used or not
+smf=no
+
+if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ]; then
+  smf=yes
+fi
+
+if [ "$use_smf" = "no" ]; then
+  smf=no
+fi
+
+if [ "$DEBUG" ]; then
+  echo PACKAGE: $PKGINST SMF: $smf
+fi
+
+# Stop service
+if [ "$smf" = "yes" ]; then
+  # Find out FMRI complete with service name
+  FMRI=`grep ${PKGINST}$ /var/sadm/install/contents | grep "^/var/opt/csw/svc/manifest" | egrep '\.xml ' | cut -d'/' -f7- | awk -F'.xml' '{print $1}'`
+  for i in `echo $FMRI | tr '\n' ' '`
+  do
+    save_smf_state "$i"
+    echo "Disabling svc:/$i ..."
+    /usr/sbin/svcadm disable -s svc:/$i
+    # Unregister with SMF
+    echo Unregister svc:/${i}:default with SMF ...
+    /usr/sbin/svccfg delete -f svc:/${i}:default
+  done
+else
+  RC=`cat /var/sadm/install/contents | grep "^/etc/init.d" | grep "s cswinitsmf" | grep ${PKGINST}$ | awk -F'=' '{print $1}'`
+  for i in `echo $RC | tr '\n' ' '`
+  do
+    echo Stopping $i ...
+    "$i" stop > /dev/null 2>&1
+  done
+fi
+
+# Remove files in class cswinitsmf
+echo "Removing class <cswinitsmf> ..."
+while read file
+do
+  echo $file
+  if [ -d $file ]; then
+    /usr/bin/rm -rf $file || exit 2
+  else
+    /usr/bin/rm -f $file || exit 2
+  fi
+done
+
+exit 0

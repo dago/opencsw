@@ -1,0 +1,72 @@
+CSWcswclassutils
+================
+
+This package contains class action scripts to simplify doing common tasks in a
+consistent manner. They can also be updated to benefit all packages that make
+use of them.
+
+Currently it has:
+
+- cswinitsmf
+
+  This class takes care of creating/removing init script links for Solaris 8
+  and 9. For Solaris 10+ it supports SMF and can create a simple manifest on
+  the fly at installation time. Read more about how to use it in the sample
+  init script provided in /etc/opt/csw/init.d/csw.smf.sample.
+
+- cswcpsampleconf
+
+  This script handles the sample configuration files. If you provide a file
+  called cswfoo.CSW it will copy it to cswfoo it that file doesn't already
+  exist. Read more in /usr/sadm/install/scripts/i.cswcpsampleconf and
+  r.cswcpsampleconf.
+
+- cswpreserveconf
+
+  This is an enhanced variation of cswcpsampleconf. It moves
+  user-modified versions of the sample config files, to a preserve
+  directory when a package is removed, and restores it on the next pkgadd.
+  Read more in /usr/sadm/install/scripts/i.cswpreserveconf and
+  r.cswpreserveconf.
+
+- cswusergroup
+
+  This class creates users and/or groups needed for packages. It supports
+  users, groups, gcos, home directory and shell. You can also decide if you want
+  the home directories to be created and/or removed during install/remove.
+
+- cswpycompile
+
+  This class takes care of creating/removing python's normal and optimized
+  bytecode files.  Set all *.py files' class = cswpycompile to activate.
+
+  In GAR, set the variable PYCOMPILE = 1 to activate.
+
+- cswinetdconf
+
+  This class manipulates /etc/inetd.conf (solaris 8/9) or enables an
+  inetd service in smf (solaris 10+).
+
+- cswetcservices
+
+  This class takes care of registering services in the global
+  /etc/services file.  It is a one way manipulation.  At package
+  removal, the service entries are left behind.
+
+- cswtexinfo
+
+  This class takes care of keeping the info/dir page of CSWtexinfo
+  in sync with all texinfo pages installed. It adds entries on
+  package installation and removes them on package removal.
+
+- cswcrontab
+
+  This class allows adding entries to the crontab for arbitrary users.
+  The entries will be tagged with the package name and removed on
+  package removal. If the entries have been changed manually they will
+  not be preserved.
+
+Read more on the wiki: http://wiki.opencsw.org/cswclassutils-package.
+
+-- 
+$Id$

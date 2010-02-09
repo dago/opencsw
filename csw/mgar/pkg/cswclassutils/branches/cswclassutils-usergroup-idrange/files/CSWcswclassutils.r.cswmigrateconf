@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# $Id$
+
+while read dest ; do
+  echo "Removing $dest"
+  rm $dest
+done

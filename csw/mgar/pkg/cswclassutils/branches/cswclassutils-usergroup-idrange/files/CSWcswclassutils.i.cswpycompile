@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+# i.pycompile - Class action script for compiling pyo and pyc files
+#
+# $Id: i.pycompile 5069 2009-05-27 17:36:24Z valholla $
+#
+# Written by Mike Watters
+#
+# 2009-05-25 First Release
+# 2009-10-14 Update to only compile package specific files (Ben Walton)
+#
+
+# Force Path for the script to use
+PATH=/usr/bin:/usr/sbin:/opt/csw/bin
+
+PY_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+PY_BINDIR=${PY_PREFIX}/bin
+PY_LIBDIR=${PY_PREFIX}/lib/python
+
+#DEBUG = 1  # Uncomment to enable debug
+if [ "${DEBUG}" ]; then
+    echo PACKAGE: $PKGINST
+fi
+
+TMPPY=/var/opt/csw/cswclassutils/pycomp.$$.`date +%Y%m%d%H%M%S`.py
+
+cat <<EOF > $TMPPY
+import py_compile
+
+pyfiles = [
+EOF
+
+echo "Installing class <cswpycompile> ..."
+
+while read src dest; do
+    if [ "$DEBUG" ]; then
+        echo SRC: $src DEST: $dest
+    fi
+
+    /usr/bin/cp -p $src $dest || exit 2
+    echo $dest
+
+    echo "	\"$dest\"," >> $TMPPY
+done
+
+cat <<EOF >> $TMPPY
+	]
+
+for f in pyfiles:
+	try:
+		py_compile.compile(f, doraise=True)
+	except py_compile.PyCompileError:
+		print "Error compiling: %s" % f
+
+EOF
+
+if [ ! -f ${PY_BINDIR}/python -a ! -x ${PY_BINDIR}/python ]; then
+    echo "Could not find or execute ${PY_BINDIR}/python"
+    echo "Check your Python installation."
+    exit 2
+fi
+    
+echo "Compiling py files to normal bytecode ..."
+${PY_BINDIR}/python -Wi -t $TMPPY
+
+echo "Compiling py files to optimized bytecode ..."
+${PY_BINDIR}/python -Wi -t -O $TMPPY
+
+rm $TMPPY
+
+exit 0

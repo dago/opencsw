@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+# i.cswpostmsg - Class action script to display a message after install
+#
+# $Id: CSWcswclassutils.i.cswusergroup 6859 2009-10-14 14:04:00Z bdwalton $
+#
+# Written by Peter Bonivart
+#
+# 2010-02-07 First release
+#
+# Documentation: http://wiki.opencsw.org/cswclassutils-package
+
+DEBUG=		# clear to disable debug, set to anything to enable
+
+if [ "$DEBUG" ]; then
+  echo PACKAGE: $PKGINST
+fi
+
+# Copy files
+echo "Installing class <cswpostmsg> ..."
+
+while read src dest; do
+  if [ "$DEBUG" ]; then
+    echo SRC: $src DEST: $dest
+  fi
+
+  # Copy the conf-file
+  /usr/bin/cp $src $dest || exit 2
+
+  # display file if readable and regular
+  [ -f $dest -a -r $dest ] && cat $dest
+
+done
+
+exit 0

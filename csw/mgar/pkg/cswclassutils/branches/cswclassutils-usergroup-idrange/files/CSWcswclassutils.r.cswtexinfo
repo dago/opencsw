@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# r.cswetcservices - Class action script
+#                for registration of info pages to CSWtexinfo
+#
+# Written and maintained by Dagobert Michelsen
+#
+# 2009-11-04 Initial release
+
+echo "Removing class <cswtexinfo> ..."
+
+while read dest; do
+
+  echo $dest
+
+  if [ -x ${PKG_INSTALL_ROOT}/opt/csw/bin/install-info ]; then
+    ${PKG_INSTALL_ROOT}/opt/csw/bin/install-info --delete $dest ${PKG_INSTALL_ROOT}/opt/csw/info/dir
+  else
+    echo "CSWtexinfo couldn't be found."
+  fi
+
+  rm -f $dest
+
+done
+
+exit 0
