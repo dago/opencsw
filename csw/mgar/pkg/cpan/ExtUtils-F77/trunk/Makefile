@@ -1,9 +1,9 @@
 GARNAME = ExtUtils-F77
-GARVERSION = 1.15
+GARVERSION = 1.16
 CATEGORIES = cpan
 AUTHOR = KGB
 
-DESCRIPTION = simple interface to F77 libs
+DESCRIPTION = Simple interface to F77 libs
 define BLURB
   This module tries to figure out how to link C programs with Fortran
   subroutines on your system. Basically one must add a list of Fortran runtime
@@ -11,6 +11,9 @@ define BLURB
   OS/compiler combination!
 endef
 
-DISTFILES += CSWpmextutilsf77.gspec
+PACKAGES = CSWpmextutilsf77
+CATALOGNAME = pm_extutilsf77
+
+ARCHALL = 1
 
 include gar/category.mk
