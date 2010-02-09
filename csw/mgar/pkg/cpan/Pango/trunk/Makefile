@@ -13,7 +13,8 @@ CATALOGNAME = pm_pango
 
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS_CSWpmpango += CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWlibcairo CSWpango
+RUNTIME_DEP_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWlibcairo CSWpango
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
