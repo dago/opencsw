@@ -16,4 +16,7 @@ CATALOGNAME = pm_extutilsf77
 
 ARCHALL = 1
 
+# Exclude crap the author has accidently left there from his Mac OS system
+EXTRA_MERGE_EXCLUDE_FILES = .*/\..*
+
 include gar/category.mk
