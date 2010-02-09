@@ -1,16 +1,19 @@
 GARNAME = Tk
-GARVERSION = 804.027
+GARVERSION = 804.028
 CATEGORIES = cpan
-AUTHOR = NI-S
+AUTHOR = SREZIC
 
-DESCRIPTION = write Tk applications in Perl.
+DESCRIPTION = A Graphical User Interface ToolKit perl module
 define BLURB
   In writing the perl Tk extension, the goals were to provide a complete
   interface to the latest production version of John Ousterhout's Tk, while
   providing an Object Oriented interface to perl code.
 endef
 
-DISTFILES += CSWpmtk.gspec
+PACKAGES = CSWpmtk
+CATALOGNAME = pm_tk
+
+RUNTIME_DEP_PKGS = CSWjpeg CSWpng CSWzlib
 
 # Use Solaris zlib/png/jpeg
 #PATCHFILES = syslibs.diff
