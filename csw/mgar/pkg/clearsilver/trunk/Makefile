@@ -12,11 +12,15 @@ endef
 
 MASTER_SITES = http://www.clearsilver.net/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = perlbuild.diff
+PATCHFILES += 0001-Do-not-use-Wall-on-Sun-Studio.patch
+
+LICENSE = LICENSE
 
 PACKAGES = CSWcs CSWpmcs CSWpycs
 
 RUNTIME_DEP_PKGS_CSWcs   = CSWzlib CSWggettextrt
-RUNTIME_DEP_PKGS_CSWpmcs = CSWcs CSWperl
+RUNTIME_DEP_PKGS_CSWpmcs = CSWcs CSWperl CSWggettextrt CSWzlib
 RUNTIME_DEP_PKGS_CSWpycs = CSWcs CSWpython
 
 CATALOGNAME_CSWcs   = clearsilver
@@ -27,21 +31,14 @@ SPKG_DESC_CSWcs   = Language-neutral HTML template system
 SPKG_DESC_CSWpmcs = Clearsilver Perl language binding
 SPKG_DESC_CSWpycs = Clearsilver Python language binding
 
-PKGFILES_CSWpmcs  = $(libdir)/perl/.*
-PKGFILES_CSWpmcs += $(mandir)/.*perl.*
-PKGFILES_CSWpycs  = $(libdir)/python.*/.*
-PKGFILES_CSWpycs += $(mandir)/.*python.*
+PKGFILES_CSWpmcs  = .*perl.*
+PKGFILES_CSWpycs  = .*python.*
 
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
-PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES = none cswpycompile
-RUNTIME_DEP_PKGS += CSWcswclassutils
+PYCOMPILE = 1
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
-
-PATCHFILES += perlbuild.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-python=$(bindir)/python
@@ -62,12 +59,15 @@ ENABLE_CHECK = 0
 # No test target
 TEST_SCRIPTS =
 
+EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal\.pod
+
 include gar/category.mk
 
 PATH := $(PATH):$(SOS11_CC_HOME)/bin
 
 ## Move lone perl manpage to the package man location
 post-install-modulated:
-	@(gmv $(INSTALLISADIR)$(prefix)/man/man3/ClearSilver.3perl \
-		$(INSTALLISADIR)$(prefix)/share/man/man3/ClearSilver.3perl)
-	@(grm -fr $(INSTALLISADIR)$(prefix)/man/man3)
+	gmv $(INSTALLISADIR)$(prefix)/man/man3/ClearSilver.3perl \
+		$(INSTALLISADIR)$(prefix)/share/man/man3/ClearSilver.3perl
+	grm -fr $(INSTALLISADIR)$(prefix)/man/man3
+	@$(MAKECOOKIE)

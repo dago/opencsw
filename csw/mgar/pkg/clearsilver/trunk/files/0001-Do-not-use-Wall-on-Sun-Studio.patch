@@ -1,0 +1,25 @@
+From 8768d20d192fde3c7de11cf994c374dae57657ea Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 9 Feb 2010 15:20:31 +0100
+Subject: [PATCH] Do not use Wall on Sun Studio
+
+---
+ rules.mk.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/rules.mk.in b/rules.mk.in
+index 2bb9ce4..8083a33 100644
+--- a/rules.mk.in
++++ b/rules.mk.in
+@@ -84,7 +84,7 @@ PERL	   = @PERL@
+ RUBY       = @RUBY@
+ 
+ CPPFLAGS   = -I$(NEOTONIC_ROOT) @CPPFLAGS@
+-CFLAGS     = @CFLAGS@ -Wall $(CPPFLAGS) $(PICFLG)
++CFLAGS     = @CFLAGS@ $(CPPFLAGS) $(PICFLG)
+ OUTPUT_OPTION = -o $@
+ LD         = $(CC) -o
+ LDFLAGS    = -L$(LIB_DIR) @LDFLAGS@
+-- 
+1.6.5.1
+
