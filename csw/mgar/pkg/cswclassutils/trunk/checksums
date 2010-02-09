@@ -1,11 +1,12 @@
 48a97af56d55bc90ce90303228ed8cc3  COPYING
-fe030911decab669145b3017ed4fdf10  CSWcswclassutils.i.cswcpsampleconf
+0b221f753df5c3f953ecdcb90ece6456  CSWcswclassutils.i.cswcpsampleconf
 9a6f5ad4919b78e4083491edcd86db0c  CSWcswclassutils.i.cswcrontab
 56900bb1fc9f40f7c227877eca32b1f8  CSWcswclassutils.i.cswetcservices
 4f2e9de463cb4b17ba6e1b3dfdf18913  CSWcswclassutils.i.cswinetd
-fa318ca696e80a9a9f2efbf35cb69080  CSWcswclassutils.i.cswinitsmf
-9b47f2ac9b8ddbdd3aa30ad59a808af6  CSWcswclassutils.i.cswmigrateconf
-c875d62c8ddaad0de2e18fff7946e1e8  CSWcswclassutils.i.cswpreserveconf
+6abb13158fee906870d1d68dc0fae6f3  CSWcswclassutils.i.cswinitsmf
+17382424148caa223f161ddfd2fb427a  CSWcswclassutils.i.cswmigrateconf
+79e4e0699a94a2d878f8ba73438c64b8  CSWcswclassutils.i.cswpostmsg
+d40da31a034daaf269b9f381fb93e88b  CSWcswclassutils.i.cswpreserveconf
 9018419febe06c12e89d66cc76e7261f  CSWcswclassutils.i.cswpycompile
 1282bef941c49d98a061b3701a1fda7c  CSWcswclassutils.i.cswtexinfo
 7f04b24b421f3afbf3c61845941ef5dd  CSWcswclassutils.i.cswusergroup
@@ -15,6 +16,7 @@ d60261ddc46e2cc83ecbbfc586a7e686  CSWcswclassutils.r.cswetcservices
 9039ea60ad4c3f8994205fb242a49a72  CSWcswclassutils.r.cswinetd
 791db9c2f6685aca67043820d260fc60  CSWcswclassutils.r.cswinitsmf
 f7a2a10bbf0f88c1909a31141e6d83ce  CSWcswclassutils.r.cswmigrateconf
+cd1f26f0fe03e4537ed68fa6354f670b  CSWcswclassutils.r.cswpostmsg
 96453922952c92c6c5a024e54ed8525f  CSWcswclassutils.r.cswpreserveconf
 02326250b63d3c75c45a8ff81768e923  CSWcswclassutils.r.cswpycompile
 ed76f47b045b000ab78154a90cf90ed4  CSWcswclassutils.r.cswtexinfo
