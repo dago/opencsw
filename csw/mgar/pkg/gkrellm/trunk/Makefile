@@ -17,13 +17,9 @@ endef
 
 MASTER_SITES = http://members.dslextreme.com/users/billw/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-#DISTFILES += $(call admfiles,CSWgkrellm, )
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
-# Patch up makefile to honor environment variables
-#PATCHFILES = suncc.diff
 
 # Disable configure scripts step
 CONFIGURE_SCRIPTS =
@@ -33,16 +29,21 @@ BUILD_ARGS   += INSTALLDIR=$(bindir)
 BUILD_ARGS   += MANDIR=$(mandir)
 BUILD_ARGS   += INCLUDEDIR=$(includedir)
 BUILD_ARGS   += LOCALEDIR=$(sharedstatedir)/locale
-BUILD_ARGS   += enable_nls=0 solaris
+BUILD_ARGS   += enable_nls=1 solaris
 
 INSTALL_ARGS  = INSTALLROOT=$(DESTDIR)
 INSTALL_ARGS += INSTALLDIR=$(DESTDIR)$(bindir)
 INSTALL_ARGS += MANDIR=$(DESTDIR)$(mandir)
 INSTALL_ARGS += INCLUDEDIR=$(DESTDIR)$(includedir)
 INSTALL_ARGS += LOCALEDIR=$(DESTDIR)$(sharedstatedir)/locale
-INSTALL_ARGS += enable_nls=0 install_solaris
+INSTALL_ARGS += enable_nls=1 install_solaris
 
 # No test suite
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+pre-configure-modulated:
+	@cp $(FILEDIR)/Makefile $(WORKROOTDIR)/build-$(MODULATIONS)/$(GARNAME)-$(GARVERSION)/Makefile
+	@cp $(FILEDIR)/src.Makefile $(WORKROOTDIR)/build-$(MODULATIONS)/$(GARNAME)-$(GARVERSION)/src/Makefile
+	@cp $(FILEDIR)/server.Makefile $(WORKROOTDIR)/build-$(MODULATIONS)/$(GARNAME)-$(GARVERSION)/server/Makefile
