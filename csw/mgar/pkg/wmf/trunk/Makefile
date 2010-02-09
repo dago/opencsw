@@ -17,17 +17,17 @@ DISTNAME = libwmf-$(GARVERSION)
 
 SPKG_SOURCEURL = http://wvware.sourceforge.net
 
-PACKAGES = CSWwmf CSWlibwmfdevel CSWwmfdoc CSWwmffonts CSWlibwmf
+PACKAGES = CSWwmf CSWlibwmfdevel CSWlibwmfdoc CSWwmffonts CSWlibwmf
 CATALOGNAME_CSWwmf = wmf
 CATALOGNAME_CSWlibwmf = libwmf
 CATALOGNAME_CSWlibwmfdevel = libwmf_devel
-CATALOGNAME_CSWwmfdoc = wmf_doc
+CATALOGNAME_CSWlibwmfdoc = wmf_doc
 CATALOGNAME_CSWwmffonts = wmf_fonts
 
 SPKG_DESC_CSWwmf += Library and tools for manipulating Windows metafiles
 SPKG_DESC_CSWlibwmf += Library and tools for manipulating Windows metafiles - runtime package
 SPKG_DESC_CSWlibwmfdevel += Library and tools for manipulating Windows metafiles - developer package
-SPKG_DESC_CSWwmfdoc += Library and tools for manipulating Windows metafiles - documentation
+SPKG_DESC_CSWlibwmfdoc += Library and tools for manipulating Windows metafiles - documentation
 SPKG_DESC_CSWwmffonts += Library and tools for manipulating Windows metafiles - fonts
 
 RUNTIME_DEP_PKGS_CSWwmf += CSWexpat CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
@@ -41,14 +41,14 @@ RUNTIME_DEP_PKGS_CSWlibwmf += CSWlibx11
 RUNTIME_DEP_PKGS_CSWlibwmf += CSWpng
 RUNTIME_DEP_PKGS_CSWlibwmf += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibwmfdevel += CSWlibwmf
-RUNTIME_DEP_PKGS_CSWwmfdoc += CSWwmf
+RUNTIME_DEP_PKGS_CSWlibwmfdoc += CSWwmf
 RUNTIME_DEP_PKGS_CSWwmffonts += 
 
 BUILD_DEP_PKGS += CSWgtk2devel
 
 PKGFILES_CSWlibwmf = $(PKGFILES_RT)
 PKGFILES_CSWlibwmfdevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWwmfdoc = $(sharedstatedir)/doc/.*
+PKGFILES_CSWlibwmfdoc = $(sharedstatedir)/doc/.*
 PKGFILES_CSWwmffonts = $(sharedstatedir)/libwmf/fonts/.*
 
 ARCHALL_CSWwmfdoc = 1
