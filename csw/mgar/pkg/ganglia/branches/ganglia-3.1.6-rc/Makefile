@@ -45,6 +45,7 @@ SPKG_DESC_CSWgangliaweb		= Ganglia web
 BUILD_DEP_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-devel CSWrrd CSWpcre
 
 RUNTIME_DEP_PKGS_CSWgangliart = CSWexpat CSWlibconfuse CSWapache2rt
+RUNTIME_DEP_PKGS_CSWgangliart += CSWpcrert
 RUNTIME_DEP_PKGS_CSWgangliaagent = CSWexpat CSWlibconfuse CSWapache2rt
 RUNTIME_DEP_PKGS_CSWgangliaagent += CSWgangliart CSWpcrert
 RUNTIME_DEP_PKGS_CSWgangliamodpython = CSWlibconfuse CSWapache2rt CSWgangliart
@@ -52,6 +53,7 @@ RUNTIME_DEP_PKGS_CSWgangliamodpython += CSWgangliaagent
 RUNTIME_DEP_PKGS_CSWgangliadevel = CSWexpat CSWlibconfuse CSWapache2rt
 RUNTIME_DEP_PKGS_CSWgangliagmetad = CSWexpat CSWlibconfuse CSWapache2rt
 RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWgangliart CSWgangliaagent CSWrrd
+RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWpcrert
 RUNTIME_DEP_PKGS_CSWgangliaweb = CSWgangliagmetad 
 RUNTIME_DEP_PKGS_CSWgangliaweb += CSWapache2 CSWphp5 CSWap2modphp5 CSWrrd
 
