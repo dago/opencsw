@@ -11,15 +11,24 @@ define BLURB
   several packages which are not described in this section.
 endef
 
+DISTFILES += CSWpmxmllibxml.postinstall
+
 PACKAGES  = CSWpmxmllibxml CSWpmxmllibxmlcom
 CATALOGNAME_CSWpmxmllibxml = pm_xmllibxml
 SPKG_DESC_CSWpmxmllibxml = Binding for libxml2
 CATALOGNAME_CSWpmxmllibxmlcom = pm_xmllibxmlcom
 SPKG_DESC_CSWpmxmllibxmlcom = Constants and Character Encoding Routines
 PKGFILES_CSWpmxmllibxmlcom = this-is-just-an-empty-stub
+ARCHALL_CSWpmxmllibxmlcom = 1
 
-BUILD_DEP_PKGS = CSWpmxmlnssupp CSWpmxmlsax CSWlibxml2 CSWlibxml2devel
-RUNTIME_DEP_PKGS = CSWpmxmlnssupp CSWpmxmlsax CSWlibxml2 CSWlibxml2devel
+RUNTIME_DEP_PKGS_CSWpmxmllibxml += CSWiconv 
+RUNTIME_DEP_PKGS_CSWpmxmllibxml += CSWzlib 
+RUNTIME_DEP_PKGS_CSWpmxmllibxml += CSWpmxmlnssupp 
+RUNTIME_DEP_PKGS_CSWpmxmllibxml += CSWpmxmlsax 
+RUNTIME_DEP_PKGS_CSWpmxmllibxml += CSWlibxml2 
+RUNTIME_DEP_PKGS_CSWpmxmllibxml += CSWlibxml2devel
+BUILD_DEP_PKGS_CSWpmxmllibxml = $(RUNTIME_DEP_PKGS_CSWpmxmllibxml)
+RUNTIME_DEP_PKGS_CSWpmxmllibxmlcom = CSWpmxmllibxml
 
 CONFIGURE_ENV += SKIP_SAX_INSTALL=1
 
