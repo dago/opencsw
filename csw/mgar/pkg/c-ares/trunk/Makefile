@@ -2,7 +2,7 @@ GARNAME = c-ares
 GARVERSION = 1.7.0
 CATEGORIES = lib
 
-DESCRIPTION = Perform DNS requests and name resolves asynchronously
+DESCRIPTION = c-ares library to perform DNS requests and name resolves asynchronously
 define BLURB
 endef
 
@@ -12,8 +12,13 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWlibcares
-CATALOGNAME = libcares
+PACKAGES = CSWlibcares CSWlibcaresdevel
+
+CATALOGNAME_CSWlibcares = libcares
+CATALOGNAME_CSWlibcaresdevel = libcares_devel
+
+SPKG_DESC_CSWlibcares = $(DESCRIPTION)
+SPKG_DESC_CSWlibcaresdevel = c-ares library developer files
 
 LICENSE = README.cares
 
@@ -21,5 +26,7 @@ BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+
+PKGFILES_CSWlibcaresdevel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
