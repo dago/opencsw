@@ -212,6 +212,7 @@ _CSWCLASSES += cswpycompile
 _CSWCLASSES += cswinetd
 _CSWCLASSES += cswinitsmf
 _CSWCLASSES += cswtexinfo
+_CSWCLASSES += cswpostmsg
 
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
@@ -359,6 +360,7 @@ _PROTOTYPE_MODIFIERS = | perl -ane '\
 				$(if $(PROTOTYPE_GROUP_$M),$$F[5] = "$(PROTOTYPE_GROUP_$M)";)\
 			$(if $(PROTOTYPE_FILES_$M),})\
 		)\
+		$(foreach F,$(POSTMSG),$$F[1] = "cswpostmsg" if( $$F[2] eq "$F" );)\
                 print join(" ",@F),"\n";'
 
 
