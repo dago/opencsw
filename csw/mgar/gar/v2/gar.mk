@@ -295,7 +295,7 @@ announce-modulation:
 	@echo "[===== NOW BUILDING: $(DISTNAME) MODULATION $(MODULATION): $(foreach M,$(MODULATORS),$M=$($M)) =====]"
 
 # prerequisite	- Make sure that the system is in a sane state for building the package
-PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(BUILD_DEP_PKGS)) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
+PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(BUILD_DEP_PKGS) $(DEP_PKGS) $(foreach S,$(_PKG_SPECS),$(DEP_PKGS_$S))) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
 
 # Force to be called in global modulation
 prerequisite: $(if $(filter global,$(MODULATION)),announce pre-everything $(COOKIEDIR) $(DOWNLOADDIR) $(PARTIALDIR) $(addprefix dep-$(GARDIR)/,$(FETCHDEPS)) pre-prerequisite $(PREREQUISITE_TARGETS) post-prerequisite)
