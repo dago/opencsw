@@ -1,0 +1,15 @@
+GARNAME = OpenGL
+GARVERSION = 0.62
+CATEGORIES = cpan
+AUTHOR = CHM
+
+DESCRIPTION = OpenGL Perl Bindings
+define BLURB
+endef
+
+PACKAGES = CSWpmopengl
+CATALOGNAME = pm_opengl
+
+DEP_PKGS = CSWfreeglut
+
+include gar/category.mk
