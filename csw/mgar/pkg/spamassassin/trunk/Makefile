@@ -31,6 +31,7 @@ SAMPLECONF += /etc/opt/csw/spamassassin/local\.cf\.CSW
 SAMPLECONF += /etc/opt/csw/spamassassin/spamd\.CSW
 USERGROUP = /etc/opt/csw/pkg/CSWspamassassin/cswusergroup
 INITSMF = /etc/opt/csw/init.d/cswspamd
+POSTMSG = /opt/csw/share/doc/spamassassin/README.upgrade
 
 MIGRATE_FILES = init.pre local.cf v310.pre v312.pre v320.pre
 MIGRATE_SOURCE_DIR = /opt/csw/etc/spamassassin
@@ -92,6 +93,7 @@ install-custom:
 	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.spamd.CSW $(DESTDIR)/etc/opt/csw/spamassassin/spamd.CSW
 	@cp $(FILEDIR)/CSWspamassassin.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@cp $(FILEDIR)/CSWspamassassin.README.spamd $(DESTDIR)$(docdir)/$(GARNAME)/README.spamd
+	@cp $(FILEDIR)/CSWspamassassin.postmsg $(DESTDIR)$(docdir)/$(GARNAME)/README.upgrade
 	echo "WORKSRC: $(WORKSRC)"
 	@( cd $(WORKSRC) ; \
 	   gmake DESTDIR=$(DESTDIR) install )
