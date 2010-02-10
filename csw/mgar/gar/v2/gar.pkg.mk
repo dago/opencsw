@@ -657,6 +657,19 @@ merge-etcservices-%:
 reset-merge-etcservices:
 	@rm -f $(COOKIEDIR)/merge-etcservices $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-etcservices-$(SPEC))
 
+merge-checkpkgoverrides-%:
+	@echo "[ Generating checkpkg override for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/checkpkg/overrides
+	$(_DBG)$(foreach O,$(or $(CHECKPKG_OVERRIDES_$*),$(CHECKPKG_OVERRIDES)),echo "$O" | \
+		perl -F'\|' -ane 'unshift @F,"$*" if(@F<2); print "$$F[0]: $$F[1]";print " $$F[2]" if( $$F[2] );' \
+		> $(PKGROOT)/opt/csw/share/checkpkg/overrides/$(call catalogname,$*))
+	@$(MAKECOOKIE)
+
+merge-checkpkgoverrides: $(foreach S,$(SPKG_SPECS),$(if $(or $(CHECKPKG_OVERRIDES_$S),$(CHECKPKG_OVERRIDES)),merge-checkpkgoverrides-$S))
+
+reset-merge-checkpkgoverrides:
+	@rm -f $(COOKIEDIR)/merge-checkpkgoverrides $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-checkpkgoverrides-$(SPEC))
+
 merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
 merge-src: fetch
 	$(_DBG)mkdir -p $(_SRCDIR)/files
