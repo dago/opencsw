@@ -14,7 +14,7 @@ import logging
 # distributed with GAR.
 path_list = [os.getcwd(),
              os.path.split(sys.argv[0])[0],
-             "..", "..", "lib", "python"]
+             "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 

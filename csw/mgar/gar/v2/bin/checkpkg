@@ -582,7 +582,7 @@ for pyc_file in ${plugindir}/opencsw.pyc \
 done
 
 # /var/sadm/install/contents cache update
-${plugindir}/update_contents_cache.py
+${checkpkg_basedir}/update_contents_cache.py
 
 if [[ "${DEBUG}" != "" ]]; then
 	extra_options="--debug"
