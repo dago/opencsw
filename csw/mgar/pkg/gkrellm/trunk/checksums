@@ -1,1 +1,6 @@
+87043d318f1fecd878671a63b8446b24  0001-Add-LOG_MAKEPRI.patch
+8a1b298516f7d1e18e34080902353aae  0002-Do-not-tingle-with-file-owner.patch
+955c4ffeb0a0223e3120ac5b66134617  Makefile
 270917784da6bf1292aba0c82af726d6  gkrellm-2.3.4.tar.bz2
+ff576ffe06797d2e7f7997cc934e210d  server.Makefile
+cce3ee260271f8886a76cbb6ae70d0af  src.Makefile

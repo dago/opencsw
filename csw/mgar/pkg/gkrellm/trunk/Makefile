@@ -17,9 +17,17 @@ endef
 
 MASTER_SITES = http://members.dslextreme.com/users/billw/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += Makefile server.Makefile src.Makefile
+PATCHFILES = 0001-Add-LOG_MAKEPRI.patch
+PATCHFILES += 0002-Do-not-tingle-with-file-owner.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+DEP_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo CSWpango
+
+# Make sure to remove this after the X11 issues have all been settled
+EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
 
 # Disable configure scripts step
 CONFIGURE_SCRIPTS =
@@ -41,9 +49,28 @@ INSTALL_ARGS += enable_nls=1 install_solaris
 # No test suite
 TEST_SCRIPTS =
 
+INSTALL_OVERRIDE_VARS = INSTALL
+INSTALL_OVERRIDE_VAR_INSTALL = /usr/ucb/install
+
+# Fix owner and permissions from src/Makefile:
+#  chgrp sys $(INSTALLDIR)/$(PACKAGE)
+#  chmod g+s $(INSTALLDIR)/$(PACKAGE)
+#  chgrp sys $(SINSTALLDIR)/$(PACKAGE_D)
+#  chmod g+s $(SINSTALLDIR)/$(PACKAGE_D)  
+
+PROTOTYPE_MODIFIERS = sgid
+PROTOTYPE_FILES_sgid = $(bindir)/gkrellmd?
+PROTOTYPE_PERMS_sgid = 2755
+PROTOTYPE_GROUP_sgid = sys
+
+# This is for the missing X11 symbol XSolarisIASetProcessInfo.
+# It does no harm, though.
+CHECKPKG_OVERRIDES = CSWgkrellm|symbol-not-found|gkrellm
+
 include gar/category.mk
 
-pre-configure-modulated:
-	@cp $(FILEDIR)/Makefile $(WORKROOTDIR)/build-$(MODULATIONS)/$(GARNAME)-$(GARVERSION)/Makefile
-	@cp $(FILEDIR)/src.Makefile $(WORKROOTDIR)/build-$(MODULATIONS)/$(GARNAME)-$(GARVERSION)/src/Makefile
-	@cp $(FILEDIR)/server.Makefile $(WORKROOTDIR)/build-$(MODULATIONS)/$(GARNAME)-$(GARVERSION)/server/Makefile
+post-extract-modulated:
+	-cp $(WORKDIR)/Makefile $(WORKSRC)/Makefile
+	-cp $(WORKDIR)/src.Makefile $(WORKSRC)/src/Makefile
+	-cp $(WORKDIR)/server.Makefile $(WORKSRC)/server/Makefile
+	@$(MAKECOOKIE)

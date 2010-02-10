@@ -1,0 +1,24 @@
+From 9f429e5beefac906601c3dbbc12daa9b317d9284 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 10 Feb 2010 14:58:04 +0100
+Subject: [PATCH] Add LOG_MAKEPRI
+
+---
+ server/main.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/server/main.c b/server/main.c
+index ce0e370..9b2fe7a 100644
+--- a/server/main.c
++++ b/server/main.c
+@@ -37,6 +37,7 @@
+ 
+ #if !defined(WIN32)
+ 	#include <syslog.h>
++#define LOG_MAKEPRI(facility,priority) ((facility)|(priority))
+ #endif // !WIN32
+ 
+ // win32 defines addrinfo but only supports getaddrinfo call on winxp or newer
+-- 
+1.6.6
+

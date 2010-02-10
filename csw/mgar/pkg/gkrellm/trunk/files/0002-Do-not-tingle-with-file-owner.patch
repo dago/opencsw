@@ -1,0 +1,43 @@
+From d52165d5155ddaffb8110d5ff7d5d4350eee0737 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 10 Feb 2010 15:18:26 +0100
+Subject: [PATCH] Do not tingle with file owner
+
+---
+ server/Makefile |    4 ++--
+ src/Makefile    |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/server/Makefile b/server/Makefile
+index 98775c1..6bd51a4 100644
+--- a/server/Makefile
++++ b/server/Makefile
+@@ -214,8 +214,8 @@ install_openbsd:
+ 
+ install_solaris:
+ 	$(MAKE) install INSTALL=/usr/ucb/install
+-	chgrp sys $(SINSTALLDIR)/$(PACKAGE_D)
+-	chmod g+s $(SINSTALLDIR)/$(PACKAGE_D)  
++	#chgrp sys $(SINSTALLDIR)/$(PACKAGE_D)
++	#chmod g+s $(SINSTALLDIR)/$(PACKAGE_D)  
+ 
+ install_windows: install_inc install_cfg
+ 	$(MAKE) BINEXT=".exe" install_bin
+diff --git a/src/Makefile b/src/Makefile
+index 9fe7ed5..9ccd5f7 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -249,8 +249,8 @@ install_openbsd:
+ 
+ install_solaris:
+ 	$(MAKE) install INSTALL=/usr/ucb/install
+-	chgrp sys $(INSTALLDIR)/$(PACKAGE)
+-	chmod g+s $(INSTALLDIR)/$(PACKAGE)  
++	#chgrp sys $(INSTALLDIR)/$(PACKAGE)
++	#chmod g+s $(INSTALLDIR)/$(PACKAGE)  
+ 
+ install_windows:
+ 	$(MAKE) BINEXT=".exe" install_bin install_inc
+-- 
+1.6.6
+
