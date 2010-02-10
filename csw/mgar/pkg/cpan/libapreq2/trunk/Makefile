@@ -73,6 +73,8 @@ include gar/category.mk
 pre-package: test fix-cfgscript
 
 fix-cfgscript:
-	@perl -i -plne 's/(APREQ_(?:SOURCE|BUILD)_DIR=).*$$/\1""/' \
+	perl -i -plne 's/(APREQ_(?:SOURCE|BUILD)_DIR=).*$$/\1""/' \
 		$(DESTDIR)$(prefix)/apache2/bin/apreq2-config
 
+post-configure-modulated:
+	gsed -i'' 's/^BUILT_SOURCES.*//' $(WORKSRC)/library/Makefile
