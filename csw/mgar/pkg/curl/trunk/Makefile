@@ -1,5 +1,5 @@
 GARNAME = curl
-GARVERSION = 7.19.7
+GARVERSION = 7.20.0
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers.
@@ -44,10 +44,9 @@ BUILD64 = 1
 # We are doing 64 bit only for the libs
 NOISAEXEC = 1
 
-RUNTIME_DEP_PKGS_CSWcurl  = CSWiconv CSWlibidn CSWlibnet CSWoldaprt CSWosslrt
-RUNTIME_DEP_PKGS_CSWcurl += CSWsasl CSWzlib CSWcurlrt
-RUNTIME_DEP_PKGS_CSWcurlrt = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl
-RUNTIME_DEP_PKGS_CSWcurldevel = CSWcurlrt
+RUNTIME_DEP_PKGS_CSWcurl = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl CSWcurlrt
+RUNTIME_DEP_PKGS_CSWcurlrt = CSWlibidn CSWoldaprt CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWcurldevel = CSWcurl
 
 SKIPTEST = 1
 
