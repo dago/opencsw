@@ -1,0 +1,7 @@
+# This is where you customize some settings of your postgrey installation so
+# you don't have to edit the scripts themselves as they will be replaced during
+# upgrades.
+#
+# Peter Bonivart, OpenCSW
+
+OPTIONS="--inet=10023 -d --whitelist-clients=/etc/opt/csw/postfix/postgrey_whitelist_clients --whitelist-recipients=/etc/opt/csw/postfix/postgrey_whitelist_recipients --pidfile=/var/opt/csw/postgrey/postgrey.pid"

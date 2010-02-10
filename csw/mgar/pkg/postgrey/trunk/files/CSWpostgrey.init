@@ -1,14 +1,24 @@
 #!/sbin/sh
 
-# 2009-12-02 Peter Bonivart
+#RC_KLEV 0,1,2,S
+#RC_SLEV 3
 
-if [ -f /lib/svc/share/smf_include.sh ]; then
-  . /lib/svc/share/smf_include.sh
-fi
+# rc-script for CSWpostgrey
+# Peter Bonivart, 2010-02-01
+
+# Source SMF includes
+[ -r /lib/svc/share/smf_include.sh ] && . /lib/svc/share/smf_include.sh
+
+# Source config file
+[ -r /etc/opt/csw/postgrey ] && . /etc/opt/csw/postgrey
 
 SERVICE=postgrey
+PATH=$PATH:/usr/bin:/opt/csw/bin
 
-OPTIONS="--inet=10023 -d --whitelist-clients=/etc/opt/csw/postfix/postgrey_whitelist_clients --whitelist-recipients=/etc/opt/csw/postfix/postgrey_whitelist_recipients --pidfile=/var/opt/csw/postgrey/postgrey.pid"
+# Use /etc/opt/csw/postgrey to configure the options instead of editing this file
+#OPTIONS="--inet=10023 -d --whitelist-clients=/etc/opt/csw/postfix/postgrey_whitelist_clients --whitelist-recipients=/etc/opt/csw/postfix/postgrey_whitelist_recipients --pidfile=/var/opt/csw/postgrey/postgrey.pid"
+
+ZONE= # used for initialization, do not change
 
 case "$1" in
   start)
@@ -17,7 +27,12 @@ case "$1" in
         ;;
   stop)
         echo "Stopping $SERVICE ..."
-        pkill $SERVICE
+        if [ -x /usr/bin/zonename ]; then
+          if [ "`/usr/bin/zonename`" = "global" ]; then
+            ZONE="-z global"
+          fi
+        fi
+        pkill $ZONE -x $SERVICE
         ;;
   restart)
         echo "Restarting $SERVICE ... "
