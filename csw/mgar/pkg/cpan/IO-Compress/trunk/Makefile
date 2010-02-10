@@ -24,6 +24,11 @@ endef
 RUNTIME_DEP_PKGS  = CSWpmcompressrawzlib
 RUNTIME_DEP_PKGS += CSWpmcompressrawbz2
 
+# Uncomment if all packages who depend on these have switched to depend on this package
+#INCOMPATIBLE_PKGS  = CSWpmcompresszlib
+#INCOMPATIBLE_PKGS += CSWpmiocompressbase
+#INCOMPATIBLE_PKGS += CSWpmiocompresszlib
+
 PACKAGES = CSWpmiocompress
 CATALOGNAME = pm_iocompress
 

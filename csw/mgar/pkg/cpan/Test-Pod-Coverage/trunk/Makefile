@@ -7,9 +7,14 @@ DESCRIPTION = Check for pod coverage in your distribution
 define BLURB
 endef
 
-DISTFILES += $(call admfiles,CSWpmtestpodcoverage,depend)
+PREREQUISITE_PKGS = CSWpmtstbldrtester CSWpmpodcoverage
+REQUIRED_PKGS = CSWpmpodsimple CSWpmiostringy
 
-DEPENDS   += cpan/Pod-Simple cpan/IO-stringy
-BUILDDEPS += cpan/Test-Builder-Tester
+DISTFILES = COPYING
+
+PACKAGES = CSWpmtestpodcoverage
+CATALOGNAME = pm_testpodcoverage
+
+ARCHALL = 1
 
 include gar/category.mk

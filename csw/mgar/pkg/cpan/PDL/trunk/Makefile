@@ -1,7 +1,7 @@
 GARNAME = PDL
-GARVERSION = 2.4.3
+GARVERSION = 2.4.6
 CATEGORIES = cpan
-AUTHOR = CSOE
+AUTHOR = CHM
 
 DESCRIPTION = The Perl Data Language
 define BLURB
@@ -11,8 +11,10 @@ define BLURB
   several paths for device-independent graphics output.
 endef
 
-DISTFILES += CSWpmpdl.gspec CSWpmpdl.depend
+PACKAGES = CSWpmpdl
+CATALOGNAME = pm_pdl
 
-DEPENDS += cpan/Inline cpan/ExtUtils-F77
+RUNTIME_DEP_PKGS = CSWpmextutilsf77 CSWpminline
+#BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 include gar/category.mk

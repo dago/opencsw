@@ -1,17 +1,20 @@
 GARNAME = Test-Pod
-GARVERSION = 1.26
+GARVERSION = 1.41
 CATEGORIES = cpan
 AUTHOR = PETDANCE
 
-DESCRIPTION = check for POD errors in files
+DESCRIPTION = Check for POD errors in files
 define BLURB
   Check POD files for errors or warnings in a test file, using Pod::Simple to
   do the heavy lifting.
 endef
 
-DISTFILES += CSWpmtestpod.gspec CSWpmtestpod.depend
+PACKAGES = CSWpmtestpod
+CATALOGNAME = pm_testpod
 
-DEPENDS   += cpan/Pod-Simple cpan/IO-stringy
-BUILDDEPS += cpan/Test-Builder-Tester
+REQUIRED_PKGS = CSWpmiostringy CSWpmpodsimple
+PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWpmtestsimple
+
+ARCHALL = 1
 
 include gar/category.mk

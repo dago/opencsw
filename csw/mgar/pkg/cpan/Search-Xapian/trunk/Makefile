@@ -13,4 +13,7 @@ CATALOGNAME = pm_searchxapian
 BUILD_DEP_PKGS = CSWxapiancore
 RUNTIME_DEP_PKGS = $(BUILD_DEP_PKGS)
 
+PATCHFILES = search-xapian-bool.patch
+PATCHDIRLEVEL = 0
+
 include gar/category.mk

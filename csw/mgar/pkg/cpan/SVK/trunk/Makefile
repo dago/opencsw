@@ -1,5 +1,5 @@
 GARNAME = SVK
-GARVERSION = 2.0.0
+GARVERSION = 2.2.1
 CATEGORIES = cpan
 AUTHOR = CLKAO
 
@@ -9,53 +9,20 @@ define BLURB
   Subversion filesystem but provides additional features.
 endef
 
-DISTFILES = $(call admfiles,CSWsvk,depend prototype)
+REQUIRED_PKGS  = CSWpmalgannotate CSWpmalgdiff CSWpmappcli CSWpmclone CSWpmclsaccessor CSWpmclsautouse
+REQUIRED_PKGS += CSWpmclsdtainherit CSWpmcompresszlib CSWpmdatahier CSWpmfiletype CSWpmfreezethaw CSWpmiodigest
+REQUIRED_PKGS += CSWpmiopager CSWpmlclemktxtlex CSWpmlclemktxtsimple CSWpmlistmoreut CSWpmlog4perl
+REQUIRED_PKGS += CSWpmpathclass CSWpmperlioeol CSWpmperlioviadyn CSWpmperlioviasym CSWpmpodescapes
+REQUIRED_PKGS += CSWpmpodsimple CSWpmregexpshellish CSWpmsvn CSWpmsvnmirror CSWpmsvnsimple CSWpmtermreadkey
+REQUIRED_PKGS += CSWpmtimedate CSWpmunivrequire CSWpmuri CSWpmyaml CSWpmyamlsyck
 
 MODDIST = $(GARNAME)-v$(GARVERSION).tar.gz
-
-# Build
-#BUILDDEPS += cpan/ExtUtils-AutoInstall
-
-# Core
-DEPENDS += utils/subversion
-DEPENDS += cpan/Algorithm-Annotate
-DEPENDS += cpan/Algorithm-Diff
-DEPENDS += cpan/App-CLI
-DEPENDS += cpan/Class-Accessor
-DEPENDS += cpan/Class-Autouse
-DEPENDS += cpan/Class-Data-Inheritable
-DEPENDS += cpan/Data-Hierarchy
-DEPENDS += cpan/IO-Digest
-DEPENDS += cpan/List-MoreUtils
-DEPENDS += cpan/Path-Class
-DEPENDS += cpan/PerlIO-eol
-DEPENDS += cpan/PerlIO-via-dynamic
-DEPENDS += cpan/PerlIO-via-symlink
-DEPENDS += cpan/SVN-Simple
-DEPENDS += cpan/TermReadKey
-DEPENDS += cpan/UNIVERSAL-require
-DEPENDS += cpan/URI
-DEPENDS += cpan/YAML
-DEPENDS += cpan/YAML-Syck
-
-# No longer needed?
-#DEPENDS += cpan/Regexp-Shellish
-#DEPENDS += cpan/Clone
-#DEPENDS += cpan/Pod-Escapes
-#DEPENDS += cpan/Pod-Simple
-#DEPENDS += cpan/TimeDate
-#DEPENDS += cpan/File-Type
-
-# Features
-DEPENDS += cpan/Compress-Zlib
-DEPENDS += cpan/FreezeThaw
-DEPENDS += cpan/IO-Pager
-DEPENDS += cpan/Locale-Maketext-Lexicon
-DEPENDS += cpan/Locale-Maketext-Simple
-DEPENDS += cpan/Log-Log4perl
-DEPENDS += cpan/SVN-Mirror
-
 WORKSRC = $(WORKDIR)/$(GARNAME)-v$(GARVERSION)
+
+PACKAGES = CSWsvk
+CATALOGNAME = svk
+
+ARCHALL = 1
 
 include gar/category.mk
 

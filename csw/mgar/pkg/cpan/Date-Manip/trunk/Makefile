@@ -1,5 +1,5 @@
 GARNAME = Date-Manip
-GARVERSION = 5.54
+GARVERSION = 6.01
 CATEGORIES = cpan
 AUTHOR = SBECK
 
@@ -11,6 +11,9 @@ define BLURB
   easily done.
 endef
 
-DISTFILES += CSWpmdatemanip.gspec
+PACKAGES = CSWpmdatemanip
+CATALOGNAME = pm_datemanip
+
+ARCHALL = 1
 
 include gar/category.mk

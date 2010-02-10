@@ -1,9 +1,9 @@
 GARNAME = Inline
-GARVERSION = 0.44
+GARVERSION = 0.45
 CATEGORIES = cpan
-AUTHOR = INGY
+AUTHOR = SISYPHUS
 
-DESCRIPTION = write Perl subroutines in other programming languages.
+DESCRIPTION = Write Perl subroutines in other programming languages
 define BLURB
   The Inline module allows you to put source code from other programming
   languages directly "inline" in a Perl script or module. The code is
@@ -11,11 +11,14 @@ define BLURB
   Perl.
 endef
 
-DISTFILES += CSWpminline.gspec CSWpminline.depend
+PATCHFILES = 0001-Skip-question-on-install.patch
 
-# Enable building included Inline::C
-PATCHFILES += inline.diff
+PACKAGES = CSWpminline
+CATALOGNAME = pm_inline
 
-DEPENDS += cpan/Parse-RecDescent
+ARCHALL = 1
+
+# The current licensing is unknown as is stated on CPAN
+CHECKPKG_OVERRIDES = license-missing
 
 include gar/category.mk

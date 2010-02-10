@@ -1,5 +1,5 @@
 GARNAME = Gimp
-GARVERSION = 2.0
+GARVERSION = 2.2pre1
 CATEGORIES = cpan
 AUTHOR = SJBURGES
 
@@ -9,19 +9,11 @@ define BLURB
   higher (including 2.0).
 endef
 
-DISTFILES += CSWpmgimp.gspec CSWpmgimp.depend
-
-DEPENDS += utils/gimp
-DEPENDS += cpan/PDL cpan/Gtk2
-
-
-BUILD_DEP_PKGS       = CSWpmpdl CSWpmgtk2 
-PKGS_REQUIRED_CSWpmglib = CSWpmpdl CSWpmgtk2 CSWgimplibs
-
+PACKAGES = CSWpmgimp
 CATALOGNAME = pm_gimp
-PACKAGES    = CSWpmgimp
 
-ARCHALL_CSWpmgimp = 1
+RUNTIME_DEP_PKGS = CSWpmpdl CSWpmgtk2 CSWgimplibs
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 LICENSE = README
 
