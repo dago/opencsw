@@ -12,6 +12,8 @@ MASTER_SITES = http://www2.petervg.nl/software/source/
 DISTFILES    = svclog
 DISTFILES   += COPYING
 
+ARCHALL = 1
+
 # Only makes sense on Solaris 10
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
