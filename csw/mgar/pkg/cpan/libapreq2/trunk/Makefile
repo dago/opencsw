@@ -46,7 +46,6 @@ RUNTIME_DEP_PKGS_CSWpmapreq2 += CSWpmextutxsbld
 PATCHFILES += requestrec.diff
 
 # BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWbdb47-devel
-
 AP2_ROOT = $(prefix)/apache2
 
 CONFIGURE_ARGS  = --enable-perl-glue
@@ -66,6 +65,7 @@ EXTRA_INC = $(prefix)/bdb47/include
 EXTRA_LIB = $(prefix)/bdb47/lib $(prefix)/apache2/lib
 
 SKIPTEST = 1
+# apache2 is not yet libtool free
 STRIP_LIBTOOL = 1
 
 include gar/category.mk
@@ -76,5 +76,8 @@ fix-cfgscript:
 	perl -i -plne 's/(APREQ_(?:SOURCE|BUILD)_DIR=).*$$/\1""/' \
 		$(DESTDIR)$(prefix)/apache2/bin/apreq2-config
 
+# since apache2 is not yet free of libtool, we need to remove
+# the BUILT_SOURCES targets, which in fact are libapr-1.la and
+# libaprutil-1.la. Once apache is libtool free we can remove this.
 post-configure-modulated:
 	gsed -i'' 's/^BUILT_SOURCES.*//' $(WORKSRC)/library/Makefile
