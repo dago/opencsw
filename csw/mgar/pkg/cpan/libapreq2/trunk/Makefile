@@ -15,7 +15,7 @@ PACKAGES = CSWlibapreq2 CSWlibapreq2-devel CSWap2modapreq2 CSWpmapreq2
 # individual packages below
 CATALOGNAME_CSWlibapreq2 = libapreq2
 SPKG_DESC_CSWlibapreq2 = Apache Request Library
-PKGFILES_CSWlibapreq2 = /opt/csw/apache2/lib/libapreq2.so.*
+PKGFILES_CSWlibapreq2  = /opt/csw/apache2/lib/libapreq2.so.*
 RUNTIME_DEP_PKGS_CSWlibapreq2 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibapreq2 += CSWapache2rt
 RUNTIME_DEP_PKGS_CSWlibapreq2 += CSWbdb47
@@ -25,7 +25,6 @@ SPKG_DESC_CSWlibapreq2-devel = Apache Request Library development support
 PKGFILES_CSWlibapreq2-devel += /opt/csw/apache2/bin/apreq2-config
 PKGFILES_CSWlibapreq2-devel += /opt/csw/apache2/include/apreq2/.*
 PKGFILES_CSWlibapreq2-devel += /opt/csw/apache2/lib/libapreq2.a
-ARCHALL_CSWlibapreq2-devel = 1
 RUNTIME_DEP_PKGS_CSWlibapreq2-devel += CSWlibapreq2
 
 CATALOGNAME_CSWap2modapreq2 = ap2_modapreq2
