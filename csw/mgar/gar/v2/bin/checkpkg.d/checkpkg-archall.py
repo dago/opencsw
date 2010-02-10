@@ -5,6 +5,7 @@
 """Verifies the architecture of the package."""
 
 import os.path
+import re
 import sys
 
 CHECKPKG_MODULE_NAME = "architecture check"
@@ -16,16 +17,32 @@ path_list = [os.path.dirname(__file__),
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 
+ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
+
 def CheckArchitectureVsContents(pkg, debug):
   """Verifies the relationship between package contents and architecture."""
   errors = []
   binaries = pkg.ListBinaries()
   pkginfo = pkg.GetParsedPkginfo()
+  pkgmap = pkg.GetPkgmap()
   arch = pkginfo["ARCH"]
-  if binaries and arch == "all":
-    for binary in binaries:
-    	errors.append(checkpkg.CheckpkgTag(pkg.pkgname, "archall-with-binaries"), binary)
-  elif not binaries and arch != "all":
+  reasons_to_be_arch_specific = []
+  for pkgmap_path in pkgmap.entries_by_path:
+    # print "pkgmap_path", repr(pkgmap_path), type(pkgmap_path)
+    if re.search(ARCH_RE, str(pkgmap_path)):
+      reasons_to_be_arch_specific.append((
+          "archall-with-arch-paths",
+          pkgmap_path,
+          "path %s looks arch-specific" % pkgmap_path))
+  for binary in binaries:
+    reasons_to_be_arch_specific.append((
+        "archall-with-binaries",
+        binary,
+        "package contains binary %s" % binary))
+  if arch == "all":
+    for tag, param, desc in reasons_to_be_arch_specific:
+      errors.append(checkpkg.CheckpkgTag(pkg.pkgname, tag, param))
+  elif not reasons_to_be_arch_specific:
     # This is not a clean way of handling messages for the user, but there's
     # not better way at the moment.
     print "Package %s does not contain any binaries." % pkg.pkgname
