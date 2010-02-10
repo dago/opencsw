@@ -34,6 +34,6 @@ install-custom:
 post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
 
 install-changelog-%:
-	ginstall -D $(FILEDIR)/changelog.CSW \
+	ginstall -Dm 644 $(FILEDIR)/changelog.CSW \
 		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
 	@$(MAKECOOKIE)
