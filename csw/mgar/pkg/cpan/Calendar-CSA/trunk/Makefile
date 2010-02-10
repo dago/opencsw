@@ -8,6 +8,7 @@ define BLURB
   Perl extension to interface with CDE Calendar Manager.
 endef
 
-DISTFILES += CSWpmccsa.gspec
+PACKAGES = CSWpmccsa
+CATALOGNAME = pm_calendar_csa
 
 include gar/category.mk
