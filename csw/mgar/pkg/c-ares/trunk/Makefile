@@ -20,6 +20,8 @@ CATALOGNAME_CSWlibcaresdevel = libcares_devel
 SPKG_DESC_CSWlibcares = $(DESCRIPTION)
 SPKG_DESC_CSWlibcaresdevel = c-ares library developer files
 
+RUNTIME_DEP_PKGS_CSWlibcaresdevel = CSWlibcares
+
 LICENSE = README.cares
 
 BUILD64 = 1
