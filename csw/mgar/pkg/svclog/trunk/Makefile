@@ -2,7 +2,7 @@ GARNAME = svclog
 GARVERSION = 1.5
 CATEGORIES = apps
 
-DESCRIPTION = Displays log file content of SMF service (Solaris 10 only)
+DESCRIPTION = Displays log file content for SMF services
 define BLURB
   Long description
 endef
