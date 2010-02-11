@@ -21,8 +21,8 @@ PACKAGES	= CSWpmdbdmysql
 
 LICENSE = README
 
-BUILD_DEP_PKGS = CSWmysql5 CSWmysql5rt CSWmysql5devel CSWzlib
-RUNTIME_DEP_PKGS = CSWmysql5rt CSWzlib
+BUILD_DEP_PKGS = CSWmysql5 CSWmysql5rt CSWmysql5devel CSWzlib CSWosslrt CSWpmdbi
+RUNTIME_DEP_PKGS = CSWmysql5rt CSWzlib CSWosslrt CSWpmdbi
 
 CONFIGURE_ARGS += --ssl
 CONFIGURE_ARGS += --testuser=root
