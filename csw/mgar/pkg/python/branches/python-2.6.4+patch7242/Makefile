@@ -116,7 +116,9 @@ PKGFILES_CSWpython-test += $(libdir)/python/json/tests.*
 PKGFILES_CSWpython-test += $(libdir)/python/lib2to3/tests.*
 PKGFILES_CSWpython-test += $(libdir)/python/sqlite3/test.*
 
-ARCHALL_CSWpython-rt = 1
+ARCHALL_CSWpython-rt   = 1
+ARCHALL_CSWpython-test = 1
+ARCHALL_CSWidle        = 1
 
 RUNTIME_DEP_PKGS_CSWidle         = CSWpython CSWpython-tk
 RUNTIME_DEP_PKGS_CSWpython       = CSWbdb47 CSWbzip2 CSWgdbm CSWggettextrt 
@@ -140,6 +142,17 @@ SPKG_DESC_CSWpython-devel = Development Files for Python
 SPKG_DESC_CSWpython-rt = An empty, obsolete package
 SPKG_DESC_CSWpython-tk = Python Tk Interface (TkInter)
 SPKG_DESC_CSWpython-test = Python Test modules
+
+LICENSE = LICENSE
+
+CHECKPKG_OVERRIDES  = CSWpython-devel|symbol-not-found|python.o
+CHECKPKG_OVERRIDES += CSWpython|symbol-not-found|xxsubtype.so
+CHECKPKG_OVERRIDES += CSWpython|symbol-not-found|_cursesmodule.so
+CHECKPKG_OVERRIDES += CSWpython|symbol-not-found|_curses_panel.so
+
+# Checkpkg should be able to guess that, perhaps symlink information is
+# missing?
+CHECKPKG_OVERRIDES += CSWpython|missing-dependency|CSWbdb
 
 include gar/category.mk
 
