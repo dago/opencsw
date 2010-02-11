@@ -1,1 +1,2 @@
-bc71d33c35004db3768465bcaf9ed23c  patch-2.6.tar.gz
+d976e6d1af14d714cffa3e6579cf7afa  0001-Add-missing-strnlen.c-from-GNUlib.patch
+d758eb96d3f75047efc004a720d33daf  patch-2.6.1.tar.gz
