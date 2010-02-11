@@ -726,6 +726,15 @@ class DirectoryFormatPackage(ShellMixin, object):
     else:
     	return list()
 
+  def GetFileContent(self, pkg_file_path):
+    if pkg_file_path.startswith("/"):
+      pkg_file_path = pkg_file_path[1:]
+    file_path = os.path.join(self.directory, "root", pkg_file_path)
+    fd = open(file_path, "r")
+    content = fd.read()
+    fd.close()
+    return content
+
 
 class Pkgmap(object):
   """Represents the pkgmap of the package.
