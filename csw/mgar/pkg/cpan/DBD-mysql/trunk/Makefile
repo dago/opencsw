@@ -1,5 +1,5 @@
 GARNAME = DBD-mysql
-GARVERSION = 4.012
+GARVERSION = 4.013
 CATEGORIES = cpan
 AUTHOR = CAPTTOFU
 
@@ -17,12 +17,15 @@ endef
 CATALOGNAME = pm_dbdmysql
 PACKAGES	= CSWpmdbdmysql
 
-ARCHALL_CSWpmdbdmysql = 1
+# ARCHALL_CSWpmdbdmysql = 1
 
 LICENSE = README
 
-PKGS_REQUIRED_CSWpmdbdmysql = CSWmysql4
+PKGS_REQUIRED_CSWpmdbdmysql = CSWmysql5
 
 CONFIGURE_ARGS += --ssl
+CONFIGURE_ARGS += --testuser=test
+CONFIGURE_ARGS += --mysql_config=$(prefix)/mysql5/bin/mysql_config
+EXTRA_LIB = $(prefix)/mysql5/lib/mysql
 
 include gar/category.mk
