@@ -24,8 +24,6 @@ CONFIGURE_ARGS += --program-prefix=g
 EXTRA_LINKER_FLAGS = -lgnugetopt
 BUILD_ARGS = SHELL=bash
 
-INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir mandir
-
 TEST_TARGET = check
 
 include gar/category.mk
