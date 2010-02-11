@@ -75,14 +75,19 @@ EXTRA_MERGE_EXCLUDE_FILES = .*\.dist
 MIGRATE_FILES_CSWmutt-base = mime.types Muttrc
 
 MERGE_SCRIPTS_isa-default-slang-no = copy-all
-MERGE_SCRIPTS_isa-default-slang-yes = copy-mutt-only
+MERGE_SCRIPTS_isa-default-slang-yes = copy-all
 
-PKGFILES_CSWmutt-ncurses = $(bindir)/mutt
+EXTRA_PAX_ARGS_slang-no = -s ",\.$(bindir)/mutt$$,.$(bindir)/mutt-ncurses,p"
+EXTRA_PAX_ARGS_slang-yes = -s ",\.$(bindir)/mutt$$,.$(bindir)/mutt-slang,p" -s ",.*,,"
+EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_slang-$(SLANG))
+
+# CSWmutt-base gets all the rest
+PKGFILES_CSWmutt-ncurses = $(bindir)/mutt-ncurses
 PKGFILES_CSWmutt-slang = $(bindir)/mutt-slang
 
-include gar/category.mk
+ALTERNATIVES_CSWmutt-ncurses = ncurses
+ALTERNATIVES_CSWmutt-slang = slang
+ALTERNATIVE_ncurses = $(bindir)/mutt mutt $(bindir)/mutt-ncurses 100
+ALTERNATIVE_slang = $(bindir)/mutt mutt $(bindir)/mutt-slang 200
 
-merge-copy-mutt-only: $(PKGROOT)
-	ginstall -d $(PKGROOT)$(bindir)
-	ginstall $(INSTALLISADIR)$(bindir)/mutt $(PKGROOT)$(bindir)/mutt-slang
-	@$(MAKECOOKIE)
+include gar/category.mk
