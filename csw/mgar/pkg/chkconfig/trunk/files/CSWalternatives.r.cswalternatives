@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# r.cswalternatives - Class action script for
+# registering applications in alternatives
+#
+# Written and maintained by Dagobert Michelsen
+#
+# 2010-02-11 Initial release
+
+: ${PKG_INSTALL_ROOT:=/}
+
+while read dest; do
+  cat $dest | while read C; do
+    set -- $C
+
+    echo "Unregistering alternative $3 ..."
+
+    if [ -x ${PKG_INSTALL_ROOT}/opt/csw/sbin/alternatives ]; then
+      chroot ${PKG_INSTALL_ROOT} /opt/csw/sbin/alternatives --remove $2 $3
+    else
+      echo "ERROR: /opt/csw/sbin/alternatives could not be found" >&2
+      exit 2
+    fi
+  done
+done
+
+exit 0

@@ -13,6 +13,8 @@ endef
 
 MASTER_SITES = http://www.sfr-fresh.com/unix/privat/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += CSWalternatives.i.cswalternatives
+DISTFILES += CSWalternatives.r.cswalternatives
 PATCHFILES = alloca.patch
 PATCHFILES += 0001-Add-missing-include-to-alloca.h.patch
 PATCHFILES += 0002-Don-t-use-named-struct-initializers.patch
@@ -42,4 +44,7 @@ include gar/category.mk
 post-merge:
 	ginstall -d $(PKGROOT)/etc/opt/csw/alternatives
 	ginstall -d $(PKGROOT)/var/opt/csw/alternatives
+	ginstall -d $(PKGROOT)/usr/sadm/install/scripts
+	ginstall $(WORKDIR)/CSWalternatives.i.cswalternatives $(PKGROOT)/usr/sadm/install/scripts/i.cswalternatives
+	ginstall $(WORKDIR)/CSWalternatives.r.cswalternatives $(PKGROOT)/usr/sadm/install/scripts/r.cswalternatives
 	@$(MAKECOOKIE)
