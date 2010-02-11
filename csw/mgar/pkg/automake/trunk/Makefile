@@ -75,8 +75,6 @@ $(DOWNLOADDIR)/README.CSW:
 
 post-merge:
 	@rm -f $(PKGROOT)$(bindir)/aclocal
-	@gln -s aclocal-1.11 $(PKGROOT)$(bindir)/aclocal
 	@rm -f $(PKGROOT)$(bindir)/automake
-	@gln -s automake-1.11 $(PKGROOT)$(bindir)/automake
 	@ginstall $(WORKDIR)/README.CSW $(PKGROOT)$(docdir)/$(GARNAME)/
 	@$(MAKECOOKIE)
