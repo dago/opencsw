@@ -23,8 +23,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS = CSWftype2 CSWt1lib CSWxpm CSWgsfonts
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-Xpm-library=$(libdir)
-CONFIGURE_ARGS += --with-Xpm-includes=$(includedir)
+#CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+#CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
+#CONFIGURE_ARGS += --with-Xpm-library=$(libdir)
+#CONFIGURE_ARGS += --with-Xpm-includes=$(includedir)
 CONFIGURE_ARGS += --with-t1-library=$(libdir)
 CONFIGURE_ARGS += --with-t1-includes=$(includedir)
 CONFIGURE_ARGS += --with-freetype2-library=$(libdir)
