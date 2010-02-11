@@ -46,6 +46,23 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.8.5 = $(bindir)/automake $(bi
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.9.6 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.10.3 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 
+#     alternatives [options] --install link name path priority  [-
+#     -slave link name path]...  [--initscript service]
+
+ALTERNATIVES = 1.6 1.7 1.8 1.9 1.10 1.11
+ALTERNATIVE_1.6 = $(bindir)/automake automake $(bindir)/automake-1.6 60
+ALTERNATIVE_1.6 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.6
+ALTERNATIVE_1.7 = $(bindir)/automake automake $(bindir)/automake-1.7 70
+ALTERNATIVE_1.7 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.7
+ALTERNATIVE_1.8 = $(bindir)/automake automake $(bindir)/automake-1.8 80
+ALTERNATIVE_1.8 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.8
+ALTERNATIVE_1.9 = $(bindir)/automake automake $(bindir)/automake-1.9 90
+ALTERNATIVE_1.9 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.9
+ALTERNATIVE_1.10 = $(bindir)/automake automake $(bindir)/automake-1.10 100
+ALTERNATIVE_1.10 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.10
+ALTERNATIVE_1.11 = $(bindir)/automake automake $(bindir)/automake-1.11 110
+ALTERNATIVE_1.11 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.11
+
 include gar/category.mk
 
 $(DOWNLOADDIR)/README.CSW:
