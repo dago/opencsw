@@ -21,10 +21,11 @@ PACKAGES	= CSWpmdbdmysql
 
 LICENSE = README
 
-PKGS_REQUIRED_CSWpmdbdmysql = CSWmysql5
+BUILD_DEP_PKGS = CSWmysql5 CSWmysql5rt CSWmysql5devel CSWzlib
+RUNTIME_DEP_PKGS = CSWmysql5rt CSWzlib
 
 CONFIGURE_ARGS += --ssl
-CONFIGURE_ARGS += --testuser=test
+CONFIGURE_ARGS += --testuser=root
 CONFIGURE_ARGS += --mysql_config=$(prefix)/mysql5/bin/mysql_config
 EXTRA_LIB = $(prefix)/mysql5/lib/mysql
 
