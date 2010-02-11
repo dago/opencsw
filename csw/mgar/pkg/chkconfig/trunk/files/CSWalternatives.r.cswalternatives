@@ -7,8 +7,6 @@
 #
 # 2010-02-11 Initial release
 
-set -x
-
 : ${PKG_INSTALL_ROOT:=/}
 
 while read dest; do
@@ -21,6 +19,7 @@ while read dest; do
     if egrep '^manual$' ${PKG_INSTALL_ROOT}/var/opt/csw/alternatives/$2 >/dev/null 2>&1; then
       CHOICE="`perl -e 'print readlink $ARGV[0]' ${PKG_INSTALL_ROOT}/etc/opt/csw/alternatives/$2`"
       if [ "$3" = "${CHOICE}" ]; then
+        echo "Preserving '$2' manual choice ${CHOICE} ..."
         mkdir -p ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives
         rm -f ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$2
         ln -s "${CHOICE}" ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$2

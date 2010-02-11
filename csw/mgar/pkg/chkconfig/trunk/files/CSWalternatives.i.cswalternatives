@@ -7,8 +7,6 @@
 #
 # 2010-02-11 Initial release
 
-set -x
-
 : ${PKG_INSTALL_ROOT:=/}
 
 while read src dest; do
@@ -33,13 +31,14 @@ while read src dest; do
     done
     
     if [ ! -x ${PKG_INSTALL_ROOT}/opt/csw/sbin/alternatives ]; then
-      chroot ${PKG_INSTALL_ROOT} /opt/csw/sbin/alternatives $ARGS
       echo "ERROR: /opt/csw/sbin/alternatives could not be found" >&2
       exit 2
     fi
 
+    chroot ${PKG_INSTALL_ROOT} /opt/csw/sbin/alternatives $ARGS
+
     # Redo previous manual selection if this is an upgrade
-    if [ -L "${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$ALTNAME" ]; then
+    if /usr/bin/test -L "${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$ALTNAME"; then
       CHOICE=`/usr/bin/perl -e 'print readlink $ARGV[0]' "${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$ALTNAME"`
       if [ "${CHOICE}" = "$ALTPATH" ]; then
         echo "Applying previous manual selection ${CHOICE} ..."

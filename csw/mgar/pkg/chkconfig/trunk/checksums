@@ -1,7 +1,7 @@
 d56d4f7b5aef5af5235943c384734780  0001-Add-missing-include-to-alloca.h.patch
 a1045173b8bc0a667883080f85a38597  0002-Don-t-use-named-struct-initializers.patch
 5abe74bf8f38f45068f43f12b52cfc4b  0003-Fix-manpage-to-use-csw-pathes.patch
-7acb4c811cecd886e010104270e6f2ff  CSWalternatives.i.cswalternatives
-9f2c7b5521878d39b4524588bf421eef  CSWalternatives.r.cswalternatives
+d021adfa40e57e62c435654111e7f08c  CSWalternatives.i.cswalternatives
+cd3e42659af6e3adfa8a220bd95dad29  CSWalternatives.r.cswalternatives
 02019af22d048085f3006de791a0c95e  alloca.patch
 592a1fe77f3844d7748adbab6357ee25  chkconfig-1.3.30c.tar.gz
