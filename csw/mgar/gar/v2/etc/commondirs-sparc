@@ -160,3 +160,7 @@
 /var/opt/csw/pkg-hooks
 /var
 /var/run
+/usr
+/usr/sadm
+/usr/sadm/install
+/usr/sadm/install/scripts

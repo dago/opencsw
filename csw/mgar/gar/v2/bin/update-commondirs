@@ -29,7 +29,10 @@ if( $l[1] =~ /^[ds]$/ ) {
   print ($l[3] =~ /([^=]*)/);
   print "\n";
 }
-  ' $TMPDIR/CSWcommon/pkgmap; echo "/var"; echo "/var/run") > ../etc/commondirs-$1
+  ' $TMPDIR/CSWcommon/pkgmap
+    echo "/var"; echo "/var/run"
+    echo "/usr"; echo "/usr/sadm"; echo "/usr/sadm/install"; echo "/usr/sadm/install/scripts"
+  ) > ../etc/commondirs-$1
 
   rm -rf $TMPDIR
 }
