@@ -7,6 +7,8 @@
 #
 # 2010-02-11 Initial release
 
+set -x
+
 : ${PKG_INSTALL_ROOT:=/}
 
 while read src dest; do
@@ -15,21 +17,35 @@ while read src dest; do
   cat $dest | while read C; do
     set -- $C
 
-    echo "Registering alternative $3 ..."
+    ALTLINK="$1"
+    ALTNAME="$2"
+    ALTPATH="$3"
+    ALTPRIO="$4"
 
-    A="--install $1 $2 $3 $4"
+    echo "Registering '$ALTNAME' alternative $ALTPATH ..."
+
+    ARGS="--install $ALTLINK $ALTNAME $ALTPATH $ALTPRIO"
     shift; shift; shift; shift
 
     while [ $# -gt 0 ]; do
-      A="$A --slave $1 $2 $3"
+      ARGS="$ARGS --slave $1 $2 $3"
       shift; shift; shift
     done
     
-    if [ -x ${PKG_INSTALL_ROOT}/opt/csw/sbin/alternatives ]; then
-      chroot ${PKG_INSTALL_ROOT} /opt/csw/sbin/alternatives $A
-    else
+    if [ ! -x ${PKG_INSTALL_ROOT}/opt/csw/sbin/alternatives ]; then
+      chroot ${PKG_INSTALL_ROOT} /opt/csw/sbin/alternatives $ARGS
       echo "ERROR: /opt/csw/sbin/alternatives could not be found" >&2
       exit 2
+    fi
+
+    # Redo previous manual selection if this is an upgrade
+    if [ -L "${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$ALTNAME" ]; then
+      CHOICE=`/usr/bin/perl -e 'print readlink $ARGV[0]' "${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$ALTNAME"`
+      if [ "${CHOICE}" = "$ALTPATH" ]; then
+        echo "Applying previous manual selection ${CHOICE} ..."
+        chroot ${PKG_INSTALL_ROOT} /opt/csw/sbin/alternatives --set $ALTNAME ${CHOICE}
+        rm -f ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$ALTNAME
+      fi
     fi
   done
 done

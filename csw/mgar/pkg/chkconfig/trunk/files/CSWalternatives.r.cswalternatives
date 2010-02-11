@@ -7,13 +7,27 @@
 #
 # 2010-02-11 Initial release
 
+set -x
+
 : ${PKG_INSTALL_ROOT:=/}
 
 while read dest; do
   cat $dest | while read C; do
     set -- $C
 
-    echo "Unregistering alternative $3 ..."
+    # If we are in manual mode and the selected item is about to be removed
+    # make sure to remember the selection for next install to be reset.
+
+    if egrep '^manual$' ${PKG_INSTALL_ROOT}/var/opt/csw/alternatives/$2 >/dev/null 2>&1; then
+      CHOICE="`perl -e 'print readlink $ARGV[0]' ${PKG_INSTALL_ROOT}/etc/opt/csw/alternatives/$2`"
+      if [ "$3" = "${CHOICE}" ]; then
+        mkdir -p ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives
+        rm -f ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$2
+        ln -s "${CHOICE}" ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$2
+      fi
+    fi
+
+    echo "Unregistering '$2' alternative $3 ..."
 
     if [ -x ${PKG_INSTALL_ROOT}/opt/csw/sbin/alternatives ]; then
       chroot ${PKG_INSTALL_ROOT} /opt/csw/sbin/alternatives --remove $2 $3
