@@ -38,7 +38,7 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/postfix
 	@ginstall -m 644 $(WORKSRC)/postgrey_whitelist_clients $(DESTDIR)/etc/opt/csw/postfix
 	@ginstall -m 644 $(WORKSRC)/postgrey_whitelist_recipients $(DESTDIR)/etc/opt/csw/postfix
-	@ginstall -m 644 $(WORKSRC)/postgrey $(DESTDIR)/etc/opt/csw/
+	@ginstall -m 644 $(FILEDIR)/postgrey $(DESTDIR)/etc/opt/csw/
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWpostgrey
 	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWpostgrey/cswusergroup
 	@ginstall -m 755 -d $(DESTDIR)$(sbindir)
