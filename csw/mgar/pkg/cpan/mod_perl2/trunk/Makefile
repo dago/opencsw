@@ -27,7 +27,7 @@ endef
 PACKAGES = CSWap2modperl
 CATALOGNAME = ap2_modperl
 
-RUNTIME_DEP_PKGS  = CSWapache2 CSWapache2rt CSWpmapachetst CSWexpat CSWiconv
+RUNTIME_DEP_PKGS  = CSWapache2 CSWapache2rt CSWexpat CSWiconv
 RUNTIME_DEP_PKGS += CSWbdb CSWoldaprt
 #BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
