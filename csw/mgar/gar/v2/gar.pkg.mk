@@ -662,9 +662,9 @@ reset-merge-etcservices:
 merge-checkpkgoverrides-%:
 	@echo "[ Generating checkpkg override for package $* ]"
 	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/checkpkg/overrides
-	$(_DBG)$(foreach O,$(or $(CHECKPKG_OVERRIDES_$*),$(CHECKPKG_OVERRIDES)),echo "$O" | \
-		perl -F'\|' -ane 'unshift @F,"$*" if(@F<2); print "$$F[0]: $$F[1]";print " $$F[2]" if( $$F[2] );' \
-		> $(PKGROOT)/opt/csw/share/checkpkg/overrides/$(call catalogname,$*))
+	$(_DBG)($(foreach O,$(or $(CHECKPKG_OVERRIDES_$*),$(CHECKPKG_OVERRIDES)),echo "$O";)) | \
+		perl -F'\|' -ane 'unshift @F,"$*" if(@F<2); $$F[0].=":"; print join(" ",@F );' \
+		> $(PKGROOT)/opt/csw/share/checkpkg/overrides/$(call catalogname,$*)
 	@$(MAKECOOKIE)
 
 merge-checkpkgoverrides: $(foreach S,$(SPKG_SPECS),$(if $(or $(CHECKPKG_OVERRIDES_$S),$(CHECKPKG_OVERRIDES)),merge-checkpkgoverrides-$S))
