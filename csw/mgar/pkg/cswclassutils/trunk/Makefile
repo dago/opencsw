@@ -22,7 +22,10 @@ CASFILES = $(wildcard $(FILEDIR)/CSW$(GARNAME).[ir].*)
 CASLIST = $(foreach F,$(CASFILES), $(subst $(FILEDIR)/CSW$(GARNAME).,,$(F)))
 DISTFILES += $(subst $(FILEDIR)/,,$(CASFILES))
 
-PROTOTYPE_FILTER = sed -e '/^d.*\/usr/d; /scripts/{ s/bin/sys/; }'
+PROTOTYPE_MODIFIERS = cas
+PROTOTYPE_FILES_cas = /usr/sadm/install/scripts/.*
+PROTOTYPE_USER_cas = bin
+PROTOTYPE_GROUP_cas = sys
 
 include gar/category.mk
 
