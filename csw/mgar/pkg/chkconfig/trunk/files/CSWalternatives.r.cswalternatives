@@ -22,6 +22,8 @@ while read dest; do
       exit 2
     fi
   done
+
+  rm -f $dest
 done
 
 exit 0
