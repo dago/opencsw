@@ -10,9 +10,6 @@ define BLURB
   perldoc LWP for more information on POST requests.
 endef
 
-# Don't ask about networked tests -- the answer is no.
-PATCHFILES += noask.diff
-
 PACKAGES = CSWpmcryptssleay
 CATALOGNAME = pm_cryptssleay
 
@@ -20,8 +17,9 @@ RUNTIME_DEP_PKGS     = CSWosslrt
 BUILD_DEP_PKGS = CSWosslrt CSWpmmimebase64
 
 CONFIGURE_ARGS = --lib=$(prefix)
+# unset https_proxy, otherwise 1 test will fail as non root user
+CONFIGURE_ENV += https_proxy=
+# dont ask stupid questions
+CONFIGURE_ENV += PERL_MM_USE_DEFAULT=1
 
 include gar/category.mk
-
-pre-test-modulated:
-	gsed -i'' 's,fail(,pass(,' $(WORKSRC)/t/01-connect.t
