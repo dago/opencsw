@@ -43,6 +43,7 @@ include gar/category.mk
 
 post-merge:
 	ginstall -d $(PKGROOT)/etc/opt/csw/alternatives
+	ginstall -d $(PKGROOT)/etc/opt/csw/preserve/CSWalternatives/alternatives
 	ginstall -d $(PKGROOT)/var/opt/csw/alternatives
 	ginstall -d $(PKGROOT)/usr/sadm/install/scripts
 	ginstall $(WORKDIR)/CSWalternatives.i.cswalternatives $(PKGROOT)/usr/sadm/install/scripts/i.cswalternatives
