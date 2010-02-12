@@ -14,6 +14,7 @@ DISTNAME = $(GARNAME)_$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += COPYING
 DISTFILES += README
+DISTFILES += CSWtcpwrap.postmsg
 
 PATCHFILES = patch-cflags.diff
 PATCHFILES += man.patch
@@ -35,6 +36,7 @@ MODULATIONS_EXTENDED = on off
 BUILD_ARGS = REAL_DAEMON_DIR=/usr/sbin
 BUILD_ARGS += STYLE=-DPROCESS_OPTIONS
 BUILD_ARGS += USER_CFLAGS="$(CFLAGS)"
+BUILD_ARGS += LIBS="-lsocket -lnsl"
 
 BUILD64 = 1
 
@@ -53,25 +55,31 @@ LIBNAME_EXTENDED-on  = libwrap-ext.so.1
 
 INSTALL_SCRIPTS = custom
 
-MERGE_SCRIPTS_isa-sparcv8-extended-off = copy-all
- MERGE_SCRIPTS_isa-sparcv8-extended-on = copy-relocated-only
-    MERGE_DIRS_isa-sparcv8-extended-on = $(libdir)
+MERGE_SCRIPTS_isa-default-extended-off = copy-all
+ MERGE_SCRIPTS_isa-default-extended-on = copy-only
+    MERGE_DIRS_isa-default-extended-on = $(libdir)
 
-MERGE_SCRIPTS_isa-sparcv9-extended-off = copy-relocated-only
-   MERGE_DIRS_isa-sparcv9-extended-off = $(libdir)
- MERGE_SCRIPTS_isa-sparcv9-extended-on = copy-relocated-only
-    MERGE_DIRS_isa-sparcv9-extended-on = $(libdir)
-
-   MERGE_SCRIPTS_isa-i386-extended-off = copy-all
-    MERGE_SCRIPTS_isa-i386-extended-on = copy-relocated-only
-       MERGE_DIRS_isa-i386-extended-on = $(libdir)
-
-  MERGE_SCRIPTS_isa-amd64-extended-off = copy-relocated-only
-     MERGE_DIRS_isa-amd64-extended-off = $(libdir)
-   MERGE_SCRIPTS_isa-amd64-extended-on = copy-relocated-only
-      MERGE_DIRS_isa-amd64-extended-on = $(libdir)
+MERGE_SCRIPTS_isa-default64-extended-off = copy-relocated-only
+   MERGE_DIRS_isa-default64-extended-off = $(libdir)
+ MERGE_SCRIPTS_isa-default64-extended-on = copy-relocated-only
+    MERGE_DIRS_isa-default64-extended-on = $(libdir)
 
 MIGRATE_FILES = hosts.allow hosts.deny
+
+ALTERNATIVES = std ext
+ALTERNATIVES_std  = $(libdir)/libwrap.so.1 tcpwrappers $(libdir)/libwrap-std.so.1 200
+ALTERNATIVES_std += $(libdir)/$(ISA_DEFAULT64)/libwrap.so.1 tcpwrappers64 $(libdir)/$(ISA_DEFAULT64)/libwrap-std.so.1
+ALTERNATIVES_ext  = $(libdir)/libwrap.so.1 tcpwrappers $(libdir)/libwrap-ext.so.1 100
+ALTERNATIVES_ext += $(libdir)/$(ISA_DEFAULT64)/libwrap.so.1 tcpwrappers64 $(libdir)/$(ISA_DEFAULT64)/libwrap-ext.so.1
+
+POSTMSG = $(docdir)/$(CATALOGNAME)/CSWtcpwrap.postmsg
+
+# These binaries link against libwrap.so which will be linked by alternatives
+# after package install. Until then they can obviously not link properly.
+CHECKPKG_OVERRIDES  = CSWtcpwrap|symbol-not-found|tcpdmatch
+CHECKPKG_OVERRIDES += CSWtcpwrap|symbol-not-found|tcpd
+CHECKPKG_OVERRIDES += CSWtcpwrap|symbol-not-found|try-from
+CHECKPKG_OVERRIDES += CSWtcpwrap|symbol-not-found|tcpdchk
 
 include gar/category.mk
 
@@ -98,9 +106,9 @@ install-custom:
 	@$(MAKECOOKIE)
 
 post-merge:
-	ln -s libwrap-std.so.1 $(PKGROOT)$(libdir)/libwrap.so.1
+	ginstall -d $(PKGROOT)$(dir $(POSTMSG))
+	ginstall $(WORKDIR)/$(notdir $(POSTMSG)) $(PKGROOT)$(POSTMSG)
 	ln -s libwrap.so.1 $(PKGROOT)$(libdir)/libwrap.so
-	ln -s libwrap-std.so.1 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libwrap.so.1
 	ln -s libwrap.so.1 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libwrap.so
 	@$(MAKECOOKIE)
 

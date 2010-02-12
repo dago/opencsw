@@ -1,0 +1,12 @@
+There are now two versions of tcpwrappers on the system installed:
+
+  * libwrap-std.so.1  The "standard" tcp wrapper library
+  * libwrap-ext.so.1  The "extended" tcp wrapper library
+
+You can easily select between the versions with the alternatives(8)
+system by executing
+
+  /opt/csw/sbin/alternatives --config tcpwrappers
+
+See http://wiki.opencsw.org/package-alternatives for details.
+
