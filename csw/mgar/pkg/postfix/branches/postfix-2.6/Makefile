@@ -1,5 +1,4 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
-# ! Update to most recent postfix version (2.6.5 as of 13th Jan 2010)
 # ! Build, install and test package (works? spool permissions ok?)
 #   WRT to permissions, run "postfix set-permissions" and compare
 # * Ship simple default configuration
@@ -94,8 +93,6 @@ CONFIGURE_SCRIPTS = custom
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = custom
 
-include gar/category.mk
-
 # Supporting documentation for building postfix
 # - Postfix Installation From Source Code 
 #   http://www.postfix.org/INSTALL.html
@@ -125,6 +122,15 @@ DEFAULTS=\
 	-DDEF_DATA_DIR=\"$(DEF_DATA_DIR)\" \
 	-DDEF_README_DIR=\"$(DEF_README_DIR)\"
 
+# By setting BUILDTYPE=simple on the command line you can produce a
+# bare-bones postfix package without any dependencies to other CSW pkgs.
+# This is currently for on demand personal use, as Phil insists on the
+# possibility of "pkg-get -i all" and two postfix's would clash.
+# Eventually it might be nice two have a bare-bones postfix in the catalog
+# as not everyone might want to pull in all the extra deps from CSWpostfix.
+ifeq ($(BUILDTYPE),simple)
+PKGNAME = $(GARNAME)-simple
+else
 # Make sure libraries in the default location can be found
 AUXLIBS = -L/opt/csw/lib
 
@@ -150,7 +156,6 @@ AUXLIBS  += -lssl -lcrypto
 BUILD_DEP_PKGS += CSWossldevel
 RUNTIME_DEP_PKGS += CSWosslrt
 
-ifneq ($(BUILDTYPE),simple)
 # Activate support for Cyrus SASL (dovecot is incl. automatically)
 # http://www.postfix.org/SASL_README.html
 FEATURES += -DUSE_SASL_AUTH -DUSE_CYRUS_SASL
@@ -183,9 +188,9 @@ AUXLIBS  += -L/opt/csw/postgresql/lib/ -R/opt/csw/postgresql/lib/
 AUXLIBS  += -lpq
 BUILD_DEP_PKGS += CSWlibpq
 RUNTIME_DEP_PKGS += CSWlibpq
-else
-PKGNAME = $(GARNAME)-simple
 endif
+
+include gar/category.mk
 
 # Make sure to include $(CFLAGS) so that we get sane defaults via GAR
 CCARGS=$(CPPFLAGS) $(INCLUDES) $(FEATURES) $(DEFAULTS) $(CFLAGS)
