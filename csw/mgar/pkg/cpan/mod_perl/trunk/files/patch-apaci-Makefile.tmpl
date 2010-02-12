@@ -1,0 +1,11 @@
+--- mod_perl-1.31.orig/apaci/Makefile.tmpl	2008-02-26 09:43:35.000000000 +0100
++++ mod_perl-1.31/apaci/Makefile.tmpl	2010-02-12 12:09:05.448774019 +0100
+@@ -94,7 +94,7 @@
+ 
+ #   FOR STAND-ALONE BUILDING ONLY
+ install:
+-	$(APXS) -i -a -n perl libperl.$(LIBEXT)
++	# $(APXS) -i -a -n perl libperl.$(LIBEXT)
+ 
+ depend:
+ 	cp Makefile.tmpl Makefile.tmpl.bak \

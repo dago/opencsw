@@ -1,5 +1,5 @@
 GARNAME = mod_perl
-GARVERSION = 1.29
+GARVERSION = 1.31
 CATEGORIES = cpan
 AUTHOR = GOZER
 
@@ -12,12 +12,13 @@ define BLURB
   an external interpreter and the penalty of Perl start-up time.
 endef
 
-pkgfiles   = prototype depend postinstall preremove space
-DISTFILES += $(call admfiles,CSWmodperl,$(pkgfiles))
-DISTFILES += test.pl README
+PACKAGES = CSWmodperl
+CATALOGNAME = mod_perl
+
+RUNTIME_DEP_PKGS  = CSWapache CSWbdb
 
 # Disable installation of module using apxs
-PATCHFILES += apxsinstall.diff
+PATCHFILES += patch-apaci-Makefile.tmpl
 
 CONFIGURE_ARGS  = USE_APXS=1
 CONFIGURE_ARGS += WITH_APXS=$(prefix)/apache/bin/apxs
@@ -26,6 +27,7 @@ CONFIGURE_ARGS += EVERYTHING=1
 
 PERL_CONFIGURE_ARGS  = INSTALLSITEARCH=$(prefix)/apache/lib/perl
 PERL_CONFIGURE_ARGS += INSTALLSITEMAN3DIR=$(prefix)/apache/man/man3
+# PERL_CONFIGURE_ARGS += LIBS=-lpthread
 
 INSTALL_SCRIPTS = custom
 
@@ -33,18 +35,14 @@ include gar/category.mk
 
 install-custom:
 	( cd $(WORKSRC) ; $(INSTALL_ENV) make install DESTDIR=$(DESTDIR) )
-	@$(MAKECOOKIE)
-
-post-install:
-	install -d $(DESTDIR)$(docdir)/mod_perl
-	install -m 0644 \
-		$(WORKDIR)/README $(DESTDIR)$(docdir)/mod_perl
-	install -d $(DESTDIR)$(prefix)/apache/perl
-	install -m 0755 \
-		$(WORKDIR)/test.pl $(DESTDIR)$(prefix)/apache/perl
-	install -d $(DESTDIR)$(prefix)/apache/libexec
+	ginstall -d $(DESTDIR)$(docdir)/mod_perl
+	ginstall -m 0644 \
+		$(FILEDIR)/README $(DESTDIR)$(docdir)/mod_perl
+	ginstall -d $(DESTDIR)$(prefix)/apache/perl
+	ginstall -m 0755 \
+		$(FILEDIR)/test.pl $(DESTDIR)$(prefix)/apache/perl
+	ginstall -d $(DESTDIR)$(prefix)/apache/libexec
 	strip $(WORKSRC)/apaci/libperl.so
-	install -m 0755 \
+	ginstall -m 0755 \
 		$(WORKSRC)/apaci/libperl.so $(DESTDIR)$(prefix)/apache/libexec
 	@$(MAKECOOKIE)
-
