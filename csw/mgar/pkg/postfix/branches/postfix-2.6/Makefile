@@ -1,12 +1,8 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
-# ! Handle system integration (refer to README.CSW or alike), see
-#   http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5313
 # ! Update to most recent postfix version (2.6.5 as of 13th Jan 2010)
-# ! Verify CONFIG_FILES list (can this be generated on the fly?)
-# ! Ship simple default configuration
-# ! Build, install and test package (bails out on existing spool files?
-#   works? spool permissions ok?)
+# ! Build, install and test package (works? spool permissions ok?)
 #   WRT to permissions, run "postfix set-permissions" and compare
+# * Ship simple default configuration
 #
 # NICE TO KNOW
 # - 2.4.6,REV=2008.05.28 preserves modified configuration files via
@@ -31,12 +27,11 @@ VENDOR_URL   = http://www.postfix.org
 MASTER_SITES = ftp://ftp.porcupine.org/mirrors/postfix-release/official/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-DISTFILES += CSWpostfix.checkinstall
+LICENSE      = LICENSE TLS_LICENSE
 
 # Tag configuration files for handling via cswclassutils
-CONFIG_BASE   = /etc/opt/csw/postfix/
-CONFIG_FILES  = access 
+CONFIG_BASE  := /etc/opt/csw/postfix/
+CONFIG_FILES := access 
 CONFIG_FILES += aliases
 CONFIG_FILES += canonical
 CONFIG_FILES += generic
@@ -46,10 +41,16 @@ CONFIG_FILES += master.cf
 CONFIG_FILES += relocated
 CONFIG_FILES += transport
 CONFIG_FILES += virtual
-SAMPLECONF    = $(addprefix $(CONFIG_BASE), $(CONFIG_FILES))
+SAMPLECONF   := $(addprefix $(CONFIG_BASE), $(CONFIG_FILES))
 
-INITSMF     = /etc/opt/csw/init.d/cswpostfix
-USERGROUP   = $(sysconfdir)/pkg/CSWpostfix/cswusergroup
+sysconfdir  = /etc/opt/csw
+INITSMF     = $(sysconfdir)/init.d/csw$(GARNAME)
+USERGROUP   = $(sysconfdir)/pkg/CSW$(GARNAME)/cswusergroup
+
+# For the sake of simplicity and user choice we dropped the automatic
+# replacement of the /usr/{lib,bin} sendmail binaries. Ref.
+# http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5313
+POSTMSG     = POSTMSG = $(DOCDIR)/$(GARNAME)/README.upgradefrom.24
 
 # Make postdrop setgid so that it can deliver to $(DEF_QUEUE_DIR)/maildrop
 PROTOTYPE_MODIFIERS = makesgid
@@ -80,6 +81,7 @@ PROTOTYPE_PERMS_pid = 0755
 PROTOTYPE_CLASS_pid = ugfiles
 
 EXTRA_MERGE_EXCLUDE_FILES  = /etc/opt/csw/postfix/LICENSE
+EXTRA_MERGE_EXCLUDE_FILES += /etc/opt/csw/postfix/TLS_LICENSE
 EXTRA_MERGE_EXCLUDE_FILES += /etc/opt/csw/postfix/makedefs.out
 
 STRIP_DIRS = $(DESTDIR)$(libexecdir)/postfix
@@ -190,7 +192,7 @@ configure-custom:
 		AUXLIBS='$(AUXLIBS)' \
 		DEBUG= \
 		OPT=
-	@$(MAKECOOKIE)
+	@$(MAKECOOIE)
 
 install-custom:
 	$(MAKE) -C $(WORKSRC) non-interactive-package install_root=$(DESTDIR) \
@@ -212,4 +214,28 @@ install-custom:
 		$(DESTDIR)/etc/opt/csw/init.d/cswpostfix
 	ginstall -D $(FILEDIR)/cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/CSWpostfix/cswusergroup
+
+    # Helper script for spool location migration (2.4.x -> 2.6.x)
+	ginstall -Dm 755 $(FILEDIR)/migrate-queuefiles.sh \
+		$(DESTDIR)$(docdir)/$(GARNAME)/scripts/migrate-queuefiles.sh
 	@$(MAKECOOKIE)
+
+post-merge-modulated: verify-config
+
+# Warn if there are any files in $(sysconfdir)/postfix which are not
+# covered by cswsampleconf. This is a safety net in case new config file
+# get introduced by more recent postfix versions. I know this runs for
+# most bloated awkwardness. Feel free to trim it down.
+verify-config: SHIPPED_CFGFILES  = $(wildcard $(PKGROOT)$(CONFIG_BASE)*)
+verify-config: SHIPPED_CFGFILES := $(subst $(PKGROOT),,$(SHIPPED_CFGFILES))
+verify-config: IGNORE_FILES += /etc/opt/csw/postfix/bounce.cf.default
+verify-config: IGNORE_FILES += /etc/opt/csw/postfix/main.cf.default
+verify-config: IGNORE_FILES += $(addsuffix .CSW, $(SAMPLECONF))
+verify-config: SHELL=/bin/bash
+verify-config:
+	@echo "Checking for files in $(CONFIG_BASE) not covered by cswsampleconf"
+	@gdiff \
+		<( echo $(IGNORE_FILES) | tr " " "\n" | sort) \
+		<( echo $(SHIPPED_CFGFILES) | tr " " "\n" | sort )
+	@echo "OK"
+	@$(MAKECOOKIE)	

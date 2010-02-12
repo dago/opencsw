@@ -3,13 +3,15 @@
 # Start or stop Postfix
 #
 # Origionally written by Valery Kotchiev <valery@blastwave.org>
-# Maintained by Darin Perusich <darin@blastwave.org>
+# Adjusted by Darin Perusich <darin@blastwave.org>
+# Adjusted by Sebastian Kayser <skayser@opencsw.org>
 # based on debians's postfix init.d script
 #
 # cswclassutils settings
-#MANIFEST /var/opt/csw/svc/manifest/network/cswpostfix.xml
+#AUTOENABLE NO
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
+CFGDIR=/etc/opt/csw/postfix
 DAEMON=/opt/csw/sbin/postfix
 PIDFILE=/var/opt/csw/run/postfix.pid
 NAME=Postfix
@@ -20,7 +22,7 @@ test -x $DAEMON -a -f /etc/opt/csw/postfix/main.cf || exit 0
 
 case "$1" in
     start)
-        if [ ! -f $pf_config_directory/aliases.dir ]; then
+        if [ ! -f $CFGDIR/aliases.dir ]; then
          /opt/csw/bin/newaliases
         fi
 
