@@ -189,7 +189,15 @@ endif
 include gar/category.mk
 
 # Make sure to include $(CFLAGS) so that we get sane defaults via GAR
+ifeq ($(BUILDTYPE),simple)
+CCARGS  = $(filter-out %/csw/%,$(CPPFLAGS))
+CCARGS += $(filter-out %/csw/%,$(INCLUDES))
+CCARGS += $(FEATURES)
+CCARGS += $(DEFAULTS)
+CCARGS += $(filter-out %/csw/%,$(CFLAGS))
+else
 CCARGS=$(CPPFLAGS) $(INCLUDES) $(FEATURES) $(DEFAULTS) $(CFLAGS)
+endif
 
 # We zero makedef's DEBUG and OPT, the relevant flags are set via GAR & CFLAGS
 configure-custom:
