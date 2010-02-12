@@ -17,11 +17,12 @@ endef
 VENDOR_URL   = http://www.mutt.org
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES   += CSWmutt.postmsg
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = COPYRIGHT
 
-PACKAGES = CSWmutt-base CSWmutt-ncurses CSWmutt-slang
+PACKAGES = CSWmutt CSWmutt-base CSWmutt-ncurses CSWmutt-slang
 
 RUNTIME_DEP_PKGS_core  = CSWgdbm
 RUNTIME_DEP_PKGS_core += CSWggettextrt
@@ -35,14 +36,17 @@ RUNTIME_DEP_PKGS_core += CSWzlib
 RUNTIME_DEP_PKGS_CSWmutt-ncurses = $(RUNTIME_DEP_PKGS_core) CSWmutt-base CSWncurses
 RUNTIME_DEP_PKGS_CSWmutt-slang   = $(RUNTIME_DEP_PKGS_core) CSWmutt-base CSWslang
 RUNTIME_DEP_PKGS_CSWmutt-base    = CSWggettextrt CSWiconv CSWlibidn
+RUNTIME_DEP_PKGS_CSWmutt         = CSWmutt-ncurses CSWmutt-slang
 
 CATALOGNAME_CSWmutt-base = mutt_base
 CATALOGNAME_CSWmutt-ncurses = mutt_ncurses
 CATALOGNAME_CSWmutt-slang = mutt_slang
+CATALOGNAME_CSWmutt = mutt
 
 SPKG_DESC_CSWmutt-base = $(DESCRIPTION)
 SPKG_DESC_CSWmutt-ncurses = Mutt mail client with ncurses interface
 SPKG_DESC_CSWmutt-slang = Mutt mail client with slang interface
+SPKG_DESC_CSWmutt = Metapackage for mutt with ncurses- and slang-interface
 
 # Raise optimizer level unless this bug has been fixed:
 #   http://dev.mutt.org/trac/ticket/3347
@@ -81,13 +85,25 @@ EXTRA_PAX_ARGS_slang-no = -s ",\.$(bindir)/mutt$$,.$(bindir)/mutt-ncurses,p"
 EXTRA_PAX_ARGS_slang-yes = -s ",\.$(bindir)/mutt$$,.$(bindir)/mutt-slang,p" -s ",.*,,"
 EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_slang-$(SLANG))
 
+POSTMSG = $(docdir)/mutt/CSWmutt.postmsg
+
 # CSWmutt-base gets all the rest
 PKGFILES_CSWmutt-ncurses = $(bindir)/mutt-ncurses
 PKGFILES_CSWmutt-slang = $(bindir)/mutt-slang
+PKGFILES_CSWmutt = $(POSTMSG)
 
 ALTERNATIVES_CSWmutt-ncurses = ncurses
 ALTERNATIVES_CSWmutt-slang = slang
 ALTERNATIVE_ncurses = $(bindir)/mutt mutt $(bindir)/mutt-ncurses 100
 ALTERNATIVE_slang = $(bindir)/mutt mutt $(bindir)/mutt-slang 200
 
+# This warning from checkpkg is obviously wrong...
+CHECKPKG_OVERRIDES_CSWmutt-base = CSWmutt-base|missing-dependency|CSWperl
+
 include gar/category.mk
+
+post-merge:
+	ginstall -d $(PKGROOT)$(docdir)/mutt/
+	ginstall $(WORKDIR)/CSWmutt.postmsg $(PKGROOT)$(docdir)/mutt/CSWmutt.postmsg
+	@$(MAKECOOKIE)
+	
