@@ -33,8 +33,8 @@ ISAEXEC_DIRS = $(libexecdir)
 MERGE_EXCLUDE_FILES = .*~ $(bindir)/.*\.sh .*\.la
 
 # Don't add the shell wrapper for other ISAs
-EXTRA_MERGE_EXCLUDE_FILES_amd64 = $(bindir)/se
-EXTRA_MERGE_EXCLUDE_FILES_sparcv9 = $(bindir)/se
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = $(bindir)/se
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = $(bindir)/se
 
 # Testsuite must be run as root
 SKIPTEST = 1
