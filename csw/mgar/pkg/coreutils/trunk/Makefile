@@ -14,6 +14,8 @@ SHELL = /opt/csw/bin/bash
 
 BUILD_DEP_PKGS = CSWbash
 
+RUNTIME_DEP_PKGS = CSWiconv CSWggettextrt CSWlibgmp
+
 DESCRIPTION = GNU core utilities
 define BLURB
 The GNU Core Utilities are the basic file, shell and text manipulation utilities of the GNU operating system. These are the core utilities which are expected to exist on every operating system.
