@@ -47,6 +47,10 @@ sysconfdir  = /etc/opt/csw
 INITSMF     = $(sysconfdir)/init.d/csw$(GARNAME)
 USERGROUP   = $(sysconfdir)/pkg/CSW$(GARNAME)/cswusergroup
 
+# Type of build. Either 'simple' (just using bdb and ssl)
+# or 'full'
+BUILDTYPE = simple
+
 # For the sake of simplicity and user choice we dropped the automatic
 # replacement of the /usr/{lib,bin} sendmail binaries. Ref.
 # http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5313
@@ -146,6 +150,7 @@ AUXLIBS  += -lssl -lcrypto
 BUILD_DEP_PKGS += CSWossldevel
 RUNTIME_DEP_PKGS += CSWosslrt
 
+ifneq ($(BUILDTYPE),simple)
 # Activate support for Cyrus SASL (dovecot is incl. automatically)
 # http://www.postfix.org/SASL_README.html
 FEATURES += -DUSE_SASL_AUTH -DUSE_CYRUS_SASL
@@ -178,7 +183,9 @@ AUXLIBS  += -L/opt/csw/postgresql/lib/ -R/opt/csw/postgresql/lib/
 AUXLIBS  += -lpq
 BUILD_DEP_PKGS += CSWlibpq
 RUNTIME_DEP_PKGS += CSWlibpq
-
+else
+PKGNAME = $(GARNAME)-simple
+endif
 
 # Make sure to include $(CFLAGS) so that we get sane defaults via GAR
 CCARGS=$(CPPFLAGS) $(INCLUDES) $(FEATURES) $(DEFAULTS) $(CFLAGS)
