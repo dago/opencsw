@@ -44,7 +44,7 @@ SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
 
 RUNTIME_DEP_PKGS_CSWoldap       = CSWbdb47 CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
-RUNTIME_DEP_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc
 RUNTIME_DEP_PKGS_CSWoldap      += CSWkrb5lib CSWlibicu CSWperl
 RUNTIME_DEP_PKGS_CSWoldapclient = CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWoldapdevel  = CSWoldaprt
@@ -115,6 +115,13 @@ PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
 PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
 INITSMF = /etc/opt/csw/init.d/cswopenldap
+
+# There are plenty of cross-references. Ignore for now, but should be
+# investigated later.
+CHECKPKG_OVERRIDES = symbol-not-found
+CHECKPKG_OVERRIDES_CSWoldapdevel  = symbol-not-found
+# The devel package depends on rt instead of the full package, that is ok.
+CHECKPKG_OVERRIDES_CSWoldapdevel += CSWoldapdevel|missing-dependency|CSWoldap
 
 include gar/category.mk
 
