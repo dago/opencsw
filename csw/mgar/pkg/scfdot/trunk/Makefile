@@ -27,16 +27,11 @@ LICENSE = CDDL.LICENSE
 RUNTIME_DEP_PKGS = CSWgraphviz
 
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS     = custom
+BUILD_ARGS        = scfdot legend.ps
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = custom
 
 include gar/category.mk
-
-build-custom:
-	$(BUILD_ENV) gmake -C $(WORKSRC) scfdot
-	$(BUILD_ENV) gmake -C $(WORKSRC) legend.ps
-	@$(MAKECOOKIE)
 
 install-custom: DOCS=AUTHORS
 install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
