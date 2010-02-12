@@ -361,6 +361,7 @@ _PROTOTYPE_MODIFIERS = | perl -ane '\
 			$(if $(PROTOTYPE_FILES_$M),})\
 		)\
 		$(foreach F,$(POSTMSG),$$F[1] = "cswpostmsg" if( $$F[2] eq "$F" );)\
+		$$F[1] = "cswalternatives" if( $$F[2] =~ m,^/opt/csw/share/alternatives/[^/]+$$, );\
                 print join(" ",@F),"\n";'
 
 
@@ -392,7 +393,8 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
 	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-I $(call licensedir,$*)/license -I /etc/opt/csw/pkg/$*/cswmigrateconf) \
-		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-X $(call licensedir,$S)/license -X /etc/opt/csw/pkg/$S/cswmigrateconf) \
+		      $(if $(or $(ALTERNATIVES_$*),$(ALTERNATIVES)),-I /opt/csw/share/alternatives/$(call catalogname,$*)) \
+		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-X $(call licensedir,$S)/license -X /etc/opt/csw/pkg/$S/cswmigrateconf -X /opt/csw/share/alternatives/$(call catalogname,$S)) \
 		      $(foreach I,$(EXTRA_PKGFILES_INCLUDED) $(EXTRA_PKGFILES_INCLUDED_$*),-i '$I') \
 		      $(foreach X,$(EXTRA_PKGFILES_EXCLUDED) $(EXTRA_PKGFILES_EXCLUDED_$*),-x '$X') \
 		      $(foreach FILE,$(_PKGFILES_INCLUDE),-i '$(FILE)') \
@@ -431,6 +433,7 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 # The dependencies to CSWcswclassutils and CSWtexinfo are only added if there are files
 # actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),CSWalternatives)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
 
 $(WORKDIR)/%.depend: $(WORKDIR)
@@ -536,6 +539,7 @@ $(foreach P,$(SPKG_SPECS),\
 
 # The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
 $(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),cswalternatives)
 $(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(shell cat $(WORKDIR)/$*.prototype | perl -e 'while(<>){@F=split;$$c{$$F[1]}++};$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$c{$C});)')
 
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
@@ -671,6 +675,18 @@ merge-checkpkgoverrides: $(foreach S,$(SPKG_SPECS),$(if $(or $(CHECKPKG_OVERRIDE
 
 reset-merge-checkpkgoverrides:
 	@rm -f $(COOKIEDIR)/merge-checkpkgoverrides $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-checkpkgoverrides-$(SPEC))
+
+merge-alternatives-%:
+	@echo "[ Generating alternatives for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/alternatives
+	$(_DBG)($(foreach A,$(or $(ALTERNATIVES_$*),$(ALTERNATIVES)),echo "$(ALTERNATIVE_$A)";)) \
+		> $(PKGROOT)/opt/csw/share/alternatives/$(call catalogname,$*)
+	@$(MAKECOOKIE)
+
+merge-alternatives: $(foreach S,$(SPKG_SPECS),$(if $(or $(ALTERNATIVES_$S),$(ALTERNATIVES)),merge-alternatives-$S))
+
+reset-merge-alternatives:
+	@rm -f $(COOKIEDIR)/merge-alternatives $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-alternatives-$(SPEC))
 
 merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
 merge-src: fetch
