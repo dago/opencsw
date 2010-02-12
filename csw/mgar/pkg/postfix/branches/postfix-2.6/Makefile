@@ -46,10 +46,6 @@ sysconfdir  = /etc/opt/csw
 INITSMF     = $(sysconfdir)/init.d/csw$(GARNAME)
 USERGROUP   = $(sysconfdir)/pkg/CSW$(GARNAME)/cswusergroup
 
-# Type of build. Either 'simple' (just using bdb and ssl)
-# or 'full'
-BUILDTYPE = simple
-
 # For the sake of simplicity and user choice we dropped the automatic
 # replacement of the /usr/{lib,bin} sendmail binaries. Ref.
 # http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5313
