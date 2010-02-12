@@ -92,6 +92,8 @@ PKGFILES_CSWmutt-ncurses = $(bindir)/mutt-ncurses
 PKGFILES_CSWmutt-slang = $(bindir)/mutt-slang
 PKGFILES_CSWmutt = $(POSTMSG)
 
+ARCHALL_CSWmutt = 1
+
 ALTERNATIVES_CSWmutt-ncurses = ncurses
 ALTERNATIVES_CSWmutt-slang = slang
 ALTERNATIVE_ncurses = $(bindir)/mutt mutt $(bindir)/mutt-ncurses 100
