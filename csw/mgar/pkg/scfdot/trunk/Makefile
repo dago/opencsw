@@ -31,8 +31,6 @@ BUILD_SCRIPTS     = custom
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = custom
 
-BUILD_TARGETS = scfdot legend.ps
-
 include gar/category.mk
 
 build-custom:
