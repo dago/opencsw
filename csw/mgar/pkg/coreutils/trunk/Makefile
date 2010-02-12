@@ -39,7 +39,8 @@ CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw/
 CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw/
 CONFIGURE_ARGS += --enable-no-install-program=chcon
 
-TEST_TARGET = check
+#TEST_TARGET = check
+TEST_TARGET =
 
 include gar/category.mk
 
