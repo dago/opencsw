@@ -1,0 +1,61 @@
+# TODO
+# ! dot seems to put an extraneous header line in each output file
+#   -36 3393.7 translate newpath user_shape_0
+#   Why is this? Bug?
+GARNAME = scfdot
+GARVERSION = 1.0
+CATEGORIES = apps
+
+DESCRIPTION = SMF Dependency Graph Generator
+define BLURB
+  Solaris 10 features the Service Management Facility (SMF), which starts
+  services in dependency order.  Run "man smf" for more information.  scfdot
+  reads the service names and dependencies from the Service Configuration
+  Facility (SCF) repository and writes a file which the dot program from the
+  graphviz package can render into a graph.
+endef
+
+VENDOR_URL   = http://hub.opensolaris.org/bin/view/Community+Group+smf/scfdot
+MASTER_SITES = http://hub.opensolaris.org/bin/download/Community+Group+smf/scfdot/
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+
+# Only makes sense on Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+LICENSE = CDDL.LICENSE
+
+RUNTIME_DEP_PKGS = CSWgraphviz
+
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS     = custom
+TEST_SCRIPTS      =
+INSTALL_SCRIPTS   = custom
+
+BUILD_TARGETS = scfdot legend.ps
+
+include gar/category.mk
+
+build-custom:
+	$(BUILD_ENV) gmake -C $(WORKSRC) scfdot
+	$(BUILD_ENV) gmake -C $(WORKSRC) legend.ps
+	@$(MAKECOOKIE)
+
+install-custom: DOCS=AUTHORS
+install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+install-custom:
+	ginstall -d	$(DOCDEST)/examples
+	cp $(WORKSRC)/snv_24_x86.* $(DOCDEST)/examples
+	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
+	cp $(FILEDIR)/README.CSW $(DOCDEST)
+
+	@# We place the scfdot binary in libexec and instead put a
+	@# readily usable wrapper in bindir
+	ginstall -d $(DESTDIR)$(bindir)
+	ginstall -d $(DESTDIR)$(libexecdir)
+	ginstall -m755 $(FILEDIR)/smfdepgraph $(DESTDIR)$(bindir)
+	ginstall -m755  $(WORKSRC)/scfdot $(DESTDIR)$(libexecdir)
+
+	@# smfdepgraph includes a legend which we also ship
+	ginstall -Dm644 $(WORKSRC)/legend.ps \
+		$(DESTDIR)$(datadir)/$(GARNAME)/legend.ps
+	@$(MAKECOOKIE)

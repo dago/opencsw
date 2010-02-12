@@ -1,0 +1,39 @@
+This package contains a wrapper around scfdot which should be sufficient
+for most use cases: smfdepgraph. Invoke it with 
+
+    smfdepgraph <outfile.ext>
+
+and it will generate a SMF dependency graph in whichever file format you
+specify (determined via the file extension). Default is postscript. The
+extension will be passed to dot via -T<ext> so dot needs to support it.
+Unsupported file extensions will give you a list of supported ones.
+
+In case you need to invoke scfdot directly, these are the usage instructions.
+We operate in two modes: with and without -L. Without -L, we print nodes
+for each instance and edges for each dependency. Fortunately dot allows
+forward references, so we can do this in one pass. Options are
+
+  -s width,height  Size, in inches, that the graph should be limited to.
+
+  -l legend.ps     PostScript file which should be used as the legend.
+
+  -x opts          Simplify the graph. opts should be a comma-separated
+                   list of
+
+     omit_net_deps
+             Omit most of the dependencies on
+             network/loopback and network/physical.
+
+     consolidate_inetd_svcs
+             Consolidate services which only depend on
+             network/inetd into a single node.
+
+     consolidate_rpcbind_svcs 
+             Consolidate services which only depend on
+             network/inetd and rpc/bind into a single node.
+
+Other hard-coded graph settings (rankdir, nodesep, margin) were intended
+for a 42" plotter. -L causes the program to print a dot file for use as
+a legend. It currently consists of eight nodes which demonstrate the
+color scheme and the dependency types.  The nodes are enclosed in a box
+which is labeled "legend".

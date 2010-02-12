@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# smfdepgraph:
+# Wrapper around the scfdot binary. Replaces the upstream shipped Makefile
+# which is geared towards build dir usage.
+
+set -u
+
+SCFDOT=/opt/csw/libexec/scfdot
+LEGEND=/opt/csw/share/scfdot/legend.ps
+SCFDOT_OPTS="-s 300,42 -l ${LEGEND} -x consolidate_inetd_svcs"
+
+[ $# -eq 1 ] || {
+  echo "Usage: ${0##*/} <outputfile>"
+  echo "File extensions sets file type, default is postscript."
+  exit 1
+}
+
+OUTFILE=${1}
+OUTTYPE=${OUTFILE##*.}; OUTTYPE=${OUTTYPE:-ps}
+
+echo "Generating ${OUTFILE} (with file type ${OUTTYPE})"
+# Directly pipe scfdot output into the dot binary
+$SCFDOT $SCFDOT_OPTS | dot -T${OUTTYPE} /dev/fd/0 > $OUTFILE
