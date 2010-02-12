@@ -36,9 +36,6 @@ EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
 
 PKGFILES_CSWlibcaresdevel = $(PKGFILES_DEVEL)
 
-POSTMSG = /opt/csw/share/doc/libcares/license
-POSTMSG += /opt/csw/lib/pkgconfig/libcares.pc
-
 include gar/category.mk
 
 post-merge:
