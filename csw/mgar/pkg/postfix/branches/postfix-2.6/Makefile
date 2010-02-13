@@ -49,7 +49,7 @@ USERGROUP   = $(sysconfdir)/pkg/CSW$(GARNAME)/cswusergroup
 # For the sake of simplicity and user choice we dropped the automatic
 # replacement of the /usr/{lib,bin} sendmail binaries. Ref.
 # http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5313
-POSTMSG     = POSTMSG = $(DOCDIR)/$(GARNAME)/README.upgradefrom.24
+POSTMSG     = $(DOCDIR)/$(GARNAME)/README.upgradefrom.24
 
 # Make postdrop setgid so that it can deliver to $(DEF_QUEUE_DIR)/maildrop
 PROTOTYPE_MODIFIERS = makesgid
