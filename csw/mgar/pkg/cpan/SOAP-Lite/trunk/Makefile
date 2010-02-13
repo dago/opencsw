@@ -10,8 +10,7 @@ define BLURB
   client and server side.
 endef
 
-RUNTIME_DEP_PKGS = CSWpmiocompress CSWpmlibwww CSWpmmimelite CSWpmmimetools CSWpmuri CSWpmxmlparser
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+DEP_PKGS = CSWpmiocompress CSWpmlibwww CSWpmmimelite CSWpmmimetools CSWpmuri CSWpmxmlparser CSWpmversion
 
 PACKAGES = CSWpmsoaplite
 CATALOGNAME = pm_soaplite
