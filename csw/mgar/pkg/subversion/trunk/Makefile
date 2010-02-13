@@ -16,7 +16,7 @@
 #   the lib itself belongs to CSWbdb47, the CSWbdb47 dep is completely fine.
 #
 GARNAME = subversion
-GARVERSION = 1.6.6
+GARVERSION = 1.6.9
 CATEGORIES = utils
 
 DESCRIPTION = Version control rethought
@@ -25,8 +25,9 @@ define BLURB
     that is a compelling replacement for CVS in the open source community.
 endef
 
-VENDOR_URL   = http://subversion.tigris.org/
+VENDOR_URL   = http://subversion.apache.org/
 MASTER_SITES = http://subversion.tigris.org/downloads/
+#MASTER_SITES = http://orac.ece.utexas.edu/pub/svn/1.6.7/yuletide-eggnog/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
