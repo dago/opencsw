@@ -125,7 +125,8 @@ DEFAULTS=\
 # Eventually it might be nice two have a bare-bones postfix in the catalog
 # as not everyone might want to pull in all the extra deps from CSWpostfix.
 ifeq ($(BUILDTYPE),simple)
-PKGNAME = $(GARNAME)-simple
+PACKAGES = CSW$(GARNAME)-simple
+CATALOGNAME = $(GARNAME)_simple
 else
 # Make sure libraries in the default location can be found
 AUXLIBS = $(LDFLAGS)
