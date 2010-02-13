@@ -128,7 +128,7 @@ ifeq ($(BUILDTYPE),simple)
 PKGNAME = $(GARNAME)-simple
 else
 # Make sure libraries in the default location can be found
-AUXLIBS = -L/opt/csw/lib
+AUXLIBS = $(LDFLAGS)
 
 # Activate support for PCRE
 # http://www.postfix.org/PCRE_README.html
@@ -188,18 +188,25 @@ endif
 
 include gar/category.mk
 
-# Make sure to include $(CFLAGS) so that we get sane defaults via GAR
+# Postfix's build system relies on CCARGS, populate it with the defaults from
+# GAR. For the bare-bones build don't leak anything located in */csw/* to the
+# build (we want to rely on as little additional CSW pkgs as possible).
 ifeq ($(BUILDTYPE),simple)
-CCARGS  = $(filter-out %/csw/%,$(CPPFLAGS))
-CCARGS += $(filter-out %/csw/%,$(INCLUDES))
-CCARGS += $(FEATURES)
-CCARGS += $(DEFAULTS)
-CCARGS += $(filter-out %/csw/%,$(CFLAGS))
+LD_OPTIONS  =
+CCARGS      = $(CFLAGS)
+CCARGS     += $(filter-out -I/opt/csw/include,$(CPPFLAGS))
+CCARGS     += $(filter-out -I/opt/csw/%,$(INCLUDES))
+CCARGS     += -DNO_PCRE         # on by default, would trigger our pcre-config
+CCARGS     += $(DEFAULTS)
 else
-CCARGS=$(CPPFLAGS) $(INCLUDES) $(FEATURES) $(DEFAULTS) $(CFLAGS)
+CCARGS=$(CFLAGS) $(CPPFLAGS) $(INCLUDES) $(FEATURES) $(DEFAULTS)
 endif
 
-# We zero makedef's DEBUG and OPT, the relevant flags are set via GAR & CFLAGS
+# Postfix doesn't use autoconf, but it's own tool called makedefs. It's
+# triggered by "gmake makefiles" in the source root and expects it's options
+# via environment variables CC CCARGS AUXLIBS DEBUG OPT. For us there is no
+# need to use DEBUG and OPT. The relevant flags are (amongst others) contained
+# in GAR's CFLAGS which we already pushed into CCARGS (see above).
 configure-custom:
 	echo $(MAKE) -C $(WORKSRC) makefiles CC=$(CC) CCARGS='$(CCARGS)'
 	$(MAKE) -C $(WORKSRC) makefiles \
