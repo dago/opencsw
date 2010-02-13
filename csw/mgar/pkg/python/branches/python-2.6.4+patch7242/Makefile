@@ -145,14 +145,17 @@ SPKG_DESC_CSWpython-test = Python Test modules
 
 LICENSE = LICENSE
 
-CHECKPKG_OVERRIDES  = CSWpython-devel|symbol-not-found|python.o
-CHECKPKG_OVERRIDES += CSWpython|symbol-not-found|xxsubtype.so
-CHECKPKG_OVERRIDES += CSWpython|symbol-not-found|_cursesmodule.so
-CHECKPKG_OVERRIDES += CSWpython|symbol-not-found|_curses_panel.so
-
 # Checkpkg should be able to guess that, perhaps symlink information is
 # missing?
-CHECKPKG_OVERRIDES += CSWpython|missing-dependency|CSWbdb
+CHECKPKG_OVERRIDES_CSWpython       += CSWpython|missing-dependency|CSWbdb
+CHECKPKG_OVERRIDES_CSWpython       += CSWpython|symbol-not-found|_curses_panel.so
+CHECKPKG_OVERRIDES_CSWpython       += CSWpython|symbol-not-found|_cursesmodule.so
+CHECKPKG_OVERRIDES_CSWpython       += CSWpython|symbol-not-found|xxsubtype.so
+CHECKPKG_OVERRIDES_CSWpython-devel  = CSWpython-devel|symbol-not-found|python.o
+
+# Dago: This override line doesn't make it to the override file.  Can you look
+# into it?
+CHECKPKG_OVERRIDES_CSWpython-rt     = CSWpython-rt|action-class-only-in-pkginfo|cswpycompile
 
 include gar/category.mk
 
