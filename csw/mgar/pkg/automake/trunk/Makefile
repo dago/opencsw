@@ -21,8 +21,9 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tar.gz)
 DISTFILES = $(SOURCEFILES)
-DISTFILES += README.CSW
-NOCHECKSUM = README.CSW
+POSTMSG = $(docdir)/automake/CSWautomake.postmsg
+DISTFILES += $(notdir $(POSTMSG))
+NOCHECKSUM = $(notdir $(POSTMSG))
 NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz, $(SOURCEFILES))
 
 RUNTIME_DEP_PKGS = CSWperl
@@ -65,16 +66,27 @@ ALTERNATIVE_1.11 += $(bindir)/aclocal aclocal $(bindir)/aclocal-1.11
 
 include gar/category.mk
 
-$(DOWNLOADDIR)/README.CSW:
-	@echo " ==> Generating README.CSW"
+$(DOWNLOADDIR)/$(notdir $(POSTMSG)):
+	@echo " ==> Generating $(notdir $(POSTMSG))"
 	@(exec >$@;								\
-	  echo "This package contains the following automake versions:";	\
-	  for VERSION in $(MODULATIONS_GARVERSION); do					\
-	    echo "  automake-$$VERSION";					\
-	  done)
+		echo "There are multiple versions of automake on the system installed:"; \
+		echo; \
+	  	for VERSION in $(MODULATIONS_GARVERSION); do \
+		  echo "  * automake-$$VERSION"; \
+		done; \
+		echo; \
+		echo "You can easily select between the versions with the alternatives(8)"; \
+		echo "system by executing"; \
+		echo; \
+		echo "  /opt/csw/sbin/alternatives --config automake"; \
+		echo; \
+		echo "See http://wiki.opencsw.org/package-alternatives for details."; \
+	)
+	@$(MAKECOOKIE)
 
 post-merge:
-	@rm -f $(PKGROOT)$(bindir)/aclocal
-	@rm -f $(PKGROOT)$(bindir)/automake
-	@ginstall $(WORKDIR)/README.CSW $(PKGROOT)$(docdir)/$(GARNAME)/
+	rm -f $(PKGROOT)$(bindir)/aclocal
+	rm -f $(PKGROOT)$(bindir)/automake
+	ginstall -d $(PKGROOT)$(dir $(POSTMSG))
+	ginstall $(WORKDIR)/$(notdir $(POSTMSG)) $(PKGROOT)$(POSTMSG)
 	@$(MAKECOOKIE)
