@@ -21,9 +21,14 @@
 # you know you are tracking the most current version.
 # 
 
-
 PATH=$PATH:/usr/sbin
 readonly NAME_MAX_LENGTH=${NAME_MAX_LENGTH:-20}
+
+command_basename=`basename $0`
+command_basedir="${0%/${command_basename}}"
+libshdir="${command_basedir}/../lib/sh"
+readonly command_basename command_basedir libshdir
+. "${libshdir}/libcheckpkg.sh"
 
 LOCAL_ARCH=`uname -p`
 if [[ -z "${CHECKPKG_TMPDIR}" ]]; then
@@ -44,9 +49,10 @@ else
 	BOLD=""
 	COLOR_RESET=""
 fi
+readonly GREEN RED BOLD COLOR_RESET
 
 readonly selfpath="$0"
-readonly selfargs="$*"
+readonly selfargs="$@"
 
 # always print out a warning message. (to stderr)
 # exit script, if quit_on_warn set
@@ -337,38 +343,9 @@ esac
 #	exit 0
 #fi
 
-
-# This function exists, because pkgtrans is BROKEN!!
-# It leaves a directory in /var/tmp/aaXXXXXXX, even after clean quit
-# SO, emulate pkgtrans behaviour, for "pkgtrans src destdir pkgname"
-#   Except that we ignore pkgname arg, and just do first one we find.
-#  and we are a bit hacky about how we do things.
-pkgtrans(){
-	if [[ ! -d $2 ]] ; then
-		print ERROR: $2 is not a directory >/dev/fd/2
-		return 1
-	fi
-	hdrblks=`(dd if=$1 skip=1 2>/dev/null| cpio -i -t  >/dev/null) 2>&1 |
-		nawk '{print $1; exit;}'`
-
-	## print initial hdrblks=$hdrblks
-
-	hdrblks=$(($hdrblks + 1))
-	mkdir $2/$3 || return 1
-
-	dd if=$1 skip=$hdrblks 2>/dev/null | (cd $2/$3 ; cpio -ivdm)
-	# on fail, SOMETIMES cpio returns 1, but sometimes it returns 0!!
-	if [[ ! -d $2/$3/install ]] ; then
-		print retrying extract with different archive offset...
-		# no, I cant tell in advance why/when the prev fails
-		hdrblks=$(($hdrblks + 1))
-		dd if=$1 skip=$hdrblks 2>/dev/null| (cd $2/$3 ; cpio -ivdm)
-	fi
-}
-
 print ""
 print Extracing pkg for examination of files...
-pkgtrans $f $EXTRACTDIR $pkgname
+custom_pkgtrans $f $EXTRACTDIR $pkgname
 
 #############################################################
 # We now have the package expanded, in "directory" form, in
@@ -566,9 +543,7 @@ done
 set_variables_for_individual_package_check "$f"
 
 test_suite_ok=1
-checkpkg_scriptname=`basename $0`
-checkpkg_basedir=${0%/${checkpkg_scriptname}}
-plugindir=${checkpkg_basedir}/checkpkg.d
+plugindir=${command_basedir}/checkpkg.d
 checkpkg_module_tag="checkpkg-"
 
 # Cleaning up old *.pyc files which can cause grief.  This is because of the
@@ -582,7 +557,9 @@ for pyc_file in ${plugindir}/opencsw.pyc \
 done
 
 # /var/sadm/install/contents cache update
-${checkpkg_basedir}/update_contents_cache.py
+${command_basedir}/update_contents_cache.py
+# Collects package stats to be later analyzed
+${command_basedir}/checkpkg_collect_stats.py "$@"
 
 if [[ "${DEBUG}" != "" ]]; then
 	extra_options="--debug"
@@ -651,7 +628,7 @@ for tagfile in ${EXTRACTDIR}/tags.*; do
 done
 
 # Collecting errors and applying the overrides.
-${checkpkg_basedir}/analyze_module_results.py \
+${command_basedir}/analyze_module_results.py \
 	-e "${EXTRACTDIR}" \
 	${pkgnames}
 if [[ "$?" -ne 0 ]]; then

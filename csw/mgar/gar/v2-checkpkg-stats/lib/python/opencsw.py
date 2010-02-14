@@ -15,6 +15,7 @@
 import copy
 import datetime
 import difflib
+import hashlib
 import logging
 import os
 import os.path
@@ -366,6 +367,9 @@ class CswSrv4File(ShellMixin, object):
     self.transformed = False
     self.dir_format_pkg = None
 
+  def __repr__(self):
+    return u"CswSrv4File(%s)" % repr(self.pkg_path)
+
   def GetWorkDir(self):
     if not self.workdir:
       self.workdir = tempfile.mkdtemp(prefix="pkg_")
@@ -395,7 +399,27 @@ class CswSrv4File(ShellMixin, object):
                     "%s or %s." % (gzip_suffix, pkg_suffix))
     return self.gunzipped_path
 
+  def Pkgtrans(self, src_file, destdir, pkgname):
+    """A proxy for the pkgtrans command.
+
+    This requires custom-pkgtrans to be available.
+    """
+    if not os.path.isdir(destdir):
+    	raise PackageError("%s doesn't exist or is not a directory" % destdir)
+    args = [os.path.join(os.path.dirname(__file__), "custom-pkgtrans"),
+           src_file, destdir, pkgname ]
+    pkgtrans_proc = subprocess.Popen(args)
+    pkgtrans_proc.communicate()
+    ret = pkgtrans_proc.wait()
+    if ret:
+    	logging.error("% has failed" % args)
+
   def TransformToDir(self):
+    """Transforms the file to the directory format.
+
+    This could use the Pkgtrans command at the top, because pkgtrans supposedly
+    leaves temporary files behind.
+    """
     if not self.transformed:
       args = ["pkgtrans", "-a", self.GetAdminFilePath(),
               self.GetGunzippedPath(), self.GetWorkDir(), "all"]
@@ -423,6 +447,13 @@ class CswSrv4File(ShellMixin, object):
   def GetPkgmap(self, analyze_permissions, strip=None):
     dir_format_pkg = self.GetDirFormatPkg()
     return dir_format_pkg.GetPkgmap(analyze_permissions, strip)
+
+  def GetMd5sum(self):
+    fp = open(self.pkg_path)
+    hash = hashlib.md5()
+    hash.update(fp.read())
+    fp.close()
+    return hash.hexdigest()
 
   def __del__(self):
     if self.workdir:
@@ -789,7 +820,7 @@ class Pkgmap(object):
       if line_to_add:
         self.paths.add(line_to_add)
       entry = {
-          "line": line,
+          "line": line.strip(),
           "type": line_type,
       }
       entry["path"] = installed_path
@@ -878,6 +909,7 @@ class OpencswCatalogBuilder(object):
           logging.warn("srv4 file for %s already exists, skipping", pkg_path)
       else:
         logging.warn("%s is not a directory.", pkg_path)
+
 
   def Srv4Exists(self, pkg_dir):
     pkg = DirectoryFormatPackage(pkg_dir)
