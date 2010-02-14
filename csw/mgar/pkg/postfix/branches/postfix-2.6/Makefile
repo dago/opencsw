@@ -51,14 +51,21 @@ USERGROUP   = $(sysconfdir)/pkg/CSW$(GARNAME)/cswusergroup
 # http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5313
 POSTMSG     = $(DOCDIR)/$(GARNAME)/README.upgradefrom.24
 
+# For file permissions reference and verification purposes, postfix ships
+# /opt/csw/libexec/postfix/postfix-files which contains a list of the
+# desired settings. "postfix check" can be used to verify the permissions,
+# "postfix set-permissions" can be used to adjust them (which shouldn't
+# be necessary from a user standpoint, it's our job to ship the right perms).
+
 # Make postdrop setgid so that it can deliver to $(DEF_QUEUE_DIR)/maildrop
 PROTOTYPE_MODIFIERS = makesgid
-PROTOTYPE_FILES_makesgid = $(sbindir)/postdrop
+PROTOTYPE_FILES_makesgid = $(sbindir)/postdrop $(sbindir)/postqueue
+PROTOTYPE_GROUP_makesgid = postdrop
 PROTOTYPE_PERMS_makesgid = 2755
 
 # Make $(DEF_QUEUE_DIR) subdirs accessible/writable to postfix only
 PROTOTYPE_MODIFIERS += spooldir
-PROTOTYPE_FILES_spooldir = $(DEF_QUEUE_DIR)/*
+PROTOTYPE_FILES_spooldir = $(DEF_QUEUE_DIR)/.*
 PROTOTYPE_USER_spooldir  = postfix
 PROTOTYPE_PERMS_spooldir = 0700
 PROTOTYPE_CLASS_spooldir = ugfiles
@@ -68,6 +75,14 @@ PROTOTYPE_MODIFIERS += maildrop
 PROTOTYPE_FILES_maildrop = $(DEF_QUEUE_DIR)/maildrop
 PROTOTYPE_GROUP_maildrop = postdrop
 PROTOTYPE_PERMS_maildrop = 0730
+PROTOTYPE_CLASS_maildrop = ugfiles
+
+# Make $(DEF_QUEUE_DIR)/public accessible by postdrop group, likely
+# used for IPC with other processes (public contains sockets).
+PROTOTYPE_MODIFIERS += public
+PROTOTYPE_FILES_maildrop = $(DEF_QUEUE_DIR)/public
+PROTOTYPE_GROUP_maildrop = postdrop
+PROTOTYPE_PERMS_maildrop = 2710
 PROTOTYPE_CLASS_maildrop = ugfiles
 
 # IMPORTANT! Make $(DEF_QUEUE_DIR)/pid accessible by root only
