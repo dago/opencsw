@@ -80,10 +80,10 @@ PROTOTYPE_CLASS_maildrop = ugfiles
 # Make $(DEF_QUEUE_DIR)/public accessible by postdrop group, likely
 # used for IPC with other processes (public contains sockets).
 PROTOTYPE_MODIFIERS += public
-PROTOTYPE_FILES_maildrop = $(DEF_QUEUE_DIR)/public
-PROTOTYPE_GROUP_maildrop = postdrop
-PROTOTYPE_PERMS_maildrop = 2710
-PROTOTYPE_CLASS_maildrop = ugfiles
+PROTOTYPE_FILES_public = $(DEF_QUEUE_DIR)/public
+PROTOTYPE_GROUP_public = postdrop
+PROTOTYPE_PERMS_public = 2710
+PROTOTYPE_CLASS_public = ugfiles
 
 # IMPORTANT! Make $(DEF_QUEUE_DIR)/pid accessible by root only
 # http://www.openwall.com/lists/oss-security/2009/09/18/6
