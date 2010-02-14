@@ -59,7 +59,7 @@ POSTMSG     = $(DOCDIR)/$(GARNAME)/README.upgradefrom.24
 
 # Make postdrop setgid so that it can deliver to $(DEF_QUEUE_DIR)/maildrop
 PROTOTYPE_MODIFIERS = makesgid
-PROTOTYPE_FILES_makesgid = $(sbindir)/postdrop $(sbindir)/postqueue
+PROTOTYPE_FILES_makesgid = $(sbindir)/post(drop|queue)
 PROTOTYPE_GROUP_makesgid = postdrop
 PROTOTYPE_PERMS_makesgid = 2755
 
