@@ -1,6 +1,6 @@
-postfix (2.6.2,REV=2010.01.13)
+postfix (2.6.5,REV=2010.02.14)
 
-  * Adopted and updated to 2.6.2. (Closes #3580, #3700, #3970)
+  * Adopted and updated to 2.6.5. (Closes #3580, #3700, #3970)
   * Moved spool directory to /var/opt/csw/spool/postfix. (Closes #3946)
   * Added Cyrus SASL support. (Closes #2843)
   * Added hash table support via bdb. (Closes #2097)
@@ -10,4 +10,4 @@ postfix (2.6.2,REV=2010.01.13)
   * Doesn't automatically substitute system sendmail binaries any more.
     Please refer to README.CSW instead. (Closes #1943, #2964, #3060) 
 
- -- Sebastian Kayser <skayser@opencsw.org>  Wed, 13 Jan 2010 22:01:36 +0100
+ -- Sebastian Kayser <skayser@opencsw.org>  Sun, 14 Feb 2010 21:25:21 +0100
