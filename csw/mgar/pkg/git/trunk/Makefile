@@ -6,7 +6,7 @@ CATEGORIES = devel
 VENDOR_URL = http://git-scm.org/
 
 # disable tests until next version bump (at the top so it stands out)
-# TEST_SCRIPTS = 
+TEST_SCRIPTS = 
 
 PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
 PACKAGES += CSWgitcompletion CSWgitdevel
