@@ -40,8 +40,8 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 build-custom:
-	cd $(WORKSRC) && $(CC) $(CFLAGS) -c yarn.c
-	cd $(WORKSRC) && $(CC) $(CFLAGS) -c pigz.c
+	cd $(WORKSRC) && $(CC) $(CPPFLAGS) $(CFLAGS) -c yarn.c
+	cd $(WORKSRC) && $(CC) $(CPPFLAGS) $(CFLAGS) -c pigz.c
 	cd $(WORKSRC) && LD_OPTIONS="$(LD_OPTIONS)" $(CC) $(LDFLAGS) -o pigz yarn.o pigz.o -lpthread -lz
 	@$(MAKECOOKIE)
 
