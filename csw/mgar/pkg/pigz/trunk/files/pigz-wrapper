@@ -5,4 +5,4 @@
 # and http://developers.sun.com/solaris/articles/alt_thread_lib.html
 LD_LIBRARY_PATH=/usr/lib/lwp
 export LD_LIBRARY_PATH
-exec `/usr/bin/dirname $0`/../libexec/`/usr/bin/basename $0` "$@"
+exec /opt/csw/libexec/`/usr/bin/basename $0` "$@"
