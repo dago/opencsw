@@ -21,6 +21,14 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS  = CSWosslrt CSWzlib
 BUILD_DEP_PKGS = CSWossldevel CSWzlib
 
+PACKAGES = CSWlibssh2 CSWlibssh2devel
+
+CATALOGNAME_CSWlibssh2 = libssh2
+CATALOGNAME_CSWlibssh2devel = libssh2_devel
+
+SPKG_DESC_CSWlibssh2 = $(DESCRIPTION)
+SPKG_DESC_CSWlibssh2devel = libssh2 developer files
+
 BUILD64 = 1
 NOISAEXEC = 1
 
@@ -34,5 +42,7 @@ TEST_TARGET = check
 #   http://sourceforge.net/tracker/?func=detail&aid=2952151&group_id=125852&atid=703942
 # has been resolved.
 SKIPTEST ?= 1
+
+PKGFILES_CSWlibssh2devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
