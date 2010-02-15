@@ -1,17 +1,27 @@
+smfdepgraph wrapper around scfdot
+---------------------------------
+
 This package contains a wrapper around scfdot which should be sufficient
-for most use cases: smfdepgraph. Invoke it with 
+for most use cases. Invoke it with 
 
     smfdepgraph <outfile.ext>
 
-and it will generate a SMF dependency graph in whichever file format you
-specify (determined via the file extension). Default is postscript. The
-extension will be passed to dot via -T<ext> so dot needs to support it.
-Unsupported file extensions will give you a list of supported ones.
+and it will generate a SMF services dependency graph in whichever file format
+you specify (determined via the file extension). Default is postscript. The
+extension will be passed to graphviz's dot via -T<ext> so dot needs to support
+it. When you pass an unsupported file extension to smfdepgraph, it will give
+you a list of supported ones.
 
-In case you need to invoke scfdot directly, these are the usage instructions.
-We operate in two modes: with and without -L. Without -L, we print nodes
-for each instance and edges for each dependency. Fortunately dot allows
-forward references, so we can do this in one pass. Options are
+In case you need to invoke scfdot directly, you can find it in
+/opt/csw/libexec/scfdot.
+
+
+scfdot usage instructions
+-------------------------
+
+We operate in two modes: with and without -L. Without -L, we print nodes for
+each instance and edges for each dependency. Fortunately dot allows forward
+references, so we can do this in one pass. Options are
 
   -s width,height  Size, in inches, that the graph should be limited to.
 
