@@ -1,7 +1,7 @@
-# TODO
-# ! dot seems to put an extraneous header line in each output file
+# TODO (release-critical prefixed with !, non release-critical with *)
+# * dot seems to put an extraneous header line in png output files
 #   -36 3393.7 translate newpath user_shape_0
-#   Why is this? Bug?
+#   Filed as http://www.opencsw.org/mantis/view.php?id=4276
 GARNAME = scfdot
 GARVERSION = 1.0
 CATEGORIES = apps
