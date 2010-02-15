@@ -41,7 +41,7 @@ SKIPTEST = 1
 
 # This is intended behaviour as the missing symbols are provided by the "se" binary
 # and the libs are to be used only by "se".
-CHECKPKG_OVERRIDES  = CSWsetoolkit|symbol-not-found|libsegui.so
-CHECKPKG_OVERRIDES += CSWsetoolkit|symbol-not-found|libsenet.so
+CHECKPKG_OVERRIDES  = symbol-not-found|libsegui.so
+CHECKPKG_OVERRIDES += symbol-not-found|libsenet.so
 
 include gar/category.mk

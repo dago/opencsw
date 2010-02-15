@@ -674,7 +674,7 @@ merge-checkpkgoverrides-%:
 	@echo "[ Generating checkpkg override for package $* ]"
 	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/checkpkg/overrides
 	$(_DBG)($(foreach O,$(or $(CHECKPKG_OVERRIDES_$*),$(CHECKPKG_OVERRIDES)),echo "$O";)) | \
-		perl -F'\|' -ane 'unshift @F,"$*" if(@F<2); $$F[0].=":"; print join(" ",@F );' \
+		perl -F'\|' -ane 'unshift @F,"$*"; $$F[0].=":"; print join(" ",@F );' \
 		> $(PKGROOT)/opt/csw/share/checkpkg/overrides/$(call catalogname,$*)
 	@$(MAKECOOKIE)
 

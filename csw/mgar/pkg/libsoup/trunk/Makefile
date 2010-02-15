@@ -45,10 +45,10 @@ ARCHALL_CSWlibsoup2 = 1
 
 # libgnutls.so.11 no longer exists, but in case someone still use libsoup-2.0.so
 # and still have libgnutls.so.11 we override checkpkg
-CHECKPKG_OVERRIDES += CSWlibsoup|orphan-soname|libgnutls.so.11
-CHECKPKG_OVERRIDES += CSWlibsoup|symbol-not-found|libsoup-2.0.so.0.0.0
+CHECKPKG_OVERRIDES += orphan-soname|libgnutls.so.11
+CHECKPKG_OVERRIDES += symbol-not-found|libsoup-2.0.so.0.0.0
 # Possible bug in checkpkg
-CHECKPKG_OVERRIDES += CSWlibsoup|symbol-not-found|libsoup-gnome-2.4.so.1.2.0
+CHECKPKG_OVERRIDES += symbol-not-found|libsoup-gnome-2.4.so.1.2.0
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 

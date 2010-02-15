@@ -76,10 +76,10 @@ POSTMSG = $(docdir)/$(CATALOGNAME)/CSWtcpwrap.postmsg
 
 # These binaries link against libwrap.so which will be linked by alternatives
 # after package install. Until then they can obviously not link properly.
-CHECKPKG_OVERRIDES  = CSWtcpwrap|symbol-not-found|tcpdmatch
-CHECKPKG_OVERRIDES += CSWtcpwrap|symbol-not-found|tcpd
-CHECKPKG_OVERRIDES += CSWtcpwrap|symbol-not-found|try-from
-CHECKPKG_OVERRIDES += CSWtcpwrap|symbol-not-found|tcpdchk
+CHECKPKG_OVERRIDES  = symbol-not-found|tcpdmatch
+CHECKPKG_OVERRIDES += symbol-not-found|tcpd
+CHECKPKG_OVERRIDES += symbol-not-found|try-from
+CHECKPKG_OVERRIDES += symbol-not-found|tcpdchk
 
 include gar/category.mk
 

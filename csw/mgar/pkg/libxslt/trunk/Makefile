@@ -53,6 +53,6 @@ PKGFILES_CSWlibxsltdevel += $(call isadirs,$(libdir),xsltConf.sh)
 PKGFILES_CSWpylibxslt = $(libdir)/python.*
 PKGFILES_CSWpylibxslt += $(docdir)/libxslt-python-$(GARVERSION)/.*
 
-CHECKPKG_OVERRIDES = CSWpylibxslt|symbol-not-found|libxsltmod.so
+CHECKPKG_OVERRIDES = symbol-not-found|libxsltmod.so
 
 include gar/category.mk

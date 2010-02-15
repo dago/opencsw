@@ -100,7 +100,7 @@ ALTERNATIVE_ncurses = $(bindir)/mutt mutt $(bindir)/mutt-ncurses 100
 ALTERNATIVE_slang = $(bindir)/mutt mutt $(bindir)/mutt-slang 200
 
 # This warning from checkpkg is obviously wrong...
-CHECKPKG_OVERRIDES_CSWmutt-base = CSWmutt-base|missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWmutt-base = missing-dependency|CSWperl
 
 include gar/category.mk
 

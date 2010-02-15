@@ -121,7 +121,7 @@ INITSMF = /etc/opt/csw/init.d/cswopenldap
 CHECKPKG_OVERRIDES = symbol-not-found
 CHECKPKG_OVERRIDES_CSWoldapdevel  = symbol-not-found
 # The devel package depends on rt instead of the full package, that is ok.
-CHECKPKG_OVERRIDES_CSWoldapdevel += CSWoldapdevel|missing-dependency|CSWoldap
+CHECKPKG_OVERRIDES_CSWoldapdevel += missing-dependency|CSWoldap
 
 include gar/category.mk
 

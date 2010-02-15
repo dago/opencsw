@@ -65,7 +65,7 @@ PROTOTYPE_GROUP_sgid = sys
 
 # This is for the missing X11 symbol XSolarisIASetProcessInfo.
 # It does no harm, though.
-CHECKPKG_OVERRIDES = CSWgkrellm|symbol-not-found|gkrellm
+CHECKPKG_OVERRIDES = symbol-not-found|gkrellm
 
 include gar/category.mk
 
