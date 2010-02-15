@@ -56,15 +56,7 @@ RUNTIME_DEP_PKGS_CSWgitdevel = CSWgit
 # git could use any other POSIX compliant shell and drop the dependency...
 RUNTIME_DEP_PKGS_CSWgitcompletion = CSWgit CSWbash CSWbashcmplt
 
-LICENSE_CSWgit = COPYING
-LICENSE_CSWgitk = COPYING
-LICENSE_CSWgitgui = COPYING
-LICENSE_CSWgitsvn = COPYING
-LICENSE_CSWgitcvs = COPYING
-LICENSE_CSWgitemacs = COPYING
-LICENSE_CSWgitdoc = COPYING
-LICENSE_CSWgitcompletion = COPYING
-LICENSE_CSWgitdevel = COPYING
+LICENSE = COPYING
 
 DESCRIPTION = Fast Version Control System
 define BLURB
