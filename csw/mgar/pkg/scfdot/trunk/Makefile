@@ -51,6 +51,8 @@ install-custom:
 	@# smfdepgraph includes a legend which we also ship
 	ginstall -Dm644 $(WORKSRC)/legend.ps \
 		$(DESTDIR)$(datadir)/$(GARNAME)/legend.ps
+	gsed -i -e 's,legend.ps,$(datadir)/$(GARNAME)/legend.ps,' \
+		$(DOCDEST)/examples/snv_24_x86.dot
 	@$(MAKECOOKIE)
 
 post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
