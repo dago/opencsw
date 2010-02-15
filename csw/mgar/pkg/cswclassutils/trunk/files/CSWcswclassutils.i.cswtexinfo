@@ -11,13 +11,13 @@ echo "Installing class <cswtexinfo> ..."
 
 while read src dest; do
 
-  echo $dest
   /usr/bin/cp $src $dest || exit 2
 
   if [ -x ${PKG_INSTALL_ROOT}/opt/csw/bin/install-info ]; then
-    ${PKG_INSTALL_ROOT}/opt/csw/bin/install-info $dest ${PKG_INSTALL_ROOT}/opt/csw/info/dir
+    echo "Registering texinfo entry for $dest"
+    ${PKG_INSTALL_ROOT}/opt/csw/bin/install-info $dest ${PKG_INSTALL_ROOT}/opt/csw/info/dir 2>/dev/null
   else
-    echo "CSWtexinfo couldn't be found."
+    echo "$dest (texinfo will be registered when CSWtexinfo is installed)"
   fi
 done
 
