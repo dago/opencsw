@@ -34,19 +34,28 @@ SPKG_SOURCEURL = http://curl.haxx.se
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-EXTRA_CONFIGURE_ARGS_isa-amd64 = --disable-ldap
-CONFIGURE_ARGS = $(DIRPATHS) --with-ssl
+# amd64 is built without openldap because there are no libs available right now (Mantis 3028)
+EXTRA_CONFIGURE_ARGS_isa-sparcv8 = --enable-ldap --enable-ldaps
+EXTRA_CONFIGURE_ARGS_isa-sparcv9 = --enable-ldap --enable-ldaps
+EXTRA_CONFIGURE_ARGS_isa-i386    = --enable-ldap --enable-ldaps
+EXTRA_CONFIGURE_ARGS_isa-amd64   = --disable-ldap
+
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-ssl
+CONFIGURE_ARGS += --enable-ares
 CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_isa-$(ISA))
 
-# amd64 is built without openldap because there are no libs available right now (Mantis 3028)
 BUILD64 = 1
 
 # We are doing 64 bit only for the libs
 NOISAEXEC = 1
 
-RUNTIME_DEP_PKGS_CSWcurl = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl CSWcurlrt
-RUNTIME_DEP_PKGS_CSWcurlrt = CSWlibidn CSWoldaprt CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWcurl = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl CSWcurlrt CSWlibcares
+RUNTIME_DEP_PKGS_CSWcurlrt = CSWlibidn CSWoldaprt CSWosslrt CSWzlib CSWlibcares
 RUNTIME_DEP_PKGS_CSWcurldevel = CSWcurl
+
+BUILD_DEP_PKGS = $(filter-out CSWcurl CSWcurlrt,$(RUNTIME_DEP_PKGS_CSWcurl) $(RUNTIME_DEP_PKGS_CSWcurlrt) $(RUNTIME_DEP_PKGS_CSWcurldevel))
+BUILD_DEP_PKGS += CSWoldapdevel CSWossldevel CSWlibcaresdevel
 
 SKIPTEST = 1
 
