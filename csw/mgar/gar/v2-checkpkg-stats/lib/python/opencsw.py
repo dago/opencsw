@@ -360,12 +360,13 @@ class ShellMixin(object):
 class CswSrv4File(ShellMixin, object):
   """Represents a package in the srv4 format (pkg)."""
 
-  def __init__(self, pkg_path):
+  def __init__(self, pkg_path, debug=False):
     self.pkg_path = pkg_path
     self.workdir = None
     self.gunzipped_path = None
     self.transformed = False
     self.dir_format_pkg = None
+    self.debug = debug
 
   def __repr__(self):
     return u"CswSrv4File(%s)" % repr(self.pkg_path)
@@ -417,13 +418,16 @@ class CswSrv4File(ShellMixin, object):
   def TransformToDir(self):
     """Transforms the file to the directory format.
 
-    This could use the Pkgtrans command at the top, because pkgtrans supposedly
-    leaves temporary files behind.
+    This uses the Pkgtrans function at the top, because pkgtrans behaves
+    differently on Solaris 8 and 10.  Having our own implementation helps
+    achieve consistent behavior.
     """
     if not self.transformed:
-      args = ["pkgtrans", "-a", self.GetAdminFilePath(),
+      args = [os.path.join(os.path.dirname(__file__),
+                           "..", "..", "bin", "custom-pkgtrans"),
               self.GetGunzippedPath(), self.GetWorkDir(), "all"]
-      unused_retcode = self.ShellCommand(args, quiet=True)
+      print "args", args
+      unused_retcode = self.ShellCommand(args, quiet=(not self.debug))
       dirs = self.GetDirs()
       if len(dirs) != 1:
         raise Error("Need exactly one package in the package stream: "

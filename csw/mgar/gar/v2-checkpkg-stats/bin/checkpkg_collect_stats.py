@@ -123,13 +123,14 @@ class PackageStats(object):
 
 
 def main():
+  debug = True
   logging.basicConfig(level=logging.DEBUG)
   parser = optparse.OptionParser()
   options, args = parser.parse_args()
   logging.basicConfig(level=logging.INFO)
   logging.info("Collecting statistics about given package files.")
   logging.debug("args: %s", args)
-  packages = [opencsw.CswSrv4File(x) for x in args]
+  packages = [opencsw.CswSrv4File(x, debug) for x in args]
   stats_list = [PackageStats(pkg) for pkg in packages]
   for pkg_stats in stats_list:
   	pkg_stats.CollectStats()
