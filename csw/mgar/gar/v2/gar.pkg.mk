@@ -396,11 +396,13 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 				-I $(call licensedir,$*)/license \
 				-I /etc/opt/csw/pkg/$*/cswmigrateconf \
 		      		-I /opt/csw/share/alternatives/$(call catalogname,$*) \
+				-I /opt/csw/share/checkpkg/overrides/$(call catalogname,$*) \
 		      )\
 		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),\
 				-X $(call licensedir,$S)/license \
 				-X /etc/opt/csw/pkg/$S/cswmigrateconf \
 				-X /opt/csw/share/alternatives/$(call catalogname,$S) \
+				-X /opt/csw/share/checkpkg/overrides/$(call catalogname,$S) \
 		      ) \
 		      $(foreach I,$(EXTRA_PKGFILES_INCLUDED) $(EXTRA_PKGFILES_INCLUDED_$*),-i '$I') \
 		      $(foreach X,$(EXTRA_PKGFILES_EXCLUDED) $(EXTRA_PKGFILES_EXCLUDED_$*),-x '$X') \
