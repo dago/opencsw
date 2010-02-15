@@ -24,13 +24,11 @@ RUNTIME_DEP_PKGS += CSWrazor CSWpmuri CSWpmhtmlparser CSWzlib
 
 UFILES_REGEX = $(SPKG_NAME)-(\d+(?:\.\d+)*).tar.gz
 
-#SAMPLECONF  = /opt/csw/etc/spamassassin/.+\.pre\.CSW
-#SAMPLECONF += /opt/csw/etc/spamassassin/local\.cf\.CSW
 SAMPLECONF  = /etc/opt/csw/spamassassin/.+\.pre\.CSW
 SAMPLECONF += /etc/opt/csw/spamassassin/local\.cf\.CSW
 SAMPLECONF += /etc/opt/csw/spamassassin/spamd\.CSW
 USERGROUP = /etc/opt/csw/pkg/CSWspamassassin/cswusergroup
-INITSMF = /etc/opt/csw/init.d/cswspamd
+INITSMF = /opt/csw/etc/init.d/cswspamd
 POSTMSG = /opt/csw/share/doc/spamassassin/README.upgrade
 
 MIGRATE_FILES = init.pre local.cf v310.pre v312.pre v320.pre
@@ -82,18 +80,17 @@ test-custom:
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)
-#	@ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/CSWspamassassin
-	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/spamassassin
+	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/init.d
+	@ginstall -m 755 $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)/opt/csw/etc/init.d/cswspamd
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWspamassassin
-	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -m 755 $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)/etc/opt/csw/init.d/cswspamd
 	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWspamassassin/cswusergroup
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/spamassassin
 	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.spamd.CSW $(DESTDIR)/etc/opt/csw/spamassassin/spamd.CSW
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@cp $(FILEDIR)/CSWspamassassin.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@cp $(FILEDIR)/CSWspamassassin.README.spamd $(DESTDIR)$(docdir)/$(GARNAME)/README.spamd
 	@cp $(FILEDIR)/CSWspamassassin.postmsg $(DESTDIR)$(docdir)/$(GARNAME)/README.upgrade
+	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)
 	echo "WORKSRC: $(WORKSRC)"
 	@( cd $(WORKSRC) ; \
 	   gmake DESTDIR=$(DESTDIR) install )
