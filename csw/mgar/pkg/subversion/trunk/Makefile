@@ -37,13 +37,14 @@ PACKAGES += CSWpythonsvn CSWrbsvn CSWjavasvn
 SPKG_DESC_CSWsvn           = Version control rethought
 CATALOGNAME_CSWsvn         = subversion
 RUNTIME_DEP_PKGS_CSWsvn       = CSWapache2rt
-RUNTIME_DEP_PKGS_CSWsvn      += CSWbdb47
+RUNTIME_DEP_PKGS_CSWsvn      += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsvn      += CSWexpat
 RUNTIME_DEP_PKGS_CSWsvn      += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWiconv
 RUNTIME_DEP_PKGS_CSWsvn      += CSWneon
 RUNTIME_DEP_PKGS_CSWsvn      += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWsasl
+RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf
 RUNTIME_DEP_PKGS_CSWsvn      += CSWsqlite3rt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWzlib
 # There are additional requirements for $(docdir)/subversion/tools/ which
