@@ -18,7 +18,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS  = CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWlibssh2  = CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWlibssh2devel = CSWlibssh2
 BUILD_DEP_PKGS = CSWossldevel CSWzlib
 
 PACKAGES = CSWlibssh2 CSWlibssh2devel
