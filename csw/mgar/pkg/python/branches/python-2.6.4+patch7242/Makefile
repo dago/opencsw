@@ -53,26 +53,10 @@ PATCHFILES += patch_2.diff.txt
 # Test for sunaudiodev fails.
 SKIPTEST = 1
 
-DEPENDS += lib/expat
-DEPENDS += lib/openssl
-DEPENDS += lib/db
-DEPENDS += lib/gdbm
-
-ifeq ($(shell uname -p), i386)
-    BASECFLAGS = -xO3 -xarch=386
-else
-    BASECFLAGS = -xO3 -xarch=v8
-endif
-
-COMPILER_EXPORTS += BASECFLAGS
-
-ifneq ($(shell uname -r), 5.8)
-    GARCOMPILER = SOS12
-endif
+BASECFLAGS = $(CFLAGS)
+EXTRA_COMMON_EXPORTS = BASECFLAGS
 
 NOISALIST = 1
-LD_OPTIONS = -R/opt/csw/lib
-export LD_OPTIONS
 CONFIGURE_ARGS  = $(DIRPATHS) 
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-ipv6
@@ -81,11 +65,8 @@ CONFIGURE_ARGS += --without-gcc
 CONFIGURE_ARGS += --with-signal-module
 CONFIGURE_ARGS += --with-fpectl
 CONFIGURE_ARGS += --with-system-ffi
-CONFIGURE_ARGS += LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib'
 
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
-# use prototype filters to set the class 
-PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+PYCOMPILE = 1
 
 PACKAGES  = CSWidle
 PACKAGES += CSWpython
@@ -147,15 +128,15 @@ LICENSE = LICENSE
 
 # Checkpkg should be able to guess that, perhaps symlink information is
 # missing?
-CHECKPKG_OVERRIDES_CSWpython       += CSWpython|missing-dependency|CSWbdb
-CHECKPKG_OVERRIDES_CSWpython       += CSWpython|symbol-not-found|_curses_panel.so
-CHECKPKG_OVERRIDES_CSWpython       += CSWpython|symbol-not-found|_cursesmodule.so
-CHECKPKG_OVERRIDES_CSWpython       += CSWpython|symbol-not-found|xxsubtype.so
-CHECKPKG_OVERRIDES_CSWpython-devel  = CSWpython-devel|symbol-not-found|python.o
+CHECKPKG_OVERRIDES_CSWpython       += missing-dependency|CSWbdb
+CHECKPKG_OVERRIDES_CSWpython       += symbol-not-found|_curses_panel.so
+CHECKPKG_OVERRIDES_CSWpython       += symbol-not-found|_cursesmodule.so
+CHECKPKG_OVERRIDES_CSWpython       += symbol-not-found|xxsubtype.so
+CHECKPKG_OVERRIDES_CSWpython-devel  = symbol-not-found|python.o
 
 # Dago: This override line doesn't make it to the override file.  Can you look
 # into it?
-CHECKPKG_OVERRIDES_CSWpython-rt     = CSWpython-rt|action-class-only-in-pkginfo|cswpycompile
+CHECKPKG_OVERRIDES_CSWpython-rt     = action-class-only-in-pkginfo|cswpycompile
 
 include gar/category.mk
 
