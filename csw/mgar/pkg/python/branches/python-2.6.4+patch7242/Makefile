@@ -9,7 +9,6 @@ CATEGORIES = lang
 #   - http://forums.sun.com/thread.jspa?threadID=5148204
 
 SPKG_SOURCEURL = http://python.org/download/releases/$(GARVERSION)
-SPKG_CLASSES = none cswpycompile
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -66,7 +65,11 @@ CONFIGURE_ARGS += --with-signal-module
 CONFIGURE_ARGS += --with-fpectl
 CONFIGURE_ARGS += --with-system-ffi
 
-PYCOMPILE = 1
+# This doesn't work here, as _PYCOMPILE_FILES is not the directory Python uses.
+# PYCOMPILE = 1
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+# use prototype filters to set the class 
+PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
 PACKAGES  = CSWidle
 PACKAGES += CSWpython
