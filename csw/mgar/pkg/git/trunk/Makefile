@@ -123,7 +123,7 @@ CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --enable-pthreads="-D_REENTRANT -lpthread"
 CONFIGURE_ARGS += --with-gitconfig=$(sysconfdir)/gitconfig
 CONFIGURE_ARGS += --with-pager=/opt/csw/bin/less
-CONFIGURE_ARGS += --with-python=/opt/csw/bin/python
+CONFIGURE_ARGS += --without-python
 
 BUILD_ARGS = MSGFMT=gmsgfmt SHELL_PATH=/opt/csw/bin/bash \
 		ASCIIDOC_NO_ROFF=YesPlease \
@@ -186,6 +186,4 @@ post-install-modulated:
 		ginstall -c -m 0755 -d $(BD); \
 		cp contrib/completion/* \
 			$(BD)/ )
-	@echo TEMP UNTIL USED: Purging Remote Helper Python Stuff
-	@( cd $(DESTDIR)/opt/csw/lib; rm -rf python )
 	@$(MAKECOOKIE)
