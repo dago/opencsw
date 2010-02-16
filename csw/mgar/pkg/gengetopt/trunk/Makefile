@@ -19,6 +19,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.gnu.org/software/gengetopt/
 
+BUILD64 = 1
+
 CONFIGURE_ARGS = $(DIRPATHS) 
 
 TEST_SCRIPTS =
