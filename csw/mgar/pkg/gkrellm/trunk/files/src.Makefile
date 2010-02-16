@@ -248,9 +248,9 @@ install_openbsd:
 	chmod g+sx $(INSTALLDIR)/$(PACKAGE)
 
 install_solaris:
-	$(MAKE) install INSTALL=/usr/ucb/install
-	chgrp sys $(INSTALLDIR)/$(PACKAGE)
-	chmod g+s $(INSTALLDIR)/$(PACKAGE)  
+	$(MAKE) install INSTALL=/opt/csw/bin/ginstall
+	fakeroot chgrp sys $(INSTALLDIR)/$(PACKAGE)
+	fakeroot chmod g+s $(INSTALLDIR)/$(PACKAGE)
 
 install_windows:
 	$(MAKE) BINEXT=".exe" install_bin install_inc

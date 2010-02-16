@@ -8,7 +8,7 @@ ifeq ($(INSTALLROOT),)
 	INSTALLROOT = /usr/local
 endif
 
-SINSTALLDIR ?= $(INSTALLROOT)/bin
+SINSTALLDIR ?= $(INSTALLROOT)/sbin
 INSTALLDIRMODE ?= 755
 
 INCLUDEDIR ?= $(INSTALLROOT)/include
@@ -213,9 +213,9 @@ install_openbsd:
 	chmod g+sx $(SINSTALLDIR)/$(PACKAGE_D)
 
 install_solaris:
-	$(MAKE) install INSTALL=/usr/ucb/install
-	chgrp sys $(SINSTALLDIR)/$(PACKAGE_D)
-	chmod g+s $(SINSTALLDIR)/$(PACKAGE_D)  
+	$(MAKE) install INSTALL=/opt/csw/bin/ginstall
+	fakeroot chgrp sys $(SINSTALLDIR)/$(PACKAGE_D)
+	fakeroot chmod g+s $(SINSTALLDIR)/$(PACKAGE_D)  
 
 install_windows: install_inc install_cfg
 	$(MAKE) BINEXT=".exe" install_bin

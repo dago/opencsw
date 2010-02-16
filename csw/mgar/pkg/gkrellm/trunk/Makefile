@@ -17,14 +17,19 @@ endef
 
 MASTER_SITES = http://members.dslextreme.com/users/billw/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += Makefile server.Makefile src.Makefile
+DISTFILES += Makefile server.Makefile src.Makefile cswgkrellmd
 PATCHFILES = 0001-Add-LOG_MAKEPRI.patch
-PATCHFILES += 0002-Do-not-tingle-with-file-owner.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-DEP_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo CSWpango
+PACKAGES = CSWgkrellm CSWgkrellmd
+PKGFILES_CSWgkrellmd = /opt/csw/sbin/gkrellmd /opt/csw/share/man/gkrellmd.1 /opt/csw/include/gkrellm2/gkrellmd.h /opt/csw/etc/init.d/cswgkrellmd
+
+SPKG_DESC_CSWgkrellmd = System monitor package daemon
+
+RUNTIME_DEP_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo CSWpango
+RUNTIME_DEP_PKGS_CSWgkrellmd = CSWggettextrt CSWglib2
 
 # Make sure to remove this after the X11 issues have all been settled
 EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
@@ -32,17 +37,16 @@ EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
 # Disable configure scripts step
 CONFIGURE_SCRIPTS =
 
+#Disable build64 until fix linking:
+#ld: fatal: file main.o: wrong ELF class: ELFCLASS64
+#BUILD64 = 1
+
 BUILD_ARGS    = INSTALLROOT=$(prefix)
-BUILD_ARGS   += INSTALLDIR=$(bindir)
-BUILD_ARGS   += MANDIR=$(mandir)
-BUILD_ARGS   += INCLUDEDIR=$(includedir)
 BUILD_ARGS   += LOCALEDIR=$(sharedstatedir)/locale
 BUILD_ARGS   += enable_nls=1 solaris
 
-INSTALL_ARGS  = INSTALLROOT=$(DESTDIR)
-INSTALL_ARGS += INSTALLDIR=$(DESTDIR)$(bindir)
-INSTALL_ARGS += MANDIR=$(DESTDIR)$(mandir)
-INSTALL_ARGS += INCLUDEDIR=$(DESTDIR)$(includedir)
+INSTALL_ARGS  = INSTALLROOT=$(DESTDIR)$(prefix)
+INSTALL_ARGS += SINSTALLDIR=$(DESTDIR)$(sbindir)
 INSTALL_ARGS += LOCALEDIR=$(DESTDIR)$(sharedstatedir)/locale
 INSTALL_ARGS += enable_nls=1 install_solaris
 
@@ -56,10 +60,10 @@ INSTALL_OVERRIDE_VAR_INSTALL = /usr/ucb/install
 #  chgrp sys $(INSTALLDIR)/$(PACKAGE)
 #  chmod g+s $(INSTALLDIR)/$(PACKAGE)
 #  chgrp sys $(SINSTALLDIR)/$(PACKAGE_D)
-#  chmod g+s $(SINSTALLDIR)/$(PACKAGE_D)  
+#  chmod g+s $(SINSTALLDIR)/$(PACKAGE_D)
 
 PROTOTYPE_MODIFIERS = sgid
-PROTOTYPE_FILES_sgid = $(bindir)/gkrellmd?
+PROTOTYPE_FILES_sgid = $(bindir)/gkrellm? $(sbindir)/gkrellmd?
 PROTOTYPE_PERMS_sgid = 2755
 PROTOTYPE_GROUP_sgid = sys
 
@@ -67,10 +71,20 @@ PROTOTYPE_GROUP_sgid = sys
 # It does no harm, though.
 CHECKPKG_OVERRIDES = symbol-not-found|gkrellm
 
+PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswgkrellmd$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+
+INITSMF = /opt/csw/etc/init.d/cswgkrellmd
+
 include gar/category.mk
 
 post-extract-modulated:
 	-cp $(WORKDIR)/Makefile $(WORKSRC)/Makefile
 	-cp $(WORKDIR)/src.Makefile $(WORKSRC)/src/Makefile
 	-cp $(WORKDIR)/server.Makefile $(WORKSRC)/server/Makefile
+	@$(MAKECOOKIE)
+
+post-install-modulated:
+	-ginstall -d $(DESTDIR)/opt/csw/etc/init.d
+	-cp $(WORKDIR)/cswgkrellmd $(DESTDIR)/opt/csw/etc/init.d/
+	-chmod 0755 $(DESTDIR)/opt/csw/etc/init.d/cswgkrellmd
 	@$(MAKECOOKIE)

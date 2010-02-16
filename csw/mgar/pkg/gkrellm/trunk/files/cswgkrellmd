@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# CSWgkrellmd start/stop script
+# Jake Goerzen (jgoerzen@opencsw.org)
+
+PROGRAM="/opt/csw/sbin/gkrellmd"
+OPTIONS="--user nobody --group sys --max-clients 3 --io-timeout 30 --reconnect-timeout 9 --detach"
+
+start()
+{
+                $PROGRAM $OPTIONS
+}
+
+stop()
+{
+        /usr/bin/pkill -x -u nobody gkrellmd
+}
+
+case "$1" in
+start)
+        start
+        ;;
+stop)
+        stop
+        ;;
+*)
+        printf 'Usage: %s {start|stop}\n' $0
+        exit 1
+esac
+
+exit $?
+
