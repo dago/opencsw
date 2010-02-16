@@ -23,6 +23,7 @@ SPKG_DESC_CSWgd = $(DESCRIPTION)
 
 RUNTIME_DEP_PKGS_CSWgd  = CSWexpat CSWfconfig CSWftype2 CSWiconv 
 RUNTIME_DEP_PKGS_CSWgd += CSWjpeg CSWpng CSWxpm CSWzlib CSWlibx11
+RUNTIME_DEP_PKGS_CSWgd += CSWlibxpm
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
