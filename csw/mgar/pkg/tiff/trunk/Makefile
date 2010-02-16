@@ -12,7 +12,7 @@ DISTNAME  = $(GARNAME)-$(GARVERSION)
 
 PACKAGES = CSWtiff CSWtiffrt CSWtiffdevel CSWtiffdoc
 CATALOGNAME_CSWtiff = tiff
-CATALOGNAME_CSWtiffrt = tiffrt
+CATALOGNAME_CSWtiffrt = tiff_rt
 CATALOGNAME_CSWtiffdevel = tiff_devel
 CATALOGNAME_CSWtiffdoc = tiff_doc
 
@@ -32,6 +32,7 @@ PKGFILES_CSWtiffdoc = $(sharedstatedir)/doc/.*
 
 ARCHALL_CSWtiffdoc = 1
 
+CHECKPKG_OVERRIDES += CSWtiffdevel|missing-dependency|CSWtiff
 LICENSE = COPYRIGHT
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
