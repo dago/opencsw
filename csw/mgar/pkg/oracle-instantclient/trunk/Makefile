@@ -24,7 +24,7 @@ DISTFILES_i386-64-sdk            = instantclient-sdk-solaris-x86-64-10.2.0.2-200
 DISTFILES_i386-64-sqlplus        = sqlplus-10.2.0.4.0-solaris-x86-64.zip
 
 DISTFILES  = $(foreach A,sparc i386,$(foreach S,32 64,$(foreach T,instantclient sdk sqlplus,$(DISTFILES_$A-$S-$T))))
-NOEXTRACT  = $(filter-out $(foreach S,32 64,$(foreach T,instantclient sdk sqlplus,$(DISTFILES_$(GARCH)-$S-$T))),$(DISTFILES))
+NOEXTRACT  = $(filter-out $(foreach S,32 64,$(foreach T,instantclient sdk sqlplus,$(DISTFILES_$(GARCH)-$S-$T)) COPYING),$(DISTFILES))
 
 # From http://www.oracle.com/technology/software/popup-license/instant_client_lic.html
 DISTFILES += instant_client_lic.html
@@ -71,6 +71,10 @@ TARGETDIR_64 = 64
 
 MERGE_SCRIPTS_isa-default = copy-all
 MERGE_SCRIPTS_isa-default64 = copy-all
+
+# The libraries are relocated. It is expected from the client to set
+# LD_LIBRARY_PATH as described by Oracle.
+CHECKPKG_OVERRIDES = symbol-not-found
 
 include gar/category.mk
 
