@@ -24,6 +24,7 @@ CONFIG_MTIME = "mtime"
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
 DO_NOT_REPORT_MISSING = set([])
 DO_NOT_REPORT_MISSING_RE = [r"SUNW.*", r"\*SUNW.*"]
+DUMP_BIN = "/usr/ccs/bin/dump"
 
 SYSTEM_SYMLINKS = (
     ("/opt/csw/bdb4", ["/opt/csw/bdb42"]),
@@ -714,3 +715,14 @@ def ApplyOverrides(error_tags, overrides):
     if not override_applies:
       tags_after_overrides.append(tag)
   return tags_after_overrides
+
+
+def GetIsalist():
+  args = ["isalist"]
+  isalist_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+  stdout, stderr = isalist_proc.communicate()
+  ret = isalist_proc.wait()
+  if ret:
+    logging.error("Calling isalist has failed.")
+  isalist = re.split(r"\s+", stdout.strip())
+  return isalist

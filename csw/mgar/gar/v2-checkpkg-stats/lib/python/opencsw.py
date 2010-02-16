@@ -574,6 +574,7 @@ class DirectoryFormatPackage(ShellMixin, object):
     self.pkgname = os.path.split(directory)[1]
     self.pkgpath = self.directory
     self.pkginfo_dict = None
+    self.binaries = None
 
   def GetCatalogname(self):
     """Returns the catalog name of the package.
@@ -713,16 +714,23 @@ class DirectoryFormatPackage(ShellMixin, object):
 
     Returns a list of absolute paths.
     """
-    self.CheckPkgpathExists()
-    find_tmpl = "find '%s' -print | xargs file | grep ELF | nawk -F: '{print $1}'"
-    find_proc = subprocess.Popen(find_tmpl % self.directory,
-                                 shell=True,
-                                 stdout=subprocess.PIPE)
-    stdout, stderr = find_proc.communicate()
-    ret = find_proc.wait()
-    if ret:
-      logging.error("The find command returned an error.")
-    return stdout.splitlines()
+    if not self.binaries:
+      self.CheckPkgpathExists()
+      files_root = os.path.join(self.directory, "root")
+      find_tmpl = "find '%s' -print | xargs file | grep ELF | nawk -F: '{print $1}'"
+      find_proc = subprocess.Popen(find_tmpl % ".",
+                                   shell=True,
+                                   stdout=subprocess.PIPE,
+                                   cwd=files_root)
+      stdout, stderr = find_proc.communicate()
+      ret = find_proc.wait()
+      if ret:
+        logging.error("The find command returned an error.")
+      dotslash_re = re.compile(r"^./")
+      def StripRe(x, strip_re):
+        return re.sub(strip_re, "", x)
+      self.binaries = [StripRe(x, dotslash_re) for x in stdout.splitlines()]
+    return self.binaries
 
   def GetAllFilenames(self):
     self.CheckPkgpathExists()

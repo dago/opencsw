@@ -28,19 +28,6 @@ sys.path.append(os.path.join(*path_list))
 import checkpkg
 import opencsw
 
-DUMP_BIN = "/usr/ccs/bin/dump"
-
-def GetIsalist():
-  args = ["isalist"]
-  isalist_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-  stdout, stderr = isalist_proc.communicate()
-  ret = isalist_proc.wait()
-  if ret:
-    logging.error("Calling isalist has failed.")
-  isalist = re.split(r"\s+", stdout.strip())
-  return isalist
-
-
 def CheckSharedLibraryConsistency(pkgs, debug):
   result_ok = True
   errors = []
@@ -48,9 +35,11 @@ def CheckSharedLibraryConsistency(pkgs, debug):
   binaries_by_pkgname = {}
   sonames_by_pkgname = {}
   pkg_by_any_filename = {}
+  def MakeBinPathAbsolute(x):
+    return os.path.join(checker.directory, "root", x)
   for checker in pkgs:
-    pkg_binary_paths = checker.ListBinaries()
-    binaries_base = [os.path.split(x)[1] for x in pkg_binary_paths]
+    pkg_binary_paths = [MakeBinPathAbsolute(x) for x in checker.ListBinaries()]
+    binaries_base = [os.path.basename(x) for x in checker.ListBinaries()]
     binaries_by_pkgname[checker.pkgname] = binaries_base
     binaries.extend(pkg_binary_paths)
     for filename in checker.GetAllFilenames():
@@ -72,9 +61,11 @@ def CheckSharedLibraryConsistency(pkgs, debug):
   #   ...
   # }
   #
+  # This bit to be replaced.
   for binary in binaries:
-    binary_base_name = binary.split("/")[-1]
-    args = [DUMP_BIN, "-Lv", binary]
+    # binary_base_name = binary.split("/")[-1]
+    binary_base_name = os.path.basename(binary)
+    args = [checkpkg.DUMP_BIN, "-Lv", binary]
     dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
     stdout, stderr = dump_proc.communicate()
     ret = dump_proc.wait()
@@ -89,7 +80,7 @@ def CheckSharedLibraryConsistency(pkgs, debug):
       binary_data[checkpkg.SONAME] = binary_base_name
     filenames_by_soname[binary_data[checkpkg.SONAME]] = binary_base_name
 
-  isalist = GetIsalist()
+  isalist = checkpkg.GetIsalist()
 
   # Building indexes by soname to simplify further processing
   # These are indexes "by soname".
