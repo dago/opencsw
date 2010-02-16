@@ -92,4 +92,6 @@ install-custom:
 	#ginstall $(WORKDIR)/$(GARCH)-$(MEMORYMODEL)/instantclient_10_2/sdk/include/* $(DESTDIR)$(includedir)/oracle/10.2/
 	ginstall -d $(DESTDIR)$(prefix)/instantclient_10_2/$(TARGETDIR_$(MEMORYMODEL))
 	cp -r $(WORKDIR)/$(GARCH)-$(MEMORYMODEL)/instantclient_10_2/* $(DESTDIR)$(prefix)/instantclient_10_2/$(TARGETDIR_$(MEMORYMODEL))/
+	gln -s libclntsh.so.10.1 $(DESTDIR)$(prefix)/instantclient_10_2/$(TARGETDIR_$(MEMORYMODEL))/libclntsh.so
+	gln -s libocci.so.10.1 $(DESTDIR)$(prefix)/instantclient_10_2/$(TARGETDIR_$(MEMORYMODEL))/libocci.so
 	@$(MAKECOOKIE)
