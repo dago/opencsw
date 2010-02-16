@@ -41,8 +41,10 @@ EXTRA_CONFIGURE_ARGS_isa-i386    = --enable-ldap --enable-ldaps
 EXTRA_CONFIGURE_ARGS_isa-amd64   = --disable-ldap
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-ssl
+CONFIGURE_ARGS += --with-ssl=/opt/csw/ssl
 CONFIGURE_ARGS += --enable-ares
+CONFIGURE_ARGS += --with-spnego=$(libdir)
+CONFIGURE_ARGS += --with-ca-path=/opt/csw/ssl/certs
 CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_isa-$(ISA))
 
 BUILD64 = 1
@@ -51,7 +53,7 @@ BUILD64 = 1
 NOISAEXEC = 1
 
 RUNTIME_DEP_PKGS_CSWcurl = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl CSWcurlrt CSWlibcares CSWlibssh2
-RUNTIME_DEP_PKGS_CSWcurlrt = CSWlibidn CSWoldaprt CSWosslrt CSWzlib CSWlibcares CSWlibssh2
+RUNTIME_DEP_PKGS_CSWcurlrt = CSWlibidn CSWoldaprt CSWosslrt CSWzlib CSWlibcares CSWlibssh2 CSWlibfbopenssl
 RUNTIME_DEP_PKGS_CSWcurldevel = CSWcurl
 
 BUILD_DEP_PKGS = $(filter-out CSWcurl CSWcurlrt,$(RUNTIME_DEP_PKGS_CSWcurl) $(RUNTIME_DEP_PKGS_CSWcurlrt) $(RUNTIME_DEP_PKGS_CSWcurldevel))
