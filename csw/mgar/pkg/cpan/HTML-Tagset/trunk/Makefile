@@ -1,16 +1,21 @@
 GARNAME = HTML-Tagset
-GARVERSION = 3.04
+GARVERSION = 3.20
 CATEGORIES = cpan
-AUTHOR = SBURKE
+AUTHOR = PETDANCE
 
-DESCRIPTION = data tables useful in parsing HTML
+DESCRIPTION = Data tables useful in parsing HTML
 define BLURB
   This module contains several data tables useful in various kinds of HTML
   parsing operations.
 endef
 
-DISTFILES = $(call admfiles,CSWpmhtmltagset,depend prototype)
+DISTFILES = COPYING
 
-CONFIGURE_ARGS = -n
+PACKAGES = CSWpmhtmltagset
+CATALOGNAME = pm_htmltagset
+
+# CONFIGURE_ARGS = -n
+
+ARCHALL = 1
 
 include gar/category.mk
