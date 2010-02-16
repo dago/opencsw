@@ -10,6 +10,8 @@ define BLURB
   the output text using Text::Format. It is _very_ simple at the moment.
 endef
 
+DISTFILES = COPYING
+
 PACKAGES = CSWpmhtml2text
 CATALOGNAME = pm_html2text
 
