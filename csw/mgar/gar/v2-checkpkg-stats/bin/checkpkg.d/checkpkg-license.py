@@ -19,16 +19,17 @@ import opencsw
 
 LICENSE_TMPL = "/opt/csw/share/doc/%s/license"
 
-def CheckLicenseFile(pkg, debug):
+def CheckLicenseFile(pkg_data, debug):
   """Checks for the presence of the license file."""
   errors = []
-  pkgmap = pkg.GetPkgmap()
-  catalogname = pkg.GetCatalogname()
+  pkgmap = pkg_data["pkgmap"]
+  catalogname = pkg_data["basic_stats"]["catalogname"]
   license_path = LICENSE_TMPL % catalogname
-  if license_path not in pkgmap.entries_by_path:
+  pkgmap_paths = [x["path"] for x in pkgmap]
+  if license_path not in pkgmap_paths:
     errors.append(
         checkpkg.CheckpkgTag(
-          pkg.pkgname,
+          pkg_data["basic_stats"]["pkgname"],
           "license-missing",
           msg="See http://sourceforge.net/apps/trac/gar/wiki/CopyRight"))
   return errors
@@ -36,10 +37,12 @@ def CheckLicenseFile(pkg, debug):
 
 def main():
   options, args = checkpkg.GetOptions()
-  pkgnames = args
+  md5sums = args
+  # CheckpkgManager class abstracts away things such as the collection of
+  # results.
   check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
-                                           options.extractdir,
-                                           pkgnames,
+                                           options.stats_basedir,
+                                           md5sums,
                                            options.debug)
   # Registering functions defined above.
   check_manager.RegisterIndividualCheck(CheckLicenseFile)

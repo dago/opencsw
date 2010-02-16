@@ -130,8 +130,9 @@ if [[ "$1" == "-e" ]] ; then
 	shift
 fi
 if [[ "$1" == "-h" ]] ; then
-	print 'Usage: checkpkg [-e] pkg1 [pkg2 ....]'
-	print '   -e = "exit on warnings"'
+	print 'Usage: checkpkg [-d] [-e] pkg1 [pkg2 ....]'
+	print '   -d  display debug messages'
+	print '   -e  exit on warnings (soon to be obsolete)'
 	shift
 fi
 
@@ -543,13 +544,14 @@ done
 set_variables_for_individual_package_check "$f"
 
 test_suite_ok=1
-plugindir=${command_basedir}/checkpkg.d
+checkpkg_module_dir=${command_basedir}/checkpkg.d
 checkpkg_module_tag="checkpkg-"
+checkpkg_stats_basedir="${HOME}/.checkpkg/stats"
 
 # Cleaning up old *.pyc files which can cause grief.  This is because of the
 # move of Python libraries.
-for pyc_file in ${plugindir}/opencsw.pyc \
-                ${plugindir}/checkpkg.pyc; do
+for pyc_file in ${checkpkg_module_dir}/opencsw.pyc \
+                ${checkpkg_module_dir}/checkpkg.pyc; do
   if [ -f "${pyc_file}" ]; then
     echo "Removing old pyc file: '${pyc_file}'"
     rm "${pyc_file}"
@@ -564,12 +566,13 @@ ${command_basedir}/checkpkg_collect_stats.py "$@"
 if [[ "${DEBUG}" != "" ]]; then
 	extra_options="--debug"
 fi
-debugmsg "plugindir: '$plugindir'"
+debugmsg "checkpkg_module_dir: '$checkpkg_module_dir'"
 log_files=""
 module_name_format="%-40s"
-if [[ -d "$plugindir" ]]; then
-	echo "Running modular tests"
-	for plugin in "${plugindir}/${checkpkg_module_tag}"*; do
+md5sums=`gmd5sum "$@" | awk '{print $1}'`
+if [[ -d "${checkpkg_module_dir}" ]]; then
+	echo "Running modular tests in ${checkpkg_module_dir}"
+	for plugin in "${checkpkg_module_dir}/${checkpkg_module_tag}"*; do
 		if [[ -x "${plugin}" ]]; then
 			plugin_base_name=`basename ${plugin}`
 			plugin_log="${EXTRACTDIR}/${plugin_base_name}.log"
@@ -577,12 +580,12 @@ if [[ -d "$plugindir" ]]; then
 			plugin_name="`echo ${plugin} | sed -e 's+.*/checkpkg-++' | sed -e 's+\.py$++'`"
 			error_tag_file="tags.${plugin_name}"
 			printf "${BOLD}${module_name_format}${COLOR_RESET} running..." "${plugin_name}"
-			debugmsg "Executing: ${plugin} $extra_options -e \"${EXTRACTDIR}\" ${pkgnames}"
+			debugmsg "Executing: ${plugin} $extra_options -b \"${checkpkg_stats_basedir}\" -o \"${EXTRACTDIR}/${error_tag_file}\" ${md5sums}"
 			${plugin} \
 				$extra_options \
-				-e "${EXTRACTDIR}" \
+				-b "${checkpkg_stats_basedir}" \
 				-o "${EXTRACTDIR}/${error_tag_file}" \
-				${pkgnames} \
+				${md5sums} \
 				> "${plugin_log}" 2>&1
 			if [[ "$?" -ne 0 ]]; then
 				printf "\r${module_name_format} ${RED}[ERROR]${COLOR_RESET}        \\n" "${plugin_name}"
@@ -595,7 +598,7 @@ if [[ -d "$plugindir" ]]; then
 		fi
 	done
 else
-	debugmsg "plugin dir ${plugindir} does not exist"
+	debugmsg "module dir ${checkpkg_module_dir} does not exist"
 fi
 
 for log_file in ${log_files}; do

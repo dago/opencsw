@@ -22,13 +22,16 @@ import checkpkg
 import opencsw
 
 
-def CheckActionClasses(pkg, debug):
+def CheckActionClasses(pkg_data, debug):
   """Checks the consistency between classes in the prototype and pkginfo."""
   errors = []
-  pkginfo = pkg.GetParsedPkginfo()
-  pkgmap = pkg.GetPkgmap()
+  pkginfo = pkg_data["pkginfo"]
+  pkgmap = pkg_data["pkgmap"]
   pkginfo_classes = set(re.split(opencsw.WS_RE, pkginfo["CLASSES"]))
-  pkgmap_classes = pkgmap.GetClasses()
+  pkgmap_classes = set()
+  for entry in pkgmap:
+    if entry["class"]:  # might be None
+      pkgmap_classes.add(entry["class"])
   only_in_pkginfo = pkginfo_classes.difference(pkgmap_classes)
   only_in_pkgmap = pkgmap_classes.difference(pkginfo_classes)
   for action_class in only_in_pkginfo:
@@ -46,10 +49,12 @@ def CheckActionClasses(pkg, debug):
 
 def main():
   options, args = checkpkg.GetOptions()
-  pkgnames = args
+  md5sums = args
+  # CheckpkgManager class abstracts away things such as the collection of
+  # results.
   check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
-                                           options.extractdir,
-                                           pkgnames,
+                                           options.stats_basedir,
+                                           md5sums,
                                            options.debug)
   # Registering functions defined above.
   check_manager.RegisterIndividualCheck(CheckActionClasses)

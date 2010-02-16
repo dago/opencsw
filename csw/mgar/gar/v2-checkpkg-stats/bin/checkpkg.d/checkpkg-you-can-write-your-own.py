@@ -21,7 +21,7 @@ import checkpkg
 # Defining the checking functions.  They come in two flavors: individual
 # package checks and set checks.
 
-def MyCheckForAsinglePackage(pkg, debug):
+def MyCheckForAsinglePackage(pkg_data, debug):
   """Checks an individual package.
   
   Gets a DirctoryFormatPackage as an argument, and returns a list of errors.
@@ -40,11 +40,13 @@ def MyCheckForAsinglePackage(pkg, debug):
   # Here's how to report an error:
   something_is_wrong = False
   if something_is_wrong:
-    errors.append(checkpkg.CheckpkgTag(pkg.pkgname, "example-problem", "thing"))
+    errors.append(checkpkg.CheckpkgTag(
+      pkg_data["basic_stats"]["pkgname"],
+      "example-problem", "thing"))
   return errors
 
 
-def MyCheckForAsetOfPackages(pkgs, debug):
+def MyCheckForAsetOfPackages(pkgs_data, debug):
   """Checks a set of packages.
 
   Sometimes individual checks aren't enough. If you need to write code which
@@ -59,12 +61,12 @@ def MyCheckForAsetOfPackages(pkgs, debug):
 
 def main():
   options, args = checkpkg.GetOptions()
-  pkgnames = args
+  md5sums = args
   # CheckpkgManager class abstracts away things such as the collection of
   # results.
   check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
-                                           options.extractdir,
-                                           pkgnames,
+                                           options.stats_basedir,
+                                           md5sums,
                                            options.debug)
   # Registering functions defined above.
   check_manager.RegisterIndividualCheck(MyCheckForAsinglePackage)

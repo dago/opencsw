@@ -568,10 +568,14 @@ def PkginfoToSrv4Name(pkginfo_dict):
 
 
 class DirectoryFormatPackage(ShellMixin, object):
+  """Represents a package in the directory format.
+
+  Allows some read-write operations.
+  """
 
   def __init__(self, directory):
     self.directory = directory
-    self.pkgname = os.path.split(directory)[1]
+    self.pkgname = os.path.basename(directory)
     self.pkgpath = self.directory
     self.pkginfo_dict = None
     self.binaries = None

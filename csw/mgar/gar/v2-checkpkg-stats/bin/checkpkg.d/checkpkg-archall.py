@@ -16,11 +16,11 @@ path_list = [os.path.dirname(__file__),
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 
-def CheckArchitectureVsContents(pkg, debug):
+def CheckArchitectureVsContents(pkg_data, debug):
   """Verifies the relationship between package contents and architecture."""
   errors = []
-  binaries = pkg.ListBinaries()
-  pkginfo = pkg.GetParsedPkginfo()
+  binaries = pkg_data["binaries"]
+  pkginfo = pkg_data["pkginfo"]
   arch = pkginfo["ARCH"]
   if binaries and arch == "all":
     for binary in binaries:
@@ -38,10 +38,12 @@ def CheckArchitectureVsContents(pkg, debug):
 
 def main():
   options, args = checkpkg.GetOptions()
-  pkgnames = args
+  md5sums = args
+  # CheckpkgManager class abstracts away things such as the collection of
+  # results.
   check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
-                                           options.extractdir,
-                                           pkgnames,
+                                           options.stats_basedir,
+                                           md5sums,
                                            options.debug)
 
   check_manager.RegisterIndividualCheck(CheckArchitectureVsContents)
