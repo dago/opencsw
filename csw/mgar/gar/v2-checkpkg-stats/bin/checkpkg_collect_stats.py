@@ -22,14 +22,18 @@ import opencsw
 
 
 def main():
-  debug = True
-  logging.basicConfig(level=logging.DEBUG)
   parser = optparse.OptionParser()
+  parser.add_option("-d", "--debug", dest="debug",
+                    default=False, action="store_true",
+                    help="Turn on debugging messages")
   options, args = parser.parse_args()
-  logging.basicConfig(level=logging.INFO)
+  if options.debug:
+    logging.basicConfig(level=logging.DEBUG)
+  else:
+    logging.basicConfig(level=logging.INFO)
   logging.info("Collecting statistics about given package files.")
   logging.debug("args: %s", args)
-  packages = [opencsw.CswSrv4File(x, debug) for x in args]
+  packages = [opencsw.CswSrv4File(x, options.debug) for x in args]
   stats_list = [checkpkg.PackageStats(pkg) for pkg in packages]
   for pkg_stats in stats_list:
   	pkg_stats.CollectStats()

@@ -34,6 +34,7 @@ SYSTEM_SYMLINKS = (
     ("/64",               ["/amd64", "/sparcv9"]),
     ("/opt/csw/lib/i386", ["/opt/csw/lib"]),
 )
+INSTALL_CONTENTS_AVG_LINE_LENGTH = 102.09710677919261
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -206,18 +207,21 @@ class SystemPkgmap(object):
         fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
     """
 
+    contents_length = os.stat(SYSTEM_PKGMAP).st_size
+    estimated_lines = contents_length / INSTALL_CONTENTS_AVG_LINE_LENGTH
     system_pkgmap_fd = open(SYSTEM_PKGMAP, "r")
     stop_re = re.compile("(%s)" % "|".join(self.STOP_PKGS))
     # Creating a data structure:
     # soname - {<path1>: <line1>, <path2>: <line2>, ...}
     logging.debug("Building sqlite3 cache db of the %s file",
                   SYSTEM_PKGMAP)
+    print "Processing %s" % SYSTEM_PKGMAP
     c = self.conn.cursor()
     count = itertools.count()
     for line in system_pkgmap_fd:
       i = count.next()
       if not i % 1000:
-        print "\r%s" % i,
+        print "\r~%3.1f%%" % (100.0 * i / estimated_lines,),
       if stop_re.search(line):
         continue
       fields = re.split(WS_RE, line)
@@ -225,7 +229,7 @@ class SystemPkgmap(object):
       pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
       sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
       c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line.strip()))
-    print
+    print "\rAll lines of %s were processed." % SYSTEM_PKGMAP
     print "Creating the main database index."
     sql = "CREATE INDEX basename_idx ON systempkgmap(basename);"
     c.execute(sql)
@@ -287,17 +291,18 @@ class SystemPkgmap(object):
     return self.GetFileMtime() <= self.GetDatabaseMtime()
 
   def PurgeDatabase(self):
-    logging.info("Purging the cache database")
-    c = self.conn.cursor()
-    sql = "DELETE FROM config;"
-    c.execute(sql)
-    sql = "DELETE FROM systempkgmap;"
-    c.execute(sql)
+    logging.info("Dropping the index.")
     sql = "DROP INDEX basename_idx;"
     try:
       c.execute(sql)
     except sqlite3.OperationalError, e:
       logging.warn(e)
+    logging.info("Removing all rows from the cache database")
+    c = self.conn.cursor()
+    sql = "DELETE FROM config;"
+    c.execute(sql)
+    sql = "DELETE FROM systempkgmap;"
+    c.execute(sql)
 
 def SharedObjectDependencies(pkgname,
                              binaries_by_pkgname,

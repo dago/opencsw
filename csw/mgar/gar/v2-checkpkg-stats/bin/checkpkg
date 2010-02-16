@@ -558,14 +558,15 @@ for pyc_file in ${checkpkg_module_dir}/opencsw.pyc \
   fi
 done
 
-# /var/sadm/install/contents cache update
-${command_basedir}/update_contents_cache.py
-# Collects package stats to be later analyzed
-${command_basedir}/checkpkg_collect_stats.py "$@"
-
 if [[ "${DEBUG}" != "" ]]; then
 	extra_options="--debug"
 fi
+
+# /var/sadm/install/contents cache update
+${command_basedir}/update_contents_cache.py
+# Collects package stats to be later analyzed
+${command_basedir}/checkpkg_collect_stats.py ${extra_options} "$@"
+
 debugmsg "checkpkg_module_dir: '$checkpkg_module_dir'"
 log_files=""
 module_name_format="%-40s"
