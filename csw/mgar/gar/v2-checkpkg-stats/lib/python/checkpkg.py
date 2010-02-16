@@ -112,7 +112,7 @@ def GetOptions():
   parser = optparse.OptionParser()
   parser.add_option("-b", dest="stats_basedir",
                     help=("The base directory with package statistics "
-                          "in yaml format"))
+                          "in yaml format, e.g. ~/.checkpkg/stats"))
   parser.add_option("-d", "--debug", dest="debug",
                     default=False, action="store_true",
                     help="Turn on debugging messages")

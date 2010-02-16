@@ -36,7 +36,7 @@ def CheckActionClasses(pkg_data, debug):
   only_in_pkgmap = pkgmap_classes.difference(pkginfo_classes)
   for action_class in only_in_pkginfo:
     error = checkpkg.CheckpkgTag(
-        pkg.pkgname,
+        pkg_data["basic_stats"]["pkgname"],
         "action-class-only-in-pkginfo",
         action_class,
         msg="This shouldn't cause any problems, but it might be not necessary.")

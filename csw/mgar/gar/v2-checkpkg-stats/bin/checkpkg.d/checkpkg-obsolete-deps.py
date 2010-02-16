@@ -45,8 +45,9 @@ def CheckObsoleteDeps(pkg_data, debug):
       if not msg:
         msg = None
       errors.append(
-          checkpkg.CheckpkgTag(pkg.pkgname, "obsolete-dependency",
-                               obsolete_pkg, msg=msg))
+          checkpkg.CheckpkgTag(
+    	      pkg_data["basic_stats"]["pkgname"],
+            "obsolete-dependency", obsolete_pkg, msg=msg))
   return errors
 
 

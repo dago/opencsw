@@ -24,7 +24,10 @@ def CheckArchitectureVsContents(pkg_data, debug):
   arch = pkginfo["ARCH"]
   if binaries and arch == "all":
     for binary in binaries:
-    	errors.append(checkpkg.CheckpkgTag(pkg.pkgname, "archall-with-binaries"), binary)
+    	errors.append(checkpkg.CheckpkgTag(
+    	  pkg_data["basic_stats"]["pkgname"],
+    	  "archall-with-binaries"),
+    	  binary)
   elif not binaries and arch != "all":
     # This is not a clean way of handling messages for the user, but there's
     # not better way at the moment.
