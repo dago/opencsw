@@ -4,6 +4,9 @@ CATEGORIES = lib
 
 DESCRIPTION = SPNEGO API
 define BLURB
+  fbopenssl is a library containing extensions to OpenSSL, including support for:
+  - GSS-API (RFC 2743)
+  - SPNEGO (RFC 2478)
 endef
 
 SF_PROJ = modgssapache
@@ -18,6 +21,9 @@ SPKG_SOURCEURL = http://sourceforge.net/projects/modgssapache
 
 BUILD_DEP_PKGS = CSWossldevel
 RUNTIME_DEP_PKGS = CSWosslrt
+
+PACKAGES = CSWlibfbopenssl
+CATALOGNAME = libfbopenssl
 
 BUILD64 = 1
 WORKSRC = $(WORKDIR)/$(GARNAME)
