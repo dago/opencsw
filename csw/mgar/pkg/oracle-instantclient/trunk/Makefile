@@ -26,6 +26,11 @@ DISTFILES_i386-64-sqlplus        = sqlplus-10.2.0.4.0-solaris-x86-64.zip
 DISTFILES  = $(foreach A,sparc i386,$(foreach S,32 64,$(foreach T,instantclient sdk sqlplus,$(DISTFILES_$A-$S-$T))))
 NOEXTRACT  = $(filter-out $(foreach S,32 64,$(foreach T,instantclient sdk sqlplus,$(DISTFILES_$(GARCH)-$S-$T))),$(DISTFILES))
 
+# From http://www.oracle.com/technology/software/popup-license/instant_client_lic.html
+DISTFILES += instant_client_lic.html
+# This is done with html2text.pl and some manual aditing from the above
+DISTFILES += COPYING
+
 BUILD_DEP_PKGS = CSWchrpath
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/tech/oci/instantclient/index.html
