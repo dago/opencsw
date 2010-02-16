@@ -1,7 +1,7 @@
 GARNAME = HTML-Tree
-GARVERSION = 3.18
+GARVERSION = 3.23
 CATEGORIES = cpan
-AUTHOR = SBURKE
+AUTHOR = PETEK
 
 DESCRIPTION = modules for making parse trees from HTML source.
 define BLURB
@@ -10,8 +10,13 @@ define BLURB
   refer to: HTML::TreeBuilder and HTML::Element.
 endef
 
-DISTFILES = $(call admfiles,CSWpmhtmltree,depend prototype)
+DISTFILES = COPYING
 
-DEPENDS += cpan/HTML-Parser
+PACKAGES = CSWpmhtmltree
+CATALOGNAME = pm_htmltree
+
+DEP_PKGS = CSWpmhtmlparser CSWpmhtmltagset
+
+ARCHALL = 1
 
 include gar/category.mk
