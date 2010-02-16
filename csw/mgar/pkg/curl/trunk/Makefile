@@ -50,12 +50,12 @@ BUILD64 = 1
 # We are doing 64 bit only for the libs
 NOISAEXEC = 1
 
-RUNTIME_DEP_PKGS_CSWcurl = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl CSWcurlrt CSWlibcares
-RUNTIME_DEP_PKGS_CSWcurlrt = CSWlibidn CSWoldaprt CSWosslrt CSWzlib CSWlibcares
+RUNTIME_DEP_PKGS_CSWcurl = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl CSWcurlrt CSWlibcares CSWlibssh2
+RUNTIME_DEP_PKGS_CSWcurlrt = CSWlibidn CSWoldaprt CSWosslrt CSWzlib CSWlibcares CSWlibssh2
 RUNTIME_DEP_PKGS_CSWcurldevel = CSWcurl
 
 BUILD_DEP_PKGS = $(filter-out CSWcurl CSWcurlrt,$(RUNTIME_DEP_PKGS_CSWcurl) $(RUNTIME_DEP_PKGS_CSWcurlrt) $(RUNTIME_DEP_PKGS_CSWcurldevel))
-BUILD_DEP_PKGS += CSWoldapdevel CSWossldevel CSWlibcaresdevel
+BUILD_DEP_PKGS += CSWoldapdevel CSWossldevel CSWlibcaresdevel CSWlibssh2devel
 
 SKIPTEST = 1
 
