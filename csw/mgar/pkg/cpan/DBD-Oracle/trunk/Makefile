@@ -7,6 +7,8 @@ DESCRIPTION = Oracle database driver for the DBI module
 define BLURB
 endef
 
+DISTFILES = COPYING
+
 PACKAGES = CSWpmdbdoracle
 CATALOGNAME = pm_dbdoracle
 
@@ -17,6 +19,13 @@ EXTRA_TEST_EXPORTS = LD_LIBRARY_PATH
 
 NOISALIST = 1
 EXTRA_LIB = /opt/csw/instantclient_10_2
-# EXTRA_INC = $(includedir)/oracle/10.2
+
+# The oracle client is not shipped.
+CHECKPKG_OVERRIDES = symbol-not-found|Oracle.so
+
+# This is an internal-only sourcepackage. Users are expected to
+# install the Oracle client manually and set LD_LIBRARY_PATH on
+# their own according to Oracle policies.
+CHECKPKG_OVERRIDES += missing-dependency|CSWorainstclient102
 
 include gar/category.mk
