@@ -20,3 +20,7 @@ DEP_PKGS = CSWpmtextformat CSWpmhtmltree
 ARCHALL = 1
 
 include gar/category.mk
+
+post-extract-modulated:
+	-perl -pi -e 's,^#!.*,#!/opt/csw/bin/perl -w,' $(WORKSRC)/html2text.pl
+	@$(MAKECOOKIE)
