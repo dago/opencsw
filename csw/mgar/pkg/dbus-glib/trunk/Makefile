@@ -19,11 +19,13 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_DESC_CSWdbusglib = $(DESCRIPTION)
 SPKG_DESC_CSWdbusglibdevel = $(DESCRIPTION) development package
 
-DISTFILES    += $(call admfiles,CSWdbusglib, )
-DISTFILES    += $(call admfiles,CSWdbusglibdev, )
+PACKAGES = CSWdbusglib CSWdbusglibdev
+
+CATALOGNAME_CSWdbusglib = dbus_glib
+CATALOGNAME_CSWdbusglibdevel = dbus_glibdev
 
 RUNTIME_DEP_PKGS_CSWdbusglibdev	= CSWdbusglib
-RUNTIME_DEP_PKGS_CSWdbusglib      	= CSWexpat CSWggettextrt CSWglib2 CSWiconv CSWsunmath CSWlibdbus
+RUNTIME_DEP_PKGS_CSWdbusglib    = CSWexpat CSWggettextrt CSWglib2 CSWiconv CSWsunmath CSWlibdbus
 
 PKGFILES_CSWdbusglibdev  = $(PKGFILES_DEVEL)
 # PKGFILES_CSWdbusglibdev += $(prefix)/include/.*
@@ -36,7 +38,7 @@ PKGFILES_CSWdbusglibdev  = $(PKGFILES_DEVEL)
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-tests 
 
-BUILD64 = 1
+# BUILD64 = 1
 
 include gar/category.mk
 
