@@ -9,6 +9,8 @@ endef
 
 MASTER_SITES = http://dns.measurement-factory.com/tools/dnstop/src/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += dnstop.pod
+DISTFILES += dnstop.8
 
 LICENSE = LICENSE
 
@@ -40,7 +42,7 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)$(bindir)
 	@ginstall -m 755 $(WORKSRC)/dnstop $(DESTDIR)$(bindir)
 	@ginstall -m 755 -d $(DESTDIR)$(mandir)/man8
-	@ginstall -m 444 $(WORKSRC)/dnstop.8 $(DESTDIR)$(mandir)/man8
+	@ginstall -m 444 $(FILEDIR)/dnstop.8 $(DESTDIR)$(mandir)/man8
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall -m 444 $(WORKSRC)/CHANGES $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(MAKECOOKIE)

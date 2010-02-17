@@ -1,0 +1,211 @@
+=head1 NAME
+
+dnstop - displays various tables of DNS traffic on your network.
+
+=head1 SYNOPSIS
+
+dnstop [-46apsQR] [-b expression] [-i address] [-f filter] [-r interval] [device] [savefile]
+
+=head1 DESCRIPTION
+
+dnstop is a small tool to listen on device or to parse the file savefile and collect and print statistics on the local network's DNS traffic. You must have read access to /dev/bpf*.
+
+=head1 COMMAND LINE OPTIONS
+
+The options are as follows:
+
+=item B<-4>
+
+Count only messages with IPv4 addresses.
+
+=item B<-6>
+
+Count only messages with IPv6 addresses.
+
+=item B<-a>
+
+Anonymize addresses.
+
+=item B<-b expression>
+
+BPF filter expression (default: udp port 53).
+
+=item B<-i address>
+
+Ignore select addresses.
+
+=item B<-p>
+
+Do not put the interface into promiscuous mode.
+
+=item B<-r>
+
+Redraw interval (seconds).
+
+=item B<-l level>
+
+Keep counts on names up to level domain name levels.
+
+For example, with -l 2 (the default), dnstop will keep two tables: one with top-level domain names, and another with second-level domain names. Increasing the level provides more details, but also requires more memory and CPU.
+
+=item B<-f>
+
+Input filter name
+
+The "unknown-tlds" filter includes only queries for TLDs that are bogus. Useful for identifying hosts/servers that leak queries for things like "localhost" or "workgroup."
+
+The "A-for-A" filter includes only A queries for names that are already IP addresses. Certain Microsoft Windows DNS servers have a known bug that forward these queries.
+
+The "rfc1918-ptr" filter includes only PTR queries for addresses in RFC1918 space. These should never leak from inside an organization.
+
+=item B<-Q>
+
+Count only DNS query messages.
+
+=item B<-R>
+
+Count only DNS reply messages.
+
+=item B<savefile>
+
+A captured network trace in pcap format.
+
+=item B<device>
+
+Ethernet device (ie fxp0).
+
+=head1 RUN TIME OPTIONS
+
+While running, the following options are available to alter the display:
+
+=item B<s>
+
+Display the source address table.
+
+=item B<d>
+
+Display the destination address table.
+
+=item B<t>
+
+Display the breakdown of query types seen.
+
+=item B<o>
+
+Display the breakdown of opcodes seen.
+
+=item B<1>
+
+Show 1st level query names.
+
+=item B<2>
+
+Show 2nd level query names.
+
+=item B<3>
+
+Show 3rd level query names.
+
+=item B<4>
+
+Show 4th level query names.
+
+=item B<5>
+
+Show 5th level query names.
+
+=item B<6>
+
+Show 6th level query names.
+
+=item B<7>
+
+Show 7th level query names.
+
+=item B<8>
+
+Show 8th level query names.
+
+=item B<9>
+
+Show 9th level query names.
+
+=item B<!>
+
+Show sources + 1st level query names.
+
+=item B<@>
+
+Show sources + 2nd level query names.
+
+=item B<#>
+
+Show sources + 3rd level query names.
+
+=item B<$>
+
+Show sources + 4th level query names.
+
+=item B<%>
+
+Show sources + 5th level query names.
+
+=item B<^>
+
+Show sources + 6th level query names.
+
+=item B<&>
+
+Show sources + 7th level query names.
+
+=item B<*>
+
+Show sources + 8th level query names.
+
+=item B<(>
+
+Show sources + 9th level query names.
+
+=item B<^R>
+
+Reset the counters.
+
+=item B<^X>
+
+Exit the program.
+
+=item B<space>
+
+Redraw.
+
+=item B<?>
+
+Help.
+
+=head1 NON-INTERACTIVE MODE
+
+If stdout is not a tty, dnstop runs in non-interactive mode. In this case, you must supply a savefile for reading, instead of capturing live packets. After reading the entire savefile, dnstop prints the top 50 entries for each table.
+
+=head1 AUTHORS
+
+=item B<Duane Wessels (wessels@measurement-factory.com)>
+
+=item B<Mark Foster (mark@foster.cc)>
+
+=item B<Jose Nazario (jose@monkey.org)>
+
+=item B<Sam Norris E<lt>@ChangeIP.comE<gt>>
+
+=item B<Max Horn E<lt>@quendi.deE<gt>>
+
+=item B<John Morrissey E<lt>jwm@horde.netE<gt>>
+
+=item B<Florian Forster E<lt>octo@verplant.orgE<gt>>
+
+=item B<Dave Plonka E<lt>plonka@cs.wisc.eduE<gt>>
+
+=item B<http://dnstop.measurement-factory.com/>
+
+=head1 BUGS
+
+Does not support TCP at this time.
