@@ -30,16 +30,17 @@ endef
 
 MASTER_SITES = http://pyyaml.org/download/pyyaml/
 DISTFILES  = $(PROJ_NAME)-$(GARVERSION).tar.gz
-WORKSRC = $(WORKDIR)/$(PROJ_NAME)-$(GARVERSION)
+DISTNAME = $(PROJ_NAME)-$(GARVERSION)
 SPKG_SOURCEURL = http://pyyaml.org/wiki/PyYAML
+LICENSE = LICENSE
 
 PACKAGES = CSWpy-yaml CSWpy-yaml-rt
 CATALOGNAME_CSWpy-yaml = py_yaml
 CATALOGNAME_CSWpy-yaml-rt = py_yaml_rt
 
-RUNTIME_DEP_PKGS_CSWpy-yaml =
+RUNTIME_DEP_PKGS_CSWpy-yaml = CSWpy-yaml-rt
 RUNTIME_DEP_PKGS_CSWpy-yaml-rt = CSWlibyaml
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWpy-yaml) $(RUNTIME_DEP_PKGS_CSWpy-yaml-rt)
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWpy-yaml-rt)
 
 SPKG_DESC_CSWpy-yaml = YAML parser and emitter for Python
 SPKG_DESC_CSWpy-yaml-rt = Runtime libraries for YAML parser and emitter
