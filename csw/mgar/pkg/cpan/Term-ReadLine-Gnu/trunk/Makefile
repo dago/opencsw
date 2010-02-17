@@ -14,10 +14,14 @@ CATALOGNAME = pm_termreadlineg
 
 RUNTIME_DEP_PKGS = CSWreadline
 
+# readline.h (CSWreadline) is inconsistent and breaks our test, therefor we
+# will patch that test for the time beeing
+PATCHFILES = patch-readline.t
+
 include gar/category.mk
 
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
+        @ginstall -d $(DOCDEST)
+        @cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+        @$(MAKECOOKIE)
