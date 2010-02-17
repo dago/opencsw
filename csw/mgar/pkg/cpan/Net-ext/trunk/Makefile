@@ -12,4 +12,6 @@ endef
 PACKAGES = CSWpmnetinet
 CATALOGNAME = pm_netinet
 
+PATCHFILES = patch-Gen.xs
+
 include gar/category.mk
