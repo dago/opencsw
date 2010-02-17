@@ -41,11 +41,12 @@ PKGFILES_CSWilmbasedevel = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWilmbase += 
 RUNTIME_DEP_PKGS_CSWilmbasedevel += CSWilmbase
 
-CHECKPKG_OVERRIDES += CSWilmbase|symbol-not-found|libIex.so.2.0.2
-CHECKPKG_OVERRIDES += CSWilmbase|symbol-not-found|libHalf.so.2.0.2
-CHECKPKG_OVERRIDES += CSWilmbase|symbol-not-found|libImath.so.2.0.2
-CHECKPKG_OVERRIDES += CSWilmbase|symbol-not-found|libIlmThread.so.6.0.0
-CHECKPKG_OVERRIDES += CSWilmbase|symbol-not-found|libImath.so.6.0.0
+
+CHECKPKG_OVERRIDES_CSWilmbase += symbol-not-found|libIex.so.2.0.2
+CHECKPKG_OVERRIDES_CSWilmbase += symbol-not-found|libHalf.so.2.0.2
+CHECKPKG_OVERRIDES_CSWilmbase += symbol-not-found|libImath.so.2.0.2
+CHECKPKG_OVERRIDES_CSWilmbase += symbol-not-found|libIlmThread.so.6.0.0
+CHECKPKG_OVERRIDES_CSWilmbase += symbol-not-found|libImath.so.6.0.0
 
 SPKG_SOURCEURL = http://www.openexr.com
 
