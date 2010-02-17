@@ -1,5 +1,5 @@
 GARNAME      = dbus-glib
-GARVERSION   = 0.80
+GARVERSION   = 0.84
 CATEGORIES   = lib
 
 DESCRIPTION  = DBus GLib Bindings
