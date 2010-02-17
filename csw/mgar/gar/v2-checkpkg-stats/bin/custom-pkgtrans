@@ -12,7 +12,11 @@ readonly command_basename command_basedir libshdir
 . "${libshdir}/libcheckpkg.sh"
 
 if [[ -z "$1" || -z "$2" || -z "$3" ]]; then
-	print "usage: $0 <file.pkg> <targetdir> <pkgname>"
+	print >&2 "usage: $0 <file.pkg> <targetdir> <pkgname>"
 	exit 1
+fi
+if [[ "$3" == "all" ]]; then
+  print >&2 "This script can't handle 'all' as the third argument"
+  exit 1
 fi
 custom_pkgtrans "$1" "$2" "$3"
