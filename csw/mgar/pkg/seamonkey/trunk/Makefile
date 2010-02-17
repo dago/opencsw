@@ -16,7 +16,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/$(GARVERSION)/
 UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/
 
-PACKAGES         			= CSWseamonkey
+PACKAGES       			= CSWseamonkey
 CATALOGNAME_CSWseamonkey 	= $(GARNAME)
 SPKG_DESC_CSWseamonkey 		= $(DESCRIPTION)
 
@@ -87,18 +87,18 @@ LICENSE = LICENSE
 WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
-post-extract:
+post-extract-modulated:
 	@mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORK_BUILD)
 	@$(MAKECOOKIE)
 
-pre-configure:
+pre-configure-modulated::
 	@cp $(FILEDIR)/.mozconfig  $(WORK_BUILD)/.mozconfig
 
-pre-install:
+pre-install-modulated::
 	( if [ ! -d $(WORK_INSTALL)/opt/csw/bin ] ; then mkdir -p $(WORK_INSTALL)/opt/csw/bin ; fi )
 	( cd $(WORK_INSTALL)/opt/csw/bin ; rm -f seamonkey ; ln -sf ../mozilla/seamonkey/bin/seamonkey . )
 
-post-install:
+post-install-modulated::
 	( gfind $(WORK_INSTALL)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
 	( gfind $(WORK_INSTALL)/opt/csw -name chromelist.txt -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORK_BUILD)/\_\_g {}.temp > {} && rm {}.temp"  \; )
 	( gfind $(WORK_INSTALL)/opt/csw/mozilla/seamonkey -name "*.js" -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORK_BUILD)/\_\_g {}.temp > {} && rm {}.temp"  \; )
