@@ -344,14 +344,13 @@ class ShellMixin(object):
   def ShellCommand(self, args, quiet=False):
     logging.debug("Calling: %s", repr(args))
     if quiet:
-      sub_stdout = subprocess.PIPE
-      sub_stderr = subprocess.PIPE
+      process = subprocess.Popen(args,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+      stdout, stderr = process.communicate()
+      retcode = process.wait()
     else:
-      sub_stdout = None
-      sub_stderr = None
-    retcode = subprocess.call(args,
-                              stdout=sub_stdout,
-                              stderr=sub_stderr)
+      retcode = subprocess.call(args)
     if retcode:
       raise Error("Running %s has failed." % repr(args))
     return retcode
@@ -406,14 +405,27 @@ class CswSrv4File(ShellMixin, object):
     This requires custom-pkgtrans to be available.
     """
     if not os.path.isdir(destdir):
-    	raise PackageError("%s doesn't exist or is not a directory" % destdir)
+      raise PackageError("%s doesn't exist or is not a directory" % destdir)
     args = [os.path.join(os.path.dirname(__file__), "custom-pkgtrans"),
            src_file, destdir, pkgname ]
     pkgtrans_proc = subprocess.Popen(args)
     pkgtrans_proc.communicate()
     ret = pkgtrans_proc.wait()
     if ret:
-    	logging.error("% has failed" % args)
+      logging.error("% has failed" % args)
+
+  def GetPkgname(self):
+    """It's necessary to figure out the pkgname from the .pkg file.
+    # nawk 'NR == 2 {print $1; exit;} $f
+    """
+    gunzipped_path = self.GetGunzippedPath()
+    args = ["nawk", "NR == 2 {print $1; exit;}", gunzipped_path]
+    nawk_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+    stdout, stderr = nawk_proc.communicate()
+    ret_code = nawk_proc.wait()
+    pkgname = stdout.strip()
+    logging.debug("GetPkgname(): %s", repr(pkgname))
+    return pkgname
 
   def TransformToDir(self):
     """Transforms the file to the directory format.
@@ -423,10 +435,12 @@ class CswSrv4File(ShellMixin, object):
     achieve consistent behavior.
     """
     if not self.transformed:
+      gunzipped_path = self.GetGunzippedPath()
+      pkgname = self.GetPkgname()
       args = [os.path.join(os.path.dirname(__file__),
                            "..", "..", "bin", "custom-pkgtrans"),
-              self.GetGunzippedPath(), self.GetWorkDir(), "all"]
-      print "args", args
+              gunzipped_path, self.GetWorkDir(), pkgname]
+      print "transforming", args
       unused_retcode = self.ShellCommand(args, quiet=(not self.debug))
       dirs = self.GetDirs()
       if len(dirs) != 1:
@@ -753,15 +767,15 @@ class DirectoryFormatPackage(ShellMixin, object):
     # worry about that at this stage.
     logging.debug("Trying to open %s", repr(file_path))
     if os.path.isfile(file_path):
-    	return open(file_path, "r")
+      return open(file_path, "r")
     else:
-    	return None
+      return None
 
   def _ParseOverridesStream(self, stream):
     overrides = []
     for line in stream:
       if line.startswith("#"):
-      	continue
+        continue
       overrides.append(checkpkg.ParseOverrideLine(line))
     return overrides
 
@@ -769,9 +783,9 @@ class DirectoryFormatPackage(ShellMixin, object):
     """Returns overrides, a list of checkpkg.Override instances."""
     stream = self._GetOverridesStream()
     if stream:
-    	return self._ParseOverridesStream(stream)
+      return self._ParseOverridesStream(stream)
     else:
-    	return list()
+      return list()
 
 
 class Pkgmap(object):

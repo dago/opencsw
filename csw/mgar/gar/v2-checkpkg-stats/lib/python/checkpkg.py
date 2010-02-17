@@ -291,14 +291,14 @@ class SystemPkgmap(object):
     return self.GetFileMtime() <= self.GetDatabaseMtime()
 
   def PurgeDatabase(self):
+    c = self.conn.cursor()
     logging.info("Dropping the index.")
     sql = "DROP INDEX basename_idx;"
     try:
       c.execute(sql)
     except sqlite3.OperationalError, e:
       logging.warn(e)
-    logging.info("Removing all rows from the cache database")
-    c = self.conn.cursor()
+    logging.info("Deleting all rows from the cache database")
     sql = "DELETE FROM config;"
     c.execute(sql)
     sql = "DELETE FROM systempkgmap;"
@@ -692,7 +692,6 @@ class Override(object):
       basket_b["tag_info"] = tag.tag_info
     basket_a["tag_name"] = self.tag_name
     basket_b["tag_name"] = tag.tag_name
-    # print "comparing", basket_a, basket_b
     return basket_a == basket_b
 
 def ParseOverrideLine(line):
@@ -929,6 +928,7 @@ class PackageStats(object):
     f = open(in_file_name, "r")
     obj = yaml.safe_load(f)
     f.close()
+    logging.debug("ReadObject(): finished reading %s", repr(in_file_name))
     return obj
 
   def ReadSavedStats(self):

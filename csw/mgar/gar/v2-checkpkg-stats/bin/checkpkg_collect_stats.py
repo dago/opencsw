@@ -32,7 +32,7 @@ def main():
   else:
     logging.basicConfig(level=logging.INFO)
   logging.info("Collecting statistics about given package files.")
-  logging.debug("args: %s", args)
+  logging.debug("calling: %s, please be patient", args)
   packages = [opencsw.CswSrv4File(x, options.debug) for x in args]
   stats_list = [checkpkg.PackageStats(pkg) for pkg in packages]
   for pkg_stats in stats_list:

@@ -49,6 +49,10 @@ def CheckActionClasses(pkg_data, debug):
 
 def main():
   options, args = checkpkg.GetOptions()
+  if options.debug:
+  	logging.basicConfig(level=logging.DEBUG)
+  else:
+  	logging.basicConfig(level=logging.INFO)
   md5sums = args
   # CheckpkgManager class abstracts away things such as the collection of
   # results.
