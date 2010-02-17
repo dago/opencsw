@@ -16,13 +16,13 @@ PKGDIST       = $(DISTFILE)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_DESC_CSWdbusglib = $(DESCRIPTION)
-SPKG_DESC_CSWdbusglibdevel = $(DESCRIPTION) development package
+SPKG_DESC_CSWdbusglib    = $(DESCRIPTION)
+SPKG_DESC_CSWdbusglibdev = $(DESCRIPTION) development package
 
 PACKAGES = CSWdbusglib CSWdbusglibdev
 
-CATALOGNAME_CSWdbusglib = dbus_glib
-CATALOGNAME_CSWdbusglibdevel = dbus_glibdev
+CATALOGNAME_CSWdbusglib         = dbus_glib
+CATALOGNAME_CSWdbusglibdev      = dbus_glibdev
 
 RUNTIME_DEP_PKGS_CSWdbusglibdev	= CSWdbusglib
 RUNTIME_DEP_PKGS_CSWdbusglib    = CSWexpat CSWggettextrt CSWglib2 CSWiconv CSWsunmath CSWlibdbus
