@@ -1,5 +1,5 @@
 GARNAME = phpldapadmin
-GARVERSION = 1.2.0.4
+GARVERSION = 1.2.0.5
 CATEGORIES = apps
 
 DESCRIPTION = Web-based LDAP browser to manage your LDAP server

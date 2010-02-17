@@ -1,14 +1,17 @@
 #!/bin/sh
 
 CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
-if [ -d ${CSW_PREFIX}/apache2/share/htdocs/phpldapadmin ]; then
+SOURCE=${CSW_PREFIX}/apache2/share/htdocs/phpldapadmin
+TARGET=${CSW_PREFIX}/share/www/phpldapadmin
+
+if [ -d ${SOURCE} -a \! -h ${SOURCE} ]; then
   /usr/bin/cat <<EOF
 
 ERROR: You seem to have a previous installation of phpLDAPadmin.
 The install location has changed from
-  /opt/csw/apache2/share/htdocs/phpldapadmin
+  ${SOURCE}
 to
-  /opt/csw/share/www/phpldapadmin/htdocs
+  ${TARGET}
 
 Your files are being moved to the new install location.
 
@@ -21,10 +24,9 @@ EOF
   echo
   echo "Copying old files:"
   echo
-  mkdir -p ${CSW_PREFIX}/share/www/phpldapadmin/htdocs
-  (cd ${CSW_PREFIX}/apache2/share/htdocs/phpldapadmin; tar cf - .) | \
-	(cd ${CSW_PREFIX}/share/www/phpldapadmin; tar xvf -)
-  rm -rf ${CSW_PREFIX}/apache2/share/htdocs/phpldapadmin
+  mkdir -p ${TARGET}/htdocs
+  (cd ${SOURCE}; tar cf - .) | (cd ${TARGET}; tar xvf -)
+  rm -rf ${SOURCE}
 fi
 
 exit 0
