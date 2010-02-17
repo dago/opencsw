@@ -16,8 +16,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 EXTRA_CFLAGS = -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION
 EXTRA_CXXFLAGS = -xlibmil -xlibmopt -features=tmplife -norunpath
 
-# BUILD64 = 1
-# NOISALIST = 1
+BUILD64 = 1
+NOISALIST = 1
 
 PATCHFILES = pixman-private.h.diff
 
