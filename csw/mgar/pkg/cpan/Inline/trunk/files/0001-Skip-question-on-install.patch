@@ -1,34 +1,17 @@
-From 1f06fd58ce8ec425d21138e3b36a7b66eb555db8 Mon Sep 17 00:00:00 2001
-From: Dagobert Michelsen <dam@opencsw.org>
-Date: Wed, 10 Feb 2010 13:52:02 +0100
-Subject: [PATCH] Skip question on install
-
----
- C/Makefile.PL |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/C/Makefile.PL b/C/Makefile.PL
-index 294846b..a290a62 100644
---- a/C/Makefile.PL
-+++ b/C/Makefile.PL
-@@ -58,12 +58,12 @@ END
- # '
- }
+--- Inline-0.46.orig/C/Makefile.PL	2010-02-17 22:12:18.040826000 +0100
++++ Inline-0.46/C/Makefile.PL	2010-02-17 22:15:07.194173580 +0100
+@@ -73,10 +73,10 @@
  
--my $answer = '';
+ my $answer = '';
  my $default = $found ? "y" : "n";
 -while (1) {
--    $answer = prompt ('Do you want to install Inline::C?', $default); 
+-    $answer = prompt ('Do you want to install Inline::C?', $default);
 -    last if $answer =~ /^(y|yes|n|no)$/i;
 -}
-+my $answer = $default;
 +#while (1) {
-+#    $answer = prompt ('Do you want to install Inline::C?', $default); 
-+#    last if $answer =~ /^(y|yes|n|no)$/i;
++    #$answer = prompt ('Do you want to install Inline::C?', $default);
++    #last if $answer =~ /^(y|yes|n|no)$/i;
 +#}
  
  if ($answer =~ /^(y|yes)$/i) {
      WriteMakefile(
--- 
-1.6.6
-
