@@ -4,6 +4,7 @@
 # Python.
 
 import copy
+import cPickle
 import errno
 import itertools
 import logging
@@ -894,6 +895,7 @@ class PackageStats(object):
     stats_path = self.GetStatsPath()
     self.MakeStatsDir()
     dir_pkg = self.GetDirFormatPkg()
+    logging.info("Collecting package statistics.")
     self.DumpObject(dir_pkg.GetAllFilenames(), "all_filenames")
     self.DumpObject(self.GetBasicStats(), "basic_stats")
     self.DumpObject(dir_pkg.ListBinaries(), "binaries")
@@ -904,15 +906,7 @@ class PackageStats(object):
     self.DumpObject(dir_pkg.GetParsedPkginfo(), "pkginfo")
     self.DumpObject(dir_pkg.GetPkgmap().entries, "pkgmap")
     self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
-
-  def DumpObject(self, obj, name):
-    stats_path = self.GetStatsPath()
-    out_file_name = os.path.join(stats_path, "%s.yml" % name)
-    logging.debug("DumpObject(): writing %s", repr(out_file_name))
-    f = open(out_file_name, "w")
-    f.write(yaml.safe_dump(obj))
-    f.close()
-    self.all_stats[name] = obj
+    logging.debug("Statistics collected.")
 
   def GetAllStats(self):
     if self.StatsExist():
@@ -921,14 +915,42 @@ class PackageStats(object):
       self.CollectStats()
     return self.all_stats
 
+  def DumpObject(self, obj, name):
+    """Saves an object.
+
+    TODO(maciej): Implement pickling with cPickle.
+    """
+    stats_path = self.GetStatsPath()
+    # yaml
+    out_file_name = os.path.join(stats_path, "%s.yml" % name)
+    logging.debug("DumpObject(): writing %s", repr(out_file_name))
+    f = open(out_file_name, "w")
+    f.write(yaml.safe_dump(obj))
+    f.close()
+    # pickle
+    out_file_name_pickle = os.path.join(stats_path, "%s.pickle" % name)
+    f = open(out_file_name_pickle, "wb")
+    cPickle.dump(obj, f)
+    f.close()
+    self.all_stats[name] = obj
+
   def ReadObject(self, name):
+    """Reads an object."""
     stats_path = self.GetStatsPath()
     in_file_name = os.path.join(stats_path, "%s.yml" % name)
-    logging.debug("ReadObject(): reading %s", repr(in_file_name))
-    f = open(in_file_name, "r")
-    obj = yaml.safe_load(f)
-    f.close()
-    logging.debug("ReadObject(): finished reading %s", repr(in_file_name))
+    in_file_name_pickle = os.path.join(stats_path, "%s.pickle" % name)
+    if os.path.exists(in_file_name_pickle):
+      logging.debug("ReadObject(): reading %s", repr(in_file_name_pickle))
+      f = open(in_file_name_pickle, "r")
+      obj = cPickle.load(f)
+      f.close()
+      logging.debug("ReadObject(): finished reading %s", repr(in_file_name_pickle))
+    else:
+      logging.debug("ReadObject(): reading %s", repr(in_file_name))
+      f = open(in_file_name, "r")
+      obj = yaml.safe_load(f)
+      f.close()
+      logging.debug("ReadObject(): finished reading %s", repr(in_file_name))
     return obj
 
   def ReadSavedStats(self):
