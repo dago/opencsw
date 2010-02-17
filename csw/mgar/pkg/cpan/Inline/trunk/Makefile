@@ -16,8 +16,6 @@ PATCHFILES = 0001-Skip-question-on-install.patch
 PACKAGES = CSWpminline
 CATALOGNAME = pm_inline
 
-ARCHALL = 1
-
 # The current licensing is unknown as is stated on CPAN
 CHECKPKG_OVERRIDES = license-missing
 
