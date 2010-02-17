@@ -1,5 +1,5 @@
 GARNAME      = gcc
-GARVERSION   = 4.4.1
+GARVERSION   = 4.4.3
 CATEGORIES   = lang
 
 DESCRIPTION  = The GNU Compiler Collection
@@ -15,6 +15,9 @@ MASTER_SITES = $(GNU_MIRROR)/$(GARNAME)-$(GARVERSION)/
 # We define upstream file regex so we can be notifed 
 # of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 ## build options
 CONFIGURE_ARGS  = --prefix=$(BUILD_PREFIX)/gcc4
@@ -44,3 +47,6 @@ include files/pkg_scripts.mk
 include files/package_files.mk
 include files/amd_merge.mk
 include gar/category.mk
+
+# We need GNU find as find
+PATH := /opt/csw/gnu:$(PATH)

@@ -30,8 +30,8 @@ merge-fix-links:
 	@echo "[===== Merging Fixing Hard Links =====]"
 	$(_DBG)(cd $(IPREFIX)/bin; grm -f *gcc *c++ g++ gcj gfortran)
 	$(_DBG)(cd $(IPREFIX)/bin; \
-		gcp i386-pc-solaris2.8-gcc-4.3.3 i386-pc-solaris2.8-gcc)
-	$(_DBG)(cd $(IPREFIX)/bin; gcp i386-pc-solaris2.8-gcc-4.3.3 gcc)
+		gcp i386-pc-solaris2.8-gcc-4.4.3 i386-pc-solaris2.8-gcc)
+	$(_DBG)(cd $(IPREFIX)/bin; gcp i386-pc-solaris2.8-gcc-4.4.3 gcc)
 	$(_DBG)(cd $(IPREFIX)/bin; \
 		gcp i386-pc-solaris2.8-g++ i386-pc-solaris2.8-c++)
 	$(_DBG)(cd $(IPREFIX)/bin; gcp i386-pc-solaris2.8-g++ g++)
@@ -40,8 +40,8 @@ merge-fix-links:
 	$(_DBG)(cd $(IPREFIX)/bin; gcp i386-pc-solaris2.8-gfortran gfortran)
 	$(_DBG)(cd $(APREFIX)/bin; grm -f *gcc *c++ g++ gcj gfortran)
 	$(_DBG)(cd $(APREFIX)/bin; \
-		gcp i386-pc-solaris2.10-gcc-4.3.3 i386-pc-solaris2.10-gcc)
-	$(_DBG)(cd $(APREFIX)/bin; gcp i386-pc-solaris2.10-gcc-4.3.3 gcc)
+		gcp i386-pc-solaris2.10-gcc-4.4.3 i386-pc-solaris2.10-gcc)
+	$(_DBG)(cd $(APREFIX)/bin; gcp i386-pc-solaris2.10-gcc-4.4.3 gcc)
 	$(_DBG)(cd $(APREFIX)/bin; \
 		gcp i386-pc-solaris2.10-g++ i386-pc-solaris2.10-c++)
 	$(_DBG)(cd $(APREFIX)/bin; gcp i386-pc-solaris2.10-g++ g++)
