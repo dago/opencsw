@@ -13,6 +13,8 @@ endef
 
 PATCHFILES = 0001-Skip-question-on-install.patch
 
+ARCHALL_CSWpminline = 1
+
 PACKAGES = CSWpminline
 CATALOGNAME = pm_inline
 
