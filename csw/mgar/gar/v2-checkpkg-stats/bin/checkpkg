@@ -216,12 +216,6 @@ hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
 basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
 pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
 
-case $software in
-     *[A-Z]*)
-	errmsg "$software must be all lowercase"
-	;;
-esac
-
 case `basename $f` in
 	${software}-${version}-*)
 		# file name looks okay

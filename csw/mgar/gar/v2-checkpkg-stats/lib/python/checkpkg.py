@@ -895,7 +895,7 @@ class PackageStats(object):
     stats_path = self.GetStatsPath()
     self.MakeStatsDir()
     dir_pkg = self.GetDirFormatPkg()
-    logging.info("Collecting package statistics.")
+    logging.info("Collecting %s package statistics.", repr(dir_pkg.pkgname))
     self.DumpObject(dir_pkg.GetAllFilenames(), "all_filenames")
     self.DumpObject(self.GetBasicStats(), "basic_stats")
     self.DumpObject(dir_pkg.ListBinaries(), "binaries")
