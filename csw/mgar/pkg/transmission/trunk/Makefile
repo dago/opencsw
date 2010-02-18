@@ -66,6 +66,7 @@ CONFIGURE_ARGS = $(DIRPATHS) --enable-gtk
 STRIP_LIBTOOL = 1
 
 TEST_TARGET = check
+CHECKPKG_OVERRIDES_CSWtransmissiongtk2 += symbol-not-found|transmission
 
 include gar/category.mk
 PATH := /opt/csw/gnu:$(PATH)
