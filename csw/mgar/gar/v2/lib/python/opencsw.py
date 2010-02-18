@@ -58,8 +58,7 @@ proxy=
 
 EMAIL_TMPL = """From: %(from)s
 To: %(to)s
-Cc: %(cc)s
-Date: %(date)s
+%(optional_cc)sDate: %(date)s
 Subject: newpkgs %(pkgnames)s
 
 %(body)s
@@ -210,7 +209,7 @@ class CatalogBasedOpencswPackage(object):
     for line in catalog_source:
       # Working around the GPG signature
       if line.startswith("#"): continue
-      if "BEGIN PGP SIGNED MESSAGE" in line: continue 
+      if "BEGIN PGP SIGNED MESSAGE" in line: continue
       if line.startswith("Hash:"): continue
       if len(line.strip()) <= 0: continue 
       if "BEGIN PGP SIGNATURE" in line: break
@@ -273,7 +272,9 @@ class NewpkgMailer(object):
     self.pkgnames = pkgnames
     self.paths = paths
     self.release_mgr = u"%s <%s>" % (release_mgr_name, release_mgr_email)
-    self.release_cc = u"%s" % release_cc
+    self.release_cc = release_cc
+    if self.release_cc:
+    	self.release_cc = unicode(release_cc)
 
   def FormatMail(self):
     body_list = ["The following package files are ready to be released:"]
@@ -318,14 +319,17 @@ class NewpkgMailer(object):
       body_list.extend(msg)
     body_list.append("")
     body = "\n".join(body_list)
+    # TODO: This needs to be rewritten using Cheetah
     d = {
         'from': self.sender,
         'to': self.release_mgr,
-        'cc': self.release_cc,
+        'optional_cc': '',
         'pkgnames': ", ".join(self.pkgnames),
         'body': body,
         'date': datetime.datetime.now(),
     }
+    if self.release_cc:
+      d['optional_cc'] = "cc: %s\n" % self.release_cc
     mail_text = EMAIL_TMPL % d
     return mail_text
 
