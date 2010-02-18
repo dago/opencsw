@@ -2,7 +2,7 @@ GARNAME = fbopenssl
 GARVERSION = 0.0.4
 CATEGORIES = lib
 
-DESCRIPTION = SPNEGO API
+DESCRIPTION = Extensions to OpenSSL including support for GSS-API and SPNEGO
 define BLURB
   fbopenssl is a library containing extensions to OpenSSL, including support for:
   - GSS-API (RFC 2743)
