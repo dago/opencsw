@@ -1,1 +1,5 @@
-cdb51b3a9fb9b01a7582a5ad797377ca  lzlib-0.8-rc1.tar.gz
+8d8488783fd776ead11ab9b19b63f4bf  0001-Do-not-do-ldconfig.patch
+ae8e904a8c07f7533b94eaf8bfb2075d  0001-Remove-Linux-specific-stuff-add-Solaris-specific-stu.patch
+fe24dd11cfece198006a781133fb13fa  0002-Change-linker-flags-for-shared-libs-to-be-Sun-Studio.patch
+dcb22fb244b8d124742cad9ddd18985a  0002-Use-ucb-echo-as-it-only-understands-n.patch
+65382168a05975e550f5381f99efc0c6  lzlib-0.9.tar.gz
