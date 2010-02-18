@@ -87,7 +87,7 @@ LICENSE = LICENSE
 WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
-post-extract-modulated:
+post-extract:
 	mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORK_BUILD)
 	@$(MAKECOOKIE)
 
