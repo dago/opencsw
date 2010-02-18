@@ -1,5 +1,5 @@
 GARNAME = transmission
-GARVERSION = 1.83
+GARVERSION = 1.90
 CATEGORIES = net
 
 DESCRIPTION = Fast, easy, and free multi-platform BitTorrent client
@@ -8,7 +8,7 @@ endef
 MASTER_SITES = http://mirrors.m0k.org/transmission/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 PATCHFILES = icons-makefile.patch
-PATCHFILES += linker-include.patch
+#PATCHFILES += linker-include.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
