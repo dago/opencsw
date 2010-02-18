@@ -820,8 +820,9 @@ redirpackage: pkgreset dirpackage
 
 # This rule automatically logs into every host where a package for this software should
 # be built. It is especially suited for automated build bots.
+platforms: _PACKAGING_PLATFORMS=$(if $(ARCHALL),$(firstword $(PACKAGING_PLATFORMS)),$(PACKAGING_PLATFORMS))
 platforms:
-	$(foreach P,$(PACKAGING_PLATFORMS),\
+	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) PLATFORM=$P _package && ,\
@@ -833,8 +834,9 @@ platforms:
 	@echo
 	@echo "The following packages have been built during this invocation:"
 	@echo
-	@$(foreach P,$(PACKAGING_PLATFORMS),\
+	@$(foreach P,$(_PACKAGING_PLATFORMS),\
 		echo "* Platform $P\c";\
+		$(if $(ARCHALL),echo " (suitable for all architectures)\c";) \
 		$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 			echo " (built on this host)";\
 			  $(MAKE) -s PLATFORM=$P _pkgshow;echo;,\
@@ -844,11 +846,12 @@ platforms:
 	)
 	@$(MAKECOOKIE)
 
+platforms-%: _PACKAGING_PLATFORMS=$(if $(ARCHALL),$(firstword $(PACKAGING_PLATFORMS)),$(PACKAGING_PLATFORMS))
 platforms-%:
-	$(foreach P,$(PACKAGING_PLATFORMS),\
+	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) PLATFORM=$P $* && ,\
+				$(MAKE) -s PLATFORM=$P $* && ,\
 				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) PLATFORM=$P $*" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
