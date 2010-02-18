@@ -12,6 +12,6 @@ CATALOGNAME = pm_taskweaken
 
 LICENSE = LICENSE
 
-ACHALL = 1
+ARCHALL = 1
 
 include gar/category.mk
