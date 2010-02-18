@@ -44,7 +44,7 @@ def main():
         tag_postfix = "|%s" % tag.tag_info.replace(" ", "|")
       else:
         tag_postfix = ""
-      print ("CHECKPKG_OVERRIDES_%s = %s%s"
+      print ("CHECKPKG_OVERRIDES_%s += %s%s"
              % (tag.pkgname, tag.tag_name, tag_postfix))
   sys.exit(exit_code)
 
