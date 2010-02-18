@@ -32,10 +32,12 @@ PKGINFO ?= /usr/bin/pkginfo
 
 ifeq ($(origin PACKAGES), undefined)
 PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(GARNAME))
+CATALOGNAME     = $(if $(filter %.gspec,$(DISTFILES)),,$(GARNAME))
 SRCPACKAGE_BASE = $(firstword $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
 SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE))
 else
+CATALOGNAME    ?= $(if $(filter-out $(firstword $(PACKAGES)),$(PACKAGES)),,$(patsubst CSW%,%,$(PACKAGES)))
 SRCPACKAGE_BASE = $(firstword $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
 SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE)))
