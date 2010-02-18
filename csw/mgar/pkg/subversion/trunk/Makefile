@@ -33,9 +33,14 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES  = CSWsvn CSWsvn-devel CSWap2svn CSWpmsvn
 PACKAGES += CSWpythonsvn CSWrbsvn CSWjavasvn
+PACKAGES += CSWsvn-contrib CSWsvn-tools
 
 SPKG_DESC_CSWsvn           = Version control rethought
+SPKG_DESC_CSWsvn-tools     = Additional subversion tools
+SPKG_DESC_CSWsvn-contrib   = Contributed subversion scripts
 CATALOGNAME_CSWsvn         = subversion
+CATALOGNAME_CSWsvn-contrib = subversion_contrib
+CATALOGNAME_CSWsvn-tools   = subversion_tools
 RUNTIME_DEP_PKGS_CSWsvn       = CSWapache2rt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsvn      += CSWexpat
@@ -47,11 +52,12 @@ RUNTIME_DEP_PKGS_CSWsvn      += CSWsasl
 RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf
 RUNTIME_DEP_PKGS_CSWsvn      += CSWsqlite3rt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWzlib
-# There are additional requirements for $(docdir)/subversion/tools/ which
-# also contains the stack of hook-scripts. Should we add those?
-#RUNTIME_DEP_PKGS_CSWsvn      += CSWperl
-#RUNTIME_DEP_PKGS_CSWsvn      += CSWpython
-#RUNTIME_DEP_PKGS_CSWsvn      += CSWruby
+RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf
+RUNTIME_DEP_PKGS_CSWsvn-contrib += CSWperl
+RUNTIME_DEP_PKGS_CSWsvn-contrib += CSWpython
+RUNTIME_DEP_PKGS_CSWsvn-tools   += CSWperl
+RUNTIME_DEP_PKGS_CSWsvn-tools   += CSWpython
+RUNTIME_DEP_PKGS_CSWsvn-tools   += CSWruby
 
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
 CATALOGNAME_CSWsvn-devel   = subversion_devel
@@ -59,6 +65,12 @@ RUNTIME_DEP_PKGS_CSWsvn-devel = CSWsvn
 ARCHALL_CSWsvn-devel       = 1
 PKGFILES_CSWsvn-devel      = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-devel     += $(docdir)/$(CATALOGNAME_CSWsvn-devel)/changelog.CSW
+
+PKGFILES_CSWsvn-contrib    = $(docdir)/subversion/contrib.*
+ARCHALL_CSWsvn-contrib     = 1
+
+PKGFILES_CSWsvn-tools      = $(docdir)/subversion/tools.*
+ARCHALL_CSWsvn-tools       = 1
 
 SPKG_DESC_CSWap2svn        = Subversion Modules for Apache 2.2
 CATALOGNAME_CSWap2svn      = ap2_subversion
@@ -186,6 +198,13 @@ CONFIGURE_ARGS += --with-serf=$(prefix)
 #   and for progress information you could compare this with
 #     tail -f $(WORKSRC)/tests.log | grep merge_tests.py
 TEST_TARGET  = check
+
+# Overrides
+CHECKPKG_OVERRIDES_CSWap2svn = symbol-not-found
+CHECKPKG_OVERRIDES_CSWrbsvn = symbol-not-found
+CHECKPKG_OVERRIDES_CSWsvn = symbol-not-found|libsvn_ra-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWpythonsvn = symbol-not-found
+CHECKPKG_OVERRIDES_CSWpmsvn = symbol-not-found
 
 include gar/category.mk
 
