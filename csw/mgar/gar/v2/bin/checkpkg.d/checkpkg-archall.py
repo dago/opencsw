@@ -19,13 +19,14 @@ import checkpkg
 
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
 
-def CheckArchitectureVsContents(pkg, debug):
+def CheckArchitectureVsContents(pkg_data, debug):
   """Verifies the relationship between package contents and architecture."""
   errors = []
-  binaries = pkg.ListBinaries()
-  pkginfo = pkg.GetParsedPkginfo()
+  binaries = pkg_data["binaries"]
+  pkginfo = pkg_data["pkginfo"]
   pkgmap = pkg.GetPkgmap()
   arch = pkginfo["ARCH"]
+  pkgname = pkg_data["basic_stats"]["pkgname"]
   reasons_to_be_arch_specific = []
   for pkgmap_path in pkgmap.entries_by_path:
     # print "pkgmap_path", repr(pkgmap_path), type(pkgmap_path)
@@ -41,13 +42,13 @@ def CheckArchitectureVsContents(pkg, debug):
         "package contains binary %s" % binary))
   if arch == "all":
     for tag, param, desc in reasons_to_be_arch_specific:
-      errors.append(checkpkg.CheckpkgTag(pkg.pkgname, tag, param))
+      errors.append(checkpkg.CheckpkgTag(pkgname, tag, param))
   elif not reasons_to_be_arch_specific:
     # This is not a clean way of handling messages for the user, but there's
     # not better way at the moment.
-    print "Package %s does not contain any binaries." % pkg.pkgname
+    print "Package %s does not contain any binaries." % pkgname
     print "Consider making it ARCHALL = 1 instead of %s:" % arch
-    print "ARCHALL_%s = 1" % pkg.pkgname
+    print "ARCHALL_%s = 1" % pkgname
     print ("However, be aware that there might be other reasons "
            "to keep it architecture-specific.")
   return errors
@@ -55,10 +56,12 @@ def CheckArchitectureVsContents(pkg, debug):
 
 def main():
   options, args = checkpkg.GetOptions()
-  pkgnames = args
+  md5sums = args
+  # CheckpkgManager class abstracts away things such as the collection of
+  # results.
   check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
-                                           options.extractdir,
-                                           pkgnames,
+                                           options.stats_basedir,
+                                           md5sums,
                                            options.debug)
 
   check_manager.RegisterIndividualCheck(CheckArchitectureVsContents)

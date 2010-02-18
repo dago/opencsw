@@ -8,6 +8,8 @@ import logging
 import os.path
 import sys
 
+CHECKPKG_MODULE_NAME = "obsolete dependencies"
+
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
 path_list = [os.path.dirname(__file__),
@@ -26,10 +28,10 @@ OBSOLETE_DEPS = {
     },
 }
 
-def CheckObsoleteDeps(pkg, debug):
+def CheckObsoleteDeps(pkg_data, debug):
   """Checks for obsolete dependencies."""
   errors = []
-  deps = set(pkg.GetDependencies())
+  deps = set(pkg_data["depends"])
   obsolete_pkg_deps = deps.intersection(set(OBSOLETE_DEPS))
   if obsolete_pkg_deps:
     for obsolete_pkg in obsolete_pkg_deps:
@@ -43,17 +45,20 @@ def CheckObsoleteDeps(pkg, debug):
       if not msg:
         msg = None
       errors.append(
-          checkpkg.CheckpkgTag(pkg.pkgname, "obsolete-dependency",
-                               obsolete_pkg, msg=msg))
+          checkpkg.CheckpkgTag(
+    	      pkg_data["basic_stats"]["pkgname"],
+            "obsolete-dependency", obsolete_pkg, msg=msg))
   return errors
 
 
 def main():
   options, args = checkpkg.GetOptions()
-  pkgnames = args
-  check_manager = checkpkg.CheckpkgManager("obsolete dependencies",
-                                           options.extractdir,
-                                           pkgnames,
+  md5sums = args
+  # CheckpkgManager class abstracts away things such as the collection of
+  # results.
+  check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
+                                           options.stats_basedir,
+                                           md5sums,
                                            options.debug)
   check_manager.RegisterIndividualCheck(CheckObsoleteDeps)
   # Running the checks, reporting and exiting.

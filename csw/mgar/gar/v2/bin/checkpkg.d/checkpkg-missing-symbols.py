@@ -22,39 +22,33 @@ import checkpkg
 
 # Defining checking functions.
 
-def CheckForMissingSymbols(pkg, debug):
+def CheckForMissingSymbols(pkg_data, debug):
   """Looks for "symbol not found" in ldd -r output."""
   errors = []
-  binaries = pkg.ListBinaries()
+  binaries = pkg_data["binaries"]
   symbol_re = re.compile(r"symbol not found:")
   for binary in binaries:
-    # this could be potentially moved into the DirectoryFormatPackage class.
-    args = ["ldd", "-r", binary]
-    ldd_proc = subprocess.Popen(
-        args,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE)
-    stdout, stderr = ldd_proc.communicate()
-    retcode = ldd_proc.wait()
-    lines = stdout.splitlines()
+    lines = pkg_data["ldd_dash_r"][binary]
     missing_symbols = False
     for line in lines:
       if re.search(symbol_re, line):
       	missing_symbols = True
     binary_base = os.path.basename(binary)
     if missing_symbols:
-    	errors.append(checkpkg.CheckpkgTag(pkg.pkgname, "symbol-not-found", binary_base))
+    	errors.append(checkpkg.CheckpkgTag(
+    	  pkg_data["basic_stats"]["pkgname"],
+    	  "symbol-not-found", binary_base))
   return errors
 
 
 def main():
   options, args = checkpkg.GetOptions()
-  pkgnames = args
+  md5sums = args
   # CheckpkgManager class abstracts away things such as the collection of
   # results.
   check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
-                                           options.extractdir,
-                                           pkgnames,
+                                           options.stats_basedir,
+                                           md5sums,
                                            options.debug)
   # Registering functions defined above.
   check_manager.RegisterIndividualCheck(CheckForMissingSymbols)

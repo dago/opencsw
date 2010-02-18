@@ -179,6 +179,7 @@ DEF_BASE_PKGS += CSWgmake
 DEF_BASE_PKGS += CSWgsed
 DEF_BASE_PKGS += CSWgtar
 DEF_BASE_PKGS += CSWpy-cheetah
+DEF_BASE_PKGS += CSWpy-yaml
 DEF_BASE_PKGS += CSWpython
 DEF_BASE_PKGS += CSWtextutils
 DEF_BASE_PKGS += CSWwget

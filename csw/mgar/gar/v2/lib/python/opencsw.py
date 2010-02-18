@@ -15,6 +15,7 @@
 import copy
 import datetime
 import difflib
+import hashlib
 import logging
 import os
 import os.path
@@ -347,14 +348,13 @@ class ShellMixin(object):
   def ShellCommand(self, args, quiet=False):
     logging.debug("Calling: %s", repr(args))
     if quiet:
-      sub_stdout = subprocess.PIPE
-      sub_stderr = subprocess.PIPE
+      process = subprocess.Popen(args,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+      stdout, stderr = process.communicate()
+      retcode = process.wait()
     else:
-      sub_stdout = None
-      sub_stderr = None
-    retcode = subprocess.call(args,
-                              stdout=sub_stdout,
-                              stderr=sub_stderr)
+      retcode = subprocess.call(args)
     if retcode:
       raise Error("Running %s has failed." % repr(args))
     return retcode
@@ -363,12 +363,16 @@ class ShellMixin(object):
 class CswSrv4File(ShellMixin, object):
   """Represents a package in the srv4 format (pkg)."""
 
-  def __init__(self, pkg_path):
+  def __init__(self, pkg_path, debug=False):
     self.pkg_path = pkg_path
     self.workdir = None
     self.gunzipped_path = None
     self.transformed = False
     self.dir_format_pkg = None
+    self.debug = debug
+
+  def __repr__(self):
+    return u"CswSrv4File(%s)" % repr(self.pkg_path)
 
   def GetWorkDir(self):
     if not self.workdir:
@@ -399,11 +403,49 @@ class CswSrv4File(ShellMixin, object):
                     "%s or %s." % (gzip_suffix, pkg_suffix))
     return self.gunzipped_path
 
+  def Pkgtrans(self, src_file, destdir, pkgname):
+    """A proxy for the pkgtrans command.
+
+    This requires custom-pkgtrans to be available.
+    """
+    if not os.path.isdir(destdir):
+      raise PackageError("%s doesn't exist or is not a directory" % destdir)
+    args = [os.path.join(os.path.dirname(__file__), "custom-pkgtrans"),
+           src_file, destdir, pkgname ]
+    pkgtrans_proc = subprocess.Popen(args)
+    pkgtrans_proc.communicate()
+    ret = pkgtrans_proc.wait()
+    if ret:
+      logging.error("% has failed" % args)
+
+  def GetPkgname(self):
+    """It's necessary to figure out the pkgname from the .pkg file.
+    # nawk 'NR == 2 {print $1; exit;} $f
+    """
+    gunzipped_path = self.GetGunzippedPath()
+    args = ["nawk", "NR == 2 {print $1; exit;}", gunzipped_path]
+    nawk_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+    stdout, stderr = nawk_proc.communicate()
+    ret_code = nawk_proc.wait()
+    pkgname = stdout.strip()
+    logging.debug("GetPkgname(): %s", repr(pkgname))
+    return pkgname
+
   def TransformToDir(self):
+    """Transforms the file to the directory format.
+
+    This uses the Pkgtrans function at the top, because pkgtrans behaves
+    differently on Solaris 8 and 10.  Having our own implementation helps
+    achieve consistent behavior.
+    """
     if not self.transformed:
-      args = ["pkgtrans", "-a", self.GetAdminFilePath(),
-              self.GetGunzippedPath(), self.GetWorkDir(), "all"]
-      unused_retcode = self.ShellCommand(args, quiet=True)
+      gunzipped_path = self.GetGunzippedPath()
+      pkgname = self.GetPkgname()
+      args = [os.path.join(os.path.dirname(__file__),
+                           "..", "..", "bin", "custom-pkgtrans"),
+              gunzipped_path, self.GetWorkDir(), pkgname]
+      logging.info("transforming: %s", args)
+      unused_retcode = self.ShellCommand(args, quiet=(not self.debug))
       dirs = self.GetDirs()
       if len(dirs) != 1:
         raise Error("Need exactly one package in the package stream: "
@@ -427,6 +469,13 @@ class CswSrv4File(ShellMixin, object):
   def GetPkgmap(self, analyze_permissions, strip=None):
     dir_format_pkg = self.GetDirFormatPkg()
     return dir_format_pkg.GetPkgmap(analyze_permissions, strip)
+
+  def GetMd5sum(self):
+    fp = open(self.pkg_path)
+    hash = hashlib.md5()
+    hash.update(fp.read())
+    fp.close()
+    return hash.hexdigest()
 
   def __del__(self):
     if self.workdir:
@@ -537,12 +586,17 @@ def PkginfoToSrv4Name(pkginfo_dict):
 
 
 class DirectoryFormatPackage(ShellMixin, object):
+  """Represents a package in the directory format.
+
+  Allows some read-write operations.
+  """
 
   def __init__(self, directory):
     self.directory = directory
-    self.pkgname = os.path.split(directory)[1]
+    self.pkgname = os.path.basename(directory)
     self.pkgpath = self.directory
     self.pkginfo_dict = None
+    self.binaries = None
 
   def GetCatalogname(self):
     """Returns the catalog name of the package.
@@ -682,16 +736,23 @@ class DirectoryFormatPackage(ShellMixin, object):
 
     Returns a list of absolute paths.
     """
-    self.CheckPkgpathExists()
-    find_tmpl = "find '%s' -print | xargs file | grep ELF | nawk -F: '{print $1}'"
-    find_proc = subprocess.Popen(find_tmpl % self.directory,
-                                 shell=True,
-                                 stdout=subprocess.PIPE)
-    stdout, stderr = find_proc.communicate()
-    ret = find_proc.wait()
-    if ret:
-      logging.error("The find command returned an error.")
-    return stdout.splitlines()
+    if not self.binaries:
+      self.CheckPkgpathExists()
+      files_root = os.path.join(self.directory, "root")
+      find_tmpl = "find '%s' -print | xargs file | grep ELF | nawk -F: '{print $1}'"
+      find_proc = subprocess.Popen(find_tmpl % ".",
+                                   shell=True,
+                                   stdout=subprocess.PIPE,
+                                   cwd=files_root)
+      stdout, stderr = find_proc.communicate()
+      ret = find_proc.wait()
+      if ret:
+        logging.error("The find command returned an error.")
+      dotslash_re = re.compile(r"^./")
+      def StripRe(x, strip_re):
+        return re.sub(strip_re, "", x)
+      self.binaries = [StripRe(x, dotslash_re) for x in stdout.splitlines()]
+    return self.binaries
 
   def GetAllFilenames(self):
     self.CheckPkgpathExists()
@@ -710,15 +771,15 @@ class DirectoryFormatPackage(ShellMixin, object):
     # worry about that at this stage.
     logging.debug("Trying to open %s", repr(file_path))
     if os.path.isfile(file_path):
-    	return open(file_path, "r")
+      return open(file_path, "r")
     else:
-    	return None
+      return None
 
   def _ParseOverridesStream(self, stream):
     overrides = []
     for line in stream:
       if line.startswith("#"):
-      	continue
+        continue
       overrides.append(checkpkg.ParseOverrideLine(line))
     return overrides
 
@@ -726,9 +787,9 @@ class DirectoryFormatPackage(ShellMixin, object):
     """Returns overrides, a list of checkpkg.Override instances."""
     stream = self._GetOverridesStream()
     if stream:
-    	return self._ParseOverridesStream(stream)
+      return self._ParseOverridesStream(stream)
     else:
-    	return list()
+      return list()
 
   def GetFileContent(self, pkg_file_path):
     if pkg_file_path.startswith("/"):
@@ -802,7 +863,7 @@ class Pkgmap(object):
       if line_to_add:
         self.paths.add(line_to_add)
       entry = {
-          "line": line,
+          "line": line.strip(),
           "type": line_type,
       }
       entry["path"] = installed_path
@@ -891,6 +952,7 @@ class OpencswCatalogBuilder(object):
           logging.warn("srv4 file for %s already exists, skipping", pkg_path)
       else:
         logging.warn("%s is not a directory.", pkg_path)
+
 
   def Srv4Exists(self, pkg_dir):
     pkg = DirectoryFormatPackage(pkg_dir)

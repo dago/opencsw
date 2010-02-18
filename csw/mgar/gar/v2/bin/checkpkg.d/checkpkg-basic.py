@@ -1,13 +1,15 @@
 #!/opt/csw/bin/python2.6
-# $Id$
+# $Id: checkpkg-you-can-write-your-own.py 8571 2010-02-16 09:05:51Z wahwah $
 
-"""Checks for the existence of the license file."""
+"""This is a dummy module. You can use it as a boilerplate for your own modules.
 
-import logging
+Copy it and modify.
+"""
+
 import os.path
 import sys
 
-CHECKPKG_MODULE_NAME = "license presence"
+CHECKPKG_MODULE_NAME = "basic checks ported from Korn shell"
 
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
@@ -15,25 +17,7 @@ path_list = [os.path.dirname(__file__),
              "..", "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
 import checkpkg
-import opencsw
-
-LICENSE_TMPL = "/opt/csw/share/doc/%s/license"
-
-def CheckLicenseFile(pkg_data, debug):
-  """Checks for the presence of the license file."""
-  errors = []
-  pkgmap = pkg_data["pkgmap"]
-  catalogname = pkg_data["basic_stats"]["catalogname"]
-  license_path = LICENSE_TMPL % catalogname
-  pkgmap_paths = [x["path"] for x in pkgmap]
-  if license_path not in pkgmap_paths:
-    errors.append(
-        checkpkg.CheckpkgTag(
-          pkg_data["basic_stats"]["pkgname"],
-          "license-missing",
-          msg="See http://sourceforge.net/apps/trac/gar/wiki/CopyRight"))
-  return errors
-
+import package_checks
 
 def main():
   options, args = checkpkg.GetOptions()
@@ -45,7 +29,8 @@ def main():
                                            md5sums,
                                            options.debug)
   # Registering functions defined above.
-  check_manager.RegisterIndividualCheck(CheckLicenseFile)
+  check_manager.RegisterIndividualCheck(package_checks.CatalognameLowercase)
+  check_manager.RegisterIndividualCheck(package_checks.FileNameSanity)
   # Running the checks, reporting and exiting.
   exit_code, screen_report, tags_report = check_manager.Run()
   f = open(options.output, "w")
