@@ -30,16 +30,22 @@ def main():
       fd = open(os.path.join(options.extractdir, file_name))
       for line in fd:
         if line.startswith("#"):
-        	continue
+          continue
         pkgname, tag_name, tag_info = checkpkg.ParseTagLine(line)
         error_tags.append(checkpkg.CheckpkgTag(pkgname, tag_name, tag_info))
   overrides = reduce(lambda x, y: x + y, overrides_list)
   tags_after_overrides = checkpkg.ApplyOverrides(error_tags, overrides)
   exit_code = bool(tags_after_overrides)
   if tags_after_overrides:
-    print "The reported error tags are:"
+    print "There were errors reported."
+    print "If you know they are false positives, you can override them:"
     for tag in tags_after_overrides:
-    	print "*", repr(tag)
+      if tag.tag_info:
+        tag_postfix = "|%s" % tag.tag_info.replace(" ", "|")
+      else:
+        tag_postfix = ""
+      print ("CHECKPKG_OVERRIDES_%s = %s%s"
+             % (tag.pkgname, tag.tag_name, tag_postfix))
   sys.exit(exit_code)
 
 

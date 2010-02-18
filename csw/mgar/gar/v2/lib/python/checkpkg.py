@@ -65,7 +65,7 @@ RUNTIME_DEP_PKGS_$pkgname += $pkg
 #end if
 """
 
-ERROR_REPORT_TMPL = u"""#if $errors
+SCREEN_ERROR_REPORT_TMPL = u"""#if $errors and $debug
 ERROR: One or more errors have been found by $name.
 #for $pkgname in $errors
 $pkgname:
@@ -613,7 +613,7 @@ class CheckpkgManager(object):
         "errors": errors,
         "debug": self.debug,
     }
-    screen_t = Template.Template(ERROR_REPORT_TMPL, searchList=[namespace])
+    screen_t = Template.Template(SCREEN_ERROR_REPORT_TMPL, searchList=[namespace])
     tags_report_t = Template.Template(TAG_REPORT_TMPL, searchList=[namespace])
     screen_report = unicode(screen_t)
     tags_report = unicode(tags_report_t)

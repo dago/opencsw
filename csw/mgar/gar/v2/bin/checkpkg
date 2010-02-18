@@ -637,18 +637,20 @@ else
 	print "All modular tests completed.  Analyzing the reports."
 fi
 
-override_info_printed=0
-for tagfile in ${EXTRACTDIR}/tags.*; do
-	if [[ -s "${tagfile}" ]]; then
-		if [[ "${override_info_printed}" -ne 1 ]]; then
-			echo "# You can use the following lines to create overrides"
-			echo "# See http://wiki.opencsw.org/checkpkg"
-			override_info_printed=1
+if [[ "${DEBUG}" != "" ]]; then
+	override_info_printed=0
+	for tagfile in ${EXTRACTDIR}/tags.*; do
+		if [[ -s "${tagfile}" ]]; then
+			if [[ "${override_info_printed}" -ne 1 ]]; then
+				echo "# You can use the following lines to create overrides"
+				echo "# See http://wiki.opencsw.org/checkpkg"
+				override_info_printed=1
+			fi
+			echo "# ${tagfile}:"
+			cat "${tagfile}"
 		fi
-		echo "# ${tagfile}:"
-		cat "${tagfile}"
-	fi
-done
+	done
+fi
 
 # Collecting errors and applying the overrides.
 ${checkpkg_basedir}/analyze_module_results.py \
