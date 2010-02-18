@@ -1,5 +1,5 @@
 GARNAME = libfontenc
-GARVERSION = 1.0.5
+GARVERSION = 1.0.4
 CATEGORIES = x11
 
 DESCRIPTION = X11 font encoding library
