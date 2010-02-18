@@ -744,7 +744,22 @@ validateplatform:
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
 ENABLE_CHECK ?= 1
-_package: validateplatform extract-global merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package $(if $(ENABLE_CHECK),pkgcheck)
+
+# The files in ISAEXEC get relocated and will be replaced by the isaexec-wrapper.
+# The trick is to delay the calculcation of the variable values until that time
+# when PKGROOT has already been populated.
+_ISAEXEC_EXCLUDE_FILES = $(bindir)/%-config $(bindir)/%/%-config
+_buildpackage: _ISAEXEC_FILES=$(filter-out $(foreach F,$(_ISAEXEC_EXCLUDE_FILES) $(ISAEXEC_EXCLUDE_FILES),$(PKGROOT)$(F)), \
+			$(wildcard $(foreach D,$(ISAEXEC_DIRS),$(PKGROOT)$(D)/* )) \
+		)
+_buildpackage: ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,               \
+			$(shell for F in $(_ISAEXEC_FILES); do          \
+				if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;     \
+			done)),)
+_buildpackage: _EXTRA_GAR_PKGS += $(if $(ISAEXEC_FILES),CSWisaexec)
+_buildpackage: pre-package $(PACKAGE_TARGETS) post-package $(if $(ENABLE_CHECK),pkgcheck)
+
+_package: validateplatform extract-global merge $(SPKG_DESTDIRS) _buildpackage
 	@$(MAKECOOKIE)
 
 package: _package

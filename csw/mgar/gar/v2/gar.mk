@@ -613,22 +613,8 @@ endif
 # These directories get relocated into their ISA subdirectories
 MERGE_DIRS ?= $(MERGE_DIRS_$(MODULATION))
 
-# The files in ISAEXEC get relocated and will be replaced by the isaexec-wrapper
-_ISAEXEC_EXCLUDE_FILES = $(bindir)/%-config $(bindir)/%/%-config
-_ISAEXEC_FILES = $(filter-out $(foreach F,$(_ISAEXEC_EXCLUDE_FILES) $(ISAEXEC_EXCLUDE_FILES),$(PKGROOT)$(F)), \
-			$(wildcard $(foreach D,$(ISAEXEC_DIRS),$(PKGROOT)$(D)/* )) \
-		)
-ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
-	$(shell for F in $(_ISAEXEC_FILES); do		\
-		if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;	\
-	done)),)
-
 ifneq ($(COMMON_PKG_DEPENDS),)
 _EXTRA_GAR_PKGS += $(COMMON_PKG_DEPENDS)
-endif
-
-ifneq ($(ISAEXEC_FILES),)
-_EXTRA_GAR_PKGS += CSWisaexec
 endif
 
 # These merge-rules are actually processed for the current modulation
