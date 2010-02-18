@@ -221,5 +221,5 @@ post-merge:
 	gln -s . $(PKGROOT)$(libdir)/mysql/$(ISA_DEFAULT)
 	# http://www.opencsw.org/bugtrack/view.php?id=4149
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/lib
-	gln -s ../../mysql5/lib/mysql $(PKGROOT)/opt/csw/lib/mysql 
+	gln -s ../mysql5/lib/mysql $(PKGROOT)/opt/csw/lib/mysql 
 	@$(MAKECOOKIE)
