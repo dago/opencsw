@@ -275,7 +275,7 @@ class NewpkgMailer(object):
     self.release_mgr = u"%s <%s>" % (release_mgr_name, release_mgr_email)
     self.release_cc = release_cc
     if self.release_cc:
-    	self.release_cc = unicode(release_cc)
+      self.release_cc = unicode(release_cc)
 
   def FormatMail(self):
     body_list = ["The following package files are ready to be released:"]
@@ -730,7 +730,6 @@ class DirectoryFormatPackage(ShellMixin, object):
         rm -rf $EXTRACTDIR
         exit 1
       fi
-    
       find $1 -print | xargs file |grep ELF |nawk -F: '{print $1}'
     }
 
@@ -739,6 +738,8 @@ class DirectoryFormatPackage(ShellMixin, object):
     if not self.binaries:
       self.CheckPkgpathExists()
       files_root = os.path.join(self.directory, "root")
+      if not os.path.exists(files_root):
+        return []
       find_tmpl = "find '%s' -print | xargs file | grep ELF | nawk -F: '{print $1}'"
       find_proc = subprocess.Popen(find_tmpl % ".",
                                    shell=True,
