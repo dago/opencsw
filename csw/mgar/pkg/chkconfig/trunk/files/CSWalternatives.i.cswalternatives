@@ -38,12 +38,12 @@ while read src dest; do
     chroot ${PKG_INSTALL_ROOT} /opt/csw/sbin/alternatives $ARGS
 
     # Redo previous manual selection if this is an upgrade
-    if /usr/bin/test -L "${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$ALTNAME"; then
-      CHOICE=`/usr/bin/perl -e 'print readlink $ARGV[0]' "${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$ALTNAME"`
+    if /usr/bin/test -L "${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/${PKG}/alternatives/$ALTNAME"; then
+      CHOICE=`/usr/bin/perl -e 'print readlink $ARGV[0]' "${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/${PKG}/alternatives/$ALTNAME"`
       if [ "${CHOICE}" = "$ALTPATH" ]; then
         echo "Applying previous manual selection ${CHOICE} ..."
         chroot ${PKG_INSTALL_ROOT} /opt/csw/sbin/alternatives --set $ALTNAME ${CHOICE}
-        rm -f ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$ALTNAME
+        rm -f ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/${PKG}/alternatives/$ALTNAME
       fi
     fi
   done

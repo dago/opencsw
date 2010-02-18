@@ -20,9 +20,9 @@ while read dest; do
       CHOICE="`perl -e 'print readlink $ARGV[0]' ${PKG_INSTALL_ROOT}/etc/opt/csw/alternatives/$2`"
       if [ "$3" = "${CHOICE}" ]; then
         echo "Preserving '$2' manual choice ${CHOICE} ..."
-        mkdir -p ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives
-        rm -f ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$2
-        ln -s "${CHOICE}" ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/CSWalternatives/alternatives/$2
+        mkdir -p ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/${PKG}/alternatives
+        rm -f ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/${PKG}/alternatives/$2
+        ln -s "${CHOICE}" ${PKG_INSTALL_ROOT}/etc/opt/csw/preserve/${PKG}/alternatives/$2
       fi
     fi
 
