@@ -8,5 +8,5 @@ system by executing
 
   /opt/csw/sbin/alternatives --config mutt
 
-See http://wiki.opencsw.org/package-alternatives for details.
+See http://www.opencsw.org/packages/alternatives for details.
 
