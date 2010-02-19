@@ -1,0 +1,4 @@
+c88ba40a011ff3bb3fb1a36a1d5d1832  0001-Make-configure-use-bash.patch
+b9048c2b7eb8974a7cd9d6486aaa4d4a  0002-Use-inttypes-instead-of-stdint.patch
+095a3aafd43cbd99dd12c78e7cc336c0  0003-Make-testsuite-use-ucb-echo.patch
+9e1d7f4db5b953e9f75b8500ebe0d4c0  lzip-1.9.tar.gz
