@@ -444,7 +444,7 @@ class CswSrv4File(ShellMixin, object):
       args = [os.path.join(os.path.dirname(__file__),
                            "..", "..", "bin", "custom-pkgtrans"),
               gunzipped_path, self.GetWorkDir(), pkgname]
-      logging.info("transforming: %s", args)
+      logging.debug("transforming: %s", args)
       unused_retcode = self.ShellCommand(args, quiet=(not self.debug))
       dirs = self.GetDirs()
       if len(dirs) != 1:
