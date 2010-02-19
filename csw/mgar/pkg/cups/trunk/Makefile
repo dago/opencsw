@@ -77,42 +77,36 @@ PACKAGES += CSWcupslinks
 INCOMPATIBLE_PKGS_CSWcupslinks = SUNWpcr SUNWpcu
 CATALOGNAME_CSWcupslinks = cups_links
 ARCHALL_CSWcupslinks = 1
-
 ARCHALL_CSWcupsdoc = 1
 ARCHALL_CSWcupsdev = 1
 
 RUNTIME_DEP_PKGS_CSWcups  = CSWcupsd CSWcupsclient
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWgnutls
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
 RUNTIME_DEP_PKGS_CSWcupsd += CSWgnutls
 RUNTIME_DEP_PKGS_CSWcupsd += CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcups
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus
 RUNTIME_DEP_PKGS_CSWcupsd += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWcupsd += CSWzlib
-
-RUNTIME_DEP_PKGS_CSWcupsclient  = CSWgnutls
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
-RUNTIME_DEP_PKGS_CSWcupsdoc = 
-RUNTIME_DEP_PKGS_CSWcupsdev = CSWcupsd
 RUNTIME_DEP_PKGS_CSWlibcups += CSWgnutls
 RUNTIME_DEP_PKGS_CSWlibcups += CSWjpeg
 RUNTIME_DEP_PKGS_CSWlibcups += CSWpng
 RUNTIME_DEP_PKGS_CSWlibcups += CSWtiff
 RUNTIME_DEP_PKGS_CSWlibcups += CSWzlib
-RUNTIME_DEP_PKGS_CSWcupslinks = CSWcupsclient
+RUNTIME_DEP_PKGS_CSWcupsdev += CSWcupsd
+
 
 PKGFILES_CSWlibcups  = $(libdir)/libcups.*
-
 PKGFILES_CSWcupsdoc  = $(datadir)/doc
 PKGFILES_CSWcupsdoc += $(datadir)/doc/.*
 PKGFILES_CSWcupsdoc += $(datadir)/cups/examples.*
-
 PKGFILES_CSWcupsdev  = $(includedir)/cups/?.*
 PKGFILES_CSWcupsdev += $(mandir)/man1/cups-config.1
 PKGFILES_CSWcupsdev += $(bindir)/cups-config
 PKGFILES_CSWcupsdev += $(datadir)/cups/ppdc.*
 PKGFILES_CSWcupsdev += $(datadir)/cups/drv.*
-
 PKGFILES_CSWcupsd  = $(sysconfdir)/init\.d/.*
 PKGFILES_CSWcupsd += $(sysconfdir)/rc.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/cupsd.*
@@ -138,7 +132,6 @@ PKGFILES_CSWcupsd += $(libdir)/svc/.*
 PKGFILES_CSWcupsd += $(bindir)/ppd(c|html|i|merge|po)
 PKGFILES_CSWcupsd += $(sbindir)/(cupsfilter|cupsd)
 PKGFILES_CSWcupsd += $(localstatedir)/.*
-
 PKGFILES_CSWcupsclient  = $(sbindir)/(accept|reject|cups(addsmb|ctl|(en|dis)able))
 PKGFILES_CSWcupsclient += $(sbindir)/cups(accept|reject)
 PKGFILES_CSWcupsclient += $(sbindir)/(lp(admin|p|c|info|move))
@@ -159,18 +152,18 @@ PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
 PKGFILES_CSWcupslinks  = /usr/sbin/.*
 PKGFILES_CSWcupslinks += /usr/bin/.*
 
-SPKG_DESC_CSWcups = Common Unix Printing System
-SPKG_DESC_CSWlibcups = CUPS libraries
-SPKG_DESC_CSWcupsd = CUPS daemon
+SPKG_DESC_CSWcups       = Common Unix Printing System
+SPKG_DESC_CSWlibcups    = CUPS libraries
+SPKG_DESC_CSWcupsd      = CUPS daemon
 SPKG_DESC_CSWcupsclient = CUPS client binaries
-SPKG_DESC_CSWcupsdoc = CUPS documentation
-SPKG_DESC_CSWcupsdev = CUPS header files
-SPKG_DESC_CSWcupslinks = Drop-in replacement for SUNWpcu and SUNWpcr
+SPKG_DESC_CSWcupsdoc    = CUPS documentation
+SPKG_DESC_CSWcupsdev    = CUPS header files
+SPKG_DESC_CSWcupslinks  = Drop-in replacement for SUNWpcu and SUNWpcr
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
-SAMPLECONF  = $(sysconfdir)/cups/cupsd\.conf\.CSW
-SAMPLECONF += $(sysconfdir)/cups/client\.conf\.CSW
-INITSMF    = $(sysconfdir)/init\.d/cswcups
+SAMPLECONF_CSWcupsd       = $(sysconfdir)/cups/cupsd\.conf\.CSW
+SAMPLECONF_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
+INITSMF_CSWcupsd          = $(sysconfdir)/init\.d/cswcups
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
@@ -185,7 +178,6 @@ CONFIGURE_ARGS_DBG += --enable-debug-guards
 CONFIGURE_ARGS_DBG += --enable-debug-printfs
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
-
 
 # This is a hack that's needed, because configure (Makedefs) will otherwise
 # plase -ltiff, etc. first and -L/opt/csw/lib afterwards, thus being unable
@@ -211,6 +203,11 @@ PRIVATE_CUPS_INC = $(DESTDIR)$(includedir)/cups
 OPTIM_DBG = -g -xO0
 OPTIM = $(OPTIM_$(GARFLAVOR))
 export OPTIM
+
+LICENSE = LICENSE.txt
+
+CHECKPKG_OVERRIDES_CSWlibcups += symbol-not-found|libcupsppdc.so.1
+CHECKPKG_OVERRIDES_CSWcupsdev += missing-dependency|CSWcups
 
 include gar/category.mk
 
