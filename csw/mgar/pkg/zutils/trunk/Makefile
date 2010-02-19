@@ -20,7 +20,8 @@ PATCHFILES += 0002-Use-correct-path-on-testsuite.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-BUILD_DEP_PKGS = CSWhelp2man
+BUILD_DEP_PKGS = CSWhelp2man CSWlzip
+RUNTIME_DEP_PKGS = CSWlzip
 
 VENDOR_URL = http://www.nongnu.org/zutils/zutils.html
 
