@@ -36,7 +36,7 @@ TEST_TARGET = check
 
 # Lots of test fail on Solaris, but they are safe to ignore for now:
 #   <http://lists.gnu.org/archive/html/bug-automake/2009-07/msg00001.html>
-SKIPTEST = 1
+SKIPTEST ?= 1
 
 ARCHALL = 1
 
@@ -82,7 +82,7 @@ $(DOWNLOADDIR)/$(notdir $(POSTMSG)):
 		echo; \
 		echo "  /opt/csw/sbin/alternatives --config automake"; \
 		echo; \
-		echo "See http://wiki.opencsw.org/package-alternatives for details."; \
+		echo "See http://www.opencsw.org/packages/alternatives for details."; \
 	)
 	@$(MAKECOOKIE)
 
