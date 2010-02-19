@@ -74,9 +74,10 @@ PACKAGES += CSWcupslinks
 
 INCOMPATIBLE_PKGS_CSWcupslinks = SUNWpcr SUNWpcu
 CATALOGNAME_CSWcupslinks = cups_links
+ARCHALL_CSWcups      = 1
 ARCHALL_CSWcupslinks = 1
-ARCHALL_CSWcupsdoc = 1
-ARCHALL_CSWcupsdev = 1
+ARCHALL_CSWcupsdoc   = 1
+ARCHALL_CSWcupsdev   = 1
 
 RUNTIME_DEP_PKGS_CSWcups  = CSWcupsd CSWcupsclient
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWgnutls
