@@ -1,3 +1,5 @@
+# $Id$
+#
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 # * How about shipping a changelog.CSW (example in files/)?
@@ -42,7 +44,7 @@ CATALOGNAME_CSWsvn         = subversion
 CATALOGNAME_CSWsvn-contrib = subversion_contrib
 CATALOGNAME_CSWsvn-tools   = subversion_tools
 RUNTIME_DEP_PKGS_CSWsvn       = CSWapache2rt
-RUNTIME_DEP_PKGS_CSWsvn      += CSWbdb48
+RUNTIME_DEP_PKGS_CSWsvn      += CSWbdb47
 RUNTIME_DEP_PKGS_CSWsvn      += CSWexpat
 RUNTIME_DEP_PKGS_CSWsvn      += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWiconv
@@ -52,7 +54,6 @@ RUNTIME_DEP_PKGS_CSWsvn      += CSWsasl
 RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf
 RUNTIME_DEP_PKGS_CSWsvn      += CSWsqlite3rt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWzlib
-RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf
 RUNTIME_DEP_PKGS_CSWsvn-contrib += CSWperl
 RUNTIME_DEP_PKGS_CSWsvn-contrib += CSWpython
 RUNTIME_DEP_PKGS_CSWsvn-tools   += CSWperl
