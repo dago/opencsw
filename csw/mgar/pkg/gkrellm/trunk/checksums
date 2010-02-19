@@ -2,5 +2,6 @@
 6a34a1bc0d7b7af7882b612af3300535  Makefile
 0b90e7e6e08187a73641d84868a1c805  cswgkrellmd
 270917784da6bf1292aba0c82af726d6  gkrellm-2.3.4.tar.bz2
+80c3eb3d6d3be4613a1b772b2b92ffd1  gkrellm.h.patch
 6c5b47a9c7e2109ae41aa2eba264b94c  server.Makefile
-6701c6a8214d9cd7f0a2e1726f842eb9  src.Makefile
+d29832f484d1f33b1f8571a732e1f891  src.Makefile

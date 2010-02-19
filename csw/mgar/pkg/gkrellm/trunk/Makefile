@@ -19,6 +19,7 @@ MASTER_SITES = http://members.dslextreme.com/users/billw/$(GARNAME)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += Makefile server.Makefile src.Makefile cswgkrellmd
 PATCHFILES = 0001-Add-LOG_MAKEPRI.patch
+PATCHFILES += gkrellm.h.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
