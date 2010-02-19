@@ -26,7 +26,7 @@ CATALOGNAME_CSWlibxtdevel = libxt_devel
 SPKG_DESC_CSWlibxt = X11 toolkit intrinsics library
 SPKG_DESC_CSWlibxtdevel = X11 toolkit intrinsics library development files
 
-RUNTIME_DEP_PKGS_CSWlibxt = CSWlibx11 CSWlibice
+RUNTIME_DEP_PKGS_CSWlibxt = CSWlibx11 CSWlibice CSWlibsm
 RUNTIME_DEP_PKGS_CSWlibxtdevel = CSWlibxt
 
 PKGFILES_CSWlibxtdevel  = $(PKGFILES_DEVEL)
