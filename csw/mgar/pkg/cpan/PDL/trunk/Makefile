@@ -14,7 +14,14 @@ endef
 PACKAGES = CSWpmpdl
 CATALOGNAME = pm_pdl
 
-RUNTIME_DEP_PKGS = CSWpmextutilsf77 CSWpminline
-#BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+PATCHFILES += patch-quiet_nan.c
+PATCHFILES += patch-perldl.conf
+
+RUNTIME_DEP_PKGS = CSWpmextutilsf77 CSWpminline CSWgd
+BUILD_DEP_PKGS = CSWpminline CSWgd
 
 include gar/category.mk
+
+post-configure-modulated:
+	gfind $(WORKSRC) -name Makefile | xargs \
+		perl -pi -e 's,-L/opt/csw/lib/libperl.so,-R/opt/csw/lib -lperl,'
