@@ -11,12 +11,10 @@
 #    
 # Known build facts/issues:
 #
-# * Build takes about 50 mins on build8x, 25 mins on build8s. This is only
-#   the build, the tests take about 5 times as much (see TEST_TARGET).
-# * checkpkg suggests CSWbdb over CSWbdb47, because it picks up the
-#   libdb-4.7.so symlink in $(libdir) which belongs to the stub CSWbdb. As
-#   the lib itself belongs to CSWbdb47, the CSWbdb47 dep is completely fine.
-#
+# * The complete build (gmake platforms) takes 4 hours. Build takes about 50
+#   mins on build8x, 25 mins on build8s. This is only the build, the tests take
+#   about 5 times as much (see TEST_TARGET).
+
 GARNAME = subversion
 GARVERSION = 1.6.9
 CATEGORIES = utils
