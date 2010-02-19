@@ -2,7 +2,7 @@ GARNAME = lzlib
 GARVERSION = 0.9
 CATEGORIES = lib
 
-DESCRIPTION = lzlib is a lossless data compression library based on the LZMA algorithm.
+DESCRIPTION = A lossless data compression library based on the LZMA algorithm
 define BLURB
   The lzlib compression library provides in-memory LZMA compression and
   decompression functions, including integrity checking of the uncompressed
@@ -22,27 +22,16 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 VENDOR_URL = http://www.nongnu.org/lzip/lzlib.html
 
 EXTRA_CXXFLAGS = -xcode=pic32
+EXTRA_LINKER_FLAGS = -lCrun
 
-# GARCOMPILER    = GNU
 BUILD64 = 1
+NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += CXX="$(CXX)"
 CONFIGURE_ARGS += CPPFLAGS="$(CPPFLAGS)"
 CONFIGURE_ARGS += CXXFLAGS="$(CXXFLAGS)"
 CONFIGURE_ARGS += LDFLAGS="$(LDFLAGS)"
-
-#BUILD_OVERRIDE_VARS = CXX CPPFLAGS CXXFLAGS LDFLAGS
-#BUILD_OVERRIDE_VAR_CXX = $(CXX)
-#BUILD_OVERRIDE_VAR_CPPFLAGS = $(CPPFLAGS)
-#BUILD_OVERRIDE_VAR_CXXFLAGS = $(CXXFLAGS)
-#BUILD_OVERRIDE_VAR_LDFLAGS = $(LDFLAGS)
-
-#TEST_OVERRIDE_VARS = CXX CPPFLAGS CXXFLAGS LDFLAGS
-#TEST_OVERRIDE_VAR_CXX = $(CXX)
-#TEST_OVERRIDE_VAR_CPPFLAGS = $(CPPFLAGS)
-#TEST_OVERRIDE_VAR_CXXFLAGS = $(CXXFLAGS)
-#TEST_OVERRIDE_VAR_LDFLAGS = $(LDFLAGS)
 
 TEST_TARGET = check
 
@@ -51,5 +40,3 @@ INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
 
 include gar/category.mk
 
-# Only ucb echo understands -n
-# PATH := /usr/ucb:$(PATH)
