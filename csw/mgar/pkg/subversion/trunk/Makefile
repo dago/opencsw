@@ -167,8 +167,8 @@ PROTOTYPE_CLASS_cswpycompile = cswpycompile
 # All of the perl modules go to $(libdir)/perl/site_perl. We are not interested
 # in the version specific perl directory which only contains a perllocal.pod.
 # Can this be re-done as a version agnostic regex? Couldn't get this to work :/
-# EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/perl/(?!site_perl\/)
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/perl/5.8.8.*
+# EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/perl/(?!site_perl)
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/perl/5.*
 
 NODIRPATHS      = --libdir --libexecdir
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
