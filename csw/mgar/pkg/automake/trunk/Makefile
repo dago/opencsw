@@ -26,6 +26,8 @@ DISTFILES += $(notdir $(POSTMSG))
 NOCHECKSUM = $(notdir $(POSTMSG))
 NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz, $(SOURCEFILES))
 
+SPKG_SOURCEURL = http://www.gnu.org/software/automake/
+
 RUNTIME_DEP_PKGS = CSWperl
 
 CONFIGURE_ARGS = $(DIRPATHS)
