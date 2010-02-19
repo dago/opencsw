@@ -1,5 +1,5 @@
 GARNAME = pigz
-GARVERSION = 2.1.5
+GARVERSION = 2.1.6
 CATEGORIES = utils
 
 DESCRIPTION = A parallel implementation of gzip
