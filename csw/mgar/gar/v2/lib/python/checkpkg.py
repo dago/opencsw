@@ -225,6 +225,8 @@ class SystemPkgmap(object):
         print "\r~%3.1f%%" % (100.0 * i / estimated_lines,),
       if stop_re.search(line):
         continue
+      if line.startswith("#"):
+        continue
       fields = re.split(WS_RE, line)
       pkgmap_entry_path = fields[0].split("=")[0]
       pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
