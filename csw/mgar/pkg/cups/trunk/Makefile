@@ -69,8 +69,6 @@ BUILD_DEP_PKGS += SUNWslpu
 
 UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
 
-SPKG_CLASSES = none cswcpsampleconf cswinitsmf
-
 PACKAGES  = CSWlibcups CSWcupsd CSWcupsclient CSWcupsdoc CSWcupsdev CSWcups
 PACKAGES += CSWcupslinks
 
