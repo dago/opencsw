@@ -40,3 +40,7 @@ INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
 
 include gar/category.mk
 
+post-install-modulated:
+	gln -s liblz.so.0 $(DESTDIR)$(libdir)/liblz.so
+	@$(MAKECOOKIE)
+
