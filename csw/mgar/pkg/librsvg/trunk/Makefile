@@ -43,6 +43,7 @@ RUNTIME_DEP_PKGS_CSWlibrsvg += CSWglib2 CSWgtk2 CSWlibatk
 RUNTIME_DEP_PKGS_CSWlibrsvg += CSWlibcairo CSWlibcroco CSWlibgsf CSWlibx11
 RUNTIME_DEP_PKGS_CSWlibrsvg += CSWlibxml2 CSWpango CSWpng CSWzlib CSWorbit2
 RUNTIME_DEP_PKGS_CSWlibrsvg += CSWbonobo2 CSWgconf2 CSWgnomevfs2 CSWlibxrender 
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibrsvgdevel += CSWlibrsvg
 RUNTIME_DEP_PKGS_CSWlibrsvgdoc +=
 RUNTIME_DEP_PKGS_CSWlibrsvgmozilla += CSWggettextrt CSWglib2
@@ -56,6 +57,10 @@ ARCHALL_CSWlibrsvgdoc = 1
 # Only if building mozilla plugin
 BUILD_DEP_PKGS += CSWmozilla
 BUILD_DEP_PKGS += CSWlibxml2devel
+
+CHECKPKG_OVERRIDES_CSWlibrsvg += symbol-not-found|rsvg-convert
+CHECKPKG_OVERRIDES_CSWlibrsvg += symbol-not-found|rsvg-view
+CHECKPKG_OVERRIDES_CSWlibrsvg += symbol-not-found|libsvg.so
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
