@@ -1,5 +1,5 @@
 GARNAME = plzip
-GARVERSION = 0.1
+GARVERSION = 0.5
 CATEGORIES = utils
 
 DESCRIPTION = plzip is a lossless data compressor based on the LZMA algorithm.
@@ -14,15 +14,29 @@ endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/ 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES  = 0001-Use-inttypes-instead-of-stdint.patch
+PATCHFILES += 0002-Use-ucb-echo.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+DEP_PKGS = CSWlzlib
 
-GARCOMPILER    = GNU
+VENDOR_URL = http://www.nongnu.org/lzip/lzlib.html
+
+EXTRA_CXXFLAGS = -xcode=pic32
+
+NOISALIST = 1
+NODIRPATHS = --includedir
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += CXX="$(CXX)"
+CONFIGURE_ARGS += CPPFLAGS="$(CPPFLAGS)"
+CONFIGURE_ARGS += CXXFLAGS="$(CXXFLAGS)"
+CONFIGURE_ARGS += LDFLAGS="$(LDFLAGS)"
+
+TEST_TARGET = check
+
+INSTALL_OVERRIDE_VARS = INSTALL
+INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
 
 include gar/category.mk

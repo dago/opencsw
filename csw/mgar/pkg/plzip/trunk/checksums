@@ -1,1 +1,3 @@
-8e736e5d24ca40046a2c52a5b4bebb62  plzip-0.1.tar.gz
+ac5eb1a5daa65a55d37b6bcde4c58fe7  0001-Use-inttypes-instead-of-stdint.patch
+690e11a488625fbb1f99e0ea411e28d4  0002-Use-ucb-echo.patch
+f32bd13e94afc29c6d7f2ff770845cf1  plzip-0.5.tar.gz
