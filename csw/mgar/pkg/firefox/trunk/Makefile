@@ -1,6 +1,6 @@
 GARNAME = firefox
-GARVERSION = 3.0.15
-CATEGORIES = x11
+GARVERSION = 3.0.16
+CATEGORIES = apps
 DISTNAME = $(GARNAME)
 
 DESCRIPTION = Firefox Community Edition web browser
@@ -13,7 +13,7 @@ DISTFILES += CSWfirefox.postremove CSWfirefox.postinstall autoconf.mk.diff firef
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
-MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
+MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)-real/source/
 UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/
 
 PACKAGES 		= CSWfirefox

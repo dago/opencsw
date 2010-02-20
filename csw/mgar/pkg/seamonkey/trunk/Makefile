@@ -1,6 +1,6 @@
 GARNAME = seamonkey
 GARVERSION = 1.1.18
-CATEGORIES = x11
+CATEGORIES = apps
 DISTNAME = $(GARNAME)
 
 DESCRIPTION = Seamonkey all-in-one internet application suite
