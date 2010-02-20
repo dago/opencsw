@@ -2,7 +2,7 @@ GARNAME = gstplugins
 GARVERSION = 0.10.26
 CATEGORIES = gnome
 
-DESCRIPTION = an essential exemplary set of elements for gstreamer
+DESCRIPTION = Base GStreamer plugins handling various media types
 define BLURB
   GStreamer Base Plug-ins is a well-groomed and well-maintained collection 
   of GStreamer plug-ins and elements, spanning the range of possible types 
