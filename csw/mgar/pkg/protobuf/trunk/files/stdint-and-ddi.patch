@@ -1,0 +1,22 @@
+diff --git a/src/google/protobuf/stubs/common.h b/src/google/protobuf/stubs/common.h
+index 551ee4a..d0ba7d5 100644
+--- a/src/google/protobuf/stubs/common.h
++++ b/src/google/protobuf/stubs/common.h
+@@ -40,13 +40,16 @@
+ #include <cstddef>
+ #include <string>
+ #include <string.h>
+-#if defined(__osf__)
++#if defined(__osf__) || defined(__SUNPRO_CC)
+ // Tru64 lacks stdint.h, but has inttypes.h which defines a superset of
+ // what stdint.h would define.
+ #include <inttypes.h>
+ #elif !defined(_MSC_VER)
+ #include <stdint.h>
+ #endif
++#if defined(__SUNPRO_CC)
++#include <sys/ddi.h>
++#endif
+ 
+ namespace std {}
+ 

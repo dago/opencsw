@@ -1,0 +1,5 @@
+65dba2c04923595b6f0a6a44d8106f0a  protobuf-2.3.0.tar.gz
+ca4082250f24ec40fbce6993bcfb87cd  std-map-2.patch
+603e491e286232a90cf9b378317db9f2  std-map-in-google-protobuf-extension_set.cc.patch
+2c16ccb4bd7120f71d557d2cb9841c42  stdint-and-ddi.patch
+d57e96bdf15bb207ba7df46d83b1a6bd  stdint-gcc.patch

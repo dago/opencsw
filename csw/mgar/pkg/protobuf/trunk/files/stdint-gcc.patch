@@ -1,0 +1,19 @@
+--- protobuf-2.3.0/src/google/protobuf/stubs/common.h.orig	2010-02-20 19:43:54.828914057 +0100
++++ protobuf-2.3.0/src/google/protobuf/stubs/common.h	2010-02-20 19:44:12.015263840 +0100
+@@ -40,14 +40,14 @@
+ #include <cstddef>
+ #include <string>
+ #include <string.h>
+-#if defined(__osf__) || defined(__SUNPRO_CC)
++#if defined(__osf__) || defined(__SUNPRO_CC) || defined(__sun__)
+ // Tru64 lacks stdint.h, but has inttypes.h which defines a superset of
+ // what stdint.h would define.
+ #include <inttypes.h>
+ #elif !defined(_MSC_VER)
+ #include <stdint.h>
+ #endif
+-#if defined(__SUNPRO_CC)
++#if defined(__SUNPRO_CC) || defined(__sun__)
+ #include <sys/ddi.h>
+ #endif
+ 
