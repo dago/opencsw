@@ -9,8 +9,10 @@ endef
 
 # Definition of the list of locale to process
 # LANG = af ar be bg bn-IN ca cs cy da de el en-GB eo es-AR es-ES et eu fi fr fy-NL ga-IE gl gu-IN he hi-IN hu id is it ja ka kn ko ku lt lv mk mn mr nb-NO nl nn-NO oc pa-IN pl pt-BR pt-PT ro ru si sk sl sq sr sv-SE te th tr uk zh-CN zh-TW
+LANG = af ar be bg ca cs cy da de el eo et eu fi fr gl he hu id is it ja ka kn ko ku lt lv mk mn mr nl oc pl ro ru si sk sl sq sr te th tr uk 
 
-LANG = de fr
+# Short list of locales, used only for testing during build description modification
+# LANG = de fr
 
 # Set arch to all
 ARCHALL = 1
