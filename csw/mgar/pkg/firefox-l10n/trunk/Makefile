@@ -20,7 +20,7 @@ ARCHALL = 1
 # Defines the list of packages
 PACKAGES = $(foreach PKG, $(LANG), CSWfirefox-l10n-$(PKG) )
 LICENSE  = License
-INCOMPATIBLE_PKGS_CSWfirefox-l10n-fr = firefox_fr
+INCOMPATIBLE_PKGS_CSWfirefox-l10n-fr = CSWfirefox-fr
 
 # Defines the package description
 $(foreach LOCALE_NAME, $(LANG), $(eval SPKG_DESC_CSWfirefox-l10n-$(LOCALE_NAME) = $(DESCRIPTION) $(LOCALE_NAME)))
