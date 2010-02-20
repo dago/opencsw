@@ -21,6 +21,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS += CSWgstreamer CSWliboil CSWglib2 CSWgnomevfs2 CSWlibogg
 BUILD_DEP_PKGS += CSWgconf2 CSWggettextrt CSWlibxml2 CSWtheora CSWvorbis
+BUILD_DEP_PKGS += CSWzlib CSWsunmath CSWorbit2 CSWlibxml2 CSWbonobo2
 RUNTIME_DEP_PKGS = $(BUILD_DEP_PKGS)
 
 CONFIGURE_ARGS += $(DIRPATHS)
