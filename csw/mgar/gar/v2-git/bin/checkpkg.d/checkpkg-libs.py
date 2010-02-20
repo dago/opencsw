@@ -1,12 +1,12 @@
 #!/opt/csw/bin/python2.6
 #
 # $Id$
-#
-# A check for dependencies between shared libraries.
-#
-# This is currently more of a prototype than a mature program, but it has some
-# unit tests and it appears to be working.  The main problem is that it's not
-# divided into smaller testable sections.
+
+"""A check for dependencies between shared libraries.
+This is currently more of a prototype than a mature program, but it has some
+unit tests and it appears to be working.  The main problem is that it's not
+divided into smaller testable sections.
+"""
 
 import os
 import os.path
@@ -16,6 +16,9 @@ import subprocess
 import logging
 import sys
 import textwrap
+from Cheetah import Template
+
+CHECKPKG_MODULE_NAME = "shared library linking consistency"
 
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
@@ -25,78 +28,31 @@ sys.path.append(os.path.join(*path_list))
 import checkpkg
 import opencsw
 
-DUMP_BIN = "/usr/ccs/bin/dump"
-
-def GetIsalist():
-  args = ["isalist"]
-  isalist_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-  stdout, stderr = isalist_proc.communicate()
-  ret = isalist_proc.wait()
-  if ret:
-    logging.error("Calling isalist has failed.")
-  isalist = re.split(r"\s+", stdout.strip())
-  return isalist
-
-
-def main():
+def CheckSharedLibraryConsistency(pkgs_data, debug):
+  ws_re = re.compile(r"\s+")
   result_ok = True
   errors = []
-  options, args = checkpkg.GetOptions()
-  pkgnames = args
-  if options.debug:
-    logging.basicConfig(level=logging.DEBUG)
-  else:
-    logging.basicConfig(level=logging.INFO)
-  checkers = []
-  for pkgname in pkgnames:
-    checker = checkpkg.CheckpkgBase(options.extractdir, pkgname)
-    checkers.append(checker)
   binaries = []
   binaries_by_pkgname = {}
   sonames_by_pkgname = {}
   pkg_by_any_filename = {}
-  for checker in checkers:
-    pkg_binary_paths = checker.ListBinaries()
-    binaries_base = [os.path.split(x)[1] for x in pkg_binary_paths]
-    binaries_by_pkgname[checker.pkgname] = binaries_base
-    binaries.extend(pkg_binary_paths)
-    for filename in checker.GetAllFilenames():
-      pkg_by_any_filename[filename] = checker.pkgname
-  # Making the binaries unique
-  binaries = set(binaries)
-  ws_re = re.compile(r"\s+")
-
-  # man ld.so.1 for more info on this hack
-  env = copy.copy(os.environ)
-  env["LD_NOAUXFLTR"] = "1"
   needed_sonames_by_binary = {}
   filenames_by_soname = {}
-  # Assembling a data structure with the data about binaries.
-  # {
-  #   <binary1 name>: { checkpkg.NEEDED_SONAMES: [...],
-  #                     checkpkg.RUNPATH:        [...]},
-  #   <binary2 name>: ...,
-  #   ...
-  # }
-  #
-  for binary in binaries:
-    binary_base_name = binary.split("/")[-1]
-    args = [DUMP_BIN, "-Lv", binary]
-    dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
-    stdout, stderr = dump_proc.communicate()
-    ret = dump_proc.wait()
-    binary_data = checkpkg.ParseDumpOutput(stdout)
-    needed_sonames_by_binary[binary_base_name] = binary_data
-    if checkpkg.SONAME not in binary_data:
-      logging.debug("The %s binary doesn't provide a SONAME. "
-                    "(It might be an executable)",
-                   binary_base_name)
-      # The shared library doesn't tell its SONAME.  We're guessing it's the
-      # same as the base file name.
-      binary_data[checkpkg.SONAME] = binary_base_name
-    filenames_by_soname[binary_data[checkpkg.SONAME]] = binary_base_name
-
-  isalist = GetIsalist()
+  for pkg_data in pkgs_data:
+    binaries_base = [os.path.basename(x) for x in pkg_data["binaries"]]
+    pkgname = pkg_data["basic_stats"]["pkgname"]
+    binaries_by_pkgname[pkgname] = binaries_base
+    binaries.extend(pkg_data["binaries"])
+    for filename in pkg_data["all_filenames"]:
+      pkg_by_any_filename[filename] = pkgname
+    for binary_data in pkg_data["binaries_dump_info"]:
+      binary_base_name = os.path.basename(binary_data["base_name"])
+      needed_sonames_by_binary[binary_base_name] = binary_data
+      filenames_by_soname[binary_data[checkpkg.SONAME]] = binary_base_name
+    
+  # Making the binaries unique
+  binaries = set(binaries)
+  isalist = pkg_data["isalist"]
 
   # Building indexes by soname to simplify further processing
   # These are indexes "by soname".
@@ -128,7 +84,7 @@ def main():
   # same bit of code with do checking and reporting.
   #
   # TODO: Rewrite this using cheetah templates
-  if options.debug and needed_sonames:
+  if debug and needed_sonames:
     print "Analysis of sonames needed by the package set:"
     binaries_with_missing_sonames = set([])
     for soname in needed_sonames:
@@ -150,10 +106,13 @@ def main():
         if soname in checkpkg.ALLOWED_ORPHAN_SONAMES:
           print "However, it's a whitelisted soname."
         else:
-          errors.append(
-              checkpkg.Error("%s is required by %s, but "
-                             "we don't know what provides it."
-                             % (soname, binaries_by_soname[soname])))
+          pass
+          # The error checking needs to be unified: done in one place only.
+          # errors.append(
+          #     checkpkg.CheckpkgTag(
+          #       "%s is required by %s, but "
+          #       "we don't know what provides it."
+          #       % (soname, binaries_by_soname[soname])))
     if binaries_with_missing_sonames:
       print "The following are binaries with missing sonames:"
       binary_lines = " ".join(sorted(binaries_with_missing_sonames))
@@ -162,11 +121,10 @@ def main():
     print
 
   dependent_pkgs = {}
-  for checker in checkers:
-    pkgname = checker.pkgname
-    dir_format_pkg = opencsw.DirectoryFormatPackage(checker.pkgpath)
-    declared_dependencies = dir_format_pkg.GetDependencies()
-    if options.debug:
+  for checker in pkgs_data:
+    pkgname = checker["basic_stats"]["pkgname"]
+    declared_dependencies = checker["depends"]
+    if debug:
       sanitized_pkgname = pkgname.replace("-", "_")
       data_file_name = "/var/tmp/checkpkg_test_data_%s.py" % sanitized_pkgname
       logging.warn("Saving test data to %s." % repr(data_file_name))
@@ -194,20 +152,48 @@ def main():
         pkgs_by_filename,
         filenames_by_soname,
         pkg_by_any_filename)
-    print checker.FormatDepsReport(missing_deps,
-                                   surplus_deps,
-                                   orphan_sonames)
+    namespace = {
+        "pkgname": pkgname,
+        "missing_deps": missing_deps,
+        "surplus_deps": surplus_deps,
+        "orphan_sonames": orphan_sonames,
+    }
+    t = Template.Template(checkpkg.REPORT_TMPL, searchList=[namespace])
+    print unicode(t)
 
     for soname in orphan_sonames:
-      errors.append(checkpkg.Error("The following soname does't belong to "
-                                   "any package: %s" % soname))
+      errors.append(
+          checkpkg.CheckpkgTag(
+            pkgname,
+            "orphan-soname",
+            soname))
+    for missing_dep in missing_deps:
+      errors.append(
+          checkpkg.CheckpkgTag(
+            pkgname,
+            "missing-dependency",
+            missing_dep))
+  return errors
 
-  if errors:
-    for error in errors:
-      logging.error(error)
-    sys.exit(1)
-  else:
-    sys.exit(0)
+
+def main():
+  options, args = checkpkg.GetOptions()
+  md5sums = args
+  # CheckpkgManager class abstracts away things such as the collection of
+  # results.
+  check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
+                                           options.stats_basedir,
+                                           md5sums,
+                                           options.debug)
+
+  check_manager.RegisterSetCheck(CheckSharedLibraryConsistency)
+
+  exit_code, screen_report, tags_report = check_manager.Run()
+  f = open(options.output, "w")
+  f.write(tags_report)
+  f.close()
+  print screen_report.strip()
+  sys.exit(exit_code)
 
 
 if __name__ == '__main__':

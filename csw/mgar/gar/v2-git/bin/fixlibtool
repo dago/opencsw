@@ -21,7 +21,6 @@
 #       @$(MAKECOOKIE)
 #
 ####################################################
-
 umask 0022
 PATH=/opt/csw/bin
 
@@ -34,7 +33,8 @@ BASEPATH=$1
 ## Fix Makefiles
 for mk in $(gfind ${BASEPATH} -name Makefile -print); do
     gcp ${mk} ${mk}.orig
-    LT_FILES=$(for lib in $(ggrep '/opt/csw.*/lib/.*\.la' ${mk}); do \
+    LT_FILES=$(for lib in $(gegrep -v '^#|^$' ${mk} | \
+                   ggrep '/opt/csw.*/lib/.*\.la'); do \
                    echo $lib |gsed -ne '/\/opt.*\.la/p'; done)
     for file in ${LT_FILES}; do
         LIB_NAME=$(ggrep 'dlname=' ${file} | \
@@ -44,7 +44,7 @@ for mk in $(gfind ${BASEPATH} -name Makefile -print); do
         fixpath=$(gecho $file |gsed 's/\//\\\//g')
         gsed "s/${fixpath}/-l${LIB_NAME}/g" ${mk} >${mk}.new
         LIB_DIR=$(ggrep 'libdir=' ${file} | gsed -e "s/.*'\(.*\)'/\1/")
-        gsed "s,\(LDFLAGS =.*\),\1 -R${LIB_DIR} -L${LIB_DIR}," ${mk}.new >${mk}
+        perl -pe 's,(LDFLAGS =[^\\]*)(\\)?\n,$1 -R'${LIB_DIR}' -L'${LIB_DIR}' $2\n,' ${mk}.new >${mk}
         gchmod +x ${mk}
     done
 done

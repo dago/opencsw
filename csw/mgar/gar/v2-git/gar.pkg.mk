@@ -32,10 +32,12 @@ PKGINFO ?= /usr/bin/pkginfo
 
 ifeq ($(origin PACKAGES), undefined)
 PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(GARNAME))
+CATALOGNAME     = $(if $(filter %.gspec,$(DISTFILES)),,$(GARNAME))
 SRCPACKAGE_BASE = $(firstword $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
 SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE))
 else
+CATALOGNAME    ?= $(if $(filter-out $(firstword $(PACKAGES)),$(PACKAGES)),,$(patsubst CSW%,%,$(PACKAGES)))
 SRCPACKAGE_BASE = $(firstword $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
 SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE)))
@@ -66,6 +68,13 @@ GARSYSTEMVERSION ?= $(shell $(SVN) propget svn:externals $(CURDIR) | perl -ane '
 GARPKG_v1 = CSWgar-v1
 GARPKG_v2 = CSWgar-v2
 RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
+
+# Sanity checks for r8335
+$(if $(NO_ISAEXEC),$(error The deprecated variable 'NO_ISAEXEC' is defined, please replace it with NOISAEXEC))
+$(if $(PREREQUISITE_PKGS),$(error The deprecated variable 'PREREQUISITE_PKGS' is defined, please replace it with BUILD_DEP_PKGS))
+$(foreach P,$(SPKG_SPECS),$(if $(PREREQUISITE_PKGS_$P),$(error The deprecated variable 'PREREQUISITE_PKGS_$P' is defined, please replace it with BUILD_DEP_PKGS_$P)))
+$(if $(REQUIRED_PKGS),$(error The deprecated variable 'REQUIRED_PKGS' is defined, please replace it with RUNTIME_DEP_PKGS))
+$(foreach P,$(SPKG_SPECS),$(if $(REQUIRED_PKGS_$P),$(error The deprecated variable 'REQUIRED_PACKAGES_$P' is defined, please replace it with RUNTIME_DEP_PKGS_$P)))
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
@@ -205,6 +214,7 @@ _CSWCLASSES += cswpycompile
 _CSWCLASSES += cswinetd
 _CSWCLASSES += cswinitsmf
 _CSWCLASSES += cswtexinfo
+_CSWCLASSES += cswpostmsg
 
 # Make sure the configuration files always have a .CSW suffix and rename the
 # configuration files to this if necessary during merge.
@@ -344,7 +354,7 @@ $(foreach SPEC,$(_PKG_SPECS),$(if $(PROTOTYPE_FILTER),$(eval _PROTOTYPE_FILTER_$
 
 _PROTOTYPE_MODIFIERS = | perl -ane '\
 		$(foreach M,$(PROTOTYPE_MODIFIERS),\
-			$(if $(PROTOTYPE_FILES_$M),if( $$F[2] =~ m(^$(PROTOTYPE_FILES_$M)$$) ) {)\
+			$(if $(PROTOTYPE_FILES_$M),if( $$F[2] =~ m(^$(shell echo $(PROTOTYPE_FILES_$M) | /usr/bin/tr " " "|")$$) ) {)\
 				$(if $(PROTOTYPE_FTYPE_$M),$$F[0] = "$(PROTOTYPE_FTYPE_$M)";)\
 				$(if $(PROTOTYPE_CLASS_$M),$$F[1] = "$(PROTOTYPE_CLASS_$M)";)\
 				$(if $(PROTOTYPE_PERMS_$M),$$F[3] = "$(PROTOTYPE_PERMS_$M)";)\
@@ -352,6 +362,8 @@ _PROTOTYPE_MODIFIERS = | perl -ane '\
 				$(if $(PROTOTYPE_GROUP_$M),$$F[5] = "$(PROTOTYPE_GROUP_$M)";)\
 			$(if $(PROTOTYPE_FILES_$M),})\
 		)\
+		$(foreach F,$(POSTMSG),$$F[1] = "cswpostmsg" if( $$F[2] eq "$F" );)\
+		$$F[1] = "cswalternatives" if( $$F[2] =~ m,^/opt/csw/share/alternatives/[^/]+$$, );\
                 print join(" ",@F),"\n";'
 
 
@@ -382,8 +394,18 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	      -n "$(_PKGFILES_EXCLUDE)" -o \
 	      -n "$(ISAEXEC_FILES_$*)" -o \
 	      -n "$(ISAEXEC_FILES)" ]; then \
-	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),-I $(call licensedir,$*)/license -I /etc/opt/csw/pkg/$*/cswmigrateconf) \
-		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),-X $(call licensedir,$S)/license -X /etc/opt/csw/pkg/$S/cswmigrateconf) \
+	  (pathfilter $(if $(or $(_PKGFILES_EXCLUDE),$(_PKGFILES_INCLUDE)),\
+				-I $(call licensedir,$*)/license \
+				-I /etc/opt/csw/pkg/$*/cswmigrateconf \
+		      		-I /opt/csw/share/alternatives/$(call catalogname,$*) \
+				-I /opt/csw/share/checkpkg/overrides/$(call catalogname,$*) \
+		      )\
+		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),\
+				-X $(call licensedir,$S)/license \
+				-X /etc/opt/csw/pkg/$S/cswmigrateconf \
+				-X /opt/csw/share/alternatives/$(call catalogname,$S) \
+				-X /opt/csw/share/checkpkg/overrides/$(call catalogname,$S) \
+		      ) \
 		      $(foreach I,$(EXTRA_PKGFILES_INCLUDED) $(EXTRA_PKGFILES_INCLUDED_$*),-i '$I') \
 		      $(foreach X,$(EXTRA_PKGFILES_EXCLUDED) $(EXTRA_PKGFILES_EXCLUDED_$*),-x '$X') \
 		      $(foreach FILE,$(_PKGFILES_INCLUDE),-i '$(FILE)') \
@@ -422,14 +444,15 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 # The dependencies to CSWcswclassutils and CSWtexinfo are only added if there are files
 # actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),CSWalternatives)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
 
 $(WORKDIR)/%.depend: $(WORKDIR)
-	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(RUNTIME_DEP_PKGS_$*)$(RUNTIME_DEP_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
+	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(RUNTIME_DEP_PKGS_$*)$(RUNTIME_DEP_PKGS)$(DEP_PKGS)$(DEP_PKGS_$*)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
 		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
 			echo "I $(PKG)";\
 		)\
-		$(foreach PKG,$(sort $(_EXTRA_GAR_PKGS)) $(RUNTIME_DEP_PKGS_$*) $(RUNTIME_DEP_PKGS),\
+		$(foreach PKG,$(sort $(_EXTRA_GAR_PKGS)) $(or $(RUNTIME_DEP_PKGS_$*),$(RUNTIME_DEP_PKGS),$(DEP_PKGS_$*),$(DEP_PKGS)),\
 			$(if $(SPKG_DESC_$(PKG)), \
 				echo "P $(PKG) $(call catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
 				echo "$(shell (/usr/bin/pkginfo $(PKG) || echo "P $(PKG) - ") | $(GAWK) '{ $$1 = "P"; print } ')"; \
@@ -527,6 +550,7 @@ $(foreach P,$(SPKG_SPECS),\
 
 # The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
 $(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),cswalternatives)
 $(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(shell cat $(WORKDIR)/$*.prototype | perl -e 'while(<>){@F=split;$$c{$$F[1]}++};$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$c{$C});)')
 
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
@@ -540,8 +564,9 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "PSTAMP=$(LOGNAME)@$(shell hostname)-$(shell date '+%Y%m%d%H%M%S')"; \
 	echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*)"; \
 	echo "HOTLINE=http://www.opencsw.org/bugtrack/"; \
-	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
+	echo "OPENCSW_CATALOGNAME=$(call catalogname,$*)"; \
 	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
+	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
 	) >$@
 
 
@@ -600,8 +625,8 @@ merge-migrateconf-%:
 	@echo "X: $(MIGRATE_FILES_$*) Y: $(MIGRATE_FILES)"
 	$(_DBG)ginstall -d $(PKGROOT)/etc/opt/csw/pkg/$*
 	$(_DBG)(echo "MIGRATE_FILES=\"$(or $(MIGRATE_FILES_$*),$(MIGRATE_FILES))\"";\
-		 $(if $(MIGRATE_SOURCE_DIR_$*),echo "SOURCE_DIR___default__=\"$(MIGRATE_SOURCE_DIR_$*)\"";)\
-		 $(if $(MIGRATE_DEST_DIR_$*),echo "DEST_DIR___default__=\"$(MIGRATE_DEST_DIR_$*)\"";)\
+		 $(if $(or $(MIGRATE_SOURCE_DIR_$*),$(MIGRATE_SOURCE_DIR)),echo "SOURCE_DIR___default__=\"$(or $(MIGRATE_SOURCE_DIR_$*),$(MIGRATE_SOURCE_DIR))\"";)\
+		 $(if $(or $(MIGRATE_DEST_DIR_$*),$(MIGRATE_DEST_DIR)),echo "DEST_DIR___default__=\"$(or $(MIGRATE_DEST_DIR_$*),$(MIGRATE_DEST_DIR))\"";)\
 		 $(foreach F,$(or $(MIGRATE_FILES_$*),$(MIGRATE_FILES)),\
 			$(if $(MIGRATE_SOURCE_DIR_$F),echo "SOURCE_DIR_$(subst .,_,$F)=\"$(MIGRATE_SOURCE_DIR_$F)\"";)\
 			$(if $(MIGRATE_DEST_DIR_$F),echo "DEST_DIR_$(subst .,_,$F)=\"$(MIGRATE_DEST_DIR_$F)\"";)\
@@ -649,6 +674,31 @@ merge-etcservices-%:
 reset-merge-etcservices:
 	@rm -f $(COOKIEDIR)/merge-etcservices $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-etcservices-$(SPEC))
 
+merge-checkpkgoverrides-%:
+	@echo "[ Generating checkpkg override for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/checkpkg/overrides
+	$(_DBG)($(foreach O,$(or $(CHECKPKG_OVERRIDES_$*),$(CHECKPKG_OVERRIDES)),echo "$O";)) | \
+		perl -F'\|' -ane 'unshift @F,"$*"; $$F[0].=":"; print join(" ",@F );' \
+		> $(PKGROOT)/opt/csw/share/checkpkg/overrides/$(call catalogname,$*)
+	@$(MAKECOOKIE)
+
+merge-checkpkgoverrides: $(foreach S,$(SPKG_SPECS),$(if $(or $(CHECKPKG_OVERRIDES_$S),$(CHECKPKG_OVERRIDES)),merge-checkpkgoverrides-$S))
+
+reset-merge-checkpkgoverrides:
+	@rm -f $(COOKIEDIR)/merge-checkpkgoverrides $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-checkpkgoverrides-$(SPEC))
+
+merge-alternatives-%:
+	@echo "[ Generating alternatives for package $* ]"
+	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/alternatives
+	$(_DBG)($(foreach A,$(or $(ALTERNATIVES_$*),$(ALTERNATIVES)),echo "$(ALTERNATIVE_$A)";)) \
+		> $(PKGROOT)/opt/csw/share/alternatives/$(call catalogname,$*)
+	@$(MAKECOOKIE)
+
+merge-alternatives: $(foreach S,$(SPKG_SPECS),$(if $(or $(ALTERNATIVES_$S),$(ALTERNATIVES)),merge-alternatives-$S))
+
+reset-merge-alternatives:
+	@rm -f $(COOKIEDIR)/merge-alternatives $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-alternatives-$(SPEC))
+
 merge-src: _SRCDIR=$(PKGROOT)$(sourcedir)/$(call catalogname,$(SRCPACKAGE_BASE))
 merge-src: fetch
 	$(_DBG)mkdir -p $(_SRCDIR)/files
@@ -694,7 +744,22 @@ validateplatform:
 # unpacked to global/ for packaging. E. g. 'merge' depends only on the specific
 # modulations and does not fill global/.
 ENABLE_CHECK ?= 1
-_package: validateplatform extract-global merge $(SPKG_DESTDIRS) pre-package $(PACKAGE_TARGETS) post-package $(if $(ENABLE_CHECK),pkgcheck)
+
+# The files in ISAEXEC get relocated and will be replaced by the isaexec-wrapper.
+# The trick is to delay the calculcation of the variable values until that time
+# when PKGROOT has already been populated.
+_ISAEXEC_EXCLUDE_FILES = $(bindir)/%-config $(bindir)/%/%-config
+_buildpackage: _ISAEXEC_FILES=$(filter-out $(foreach F,$(_ISAEXEC_EXCLUDE_FILES) $(ISAEXEC_EXCLUDE_FILES),$(PKGROOT)$(F)), \
+			$(wildcard $(foreach D,$(ISAEXEC_DIRS),$(PKGROOT)$(D)/* )) \
+		)
+_buildpackage: ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,               \
+			$(shell for F in $(_ISAEXEC_FILES); do          \
+				if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;     \
+			done)),)
+_buildpackage: _EXTRA_GAR_PKGS += $(if $(ISAEXEC_FILES),CSWisaexec)
+_buildpackage: pre-package $(PACKAGE_TARGETS) post-package $(if $(ENABLE_CHECK),pkgcheck)
+
+_package: validateplatform extract-global merge $(SPKG_DESTDIRS) _buildpackage
 	@$(MAKECOOKIE)
 
 package: _package
@@ -770,8 +835,9 @@ redirpackage: pkgreset dirpackage
 
 # This rule automatically logs into every host where a package for this software should
 # be built. It is especially suited for automated build bots.
+platforms: _PACKAGING_PLATFORMS=$(if $(ARCHALL),$(firstword $(PACKAGING_PLATFORMS)),$(PACKAGING_PLATFORMS))
 platforms:
-	$(foreach P,$(PACKAGING_PLATFORMS),\
+	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) PLATFORM=$P _package && ,\
@@ -783,8 +849,9 @@ platforms:
 	@echo
 	@echo "The following packages have been built during this invocation:"
 	@echo
-	@$(foreach P,$(PACKAGING_PLATFORMS),\
+	@$(foreach P,$(_PACKAGING_PLATFORMS),\
 		echo "* Platform $P\c";\
+		$(if $(ARCHALL),echo " (suitable for all architectures)\c";) \
 		$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 			echo " (built on this host)";\
 			  $(MAKE) -s PLATFORM=$P _pkgshow;echo;,\
@@ -794,11 +861,12 @@ platforms:
 	)
 	@$(MAKECOOKIE)
 
+platforms-%: _PACKAGING_PLATFORMS=$(if $(ARCHALL),$(firstword $(PACKAGING_PLATFORMS)),$(PACKAGING_PLATFORMS))
 platforms-%:
-	$(foreach P,$(PACKAGING_PLATFORMS),\
+	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) PLATFORM=$P $* && ,\
+				$(MAKE) -s PLATFORM=$P $* && ,\
 				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) PLATFORM=$P $*" && \
 			),\
 			$(error *** No host has been defined for platform $P)\

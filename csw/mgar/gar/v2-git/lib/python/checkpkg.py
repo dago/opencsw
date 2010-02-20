@@ -3,6 +3,9 @@
 # This is the checkpkg library, common for all checkpkg tests written in
 # Python.
 
+import copy
+import cPickle
+import errno
 import itertools
 import logging
 import optparse
@@ -12,6 +15,7 @@ import re
 import socket
 import sqlite3
 import subprocess
+import yaml
 from Cheetah import Template
 import opencsw
 
@@ -22,26 +26,30 @@ RUNPATH = "runpath"
 SONAME = "soname"
 CONFIG_MTIME = "mtime"
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
-DO_NOT_REPORT_MISSING = set([u"SUNWlibC", u"SUNWcsl", u"SUNWlibms",
-                             u"*SUNWcslr", u"*SUNWlibC", u"*SUNWlibms",
-                             u"SUNWcslx"])
+DO_NOT_REPORT_MISSING = set([])
+DO_NOT_REPORT_MISSING_RE = [r"SUNW.*", r"\*SUNW.*"]
+DUMP_BIN = "/usr/ccs/bin/dump"
+
 SYSTEM_SYMLINKS = (
-    ("/opt/csw/bdb4", ["/opt/csw/bdb42"]),
-    ("/64", ["/amd64", "/sparcv9"]),
+    ("/opt/csw/bdb4",     ["/opt/csw/bdb42"]),
+    ("/64",               ["/amd64", "/sparcv9"]),
     ("/opt/csw/lib/i386", ["/opt/csw/lib"]),
 )
+INSTALL_CONTENTS_AVG_LINE_LENGTH = 102.09710677919261
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
 ALLOWED_ORPHAN_SONAMES = set([u"libm.so.2"])
 DEPENDENCY_FILENAME_REGEXES = (
-    (r".*\.pl", u"CSWperl"),
-    (r".*\.pm", u"CSWperl"),
-    (r".*\.py", u"CSWpython"),
-    (r".*\.rb", u"CSWruby"),
+    (r".*\.pl$", u"CSWperl"),
+    (r".*\.pm$", u"CSWperl"),
+    (r".*\.py$", u"CSWpython"),
+    (r".*\.rb$", u"CSWruby"),
 )
 
-REPORT_TMPL = u"""# $pkgname:
+REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
+# $pkgname:
+#end if
 #if $missing_deps
 # SUGGESTION: you may want to add some or all of the following as depends:
 #    (Feel free to ignore SUNW or SPRO packages)
@@ -61,12 +69,9 @@ RUNTIME_DEP_PKGS_$pkgname += $pkg
 # ! $soname
 #end for
 #end if
-#if not $missing_deps and not $surplus_deps and not $orphan_sonames
-# + Dependencies of $pkgname look good.
-#end if
 """
 
-ERROR_REPORT_TMPL = u"""#if $errors
+SCREEN_ERROR_REPORT_TMPL = u"""#if $errors and $debug
 ERROR: One or more errors have been found by $name.
 #for $pkgname in $errors
 $pkgname:
@@ -76,10 +81,22 @@ $pkgname:
 #end for
 #else
 #if $debug
-OK: $name found no problems.
+OK: $repr($name) module found no problems.
 #end if
 #end if
 """
+
+# http://www.cheetahtemplate.org/docs/users_guide_html_multipage/language.directives.closures.html
+TAG_REPORT_TMPL = u"""#if $errors
+# Tags reported by $name module
+#for $pkgname in $errors
+#for $tag in $errors[$pkgname]
+$pkgname: ${tag.tag_name}#if $tag.tag_info# $tag.tag_info#end if#
+#end for
+#end for
+#end if
+"""
+
 
 class Error(Exception):
   pass
@@ -95,77 +112,33 @@ class PackageError(Error):
 
 def GetOptions():
   parser = optparse.OptionParser()
-  parser.add_option("-e", dest="extractdir",
-                    help="The directory into which the package has been extracted")
+  parser.add_option("-b", dest="stats_basedir",
+                    help=("The base directory with package statistics "
+                          "in yaml format, e.g. ~/.checkpkg/stats"))
   parser.add_option("-d", "--debug", dest="debug",
                     default=False, action="store_true",
                     help="Turn on debugging messages")
+  parser.add_option("-o", "--output", dest="output",
+                    help="Output error tag file")
   (options, args) = parser.parse_args()
-  if not options.extractdir:
-    raise ConfigurationError("ERROR: -e option is missing.")
+  if not options.stats_basedir:
+    raise ConfigurationError("ERROR: the -b option is missing.")
+  if not options.output:
+    raise ConfigurationError("ERROR: the -o option is missing.")
   # Using set() to make the arguments unique.
   return options, set(args)
 
 
-class CheckpkgBase(object):
-  """This class has functionality overlapping with DirectoryFormatPackage
-  from the opencsw.py library. The classes should be merged.
-  """
-
-  def __init__(self, extractdir, pkgname):
-    self.extractdir = extractdir
-    self.pkgname = pkgname
-    self.pkgpath = os.path.join(self.extractdir, self.pkgname)
-
-  def CheckPkgpathExists(self):
-    if not os.path.isdir(self.pkgpath):
-      raise PackageError("%s does not exist or is not a directory"
-                         % self.pkgpath)
-
-  def ListBinaries(self):
-    """Shells out to list all the binaries from a given package.
-
-    Original checkpkg code:
-
-    # #########################################
-    # # find all executables and dynamic libs,and list their filenames.
-    # listbinaries() {
-    #   if [ ! -d $1 ] ; then
-    #     print errmsg $1 not a directory
-    #     rm -rf $EXTRACTDIR
-    #     exit 1
-    #   fi
-    # 
-    #   find $1 -print | xargs file |grep ELF |nawk -F: '{print $1}'
-    # }
-    """
-    self.CheckPkgpathExists()
-    find_tmpl = "find %s -print | xargs file | grep ELF | nawk -F: '{print $1}'"
-    find_proc = subprocess.Popen(find_tmpl % self.pkgpath,
-                                 shell=True, stdout=subprocess.PIPE)
-    stdout, stderr = find_proc.communicate()
-    ret = find_proc.wait()
-    if ret:
-      logging.error("The find command returned an error.")
-    return stdout.splitlines()
-
-  def GetAllFilenames(self):
-    self.CheckPkgpathExists()
-    file_basenames = []
-    for root, dirs, files in os.walk(self.pkgpath):
-      file_basenames.extend(files)
-    return file_basenames
-
-  def FormatDepsReport(self, missing_deps, surplus_deps, orphan_sonames):
-    """To be removed."""
-    namespace = {
-        "pkgname": self.pkgname,
-        "missing_deps": missing_deps,
-        "surplus_deps": surplus_deps,
-        "orphan_sonames": orphan_sonames,
-    }
-    t = Template.Template(REPORT_TMPL, searchList=[namespace])
-    return unicode(t)
+def FormatDepsReport(pkgname, missing_deps, surplus_deps, orphan_sonames):
+  """To be removed."""
+  namespace = {
+      "pkgname": pkgname,
+      "missing_deps": missing_deps,
+      "surplus_deps": surplus_deps,
+      "orphan_sonames": orphan_sonames,
+  }
+  t = Template.Template(REPORT_TMPL, searchList=[namespace])
+  return unicode(t)
 
 
 class SystemPkgmap(object):
@@ -235,26 +208,31 @@ class SystemPkgmap(object):
         fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
     """
 
+    contents_length = os.stat(SYSTEM_PKGMAP).st_size
+    estimated_lines = contents_length / INSTALL_CONTENTS_AVG_LINE_LENGTH
     system_pkgmap_fd = open(SYSTEM_PKGMAP, "r")
     stop_re = re.compile("(%s)" % "|".join(self.STOP_PKGS))
     # Creating a data structure:
     # soname - {<path1>: <line1>, <path2>: <line2>, ...}
     logging.debug("Building sqlite3 cache db of the %s file",
                   SYSTEM_PKGMAP)
+    print "Processing %s" % SYSTEM_PKGMAP
     c = self.conn.cursor()
     count = itertools.count()
     for line in system_pkgmap_fd:
       i = count.next()
       if not i % 1000:
-        print "\r%s" % i,
+        print "\r~%3.1f%%" % (100.0 * i / estimated_lines,),
       if stop_re.search(line):
+        continue
+      if line.startswith("#"):
         continue
       fields = re.split(WS_RE, line)
       pkgmap_entry_path = fields[0].split("=")[0]
       pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
       sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
       c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line.strip()))
-    print
+    print "\rAll lines of %s were processed." % SYSTEM_PKGMAP
     print "Creating the main database index."
     sql = "CREATE INDEX basename_idx ON systempkgmap(basename);"
     c.execute(sql)
@@ -316,17 +294,18 @@ class SystemPkgmap(object):
     return self.GetFileMtime() <= self.GetDatabaseMtime()
 
   def PurgeDatabase(self):
-    logging.info("Purging the cache database")
     c = self.conn.cursor()
-    sql = "DELETE FROM config;"
-    c.execute(sql)
-    sql = "DELETE FROM systempkgmap;"
-    c.execute(sql)
+    logging.info("Dropping the index.")
     sql = "DROP INDEX basename_idx;"
     try:
       c.execute(sql)
     except sqlite3.OperationalError, e:
       logging.warn(e)
+    logging.info("Deleting all rows from the cache database")
+    sql = "DELETE FROM config;"
+    c.execute(sql)
+    sql = "DELETE FROM systempkgmap;"
+    c.execute(sql)
 
 def SharedObjectDependencies(pkgname,
                              binaries_by_pkgname,
@@ -441,6 +420,11 @@ def AnalyzeDependencies(pkgname,
   # Don't report itself as a suggested dependency.
   missing_deps = missing_deps.difference(set([pkgname]))
   missing_deps = missing_deps.difference(set(DO_NOT_REPORT_MISSING))
+  for re_str in DO_NOT_REPORT_MISSING_RE:
+    padded_re = "^%s$" % re_str
+    missing_deps = filter(lambda x: not re.match(padded_re, x),
+                          missing_deps)
+  missing_deps = set(missing_deps)
   surplus_deps = declared_dependencies_set.difference(auto_dependencies)
   surplus_deps = surplus_deps.difference(DO_NOT_REPORT_SURPLUS)
   orphan_sonames = orphan_sonames.difference(ALLOWED_ORPHAN_SONAMES)
@@ -573,14 +557,29 @@ def ParseDumpOutput(dump_output):
   return binary_data
 
 
+class CheckpkgTag(object):
+  """Represents a tag to be written to the checkpkg tag file."""
+
+  def __init__(self, pkgname, tag_name, tag_info=None, severity=None, msg=None):
+    self.pkgname = pkgname
+    self.tag_name = tag_name
+    self.tag_info = tag_info
+    self.severity = severity
+    self.msg = msg
+
+  def __repr__(self):
+    return (u"CheckpkgTag(%s, %s, %s, ...)"
+            % (repr(self.pkgname), repr(self.tag_name), repr(self.tag_info)))
+
+
 class CheckpkgManager(object):
   """Takes care of calling checking functions"""
 
-  def __init__(self, name, extractdir, pkgname_list, debug=False):
+  def __init__(self, name, stats_basedir, md5sum_list, debug=False):
     self.debug = debug
     self.name = name
-    self.extractdir = extractdir
-    self.pkgname_list = pkgname_list
+    self.md5sum_list = md5sum_list
+    self.stats_basedir = stats_basedir
     self.errors = []
     self.individual_checks = []
     self.set_checks = []
@@ -592,31 +591,372 @@ class CheckpkgManager(object):
   def RegisterSetCheck(self, function):
     self.set_checks.append(function)
 
-  def Run(self):
-    """Runs all the checks
+  def GetPackageStatsList(self):
+    stats_list = []
+    for md5sum in self.md5sum_list:
+      stats_list.append(PackageStats(None, self.stats_basedir, md5sum))
+    return stats_list
 
-    Returns a tuple of an exit code and a report.
-    """
-    packages = []
+  def GetAllTags(self, packages_data):
     errors = {}
-    for pkgname in self.pkgname_list:
-        pkg_path = os.path.join(self.extractdir, pkgname)
-        packages.append(opencsw.DirectoryFormatPackage(pkg_path))
-    for pkg in packages:
+    for pkg_data in packages_data:
       for function in self.individual_checks:
-        errors_for_pkg = function(pkg)
+        all_stats = pkg_data.GetAllStats()
+        errors_for_pkg = function(all_stats, debug=self.debug)
         if errors_for_pkg:
-          errors[pkg.pkgname] = errors_for_pkg
+          errors[all_stats["basic_stats"]["pkgname"]] = errors_for_pkg
     # Set checks
     for function in self.set_checks:
-      set_errors = function(packages)
+      set_errors = function([x.GetAllStats() for x in packages_data],
+                            debug=self.debug)
       if set_errors:
-        errors["The package set"] = set_errors
+        # These were generated by a set, but are likely to be bound to specific
+        # packages. We'll try to preserve the package assignments.
+        for tag in set_errors:
+          if tag.pkgname:
+            if not tag.pkgname in errors:
+              errors[tag.pkgname] = []
+            errors[tag.pkgname].append(tag)
+          else:
+            if "package-set" not in errors:
+              errors["package-set"] = []
+            errors["package-set"].append(error)
+    return errors
+
+  def FormatReports(self, errors):
     namespace = {
         "name": self.name,
         "errors": errors,
         "debug": self.debug,
     }
-    t = Template.Template(ERROR_REPORT_TMPL, searchList=[namespace])
-    exit_code = bool(errors)
-    return (exit_code, unicode(t))
+    screen_t = Template.Template(SCREEN_ERROR_REPORT_TMPL, searchList=[namespace])
+    tags_report_t = Template.Template(TAG_REPORT_TMPL, searchList=[namespace])
+    screen_report = unicode(screen_t)
+    tags_report = unicode(tags_report_t)
+    return screen_report, tags_report
+
+  def Run(self):
+    """Runs all the checks
+
+    Returns a tuple of an exit code and a report.
+    """
+    packages_data = self.GetPackageStatsList()
+    errors = self.GetAllTags(packages_data)
+    screen_report, tags_report = self.FormatReports(errors)
+    exit_code = 0
+    return (exit_code, screen_report, tags_report)
+
+
+def ParseTagLine(line):
+  """Parses a line from the tag.${module} file.
+
+  Returns a triplet of pkgname, tagname, tag_info.
+  """
+  level_1 = line.strip().split(":")
+  if len(level_1) > 1:
+    data_1 = level_1[1]
+    pkgname = level_1[0]
+  else:
+    data_1 = level_1[0]
+    pkgname = None
+  level_2 = re.split(WS_RE, data_1.strip())
+  tag_name = level_2[0]
+  if len(level_2) > 1:
+    tag_info = " ".join(level_2[1:])
+  else:
+    tag_info = None
+  return (pkgname, tag_name, tag_info)
+
+
+class Override(object):
+  """Represents an override of a certain checkpkg tag.
+
+  It's similar to checkpkg.CheckpkgTag, but serves a different purpose.
+  """
+
+  def __init__(self, pkgname, tag_name, tag_info):
+    self.pkgname = pkgname
+    self.tag_name = tag_name
+    self.tag_info = tag_info
+
+  def __repr__(self):
+    return (u"Override(%s, %s, %s)"
+            % (self.pkgname, self.tag_name, self.tag_info))
+
+  def DoesApply(self, tag):
+    """Figures out if this override applies to the given tag."""
+    basket_a = {}
+    basket_b = {}
+    if self.pkgname:
+      basket_a["pkgname"] = self.pkgname
+      basket_b["pkgname"] = tag.pkgname
+    if self.tag_info:
+      basket_a["tag_info"] = self.tag_info
+      basket_b["tag_info"] = tag.tag_info
+    basket_a["tag_name"] = self.tag_name
+    basket_b["tag_name"] = tag.tag_name
+    return basket_a == basket_b
+
+def ParseOverrideLine(line):
+  level_1 = line.split(":")
+  if len(level_1) > 1:
+    pkgname = level_1[0]
+    data_1 = level_1[1]
+  else:
+    pkgname = None
+    data_1 = level_1[0]
+  level_2 = re.split(WS_RE, data_1.strip())
+  if len(level_2) > 1:
+    tag_name = level_2[0]
+    tag_info = " ".join(level_2[1:])
+  else:
+    tag_name = level_2[0]
+    tag_info = None
+  return Override(pkgname, tag_name, tag_info)
+
+
+def ApplyOverrides(error_tags, overrides):
+  """Filters out all the error tags that overrides apply to.
+  
+  O(N * M), but N and M are always small.
+  """
+  tags_after_overrides = []
+  for tag in error_tags:
+    override_applies = False
+    for override in overrides:
+      if override.DoesApply(tag):
+        override_applies = True
+    if not override_applies:
+      tags_after_overrides.append(tag)
+  return tags_after_overrides
+
+
+def GetIsalist():
+  args = ["isalist"]
+  isalist_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+  stdout, stderr = isalist_proc.communicate()
+  ret = isalist_proc.wait()
+  if ret:
+    logging.error("Calling isalist has failed.")
+  isalist = re.split(r"\s+", stdout.strip())
+  return isalist
+
+
+class PackageStats(object):
+  """Collects stats about a package and saves it."""
+  STATS_VERSION = 1L
+  # This list needs to be synchronized with the CollectStats() method.
+  STAT_FILES = [
+      "all_filenames",
+      "basic_stats",
+      "binaries",
+      "binaries_dump_info",
+      "depends",
+      "isalist",
+      "ldd_dash_r",
+      "overrides",
+      "pkginfo",
+      "pkgmap",
+  ]
+
+  def __init__(self, srv4_pkg, stats_basedir=None, md5sum=None):
+    self.srv4_pkg = srv4_pkg
+    self.md5sum = md5sum
+    self.dir_format_pkg = None
+    self.stats_path = None
+    self.all_stats = {}
+    self.stats_basedir = stats_basedir
+    if not self.stats_basedir:
+      home = os.environ["HOME"]
+      parts = [home, ".checkpkg", "stats"]
+      self.stats_basedir = os.path.join(*parts)
+
+  def GetMd5sum(self):
+    if not self.md5sum:
+      self.md5sum = self.srv4_pkg.GetMd5sum()
+    return self.md5sum
+
+  def GetStatsPath(self):
+    if not self.stats_path:
+      md5sum = self.GetMd5sum()
+      two_chars = md5sum[0:2]
+      parts = [self.stats_basedir, two_chars, md5sum]
+      self.stats_path = os.path.join(*parts)
+    return self.stats_path
+
+  def StatsExist(self):
+    """Checks if statistics of a package exist.
+
+    Returns:
+      bool
+    """
+    if not self.StatsDirExists():
+      return False
+    # More checks can be added in the future.
+    return True
+
+  def StatsDirExists(self):
+    return os.path.isdir(self.GetStatsPath())
+
+  def GetDirFormatPkg(self):
+    if not self.dir_format_pkg:
+      self.dir_format_pkg = self.srv4_pkg.GetDirFormatPkg()
+    return self.dir_format_pkg
+
+  def MakeStatsDir(self):
+    """mkdir -p equivalent.
+
+    http://stackoverflow.com/questions/600268/mkdir-p-functionality-in-python
+    """
+    stats_path = self.GetStatsPath()
+    try:
+      os.makedirs(stats_path)
+    except OSError, e:
+      if e.errno == errno.EEXIST:
+        pass
+      else:
+        raise
+
+  def GetBinaryDumpInfo(self):
+    dir_pkg = self.GetDirFormatPkg()
+    # Binaries. This could be split off to a separate function.
+    # man ld.so.1 for more info on this hack
+    env = copy.copy(os.environ)
+    env["LD_NOAUXFLTR"] = "1"
+    binaries_dump_info = []
+    for binary in dir_pkg.ListBinaries():
+      binary_abs_path = os.path.join(dir_pkg.directory, "root", binary)
+      binary_base_name = os.path.basename(binary)
+      args = [DUMP_BIN, "-Lv", binary_abs_path]
+      dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
+      stdout, stderr = dump_proc.communicate()
+      ret = dump_proc.wait()
+      binary_data = ParseDumpOutput(stdout)
+      binary_data["path"] = binary
+      binary_data["soname_guessed"] = False
+      binary_data["base_name"] = binary_base_name
+      if SONAME not in binary_data:
+        logging.debug("The %s binary doesn't provide a SONAME. "
+                      "(It might be an executable)",
+                     binary_base_name)
+        # The binary doesn't tell its SONAME.  We're guessing it's the
+        # same as the base file name.
+        binary_data[SONAME] = binary_base_name
+        binary_data["soname_guessed"] = True
+      binaries_dump_info.append(binary_data)
+    return binaries_dump_info
+
+  def GetBasicStats(self):
+    dir_pkg = self.GetDirFormatPkg()
+    basic_stats = {}
+    basic_stats["stats_version"] = self.STATS_VERSION
+    basic_stats["pkg_path"] = self.srv4_pkg.pkg_path
+    basic_stats["pkg_basename"] = os.path.basename(self.srv4_pkg.pkg_path)
+    basic_stats["parsed_basename"] = opencsw.ParsePackageFileName(basic_stats["pkg_basename"])
+    basic_stats["pkgname"] = dir_pkg.pkgname
+    basic_stats["catalogname"] = dir_pkg.GetCatalogname()
+    return basic_stats
+
+  def GetOverrides(self):
+    dir_pkg = self.GetDirFormatPkg()
+    overrides = dir_pkg.GetOverrides()
+    def OverrideToDict(override):
+      d = {}
+      d["pkgname"] = override.pkgname
+      d["tag_name"] = override.tag_name
+      d["tag_info"] = override.tag_info
+      return d
+    overrides_simple = [OverrideToDict(x) for x in overrides]
+    return overrides_simple
+
+  def GetLddMinusRlines(self):
+    """Returns ldd -r output."""
+    dir_pkg = self.GetDirFormatPkg()
+    binaries = dir_pkg.ListBinaries()
+    ldd_output = {}
+    for binary in binaries:
+      binary_abspath = os.path.join(dir_pkg.directory, "root", binary)
+      # this could be potentially moved into the DirectoryFormatPackage class.
+      # ldd needs the binary to be executable
+      os.chmod(binary_abspath, 0755)
+      args = ["ldd", "-r", binary_abspath]
+      ldd_proc = subprocess.Popen(
+          args,
+          stdout=subprocess.PIPE,
+          stderr=subprocess.PIPE)
+      stdout, stderr = ldd_proc.communicate()
+      retcode = ldd_proc.wait()
+      if retcode:
+        logging.error("%s returned an error: %s", args, stderr)
+      lines = stdout.splitlines()
+      ldd_output[binary] = lines
+    return ldd_output
+
+
+  def CollectStats(self):
+    stats_path = self.GetStatsPath()
+    self.MakeStatsDir()
+    dir_pkg = self.GetDirFormatPkg()
+    logging.info("Collecting %s package statistics.", repr(dir_pkg.pkgname))
+    self.DumpObject(dir_pkg.GetAllFilenames(), "all_filenames")
+    self.DumpObject(self.GetBasicStats(), "basic_stats")
+    self.DumpObject(dir_pkg.ListBinaries(), "binaries")
+    self.DumpObject(self.GetBinaryDumpInfo(), "binaries_dump_info")
+    self.DumpObject(dir_pkg.GetDependencies(), "depends")
+    self.DumpObject(GetIsalist(), "isalist")
+    self.DumpObject(self.GetOverrides(), "overrides")
+    self.DumpObject(dir_pkg.GetParsedPkginfo(), "pkginfo")
+    self.DumpObject(dir_pkg.GetPkgmap().entries, "pkgmap")
+    self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
+    logging.debug("Statistics collected.")
+
+  def GetAllStats(self):
+    if self.StatsExist():
+      self.all_stats = self.ReadSavedStats()
+    else:
+      self.CollectStats()
+    return self.all_stats
+
+  def DumpObject(self, obj, name):
+    """Saves an object.
+
+    TODO(maciej): Implement pickling with cPickle.
+    """
+    stats_path = self.GetStatsPath()
+    # yaml
+    out_file_name = os.path.join(stats_path, "%s.yml" % name)
+    logging.debug("DumpObject(): writing %s", repr(out_file_name))
+    f = open(out_file_name, "w")
+    f.write(yaml.safe_dump(obj))
+    f.close()
+    # pickle
+    out_file_name_pickle = os.path.join(stats_path, "%s.pickle" % name)
+    f = open(out_file_name_pickle, "wb")
+    cPickle.dump(obj, f)
+    f.close()
+    self.all_stats[name] = obj
+
+  def ReadObject(self, name):
+    """Reads an object."""
+    stats_path = self.GetStatsPath()
+    in_file_name = os.path.join(stats_path, "%s.yml" % name)
+    in_file_name_pickle = os.path.join(stats_path, "%s.pickle" % name)
+    if os.path.exists(in_file_name_pickle):
+      logging.debug("ReadObject(): reading %s", repr(in_file_name_pickle))
+      f = open(in_file_name_pickle, "r")
+      obj = cPickle.load(f)
+      f.close()
+      logging.debug("ReadObject(): finished reading %s", repr(in_file_name_pickle))
+    else:
+      logging.debug("ReadObject(): reading %s", repr(in_file_name))
+      f = open(in_file_name, "r")
+      obj = yaml.safe_load(f)
+      f.close()
+      logging.debug("ReadObject(): finished reading %s", repr(in_file_name))
+    return obj
+
+  def ReadSavedStats(self):
+    all_stats = {}
+    for name in self.STAT_FILES:
+      all_stats[name] = self.ReadObject(name)
+    return all_stats

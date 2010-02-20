@@ -295,7 +295,7 @@ announce-modulation:
 	@echo "[===== NOW BUILDING: $(DISTNAME) MODULATION $(MODULATION): $(foreach M,$(MODULATORS),$M=$($M)) =====]"
 
 # prerequisite	- Make sure that the system is in a sane state for building the package
-PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(BUILD_DEP_PKGS)) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
+PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(BUILD_DEP_PKGS) $(DEP_PKGS) $(foreach S,$(_PKG_SPECS),$(DEP_PKGS_$S))) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
 
 # Force to be called in global modulation
 prerequisite: $(if $(filter global,$(MODULATION)),announce pre-everything $(COOKIEDIR) $(DOWNLOADDIR) $(PARTIALDIR) $(addprefix dep-$(GARDIR)/,$(FETCHDEPS)) pre-prerequisite $(PREREQUISITE_TARGETS) post-prerequisite)
@@ -650,22 +650,8 @@ endif
 # These directories get relocated into their ISA subdirectories
 MERGE_DIRS ?= $(MERGE_DIRS_$(MODULATION))
 
-# The files in ISAEXEC get relocated and will be replaced by the isaexec-wrapper
-_ISAEXEC_EXCLUDE_FILES = $(bindir)/%-config $(bindir)/%/%-config
-_ISAEXEC_FILES = $(filter-out $(foreach F,$(_ISAEXEC_EXCLUDE_FILES) $(ISAEXEC_EXCLUDE_FILES),$(PKGROOT)$(F)), \
-			$(wildcard $(foreach D,$(ISAEXEC_DIRS),$(PKGROOT)$(D)/* )) \
-		)
-ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,		\
-	$(shell for F in $(_ISAEXEC_FILES); do		\
-		if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;	\
-	done)),)
-
 ifneq ($(COMMON_PKG_DEPENDS),)
 _EXTRA_GAR_PKGS += $(COMMON_PKG_DEPENDS)
-endif
-
-ifneq ($(ISAEXEC_FILES),)
-_EXTRA_GAR_PKGS += CSWisaexec
 endif
 
 # These merge-rules are actually processed for the current modulation
@@ -749,7 +735,7 @@ endef
 
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge merge-do merge-license merge-classutils $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
+merge: checksum pre-merge merge-do merge-license merge-classutils merge-checkpkgoverrides merge-alternatives $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
 	@$(DONADA)
 
 merge-do: $(if $(PARALLELMODULATIONS),merge-parallel,merge-sequential)
@@ -825,7 +811,7 @@ merge-copy-config-only:
 .PHONY: remerge reset-merge reset-merge-modulated
 remerge: reset-merge merge
 
-reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-src
+reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-src
 	@rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
 	@rm -rf $(PKGROOT)
 	@$(DONADA)

@@ -1,3 +1,7 @@
+
+stoptheunwary:
+	$(error "*** You are in the GAR directory and probably didn't mean to call make")
+
 FILTER_DIRS = CVS/ bin/ meta/
 # top-level Makefile for the entire tree.
 %:

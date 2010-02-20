@@ -9,6 +9,8 @@ Copy it and modify.
 import os.path
 import sys
 
+CHECKPKG_MODULE_NAME = "a template of a checkpkg module"
+
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
 path_list = [os.path.dirname(__file__),
@@ -16,16 +18,19 @@ path_list = [os.path.dirname(__file__),
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 
-# Defining checking functions.
+# Defining the checking functions.  They come in two flavors: individual
+# package checks and set checks.
 
-def MyCheckForAsinglePackage(pkg):
+def MyCheckForAsinglePackage(pkg_data, debug):
   """Checks an individual package.
   
   Gets a DirctoryFormatPackage as an argument, and returns a list of errors.
 
-  Errors should be a list of checkpkg.PackageError objects:
+  Errors should be a list of checkpkg.CheckpkgTag objects:
+  errors.append(checkpkg.CheckpkgTag(pkg.pkgname, "tag-name"))
 
-  errors.append(checkpkg.PackageError("There's something wrong."))
+  You can also add a parameter:
+  errors.append(checkpkg.CheckpkgTag(pkg.pkgname, "tag-name", "/opt/csw/bin/problem"))
   """
   errors = []
   # Checking code for an individual package goes here.  See the
@@ -35,11 +40,13 @@ def MyCheckForAsinglePackage(pkg):
   # Here's how to report an error:
   something_is_wrong = False
   if something_is_wrong:
-    errors.append(checkpkg.PackageError("There's something wrong."))
+    errors.append(checkpkg.CheckpkgTag(
+      pkg_data["basic_stats"]["pkgname"],
+      "example-problem", "thing"))
   return errors
 
 
-def MyCheckForAsetOfPackages(pkgs):
+def MyCheckForAsetOfPackages(pkgs_data, debug):
   """Checks a set of packages.
 
   Sometimes individual checks aren't enough. If you need to write code which
@@ -54,19 +61,22 @@ def MyCheckForAsetOfPackages(pkgs):
 
 def main():
   options, args = checkpkg.GetOptions()
-  pkgnames = args
+  md5sums = args
   # CheckpkgManager class abstracts away things such as the collection of
   # results.
-  check_manager = checkpkg.CheckpkgManager("a template of a checkpkg module",
-                                           options.extractdir,
-                                           pkgnames,
+  check_manager = checkpkg.CheckpkgManager(CHECKPKG_MODULE_NAME,
+                                           options.stats_basedir,
+                                           md5sums,
                                            options.debug)
   # Registering functions defined above.
   check_manager.RegisterIndividualCheck(MyCheckForAsinglePackage)
   check_manager.RegisterSetCheck(MyCheckForAsetOfPackages)
   # Running the checks, reporting and exiting.
-  exit_code, report = check_manager.Run()
-  print report.strip()
+  exit_code, screen_report, tags_report = check_manager.Run()
+  f = open(options.output, "w")
+  f.write(tags_report)
+  f.close()
+  print screen_report.strip()
   sys.exit(exit_code)
 
 

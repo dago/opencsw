@@ -1,7 +1,7 @@
 # X11
 
 # Version of X11 
-X11_RELEASE_VERSION = X11R7.4
+X11_RELEASE_VERSION = X11R7.5
 
 # Definition of the URL to access sources
 X11_PROTO_MASTER_SITE = http://xorg.freedesktop.org/releases/$(X11_RELEASE_VERSION)/src/proto/

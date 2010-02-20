@@ -196,6 +196,8 @@ check-upstream-and-mail:
 #				  echo ""; \
 #				  echo "Please consider updating your package. Documentation is available from this link : http://www.opencsw.org" ; \
 #				  echo ""; \
+#				  echo "Questions, problem report or help should be sent to mailto:maintainers@lists.opencsw.org"; \
+#				  echo ""; \
 #				  echo "--"; \
 #				  echo "Kindest regards"; \
 #				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
@@ -222,6 +224,8 @@ check-upstream-and-mail:
 				echo "    $(UPSTREAM_MASTER_SITES)"; \
 				echo ""; \
 				echo "Please consider updating your package." ; \
+			        echo ""; \
+    			        echo "Questions, problem report or help should be sent to mailto:maintainers@lists.opencsw.org"; \
 				echo ""; \
 				echo "--"; \
 				echo "Kindest regards"; \

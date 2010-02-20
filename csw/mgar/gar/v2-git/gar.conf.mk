@@ -179,6 +179,7 @@ DEF_BASE_PKGS += CSWgmake
 DEF_BASE_PKGS += CSWgsed
 DEF_BASE_PKGS += CSWgtar
 DEF_BASE_PKGS += CSWpy-cheetah
+DEF_BASE_PKGS += CSWpy-yaml
 DEF_BASE_PKGS += CSWpython
 DEF_BASE_PKGS += CSWtextutils
 DEF_BASE_PKGS += CSWwget
@@ -497,10 +498,10 @@ ifndef NORUNPATH
 # may not be a subdirectory for the 32-bit standard case (this would normally
 # be a symlink of the form lib/sparcv8 -> . and lib/i386 -> .). This is most likely
 # the case for libraries in $(EXTRA_LIB) for which no links generated in CSWcommon.
-RUNPATH_DIRS ?= $(libpath_install) $(filter-out $(libpath_install),$(libdir_install)) $(EXTRA_LIB) $(EXTRA_RUNPATH_DIRS)
+RUNPATH_DIRS ?= $(EXTRA_RUNPATH_DIRS) $(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install)
 
 ifndef NOISALIST
-RUNPATH_ISALIST ?= $(libpath_install) $(filter-out $(libpath_install),$(libdir_install)) $(EXTRA_LIB) $(EXTRA_RUNPATH_ISALIST)
+RUNPATH_ISALIST ?= $(EXTRA_RUNPATH_DIRS) $(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install)
 endif
 
 # Iterate over all directories in RUNPATH_DIRS, prefix each directory with one
@@ -508,7 +509,7 @@ endif
 RUNPATH_LINKER_FLAGS ?= $(foreach D,$(RUNPATH_DIRS),$(addprefix -R,$(addsuffix /\$$ISALIST,$(filter $D,$(RUNPATH_ISALIST))) $(abspath $D/$(MM_LIBDIR)))) $(addprefix -R,$(filter-out $(RUNPATH_DIRS),$(RUNPATH_ISALIST))) $(EXTRA_RUNPATH_LINKER_FLAGS)
 endif
 
-LINKER_FLAGS ?= $(foreach ELIB,$(libpath_install) $(filter-out $(libpath_install),$(libdir_install)) $(EXTRA_LIB),-L$(abspath $(ELIB)/$(MM_LIBDIR))) $(EXTRA_LINKER_FLAGS)
+LINKER_FLAGS ?= $(foreach ELIB,$(EXTRA_LIB) $(filter-out $(libpath_install),$(libdir_install)) $(libpath_install),-L$(abspath $(ELIB)/$(MM_LIBDIR))) $(EXTRA_LINKER_FLAGS)
 
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
 CC       = $($(GARCOMPILER)_CC)
@@ -525,7 +526,7 @@ GCC4_LD_OPTIONS = -R$(abspath $(GCC4_CC_HOME)/lib/$(MM_LIBDIR)) $(EXTRA_GCC4_LD_
 SOS11_LD_OPTIONS = $(EXTRA_SOS11_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 SOS12_LD_OPTIONS = $(EXTRA_SOS12_LD_OPTIONS) $(EXTRA_SOS_LD_OPTIONS)
 
-LD_OPTIONS ?= $(strip $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS) $(EXTRA_LD_OPTIONS))
+LD_OPTIONS ?= $(strip $($(GARCOMPILER)_LD_OPTIONS) $(RUNPATH_LINKER_FLAGS) $(EXTRA_LD_OPTIONS) $(_CATEGORY_LD_OPTIONS))
 
 # 1. Make sure everything works fine for SOS12
 # 2. Allow us to use programs we just built. This is a bit complicated,
