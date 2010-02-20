@@ -14,6 +14,12 @@
 # * The complete build (gmake platforms) takes 4 hours. Build takes about 50
 #   mins on build8x, 25 mins on build8s. This is only the build, the tests take
 #   about 5 times as much (see TEST_TARGET).
+# * Our package is listed on Subversion's binary packages page.  If this
+#   package is being taken over, the new maintainer needs to be listed on
+#   Subversion's page.  To update their page, one needs to check out this
+#   repository: http://svn.apache.org/repos/asf/subversion/site/
+#   ...and send the patch to the subversion dev mailing list.
+#   http://subversion.apache.org/mailing-lists.html
 
 GARNAME = subversion
 GARVERSION = 1.6.9
