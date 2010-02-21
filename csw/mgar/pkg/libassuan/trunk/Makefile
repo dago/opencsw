@@ -14,18 +14,15 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.gnupg.org/download/#libassuan
 
-BUILD_DEP_PKGS = CSWpth
+BUILD_DEP_PKGS = CSWgpgerr CSWpth
+RUNTIME_DEP_PKGS = CSWgpgerr
 
 BUILD64 = 1
 NOISAEXEC = 1
 
-EXTRA_LDFLAGS = -lrt -lsocket -lnsl
+# EXTRA_LDFLAGS = -lrt -lsocket -lnsl
 
 CONFIGURE_ARGS = $(DIRPATHS)
-
-# We must include static libs here as libassuan contains *only*
-# static libs
-MERGE_EXCLUDE_STATICLIBS =
 
 TEST_TARGET = check
 
