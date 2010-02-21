@@ -19,7 +19,12 @@ ARCHALL = 1
 # Defines the list of packages
 PACKAGES = $(foreach PKG, $(LANG), CSWffox-l10n-$(PKG) )
 LICENSE  = License
+
+# There was previously a french localization package. It is renamed, thus declared as incompatible
 INCOMPATIBLE_PKGS_CSWffox-l10n-fr = CSWfirefox-fr
+
+# Add firefox as a depend
+RUNTIME_DEP_PKGS = CSWfirefox
 
 # Defines the package description
 $(foreach LOCALE_NAME, $(LANG), $(eval SPKG_DESC_CSWffox-l10n-$(LOCALE_NAME) = $(DESCRIPTION) $(LOCALE_NAME)))
