@@ -8,28 +8,27 @@ define BLURB
 endef
 
 # Definition of the list of locale to process
-# LANG = af ar be bg bn-IN ca cs cy da de el en-GB eo es-AR es-ES et eu fi fr fy-NL ga-IE gl gu-IN he hi-IN hu id is it ja ka kn ko ku lt lv mk mn mr nb-NO nl nn-NO oc pa-IN pl pt-BR pt-PT ro ru si sk sl sq sr sv-SE te th tr uk zh-CN zh-TW
-LANG = af ar be bg ca cs cy da de el eo et eu fi fr gl he hu id is it ja ka kn ko ku lt lv mk mn mr nl oc pl ro ru si sk sl sq sr te th tr uk 
+LANG = af ar be bg bn-IN ca cs cy da de el en-GB eo es-AR es-ES et eu fi fr fy-NL ga-IE gl gu-IN he hi-IN hu id is it ja ka kn ko ku lt lv mk mn mr nb-NO nl nn-NO oc pa-IN pl pt-BR pt-PT ro ru si sk sl sq sr sv-SE te th tr uk zh-CN zh-TW
 
 # Short list of locales, used only for testing during build description modification
-# LANG = de fr
+# LANG = de fr pt-PT
 
 # Set arch to all
 ARCHALL = 1
 
 # Defines the list of packages
-PACKAGES = $(foreach PKG, $(LANG), CSWfirefox-l10n-$(PKG) )
+PACKAGES = $(foreach PKG, $(LANG), CSWffox-l10n-$(PKG) )
 LICENSE  = License
-INCOMPATIBLE_PKGS_CSWfirefox-l10n-fr = CSWfirefox-fr
+INCOMPATIBLE_PKGS_CSWffox-l10n-fr = CSWfirefox-fr
 
 # Defines the package description
-$(foreach LOCALE_NAME, $(LANG), $(eval SPKG_DESC_CSWfirefox-l10n-$(LOCALE_NAME) = $(DESCRIPTION) $(LOCALE_NAME)))
+$(foreach LOCALE_NAME, $(LANG), $(eval SPKG_DESC_CSWffox-l10n-$(LOCALE_NAME) = $(DESCRIPTION) $(LOCALE_NAME)))
 
 # Defines the catalog names
-$(foreach LOCALE_NAME, $(LANG), $(eval CATALOGNAME_CSWfirefox-l10n-$(LOCALE_NAME) = firefox_l10n_$(LOCALE_NAME)))
+$(foreach LOCALE_NAME, $(LANG), $(eval CATALOGNAME_CSWffox-l10n-$(LOCALE_NAME) = firefox_l10n_$(shell echo $(LOCALE_NAME) | tr \- _ | tr [A-Z] [a-z] )))
 
 # Defines the files filters
-$(foreach LOCALE_NAME, $(LANG), $(eval PKGFILES_CSWfirefox-l10n-$(LOCALE_NAME) = .*langpack-$(LOCALE_NAME).*))
+$(foreach LOCALE_NAME, $(LANG), $(eval PKGFILES_CSWffox-l10n-$(LOCALE_NAME) = .*langpack-$(LOCALE_NAME).*))
 
 # Defines the content to be downloaded
 MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/linux-i686/xpi/
