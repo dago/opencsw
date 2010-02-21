@@ -23,6 +23,9 @@ SPKG_DESC_CSWlibxtst = The Xtst Library
 SPKG_DESC_CSWlibxtstdevel = The Xtst Library development files
 
 RUNTIME_DEP_PKGS_CSWlibxtstdevel = CSWlibxtst
+RUNTIME_DEP_PKGS_CSWlibxtst += CSWlibx11
+RUNTIME_DEP_PKGS_CSWlibxtst += CSWlibxext
+RUNTIME_DEP_PKGS_CSWlibxtst += CSWlibxi
 
 BUILD64 = 1
 NOISALIST = 1
