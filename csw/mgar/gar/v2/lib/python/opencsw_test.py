@@ -261,6 +261,8 @@ class PackageGroupNameTest(unittest.TestCase):
         ("foo", ["foo"]),
         ("foo", ["foo", "libfoo"]),
         ("foo", ["foo", "libfoo", "foo_devel"]),
+        ("foo_ba", ["foo_bar", "foo_baz"]),
+        ("foo", ["foo_a", "foo_b"]),
         ("various packages", ["foo", "libfoo", "foo_devel", "bar"]),
     ]
     for expected_name, catalogname_list in data:

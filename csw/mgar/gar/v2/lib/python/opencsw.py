@@ -562,6 +562,9 @@ def CatalogNameGroupName(catalogname_list):
                                            catalogname_list.pop())
     if substring_set:
       current_substring = list(substring_set)[0]
+  # If it's something like foo_, make it foo.
+  while current_substring and not current_substring[-1].isalnum():
+    current_substring = current_substring[:-1]
   if len(current_substring) >= 2:
     return current_substring
   return "various packages"
