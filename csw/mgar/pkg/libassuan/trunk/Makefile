@@ -1,5 +1,5 @@
 GARNAME = libassuan
-GARVERSION = 1.0.5
+GARVERSION = 2.0.0
 CATEGORIES = lib
 
 DESCRIPTION = IPC library used by some GnuPG related software
@@ -8,10 +8,11 @@ endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libassuan/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWlibassuan,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
+
+SPKG_SOURCEURL = http://www.gnupg.org/download/#libassuan
 
 BUILD_DEP_PKGS = CSWpth
 
