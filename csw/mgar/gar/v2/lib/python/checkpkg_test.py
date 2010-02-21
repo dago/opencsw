@@ -716,5 +716,16 @@ class ApplyOverridesUnitTest(unittest.TestCase):
     self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
 
 
+class SystemPkgmapUnitTest(unittest.TestCase):
+
+  def testParsePkginfoLine(self):
+    line = ('application CSWcswclassutils     '
+            'cswclassutils - CSW class action utilities')
+    expected = ('CSWcswclassutils',
+                'cswclassutils - CSW class action utilities')
+    spkgmap = checkpkg.SystemPkgmap()
+    self.assertEqual(expected, spkgmap._ParsePkginfoLine(line))
+
+
 if __name__ == '__main__':
   unittest.main()

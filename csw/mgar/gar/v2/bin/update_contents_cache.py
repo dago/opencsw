@@ -21,6 +21,7 @@ def main():
   print "Checking if the package cache is up to date."
   logging.basicConfig(level=logging.INFO)
   test_pkgmap = checkpkg.SystemPkgmap()
+  test_pkgmap.InitializeDatabase()
 
 
 if __name__ == '__main__':

@@ -36,6 +36,7 @@ SYSTEM_SYMLINKS = (
     ("/opt/csw/lib/i386", ["/opt/csw/lib"]),
 )
 INSTALL_CONTENTS_AVG_LINE_LENGTH = 102.09710677919261
+DB_SCHEMA_VERSION = 2L
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -146,8 +147,8 @@ class SystemPkgmap(object):
 
   TODO: Implement timestamp checking and refreshing the cache.
   """
-  
-  STOP_PKGS = ["SUNWbcp", "SUNWowbcp", "SUNWucb"] 
+
+  STOP_PKGS = ["SUNWbcp", "SUNWowbcp", "SUNWucb"]
   CHECKPKG_DIR = ".checkpkg"
   SQLITE3_DBNAME_TMPL = "var-sadm-install-contents-cache-%s"
 
@@ -162,20 +163,36 @@ class SystemPkgmap(object):
                                 self.SQLITE3_DBNAME_TMPL % self.fqdn)
     self.file_mtime = None
     self.cache_mtime = None
+    self.initialized = False
+
+  def _LazyInitializeDatabase(self):
+    if not self.initialized:
+      self.InitializeDatabase()
+
+  def InitializeDatabase(self):
     if os.path.exists(self.db_path):
       logging.debug("Connecting to the %s database.", self.db_path)
       self.conn = sqlite3.connect(self.db_path)
+      if not self.IsDatabaseGoodSchema():
+        logging.warning("Old database schema detected. Dropping tables.")
+        self.PurgeDatabase(drop_tables=True)
+        self.CreateTables()
       if not self.IsDatabaseUpToDate():
         logging.warning("Rebuilding the package cache, can take a few minutes.")
         self.PurgeDatabase()
         self.PopulateDatabase()
     else:
-      print "Building a cache of /var/sadm/install/contents."
+      print "Building a cache of %s." % SYSTEM_PKGMAP
       print "The cache will be kept in %s." % self.db_path
       if not os.path.exists(self.checkpkg_dir):
         logging.debug("Creating %s", self.checkpkg_dir)
         os.mkdir(self.checkpkg_dir)
       self.conn = sqlite3.connect(self.db_path)
+      self.CreateTables()
+      self.PopulateDatabase()
+    self.initialized = True
+
+  def CreateTables(self):
       c = self.conn.cursor()
       c.execute("""
           CREATE TABLE systempkgmap (
@@ -190,24 +207,24 @@ class SystemPkgmap(object):
           CREATE TABLE config (
             key VARCHAR(255) PRIMARY KEY,
             float_value FLOAT,
+            int_value INTEGER,
             str_value VARCHAR(255)
           );
       """)
-      self.PopulateDatabase()
-
-  def SymlinkDuringInstallation(self, p):
-    """Emulates the effect of some symlinks present during installations."""
-    p = p.replace("/opt/csw/lib/i386", "/opt/csw/lib")
+      c.execute("""
+          CREATE TABLE packages (
+            pkgname VARCHAR(255) PRIMARY KEY,
+            pkg_desc VARCHAR(255)
+          );
+      """)
 
   def PopulateDatabase(self):
     """Imports data into the database.
 
     Original bit of code from checkpkg:
-    
     egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
         fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
     """
-
     contents_length = os.stat(SYSTEM_PKGMAP).st_size
     estimated_lines = contents_length / INSTALL_CONTENTS_AVG_LINE_LENGTH
     system_pkgmap_fd = open(SYSTEM_PKGMAP, "r")
@@ -236,8 +253,30 @@ class SystemPkgmap(object):
     print "Creating the main database index."
     sql = "CREATE INDEX basename_idx ON systempkgmap(basename);"
     c.execute(sql)
+    self.PopulatePackagesTable()
     self.SetDatabaseMtime()
+    self.SetDatabaseSchemaVersion()
     self.conn.commit()
+
+  def _ParsePkginfoLine(self, line):
+    fields = re.split(WS_RE, line)
+    pkgname = fields[1]
+    pkg_desc = u" ".join(fields[2:])
+    return pkgname, pkg_desc
+
+  def PopulatePackagesTable(self):
+    args = ["pkginfo"]
+    pkginfo_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+    stdout, stderr = pkginfo_proc.communicate()
+    ret = pkginfo_proc.wait()
+    c = self.conn.cursor()
+    sql = """
+    INSERT INTO packages (pkgname, pkg_desc)
+    VALUES (?, ?);
+    """
+    for line in stdout.splitlines():
+      pkgname, pkg_desc = self._ParsePkginfoLine(line)
+      c.execute(sql, [pkgname, pkg_desc])
 
   def SetDatabaseMtime(self):
     c = self.conn.cursor()
@@ -251,7 +290,17 @@ class SystemPkgmap(object):
     """
     c.execute(sql, [CONFIG_MTIME, mtime])
 
+  def SetDatabaseSchemaVersion(self):
+    sql = """
+    INSERT INTO config (key, int_value)
+    VALUES (?, ?);
+    """
+    c = self.conn.cursor()
+    c.execute(sql, ["db_schema_version", DB_SCHEMA_VERSION])
+    logging.debug("Setting db_schema_version to %s", DB_SCHEMA_VERSION)
+
   def GetPkgmapLineByBasename(self, filename):
+    self._LazyInitializeDatabase()
     if filename in self.cache:
       return self.cache[filename]
     sql = "SELECT path, line FROM systempkgmap WHERE basename = ?;"
@@ -287,25 +336,65 @@ class SystemPkgmap(object):
       self.file_mtime = stat_data.st_mtime
     return self.file_mtime
 
+  def GetDatabaseSchemaVersion(self):
+    sql = """
+    SELECT int_value FROM config
+    WHERE key = ?;
+    """
+    c = self.conn.cursor()
+    schema_on_disk = 1L
+    try:
+      c.execute(sql, ["db_schema_version"])
+      for row in c:
+        schema_on_disk = row[0]
+    except sqlite3.OperationalError, e:
+      # : no such column: int_value
+      # The first versions of the database did not
+      # have the int_value field.
+      if re.search(r"int_value", str(e)):
+        # We assume it's the first schema version.
+        logging.debug("sqlite3.OperationalError, %s: guessing it's 1.", e)
+      else:
+        raise
+    return schema_on_disk
+
+  def IsDatabaseGoodSchema(self):
+    good_version = self.GetDatabaseSchemaVersion() >= DB_SCHEMA_VERSION
+    return good_version
+
   def IsDatabaseUpToDate(self):
     f_mtime = self.GetFileMtime()
     d_mtime = self.GetDatabaseMtime()
     logging.debug("f_mtime %s, d_time: %s", f_mtime, d_mtime)
-    return self.GetFileMtime() <= self.GetDatabaseMtime()
+    fresh = self.GetFileMtime() <= self.GetDatabaseMtime()
+    good_version = self.GetDatabaseSchemaVersion() >= DB_SCHEMA_VERSION
+    return fresh and good_version
 
-  def PurgeDatabase(self):
+  def SoftDropTable(self, tablename):
     c = self.conn.cursor()
-    logging.info("Dropping the index.")
-    sql = "DROP INDEX basename_idx;"
     try:
-      c.execute(sql)
+      # This doesn't accept placeholders.
+      c.execute("DROP TABLE %s;" % tablename)
     except sqlite3.OperationalError, e:
-      logging.warn(e)
-    logging.info("Deleting all rows from the cache database")
-    sql = "DELETE FROM config;"
-    c.execute(sql)
-    sql = "DELETE FROM systempkgmap;"
-    c.execute(sql)
+      logging.warn("sqlite3.OperationalError: %s", e)
+
+  def PurgeDatabase(self, drop_tables=False):
+    c = self.conn.cursor()
+    if drop_tables:
+      for table_name in ("config", "systempkgmap", "packages"):
+        self.SoftDropTable(table_name)
+    else:
+      logging.info("Dropping the index.")
+      sql = "DROP INDEX basename_idx;"
+      try:
+        c.execute(sql)
+      except sqlite3.OperationalError, e:
+        logging.warn(e)
+      logging.info("Deleting all rows from the cache database")
+      sql = "DELETE FROM config;"
+      c.execute(sql)
+      sql = "DELETE FROM systempkgmap;"
+      c.execute(sql)
 
 def SharedObjectDependencies(pkgname,
                              binaries_by_pkgname,
