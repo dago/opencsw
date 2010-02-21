@@ -1,0 +1,13 @@
+--- protobuf-2.3.0/src/google/protobuf/stubs/strutil.h.orig	2010-02-20 23:30:45.020320818 +0100
++++ protobuf-2.3.0/src/google/protobuf/stubs/strutil.h	2010-02-20 23:31:46.345602745 +0100
+@@ -37,6 +37,10 @@
+ #include <vector>
+ #include <google/protobuf/stubs/common.h>
+ 
++#if defined(__SUNPRO_CC)
++#define strtof strtod
++#endif
++
+ namespace google {
+ namespace protobuf {
+ 

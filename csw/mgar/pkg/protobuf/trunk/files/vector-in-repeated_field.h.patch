@@ -1,0 +1,10 @@
+--- protobuf-2.3.0/src/google/protobuf/repeated_field.h.orig	2010-02-20 23:27:43.399507660 +0100
++++ protobuf-2.3.0/src/google/protobuf/repeated_field.h	2010-02-20 23:27:56.747055871 +0100
+@@ -48,6 +48,7 @@
+ 
+ #include <string>
+ #include <iterator>
++#include <vector>
+ #include <google/protobuf/stubs/common.h>
+ #include <google/protobuf/message_lite.h>
+ 

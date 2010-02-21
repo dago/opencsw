@@ -2,6 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
+# Still doesn't build, I've filed a bug:
+# http://code.google.com/p/protobuf/issues/detail?id=166
+
 GARNAME = protobuf
 GARVERSION = 2.3.0
 CATEGORIES = lib
@@ -20,6 +23,11 @@ PATCHFILES  = stdint-and-ddi.patch
 PATCHFILES += std-map-in-google-protobuf-extension_set.cc.patch
 PATCHFILES += stdint-gcc.patch
 PATCHFILES += std-map-2.patch
+PATCHFILES += vector-in-repeated_field.h.patch
+PATCHFILES += strtof.patch
+PATCHFILES += std-map-again.patch
+PATCHFILES += std-map-yet-again.patch
+PATCHFILES += std-map-yet-again-include-map.patch
 LICENSE = COPYING.txt
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER = SOS12

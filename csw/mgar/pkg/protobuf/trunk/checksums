@@ -1,5 +1,10 @@
 65dba2c04923595b6f0a6a44d8106f0a  protobuf-2.3.0.tar.gz
 ca4082250f24ec40fbce6993bcfb87cd  std-map-2.patch
+0b2f1b0bd5747aefe412af51b7434294  std-map-again.patch
 603e491e286232a90cf9b378317db9f2  std-map-in-google-protobuf-extension_set.cc.patch
+e02c84596b8b4a03d5a160469edc8187  std-map-yet-again-include-map.patch
+20dee4f5aa23962864d55423fcbc63aa  std-map-yet-again.patch
 2c16ccb4bd7120f71d557d2cb9841c42  stdint-and-ddi.patch
 d57e96bdf15bb207ba7df46d83b1a6bd  stdint-gcc.patch
+c22e22af396037fd24f8c5e276b31d98  strtof.patch
+d2919404a19d4dd38d4e4378014b4518  vector-in-repeated_field.h.patch
