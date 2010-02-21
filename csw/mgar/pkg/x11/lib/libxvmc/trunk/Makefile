@@ -27,6 +27,9 @@ SPKG_DESC_CSWlibxvmcdevel = $(DESCRIPTION) development files
 
 RUNTIME_DEP_PKGS_CSWlibxvmc      = CSWlibx11 CSWlibxext CSWlibxv
 RUNTIME_DEP_PKGS_CSWlibxvmcdevel = CSWlibxvmc
+RUNTIME_DEP_PKGS_CSWlibxvmcdevel = CSWxv
+
+BUILD_DEP_PKGS_CSWlibxvmcdevel = CSWxv
 
 PKGFILES_CSWlibxvmcdevel  = $(PKGFILES_DEVEL)
 
