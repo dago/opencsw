@@ -23,8 +23,9 @@ CATALOGNAME_CSWlibxidevel = libxi_devel
 SPKG_DESC_CSWlibxi = Client library for XInput
 SPKG_DESC_CSWlibxi = Client library for XInput development files
 
-#RUNTIME_DEP_PKGS_CSWlibxi = 
 RUNTIME_DEP_PKGS_CSWlibxidevel = CSWlibxi
+RUNTIME_DEP_PKGS_CSWlibxi += CSWlibx11
+RUNTIME_DEP_PKGS_CSWlibxi += CSWlibxext
 
 BUILD64 = 1
 NOISALIST = 1
