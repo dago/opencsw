@@ -1,4 +1,4 @@
-GARNAME = gstplugins_bad
+GARNAME = gst-plugins-bad
 GARVERSION = 0.10.17
 CATEGORIES = gnome
 
@@ -11,33 +11,35 @@ define BLURB
 endef
 
 MASTER_SITES = http://gstreamer.freedesktop.org/src/gst-plugins-bad/
-SRCNAME = gst-plugins-bad
-DISTFILES  = $(SRCNAME)-$(GARVERSION).tar.gz
-WORKSRC = $(WORKDIR)/$(SRCNAME)-$(GARVERSION)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PACKAGES = CSWgstpluginsbad
 CATALOGNAME = gstplugins_bad
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-BUILD_DEP_PKGS += CSWzlib CSWsunmath CSWneon CSWmesa CSWlibxml2 CSWlibsdl
-BUILD_DEP_PKGS += CSWiconv CSWgstreamer CSWgstplugins CSWglib2 CSWggettext
-BUILD_DEP_PKGS += CSWbzip2 CSWfaac CSWfaad2 CSWggettextrt CSWjasper CSWliboil
-RUNTIME_DEP_PKGS = $(BUILD_DEP_PKGS)
+DEP_PKGS += CSWlibxml2 CSWgtk2 CSWlibx11 CSWlibice CSWlibglade2 CSWlibsm
+DEP_PKGS += CSWgstreamer CSWgstplugins CSWglib2 CSWpango CSWlibatk CSWlibcairo
+DEP_PKGS += CSWbzip2 CSWfaac CSWfaad2 CSWggettextrt CSWjasper CSWliboil
+DEP_PKGS += CSWfconfig CSWftype2
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-debug
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib/$(MM_LIBDIR)
+
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 STRIP_LIBTOOL = 1
 
 TEST_SCRIPTS =
 
-LICENSE = $(WORKDIR_FIRSTMOD)/$(SRCNAME)-$(GARVERSION)/COPYING
-
 PATCHFILES = patch-gstvideomeasure_collector.h patch-gstvideomeasure_ssim.h
 
 # we provide that symbol
 CHECKPKG_OVERRIDES_CSWgstpluginsbad += symbol-not-found|libgstcamerabin.so
+CHECKPKG_OVERRIDES_CSWgstpluginsbad += symbol-not-found|gst-camera
 
 include gar/category.mk
 post-configure-modulated:
@@ -53,3 +55,12 @@ post-configure-modulated:
 		$(WORKSRC)/gst/librfb/vncauth.c
 	perl -pi -e 's,INADDR_NONE,~INADDR_ANY,' \
 		$(WORKSRC)/gst/pcapparse/gstpcapparse.c
+	perl -pi -e 's,(LIBS = -lnsl -lsocket),$$1 -lm,' \
+		$(WORKSRC)/tests/examples/scaletempo/Makefile
+	@# because of our legacy libXrender
+	gsed -i 's/^\(LDFLAGS =\)/\1 $$(X_LIBS)/' \
+		$(WORKSRC)/tests/examples/camerabin/Makefile
+	gsed -i 's/\(mxfdemux_structure_LDFLAGS =\)/\1 $$(X_LIBS)/' \
+		$(WORKSRC)/tests/examples/mxf/Makefile
+	gsed -i 's/\(scaletempo_demo_LDFLAGS =\)/\1 $$(X_LIBS)/' \
+		$(WORKSRC)/tests/examples/scaletempo/Makefile
