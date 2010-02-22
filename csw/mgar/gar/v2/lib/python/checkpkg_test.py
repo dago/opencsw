@@ -709,7 +709,7 @@ class ApplyOverridesUnitTest(unittest.TestCase):
     overrides = [checkpkg.Override("CSWfoo", "foo-tag", "tag-info-1")]
     self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
 
-  def test_5(self):
+  def test_6(self):
     """Pkgname mismatch."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override("CSWbar", "foo-tag", "tag-info-1")]
