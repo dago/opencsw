@@ -395,10 +395,11 @@ class SystemPkgmap(object):
       except sqlite3.OperationalError, e:
         logging.warn(e)
       logging.info("Deleting all rows from the cache database")
-      sql = "DELETE FROM config;"
-      c.execute(sql)
-      sql = "DELETE FROM systempkgmap;"
-      c.execute(sql)
+      for table in ("config", "systempkgmap", "packages"):
+        try:
+          c.execute("DELETE FROM %s;" % table)
+        except sqlite3.OperationalError, e:
+          logging.warn("sqlite3.OperationalError: %s", e)
 
 def SharedObjectDependencies(pkgname,
                              binaries_by_pkgname,
