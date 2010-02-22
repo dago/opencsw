@@ -24,15 +24,15 @@ DISTFILES += curlbuild.h
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWcurl CSWcurlrt CSWcurlrtfull CSWcurldevel
-CATALOGNAME_CSWcurl = curl
-CATALOGNAME_CSWcurlrt = curl_rt
+CATALOGNAME_CSWcurl       = curl
+CATALOGNAME_CSWcurlrt     = curl_rt
 CATALOGNAME_CSWcurlrtfull = curl_rt_full
-CATALOGNAME_CSWcurldevel = curl_devel
+CATALOGNAME_CSWcurldevel  = curl_devel
 
-SPKG_DESC_CSWcurl      = A command line tool and library for client-side URL transfers
-SPKG_DESC_CSWcurlrt    = Curl Runtime Libraries (minimal dependencies)
+SPKG_DESC_CSWcurl       = A command line tool and library for client-side URL transfers
+SPKG_DESC_CSWcurlrt     = Curl Runtime Libraries (minimal dependencies)
 SPKG_DESC_CSWcurlrtfull = Curl Runtime Libraries (full featured)
-SPKG_DESC_CSWcurldevel = Curl Developer Files
+SPKG_DESC_CSWcurldevel  = Curl Developer Files
 
 SPKG_SOURCEURL = http://curl.haxx.se
 
@@ -45,7 +45,7 @@ EXTRA_CONFIGURE_ARGS_LDAP_isa-sparcv9 = --enable-ldap --enable-ldaps
 EXTRA_CONFIGURE_ARGS_LDAP_isa-i386    = --enable-ldap --enable-ldaps
 EXTRA_CONFIGURE_ARGS_LDAP_isa-amd64   = --disable-ldap
 
-EXTRA_CONFIGURE_ARGS_features-minimal = --disable-ldap --disable-libssh2 --disable-ares
+EXTRA_CONFIGURE_ARGS_features-minimal = --disable-ldap --without-libssh2 --disable-ares
 EXTRA_CONFIGURE_ARGS_features-full    = --enable-ares --with-spnego=$(libdir)
 EXTRA_CONFIGURE_ARGS_features-full   += $(EXTRA_CONFIGURE_ARGS_LDAP_isa-$(ISA))
 
