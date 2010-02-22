@@ -727,5 +727,18 @@ class SystemPkgmapUnitTest(unittest.TestCase):
     self.assertEqual(expected, spkgmap._ParsePkginfoLine(line))
 
 
+class PackageStatsUnitTest(unittest.TestCase):
+
+  def test_ParseNmSymLine(self):
+    line = '0000097616 T aliases_lookup'
+    expected = {
+        'address': '0000097616',
+        'type': 'T',
+        'name': 'aliases_lookup',
+    }
+    pkgstats = checkpkg.PackageStats(None)
+    self.assertEqual(expected, pkgstats._ParseNmSymLine(line))
+
+
 if __name__ == '__main__':
   unittest.main()
