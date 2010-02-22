@@ -1,4 +1,4 @@
-GARNAME = gstplugins
+GARNAME = gst-plugins-base
 GARVERSION = 0.10.26
 CATEGORIES = gnome
 
@@ -12,17 +12,17 @@ define BLURB
 endef
 
 MASTER_SITES = http://gstreamer.freedesktop.org/src/gst-plugins-base/
-SRCNAME = gst-plugins-base
-DISTFILES  = $(SRCNAME)-$(GARVERSION).tar.gz
-WORKSRC = $(WORKDIR)/$(SRCNAME)-$(GARVERSION)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+
+PACKAGES = CSWgstplugins
+CATALOGNAME = gstplugins
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-BUILD_DEP_PKGS += CSWgstreamer CSWliboil CSWglib2 CSWgnomevfs2 CSWlibogg
-BUILD_DEP_PKGS += CSWgconf2 CSWggettextrt CSWlibxml2 CSWtheora CSWvorbis
-BUILD_DEP_PKGS += CSWzlib CSWsunmath CSWorbit2 CSWlibxml2 CSWbonobo2
-RUNTIME_DEP_PKGS = $(BUILD_DEP_PKGS)
+DEP_PKGS += CSWgstreamer CSWliboil CSWglib2 CSWgnomevfs2 CSWlibogg
+DEP_PKGS += CSWgconf2 CSWggettextrt CSWlibxml2 CSWtheora CSWvorbis
+DEP_PKGS += CSWlibice CSWlibx11 CSWlibsm CSWlibxext
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-debug
@@ -32,12 +32,15 @@ CONFIGURE_ARGS += --disable-xvideo
 CONFIGURE_ARGS += --disable-gst_v4l
 CONFIGURE_ARGS += --disable-libvisual
 CONFIGURE_ARGS += --disable-pango
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib/$(MM_LIBDIR)
+
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 STRIP_LIBTOOL = 1
 
 TEST_SCRIPTS =
-
-LICENSE = $(WORKDIR_FIRSTMOD)/$(SRCNAME)-$(GARVERSION)/COPYING
 
 # we are providing those symbols
 CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstaudio-0.10.so.0.19.0
@@ -61,5 +64,9 @@ include gar/category.mk
 
 # sigh, portable code?
 post-configure-modulated:
-	perl -pi -e 's/(LIBS = -lnsl -lsocket)/$$1 -lresolv/' \
+	gsed -i 's/\(LIBS = -lnsl -lsocket\)/\1 -lresolv/' \
 		$(WORKSRC)/gst/tcp/Makefile
+	gsed -i 's/\(giosrc_mounting_LDFLAGS =\)/\1 $$(X_LIBS)/' \
+		$(WORKSRC)/tests/examples/gio/Makefile
+	gsed -i 's/\(volume_LDFLAGS =\)/\1 $$(X_LIBS)/' \
+		$(WORKSRC)/tests/examples/volume/Makefile
