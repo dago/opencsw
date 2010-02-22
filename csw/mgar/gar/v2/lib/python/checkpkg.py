@@ -1105,3 +1105,28 @@ class PackageStats(object):
     for name in self.STAT_FILES:
       all_stats[name] = self.ReadObject(name)
     return all_stats
+
+  def _ParseLddDashRline(self, line):
+    found_re = r"^\t(?P<soname>\S+)\s+=>\s+(?P<path_found>\S+)"
+    symbol_not_found_re = r"^\tsymbol not found:\s(?P<symbol>\S+)\s+\((?P<path_not_found>\S+)\)"
+    common_re = r"(%s|%s)" % (found_re, symbol_not_found_re)
+    m = re.match(common_re, line)
+    response = {}
+    if m:
+      d = m.groupdict()
+      if "soname" in d and d["soname"]:
+        # it was found
+        response["state"] = "OK"
+        response["soname"] = d["soname"]
+        response["path"] = d["path_found"]
+        response["symbol"] = None
+      elif "symbol" in d:
+        response["state"] = "symbol-not-found"
+        response["soname"] = None
+        response["path"] = d["path_not_found"]
+        response["symbol"] = d["symbol"]
+      else:
+        raise StdoutSyntaxError("Could not parse %s" % repr(line))
+    else:
+      raise StdoutSyntaxError("Could not parse %s" % repr(line))
+    return response

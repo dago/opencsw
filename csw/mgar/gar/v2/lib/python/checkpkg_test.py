@@ -762,6 +762,9 @@ class SystemPkgmapUnitTest(unittest.TestCase):
 
 class PackageStatsUnitTest(unittest.TestCase):
 
+  def setUp(self):
+    self.pkgstats = checkpkg.PackageStats(None)
+
   def test_ParseNmSymLineGoodLine(self):
     line = '0000097616 T aliases_lookup'
     expected = {
@@ -769,13 +772,32 @@ class PackageStatsUnitTest(unittest.TestCase):
         'type': 'T',
         'name': 'aliases_lookup',
     }
-    pkgstats = checkpkg.PackageStats(None)
-    self.assertEqual(expected, pkgstats._ParseNmSymLine(line))
+    self.assertEqual(expected, self.pkgstats._ParseNmSymLine(line))
 
   def test_ParseNmSymLineBadLine(self):
     line = 'foo'
-    pkgstats = checkpkg.PackageStats(None)
-    self.assertEqual(None, pkgstats._ParseNmSymLine(line))
+    self.assertEqual(None, self.pkgstats._ParseNmSymLine(line))
+
+  def test_ParseLddDashRlineFound(self):
+    line = '\tlibc.so.1 =>  /lib/libc.so.1'
+    expected = {
+        'state': 'OK',
+        'soname': 'libc.so.1',
+        'path': '/lib/libc.so.1',
+        'symbol': None,
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLddDashRlineSymbolMissing(self):
+    line = ('\tsymbol not found: check_encoding_conversion_args    '
+            '(/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)')
+    expected = {
+        'state': 'symbol-not-found',
+        'soname': None,
+        'path': '/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so',
+        'symbol': 'check_encoding_conversion_args',
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
 
 
 if __name__ == '__main__':
