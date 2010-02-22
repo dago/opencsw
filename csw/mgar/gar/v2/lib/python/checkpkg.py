@@ -986,6 +986,55 @@ class PackageStats(object):
       ldd_output[binary] = lines
     return ldd_output
 
+  def GetDefinedSymbols(self):
+    """Returns text symbols (i.e. defined functions) for packaged ELF objects
+
+    To do this we parse output lines from nm similar to the following. "T"s are
+    the definitions which we are after.
+
+      0000104000 D _lib_version
+      0000986980 D _libiconv_version
+      0000000000 U abort
+      0000097616 T aliases_lookup
+    """
+    dir_pkg = self.GetDirFormatPkg()
+    binaries = dir_pkg.ListBinaries()
+    defined_symbols = {}
+
+    for binary in binaries:
+      binary_abspath = os.path.join(dir_pkg.directory, "root", binary)
+      # Get parsable, ld.so.1 relevant SHT_DYNSYM symbol information
+      args = ["/usr/ccs/bin/nm", "-p", "-D", binary_abspath]
+      nm_proc = subprocess.Popen(
+          args,
+          stdout=subprocess.PIPE,
+          stderr=subprocess.PIPE)
+      stdout, stderr = nm_proc.communicate()
+      retcode = nm_proc.wait()
+      if retcode:
+        logging.error("%s returned an error: %s", args, stderr)
+        continue
+      nm_out = stdout.splitlines()
+
+      defined_symbols[binary] = []
+      for line in nm_out:
+        sym = self._ParseNmSymLine(line)
+        if not sym:
+          continue
+        if not sym['type'] == "T":
+          continue
+        defined_symbols[binary].append(sym['name'])
+
+    return defined_symbols
+
+  def _ParseNmSymLine(self, line):
+    re_defined_symbol =  re.compile('[0-9]+ [ABDFNSTU] \S+')
+    m = re_defined_symbol.match(line)
+    if not m:
+      return None
+    fields = line.split()
+    sym = { 'address': fields[0], 'type': fields[1], 'name': fields[2] }
+    return sym
 
   def CollectStats(self):
     stats_path = self.GetStatsPath()
@@ -1002,6 +1051,7 @@ class PackageStats(object):
     self.DumpObject(dir_pkg.GetParsedPkginfo(), "pkginfo")
     self.DumpObject(dir_pkg.GetPkgmap().entries, "pkgmap")
     self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
+    self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
     logging.debug("Statistics collected.")
 
   def GetAllStats(self):
