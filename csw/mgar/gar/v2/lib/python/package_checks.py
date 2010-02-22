@@ -46,13 +46,30 @@
 #                       pkg.catalogname.lower(),
 #                       pkg,
 #                       "catalogname-not-lowercase")
+#
+# A question: What would unit tests of these checks look like?
 #     
 # Alternately, a function-based approach is possible:
 #
-# def IndividualCheckCatalogname(pkg_data, checkpkg_mgr):
-#   catalogdata = pkg_data["basic_stats"]["catalogname"]
-#   if catalogdata != catalogdata.lower():
+# def IndividualCheckCatalogname(pkg_data, checkpkg_mgr, debug):
+#   catalogname = pkg_data["basic_stats"]["catalogname"]
+#   if catalogname != catalogname.lower():
 #     checkpkg_mgr.ReportError("catalogname-not-lowercase")
+#
+# Here, unit testing of these functions would always require mock objects.  But
+# overall it looks like a simpler approach.
+#
+# Instead of the debug flag, a logger could be used, although it would make
+# testing slightly annoying, since it would be necessary to mock
+# all the calls to the logger.
+#
+# def IndividualCheckCatalogname(pkg_data, checkpkg_mgr, logger):
+#   catalogname = pkg_data["basic_stats"]["catalogname"]
+#   logger.debug("catalogname: %s", catalogname)
+#   if catalogname != catalogname.lower():
+#     checkpkg_mgr.ReportError("catalogname-not-lowercase")
+#
+#
 
 import checkpkg
 import re
@@ -120,6 +137,3 @@ def CheckArchitectureVsContents(pkg_data, debug):
     print ("However, be aware that there might be other reasons "
            "to keep it architecture-specific.")
   return errors
-
-
-
