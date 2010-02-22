@@ -1,4 +1,4 @@
-GARNAME = gstplugins_ugly
+GARNAME = gst-plugins-ugly
 GARVERSION = 0.10.13
 CATEGORIES = gnome
 
@@ -11,9 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://gstreamer.freedesktop.org/src/gst-plugins-ugly/
-SRCNAME = gst-plugins-ugly
-DISTFILES  = $(SRCNAME)-$(GARVERSION).tar.gz
-WORKSRC = $(WORKDIR)/$(SRCNAME)-$(GARVERSION)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PACKAGES = CSWgstpluginsugly
 CATALOGNAME = gstplugins_ugly
 
@@ -27,11 +25,14 @@ RUNTIME_DEP_PKGS = $(BUILD_DEP_PKGS)
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-debug
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib/$(MM_LIBDIR)
+
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 STRIP_LIBTOOL = 1
 
 TEST_SCRIPTS =
-
-LICENSE = $(WORKDIR_FIRSTMOD)/$(SRCNAME)-$(GARVERSION)/COPYING
 
 include gar/category.mk
