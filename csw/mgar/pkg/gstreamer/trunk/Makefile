@@ -10,6 +10,9 @@ define BLURB
   editing) processing.
 endef
 
+PACKAGES = CSWgstreamer
+CATALOGNAME = gstreamer
+
 MASTER_SITES = http://gstreamer.freedesktop.org/src/gstreamer/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
