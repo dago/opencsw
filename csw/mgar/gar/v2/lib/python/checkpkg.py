@@ -1090,7 +1090,8 @@ class PackageStats(object):
       f = open(in_file_name_pickle, "r")
       obj = cPickle.load(f)
       f.close()
-      logging.debug("ReadObject(): finished reading %s", repr(in_file_name_pickle))
+      logging.debug("ReadObject(): finished reading %s",
+                    repr(in_file_name_pickle))
     else:
       logging.debug("ReadObject(): reading %s", repr(in_file_name))
       f = open(in_file_name, "r")
