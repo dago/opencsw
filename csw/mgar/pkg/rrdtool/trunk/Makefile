@@ -16,6 +16,10 @@ DISTFILES += $(call admfiles,CSWrrdtool)
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+#GARCOMPILER = SOS12
+#GARCOMPILER = GCC4
+#PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
+
 RUNTIME_DEP_PKGS = CSWggettextrt
 RUNTIME_DEP_PKGS += CSWglib2
 RUNTIME_DEP_PKGS += CSWiconv
@@ -29,7 +33,7 @@ RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWruby
 
 EXTRA_INC = $(prefix)/include/cairo
-EXTRA_INC += $(prefix)/include/libxml2/libxml
+EXTRA_INC += $(prefix)/include/libxml2
 EXTRA_INC += $(prefix)/X11/include
 
 EXTRA_LIB = $(prefix)/X11/lib
