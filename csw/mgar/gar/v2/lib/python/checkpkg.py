@@ -276,7 +276,11 @@ class SystemPkgmap(object):
     """
     for line in stdout.splitlines():
       pkgname, pkg_desc = self._ParsePkginfoLine(line)
-      c.execute(sql, [pkgname, pkg_desc])
+      try:
+        c.execute(sql, [pkgname, pkg_desc])
+      except sqlite3.IntegrityError, e:
+        logging.warn("pkgname %s throws an sqlite3.IntegrityError: %s",
+                     repr(pkgname), e)
 
   def SetDatabaseMtime(self):
     c = self.conn.cursor()
