@@ -1,5 +1,5 @@
 GARNAME = transmission
-GARVERSION = 1.90
+GARVERSION = 1.91
 CATEGORIES = net
 
 DESCRIPTION = Fast, easy, and free multi-platform BitTorrent client
