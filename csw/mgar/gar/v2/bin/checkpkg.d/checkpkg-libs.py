@@ -81,7 +81,7 @@ def CheckSharedLibraryConsistency(pkgs_data, debug):
   # This section is somewhat overlapping with checkpkg.AnalyzeDependencies(),
   # it has a different purpose: it reports the relationships between shared
   # libraries, binaries using them and packages providing them.  Ideally, the
-  # same bit of code with do checking and reporting.
+  # same bit of code would do both checking and reporting.
   #
   # TODO: Rewrite this using cheetah templates
   if debug and needed_sonames:

@@ -236,6 +236,7 @@ class SystemPkgmap(object):
     print "Processing %s" % SYSTEM_PKGMAP
     c = self.conn.cursor()
     count = itertools.count()
+    sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
     for line in system_pkgmap_fd:
       i = count.next()
       if not i % 1000:
@@ -247,7 +248,6 @@ class SystemPkgmap(object):
       fields = re.split(WS_RE, line)
       pkgmap_entry_path = fields[0].split("=")[0]
       pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
-      sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
       c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line.strip()))
     print "\rAll lines of %s were processed." % SYSTEM_PKGMAP
     print "Creating the main database index."
@@ -405,7 +405,7 @@ def SharedObjectDependencies(pkgname,
   """This is one of the more obscure and more important pieces of code.
 
   I tried to make it simpler, but given that the operations here involve
-  whole sets of packages, it's not easy.
+  whole sets of packages, it's not easy to simplify.
   """
   so_dependencies = set()
   orphan_sonames = set()
