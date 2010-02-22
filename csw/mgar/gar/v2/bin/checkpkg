@@ -538,7 +538,7 @@ done
 set_variables_for_individual_package_check "$f"
 
 test_suite_ok=1
-checkpkg_module_dir=${command_basedir}/checkpkg.d
+checkpkg_module_dir=${command_basedir}/../lib/checkpkg.d
 checkpkg_module_tag="checkpkg-"
 checkpkg_stats_basedir="${HOME}/.checkpkg/stats"
 
