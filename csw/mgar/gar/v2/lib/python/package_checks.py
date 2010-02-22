@@ -1,5 +1,58 @@
-# Defining the checking functions.  They come in two flavors: individual
-# package checks and set checks.
+# $Id$
+#
+# Package checking functions.  They come in two flavors:
+# - individual package checks
+# - set checks
+#
+# Some ideas for the future development of the checks.  Here's what a check
+# could look like:
+#
+# class FooCheck(checkpkg.IndividualCheck):
+#   """Simplest check for an individual package."""
+#   
+#   def CheckExampleOne(self):
+#     """First idea, with an ReportError method."""
+#     if self.catalogname != self.catalogname.lower():
+#       self.ReportError("catalogname-not-lowercase")
+#
+#   def CheckExampleTwo(self):
+#     """Second idea, more similar to a unit test."""
+#     self.checkEqual(self.catalogname,
+#                     self.catalogname.lower(),
+#                     "catalogname-not-lowercase")
+#
+# What would be needed to do that:
+#
+#  - Have a class that looks for classes derived from checkpkg.IndividualCheck,
+#    run SetUp on them (which sets things such as self.catalogname) and then
+#    Check().
+#  - Read all the data and set appropriate member names.
+#     
+# Set checks would be slightly more complicated.
+#
+# class BarCheck(checkpkg.SetCheck):
+#   """More complex check for multiple packages.
+#
+#   We cannot have package data as class members any more, we have to use
+#   a class member with a list of objects containing packages' data.
+#
+#   In this class, checkEqual() methods needs one more parameter, denoting
+#   the package to assign the error to.
+#   """
+#
+#   def Check(self):
+#     for pkg in self.pkgs:
+#       self.checkEqual(pkg.catalogname,
+#                       pkg.catalogname.lower(),
+#                       pkg,
+#                       "catalogname-not-lowercase")
+#     
+# Alternately, a function-based approach is possible:
+#
+# def IndividualCheckCatalogname(pkg_data, checkpkg_mgr):
+#   catalogdata = pkg_data["basic_stats"]["catalogname"]
+#   if catalogdata != catalogdata.lower():
+#     checkpkg_mgr.ReportError("catalogname-not-lowercase")
 
 import checkpkg
 import re
