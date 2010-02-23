@@ -766,7 +766,7 @@ package: _package
 	@echo
 	@echo "The following packages have been built:"
 	@echo
-	@$(MAKE) -s PLATFORM=$(PLATFORM) _pkgshow
+	@$(MAKE) -s GAR_PLATFORM=$(GAR_PLATFORM) _pkgshow
 	@echo
 	@$(DONADA)
 
@@ -775,7 +775,7 @@ dirpackage: ENABLE_CHECK=
 dirpackage: _package
 	@echo "The following packages have been built:"
 	@echo
-	@$(MAKE) -s PLATFORM=$(PLATFORM) _dirpkgshow
+	@$(MAKE) -s GAR_PLATFORM=$(GAR_PLATFORM) _dirpkgshow
 	@echo
 	@$(DONADA)
 
@@ -840,8 +840,8 @@ platforms:
 	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) PLATFORM=$P _package" && \
+				$(MAKE) GAR_PLATFORM=$P _package && ,\
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
@@ -854,9 +854,9 @@ platforms:
 		$(if $(ARCHALL),echo " (suitable for all architectures)\c";) \
 		$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 			echo " (built on this host)";\
-			  $(MAKE) -s PLATFORM=$P _pkgshow;echo;,\
+			  $(MAKE) -s GAR_PLATFORM=$P _pkgshow;echo;,\
 			echo " (built on host '$(PACKAGING_HOST_$P)')";\
-			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) -s PLATFORM=$P _pkgshow";echo;\
+			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) -s GAR_PLATFORM=$P _pkgshow";echo;\
 		)\
 	)
 	@$(MAKECOOKIE)
@@ -866,8 +866,8 @@ platforms-%:
 	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) -s PLATFORM=$P $* && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) PLATFORM=$P $*" && \
+				$(MAKE) -s GAR_PLATFORM=$P $* && ,\
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P $*" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\

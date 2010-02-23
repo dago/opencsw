@@ -24,11 +24,11 @@ PACKAGING_PLATFORMS ?= solaris8-sparc solaris8-i386
 # invoked from "gmake platforms" or when you build a package on a host
 # that is suitable for the platform.
 # If there are no platform hosts defined the feature is disabled.
-PLATFORM ?= $(firstword $(foreach P,$(PACKAGING_PLATFORMS),$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),$P)))
+GAR_PLATFORM ?= $(firstword $(foreach P,$(PACKAGING_PLATFORMS),$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),$P)))
 
 MODULATION ?= global
 FILEDIR ?= files
-WORKROOTDIR ?= $(if $(PLATFORM),work/$(PLATFORM),work)
+WORKROOTDIR ?= $(if $(GAR_PLATFORM),work/$(GAR_PLATFORM),work)
 WORKDIR ?= $(WORKROOTDIR)/build-$(MODULATION)
 WORKDIR_FIRSTMOD ?= $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))
 DOWNLOADDIR ?= $(WORKROOTDIR)/download
