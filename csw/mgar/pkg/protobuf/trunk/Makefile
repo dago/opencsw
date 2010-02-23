@@ -23,6 +23,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PATCHFILES += 0001-Patches-from-GAR.patch
 PATCHFILES += 0002-std-map-in-two-more-files.patch
+PATCHFILES += OutputDirectoryIsFileError-unittest.patch
+PATCHFILES += trailing-slash-test-fails-on-solaris-8-x86.patch
 LICENSE = COPYING.txt
 EXTRA_CFLAGS = 
 EXTRA_CXXFLAGS = -library=stlport4 -library=no%Cstd
