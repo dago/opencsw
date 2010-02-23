@@ -4,6 +4,9 @@
 
 # Still doesn't build, I've filed a bug:
 # http://code.google.com/p/protobuf/issues/detail?id=166
+#
+# About using stlport4
+# http://developers.sun.com/solaris/articles/cmp_stlport_libCstd.html
 
 GARNAME = protobuf
 GARVERSION = 2.3.0
@@ -14,22 +17,19 @@ define BLURB
 	extensible format. Google uses Protocol Buffers for almost all of its
 	internal RPC protocols and file formats.
 endef
-PACKAGING_PLATFORMS ?= solaris9-sparc solaris9-i386
+# PACKAGING_PLATFORMS ?= solaris9-sparc solaris9-i386
 SPKG_SOURCEURL = http://code.google.com/p/protobuf/
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-PATCHFILES  = stdint-and-ddi.patch
-PATCHFILES += std-map-in-google-protobuf-extension_set.cc.patch
-PATCHFILES += stdint-gcc.patch
-PATCHFILES += std-map-2.patch
-PATCHFILES += vector-in-repeated_field.h.patch
-PATCHFILES += strtof.patch
-PATCHFILES += std-map-again.patch
-PATCHFILES += std-map-yet-again.patch
-PATCHFILES += std-map-yet-again-include-map.patch
+PATCHFILES += 0001-Patches-from-GAR.patch
+PATCHFILES += 0002-std-map-in-two-more-files.patch
 LICENSE = COPYING.txt
+EXTRA_CFLAGS = 
+EXTRA_CXXFLAGS = -library=stlport4 -library=no%Cstd
+EXTRA_LDFLAGS = -lCrun -lm
 CONFIGURE_ARGS = $(DIRPATHS)
-GARCOMPILER = SOS12
-# GARCOMPILER = GNU
+TEST_TARGET = check
+RUNTIME_DEP_PKGS_CSWprotobuf += CSWstlport
+RUNTIME_DEP_PKGS_CSWprotobuf += CSWzlib
 include gar/category.mk

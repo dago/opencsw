@@ -1,12 +1,92 @@
-From 69fe78fbe6c50a69eb57d20538e78d73d2abab4a Mon Sep 17 00:00:00 2001
+From 8a36482ed025a9ae5adbc43e7285028119dab121 Mon Sep 17 00:00:00 2001
 From: Maciej Blizinski <maciej@opencsw.org>
-Date: Sat, 20 Feb 2010 15:36:34 +0100
-Subject: [PATCH] std::map in google/protobuf/extension_set.cc
+Date: Sun, 21 Feb 2010 20:07:10 +0100
+Subject: [PATCH 1/2] Patches from GAR
 
 ---
- src/google/protobuf/extension_set.cc |   52 +++++++++++++++++-----------------
- 1 files changed, 26 insertions(+), 26 deletions(-)
+ .../protobuf/compiler/command_line_interface.h     |    2 +
+ src/google/protobuf/descriptor_database.cc         |    9 ++--
+ src/google/protobuf/descriptor_database.h          |    2 +-
+ src/google/protobuf/extension_set.cc               |   52 ++++++++++----------
+ src/google/protobuf/repeated_field.h               |    1 +
+ src/google/protobuf/stubs/common.h                 |    5 ++-
+ src/google/protobuf/stubs/strutil.h                |    4 ++
+ 7 files changed, 43 insertions(+), 32 deletions(-)
 
+diff --git a/src/google/protobuf/compiler/command_line_interface.h b/src/google/protobuf/compiler/command_line_interface.h
+index d25a50e..3815d5c 100644
+--- a/src/google/protobuf/compiler/command_line_interface.h
++++ b/src/google/protobuf/compiler/command_line_interface.h
+@@ -55,6 +55,8 @@ template<typename T> class RepeatedPtrField;  // repeated_field.h
+ 
+ namespace compiler {
+ 
++using std::map;
++
+ class CodeGenerator;        // code_generator.h
+ class OutputDirectory;      // code_generator.h
+ class DiskSourceTree;       // importer.h
+diff --git a/src/google/protobuf/descriptor_database.cc b/src/google/protobuf/descriptor_database.cc
+index 95708d9..ad29ed1 100644
+--- a/src/google/protobuf/descriptor_database.cc
++++ b/src/google/protobuf/descriptor_database.cc
+@@ -35,6 +35,7 @@
+ #include <google/protobuf/descriptor_database.h>
+ 
+ #include <set>
++#include <map>
+ 
+ #include <google/protobuf/descriptor.pb.h>
+ #include <google/protobuf/wire_format_lite_inl.h>
+@@ -97,7 +98,7 @@ bool SimpleDescriptorDatabase::DescriptorIndex<Value>::AddSymbol(
+ 
+   // Try to look up the symbol to make sure a super-symbol doesn't already
+   // exist.
+-  typename map<string, Value>::iterator iter = FindLastLessOrEqual(name);
++  typename std::map<string, Value>::iterator iter = FindLastLessOrEqual(name);
+ 
+   if (iter == by_symbol_.end()) {
+     // Apparently the map is currently empty.  Just insert and be done with it.
+@@ -179,7 +180,7 @@ Value SimpleDescriptorDatabase::DescriptorIndex<Value>::FindFile(
+ template <typename Value>
+ Value SimpleDescriptorDatabase::DescriptorIndex<Value>::FindSymbol(
+     const string& name) {
+-  typename map<string, Value>::iterator iter = FindLastLessOrEqual(name);
++  typename std::map<string, Value>::iterator iter = FindLastLessOrEqual(name);
+ 
+   return (iter != by_symbol_.end() && IsSubSymbol(iter->first, name)) ?
+          iter->second : Value();
+@@ -198,7 +199,7 @@ template <typename Value>
+ bool SimpleDescriptorDatabase::DescriptorIndex<Value>::FindAllExtensionNumbers(
+     const string& containing_type,
+     vector<int>* output) {
+-  typename map<pair<string, int>, Value >::const_iterator it =
++  typename std::map<pair<string, int>, Value >::const_iterator it =
+       by_extension_.lower_bound(make_pair(containing_type, 0));
+   bool success = false;
+ 
+@@ -212,7 +213,7 @@ bool SimpleDescriptorDatabase::DescriptorIndex<Value>::FindAllExtensionNumbers(
+ }
+ 
+ template <typename Value>
+-typename map<string, Value>::iterator
++typename std::map<string, Value>::iterator
+ SimpleDescriptorDatabase::DescriptorIndex<Value>::FindLastLessOrEqual(
+     const string& name) {
+   // Find the last key in the map which sorts less than or equal to the
+diff --git a/src/google/protobuf/descriptor_database.h b/src/google/protobuf/descriptor_database.h
+index f32b1db..49f0de6 100644
+--- a/src/google/protobuf/descriptor_database.h
++++ b/src/google/protobuf/descriptor_database.h
+@@ -233,7 +233,7 @@ class LIBPROTOBUF_EXPORT SimpleDescriptorDatabase : public DescriptorDatabase {
+ 
+     // Find the last entry in the by_symbol_ map whose key is less than or
+     // equal to the given name.
+-    typename map<string, Value>::iterator FindLastLessOrEqual(
++    typename std::map<string, Value>::iterator FindLastLessOrEqual(
+         const string& name);
+ 
+     // True if either the arguments are equal or super_symbol identifies a
 diff --git a/src/google/protobuf/extension_set.cc b/src/google/protobuf/extension_set.cc
 index 6084885..2cd66f6 100644
 --- a/src/google/protobuf/extension_set.cc
@@ -238,6 +318,55 @@ index 6084885..2cd66f6 100644
        extensions_.insert(make_pair(number, Extension()));
    *result = &insert_result.first->second;
    (*result)->descriptor = descriptor;
+diff --git a/src/google/protobuf/repeated_field.h b/src/google/protobuf/repeated_field.h
+index defdefe..39138f0 100644
+--- a/src/google/protobuf/repeated_field.h
++++ b/src/google/protobuf/repeated_field.h
+@@ -48,6 +48,7 @@
+ 
+ #include <string>
+ #include <iterator>
++#include <vector>
+ #include <google/protobuf/stubs/common.h>
+ #include <google/protobuf/message_lite.h>
+ 
+diff --git a/src/google/protobuf/stubs/common.h b/src/google/protobuf/stubs/common.h
+index 551ee4a..f000c76 100644
+--- a/src/google/protobuf/stubs/common.h
++++ b/src/google/protobuf/stubs/common.h
+@@ -40,13 +40,16 @@
+ #include <cstddef>
+ #include <string>
+ #include <string.h>
+-#if defined(__osf__)
++#if defined(__osf__) || defined(__SUNPRO_CC) || defined(__sun__)
+ // Tru64 lacks stdint.h, but has inttypes.h which defines a superset of
+ // what stdint.h would define.
+ #include <inttypes.h>
+ #elif !defined(_MSC_VER)
+ #include <stdint.h>
+ #endif
++#if defined(__SUNPRO_CC) || defined(__sun__)
++#include <sys/ddi.h>
++#endif
+ 
+ namespace std {}
+ 
+diff --git a/src/google/protobuf/stubs/strutil.h b/src/google/protobuf/stubs/strutil.h
+index 777694b..b22babe 100644
+--- a/src/google/protobuf/stubs/strutil.h
++++ b/src/google/protobuf/stubs/strutil.h
+@@ -37,6 +37,10 @@
+ #include <vector>
+ #include <google/protobuf/stubs/common.h>
+ 
++#if defined(__SUNPRO_CC)
++#define strtof strtod
++#endif
++
+ namespace google {
+ namespace protobuf {
+ 
 -- 
 1.6.6
 
