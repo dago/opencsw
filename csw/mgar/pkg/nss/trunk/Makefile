@@ -14,13 +14,10 @@
 # TODO: nss-config
 # TODO: a better nss.pc
 
-# the package does not compile on solaris8
-# so make it for solaris10 only at the moment
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
 # For DBG builds
 PATCHFILES  = whoami.patch
-# I'll let Wan-Teh decide what and where to patch
+
+# Required patches.
 PATCHFILES += include.patch
 PATCHFILES += ld-options.patch
 PATCHFILES += platlibs-sqlite3.patch
@@ -39,7 +36,7 @@ MINOR_VERSION = 12
 PATCHLEVEL    = 4
 GARVERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 CATEGORIES = lib
-DESCRIPTION = Network Security Services library, implements PKI support
+DESCRIPTION = Network Security Services library, implements crypto, PKI, SSL, and S/MIME support
 define BLURB
   Network Security Services (NSS) is a set of libraries designed to support
   cross-platform development of security-enabled client and server
@@ -51,7 +48,8 @@ SPKG_SOURCEURL = http://www.mozilla.org/projects/security/pki/nss/
 # TODO: Generate RTM_NAME from GARVERSION
 RTM_NAME = NSS_3_12_4_RTM
 MASTER_SITES = https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM_NAME)/src/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += mpl-tri-license-txt
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS = CSWnspr CSWsqlite3rt
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnspr-devel CSWsqlite3devel
@@ -109,6 +107,8 @@ NSS_BINARIES += pk12util
 NSS_BINARIES += signtool
 NSS_BINARIES += signver
 NSS_BINARIES += ssltap
+
+LICENSE = mpl-tri-license-txt
 
 include gar/category.mk
 

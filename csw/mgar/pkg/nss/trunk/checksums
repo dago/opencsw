@@ -1,5 +1,6 @@
 4b2246d07092fe8b2f29a1a01e9bc821  include.patch
 79083e118f3d885957910fc845844c1c  ld-options.patch
+fd5baf22edc790b6fb5b84e4ba915cf0  mpl-tri-license-txt
 1ee3ed9c1900079319bd1de51388d856  nss-3.12.4.tar.gz
 bd8d96c42238c7cfd07ec1ba21191066  platlibs-sqlite3-64.patch
 f0f40bd021423ab1680b4d87cd19c1db  platlibs-sqlite3.patch
