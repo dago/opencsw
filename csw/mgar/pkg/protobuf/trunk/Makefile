@@ -17,7 +17,6 @@ define BLURB
 	extensible format. Google uses Protocol Buffers for almost all of its
 	internal RPC protocols and file formats.
 endef
-# PACKAGING_PLATFORMS ?= solaris9-sparc solaris9-i386
 SPKG_SOURCEURL = http://code.google.com/p/protobuf/
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
@@ -28,6 +27,7 @@ LICENSE = COPYING.txt
 EXTRA_CFLAGS = 
 EXTRA_CXXFLAGS = -library=stlport4 -library=no%Cstd
 EXTRA_LDFLAGS = -lCrun -lm
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 RUNTIME_DEP_PKGS_CSWprotobuf += CSWstlport
