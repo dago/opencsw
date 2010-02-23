@@ -1,5 +1,5 @@
 GARNAME = swig
-GARVERSION = 1.3.39
+GARVERSION = 1.3.40
 CATEGORIES = devel
 
 DESCRIPTION = A scripting interface generator for C/C++ code.
