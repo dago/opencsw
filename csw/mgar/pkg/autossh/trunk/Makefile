@@ -3,6 +3,8 @@
 #   2009-06-24, intends to work on it, has access to his own Solaris
 #   box. In case of a new upstream version, verify whether man page
 #   formats properly (for now see install-preformatted-manpage: below).
+# * DESTDIR and --with-ssh handling could be fixed. See the Debian
+#   patch tracker: http://patch-tracker.debian.org/package/autossh/1.4b-1
 GARNAME = autossh
 GARVERSION = 1.4b
 CATEGORIES = net
@@ -26,6 +28,9 @@ NORUNPATH = 1
 
 # --with-ssh=/usr/bin/ssh doesn't work -> checking for ssh... /opt/csw/bin/ssh
 BUILD_ARGS = 'SSH=/usr/bin/ssh'
+
+# autossh doesn't ship a license and can't find one on $VENDOR_URL either
+CHECKPKG_OVERRIDES_CSWautossh += license-missing
 
 include gar/category.mk
 
