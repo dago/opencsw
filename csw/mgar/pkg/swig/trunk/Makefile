@@ -27,6 +27,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=1645
 UPSTREAM_USE_SF = 1
 
+LICENSE_CSWswig = LICENSE
+
 RUNTIME_DEP_PKGS = CSWzlib
 
 #SWIG doesn't DEPEND on the languages it supports being installed
@@ -55,7 +57,6 @@ TEST_SCRIPTS =
 CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWswig += license-missing
 
 include gar/category.mk
 
