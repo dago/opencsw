@@ -1,5 +1,5 @@
 GARNAME = mantisbt
-GARVERSION = 1.1.8
+GARVERSION = 1.2.0
 CATEGORIES = apps
 
 DESCRIPTION = Mantis is a free popular web-based bugtracking system
@@ -14,7 +14,8 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWmantis.preinstall CSWmantis.postinstall
+DISTFILES += CSWmantis.preinstall
+DISTFILES += CSWmantis.postmsg
 
 PACKAGES = CSWmantis
 
@@ -32,15 +33,18 @@ INSTALL_SCRIPTS = custom
 
 SPKG_SOURCEURL = http://www.mantisbt.org/
 
+POSTMSG = $(docdir)/$(CATALOGNAME)/$(PACKAGES).postmsg
+
 include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
-	@rm -rf $(DESTDIR)$(sharedstatedir)/www/mantis
-	@ginstall -d $(DESTDIR)$(sharedstatedir)/www/mantis
-	@cp -rp $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs
-	@find $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs -name .cvsignore -exec rm \{\} \;
-	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
-	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
-	@ln -s $(sharedstatedir)/www/mantis/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
+	ginstall -d $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs
+	cd $(WORKSRC) && tar cf - . | ( cd $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs; tar xvf - )
+	find $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs -name .cvsignore -exec rm \{\} \;
+	ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
+	ln -s $(sharedstatedir)/www/mantis/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
+	ginstall -d $(PKGROOT)$(docdir)/$(CATALOGNAME)/
+	ginstall $(WORKDIR)/$(PACKAGES).postmsg $(PKGROOT)$(docdir)/$(CATALOGNAME)/$(PACKAGES).postmsg
+	@$(MAKECOOKIE)
 
