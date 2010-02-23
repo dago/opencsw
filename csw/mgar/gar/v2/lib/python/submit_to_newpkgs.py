@@ -135,8 +135,9 @@ def main():
   try:
     ret = subprocess.call(args)
   except OSError, e:
-    raise PackageSubmissionError("Couldn't run %s, is the binary "
-                                 "in the path? %s" % (args, e))
+    raise PackageSubmissionError(
+        "Couldn't run %s, is the binary "
+        "in the $PATH? The error was: %s" % (repr(args[0]), e))
   if ret:
     msg = "Copying %s to %s has failed." % (p, dst_arg)
     logging.error(msg)
