@@ -16,6 +16,7 @@ MASTER_SITES = http://download.savannah.gnu.org/releases/zutils/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES  = 0001-Use-inttypes-instead-of-stdint.patch
 PATCHFILES += 0002-Use-correct-path-on-testsuite.patch
+PATCHFILES += 0003-Use-Zutils-instead-of-zutils.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

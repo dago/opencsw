@@ -1,0 +1,124 @@
+From 594dfe11efc4dd32d988e96e74b7c164e1ac9718 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 23 Feb 2010 15:55:20 +0100
+Subject: [PATCH] Use Zutils instead of zutils
+
+---
+ zcat.in  |    6 +++---
+ zdiff.in |    4 ++--
+ zgrep.in |    6 +++---
+ ztest.in |    6 +++---
+ 4 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/zcat.in b/zcat.in
+index 010b7bb..3d133a9 100644
+--- a/zcat.in
++++ b/zcat.in
+@@ -67,7 +67,7 @@ done
+ 
+ if [ $# = 0 ] ; then
+ 	bindir=`echo "$0" | sed -e 's,[^/]*$,,'`
+-	prog_name=`"${bindir}"zutils -t`
++	prog_name=`"${bindir}"Zutils -t`
+ 	case "${prog_name}" in
+ 	bzip2)	prog="bzip2 -cdfq" ;;
+ 	gzip)	prog="gzip -cdfq ${gz_args}" ;;
+@@ -75,7 +75,7 @@ if [ $# = 0 ] ; then
+ 	xz)	prog="xz -cdfq ${xz_args}" ;;
+ 	*)	prog=cat ;;
+ 	esac
+-	{ "${bindir}"zutils -m ${prog_name} ; cat ; } | ${prog} | cat ${args}
++	{ "${bindir}"Zutils -m ${prog_name} ; cat ; } | ${prog} | cat ${args}
+ 	exit $?
+ fi
+ 
+@@ -98,7 +98,7 @@ for i in "$@" ; do
+ 			fi
+ 		fi
+ 		bindir=`echo "$0" | sed -e 's,[^/]*$,,'`
+-		prog_name=`"${bindir}"zutils -t -- "$i"`
++		prog_name=`"${bindir}"Zutils -t -- "$i"`
+ 		case "${prog_name}" in
+ 		bzip2)	prog="bzip2 -cdfq" ;;
+ 		gzip)	prog="gzip -cdfq ${gz_args}" ;;
+diff --git a/zdiff.in b/zdiff.in
+index 0ece51f..fc1d4e1 100644
+--- a/zdiff.in
++++ b/zdiff.in
+@@ -120,13 +120,13 @@ prog1=
+ prog2=
+ bindir=`echo "$0" | sed -e 's,[^/]*$,,'`
+ if [ -f "${file1}" ] ; then
+-	prog_name=`"${bindir}"zutils -t -- "${file1}"`
++	prog_name=`"${bindir}"Zutils -t -- "${file1}"`
+ 	case "${prog_name}" in
+ 	bzip2 | gzip | lzip | xz) prog1=${prog_name} ;;
+ 	esac
+ fi
+ if [ -f "${file2}" ] ; then
+-	prog_name=`"${bindir}"zutils -t -- "${file2}"`
++	prog_name=`"${bindir}"Zutils -t -- "${file2}"`
+ 	case "${prog_name}" in
+ 	bzip2 | gzip | lzip | xz) prog2=${prog_name} ;;
+ 	esac
+diff --git a/zgrep.in b/zgrep.in
+index 3298646..1d9b34a 100644
+--- a/zgrep.in
++++ b/zgrep.in
+@@ -85,12 +85,12 @@ fi
+ 
+ if [ $# = 0 ] ; then
+ 	bindir=`echo "$0" | sed -e 's,[^/]*$,,'`
+-	prog_name=`"${bindir}"zutils -t`
++	prog_name=`"${bindir}"Zutils -t`
+ 	case "${prog_name}" in
+ 	bzip2 | gzip | lzip | xz) prog="${prog_name} -cdfq" ;;
+ 	*)	prog=cat ;;
+ 	esac
+-	{ "${bindir}"zutils -m ${prog_name} ; cat ; } | ${prog} | grep ${args}
++	{ "${bindir}"Zutils -m ${prog_name} ; cat ; } | ${prog} | grep ${args}
+ 	exit $?
+ fi
+ 
+@@ -110,7 +110,7 @@ for i in "$@" ; do
+ 			fi
+ 		fi
+ 		bindir=`echo "$0" | sed -e 's,[^/]*$,,'`
+-		prog_name=`"${bindir}"zutils -t -- "$i"`
++		prog_name=`"${bindir}"Zutils -t -- "$i"`
+ 		case "${prog_name}" in
+ 		bzip2 | gzip | lzip | xz) prog="${prog_name} -cdfq" ;;
+ 		*)	prog=cat ;;
+diff --git a/ztest.in b/ztest.in
+index f56c853..a9973d7 100644
+--- a/ztest.in
++++ b/ztest.in
+@@ -60,14 +60,14 @@ done
+ 
+ if [ $# = 0 ] ; then
+ 	bindir=`echo "$0" | sed -e 's,[^/]*$,,'`
+-	prog=`"${bindir}"zutils -t`
++	prog=`"${bindir}"Zutils -t`
+ 	case "${prog}" in
+ 	bzip2 | gzip | lzip | xz)
+ 		;;
+ 	*)	echo "$0: Unknown data format read from stdin" 1>&2
+ 		exit 1 ;;
+ 	esac
+-	{ "${bindir}"zutils -m ${prog} ; cat ; } | ${prog} -t ${args}
++	{ "${bindir}"Zutils -m ${prog} ; cat ; } | ${prog} -t ${args}
+ 	exit $?
+ fi
+ 
+@@ -87,7 +87,7 @@ for i in "$@" ; do
+ 			fi
+ 		fi
+ 		bindir=`echo "$0" | sed -e 's,[^/]*$,,'`
+-		prog=`"${bindir}"zutils -t -- "$i"`
++		prog=`"${bindir}"Zutils -t -- "$i"`
+ 		case "${prog}" in
+ 		bzip2 | gzip | lzip | xz)
+ 			;;
+-- 
+1.6.6
+
