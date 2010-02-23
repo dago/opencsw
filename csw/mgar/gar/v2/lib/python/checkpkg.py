@@ -1028,7 +1028,7 @@ class PackageStats(object):
         sym = self._ParseNmSymLine(line)
         if not sym:
           continue
-        if not sym['type'] == "T":
+        if sym['type'] not in ("T", "D"):
           continue
         defined_symbols[binary].append(sym['name'])
 
