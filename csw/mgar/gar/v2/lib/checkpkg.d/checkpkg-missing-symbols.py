@@ -19,27 +19,9 @@ path_list = [os.path.dirname(__file__),
              "..", "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
 import checkpkg
+import package_checks
 
 # Defining checking functions.
-
-def CheckForMissingSymbols(pkg_data, debug):
-  """Looks for "symbol not found" in ldd -r output."""
-  errors = []
-  binaries = pkg_data["binaries"]
-  symbol_re = re.compile(r"symbol not found:")
-  for binary in binaries:
-    lines = pkg_data["ldd_dash_r"][binary]
-    missing_symbols = False
-    for line in lines:
-      if re.search(symbol_re, line):
-      	missing_symbols = True
-    binary_base = os.path.basename(binary)
-    if missing_symbols:
-    	errors.append(checkpkg.CheckpkgTag(
-    	  pkg_data["basic_stats"]["pkgname"],
-    	  "symbol-not-found", binary_base))
-  return errors
-
 
 def main():
   options, args = checkpkg.GetOptions()
@@ -51,7 +33,7 @@ def main():
                                            md5sums,
                                            options.debug)
   # Registering functions defined above.
-  check_manager.RegisterIndividualCheck(CheckForMissingSymbols)
+  check_manager.RegisterSetCheck(package_checks.CheckForMissingSymbols)
   # Running the checks, reporting and exiting.
   exit_code, screen_report, tags_report = check_manager.Run()
   f = open(options.output, "w")

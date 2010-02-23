@@ -39,6 +39,7 @@ LDD_R_OUTPUT_1 =  """\tlibc.so.1 =>  /lib/libc.so.1
 \tsymbol not found: LocalToUtf    (/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)
 \tsymbol not found: UtfToLocal    (/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)
 \tlibm.so.2 =>   /lib/libm.so.2
+\t/usr/lib/secure/s8_preload.so.1
 """
 
 class DependenciesUnitTest_1(unittest.TestCase):
@@ -798,6 +799,20 @@ class PackageStatsUnitTest(unittest.TestCase):
         'symbol': 'check_encoding_conversion_args',
     }
     self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLddDashRlineFound(self):
+    line = '\t/usr/lib/secure/s8_preload.so.1'
+    expected = {
+        'state': 'OK',
+        'soname': None,
+        'path': '/usr/lib/secure/s8_preload.so.1',
+        'symbol': None,
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLddDashRlineManyLines(self):
+    for line in LDD_R_OUTPUT_1.splitlines():
+      parsed = self.pkgstats._ParseLddDashRline(line)
 
 
 if __name__ == '__main__':

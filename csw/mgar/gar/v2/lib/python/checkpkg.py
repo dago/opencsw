@@ -111,6 +111,10 @@ class PackageError(Error):
   pass
 
 
+class StdoutSyntaxError(Error):
+  pass
+
+
 def GetOptions():
   parser = optparse.OptionParser()
   parser.add_option("-b", dest="stats_basedir",
@@ -811,7 +815,7 @@ def ParseOverrideLine(line):
 
 def ApplyOverrides(error_tags, overrides):
   """Filters out all the error tags that overrides apply to.
-  
+
   O(N * M), but N and M are always small.
   """
   tags_after_overrides = []
@@ -845,6 +849,7 @@ class PackageStats(object):
       "basic_stats",
       "binaries",
       "binaries_dump_info",
+      "defined_symbols",
       "depends",
       "isalist",
       "ldd_dash_r",
@@ -982,8 +987,10 @@ class PackageStats(object):
       retcode = ldd_proc.wait()
       if retcode:
         logging.error("%s returned an error: %s", args, stderr)
-      lines = stdout.splitlines()
-      ldd_output[binary] = lines
+      ldd_info = []
+      for line in stdout.splitlines():
+        ldd_info.append(self._ParseLddDashRline(line))
+      ldd_output[binary] = ldd_info
     return ldd_output
 
   def GetDefinedSymbols(self):
@@ -1036,7 +1043,14 @@ class PackageStats(object):
     sym = { 'address': fields[0], 'type': fields[1], 'name': fields[2] }
     return sym
 
-  def CollectStats(self):
+  def CollectStats(self, force=False):
+    if not self.StatsDirExists() or force:
+      self._CollectStats()
+
+  def _CollectStats(self):
+    """The list of variables needs to be synchronized with the one
+    at the top of this class.
+    """
     stats_path = self.GetStatsPath()
     self.MakeStatsDir()
     dir_pkg = self.GetDirFormatPkg()
@@ -1109,7 +1123,8 @@ class PackageStats(object):
   def _ParseLddDashRline(self, line):
     found_re = r"^\t(?P<soname>\S+)\s+=>\s+(?P<path_found>\S+)"
     symbol_not_found_re = r"^\tsymbol not found:\s(?P<symbol>\S+)\s+\((?P<path_not_found>\S+)\)"
-    common_re = r"(%s|%s)" % (found_re, symbol_not_found_re)
+    only_so = r"^\t(?P<path_only>\S+)$"
+    common_re = r"(%s|%s|%s)" % (found_re, symbol_not_found_re, only_so)
     m = re.match(common_re, line)
     response = {}
     if m:
@@ -1120,11 +1135,16 @@ class PackageStats(object):
         response["soname"] = d["soname"]
         response["path"] = d["path_found"]
         response["symbol"] = None
-      elif "symbol" in d:
+      elif "symbol" in d and d["symbol"]:
         response["state"] = "symbol-not-found"
         response["soname"] = None
         response["path"] = d["path_not_found"]
         response["symbol"] = d["symbol"]
+      elif d["path_only"]:
+        response["state"] = "OK"
+        response["soname"] = None
+        response["path"] = d["path_only"]
+        response["symbol"] = None
       else:
         raise StdoutSyntaxError("Could not parse %s" % repr(line))
     else:

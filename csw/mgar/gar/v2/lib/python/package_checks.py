@@ -137,3 +137,41 @@ def CheckArchitectureVsContents(pkg_data, debug):
     print ("However, be aware that there might be other reasons "
            "to keep it architecture-specific.")
   return errors
+
+
+def CheckForMissingSymbols(pkgs_data, debug):
+  """Analyzes missing symbols reported by ldd -r.
+
+  1. Collect triplets: pkgname, binary, missing symbol
+  2. If there are any missing symbols, collect all the symbols that are provided
+     by the set of packages.
+  3. From the list of missing symbols, remove all symbols that are provided
+     by the set of packages.
+  4. Report any remaining symbols as errors.
+
+  What indexes do we need?
+
+  symbol -> (pkgname, binary)
+  set(allsymbols)
+  """
+  errors = []
+  missing_symbols = []
+  all_symbols = set()
+  for pkg_data in pkgs_data:
+    pkgname = pkg_data["basic_stats"]["pkgname"]
+    binaries = pkg_data["binaries"]
+    for binary in binaries:
+      for ldd_elem in pkg_data["ldd_dash_r"][binary]:
+        if ldd_elem["state"] == "symbol-not-found":
+          missing_symbols.append((pkgname,
+                                  binary,
+                                  ldd_elem["symbol"]))
+      for symbol in pkg_data["defined_symbols"][binary]:
+        all_symbols.add(symbol)
+  # Remove symbols defined elsewhere.
+  while missing_symbols:
+    ms_pkgname, ms_binary, ms_symbol = missing_symbols.pop()
+    if ms_symbol not in all_symbols:
+      errors.append(checkpkg.CheckpkgTag(
+        ms_pkgname, "symbol-not-found", "%s %s" % (ms_binary, ms_symbol)))
+  return errors
