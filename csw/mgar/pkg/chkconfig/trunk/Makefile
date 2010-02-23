@@ -6,7 +6,7 @@ GARNAME = chkconfig
 GARVERSION = 1.3.30c
 CATEGORIES = utils
 
-DESCRIPTION = Alternatives system from Red Hat
+DESCRIPTION = RedHat alternatives engine with CSW customizations
 define BLURB
   Alternatives system from Red Hat
 endef
