@@ -16,6 +16,7 @@ MASTER_SITES = http://ffmpeg.org/releases/
 DISTFILES  = $(DISTNAME).tar.bz2
 
 PATCHFILES = gnu-grep.patch
+PATCHFILES += 0001-Use-inttypes-instead-of-stdint.patch
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
