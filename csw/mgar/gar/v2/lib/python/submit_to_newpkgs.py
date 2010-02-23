@@ -132,7 +132,11 @@ def main():
   # TODO(maciej): rsync only once
   args = ["rsync", "-v"] + files_to_rsync + [dst_arg]
   logging.debug(args)
-  ret = subprocess.call(args)
+  try:
+    ret = subprocess.call(args)
+  except OSError, e:
+    raise PackageSubmissionError("Couldn't run %s, is the binary "
+                                 "in the path? %s" % (args, e))
   if ret:
     msg = "Copying %s to %s has failed." % (p, dst_arg)
     logging.error(msg)
