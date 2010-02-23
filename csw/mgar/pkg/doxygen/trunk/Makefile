@@ -1,5 +1,5 @@
 GARNAME = doxygen
-GARVERSION = 1.6.1
+GARVERSION = 1.6.3
 CATEGORIES = utils
 
 DESCRIPTION = A documentation system for programming languages
@@ -10,10 +10,6 @@ endef
 
 MASTER_SITES = http://ftp.stack.nl/pub/users/dimitri/
 DISTFILES  = $(GARNAME)-$(GARVERSION).src.tar.gz
-
-# Patch taken from
-#   https://bugzilla.gnome.org/show_bug.cgi?id=599128
-PATCHFILES = 0001-Add-suggested-iconv-patch-from-bug-599128.patch
 
 PACKAGES = CSWdoxygen CSWdoxygendoc
 
@@ -47,6 +43,10 @@ EXTRA_PAX_ARGS += -s ',^\.$(prefix)/man,.$(mandir),'
 
 ARCHALL_CSWdoxygendoc = 1
 PKGFILES_CSWdoxygendoc = $(PKGFILES_DOC)
+
+# There are some Python examples in there, but pulling in Python unconditionally
+# for these tiny examples seems overkill.
+CHECKPKG_OVERRIDES_CSWdoxygendoc = missing-dependency|CSWpython
 
 include gar/category.mk
 
