@@ -15,13 +15,36 @@ SF_PROJ = mpeg4ip
 MASTER_SITES = http://download.m0k.org/handbrake/contrib/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTNAME = $(GARNAME)
-# PATCHFILES = mpeg4ip-1.6.1-mjj.patch
-PATCHFILES += 0001-Bootstrap-again.patch
+PATCHFILES = mpeg4ip-1.6.1-mjj.patch
+# PATCHFILES += 0001-Bootstrap-again.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+GARCOMPILER = GNU
 BUILD64 = 1
+
+EXTRA_CPPFLAGS = -D_GETOPT_H=1
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/cvs_bootstrap
+
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-shared --disable-static
+CONFIGURE_ARGS += --enable-server --enable-player
+CONFIGURE_ARGS += --enable-mp4live
+CONFIGURE_ARGS += --enable-ipv6
+
+CONFIGURE_ARGS_isa-i386 = --enable-mmx
+CONFIGURE_ARGS_isa-sparc = --disable-mmx
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_isa-$(ISA))
 
 include gar/category.mk
+
+post-extract-modulated:
+	-rm -f $(WORKSRC)/bootstrapped
+	@$(MAKECOOKIE)
+
+configure-%/cvs_bootstrap:
+	@echo " ==> Running CVS bootstrap in $*"
+	cd $* && $(CONFIGURE_ENV) ./cvs_bootstrap $(CONFIGURE_ARGS)
+	@$(MAKECOOKIE)
