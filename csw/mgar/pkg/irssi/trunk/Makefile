@@ -11,21 +11,19 @@ define BLURB
 	Support for other protocols like ICQ could be created some day too.
 endef
 
+VENDOR_URL   = http://www.irssi.org/
 MASTER_SITES = http://www.irssi.org/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-
-# We define upstream file regex so we can be notifed of new upstream software release
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_CLASSES = none cswcpsampleconf
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/irssi.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
+SAMPLECONF = .*/irssi.conf
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --with-socks
 CONFIGURE_ARGS += --with-bot
 CONFIGURE_ARGS += --with-proxy
-CONFIGURE_ARGS += --with-perl=module
+CONFIGURE_ARGS += --with-perl=yes
 CONFIGURE_ARGS += --with-perl-lib=vendor
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
@@ -36,19 +34,10 @@ RUNTIME_DEP_PKGS += CSWosslrt
 RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWsunmath
 RUNTIME_DEP_PKGS += CSWggettextrt
-RUNTIME_DEP_PKGS += CSWcswclassutils
+RUNTIME_DEP_PKGS += CSWbdb47
+
+CHECKPKG_OVERRIDES_CSWirssi += symbol-not-found
 
 TEST_TARGET = check
 
-# moving configuration file
-post-install-modulated:
-	(cd $(DESTDIR)$(prefix)/etc; \
-	for i in irssi.conf; do \
-		if [ -r "$$i" ]; then \
-			echo "$$i -> $$i.CSW"; \
-			mv "$$i" "$$i.CSW";     \
-		fi \
-	done)
-
 include gar/category.mk
-PATH := /opt/csw/gnu:$(PATH)
