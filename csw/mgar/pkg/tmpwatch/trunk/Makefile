@@ -1,5 +1,9 @@
 # TODO 
-# ! strtoimax implementation missing on Solaris 8/9
+# ! strtoimax implementation missing on Solaris 8/9, gnulib provides
+#   a strtoimax implementation. Relevant bug against tmpwatch:
+#     https://fedorahosted.org/tmpwatch/ticket/5
+#   Any solutions will certainly also be appreciated by the people on the
+#   bug report.
 GARNAME = tmpwatch
 GARVERSION = 2.9.17
 CATEGORIES = apps
@@ -16,6 +20,9 @@ VENDOR_URL   = https://fedorahosted.org/tmpwatch/
 MASTER_SITES = https://fedorahosted.org/releases/t/m/tmpwatch/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+BUILD_DEP_PKGS   = CSWlibgnugetopt
+RUNTIME_DEP_PKGS = CSWlibgnugetopt
 
 # Taken from libgcrypt's stringhelp.c
 DISTFILES    += stpcpy.c
