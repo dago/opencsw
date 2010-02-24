@@ -23,6 +23,9 @@ SPKG_SOURCEURL = http://www.audiocoding.com/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(SF_PROJ)-(\d+(?:\.\d+)*).tar.bz2
 
+# TBD:
+# DEP_PKGS = CSWmpeg4ip
+
 BUILD64 = 1
 NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
