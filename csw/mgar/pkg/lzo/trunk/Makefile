@@ -17,5 +17,6 @@ VENDOR_URL = http://www.oberhumer.com/opensource/lzo/
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-shared --disable-static
 
 include gar/category.mk
