@@ -24,7 +24,6 @@ running() {
     queue=`/opt/csw/sbin/postconf -c ${CFGDIR} -h queue_directory 2>/dev/null`
     if [ -f ${queue}/pid/master.pid ]; then
         pid=`sed 's/ //g' ${queue}/pid/master.pid`
-        # what directory does the executable live in.  stupid prelink systems.
         pspid=`ps -fp $pid -o pid | sed -n '/[0-9]/{s/ //g;p;}'`
         if [ "X$pid" = "X$pspid" ]; then
             /bin/echo y
