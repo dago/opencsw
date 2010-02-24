@@ -42,6 +42,7 @@ MERGE_DIRS_isa-extra = $(libdir)
 # not able to figure out which target runs the tests in "tests"
 TEST_TARGET = check
 
+ARCHALL_CSWlzma = 1
 PKGFILES_CSWlzma = NOMATCH
 
 include gar/category.mk
