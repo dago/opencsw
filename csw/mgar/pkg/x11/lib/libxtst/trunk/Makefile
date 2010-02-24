@@ -27,6 +27,9 @@ RUNTIME_DEP_PKGS_CSWlibxtst += CSWlibx11
 RUNTIME_DEP_PKGS_CSWlibxtst += CSWlibxext
 RUNTIME_DEP_PKGS_CSWlibxtst += CSWlibxi
 
+BUILD_DEP_PKGS_CSWlibxtst += CSWlibxi
+BUILD_DEP_PKGS_CSWlibxtst += CSWlibxidevel
+
 BUILD64 = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
