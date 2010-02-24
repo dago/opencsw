@@ -1,0 +1,73 @@
+# vim: ft=perl
+
+$email     = 'mjensen@opencsw.org';
+
+$progname  = 'mpeg4ip';
+$version   = '1.6.1';
+
+$buildroot = "${builddir}/${progname}-${version}-buildroot";
+
+$category  = 'system';
+$vendor    = 'http://mpeg4ip.sourceforge.net/ packaged for CSW by Murray Jensen';
+
+@sources   = ("${progname}-${version}.tar.gz");
+$prepatch  = <<"EOF";
+	set -e
+	mv ${progname} ${progname}-${version}
+	rm -f ${progname}-${version}/Makefile
+EOF
+@patches   = (["${progname}-${version}-mjj.patch", "${progname}-${version}", '-p1']);
+
+@packages  = ({
+		pkgname      => "${progname}lib",
+		filename     => "${progname}_lib",
+		name         => "${progname}_lib - an end-to-end system to explore streaming multimedia - headers and libraries",
+		dependencies => ['CSWcommon','CSWgcc3g++rt'],
+		filelist     => [qw(opt/csw/bin/mpeg4ip-config opt/csw/include opt/csw/lib opt/csw/share/man/man3 \! -wholename \*/mp4player_plugin\*)]
+	      },
+	      {
+		pkgname      => "${progname}",
+		filename     => "${progname}",
+		name         => "${progname} - an end-to-end system to explore streaming multimedia - binaries",
+		dependencies => ['CSWcommon',"CSW${progname}lib",'CSWsdlmixer'],
+		filelist     => [qw(opt/csw/bin opt/csw/lib/mp4player_plugin opt/csw/share/man/man1 \! -wholename \*/mpeg4ip-config \! -name mp4live.1)]
+	      });
+
+$copyright = "${progname}-${version}/COPYING";
+
+$build     = <<"EOF";
+
+cd ${progname}-${version}
+
+compiler=gcc3
+nozdefs=true
+
+. ${RealBin}/mjj_setup
+
+## ignore forced bootstrap
+#ac_cv_file___bootstrapped=yes; export ac_cv_file___bootstrapped
+rm -f bootstrapped
+ 
+cfgflags="\
+    --prefix=/opt/csw \
+    --mandir=/opt/csw/share/man \
+    --enable-shared \
+    --disable-static \
+    --enable-server \
+    --enable-player \
+    --enable-mp4live \
+    --enable-ipv6 \
+"
+
+case `uname -p` in
+sparc)	cfgflags="\$cfgflags --disable-mmx" ;;
+i386)	cfgflags="\$cfgflags --enable-mmx" ;;
+esac
+
+buildroot=${buildroot}
+cfgmarker=_always_run_configure_
+cfgprogram=./cvs_bootstrap
+
+. ${RealBin}/mjj_build
+
+EOF
