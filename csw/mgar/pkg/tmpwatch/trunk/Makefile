@@ -1,7 +1,5 @@
 # TODO 
 # ! strtoimax implementation missing on Solaris 8/9
-# ! on repeated gmake build invocations (after build failures), only a subset of the
-#   environment is used, in particular CPPFLAGS/LDFLAGS are missing
 GARNAME = tmpwatch
 GARVERSION = 2.9.17
 CATEGORIES = apps
