@@ -32,7 +32,7 @@ BUILD_ARGS = tmpwatch
 TEST_SCRIPTS =
 
 # Link against our OpenCSW getopt lib which has getopt_long
-EXTRA_LD_FLAGS = -lgnugetopt
+EXTRA_LINKER_FLAGS = -lgnugetopt
 
 include gar/category.mk
 
