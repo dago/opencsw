@@ -29,6 +29,9 @@ RUNTIME_DEP_PKGS_CSWlibxvmc       = CSWlibx11 CSWlibxext CSWlibxv
 RUNTIME_DEP_PKGS_CSWlibxvmc 	 += CSWxv
 RUNTIME_DEP_PKGS_CSWlibxvmcdevel += CSWlibxvmc
 
+BUILD_DEP_PKGS_CSWlibxvmc 	 += CSWlibxv
+BUILD_DEP_PKGS_CSWlibxvmc 	 += CSWlibxvdevel
+
 PKGFILES_CSWlibxvmcdevel  = $(PKGFILES_DEVEL)
 
 BUILD64 = 1
