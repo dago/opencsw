@@ -13,19 +13,35 @@ endef
 MASTER_SITES = http://tukaani.org/xz/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWgcc4corert
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-GARCOMPILER    = GNU
+PACKAGES = CSWxz CSWlzma
+
+CATALOGNAME_CSWxz = xz
+CATALOGNAME_CSWlzma = lzma
+
+SPKG_DESC_CSWxz = $(DESCRIPTION)
+SPKG_DESC_CSWlzma = Stub to the successor xz
+
+RUNTIME_DEP_PKGS_CSWxz = CSWggettextrt CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlzma = CSWxz
+
+GARCOMPILER = GNU
+
+BUILD64 = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # Workaround for reported bug:
 #   <http://sourceforge.net/projects/lzmautils/forums/forum/708858/topic/3500014>
 CONFIGURE_ARGS += gl_cv_cc_visibility=no
 
+MERGE_DIRS_isa-extra = $(libdir)
+
 # not able to figure out which target runs the tests in "tests"
 TEST_TARGET = check
+
+PKGFILES_CSWlzma = NOMATCH
 
 include gar/category.mk
