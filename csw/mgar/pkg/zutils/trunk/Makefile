@@ -41,3 +41,7 @@ INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
 EXTRA_PAX_ARGS = -s ",/z,/Z,p"
 
 include gar/category.mk
+
+post-extract-modulated:
+	-gln -s zutils $(WORKSRC)/Zutils
+	@$(MAKECOOKIE)
