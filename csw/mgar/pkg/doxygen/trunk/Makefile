@@ -27,12 +27,12 @@ SPKG_SOURCEURL = http://www.stack.nl/~dimitri/doxygen/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).src.tar.gz
 UPSTREAM_MASTER_SITES = $(SPKG_SOURCEURL)
 
-BUILD_DEP_PKGS = CSWgraphviz2
+BUILD_DEP_PKGS = CSWgraphviz
 
 CONFIGURE_ARGS = --prefix $(prefix)
 CONFIGURE_ARGS += --release
 CONFIGURE_ARGS += --docdir $(docdir)/doxygen
-CONFIGURE_ARGS += --dot /opt/csw/graphviz2/bin/dot
+CONFIGURE_ARGS += --dot /opt/csw/bin/dot
 CONFIGURE_ARGS += --platform solaris-cc
 
 TEST_SCRIPTS =
