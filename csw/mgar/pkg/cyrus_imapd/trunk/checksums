@@ -1,3 +1,4 @@
+c86246806025404625c98a2348d0739d  0001-Force-linkage-to-libperl.so.patch
 585646739e9403c02e868900ebed892a  CSWcyrusimapd.checkinstall
 5111a5573aa6d4878b852780aeae8a27  CSWcyrusimapd.preinstall
 940d00efcc42b92f05e92e6dd2764f61  CSWcyrusimapd.prototype

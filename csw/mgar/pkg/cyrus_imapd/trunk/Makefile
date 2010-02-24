@@ -92,6 +92,10 @@ PATCHFILES += cyrus-imapd-2.3.7-nobarenewlinescheck.patch
 # we restore the previous default value to avoid upgrade problem
 PATCHFILES += restore_allowplaintext_default.patch
 
+# Make sure the module is self contained. This fixes bug
+#   <http://www.opencsw.org/mantis/view.php?id=3766>
+PATCHFILES += 0001-Force-linkage-to-libperl.so.patch
+
 #GARCOMPILER = GNU
 #GNU_CC_OPT = -g
 #GNU_LD_OPT = -g
