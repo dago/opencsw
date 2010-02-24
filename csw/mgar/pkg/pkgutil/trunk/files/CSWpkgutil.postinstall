@@ -24,4 +24,8 @@ else
   echo "admin already exists, will not copy admin.CSW to it."
 fi
 
+echo
+echo "NOTE! Make sure to check out any changes in /etc/opt/csw/pkgutil.conf.CSW."
+echo
+
 exit 0

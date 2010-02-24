@@ -1,4 +1,5 @@
 GARNAME = pkgutil
+#GARVERSION = 1.10b1
 GARVERSION = 1.9.1
 CATEGORIES = utils
 
@@ -15,9 +16,7 @@ COMMON_PKG_DEPENDS =
 
 MASTER_SITES  = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).zip
-DISTFILES += $(call admfiles,CSWpkgutil,prototype)
-DISTFILES += i.cswpkgutil
-DISTFILES += r.cswpkgutil
+DISTFILES += $(call admfiles,CSWpkgutil,prototype preremove postinstall)
 DISTFILES += build_sun_catalog.py
 DISTFILES += opencsw.py
 
@@ -27,8 +26,8 @@ SPKG_DESC_CSWpkgutil = $(DESCRIPTION)
 SPKG_DESC_CSWpkgutilplus = Extends pkgutil functionality
 
 # Explicitly depend on CSWcommon here since it's not the default
-#RUNTIME_DEP_PKGS_CSWpkgutilplus = CSWcommon CSWperl CSWgnupg CSWpkgutil CSWpmwwwcurl
-RUNTIME_DEP_PKGS_CSWpkgutilplus = CSWcommon CSWperl CSWgnupg CSWpkgutil CSWcswpkgloghooks CSWpython
+RUNTIME_DEP_PKGS_CSWpkgutilplus  = CSWcommon CSWperl CSWgnupg CSWpkgutil CSWcswpkgloghooks CSWpython
+#RUNTIME_DEP_PKGS_CSWpkgutilplus += CSWpmwwwcurl
 
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
 PKGFILES_CSWpkgutilplus += .*chkcat.*
@@ -50,7 +49,6 @@ include gar/category.mk
 
 WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://pkgutil.wikidot.com/
-SPKG_CLASSES_CSWpkgutil = none cswpkgutil
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
