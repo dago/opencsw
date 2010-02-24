@@ -10,7 +10,7 @@
 # cswclassutils settings
 #AUTOENABLE NO
 
-PATH=/bin:/usr/bin:/sbin:/usr/sbin:/opt/csw/sbin
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin
 CFGDIR=/etc/opt/csw/postfix
 DAEMON=/opt/csw/sbin/postfix
 PIDFILE=/var/opt/csw/run/postfix.pid
@@ -21,12 +21,12 @@ unset TZ
 test -x ${DAEMON} -a -f ${CFGDIR}/main.cf || exit 0
 
 running() {
-    queue=`/opt/csw/sbin/postconf -c ${CFGDIR} -h queue_directory 2>/dev/null`
+    queue=`postconf -c ${CFGDIR} -h queue_directory 2>/dev/null`
     if [ -f ${queue}/pid/master.pid ]; then
         pid=`sed 's/ //g' ${queue}/pid/master.pid`
         pspid=`ps -fp $pid -o pid | sed -n '/[0-9]/{s/ //g;p;}'`
         if [ "X$pid" = "X$pspid" ]; then
-            /bin/echo y
+            echo y
         fi
     fi
 }
@@ -37,13 +37,13 @@ case "$1" in
          /opt/csw/bin/newaliases
         fi
 
-        /bin/echo "Starting mail transport agent: Postfix"
+        echo "Starting mail transport agent: Postfix"
         ${DAEMON} -c ${CFGDIR} start 2>&1 |
                 (grep -v 'starting the Postfix' 1>&2 || /bin/true)
     ;;
 
     stop)
-        /bin/echo "Stopping mail transport agent: Postfix"
+        echo "Stopping mail transport agent: Postfix"
         ${DAEMON} -c ${CFGDIR} stop 2>&1 |
                 (grep -v 'stopping the Postfix' 1>&2 || /bin/true)
     ;;
@@ -54,10 +54,10 @@ case "$1" in
     ;;
     
     force-reload|reload)
-        /bin/echo "Reloading Postfix configuration..."
+        echo "Reloading Postfix configuration..."
         ${DAEMON} -c ${CFGDIR} reload 2>&1 |
                 (grep -v 'refreshing the Postfix' 1>&2 || /bin/true)
-        /bin/echo "done."
+        echo "done."
     ;;
 
     flush)
@@ -71,16 +71,16 @@ case "$1" in
     status)
         RUNNING=`running`
         if [ -n "$RUNNING" ]; then
-           /bin/echo "postfix is running"
+           echo "postfix is running"
            exit 0
         else
-           /bin/echo "postfix is not running"
+           echo "postfix is not running"
            exit 3
         fi
     ;;
 
     *)
-        /bin/echo "Usage: /etc/init.d/postfix {start|stop|restart|reload|flush|check|status|force-reload}"
+        echo "Usage: /etc/init.d/postfix {start|stop|restart|reload|flush|check|status|force-reload}"
         exit 1
     ;;
 esac
