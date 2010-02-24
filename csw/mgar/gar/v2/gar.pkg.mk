@@ -155,7 +155,7 @@ SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
 SPKG_CLASSES   ?= none
-SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
+SPKG_OSNAME    := $(if $(SPKG_OSNAME),$(SPKG_OSNAME),$(shell /usr/bin/uname -s)$(shell /usr/bin/uname -r))
 
 SPKG_SPOOLROOT ?= $(DESTROOT)
 SPKG_SPOOLDIR  ?= $(SPKG_SPOOLROOT)/spool.$(GAROSREL)-$(GARCH)

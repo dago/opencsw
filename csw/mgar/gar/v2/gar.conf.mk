@@ -14,7 +14,7 @@
 -include /etc/opt/csw/garrc
 -include /opt/csw/etc/garrc
 
-THISHOST := $(shell uname -n)
+THISHOST := $(shell /usr/bin/uname -n)
 
 # On these platforms packages are built.
 # They will include binaries for all ISAs that are specified for the platform.
@@ -102,8 +102,8 @@ GARFLAVOR ?= OPT
 
 # Architecture
 GARCHLIST ?= sparc i386
-GARCH    ?= $(shell uname -p)
-GAROSREL ?= $(shell uname -r)
+GARCH    := $(if $(GARCH),$(GARCH),$(shell /usr/bin/uname -p))
+GAROSREL := $(if $(GAROSREL),$(GAROSREL),$(shell /usr/bin/uname -r))
 
 
 # These are the standard directory name variables from all GNU
