@@ -15,9 +15,9 @@ define BLURB
   enabling it to. 
 endef
 
-SPKG_SOURCEURL = http://packages.debian.org/sid/tmpreaper
+VENDOR_URL   = http://packages.debian.org/sid/tmpreaper
 MASTER_SITES = http://ftp.de.debian.org/debian/pool/main/t/tmpreaper/
-DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
+DISTFILES    = $(GARNAME)_$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS =
