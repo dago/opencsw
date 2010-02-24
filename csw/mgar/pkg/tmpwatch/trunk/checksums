@@ -1,0 +1,4 @@
+9d3371e425a1214f59044487b2cf76b9  0001-Makefile-honor-defaults-and-use-DESTDIR-instead-of-R.patch
+af1b38792e28777a049cbe4ca3dd2132  0002-tmpwatch.c-include-stpcpy.c.patch
+6a89324536d839b75ceb2fbdac4bf255  stpcpy.c
+7738f5db4ae0ce3795c224f13a597356  tmpwatch-2.9.17.tar.bz2

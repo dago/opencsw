@@ -1,0 +1,61 @@
+From a6bf87119784e5f4cf2ecfeab171e6b59ce725e1 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Wed, 24 Feb 2010 16:39:37 +0100
+Subject: [PATCH 1/2] Makefile: honor defaults and use DESTDIR instead of ROOT
+
+---
+ Makefile |   24 +++++++++++++-----------
+ 1 files changed, 13 insertions(+), 11 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index cfb71dd..35297a3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,7 +2,9 @@ VERSION=2.9.17
+ HGTAG = 'tmpwatch-$(VERSION)'
+ OS_NAME=$(shell uname -s)
+ 
+-CFLAGS=$(RPM_OPT_FLAGS) -W -Wall -DVERSION=\"$(VERSION)\" -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE
++CFLAGS ?= $(RPM_OPT_FLAGS) -W -Wall
++CFLAGS += -DVERSION=\"$(VERSION)\"
++CFLAGS += -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE
+ 
+ ifeq ($(OS_NAME),HP-UX)
+     ROOT=/
+@@ -13,12 +15,12 @@ ifeq ($(OS_NAME),HP-UX)
+     CC=gcc
+ endif
+ ifeq ($(OS_NAME),SunOS)
+-    ROOT=/
+-    PREFIX=/usr/local
+-    MANDIR=$(PREFIX)/man
+-    SBINDIR=$(PREFIX)/sbin
+-    INSTALL=./install-sh
+-    CC=gcc
++    DESTDIR?=/
++    PREFIX?=/usr/local
++    MANDIR?=$(PREFIX)/man
++    SBINDIR?=$(PREFIX)/sbin
++    INSTALL?=./install-sh
++    CC?=gcc
+ endif
+ ifeq ($(OS_NAME),Linux)
+     ROOT=/
+@@ -31,10 +33,10 @@ endif
+ all: tmpwatch
+ 
+ install: all
+-	[ -d $(ROOT)$(SBINDIR) ] || mkdir -p $(ROOT)$(SBINDIR)
+-	[ -d $(ROOT)$(MANDIR)/man8 ] || mkdir -p $(ROOT)$(MANDIR)/man8
+-	$(INSTALL) -m 755 tmpwatch $(ROOT)$(SBINDIR)/tmpwatch
+-	$(INSTALL) -m 644 tmpwatch.8 $(ROOT)$(MANDIR)/man8/tmpwatch.8
++	[ -d $(DESTDIR)$(SBINDIR) ] || mkdir -p $(DESTDIR)$(SBINDIR)
++	[ -d $(DESTDIR)$(MANDIR)/man8 ] || mkdir -p $(DESTDIR)$(MANDIR)/man8
++	$(INSTALL) -m 755 tmpwatch $(DESTDIR)$(SBINDIR)/tmpwatch
++	$(INSTALL) -m 644 tmpwatch.8 $(DESTDIR)$(MANDIR)/man8/tmpwatch.8
+ 
+ clean:
+ 	rm -f tmpwatch
+-- 
+1.6.6
+
