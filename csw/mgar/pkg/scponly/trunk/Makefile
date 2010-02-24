@@ -4,18 +4,14 @@ CATEGORIES = xtra
 
 DESCRIPTION = A Restricted Shell
 define BLURB
-scponly is an alternative 'shell' (of sorts) for system administrators who would like to provide access to remote users to both read and write local files without providing any remote execution priviledges.
+  scponly is an alternative 'shell' (of sorts) for system administrators
+  who would like to provide access to remote users to both read and write
+  local files without providing any remote execution priviledges.
 endef
 
+VENDOR_URL   = http://sublimation.org/scponly/
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+DISTFILES    = $(GARNAME)-$(GARVERSION).tgz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
