@@ -15,8 +15,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.oberhumer.com/opensource/lzo/
 
+CONFIGURE_ARGS_isa-amd64 = --disable-asm
+
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-static
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_isa-$(ISA))
 
 include gar/category.mk
