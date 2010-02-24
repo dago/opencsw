@@ -12,6 +12,7 @@ endef
 
 MASTER_SITES = http://tukaani.org/xz/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = 0001-Do-not-force-inclusion-of-stdint.h.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -31,7 +32,12 @@ GARCOMPILER = GNU
 
 BUILD64 = 1
 NOISAEXEC = 1
+
+# Assembler integration broken in amd64
+CONFIGURE_ARGS_isa-amd64 = --disable-assembler
+
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_isa-$(ISA))
 
 # Workaround for reported bug:
 #   <http://sourceforge.net/projects/lzmautils/forums/forum/708858/topic/3500014>
