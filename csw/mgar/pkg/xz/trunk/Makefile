@@ -21,6 +21,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 GARCOMPILER    = GNU
 CONFIGURE_ARGS = $(DIRPATHS)
 
+# Workaround for reported bug:
+#   <http://sourceforge.net/projects/lzmautils/forums/forum/708858/topic/3500014>
+CONFIGURE_ARGS += gl_cv_cc_visibility=no
+
 # not able to figure out which target runs the tests in "tests"
 TEST_TARGET = check
 
