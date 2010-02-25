@@ -14,7 +14,11 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
+PATCHFILES = sun-sed.patch
 BUILD64 = 1
-MD5SUM = gm5sum
+# To make the test use gmd5sum
+MD5SUM = gmd5sum
+RUNTIME_DEP_PKGS_CSWsharutils += CSWggettextrt
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWsharutils) CSWtextutils
 export MD5SUM
 include gar/category.mk
