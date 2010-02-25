@@ -40,6 +40,7 @@ LDD_R_OUTPUT_1 =  """\tlibc.so.1 =>  /lib/libc.so.1
 \tsymbol not found: UtfToLocal    (/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)
 \tlibm.so.2 =>   /lib/libm.so.2
 \t/usr/lib/secure/s8_preload.so.1
+\tlibXext.so.0 (SUNW_1.1) =>\t (version not found)
 """
 
 class DependenciesUnitTest_1(unittest.TestCase):
@@ -807,6 +808,16 @@ class PackageStatsUnitTest(unittest.TestCase):
         'soname': None,
         'path': '/usr/lib/secure/s8_preload.so.1',
         'symbol': None,
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLdd_VersionNotFound(self):
+    line = '\tlibXext.so.0 (SUNW_1.1) =>\t (version not found)'
+    expected = {
+        'symbol': None,
+        'soname': 'libXext.so.0',
+        'path': None,
+        'state': 'version-not-found',
     }
     self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
 

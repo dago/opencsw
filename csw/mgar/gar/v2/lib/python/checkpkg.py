@@ -1124,7 +1124,8 @@ class PackageStats(object):
     found_re = r"^\t(?P<soname>\S+)\s+=>\s+(?P<path_found>\S+)"
     symbol_not_found_re = r"^\tsymbol not found:\s(?P<symbol>\S+)\s+\((?P<path_not_found>\S+)\)"
     only_so = r"^\t(?P<path_only>\S+)$"
-    common_re = r"(%s|%s|%s)" % (found_re, symbol_not_found_re, only_so)
+    version_so = r'^\t(?P<soname_version_not_found>\S+) \((?P<lib_name>\S+)\) =>\t \(version not found\)'
+    common_re = r"(%s|%s|%s|%s)" % (found_re, symbol_not_found_re, only_so, version_so)
     m = re.match(common_re, line)
     response = {}
     if m:
@@ -1144,6 +1145,11 @@ class PackageStats(object):
         response["state"] = "OK"
         response["soname"] = None
         response["path"] = d["path_only"]
+        response["symbol"] = None
+      elif d["soname_version_not_found"]:
+        response["state"] = "version-not-found"
+        response["soname"] = d["soname_version_not_found"]
+        response["path"] = None
         response["symbol"] = None
       else:
         raise StdoutSyntaxError("Could not parse %s" % repr(line))
