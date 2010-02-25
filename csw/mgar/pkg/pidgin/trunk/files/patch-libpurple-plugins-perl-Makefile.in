@@ -1,0 +1,25 @@
+--- pidgin-2.6.6.orig/libpurple/plugins/perl/Makefile.in	2010-02-16 10:34:23.000000000 +0100
++++ pidgin-2.6.6/libpurple/plugins/perl/Makefile.in	2010-02-25 17:26:31.537969797 +0100
+@@ -798,7 +798,7 @@
+ 			${LN_S} -f $$srcloc/$$f $$f; \
+ 		done; \
+ 	fi
+-	@cd common && $(perlpath) Makefile.PL
++	@cd common && $(perlpath) Makefile.PL INSTALLDIRS=vendor
+ 
+ common/Makefile.PL: common/Makefile.PL.in $(top_builddir)/config.status
+ 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
+@@ -807,10 +807,10 @@
+ 	@for dir in $(perl_dirs); do \
+ 		cd $$dir && \
+ 		if [ ! -f Makefile ]; then \
+-			$(perlpath) Makefile.PL; \
++			$(perlpath) Makefile.PL INSTALLDIRS=vendor; \
+ 		fi && \
+-		($(MAKE) CC="$(CC)" CCFLAGS="$(PERL_CFLAGS) $(CFLAGS)" $(PERL_EXTRA_OPTS) || \
+-		 $(MAKE) CC="$(CC)" CCFLAGS="$(PERL_CFLAGS) $(CFLAGS)" $(PERL_EXTRA_OPTS)) && \
++		($(MAKE) CC="$(CC)" CCFLAGS="$(PERL_CFLAGS) $(CFLAGS) $(PERL_LIBS)" $(PERL_EXTRA_OPTS) || \
++		 $(MAKE) CC="$(CC)" CCFLAGS="$(PERL_CFLAGS) $(CFLAGS) $(PERL_LIBS)" $(PERL_EXTRA_OPTS)) && \
+ 		cd ..; \
+ 	done
+ 

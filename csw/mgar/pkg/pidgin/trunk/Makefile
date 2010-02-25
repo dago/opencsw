@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = pidgin
-GARVERSION = 2.6.5
+GARVERSION = 2.6.6
 CATEGORIES = apps
 
 DESCRIPTION = Multi-protocol IM client
@@ -20,12 +20,16 @@ CONFIGURE_ARGS += '--with-tkconfig=/opt/csw/lib'
 CONFIGURE_ARGS += '--enable-gnutls=yes'
 CONFIGURE_ARGS += '--disable-nss'
 CONFIGURE_ARGS += '--disable-avahi'
+CONFIGURE_ARGS += '--disable-screensaver'
 CONFIGURE_ARGS += '--disable-nm'
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
 CONFIGURE_ARGS += --disable-vv
 
 
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
 PATH = $(SOS11_CC_HOME)/bin:$(PATH)
 EXTRA_EXPORTS = PATH
 
@@ -55,9 +59,16 @@ RUNTIME_DEP_PKGS += CSWgnutls CSWgstreamer CSWgtk2 CSWgtkspell CSWlibatk
 RUNTIME_DEP_PKGS += CSWlibcairo CSWlibdbus CSWlibxml2 CSWmeanwhile CSWncurses
 RUNTIME_DEP_PKGS += CSWpango CSWperl CSWpython CSWsilctoolkit CSWstartupnotif
 RUNTIME_DEP_PKGS += CSWtcl CSWtk CSWiconv CSWsunmath CSWzlib CSWdbus
-RUNTIME_DEP_PKGS += CSWfconfig CSWftype2 CSWlibx11 CSWbdb CSWlibidn
-
+RUNTIME_DEP_PKGS += CSWfconfig CSWftype2 CSWlibx11 CSWbdb47 CSWlibidn
+RUNTIME_DEP_PKGS += CSWlibice CSWlibxext CSWlibsm CSWgstplugins
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWlibdbusdev CSWdbusglibdev CSWgnutlsdevel
+
+PATCHFILES += patch-pidgin-Makefile.in
+PATCHFILES += patch-pidgin-plugin.c
+PATCHFILES += patch-pidgin-plugins-perl-Makefile.in
+PATCHFILES += patch-pidgin-plugins-perl-common-Makefile.PL.in
+PATCHFILES += patch-libpurple-plugins-perl-Makefile.in
+PATCHFILES += patch-libpurple-plugins-perl-common-Makefile.PL.in
 
 include gar/category.mk
