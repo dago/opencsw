@@ -28,7 +28,7 @@ CATALOGNAME_CSWneonfull = neon_full
 CATALOGNAME_CSWneon-devel = neon_devel
 
 RUNTIME_DEP_PKGS_CSWneon = CSWexpat CSWosslrt CSWzlib CSWggettextrt
-RUNTIME_DEP_PKGS_CSWneonfull = CSWexpat CSWosslrt CSWzlib CSWggettextrt CSWpakchois CSWlibproxy
+RUNTIME_DEP_PKGS_CSWneonfull = CSWexpat CSWosslrt CSWzlib CSWggettextrt CSWpakchois CSWlibproxy CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWneon-devel = CSWneon
 
 BUILD_DEP_PKGS = $(sort $(RUNTIME_DEP_PKGS_CSWneon) $(RUNTIME_DEP_PKGS_CSWneonfull))
