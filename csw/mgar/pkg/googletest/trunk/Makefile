@@ -17,13 +17,12 @@ endef
 SPKG_SOURCEURL = http://code.google.com/p/googletest/
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = gtest-$(GARVERSION).tar.gz
-WORKSRC = $(WORKDIR)/gtest-$(GARVERSION)
+DISTNAME = gtest-$(GARVERSION)
 UFILES_REGEX = gtest-(\d+(?:\.\d+)*).tar.gz
+EXTRA_CXXFLAGS = -library=stlport4 -library=no%Cstd
+# EXTRA_LDFLAGS = -lCrun -lm
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-TEST_SCRIPTS = googletest
-TEST_TARGETS = check
-include gar/category.mk
+TEST_TARGET = check
 
-test-googletest:
-	(cd $(WORKSRC) && gmake check)
-	@$(MAKECOOKIE)
+include gar/category.mk
