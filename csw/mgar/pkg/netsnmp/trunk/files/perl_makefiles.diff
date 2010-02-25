@@ -5,7 +5,7 @@ diff -ru ../build-global/net-snmp-5.4.2.1/perl/ASN/Makefile.PL net-snmp-5.4.2.1/
        $lib_version = `$opts->{'nsconfig'} --version`;
        
        if (lc($opts->{'insource'}) eq "true") {
-+        $Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ " . "$Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
++        $Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ -L/opt/csw/lib -lperl $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
  	$Params{'LIBS'} = "-L../../snmplib/.libs -L../../snmplib/ " . $Params{'LIBS'};
  	$Params{'CCFLAGS'} = "-I../../include " . $Params{'CCFLAGS'};
        }
@@ -16,7 +16,7 @@ diff -ru ../build-global/net-snmp-5.4.2.1/perl/OID/Makefile.PL net-snmp-5.4.2.1/
  	$Params{'CCFLAGS'} .= " " . $Config{'ccflags'};
          $lib_version = `$opts->{'nsconfig'} --version`;
  	if (lc($opts->{'insource'}) eq "true") {
-+	    $Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ " . "$Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
++	    $Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ -L/opt/csw/lib -lperl $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
  	    $Params{'LIBS'} = "-L../../snmplib/.libs -L../../snmplib/ " . $Params{'LIBS'};
  	    $Params{'CCFLAGS'} = "-I../../include " . $Params{'CCFLAGS'};
  #	} else {
@@ -27,7 +27,7 @@ diff -ru ../build-global/net-snmp-5.4.2.1/perl/SNMP/Makefile.PL net-snmp-5.4.2.1
  	}
          $lib_version = `$opts->{'nsconfig'} --version`;
  	if (lc($opts->{'insource'}) eq "true") {
-+	    $Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ " . "$Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
++	    $Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ -L/opt/csw/lib -lperl $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
  	    $Params{'LIBS'} = "-L../../snmplib/.libs -L../../snmplib/ " . $Params{'LIBS'};
  	    $Params{'CCFLAGS'} = "-I../../include " . $Params{'CCFLAGS'};
  #	} else {
@@ -38,7 +38,7 @@ diff -ru ../build-global/net-snmp-5.4.2.1/perl/TrapReceiver/Makefile.PL net-snmp
  	}
  
  	if (lc($opts->{'insource'}) eq "true") {
-+	    $Params{'LDDLFLAGS'} = "-L../../apps/.libs -L../../apps -L../../agent/.libs -L../../agent -L../../agent/helpers/.libs -L../../agent/helpers -L../../snmplib/.libs -L../../snmplib " . "$Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
++	    $Params{'LDDLFLAGS'} = "-L../../apps/.libs -L../../apps -L../../agent/.libs -L../../agent -L../../agent/helpers/.libs -L../../agent/helpers -L../../snmplib/.libs -L../../snmplib -L/opt/csw/lib -lperl $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
              $Params{'LIBS'} = "-L../../apps/.libs -L../../apps -L../../agent/.libs -L../../agent -L../../agent/helpers/.libs -L../../agent/helpers -L../../snmplib/.libs -L../../snmplib " . $Params{'LIBS'};
  	    $Params{'CCFLAGS'} = "-I../../include " . $Params{'CCFLAGS'};
  	} else {
@@ -49,7 +49,7 @@ diff -ru ../build-global/net-snmp-5.4.2.1/perl/agent/Makefile.PL net-snmp-5.4.2.
  	$Params{'CCFLAGS'} .= " " . $Config{'ccflags'};
          $lib_version = `$opts->{'nsconfig'} --version`;
  	if (lc($opts->{'insource'}) eq "true") {
-+	    $Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ -L../../agent/.libs -L../../agent/ -L../../agent/helpers/.libs -L../../agent/helpers/ " . "$Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
++	    $Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ -L../../agent/.libs -L../../agent/ -L../../agent/helpers/.libs -L../../agent/helpers/ -L/opt/csw/lib -lperl $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
  	    $Params{'LIBS'} = "-L../../snmplib/.libs -L../../snmplib/ -L../../agent/.libs -L../../agent/ -L../../agent/helpers/.libs -L../../agent/helpers/ " . $Params{'LIBS'};
  	    $Params{'CCFLAGS'} = "-I../../include " . $Params{'CCFLAGS'};
  #	} else {
@@ -60,7 +60,7 @@ diff -ru ../build-global/net-snmp-5.4.2.1/perl/default_store/Makefile.PL net-snm
  	$Params{'CCFLAGS'} .= " " . $Config{'ccflags'};
          $lib_version = `$opts->{'nsconfig'} --version`;
  	if (lc($opts->{'insource'}) eq "true") {
-+   	    $Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ " . "$Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
++   	    $Params{'LDDLFLAGS'} = "-L../../snmplib/.libs -L../../snmplib/ -L/opt/csw/lib -lperl $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
  	    $Params{'LIBS'} = "-L../../snmplib/.libs -L../../snmplib/ " . $Params{'LIBS'};
  	    $Params{'CCFLAGS'} = "-I../../include " . $Params{'CCFLAGS'};
  	}
@@ -70,7 +70,7 @@ diff -ru ../build-global/net-snmp-5.4.2.1/perl/default_store/Makefile.PL net-snm
      }
      else {
  	$opts = NetSNMPGetOpts("../../");
-+	$Params{'LDDLFLAGS'} = "$Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
++	$Params{'LDDLFLAGS'} = "-L/opt/csw/lib -lperl $Config{lddlflags} " . `$opts->{'nsconfig'} --ldflags`;
  	$Params{'LIBS'}    = `$opts->{'nsconfig'} --libs`;
  	chomp($Params{'LIBS'});
  	$Params{'CCFLAGS'} = `$opts->{'nsconfig'} --cflags`;
@@ -78,7 +78,7 @@ diff -ru ../build-global/net-snmp-5.4.2.1/perl/default_store/Makefile.PL net-snm
  	$Params{'CCFLAGS'} .= " " . $Config{'ccflags'};
          $lib_version = `$opts->{'nsconfig'} --version`;
  	if ($opts->{'insource'} eq "true") {
-+	    $Params{'LDDLFLAGS'} = "-L../../../snmplib/.libs -L../../../snmplib/ " . $Params{'LDDLFLAGS'};
++	    $Params{'LDDLFLAGS'} = "-L../../../snmplib/.libs -L../../../snmplib/ -L/opt/csw/lib -lperl " . $Params{'LDDLFLAGS'};
  	    $Params{'LIBS'} = "-L../../../snmplib/.libs -L../../../snmplib/ " . $Params{'LIBS'};
  	    $Params{'CCFLAGS'} = "-I../../../include " . $Params{'CCFLAGS'};
  	}
