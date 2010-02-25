@@ -1,0 +1,14 @@
+diff --speed-large-files --minimal -Nru mpeg4ip.orig/lib/SDLAudio/src/audio/sun/SDL_sunaudio.c mpeg4ip/lib/SDLAudio/src/audio/sun/SDL_sunaudio.c
+--- mpeg4ip.orig/lib/SDLAudio/src/audio/sun/SDL_sunaudio.c 2010-02-25 01:29:55.025447000 +0100
++++ mpeg4ip/lib/SDLAudio/src/audio/sun/SDL_sunaudio.c      2010-02-25 01:32:11.778312000 +0100
+@@ -163,9 +163,9 @@
+ #endif
+ }
+
++static Uint8 snd2au(int sample);
+ void DSP_PlayAudio(_THIS)
+ {
+-       static Uint8 snd2au(int sample);
+        /* Write the audio data */
+        if ( ulaw_only ) {
+                /* Assuming that this->spec.freq >= 8000 Hz */

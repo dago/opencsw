@@ -13,9 +13,14 @@ SF_PROJ = mpeg4ip
 # SF doesn't have the latest version as it was removed due to some breakage
 # So we get it from another place and patch the flaw away
 MASTER_SITES = http://download.m0k.org/handbrake/contrib/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTNAME = $(GARNAME)
-PATCHFILES = mpeg4ip-1.6.1-mjj.patch
+
+
+DISTFILES   = $(GARNAME)-$(GARVERSION).tar.gz
+DISTNAME    = $(GARNAME)
+PATCHFILES  = mpeg4ip-1.6.1-mjj.patch 
+# PATCHFILES += SDL_sunaudio.c.diff
+# PATCHFILES += type_basic.cpp.diff
+
 # PATCHFILES += 0001-Bootstrap-again.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -24,7 +29,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 GARCOMPILER = GNU
 BUILD64 = 1
 
-EXTRA_CPPFLAGS = -D_GETOPT_H=1
+# EXTRA_CPPFLAGS = -D_GETOPT_H=1 -DHAVE_GETOPT_H
+EXTRA_CPPFLAGS = -DHAVE_GETOPT_H -D__GNU_LIBRARY__
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/cvs_bootstrap
 
@@ -37,6 +43,13 @@ CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS_isa-i386 = --enable-mmx
 CONFIGURE_ARGS_isa-sparc = --disable-mmx
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_isa-$(ISA))
+
+PACKAGES = CSWmpeg4ip
+CATALOGNAME_CSWmpeg4ip = mpeg4ip
+SPKG_DESC_CSWmpeg4ip = $(DESCRIPTION)
+
+BUILD_DEP_PKGS_CSWmpeg4ip = CSWlibgnugetopt
+
 
 include gar/category.mk
 
