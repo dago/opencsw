@@ -1,0 +1,53 @@
+From c4d441c054c664391797c6019232fd174adadd7a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 26 Feb 2010 22:34:48 +0100
+Subject: [PATCH 3/4] Use inttypes instead of stdint
+
+---
+ decoder.c |    2 +-
+ encoder.c |    2 +-
+ main.c    |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/decoder.c b/decoder.c
+index 20799a3..bfe82eb 100644
+--- a/decoder.c
++++ b/decoder.c
+@@ -19,7 +19,7 @@
+ 
+ #include <errno.h>
+ #include <stdbool.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+diff --git a/encoder.c b/encoder.c
+index a46893a..90215a4 100644
+--- a/encoder.c
++++ b/encoder.c
+@@ -21,7 +21,7 @@
+ #include <stdbool.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ 
+ #include "clzip.h"
+ #include "encoder.h"
+diff --git a/main.c b/main.c
+index 3eb7c87..c1ab889 100644
+--- a/main.c
++++ b/main.c
+@@ -31,7 +31,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <fcntl.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <unistd.h>
+ #include <utime.h>
+ #include <sys/stat.h>
+-- 
+1.6.6
+

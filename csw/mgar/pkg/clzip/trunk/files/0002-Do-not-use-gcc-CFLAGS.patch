@@ -1,0 +1,25 @@
+From 925f3889c4e6f2738c874a91dc6d077c27552eaa Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 26 Feb 2010 22:34:25 +0100
+Subject: [PATCH 2/4] Do not use gcc CFLAGS
+
+---
+ configure |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index 5ebfe51..224c7ed 100755
+--- a/configure
++++ b/configure
+@@ -27,7 +27,7 @@ mandir='$(datadir)/man'
+ sysconfdir='$(prefix)/etc'
+ CC=
+ CPPFLAGS=
+-CFLAGS='-Wall -W -O2 -std=gnu99'
++CFLAGS=
+ LDFLAGS=
+ 
+ # Loop over all args
+-- 
+1.6.6
+

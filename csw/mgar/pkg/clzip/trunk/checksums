@@ -1,0 +1,5 @@
+11dfe47b102267e6c070699b0a92b741  0001-Do-not-use-gcc-CFLAGS.patch
+3db9d95c5cac0ee16f762e3c65ce3336  0002-Do-not-use-gcc-CFLAGS.patch
+2a1badc5ef23643659843f9a557afb13  0003-Use-inttypes-instead-of-stdint.patch
+782315357fca676b888181ee0992e5ba  0004-Use-ucb-echo-for-n.patch
+94c29caf7ded781280b4b0261bbf1b80  clzip-1.0-rc2.tar.gz

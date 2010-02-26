@@ -1,0 +1,25 @@
+From 546e169ba5421d3c9a28a1e7e232c698992d9c5f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 26 Feb 2010 22:34:20 +0100
+Subject: [PATCH 1/4] Do not use gcc CFLAGS
+
+---
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 802fa80..d602669 100644
+--- a/Makefile
++++ b/Makefile
+@@ -18,7 +18,7 @@ mandir = /opt/csw/share/man
+ sysconfdir = /opt/csw/etc
+ CC = cc
+ CPPFLAGS = 
+-CFLAGS = -Wall -W -O2 -std=gnu99
++CFLAGS = 
+ LDFLAGS = 
+ 
+ DISTNAME = $(pkgname)-$(pkgversion)
+-- 
+1.6.6
+
