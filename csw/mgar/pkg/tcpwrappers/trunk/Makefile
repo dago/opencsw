@@ -113,8 +113,8 @@ post-merge:
 	@# As libwrap.so.1 is the SONAME to be bound against we must register it with the package
 	@# to allow chkpkg to look up the pkgname for the library. This is rewritten by alternatives
 	@# on installation and is solely to register the link path, the destination doesn't matter.
-	ln -s libwrap-std.so.1 $(PKGROOT)$(libdir)/libwrap.so.1
-	ln -s libwrap-std.so.1 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libwrap.so.1
+	ln -s /etc/opt/csw/alternatives/tcpwrappers $(PKGROOT)$(libdir)/libwrap.so.1
+	ln -s /etc/opt/csw/alternatives/tcpwrappers64 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libwrap.so.1
 	@$(MAKECOOKIE)
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
