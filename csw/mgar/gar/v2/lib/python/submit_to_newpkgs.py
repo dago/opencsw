@@ -90,7 +90,8 @@ def main():
     parser = optparse.OptionParser()
     parser.add_option("-p", "--pkgnames",
                       dest="pkgnames",
-                      help="A comma-separated list of pkgnames")
+                      help="A comma-separated list of pkgnames: "
+                           "cups,cupsdevel,libcups")
     parser.add_option("-d", "--debug",
                       dest="debug", default=False,
                       action="store_true",
