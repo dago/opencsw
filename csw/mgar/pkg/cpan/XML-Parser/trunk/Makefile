@@ -15,6 +15,8 @@ define BLURB
   options given at XML::Parser creation time.
 endef
 
+DISTFILES = COPYING
+
 PACKAGES = CSWpmxmlparser
 CATALOGNAME = pm_xmlparser
 
