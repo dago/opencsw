@@ -20,8 +20,8 @@ RUNTIME_DEP_PKGS_CSWgs += CSWjbig2dec
 # Pending release of libpaper
 #RUNTIME_DEP_PKGS_CSWgs += CSWlibpaper
 
-CHECKPKG_OVERRIDES += CSWgs|symbol-not-found|gsc
-CHECKPKG_OVERRIDES += CSWgs|symbol-not-found|gsx
+CHECKPKG_OVERRIDES_CSWgs += symbol-not-found|gsc
+CHECKPKG_OVERRIDES_CSWgs += symbol-not-found|gsx
 
 SPKG_SOURCEURL = http://www.ghostscript.com
 
