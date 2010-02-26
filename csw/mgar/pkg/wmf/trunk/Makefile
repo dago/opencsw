@@ -54,13 +54,13 @@ PKGFILES_CSWwmffonts = $(sharedstatedir)/libwmf/fonts/.*
 ARCHALL_CSWwmfdoc = 1
 ARCHALL_CSWwmffonts = 1
 
-CHECKPKG_OVERRIDES += CSWlibwmf|symbol-not-found|libwmf-0.2.so.7.1.0
-CHECKPKG_OVERRIDES += CSWwmf|symbol-not-found|io-wmf.so
-CHECKPKG_OVERRIDES += CSWwmf|symbol-not-found|wmf2gd
-CHECKPKG_OVERRIDES += CSWwmf|symbol-not-found|wmf2x
-CHECKPKG_OVERRIDES += CSWwmf|symbol-not-found|wmf2fig
-CHECKPKG_OVERRIDES += CSWwmf|symbol-not-found|wmf2svg
-CHECKPKG_OVERRIDES += CSWwmf|symbol-not-found|wmf2eps
+CHECKPKG_OVERRIDES_CSWlibwmf += symbol-not-found|libwmf-0.2.so.7.1.0
+CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|io-wmf.so
+CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|wmf2gd
+CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|wmf2x
+CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|wmf2fig
+CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|wmf2svg
+CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|wmf2eps
 
 BUILD64 = 1
 
