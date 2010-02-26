@@ -1,5 +1,5 @@
 GARNAME = freetype
-GARVERSION = 2.3.9
+GARVERSION = 2.3.12
 CATEGORIES = lib
 
 DESCRIPTION = A free and portable TrueType font rendering engine
@@ -16,11 +16,12 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += COPYING
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
+
+LICENSE = docs/LICENSE.TXT
 
 PACKAGES = CSWftype2
 CATALOGNAME_CSWftype2 = freetype2
