@@ -2,7 +2,7 @@
 # - Move this to a pymodules/ subdirectory with the rest of the
 #   python modules (similar to the cpan directory).
 GARNAME = pylxml
-GARVERSION = 2.2.2
+GARVERSION = 2.2.4
 CATEGORIES = python
 
 DESCRIPTION = Pythonic binding for the libxml2 and libxslt libraries
@@ -13,13 +13,16 @@ define BLURB
   but superior to the well-known ElementTree API.
 endef
 
-SPKG_SOURCEURL = http://codespeak.net/lxml/
+VENDOR_URL   = http://codespeak.net/lxml/
 MASTER_SITES = http://pypi.python.org/packages/source/l/lxml/
-DISTNAME = lxml-$(GARVERSION)
-DISTFILES  = $(DISTNAME).tar.gz
+DISTNAME     = lxml-$(GARVERSION)
+DISTFILES    = $(DISTNAME).tar.gz
 UFILES_REGEX = lxml-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWpylxml
+# See http://codespeak.net/lxml/index.html#license
+LICENSE = doc/licenses/BSD.txt
+
+PACKAGES = CSWpy-lxml
 CATALOGNAME = py_lxml
 
 RUNTIME_DEP_PKGS = CSWlibxml2 CSWlibxslt CSWzlib
