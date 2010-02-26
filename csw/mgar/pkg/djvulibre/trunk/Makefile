@@ -19,12 +19,33 @@ SPKG_DESC_CSWdjvulibre += DjVu standalone viewer, browser plug-in, command linet
 SPKG_DESC_CSWdjvulibrert += DjVu standalone viewer, browser plug-in, command line tools - runtime package
 SPKG_DESC_CSWdjvulibredevel += DjVu standalone viewer, browser plug-in, commandline tools - developer package
 
-RUNTIME_DEP_PKGS_CSWdjvulibre += CSWdjvulibrert CSWjpeg CSWtiff CSWzlib
+RUNTIME_DEP_PKGS_CSWdjvulibre += CSWdjvulibrert CSWjpeg CSWzlib
+RUNTIME_DEP_PKGS_CSWdjvulibre += CSWtiffrt
 RUNTIME_DEP_PKGS_CSWdjvulibrert += CSWjpeg
 RUNTIME_DEP_PKGS_CSWdjvulibredevel += CSWdjvulibrert
 
 PKGFILES_CSWdjvulibrert = $(PKGFILES_RT)
 PKGFILES_CSWdjvulibredevel = $(PKGFILES_DEVEL)
+
+
+CHECKPKG_OVERRIDES_CSWdjvulibredevel += missing-dependency|CSWdjvulibre
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvm
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvused
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvups
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvuserve
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|cpaldjvu
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|csepdjvu
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvuextract
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvutxt
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|cjb2
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvutoxml
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|c44
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvuxmlparser
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvumake
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvudump
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|bzz
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|djvmcvt
+CHECKPKG_OVERRIDES_CSWdjvulibre += symbol-not-found|ddjvu
 
 SPKG_SOURCEURL = http://djvu.sourceforge.net/
 
