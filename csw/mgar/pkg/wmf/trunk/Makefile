@@ -21,7 +21,7 @@ PACKAGES = CSWwmf CSWlibwmf CSWlibwmfdevel CSWlibwmfdoc CSWwmffonts CSWlibwmfgtk
 CATALOGNAME_CSWwmf = wmf
 CATALOGNAME_CSWlibwmf = libwmf
 CATALOGNAME_CSWlibwmfdevel = libwmf_devel
-CATALOGNAME_CSWlibwmfdoc = wmf_doc
+CATALOGNAME_CSWlibwmfdoc = libwmf_doc
 CATALOGNAME_CSWlibwmfgtk = libwmf_gtk
 CATALOGNAME_CSWwmffonts = wmf_fonts
 
