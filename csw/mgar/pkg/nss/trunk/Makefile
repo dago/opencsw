@@ -14,29 +14,12 @@
 # TODO: nss-config
 # TODO: a better nss.pc
 
-# For DBG builds
-PATCHFILES  = whoami.patch
-
-# Required patches.
-PATCHFILES += include.patch
-PATCHFILES += ld-options.patch
-PATCHFILES += platlibs-sqlite3.patch
-PATCHFILES_isa-sparcv8 = sqlite3-32.patch
-PATCHFILES_isa-i386 = sqlite3-32.patch
-PATCHFILES_isa-sparcv9  = sqlite3-64.patch
-PATCHFILES_isa-sparcv9 += platlibs-sqlite3-64.patch
-PATCHFILES_isa-amd64  = sqlite3-64.patch
-PATCHFILES_isa-amd64 += platlibs-sqlite3-64.patch
-
-
-
 GARNAME = nss
 MAJOR_VERSION = 3
 MINOR_VERSION = 12
 PATCHLEVEL    = 4
 GARVERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 CATEGORIES = lib
-DESCRIPTION = Network Security Services library, implements crypto, PKI, SSL, and S/MIME support
 define BLURB
   Network Security Services (NSS) is a set of libraries designed to support
   cross-platform development of security-enabled client and server
@@ -51,7 +34,23 @@ MASTER_SITES = https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(R
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += mpl-tri-license-txt
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-RUNTIME_DEP_PKGS = CSWnspr CSWsqlite3rt
+
+PACKAGES = CSWlibnss3 CSWlibnss3-devel CSWlibnss3-tools
+
+SPKG_DESC_CSWlibnss3 = Network Security Services library, implements crypto, PKI, SSL, and S/MIME support
+SPKG_DESC_CSWlibnss3-devel = libnss3 development files
+SPKG_DESC_CSWlibnss3-tools = libnss3 command-line utilities
+
+PKGFILES_CSWlibnss3-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibnss3-tools = $(bindir).*
+
+CATALOGNAME_CSWlibnss3-devel = libnss3_devel
+CATALOGNAME_CSWlibnss3-tools = libnss3_tools
+
+RUNTIME_DEP_PKGS_CSWlibnss3 = CSWnspr CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWlibnss3-devel += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWlibnss3
+RUNTIME_DEP_PKGS_CSWlibnss3-tools += CSWnspr
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnspr-devel CSWsqlite3devel
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = nss
@@ -109,6 +108,20 @@ NSS_BINARIES += signver
 NSS_BINARIES += ssltap
 
 LICENSE = mpl-tri-license-txt
+
+# For DBG builds
+PATCHFILES  = whoami.patch
+
+# Required patches.
+PATCHFILES += include.patch
+PATCHFILES += ld-options.patch
+PATCHFILES += platlibs-sqlite3.patch
+PATCHFILES_isa-sparcv8 = sqlite3-32.patch
+PATCHFILES_isa-i386 = sqlite3-32.patch
+PATCHFILES_isa-sparcv9  = sqlite3-64.patch
+PATCHFILES_isa-sparcv9 += platlibs-sqlite3-64.patch
+PATCHFILES_isa-amd64  = sqlite3-64.patch
+PATCHFILES_isa-amd64 += platlibs-sqlite3-64.patch
 
 include gar/category.mk
 
@@ -169,8 +182,11 @@ install-nss:
 				&& \
 			false \
 		)
-	ginstall -d -m 755 $(DESTDIR)$(prefix)/lib/pkgconfig
+	ginstall -d -m 755 $(DESTDIR)$(libdir)/pkgconfig
 	ginstall -m 644 \
 		$(FILEDIR)/nss.pc \
-		$(DESTDIR)$(prefix)/lib/pkgconfig
+		$(DESTDIR)$(libdir)/pkgconfig
+	if [ $(MEMORYMODEL) = 64 ]; then \
+		gsed -i -e 's+/lib$$+lib/64+' $(DESTDIR)$(libdir)/pkgconfig/nss.pc ; \
+	fi
 	@$(MAKECOOKIE)
