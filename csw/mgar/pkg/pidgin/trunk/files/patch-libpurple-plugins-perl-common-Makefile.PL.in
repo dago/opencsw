@@ -1,10 +1,18 @@
 --- pidgin-2.6.6.orig/libpurple/plugins/perl/common/Makefile.PL.in	2010-02-16 10:34:06.000000000 +0100
-+++ pidgin-2.6.6/libpurple/plugins/perl/common/Makefile.PL.in	2010-02-25 18:18:46.653361400 +0100
-@@ -11,6 +11,7 @@
++++ pidgin-2.6.6/libpurple/plugins/perl/common/Makefile.PL.in	2010-02-26 10:04:39.981704542 +0100
+@@ -11,11 +11,14 @@
         AUTHOR           => 'Purple <http://pidgin.im/>') : ()),
      'DEFINE'            => '@DEBUG_CFLAGS@',
      'INC'               => '-I. -I@srcdir@ -I@top_srcdir@ -I@top_srcdir@/libpurple @GLIB_CFLAGS@',
-+    'LIBS'              => '@PERL_LIBS@',
++    'LIBS'          => '@PERL_LIBS@ -lglib-2.0',
      'OBJECT'            => '$(O_FILES)', # link all the C files too
  #    'OPTIMIZE'          => '-g', # For debugging
      'INSTALLDIRS'          => 'vendor',
+     'INSTALL_BASE'         => '$(prefix)',
+-    'INSTALLVENDORARCH'    => '$(libdir)/purple-$(PURPLE_MAJOR_VERSION)/perl',
++    'INSTALLVENDORARCH'    => '$(libdir)/perl/csw',
++    'INSTALLVENDORLIB'     => '$(libdir)/perl/csw',
++    'INSTALLARCHLIB'       => '$(libdir)/perl/csw',
+     'INSTALLVENDORMAN3DIR' => '$(mandir)/man3',
+     'macro'                => {
+         'prefix'               => '@prefix@',

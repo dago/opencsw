@@ -1,10 +1,19 @@
 --- pidgin-2.6.6.orig/pidgin/plugins/perl/common/Makefile.PL.in	2010-02-16 10:34:06.000000000 +0100
-+++ pidgin-2.6.6/pidgin/plugins/perl/common/Makefile.PL.in	2010-02-25 18:10:57.385636308 +0100
-@@ -10,6 +10,7 @@
++++ pidgin-2.6.6/pidgin/plugins/perl/common/Makefile.PL.in	2010-02-26 09:59:56.721552783 +0100
+@@ -10,12 +10,15 @@
         'AUTHOR'        => 'Pidgin <http://pidgin.im/>') :  ()),
      'DEFINE'        => '@DEBUG_CFLAGS@',
      'INC'           => '-I. -I@srcdir@ -I@top_srcdir@ -I@top_srcdir@/libpurple -I@top_srcdir@/pidgin @GTK_CFLAGS@',
-+    'LIBS'          => '@PERL_LIBS@',
++    'LIBS'          => '@PERL_LIBS@ -lglib-2.0',
      'OBJECT'        => '$(O_FILES)', # link all the C files too
      'TYPEMAPS'      => ["@top_srcdir@/libpurple/plugins/perl/common/typemap"],
  #    'OPTIMIZE'      => '-g', # For debugging.
+     'INSTALLDIRS'          => 'vendor',
+     'INSTALL_BASE'         => '$(prefix)',
+-    'INSTALLVENDORARCH'    => '$(libdir)/pidgin/perl',
++    'INSTALLVENDORARCH'    => '$(libdir)/perl/csw',
++    'INSTALLVENDORLIB'     => '$(libdir)/perl/csw',
++    'INSTALLARCHLIB'       => '$(libdir)/perl/csw',
+     'INSTALLVENDORMAN3DIR' => '$(mandir)/man3',
+     'macro'                => {
+         'prefix'      => '@prefix@',

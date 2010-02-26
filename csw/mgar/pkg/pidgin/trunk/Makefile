@@ -27,9 +27,6 @@ CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
 CONFIGURE_ARGS += --disable-vv
 
 
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
 PATH = $(SOS11_CC_HOME)/bin:$(PATH)
 EXTRA_EXPORTS = PATH
 
@@ -40,8 +37,9 @@ MSGMERGE=/opt/csw/bin/gmsgmerge
 SED=/opt/csw/bin/gsed
 X11_CFLAGS=-D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS -DXTHREADS -DXUSE_MTSAFE_API
 X11_LIBS=-lX11
+LIBS=-lm
 EXTRA_CONFIGURE_EXPORTS  = DOT XGETTEXT MSGFMT MSGMERGE SED PKG_CONFIG_PATH
-EXTRA_CONFIGURE_EXPORTS += X11_CFLAGS X11_LIBS
+EXTRA_CONFIGURE_EXPORTS += X11_CFLAGS X11_LIBS LIBS
 EXTRA_INC = /opt/csw/include/ncurses
 TEST_TARGET = check
 TEST_SCRIPTS =
@@ -51,6 +49,9 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 EXTRA_LDFLAGS = -R $(prefix)/X11/lib
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
@@ -66,9 +67,7 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWlibdbusdev CSWdbusglibdev CSWgnutlsdevel
 
 PATCHFILES += patch-pidgin-Makefile.in
 PATCHFILES += patch-pidgin-plugin.c
-PATCHFILES += patch-pidgin-plugins-perl-Makefile.in
 PATCHFILES += patch-pidgin-plugins-perl-common-Makefile.PL.in
-PATCHFILES += patch-libpurple-plugins-perl-Makefile.in
 PATCHFILES += patch-libpurple-plugins-perl-common-Makefile.PL.in
 
 include gar/category.mk
