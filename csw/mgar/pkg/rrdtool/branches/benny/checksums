@@ -1,0 +1,4 @@
+48a9b258cf8b4b943dbaf30ea939c315  CSWrrdtool.gspec
+20e58c7facf2687037288c157c32df1a  patch-src-Makefile.in
+47709778545eec2e8c5c3b38f9c94fcd  patch-src-rrd_open.c
+9318d3b4016dd9dd9897f1eac7548032  rrdtool-1.4.2.tar.gz
