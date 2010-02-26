@@ -21,7 +21,7 @@ PATCHFILES += 0003-Make-testsuite-use-ucb-echo.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-VENDOR_URL = http://www.nongnu.org/lzip/clzip.html
+VENDOR_URL = http://www.nongnu.org/lzip/lzip.html
 
 NODIRPATHS = --includedir
 CONFIGURE_ARGS = $(DIRPATHS)
