@@ -67,10 +67,10 @@ MERGE_SCRIPTS_isa-default64-extended-off = copy-relocated-only
 MIGRATE_FILES = hosts.allow hosts.deny
 
 ALTERNATIVES = std ext
-ALTERNATIVES_std  = $(libdir)/libwrap.so.1 tcpwrappers $(libdir)/libwrap-std.so.1 200
-ALTERNATIVES_std += $(libdir)/$(ISA_DEFAULT64)/libwrap.so.1 tcpwrappers64 $(libdir)/$(ISA_DEFAULT64)/libwrap-std.so.1
-ALTERNATIVES_ext  = $(libdir)/libwrap.so.1 tcpwrappers $(libdir)/libwrap-ext.so.1 100
-ALTERNATIVES_ext += $(libdir)/$(ISA_DEFAULT64)/libwrap.so.1 tcpwrappers64 $(libdir)/$(ISA_DEFAULT64)/libwrap-ext.so.1
+ALTERNATIVE_std  = $(libdir)/libwrap.so.1 tcpwrappers $(libdir)/libwrap-std.so.1 200
+ALTERNATIVE_std += $(libdir)/$(ISA_DEFAULT64)/libwrap.so.1 tcpwrappers64 $(libdir)/$(ISA_DEFAULT64)/libwrap-std.so.1
+ALTERNATIVE_ext  = $(libdir)/libwrap.so.1 tcpwrappers $(libdir)/libwrap-ext.so.1 100
+ALTERNATIVE_ext += $(libdir)/$(ISA_DEFAULT64)/libwrap.so.1 tcpwrappers64 $(libdir)/$(ISA_DEFAULT64)/libwrap-ext.so.1
 
 POSTMSG = $(docdir)/$(CATALOGNAME)/CSWtcpwrap.postmsg
 
