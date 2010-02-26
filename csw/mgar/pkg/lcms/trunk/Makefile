@@ -18,21 +18,36 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(GARSUBREV).tar.gz
 #DISTFILES  = $(GARNAME)-$(GARVERSION)$(GARSUBREV).tar.gz
 
-PACKAGES = CSWlcms CSWlcmsrt CSWlcmsdevel
+PACKAGES = CSWlcms CSWlcmsrt CSWlcmsdevel CSWpy-lcms
 CATALOGNAME_CSWlcms = lcms
 CATALOGNAME_CSWlcmsrt = lcms_rt
 CATALOGNAME_CSWlcmsdevel = lcms_devel
+CATALOGNAME_CSWpy-lcms = py_lcms
 
 SPKG_DESC_CSWlcms += The little color management system and tools
 SPKG_DESC_CSWlcmsrt += The little color management system and tools - runtime package
 SPKG_DESC_CSWlcmsdevel += The little color management system and tools - developer package
+SPKG_DESC_CSWpy-lcms += The little color management system and tools - python bindings
 
-RUNTIME_DEP_PKGS_CSWlcms += CSWlcmsrt CSWjpeg CSWtiff CSWzlib
+RUNTIME_DEP_PKGS_CSWlcms += CSWlcmsrt CSWjpeg CSWzlib
+RUNTIME_DEP_PKGS_CSWlcms += CSWtiffrt
 RUNTIME_DEP_PKGS_CSWlcmsrt += 
-RUNTIME_DEP_PKGS_CSWlcmsdevel += CSWlcms
+RUNTIME_DEP_PKGS_CSWlcmsdevel += CSWlcmsrt
+RUNTIME_DEP_PKGS_CSWpy-lcms += CSWlcmsrt CSWpython
+
+CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|icclink
+CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|tiffdiff
+CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|icc2ps
+CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|tifficc
+CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|wtpt
+CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|jpegicc
+CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|icctrans
+CHECKPKG_OVERRIDES_CSWlcmsdevel += missing-dependency|CSWlcms
+CHECKPKG_OVERRIDES_CSWpy-lcms += symbol-not-found|_lcms.so
 
 PKGFILES_CSWlcmsrt = $(PKGFILES_RT)
 PKGFILES_CSWlcmsdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWpy-lcms = $(libdir).*/python/site-packages/.*
 
 SPKG_SOURCEURL = http://www.littlecms.com
 
@@ -52,3 +67,4 @@ TEST_TARGET = check
 
 include gar/category.mk
 
+CXXFLAGS += -D_RWSTD_NO_WSTR=1
