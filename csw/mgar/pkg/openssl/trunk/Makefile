@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = openssl
-GARVERSION = 0.9.8l
+GARVERSION = 0.9.8m
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
