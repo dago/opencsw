@@ -61,7 +61,7 @@ PKGFILES_CSWlibwmfdoc = $(sharedstatedir)/doc/.*
 PKGFILES_CSWlibwmfgtk = $(libdir).*/io-wmf.so
 PKGFILES_CSWwmffonts = $(sharedstatedir)/libwmf/fonts/.*
 
-ARCHALL_CSWwmfdoc = 1
+ARCHALL_CSWlibwmfdoc = 1
 ARCHALL_CSWwmffonts = 1
 
 CHECKPKG_OVERRIDES_CSWlibwmf += symbol-not-found|libwmf-0.2.so.7.1.0
