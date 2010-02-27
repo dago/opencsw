@@ -32,8 +32,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --with-tcl=/opt/csw/lib --with-tk=/opt/csw/lib
-CONFIGURE_ARGS += --with-tclinclude=/export/home/hson/dev/mgar/pkg/tcl/trunk/work/solaris8-sparc/./build-isa-sparcv8/tcl8.5.7/generic/
-CONFIGURE_ARGS += --with-tkinclude=/export/home/hson/dev/mgar/pkg/tk/trunk/work/solaris8-sparc/./build-isa-sparcv8/tk8.5.7/generic/
+CONFIGURE_ARGS += --with-tclinclude=$(WORKSRC)/../tcl8.5.7/generic/
+CONFIGURE_ARGS += --with-tkinclude=$(WORKSRC)/../tk8.5.7/generic/
 
 TEST_TARGET = 
 
@@ -63,9 +63,4 @@ pre-configure-modulated:
 		Dbg.c	; \
 	)
 #	@( cd $(WORKSRC); aclocal;autoconf)
-	@$(MAKECOOKIE)
-
-configure-%/configure:
-	@echo " ==> Running configure in $*"
-	cd $* && $(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
