@@ -35,4 +35,11 @@ NOISAEXEC = 1
 
 TEST_TARGET = check
 
+EXTRA_MERGE_INCLUDE_FILES  = $(libdir)/libname-server-2.a
+
+CPP = /usr/lib/cpp
+EXTRA_COMMON_EXPORTS += CPP
+CXXCPP = /usr/lib/cpp
+EXTRA_COMMON_EXPORTS += CXXCPP
+
 include gar/category.mk
