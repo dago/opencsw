@@ -59,8 +59,8 @@ give_a_chance_to_stop() {
   echo "----8<---- migration configuration end   ----8<----"
   echo
   echo "*******************************************************************"
-  echo "* Configuration files are going to be migrated from the deprecated "
-  echo "* location (/opt/csw/etc) to the new location (/etc/opt/csw).      "
+  echo "* Files will be now migrated from the deprecated location          "
+  echo "* (e.g. /opt/csw/etc) to the new location (e.g. /etc/opt/csw).     "
   echo "*                                                                  "
   echo "*         Migration will continue in 10 seconds.                   "
   echo "*          Press CTRL+C if you want to stop now.                   "
