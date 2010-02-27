@@ -257,6 +257,8 @@ class StagingDir(object):
   def __init__(self, dir_path):
     self.dir_path = dir_path
 
+  def __repr__(self):
+    return u"StagingDir(%s)" % repr(self.dir_path)
   def GetLatest(self, software, architectures=ARCHITECTURES):
     files = os.listdir(self.dir_path)
     package_files = []
@@ -268,7 +270,8 @@ class StagingDir(object):
       if relevant_pkgs:
         package_files.append(relevant_pkgs[-1])
     if not package_files:
-      raise PackageError("Could not find %s in %s" % (software, self.dir_path))
+      raise PackageError("Could not find %s in %s"
+                         % (repr(software), repr(self.dir_path)))
     logging.debug("The latest packages %s in %s are %s",
                   repr(software),
                   repr(self.dir_path),

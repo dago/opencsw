@@ -87,7 +87,8 @@ def main():
                 repr(opt_name))
         raise ConfigurationError("Option %s is missing from the configuration."
                            % repr(opt_name))
-    parser = optparse.OptionParser()
+    usage = """%s [options] [file1 file2 ...]""" % sys.argv[0]
+    parser = optparse.OptionParser(usage)
     parser.add_option("-p",
                       dest="pkgnames",
                       help="A deprecated options. Please use --catalognames.")
@@ -100,7 +101,8 @@ def main():
                       action="store_true",
                       help="Print debugging messages")
     (options, args) = parser.parse_args()
-    level = logging.WARN
+    file_names = args
+    level = logging.INFO
     if options.debug:
       level = logging.DEBUG
     logging.basicConfig(level=level)
@@ -112,9 +114,6 @@ def main():
                                          options.pkgnames])
       else:
         options.catalognames = options.pkgnames
-    if not options.catalognames:
-      parser.print_help()
-      raise ConfigurationError("You need to specify a package name or names.")
     if config.has_option(CONFIG_RELEASE_SECTION, "release cc"):
       release_cc = config.get(CONFIG_RELEASE_SECTION, "release cc")
     else:
@@ -124,10 +123,28 @@ def main():
     print CONFIG_INFO
     print e
     sys.exit(1)
-  catalognames = options.catalognames.split(",")
-  package_files = []
   staging_dir = opencsw.StagingDir(config.get(CONFIG_RELEASE_SECTION,
                                                   "package dir"))
+  if options.catalognames:
+    catalognames = options.catalognames.split(",")
+  else:
+    catalognames = []
+  if file_names:
+    for file_name in file_names:
+      base_name = os.path.basename(file_name)
+      if base_name != file_name:
+        logging.warn("Removing %s, using only %s"
+                     % (repr(os.path.dirname(file_name)), repr(base_name)))
+        logging.warn("Only %s will be searched for packages."
+                     % repr(staging_dir))
+      parsed_file_name = opencsw.ParsePackageFileName(base_name)
+      catalognames.append(parsed_file_name["catalogname"])
+  catalognames = sorted(set(catalognames))
+  if not catalognames:
+    parser.print_help()
+    raise ConfigurationError("You need to specify a package name or names.")
+
+  package_files = []
   for p in catalognames:
     package_files.extend(staging_dir.GetLatest(p))
   logging.debug("Copying files to the target host:dir")
