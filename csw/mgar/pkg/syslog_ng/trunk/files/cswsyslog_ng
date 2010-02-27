@@ -38,7 +38,8 @@ case "$1" in
   stop)
     if [ -f ${PID_FILE} ]; then
       syspid=`/usr/bin/cat ${PID_FILE}`
-      [ "$syspid" -gt 0 ] && kill -15 $syspid && rm ${PID_FILE}
+      # The -f flag is used because the PID_FILE might be gone.
+      [ "$syspid" -gt 0 ] && kill -15 $syspid && rm -f ${PID_FILE}
     fi
     ;;
   *)
@@ -46,3 +47,6 @@ case "$1" in
     exit 1
     ;;
 esac
+
+# Don't exit with the status of the last command.
+exit 0
