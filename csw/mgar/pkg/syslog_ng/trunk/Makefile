@@ -1,5 +1,5 @@
 GARNAME = syslog-ng
-GARVERSION = 3.0.4
+GARVERSION = 3.0.5
 CATEGORIES = server
 
 DESCRIPTION = A powerful syslogd replacement
