@@ -849,10 +849,10 @@ class PackageStats(object):
       "basic_stats",
       "binaries",
       "binaries_dump_info",
-      "defined_symbols",
+      # "defined_symbols",
       "depends",
       "isalist",
-      "ldd_dash_r",
+      # "ldd_dash_r",
       "overrides",
       "pkginfo",
       "pkgmap",
@@ -1064,8 +1064,10 @@ class PackageStats(object):
     self.DumpObject(self.GetOverrides(), "overrides")
     self.DumpObject(dir_pkg.GetParsedPkginfo(), "pkginfo")
     self.DumpObject(dir_pkg.GetPkgmap().entries, "pkgmap")
-    self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
-    self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
+    # This check is currently disabled, let's save time by not collecting
+    # these data.
+    # self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
+    # self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
     logging.debug("Statistics collected.")
 
   def GetAllStats(self):
