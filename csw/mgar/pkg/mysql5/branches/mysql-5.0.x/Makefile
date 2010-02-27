@@ -174,10 +174,6 @@ PROTOTYPE_GROUP_dbdir = mysql
 PROTOTYPE_PERMS_dbdir = 0700
 PROTOTYPE_CLASS_dbdir = ugfiles
 
-# CSWmysql5 contains no files
-CHECKPKG_OVERRIDES_CSWmysql5 += license-missing
-CHECKPKG_OVERRIDES_CSWmysql5 += action-class-only-in-pkginfo|none
-
 # Until the dependency guessed gets better at guessing
 CHECKPKG_OVERRIDES_CSWmysql5devel += missing-dependency|CSWmysql5
 
