@@ -24,6 +24,8 @@ BINDIR = $(bindir)
 MANDIR = $(mandir)
 INSTALL_ARGS = install install.man
 
+ARCHALL = 1
+
 include gar/category.mk
 
 pre-install-modulated:
