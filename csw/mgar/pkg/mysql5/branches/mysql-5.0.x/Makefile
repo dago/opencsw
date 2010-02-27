@@ -33,8 +33,12 @@ global_bindir = /opt/csw/bin
 
 INITSMF = $(global_sysconfdir)/init\.d/csw$(GARNAME)
 
-PACKAGES  = CSW$(GARNAME) CSW$(GARNAME)bench CSW$(GARNAME)client CSW$(GARNAME)devel
-PACKAGES += CSW$(GARNAME)rt CSW$(GARNAME)test
+PACKAGES  = CSW$(GARNAME)
+PACKAGES += CSW$(GARNAME)bench
+PACKAGES += CSW$(GARNAME)client
+PACKAGES += CSW$(GARNAME)devel
+PACKAGES += CSW$(GARNAME)rt
+PACKAGES += CSW$(GARNAME)test
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
@@ -115,17 +119,14 @@ PKGFILES_CSW$(GARNAME)test    = $(prefix)/mysql-test.*
 
 RUNTIME_DEP_PKGS_CSW$(GARNAME)            = CSW$(GARNAME)client
 RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSW$(GARNAME)rt
-# RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSWzlib
-# RUNTIME_DEP_PKGS_CSW$(GARNAME)rt          = CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)rt         += CSWzlib
 RUNTIME_DEP_PKGS_CSW$(GARNAME)bench       = CSW$(GARNAME)
 RUNTIME_DEP_PKGS_CSW$(GARNAME)bench      += CSWperl
 RUNTIME_DEP_PKGS_CSW$(GARNAME)client      = CSW$(GARNAME)rt
-# RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWncurses
 RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWzlib
-RUNTIME_DEP_PKGS_CSW$(GARNAME)devel       = CSW$(GARNAME)
+RUNTIME_DEP_PKGS_CSW$(GARNAME)devel       = CSW$(GARNAME)rt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)test        = CSW$(GARNAME)
 RUNTIME_DEP_PKGS_CSW$(GARNAME)test       += CSWperl
 
@@ -176,6 +177,13 @@ PROTOTYPE_CLASS_dbdir = ugfiles
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
+
+# CSWmysql5 contains no files
+CHECKPKG_OVERRIDES_CSWmysql5 += license-missing
+CHECKPKG_OVERRIDES_CSWmysql5 += action-class-only-in-pkginfo|none
+
+# Until the dependency guessed gets better at guessing
+CHECKPKG_OVERRIDES_CSWmysql5devel += missing-dependency|CSWmysql5
 
 pre-configure-modulated:
 	# To work around the following libtool version mismatch problem:
