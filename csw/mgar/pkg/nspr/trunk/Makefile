@@ -29,12 +29,11 @@ PKGFILES_CSWnspr-devel += $(bindir).*nspr-config
 PKGFILES_CSWnspr-devel += .*/nspr\.pc
 PKGFILES_CSWnspr-devel += .*compile-et\.pl
 
-ARCHALL_CSWnspr-devel = 1
-
 SPKG_DESC_CSWnspr = Netscape Portable Runtime
 SPKG_DESC_CSWnspr-devel = Netscape Portable Runtime header files
 CATALOGNAME_CSWnspr-devel = nspr_devel
-RUNTIME_DEP_PKGS_CSWnspr-devel = CSWnspr
+RUNTIME_DEP_PKGS_CSWnspr-devel  = CSWnspr
+RUNTIME_DEP_PKGS_CSWnspr-devel += CSWperl
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -68,6 +67,8 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 BUILD64 = 1
 
+LICENSE = LICENSE
+
 include gar/category.mk
 
 configure-nspr:
@@ -98,9 +99,12 @@ install-nspr:
 	ginstall -m 755 -d $(DESTDIR)$(bindir)
 	ginstall -m 755 $(WORKSRC)/build/config/nspr-config \
 		$(DESTDIR)$(bindir)
-	ginstall -m 755 -d $(DESTDIR)$(prefix)/lib/pkgconfig
+	ginstall -m 755 -d $(DESTDIR)$(libdir)/pkgconfig
 	ginstall -m 644 $(WORKSRC)/build/config/nspr.pc \
-		$(DESTDIR)$(prefix)/lib/pkgconfig
+		$(DESTDIR)$(libdir)/pkgconfig
+	if [ $(MEMORYMODEL) = 64 ]; then \
+		gsed -i -e 's+/lib$$+lib/64+' $(DESTDIR)$(libdir)/pkgconfig/nspr.pc ; \
+	fi
 	rm -f $(DESTDIR)$(bindir)/prerr.properties
 	rm -f $(DESTDIR)$(bindir)/nspr.pc
 	@$(MAKECOOKIE)
