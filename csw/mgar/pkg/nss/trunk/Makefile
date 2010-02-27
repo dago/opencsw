@@ -123,6 +123,9 @@ PATCHFILES_isa-sparcv9 += platlibs-sqlite3-64.patch
 PATCHFILES_isa-amd64  = sqlite3-64.patch
 PATCHFILES_isa-amd64 += platlibs-sqlite3-64.patch
 
+# http://lists.opencsw.org/pipermail/pkgsubmissions/2010-February/000167.html
+NOISAEXEC = 1
+
 include gar/category.mk
 
 build-nss: build-coreconf build-dbm build-nss-compile
