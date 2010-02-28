@@ -1,0 +1,10 @@
+#<IfModule dav_svn_module>
+#    <Location /repos>
+#        DAV svn
+#        SVNPath /absolute/path/to/repository
+#    </Location>
+#</IfModule>
+
+#<IfModule authz_svn_module>
+#    AuthzSVNAccessFile etc/svn_access.conf
+#</IfModule>
