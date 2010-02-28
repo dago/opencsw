@@ -25,6 +25,10 @@ CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 
 TEST_TARGET = check
+
+CHECKPKG_OVERRIDES_CSWlibserf += license-missing
+
+
 include gar/category.mk
 
 #EXTRA_LDFLAGS = -R/opt/csw/bdb44/lib
