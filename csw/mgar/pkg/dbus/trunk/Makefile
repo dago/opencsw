@@ -22,9 +22,6 @@ PACKAGES = CSWdbus CSWlibdbus CSWlibdbusdev
 CATALOGNAME_CSWdbus = dbus
 CATALOGNAME_CSWlibdbus = libdbus
 CATALOGNAME_CSWlibdbusdev = libdbusdev
-#DISTFILES    += $(call admfiles,CSWdbus, preinstall, )
-#DISTFILES    += $(call admfiles,CSWlibdbusdev, )
-#DISTFILES    += $(call admfiles,CSWlibdbus, )
 DISTFILES    += CSWdbus.preinstall
 DISTFILES    += cswdbus
 
@@ -36,7 +33,8 @@ PKGFILES_CSWlibdbusdev += $(libdir)/dbus-1.0/.*
 PKGFILES_CSWlibdbus     = $(PKGFILES_RT)
 
 # Dependencies tracking
-RUNTIME_DEP_PKGS_CSWdbus	= CSWexpat CSWlibdbus CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWdbus	    = CSWexpat CSWlibdbus CSWlibsm CSWlibice CSWlibx11
+RUNTIME_DEP_PKGS_CSWlibdbus	    = CSWexpat CSWlibdbus CSWlibsm CSWlibice CSWlibx11
 RUNTIME_DEP_PKGS_CSWlibdbusdev  = CSWlibdbus
 
 # SMF support
@@ -46,7 +44,11 @@ PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/init.d\/cswdbus$$$$/ { $$$$2 = "cswinitsmf" 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-tests --with-xml=expat 
 
+EXTRA_CPPFLAGS = -D_XPG4_2
+
 BUILD64 = 1
+
+PATCHFILES += dbus-sysdeps-unix.c.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

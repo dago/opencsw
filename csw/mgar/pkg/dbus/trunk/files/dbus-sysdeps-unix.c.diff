@@ -1,0 +1,11 @@
+--- dbus-1.3.0.orig/dbus/dbus-sysdeps-unix.c    2009-07-16 16:04:55.000000000 +0200
++++ dbus-1.3.0/dbus/dbus-sysdeps-unix.c         2010-02-28 16:49:51.561773000 +0100
+@@ -3043,7 +3043,7 @@
+     return -1;
+   }
+
+-#ifndef F_DUPFD_CLOEXEC
++#ifdef F_DUPFD_CLOEXEC
+   if (!cloexec_done)
+ #endif
+     {
