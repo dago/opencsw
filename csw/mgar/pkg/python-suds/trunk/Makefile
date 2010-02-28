@@ -15,4 +15,5 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpy-suds
 CATALOGNAME_CSWpy-suds = py_suds
 ARCHALL_CSWpy-suds = 1
+LICENSE = LICENSE
 include gar/category.mk
