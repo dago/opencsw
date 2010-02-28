@@ -15,6 +15,7 @@ f none /opt/csw/share/doc/openssh/ChangeLog 0644 root bin
 f none /opt/csw/share/doc/openssh/ChangeLog.gssapi 0644 root bin
 f none /opt/csw/share/doc/openssh/INSTALL 0644 root bin
 f none /opt/csw/share/doc/openssh/LICENCE 0644 root bin
+f none /opt/csw/share/doc/openssh/license 0644 root bin
 f none /opt/csw/share/doc/openssh/OVERVIEW 0644 root bin
 f none /opt/csw/share/doc/openssh/README 0644 root bin
 f none /opt/csw/share/doc/openssh/README.dns 0644 root bin
