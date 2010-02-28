@@ -19,5 +19,5 @@ RUNTIME_DEP_PKGS_CSWgnomeicontheme = CSWicon-naming-utils
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWgnomeicontheme)
 TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
-ARCHALL_CSWgnome-icon-theme = 1
+ARCHALL_CSWgnomeicontheme = 1
 include gar/category.mk
