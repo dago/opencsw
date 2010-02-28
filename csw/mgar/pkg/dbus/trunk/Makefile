@@ -34,7 +34,6 @@ PKGFILES_CSWlibdbus     = $(PKGFILES_RT)
 
 # Dependencies tracking
 RUNTIME_DEP_PKGS_CSWdbus	    = CSWexpat CSWlibdbus CSWlibsm CSWlibice CSWlibx11
-RUNTIME_DEP_PKGS_CSWlibdbus	    = CSWexpat CSWlibdbus CSWlibsm CSWlibice CSWlibx11
 RUNTIME_DEP_PKGS_CSWlibdbusdev  = CSWlibdbus
 
 # SMF support
