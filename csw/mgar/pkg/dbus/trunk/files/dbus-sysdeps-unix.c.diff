@@ -1,18 +1,12 @@
 --- dbus-1.3.0.orig/dbus/dbus-sysdeps-unix.c    2009-07-16 16:04:55.000000000 +0200
 +++ dbus-1.3.0/dbus/dbus-sysdeps-unix.c         2010-02-28 16:49:51.561773000 +0100
-@@ -54,6 +54,15 @@
+@@ -54,6 +54,9 @@
  #include <netinet/in.h>
  #include <netdb.h>
  #include <grp.h>
-+#ifndef sun
 +#include <alloca.h>
-+#ifndef CMSG_SPACE
 +#define CMSG_SPACE(l) ((size_t)_CMSG_HDR_ALIGN(sizeof (struct cmsghdr) + (l)))
-+#endif
-+#ifndef CMSG_LEN
 +#define CMSG_LEN(l) ((size_t)_CMSG_DATA_ALIGN(sizeof (struct cmsghdr)) + (l))
-+#endif
-+#endif
 
  #ifdef HAVE_ERRNO_H
  #include <errno.h>
