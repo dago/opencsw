@@ -14,16 +14,16 @@ DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz
 PKGDIST       = $(DISTFILE)
 
 # Generate description fields
-SPKG_DESC_CSWdbus         = $(DESCRIPTION)
-SPKG_DESC_CSWlibdbus      = $(DESCRIPTION) libraries
-SPKG_DESC_CSWlibdbusdev   = $(DESCRIPTION) development package
+SPKG_DESC_CSWdbus          = $(DESCRIPTION)
+SPKG_DESC_CSWlibdbus       = $(DESCRIPTION) libraries
+SPKG_DESC_CSWlibdbusdev    = $(DESCRIPTION) development package
 
-PACKAGES = CSWdbus CSWlibdbus CSWlibdbusdev
-CATALOGNAME_CSWdbus = dbus
-CATALOGNAME_CSWlibdbus = libdbus
-CATALOGNAME_CSWlibdbusdev = libdbusdev
-DISTFILES    += CSWdbus.preinstall
-DISTFILES    += cswdbus
+PACKAGES                   = CSWdbus CSWlibdbus CSWlibdbusdev
+CATALOGNAME_CSWdbus        = dbus
+CATALOGNAME_CSWlibdbus     = libdbus
+CATALOGNAME_CSWlibdbusdev  = libdbusdev
+DISTFILES                 += CSWdbus.preinstall
+DISTFILES                 += cswdbus
 
 # Dynamic CSWlibdbusdev prototype
 PKGFILES_CSWlibdbusdev  = $(PKGFILES_DEVEL)
@@ -33,7 +33,7 @@ PKGFILES_CSWlibdbusdev += $(libdir)/dbus-1.0/.*
 PKGFILES_CSWlibdbus     = $(PKGFILES_RT)
 
 # Dependencies tracking
-RUNTIME_DEP_PKGS_CSWdbus	    = CSWexpat CSWlibdbus CSWlibsm CSWlibice CSWlibx11
+RUNTIME_DEP_PKGS_CSWdbus        = CSWexpat CSWlibdbus CSWlibsm CSWlibice CSWlibx11 CSWcswclassutils
 RUNTIME_DEP_PKGS_CSWlibdbusdev  = CSWlibdbus
 
 # SMF support
