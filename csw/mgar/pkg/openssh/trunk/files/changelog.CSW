@@ -1,4 +1,10 @@
-openssh (5.3p1,REV=2008.12.16) unstable
+openssh (5.3p1,REV=2010.02.28) unstable
+
+  * Added ssh-copy-id contrib script (Closes: #4306)
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 28 Feb 2010 17:03:52 +0100
+
+openssh (5.3p1,REV=2009.12.14) unstable
 
   * Package rebuild to solve an incorrect upload in the repository tree.
   * Changed package version numbering scheme.

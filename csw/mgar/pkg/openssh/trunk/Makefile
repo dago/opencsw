@@ -124,7 +124,11 @@ pre-configure:
 	@$(MAKECOOKIE)
 
 # adding documentation files
-post-merge: merge-config-files merge-doc-files merge-init-files
+post-merge: merge-config-files merge-doc-files merge-init-files merge-contrib-files
+
+merge-contrib-files:
+	ginstall -D "$(WORKSRC_FIRSTMOD)/contrib/ssh-copy-id" "$(PKGROOT)/$(bindir)/ssh-copy-id"
+	ginstall -D "$(WORKSRC_FIRSTMOD)/contrib/ssh-copy-id.1" "$(PKGROOT)/$(mandir)/man1/ssh-copy-id.1"
 
 merge-init-files:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswopenssh" "$(PKGROOT)/etc/opt/csw/init.d/cswopenssh"

@@ -4,6 +4,7 @@ s none /opt/csw/bin/slogin=./ssh
 f none /opt/csw/bin/ssh 0755 root bin
 f none /opt/csw/bin/ssh-add 0755 root bin
 f none /opt/csw/bin/ssh-agent 0755 root bin
+f none /opt/csw/bin/ssh-copy-id 0755 root bin
 f none /opt/csw/bin/ssh-keygen 0755 root bin
 f none /opt/csw/bin/ssh-keyscan 0755 root bin
 d none /opt/csw/etc/ssh 0755 root bin
@@ -31,6 +32,7 @@ f none /opt/csw/share/man/man1/sftp.1 0644 root bin
 s none /opt/csw/share/man/man1/slogin.1=./ssh.1
 f none /opt/csw/share/man/man1/ssh-add.1 0644 root bin
 f none /opt/csw/share/man/man1/ssh-agent.1 0644 root bin
+f none /opt/csw/share/man/man1/ssh-copy-id.1 0644 root bin
 f none /opt/csw/share/man/man1/ssh-keygen.1 0644 root bin
 f none /opt/csw/share/man/man1/ssh-keyscan.1 0644 root bin
 f none /opt/csw/share/man/man1/ssh.1 0644 root bin
