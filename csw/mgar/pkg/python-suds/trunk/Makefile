@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = python-suds
-GARVERSION = 0.3.8
+GARVERSION = 0.3.9
 CATEGORIES = python
 DESCRIPTION =  lightweight SOAP python client for consuming Web Services
 define BLURB
