@@ -262,15 +262,6 @@ print "/usr/sbin/pkgchk passed."
 # Check for some common errors
 if [[ $pkgname != "CSWcommon" ]] ; then
 
-	if [[ $LOGNAME != "root" ]] ; then
-		nawk '$6 == "'$LOGNAME'" {print; exit 1}' $EXTRACTDIR/$pkgname/pkgmap
-		if [[ $? -eq 1 ]] ; then
-			print ERROR: files owned by $LOGNAME in prototype file
-			rm -rf $EXTRACTDIR $TMPARCHIVE
-			exit 1
-		fi
-	fi
-
 	egrep 'd none /opt ' $EXTRACTDIR/$pkgname/pkgmap
 	if [[ $? -eq 0 ]] ; then
 	errmsg You should not have an entry for /opt in your prototype file

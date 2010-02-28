@@ -16,7 +16,7 @@ path_list = [os.path.dirname(__file__),
              "..", "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
 import checkpkg
-import package_checks
+import package_checks_old
 
 def main():
   options, args = checkpkg.GetOptions()
@@ -29,7 +29,7 @@ def main():
                                            options.debug)
 
   check_manager.RegisterIndividualCheck(
-      package_checks.CheckArchitectureVsContents)
+      package_checks_old.CheckArchitectureVsContents)
   exit_code, screen_report, tags_report = check_manager.Run()
   f = open(options.output, "w")
   f.write(tags_report)

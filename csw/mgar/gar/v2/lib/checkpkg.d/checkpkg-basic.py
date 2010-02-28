@@ -17,7 +17,7 @@ path_list = [os.path.dirname(__file__),
              "..", "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
 import checkpkg
-import package_checks
+import package_checks_old
 
 def main():
   options, args = checkpkg.GetOptions()
@@ -29,9 +29,12 @@ def main():
                                            md5sums,
                                            options.debug)
   # Registering functions defined above.
-  check_manager.RegisterIndividualCheck(package_checks.CatalognameLowercase)
-  check_manager.RegisterIndividualCheck(package_checks.FileNameSanity)
-  check_manager.RegisterIndividualCheck(package_checks.PkginfoSanity)
+  check_manager.RegisterIndividualCheck(package_checks_old.CatalognameLowercase)
+  check_manager.RegisterIndividualCheck(package_checks_old.FileNameSanity)
+  check_manager.RegisterIndividualCheck(package_checks_old.PkginfoSanity)
+  check_manager.RegisterIndividualCheck(package_checks_old.ArchitectureSanity)
+  check_manager.RegisterIndividualCheck(package_checks_old.CheckBuildingUser)
+  check_manager.RegisterIndividualCheck(package_checks_old.CheckPkgmapPaths)
   # Running the checks, reporting and exiting.
   exit_code, screen_report, tags_report = check_manager.Run()
   f = open(options.output, "w")
