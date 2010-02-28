@@ -15,6 +15,7 @@ import re
 import socket
 import sqlite3
 import subprocess
+import textwrap
 import yaml
 from Cheetah import Template
 import opencsw
@@ -92,6 +93,9 @@ TAG_REPORT_TMPL = u"""#if $errors
 # Tags reported by $name module
 #for $pkgname in $errors
 #for $tag in $errors[$pkgname]
+#if $tag.msg
+$textwrap.fill($tag.msg, 70, initial_indent="# ", subsequent_indent="# ")
+#end if
 $pkgname: ${tag.tag_name}#if $tag.tag_info# $tag.tag_info#end if#
 #end for
 #end for
@@ -144,6 +148,18 @@ def FormatDepsReport(pkgname, missing_deps, surplus_deps, orphan_sonames):
   }
   t = Template.Template(REPORT_TMPL, searchList=[namespace])
   return unicode(t)
+
+
+def ExtractDescription(pkginfo):
+  desc_re = re.compile(r"^[\w_]+ - (.*)$")
+  m = re.match(desc_re, pkginfo["NAME"])
+  return m.group(1) if m else None
+
+
+def ExtractMaintainerName(pkginfo):
+  maint_re = re.compile("^.*for CSW by (.*)$")
+  m = re.match(maint_re, pkginfo["VENDOR"])
+  return m.group(1) if m else None
 
 
 class SystemPkgmap(object):
@@ -666,8 +682,26 @@ class CheckpkgTag(object):
     self.msg = msg
 
   def __repr__(self):
-    return (u"CheckpkgTag(%s, %s, %s, ...)"
-            % (repr(self.pkgname), repr(self.tag_name), repr(self.tag_info)))
+    return (u"CheckpkgTag(%s, %s, %s, %s)"
+            % (repr(self.pkgname),
+               repr(self.tag_name),
+               repr(self.tag_info),
+               repr(self.msg)))
+
+  def ToGarSyntax(self):
+    msg_lines = []
+    if self.msg:
+      msg_lines.extend(textwrap(self.msg, 70,
+                                initial_indent="# ",
+                                subsequent_indent="# "))
+    if self.tag_info:
+      tag_postfix = "|%s" % self.tag_info.replace(" ", "|")
+    else:
+      tag_postfix = ""
+    msg_lines.append(u"CHECKPKG_OVERRIDES_%s += %s%s"
+                     % (self.pkgname, self.tag_name, tag_postfix))
+    return "\n".join(msg_lines)
+
 
 
 class CheckpkgManager(object):
@@ -726,6 +760,7 @@ class CheckpkgManager(object):
         "name": self.name,
         "errors": errors,
         "debug": self.debug,
+        "textwrap": textwrap,
     }
     screen_t = Template.Template(SCREEN_ERROR_REPORT_TMPL, searchList=[namespace])
     tags_report_t = Template.Template(TAG_REPORT_TMPL, searchList=[namespace])
@@ -779,7 +814,7 @@ class Override(object):
 
   def __repr__(self):
     return (u"Override(%s, %s, %s)"
-            % (self.pkgname, self.tag_name, self.tag_info))
+            % (repr(self.pkgname), repr(self.tag_name), repr(self.tag_info)))
 
   def DoesApply(self, tag):
     """Figures out if this override applies to the given tag."""
@@ -794,6 +829,7 @@ class Override(object):
     basket_a["tag_name"] = self.tag_name
     basket_b["tag_name"] = tag.tag_name
     return basket_a == basket_b
+
 
 def ParseOverrideLine(line):
   level_1 = line.split(":")
@@ -819,14 +855,18 @@ def ApplyOverrides(error_tags, overrides):
   O(N * M), but N and M are always small.
   """
   tags_after_overrides = []
+  applied_overrides = set([])
+  provided_overrides = set(copy.copy(overrides))
   for tag in error_tags:
     override_applies = False
     for override in overrides:
       if override.DoesApply(tag):
         override_applies = True
+        applied_overrides.add(override)
     if not override_applies:
       tags_after_overrides.append(tag)
-  return tags_after_overrides
+  unapplied_overrides = provided_overrides.difference(applied_overrides)
+  return tags_after_overrides, unapplied_overrides
 
 
 def GetIsalist():

@@ -708,47 +708,47 @@ class ApplyOverridesUnitTest(unittest.TestCase):
     """One tag, no overrides."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = []
-    self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual((tags, set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_1b(self):
     """One override, matching by tag name only."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = [checkpkg.Override(None, "foo-tag", None)]
-    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual(([], set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_1c(self):
     """One override, matching by tag name only, no pkgname."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = [checkpkg.Override(None, "foo-tag", None)]
-    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual(([], set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_2(self):
     """One override, matching by tag name and tag info, no pkgname."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = [checkpkg.Override(None, "foo-tag", None)]
-    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual(([], set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_3(self):
     """One override, matching by tag name, mismatching tag info, no pkgname."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override(None, "foo-tag", "tag-info-2")]
-    self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual((tags, set(overrides)), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_4(self):
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override(None, "foo-tag", "tag-info-1")]
-    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual(([], set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_5(self):
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override("CSWfoo", "foo-tag", "tag-info-1")]
-    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual(([], set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_6(self):
     """Pkgname mismatch."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override("CSWbar", "foo-tag", "tag-info-1")]
-    self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual((tags, set(overrides)), checkpkg.ApplyOverrides(tags, overrides))
 
 
 class SystemPkgmapUnitTest(unittest.TestCase):
@@ -824,6 +824,21 @@ class PackageStatsUnitTest(unittest.TestCase):
   def test_ParseLddDashRlineManyLines(self):
     for line in LDD_R_OUTPUT_1.splitlines():
       parsed = self.pkgstats._ParseLddDashRline(line)
+
+
+class ExtractorsUnitTest(unittest.TestCase):
+
+  def testExtractDescription_1(self):
+    data = {"NAME": "nspr_devel - Netscape Portable Runtime header files"}
+    result = "Netscape Portable Runtime header files"
+    self.assertEqual(result, checkpkg.ExtractDescription(data))
+
+  def testExtractMaintainerName(self):
+    data = {"VENDOR": "https://ftp.mozilla.org/pub/mozilla.org/"
+                      "nspr/releases/v4.8/src/ packaged for CSW by "
+                      "Maciej Blizinski"}
+    result = "Maciej Blizinski"
+    self.assertEqual(result, checkpkg.ExtractMaintainerName(data))
 
 
 if __name__ == '__main__':

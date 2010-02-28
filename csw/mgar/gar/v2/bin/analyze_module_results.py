@@ -34,18 +34,21 @@ def main():
         pkgname, tag_name, tag_info = checkpkg.ParseTagLine(line)
         error_tags.append(checkpkg.CheckpkgTag(pkgname, tag_name, tag_info))
   overrides = reduce(lambda x, y: x + y, overrides_list)
-  tags_after_overrides = checkpkg.ApplyOverrides(error_tags, overrides)
+  (tags_after_overrides,
+   unapplied_overrides) = checkpkg.ApplyOverrides(error_tags, overrides)
   exit_code = bool(tags_after_overrides)
   if tags_after_overrides:
     print "There were errors reported."
     print "If you know they are false positives, you can override them:"
     for tag in tags_after_overrides:
-      if tag.tag_info:
-        tag_postfix = "|%s" % tag.tag_info.replace(" ", "|")
-      else:
-        tag_postfix = ""
-      print ("CHECKPKG_OVERRIDES_%s += %s%s"
-             % (tag.pkgname, tag.tag_name, tag_postfix))
+      print tag.ToGarSyntax()
+  if unapplied_overrides:
+    print "WARNING: Some overrides did not match any errors."
+    print "         They can be removed, as they don't take any effect anyway."
+    print "         If you're getting errors at the same time, maybe you didn't"
+    print "         specify the overrides correctly."
+    for override in unapplied_overrides:
+      print "* %s" % override
   sys.exit(exit_code)
 
 

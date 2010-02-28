@@ -112,5 +112,12 @@ opt/csw/lib/postgresql/8.4/adminpack.so: [Pg_magic_func, _fini, _init, pg_file_r
     self.failUnless(errors)
 
 
+  def testArchitectureSanity(self):
+    self.pkg_data_2["pkginfo"] = {}
+    self.pkg_data_2["pkginfo"]["ARCH"] = "i386"
+    errors = pc.ArchitectureSanity(self.pkg_data_2, False)
+    self.failUnless(errors)
+
+
 if __name__ == '__main__':
   unittest.main()

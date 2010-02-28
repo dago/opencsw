@@ -91,8 +91,10 @@ errmsg(){
 	print ERROR: $* >/dev/fd/2
 	cleanup
 	cleanupset
-	print "To run checkpkg in the debug mode, add the '-d' flag:"
+	print "To run checkpkg in the debug mode, add the '-d' flag, for example:"
 	print "${selfpath} -d ${selfargs}"
+	print "After you modify any overrides, you need to do gmake remerge repackage"
+	print "or gmake platforms-remerge platforms-repackage."
 	exit 1
 }
 
@@ -216,108 +218,11 @@ hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
 basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
 pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
 
-case `basename $f` in
-	${software}-${version}-*)
-		# file name looks okay
-	;;
-	${software}-*)
-		print ERROR: filename missing full version field $version
-		rm -rf $EXTRACTDIR $TMPARCHIVE
-		 exit 1
-	;;
-	*)
-		print ERROR: filename  should start with $software-$version-
-		rm -rf $EXTRACTDIR $TMPARCHIVE
-		exit  1
-esac
-
-
-
-if [ "$maintname" = "" ] ; then
-	# the old format, in the DESC field
-	maintname=`sed -n 's/^DESC=.*for CSW by //p' $TMPFILE`
-
-	# Since the DESC field has been coopted, take
-	# description from second half of NAME field now.
-	desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
-else
-	if [ "$desc" = "" ] ; then
-		desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
-	fi
-fi
-
 rm $TMPFILE
 
 # strip out '' chars, because it interferes with mysql
 desc=`print $desc | sed "s/'//g"`
 
-
-print Info for pkg $pkgname
-
-print software= "'$software'"
-print arch= "'$pkgarch'"
-print desc="'$desc'"
-print pkgname="'$pkgname'"
-print version="'$version'"
-print maintainer name="'$maintname'"
-print maint email="'$email'"
-print hotline="'$hotline'"
-if [ "$basedir" != "" ] ; then
-	print basedir="'$basedir'"
-fi
-
-if [[ ${#software} -gt ${NAME_MAX_LENGTH} ]] ; then
-	errmsg "$f: software name longer than ${NAME_MAX_LENGTH} chars"
-fi
-if [[ ${#pkgname} -gt ${NAME_MAX_LENGTH} ]] ; then
-	errmsg "$f: pkg name longer than ${NAME_MAX_LENGTH} chars"
-fi
-
-if [ "$software" = "" ] ; then errmsg $f: software field not set properly in NAME ; fi
-if [ "$pkgname" = "" ] ; then errmsg $f: pkgname field blank ; fi
-if [ "$desc" = "" ] ; then errmsg $f: no description in either NAME or DESC field ; fi
-if [ ${#desc} -gt 100 ] ; then errmsg $f: description greater than 100 chars ; fi
-if [ "$version" = "" ] ; then errmsg $f: VERSION field blank ;  fi
-if [ "$maintname" = "" ] ; then errmsg $f: maintainer name not detected. Fill out VENDOR field properly ; fi
-if [ "$email" = "" ] ; then errmsg $f: EMAIL field blank ; fi
-if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
-
-
-case $version in
-	*-*)
-		errmsg "VERSION field not allowed to have \"-\" in it"
-	;;
-	*,REV=20[01][0-9].[0-9][0-9].[0-9][0-9]*)
-		:
-	;;
-	*)
-		print ERROR: no REV=YYYY.MM.DD field in VERSION
-		exit 1
-	;;
-esac
-
-case $pkgarch in
-	sparc|i386|all)
-	;;
-	sparc.*|i386.*)
-	;;
-
-	*)
-	print ERROR: non-standard ARCH def in package: $pkgarch
-	rm -rf $EXTRACTDIR $TMPARCHIVE
-	exit 1
-esac
-
-case $f in
-  *${pkgarch}*)
-    print "f: $f, pkgarch: $pkgarch"
-    ;;
-  *)
-    print "The file name is '$f'."
-    print "The pkgarch is '$pkgarch'."
-    errmsg "ERROR: package file name and pkgarch don't match."
-    ;;
-esac
 
 goodarch=yes
 case $f in
@@ -575,7 +480,8 @@ if [[ -d "${checkpkg_module_dir}" ]]; then
 			plugin_name="`echo ${plugin} | sed -e 's+.*/checkpkg-++' | sed -e 's+\.py$++'`"
 			error_tag_file="tags.${plugin_name}"
 			printf "${BOLD}${module_name_format}${COLOR_RESET} running..." "${plugin_name}"
-			debugmsg "Executing: ${plugin} $extra_options -b \"${checkpkg_stats_basedir}\" -o \"${EXTRACTDIR}/${error_tag_file}\" ${md5sums}"
+			debugmsg "Executing: ${plugin} $extra_options -b \"${checkpkg_stats_basedir}\"" \
+		                 "-o \"${EXTRACTDIR}/${error_tag_file}\" `echo ${md5sums}`"
 			${plugin} \
 				$extra_options \
 				-b "${checkpkg_stats_basedir}" \
@@ -597,7 +503,9 @@ else
 fi
 
 for log_file in ${log_files}; do
-	if [[ `gwc -c "${log_file}" | awk '{print $1}'` -gt 1 ]]; then
+	log_len=`gsed -e 's/\s\+//g' "${log_file}" | gtr -s '\n' | gwc -c | awk '{print $1}'`
+	if [[ "${log_len}" -gt 1 ]]; then
+		print "printing ${log_file}..."
 		debugmsg ">> LOG START: ${log_file}"
 		cat "${log_file}"
 		debugmsg "<< LOG END: ${log_file}"

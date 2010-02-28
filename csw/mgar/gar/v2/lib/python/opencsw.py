@@ -93,15 +93,27 @@ class PackageError(Error):
 
 
 def ParsePackageFileName(p):
+  if p.endswith(".gz"):
+    p = p[:-3]
+  if p.endswith(".pkg"):
+    p = p[:-4]
   bits = p.split("-")
   catalogname = bits[0]
   version, version_info, revision_info = ParseVersionString(bits[1])
+  if len(bits) == 5:
+    osrel, arch, vendortag = bits[2:5]
+  else:
+    arch, vendortag = bits[2:4]
+    osrel = "unspecified"
   data = {
       'catalogname': catalogname,
       'full_version_string': bits[1],
       'version': version,
       'version_info': version_info,
       'revision_info': revision_info,
+      'osrel': osrel,
+      'arch': arch,
+      'vendortag': vendortag,
   }
   return data
 

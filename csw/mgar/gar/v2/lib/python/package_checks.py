@@ -76,6 +76,12 @@ import re
 
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
 
+MAX_CATALOGNAME_LENGTH = 20
+MAX_PKGNAME_LENGTH = 20
+MAX_DESCRIPTION_LENGTH = 100
+ARCH_LIST = ["sparc", "i386", "all"]
+VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
+
 def CatalognameLowercase(pkg_data, debug):
   errors = []
   # Here's how to report an error:
@@ -93,15 +99,121 @@ def CatalognameLowercase(pkg_data, debug):
 
 def FileNameSanity(pkg_data, debug):
   errors = []
-  # Here's how to report an error:
   basic_stats = pkg_data["basic_stats"]
   revision_info = basic_stats["parsed_basename"]["revision_info"]
   catalogname = pkg_data["basic_stats"]["catalogname"]
+  pkgname = pkg_data["basic_stats"]["pkgname"]
   if "REV" not in revision_info:
     errors.append(checkpkg.CheckpkgTag(
-      pkg_data["basic_stats"]["pkgname"],
-      "rev-tag-missing-in-filename"))
+      pkgname, "rev-tag-missing-in-filename"))
+  if len(catalogname) > MAX_CATALOGNAME_LENGTH:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "catalogname-too-long"))
+  if len(pkgname) > MAX_PKGNAME_LENGTH:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "pkgname-too-long"))
+  if basic_stats["parsed_basename"]["osrel"] == "unspecified":
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "osrel-tag-not-specified"))
   return errors
+
+
+def PkginfoSanity(pkg_data, debug):
+  """pkginfo sanity checks.
+
+if [ "$maintname" = "" ] ; then
+	# the old format, in the DESC field
+	maintname=`sed -n 's/^DESC=.*for CSW by //p' $TMPFILE`
+
+	# Since the DESC field has been coopted, take
+	# description from second half of NAME field now.
+	desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
+else
+	if [ "$desc" = "" ] ; then
+		desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
+	fi
+fi
+
+software=`sed -n 's/^NAME=\([^ -]*\) -.*$/\1/p' $TMPFILE`
+version=`sed -n 's/^VERSION=//p' $TMPFILE`
+desc=`sed -n 's/^DESC=//p' $TMPFILE`
+email=`sed -n 's/^EMAIL=//p' $TMPFILE`
+maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
+hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
+basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
+pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
+
+if [ "$software" = "" ] ; then errmsg $f: software field not set properly in NAME ; fi
+if [ "$pkgname" = "" ] ; then errmsg $f: pkgname field blank ; fi
+if [ "$desc" = "" ] ; then errmsg $f: no description in either NAME or DESC field ; fi
+if [ ${#desc} -gt 100 ] ; then errmsg $f: description greater than 100 chars ; fi
+if [ "$version" = "" ] ; then errmsg $f: VERSION field blank ;  fi
+if [ "$maintname" = "" ] ; then errmsg $f: maintainer name not detected. Fill out VENDOR field properly ; fi
+if [ "$email" = "" ] ; then errmsg $f: EMAIL field blank ; fi
+if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
+  """
+  errors = []
+  catalogname = pkg_data["basic_stats"]["catalogname"]
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  pkginfo = pkg_data["pkginfo"]
+  if not catalogname:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "empty-catalogname"))
+  if not pkgname:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "empty-pkgname"))
+  if not "VERSION" in pkginfo or not pkginfo["VERSION"]:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "pkginfo-version-field-missing"))
+  desc = checkpkg.ExtractDescription(pkginfo)
+  if not desc:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "description-missing"))
+  if len(desc) > MAX_DESCRIPTION_LENGTH:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "description-too-long"))
+  # maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
+  maintname = checkpkg.ExtractMaintainerName(pkginfo)
+  if not maintname:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "maintainer-name-not-set"))
+  # email
+  if not pkginfo["EMAIL"]:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "email-blank"))
+  # hotline
+  if not pkginfo["HOTLINE"]:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "hotline-blank"))
+  pkginfo_version = pkg_data["basic_stats"]["parsed_basename"]["full_version_string"]
+  if pkginfo_version != pkginfo["VERSION"]:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "filename-version-does-not-match-pkginfo-version"))
+  if re.search(r"-", pkginfo["VERSION"]):
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "minus-not-allowed-in-version"))
+  if not re.match(VERSION_RE, pkginfo["VERSION"]):
+    msg = ("Version regex: %s, version value: %s."
+           % (repr(VERSION_RE), repr(pkginfo["VERSION"])))
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "version-does-not-match-regex", msg=msg))
+  if pkginfo["ARCH"] not in ARCH_LIST:
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "non-standard-architecture", pkginfo["ARCH"]))
+  return errors
+
+
+def ArchitectureSanity(pkg_data, debug):
+  errors = []
+  basic_stats = pkg_data["basic_stats"]
+  pkgname = basic_stats["pkgname"]
+  pkginfo = pkg_data["pkginfo"]
+  filename = basic_stats["pkg_basename"]
+  arch = pkginfo["ARCH"]
+  filename_re = r"-%s-" % arch
+  if not re.search(filename_re, filename):
+    errors.append(checkpkg.CheckpkgTag(
+      pkgname, "srv4-filename-architecture-mismatch", arch))
 
 
 def CheckArchitectureVsContents(pkg_data, debug):

@@ -124,7 +124,7 @@ def CheckSharedLibraryConsistency(pkgs_data, debug):
   for checker in pkgs_data:
     pkgname = checker["basic_stats"]["pkgname"]
     declared_dependencies = checker["depends"]
-    if debug:
+    if debug and False:
       sanitized_pkgname = pkgname.replace("-", "_")
       data_file_name = "/var/tmp/checkpkg_test_data_%s.py" % sanitized_pkgname
       logging.warn("Saving test data to %s." % repr(data_file_name))

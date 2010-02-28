@@ -31,6 +31,7 @@ def main():
   # Registering functions defined above.
   check_manager.RegisterIndividualCheck(package_checks.CatalognameLowercase)
   check_manager.RegisterIndividualCheck(package_checks.FileNameSanity)
+  check_manager.RegisterIndividualCheck(package_checks.PkginfoSanity)
   # Running the checks, reporting and exiting.
   exit_code, screen_report, tags_report = check_manager.Run()
   f = open(options.output, "w")

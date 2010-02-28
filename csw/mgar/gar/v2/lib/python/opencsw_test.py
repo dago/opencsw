@@ -118,18 +118,45 @@ class ParsePackageFileNameTest(unittest.TestCase):
       self.assertEqual(pkg_version, compiled["full_version_string"])
 
 
+class ParsePackageFileNameTest_2(unittest.TestCase):
+
+  def setUp(self):
+    self.file_name = 'mysql5client-5.0.87,REV=2010.02.28-SunOS5.8-i386-CSW.pkg.gz'
+    self.parsed = opencsw.ParsePackageFileName(self.file_name)
+
+  def testParsePackageFileName_2_1(self):
+    self.assertTrue("arch" in self.parsed)
+    self.assertEqual(self.parsed["arch"], "i386")
+
+  def testParsePackageFileName_2_2(self):
+    self.assertTrue("osrel" in self.parsed)
+    self.assertEqual(self.parsed["osrel"], "SunOS5.8")
+
+  def testParsePackageFileName_2_3(self):
+    self.assertTrue("vendortag" in self.parsed)
+    self.assertEqual(self.parsed["vendortag"], "CSW")
+
+  def testParsePackageFileName_OldFormat(self):
+    """Old srv4 file name."""
+    file_name = "achievo-0.8.4-all-CSW.pkg.gz"
+    parsed = opencsw.ParsePackageFileName(file_name)
+    self.assertEqual("unspecified", parsed["osrel"])
+
+
 class UpgradeTypeTest(unittest.TestCase):
 
   def testUpgradeType_1(self):
     pkg = opencsw.CatalogBasedOpencswPackage("analog")
     pkg.LazyDownloadCatalogData(CATALOG_DATA_1.splitlines())
     expected_data = {
-        'catalogname': 'analog',
-        'full_version_string': '5.32,REV=2003.9.12',
         'version': '5.32',
-        'version_info': {opencsw.MAJOR_VERSION: '5',
-                         opencsw.MINOR_VERSION: '32'},
+        'full_version_string': '5.32,REV=2003.9.12',
+        'version_info': {'minor version': '32', 'major version': '5'},
+        'vendortag': 'CSW',
         'revision_info': {'REV': '2003.9.12'},
+        'arch': 'sparc',
+        'osrel': 'SunOS5.8',
+        'catalogname': 'analog'
     }
     self.assertEqual(expected_data, pkg.GetCatalogPkgData())
 
