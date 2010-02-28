@@ -211,11 +211,6 @@ CHECKPKG_OVERRIDES_CSWsvn = symbol-not-found|libsvn_ra-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWpythonsvn = symbol-not-found
 CHECKPKG_OVERRIDES_CSWpmsvn = symbol-not-found
 
-CHECKPKG_OVERRIDES_CSWsvn += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWsvn += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWsvn += missing-dependency|CSWpython
-
-
 include gar/category.mk
 
 BINDING_LANGS   = java perl python ruby
