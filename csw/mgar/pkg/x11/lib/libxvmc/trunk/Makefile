@@ -26,7 +26,6 @@ SPKG_DESC_CSWlibxvmcdevel = $(DESCRIPTION) development files
 BUILD_DEP_PKGS = CSWxv
 
 RUNTIME_DEP_PKGS_CSWlibxvmc       = CSWlibx11 CSWlibxext CSWlibxv
-RUNTIME_DEP_PKGS_CSWlibxvmc 	 += CSWxv
 RUNTIME_DEP_PKGS_CSWlibxvmcdevel += CSWlibxvmc
 
 BUILD_DEP_PKGS_CSWlibxvmc 	 += CSWlibxv
