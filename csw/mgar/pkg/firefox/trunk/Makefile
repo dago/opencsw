@@ -1,5 +1,5 @@
 GARNAME = firefox
-GARVERSION = 3.0.16
+GARVERSION = 3.0.18
 CATEGORIES = apps
 DISTNAME = $(GARNAME)
 
@@ -13,14 +13,15 @@ DISTFILES += CSWfirefox.postremove CSWfirefox.postinstall autoconf.mk.diff firef
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
-MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)-real/source/
+MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
 UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/
 
 PACKAGES 		= CSWfirefox
 CATALOGNAME_CSWfirefox 	= $(GARNAME)
 SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 
-BUILD_DEP_PKGS = CSWgtk2devel CSWlibdbusdev CSWdbusglibdev CSWsqlite3devel CSWkbproto CSWrenderproto
+BUILD_DEP_PKGS  = CSWgtk2devel CSWlibdbusdev CSWdbusglibdev CSWsqlite3devel CSWkbproto CSWrenderproto
+BUILD_DEP_PKGS += CSWxproto CSWlibpthreadstubs CSWlibxcb CSWlibxcbdevel CSWlibxft2 CSWlibxft2devel
 
 RUNTIME_DEP_PKGS_CSWfirefox  = CSWdbusglib
 RUNTIME_DEP_PKGS_CSWfirefox += CSWfconfig
@@ -52,7 +53,7 @@ PATCHFILES += solaris_lwp.h.diff
 PATCHFILES += nsNativeApSuportUnix.cpp.diff
 PATCHFILES += nsExceptionHandler.cpp.diff 
 PATCHFILES += SunOS5.mk.diff
-PATCHFILES += nsWildCard.cpp.diff
+# PATCHFILES += nsWildCard.cpp.diff
 PATCHFILES += softoken.manifest.mm.diff
 PATCHFILES += softoken.config.mk.diff
 PATCHFILES += legacydb.manifest.mm.diff
