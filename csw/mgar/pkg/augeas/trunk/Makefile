@@ -24,7 +24,9 @@ GARCOMPILER = GCC4
 
 EXTRA_LDFLAGS = -lgnugetopt
 
-BUILD64 = 1
+# Building on Solaris 10 doesn't work as it support C99 and the above fixes are not necessary there.
+# Disable 64 bit for now.
+# BUILD64 = 1
 NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
