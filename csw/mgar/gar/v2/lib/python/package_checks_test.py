@@ -49,6 +49,13 @@ class TestDescription(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError('pkginfo-description-missing')
 
 
+class TestDescriptionLong(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckDescription'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["NAME"] = 'foo - ' 'A' * 200
+    self.error_mgr_mock.ReportError('pkginfo-description-too-long')
+
+
 class TestCheckCatalogname(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckCatalogname'
   def CheckpkgTest(self):

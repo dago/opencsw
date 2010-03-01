@@ -23,6 +23,7 @@ PATHS_ALLOWED_ONLY_IN = {
     "CSWiconv": ["/opt/csw/lib/charset.alias"],
     "CSWtexinfp": ["/opt/csw/share/info/dir"],
 }
+MAX_DESCRIPTION_LENGTH = 100
 
 
 def CheckForbiddenPaths(pkg_data, error_mgr, logger):

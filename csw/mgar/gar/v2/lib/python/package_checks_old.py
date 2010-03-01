@@ -9,7 +9,6 @@ ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
 
 MAX_CATALOGNAME_LENGTH = 20
 MAX_PKGNAME_LENGTH = 20
-MAX_DESCRIPTION_LENGTH = 100
 ARCH_LIST = ["sparc", "i386", "all"]
 VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
 ONLY_ALLOWED_IN_PKG = {
