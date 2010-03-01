@@ -12,6 +12,7 @@
 #   error_mgr.ReportError("something-is-wrong")
 
 import re
+import checkpkg
 
 PATHS_ALLOWED_ONLY_IN = {
     "CSWcommon": ["/opt",
@@ -62,6 +63,24 @@ def CheckMultipleDepends(pkg_data, error_mgr, logger):
     if pkgname in new_depends:
       error_mgr.ReportError("dependency-listed-more-than-once", pkgname)
     new_depends.add(pkgname)
+
+
+def CheckDescription(pkg_data, error_mgr, logger):
+  pkginfo = pkg_data["pkginfo"]
+  desc = checkpkg.ExtractDescription(pkginfo)
+  if not desc:
+    error_mgr.ReportError("pkginfo-description-missing")
+  else:
+    if len(desc) > MAX_DESCRIPTION_LENGTH:
+      error_mgr.ReportError("pkginfo-description-too-long")
+
+
+def CheckCatalogname(pkg_data, error_mgr, logger):
+  pkginfo = pkg_data["pkginfo"]
+  catalogname = pkginfo["NAME"].split(" ")[0]
+  catalogname_re = r"^(\w+)$"
+  if not re.match(catalogname_re, catalogname):
+    error_mgr.ReportError("pkginfo-bad-catalogname")
 
 
 def SetCheckDependencies(pkgs_data, error_mgr, logger):

@@ -24,7 +24,7 @@ def CatalognameLowercase(pkg_data, debug):
     errors.append(checkpkg.CheckpkgTag(
       pkg_data["basic_stats"]["pkgname"],
       "catalogname-not-lowercase"))
-  if not re.match(r"^\w+$", catalogname):
+  if not re.match(r"^[\w_]+$", catalogname):
     errors.append(checkpkg.CheckpkgTag(
       pkg_data["basic_stats"]["pkgname"],
       "catalogname-is-not-a-simple-word"))
@@ -99,13 +99,6 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
   if not "VERSION" in pkginfo or not pkginfo["VERSION"]:
     errors.append(checkpkg.CheckpkgTag(
       pkgname, "pkginfo-version-field-missing"))
-  desc = checkpkg.ExtractDescription(pkginfo)
-  if not desc:
-    errors.append(checkpkg.CheckpkgTag(
-      pkgname, "description-missing"))
-  if len(desc) > MAX_DESCRIPTION_LENGTH:
-    errors.append(checkpkg.CheckpkgTag(
-      pkgname, "description-too-long"))
   # maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
   maintname = checkpkg.ExtractMaintainerName(pkginfo)
   if not maintname:
