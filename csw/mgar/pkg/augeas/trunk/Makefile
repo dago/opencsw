@@ -11,12 +11,34 @@ endef
 
 MASTER_SITES = http://augeas.net/download/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES  = 0001-Do-not-use-_N-already-taken-on-Solaris.patch
+PATCHFILES += 0002-Hack-in-isblank-as-gnutools-dont-seem-to-be-used.patch
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://augeas.net
 
+RUNTIME_DEP_PKGS = CSWgcc4corert CSWlibgnugetopt CSWreadline
+
+GARCOMPILER = GCC4
+
+EXTRA_LDFLAGS = -lgnugetopt
+
 BUILD64 = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
+TEST_TARGET = check
+
+EXTRA_MERGE_EXCLUDE_FILES = .*/charset.alias
+MERGE_DIRS_isa-extra = $(libdir)
+
 include gar/category.mk
+
+# Local bin/ for readlink, /opt/csw/gnu for GNU tail, diff
+PATH := $(abspath ./bin):/opt/csw/gnu:$(PATH)
+
+post-extract-modulated:
+	@# Tests are written in bash
+	-cd $(WORKSRC)/tests && perl -e 's,#! /bin/sh,#! /bin/bash,' -pi *.sh
+	@$(MAKECOOKIE)
