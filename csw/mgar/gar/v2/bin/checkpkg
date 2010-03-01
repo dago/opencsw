@@ -260,58 +260,6 @@ print "/usr/sbin/pkgchk passed."
 
 ########################################
 # Check for some common errors
-if [[ $pkgname != "CSWcommon" ]] ; then
-
-	egrep 'd none /opt ' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg You should not have an entry for /opt in your prototype file
-	fi
-	egrep 'd none [^ ]* 06' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg You must have execute permission set on directories
-	fi
-	egrep '/opt/csw/man|d none man' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg /opt/csw/man should not have a directory entry in prototype
-	fi
-	egrep '/opt/csw/doc|d none doc' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg /opt/csw/doc should not have a directory entry in prototype
-	fi
-	egrep '/opt/csw/info|d none info' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg /opt/csw/info should not have a directory entry in prototype
-	fi
-	egrep 'lib/charset.alias' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	warnmsg Only CSWiconv should have lib/charset.alias in it
-	fi
-	egrep 'share/locale/locale.alias' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	warnmsg Only CSWcommon should have share/locale/locale.alias in it
-	fi
-	fgrep  '? ? ?' $EXTRACTDIR/$pkgname/pkgmap |
-	egrep '[/]opt[/]csw'
-	if [[ $? -eq 0 ]] ; then
-	errmsg "You should only use '? ? ?' for non-csw paths. Use appropriate explicit perms/ownership instead"
-	fi
-	# this is like "installed package info". It is acceptible
-	# to update it in a postinstall script, but not have it
-	# directly in the pkgmap. A "e" entry might be acceptible though.
-	egrep ' f .*/perllocal.pod' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg perllocal.pod should be removed from prototype file
-	fi
-fi
-# special case. sigh.
-if [[ $pkgname != "CSWtexinfo" ]] ; then
-	egrep '/opt/csw/share/info/dir[ ]|none share/info/dir[ ]' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg /opt/csw/share/info/dir should only be in CSWtexinfo
-	rm -rf $EXTRACTDIR $TMPARCHIVE
-	exit 1
-	fi
-fi
 #########################################
 # find all executables and dynamic libs,and list their filenames.
 listbinaries() {
@@ -324,26 +272,15 @@ listbinaries() {
 	find $1 -print | xargs file |grep ELF |nawk -F: '{print $1}'
 }
 
-
-
-
 if [[ "$goodarch" = "yes" ]] ; then
 	# man ld.so.1 for more info on this hack
 	export LD_NOAUXFLTR=1
-
 	listbinaries $EXTRACTDIR/$pkgname >$EXTRACTDIR/elflist
 	# have to do this for ldd to work. arrg.
 	if [ -s "$EXTRACTDIR/elflist" ] ; then
 		chmod 0755 `cat $EXTRACTDIR/elflist`
-
-	#cat $EXTRACTDIR/elflist| xargs ldd  2>/dev/null |fgrep  '.so' |
-	#              sed 's:^.*=>[^/]*::' | nawk '{print $1}' |sort -u >$EXTRACTDIR/liblist
-
 		cat $EXTRACTDIR/elflist| xargs /usr/ccs/bin/dump -Lv |nawk '$2=="NEEDED"{print $3}' |
 			sort -u | egrep -v $EXTRACTDIR >$EXTRACTDIR/liblist
-
-			
-
 		print libraries used are:
 		cat $EXTRACTDIR/liblist
 		print "cross-referencing with depend file (May take a while)"
@@ -373,14 +310,6 @@ fi
 nawk '$2=="'$pkgname'" {exit 1}' $EXTRACTDIR/$pkgname/install/depend
 if [[ $? -ne 0 ]] ; then
 	errmsg "$pkgname references self in depend file"
-fi
-
-# Verify that there are no multiple depends
-repeated_depends="$(awk '{print $2}' $EXTRACTDIR/$pkgname/install/depend \
-  | sort | uniq -c | awk '{print $1}' | sort | uniq | wc -l)"
-if [[ "$repeated_depends" -gt 1 ]]; then
-        cat $EXTRACTDIR/$pkgname/install/depend
-        errmsg "$pkgname lists a dependency more than once, see above"
 fi
 
 #to retain a record of all packages currently being examined from $@

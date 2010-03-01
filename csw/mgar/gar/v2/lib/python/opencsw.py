@@ -739,11 +739,15 @@ class DirectoryFormatPackage(ShellMixin, object):
 
   def GetDependencies(self):
     fd = open(os.path.join(self.directory, "install", "depend"), "r")
-    depends = {}
+    # It needs to be a list because there might be duplicates and it's
+    # necessary to carry that information.
+    depends = []
     for line in fd:
       fields = re.split(WS_RE, line)
       if fields[0] == "P":
-        depends[fields[1]] = " ".join(fields[1:])
+        pkgname = fields[1]
+        pkg_desc = " ".join(fields[1:])
+        depends.append((pkgname, pkg_desc))
     fd.close()
     return depends
 

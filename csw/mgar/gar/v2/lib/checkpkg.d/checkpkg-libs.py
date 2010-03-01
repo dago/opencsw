@@ -123,27 +123,7 @@ def CheckSharedLibraryConsistency(pkgs_data, debug):
   dependent_pkgs = {}
   for checker in pkgs_data:
     pkgname = checker["basic_stats"]["pkgname"]
-    declared_dependencies = checker["depends"]
-    if debug and False:
-      sanitized_pkgname = pkgname.replace("-", "_")
-      data_file_name = "/var/tmp/checkpkg_test_data_%s.py" % sanitized_pkgname
-      logging.warn("Saving test data to %s." % repr(data_file_name))
-      test_fd = open(data_file_name, "w")
-      print >>test_fd, "# Testing data for %s" % pkgname
-      print >>test_fd, "# $Id$"
-      print >>test_fd, "DATA_PKGNAME                  =", repr(pkgname)
-      print >>test_fd, "DATA_DECLARED_DEPENDENCIES    =", repr(declared_dependencies)
-      print >>test_fd, "DATA_BINARIES_BY_PKGNAME      =", repr(binaries_by_pkgname)
-      print >>test_fd, "DATA_NEEDED_SONAMES_BY_BINARY =", repr(needed_sonames_by_binary)
-      print >>test_fd, "DATA_PKGS_BY_FILENAME         =", repr(pkgs_by_filename)
-      print >>test_fd, "DATA_FILENAMES_BY_SONAME      =", repr(filenames_by_soname)
-      print >>test_fd, "DATA_PKG_BY_ANY_FILENAME      =", repr(pkg_by_any_filename)
-      print >>test_fd, "DATA_LINES_BY_SONAME          =", repr(lines_by_soname)
-      print >>test_fd, "DATA_PKGMAP_CACHE             =", repr(pkgmap.cache)
-      print >>test_fd, "DATA_BINARIES_BY_SONAME       =", repr(binaries_by_soname)
-      print >>test_fd, "DATA_ISALIST                  =", repr(isalist)
-      test_fd.close()
-
+    declared_dependencies = dict(checker["depends"])
     missing_deps, surplus_deps, orphan_sonames = checkpkg.AnalyzeDependencies(
         pkgname,
         declared_dependencies,
