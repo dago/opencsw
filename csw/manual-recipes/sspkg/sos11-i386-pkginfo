@@ -1,0 +1,9 @@
+PKG=CSWsos11
+NAME=sos11 - Sun Studio 11
+ARCH=i386
+VERSION=11
+CATEGORY=application
+VENDOR=http://developers.sun.com/sunstudio/products/previous/11/index.jsp packaged for CSW by Dagobert Michelsen
+EMAIL=dam@opencsw.org
+CLASSES=none
+HOTLINE=http://www.opencsw.org/bugtrack/

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+ARCH=`uname -p`
+PKGINFO=sos12-${ARCH}-pkginfo
+WORK=work/sos12-${ARCH}
+(cd /opt/studio/SOS12; pkgproto .;
+ echo "i pkginfo=${PKGINFO}") > sos12-${ARCH}-pkgproto
+mkdir -p ${WORK}
+pkgmk -a ${ARCH} \
+	-b /opt/studio/SOS12 \
+	-f sos12-${ARCH}-pkgproto \
+	-p "$(LOGNAME)@$(hostname)-$(date '+%Y%m%d%H%M%S')" \
+	-o -d ${WORK}
+pkgtrans ${WORK} /dev/fd/1 CSWsos12 | pigz -c -9 > sos12-12,REV=`date '+%Y.%m.%d'`-`uname -s``uname -r`-${ARCH}-CSW.pkg.gz
+

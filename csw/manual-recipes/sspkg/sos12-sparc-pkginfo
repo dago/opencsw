@@ -1,0 +1,9 @@
+PKG=CSWsos12
+NAME=sos12 - Sun Studio 12
+ARCH=sparc
+VERSION=12
+CATEGORY=application
+VENDOR=http://developers.sun.com/sunstudio/downloads/previous/ss12/ packaged for CSW by Dagobert Michelsen
+EMAIL=dam@opencsw.org
+CLASSES=none
+HOTLINE=http://www.opencsw.org/bugtrack/

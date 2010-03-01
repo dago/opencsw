@@ -1,0 +1,9 @@
+PKG=CSWsos12u1
+NAME=sos12u1 - Sun Studio 12u1
+ARCH=sparc
+VERSION=12.1
+CATEGORY=application
+VENDOR=http://developers.sun.com/sunstudio/downloads/index.jsp packaged for CSW by Dagobert Michelsen
+EMAIL=dam@opencsw.org
+CLASSES=none
+HOTLINE=http://www.opencsw.org/bugtrack/
