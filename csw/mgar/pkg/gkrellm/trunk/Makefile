@@ -30,10 +30,8 @@ PKGFILES_CSWgkrellmd = /opt/csw/sbin/gkrellmd /opt/csw/share/man/gkrellmd.1 /opt
 SPKG_DESC_CSWgkrellmd = System monitor package daemon
 
 RUNTIME_DEP_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo CSWpango
-RUNTIME_DEP_PKGS_CSWgkrellmd = CSWggettextrt CSWglib2
 
-# Make sure to remove this after the X11 issues have all been settled
-EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
+RUNTIME_DEP_PKGS_CSWgkrellmd = CSWggettextrt CSWglib2
 
 # Disable configure scripts step
 CONFIGURE_SCRIPTS =
