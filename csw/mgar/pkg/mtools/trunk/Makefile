@@ -1,5 +1,5 @@
 GARNAME = mtools
-GARVERSION = 4.0.12
+GARVERSION = 4.0.13
 CATEGORIES = utils
 
 DESCRIPTION = read/write/list/format DOS disks under Unix
