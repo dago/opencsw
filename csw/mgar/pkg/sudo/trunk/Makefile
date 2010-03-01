@@ -1,7 +1,7 @@
 GARNAME = sudo
 GARVERSION = 1.7.2
 CATEGORIES = utils
-RELEASE = p2
+RELEASE = p4
 
 DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
@@ -62,6 +62,8 @@ PKGFILES_CSWsudo += $(bindir)/sudo
 PROTOTYPE_MODIFIERS = sudo
 PROTOTYPE_FILES_sudo = $(bindir)/sudo.minimal
 PROTOTYPE_PERMS_sudo = 4755
+
+LICENSE = LICENSE
 
 include gar/category.mk
 
