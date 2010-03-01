@@ -65,13 +65,15 @@ PROTOTYPE_PERMS_sudo = 4755
 
 LICENSE = LICENSE
 
+ALTERNATIVES_CSWsudo = minimal
+ALTERNATIVE_minimal  = $(bindir)/sudo     sudo     $(bindir)/sudo.minimal     50
+ALTERNATIVE_minimal += $(bindir)/sudoedit sudoedit $(bindir)/sudoedit.minimal
+
 include gar/category.mk
 
 post-install-modulated:
 	@( cd $(DESTDIR)$(bindir) ; gmv sudo sudo.minimal )
-	@( cd $(DESTDIR)$(bindir) ; gln -s sudo.minimal sudo )
-	@( cd $(DESTDIR)$(bindir) ; grm -f sudoedit )
-	@( cd $(DESTDIR)$(bindir) ; gcp sudo.minimal sudoedit )
+	@( cd $(DESTDIR)$(bindir) ; gmv sudoedit sudoedit.minimal )
 	@( cd $(DESTDIR)$(sysconfdir) ; gmv sudoers sudoers.CSW )
 	install -m 755 -d $(DESTDIR)$(LOGPATH)/logs
 	@$(MAKECOOKIE)
