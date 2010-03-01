@@ -1,5 +1,5 @@
 GARNAME = libsoup
-GARVERSION = 2.26.3
+GARVERSION = 2.29.91
 CATEGORIES = gnome
   
  
