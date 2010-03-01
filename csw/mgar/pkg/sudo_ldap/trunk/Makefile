@@ -1,7 +1,7 @@
 GARNAME = sudo
 GARVERSION = 1.7.2
 CATEGORIES = utils
-RELEASE = p2
+RELEASE = p4
 
 DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
@@ -29,6 +29,8 @@ SPKG_DESC_CSWsudoldap = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudoldap = http://www.sudo.ws
 RUNTIME_DEP_PKGS_CSWsudoldap = CSWsudo-common CSWggettextrt CSWoldaprt 
 
+LOGPATH = /var/opt/csw/log/sudo
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-logging=both
@@ -37,13 +39,22 @@ CONFIGURE_ARGS += --with-env-editor
 CONFIGURE_ARGS += --with-ldap=$(prefix)
 CONFIGURE_ARGS += --with-ldap-conf-file=$(sysconfdir)/ldap.conf
 CONFIGURE_ARGS += --disable-path-info
-CONFIGURE_ARGS += --with-logpath=/var/opt/csw/sudo/logs/sudolog
+CONFIGURE_ARGS += --with-logpath=$(LOGPATH)/sudolog
 ifneq ($(shell uname -r),5.8)
     CONFIGURE_ARGS += --with-project
 endif
 
+# sysconfdir to be enabled later
+# sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
 
 TEST_TARGET = check
+FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
+
+LICENSE = LICENSE
+ALTERNATIVES_CSWsudoldap = sudoldap
+ALTERNATIVE_sudoldap  = $(bindir)/sudo     sudo     $(bindir)/sudo.ldap     60
+ALTERNATIVE_sudoldap += $(bindir)/sudoedit sudoedit $(bindir)/sudoedit.ldap
 
 include gar/category.mk
 
@@ -51,9 +62,13 @@ PKGFILES_CSWsudoldap = .*$(bindir).*/sudo.ldap
 
 post-install-modulated:
 	@( cd $(DESTDIR)$(bindir) ; gmv sudo sudo.ldap )
-	@( cd $(DESTDIR)$(bindir) ; grm sudoedit )
-	@( cd $(DESTDIR)$(bindir) ; gchmod 4755 sudo.ldap )
+	@( cd $(DESTDIR)$(bindir) ; gmv sudoedit sudoedit.ldap )
+	install -m 755 -d $(DESTDIR)$(LOGPATH)/logs
+	@$(MAKECOOKIE)
+
+post-merge-modulated:
+	@( cd $(PKGROOT)$(bindir); \
+		gfind . -type f -name sudo\* -exec gchmod 4755 {} \; )
 	@$(MAKECOOKIE)
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
-
