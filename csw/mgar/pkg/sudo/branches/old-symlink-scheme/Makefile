@@ -54,6 +54,8 @@ include gar/category.mk
 
 PKGFILES_CSWsudo  = .*$(bindir).*/sudo.minimal
 
+LICENSE = LICENSE
+
 post-install-modulated:
 	@( cd $(DESTDIR)$(bindir) ; gmv sudo sudo.minimal )
 	@( cd $(DESTDIR)$(bindir) ; gln -s sudo.minimal sudo )
