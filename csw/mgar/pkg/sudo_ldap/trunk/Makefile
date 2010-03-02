@@ -54,6 +54,7 @@ FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
 PKGFILES_CSWsudoldap  = $(bindir)/sudo\.ldap
 PKGFILES_CSWsudoldap += $(bindir)/sudoedit\.ldap
+PKGFILES_CSWsudoldap += $(mandir)/man4/sudoers\.ldap\.4
 
 PROTOTYPE_MODIFIERS = sudo
 PROTOTYPE_FILES_sudo = $(bindir)/sudo(|edit).ldap
