@@ -1,10 +1,6 @@
 GARNAME = sudo
-GARVERSION = 1.7.2
+GARVERSION = 1.7.2p5
 CATEGORIES = utils
-RELEASE = p5
-
-DISTVERSION = $(GARVERSION)$(RELEASE)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
 
 DESCRIPTION = Provides limited super user privileges
 define BLURB
@@ -15,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
-DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz 
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
 PATCHFILES = install.diff
 
 # We define upstream file regex so we can be notifed of new 
