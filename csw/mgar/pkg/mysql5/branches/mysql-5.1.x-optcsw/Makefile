@@ -3,14 +3,14 @@
 # $Id$
 
 PROJ_NAME = mysql
-GARNAME = $(PROJ_NAME)5
+GARNAME = $(PROJ_NAME)51
 BASE_VERSION = 5.1
-PATCHLEVEL = 40
+PATCHLEVEL = 44
 GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
 # Useful when making a series of builds on the same day
-GARFLAVOR ?= DBG
+# GARFLAVOR ?= DBG
 
 DISTNAME = mysql-$(GARVERSION)
 SPKG_SOURCEURL = http://www.mysql.com/
@@ -43,8 +43,12 @@ global_bindir = /opt/csw/bin
 
 INITSMF = $(global_sysconfdir)/init\.d/csw$(GARNAME)
 
-PACKAGES  = CSW$(GARNAME) CSW$(GARNAME)bench CSW$(GARNAME)client CSW$(GARNAME)devel
-PACKAGES += CSW$(GARNAME)rt CSW$(GARNAME)test
+PACKAGES  = CSW$(GARNAME)
+PACKAGES += CSW$(GARNAME)bench
+PACKAGES += CSW$(GARNAME)client
+PACKAGES += CSW$(GARNAME)devel
+PACKAGES += CSW$(GARNAME)rt
+PACKAGES += CSW$(GARNAME)test
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
@@ -66,7 +70,7 @@ CATALOGNAME_CSW$(GARNAME)rt     = $(GARNAME)rt
 CATALOGNAME_CSW$(GARNAME)test   = $(GARNAME)test
 
 
-ARCHALL_CSWmysql5bench = 1
+ARCHALL_CSW$(GARNAME)bench = 1
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
@@ -132,7 +136,7 @@ RUNTIME_DEP_PKGS_CSW$(GARNAME)client      = CSW$(GARNAME)rt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWncurses
 RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWzlib
-RUNTIME_DEP_PKGS_CSW$(GARNAME)devel       = CSW$(GARNAME)
+RUNTIME_DEP_PKGS_CSW$(GARNAME)devel       = CSW$(GARNAME)rt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)test        = CSW$(GARNAME)
 RUNTIME_DEP_PKGS_CSW$(GARNAME)test       += CSWperl
 
@@ -196,11 +200,11 @@ PROTOTYPE_GROUP_dbdir = mysql
 PROTOTYPE_PERMS_dbdir = 0700
 PROTOTYPE_CLASS_dbdir = ugfiles
 
-SPKG_CLASSES = none ugfiles
-
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
+
+CHECKPKG_OVERRIDES_CSWmysql51devel += missing-dependency|CSWmysql51
 
 test-custom:
 	alias sh=/usr/bin/bash;                                 \
@@ -223,20 +227,22 @@ post-merge:
 	ginstall -m 644 $(FILEDIR)/ChangeLog $(PKGROOT)$(datadir)/mysql/doc
 	ginstall -m 644 $(FILEDIR)/README.CSW $(PKGROOT)$(datadir)/mysql/doc
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/mysql/doc
-	# ln -sf ../../../mysql5/share/mysql/doc/README.CSW \
-	# 	$(PKGROOT)/opt/csw/share/mysql/doc/README.CSW
+	ln -sf ../../../$(GARNAME)/share/mysql/doc/README.CSW \
+		$(PKGROOT)/opt/csw/share/mysql/doc/README.CSW
 	ginstall -m 755 -d $(PKGROOT)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/csw$(GARNAME) $(PKGROOT)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
 	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(GARNAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		        $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(GARNAME)
-	## A symlink for mysql5 include files
-	## ginstall -m 755 -d $(PKGROOT)/opt/csw/include
-	## ln -s ../mysql5/include/mysql $(PKGROOT)/opt/csw/include/mysql
+	# A symlink for mysql5 include files
+	# ginstall -m 755 -d $(PKGROOT)/opt/csw/include
+	# ln -s ../$(GARNAME)/include/mysql $(PKGROOT)/opt/csw/include/mysql
 	# Create symlinks to binaries
 	ginstall -m 755 -d $(PKGROOT)$(global_bindir)
 	for f in $(PKGROOT)$(bindir)/*; do \
+		if echo $$f | grep amd64$$; then continue; fi; \
+		if echo $$f | grep sparcv9$$; then continue; fi; \
 		ln -s ../..$(bindir)/`basename $$f` \
 		      $(PKGROOT)$(global_bindir)/`basename $$f`; \
 	done
