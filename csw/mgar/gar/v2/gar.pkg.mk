@@ -762,7 +762,7 @@ _buildpackage: ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,
 				if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;     \
 			done)),)
 _buildpackage: _EXTRA_GAR_PKGS += $(if $(ISAEXEC_FILES),CSWisaexec)
-_buildpackage: pre-package $(PACKAGE_TARGETS) post-package $(if $(ENABLE_CHECK),pkgcheck)
+_buildpackage: pre-package $(PACKAGE_TARGETS) post-package $(if $(filter-out 0,$(ENABLE_CHECK)),pkgcheck)
 
 _package: validateplatform extract-global merge $(SPKG_DESTDIRS) _buildpackage
 	@$(MAKECOOKIE)
