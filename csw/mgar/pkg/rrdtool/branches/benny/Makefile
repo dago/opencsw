@@ -63,8 +63,9 @@ TEST_TARGET = check
 
 PATCHFILES += patch-src-Makefile.in
 PATCHFILES += patch-src-rrd_open.c
+PATCHFILES += patch-bindings-Makefile.in
 
-BUILD64 = 1
+# BUILD64 = 1
 
 STRIP_LIBTOOL = 1
 
