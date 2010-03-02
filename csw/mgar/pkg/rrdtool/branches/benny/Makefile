@@ -34,6 +34,8 @@ RUNTIME_DEP_PKGS += CSWzlib
 RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWruby
 
+# BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS) CSWlua
+
 EXTRA_INC = $(prefix)/include/cairo
 EXTRA_INC += $(prefix)/include/libxml2
 EXTRA_INC += $(prefix)/X11/include
@@ -47,9 +49,9 @@ EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 CONFIGURE_ARS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(GARNAME)
-CONFIGURE_ARGS += --disable-python
+CONFIGURE_ARGS += --disable-lua 
+CONFIGURE_ARGS += --enable-python
 CONFIGURE_ARGS += --enable-ruby
-CONFIGURE_ARGS += --disable-libintl
 CONFIGURE_ARGS += --enable-perl
 CONFIGURE_ARGS += --with-perl-options=INSTALLDIRS=vendor
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
@@ -80,9 +82,14 @@ pre-build-modulated:
 
 pre-build-isa-amd64:
 	@# since our perl is 32bit, we need to patch away the module build
-	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-amd64-Makefile.in
-	gpatch -d$(WORKSRC) -p1 -F2 < \
-		$(FILEDIR)/patch-amd64-bindings-Makefile.in
+	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-Makefile.in
+	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-bindings-Makefile.in
+	@$(MAKECOOKIE)
+
+pre-build-isa-sparcv9:
+	@# since our perl is 32bit, we need to patch away the module build
+	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-Makefile.in
+	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-bindings-Makefile.in
 	@$(MAKECOOKIE)
 
 env:
