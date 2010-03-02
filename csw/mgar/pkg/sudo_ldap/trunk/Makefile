@@ -1,7 +1,7 @@
 GARNAME = sudo
 GARVERSION = 1.7.2
 CATEGORIES = utils
-RELEASE = p4
+RELEASE = p5
 
 DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
@@ -28,6 +28,7 @@ CATALOGNAME_CSWsudoldap = sudo_ldap
 SPKG_DESC_CSWsudoldap = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudoldap = http://www.sudo.ws
 RUNTIME_DEP_PKGS_CSWsudoldap = CSWsudo-common CSWggettextrt CSWoldaprt 
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWsudoldap) CSWggettext
 
 LOGPATH = /var/opt/csw/log/sudo
 
@@ -51,6 +52,13 @@ localstatedir = /var/opt/csw
 TEST_TARGET = check
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
+PKGFILES_CSWsudoldap  = $(bindir)/sudo\.ldap
+PKGFILES_CSWsudoldap += $(bindir)/sudoedit\.ldap
+
+PROTOTYPE_MODIFIERS = sudo
+PROTOTYPE_FILES_sudo = $(bindir)/sudo(|edit).ldap
+PROTOTYPE_PERMS_sudo = 4755
+
 LICENSE = LICENSE
 ALTERNATIVES_CSWsudoldap = sudoldap
 ALTERNATIVE_sudoldap  = $(bindir)/sudo     sudo     $(bindir)/sudo.ldap     60
@@ -58,17 +66,10 @@ ALTERNATIVE_sudoldap += $(bindir)/sudoedit sudoedit $(bindir)/sudoedit.ldap
 
 include gar/category.mk
 
-PKGFILES_CSWsudoldap = .*$(bindir).*/sudo.ldap
+PKGFILES_CSWsudoldap = $(bindir)/sudo.*
 
 post-install-modulated:
-	@( cd $(DESTDIR)$(bindir) ; gmv sudo sudo.ldap )
-	@( cd $(DESTDIR)$(bindir) ; gmv sudoedit sudoedit.ldap )
+	( cd $(DESTDIR)$(bindir) ; gmv sudo sudo.ldap )
+	( cd $(DESTDIR)$(bindir) ; gmv sudoedit sudoedit.ldap )
 	install -m 755 -d $(DESTDIR)$(LOGPATH)/logs
 	@$(MAKECOOKIE)
-
-post-merge-modulated:
-	@( cd $(PKGROOT)$(bindir); \
-		gfind . -type f -name sudo\* -exec gchmod 4755 {} \; )
-	@$(MAKECOOKIE)
-
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)

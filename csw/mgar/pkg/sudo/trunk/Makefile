@@ -1,7 +1,7 @@
 GARNAME = sudo
 GARVERSION = 1.7.2
 CATEGORIES = utils
-RELEASE = p4
+RELEASE = p5
 
 DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
@@ -56,15 +56,14 @@ localstatedir = /var/opt/csw
 TEST_TARGET = check
 FIXCONFIG_DIRS = $(DESTDIR)$(libexecdir)
 
-PKGFILES_CSWsudo  = $(bindir)/sudo.minimal
-PKGFILES_CSWsudo += $(bindir)/sudo
+PKGFILES_CSWsudo  = $(bindir)/sudo\.minimal
+PKGFILES_CSWsudo += $(bindir)/sudoedit\.minimal
 
 PROTOTYPE_MODIFIERS = sudo
-PROTOTYPE_FILES_sudo = $(bindir)/sudo.minimal
+PROTOTYPE_FILES_sudo = $(bindir)/sudo(|edit).minimal
 PROTOTYPE_PERMS_sudo = 4755
 
 LICENSE = LICENSE
-
 ALTERNATIVES_CSWsudo = minimal
 ALTERNATIVE_minimal  = $(bindir)/sudo     sudo     $(bindir)/sudo.minimal     50
 ALTERNATIVE_minimal += $(bindir)/sudoedit sudoedit $(bindir)/sudoedit.minimal
@@ -77,10 +76,3 @@ post-install-modulated:
 	@( cd $(DESTDIR)$(sysconfdir) ; gmv sudoers sudoers.CSW )
 	install -m 755 -d $(DESTDIR)$(LOGPATH)/logs
 	@$(MAKECOOKIE)
-
-post-merge-modulated:
-	@( cd $(PKGROOT)$(bindir); \
-		gfind . -type f -name sudo\* -exec gchmod 4755 {} \; )
-	@$(MAKECOOKIE)
-
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
