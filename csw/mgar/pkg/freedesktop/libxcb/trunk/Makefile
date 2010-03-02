@@ -1,5 +1,5 @@
 GARNAME = libxcb
-GARVERSION = 1.2
+GARVERSION = 1.5
 CATEGORIES = x11
 
 DESCRIPTION = The XCB library
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://xcb.freedesktop.org/dist/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
 BUILD_DEP_PKGS = CSWlibxaudevel CSWlibpthreadstubs CSWdoxygen CSWpython CSWxcbproto CSWgraphviz2
 RUNTIME_DEP_PKGS_CSWlibxcb = CSWlibxau
@@ -29,7 +29,7 @@ CATALOGNAME_CSWlibxcbdoc   = libxcb_doc
 PKGFILES_CSWlibxcbdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxcbdoc   = $(PKGFILES_DOC)
 
-RUNTIME_DEP_PKGS_CSWlibxcbdevel = CSWlibxcb
+RUNTIME_DEP_PKGS_CSWlibxcbdevel = CSWlibxcb CSWlibpthreadstubs
 RUNTIME_DEP_PKGS_CSWlibxcb	     = CSWx11common CSWlibxau CSWlibxdmcp
 
 ARCHALL_CSWlibxcbdoc = 1
