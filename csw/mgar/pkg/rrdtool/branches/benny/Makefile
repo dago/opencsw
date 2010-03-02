@@ -4,9 +4,9 @@ CATEGORIES = utils
 
 DESCRIPTION = time-series data logging and graphing.
 define BLURB
-	RRDtool is basically the time-series graphing and data storage/management
-	component of MRTG, broken out and `done right'. `done right' means that
-	RRDtool is magnitudes faster than MRTG and extremely configurable.
+  RRDtool is basically the time-series graphing and data storage/management
+  component of MRTG, broken out and `done right'. `done right' means that
+  RRDtool is magnitudes faster than MRTG and extremely configurable.
 endef
 
 MASTER_SITES = http://oss.oetiker.ch/$(GARNAME)/pub/
@@ -33,6 +33,7 @@ RUNTIME_DEP_PKGS += CSWsunmath
 RUNTIME_DEP_PKGS += CSWzlib
 RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWruby
+RUNTIME_DEP_PKGS += CSWpython
 
 # BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS) CSWlua
 
@@ -52,10 +53,12 @@ CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(GARNAME)
 CONFIGURE_ARGS += --disable-lua 
 CONFIGURE_ARGS += --enable-python
 CONFIGURE_ARGS += --enable-ruby
+CONFIGURE_ARGS += --with-ruby-options=CFLAGS=
 CONFIGURE_ARGS += --enable-perl
 CONFIGURE_ARGS += --with-perl-options=INSTALLDIRS=vendor
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS += --exec-prefix=$(prefix)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
@@ -64,6 +67,7 @@ TEST_TARGET = check
 PATCHFILES += patch-src-Makefile.in
 PATCHFILES += patch-src-rrd_open.c
 PATCHFILES += patch-bindings-Makefile.in
+PATCHFILES += patch-bindings-ruby-extconf.rb
 
 # BUILD64 = 1
 
