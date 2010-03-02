@@ -57,6 +57,9 @@ BUILD_SCRIPTS = nss
 INSTALL_SCRIPTS = nss
 TEST_SCRIPTS =
 BUILD64 = 1
+MERGE_DIRS_isa-sparcv9 = $(libdir)
+MERGE_DIRS_isa-amd64   = $(libdir)
+
 EXTRA_INC = $(prefix)/include
 
 libdir_install = $(prefix)/lib
