@@ -6,7 +6,7 @@
 # set icon directories.
 
 GARNAME = rox-filer
-GARVERSION = 2.9
+GARVERSION = 2.10
 CATEGORIES = apps
 DESCRIPTION = A lightweight X file manager
 define BLURB
