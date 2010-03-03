@@ -16,10 +16,18 @@ MASTER_SITES = $(SF_MIRRORS)
 SF_PROJ = rox
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-RUNTIME_DEP_PKGS  = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
-RUNTIME_DEP_PKGS += CSWlibatk CSWlibcairo CSWlibglade2 CSWlibxml2 CSWpango
-RUNTIME_DEP_PKGS += CSWbash CSWlibice CSWlibsm
-
+RUNTIME_DEP_PKGS_CSWroxfiler  = CSWbash
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWfconfig
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWftype2
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWglib2
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWgtk2
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWlibatk
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWlibglade2
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWlibgnugetopt
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWroxfiler += CSWpango
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = rox
@@ -29,6 +37,10 @@ PACKAGES = CSWroxfiler
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 X_EXTRA_LIBS = -lm
 export X_EXTRA_LIBS
+
+LICENSE = ROX-Filer/Help/COPYING
+
+include gar/category.mk
 
 build-rox:
 	(cd $(WORKSRC); $(BUILD_ENV) ./ROX-Filer/AppRun --compile)
@@ -51,5 +63,3 @@ install-rox:
 	gfind $(DESTDIR)$(datadir) -type d -exec chmod 0755 {} \;
 	gfind $(DESTDIR)$(datadir) -type f -exec chmod 0644 {} \;
 	@$(MAKECOOKIE)
-
-include gar/category.mk
