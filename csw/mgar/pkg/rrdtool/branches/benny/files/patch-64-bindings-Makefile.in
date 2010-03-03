@@ -37,7 +37,7 @@
  
  # add the following to the all target
 -all-local:  @COMP_PERL@ @COMP_RUBY@ @COMP_PYTHON@
-+all-local:  @COMP_RUBY@ @COMP_PYTHON@
++all-local:  @COMP_RUBY@
  
  install-data-local:
  	$(AM_V_GEN)test -f perl-piped/Makefile && cd perl-piped && $(MAKE) install || true

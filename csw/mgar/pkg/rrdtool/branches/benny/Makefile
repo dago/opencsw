@@ -18,15 +18,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWrrd
 CATALOGNAME = rrdtool
 
-#GARCOMPILER = SOS12
-#GARCOMPILER = GCC4
-#PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
-
-RUNTIME_DEP_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS += CSWggettextrt
 RUNTIME_DEP_PKGS += CSWglib2
 RUNTIME_DEP_PKGS += CSWiconv
 RUNTIME_DEP_PKGS += CSWlibcairo
-# RUNTIME_DEP_PKGS += CSWlibxml2
 RUNTIME_DEP_PKGS += CSWpango
 RUNTIME_DEP_PKGS += CSWpng
 RUNTIME_DEP_PKGS += CSWsunmath
@@ -34,8 +29,20 @@ RUNTIME_DEP_PKGS += CSWzlib
 RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWruby
 RUNTIME_DEP_PKGS += CSWpython
+RUNTIME_DEP_PKGS += CSWlibxml2
 
-# BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS) CSWlua
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
+BUILD_DEP_PKGS += CSWlibpthreadstubs
+BUILD_DEP_PKGS += CSWlibxaudevel
+BUILD_DEP_PKGS += CSWlibxcbdevel
+BUILD_DEP_PKGS += CSWpangodevel
+BUILD_DEP_PKGS += CSWlibcairodevel
+BUILD_DEP_PKGS += CSWglib2devel
+BUILD_DEP_PKGS += CSWxproto
+BUILD_DEP_PKGS += CSWlibxrenderdevel
+BUILD_DEP_PKGS += CSWrenderproto
+BUILD_DEP_PKGS += CSWkbproto
+BUILD_DEP_PKGS += CSWpython-devel
 
 EXTRA_INC = $(prefix)/include/cairo
 EXTRA_INC += $(prefix)/include/libxml2
@@ -49,7 +56,7 @@ EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 CONFIGURE_ARS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(GARNAME)
+CONFIGURE_ARGS += --docdir=$(sharedstatedir)/doc/$(GARNAME)
 CONFIGURE_ARGS += --disable-lua 
 CONFIGURE_ARGS += --enable-python
 CONFIGURE_ARGS += --enable-ruby
@@ -69,7 +76,8 @@ PATCHFILES += patch-src-rrd_open.c
 PATCHFILES += patch-bindings-Makefile.in
 PATCHFILES += patch-bindings-ruby-extconf.rb
 
-# BUILD64 = 1
+BUILD64 = 1
+#NOISAEXEC = 1
 
 STRIP_LIBTOOL = 1
 
@@ -85,17 +93,14 @@ pre-build-modulated:
 	cp $(FILEDIR)/s_round.h $(WORKSRC)/src
 	@$(MAKECOOKIE)
 
-pre-build-isa-amd64:
+post-patch-isa-amd64:
 	@# since our perl is 32bit, we need to patch away the module build
 	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-Makefile.in
 	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-bindings-Makefile.in
 	@$(MAKECOOKIE)
 
-pre-build-isa-sparcv9:
+post-patch-isa-sparcv9:
 	@# since our perl is 32bit, we need to patch away the module build
 	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-Makefile.in
 	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-bindings-Makefile.in
 	@$(MAKECOOKIE)
-
-env:
-	@echo "PKG_CONFIG_PATH: $(PKG_CONFIG_PATH)"
