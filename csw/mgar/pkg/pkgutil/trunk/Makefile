@@ -1,6 +1,5 @@
 GARNAME = pkgutil
-#GARVERSION = 1.10b1
-GARVERSION = 1.9.1
+GARVERSION = 1.10b1
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -19,6 +18,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).zip
 DISTFILES += $(call admfiles,CSWpkgutil,prototype preremove postinstall)
 DISTFILES += build_sun_catalog.py
 DISTFILES += opencsw.py
+DISTFILES += cswcatalog
 
 PACKAGES = CSWpkgutil CSWpkgutilplus
 
@@ -32,8 +32,9 @@ RUNTIME_DEP_PKGS_CSWpkgutilplus  = CSWcommon CSWperl CSWgnupg CSWpkgutil CSWcswp
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
 PKGFILES_CSWpkgutilplus += .*chkcat.*
 PKGFILES_CSWpkgutilplus += .*pkgutilplus.*
-PKGFILES_CSWpkgutilplus += .*build_sun_catalog.*
-PKGFILES_CSWpkgutilplus += .*opencsw.py.*
+PKGFILES_CSWpkgutilplus += .*build_sun_catalog
+PKGFILES_CSWpkgutilplus += .*opencsw.py
+PKGFILES_CSWpkgutilplus += .*cswcatalog
 
 ARCHALL_CSWpkgutilplus = 1
 
@@ -58,6 +59,7 @@ install-custom:
 	@ginstall -m 755 $(WORKSRC)/pkgutillog $(DESTDIR)/etc/opt/csw/pkg-hooks/preargproc.d/01-CSW$(GARNAME)plus-log
 	@ginstall -m 755 -d $(DESTDIR)$(bindir)
 	@ginstall -m 755 $(WORKSRC)/$(GARNAME) $(WORKSRC)/bldcat $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
+	@ginstall -m 755 $(FILEDIR)/cswcatalog $(DESTDIR)$(bindir)
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc
 	@ginstall -m 644 $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/opt/csw/etc/$(GARNAME).conf.CSW
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/libexec/$(GARNAME)

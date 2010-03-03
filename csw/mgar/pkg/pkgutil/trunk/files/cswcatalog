@@ -1,0 +1,274 @@
+#!/opt/csw/bin/perl -w
+
+# This script takes the packages from a source directory containing packages
+# and builds a target directory suitable for pkg-get/pkgutil.
+# If the target directory already exists the contents is synced to match the 
+# source packages. It is possible to make the new catalog an overlay over an
+# existing catalog. In this case symlinks are used to reference the packages.
+#
+# cswcatalog --basedir /export/mirror/opencsw/current \
+#            --pkgdir /export/home/experimental/perl \
+#            --repodir /export/mirror/opencsw/experimental/perl
+#
+# Known issues/limitations:
+# * Only the most recent version of a package will go it into the catalog
+# * To build the catalog, bldcat extracts the packages which takes long,
+#   could possibly be sped up by only gzcat'ing (in bldcat)
+
+# 1. Read catalog with new packages to overlay
+# 2. Read catalog of base directory
+# 3. Read output directory
+
+use strict;
+use Data::Dumper;
+use POSIX qw( strftime );
+use Getopt::Long;
+use File::Basename;
+use File::Spec;
+
+my @architectures = qw( i386 sparc );
+my @osversions    = qw( 5.8 5.9 5.10 5.11 );
+my $pkg_lastmod   = 0;  # Modification time of most recent package
+my %p;                  # Nested data structure for pkg information
+
+my $opt_basedir;
+my $opt_pkgdir;
+my $opt_repodir;
+my $opt_help;
+my $opt_verbose;
+my $opt_noaction;
+my $opt_relative;
+
+
+sub get_filelist {
+  my $dir = shift;
+  opendir T, $dir || die "ERROR: Cannot open directory $dir\n";
+  my @files = grep { !/^\.\.?$/ } readdir T;
+  closedir T;
+  return @files;
+}
+
+sub is_pkgfile {
+  my $f = shift;
+  return 1 if $f =~ /\.pkg(\.gz)?$/;
+  return 0;
+}
+
+sub sanity_checks {
+  die "ERROR: /opt/csw/bin/bldcat not found. Please install pkgutilplus.\n"
+    unless (-x "/opt/csw/bin/bldcat");
+  die "ERROR: $opt_pkgdir doesn't exist\n" unless (-d $opt_pkgdir);
+}
+
+sub usage {
+  my $name = basename($0);
+  print <<EOM;
+Populate a repository structure from a directory with package files
+
+Usage: $name [ -b <basedir> ] [-n] -d <pkgdir> -o <repodir>
+
+  -d|--pkgdir    Specifies the directory with CSW packages  (source)
+  -o|--repodir   Specifies the directory for the repository (target)
+  -b|--basedir   If the source directory only contains a subset of pkgs,
+                 basedir can be an existing repository fromw which additional
+                 packages, usually dependencies, will be pulled in (optional)
+  -n|--noaction  Dry-run, no symlinks, no bldcat invocation
+  --relative     Create relative symlinks (default: absolute symlinks)
+EOM
+  exit;
+}
+
+
+### Main ###
+
+my $result = GetOptions(
+	"b|basedir=s" => \$opt_basedir,
+	"d|pkgdir:s" => \$opt_pkgdir,
+	"o|repodir:s" => \$opt_repodir,
+	"verbose" => \$opt_verbose,
+	"noaction" => \$opt_noaction,
+    "help" => \$opt_help,
+    "relative" => \$opt_relative,
+	);
+usage if $opt_help;
+usage if !$opt_repodir || !$opt_pkgdir;
+
+$opt_basedir = File::Spec->rel2abs($opt_basedir) if $opt_basedir;
+$opt_pkgdir  = File::Spec->rel2abs($opt_pkgdir) if $opt_pkgdir;
+$opt_repodir = File::Spec->rel2abs($opt_repodir) if $opt_repodir;
+
+sanity_checks;
+
+
+# Read information from package file names and store this data in %p for later
+#   rubytk-1.8.7,REV=2008.09.19_p72-SunOS5.8-sparc-CSW.pkg.gz
+print "Processing packages from $opt_pkgdir\n";
+my @pkgs = grep { is_pkgfile $_ } get_filelist("$opt_pkgdir");
+foreach my $pkg (@pkgs) {
+  my ($cname,$vers,$os,$arch) = ($pkg =~ /^([^-]+)-([^-]+)-SunOS([^-]+)-([^-]+)-CSW\./);
+
+  if( !defined $cname || !defined $vers ) {
+    print "- Ignoring $pkg\n";
+    next;
+  }
+
+  print "- Processing $opt_pkgdir/$pkg\n" if ($opt_verbose);
+
+  #my ($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks)
+  my $mtime = (stat( "$opt_pkgdir/$pkg" ))[9];
+  $pkg_lastmod = $mtime if( $mtime > $pkg_lastmod );
+
+  # ? When you encounter a catalogname for the second time and then skip it,
+  #   how exactly do you know that it's older than the previous package?
+  if( $arch eq "all" ) {
+    if( exists $p{sparc}->{$os}->{$cname} ) {
+      print "- Skipping $pkg as there is already a newer version\n";
+      next;
+    }
+    $p{sparc}->{$os}->{$cname} = "$opt_pkgdir/$pkg";
+
+    if( exists $p{i386}->{$os}->{$cname} ) {
+      print "- Skipping $pkg as there is already a newer version\n";
+      next;
+    }
+    $p{i386}->{$os}->{$cname} = "$opt_pkgdir/$pkg";
+  } else {
+    if( exists $p{$arch}->{$os}->{$cname} ) {
+      print "- Skipping $pkg as there is already a newer version\n";
+      next;
+    }
+    $p{$arch}->{$os}->{$cname} = "$opt_pkgdir/$pkg";
+  }
+
+}
+
+
+# Packages usually only exists for a base OS release (say 5.8) and are then
+# also used on newer OS releases. Populate package data upwards if required.
+foreach my $arch (@architectures) {
+  for (0 .. ($#osversions - 1)) {
+    my $osver = $osversions[$_];
+    foreach my $c (keys %{$p{$arch}->{$osver}}) {
+      $p{$arch}->{$osversions[$_+1]}->{$c} ||=
+        $p{$arch}->{$osversions[$_]}->{$c};
+    }
+  }
+}
+
+
+# Also read in packages from a base repository (usually current). Packages
+# from the overlay directory take precendence.
+if( $opt_basedir) {
+  print "Processing packages from $opt_basedir\n";
+  foreach my $a (@architectures) {
+    foreach my $v (@osversions) {
+      my @pkgs = grep { is_pkgfile $_ } get_filelist("$opt_basedir/$a/$v");
+      foreach my $pkg (@pkgs) {
+
+        print "- VERBOSE: Processing $opt_basedir/$pkg\n" if ($opt_verbose);
+        # rubytk-1.8.7,REV=2008.09.19_p72-SunOS5.8-sparc-CSW.pkg.gz
+        my ($cname,$vers,$os,$arch) = ($pkg =~ /^([^-]+)-([^-]+)-SunOS([^-]+)-([^-]+)-CSW\./);
+        if( !defined $cname || !defined $vers ) {
+          print "- Ignoring $pkg\n";
+          next;
+        }
+
+        # XXX: Strip files with length == 0 fro overlay out of current/.
+
+        if( exists $p{$a}->{$v}->{$cname} ) {
+          print "- Skipping $pkg from base as it is overwritten\n";
+          next;
+        }
+        $p{$a}->{$v}->{$cname} = "$opt_basedir/$a/$v/$pkg";
+      }
+    }
+  }
+}
+
+print "\nPre-processing done. Starting to build repository structure at $opt_repodir\n";
+foreach my $a (@architectures) {
+  foreach my $v (@osversions) {
+    my %base;
+    
+    my $d = $opt_repodir;
+    my $changed = 0;
+
+    print "\nBuilding catalog for $d/$a/$v\n";
+
+    mkdir( "$d" ) if( ! -d "$d" );
+    mkdir( "$d/$a" ) if( ! -d "$d/$a" );
+    mkdir( "$d/$a/$v" ) if( ! -d "$d/$a/$v" );
+
+    # When building the catalog and description files for the first time, use
+    # the base catalog and description to speed things up. bldcat will
+    # re-use such existing catalog information.
+    if ($opt_basedir && !$opt_noaction) {
+      if( ! -f "$d/$a/$v/catalog" && -f "$opt_basedir/$a/$v/catalog" ) {
+        system( "cp $opt_basedir/$a/$v/catalog $d/$a/$v/catalog" );
+      }
+      delete $base{catalog};
+      if( ! -f "$d/$a/$v/descriptions" && -f "$opt_basedir/$a/$v/descriptions" ) {
+        system( "cp $opt_basedir/$a/$v/descriptions $d/$a/$v/descriptions" );
+      }
+      delete $base{descriptions};
+    }
+
+    # Index all files that should be in there by pkgname
+    my %basefiles;
+    foreach my $c (keys %{$p{$a}->{$v}}) {
+      my $pkg = $p{$a}->{$v}->{$c};
+      $basefiles{$pkg} = $c;
+    }
+
+    # Housekeeping, delete dangling links pointing to vanished packages
+    my @f = get_filelist("$d/$a/$v");
+    foreach my $f (sort @f) {
+      next if( $f eq "descriptions" || $f eq "catalog" );
+      if( ! -r "$d/$a/$v/$f" ) {
+        print "- Deleting $d/$a/$v/$f because the link can not be read.\n";
+        unlink( "$d/$a/$v/$f" ) unless ($opt_noaction);
+        $changed = 1;
+        next;
+      }
+      my $dest = (-l "$d/$a/$v/$f" && readlink "$d/$a/$v/$f") || "$d/$a/$v/$f";
+      if( !exists $basefiles{$dest} ) {
+        print "- Deleting $d/$a/$v/$f because it was not in the basedirectory.\n";
+        unlink( "$d/$a/$v/$f" ) unless ($opt_noaction);
+        $changed = 1;
+        next;
+      }
+    }
+
+    # Populate repository with symlinks to each pkg (unless already in place)
+    foreach my $c (sort keys %{$p{$a}->{$v}}) {
+      my $pkg = $p{$a}->{$v}->{$c};
+      my $pfile = basename($pkg);
+      if( -e "$d/$a/$v/$pfile" ) {
+        print "- Keeping $pfile\n" if ($opt_verbose);
+        next;
+      }
+      print "- Linking $pkg to $d/$a/$v/$pfile\n";
+
+      # If the --relative option is given we create relative pkg symlinks
+      unless ($opt_noaction) {
+        my $linkdest = $pkg;
+        if ($opt_relative) {
+          $linkdest = File::Spec->abs2rel("$pkg", "$d/$a/$v");
+        }
+        symlink "$linkdest", "$d/$a/$v/$pfile";
+      }
+      $changed = 1;
+    }
+
+    my $catalog_lastmod = (stat( "$d/$a/$v/catalog" ))[9];
+    if( $changed || !$catalog_lastmod || $pkg_lastmod > $catalog_lastmod ) {
+      print "- Packages changed, rebuilding catalog.\n";
+      unless($opt_noaction) {
+        system( "cd $d/$a/$v && /opt/csw/bin/bldcat . | sed -e 's/^/- /" );
+        system( "rm -rf /tmp/bldcat.*" );
+      }
+    } else {
+      print "- No packages changed, skipping catalog rebuild.\n";
+    }
+  }
+}
