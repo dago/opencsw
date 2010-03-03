@@ -10,15 +10,22 @@
 #
 # Documentation: http://wiki.opencsw.org/cswclassutils-package
 #
-# TODO
+# Known issues:
 # ! calls to useradd, groupadd, and getent are not PKG_INSTALL_ROOT aware,
-#   but CAS via -R might be flawed anyway, needs inspection eventually.
-# ! path to /etc/shadow in set_user_nologin() are not PKG_ISNTALL_ROOT aware
-# ! on failure to determine UID/GID it might be more robust to not exit_error
-#   but instead only display a warning
+#   but CAS via -R are flawed anyway. See:
+#   http://wiki.opencsw.org/cswclassutils-package#toc5
+# ! path to /etc/shadow in set_user_nologin() are not PKG_INSTALL_ROOT aware
 #
 
-DEBUG=${DEBUG:-}		# set via environment to enable debugging
+# Safety measure during coding, bail out on access of unset variables
+set -u
+
+# Set DEBUG to anything via environment to display debugging messages
+DEBUG=${DEBUG:-}
+
+# Avoid unset errors for variables which are usually unset during CLI tests
+PKGINST=${PKGINST:-}
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-}
 
 UID_MIN_DEFAULT=100
 UID_MAX_DEFAULT=999
@@ -57,12 +64,20 @@ exit_error() {
   exit 1
 }
 
+debug_echo() {
+  [ -n "$DEBUG" ] && echo "DEBUG: $*" >&2
+}
+
 is_numeric() {
-  case "$1" in *[^0-9]*) return 1;; esac
+  case "$1" in *[!0-9]*) return 1;; esac
   [ -z "$1" ] && return 1
   return 0
 }
 
+# Return the first available UID where UID_MIN <= UID <= UID_MAX.
+# Return -1 if no UID is available. Done in two steps:
+# 1) One getent call -> store all occupied UIDs from the target range
+# 2) Iterate over the target range, return the first non-taken UID
 first_avail_uid() {
   for uid in `/usr/bin/getent passwd | cut -d: -f3 | sort -n`
   do
@@ -80,6 +95,7 @@ first_avail_uid() {
   echo -1
 }
 
+# Same as first_avail_uid (see above) just for GIDs.
 first_avail_gid() {
   for gid in `/usr/bin/getent group | cut -d: -f3 | sort -n`
   do
@@ -97,8 +113,8 @@ first_avail_gid() {
   echo -1
 }
 
-# Validate ID range settings, ref. useradd(1m) and groupadd(1m) for sys limit
-# Currently defined by MAXUID in /usr/include/sys/param.h -> 2147483647
+# Validate ID range configuration, ref. useradd(1m) and groupadd(1m) for sys
+# limit, currently defined by MAXUID in /usr/include/sys/param.h -> 2147483647
 
 is_numeric $UID_MIN || exit_error "$UID_MIN_CFGNAME is non-numeric ($UID_MIN)"
 is_numeric $UID_MAX || exit_error "$UID_MAX_CFGNAME is non-numeric ($UID_MAX)"
@@ -126,10 +142,6 @@ Constraints are
   $GID_MIN_CFGNAME must be < $GID_MAX_CFGNAME
 "
 
-if [ "$DEBUG" ]; then
-  echo PACKAGE: $PKGINST
-fi
-
 create_group() {
 
   group="$1"
@@ -140,10 +152,10 @@ create_group() {
   fi
 
   gid=`first_avail_gid`
-  if [ "$gid" == "-1" ]; then
-    exit_error "Failed to determine GID for group $group"
-  fi
+  [ "$gid" = "-1" ] && exit_error "Failed to determine GID for group $group"
+  is_numeric "$gid" || exit_error "Failed to determine GID for group $group"
 
+  debug_echo "/usr/sbin/groupadd -g $gid $group"
   if /usr/sbin/groupadd -g $gid $group > /dev/null; then
     echo Group $group has been added
   else
@@ -159,10 +171,14 @@ create_user() {
   shell="$5"
   create="$6" 
 
-  if /bin/getent passwd $user > /dev/null; then
+  if getent passwd $user > /dev/null; then
     echo User $user already exists
     return
   fi
+
+  uid=`first_avail_uid`
+  [ "$uid" = "-1" ] && exit_error "Failed to determine UID for user $user"
+  is_numeric "$uid" || exit_error "Failed to determine UID for user $user"
 
   [ -n "$group" ] && group="-g $group"
   [ -n "$gcos" ] && gcos="-c $gcos"
@@ -170,7 +186,10 @@ create_user() {
   [ -n "$shell" ] && shell="-s $shell"
   [ -n "$create" ] && create="-m"
 
-  if /usr/sbin/useradd $gcos $group $create $dir $shell $user > /dev/null; then
+  debug_echo "/usr/sbin/useradd -g $uid $gcos $group $create $dir $shell $user"
+  if /usr/sbin/useradd \
+       -u $uid $gcos $group $create $dir $shell $user > /dev/null
+  then
     echo User $user has been added
   else
     exit_error "Failed to add user $user"
@@ -209,13 +228,13 @@ set_user_nologin() {
   esac
 }
 
+debug_echo "PACKAGE: $PKGINST"
+
 # Copy files
 echo "Installing class <cswusergroup> ..."
 
 while read src dest; do
-  if [ "$DEBUG" ]; then
-    echo SRC: $src DEST: $dest
-  fi
+  debug_echo "SRC: $src DEST: $dest"
 
   # Copy the conf-file
   /usr/bin/cp $src $dest || exit 2
