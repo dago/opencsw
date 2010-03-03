@@ -5,7 +5,7 @@
 PROJ_NAME = mysql
 GARNAME = $(PROJ_NAME)5
 BASE_VERSION = 5.0
-PATCHLEVEL = 87
+PATCHLEVEL = 90
 GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
@@ -60,8 +60,8 @@ CATALOGNAME_CSW$(GARNAME)rt     = $(GARNAME)rt
 CATALOGNAME_CSW$(GARNAME)test   = $(GARNAME)test
 
 
-ARCHALL_CSWmysql5bench = 1
-ARCHALL_CSWmysql5test  = 1
+ARCHALL_CSW$(GARNAME)bench = 1
+ARCHALL_CSW$(GARNAME)test  = 1
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
