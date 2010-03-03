@@ -9,25 +9,238 @@
 # 2009-02-10 First release
 #
 # Documentation: http://wiki.opencsw.org/cswclassutils-package
+#
+# Known issues:
+# ! calls to useradd, groupadd, and getent are not PKG_INSTALL_ROOT aware,
+#   but CAS via -R are flawed anyway. See:
+#   http://wiki.opencsw.org/cswclassutils-package#toc5
+# ! path to /etc/shadow in set_user_nologin() are not PKG_INSTALL_ROOT aware
+#
 
-DEBUG=		# clear to disable debug, set to anything to enable
+# Safety measure during coding, bail out on access of unset variables
+set -u
 
-if [ "$DEBUG" ]; then
-  echo PACKAGE: $PKGINST
+# Set DEBUG to anything via environment to display debugging messages
+DEBUG=${DEBUG:-}
+
+# Avoid unset errors for variables which are usually unset during CLI tests
+PKGINST=${PKGINST:-}
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-}
+
+UID_MIN_DEFAULT=100
+UID_MAX_DEFAULT=999
+GID_MIN_DEFAULT=100
+GID_MAX_DEFAULT=999
+
+# Retrieve min/max UID/GID settings from csw.conf. Use usergroup_ variables
+# to be naming-consistant with the already existing usergroup_remove variable.
+# See http://www.opencsw.org/mantis/view.php?id=3637
+#
+# Internally, we use shorter var names which makes it IMHO easier to
+# code (particularly WRT to 80 chars width) and read the code, but it's a bit
+# of a PITA at the same time. Thoughts?
+
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
 fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+UID_MIN_CFGNAME=usergroup_uid_low
+UID_MAX_CFGNAME=usergroup_uid_high
+GID_MIN_CFGNAME=usergroup_gid_low
+GID_MAX_CFGNAME=usergroup_gid_high
+
+UID_MIN=`eval echo \$\{$UID_MIN_CFGNAME:-$UID_MIN_DEFAULT}`
+UID_MAX=`eval echo \$\{$UID_MAX_CFGNAME:-$UID_MAX_DEFAULT}`
+GID_MIN=`eval echo \$\{$GID_MIN_CFGNAME:-$GID_MIN_DEFAULT}`
+GID_MAX=`eval echo \$\{$GID_MAX_CFGNAME:-$GID_MAX_DEFAULT}`
+
+# Functions
+
+exit_error() {
+  echo "ERROR: $*" >&2
+  exit 1
+}
+
+debug_echo() {
+  [ -n "$DEBUG" ] && echo "DEBUG: $*" >&2
+}
+
+is_numeric() {
+  case "$1" in *[!0-9]*) return 1;; esac
+  [ -z "$1" ] && return 1
+  return 0
+}
+
+# Return the first available UID where UID_MIN <= UID <= UID_MAX.
+# Return -1 if no UID is available. Done in two steps:
+# 1) One getent call -> store all occupied UIDs from the target range
+# 2) Iterate over the target range, return the first non-taken UID
+first_avail_uid() {
+  for uid in `/usr/bin/getent passwd | cut -d: -f3 | sort -n`
+  do
+    [ $uid -lt $UID_MIN ] && continue
+    [ $uid -gt $UID_MAX ] && break
+    eval UID_TAKEN_$uid=1
+  done
+
+  uid=$UID_MIN
+  while test $uid -le $UID_MAX
+  do
+    [ `eval echo \$\{UID_TAKEN_$uid:-0}` -eq 1 ] || { echo $uid; return; }
+    uid=`expr $uid + 1`
+  done
+  echo -1
+}
+
+# Same as first_avail_uid (see above) just for GIDs.
+first_avail_gid() {
+  for gid in `/usr/bin/getent group | cut -d: -f3 | sort -n`
+  do
+    [ $gid -lt $GID_MIN ] && continue
+    [ $gid -gt $GID_MAX ] && break
+    eval GID_TAKEN_$gid=1
+  done
+
+  gid=$GID_MIN
+  while test $gid -le $GID_MAX
+  do
+    [ `eval echo \$\{GID_TAKEN_$gid:-0}` -eq 1 ] || { echo $gid; return; }
+    gid=`expr $gid + 1`
+  done
+  echo -1
+}
+
+# Validate ID range configuration, ref. useradd(1m) and groupadd(1m) for sys
+# limit, currently defined by MAXUID in /usr/include/sys/param.h -> 2147483647
+
+is_numeric $UID_MIN || exit_error "$UID_MIN_CFGNAME is non-numeric ($UID_MIN)"
+is_numeric $UID_MAX || exit_error "$UID_MAX_CFGNAME is non-numeric ($UID_MAX)"
+is_numeric $GID_MIN || exit_error "$GID_MIN_CFGNAME is non-numeric ($GID_MIN)"
+is_numeric $GID_MAX || exit_error "$GID_MAX_CFGNAME is non-numeric ($GID_MAX)"
+
+test $UID_MIN -ge 0 \
+    -a $UID_MAX -le 2147483647 \
+    -a $UID_MIN -lt $UID_MAX \
+    -a $GID_MIN -ge 0 \
+    -a $GID_MAX -le 2147483647 \
+    -a $GID_MIN -lt $GID_MAX || \
+  exit_error "usergroup ID range settings are invalid
+
+Settings are
+  $UID_MIN_CFGNAME: $UID_MIN
+  $UID_MAX_CFGNAME: $UID_MAX
+  $GID_MIN_CFGNAME: $GID_MIN
+  $GID_MAX_CFGNAME: $GID_MAX
+
+Constraints are
+  $UID_MIN_CFGNAME and $GID_MIN_CFGNAME must be >0
+  $UID_MAX_CFGNAME and $GID_MAX_CFGNAME must be <2147483647
+  $UID_MIN_CFGNAME must be < $UID_MAX_CFGNAME
+  $GID_MIN_CFGNAME must be < $GID_MAX_CFGNAME
+"
+
+create_group() {
+
+  group="$1"
+
+  if /bin/getent group $group > /dev/null; then
+    echo Group $group already exists
+    return
+  fi
+
+  gid=`first_avail_gid`
+  [ "$gid" = "-1" ] && exit_error "Failed to determine GID for group $group"
+  is_numeric "$gid" || exit_error "Failed to determine GID for group $group"
+
+  debug_echo "/usr/sbin/groupadd -g $gid $group"
+  if /usr/sbin/groupadd -g $gid $group > /dev/null; then
+    echo Group $group has been added
+  else
+    exit_error "Failed to add group $group"
+  fi
+}
+
+create_user() {
+  user="$1"
+  group="$2"
+  gcos="$3"
+  dir="$4"
+  shell="$5"
+  create="$6" 
+
+  if getent passwd $user > /dev/null; then
+    echo User $user already exists
+    return
+  fi
+
+  uid=`first_avail_uid`
+  [ "$uid" = "-1" ] && exit_error "Failed to determine UID for user $user"
+  is_numeric "$uid" || exit_error "Failed to determine UID for user $user"
+
+  [ -n "$group" ] && group="-g $group"
+  [ -n "$gcos" ] && gcos="-c $gcos"
+  [ -n "$dir" ] && dir="-d $dir"
+  [ -n "$shell" ] && shell="-s $shell"
+  [ -n "$create" ] && create="-m"
+
+  debug_echo "/usr/sbin/useradd -g $uid $gcos $group $create $dir $shell $user"
+  if /usr/sbin/useradd \
+       -u $uid $gcos $group $create $dir $shell $user > /dev/null
+  then
+    echo User $user has been added
+  else
+    exit_error "Failed to add user $user"
+  fi
+}
+
+set_user_nologin() {
+  case "`uname -r`" in
+  5.8|5.9)
+    # for old solaris, we munge the shadow file manually.
+    omask=`umask`
+    umask 0377
+
+    awk 'BEGIN { FS=":"; OFS=":" } $1 == "'$user'" { $2 = "NP" } { print }' /etc/shadow > /etc/shadow.$PKGINST
+    if [ $? -ne 0 ]; then
+      rm /etc/shadow.$PKGINST
+      exit_error "Setting NP for '$user' failed."
+    fi
+
+    if cmp -s /etc/shadow /etc/shadow.$PKGINST; then
+      rm /etc/shadow.$PKGINST
+    else
+      echo "Updating account '$user' to be no-login (NP)"
+      chgrp sys /etc/shadow.$PKGINST
+      cp -p /etc/shadow /etc/shadow.CSW && \
+      mv /etc/shadow.$PKGINST /etc/shadow
+    fi
+	umask $omask
+  ;;
+  *)
+    # for modern solaris, use the built-in tools
+    if ! passwd -N $user; then
+      exit_error "Setting NP for '$user' failed."
+    fi
+  ;;
+  esac
+}
+
+debug_echo "PACKAGE: $PKGINST"
 
 # Copy files
 echo "Installing class <cswusergroup> ..."
 
 while read src dest; do
-  if [ "$DEBUG" ]; then
-    echo SRC: $src DEST: $dest
-  fi
+  debug_echo "SRC: $src DEST: $dest"
 
   # Copy the conf-file
   /usr/bin/cp $src $dest || exit 2
 
   for i in `cat $dest | sed 's/ /_/g'`; do
+
     user=`echo $i | awk -F':' '{print $1}'`
     group=`echo $i | awk -F':' '{print $2}'`
     gcos=`echo $i | awk -F':' '{print $3}'`
@@ -35,88 +248,21 @@ while read src dest; do
     shell=`echo $i | awk -F':' '{print $5}'`
     create=`echo $i | awk -F':' '{print $6}'`
     nopass=`echo $i | awk -F':' '{print $8}'`
+
     if [ -n "$group" ]; then
-      /bin/getent group $group > /dev/null
-      if [ $? -ne 0 ]; then
-        /usr/sbin/groupadd $group > /dev/null
-        if [ $? -eq 0 ]; then
-          echo Group $group has been added
-        else
-          echo ERROR: Failed to add group $group
-        fi
-      else
-        echo Group $group already exists
-      fi
+      create_group $group
     else
       echo No group to create
     fi
 
     if [ -n "$user" ]; then
-      /bin/getent passwd $user > /dev/null
-      if [ $? -ne 0 ]; then
-        if [ -n "$group" ]; then
-          group="-g $group"
-        fi
-        if [ -n "$gcos" ]; then
-          gcos="-c $gcos"
-        fi
-        if [ -n "$dir" ]; then
-          dir="-d $dir"
-        fi
-        if [ -n "$shell" ]; then
-          shell="-s $shell"
-        fi
-        if [ -n "$create" ]; then
-          create="-m"
-        fi
-        /usr/sbin/useradd $gcos $group $create $dir $shell $user > /dev/null
-        if [ $? -eq 0 ]; then
-          echo User $user has been added
-        else
-          echo ERROR: Failed to add user $user
-        fi
-      else
-        echo User $user already exists
-      fi
-
-      if [ -n "$nopass" ]; then
-	  case "`uname -r`" in
-	      5.8|5.9)
-		  # for old solaris, we munge the shadow file manually.
-		  omask=`umask`
-		  umask 0377
-		  awk 'BEGIN { FS=":"; OFS=":" } $1 == "'$user'" { $2 = "NP" } { print }' /etc/shadow > /etc/shadow.$PKGINST
-		  if [ $? -eq 0 ]; then
-		      cmp -s /etc/shadow /etc/shadow.$PKGINST
-		      if [ $? -ne 0 ]; then
-			  echo "Updating account '$user' to be no-login (NP)"
-			  chgrp sys /etc/shadow.$PKGINST
-			  cp -p /etc/shadow /etc/shadow.CSW && \
-			      mv /etc/shadow.$PKGINST /etc/shadow
-		      else
-			  rm /etc/shadow.$PKGINST
-		      fi
-		  else
-		      echo "ERROR: Setting NP for '$user' failed."
-		      rm /etc/shadow.$PKGINST
-		  fi
-		  umask $omask
-		  ;;
-	      *)
-		  # for modern solaris, use the built-in tools
-		  passwd -N $user
-		  if [ $? -ne 0 ]; then
-		      echo "ERROR: Setting NP for '$user' failed."
-		  fi
-		  ;;
-	      esac
-      fi
+      create_user "$user" "$group" "$gcos" "$dir" "$shell" "$create"
+      [ -n "$nopass" ] && set_user_nologin "$user"
     else
       echo No user to create
     fi
     echo
   done
-
 done
 
 exit 0
