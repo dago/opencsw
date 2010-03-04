@@ -1,0 +1,50 @@
+From c4d419358421a3d6c54adc1d9a4118b4245581e1 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Thu, 4 Mar 2010 22:07:10 +0100
+Subject: [PATCH 1/2] Makefile: only set defaults if not explicitly given
+
+---
+ Makefile |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index b0e9539..eaf2323 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,6 @@
+ # Makefile for autobench scripts
+ VERSION = 2.1.2
+-PREFIX = /usr/local
++PREFIX ?= /usr/local
+ 
+ # Automatically set correct paths for building Debian packages
+ ifdef DEB_BUILD_ARCH
+@@ -9,9 +9,9 @@ ifdef DEB_BUILD_ARCH
+   PREFIX = $(DESTDIR)
+ endif
+ 
+-BINDIR = $(PREFIX)$(ROOTBIN_PREFIX)/bin
+-MANDIR = $(PREFIX)$(ROOTMAN_PREFIX)/man/man1
+-ETCDIR = $(PREFIX)/etc
++BINDIR ?= $(PREFIX)$(ROOTBIN_PREFIX)/bin
++MANDIR ?= $(PREFIX)$(ROOTMAN_PREFIX)/man/man1
++ETCDIR ?= $(PREFIX)/etc
+ 
+ ifdef DEB_BUILD_ARCH
+   export AB_CFG = /etc/autobench.conf
+@@ -20,9 +20,9 @@ else
+ endif
+ 
+ # Compiler & flags
+-CC=gcc
+-CFLAGS=-O2 -Wall
+-DEBUG_FLAGS=-Wall -g
++CC?=gcc
++CFLAGS?=-O2 -Wall
++DEBUG_FLAGS?=-Wall -g
+ 
+ #---------------------------------------------------------------------------
+ # Release related 
+-- 
+1.6.6
+

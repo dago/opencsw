@@ -1,0 +1,56 @@
+From 2dcc550bd0c7eaa94c7dee745898121b180afcf3 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Thu, 4 Mar 2010 22:45:36 +0100
+Subject: [PATCH 2/2] man pages: adjust default conf location
+
+---
+ autobench.1       |    6 ++----
+ autobench_admin.1 |    8 +++-----
+ 2 files changed, 5 insertions(+), 9 deletions(-)
+
+diff --git a/autobench.1 b/autobench.1
+index 335ca58..55b30b3 100644
+--- a/autobench.1
++++ b/autobench.1
+@@ -150,14 +150,12 @@ httperf_print-reply = body
+ httperf_print-request = header
+ .SH FILES
+ .TP 
+-.I [/usr/local]/etc/autobench.conf
++.I /opt/csw/share/doc/autobench/examples/autobench.conf
+ Default configuration file, copied into the user's home directory when
+ .B autobench 
+ or
+ .B autobench_admin
+-is first run.  Defaults to \fI/etc/autobench.conf\fR if
+-autobench was installed from the Debian package,
+-\fI/usr/local/etc/autobench.conf\fR otherwise.
++is first run.
+ .TP
+ .I $HOME/.autobench.conf
+ The active autobench configuration file.
+diff --git a/autobench_admin.1 b/autobench_admin.1
+index aa5b74b..30ed6c8 100644
+--- a/autobench_admin.1
++++ b/autobench_admin.1
+@@ -148,14 +148,12 @@ httperf_print-reply = body
+ httperf_print-request = header
+ .SH FILES
+ .TP 
+-.I [/usr/local]/etc/autobench.conf
++.I /opt/csw/share/doc/autobench/examples/autobench.conf
+ Default configuration file, copied into the user's home directory when
+-.B autobench 
++.B autobench
+ or
+ .B autobench_admin
+-is first run.  Defaults to \fI/etc/autobench.conf\fR if
+-autobench was installed from the Debian package,
+-\fI/usr/local/etc/autobench.conf\fR otherwise.
++is first run.
+ .TP
+ .I $HOME/.autobench.conf
+ The active autobench configuration file.
+-- 
+1.6.6
+
