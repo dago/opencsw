@@ -36,19 +36,33 @@ MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+# License taken from one of the .c files in lieu of an official COPYING
+DISTFILES = COPYING
+
+RUNTIME_DEP_PKGS_CSWhttperf += CSWosslrt
+
 # Put source tree -I instructions first so that <event.h> is not picked
 # up from -I/opt/csw/lib
 PATCHFILES  = 0001-Move-cpp-includes-from-AM_CFLAGS-to-AM_CPPFLAGS.patch
-# Avoid implicit declarations for getpid and some str* functions
-PATCHFILES += 0002-getopt.c-include-header-files-for-getpid-and-strlen-.patch
+# Avoid implicit declarations for getpid and some str* functions.
+# Commented out as unistd.h causes rename()/getopt() redeclarations in getopt.c
+#PATCHFILES += 0002-getopt.c-include-header-files-for-getpid-and-strlen-.patch
+
 # Rewrite non-constant subscript in array declaration to make cc happy
 PATCHFILES += 0003-avoid-variably-modified-type-in-struct.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
+TEST_SCRIPTS =
 
 include gar/category.mk
 
 # Patch 0001 tweaks "Makefile.am"s so we then pull out the autoreconf hammer
 pre-configure-modulated:
 	autoreconf -fi $(WORKSRC)
+	@$(MAKECOOKIE)
+
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated:
+	ginstall -D $(WORKSRC)/AUTHORS $(DOCDEST)/AUTHORS
+	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@$(MAKECOOKIE)
