@@ -5,7 +5,7 @@ GARNAME = pylxml
 GARVERSION = 2.2.4
 CATEGORIES = python
 
-DESCRIPTION = Pythonic binding for the libxml2 and libxslt libraries
+DESCRIPTION = Easy to use and powerful libxml2/libxslt binding for Python
 define BLURB
   lxml is a Pythonic binding for the libxml2 and libxslt libraries. It is
   unique in that it combines the speed and feature completeness of these
