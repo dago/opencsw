@@ -37,7 +37,7 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # License taken from one of the .c files in lieu of an official COPYING
-DISTFILES = COPYING
+DISTFILES   += COPYING
 
 RUNTIME_DEP_PKGS_CSWhttperf += CSWosslrt
 
