@@ -22,25 +22,33 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += libIlmImf.so.2.0.2.i
 DISTFILES += libIlmImf.so.2.0.2.s
 
-PACKAGES = CSWopenexr CSWopenexrrt CSWopenexrdevel
+PACKAGES = CSWopenexr CSWopenexrrt CSWopenexrdevel CSWopenexrdoc
 CATALOGNAME_CSWopenexr = openexr
 CATALOGNAME_CSWopenexrrt = openexr_rt
 CATALOGNAME_CSWopenexrdevel = openexr_devel
+CATALOGNAME_CSWopenexrdoc = openexr_doc
 
 SPKG_DESC_CSWopenexr += $(DESCRIPTION)
 SPKG_DESC_CSWopenexrrt += $(DESCRIPTION) - runtime package
 SPKG_DESC_CSWopenexrdevel += $(DESCRIPTION) - developer package
+SPKG_DESC_CSWopenexrdoc += $(DESCRIPTION) - documentation
 
 PKGFILES_CSWopenexrrt = $(PKGFILES_RT)
 PKGFILES_CSWopenexrdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWopenexrdoc = $(docdir)/OpenEXR.*
+
+ARCHALL_CSWopenexrdoc = 1
 
 RUNTIME_DEP_PKGS_CSWopenexr += CSWopenexrrt
 RUNTIME_DEP_PKGS_CSWopenexr += CSWilmbase
 RUNTIME_DEP_PKGS_CSWopenexr += CSWzlib
 RUNTIME_DEP_PKGS_CSWopenexrrt += CSWilmbase CSWzlib
-RUNTIME_DEP_PKGS_CSWopenexrdevel += CSWopenexr
+RUNTIME_DEP_PKGS_CSWopenexrdevel += CSWopenexrrt
+RUNTIME_DEP_PKGS_CSWopenexrdoc += 
 
 SPKG_SOURCEURL = http://www.openexr.com
+
+CHECKPKG_OVERRIDES_CSWopenexrdevel += missing-dependency|CSWopenexr
 
 LICENSE = LICENSE 
 
