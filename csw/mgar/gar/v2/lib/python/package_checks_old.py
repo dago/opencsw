@@ -2,6 +2,8 @@
 # coding=utf-8
 # $Id$
 
+"""This module uses an old API.  Please do not add new checks here."""
+
 import checkpkg
 import re
 
@@ -102,30 +104,30 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
   maintname = checkpkg.ExtractMaintainerName(pkginfo)
   if not maintname:
     errors.append(checkpkg.CheckpkgTag(
-      pkgname, "maintainer-name-not-set"))
+      pkgname, "pkginfo-maintainer-name-not-set"))
   # email
   if not pkginfo["EMAIL"]:
     errors.append(checkpkg.CheckpkgTag(
-      pkgname, "email-blank"))
+      pkgname, "pkginfo-blank-email"))
   # hotline
   if not pkginfo["HOTLINE"]:
     errors.append(checkpkg.CheckpkgTag(
-      pkgname, "hotline-blank"))
+      pkgname, "pkginfo-hotline-blank"))
   pkginfo_version = pkg_data["basic_stats"]["parsed_basename"]["full_version_string"]
   if pkginfo_version != pkginfo["VERSION"]:
     errors.append(checkpkg.CheckpkgTag(
       pkgname, "filename-version-does-not-match-pkginfo-version"))
   if re.search(r"-", pkginfo["VERSION"]):
     errors.append(checkpkg.CheckpkgTag(
-      pkgname, "minus-not-allowed-in-version"))
+      pkgname, "pkginfo-minus-in-version"))
   if not re.match(VERSION_RE, pkginfo["VERSION"]):
     msg = ("Version regex: %s, version value: %s."
            % (repr(VERSION_RE), repr(pkginfo["VERSION"])))
     errors.append(checkpkg.CheckpkgTag(
-      pkgname, "version-does-not-match-regex", msg=msg))
+      pkgname, "pkginfo-version-wrong-format", msg=msg))
   if pkginfo["ARCH"] not in ARCH_LIST:
     errors.append(checkpkg.CheckpkgTag(
-      pkgname, "non-standard-architecture", pkginfo["ARCH"]))
+      pkgname, "pkginfo-nonstandard-architecture", pkginfo["ARCH"]))
   if "PSTAMP" in pkginfo:
     if not re.match(checkpkg.PSTAMP_RE, pkginfo["PSTAMP"]):
       errors.append(checkpkg.CheckpkgTag(

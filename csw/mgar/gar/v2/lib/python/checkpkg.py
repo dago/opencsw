@@ -810,7 +810,16 @@ class CheckpkgManager2(CheckpkgManagerBase):
   Its purpose is to reduce the amount of boilerplate code and allow for easier
   unit test writing.
   """
-  class IndividualErrorGatherer(object):
+  class CheckInterfaceBase(object):
+    """Base class for check proxies.
+
+    It wraps access to the /var/sadm/install/contents cache.
+    """
+
+    def __init__(self, system_pkgmap):
+      self.system_pkgmap = system_pkgmap
+
+  class IndividualCheckInterface(CheckInterfaceBase):
     """To be passed to the checking functions.
 
     Wraps the creation of CheckpkgTag objects.
@@ -824,7 +833,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
       self.errors.append(
           CheckpkgTag(self.pkgname, tag_name, tag_info, msg))
 
-  def SetErrorGatherer(object):
+  def SetCheckInterface(object):
     """To be bassed to set checking functions."""
     def __init__(self):
       self.errors = []
@@ -865,21 +874,21 @@ class CheckpkgManager2(CheckpkgManagerBase):
       for function in self.individual_checks:
         all_stats = pkg_data.GetAllStats()
         pkgname = all_stats["basic_stats"]["pkgname"]
-        error_mgr = self.IndividualErrorGatherer(pkgname)
+        check_interface = self.IndividualCheckInterface(pkgname)
         logger = logging.getLogger("%s-%s" % (pkgname, function.__name__))
         logger.debug("Calling %s", function.__name__)
-        function(all_stats, error_mgr, logger=logger)
-        if error_mgr.errors:
-          errors[pkgname] = error_mgr.errors
+        function(all_stats, check_interface, logger=logger)
+        if check_interface.errors:
+          errors[pkgname] = check_interface.errors
     # Set checks
     for function in self.set_checks:
       pkgs_data = [x.GetAllStats() for x in packages_data]
       logger = logging.getLogger("SetCheck-%s" % (function.__name__,))
-      error_mgr = self.SetErrorGatherer()
+      check_interface = self.SetCheckInterface()
       logger.debug("Calling %s", function.__name__)
-      function(pkgs_data, error_mgr, logger)
-      if error_mgr.errors:
-        errors = self.SetErrorsToDict(error_mgr.errors, errors)
+      function(pkgs_data, check_interface, logger)
+      if check_interface.errors:
+        errors = self.SetErrorsToDict(check_interface.errors, errors)
     return errors
 
   def Run(self):
@@ -1097,7 +1106,8 @@ class PackageStats(object):
     basic_stats["stats_version"] = PACKAGE_STATS_VERSION
     basic_stats["pkg_path"] = self.srv4_pkg.pkg_path
     basic_stats["pkg_basename"] = os.path.basename(self.srv4_pkg.pkg_path)
-    basic_stats["parsed_basename"] = opencsw.ParsePackageFileName(basic_stats["pkg_basename"])
+    basic_stats["parsed_basename"] = opencsw.ParsePackageFileName(
+        basic_stats["pkg_basename"])
     basic_stats["pkgname"] = dir_pkg.pkgname
     basic_stats["catalogname"] = dir_pkg.GetCatalogname()
     return basic_stats

@@ -28,7 +28,7 @@ class CheckpkgUnitTestHelper(object):
   def testDefault(self):
     self.logger_mock = self.mocker.CreateMock(logging.Logger)
     self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg.CheckpkgManager2.IndividualErrorGatherer)
+        checkpkg.CheckpkgManager2.IndividualCheckInterface)
     self.CheckpkgTest()
     self.mocker.ReplayAll()
     getattr(pc, self.FUNCTION_NAME)(self.pkg_data, self.error_mgr_mock, self.logger_mock)
@@ -62,6 +62,34 @@ class TestCheckCatalogname(CheckpkgUnitTestHelper, unittest.TestCase):
     self.pkg_data["pkginfo"]["NAME"] = 'foo-bar - This catalog name is bad'
     self.error_mgr_mock.ReportError('pkginfo-bad-catalogname')
 
+class TestCheckCatalogname(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSmfIntegration'
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "none",
+      "group": "bin",
+      "line": "1 f none /etc/opt/csw/init.d/foo 0644 root bin 36372 24688 1266395027",
+      "mode": '0755',
+      "path": "/etc/opt/csw/init.d/foo",
+      "type": "f",
+      "user": "root"
+    })
+    self.error_mgr_mock.ReportError('init-file-missing-cswinitsmf-class',
+                                    '/etc/opt/csw/init.d/foo class=none')
+
+class TestCheckCatalognameGood(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSmfIntegration'
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "cswinitsmf",
+      "group": "bin",
+      "line": "1 f none /etc/opt/csw/init.d/foo 0644 root bin 36372 24688 1266395027",
+      "mode": '0755',
+      "path": "/etc/opt/csw/init.d/foo",
+      "type": "f",
+      "user": "root"
+    })
+
 
 if __name__ == '__main__':
-	unittest.main()
+  unittest.main()

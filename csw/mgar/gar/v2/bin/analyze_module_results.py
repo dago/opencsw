@@ -48,7 +48,7 @@ def main():
     print "         If you're getting errors at the same time, maybe you didn't"
     print "         specify the overrides correctly."
     for override in unapplied_overrides:
-      print "* %s" % override
+      print "* Unused %s" % override
   sys.exit(exit_code)
 
 

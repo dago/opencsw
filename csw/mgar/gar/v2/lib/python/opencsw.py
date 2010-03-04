@@ -787,7 +787,7 @@ class DirectoryFormatPackage(ShellMixin, object):
       stdout, stderr = find_proc.communicate()
       ret = find_proc.wait()
       if ret:
-        logging.error("The find command returned an error.")
+        logging.error("The %s command returned an error.", repr(find_tmpl))
       dotslash_re = re.compile(r"^./")
       def StripRe(x, strip_re):
         return re.sub(strip_re, "", x)

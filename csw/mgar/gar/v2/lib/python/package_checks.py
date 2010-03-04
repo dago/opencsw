@@ -84,6 +84,19 @@ def CheckCatalogname(pkg_data, error_mgr, logger):
     error_mgr.ReportError("pkginfo-bad-catalogname")
 
 
+def CheckSmfIntegration(pkg_data, error_mgr, logger):
+  init_re = re.compile(r"/init\.d/")
+  for entry in pkg_data["pkgmap"]:
+    if not entry["path"]:
+      continue
+    if not re.search(init_re, entry["path"]):
+      continue
+    if entry["class"] != "cswinitsmf":
+      error_mgr.ReportError(
+          "init-file-missing-cswinitsmf-class",
+          "%s class=%s" % (entry["path"], entry["class"]))
+
+
 def SetCheckDependencies(pkgs_data, error_mgr, logger):
   """Dependencies must be either installed in the system, or in the set."""
   pass
