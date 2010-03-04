@@ -32,13 +32,12 @@ SPKG_DESC_CSWvncv = TightVNC viewer
 MIGRATE_FILES_CSWvncs = vncservers
 INITSMF = /etc/opt/csw/init.d/cswvncserver
 
-RUNTIME_DEP_PKGS  = CSWbash
-RUNTIME_DEP_PKGS += CSWjpeg
-RUNTIME_DEP_PKGS += CSWlibice
-RUNTIME_DEP_PKGS += CSWlibsm
-RUNTIME_DEP_PKGS += CSWlibxext
-RUNTIME_DEP_PKGS += CSWtcpwrap
-RUNTIME_DEP_PKGS += CSWzlib
+RUNTIME_DEP_PKGS_CSWvncs  = CSWbash
+RUNTIME_DEP_PKGS_CSWvncs += CSWjpeg
+RUNTIME_DEP_PKGS_CSWvncs += CSWtcpwrap
+RUNTIME_DEP_PKGS_CSWvncs += CSWzlib
+RUNTIME_DEP_PKGS_CSWvncv += CSWjpeg
+RUNTIME_DEP_PKGS_CSWvncv += CSWzlib
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
@@ -60,6 +59,8 @@ PATCHFILES  = 0001-Sun-compiler-in-sun.cf.patch
 PATCHFILES += 0002-GNU-make-by-default.patch
 PATCHFILES += 0003-libdix.a-after-libos.a.patch
 PATCHFILES += 0001-Force-the-use-of-libwrap.patch
+
+LICENSE = LICENCE.TXT
 
 include gar/category.mk
 
