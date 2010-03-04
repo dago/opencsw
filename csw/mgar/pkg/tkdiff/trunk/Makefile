@@ -16,6 +16,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-unix.tar.gz
 
 DEP_PKGS = CSWtk
 
+VENDOR_URL = http://tkdiff.sourceforge.net/
+
 BUILD_SCRIPTS =
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
