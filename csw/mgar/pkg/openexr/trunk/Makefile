@@ -2,7 +2,7 @@ GARNAME = openexr
 GARVERSION = 1.6.1
 CATEGORIES = lib
 
-DESCRIPTION = high dynamic-range (HDR) image file format developed by Industrial Light & Magic
+DESCRIPTION = High dynamic-range (HDR) image file format developed by Industrial Light & Magic
 define BLURB
 	IlmImf is our "EXR" file format for storing 16-bit FP images.  Libraries in
 	this package depend on the IlmBase library.
@@ -22,16 +22,22 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += libIlmImf.so.2.0.2.i
 DISTFILES += libIlmImf.so.2.0.2.s
 
-PACKAGES = CSWopenexr CSWopenexrdevel
+PACKAGES = CSWopenexr CSWopenexrrt CSWopenexrdevel
 CATALOGNAME_CSWopenexr = openexr
+CATALOGNAME_CSWopenexrrt = openexr_rt
 CATALOGNAME_CSWopenexrdevel = openexr_devel
 
-SPKG_DESC_CSWopenexr += High dynamic-range (HDR) image file format developed by Industrial Light & Magic
-SPKG_DESC_CSWopenexrdevel += High dynamic-range (HDR) image file format developed by Industrial Light & Magic - developer package
+SPKG_DESC_CSWopenexr += $(DESCRIPTION)
+SPKG_DESC_CSWopenexrrt += $(DESCRIPTION) - runtime package
+SPKG_DESC_CSWopenexrdevel += $(DESCRIPTION) - developer package
 
+PKGFILES_CSWopenexrrt = $(PKGFILES_RT)
 PKGFILES_CSWopenexrdevel = $(PKGFILES_DEVEL)
 
-RUNTIME_DEP_PKGS_CSWopenexr += CSWilmbase CSWzlib
+RUNTIME_DEP_PKGS_CSWopenexr += CSWopenexrrt
+RUNTIME_DEP_PKGS_CSWopenexr += CSWilmbase
+RUNTIME_DEP_PKGS_CSWopenexr += CSWzlib
+RUNTIME_DEP_PKGS_CSWopenexrrt += CSWilmbase CSWzlib
 RUNTIME_DEP_PKGS_CSWopenexrdevel += CSWopenexr
 
 SPKG_SOURCEURL = http://www.openexr.com
@@ -51,7 +57,6 @@ EXTRA_CXX_FLAGS_isa-sparcv9 = -KPIC
 EXTRA_CXX_FLAGS += $(EXTRA_LD_FLAGS_$(MODULATION))
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 # Check fails if library isn't installed /opt/csw/lib and until a 64-bit
 # lib is installed test has to be disabled
