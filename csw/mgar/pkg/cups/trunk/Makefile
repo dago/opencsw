@@ -162,7 +162,7 @@ SPKG_DESC_CSWcupslinks  = Drop-in replacement for SUNWpcu and SUNWpcr
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 SAMPLECONF_CSWcupsd       = $(sysconfdir)/cups/cupsd\.conf\.CSW
 SAMPLECONF_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
-INITSMF_CSWcupsd          = $(sysconfdir)/init\.d/cswcups
+INITSMF                   = $(sysconfdir)/init\.d/cswcups
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
@@ -204,9 +204,6 @@ OPTIM = $(OPTIM_$(GARFLAVOR))
 export OPTIM
 
 LICENSE = LICENSE.txt
-
-CHECKPKG_OVERRIDES_CSWlibcups += symbol-not-found|libcupsppdc.so.1
-CHECKPKG_OVERRIDES_CSWcupsdev += missing-dependency|CSWcups
 
 include gar/category.mk
 
