@@ -1,0 +1,49 @@
+From 032fdb655f2c9096920c925577396fb71b9d7a78 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Thu, 4 Mar 2010 19:37:27 +0100
+Subject: [PATCH 1/3] Move cpp includes from AM_CFLAGS to AM_CPPFLAGS
+
+---
+ src/Makefile.am      |    2 +-
+ src/gen/Makefile.am  |    2 +-
+ src/stat/Makefile.am |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 6685b4d..a91540d 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -1,7 +1,7 @@
+ SUBDIRS = gen lib stat
+ 
+ # what flags you want to pass to the C compiler & linker
+-AM_CFLAGS = -I$(srcdir) -I$(srcdir)/gen -I$(srcdir)/lib -I$(srcdir)/stat
++AM_CPPFLAGS = -I$(srcdir) -I$(srcdir)/gen -I$(srcdir)/lib -I$(srcdir)/stat
+ 
+ bin_PROGRAMS = httperf idleconn
+ httperf_SOURCES = httperf.c httperf.h object.c object.h call.c call.h conn.c \
+diff --git a/src/gen/Makefile.am b/src/gen/Makefile.am
+index 740f27e..75dff29 100644
+--- a/src/gen/Makefile.am
++++ b/src/gen/Makefile.am
+@@ -1,5 +1,5 @@
+ # what flags you want to pass to the C compiler & linker
+-AM_CFLAGS = -I$(srcdir)/..
++AM_CPPFLAGS = -I$(srcdir)/..
+ AM_LDFLAGS =
+ 
+ noinst_LIBRARIES = libgen.a
+diff --git a/src/stat/Makefile.am b/src/stat/Makefile.am
+index 08498aa..d98f3cb 100644
+--- a/src/stat/Makefile.am
++++ b/src/stat/Makefile.am
+@@ -1,5 +1,5 @@
+ # what flags you want to pass to the C compiler & linker
+-AM_CFLAGS = -I$(srcdir)/.. -I$(srcdir)/../gen
++AM_CPPFLAGS = -I$(srcdir)/.. -I$(srcdir)/../gen
+ 
+ noinst_LIBRARIES = libstat.a
+ libstat_a_SOURCES = basic.c sess_stat.c print_reply.c stats.h
+-- 
+1.6.6
+

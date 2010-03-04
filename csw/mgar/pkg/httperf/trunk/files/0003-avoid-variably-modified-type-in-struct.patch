@@ -1,0 +1,36 @@
+From 21ad56ee66fc00014fdc7c53ddd26c4d556c7867 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Thu, 4 Mar 2010 20:33:33 +0100
+Subject: [PATCH 3/3] avoid variably modified type in struct
+
+This rewrites the floating point operation (i.e. non integer constant)
+for the array length of conn_lifetime_hist to an integer constant.
+Otherwise cc is unhappy.
+
+  "basic.c", line 97: warning: can not declare variably modified type at file scope
+  "basic.c", line 97: warning: member can not have variably modified type: conn_lifetime_hist
+
+For some background details see:
+Sun Studio C - Is this warning valid? Is it suppressable?
+http://forums.sun.com/thread.jspa?threadID=5412459
+---
+ src/stat/basic.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/src/stat/basic.c b/src/stat/basic.c
+index e5c4b77..be57bc3 100644
+--- a/src/stat/basic.c
++++ b/src/stat/basic.c
+@@ -50,7 +50,8 @@
+    times.  */
+ #define MAX_LIFETIME	100.0		/* max. conn. lifetime in seconds */
+ #define BIN_WIDTH	1e-3
+-#define NUM_BINS	((u_int) (MAX_LIFETIME / BIN_WIDTH))
++/*#define NUM_BINS	((u_int) (MAX_LIFETIME / BIN_WIDTH)) */
++#define NUM_BINS	100000
+ 
+ static struct
+   {
+-- 
+1.6.6
+
