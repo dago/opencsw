@@ -65,6 +65,7 @@ CONFIGURE_ARGS += --enable-perl
 CONFIGURE_ARGS += --with-perl-options=INSTALLDIRS=vendor
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS += --with-libintl-prefix=$(libdir)
 CONFIGURE_ARGS += --exec-prefix=$(prefix)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
