@@ -1,4 +1,6 @@
-fdd341c3d66bf1bea2113c79db852d68  download/wesnoth-1.4.7.tar.bz2
-724aaa92df2d85d3e69b96837786cb64  download/CSWwesnoth.gspec
-3ad3f94e881c3be62ec6424df8013ab4  download/CSWwesnoth.depend
-59968804e93a18220d7d18e8252fff8d  download/language.cpp.diff
+f316fcd8051bec370f21ea75a2638477  Makefile.fixed
+76eeb1596dfa00c985f0f7c02d2c4b1b  configure.patch
+1e4363990aa7b5eb2ceaf4cef2237c80  global.hpp.patch
+59968804e93a18220d7d18e8252fff8d  language.cpp.diff
+b9890e1344f0f1d62bdf3e80cf4e4575  simple_wml.cpp.patch
+fdd341c3d66bf1bea2113c79db852d68  wesnoth-1.4.7.tar.bz2

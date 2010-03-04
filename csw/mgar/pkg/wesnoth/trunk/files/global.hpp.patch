@@ -1,0 +1,9 @@
+diff -rupN wesnoth-1.4.7/src/global.hpp wesnoth-1.4.7.new/src/global.hpp
+--- wesnoth-1.4.7/src/global.hpp	2008-02-16 09:47:16.000000000 +0100
++++ wesnoth-1.4.7.new/src/global.hpp	2010-03-04 01:40:03.524211569 +0100
+@@ -80,3 +80,5 @@ namespace std {
+ 
+ #endif
+ #endif
++
++#include <signal.h>
