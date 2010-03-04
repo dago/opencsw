@@ -1,3 +1,4 @@
 b5e6a0c732e428134783b6ec6e06c577  0001-Move-cpp-includes-from-AM_CFLAGS-to-AM_CPPFLAGS.patch
 858eeb97b1106d2d4dbd2c171040866e  0003-avoid-variably-modified-type-in-struct.patch
 ffe0c63c95c3bc2893bccf6561d9c013  COPYING
+2968c36b9ecf3d98fc1f2c1c9c0d9341  httperf-0.9.0.tar.gz
