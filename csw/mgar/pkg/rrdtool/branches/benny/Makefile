@@ -55,7 +55,7 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
-CONFIGURE_ARS  = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --docdir=$(sharedstatedir)/doc/$(GARNAME)
 CONFIGURE_ARGS += --disable-lua 
 CONFIGURE_ARGS += --enable-python
@@ -66,7 +66,6 @@ CONFIGURE_ARGS += --with-perl-options=INSTALLDIRS=vendor
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS += --with-libintl-prefix=$(libdir)
-CONFIGURE_ARGS += --exec-prefix=$(prefix)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
@@ -78,30 +77,31 @@ PATCHFILES += patch-bindings-Makefile.in
 PATCHFILES += patch-bindings-ruby-extconf.rb
 
 BUILD64 = 1
-#NOISAEXEC = 1
 
 STRIP_LIBTOOL = 1
 
+include gar/category.mk
 # ugly fix to fix doc path
 #post-install-modulated:
-	#@echo "  ==> Fixing doc path"
-	#@mv $(DESTDIR)$(prefix)/share/doc/rrdtool-$(GARVERSION) $(DESTDIR)$(prefix)/share/doc/rrdtool
-
-include gar/category.mk
+	#echo "  ==> Fixing doc path"
+	#mv $(DESTDIR)$(prefix)/share/doc/rrdtool-$(GARVERSION) $(DESTDIR)$(prefix)/share/doc/rrdtool
 
 pre-build-modulated:
+	echo "  ==> Adding math function round()"
 	cp $(FILEDIR)/s_round.c $(WORKSRC)/src
 	cp $(FILEDIR)/s_round.h $(WORKSRC)/src
 	@$(MAKECOOKIE)
 
 post-patch-isa-amd64:
-	@# since our perl is 32bit, we need to patch away the module build
+	@# since our perl/python is 32bit, we need to patch away the build
+	echo "  ==> Removing perl/python module"
 	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-Makefile.in
 	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-bindings-Makefile.in
 	@$(MAKECOOKIE)
 
 post-patch-isa-sparcv9:
-	@# since our perl is 32bit, we need to patch away the module build
+	@# since our perl/python is 32bit, we need to patch away the build
+	echo "  ==> Removing perl/python module"
 	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-Makefile.in
 	gpatch -d$(WORKSRC) -p1 -F2 < $(FILEDIR)/patch-64-bindings-Makefile.in
 	@$(MAKECOOKIE)
