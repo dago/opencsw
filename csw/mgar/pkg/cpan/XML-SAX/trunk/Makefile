@@ -1,7 +1,7 @@
 GARNAME = XML-SAX
-GARVERSION = 0.14
+GARVERSION = 0.96
 CATEGORIES = cpan
-AUTHOR = MSERGEANT
+AUTHOR = GRANTM
 
 DESCRIPTION = Simple API for XML
 define BLURB
@@ -10,11 +10,13 @@ define BLURB
   returning any SAX parser installed on the user's system.
 endef
 
-DISTFILES += $(call admfiles,CSWpmxmlsax,depend prototype)
+DEP_PKGS = CSWpmxmlnssupp
 
-DEPENDS += cpan/XML-NamespaceSupport
+PACKAGES = CSWpmxmlsax
+CATALOGNAME = pm_xmlsax
 
-# Enable modification of ParserDetails.ini
-PATCHFILES = parser.diff
+LICENSE = LICENSE
+
+ARCHALL = 1
 
 include gar/category.mk
