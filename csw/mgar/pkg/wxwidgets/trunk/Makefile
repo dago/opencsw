@@ -68,7 +68,6 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES  = CSWwxwidgetscommon
 PACKAGES += CSWwxwidgetsdevel
 PACKAGES += CSWwxwidgetsgtk2
-ARCHALL_CSWwxwidgetsdevel  = 1
 SPKG_DESC_CSWwxwidgetscommon = A cross-platform toolkit, common files
 SPKG_DESC_CSWwxwidgetsdevel  = A cross-platform toolkit, header files
 SPKG_DESC_CSWwxwidgetsgtk2   = A cross-platform toolkit, gtk2 support
@@ -79,7 +78,12 @@ RUNTIME_DEP_PKGS_CSWwxwidgetscommon += CSWlibxext
 RUNTIME_DEP_PKGS_CSWwxwidgetscommon += CSWncurses
 RUNTIME_DEP_PKGS_CSWwxwidgetscommon += CSWsunmath
 RUNTIME_DEP_PKGS_CSWwxwidgetscommon += CSWzlib
-
+RUNTIME_DEP_PKGS_CSWwxwidgetsdevel += CSWexpat
+RUNTIME_DEP_PKGS_CSWwxwidgetsdevel += CSWiconv
+RUNTIME_DEP_PKGS_CSWwxwidgetsdevel += CSWlibxext
+RUNTIME_DEP_PKGS_CSWwxwidgetsdevel += CSWncurses
+RUNTIME_DEP_PKGS_CSWwxwidgetsdevel += CSWsunmath
+RUNTIME_DEP_PKGS_CSWwxwidgetsdevel += CSWzlib
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWexpat
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWfconfig
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWftype2
@@ -98,6 +102,7 @@ RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWpng
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWsunmath
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWtiff
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2 += CSWzlib
+
 
 # Dependencies between wxwidgets subpackages
 RUNTIME_DEP_PKGS_CSWwxwidgetsgtk2  += CSWwxwidgetscommon
@@ -160,6 +165,8 @@ CONFIGURE_ARGS_garversion-2.8.5 = --enable-monolithic
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_garversion-$(GARVERSION))
 
 INSTALL_SCRIPTS = wxwidgets
+
+LICENSE = docs/licence.txt
 
 include gar/category.mk
 
