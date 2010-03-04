@@ -1,15 +1,22 @@
 GARNAME = XML-NamespaceSupport
-GARVERSION = 1.09
+GARVERSION = 1.10
 CATEGORIES = cpan
-AUTHOR = RBERJON
+AUTHOR = PERIGRIN
 
-DESCRIPTION = a simple generic namespace support class
+DESCRIPTION = Simple generic namespace support class
 define BLURB
   This module offers a simple to process namespaced XML names (unames) from
   within any application that may need them. It also helps maintain a prefix
   to namespace URI map, and provides a number of basic checks.
 endef
 
-DISTFILES += $(call admfiles,CSWpmxmlnssupp,prototype)
+DISTFILES = COPYING
+
+PACKAGES = CSWpmxmlnssupp
+CATALOGNAME = pm_xmlnssupp
+
+PERL_CONFIGURE_ARGS = --skip
+
+ARCHALL = 1
 
 include gar/category.mk
