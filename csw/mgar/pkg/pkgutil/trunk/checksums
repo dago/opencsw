@@ -3,5 +3,6 @@ a16c6f81bc537d6172fd65d8da1aeecc  CSWpkgutil.gspec
 2fb6c94a2d212f08b71d462082a2d31a  CSWpkgutil.preremove
 a0e549282bf18241e4490ed6b051b92a  CSWpkgutil.prototype
 b5fffa0be100ddbb7262ce3a0a4e3bb7  build_sun_catalog.py
+7ad27336f90e73da3254a61d91025ee5  cswcatalog
 3a6b789b3d5e05f41d2363dd26a92acf  opencsw.py
-d65a85a929f3901d4a613006e7c2c7bd  pkgutil-1.9.1.zip
+0de3732c58681eeaa21ce64b252607c8  pkgutil-1.10b1.zip
