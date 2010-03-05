@@ -1,0 +1,12 @@
+diff -rupN xpilot-4.5.5/src/client/query.c xpilot-4.5.5.new/src/client/query.c
+--- xpilot-4.5.5/src/client/query.c     2010-02-21 16:59:29.000000000 +0100
++++ xpilot-4.5.5.new/src/client/query.c 2010-03-05 23:39:44.876118127 +0100
+@@ -37,7 +37,7 @@
+ # include <netinet/in.h>
+ # include <arpa/inet.h>
+ # include <netdb.h>
+-# if defined(SVR4) || defined(__svr4__)
++# if defined(SVR4) || defined(__svr4__) || defined (__SVR4)
+ #  include <sys/sockio.h>
+ # endif
+ # ifndef __hpux
