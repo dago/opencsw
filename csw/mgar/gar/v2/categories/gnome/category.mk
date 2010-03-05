@@ -10,4 +10,8 @@ export MSGFMT
 export XGETTEXT
 export GETTEXT
 
+# Perhaps there is a category-level variable set?
+EXTRA_INC ?= /opt/csw/X11/include /usr/X11/include /usr/openwin/share/include
+EXTRA_LIB ?= /opt/csw/X11/lib
+
 include gar/gar.mk
