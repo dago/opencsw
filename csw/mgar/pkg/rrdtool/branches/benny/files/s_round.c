@@ -25,14 +25,12 @@
  */
 
 #include <math.h>
+#include "s_round.h"
 
 double
 round(double x)
 {
         double t;
-
-	if (!isfinite(x))
-                return (x);
 
         if (x >= 0.0) {
                 t = floor(x);

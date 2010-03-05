@@ -43,6 +43,7 @@ BUILD_DEP_PKGS += CSWlibxrenderdevel
 BUILD_DEP_PKGS += CSWrenderproto
 BUILD_DEP_PKGS += CSWkbproto
 BUILD_DEP_PKGS += CSWpython-devel
+BUILD_DEP_PKGS += CSWrubydev
 
 EXTRA_INC = $(prefix)/include/cairo
 EXTRA_INC += $(prefix)/include/libxml2
@@ -75,6 +76,8 @@ PATCHFILES += patch-src-Makefile.in
 PATCHFILES += patch-src-rrd_open.c
 PATCHFILES += patch-bindings-Makefile.in
 PATCHFILES += patch-bindings-ruby-extconf.rb
+PATCHFILES += patch-bindings-perl-piped-Makefile.PL
+PATCHFILES += patch-bindings-perl-shared-Makefile.PL
 
 BUILD64 = 1
 
