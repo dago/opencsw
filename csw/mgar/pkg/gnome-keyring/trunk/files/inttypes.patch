@@ -1,0 +1,11 @@
+--- gnome-keyring-2.28.2/egg/egg-buffer.h.orig	2010-03-05 09:06:31.005474422 +0100
++++ gnome-keyring-2.28.2/egg/egg-buffer.h	2010-03-05 09:06:59.832964326 +0100
+@@ -25,7 +25,7 @@
+ #define EGG_BUFFER_H
+ 
+ #include <stdlib.h>
+-#include <stdint.h>
++#include <sys/inttypes.h>
+ 
+ /* -------------------------------------------------------------------
+  * EggBuffer 
