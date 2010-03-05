@@ -4,4 +4,4 @@
 #
 # Peter Bonivart, OpenCSW
 
-OPTIONS=-i 127.0.0.1 -m 10 --min-children=2 --max-conn-per-child=50 -s local2 --syslog-socket=inet -u spamd -x -r /opt/csw/var/spamd/spamd.pid
+OPTIONS=-i 127.0.0.1 -m 10 --min-children=2 --max-conn-per-child=50 -s local2 --syslog-socket=inet -u spamd -x -r /var/opt/csw/spamassassin/spamd.pid
