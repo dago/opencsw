@@ -1,3 +1,5 @@
+# $Id$
+
 GARVERSION = 1.6
 CATEGORIES = x11
 PROTONAME = xcb-proto
@@ -38,19 +40,15 @@ RUNTIME_DEP_PKGS_CSWxcbproto = CSWx11common
 RUNTIME_DEP_PKGS_CSWpyxcbproto = CSWxcbproto CSWpython
 
 SPKG_DESC_CSWxcbproto = XCB protocol descriptions (in XML)
-SPKG_DESC_CSWpyxcbproto = XCB protocol descriptions (in XML) Python Bindings
+SPKG_DESC_CSWpyxcbproto = $(SPKG_DESC_CSWxcbproto) Python Bindings
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-PYTHON_PREFIX=$(BUILD_PREFIX)/lib/python/site-packages
-
-EXTRA_PAX_ARGS = -s ',^.*/\(xcbgen/.*\.py\),.$(BUILD_PREFIX)/lib/python/site-packages/\1,'
-EXTRA_PAX_ARGS += -s ',^\.$(libdir)/python.*,,'
+PYTHON_PREFIX = $(BUILD_PREFIX)/lib/python/site-packages
 
 PYCOMPILE = 1
 
@@ -58,3 +56,12 @@ PKGFILES_CSWpyxcbproto = .*\.py
 ARCHALL_CSWpyxcbproto = 1
 
 include gar/category.mk
+
+# This bit is probably somewhat objectionable, but it gets the job done.
+post-merge:
+	ginstall -m 755 -d $(PKGROOT)/opt/csw/lib
+	[ -d $(PKGROOT)$(prefix)/lib/python ] \
+		&& \
+		gmv -v $(PKGROOT)$(prefix)/lib/python $(PKGROOT)/opt/csw/lib
+	grm -fv $(PKGROOT)/opt/csw/lib/python/site-packages/xcbgen/*.py[co]
+	@$(MAKECOOKIE)
