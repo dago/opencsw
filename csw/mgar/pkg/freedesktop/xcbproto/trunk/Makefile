@@ -55,5 +55,6 @@ EXTRA_PAX_ARGS += -s ',^\.$(libdir)/python.*,,'
 PYCOMPILE = 1
 
 PKGFILES_CSWpyxcbproto = .*\.py
+ARCHALL_CSWpyxcbproto = 1
 
 include gar/category.mk
