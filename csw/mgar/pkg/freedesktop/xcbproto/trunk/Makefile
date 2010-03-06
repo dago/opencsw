@@ -60,8 +60,8 @@ include gar/category.mk
 # This bit is probably somewhat objectionable, but it gets the job done.
 post-merge:
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/lib
-	[ -d $(PKGROOT)$(prefix)/lib/python ] \
-		&& \
-		gmv -v $(PKGROOT)$(prefix)/lib/python $(PKGROOT)/opt/csw/lib
+	if [ -d $(PKGROOT)$(prefix)/lib/python ]; then \
+		gmv -v $(PKGROOT)$(prefix)/lib/python $(PKGROOT)/opt/csw/lib; \
+	fi
 	grm -fv $(PKGROOT)/opt/csw/lib/python/site-packages/xcbgen/*.py[co]
 	@$(MAKECOOKIE)
