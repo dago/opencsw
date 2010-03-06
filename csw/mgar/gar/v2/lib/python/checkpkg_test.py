@@ -828,9 +828,14 @@ class PackageStatsUnitTest(unittest.TestCase):
 
 class ExtractorsUnitTest(unittest.TestCase):
 
-  def testExtractDescription_1(self):
+  def testExtractDescriptionFromGoodData(self):
     data = {"NAME": "nspr_devel - Netscape Portable Runtime header files"}
     result = "Netscape Portable Runtime header files"
+    self.assertEqual(result, checkpkg.ExtractDescription(data))
+
+  def testExtractDescriptionWithBadCatalogname(self):
+    data = {"NAME": "foo-bar - Bad catalogname shouldn't break this function"}
+    result = "Bad catalogname shouldn't break this function"
     self.assertEqual(result, checkpkg.ExtractDescription(data))
 
   def testExtractMaintainerName(self):

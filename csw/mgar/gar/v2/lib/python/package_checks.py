@@ -74,6 +74,9 @@ def CheckDescription(pkg_data, error_mgr, logger):
   else:
     if len(desc) > MAX_DESCRIPTION_LENGTH:
       error_mgr.ReportError("pkginfo-description-too-long")
+    if not desc[0].isupper():
+      error_mgr.ReportError("pkginfo-description-not-starting-with-uppercase",
+                            desc)
 
 
 def CheckCatalogname(pkg_data, error_mgr, logger):
@@ -81,7 +84,7 @@ def CheckCatalogname(pkg_data, error_mgr, logger):
   catalogname = pkginfo["NAME"].split(" ")[0]
   catalogname_re = r"^(\w+)$"
   if not re.match(catalogname_re, catalogname):
-    error_mgr.ReportError("pkginfo-bad-catalogname")
+    error_mgr.ReportError("pkginfo-bad-catalogname", catalogname)
 
 
 def CheckSmfIntegration(pkg_data, error_mgr, logger):

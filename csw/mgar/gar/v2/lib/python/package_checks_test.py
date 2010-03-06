@@ -56,6 +56,14 @@ class TestDescriptionLong(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError('pkginfo-description-too-long')
 
 
+class TestDescriptionNotCapitalized(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckDescription'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["NAME"] = 'foo - lowercase'
+    self.error_mgr_mock.ReportError('pkginfo-description-not-starting-with-uppercase',
+                                    'lowercase')
+
+
 class TestCheckCatalogname(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckCatalogname'
   def CheckpkgTest(self):

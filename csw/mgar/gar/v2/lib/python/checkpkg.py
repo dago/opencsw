@@ -32,6 +32,7 @@ DO_NOT_REPORT_MISSING = set([])
 DO_NOT_REPORT_MISSING_RE = [r"SUNW.*", r"\*SUNW.*"]
 DUMP_BIN = "/usr/ccs/bin/dump"
 PSTAMP_RE = r"(?P<username>\w)+@(?P<hostname>\w+)-(?P<timestamp>\d+)"
+DESCRIPTION_RE = r"^([\S]+) - (.*)$"
 
 SYSTEM_SYMLINKS = (
     ("/opt/csw/bdb4",     ["/opt/csw/bdb42"]),
@@ -154,9 +155,9 @@ def FormatDepsReport(pkgname, missing_deps, surplus_deps, orphan_sonames):
 
 
 def ExtractDescription(pkginfo):
-  desc_re = re.compile(r"^[\w_]+ - (.*)$")
+  desc_re = re.compile(DESCRIPTION_RE)
   m = re.match(desc_re, pkginfo["NAME"])
-  return m.group(1) if m else None
+  return m.group(2) if m else None
 
 
 def ExtractMaintainerName(pkginfo):
