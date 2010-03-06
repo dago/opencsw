@@ -8,11 +8,13 @@ DESCRIPTION = The XCB utility library
 define BLURB
 endef
 
+SPKG_SOURCEDIR = http://xcb.freedesktop.org/XcbUtil/
 MASTER_SITES = http://xcb.freedesktop.org/dist/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += COPYING
 
-BUILD_DEP_PKGS = CSWgnulinks
 RUNTIME_DEP_PKGS = CSWlibxcb
+BUILD_DEP_PKGS = CSWgnulinks $(RUNTIME_DEP_PKGS)
 PACKAGES = CSWxcbutil
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
