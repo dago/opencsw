@@ -2,7 +2,7 @@ GARNAME = rrdtool
 GARVERSION = 1.4.2
 CATEGORIES = utils
 
-DESCRIPTION = time-series data logging and graphing.
+DESCRIPTION = Time-series data logging and graphing.
 define BLURB
   RRDtool is basically the time-series graphing and data storage/management
   component of MRTG, broken out and `done right'. `done right' means that
