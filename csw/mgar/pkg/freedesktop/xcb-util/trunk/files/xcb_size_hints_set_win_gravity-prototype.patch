@@ -1,0 +1,11 @@
+--- xcb-util-0.3.6/icccm/xcb_icccm.h.orig	2010-03-06 14:41:45.211336028 +0100
++++ xcb-util-0.3.6/icccm/xcb_icccm.h	2010-03-06 14:42:30.116368353 +0100
+@@ -521,7 +521,7 @@
+  * @param win_gravity Window gravity value.
+  */
+ void xcb_size_hints_set_win_gravity(xcb_size_hints_t *hints,
+-                                    uint32_t win_gravity);
++                                    xcb_gravity_t win_gravity);
+ 
+ /**
+  * @brief Deliver a ChangeProperty request to set a value to a given property.

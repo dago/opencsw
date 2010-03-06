@@ -1,5 +1,7 @@
+# $Id$
+
 GARNAME = xcb-util
-GARVERSION = 0.3.5
+GARVERSION = 0.3.6
 CATEGORIES = x11
 
 DESCRIPTION = The XCB utility library
@@ -13,7 +15,6 @@ BUILD_DEP_PKGS = CSWgnulinks
 RUNTIME_DEP_PKGS = CSWlibxcb
 PACKAGES = CSWxcbutil
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CATALOGNAME = xcbutil
@@ -22,7 +23,7 @@ BUILD64 = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-#EXTRA_CFLAGS = -D__solaris__
+PATCHFILES += xcb_size_hints_set_win_gravity-prototype.patch
 
 include gar/category.mk
 
