@@ -131,7 +131,8 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
   if "PSTAMP" in pkginfo:
     if not re.match(checkpkg.PSTAMP_RE, pkginfo["PSTAMP"]):
       errors.append(checkpkg.CheckpkgTag(
-        pkgname, "pkginfo-pkstamp-in-wrong-format",
+        pkgname, "pkginfo-pstamp-in-wrong-format",
+        pkginfo["PSTAMP"],
         msg=("It should be 'username@hostname-timestamp', "
              "but it's %s." % repr(pkginfo["PSTAMP"]))))
   else:
