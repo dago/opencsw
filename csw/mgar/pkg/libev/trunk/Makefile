@@ -15,4 +15,5 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64 = 1
 NOISAEXEC = 1
+TEST_TARGET = check
 include gar/category.mk
