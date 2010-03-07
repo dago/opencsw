@@ -16,4 +16,5 @@ CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64 = 1
 NOISAEXEC = 1
 TEST_TARGET = check
+LICENSE = LICENSE
 include gar/category.mk
