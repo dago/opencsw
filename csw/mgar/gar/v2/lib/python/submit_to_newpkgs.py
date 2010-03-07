@@ -42,10 +42,10 @@ CONFIG_INFO = """Create a file in ~/.releases.ini with the following content:
 
 [releases]
 sender name = Your Name
-sender email = your.email@example.com
+sender email = your.email@opencsw.org
 release manager name = Release Manager
-release manager email = their.email@example.com
-release cc = maintainers@example.com
+release manager email = pkgsubmissions@lists.opencsw.org
+; release cc = maintainers@example.com
 ; Usually it's /home/testing
 package dir = /home/testing
 target host = bender
@@ -58,7 +58,7 @@ CONFIGURATION_FILE_LOCATIONS = [
 ]
 CONFIG_REQUIRED_OPTS = [
     "sender name", "sender email",
-    "release manager name", "release manager email",
+    "release manager email",
     "package dir",
 ]
 DEFAULT_FILE_NAME = "newpkgs.mail"
