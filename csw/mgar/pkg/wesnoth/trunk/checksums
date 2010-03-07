@@ -3,4 +3,4 @@ f316fcd8051bec370f21ea75a2638477  Makefile.fixed
 1e4363990aa7b5eb2ceaf4cef2237c80  global.hpp.patch
 59968804e93a18220d7d18e8252fff8d  language.cpp.diff
 b9890e1344f0f1d62bdf3e80cf4e4575  simple_wml.cpp.patch
-fdd341c3d66bf1bea2113c79db852d68  wesnoth-1.4.7.tar.bz2
+b1e452e8138e3c573e92eb75f8a2d31a  wesnoth-1.7.13.tar.bz2

@@ -1,5 +1,5 @@
 GARNAME = wesnoth
-GARVERSION = 1.4.7
+GARVERSION = 1.7.13
 CATEGORIES = apps
 
 DESCRIPTION = a free turn-based strategy game with a fanasy theme
