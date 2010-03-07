@@ -202,7 +202,7 @@ CONFIGURE_ARGS += --with-serf=$(prefix)
 #     $(WORKSRC)/subversion/tests/cmdline/merge_tests.py --list
 #   and for progress information you could compare this with
 #     tail -f $(WORKSRC)/tests.log | grep merge_tests.py
-TEST_TARGET  = check
+TEST_TARGET  = #check
 
 # Overrides
 CHECKPKG_OVERRIDES_CSWap2svn = symbol-not-found
