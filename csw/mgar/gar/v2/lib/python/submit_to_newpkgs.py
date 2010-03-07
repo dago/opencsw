@@ -114,6 +114,10 @@ def main():
                                          options.pkgnames])
       else:
         options.catalognames = options.pkgnames
+    if config.has_option(CONFIG_RELEASE_SECTION, "release manager name"):
+      release_mgr_name=config.get(CONFIG_RELEASE_SECTION, "release manager name"),
+    else:
+      release_mgr_name = None
     if config.has_option(CONFIG_RELEASE_SECTION, "release cc"):
       release_cc = config.get(CONFIG_RELEASE_SECTION, "release cc")
     else:
@@ -174,7 +178,7 @@ def main():
     raise PackageSubmissionError(msg)
   nm = opencsw.NewpkgMailer(
       catalognames, remote_package_references,
-      release_mgr_name=config.get(CONFIG_RELEASE_SECTION, "release manager name"),
+      release_mgr_name=release_mgr_name,
       release_mgr_email=config.get(CONFIG_RELEASE_SECTION, "release manager email"),
       sender_name=config.get(CONFIG_RELEASE_SECTION, "sender name"),
       sender_email=config.get(CONFIG_RELEASE_SECTION, "sender email"),

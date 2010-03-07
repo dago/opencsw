@@ -302,7 +302,10 @@ class NewpkgMailer(object):
     self.sender = u"%s <%s>" % (sender_name, sender_email)
     self.pkgnames = pkgnames
     self.paths = paths
-    self.release_mgr = u"%s <%s>" % (release_mgr_name, release_mgr_email)
+    if release_mgr_name:
+      self.release_mgr = u"%s <%s>" % (release_mgr_name, release_mgr_email)
+    else:
+      self.release_mgr = u"%s" % (release_mgr_email)
     self.release_cc = release_cc
     if self.release_cc:
       self.release_cc = unicode(release_cc)
