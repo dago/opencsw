@@ -1,0 +1,43 @@
+--- awesome-3.4.4/build-utils/gperf.sh.orig	2010-03-07 10:35:38.518346274 +0100
++++ awesome-3.4.4/build-utils/gperf.sh	2010-03-07 10:37:23.977357986 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ #
+ # Copyright © 2008 Pierre Habouzit <madcoder@debian.org>
+ #
+@@ -50,7 +50,7 @@
+ 
+ typedef enum awesome_token_t {
+     A_TK_UNKNOWN,
+-`tr '[:lower:]' '[:upper:]' | sed -e "s/^[^/].*/    A_TK_&,/"`
++`tr '[:lower:]' '[:upper:]' | gsed -e "s/^[^/].*/    A_TK_&,/"`
+ } awesome_token_t;
+ 
+ __attribute__((pure)) enum awesome_token_t a_tokenize(const char *s, int len);
+@@ -109,14 +109,14 @@
+ }
+ 
+ extract_tokens() {
+-    grep '^### ' "$1" | cut -d ' ' -f 2
++    ggrep '^### ' "$1" | cut -d ' ' -f 2
+ }
+ 
+ 
+ TOKENS_FILE="$1"
+ TARGET="$2"
+ 
+-trap "rm -f ${TARGET}" 0
++trap "grm -f ${TARGET}" 0
+ 
+ rm -f "${TARGET}"
+ case "${TARGET}" in
+@@ -124,7 +124,7 @@
+     *.c) do_c > "${TARGET}" < "${TOKENS_FILE}" ;;
+     *)  die "you must ask for the 'h' or 'c' generation";;
+ esac
+-chmod -w "${TARGET}"
++gchmod -w "${TARGET}"
+ 
+ trap - 0
+ exit 0

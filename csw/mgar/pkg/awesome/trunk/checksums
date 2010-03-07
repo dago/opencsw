@@ -1,1 +1,3 @@
 8c2537ad898d7f58a0f3ba92e6a561a1  awesome-3.4.4.tar.bz2
+1d5c67eb4555b367032c1294fb72bf0b  backtrace.c.patch
+346c2299f6f5be4d667ff3769a1251f0  gperf.sh-solarify.patch

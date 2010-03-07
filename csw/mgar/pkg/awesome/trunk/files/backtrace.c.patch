@@ -1,0 +1,30 @@
+--- awesome-3.4.4/common/backtrace.c.orig	2010-03-07 10:55:50.898528590 +0100
++++ awesome-3.4.4/common/backtrace.c	2010-03-07 10:57:36.194936144 +0100
+@@ -19,7 +19,6 @@
+  *
+  */
+ 
+-#include <execinfo.h>
+ #include "common/backtrace.h"
+ 
+ #define MAX_STACK_SIZE 32
+@@ -34,8 +33,8 @@
+     char **bt;
+     int stack_size;
+ 
+-    stack_size = backtrace(stack, countof(stack));
+-    bt = backtrace_symbols(stack, stack_size);
++    stack_size = 0;
++    bt = NULL;
+ 
+     buffer_init(buf);
+     if(bt)
+@@ -49,7 +48,7 @@
+         p_delete(&bt);
+     }
+     else
+-        buffer_addsl(buf, "Cannot get backtrace symbols.");
++        buffer_addsl(buf, "Cannot get backtrace symbols, disabled due to missing execinfo.h on Solaris.");
+ }
+ 
+ // vim: filetype=c:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=80
