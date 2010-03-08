@@ -361,10 +361,12 @@ GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(filter-out $(ALLFILES_DYNSCRIP
 MAKESUM_TARGETS =  $(filter-out $(_NOCHECKSUM) $(NOCHECKSUM),$(ALLFILES))
 
 makesum: fetch $(addprefix $(DOWNLOADDIR)/,$(MAKESUM_TARGETS)) $(GARCHIVE_TARGETS)
-	@if test "x$(MAKESUM_TARGETS)" != "x "; then \
+	@if test "x$(MAKESUM_TARGETS)" != "x"; then \
 		(cd $(DOWNLOADDIR) && gmd5sum $(MAKESUM_TARGETS)) > $(CHECKSUM_FILE) ; \
 		echo "Checksums made for $(MAKESUM_TARGETS)" ; \
 		cat $(CHECKSUM_FILE) ; \
+	else \
+		cp /dev/null $(CHECKSUM_FILE) ; \
 	fi
 
 # I am always typing this by mistake
