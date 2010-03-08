@@ -1,7 +1,7 @@
 GARNAME = Net-Patricia
-GARVERSION = 1.014
+GARVERSION = 1.16
 CATEGORIES = cpan
-AUTHOR = PLONKA
+AUTHOR = PHILIPP
 
 DESCRIPTION = Patricia Trie perl module for fast IP address lookups
 define BLURB
@@ -20,6 +20,7 @@ define BLURB
      Reno release.
 endef
 
-DISTFILES += $(call admfiles,CSWpmnetpatricia,prototype)
+PACKAGES = CSWpmnetpatricia
+CATALOGNAME = pm_netpatricia
 
 include gar/category.mk
