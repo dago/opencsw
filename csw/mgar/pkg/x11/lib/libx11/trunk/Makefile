@@ -31,7 +31,7 @@ CATALOGNAME_CSWlibx11devel = libx11_devel
 
 PKGFILES_CSWlibx11devel  = $(PKGFILES_DEVEL)
 
-RUNTIME_DEP_PKGS_CSWlibx11      = CSWx11common CSWlibxcb
+RUNTIME_DEP_PKGS_CSWlibx11      = CSWx11common CSWlibxcb CSWx11xproto CSWx11kbproto
 RUNTIME_DEP_PKGS_CSWlibx11devel = CSWlibx11
 
 BUILD64 = 1
