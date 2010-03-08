@@ -1,17 +1,27 @@
 GARNAME = Digest-SHA1
-GARVERSION = 2.12
+GARVERSION = stub
 CATEGORIES = cpan
 AUTHOR = GAAS
 
-DESCRIPTION = Interface to the SHA-1 Algorithm
+DESCRIPTION = Stub to the Perl build-in module Digest::SHA1
 define BLURB
-  The Digest::SHA1 module allows you to use the NIST SHA-1 message digest
-  algorithm from within Perl programs. The algorithm takes as input a message
-  of arbitrary length and produces as output a 160-bit "fingerprint" or
-  "message digest" of the input.
 endef
+
+MODDIST =
 
 PACKAGES = CSWpmdigestsha1
 CATALOGNAME = pm_digestsha1
+
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
+TEST_SCRIPTS =
+INSTALL_SCRIPTS =
+
+ARCHALL = 1
+
+# This package is completely empty, so it hasn't got any files
+# and no license either.
+CHECKPKG_OVERRIDES  = action-class-only-in-pkginfo|none
+CHECKPKG_OVERRIDES += license-missing
 
 include gar/category.mk
