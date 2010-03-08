@@ -14,7 +14,7 @@
 
 PROG=spamd
 PATH=$PATH:/usr/bin:/opt/csw/bin
-#OPTIONS=-i 127.0.0.1 -m 10 --min-children=2 --max-conn-per-child=50 -s local2 --syslog-socket=inet -u spamd -x -r /var/opt/csw/spamassassin/spamd.pid
+#OPTIONS="-i 127.0.0.1 -m 10 --min-children=2 --max-conn-per-child=50 -s local2 --syslog-socket=inet -u spamd -x -r /var/opt/csw/spamassassin/spamd.pid"
 
 ZONE= # used for initialization, do not change
 
