@@ -16,6 +16,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 STRIP_LIBTOOL = 1
 EXTRA_LD_OPTIONS = /opt/csw/X11/lib/libX11.so -lm
+# There are no shared-object dependencies on CSWdbus, but it's required for
+# evince to work.
+RUNTIME_DEP_PKGS_CSWevince += CSWdbus
 RUNTIME_DEP_PKGS_CSWevince += CSWdbusglib
 RUNTIME_DEP_PKGS_CSWevince += CSWdjvulibre
 RUNTIME_DEP_PKGS_CSWevince += CSWfconfig
