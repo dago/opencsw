@@ -20,8 +20,8 @@ PACKAGES = CSWlibxau CSWlibxaudevel
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS_CSWlibxau = CSWx11common
-RUNTIME_DEP_PKGS_CSWlibxaudevel = CSWlibxau
+RUNTIME_DEP_PKGS_CSWlibxau = CSWx11common CSWxproto
+RUNTIME_DEP_PKGS_CSWlibxaudevel = CSWlibxau 
 
 CATALOGNAME_CSWlibxau = libxau
 CATALOGNAME_CSWlibxaudevel = libxau_devel
