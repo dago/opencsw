@@ -1,0 +1,5 @@
+mod_fcgid (2.3.5,REV=2010.03.09)
+
+  * Initial release.
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Tue,  9 Mar 2010 00:43:21 +0100
