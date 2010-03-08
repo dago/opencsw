@@ -1,0 +1,27 @@
+GARNAME = librsync
+GARVERSION = 0.9.7
+CATEGORIES = lib
+
+DESCRIPTION = Library with the rolling-checksum algorithm known from rsync
+define BLURB
+  ibrsync implements the rolling-checksum algorithm of remote file
+  synchronization that was popularized by the rsync utility and is used in
+  rproxy. This algorithm transfers the differences between 2 files without
+  needing both files on the same system.
+endef
+
+MASTER_SITES = $(SF_MIRRORS)
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
+
+# delta.c contains inlined functions without storage qualifiers, treat them
+# as static as the only references are within delta.c itself. Otherwise the
+# linking will fail to resolve those references. See "inline functions"
+#   http://docs.sun.com/app/docs/doc/820-7598/6nirjunib?a=view
+EXTRA_CFLAGS = -features=no%extinl
+
+include gar/category.mk
