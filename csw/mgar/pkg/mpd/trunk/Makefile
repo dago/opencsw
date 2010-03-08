@@ -12,11 +12,13 @@ a great desktop music player, especially if you are a console junkie,
 like frontend options, or restart X often.
 endef
 
-# A problem:
+# TODO:
 #
-# The build, ported from gar v1 to v2 by Maciej Bliziński is pretty much done,
-# but unfortunately, mpd segfaults when testing. More debugging is needed; this
-# build is being submitted to separate segfault fixes from v1-v2 port.
+# There already are libraries to compile in AAC and mp4 support, but the
+# configure script is not smart enough to pick up the header files.
+#
+# For example, faad.h test fails when faad.h is in /opt/csw/include.  This
+# might require patching.
 
 SF_PROJ = musicpd
 MASTER_SITES = $(SF_MIRROR)
