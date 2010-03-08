@@ -27,7 +27,7 @@ CATALOGNAME_CSWlibxextdevel = libxext_devel
 SPKG_DESC_CSWlibxext = X11 miscellaneous extensions library
 SPKG_DESC_CSWlibxextdevel = X11 miscellaneous extensions library development files
 
-RUNTIME_DEP_PKGS_CSWlibxext = CSWlibx11 CSWlibxau
+RUNTIME_DEP_PKGS_CSWlibxext = CSWlibx11 CSWlibxau CSWx11xextproto
 RUNTIME_DEP_PKGS_CSWlibxextdevel = CSWlibxext
 
 PKGFILES_CSWlibxextdevel  = $(PKGFILES_DEVEL)
