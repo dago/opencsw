@@ -8,10 +8,10 @@ define BLURB
 endef
 
 # Definition of the list of locale to process
-# LANG = af be bg ca cs da de el en-GB es-AR es-ES eu fi fr ga-IE he hu it ja ko lt mk nb-NO nl nn-NO pa-IN pl pt-BR pt-PT ru sk sl sv-SE tr uk zh-CN zh-TW
+LANG = af be bg ca cs da de el en-GB es-AR es-ES eu fi fr ga-IE he hu it ja ko lt mk nb-NO nl nn-NO pa-IN pl pt-BR pt-PT ru sk sl sv-SE tr uk zh-CN zh-TW
 
 # Short list of locales, used only for testing during build description modification
-LANG = de fr pt-PT
+# LANG = de fr pt-PT
 
 # Set arch to all
 ARCHALL = 1
