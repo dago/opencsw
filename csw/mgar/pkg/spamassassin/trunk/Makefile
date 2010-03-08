@@ -3,7 +3,7 @@ SPKG_NAME = Mail-SpamAssassin
 GARVERSION = 3.3.0
 CATEGORIES = net
 
-DESCRIPTION = mail filter with a wide range of tests
+DESCRIPTION = Mail filter with a wide range of tests
 define BLURB
   SpamAssassin is a mail filter which attempts to identify spam using
   a variety of mechanisms including text analysis, Bayesian filtering,
@@ -16,7 +16,7 @@ DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
 #DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-rc3.tar.gz
 DISTFILES += COPYING
 
-RUNTIME_DEP_PKGS  = CSWgnupg CSWosslrt CSWperl CSWpmarchivetar CSWpmdbi CSWpmdigestsha
+RUNTIME_DEP_PKGS  = CSWgnupg CSWosslrt CSWperl CSWpmdbi
 RUNTIME_DEP_PKGS += CSWpmiosocketinet6 CSWpmiosocketssl CSWpmiozlib
 RUNTIME_DEP_PKGS += CSWpmipcountry CSWpmldap CSWpmlibwww CSWpmmaildkim
 RUNTIME_DEP_PKGS += CSWpmmailspf CSWpmmailtools CSWpmmimebase64 CSWpmnetaddrip CSWpmnetdns
