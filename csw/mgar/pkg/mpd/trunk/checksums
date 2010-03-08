@@ -1,4 +1,4 @@
-e02f090a3592231ce20683f3b9d8f965  download/cswmpd.init
-6fee19ad604cfb80c5a13106df6c8925  download/cswusergroup
-66817a4b4c05454e6488f6b821f2a6a3  download/mpd-0.14.2.tar.bz2
-cbfadc495881963071465341cbb6b411  download/mpd.conf
+e02f090a3592231ce20683f3b9d8f965  cswmpd.init
+6fee19ad604cfb80c5a13106df6c8925  cswusergroup
+824e1ce46c0f468865d9e5e403cdaf5d  mpd-0.15.8.tar.bz2
+cbfadc495881963071465341cbb6b411  mpd.conf

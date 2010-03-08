@@ -1,5 +1,5 @@
 GARNAME = mpd
-GARVERSION = 0.14.2
+GARVERSION = 0.15.8
 CATEGORIES = server
 
 DESCRIPTION = The Music Player Daemon
@@ -43,7 +43,11 @@ GARCOMPILER = SOS12
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ao
+CONFIGURE_ARGS += --enable-aac
 CONFIGURE_ARGS += --bindir=/opt/csw/sbin
+CONFIGURE_ARGS += --with-faad=/opt/csw
+CONFIGURE_ARGS += --with-faad-libraries=/opt/csw/lib
+CONFIGURE_ARGS += --with-faad-includes=/opt/csw/include
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
@@ -57,15 +61,18 @@ post-install-modulated:
 	ginstall $(FILEDIR)/cswmpd.init $(DESTDIR)/etc/opt/csw/init.d/cswmpd
 	ginstall -D $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmpd/cswusergroup
 
-RUNTIME_DEP_PKGS  = CSWaudiofile
-RUNTIME_DEP_PKGS += CSWcswclassutils
-RUNTIME_DEP_PKGS += CSWflac
-RUNTIME_DEP_PKGS += CSWggettextrt
-RUNTIME_DEP_PKGS += CSWglib2
-RUNTIME_DEP_PKGS += CSWlibao
-RUNTIME_DEP_PKGS += CSWlibid3tag
-RUNTIME_DEP_PKGS += CSWlibmad
-RUNTIME_DEP_PKGS += CSWzlib
+RUNTIME_DEP_PKGS_CSWmpd += CSWaudiofile
+RUNTIME_DEP_PKGS_CSWmpd += CSWflac
+RUNTIME_DEP_PKGS_CSWmpd += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWmpd += CSWglib2
+RUNTIME_DEP_PKGS_CSWmpd += CSWlame
+RUNTIME_DEP_PKGS_CSWmpd += CSWlibao
+RUNTIME_DEP_PKGS_CSWmpd += CSWlibid3tag
+RUNTIME_DEP_PKGS_CSWmpd += CSWlibmad
+RUNTIME_DEP_PKGS_CSWmpd += CSWlibogg
+RUNTIME_DEP_PKGS_CSWmpd += CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWmpd += CSWvorbis
+RUNTIME_DEP_PKGS_CSWmpd += CSWzlib
 
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
 
