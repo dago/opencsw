@@ -115,7 +115,8 @@ def main():
       else:
         options.catalognames = options.pkgnames
     if config.has_option(CONFIG_RELEASE_SECTION, "release manager name"):
-      release_mgr_name=config.get(CONFIG_RELEASE_SECTION, "release manager name"),
+      release_mgr_name = config.get(CONFIG_RELEASE_SECTION,
+                                    "release manager name")
     else:
       release_mgr_name = None
     if config.has_option(CONFIG_RELEASE_SECTION, "release cc"):
