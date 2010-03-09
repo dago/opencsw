@@ -1,3 +1,5 @@
+# $Id$
+
 GARNAME = libxcb
 GARVERSION = 1.5
 CATEGORIES = x11
