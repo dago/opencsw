@@ -23,4 +23,13 @@ TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 # A fix for an inline function and 'symbol not found'.
 EXTRA_CFLAGS = -features=no%extinl
+
+ALTERNATIVES = mpg321
+
+ALTERNATIVE_mpg321 = $(bindir)/mpg123 mpg123 $(bindir)/mpg321 50
+
 include gar/category.mk
+
+post-merge:
+	rm $(PKGROOT)$(bindir)/mpg123
+	@$(MAKECOOKIE)
