@@ -15,11 +15,24 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+PACKAGES = CSWalarmclock
+CATALOGNAME = alarmclock
+
+RUNTIME_DEP_PKGS  = CSWdbusglib CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgstreamer CSWgtk2
+RUNTIME_DEP_PKGS += CSWlibatk CSWlibcairo CSWlibdbus CSWlibnotify CSWlibxml2 CSWpango
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # AM_CFLAGS contains -Wall which only works with GCC
 BUILD_OVERRIDE_VARS = AM_CFLAGS
 BUILD_OVERRIDE_VAR_AM_CFLAGS =
+
+# Remove when move towards csw x11 has been finished
+EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
+
+STRIP_LIBTOOL = 1
+
+TEST_TARGET = check
 
 include gar/category.mk
 
