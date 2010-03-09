@@ -32,6 +32,11 @@ EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
+# Remove when move towards csw x11 has been finished
+LARCH_sparcv9 = sparcv9
+LARCH_amd64   = amd64
+EXTRA_LINKER_FLAGS = /usr/openwin/lib/$(LARCH_$(ISA))/libXext.so
+
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
