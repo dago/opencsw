@@ -1,5 +1,5 @@
 GARNAME = glib
-GARVERSION = 2.23.1
+GARVERSION = 2.23.5
 CATEGORIES = lib
 
 DESCRIPTION = The GLib library of C routines.
@@ -22,8 +22,9 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 PATCHFILES  = glib-typedetect.patch
 PATCHFILES += FIXED_STR.patch
 PATCHFILES += gsize.patch
-PATCHFILES += gconverter.patch
+# PATCHFILES += gconverter.patch
 PATCHFILES += CMSG_LEN.patch
+PATCHFILES += 0001-Use-G_STRFUNC-instead-of-explicit-gcc-only-__PRETTY_.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
