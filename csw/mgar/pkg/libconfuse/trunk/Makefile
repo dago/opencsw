@@ -1,12 +1,12 @@
 GARNAME = libconfuse
-GARVERSION = 2.6
+GARVERSION = 2.7
 CATEGORIES = lib
 
-# For libConfuse 2.6, the test suite doesn't compile cleanly on Solaris,
+# For libConfuse 2.7, the test suite doesn't compile cleanly on Solaris,
 # so we skip it.  This should be re-assessed with each new release
 # from upstream.  Proposed fixes for the test suite to be submitted
 # upstream.
-ifeq ($(GARVERSION),2.6)
+ifeq ($(GARVERSION),2.7)
 #TEST_TARGET = check
 TEST_SCRIPTS = 
 endif
@@ -22,8 +22,9 @@ define BLURB
   to a program using a simple API.
 endef
 
-MASTER_SITES = http://bzero.se/confuse/
-PATCHFILES = setopt.diff
+#MASTER_SITES = http://bzero.se/confuse/
+MASTER_SITES = http://savannah.nongnu.org/download/confuse/
+PATCHFILES = 
 DISTFILES  = confuse-$(GARVERSION).tar.gz
 DISTFILES += $(PATCHFILES)
 DISTNAME = confuse-$(GARVERSION)
