@@ -1,5 +1,5 @@
-GARNAME = libatk
-GARVERSION = 1.26.0
+GARNAME = atk
+GARVERSION = 1.29.92
 CATEGORIES = lib
 
 DESCRIPTION = An accessibility toolkit for GNOME
@@ -11,19 +11,29 @@ define BLURB
   utilize all of the functionality of the GNOME user environment.
 endef
 
-MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/atk/1.26/
-DISTNAME = atk-$(GARVERSION)
+MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES = $(DISTNAME).tar.bz2
-# We define upstream file regex so we can be notifed of new upstream software release
-# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2
+PACKAGES = CSWlibatk CSWlibatkdevel
+
+CATALOGNAME_CSWlibatk      = libatk
+CATALOGNAME_CSWlibatkdevek = libatk_devel
+
+SPKG_DESC_CSWlibatk = $(DESCRIPTION)
+SPKG_DESC_CSWlibatk = Developer files for libatk
+
+RUNTIME_DEP_PKGS_CSWlibatk = CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS_CSWlibatkdevel = CSWlibatk CSWglib2devel
 
 BUILD64 = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-debug=yes
 
 TEST_TARGET = check
+
+PKGFILES_CSWlibatkdevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibatkdevel += $(sharedstatedir)/gtk-doc/.*
 
 include gar/category.mk
