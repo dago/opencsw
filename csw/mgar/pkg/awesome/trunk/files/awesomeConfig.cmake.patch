@@ -1,0 +1,20 @@
+--- awesome-3.4.4/awesomeConfig.cmake.orig	2010-03-09 18:53:40.270578634 +0100
++++ awesome-3.4.4/awesomeConfig.cmake	2010-03-09 18:55:57.683822917 +0100
+@@ -167,6 +167,7 @@
+ 
+ # Check for libev
+ a_find_library(LIB_EV ev)
++a_find_library(LIB_ICONV iconv)
+ 
+ # Error check
+ if(NOT LUA51_FOUND AND NOT LUA50_FOUND) # This is a workaround to a cmake bug
+@@ -177,7 +178,8 @@
+     ${AWESOME_COMMON_REQUIRED_LDFLAGS}
+     ${AWESOME_REQUIRED_LIBRARIES}
+     ${LIB_EV}
+-    ${LUA_LIBRARIES})
++    ${LUA_LIBRARIES}
++    ${LIB_ICONV})
+ 
+ set(AWESOME_REQUIRED_INCLUDE_DIRS
+     ${AWESOME_COMMON_REQUIRED_INCLUDE_DIRS}

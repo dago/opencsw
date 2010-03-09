@@ -17,12 +17,15 @@ BUILD_SCRIPTS = awesome
 INSTALL_SCRIPTS = awesome
 CONFIGURE_ARGS = $(DIRPATHS)
 GARCOMPILER = GNU
-EXTRA_LD_OPTIONS = -L/opt/csw/lib -liconv
+# EXTRA_LD_OPTIONS = -L/opt/csw/lib -liconv
+# EXTRA_CFLAGS = -xc99 -DCE
+# EXTRA_CXXFLAGS = -xc99 -DCEPLUSPLUS
 
-BUILD_DEP_PKGS += CSWlua CSWgperf
+BUILD_DEP_PKGS += CSWlua CSWgperf CSWlibdbusdev
 EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 PATCHFILES += gperf.sh-solarify.patch
 PATCHFILES += backtrace.c.patch
+PATCHFILES += awesomeConfig.cmake.patch
 
 include gar/category.mk
 
