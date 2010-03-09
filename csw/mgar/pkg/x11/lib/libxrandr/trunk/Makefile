@@ -28,7 +28,7 @@ RUNTIME_DEP_PKGS_CSWlibxrandrdevel = CSWlibxrandr
 # BUILD_DEP_PKGS = CSWrandrproto CSWlibxextdevel 
 
 PKGFILES_CSWlibxrandrdevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibxrandr       = CSWlibx11 CSWlibxext CSWlibxrender
+# PKGFILES_CSWlibxrandr       = CSWlibx11 CSWlibxext CSWlibxrender
 
 BUILD64 = 1
 NOISALIST = 1
