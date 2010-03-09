@@ -19,7 +19,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 PACKAGES = CSWlibatk CSWlibatkdevel
 
 CATALOGNAME_CSWlibatk      = libatk
-CATALOGNAME_CSWlibatkdevek = libatk_devel
+CATALOGNAME_CSWlibatkdevel = libatk_devel
 
 SPKG_DESC_CSWlibatk = $(DESCRIPTION)
 SPKG_DESC_CSWlibatk = Developer files for libatk
