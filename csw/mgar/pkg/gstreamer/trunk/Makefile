@@ -44,3 +44,6 @@ CHECKPKG_OVERRIDES_CSWgstreamer += symbol-not-found|gst-plugin-scanner
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+# select the right flex parser aka CSWflex-new
+CONFIGURE_ENV  += FLEX_PATH=/opt/csw/bin/flex-2.5.35
