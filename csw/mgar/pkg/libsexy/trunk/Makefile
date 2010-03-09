@@ -37,6 +37,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
-PKGFILES_CSWlibsexydevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibsexydevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibsexydevel += $(sharedstatedir)/gtk-doc/.*
 
 include gar/category.mk
