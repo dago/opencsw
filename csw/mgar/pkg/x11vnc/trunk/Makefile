@@ -17,25 +17,15 @@ VENDOR_URL = http://www.karlrunge.com/x11vnc/
 
 BUILD_DEP_PKGS = CSWossldevel CSWzlib CSWjpeg
 RUNTIME_DEP_PKGS = CSWosslrt CSWzlib CSWjpeg
+RUNTIME_DEP_PKGS += CSWlibx11 CSWlibxdamage CSWlibxext CSWlibxfixes CSWlibxinerama CSWlibxtst
 
-PACKAGING_PLATFORMS  = solaris8-sparc solaris8-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-
-# This is to make sure the X11 path is prepended to the front of lib pathes.
-# Otherwise the wrong X11 gets picked up.
-EXTRA_LIB_garosrel-5.8  = /usr/openwin/lib
-# We can't add /usr/sfw/lib because then openssl is pickedup from there too.
-#EXTRA_LIB_garosrel-5.10 = /usr/X11/lib /usr/sfw/lib
-EXTRA_LIB_garosrel-5.10 = /usr/X11/lib
-EXTRA_LIB = $(EXTRA_LIB_garosrel-$(GAROSREL))
-
-CONFIGURE_ARGS_garosrel-5.8  = --x-includes=/usr/openwin/include
-CONFIGURE_ARGS_garosrel-5.8 += --x-libraries=/usr/openwin/lib 
-CONFIGURE_ARGS_garosrel-5.10  = --x-includes=/usr/X11/include
-CONFIGURE_ARGS_garosrel-5.10 += --x-libraries=/usr/X11/lib 
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_garosrel-$(GAROSREL))
+CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 TEST_TARGET = check
 
