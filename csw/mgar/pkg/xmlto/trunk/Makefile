@@ -7,7 +7,7 @@ BUILD_DEP_PKGS += CSWflex CSWggetopt
 
 RUNTIME_DEP_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
 RUNTIME_DEP_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m CSWmktemp
-RUNTIME_DEP_PKGS += CSWggetopt CSWbash CSWgfile
+RUNTIME_DEP_PKGS += CSWggetopt CSWbash CSWgfile CSWtextutils
 
 DESCRIPTION = An XSL toolchain front end.
 define BLURB
@@ -19,9 +19,9 @@ endef
 MASTER_SITES = https://fedorahosted.org/releases/x/m/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
-# Out gcp (from the very old fileutils) spits out warnings about -P changing
+# Our gcp (from the very old fileutils) spits out warnings about -P changing
 # meanings.  xmlto is depending on the new meaning.  We'll explicitly use
-# the long forms of -P (--no-dereference) and -p (--presever).
+# the long forms of -P (--no-dereference) and -p (--preserve).
 PATCHFILES = gcp-explicit-args.patch
 
 TEST_TARGET = check
@@ -42,7 +42,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += BASH=/opt/csw/bin/bash
 CONFIGURE_ARGS += GETOPT=/opt/csw/bin/ggetopt
 CONFIGURE_ARGS += FIND=/opt/csw/bin/gfind
-CONFIGURE_ARGS += TAIL=/usr/xpg4/bin/tail
+CONFIGURE_ARGS += TAIL=/opt/csw/bin/gtail
 CONFIGURE_ARGS += GCP=/opt/csw/bin/gcp
 CONFIGURE_ARGS += MKTEMP=/opt/csw/bin/mktemp
 
