@@ -9,16 +9,24 @@ CATEGORIES = gnome
 DESCRIPTION = Document viewer for multiple document formats
 define BLURB
 endef
+GARFLAVOR = DBG
 SPKG_SOURCEURL = http://projects.gnome.org/evince/
 MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(GARNAME)/$(GNOME_VERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS_DBG = --enable-debug
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
+EXTRA_CFLAGS_DBG = -g
+EXTRA_CFLAGS += $(EXTRA_CFLAGS_$(GARFLAVOR))
 STRIP_LIBTOOL = 1
 EXTRA_LD_OPTIONS = /opt/csw/X11/lib/libX11.so -lm
 # There are no shared-object dependencies on CSWdbus, but it's required for
 # evince to work.
 RUNTIME_DEP_PKGS_CSWevince += CSWdbus
+# Shared MIME info is needed to detect file types
+RUNTIME_DEP_PKGS_CSWevince += CSWsharedmimeinfo
+
 RUNTIME_DEP_PKGS_CSWevince += CSWdbusglib
 RUNTIME_DEP_PKGS_CSWevince += CSWdjvulibre
 RUNTIME_DEP_PKGS_CSWevince += CSWfconfig
