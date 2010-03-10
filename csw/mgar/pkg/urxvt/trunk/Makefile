@@ -6,7 +6,7 @@ GARNAME = rxvt-unicode
 GARVERSION = 9.07
 CATEGORIES = apps
 
-DESCRIPTION = (ouR XVT, unicode) - a VT102 emulator for the X window system
+DESCRIPTION = A VT102 emulator for the X window system (pron. ouR XVT, unicode)
 define BLURB
   rxvt-unicode, is a colour vt102 terminal emulator intended as an xterm(1)
   replacement for users who do not require features such as Tektronix 4014
@@ -20,17 +20,29 @@ endef
 
 MASTER_SITES         = http://dist.schmorp.de/rxvt-unicode/
 DISTFILES            = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES            += urxvt-wrapper
+DISTFILES           += urxvt-wrapper
 UFILES_REGEX         = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 SPKG_SOURCEURL       = http://software.schmorp.de/pkg/rxvt-unicode.html
-PACKAGING_PLATFORMS  = solaris10-sparc solaris10-i386
 PACKAGES             = CSWurxvt
 CATALOGNAME_CSWurxvt = urxvt
 CONFIGURE_ARGS       = $(DIRPATHS)
 CONFIGURE_ARGS      += --disable-perl
+CONFIGURE_ARGS      += --with-terminfo=/opt/csw/share/terminfo
+# For the wrapper
 RUNTIME_DEP_PKGS_CSWurxvt  = CSWbash
+# Because of terminfo
+RUNTIME_DEP_PKGS_CSWurxvt += CSWncurses
+# Shared library dependencies
+RUNTIME_DEP_PKGS_CSWurxvt += CSWfconfig
+RUNTIME_DEP_PKGS_CSWurxvt += CSWftype2
+RUNTIME_DEP_PKGS_CSWurxvt += CSWlibx11
+RUNTIME_DEP_PKGS_CSWurxvt += CSWlibxft2
+RUNTIME_DEP_PKGS_CSWurxvt += CSWlibxrender
 GARCOMPILER = GNU
-TEST_SCRIPTS =
+TEST_TARGET = check
+EXTRA_INC = /opt/csw/X11/include
+EXTRA_LIB = /opt/csw/X11/lib
+EXTRA_PKG_CONFIG_DIRS = /opt/csw/X11/lib
 
 include gar/category.mk
 
