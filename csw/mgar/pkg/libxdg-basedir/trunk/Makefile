@@ -23,5 +23,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWlibxdgbasedir
 CATALOGNAME = libxdg_basedir
 TEST_SCRIPTS =
+sysconfdir = /etc$(prefix)
+localstatedir = /var$(prefix)
 CONFIGURE_ARGS = $(DIRPATHS)
 include gar/category.mk
