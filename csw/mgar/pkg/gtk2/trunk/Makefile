@@ -1,5 +1,5 @@
 GARNAME = gtk2
-GARVERSION = 2.19.6
+GARVERSION = 2.19.7
 CATEGORIES = lib
 
 DESCRIPTION = GTK+, the multiplatform X11 toolkit for GUI development
