@@ -4,7 +4,7 @@ CATEGORIES = lib
 
 DESCRIPTION = Library with the rolling-checksum algorithm known from rsync
 define BLURB
-  ibrsync implements the rolling-checksum algorithm of remote file
+  librsync implements the rolling-checksum algorithm of remote file
   synchronization that was popularized by the rsync utility and is used in
   rproxy. This algorithm transfers the differences between 2 files without
   needing both files on the same system.
@@ -13,6 +13,10 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+RUNTIME_DEP_PKGS_CSWlibrsync += CSWbzip2
+RUNTIME_DEP_PKGS_CSWlibrsync += CSWlibpopt
+RUNTIME_DEP_PKGS_CSWlibrsync += CSWzlib
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
