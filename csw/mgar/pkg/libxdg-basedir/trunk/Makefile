@@ -5,7 +5,7 @@
 GARNAME = libxdg-basedir
 GARVERSION = 1.0.2
 CATEGORIES = lib
-DESCRIPTION = implements functions according to the XDG Base Directory Specification
+DESCRIPTION = Implements functions according to the XDG Base Directory Specification
 define BLURB
 
 	The XDG Base Directory Specification defines where should user files be
@@ -26,4 +26,5 @@ TEST_SCRIPTS =
 sysconfdir = /etc$(prefix)
 localstatedir = /var$(prefix)
 CONFIGURE_ARGS = $(DIRPATHS)
+BUILD64 = 1
 include gar/category.mk
