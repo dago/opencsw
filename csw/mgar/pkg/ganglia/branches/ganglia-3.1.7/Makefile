@@ -1,5 +1,5 @@
 GARNAME = ganglia
-GARVERSION = 3.1.6
+GARVERSION = 3.1.7
 CATEGORIES = utils
 
 # How should we set this?
@@ -107,6 +107,9 @@ ifeq ($(GARVERSION),3.1.5)
 TEST_SCRIPTS =
 endif
 ifeq ($(GARVERSION),3.1.6)
+TEST_SCRIPTS =
+endif
+ifeq ($(GARVERSION),3.1.7)
 TEST_SCRIPTS =
 endif
 
