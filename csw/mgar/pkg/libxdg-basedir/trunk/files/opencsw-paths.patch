@@ -1,0 +1,14 @@
+--- libxdg-basedir-1.0.2/src/basedir.c.orig	2010-03-10 21:04:10.463085037 +0100
++++ libxdg-basedir-1.0.2/src/basedir.c	2010-03-10 21:05:03.056021665 +0100
+@@ -90,9 +90,9 @@
+ static const char
+ 	DefaultRelativeDataHome[] = DIR_SEPARATOR_STR ".local" DIR_SEPARATOR_STR "share",
+ 	DefaultRelativeConfigHome[] = DIR_SEPARATOR_STR ".config",
+-	DefaultDataDirectories1[] = DIR_SEPARATOR_STR "usr" DIR_SEPARATOR_STR "local" DIR_SEPARATOR_STR "share",
++	DefaultDataDirectories1[] = DIR_SEPARATOR_STR "opt" DIR_SEPARATOR_STR "csw" DIR_SEPARATOR_STR "share",
+ 	DefaultDataDirectories2[] = DIR_SEPARATOR_STR "usr" DIR_SEPARATOR_STR "share",
+-	DefaultConfigDirectories[] = DIR_SEPARATOR_STR "etc" DIR_SEPARATOR_STR "xdg",
++	DefaultConfigDirectories[] = DIR_SEPARATOR_STR "etc" DIR_SEPARATOR_STR "opt" DIR_SEPARATOR_STR "csw" DIR_SEPARATOR_STR "xdg",
+ 	DefaultRelativeCacheHome[] = DIR_SEPARATOR_STR ".cache";
+ 
+ static const char
