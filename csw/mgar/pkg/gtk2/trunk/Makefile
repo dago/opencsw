@@ -1,5 +1,5 @@
 GARNAME = gtk2
-GARVERSION = 2.16.5
+GARVERSION = 2.19.6
 CATEGORIES = lib
 
 DESCRIPTION = GTK+, the multiplatform X11 toolkit for GUI development
@@ -16,13 +16,12 @@ endef
 #
 # #if (defined(__STDC__) && !defined(UNIXCPP)) || defined(ANSICPP)
 
-MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/gtk+/2.16/
+GNOME_PROJ = gtk+
+MASTER_SITES = $(GNOME_MIRROR)
 
-DISTFILES = gtk+-$(GARVERSION).tar.bz2
+DISTNAME = gtk+-$(GARVERSION)
+DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += CSWgtk2.postinstall
-DISTFILES += fixme.sh
-
-WORKSRC = $(WORKDIR)/gtk+-$(GARVERSION)
 
 PACKAGES = CSWgtk2 CSWgtk2devel CSWgtk2doc
 
@@ -35,8 +34,9 @@ SPKG_DESC_CSWgtk2devel = A feature rich toolkit for creating graphical user inte
 SPKG_DESC_CSWgtk2doc = A feature rich toolkit for creating graphical user interfaces documentation
 
 BUILD_DEP_PKGS = CSWbash
-RUNTIME_DEP_PKGS_CSWgtk2 = CSWjasper CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff CSWzlib
+RUNTIME_DEP_PKGS_CSWgtk2 = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibxcomposite CSWlibxcursor CSWlibxdamage CSWlibxext CSWlibxfixes CSWlibxinerama CSWlibxrandr
 RUNTIME_DEP_PKGS_CSWgtk2devel  = CSWgtk2 CSWglib2devel
 RUNTIME_DEP_PKGS_CSWgtk2devel += CSWlibcairodevel CSWlibx11devel CSWlibxrenderdevel CSWpangodevel
 
@@ -55,6 +55,8 @@ CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS += --disable-cups
 
+STRIP_LIBTOOL = 1
+
 #TEST_TARGET = check
 # There is a test failing on Xvfb which may or may not be harmful. Disable for now.
 TEST_TARGET =
@@ -69,8 +71,3 @@ PKGFILES_CSWgtk2doc = $(sharedstatedir)/gtk-doc/.*
 ARCHALL_CSWgtk2doc = 1
 
 include gar/category.mk
-
-post-configure-modulated:
-	@echo " ==> Fixing libtool files"
-	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-	@$(MAKECOOKIE)
