@@ -25,7 +25,9 @@ else
 fi
 
 echo
+echo "NOTE!"
 echo "NOTE! Make sure to check out any changes in /etc/opt/csw/pkgutil.conf.CSW."
+echo "NOTE!"
 echo
 
 exit 0
