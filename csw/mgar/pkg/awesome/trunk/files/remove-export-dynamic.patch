@@ -1,0 +1,13 @@
+--- awesome-3.4.4/CMakeLists.txt.orig	2010-03-10 11:23:26.685134271 +0100
++++ awesome-3.4.4/CMakeLists.txt	2010-03-10 11:23:58.858789913 +0100
+@@ -93,10 +93,6 @@
+     ${AWE_SRCS}
+     ${BUILD_DIR}/common/tokenize.c)
+ 
+-set_target_properties(${PROJECT_AWE_NAME}
+-    PROPERTIES
+-    LINK_FLAGS -export-dynamic)
+-
+ target_link_libraries(${PROJECT_AWE_NAME}
+     ${AWESOME_COMMON_REQUIRED_LIBRARIES}
+     ${AWESOME_REQUIRED_LIBRARIES}

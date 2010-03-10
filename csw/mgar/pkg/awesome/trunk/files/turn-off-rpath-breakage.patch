@@ -1,0 +1,10 @@
+--- awesome-3.4.4/awesomeConfig.cmake.orig	2010-03-10 12:24:06.477524567 +0100
++++ awesome-3.4.4/awesomeConfig.cmake	2010-03-10 12:24:34.307159286 +0100
+@@ -9,6 +9,7 @@
+ project(${PROJECT_AWE_NAME} C)
+ 
+ set(CMAKE_BUILD_TYPE RELEASE)
++set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+ 
+ option(WITH_DBUS "build with D-BUS" ON)
+ option(GENERATE_MANPAGES "generate manpages" ON)

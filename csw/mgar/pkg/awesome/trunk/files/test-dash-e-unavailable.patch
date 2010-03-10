@@ -1,0 +1,11 @@
+--- awesome-3.4.4/Makefile.orig	2010-03-10 11:35:56.642761333 +0100
++++ awesome-3.4.4/Makefile	2010-03-10 11:36:11.939322719 +0100
+@@ -16,7 +16,7 @@
+ 	ln -s -f ${builddir}/$@ $@
+ 
+ $(BUILDLN):
+-	test -e $(BUILDLN) || ln -s -f ${builddir} $(BUILDLN)
++	test -h $(BUILDLN) || ln -s -f ${builddir} $(BUILDLN)
+ 
+ cmake ${builddir}/CMakeCache.txt:
+ 	mkdir -p ${builddir}

@@ -20,12 +20,39 @@ GARCOMPILER = GNU
 # EXTRA_LD_OPTIONS = -L/opt/csw/lib -liconv
 # EXTRA_CFLAGS = -xc99 -DCE
 # EXTRA_CXXFLAGS = -xc99 -DCEPLUSPLUS
+TEST_SCRIPTS =
 
+EXTRA_INC = /opt/csw/X11/include
+EXTRA_LIB = /opt/csw/X11/lib
 BUILD_DEP_PKGS += CSWlua CSWgperf CSWlibdbusdev
 EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 PATCHFILES += gperf.sh-solarify.patch
 PATCHFILES += backtrace.c.patch
-PATCHFILES += awesomeConfig.cmake.patch
+PATCHFILES += iconv-try-1.patch
+# PATCHFILES += libiconv.patch
+PATCHFILES += test-dash-e-unavailable.patch
+PATCHFILES += remove-export-dynamic.patch
+
+CMAKE_ARGS  = -DSYSCONFDIR=/etc/opt/csw
+CMAKE_ARGS += -DPREFIX=/opt/csw
+export CMAKE_ARGS
+
+RUNTIME_DEP_PKGS_CSWawesome += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWawesome += CSWglib2
+RUNTIME_DEP_PKGS_CSWawesome += CSWiconv
+RUNTIME_DEP_PKGS_CSWawesome += CSWimlib2
+RUNTIME_DEP_PKGS_CSWawesome += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWawesome += CSWlibdbus
+RUNTIME_DEP_PKGS_CSWawesome += CSWlibev
+RUNTIME_DEP_PKGS_CSWawesome += CSWlibx11
+RUNTIME_DEP_PKGS_CSWawesome += CSWlibxcb
+RUNTIME_DEP_PKGS_CSWawesome += CSWlibxdgbasedir
+RUNTIME_DEP_PKGS_CSWawesome += CSWlua
+RUNTIME_DEP_PKGS_CSWawesome += CSWpango
+RUNTIME_DEP_PKGS_CSWawesome += CSWstartupnotif
+RUNTIME_DEP_PKGS_CSWawesome += CSWxcbutil
+
+LICENSE = LICENSE
 
 include gar/category.mk
 
@@ -38,3 +65,4 @@ install-awesome:
 	@$(MAKECOOKIE)
 
 PATH := /opt/csw/gnu:$(PATH)
+# PATCHFILES += turn-off-rpath-breakage.patch
