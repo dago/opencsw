@@ -7,7 +7,7 @@ GARVERSION = 0.2.11
 DISTFILE_SUFFIX = -2
 CATEGORIES = apps
 
-DESCRIPTION = A Free replacement for mpg123
+DESCRIPTION = A Free, fast fixed-point math replacement for mpg123
 SPKG_SOURCEURL = http://mpg321.sourceforge.net/
 define BLURB
 endef
