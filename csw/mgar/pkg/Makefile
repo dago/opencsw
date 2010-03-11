@@ -64,7 +64,8 @@ pkglist:
 
 newpkg-%:
 	@svn mkdir $* $*/tags $*/branches $*/trunk $*/trunk/files
-	@(echo "GARNAME = $*";                                     								\
+	@(echo "# $$Id$$";                                        								\
+	echo "GARNAME = $*";                                     								\
 	echo "GARVERSION = 1.0";                                        								\
 	echo "CATEGORIES = category";                                   								\
 	echo "";                                                        								\
@@ -76,7 +77,7 @@ newpkg-%:
 	echo "MASTER_SITES = ";                                         								\
 	echo "DISTFILES  = $$(GARNAME)-$$(GARVERSION).tar.gz";          								\
 	echo "";                                                        								\
-	echo "# We define upstream file regex so we can be notifed of new upstream software release";  	\
+	echo "# File name regex to get notifications about upstream software releases";  	\
 	echo "UFILES_REGEX = $$(GARNAME)-(\d+(?:\.\d+)*).tar.gz";										\
 	echo "";                                                        								\
 	echo "# If the url used to check for software update is different of MASTER_SITES, then ";   	\
@@ -89,6 +90,7 @@ newpkg-%:
 	) > $*/trunk/Makefile
 	@touch $*/trunk/checksums
 	@svn add $*/trunk/Makefile $*/trunk/checksums
+	@svn ps svn:keywords Id $*/trunk/Makefile
 	@echo "cookies\ndownload\nwork\n" | svn propset svn:ignore -F /dev/fd/0 $*/trunk
 	@echo "gar https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2" | svn propset svn:externals -F /dev/fd/0 $*/trunk
 	@if [ -d ../gar/v2 ]; then \
