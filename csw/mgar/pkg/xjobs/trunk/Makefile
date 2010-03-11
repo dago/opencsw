@@ -1,5 +1,5 @@
 GARNAME = xjobs
-GARVERSION = 20100203
+GARVERSION = 20100311
 CATEGORIES = utils
 
 DESCRIPTION = Executes jobs in parallel similar to xargs
