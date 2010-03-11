@@ -1,15 +1,17 @@
 GARNAME = POE-Test-Loops
-GARVERSION = 1.005
+GARVERSION = 1.033
 CATEGORIES = cpan
 AUTHOR = RCAPUTO
 
 DESCRIPTION = Reusable tests for POE::Loop authors
 define BLURB
-  Long description
 endef
+
+DISTFILES = COPYING
 
 PACKAGES = CSWpoetestloops
 CATALOGNAME = pm_poetestloops
+
 ARCHALL = 1
 
 include gar/category.mk
