@@ -17,23 +17,20 @@ LANG = af be bg ca cs da de el en-GB es-AR es-ES eu fi fr ga-IE he hu it ja ko l
 ARCHALL = 1
 
 # Defines the list of packages
-PACKAGES = $(foreach PKG, $(LANG), CSWtbird-l10n-$(PKG) )
+PACKAGES = $(foreach PKG, $(LANG), CSWthunderbird-$(PKG) )
 LICENSE  = License
-
-# There was previously a french localization package. It is renamed, thus declared as incompatible
-INCOMPATIBLE_PKGS_CSWtbird-l10n-fr = CSWthunderbird-fr
 
 # Add thunderbird as a depend
 RUNTIME_DEP_PKGS = CSWthunderbird
 
 # Defines the package description
-$(foreach LOCALE_NAME, $(LANG), $(eval SPKG_DESC_CSWtbird-l10n-$(LOCALE_NAME) = $(DESCRIPTION) $(LOCALE_NAME)))
+$(foreach LOCALE_NAME, $(LANG), $(eval SPKG_DESC_CSWthunderbird-$(LOCALE_NAME) = $(DESCRIPTION) $(LOCALE_NAME)))
 
 # Defines the catalog names
-$(foreach LOCALE_NAME, $(LANG), $(eval CATALOGNAME_CSWtbird-l10n-$(LOCALE_NAME) = tbird_l10n_$(shell echo $(LOCALE_NAME) | tr \- _ | tr [A-Z] [a-z] )))
+$(foreach LOCALE_NAME, $(LANG), $(eval CATALOGNAME_CSWthunderbird-$(LOCALE_NAME) = thunderbird_$(shell echo $(LOCALE_NAME) | tr \- _ | tr [A-Z] [a-z] )))
 
 # Defines the files filters
-$(foreach LOCALE_NAME, $(LANG), $(eval PKGFILES_CSWtbird-l10n-$(LOCALE_NAME) = .*langpack-$(LOCALE_NAME).*))
+$(foreach LOCALE_NAME, $(LANG), $(eval PKGFILES_CSWthunderbird-$(LOCALE_NAME) = .*langpack-$(LOCALE_NAME).*))
 
 # Defines the content to be downloaded
 MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/$(GARVERSION)/linux-i686/xpi/
