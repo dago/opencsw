@@ -1,3 +1,5 @@
+# $Id$
+
 GARNAME = lcms
 GARVERSION = 1.19
 GARSUBREV = 
@@ -35,15 +37,7 @@ RUNTIME_DEP_PKGS_CSWlcmsrt +=
 RUNTIME_DEP_PKGS_CSWlcmsdevel += CSWlcmsrt
 RUNTIME_DEP_PKGS_CSWpy-lcms += CSWlcmsrt CSWpython
 
-CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|icclink
-CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|tiffdiff
-CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|icc2ps
-CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|tifficc
-CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|wtpt
-CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|jpegicc
-CHECKPKG_OVERRIDES_CSWlcms += symbol-not-found|icctrans
 CHECKPKG_OVERRIDES_CSWlcmsdevel += missing-dependency|CSWlcms
-CHECKPKG_OVERRIDES_CSWpy-lcms += symbol-not-found|_lcms.so
 
 PKGFILES_CSWlcmsrt = $(PKGFILES_RT)
 PKGFILES_CSWlcmsdevel = $(PKGFILES_DEVEL)
@@ -57,9 +51,13 @@ UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=26279
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-static=no
-CONFIGURE_ARGS += --with-python
+CONFIGURE_ARGS              = $(DIRPATHS)
+CONFIGURE_ARGS             += --enable-static=no
+CONFIGURE_ARGS_isa-sparcv8 += --with-python
+CONFIGURE_ARGS_isa-i386    += --with-python
+CONFIGURE_ARGS_isa-sparcv9 += --without-python
+CONFIGURE_ARGS_isa-amd64   += --without-python
+CONFIGURE_ARGS             += $(CONFIGURE_ARGS_$(MODULATION))
 
 BUILD64 = 1
 
