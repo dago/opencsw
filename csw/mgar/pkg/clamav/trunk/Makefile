@@ -1,5 +1,5 @@
 GARNAME = clamav
-GARVERSION = 0.95.3
+GARVERSION = 0.96rc1
 #DISTNAME = $(GARNAME)-devel-latest
 CATEGORIES = apps
 
@@ -24,14 +24,11 @@ SPKG_DESC_CSWclamav = $(DESCRIPTION)
 CATALOGNAME_CSWlibclamav = libclamav
 SPKG_DESC_CSWlibclamav = $(DESCRIPTION) Library
 
-RUNTIME_DEP_PKGS_CSWclamav = CSWlibclamav CSWzlib CSWbzip2 CSWiconv CSWcswclassutils CSWncurses CSWlibtoolrt
+RUNTIME_DEP_PKGS_CSWclamav = CSWlibclamav CSWzlib CSWbzip2 CSWiconv CSWncurses CSWlibtoolrt
 RUNTIME_DEP_PKGS_CSWlibclamav = CSWzlib CSWbzip2 CSWiconv CSWlibtoolrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# add usergroup class
-SPKG_CLASSES_CSWclamav = none cswusergroup ugfiles cswcpsampleconf cswinitsmf
 
 PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
@@ -40,6 +37,8 @@ PATCHFILES += CSWclamav.clamd.conf.p
 # http://bugs.sun.com/view_bug.do?bug_id=6683773
 # New bug filed since the above one isn't really solved, no bug id yet
 OPT_FLAGS_SOS = -xO2
+
+sysconfdir = /etc/opt/csw
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-clamav
@@ -54,22 +53,25 @@ PKGFILES_CSWlibclamav  = $(libdir)/.*
 PKGFILES_CSWlibclamav += $(includedir)/.*
 PKGFILES_CSWlibclamav += $(docdir)/libclamav/.*
 
-PROTOTYPE_FILTER  = awk ' \
-   $$$$3 ~ /\/init.d\/cswclamd$$$$/ { $$$$2 = "cswinitsmf" } \
-   $$$$3 ~ /\/init.d\/cswclamav-milter$$$$/ { $$$$2 = "cswinitsmf" } \
-   $$$$3 ~ /\/clamd.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-   $$$$3 ~ /\/clamav-milter.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-   $$$$3 ~ /\/freshclam.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-   $$$$3 ~ /\/var\/opt\/csw\/clamav/ { $$$$5 = "clamav" ; $$$$2 = "ugfiles" } \
-   $$$$3 ~ /\/opt\/csw\/etc\/CSWclamav\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } \
-   { print }'
+PROTOTYPE_MODIFIERS = 1
+PROTOTYPE_FILES_1 = \/var\/opt\/csw\/clamav.*
+PROTOTYPE_CLASS_1 = ugfiles
+PROTOTYPE_USER_1 = clamav
+
+INITSMF  = /etc/opt/csw/init.d/cswclamd
+INITSMF += /etc/opt/csw/init.d/cswclamav-milter
+SAMPLECONF  = /etc/opt/csw/clamd.conf
+SAMPLECONF += /etc/opt/csw/clamav-milter.conf
+SAMPLECONF += /etc/opt/csw/freshclam.conf
+USERGROUP = /etc/opt/csw/pkg/CSWclamav/cswusergroup
+
+MIGRATE_FILES_CSWclamav = clamd.conf clamav-milter.conf freshclam.conf
+MIGRATE_SOURCE_DIR_CSWclamav = /opt/csw/etc
+MIGRATE_DEST_DIR_CSWclamav = /etc/opt/csw
 
 SPKG_SOURCEURL = http://www.clamav.net
 
 TEST_TARGET = check
-
-# can not run checkpkg due to libs in separate package
-#ENABLE_CHECK=0
 
 include gar/category.mk
 
@@ -87,18 +89,15 @@ post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamd $(DESTDIR)/etc/opt/csw/init.d/cswclamd
 	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamav-milter $(DESTDIR)/etc/opt/csw/init.d/cswclamav-milter
-	@mv $(DESTDIR)$(sysconfdir)/clamd.conf $(DESTDIR)$(sysconfdir)/clamd.conf.CSW
-	@mv $(DESTDIR)$(sysconfdir)/freshclam.conf $(DESTDIR)$(sysconfdir)/freshclam.conf.CSW
-	@mv $(DESTDIR)$(sysconfdir)/clamav-milter.conf $(DESTDIR)$(sysconfdir)/clamav-milter.conf.CSW
-	@ginstall -d $(DESTDIR)$(sysconfdir)/CSWclamav
-	@ginstall -m 644 $(FILEDIR)/CSWclamav.cswusergroup $(DESTDIR)$(sysconfdir)/CSWclamav/cswusergroup
+	@ginstall -d $(DESTDIR)$(sysconfdir)/pkg/CSWclamav
+	@ginstall -m 644 $(FILEDIR)/CSWclamav.cswusergroup $(DESTDIR)$(sysconfdir)/pkg/CSWclamav/cswusergroup
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@ginstall -m 644 $(FILEDIR)/CSWclamav.INSTALL.clamav-milter.CSW $(DOCDEST)/INSTALL.clamav-milter.CSW
 	@ginstall -m 644 $(FILEDIR)/CSWclamav.README.CSW $(DOCDEST)/README.CSW
 	@ginstall -d $(DOCDEST)/contrib
-	@ginstall -m 644 $(WORKSRC)/contrib/clamdwatch/* $(DOCDEST)/contrib
-	@ginstall -m 644 $(WORKSRC)/contrib/cleanup-partial.pl $(DOCDEST)/contrib
+#	@ginstall -m 644 $(WORKSRC)/contrib/clamdwatch/* $(DOCDEST)/contrib
+#	@ginstall -m 644 $(WORKSRC)/contrib/cleanup-partial.pl $(DOCDEST)/contrib
 	@ginstall -d $(DOCDEST)/html
 	@ginstall -m 644 $(WORKSRC)/docs/html/* $(DOCDEST)/html
 	@$(MAKECOOKIE)
