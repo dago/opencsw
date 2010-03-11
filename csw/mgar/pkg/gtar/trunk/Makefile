@@ -1,5 +1,5 @@
 GARNAME = tar
-GARVERSION = 1.22
+GARVERSION = 1.23
 CATEGORIES = utils
 
 DESCRIPTION = GNU tape archiver
