@@ -48,6 +48,8 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 # $(prefix)/lib since the latter is linked to /usr/openwin/lib/libX11.so.4
 EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
+EXTRA_BUILD_ISAS = sparcv8plus+vis pentium_pro+mmx
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic
 CONFIGURE_ARGS += --enable-cups
