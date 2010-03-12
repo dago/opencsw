@@ -29,12 +29,19 @@ SPKG_DESC_CSWungif = Links to giflib now the patent is dropped
 
 SPKG_SOURCEURL = http://giflib.sourceforge.net/
 
-RUNTIME_DEP_PKGS_CSWgiflib = CSWgiflibrt
+RUNTIME_DEP_PKGS_CSWgiflibrt = CSWlibice CSWlibsm CSWlibx11
+RUNTIME_DEP_PKGS_CSWgiflib = CSWlibice CSWlibsm CSWlibx11 CSWgiflibrt
 RUNTIME_DEP_PKGS_CSWungif = CSWgiflib
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 TEST_TARGET = check
 
@@ -42,6 +49,9 @@ TEST_TARGET = check
 NOISAEXEC = 1
 MERGE_DIRS_isa-sparcv9 = $(libdir)
 MERGE_DIRS_isa-amd64 = $(libdir)
+
+ARCHALL_CSWgiflibdoc = 1
+ARCHALL_CSWungif = 1
 
 PKGFILES_CSWgiflibrt = .*/libgif\..*
 PKGFILES_CSWgiflibdoc = $(PKGFILES_DOC)
