@@ -1,5 +1,5 @@
 GARNAME = wesnoth
-GARVERSION = 1.7.13
+GARVERSION = 1.6.5
 CATEGORIES = apps
 
 DESCRIPTION = a free turn-based strategy game with a fanasy theme
@@ -9,7 +9,6 @@ endef
 
 MASTER_SITES += $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += Makefile.fixed
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=89495
@@ -17,9 +16,12 @@ UPSTREAM_USE_SF = 1
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 
 PATCHFILES = language.cpp.diff
-PATCHFILES += configure.patch
-PATCHFILES += simple_wml.cpp.patch
-PATCHFILES += global.hpp.patch
+PATCHFILES += configure.diff
+PATCHFILES += global.hpp.diff
+PATCHFILES += generator_private.hpp.diff
+PATCHFILES += image.cpp.diff
+PATCHFILES += marked-up_text.cpp.diff
+PATCHFILES += simple_wml.cpp.diff
 
 RUNTIME_DEP_PKGS_CSWwesnoth = CSWboostrt
 RUNTIME_DEP_PKGS_CSWwesnoth += CSWftype2
@@ -41,21 +43,28 @@ CHECKPKG_OVERRIDES_CSWwesnoth += symbol-not-found|cutter
 CHECKPKG_OVERRIDES_CSWwesnoth += symbol-not-found|wesnoth_editor
 CHECKPKG_OVERRIDES_CSWwesnoth += symbol-not-found|wesnoth
 CHECKPKG_OVERRIDES_CSWwesnoth += symbol-not-found|wesnothd
+CHECKPKG_OVERRIDES_CSWwesnoth += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWwesnoth += missing-dependency|CSWruby
+
+EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so -L.
 
 CONFIGURE_ARGS = --prefix=$(prefix)
+CONFIGURE_ARGS += PKG_CONFIG_PATH=/opt/csw/X11/lib/pkgconfig
 CONFIGURE_ARGS += CXXFLAGS='-features=extensions -library=stlport4'
-CONFIGURE_ARGS += LDFLAGS='-L. -L/opt/csw/lib -lstlport -lintl -lsocket -lboost_iostreams -lsunmath -lSDL_ttf'
+CONFIGURE_ARGS += LIBS='-lstlport -lintl -lsocket -lboost_iostreams -lsunmath -lSDL_ttf -lcairo -lpango-1.0 -lpangocairo-1.0'
+CONFIGURE_ARGS += PANGO_CFLAGS='-I/opt/csw/include/pango-1.0 -I/opt/csw/include/glib-2.0 -I/opt/csw/lib/glib-2.0/include -I/opt/csw/include/cairo'
+CONFIGURE_ARGS += PANGO_LIBS='-L/opt/csw/lib -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -lglib-2.0 -lintl'
+CONFIGURE_ARGS += LUA_CFLAGS=-I/opt/csw/include
+CONFIGURE_ARGS += LUA_LIBS=-L/opt/csw/lib
 CONFIGURE_ARGS += --with-fifodir=/var/opt/csw/run
-CONFIGURE_ARGS += --enable-server
-CONFIGURE_ARGS += --enable-campaign-server
-CONFIGURE_ARGS += --enable-tools
-CONFIGURE_ARGS += --enable-editor
+#CONFIGURE_ARGS += --enable-server
+#CONFIGURE_ARGS += --enable-campaign-server
+#CONFIGURE_ARGS += --enable-tools
+#CONFIGURE_ARGS += --enable-editor
 CONFIGURE_ARGS += --with-boost=/opt/csw
+CONFIGURE_ARGS += --disable-strict-compilation
+CONFIGURE_ARGS += --with-zlib-prefix=/opt/csw
 
 TEST_SCRIPTS =
 
 include gar/category.mk
-
-post-configure-modulated:
-	-cp $(FILEDIR)/Makefile.fixed $(WORKSRC)/src/Makefile
-	$(MAKECOOKIE)

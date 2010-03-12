@@ -1,0 +1,11 @@
+--- wesnoth-1.6.5/src/gui/widgets/image.cpp	2009-08-18 21:47:08.000000000 +0200
++++ wesnoth-1.6.5.new/src/gui/widgets/image.cpp	2010-03-11 19:23:36.284806844 +0100
+@@ -22,7 +22,7 @@ namespace gui2 {
+ 
+ tpoint timage::calculate_best_size() const
+ {
+-	surface image(get_image(image::locator(label())));
++	surface image(image::get_image(image::locator(label())));
+ 
+ 	tpoint result(0, 0);
+ 	if(image) {

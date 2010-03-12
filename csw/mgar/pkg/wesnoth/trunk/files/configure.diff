@@ -1,0 +1,16 @@
+--- wesnoth-1.6.5/configure	2009-09-06 18:46:43.000000000 +0200
++++ wesnoth-1.6.5.new/configure	2010-03-11 18:32:48.463409914 +0100
+@@ -6004,10 +6004,10 @@ then
+ 	# Don't use ansi for CFLAGS since it fails to compile.
+ 	CFLAGS="-O0 -DDEBUG -ggdb3 -W -Wall $CFLAGS"
+ 	CXXFLAGS="-O0 -DDEBUG -ggdb3 -W -Wall -ansi $CXXFLAGS"
+-else
++#else
+ 	# Don't use ansi for CFLAGS since it fails to compile.
+-	CFLAGS="-O2 -W -Wall $CFLAGS"
+-	CXXFLAGS="-O2 -W -Wall -ansi $CXXFLAGS"
++	#CFLAGS="-O2 -W -Wall $CFLAGS"
++	#CXXFLAGS="-O2 -W -Wall -ansi $CXXFLAGS"
+ fi
+ 
+ if test "x$profile" = "xyes"

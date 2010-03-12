@@ -1,0 +1,11 @@
+--- wesnoth-1.6.5/src/global.hpp	2009-01-01 11:28:26.000000000 +0100
++++ wesnoth-1.6.5.new/src/global.hpp	2010-03-12 20:48:48.684634033 +0100
+@@ -29,3 +29,8 @@
+ #endif
+ 
+ #endif
++
++#include <math.h>
++#include <stdlib.h>
++#include <unistd.h>
++#include <signal.h>

@@ -1,0 +1,71 @@
+--- wesnoth-1.6.5/src/gui/widgets/generator_private.hpp	2009-03-15 13:06:50.000000000 +0100
++++ wesnoth-1.6.5.new/src/gui/widgets/generator_private.hpp	2010-03-11 19:33:14.173591965 +0100
+@@ -170,7 +170,7 @@ struct thorizontal_list
+ 	 * @return                    The best size,
+ 	 */
+ 	tpoint calculate_best_size() const
+-		{ ERROR_LOG(false); }
++		{ ERROR_LOG(false); return tpoint(0,0); }
+ 
+ 	/**
+ 	 * Sets the size of the generator.
+@@ -198,11 +198,11 @@ struct thorizontal_list
+ 		{ ERROR_LOG(false); }
+ 
+ 	/** Inherited from tgenerator_. */
+-	twidget* find_widget(const tpoint&, const bool) { ERROR_LOG(false); }
++	twidget* find_widget(const tpoint&, const bool) { ERROR_LOG(false); return NULL;}
+ 
+ 	/** Inherited from tgenerator_. */
+ 	const twidget* find_widget(const tpoint&, const bool) const
+-		{ ERROR_LOG(false); }
++		{ ERROR_LOG(false); return NULL;}
+ 
+ 	/***** ***** ***** ***** keyboard functions ***** ***** ***** *****/
+ 
+@@ -299,7 +299,7 @@ struct tmatrix
+ 
+ 	/** See thorizontal_list::calculate_best_size(). */
+ 	tpoint calculate_best_size() const
+-		{ ERROR_LOG(false); }
++		{ ERROR_LOG(false); return tpoint(0,0); }
+ 
+ 	/** See thorizontal_list::set_size(). */
+ 	void set_size(const tpoint& /*origin*/, const tpoint& /*size*/)
+@@ -314,11 +314,11 @@ struct tmatrix
+ 		{ ERROR_LOG(false); }
+ 
+ 	/** See thorizontal_list::find_widget(). */
+-	twidget* find_widget(const tpoint&, const bool) { ERROR_LOG(false); }
++	twidget* find_widget(const tpoint&, const bool) { ERROR_LOG(false); return NULL; }
+ 
+ 	/** See thorizontal_list::find_widget(). */
+ 	const twidget* find_widget(const tpoint&, const bool) const
+-		{ ERROR_LOG(false); }
++		{ ERROR_LOG(false); return NULL; }
+ 
+ 	/***** ***** ***** ***** keyboard functions ***** ***** ***** *****/
+ 
+@@ -354,7 +354,7 @@ struct tindependant
+ 
+ 	/** See thorizontal_list::calculate_best_size(). */
+ 	tpoint calculate_best_size() const
+-		{ ERROR_LOG(false); }
++		{ ERROR_LOG(false); return tpoint(0,0); }
+ 
+ 	/** See thorizontal_list::set_size(). */
+ 	void set_size(const tpoint& /*origin*/, const tpoint& /*size*/)
+@@ -369,11 +369,11 @@ struct tindependant
+ 		{ ERROR_LOG(false); }
+ 
+ 	/** See thorizontal_list::find_widget(). */
+-	twidget* find_widget(const tpoint&, const bool) { ERROR_LOG(false); }
++	twidget* find_widget(const tpoint&, const bool) { ERROR_LOG(false); return NULL; }
+ 
+ 	/** See thorizontal_list::find_widget(). */
+ 	const twidget* find_widget(const tpoint&, const bool) const
+-		{ ERROR_LOG(false); }
++		{ ERROR_LOG(false); return NULL; }
+ 
+ 	/***** ***** ***** ***** keyboard functions ***** ***** ***** *****/
+ 

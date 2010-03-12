@@ -1,0 +1,11 @@
+--- wesnoth-1.6.5/src/marked-up_text.cpp	2009-08-07 04:24:48.000000000 +0200
++++ wesnoth-1.6.5.new/src/marked-up_text.cpp	2010-03-11 21:33:02.491029941 +0100
+@@ -219,7 +219,7 @@ SDL_Rect draw_text(CVideo* gui, const SD
+                    const SDL_Color& colour, const std::string& txt,
+                    int x, int y, bool use_tooltips, int style)
+ {
+-	return draw_text(gui != NULL ? gui->getSurface() : NULL, area, size, colour, txt, x, y, use_tooltips, style);
++	return draw_text((gui != NULL ? gui->getSurface() : (surface)NULL), area, size, colour, txt, x, y, use_tooltips, style);
+ }
+ 
+ bool is_format_char(char c)
