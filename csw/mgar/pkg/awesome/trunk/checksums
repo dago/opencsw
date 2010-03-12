@@ -1,6 +1,6 @@
 8c2537ad898d7f58a0f3ba92e6a561a1  awesome-3.4.4.tar.bz2
 1d5c67eb4555b367032c1294fb72bf0b  backtrace.c.patch
-346c2299f6f5be4d667ff3769a1251f0  gperf.sh-solarify.patch
+15a863e32d3cd4fda402385cf0e03b46  gperf.sh-solarify.patch
 3186b1d530e691611c9da0443689b5e4  iconv-try-1.patch
 9201583f764cb4859e6a49c883dd6672  remove-export-dynamic.patch
 346d88270c8702b7f4d7ab519d7ccc07  test-dash-e-unavailable.patch
