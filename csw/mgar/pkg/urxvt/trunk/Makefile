@@ -28,8 +28,6 @@ CATALOGNAME_CSWurxvt = urxvt
 CONFIGURE_ARGS       = $(DIRPATHS)
 CONFIGURE_ARGS      += --disable-perl
 CONFIGURE_ARGS      += --with-terminfo=/opt/csw/share/terminfo
-# For the wrapper
-RUNTIME_DEP_PKGS_CSWurxvt  = CSWbash
 # Because of terminfo
 RUNTIME_DEP_PKGS_CSWurxvt += CSWncurses
 # Shared library dependencies
