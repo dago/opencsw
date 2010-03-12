@@ -1,17 +1,12 @@
-diff --speed-large-files --minimal -Nru XML-Twig-3.10.orig/Makefile.PL XML-Twig-3.10/Makefile.PL
---- XML-Twig-3.10.orig/Makefile.PL	2003-06-06 10:22:46.000000000 -0700
-+++ XML-Twig-3.10/Makefile.PL	2003-07-29 14:37:00.821082000 -0700
-@@ -11,10 +11,10 @@
- xml_spellcheck|y|spellcheck XML files skipping tags
- QUERIES
-     my ($program, $default, $description) = split /\|/, $_;
--    if (prompt("Do you want to install '$program' ($description)?", 
--               $default) =~ /^y/) {
-+#    if (prompt("Do you want to install '$program' ($description)?", 
-+#               $default) =~ /^y/) {
- 	push(@programs, $program);
--    }
-+#    }
- }
- 
- WriteMakefile(
+diff -ru XML-Twig-3.32.orig/Makefile.PL XML-Twig-3.32/Makefile.PL
+--- XML-Twig-3.32.orig/Makefile.PL	2009-03-17 20:16:43.000000000 +0100
++++ XML-Twig-3.32/Makefile.PL	2009-03-17 20:26:13.438626991 +0100
+@@ -24,7 +24,7 @@
+           "    'perl Makefile.PL -n' to skip installation\n";
+     foreach my $prompt (@prompts)
+       { my ($program, $default, $description) = @$prompt;
+-        if( prompt("Do you want to install '$program' ($description)?", $default) =~ /^y/)
++#        if( prompt("Do you want to install '$program' ($description)?", $default) =~ /^y/)
+           { push(@programs, $program); }
+       }
+   }

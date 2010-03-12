@@ -1,5 +1,5 @@
 GARNAME = XML-Twig
-GARVERSION = 3.29
+GARVERSION = 3.32
 CATEGORIES = cpan
 AUTHOR = MIROD
 
@@ -10,11 +10,17 @@ define BLURB
   allowing you to output the parts of it that have been completely processed.
 endef
 
-DISTFILES = $(call admfiles,CSWpmxmltwig,depend prototype)
+DISTFILES = $(call admfiles,CSWpmxmltwig)
+
+PREREQ_PKGS += CSWpmtestpod CSWpmxmlsimple CSWpmxmlhandleyawrit
+PREREQ_PKGS +=  CSWpmxmlsaxwriter CSWpmxmlfilterbuffertxt CSWpmiostringy
+
+REQUIRED_PKGS += CSWpmxmlparser CSWexpat CSWpmlibwww CSWpmhtmlparser
+REQUIRED_PKGS += CSWpmtieixhash CSWpmxmlxpath CSWpmhtmltree
 
 DEPENDS += cpan/XML-Parser
 
 # Force installation without prompting
-PATCHFILES = install.diff
+#PATCHFILES = install.diff
 
 include gar/category.mk
