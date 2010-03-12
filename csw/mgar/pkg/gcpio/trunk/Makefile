@@ -1,5 +1,5 @@
 GARNAME = cpio
-GARVERSION = 2.10
+GARVERSION = 2.11
 CATEGORIES = utils
 
 DESCRIPTION = GNU cpio
@@ -29,3 +29,8 @@ TEST_SCRIPTS =
 #EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
 include gar/category.mk
+
+post-merge:
+	ginstall -d $(PKGROOT)$(prefix)/gnu
+	gln -s ../bin/gcpio $(PKGROOT)$(prefix)/gnu/cpio
+	@$(MAKECOOKIE)
