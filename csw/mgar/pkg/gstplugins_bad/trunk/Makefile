@@ -37,10 +37,6 @@ TEST_SCRIPTS =
 
 PATCHFILES = patch-gstvideomeasure_collector.h patch-gstvideomeasure_ssim.h
 
-# we provide that symbol
-CHECKPKG_OVERRIDES_CSWgstpluginsbad += symbol-not-found|libgstcamerabin.so
-CHECKPKG_OVERRIDES_CSWgstpluginsbad += symbol-not-found|gst-camera
-
 include gar/category.mk
 post-configure-modulated:
 	perl -pi -e 's,(LIBS = -lnsl -lsocket),$$1 -lresolv,' \
