@@ -42,24 +42,6 @@ STRIP_LIBTOOL = 1
 
 TEST_SCRIPTS =
 
-# we are providing those symbols
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstaudio-0.10.so.0.19.0
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstriff-0.10.so.0.19.0
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstgnomevfs.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstapp.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstvolume.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstplaybin.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstogg.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstdecodebin.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstaudioconvert.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstadder.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgsttheora.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstdecodebin2.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstvideoscale.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstximagesink.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstvorbis.so
-CHECKPKG_OVERRIDES_CSWgstplugins += symbol-not-found|libgstcdda-0.10.so.0.19.0
-
 include gar/category.mk
 
 # sigh, portable code?
