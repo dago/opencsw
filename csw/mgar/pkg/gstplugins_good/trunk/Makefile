@@ -46,8 +46,8 @@ post-configure-modulated:
 	perl -pi -e 's,tanhf,tanh,' \
 		$(WORKSRC)/gst/replaygain/gstrglimiter.c
 	@# [bus_message_cb]:ube: error: SIGNAL: Segmentation Fault
-	@# <@Dagobert> Yes, try lowering the optimizer level from -xO3 down to -xO2
-	@#             and may further down.
+	@# <@Dagobert> Yes, try lowering the optimizer level from -xO3 down to
+	@# -xO2 and may further down.
 	perl -pi -e 's,xO3,xO1,' $(WORKSRC)/tests/icles/Makefile
 	gsed -i 's/\(demo_LDFLAGS =\)/\1 $$(X_LIBS)/' \
 		$(WORKSRC)/tests/examples/equalizer/Makefile
