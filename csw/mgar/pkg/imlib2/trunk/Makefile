@@ -19,16 +19,16 @@ DISTFILES += $(GARNAME)_loaders-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS = CSWbzip2 CSWftype2 CSWgiflibrt CSWjpeg CSWlibid3tag
-RUNTIME_DEP_PKGS += CSWlibxext CSWpng CSWtiff CSWzlib
+RUNTIME_DEP_PKGS += CSWlibxext CSWpng CSWtiff CSWzlib CSWlibx11
 
-#EXTRA_INC = $(prefix)/X11/include
-#EXTRA_LIB = $(prefix)/X11/lib
-#EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-#CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
-#CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 TEST_TARGET = check
 
