@@ -1042,6 +1042,7 @@ f none /opt/csw/share/man/man3/ui.3 0644 root bin
 f none /opt/csw/share/man/man3/ui_compat.3 0644 root bin
 f none /opt/csw/share/man/man3/x509.3 0644 root bin
 f none /opt/csw/share/doc/openssl_devel/changelog.CSW 644 root bin
+f none /opt/csw/share/doc/openssl_devel/license 644 root bin
 f none /opt/csw/share/doc/openssl_devel/CHANGES 644 root bin
 f none /opt/csw/share/doc/openssl_devel/CHANGES.SSLeay 644 root bin
 f none /opt/csw/share/doc/openssl_devel/PROBLEMS 644 root bin

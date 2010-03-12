@@ -1,5 +1,6 @@
 d none /opt/csw/share/doc/openssl 0755 root bin
 f none /opt/csw/share/doc/openssl/changelog.CSW 644 root bin
+f none /opt/csw/share/doc/openssl/license 644 root bin
 f none /opt/csw/share/doc/openssl/CHANGES 644 root bin
 f none /opt/csw/share/doc/openssl/CHANGES.SSLeay 644 root bin
 f none /opt/csw/share/doc/openssl/PROBLEMS 644 root bin

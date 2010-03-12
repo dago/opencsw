@@ -41,9 +41,11 @@ RUNTIME_DEP_PKGS_CSWossldevel = CSWosslrt
 
 SPKG_DESC_CSWosslutils = Openssl binaries and related tools 
 CATALOGNAME_CSWosslutils = openssl_utils
-RUNTIME_DEP_PKGS_CSWosslutils = CSWosslrt CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWosslutils = CSWosslrt
 SPKG_CLASSES_CSWosslutils = none cswpreserveconf
 
+# we use sun perl not csw one
+CHECKPKG_OVERRIDES_CSWosslutils = missing-dependency|CSWperl
 
 ###### Upstream and opencsw files information #######
 
@@ -65,6 +67,7 @@ DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS R
 # solaris-386-cc, solaris-pentium-cc, solaris-pentium_pro-cc, solaris-sparcv9+vis-cc
 PATCHFILES = more_configure_targets.patch
 
+LICENSE=LICENSE
 
 ##### Build and installation information #####
 

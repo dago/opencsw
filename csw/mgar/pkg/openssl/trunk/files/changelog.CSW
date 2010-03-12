@@ -1,8 +1,9 @@
-openssl (0.9.8m,REV=2010.02.27) unstable
+openssl (0.9.8m,REV=2010.03.13) unstable
 
   * New upstream version.
+  * Added license file.
 
-   -- Yann Rouillard <yann@opencsw.org>  Sat, 27 Feb 2010 11:30:08 +0100
+   -- Yann Rouillard <yann@opencsw.org>  Sat, 13 Mar 2010 11:30:08 +0100
 
 openssl (0.9.8l,REV=2009.12.08) unstable
 
