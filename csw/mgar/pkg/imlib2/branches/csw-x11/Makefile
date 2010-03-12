@@ -1,6 +1,6 @@
 GARNAME = imlib2
 GARVERSION = 1.4.2
-CATEGORIES = lib
+CATEGORIES = x11
 
 DESCRIPTION = Imlib 2 is the successor to Imlib, a powerful graphics library
 define BLURB
@@ -12,23 +12,29 @@ endef
 
 SF_PROJ = enlightenment
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(GARNAME)_loaders-$(GARVERSION).tar.bz2
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES   += $(GARNAME)_loaders-$(GARVERSION).tar.bz2
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-RUNTIME_DEP_PKGS = CSWbzip2 CSWftype2 CSWgiflibrt CSWjpeg CSWlibid3tag
-RUNTIME_DEP_PKGS += CSWlibxext CSWpng CSWtiff CSWzlib
+RUNTIME_DEP_PKGS += CSWbzip2
+RUNTIME_DEP_PKGS += CSWftype2
+RUNTIME_DEP_PKGS += CSWgiflibrt
+RUNTIME_DEP_PKGS += CSWjpeg
+RUNTIME_DEP_PKGS += CSWlibid3tag
+RUNTIME_DEP_PKGS += CSWlibxext
+RUNTIME_DEP_PKGS += CSWpng
+RUNTIME_DEP_PKGS += CSWtiff
+RUNTIME_DEP_PKGS += CSWzlib
 
-#EXTRA_INC = $(prefix)/X11/include
-#EXTRA_LIB = $(prefix)/X11/lib
-#EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+EXTRA_INC = /opt/csw/include
+EXTRA_LIB = /opt/csw/lib
+# EXTRA_PKG_CONFIG_DIRS = /opt/csw/lib
 
 BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-#CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
-#CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --x-include=$(prefix)/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/lib/$(MM_LIBDIR))
 
 TEST_TARGET = check
 
