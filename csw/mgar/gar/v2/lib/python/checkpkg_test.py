@@ -1,6 +1,7 @@
 #!/opt/csw/bin/python2.6
 # $Id$
 
+import re
 import unittest
 import mox
 import difflib
@@ -826,6 +827,15 @@ class ExtractorsUnitTest(unittest.TestCase):
                       "Maciej Blizinski"}
     result = "Maciej Blizinski"
     self.assertEqual(result, checkpkg.ExtractMaintainerName(data))
+
+  def testPstampRegex(self):
+    pstamp = "hson@solaris9s-csw-20100313144445"
+    expected = {
+        'username': 'hson',
+        'timestamp': '20100313144445',
+        'hostname': 'solaris9s-csw'
+    }
+    self.assertEqual(expected, re.match(checkpkg.PSTAMP_RE, pstamp).groupdict())
 
 
 if __name__ == '__main__':
