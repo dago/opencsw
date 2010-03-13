@@ -312,7 +312,7 @@ class NewpkgMailer(object):
 
   def FormatMail(self):
     return self._FormatMail(self.paths, self.pkgnames, self.sender,
-                             self.release_mgr, self.release_cc)
+                            self.release_mgr, self.release_cc)
 
   def _GetPkgsData(self, paths):
     """Gathering package info, grouping packages that are upgraded together."""

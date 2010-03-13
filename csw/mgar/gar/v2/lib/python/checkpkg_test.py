@@ -292,14 +292,6 @@ class GuessDepsUnitTest(unittest.TestCase):
 
 class GetLinesBySonameUnitTest(unittest.TestCase):
 
-  class PkgmapStub(object):
-
-    def __init__(self, cache):
-      self.cache = cache
-
-    def GetPkgmapLineByBasename(self, soname):
-      return self.cache[soname]
-
   def setUp(self):
     self.pkgmap_mocker = mox.Mox()
 
@@ -377,62 +369,52 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
 
   def testGetLinesBySoname(self):
     expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
-    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo")
-    lines1 = {"/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
-              "/usr/lib":                  "/usr/lib/foo.so.1 foo"}
-    # pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    self.pkgmap_mocker.ReplayAll()
-    pkgmap.GetPkgmapLineByBasename("foo")
+    runpath_data_by_soname = {
+        "foo.so.1": {
+          "/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
+          "/usr/lib":                 "/usr/lib/foo.so.1 foo"},
+    }
     needed_sonames = set(["foo.so.1"])
     runpath_by_needed_soname = {"foo.so.1": ["/opt/csw/lib/$ISALIST", "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
-    self.pkgmap_mocker.VerifyAll()
+    result = checkpkg.GetLinesBySoname(runpath_data_by_soname, needed_sonames,
+                                       runpath_by_needed_soname, isalist)
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_3(self):
     expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
-    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo")
-    lines1 = {
-        "/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
-        "/opt/csw/lib":             "/opt/csw/lib/foo.so.1 foo",
-        "/usr/lib":                 "/usr/lib/foo.so.1 foo"}
-    # pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    self.pkgmap_mocker.ReplayAll()
-    pkgmap.GetPkgmapLineByBasename("foo")
+    runpath_data_by_soname = {
+        "foo.so.1": {
+          "/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
+          "/opt/csw/lib":             "/opt/csw/lib/foo.so.1 foo",
+          "/usr/lib":                 "/usr/lib/foo.so.1 foo",
+        }
+    }
     needed_sonames = set(["foo.so.1"])
     runpath_by_needed_soname = {
         "foo.so.1": ["/opt/csw/lib/$ISALIST", "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(
-        pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
-    self.pkgmap_mocker.VerifyAll()
+    result = checkpkg.GetLinesBySoname(runpath_data_by_soname, needed_sonames,
+                                       runpath_by_needed_soname, isalist)
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_4(self):
     """A more complex test, four ISAs."""
     expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
-    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo")
-    lines1 = {
-        "/opt/csw/lib/isa-value-1":
-            "/opt/csw/lib/isa-value-1/foo.so.1 foo",
-        "/opt/csw/mysql5/lib/isa-value-2":
-            "/opt/csw/mysql5/lib/isa-value-2/foo.so.1 foo",
-        "/opt/csw/mysql5/lib/isa-value-1":
-            "/opt/csw/mysql5/lib/isa-value-1/foo.so.1 foo",
-        "/opt/csw/lib":
-            "/opt/csw/lib/foo.so.1 foo",
-        "/usr/lib":
-            "/usr/lib/foo.so.1 foo"}
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    self.pkgmap_mocker.ReplayAll()
-    pkgmap.GetPkgmapLineByBasename("foo")
+    runpath_data_by_soname = {
+        "foo.so.1": {
+          "/opt/csw/lib/isa-value-1":
+              "/opt/csw/lib/isa-value-1/foo.so.1 foo",
+          "/opt/csw/mysql5/lib/isa-value-2":
+              "/opt/csw/mysql5/lib/isa-value-2/foo.so.1 foo",
+          "/opt/csw/mysql5/lib/isa-value-1":
+              "/opt/csw/mysql5/lib/isa-value-1/foo.so.1 foo",
+          "/opt/csw/lib":
+              "/opt/csw/lib/foo.so.1 foo",
+          "/usr/lib":
+              "/usr/lib/foo.so.1 foo"
+        }
+    }
     needed_sonames = set(["foo.so.1"])
     runpath_by_needed_soname = {
         "foo.so.1": ["/opt/csw/mysql5/lib/$ISALIST/mysql",
@@ -440,41 +422,40 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
                      "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
     result = checkpkg.GetLinesBySoname(
-        pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
+        runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
     self.pkgmap_mocker.VerifyAll()
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_5(self):
-    """Based on CSWmysql5client on build8x."""
+    """Based on CSWmysql5client on build8x (5)."""
     soname = u'libm.so.1'
     expected = {u'libm.so.1': u'/usr/lib/libm.so.1 f none 0755 root bin '
                               u'99844 3884 1050525375 SUNWlibms\n'}
-
-    pkgmap_stub = self.PkgmapStub(d6.DATA_PKGMAP_CACHE)
+    runpath_data_by_soname = d6.DATA_PKGMAP_CACHE
     (needed_sonames,
      binaries_by_soname,
      runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
          d6.DATA_NEEDED_SONAMES_BY_BINARY)
     result = checkpkg.GetLinesBySoname(
-        pkgmap_stub,
+        runpath_data_by_soname,
         set([soname]),
         runpath_by_needed_soname,
         d6.DATA_ISALIST)
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_6(self):
-    """Based on CSWmysql5client on build8x."""
+    """Based on CSWmysql5client on build8x (6)."""
     soname = u'libz.so.1'
     expected = {
         u'libz.so.1': u'/opt/csw/lib/pentium_pro+mmx/libz.so.1=libz.so.1.2.3 '
         u's none CSWzlib\n'}
-    pkgmap_stub = self.PkgmapStub(d6.DATA_PKGMAP_CACHE)
+    runpath_data_by_soname = d6.DATA_PKGMAP_CACHE
     (needed_sonames,
      binaries_by_soname,
      runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
          d6.DATA_NEEDED_SONAMES_BY_BINARY)
     result = checkpkg.GetLinesBySoname(
-        pkgmap_stub,
+        runpath_data_by_soname,
         set([soname]),
         runpath_by_needed_soname,
         d6.DATA_ISALIST)
@@ -488,7 +469,7 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
         u'libncursesw.so.5':
           u'/opt/csw/lib/amd64/libncursesw.so.5=libncursesw.so.5.7 '
           u's none CSWncurses\n'}
-    pkgmap_stub = self.PkgmapStub(d6.DATA_PKGMAP_CACHE)
+    runpath_data_by_soname = d6.DATA_PKGMAP_CACHE
     (needed_sonames,
      binaries_by_soname,
      runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
@@ -497,7 +478,7 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     isalist = ['amd64', 'pentium_pro+mmx', 'pentium_pro', 'pentium+mmx',
                'pentium', 'i486', 'i386', 'i86']
     result = checkpkg.GetLinesBySoname(
-        pkgmap_stub,
+        runpath_data_by_soname,
         set([soname]),
         runpath_by_needed_soname,
         isalist)
@@ -505,16 +486,17 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
 
   def testGetLinesBySoname_8(self):
     expected = {'foo.so.1': '/opt/csw/postgresql/lib/foo.so.1 foo'}
-    lines1 = {"/opt/csw/postgresql/lib": "/opt/csw/postgresql/lib/foo.so.1 foo"}
-    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    self.pkgmap_mocker.ReplayAll()
+    runpath_data_by_soname = {
+        "foo.so.1": {
+          "/opt/csw/postgresql/lib": "/opt/csw/postgresql/lib/foo.so.1 foo",
+        }
+    }
     needed_sonames = set(["foo.so.1"])
     runpath_by_needed_soname = {
         "foo.so.1": ["/opt/csw/postgresql/lib/", "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
-    self.pkgmap_mocker.VerifyAll()
+    result = checkpkg.GetLinesBySoname(
+        runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_9(self):
@@ -524,16 +506,16 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     end up in /opt/csw/lib instead.
     """
     expected = {'foo.so.0': '/opt/csw/lib/i386/foo.so.0 foo'}
-    lines1 = {"/opt/csw/lib/i386": "/opt/csw/lib/i386/foo.so.0 foo"}
-    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo.so.0").AndReturn(lines1)
-    self.pkgmap_mocker.ReplayAll()
+    runpath_data_by_soname = {
+        "foo.so.0": {
+          "/opt/csw/lib/i386": "/opt/csw/lib/i386/foo.so.0 foo",
+        }
+    }
     needed_sonames = set(["foo.so.0"])
     runpath_by_needed_soname = {"foo.so.0": ["/opt/csw/lib", "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
     result = checkpkg.GetLinesBySoname(
-        pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
-    self.pkgmap_mocker.VerifyAll()
+        runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
     self.assertEqual(expected, result)
 
   def testSanitizeRunpath_1(self):

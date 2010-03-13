@@ -1,5 +1,5 @@
 #!/opt/csw/bin/python2.6
-# $Id: checkpkg-you-can-write-your-own.py 8571 2010-02-16 09:05:51Z wahwah $
+# $Id$
 
 """This is a dummy module. You can use it as a boilerplate for your own modules.
 

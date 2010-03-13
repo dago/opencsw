@@ -600,7 +600,9 @@ def SanitizeRunpath(runpath):
   return runpath
 
 
-def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
+def GetLinesBySoname(runpath_data_by_soname,
+                     needed_sonames,
+                     runpath_by_needed_soname, isalist):
   """Works out which system pkgmap lines correspond to given sonames."""
   lines_by_soname = {}
   for soname in needed_sonames:
@@ -611,11 +613,11 @@ def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
       runpath = SanitizeRunpath(runpath)
       runpath_list = ExpandRunpath(runpath, isalist)
       runpath_list = Emulate64BitSymlinks(runpath_list)
-      soname_runpath_data = pkgmap.GetPkgmapLineByBasename(soname)
       # Emulating the install time symlinks, for instance, if the prototype contains
       # /opt/csw/lib/i386/foo.so.0 and /opt/csw/lib/i386 is a symlink to ".",
-      # the shared library ends up in /opt/csw/lib/foo.so.0 and should be findable even when
-      # RPATH does not contain $ISALIST.
+      # the shared library ends up in /opt/csw/lib/foo.so.0 and should be
+      # findable even when RPATH does not contain $ISALIST.
+      soname_runpath_data = runpath_data_by_soname[soname]
       new_soname_runpath_data = {}
       for p in soname_runpath_data:
         expanded_p_list = Emulate64BitSymlinks([p])
@@ -803,6 +805,45 @@ class CheckpkgManager(CheckpkgManagerBase):
     return errors
 
 
+class CheckInterfaceBase(object):
+  """Base class for check proxies.
+
+  It wraps access to the /var/sadm/install/contents cache.
+  """
+
+  def __init__(self, system_pkgmap=None):
+    self.system_pkgmap = system_pkgmap
+    if not self.system_pkgmap:
+      self.system_pkgmap = SystemPkgmap()
+
+
+class IndividualCheckInterface(CheckInterfaceBase):
+  """To be passed to the checking functions.
+
+  Wraps the creation of CheckpkgTag objects.
+  """
+
+  def __init__(self, pkgname, system_pkgmap=None):
+    super(IndividualCheckInterface, self).__init__(system_pkgmap)
+    self.pkgname = pkgname
+    self.errors = []
+
+  def ReportError(self, tag_name, tag_info=None, msg=None):
+    tag = CheckpkgTag(self.pkgname, tag_name, tag_info, msg)
+    self.errors.append(tag)
+
+
+def SetCheckInterface(object):
+  """To be passed to set checking functions."""
+  def __init__(self, system_pkgmap):
+    super(SetCheckInterface, self).__init__(system_pkgmap)
+    self.errors = []
+
+  def ReportError(self, pkgname, tag_name, tag_info=None, msg=None):
+    tag = CheckpkgTag(pkgname, tag_name, tag_info, msg)
+    self.errors.append(tag)
+
+
 class CheckpkgManager2(CheckpkgManagerBase):
   """The second incarnation of the checkpkg manager.
 
@@ -811,38 +852,6 @@ class CheckpkgManager2(CheckpkgManagerBase):
   Its purpose is to reduce the amount of boilerplate code and allow for easier
   unit test writing.
   """
-  class CheckInterfaceBase(object):
-    """Base class for check proxies.
-
-    It wraps access to the /var/sadm/install/contents cache.
-    """
-
-    def __init__(self, system_pkgmap):
-      self.system_pkgmap = system_pkgmap
-
-  class IndividualCheckInterface(CheckInterfaceBase):
-    """To be passed to the checking functions.
-
-    Wraps the creation of CheckpkgTag objects.
-    """
-
-    def __init__(self, pkgname):
-      self.pkgname = pkgname
-      self.errors = []
-
-    def ReportError(self, tag_name, tag_info=None, msg=None):
-      self.errors.append(
-          CheckpkgTag(self.pkgname, tag_name, tag_info, msg))
-
-  def SetCheckInterface(object):
-    """To be bassed to set checking functions."""
-    def __init__(self):
-      self.errors = []
-
-    def ReportError(self, pkgname, tag_name, tag_info=None, msg=None):
-      self.errors.append(
-          CheckpkgTag(pkgname, tag_name, tag_info, msg))
-
   def _RegisterIndividualCheck(self, function):
     self.individual_checks.append(function)
 
@@ -875,7 +884,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
       for function in self.individual_checks:
         all_stats = pkg_data.GetAllStats()
         pkgname = all_stats["basic_stats"]["pkgname"]
-        check_interface = self.IndividualCheckInterface(pkgname)
+        check_interface = IndividualCheckInterface(pkgname)
         logger = logging.getLogger("%s-%s" % (pkgname, function.__name__))
         logger.debug("Calling %s", function.__name__)
         function(all_stats, check_interface, logger=logger)
@@ -885,7 +894,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
     for function in self.set_checks:
       pkgs_data = [x.GetAllStats() for x in packages_data]
       logger = logging.getLogger("SetCheck-%s" % (function.__name__,))
-      check_interface = self.SetCheckInterface()
+      check_interface = SetCheckInterface()
       logger.debug("Calling %s", function.__name__)
       function(pkgs_data, check_interface, logger)
       if check_interface.errors:

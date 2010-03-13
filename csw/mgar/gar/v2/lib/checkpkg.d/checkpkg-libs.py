@@ -64,8 +64,11 @@ def CheckSharedLibraryConsistency(pkgs_data, debug):
   pkgmap = checkpkg.SystemPkgmap()
   logging.debug("Determining the soname-package relationships.")
   # lines by soname is an equivalent of $EXTRACTDIR/shortcatalog
+  runpath_data_by_soname = {}
+  for soname in needed_sonames:
+    runpath_data_by_soname[soname] = pkgmap.GetPkgmapLineByBasename(soname)
   lines_by_soname = checkpkg.GetLinesBySoname(
-      pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
+      runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
 
   # Creating a map from files to packages.
   pkgs_by_filename = {}
