@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = Trac
-GARVERSION = 0.11.6
+GARVERSION = 0.11.7
 CATEGORIES = python
 
 DESCRIPTION = Integrated SCM and Project Management
