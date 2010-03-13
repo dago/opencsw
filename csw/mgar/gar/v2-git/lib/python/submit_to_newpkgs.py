@@ -42,10 +42,10 @@ CONFIG_INFO = """Create a file in ~/.releases.ini with the following content:
 
 [releases]
 sender name = Your Name
-sender email = your.email@example.com
+sender email = your.email@opencsw.org
 release manager name = Release Manager
-release manager email = their.email@example.com
-release cc = maintainers@example.com
+release manager email = pkgsubmissions@lists.opencsw.org
+; release cc = maintainers@example.com
 ; Usually it's /home/testing
 package dir = /home/testing
 target host = bender
@@ -58,7 +58,7 @@ CONFIGURATION_FILE_LOCATIONS = [
 ]
 CONFIG_REQUIRED_OPTS = [
     "sender name", "sender email",
-    "release manager name", "release manager email",
+    "release manager email",
     "package dir",
 ]
 DEFAULT_FILE_NAME = "newpkgs.mail"
@@ -87,22 +87,38 @@ def main():
                 repr(opt_name))
         raise ConfigurationError("Option %s is missing from the configuration."
                            % repr(opt_name))
-    parser = optparse.OptionParser()
-    parser.add_option("-p", "--pkgnames",
+    usage = """%s [options] [file1 file2 ...]""" % sys.argv[0]
+    parser = optparse.OptionParser(usage)
+    parser.add_option("-p",
                       dest="pkgnames",
-                      help="A comma-separated list of pkgnames")
+                      help="A deprecated options. Please use --catalognames.")
+    parser.add_option("-c", "--catalognames",
+                      dest="catalognames",
+                      help="A comma-separated list of catalog names: "
+                           "cups,cupsdevel,libcups")
     parser.add_option("-d", "--debug",
                       dest="debug", default=False,
                       action="store_true",
                       help="Print debugging messages")
     (options, args) = parser.parse_args()
-    level = logging.WARN
+    file_names = args
+    level = logging.INFO
     if options.debug:
       level = logging.DEBUG
     logging.basicConfig(level=level)
-    if not options.pkgnames:
-      parser.print_help()
-      raise ConfigurationError("You need to specify a package name or names.")
+    if options.pkgnames:
+      logging.warn("The -p option is deprecated. Please use "
+                   "--catalognames or -c")
+      if options.catalognames:
+        options.catalognames = ",".join([options.catalognames,
+                                         options.pkgnames])
+      else:
+        options.catalognames = options.pkgnames
+    if config.has_option(CONFIG_RELEASE_SECTION, "release manager name"):
+      release_mgr_name = config.get(CONFIG_RELEASE_SECTION,
+                                    "release manager name")
+    else:
+      release_mgr_name = None
     if config.has_option(CONFIG_RELEASE_SECTION, "release cc"):
       release_cc = config.get(CONFIG_RELEASE_SECTION, "release cc")
     else:
@@ -112,11 +128,29 @@ def main():
     print CONFIG_INFO
     print e
     sys.exit(1)
-  pkgnames = options.pkgnames.split(",")
-  package_files = []
   staging_dir = opencsw.StagingDir(config.get(CONFIG_RELEASE_SECTION,
                                                   "package dir"))
-  for p in pkgnames:
+  if options.catalognames:
+    catalognames = options.catalognames.split(",")
+  else:
+    catalognames = []
+  if file_names:
+    for file_name in file_names:
+      base_name = os.path.basename(file_name)
+      if base_name != file_name:
+        logging.warn("Removing %s, using only %s"
+                     % (repr(os.path.dirname(file_name)), repr(base_name)))
+        logging.warn("Only %s will be searched for packages."
+                     % repr(staging_dir))
+      parsed_file_name = opencsw.ParsePackageFileName(base_name)
+      catalognames.append(parsed_file_name["catalogname"])
+  catalognames = sorted(set(catalognames))
+  if not catalognames:
+    parser.print_help()
+    raise ConfigurationError("You need to specify a package name or names.")
+
+  package_files = []
+  for p in catalognames:
     package_files.extend(staging_dir.GetLatest(p))
   logging.debug("Copying files to the target host:dir")
   remote_package_files = []
@@ -132,14 +166,20 @@ def main():
   # TODO(maciej): rsync only once
   args = ["rsync", "-v"] + files_to_rsync + [dst_arg]
   logging.debug(args)
-  ret = subprocess.call(args)
+  try:
+    ret = subprocess.call(args)
+  except OSError, e:
+    raise PackageSubmissionError(
+        "Couldn't run %s, is the binary "
+        "in the $PATH? The error was: %s" % (repr(args[0]), e))
   if ret:
-    msg = "Copying %s to %s has failed." % (p, dst_arg)
+    msg = ("Copying %s to %s has failed. "
+           "Are you on the login host?" % (p, dst_arg))
     logging.error(msg)
     raise PackageSubmissionError(msg)
   nm = opencsw.NewpkgMailer(
-      pkgnames, remote_package_references,
-      release_mgr_name=config.get(CONFIG_RELEASE_SECTION, "release manager name"),
+      catalognames, remote_package_references,
+      release_mgr_name=release_mgr_name,
       release_mgr_email=config.get(CONFIG_RELEASE_SECTION, "release manager email"),
       sender_name=config.get(CONFIG_RELEASE_SECTION, "sender name"),
       sender_email=config.get(CONFIG_RELEASE_SECTION, "sender email"),

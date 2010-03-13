@@ -4,70 +4,99 @@
 
 import unittest
 import package_checks as pc
+import checkpkg
 import yaml
 import os.path
+import mox
+import logging
 
 BASE_DIR = os.path.dirname(__file__)
 TESTDATA_DIR = os.path.join(BASE_DIR, "testdata")
+CHECKPKG_STATS_DIR = os.path.join(TESTDATA_DIR, "stats")
 
-class PackageChecksUnitTest(unittest.TestCase):
+class CheckpkgUnitTestHelper(object):
+  """Wraps common components of checkpkg tests."""
+  MD5 = "461a24f02dd5020b4aa014b76f3ec2cc"
 
   def setUp(self):
-    self.pkg_data_1 = {
-          "basic_stats": {
-                "pkgname": "CSWfoo"
-        }
-    }
-    self.pkg_data_2 = {
-        'basic_stats': {
-          'parsed_basename':
-              {'revision_info': {'REV': '2010.02.15'},
-               'catalogname': 'python_tk',
-               'full_version_string': '2.6.4,REV=2010.02.15',
-               'version': '2.6.4',
-               'version_info': {
-                 'minor version': '6',
-                 'major version': '2',
-                 'patchlevel': '4'}},
-          'pkgname': 'CSWpython-tk',
-          'stats_version': 1,
-          'pkg_basename': 'python_tk-2.6.4,REV=2010.02.15-SunOS5.8-sparc-CSW.pkg.gz',
-          'pkg_path': '/tmp/pkg_lL0HDH/python_tk-2.6.4,REV=2010.02.15-SunOS5.8-sparc-CSW.pkg.gz',
-          'catalogname': 'python_tk'}}
+    # This is slow. Let's speed it up somehow.  Move away from yaml and create
+    # a Python module with the data.
+    self.pkg_stats = checkpkg.PackageStats(None, CHECKPKG_STATS_DIR, self.MD5)
+    self.pkg_data = self.pkg_stats.GetAllStats()
+    self.mocker = mox.Mox()
 
-  def LoadData(self, name):
-    file_name = os.path.join(TESTDATA_DIR, "%s.yml" % name)
-    f = open(file_name, "rb")
-    data = yaml.safe_load(f)
-    f.close()
-    return data
+  def testDefault(self):
+    self.logger_mock = self.mocker.CreateMock(logging.Logger)
+    self.error_mgr_mock = self.mocker.CreateMock(
+        checkpkg.CheckpkgManager2.IndividualCheckInterface)
+    self.CheckpkgTest()
+    self.mocker.ReplayAll()
+    getattr(pc, self.FUNCTION_NAME)(self.pkg_data, self.error_mgr_mock, self.logger_mock)
+    self.mocker.VerifyAll()
 
-  def testCatalogName_1(self):
-    self.pkg_data_1["basic_stats"]["catalogname"] = "Foo"
-    errors = pc.CatalognameLowercase(self.pkg_data_1, False)
-    self.failUnless(errors)
 
-  def testCatalogName_2(self):
-    self.pkg_data_1["basic_stats"]["catalogname"] = "foo"
-    errors = pc.CatalognameLowercase(self.pkg_data_1, False)
-    self.failIf(errors)
+class TestMultipleDepends(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckMultipleDepends'
+  def CheckpkgTest(self):
+    self.pkg_data["depends"].append(("CSWcommon", "This is surplus"))
+    self.error_mgr_mock.ReportError('dependency-listed-more-than-once',
+                                    'CSWcommon')
 
-  def testCatalogNameSpecialCharacters(self):
-    self.pkg_data_1["basic_stats"]["catalogname"] = "foo+abc&123"
-    errors = pc.CatalognameLowercase(self.pkg_data_1, False)
-    self.failUnless(errors)
+class TestDescription(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckDescription'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["NAME"] = 'foo'
+    self.error_mgr_mock.ReportError('pkginfo-description-missing')
 
-  def testFileNameSanity(self):
-    del(self.pkg_data_2["basic_stats"]["parsed_basename"]["revision_info"]["REV"])
-    errors = pc.FileNameSanity(self.pkg_data_2, False)
-    self.failUnless(errors)
 
-  def testCheckArchitectureVsContents(self):
-    self.pkg_data_2["pkgmap"] = self.LoadData("example-1-pkgmap")
-    self.pkg_data_2["binaries"] = []
-    self.pkg_data_2["pkginfo"] = self.LoadData("example-1-pkginfo")
-    errors = pc.CheckArchitectureVsContents(self.pkg_data_2, False)
-    print errors
+class TestDescriptionLong(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckDescription'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["NAME"] = 'foo - ' 'A' * 200
+    self.error_mgr_mock.ReportError('pkginfo-description-too-long')
+
+
+class TestDescriptionNotCapitalized(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckDescription'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["NAME"] = 'foo - lowercase'
+    self.error_mgr_mock.ReportError('pkginfo-description-not-starting-with-uppercase',
+                                    'lowercase')
+
+
+class TestCheckCatalogname(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckCatalogname'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["NAME"] = 'foo-bar - This catalog name is bad'
+    self.error_mgr_mock.ReportError('pkginfo-bad-catalogname')
+
+class TestCheckCatalogname(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSmfIntegration'
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "none",
+      "group": "bin",
+      "line": "1 f none /etc/opt/csw/init.d/foo 0644 root bin 36372 24688 1266395027",
+      "mode": '0755',
+      "path": "/etc/opt/csw/init.d/foo",
+      "type": "f",
+      "user": "root"
+    })
+    self.error_mgr_mock.ReportError('init-file-missing-cswinitsmf-class',
+                                    '/etc/opt/csw/init.d/foo class=none')
+
+class TestCheckCatalognameGood(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSmfIntegration'
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "cswinitsmf",
+      "group": "bin",
+      "line": "1 f none /etc/opt/csw/init.d/foo 0644 root bin 36372 24688 1266395027",
+      "mode": '0755',
+      "path": "/etc/opt/csw/init.d/foo",
+      "type": "f",
+      "user": "root"
+    })
 
 
 if __name__ == '__main__':

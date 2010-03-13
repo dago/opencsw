@@ -34,10 +34,21 @@ sqlite3 ~/.checkpkg/var-sadm-install-contents-cache-build8x
 SELECT * FROM systempkgmap WHERE basename = 'libncursesw.so.5';
 """
 
+LDD_R_OUTPUT_1 =  """\tlibc.so.1 =>  /lib/libc.so.1
+\tsymbol not found: check_encoding_conversion_args    (/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)
+\tsymbol not found: LocalToUtf    (/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)
+\tsymbol not found: UtfToLocal    (/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)
+\tlibm.so.2 =>   /lib/libm.so.2
+\t/usr/lib/secure/s8_preload.so.1
+\tlibXext.so.0 (SUNW_1.1) =>\t (version not found)
+"""
+
 class DependenciesUnitTest_1(unittest.TestCase):
 
   def setUp(self):
-    self.missing_deps, self.surplus_deps, self.orphan_sonames = checkpkg.AnalyzeDependencies(
+    (self.missing_deps,
+     self.surplus_deps,
+     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
         d1.DATA_PKGNAME,
         d1.DATA_DECLARED_DEPENDENCIES,
         d1.DATA_BINARIES_BY_PKGNAME,
@@ -61,7 +72,9 @@ class DependenciesUnitTest_1(unittest.TestCase):
 class DependenciesUnitTest_2(unittest.TestCase):
 
   def setUp(self):
-    self.missing_deps, self.surplus_deps, self.orphan_sonames = checkpkg.AnalyzeDependencies(
+    (self.missing_deps,
+     self.surplus_deps,
+     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
         d2.DATA_PKGNAME,
         d2.DATA_DECLARED_DEPENDENCIES,
         d2.DATA_BINARIES_BY_PKGNAME,
@@ -85,7 +98,9 @@ class DependenciesUnitTest_2(unittest.TestCase):
 class DependenciesUnitTest_3(unittest.TestCase):
 
   def setUp(self):
-    self.missing_deps, self.surplus_deps, self.orphan_sonames = checkpkg.AnalyzeDependencies(
+    (self.missing_deps,
+     self.surplus_deps,
+     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
         d3.DATA_PKGNAME,
         d3.DATA_DECLARED_DEPENDENCIES,
         d3.DATA_BINARIES_BY_PKGNAME,
@@ -109,7 +124,9 @@ class DependenciesUnitTest_3(unittest.TestCase):
 class DependenciesUnitTest_4(unittest.TestCase):
 
   def setUp(self):
-    self.missing_deps, self.surplus_deps, self.orphan_sonames = checkpkg.AnalyzeDependencies(
+    (self.missing_deps,
+     self.surplus_deps,
+     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
         d4.DATA_PKGNAME,
         d4.DATA_DECLARED_DEPENDENCIES,
         d4.DATA_BINARIES_BY_PKGNAME,
@@ -133,7 +150,9 @@ class DependenciesUnitTest_4(unittest.TestCase):
 class DependenciesUnitTest_5(unittest.TestCase):
 
   def setUp(self):
-    self.missing_deps, self.surplus_deps, self.orphan_sonames = checkpkg.AnalyzeDependencies(
+    (self.missing_deps,
+     self.surplus_deps,
+     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
         d5.DATA_PKGNAME,
         d5.DATA_DECLARED_DEPENDENCIES,
         d5.DATA_BINARIES_BY_PKGNAME,
@@ -260,24 +279,18 @@ class GuessDepsUnitTest(unittest.TestCase):
     data1 = set(['CSWmysql51', 'CSWmysql51rt', 'CSWmysql51test',
                  'CSWmysql51client', 'CSWmysql51bench', 'CSWmysql51devel'])
     data2 = dict(((x, x) for x in data1))
-    self.assertEqual(set([u"CSWmysql51"]), checkpkg.GuessDepsByPkgname(u"CSWmysql51devel", data2))
+    self.assertEqual(set([u"CSWmysql51"]),
+                     checkpkg.GuessDepsByPkgname(u"CSWmysql51devel", data2))
 
   def testGuessDepsByPkgname4(self):
     data1 = set(['CSWmysql51', 'CSWmysql51rt', 'CSWmysql51test',
                  'CSWmysql51client', 'CSWmysql51bench', 'CSWmysql51devel'])
     data2 = dict(((x, x) for x in data1))
-    self.assertEqual(set([]), checkpkg.GuessDepsByPkgname(u"CSWmysql51rt", data2))
+    self.assertEqual(set([]),
+                     checkpkg.GuessDepsByPkgname(u"CSWmysql51rt", data2))
 
 
 class GetLinesBySonameUnitTest(unittest.TestCase):
-
-  class PkgmapStub(object):
-
-    def __init__(self, cache):
-      self.cache = cache
-
-    def GetPkgmapLineByBasename(self, soname):
-      return self.cache[soname]
 
   def setUp(self):
     self.pkgmap_mocker = mox.Mox()
@@ -291,7 +304,8 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
   def testExpandRunpath_2(self):
     isalist = ["foo", "bar"]
     runpath = "/opt/csw/mysql5/lib/$ISALIST/mysql"
-    expected = ["/opt/csw/mysql5/lib/foo/mysql", "/opt/csw/mysql5/lib/bar/mysql"]
+    expected = ["/opt/csw/mysql5/lib/foo/mysql",
+                "/opt/csw/mysql5/lib/bar/mysql"]
     self.assertEquals(expected, checkpkg.ExpandRunpath(runpath, isalist))
 
   def testEmulate64BitSymlinks_1(self):
@@ -329,8 +343,10 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     expected = "/opt/csw/bdb42"
     not_expected = "/opt/csw/bdb422"
     result = checkpkg.Emulate64BitSymlinks(runpath_list)
-    self.assertTrue(expected in result, "%s not in %s" % (expected, result))
-    self.assertFalse(not_expected in result, "%s is in %s" % (not_expected, result))
+    self.assertTrue(expected in result,
+                    "%s not in %s" % (expected, result))
+    self.assertFalse(not_expected in result,
+                     "%s is in %s" % (not_expected, result))
 
   def testEmulateSymlinks_5(self):
     """Install time symlink expansion."""
@@ -344,68 +360,61 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     runpath_list = ["/opt/csw/lib/i386"]
     expected = "/opt/csw/lib"
     not_expected = "/opt/csw/lib/i386"
-    result = checkpkg.ExpandSymlink("/opt/csw/lib/i386", "/opt/csw/lib", "/opt/csw/lib/i386")
+    result = checkpkg.ExpandSymlink("/opt/csw/lib/i386",
+                                    "/opt/csw/lib",
+                                    "/opt/csw/lib/i386")
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
-    self.assertFalse(not_expected in result, "%s is in %s" % (not_expected, result))
+    self.assertFalse(not_expected in result,
+                     "%s is in %s" % (not_expected, result))
 
   def testGetLinesBySoname(self):
     expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
-    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo")
-    lines1 = {"/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
-              "/usr/lib":                  "/usr/lib/foo.so.1 foo"}
-    # pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    self.pkgmap_mocker.ReplayAll()
-    pkgmap.GetPkgmapLineByBasename("foo")
+    runpath_data_by_soname = {
+        "foo.so.1": {
+          "/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
+          "/usr/lib":                 "/usr/lib/foo.so.1 foo"},
+    }
     needed_sonames = set(["foo.so.1"])
     runpath_by_needed_soname = {"foo.so.1": ["/opt/csw/lib/$ISALIST", "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
-    self.pkgmap_mocker.VerifyAll()
+    result = checkpkg.GetLinesBySoname(runpath_data_by_soname, needed_sonames,
+                                       runpath_by_needed_soname, isalist)
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_3(self):
     expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
-    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo")
-    lines1 = {
-        "/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
-        "/opt/csw/lib":             "/opt/csw/lib/foo.so.1 foo",
-        "/usr/lib":                 "/usr/lib/foo.so.1 foo"}
-    # pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    self.pkgmap_mocker.ReplayAll()
-    pkgmap.GetPkgmapLineByBasename("foo")
+    runpath_data_by_soname = {
+        "foo.so.1": {
+          "/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
+          "/opt/csw/lib":             "/opt/csw/lib/foo.so.1 foo",
+          "/usr/lib":                 "/usr/lib/foo.so.1 foo",
+        }
+    }
     needed_sonames = set(["foo.so.1"])
     runpath_by_needed_soname = {
         "foo.so.1": ["/opt/csw/lib/$ISALIST", "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(
-        pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
-    self.pkgmap_mocker.VerifyAll()
+    result = checkpkg.GetLinesBySoname(runpath_data_by_soname, needed_sonames,
+                                       runpath_by_needed_soname, isalist)
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_4(self):
     """A more complex test, four ISAs."""
     expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
-    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo")
-    lines1 = {
-        "/opt/csw/lib/isa-value-1":
-            "/opt/csw/lib/isa-value-1/foo.so.1 foo",
-        "/opt/csw/mysql5/lib/isa-value-2":
-            "/opt/csw/mysql5/lib/isa-value-2/foo.so.1 foo",
-        "/opt/csw/mysql5/lib/isa-value-1":
-            "/opt/csw/mysql5/lib/isa-value-1/foo.so.1 foo",
-        "/opt/csw/lib":
-            "/opt/csw/lib/foo.so.1 foo",
-        "/usr/lib":
-            "/usr/lib/foo.so.1 foo"}
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    self.pkgmap_mocker.ReplayAll()
-    pkgmap.GetPkgmapLineByBasename("foo")
+    runpath_data_by_soname = {
+        "foo.so.1": {
+          "/opt/csw/lib/isa-value-1":
+              "/opt/csw/lib/isa-value-1/foo.so.1 foo",
+          "/opt/csw/mysql5/lib/isa-value-2":
+              "/opt/csw/mysql5/lib/isa-value-2/foo.so.1 foo",
+          "/opt/csw/mysql5/lib/isa-value-1":
+              "/opt/csw/mysql5/lib/isa-value-1/foo.so.1 foo",
+          "/opt/csw/lib":
+              "/opt/csw/lib/foo.so.1 foo",
+          "/usr/lib":
+              "/usr/lib/foo.so.1 foo"
+        }
+    }
     needed_sonames = set(["foo.so.1"])
     runpath_by_needed_soname = {
         "foo.so.1": ["/opt/csw/mysql5/lib/$ISALIST/mysql",
@@ -413,40 +422,40 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
                      "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
     result = checkpkg.GetLinesBySoname(
-        pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
+        runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
     self.pkgmap_mocker.VerifyAll()
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_5(self):
-    """Based on CSWmysql5client on build8x."""
+    """Based on CSWmysql5client on build8x (5)."""
     soname = u'libm.so.1'
     expected = {u'libm.so.1': u'/usr/lib/libm.so.1 f none 0755 root bin '
                               u'99844 3884 1050525375 SUNWlibms\n'}
-
-    pkgmap_stub = self.PkgmapStub(d6.DATA_PKGMAP_CACHE)
+    runpath_data_by_soname = d6.DATA_PKGMAP_CACHE
     (needed_sonames,
      binaries_by_soname,
      runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
          d6.DATA_NEEDED_SONAMES_BY_BINARY)
     result = checkpkg.GetLinesBySoname(
-        pkgmap_stub,
+        runpath_data_by_soname,
         set([soname]),
         runpath_by_needed_soname,
         d6.DATA_ISALIST)
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_6(self):
-    """Based on CSWmysql5client on build8x."""
+    """Based on CSWmysql5client on build8x (6)."""
     soname = u'libz.so.1'
-    expected = {u'libz.so.1': u'/opt/csw/lib/pentium_pro+mmx/libz.so.1=libz.so.1.2.3 '
-                              u's none CSWzlib\n'}
-    pkgmap_stub = self.PkgmapStub(d6.DATA_PKGMAP_CACHE)
+    expected = {
+        u'libz.so.1': u'/opt/csw/lib/pentium_pro+mmx/libz.so.1=libz.so.1.2.3 '
+        u's none CSWzlib\n'}
+    runpath_data_by_soname = d6.DATA_PKGMAP_CACHE
     (needed_sonames,
      binaries_by_soname,
      runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
          d6.DATA_NEEDED_SONAMES_BY_BINARY)
     result = checkpkg.GetLinesBySoname(
-        pkgmap_stub,
+        runpath_data_by_soname,
         set([soname]),
         runpath_by_needed_soname,
         d6.DATA_ISALIST)
@@ -457,10 +466,10 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     soname = u'libncursesw.so.5'
     # To test the 64-bit symlink expansion
     expected = {
-    	  u'libncursesw.so.5':
-    	    u'/opt/csw/lib/amd64/libncursesw.so.5=libncursesw.so.5.7 '
-    	    u's none CSWncurses\n'}
-    pkgmap_stub = self.PkgmapStub(d6.DATA_PKGMAP_CACHE)
+        u'libncursesw.so.5':
+          u'/opt/csw/lib/amd64/libncursesw.so.5=libncursesw.so.5.7 '
+          u's none CSWncurses\n'}
+    runpath_data_by_soname = d6.DATA_PKGMAP_CACHE
     (needed_sonames,
      binaries_by_soname,
      runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
@@ -469,7 +478,7 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     isalist = ['amd64', 'pentium_pro+mmx', 'pentium_pro', 'pentium+mmx',
                'pentium', 'i486', 'i386', 'i86']
     result = checkpkg.GetLinesBySoname(
-        pkgmap_stub,
+        runpath_data_by_soname,
         set([soname]),
         runpath_by_needed_soname,
         isalist)
@@ -477,15 +486,17 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
 
   def testGetLinesBySoname_8(self):
     expected = {'foo.so.1': '/opt/csw/postgresql/lib/foo.so.1 foo'}
-    lines1 = {"/opt/csw/postgresql/lib": "/opt/csw/postgresql/lib/foo.so.1 foo"}
-    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo.so.1").AndReturn(lines1)
-    self.pkgmap_mocker.ReplayAll()
+    runpath_data_by_soname = {
+        "foo.so.1": {
+          "/opt/csw/postgresql/lib": "/opt/csw/postgresql/lib/foo.so.1 foo",
+        }
+    }
     needed_sonames = set(["foo.so.1"])
-    runpath_by_needed_soname = {"foo.so.1": ["/opt/csw/postgresql/lib/", "/usr/lib"]}
+    runpath_by_needed_soname = {
+        "foo.so.1": ["/opt/csw/postgresql/lib/", "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
-    self.pkgmap_mocker.VerifyAll()
+    result = checkpkg.GetLinesBySoname(
+        runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
     self.assertEqual(expected, result)
 
   def testGetLinesBySoname_9(self):
@@ -495,22 +506,25 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     end up in /opt/csw/lib instead.
     """
     expected = {'foo.so.0': '/opt/csw/lib/i386/foo.so.0 foo'}
-    lines1 = {"/opt/csw/lib/i386": "/opt/csw/lib/i386/foo.so.0 foo"}
-    pkgmap = self.pkgmap_mocker.CreateMock(checkpkg.SystemPkgmap)
-    pkgmap.GetPkgmapLineByBasename("foo.so.0").AndReturn(lines1)
-    self.pkgmap_mocker.ReplayAll()
+    runpath_data_by_soname = {
+        "foo.so.0": {
+          "/opt/csw/lib/i386": "/opt/csw/lib/i386/foo.so.0 foo",
+        }
+    }
     needed_sonames = set(["foo.so.0"])
     runpath_by_needed_soname = {"foo.so.0": ["/opt/csw/lib", "/usr/lib"]}
     isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist)
-    self.pkgmap_mocker.VerifyAll()
+    result = checkpkg.GetLinesBySoname(
+        runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
     self.assertEqual(expected, result)
 
   def testSanitizeRunpath_1(self):
-    self.assertEqual("/opt/csw/lib", checkpkg.SanitizeRunpath("/opt/csw/lib/"))
+    self.assertEqual("/opt/csw/lib",
+                     checkpkg.SanitizeRunpath("/opt/csw/lib/"))
 
   def testSanitizeRunpath_2(self):
-    self.assertEqual("/opt/csw/lib", checkpkg.SanitizeRunpath("/opt//csw////lib/"))
+    self.assertEqual("/opt/csw/lib",
+                     checkpkg.SanitizeRunpath("/opt//csw////lib/"))
 
 
 
@@ -541,7 +555,8 @@ class ParseDumpOutputUnitTest(unittest.TestCase):
                      checkpkg.ParseDumpOutput(dump_1.DATA_DUMP_OUTPUT))
 
   def test_2(self):
-    expected_runpath = ['/usr/lib/$ISALIST', '/usr/lib', '/lib/$ISALIST', '/lib']
+    expected_runpath = ['/usr/lib/$ISALIST', '/usr/lib', '/lib/$ISALIST',
+                        '/lib']
     self.assertEqual(
         expected_runpath,
         checkpkg.ParseDumpOutput(dump_2.DATA_DUMP_OUTPUT)["runpath"])
@@ -623,11 +638,13 @@ class CheckpkgTagsUnitTest(unittest.TestCase):
 
   def testParseTagLine3(self):
     line = "CSWfoo: foo-tag foo-info"
-    self.assertEquals(("CSWfoo", "foo-tag", "foo-info"), checkpkg.ParseTagLine(line))
+    self.assertEquals(("CSWfoo", "foo-tag", "foo-info"),
+                      checkpkg.ParseTagLine(line))
 
   def testParseTagLine4(self):
     line = "CSWfoo: foo-tag foo-info1 foo-info2"
-    self.assertEquals(("CSWfoo", "foo-tag", "foo-info1 foo-info2"), checkpkg.ParseTagLine(line))
+    self.assertEquals(("CSWfoo", "foo-tag", "foo-info1 foo-info2"),
+                      checkpkg.ParseTagLine(line))
 
 
 class ParseOverrideLineUnitTest(unittest.TestCase):
@@ -673,47 +690,142 @@ class ApplyOverridesUnitTest(unittest.TestCase):
     """One tag, no overrides."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = []
-    self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual((tags, set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_1b(self):
     """One override, matching by tag name only."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = [checkpkg.Override(None, "foo-tag", None)]
-    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual(([], set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_1c(self):
     """One override, matching by tag name only, no pkgname."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = [checkpkg.Override(None, "foo-tag", None)]
-    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual(([], set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_2(self):
     """One override, matching by tag name and tag info, no pkgname."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag")]
     overrides = [checkpkg.Override(None, "foo-tag", None)]
-    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual(([], set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_3(self):
     """One override, matching by tag name, mismatching tag info, no pkgname."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override(None, "foo-tag", "tag-info-2")]
-    self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual((tags, set(overrides)), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_4(self):
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override(None, "foo-tag", "tag-info-1")]
-    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual(([], set([])), checkpkg.ApplyOverrides(tags, overrides))
 
   def test_5(self):
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override("CSWfoo", "foo-tag", "tag-info-1")]
-    self.assertEqual([], checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual(([], set([])), checkpkg.ApplyOverrides(tags, overrides))
 
-  def test_5(self):
+  def test_6(self):
     """Pkgname mismatch."""
     tags = [checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "tag-info-1")]
     overrides = [checkpkg.Override("CSWbar", "foo-tag", "tag-info-1")]
-    self.assertEqual(tags, checkpkg.ApplyOverrides(tags, overrides))
+    self.assertEqual((tags, set(overrides)), checkpkg.ApplyOverrides(tags, overrides))
+
+
+class SystemPkgmapUnitTest(unittest.TestCase):
+
+  def testParsePkginfoLine(self):
+    line = ('application CSWcswclassutils     '
+            'cswclassutils - CSW class action utilities')
+    expected = ('CSWcswclassutils',
+                'cswclassutils - CSW class action utilities')
+    spkgmap = checkpkg.SystemPkgmap()
+    self.assertEqual(expected, spkgmap._ParsePkginfoLine(line))
+
+
+class PackageStatsUnitTest(unittest.TestCase):
+
+  def setUp(self):
+    self.pkgstats = checkpkg.PackageStats(None)
+
+  def test_ParseNmSymLineGoodLine(self):
+    line = '0000097616 T aliases_lookup'
+    expected = {
+        'address': '0000097616',
+        'type': 'T',
+        'name': 'aliases_lookup',
+    }
+    self.assertEqual(expected, self.pkgstats._ParseNmSymLine(line))
+
+  def test_ParseNmSymLineBadLine(self):
+    line = 'foo'
+    self.assertEqual(None, self.pkgstats._ParseNmSymLine(line))
+
+  def test_ParseLddDashRlineFound(self):
+    line = '\tlibc.so.1 =>  /lib/libc.so.1'
+    expected = {
+        'state': 'OK',
+        'soname': 'libc.so.1',
+        'path': '/lib/libc.so.1',
+        'symbol': None,
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLddDashRlineSymbolMissing(self):
+    line = ('\tsymbol not found: check_encoding_conversion_args    '
+            '(/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so)')
+    expected = {
+        'state': 'symbol-not-found',
+        'soname': None,
+        'path': '/opt/csw/lib/postgresql/8.4/utf8_and_gbk.so',
+        'symbol': 'check_encoding_conversion_args',
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLddDashRlineFound(self):
+    line = '\t/usr/lib/secure/s8_preload.so.1'
+    expected = {
+        'state': 'OK',
+        'soname': None,
+        'path': '/usr/lib/secure/s8_preload.so.1',
+        'symbol': None,
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLdd_VersionNotFound(self):
+    line = '\tlibXext.so.0 (SUNW_1.1) =>\t (version not found)'
+    expected = {
+        'symbol': None,
+        'soname': 'libXext.so.0',
+        'path': None,
+        'state': 'version-not-found',
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLddDashRlineManyLines(self):
+    for line in LDD_R_OUTPUT_1.splitlines():
+      parsed = self.pkgstats._ParseLddDashRline(line)
+
+
+class ExtractorsUnitTest(unittest.TestCase):
+
+  def testExtractDescriptionFromGoodData(self):
+    data = {"NAME": "nspr_devel - Netscape Portable Runtime header files"}
+    result = "Netscape Portable Runtime header files"
+    self.assertEqual(result, checkpkg.ExtractDescription(data))
+
+  def testExtractDescriptionWithBadCatalogname(self):
+    data = {"NAME": "foo-bar - Bad catalogname shouldn't break this function"}
+    result = "Bad catalogname shouldn't break this function"
+    self.assertEqual(result, checkpkg.ExtractDescription(data))
+
+  def testExtractMaintainerName(self):
+    data = {"VENDOR": "https://ftp.mozilla.org/pub/mozilla.org/"
+                      "nspr/releases/v4.8/src/ packaged for CSW by "
+                      "Maciej Blizinski"}
+    result = "Maciej Blizinski"
+    self.assertEqual(result, checkpkg.ExtractMaintainerName(data))
 
 
 if __name__ == '__main__':

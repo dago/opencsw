@@ -36,7 +36,7 @@ def main():
   packages = [opencsw.CswSrv4File(x, options.debug) for x in args]
   stats_list = [checkpkg.PackageStats(pkg) for pkg in packages]
   for pkg_stats in stats_list:
-  	pkg_stats.CollectStats()
+    pkg_stats.CollectStats()
 
 if __name__ == '__main__':
-	main()
+  main()

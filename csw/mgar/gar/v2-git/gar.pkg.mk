@@ -32,7 +32,7 @@ PKGINFO ?= /usr/bin/pkginfo
 
 ifeq ($(origin PACKAGES), undefined)
 PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(GARNAME))
-CATALOGNAME     = $(if $(filter %.gspec,$(DISTFILES)),,$(GARNAME))
+CATALOGNAME    ?= $(if $(filter %.gspec,$(DISTFILES)),,$(GARNAME))
 SRCPACKAGE_BASE = $(firstword $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
 SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE))
@@ -155,7 +155,7 @@ SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
 SPKG_CLASSES   ?= none
-SPKG_OSNAME    ?= $(shell uname -s)$(shell uname -r)
+SPKG_OSNAME    := $(if $(SPKG_OSNAME),$(SPKG_OSNAME),$(shell /usr/bin/uname -s)$(shell /usr/bin/uname -r))
 
 SPKG_SPOOLROOT ?= $(DESTROOT)
 SPKG_SPOOLDIR  ?= $(SPKG_SPOOLROOT)/spool.$(GAROSREL)-$(GARCH)
@@ -354,7 +354,7 @@ $(foreach SPEC,$(_PKG_SPECS),$(if $(PROTOTYPE_FILTER),$(eval _PROTOTYPE_FILTER_$
 
 _PROTOTYPE_MODIFIERS = | perl -ane '\
 		$(foreach M,$(PROTOTYPE_MODIFIERS),\
-			$(if $(PROTOTYPE_FILES_$M),if( $$F[2] =~ m(^$(shell echo $(PROTOTYPE_FILES_$M) | /usr/bin/tr " " "|")$$) ) {)\
+			$(if $(PROTOTYPE_FILES_$M),if( $$F[2] =~ m(^$(firstword $(PROTOTYPE_FILES_$M))$(foreach F,$(wordlist 2,$(words $(PROTOTYPE_FILES_$M)),$(PROTOTYPE_FILES_$M)),|$F)$$) ) {)\
 				$(if $(PROTOTYPE_FTYPE_$M),$$F[0] = "$(PROTOTYPE_FTYPE_$M)";)\
 				$(if $(PROTOTYPE_CLASS_$M),$$F[1] = "$(PROTOTYPE_CLASS_$M)";)\
 				$(if $(PROTOTYPE_PERMS_$M),$$F[3] = "$(PROTOTYPE_PERMS_$M)";)\
@@ -447,6 +447,7 @@ $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),CSWalternatives)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
 
+# The final "true" is for packages without dependencies to make the shell happy as "( )" is not allowed.
 $(WORKDIR)/%.depend: $(WORKDIR)
 	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(RUNTIME_DEP_PKGS_$*)$(RUNTIME_DEP_PKGS)$(DEP_PKGS)$(DEP_PKGS_$*)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
 		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
@@ -457,7 +458,8 @@ $(WORKDIR)/%.depend: $(WORKDIR)
 				echo "P $(PKG) $(call catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
 				echo "$(shell (/usr/bin/pkginfo $(PKG) || echo "P $(PKG) - ") | $(GAWK) '{ $$1 = "P"; print } ')"; \
 			) \
-		)) >$@)
+		) \
+		true) >$@)
 
 # Dynamic gspec-files are constructed as follows:
 # - Packages using dynamic gspec-files must be listed in PACKAGES
@@ -690,8 +692,11 @@ reset-merge-checkpkgoverrides:
 merge-alternatives-%:
 	@echo "[ Generating alternatives for package $* ]"
 	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/alternatives
-	$(_DBG)($(foreach A,$(or $(ALTERNATIVES_$*),$(ALTERNATIVES)),echo "$(ALTERNATIVE_$A)";)) \
-		> $(PKGROOT)/opt/csw/share/alternatives/$(call catalogname,$*)
+	$(_DBG)($(foreach A,$(or $(ALTERNATIVES_$*),$(ALTERNATIVES)), \
+		$(if $(ALTERNATIVE_$A), \
+			echo "$(ALTERNATIVE_$A)";, \
+			$(error The variable 'ALTERNATIVE_$A' is empty, but must contain an alternative) \
+		))) > $(PKGROOT)/opt/csw/share/alternatives/$(call catalogname,$*)
 	@$(MAKECOOKIE)
 
 merge-alternatives: $(foreach S,$(SPKG_SPECS),$(if $(or $(ALTERNATIVES_$S),$(ALTERNATIVES)),merge-alternatives-$S))
@@ -757,7 +762,7 @@ _buildpackage: ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,
 				if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;     \
 			done)),)
 _buildpackage: _EXTRA_GAR_PKGS += $(if $(ISAEXEC_FILES),CSWisaexec)
-_buildpackage: pre-package $(PACKAGE_TARGETS) post-package $(if $(ENABLE_CHECK),pkgcheck)
+_buildpackage: pre-package $(PACKAGE_TARGETS) post-package $(if $(filter-out 0,$(ENABLE_CHECK)),pkgcheck)
 
 _package: validateplatform extract-global merge $(SPKG_DESTDIRS) _buildpackage
 	@$(MAKECOOKIE)
@@ -766,7 +771,7 @@ package: _package
 	@echo
 	@echo "The following packages have been built:"
 	@echo
-	@$(MAKE) -s PLATFORM=$(PLATFORM) _pkgshow
+	@$(MAKE) -s GAR_PLATFORM=$(GAR_PLATFORM) _pkgshow
 	@echo
 	@$(DONADA)
 
@@ -775,7 +780,7 @@ dirpackage: ENABLE_CHECK=
 dirpackage: _package
 	@echo "The following packages have been built:"
 	@echo
-	@$(MAKE) -s PLATFORM=$(PLATFORM) _dirpkgshow
+	@$(MAKE) -s GAR_PLATFORM=$(GAR_PLATFORM) _dirpkgshow
 	@echo
 	@$(DONADA)
 
@@ -840,8 +845,8 @@ platforms:
 	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) PLATFORM=$P _package" && \
+				$(MAKE) GAR_PLATFORM=$P _package && ,\
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
@@ -854,9 +859,9 @@ platforms:
 		$(if $(ARCHALL),echo " (suitable for all architectures)\c";) \
 		$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 			echo " (built on this host)";\
-			  $(MAKE) -s PLATFORM=$P _pkgshow;echo;,\
+			  $(MAKE) -s GAR_PLATFORM=$P _pkgshow;echo;,\
 			echo " (built on host '$(PACKAGING_HOST_$P)')";\
-			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) -s PLATFORM=$P _pkgshow";echo;\
+			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) -s GAR_PLATFORM=$P _pkgshow";echo;\
 		)\
 	)
 	@$(MAKECOOKIE)
@@ -866,8 +871,8 @@ platforms-%:
 	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
-				$(MAKE) -s PLATFORM=$P $* && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) PLATFORM=$P $*" && \
+				$(MAKE) -s GAR_PLATFORM=$P $* && ,\
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P $*" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\

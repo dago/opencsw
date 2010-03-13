@@ -1,8 +1,11 @@
 # Add a dependency to CSWpython
 _EXTRA_GAR_PKGS += CSWpython
 
-# Exclude egg-info files (only needed for easy_install)
-_MERGE_EXCLUDE_CATEGORY += .*\.egg-info.*
+# For the record, do not include the following line:
+# _MERGE_EXCLUDE_CATEGORY += .*\.egg-info.*
+#
+# It breaks pysetuptools and trac.  Here's a relevant reading:
+# http://fedoraproject.org/wiki/Packaging:Python#Packaging_eggs_and_setuptools_concerns
 
 # Activate cswpycompile support to exclude .pyc and .pyo files from 
 # the package and compile them on installation. File exclusion is 

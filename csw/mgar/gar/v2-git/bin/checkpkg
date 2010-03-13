@@ -91,8 +91,10 @@ errmsg(){
 	print ERROR: $* >/dev/fd/2
 	cleanup
 	cleanupset
-	print "To run checkpkg in the debug mode, add the '-d' flag:"
+	print "To run checkpkg in the debug mode, add the '-d' flag, for example:"
 	print "${selfpath} -d ${selfargs}"
+	print "After you modify any overrides, you need to do gmake remerge repackage"
+	print "or gmake platforms-remerge platforms-repackage."
 	exit 1
 }
 
@@ -216,108 +218,11 @@ hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
 basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
 pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
 
-case `basename $f` in
-	${software}-${version}-*)
-		# file name looks okay
-	;;
-	${software}-*)
-		print ERROR: filename missing full version field $version
-		rm -rf $EXTRACTDIR $TMPARCHIVE
-		 exit 1
-	;;
-	*)
-		print ERROR: filename  should start with $software-$version-
-		rm -rf $EXTRACTDIR $TMPARCHIVE
-		exit  1
-esac
-
-
-
-if [ "$maintname" = "" ] ; then
-	# the old format, in the DESC field
-	maintname=`sed -n 's/^DESC=.*for CSW by //p' $TMPFILE`
-
-	# Since the DESC field has been coopted, take
-	# description from second half of NAME field now.
-	desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
-else
-	if [ "$desc" = "" ] ; then
-		desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
-	fi
-fi
-
 rm $TMPFILE
 
 # strip out '' chars, because it interferes with mysql
 desc=`print $desc | sed "s/'//g"`
 
-
-print Info for pkg $pkgname
-
-print software= "'$software'"
-print arch= "'$pkgarch'"
-print desc="'$desc'"
-print pkgname="'$pkgname'"
-print version="'$version'"
-print maintainer name="'$maintname'"
-print maint email="'$email'"
-print hotline="'$hotline'"
-if [ "$basedir" != "" ] ; then
-	print basedir="'$basedir'"
-fi
-
-if [[ ${#software} -gt ${NAME_MAX_LENGTH} ]] ; then
-	errmsg "$f: software name longer than ${NAME_MAX_LENGTH} chars"
-fi
-if [[ ${#pkgname} -gt ${NAME_MAX_LENGTH} ]] ; then
-	errmsg "$f: pkg name longer than ${NAME_MAX_LENGTH} chars"
-fi
-
-if [ "$software" = "" ] ; then errmsg $f: software field not set properly in NAME ; fi
-if [ "$pkgname" = "" ] ; then errmsg $f: pkgname field blank ; fi
-if [ "$desc" = "" ] ; then errmsg $f: no description in either NAME or DESC field ; fi
-if [ ${#desc} -gt 100 ] ; then errmsg $f: description greater than 100 chars ; fi
-if [ "$version" = "" ] ; then errmsg $f: VERSION field blank ;  fi
-if [ "$maintname" = "" ] ; then errmsg $f: maintainer name not detected. Fill out VENDOR field properly ; fi
-if [ "$email" = "" ] ; then errmsg $f: EMAIL field blank ; fi
-if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
-
-
-case $version in
-	*-*)
-		errmsg "VERSION field not allowed to have \"-\" in it"
-	;;
-	*,REV=20[01][0-9].[0-9][0-9].[0-9][0-9]*)
-		:
-	;;
-	*)
-		print ERROR: no REV=YYYY.MM.DD field in VERSION
-		exit 1
-	;;
-esac
-
-case $pkgarch in
-	sparc|i386|all)
-	;;
-	sparc.*|i386.*)
-	;;
-
-	*)
-	print ERROR: non-standard ARCH def in package: $pkgarch
-	rm -rf $EXTRACTDIR $TMPARCHIVE
-	exit 1
-esac
-
-case $f in
-  *${pkgarch}*)
-    print "f: $f, pkgarch: $pkgarch"
-    ;;
-  *)
-    print "The file name is '$f'."
-    print "The pkgarch is '$pkgarch'."
-    errmsg "ERROR: package file name and pkgarch don't match."
-    ;;
-esac
 
 goodarch=yes
 case $f in
@@ -355,67 +260,6 @@ print "/usr/sbin/pkgchk passed."
 
 ########################################
 # Check for some common errors
-if [[ $pkgname != "CSWcommon" ]] ; then
-
-	if [[ $LOGNAME != "root" ]] ; then
-		nawk '$6 == "'$LOGNAME'" {print; exit 1}' $EXTRACTDIR/$pkgname/pkgmap
-		if [[ $? -eq 1 ]] ; then
-			print ERROR: files owned by $LOGNAME in prototype file
-			rm -rf $EXTRACTDIR $TMPARCHIVE
-			exit 1
-		fi
-	fi
-
-	egrep 'd none /opt ' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg You should not have an entry for /opt in your prototype file
-	fi
-	egrep 'd none [^ ]* 06' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg You must have execute permission set on directories
-	fi
-	egrep '/opt/csw/man|d none man' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg /opt/csw/man should not have a directory entry in prototype
-	fi
-	egrep '/opt/csw/doc|d none doc' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg /opt/csw/doc should not have a directory entry in prototype
-	fi
-	egrep '/opt/csw/info|d none info' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg /opt/csw/info should not have a directory entry in prototype
-	fi
-	egrep 'lib/charset.alias' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	warnmsg Only CSWiconv should have lib/charset.alias in it
-	fi
-	egrep 'share/locale/locale.alias' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	warnmsg Only CSWcommon should have share/locale/locale.alias in it
-	fi
-	fgrep  '? ? ?' $EXTRACTDIR/$pkgname/pkgmap |
-	egrep '[/]opt[/]csw'
-	if [[ $? -eq 0 ]] ; then
-	errmsg "You should only use '? ? ?' for non-csw paths. Use appropriate explicit perms/ownership instead"
-	fi
-	# this is like "installed package info". It is acceptible
-	# to update it in a postinstall script, but not have it
-	# directly in the pkgmap. A "e" entry might be acceptible though.
-	egrep ' f .*/perllocal.pod' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg perllocal.pod should be removed from prototype file
-	fi
-fi
-# special case. sigh.
-if [[ $pkgname != "CSWtexinfo" ]] ; then
-	egrep '/opt/csw/share/info/dir[ ]|none share/info/dir[ ]' $EXTRACTDIR/$pkgname/pkgmap
-	if [[ $? -eq 0 ]] ; then
-	errmsg /opt/csw/share/info/dir should only be in CSWtexinfo
-	rm -rf $EXTRACTDIR $TMPARCHIVE
-	exit 1
-	fi
-fi
 #########################################
 # find all executables and dynamic libs,and list their filenames.
 listbinaries() {
@@ -428,26 +272,15 @@ listbinaries() {
 	find $1 -print | xargs file |grep ELF |nawk -F: '{print $1}'
 }
 
-
-
-
 if [[ "$goodarch" = "yes" ]] ; then
 	# man ld.so.1 for more info on this hack
 	export LD_NOAUXFLTR=1
-
 	listbinaries $EXTRACTDIR/$pkgname >$EXTRACTDIR/elflist
 	# have to do this for ldd to work. arrg.
 	if [ -s "$EXTRACTDIR/elflist" ] ; then
 		chmod 0755 `cat $EXTRACTDIR/elflist`
-
-	#cat $EXTRACTDIR/elflist| xargs ldd  2>/dev/null |fgrep  '.so' |
-	#              sed 's:^.*=>[^/]*::' | nawk '{print $1}' |sort -u >$EXTRACTDIR/liblist
-
 		cat $EXTRACTDIR/elflist| xargs /usr/ccs/bin/dump -Lv |nawk '$2=="NEEDED"{print $3}' |
 			sort -u | egrep -v $EXTRACTDIR >$EXTRACTDIR/liblist
-
-			
-
 		print libraries used are:
 		cat $EXTRACTDIR/liblist
 		print "cross-referencing with depend file (May take a while)"
@@ -477,14 +310,6 @@ fi
 nawk '$2=="'$pkgname'" {exit 1}' $EXTRACTDIR/$pkgname/install/depend
 if [[ $? -ne 0 ]] ; then
 	errmsg "$pkgname references self in depend file"
-fi
-
-# Verify that there are no multiple depends
-repeated_depends="$(awk '{print $2}' $EXTRACTDIR/$pkgname/install/depend \
-  | sort | uniq -c | awk '{print $1}' | sort | uniq | wc -l)"
-if [[ "$repeated_depends" -gt 1 ]]; then
-        cat $EXTRACTDIR/$pkgname/install/depend
-        errmsg "$pkgname lists a dependency more than once, see above"
 fi
 
 #to retain a record of all packages currently being examined from $@
@@ -538,7 +363,7 @@ done
 set_variables_for_individual_package_check "$f"
 
 test_suite_ok=1
-checkpkg_module_dir=${command_basedir}/checkpkg.d
+checkpkg_module_dir=${command_basedir}/../lib/checkpkg.d
 checkpkg_module_tag="checkpkg-"
 checkpkg_stats_basedir="${HOME}/.checkpkg/stats"
 
@@ -575,7 +400,8 @@ if [[ -d "${checkpkg_module_dir}" ]]; then
 			plugin_name="`echo ${plugin} | sed -e 's+.*/checkpkg-++' | sed -e 's+\.py$++'`"
 			error_tag_file="tags.${plugin_name}"
 			printf "${BOLD}${module_name_format}${COLOR_RESET} running..." "${plugin_name}"
-			debugmsg "Executing: ${plugin} $extra_options -b \"${checkpkg_stats_basedir}\" -o \"${EXTRACTDIR}/${error_tag_file}\" ${md5sums}"
+			debugmsg "Executing: ${plugin} $extra_options -b \"${checkpkg_stats_basedir}\"" \
+		                 "-o \"${EXTRACTDIR}/${error_tag_file}\" `echo ${md5sums}`"
 			${plugin} \
 				$extra_options \
 				-b "${checkpkg_stats_basedir}" \
@@ -597,7 +423,9 @@ else
 fi
 
 for log_file in ${log_files}; do
-	if [[ `gwc -c "${log_file}" | awk '{print $1}'` -gt 1 ]]; then
+	log_len=`gsed -e 's/\s\+//g' "${log_file}" | gtr -s '\n' | gwc -c | awk '{print $1}'`
+	if [[ "${log_len}" -gt 1 ]]; then
+		print "printing ${log_file}..."
 		debugmsg ">> LOG START: ${log_file}"
 		cat "${log_file}"
 		debugmsg "<< LOG END: ${log_file}"

@@ -1,15 +1,14 @@
 #!/opt/csw/bin/python2.6
-# $Id: checkpkg-you-can-write-your-own.py 8571 2010-02-16 09:05:51Z wahwah $
+#
+# $Id$
 
-"""This is a dummy module. You can use it as a boilerplate for your own modules.
-
-Copy it and modify.
-"""
+"""Verifies the architecture of the package."""
 
 import os.path
+import re
 import sys
 
-CHECKPKG_MODULE_NAME = "basic checks ported from Korn shell"
+CHECKPKG_MODULE_NAME = "architecture check"
 
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
@@ -17,7 +16,7 @@ path_list = [os.path.dirname(__file__),
              "..", "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
 import checkpkg
-import package_checks
+import package_checks_old
 
 def main():
   options, args = checkpkg.GetOptions()
@@ -28,10 +27,9 @@ def main():
                                            options.stats_basedir,
                                            md5sums,
                                            options.debug)
-  # Registering functions defined above.
-  check_manager.RegisterIndividualCheck(package_checks.CatalognameLowercase)
-  check_manager.RegisterIndividualCheck(package_checks.FileNameSanity)
-  # Running the checks, reporting and exiting.
+
+  check_manager.RegisterIndividualCheck(
+      package_checks_old.CheckArchitectureVsContents)
   exit_code, screen_report, tags_report = check_manager.Run()
   f = open(options.output, "w")
   f.write(tags_report)
@@ -42,3 +40,5 @@ def main():
 
 if __name__ == '__main__':
   main()
+
+# vim:set sw=2 ts=2 sts=2 expandtab:

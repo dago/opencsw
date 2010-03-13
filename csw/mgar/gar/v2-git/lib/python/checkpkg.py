@@ -15,9 +15,11 @@ import re
 import socket
 import sqlite3
 import subprocess
+import textwrap
 import yaml
 from Cheetah import Template
 import opencsw
+import package_checks
 
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
@@ -29,6 +31,8 @@ DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
 DO_NOT_REPORT_MISSING = set([])
 DO_NOT_REPORT_MISSING_RE = [r"SUNW.*", r"\*SUNW.*"]
 DUMP_BIN = "/usr/ccs/bin/dump"
+PSTAMP_RE = r"(?P<username>\w)+@(?P<hostname>[\w\.]+)-(?P<timestamp>\d+)"
+DESCRIPTION_RE = r"^([\S]+) - (.*)$"
 
 SYSTEM_SYMLINKS = (
     ("/opt/csw/bdb4",     ["/opt/csw/bdb42"]),
@@ -36,6 +40,8 @@ SYSTEM_SYMLINKS = (
     ("/opt/csw/lib/i386", ["/opt/csw/lib"]),
 )
 INSTALL_CONTENTS_AVG_LINE_LENGTH = 102.09710677919261
+DB_SCHEMA_VERSION = 2L
+PACKAGE_STATS_VERSION = 2L
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -91,6 +97,9 @@ TAG_REPORT_TMPL = u"""#if $errors
 # Tags reported by $name module
 #for $pkgname in $errors
 #for $tag in $errors[$pkgname]
+#if $tag.msg
+$textwrap.fill($tag.msg, 70, initial_indent="# ", subsequent_indent="# ")
+#end if
 $pkgname: ${tag.tag_name}#if $tag.tag_info# $tag.tag_info#end if#
 #end for
 #end for
@@ -107,6 +116,10 @@ class ConfigurationError(Error):
 
 
 class PackageError(Error):
+  pass
+
+
+class StdoutSyntaxError(Error):
   pass
 
 
@@ -141,13 +154,33 @@ def FormatDepsReport(pkgname, missing_deps, surplus_deps, orphan_sonames):
   return unicode(t)
 
 
+def ExtractDescription(pkginfo):
+  desc_re = re.compile(DESCRIPTION_RE)
+  m = re.match(desc_re, pkginfo["NAME"])
+  return m.group(2) if m else None
+
+
+def ExtractMaintainerName(pkginfo):
+  maint_re = re.compile("^.*for CSW by (.*)$")
+  m = re.match(maint_re, pkginfo["VENDOR"])
+  return m.group(1) if m else None
+
+
+def ExtractBuildUsername(pkginfo):
+  m = re.match(PSTAMP_RE, pkginfo["PSTAMP"])
+  if m:
+    return m.group("username")
+  else:
+    return None
+
+
 class SystemPkgmap(object):
   """A class to hold and manipulate the /var/sadm/install/contents file.
 
   TODO: Implement timestamp checking and refreshing the cache.
   """
-  
-  STOP_PKGS = ["SUNWbcp", "SUNWowbcp", "SUNWucb"] 
+
+  STOP_PKGS = ["SUNWbcp", "SUNWowbcp", "SUNWucb"]
   CHECKPKG_DIR = ".checkpkg"
   SQLITE3_DBNAME_TMPL = "var-sadm-install-contents-cache-%s"
 
@@ -162,20 +195,36 @@ class SystemPkgmap(object):
                                 self.SQLITE3_DBNAME_TMPL % self.fqdn)
     self.file_mtime = None
     self.cache_mtime = None
+    self.initialized = False
+
+  def _LazyInitializeDatabase(self):
+    if not self.initialized:
+      self.InitializeDatabase()
+
+  def InitializeDatabase(self):
     if os.path.exists(self.db_path):
       logging.debug("Connecting to the %s database.", self.db_path)
       self.conn = sqlite3.connect(self.db_path)
+      if not self.IsDatabaseGoodSchema():
+        logging.warning("Old database schema detected. Dropping tables.")
+        self.PurgeDatabase(drop_tables=True)
+        self.CreateTables()
       if not self.IsDatabaseUpToDate():
         logging.warning("Rebuilding the package cache, can take a few minutes.")
         self.PurgeDatabase()
         self.PopulateDatabase()
     else:
-      print "Building a cache of /var/sadm/install/contents."
+      print "Building a cache of %s." % SYSTEM_PKGMAP
       print "The cache will be kept in %s." % self.db_path
       if not os.path.exists(self.checkpkg_dir):
         logging.debug("Creating %s", self.checkpkg_dir)
         os.mkdir(self.checkpkg_dir)
       self.conn = sqlite3.connect(self.db_path)
+      self.CreateTables()
+      self.PopulateDatabase()
+    self.initialized = True
+
+  def CreateTables(self):
       c = self.conn.cursor()
       c.execute("""
           CREATE TABLE systempkgmap (
@@ -190,24 +239,24 @@ class SystemPkgmap(object):
           CREATE TABLE config (
             key VARCHAR(255) PRIMARY KEY,
             float_value FLOAT,
+            int_value INTEGER,
             str_value VARCHAR(255)
           );
       """)
-      self.PopulateDatabase()
-
-  def SymlinkDuringInstallation(self, p):
-    """Emulates the effect of some symlinks present during installations."""
-    p = p.replace("/opt/csw/lib/i386", "/opt/csw/lib")
+      c.execute("""
+          CREATE TABLE packages (
+            pkgname VARCHAR(255) PRIMARY KEY,
+            pkg_desc VARCHAR(255)
+          );
+      """)
 
   def PopulateDatabase(self):
     """Imports data into the database.
 
     Original bit of code from checkpkg:
-    
     egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
         fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
     """
-
     contents_length = os.stat(SYSTEM_PKGMAP).st_size
     estimated_lines = contents_length / INSTALL_CONTENTS_AVG_LINE_LENGTH
     system_pkgmap_fd = open(SYSTEM_PKGMAP, "r")
@@ -219,6 +268,7 @@ class SystemPkgmap(object):
     print "Processing %s" % SYSTEM_PKGMAP
     c = self.conn.cursor()
     count = itertools.count()
+    sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
     for line in system_pkgmap_fd:
       i = count.next()
       if not i % 1000:
@@ -230,14 +280,39 @@ class SystemPkgmap(object):
       fields = re.split(WS_RE, line)
       pkgmap_entry_path = fields[0].split("=")[0]
       pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
-      sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
       c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line.strip()))
     print "\rAll lines of %s were processed." % SYSTEM_PKGMAP
     print "Creating the main database index."
     sql = "CREATE INDEX basename_idx ON systempkgmap(basename);"
     c.execute(sql)
+    self.PopulatePackagesTable()
     self.SetDatabaseMtime()
+    self.SetDatabaseSchemaVersion()
     self.conn.commit()
+
+  def _ParsePkginfoLine(self, line):
+    fields = re.split(WS_RE, line)
+    pkgname = fields[1]
+    pkg_desc = u" ".join(fields[2:])
+    return pkgname, pkg_desc
+
+  def PopulatePackagesTable(self):
+    args = ["pkginfo"]
+    pkginfo_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+    stdout, stderr = pkginfo_proc.communicate()
+    ret = pkginfo_proc.wait()
+    c = self.conn.cursor()
+    sql = """
+    INSERT INTO packages (pkgname, pkg_desc)
+    VALUES (?, ?);
+    """
+    for line in stdout.splitlines():
+      pkgname, pkg_desc = self._ParsePkginfoLine(line)
+      try:
+        c.execute(sql, [pkgname, pkg_desc])
+      except sqlite3.IntegrityError, e:
+        logging.warn("pkgname %s throws an sqlite3.IntegrityError: %s",
+                     repr(pkgname), e)
 
   def SetDatabaseMtime(self):
     c = self.conn.cursor()
@@ -251,7 +326,17 @@ class SystemPkgmap(object):
     """
     c.execute(sql, [CONFIG_MTIME, mtime])
 
+  def SetDatabaseSchemaVersion(self):
+    sql = """
+    INSERT INTO config (key, int_value)
+    VALUES (?, ?);
+    """
+    c = self.conn.cursor()
+    c.execute(sql, ["db_schema_version", DB_SCHEMA_VERSION])
+    logging.debug("Setting db_schema_version to %s", DB_SCHEMA_VERSION)
+
   def GetPkgmapLineByBasename(self, filename):
+    self._LazyInitializeDatabase()
     if filename in self.cache:
       return self.cache[filename]
     sql = "SELECT path, line FROM systempkgmap WHERE basename = ?;"
@@ -287,25 +372,66 @@ class SystemPkgmap(object):
       self.file_mtime = stat_data.st_mtime
     return self.file_mtime
 
+  def GetDatabaseSchemaVersion(self):
+    sql = """
+    SELECT int_value FROM config
+    WHERE key = ?;
+    """
+    c = self.conn.cursor()
+    schema_on_disk = 1L
+    try:
+      c.execute(sql, ["db_schema_version"])
+      for row in c:
+        schema_on_disk = row[0]
+    except sqlite3.OperationalError, e:
+      # : no such column: int_value
+      # The first versions of the database did not
+      # have the int_value field.
+      if re.search(r"int_value", str(e)):
+        # We assume it's the first schema version.
+        logging.debug("sqlite3.OperationalError, %s: guessing it's 1.", e)
+      else:
+        raise
+    return schema_on_disk
+
+  def IsDatabaseGoodSchema(self):
+    good_version = self.GetDatabaseSchemaVersion() >= DB_SCHEMA_VERSION
+    return good_version
+
   def IsDatabaseUpToDate(self):
     f_mtime = self.GetFileMtime()
     d_mtime = self.GetDatabaseMtime()
     logging.debug("f_mtime %s, d_time: %s", f_mtime, d_mtime)
-    return self.GetFileMtime() <= self.GetDatabaseMtime()
+    fresh = self.GetFileMtime() <= self.GetDatabaseMtime()
+    good_version = self.GetDatabaseSchemaVersion() >= DB_SCHEMA_VERSION
+    return fresh and good_version
 
-  def PurgeDatabase(self):
+  def SoftDropTable(self, tablename):
     c = self.conn.cursor()
-    logging.info("Dropping the index.")
-    sql = "DROP INDEX basename_idx;"
     try:
-      c.execute(sql)
+      # This doesn't accept placeholders.
+      c.execute("DROP TABLE %s;" % tablename)
     except sqlite3.OperationalError, e:
-      logging.warn(e)
-    logging.info("Deleting all rows from the cache database")
-    sql = "DELETE FROM config;"
-    c.execute(sql)
-    sql = "DELETE FROM systempkgmap;"
-    c.execute(sql)
+      logging.warn("sqlite3.OperationalError: %s", e)
+
+  def PurgeDatabase(self, drop_tables=False):
+    c = self.conn.cursor()
+    if drop_tables:
+      for table_name in ("config", "systempkgmap", "packages"):
+        self.SoftDropTable(table_name)
+    else:
+      logging.info("Dropping the index.")
+      sql = "DROP INDEX basename_idx;"
+      try:
+        c.execute(sql)
+      except sqlite3.OperationalError, e:
+        logging.warn(e)
+      logging.info("Deleting all rows from the cache database")
+      for table in ("config", "systempkgmap", "packages"):
+        try:
+          c.execute("DELETE FROM %s;" % table)
+        except sqlite3.OperationalError, e:
+          logging.warn("sqlite3.OperationalError: %s", e)
 
 def SharedObjectDependencies(pkgname,
                              binaries_by_pkgname,
@@ -316,7 +442,7 @@ def SharedObjectDependencies(pkgname,
   """This is one of the more obscure and more important pieces of code.
 
   I tried to make it simpler, but given that the operations here involve
-  whole sets of packages, it's not easy.
+  whole sets of packages, it's not easy to simplify.
   """
   so_dependencies = set()
   orphan_sonames = set()
@@ -474,7 +600,9 @@ def SanitizeRunpath(runpath):
   return runpath
 
 
-def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
+def GetLinesBySoname(runpath_data_by_soname,
+                     needed_sonames,
+                     runpath_by_needed_soname, isalist):
   """Works out which system pkgmap lines correspond to given sonames."""
   lines_by_soname = {}
   for soname in needed_sonames:
@@ -485,11 +613,11 @@ def GetLinesBySoname(pkgmap, needed_sonames, runpath_by_needed_soname, isalist):
       runpath = SanitizeRunpath(runpath)
       runpath_list = ExpandRunpath(runpath, isalist)
       runpath_list = Emulate64BitSymlinks(runpath_list)
-      soname_runpath_data = pkgmap.GetPkgmapLineByBasename(soname)
       # Emulating the install time symlinks, for instance, if the prototype contains
       # /opt/csw/lib/i386/foo.so.0 and /opt/csw/lib/i386 is a symlink to ".",
-      # the shared library ends up in /opt/csw/lib/foo.so.0 and should be findable even when
-      # RPATH does not contain $ISALIST.
+      # the shared library ends up in /opt/csw/lib/foo.so.0 and should be
+      # findable even when RPATH does not contain $ISALIST.
+      soname_runpath_data = runpath_data_by_soname[soname]
       new_soname_runpath_data = {}
       for p in soname_runpath_data:
         expanded_p_list = Emulate64BitSymlinks([p])
@@ -568,12 +696,30 @@ class CheckpkgTag(object):
     self.msg = msg
 
   def __repr__(self):
-    return (u"CheckpkgTag(%s, %s, %s, ...)"
-            % (repr(self.pkgname), repr(self.tag_name), repr(self.tag_info)))
+    return (u"CheckpkgTag(%s, %s, %s, %s)"
+            % (repr(self.pkgname),
+               repr(self.tag_name),
+               repr(self.tag_info),
+               repr(self.msg)))
+
+  def ToGarSyntax(self):
+    msg_lines = []
+    if self.msg:
+      msg_lines.extend(textwrap(self.msg, 70,
+                                initial_indent="# ",
+                                subsequent_indent="# "))
+    if self.tag_info:
+      tag_postfix = "|%s" % self.tag_info.replace(" ", "|")
+    else:
+      tag_postfix = ""
+    msg_lines.append(u"CHECKPKG_OVERRIDES_%s += %s%s"
+                     % (self.pkgname, self.tag_name, tag_postfix))
+    return "\n".join(msg_lines)
 
 
-class CheckpkgManager(object):
-  """Takes care of calling checking functions"""
+
+class CheckpkgManagerBase(object):
+  """Common functions between the older and newer calling functions."""
 
   def __init__(self, name, stats_basedir, md5sum_list, debug=False):
     self.debug = debug
@@ -585,49 +731,18 @@ class CheckpkgManager(object):
     self.set_checks = []
     self.packages = []
 
-  def RegisterIndividualCheck(self, function):
-    self.individual_checks.append(function)
-
-  def RegisterSetCheck(self, function):
-    self.set_checks.append(function)
-
   def GetPackageStatsList(self):
     stats_list = []
     for md5sum in self.md5sum_list:
       stats_list.append(PackageStats(None, self.stats_basedir, md5sum))
     return stats_list
 
-  def GetAllTags(self, packages_data):
-    errors = {}
-    for pkg_data in packages_data:
-      for function in self.individual_checks:
-        all_stats = pkg_data.GetAllStats()
-        errors_for_pkg = function(all_stats, debug=self.debug)
-        if errors_for_pkg:
-          errors[all_stats["basic_stats"]["pkgname"]] = errors_for_pkg
-    # Set checks
-    for function in self.set_checks:
-      set_errors = function([x.GetAllStats() for x in packages_data],
-                            debug=self.debug)
-      if set_errors:
-        # These were generated by a set, but are likely to be bound to specific
-        # packages. We'll try to preserve the package assignments.
-        for tag in set_errors:
-          if tag.pkgname:
-            if not tag.pkgname in errors:
-              errors[tag.pkgname] = []
-            errors[tag.pkgname].append(tag)
-          else:
-            if "package-set" not in errors:
-              errors["package-set"] = []
-            errors["package-set"].append(error)
-    return errors
-
   def FormatReports(self, errors):
     namespace = {
         "name": self.name,
         "errors": errors,
         "debug": self.debug,
+        "textwrap": textwrap,
     }
     screen_t = Template.Template(SCREEN_ERROR_REPORT_TMPL, searchList=[namespace])
     tags_report_t = Template.Template(TAG_REPORT_TMPL, searchList=[namespace])
@@ -645,6 +760,150 @@ class CheckpkgManager(object):
     screen_report, tags_report = self.FormatReports(errors)
     exit_code = 0
     return (exit_code, screen_report, tags_report)
+
+
+class CheckpkgManager(CheckpkgManagerBase):
+  """Takes care of calling checking functions.
+
+  This is an old API as of 2010-02-28.
+  """
+  def RegisterIndividualCheck(self, function):
+    self.individual_checks.append(function)
+
+  def RegisterSetCheck(self, function):
+    self.set_checks.append(function)
+
+  def SetErrorsToDict(self, set_errors, a_dict):
+    # These were generated by a set, but are likely to be bound to specific
+    # packages. We'll try to preserve the package assignments.
+    errors = copy.copy(a_dict)
+    for tag in set_errors:
+      if tag.pkgname:
+        if not tag.pkgname in errors:
+          errors[tag.pkgname] = []
+        errors[tag.pkgname].append(tag)
+      else:
+        if "package-set" not in errors:
+          errors["package-set"] = []
+        errors["package-set"].append(error)
+    return a_dict
+
+  def GetAllTags(self, packages_data):
+    errors = {}
+    for pkg_data in packages_data:
+      for function in self.individual_checks:
+        all_stats = pkg_data.GetAllStats()
+        errors_for_pkg = function(all_stats, debug=self.debug)
+        if errors_for_pkg:
+          errors[all_stats["basic_stats"]["pkgname"]] = errors_for_pkg
+    # Set checks
+    for function in self.set_checks:
+      set_errors = function([x.GetAllStats() for x in packages_data],
+                            debug=self.debug)
+      if set_errors:
+        errors = self.SetErrorsToDict(set_errors, errors)
+    return errors
+
+
+class CheckInterfaceBase(object):
+  """Base class for check proxies.
+
+  It wraps access to the /var/sadm/install/contents cache.
+  """
+
+  def __init__(self, system_pkgmap=None):
+    self.system_pkgmap = system_pkgmap
+    if not self.system_pkgmap:
+      self.system_pkgmap = SystemPkgmap()
+
+
+class IndividualCheckInterface(CheckInterfaceBase):
+  """To be passed to the checking functions.
+
+  Wraps the creation of CheckpkgTag objects.
+  """
+
+  def __init__(self, pkgname, system_pkgmap=None):
+    super(IndividualCheckInterface, self).__init__(system_pkgmap)
+    self.pkgname = pkgname
+    self.errors = []
+
+  def ReportError(self, tag_name, tag_info=None, msg=None):
+    tag = CheckpkgTag(self.pkgname, tag_name, tag_info, msg)
+    self.errors.append(tag)
+
+
+def SetCheckInterface(object):
+  """To be passed to set checking functions."""
+  def __init__(self, system_pkgmap):
+    super(SetCheckInterface, self).__init__(system_pkgmap)
+    self.errors = []
+
+  def ReportError(self, pkgname, tag_name, tag_info=None, msg=None):
+    tag = CheckpkgTag(pkgname, tag_name, tag_info, msg)
+    self.errors.append(tag)
+
+
+class CheckpkgManager2(CheckpkgManagerBase):
+  """The second incarnation of the checkpkg manager.
+
+  Implements the API to be used by checking functions.
+
+  Its purpose is to reduce the amount of boilerplate code and allow for easier
+  unit test writing.
+  """
+  def _RegisterIndividualCheck(self, function):
+    self.individual_checks.append(function)
+
+  def _RegisterSetCheck(self, function):
+    self.set_checks.append(function)
+
+  def _AutoregisterChecks(self):
+    """Autodetects all defined checks."""
+    logging.debug("CheckpkgManager2._AutoregisterChecks()")
+    checkpkg_module = package_checks
+    members = dir(checkpkg_module)
+    for member_name in members:
+      logging.debug("member_name: %s", repr(member_name))
+      member = getattr(checkpkg_module, member_name)
+      if callable(member):
+        if member_name.startswith("Check"):
+          logging.debug("Registering individual check %s", repr(member_name))
+          self._RegisterIndividualCheck(member)
+        elif member_name.startswith("SetCheck"):
+          logging.debug("Registering set check %s", repr(member_name))
+          self._RegisterIndividualCheck(member)
+
+  def GetAllTags(self, packages_data):
+    errors = {}
+    logging_level = logging.INFO
+    if self.debug:
+      logging_level = logging.DEBUG
+    # Individual checks
+    for pkg_data in packages_data:
+      for function in self.individual_checks:
+        all_stats = pkg_data.GetAllStats()
+        pkgname = all_stats["basic_stats"]["pkgname"]
+        check_interface = IndividualCheckInterface(pkgname)
+        logger = logging.getLogger("%s-%s" % (pkgname, function.__name__))
+        logger.debug("Calling %s", function.__name__)
+        function(all_stats, check_interface, logger=logger)
+        if check_interface.errors:
+          errors[pkgname] = check_interface.errors
+    # Set checks
+    for function in self.set_checks:
+      pkgs_data = [x.GetAllStats() for x in packages_data]
+      logger = logging.getLogger("SetCheck-%s" % (function.__name__,))
+      check_interface = SetCheckInterface()
+      logger.debug("Calling %s", function.__name__)
+      function(pkgs_data, check_interface, logger)
+      if check_interface.errors:
+        errors = self.SetErrorsToDict(check_interface.errors, errors)
+    return errors
+
+  def Run(self):
+    self._AutoregisterChecks()
+    return super(CheckpkgManager2, self).Run()
 
 
 def ParseTagLine(line):
@@ -681,7 +940,7 @@ class Override(object):
 
   def __repr__(self):
     return (u"Override(%s, %s, %s)"
-            % (self.pkgname, self.tag_name, self.tag_info))
+            % (repr(self.pkgname), repr(self.tag_name), repr(self.tag_info)))
 
   def DoesApply(self, tag):
     """Figures out if this override applies to the given tag."""
@@ -696,6 +955,7 @@ class Override(object):
     basket_a["tag_name"] = self.tag_name
     basket_b["tag_name"] = tag.tag_name
     return basket_a == basket_b
+
 
 def ParseOverrideLine(line):
   level_1 = line.split(":")
@@ -717,18 +977,22 @@ def ParseOverrideLine(line):
 
 def ApplyOverrides(error_tags, overrides):
   """Filters out all the error tags that overrides apply to.
-  
+
   O(N * M), but N and M are always small.
   """
   tags_after_overrides = []
+  applied_overrides = set([])
+  provided_overrides = set(copy.copy(overrides))
   for tag in error_tags:
     override_applies = False
     for override in overrides:
       if override.DoesApply(tag):
         override_applies = True
+        applied_overrides.add(override)
     if not override_applies:
       tags_after_overrides.append(tag)
-  return tags_after_overrides
+  unapplied_overrides = provided_overrides.difference(applied_overrides)
+  return tags_after_overrides, unapplied_overrides
 
 
 def GetIsalist():
@@ -744,16 +1008,16 @@ def GetIsalist():
 
 class PackageStats(object):
   """Collects stats about a package and saves it."""
-  STATS_VERSION = 1L
   # This list needs to be synchronized with the CollectStats() method.
   STAT_FILES = [
       "all_filenames",
       "basic_stats",
       "binaries",
       "binaries_dump_info",
+      # "defined_symbols",
       "depends",
       "isalist",
-      "ldd_dash_r",
+      # "ldd_dash_r",
       "overrides",
       "pkginfo",
       "pkgmap",
@@ -849,10 +1113,11 @@ class PackageStats(object):
   def GetBasicStats(self):
     dir_pkg = self.GetDirFormatPkg()
     basic_stats = {}
-    basic_stats["stats_version"] = self.STATS_VERSION
+    basic_stats["stats_version"] = PACKAGE_STATS_VERSION
     basic_stats["pkg_path"] = self.srv4_pkg.pkg_path
     basic_stats["pkg_basename"] = os.path.basename(self.srv4_pkg.pkg_path)
-    basic_stats["parsed_basename"] = opencsw.ParsePackageFileName(basic_stats["pkg_basename"])
+    basic_stats["parsed_basename"] = opencsw.ParsePackageFileName(
+        basic_stats["pkg_basename"])
     basic_stats["pkgname"] = dir_pkg.pkgname
     basic_stats["catalogname"] = dir_pkg.GetCatalogname()
     return basic_stats
@@ -888,12 +1153,70 @@ class PackageStats(object):
       retcode = ldd_proc.wait()
       if retcode:
         logging.error("%s returned an error: %s", args, stderr)
-      lines = stdout.splitlines()
-      ldd_output[binary] = lines
+      ldd_info = []
+      for line in stdout.splitlines():
+        ldd_info.append(self._ParseLddDashRline(line))
+      ldd_output[binary] = ldd_info
     return ldd_output
 
+  def GetDefinedSymbols(self):
+    """Returns text symbols (i.e. defined functions) for packaged ELF objects
 
-  def CollectStats(self):
+    To do this we parse output lines from nm similar to the following. "T"s are
+    the definitions which we are after.
+
+      0000104000 D _lib_version
+      0000986980 D _libiconv_version
+      0000000000 U abort
+      0000097616 T aliases_lookup
+    """
+    dir_pkg = self.GetDirFormatPkg()
+    binaries = dir_pkg.ListBinaries()
+    defined_symbols = {}
+
+    for binary in binaries:
+      binary_abspath = os.path.join(dir_pkg.directory, "root", binary)
+      # Get parsable, ld.so.1 relevant SHT_DYNSYM symbol information
+      args = ["/usr/ccs/bin/nm", "-p", "-D", binary_abspath]
+      nm_proc = subprocess.Popen(
+          args,
+          stdout=subprocess.PIPE,
+          stderr=subprocess.PIPE)
+      stdout, stderr = nm_proc.communicate()
+      retcode = nm_proc.wait()
+      if retcode:
+        logging.error("%s returned an error: %s", args, stderr)
+        continue
+      nm_out = stdout.splitlines()
+
+      defined_symbols[binary] = []
+      for line in nm_out:
+        sym = self._ParseNmSymLine(line)
+        if not sym:
+          continue
+        if sym['type'] not in ("T", "D", "B"):
+          continue
+        defined_symbols[binary].append(sym['name'])
+
+    return defined_symbols
+
+  def _ParseNmSymLine(self, line):
+    re_defined_symbol =  re.compile('[0-9]+ [ABDFNSTU] \S+')
+    m = re_defined_symbol.match(line)
+    if not m:
+      return None
+    fields = line.split()
+    sym = { 'address': fields[0], 'type': fields[1], 'name': fields[2] }
+    return sym
+
+  def CollectStats(self, force=False):
+    if not self.StatsDirExists() or force:
+      self._CollectStats()
+
+  def _CollectStats(self):
+    """The list of variables needs to be synchronized with the one
+    at the top of this class.
+    """
     stats_path = self.GetStatsPath()
     self.MakeStatsDir()
     dir_pkg = self.GetDirFormatPkg()
@@ -907,7 +1230,10 @@ class PackageStats(object):
     self.DumpObject(self.GetOverrides(), "overrides")
     self.DumpObject(dir_pkg.GetParsedPkginfo(), "pkginfo")
     self.DumpObject(dir_pkg.GetPkgmap().entries, "pkgmap")
-    self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
+    # This check is currently disabled, let's save time by not collecting
+    # these data.
+    # self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
+    # self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
     logging.debug("Statistics collected.")
 
   def GetAllStats(self):
@@ -942,17 +1268,18 @@ class PackageStats(object):
     in_file_name = os.path.join(stats_path, "%s.yml" % name)
     in_file_name_pickle = os.path.join(stats_path, "%s.pickle" % name)
     if os.path.exists(in_file_name_pickle):
-      logging.debug("ReadObject(): reading %s", repr(in_file_name_pickle))
+      # logging.debug("ReadObject(): reading %s", repr(in_file_name_pickle))
       f = open(in_file_name_pickle, "r")
       obj = cPickle.load(f)
       f.close()
-      logging.debug("ReadObject(): finished reading %s", repr(in_file_name_pickle))
+      # logging.debug("ReadObject(): finished reading %s",
+      #               repr(in_file_name_pickle))
     else:
-      logging.debug("ReadObject(): reading %s", repr(in_file_name))
+      # logging.debug("ReadObject(): reading %s", repr(in_file_name))
       f = open(in_file_name, "r")
       obj = yaml.safe_load(f)
       f.close()
-      logging.debug("ReadObject(): finished reading %s", repr(in_file_name))
+      # logging.debug("ReadObject(): finished reading %s", repr(in_file_name))
     return obj
 
   def ReadSavedStats(self):
@@ -960,3 +1287,40 @@ class PackageStats(object):
     for name in self.STAT_FILES:
       all_stats[name] = self.ReadObject(name)
     return all_stats
+
+  def _ParseLddDashRline(self, line):
+    found_re = r"^\t(?P<soname>\S+)\s+=>\s+(?P<path_found>\S+)"
+    symbol_not_found_re = r"^\tsymbol not found:\s(?P<symbol>\S+)\s+\((?P<path_not_found>\S+)\)"
+    only_so = r"^\t(?P<path_only>\S+)$"
+    version_so = r'^\t(?P<soname_version_not_found>\S+) \((?P<lib_name>\S+)\) =>\t \(version not found\)'
+    common_re = r"(%s|%s|%s|%s)" % (found_re, symbol_not_found_re, only_so, version_so)
+    m = re.match(common_re, line)
+    response = {}
+    if m:
+      d = m.groupdict()
+      if "soname" in d and d["soname"]:
+        # it was found
+        response["state"] = "OK"
+        response["soname"] = d["soname"]
+        response["path"] = d["path_found"]
+        response["symbol"] = None
+      elif "symbol" in d and d["symbol"]:
+        response["state"] = "symbol-not-found"
+        response["soname"] = None
+        response["path"] = d["path_not_found"]
+        response["symbol"] = d["symbol"]
+      elif d["path_only"]:
+        response["state"] = "OK"
+        response["soname"] = None
+        response["path"] = d["path_only"]
+        response["symbol"] = None
+      elif d["soname_version_not_found"]:
+        response["state"] = "version-not-found"
+        response["soname"] = d["soname_version_not_found"]
+        response["path"] = None
+        response["symbol"] = None
+      else:
+        raise StdoutSyntaxError("Could not parse %s" % repr(line))
+    else:
+      raise StdoutSyntaxError("Could not parse %s" % repr(line))
+    return response

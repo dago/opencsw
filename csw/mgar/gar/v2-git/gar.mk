@@ -135,8 +135,8 @@ merge-$(2): BUILDHOST=$$(call modulation2host)
 merge-$(2):
 	@echo "[===== Building modulation '$(2)' on host '$$(BUILDHOST)' =====]"
 	$$(if $$(and $$(BUILDHOST),$$(filter-out $$(THISHOST),$$(BUILDHOST))),\
-		$(SSH) $$(BUILDHOST) "PATH=$$(PATH) $(MAKE) -C $$(CURDIR) $(if $(PLATFORM),PLATFORM=$(PLATFORM)) MODULATION=$(2) $(3) merge-modulated",\
-		$(MAKE) $(if $(PLATFORM),PLATFORM=$(PLATFORM)) MODULATION=$(2) $(3) merge-modulated\
+		$(SSH) $$(BUILDHOST) "PATH=$$(PATH) $(MAKE) -C $$(CURDIR) $(if $(GAR_PLATFORM),GAR_PLATFORM=$(GAR_PLATFORM)) MODULATION=$(2) $(3) merge-modulated",\
+		$(MAKE) $(if $(GAR_PLATFORM),GAR_PLATFORM=$(GAR_PLATFORM)) MODULATION=$(2) $(3) merge-modulated\
 	)
 	@# The next line has intentionally been left blank to explicitly terminate this make rule
 
@@ -361,10 +361,12 @@ GARCHIVE_TARGETS =  $(addprefix $(GARCHIVEDIR)/,$(filter-out $(ALLFILES_DYNSCRIP
 MAKESUM_TARGETS =  $(filter-out $(_NOCHECKSUM) $(NOCHECKSUM),$(ALLFILES))
 
 makesum: fetch $(addprefix $(DOWNLOADDIR)/,$(MAKESUM_TARGETS)) $(GARCHIVE_TARGETS)
-	@if test "x$(MAKESUM_TARGETS)" != "x "; then \
+	@if test "x$(MAKESUM_TARGETS)" != "x"; then \
 		(cd $(DOWNLOADDIR) && gmd5sum $(MAKESUM_TARGETS)) > $(CHECKSUM_FILE) ; \
 		echo "Checksums made for $(MAKESUM_TARGETS)" ; \
 		cat $(CHECKSUM_FILE) ; \
+	else \
+		cp /dev/null $(CHECKSUM_FILE) ; \
 	fi
 
 # I am always typing this by mistake
