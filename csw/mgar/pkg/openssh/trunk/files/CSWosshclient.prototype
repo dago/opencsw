@@ -24,7 +24,6 @@ f none /opt/csw/share/doc/openssh_client/README 0644 root bin
 f none /opt/csw/share/doc/openssh_client/README.dns 0644 root bin
 f none /opt/csw/share/doc/openssh_client/README.platform 0644 root bin
 f none /opt/csw/share/doc/openssh_client/README.privsep 0644 root bin
-f none /opt/csw/share/doc/openssh_client/README.smartcard 0644 root bin
 f none /opt/csw/share/doc/openssh_client/README.tun 0644 root bin
 f none /opt/csw/share/doc/openssh_client/TODO 0644 root bin
 f none /opt/csw/share/doc/openssh_client/WARNING.RNG 0644 root bin
