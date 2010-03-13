@@ -10,6 +10,8 @@ endef
 MASTER_SITES = http://namebench.googlecode.com/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tgz
 
+SPKG_SOURCEURL = http://code.google.com/p/namebench
+
 RUNTIME_DEP_PKGS = CSWpython-tk
 
 # We define upstream file regex so we can be notifed of new upstream software release
