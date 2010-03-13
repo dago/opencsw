@@ -7,7 +7,6 @@ d none /opt/csw/libexec 0755 root bin
 f none /opt/csw/libexec/sftp-server 0755 root bin
 f none /opt/csw/sbin/sshd 0755 root bin
 f none /opt/csw/sbin/sshd.smf_wrapper 0755 root bin
-f none /opt/csw/share/Ssh.bin 0644 root bin
 d none /opt/csw/share/doc/openssh 0755 root bin
 f none /opt/csw/share/doc/openssh/changelog.CSW 0644 root bin
 f none /opt/csw/share/doc/openssh/CREDITS 0644 root bin
@@ -21,7 +20,6 @@ f none /opt/csw/share/doc/openssh/README 0644 root bin
 f none /opt/csw/share/doc/openssh/README.dns 0644 root bin
 f none /opt/csw/share/doc/openssh/README.platform 0644 root bin
 f none /opt/csw/share/doc/openssh/README.privsep 0644 root bin
-f none /opt/csw/share/doc/openssh/README.smartcard 0644 root bin
 f none /opt/csw/share/doc/openssh/README.tun 0644 root bin
 f none /opt/csw/share/doc/openssh/TODO 0644 root bin
 f none /opt/csw/share/doc/openssh/WARNING.RNG 0644 root bin

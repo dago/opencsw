@@ -1,3 +1,9 @@
+openssh (5.4p1,REV=2010.03.13) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 12 Mar 2010 23:53:43 +0100
+
 openssh (5.3p1,REV=2010.02.28) unstable
 
   * Added ssh-copy-id contrib script (Closes: #4306)
