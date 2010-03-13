@@ -2,6 +2,7 @@ bash (4.1.02,REV=2010.03.13) unstable
 
   * Added bash patches bash41-001 and bash41-002.
   * Removed patch vsnprintf.patch applied upstream.
+  * Switched to dynamic prototype.
 
  -- Yann Rouillard <yann@opencsw.org>  Sat, 13 Mar 2010 13:28:35 +0100
 

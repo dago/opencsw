@@ -44,7 +44,6 @@ MASTER_SITES = $(GNU_MIRROR)/bash-$(BASH_VERSION)-patches/
 MASTER_SITES += $(GNU_MIRROR)
 DISTNAME = $(GARNAME)-$(BASH_VERSION)
 DISTFILES  = $(GARNAME)-$(BASH_VERSION).tar.gz
-DISTFILES += CSWbash.prototype
 DISTFILES += changelog.CSW
 
 # build action script to modify /etc/shells at package installation and removal time
@@ -67,8 +66,22 @@ PATCHFILES = $(shell LEVEL=1; \
 # opencsw bash use /etc/bash.bashrc and /etc/bash.bash_logout files
 PATCHFILES += use_system_bashrc_and_logout.patch
 
+LICENSE = COPYING
+
+# we add CSW bash to the /etc/shells files using the build script
+PROTOTYPE_MODIFIERS = shell
+PROTOTYPE_FILES_shell = \/etc\/shells   # a normal Perl regexp. Watch out for links!
+PROTOTYPE_PERMS_shell = ?
+PROTOTYPE_CLASS_shell = build
+PROTOTYPE_USER_shell = ?
+PROTOTYPE_GROUP_shell = ?
+PROTOTYPE_FTYPE_shell = e
+
 
 ##### Build and installation information #####
+
+CHECKPKG_OVERRIDES_CSWbash += action-class-only-in-pkginfo|build
+
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -80,7 +93,6 @@ pre-configure:
 	touch $(WORKSRC)/aclocal.m4
 	touch $(WORKSRC)/configure
 	touch $(WORKSRC)/config.status
-
 
 post-merge:
 	@( for FILE in README RBASH NEWS NOTES POSIX AUTHORS doc/FAQ doc/INTRO; do \
