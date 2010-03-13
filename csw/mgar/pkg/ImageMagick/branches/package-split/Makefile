@@ -57,6 +57,8 @@ RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWzlib
 RUNTIME_DEP_PKGS_CSWpmimagemagick += CSWimagemagickrt
 RUNTIME_DEP_PKGS_CSWpmimagemagick += CSWperl
 
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibrsvg
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWimagemagickrt
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWopenexrrt
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWbzip2
