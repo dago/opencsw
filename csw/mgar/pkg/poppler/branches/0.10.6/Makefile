@@ -14,17 +14,42 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += old_libs_i386.tar.bz2
 DISTFILES += old_libs_sparc.tar.bz2
 
-RUNTIME_DEP_PKGS_CSWpoppler += CSWgtk2
-RUNTIME_DEP_PKGS_CSWpoppler += CSWiconv
-RUNTIME_DEP_PKGS_CSWpoppler += CSWlibcairo
-RUNTIME_DEP_PKGS_CSWpoppler += CSWpango
-RUNTIME_DEP_PKGS_CSWpoppler += CSWzlib
+PACKAGES = CSWpoppler CSWlibpoppler CSWlibpopplerdev CSWlibpopplerdoc
+CATALOGNAME_CSWpoppler = poppler
+CATALOGNAME_CSWlibpoppler = libpoppler
+CATALOGNAME_CSWlibpopplerdev = libpoppler_devel
+CATALOGNAME_CSWlibpopplerdoc = libpoppler_doc
+SPKG_DESC_CSWpoppler = $(DESCRIPTION) - utilities
+SPKG_DESC_CSWlibpoppler = $(DESCRIPTION)
+SPKG_DESC_CSWlibpopplerdev = $(DESCRIPTION) - developer package
+SPKG_DESC_CSWlibpopplerdoc = $(DESCRIPTION) - documentation
+
+PKGFILES_CSWlibpoppler= $(PKGFILES_RT)
+PKGFILES_CSWlibpopplerdev = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibpopplerdoc = $(sharedstatedir)/gtk-doc/.*
+
+INCOMPATIBLE_PKGS_CSWpoppler = CSWxpdf
+
 RUNTIME_DEP_PKGS_CSWpoppler += CSWfconfig
 RUNTIME_DEP_PKGS_CSWpoppler += CSWftype2
-RUNTIME_DEP_PKGS_CSWpoppler += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWpoppler += CSWglib2
 RUNTIME_DEP_PKGS_CSWpoppler += CSWjpeg
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibxml2
+
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWjpeg
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpango
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpoppler
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWzlib
+
+#CHECKPKG_OVERRIDES_CSWlibpopplerdev += missing-dependency|CSWlibpoppler
 
 #PATCHFILES += missing-includes.patch
 
