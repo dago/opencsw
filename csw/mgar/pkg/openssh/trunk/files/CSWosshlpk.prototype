@@ -13,8 +13,8 @@ f none /opt/csw/share/doc/openssh_lpk/CREDITS 0644 root bin
 f none /opt/csw/share/doc/openssh_lpk/ChangeLog 0644 root bin
 f none /opt/csw/share/doc/openssh_lpk/ChangeLog.gssapi 0644 root bin
 f none /opt/csw/share/doc/openssh_lpk/INSTALL 0644 root bin
+l none /opt/csw/share/doc/openssh_lpk/license=LICENCE
 f none /opt/csw/share/doc/openssh_lpk/LICENCE 0644 root bin
-f none /opt/csw/share/doc/openssh_lpk/license 0644 root bin
 f none /opt/csw/share/doc/openssh_lpk/OVERVIEW 0644 root bin
 f none /opt/csw/share/doc/openssh_lpk/README 0644 root bin
 f none /opt/csw/share/doc/openssh_lpk/README.dns 0644 root bin

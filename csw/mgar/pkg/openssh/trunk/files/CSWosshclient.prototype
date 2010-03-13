@@ -17,8 +17,8 @@ f none /opt/csw/share/doc/openssh_client/CREDITS 0644 root bin
 f none /opt/csw/share/doc/openssh_client/ChangeLog 0644 root bin
 f none /opt/csw/share/doc/openssh_client/ChangeLog.gssapi 0644 root bin
 f none /opt/csw/share/doc/openssh_client/INSTALL 0644 root bin
+l none /opt/csw/share/doc/openssh_client/license=LICENCE
 f none /opt/csw/share/doc/openssh_client/LICENCE 0644 root bin
-f none /opt/csw/share/doc/openssh_client/license 0644 root bin
 f none /opt/csw/share/doc/openssh_client/OVERVIEW 0644 root bin
 f none /opt/csw/share/doc/openssh_client/README 0644 root bin
 f none /opt/csw/share/doc/openssh_client/README.dns 0644 root bin
