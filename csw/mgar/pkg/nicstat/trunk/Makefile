@@ -1,5 +1,5 @@
 GARNAME = nicstat
-GARVERSION = 1.21
+GARVERSION = 1.22
 CATEGORIES = net
 
 DESCRIPTION = Network monitoring tool
@@ -23,8 +23,6 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
-
-WORKSRC = $(WORKDIR)
 
 ifeq ($(shell uname -p), sparc)
   MYARCH = -xarch=v8
