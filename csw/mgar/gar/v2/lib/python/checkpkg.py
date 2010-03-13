@@ -816,6 +816,10 @@ class CheckInterfaceBase(object):
     if not self.system_pkgmap:
       self.system_pkgmap = SystemPkgmap()
 
+  def GetPkgmapLineByBasename(self, basename):
+    """Proxies calls to self.system_pkgmap."""
+    return self.system_pkgmap.GetPkgmapLineByBasename(basename)
+
 
 class IndividualCheckInterface(CheckInterfaceBase):
   """To be passed to the checking functions.
@@ -833,9 +837,10 @@ class IndividualCheckInterface(CheckInterfaceBase):
     self.errors.append(tag)
 
 
-def SetCheckInterface(object):
+class SetCheckInterface(CheckInterfaceBase):
   """To be passed to set checking functions."""
-  def __init__(self, system_pkgmap):
+
+  def __init__(self, system_pkgmap=None):
     super(SetCheckInterface, self).__init__(system_pkgmap)
     self.errors = []
 
@@ -872,19 +877,21 @@ class CheckpkgManager2(CheckpkgManagerBase):
           self._RegisterIndividualCheck(member)
         elif member_name.startswith("SetCheck"):
           logging.debug("Registering set check %s", repr(member_name))
-          self._RegisterIndividualCheck(member)
+          self._RegisterSetCheck(member)
 
   def GetAllTags(self, packages_data):
     errors = {}
+    # TODO: Configure the logger with the logging level.
     logging_level = logging.INFO
     if self.debug:
       logging_level = logging.DEBUG
+    pkgmap = SystemPkgmap()
     # Individual checks
     for pkg_data in packages_data:
       for function in self.individual_checks:
         all_stats = pkg_data.GetAllStats()
         pkgname = all_stats["basic_stats"]["pkgname"]
-        check_interface = IndividualCheckInterface(pkgname)
+        check_interface = IndividualCheckInterface(pkgname, pkgmap)
         logger = logging.getLogger("%s-%s" % (pkgname, function.__name__))
         logger.debug("Calling %s", function.__name__)
         function(all_stats, check_interface, logger=logger)
@@ -894,7 +901,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
     for function in self.set_checks:
       pkgs_data = [x.GetAllStats() for x in packages_data]
       logger = logging.getLogger("SetCheck-%s" % (function.__name__,))
-      check_interface = SetCheckInterface()
+      check_interface = SetCheckInterface(pkgmap)
       logger.debug("Calling %s", function.__name__)
       function(pkgs_data, check_interface, logger)
       if check_interface.errors:
