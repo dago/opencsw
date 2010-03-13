@@ -12,6 +12,7 @@ as an extension to Emacs.
 endef
 
 BUILD_DEP_PKGS = CSWautoconf CSWautomake CSWtexinfo
+RUNTIME_DEP_PKGS = CSWgit CSWemacscommon
 
 GIT_REPOS = git://github.com/technomancy/magit.git
 GIT_TREEISH = $(PATCHLEVEL)
