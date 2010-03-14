@@ -14,8 +14,8 @@ PACKAGES = CSWliblqr CSWliblqrdevel
 CATALOGNAME_CSWliblqr = liblqr
 CATALOGNAME_CSWliblqrdevel = liblqr_devel
 
-SPKG_DESC_CSWliblqr += A seam-carving C/C++ library called Liquid Rescale
-SPKG_DESC_CSWliblqrdevel += A seam-carving C/C++ library called Liquid Rescale - developer package
+SPKG_DESC_CSWliblqr += $(DESCRIPTION)
+SPKG_DESC_CSWliblqrdevel += $(DESCRIPTION) - developer package
 
 RUNTIME_DEP_PKGS_CSWliblqr += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWliblqr += CSWglib2
@@ -23,15 +23,9 @@ RUNTIME_DEP_PKGS_CSWliblqrdevel += CSWliblqr
 
 PKGFILES_CSWliblqrdevel = $(PKGFILES_DEVEL)
 
-# Some symbols seems to be missing for some strange reason
-CHECKPKG_OVERRIDES_CSWliblqr += symbol-not-found|liblqr-1.so.0.3.1
-CHECKPKG_OVERRIDES_CSWliblqr += symbol-not-found|liblqr-1.so.0.3.1
-
 SPKG_SOURCEURL = http://liblqr.wikidot.com/
 
-#LICENSE = flashpix.h
-
-#DOCFILES = AUTHORS ChangeLog NEWS README
+DOCFILES = AUTHORS BUGS COPYING COPYING.LESSER ChangeLog NEWS README TODO
 
 UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
 
