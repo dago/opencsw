@@ -34,5 +34,8 @@ pre-configure-modulated:
 # When CSWemacs sprouts a nice auto-startup facility like Redhat or
 # Debian, remove this...
 post-install-modulated:
+	@(cd $(WORKSRC); \
+		mkdir -p $(DESTDIR)/$(docdir)/$(GARNAME); \
+		cp README AUTHORS NEWS $(DESTDIR)/$(docdir)/$(GARNAME) )
 	@(cd $(DESTDIR); rm -rf opt/csw/etc )
 	@$(MAKECOOKIE)
