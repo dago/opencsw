@@ -7,8 +7,6 @@
 import checkpkg
 import re
 
-ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
-
 MAX_CATALOGNAME_LENGTH = 20
 MAX_PKGNAME_LENGTH = 20
 ARCH_LIST = ["sparc", "i386", "all"]
@@ -123,55 +121,6 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
   else:
     errors.append(checkpkg.CheckpkgTag(
       pkgname, "pkginfo-pstamp-missing"))
-  return errors
-
-
-def ArchitectureSanity(pkg_data, debug):
-  errors = []
-  basic_stats = pkg_data["basic_stats"]
-  pkgname = basic_stats["pkgname"]
-  pkginfo = pkg_data["pkginfo"]
-  filename = basic_stats["pkg_basename"]
-  arch = pkginfo["ARCH"]
-  filename_re = r"-%s-" % arch
-  if not re.search(filename_re, filename):
-    errors.append(checkpkg.CheckpkgTag(
-      pkgname, "srv4-filename-architecture-mismatch", arch))
-  return errors
-
-
-def CheckArchitectureVsContents(pkg_data, debug):
-  """Verifies the relationship between package contents and architecture."""
-  errors = []
-  binaries = pkg_data["binaries"]
-  pkginfo = pkg_data["pkginfo"]
-  pkgmap = pkg_data["pkgmap"]
-  arch = pkginfo["ARCH"]
-  pkgname = pkg_data["basic_stats"]["pkgname"]
-  reasons_to_be_arch_specific = []
-  pkgmap_paths = [x["path"] for x in pkgmap]
-  for pkgmap_path in pkgmap_paths:
-    if re.search(ARCH_RE, str(pkgmap_path)):
-      reasons_to_be_arch_specific.append((
-          "archall-with-arch-paths",
-          pkgmap_path,
-          "path %s looks arch-specific" % pkgmap_path))
-  for binary in binaries:
-    reasons_to_be_arch_specific.append((
-        "archall-with-binaries",
-        binary,
-        "package contains binary %s" % binary))
-  if arch == "all":
-    for tag, param, desc in reasons_to_be_arch_specific:
-      errors.append(checkpkg.CheckpkgTag(pkgname, tag, param))
-  elif not reasons_to_be_arch_specific:
-    # This is not a clean way of handling messages for the user, but there's
-    # not better way at the moment.
-    print "Package %s does not contain any binaries." % pkgname
-    print "Consider making it ARCHALL = 1 instead of %s:" % arch
-    print "ARCHALL_%s = 1" % pkgname
-    print ("However, be aware that there might be other reasons "
-           "to keep it architecture-specific.")
   return errors
 
 

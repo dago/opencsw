@@ -14,6 +14,7 @@
 import re
 import os
 import checkpkg
+import opencsw
 from Cheetah import Template
 
 PATHS_ALLOWED_ONLY_IN = {
@@ -26,6 +27,18 @@ PATHS_ALLOWED_ONLY_IN = {
     "CSWtexinfp": ["/opt/csw/share/info/dir"],
 }
 MAX_DESCRIPTION_LENGTH = 100
+LICENSE_TMPL = "/opt/csw/share/doc/%s/license"
+OBSOLETE_DEPS = {
+    # "CSWfoo": {
+    #   "hint": "Do this...",
+    #   "url": "http://www.opencsw.org/bugtrack/view.php?id=..."
+    # },
+    "CSWpython-rt": {
+      "hint": "CSWpython-rt is deprecated, use CSWpython instead.",
+      "url": "http://www.opencsw.org/bugtrack/view.php?id=4031"
+    },
+}
+ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
 
 
 def CatalognameLowercase(pkg_data, error_mgr, logger):
@@ -246,3 +259,91 @@ def CheckDependsOnSelf(pkg_data, error_mgr, logger):
   for depname, dep_desc in pkg_data["depends"]:
     if depname == pkgname:
       error_mgr.ReportError("depends-on-self")
+
+def CheckArchitectureSanity(pkg_data, error_mgr, logger):
+  basic_stats = pkg_data["basic_stats"]
+  pkgname = basic_stats["pkgname"]
+  pkginfo = pkg_data["pkginfo"]
+  filename = basic_stats["pkg_basename"]
+  arch = pkginfo["ARCH"]
+  filename_re = r"-%s-" % arch
+  if not re.search(filename_re, filename):
+    error_mgr.ReportError("srv4-filename-architecture-mismatch", arch)
+
+
+def CheckActionClasses(pkg_data, error_mgr, logger):
+  """Checks the consistency between classes in the prototype and pkginfo."""
+  pkginfo = pkg_data["pkginfo"]
+  pkgmap = pkg_data["pkgmap"]
+  pkginfo_classes = set(re.split(opencsw.WS_RE, pkginfo["CLASSES"]))
+  pkgmap_classes = set()
+  for entry in pkgmap:
+    if entry["class"]:  # might be None
+      pkgmap_classes.add(entry["class"])
+  only_in_pkginfo = pkginfo_classes.difference(pkgmap_classes)
+  only_in_pkgmap = pkgmap_classes.difference(pkginfo_classes)
+  for action_class in only_in_pkginfo:
+    error_mgr.ReportError("action-class-only-in-pkginfo", action_class)
+  for action_class in only_in_pkgmap:
+    error_mgr.ReportError("action-class-only-in-pkgmap", action_class)
+
+
+def CheckLicenseFile(pkg_data, error_mgr, logger):
+  """Checks for the presence of the license file."""
+  # TODO: Write a unit test
+  pkgmap = pkg_data["pkgmap"]
+  catalogname = pkg_data["basic_stats"]["catalogname"]
+  license_path = LICENSE_TMPL % catalogname
+  pkgmap_paths = [x["path"] for x in pkgmap]
+  if license_path not in pkgmap_paths:
+    error_mgr.ReportError("license-missing")
+    logger.info("See http://sourceforge.net/apps/trac/gar/wiki/CopyRight")
+
+def CheckObsoleteDeps(pkg_data, error_mgr, logger):
+  """Checks for obsolete dependencies."""
+  deps = set(pkg_data["depends"])
+  obsolete_pkg_deps = deps.intersection(set(OBSOLETE_DEPS))
+  if obsolete_pkg_deps:
+    for obsolete_pkg in obsolete_pkg_deps:
+      error_mgr.ReportError("obsolete-dependency", obsolete_pkg)
+      msg = ""
+      if "hint" in OBSOLETE_DEPS[obsolete_pkg]:
+        msg += "Hint: %s" % OBSOLETE_DEPS[obsolete_pkg]["hint"]
+      if "url" in OBSOLETE_DEPS[obsolete_pkg]:
+        if msg:
+          msg += ", "
+        msg += "URL: %s" % OBSOLETE_DEPS[obsolete_pkg]["url"]
+      if not msg:
+        msg = None
+      logger.info(msg)
+
+
+def CheckArchitectureVsContents(pkg_data, error_mgr, logger):
+  """Verifies the relationship between package contents and architecture."""
+  binaries = pkg_data["binaries"]
+  pkginfo = pkg_data["pkginfo"]
+  pkgmap = pkg_data["pkgmap"]
+  arch = pkginfo["ARCH"]
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  reasons_to_be_arch_specific = []
+  pkgmap_paths = [x["path"] for x in pkgmap]
+  for pkgmap_path in pkgmap_paths:
+    if re.search(ARCH_RE, str(pkgmap_path)):
+      reasons_to_be_arch_specific.append((
+          "archall-with-arch-paths",
+          pkgmap_path,
+          "path %s looks arch-specific" % pkgmap_path))
+  for binary in binaries:
+    reasons_to_be_arch_specific.append((
+        "archall-with-binaries",
+        binary,
+        "package contains binary %s" % binary))
+  if arch == "all":
+    for tag, param, desc in reasons_to_be_arch_specific:
+      error_mgr.ReportError(tag, param, desc)
+  elif not reasons_to_be_arch_specific:
+    logger.info("Package %s does not contain any binaries.", pkgname)
+    logger.info("Consider making it ARCHALL = 1 instead of %s:", arch)
+    logger.info("ARCHALL_%s = 1", pkgname)
+    logger.info("However, be aware that there might be other reasons "
+                "to keep it architecture-specific.")

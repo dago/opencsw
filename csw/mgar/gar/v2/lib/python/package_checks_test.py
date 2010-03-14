@@ -174,5 +174,24 @@ class TestCheckCheckDependsOnSelf(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError('depends-on-self')
 
 
+class TestCheckArchitectureSanity(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckArchitectureSanity'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["ARCH"] = "i386"
+    self.error_mgr_mock.ReportError('srv4-filename-architecture-mismatch', 'i386')
+
+class TestCheckArchitectureVsContents(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckArchitectureVsContents'
+  def CheckpkgTest(self):
+    # TODO: Update this.
+    # self.pkg_data["pkgmap"] = self.LoadData("example-1-pkgmap")
+    # self.pkg_data["binaries"] = []
+    # self.pkg_data["pkginfo"] = self.LoadData("example-1-pkginfo")
+    # errors = pc.CheckArchitectureVsContents(self.pkg_data_2, False)
+    # self.failIf(errors)
+    pass
+
+
+
 if __name__ == '__main__':
   unittest.main()

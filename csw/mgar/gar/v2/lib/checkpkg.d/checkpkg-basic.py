@@ -31,7 +31,6 @@ def main():
   # Registering functions defined above.
   check_manager.RegisterIndividualCheck(package_checks_old.FileNameSanity)
   check_manager.RegisterIndividualCheck(package_checks_old.PkginfoSanity)
-  check_manager.RegisterIndividualCheck(package_checks_old.ArchitectureSanity)
   check_manager.RegisterIndividualCheck(package_checks_old.CheckBuildingUser)
   check_manager.RegisterIndividualCheck(package_checks_old.CheckPkgmapPaths)
   # Running the checks, reporting and exiting.

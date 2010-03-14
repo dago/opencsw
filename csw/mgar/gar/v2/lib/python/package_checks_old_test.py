@@ -51,13 +51,6 @@ class PackageChecksUnitTest(unittest.TestCase):
     errors = pc.FileNameSanity(self.pkg_data_2, False)
     self.failUnless(errors)
 
-  def testCheckArchitectureVsContents(self):
-    self.pkg_data_2["pkgmap"] = self.LoadData("example-1-pkgmap")
-    self.pkg_data_2["binaries"] = []
-    self.pkg_data_2["pkginfo"] = self.LoadData("example-1-pkginfo")
-    errors = pc.CheckArchitectureVsContents(self.pkg_data_2, False)
-    self.failIf(errors)
-
   def testCheckForMissingSymbols(self):
     ldd_dash_r_yml = """opt/csw/lib/postgresql/8.4/_int.so:
 - {path: /usr/lib/libc.so.1, soname: libc.so.1, state: OK, symbol: null}
@@ -100,13 +93,6 @@ opt/csw/lib/postgresql/8.4/_int2.so: []
     self.pkg_data_2["binaries"] = ["opt/csw/lib/postgresql/8.4/_int.so",
                                    "opt/csw/lib/postgresql/8.4/_int2.so"]
     errors = pc.CheckForMissingSymbols([self.pkg_data_2], False)
-    self.failUnless(errors)
-
-
-  def testArchitectureSanity(self):
-    self.pkg_data_2["pkginfo"] = {}
-    self.pkg_data_2["pkginfo"]["ARCH"] = "i386"
-    errors = pc.ArchitectureSanity(self.pkg_data_2, False)
     self.failUnless(errors)
 
 

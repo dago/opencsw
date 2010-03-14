@@ -18,7 +18,6 @@ sys.path.append(os.path.join(*path_list))
 import checkpkg
 
 def main():
-  print "Checking if the package cache is up to date."
   logging.basicConfig(level=logging.INFO)
   test_pkgmap = checkpkg.SystemPkgmap()
   test_pkgmap.InitializeDatabase()
