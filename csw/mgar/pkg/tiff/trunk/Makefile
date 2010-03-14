@@ -2,7 +2,7 @@ GARNAME = tiff
 GARVERSION = 3.9.2
 CATEGORIES = lib
 
-DESCRIPTION = lib and tools for Tag Image File Format
+DESCRIPTION = Lib and tools for Tag Image File Format
 define BLURB
 endef
 
@@ -16,10 +16,10 @@ CATALOGNAME_CSWtiffrt = tiff_rt
 CATALOGNAME_CSWtiffdevel = tiff_devel
 CATALOGNAME_CSWtiffdoc = tiff_doc
 
-SPKG_DESC_CSWtiff += lib and tools for Tag Image File Format
-SPKG_DESC_CSWtiffrt += lib and tools for Tag Image File Format - runtime package
-SPKG_DESC_CSWtiffdevel += lib and tools for Tag Image File Format - developer package
-SPKG_DESC_CSWtiffdoc += lib and tools for Tag Image File Format - documentation
+SPKG_DESC_CSWtiff += $(DESCRIPTION)
+SPKG_DESC_CSWtiffrt +=  $(DESCRIPTION) - runtime package
+SPKG_DESC_CSWtiffdevel += $(DESCRIPTION) - developer package
+SPKG_DESC_CSWtiffdoc += $(DESCRIPTION) - documentation
 
 RUNTIME_DEP_PKGS_CSWtiff += CSWtiffrt CSWjbigkit CSWjpeg CSWzlib
 RUNTIME_DEP_PKGS_CSWtiffrt += CSWjbigkit CSWjpeg CSWzlib
