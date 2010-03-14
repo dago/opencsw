@@ -2,7 +2,7 @@ GARNAME = memconf
 GARVERSION = 2.13
 CATEGORIES = utils
 
-DESCRIPTION = perl script that displays memory modules installed
+DESCRIPTION = Perl script that displays memory modules installed
 define BLURB
 	memconf reports the size of each SIMM/DIMM memory module installed in
 	a system. It also reports the system type and any empty memory sockets.
