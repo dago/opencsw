@@ -433,6 +433,15 @@ class SystemPkgmap(object):
         except sqlite3.OperationalError, e:
           logging.warn("sqlite3.OperationalError: %s", e)
 
+  def GetInstalledPackages(self):
+    """Returns a dictioary of all installed packages."""
+    self._LazyInitializeDatabase()
+    c = self.conn.cursor()
+    sql = "SELECT pkgname, pkg_desc FROM packages;"
+    c.execute(sql)
+    return dict(x[0:2] for x in c)
+
+
 def SharedObjectDependencies(pkgname,
                              binaries_by_pkgname,
                              needed_sonames_by_binary,
@@ -819,6 +828,9 @@ class CheckInterfaceBase(object):
   def GetPkgmapLineByBasename(self, basename):
     """Proxies calls to self.system_pkgmap."""
     return self.system_pkgmap.GetPkgmapLineByBasename(basename)
+
+  def GetInstalledPackages(self):
+    return self.system_pkgmap.GetInstalledPackages()
 
 
 class IndividualCheckInterface(CheckInterfaceBase):
@@ -1249,6 +1261,13 @@ class PackageStats(object):
     else:
       self.CollectStats()
     return self.all_stats
+
+  def GetSavedOverrides(self):
+    if not self.StatsExist():
+      raise PackageError("Package stats not ready.")
+    override_stats = self.ReadObject("overrides")
+    overrides = [Override(**x) for x in override_stats]
+    return overrides
 
   def DumpObject(self, obj, name):
     """Saves an object.

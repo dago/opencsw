@@ -46,21 +46,6 @@ class PackageChecksUnitTest(unittest.TestCase):
     f.close()
     return data
 
-  def testCatalogName_1(self):
-    self.pkg_data_1["basic_stats"]["catalogname"] = "Foo"
-    errors = pc.CatalognameLowercase(self.pkg_data_1, False)
-    self.failUnless(errors)
-
-  def testCatalogName_2(self):
-    self.pkg_data_1["basic_stats"]["catalogname"] = "foo"
-    errors = pc.CatalognameLowercase(self.pkg_data_1, False)
-    self.failIf(errors)
-
-  def testCatalogNameSpecialCharacters(self):
-    self.pkg_data_1["basic_stats"]["catalogname"] = "foo+abc&123"
-    errors = pc.CatalognameLowercase(self.pkg_data_1, False)
-    self.failUnless(errors)
-
   def testFileNameSanity(self):
     del(self.pkg_data_2["basic_stats"]["parsed_basename"]["revision_info"]["REV"])
     errors = pc.FileNameSanity(self.pkg_data_2, False)

@@ -152,10 +152,10 @@ if [ -d $EXTRACTDIR ] ; then
 	exit 1
 fi
 
+printf "Examining pkginfo files: "
+
 for f in "$@"
 do
-
-
 
 if [[ ! -f $f ]] ; then
 	print ERROR: $f does not exist
@@ -163,46 +163,43 @@ if [[ ! -f $f ]] ; then
 fi
 
 
-case $f in
-	*)
-	print Examining $f
+debugmsg "Examining $f"
+debugmsg "Looking for bad strings..."
 
-	print Looking for bad strings...
-
-	# XPG4 grep has some kind of magical "ignore ELF header" power.
-	#  but... not on sol8, just sol10?
-	# and so does /bin/grep. but NOT /bin/egrep???
-	#
-	# Need to rewrite this whole thing to also
-	# check for badly set RUNPATHs. sigh.
-	#
-	# Using rot13 so that checkpkg can check itself without reporting
-	# an error.
-	badpaths="$(echo /rkcbeg/zrqhfn /bcg/ohvyq | gtr a-mn-z n-za-m)"
-	for badpath in $badpaths ; do
-		GREP=/bin/grep gzgrep "$badpath" $f
-		if [[ $? -eq 0 ]] ; then
-			print ""
-			print ERROR: build-machine paths found in file $f
-			print '($badpath)'
-			exit 1
-		fi
-	done
-esac
-
-print Extracting all files for more detailed inspection...
+# XPG4 grep has some kind of magical "ignore ELF header" power.
+#  but... not on sol8, just sol10?
+# and so does /bin/grep. but NOT /bin/egrep???
+#
+# Need to rewrite this whole thing to also
+# check for badly set RUNPATHs. sigh.
+#
+# Using rot13 so that checkpkg can check itself without reporting
+# an error.
+badpaths="$(echo /rkcbeg/zrqhfn /bcg/ohvyq | gtr a-mn-z n-za-m)"
+for badpath in $badpaths ; do
+  GREP=/bin/grep gzgrep "$badpath" $f
+  if [[ $? -eq 0 ]] ; then
+    print ""
+    print "ERROR: build-machine paths found in file $f"
+    print "($badpath)"
+    exit 1
+  fi
+done
 
 set_variables_for_individual_package_check "$f"
 
-mkdir $EXTRACTDIR
+[ -d ${EXTRACTDIR} ] || mkdir ${EXTRACTDIR}
 
 # FIXME: This doesn't support multiple packages
 TMPFILE=$EXTRACTDIR/pkginfo
 
 
-dd if=$f skip=1 | (cd $EXTRACTDIR; cpio -ivd $pkgname/pkginfo)
+printf "$pkgname "
+dd if=$f skip=1 | (cd $EXTRACTDIR; cpio -ivd $pkgname/pkginfo >/dev/null 2>&1)
 if [[ $? -ne 0 ]] ; then
-	print ERROR: could not extract $f
+	print "ERROR: could not extract $f"
+	print "with (cd $EXTRACTDIR; cpio -ivd $pkgname/pkginfo)"
+	ls -l $EXTRACTDIR
 	rm -rf $EXTRACTDIR $TMPARCHIVE
 	exit 1
 fi
@@ -223,142 +220,50 @@ rm $TMPFILE
 # strip out '' chars, because it interferes with mysql
 desc=`print $desc | sed "s/'//g"`
 
-
-goodarch=yes
-case $f in
-	*${LOCAL_ARCH}*)
-		
-	;;
-	*)
-		print NOTE: pkg must be for arch $LOCAL_ARCH to check dynamic libs
-		goodarch=no		
-	;;
-esac
-
-
-#if [ "$goodarch" = "no" ] ; then
-#	# neutral architechture. cant check libraries for it.
-#	print ""
-#	rm -rf $EXTRACTDIR $TMPARCHIVE
-#	exit 0
-#fi
-
-print ""
-print Extracing pkg for examination of files...
-custom_pkgtrans $f $EXTRACTDIR $pkgname
-
 #############################################################
 # We now have the package expanded, in "directory" form, in
 # $EXTRACTDIR/$pkgname
 # Now do some extended error checking on it.
 # This is similar to Debians "Lintian" phase for packages.
 
-/usr/sbin/pkgchk -d $EXTRACTDIR $pkgname || errmsg "Package failed integrity check"
-
-print "/usr/sbin/pkgchk passed."
+# TODO: Run this during the stats collection stage.
+# /usr/sbin/pkgchk -d $EXTRACTDIR $pkgname || errmsg "Package failed integrity check"
+# print "/usr/sbin/pkgchk passed."
 
 
 ########################################
 # Check for some common errors
 #########################################
-# find all executables and dynamic libs,and list their filenames.
-listbinaries() {
-	if [ ! -d $1 ] ; then
-		print errmsg $1 not a directory
-		rm -rf $EXTRACTDIR
-		exit 1
-	fi
 
-	find $1 -print | xargs file |grep ELF |nawk -F: '{print $1}'
-}
+# TODO: To be ported.
+#
+# # find all executables and dynamic libs,and list their filenames.
+# if [[ "$basedir" != "" ]] ; then
+# 	print
+# 	if [[ -f $EXTRACTDIR/elflist ]] ; then
+# 		print "Checking relocation ability..."
+# 		xargs strings < $EXTRACTDIR/elflist| grep /opt/csw
+# 		if [[ $? -eq 0 ]] ; then
+# 			errmsg package build as relocatable, but binaries have hardcoded /opt/csw paths in them
+# 		else
+# 			print trivial check passed
+# 		fi
+# 	else
+# 		echo No relocation check done for non-binary relocatable package.
+# 	fi
+# fi
 
-if [[ "$goodarch" = "yes" ]] ; then
-	# man ld.so.1 for more info on this hack
-	export LD_NOAUXFLTR=1
-	listbinaries $EXTRACTDIR/$pkgname >$EXTRACTDIR/elflist
-	# have to do this for ldd to work. arrg.
-	if [ -s "$EXTRACTDIR/elflist" ] ; then
-		chmod 0755 `cat $EXTRACTDIR/elflist`
-		cat $EXTRACTDIR/elflist| xargs /usr/ccs/bin/dump -Lv |nawk '$2=="NEEDED"{print $3}' |
-			sort -u | egrep -v $EXTRACTDIR >$EXTRACTDIR/liblist
-		print libraries used are:
-		cat $EXTRACTDIR/liblist
-		print "cross-referencing with depend file (May take a while)"
-	else
-		print No dynamic libraries in the package
-	fi
-fi
-
-#If these dont exist, it is Bad.
-touch $EXTRACTDIR/liblist $EXTRACTDIR/libpkgs
-
-# store things that look like shared objects from the package map for
-# delayed library validation.
-grep "\.so" $EXTRACTDIR/$pkgname/pkgmap >> $SETLIBS
-
-if [[ -f $EXTRACTDIR/$pkgname/install/depend ]] ; then
-	print 
-	print "Examining 'depend' file"
-else
-	# They may have forgotten to create/add in a depend file
-	# Remind people what the package depends on
-	# print "Analysing dynamic dependancies, if any"
-	touch $EXTRACTDIR/$pkgname/install/depend
-fi
-
-# sanity check against "depends on self"
-nawk '$2=="'$pkgname'" {exit 1}' $EXTRACTDIR/$pkgname/install/depend
-if [[ $? -ne 0 ]] ; then
-	errmsg "$pkgname references self in depend file"
-fi
-
-#to retain a record of all packages currently being examined from $@
-echo $pkgname >> $SETDEPS
-
-nawk '$1=="P" {print $2}'  $EXTRACTDIR/$pkgname/install/depend |
-	sort >$EXTRACTDIR/deppkgs
-for dep in `cat $EXTRACTDIR/deppkgs`
-do
-    pkginfo $dep
-    if [[ $? -ne 0 ]]; then
-	#if we've already looked at the package named $dep,
-	#it'll be in the file.
-	awk "\$1 == \"$dep\" {print}" $SETDEPS | /usr/bin/grep $dep >/dev/null
-	if [[ $? -ne 0 ]]; then #we haven't yet seen this package in our set
-	    echo "Can't validate dependence on $dep.  Storing for delayed validation."
-	    #store for validation at the end.
-	    echo "$dep $pkgname" >> $SETDEPS.missing
-	else
-	    echo "Found $dep as part of the package set being evaluated."
-	fi
-    fi
+tmparchives="$tmparchives $TMPARCHIVE"
 done
 
-if [[ "$basedir" != "" ]] ; then
-	print
-	if [[ -f $EXTRACTDIR/elflist ]] ; then
-		print "Checking relocation ability..."
-		xargs strings < $EXTRACTDIR/elflist| grep /opt/csw
-		if [[ $? -eq 0 ]] ; then
-			errmsg package build as relocatable, but binaries have hardcoded /opt/csw paths in them
-		else
-			print trivial check passed
-		fi
-	else
-		echo No relocation check done for non-binary relocatable package.
-	fi
-fi
+# Terminating the line with pkgnames
+echo
 
 # Plugin section.
 #
 # Plugins should live in checkpkg.d subdirectory in the same directory in which
 # checkpkg is.  Each plugin file name should be an executable and begin with
 # "checkpkg-".
-
-tmparchives="$tmparchives $TMPARCHIVE"
-done
-
-# All packages have been extracted.
 
 set_variables_for_individual_package_check "$f"
 
@@ -456,9 +361,10 @@ if [[ "${DEBUG}" != "" ]]; then
 fi
 
 # Collecting errors and applying the overrides.
+# This has to use the original files.
 ${command_basedir}/analyze_module_results.py \
-	-e "${EXTRACTDIR}" \
-	${pkgnames}
+    -e "${EXTRACTDIR}" \
+    "$@"
 if [[ "$?" -ne 0 ]]; then
 	errmsg "${RED}Modular checks are reporting errors.${COLOR_RESET}"
 else
@@ -469,19 +375,5 @@ print ""
 
 # Cleaning up after all packages
 cleanup
-
-if [ -s $SETDEPS.missing ]; then
-    print "Doing late evaluations of package dependencies."
-    while read mdep; do
-	dep=`echo $mdep | nawk '{print $1}'`
-	pkg=`echo $mdep | nawk '{print $2}'`
-	/usr/bin/grep $dep $SETDEPS >/dev/null
-	if [ $? -ne 0 ]; then
-	    errmsg "Couldn't validate $dep as a dependency in package $pkg"
-	else
-	    print "Validated $dep as a dependency for $pkg."
-	fi
-    done < $SETDEPS.missing
-fi
 
 cleanupset

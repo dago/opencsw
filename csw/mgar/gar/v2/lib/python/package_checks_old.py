@@ -17,21 +17,6 @@ ONLY_ALLOWED_IN_PKG = {
     "CSWcommon": ("/opt", "",)
 }
 
-def CatalognameLowercase(pkg_data, debug):
-  errors = []
-  # Here's how to report an error:
-  catalogname = pkg_data["basic_stats"]["catalogname"]
-  if catalogname != catalogname.lower():
-    errors.append(checkpkg.CheckpkgTag(
-      pkg_data["basic_stats"]["pkgname"],
-      "catalogname-not-lowercase"))
-  if not re.match(r"^[\w_]+$", catalogname):
-    errors.append(checkpkg.CheckpkgTag(
-      pkg_data["basic_stats"]["pkgname"],
-      "catalogname-is-not-a-simple-word"))
-  return errors
-
-
 def FileNameSanity(pkg_data, debug):
   errors = []
   basic_stats = pkg_data["basic_stats"]

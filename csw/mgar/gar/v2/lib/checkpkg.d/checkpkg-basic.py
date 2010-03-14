@@ -29,7 +29,6 @@ def main():
                                            md5sums,
                                            options.debug)
   # Registering functions defined above.
-  check_manager.RegisterIndividualCheck(package_checks_old.CatalognameLowercase)
   check_manager.RegisterIndividualCheck(package_checks_old.FileNameSanity)
   check_manager.RegisterIndividualCheck(package_checks_old.PkginfoSanity)
   check_manager.RegisterIndividualCheck(package_checks_old.ArchitectureSanity)

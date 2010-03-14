@@ -28,6 +28,14 @@ PATHS_ALLOWED_ONLY_IN = {
 MAX_DESCRIPTION_LENGTH = 100
 
 
+def CatalognameLowercase(pkg_data, error_mgr, logger):
+  catalogname = pkg_data["basic_stats"]["catalogname"]
+  if catalogname != catalogname.lower():
+    error_mgr.ReportError("catalogname-not-lowercase")
+  if not re.match(r"^[\w_]+$", catalogname):
+    error_mgr.ReportError("catalogname-is-not-a-simple-word")
+
+
 def CheckForbiddenPaths(pkg_data, error_mgr, logger):
   for pkgname in PATHS_ALLOWED_ONLY_IN:
     if pkgname != pkg_data["basic_stats"]["pkgname"]:
@@ -223,4 +231,18 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
 
 def SetCheckDependencies(pkgs_data, error_mgr, logger):
   """Dependencies must be either installed in the system, or in the set."""
-  pass
+  known_pkgs = set(error_mgr.GetInstalledPackages())
+  pkgs_under_check = [x["basic_stats"]["pkgname"] for x in pkgs_data]
+  for pkgname in pkgs_under_check:
+    known_pkgs.add(pkgname)
+  for pkg_data in pkgs_data:
+    pkgname = pkg_data["basic_stats"]["pkgname"]
+    for depname, dep_desc in pkg_data["depends"]:
+      if depname not in known_pkgs:
+        error_mgr.ReportError(pkgname, "unidentified-dependency", depname)
+
+def CheckDependsOnSelf(pkg_data, error_mgr, logger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  for depname, dep_desc in pkg_data["depends"]:
+    if depname == pkgname:
+      error_mgr.ReportError("depends-on-self")

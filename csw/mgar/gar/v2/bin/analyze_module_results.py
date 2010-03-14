@@ -16,13 +16,13 @@ import opencsw
 def main():
   parser = optparse.OptionParser()
   parser.add_option("-e", "--extract-dir", dest="extractdir",
-                    help="Directory with extracted packages")
+                    help="Directory with extracted packages "
+                         "(with error tag files)")
   options, args = parser.parse_args()
-  pkgnames = args
-  packages = [opencsw.DirectoryFormatPackage(
-                  os.path.join(options.extractdir, pkgname))
-              for pkgname in pkgnames]
-  overrides_list = [pkg.GetOverrides() for pkg in packages]
+  filenames = args
+  srv4_pkgs = [opencsw.CswSrv4File(x) for x in filenames]
+  pkgstats = [checkpkg.PackageStats(x) for x in srv4_pkgs]
+  overrides_list = [pkg.GetSavedOverrides() for pkg in pkgstats]
   files = os.listdir(options.extractdir)
   error_tags = []
   for file_name in files:
