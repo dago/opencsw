@@ -46,7 +46,7 @@ VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
 ONLY_ALLOWED_IN_PKG = {
     "CSWcommon": ("/opt", )
 }
-DO_NOT_LINK_AGAINST_THESE_SONAMES = set(["libX11.so.4", "libXext.so.0"])
+DO_NOT_LINK_AGAINST_THESE_SONAMES = set(["libX11.so.4"])
 
 
 def CatalognameLowercase(pkg_data, error_mgr, logger):
