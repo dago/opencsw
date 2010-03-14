@@ -26,29 +26,77 @@ SPKG_SOURCEURL = http://librsvg.sourceforge.net
 
 LICENSE = COPYING.LIB
 
-PACKAGES = CSWlibrsvg CSWlibrsvgdevel CSWlibrsvgdoc CSWlibrsvgmozilla
+PACKAGES = CSWlibrsvg CSWlibrsvgdevel CSWlibrsvgdoc CSWlibrsvgmozilla CSWrsvg CSWlibrsvggnome
 
+CATALOGNAME_CSWrsvg = rsvg
 CATALOGNAME_CSWlibrsvg = librsvg
+CATALOGNAME_CSWlibrsvggnome = librsvg_gnome
 CATALOGNAME_CSWlibrsvgdevel = librsvg_devel
 CATALOGNAME_CSWlibrsvgdoc = librsvg_doc
 CATALOGNAME_CSWlibrsvgmozilla = librsvg_mozilla
 
+SPKG_DESC_CSWrsvg += SVG to raster image conversion utility
 SPKG_DESC_CSWlibrsvg += Scalable Vector Graphics library
 SPKG_DESC_CSWlibrsvgdevel += Scalable Vector Graphics library - developer package
 SPKG_DESC_CSWlibrsvgdoc += Scalable Vector Graphics library - documentation
+SPKG_DESC_CSWlibrsvggnome += Scalable Vector Graphics library - Gnome module
 SPKG_DESC_CSWlibrsvgmozilla += Scalable Vector Graphics library - Mozilla plugin
 
-RUNTIME_DEP_PKGS_CSWlibrsvg += CSWfconfig CSWftype2 CSWggettextrt
-RUNTIME_DEP_PKGS_CSWlibrsvg += CSWglib2 CSWgtk2 CSWlibatk
-RUNTIME_DEP_PKGS_CSWlibrsvg += CSWlibcairo CSWlibcroco CSWlibgsf CSWlibx11
-RUNTIME_DEP_PKGS_CSWlibrsvg += CSWlibxml2 CSWpango CSWpng CSWzlib CSWorbit2
-RUNTIME_DEP_PKGS_CSWlibrsvg += CSWbonobo2 CSWgconf2 CSWgnomevfs2 CSWlibxrender 
+RUNTIME_DEP_PKGS_CSWrsvg += CSWfconfig
+RUNTIME_DEP_PKGS_CSWrsvg += CSWftype2
+RUNTIME_DEP_PKGS_CSWrsvg += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWrsvg += CSWglib2
+RUNTIME_DEP_PKGS_CSWrsvg += CSWgtk2
+RUNTIME_DEP_PKGS_CSWrsvg += CSWlibatk
+RUNTIME_DEP_PKGS_CSWrsvg += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWrsvg += CSWlibcroco
+RUNTIME_DEP_PKGS_CSWrsvg += CSWlibgsf
+RUNTIME_DEP_PKGS_CSWrsvg += CSWlibrsvg
+RUNTIME_DEP_PKGS_CSWrsvg += CSWlibx11
+RUNTIME_DEP_PKGS_CSWrsvg += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWrsvg += CSWpango
+RUNTIME_DEP_PKGS_CSWrsvg += CSWpng
+
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWbonobo2
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWgconf2
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWgnomevfs2
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWgtk2
 RUNTIME_DEP_PKGS_CSWlibrsvg += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWlibcroco
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWlibgsf
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWorbit2
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWpango
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWpng
+RUNTIME_DEP_PKGS_CSWlibrsvg += CSWzlib
+
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibatk
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibcroco
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibgsf
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibrsvg
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWpango
+RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWpng
+
 RUNTIME_DEP_PKGS_CSWlibrsvgdevel += CSWlibrsvg
 RUNTIME_DEP_PKGS_CSWlibrsvgdoc +=
 RUNTIME_DEP_PKGS_CSWlibrsvgmozilla += CSWggettextrt CSWglib2
 
+PKGFILES_CSWlibrsvg= $(PKGFILES_RT)
 PKGFILES_CSWlibrsvgdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibrsvggnome = $(libdir)/gtk-2.0/.*
 PKGFILES_CSWlibrsvgmozilla = $(libdir)/mozilla/.*
 PKGFILES_CSWlibrsvgdoc = $(sharedstatedir)/gtk-doc/.*
 
@@ -57,10 +105,6 @@ ARCHALL_CSWlibrsvgdoc = 1
 # Only if building mozilla plugin
 BUILD_DEP_PKGS += CSWmozilla
 BUILD_DEP_PKGS += CSWlibxml2devel
-
-CHECKPKG_OVERRIDES_CSWlibrsvg += symbol-not-found|rsvg-convert
-CHECKPKG_OVERRIDES_CSWlibrsvg += symbol-not-found|rsvg-view
-CHECKPKG_OVERRIDES_CSWlibrsvg += symbol-not-found|libsvg.so
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
