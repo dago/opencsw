@@ -13,7 +13,7 @@ DISTNAME = libXau-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
 # BUILD_DEP_PKGS = CSWinputproto CSWxkbproto CSWxrenderproto CSWxcbproto
-# BUILD_DEP_PKGS += CSWxextproto CSWxproto CSWxtrans CSWlibpthreadstubs
+# BUILD_DEP_PKGS += CSWxextproto CSWx11xproto CSWxtrans CSWlibpthreadstubs
 
 PACKAGES = CSWlibxau CSWlibxaudevel
 
