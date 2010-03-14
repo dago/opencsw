@@ -198,5 +198,36 @@ class TestCheckFileNameSanity(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError('rev-tag-missing-in-filename')
 
 
+class TestCheckLinkingAgainstSunX11(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckLinkingAgainstSunX11'
+  def CheckpkgTest(self):
+    self.pkg_data["binaries_dump_info"][0]["needed sonames"].append("libX11.so.4")
+
+class TestCheckLinkingAgainstSunX11_Bad(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckLinkingAgainstSunX11'
+  def CheckpkgTest(self):
+    self.pkg_data["binaries_dump_info"].append({
+         'base_name': 'libImlib2.so.1.4.2',
+         'needed sonames': ['libfreetype.so.6',
+                            'libz.so',
+                            'libX11.so.4',
+                            'libXext.so.0',
+                            'libdl.so.1',
+                            'libm.so.1',
+                            'libc.so.1'],
+         'path': 'opt/csw/lib/libImlib2.so.1.4.2',
+         'runpath': ['/opt/csw/lib/$ISALIST',
+                     '/opt/csw/lib',
+                     '/usr/lib/$ISALIST',
+                     '/usr/lib',
+                     '/lib/$ISALIST',
+                     '/lib'],
+         'soname': 'libImlib2.so.1',
+         'soname_guessed': False,
+    })
+    self.error_mgr_mock.ReportError('linked-against-discouraged-library',
+                                    'libImlib2.so.1.4.2 libX11.so.4')
+
+
 if __name__ == '__main__':
   unittest.main()

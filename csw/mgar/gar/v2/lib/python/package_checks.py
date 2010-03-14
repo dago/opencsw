@@ -46,7 +46,7 @@ VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
 ONLY_ALLOWED_IN_PKG = {
     "CSWcommon": ("/opt", )
 }
-
+DO_NOT_LINK_AGAINST_THESE_SONAMES = set(["libX11.so.4", "libXext.so.0"])
 
 
 def CatalognameLowercase(pkg_data, error_mgr, logger):
@@ -497,3 +497,13 @@ def CheckPkgmapPaths(pkg_data, error_mgr, logger):
     for disallowed_path in ONLY_ALLOWED_IN_PKG[allowed_pkgname]:
       if disallowed_path in pkg_paths and pkgname != allowed_pkgname:
         error_mgr.ReportError("disallowed-path", disallowed_path)
+
+
+def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger):
+  for binary_info in pkg_data["binaries_dump_info"]:
+    for soname in binary_info["needed sonames"]:
+      if (".so" in binary_info["soname"]
+          and
+          soname in DO_NOT_LINK_AGAINST_THESE_SONAMES):
+        error_mgr.ReportError("linked-against-discouraged-library",
+                              "%s %s" % (binary_info["base_name"], soname))
