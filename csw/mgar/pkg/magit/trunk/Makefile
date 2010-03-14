@@ -1,6 +1,6 @@
 GARNAME = magit
 GARVERSION = 0.7
-PATCHLEVEL = 57f299
+PATCHLEVEL = magit_0.7
 CATEGORIES = utils
 
 ARCHALL = 1
@@ -14,7 +14,7 @@ endef
 BUILD_DEP_PKGS = CSWautoconf CSWautomake CSWtexinfo CSWemacs
 RUNTIME_DEP_PKGS = CSWgit CSWemacscommon
 
-GIT_REPOS = git://github.com/technomancy/magit.git
+GIT_REPOS = git://gitorious.org/magit/magit.git
 GIT_TREEISH = $(PATCHLEVEL)
 
 # We define upstream file regex so we can be notifed of new upstream
