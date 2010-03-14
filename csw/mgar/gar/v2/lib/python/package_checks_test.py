@@ -191,6 +191,11 @@ class TestCheckArchitectureVsContents(CheckpkgUnitTestHelper, unittest.TestCase)
     # self.failIf(errors)
     pass
 
+class TestCheckFileNameSanity(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckFileNameSanity'
+  def CheckpkgTest(self):
+    del(self.pkg_data["basic_stats"]["parsed_basename"]["revision_info"]["REV"])
+    self.error_mgr_mock.ReportError('rev-tag-missing-in-filename')
 
 
 if __name__ == '__main__':

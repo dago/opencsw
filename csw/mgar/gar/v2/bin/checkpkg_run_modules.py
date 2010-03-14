@@ -1,10 +1,7 @@
 #!/opt/csw/bin/python2.6
 # $Id$
 
-"""This is a dummy check. You can use it as a boilerplate for your own checks.
-
-Copy it and modify.
-"""
+"""This script runs all the checks written in Python."""
 
 import logging
 import os.path
@@ -16,7 +13,7 @@ CHECKPKG_MODULE_NAME = "Second checkpkg API version"
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
 path_list = [os.path.dirname(__file__),
-             "..", "..", "lib", "python"]
+             "..", "lib", "python"]
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 import opencsw
@@ -40,7 +37,8 @@ def main():
   f = open(options.output, "w")
   f.write(tags_report)
   f.close()
-  print screen_report.strip()
+  if screen_report:
+    sys.stdout.write(screen_report)
   sys.exit(exit_code)
 
 

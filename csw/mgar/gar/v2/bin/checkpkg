@@ -339,6 +339,20 @@ for log_file in ${log_files}; do
 	fi
 done
 
+# This check is special; it uses one executable for all the checks written in Python.
+printf "${BOLD}${module_name_format}${COLOR_RESET} running..." "Python tests"
+${command_basedir}/checkpkg_run_modules.py \
+    ${extra_options} \
+    -b "${checkpkg_stats_basedir}" \
+    -o "${EXTRACTDIR}/tags.python-checks" \
+    ${md5sums}
+if [[ "$?" -ne 0 ]]; then
+  printf "\r${module_name_format} ${RED}[ERROR]${COLOR_RESET}        \\n" "${plugin_name}"
+  test_suite_ok=0
+else
+  printf "\r${module_name_format} [Done]        \\n" "${plugin_name}"
+fi
+
 if [[ ${test_suite_ok} -ne 1 ]]; then
 	errmsg "One or more modular tests have finished with an error."
 else

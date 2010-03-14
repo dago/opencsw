@@ -39,6 +39,14 @@ OBSOLETE_DEPS = {
     },
 }
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
+MAX_CATALOGNAME_LENGTH = 20
+MAX_PKGNAME_LENGTH = 20
+ARCH_LIST = ["sparc", "i386", "all"]
+VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
+ONLY_ALLOWED_IN_PKG = {
+    "CSWcommon": ("/opt", )
+}
+
 
 
 def CatalognameLowercase(pkg_data, error_mgr, logger):
@@ -235,7 +243,9 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
         "orphan_sonames": orphan_sonames,
     }
     t = Template.Template(checkpkg.REPORT_TMPL, searchList=[namespace])
-    print unicode(t)
+    report = unicode(t)
+    if report.strip():
+      print report
     for soname in orphan_sonames:
       error_mgr.ReportError(pkgname, "orphan-soname", soname)
     for missing_dep in missing_deps:
@@ -347,3 +357,143 @@ def CheckArchitectureVsContents(pkg_data, error_mgr, logger):
     logger.info("ARCHALL_%s = 1", pkgname)
     logger.info("However, be aware that there might be other reasons "
                 "to keep it architecture-specific.")
+
+def CheckFileNameSanity(pkg_data, error_mgr, logger):
+  basic_stats = pkg_data["basic_stats"]
+  revision_info = basic_stats["parsed_basename"]["revision_info"]
+  catalogname = pkg_data["basic_stats"]["catalogname"]
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  if "REV" not in revision_info:
+    error_mgr.ReportError("rev-tag-missing-in-filename")
+  if len(catalogname) > MAX_CATALOGNAME_LENGTH:
+    error_mgr.ReportError("catalogname-too-long")
+  if len(pkgname) > MAX_PKGNAME_LENGTH:
+    error_mgr.ReportError("pkgname-too-long")
+  if basic_stats["parsed_basename"]["osrel"] == "unspecified":
+    error_mgr.ReportError("osrel-tag-not-specified")
+
+
+def CheckPkginfoSanity(pkg_data, error_mgr, logger):
+  """pkginfo sanity checks.
+
+if [ "$maintname" = "" ] ; then
+  # the old format, in the DESC field
+  maintname=`sed -n 's/^DESC=.*for CSW by //p' $TMPFILE`
+
+  # Since the DESC field has been coopted, take
+  # description from second half of NAME field now.
+  desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
+else
+  if [ "$desc" = "" ] ; then
+    desc=`sed -n 's/^NAME=[^ -]* - //p' $TMPFILE`
+  fi
+fi
+
+software=`sed -n 's/^NAME=\([^ -]*\) -.*$/\1/p' $TMPFILE`
+version=`sed -n 's/^VERSION=//p' $TMPFILE`
+desc=`sed -n 's/^DESC=//p' $TMPFILE`
+email=`sed -n 's/^EMAIL=//p' $TMPFILE`
+maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
+hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
+basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
+pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
+
+if [ "$software" = "" ] ; then errmsg $f: software field not set properly in NAME ; fi
+if [ "$pkgname" = "" ] ; then errmsg $f: pkgname field blank ; fi
+if [ "$desc" = "" ] ; then errmsg $f: no description in either NAME or DESC field ; fi
+if [ ${#desc} -gt 100 ] ; then errmsg $f: description greater than 100 chars ; fi
+if [ "$version" = "" ] ; then errmsg $f: VERSION field blank ;  fi
+if [ "$maintname" = "" ] ; then errmsg $f: maintainer name not detected. Fill out VENDOR field properly ; fi
+if [ "$email" = "" ] ; then errmsg $f: EMAIL field blank ; fi
+if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
+  """
+  catalogname = pkg_data["basic_stats"]["catalogname"]
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  pkginfo = pkg_data["pkginfo"]
+  if not catalogname:
+    error_mgr.ReportError("pkginfo-empty-catalogname")
+  if not pkgname:
+    error_mgr.ReportError("pkginfo-empty-pkgname")
+  if not "VERSION" in pkginfo or not pkginfo["VERSION"]:
+    error_mgr.ReportError("pkginfo-version-field-missing")
+  # maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
+  maintname = checkpkg.ExtractMaintainerName(pkginfo)
+  if not maintname:
+    error_mgr.ReportError("pkginfo-maintainer-name-not-set")
+  # email
+  if not pkginfo["EMAIL"]:
+    error_mgr.ReportError("pkginfo-blank-email")
+  # hotline
+  if not pkginfo["HOTLINE"]:
+    error_mgr.ReportError("pkginfo-hotline-blank")
+  pkginfo_version = pkg_data["basic_stats"]["parsed_basename"]["full_version_string"]
+  if pkginfo_version != pkginfo["VERSION"]:
+    error_mgr.ReportError("filename-version-does-not-match-pkginfo-version")
+  if re.search(r"-", pkginfo["VERSION"]):
+    error_mgr.ReportError("pkginfo-minus-in-version")
+  if not re.match(VERSION_RE, pkginfo["VERSION"]):
+    msg = ("Version regex: %s, version value: %s."
+           % (repr(VERSION_RE), repr(pkginfo["VERSION"])))
+    error_mgr.ReportError("pkginfo-version-wrong-format", msg)
+  if pkginfo["ARCH"] not in ARCH_LIST:
+    error_mgr.ReportError("pkginfo-nonstandard-architecture", pkginfo["ARCH"])
+  if "PSTAMP" in pkginfo:
+    if not re.match(checkpkg.PSTAMP_RE, pkginfo["PSTAMP"]):
+      msg=("It should be 'username@hostname-timestamp', "
+           "but it's %s." % repr(pkginfo["PSTAMP"]))
+      error_mgr.ReportError("pkginfo-pstamp-in-wrong-format", pkginfo["PSTAMP"], msg)
+  else:
+    error_mgr.ReportError("pkginfo-pstamp-missing")
+
+
+def DisabledCheckMissingSymbols(pkgs_data, error_mgr, logger):
+  """Analyzes missing symbols reported by ldd -r.
+
+  1. Collect triplets: pkgname, binary, missing symbol
+  2. If there are any missing symbols, collect all the symbols that are provided
+     by the set of packages.
+  3. From the list of missing symbols, remove all symbols that are provided
+     by the set of packages.
+  4. Report any remaining symbols as errors.
+
+  What indexes do we need?
+
+  symbol -> (pkgname, binary)
+  set(allsymbols)
+  """
+  missing_symbols = []
+  all_symbols = set()
+  for pkg_data in pkgs_data:
+    pkgname = pkg_data["basic_stats"]["pkgname"]
+    binaries = pkg_data["binaries"]
+    for binary in binaries:
+      for ldd_elem in pkg_data["ldd_dash_r"][binary]:
+        if ldd_elem["state"] == "symbol-not-found":
+          missing_symbols.append((pkgname,
+                                  binary,
+                                  ldd_elem["symbol"]))
+      for symbol in pkg_data["defined_symbols"][binary]:
+        all_symbols.add(symbol)
+  # Remove symbols defined elsewhere.
+  while missing_symbols:
+    ms_pkgname, ms_binary, ms_symbol = missing_symbols.pop()
+    if ms_symbol not in all_symbols:
+      error_mgr.ReportError("symbol-not-found", "%s %s" % (ms_binary, ms_symbol))
+
+
+def CheckBuildingUser(pkg_data, error_mgr, logger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  username = checkpkg.ExtractBuildUsername(pkg_data["pkginfo"])
+  for entry in pkg_data["pkgmap"]:
+    if entry["user"] and entry["user"] == username:
+      error_mgr.ReportError("file-owned-by-building-user"
+                            "%s, %s" % (entry["path"], entry["user"]))
+
+
+def CheckPkgmapPaths(pkg_data, error_mgr, logger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  pkg_paths = set([x["path"] for x in pkg_data["pkgmap"]])
+  for allowed_pkgname in ONLY_ALLOWED_IN_PKG:
+    for disallowed_path in ONLY_ALLOWED_IN_PKG[allowed_pkgname]:
+      if disallowed_path in pkg_paths and pkgname != allowed_pkgname:
+        error_mgr.ReportError("disallowed-path", disallowed_path)

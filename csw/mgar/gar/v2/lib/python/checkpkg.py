@@ -786,34 +786,6 @@ class CheckpkgManagerBase(object):
     return (exit_code, screen_report, tags_report)
 
 
-class CheckpkgManager(CheckpkgManagerBase):
-  """Takes care of calling checking functions.
-
-  This is an old API as of 2010-02-28.
-  """
-  def RegisterIndividualCheck(self, function):
-    self.individual_checks.append(function)
-
-  def RegisterSetCheck(self, function):
-    self.set_checks.append(function)
-
-  def GetAllTags(self, packages_data):
-    errors = {}
-    for pkg_data in packages_data:
-      for function in self.individual_checks:
-        all_stats = pkg_data.GetAllStats()
-        errors_for_pkg = function(all_stats, debug=self.debug)
-        if errors_for_pkg:
-          errors[all_stats["basic_stats"]["pkgname"]] = errors_for_pkg
-    # Set checks
-    for function in self.set_checks:
-      set_errors = function([x.GetAllStats() for x in packages_data],
-                            debug=self.debug)
-      if set_errors:
-        errors = self.SetErrorsToDict(set_errors, errors)
-    return errors
-
-
 class CheckInterfaceBase(object):
   """Base class for check proxies.
 
