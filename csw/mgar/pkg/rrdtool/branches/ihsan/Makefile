@@ -40,8 +40,8 @@ BUILD_DEP_PKGS += CSWlibcairodevel
 BUILD_DEP_PKGS += CSWglib2devel
 BUILD_DEP_PKGS += CSWxproto
 BUILD_DEP_PKGS += CSWlibxrenderdevel
-BUILD_DEP_PKGS += CSWrenderproto
-BUILD_DEP_PKGS += CSWkbproto
+BUILD_DEP_PKGS += CSWx11renderproto
+BUILD_DEP_PKGS += CSWx11kbproto
 BUILD_DEP_PKGS += CSWpython-devel
 BUILD_DEP_PKGS += CSWrubydev
 
