@@ -3,7 +3,7 @@ GARVERSION = 6.6.0
 GARSUBREV = 5
 CATEGORIES = lib
 
-DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
+DESCRIPTION = A software suite to create, edit, and compose bitmap images
 define BLURB
   ImageMagick is a robust collection of tools and libraries offered under a
   usage license to read, write, and manipulate an image in many image formats
@@ -19,12 +19,14 @@ CATALOGNAME_CSWimagemagickrt = imagemagick_rt
 CATALOGNAME_CSWpmimagemagick = pm_imagemagick
 SPKG_DESC_CSWimagemagick = $(DESCRIPTION)
 SPKG_DESC_CSWimagemagickdev = $(DESCRIPTION) - development package
-SPKG_DESC_CSWimagemagickdoc = $(DESCRIPTION) - documentation package
+SPKG_DESC_CSWimagemagickdoc = $(DESCRIPTION) - documentation 
 SPKG_DESC_CSWimagemagickrt = $(DESCRIPTION) - runtime package
 SPKG_DESC_CSWpmimagemagick = $(DESCRIPTION) - perl module
 
 PKGFILES_CSWimagemagickdev = $(PKGFILES_DEVEL)
 PKGFILES_CSWimagemagickrt = $(PKGFILES_RT)
+PKGFILES_CSWimagemagickrt += $(call baseisadirs,$(libdir),ImageMagick.*)
+PKGFILES_CSWimagemagickrt += $(sharedstatedir)/ImageMagick.*
 PKGFILES_CSWimagemagickdoc = $(docdir)/ImageMagick.*
 PKGFILES_CSWpmimagemagick = $(libdir)/perl/.*
 
@@ -39,56 +41,54 @@ SPKG_SOURCEURL = http://www.imagemagick.org
 
 LICENSE = LICENSE
 
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWbzip2
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWfconfig
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWftype2
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWimagemagickrt
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWjpeg
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlcmsrt
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibice
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibsm
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibtoolrt
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibx11
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibxext
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibxt
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWtiffrt
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWzlib
+
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWbzip2
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWdjvulibrert
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWfconfig
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWftype2
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWglib2
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWgraphviz
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWgs
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWgtk2
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWilmbase
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWjasper
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWjbigkit
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWjpeg
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlcmsrt
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibfpx
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibice
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibrsvg
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibsm
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibtoolrt
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibwmf
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibx11
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibxext
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibxml2
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWlibxt
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWopenexrrt
+RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWpng
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWsunmath
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWtiffrt
 RUNTIME_DEP_PKGS_CSWimagemagickrt += CSWzlib
 
 RUNTIME_DEP_PKGS_CSWpmimagemagick += CSWimagemagickrt
 RUNTIME_DEP_PKGS_CSWpmimagemagick += CSWperl
-
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibcairo
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibrsvg
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWimagemagickrt
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWopenexrrt
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWbzip2
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWdjvulibrert
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWfconfig
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWftype2
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWglib2
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWgraphviz
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWgs
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWgtk2
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWilmbase
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWjasper
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWjbigkit
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWjpeg
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlcmsrt
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibfpx
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibice
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibsm
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibtoolrt
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmf
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibx11
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibxext
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibxt
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWperl
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWpng
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWsunmath
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWtiffrt
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWzlib
 
 CHECKPKG_OVERRIDES_CSWimagemagickdev += missing-dependency|CSWimagemagick
 
