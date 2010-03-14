@@ -87,7 +87,7 @@ ALTERNATIVES_CSWgiflibrtx11 = cswx11
 ALTERNATIVE_nox11  = $(libdir)/libgif.so.4.1.6 giflib $(libdir)/libgif-nox11.so.4.1.6 100
 ALTERNATIVE_nox11 += $(libdir)/$(ISA_DEFAULT64)/libgif.so.4.1.6 giflib64 $(libdir)/$(ISA_DEFAULT64)/libneon-nox11.so.4.1.6
 
-ALTERNATIVE_cswx11  = $(libdir)/libgif.so.4.1.6 giflib $(libdir)/libgif-cswx11.so.4.1.6 100
+ALTERNATIVE_cswx11  = $(libdir)/libgif.so.4.1.6 giflib $(libdir)/libgif-cswx11.so.4.1.6 200
 ALTERNATIVE_cswx11 += $(libdir)/$(ISA_DEFAULT64)/libgif.so.4.1.6 giflib64 $(libdir)/$(ISA_DEFAULT64)/libneon-cswx11.so.4.1.6
 
 include gar/category.mk
