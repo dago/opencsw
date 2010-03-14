@@ -71,6 +71,7 @@ include gar/category.mk
 
 post-configure-modulated:
 	gsed -i s#/...ISALIST#/'$$ISALIST'# $(WORKSRC)/objs/ngx_auto_config.h
+	gsed -i s#/ pause#/ rep; nop# $(WORKSRC)/src/os/unix/ngx_sunpro_amd64.il
 	$(MAKECOOKIE)
 
 post-install-modulated:
