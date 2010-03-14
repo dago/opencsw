@@ -152,8 +152,6 @@ if [ -d $EXTRACTDIR ] ; then
 	exit 1
 fi
 
-printf "Examining pkginfo files: "
-
 for f in "$@"
 do
 
@@ -190,35 +188,35 @@ set_variables_for_individual_package_check "$f"
 
 [ -d ${EXTRACTDIR} ] || mkdir ${EXTRACTDIR}
 
-# FIXME: This doesn't support multiple packages
-TMPFILE=$EXTRACTDIR/pkginfo
-
-
-printf "$pkgname "
-dd if=$f skip=1 | (cd $EXTRACTDIR; cpio -ivd $pkgname/pkginfo >/dev/null 2>&1)
-if [[ $? -ne 0 ]] ; then
-	print "ERROR: could not extract $f"
-	print "with (cd $EXTRACTDIR; cpio -ivd $pkgname/pkginfo)"
-	ls -l $EXTRACTDIR
-	rm -rf $EXTRACTDIR $TMPARCHIVE
-	exit 1
-fi
-
-mv $EXTRACTDIR/$pkgname/pkginfo $EXTRACTDIR ; rmdir $EXTRACTDIR/$pkgname
-
-software=`sed -n 's/^NAME=\([^ -]*\) -.*$/\1/p' $TMPFILE`
-version=`sed -n 's/^VERSION=//p' $TMPFILE`
-desc=`sed -n 's/^DESC=//p' $TMPFILE`
-email=`sed -n 's/^EMAIL=//p' $TMPFILE`
-maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
-hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
-basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
-pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
-
-rm $TMPFILE
+# # FIXME: This doesn't support multiple packages
+# TMPFILE=$EXTRACTDIR/pkginfo
+# 
+# 
+# printf "$pkgname "
+# dd if=$f skip=1 | (cd $EXTRACTDIR; cpio -ivd $pkgname/pkginfo >/dev/null 2>&1)
+# if [[ $? -ne 0 ]] ; then
+# 	print "ERROR: could not extract $f"
+# 	print "with (cd $EXTRACTDIR; cpio -ivd $pkgname/pkginfo)"
+# 	ls -l $EXTRACTDIR
+# 	rm -rf $EXTRACTDIR $TMPARCHIVE
+# 	exit 1
+# fi
+# 
+# mv $EXTRACTDIR/$pkgname/pkginfo $EXTRACTDIR ; rmdir $EXTRACTDIR/$pkgname
+# 
+# software=`sed -n 's/^NAME=\([^ -]*\) -.*$/\1/p' $TMPFILE`
+# version=`sed -n 's/^VERSION=//p' $TMPFILE`
+# desc=`sed -n 's/^DESC=//p' $TMPFILE`
+# email=`sed -n 's/^EMAIL=//p' $TMPFILE`
+# maintname=`sed -n 's/^VENDOR=.*for CSW by //p' $TMPFILE`
+# hotline=`sed -n 's/^HOTLINE=//p' $TMPFILE`
+# basedir=`sed -n 's/^BASEDIR=//p' $TMPFILE`
+# pkgarch=`sed -n 's/^ARCH=//p' $TMPFILE|head -1`
+# 
+# rm $TMPFILE
 
 # strip out '' chars, because it interferes with mysql
-desc=`print $desc | sed "s/'//g"`
+# desc=`print $desc | sed "s/'//g"`
 
 #############################################################
 # We now have the package expanded, in "directory" form, in
@@ -255,9 +253,6 @@ desc=`print $desc | sed "s/'//g"`
 
 tmparchives="$tmparchives $TMPARCHIVE"
 done
-
-# Terminating the line with pkgnames
-echo
 
 # Plugin section.
 #
@@ -303,9 +298,9 @@ if [[ -d "${checkpkg_module_dir}" ]]; then
 			log_files="${log_files} ${plugin_log}"
 			plugin_name="`echo ${plugin} | sed -e 's+.*/checkpkg-++' | sed -e 's+\.py$++'`"
 			error_tag_file="tags.${plugin_name}"
-			printf "${BOLD}${module_name_format}${COLOR_RESET} running..." "${plugin_name}"
 			debugmsg "Executing: ${plugin} $extra_options -b \"${checkpkg_stats_basedir}\"" \
-		                 "-o \"${EXTRACTDIR}/${error_tag_file}\" `echo ${md5sums}`"
+		           "-o \"${EXTRACTDIR}/${error_tag_file}\" `echo ${md5sums}`"
+			printf "${BOLD}${module_name_format}${COLOR_RESET} running..." "${plugin_name}"
 			${plugin} \
 				$extra_options \
 				-b "${checkpkg_stats_basedir}" \
@@ -313,7 +308,8 @@ if [[ -d "${checkpkg_module_dir}" ]]; then
 				${md5sums} \
 				> "${plugin_log}" 2>&1
 			if [[ "$?" -ne 0 ]]; then
-				printf "\r${module_name_format} ${RED}[ERROR]${COLOR_RESET}        \\n" "${plugin_name}"
+				printf "\r${module_name_format} ${RED}[ERROR]${COLOR_RESET}        \\n" \
+				       "${plugin_name}"
 				test_suite_ok=0
 			else
 				printf "\r${module_name_format} [Done]        \\n" "${plugin_name}"
@@ -339,23 +335,19 @@ for log_file in ${log_files}; do
 done
 
 # This check is special; it uses one executable for all the checks written in Python.
-print "Running Python tests..."
+print "Analyzing collected statistics..."
 ${command_basedir}/checkpkg_run_modules.py \
     ${extra_options} \
     -b "${checkpkg_stats_basedir}" \
     -o "${EXTRACTDIR}/tags.python-checks" \
     ${md5sums}
 if [[ "$?" -ne 0 ]]; then
-  print "There was a problem running Python tests."
+  print "There was a problem analyzing package stats."
   test_suite_ok=0
-else
-  print "Python tests done."
 fi
 
 if [[ ${test_suite_ok} -ne 1 ]]; then
-	errmsg "One or more modular tests have finished with an error."
-else
-	print "All modular tests completed.  Analyzing the reports."
+	errmsg "One or more tests have finished with an error."
 fi
 
 if [[ "${DEBUG}" != "" ]]; then
