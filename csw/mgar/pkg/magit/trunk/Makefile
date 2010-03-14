@@ -37,5 +37,5 @@ post-install-modulated:
 	@(cd $(WORKSRC); \
 		mkdir -p $(DESTDIR)/$(docdir)/$(GARNAME); \
 		cp README AUTHORS NEWS $(DESTDIR)/$(docdir)/$(GARNAME) )
-	@(cd $(DESTDIR); rm -rf opt/csw/etc )
+	@(cd $(DESTDIR); rm -rf opt/csw/etc opt/csw/share/info/dir )
 	@$(MAKECOOKIE)
