@@ -296,7 +296,6 @@ log_files=""
 module_name_format="%-40s"
 md5sums=`gmd5sum "$@" | awk '{print $1}'`
 if [[ -d "${checkpkg_module_dir}" ]]; then
-	echo "Running modular tests in ${checkpkg_module_dir}"
 	for plugin in "${checkpkg_module_dir}/${checkpkg_module_tag}"*; do
 		if [[ -x "${plugin}" ]]; then
 			plugin_base_name=`basename ${plugin}`
@@ -340,17 +339,17 @@ for log_file in ${log_files}; do
 done
 
 # This check is special; it uses one executable for all the checks written in Python.
-printf "${BOLD}${module_name_format}${COLOR_RESET} running..." "Python tests"
+print "Running Python tests..."
 ${command_basedir}/checkpkg_run_modules.py \
     ${extra_options} \
     -b "${checkpkg_stats_basedir}" \
     -o "${EXTRACTDIR}/tags.python-checks" \
     ${md5sums}
 if [[ "$?" -ne 0 ]]; then
-  printf "\r${module_name_format} ${RED}[ERROR]${COLOR_RESET}        \\n" "${plugin_name}"
+  print "There was a problem running Python tests."
   test_suite_ok=0
 else
-  printf "\r${module_name_format} [Done]        \\n" "${plugin_name}"
+  print "Python tests done."
 fi
 
 if [[ ${test_suite_ok} -ne 1 ]]; then
