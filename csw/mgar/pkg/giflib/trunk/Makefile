@@ -59,6 +59,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(FEATURES))
 TEST_TARGET = check
 
 EXTRA_PAX_ARGS-32 = -s ",\(\.$(libdir)/libgif\)\(\.so\.4\.1\.6\),\1-$(FEATURES)\2,p"
+EXTRA_PAX_ARGS-32 += -s ",\(\.$(bindir)/gif2x11\),\1,p"
 EXTRA_PAX_ARGS-64 = -s ",\.$(libdir)/libgif\(\.so\.4\.1\.6\),.$(libdir_install)/$(ISA)/libgif-$(FEATURES)\1,p"
 EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS-$(MEMORYMODEL))
 
@@ -77,7 +78,7 @@ ARCHALL_CSWgiflibdoc = 1
 ARCHALL_CSWungif = 1
 
 PKGFILES_CSWgiflibrt = .*/libgif-nox11\..*
-PKGFILES_CSWgiflibrtx11 = .*/libgif-cswx11\..*
+PKGFILES_CSWgiflibrtx11 = .*/libgif-cswx11\..* $(bindir)/gif2x11
 PKGFILES_CSWgiflibdoc = $(PKGFILES_DOC)
 PKGFILES_CSWungif = .*/libungif\..*
 
