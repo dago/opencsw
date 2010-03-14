@@ -49,7 +49,7 @@ RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpango
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpoppler
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWzlib
 
-#CHECKPKG_OVERRIDES_CSWlibpopplerdev += missing-dependency|CSWlibpoppler
+CHECKPKG_OVERRIDES_CSWlibpopplerdev += missing-dependency|CSWlibpoppler
 
 #PATCHFILES += missing-includes.patch
 
