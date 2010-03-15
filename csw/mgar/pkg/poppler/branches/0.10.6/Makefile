@@ -46,10 +46,9 @@ RUNTIME_DEP_PKGS_CSWlibpoppler += CSWjpeg
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlibcairo
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlibxml2
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpango
-RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpoppler
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWzlib
 
-CHECKPKG_OVERRIDES_CSWlibpopplerdev += missing-dependency|CSWlibpoppler
+RUNTIME_DEP_PKGS_CSWlibpopplerdev += CSWlibpoppler
 
 #PATCHFILES += missing-includes.patch
 
