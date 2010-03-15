@@ -11,24 +11,63 @@ endef
 SPKG_SOURCEURL = http://poppler.freedesktop.org/
 MASTER_SITES = http://poppler.freedesktop.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += old_libs_i386.tar.bz2
+DISTFILES += old_libs_sparc.tar.bz2
 
-PATCHFILES += missing-includes.patch
+PACKAGES = CSWpoppler CSWlibpoppler CSWlibpopplerdev CSWlibpopplerdoc
+CATALOGNAME_CSWpoppler = poppler
+CATALOGNAME_CSWlibpoppler = libpoppler
+CATALOGNAME_CSWlibpopplerdev = libpoppler_devel
+CATALOGNAME_CSWlibpopplerdoc = libpoppler_doc
+SPKG_DESC_CSWpoppler = $(DESCRIPTION) - utilities
+SPKG_DESC_CSWlibpoppler = $(DESCRIPTION)
+SPKG_DESC_CSWlibpopplerdev = $(DESCRIPTION) - developer package
+SPKG_DESC_CSWlibpopplerdoc = $(DESCRIPTION) - documentation
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
+PKGFILES_CSWlibpoppler= $(PKGFILES_RT)
+PKGFILES_CSWlibpopplerdev = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibpopplerdoc = $(sharedstatedir)/gtk-doc/.*
+
+INCOMPATIBLE_PKGS_CSWpoppler = CSWxpdf
+
+RUNTIME_DEP_PKGS_CSWpoppler += CSWfconfig
+RUNTIME_DEP_PKGS_CSWpoppler += CSWftype2
+RUNTIME_DEP_PKGS_CSWpoppler += CSWjpeg
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibxml2
+
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWjpeg
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpango
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWzlib
+
+CHECKPKG_OVERRIDES_CSWlibpopplerdev += missing-dependency|CSWlibpoppler
+
+#PATCHFILES += missing-includes.patch
+
 # UPSTREAM_MASTER_SITES = 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 
+# Fix for making sure libtool doesn't pick up libpoppler.so from /opt/csw/lib
+# when relinking libpoppler-glib during install phaze
+EXTRA_SOS_LD_FLAGS += -L$(abspath $(WORKSRC)/poppler/.libs)
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
-RUNTIME_DEP_PKGS += CSWfconfig
-RUNTIME_DEP_PKGS += CSWftype2
-RUNTIME_DEP_PKGS += CSWggettextrt
-RUNTIME_DEP_PKGS += CSWglib2
-RUNTIME_DEP_PKGS += CSWjpeg
-RUNTIME_DEP_PKGS += CSWlibxml2
-RUNTIME_DEP_PKGS += CSWzlib
-
 include gar/category.mk
+
+post-install-isa-sparcv8:
+	(cd $(INSTALLISADIR)$(libdir);bzip2 -dc $(CURDIR)/$(DOWNLOADDIR)/old_libs_sparc.tar.bz2|tar xf -)
+	$(MAKECOOKIE)
+
+post-install-isa-i386:
+	(cd $(INSTALLISADIR)$(libdir);bzip2 -dc $(CURDIR)/$(DOWNLOADDIR)/old_libs_i386.tar.bz2|tar xf -)
+	$(MAKECOOKIE)
