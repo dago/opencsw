@@ -1,21 +1,20 @@
 GARNAME = spidermonkey
-GARVERSION = 1.5
+GARVERSION = 1.7.0
 CATEGORIES = lib
 
-DESCRIPTION = SpiderMonkey JS library
+DESCRIPTION = The Mozilla SpiderMonkey JavaScript interpreter and library
 define BLURB
   SpiderMonkey JS library
 endef
 
+VENDOR_URL   = http://www.mozilla.org/js/spidermonkey/
 MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/js/
-DISTFILES  = js-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWspidermonkey,)
+DISTFILES    = js-$(GARVERSION).tar.gz
+UFILES_REGEX = js-(\d+(?:\.\d+)*).tar.gz
+
 # the sun5.8 x86 config file is missing so
 # we are using our own
-DISTFILES += SunOS5.8_i86pc.mk
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = js-(\d+(?:\.\d+)*).tar.gz
+#DISTFILES += SunOS5.8_i86pc.mk
 
 DISTNAME = js
 
