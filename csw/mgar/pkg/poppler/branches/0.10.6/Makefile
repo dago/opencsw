@@ -50,6 +50,8 @@ RUNTIME_DEP_PKGS_CSWlibpoppler += CSWzlib
 
 RUNTIME_DEP_PKGS_CSWlibpopplerdev += CSWlibpoppler
 
+ARCHALL_CSWlibpopplerdoc = 1
+
 #PATCHFILES += missing-includes.patch
 
 # UPSTREAM_MASTER_SITES = 
