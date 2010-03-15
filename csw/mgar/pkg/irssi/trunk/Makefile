@@ -16,6 +16,8 @@ MASTER_SITES = http://www.irssi.org/files/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGING_PLATFORMS =  solaris8-sparc solaris8-i386
+
 SAMPLECONF = .*/irssi.conf
 
 CONFIGURE_ARGS += $(DIRPATHS)
