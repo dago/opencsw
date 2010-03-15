@@ -45,7 +45,7 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibx11
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibxext
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibxml2
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibxt
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWopenexr
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWopenexrrt
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWperl
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWpng
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWsunmath
@@ -75,6 +75,7 @@ CONFIGURE_ARGS_COMMON += --disable-silent-rules
 CONFIGURE_ARGS = $(CONFIGURE_ARGS_COMMON) $(foreach M,$(MODULATIONS),$(CONFIGURE_ARGS_$M))
 
 PATCHFILES += Makefile.patch
+PATCHFILES += configure.diff
 
 # Test has to be run *after* install
 #TEST_TARGET = check
@@ -105,7 +106,6 @@ include gar/category.mk
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(GARSUBREV)
 
 post-install-isa-sparcv8:
-	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
 	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.2.9.s.tar.bz2 |tar xf -)
 	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.5.2.s.tar.bz2 |tar xf -)
 	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
@@ -113,7 +113,6 @@ post-install-isa-sparcv8:
 	@$(MAKECOOKIE)
 
 post-install-isa-i386:
-	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
 	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.2.9.i.tar.bz2 |tar xf -)
 	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.5.2.i.tar.bz2 |tar xf -)
 	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
