@@ -1,5 +1,5 @@
 GARNAME = pbzip2
-GARVERSION = 1.0.5
+GARVERSION = 1.1.0
 CATEGORIES = utils
 
 DESCRIPTION = Parallel BZIP2 Data Compression Software
