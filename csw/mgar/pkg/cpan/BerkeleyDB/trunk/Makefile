@@ -1,5 +1,5 @@
 GARNAME = BerkeleyDB
-GARVERSION = 0.41
+GARVERSION = 0.42
 CATEGORIES = cpan
 AUTHOR = PMQS
 
@@ -7,6 +7,8 @@ DESCRIPTION = BerkeleyDB module
 define BLURB
   Includes BerkeleyDB, BerkeleyDB::Btree, BerkeleyDB::Hash
 endef
+
+DISTFILES = COPYING
 
 PACKAGES = CSWpmberkeleydb
 CATALOGNAME = pm_berkeleydb
