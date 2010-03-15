@@ -1,0 +1,13 @@
+--- wesnoth-1.6.5/src/time.hpp	2009-01-01 11:27:41.000000000 +0100
++++ wesnoth-1.6.5.new/src/time.hpp	2010-03-14 19:17:14.451509148 +0100
+@@ -16,6 +16,10 @@
+ #define TIME_HPP_INCLUDED
+ #include <cstdlib>
+ 
++#if defined (__SVR4)  && defined (__sun)
++#include <sys/types.h>
++#endif
++
+ namespace ntime {
+ 
+ 	const int frames_to_remember = 6;
