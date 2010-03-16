@@ -34,6 +34,6 @@ CONFIGURE_ARGS += --enable-threads
 
 TEST_TARGET = check
 
-MERGE_DIRS_isa-extra = $(bindir)
+MERGE_DIRS_isa-extra = $(bindir) $(libdir)
 
 include gar/category.mk
