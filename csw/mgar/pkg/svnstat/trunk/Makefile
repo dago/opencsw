@@ -1,0 +1,20 @@
+GARNAME = svnstat
+GARVERSION = 1.0
+CATEGORIES = apps
+
+DESCRIPTION = Statistic reports and report graphs similar to StatCvs from Subversion
+define BLURB
+endef
+
+MASTER_SITES = $(SF_MIRROR)
+DISTNAME = SvnStat-$(GARVERSION)
+DISTFILES  = $(DISTNAME).zip
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = SvnStat-(\d+(?:\.\d+)*).zip
+
+VENDOR_URL = http://svnstat.sourceforge.net/
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+include gar/category.mk
