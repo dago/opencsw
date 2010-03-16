@@ -7,19 +7,19 @@ VAR=$PKG_INSTALL_ROOT/var/opt/csw/pkgutil
 echo
 
 if [ "`cmp "$ETC1/pkgutil.conf" "$ETC1/pkgutil.conf.CSW"`" ]; then
-  echo "pkgutil.conf modified, will not remove it."
+  echo "/opt/csw/etc/pkgutil.conf modified, will not remove it."
 else
   /bin/rm $ETC1/pkgutil.conf
 fi
 
 if [ "`cmp "$ETC2/pkgutil.conf" "$ETC2/pkgutil.conf.CSW"`" ]; then
-  echo "pkgutil.conf modified, will not remove it."
+  echo "/etc/opt/csw/pkgutil.conf modified, will not remove it."
 else
   /bin/rm $ETC2/pkgutil.conf
 fi
 
 if [ "`cmp "$VAR/admin" "$VAR/admin.CSW"`" ]; then
-  echo "admin modified, will not remove it."
+  echo "/var/opt/csw/pkgutil/admin modified, will not remove it."
 else
   /bin/rm $VAR/admin
 fi
