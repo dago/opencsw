@@ -10,6 +10,8 @@ define BLURB
   logging process with a tool like Tobias Oetiker's MRTG.
 endef
 
-DISTFILES += CSWpmfiletail.gspec
+PACKAGES = CSWpmfiletail
+CATALOGNAME = pm_filetail
+ARCHALL = 1
 
 include gar/category.mk
