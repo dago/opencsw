@@ -228,8 +228,7 @@ MODULATION_ISACOLLAPSEDEXTRA = $(strip $(call __isacollapsedmodulation,$(strip $
 # Instead of $(myvar_$(MODULATION)) $(call modulationvalue,myvar)
 define modulationvalue
 $(strip $(or $($(1)_$(MODULATION)),\
-             $($(1)_$(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisa)),\
-             $($(1)_$(call __isacollapsedmodulation,$(strip $(MODULATORS)),__collapsedisaextra))\
+             $($(1)_$(MODULATION_ISACOLLAPSED)),\
 ))
 endef
 
@@ -613,7 +612,7 @@ MERGE_SCRIPTS_$(MODULATION) ?= $(MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSED))
 endif
 
 # These directories get relocated into their ISA subdirectories
-MERGE_DIRS ?= $(MERGE_DIRS_$(MODULATION))
+MERGE_DIRS ?= $(call modulationvalue,MERGE_DIRS)
 
 ifneq ($(COMMON_PKG_DEPENDS),)
 _EXTRA_GAR_PKGS += $(COMMON_PKG_DEPENDS)
