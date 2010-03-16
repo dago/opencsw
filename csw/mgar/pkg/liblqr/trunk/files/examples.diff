@@ -1,0 +1,143 @@
+diff -Nru ../build-global/liblqr-1-0.4.1/examples/Makefile liblqr-1-0.4.1/examples/Makefile
+--- ../build-global/liblqr-1-0.4.1/examples/Makefile	2009-05-09 18:41:30.000000000 +0200
++++ liblqr-1-0.4.1/examples/Makefile	2010-03-16 03:08:38.227713387 +0100
+@@ -21,7 +21,6 @@
+ tt1out = liquidrescale
+ tt2out = liquidrescale-basic
+ 
+-
+ # collect flags for the compiler for lqr library
+ LQR_CFLAGS = `pkg-config --cflags lqr-1`
+ 
+@@ -51,9 +50,9 @@
+        $(GTHREAD_LIBS)
+ 
+ # define the flags to use in the various compilation steps
+-BASE_FLAGS = -Winline -O2 -Wall
++BASE_FLAGS = 
+ OBJ_BUILD_FLAGS = $(BASE_FLAGS) $(INCLUDES) $(LIBDIRS) 
+-LINKING_FLAGS = $(OBJ_BUILD_FLAGS) $(LIBS) 
++LINKING_FLAGS = $(OBJ_BUILD_FLAGS) $(LIBS) -lgnugetopt
+ 
+ # compilation rules
+ 
+@@ -63,17 +62,17 @@
+ 
+ # linking
+ $(tt1out) : $(tt1obj)
+-	g++ $(LINKING_FLAGS) -o $(tt1out) $(tt1obj)
++	CC $(LINKING_FLAGS) -o $(tt1out) $(tt1obj)
+ 
+ $(tt2out) : $(tt2obj)
+-	g++ $(LINKING_FLAGS) -o $(tt2out) $(tt2obj)
++	CC $(LINKING_FLAGS) -o $(tt2out) $(tt2obj)
+ 
+ # object building
+ $(tt1).o : $(tt1).cpp $(tt1).h
+-	g++ -c $(OBJ_BUILD_FLAGS) $(tt1).cpp
++	CC -c -D__STDC__=1 $(OBJ_BUILD_FLAGS) $(tt1).cpp 
+ 
+ $(tt2).o : $(tt2).cpp
+-	g++ -c $(OBJ_BUILD_FLAGS) $(tt2).cpp
++	CC -c -D__STDC__=1 $(OBJ_BUILD_FLAGS) $(tt2).cpp
+ 
+ #cleanup
+ clean:
+diff -Nru ../build-global/liblqr-1-0.4.1/examples/Makefile.orig liblqr-1-0.4.1/examples/Makefile.orig
+--- ../build-global/liblqr-1-0.4.1/examples/Makefile.orig	1970-01-01 01:00:00.000000000 +0100
++++ liblqr-1-0.4.1/examples/Makefile.orig	2010-03-16 03:09:48.023084903 +0100
+@@ -0,0 +1,80 @@
++#
++# Makefile example for liquidrescale (lqr) library
++# 
++# This is thought for exemplification purposes.
++# It will only work if you have already installed
++# the lqr library, the pngwriter and all their 
++# required dependencies (glib, z, png, freetype).
++#
++# It does not perform any kind of check on the system,
++# and won't report any sensible error message.
++#
++
++
++# set the sources file name
++tt1 = liquidrescale
++tt2 = liquidrescale-basic
++# objects to build
++tt1obj = $(tt1).o
++tt2obj = $(tt2).o
++# executable names
++tt1out = liquidrescale
++tt2out = liquidrescale-basic
++
++# collect flags for the compiler for lqr library
++LQR_CFLAGS = `pkg-config --cflags lqr-1`
++
++LQR_LIBS = `pkg-config --libs lqr-1`
++
++LQR_LIBDIR = `pkg-config --variable=libdir lqr-1`
++
++# collect flags for pngwriter library
++PNGWRITER_CFLAGS = `freetype-config --cflags` 
++
++PNGWRITER_LIBS = -lpng -lpngwriter -lz -lfreetype 
++
++# collect flags for the compiler for glib thread support
++GTHREAD_LIBS = `pkg-config --libs gthread-2.0`
++
++# join the flags collected above
++INCLUDES = \
++	$(LQR_CFLAGS) \
++	$(PNGWRITER_CFLAGS)
++
++LIBDIRS = \
++	  -L$(LQR_LIBDIR)
++
++LIBS = \
++       $(LQR_LIBS) \
++       $(PNGWRITER_LIBS) \
++       $(GTHREAD_LIBS)
++
++# define the flags to use in the various compilation steps
++BASE_FLAGS = 
++OBJ_BUILD_FLAGS = $(BASE_FLAGS) $(INCLUDES) $(LIBDIRS) 
++LINKING_FLAGS = $(OBJ_BUILD_FLAGS) $(LIBS) -lgnugetopt
++
++# compilation rules
++
++.PHONY : all clean
++
++all: $(tt1out) $(tt2out)
++
++# linking
++$(tt1out) : $(tt1obj)
++	CC $(LINKING_FLAGS) -o $(tt1out) $(tt1obj)
++
++$(tt2out) : $(tt2obj)
++	CC $(LINKING_FLAGS) -o $(tt2out) $(tt2obj)
++
++# object building
++$(tt1).o : $(tt1).cpp $(tt1).h
++	CC -c -D__STDC__=1 $(OBJ_BUILD_FLAGS) $(tt1).cpp 
++
++$(tt2).o : $(tt2).cpp
++	CC -c -D__STDC__=1 $(OBJ_BUILD_FLAGS) $(tt2).cpp
++
++#cleanup
++clean:
++	rm -f *~ ctags $(tt1obj) $(tt2obj) $(tt1out) $(tt2out)
++
+diff -Nru ../build-global/liblqr-1-0.4.1/examples/liquidrescale.cpp liblqr-1-0.4.1/examples/liquidrescale.cpp
+--- ../build-global/liblqr-1-0.4.1/examples/liquidrescale.cpp	2009-05-11 02:11:50.000000000 +0200
++++ liblqr-1-0.4.1/examples/liquidrescale.cpp	2010-03-16 03:08:38.252945938 +0100
+@@ -15,9 +15,9 @@
+  * along with this program; if not, see <http://www.gnu.org/licenses/> 
+  */
+ 
++#include <getopt.h>
+ #include <pngwriter.h>
+ #include <lqr.h>
+-#include <getopt.h>
+ #include "liquidrescale.h"
+ 
+ using namespace std;

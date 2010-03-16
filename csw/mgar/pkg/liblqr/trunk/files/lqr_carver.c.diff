@@ -1,0 +1,27 @@
+diff -Nru ../build-global/liblqr-1-0.4.1/lqr/lqr_carver.c liblqr-1-0.4.1/lqr/lqr_carver.c
+--- ../build-global/liblqr-1-0.4.1/lqr/lqr_carver.c	2009-05-11 02:08:03.000000000 +0200
++++ liblqr-1-0.4.1/lqr/lqr_carver.c	2010-03-16 06:27:45.765156213 +0100
+@@ -252,7 +252,11 @@
+     r->rigidity_map = g_try_new0(gfloat, 2 * r->delta_x + 1);
+     r->rigidity_map += r->delta_x;
+     for (x = -r->delta_x; x <= r->delta_x; x++) {
++#if defined(__sun) && defined(__SUNPRO_C) && (defined(__SunOS_5_9) || defined(__SunOS_5_8))
++        r->rigidity_map[x] = r->rigidity * pow(fabs(x), 1.5) / r->h;
++#else
+         r->rigidity_map[x] = r->rigidity * powf(fabsf(x), 1.5) / r->h;
++#endif
+     }
+ 
+     r->active = TRUE;
+@@ -1221,7 +1225,11 @@
+             /* reduce the range if there's no (relevant) difference
+              * with the previous map */
+             if (r->least[data] == least) {
++#if defined(__sun) && defined(__SUNPRO_C) && (defined(__SunOS_5_9) || defined(__SunOS_5_8))
++                if (fabs(r->m[data] - new_m) < UPDATE_TOLERANCE) {
++#else
+                 if (fabsf(r->m[data] - new_m) < UPDATE_TOLERANCE) {
++#endif
+                     if (stop == 0) {
+                         x_stop = x;
+                     }

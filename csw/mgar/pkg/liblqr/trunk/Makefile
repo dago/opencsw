@@ -29,6 +29,10 @@ DOCFILES = AUTHORS BUGS COPYING COPYING.LESSER ChangeLog NEWS README TODO
 
 UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
 
+PATCHFILES += inline.diff
+PATCHFILES += examples.diff
+PATCHFILES += lqr_carver.c.diff
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 STRIP_LIBTOOL=1

@@ -1,0 +1,89 @@
+diff -Nru ../build-isa-sparcv9/liblqr-1-0.4.1/lqr/lqr_energy.c liblqr-1-0.4.1/lqr/lqr_energy.c
+--- ../build-isa-sparcv9/liblqr-1-0.4.1/lqr/lqr_energy.c	2009-05-11 02:08:03.000000000 +0200
++++ liblqr-1-0.4.1/lqr/lqr_energy.c	2010-03-16 03:02:27.106285715 +0100
+@@ -44,7 +44,7 @@
+ 
+ /* read normalised pixel value from
+  * rgb buffer at the given index */
+-inline gdouble
++extern inline gdouble
+ lqr_pixel_get_norm(void *rgb, gint rgb_ind, LqrColDepth col_depth)
+ {
+     switch (col_depth) {
+@@ -66,7 +66,7 @@
+ 
+ /* write pixel from normalised value
+  * in rgb buffer at the given index */
+-inline void
++extern inline void
+ lqr_pixel_set_norm(gdouble val, void *rgb, gint rgb_ind, LqrColDepth col_depth)
+ {
+     switch (col_depth) {
+@@ -90,7 +90,7 @@
+     }
+ }
+ 
+-inline gdouble
++extern inline gdouble
+ lqr_pixel_get_rgbcol(void *rgb, gint rgb_ind, LqrColDepth col_depth, LqrImageType image_type, gint channel)
+ {
+     gdouble black_fact = 0;
+@@ -115,7 +115,7 @@
+     }
+ }
+ 
+-inline gdouble
++extern inline gdouble
+ lqr_carver_read_brightness_grey(LqrCarver *r, gint x, gint y)
+ {
+     gint now = r->raw[y][x];
+@@ -123,7 +123,7 @@
+     return lqr_pixel_get_norm(r->rgb, rgb_ind, r->col_depth);
+ }
+ 
+-inline gdouble
++extern inline gdouble
+ lqr_carver_read_brightness_std(LqrCarver *r, gint x, gint y)
+ {
+     gdouble red, green, blue;
+@@ -205,7 +205,7 @@
+     return bright * alpha_fact;
+ }
+ 
+-inline gdouble
++extern inline gdouble
+ lqr_carver_read_luma_std(LqrCarver *r, gint x, gint y)
+ {
+     gdouble red, green, blue;
+diff -Nru ../build-isa-sparcv9/liblqr-1-0.4.1/lqr/lqr_energy_priv.h liblqr-1-0.4.1/lqr/lqr_energy_priv.h
+--- ../build-isa-sparcv9/liblqr-1-0.4.1/lqr/lqr_energy_priv.h	2009-05-11 02:08:03.000000000 +0200
++++ liblqr-1-0.4.1/lqr/lqr_energy_priv.h	2010-03-16 03:02:38.451733418 +0100
+@@ -38,18 +38,18 @@
+ #define LQR_SATURATE_(x) (1 / (1 + (1 / (x))))
+ #define LQR_SATURATE(x) ((x) >= 0 ? LQR_SATURATE_(x) : -LQR_SATURATE_(-x))
+ 
+-inline gdouble lqr_pixel_get_norm(void *src, gint src_ind, LqrColDepth col_depth);
+-inline void lqr_pixel_set_norm(gdouble val, void *rgb, gint rgb_ind, LqrColDepth col_depth);
+-inline gdouble lqr_pixel_get_rgbcol(void *rgb, gint rgb_ind, LqrColDepth col_depth, LqrImageType image_type,
++extern inline gdouble lqr_pixel_get_norm(void *src, gint src_ind, LqrColDepth col_depth);
++extern inline void lqr_pixel_set_norm(gdouble val, void *rgb, gint rgb_ind, LqrColDepth col_depth);
++extern inline gdouble lqr_pixel_get_rgbcol(void *rgb, gint rgb_ind, LqrColDepth col_depth, LqrImageType image_type,
+                                     gint channel);
+-inline gdouble lqr_carver_read_brightness_grey(LqrCarver *r, gint x, gint y);
+-inline gdouble lqr_carver_read_brightness_std(LqrCarver *r, gint x, gint y);
++extern inline gdouble lqr_carver_read_brightness_grey(LqrCarver *r, gint x, gint y);
++extern inline gdouble lqr_carver_read_brightness_std(LqrCarver *r, gint x, gint y);
+ gdouble lqr_carver_read_brightness_custom(LqrCarver *r, gint x, gint y);
+-inline gdouble lqr_carver_read_brightness(LqrCarver *r, gint x, gint y);
+-inline gdouble lqr_carver_read_luma_std(LqrCarver *r, gint x, gint y);
+-inline gdouble lqr_carver_read_luma(LqrCarver *r, gint x, gint y);
+-inline gdouble lqr_carver_read_rgba(LqrCarver *r, gint x, gint y, gint channel);
+-inline gdouble lqr_carver_read_custom(LqrCarver *r, gint x, gint y, gint channel);
++extern inline gdouble lqr_carver_read_brightness(LqrCarver *r, gint x, gint y);
++extern inline gdouble lqr_carver_read_luma_std(LqrCarver *r, gint x, gint y);
++extern inline gdouble lqr_carver_read_luma(LqrCarver *r, gint x, gint y);
++extern inline gdouble lqr_carver_read_rgba(LqrCarver *r, gint x, gint y, gint channel);
++extern inline gdouble lqr_carver_read_custom(LqrCarver *r, gint x, gint y, gint channel);
+ 
+ gdouble lqr_carver_read_cached_std(LqrCarver *r, gint x, gint y);
+ gdouble lqr_carver_read_cached_rgba(LqrCarver *r, gint x, gint y, gint channel);
