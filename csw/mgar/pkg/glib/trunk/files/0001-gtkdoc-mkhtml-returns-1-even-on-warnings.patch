@@ -1,0 +1,67 @@
+From 10920de07030b7407cd5ff9a243e02083a96a2fb Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 15 Mar 2010 16:02:12 +0100
+Subject: [PATCH] gtkdoc-mkhtml returns 1 on warnings
+
+---
+ docs/reference/glib/Makefile.am    |    2 +-
+ docs/reference/glib/Makefile.in    |    2 +-
+ docs/reference/gobject/Makefile.am |    2 +-
+ docs/reference/gobject/Makefile.in |    2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/docs/reference/glib/Makefile.am b/docs/reference/glib/Makefile.am
+index e44a3c2..14f9cb1 100644
+--- a/docs/reference/glib/Makefile.am
++++ b/docs/reference/glib/Makefile.am
+@@ -148,7 +148,7 @@ html-build.stamp: sgml.stamp $(DOC_MAIN_SGML_FILE) $(content_files)
+ 	@echo '*** Building HTML ***'
+ 	rm -rf $(srcdir)/html 
+ 	mkdir $(srcdir)/html
+-	cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
++	-cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
+ 	test "x$(HTML_IMAGES)" = "x" || ( cd $(srcdir) && cp $(HTML_IMAGES) html )
+ 	@echo '-- Fixing Crossreferences' 
+ 	cd $(srcdir) && gtkdoc-fixxref --module-dir=html --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
+diff --git a/docs/reference/glib/Makefile.in b/docs/reference/glib/Makefile.in
+index 35b867f..3581cae 100644
+--- a/docs/reference/glib/Makefile.in
++++ b/docs/reference/glib/Makefile.in
+@@ -400,7 +400,7 @@ maintainer-clean-generic clean mostlyclean distclean maintainer-clean
+ @ENABLE_GTK_DOC_TRUE@	@echo '*** Building HTML ***'
+ @ENABLE_GTK_DOC_TRUE@	rm -rf $(srcdir)/html 
+ @ENABLE_GTK_DOC_TRUE@	mkdir $(srcdir)/html
+-@ENABLE_GTK_DOC_TRUE@	cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
++@ENABLE_GTK_DOC_TRUE@	-cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
+ @ENABLE_GTK_DOC_TRUE@	test "x$(HTML_IMAGES)" = "x" || ( cd $(srcdir) && cp $(HTML_IMAGES) html )
+ @ENABLE_GTK_DOC_TRUE@	@echo '-- Fixing Crossreferences' 
+ @ENABLE_GTK_DOC_TRUE@	cd $(srcdir) && gtkdoc-fixxref --module-dir=html --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
+diff --git a/docs/reference/gobject/Makefile.am b/docs/reference/gobject/Makefile.am
+index 2462df3..e8fe488 100644
+--- a/docs/reference/gobject/Makefile.am
++++ b/docs/reference/gobject/Makefile.am
+@@ -126,7 +126,7 @@ html-build.stamp: sgml.stamp $(DOC_MAIN_SGML_FILE) $(content_files)
+ 	@echo '*** Building HTML ***'
+ 	rm -rf $(srcdir)/html 
+ 	mkdir $(srcdir)/html
+-	cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
++	-cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
+ 	test "x$(HTML_IMAGES)" = "x" || ( cd $(srcdir) && cp $(HTML_IMAGES) html )
+ 	@echo '-- Fixing Crossreferences' 
+ 	cd $(srcdir) && gtkdoc-fixxref --module-dir=html --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
+diff --git a/docs/reference/gobject/Makefile.in b/docs/reference/gobject/Makefile.in
+index 6182c8d..0cb73aa 100644
+--- a/docs/reference/gobject/Makefile.in
++++ b/docs/reference/gobject/Makefile.in
+@@ -375,7 +375,7 @@ maintainer-clean-generic clean mostlyclean distclean maintainer-clean
+ @ENABLE_GTK_DOC_TRUE@	@echo '*** Building HTML ***'
+ @ENABLE_GTK_DOC_TRUE@	rm -rf $(srcdir)/html 
+ @ENABLE_GTK_DOC_TRUE@	mkdir $(srcdir)/html
+-@ENABLE_GTK_DOC_TRUE@	cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
++@ENABLE_GTK_DOC_TRUE@	-cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
+ @ENABLE_GTK_DOC_TRUE@	test "x$(HTML_IMAGES)" = "x" || ( cd $(srcdir) && cp $(HTML_IMAGES) html )
+ @ENABLE_GTK_DOC_TRUE@	@echo '-- Fixing Crossreferences' 
+ @ENABLE_GTK_DOC_TRUE@	cd $(srcdir) && gtkdoc-fixxref --module-dir=html --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
+-- 
+1.7.0
+
