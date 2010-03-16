@@ -1,5 +1,5 @@
 GARNAME = libxml2
-GARVERSION = 2.7.6
+GARVERSION = 2.7.7
 CATEGORIES = lib
 
 DESCRIPTION = XML Parser Library
