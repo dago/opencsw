@@ -46,6 +46,7 @@ CONFIGURE_ARGS += --enable-milter
 # unrecognized by 0.95rc1? CONFIGURE_ARGS += --with-sendmail=$(libdir)/sendmail
 CONFIGURE_ARGS += --with-dbdir=/var/opt/csw/$(GARNAME)/db
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(GARNAME)
+CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
@@ -58,8 +59,8 @@ PROTOTYPE_FILES_1 = \/var\/opt\/csw\/clamav.*
 PROTOTYPE_CLASS_1 = ugfiles
 PROTOTYPE_USER_1 = clamav
 
-INITSMF  = /etc/opt/csw/init.d/cswclamd
-INITSMF += /etc/opt/csw/init.d/cswclamav-milter
+INITSMF  = /opt/csw/etc/init.d/cswclamd
+INITSMF += /opt/csw/etc/init.d/cswclamav-milter
 SAMPLECONF  = /etc/opt/csw/clamd.conf
 SAMPLECONF += /etc/opt/csw/clamav-milter.conf
 SAMPLECONF += /etc/opt/csw/freshclam.conf
@@ -86,9 +87,9 @@ DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 
 post-install-modulated:
 	@echo " ==> Post-install for $(GARNAME) (custom)"
-	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamd $(DESTDIR)/etc/opt/csw/init.d/cswclamd
-	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamav-milter $(DESTDIR)/etc/opt/csw/init.d/cswclamav-milter
+	@ginstall -d $(DESTDIR)/opt/csw/etc/init.d
+	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamd $(DESTDIR)/opt/csw/etc/init.d/cswclamd
+	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamav-milter $(DESTDIR)/opt/csw/etc/init.d/cswclamav-milter
 	@ginstall -d $(DESTDIR)$(sysconfdir)/pkg/CSWclamav
 	@ginstall -m 644 $(FILEDIR)/CSWclamav.cswusergroup $(DESTDIR)$(sysconfdir)/pkg/CSWclamav/cswusergroup
 	@ginstall -d $(DOCDEST)
@@ -100,4 +101,5 @@ post-install-modulated:
 #	@ginstall -m 644 $(WORKSRC)/contrib/cleanup-partial.pl $(DOCDEST)/contrib
 	@ginstall -d $(DOCDEST)/html
 	@ginstall -m 644 $(WORKSRC)/docs/html/* $(DOCDEST)/html
+	@chmod 600 $(DESTDIR)$(sysconfdir)/freshclam.conf
 	@$(MAKECOOKIE)
