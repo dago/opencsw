@@ -21,7 +21,16 @@ SPKG_SOURCEURL = http://www.fftw.org/
 
 BUILD64 = 1
 NOISAEXEC = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-shared=yes
+CONFIGURE_ARGS += --enable-alloca
+CONFIGURE_ARGS += --enable-static=no
+#CONFIGURE_ARGS += --enable-mpi
+CONFIGURE_ARGS += --enable-portable-binary
+CONFIGURE_ARGS += --disable-fortran
+#CONFIGURE_ARGS += --enable-openmp
+CONFIGURE_ARGS += --enable-threads
 
 TEST_TARGET = check
 
