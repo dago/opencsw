@@ -18,7 +18,9 @@ RUNTIME_DEP_PKGS_CSWlibrsync += CSWbzip2
 RUNTIME_DEP_PKGS_CSWlibrsync += CSWlibpopt
 RUNTIME_DEP_PKGS_CSWlibrsync += CSWzlib
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-shared=yes
+CONFIGURE_ARGS += --enable-static=no
 
 TEST_TARGET = check
 
