@@ -13,4 +13,6 @@ endef
 PACKAGES = CSWpmconvertuulib
 CATALOGNAME = pm_convertuulib
 
+PACKAGING_PLATFORMS =  solaris8-sparc solaris8-i386
+
 include gar/category.mk
