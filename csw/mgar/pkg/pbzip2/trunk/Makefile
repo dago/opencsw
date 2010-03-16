@@ -32,6 +32,9 @@ SKIPTEST = 1
 # custom install
 INSTALL_SCRIPTS = custom
 
+# After some testing. Using a special ISA modulation does *not* speed
+# up bzip2. Therefor i will just stick to a regular 32bit build here.
+
 include gar/category.mk
 
 pre-build-modulated:
