@@ -32,7 +32,7 @@ SPKG_DESC_CSWlcmsdevel += The little color management system and tools - develop
 SPKG_DESC_CSWpy-lcms += The little color management system and tools - python bindings
 
 RUNTIME_DEP_PKGS_CSWlcms += CSWlcmsrt CSWjpeg CSWzlib
-RUNTIME_DEP_PKGS_CSWlcms += CSWtiffrt
+RUNTIME_DEP_PKGS_CSWlcms += CSWtiff
 RUNTIME_DEP_PKGS_CSWlcmsrt += 
 RUNTIME_DEP_PKGS_CSWlcmsdevel += CSWlcmsrt
 RUNTIME_DEP_PKGS_CSWpy-lcms += CSWlcmsrt CSWpython
