@@ -66,3 +66,11 @@ BUILD64 = 1
 TEST_TARGET =
 
 include gar/category.mk
+
+post-install-isa-sparcv8:
+	@cp $(FILEDIR)/libdjvulibre.so.15.s $(INSTALLISADIR)$(libdir)/libdjvulibre.so.15
+	$(MAKECOOKIE)
+
+post-install-isa-i386:
+	@cp $(FILEDIR)/libdjvulibre.so.15.i $(INSTALLISADIR)$(libdir)/libdjvulibre.so.15
+	$(MAKECOOKIE)
