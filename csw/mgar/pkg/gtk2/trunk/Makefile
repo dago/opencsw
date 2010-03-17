@@ -37,7 +37,7 @@ BUILD_DEP_PKGS = CSWbash
 RUNTIME_DEP_PKGS_CSWgtk2 = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibxcomposite CSWlibxcursor CSWlibxdamage CSWlibxext CSWlibxfixes CSWlibxinerama CSWlibxrandr
-RUNTIME_DEP_PKGS_CSWgtk2devel  = CSWgtk2 CSWglib2devel
+RUNTIME_DEP_PKGS_CSWgtk2devel  = CSWgtk2 CSWglib2devel CSWatkdevel
 RUNTIME_DEP_PKGS_CSWgtk2devel += CSWlibcairodevel CSWlibx11devel CSWlibxrenderdevel CSWpangodevel
 
 SPKG_SOURCEURL = http://www.gtk.org/
