@@ -19,6 +19,10 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+# TBD:
+# - libeet missing
+# - libedb missing
+
 PACKAGES = CSWimlib2loaders
 CATALOGNAME = imlib2_loaders
 
