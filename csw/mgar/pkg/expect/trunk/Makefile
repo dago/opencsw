@@ -4,17 +4,35 @@ CATEGORIES = utils
 
 DESCRIPTION = Tool for automating interactive applications
 define BLURB
-Expect is a tool for automating interactive applications such as telnet, ftp, passwd, fsck, rlogin, tip, etc. Expect really makes this stuff trivial. Expect is also useful for testing these same applications. And by adding Tk, you can also wrap interactive applications in X11 GUIs.
+  Expect is a tool for automating interactive applications such as telnet,
+  ftp, passwd, fsck, rlogin, tip, etc. Expect really makes this stuff trivial.
+  Expect is also useful for testing these same applications. And by adding Tk,
+  you can also wrap interactive applications in X11 GUIs.
 
-Expect can make easy all sorts of tasks that are prohibitively difficult with anything else. You will find that Expect is an absolutely invaluable tool - using it, you will be able to automate tasks that you've never even thought of before - and you'll be able to do this automation quickly and easily.
+  Expect can make easy all sorts of tasks that are prohibitively difficult with
+  anything else. You will find that Expect is an absolutely invaluable tool - using it,
+  you will be able to automate tasks that you've never even thought of before - and
+  you'll be able to do this automation quickly and easily.
 endef
+
+# Build and package tcl
+# Build and package tk
+# "gmake extract" in expect
+# "cp -rp ../../tcl/trunk/work/.../tcl8.5.7 work/.../build.../"
+# "cp -rp ../../tk/trunk/work/.../tk8.5.7 work/.../build.../"
+# "gmake build package repackage"
+
 
 # For some reason upstream have recalled 5.44.1 and has 5.43 as primary on 
 # homepage as expect.tar.gz
 MASTER_SITES = http://expect.nist.gov/
+MASTER_SITES += http://downloads.sourceforge.net/tcl/
 DISTNAME  = $(GARNAME)-$(GARVERSION)
 DISTFILES  = $(GARNAME).tar.gz
 DISTFILES += expect.m4
+
+DISTFILES += tcl8.5.7-src.tar.gz
+DISTFILES += tk8.5.7-src.tar.gz
 
 PATCHFILES += expect-5.39.0-libdir.patch
 #PATCHFILES += expect-5.42.1-missing-includes.patch
@@ -27,13 +45,13 @@ PATCHFILES += expect-5.43.0-multilib.patch
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# UPSTREAM_MASTER_SITES = 
-
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --with-tcl=/opt/csw/lib --with-tk=/opt/csw/lib
-CONFIGURE_ARGS += --with-tclinclude=$(WORKSRC)/../tcl8.5.7/generic/
-CONFIGURE_ARGS += --with-tkinclude=$(WORKSRC)/../tk8.5.7/generic/
+# CONFIGURE_ARGS += --with-tclinclude=$(WORKSRC)/../tcl8.5.7/generic/
+# CONFIGURE_ARGS += --with-tkinclude=$(WORKSRC)/../tk8.5.7/generic/
+CONFIGURE_ARGS += --with-tclinclude=$(abspath $(WORKDIR)/tcl8.5.7/unix)
+CONFIGURE_ARGS += --with-tkinclude=$(abspath $(WORKDIR)/tk8.5.7/unix)
 
 TEST_TARGET = 
 
