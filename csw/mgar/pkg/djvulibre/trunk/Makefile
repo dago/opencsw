@@ -19,9 +19,10 @@ SPKG_DESC_CSWdjvulibre += DjVu standalone viewer, browser plug-in, command linet
 SPKG_DESC_CSWdjvulibrert += DjVu standalone viewer, browser plug-in, command line tools - runtime package
 SPKG_DESC_CSWdjvulibredevel += DjVu standalone viewer, browser plug-in, commandline tools - developer package
 
-RUNTIME_DEP_PKGS_CSWdjvulibre += CSWdjvulibrert CSWjpeg CSWzlib
+RUNTIME_DEP_PKGS_CSWdjvulibre += CSWdjvulibrert CSWjpeg
 RUNTIME_DEP_PKGS_CSWdjvulibre += CSWtiff
 RUNTIME_DEP_PKGS_CSWdjvulibrert += CSWjpeg
+RUNTIME_DEP_PKGS_CSWdjvulibrert += CSWiconv
 RUNTIME_DEP_PKGS_CSWdjvulibredevel += CSWdjvulibrert
 
 PKGFILES_CSWdjvulibrert = $(PKGFILES_RT)
