@@ -1,5 +1,5 @@
 GARNAME = ganglia
-GARVERSION = 3.1.2
+GARVERSION = 3.1.7
 CATEGORIES = utils
 
 # How should we set this?
@@ -24,7 +24,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWgangliaweb.postinstall CSWgangliaweb.preremove
 DISTFILES += httpd-ganglia.conf.CSW cswgmond cswgmetad
 
-PACKAGES = CSWgangliaagent CSWgangliart CSWgangliadevel CSWgangliagmetad CSWgangliaweb CSWgangliamodpython
+PACKAGES = CSWgangliart CSWgangliaagent CSWgangliadevel CSWgangliagmetad CSWgangliaweb CSWgangliamodpython
 
 CATALOGNAME_CSWganglia		= ganglia
 CATALOGNAME_CSWgangliart	= ganglia_rt
@@ -42,16 +42,18 @@ SPKG_DESC_CSWgangliadevel	= Ganglia headers for metric module development
 SPKG_DESC_CSWgangliagmetad	= Ganglia gmetad
 SPKG_DESC_CSWgangliaweb		= Ganglia web
 
-BUILD_DEP_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-devel CSWrrd
+BUILD_DEP_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-devel CSWrrd CSWpcre
 
 RUNTIME_DEP_PKGS_CSWgangliart = CSWexpat CSWlibconfuse CSWapache2rt
+RUNTIME_DEP_PKGS_CSWgangliart += CSWpcrert
 RUNTIME_DEP_PKGS_CSWgangliaagent = CSWexpat CSWlibconfuse CSWapache2rt
-RUNTIME_DEP_PKGS_CSWgangliaagent += CSWgangliart
+RUNTIME_DEP_PKGS_CSWgangliaagent += CSWgangliart CSWpcrert
 RUNTIME_DEP_PKGS_CSWgangliamodpython = CSWlibconfuse CSWapache2rt CSWgangliart
 RUNTIME_DEP_PKGS_CSWgangliamodpython += CSWgangliaagent
 RUNTIME_DEP_PKGS_CSWgangliadevel = CSWexpat CSWlibconfuse CSWapache2rt
 RUNTIME_DEP_PKGS_CSWgangliagmetad = CSWexpat CSWlibconfuse CSWapache2rt
 RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWgangliart CSWgangliaagent CSWrrd
+RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWpcrert
 RUNTIME_DEP_PKGS_CSWgangliaweb = CSWgangliagmetad 
 RUNTIME_DEP_PKGS_CSWgangliaweb += CSWapache2 CSWphp5 CSWap2modphp5 CSWrrd
 
@@ -63,6 +65,10 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 # This is attachment #45 from Ganglia bug
 #   http://bugzilla.ganglia.info/cgi-bin/bugzilla/show_bug.cgi?id=77
 #PATCHFILES = $(GARNAME)-$(GARVERSION)-solaris-cc.patch
+
+# Uncomment this if we want to build both 32 bit and 64 bit binaries
+# By default, only 32 bit binaries are built
+#BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -84,22 +90,35 @@ CONFIGURE_ARGS += --with-status
 # TODO: define a CSWgangliamodpython package
 # Depends: some issues exist getting the Python support working on Solaris,
 # Ganglia's configure.in needs to be further enhanced for this to work
-CONFIGURE_ARGS += --without-python
+CONFIGURE_ARGS += --disable-python
 #CONFIGURE_ARGS += --with-python=/opt/csw
 
 # For Ganglia 3.1.2, the test suite doesn't compile cleanly on Solaris,
 # so we skip it.  This should be re-assessed with each new release
 # from upstream.  Proposed fixes for the test suite to be submitted
 # upstream.
-ifeq ($(GARVERSION),3.1.2)
+ifeq ($(GARVERSION),3.1.3)
 TEST_SCRIPTS = 
+endif
+ifeq ($(GARVERSION),3.1.4)
+TEST_SCRIPTS =
+endif
+ifeq ($(GARVERSION),3.1.5)
+TEST_SCRIPTS =
+endif
+ifeq ($(GARVERSION),3.1.6)
+TEST_SCRIPTS =
+endif
+ifeq ($(GARVERSION),3.1.7)
+TEST_SCRIPTS =
 endif
 
 INSTALL_SCRIPTS = $(WORKSRC)/Makefile custom
 
 WWWROOT = /opt/csw/share/www
 WWWGANGLIA = $(WWWROOT)/ganglia
-ETCGANGLIA = /etc/opt/csw/ganglia
+sysconfdir = /etc/opt/csw/ganglia
+ETCGANGLIA = $(sysconfdir)
 
 PKGFILES_CSWganglia = 
 PKGFILES_CSWgangliart = $(libdir)/libganglia.*
@@ -109,6 +128,11 @@ PKGFILES_CSWgangliagmetad = .*/gmetad.* /opt/csw/var/ganglia/rrds /etc/opt/csw/i
 PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.* /opt/csw/apache2/etc/extra/.*
 
 PRESERVECONF = /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
+PRESERVECONF += /etc/opt/csw/ganglia/gmond.conf.CSW
+PRESERVECONF += /etc/opt/csw/ganglia/gmetad.conf.CSW
+PRESERVECONF += /etc/opt/csw/ganglia/conf.d/modgstatus.conf.CSW
+PRESERVECONF += /etc/opt/csw/ganglia/conf.d/modpython.conf.CSW
+PRESERVECONF += $(WWWGANGLIA)/conf.php
 
 # For gmond
 INITSMF = /etc/opt/csw/init.d/cswgmond
@@ -134,25 +158,26 @@ install-custom:
 	@cd $(WORKSRC)/web; \
 		cp -R * $(DESTDIR)$(WWWGANGLIA)
 	@ginstall -D $(FILEDIR)/conf.php \
-		$(DESTDIR)$(WWWGANGLIA)/conf.php
+		$(DESTDIR)$(WWWGANGLIA)/conf.php.CSW
 	@rm -rf $(DESTDIR)$(WWWGANGLIA)/*.in
 	@ginstall -D $(FILEDIR)/httpd-ganglia.conf.CSW \
 		$(DESTDIR)/opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
 	@ginstall -d $(DESTDIR)$(ETCGANGLIA)/conf.d
 	@$(WORKSRC)/gmond/gmond -t | grep -v "^include" \
-		> $(DESTDIR)$(ETCGANGLIA)/gmond.conf
+		> $(DESTDIR)$(ETCGANGLIA)/gmond.conf.CSW
 	@echo "include ('/etc/opt/csw/ganglia/conf.d/*.conf')" \
-		>> $(DESTDIR)$(ETCGANGLIA)/gmond.conf
+		>> $(DESTDIR)$(ETCGANGLIA)/gmond.conf.CSW
 #	@ginstall -D $(FILEDIR)/gmond.conf \
 #		$(DESTDIR)$(ETCGANGLIA)/gmond.conf
 	@ginstall -D $(FILEDIR)/gmetad.conf \
-		$(DESTDIR)$(ETCGANGLIA)/gmetad.conf
+		$(DESTDIR)$(ETCGANGLIA)/gmetad.conf.CSW
 	@cd $(WORKSRC)/gmond/modules/conf.d; \
-		cp -R *.conf $(DESTDIR)$(ETCGANGLIA)/conf.d
-	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/example.conf \
-		$(DESTDIR)$(ETCGANGLIA)/conf.d/multicpu.conf
+		for CONF_FILE in *.conf ; \
+		do cp -R "$${CONF_FILE}" $(DESTDIR)$(ETCGANGLIA)/conf.d/"$${CONF_FILE}.CSW" ; done
+	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/example.conf.CSW \
+		$(DESTDIR)$(ETCGANGLIA)/conf.d/multicpu.conf.CSW
 ifeq ($(GARVERSION),3.1.2)
-	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/modgstatus.conf
+	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/modgstatus.conf.CSW
 endif
 	@ginstall -d $(DESTDIR)/opt/csw/var/ganglia/rrds
 	
