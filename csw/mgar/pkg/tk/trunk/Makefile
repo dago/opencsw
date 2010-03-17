@@ -11,13 +11,10 @@ MASTER_SITES = $(SF_MIRRORS)
 
 DISTNAME = $(GARNAME)$(GARVERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
+DISTFILES += libtk8.4.so.i
+DISTFILES += libtk8.4.so.s
 
-RUNTIME_DEP_PKGS_CSWtk += CSWfconfig
-RUNTIME_DEP_PKGS_CSWtk += CSWftype2
-RUNTIME_DEP_PKGS_CSWtk += CSWlibx11
-RUNTIME_DEP_PKGS_CSWtk += CSWlibxft2
-RUNTIME_DEP_PKGS_CSWtk += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWtk += CSWtcl
+DEP_PKGS_CSWtk = CSWfconfig CSWftype2 CSWlibx11 CSWlibxft2 CSWlibxrender CSWtcl
 
 SPKG_SOURCEURL = http://www.tcl.tk/
 
@@ -50,3 +47,15 @@ include gar/category.mk
 
 #CFLAGS := $(filter-out -I%,$(CFLAGS))
 #DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
+
+post-install-i386:
+	@# Install legacy libs
+	@# Building them with version modulations would be hard as that would require a full legacy tcl also
+	ginstall $(WORKDIR)/libtk8.4.so.i $(DESTDIR)$(libdir)/libtk8.4.so
+	@$(MAKECOOKIE)
+
+post-install-sparc:
+	@# Install legacy libs
+	@# Building them with version modulations would be hard as that would require a full legacy tcl also
+	ginstall $(WORKDIR)/libtk8.4.so.s $(DESTDIR)$(libdir)/libtk8.4.so
+	@$(MAKECOOKIE)
