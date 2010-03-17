@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
+GARFLAVOR = DBG
+
 GARNAME = awesome
 GARVERSION = 3.4.4
 CATEGORIES = apps
@@ -59,10 +61,14 @@ BUILD_DEP_PKGS += CSWlibdbusdev
 BUILD_DEP_PKGS += CSWimagemagick
 BUILD_DEP_PKGS += CSWlibcairodevel
 # Enable when fixed to used gtail
+# BUILD_DEP_PKGS += CSWasciidoc
 # BUILD_DEP_PKGS += CSWxmlto
 BUILD_DEP_PKGS += CSWxcbproto
 BUILD_DEP_PKGS += CSWpyxcbproto
 BUILD_DEP_PKGS += CSWlibxdmcpdevel
+BUILD_DEP_PKGS += CSWlibxaudevel
+BUILD_DEP_PKGS += CSWlibxrenderdevel
+BUILD_DEP_PKGS += CSWlibx11devel
 
 LICENSE = LICENSE
 
