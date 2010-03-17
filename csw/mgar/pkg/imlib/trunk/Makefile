@@ -16,12 +16,21 @@ EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-# EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
+# EXTRA_LINKER_FLAGS = -L$(libdir) -l/usr/openwin/lib/libXext.so
+
+STRIP_LIBTOOL = 1
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+
+
+RUNTIME_DEP_PKGS_CSWimlib  = CSWgiflib CSWjpeg CSWpng CSWtiff CSWzlib
+RUNTIME_DEP_PKGS_CSWimlib += CSWlibice CSWlibsm CSWlibxext
+
+# Building the test cases misses -lX11, disable for now
+SKIPTEST ?= 1
 
 TEST_TARGET = check
 
