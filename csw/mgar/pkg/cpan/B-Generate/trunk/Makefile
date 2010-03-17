@@ -1,0 +1,15 @@
+GARNAME = B-Generate
+GARVERSION = 1.26
+CATEGORIES = cpan
+AUTHOR = RURBAN
+
+DESCRIPTION = Create your own op trees
+define BLURB
+endef
+
+PACKAGES = CSWpmbgenerate
+CATALOGNAME = pm_bgenerate
+
+LICENSE = Copying
+
+include gar/category.mk
