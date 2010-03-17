@@ -1,5 +1,5 @@
 GARNAME = imlib2
-GARVERSION = 1.4.2
+GARVERSION = 1.4.3
 CATEGORIES = lib
 
 DESCRIPTION = Imlib 2 is the successor to Imlib, a powerful graphics library
