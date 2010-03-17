@@ -1,5 +1,5 @@
 GARNAME = MIME-Types
-GARVERSION = 1.28
+GARVERSION = 1.29
 CATEGORIES = cpan
 AUTHOR = MARKOV
 
@@ -10,6 +10,8 @@ define BLURB
   list is long but not complete. Please don't hestitate to ask to add
   additional information.
 endef
+
+DISTFILES = COPYING
 
 PACKAGES = CSWpmmimetypes
 CATALOGNAME = pm_mimetypes
