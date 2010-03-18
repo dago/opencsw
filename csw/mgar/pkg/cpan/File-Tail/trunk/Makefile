@@ -14,4 +14,6 @@ PACKAGES = CSWpmfiletail
 CATALOGNAME = pm_filetail
 ARCHALL = 1
 
+CHECKPKG_OVERRIDES_CSWpmfiletail += license-missing
+
 include gar/category.mk
