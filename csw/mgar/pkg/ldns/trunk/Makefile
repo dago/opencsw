@@ -33,6 +33,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns
 
+LICENSE = LICENSE
+
 BUILD64 = 1
 EXTRA_BUILD_ISAS_i386 = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus
