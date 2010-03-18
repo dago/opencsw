@@ -9,6 +9,10 @@ define BLURB
   Mail::Internet, Mail::Mailer, Mail::Send and Mail::Util.
 endef
 
-DISTFILES += $(call admfiles,CSWpmmailtools,prototype)
+PACKAGES = CSWpmmailtools
+CATALOGNAME = pm_mailtools
+ARCHALL = 1
+
+CHECKPKG_OVERRIDES_CSWpmmailtools += license-missing
 
 include gar/category.mk
