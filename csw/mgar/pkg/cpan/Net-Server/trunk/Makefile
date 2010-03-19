@@ -11,8 +11,11 @@ define BLURB
   concepts in the Apache Webserver.
 endef
 
-DISTFILES += CSWpmnetserver.gspec
+DISTFILES = COPYING
 
-CONFIGURE_ARGS = 
+PACKAGES = CSWpmnetserver
+CATALOGNAME = pm_netserver
+
+ARCHALL = 1
 
 include gar/category.mk
