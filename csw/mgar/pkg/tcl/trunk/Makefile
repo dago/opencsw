@@ -45,7 +45,7 @@ INCLUDE_FLAGS =
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # tk need the static tclstub library for some reason
-EXTRA_MERGE_INCLUDE_FILES  = $(libdir)/libtclstub.*\.a
+MERGE_EXCLUDE_STATICLIBS =
 
 MERGE_SCRIPTS_isa-default-garversion-8.4.19 = copy-lib-only
 
