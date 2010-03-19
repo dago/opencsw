@@ -1,0 +1,20 @@
+# Copyright 2009 OpenCSW
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
+GARNAME = guppy
+GARVERSION = 0.1.9
+CATEGORIES = python
+DESCRIPTION  = Programming environment providing object and heap memory sizing,
+DESCRIPTION += profiling and analysis
+define BLURB
+endef
+SPKG_SOURCEURL = http://guppy-pe.sourceforge.net/
+MASTER_SITES = http://pypi.python.org/packages/source/g/guppy/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+# guppy-0.1.9.tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+TEST_SCRIPTS =
+CONFIGURE_ARGS = $(DIRPATHS)
+LICENSE = PKG-INFO
+include gar/category.mk
