@@ -39,7 +39,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
-EXTRA_MERGE_INCLUDE_FILES  = $(libdir)/libtkstub.*\.a
+# tk need the static tclstub library for some reason
+MERGE_EXCLUDE_STATICLIBS =
 
 TEST_TARGET =
 
