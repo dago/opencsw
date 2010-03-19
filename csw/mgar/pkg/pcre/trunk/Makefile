@@ -42,6 +42,7 @@ EXTRA_LINKER_FLAGS = -lncurses
 
 TEST_TARGET = check
 
+MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 MERGE_DIRS_isa-extra = $(libdir)
 
 PKGFILES_CSWpcrert = $(PKGFILES_RT)
