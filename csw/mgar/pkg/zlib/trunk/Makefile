@@ -1,5 +1,5 @@
 GARNAME = zlib
-GARVERSION = 1.2.3
+GARVERSION = 1.2.4
 CATEGORIES = lib
 
 DESCRIPTION = Zlib Data Compression Library
@@ -18,9 +18,11 @@ endef
 SF_PROJ=libpng
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES += license
 
 SPKG_SOURCEURL = http://www.zlib.net
 
+LICENSE = license
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=5624
 UPSTREAM_USE_SF = 1
@@ -33,7 +35,7 @@ BUILD64 = 1
 #NOISAEXEC = 1
 EXTRA_BUILD_ISAS = sparcv8plus sparcv8plus+vis pentium_pro+mmx pentium
 
-CONFIGURE_ARGS = --prefix=$(prefix) --exec_prefix=$(exec_prefix) 
+CONFIGURE_ARGS = --prefix=$(prefix) --eprefix=$(exec_prefix) 
 CONFIGURE_ARGS += --libdir=$(libdir) --includedir=$(includedir)  --shared
 
 include gar/category.mk

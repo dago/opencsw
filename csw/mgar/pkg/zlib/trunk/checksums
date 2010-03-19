@@ -1,3 +1,4 @@
-dee233bf288ee795ac96a98cc2e369b6  download/zlib-1.2.3.tar.bz2
-7e6ff59ded76dd7d90a5dc10ff25e20a  download/Makefile.in.diff
-95c0edba1d5160ed41b871f2c83e813a  download/configure.diff
+f42963676d4ac5dbf75bb9187aadd2a0  Makefile.in.diff
+eb5fb03fc91399bb0ad892223d339c09  configure.diff
+4f83c4bd64190ba690413ab698861b3f  license
+763c6a0b4ad1cdf5549e3ab3f140f4cb  zlib-1.2.4.tar.bz2
