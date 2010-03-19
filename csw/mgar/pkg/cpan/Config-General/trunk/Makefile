@@ -1,5 +1,5 @@
 GARNAME = Config-General
-GARVERSION = 2.40
+GARVERSION = 2.44
 CATEGORIES = cpan
 AUTHOR = TLINDEN
 
@@ -17,8 +17,11 @@ define BLURB
   C-style comments or multiline options
 endef
 
-DISTFILES += CSWpmconfiggeneral.gspec
+DISTFILES = COPYING
 
-CONFIGURE_ARGS = 
+PACKAGES = CSWpmconfiggeneral
+CATALOGNAME = pm_configgeneral
+
+ARCHALL = 1
 
 include gar/category.mk

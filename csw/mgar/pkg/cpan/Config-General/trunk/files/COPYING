@@ -1,0 +1,11 @@
+       Config::General
+       Config::General::Extended
+           Copyright (c) 2000-2007 by Thomas Linden <tom@daemon.de>
+
+       Config::General::Interpolated
+           Copyright (c) 2001 by Wei-Hon Chen <plasmaball@pchome.com.tw>
+           Copyright (c) 2002-2007 by Thomas Linden <tom@daemon.de>.
+
+       This library is free software; you can redistribute it
+       and/or modify it under the same terms as Perl itself.
+
