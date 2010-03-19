@@ -11,8 +11,11 @@ define BLURB
   script parameters.
 endef
 
-DISTFILES += CSWpmappconfig.gspec
+DISTFILES = COPYING
 
-DEPENDS += cpan/File-HomeDir
+PACKAGES = CSWpmappconfig
+CATALOGNAME = pm_appconfig
+
+ARCHALL = 1
 
 include gar/category.mk
