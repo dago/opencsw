@@ -44,6 +44,10 @@ INCLUDE_FLAGS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+INSTALL_ARGS-8.4.19 = install
+INSTALL_ARGS-8.5.8 = install install-private-headers install-tzdata install-msgs
+INSTALL_ARGS = $(INSTALL_ARGS-$(GARVERSION))
+
 # tk need the static tclstub library for some reason
 MERGE_EXCLUDE_STATICLIBS =
 
