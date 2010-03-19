@@ -422,9 +422,9 @@ class CswSrv4File(ShellMixin, object):
     return os.path.join(self.GetWorkDir(), "admin")
 
   def GetGunzippedPath(self):
-    gzip_suffix = ".gz"
-    pkg_suffix = ".pkg"
     if not self.gunzipped_path:
+      gzip_suffix = ".gz"
+      pkg_suffix = ".pkg"
       if self.pkg_path.endswith("%s%s" % (pkg_suffix, gzip_suffix)):
         base_name_gz = os.path.split(self.pkg_path)[1]
         shutil.copy(self.pkg_path, self.GetWorkDir())
@@ -517,7 +517,7 @@ class CswSrv4File(ShellMixin, object):
 
   def GetPkgchkOutput(self):
     """Returns: (exit code, stdout, stderr)."""
-    args = ["pkgchk", "-d", self.GetPkgname()]
+    args = ["pkgchk", "-d", self.GetGunzippedPath(), "all"]
     pkgchk_proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = pkgchk_proc.communicate()
     ret = pkgchk_proc.wait()
