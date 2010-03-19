@@ -1,9 +1,9 @@
 GARNAME = Object-Realize-Later
-GARVERSION = 0.15
+GARVERSION = 0.18
 CATEGORIES = cpan
 AUTHOR = MARKOV
 
-DESCRIPTION = delayed creation of objects
+DESCRIPTION = Delayed creation of objects
 define BLURB
   The Object::Realize::Later class helps with implementing transparent on
   demand realization of object data. This is related to the tricks on
@@ -11,8 +11,11 @@ define BLURB
   functionality.
 endef
 
-DEPENDS += cpan/Scalar-List-Utils
+DISTFILES = COPYING
 
-DISTFILES += CSWpmobjrelater.gspec
+PACKAGES = CSWpmobjrealizelater
+CATALOGNAME = pm_objrealizelater
+
+ARCHALL = 1
 
 include gar/category.mk
