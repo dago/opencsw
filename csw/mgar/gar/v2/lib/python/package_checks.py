@@ -15,6 +15,7 @@ import re
 import os
 import checkpkg
 import opencsw
+import textwrap
 from Cheetah import Template
 
 PATHS_ALLOWED_ONLY_IN = {
@@ -47,6 +48,7 @@ ONLY_ALLOWED_IN_PKG = {
     "CSWcommon": ("/opt", )
 }
 DO_NOT_LINK_AGAINST_THESE_SONAMES = set(["libX11.so.4"])
+DISCOURAGED_FILE_PATTERNS = (r"\.py[co]$",)
 
 
 def CatalognameLowercase(pkg_data, error_mgr, logger):
@@ -68,17 +70,20 @@ def CheckForbiddenPaths(pkg_data, error_mgr, logger):
 
 def CheckDirectoryPermissions(pkg_data, error_mgr, logger):
   for entry in pkg_data["pkgmap"]:
-    if entry["type"] == "d":
-      if entry["mode"][1] == "6":
-        error_mgr.ReportError("executable-bit-missing-on-a-directory",
-                              entry["path"])
+    if (entry["type"] == "d"
+          and
+        entry["mode"] != "?"
+          and
+        entry["mode"][1] == "6"):
+      error_mgr.ReportError("executable-bit-missing-on-a-directory",
+                            entry["path"])
 
 
 def CheckNonCswPathsDirectoryPerms(pkg_data, error_mgr, logger):
   for entry in pkg_data["pkgmap"]:
     if entry["user"] == "?" or entry["group"] == "?" or entry["mode"] == "?":
       if entry["path"].startswith("/opt/csw"):
-        error_mgr.ReportError("question-mark-perms-in-opt-csw", entry["path"])
+        error_mgr.ReportError("pkgmap-question-mark-perms-in-opt-csw", entry["path"])
 
 
 def CheckPerlLocal(pkg_data, error_mgr, logger):
@@ -188,7 +193,7 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
   # same bit of code would do both checking and reporting.
   #
   # TODO: Rewrite this using cheetah templates
-  if False and needed_sonames:
+  if True and needed_sonames:
     print "Analysis of sonames needed by the package set:"
     binaries_with_missing_sonames = set([])
     for soname in needed_sonames:
@@ -196,7 +201,7 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
       if soname in filenames_by_soname:
         print "%s is provided by the package itself" % soname
       elif soname in lines_by_soname:
-        print ("%s is provided by %s and required by:" 
+        print ("%s is provided by %s and required by:"
                % (soname,
                   pkgs_by_filename[soname]))
         filename_lines = " ".join(sorted(binaries_by_soname[soname]))
@@ -210,7 +215,7 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
         if soname in checkpkg.ALLOWED_ORPHAN_SONAMES:
           print "However, it's a whitelisted soname."
         else:
-          pass
+          print "No package seems to be providing %s" % (soname,)
           # The error checking needs to be unified: done in one place only.
           # errors.append(
           #     checkpkg.CheckpkgTag(
@@ -242,14 +247,16 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
         "surplus_deps": surplus_deps,
         "orphan_sonames": orphan_sonames,
     }
-    t = Template.Template(checkpkg.REPORT_TMPL, searchList=[namespace])
-    report = unicode(t)
-    if report.strip():
-      print report
     for soname in orphan_sonames:
       error_mgr.ReportError(pkgname, "orphan-soname", soname)
     for missing_dep in missing_deps:
       error_mgr.ReportError(pkgname, "missing-dependency", missing_dep)
+    for surplus_dep in surplus_deps:
+      error_mgr.ReportError(pkgname, "surplus-dependency", surplus_dep)
+    t = Template.Template(checkpkg.REPORT_TMPL, searchList=[namespace])
+    report = unicode(t)
+    if report.strip():
+      print report
 
 
 def SetCheckDependencies(pkgs_data, error_mgr, logger):
@@ -285,6 +292,8 @@ def CheckActionClasses(pkg_data, error_mgr, logger):
   """Checks the consistency between classes in the prototype and pkginfo."""
   pkginfo = pkg_data["pkginfo"]
   pkgmap = pkg_data["pkgmap"]
+  if "CLASSES" not in pkginfo:
+    return
   pkginfo_classes = set(re.split(opencsw.WS_RE, pkginfo["CLASSES"]))
   pkgmap_classes = set()
   for entry in pkgmap:
@@ -410,6 +419,10 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
   catalogname = pkg_data["basic_stats"]["catalogname"]
   pkgname = pkg_data["basic_stats"]["pkgname"]
   pkginfo = pkg_data["pkginfo"]
+  # PKG, NAME, ARCH, VERSION and CATEGORY
+  for parameter in ("PKG", "NAME", "ARCH", "VERSION", "CATEGORY"):
+    if parameter not in pkginfo:
+      error_mgr.ReportError("pkginfo-missing-parameter", parameter)
   if not catalogname:
     error_mgr.ReportError("pkginfo-empty-catalogname")
   if not pkgname:
@@ -507,3 +520,24 @@ def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger):
           soname in DO_NOT_LINK_AGAINST_THESE_SONAMES):
         error_mgr.ReportError("linked-against-discouraged-library",
                               "%s %s" % (binary_info["base_name"], soname))
+
+def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger):
+  patterns = [re.compile(x) for x in DISCOURAGED_FILE_PATTERNS]
+  for entry in pkg_data["pkgmap"]:
+    if entry["path"]:
+      for pattern in patterns:
+        if re.search(pattern, entry["path"]):
+          error_mgr.ReportError("discouraged-path-in-pkgmap",
+                                entry["path"])
+
+def CheckBadPaths(pkg_data, error_mgr, logger):
+  for regex in pkg_data["bad_paths"]:
+    for file_name in pkg_data["bad_paths"][regex]:
+      error_mgr.ReportError("file-with-bad-content", "%s %s" % (regex, file_name))
+
+def CheckPkgchk(pkg_data, error_mgr, logger):
+  if pkg_data["pkgchk"]["return_code"] != 0:
+    error_mgr.ReportError("pkgchk-failed-with-code", pkg_data["pkgchk"]["return_code"])
+    for line in pkg_data["pkgchk"]["stderr_lines"]:
+      logger.warn(line)
+

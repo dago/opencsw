@@ -3,13 +3,14 @@
 # Style guide:
 # http://code.google.com/p/soc/wiki/PythonStyleGuide
 
-import Cheetah.Template
-import shutil
-import tempfile
+import logging
 import os
 import os.path
+import shutil
 import subprocess
+import tempfile
 import opencsw
+import Cheetah.Template
 
 """A module used to do end-to-end testing of GAR."""
 
@@ -177,6 +178,8 @@ class DynamicGarBuild(GarBuild):
     if self.cleanup:
       if os.path.isdir(self.build_dir):
         shutil.rmtree(self.build_dir)
+    else:
+      logging.warn("Not removing files from %s", repr(self.build_dir))
 
 
 class StaticGarBuild(GarBuild):

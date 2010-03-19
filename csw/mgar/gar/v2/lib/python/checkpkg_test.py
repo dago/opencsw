@@ -603,7 +603,7 @@ RUNTIME_DEP_PKGS_CSWfoo += SUNWgss
 class CheckpkgTagsUnitTest(unittest.TestCase):
   
   def test_1(self):
-    m = checkpkg.CheckpkgManager("testname", "/tmp", ["CSWfoo"])
+    m = checkpkg.CheckpkgManager2("testname", "/tmp", ["CSWfoo"])
     tags = {
         "CSWfoo": [
           checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "foo-info"),
@@ -614,7 +614,7 @@ class CheckpkgTagsUnitTest(unittest.TestCase):
     self.assertEqual(expected, tags_report)
 
   def test_2(self):
-    m = checkpkg.CheckpkgManager("testname", "/tmp", ["CSWfoo"])
+    m = checkpkg.CheckpkgManager2("testname", "/tmp", ["CSWfoo"])
     tags = {
         "CSWfoo": [
           checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "foo-info"),

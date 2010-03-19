@@ -11,6 +11,8 @@ import os.path
 import mox
 import logging
 
+import testdata.checkpkg_test_data_CSWdjvulibrert as td_1
+
 BASE_DIR = os.path.dirname(__file__)
 TESTDATA_DIR = os.path.join(BASE_DIR, "testdata")
 CHECKPKG_STATS_DIR = os.path.join(TESTDATA_DIR, "stats")
@@ -31,12 +33,18 @@ class CheckpkgUnitTestHelper(object):
     self.mocker = mox.Mox()
 
   def testDefault(self):
-    self.logger_mock = self.mocker.CreateMock(logging.Logger)
+    class LoggerStub(object):
+      def debug(self, debug_s, *kwords):
+        pass
+    # self.logger_mock = self.mocker.CreateMock(logging.Logger)
+    self.logger_mock = LoggerStub()
     self.error_mgr_mock = self.mocker.CreateMock(
         checkpkg.IndividualCheckInterface)
     self.CheckpkgTest()
     self.mocker.ReplayAll()
-    getattr(pc, self.FUNCTION_NAME)(self.pkg_data, self.error_mgr_mock, self.logger_mock)
+    getattr(pc, self.FUNCTION_NAME)(self.pkg_data,
+                                    self.error_mgr_mock,
+                                    self.logger_mock)
     self.mocker.VerifyAll()
 
 
@@ -228,6 +236,45 @@ class TestCheckLinkingAgainstSunX11_Bad(CheckpkgUnitTestHelper, unittest.TestCas
     self.error_mgr_mock.ReportError('linked-against-discouraged-library',
                                     'libImlib2.so.1.4.2 libX11.so.4')
 
+class TestSetCheckSharedLibraryConsistency_1(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckSharedLibraryConsistency'
+  def CheckpkgTest(self):
+    self.pkg_data = [td_1.pkg_data]
+    self.error_mgr_mock.GetPkgmapLineByBasename('libiconv.so.2').AndReturn(
+      {u'/opt/csw/lib': u'/opt/csw/lib/libiconv.so.2=libiconv.so.2.5.0 s none CSWiconv',
+       u'/opt/csw/lib/sparcv9': u'/opt/csw/lib/sparcv9/libiconv.so.2=libiconv.so.2.5.0 s none CSWiconv'})
+    self.error_mgr_mock.GetPkgmapLineByBasename('libjpeg.so.62').AndReturn(
+      {u'/opt/csw/lib': u'/opt/csw/lib/libjpeg.so.62=libjpeg.so.62.0.0 s none CSWjpeg',
+       u'/opt/csw/lib/sparcv9': u'/opt/csw/lib/sparcv9/libjpeg.so.62=libjpeg.so.62.0.0 s none CSWjpeg',
+       u'/usr/lib': u'/usr/lib/libjpeg.so.62=libjpeg.so.62.0.0 s none SUNWjpg',
+       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libjpeg.so.62=libjpeg.so.62.0.0 s none SUNWjpg'})
+    self.error_mgr_mock.GetPkgmapLineByBasename('libCrun.so.1').AndReturn(
+      {u'/usr/lib': u'/usr/lib/libCrun.so.1 f none 0755 root bin 70360 7735 1256313285 *SUNWlibC',
+       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libCrun.so.1 f none 0755 root bin 86464 53547 1256313286 *SUNWlibC'})
+    self.error_mgr_mock.GetPkgmapLineByBasename('libCstd.so.1').AndReturn(
+      {u'/usr/lib': u'/usr/lib/libCstd.so.1 f none 0755 root bin 3324372 28085 1256313286 *SUNWlibC',
+       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libCstd.so.1 f none 0755 root bin 3773400 36024 1256313286 *SUNWlibC'})
+    self.error_mgr_mock.GetPkgmapLineByBasename('libm.so.1').AndReturn(
+      {u'/lib': u'/lib/libm.so.1 f none 0755 root bin 23828 57225 1106444965 SUNWlibmsr',
+       u'/lib/sparcv9': u'/lib/sparcv9/libm.so.1 f none 0755 root bin 30656 9035 1106444966 SUNWlibmsr',
+       u'/usr/lib': u'/usr/lib/libm.so.1=../../lib/libm.so.1 s none *SUNWlibms',
+       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libm.so.1=../../../lib/sparcv9/libm.so.1 s none *SUNWlibms'})
+    self.error_mgr_mock.GetPkgmapLineByBasename('libpthread.so.1').AndReturn(
+      {u'/lib': u'/lib/libpthread.so.1 f none 0755 root bin 21472 2539 1106444694 SUNWcslr',
+       u'/lib/sparcv9': u'/lib/sparcv9/libpthread.so.1 f none 0755 root bin 26960 55139 1106444706 SUNWcslr',
+       u'/usr/lib': u'/usr/lib/libpthread.so.1=../../lib/libpthread.so.1 s none SUNWcsl',
+       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libpthread.so.1=../../../lib/sparcv9/libpthread.so.1 s none SUNWcsl'})
+    self.error_mgr_mock.GetPkgmapLineByBasename('libc.so.1').AndReturn(
+      {u'/lib': u'/lib/libc.so.1 f none 0755 root bin 1639840 9259 1253045976 SUNWcslr',
+       u'/lib/sparcv9': u'/lib/sparcv9/libc.so.1 f none 0755 root bin 1779120 22330 1253045979 SUNWcslr',
+       u'/usr/lib': u'/usr/lib/libc.so.1=../../lib/libc.so.1 s none SUNWcsl',
+       u'/usr/lib/libp': u'/usr/lib/libp/libc.so.1=../../../lib/libc.so.1 s none SUNWdpl',
+       u'/usr/lib/libp/sparcv9': u'/usr/lib/libp/sparcv9/libc.so.1=../../../../lib/sparcv9/libc.so.1 s none SUNWdpl',
+       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libc.so.1=../../../lib/sparcv9/libc.so.1 s none SUNWcsl'})
+    self.error_mgr_mock.GetPkgmapLineByBasename('libjpeg.so.7').AndReturn(
+      {u'/opt/csw/lib': u'/opt/csw/lib/libjpeg.so.7=libjpeg.so.7.0.0 s none CSWjpeg',
+       u'/opt/csw/lib/sparcv9': u'/opt/csw/lib/sparcv9/libjpeg.so.7=libjpeg.so.7.0.0 s none CSWjpeg'})
+    self.error_mgr_mock.ReportError('CSWdjvulibrert', 'missing-dependency', u'CSWiconv')
 
 if __name__ == '__main__':
   unittest.main()

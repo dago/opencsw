@@ -21,6 +21,8 @@ from Cheetah import Template
 import opencsw
 import package_checks
 
+DB_SCHEMA_VERSION = 2L
+PACKAGE_STATS_VERSION = 3L
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
 NEEDED_SONAMES = "needed sonames"
@@ -33,6 +35,11 @@ DO_NOT_REPORT_MISSING_RE = [r"SUNW.*", r"\*SUNW.*"]
 DUMP_BIN = "/usr/ccs/bin/dump"
 PSTAMP_RE = r"(?P<username>\w+)@(?P<hostname>[\w\.-]+)-(?P<timestamp>\d+)"
 DESCRIPTION_RE = r"^([\S]+) - (.*)$"
+BAD_CONTENT_REGEXES = (
+    # No need to encode / obfuscate these, as overrides can be used.
+    r'/export/medusa',
+    r'/opt/build',
+)
 
 SYSTEM_SYMLINKS = (
     ("/opt/csw/bdb4",     ["/opt/csw/bdb42"]),
@@ -40,8 +47,6 @@ SYSTEM_SYMLINKS = (
     ("/opt/csw/lib/i386", ["/opt/csw/lib"]),
 )
 INSTALL_CONTENTS_AVG_LINE_LENGTH = 102.09710677919261
-DB_SCHEMA_VERSION = 2L
-PACKAGE_STATS_VERSION = 2L
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -774,6 +779,20 @@ class CheckpkgManagerBase(object):
         errors["package-set"].append(error)
     return a_dict
 
+  def GetOptimizedAllStats(self, stats_obj_list):
+    pkgs_data = []
+    for stats_obj in stats_obj_list:
+      # pkg_data = {}
+      # This bit is tightly tied to the data structures returned by
+      # PackageStats.
+      #
+      # Python strings are already implementing the flyweight pattern. What's
+      # left is lists and dictionaries.
+      raw_pkg_data = stats_obj.GetAllStats()
+      pkg_data = raw_pkg_data
+      pkgs_data.append(pkg_data)
+    return pkgs_data
+
   def Run(self):
     """Runs all the checks
 
@@ -785,6 +804,9 @@ class CheckpkgManagerBase(object):
     exit_code = 0
     return (exit_code, screen_report, tags_report)
 
+
+class Flyweight(object):
+  pass
 
 class CheckInterfaceBase(object):
   """Base class for check proxies.
@@ -863,27 +885,42 @@ class CheckpkgManager2(CheckpkgManagerBase):
           logging.debug("Registering set check %s", repr(member_name))
           self._RegisterSetCheck(member)
 
-  def GetAllTags(self, packages_data):
+  def GetAllTags(self, stats_obj_list):
     errors = {}
-    # TODO: Configure the logger with the logging level.
+    # TODO: Actually configure the logger with the logging level.
     logging_level = logging.INFO
     if self.debug:
       logging_level = logging.DEBUG
     pkgmap = SystemPkgmap()
+
+    # TODO: In order to process all the catalog, and load them all into the
+    # memory, we need to store them more efficiently.  Currently, the process
+    # grows up to 9GB of RAM usage, and it doesn't end there.  Some ideas how to
+    # use less RAM:
+    # - some values (tuples, lists) repeat, and there's no need to store
+    #   all the copies. Instead, store references.  (the Flyweight design
+    #   pattern)
+    # - enclose data loading in a separate function, which will merge data
+    #   from all the packages.
+    # 
+    # In other words, the following line needs to be smart:
+    # pkgs_data = [x.GetAllStats() for x in stats_obj_list]
+    pkgs_data = self.GetOptimizedAllStats(stats_obj_list)
+
     # Individual checks
-    for pkg_data in packages_data:
+    for package_stats_obj in stats_obj_list:
+      pkg_data = package_stats_obj.GetAllStats()
+      pkgname = pkg_data["basic_stats"]["pkgname"]
+      check_interface = IndividualCheckInterface(pkgname, pkgmap)
       for function in self.individual_checks:
-        all_stats = pkg_data.GetAllStats()
-        pkgname = all_stats["basic_stats"]["pkgname"]
-        check_interface = IndividualCheckInterface(pkgname, pkgmap)
         logger = logging.getLogger("%s-%s" % (pkgname, function.__name__))
         logger.debug("Calling %s", function.__name__)
-        function(all_stats, check_interface, logger=logger)
+        function(pkg_data, check_interface, logger=logger)
         if check_interface.errors:
           errors[pkgname] = check_interface.errors
     # Set checks
     for function in self.set_checks:
-      pkgs_data = [x.GetAllStats() for x in packages_data]
+      pkgs_data = [x.GetAllStats() for x in stats_obj_list]
       logger = logging.getLogger("SetCheck-%s" % (function.__name__,))
       check_interface = SetCheckInterface(pkgmap)
       logger.debug("Calling %s", function.__name__)
@@ -1002,6 +1039,7 @@ class PackageStats(object):
   # This list needs to be synchronized with the CollectStats() method.
   STAT_FILES = [
       "all_filenames",
+      "bad_paths",
       "basic_stats",
       "binaries",
       "binaries_dump_info",
@@ -1010,6 +1048,7 @@ class PackageStats(object):
       "isalist",
       # "ldd_dash_r",
       "overrides",
+      "pkgchk",
       "pkginfo",
       "pkgmap",
   ]
@@ -1025,6 +1064,15 @@ class PackageStats(object):
       home = os.environ["HOME"]
       parts = [home, ".checkpkg", "stats"]
       self.stats_basedir = os.path.join(*parts)
+
+  def GetPkgchkData(self):
+    ret, stdout, stderr = self.srv4_pkg.GetPkgchkOutput()
+    data = {
+        'return_code': ret,
+        'stdout_lines': stdout.splitlines(),
+        'stderr_lines': stderr.splitlines(),
+    }
+    return data
 
   def GetMd5sum(self):
     if not self.md5sum:
@@ -1059,13 +1107,16 @@ class PackageStats(object):
     return self.dir_format_pkg
 
   def MakeStatsDir(self):
+    stats_path = self.GetStatsPath()
+    self._MakeDirP(stats_path)
+
+  def _MakeDirP(self, dir_path):
     """mkdir -p equivalent.
 
     http://stackoverflow.com/questions/600268/mkdir-p-functionality-in-python
     """
-    stats_path = self.GetStatsPath()
     try:
-      os.makedirs(stats_path)
+      os.makedirs(dir_path)
     except OSError, e:
       if e.errno == errno.EEXIST:
         pass
@@ -1201,12 +1252,26 @@ class PackageStats(object):
     return sym
 
   def CollectStats(self, force=False):
+    """Lazy stats collection."""
     if not self.StatsDirExists() or force:
+      self._CollectStats()
+      return
+    basic_stats_file = in_file_name_pickle = os.path.join(
+        self.GetStatsPath(), "basic_stats.pickle")
+    f = open(basic_stats_file, "r")
+    obj = cPickle.load(f)
+    f.close()
+    saved_version = obj["stats_version"]
+    if saved_version < PACKAGE_STATS_VERSION:
       self._CollectStats()
 
   def _CollectStats(self):
     """The list of variables needs to be synchronized with the one
     at the top of this class.
+
+    TODO:
+    - Run pkgchk against the package file.
+    - Grep all the files for bad paths.
     """
     stats_path = self.GetStatsPath()
     self.MakeStatsDir()
@@ -1219,13 +1284,15 @@ class PackageStats(object):
     self.DumpObject(dir_pkg.GetDependencies(), "depends")
     self.DumpObject(GetIsalist(), "isalist")
     self.DumpObject(self.GetOverrides(), "overrides")
+    self.DumpObject(self.GetPkgchkData(), "pkgchk")
     self.DumpObject(dir_pkg.GetParsedPkginfo(), "pkginfo")
     self.DumpObject(dir_pkg.GetPkgmap().entries, "pkgmap")
     # This check is currently disabled, let's save time by not collecting
     # these data.
     # self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
     # self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
-    logging.debug("Statistics collected.")
+    self.DumpObject(dir_pkg.GetFilesContaining(BAD_CONTENT_REGEXES), "bad_paths")
+    logging.debug("Statistics of %s have been collected.", repr(dir_pkg.pkgname))
 
   def GetAllStats(self):
     if self.StatsExist():
@@ -1242,10 +1309,7 @@ class PackageStats(object):
     return overrides
 
   def DumpObject(self, obj, name):
-    """Saves an object.
-
-    TODO(maciej): Implement pickling with cPickle.
-    """
+    """Saves an object."""
     stats_path = self.GetStatsPath()
     # yaml
     out_file_name = os.path.join(stats_path, "%s.yml" % name)
@@ -1266,18 +1330,13 @@ class PackageStats(object):
     in_file_name = os.path.join(stats_path, "%s.yml" % name)
     in_file_name_pickle = os.path.join(stats_path, "%s.pickle" % name)
     if os.path.exists(in_file_name_pickle):
-      # logging.debug("ReadObject(): reading %s", repr(in_file_name_pickle))
       f = open(in_file_name_pickle, "r")
       obj = cPickle.load(f)
       f.close()
-      # logging.debug("ReadObject(): finished reading %s",
-      #               repr(in_file_name_pickle))
     else:
-      # logging.debug("ReadObject(): reading %s", repr(in_file_name))
       f = open(in_file_name, "r")
       obj = yaml.safe_load(f)
       f.close()
-      # logging.debug("ReadObject(): finished reading %s", repr(in_file_name))
     return obj
 
   def ReadSavedStats(self):

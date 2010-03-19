@@ -5,6 +5,7 @@ import sys
 import unittest
 sys.path.append("../lib/python")
 import gartest
+import opencsw
 
 class OverridesUnitTest_1(unittest.TestCase):
   """Tests CHECKPKG_OVERRIDES support."""
@@ -21,9 +22,13 @@ class OverridesUnitTest_1(unittest.TestCase):
     pkg = mybuild.GetFirstBuiltPackage()
     overr_file = "/opt/csw/share/checkpkg/overrides/overrides_test"
     expected = 'CSWoverrides-test: example-tag example-parameter\n'
-    self.assertEqual(expected, pkg.GetFileContent(overr_file))
-    overrides = pkg.GetOverrides()
-    self.assertEqual(1, len(overrides))
+    try:
+      self.assertEqual(expected, pkg.GetFileContent(overr_file))
+      overrides = pkg.GetOverrides()
+      self.assertEqual(1, len(overrides))
+    except opencsw.PackageError, e:
+      mybuild.cleanup = False
+      self.fail(e)
 
   def testTwoOverriders(self):
     """Checks that CHECKPKG_OVERRIDES variable creates overrides."""
@@ -79,3 +84,6 @@ class OverridesUnitTest_1(unittest.TestCase):
 #     self.assertEqual(expected, pkg.GetFileContent(overr_file_1))
 #     overrides = pkg.GetOverrides()
 #     self.assertEqual(1, len(overrides))
+
+if __name__ == '__main__':
+	unittest.main()

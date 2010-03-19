@@ -405,6 +405,7 @@ class CswSrv4File(ShellMixin, object):
     self.transformed = False
     self.dir_format_pkg = None
     self.debug = debug
+    self.pkgname = None
 
   def __repr__(self):
     return u"CswSrv4File(%s)" % repr(self.pkg_path)
@@ -457,14 +458,15 @@ class CswSrv4File(ShellMixin, object):
     """It's necessary to figure out the pkgname from the .pkg file.
     # nawk 'NR == 2 {print $1; exit;} $f
     """
-    gunzipped_path = self.GetGunzippedPath()
-    args = ["nawk", "NR == 2 {print $1; exit;}", gunzipped_path]
-    nawk_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
-    stdout, stderr = nawk_proc.communicate()
-    ret_code = nawk_proc.wait()
-    pkgname = stdout.strip()
-    logging.debug("GetPkgname(): %s", repr(pkgname))
-    return pkgname
+    if not self.pkgname:
+      gunzipped_path = self.GetGunzippedPath()
+      args = ["nawk", "NR == 2 {print $1; exit;}", gunzipped_path]
+      nawk_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+      stdout, stderr = nawk_proc.communicate()
+      ret_code = nawk_proc.wait()
+      self.pkgname = stdout.strip()
+      logging.debug("GetPkgname(): %s", repr(self.pkgname))
+    return self.pkgname
 
   def TransformToDir(self):
     """Transforms the file to the directory format.
@@ -506,11 +508,20 @@ class CswSrv4File(ShellMixin, object):
     return dir_format_pkg.GetPkgmap(analyze_permissions, strip)
 
   def GetMd5sum(self):
+    logging.debug("GetMd5sum() (%s)", repr(self.pkg_path))
     fp = open(self.pkg_path)
     hash = hashlib.md5()
     hash.update(fp.read())
     fp.close()
     return hash.hexdigest()
+
+  def GetPkgchkOutput(self):
+    """Returns: (exit code, stdout, stderr)."""
+    args = ["pkgchk", "-d", self.GetPkgname()]
+    pkgchk_proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = pkgchk_proc.communicate()
+    ret = pkgchk_proc.wait()
+    return ret, stdout, stderr
 
   def __del__(self):
     if self.workdir:
@@ -635,6 +646,7 @@ class DirectoryFormatPackage(ShellMixin, object):
     self.pkgpath = self.directory
     self.pkginfo_dict = None
     self.binaries = None
+    self.file_paths = None
 
   def GetCatalogname(self):
     """Returns the catalog name of the package.
@@ -741,10 +753,13 @@ class DirectoryFormatPackage(ShellMixin, object):
     self.SetPkginfoEntry("NAME", pkginfo_name)
 
   def GetDependencies(self):
+    depends = []
+    depend_file_path = os.path.join(self.directory, "install", "depend")
+    if not os.path.exists(depend_file_path):
+      return depends
     fd = open(os.path.join(self.directory, "install", "depend"), "r")
     # It needs to be a list because there might be duplicates and it's
     # necessary to carry that information.
-    depends = []
     for line in fd:
       fields = re.split(WS_RE, line)
       if fields[0] == "P":
@@ -798,11 +813,19 @@ class DirectoryFormatPackage(ShellMixin, object):
     return self.binaries
 
   def GetAllFilenames(self):
-    self.CheckPkgpathExists()
-    file_basenames = []
-    for root, dirs, files in os.walk(self.pkgpath):
-      file_basenames.extend(files)
-    return file_basenames
+    file_paths = self.GetAllFilePaths()
+    return [os.path.basename(f) for f in file_paths]
+
+  def GetAllFilePaths(self):
+    """Similar to GetAllFilenames, but returns full paths."""
+    if not self.file_paths:
+      self.CheckPkgpathExists()
+      remove_prefix = "%s/" % self.pkgpath
+      self.file_paths = []
+      for root, dirs, files in os.walk(os.path.join(self.pkgpath, "root")):
+        full_paths = [os.path.join(root, f) for f in files]
+        self.file_paths.extend([f.replace(remove_prefix, "") for f in full_paths])
+    return self.file_paths
 
   def _GetOverridesStream(self):
     catalogname = self.GetCatalogname()
@@ -837,11 +860,27 @@ class DirectoryFormatPackage(ShellMixin, object):
   def GetFileContent(self, pkg_file_path):
     if pkg_file_path.startswith("/"):
       pkg_file_path = pkg_file_path[1:]
+    # TODO: Write a unit test for the right path
     file_path = os.path.join(self.directory, "root", pkg_file_path)
-    fd = open(file_path, "r")
-    content = fd.read()
-    fd.close()
-    return content
+    try:
+      fd = open(file_path, "r")
+      content = fd.read()
+      fd.close()
+      return content
+    except IOError, e:
+      raise PackageError(e)
+
+  def GetFilesContaining(self, regex_list):
+    full_paths = self.GetAllFilePaths()
+    files_by_pattern = {}
+    for full_path in full_paths:
+      content = open(os.path.join(self.pkgpath, full_path), "rb").read()
+      for regex in regex_list:
+        if re.search(regex, content):
+          if regex not in files_by_pattern:
+            files_by_pattern[regex] = []
+          files_by_pattern[regex].append(full_path)
+    return files_by_pattern
 
 
 class Pkgmap(object):
