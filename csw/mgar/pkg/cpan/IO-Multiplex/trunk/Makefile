@@ -11,8 +11,11 @@ define BLURB
 	It can also accept incoming connections on one or more listen sockets.
 endef
 
-DISTFILES += CSWpmiomultiplex.gspec
+DISTFILES = COPYING
 
-CONFIGURE_ARGS = 
+PACKAGES = CSWpmiomultiplex
+CATALOGNAME = pm_iomultiplex
+
+ARCHALL = 1
 
 include gar/category.mk
