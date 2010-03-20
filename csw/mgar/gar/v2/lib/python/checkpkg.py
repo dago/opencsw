@@ -479,16 +479,16 @@ def SharedObjectDependencies(pkgname,
 def GuessDepsByFilename(pkgname, pkg_by_any_filename):
   """Guesses dependencies based on filename regexes."""
   guessed_deps = set()
-  for pattern, dep_pkgname in DEPENDENCY_FILENAME_REGEXES:
-    # If any file name matches, add the dep, go to the next pattern/pkg
-    # combination.
-    pattern_re = re.compile("^%s$" % pattern)
-    for filename in pkg_by_any_filename:
-      if (re.match(pattern_re, filename)
-            and
-          pkgname == pkg_by_any_filename[filename]):
+  patterns = [(re.compile(x), y) for x, y in DEPENDENCY_FILENAME_REGEXES]
+  filenames = []
+  # First, find the filenames of interest.
+  for filename, file_pkgname in pkg_by_any_filename.iteritems():
+    if file_pkgname == pkgname:
+      filenames.append(filename)
+  for regex, dep_pkgname in patterns:
+    for filename in filenames:
+      if regex.match(filename):
         guessed_deps.add(dep_pkgname)
-        break
   return guessed_deps
 
 

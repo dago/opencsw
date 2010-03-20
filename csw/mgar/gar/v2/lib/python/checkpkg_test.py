@@ -249,6 +249,16 @@ class GuessDepsUnitTest(unittest.TestCase):
     self.assertEqual(expected,
                      checkpkg.GuessDepsByFilename(pkgname, pkg_by_filename))
 
+  def testGuessDepsByFilename3(self):
+    expected = set([])
+    pkgname = u"CSWfoo"
+    pkg_by_filename = {
+        "/opt/csw/bin/bar": u"CSWfoo",
+        "/opt/csw/lib/foo.so.1": u"CSWfoo",
+    }
+    self.assertEqual(expected,
+                     checkpkg.GuessDepsByFilename(pkgname, pkg_by_filename))
+
   def testGuessDepsByPkgname1(self):
     expected = set([u"CSWfoo"])
     pkgname = u"CSWfoo-devel"
