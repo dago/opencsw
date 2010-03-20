@@ -1,5 +1,5 @@
 GARNAME = DateTime
-GARVERSION = 0.50
+GARVERSION = 0.55
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
@@ -14,9 +14,16 @@ endef
 PACKAGES = CSWpmdatetime
 CATALOGNAME = pm_datetime
 
-RUNTIME_DEP_PKGS  = CSWpmdatetimetimezone
-RUNTIME_DEP_PKGS += CSWpmdatetimelocale
+LICENSE = LICENSE
+
+DEP_PKGS  = CSWpmdatetimetimezone CSWpmdatetimelocale
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
+BUILD_SCRIPTS = $(WORKSRC)/Build
+TEST_SCRIPTS = $(WORKSRC)/Build
+INSTALL_SCRIPTS = $(WORKSRC)/Build
+
+ARCHALL = 1
 
 include gar/category.mk
 
-LICENSE = LICENSE
