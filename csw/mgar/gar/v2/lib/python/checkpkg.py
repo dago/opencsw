@@ -788,6 +788,7 @@ class CheckpkgManagerBase(object):
       #
       # Python strings are already implementing the flyweight pattern. What's
       # left is lists and dictionaries.
+      logging.debug("Loading stats for %s", stats_obj.md5sum)
       raw_pkg_data = stats_obj.GetAllStats()
       pkg_data = raw_pkg_data
       pkgs_data.append(pkg_data)
@@ -818,6 +819,7 @@ class CheckInterfaceBase(object):
     self.system_pkgmap = system_pkgmap
     if not self.system_pkgmap:
       self.system_pkgmap = SystemPkgmap()
+    self.messages = []
 
   def GetPkgmapLineByBasename(self, basename):
     """Proxies calls to self.system_pkgmap."""
@@ -825,6 +827,9 @@ class CheckInterfaceBase(object):
 
   def GetInstalledPackages(self):
     return self.system_pkgmap.GetInstalledPackages()
+
+  def Message(self, msg):
+    sef.messages.append(msg)
 
 
 class IndividualCheckInterface(CheckInterfaceBase):
@@ -905,11 +910,12 @@ class CheckpkgManager2(CheckpkgManagerBase):
     # 
     # In other words, the following line needs to be smart:
     # pkgs_data = [x.GetAllStats() for x in stats_obj_list]
+    logging.debug("Loading all package statistics.")
     pkgs_data = self.GetOptimizedAllStats(stats_obj_list)
+    logging.debug("All package statistics loaded.")
 
     # Individual checks
-    for package_stats_obj in stats_obj_list:
-      pkg_data = package_stats_obj.GetAllStats()
+    for pkg_data in pkgs_data:
       pkgname = pkg_data["basic_stats"]["pkgname"]
       check_interface = IndividualCheckInterface(pkgname, pkgmap)
       for function in self.individual_checks:
@@ -920,7 +926,6 @@ class CheckpkgManager2(CheckpkgManagerBase):
           errors[pkgname] = check_interface.errors
     # Set checks
     for function in self.set_checks:
-      pkgs_data = [x.GetAllStats() for x in stats_obj_list]
       logger = logging.getLogger("SetCheck-%s" % (function.__name__,))
       check_interface = SetCheckInterface(pkgmap)
       logger.debug("Calling %s", function.__name__)
