@@ -20,6 +20,7 @@ NOEXTRACT = $(filter-out $(GARNAME)$(GARVERSION)-src.tar.gz,$(SOURCEFILES))
 # Fix for finding libsunmath on i386 and amd64
 PATCHFILES-8.5.8  = configure.patch
 PATCHFILES-8.5.8 += tcl.m4.patch
+PATCHFILES-8.5.8 += tclInt.h.patch
 
 PATCHFILES = $(PATCHFILES-$(GARVERSION))
 ALLFILES_PATCHFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(PATCHFILES-$(VERSION)))

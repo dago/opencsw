@@ -1,0 +1,11 @@
+--- ../build-isa-sparcv8-garversion-8.5.8/tcl8.5.8/generic/tclInt.h	2009-10-18 13:21:38.000000000 +0200
++++ tcl8.5.8/generic/tclInt.h	2010-03-19 19:06:24.590674715 +0100
+@@ -60,7 +60,7 @@
+ #else
+ #include <string.h>
+ #endif
+-#ifdef STDC_HEADERS
++#if defined(STDC_HEADERS) || defined(__sun)
+ #include <stddef.h>
+ #else
+ typedef int ptrdiff_t;
