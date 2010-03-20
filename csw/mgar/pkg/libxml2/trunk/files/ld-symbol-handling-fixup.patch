@@ -1,11 +1,13 @@
---- libxml2-2.7.6/configure.orig	2009-12-06 02:38:02.408924064 +0100
-+++ libxml2-2.7.6/configure	2009-12-06 02:38:28.581172792 +0100
-@@ -12150,15 +12150,10 @@
- $(/usr/bin/ld --help 2>&1 | grep -- --version-script >/dev/null) && \
-     VERSION_SCRIPT_FLAGS=-Wl,--version-script=
- test "`uname`" == "SunOS" && \
--    VERSION_SCRIPT_FLAGS="-Wl,-M -Wl,"
-+    VERSION_SCRIPT_FLAGS="-Wl,-M"
+--- libxml2-2.7.7/configure.orig	2010-03-16 03:22:07.931504296 +0100
++++ libxml2-2.7.7/configure	2010-03-16 03:22:59.183232519 +0100
+@@ -12157,17 +12157,12 @@
+   VERSION_SCRIPT_FLAGS=-Wl,--version-script=
+ else
+   case $host in
+-  *-*-sunos*) VERSION_SCRIPT_FLAGS="-Wl,-M -Wl,";;
++  *-*-sunos*) VERSION_SCRIPT_FLAGS="-Wl,-M";;
+   esac
+ fi
  
 - if test -n "$VERSION_SCRIPT_FLAGS"; then
 -  USE_VERSION_SCRIPT_TRUE=
