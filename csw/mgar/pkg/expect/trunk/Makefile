@@ -15,14 +15,6 @@ define BLURB
   you'll be able to do this automation quickly and easily.
 endef
 
-# Build and package tcl
-# Build and package tk
-# "gmake extract" in expect
-# "cp -rp ../../tcl/trunk/work/.../tcl8.5.7 work/.../build.../"
-# "cp -rp ../../tk/trunk/work/.../tk8.5.7 work/.../build.../"
-# "gmake build package repackage"
-
-
 # For some reason upstream have recalled 5.44.1 and has 5.43 as primary on 
 # homepage as expect.tar.gz
 MASTER_SITES = http://expect.nist.gov/
@@ -30,9 +22,7 @@ MASTER_SITES += http://downloads.sourceforge.net/tcl/
 DISTNAME  = $(GARNAME)-$(GARVERSION)
 DISTFILES  = $(GARNAME).tar.gz
 DISTFILES += expect.m4
-
-DISTFILES += tcl8.5.7-src.tar.gz
-DISTFILES += tk8.5.7-src.tar.gz
+DISTFILES += license
 
 PATCHFILES += expect-5.39.0-libdir.patch
 #PATCHFILES += expect-5.42.1-missing-includes.patch
@@ -42,18 +32,44 @@ PATCHFILES += expect-5.43.0-missing-includes.patch
 PATCHFILES += expect-5.43.0-multilib.patch
 #PATCHFILES += expect-5.44.1-destdir.patch
 #PATCHFILES += expect-5.44.1-gfbsd.patch
+PATCHFILES += Makefile.in.patch
+# Missing include files gives warnings
+PATCHFILES += solaris.patch
+# Fix some warnings
+PATCHFILES += warnings.patch
+
+LICENSE = license
+
+RUNTIME_DEP_PKGS_CSWexpect += CSWtcl
+RUNTIME_DEP_PKGS_CSWexpect += CSWtk
+RUNTIME_DEP_PKGS_CSWexpect += CSWfconfig
+RUNTIME_DEP_PKGS_CSWexpect += CSWftype2
+RUNTIME_DEP_PKGS_CSWexpect += CSWlibx11
+RUNTIME_DEP_PKGS_CSWexpect += CSWlibxft2
+RUNTIME_DEP_PKGS_CSWexpect += CSWlibxrender
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS  = $(DIRPATHS)
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+#EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+
+INSTALL_ROOT=$(DESTDIR)
+INSTALL_EXPORTS += INSTALL_ROOT
+INSTALL_EXPORTS += LD_OPTIONS
+
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS += --enable-shared
-CONFIGURE_ARGS += --with-tcl=/opt/csw/lib --with-tk=/opt/csw/lib
-# CONFIGURE_ARGS += --with-tclinclude=$(WORKSRC)/../tcl8.5.7/generic/
-# CONFIGURE_ARGS += --with-tkinclude=$(WORKSRC)/../tk8.5.7/generic/
-CONFIGURE_ARGS += --with-tclinclude=$(abspath $(WORKDIR)/tcl8.5.7/unix)
-CONFIGURE_ARGS += --with-tkinclude=$(abspath $(WORKDIR)/tk8.5.7/unix)
+CONFIGURE_ARGS += --with-tcl=$(libdir) --with-tk=$(libdir)
+CONFIGURE_ARGS += --with-tclinclude=$(includedir)
+CONFIGURE_ARGS += --with-tkinclude=$(includedir)
 
 TEST_TARGET = 
+
+BUILD64 = 1
 
 include gar/category.mk
 

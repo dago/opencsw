@@ -1,0 +1,35 @@
+Although I can't promise anything in the way of support, I'd be
+interested to hear about your experiences using it (good or bad).  I'm
+also interested in hearing bug reports and suggestions for improvement
+even though I can't promise to implement them.
+
+If you send me a bug, fix, or question, include the version of Expect
+(as reported by expect -d), version of Tcl, and name and version of
+the OS that you are using.  Before sending mail, it may be helpful to
+verify that your problem still exists in the latest version.  You can
+check on the current release and whether it addresses your problems by
+retrieving the latest HISTORY file (see "History" above).
+
+
+Awards, love letters, and bug reports may be sent to:
+
+Don Libes
+National Institute of Standards and Technology
+Bldg 220, Rm A-127
+Gaithersburg, MD  20899
+(301) 975-3535
+libes@nist.gov
+
+I hereby place this software in the public domain.  NIST and I would
+appreciate credit if this program or parts of it are used.
+
+Design and implementation of this program was funded primarily by
+myself.  Funding contributors include the NIST Automated Manufacturing
+Research Facility (funded by the Navy Manufacturing Technology
+Program), the NIST Scientific and Technical Research Services, the
+ARPA Persistent Object Bases project and the Computer-aided
+Acquisition and the Logistic Support (CALS) program of the Office of
+the Secretary of Defense.
+
+Especially signicant contributions were made by John Ousterhout, Henry
+Spencer, and Rob Savoye.  See the HISTORY file for others.

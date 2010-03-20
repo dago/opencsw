@@ -1,0 +1,55 @@
+--- expect-5.43/Makefile.in.orig	2010-03-18 11:22:26.000000000 +0100
++++ expect-5.43/Makefile.in	2010-03-18 14:43:07.596140428 +0100
+@@ -101,7 +101,7 @@
+ # to be different than those used for actually reference files at
+ # run-time.  INSTALL_ROOT is prepended to $prefix and $exec_prefix
+ # when installing files.
+-INSTALL_ROOT =
++#INSTALL_ROOT =
+ 
+ # The following Expect scripts are not necessary to have installed as
+ # commands, but are very useful.  Edit out what you don't want installed.
+@@ -345,7 +345,7 @@
+ # build expect binary that does not depend on Expect's shared libs
+ # IFF static Tcl/Tk libraries are available.
+ expect:	exp_main_exp.o $(EXP_UNSHARED_LIB_FILE)
+-	$(CC) $(XCFLAGS) @TCL_LD_FLAGS@ -o expect exp_main_exp.o $(EXP_UNSHARED_LIB_FILE) $(TCLLIB) $(EXP_AND_TCL_LIBS)
++	$(CC) $(XCFLAGS) $(LDFLAGS) -o expect exp_main_exp.o $(EXP_UNSHARED_LIB_FILE) $(TCLLIB) $(EXP_AND_TCL_LIBS)
+ 	$(SETUID) expect
+ 
+ # install Expect library
+@@ -372,12 +372,12 @@
+ 	else true; fi
+ 
+ expect_installed:	exp_main_exp.o $(EXP_LIB_FILE) install_shared_lib
+-	$(CC) $(XCFLAGS) @EXP_SHLIB_CFLAGS@ @TCL_LD_FLAGS@ -o expect_installed exp_main_exp.o @EXP_LIB_SPEC@ $(TCLLIB_INSTALLED) $(EXP_AND_TCL_LIBS)
++	$(CC) $(XCFLAGS) @EXP_SHLIB_CFLAGS@ $(LDFLAGS) -o expect_installed exp_main_exp.o @EXP_LIB_SPEC@ $(TCLLIB_INSTALLED) $(EXP_AND_TCL_LIBS)
+ 	$(SETUID) expect_installed
+ 
+ # Build Expect with TestCenter
+ expect.tc: exp_main_exp.o $(OFILES) 
+-	proof $(CC) $(XCFLAGS) @EXP_SHLIB_CFLAGS@ @TCL_LD_FLAGS@ -o expect.tc $(OFILES) exp_main_exp.o $(TCLLIB) $(EXP_AND_TCL_LIBS) 
++	proof $(CC) $(XCFLAGS) @EXP_SHLIB_CFLAGS@ $(LDFLAGS) -o expect.tc $(OFILES) exp_main_exp.o $(TCLLIB) $(EXP_AND_TCL_LIBS) 
+ 	$(SETUID) expect.tc
+ 
+ # Build an executable with both Expect and Tk
+@@ -388,16 +388,16 @@
+ # configure) separately for Expectk, but as far as I know, it doesn't hurt
+ # anything here, so I'm not worrying about it.
+ expectk: exp_main_tk.o $(EXP_UNSHARED_LIB_FILE)
+-	$(CC) $(XCFLAGS) @TCL_LD_FLAGS@ -o expectk exp_main_tk.o $(EXP_UNSHARED_LIB_FILE) $(TKLIB) $(TCLLIB) $(X11_LD_FLAGS) $(EXP_AND_TK_LIBS) 
++	$(CC) $(XCFLAGS) $(LDFLAGS) -o expectk exp_main_tk.o $(EXP_UNSHARED_LIB_FILE) $(TKLIB) $(TCLLIB) $(X11_LD_FLAGS) $(EXP_AND_TK_LIBS) 
+ 	$(SETUID) expectk
+ 
+ expectk_installed: exp_main_tk.o $(EXP_LIB_FILE)
+-	$(CC) $(XCFLAGS) @EXP_SHLIB_CFLAGS@ @TCL_LD_FLAGS@ -o expectk_installed exp_main_tk.o @EXP_LIB_SPEC@ $(TKLIB_INSTALLED) $(TCLLIB_INSTALLED) $(X11_LD_FLAGS) $(EXP_AND_TK_LIBS) 
++	$(CC) $(XCFLAGS) @EXP_SHLIB_CFLAGS@ $(LDFLAGS) -o expectk_installed exp_main_tk.o @EXP_LIB_SPEC@ $(TKLIB_INSTALLED) $(TCLLIB_INSTALLED) $(X11_LD_FLAGS) $(EXP_AND_TK_LIBS) 
+ 	$(SETUID) expectk_installed
+ 
+ # Build Expectk with TestCenter
+ expectk.tc: exp_main_tk.o $(OFILES) 
+-	proof $(CC) $(XCFLAGS) @TCL_LD_FLAGS@ -o expectk.tc $(OFILES) exp_main_tk.o $(TKLIB) $(TCLLIB) $(X11_LD_FLAGS) $(EXP_AND_TK_LIBS) 
++	proof $(CC) $(XCFLAGS) $(LDFLAGS) -o expectk.tc $(OFILES) exp_main_tk.o $(TKLIB) $(TCLLIB) $(X11_LD_FLAGS) $(EXP_AND_TK_LIBS) 
+ 	$(SETUID) expectk.tc
+ 
+ expect-unshared-lib-file :: $(EXP_UNSHARED_LIB_FILE)
