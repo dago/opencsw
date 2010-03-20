@@ -477,7 +477,11 @@ def SharedObjectDependencies(pkgname,
 
 
 def GuessDepsByFilename(pkgname, pkg_by_any_filename):
-  """Guesses dependencies based on filename regexes."""
+  """Guesses dependencies based on filename regexes.
+
+  This function is still inefficient.  It should be getting better data
+  structures to work with.
+  """
   guessed_deps = set()
   patterns = [(re.compile(x), y) for x, y in DEPENDENCY_FILENAME_REGEXES]
   filenames = []
@@ -1386,3 +1390,14 @@ class PackageStats(object):
     else:
       raise StdoutSyntaxError("Could not parse %s" % repr(line))
     return response
+
+
+def ErrorTagsFromFile(file_name):
+  fd = open(file_name)
+  error_tags = []
+  for line in fd:
+    if line.startswith("#"):
+      continue
+    pkgname, tag_name, tag_info = ParseTagLine(line)
+    error_tags.append(CheckpkgTag(pkgname, tag_name, tag_info))
+  return error_tags

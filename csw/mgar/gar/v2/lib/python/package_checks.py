@@ -224,9 +224,9 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
     print
 
   dependent_pkgs = {}
-  for checker in pkgs_data:
-    pkgname = checker["basic_stats"]["pkgname"]
-    declared_dependencies = dict(checker["depends"])
+  for pkg_data in pkgs_data:
+    pkgname = pkg_data["basic_stats"]["pkgname"]
+    declared_dependencies = dict(pkg_data["depends"])
     missing_deps, surplus_deps, orphan_sonames = checkpkg.AnalyzeDependencies(
         pkgname,
         declared_dependencies,

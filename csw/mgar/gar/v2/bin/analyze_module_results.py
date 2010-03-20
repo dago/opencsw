@@ -26,13 +26,8 @@ def main():
   files = os.listdir(options.extractdir)
   error_tags = []
   for file_name in files:
-    if file_name.startswith("tags."):
-      fd = open(os.path.join(options.extractdir, file_name))
-      for line in fd:
-        if line.startswith("#"):
-          continue
-        pkgname, tag_name, tag_info = checkpkg.ParseTagLine(line)
-        error_tags.append(checkpkg.CheckpkgTag(pkgname, tag_name, tag_info))
+    full_path = os.path.join(options.extractdir, file_name)
+    error_tags.extend(checkpkg.ErrorTagsFromFile(full_path))
   overrides = reduce(lambda x, y: x + y, overrides_list)
   (tags_after_overrides,
    unapplied_overrides) = checkpkg.ApplyOverrides(error_tags, overrides)

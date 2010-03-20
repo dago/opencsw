@@ -10,7 +10,7 @@
 #  - getopts support for command line options
 #  - colors
 #  - modular architecture + unit tests
-#  - 
+#  - reliable shared library checking
 #
 # This script examines a package that has been put together
 # for submittal to the CSW archive at opencsw.org
@@ -24,9 +24,8 @@
 # Be sure to occasionally do a "pkg-get update cswutils" so that
 # you know you are tracking the most current version.
 # 
-# TODOs before commit:
-#  - bad strings check
-#  - pkgchk run
+# TODO:
+# - add message handlig to the CheckInterface class.
 #
 
 PATH=$PATH:/usr/sbin
@@ -97,6 +96,7 @@ errmsg(){
 	cleanup
 	cleanupset
 	print "To run checkpkg in the debug mode, add the '-d' flag, for example:"
+  # selfargs can be very, very long. Find a way to truncate it.
 	# print "${selfpath} -d ${selfargs}"
 	print "After you modify any overrides, you need to do gmake remerge repackage"
 	print "or gmake platforms-remerge platforms-repackage."
@@ -252,8 +252,15 @@ log_files=""
 module_name_format="%-40s"
 # TODO: A performance problem. The following line means that the md5sums are
 # calculated once more.
-debugmsg "Calculating md5 sums of all the package files."
-md5sums=`gmd5sum "$@" | awk '{print $1}'`
+if [ "${MD5_SUMS_CATALOG_FILE}" ]; then
+	debugmsg "Reading md5sums from ${MD5_SUMS_CATALOG_FILE}"
+	md5sums=`cat "${MD5_SUMS_CATALOG_FILE}" \
+	    | awk '{print $5}' \
+	    | ggrep -E '[0-9abcdef]{32}'`
+else
+  debugmsg "Calculating md5 sums of all the package files."
+  md5sums=`gmd5sum "$@" | awk '{print $1}'`
+fi
 debugmsg "All md5 sums: ${md5sums}"
 if [[ -d "${checkpkg_module_dir}" ]]; then
 	for plugin in "${checkpkg_module_dir}/${checkpkg_module_tag}"*; do
