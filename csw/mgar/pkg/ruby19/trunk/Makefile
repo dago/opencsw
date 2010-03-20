@@ -92,7 +92,7 @@ MERGE_EXCLUDE_STATICLIBS =
 
 COMPILE_ELISP = 1
 
-PI_TARGETS  = samples rbconfig rbscripts rubymode
+PI_TARGETS  = samples rbconfig rbscripts
 
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
@@ -102,18 +102,11 @@ multiconfig:
 	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).SOS11
 	@gcp $(FILEDIR)/rbconfig.rb.GCC4.$(GARCH) $(DESTDIR)/$(RBCONFIG).GCC4
 	@gln -n -s $(RBCONFIG).SOS11 $(DESTDIR)$(RBCONFIG)
-	@gcp $(FILEDIR)/cswrbconfig $(DESTDIR)/opt/csw/bin/
-	@chmod 755 $(DESTDIR)/opt/csw/bin/cswrbconfig
-	@ginstall -c -d -m 0755 $(DESTDIR)$(docdir)/ruby/
-	@ginstall -c -m 0644 $(FILEDIR)/README.csw $(DESTDIR)$(docdir)/ruby/
+	@gcp $(FILEDIR)/cswrbconfig $(DESTDIR)/opt/csw/bin/cswrbconfig19
+	@chmod 755 $(DESTDIR)/opt/csw/bin/cswrbconfig19
+	@ginstall -c -d -m 0755 $(DESTDIR)$(docdir)/$(GARNAME)/
+	@ginstall -c -m 0644 $(FILEDIR)/README.csw $(DESTDIR)$(docdir)/$(GARNAME)/
 	@$(MAKECONFIG)
-
-rubymode: RMDIR=$(DESTDIR)/$(datadir)/emacs/site-lisp/ruby-mode
-rubymode:
-	@echo " ===> Installing and Compilingn ruby-mode elisp"
-	@(mkdir -p $(RMDIR); \
-		cp $(WORKSRC)/misc/*el $(RMDIR))
-	@$(MAKECOOKIE)
 
 # Fix up rbconfig
 rbconfig:
@@ -123,10 +116,10 @@ rbconfig:
 
 # Copy samples
 samples:
-	@mkdir -p $(DESTDIR)$(docdir)/ruby/
-	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/ruby/
+	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)/
+	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/$(GARNAME)/
 	@for ext in bigdecimal dl tk ; do \
-		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/ruby/sample/$$ext ; \
+		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/$(GARNAME)/sample/$$ext ; \
 	done
 	@$(MAKECOOKIE)
 
@@ -134,7 +127,7 @@ samples:
 rbscripts:
 	@echo " ==> Fixing shebang path in distributed ruby scripts"
 	@find $(DESTDIR)$(prefix) -type f -name '*.rb' -exec \
-		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/ruby}g" {} \;
+		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/$(GARNAME)}g" {} \;
 	@$(MAKECOOKIE)
 
 
