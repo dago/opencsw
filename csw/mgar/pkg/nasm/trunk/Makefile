@@ -15,6 +15,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LICENSE = LICENSE
 
+VENDOR_URL = http://www.nasm.us/
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 INSTALL_ARGS = INSTALLROOT=$(DESTDIR)
