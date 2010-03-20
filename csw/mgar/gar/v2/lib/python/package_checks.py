@@ -165,8 +165,8 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
   # These are indexes "by soname".
   (needed_sonames,
    binaries_by_soname,
-   runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
-       needed_sonames_by_binary)
+   runpath_by_needed_soname
+  ) = checkpkg.BuildIndexesBySoname(needed_sonames_by_binary)
 
   logger.debug("Determining the soname-package relationships.")
   # lines by soname is an equivalent of $EXTRACTDIR/shortcatalog
@@ -176,7 +176,7 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
   lines_by_soname = checkpkg.GetLinesBySoname(
       runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
 
-  # Creating a map from files to packages.
+  logger.debug("Creating a map from files to packages.")
   pkgs_by_filename = {}
   for soname, line in lines_by_soname.iteritems():
     # TODO: Find all the packages, not just the last field.
@@ -185,7 +185,7 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
     pkgname = fields[-1]
     pkgs_by_filename[soname] = pkgname
 
-  # A shared object dependency/provisioning report, plus checking.
+  # A shared object dependency/provisioning report.
   #
   # This section is somewhat overlapping with checkpkg.AnalyzeDependencies(),
   # it has a different purpose: it reports the relationships between shared
@@ -216,12 +216,6 @@ def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
           print "However, it's a whitelisted soname."
         else:
           print "No package seems to be providing %s" % (soname,)
-          # The error checking needs to be unified: done in one place only.
-          # errors.append(
-          #     checkpkg.CheckpkgTag(
-          #       "%s is required by %s, but "
-          #       "we don't know what provides it."
-          #       % (soname, binaries_by_soname[soname])))
     if binaries_with_missing_sonames:
       print "The following are binaries with missing sonames:"
       binary_lines = " ".join(sorted(binaries_with_missing_sonames))
@@ -271,11 +265,13 @@ def SetCheckDependencies(pkgs_data, error_mgr, logger):
       if depname not in known_pkgs:
         error_mgr.ReportError(pkgname, "unidentified-dependency", depname)
 
+
 def CheckDependsOnSelf(pkg_data, error_mgr, logger):
   pkgname = pkg_data["basic_stats"]["pkgname"]
   for depname, dep_desc in pkg_data["depends"]:
     if depname == pkgname:
       error_mgr.ReportError("depends-on-self")
+
 
 def CheckArchitectureSanity(pkg_data, error_mgr, logger):
   basic_stats = pkg_data["basic_stats"]
@@ -317,6 +313,7 @@ def CheckLicenseFile(pkg_data, error_mgr, logger):
   if license_path not in pkgmap_paths:
     error_mgr.ReportError("license-missing")
     logger.info("See http://sourceforge.net/apps/trac/gar/wiki/CopyRight")
+
 
 def CheckObsoleteDeps(pkg_data, error_mgr, logger):
   """Checks for obsolete dependencies."""
@@ -445,8 +442,7 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
   if re.search(r"-", pkginfo["VERSION"]):
     error_mgr.ReportError("pkginfo-minus-in-version")
   if not re.match(VERSION_RE, pkginfo["VERSION"]):
-    msg = ("Version regex: %s, version value: %s."
-           % (repr(VERSION_RE), repr(pkginfo["VERSION"])))
+    msg = pkginfo["VERSION"]
     error_mgr.ReportError("pkginfo-version-wrong-format", msg)
   if pkginfo["ARCH"] not in ARCH_LIST:
     error_mgr.ReportError("pkginfo-nonstandard-architecture", pkginfo["ARCH"])
@@ -521,6 +517,7 @@ def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger):
         error_mgr.ReportError("linked-against-discouraged-library",
                               "%s %s" % (binary_info["base_name"], soname))
 
+
 def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger):
   patterns = [re.compile(x) for x in DISCOURAGED_FILE_PATTERNS]
   for entry in pkg_data["pkgmap"]:
@@ -530,14 +527,15 @@ def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger):
           error_mgr.ReportError("discouraged-path-in-pkgmap",
                                 entry["path"])
 
+
 def CheckBadPaths(pkg_data, error_mgr, logger):
   for regex in pkg_data["bad_paths"]:
     for file_name in pkg_data["bad_paths"][regex]:
       error_mgr.ReportError("file-with-bad-content", "%s %s" % (regex, file_name))
+
 
 def CheckPkgchk(pkg_data, error_mgr, logger):
   if pkg_data["pkgchk"]["return_code"] != 0:
     error_mgr.ReportError("pkgchk-failed-with-code", pkg_data["pkgchk"]["return_code"])
     for line in pkg_data["pkgchk"]["stderr_lines"]:
       logger.warn(line)
-
