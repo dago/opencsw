@@ -3,8 +3,18 @@ GARVERSION = 1.9.1
 PATCHLEVEL = p376
 CATEGORIES = lang
 
-# TEST_TARGET = check
+# Working with Jens Deppe, we've determined that the two failing tests
+# in 1.9.1p376 are bad tests (as documented here[1] and here[2]).
+# They make assumptions about kernel behaviour that don't hold for
+# solaris.
+#
+# [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543805
+# [2] http://redmine.ruby-lang.org/issues/show/2609
+ifneq ($(GARVERSION)$(PATCHLEVEL), 1.9.1p376)
+TEST_TARGET = check
+else
 TEST_SCRIPTS = 
+endif
 
 DISTNAME = ruby-$(GARVERSION)-$(PATCHLEVEL)
 
@@ -19,7 +29,8 @@ define BLURB
   closures.
 endef
 
-PACKAGES = CSWruby19 CSWruby19doc CSWruby19tk CSWruby19dev CSWruby19mode CSWruby19modeel
+PACKAGES =  CSWruby19 CSWruby19doc CSWruby19tk CSWruby19dev
+PACKAGES += CSWruby19mode CSWruby19modeel
 
 ARCHALL_CSWruby19doc = 1
 ARCHALL_CSWruby19mode = 1
