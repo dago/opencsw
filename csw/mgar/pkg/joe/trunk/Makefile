@@ -1,9 +1,6 @@
 GARNAME = joe
-GARVERSION = 3.3
+GARVERSION = 3.7
 CATEGORIES = utils
-SPKG_PACKAGER   = Markus Mayer
-SPKG_EMAIL      = mmayer@opencsw.org
-
 
 DESCRIPTION = Joe's Own Editor
 define BLURB
@@ -18,18 +15,23 @@ define BLURB
   UNIX-integration features of VI.
 endef
 
-MASTER_SITES = http://superb-west.dl.sourceforge.net/sourceforge/joe-editor/ http://mesh.dl.sourceforge.net/sourceforge/joe-editor/
+SF_PROJ = joe-editor
+MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWjoe,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=23475
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 
+DEP_PKGS = CSWncurses
+
+sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# joe doesn't have a test target
-TEST_TARGET =
+TEST_TARGET = check
+
+PRESERVECONF = /etc/opt/csw/joe/.*
+MIGRATE_FILES = jmacsrc joerc jpicorc jstarrc rjoerc
 
 include gar/category.mk

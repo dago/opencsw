@@ -1,4 +1,0 @@
-%var            bitname joe
-%var            pkgname CSWjoe
-%include        url file://%{PKGLIB}/csw_standard.gspec
-%copyright      url file://%{WORKSRC}/COPYING
