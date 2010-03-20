@@ -1,8 +1,5 @@
-# TODO
-# - Now that we mostly have our own CSW X11 libs, can we place the app-default
-#   files in a location where they are actually read by default?
 GARNAME = xterm
-GARVERSION = 251
+GARVERSION = 256
 CATEGORIES = apps
 
 DESCRIPTION = Terminal emulator for the X Window System
@@ -14,12 +11,19 @@ define BLURB
   the control sequences for VT220.
 endef
 
-SPKG_SOURCEURL = http://invisible-island.net/xterm/
-MASTER_SITES   = ftp://invisible-island.net/xterm/
-DISTFILES      = $(GARNAME)-$(GARVERSION).tgz
-UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+VENDOR_URL    = http://invisible-island.net/xterm/
+MASTER_SITES  = ftp://invisible-island.net/xterm/
+DISTFILES     = $(GARNAME)-$(GARVERSION).tgz
+UFILES_REGEX  = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+DISTFILES    += COPYING
 
-RUNTIME_DEP_PKGS = CSWfconfig CSWlibxft2
+RUNTIME_DEP_PKGS  = CSWfconfig
+RUNTIME_DEP_PKGS += CSWlibxft2
+RUNTIME_DEP_PKGS += CSWlibice
+RUNTIME_DEP_PKGS += CSWlibx11
+RUNTIME_DEP_PKGS += CSWlibxaw
+RUNTIME_DEP_PKGS += CSWlibxmu
+RUNTIME_DEP_PKGS += CSWlibxt
 
 # xterm Makefile doesn't have a test target
 TEST_TARGET =
@@ -45,7 +49,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 CONFIGURE_ARGS_DBG = --enable-trace --enable-warnings
 
 # Notes on CSW X11 libs:
-# xterm depends on Xrender and Xft for freetype font support. Starting with 
+# Through CSW freetype, xterm depends on Xrender and Xft. Starting with 
 #
 # 	libxrender-0.9.4,REV=2009.06.11
 #	libxft2-2.1.13,REV=2009.06.15
@@ -53,19 +57,16 @@ CONFIGURE_ARGS_DBG = --enable-trace --enable-warnings
 # these libs moved to the CSW X11 libs prefix (/opt/csw/X11). Accordingly, 
 # we need to build against these X11 libs, otherwise ./configure bails out
 # when verifying the linkage to freetype. This unfortunatel drags a pile
-# of other CSW X11 libs with it ... o_O ... Any caveats? libX11 for
-# instance will be run-time linked twice (see ldd output on xterm).
-# One from Solaris, another one from us. Time will show how this works out.
+# of other CSW X11 libs with it ... o_O ...
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(prefix)/X11/lib
+CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
-RUNTIME_DEP_PKGS += CSWlibice CSWlibx11 CSWlibxaw CSWlibxmu CSWlibxt
-
-# The need for the explicit -lfontconfig linkage also came along when 
-# we upgraded from xterm-243 (CSW X11 libs had been introduced in the
-# meantime, related? pkgconfig woes?). Without the explicit linkage
-# there are implicit symbol dependencies on the final xterm linking run.
-EXTRA_LDFLAGS = -L$(libdir) -lfontconfig
+# Make sure to runtime link the same way that we link edited
+# * xterm link edit order is (-L/-R):  X11/lib/, lib/
+# * LD_OPTIONS would prepend (-R):  lib/
+# -> libs like libXft might be runtime linked from lib/ instead of X11/lib/
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(filter-out %ISALIST, $(RUNPATH_LINKER_FLAGS))
 
 # luit comes with snv_85 
 #   http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6662431
@@ -73,6 +74,9 @@ EXTRA_LDFLAGS = -L$(libdir) -lfontconfig
 
 
 include gar/category.mk
+
+# ./configure needs to find xft-config
+PATH := /opt/csw/X11/bin:$(PATH)
 
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated: CSWDOCS=README.CSW changelog.CSW
