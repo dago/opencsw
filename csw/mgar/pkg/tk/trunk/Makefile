@@ -1,5 +1,5 @@
 GARNAME = tk
-GARVERSION = 8.5.7
+GARVERSION = 8.5.8
 CATEGORIES = lang
 
 DESCRIPTION = GUI toolkit for tcl
@@ -17,6 +17,7 @@ DISTFILES += libtk8.4.so.s
 DEP_PKGS_CSWtk = CSWfconfig CSWftype2 CSWlibx11 CSWlibxft2 CSWlibxrender CSWtcl
 
 SPKG_SOURCEURL = http://www.tcl.tk/
+LICENSE = license.terms
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
@@ -48,6 +49,11 @@ include gar/category.mk
 
 #CFLAGS := $(filter-out -I%,$(CFLAGS))
 #DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
+
+
+pre-configure-modulated:
+	@(cd $(WORKSRC) ; cp -p ../license.terms .)
+	@$(MAKECOOKIE)
 
 post-install-i386:
 	@# Install legacy libs
