@@ -57,7 +57,7 @@ PKGFILES_CSWruby19doc = $(datadir)/ri/.* $(docdir)/ruby19/sample.*
 
 PKGFILES_CSWruby19tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
-PKGFILES_CSWruby19dev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
+PKGFILES_CSWruby19dev = $(includedir)/.*\h $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
 
 PKGFILES_CSWruby19mode = $(datadir)/emacs/site-lisp/.*elc$
 
