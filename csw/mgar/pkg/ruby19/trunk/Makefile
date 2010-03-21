@@ -39,16 +39,10 @@ PACKAGES =  CSWruby19 CSWruby19doc CSWruby19tk CSWruby19dev
 PACKAGES += CSWruby19mode CSWruby19modeel
 
 ARCHALL_CSWruby19doc = 1
-ARCHALL_CSWruby19mode = 1
-ARCHALL_CSWruby19modeel = 1
 
 RUNTIME_DEP_PKGS_CSWruby19doc = CSWruby19
 RUNTIME_DEP_PKGS_CSWruby19tk = CSWruby19 CSWtk CSWtcl
-RUNTIME_DEP_PKGS_CSWruby19mode = CSWemacscommon
-RUNTIME_DEP_PKGS_CSWruby19modeel = CSWemacscommon
 RUNTIME_DEP_PKGS_CSWruby19dev = CSWruby19
-
-CATALOGNAME_CSWruby19modeel = ruby19mode_el
 
 SPKG_DESC_CSWruby19doc = Documentation for Ruby 1.9
 
@@ -56,19 +50,11 @@ SPKG_DESC_CSWruby19tk = Ruby 1.9 Tcl/TK Extension
 
 SPKG_DESC_CSWruby19dev = Ruby 1.9 Extension Development Files
 
-SPKG_DESC_CSWruby19mode = Ruby 1.9 major mode for Emacs
-
-SPKG_DESC_CSWruby19modeel = Elisp source for ruby 1.9 mode
-
 PKGFILES_CSWruby19doc = $(datadir)/ri/.* $(docdir)/ruby19/sample.*
 
 PKGFILES_CSWruby19tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
 PKGFILES_CSWruby19dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
-
-PKGFILES_CSWruby19mode = $(datadir)/emacs/site-lisp/.*elc$
-
-PKGFILES_CSWruby19modeel = $(datadir)/emacs/site-lisp/.*el$
 
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
@@ -136,5 +122,3 @@ rbscripts:
 	@find $(DESTDIR)$(prefix) -type f -name '*.rb' -exec \
 		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/$(GARNAME)}g" {} \;
 	@$(MAKECOOKIE)
-
-
