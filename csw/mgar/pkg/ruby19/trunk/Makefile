@@ -36,7 +36,6 @@ define BLURB
 endef
 
 PACKAGES =  CSWruby19 CSWruby19doc CSWruby19tk CSWruby19dev
-PACKAGES += CSWruby19mode CSWruby19modeel
 
 ARCHALL_CSWruby19doc = 1
 
