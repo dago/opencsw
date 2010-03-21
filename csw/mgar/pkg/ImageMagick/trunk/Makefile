@@ -174,7 +174,9 @@ UFILES_REGEX = ImageMagick-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
 CONFIGURE_ARGS_COMMON  = $(DIRPATHS)
 CONFIGURE_ARGS_COMMON += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS_COMMON += --enable-shared --disable-static
-CONFIGURE_ARGS_COMMON += --with-dps=yes --with-gslib=yes
+CONFIGURE_ARGS_COMMON += --with-dps=yes
+# Ghostscript lib is linked to Sun X11
+CONFIGURE_ARGS_COMMON += --with-gslib=no
 CONFIGURE_ARGS_COMMON += --x-includes=/opt/csw/X11/include
 CONFIGURE_ARGS_COMMON += --x-libraries=/opt/csw/X11/lib 
 # Solaris 8 and 9 doesn't have complex.h
