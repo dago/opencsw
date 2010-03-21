@@ -18,6 +18,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWrrd
 CATALOGNAME = rrdtool
 
+PACKAGING_PLATFORMS =  solaris8-sparc solaris8-i386
+
 RUNTIME_DEP_PKGS += CSWggettextrt
 RUNTIME_DEP_PKGS += CSWglib2
 RUNTIME_DEP_PKGS += CSWiconv
