@@ -1,0 +1,5 @@
+6833fe18e7e46f410c21703bcfac6bb1  Makefile.in.patch
+031e8a24073fd02ee1e16e87a63ebcc0  configure.patch
+9107b4429fdafde914bd23405544c58d  libgdiplus-2.6.tar.bz2
+4b842f78ffee7766f0d686a214fe8760  metafile.c.patch
+c20e300bf2b5c5d657ba679bc1d1ddf9  win32structs.h.patch
