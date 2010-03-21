@@ -40,6 +40,7 @@ RUNTIME_DEP_PKGS_CSWruby19doc = CSWruby19
 RUNTIME_DEP_PKGS_CSWruby19tk = CSWruby19 CSWtk CSWtcl
 RUNTIME_DEP_PKGS_CSWruby19mode = CSWemacscommon
 RUNTIME_DEP_PKGS_CSWruby19modeel = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWruby19dev = CSWruby19
 
 CATALOGNAME_CSWruby19modeel = ruby19mode_el
 
