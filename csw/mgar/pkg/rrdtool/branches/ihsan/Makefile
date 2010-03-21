@@ -80,6 +80,9 @@ PATCHFILES += patch-bindings-perl-piped-Makefile.PL
 PATCHFILES += patch-bindings-perl-shared-Makefile.PL
 
 BUILD64 = 1
+NOISAEXEC = 1
+MERGE_DIRS_isa-sparcv9 = $(libdir)
+MERGE_DIRS_isa-amd64 = $(libdir)
 
 STRIP_LIBTOOL = 1
 
