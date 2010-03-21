@@ -34,8 +34,8 @@ PATCHFILES_solaris8-i386_isa-amd64 += SunStudio-have-no-stdc99-flag.patch
 PATCHFILES_solaris8-i386_isa-i386 += Solaris8-have-no-stdc99-flag.patch
 PATCHFILES_solaris8-i386_isa-i386 += stdfiles.patch
 PATCHFILES_solaris8-i386_isa-i386 += proxy.c.patch
-PATCHFILES += $(PATCHFILES_$(PLATFORM))
-PATCHFILES += $(PATCHFILES_$(PLATFORM)_$(MODULATION))
+PATCHFILES += $(PATCHFILES_$(GAR_PLATFORM))
+PATCHFILES += $(PATCHFILES_$(GAR_PLATFORM)_$(MODULATION))
 PATCHFILES += 0002-Dont-preset-CFLAGS.patch
 
 
