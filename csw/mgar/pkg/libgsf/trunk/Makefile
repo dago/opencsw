@@ -16,7 +16,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 BUILD_DEP_PKGS += CSWgnulinks CSWgtk-doc CSWglib2devel CSWlibxml2devel
 
 RUNTIME_DEP_PKGS += CSWbonobo2 CSWbzip2 CSWgconf2 CSWggettextrt CSWglib2
-RUNTIME_DEP_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib CSWiconv
+RUNTIME_DEP_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -40,13 +40,9 @@ include gar/category.mk
 PATH := /opt/csw/gnu:$(PATH)
 
 post-install-isa-sparcv8:
-	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-1.so.1.9.1
-	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1.9.1
-	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libgsf-1.so.1 ] ; then ln -s libgsf-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-1.so.1 ; fi )
-	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1 ] ; then ln -s libgsf-gnome-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1 ; fi )
+	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
+	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
 
 post-install-isa-i386:
-	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-1.so.1.9.1
-	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1.9.1
-	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libgsf-1.so.1 ] ; then ln -s libgsf-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-1.so.1 ; fi )
-	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1 ] ; then ln -s libgsf-gnome-1.so.1.9.1 $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1 ; fi )
+	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
+	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
