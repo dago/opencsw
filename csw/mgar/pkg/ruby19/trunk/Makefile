@@ -71,14 +71,14 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-suffix=19
 CONFIGURE_ARGS += --enable-pthread
 
-include gar/category.mk
-
 ifdef USEGCC
-GARCOMPILER = GNU
+GARCOMPILER = GCC4
 RUNTIME_DEP_PKGS_CSWruby19 += CSWgcc4corert
 else
 SOS11_LD_FLAGS =
 endif
+
+include gar/category.mk
 
 MERGE_EXCLUDE_STATICLIBS = 
 
