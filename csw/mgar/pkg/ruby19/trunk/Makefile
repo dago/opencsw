@@ -3,6 +3,12 @@ GARVERSION = 1.9.1
 PATCHLEVEL = p376
 CATEGORIES = lang
 
+# Overrides for checkpkg.  These are all false positives or ignorable
+# for now.
+CHECKPKG_OVERRIDES_CSWruby19tk += linked-against-discouraged-library|tcltklib.so|libX11.so.4
+CHECKPKG_OVERRIDES_CSWruby19tk += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby19tk += surplus-dependency|CSWruby19
+
 # Working with Jens Deppe, we've determined that the two failing tests
 # in 1.9.1p376 are bad tests (as documented here[1] and here[2]).
 # They make assumptions about kernel behaviour that don't hold for
