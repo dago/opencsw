@@ -40,28 +40,46 @@ PATCHFILES += 0002-Dont-preset-CFLAGS.patch
 
 
 PACKAGES = CSWlibproxy CSWlibproxydevel CSWpy-libproxy
+PACKAGES += CSWlibproxykde CSWlibproxygnome
 CATALOGNAME_CSWlibproxy = libproxy
 CATALOGNAME_CSWlibproxydevel = libproxy_devel
 CATALOGNAME_CSWpy-libproxy = py_libproxy
-SPKG_DESC_CSWlibproxy = A library that provides automatic proxy configuration management
-SPKG_DESC_CSWlibproxydevel = A library that provides automatic proxy configuration management - development files
-SPKG_DESC_CSWpy-libproxy = A library that provides automatic proxy configuration management - Python bindings
+CATALOGNAME_CSWlibproxykde = libproxy_kde
+CATALOGNAME_CSWlibproxygnome = libproxy_gnome
+SPKG_DESC_CSWlibproxy = $(DESCRIPTION)
+SPKG_DESC_CSWlibproxydevel = $(DESCRIPTION) - development files
+SPKG_DESC_CSWpy-libproxy = $(DESCRIPTION) - Python bindings
+SPKG_DESC_CSWlibproxykde = $(DESCRIPTION) - kde module
+SPKG_DESC_CSWlibproxygnome = $(DESCRIPTION) - gnome module
 
-RUNTIME_DEP_PKGS_CSWlibproxy += CSWlibice CSWlibsm CSWlibx11 CSWlibxmu CSWlibxt
+RUNTIME_DEP_PKGS_CSWlibproxy += 
 RUNTIME_DEP_PKGS_CSWlibproxydevel += CSWlibproxy
 RUNTIME_DEP_PKGS_CSWpy-libproxy += CSWpython CSWlibproxy
+RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibice
+RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibproxy
+RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibsm
+RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibx11
+RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibxmu
+RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibxt
+RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibice
+RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibproxy
+RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibsm
+RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibx11
+RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibxmu
+RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibxt
+
 BUILD_DEP_PKGS += CSWlibx11devel CSWlibxmudevel CSWlibdbusdev
 #Disable Mozilla/Firefox/Seamonkey plugin until there is a 64-bit version
 #BUILD_DEP_PKGS += CSWmozilla CSWseamonkey CSWfirefox
 
 PKGFILES_CSWlibproxydevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWpy-libproxy = $(libdir).*/python/site-packages/.*
+PKGFILES_CSWlibproxykde = $(libdir).*/config_kde.so
+PKGFILES_CSWlibproxygnome = $(libdir).*/config_gnome.so
 
 ARCHALL_CSWpy-libproxy = 1
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 EXTRA_LINKER_FLAGS = -lnsl
 BUILD64 = 1
@@ -73,7 +91,6 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 #EXTRA_PKG_CONFIG_DIRS += $(prefix)/mozilla/lib
 #EXTRA_PKG_CONFIG_DIRS += $(prefix)/mozilla/firefox/lib
 #EXTRA_PKG_CONFIG_DIRS += $(prefix)/mozilla/seamonkey/lib
-
 
 CONFIGURE_ARGS = $(DIRPATHS)
 #Disable Mozilla/Firefox/Seamonkey plugin until there is a 64-bit version
