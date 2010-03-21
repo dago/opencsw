@@ -35,21 +35,28 @@ RUNTIME_DEP_PKGS_CSWpoppler += CSWftype2
 RUNTIME_DEP_PKGS_CSWpoppler += CSWjpeg
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler
 RUNTIME_DEP_PKGS_CSWpoppler += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlcmsrt
+RUNTIME_DEP_PKGS_CSWpoppler += CSWpng
 
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlcmsrt
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpng
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWfconfig
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWftype2
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWglib2
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibpoppler += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWjpeg
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlibcairo
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWlibxml2
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWpango
 RUNTIME_DEP_PKGS_CSWlibpoppler += CSWzlib
 
-CHECKPKG_OVERRIDES_CSWlibpopplerdev += missing-dependency|CSWlibpoppler
+RUNTIME_DEP_PKGS_CSWlibpopplerdev += CSWlibpoppler
 
-#PATCHFILES += missing-includes.patch
+ARCHALL_CSWlibpopplerdoc = 1
+
+PATCHFILES += missing-includes.patch
 
 # UPSTREAM_MASTER_SITES = 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
