@@ -1,8 +1,9 @@
+# $Id$
+
 GARNAME = ncurses
 GARVERSION = 5.7
 CATEGORIES = lib
 
-DESCRIPTION = A free software emulation of curses
 define BLURB
  The ncurses (new curses) library is a free software emulation of curses
   in System V Release 4.0 and more. It uses terminfo format, supports pads
@@ -19,6 +20,11 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = patch-xcode.diff
 
 LICENSE = README
+PACKAGES = CSWncurses CSWterminfo
+SPKG_DESC_CSWncurses = A free software emulation of curses
+SPKG_DESC_CSWterminfo = Database of terminal information, part of ncurses
+PKGFILES_CSWterminfo = $(datadir)/terminfo.*
+ARCHALL_CSWterminfo = 1
 
 SPKG_SOURCEURL = http://www.gnu.org/software/ncurses/ncurses.html
 
@@ -66,6 +72,8 @@ MERGE_SCRIPTS_isa-sparcv9-widec-disable = copy-relocated-only copy-config-only
     MERGE_SCRIPTS_isa-i386-widec-enable = copy-all
    MERGE_SCRIPTS_isa-amd64-widec-enable = copy-relocated-only copy-config-only
       MERGE_DIRS_isa-amd64-widec-enable = $(libdir)
+
+RUNTIME_DEP_PKGS_CSWncurses = CSWterminfo
 
 include gar/category.mk
 
