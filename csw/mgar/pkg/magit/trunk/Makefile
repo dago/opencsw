@@ -5,7 +5,9 @@ CATEGORIES = utils
 
 ARCHALL = 1
 
-DESCRIPTION = An Emacs Mode for Git
+VENDOR_URL = http://zagadka.vm.bytemark.co.uk/magit/
+
+DESCRIPTION = An Git Mode for Emacs
 define BLURB
 Magit is an interface to the version control system Git, implemented
 as an extension to Emacs. 
