@@ -37,6 +37,7 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlcmsrt
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibcairo
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibfpx
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibice
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWliblqr
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibrsvg
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibsm
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibtoolrt
