@@ -1,6 +1,6 @@
 GARNAME = spamassassin
 SPKG_NAME = Mail-SpamAssassin
-GARVERSION = 3.3.0
+GARVERSION = 3.3.1
 CATEGORIES = net
 
 DESCRIPTION = Mail filter with a wide range of tests
@@ -37,8 +37,8 @@ MIGRATE_DEST_DIR = /etc/opt/csw/spamassassin
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
-#TEST_SCRIPTS = custom
-TEST_SCRIPTS = 
+TEST_SCRIPTS = custom
+#TEST_SCRIPTS = 
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk
