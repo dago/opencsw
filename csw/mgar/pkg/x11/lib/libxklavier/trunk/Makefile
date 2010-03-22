@@ -16,8 +16,6 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
 PACKAGES = CSWlibxklavier CSWlibxklavierdevel
 
 CATALOGNAME_CSWlibxklavier = libxklavier
@@ -39,6 +37,10 @@ NOISALIST = 1
 STRIP_LIBTOOL = 1
 
 LICENSE = COPYING.LIB
+
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --x-includes=$(includedir)
+CONFIGURE_ARGS += --x-libraries=$(libdir)
 
 include gar/category.mk
 pre-configure-modulated:
