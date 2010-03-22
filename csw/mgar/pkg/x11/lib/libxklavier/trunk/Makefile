@@ -1,5 +1,5 @@
 GARNAME = libxklavier
-GARVERSION = 5.0
+GARVERSION = 4.0
 CATEGORIES = x11
 
 DESCRIPTION = X11 high-level API for X Keyboard Extension
@@ -46,4 +46,8 @@ include gar/category.mk
 pre-configure-modulated:
 	# remove GCCish
 	gsed -i 's/-Wall//' $(WORKSRC)/libxklavier/Makefile.in
+	gsed -i 's/-Wall//' $(WORKSRC)/tests/Makefile.in
+	gsed -i 's/-Werror//' $(WORKSRC)/tests/Makefile.in
+	gsed -i 's,<getopt.h>,<unistd.h>,' $(WORKSRC)/tests/test_config.c
+	gsed -i 's,<getopt.h>,<unistd.h>,' $(WORKSRC)/tests/test_monitor.c
 	@$(MAKECOOKIE)
