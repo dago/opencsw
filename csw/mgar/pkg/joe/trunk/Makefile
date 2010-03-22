@@ -27,7 +27,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
 DEP_PKGS = CSWncurses
 
 sysconfdir = /etc/opt/csw
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-curses
 
 TEST_TARGET = check
 
