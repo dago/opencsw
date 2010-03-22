@@ -19,7 +19,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS += CSWftype2 CSWgconf2 CSWggettextrt CSWglib2 CSWgstplugins
 RUNTIME_DEP_PKGS += CSWgstreamer CSWgtk2 CSWlibatk CSWlibcairo CSWlibglade2
-RUNTIME_DEP_PKGS += CSWlibxml2 CSWpango
+RUNTIME_DEP_PKGS += CSWlibxml2 CSWpango CSWfconfig
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS) CSWgtk2devel CSWlibxcbdevel CSWlibxcb
 BUILD_DEP_PKGS += CSWlibpthreadstubs CSWlibxau CSWlibxaudevel CSWxproto
 BUILD_DEP_PKGS += CSWrenderproto CSWkbproto CSWgnomedocutils CSWpylibxml2
