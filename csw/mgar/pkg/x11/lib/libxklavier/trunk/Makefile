@@ -1,0 +1,47 @@
+GARNAME = libxklavier
+GARVERSION = 5.0
+CATEGORIES = x11
+
+DESCRIPTION = X11 high-level API for X Keyboard Extension
+define BLURB
+  libxklavier is a library providing high-level API for X Keyboard 
+  Extension known as XKB. This library is indended to support XFree86 
+  and other commercial X servers. It is useful for creating XKB-related 
+  software (layout indicators etc).
+endef
+
+MASTER_SITES = http://downloads.sourceforge.net/project/gswitchit/libxklavier/$(GARVERSION)/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+PACKAGES = CSWlibxklavier CSWlibxklavierdevel
+
+CATALOGNAME_CSWlibxklavier = libxklavier
+CATALOGNAME_CSWlibxklavierdevel = libxklavier_devel
+
+SPKG_DESC_CSWlibxklavier = $(DESCRIPTION)
+SPKG_DESC_CSWlibxklavierdevel = $(DESCRIPTION) development files
+
+BUILD_DEP_PKGS = CSWiso-codes CSWlibxkbfiledevel CSWlibxml2devel CSWgtk-doc
+RUNTIME_DEP_PKGS_CSWlibxklavier += CSWggettextrt CSWglib2 CSWlibx11 CSWlibxml2 
+RUNTIME_DEP_PKGS_CSWlibxklavier += CSWlibxkbfile
+RUNTIME_DEP_PKGS_CSWlibxklavierdevel += $(RUNTIME_DEP_PKGS_CSWlibxklavier)
+RUNTIME_DEP_PKGS_CSWlibxklavierdevel += CSWlibxklavier
+
+PKGFILES_CSWlibxrandrdevel  = $(PKGFILES_DEVEL)
+
+BUILD64 = 1
+NOISALIST = 1
+STRIP_LIBTOOL = 1
+
+LICENSE = COPYING.LIB
+
+include gar/category.mk
+pre-configure-modulated:
+	# remove GCCish
+	gsed -i 's/-Wall//' $(WORKSRC)/libxklavier/Makefile.in
+	@$(MAKECOOKIE)
