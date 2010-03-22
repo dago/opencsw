@@ -74,11 +74,17 @@ CONFIGURE_ARGS += --enable-pthread
 ifdef USEGCC
 GARCOMPILER = GCC4
 RUNTIME_DEP_PKGS_CSWruby19 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWruby19dev += CSWgcc4core
+# This is for rbconfig.rb: without this, modules built may not get a
+# proper setting.
+EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
 else
 SOS11_LD_FLAGS =
 endif
 
 include gar/category.mk
+
+SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
 MERGE_EXCLUDE_STATICLIBS = 
 
