@@ -32,7 +32,7 @@ RUNTIME_DEP_PKGS_CSWlibunique += CSWdbusglib CSWlibdbus CSWlibxext
 RUNTIME_DEP_PKGS_CSWlibuniquedevel += CSWlibunique
 RUNTIME_DEP_PKGS_CSWlibuniquedoc += CSWlibunique
 
-PREREQUISITE_PKGS += CSWdbusglibdev
+BUILD_DEP_PKGS += CSWdbusglibdev
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
