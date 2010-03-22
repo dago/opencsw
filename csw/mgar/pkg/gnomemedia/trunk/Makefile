@@ -21,9 +21,9 @@ RUNTIME_DEP_PKGS += CSWftype2 CSWgconf2 CSWggettextrt CSWglib2 CSWgstplugins
 RUNTIME_DEP_PKGS += CSWgstreamer CSWgtk2 CSWlibatk CSWlibcairo CSWlibglade2
 RUNTIME_DEP_PKGS += CSWlibxml2 CSWpango CSWfconfig
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS) CSWgtk2devel CSWlibxcbdevel CSWlibxcb
-BUILD_DEP_PKGS += CSWlibpthreadstubs CSWlibxau CSWlibxaudevel CSWxproto
-BUILD_DEP_PKGS += CSWrenderproto CSWkbproto CSWgnomedocutils CSWpylibxml2
-BUILD_DEP_PKGS += CSWscrollkeeper
+BUILD_DEP_PKGS += CSWlibpthreadstubs CSWlibxau CSWlibxaudevel CSWx11xproto
+BUILD_DEP_PKGS += CSWx11renderproto CSWx11kbproto CSWgnomedocutils CSWpylibxml2
+BUILD_DEP_PKGS += CSWscrollkeeper CSWintltool CSWlibxcbdevel CSWlibxdmcpdevel
 
 CONFIGURE_ARGS += $(DIRPATHS)
 
@@ -53,3 +53,10 @@ pre-configure-modulated:
 	gsed -i 's,GSR_LIBS=$$pkg_cv_GSR_LIBS,GSR_LIBS="$(ADD_X11_LIB) $$pkg_cv_GSR_LIBS",' $(WORKSRC)/configure
 	gsed -i 's,GSTMIXER_LIBS=$$pkg_cv_GSTMIXER_LIBS,GSTMIXER_LIBS="$(ADD_X11_LIB) $$pkg_cv_GSTMIXER_LIBS -lm",' $(WORKSRC)/configure
 	@$(MAKECOOKIE)
+
+pre-build-isa-sparcv8:
+	# why ist sparc 32bit xsltproc broken? just cores...
+	gsed -i 's,xsltproc,/opt/csw/bin/sparcv9/xsltproc,' $(WORKSRC)/grecord/doc/Makefile
+	gsed -i 's,xsltproc,/opt/csw/bin/sparcv9/xsltproc,' $(WORKSRC)/gst-mixer/doc/Makefile
+	gsed -i 's,xsltproc,/opt/csw/bin/sparcv9/xsltproc,' $(WORKSRC)/gstreamer-properties/help/Makefile
+	gsed -i 's,xsltproc,/opt/csw/bin/sparcv9/xsltproc,' $(WORKSRC)/profiles/help/Makefile
