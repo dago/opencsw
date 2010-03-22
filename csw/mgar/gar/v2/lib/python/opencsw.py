@@ -810,11 +810,12 @@ class DirectoryFormatPackage(ShellMixin, object):
       def StripRe(x, strip_re):
         return re.sub(strip_re, "", x)
       self.binaries = [StripRe(x, dotslash_re) for x in stdout.splitlines()]
+      self.binaries = sorted(self.binaries)
     return self.binaries
 
   def GetAllFilenames(self):
     file_paths = self.GetAllFilePaths()
-    return [os.path.basename(f) for f in file_paths]
+    return sorted([os.path.basename(f) for f in file_paths])
 
   def GetAllFilePaths(self):
     """Similar to GetAllFilenames, but returns full paths."""
