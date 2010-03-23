@@ -28,7 +28,7 @@ PACKAGES = CSWap2modperl
 CATALOGNAME = ap2_modperl
 
 RUNTIME_DEP_PKGS  = CSWapache2rt CSWexpat CSWiconv
-RUNTIME_DEP_PKGS += CSWbdb47 CSWoldaprt
+RUNTIME_DEP_PKGS += CSWbdb CSWbdb47 CSWoldaprt
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 CONFIGURE_ARGS  = MP_APXS=$(prefix)/apache2/sbin/apxs
