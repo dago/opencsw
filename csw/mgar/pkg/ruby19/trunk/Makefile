@@ -79,7 +79,8 @@ RUNTIME_DEP_PKGS_CSWruby19dev += CSWgcc4core
 # proper setting.
 EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
 else
-SOS11_LD_FLAGS =
+GARCOMPILER = SOS12
+SOS12_LD_FLAGS =
 endif
 
 include gar/category.mk
