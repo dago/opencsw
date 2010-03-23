@@ -9,8 +9,14 @@ endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/libgnomekbd/2.28/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-PACKAGES = CSWlibgnomekbd
-CATALOGNAME = libgnomekbd
+PACKAGES = CSWlibgnomekbd CSWlibgnomekbddevel
+CATALOGNAME_CSWlibgnomekbd = libgnomekbd
+CATALOGNAME_CSWlibgnomekbddevel = libgnomekbd_devel
+
+SPKG_DESC_CSWlibgnomekbd = $(DESCRIPTION)
+SPKG_DESC_CSWlibgnomekbddevel = $(DESCRIPTION) development files
+
+PKGFILES_CSWlibgnomekbddevel = $(PKGFILES_DEVEL)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -30,6 +36,8 @@ RUNTIME_DEP_PKGS += CSWlibxklavier
 RUNTIME_DEP_PKGS += CSWlibxml2
 RUNTIME_DEP_PKGS += CSWpango
 
+RUNTIME_DEP_PKGS_CSWlibgnomekbddevel += CSWlibgnomekbd
+
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
 BUILD_DEP_PKGS += CSWlibglade2
 BUILD_DEP_PKGS += CSWgtk2devel
@@ -41,6 +49,12 @@ BUILD_DEP_PKGS += CSWlibxklavierdevel
 BUILD_DEP_PKGS += CSWkbproto
 BUILD_DEP_PKGS += CSWgnomedocutils
 BUILD_DEP_PKGS += CSWscrollkeeper
+BUILD_DEP_PKGS += CSWintltool
+BUILD_DEP_PKGS += CSWgnulinks
+BUILD_DEP_PKGS += CSWdbusglibdev
+BUILD_DEP_PKGS += CSWlibdbusdev
+BUILD_DEP_PKGS += CSWgtk2devel
+BUILD_DEP_PKGS += CSWlibatkdevel
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
