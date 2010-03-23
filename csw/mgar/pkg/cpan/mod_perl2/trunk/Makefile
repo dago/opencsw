@@ -27,9 +27,9 @@ endef
 PACKAGES = CSWap2modperl
 CATALOGNAME = ap2_modperl
 
-RUNTIME_DEP_PKGS  = CSWapache2 CSWapache2rt CSWexpat CSWiconv
+RUNTIME_DEP_PKGS  = CSWapache2rt CSWexpat CSWiconv
 RUNTIME_DEP_PKGS += CSWbdb CSWoldaprt
-#BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 CONFIGURE_ARGS  = MP_APXS=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += MP_PROMPT_DEFAULT=1
@@ -42,6 +42,8 @@ CONFIGURE_ARGS += MP_DEBUG=1
 TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = custom
+
+LICENSE = LICENSE
 
 include gar/category.mk
 
