@@ -3,10 +3,10 @@
 # $Id$
 
 GARNAME = twisted
-MAJ_VERSION = 8.2
+MAJ_VERSION = 9.0
 PATCHLEVEL = 0
 GARVERSION = $(MAJ_VERSION).$(PATCHLEVEL)
-CATEGORIES = lib
+CATEGORIES = python
 
 DESCRIPTION = An event-driven networking engine
 define BLURB
@@ -15,37 +15,12 @@ define BLURB
   mail servers, and more.
 endef
 
-DLOAD_NAME = Twisted
-
-MASTER_SITES = http://tmrc.mit.edu/mirror/$(GARNAME)/$(DLOAD_NAME)/$(MAJ_VERSION)/
-DISTFILES  = $(DLOAD_NAME)-$(GARVERSION).tar.bz2
-
-WORKSRC = $(WORKDIR)/$(DLOAD_NAME)-$(GARVERSION)
-SPKG_CLASSES = none cswpycompile
-RUNTIME_DEP_PKGS = CSWcswclassutils CSWpython CSWpython-rt
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = twisted
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = twisted
-
-PROTOTYPE_FILTER = awk ' \
-  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } \
-  { print }'
-
-build-twisted:
-	(cd $(WORKSRC); python setup.py build)
-	@$(MAKECOOKIE)
-
-install-twisted:
-	(cd $(WORKSRC); python setup.py install --root=$(DESTDIR))
-	@$(MAKECOOKIE)
-
-post-install-modulated:
-	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
-	@$(MAKECOOKIE)
+UPSTREAM_NAME = Twisted
+DISTNAME      = $(UPSTREAM_NAME)-$(GARVERSION)
+MASTER_SITES  = http://tmrc.mit.edu/mirror/$(GARNAME)/$(UPSTREAM_NAME)/$(MAJ_VERSION)/
+DISTFILES     = $(DISTNAME).tar.bz2
+UFILES_REGEX  = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+TEST_SCRIPTS  = 
+LICENSE       = LICENSE
 
 include gar/category.mk
