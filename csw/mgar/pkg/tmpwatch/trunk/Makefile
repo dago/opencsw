@@ -1,11 +1,5 @@
-# TODO 
-# ! strtoimax implementation missing on Solaris 8/9, gnulib provides
-#   a strtoimax implementation. Relevant bug against tmpwatch:
-#     https://fedorahosted.org/tmpwatch/ticket/5
-#   Any solutions will certainly also be appreciated by the people on the
-#   bug report.
 GARNAME = tmpwatch
-GARVERSION = 2.9.17
+GARVERSION = 2.10.1
 CATEGORIES = apps
 
 DESCRIPTION = Removes files which haven't been accessed for a period of time
@@ -24,15 +18,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 BUILD_DEP_PKGS   = CSWlibgnugetopt
 RUNTIME_DEP_PKGS = CSWlibgnugetopt
 
-# Taken from libgcrypt's stringhelp.c
-DISTFILES    += stpcpy.c
-
-# Tweak Makefile to honor environment variables
-PATCHFILES  = 0001-Makefile-honor-defaults-and-use-DESTDIR-instead-of-R.patch
-# Include missing stpcpy() implementation
-PATCHFILES += 0002-tmpwatch.c-include-stpcpy.c.patch
-
-CONFIGURE_SCRIPTS =
+CONFIGURE_ARGS = $(DIRPATHS)
 BUILD_ARGS = tmpwatch
 TEST_SCRIPTS =
 
@@ -40,7 +26,3 @@ TEST_SCRIPTS =
 EXTRA_LINKER_FLAGS = -lgnugetopt
 
 include gar/category.mk
-
-pre-build-modulated:
-	cp $(WORKDIR)/stpcpy.c $(WORKSRC)
-	@$(MAKECOOKIE)
