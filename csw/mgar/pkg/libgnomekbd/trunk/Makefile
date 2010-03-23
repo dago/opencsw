@@ -9,8 +9,8 @@ endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/libgnomekbd/2.28/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-PACKAGES = CSWgnomemedia
-CATALOGNAME = gnomemedia
+PACKAGES = CSWlibgnomekbd
+CATALOGNAME = libgnomekbd
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
