@@ -1,6 +1,7 @@
 #!/opt/csw/bin/python2.6
 # $Id$
 
+import operator
 import optparse
 import os
 import sys
@@ -28,7 +29,7 @@ def main():
   for file_name in files:
     full_path = os.path.join(options.extractdir, file_name)
     error_tags.extend(checkpkg.ErrorTagsFromFile(full_path))
-  overrides = reduce(lambda x, y: x + y, overrides_list)
+  overrides = reduce(operator.add, overrides_list)
   (tags_after_overrides,
    unapplied_overrides) = checkpkg.ApplyOverrides(error_tags, overrides)
   exit_code = bool(tags_after_overrides)

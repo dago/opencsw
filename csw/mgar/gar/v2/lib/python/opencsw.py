@@ -797,6 +797,7 @@ class DirectoryFormatPackage(ShellMixin, object):
       files_root = os.path.join(self.directory, "root")
       if not os.path.exists(files_root):
         return []
+      # FIXME: It thinks that ELFunctionMapper.html is a binary
       find_tmpl = "find '%s' -print | xargs file | grep ELF | nawk -F: '{print $1}'"
       find_proc = subprocess.Popen(find_tmpl % ".",
                                    shell=True,

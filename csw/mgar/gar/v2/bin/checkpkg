@@ -113,15 +113,18 @@ debugmsg() {
 #  - Use an pre-cached (from a catalog file?) list of md5 sums
 #  - Don't use the data from /var/sadm/install/contents
 SAVE_TAGS=0
+SAVED_TAGS_FILE=error-tags.txt
 display_help=0
 SKIP_STATS_COLLECTION=0
 MD5_SUMS_CATALOG_FILE=""
 
-while getopts hsdNM: opt; do
+while getopts hsdNM:o: opt; do
 	case "${opt}" in
 	  s)
       SAVE_TAGS=1
-      SAVED_TAGS_FILE=error-tags.txt
+      ;;
+    o)
+      SAVED_TAGS_FILE="${OPTARG}"
       ;;
     d)
       DEBUG=1

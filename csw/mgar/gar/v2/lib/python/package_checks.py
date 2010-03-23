@@ -15,7 +15,9 @@ import re
 import os
 import checkpkg
 import opencsw
+import pprint
 import textwrap
+import dependency_checks as depchecks
 from Cheetah import Template
 
 PATHS_ALLOWED_ONLY_IN = {
@@ -49,6 +51,13 @@ ONLY_ALLOWED_IN_PKG = {
 }
 DO_NOT_LINK_AGAINST_THESE_SONAMES = set(["libX11.so.4"])
 DISCOURAGED_FILE_PATTERNS = (r"\.py[co]$",)
+BAD_RPATH_LIST = [
+    r'/opt/csw/lib/mysql/lib',
+    r'/opt/csw/lib/mysql/lib/sparcv9',
+    r'/opt/csw/lib/\$ISALIST',
+    r'/opt/csw/lib/$$ISALIST',
+    r'/opt/csw/lib/SALIST',
+]
 
 
 def CatalognameLowercase(pkg_data, error_mgr, logger):
@@ -57,15 +66,6 @@ def CatalognameLowercase(pkg_data, error_mgr, logger):
     error_mgr.ReportError("catalogname-not-lowercase")
   if not re.match(r"^[\w_]+$", catalogname):
     error_mgr.ReportError("catalogname-is-not-a-simple-word")
-
-
-def CheckForbiddenPaths(pkg_data, error_mgr, logger):
-  for pkgname in PATHS_ALLOWED_ONLY_IN:
-    if pkgname != pkg_data["basic_stats"]["pkgname"]:
-      for entry in pkg_data["pkgmap"]:
-        for forbidden_path in PATHS_ALLOWED_ONLY_IN[pkgname]:
-          if entry["path"] == forbidden_path:
-            error_mgr.ReportError("forbidden-path", entry["path"])
 
 
 def CheckDirectoryPermissions(pkg_data, error_mgr, logger):
@@ -109,7 +109,7 @@ def CheckDescription(pkg_data, error_mgr, logger):
     error_mgr.ReportError("pkginfo-description-missing")
   else:
     if len(desc) > MAX_DESCRIPTION_LENGTH:
-      error_mgr.ReportError("pkginfo-description-too-long")
+      error_mgr.ReportError("pkginfo-description-too-long", "length=%s" % len(desc))
     if not desc[0].isupper():
       error_mgr.ReportError("pkginfo-description-not-starting-with-uppercase",
                             desc)
@@ -118,7 +118,7 @@ def CheckDescription(pkg_data, error_mgr, logger):
 def CheckCatalogname(pkg_data, error_mgr, logger):
   pkginfo = pkg_data["pkginfo"]
   catalogname = pkginfo["NAME"].split(" ")[0]
-  catalogname_re = r"^(\w+)$"
+  catalogname_re = r"^([\w\+]+)$"
   if not re.match(catalogname_re, catalogname):
     error_mgr.ReportError("pkginfo-bad-catalogname", catalogname)
 
@@ -136,117 +136,78 @@ def CheckSmfIntegration(pkg_data, error_mgr, logger):
           "%s class=%s" % (entry["path"], entry["class"]))
 
 
-def SetCheckSharedLibraryConsistency(pkgs_data, error_mgr, logger):
-  ws_re = re.compile(r"\s+")
-  result_ok = True
-  binaries = []
-  binaries_by_pkgname = {}
-  sonames_by_pkgname = {}
-  pkg_by_any_filename = {}
-  needed_sonames_by_binary = {}
-  filenames_by_soname = {}
+def SetCheckLibraries(pkgs_data, error_mgr, logger):
+  """Second versionof the library checking code.
+
+  1. Collect all the data from the FS:
+     {"<basename>": {"/path/1": ["CSWfoo1"], "/path/2": ["CSWfoo2"]}}
+     1.1. find all needed sonames
+     1.2. get all the data for needed sonames
+  2. Construct an overlay by applying data from the package set
+  3. For each binary
+     3.1. Resolve all NEEDED sonames
+  """
+  needed_sonames = []
   for pkg_data in pkgs_data:
-    binaries_base = [os.path.basename(x) for x in pkg_data["binaries"]]
-    pkgname = pkg_data["basic_stats"]["pkgname"]
-    binaries_by_pkgname[pkgname] = binaries_base
-    binaries.extend(pkg_data["binaries"])
-    for filename in pkg_data["all_filenames"]:
-      pkg_by_any_filename[filename] = pkgname
-    for binary_data in pkg_data["binaries_dump_info"]:
-      binary_base_name = os.path.basename(binary_data["base_name"])
-      needed_sonames_by_binary[binary_base_name] = binary_data
-      filenames_by_soname[binary_data[checkpkg.SONAME]] = binary_base_name
-
-  # Making the binaries unique
-  binaries = set(binaries)
-  isalist = pkg_data["isalist"]
-
-  # Building indexes by soname to simplify further processing
-  # These are indexes "by soname".
-  (needed_sonames,
-   binaries_by_soname,
-   runpath_by_needed_soname
-  ) = checkpkg.BuildIndexesBySoname(needed_sonames_by_binary)
-
-  logger.debug("Determining the soname-package relationships.")
-  # lines by soname is an equivalent of $EXTRACTDIR/shortcatalog
-  runpath_data_by_soname = {}
-  for soname in needed_sonames:
-    runpath_data_by_soname[soname] = error_mgr.GetPkgmapLineByBasename(soname)
-  lines_by_soname = checkpkg.GetLinesBySoname(
-      runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
-
-  logger.debug("Creating a map from files to packages.")
-  pkgs_by_filename = {}
-  for soname, line in lines_by_soname.iteritems():
-    # TODO: Find all the packages, not just the last field.
-    fields = re.split(ws_re, line.strip())
-    # For now, we'll assume that the last field is the package.
-    pkgname = fields[-1]
-    pkgs_by_filename[soname] = pkgname
-
-  # A shared object dependency/provisioning report.
-  #
-  # This section is somewhat overlapping with checkpkg.AnalyzeDependencies(),
-  # it has a different purpose: it reports the relationships between shared
-  # libraries, binaries using them and packages providing them.  Ideally, the
-  # same bit of code would do both checking and reporting.
-  #
-  # TODO: Rewrite this using cheetah templates
-  if True and needed_sonames:
-    print "Analysis of sonames needed by the package set:"
-    binaries_with_missing_sonames = set([])
-    for soname in needed_sonames:
-      logger.debug("Analyzing: %s", soname)
-      if soname in filenames_by_soname:
-        print "%s is provided by the package itself" % soname
-      elif soname in lines_by_soname:
-        print ("%s is provided by %s and required by:"
-               % (soname,
-                  pkgs_by_filename[soname]))
-        filename_lines = " ".join(sorted(binaries_by_soname[soname]))
-        for line in textwrap.wrap(filename_lines, 70):
-          print " ", line
-      else:
-        print ("%s is required by %s, but we don't know what provides it."
-               % (soname, binaries_by_soname[soname]))
-        for binary in binaries_by_soname[soname]:
-          binaries_with_missing_sonames.add(binary)
-        if soname in checkpkg.ALLOWED_ORPHAN_SONAMES:
-          print "However, it's a whitelisted soname."
-        else:
-          print "No package seems to be providing %s" % (soname,)
-    if binaries_with_missing_sonames:
-      print "The following are binaries with missing sonames:"
-      binary_lines = " ".join(sorted(binaries_with_missing_sonames))
-      for line in textwrap.wrap(binary_lines, 70):
-        print " ", line
-    print
-
-  dependent_pkgs = {}
+    for binary_info in pkg_data["binaries_dump_info"]:
+      needed_sonames.extend(binary_info["needed sonames"])
+  needed_sonames = sorted(set(needed_sonames))
+  # Finding candidate libraries from the filesystem (/var/sadm/install/contents)
+  path_and_pkg_by_soname = {}
+  for needed_soname in needed_sonames:
+    path_and_pkg_by_soname[needed_soname] = error_mgr.GetPathsAndPkgnamesByBasename(
+        needed_soname)
+  # Adding overlay based on the given package set
+  # TODO: Emulate package removal
   for pkg_data in pkgs_data:
     pkgname = pkg_data["basic_stats"]["pkgname"]
-    declared_dependencies = dict(pkg_data["depends"])
-    missing_deps, surplus_deps, orphan_sonames = checkpkg.AnalyzeDependencies(
-        pkgname,
-        declared_dependencies,
-        binaries_by_pkgname,
-        needed_sonames_by_binary,
-        pkgs_by_filename,
-        filenames_by_soname,
-        pkg_by_any_filename)
-    namespace = {
-        "pkgname": pkgname,
-        "missing_deps": missing_deps,
-        "surplus_deps": surplus_deps,
-        "orphan_sonames": orphan_sonames,
-    }
-    for soname in orphan_sonames:
-      error_mgr.ReportError(pkgname, "orphan-soname", soname)
+    for binary_info in pkg_data["binaries_dump_info"]:
+      soname = binary_info["soname"]
+      binary_path, basename = os.path.split(binary_info["path"])
+      if not binary_path.startswith('/'):
+        binary_path = "/" + binary_path
+      if soname not in path_and_pkg_by_soname:
+        path_and_pkg_by_soname[soname] = {}
+      path_and_pkg_by_soname[soname][binary_path] = [pkgname]
+  # Resolving sonames for each binary
+  for pkg_data in pkgs_data:
+    pkgname = pkg_data["basic_stats"]["pkgname"]
+    check_args = (pkg_data, error_mgr, logger, path_and_pkg_by_soname)
+    req_pkgs_reasons = depchecks.Libraries(*check_args)
+    req_pkgs_reasons.extend(depchecks.ByFilename(*check_args))
+    missing_reasons_by_pkg = {}
+    for pkg, reason in req_pkgs_reasons:
+      if pkg not in missing_reasons_by_pkg:
+        missing_reasons_by_pkg[pkg] = set()
+      missing_reasons_by_pkg[pkg].add(reason)
+    declared_deps = pkg_data["depends"]
+    declared_deps_set = set([x[0] for x in declared_deps])
+    req_pkgs_set = set([x[0] for x in req_pkgs_reasons])
+    missing_deps = req_pkgs_set.difference(declared_deps_set)
+    pkgs_to_remove = set()
+    for regex_str in checkpkg.DO_NOT_REPORT_MISSING_RE:
+      regex = re.compile(regex_str)
+      for dep_pkgname in missing_deps:
+        if re.match(regex, dep_pkgname):
+          pkgs_to_remove.add(dep_pkgname)
+    if pkgname in missing_deps:
+      pkgs_to_remove.add(pkgname)
+    logger.debug("Removing %s from the list of missing pkgs.", pkgs_to_remove)
+    missing_deps = missing_deps.difference(pkgs_to_remove)
+    surplus_deps = declared_deps_set.difference(req_pkgs_set)
+    surplus_deps = surplus_deps.difference(checkpkg.DO_NOT_REPORT_SURPLUS)
+    missing_deps_reasons = []
     for missing_dep in missing_deps:
-      error_mgr.ReportError(pkgname, "missing-dependency", missing_dep)
+      error_mgr.ReportError(pkgname, "missing-dependency", "%s" % (missing_dep))
+      missing_deps_reasons.append((missing_dep, missing_reasons_by_pkg[missing_dep]))
     for surplus_dep in surplus_deps:
       error_mgr.ReportError(pkgname, "surplus-dependency", surplus_dep)
+    namespace = {
+        "pkgname": pkgname,
+        "missing_deps": missing_deps_reasons,
+        "surplus_deps": surplus_deps,
+        "orphan_sonames": None,
+    }
     t = Template.Template(checkpkg.REPORT_TMPL, searchList=[namespace])
     report = unicode(t)
     if report.strip():
@@ -281,7 +242,8 @@ def CheckArchitectureSanity(pkg_data, error_mgr, logger):
   arch = pkginfo["ARCH"]
   filename_re = r"-%s-" % arch
   if not re.search(filename_re, filename):
-    error_mgr.ReportError("srv4-filename-architecture-mismatch", arch)
+    error_mgr.ReportError("srv4-filename-architecture-mismatch",
+                          "pkginfo=%s filename=%s" % (arch, filename))
 
 
 def CheckActionClasses(pkg_data, error_mgr, logger):
@@ -446,6 +408,10 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
     error_mgr.ReportError("pkginfo-version-wrong-format", msg)
   if pkginfo["ARCH"] not in ARCH_LIST:
     error_mgr.ReportError("pkginfo-nonstandard-architecture", pkginfo["ARCH"])
+
+
+def CheckPstamp(pkg_data, error_mgr, logger):
+  pkginfo = pkg_data["pkginfo"]
   if "PSTAMP" in pkginfo:
     if not re.match(checkpkg.PSTAMP_RE, pkginfo["PSTAMP"]):
       msg=("It should be 'username@hostname-timestamp', "
@@ -508,6 +474,16 @@ def CheckPkgmapPaths(pkg_data, error_mgr, logger):
         error_mgr.ReportError("disallowed-path", disallowed_path)
 
 
+def CheckDisallowedPaths(pkg_data, error_mgr, logger):
+  """This seems to be a duplicate of CheckPkgmapPaths."""
+  for pkgname in PATHS_ALLOWED_ONLY_IN:
+    if pkgname != pkg_data["basic_stats"]["pkgname"]:
+      for entry in pkg_data["pkgmap"]:
+        for forbidden_path in PATHS_ALLOWED_ONLY_IN[pkgname]:
+          if entry["path"] == forbidden_path:
+            error_mgr.ReportError("disallowed-path", entry["path"])
+
+
 def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger):
   for binary_info in pkg_data["binaries_dump_info"]:
     for soname in binary_info["needed sonames"]:
@@ -539,3 +515,13 @@ def CheckPkgchk(pkg_data, error_mgr, logger):
     error_mgr.ReportError("pkgchk-failed-with-code", pkg_data["pkgchk"]["return_code"])
     for line in pkg_data["pkgchk"]["stderr_lines"]:
       logger.warn(line)
+
+def CheckRpath(pkg_data, error_mgr, logger):
+  # for bad_rpath in BAD_RPATH_LIST:
+  bad_rpath_set = set(BAD_RPATH_LIST)
+  for binary_info in pkg_data["binaries_dump_info"]:
+    for actual_rpath in binary_info["runpath"]:
+      if actual_rpath in bad_rpath_set:
+        error_mgr.ReportError("bad-rpath-entry",
+                              "%s %s" % (binary_info["path"], actual_rpath))
+

@@ -10,8 +10,10 @@ import yaml
 import os.path
 import mox
 import logging
+import pprint
 
 import testdata.checkpkg_test_data_CSWdjvulibrert as td_1
+import testdata.checkpkg_pkgs_data_minimal as td_2
 
 BASE_DIR = os.path.dirname(__file__)
 TESTDATA_DIR = os.path.join(BASE_DIR, "testdata")
@@ -33,8 +35,13 @@ class CheckpkgUnitTestHelper(object):
     self.mocker = mox.Mox()
 
   def testDefault(self):
+
     class LoggerStub(object):
+
       def debug(self, debug_s, *kwords):
+        pass
+
+      def info(self, debug_s, *kwords):
         pass
     # self.logger_mock = self.mocker.CreateMock(logging.Logger)
     self.logger_mock = LoggerStub()
@@ -66,7 +73,7 @@ class TestDescriptionLong(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckDescription'
   def CheckpkgTest(self):
     self.pkg_data["pkginfo"]["NAME"] = 'foo - ' 'A' * 200
-    self.error_mgr_mock.ReportError('pkginfo-description-too-long')
+    self.error_mgr_mock.ReportError('pkginfo-description-too-long', 'length=1394')
 
 
 class TestDescriptionNotCapitalized(CheckpkgUnitTestHelper, unittest.TestCase):
@@ -77,13 +84,20 @@ class TestDescriptionNotCapitalized(CheckpkgUnitTestHelper, unittest.TestCase):
                                     'lowercase')
 
 
-class TestCheckCatalogname(CheckpkgUnitTestHelper, unittest.TestCase):
+class TestCheckCatalogname_1(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckCatalogname'
   def CheckpkgTest(self):
     self.pkg_data["pkginfo"]["NAME"] = 'foo-bar - This catalog name is bad'
-    self.error_mgr_mock.ReportError('pkginfo-bad-catalogname')
+    self.error_mgr_mock.ReportError('pkginfo-bad-catalogname', 'foo-bar')
 
-class TestCheckCatalogname(CheckpkgUnitTestHelper, unittest.TestCase):
+
+class TestCheckCatalogname_2(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckCatalogname'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["NAME"] = 'libsigc++_devel - This catalog name is good'
+
+
+class TestCheckSmfIntegration(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckSmfIntegration'
   def CheckpkgTest(self):
     self.pkg_data["pkgmap"].append({
@@ -186,7 +200,9 @@ class TestCheckArchitectureSanity(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckArchitectureSanity'
   def CheckpkgTest(self):
     self.pkg_data["pkginfo"]["ARCH"] = "i386"
-    self.error_mgr_mock.ReportError('srv4-filename-architecture-mismatch', 'i386')
+    self.error_mgr_mock.ReportError(
+        'srv4-filename-architecture-mismatch',
+        'pkginfo=i386 filename=rsync-3.0.7,REV=2010.02.17-SunOS5.8-sparc-CSW.pkg.gz')
 
 class TestCheckArchitectureVsContents(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckArchitectureVsContents'
@@ -236,45 +252,55 @@ class TestCheckLinkingAgainstSunX11_Bad(CheckpkgUnitTestHelper, unittest.TestCas
     self.error_mgr_mock.ReportError('linked-against-discouraged-library',
                                     'libImlib2.so.1.4.2 libX11.so.4')
 
-class TestSetCheckSharedLibraryConsistency_1(CheckpkgUnitTestHelper, unittest.TestCase):
-  FUNCTION_NAME = 'SetCheckSharedLibraryConsistency'
+class TestSetCheckSharedLibraryConsistency2_1(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
   def CheckpkgTest(self):
     self.pkg_data = [td_1.pkg_data]
-    self.error_mgr_mock.GetPkgmapLineByBasename('libiconv.so.2').AndReturn(
-      {u'/opt/csw/lib': u'/opt/csw/lib/libiconv.so.2=libiconv.so.2.5.0 s none CSWiconv',
-       u'/opt/csw/lib/sparcv9': u'/opt/csw/lib/sparcv9/libiconv.so.2=libiconv.so.2.5.0 s none CSWiconv'})
-    self.error_mgr_mock.GetPkgmapLineByBasename('libjpeg.so.62').AndReturn(
-      {u'/opt/csw/lib': u'/opt/csw/lib/libjpeg.so.62=libjpeg.so.62.0.0 s none CSWjpeg',
-       u'/opt/csw/lib/sparcv9': u'/opt/csw/lib/sparcv9/libjpeg.so.62=libjpeg.so.62.0.0 s none CSWjpeg',
-       u'/usr/lib': u'/usr/lib/libjpeg.so.62=libjpeg.so.62.0.0 s none SUNWjpg',
-       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libjpeg.so.62=libjpeg.so.62.0.0 s none SUNWjpg'})
-    self.error_mgr_mock.GetPkgmapLineByBasename('libCrun.so.1').AndReturn(
-      {u'/usr/lib': u'/usr/lib/libCrun.so.1 f none 0755 root bin 70360 7735 1256313285 *SUNWlibC',
-       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libCrun.so.1 f none 0755 root bin 86464 53547 1256313286 *SUNWlibC'})
-    self.error_mgr_mock.GetPkgmapLineByBasename('libCstd.so.1').AndReturn(
-      {u'/usr/lib': u'/usr/lib/libCstd.so.1 f none 0755 root bin 3324372 28085 1256313286 *SUNWlibC',
-       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libCstd.so.1 f none 0755 root bin 3773400 36024 1256313286 *SUNWlibC'})
-    self.error_mgr_mock.GetPkgmapLineByBasename('libm.so.1').AndReturn(
-      {u'/lib': u'/lib/libm.so.1 f none 0755 root bin 23828 57225 1106444965 SUNWlibmsr',
-       u'/lib/sparcv9': u'/lib/sparcv9/libm.so.1 f none 0755 root bin 30656 9035 1106444966 SUNWlibmsr',
-       u'/usr/lib': u'/usr/lib/libm.so.1=../../lib/libm.so.1 s none *SUNWlibms',
-       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libm.so.1=../../../lib/sparcv9/libm.so.1 s none *SUNWlibms'})
-    self.error_mgr_mock.GetPkgmapLineByBasename('libpthread.so.1').AndReturn(
-      {u'/lib': u'/lib/libpthread.so.1 f none 0755 root bin 21472 2539 1106444694 SUNWcslr',
-       u'/lib/sparcv9': u'/lib/sparcv9/libpthread.so.1 f none 0755 root bin 26960 55139 1106444706 SUNWcslr',
-       u'/usr/lib': u'/usr/lib/libpthread.so.1=../../lib/libpthread.so.1 s none SUNWcsl',
-       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libpthread.so.1=../../../lib/sparcv9/libpthread.so.1 s none SUNWcsl'})
-    self.error_mgr_mock.GetPkgmapLineByBasename('libc.so.1').AndReturn(
-      {u'/lib': u'/lib/libc.so.1 f none 0755 root bin 1639840 9259 1253045976 SUNWcslr',
-       u'/lib/sparcv9': u'/lib/sparcv9/libc.so.1 f none 0755 root bin 1779120 22330 1253045979 SUNWcslr',
-       u'/usr/lib': u'/usr/lib/libc.so.1=../../lib/libc.so.1 s none SUNWcsl',
-       u'/usr/lib/libp': u'/usr/lib/libp/libc.so.1=../../../lib/libc.so.1 s none SUNWdpl',
-       u'/usr/lib/libp/sparcv9': u'/usr/lib/libp/sparcv9/libc.so.1=../../../../lib/sparcv9/libc.so.1 s none SUNWdpl',
-       u'/usr/lib/sparcv9': u'/usr/lib/sparcv9/libc.so.1=../../../lib/sparcv9/libc.so.1 s none SUNWcsl'})
-    self.error_mgr_mock.GetPkgmapLineByBasename('libjpeg.so.7').AndReturn(
-      {u'/opt/csw/lib': u'/opt/csw/lib/libjpeg.so.7=libjpeg.so.7.0.0 s none CSWjpeg',
-       u'/opt/csw/lib/sparcv9': u'/opt/csw/lib/sparcv9/libjpeg.so.7=libjpeg.so.7.0.0 s none CSWjpeg'})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libCrun.so.1').AndReturn(
+      {u'/usr/lib': [u'SUNWlibC'],
+       u'/usr/lib/sparcv9': [u'SUNWlibC']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libCstd.so.1').AndReturn(
+      {u'/usr/lib': [u'SUNWlibC'],
+       u'/usr/lib/sparcv9': [u'SUNWlibC']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn(
+      {u'/lib': [u'SUNWcslr'],
+       u'/lib/sparcv9': [u'SUNWcslr'],
+       u'/usr/lib': [u'SUNWcsl'],
+       u'/usr/lib/libp': [u'SUNWdpl'],
+       u'/usr/lib/libp/sparcv9': [u'SUNWdpl'],
+       u'/usr/lib/sparcv9': [u'SUNWcsl']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libiconv.so.2').AndReturn(
+      {u'/opt/csw/lib': [u'CSWiconv'],
+       u'/opt/csw/lib/sparcv9': [u'CSWiconv']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libjpeg.so.62').AndReturn(
+      {u'/opt/csw/lib': [u'CSWjpeg'],
+       u'/opt/csw/lib/sparcv9': [u'CSWjpeg'],
+       u'/usr/lib': [u'SUNWjpg'],
+       u'/usr/lib/sparcv9': [u'SUNWjpg']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libjpeg.so.7').AndReturn(
+      {u'/opt/csw/lib': [u'CSWjpeg'],
+       u'/opt/csw/lib/sparcv9': [u'CSWjpeg']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libm.so.1').AndReturn(
+      {u'/lib': [u'SUNWlibmsr'],
+       u'/lib/sparcv9': [u'SUNWlibmsr'],
+       u'/usr/lib': [u'SUNWlibms'],
+       u'/usr/lib/sparcv9': [u'SUNWlibms']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libpthread.so.1').AndReturn(
+      {u'/lib': [u'SUNWcslr'],
+       u'/lib/sparcv9': [u'SUNWcslr'],
+       u'/usr/lib': [u'SUNWcsl'],
+       u'/usr/lib/sparcv9': [u'SUNWcsl']})
     self.error_mgr_mock.ReportError('CSWdjvulibrert', 'missing-dependency', u'CSWiconv')
+
+
+class TestCheckPstamp(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckPstamp'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["PSTAMP"] = "build8s20090904191054"
+    self.error_mgr_mock.ReportError(
+        'pkginfo-pstamp-in-wrong-format', 'build8s20090904191054',
+        "It should be 'username@hostname-timestamp', but it's 'build8s20090904191054'.")
+
 
 if __name__ == '__main__':
   unittest.main()

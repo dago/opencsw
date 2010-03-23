@@ -7,29 +7,17 @@ import mox
 import difflib
 import checkpkg
 import opencsw
-import testdata.checkpkg_test_data_CSWmysql51rt as d1
-import testdata.checkpkg_test_data_CSWmysql51client as d2
-import testdata.checkpkg_test_data_CSWmysql51 as d3
-import testdata.checkpkg_test_data_CSWmysql51devel as d4
-import testdata.checkpkg_test_data_CSWlibpq_84 as d5
-import testdata.checkpkg_test_data_CSWmysql5client_8x as d6
-import testdata.checkpkg_test_data_CSWpostfix as d7
 import testdata.dump_output_1 as dump_1
 import testdata.dump_output_2 as dump_2
+import testdata.dump_output_3 as dump_3
 
 """A set of unit tests for the library checking code.
 
 A bunch of lines to test in the interactive Python shell.
 
 import sys
-sys.path.append("gar/bin/checkpkg.d")
+sys.path.append("lib/python")
 import checkpkg
-import testdata.checkpkg_test_data_CSWmysql5client_8x as d6
-
-checkpkg.SharedObjectDependencies("CSWmysql5client",
-d6.DATA_BINARIES_BY_PKGNAME, d6.DATA_NEEDED_SONAMES_BY_BINARY,
-d6.DATA_PKGS_BY_FILENAME, d6.DATA_FILENAMES_BY_SONAME,
-d6.DATA_PKG_BY_ANY_FILENAME)
 
 sqlite3 ~/.checkpkg/var-sadm-install-contents-cache-build8x
 SELECT * FROM systempkgmap WHERE basename = 'libncursesw.so.5';
@@ -43,263 +31,6 @@ LDD_R_OUTPUT_1 =  """\tlibc.so.1 =>  /lib/libc.so.1
 \t/usr/lib/secure/s8_preload.so.1
 \tlibXext.so.0 (SUNW_1.1) =>\t (version not found)
 """
-
-class DependenciesUnitTest_1(unittest.TestCase):
-
-  def setUp(self):
-    (self.missing_deps,
-     self.surplus_deps,
-     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
-        d1.DATA_PKGNAME,
-        d1.DATA_DECLARED_DEPENDENCIES,
-        d1.DATA_BINARIES_BY_PKGNAME,
-        d1.DATA_NEEDED_SONAMES_BY_BINARY,
-        d1.DATA_PKGS_BY_FILENAME,
-        d1.DATA_FILENAMES_BY_SONAME,
-        d1.DATA_PKG_BY_ANY_FILENAME,
-    )
-
-  def testSurplusDeps(self):
-    self.assertEquals(set([]), self.surplus_deps)
-
-  def testOrphanSonames(self):
-    self.assertEquals(set([]), self.orphan_sonames)
-
-  def testMissingDeps(self):
-    expected = set([])
-    self.assertEquals(expected, self.missing_deps)
-
-
-class DependenciesUnitTest_2(unittest.TestCase):
-
-  def setUp(self):
-    (self.missing_deps,
-     self.surplus_deps,
-     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
-        d2.DATA_PKGNAME,
-        d2.DATA_DECLARED_DEPENDENCIES,
-        d2.DATA_BINARIES_BY_PKGNAME,
-        d2.DATA_NEEDED_SONAMES_BY_BINARY,
-        d2.DATA_PKGS_BY_FILENAME,
-        d2.DATA_FILENAMES_BY_SONAME,
-        d2.DATA_PKG_BY_ANY_FILENAME,
-    )
-
-  def testSurplusDeps(self):
-    self.assertEquals(set([]), self.surplus_deps)
-
-  def testOrphanSonames(self):
-    self.assertEquals(set([]), self.orphan_sonames)
-
-  def testMissingDeps(self):
-    expected = set([])
-    self.assertEquals(expected, self.missing_deps)
-
-
-class DependenciesUnitTest_3(unittest.TestCase):
-
-  def setUp(self):
-    (self.missing_deps,
-     self.surplus_deps,
-     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
-        d3.DATA_PKGNAME,
-        d3.DATA_DECLARED_DEPENDENCIES,
-        d3.DATA_BINARIES_BY_PKGNAME,
-        d3.DATA_NEEDED_SONAMES_BY_BINARY,
-        d3.DATA_PKGS_BY_FILENAME,
-        d3.DATA_FILENAMES_BY_SONAME,
-        d3.DATA_PKG_BY_ANY_FILENAME,
-    )
-
-  def testSurplusDeps(self):
-    self.assertEquals(set([u'CSWmysql51client']), self.surplus_deps)
-
-  def testOrphanSonames(self):
-    self.assertEquals(set([]), self.orphan_sonames)
-
-  def testMissingDeps(self):
-    expected = set(['CSWmysql51rt'])
-    self.assertEquals(expected, self.missing_deps)
-
-
-class DependenciesUnitTest_4(unittest.TestCase):
-
-  def setUp(self):
-    (self.missing_deps,
-     self.surplus_deps,
-     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
-        d4.DATA_PKGNAME,
-        d4.DATA_DECLARED_DEPENDENCIES,
-        d4.DATA_BINARIES_BY_PKGNAME,
-        d4.DATA_NEEDED_SONAMES_BY_BINARY,
-        d4.DATA_PKGS_BY_FILENAME,
-        d4.DATA_FILENAMES_BY_SONAME,
-        d4.DATA_PKG_BY_ANY_FILENAME,
-    )
-
-  def testSurplusDeps(self):
-    self.assertEquals(set([]), self.surplus_deps)
-
-  def testOrphanSonames(self):
-    self.assertEquals(set([]), self.orphan_sonames)
-
-  def testMissingDeps(self):
-    expected = set([])
-    self.assertEquals(expected, self.missing_deps)
-
-
-class DependenciesUnitTest_5(unittest.TestCase):
-
-  def setUp(self):
-    (self.missing_deps,
-     self.surplus_deps,
-     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
-        d5.DATA_PKGNAME,
-        d5.DATA_DECLARED_DEPENDENCIES,
-        d5.DATA_BINARIES_BY_PKGNAME,
-        d5.DATA_NEEDED_SONAMES_BY_BINARY,
-        d5.DATA_PKGS_BY_FILENAME,
-        d5.DATA_FILENAMES_BY_SONAME,
-        d5.DATA_PKG_BY_ANY_FILENAME,
-    )
-
-  def testSurplusDeps(self):
-    self.assertEquals(set([]), self.surplus_deps)
-
-  def testOrphanSonames(self):
-    self.assertEquals(set([]), self.orphan_sonames)
-
-  def testMissingDeps(self):
-    # This tends to report itself...
-    expected = set([])
-    self.assertEquals(expected, self.missing_deps)
-
-
-class DependenciesUnitTest_6(unittest.TestCase):
-
-  def setUp(self):
-    (self.missing_deps,
-     self.surplus_deps,
-     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
-        d6.DATA_PKGNAME,
-        d6.DATA_DECLARED_DEPENDENCIES,
-        d6.DATA_BINARIES_BY_PKGNAME,
-        d6.DATA_NEEDED_SONAMES_BY_BINARY,
-        d6.DATA_PKGS_BY_FILENAME,
-        d6.DATA_FILENAMES_BY_SONAME,
-        d6.DATA_PKG_BY_ANY_FILENAME,
-    )
-
-  def testSurplusDeps(self):
-    self.assertEquals(set([]), self.surplus_deps)
-
-  def testOrphanSonames(self):
-    self.assertEquals(set([]), self.orphan_sonames)
-
-  def testMissingDeps(self):
-    expected = set([])
-    self.assertEquals(expected, self.missing_deps)
-
-
-class DependenciesUnitTest_7(unittest.TestCase):
-
-  def setUp(self):
-    (self.missing_deps,
-     self.surplus_deps,
-     self.orphan_sonames) = checkpkg.AnalyzeDependencies(
-        d7.DATA_PKGNAME,
-        d7.DATA_DECLARED_DEPENDENCIES,
-        d7.DATA_BINARIES_BY_PKGNAME,
-        d7.DATA_NEEDED_SONAMES_BY_BINARY,
-        d7.DATA_PKGS_BY_FILENAME,
-        d7.DATA_FILENAMES_BY_SONAME,
-        d7.DATA_PKG_BY_ANY_FILENAME,
-    )
-
-  def testSurplusDeps(self):
-    self.assertEquals(set([]), self.surplus_deps)
-
-  def testOrphanSonames(self):
-    self.assertEquals(set([]), self.orphan_sonames)
-
-  def testMissingDeps(self):
-    expected = set([])
-    self.assertEquals(expected, self.missing_deps)
-
-
-class GuessDepsUnitTest(unittest.TestCase):
-
-  def testGuessDepsByFilename1(self):
-    expected = set([u"CSWpython"])
-    pkgname = u"CSWfoo"
-    pkg_by_filename = {
-        "/opt/csw/bin/bar": u"CSWfoo",
-        "/opt/csw/lib/python/site-packages/foo.py": u"CSWfoo",
-    }
-    self.assertEqual(expected,
-                     checkpkg.GuessDepsByFilename(pkgname, pkg_by_filename))
-
-  def testGuessDepsByFilename2(self):
-    expected = set([])
-    pkgname = u"CSWfoo"
-    pkg_by_filename = {
-        "/opt/csw/bin/bar": u"CSWfoo",
-        "/opt/csw/lib/python/site-packages/foo.py": u"CSWbar",
-    }
-    self.assertEqual(expected,
-                     checkpkg.GuessDepsByFilename(pkgname, pkg_by_filename))
-
-  def testGuessDepsByFilename3(self):
-    expected = set([])
-    pkgname = u"CSWfoo"
-    pkg_by_filename = {
-        "/opt/csw/bin/bar": u"CSWfoo",
-        "/opt/csw/lib/foo.so.1": u"CSWfoo",
-    }
-    self.assertEqual(expected,
-                     checkpkg.GuessDepsByFilename(pkgname, pkg_by_filename))
-
-  def testGuessDepsByPkgname1(self):
-    expected = set([u"CSWfoo"])
-    pkgname = u"CSWfoo-devel"
-    pkg_by_filename = {
-        "/opt/csw/bin/bar": u"CSWfoo",
-        "/opt/csw/bin/barfoo": u"CSWfoobar",
-        "/opt/csw/lib/python/site-packages/foo.py": u"CSWfoo",
-    }
-    self.assertEqual(expected,
-                     checkpkg.GuessDepsByPkgname(pkgname, pkg_by_filename))
-
-  def testGuessDepsByPkgname2(self):
-    expected = set([])
-    pkgname = u"CSWzfoo-devel"
-    pkg_by_filename = {
-        "/opt/csw/bin/bar": u"CSWfoo",
-        "/opt/csw/bin/barfoo": u"CSWfoobar",
-        "/opt/csw/lib/python/site-packages/foo.py": u"CSWfoo",
-    }
-    self.assertEqual(expected,
-                     checkpkg.GuessDepsByPkgname(pkgname, pkg_by_filename))
-
-  def testGuessDepsByPkgname3(self):
-    self.assertEqual(set([u"CSWmysql51"]),
-                     checkpkg.GuessDepsByPkgname(u"CSWmysql51devel",
-                                                 d4.DATA_PKG_BY_ANY_FILENAME))
-
-  def testGuessDepsByPkgname4(self):
-    data1 = set(['CSWmysql51', 'CSWmysql51rt', 'CSWmysql51test',
-                 'CSWmysql51client', 'CSWmysql51bench', 'CSWmysql51devel'])
-    data2 = dict(((x, x) for x in data1))
-    self.assertEqual(set([u"CSWmysql51"]),
-                     checkpkg.GuessDepsByPkgname(u"CSWmysql51devel", data2))
-
-  def testGuessDepsByPkgname4(self):
-    data1 = set(['CSWmysql51', 'CSWmysql51rt', 'CSWmysql51test',
-                 'CSWmysql51client', 'CSWmysql51bench', 'CSWmysql51devel'])
-    data2 = dict(((x, x) for x in data1))
-    self.assertEqual(set([]),
-                     checkpkg.GuessDepsByPkgname(u"CSWmysql51rt", data2))
-
 
 class GetLinesBySonameUnitTest(unittest.TestCase):
 
@@ -378,157 +109,6 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     self.assertFalse(not_expected in result,
                      "%s is in %s" % (not_expected, result))
 
-  def testGetLinesBySoname(self):
-    expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
-    runpath_data_by_soname = {
-        "foo.so.1": {
-          "/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
-          "/usr/lib":                 "/usr/lib/foo.so.1 foo"},
-    }
-    needed_sonames = set(["foo.so.1"])
-    runpath_by_needed_soname = {"foo.so.1": ["/opt/csw/lib/$ISALIST", "/usr/lib"]}
-    isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(runpath_data_by_soname, needed_sonames,
-                                       runpath_by_needed_soname, isalist)
-    self.assertEqual(expected, result)
-
-  def testGetLinesBySoname_3(self):
-    expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
-    runpath_data_by_soname = {
-        "foo.so.1": {
-          "/opt/csw/lib/isa-value-1": "/opt/csw/lib/isa-value-1/foo.so.1 foo",
-          "/opt/csw/lib":             "/opt/csw/lib/foo.so.1 foo",
-          "/usr/lib":                 "/usr/lib/foo.so.1 foo",
-        }
-    }
-    needed_sonames = set(["foo.so.1"])
-    runpath_by_needed_soname = {
-        "foo.so.1": ["/opt/csw/lib/$ISALIST", "/usr/lib"]}
-    isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(runpath_data_by_soname, needed_sonames,
-                                       runpath_by_needed_soname, isalist)
-    self.assertEqual(expected, result)
-
-  def testGetLinesBySoname_4(self):
-    """A more complex test, four ISAs."""
-    expected = {'foo.so.1': '/opt/csw/lib/isa-value-1/foo.so.1 foo'}
-    runpath_data_by_soname = {
-        "foo.so.1": {
-          "/opt/csw/lib/isa-value-1":
-              "/opt/csw/lib/isa-value-1/foo.so.1 foo",
-          "/opt/csw/mysql5/lib/isa-value-2":
-              "/opt/csw/mysql5/lib/isa-value-2/foo.so.1 foo",
-          "/opt/csw/mysql5/lib/isa-value-1":
-              "/opt/csw/mysql5/lib/isa-value-1/foo.so.1 foo",
-          "/opt/csw/lib":
-              "/opt/csw/lib/foo.so.1 foo",
-          "/usr/lib":
-              "/usr/lib/foo.so.1 foo"
-        }
-    }
-    needed_sonames = set(["foo.so.1"])
-    runpath_by_needed_soname = {
-        "foo.so.1": ["/opt/csw/mysql5/lib/$ISALIST/mysql",
-                     "/opt/csw/lib/$ISALIST",
-                     "/usr/lib"]}
-    isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(
-        runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
-    self.pkgmap_mocker.VerifyAll()
-    self.assertEqual(expected, result)
-
-  def testGetLinesBySoname_5(self):
-    """Based on CSWmysql5client on build8x (5)."""
-    soname = u'libm.so.1'
-    expected = {u'libm.so.1': u'/usr/lib/libm.so.1 f none 0755 root bin '
-                              u'99844 3884 1050525375 SUNWlibms\n'}
-    runpath_data_by_soname = d6.DATA_PKGMAP_CACHE
-    (needed_sonames,
-     binaries_by_soname,
-     runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
-         d6.DATA_NEEDED_SONAMES_BY_BINARY)
-    result = checkpkg.GetLinesBySoname(
-        runpath_data_by_soname,
-        set([soname]),
-        runpath_by_needed_soname,
-        d6.DATA_ISALIST)
-    self.assertEqual(expected, result)
-
-  def testGetLinesBySoname_6(self):
-    """Based on CSWmysql5client on build8x (6)."""
-    soname = u'libz.so.1'
-    expected = {
-        u'libz.so.1': u'/opt/csw/lib/pentium_pro+mmx/libz.so.1=libz.so.1.2.3 '
-        u's none CSWzlib\n'}
-    runpath_data_by_soname = d6.DATA_PKGMAP_CACHE
-    (needed_sonames,
-     binaries_by_soname,
-     runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
-         d6.DATA_NEEDED_SONAMES_BY_BINARY)
-    result = checkpkg.GetLinesBySoname(
-        runpath_data_by_soname,
-        set([soname]),
-        runpath_by_needed_soname,
-        d6.DATA_ISALIST)
-    self.assertEqual(expected, result)
-
-  def testGetLinesBySoname_7(self):
-    """A test for 64-bit symlink expansion."""
-    soname = u'libncursesw.so.5'
-    # To test the 64-bit symlink expansion
-    expected = {
-        u'libncursesw.so.5':
-          u'/opt/csw/lib/amd64/libncursesw.so.5=libncursesw.so.5.7 '
-          u's none CSWncurses\n'}
-    runpath_data_by_soname = d6.DATA_PKGMAP_CACHE
-    (needed_sonames,
-     binaries_by_soname,
-     runpath_by_needed_soname) = checkpkg.BuildIndexesBySoname(
-         d6.DATA_NEEDED_SONAMES_BY_BINARY)
-    # The original data did not have amd64 in the isalist.
-    isalist = ['amd64', 'pentium_pro+mmx', 'pentium_pro', 'pentium+mmx',
-               'pentium', 'i486', 'i386', 'i86']
-    result = checkpkg.GetLinesBySoname(
-        runpath_data_by_soname,
-        set([soname]),
-        runpath_by_needed_soname,
-        isalist)
-    self.assertEqual(expected, result)
-
-  def testGetLinesBySoname_8(self):
-    expected = {'foo.so.1': '/opt/csw/postgresql/lib/foo.so.1 foo'}
-    runpath_data_by_soname = {
-        "foo.so.1": {
-          "/opt/csw/postgresql/lib": "/opt/csw/postgresql/lib/foo.so.1 foo",
-        }
-    }
-    needed_sonames = set(["foo.so.1"])
-    runpath_by_needed_soname = {
-        "foo.so.1": ["/opt/csw/postgresql/lib/", "/usr/lib"]}
-    isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(
-        runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
-    self.assertEqual(expected, result)
-
-  def testGetLinesBySoname_9(self):
-    """Emulation of binaries installed into /opt/csw/lib/i386.
-
-    The problem is that /opt/csw/lib/i386 is a symlink and the binaries
-    end up in /opt/csw/lib instead.
-    """
-    expected = {'foo.so.0': '/opt/csw/lib/i386/foo.so.0 foo'}
-    runpath_data_by_soname = {
-        "foo.so.0": {
-          "/opt/csw/lib/i386": "/opt/csw/lib/i386/foo.so.0 foo",
-        }
-    }
-    needed_sonames = set(["foo.so.0"])
-    runpath_by_needed_soname = {"foo.so.0": ["/opt/csw/lib", "/usr/lib"]}
-    isalist = ["isa-value-1", "isa-value-2"]
-    result = checkpkg.GetLinesBySoname(
-        runpath_data_by_soname, needed_sonames, runpath_by_needed_soname, isalist)
-    self.assertEqual(expected, result)
-
   def testSanitizeRunpath_1(self):
     self.assertEqual("/opt/csw/lib",
                      checkpkg.SanitizeRunpath("/opt/csw/lib/"))
@@ -543,17 +123,9 @@ class ParseDumpOutputUnitTest(unittest.TestCase):
 
   def test_1(self):
     expected = {
-        'soname': 'libmysqlclient.so.15',
-        'runpath': ['/opt/csw/lib/$ISALIST',
-                    '/opt/csw/lib',
-                    '/opt/csw/mysql5/lib/$ISALIST',
-                    '/opt/csw/mysql5/lib',
-                    '/opt/csw/mysql5/lib/$ISALIST/mysql',
-                    # These four are artificially appended
-                    '/usr/lib/$ISALIST',
-                    '/usr/lib',
-                    '/lib/$ISALIST',
-                    '/lib'],
+        'RPATH set': True,
+        'RUNPATH RPATH the same': True,
+        'RUNPATH set': True,
         'needed sonames': ['librt.so.1',
                            'libresolv.so.2',
                            'libc.so.1',
@@ -561,57 +133,50 @@ class ParseDumpOutputUnitTest(unittest.TestCase):
                            'libsocket.so.1',
                            'libnsl.so.1',
                            'libm.so.1',
-                           'libz.so.1']}
+                           'libz.so.1'],
+        'runpath': ['/opt/csw/lib/$ISALIST',
+                    '/opt/csw/lib',
+                    '/opt/csw/mysql5/lib/$ISALIST',
+                    '/opt/csw/mysql5/lib',
+                    '/opt/csw/mysql5/lib/$ISALIST/mysql'],
+        'soname': 'libmysqlclient.so.15',
+    }
     self.assertEqual(expected,
                      checkpkg.ParseDumpOutput(dump_1.DATA_DUMP_OUTPUT))
 
-  def test_2(self):
-    expected_runpath = ['/usr/lib/$ISALIST', '/usr/lib', '/lib/$ISALIST',
-                        '/lib']
+  def testEmpty(self):
+    expected_runpath = []
     self.assertEqual(
         expected_runpath,
         checkpkg.ParseDumpOutput(dump_2.DATA_DUMP_OUTPUT)["runpath"])
 
-
-class FormatDepsReportUnitTest(unittest.TestCase):
-
-  def AssertTextEqual(self, text1, text2):
-    difference = "\n".join(difflib.context_diff(text2.splitlines(), text1.splitlines()))
-    self.assertEqual(text1, text2, difference)
-
-  def testAll(self):
-    missing_deps = set([u'SUNWgss', u'*SUNWlxsl'])
-    surplus_deps = set(['CSWsudo', 'CSWlibxslt'])
-    orphan_sonames = set([u'libm.so.2'])
-    testdata = ("CSWfoo", missing_deps, surplus_deps, orphan_sonames)
-    checker = opencsw.DirectoryFormatPackage("/tmp/nonexistent/CSWfoo")
-    expected = u"""# CSWfoo:
-# SUGGESTION: you may want to add some or all of the following as depends:
-#    (Feel free to ignore SUNW or SPRO packages)
-RUNTIME_DEP_PKGS_CSWfoo += *SUNWlxsl
-RUNTIME_DEP_PKGS_CSWfoo += SUNWgss
-# The following dependencies might be unnecessary:
-# ? CSWlibxslt
-# ? CSWsudo
-# The following required sonames would not be found at runtime:
-# ! libm.so.2
-"""
-    result = checkpkg.FormatDepsReport(*testdata)
-    self.AssertTextEqual(result, expected)
-
-  def testNone(self):
-    missing_deps = set([])
-    surplus_deps = set([])
-    orphan_sonames = set([])
-    testdata = ("CSWfoo", missing_deps, surplus_deps, orphan_sonames)
-    checker = opencsw.DirectoryFormatPackage("/tmp/nonexistent/CSWfoo")
-    expected = u""
-    result = checkpkg.FormatDepsReport(*testdata)
-    self.AssertTextEqual(result, expected)
+  def testRpathOnly(self):
+    expected = {
+        'RPATH set': True,
+        'RUNPATH RPATH the same': False,
+        'RUNPATH set': False,
+        'needed sonames': ['librt.so.1',
+                           'libresolv.so.2',
+                           'libc.so.1',
+                           'libgen.so.1',
+                           'libsocket.so.1',
+                           'libnsl.so.1',
+                           'libm.so.1',
+                           'libz.so.1'],
+        'runpath': ['/opt/csw/lib/$ISALIST',
+                    '/opt/csw/lib',
+                    '/opt/csw/mysql5/lib/$ISALIST',
+                    '/opt/csw/mysql5/lib',
+                    '/opt/csw/mysql5/lib/$ISALIST/mysql'],
+        'soname': 'libmysqlclient.so.15',
+    }
+    self.assertEqual(
+        expected,
+        checkpkg.ParseDumpOutput(dump_3.DATA_DUMP_OUTPUT))
 
 
 class CheckpkgTagsUnitTest(unittest.TestCase):
-  
+
   def test_1(self):
     m = checkpkg.CheckpkgManager2("testname", "/tmp", ["CSWfoo"])
     tags = {

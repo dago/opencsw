@@ -1,0 +1,64 @@
+# $Id$
+
+import checkpkg
+import re
+
+def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  logger.info("Package %s", pkgname)
+  orphan_sonames = []
+  required_deps = []
+  isalist = pkg_data["isalist"]
+  for binary_info in pkg_data["binaries_dump_info"]:
+    for soname in binary_info["needed sonames"]:
+      resolved = False
+      path_list = path_and_pkg_by_soname[soname].keys()
+      logger.debug("%s @ %s: looking for %s in %s",
+                   soname, binary_info["path"], binary_info["runpath"], path_list)
+      for runpath in binary_info["runpath"] + checkpkg.SYS_DEFAULT_RUNPATH:
+        resolved_path = checkpkg.ResolveSoname(runpath, soname, isalist, path_list)
+        if resolved_path:
+          logger.debug("%s needed by %s:",
+                 soname, binary_info["path"])
+          # print "%s => %s" % (binary_info["runpath"], resolved_path)
+          logger.debug("=> %s provided by %s",
+              resolved_path, path_and_pkg_by_soname[soname][resolved_path])
+          resolved = True
+          req_pkg = path_and_pkg_by_soname[soname][resolved_path][-1]
+          # TODO: Throw an error when /opt/csw/lib/libdb-4.7.so gets resolved
+          reason = "provides %s/%s needed by %s" % (resolved_path, soname, binary_info["path"])
+          BAD_COMBINATIONS = (
+              ("/opt/csw/lib", "libdb-4.7.so", "Deprecated Berkeley DB location"),
+          )
+          for bad_path, bad_soname, msg in BAD_COMBINATIONS:
+            # print "resolved_path == bad_path", resolved_path, bad_path, resolved_path == bad_path
+            # print "soname == bad_soname", soname, bad_soname, soname == bad_soname
+            if resolved_path == bad_path and soname == bad_soname:
+              logger.debug("Bad lib found: %s/%s", bad_path, bad_soname)
+              error_mgr.ReportError(
+                  "deprecated-library",
+                  "%s %s %s/%s" % (binary_info["path"], msg, resolved_path, soname))
+          required_deps.append((req_pkg, reason))
+          break
+      if not resolved:
+        orphan_sonames.append((soname, binary_info["path"]))
+  orphan_sonames = set(orphan_sonames)
+  for soname, binary_path in orphan_sonames:
+    error_mgr.ReportError(
+        pkgname, "soname-not-found", "%s needed by %s" % (soname, binary_path))
+  # TODO: Report orphan sonames here
+  return required_deps
+
+def ByFilename(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  req_pkgs_reasons = []
+  dep_regexes = [(re.compile(x), x, y)
+                 for x, y in checkpkg.DEPENDENCY_FILENAME_REGEXES]
+  for regex, regex_str, dep_pkgname in dep_regexes:
+    for pkgmap_entry in pkg_data["pkgmap"]:
+      if pkgmap_entry["path"] and regex.match(pkgmap_entry["path"]):
+        msg = ("found file(s) matching %s, e.g. %s"
+               % (regex_str, repr(pkgmap_entry["path"])))
+        req_pkgs_reasons.append((dep_pkgname, msg))
+        break
+  return req_pkgs_reasons

@@ -8,10 +8,12 @@ import cPickle
 import errno
 import itertools
 import logging
+import operator
 import optparse
 import os
 import os.path
 import re
+import pprint
 import socket
 import sqlite3
 import subprocess
@@ -22,7 +24,7 @@ import opencsw
 import package_checks
 
 DB_SCHEMA_VERSION = 2L
-PACKAGE_STATS_VERSION = 3L
+PACKAGE_STATS_VERSION = 4L
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
 NEEDED_SONAMES = "needed sonames"
@@ -47,6 +49,13 @@ SYSTEM_SYMLINKS = (
     ("/opt/csw/lib/i386", ["/opt/csw/lib"]),
 )
 INSTALL_CONTENTS_AVG_LINE_LENGTH = 102.09710677919261
+SYS_DEFAULT_RUNPATH = [
+    "/usr/lib/$ISALIST",
+    "/usr/lib",
+    "/lib/$ISALIST",
+    "/lib",
+]
+
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -62,22 +71,20 @@ REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
 # $pkgname:
 #end if
 #if $missing_deps
-# SUGGESTION: you may want to add some or all of the following as depends:
-#    (Feel free to ignore SUNW or SPRO packages)
-#for $pkg in $sorted($missing_deps)
+# SUGGESTION: you may want to add some or all of the following as dependencies:
+#for $pkg, $reasons in $sorted($missing_deps)
+# $pkg, reasons:
+#for $reason in $reasons
+# - $reason
+#end for
 RUNTIME_DEP_PKGS_$pkgname += $pkg
 #end for
 #end if
 #if $surplus_deps
-# The following dependencies might be unnecessary:
+# If you don't know of any reasons to include these dependencies, you might
+# remove them:
 #for $pkg in $sorted($surplus_deps)
 # ? $pkg
-#end for
-#end if
-#if $orphan_sonames
-# The following required sonames would not be found at runtime:
-#for $soname in $sorted($orphan_sonames)
-# ! $soname
 #end for
 #end if
 """
@@ -355,6 +362,25 @@ class SystemPkgmap(object):
     self.cache[filename] = lines
     return lines
 
+  def _InferPackagesFromPkgmapLine(self, line):
+    """A stub of a function, to be enhanced."""
+    line = line.strip()
+    parts = re.split(WS_RE, line)
+    return [parts[-1]]
+
+  def GetPathsAndPkgnamesByBasename(self, filename):
+    """Returns paths and packages by basename.
+
+    e.g.
+    {"/opt/csw/lib": ["CSWfoo", "CSWbar"],
+     "/opt/csw/1/lib": ["CSWfoomore"]}
+    """
+    lines = self.GetPkgmapLineByBasename(filename)
+    # Infer packages
+    for file_path in lines:
+      lines[file_path] = self._InferPackagesFromPkgmapLine(lines[file_path])
+    return lines
+
   def GetDatabaseMtime(self):
     if not self.cache_mtime:
       sql = """
@@ -447,134 +473,6 @@ class SystemPkgmap(object):
     return dict(x[0:2] for x in c)
 
 
-def SharedObjectDependencies(pkgname,
-                             binaries_by_pkgname,
-                             needed_sonames_by_binary,
-                             pkgs_by_soname,
-                             filenames_by_soname,
-                             pkg_by_any_filename):
-  """This is one of the more obscure and more important pieces of code.
-
-  I tried to make it simpler, but given that the operations here involve
-  whole sets of packages, it's not easy to simplify.
-  """
-  so_dependencies = set()
-  orphan_sonames = set()
-  self_provided = set()
-  for binary in binaries_by_pkgname[pkgname]:
-    needed_sonames = needed_sonames_by_binary[binary][NEEDED_SONAMES]
-    for soname in needed_sonames:
-      if soname in filenames_by_soname:
-        filename = filenames_by_soname[soname]
-        pkg = pkg_by_any_filename[filename]
-        self_provided.add(soname)
-        so_dependencies.add(pkg)
-      elif soname in pkgs_by_soname:
-        so_dependencies.add(pkgs_by_soname[soname])
-      else:
-        orphan_sonames.add(soname)
-  return so_dependencies, self_provided, orphan_sonames
-
-
-def GuessDepsByFilename(pkgname, pkg_by_any_filename):
-  """Guesses dependencies based on filename regexes.
-
-  This function is still inefficient.  It should be getting better data
-  structures to work with.
-  """
-  guessed_deps = set()
-  patterns = [(re.compile(x), y) for x, y in DEPENDENCY_FILENAME_REGEXES]
-  filenames = []
-  # First, find the filenames of interest.
-  for filename, file_pkgname in pkg_by_any_filename.iteritems():
-    if file_pkgname == pkgname:
-      filenames.append(filename)
-  for regex, dep_pkgname in patterns:
-    for filename in filenames:
-      if regex.match(filename):
-        guessed_deps.add(dep_pkgname)
-  return guessed_deps
-
-
-def GuessDepsByPkgname(pkgname, pkg_by_any_filename):
-  # More guessed dependencies: If one package is a substring of another, it
-  # might be a hint. For example, CSWmysql51test should depend on CSWmysql51.
-  # However, the rt (runtime) packages should not want to depend on the main
-  # package.
-  guessed_deps = set()
-  all_other_pkgs = set(pkg_by_any_filename.values())
-  for other_pkg in all_other_pkgs:
-    other_pkg = unicode(other_pkg)
-    if pkgname == other_pkg:
-      continue
-    if pkgname.startswith(other_pkg):
-      endings = ["devel", "test", "bench", "dev"]
-      for ending in endings:
-        if pkgname.endswith(ending):
-          guessed_deps.add(other_pkg)
-  return guessed_deps
-
-
-def AnalyzeDependencies(pkgname,
-                        declared_dependencies,
-                        binaries_by_pkgname,
-                        needed_sonames_by_binary,
-                        pkgs_by_soname,
-                        filenames_by_soname,
-                        pkg_by_any_filename):
-  """Gathers and merges dependency results from other functions.
-
-  declared_dependencies: Dependencies that the package in question claims to
-                         have.
-
-  binaries_by_pkgname: A dictionary mapping pkgnames (CSWfoo) to binary names
-                       (without paths)
-
-  needed_sonames_by_binary: A dictionary mapping binary file name to
-                            a dictionary containing: "needed sonames",
-                            "soname", "rpath". Based on examining the binary
-                            files within the packages.
-
-  pkgs_by_soname: A dictionary mapping sonames to pkgnames, based on the
-                  contents of the system wide pkgmap
-                  (/var/sadm/install/contents)
-
-  filenames_by_soname: A dictionary mapping shared library sonames to filenames,
-                       based on files within packages
-
-  pkg_by_any_filename: Mapping from file names to packages names, based on the
-                       contents of the packages under examination.
-  """
-  declared_dependencies_set = set(declared_dependencies)
-
-  so_dependencies, self_provided, orphan_sonames = SharedObjectDependencies(
-      pkgname,
-      binaries_by_pkgname,
-      needed_sonames_by_binary,
-      pkgs_by_soname,
-      filenames_by_soname,
-      pkg_by_any_filename)
-  auto_dependencies = reduce(lambda x, y: x.union(y),
-      [
-        so_dependencies,
-        GuessDepsByFilename(pkgname, pkg_by_any_filename),
-        GuessDepsByPkgname(pkgname, pkg_by_any_filename),
-      ])
-  missing_deps = auto_dependencies.difference(declared_dependencies_set)
-  # Don't report itself as a suggested dependency.
-  missing_deps = missing_deps.difference(set([pkgname]))
-  missing_deps = missing_deps.difference(set(DO_NOT_REPORT_MISSING))
-  for re_str in DO_NOT_REPORT_MISSING_RE:
-    padded_re = "^%s$" % re_str
-    missing_deps = filter(lambda x: not re.match(padded_re, x),
-                          missing_deps)
-  missing_deps = set(missing_deps)
-  surplus_deps = declared_dependencies_set.difference(auto_dependencies)
-  surplus_deps = surplus_deps.difference(DO_NOT_REPORT_SURPLUS)
-  orphan_sonames = orphan_sonames.difference(ALLOWED_ORPHAN_SONAMES)
-  return missing_deps, surplus_deps, orphan_sonames
-
-
 def ExpandRunpath(runpath, isalist):
   # Emulating $ISALIST expansion
   if '$ISALIST' in runpath:
@@ -618,71 +516,45 @@ def SanitizeRunpath(runpath):
   return runpath
 
 
-def GetLinesBySoname(runpath_data_by_soname,
-                     needed_sonames,
-                     runpath_by_needed_soname, isalist):
-  """Works out which system pkgmap lines correspond to given sonames."""
-  lines_by_soname = {}
-  for soname in needed_sonames:
-    # This is the critical part of the algorithm: it iterates over the
-    # runpath and finds the first matching one.
-    runpath_found = False
-    for runpath in runpath_by_needed_soname[soname]:
-      runpath = SanitizeRunpath(runpath)
-      runpath_list = ExpandRunpath(runpath, isalist)
-      runpath_list = Emulate64BitSymlinks(runpath_list)
-      # Emulating the install time symlinks, for instance, if the prototype contains
-      # /opt/csw/lib/i386/foo.so.0 and /opt/csw/lib/i386 is a symlink to ".",
-      # the shared library ends up in /opt/csw/lib/foo.so.0 and should be
-      # findable even when RPATH does not contain $ISALIST.
-      soname_runpath_data = runpath_data_by_soname[soname]
-      new_soname_runpath_data = {}
-      for p in soname_runpath_data:
-        expanded_p_list = Emulate64BitSymlinks([p])
-        for expanded_p in expanded_p_list:
-          new_soname_runpath_data[expanded_p] = soname_runpath_data[p]
-      soname_runpath_data = new_soname_runpath_data
+def ResolveSoname(runpath, soname, isalist, path_list):
+  """Emulates ldd behavior, minimal implementation.
 
-      logging.debug("%s: will be looking for %s in %s" %
-                    (soname, runpath_list, soname_runpath_data.keys()))
-      for runpath_expanded in runpath_list:
-        if runpath_expanded in soname_runpath_data:
-          lines_by_soname[soname] = soname_runpath_data[runpath_expanded]
-          runpath_found = True
-          # This break only goes out of the inner loop,
-          # need another one below to finish the outer loop.
-          break
-      if runpath_found:
-        break
-  return lines_by_soname
+  runpath: e.g. ["/opt/csw/lib/$ISALIST", "/usr/lib"]
+  soname: e.g. "libfoo.so.1"
+  isalist: e.g. ["sparcv9", "sparcv8"]
+  path_list: A list of paths where the soname is present, e.g.
+             ["/opt/csw/lib", "/opt/csw/lib/sparcv9"]
 
-
-def BuildIndexesBySoname(needed_sonames_by_binary):
-  """Builds data structures indexed by soname.
-
-  Building indexes
-  {"foo.so": ["/opt/csw/lib/gcc4", "/opt/csw/lib", ...],
-   ...
-  }
+  The function returns the one path.
   """
-  needed_sonames = set()
-  binaries_by_soname = {}
-  runpath_by_needed_soname = {}
-  for binary_name, data in needed_sonames_by_binary.iteritems():
-    for soname in data[NEEDED_SONAMES]:
-      needed_sonames.add(soname)
-      if soname not in runpath_by_needed_soname:
-        runpath_by_needed_soname[soname] = []
-      runpath_by_needed_soname[soname].extend(data[RUNPATH])
-      if soname not in binaries_by_soname:
-        binaries_by_soname[soname] = set()
-      binaries_by_soname[soname].add(binary_name)
-  return needed_sonames, binaries_by_soname, runpath_by_needed_soname
+  runpath = SanitizeRunpath(runpath)
+  runpath_list = ExpandRunpath(runpath, isalist)
+  runpath_list = Emulate64BitSymlinks(runpath_list)
+  # Emulating the install time symlinks, for instance, if the prototype contains
+  # /opt/csw/lib/i386/foo.so.0 and /opt/csw/lib/i386 is a symlink to ".",
+  # the shared library ends up in /opt/csw/lib/foo.so.0 and should be
+  # findable even when RPATH does not contain $ISALIST.
+  original_paths_by_expanded_paths = {}
+  for p in path_list:
+    expanded_p_list = Emulate64BitSymlinks([p])
+    # We can't just expand and return; we need to return one of the paths given
+    # in the path_list.
+    for expanded_p in expanded_p_list:
+      original_paths_by_expanded_paths[expanded_p] = p
+  logging.debug("%s: looking for %s in %s",
+      soname, runpath_list, original_paths_by_expanded_paths.keys())
+  for runpath_expanded in runpath_list:
+    if runpath_expanded in original_paths_by_expanded_paths:
+      logging.debug("Found %s",
+                    original_paths_by_expanded_paths[runpath_expanded])
+      return original_paths_by_expanded_paths[runpath_expanded]
 
 
 def ParseDumpOutput(dump_output):
   binary_data = {RUNPATH: [],
                  NEEDED_SONAMES: []}
+  runpath = []
+  rpath = []
   for line in dump_output.splitlines():
     fields = re.split(WS_RE, line)
     # TODO: Make it a unit test
@@ -692,14 +564,18 @@ def ParseDumpOutput(dump_output):
     if fields[1] == "NEEDED":
       binary_data[NEEDED_SONAMES].append(fields[2])
     elif fields[1] == "RUNPATH":
-      binary_data[RUNPATH].extend(fields[2].split(":"))
+      runpath.extend(fields[2].split(":"))
+    elif fields[1] == "RPATH":
+      rpath.extend(fields[2].split(":"))
     elif fields[1] == "SONAME":
       binary_data[SONAME] = fields[2]
-  # Adding the default runtime path search option.
-  binary_data[RUNPATH].append("/usr/lib/$ISALIST")
-  binary_data[RUNPATH].append("/usr/lib")
-  binary_data[RUNPATH].append("/lib/$ISALIST")
-  binary_data[RUNPATH].append("/lib")
+  if runpath:
+    binary_data[RUNPATH].extend(runpath)
+  elif rpath:
+    binary_data[RUNPATH].extend(rpath)
+  binary_data["RUNPATH RPATH the same"] = (runpath == rpath)
+  binary_data["RPATH set"] = bool(rpath)
+  binary_data["RUNPATH set"] = bool(runpath)
   return binary_data
 
 
@@ -810,11 +686,8 @@ class CheckpkgManagerBase(object):
     return (exit_code, screen_report, tags_report)
 
 
-class Flyweight(object):
-  pass
-
 class CheckInterfaceBase(object):
-  """Base class for check proxies.
+  """Proxies interaction with checking functions.
 
   It wraps access to the /var/sadm/install/contents cache.
   """
@@ -827,7 +700,12 @@ class CheckInterfaceBase(object):
 
   def GetPkgmapLineByBasename(self, basename):
     """Proxies calls to self.system_pkgmap."""
+    logging.warning("GetPkgmapLineByBasename(%s): deprecated function", basename)
     return self.system_pkgmap.GetPkgmapLineByBasename(basename)
+
+  def GetPathsAndPkgnamesByBasename(self, basename):
+    """Proxies calls to self.system_pkgmap."""
+    return self.system_pkgmap.GetPathsAndPkgnamesByBasename(basename)
 
   def GetInstalledPackages(self):
     return self.system_pkgmap.GetInstalledPackages()
