@@ -5,7 +5,7 @@
 GARNAME = pysvn
 GARVERSION = 1.7.1
 CATEGORIES = lib
-DESCRIPTION = python
+DESCRIPTION = Python SVN Extension and WorkBench GUI
 define BLURB
 
   The pysvn project's goal is to enable Tools to be written in Python that use
@@ -33,10 +33,12 @@ PATCHFILES += 0001-fixes-for-tests.patch
 PATCHFILES += 0008-gid-in-two-more-places.patch
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+LICENSE = LICENSE.txt
 RUNTIME_DEP_PKGS  = CSWexpat
 RUNTIME_DEP_PKGS += CSWgcc4corert
 RUNTIME_DEP_PKGS += CSWgcc4g++rt
 RUNTIME_DEP_PKGS += CSWneon
+RUNTIME_DEP_PKGS += CSWpython
 RUNTIME_DEP_PKGS += CSWsvn
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWsvn-devel CSWapache2-devel CSWbash
