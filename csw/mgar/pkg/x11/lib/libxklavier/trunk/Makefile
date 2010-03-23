@@ -30,7 +30,7 @@ RUNTIME_DEP_PKGS_CSWlibxklavier += CSWlibxkbfile
 RUNTIME_DEP_PKGS_CSWlibxklavierdevel += $(RUNTIME_DEP_PKGS_CSWlibxklavier)
 RUNTIME_DEP_PKGS_CSWlibxklavierdevel += CSWlibxklavier
 
-PKGFILES_CSWlibxrandrdevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxklavierdevel  = $(PKGFILES_DEVEL)
 
 BUILD64 = 1
 NOISALIST = 1
