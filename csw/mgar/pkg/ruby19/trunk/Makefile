@@ -109,7 +109,7 @@ multiconfig:
 # Fix up rbconfig
 rbconfig:
 	@gsed -i -e s,$(DESTDIR),, \
-		$(DESTDIR)$(libdir)/$(GARNAME)/$(GARVERSION)/$(GARCH)-solaris2.8/rbconfig.rb
+		$(DESTDIR)$(libdir)/$(GARNAME)/$(GARVERSION)/$(GARCH)-solaris2.9/rbconfig.rb
 	@$(MAKECOOKIE)
 
 # Copy samples
