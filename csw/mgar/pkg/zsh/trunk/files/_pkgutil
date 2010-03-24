@@ -1,0 +1,58 @@
+#compdef pkgutil
+
+local curcontext="$curcontext" state line expl ret=1
+typeset -A opt_args
+
+local opts='(-i --install -u --upgrade -r --remove -d --download -a --available -c --compare -U --catalog -S --stream -h --help -v --version -V --syscheck)'
+local catalog
+catalog=( /var/opt/csw/pkgutil/catalog.*_`uname -p`_`uname -r`(N[1]) )
+
+_arguments \
+  "$opts"{-i,--install}'[install package]' \
+  "$opts"{-u,--upgrade}'[upgrade package]' \
+  "$opts"{-r,--remove}'[remove package]' \
+  "$opts"{-d,--download}'[download only]' \
+  "$opts-U[update catalog]" \
+  "$opts"{-a,--available}'[show available packages]' \
+  "$opts"{-c,--compare}'[compare installed packages to current]' \
+  "$opts-C[compare showing only differences]" \
+  {-e,--email=}'[send e-mail with available updates]:email:_email_addresses' \
+  {-t,--temp}'[specify temporary download site]:site' \
+  "$opts"{-s,--stream}'[build package stream]' \
+  {-T,--target=}'[specify target arch and release]:arch:->arch' \
+  {-o,--output=}'[specify filename for package stream]:file:_files' \
+  \*{-x,--exclude=}'[specify package to exclude]:package:->packages' \
+  {-W,--workdir}'[path for downloads]:path:_directories' \
+  '--config=[specify alternate config file]:file' \
+  {-y,--yes}'[answer yes on all prompts]' \
+  {-n,--nomod}'[dry run making no modifications]' \
+  {-D,--debug}'[enable debug information]' \
+  '--trace[set trace mode (-v) for pkgadd/pkgrm]' \
+  "$opts"{-h,--help}'[display help information]' \
+  "$opts"{-v,--version}'[show pkgutil version]' \
+  "$opts"{-V,--syscheck}'[show info about binaries and features used]' \
+  '*:: :->packages' && ret=0
+
+case $state in
+  packages)
+    (( $#catalog )) || return 1
+    typeset -A pkgs
+    pkgs=( ${(s: :)${${${${(f)"$(<$catalog)"[3,-1]}/(#b) [^ ]## ([^ ]##) */ ${match[1]}}:#\#*}[3,(i)-----BEGIN*]}[1,-2]} )
+    if (( $+opt_args[-r] + $+opt_args[--remove] + $+opt_args[-u] + $+opt_args[--upgrade])); then
+      local old=\(${(j.|.)${${${${(f)"$(pkginfo)"}#[^ ]## ##}%% *}}}\)
+      _wanted packages expl package compadd ${(k)pkgs[(R)$~old]} && ret=0
+    else
+      _wanted packages expl package compadd -k pkgs && ret=0
+    fi
+  ;;
+  arch)
+    local suf
+    if compset -P '*:'; then
+      _wanted releases expl release compadd 5.{8..10} && ret=0
+    else
+      compset -S ':*' || suf=( -S : )
+      _wanted architectures expl arch compadd $suf[@] i386 sparc && ret=0
+    fi
+esac
+
+return ret
