@@ -27,6 +27,9 @@ RUNTIME_DEP_PKGS_CSWgnomedesktop +=
 RUNTIME_DEP_PKGS_CSWgnomedesktopdevel += CSWevolution
 RUNTIME_DEP_PKGS_CSWgnomedesktopdoc += CSWevolution
 
+BUILD_DEP_PKGS_CSWgnomedesktop += CSWlibxrandrdevel
+BUILD_DEP_PKGS_CSWgnomedesktop += CSWx11randrproto
+
 PKGFILES_CSWgnomedesktopdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWgnomedesktopdoc = $(sharedstatedir)/gtk-doc/.*
 
@@ -40,7 +43,7 @@ EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-BUILD64 = 1
+# BUILD64 = 1
 
 STRIP_LIBTOOL = 1
 
@@ -51,3 +54,13 @@ TEST_TARGET = check
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
+
+pre-build-modulated:
+	gsed -i 's/^\(GNOME_DESKTOP_LIBS = .*\)$$/\1 -lm/' \
+		$(WORKSRC)/libgnome-desktop/Makefile
+	gsed -i 's,\tmsgfmt,\t$$(GMSGFMT),' \
+		$(WORKSRC)/desktop-docs/fdl/Makefile
+	gsed -i 's,\tmsgfmt,\t$$(GMSGFMT),' \
+		$(WORKSRC)/desktop-docs/gpl/Makefile
+	gsed -i 's,\tmsgfmt,\t$$(GMSGFMT),' \
+		$(WORKSRC)/desktop-docs/lgpl/Makefile
