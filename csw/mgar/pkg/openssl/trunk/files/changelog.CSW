@@ -1,3 +1,10 @@
+openssl (0.9.8n,REV=2010.03.24) unstable
+
+  * New upstream version.
+  * Fixed CVE-2010-0740.
+
+   -- Yann Rouillard <yann@opencsw.org>  Wed, 24 Mar 2010 21:25:41 +0100
+
 openssl (0.9.8m,REV=2010.03.13) unstable
 
   * New upstream version.

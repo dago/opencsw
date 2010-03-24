@@ -8,6 +8,6 @@ b2fb1179d94e57e9c0127c987613d5fb  CSWosslrt.prototype-i386
 2b956d4877de436a584dc6e09574c8d8  CSWosslrt.prototype-sparc
 1cb63bd3d00639f0aee05fdf96651d95  CSWosslutils.prototype
 b78faa440d6f6a2a07663de331678648  README.CSW
-9936ba7d9b07b5b5e27369434000413d  changelog.CSW
+f0d5119652618d956eb24490b7577eb9  changelog.CSW
 84830e15846f1b20d8371c1fa375a0b1  more_configure_targets.patch
-898bf125370926d5f692a2201124f8ec  openssl-0.9.8m.tar.gz
+076d8efc3ed93646bd01f04e23c07066  openssl-0.9.8n.tar.gz
