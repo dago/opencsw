@@ -15,14 +15,8 @@ MASTER_SITES = https://fedorahosted.org/releases/t/m/tmpwatch/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-BUILD_DEP_PKGS   = CSWlibgnugetopt
-RUNTIME_DEP_PKGS = CSWlibgnugetopt
-
 CONFIGURE_ARGS = $(DIRPATHS)
-BUILD_ARGS = tmpwatch
 TEST_SCRIPTS =
 
-# Link against our OpenCSW getopt lib which has getopt_long
-EXTRA_LINKER_FLAGS = -lgnugetopt
-
 include gar/category.mk
+
