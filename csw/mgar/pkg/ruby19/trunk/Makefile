@@ -3,12 +3,6 @@ GARVERSION = 1.9.1
 PATCHLEVEL = p376
 CATEGORIES = lang
 
-# Overrides for checkpkg.  These are all false positives or ignorable
-# for now.
-CHECKPKG_OVERRIDES_CSWruby19tk += linked-against-discouraged-library|tcltklib.so|libX11.so.4
-CHECKPKG_OVERRIDES_CSWruby19tk += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby19tk += surplus-dependency|CSWruby19
-
 # Working with Jens Deppe, we've determined that the two failing tests
 # in 1.9.1p376 are bad tests (as documented here[1] and here[2]).
 # They make assumptions about kernel behaviour that don't hold for
@@ -39,6 +33,8 @@ PACKAGES =  CSWruby19 CSWruby19doc CSWruby19tk CSWruby19dev
 
 ARCHALL_CSWruby19doc = 1
 
+RUNTIME_DEP_PKGS_CSWruby19 = CSWgdbm CSWiconv CSWncurses CSWosslrt
+RUNTIME_DEP_PKGS_CSWruby19 += CSWreadline CSWzlib
 RUNTIME_DEP_PKGS_CSWruby19doc = CSWruby19
 RUNTIME_DEP_PKGS_CSWruby19tk = CSWruby19 CSWtk CSWtcl
 RUNTIME_DEP_PKGS_CSWruby19dev = CSWruby19
@@ -70,6 +66,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-suffix=19
 CONFIGURE_ARGS += --enable-pthread
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
 
 ifdef USEGCC
 GARCOMPILER = GCC4
