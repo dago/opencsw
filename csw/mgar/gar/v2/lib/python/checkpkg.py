@@ -716,12 +716,19 @@ class CheckInterfaceBase(object):
 
   def GetCommonPaths(self, arch):
     """Returns a list of paths for architecture, from gar/etc/commondirs*."""
-    file_name = os.path.join(
-        os.path.dirname(__file__), "..", "..", "etc", "commondirs-%s" % arch)
-    logging.debug("opening %s", file_name)
-    f = open(file_name, "r")
-    lines = f.read().splitlines()
-    f.close()
+    assert arch in ('i386', 'sparc', 'all'), "Wrong arch: %s" % repr(arch)
+    if arch == 'all':
+      archs = ('i386', 'sparc')
+    else:
+      archs = [arch]
+    lines = []
+    for arch in archs:
+      file_name = os.path.join(
+          os.path.dirname(__file__), "..", "..", "etc", "commondirs-%s" % arch)
+      logging.debug("opening %s", file_name)
+      f = open(file_name, "r")
+      lines.extend(f.read().splitlines())
+      f.close()
     return lines
 
 
