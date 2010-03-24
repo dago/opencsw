@@ -1,3 +1,10 @@
+openssh (5.4p1,REV=2010.03.24) unstable
+
+  * Added derelativise_path_bugfix.patch patch to solve a bug in the
+  derelativise_path function (Closes: #4367).
+
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 24 Mar 2010 22:00:55 +0100
+
 openssh (5.4p1,REV=2010.03.13) unstable
 
   * New upstream release.

@@ -73,6 +73,10 @@ PATCHFILES += don_t_use_TIOCSCTTY.patch
 # see https://bugzilla.mindrot.org/show_bug.cgi?id=1457
 PATCHFILES += no_x_forwarding_bug.patch
 
+# Fix an incorrect usage of getcwd under Solaris
+# see https://bugzilla.mindrot.org/show_bug.cgi?id=1739
+PATCHFILES += derelativise_path_bugfix.patch
+
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
 DOCFILES += README.platform README.privsep README.smartcard README.tun TODO WARNING.RNG    
