@@ -46,6 +46,6 @@ install-custom:
 	@ginstall -D $(WORKSRC)/tkcvs/tkcvs.tcl $(DESTDIR)$(prefix)/bin/tkcvs
 	@ginstall -D $(WORKSRC)/tkcvs/tkcvs.1 $(DESTDIR)$(prefix)/share/man/man1/tkcvs.1
 	@ginstall -d $(DESTDIR)$(prefix)/lib/tkcvs/bitmaps
-	@ginstall -m 644 $(TCL_FILES) $(DESTDIR)$(prefix)/lib/tkcvs
+	@ginstall -m 644 $(TCL_FILES) $(WORKSRC)/tkcvs/tclIndex $(DESTDIR)$(prefix)/lib/tkcvs
 	@ginstall -m 644 $(IMAGE_FILES) $(DESTDIR)$(prefix)/lib/tkcvs/bitmaps
 	@$(MAKECOOKIE)
