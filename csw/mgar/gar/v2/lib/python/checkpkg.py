@@ -697,6 +697,7 @@ class CheckInterfaceBase(object):
     if not self.system_pkgmap:
       self.system_pkgmap = SystemPkgmap()
     self.messages = []
+    self.common_paths = {}
 
   def GetPkgmapLineByBasename(self, basename):
     """Proxies calls to self.system_pkgmap."""
@@ -712,6 +713,17 @@ class CheckInterfaceBase(object):
 
   def Message(self, msg):
     sef.messages.append(msg)
+
+  def GetCommonPaths(self, arch):
+    """Returns a list of paths for architecture, from gar/etc/commondirs*."""
+    file_name = os.path.join(
+        os.path.dirname(__file__), "..", "..", "etc", "commondirs-%s" % arch)
+    logging.debug("opening %s", file_name)
+    f = open(file_name, "r")
+    lines = f.read().splitlines()
+    f.close()
+    return lines
+
 
 
 class IndividualCheckInterface(CheckInterfaceBase):

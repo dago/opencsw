@@ -11,6 +11,7 @@
 #   logger.debug("Checking something.")
 #   error_mgr.ReportError("something-is-wrong")
 
+import copy
 import re
 import os
 import checkpkg
@@ -21,13 +22,14 @@ import dependency_checks as depchecks
 from Cheetah import Template
 
 PATHS_ALLOWED_ONLY_IN = {
-    "CSWcommon": ["/opt",
-                  "/opt/csw/man",
-                  "/opt/csw/doc",
-                  "/opt/csw/info",
-                  "/opt/csw/share/locale/locale.alias"],
-    "CSWiconv": ["/opt/csw/lib/charset.alias"],
-    "CSWtexinfp": ["/opt/csw/share/info/dir"],
+    # Leading slash must be removed.
+    "CSWcommon": ["opt",
+                  "opt/csw/man",
+                  "opt/csw/doc",
+                  "opt/csw/info",
+                  "opt/csw/share/locale/locale.alias"],
+    "CSWiconv": ["opt/csw/lib/charset.alias"],
+    "CSWtexinfp": ["opt/csw/share/info/dir"],
 }
 MAX_DESCRIPTION_LENGTH = 100
 LICENSE_TMPL = "/opt/csw/share/doc/%s/license"
@@ -46,9 +48,6 @@ MAX_CATALOGNAME_LENGTH = 20
 MAX_PKGNAME_LENGTH = 20
 ARCH_LIST = ["sparc", "i386", "all"]
 VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
-ONLY_ALLOWED_IN_PKG = {
-    "CSWcommon": ("/opt", )
-}
 DO_NOT_LINK_AGAINST_THESE_SONAMES = set(["libX11.so.4"])
 DISCOURAGED_FILE_PATTERNS = (r"\.py[co]$",)
 BAD_RPATH_LIST = [
@@ -465,23 +464,33 @@ def CheckBuildingUser(pkg_data, error_mgr, logger):
                             "%s, %s" % (entry["path"], entry["user"]))
 
 
-def CheckPkgmapPaths(pkg_data, error_mgr, logger):
-  pkgname = pkg_data["basic_stats"]["pkgname"]
-  pkg_paths = set([x["path"] for x in pkg_data["pkgmap"]])
-  for allowed_pkgname in ONLY_ALLOWED_IN_PKG:
-    for disallowed_path in ONLY_ALLOWED_IN_PKG[allowed_pkgname]:
-      if disallowed_path in pkg_paths and pkgname != allowed_pkgname:
-        error_mgr.ReportError("disallowed-path", disallowed_path)
-
-
 def CheckDisallowedPaths(pkg_data, error_mgr, logger):
-  """This seems to be a duplicate of CheckPkgmapPaths."""
-  for pkgname in PATHS_ALLOWED_ONLY_IN:
+  """Checks for disallowed paths, such as common paths."""
+  arch = pkg_data["pkginfo"]["ARCH"]
+  # Common paths read from the file are absolute, e.g. /opt/csw/lib
+  # while paths in pkginfo are relative, e.g. opt/csw/lib.
+  common_paths = []
+  for common_path in error_mgr.GetCommonPaths(arch):
+    if common_path.startswith("/"):
+      common_path = common_path[1:]
+    common_paths.append(common_path)
+  paths_only_allowed_in = copy.copy(PATHS_ALLOWED_ONLY_IN)
+  paths_only_allowed_in["CSWcommon"] += common_paths
+  paths_in_pkg = set()
+  for entry in pkg_data["pkgmap"]:
+    entry_path = entry["path"]
+    if not entry_path:
+      continue
+    if entry_path.startswith("/"):
+      entry_path = entry_path[1:]
+    paths_in_pkg.add(entry_path)
+  for pkgname in paths_only_allowed_in:
     if pkgname != pkg_data["basic_stats"]["pkgname"]:
-      for entry in pkg_data["pkgmap"]:
-        for forbidden_path in PATHS_ALLOWED_ONLY_IN[pkgname]:
-          if entry["path"] == forbidden_path:
-            error_mgr.ReportError("disallowed-path", entry["path"])
+      disallowed_paths = set(paths_only_allowed_in[pkgname])
+      intersection = disallowed_paths.intersection(paths_in_pkg)
+      logger.debug("Bad paths found: %s", intersection)
+      for bad_path in intersection:
+        error_mgr.ReportError("disallowed-path", bad_path)
 
 
 def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger):

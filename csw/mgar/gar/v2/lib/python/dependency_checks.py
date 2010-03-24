@@ -5,7 +5,7 @@ import re
 
 def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
   pkgname = pkg_data["basic_stats"]["pkgname"]
-  logger.info("Package %s", pkgname)
+  logger.debug("Package %s", pkgname)
   orphan_sonames = []
   required_deps = []
   isalist = pkg_data["isalist"]
