@@ -45,7 +45,11 @@ RUNTIME_DEP_PKGS_CSWosslutils = CSWosslrt
 SPKG_CLASSES_CSWosslutils = none cswpreserveconf
 
 # we use sun perl not csw one
-CHECKPKG_OVERRIDES_CSWosslutils = missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWosslutils += missing-dependency|CSWperl
+
+CHECKPKG_OVERRIDES_CSWossldevel += surplus-dependency|CSWosslrt
+CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWcacertificates
+
 
 ###### Upstream and opencsw files information #######
 

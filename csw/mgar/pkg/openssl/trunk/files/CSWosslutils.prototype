@@ -1,7 +1,6 @@
 f none /opt/csw/bin/c_rehash 0755 root bin
 f none /opt/csw/bin/openssl 0755 root bin
 d none /opt/csw/share/doc/openssl_utils 0755 root bin
-d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man1 0755 root bin
 f none /opt/csw/share/man/man1/CA.pl.1 0644 root bin
 f none /opt/csw/share/man/man1/asn1parse.1 0644 root bin
