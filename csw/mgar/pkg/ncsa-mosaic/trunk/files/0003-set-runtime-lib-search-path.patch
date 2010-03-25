@@ -1,0 +1,25 @@
+From d4d9ab253882c1fe3ca58f60cefc45f2947f9493 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Thu, 25 Mar 2010 21:54:35 +0000
+Subject: [PATCH 3/3] set runtime lib search path
+
+---
+ makefiles/Makefile.sun |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/makefiles/Makefile.sun b/makefiles/Makefile.sun
+index 287c54e..363e050 100755
+--- a/makefiles/Makefile.sun
++++ b/makefiles/Makefile.sun
+@@ -104,7 +104,7 @@ xing = -I/opt/csw/X11/include
+ # xlibs = -L/usr/X11R6/lib -lXext -lXpm -lXm -lXmu -lXt -lX11 -lICE -lSM
+ 
+ # Solaris
+-xlibs = -L/opt/csw/X11/lib -lXext -lXpm -lXm -lXmu -lXt -lX11 -lICE -lSM
++xlibs = -L/opt/csw/X11/lib -R/opt/csw/X11/lib -lXext -lXpm -lXm -lXmu -lXt -lX11 -lICE -lSM
+ static_motif_xlibs = -L/opt/csw/X11/lib -lXext -lXpm /opt/csw/X11/lib/libXm.a -lXmu -lXt -lX11 -lICE -lSM
+ static_xlibs = /opt/csw/X11/lib/libXpm.a /opt/csw/X11/lib/libXm.a /opt/csw/X11/lib/libXmu.a /opt/csw/X11/lib/libXt.a /opt/csw/X11/lib/libXext.a /opt/csw/X11/lib/libX11.a /opt/csw/X11/lib/libSM.a /opt/csw/X11/lib/libICE.a
+ #### For BSD/386:
+-- 
+1.6.5.1
+

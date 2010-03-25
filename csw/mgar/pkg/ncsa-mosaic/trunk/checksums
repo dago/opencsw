@@ -1,0 +1,3 @@
+04606d65883504febd6a014b4a7ad953  0001-Copying-Makefile.linux-to-Makefile.sun.patch
+6cf4ba26d7380243062e0592aadc4ff5  0002-Got-it-to-build-with-gnulib-stuff.patch
+7321d5ef003731325e6e2b4d5f8003d4  0003-set-runtime-lib-search-path.patch
