@@ -1,5 +1,5 @@
 GARNAME = grep
-GARVERSION = 2.5
+GARVERSION = 2.6
 CATEGORIES = utils
 
 DESCRIPTION = GNU grep
@@ -15,22 +15,28 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTNAME = grep-2.6.7-64540
+DISTFILES = $(DISTNAME).tar.xz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Patch makefile to honor DESTDIR
-PATCHFILES = install.diff
+DEP_PKGS_CSWgrep = CSWggettextrt CSWpcrert
 
-CONFIGURE_ARGS = $(DIRPATHS)
+# As suggested in
+#   <http://savannah.gnu.org/bugs/?24813>
+EXTRA_CFLAGS = -features=extensions
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --program-prefix=g
 
 TEST_TARGET = check
 
-# Spencer bre test #16 fails
-TEST_SCRIPTS =
+EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
 include gar/category.mk
 
-pre-test:
-	@( cd $(WORKSRC)/tests ; chmod 555 *.sh *.awk )
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(prefix)/gnu
+	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);)
+	@$(MAKECOOKIE)
