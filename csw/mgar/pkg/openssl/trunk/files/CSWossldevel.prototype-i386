@@ -73,7 +73,6 @@ f none /opt/csw/lib/libcrypto.a 0644 root bin
 d none /opt/csw/lib/pentium_pro 0755 root bin
 f none /opt/csw/lib/pentium_pro/libcrypto.a 0644 root bin
 f none /opt/csw/lib/pentium_pro/libssl.a 0644 root bin
-d none /opt/csw/lib/amd64 0755 root bin
 f none /opt/csw/lib/amd64/libcrypto.a 0644 root bin
 f none /opt/csw/lib/amd64/libssl.a 0644 root bin
 d none /opt/csw/lib/pkgconfig 0755 root bin
