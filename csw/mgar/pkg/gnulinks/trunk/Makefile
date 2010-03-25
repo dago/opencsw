@@ -5,7 +5,7 @@ CATEGORIES = xtra
 VENDOR_URL = http://opencsw.org
 
 GLINKPKGS = CSWdiffutils CSWggettext CSWggettextrt CSWbison CSWbinutils
-GLINKPKGS += CSWggrep CSWgawk CSWgsed CSWggetopt CSWfindutils
+GLINKPKGS += CSWgawk CSWgsed CSWggetopt CSWfindutils
 GLINKPKGS += CSWgmake CSWgpatch CSWgm4 CSWgwhois CSWgtar
 GLINKPKGS += CSWshutils CSWgfile CSWtextutils
 BUILD_DEP_PKGS = $(GLINKPKGS) CSWpkgutil
@@ -16,13 +16,16 @@ define BLURB
   /opt/csw/gnu.
 endef
 
-MASTER_SITES = 
-DISTFILES = CSWgnulinks.gspec CSWgnulinks.prototype
+MASTER_SITES = http://www.opencsw.org
+DISTFILES = CSWgnulinks.prototype
+DISTFILES += COPYING
 
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = 
 INSTALL_SCRIPTS = 
 TEST_SCRIPTS =
+
+ARCHALL = 1
 
 include gar/category.mk
 
