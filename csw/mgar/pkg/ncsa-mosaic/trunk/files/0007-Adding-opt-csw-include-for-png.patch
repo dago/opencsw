@@ -1,0 +1,25 @@
+From 404a6dec66c2370877644b17ce3091fffffad306 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Thu, 25 Mar 2010 22:58:56 +0000
+Subject: [PATCH 7/7] Adding /opt/csw/include for png
+
+---
+ makefiles/Makefile.sun |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/makefiles/Makefile.sun b/makefiles/Makefile.sun
+index 71e9e85..c7a7fc5 100755
+--- a/makefiles/Makefile.sun
++++ b/makefiles/Makefile.sun
+@@ -149,7 +149,7 @@ static_xlibs = /opt/csw/X11/lib/libXpm.a /opt/csw/X11/lib/libXm.a /opt/csw/X11/l
+ # SAM pnglibs = $(pnglibdir)/libpng.a $(pnglibdir)/libz.a /usr/lib/libm.a
+ # SAM pngflags =  -I$(pngincludedir) -DHAVE_PNG
+ pnglibs = -L/opt/csw/lib -R/opt/csw/lib -lpng -lz -lm
+-pngflags = -DHAVE_PNG
++pngflags = -DHAVE_PNG -I/opt/csw/include
+ 
+ #### JPEG SUPPORT
+ #### For inline JPEG support, the following should be defined:
+-- 
+1.6.5.1
+

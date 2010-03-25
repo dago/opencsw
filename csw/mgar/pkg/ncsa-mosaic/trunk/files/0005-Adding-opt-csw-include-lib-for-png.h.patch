@@ -1,0 +1,25 @@
+From 21b0b966b2aeb5b01de5bbe942eec7a84ce1c9c8 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Thu, 25 Mar 2010 22:38:56 +0000
+Subject: [PATCH 5/6] Adding /opt/csw/{include,lib} for png.h.
+
+---
+ makefiles/Makefile.sun |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/makefiles/Makefile.sun b/makefiles/Makefile.sun
+index 6b4018e..71e9e85 100755
+--- a/makefiles/Makefile.sun
++++ b/makefiles/Makefile.sun
+@@ -148,7 +148,7 @@ static_xlibs = /opt/csw/X11/lib/libXpm.a /opt/csw/X11/lib/libXm.a /opt/csw/X11/l
+ # SAM pngincludedir = $(pngdir)/include
+ # SAM pnglibs = $(pnglibdir)/libpng.a $(pnglibdir)/libz.a /usr/lib/libm.a
+ # SAM pngflags =  -I$(pngincludedir) -DHAVE_PNG
+-pnglibs = -lpng -lz -lm
++pnglibs = -L/opt/csw/lib -R/opt/csw/lib -lpng -lz -lm
+ pngflags = -DHAVE_PNG
+ 
+ #### JPEG SUPPORT
+-- 
+1.6.5.1
+

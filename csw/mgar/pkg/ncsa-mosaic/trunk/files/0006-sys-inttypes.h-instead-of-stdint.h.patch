@@ -1,0 +1,25 @@
+From 5e86e2da62182be4bcf794961e5ba5ea42b340c6 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Thu, 25 Mar 2010 22:49:31 +0000
+Subject: [PATCH 6/6] sys/inttypes.h instead of stdint.h
+
+---
+ src/getdelim.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/getdelim.c b/src/getdelim.c
+index c024090..a20b6be 100644
+--- a/src/getdelim.c
++++ b/src/getdelim.c
+@@ -28,7 +28,7 @@
+ #include <stdio.h>
+ 
+ #include <limits.h>
+-#include <stdint.h>
++#include <sys/inttypes.h>
+ #include <stdlib.h>
+ #include <errno.h>
+ 
+-- 
+1.6.5.1
+
