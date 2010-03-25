@@ -169,6 +169,7 @@ COMMON_PKG_DEPENDS ?= CSWcommon
 
 # These are the core packages which must be installed for GAR to function correctly
 
+DEF_BASE_PKGS += CSWxz
 DEF_BASE_PKGS += CSWbzip2
 DEF_BASE_PKGS += CSWdiffutils
 DEF_BASE_PKGS += CSWfindutils

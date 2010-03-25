@@ -306,17 +306,29 @@ tar-bz-extract-%:
 	@bzip2 -dc $(DOWNLOADDIR)/$* | gtar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
 	@$(MAKECOOKIE)
 
+# rule to extract files with tar and xz
+tar-xz-extract-%:
+	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
+	@xz -dc $(DOWNLOADDIR)/$* | gtar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
+	@$(MAKECOOKIE)
+
 # extract compressed single files
-bz-extract-%:
+gz-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
 	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
-	@bzip2 -d $(WORKDIR)/$*
+	@gzip -d $(WORKDIR)/$*
 	@$(MAKECOOKIE)
 
 gz-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
 	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
 	@gzip -d $(WORKDIR)/$*
+	@$(MAKECOOKIE)
+
+xz-extract-%:
+	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
+	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
+	@xz -d $(WORKDIR)/$*
 	@$(MAKECOOKIE)
 
 # extra dependency rule for git repos, that will allow the user
@@ -379,6 +391,9 @@ extract-archive-%.tar.bz2: tar-bz-extract-%.tar.bz2
 extract-archive-%.tbz: tar-bz-extract-%.tbz
 	@$(MAKECOOKIE)
 
+extract-archive-%.tar.xz: tar-xz-extract-%.tar.xz
+	@$(MAKECOOKIE)
+
 extract-archive-%.zip: zip-extract-%.zip
 	@$(MAKECOOKIE)
 
@@ -388,10 +403,13 @@ extract-archive-%.ZIP: zip-extract-%.ZIP
 extract-archive-%.deb: deb-bin-extract-%.deb
 	@$(MAKECOOKIE)
 
+extract-archive-%.gz: gz-extract-%.gz
+	@$(MAKECOOKIE)
+
 extract-archive-%.bz2: bz-extract-%.bz2
 	@$(MAKECOOKIE)
 
-extract-archive-%.gz: gz-extract-%.gz
+extract-archive-%.xz: xz-extract-%.xz
 	@$(MAKECOOKIE)
 
 extract-archive-%.git: git-extract-%.git
@@ -412,6 +430,12 @@ PATCHDIRLEVEL ?= 1
 PATCHDIRFUZZ ?= 2
 GARPATCH = gpatch -d$(PATCHDIR) -p$(PATCHDIRLEVEL) -F$(PATCHDIRFUZZ)
 BASEWORKSRC = $(shell basename $(WORKSRC))
+
+# apply xzipped patches
+xz-patch-%:
+	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
+	@xz -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
+	@$(MAKECOOKIE)
 
 # apply bzipped patches
 bz-patch-%:
@@ -447,6 +471,9 @@ normal-patch-%:
 # These rules specify which of the above patch action rules to use for a given
 # file extension.  Often support for a given patch format can be handled by
 # simply adding a rule here.
+
+patch-extract-%.xz: xz-patch-%.xz
+	@$(MAKECOOKIE)
 
 patch-extract-%.bz: bz-patch-%.bz
 	@$(MAKECOOKIE)
@@ -513,7 +540,7 @@ configure-%/waf:
 # build from a standard gnu-style makefile's default rule.
 build-%/Makefile:
 	@echo " ==> Running make in $*"
-	@$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
+	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/makefile:
@@ -568,7 +595,7 @@ TEST_TARGET ?= test
 # Run tests on pre-built sources
 test-%/Makefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
+	$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 test-%/makefile:
