@@ -1,9 +1,11 @@
-openssh (5.4p1,REV=2010.03.24) unstable
+openssh (5.4p1,REV=2010.03.25) unstable
 
   * Added derelativise_path_bugfix.patch patch to solve a bug in the
   derelativise_path function (Closes: #4367).
+  * Added dont_derelativise_authorizedkeysfile_option.patch so the
+  AuthorizedKeysFile option can be relative as explained in the man page.
 
- -- Yann Rouillard <yann@opencsw.org>  Wed, 24 Mar 2010 22:00:55 +0100
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 25 Mar 2010 19:15:55 +0100
 
 openssh (5.4p1,REV=2010.03.13) unstable
 

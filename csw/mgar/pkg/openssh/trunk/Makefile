@@ -77,6 +77,10 @@ PATCHFILES += no_x_forwarding_bug.patch
 # see https://bugzilla.mindrot.org/show_bug.cgi?id=1739
 PATCHFILES += derelativise_path_bugfix.patch
 
+# AuthorizedKeysFile option value should not be derelativized !!
+# see https://bugzilla.mindrot.org/show_bug.cgi?id=1739
+PATCHFILES += dont_derelativise_authorizedkeysfile_option.patch
+
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
 DOCFILES += README.platform README.privsep README.smartcard README.tun TODO WARNING.RNG    
