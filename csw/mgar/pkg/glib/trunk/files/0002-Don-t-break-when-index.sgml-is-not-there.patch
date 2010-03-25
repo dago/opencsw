@@ -1,0 +1,39 @@
+From 135d620b4b3884a20a37f50b2e10554e763f41cf Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 24 Mar 2010 17:57:23 +0100
+Subject: [PATCH] Don't break when index.sgml is not there
+
+---
+ docs/reference/glib/Makefile.am |    2 +-
+ docs/reference/glib/Makefile.in |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/docs/reference/glib/Makefile.am b/docs/reference/glib/Makefile.am
+index 14f9cb1..cf79f05 100644
+--- a/docs/reference/glib/Makefile.am
++++ b/docs/reference/glib/Makefile.am
+@@ -174,7 +174,7 @@ install-data-local:
+ 	    $(INSTALL_DATA) $$i $(DESTDIR)$(TARGET_DIR); \
+ 	  done; \
+ 	  echo '-- Installing $(srcdir)/html/index.sgml' ; \
+-	  $(INSTALL_DATA) $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR); \
++	  if [ -f $(srcdir)/html/index.sgml ]; then $(INSTALL_DATA) $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR); fi; \
+ 	fi)
+ 
+ #
+diff --git a/docs/reference/glib/Makefile.in b/docs/reference/glib/Makefile.in
+index 3581cae..69df35c 100644
+--- a/docs/reference/glib/Makefile.in
++++ b/docs/reference/glib/Makefile.in
+@@ -425,7 +425,7 @@ install-data-local:
+ 	    $(INSTALL_DATA) $$i $(DESTDIR)$(TARGET_DIR); \
+ 	  done; \
+ 	  echo '-- Installing $(srcdir)/html/index.sgml' ; \
+-	  $(INSTALL_DATA) $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR); \
++	  if [ -f $(srcdir)/html/index.sgml ]; then $(INSTALL_DATA) $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR); fi; \
+ 	fi)
+ 
+ #
+-- 
+1.7.0
+

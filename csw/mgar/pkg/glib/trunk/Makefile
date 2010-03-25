@@ -18,9 +18,11 @@ MASTER_SITES = $(sort $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GNOME_ROOT)/
 SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION), $(GARNAME)-$(VERSION).tar.gz)
 DISTFILES  = $(SOURCEFILES)
 NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
-PATCHFILES_isa-i386-garversion-1.3.15 = 0001-gtkdoc-mkhtml-returns-1-even-on-warnings.patch
-PATCHFILES_isa-sparcv8-garversion-1.3.15 = 0001-gtkdoc-mkhtml-returns-1-even-on-warnings.patch
-PATCHFILES_isa-sparcv9-garversion-1.3.15 = 0001-gtkdoc-mkhtml-returns-1-even-on-warnings.patch
+PATCHFILES-1.3.15  = 0001-gtkdoc-mkhtml-returns-1-even-on-warnings.patch
+PATCHFILES-1.3.15 += 0002-Don-t-break-when-index.sgml-is-not-there.patch
+PATCHFILES_isa-i386-garversion-1.3.15 = $(PATCHFILES-1.3.15)
+PATCHFILES_isa-sparcv8-garversion-1.3.15 = $(PATCHFILES-1.3.15)
+PATCHFILES_isa-sparcv9-garversion-1.3.15 = $(PATCHFILES-1.3.15)
 
 PACKAGES = CSWglib CSWglibdevel
 
