@@ -25,6 +25,9 @@ PACKAGES = CSWrlwrap
 
 RUNTIME_DEP_PKGS  = CSWreadline 
 
+# We don't want to depend on OpenCSW perl
+CHECKPKG_OVERRIDES_CSWrlwrap += missing-dependency|CSWperl
+
 ###### Upstream and opencsw files information #######
 
 MASTER_SITES = http://utopia.knoware.nl/~hlub/uck/rlwrap/
