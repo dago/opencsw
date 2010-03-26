@@ -537,7 +537,7 @@ $(shell echo
 endef
 
 define pkgvar
-$(strip $(if $($(1)_$(2)),$($(1)_$(2)),$($(1))))
+$(strip $(or $(_CATEGORY_$(1)_$(2)),$(_CATEGORY_$(1)),$($(1)_$(2)),$($(1))))
 endef
 
 # Make sure every producable package contains specific descriptions.
@@ -569,6 +569,7 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "OPENCSW_CATALOGNAME=$(call catalogname,$*)"; \
 	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
 	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
+	$(_CATEGORY_PKGINFO) \
 	) >$@
 
 
