@@ -24,7 +24,7 @@ import opencsw
 import package_checks
 
 DB_SCHEMA_VERSION = 2L
-PACKAGE_STATS_VERSION = 4L
+PACKAGE_STATS_VERSION = 5L
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
 NEEDED_SONAMES = "needed sonames"
@@ -952,7 +952,7 @@ class PackageStats(object):
       # "defined_symbols",
       "depends",
       "isalist",
-      # "ldd_dash_r",
+      "ldd_dash_r",
       "overrides",
       "pkgchk",
       "pkginfo",
@@ -1193,9 +1193,10 @@ class PackageStats(object):
     self.DumpObject(self.GetPkgchkData(), "pkgchk")
     self.DumpObject(dir_pkg.GetParsedPkginfo(), "pkginfo")
     self.DumpObject(dir_pkg.GetPkgmap().entries, "pkgmap")
+    # To be used with Perl modules
+    self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
     # This check is currently disabled, let's save time by not collecting
     # these data.
-    # self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
     # self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
     self.DumpObject(dir_pkg.GetFilesContaining(BAD_CONTENT_REGEXES), "bad_paths")
     logging.debug("Statistics of %s have been collected.", repr(dir_pkg.pkgname))
