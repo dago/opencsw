@@ -50,4 +50,5 @@ RUNTIME_DEP_PKGS_CSWevince += CSWpango
 RUNTIME_DEP_PKGS_CSWevince += CSWpoppler
 RUNTIME_DEP_PKGS_CSWevince += CSWtiff
 RUNTIME_DEP_PKGS_CSWevince += CSWzlib
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWevince)
 include gar/category.mk
