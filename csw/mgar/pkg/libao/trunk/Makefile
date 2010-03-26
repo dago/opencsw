@@ -1,5 +1,5 @@
 GARNAME = libao
-GARVERSION = 0.8.8
+GARVERSION = 1.0.0
 CATEGORIES = lib
 
 DESCRIPTION = Cross-platform audio library
