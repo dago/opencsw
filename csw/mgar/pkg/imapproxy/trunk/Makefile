@@ -30,9 +30,7 @@ PACKAGES = CSWimapproxy
 RUNTIME_DEP_PKGS  = CSWtcpwrap 
 RUNTIME_DEP_PKGS += CSWosslrt 
 
-# adding configuration handling classes
 SPKG_CLASSES = none cswpreserveconf cswinitsmf
-
 
 ###### Upstream and opencsw files information #######
 
@@ -45,9 +43,12 @@ DISTFILES  = up-$(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += imapproxy.conf
 DISTFILES += changelog.CSW README.CSW
 # init and smf stuffs
-DISTFILES += cswimapproxy.init cswimapproxy.xml
+DISTFILES += cswimapproxy cswimapproxy.xml
 
 DISTNAME = up-$(GARNAME)-$(GARVERSION)
+
+INITSMF = /etc/init.d/cswimapproxy
+PRESERVECONF = /opt/csw/etc/imapproxy.conf
 
 # imapproxy lacks include of openssl/md5.h
 # PATCHFILES += md5_include.patch
@@ -78,6 +79,7 @@ post-merge:
 	ginstall -D $(WORKSRC_FIRSTMOD)/README.ssl $(PKGROOT)$(docdir)/$(GARNAME)/README.ssl
 	ginstall -D $(WORKDIR_FIRSTMOD)/imapproxy.conf $(PKGROOT)$(sysconfdir)/imapproxy.conf.CSW
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswimapproxy.xml"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy" "$(PKGROOT)/etc/init.d/cswimapproxy"
 	@$(MAKECOOKIE)
 
 

@@ -2,9 +2,13 @@
 # /etc/init.d/imapproxy
 #
 
-# chkconfig stuff
-# chkconfig: 3 99 10
-# description: A caching IMAP proxy server
+#RC_KNUM 99  
+#RC_SNUM 10   
+#RC_KLEV 0,1,2,S   
+#RC_SLEV 3         
+#MANIFEST /var/opt/csw/svc/manifest/network/cswimapproxy.xml
+#AUTOENABLE no
+
  
 ################################
 # Variable initialization #
