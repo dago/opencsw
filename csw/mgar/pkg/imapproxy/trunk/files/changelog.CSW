@@ -1,6 +1,8 @@
 imapproxy (1.2.7,REV=2010.02.28) unstable
 
   * New upstream version.
+  * Now uses cswclassutils class action scripts for SMF support and
+  configuration handling.
 
  -- Yann Rouillard <yann@opencsw.org>  Sun, 28 Feb 2010 17:24:21 +0100
 
