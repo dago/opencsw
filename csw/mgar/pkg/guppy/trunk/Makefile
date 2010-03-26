@@ -12,8 +12,9 @@ endef
 SPKG_SOURCEURL = http://guppy-pe.sourceforge.net/
 MASTER_SITES = http://pypi.python.org/packages/source/g/guppy/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-# guppy-0.1.9.tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES = CSWpy-guppy
+CATALOGNAME_CSWpy-guppy = py_guppy
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 LICENSE = PKG-INFO
