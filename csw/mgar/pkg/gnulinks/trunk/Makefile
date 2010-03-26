@@ -1,5 +1,5 @@
 GARNAME = gnulinks
-GARVERSION = 1.2
+GARVERSION = 1.3
 CATEGORIES = xtra
 
 VENDOR_URL = http://opencsw.org
