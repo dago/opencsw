@@ -3,7 +3,7 @@ GARVERSION = 2.36
 CATEGORIES = cpan
 AUTHOR = MSERGEANT
 
-DESCRIPTION = a module for parsing XML documents
+DESCRIPTION = A module for parsing XML documents
 define BLURB
   This module provides ways to parse XML documents. It is built on top of
   XML::Parser::Expat, which is a lower level interface to James Clarks expat
