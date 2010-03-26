@@ -38,24 +38,6 @@ _CATEGORY_GSPEC_INCLUDE ?= csw_cpan_dyngspec.gspec
 
 include gar/gar.mk
 
-# Canned commands for finding packlist files
-find_packlist = $(shell find $(1) -type f -name .packlist | head -1)
-find_newest_packlist = $(shell find $(1) -type f -name .packlist -cnewer $(TIMESTAMP))
-
-# Fix package packlist for installation
-PERL_PACKLIST ?= $(call find_newest_packlist $(DESTDIR)$(perlpackroot))
-pre-package:
-	@if test -n "$(PERL_PACKLIST)" && test -f "$(PERL_PACKLIST)" ; then \
-		echo " ==> Fixing Perl Packlist: $(PERL_PACKLIST)" ; \
-		gsed -i -e s,$(DESTDIR),,g $(PERL_PACKLIST) ; \
-	fi
-	@$(MAKECOOKIE)
-
-# Enable scripts to see prereqs
-PERL5LIB  = $(DESTDIR)$(libdir)/perl/csw
-PERL5LIB := $(PERL5LIB):$(DESTDIR)$(datadir)/perl/csw
-export PERL5LIB
-
 CONFIGURE_ENV += PERL5LIB=$(PERL5LIB)
 BUILD_ENV     += PERL5LIB=$(PERL5LIB)
 TEST_ENV      += PERL5LIB=$(PERL5LIB)
