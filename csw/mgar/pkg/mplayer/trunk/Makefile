@@ -1,3 +1,5 @@
+# $Id$
+#
 ##Mplayer and $ISAEXEC makefile example###
 #
 # This makefile has a lot of notes and extra information in it, as I've been
@@ -6,39 +8,94 @@
 
 GARNAME = MPlayer
 GARVERSION = 1.0rc2
-SPKG_REVSTAMP = ,REV=$(shell date '+%Y.%m.%d').rc2
+GARVERSION_Blue = 1.7
 CATEGORIES = apps
 
 DESCRIPTION = MPlayer is a movie player which runs on many systems
 define BLURB
-MPlayer is a movie player which runs on many systems (see the documentation). It plays most MPEG/VOB, AVI, Ogg/OGM, VIVO, ASF/WMA/WMV, QT/MOV/MP4, RealMedia, Matroska, NUT, NuppelVideo, FLI, YUV4MPEG, FILM, RoQ, PVA files, supported by many native, XAnim, and Win32 DLL codecs. You can watch VideoCD, SVCD, DVD, 3ivx, DivX 3/4/5 and even WMV movies..
+
+  MPlayer is a movie player which runs on many systems (see the documentation).
+  It plays most MPEG/VOB, AVI, Ogg/OGM, VIVO, ASF/WMA/WMV, QT/MOV/MP4,
+  RealMedia, Matroska, NUT, NuppelVideo, FLI, YUV4MPEG, FILM, RoQ, PVA files,
+  supported by many native, XAnim, and Win32 DLL codecs. You can watch VideoCD,
+  SVCD, DVD, 3ivx, DivX 3/4/5 and even WMV movies..
+
 endef
 
 MASTER_SITES = http://www3.mplayerhq.hu/MPlayer/releases/ http://www3.mplayerhq.hu/MPlayer/skins/
 
-GARCOMPILER = GNU
+GARCOMPILER = GCC4
 GNU_CC_HOME = /opt/csw/gcc4
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += Blue-1.7.tar.bz2
-DISTFILES += $(call admfiles,CSWmplayer,depend)
+DISTFILES += Blue-$(GARVERSION_Blue).tar.bz2
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+LICENSE = LICENSE
 
-PATCHFILES = fix-configure.diff
+PACKAGES = CSWmplayer
+CATALOGNAME_CSWmplayer = mplayer
+
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+
+RUNTIME_DEP_PKGS_CSWmplayer += CSWaalib
+RUNTIME_DEP_PKGS_CSWmplayer += CSWesound
+RUNTIME_DEP_PKGS_CSWmplayer += CSWfaac
+RUNTIME_DEP_PKGS_CSWmplayer += CSWfconfig
+RUNTIME_DEP_PKGS_CSWmplayer += CSWftype2
+RUNTIME_DEP_PKGS_CSWmplayer += CSWgiflibrt
+RUNTIME_DEP_PKGS_CSWmplayer += CSWglib
+RUNTIME_DEP_PKGS_CSWmplayer += CSWgtk
+RUNTIME_DEP_PKGS_CSWmplayer += CSWiconv
+RUNTIME_DEP_PKGS_CSWmplayer += CSWjpeg
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlame
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibmad
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibogg
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibx11
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibxext
+RUNTIME_DEP_PKGS_CSWmplayer += CSWlibxt
+RUNTIME_DEP_PKGS_CSWmplayer += CSWmesa
+RUNTIME_DEP_PKGS_CSWmplayer += CSWnas
+RUNTIME_DEP_PKGS_CSWmplayer += CSWncurses
+RUNTIME_DEP_PKGS_CSWmplayer += CSWopenal
+RUNTIME_DEP_PKGS_CSWmplayer += CSWpng
+RUNTIME_DEP_PKGS_CSWmplayer += CSWspeex
+RUNTIME_DEP_PKGS_CSWmplayer += CSWtheora
+RUNTIME_DEP_PKGS_CSWmplayer += CSWzlib
+
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWmplayer)
+BUILD_DEP_PKGS += CSWgnulinks
+
+PATCHFILES  = fix-configure.diff
 PATCHFILES += fix-libavcodec-gcc-bug.diff
 PATCHFILES += fix-manpage-macros.diff
 PATCHFILES += sparc-v8-novis.diff
 #Sol8 only PATCHFILES += stdint-wrapper.diff
 
-CONFIGURE_ARGS  = --prefix=/opt/csw
-CONFIGURE_ARGS += --with-extraincdir=/usr/X11/include
-CONFIGURE_ARGS += --with-extraincdir=/usr/include
+UNWANTED_CONF_ARGS = --sysconfdir=/opt/csw/etc --sbindir=/opt/csw/sbin --exec_prefix=/opt/csw --libexecdir=/opt/csw/libexec
+UNWANTED_CONF_ARGS += --sharedstatedir=/opt/csw/share
+UNWANTED_CONF_ARGS += --localstatedir=/opt/csw/var
+UNWANTED_CONF_ARGS += --infodir=/opt/csw/share/info
+UNWANTED_CONF_ARGS += --includedir=/opt/csw/include
+UNWANTED_CONF_ARGS += --sbindir=/opt/csw/sbin/amd64
+UNWANTED_CONF_ARGS += --libexecdir=/opt/csw/libexec/amd64
+
+CONFIGURE_ARGS  = $(filter-out $(UNWANTED_CONF_ARGS),$(DIRPATHS))
+CONFIGURE_ARGS += --with-extraincdir=/opt/csw/X11/include
 CONFIGURE_ARGS += --mandir=$(BUILD_PREFIX)/share/man
 CONFIGURE_ARGS += --enable-gui
 CONFIGURE_ARGS += --disable-win32dll
 CONFIGURE_ARGS += --disable-libvorbis #Having trouble compiling it
+
+NO_MMX_ARGS += --disable-sse
+NO_MMX_ARGS += --disable-sse2
+NO_MMX_ARGS += --disable-ssse3
+NO_MMX_ARGS += --disable-mmx
+NO_MMX_ARGS += --disable-mmxext
+CONFIGURE_ARGS_isa-i386  += $(NO_MMX_ARGS)
+CONFIGURE_ARGS_isa-amd64 += $(NO_MMX_ARGS)
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
 #CONFIGURE_ARGS += --disable-libcdio
 #CONFIGURE_ARGS += --disable-iconv #Solaris libc has iconv already
 
@@ -49,6 +106,11 @@ ifeq ($(shell uname -p),sparc)
 CONFIGURE_ARGS += --disable-openal 
 CONFIGURE_ARGS += --disable-gl
 endif
+
+# Fails in amd64
+# BUILD64 = 1
+
+TEST_SCRIPTS =
 
 ###Framework for an $ISAEXEC optimised build###
 # To allow for the same build to run multiple times without each version
@@ -142,13 +204,13 @@ endif
 # In theory, I should be able to just use the first string in $ISATARGET.
 # Need to work out if Makefiles support this function.
 
-ifeq ($(shell uname -p),i386)
- ISATARGETS ?= pentium pentium-mmx pentium2
- BASEISA ?= pentium
-else
- ISATARGETS ?= v8 ultrasparc ultrasparc3
- BASEISA ?= v8
-endif
+# ifeq ($(shell uname -p),i386)
+#  ISATARGETS ?= pentium pentium-mmx pentium2
+#  BASEISA ?= pentium
+# else
+#  ISATARGETS ?= v8 ultrasparc ultrasparc3
+#  BASEISA ?= v8
+# endif
 
 # Mapping
 # Do Makefiles have a concept of a hash table for matching these?
@@ -158,49 +220,53 @@ endif
 # pentium_pro+mmx=pentium2
 # 64-bit is athlon=amd64 but I expect -m64 will be what we're after.
 
-#If statement for gcc needed here!
-pentium_dir 	= pentium
-pentium-mmx_dir = pentium+mmx
-pentium2_dir 	= pentium_pro+mmx
+## #If statement for gcc needed here!
+## pentium_dir 	= pentium
+## pentium-mmx_dir = pentium+mmx
+## pentium2_dir 	= pentium_pro+mmx
+## 
+## #Sparc
+## v8_dir 	= sparcv8
+## # ?? 	= sparcv8plus
+## # ?? 	= sparcv8plus+vis
+## ultrasparc_dir 	= sparcv9
+## ultrasparc3_dir	= sparcv9+vis
+## #v9_dir	= sparcv9+vis2 
 
-#Sparc
-v8_dir 	= sparcv8
-# ?? 	= sparcv8plus
-# ?? 	= sparcv8plus+vis
-ultrasparc_dir 	= sparcv9
-ultrasparc3_dir	= sparcv9+vis
-#v9_dir	= sparcv9+vis2 
 
-
-ISAEXEC_DIR = $($(ISA)_dir)
+# ISAEXEC_DIR = $($(ISA)_dir)
 
 # If you just typed gmake, this will build the stardard BASEISA build.
 # For a single optimised build use gmake ISA=your-target-here.
 # For all optimised versions ($ISAEXEC), use gmake optbuild 
-ISA ?= $(BASEISA)
+# ISA ?= $(BASEISA)
 
 #Which binaries do you want to use $ISAEXEC for?
 # Note: These must be the full paths!
-ISAEXEC_BINS = opt/csw/bin/mplayer opt/csw/bin/mencoder
+# ISAEXEC_BINS = opt/csw/bin/mplayer opt/csw/bin/mencoder
 
 
 # Inclue all standard GAR variables and functionality from here onward:
 include gar/category.mk
 
 # See earlier, we needed to set this VAR _after_ the category.mk include
-BASE_DESTDIR :=$(DESTDIR)-$(BASEISA)
-DESTDIR := $(DESTDIR)-$(ISA)
+# BASE_DESTDIR :=$(DESTDIR)-$(BASEISA)
+# DESTDIR := $(DESTDIR)-$(ISA)
 
 ####Mplayer specific optimisation notes####
 
 # Mplayer uses -mtune, not -march
 
-# Compiler options 
-ifeq ($(GARCH),i386)
- CFLAGS = -O2 -pipe -mtune=$(ISA)
-else # I.E sparc
-CFLAGS = -O2 -pipe -mcpu=$(ISA)
-endif
+## # Compiler options 
+## ifeq ($(GARCH),i386)
+## ifeq ($(ISA),amd64)
+## CFLAGS = -O2 -pipe -mtune=opteron
+## else
+## CFLAGS = -O2 -pipe -mtune=$(ISA)
+## endif
+## else # I.E sparc
+## CFLAGS = -O2 -pipe -mcpu=$(ISA)
+## endif
 
 #CPPFLAGS = $(CFLAGS)
 #CXXFLAGS = $(CFLAGS)
@@ -226,21 +292,21 @@ showvars:
 # to build a package at the end. Actually, no, I just define it manually...
 # I've created a full-package: target which runs $(FULL_PACKAGE). This will be the final step
 
-PLAIN_PACKAGE := $(POST_INSTALL_TARGETS)
-POST_INSTALL_TARGETS := strip fixconfig
+# PLAIN_PACKAGE := $(POST_INSTALL_TARGETS)
+# POST_INSTALL_TARGETS := strip fixconfig
 
 # This is the main target used by this Makefile for creating $ISAEXEC format pkgs.
 # This for loop is very important for handling the $DESTDIR var as it applies in
 # the post-install steps (I.E the ISA-specific dirs)
 
-optbuild:
-	(for TARGET in $(ISATARGETS); do \
-	gmake -e ISA=$$TARGET build only-install; done)
+# optbuild:
+# 	(for TARGET in $(ISATARGETS); do \
+# 	gmake -e ISA=$$TARGET build only-install; done)
 
 
 # This target is copied from gar.pkg.mk, just with $(POST_INSTALL_TARGETS) stripped
 # from the end. This prevents the install target from kicking off the packaging step.
-only-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) isa-post-install
+# only-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install $(INSTALL_TARGETS) isa-post-install
 
 
 ###Tidy ups and files below
@@ -249,10 +315,7 @@ only-install:  $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test $(INSTALL_DIRS) $
 # Finally, merge in all the optimised binaries
 
 #Isaexec version
-isa-post-install: skins fonts merge-opt-bins
-
-#Standard package version
-post-install: skins fonts
+post-install-modulated: skins fonts merge-opt-bins
 
 #### Skins, Fonts, Codecs and below all need to be run from optbuild to inherit
 #	the expanded $(DESTDIR) variable which includes their expanded path
@@ -261,8 +324,8 @@ post-install: skins fonts
 
 
 skins:
-	(mkdir -p $(DESTDIR)$(BUILD_PREFIX)/share/mplayer/skins/default)
-	(cp -r $(WORKSRC)/../Blue/* $(DESTDIR)$(BUILD_PREFIX)/share/mplayer/skins/default)
+	ginstall -m 755 -d $(DESTDIR)$(datadir)/mplayer/skins/default
+	(cp -r $(WORKSRC)/../Blue/* $(DESTDIR)$(datadir)/mplayer/skins/default)
 
 fonts:
 	(ln -f -s /usr/openwin/lib/X11/fonts/TrueType/Arial.ttf $(DESTDIR)$(BUILD_PREFIX)/share/mplayer/subfont.ttf)
@@ -277,37 +340,10 @@ merge-opt-bins:
 	(mkdir -p $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR))
 	(cd $(DESTDIR); if test ! -f $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR)/* ; then mv $(ISAEXEC_BINS) $(BASE_DESTDIR)$(BUILD_PREFIX)/bin/$(ISAEXEC_DIR); fi )
 
-	
-
-# This sets up the protype file correctly, but you'll have to do the depend manually.
-# In Mplayer's case, I have to hard code the filename, as the tarball has it
-# as "MPlayer", not "mplayer", so I can't simply use $(GARNAME)
-#
-
-#Should be able to use the ISA_BINS var here, maybe a foreach loop?
-isa-post-package:
-	@echo " ===> Starting Mplayer post-package phase <==="
-	@if test ! -f  $(COOKIEDIR)/post-package ; then \
-	echo "l none /opt/csw/bin/mplayer=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype; \
-	echo "l none /opt/csw/bin/mencoder=isaexec" >> $(WORKSRC)/../CSWmplayer.prototype; \
-	touch $(COOKIEDIR)/post-package; fi
-	#Sneaky wrapper to re-run package-create with our newly added isaexecs!
-	rm $(COOKIEDIR)/package-create
-	@echo " Running gmake package-create for a second time"
-	gmake package-create
-
-
-#A edited packaging target that doesn't re-run all the install steps.
-only-package:
-	gmake pre-package package-create isa-post-package package-check
-
-
-#The whole shabang! Start to finish, in one line: gmake all-in-one
-all-in-one: optbuild only-package
-
-
 ###not yet implemented, mplayer specific
 ## --enable-runtime-cpudetection allows the binary to run anywhere, use for i386?
 #run-anywhere-build:
 #	(gmake ISA=pentium)
 #CONFIGURE_ARGS += --enable-runtime-cpudetection
+
+PATH := /opt/csw/gnu:$(PATH)
