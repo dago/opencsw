@@ -30,12 +30,14 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
           BAD_COMBINATIONS = (
               ("/opt/csw/lib", "libdb-4.7.so", "Deprecated Berkeley DB location"),
           )
+          logger.debug("Checking deprecated library locations.")
           for bad_path, bad_soname, msg in BAD_COMBINATIONS:
             # print "resolved_path == bad_path", resolved_path, bad_path, resolved_path == bad_path
             # print "soname == bad_soname", soname, bad_soname, soname == bad_soname
             if resolved_path == bad_path and soname == bad_soname:
               logger.debug("Bad lib found: %s/%s", bad_path, bad_soname)
               error_mgr.ReportError(
+                  pkgname,
                   "deprecated-library",
                   "%s %s %s/%s" % (binary_info["path"], msg, resolved_path, soname))
           required_deps.append((req_pkg, reason))

@@ -657,7 +657,7 @@ class CheckpkgManagerBase(object):
         if "package-set" not in errors:
           errors["package-set"] = []
         errors["package-set"].append(error)
-    return a_dict
+    return errors
 
   def GetOptimizedAllStats(self, stats_obj_list):
     pkgs_data = []
@@ -798,23 +798,9 @@ class CheckpkgManager2(CheckpkgManagerBase):
     if self.debug:
       logging_level = logging.DEBUG
     pkgmap = SystemPkgmap()
-
-    # TODO: In order to process all the catalog, and load them all into the
-    # memory, we need to store them more efficiently.  Currently, the process
-    # grows up to 9GB of RAM usage, and it doesn't end there.  Some ideas how to
-    # use less RAM:
-    # - some values (tuples, lists) repeat, and there's no need to store
-    #   all the copies. Instead, store references.  (the Flyweight design
-    #   pattern)
-    # - enclose data loading in a separate function, which will merge data
-    #   from all the packages.
-    # 
-    # In other words, the following line needs to be smart:
-    # pkgs_data = [x.GetAllStats() for x in stats_obj_list]
     logging.debug("Loading all package statistics.")
     pkgs_data = self.GetOptimizedAllStats(stats_obj_list)
     logging.debug("All package statistics loaded.")
-
     # Individual checks
     for pkg_data in pkgs_data:
       pkgname = pkg_data["basic_stats"]["pkgname"]
