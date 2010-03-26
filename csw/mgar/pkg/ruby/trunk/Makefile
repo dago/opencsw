@@ -99,6 +99,9 @@ MERGE_EXCLUDE_STATICLIBS =
 
 COMPILE_ELISP = 1
 
+EXTRA_INC = $(prefix)/X11/include
+EXTRA_LIB = $(prefix)/X11/lib
+
 ifdef USEGCC
 GARCOMPILER = GNU
 RUNTIME_DEP_PKGS_CSWruby += CSWgcc4corert
