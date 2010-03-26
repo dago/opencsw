@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = imapproxy
-GARVERSION = 1.2.6
+GARVERSION = 1.2.7
 CATEGORIES = server
 
 DESCRIPTION = A caching IMAP proxy server
@@ -29,8 +29,9 @@ PACKAGES = CSWimapproxy
 
 RUNTIME_DEP_PKGS  = CSWtcpwrap 
 RUNTIME_DEP_PKGS += CSWosslrt 
-RUNTIME_DEP_PKGS += CSWcswclassutils
 
+# adding configuration handling classes
+SPKG_CLASSES = none cswpreserveconf cswinitsmf
 
 
 ###### Upstream and opencsw files information #######
@@ -41,12 +42,12 @@ MASTER_SITES = http://www.imapproxy.org/downloads/
 UFILES_REGEX = up-$(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES  = up-$(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWimapproxy.prototype
 DISTFILES += imapproxy.conf
 DISTFILES += changelog.CSW README.CSW
 # init and smf stuffs
-DISTFILES += cswimapproxy.init cswimapproxy.xml svc-cswimapproxy
-DISTFILES += i.smf r.smf
+DISTFILES += cswimapproxy.init cswimapproxy.xml
+
+DISTNAME = up-$(GARNAME)-$(GARVERSION)
 
 # imapproxy lacks include of openssl/md5.h
 # PATCHFILES += md5_include.patch
@@ -59,13 +60,7 @@ PATCHFILES += conf_file_location.patch
 # imapproxy makefile
 PATCHFILES += destdir.patch
 
-
 ##### Build and installation information #####
-
-# files are extracted in up-imapproxy-version 
-# not imapproxy-version
-WORKSRC = $(WORKDIR)/up-$(GARNAME)-$(GARVERSION)
-WORKSRC_FIRSTMOD = $(WORKDIR_FIRSTMOD)/up-$(GARNAME)-$(GARVERSION)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -82,6 +77,7 @@ post-merge:
 	ginstall -D $(WORKSRC_FIRSTMOD)/README.known_issues $(PKGROOT)$(docdir)/$(GARNAME)/README.known_issues
 	ginstall -D $(WORKSRC_FIRSTMOD)/README.ssl $(PKGROOT)$(docdir)/$(GARNAME)/README.ssl
 	ginstall -D $(WORKDIR_FIRSTMOD)/imapproxy.conf $(PKGROOT)$(sysconfdir)/imapproxy.conf.CSW
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswimapproxy.xml"
 	@$(MAKECOOKIE)
 
 
