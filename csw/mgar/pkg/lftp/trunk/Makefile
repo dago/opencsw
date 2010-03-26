@@ -42,13 +42,20 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWlftp.prototype
 DISTFILES += changelog.CSW
 
-
-##### Build and installation information #####
-
 # do some type conversion before munmap call
 # so lftp can be compiled with sun cc 
 # (patch only mandatory to compile with gnutls)
 #PATCHFILES = munmap.patch
+
+# Sun Studio 12 cc supports the __restrict__ keyword
+# but CC doesn't, that disturbs autoconf.
+# so we have to apply the following modification to 
+# lftp-provided autoconf m4 macros
+# http://git.savannah.gnu.org/cgit/autoconf.git/commit/?id=aa30765d64d4a50ad7ce83e78b5699223571ef36
+PATCHFILES += sun_cc_no_restrict.patch
+
+##### Build and installation information #####
+
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # previous maintainer compiled with openssl
