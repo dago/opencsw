@@ -1,3 +1,4 @@
 5bc881a13c106b1c97f2137ff1755817  CSWlftp.prototype
-7b975100c5923f126f82db6c5acb1da3  changelog.CSW
+9762d1259c88dd7dac2f9206a39e7cf5  changelog.CSW
 42f31ca6b10d7bc4e9cd7408b476ee9b  lftp-4.0.6.tar.gz
+1a9dd9857cef5453fc14102dbc2e7713  sun_cc_no_restrict.patch
