@@ -1,5 +1,5 @@
 GARNAME = libvorbis
-GARVERSION = 1.2.3
+GARVERSION = 1.3.1
 CATEGORIES = lib
 
 DESCRIPTION = Vorbis codec library.
@@ -23,7 +23,7 @@ BUILD64 = 1
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-EXTRA_LD_FLAGS = -L$(libdir) -lsunmath
+EXTRA_LD_FLAGS = -L$(libdir) -lsunmath -lm
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
