@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = lftp
-GARVERSION = 4.0.5
+GARVERSION = 4.0.6
 CATEGORIES = net
 
 DESCRIPTION = sophisticated command-line ftp/http client
@@ -53,7 +53,7 @@ DISTFILES += changelog.CSW
 CONFIGURE_ARGS = $(DIRPATHS)
 # previous maintainer compiled with openssl
 # instead of gnutls, no need to change that
-CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
+#CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 
 TEST_SCRIPTS =
 
