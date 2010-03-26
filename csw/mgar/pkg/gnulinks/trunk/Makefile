@@ -8,7 +8,7 @@ GLINKPKGS = CSWdiffutils CSWggettext CSWggettextrt CSWbison CSWbinutils
 GLINKPKGS += CSWgawk CSWgsed CSWggetopt CSWfindutils
 GLINKPKGS += CSWgmake CSWgpatch CSWgm4 CSWgwhois CSWgtar
 GLINKPKGS += CSWshutils CSWgfile CSWtextutils
-BUILD_DEP_PKGS = $(GLINKPKGS) CSWpkgutil
+BUILD_DEP_PKGS = $(GLINKPKGS) CSWpkgutil CSWbash
 
 DESCRIPTION = Creates native symlinks for GNU tools in /opt/csw/gnu
 define BLURB
@@ -17,20 +17,38 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.opencsw.org
-DISTFILES = CSWgnulinks.prototype
 DISTFILES += COPYING
 
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = 
-INSTALL_SCRIPTS = 
+INSTALL_SCRIPTS = custom
 TEST_SCRIPTS =
 
 ARCHALL = 1
 
+SHELL = /opt/csw/bin/bash
+
 include gar/category.mk
 
+pre-build-modulated:
+	@(cd $(WORKSRC); cp ../COPYING .; )
 
+install-custom:
+	@mkdir -p $(DESTDIR)
+	( cd $(DESTDIR); pwd; mkdir -p opt/csw/gnu; cd opt/csw/gnu; pwd; \
+		for p in $(GLINKPKGS); do \
+			echo Creating links for $$p; \
+			for f in $$(pkgutil -L $$p | grep /opt/csw/bin/g); do \
+				base=$$(basename $$f); \
+				basenog=$${base/g/}; \
+				gln -sf ../bin/$$base $$basenog; \
+			done; \
+		done; \
+		rm -f descriptions* catalog* )
+	@$(MAKECOOKIE)
 
+# this shouldn't be used now, but is helpful if you ever want to
+# generate a manual prototype file for this package
 newproto:
 	@echo Generating new prototype...
 	@( { echo /opt/csw/gnu;  \
