@@ -34,6 +34,8 @@ SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/bash/bashtop.html
 
 SPKG_CLASSES = none build
 
+CHECKPKG_OVERRIDES_CSWbash += surplus-dependency|CSWtexinfo
+
 ###### Upstream and opencsw files information #######
 
 # We define upstream file regex so we can be notifed of new upstream software release
