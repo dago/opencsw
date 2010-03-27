@@ -28,6 +28,7 @@ PACKAGES = CSWbash
 
 RUNTIME_DEP_PKGS = CSWggettextrt
 RUNTIME_DEP_PKGS += CSWiconv
+RUNTIME_DEP_PKGS += CSWtexinfo
 
 SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/bash/bashtop.html
 
