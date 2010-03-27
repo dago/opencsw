@@ -28,7 +28,6 @@ PACKAGES = CSWbash
 
 RUNTIME_DEP_PKGS = CSWggettextrt
 RUNTIME_DEP_PKGS += CSWiconv
-RUNTIME_DEP_PKGS += CSWtexinfo
 
 SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/bash/bashtop.html
 
@@ -103,3 +102,4 @@ post-merge:
 	done )
 	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(GARNAME)/changelog.CSW
 	ginstall -D $(WORKDIR_FIRSTMOD)/shells $(PKGROOT)/etc/shells
+	rm -f $(PKGROOT)/$(infodir)/bash.info
