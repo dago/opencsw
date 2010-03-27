@@ -1,0 +1,60 @@
+diff -Naur tcl8.5.7.orig/unix/configure tcl8.5.7.patched/unix/configure
+--- tcl8.5.7.orig/unix/configure	2009-04-15 21:30:05.000000000 +0200
++++ tcl8.5.7.patched/unix/configure	2009-08-19 17:28:51.563281904 +0200
+@@ -8424,7 +8424,7 @@
+ 
+ 
+ else
+-  if test "$arch" = "amd64 i386"; then
++  if test "$arch" = "amd64"; then
+ 
+ 		    if test "$GCC" = yes; then
+ 
+@@ -8475,7 +8475,7 @@
+ 		arch=`isainfo`
+ 		echo "$as_me:$LINENO: checking whether to use -lsunmath for fp rounding control" >&5
+ echo $ECHO_N "checking whether to use -lsunmath for fp rounding control... $ECHO_C" >&6
+-		if test "$arch" = "amd64 i386"; then
++		if test "$arch" = "amd64" -o "$arch" = "i386"; then
+ 
+ 			echo "$as_me:$LINENO: result: yes" >&5
+ echo "${ECHO_T}yes" >&6
+@@ -8658,7 +8658,7 @@
+ 			#CC_SEARCH_FLAGS="${CC_SEARCH_FLAGS},-R,$v9gcclibdir"
+ 
+ else
+-  if test "$arch" = "amd64 i386"; then
++  if test "$arch" = "amd64"; then
+ 
+ 			SHLIB_LD="$SHLIB_LD -m64 -static-libgcc"
+ 
+diff -Naur tcl8.5.7.orig/unix/tcl.m4 tcl8.5.7.patched/unix/tcl.m4
+--- tcl8.5.7.orig/unix/tcl.m4	2009-04-15 21:30:05.000000000 +0200
++++ tcl8.5.7.patched/unix/tcl.m4	2009-08-19 17:30:12.073868365 +0200
+@@ -1920,7 +1920,7 @@
+ 			# Solaris 64 uses this as well
+ 			#LD_LIBRARY_PATH_VAR="LD_LIBRARY_PATH_64"
+ 		    ])
+-		], [AS_IF([test "$arch" = "amd64 i386"], [
++		], [AS_IF([test "$arch" = "amd64"], [
+ 		    AS_IF([test "$GCC" = yes], [
+ 			case $system in
+ 			    SunOS-5.1[[1-9]]*|SunOS-5.[[2-9]][[0-9]]*)
+@@ -1951,7 +1951,7 @@
+ 	    AS_IF([test "$GCC" = yes],[use_sunmath=no],[
+ 		arch=`isainfo`
+ 		AC_MSG_CHECKING([whether to use -lsunmath for fp rounding control])
+-		AS_IF([test "$arch" = "amd64 i386"], [
++		AS_IF([test "$arch" = "amd64" -o "$arch" = "i386"], [
+ 			AC_MSG_RESULT([yes])
+ 			MATH_LIBS="-lsunmath $MATH_LIBS"
+ 			AC_CHECK_HEADER(sunmath.h)
+@@ -1982,7 +1982,7 @@
+ 			# path, remove so name and append 'sparcv9'
+ 			#v9gcclibdir="`gcc -print-file-name=libgcc_s.so` | ..."
+ 			#CC_SEARCH_FLAGS="${CC_SEARCH_FLAGS},-R,$v9gcclibdir"
+-		    ], [AS_IF([test "$arch" = "amd64 i386"], [
++		    ], [AS_IF([test "$arch" = "amd64"], [
+ 			SHLIB_LD="$SHLIB_LD -m64 -static-libgcc"
+ 		    ])])
+ 		])
