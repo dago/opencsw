@@ -1,3 +1,9 @@
+bash (4.1.04,REV=2010.03.27) unstable
+
+  * Added bash patches bash41-003 and bash41-005.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 27 Mar 2010 13:57:16 +0100
+
 bash (4.1.02,REV=2010.03.13) unstable
 
   * Added bash patches bash41-001 and bash41-002.
