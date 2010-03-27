@@ -222,6 +222,11 @@ class CheckpkgTagsUnitTest(unittest.TestCase):
     self.assertEquals(("CSWfoo", "foo-tag", "foo-info1 foo-info2"),
                       checkpkg.ParseTagLine(line))
 
+  def testParseTagLine_WithUrl(self):
+    line = "CSWfoo: tag-with-an-url http://www.example.com/"
+    self.assertEquals(("CSWfoo", "tag-with-an-url", "http://www.example.com/"),
+                      checkpkg.ParseTagLine(line))
+
 
 class ParseOverrideLineUnitTest(unittest.TestCase):
   

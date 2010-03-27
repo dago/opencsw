@@ -833,7 +833,7 @@ def ParseTagLine(line):
   """
   level_1 = line.strip().split(":")
   if len(level_1) > 1:
-    data_1 = level_1[1]
+    data_1 = ":".join(level_1[1:])
     pkgname = level_1[0]
   else:
     data_1 = level_1[0]
