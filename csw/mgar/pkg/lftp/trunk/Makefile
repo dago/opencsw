@@ -54,13 +54,15 @@ DISTFILES += changelog.CSW
 # http://git.savannah.gnu.org/cgit/autoconf.git/commit/?id=aa30765d64d4a50ad7ce83e78b5699223571ef36
 PATCHFILES += sun_cc_no_restrict.patch
 
+PATCHFILES += dont_use_csw_getopt_h.patch
+
 ##### Build and installation information #####
 
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # previous maintainer compiled with openssl
 # instead of gnutls, no need to change that
-#CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
+CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 
 TEST_SCRIPTS =
 
