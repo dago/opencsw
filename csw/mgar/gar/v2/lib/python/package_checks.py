@@ -49,13 +49,28 @@ MAX_PKGNAME_LENGTH = 20
 ARCH_LIST = ["sparc", "i386", "all"]
 VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
 DO_NOT_LINK_AGAINST_THESE_SONAMES = set(["libX11.so.4"])
-DISCOURAGED_FILE_PATTERNS = (r"\.py[co]$",)
-BAD_RPATH_LIST = [
-    r'/opt/csw/lib/mysql/lib',
-    r'/opt/csw/lib/mysql/lib/sparcv9',
-    r'/opt/csw/lib/\$ISALIST',
-    r'/opt/csw/lib/$$ISALIST',
-    r'/opt/csw/lib/SALIST',
+DISCOURAGED_FILE_PATTERNS = (
+    r"\.py[co]$",
+    r"/lib\w+\.l?a$",
+)
+RPATH_PARTS = {
+    'prefix': r"(?P<prefix>/opt/csw)",
+    'prefix_extra': r"(?P<prefix_extra>(/(?!lib)[\w-]+)*)",
+    'subdirs': r"(?P<subdirs>(/(?!-R)[\w\-\.]+)*)",
+    'isalist': r"(?P<isalist>/(\$ISALIST|64))",
+    'subdir2': r"(?P<subdir2>/[\w\-\.]+)",
+}
+RPATH_WHITELIST = [
+    ("^"
+     "%(prefix)s"
+     "%(prefix_extra)s"
+     "/(lib|libexec)"
+     "%(subdirs)s"
+     "%(isalist)s?"
+     "%(subdir2)s?"
+     "$") % RPATH_PARTS,
+    r"^\$ORIGIN$",
+    r"^/usr(/(ccs|dt|openwin))?/lib(/sparcv9)?$",
 ]
 # Check ldd -r only for Perl modules
 SYMBOLS_CHECK_ONLY_FOR = r"^CSWpm.*$"
@@ -490,9 +505,10 @@ def CheckDisallowedPaths(pkg_data, error_mgr, logger):
     if pkgname != pkg_data["basic_stats"]["pkgname"]:
       disallowed_paths = set(paths_only_allowed_in[pkgname])
       intersection = disallowed_paths.intersection(paths_in_pkg)
-      logger.debug("Bad paths found: %s", intersection)
-      for bad_path in intersection:
-        error_mgr.ReportError("disallowed-path", bad_path)
+      if intersection:
+        logger.debug("Bad paths found: %s", intersection)
+        for bad_path in intersection:
+          error_mgr.ReportError("disallowed-path", bad_path)
 
 
 def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger):
@@ -528,13 +544,27 @@ def CheckPkgchk(pkg_data, error_mgr, logger):
       logger.warn(line)
 
 def CheckRpath(pkg_data, error_mgr, logger):
-  # for bad_rpath in BAD_RPATH_LIST:
-  bad_rpath_set = set(BAD_RPATH_LIST)
+  regex_whitelist = [re.compile(x) for x in RPATH_WHITELIST]
   for binary_info in pkg_data["binaries_dump_info"]:
-    for actual_rpath in binary_info["runpath"]:
-      if actual_rpath in bad_rpath_set:
-        error_mgr.ReportError("bad-rpath-entry",
-                              "%s %s" % (binary_info["path"], actual_rpath))
+    actual_rpaths = binary_info["runpath"]
+    matching = []
+    not_matching = []
+    for rpath in actual_rpaths:
+      matched = False
+      for white_re in regex_whitelist:
+        m = white_re.match(rpath)
+        if m:
+          matching.append((rpath, m.groupdict()))
+          matched = True
+          break
+      if matched:
+        matching.append(rpath)
+      else:
+        not_matching.append(rpath)
+
+    for bad in sorted(not_matching):
+      logger.debug("Bad rpath: %s", bad)
+      error_mgr.ReportError("bad-rpath-entry", bad)
 
 
 def DisabledCheckForMissingSymbols(pkgs_data, debug):
@@ -575,21 +605,28 @@ def DisabledCheckForMissingSymbols(pkgs_data, debug):
   return errors
 
 
-def CheckForMissingSymbolsDumb(pkg_data, error_mgr, logger):
+def DisableCheckForMissingSymbolsDumb(pkg_data, error_mgr, logger):
   """Analyzes missing symbols reported by ldd -r.
 
-  Only makes sense for perl modules.
+  So far only made sense for perl modules.  Disables because it falls over on
+  big KDE packages.
   """
   pkgname = pkg_data["basic_stats"]["pkgname"]
   if not re.match(SYMBOLS_CHECK_ONLY_FOR, pkgname):
     return
-  found = False
+  symbol_not_found_was_seen = False
+  relocation_was_seen = False
   for binary_info in pkg_data["binaries_dump_info"]:
     for ldd_elem in pkg_data["ldd_dash_r"][binary_info["path"]]:
-      if ldd_elem["state"] == "symbol-not-found":
+      if not symbol_not_found_was_seen and ldd_elem["state"] == "symbol-not-found":
         error_mgr.ReportError("symbol-not-found",
                               "e.g. %s misses %s" % (binary_info["path"], ldd_elem["symbol"]))
-        found = True
-        break
-    if found:
-      break
+        symbol_not_found_was_seen = True
+      if (not relocation_was_seen
+            and
+          ldd_elem["state"] == 'relocation-bound-to-a-symbol-with-STV_PROTECTED-visibility'):
+        error_mgr.ReportError(ldd_elem["state"],
+            "e.g. symbol: %s file: %s "
+            "relocation bound to a symbol with STV_PROTECTED visibility"
+            % (ldd_elem["symbol"], ldd_elem["path"]))
+

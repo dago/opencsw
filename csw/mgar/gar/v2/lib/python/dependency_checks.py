@@ -3,6 +3,14 @@
 import checkpkg
 import re
 
+DEPRECATED_LIBRARY_LOCATIONS = (
+    ("/opt/csw/lib", "libdb-4.7.so", "Deprecated Berkeley DB location"),
+    ("/opt/csw/lib/mysql", "libmysqlclient_r.so.15",
+     "Please use /opt/csw/mysql5/..."),
+    ("/opt/csw/lib/mysql", "libmysqlclient.so.15",
+     "Please use /opt/csw/mysql5/..."),
+)
+
 def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
   pkgname = pkg_data["basic_stats"]["pkgname"]
   logger.debug("Package %s", pkgname)
@@ -25,15 +33,8 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
               resolved_path, path_and_pkg_by_soname[soname][resolved_path])
           resolved = True
           req_pkg = path_and_pkg_by_soname[soname][resolved_path][-1]
-          # TODO: Throw an error when /opt/csw/lib/libdb-4.7.so gets resolved
           reason = "provides %s/%s needed by %s" % (resolved_path, soname, binary_info["path"])
-          BAD_COMBINATIONS = (
-              ("/opt/csw/lib", "libdb-4.7.so", "Deprecated Berkeley DB location"),
-          )
-          logger.debug("Checking deprecated library locations.")
-          for bad_path, bad_soname, msg in BAD_COMBINATIONS:
-            # print "resolved_path == bad_path", resolved_path, bad_path, resolved_path == bad_path
-            # print "soname == bad_soname", soname, bad_soname, soname == bad_soname
+          for bad_path, bad_soname, msg in DEPRECATED_LIBRARY_LOCATIONS:
             if resolved_path == bad_path and soname == bad_soname:
               logger.debug("Bad lib found: %s/%s", bad_path, bad_soname)
               error_mgr.ReportError(

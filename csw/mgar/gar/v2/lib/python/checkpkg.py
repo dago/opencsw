@@ -938,7 +938,7 @@ class PackageStats(object):
       # "defined_symbols",
       "depends",
       "isalist",
-      "ldd_dash_r",
+      # "ldd_dash_r",
       "overrides",
       "pkgchk",
       "pkginfo",
@@ -1179,8 +1179,8 @@ class PackageStats(object):
     self.DumpObject(self.GetPkgchkData(), "pkgchk")
     self.DumpObject(dir_pkg.GetParsedPkginfo(), "pkginfo")
     self.DumpObject(dir_pkg.GetPkgmap().entries, "pkgmap")
-    # To be used with Perl modules
-    self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
+    # The ldd -r reporting breaks on bigger packages during yaml saving.
+    # self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
     # This check is currently disabled, let's save time by not collecting
     # these data.
     # self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
@@ -1243,7 +1243,12 @@ class PackageStats(object):
     symbol_not_found_re = r"^\tsymbol not found:\s(?P<symbol>\S+)\s+\((?P<path_not_found>\S+)\)"
     only_so = r"^\t(?P<path_only>\S+)$"
     version_so = r'^\t(?P<soname_version_not_found>\S+) \((?P<lib_name>\S+)\) =>\t \(version not found\)'
-    common_re = r"(%s|%s|%s|%s)" % (found_re, symbol_not_found_re, only_so, version_so)
+    stv_protected = (r'^\trelocation \S+ symbol: (?P<relocation_symbol>\S+): '
+                     r'file (?P<relocation_path>\S+): '
+                     r'relocation bound to a symbol with STV_PROTECTED visibility$')
+    common_re = (r"(%s|%s|%s|%s|%s)"
+                 % (found_re, symbol_not_found_re, only_so, version_so,
+                    stv_protected))
     m = re.match(common_re, line)
     response = {}
     if m:
@@ -1269,10 +1274,17 @@ class PackageStats(object):
         response["soname"] = d["soname_version_not_found"]
         response["path"] = None
         response["symbol"] = None
+      elif d["relocation_symbol"]:
+        response["state"] = 'relocation-bound-to-a-symbol-with-STV_PROTECTED-visibility'
+        response["soname"] = None
+        response["path"] = d["relocation_path"]
+        response["symbol"] = d["relocation_symbol"]
       else:
-        raise StdoutSyntaxError("Could not parse %s" % repr(line))
+        raise StdoutSyntaxError("Could not parse %s with %s"
+                                % (repr(line), common_re))
     else:
-      raise StdoutSyntaxError("Could not parse %s" % repr(line))
+      raise StdoutSyntaxError("Could not parse %s with %s"
+                              % (repr(line), common_re))
     return response
 
 

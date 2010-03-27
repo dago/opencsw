@@ -379,6 +379,18 @@ class PackageStatsUnitTest(unittest.TestCase):
     }
     self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
 
+  def test_ParseLdd_StvProtectedVisibility(self):
+    line = ('\trelocation R_SPARC_COPY symbol: ASN1_OCTET_STRING_it: '
+            'file /opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.8: '
+            'relocation bound to a symbol with STV_PROTECTED visibility')
+    expected = {
+        'symbol': 'ASN1_OCTET_STRING_it',
+        'soname': None,
+        'path': '/opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.8',
+        'state': 'relocation-bound-to-a-symbol-with-STV_PROTECTED-visibility',
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
   def test_ParseLddDashRlineManyLines(self):
     for line in LDD_R_OUTPUT_1.splitlines():
       parsed = self.pkgstats._ParseLddDashRline(line)

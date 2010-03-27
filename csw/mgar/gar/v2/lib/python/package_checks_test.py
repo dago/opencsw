@@ -14,6 +14,7 @@ import pprint
 
 import testdata.checkpkg_test_data_CSWdjvulibrert as td_1
 import testdata.checkpkg_pkgs_data_minimal as td_2
+import testdata.rpaths
 
 BASE_DIR = os.path.dirname(__file__)
 TESTDATA_DIR = os.path.join(BASE_DIR, "testdata")
@@ -300,6 +301,120 @@ class TestCheckPstamp(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError(
         'pkginfo-pstamp-in-wrong-format', 'build8s20090904191054',
         "It should be 'username@hostname-timestamp', but it's 'build8s20090904191054'.")
+
+
+class TestCheckRpath(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckRpath'
+  def CheckpkgTest(self):
+    binaries_dump_info = self.pkg_data["binaries_dump_info"]
+    binaries_dump_info[0]["runpath"] = testdata.rpaths.all_rpaths
+    self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '$ORIGIN/..')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '$ORIGIN/../../../usr/lib/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '$ORIGIN/../../usr/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '$ORIGIN/../lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '$ORIGIN/../ure-link/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '../../../../../dist/bin')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '../../../../dist/bin')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '../../../dist/bin')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '../../dist/bin')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/bin')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/home/buysse/build/expect-5.42.1/cswstage/opt/csw/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/home/phil/build/gettext-0.14.1/gettext-tools/intl/.libs')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/medusa/kenmays/build/qt-x11-free-3.3.3/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/medusa/kenmays/build/s_qt/qt-x11-free-3.3.3/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/medusa/kenmays/build/sparc_qt/qt-x11-free-3.3.4/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/medusa/kenmays/build/sparc_qt/qt-x11-free-3.3.4/plugins/designer')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/medusa/kenmays/build/sparc_qt/qt-x11-free-3.3.4/plugins/sqldrivers')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/home/harpchad/local/sparc/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/lib/sparcv9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWcluster/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWmlib/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/rw7')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/stlport4')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/v8')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/v8plus')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/v8plusa')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/v8plusb')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/build/michael/synce-0.8.9-buildroot/opt/csw/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/$ISALIST')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw//lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/X11/lib/')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/bdb4/lib/')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/$')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/$$ISALIST')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/-R/opt/csw/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/\\$ISALIST')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/\\SALIST')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/sparcv8plus+vis')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/mysql4//lib/mysql')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/nagios/lib/\\$ISALIST')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/openoffice.org/basis3.1/program')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/openoffice.org/ure/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/cw/gcc3/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/forte8/SUNWspro/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/forte8/SUNWspro/lib/rw7')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/forte8/SUNWspro/lib/rw7/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/forte8/SUNWspro/lib/v8')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/forte8/SUNWspro/lib/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/schily/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/sfw/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS10/SUNWspro/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS10/SUNWspro/lib/rw7')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS10/SUNWspro/lib/v8')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS10/SUNWspro/lib/v8plus')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/rw7')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/rw7/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/stlport4')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/stlport4/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/v8')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/v8plus')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib/rw7')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib/rw7/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib/v8')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib/v8plusa')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/rw7')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/rw7/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/stlport4')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/stlport4/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/v8')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/v9')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/oracle/product/9.2.0/lib32')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/X/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/local/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/local/openldap-2.3/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/sfw/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/ucblib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/xpg4/lib')
+    self.error_mgr_mock.ReportError('bad-rpath-entry', 'RIGIN/../lib')
+
+
+class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    binaries_dump_info = self.pkg_data["binaries_dump_info"]
+    binaries_dump_info[0]["runpath"] = ["/opt/csw/lib"]
+    binaries_dump_info[0]["needed sonames"] = ["libdb-4.7.so"]
+    self.pkg_data["depends"] = (("CSWfoo", None),)
+    self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
+       u'/opt/csw/lib': [u'CSWfoo'],
+       u'/opt/csw/lib/sparcv9': [u'CSWfoo'],
+    })
+    self.error_mgr_mock.ReportError(
+        'deprecated-library',
+        u'opt/csw/bin/sparcv9/rsync Deprecated Berkeley DB location '
+        u'/opt/csw/lib/libdb-4.7.so')
+    self.pkg_data = [self.pkg_data]
 
 
 if __name__ == '__main__':
