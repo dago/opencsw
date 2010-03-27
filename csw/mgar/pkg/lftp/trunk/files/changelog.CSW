@@ -4,6 +4,9 @@ lftp (4.0.6,REV=2010.03.26) unstable
   * Applied sun_cc_no_restrict.patch to prevent the configure script
   from incorrectly thinking that Sun Studio 12 CC supports the __restrict__
   keyword.
+  * Applied dont_use_csw_getopt_h.patch to prevent lftp from using opencsw
+  getopt.h as it breaks the build.
+  * Switched to gar dynamic prototype.
 
  -- Yann Rouillard <yann@opencsw.org>  Fri, 26 Mar 2010 22:03:15 +0100
 

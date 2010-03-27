@@ -16,7 +16,7 @@ GARNAME = lftp
 GARVERSION = 4.0.6
 CATEGORIES = net
 
-DESCRIPTION = sophisticated command-line ftp/http client
+DESCRIPTION = A sophisticated command-line ftp/http client
 define BLURB
    lftp is a sophisticated command line based file transfer program. Supported protocols include FTP, HTTP, SFTP, and FISH. It has a multithreaded design allowing you to issue and execute multiple commands simultaneously or in the background. It also features mirroring capabilities and will reconnect and continue transfers in the event of a disconnection. Also, if you quit the program while transfers are still in progress, it will switch to nohup mode and finish the transfers in the background. Additional protocols supported: FTP over HTTP proxy, HTTPS and FTP over SSL. There are lots of tunable parameters, including rate limitation, number of connections limitation and more.
 endef
@@ -25,10 +25,6 @@ PACKAGES = CSWlftp
 CATALOGNAME_CSWlftp = lftp
 
 RUNTIME_DEP_PKGS = CSWexpat CSWggettextrt CSWiconv CSWosslrt CSWreadline 
-
-# we're using conf handling class from the cswclassutils package
-RUNTIME_DEP_PKGS += CSWcswclassutils
-SPKG_CLASSES = none cswpreserveconf
 
 
 ###### Upstream and opencsw files information #######
@@ -39,7 +35,6 @@ MASTER_SITES = http://ftp.yars.free.net/pub/source/lftp/
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWlftp.prototype
 DISTFILES += changelog.CSW
 
 # do some type conversion before munmap call
@@ -56,6 +51,8 @@ PATCHFILES += sun_cc_no_restrict.patch
 
 PATCHFILES += dont_use_csw_getopt_h.patch
 
+PRESERVECONF = /opt/csw/etc/lftp.conf
+
 ##### Build and installation information #####
 
 
@@ -69,7 +66,7 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 post-merge:
-	@ginstall -D $(PKGROOT)/$(sysconfdir)/lftp.conf $(PKGROOT)/$(sysconfdir)/lftp.conf.CSW
 	@ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)/$(docdir)/lftp/changelog.CSW
+	@rm $(PKGROOT)/$(libdir)/charset.alias
 	@$(MAKECOOKIE)
 
