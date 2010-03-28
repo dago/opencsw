@@ -21,6 +21,11 @@ PATCHFILES += tcl.m4.patch
 PATCHFILES += tclInt.h.patch
 
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
+
+CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/export/medusa|root/opt/csw/lib/libtclstub8.4.a
+CHECKPKG_OVERRIDES_CSWtcl += soname-not-found|libm.so.2|needed|by|opt/csw/lib/amd64/libtcl8.5.so
+CHECKPKG_OVERRIDES_CSWtcl += soname-not-found|libm.so.2|needed|by|opt/csw/bin/amd64/tclsh8.5
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
 UPSTREAM_USE_SF = 1
