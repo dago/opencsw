@@ -47,6 +47,9 @@ RUNTIME_DEP_PKGS_CSWexpect += CSWftype2
 RUNTIME_DEP_PKGS_CSWexpect += CSWlibx11
 RUNTIME_DEP_PKGS_CSWexpect += CSWlibxft2
 RUNTIME_DEP_PKGS_CSWexpect += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWexpect += CSWlibxext
+RUNTIME_DEP_PKGS_CSWexpect += CSWlibxscrnsaver
+RUNTIME_DEP_PKGS_CSWexpect += CSWsunmath
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -97,4 +100,12 @@ pre-configure-modulated:
 		Dbg.c	; \
 	)
 #	@( cd $(WORKSRC); aclocal;autoconf)
+	@$(MAKECOOKIE)
+
+post-install-isa-sparcv8:
+	@( cd $(INSTALLISADIR); xz -dc $(CURDIR)/$(FILEDIR)/5.42.sparc.tar.xz | tar xf -)
+	@$(MAKECOOKIE)
+
+post-install-isa-i386:
+	@( cd $(INSTALLISADIR); xz -dc $(CURDIR)/$(FILEDIR)/5.42.i386.tar.xz | tar xf -)
 	@$(MAKECOOKIE)
