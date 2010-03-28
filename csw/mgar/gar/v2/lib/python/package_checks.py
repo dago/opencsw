@@ -7,7 +7,7 @@
 # Individual checks need to be named "Check<something>", while set checks are named
 # "SetCheck<something>".
 #
-# def CheckSomething(pkg_data, error_mgr, logger):
+# def CheckSomething(pkg_data, error_mgr, logger, messenger):
 #   logger.debug("Checking something.")
 #   error_mgr.ReportError("something-is-wrong")
 
@@ -76,7 +76,7 @@ RPATH_WHITELIST = [
 SYMBOLS_CHECK_ONLY_FOR = r"^CSWpm.*$"
 
 
-def CatalognameLowercase(pkg_data, error_mgr, logger):
+def CatalognameLowercase(pkg_data, error_mgr, logger, messenger):
   catalogname = pkg_data["basic_stats"]["catalogname"]
   if catalogname != catalogname.lower():
     error_mgr.ReportError("catalogname-not-lowercase")
@@ -84,7 +84,7 @@ def CatalognameLowercase(pkg_data, error_mgr, logger):
     error_mgr.ReportError("catalogname-is-not-a-simple-word")
 
 
-def CheckDirectoryPermissions(pkg_data, error_mgr, logger):
+def CheckDirectoryPermissions(pkg_data, error_mgr, logger, messenger):
   for entry in pkg_data["pkgmap"]:
     if (entry["type"] == "d"
           and
@@ -95,14 +95,14 @@ def CheckDirectoryPermissions(pkg_data, error_mgr, logger):
                             entry["path"])
 
 
-def CheckNonCswPathsDirectoryPerms(pkg_data, error_mgr, logger):
+def CheckNonCswPathsDirectoryPerms(pkg_data, error_mgr, logger, messenger):
   for entry in pkg_data["pkgmap"]:
     if entry["user"] == "?" or entry["group"] == "?" or entry["mode"] == "?":
       if entry["path"].startswith("/opt/csw"):
         error_mgr.ReportError("pkgmap-question-mark-perms-in-opt-csw", entry["path"])
 
 
-def CheckPerlLocal(pkg_data, error_mgr, logger):
+def CheckPerlLocal(pkg_data, error_mgr, logger, messenger):
   perllocal_re = re.compile(r'/perllocal.pod')
   for entry in pkg_data["pkgmap"]:
     if entry["path"]:
@@ -110,7 +110,7 @@ def CheckPerlLocal(pkg_data, error_mgr, logger):
         error_mgr.ReportError("perllocal-pod-in-pkgmap", entry["path"])
 
 
-def CheckMultipleDepends(pkg_data, error_mgr, logger):
+def CheckMultipleDepends(pkg_data, error_mgr, logger, messenger):
   new_depends = set()
   for pkgname, desc in pkg_data["depends"]:
     if pkgname in new_depends:
@@ -118,7 +118,7 @@ def CheckMultipleDepends(pkg_data, error_mgr, logger):
     new_depends.add(pkgname)
 
 
-def CheckDescription(pkg_data, error_mgr, logger):
+def CheckDescription(pkg_data, error_mgr, logger, messenger):
   pkginfo = pkg_data["pkginfo"]
   desc = checkpkg.ExtractDescription(pkginfo)
   if not desc:
@@ -130,13 +130,13 @@ def CheckDescription(pkg_data, error_mgr, logger):
       error_mgr.ReportError("pkginfo-description-not-starting-with-uppercase",
                             desc)
 
-def CheckVendorURL(pkg_data, error_mgr, logger):
+def CheckVendorURL(pkg_data, error_mgr, logger, messenger):
   vendorurl = pkg_data["pkginfo"]["VENDOR"].split(" ")[0]
   vendorurl_re = r"^(http|ftp)\://.+\..+$"
   if not re.match(vendorurl_re, vendorurl):
     error_mgr.ReportError("pkginfo-bad-vendorurl", vendorurl, "Solution: add VENDOR_URL to GAR Recipe") 
 
-def CheckCatalogname(pkg_data, error_mgr, logger):
+def CheckCatalogname(pkg_data, error_mgr, logger, messenger):
   pkginfo = pkg_data["pkginfo"]
   catalogname = pkginfo["NAME"].split(" ")[0]
   catalogname_re = r"^([\w\+]+)$"
@@ -144,7 +144,7 @@ def CheckCatalogname(pkg_data, error_mgr, logger):
     error_mgr.ReportError("pkginfo-bad-catalogname", catalogname)
 
 
-def CheckSmfIntegration(pkg_data, error_mgr, logger):
+def CheckSmfIntegration(pkg_data, error_mgr, logger, messenger):
   init_re = re.compile(r"/init\.d/")
   for entry in pkg_data["pkgmap"]:
     if not entry["path"]:
@@ -157,7 +157,7 @@ def CheckSmfIntegration(pkg_data, error_mgr, logger):
           "%s class=%s" % (entry["path"], entry["class"]))
 
 
-def SetCheckLibraries(pkgs_data, error_mgr, logger):
+def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
   """Second versionof the library checking code.
 
   1. Collect all the data from the FS:
@@ -232,10 +232,14 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger):
     t = Template.Template(checkpkg.REPORT_TMPL, searchList=[namespace])
     report = unicode(t)
     if report.strip():
-      print report
+      for line in report.splitlines():
+        messenger.Message(line)
+    for missing_dep in missing_deps:
+      messenger.SuggestGarLine(
+          "RUNTIME_DEP_PKGS_%s = %s" % (pkgname, missing_dep))
 
 
-def SetCheckDependencies(pkgs_data, error_mgr, logger):
+def SetCheckDependencies(pkgs_data, error_mgr, logger, messenger):
   """Dependencies must be either installed in the system, or in the set."""
   known_pkgs = set(error_mgr.GetInstalledPackages())
   pkgs_under_check = [x["basic_stats"]["pkgname"] for x in pkgs_data]
@@ -248,14 +252,14 @@ def SetCheckDependencies(pkgs_data, error_mgr, logger):
         error_mgr.ReportError(pkgname, "unidentified-dependency", depname)
 
 
-def CheckDependsOnSelf(pkg_data, error_mgr, logger):
+def CheckDependsOnSelf(pkg_data, error_mgr, logger, messenger):
   pkgname = pkg_data["basic_stats"]["pkgname"]
   for depname, dep_desc in pkg_data["depends"]:
     if depname == pkgname:
       error_mgr.ReportError("depends-on-self")
 
 
-def CheckArchitectureSanity(pkg_data, error_mgr, logger):
+def CheckArchitectureSanity(pkg_data, error_mgr, logger, messenger):
   basic_stats = pkg_data["basic_stats"]
   pkgname = basic_stats["pkgname"]
   pkginfo = pkg_data["pkginfo"]
@@ -267,7 +271,7 @@ def CheckArchitectureSanity(pkg_data, error_mgr, logger):
                           "pkginfo=%s filename=%s" % (arch, filename))
 
 
-def CheckActionClasses(pkg_data, error_mgr, logger):
+def CheckActionClasses(pkg_data, error_mgr, logger, messenger):
   """Checks the consistency between classes in the prototype and pkginfo."""
   pkginfo = pkg_data["pkginfo"]
   pkgmap = pkg_data["pkgmap"]
@@ -286,7 +290,7 @@ def CheckActionClasses(pkg_data, error_mgr, logger):
     error_mgr.ReportError("action-class-only-in-pkgmap", action_class)
 
 
-def CheckLicenseFile(pkg_data, error_mgr, logger):
+def CheckLicenseFile(pkg_data, error_mgr, logger, messenger):
   """Checks for the presence of the license file."""
   # TODO: Write a unit test
   pkgmap = pkg_data["pkgmap"]
@@ -294,11 +298,12 @@ def CheckLicenseFile(pkg_data, error_mgr, logger):
   license_path = LICENSE_TMPL % catalogname
   pkgmap_paths = [x["path"] for x in pkgmap]
   if license_path not in pkgmap_paths:
-    error_mgr.ReportError("license-missing")
-    logger.info("See http://sourceforge.net/apps/trac/gar/wiki/CopyRight")
+    error_mgr.ReportError(
+        "license-missing", license_path,
+        "See http://sourceforge.net/apps/trac/gar/wiki/CopyRight")
 
 
-def CheckObsoleteDeps(pkg_data, error_mgr, logger):
+def CheckObsoleteDeps(pkg_data, error_mgr, logger, messenger):
   """Checks for obsolete dependencies."""
   deps = set(pkg_data["depends"])
   obsolete_pkg_deps = deps.intersection(set(OBSOLETE_DEPS))
@@ -317,7 +322,7 @@ def CheckObsoleteDeps(pkg_data, error_mgr, logger):
       logger.info(msg)
 
 
-def CheckArchitectureVsContents(pkg_data, error_mgr, logger):
+def CheckArchitectureVsContents(pkg_data, error_mgr, logger, messenger):
   """Verifies the relationship between package contents and architecture."""
   binaries = pkg_data["binaries"]
   pkginfo = pkg_data["pkginfo"]
@@ -341,13 +346,14 @@ def CheckArchitectureVsContents(pkg_data, error_mgr, logger):
     for tag, param, desc in reasons_to_be_arch_specific:
       error_mgr.ReportError(tag, param, desc)
   elif not reasons_to_be_arch_specific:
-    logger.info("Package %s does not contain any binaries.", pkgname)
-    logger.info("Consider making it ARCHALL = 1 instead of %s:", arch)
-    logger.info("ARCHALL_%s = 1", pkgname)
-    logger.info("However, be aware that there might be other reasons "
-                "to keep it architecture-specific.")
+    messenger.Message("Package %s does not contain any binaries. "
+                      "Consider making it ARCHALL = 1 instead of %s. "
+                      "However, be aware that there might be other reasons "
+                      "to keep it architecture-specific."
+                      % (pkgname, arch))
+    messenger.SuggestGarLine("ARCHALL_%s = 1" % pkgname)
 
-def CheckFileNameSanity(pkg_data, error_mgr, logger):
+def CheckFileNameSanity(pkg_data, error_mgr, logger, messenger):
   basic_stats = pkg_data["basic_stats"]
   revision_info = basic_stats["parsed_basename"]["revision_info"]
   catalogname = pkg_data["basic_stats"]["catalogname"]
@@ -362,7 +368,7 @@ def CheckFileNameSanity(pkg_data, error_mgr, logger):
     error_mgr.ReportError("osrel-tag-not-specified")
 
 
-def CheckPkginfoSanity(pkg_data, error_mgr, logger):
+def CheckPkginfoSanity(pkg_data, error_mgr, logger, messenger):
   """pkginfo sanity checks.
 
 if [ "$maintname" = "" ] ; then
@@ -415,23 +421,30 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
     error_mgr.ReportError("pkginfo-maintainer-name-not-set")
   # email
   if not pkginfo["EMAIL"]:
-    error_mgr.ReportError("pkginfo-blank-email")
+    error_mgr.ReportError("pkginfo-email-blank")
   # hotline
   if not pkginfo["HOTLINE"]:
     error_mgr.ReportError("pkginfo-hotline-blank")
   pkginfo_version = pkg_data["basic_stats"]["parsed_basename"]["full_version_string"]
   if pkginfo_version != pkginfo["VERSION"]:
-    error_mgr.ReportError("filename-version-does-not-match-pkginfo-version")
+    error_mgr.ReportError("filename-version-does-not-match-pkginfo-version",
+                          "filename=%s pkginfo=%s"
+                          % (pkginfo_version, pkginfo["VERSION"]))
   if re.search(r"-", pkginfo["VERSION"]):
-    error_mgr.ReportError("pkginfo-minus-in-version")
+    error_mgr.ReportError("pkginfo-minus-in-version", pkginfo["VERSION"])
   if not re.match(VERSION_RE, pkginfo["VERSION"]):
-    msg = pkginfo["VERSION"]
-    error_mgr.ReportError("pkginfo-version-wrong-format", msg)
+    msg = "Should match %s" % VERSION_RE
+    error_mgr.ReportError("pkginfo-version-wrong-format",
+                          pkginfo["VERSION"],
+                          msg)
   if pkginfo["ARCH"] not in ARCH_LIST:
-    error_mgr.ReportError("pkginfo-nonstandard-architecture", pkginfo["ARCH"])
+    error_mgr.ReportError(
+        "pkginfo-nonstandard-architecture",
+        pkginfo["ARCH"],
+        "known architectures: %s" % ARCH_LIST)
 
 
-def CheckPstamp(pkg_data, error_mgr, logger):
+def CheckPstamp(pkg_data, error_mgr, logger, messenger):
   pkginfo = pkg_data["pkginfo"]
   if "PSTAMP" in pkginfo:
     if not re.match(checkpkg.PSTAMP_RE, pkginfo["PSTAMP"]):
@@ -442,7 +455,7 @@ def CheckPstamp(pkg_data, error_mgr, logger):
     error_mgr.ReportError("pkginfo-pstamp-missing")
 
 
-def DisabledCheckMissingSymbols(pkgs_data, error_mgr, logger):
+def DisabledCheckMissingSymbols(pkgs_data, error_mgr, logger, messenger):
   """Analyzes missing symbols reported by ldd -r.
 
   1. Collect triplets: pkgname, binary, missing symbol
@@ -477,7 +490,7 @@ def DisabledCheckMissingSymbols(pkgs_data, error_mgr, logger):
       error_mgr.ReportError("symbol-not-found", "%s %s" % (ms_binary, ms_symbol))
 
 
-def CheckBuildingUser(pkg_data, error_mgr, logger):
+def CheckBuildingUser(pkg_data, error_mgr, logger, messenger):
   pkgname = pkg_data["basic_stats"]["pkgname"]
   username = checkpkg.ExtractBuildUsername(pkg_data["pkginfo"])
   for entry in pkg_data["pkgmap"]:
@@ -486,7 +499,7 @@ def CheckBuildingUser(pkg_data, error_mgr, logger):
                             "%s, %s" % (entry["path"], entry["user"]))
 
 
-def CheckDisallowedPaths(pkg_data, error_mgr, logger):
+def CheckDisallowedPaths(pkg_data, error_mgr, logger, messenger):
   """Checks for disallowed paths, such as common paths."""
   arch = pkg_data["pkginfo"]["ARCH"]
   # Common paths read from the file are absolute, e.g. /opt/csw/lib
@@ -513,10 +526,13 @@ def CheckDisallowedPaths(pkg_data, error_mgr, logger):
       if intersection:
         logger.debug("Bad paths found: %s", intersection)
         for bad_path in intersection:
-          error_mgr.ReportError("disallowed-path", bad_path)
+          error_mgr.ReportError(
+              "disallowed-path", bad_path,
+              "This path is already provided by CSWcommon "
+              "or is not allowed for other reasons.")
 
 
-def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger):
+def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
   for binary_info in pkg_data["binaries_dump_info"]:
     for soname in binary_info["needed sonames"]:
       if (".so" in binary_info["soname"]
@@ -526,7 +542,7 @@ def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger):
                               "%s %s" % (binary_info["base_name"], soname))
 
 
-def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger):
+def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger, messenger):
   patterns = [re.compile(x) for x in DISCOURAGED_FILE_PATTERNS]
   for entry in pkg_data["pkgmap"]:
     if entry["path"]:
@@ -536,19 +552,19 @@ def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger):
                                 entry["path"])
 
 
-def CheckBadPaths(pkg_data, error_mgr, logger):
+def CheckBadPaths(pkg_data, error_mgr, logger, messenger):
   for regex in pkg_data["bad_paths"]:
     for file_name in pkg_data["bad_paths"][regex]:
       error_mgr.ReportError("file-with-bad-content", "%s %s" % (regex, file_name))
 
 
-def CheckPkgchk(pkg_data, error_mgr, logger):
+def CheckPkgchk(pkg_data, error_mgr, logger, messenger):
   if pkg_data["pkgchk"]["return_code"] != 0:
     error_mgr.ReportError("pkgchk-failed-with-code", pkg_data["pkgchk"]["return_code"])
     for line in pkg_data["pkgchk"]["stderr_lines"]:
       logger.warn(line)
 
-def CheckRpath(pkg_data, error_mgr, logger):
+def CheckRpath(pkg_data, error_mgr, logger, messenger):
   regex_whitelist = [re.compile(x) for x in RPATH_WHITELIST]
   for binary_info in pkg_data["binaries_dump_info"]:
     actual_rpaths = binary_info["runpath"]
@@ -610,7 +626,7 @@ def DisabledCheckForMissingSymbols(pkgs_data, debug):
   return errors
 
 
-def DisableCheckForMissingSymbolsDumb(pkg_data, error_mgr, logger):
+def DisableCheckForMissingSymbolsDumb(pkg_data, error_mgr, logger, messenger):
   """Analyzes missing symbols reported by ldd -r.
 
   So far only made sense for perl modules.  Disables because it falls over on

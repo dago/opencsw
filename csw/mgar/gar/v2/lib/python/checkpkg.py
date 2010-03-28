@@ -68,39 +68,58 @@ DEPENDENCY_FILENAME_REGEXES = (
 )
 
 REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
-# $pkgname:
+Missing dependencies of $pkgname:
 #end if
 #if $missing_deps
-# SUGGESTION: you may want to add some or all of the following as dependencies:
 #for $pkg, $reasons in $sorted($missing_deps)
-# $pkg, reasons:
+$pkg, reasons:
 #for $reason in $reasons
-# - $reason
+ - $reason
 #end for
 RUNTIME_DEP_PKGS_$pkgname += $pkg
 #end for
 #end if
 #if $surplus_deps
-# If you don't know of any reasons to include these dependencies, you might
-# remove them:
+If you don't know of any reasons to include these dependencies, you might remove them:
 #for $pkg in $sorted($surplus_deps)
-# ? $pkg
+? $pkg
 #end for
 #end if
 """
 
-SCREEN_ERROR_REPORT_TMPL = u"""#if $errors and $debug
+SCREEN_ERROR_REPORT_TMPL = u"""#if $errors
+#if $debug
 ERROR: One or more errors have been found by $name.
+#end if
 #for $pkgname in $errors
 $pkgname:
 #for $error in $errors[$pkgname]
+#if $debug
   $repr($error)
+#elif $error.msg
+$textwrap.fill($error.msg, 78, initial_indent="# ", subsequent_indent="# ")
+# -> $repr($error)
+
+#end if
 #end for
 #end for
 #else
 #if $debug
 OK: $repr($name) module found no problems.
 #end if
+#end if
+#if $messages
+#for $msg in $messages
+$textwrap.fill($msg, 78, initial_indent="# ", subsequent_indent="# ")
+#end for
+#end if
+#if $gar_lines
+
+# Checkpkg suggests adding the following lines to the GAR recipe,
+# see above for details:
+#for $line in $gar_lines
+$line
+#end for
 #end if
 """
 
@@ -152,18 +171,6 @@ def GetOptions():
     raise ConfigurationError("ERROR: the -o option is missing.")
   # Using set() to make the arguments unique.
   return options, set(args)
-
-
-def FormatDepsReport(pkgname, missing_deps, surplus_deps, orphan_sonames):
-  """To be removed."""
-  namespace = {
-      "pkgname": pkgname,
-      "missing_deps": missing_deps,
-      "surplus_deps": surplus_deps,
-      "orphan_sonames": orphan_sonames,
-  }
-  t = Template.Template(REPORT_TMPL, searchList=[namespace])
-  return unicode(t)
 
 
 def ExtractDescription(pkginfo):
@@ -590,11 +597,10 @@ class CheckpkgTag(object):
     self.msg = msg
 
   def __repr__(self):
-    return (u"CheckpkgTag(%s, %s, %s, %s)"
+    return (u"CheckpkgTag(%s, %s, %s)"
             % (repr(self.pkgname),
                repr(self.tag_name),
-               repr(self.tag_info),
-               repr(self.msg)))
+               repr(self.tag_info)))
 
   def ToGarSyntax(self):
     msg_lines = []
@@ -609,7 +615,6 @@ class CheckpkgTag(object):
     msg_lines.append(u"CHECKPKG_OVERRIDES_%s += %s%s"
                      % (self.pkgname, self.tag_name, tag_postfix))
     return "\n".join(msg_lines)
-
 
 
 class CheckpkgManagerBase(object):
@@ -631,12 +636,14 @@ class CheckpkgManagerBase(object):
       stats_list.append(PackageStats(None, self.stats_basedir, md5sum))
     return stats_list
 
-  def FormatReports(self, errors):
+  def FormatReports(self, errors, messages, gar_lines):
     namespace = {
         "name": self.name,
         "errors": errors,
         "debug": self.debug,
         "textwrap": textwrap,
+        "messages": messages,
+        "gar_lines": gar_lines,
     }
     screen_t = Template.Template(SCREEN_ERROR_REPORT_TMPL, searchList=[namespace])
     tags_report_t = Template.Template(TAG_REPORT_TMPL, searchList=[namespace])
@@ -680,8 +687,8 @@ class CheckpkgManagerBase(object):
     Returns a tuple of an exit code and a report.
     """
     packages_data = self.GetPackageStatsList()
-    errors = self.GetAllTags(packages_data)
-    screen_report, tags_report = self.FormatReports(errors)
+    errors, messages, gar_lines = self.GetAllTags(packages_data)
+    screen_report, tags_report = self.FormatReports(errors, messages, gar_lines)
     exit_code = 0
     return (exit_code, screen_report, tags_report)
 
@@ -696,12 +703,12 @@ class CheckInterfaceBase(object):
     self.system_pkgmap = system_pkgmap
     if not self.system_pkgmap:
       self.system_pkgmap = SystemPkgmap()
-    self.messages = []
     self.common_paths = {}
 
   def GetPkgmapLineByBasename(self, basename):
     """Proxies calls to self.system_pkgmap."""
-    logging.warning("GetPkgmapLineByBasename(%s): deprecated function", basename)
+    logging.warning("GetPkgmapLineByBasename(%s): deprecated function",
+                    basename)
     return self.system_pkgmap.GetPkgmapLineByBasename(basename)
 
   def GetPathsAndPkgnamesByBasename(self, basename):
@@ -710,9 +717,6 @@ class CheckInterfaceBase(object):
 
   def GetInstalledPackages(self):
     return self.system_pkgmap.GetInstalledPackages()
-
-  def Message(self, msg):
-    sef.messages.append(msg)
 
   def GetCommonPaths(self, arch):
     """Returns a list of paths for architecture, from gar/etc/commondirs*."""
@@ -732,7 +736,6 @@ class CheckInterfaceBase(object):
     return lines
 
 
-
 class IndividualCheckInterface(CheckInterfaceBase):
   """To be passed to the checking functions.
 
@@ -745,7 +748,7 @@ class IndividualCheckInterface(CheckInterfaceBase):
     self.errors = []
 
   def ReportError(self, tag_name, tag_info=None, msg=None):
-    tag = CheckpkgTag(self.pkgname, tag_name, tag_info, msg)
+    tag = CheckpkgTag(self.pkgname, tag_name, tag_info, msg=msg)
     self.errors.append(tag)
 
 
@@ -757,8 +760,21 @@ class SetCheckInterface(CheckInterfaceBase):
     self.errors = []
 
   def ReportError(self, pkgname, tag_name, tag_info=None, msg=None):
-    tag = CheckpkgTag(pkgname, tag_name, tag_info, msg)
+    tag = CheckpkgTag(pkgname, tag_name, tag_info, msg=msg)
     self.errors.append(tag)
+
+
+class CheckpkgMessenger(object):
+  """Class responsible for passing messages from checks to the user."""
+  def __init__(self):
+    self.messages = []
+    self.gar_lines = []
+
+  def Message(self, m):
+    self.messages.append(m)
+
+  def SuggestGarLine(self, m):
+    self.gar_lines.append(m)
 
 
 class CheckpkgManager2(CheckpkgManagerBase):
@@ -781,7 +797,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
     checkpkg_module = package_checks
     members = dir(checkpkg_module)
     for member_name in members:
-      logging.debug("member_name: %s", repr(member_name))
+      logging.debug("Examining module member: %s", repr(member_name))
       member = getattr(checkpkg_module, member_name)
       if callable(member):
         if member_name.startswith("Check"):
@@ -793,14 +809,11 @@ class CheckpkgManager2(CheckpkgManagerBase):
 
   def GetAllTags(self, stats_obj_list):
     errors = {}
-    # TODO: Actually configure the logger with the logging level.
-    logging_level = logging.INFO
-    if self.debug:
-      logging_level = logging.DEBUG
     pkgmap = SystemPkgmap()
     logging.debug("Loading all package statistics.")
     pkgs_data = self.GetOptimizedAllStats(stats_obj_list)
     logging.debug("All package statistics loaded.")
+    messenger = CheckpkgMessenger()
     # Individual checks
     for pkg_data in pkgs_data:
       pkgname = pkg_data["basic_stats"]["pkgname"]
@@ -808,18 +821,18 @@ class CheckpkgManager2(CheckpkgManagerBase):
       for function in self.individual_checks:
         logger = logging.getLogger("%s-%s" % (pkgname, function.__name__))
         logger.debug("Calling %s", function.__name__)
-        function(pkg_data, check_interface, logger=logger)
+        function(pkg_data, check_interface, logger=logger, messenger=messenger)
         if check_interface.errors:
           errors[pkgname] = check_interface.errors
     # Set checks
     for function in self.set_checks:
-      logger = logging.getLogger("SetCheck-%s" % (function.__name__,))
+      logger = logging.getLogger(function.__name__)
       check_interface = SetCheckInterface(pkgmap)
       logger.debug("Calling %s", function.__name__)
-      function(pkgs_data, check_interface, logger)
+      function(pkgs_data, check_interface, logger=logger, messenger=messenger)
       if check_interface.errors:
         errors = self.SetErrorsToDict(check_interface.errors, errors)
-    return errors
+    return errors, messenger.messages, messenger.gar_lines
 
   def Run(self):
     self._AutoregisterChecks()
@@ -1170,7 +1183,6 @@ class PackageStats(object):
     dir_pkg = self.GetDirFormatPkg()
     logging.info("Collecting %s package statistics.", repr(dir_pkg.pkgname))
     self.DumpObject(dir_pkg.GetAllFilenames(), "all_filenames")
-    self.DumpObject(self.GetBasicStats(), "basic_stats")
     self.DumpObject(dir_pkg.ListBinaries(), "binaries")
     self.DumpObject(self.GetBinaryDumpInfo(), "binaries_dump_info")
     self.DumpObject(dir_pkg.GetDependencies(), "depends")
@@ -1185,6 +1197,10 @@ class PackageStats(object):
     # these data.
     # self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
     self.DumpObject(dir_pkg.GetFilesContaining(BAD_CONTENT_REGEXES), "bad_paths")
+    # This one should be last, so that if the collection is interrupted
+    # in one of the previous runs, the basic_stats.pickle file is not there
+    # or not updated, and the collection is started again.
+    self.DumpObject(self.GetBasicStats(), "basic_stats")
     logging.debug("Statistics of %s have been collected.", repr(dir_pkg.pkgname))
 
   def GetAllStats(self):

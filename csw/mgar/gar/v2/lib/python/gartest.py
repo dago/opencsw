@@ -35,7 +35,7 @@ post-install-modulated:
 """
 TMPDIR_PREFIX = "gartest-"
 # FIXME: This information should be pulled out from GAR
-DIR_PKG_OUT_DIR = os.path.join(os.environ["HOME"], "spool.5.8-sparc")
+DIR_PKG_OUT_DIR = os.path.join(os.environ["HOME"], "spool.5.9-sparc")
 
 
 class Error(Exception):

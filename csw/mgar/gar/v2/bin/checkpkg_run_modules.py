@@ -39,6 +39,8 @@ def main():
   f.close()
   if screen_report:
     sys.stdout.write(screen_report)
+  else:
+    logging.debug("No screen report.")
   sys.exit(exit_code)
 
 

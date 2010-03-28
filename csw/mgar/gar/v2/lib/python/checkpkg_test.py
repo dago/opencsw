@@ -184,7 +184,7 @@ class CheckpkgTagsUnitTest(unittest.TestCase):
           checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "foo-info"),
         ],
     }
-    screen_report, tags_report = m.FormatReports(tags)
+    screen_report, tags_report = m.FormatReports(tags, [])
     expected = u'# Tags reported by testname module\nCSWfoo: foo-tag foo-info\n'
     self.assertEqual(expected, tags_report)
 
@@ -197,7 +197,7 @@ class CheckpkgTagsUnitTest(unittest.TestCase):
           checkpkg.CheckpkgTag("CSWfoo", "baz-tag"),
         ],
     }
-    screen_report, tags_report = m.FormatReports(tags)
+    screen_report, tags_report = m.FormatReports(tags, [])
     expected = (u'# Tags reported by testname module\n'
                 u'CSWfoo: foo-tag foo-info\n'
                 u'CSWfoo: bar-tag bar-info\n'

@@ -27,32 +27,33 @@ class CheckpkgUnitTestHelper(object):
   """Wraps common components of checkpkg tests."""
 
   def setUp(self):
-    # This is slow. Let's speed it up somehow.  Move away from yaml and create
-    # a Python module with the data.
     self.pkg_stats = DEFAULT_PKG_STATS
-    self.pkg_data = self.pkg_stats.GetAllStats()
+    # self.pkg_data = self.pkg_stats.GetAllStats()
     # This makes one of the test break. To be investigated.
-    # self.pkg_data = DEFAULT_PKG_DATA
+    self.pkg_data = copy.deepcopy(DEFAULT_PKG_DATA)
     self.mocker = mox.Mox()
 
   def testDefault(self):
 
     class LoggerStub(object):
-
       def debug(self, debug_s, *kwords):
         pass
-
       def info(self, debug_s, *kwords):
+        pass
+    class MessengerStub(object):
+      def Message(self, m):
         pass
     # self.logger_mock = self.mocker.CreateMock(logging.Logger)
     self.logger_mock = LoggerStub()
     self.error_mgr_mock = self.mocker.CreateMock(
         checkpkg.IndividualCheckInterface)
+    self.messenger = MessengerStub()
     self.CheckpkgTest()
     self.mocker.ReplayAll()
     getattr(pc, self.FUNCTION_NAME)(self.pkg_data,
                                     self.error_mgr_mock,
-                                    self.logger_mock)
+                                    self.logger_mock,
+                                    self.messenger)
     self.mocker.VerifyAll()
 
 
