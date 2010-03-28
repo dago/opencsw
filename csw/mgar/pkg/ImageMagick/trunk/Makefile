@@ -1,6 +1,6 @@
 GARNAME = imagemagick
 GARVERSION = 6.6.0
-GARSUBREV = 7
+GARSUBREV = 9
 CATEGORIES = lib
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -52,6 +52,17 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWpng
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWsunmath
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWtiff
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWzlib
+
+BUILD_DEP_PKGS += CSWdjvulibredevel
+BUILD_DEP_PKGS += CSWgraphvizdevel
+BUILD_DEP_PKGS += CSWilmbasedevel
+BUILD_DEP_PKGS += CSWlcmsdevel
+BUILD_DEP_PKGS += CSWlibcairodevel
+BUILD_DEP_PKGS += CSWlibcairodevel
+BUILD_DEP_PKGS += CSWliblqrdevel
+BUILD_DEP_PKGS += CSWlibwmfdevel
+BUILD_DEP_PKGS += CSWopenexrdevel
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWimagemagick)
 
 # Old modules are linked to libX11.so.4
 CHECKPKG_OVERRIDES_CSWimagemagick += linked-against-discouraged-library|xwd.so|libX11.so.4
@@ -183,6 +194,7 @@ CONFIGURE_ARGS_COMMON += --x-libraries=/opt/csw/X11/lib
 # Solaris 8 and 9 doesn't have complex.h
 CONFIGURE_ARGS_COMMON += --without-fftw
 CONFIGURE_ARGS_COMMON += --with-modules=yes
+# Let's try to use openmp and see what it does for performance
 #CONFIGURE_ARGS_COMMON += --disable-openmp
 CONFIGURE_ARGS_COMMON += --disable-silent-rules
 # Until librsvg,graphviz and perl is 64bit
