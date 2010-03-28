@@ -26,6 +26,7 @@ CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/export/medusa|root/opt/csw/l
 CHECKPKG_OVERRIDES_CSWtcl += soname-not-found|libm.so.2|needed|by|opt/csw/lib/amd64/libtcl8.5.so
 CHECKPKG_OVERRIDES_CSWtcl += soname-not-found|libm.so.2|needed|by|opt/csw/bin/amd64/tclsh8.5
 CHECKPKG_OVERRIDES_CSWtcl += surplus-dependency|CSWsunmath
+CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/export/medusa|root/opt/csw/share/checkpkg/overrides/tcl
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
