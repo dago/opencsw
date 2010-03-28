@@ -14,6 +14,8 @@ CATALOGNAME = pm_netpcap
 
 # depends
 RUNTIME_DEP_PKGS     = CSWlibpcap
-BUILD_DEP_PKGS = CSWlibpcap CSWlibpcapdevel
+BUILD_DEP_PKGS       = $(RUNTIME_DEP_PKGS) CSWlibpcapdevel
+
+LICENSE = README
 
 include gar/category.mk
