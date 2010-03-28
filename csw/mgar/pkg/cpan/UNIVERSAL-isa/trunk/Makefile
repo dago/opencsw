@@ -18,11 +18,14 @@ endef
 PACKAGES = CSWpmuniversalisa
 CATALOGNAME = pm_universalisa
 
-RUNTIME_DEP_PKGS = CSWpmmodulebuild
+BUILD_DEP_PKGS = CSWpmmodulebuild
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
 BUILD_SCRIPTS = $(WORKSRC)/Build
 TEST_SCRIPTS = $(WORKSRC)/Build
 INSTALL_SCRIPTS = $(WORKSRC)/Build
+
+ARCHALL = 1
+CHECKPKG_OVERRIDES = license-missing
 
 include gar/category.mk
