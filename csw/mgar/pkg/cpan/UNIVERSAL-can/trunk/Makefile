@@ -24,4 +24,8 @@ BUILD_SCRIPTS = $(WORKSRC)/Build
 TEST_SCRIPTS = $(WORKSRC)/Build
 INSTALL_SCRIPTS = $(WORKSRC)/Build
 
+ARCHALL_CSWpmuniversalcan += 1
+CHECKPKG_OVERRIDES_CSWpmuniversalcan += license-missing
+CHECKPKG_OVERRIDES_CSWpmuniversalcan += surplus-dependency|CSWpmmodulebuild
+
 include gar/category.mk
