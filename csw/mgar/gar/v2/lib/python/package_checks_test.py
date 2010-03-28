@@ -418,5 +418,25 @@ class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
     self.pkg_data = [self.pkg_data]
 
 
+class TestCheckVendorURL_BadUrl(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = "CheckVendorURL"
+  def CheckpkgTest(self):
+    # Injecting the data to be examined.
+    self.pkg_data["pkginfo"]["VENDOR"] = "badurl"
+    # Expecting the following method to be called.
+    self.error_mgr_mock.ReportError(
+        "pkginfo-bad-vendorurl",
+        "badurl",
+        "Solution: add VENDOR_URL to GAR Recipe")
+
+
+class TestCheckVendorURL_Good(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = "CheckVendorURL"
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["VENDOR"] = "http://www.example.com/"
+    # No call to error_mgr_mock means that no errors should be reported: the
+    # URL is okay.
+
+
 if __name__ == '__main__':
   unittest.main()

@@ -130,6 +130,11 @@ def CheckDescription(pkg_data, error_mgr, logger):
       error_mgr.ReportError("pkginfo-description-not-starting-with-uppercase",
                             desc)
 
+def CheckVendorURL(pkg_data, error_mgr, logger):
+  vendorurl = pkg_data["pkginfo"]["VENDOR"].split(" ")[0]
+  vendorurl_re = r"^(http|ftp)\://.+\..+$"
+  if not re.match(vendorurl_re, vendorurl):
+    error_mgr.ReportError("pkginfo-bad-vendorurl", vendorurl, "Solution: add VENDOR_URL to GAR Recipe") 
 
 def CheckCatalogname(pkg_data, error_mgr, logger):
   pkginfo = pkg_data["pkginfo"]
