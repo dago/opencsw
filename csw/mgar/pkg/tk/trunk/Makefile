@@ -11,12 +11,16 @@ MASTER_SITES = $(SF_MIRRORS)
 
 DISTNAME = $(GARNAME)$(GARVERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
-DISTFILES += libtk8.4.so.i
-DISTFILES += libtk8.4.so.s
+
+PATCHFILES = Makefile.in.diff
+PATCHDIR = $(WORKDIR)/$(DISTNAME)
 
 DEP_PKGS_CSWtk = CSWfconfig CSWftype2 CSWlibx11 CSWlibxft2 CSWlibxrender CSWtcl
+DEP_PKGS_CSWtk += CSWlibxext
+DEP_PKGS_CSWtk += CSWlibxscrnsaver
+DEP_PKGS_CSWtk += CSWsunmath
 
-SPKG_SOURCEURL = http://www.tcl.tk/
+VENDOR_URL = http://www.tcl.tk/
 LICENSE = license.terms
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -58,11 +62,11 @@ pre-configure-modulated:
 post-install-i386:
 	@# Install legacy libs
 	@# Building them with version modulations would be hard as that would require a full legacy tcl also
-	ginstall $(WORKDIR)/libtk8.4.so.i $(DESTDIR)$(libdir)/libtk8.4.so
+	@( cd $(INSTALLISADIR); xz -dc $(CURDIR)/$(FILEDIR)/8.4.i386.tar.xz | tar xf -)
 	@$(MAKECOOKIE)
 
 post-install-sparc:
 	@# Install legacy libs
 	@# Building them with version modulations would be hard as that would require a full legacy tcl also
-	ginstall $(WORKDIR)/libtk8.4.so.s $(DESTDIR)$(libdir)/libtk8.4.so
+	@( cd $(INSTALLISADIR); xz -dc $(CURDIR)/$(FILEDIR)/8.4.sparc.tar.xz | tar xf -)
 	@$(MAKECOOKIE)
