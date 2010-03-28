@@ -411,6 +411,7 @@ class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
        u'/opt/csw/lib/sparcv9': [u'CSWfoo'],
     })
     self.error_mgr_mock.ReportError(
+        'CSWrsync',
         'deprecated-library',
         u'opt/csw/bin/sparcv9/rsync Deprecated Berkeley DB location '
         u'/opt/csw/lib/libdb-4.7.so')
