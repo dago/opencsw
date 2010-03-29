@@ -43,6 +43,8 @@ class CheckpkgUnitTestHelper(object):
     class MessengerStub(object):
       def Message(self, m):
         pass
+      def SuggestGarLine(self, m):
+        pass
     # self.logger_mock = self.mocker.CreateMock(logging.Logger)
     self.logger_mock = LoggerStub()
     self.error_mgr_mock = self.mocker.CreateMock(
