@@ -894,7 +894,7 @@ def ParseOverrideLine(line):
   level_1 = line.split(":")
   if len(level_1) > 1:
     pkgname = level_1[0]
-    data_1 = level_1[1]
+    data_1 = ":".join(level_1[1:])
   else:
     pkgname = None
     data_1 = level_1[0]

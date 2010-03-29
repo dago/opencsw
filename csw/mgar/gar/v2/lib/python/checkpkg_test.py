@@ -184,7 +184,7 @@ class CheckpkgTagsUnitTest(unittest.TestCase):
           checkpkg.CheckpkgTag("CSWfoo", "foo-tag", "foo-info"),
         ],
     }
-    screen_report, tags_report = m.FormatReports(tags, [])
+    screen_report, tags_report = m.FormatReports(tags, [], [])
     expected = u'# Tags reported by testname module\nCSWfoo: foo-tag foo-info\n'
     self.assertEqual(expected, tags_report)
 
@@ -197,7 +197,7 @@ class CheckpkgTagsUnitTest(unittest.TestCase):
           checkpkg.CheckpkgTag("CSWfoo", "baz-tag"),
         ],
     }
-    screen_report, tags_report = m.FormatReports(tags, [])
+    screen_report, tags_report = m.FormatReports(tags, [], [])
     expected = (u'# Tags reported by testname module\n'
                 u'CSWfoo: foo-tag foo-info\n'
                 u'CSWfoo: bar-tag bar-info\n'
@@ -234,9 +234,13 @@ class ParseOverrideLineUnitTest(unittest.TestCase):
     line1 = "CSWfoo: foo-override"
     line2 = "CSWfoo: foo-override foo-info"
     line3 = "CSWfoo: foo-override foo-info-1 foo-info-2"
+    line4 = ("CSWpmcommonsense: "
+             "pkginfo-description-not-starting-with-uppercase "
+             "common-sense: Some sane defaults for Perl programs")
     self.o1 = checkpkg.ParseOverrideLine(line1)
     self.o2 = checkpkg.ParseOverrideLine(line2)
     self.o3 = checkpkg.ParseOverrideLine(line3)
+    self.o4 = checkpkg.ParseOverrideLine(line4)
 
   def test_ParseOverridesLine1(self):
     self.assertEqual("CSWfoo", self.o1.pkgname)
@@ -258,6 +262,19 @@ class ParseOverrideLineUnitTest(unittest.TestCase):
 
   def test_ParseOverridesLine7(self):
     self.assertEqual("foo-info-1 foo-info-2", self.o3.tag_info)
+
+  def test_ParseOverridesLine_4_1(self):
+    self.assertEqual("CSWpmcommonsense", self.o4.pkgname)
+
+  def test_ParseOverridesLine_4_2(self):
+    self.assertEqual(
+        "pkginfo-description-not-starting-with-uppercase",
+        self.o4.tag_name)
+
+  def test_ParseOverridesLine_4_3(self):
+    self.assertEqual(
+        "common-sense: Some sane defaults for Perl programs",
+        self.o4.tag_info)
 
 
 class ApplyOverridesUnitTest(unittest.TestCase):
