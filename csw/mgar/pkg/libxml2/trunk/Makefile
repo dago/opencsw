@@ -26,7 +26,7 @@ SPKG_DESC_CSWpylibxml2    = XML Parser Library Python Bindings
 
 RUNTIME_DEP_PKGS_CSWlibxml2 = CSWiconv CSWzlib
 RUNTIME_DEP_PKGS_CSWlibxml2devel = CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpylibxml2 = CSWpython CSWpython-rt CSWlibxml2 CSWiconv CSWzlib
+RUNTIME_DEP_PKGS_CSWpylibxml2 = CSWpython CSWlibxml2 CSWiconv CSWzlib
 
 # We don't have 64 bit Python yet
 CONFIGURE_ARGS_32 = --with-python=$(prefix)
@@ -63,6 +63,9 @@ PKGFILES_CSWpylibxml2 += $(docdir)/pylibxml2/.*
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
+
+# override checkpkg for this
+CHECKPKG_OVERRIDES_CSWlibxml2devel += surplus-dependency|CSWlibxml2
 
 include gar/category.mk
 
