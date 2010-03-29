@@ -10,14 +10,15 @@ define BLURB
 endef
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpmappcli,)
+DISTFILES += COPYING
+
+PACKAGES = CSWpmappcli
+CATALOGNAME = pm_appcli
+ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple CSWpmpodsimple
 
-DEPENDS += cpan/Locale-Maketext-Simple
-DEPENDS += cpan/Pod-Simple
-DEPENDS += cpan/Getopt-Long
-
-EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+CHECKPKG_OVERRIDES_CSWpmappcli += surplus-dependency|CSWpmpodsimple
+CHECKPKG_OVERRIDES_CSWpmappcli += surplus-dependency|CSWpmlclemktxtsimple
 
 include gar/category.mk
