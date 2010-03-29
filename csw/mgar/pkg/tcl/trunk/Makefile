@@ -23,8 +23,7 @@ PATCHFILES += tclInt.h.patch
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
 
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/export/medusa|root/opt/csw/lib/libtclstub8.4.a
-CHECKPKG_OVERRIDES_CSWtcl += soname-not-found|libm.so.2|needed|by|opt/csw/lib/amd64/libtcl8.5.so
-CHECKPKG_OVERRIDES_CSWtcl += soname-not-found|libm.so.2|needed|by|opt/csw/bin/amd64/tclsh8.5
+CHECKPKG_OVERRIDES_CSWtcl += soname-not-found|libm.so.2
 CHECKPKG_OVERRIDES_CSWtcl += surplus-dependency|CSWsunmath
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/export/medusa|root/opt/csw/share/checkpkg/overrides/tcl
 
