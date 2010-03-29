@@ -1,5 +1,5 @@
 GARNAME = phpsysinfo
-GARVERSION = 2.5.4
+GARVERSION = 3.0.4
 CATEGORIES = utils
 
 DESCRIPTION = Displays information about the host being accessed
@@ -32,6 +32,10 @@ WORKSRC = $(WORKDIR)/$(GARNAME)
 
 SAMPLECONF = .*config.php
 
+CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWap2modphp5
+CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWapache2
+
 include gar/category.mk
 
 install-custom:
@@ -43,6 +47,6 @@ install-custom:
 	@( cd $(DESTDIR)$(prefix)/share/www/phpsysinfo ; \
 	   mv config.php.new config.php ; \
 	   mv COPYING $(DESTDIR)$(docdir)/$(GARNAME)/license )
-	@( cd $(DESTDIR)$(prefix)/share/www/phpsysinfo/includes/os ; \
-	   gpatch < ../../../../../../../../../$(FILEDIR)/CSWphpsysinfo.class.SunOS.inc.php.p )
+#	@( cd $(DESTDIR)$(prefix)/share/www/phpsysinfo/includes/os ; \
+#	   gpatch < ../../../../../../../../../$(FILEDIR)/CSWphpsysinfo.class.SunOS.inc.php.p )
 	@$(MAKECOOKIE)
