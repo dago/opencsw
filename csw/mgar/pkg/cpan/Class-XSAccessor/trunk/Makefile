@@ -1,0 +1,15 @@
+GARNAME = Class-XSAccessor
+GARVERSION = 1.05
+CATEGORIES = cpan
+AUTHOR = SMUELLER
+
+DESCRIPTION = Generate fast XS accessors without runtime compilation
+define BLURB
+endef
+
+DISTFILES = COPYING
+
+PACKAGES = CSWpmclassxsaccessor
+CATALOGNAME = pm_classxsaccessor
+
+include gar/category.mk
