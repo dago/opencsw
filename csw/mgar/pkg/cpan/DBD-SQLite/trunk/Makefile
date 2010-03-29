@@ -3,7 +3,7 @@ GARVERSION = 1.29
 CATEGORIES = cpan
 AUTHOR = ADAMK
 
-DESCRIPTION = self contained RDBMS in a DBI driver
+DESCRIPTION = Self contained RDBMS in a DBI driver
 define BLURB
     DBD::SQLite is a Perl DBI driver for SQLite, that includes the entire
     thing in the distribution. So in order to get a fast transaction capable
