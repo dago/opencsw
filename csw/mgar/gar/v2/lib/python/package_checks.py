@@ -236,7 +236,7 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
         messenger.Message(line)
     for missing_dep in missing_deps:
       messenger.SuggestGarLine(
-          "RUNTIME_DEP_PKGS_%s = %s" % (pkgname, missing_dep))
+          "RUNTIME_DEP_PKGS_%s += %s" % (pkgname, missing_dep))
 
 
 def SetCheckDependencies(pkgs_data, error_mgr, logger, messenger):
