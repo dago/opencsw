@@ -1,0 +1,17 @@
+GARNAME = common-sense
+GARVERSION = 3.0
+CATEGORIES = cpan
+AUTHOR = MLEHMANN
+
+DESCRIPTION = Some sane defaults for Perl programs
+define BLURB
+endef
+
+PACKAGES = CSWpmcommonsense
+CATALOGNAME = pm_commonsense
+
+LICENSE = LICENSE
+
+ARCHALL = 1
+
+include gar/category.mk
