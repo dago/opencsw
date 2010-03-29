@@ -2,7 +2,7 @@ GARNAME = qhull
 GARVERSION = 2003.1
 CATEGORIES = lib
 
-DESCRIPTION = Qhull computes the convex hull and other hulls
+DESCRIPTION = Qhull computes the convex hull and other hulls (with poly.c-qh_gethash.patch)
 define BLURB
   Qhull computes the convex hull, Delaunay triangulation, Voronoi diagram,
   halfspace intersection about a point, furthest-site Delaunay triangulation,
@@ -18,8 +18,14 @@ endef
 MASTER_SITES = http://www.qhull.org/download/
 DISTFILES  = $(DISTNAME).tar.gz
 
+# From http://www.qhull.org/download/
+PATCHDIRLEVEL = 2
+PATCHFILES = poly.c-qh_gethash.patch
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+LICENSE = COPYING.txt
 
 PACKAGES = CSWqhull CSWqhullrt
 
