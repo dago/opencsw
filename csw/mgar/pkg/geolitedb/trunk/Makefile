@@ -1,8 +1,8 @@
 GARNAME = geolitedb
-GARVERSION = 091001
+GARVERSION = 100302
 CATEGORIES = net
 
-DESCRIPTION = geolite country database
+DESCRIPTION = Geolite country database
 
 MASTER_SITES = http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/
 DISTFILES  = GeoIP.dat.gz
