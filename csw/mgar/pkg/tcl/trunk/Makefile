@@ -63,13 +63,13 @@ post-install-isa-sparcv8:
 	@( cd $(INSTALLISADIR); xz -dc $(CURDIR)/$(FILEDIR)/8.4.sparc.tar.xz | tar xf -)
 	@# Need to manually create symlink to latest version
 	@echo Creating tclsh link
-	@ln -s tclsh.5 $(INSTALLISADIR)/$(bindir)/tclsh
+	@ln -s tclsh8.5 $(INSTALLISADIR)/$(bindir)/tclsh
 	@$(MAKECOOKIE)
 
 post-install-isa-sparcv9:
 	@# Need to manually create symlink to latest version
 	@echo Creating tclsh link
-	@ln -s tclsh.5 $(INSTALLISADIR)/$(bindir)/tclsh
+	@ln -s tclsh8.5 $(INSTALLISADIR)/$(bindir)/tclsh
 	@$(MAKECOOKIE)
 
 post-install-isa-i386:
@@ -78,11 +78,11 @@ post-install-isa-i386:
 	@( cd $(INSTALLISADIR); xz -dc $(CURDIR)/$(FILEDIR)/8.4.i386.tar.xz | tar xf -)
 	@# Need to manually create symlink to latest version
 	@echo Creating tclsh link
-	@ln -s tclsh.5 $(INSTALLISADIR)/$(bindir)/tclsh
+	@ln -s tclsh8.5 $(INSTALLISADIR)/$(bindir)/tclsh
 	@$(MAKECOOKIE)
 
 post-install-isa-amd64:
 	@# Need to manually create symlink to latest version
 	@echo Creating tclsh link
-	@ln -s tclsh.5 $(INSTALLISADIR)/$(bindir)/tclsh
+	@ln -s tclsh8.5 $(INSTALLISADIR)/$(bindir)/tclsh
 	@$(MAKECOOKIE)
