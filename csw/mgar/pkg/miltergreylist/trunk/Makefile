@@ -16,7 +16,7 @@ MASTER_SITES = http://ftp.espci.fr/pub/milter-greylist/
 DISTFILES  = milter-greylist-$(DISTVERSION).tgz
 DISTFILES += COPYING
 
-RUNTIME_DEP_PKGS = CSWsendmail CSWcurlrt CSWgeoip
+REQUIRED_PKGS = CSWcurlrt CSWgeoip
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
@@ -29,22 +29,28 @@ CONFIGURE_ARGS += --with-user=`/usr/xpg4/bin/id -u`
 CONFIGURE_ARGS += --with-conffile=/etc/opt/csw/greylist.conf
 CONFIGURE_ARGS += --enable-dnsrbl
 CONFIGURE_ARGS += --enable-stdio-hack
-CONFIGURE_ARGS += --localstatedir=/var/opt/csw/milter-greylist
+CONFIGURE_ARGS += --localstatedir=/var/opt/csw/miltergreylist
 CONFIGURE_ARGS += --with-libGeoIP=/opt/csw/lib
 CONFIGURE_ARGS += --with-libcurl=/opt/csw/lib
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 
-#SPKG_CLASSES = none cswusergroup cswcpsampleconf cswinitsmf
+#SPKG_CLASSES = none cswusergroup ugfiles cswcpsampleconf cswinitsmf
 
 TEST_SCRIPTS = 
 INSTALL_SCRIPTS = custom
 USERGROUP = /opt/csw/etc/pkg/miltergreylist/cswusergroup
-SAMPLECONF = /etc/opt/csw/greylist.conf.CSW
+SAMPLECONF = /etc/opt/csw/greylist.conf
 INITSMF = /etc/opt/csw/init.d/cswmiltergreylist
 
-PROTOTYPE_FILTER  = awk ' \
-  $$$$3 ~ /\/var\/opt\/csw\/miltergreylist/ { $$$$4 = "0700" ; $$$$5 = "greylist" } \
-  { print }'
+PROTOTYPE_MODIFIERS = 1
+PROTOTYPE_FILES_1 = /var/opt/csw/miltergreylist
+PROTOTYPE_CLASS_1 = ugfiles
+PROTOTYPE_PERMS_1 = 0700
+PROTOTYPE_USER_1 = greylist
+
+#PROTOTYPE_FILTER  = awk ' \
+#  $$$$3 ~ /\/var\/opt\/csw\/miltergreylist/ { $$$$2 = "ugfiles" ; $$$$4 = "0700" ; $$$$5 = "greylist" } \
+#  { print }'
 
 include gar/category.mk
 
@@ -59,7 +65,7 @@ install-custom:
 	@( cd $(WORKSRC) ; \
 	   gmake DESTDIR=$(DESTDIR) install )
 	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw
-	@mv $(DESTDIR)/etc/mail/greylist.conf $(DESTDIR)/etc/opt/csw/greylist.conf.CSW
+	@mv $(DESTDIR)/etc/mail/greylist.conf $(DESTDIR)/etc/opt/csw/greylist.conf
 	@rmdir $(DESTDIR)/etc/mail
 	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(foreach DOC,$(DOCLIST),cp $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
@@ -69,5 +75,6 @@ install-custom:
 	@cp $(FILEDIR)/CSWmiltergreylist.ug $(DESTDIR)/opt/csw/etc/pkg/$(GARNAME)/cswusergroup
 	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
 	@cp $(FILEDIR)/CSWmiltergreylist.init $(DESTDIR)/etc/opt/csw/init.d/cswmiltergreylist
-	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)$(GARNAME)
+	@chmod 755 $(DESTDIR)/etc/opt/csw/init.d/cswmiltergreylist
+	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(MAKECOOKIE)
