@@ -14,6 +14,6 @@ LICENSE = LICENSE
 
 ARCHALL = 1
 
-CHECKPKG_OVERRIDES_CSWpmcommonsense += pkginfo-description-not-starting-with-uppercase|common-sense:|Some|sane|defaults|for|Perl|programs
+CHECKPKG_OVERRIDES = pkginfo-description-not-starting-with-uppercase
 
 include gar/category.mk
