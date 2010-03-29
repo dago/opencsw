@@ -11,14 +11,12 @@ define BLURB
   Perl.
 endef
 
+DISTFILES = COPYING
 PATCHFILES = 0001-Skip-question-on-install.patch
-
-ARCHALL_CSWpminline = 1
 
 PACKAGES = CSWpminline
 CATALOGNAME = pm_inline
 
-# The current licensing is unknown as is stated on CPAN
-CHECKPKG_OVERRIDES = license-missing
+ARCHALL = 1
 
 include gar/category.mk
