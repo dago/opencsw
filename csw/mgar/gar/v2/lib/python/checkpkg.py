@@ -31,6 +31,7 @@ NEEDED_SONAMES = "needed sonames"
 RUNPATH = "runpath"
 SONAME = "soname"
 CONFIG_MTIME = "mtime"
+WRITE_YAML = False
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
 DO_NOT_REPORT_MISSING = set([])
 DO_NOT_REPORT_MISSING_RE = [r"SUNW.*", r"\*SUNW.*"]
@@ -115,8 +116,8 @@ $textwrap.fill($msg, 78, initial_indent="# ", subsequent_indent="# ")
 #end if
 #if $gar_lines
 
-# Checkpkg suggests adding the following lines to the GAR recipe,
-# see above for details:
+# Checkpkg suggests adding the following lines to the GAR recipe:
+# This is a summary; see above for details.
 #for $line in $gar_lines
 $line
 #end for
@@ -603,6 +604,7 @@ class CheckpkgTag(object):
                repr(self.tag_info)))
 
   def ToGarSyntax(self):
+    """Presents the error tag using GAR syntax."""
     msg_lines = []
     if self.msg:
       msg_lines.extend(textwrap(self.msg, 70,
@@ -945,7 +947,6 @@ class PackageStats(object):
   STAT_FILES = [
       "all_filenames",
       "bad_paths",
-      "basic_stats",
       "binaries",
       "binaries_dump_info",
       # "defined_symbols",
@@ -956,6 +957,9 @@ class PackageStats(object):
       "pkgchk",
       "pkginfo",
       "pkgmap",
+      # This entry needs to be last because of the assumption in the
+      # CollectStats() function.
+      "basic_stats",
   ]
 
   def __init__(self, srv4_pkg, stats_basedir=None, md5sum=None):
@@ -1161,9 +1165,13 @@ class PackageStats(object):
     if not self.StatsDirExists() or force:
       self._CollectStats()
       return
-    basic_stats_file = in_file_name_pickle = os.path.join(
-        self.GetStatsPath(), "basic_stats.pickle")
-    f = open(basic_stats_file, "r")
+    for stats_name in self.STAT_FILES + ["basic_stats"]:
+      file_name = in_file_name_pickle = os.path.join(
+          self.GetStatsPath(), "%s.pickle" % stats_name)
+      if not os.path.exists(file_name):
+        self._CollectStats()
+        return
+    f = open(file_name, "r")
     obj = cPickle.load(f)
     f.close()
     saved_version = obj["stats_version"]
@@ -1192,6 +1200,7 @@ class PackageStats(object):
     self.DumpObject(dir_pkg.GetParsedPkginfo(), "pkginfo")
     self.DumpObject(dir_pkg.GetPkgmap().entries, "pkgmap")
     # The ldd -r reporting breaks on bigger packages during yaml saving.
+    # It might work when yaml is disabled
     # self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
     # This check is currently disabled, let's save time by not collecting
     # these data.
@@ -1221,13 +1230,15 @@ class PackageStats(object):
     """Saves an object."""
     stats_path = self.GetStatsPath()
     # yaml
-    out_file_name = os.path.join(stats_path, "%s.yml" % name)
-    logging.debug("DumpObject(): writing %s", repr(out_file_name))
-    f = open(out_file_name, "w")
-    f.write(yaml.safe_dump(obj))
-    f.close()
+    if WRITE_YAML:
+      out_file_name = os.path.join(stats_path, "%s.yml" % name)
+      logging.debug("DumpObject(): writing %s", repr(out_file_name))
+      f = open(out_file_name, "w")
+      f.write(yaml.safe_dump(obj))
+      f.close()
     # pickle
     out_file_name_pickle = os.path.join(stats_path, "%s.pickle" % name)
+    logging.debug("DumpObject(): writing %s", repr(out_file_name_pickle))
     f = open(out_file_name_pickle, "wb")
     cPickle.dump(obj, f)
     f.close()
@@ -1242,10 +1253,13 @@ class PackageStats(object):
       f = open(in_file_name_pickle, "r")
       obj = cPickle.load(f)
       f.close()
-    else:
+    elif os.path.exists(in_file_name):
       f = open(in_file_name, "r")
       obj = yaml.safe_load(f)
       f.close()
+    else:
+      raise PackageError("Can't read %s nor %s."
+                         % (in_file_name, in_file_name_pickle))
     return obj
 
   def ReadSavedStats(self):
@@ -1262,9 +1276,15 @@ class PackageStats(object):
     stv_protected = (r'^\trelocation \S+ symbol: (?P<relocation_symbol>\S+): '
                      r'file (?P<relocation_path>\S+): '
                      r'relocation bound to a symbol with STV_PROTECTED visibility$')
-    common_re = (r"(%s|%s|%s|%s|%s)"
+    sizes_differ = (r'^\trelocation \S+ sizes differ: (?P<sizes_differ_symbol>\S+)$')
+    sizes_info = (r'^\t\t\(file (?P<sizediff_file1>\S+) size=(?P<size1>0x\w+); '
+                  r'file (?P<sizediff_file2>\S+) size=(?P<size2>0x\w+)\)$')
+    sizes_one_used = (
+        r'^\t\t(?P<sizediffused_file>\S+) size used; '
+        'possible insufficient data copied$')
+    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s)"
                  % (found_re, symbol_not_found_re, only_so, version_so,
-                    stv_protected))
+                    stv_protected, sizes_differ, sizes_info, sizes_one_used))
     m = re.match(common_re, line)
     response = {}
     if m:
@@ -1295,6 +1315,21 @@ class PackageStats(object):
         response["soname"] = None
         response["path"] = d["relocation_path"]
         response["symbol"] = d["relocation_symbol"]
+      elif d["sizes_differ_symbol"]:
+        response["state"] = 'sizes-differ'
+        response["soname"] = None
+        response["path"] = None
+        response["symbol"] = d["sizes_differ_symbol"]
+      elif d["sizediff_file1"]:
+        response["state"] = 'sizes-diff-info'
+        response["soname"] = None
+        response["path"] = "%s %s" % (d["sizediff_file1"], d["sizediff_file2"])
+        response["symbol"] = None
+      elif d["sizediffused_file"]:
+        response["state"] = 'sizes-diff-one-used'
+        response["soname"] = None
+        response["path"] = "%s %s" % (d["sizediff_file1"], d["sizediff_file2"])
+        response["symbol"] = None
       else:
         raise StdoutSyntaxError("Could not parse %s with %s"
                                 % (repr(line), common_re))

@@ -30,6 +30,9 @@ LDD_R_OUTPUT_1 =  """\tlibc.so.1 =>  /lib/libc.so.1
 \tlibm.so.2 =>   /lib/libm.so.2
 \t/usr/lib/secure/s8_preload.so.1
 \tlibXext.so.0 (SUNW_1.1) =>\t (version not found)
+\trelocation R_SPARC_COPY symbol: ASN1_OCTET_STRING_it: file /opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.8: relocation bound to a symbol with STV_PROTECTED visibility
+\trelocation R_SPARC_COPY sizes differ: _ZTI7QWidget
+\t\t(file /tmp/pkg_GqCk0P/CSWkdeartworkgcc/root/opt/csw/kde-gcc/bin/kslideshow.kss size=0x28; file /opt/csw/kde-gcc/lib/libqt-mt.so.3 size=0x20)
 """
 
 class GetLinesBySonameUnitTest(unittest.TestCase):
@@ -410,6 +413,40 @@ class PackageStatsUnitTest(unittest.TestCase):
         'soname': None,
         'path': '/opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.8',
         'state': 'relocation-bound-to-a-symbol-with-STV_PROTECTED-visibility',
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLdd_SizesDiffer(self):
+    line = '\trelocation R_SPARC_COPY sizes differ: _ZTI7QWidget'
+    expected = {
+        'symbol': '_ZTI7QWidget',
+        'soname': None,
+        'path': None,
+        'state': 'sizes-differ',
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLdd_SizesDifferInfo(self):
+    line = ('\t\t(file /tmp/pkg_GqCk0P/CSWkdeartworkgcc/root/opt/csw/kde-gcc/bin/'
+            'kslideshow.kss size=0x28; '
+            'file /opt/csw/kde-gcc/lib/libqt-mt.so.3 size=0x20)')
+    expected = {
+        'symbol': None,
+        'path': ('/tmp/pkg_GqCk0P/CSWkdeartworkgcc/root/opt/csw/kde-gcc/'
+                 'bin/kslideshow.kss /opt/csw/kde-gcc/lib/libqt-mt.so.3'),
+        'state': 'sizes-diff-info',
+        'soname': None,
+    }
+    self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
+
+  def test_ParseLdd_SizesDifferOneUsed(self):
+    line = ('\t\t/opt/csw/kde-gcc/lib/libqt-mt.so.3 size used; '
+            'possible insufficient data copied')
+    expected = {
+        'symbol': None,
+        'path': '/opt/csw/kde-gcc/lib/libqt-mt.so.3',
+        'state': 'sizes-diff-one-used',
+        'soname': None,
     }
     self.assertEqual(expected, self.pkgstats._ParseLddDashRline(line))
 

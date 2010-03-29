@@ -34,8 +34,8 @@ def main():
    unapplied_overrides) = checkpkg.ApplyOverrides(error_tags, overrides)
   exit_code = bool(tags_after_overrides)
   if tags_after_overrides:
-    print "There were errors reported."
-    print "If you know they are false positives, you can override them:"
+    print "If any of the reported errors were false positives, you can"
+    print "override them pasting the lines below to the GAR recipe."
     for tag in tags_after_overrides:
       print tag.ToGarSyntax()
   if unapplied_overrides:

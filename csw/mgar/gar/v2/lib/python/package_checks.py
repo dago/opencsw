@@ -626,11 +626,11 @@ def DisabledCheckForMissingSymbols(pkgs_data, debug):
   return errors
 
 
-def DisableCheckForMissingSymbolsDumb(pkg_data, error_mgr, logger, messenger):
+def DisabledCheckForMissingSymbolsDumb(pkg_data, error_mgr, logger, messenger):
   """Analyzes missing symbols reported by ldd -r.
 
   So far only made sense for perl modules.  Disables because it falls over on
-  big KDE packages.
+  big KDE packages.  During pickling (serialization), Python runs out of memory.
   """
   pkgname = pkg_data["basic_stats"]["pkgname"]
   if not re.match(SYMBOLS_CHECK_ONLY_FOR, pkgname):

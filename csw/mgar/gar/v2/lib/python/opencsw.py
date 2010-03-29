@@ -406,6 +406,7 @@ class CswSrv4File(ShellMixin, object):
     self.dir_format_pkg = None
     self.debug = debug
     self.pkgname = None
+    self.md5sum = None
 
   def __repr__(self):
     return u"CswSrv4File(%s)" % repr(self.pkg_path)
@@ -508,12 +509,14 @@ class CswSrv4File(ShellMixin, object):
     return dir_format_pkg.GetPkgmap(analyze_permissions, strip)
 
   def GetMd5sum(self):
-    logging.debug("GetMd5sum() (%s)", repr(self.pkg_path))
-    fp = open(self.pkg_path)
-    hash = hashlib.md5()
-    hash.update(fp.read())
-    fp.close()
-    return hash.hexdigest()
+    if not self.md5sum:
+      logging.debug("GetMd5sum() reading file %s", repr(self.pkg_path))
+      fp = open(self.pkg_path)
+      hash = hashlib.md5()
+      hash.update(fp.read())
+      fp.close()
+      self.md5sum = hash.hexdigest()
+    return self.md5sum
 
   def GetPkgchkOutput(self):
     """Returns: (exit code, stdout, stderr)."""
@@ -1046,3 +1049,53 @@ class OpencswCatalogBuilder(object):
     result = os.path.exists(srv4_path)
     logging.debug("Srv4Exists(%s) => %s, %s", pkg_dir, repr(srv4_path), result)
     return result
+
+
+class OpencswCatalog(object):
+  """Represents a catalog file."""
+
+  def __init__(self, file_name):
+    self.file_name = file_name
+    self.by_basename = {}
+    self.catalog_data = []
+
+  def _GetCatalogData(self, fd):
+    cline_re_str = (
+        r"^"
+        r"(?P<catalogname>\S+)"
+        r"\s+"
+        r"(?P<version>\S+)"
+        r"\s+"
+        r"(?P<pkgname>\S+)"
+        r"\s+"
+        r"(?P<file_basename>\S+)"
+        r"\s+"
+        r"(?P<md5sum>\S+)"
+        r"\s+"
+        r"(?P<size>\S+)"
+        r"\s+"
+        r"(?P<deps>\S+)"
+        r"\s+"
+        r"(?P<none_thing>\S+)$"
+    )
+    cline_re = re.compile(cline_re_str)
+    for line in fd:
+      m = cline_re.match(line)
+      if m:
+        d = m.groupdict()
+        self.catalog_data.append(d)
+      else:
+        logging.debug("%s did not match the regex", repr(line))
+
+  def GetCatalogData(self):
+    if not self.catalog_data:
+      fd = open(self.file_name, "r")
+      self._GetCatalogData(fd)
+    return self.catalog_data
+
+  def GetDataByBasename(self):
+    if not self.by_basename:
+      cd = self.GetCatalogData()
+      for d in cd:
+        self.by_basename[d["file_basename"]] = d
+    return self.by_basename

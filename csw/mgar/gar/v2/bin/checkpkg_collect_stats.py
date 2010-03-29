@@ -27,15 +27,30 @@ def main():
   parser.add_option("-d", "--debug", dest="debug",
                     default=False, action="store_true",
                     help="Turn on debugging messages")
+  parser.add_option("-c", "--catalog", dest="catalog_file",
+                    help="Catalog file")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
   else:
     logging.basicConfig(level=logging.INFO)
   logging.debug("Collecting statistics about given package files.")
-  logging.debug("calling: %s, please be patient", args)
+  args_display = args
+  if len(args_display) > 5:
+    args_display = args_display[:5] + ["...more..."]
+  logging.debug("Calling: %s, please be patient", args_display)
   packages = [opencsw.CswSrv4File(x, options.debug) for x in args]
+  if options.catalog_file:
+    # Using cached md5sums to save time: injecting md5sums
+    # from the catalog.
+    catalog = opencsw.OpencswCatalog(options.catalog_file)
+    md5s_by_basename = catalog.GetDataByBasename()
+    for pkg in packages:
+      basename = os.path.basename(pkg.pkg_path)
+      pkg.md5sum = md5s_by_basename[basename]["md5sum"]
   stats_list = [checkpkg.PackageStats(pkg) for pkg in packages]
+  md5s_by_basename = None # To free memory
+  catalog = None          # To free memory
   del(packages)
   stats_list.reverse()
   total_packages = len(stats_list)

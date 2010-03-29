@@ -240,11 +240,20 @@ if [[ "${DEBUG}" != "" ]]; then
 	extra_options="--debug"
 fi
 
+if [[ -n "${MD5_SUMS_CATALOG_FILE}" ]]; then
+	catalog_options="--catalog=${MD5_SUMS_CATALOG_FILE}"
+else
+	catalog_options=""
+fi
+
 # /var/sadm/install/contents cache update
 ${command_basedir}/update_contents_cache.py
 if [[ "${SKIP_STATS_COLLECTION}" -eq 0 ]]; then
-  # Collects package stats to be later analyzed
-  ${command_basedir}/checkpkg_collect_stats.py ${extra_options} "$@"
+  # Collects package stats to be analyzed later
+  ${command_basedir}/checkpkg_collect_stats.py \
+      ${catalog_options} \
+      ${extra_options} \
+      "$@"
   if [[ "$?" -ne 0 ]]; then
     errmsg "Stats collection phase has failed."
   fi
