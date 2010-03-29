@@ -3,7 +3,7 @@ GARVERSION = 0.94
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
-DESCRIPTION = $(GARNAME): validate method/function parameters
+DESCRIPTION = Validate method/function parameters
 define BLURB
   The Params::Validate module allows you to validate method or function call
   parameters to an arbitrary level of specificity. At the simplest level, it
