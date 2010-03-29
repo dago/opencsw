@@ -48,7 +48,8 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
     error_mgr.ReportError(
-        pkgname, "soname-not-found", "%s needed by %s" % (soname, binary_path))
+        pkgname, "soname-not-found", soname,
+        "%s is needed by %s" % (soname, binary_path))
   # TODO: Report orphan sonames here
   return required_deps
 
