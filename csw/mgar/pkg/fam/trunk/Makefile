@@ -19,7 +19,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://oss.sgi.com/projects/fam/
 
+sysconfdir = /etc/opt/csw
+sharedstatedir = /var/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
+
+MIFRATE_FILES = fam.conf
 
 CSWfam_etcrpc = "sgi_fam		391002"
 CSWfam_inetdconf = "sgi_fam/1-2	stream	rpc/tcp	wait	root	$(bindir)/fam	fam"
