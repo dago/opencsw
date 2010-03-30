@@ -3,7 +3,7 @@ GARVERSION = 1.01
 CATEGORIES = cpan
 AUTHOR = MARKF
 
-DESCRIPTION = test testsuites built with Test::Builder
+DESCRIPTION = Test testsuites built with Test::Builder
 define BLURB
   The testing system is designed to be used by performing a three step process
   for each test you wish to test. This process starts with using test_out and
@@ -15,13 +15,10 @@ DISTFILES += COPYING
 
 PACKAGES = CSWpmtstbldrtester
 CATALOGNAME = pm_tstbldrtester
-
 ARCHALL = 1
 
 # Seems that tests might assume a newer version of Test-Simple than is
 # provided with Perl 5.8.8.
 TEST_SCRIPTS =
-
-EXTRA_MERGE_EXCLUDE_FILES = .*\.3perl
 
 include gar/category.mk
