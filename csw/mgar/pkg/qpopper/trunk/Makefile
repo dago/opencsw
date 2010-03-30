@@ -22,6 +22,8 @@ PACKAGES = CSWqpopper
 CATALOGNAME_CSWqpopper = qpopper
 SPKG_DESC_CSWqpopper = $(DESCRIPTION)
 
+INETDCONF = /etc/opt/csw/pkg/CSWqpopper/inetd.conf
+
 SPKG_SOURCEURL = http://www.eudora.com/qpopper
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -32,6 +34,8 @@ include gar/category.mk
 
 install-custom:
 	@echo " ==> Install for $(GARNAME) (custom)"
+	@ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
+	@cp $(FILEDIR)/inetd.conf $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall -d $(DESTDIR)$(sbindir)
 	@ginstall -d $(DESTDIR)$(mandir)/man8
