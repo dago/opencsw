@@ -110,14 +110,14 @@ RUNTIME_DEP_PKGS_CSWrubydev += CSWgcc4core
 # setting.
 EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
 else
-SOS11_LD_FLAGS =
+SOS12_LD_FLAGS =
 endif
 
 include gar/category.mk
 
 SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
-RBCONFIG = /opt/csw/lib/ruby/1.8/$(GARCH)-solaris2.8/rbconfig.rb
+RBCONFIG = /opt/csw/lib/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb
 
 PI_TARGETS  = samples rbconfig rbscripts rubymode multiconfig
 
@@ -145,7 +145,7 @@ rubymode:
 # Fix up rbconfig
 rbconfig:
 	@gsed -i -e s,$(DESTDIR),, \
-		$(DESTDIR)$(libdir)/ruby/1.8/$(GARCH)-solaris2.8/rbconfig.rb
+		$(DESTDIR)$(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb
 	@$(MAKECOOKIE)
 
 # Copy samples
