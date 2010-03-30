@@ -1,5 +1,5 @@
 GARNAME = OLE-Storage_Lite
-GARVERSION = 0.18
+GARVERSION = 0.19
 CATEGORIES = cpan
 AUTHOR = JMCNAMARA
 
@@ -8,12 +8,10 @@ define BLURB
   This module allows you to read and write an OLE-Structured file.
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpmolestoragelite,)
+DISTFILES += COPYING
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+PACKAGES = CSWpmolestoragelite
+CATALOGNAME = pm_olestoragelite
+ARCHALL = 1
 
 include gar/category.mk
