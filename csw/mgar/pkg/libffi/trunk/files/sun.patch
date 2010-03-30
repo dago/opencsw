@@ -47,12 +47,3 @@ diff -Nru libffi-3.0.9.orig/src/x86/ffitarget.h libffi-3.0.9/src/x86/ffitarget.h
    FFI_DEFAULT_ABI = FFI_SYSV,
  #else
    FFI_DEFAULT_ABI = FFI_UNIX64,
-@@ -96,7 +96,7 @@
- #define FFI_TYPE_SMALL_STRUCT_2B (FFI_TYPE_LAST + 2)
- #define FFI_TYPE_SMALL_STRUCT_4B (FFI_TYPE_LAST + 3)
- 
--#if defined (X86_64) || (defined (__x86_64__) && defined (X86_DARWIN))
-+#if defined (X86_64) || ((defined (__x86_64__) || defined (__x86_64)) && defined (X86_DARWIN))
- #define FFI_TRAMPOLINE_SIZE 24
- #define FFI_NATIVE_RAW_API 0
- #else
