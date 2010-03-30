@@ -1,7 +1,7 @@
 GARNAME = Module-Load-Conditional
-GARVERSION = 0.30
+GARVERSION = 0.36
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = Query module information and load at runtime
 define BLURB
@@ -9,17 +9,21 @@ define BLURB
   any of the modules you have installed on your system during runtime.
 endef
 
-DISTFILES += $(call admfiles,CSWpmmodloadcond,)
+DISTFILES += COPYING
+
+PACKAGES = CSWpmmodloadcond
+CATALOGNAME = pm_modloadcond
+ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWpmprmscheck CSWpmmodload CSWpmlclemktxtsimple
 
-#SKIPTEST = 1
+CHECKPKG_OVERRIDES_CSWpmmodloadcond += surplus-dependency|CSWpmprmscheck
+CHECKPKG_OVERRIDES_CSWpmmodloadcond += surplus-dependency|CSWpmmodload
+CHECKPKG_OVERRIDES_CSWpmmodloadcond += surplus-dependency|CSWpmlclemktxtsimple
 
 DEPENDS += cpan/Params-Check
 DEPENDS += cpan/Module-Load
 DEPENDS += cpan/Locale-Maketext-Simple
 DEPENDS += cpan/version
-
-EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
 include gar/category.mk
