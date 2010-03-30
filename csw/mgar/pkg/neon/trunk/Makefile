@@ -121,12 +121,6 @@ FEATURES_libneon64.27  = $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.3
 FEATURES_libneon64.27 += libneon-minimal.so.27.2.3
 FEATURES_libneon64.27 += libneon-full.so.27.2.3
 
-# This is ok as the AUX pulls in the specific lib which returns the generic SONAME
-CHECKPKG_OVERRIDES_CSWneon += soname-not-found|libneon-minimal.so.27.2.3
-CHECKPKG_OVERRIDES_CSWneon += soname-not-found|libneon-minimal.so.27.2.3
-CHECKPKG_OVERRIDES_CSWneon += soname-not-found|libneon-minimal.so.26.0.4
-CHECKPKG_OVERRIDES_CSWneon += soname-not-found|libneon-minimal.so.26.0.4
-
 # This comes from krb5-config --libs
 CHECKPKG_OVERRIDES_CSWneonfull += bad-rpath-entry|/opt/csw/lib/
 
@@ -156,6 +150,7 @@ post-merge:
 		ld $(_LDFLAGS-$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L))))))) \
 			-G -h $(word 2,$(FEATURES_$L)) -o $(WORKDIR)/stub-$(notdir $(firstword $(FEATURES_$L))) $(WORKDIR)/empty$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L)))))).o;\
 		ld $(_LDFLAGS-$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L))))))) \
+			-R $(patsubst %/,%,$(dir $(firstword $(FEATURES_$L)))) \
 			-G -h `/usr/ccs/bin/dump -Lv $(dir $(firstword $(FEATURES_$L)))/$(word 2,$(FEATURES_$L)) | awk '$$2 == "SONAME" { print $$3 }'` \
 			-o $(PKGROOT)$(firstword $(FEATURES_$L)) \
 			$(foreach F,$(wordlist 3,$(words $(FEATURES_$L)),$(FEATURES_$L)),-f $F) \
