@@ -92,18 +92,34 @@ PKGFILES_CSWneonfull = .*-full.*
 PKGFILES_CSWneon-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWneon-devel += $(docdir)/.*
 
-ALTERNATIVES_CSWneon = minimal
-ALTERNATIVES_CSWneonfull = full
 
-ALTERNATIVE_minimal  = $(libdir)/libneon.so.27.2.3 neon $(libdir)/libneon-minimal.so.27.2.3 100
-ALTERNATIVE_minimal += $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.3 neon64 $(libdir)/$(ISA_DEFAULT64)/libneon-minimal.so.27.2.3
-ALTERNATIVE_minimal += $(libdir)/libneon.so.26.0.4 neon.26 $(libdir)/libneon-minimal.so.26.0.4
-ALTERNATIVE_minimal += $(libdir)/$(ISA_DEFAULT64)/libneon.so.26.0.4 neon64.26 $(libdir)/$(ISA_DEFAULT64)/libneon-minimal.so.26.0.4
+# ALTERNATIVES_CSWneon = minimal
+# ALTERNATIVES_CSWneonfull = full
 
-ALTERNATIVE_full     = $(libdir)/libneon.so.27.2.3 neon $(libdir)/libneon-full.so.27.2.3 200
-ALTERNATIVE_full    += $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.3 neon64 $(libdir)/$(ISA_DEFAULT64)/libneon-full.so.27.2.3
-ALTERNATIVE_full    += $(libdir)/libneon.so.26.0.4 neon.26 $(libdir)/libneon-full.so.26.0.4
-ALTERNATIVE_full    += $(libdir)/$(ISA_DEFAULT64)/libneon.so.26.0.4 neon64.26 $(libdir)/$(ISA_DEFAULT64)/libneon-full.so.26.0.4
+# ALTERNATIVE_minimal  = $(libdir)/libneon.so.27.2.3 neon $(libdir)/libneon-minimal.so.27.2.3 100
+# ALTERNATIVE_minimal += $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.3 neon64 $(libdir)/$(ISA_DEFAULT64)/libneon-minimal.so.27.2.3
+# ALTERNATIVE_minimal += $(libdir)/libneon.so.26.0.4 neon.26 $(libdir)/libneon-minimal.so.26.0.4
+# ALTERNATIVE_minimal += $(libdir)/$(ISA_DEFAULT64)/libneon.so.26.0.4 neon64.26 $(libdir)/$(ISA_DEFAULT64)/libneon-minimal.so.26.0.4
+
+# ALTERNATIVE_full     = $(libdir)/libneon.so.27.2.3 neon $(libdir)/libneon-full.so.27.2.3 200
+# ALTERNATIVE_full    += $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.3 neon64 $(libdir)/$(ISA_DEFAULT64)/libneon-full.so.27.2.3
+# ALTERNATIVE_full    += $(libdir)/libneon.so.26.0.4 neon.26 $(libdir)/libneon-full.so.26.0.4
+# ALTERNATIVE_full    += $(libdir)/$(ISA_DEFAULT64)/libneon.so.26.0.4 neon64.26 $(libdir)/$(ISA_DEFAULT64)/libneon-full.so.26.0.4
+
+FEATURE_LIBRARIES  = libneon.26 libneon64.26
+FEATURE_LIBRARIES += libneon.27 libneon64.27
+FEATURES_libneon.26  = $(libdir)/libneon.so.26.0.4
+FEATURES_libneon.26 += libneon-minimal.so.26.0.4
+FEATURES_libneon.26 += libneon-full.so.26.0.4
+FEATURES_libneon64.26  = $(libdir)/$(ISA_DEFAULT64)/libneon.so.26.0.4
+FEATURES_libneon64.26 += libneon-minimal.so.26.0.4
+FEATURES_libneon64.26 += libneon-full.so.26.0.4
+FEATURES_libneon.27  = $(libdir)/libneon.so.27.2.3
+FEATURES_libneon.27 += libneon-minimal.so.27.2.3
+FEATURES_libneon.27 += libneon-full.so.27.2.3
+FEATURES_libneon64.27  = $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.3
+FEATURES_libneon64.27 += libneon-minimal.so.27.2.3
+FEATURES_libneon64.27 += libneon-full.so.27.2.3
 
 include gar/category.mk
 
@@ -111,3 +127,27 @@ include gar/category.mk
 #	rm -f $(DESTDIR)$(libdir)/libneon.so
 #	gln -s libneon.so.27 $(DESTDIR)$(libdir)/libneon.so
 #	@$(MAKECOOKIE)
+
+# cc -G -c empty.c
+# ld -G -h libneon-minimal.so.26 -o stub-libneon.so.26 empty.o
+# ld -R /opt/csw/lib -G -h libneon.so.26 -o libneon.so.26 -f libneon-full.so.26 -f libneon-max.so.26 stub-libneon.so.26
+
+# 32/64 bit detection is done by looking at the last directory component and
+# guessing by ISA if it is 32 or 64 bit
+
+post-merge: _LDFLAGS-32=
+post-merge: _LDFLAGS-64=-64
+post-merge:
+post-merge:
+	cd $(WORKDIR); touch empty.c; $(CC) -G -c empty.c
+	cd $(WORKDIR); touch empty64.c; $(CC) -m64 -G -c empty64.c
+	$(foreach L,$(FEATURE_LIBRARIES),\
+		ld $(_LDFLAGS-$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L))))))) \
+			-G -h $(word 2,$(FEATURES_$L)) -o $(WORKDIR)/stub-$(notdir $(firstword $(FEATURES_$L))) $(WORKDIR)/empty$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L)))))).o;\
+		ld $(_LDFLAGS-$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L))))))) \
+			-G -h `/usr/ccs/bin/dump -Lv $(dir $(firstword $(FEATURES_$L)))/$(word 2,$(FEATURES_$L)) | awk '$$2 == "SONAME" { print $$3 }'` \
+			-o $(PKGROOT)$(firstword $(FEATURES_$L)) \
+			$(foreach F,$(wordlist 3,$(words $(FEATURES_$L)),$(FEATURES_$L)),-f $F) \
+			$(WORKDIR)/stub-$(notdir $(firstword $(FEATURES_$L))); \
+	)
+	@$(MAKECOOKIE)
