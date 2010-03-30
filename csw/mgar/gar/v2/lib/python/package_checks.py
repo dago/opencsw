@@ -75,6 +75,9 @@ RPATH_WHITELIST = [
 # Check ldd -r only for Perl modules
 SYMBOLS_CHECK_ONLY_FOR = r"^CSWpm.*$"
 
+# Valid URLs in the VENDOR field in pkginfo
+VENDORURL_RE = r"^(http|ftp)s?\://.+\..+$"
+
 
 def CatalognameLowercase(pkg_data, error_mgr, logger, messenger):
   catalogname = pkg_data["basic_stats"]["catalogname"]
@@ -130,11 +133,13 @@ def CheckDescription(pkg_data, error_mgr, logger, messenger):
       error_mgr.ReportError("pkginfo-description-not-starting-with-uppercase",
                             desc)
 
+
 def CheckVendorURL(pkg_data, error_mgr, logger, messenger):
-  vendorurl = pkg_data["pkginfo"]["VENDOR"].split(" ")[0]
-  vendorurl_re = r"^(http|ftp)s?\://.+\..+$"
-  if not re.match(vendorurl_re, vendorurl):
-    error_mgr.ReportError("pkginfo-bad-vendorurl", vendorurl, "Solution: add VENDOR_URL to GAR Recipe") 
+  vendorurl = opencsw.WS_RE.split(pkg_data["pkginfo"]["VENDOR"])[0]
+  if not re.match(VENDORURL_RE, vendorurl):
+    error_mgr.ReportError("pkginfo-bad-vendorurl", vendorurl,
+                          "Solution: add VENDOR_URL to GAR Recipe")
+
 
 def CheckCatalogname(pkg_data, error_mgr, logger, messenger):
   pkginfo = pkg_data["pkginfo"]
