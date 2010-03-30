@@ -1,9 +1,9 @@
 GARNAME = qpopper
-GARVERSION = 4.0.16
+GARVERSION = 4.0.19
 WORKSRC = $(WORKDIR)/$(GARNAME)$(GARVERSION)
 CATEGORIES = apps
 
-DESCRIPTION = the most widely-used POP3 server for Unix
+DESCRIPTION = The most widely-used POP3 server for Unix
 define BLURB
   Qpopper supports the widely used POP3 protocol for downloading Internet
   e-mail used by many popular e-mail clients. Qpopper does not include a
