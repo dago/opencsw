@@ -1,7 +1,7 @@
 GARNAME = Module-Load
-GARVERSION = 0.14
+GARVERSION = 0.18
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = Runtime require of both modules and files
 define BLURB
@@ -9,9 +9,12 @@ define BLURB
   or a module.
 endef
 
-DISTFILES += $(call admfiles,CSWpmmodload,)
+DISTFILES += COPYING
 
-#SKIPTEST = 1
+PACKAGES = CSWpmmodload
+CATALOGNAME = pm_modload
+
+ARCHALL = 1
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
