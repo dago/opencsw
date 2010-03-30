@@ -16,7 +16,8 @@ endef
 MASTER_SITES = ftp://sourceware.org/pub/libffi/
 SPKG_SOURCEURL = http://sourceware.org/libffi/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES = sun.patch
+# Not needed unless using SOS12 compiler
+#PATCHFILES = sun.patch
 
 PACKAGES = CSWlibffi CSWlibffidevel
 CATALOGNAME_CSWlibffi = libffi
@@ -29,16 +30,19 @@ PKGFILES_CSWlibffidevel = $(PKGFILES_DEVEL)
 LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS_CSWlibffidevel += CSWlibffi
-#RUNTIME_DEP_PKGS_CSWlibffi = CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibffi = CSWgcc4corert
+
+CHECKPKG_OVERRIDES_CSWlibffidevel += surplus-dependency|CSWlibffi
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-GARCOMPILER = SOS12
+GARCOMPILER = GCC4
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-# Tests fail since they are written for gcc only
+# Tests fail since they are written for gcc only if using SOS12 compiler
+# But they also fails on 64-bit
 #TEST_TARGET = check
 TEST_TARGET = 
 
@@ -56,3 +60,4 @@ pre-configure-isa-sparcv9:
 	@( cd $(WORKSRC); gsed -e "s|src/sparc/v8.S||" -e "s/AM_CFLAGS = .*/AM_CFLAGS = /" -i Makefile.am ; \
 		aclocal; \
 		automake)
+	$(MAKECOOKIE)
