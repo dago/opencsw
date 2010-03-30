@@ -121,6 +121,17 @@ FEATURES_libneon64.27  = $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.3
 FEATURES_libneon64.27 += libneon-minimal.so.27.2.3
 FEATURES_libneon64.27 += libneon-full.so.27.2.3
 
+# This is ok as the AUX pulls in the specific lib which returns the generic SONAME
+CHECKPKG_OVERRIDES_CSWneon += soname-not-found|libneon-minimal.so.27.2.3
+CHECKPKG_OVERRIDES_CSWneon += soname-not-found|libneon-minimal.so.27.2.3
+CHECKPKG_OVERRIDES_CSWneon += soname-not-found|libneon-minimal.so.26.0.4
+CHECKPKG_OVERRIDES_CSWneon += soname-not-found|libneon-minimal.so.26.0.4
+
+# This comes from krb5-config --libs
+CHECKPKG_OVERRIDES_CSWneonfull += bad-rpath-entry|/opt/csw/lib/
+
+CHECKPKG_OVERRIDES_CSWneon-devel += surplus-dependency|CSWneon
+
 include gar/category.mk
 
 #post-install-modulated:
