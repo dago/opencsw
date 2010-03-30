@@ -132,7 +132,7 @@ def CheckDescription(pkg_data, error_mgr, logger, messenger):
 
 def CheckVendorURL(pkg_data, error_mgr, logger, messenger):
   vendorurl = pkg_data["pkginfo"]["VENDOR"].split(" ")[0]
-  vendorurl_re = r"^(http|ftp)\://.+\..+$"
+  vendorurl_re = r"^(http|ftp)s?\://.+\..+$"
   if not re.match(vendorurl_re, vendorurl):
     error_mgr.ReportError("pkginfo-bad-vendorurl", vendorurl, "Solution: add VENDOR_URL to GAR Recipe") 
 

@@ -441,5 +441,11 @@ class TestCheckVendorURL_Good(CheckpkgUnitTestHelper, unittest.TestCase):
     # URL is okay.
 
 
+class TestCheckVendorURL_Https(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = "CheckVendorURL"
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["VENDOR"] = "https://www.example.com/"
+
+
 if __name__ == '__main__':
   unittest.main()
