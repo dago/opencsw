@@ -1,12 +1,14 @@
 GARNAME = Module-CoreList
-GARVERSION = 2.17
+GARVERSION = 2.26
 CATEGORIES = cpan
-AUTHOR = RGARCIA
+AUTHOR = BINGOS
 
 DESCRIPTION = What modules shipped with versions of Perl
 define BLURB
   What modules shipped with versions of Perl
 endef
+
+DISTFILES += COPYING
 
 PACKAGES = CSWpmmodcorelist
 CATALOGNAME = pm_modcorelist
