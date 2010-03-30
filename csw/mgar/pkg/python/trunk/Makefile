@@ -119,6 +119,9 @@ RUNTIME_DEP_PKGS_CSWpython-tk    += CSWlibx11
 RUNTIME_DEP_PKGS_CSWpython-devel  = CSWpython
 RUNTIME_DEP_PKGS_CSWpython-test  += CSWpython
 
+# This could be handled by automatic dependency detection
+CHECKPKG_OVERRIDES_CSWidle += surplus-dependency|CSWpython-tk
+
 CATALOGNAME_CSWidle         = idle
 CATALOGNAME_CSWpython       = python
 CATALOGNAME_CSWpython-devel = python_devel
@@ -132,10 +135,6 @@ SPKG_DESC_CSWpython-tk    = Python Tk Interface (TkInter)
 SPKG_DESC_CSWpython-test  = Python Test modules
 
 LICENSE = LICENSE
-
-# Need to adjust the RPATH:
-# CHECKPKG_OVERRIDES_CSWpython       += missing-dependency|CSWbdb
-# CHECKPKG_OVERRIDES_CSWpython += surplus-dependency|CSWbdb47
 
 # These won't be fixed.
 CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/export/medusa|root/opt/csw/lib/libpython2.5.so.1.0
