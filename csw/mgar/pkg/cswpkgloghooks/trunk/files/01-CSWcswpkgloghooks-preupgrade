@@ -1,4 +1,4 @@
-#!/opt/csw/bin/bash
+#!env bash
 
 set -- ${1/-/ }
 

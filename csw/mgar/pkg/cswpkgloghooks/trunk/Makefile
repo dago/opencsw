@@ -1,5 +1,5 @@
 GARNAME = cswpkgloghooks
-GARVERSION = 1.0
+GARVERSION = 1.1
 CATEGORIES = utils
 
 VENDOR_URL = http://opencsw.org
@@ -12,7 +12,7 @@ Install, upgrade and removal actions are logged, both on success and on
 failure.  Currently, the default of user.notice is used.
 endef
 
-RUNTIME_DEP_PKGS = CSWbash
+VENDOR_URL = http://www.opencsw.org/
 
 MASTER_SITES = 
 DISTFILES =
