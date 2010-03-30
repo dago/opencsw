@@ -1,0 +1,60 @@
+From 6a802824b4484fb354caf9ece683f9b83f65d648 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 30 Mar 2010 10:01:44 +0200
+Subject: [PATCH] Force bash on specific tests
+
+---
+ tests/bre.sh          |    2 +-
+ tests/ere.sh          |    2 +-
+ tests/spencer1-locale |    2 +-
+ tests/spencer1.sh     |    2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/tests/bre.sh b/tests/bre.sh
+index 0a1153b..e511805 100755
+--- a/tests/bre.sh
++++ b/tests/bre.sh
+@@ -14,5 +14,5 @@ failures=0
+ 
+ ${AWK-awk} -f $srcdir/bre.awk $srcdir/bre.tests > bre.script
+ 
+-sh bre.script && exit $failures
++bash bre.script && exit $failures
+ exit 1
+diff --git a/tests/ere.sh b/tests/ere.sh
+index 2ebdc63..208582b 100755
+--- a/tests/ere.sh
++++ b/tests/ere.sh
+@@ -15,5 +15,5 @@ failures=0
+ 
+ ${AWK-awk} -f $srcdir/ere.awk $srcdir/ere.tests > ere.script
+ 
+-sh ere.script && exit $failures
++bash ere.script && exit $failures
+ exit 1
+diff --git a/tests/spencer1-locale b/tests/spencer1-locale
+index fa9909d..6da7165 100755
+--- a/tests/spencer1-locale
++++ b/tests/spencer1-locale
+@@ -19,6 +19,6 @@ ${AWK-awk} -v extra_locale=$LOCALE_FR_UTF8 \
+     -f "$abs_srcdir/spencer1-locale.awk" "$abs_srcdir/spencer1.tests" \
+   > spencer1-locale.script || fail=1
+ 
+-sh spencer1-locale.script || fail=1
++bash spencer1-locale.script || fail=1
+ 
+ Exit $fail
+diff --git a/tests/spencer1.sh b/tests/spencer1.sh
+index 0bd6bd1..47325d2 100755
+--- a/tests/spencer1.sh
++++ b/tests/spencer1.sh
+@@ -15,5 +15,5 @@ failures=0
+ 
+ ${AWK-awk} -f $srcdir/spencer1.awk $srcdir/spencer1.tests > spencer1.script
+ 
+-sh spencer1.script && exit $failures
++bash spencer1.script && exit $failures
+ exit 1
+-- 
+1.7.0
+

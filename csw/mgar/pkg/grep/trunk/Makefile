@@ -1,5 +1,5 @@
 GARNAME = grep
-GARVERSION = 2.6
+GARVERSION = 2.6.2
 CATEGORIES = utils
 
 DESCRIPTION = GNU grep
@@ -15,20 +15,23 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTNAME = grep-2.6.7-64540
 DISTFILES = $(DISTNAME).tar.xz
 
+# Force bash until this is fixed:
+#   http://savannah.gnu.org/bugs/?29381
+PATCHFILES = 0001-Force-bash-on-specific-tests.patch
+
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.xz
 
-DEP_PKGS_CSWgrep = CSWggettextrt CSWpcrert
-
-# As suggested in
-#   <http://savannah.gnu.org/bugs/?24813>
-EXTRA_CFLAGS = -features=extensions
+DEP_PKGS = CSWggettextrt CSWpcrert
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
+
+# Skip tests as they fail only in gnulib and are probably harmless:
+#   https://savannah.gnu.org/bugs/?29380
+SKIPTEST ?= 1
 
 TEST_TARGET = check
 
