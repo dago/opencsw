@@ -1,0 +1,156 @@
+# $Id$
+
+GARNAME = Python
+GARVERSION = 2.6.5
+CATEGORIES = lang
+
+# Known issues:
+#
+# - No 64-bit build
+# - ctypes module doesn't compile
+#   - http://forums.sun.com/thread.jspa?threadID=5148204
+
+SPKG_SOURCEURL = http://python.org/download/releases/$(GARVERSION)
+
+DESCRIPTION = A high-level scripting language.
+define BLURB
+  Python is an interpreted, interactive, object-oriented programming language.
+  It combines remarkable power with very clear syntax, and isnt difficult to
+  learn.  It has modules, classes, exceptions, very high level data types, and
+  dynamic typing. There are interfaces to many system calls and libraries, as
+  well as to various windowing systems (Tk, Mac, MFC, GTK+, Qt, wxWindows).
+  Newbuilt-in modules are easily written in C or C++. Python is also usable as
+  an extension language for applications that need a programmable interface.
+endef
+
+MASTER_SITES = http://python.org/ftp/python/$(GARVERSION)/
+UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
+
+DISTFILES  = $(DISTNAME).tar.bz2
+
+# Previous Library for compatability
+DISTFILES += libpython2.5.so.1.0-isa-sparcv8
+DISTFILES += libpython2.5.so.1.0-isa-i386
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+# Patches
+PATCHFILES += faqwiz.diff
+PATCHFILES += makesetup.diff
+PATCHFILES += modules.diff
+PATCHFILES += multiprocess.diff
+PATCHFILES += pyport.diff
+PATCHFILES += site.diff
+PATCHFILES += python-config-in.diff
+PATCHFILES += setup.diff
+
+# Test for sunaudiodev fails.
+SKIPTEST = 1
+
+EXTRA_INC += $(prefix)/X11/include
+EXTRA_LIB += $(prefix)/X11/lib
+EXTRA_LIB += $(prefix)/bdb47/lib
+EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+
+BASECFLAGS = $(CFLAGS)
+EXTRA_COMMON_EXPORTS = BASECFLAGS
+
+NOISALIST = 1
+CONFIGURE_ARGS  = $(DIRPATHS) 
+CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS += --enable-unicode=ucs4
+CONFIGURE_ARGS += --without-gcc
+CONFIGURE_ARGS += --with-signal-module
+CONFIGURE_ARGS += --with-fpectl
+CONFIGURE_ARGS += --with-system-ffi
+
+# This doesn't work here, as _PYCOMPILE_FILES is not the directory Python uses.
+# PYCOMPILE = 1
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+# use prototype filters to set the class 
+PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
+
+PACKAGES  = CSWidle
+PACKAGES += CSWpython
+PACKAGES += CSWpython-devel
+PACKAGES += CSWpython-test
+PACKAGES += CSWpython-tk
+
+INCOMPATIBLE_PKGS_CSWpython = CSWpydistutils
+
+PKGFILES_CSWidle  = $(libdir)/.*/idlelib/.*
+PKGFILES_CSWidle += $(bindir)/idle
+PKGFILES_CSWpython-devel  = $(includedir)/.*
+PKGFILES_CSWpython-devel += $(libdir)/.*/config/.*
+PKGFILES_CSWpython-devel += $(bindir)/.*config.*
+# No idea why would this be in CSWpython, and no good idea for a better package
+# to put it.
+PKGFILES_CSWpython-devel += $(bindir)/smtpd.py
+PKGFILES_CSWpython-tk  = $(libdir)/.*/lib-tk/.*
+PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
+PKGFILES_CSWpython-test  = $(libdir)/python/test/.*
+PKGFILES_CSWpython-test += $(libdir)/python/bsddb/test.*
+PKGFILES_CSWpython-test += $(libdir)/python/ctypes/test.*
+PKGFILES_CSWpython-test += $(libdir)/python/email/test.*
+PKGFILES_CSWpython-test += $(libdir)/python/distutils/tests.*
+PKGFILES_CSWpython-test += $(libdir)/python/json/tests.*
+PKGFILES_CSWpython-test += $(libdir)/python/lib2to3/tests.*
+PKGFILES_CSWpython-test += $(libdir)/python/sqlite3/test.*
+
+ARCHALL_CSWpython-test = 1
+ARCHALL_CSWidle        = 1
+
+RUNTIME_DEP_PKGS_CSWidle          = CSWpython CSWpython-tk
+RUNTIME_DEP_PKGS_CSWpython       += CSWbdb47
+RUNTIME_DEP_PKGS_CSWpython       += CSWbzip2
+RUNTIME_DEP_PKGS_CSWpython       += CSWgdbm
+RUNTIME_DEP_PKGS_CSWpython       += CSWggettextrt 
+RUNTIME_DEP_PKGS_CSWpython       += CSWncurses
+RUNTIME_DEP_PKGS_CSWpython       += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpython       += CSWreadline 
+RUNTIME_DEP_PKGS_CSWpython       += CSWsqlite3rt CSWzlib
+RUNTIME_DEP_PKGS_CSWpython-tk    += CSWpython
+RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtcl
+RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtk 
+RUNTIME_DEP_PKGS_CSWpython-tk    += CSWlibx11
+RUNTIME_DEP_PKGS_CSWpython-devel  = CSWpython
+RUNTIME_DEP_PKGS_CSWpython-test  += CSWpython
+
+# This could be handled by automatic dependency detection
+CHECKPKG_OVERRIDES_CSWidle += surplus-dependency|CSWpython-tk
+
+CATALOGNAME_CSWidle         = idle
+CATALOGNAME_CSWpython       = python
+CATALOGNAME_CSWpython-devel = python_devel
+CATALOGNAME_CSWpython-tk    = python_tk
+CATALOGNAME_CSWpython-test  = python_test
+
+SPKG_DESC_CSWidle         = Python IDE
+SPKG_DESC_CSWpython       = A high-level scripting language.
+SPKG_DESC_CSWpython-devel = Development Files for Python
+SPKG_DESC_CSWpython-tk    = Python Tk Interface (TkInter)
+SPKG_DESC_CSWpython-test  = Python Test modules
+
+LICENSE = LICENSE
+
+# These won't be fixed.
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/export/medusa|root/opt/csw/lib/libpython2.5.so.1.0
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/opt/build|root/opt/csw/lib/libpython2.5.so.1.0
+# Amusingly, now the overrides file contains the bad data.
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/export/medusa|root/opt/csw/share/checkpkg/overrides/python
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/opt/build|root/opt/csw/share/checkpkg/overrides/python
+
+include gar/category.mk
+
+post-install-modulated: install-deprecated-libs
+	@$(MAKECOOKIE)
+
+install-deprecated-libs:
+	echo "===> Installing deprecated Libraries into $(libdir)"
+	cp $(DOWNLOADDIR)/libpython2.5.so.1.0-$(MODULATION) \
+		$(DESTDIR)$(libdir)/libpython2.5.so.1.0
+	cd $(DESTDIR)$(libdir); ln -s libpython2.5.so.1.0 libpython2.5.so
+	@$(MAKECOOKIE)

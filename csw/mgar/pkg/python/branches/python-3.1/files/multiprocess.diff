@@ -1,0 +1,45 @@
+--- Python-2.6.1/Modules/_multiprocessing/multiprocessing.h	2008-11-04 14:43:31.000000000 -0600
++++ ./multiprocessing.h	2009-02-08 11:44:33.901496225 -0600
+@@ -39,6 +39,20 @@
+ #endif
+ 
+ /*
++ * Solaris 8 missing CMSG_SPACE and CMSG_LEN
++ */
++#ifndef CMSG_SPACE
++#  define CMSG_SPACE(l)       (_CMSG_DATA_ALIGN(sizeof(struct cmsghdr)) + \
++                                      _CMSG_HDR_ALIGN(l))
++#  warning "assuming 4-byte alignment for CMSG_SPACE"
++#endif  /* CMSG_SPACE */
++
++#ifndef CMSG_LEN
++#  define CMSG_LEN(l)         (_CMSG_DATA_ALIGN(sizeof(struct cmsghdr)) + (l))
++#  warning "assuming 4-byte alignment for CMSG_LEN"
++#endif /* CMSG_LEN */
++
++/*
+  * Issue 3110 - Solaris does not define SEM_VALUE_MAX
+  */
+ #ifndef SEM_VALUE_MAX
+Index: Python-2.6.2/Modules/_multiprocessing/multiprocessing.h
+===================================================================
+--- Python-2.6.2/Modules/_multiprocessing/multiprocessing.h  (revision 66181)
++++ Python-2.6.2/Modules/_multiprocessing/multiprocessing.h  (working copy)
+@@ -37,6 +37,17 @@
+ #endif
+ 
+ /*
++ * Issue 3110 - Solaris does not define SEM_VALUE_MAX
++ */
++#ifndef SEM_VALUE_MAX
++#  ifdef _SEM_VALUE_MAX
++#    define SEM_VALUE_MAX _SEM_VALUE_MAX
++#  else
++#    define SEM_VALUE_MAX INT_MAX
++#  endif
++#endif
++
++/*
+  * Make sure Py_ssize_t available
+  */
+
