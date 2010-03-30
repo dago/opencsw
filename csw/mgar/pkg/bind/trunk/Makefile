@@ -70,7 +70,7 @@ PKGFILES_CSWbindchroot = .*chroot.*
 INSTALL_SCRIPTS = custom
 
 PROTOTYPE_MODIFIERS = 1
-PROTOTYPE_FILES_1 = /var/opt/csw/named
+PROTOTYPE_FILES_1 = /var/opt/csw/named.*
 PROTOTYPE_CLASS_1 = ugfiles
 PROTOTYPE_USER_1 = named
 PROTOTYPE_GROUP_1 = named
@@ -82,6 +82,10 @@ SAMPLECONF += /etc/opt/csw/pkg/CSWbind/bind
 USERGROUP = /etc/opt/csw/pkg/CSWbind/cswusergroup
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
+
+CHECKPKG_OVERRIDES_CSWbinddevel += surplus-dependency|CSWbind
+CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
+CHECKPKG_OVERRIDES_CSWbindchroot += surplus-dependency|CSWbind
 
 include gar/category.mk
 
