@@ -1,5 +1,5 @@
 GARNAME = Number-Format
-GARVERSION = 1.70
+GARVERSION = 1.73
 CATEGORIES = cpan
 AUTHOR = WRW
 
@@ -14,14 +14,10 @@ define BLURB
   user.
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpmnumberformat,)
+DISTFILES += COPYING
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-#CONFIGURE_ARGS = $(DIRPATHS)
-
-EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+PACKAGES = CSWpmnumberformat
+CATALOGNAME = pm_numberformat
+ARCHALL = 1
 
 include gar/category.mk
