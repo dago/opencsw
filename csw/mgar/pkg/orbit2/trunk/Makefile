@@ -11,6 +11,8 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
 PACKAGES = CSWorbit2
 CATALOGNAME = orbit2
 
@@ -18,10 +20,12 @@ RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2 CSWlibidl
 
 SPKG_SOURCEURL = http://projects.gnome.org/ORBit2/
 
+CPP = /usr/lib/cpp
+CXXCPP = /usr/lib/cpp
+EXTRA_COMMON_EXPORTS = CPP CXXCPP
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 STRIP_LIBTOOL = 1
-
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 NOISAEXEC = 1
@@ -32,8 +36,6 @@ TEST_TARGET = check
 
 EXTRA_MERGE_INCLUDE_FILES  = $(libdir)/libname-server-2.a
 
-CPP = /usr/lib/cpp
-CXXCPP = /usr/lib/cpp
-EXTRA_COMMON_EXPORTS = CPP CXXCPP
+CHECKPKG_OVERRIDES_CSWorbit2 += soname-not-found|libm.so.2
 
 include gar/category.mk
