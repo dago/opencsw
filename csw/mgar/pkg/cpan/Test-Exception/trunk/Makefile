@@ -13,14 +13,8 @@ endef
 PACKAGES = CSWpmtstexception
 CATALOGNAME = pm_tstexception
 
-# depends
-RUNTIME_DEP_PKGS     = CSWpmsubuplevel
-BUILD_DEP_PKGS       = CSWpmsubuplevel
-
 ARCHALL = 1
 
-CHECKPKG_OVERRIDES_CSWpmtstexception += license-missing
-# what is this?
-CHECKPKG_OVERRIDES_CSWpmtstexception += surplus-dependency|CSWpmsubuplevel
+LICENSE = $(FILEDIR)/LICENSE
 
 include gar/category.mk
