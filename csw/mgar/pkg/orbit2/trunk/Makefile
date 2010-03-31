@@ -26,6 +26,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 BUILD64 = 1
 NOISAEXEC = 1
 
+# The test involves one manual step, skip for automatic building
+SKIPTEST ?= 1
 TEST_TARGET = check
 
 EXTRA_MERGE_INCLUDE_FILES  = $(libdir)/libname-server-2.a
