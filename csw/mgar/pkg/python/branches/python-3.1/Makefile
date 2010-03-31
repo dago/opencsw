@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = Python
-GARVERSION = 2.6.5
+GARVERSION = 3.1.2
 CATEGORIES = lang
 
 # Known issues:
@@ -28,11 +28,6 @@ UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
-# Previous Library for compatability
-DISTFILES += libpython2.5.so.1.0-isa-sparcv8
-DISTFILES += libpython2.5.so.1.0-isa-i386
-
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Patches
@@ -40,17 +35,16 @@ PATCHFILES += faqwiz.diff
 PATCHFILES += makesetup.diff
 PATCHFILES += modules.diff
 PATCHFILES += multiprocess.diff
-PATCHFILES += pyport.diff
-PATCHFILES += site.diff
-PATCHFILES += python-config-in.diff
-PATCHFILES += setup.diff
+# PATCHFILES += pyport.diff
+# PATCHFILES += site.diff
+# PATCHFILES += python-config-in.diff
+# PATCHFILES += setup.diff
 
 # Test for sunaudiodev fails.
 SKIPTEST = 1
 
 EXTRA_INC += $(prefix)/X11/include
 EXTRA_LIB += $(prefix)/X11/lib
-EXTRA_LIB += $(prefix)/bdb47/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
@@ -73,84 +67,74 @@ EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 # use prototype filters to set the class 
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
-PACKAGES  = CSWidle
-PACKAGES += CSWpython
-PACKAGES += CSWpython-devel
-PACKAGES += CSWpython-test
-PACKAGES += CSWpython-tk
+PACKAGES  = CSWidle31
+PACKAGES += CSWpython31
+PACKAGES += CSWpython31-devel
+PACKAGES += CSWpython31-test
+PACKAGES += CSWpython31-tk
 
-INCOMPATIBLE_PKGS_CSWpython = CSWpydistutils
+INCOMPATIBLE_PKGS_CSWpython31 = CSWpydistutils
 
-PKGFILES_CSWidle  = $(libdir)/.*/idlelib/.*
-PKGFILES_CSWidle += $(bindir)/idle
-PKGFILES_CSWpython-devel  = $(includedir)/.*
-PKGFILES_CSWpython-devel += $(libdir)/.*/config/.*
-PKGFILES_CSWpython-devel += $(bindir)/.*config.*
-# No idea why would this be in CSWpython, and no good idea for a better package
+PKGFILES_CSWidle31  = $(libdir)/.*/idlelib/.*
+PKGFILES_CSWidle31 += $(bindir)/idle
+PKGFILES_CSWpython31-devel  = $(includedir)/.*
+PKGFILES_CSWpython31-devel += $(libdir)/.*/config/.*
+PKGFILES_CSWpython31-devel += $(bindir)/.*config.*
+# No idea why would this be in CSWpython31, and no good idea for a better package
 # to put it.
-PKGFILES_CSWpython-devel += $(bindir)/smtpd.py
-PKGFILES_CSWpython-tk  = $(libdir)/.*/lib-tk/.*
-PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
-PKGFILES_CSWpython-test  = $(libdir)/python/test/.*
-PKGFILES_CSWpython-test += $(libdir)/python/bsddb/test.*
-PKGFILES_CSWpython-test += $(libdir)/python/ctypes/test.*
-PKGFILES_CSWpython-test += $(libdir)/python/email/test.*
-PKGFILES_CSWpython-test += $(libdir)/python/distutils/tests.*
-PKGFILES_CSWpython-test += $(libdir)/python/json/tests.*
-PKGFILES_CSWpython-test += $(libdir)/python/lib2to3/tests.*
-PKGFILES_CSWpython-test += $(libdir)/python/sqlite3/test.*
+PKGFILES_CSWpython31-devel += $(bindir)/smtpd.py
+PKGFILES_CSWpython31-tk  = $(libdir)/.*/lib-tk/.*
+PKGFILES_CSWpython31-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
+PKGFILES_CSWpython31-test  = $(libdir)/python/test/.*
+PKGFILES_CSWpython31-test += $(libdir)/python/bsddb/test.*
+PKGFILES_CSWpython31-test += $(libdir)/python/ctypes/test.*
+PKGFILES_CSWpython31-test += $(libdir)/python/email/test.*
+PKGFILES_CSWpython31-test += $(libdir)/python/distutils/tests.*
+PKGFILES_CSWpython31-test += $(libdir)/python/json/tests.*
+PKGFILES_CSWpython31-test += $(libdir)/python/lib2to3/tests.*
+PKGFILES_CSWpython31-test += $(libdir)/python/sqlite3/test.*
 
-ARCHALL_CSWpython-test = 1
-ARCHALL_CSWidle        = 1
+ARCHALL_CSWpython31-test = 1
+ARCHALL_CSWidle31        = 1
 
-RUNTIME_DEP_PKGS_CSWidle          = CSWpython CSWpython-tk
-RUNTIME_DEP_PKGS_CSWpython       += CSWbdb47
-RUNTIME_DEP_PKGS_CSWpython       += CSWbzip2
-RUNTIME_DEP_PKGS_CSWpython       += CSWgdbm
-RUNTIME_DEP_PKGS_CSWpython       += CSWggettextrt 
-RUNTIME_DEP_PKGS_CSWpython       += CSWncurses
-RUNTIME_DEP_PKGS_CSWpython       += CSWosslrt
-RUNTIME_DEP_PKGS_CSWpython       += CSWreadline 
-RUNTIME_DEP_PKGS_CSWpython       += CSWsqlite3rt CSWzlib
-RUNTIME_DEP_PKGS_CSWpython-tk    += CSWpython
-RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtcl
-RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtk 
-RUNTIME_DEP_PKGS_CSWpython-tk    += CSWlibx11
-RUNTIME_DEP_PKGS_CSWpython-devel  = CSWpython
-RUNTIME_DEP_PKGS_CSWpython-test  += CSWpython
+RUNTIME_DEP_PKGS_CSWidle31         += CSWpython31
+RUNTIME_DEP_PKGS_CSWidle31         += CSWpython31-tk
+RUNTIME_DEP_PKGS_CSWpython31       += CSWbzip2
+RUNTIME_DEP_PKGS_CSWpython31       += CSWgdbm
+RUNTIME_DEP_PKGS_CSWpython31       += CSWggettextrt 
+RUNTIME_DEP_PKGS_CSWpython31       += CSWncurses
+RUNTIME_DEP_PKGS_CSWpython31       += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpython31       += CSWreadline 
+RUNTIME_DEP_PKGS_CSWpython31       += CSWsqlite3rt CSWzlib
+RUNTIME_DEP_PKGS_CSWpython31-tk    += CSWpython31
+RUNTIME_DEP_PKGS_CSWpython31-tk    += CSWtcl
+RUNTIME_DEP_PKGS_CSWpython31-tk    += CSWtk 
+RUNTIME_DEP_PKGS_CSWpython31-tk    += CSWlibx11
+RUNTIME_DEP_PKGS_CSWpython31-devel += CSWpython31
+RUNTIME_DEP_PKGS_CSWpython31-test  += CSWpython31
 
 # This could be handled by automatic dependency detection
-CHECKPKG_OVERRIDES_CSWidle += surplus-dependency|CSWpython-tk
+CHECKPKG_OVERRIDES_CSWidle31 += surplus-dependency|CSWpython31-tk
 
-CATALOGNAME_CSWidle         = idle
-CATALOGNAME_CSWpython       = python
-CATALOGNAME_CSWpython-devel = python_devel
-CATALOGNAME_CSWpython-tk    = python_tk
-CATALOGNAME_CSWpython-test  = python_test
+CATALOGNAME_CSWidle31         = idle_31
+CATALOGNAME_CSWpython31       = python_31
+CATALOGNAME_CSWpython31-devel = python_31_devel
+CATALOGNAME_CSWpython31-tk    = python_31_tk
+CATALOGNAME_CSWpython31-test  = python_31_test
 
-SPKG_DESC_CSWidle         = Python IDE
-SPKG_DESC_CSWpython       = A high-level scripting language.
-SPKG_DESC_CSWpython-devel = Development Files for Python
-SPKG_DESC_CSWpython-tk    = Python Tk Interface (TkInter)
-SPKG_DESC_CSWpython-test  = Python Test modules
+SPKG_DESC_CSWidle31         = Python IDE
+SPKG_DESC_CSWpython31       = A high-level scripting language, 3.1 series
+SPKG_DESC_CSWpython31-devel = Development Files for Python
+SPKG_DESC_CSWpython31-tk    = Python Tk Interface (TkInter)
+SPKG_DESC_CSWpython31-test  = Python Test modules
+
+CHECKPKG_OVERRIDES_CSWpython31 += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython31-test += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython31-test += surplus-dependency|CSWpython31
+CHECKPKG_OVERRIDES_CSWidle31 += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWidle31 += surplus-dependency|CSWpython31
+CHECKPKG_OVERRIDES_CSWpython31-devel += surplus-dependency|CSWpython31
 
 LICENSE = LICENSE
 
-# These won't be fixed.
-CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/export/medusa|root/opt/csw/lib/libpython2.5.so.1.0
-CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/opt/build|root/opt/csw/lib/libpython2.5.so.1.0
-# Amusingly, now the overrides file contains the bad data.
-CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/export/medusa|root/opt/csw/share/checkpkg/overrides/python
-CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/opt/build|root/opt/csw/share/checkpkg/overrides/python
-
 include gar/category.mk
-
-post-install-modulated: install-deprecated-libs
-	@$(MAKECOOKIE)
-
-install-deprecated-libs:
-	echo "===> Installing deprecated Libraries into $(libdir)"
-	cp $(DOWNLOADDIR)/libpython2.5.so.1.0-$(MODULATION) \
-		$(DESTDIR)$(libdir)/libpython2.5.so.1.0
-	cd $(DESTDIR)$(libdir); ln -s libpython2.5.so.1.0 libpython2.5.so
-	@$(MAKECOOKIE)
