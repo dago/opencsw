@@ -1,5 +1,5 @@
 GARNAME = audiofile
-GARVERSION = 0.2.6
+GARVERSION = 0.2.7
 CATEGORIES = lib
 
 DESCRIPTION = Silicon Graphics Audio File Library
@@ -14,6 +14,9 @@ endef
 
 MASTER_SITES = http://www.68k.org/~michael/audiofile/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+
+# Delivered from the Michael Pruett (upstream author)
+PATCHFILES = 0001-Add-missing-headers-for-C99.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

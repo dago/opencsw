@@ -1,0 +1,126 @@
+diff -rNc -x Makefile -x .deps -x 'config.*' -x autom4te.cache audiofile-0.2.7/libaudiofile/Makefile.am audiofile-0.2.7-solaris9/libaudiofile/Makefile.am
+*** audiofile-0.2.7/libaudiofile/Makefile.am	2010-03-12 00:57:54.000000000 -0800
+--- audiofile-0.2.7-solaris9/libaudiofile/Makefile.am	2010-03-30 22:09:59.000000000 -0700
+***************
+*** 1,5 ****
+--- 1,8 ----
+  ## Process this file with automake to produce Makefile.in
+  
++ 
++ INCLUDES = -I$(srcdir)/../solaris9
++ 
+  SUBDIRS = modules
+  
+  lib_LTLIBRARIES = libaudiofile.la
+diff -rNc -x Makefile -x .deps -x 'config.*' -x autom4te.cache audiofile-0.2.7/libaudiofile/Makefile.in audiofile-0.2.7-solaris9/libaudiofile/Makefile.in
+*** audiofile-0.2.7/libaudiofile/Makefile.in	2010-03-30 22:43:55.000000000 -0700
+--- audiofile-0.2.7-solaris9/libaudiofile/Makefile.in	2010-03-30 22:43:41.000000000 -0700
+***************
+*** 258,263 ****
+--- 258,264 ----
+  top_build_prefix = @top_build_prefix@
+  top_builddir = @top_builddir@
+  top_srcdir = @top_srcdir@
++ INCLUDES = -I$(srcdir)/../solaris9
+  SUBDIRS = modules
+  lib_LTLIBRARIES = libaudiofile.la
+  EXTRA_DIST = audiofile.exports
+diff -rNc -x Makefile -x .deps -x 'config.*' -x autom4te.cache audiofile-0.2.7/libaudiofile/modules/Makefile.am audiofile-0.2.7-solaris9/libaudiofile/modules/Makefile.am
+*** audiofile-0.2.7/libaudiofile/modules/Makefile.am	2010-03-12 00:57:54.000000000 -0800
+--- audiofile-0.2.7-solaris9/libaudiofile/modules/Makefile.am	2010-03-30 22:12:22.000000000 -0700
+***************
+*** 1,6 ****
+  noinst_LTLIBRARIES = libmodules.la
+  
+! INCLUDES = -I$(srcdir)/..
+  
+  libmodules_la_SOURCES = \
+  	g711.c g711.h \
+--- 1,6 ----
+  noinst_LTLIBRARIES = libmodules.la
+  
+! INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../../solaris9
+  
+  libmodules_la_SOURCES = \
+  	g711.c g711.h \
+diff -rNc -x Makefile -x .deps -x 'config.*' -x autom4te.cache audiofile-0.2.7/libaudiofile/modules/Makefile.in audiofile-0.2.7-solaris9/libaudiofile/modules/Makefile.in
+*** audiofile-0.2.7/libaudiofile/modules/Makefile.in	2010-03-30 22:43:55.000000000 -0700
+--- audiofile-0.2.7-solaris9/libaudiofile/modules/Makefile.in	2010-03-30 22:43:41.000000000 -0700
+***************
+*** 188,194 ****
+  top_builddir = @top_builddir@
+  top_srcdir = @top_srcdir@
+  noinst_LTLIBRARIES = libmodules.la
+! INCLUDES = -I$(srcdir)/..
+  libmodules_la_SOURCES = \
+  	g711.c g711.h \
+  	pcm.c pcm.h \
+--- 188,194 ----
+  top_builddir = @top_builddir@
+  top_srcdir = @top_srcdir@
+  noinst_LTLIBRARIES = libmodules.la
+! INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../../solaris9
+  libmodules_la_SOURCES = \
+  	g711.c g711.h \
+  	pcm.c pcm.h \
+diff -rNc -x Makefile -x .deps -x 'config.*' -x autom4te.cache audiofile-0.2.7/solaris9/stdbool.h audiofile-0.2.7-solaris9/solaris9/stdbool.h
+*** audiofile-0.2.7/solaris9/stdbool.h	1969-12-31 16:00:00.000000000 -0800
+--- audiofile-0.2.7-solaris9/solaris9/stdbool.h	2010-03-30 22:01:04.000000000 -0700
+***************
+*** 0 ****
+--- 1,9 ----
++ #ifndef REPLACEMENT_STDBOOL_H
++ #define REPLACEMENT_STDBOOL_H
++ 
++ typedef int bool;
++ 
++ #define true 1
++ #define false 0
++ 
++ #endif
+diff -rNc -x Makefile -x .deps -x 'config.*' -x autom4te.cache audiofile-0.2.7/solaris9/stdint.h audiofile-0.2.7-solaris9/solaris9/stdint.h
+*** audiofile-0.2.7/solaris9/stdint.h	1969-12-31 16:00:00.000000000 -0800
+--- audiofile-0.2.7-solaris9/solaris9/stdint.h	2010-03-30 22:14:13.000000000 -0700
+***************
+*** 0 ****
+--- 1,6 ----
++ #ifndef REPLACEMENT_STDINT_H
++ #define REPLACEMENT_STDINT_H
++ 
++ #include <inttypes.h>
++ 
++ #endif
+diff -rNc -x Makefile -x .deps -x 'config.*' -x autom4te.cache audiofile-0.2.7/test/Makefile.am audiofile-0.2.7-solaris9/test/Makefile.am
+*** audiofile-0.2.7/test/Makefile.am	2010-03-18 23:48:34.000000000 -0700
+--- audiofile-0.2.7-solaris9/test/Makefile.am	2010-03-30 22:15:23.000000000 -0700
+***************
+*** 1,4 ****
+! INCLUDES = -I$(top_srcdir)/libaudiofile
+  
+  noinst_PROGRAMS = \
+  	error \
+--- 1,4 ----
+! INCLUDES = -I$(top_srcdir)/libaudiofile -I$(top_srcdir)/solaris9
+  
+  noinst_PROGRAMS = \
+  	error \
+diff -rNc -x Makefile -x .deps -x 'config.*' -x autom4te.cache audiofile-0.2.7/test/Makefile.in audiofile-0.2.7-solaris9/test/Makefile.in
+*** audiofile-0.2.7/test/Makefile.in	2010-03-30 22:43:56.000000000 -0700
+--- audiofile-0.2.7-solaris9/test/Makefile.in	2010-03-30 22:43:41.000000000 -0700
+***************
+*** 351,357 ****
+  top_build_prefix = @top_build_prefix@
+  top_builddir = @top_builddir@
+  top_srcdir = @top_srcdir@
+! INCLUDES = -I$(top_srcdir)/libaudiofile
+  EXTRA_DIST = transparency.sh misc.sh pipe.sh
+  LDADD = $(top_builddir)/libaudiofile/libaudiofile.la
+  DEPENDENCIES = $(top_builddir)/libaudiofile/libaudiofile.la
+--- 351,357 ----
+  top_build_prefix = @top_build_prefix@
+  top_builddir = @top_builddir@
+  top_srcdir = @top_srcdir@
+! INCLUDES = -I$(top_srcdir)/libaudiofile -I$(top_srcdir)/solaris9
+  EXTRA_DIST = transparency.sh misc.sh pipe.sh
+  LDADD = $(top_builddir)/libaudiofile/libaudiofile.la
+  DEPENDENCIES = $(top_builddir)/libaudiofile/libaudiofile.la

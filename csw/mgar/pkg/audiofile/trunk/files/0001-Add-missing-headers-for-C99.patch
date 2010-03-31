@@ -1,0 +1,121 @@
+From 25c928419abb78f3836a52cb80db5bdd79dd6b52 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 31 Mar 2010 10:37:31 +0200
+Subject: [PATCH] Add missing headers for C99
+
+---
+ libaudiofile/Makefile.am         |    3 +++
+ libaudiofile/Makefile.in         |    1 +
+ libaudiofile/modules/Makefile.am |    2 +-
+ libaudiofile/modules/Makefile.in |    2 +-
+ solaris9/stdbool.h               |    9 +++++++++
+ solaris9/stdint.h                |    6 ++++++
+ test/Makefile.am                 |    2 +-
+ test/Makefile.in                 |    2 +-
+ 8 files changed, 23 insertions(+), 4 deletions(-)
+ create mode 100644 solaris9/stdbool.h
+ create mode 100644 solaris9/stdint.h
+
+diff --git a/libaudiofile/Makefile.am b/libaudiofile/Makefile.am
+index 9481114..22429b9 100644
+--- a/libaudiofile/Makefile.am
++++ b/libaudiofile/Makefile.am
+@@ -1,5 +1,8 @@
+ ## Process this file with automake to produce Makefile.in
+ 
++
++INCLUDES = -I$(srcdir)/../solaris9
++
+ SUBDIRS = modules
+ 
+ lib_LTLIBRARIES = libaudiofile.la
+diff --git a/libaudiofile/Makefile.in b/libaudiofile/Makefile.in
+index 60ac924..9754369 100644
+--- a/libaudiofile/Makefile.in
++++ b/libaudiofile/Makefile.in
+@@ -203,6 +203,7 @@ sbindir = @sbindir@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
++INCLUDES = -I$(srcdir)/../solaris9
+ SUBDIRS = modules
+ lib_LTLIBRARIES = libaudiofile.la
+ EXTRA_DIST = audiofile.exports
+diff --git a/libaudiofile/modules/Makefile.am b/libaudiofile/modules/Makefile.am
+index 02b8f91..8d853c2 100644
+--- a/libaudiofile/modules/Makefile.am
++++ b/libaudiofile/modules/Makefile.am
+@@ -1,6 +1,6 @@
+ noinst_LTLIBRARIES = libmodules.la
+ 
+-INCLUDES = -I$(srcdir)/..
++INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../../solaris9
+ 
+ libmodules_la_SOURCES = \
+ 	g711.c g711.h \
+diff --git a/libaudiofile/modules/Makefile.in b/libaudiofile/modules/Makefile.in
+index d9b4a21..1e0462e 100644
+--- a/libaudiofile/modules/Makefile.in
++++ b/libaudiofile/modules/Makefile.in
+@@ -180,7 +180,7 @@ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ noinst_LTLIBRARIES = libmodules.la
+-INCLUDES = -I$(srcdir)/..
++INCLUDES = -I$(srcdir)/.. -I$(srcdir)/../../solaris9
+ libmodules_la_SOURCES = \
+ 	g711.c g711.h \
+ 	pcm.c pcm.h \
+diff --git a/solaris9/stdbool.h b/solaris9/stdbool.h
+new file mode 100644
+index 0000000..ba8c753
+--- /dev/null
++++ b/solaris9/stdbool.h
+@@ -0,0 +1,9 @@
++#ifndef REPLACEMENT_STDBOOL_H
++#define REPLACEMENT_STDBOOL_H
++
++typedef int bool;
++
++#define true 1
++#define false 0
++
++#endif
+diff --git a/solaris9/stdint.h b/solaris9/stdint.h
+new file mode 100644
+index 0000000..0dafabc
+--- /dev/null
++++ b/solaris9/stdint.h
+@@ -0,0 +1,6 @@
++#ifndef REPLACEMENT_STDINT_H
++#define REPLACEMENT_STDINT_H
++
++#include <inttypes.h>
++
++#endif
+diff --git a/test/Makefile.am b/test/Makefile.am
+index f0b0dcb..7374653 100644
+--- a/test/Makefile.am
++++ b/test/Makefile.am
+@@ -1,4 +1,4 @@
+-INCLUDES = -I$(top_srcdir)/libaudiofile
++INCLUDES = -I$(top_srcdir)/libaudiofile -I$(top_srcdir)/solaris9
+ 
+ noinst_PROGRAMS = \
+ 	error \
+diff --git a/test/Makefile.in b/test/Makefile.in
+index 92e6ec2..bdd7e18 100644
+--- a/test/Makefile.in
++++ b/test/Makefile.in
+@@ -333,7 +333,7 @@ sbindir = @sbindir@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-INCLUDES = -I$(top_srcdir)/libaudiofile
++INCLUDES = -I$(top_srcdir)/libaudiofile -I$(top_srcdir)/solaris9
+ EXTRA_DIST = transparency.sh misc.sh pipe.sh
+ TESTS = error writeaiff writeircam writenext writewave writeraw \
+ 	writeavr writeiff writenist \
+-- 
+1.7.0
+
