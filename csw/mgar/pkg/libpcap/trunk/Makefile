@@ -1,5 +1,5 @@
 GARNAME = libpcap
-GARVERSION = 1.0.0
+GARVERSION = 1.1
 CATEGORIES = lib
 
 DESCRIPTION = System-independent interface for user-level packet capture
@@ -15,9 +15,9 @@ LICENSE = LICENSE
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES  = sf-bugtrack-2224954-fix-autoconf-header.diff
-PATCHFILES += sf-bugtrack-2504874-create-dir-patch.diff
-PATCHFILES += shared-library.diff
+# PATCHFILES  = sf-bugtrack-2224954-fix-autoconf-header.diff
+# PATCHFILES += sf-bugtrack-2504874-create-dir-patch.diff
+# PATCHFILES += shared-library.diff
 
 PACKAGES = CSWlibpcap CSWlibpcapdevel
 
@@ -25,7 +25,9 @@ CATALOGNAME_CSWlibpcap = libpcap
 CATALOGNAME_CSWlibpcapdevel = libpcap_devel
 
 SPKG_DESC_CSWlibpcap = System-independent interface for user-level packet capture
-SPKG_DESC_CSWlibpcapdevel = libpcap development files
+SPKG_DESC_CSWlibpcapdevel = Development files for libpcap
+
+RUNTIME_DEP_PKGS_CSWlibpcapdevel = CSWlibpcap
 
 BUILD64 = 1
 
@@ -55,10 +57,10 @@ MERGE_DIRS_isa-pentium = $(libdir)
 
 PKGFILES_CSWlibpcapdevel = $(PKGFILES_DEVEL)
 
-RUNTIME_DEP_PKGS_CSWlibpcapdevel = CSWlibpcap
+CHECKPKG_OVERRIDES_CSWlibpcapdevel += surplus-dependency|CSWlibpcap
 
 include gar/category.mk
 
-post-install-modulated:
-	ln -s libpcap.so.1.0.0 $(DESTDIR)$(libdir)/libpcap.so
-	@$(MAKECOOKIE)
+#post-install-modulated:
+#	ln -s libpcap.so.1.0.0 $(DESTDIR)$(libdir)/libpcap.so
+#	@$(MAKECOOKIE)
