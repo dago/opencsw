@@ -1,5 +1,5 @@
 GARNAME = cswpkgloghooks
-GARVERSION = 1.1
+GARVERSION = 1.1.1
 CATEGORIES = utils
 
 VENDOR_URL = http://opencsw.org
