@@ -14,6 +14,14 @@ PACKAGES = CSWpmnetanalysis
 CATALOGNAME = pm_netanalysis
 
 # depends
-BUILD_DEP_PKGS = CSWpmnetpcap CSWpmnetpacket CSWpmtstmockobject
+DEP_PKGS = CSWpmnetpcap CSWpmnetpacket CSWpmtstmockobject
+
+LICENSE = $(FILEDIR)/LICENSE
+
+ARCHALL = 1
+
+CHECKPKG_OVERRIDES_CSWpmnetanalysis += surplus-dependency|CSWpmtstmockobject
+CHECKPKG_OVERRIDES_CSWpmnetanalysis += surplus-dependency|CSWpmnetpcap
+CHECKPKG_OVERRIDES_CSWpmnetanalysis += surplus-dependency|CSWpmnetpacket
 
 include gar/category.mk
