@@ -627,7 +627,6 @@ _MERGE_INCLUDE_FILES = $(MERGE_INCLUDE_FILES)
 else
 _MERGE_INCLUDE_FILES = $(MERGE_INCLUDE_FILES_$(MODULATION))
 endif
-_MERGE_INCLUDE_FILES += $(EXTRA_MERGE_INCLUDE_FILES) $(EXTRA_MERGE_INCLUDE_FILES_$(MODULATION))
 
 # This can be defined in category.mk
 MERGE_EXCLUDE_CATEGORY ?= $(_MERGE_EXCLUDE_CATEGORY)
@@ -654,8 +653,10 @@ endif
 _MERGE_EXCLUDE_FILES += $(EXTRA_MERGE_EXCLUDE_FILES) $(EXTRA_MERGE_EXCLUDE_FILES_$(MODULATION)) $(MERGE_EXCLUDE_DEFAULT)
 
 # This variable contains parameter for pax to honor global file inclusion/exclusion
+# Make sure include overrides are processed first
+_INC_EXT_RULE = $(foreach F,$(EXTRA_MERGE_INCLUDE_FILES) $(EXTRA_MERGE_INCLUDE_FILES_$(MODULATION)),-s ",^\(\.$F\)$$,\1,")
 # Exclude by replacing files with the empty string
-_INC_EXT_RULE = $(foreach F,$(_MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
+_INC_EXT_RULE += $(foreach F,$(_MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
 # Replace files by itself terminating on first match
 _INC_EXT_RULE += $(foreach F,$(_MERGE_INCLUDE_FILES),-s ",^\(\.$F\)$$,\1,")
 
