@@ -1,8 +1,8 @@
 GARNAME = tcpdump
-GARVERSION = 4.0.0
+GARVERSION = 4.1
 CATEGORIES = utils
 
-DESCRIPTION = tcpdump allows you to dump the traffic on a network
+DESCRIPTION = Dump network traffic
 define BLURB
 endef
 
@@ -11,8 +11,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 LICENSE = LICENSE
 
-BUILD_DEP_PKGS = CSWlibpcap CSWosslrt CSWossldevel
-RUNTIME_DEP_PKGS = CSWlibpcap CSWosslrt
+BUILD_DEP_PKGS = CSWlibpcap CSWosslrt CSWossldevel CSWlibsmi
+RUNTIME_DEP_PKGS = CSWlibpcap CSWosslrt CSWlibsmi
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -24,7 +24,10 @@ TEST_SCRIPTS =
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS += --with-crypto=$(prefix)
+CONFIGURE_ARGS += --with-smi
 
+# There is a versioned tcpdump, which is not a hardlink. No need for that.
 EXTRA_MERGE_EXCLUDE_FILES = $(sbindir)/tcpdump\..*
 
 include gar/category.mk
