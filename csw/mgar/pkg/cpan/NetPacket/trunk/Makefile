@@ -14,8 +14,8 @@ endef
 PACKAGES = CSWpmnetpacket
 CATALOGNAME = pm_netpacket
 
-CHECKPKG_OVERRIDES = license-missing
-
 ARCHALL = 1
+
+LICENSE = $(FILEDIR)/LICENSE
 
 include gar/category.mk
