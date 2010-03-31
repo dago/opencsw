@@ -27,4 +27,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
+# amd64 on i386
+CHECKPKG_OVERRIDES_CSWaudiofile += soname-not-found|libm.so.2
+CHECKPKG_OVERRIDES_CSWaudiofile += soname-not-found|libm.so.2
+CHECKPKG_OVERRIDES_CSWaudiofile += soname-not-found|libm.so.2
+
 include gar/category.mk
