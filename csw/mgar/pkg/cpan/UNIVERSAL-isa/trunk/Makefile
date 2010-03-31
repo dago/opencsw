@@ -26,6 +26,7 @@ TEST_SCRIPTS = $(WORKSRC)/Build
 INSTALL_SCRIPTS = $(WORKSRC)/Build
 
 ARCHALL = 1
-CHECKPKG_OVERRIDES = license-missing
+
+LICENSE = $(FILEDIR)/LICENSE
 
 include gar/category.mk
