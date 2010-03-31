@@ -17,15 +17,13 @@ endef
 PACKAGES = CSWpmuniversalcan
 CATALOGNAME = pm_universalcan
 
-RUNTIME_DEP_PKGS = CSWpmmodulebuild
-
 CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
 BUILD_SCRIPTS = $(WORKSRC)/Build
 TEST_SCRIPTS = $(WORKSRC)/Build
 INSTALL_SCRIPTS = $(WORKSRC)/Build
 
-ARCHALL_CSWpmuniversalcan += 1
-CHECKPKG_OVERRIDES_CSWpmuniversalcan += license-missing
-CHECKPKG_OVERRIDES_CSWpmuniversalcan += surplus-dependency|CSWpmmodulebuild
+LICENSE = $(FILEDIR)/LICENSE
+
+ARCHALL = 1
 
 include gar/category.mk
