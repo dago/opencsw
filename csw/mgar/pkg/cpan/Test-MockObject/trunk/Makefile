@@ -1,5 +1,5 @@
 GARNAME = Test-MockObject
-GARVERSION = 1.07
+GARVERSION = 1.09
 CATEGORIES = cpan
 AUTHOR = CHROMATIC
 
@@ -11,6 +11,17 @@ define BLURB
   supposed to be testing anyway.
 endef
 
-DISTFILES += CSWpmtstmockobject.gspec
+PACKAGES = CSWpmtstmockobject
+CATALOGNAME = pm_tstmockobject
+
+DEP_PKGS = CSWpmtstexception CSWpmuniversalisa CSWpmuniversalcan
+
+ARCHALL = 1
+
+LICENSE = $(FILEDIR)/LICENSE
+
+CHECKPKG_OVERRIDES_CSWpmtstmockobject += surplus-dependency|CSWpmtstexception
+CHECKPKG_OVERRIDES_CSWpmtstmockobject += surplus-dependency|CSWpmuniversalisa
+CHECKPKG_OVERRIDES_CSWpmtstmockobject += surplus-dependency|CSWpmuniversalcan
 
 include gar/category.mk
