@@ -12,10 +12,11 @@ endef
 PACKAGES = CSWpmnetpcap
 CATALOGNAME = pm_netpcap
 
+# add a proper license
+ LICENSE = $(FILEDIR)/LICENSE
+
 # depends
 RUNTIME_DEP_PKGS     = CSWlibpcap
 BUILD_DEP_PKGS       = $(RUNTIME_DEP_PKGS) CSWlibpcapdevel
-
-LICENSE = README
 
 include gar/category.mk
