@@ -17,10 +17,6 @@ PACKAGES = CSWap2modwsgi
 
 RUNTIME_DEP_PKGS_CSWap2modwsgi = CSWpython
 CATALOGNAME_CSWap2modwsgi   = ap2_modwsgi
-SPKG_DESC_CSWap2modwsgi     = an Apache/Python WSGI adapter module
-
-#PATCHFILES  = configure.diff
-#PATCHFILES += connobject.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
