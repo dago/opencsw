@@ -29,12 +29,6 @@ INSTALL_SCRIPTS = custom
 LICENSE = COPYING
 ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWtcl CSWtk CSWtkdiff
-POST_INSTALL_TARGETS := fixscript
-
-# Script needs to run wish from /opt/csw
-fixscript:
-	@echo " ==> Fixing wish path in tkcvs script"
-	perl -i -plne "s{^exec wish}{exec ${bindir}/wish}g" $(DESTDIR)$(prefix)/bin/tkcvs
 
 include gar/category.mk
 
@@ -44,6 +38,7 @@ IMAGE_FILES = $(wildcard $(WORKSRC)/tkcvs/bitmaps/*.gif $(WORKSRC)/tkcvs/bitmaps
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
 	@ginstall -D $(WORKSRC)/tkcvs/tkcvs.tcl $(DESTDIR)$(prefix)/bin/tkcvs
+	perl -i -plne "s{^exec wish}{exec ${bindir}/wish}g" $(DESTDIR)$(prefix)/bin/tkcvs
 	@ginstall -D $(WORKSRC)/tkcvs/tkcvs.1 $(DESTDIR)$(prefix)/share/man/man1/tkcvs.1
 	@ginstall -d $(DESTDIR)$(prefix)/lib/tkcvs/bitmaps
 	@ginstall -m 644 $(TCL_FILES) $(WORKSRC)/tkcvs/tclIndex $(DESTDIR)$(prefix)/lib/tkcvs
