@@ -45,6 +45,7 @@ CHECKPKG_OVERRIDES_CSWruby19tk += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWruby19tk += surplus-dependency|CSWruby19
 CHECKPKG_OVERRIDES_CSWruby19 += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWruby19ri += surplus-dependency|CSWruby19
+CHECKPKG_OVERRIDES_CSWruby19tk += linked-against-discouraged-library|tcltklib.so|libX11.so.4
 
 RUNTIME_DEP_PKGS_CSWruby19 = CSWgdbm CSWiconv CSWncurses CSWosslrt
 RUNTIME_DEP_PKGS_CSWruby19 += CSWreadline CSWzlib
