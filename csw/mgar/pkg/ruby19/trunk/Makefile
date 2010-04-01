@@ -34,6 +34,18 @@ PACKAGES =  CSWruby19 CSWruby19doc CSWruby19ri CSWruby19tk CSWruby19dev
 ARCHALL_CSWruby19doc = 1
 ARCHALL_CSWruby19ri = 1
 
+# checkpkg overrides
+CHECKPKG_OVERRIDES_CSWruby19dev += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby19dev += surplus-dependency|CSWruby19
+CHECKPKG_OVERRIDES_CSWruby19doc += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWruby19doc += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby19doc += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWruby19doc += surplus-dependency|CSWruby19
+CHECKPKG_OVERRIDES_CSWruby19tk += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby19tk += surplus-dependency|CSWruby19
+CHECKPKG_OVERRIDES_CSWruby19 += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby19ri += surplus-dependency|CSWruby19
+
 RUNTIME_DEP_PKGS_CSWruby19 = CSWgdbm CSWiconv CSWncurses CSWosslrt
 RUNTIME_DEP_PKGS_CSWruby19 += CSWreadline CSWzlib
 RUNTIME_DEP_PKGS_CSWruby19doc = CSWruby19
