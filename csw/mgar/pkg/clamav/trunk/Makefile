@@ -1,5 +1,5 @@
 GARNAME = clamav
-GARVERSION = 0.96rc1
+GARVERSION = 0.96
 #DISTNAME = $(GARNAME)-devel-latest
 CATEGORIES = apps
 
@@ -33,6 +33,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
 
+#GARCOMPILER = GCC4
+
 # Seems to be a compiler bug forcing us to use -xO2 instead of -xO3
 # http://bugs.sun.com/view_bug.do?bug_id=6683773
 # New bug filed since the above one isn't really solved, no bug id yet
@@ -42,11 +44,15 @@ sysconfdir = /etc/opt/csw
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-clamav
-CONFIGURE_ARGS += --enable-milter
 # unrecognized by 0.95rc1? CONFIGURE_ARGS += --with-sendmail=$(libdir)/sendmail
 CONFIGURE_ARGS += --with-dbdir=/var/opt/csw/$(GARNAME)/db
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(GARNAME)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
+CONFIGURE_ARGS += --enable-milter
+#CONFIGURE_ARGS += --enable-llvm
+CONFIGURE_ARGS += --disable-llvm
+#CONFIGURE_ARGS += --enable-check
+CONFIGURE_ARGS += --enable-clamdtop
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
