@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = httpd
-GARVERSION = 2.2.14
+GARVERSION = 2.2.15
 CATEGORIES = server
 
 DESCRIPTION = A high performance HTTP server.
@@ -15,12 +15,17 @@ include files/config.mk
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
-PACKAGES  = CSWapache2
-# packages with dashes need this so gar does not thing -devel is a version number
-# CATALOGNAME_CSWapache2-devel = apache2_devel
+PACKAGES  = CSWapache2 CSWapache2-devel
 
 # Descriptions for every package
 # SPKG_DESC_CSWapache2 = $(DESCRIPTION)
+
+SPKG_DESC_CSWapache2-devel      = Apache2 Development Support
+CATALOGNAME_CSWapache2-devel    = apache2_devel
+ARCHALL_CSWapache2-devel        = 1
+#PKGFILES_CSWapache2-devel       = $(PKGFILES_DEVEL)
+PKGFILES_CSWapache2-devel       = $(APACHE_ROOT)/*.h
+
 
 # Contents for every package.
 # You don't define PKGFILES_CSWapache2, it's going to be the default,
