@@ -11,7 +11,7 @@ define BLURB
 endef
 
 # work around dumb checkpkg not recognizing the license file ...
-LICENSE = LICENCSE
+LICENSE = LICENSE
 
 include files/config.mk
 
