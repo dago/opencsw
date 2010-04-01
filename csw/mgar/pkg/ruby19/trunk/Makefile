@@ -64,7 +64,7 @@ SPKG_DESC_CSWruby19dev = Ruby 1.9 Extension Development Files
 
 PKGFILES_CSWruby19doc = $(docdir)/ruby19/sample.*
 
-PKGFILES_CSWruby19ri = $(sharedir)/ri19.* $(bindir)/ri19
+PKGFILES_CSWruby19ri = $(datadir)/ri19.* $(bindir)/ri19
 
 PKGFILES_CSWruby19tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
