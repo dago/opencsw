@@ -10,6 +10,9 @@ define BLURB
   best around in terms of functionality, efficiency, security and speed.
 endef
 
+# work around dumb checkpkg not recognizing the license file ...
+LICENSE = LICENCSE
+
 include files/config.mk
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -41,11 +44,9 @@ DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
-RUNTIME_DEP_PKGS_CSWapache2        = CSWbdb CSWexpat CSWgdbm CSWiconv
+RUNTIME_DEP_PKGS_CSWapache2        = CSWexpat CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2       += CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWzlib
-RUNTIME_DEP_PKGS_CSWapache2       += CSWsqlite3rt CSWsqlite3 CSWcswclassutils
-RUNTIME_DEP_PKGS_CSWapache2       += CSWggettextrt CSWgsed
-RUNTIME_DEP_PKGS_CSWapache2       += CSWperl
+RUNTIME_DEP_PKGS_CSWapache2       += CSWsqlite3rt CSWcswclassutils
 
 # The SMF support: you don't need to specify cswinitsmf any more.  You need to
 # make sure the the /etc/opt/csw/init.d/cswapache file gets installed during
