@@ -2,6 +2,7 @@ GARNAME = mod_wsgi
 GARVERSION = 3.2
 CATEGORIES = lib
 
+
 DESCRIPTION = an Apache/Python WSGI adapter module
 define BLURB
   Mod_wsgi is a python WSGI adapter module for Apache.
@@ -10,6 +11,7 @@ endef
 MASTER_SITES = http://modwsgi.googlecode.com/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += postinstall preremove space
+LICENSE = LICENCE
 
 PACKAGES = CSWap2modwsgi
 
