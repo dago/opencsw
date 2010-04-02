@@ -1,5 +1,5 @@
 GARNAME = nagios
-GARVERSION = 3.2.0
+GARVERSION = 3.2.1
 CATEGORIES = apps
 
 DESCRIPTION = nagios network monitoring base package (no plugins)
@@ -9,19 +9,20 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES += $(call admfiles,CSWnagios,checkinstall preinstall preremove prototype )
-DISTFILES += CSWnagios.checkinstall CSWnagios.preinstall CSWnagios.preremove CSWnagios.prototype
+DISTFILES += CSWnagios.checkinstall CSWnagios.preinstall CSWnagios.preremove CSWnagios.prototype CSWnagios.postinstall
 DISTFILES += cswnagios
 
 PATCHFILES = patch.diff	# cgi/cmd.c - GNU macro __attribute__ unknown to compiler
 			# http://article.gmane.org/gmane.network.nagios.devel/4726
 			# (Error 2)
-PATCHFILES += configure.diff	# configure
 PATCHFILES += install-opts.diff	# sets in every Makefile.in "INSTALL_OPT="" (empty)
 				# necessary, so ginstall doesn't get -o and -g options
 
 PACKAGES = CSWnagios
 CATALOGNAME = nagios
+
+PACKAGING_PLATFORMS = solaris9-sparc
+PACKAGING_PLATFORMS += solaris9-i386
 
 RUNTIME_DEP_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
 RUNTIME_DEP_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWap2modphp5 CSWcswclassutils
@@ -48,7 +49,6 @@ CONFIGURE_ARGS += --with-lockfile=/var/opt/csw/nagios/nagios.lock
 CONFIGURE_ARGS += --localstatedir=/var$(prefix)
 
 EXTRA_LIB = $(BUILD_PREFIX)/lib
-EXTRA_INC = $(BUILD_PREFIX)/include
 
 BUILD_ARGS = all
 

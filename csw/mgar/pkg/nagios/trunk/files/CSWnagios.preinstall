@@ -11,17 +11,23 @@ cat << EOF
 
 =======================================================================
 
-From Nagios 3.2.0 on the configuration and log files for the OpenCSW 
-package are stored in /etc/opt/csw/nagios/ and /var/opt/csw/nagios/.
+From Nagios 3.2.1 on the configuration and log files for this package
+are stored in /etc/opt/csw/nagios/ and /var/opt/csw/nagios/.
 
-Changes you made to your existing config will automatically 
-moved to the new location.
+The standard config files will be moved automatically to the new 
+location.  Files made by your own will remain in /opt/csw/nagios/etc/
+and have to be moved manually by you.
 
+Don't forget to change the pathes in your config files. Verify the 
+new config with the following command:
 
-Please be aware, that it's very likely that you have to change your
-nagios.cfg to that changes.
+   /opt/csw/nagios/bin/nagios -v /etc/opt/csw/nagios/nagios.cfg
 
-            Installation will proceed in 30 seconds. 
+You can find additional information at:
+
+   http://wiki.opencsw.org/nagios
+
+         The installation will proceed in 30 seconds.
              Press CTRL+C if you want to stop now.
 
 =======================================================================
