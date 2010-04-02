@@ -109,16 +109,17 @@ MERGE_EXCLUDE_STATICLIBS =
 
 COMPILE_ELISP = 1
 
-PI_TARGETS  = samples rbconfig rbscripts
+PI_TARGETS  = samples rbconfig rbscripts multiconfig
 
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
 
+multiconfig: RBCONFIG=/opt/csw/lib/ruby19/1.9.1/$(GARCH)-solaris2.9/rbconfig.rb
 multiconfig:
 	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
-	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).SOS11
+	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).SOS12
 	@gcp $(FILEDIR)/rbconfig.rb.GCC4.$(GARCH) $(DESTDIR)/$(RBCONFIG).GCC4
-	@gln -n -s $(RBCONFIG).SOS11 $(DESTDIR)$(RBCONFIG)
+	@gln -n -s $(RBCONFIG).SOS12 $(DESTDIR)$(RBCONFIG)
 	@gcp $(FILEDIR)/cswrbconfig $(DESTDIR)/opt/csw/bin/cswrbconfig19
 	@chmod 755 $(DESTDIR)/opt/csw/bin/cswrbconfig19
 	@ginstall -c -d -m 0755 $(DESTDIR)$(docdir)/$(GARNAME)/
