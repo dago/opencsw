@@ -52,6 +52,7 @@ RUNTIME_DEP_PKGS_CSWapache2       += CSWsqlite3rt CSWcswclassutils
 # make sure the the /etc/opt/csw/init.d/cswapache file gets installed during
 # the post-install stage, and add "INITSMF = /etc/opt/csw/init.d/cswapache" to
 # the Makefile.
+INITSMF = /etc/opt/csw/init.d/cswapache2
 
 pre-configure-modulated:
 	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); ./buildconf)
