@@ -22,3 +22,9 @@ TEST_SCRIPTS      =
 
 include gar/category.mk
 
+pre-build-modulated:
+	@echo "Changing /bin/sh to /opt/csw/bin/bash in test scripts..."
+	@(cd $(WORKSRC)/tests; \
+		ggrep -rl '#!/bin/sh' * | \
+			xargs perl -pi -e 's|#!/bin/sh|#!/opt/csw/bin/bash|' )
+	@$(MAKECOOKIE)
