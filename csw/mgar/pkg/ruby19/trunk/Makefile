@@ -29,18 +29,18 @@ define BLURB
   closures.
 endef
 
-PACKAGES =  CSWruby19 CSWruby19doc CSWruby19ri CSWruby19tk CSWruby19dev
+PACKAGES =  CSWruby19 CSWruby19samples CSWruby19ri CSWruby19tk CSWruby19dev
 
-ARCHALL_CSWruby19doc = 1
+ARCHALL_CSWruby19samples = 1
 ARCHALL_CSWruby19ri = 1
 
 # checkpkg overrides
 CHECKPKG_OVERRIDES_CSWruby19dev += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWruby19dev += surplus-dependency|CSWruby19
-CHECKPKG_OVERRIDES_CSWruby19doc += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWruby19doc += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby19doc += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWruby19doc += surplus-dependency|CSWruby19
+CHECKPKG_OVERRIDES_CSWruby19samples += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWruby19samples += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby19samples += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWruby19samples += surplus-dependency|CSWruby19
 CHECKPKG_OVERRIDES_CSWruby19tk += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWruby19tk += surplus-dependency|CSWruby19
 CHECKPKG_OVERRIDES_CSWruby19 += missing-dependency|CSWruby
@@ -49,12 +49,12 @@ CHECKPKG_OVERRIDES_CSWruby19tk += linked-against-discouraged-library|tcltklib.so
 
 RUNTIME_DEP_PKGS_CSWruby19 = CSWgdbm CSWiconv CSWncurses CSWosslrt
 RUNTIME_DEP_PKGS_CSWruby19 += CSWreadline CSWzlib
-RUNTIME_DEP_PKGS_CSWruby19doc = CSWruby19
+RUNTIME_DEP_PKGS_CSWruby19samples = CSWruby19
 RUNTIME_DEP_PKGS_CSWruby19tk = CSWruby19 CSWtk CSWtcl
 RUNTIME_DEP_PKGS_CSWruby19dev = CSWruby19
 RUNTIME_DEP_PKGS_CSWruby19ri = CSWruby19
 
-SPKG_DESC_CSWruby19doc = Documentation for Ruby 1.9
+SPKG_DESC_CSWruby19samples = Example programs for Ruby 1.9
 
 SPKG_DESC_CSWruby19ri = Ruby 1.9 Interactive Reference
 
@@ -62,7 +62,7 @@ SPKG_DESC_CSWruby19tk = Ruby 1.9 Tcl/TK Extension
 
 SPKG_DESC_CSWruby19dev = Ruby 1.9 Extension Development Files
 
-PKGFILES_CSWruby19doc = $(docdir)/ruby19/sample.*
+PKGFILES_CSWruby19samples = $(docdir)/ruby19/sample.*
 
 PKGFILES_CSWruby19ri = $(datadir)/ri19.* $(bindir)/ri19
 
