@@ -20,9 +20,9 @@ DISTFILES += proxy.c.patch
 DISTFILES += 0002-Dont-preset-CFLAGS.patch
 
 PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-#PATCHFILES  = 0001-Use-xc99-for-Sun-Studio-compiler.patch
 # For Solaris 10 targets
 PATCHFILES_solaris10-sparc += SunStudio-have-no-stdc99-flag.patch
 PATCHFILES_solaris10-i386 += SunStudio-have-no-stdc99-flag.patch
@@ -34,9 +34,19 @@ PATCHFILES_solaris8-i386_isa-amd64 += SunStudio-have-no-stdc99-flag.patch
 PATCHFILES_solaris8-i386_isa-i386 += Solaris8-have-no-stdc99-flag.patch
 PATCHFILES_solaris8-i386_isa-i386 += stdfiles.patch
 PATCHFILES_solaris8-i386_isa-i386 += proxy.c.patch
+#For Solaris 9 targets
+PATCHFILES_solaris9-sparc += Solaris8-have-no-stdc99-flag.patch
+PATCHFILES_solaris9-sparc += proxy.c.patch
+PATCHFILES_solaris9-sparc += stdfiles.patch
+PATCHFILES_solaris9-i386_isa-amd64 += SunStudio-have-no-stdc99-flag.patch
+PATCHFILES_solaris9-i386_isa-i386 += Solaris8-have-no-stdc99-flag.patch
+PATCHFILES_solaris9-i386_isa-i386 += stdfiles.patch
+PATCHFILES_solaris9-i386_isa-i386 += proxy.c.patch
+#For all targets
+PATCHFILES += 0002-Dont-preset-CFLAGS.patch
+# Merge them all together
 PATCHFILES += $(PATCHFILES_$(GAR_PLATFORM))
 PATCHFILES += $(PATCHFILES_$(GAR_PLATFORM)_$(MODULATION))
-PATCHFILES += 0002-Dont-preset-CFLAGS.patch
 
 
 PACKAGES = CSWlibproxy CSWlibproxydevel CSWpy-libproxy
@@ -53,14 +63,18 @@ SPKG_DESC_CSWlibproxykde = $(DESCRIPTION) - kde module
 SPKG_DESC_CSWlibproxygnome = $(DESCRIPTION) - gnome module
 
 RUNTIME_DEP_PKGS_CSWlibproxy += 
+
 RUNTIME_DEP_PKGS_CSWlibproxydevel += CSWlibproxy
+
 RUNTIME_DEP_PKGS_CSWpy-libproxy += CSWpython CSWlibproxy
+
 RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibice
 RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibproxy
 RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibsm
 RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibx11
 RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibxmu
 RUNTIME_DEP_PKGS_CSWlibproxygnome += CSWlibxt
+
 RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibice
 RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibproxy
 RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibsm
@@ -69,6 +83,13 @@ RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibxmu
 RUNTIME_DEP_PKGS_CSWlibproxykde += CSWlibxt
 
 BUILD_DEP_PKGS += CSWlibx11devel CSWlibxmudevel CSWlibdbusdev
+
+CHECKPKG_OVERRIDES_CSWpy-libproxy += surplus-dependency|CSWlibproxy
+CHECKPKG_OVERRIDES_CSWlibproxy += soname-not-found|libm.so.2
+CHECKPKG_OVERRIDES_CSWlibproxykde += soname-not-found|libm.so.2
+CHECKPKG_OVERRIDES_CSWlibproxydevel += surplus-dependency|CSWlibproxy
+CHECKPKG_OVERRIDES_CSWlibproxygnome += soname-not-found|libm.so.2
+
 #Disable Mozilla/Firefox/Seamonkey plugin until there is a 64-bit version
 #BUILD_DEP_PKGS += CSWmozilla CSWseamonkey CSWfirefox
 
@@ -83,6 +104,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_LINKER_FLAGS = -lnsl
 BUILD64 = 1
+
+# Skip 64 bit binaries - they are just big and gain nothing
+MERGE_DIRS_isa-extra = $(libdir)
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
