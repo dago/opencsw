@@ -27,28 +27,32 @@ GIT_TREEISH = $(if $(GIT_TREEISH_$(1)),$(GIT_TREEISH_$(1)),HEAD)
 
 #################### FETCH RULES ####################
 
-URLS = $(call URLSTRIP,$(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(ALLFILES_PATCHFILES))))
+URLS = $(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(ALLFILES_PATCHFILES)))
 
 # if the caller has defined _postinstall, etc targets for a package, add
 # these 'dynamic script' targets to our fetch list
-URLS += $(foreach DYN,$(DYNSCRIPTS),dynscr//$(DYN))
+URLS += $(foreach DYN,$(DYNSCRIPTS),dynscr://$(DYN))
 
 ifdef GIT_REPOS
-URLS += $(foreach R,$(GIT_REPOS),gitrepo//$(call GITPROJ,$(R)) $(subst http,git-http,$(call URLSTRIP,$(R))))
+URLS += $(foreach R,$(GIT_REPOS),gitrepo://$(call GITPROJ,$(R)) $(subst http,git-http,$(call URLSTRIP,$(R))))
 endif
 
 # Download the file if and only if it doesn't have a preexisting
 # checksum file.  Loop through available URLs and stop when you
 # get one that doesn't return an error code.
+# Note that GAR targets are used to download the URLs, thus:
+# 1) we have to strip the colon from the URLs
+# 2) the download is very costly with bigger Makefiles as they will be
+#    re-evaluated for every URL (nested gmake invocation, room for improvement)
 $(DOWNLOADDIR)/%:  
 	@if test -f $(COOKIEDIR)/checksum-$*; then : ; else \
 		echo " ==> Grabbing $@"; \
-		for i in $(filter %/$*,$(URLS)); do  \
+		( for i in $(filter %/$*,$(URLS)); do  \
 			echo " 	==> Trying $$i"; \
-			$(MAKE) -s $$i || continue; \
+			$(MAKE) -s `echo $$i | tr -d :` || continue; \
 			mv $(PARTIALDIR)/$* $@; \
 			break; \
-		done; \
+		done; ) 2>&1 | grep -v '^$(MAKE)'; \
 		if test -r $@ ; then : ; else \
 			echo '(!!!) Failed to download $@!' 1>&2; \
 			false; \
