@@ -103,7 +103,9 @@ ARCHALL_CSWpy-libproxy = 1
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_LINKER_FLAGS = -lnsl
+
 BUILD64 = 1
+NOISAEXEC = 1
 
 # Skip 64 bit binaries - they are just big and gain nothing
 MERGE_DIRS_isa-extra = $(libdir)
