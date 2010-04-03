@@ -136,7 +136,7 @@ rbconfig:
 samples:
 	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)/
 	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/$(GARNAME)/
-	@for ext in bigdecimal dl tk ; do \
+	@for ext in bigdecimal tk win32ole ; do \
 		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/$(GARNAME)/sample/$$ext ; \
 	done
 	@$(MAKECOOKIE)
