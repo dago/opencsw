@@ -85,6 +85,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-suffix=19
 CONFIGURE_ARGS += --enable-pthread
+CONFIGURE_ARGS += --enable-shared
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
