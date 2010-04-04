@@ -12,17 +12,29 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
-#PACKAGES = CSWgobjectintrospection CSWgobjectintrospectiondevel CSWjsonglibdoc
-#CATALOGNAME_CSWgobjectintrospection = gobject_introspection
-#CATALOGNAME_CSWgobjectintrospectiondevel = gobject_introspection_devel
-#CATALOGNAME_CSWgobjectintrospectiondoc = gobject_introspection_doc
+PACKAGES = CSWgobjintrospect CSWgobjintrospectdev
+CATALOGNAME_CSWgobjintrospect = gobject_introspection
+CATALOGNAME_CSWgobjintrospectdev = gobject_introspection_devel
 
-#PKGFILES_CSWgobjectintrospectiondevel = $(PKGFILES_DEVEL)
-#PKGFILES_CSWgobjectintrospectiondoc = $(sharedstatedir)/gtk-doc/.*
+SPKG_DESC_CSWgobjintrospect = $(DESCRIPTION)
+SPKG_DESC_CSWgobjintrospectdev = $(DESCRIPTION) - developer package
 
-#ARCHALL_CSWgobjectintrospectiondoc = 1
+PKGFILES_CSWgobjintrospectdev = $(PKGFILES_DEVEL)
+
+ARCHALL_CSWgobjintrospectdoc = 1
 
 BUILD_DEP_PKGS += CSWbison CSWlibffi
+
+RUNTIME_DEP_PKGS_CSWgobjintrospect += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWgobjintrospect += CSWglib2
+RUNTIME_DEP_PKGS_CSWgobjintrospect += CSWlibffi
+RUNTIME_DEP_PKGS_CSWgobjintrospect += CSWpython
+RUNTIME_DEP_PKGS_CSWgobjintrospectdev += CSWgobjintrospect
+
+CHECKPKG_OVERRIDES_CSWgobjintrospect += symbol-not-found|g-ir-compiler
+CHECKPKG_OVERRIDES_CSWgobjintrospect += symbol-not-found|g-ir-generate
+CHECKPKG_OVERRIDES_CSWgobjintrospect += symbol-not-found|_giscanner.so
+
 
 PATCHFILES += gobject-introspection-01-ginvoke.diff
 PATCHFILES += gobject-introspection-02-glib-compilation.diff
@@ -38,8 +50,9 @@ EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-NOISAEXEC = 1
-BUILD64 = 1
+#NOISAEXEC = 1
+# Python isn't 64-bit yet
+#BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
@@ -48,6 +61,8 @@ CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 #SHELL = /opt/csw/bin/bash
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check 
 
 include gar/category.mk
 
@@ -64,3 +79,4 @@ pre-configure-modulated:
 		automake -a -c -f	;	\
 		autoconf	;	\
 	)
+	$(MAKECOOKIE)
