@@ -1,5 +1,5 @@
 GARNAME      = pixman
-GARVERSION   = 0.17.10
+GARVERSION   = 0.18.0
 CATEGORIES   = lib
 
 DESCRIPTION = The pixel-manipulation library for X and cairo
