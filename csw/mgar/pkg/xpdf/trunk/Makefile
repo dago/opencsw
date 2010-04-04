@@ -13,6 +13,7 @@ define BLURB
   or standard X fonts. 
 endef
 
+VENDOR_URL = http://www.foolabs.com/xpdf
 MASTER_SITES = ftp://ftp.foolabs.com/pub/xpdf/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
@@ -21,6 +22,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
 RUNTIME_DEP_PKGS = CSWftype2 CSWt1lib CSWgsfonts
+
+# poppler also has pdffonts, pdfimages et al.
+INCOMPATIBLE_PKGS = CSWpoppler
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-t1-library=$(libdir)
