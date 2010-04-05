@@ -16,8 +16,11 @@ endef
 MASTER_SITES = ftp://sourceware.org/pub/libffi/
 SPKG_SOURCEURL = http://sourceware.org/libffi/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-# Not needed unless using SOS12 compiler
-#PATCHFILES = sun.patch
+# Not needed unless using SOS compiler
+#PATCHFILE += Makefile.in.patch
+# Not really needed for build, but for SOS compiler using libffi
+PATCHFILE += ffi_common.h.patch
+PATCHFILE += ffi_target.h.patch
 
 PACKAGES = CSWlibffi CSWlibffidevel
 CATALOGNAME_CSWlibffi = libffi

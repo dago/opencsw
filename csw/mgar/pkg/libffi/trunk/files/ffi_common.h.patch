@@ -1,0 +1,12 @@
+diff -Nru libffi-3.0.9.orig/include/ffi_common.h libffi-3.0.9/include/ffi_common.h
+--- libffi-3.0.9.orig/include/ffi_common.h	2009-12-29 16:22:26.000000000 +0100
++++ libffi-3.0.9/include/ffi_common.h	2010-01-30 08:20:33.829433399 +0100
+@@ -84,7 +84,7 @@
+ } extended_cif;
+ 
+ /* Terse sized type definitions.  */
+-#if defined(_MSC_VER) || defined(__sgi)
++#if defined(_MSC_VER) || defined(__sgi) || defined(__sun)
+ typedef unsigned char UINT8;
+ typedef signed char   SINT8;
+ typedef unsigned short UINT16;
