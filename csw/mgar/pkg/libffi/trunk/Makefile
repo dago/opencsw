@@ -17,10 +17,10 @@ MASTER_SITES = ftp://sourceware.org/pub/libffi/
 SPKG_SOURCEURL = http://sourceware.org/libffi/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # Not needed unless using SOS compiler
-#PATCHFILE += Makefile.in.patch
+#PATCHFILES += Makefile.in.patch
 # Not really needed for build, but for SOS compiler using libffi
-PATCHFILE += ffi_common.h.patch
-PATCHFILE += ffi_target.h.patch
+PATCHFILES += ffi_common.h.patch
+PATCHFILES += ffi_target.h.patch
 
 PACKAGES = CSWlibffi CSWlibffidevel
 CATALOGNAME_CSWlibffi = libffi
@@ -28,7 +28,8 @@ CATALOGNAME_CSWlibffidevel = libffi_devel
 SPKG_DESC_CSWlibffi = $(DESCRIPTION)
 SPKG_DESC_CSWlibffidevel = $(DESCRIPTION) - developer package
 
-PKGFILES_CSWlibffidevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibffidevel += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibffidevel += $(libdir)/.*/include/.*
 
 LICENSE = LICENSE
 
