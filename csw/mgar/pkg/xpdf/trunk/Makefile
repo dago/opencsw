@@ -45,6 +45,11 @@ CONFIGURE_ARGS += --with-t1-library=$(libdir)
 CONFIGURE_ARGS += --with-t1-includes=$(includedir)
 CONFIGURE_ARGS += --with-freetype2-library=$(libdir)
 CONFIGURE_ARGS += --with-freetype2-includes=$(includedir)/freetype2
+CONFIGURE_ARGS += --with-Xpm-library=/usr/openwin/lib
+CONFIGURE_ARGS += --with-Xpm-includes=/usr/openwin/include
+
+EXTRA_SOS_LD_FLAGS = -L/usr/openwin/lib
+EXTRA_SOS_LD_OPTIONS = -R/usr/openwin/lib
 
 # apply patches
 PATCHFILES  = xpdf-3.02pl1.patch
