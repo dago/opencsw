@@ -2,8 +2,8 @@ GARNAME = nsca
 GARVERSION = 2.7.2
 CATEGORIES = apps
 
-SPKG_DESC_CSWnsca = nagios service check acceptor
-SPKG_DESC_CSWsendnsca = sends check results to nsca daemon
+SPKG_DESC_CSWnsca = Nagios service check acceptor
+SPKG_DESC_CSWsendnsca = Sends check results to nsca daemon
 
 define BLURB
   NSCA allows you to integrate passive alerts and checks from remote machines and applications with Nagios. Useful for processing security alerts, as well as redundant and distributed Nagios setups.
@@ -32,8 +32,8 @@ PACKAGES = CSWnsca CSWsendnsca
 CATALOGNAME_CSWnsca = nsca
 CATALOGNAME_CSWsendnsca = send_nsca
 
-RUNTIME_DEP_PKGS_CSWnsca     = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
-RUNTIME_DEP_PKGS_CSWsendnsca = CSWlibmcrypt CSWlibtoolrt CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWnsca     = CSWlibmcrypt CSWlibtoolrt 
+RUNTIME_DEP_PKGS_CSWsendnsca = CSWlibmcrypt CSWlibtoolrt
 
 SPKG_CLASSES_CSWnsca = none cswusergroup cswpreserveconf cswinitsmf
 SPKG_CLASSES_CSWsendnsca = none cswusergroup cswpreserveconf
@@ -43,6 +43,8 @@ NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-nsca-port=5667
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/nagios
+
+LICENSE = LEGAL
 
 BUILD_TARGETS = nsca
 

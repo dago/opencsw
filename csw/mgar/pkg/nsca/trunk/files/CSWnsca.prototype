@@ -1,6 +1,7 @@
 1 f none /opt/csw/nagios/bin/nsca 0755 root bin
 1 f cswpreserveconf /etc/opt/csw/nagios/nsca.cfg.CSW 0644 root bin
 1 d none /opt/csw/share/doc/nsca 0755 root bin
+1 f none /opt/csw/share/doc/nsca/license 0644 root bin
 1 f none /opt/csw/share/doc/nsca/Changelog 0644 root bin
 1 f none /opt/csw/share/doc/nsca/LEGAL 0644 root bin
 1 f none /opt/csw/share/doc/nsca/README 0644 root bin
