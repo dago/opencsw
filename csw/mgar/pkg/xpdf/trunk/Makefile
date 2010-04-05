@@ -20,11 +20,25 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGES = CSWxpdf CSWxpdfutils
+CATALOGNAME_CSWxpdf = xpdf
+CATALOGNAME_CSWxpdfutils = xpdf_utils
+SPKG_DESC_CSWxpdf = $(DESCRIPTION)
+SPKG_DESC_CSWxpdfutils = $(DESCRIPTION) - utils
+
 # we require
 RUNTIME_DEP_PKGS = CSWftype2 CSWt1lib CSWgsfonts
 
 # poppler also has pdffonts, pdfimages et al.
-INCOMPATIBLE_PKGS = CSWpoppler
+INCOMPATIBLE_PKGS_CSWxpdfutils = CSWpoppler
+
+PKGFILES_CSWxpdf += $(call baseisadirs,$(bindir),[^/]*xpdf)
+PKGFILES_CSWxpdf += $(sysconfdir)/.*
+PKGFILES_CSWxpdf += $(mandir)/man.*/xpdf.*
+
+# Yes, we need gsfonts
+CHECKPKG_OVERRIDES_CSWxpdfutils += surplus-dependency|CSWgsfonts
+CHECKPKG_OVERRIDES_CSWxpdf += surplus-dependency|CSWgsfonts
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-t1-library=$(libdir)
