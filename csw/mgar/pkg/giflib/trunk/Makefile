@@ -85,11 +85,9 @@ PKGFILES_CSWgiflibrtx11 = $(prefix)/X11/.*
 PKGFILES_CSWgiflibdoc = $(PKGFILES_DOC)
 PKGFILES_CSWungif = .*/libungif\..*
 
-CHECKPKG_OVERRIDES_CSWgiflib += linked-against-discouraged-library|libgif.so.4.1.6|libX11.so.4
-CHECKPKG_OVERRIDES_CSWgiflib += bad-rpath-entry|/usr/openwin/lib/64
-CHECKPKG_OVERRIDES_CSWgiflib += surplus-dependency|CSWgiflibrt
-CHECKPKG_OVERRIDES_CSWgiflibrt += linked-against-discouraged-library|libgif.so.4.1.6|libX11.so.4
 CHECKPKG_OVERRIDES_CSWungif += surplus-dependency|CSWgiflib
+CHECKPKG_OVERRIDES_CSWgiflibrt += bad-rpath-entry|/usr/openwin/lib/64
+CHECKPKG_OVERRIDES_CSWgiflibrt += linked-against-discouraged-library|libgif.so.4.1.6|libX11.so.4
 
 include gar/category.mk
 
