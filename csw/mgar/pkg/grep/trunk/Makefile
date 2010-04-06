@@ -1,5 +1,5 @@
 GARNAME = grep
-GARVERSION = 2.6.2
+GARVERSION = 2.6.3
 CATEGORIES = utils
 
 DESCRIPTION = GNU grep
@@ -16,10 +16,6 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(DISTNAME).tar.xz
-
-# Force bash until this is fixed:
-#   http://savannah.gnu.org/bugs/?29381
-PATCHFILES = 0001-Force-bash-on-specific-tests.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.xz
