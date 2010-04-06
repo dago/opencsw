@@ -1,5 +1,5 @@
 GARNAME = tcpdump
-GARVERSION = 4.1.0
+GARVERSION = 4.1.1
 CATEGORIES = utils
 
 DESCRIPTION = Dump network traffic
@@ -8,7 +8,6 @@ endef
 
 MASTER_SITES = http://www.tcpdump.org/release/ 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTNAME = $(GARNAME)-4.1
 
 LICENSE = LICENSE
 
