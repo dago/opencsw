@@ -66,6 +66,8 @@ DEPENDENCY_FILENAME_REGEXES = (
     (r".*\.pm$", u"CSWperl"),
     (r".*\.py$", u"CSWpython"),
     (r".*\.rb$", u"CSWruby"),
+    (r".*\.el$", u"CSWemacscommon"),
+    (r".*\.elc$", u"CSWemacscommon"),
 )
 
 REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
