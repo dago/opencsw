@@ -1,5 +1,5 @@
 GARNAME = libpcap
-GARVERSION = 1.1.0
+GARVERSION = 1.1.1
 CATEGORIES = lib
 
 DESCRIPTION = System-independent interface for user-level packet capture
@@ -9,7 +9,6 @@ endef
 
 MASTER_SITES = http://www.tcpdump.org/release/ 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTNAME = $(GARNAME)-1.1
 
 LICENSE = LICENSE
 
