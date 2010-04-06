@@ -15,17 +15,19 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PACKAGES = CSWgiflib CSWgiflibrt CSWgiflibrtx11 CSWgiflibdoc CSWungif
+PACKAGES = CSWgiflib CSWgiflibrt CSWx11giflib CSWx11giflibrt CSWgiflibdoc CSWungif
 
 CATALOGNAME_CSWgiflib = giflib
 CATALOGNAME_CSWgiflibrt = giflib_rt
-CATALOGNAME_CSWgiflibrtx11 = giflib_rt_x11
+CATALOGNAME_CSWx11giflib = x11_giflib
+CATALOGNAME_CSWx11giflibrt = x11_giflib_rt
 CATALOGNAME_CSWgiflibdoc = giflib_doc
 CATALOGNAME_CSWungif = libungif
 
 SPKG_DESC_CSWgiflib = A library for reading and writing gif images
 SPKG_DESC_CSWgiflibrt = Runtime library for giflib (Sun X11 binding)
-SPKG_DESC_CSWgiflibrtx11 = Runtime library for giflib (OpenCSW X11 binding)
+SPKG_DESC_CSWx11giflib = Package for giflib bound against OpenCSW X11
+SPKG_DESC_CSWx11giflibrt = Runtime libraries for giflib bound against OpenCSW X11
 SPKG_DESC_CSWgiflibdoc = Documentation for giflib
 SPKG_DESC_CSWungif = Stub which links to giflib now the patent is dropped
 
@@ -33,21 +35,22 @@ SPKG_SOURCEURL = http://giflib.sourceforge.net/
 
 BUILD_DEP_PKGS = CSWlibicedevel CSWlibsmdevel CSWlibx11devel
 
-RUNTIME_DEP_PKGS_CSWgiflibrt =
-RUNTIME_DEP_PKGS_CSWgiflibrtx11 = CSWlibice CSWlibsm CSWlibx11
+RUNTIME_DEP_PKGS_CSWx11giflibrt = CSWlibice CSWlibsm CSWlibx11
+RUNTIME_DEP_PKGS_CSWx11giflib = CSWlibice CSWlibsm CSWlibx11 CSWx11giflibrt
 RUNTIME_DEP_PKGS_CSWgiflib = CSWgiflibrt
 RUNTIME_DEP_PKGS_CSWungif = CSWgiflib
+
 
 EXTRA_MODULATORS = X11
 MODULATIONS_X11 = sunwx11 cswx11
 
-EXTRA_INC_cswx11 = $(prefix)/X11/include
-EXTRA_LIB_cswx11 = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS_cswx11 = $(prefix)/X11/lib
+# EXTRA_INC_cswx11 = $(prefix)/X11/include
+# EXTRA_LIB_cswx11 = $(prefix)/X11/lib
+# EXTRA_PKG_CONFIG_DIRS_cswx11 = $(prefix)/X11/lib
 
-EXTRA_INC = $(EXTRA_INC_$(X11))
-EXTRA_LIB = $(EXTRA_LIB_$(X11))
-EXTRA_PKG_CONFIG_DIRS = $(EXTRA_PKG_CONFIG_DIRS_$(X11))
+# EXTRA_INC = $(EXTRA_INC_$(X11))
+# EXTRA_LIB = $(EXTRA_LIB_$(X11))
+# EXTRA_PKG_CONFIG_DIRS = $(EXTRA_PKG_CONFIG_DIRS_$(X11))
 
 STRIP_LIBTOOL = 1
 
@@ -60,8 +63,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 CONFIGURE_ARGS_sunwx11  = --x-includes=/usr/openwin/include
 CONFIGURE_ARGS_sunwx11 += --x-libraries=$(abspath /usr/openwin/lib/$(MM_LIBDIR))
-CONFIGURE_ARGS_cswx11  = --x-include=$(prefix)/X11/include
-CONFIGURE_ARGS_cswx11 += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS_cswx11  = --x-include=$(prefix)/include
+CONFIGURE_ARGS_cswx11 += --x-libraries=$(abspath $(prefix)/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(X11))
 
 TEST_TARGET = check
@@ -73,7 +76,7 @@ MERGE_SCRIPTS_isa-default-x11-sunwx11 = copy-all
 MERGE_SCRIPTS_isa-default64-x11-sunwx11 = copy-relocated-only
 MERGE_DIRS_isa-default64-x11-sunwx11 = $(libdir)
 MERGE_SCRIPTS_isa-default-x11-cswx11 = copy-only
-MERGE_DIRS_isa-default-x11-cswx11 = $(libdir)
+MERGE_DIRS_isa-default-x11-cswx11 = $(libdir) $(bindir)
 MERGE_SCRIPTS_isa-default64-x11-cswx11 = copy-relocated-only
 MERGE_DIRS_isa-default64-x11-cswx11 = $(libdir)
 
@@ -81,7 +84,8 @@ ARCHALL_CSWgiflibdoc = 1
 ARCHALL_CSWungif = 1
 
 PKGFILES_CSWgiflibrt = $(PKGFILES_RT)
-PKGFILES_CSWgiflibrtx11 = $(prefix)/X11/.*
+PKGFILES_CSWx11giflibrt = $(call baseisadirs,$(prefix)/X11/lib,[^/]*\.so(\.\d+)*)
+PKGFILES_CSWx11giflib = $(prefix)/X11/bin/.*
 PKGFILES_CSWgiflibdoc = $(PKGFILES_DOC)
 PKGFILES_CSWungif = .*/libungif\..*
 
