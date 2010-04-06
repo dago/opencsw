@@ -1,0 +1,24 @@
+# : Makefile 9089 2010-03-11 08:34:46Z wahwah $
+GARNAME = wdiff
+GARVERSION = 0.6.1
+CATEGORIES = utils
+
+DESCRIPTION = A front end to diff for comparing files on a word per word basis
+define BLURB
+endef
+
+MASTER_SITES = $(GNU_MIRROR)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+
+# File name regex to get notifications about upstream software releases
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+DEP_PKGS = CSWggettextrt
+
+CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
+
+EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
+
+include gar/category.mk
