@@ -1,0 +1,54 @@
+diff --speed-large-files --minimal -Nru xmlstarlet-1.0.1.orig/configure xmlstarlet-1.0.1/configure
+--- xmlstarlet-1.0.1.orig/configure	2005-03-14 02:32:18.000000000 +0100
++++ xmlstarlet-1.0.1/configure	2007-07-05 22:32:36.130043000 +0200
+@@ -1076,7 +1076,6 @@
+ fi
+ 
+ 
+-CFLAGS="-Wall -g -pedantic"
+ EXTRA_LIBS=
+ 
+ case "${host}" in
+@@ -1089,7 +1088,6 @@
+       ;;
+ esac
+ 
+-LIBXML_PREFIX="/usr"
+ # Check whether --with-libxml-prefix or --without-libxml-prefix was given.
+ if test "${with_libxml_prefix+set}" = set; then
+   withval="$with_libxml_prefix"
+@@ -1138,7 +1136,6 @@
+ 	fi
+ fi
+ 
+-LIBXSLT_PREFIX="/usr"
+ # Check whether --with-libxslt-prefix or --without-libxslt-prefix was given.
+ if test "${with_libxslt_prefix+set}" = set; then
+   withval="$with_libxslt_prefix"
+diff --speed-large-files --minimal -Nru xmlstarlet-1.0.1.orig/configure.in xmlstarlet-1.0.1/configure.in
+--- xmlstarlet-1.0.1.orig/configure.in	2005-03-14 02:30:42.000000000 +0100
++++ xmlstarlet-1.0.1/configure.in	2007-07-05 22:32:25.479586000 +0200
+@@ -8,7 +8,6 @@
+ AC_CANONICAL_HOST
+ AC_PROG_CC
+ 
+-CFLAGS="-Wall -g -pedantic"
+ EXTRA_LIBS=
+ 
+ case "${host}" in
+@@ -26,7 +25,6 @@
+ dnl the ability to specify the location of the libxml
+ dnl library during linking and compilation.
+ dnl
+-LIBXML_PREFIX="/usr"
+ AC_ARG_WITH(libxml-prefix,
+         [  --with-libxml-prefix=[PFX]		Specify location of libxml],
+         LIBXML_PREFIX=$withval
+@@ -69,7 +67,6 @@
+ dnl the ability to specify the location of the libxslt
+ dnl library during linking and compilation.
+ dnl
+-LIBXSLT_PREFIX="/usr"
+ AC_ARG_WITH(libxslt-prefix,
+         [  --with-libxslt-prefix=[PFX]		Specify location of libxslt],
+ 	LIBXSLT_PREFIX=$withval
