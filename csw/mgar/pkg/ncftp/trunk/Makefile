@@ -1,5 +1,5 @@
 GARNAME = ncftp
-GARVERSION = 3.2.3
+GARVERSION = 3.2.4
 CATEGORIES = net
 
 DESCRIPTION = File Transfer Protocol (FTP) client applications.
@@ -25,5 +25,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 # No test target in the makefile
 TEST_SCRIPTS =
+
+# gtar *is* needed
+CHECKPKG_OVERRIDES_CSWncftp += surplus-dependency|CSWgtar
 
 include gar/category.mk
