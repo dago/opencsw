@@ -1,5 +1,5 @@
 GARNAME = unbound
-GARVERSION = 1.4.1
+GARVERSION = 1.4.3
 CATEGORIES = server
 
 DESCRIPTION = A validating, recursive, and caching DNS resolver
@@ -28,22 +28,13 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-PACKAGING_PLATFORMS =  solaris8-sparc solaris8-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-
-ifeq ($(shell uname -r),5.8)
-	GARCOMPILER = GCC4
-	RUNTIME_DEP_PKGS += CSWgcc4corert
-	DESCRIPTION = A validating, recursive, and caching DNS resolver (gcc)
-endif
-ifeq ($(shell uname -r),5.10)
-	GARCOMPILER = SOS12
-endif
+PACKAGING_PLATFORMS +=  solaris9-sparc solaris9-i386
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGUTE_ARGS += --with-solaris-threads
 CONFIGURE_ARGS += --with-ldns=/opt/csw
 CONFIGURE_ARGS += --with-ssl=/opt/csw
+CONFIGURE_ARGS += --with-libevent=/opt/csw
 CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
