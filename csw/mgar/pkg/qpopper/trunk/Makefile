@@ -26,7 +26,8 @@ INETDCONF = /etc/opt/csw/pkg/CSWqpopper/inetd.conf
 
 SPKG_SOURCEURL = http://www.eudora.com/qpopper
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-specialauth
 
 INSTALL_SCRIPTS = custom
 
