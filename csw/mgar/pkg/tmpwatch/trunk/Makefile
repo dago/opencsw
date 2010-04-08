@@ -18,5 +18,13 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
 
+NORUNPATH = 1
+
 include gar/category.mk
 
+# Install changelog.CSW
+post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
+install-changelog-%:
+	ginstall -D $(FILEDIR)/changelog.CSW \
+		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
+	@$(MAKECOOKIE)
