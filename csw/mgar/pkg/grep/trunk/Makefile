@@ -20,6 +20,9 @@ DISTFILES = $(DISTNAME).tar.xz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.xz
 
+PACKAGES = CSWgrep
+CATALOGNAME = ggrep
+
 DEP_PKGS = CSWggettextrt CSWpcrert
 
 CONFIGURE_ARGS  = $(DIRPATHS)
