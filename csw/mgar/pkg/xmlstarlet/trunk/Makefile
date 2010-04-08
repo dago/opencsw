@@ -1,5 +1,5 @@
 GARNAME = xmlstarlet
-GARVERSION = 1.0.1
+GARVERSION = 1.0.2
 CATEGORIES = utils
 
 DESCRIPTION = XML transformation utility
@@ -12,17 +12,16 @@ define BLURB
 endef
 
 SF_PROJ = xmlstar
-MASTER_SITES += $(SF_MIRRORS)
+# MASTER_SITES += $(SF_MIRRORS)
+MASTER_SITES = http://xmlstar.sourceforge.net/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-RUNTIME_DEP_PKGS = CSWgcrypt CSWggettextrt CSWgpgerr CSWiconv CSWlibxml2 CSWlibxslt CSWzlib   
+RUNTIME_DEP_PKGS = CSWiconv CSWlibxml2 CSWlibxslt CSWzlib   
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=66612
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
-
-PATCHFILES = $(GARNAME)-$(GARVERSION)-cc.patch
 
 BUILD64 = 1
 
