@@ -817,10 +817,6 @@ class DirectoryFormatPackage(ShellMixin, object):
       self.binaries = sorted(self.binaries)
     return self.binaries
 
-  def GetAllFilenames(self):
-    file_paths = self.GetAllFilePaths()
-    return sorted([os.path.basename(f) for f in file_paths])
-
   def GetAllFilePaths(self):
     """Similar to GetAllFilenames, but returns full paths."""
     if not self.file_paths:

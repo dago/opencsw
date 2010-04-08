@@ -724,6 +724,7 @@ class CheckInterfaceBase(object):
 
   def GetCommonPaths(self, arch):
     """Returns a list of paths for architecture, from gar/etc/commondirs*."""
+    # TODO: If this was cached, it would save a significant amount of time.
     assert arch in ('i386', 'sparc', 'all'), "Wrong arch: %s" % repr(arch)
     if arch == 'all':
       archs = ('i386', 'sparc')
@@ -947,7 +948,6 @@ class PackageStats(object):
   """Collects stats about a package and saves it."""
   # This list needs to be synchronized with the CollectStats() method.
   STAT_FILES = [
-      "all_filenames",
       "bad_paths",
       "binaries",
       "binaries_dump_info",
@@ -1192,7 +1192,6 @@ class PackageStats(object):
     self.MakeStatsDir()
     dir_pkg = self.GetDirFormatPkg()
     logging.info("Collecting %s package statistics.", repr(dir_pkg.pkgname))
-    self.DumpObject(dir_pkg.GetAllFilenames(), "all_filenames")
     self.DumpObject(dir_pkg.ListBinaries(), "binaries")
     self.DumpObject(self.GetBinaryDumpInfo(), "binaries_dump_info")
     self.DumpObject(dir_pkg.GetDependencies(), "depends")
