@@ -316,6 +316,12 @@ tar-xz-extract-%:
 	@xz -dc $(DOWNLOADDIR)/$* | gtar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
 	@$(MAKECOOKIE)
 
+# rule to extract files with tar and lz
+tar-lz-extract-%:
+	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
+	@lzip -dc $(DOWNLOADDIR)/$* | gtar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
+	@$(MAKECOOKIE)
+
 # extract compressed single files
 gz-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
@@ -333,6 +339,12 @@ xz-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
 	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
 	@xz -d $(WORKDIR)/$*
+	@$(MAKECOOKIE)
+
+lz-extract-%:
+	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
+	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
+	@lzip -d $(WORKDIR)/$*
 	@$(MAKECOOKIE)
 
 # extra dependency rule for git repos, that will allow the user
@@ -398,6 +410,9 @@ extract-archive-%.tbz: tar-bz-extract-%.tbz
 extract-archive-%.tar.xz: tar-xz-extract-%.tar.xz
 	@$(MAKECOOKIE)
 
+extract-archive-%.tar.lz: tar-lz-extract-%.tar.lz
+	@$(MAKECOOKIE)
+
 extract-archive-%.zip: zip-extract-%.zip
 	@$(MAKECOOKIE)
 
@@ -414,6 +429,9 @@ extract-archive-%.bz2: bz-extract-%.bz2
 	@$(MAKECOOKIE)
 
 extract-archive-%.xz: xz-extract-%.xz
+	@$(MAKECOOKIE)
+
+extract-archive-%.lz: lz-extract-%.lz
 	@$(MAKECOOKIE)
 
 extract-archive-%.git: git-extract-%.git
