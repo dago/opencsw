@@ -45,8 +45,8 @@ PYCOMPILE = 1
 STRIP_LIBTOOL = 1
 
 # Skip 64 bit binaries - they are just big and gain nothing
-MERGE_DIRS_isa-sparcv9 = $(libdir)
-MERGE_DIRS_isa-amd64 = $(libdir)
+MERGE_SCRIPTS_isa-default64 = copy-relocated-only copy-config-only
+MERGE_DIRS_isa-default64 = $(libdir)
 
 EXTRA_PAX_ARGS  = -s ",^\.$(docdir)/libxml2-$(GARVERSION),.$(docdir)/libxml2,p"
 EXTRA_PAX_ARGS += -s ",^\.$(docdir)/libxml2-python-$(GARVERSION),.$(docdir)/pylibxml2,p"
