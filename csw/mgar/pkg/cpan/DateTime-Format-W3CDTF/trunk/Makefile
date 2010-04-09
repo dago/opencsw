@@ -1,0 +1,17 @@
+GARNAME = DateTime-Format-W3CDTF
+GARVERSION = 0.05
+CATEGORIES = cpan
+AUTHOR = DROLSKY
+
+DESCRIPTION = Parse and format W3CDTF datetime strings
+define BLURB
+endef
+
+PACKAGES = CSWpmdatetimefmtw3tf
+CATALOGNAME = pm_datetimefmtw3tf
+
+LICENSE = LICENSE
+
+ARCHALL = 1
+
+include gar/category.mk
