@@ -1,9 +1,9 @@
 GARNAME = Cache-Cache
-GARVERSION = 1.05
+GARVERSION = 1.06
 CATEGORIES = cpan
-AUTHOR = DCLINTON
+AUTHOR = JSWARTZ
 
-DESCRIPTION = cache interface
+DESCRIPTION = Cache interface
 define BLURB
   The Cache modules are designed to assist a developer in persisting data for
   a specified period of time. Often these modules are used in web applications
@@ -14,8 +14,15 @@ define BLURB
   to use abstraction of the filesystem or shared memory.
 endef
 
-DISTFILES += CSWpmcachecache.gspec CSWpmcachecache.depend
+PACKAGES = CSWpmcachecache
+CATALOGNAME = pm_cachecache
 
-DEPENDS += cpan/Digest-SHA1 cpan/IPC-ShareLite cpan/Error
+DEP_PKGS = CSWpmdigestsha1 CSWpmerror CSWpmipcshrlite
+
+ARCHALL = 1
+
+CHECKPKG_OVERRIDES_CSWpmcachecache += surplus-dependency|CSWpmipcshrlite
+CHECKPKG_OVERRIDES_CSWpmcachecache += surplus-dependency|CSWpmerror
+CHECKPKG_OVERRIDES_CSWpmcachecache += surplus-dependency|CSWpmdigestsha1
 
 include gar/category.mk
