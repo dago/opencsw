@@ -12,7 +12,7 @@ define BLURB
   comprehensive.
 endef
 
-PREREQUISITE_PKS = CSWpmmodulebuild CSWpmtestpod
+BUILD_DEP_PKGS = CSWpmmodulebuild CSWpmtestpod
 RUNTIME_DEP_PKGS = CSWpmdevelsymdump
 
 DISTFILES = COPYING
@@ -21,5 +21,7 @@ PACKAGES = CSWpmpodcoverage
 CATALOGNAME = pm_podcoverage
 
 ARCHALL = 1
+
+CHECKPKG_OVERRIDES_CSWpmpodcoverage += surplus-dependency|CSWpmdevelsymdump
 
 include gar/category.mk
