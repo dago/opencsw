@@ -1,8 +1,3 @@
-%var            bitname pm_xmlrss
-%var            pkgname CSWpmxmlrss
-%var            arch all
-%include        url file://%{PKGLIB}/csw_cpan.gspec
-%copyright      
 Copyright (c) 2001 Jonathan Eisenzopf and Rael Dornfest. All rights reserved.
 Maintained by brian d foy
 

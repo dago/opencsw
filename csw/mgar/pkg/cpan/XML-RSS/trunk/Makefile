@@ -1,9 +1,9 @@
 GARNAME = XML-RSS
-GARVERSION = 1.05
+GARVERSION = 1.47
 CATEGORIES = cpan
-AUTHOR = KELLAN
+AUTHOR = SHLOMIF
 
-DESCRIPTION = creates and updates RSS files
+DESCRIPTION = Creates and updates RSS files
 define BLURB
   This module provides a basic framework for creating and maintaining RDF Site
   Summary (RSS) files. This distribution also contains many examples that
@@ -13,9 +13,13 @@ define BLURB
   or if you want to syndicate your own content.
 endef
 
-DISTFILES += CSWpmxmlrss.gspec CSWpmxmlrss.depend
+DISTFILES = COPYING
 
-DEPENDS += cpan/XML-Parser
-BUILDDEPS += cpan/Test-Manifest
+PACKAGES = CSWpmxmlrss
+CATALOGNAME = pm_xmlrss
+
+DEP_PKGS = CSWpmxmlparser CSWpmdatetime CSWpmdatetimefmtmail CSWpmdatetimefmtw3tf
+
+ARCHALL = 1
 
 include gar/category.mk
