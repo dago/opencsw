@@ -1,5 +1,5 @@
 GARNAME = DateTime-TimeZone
-GARVERSION = 0.90
+GARVERSION = 1.16
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
@@ -13,13 +13,17 @@ define BLURB
   use DateTime::TimeZone methods.
 endef
 
-PACKAGES = CSWpmdatetimetimezone
-CATALOGNAME = pm_datetimetimezone
+PACKAGES = CSWpmdatetimetz
+CATALOGNAME = pm_datetimetz
+
+LICENSE = LICENSE
+
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS  = CSWpmclasssingleton
-RUNTIME_DEP_PKGS += CSWpmparamsvalidate
+DEP_PKGS = CSWpmclasssingleton CSWpmparamsvalidate
+
+CHECKPKG_OVERRIDES_CSWpmdatetimetz += surplus-dependency|CSWpmclasssingleton
+CHECKPKG_OVERRIDES_CSWpmdatetimetz += surplus-dependency|CSWpmparamsvalidate
 
 include gar/category.mk
 
-LICENSE = LICENSE
