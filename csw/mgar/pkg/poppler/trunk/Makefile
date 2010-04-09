@@ -34,7 +34,7 @@ PKGFILES_CSWlibpopplerdoc = $(sharedstatedir)/gtk-doc/.*
 #RUNTIME_DEP_PKGS_CSWpoppler += CSWfconfig
 #RUNTIME_DEP_PKGS_CSWpoppler += CSWftype2
 #RUNTIME_DEP_PKGS_CSWpoppler += CSWjpeg
-#RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler
+RUNTIME_DEP_PKGS_CSWpoppler += CSWlibpoppler
 #RUNTIME_DEP_PKGS_CSWpoppler += CSWlibxml2
 #RUNTIME_DEP_PKGS_CSWpoppler += CSWlcmsrt
 #RUNTIME_DEP_PKGS_CSWpoppler += CSWpng
@@ -58,6 +58,7 @@ RUNTIME_DEP_PKGS_CSWlibpopplerdev += CSWlibpoppler
 ARCHALL_CSWpoppler = 1
 ARCHALL_CSWlibpopplerdoc = 1
 
+CHECKPKG_OVERRIDES_CSWpoppler += surplus-dependency|CSWlibpoppler
 CHECKPKG_OVERRIDES_CSWlibpopplerdev += surplus-dependency|CSWlibpoppler
 CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/lib/64
 CHECKPKG_OVERRIDES_CSWlibpoppler += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/amd64
