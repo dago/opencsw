@@ -1,5 +1,5 @@
 GARNAME = jpeginfo
-GARVERSION = 1.6.0
+GARVERSION = 1.6.1
 CATEGORIES = utils
 
 DESCRIPTION = Info and error checking of jpeg files
