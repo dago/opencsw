@@ -16,14 +16,12 @@ CATALOGNAME = pm_datetime
 
 LICENSE = LICENSE
 
-DEP_PKGS  = CSWpmdatetimetimezone CSWpmdatetimelocale
+DEP_PKGS  = CSWpmdatetimetz CSWpmdatetimelocale
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
 BUILD_SCRIPTS = $(WORKSRC)/Build
 TEST_SCRIPTS = $(WORKSRC)/Build
 INSTALL_SCRIPTS = $(WORKSRC)/Build
-
-ARCHALL = 1
 
 include gar/category.mk
 
