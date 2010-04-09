@@ -1,5 +1,5 @@
 GARNAME = rrdtool
-GARVERSION = 1.4.2
+GARVERSION = 1.4.3
 CATEGORIES = utils
 
 DESCRIPTION = Time-series data logging and graphing.
@@ -18,7 +18,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWrrd
 CATALOGNAME = rrdtool
 
-PACKAGING_PLATFORMS =  solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 
 RUNTIME_DEP_PKGS += CSWggettextrt
 RUNTIME_DEP_PKGS += CSWglib2
