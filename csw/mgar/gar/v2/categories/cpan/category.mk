@@ -39,6 +39,9 @@ SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
 _MERGE_EXCLUDE_CATEGORY = .*/perllocal\.pod .*/\.packlist
 _CATEGORY_GSPEC_INCLUDE ?= csw_cpan_dyngspec.gspec
 
+# Perl module dependencies can not be properly tracked right now
+_CATEGORY_CHECKPKG_OVERRIDES = surplus-dependency
+
 include gar/gar.mk
 
 CONFIGURE_ENV += PERL5LIB=$(PERL5LIB)
