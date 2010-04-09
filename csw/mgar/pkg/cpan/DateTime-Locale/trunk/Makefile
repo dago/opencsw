@@ -1,5 +1,5 @@
 GARNAME = DateTime-Locale
-GARVERSION = 0.42
+GARVERSION = 0.45
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
@@ -12,11 +12,10 @@ endef
 
 PACKAGES = CSWpmdatetimelocale
 CATALOGNAME = pm_datetimelocale
-ARCHALL = 1
-
-RUNTIME_DEP_PKGS = CSWpmlistmoreutils
-
-include gar/category.mk
 
 LICENSE = LICENSE
+
+ARCHALL = 1
+
+include gar/category.mk
 
