@@ -17,10 +17,14 @@ MASTER_SITES = ftp://sourceware.org/pub/libffi/
 SPKG_SOURCEURL = http://sourceware.org/libffi/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # Not needed unless using SOS compiler
-#PATCHFILES += Makefile.in.patch
+PATCHFILES += Makefile.in.patch
 # Not really needed for build, but for SOS compiler using libffi
 PATCHFILES += ffi_common.h.patch
 PATCHFILES += ffi_target.h.patch
+# Fix needed for amd64 using SOS compiler
+# found at http://software.intel.com/en-us/forums/showthread.php?t=56652
+# originally for icc, but at least get the stuff to compile
+PATCHFILES += ffi64.c.patch
 
 PACKAGES = CSWlibffi CSWlibffidevel
 CATALOGNAME_CSWlibffi = libffi
@@ -34,19 +38,17 @@ PKGFILES_CSWlibffidevel += $(libdir)/.*/include/.*
 LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS_CSWlibffidevel += CSWlibffi
-RUNTIME_DEP_PKGS_CSWlibffi = CSWgcc4corert
 
 CHECKPKG_OVERRIDES_CSWlibffidevel += surplus-dependency|CSWlibffi
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-GARCOMPILER = GCC4
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-# Tests fail since they are written for gcc only if using SOS12 compiler
-# But they also fails on 64-bit
+# Tests fail since they are written for gcc only 
+# But they also fails on 64-bit even when using gcc
 #TEST_TARGET = check
 TEST_TARGET = 
 

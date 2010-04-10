@@ -1,0 +1,34 @@
+--- libffi-3.0.9/src/x86/ffi64.c.orig	2009-12-29 16:22:26.000000000 +0100
++++ libffi-3.0.9/src/x86/ffi64.c	2010-04-09 23:48:55.928436791 +0200
+@@ -36,6 +36,10 @@
+ #define MAX_GPR_REGS 6
+ #define MAX_SSE_REGS 8
+ 
++#if defined(__SUNPRO_C)
++typedef struct { int64_t m[2]; } __int128_t;
++#endif
++
+ struct register_args
+ {
+   /* Registers for argument passing.  */
+@@ -469,10 +473,20 @@
+ 		  break;
+ 		case X86_64_SSE_CLASS:
+ 		case X86_64_SSEDF_CLASS:
++#if defined(__SUNPRO_C)
++		  reg_args->sse[ssecount++].m[0] = *(UINT64 *) a;
++		  reg_args->sse[ssecount++].m[1] = 0;
++#else
+ 		  reg_args->sse[ssecount++] = *(UINT64 *) a;
++#endif
+ 		  break;
+ 		case X86_64_SSESF_CLASS:
++#if defined(__SUNPRO_C)
++		  reg_args->sse[ssecount++].m[0] = *(UINT32 *) a;
++		  reg_args->sse[ssecount++].m[1] = 0;
++#else
+ 		  reg_args->sse[ssecount++] = *(UINT32 *) a;
++#endif
+ 		  break;
+ 		default:
+ 		  abort();
