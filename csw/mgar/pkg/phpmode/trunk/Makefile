@@ -9,6 +9,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += php-mode.el
 
 BUILD_DEP_PKGS = CSWemacs
 
@@ -55,4 +56,7 @@ post-install-modulated:
 		cp $(WORKSRC)/php-mode.el $(DESTDIR)$(LISPDIR); \
 		chmod -x $(DESTDIR)$(LISPDIR)/*; \
 		cp $(WORKSRC)/*info $(DESTDIR)/$(INFODIR) )
+	@echo Installing emacs site-start file.
+	@( gmkdir -p $(DESTDIR)/$(LISPDIR)/site-start.d; \
+		cp $(FILEDIR)/php-mode.el $(DESTDIR)/$(LISPDIR)/site-start.d )
 	@$(MAKECOOKIE)
