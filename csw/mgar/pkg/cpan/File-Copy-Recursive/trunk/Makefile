@@ -1,0 +1,17 @@
+GARNAME = File-Copy-Recursive
+GARVERSION = 0.38
+CATEGORIES = cpan
+AUTHOR = DMUEY
+
+DESCRIPTION = Recursively copy files and directories
+define BLURB
+endef
+
+DISTFILES = COPYING
+
+PACKAGES = CSWpmfilecpyrecurs
+CATALOGNAME = pm_filecpyrecurs
+
+ARCHALL = 1
+
+include gar/category.mk
