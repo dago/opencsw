@@ -14,7 +14,7 @@ as an extension to Emacs.
 endef
 
 BUILD_DEP_PKGS = CSWautoconf CSWautomake CSWtexinfo CSWemacs
-RUNTIME_DEP_PKGS = CSWgit CSWemacscommon
+RUNTIME_DEP_PKGS = CSWgit CSWemacscommon CSWemacssitestart
 
 GIT_REPOS = git://gitorious.org/magit/magit.git
 GIT_TREEISH = $(PATCHLEVEL)
@@ -39,5 +39,8 @@ post-install-modulated:
 	@(cd $(WORKSRC); \
 		mkdir -p $(DESTDIR)/$(docdir)/$(GARNAME); \
 		cp README AUTHORS NEWS $(DESTDIR)/$(docdir)/$(GARNAME) )
+	@echo Setting up emacs site-start...
+	@(cd $(DESTDIR); mkdir -p opt/csw/share/emacs/site-lisp/site-start.d; \
+		mv opt/csw/etc/emacs/site-start.d/50magit.el opt/csw/share/emacs/site-lisp/site-start.d/magit.el )
 	@(cd $(DESTDIR); rm -rf opt/csw/etc opt/csw/share/info/dir )
 	@$(MAKECOOKIE)
