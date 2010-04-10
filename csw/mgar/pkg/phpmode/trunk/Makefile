@@ -44,7 +44,7 @@ include gar/category.mk
 LISPDIR = $(datadir)/emacs/site-lisp
 INFODIR = $(datadir)/info
 
-post-extract-modulated:
+post-extract-modulated: $(WORKSRC)
 	@echo "Adding GPLv3 file to source tree."
 	@( cp $(FILEDIR)/gpl-3.0.txt $(WORKSRC)/COPYING )
 	@$(MAKECOOKIE)
