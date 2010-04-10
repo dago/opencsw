@@ -1,0 +1,24 @@
+GARNAME = Net-Daemon
+GARVERSION = 0.43
+CATEGORIES = cpan
+AUTHOR = MNOONING
+
+DESCRIPTION = Perl extension for portable daemons
+define BLURB
+endef
+
+# Good thing the locations have standards. But why have a standard when
+# people don't use it? :-(
+MASTER_SITES = $(addsuffix $(GARNAME)/,$(CPAN_MIRRORS))
+DISTNAME = $(GARNAME)
+
+DISTFILES = COPYING
+
+PATCHFILES = Net-Daemon-5.10-support.patch
+
+PACKAGES = CSWpmnetdaemon
+CATALOGNAME = pm_netdaemon
+
+ARCHALL = 1
+
+include gar/category.mk
