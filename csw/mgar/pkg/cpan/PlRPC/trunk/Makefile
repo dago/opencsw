@@ -1,0 +1,22 @@
+GARNAME = PlRPC
+GARVERSION = 0.2020
+CATEGORIES = cpan
+AUTHOR = MNOONING
+
+DESCRIPTION = Perl extension for writing perl RPC servers and clients
+define BLURB
+endef
+
+# Good thing the locations have standards. But why have a standard when
+# people don't use it? :-(
+MASTER_SITES = $(addsuffix $(GARNAME)/,$(CPAN_MIRRORS))
+DISTNAME = $(GARNAME)
+
+DISTFILES = COPYING
+
+PACKAGES = CSWpmplrpc
+CATALOGNAME = pm_plrpc
+
+ARCHALL = 1
+
+include gar/category.mk
