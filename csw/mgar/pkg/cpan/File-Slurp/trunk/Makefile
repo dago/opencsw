@@ -1,0 +1,17 @@
+GARNAME = File-Slurp
+GARVERSION = 9999.13
+CATEGORIES = cpan
+AUTHOR = DROLSKY
+
+DESCRIPTION = Efficient Reading/Writing of Complete Files
+define BLURB
+endef
+
+DISTFILES = COPYING
+
+PACKAGES = CSWpmfileslurp
+CATALOGNAME = pm_fileslurp
+
+ARCHALL = 1
+
+include gar/category.mk
