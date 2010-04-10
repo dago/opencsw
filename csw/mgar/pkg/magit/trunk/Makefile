@@ -16,6 +16,9 @@ endef
 BUILD_DEP_PKGS = CSWautoconf CSWautomake CSWtexinfo CSWemacs
 RUNTIME_DEP_PKGS = CSWgit CSWemacscommon CSWemacssitestart
 
+CHECKPKG_OVERRIDES_CSWmagit += surplus-dependency|CSWemacssitestart
+CHECKPKG_OVERRIDES_CSWmagit += surplus-dependency|CSWgit
+
 GIT_REPOS = git://gitorious.org/magit/magit.git
 GIT_TREEISH = $(PATCHLEVEL)
 
