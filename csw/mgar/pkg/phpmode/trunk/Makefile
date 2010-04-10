@@ -17,7 +17,9 @@ PACKAGES = CSWphpmode
 
 CATALOGNAME_CSWphpmode = php_mode
 
-RUNTIME_DEP_PKGS_CSWphpmode = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWphpmode = CSWemacscommon CSWemacssitestart
+
+CHECKPKG_OVERRIDES_CSWphpmode += surplus-dependency|CSWemacssitestart
 
 ARCHALL = 1
 
