@@ -1,5 +1,5 @@
 GARNAME = wireshark
-GARVERSION = 1.2.3
+GARVERSION = 1.2.7
 CATEGORIES = apps
 
 DESCRIPTION = Wireshark (was Ethereal) is a free network protocol analyzer
@@ -12,34 +12,31 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
-RUNTIME_DEP_PKGS += CSWgcrypt CSWgeoip CSWggettextrt CSWglib2 CSWgnutls
-RUNTIME_DEP_PKGS += CSWgpgerr CSWgtk2 CSWkrb5lib CSWlibpcap CSWlibxext
-RUNTIME_DEP_PKGS += CSWlua CSWpango CSWpcrert CSWzlib
+RUNTIME_DEP_PKGS_CSWwireshark += CSWgcrypt CSWgeoip CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS_CSWwireshark += CSWgpgerr CSWgtk2 CSWkrb5lib CSWlibpcap 
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlua CSWpango CSWpcrert CSWzlib
+RUNTIME_DEP_PKGS_CSWwireshark += CSWgnutls CSWlibcares
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibsmi
+RUNTIME_DEP_PKGS_CSWwireshark += CSWosslrt
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# krb5-config has -R/opt/csw/lib/
+CHECKPKG_OVERRIDES_CSWwireshark += bad-rpath-entry|/opt/csw/lib/
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.wireshark.org/
-
-#SED = /opt/csw/bin/gsed
-#EXTRA_COMMON_EXPORTS = SED
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-#EXTRA_INC += /opt/csw/include/gtk-2.0
-#EXTRA_INC += /opt/csw/lib/gtk-2.0/include
-#EXTRA_INC += /opt/csw/include/glib-2.0
-#EXTRA_INC += /opt/csw/lib/glib-2.0/include
-#EXTRA_INC += /opt/csw/include/cairo
-#EXTRA_INC += /opt/csw/include/pango-1.0
-#EXTRA_INC += /opt/csw/include/atk-1.0
-
-#EXTRA_LINKER_FLAGS = -lgtk-x11-2.0 -lX11 /usr/openwin/lib/libXext.so
-EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
+# We want to be link with Xrender from $(prefix)/X11/lib not $(prefix)/lib
+# since the latter is linked to /usr/openwin/lib/libX11.so.4
+EXTRA_SOS_LD_FLAGS += -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-usr-local=no
+CONFIGURE_ARGS += --with-ssl=/opt/csw
 
 TEST_SCRIPTS =
 
