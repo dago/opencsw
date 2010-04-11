@@ -2,7 +2,7 @@ GARNAME = nagios
 GARVERSION = 3.2.1
 CATEGORIES = apps
 
-DESCRIPTION = nagios network monitoring base package (no plugins)
+DESCRIPTION = Nagios network monitoring base package (no plugins)
 define BLURB
   Nagios is a powerful, enterprise-class host, service, application, and network monitoring program. Designed to be fast, flexible, and rock-solid stable. Nagios runs on *NIX hosts and can monitor Windows, Linux/Unix/BSD, Netware, and network devices.
 endef
@@ -25,9 +25,11 @@ PACKAGING_PLATFORMS = solaris9-sparc
 PACKAGING_PLATFORMS += solaris9-i386
 
 RUNTIME_DEP_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
-RUNTIME_DEP_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWap2modphp5 CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWap2modphp5 CSWbdb
 
 SPKG_CLASSES = none cswpreserveconf cswinitsmf
+
+LICENSE = LICENSE
 
 NOISALIST = 1
 

@@ -391,7 +391,7 @@ f none /opt/csw/nagios/share/stylesheets/trends.css 0644 nagios nagios
 d none /opt/csw/share/doc/nagios 0755 root bin
 f none /opt/csw/share/doc/nagios/Changelog 0644 root bin
 f none /opt/csw/share/doc/nagios/INSTALLING 0644 root bin
-f none /opt/csw/share/doc/nagios/LICENSE 0644 root bin
+f none /opt/csw/share/doc/nagios/license 0644 root bin
 f none /opt/csw/share/doc/nagios/README 0644 root bin
 f none /opt/csw/share/doc/nagios/UPGRADING 0644 root bin
 d none /var/opt/csw/nagios 0755 nagios nagios
