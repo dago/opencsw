@@ -9,7 +9,7 @@
 
 #FMRI application    # FMRI path for service
 
-CONFIG_FILE=/opt/csw/nagios/etc/nsca.cfg
+CONFIG_FILE=/etc/opt/csw/nagios/nsca.cfg
 
 SMF_EXIT_ERR_CONFIG=1
 
