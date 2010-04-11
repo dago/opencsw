@@ -1,3 +1,0 @@
-%var            bitname send_nsca
-%var            pkgname CSWsendnsca
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
