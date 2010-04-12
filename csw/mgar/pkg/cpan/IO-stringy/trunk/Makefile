@@ -1,7 +1,7 @@
 GARNAME = IO-stringy
-GARVERSION = 2.109
+GARVERSION = 2.110
 CATEGORIES = cpan
-AUTHOR = ERYQ
+AUTHOR = DSKOLL
 
 DESCRIPTION = I/O on in-core objects like strings and arrays
 define BLURB
@@ -10,6 +10,9 @@ define BLURB
   IO::Scalar, IO::ScalarArray, and IO::Lines.
 endef
 
-DISTFILES = $(call admfiles,CSWpmiostringy,)
+PACKAGES = CSWpmiostringy
+CATALOGNAME = pm_iostringy
+
+ARCHALL = 1
 
 include gar/category.mk
