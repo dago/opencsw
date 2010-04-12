@@ -1,5 +1,5 @@
 GARNAME = Digest-HMAC
-GARVERSION = 1.01
+GARVERSION = 1.02
 CATEGORIES = cpan
 AUTHOR = GAAS
 
@@ -10,7 +10,9 @@ define BLURB
   usually MD5 or SHA-1. The HMAC mechanism is described in RFC 2104.
 endef
 
-REQUIRED_PKGS = CSWpmdigestsha1
+DEP_PKGS = CSWpmdigestsha1
+
+DISTFILES = COPYING
 
 PACKAGES = CSWpmdigesthmac
 CATALOGNAME = pm_digesthmac
