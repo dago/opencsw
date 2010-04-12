@@ -1,5 +1,5 @@
 GARNAME = TimeDate
-GARVERSION = 1.16
+GARVERSION = 1.20
 CATEGORIES = cpan
 AUTHOR = GBARR
 
@@ -8,6 +8,11 @@ define BLURB
   Date::Parse provides two routines for parsing date strings into time values.
 endef
 
-DISTFILES = $(call admfiles,CSWpmtimedate,depend prototype)
+DISTFILES = COPYING
+
+PACKAGES = CSWpmtimedate
+CATALOGNAME = pm_timedate
+
+ARCHALL = 1
 
 include gar/category.mk
