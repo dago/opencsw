@@ -1,5 +1,5 @@
 GARNAME = sudo
-GARVERSION = 1.7.2p5
+GARVERSION = 1.7.2p6
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges
@@ -63,6 +63,9 @@ LICENSE = LICENSE
 ALTERNATIVES_CSWsudo = minimal
 ALTERNATIVE_minimal  = $(bindir)/sudo     sudo     $(bindir)/sudo.minimal     50
 ALTERNATIVE_minimal += $(bindir)/sudoedit sudoedit $(bindir)/sudoedit.minimal
+
+CHECKPKG_OVERRIDES_CSWsudo += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWsudo += surplus-dependency|CSWsudo-common
 
 include gar/category.mk
 
