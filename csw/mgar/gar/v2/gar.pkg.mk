@@ -693,14 +693,15 @@ reset-merge-checkpkgoverrides:
 merge-alternatives-%:
 	@echo "[ Generating alternatives for package $* ]"
 	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/alternatives
-	$(_DBG)($(foreach A,$(or $(ALTERNATIVES_$*),$(ALTERNATIVES)), \
+	$(_DBG)($(if $(ALTERNATIVE),echo "$(ALTERNATIVE)";) \
+		$(foreach A,$(or $(ALTERNATIVES_$*),$(ALTERNATIVES)), \
 		$(if $(ALTERNATIVE_$A), \
 			echo "$(ALTERNATIVE_$A)";, \
 			$(error The variable 'ALTERNATIVE_$A' is empty, but must contain an alternative) \
 		))) > $(PKGROOT)/opt/csw/share/alternatives/$(call catalogname,$*)
 	@$(MAKECOOKIE)
 
-merge-alternatives: $(foreach S,$(SPKG_SPECS),$(if $(or $(ALTERNATIVES_$S),$(ALTERNATIVES)),merge-alternatives-$S))
+merge-alternatives: $(foreach S,$(SPKG_SPECS),$(if $(or $(ALTERNATIVES_$S),$(ALTERNATIVES),$(ALTERNATIVE)),merge-alternatives-$S))
 
 reset-merge-alternatives:
 	@rm -f $(COOKIEDIR)/merge-alternatives $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-alternatives-$(SPEC))
