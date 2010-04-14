@@ -1,0 +1,25 @@
+From 675687ba7bdf73c0000cc523f5608ec5519b95db Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 14 Apr 2010 22:22:39 +0200
+Subject: [PATCH] Add missing define for REG_NOERROR
+
+---
+ w_keyboard.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/w_keyboard.c b/w_keyboard.c
+index 6655d08..2168713 100644
+--- a/w_keyboard.c
++++ b/w_keyboard.c
+@@ -41,7 +41,7 @@
+ #define REG_NOERROR REG_OKAY
+ #endif
+ 
+-#if defined(__FreeBSD__) && !defined(REG_NOERROR)
++#if (defined(__FreeBSD__) || defined(__sun)) && !defined(REG_NOERROR)
+ #define REG_NOERROR 0
+ #endif
+ 
+-- 
+1.7.0
+

@@ -1,0 +1,74 @@
+# : Makefile 9089 2010-03-11 08:34:46Z wahwah $
+GARNAME = xfig
+GARVERSION = 3.2.5b
+CATEGORIES = utils
+
+DESCRIPTION = An interactive drawing tool
+define BLURB
+  The purpose of this site is to provide a central Xfig repository for the
+  diverse documentation and programs available on the web. All the components
+  and libraries will be available at this site, in addition to Xfig drawings.
+endef
+
+SF_PROJ = mcj
+MASTER_SITES = $(SF_MIRROR)
+DISTNAME = $(GARNAME).$(GARVERSION)
+DISTFILES  = $(DISTNAME).full.tar.gz
+
+PATCHFILES = 0001-Add-missing-define-for-REG_NOERROR.patch
+
+# File name regex to get notifications about upstream software releases
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).full.tar.gz
+
+VENOR_URL = http://www.xfig.org/
+
+LICENSE = Libraries/GUI/LICENSE
+
+DEP_PKGS = CSWxpm CSWzlib CSWjpeg CSWpng CSWxaw3d
+
+CONFIGURE_SCRIPTS = $(WORKSRC)/Imakefile
+
+BUILD_OVERRIDE_VARS  = PNGLIBDIR PNGINC ZLIBDIR
+BUILD_OVERRIDE_VARS += JPEGLIBDIR JPEGINC
+BUILD_OVERRIDE_VARS += XPMLIBDIR XPMINC
+BUILD_OVERRIDE_VARS += XFIGLIBDIR XFIGDOCDIR
+
+BUILD_OVERRIDE_VAR_PNGLIBDIR = $(libdir)
+BUILD_OVERRIDE_VAR_PNGINC = -I$(includedir)
+BUILD_OVERRIDE_VAR_ZLIBDIR = $(libdir)
+BUILD_OVERRIDE_VAR_JPEGLIBDIR = $(libdir)
+BUILD_OVERRIDE_VAR_JPEGINC = -I$(includedir)
+BUILD_OVERRIDE_VAR_XPMLIBDIR = /usr/openwin/lib
+BUILD_OVERRIDE_VAR_XPMINC = -I/usr/openwin/include/X11
+
+BUILD_OVERRIDE_VAR_XFIGLIBDIR = $(libdir)/xfig
+BUILD_OVERRIDE_VAR_XFIGDOCDIR = $(docdir)/xfig
+
+# -DXFIGLIBDIR=\"/usr/openwin/lib/X11/xfig\" -DXFIGDOCDIR=\"/usr/local/xfig/doc\" -DPRINTCAP=\"/etc/printcap\"
+
+TEST_SCRIPTS =
+
+INSTALL_ARGS = install.man install.html install.libs
+
+INSTALL_OVERRIDE_VARS = BINDIR MANPATH LIBDIR XFIGDOCDIR
+INSTALL_OVERRIDE_VAR_BINDIR = $(bindir)
+INSTALL_OVERRIDE_VAR_MANPATH = $(mandir)
+INSTALL_OVERRIDE_VAR_LIBDIR = $(libdir)
+INSTALL_OVERRIDE_VAR_XFIGDOCDIR = $(docdir)/xfig
+
+# INSTALL_SCRIPTS = custom
+
+include gar/category.mk
+
+post-extract-modulated:
+	-find $(WORKSRC) -type d -exec chmod 755 \{\} \;
+	-find $(WORKSRC) -type f -exec chmod ugo+r \{\} \;
+	@$(MAKECOOKIE)
+
+
+#install-custom:
+#	ginstall -d $(DESTDIR)$(bindir)
+#	ginstall $(WORKSRC)/xearth $(DESTDIR)$(bindir)/xearth
+#	ginstall -d $(DESTDIR)$(mandir)/man1
+#	ginstall $(WORKSRC)/xearth.man $(DESTDIR)$(mandir)/man1/xearth.1
+#	@$(MAKECOOKIE)
