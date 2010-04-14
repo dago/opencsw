@@ -17,7 +17,6 @@ CATALOGNAME = pm_maildkim
 ARCHALL = 1
 
 DEPENDS += cpan/Crypt-OpenSSL-RSA
-DEPENDS += cpan/Digest-SHA1
 DEPENDS += cpan/Error
 DEPENDS += cpan/MailTools
 DEPENDS += cpan/Net-DNS
