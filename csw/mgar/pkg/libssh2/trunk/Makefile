@@ -39,6 +39,10 @@ CONFIGURE_ARGS += --with-openssl=/opt/csw
 
 TEST_TARGET = check
 
+# Disable for now until this is fixed:
+#   http://libssh2.stuge.se/ticket/170
+SKIPTEST ?= 1
+
 PKGFILES_CSWlibssh2devel = $(PKGFILES_DEVEL)
 
 CHECKPKG_OVERRIDES_CSWlibssh2devel += surplus-dependency|CSWlibssh2
