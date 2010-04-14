@@ -1,5 +1,5 @@
 GARNAME = libssh2
-GARVERSION = 1.2.4
+GARVERSION = 1.2.5
 CATEGORIES = lib
 
 DESCRIPTION = A Library Implementing the SSH2 Protocol
@@ -28,7 +28,7 @@ CATALOGNAME_CSWlibssh2 = libssh2
 CATALOGNAME_CSWlibssh2devel = libssh2_devel
 
 SPKG_DESC_CSWlibssh2 = $(DESCRIPTION)
-SPKG_DESC_CSWlibssh2devel = libssh2 developer files
+SPKG_DESC_CSWlibssh2devel = Developer files for libssh2
 
 BUILD64 = 1
 NOISAEXEC = 1
@@ -39,11 +39,8 @@ CONFIGURE_ARGS += --with-openssl=/opt/csw
 
 TEST_TARGET = check
 
-# The second test "ssh2" sometimes hangs. Disable tests for now until
-#   http://sourceforge.net/tracker/?func=detail&aid=2952151&group_id=125852&atid=703942
-# has been resolved.
-SKIPTEST ?= 1
-
 PKGFILES_CSWlibssh2devel = $(PKGFILES_DEVEL)
+
+CHECKPKG_OVERRIDES_CSWlibssh2devel += surplus-dependency|CSWlibssh2
 
 include gar/category.mk
