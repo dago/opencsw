@@ -1,7 +1,7 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 GARNAME = lha
-GARVERSION = 1.14i-ac20040929p1
-SPKG_VERSION = $(echo $(GARVERSION) | tr '-' '_')
+GARVERSION = 1.14i-ac20050924p1
+SPKG_VERSION = $(shell echo $(GARVERSION) | tr '-' '_')
 CATEGORIES = utils
 
 DESCRIPTION = File archiving/compression program
