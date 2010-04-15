@@ -27,7 +27,7 @@ localstatedir="/var${prefix}"
 start_puppetd() {
   cd /
   # Start daemons.
-  ${bindir}/puppetd
+  ${sbindir}/puppetd
 }
 
 reload_puppetd() {

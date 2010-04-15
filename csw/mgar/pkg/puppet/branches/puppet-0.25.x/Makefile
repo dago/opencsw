@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 GARNAME = puppet
-GARVERSION = 0.24.8
+GARVERSION = 0.25.4
 CATEGORIES = apps
 
 define BLURB
@@ -21,9 +21,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://reductivelabs.com/downloads/puppet/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += cswpuppetd cswpuppetmasterd cswusergroup
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://reductivelabs.com/products/puppet/
 
 INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
@@ -40,6 +40,7 @@ SPKG_DESC_CSWpuppetmaster = System configuration management tool, server
 RUNTIME_DEP_PKGS                  = CSWfacter
 RUNTIME_DEP_PKGS                 += CSWruby
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWpuppet
+RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWruby
 
 PKGFILES_CSWpuppetmaster  = $(sysconfdir)/init\.d/cswpuppetmasterd
 PKGFILES_CSWpuppetmaster += $(sbindir)/puppetmasterd
@@ -58,6 +59,9 @@ INSTALL_SCRIPTS   = puppet
 
 PATCHFILES  = 0001-pkgutil-support.patch
 PATCHFILES += 0002-Using-the-single-option-of-pkgutil.patch
+
+CHECKPKG_OVERRIDES_CSWpuppet += surplus-dependency|CSWfacter
+CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWpuppet
 
 include gar/category.mk
 
@@ -84,4 +88,12 @@ install-puppet:
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/puppet
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/puppet/cswusergroup
+	@$(MAKECOOKIE)
+
+post-merge:
+	# For this file to run, CSWpuppet would need to depend on CSWpython,
+	# and we don't want that. It could be split off to another package, but
+	# this file doesn't seem to be of any use on Solaris, so we can safely
+	# remove it.
+	rm $(PKGROOT)$(libdir)/ruby/site_ruby/1.8/puppet/provider/package/yumhelper.py
 	@$(MAKECOOKIE)
