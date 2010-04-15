@@ -38,8 +38,10 @@ RUNTIME_DEP_PKGS += CSWggettextrt
 RUNTIME_DEP_PKGS += CSWbdb
 
 CHECKPKG_OVERRIDES_CSWirssi += surplus-dependency|CSWiconv
+#CHECKPKG_OVERRIDES_CSWirssi += deprecated-library|opt/csw/bin/botti|Deprecated|Berkeley|DB|location|/opt/csw/lib/libdb-4.7.so
+#CHECKPKG_OVERRIDES_CSWirssi += deprecated-library|opt/csw/bin/irssi|Deprecated|Berkeley|DB|location|/opt/csw/lib/libdb-4.7.so
 
-CHECKPKG_OVERRIDES_CSWirssi += symbol-not-found
+#CHECKPKG_OVERRIDES_CSWirssi += symbol-not-found
 
 TEST_TARGET = check
 
