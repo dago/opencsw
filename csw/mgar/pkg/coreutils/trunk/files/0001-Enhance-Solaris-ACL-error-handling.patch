@@ -1,22 +1,25 @@
-From 8d4aa48bc66f346db116dd2fe4aa524e1362897f Mon Sep 17 00:00:00 2001
-From: Ben Walton <bwalton@opencsw.org>
-Date: Fri, 15 Jan 2010 03:43:16 +0100
-Subject: [PATCH] Fix solaris acl support breakage
+From a06d449a84a393d2d764a0d7871840cb99f665d7 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Date: Thu, 11 Feb 2010 04:43:29 +0100
+Subject: [PATCH] Enhance Solaris ACL error handling
 
-Solaris has support for ACL's on NFS, but only in certain combinations
-of client and server.  When ACL operations are attempted in
-unsupported situations, EOPNOTSUPP can be returned instead of ENOSYS.
-This patch allows utilities that work with ACL's to handle the
-difference properly.
+Gracefully handle EOPNOTSUPP in qcopy_acl and qset_acl.  These
+functions, as used in coreutils, were causing the test suite to fail
+on Solaris 8 i386 with ZFS-backed NFSv3 mounts.  The failures included
+errors such as:
 
-Signed-off-by: Ben Walton <bwalton@opencsw.org>
+FAIL: cp/backup-dir
+cp: preserving permissions for `y/x': Operation not supported on
+transport endpoint
+
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
 ---
  lib/copy-acl.c     |    4 ++--
  lib/set-mode-acl.c |    2 +-
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/lib/copy-acl.c b/lib/copy-acl.c
-index 1e82240..6a21aeb 100644
+index 1e82240..e187cda 100644
 --- a/lib/copy-acl.c
 +++ b/lib/copy-acl.c
 @@ -294,7 +294,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
@@ -24,7 +27,7 @@ index 1e82240..6a21aeb 100644
        if (count < 0)
          {
 -          if (errno == ENOSYS || errno == ENOTSUP)
-+          if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
++          if (errno == ENOSYS || errno == ENOTSUP || errno == EOPNOTSUPP)
              {
                count = 0;
                entries = NULL;
@@ -51,5 +54,5 @@ index c5b4726..2cd2c75 100644
          return -1;
        }
 -- 
-1.6.5.1
+1.6.6
 

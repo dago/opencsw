@@ -8,11 +8,12 @@ CATEGORIES = utils
 OPT_FLAGS_GCC = -O1 -pipe
 
 # building with gcc gets us extra tools (eg: stdbuf)
-GARCOMPILER = GCC4
+# GARCOMPILER = GCC4
 
 SHELL = /opt/csw/bin/bash
 
-BUILD_DEP_PKGS = CSWbash
+BUILD_DEP_PKGS =  CSWautomake CSWautoconf CSWbison CSWggettext CSWgit
+BUILD_DEP_PKGS += CSWgperf CSWgzip CSWperl CSWrsync CSWgtar CSWbash
 
 RUNTIME_DEP_PKGS = CSWiconv CSWggettextrt CSWlibgmp
 
@@ -25,10 +26,7 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES = 0001-Fix-solaris-acl-support-breakage.patch
-
-BUILD_DEP_PKGS =  CSWautomake CSWautoconf CSWbison CSWggettext CSWgit
-BUILD_DEP_PKGS += CSWgperf CSWgzip CSWperl CSWrsync CSWgtar CSWbash
+PATCHFILES = 0001-Enhance-Solaris-ACL-error-handling.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -41,8 +39,10 @@ CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw/
 CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw/
 CONFIGURE_ARGS += --enable-no-install-program=chcon
 
-#TEST_TARGET = check
-TEST_TARGET =
+# required for eaccess and not picked up automatically.
+EXTRA_LDFLAGS = -lgen
+
+TEST_TARGET = check
 
 include gar/category.mk
 
