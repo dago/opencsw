@@ -26,4 +26,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
+# Disable tests until this is fixed:
+#   https://bugs.g10code.com/gnupg/msg3633
+SKIPTEST ?= 1
+
 include gar/category.mk
