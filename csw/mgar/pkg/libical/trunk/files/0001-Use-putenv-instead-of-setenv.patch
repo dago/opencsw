@@ -1,0 +1,27 @@
+From 65113edda06ad24ceec3a924d7a45cb609742924 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 16 Apr 2010 11:09:15 +0200
+Subject: [PATCH] Use putenv instead of setenv
+
+---
+ src/test/timezones.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/src/test/timezones.c b/src/test/timezones.c
+index 0ddcc7e..9621325 100644
+--- a/src/test/timezones.c
++++ b/src/test/timezones.c
+@@ -49,7 +49,9 @@ int main(int argc, char **argv)
+          * select this location for glibc: needs support for TZ=<location>
+          * which is not POSIX
+          */
+-        setenv("TZ", zone_location, 1);
++	char tzenv[200];
++	snprintf(tzenv,sizeof(tzenv),"TZ=%s", zone_location);
++	putenv( tzenv );
+         tzset();
+ 
+         /*
+-- 
+1.7.0
+
