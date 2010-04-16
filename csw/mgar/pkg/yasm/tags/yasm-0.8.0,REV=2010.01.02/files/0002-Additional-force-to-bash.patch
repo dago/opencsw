@@ -1,0 +1,22 @@
+From 595b93bd837b5349154d2796da90d53567de5adb Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 2 Jan 2010 11:21:42 +0100
+Subject: [PATCH 2/2] Additional force to bash
+
+---
+ .../objfmts/bin/tests/multisect/bin_multi_test.sh  |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/modules/objfmts/bin/tests/multisect/bin_multi_test.sh b/modules/objfmts/bin/tests/multisect/bin_multi_test.sh
+index acd0c34..4984530 100755
+--- a/modules/objfmts/bin/tests/multisect/bin_multi_test.sh
++++ b/modules/objfmts/bin/tests/multisect/bin_multi_test.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ # $Id: bin_multi_test.sh 2010 2007-11-14 08:33:32Z peter $
+ 
+ YASM_TEST_SUITE=1
+-- 
+1.6.6
+
