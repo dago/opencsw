@@ -1,5 +1,5 @@
 GARNAME = amavisd-new
-GARVERSION = 2.6.3
+GARVERSION = 2.6.4
 CATEGORIES = server
 
 DESCRIPTION = Interface between MTA and content checkers
@@ -10,6 +10,7 @@ endef
 PACKAGES = CSWamavisdnew
 CATALOGNAME = amavisd_new
 ARCHALL = 1
+LICENSE = LICENSE
 
 MASTER_SITES = http://www.ijs.si/software/amavisd/#download
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
@@ -22,13 +23,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS += CSWbdb47
 RUNTIME_DEP_PKGS += CSWperl
-RUNTIME_DEP_PKGS += CSWcswclassutils
 RUNTIME_DEP_PKGS += CSWpmiostringy
 RUNTIME_DEP_PKGS += CSWpmnetserver
 RUNTIME_DEP_PKGS += CSWpmmailtools
 RUNTIME_DEP_PKGS += CSWpmmimetools
-RUNTIME_DEP_PKGS += CSWiocompress
-RUNTIME_DEP_PKGS += CSWpmarchivetar
+RUNTIME_DEP_PKGS += CSWpmiocompress
 RUNTIME_DEP_PKGS += CSWpmarchivezip
 RUNTIME_DEP_PKGS += CSWspamassassin
 RUNTIME_DEP_PKGS += CSWpmberkeleydb
@@ -36,6 +35,20 @@ RUNTIME_DEP_PKGS += CSWpmconverttnef
 RUNTIME_DEP_PKGS += CSWpmconvertuulib
 RUNTIME_DEP_PKGS += CSWpmmaildkim
 RUNTIME_DEP_PKGS += CSWpmunixsyslog
+
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmmaildkim
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmnetserver
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWbdb47
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmiostringy
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmconverttnef
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmberkeleydb
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmiocompress
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmarchivezip
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmconvertuulib
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmmailtools
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWspamassassin
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmmimetools
+CHECKPKG_OVERRIDES_CSWamavisdnew += surplus-dependency|CSWpmunixsyslog
 
 PATCHFILES += amavisd-agent.diff
 PATCHFILES += amavisd-nanny.diff
@@ -87,6 +100,7 @@ install-custom:
 	cp -r $(AMAVISDOC) $(DESTDIR)$(prefix)/share/doc/amavisd-new
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 files/cswamavisdnew $(DESTDIR)/etc/opt/csw/init.d/cswamavisdnew
+	ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSWamavisdnew
 	ginstall -m 644 files/CSWamavisdnew.cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWamavisdnew/cswusergroup
 	$(MAKECOOKIE)
 
