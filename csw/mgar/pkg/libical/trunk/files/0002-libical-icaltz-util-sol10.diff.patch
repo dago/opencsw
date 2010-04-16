@@ -1,0 +1,24 @@
+From 053a845b3a7a65c2defcf570858cbbcffef5d147 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 16 Apr 2010 11:38:32 +0200
+Subject: [PATCH] libical-icaltz-util-sol10.diff
+
+---
+ src/libical/icaltz-util.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/src/libical/icaltz-util.c b/src/libical/icaltz-util.c
+index 6c2dc26..7104500 100644
+--- a/src/libical/icaltz-util.c
++++ b/src/libical/icaltz-util.c
+@@ -26,6 +26,7 @@
+ #include <string.h>
+ 
+ #if defined(sun) && defined(__SVR4)
++#include <sys/types.h>
+ #include <sys/byteorder.h>
+ #else
+ # ifdef HAVE_BYTESWAP_H
+-- 
+1.7.0
+

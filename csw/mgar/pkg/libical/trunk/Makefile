@@ -15,6 +15,11 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 #   http://sourceforge.net/tracker/?func=detail&aid=2988172&group_id=16077&atid=116077
 PATCHFILES = 0001-Use-putenv-instead-of-setenv.patch
 
+# Fix on Solaris x86 only until this is resolved:
+#   http://sourceforge.net/tracker/?func=detail&aid=2805395&group_id=16077&atid=116077
+# (Patch has been reformatted for homogenous PATCHDIRLEVEL)
+PATCHFILES += 0002-libical-icaltz-util-sol10.diff.patch
+
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
