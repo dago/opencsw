@@ -1,5 +1,5 @@
 GARNAME = msmtp
-GARVERSION = 1.4.19
+GARVERSION = 1.4.20
 CATEGORIES = net
 
 DESCRIPTION = SMTP client
@@ -25,13 +25,12 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
+VENDOR_URL = http://msmtp.sourceforge.net/
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-RUNTIME_DEP_PKGS  = CSWgcrypt CSWggettextrt CSWgnutls CSWgpgerr CSWiconv CSWkrb5lib
-RUNTIME_DEP_PKGS += CSWlibgsasl CSWlibidn CSWlibntlm CSWzlib
-
-RUNPATHQUOTE = 1
+RUNTIME_DEP_PKGS = CSWlibidn CSWgnutls CSWlibgsasl CSWggettextrt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
