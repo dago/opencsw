@@ -1,5 +1,5 @@
 GARNAME = nsd
-GARVERSION = 3.2.4
+GARVERSION = 3.2.5
 CATEGORIES = server
 
 DESCRIPTION = An authoritative only non-recursive name server
@@ -22,6 +22,8 @@ PACKAGES = CSWnsd
 RUNTIME_DEP_PKGS = CSWosslrt
 CATALOGNAME = nsd
 SPKG_DESC = An authoritative only non-recursive name server
+PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
+LICENSE = LICENSE
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += cswusergroup
