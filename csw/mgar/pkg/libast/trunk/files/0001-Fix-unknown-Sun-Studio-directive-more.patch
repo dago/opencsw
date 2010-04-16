@@ -1,0 +1,33 @@
+From 71446a56d8771125fb546942728493fe4f2b3c01 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 16 Apr 2010 16:49:46 +0200
+Subject: [PATCH 1/2] Fix unknown Sun Studio directive more
+
+---
+ test/perf.c |    3 ++-
+ test/test.c |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/test/perf.c b/test/perf.c
+index f2a4174..bcb5588 100644
+--- a/test/perf.c
++++ b/test/perf.c
+@@ -21,13 +21,14 @@
+  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  */
+ 
++#include <libast.h>
++
+ static const char cvs_ident[] = "$Id: perf.c,v 1.13 2004/10/26 18:01:54 mej Exp $";
+ 
+ #if defined(HAVE_CONFIG_H) && (HAVE_CONFIG_H != 0)
+ # include <config.h>
+ #endif
+ 
+-#include <libast.h>
+ #include "perf.h"
+ 
+ unsigned long tnum = 0;
+-- 
+1.7.0
+

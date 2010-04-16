@@ -1,0 +1,57 @@
+From 09a577da98246aa634b9b87ff21bb13b68d7fd82 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 16 Apr 2010 16:54:27 +0200
+Subject: [PATCH 2/2] Fix check for C99
+
+---
+ configure    |    4 ++--
+ configure.in |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/configure b/configure
+index 7e35ca3..b649ab9 100755
+--- a/configure
++++ b/configure
+@@ -24270,7 +24270,7 @@ if test "${with_pedantry+set}" = set; then
+   withval="$with_pedantry"
+ 
+         if test "$withval" != "no"; then
+-            CFLAGS="$CFLAGS -Wall -Werror -std=c99"
++            CFLAGS="$CFLAGS -xc99"
+ 
+ cat >>confdefs.h <<\_ACEOF
+ #define STRICT_ISO_C99 1
+@@ -24297,7 +24297,7 @@ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+ 
+                int main () {
+-                   int a = 0, b = 0;
++                   signed char a = 0, b = 0;
+                    (long) a = (long) b;
+                    return 0;
+                }
+diff --git a/configure.in b/configure.in
+index cc50226..e9cc017 100644
+--- a/configure.in
++++ b/configure.in
+@@ -71,7 +71,7 @@ AC_ARG_WITH(pedantry,
+     [  --with-pedantry         add -Werror -std=c99 -pedantic to CFLAGS],
+     [
+         if test "$withval" != "no"; then
+-            CFLAGS="$CFLAGS -Wall -Werror -std=c99"
++            CFLAGS="$CFLAGS -xc99"
+             AC_DEFINE(STRICT_ISO_C99, 1, [Defined if strict ISO C99 (9899:1999) is requested or required.])
+         fi
+     ]
+@@ -80,7 +80,7 @@ AC_ARG_WITH(pedantry,
+ AC_MSG_CHECKING(if STRICT_ISO_C99 required)
+ AC_TRY_RUN([
+                int main () {
+-                   int a = 0, b = 0;
++                   signed char a = 0, b = 0;
+                    (long) a = (long) b;
+                    return 0;
+                }
+-- 
+1.7.0
+

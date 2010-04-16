@@ -1,2 +1,4 @@
+b73d6d2c26911ff3085b6dac28db3f5e  0001-Fix-unknown-Sun-Studio-directive-more.patch
 2460a809fdffec738719fa1d59b63705  0001-Fix-unknown-Sun-Studio-directive.patch
+4cbabcd7b09030530cd3311f713ee810  0002-Fix-check-for-C99.patch
 a9ec3b2da317f35869316e6d9571d296  libast-0.7.tar.gz
