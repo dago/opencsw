@@ -1,5 +1,5 @@
 GARNAME = yasm
-GARVERSION = 0.8.0
+GARVERSION = 1.0.0
 CATEGORIES = devel
 
 DESCRIPTION = A complete rewrite of the NASM assembler
@@ -15,11 +15,6 @@ endef
 
 MASTER_SITES = http://www.tortall.net/projects/yasm/releases/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-
-# Patch testsuite until this has been fixed:
-#   <http://www.tortall.net/projects/yasm/ticket/199>
-PATCHFILES  = 0001-Force-bash-on-testsuite.patch
-PATCHFILES += 0002-Additional-force-to-bash.patch
 
 RUNTIME_DEP_PKGS = CSWggettextrt
 
