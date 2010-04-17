@@ -12,9 +12,9 @@ define BLURB
 endef
 
 SF_PROJ = xmlstar
-# MASTER_SITES += $(SF_MIRRORS)
-MASTER_SITES = http://xmlstar.sourceforge.net/downloads/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES += http://xmlstar.sourceforge.net/downloads/
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWiconv CSWlibxml2 CSWlibxslt CSWzlib   
 
