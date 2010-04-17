@@ -11,6 +11,8 @@ MASTER_SITES = http://bre.klaki.net/programs/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 0001-Update-Paths-and-Binary-Tool-Names-for-CSW.patch
 
+DISTNAME = $(GARNAME)
+
 ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWgmake CSWshutils CSWperl CSWless
@@ -30,10 +32,6 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk
-
-post-extract:
-	@cd $(WORKDIR_FIRSTMOD); mv $(GARNAME) $(GARNAME)-$(GARVERSION);
-	@$(MAKECOOKIE)
 
 install-custom: CMDD=$(docdir)/$(GARNAME)
 install-custom:
