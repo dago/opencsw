@@ -3,7 +3,7 @@ GARVERSION = 7.3.6
 CATEGORIES = utils
 
 ARCHALL = 1
-RUNTIME_DEP_PKGS = CSWperl CSWgnulinks CSWgfile CSWggrep CSWfortune CSWgawk
+RUNTIME_DEP_PKGS = CSWperl CSWggrep CSWfortune CSWgawk CSWcoreutils
 
 LICENSE = License
 
@@ -30,6 +30,8 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
+
+CHECKPKG_OVERRIDES_CSWlogwatch += unidentified-dependency|CSWcoreutils
 
 include gar/category.mk
 
