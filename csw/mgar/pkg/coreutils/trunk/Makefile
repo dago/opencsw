@@ -42,7 +42,11 @@ CONFIGURE_ARGS += --enable-no-install-program=chcon
 # required for eaccess and not picked up automatically.
 EXTRA_LDFLAGS = -lgen
 
+ifneq ($(GARVERSION), 8.4)
 TEST_TARGET = check
+else
+TEST_SCRIPTS =
+endif
 
 include gar/category.mk
 
