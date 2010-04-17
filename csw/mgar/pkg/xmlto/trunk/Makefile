@@ -27,6 +27,18 @@ PATCHFILES = gcp-explicit-args.patch
 TEST_TARGET = check
 
 CHECKPKG_OVERRIDES_CSWxmlto += unidentified-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWdocbookdtds
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWsgmlcommon
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWdocbookxsl
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWxmlcommon
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWflex
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWmktemp
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWlibxml2
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWbash
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWggetopt
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWlibxslt
+CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWw3m
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
