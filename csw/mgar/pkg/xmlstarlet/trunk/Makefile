@@ -25,10 +25,6 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 
 BUILD64 = 1
 
-TEST_TARGET = check
-
-include gar/category.mk
-
 CONFIGURE_ENV += LIBXML_PREFIX=$(prefix)
 CONFIGURE_ENV += LIBXML_CFLAGS="$(shell $(bindir)/xml2-config --cflags)"
 CONFIGURE_ENV += LIBXML_LIBS="$(shell $(bindir)/xml2-config --libs)"
@@ -37,6 +33,12 @@ CONFIGURE_ENV += LIBXSLT_CFLAGS="$(shell $(bindir)/xslt-config --cflags)"
 CONFIGURE_ENV += LIBXSLT_LIBS="$(shell $(bindir)/xslt-config --libs) -lexslt"
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
+
+CHECKPKG_OVERRIDES_CSWxmlstarlet += soname-not-found|libm.so.2
+
+include gar/category.mk
 
 post-install-modulated:
 	@echo " ==> Renaming program to xmlstarlet"
