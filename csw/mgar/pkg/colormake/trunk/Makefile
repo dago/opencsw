@@ -18,6 +18,9 @@ ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWgmake CSWcoreutils CSWperl CSWless
 
 CHECKPKG_OVERRIDES_CSWcolormake += unidentified-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWcolormake += surplus-dependency|CSWgmake
+CHECKPKG_OVERRIDES_CSWcolormake += surplus-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWcolormake += surplus-dependency|CSWless
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
