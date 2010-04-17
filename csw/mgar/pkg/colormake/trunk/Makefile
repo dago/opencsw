@@ -15,7 +15,9 @@ DISTNAME = $(GARNAME)
 
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS = CSWgmake CSWshutils CSWperl CSWless
+RUNTIME_DEP_PKGS = CSWgmake CSWcoreutils CSWperl CSWless
+
+CHECKPKG_OVERRIDES_CSWcolormake += unidentified-dependency|CSWcoreutils
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
