@@ -5,7 +5,7 @@ CATEGORIES = utils
 # seq has issues related to the handling of long double's with -O2.
 # this issue manifested on sol8 and sol9 x86 only.  sparc was unaffected
 # and sol10 x86 was fine too.
-OPT_FLAGS_GCC = -O1 -pipe
+# OPT_FLAGS_GCC = -O1 -pipe
 
 # building with gcc gets us extra tools (eg: stdbuf)
 # GARCOMPILER = GCC4
@@ -28,15 +28,16 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 0001-Enhance-Solaris-ACL-error-handling.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# We define upstream file regex so we can be notifed of new upstream
+# software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
-CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw/
-CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw/
+CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw
+CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw
 CONFIGURE_ARGS += --enable-no-install-program=chcon
 
 # required for eaccess and not picked up automatically.
