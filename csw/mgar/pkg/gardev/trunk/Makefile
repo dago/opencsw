@@ -29,6 +29,22 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 CHECKPKG_OVERRIDES_CSWgardevel += unidentified-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWlftp
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWgmake
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWgsed
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWggrep
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWgtar
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWwget
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWfindutils
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWpy-cheetah
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWbzip2
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWsvn
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWgawk
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWdiffutils
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWnetcat
 
 include gar/category.mk
 
