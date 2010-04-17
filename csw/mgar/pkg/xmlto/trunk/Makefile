@@ -7,7 +7,7 @@ BUILD_DEP_PKGS += CSWflex CSWggetopt
 
 RUNTIME_DEP_PKGS = CSWsgmlcommon CSWxmlcommon CSWlibxml2 CSWdocbookdtds
 RUNTIME_DEP_PKGS += CSWdocbookxsl CSWlibxslt CSWflex CSWw3m CSWmktemp
-RUNTIME_DEP_PKGS += CSWggetopt CSWbash CSWgfile CSWtextutils
+RUNTIME_DEP_PKGS += CSWggetopt CSWbash CSWcoreutils
 
 DESCRIPTION = An XSL toolchain front end.
 define BLURB
@@ -25,6 +25,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 PATCHFILES = gcp-explicit-args.patch
 
 TEST_TARGET = check
+
+CHECKPKG_OVERRIDES_CSWxmlto += unidentified-dependency|CSWcoreutils
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
