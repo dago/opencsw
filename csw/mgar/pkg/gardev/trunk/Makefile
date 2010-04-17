@@ -51,5 +51,6 @@ include gar/category.mk
 install-custom: DOCDIR=$(DESTDIR)/$(docdir)/$(GARNAME)
 install-custom: $(WORKSRC)
 	@(gmkdir -p $(DOCDIR); \
-		cp $(FILEDIR)/README.csw $(DOCDIR) )
+		cp $(FILEDIR)/README.csw $(DOCDIR); \
+		echo 'This is a dummy package, covered by a dummy license.' >> $(DOCDIR)/license)
 	@$(MAKECOOKIE)
