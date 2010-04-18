@@ -34,7 +34,6 @@ EXTRA_INC += $(prefix)/bdb47/include
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
 RUNTIME_DEP_PKGS += CSWglib2
-RUNTIME_DEP_PKGS += CSWiconv
 RUNTIME_DEP_PKGS += CSWosslrt
 RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWggettextrt
