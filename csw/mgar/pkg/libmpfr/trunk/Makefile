@@ -1,5 +1,5 @@
 GARNAME = mpfr
-GARVERSION = 2.4.1
+GARVERSION = 2.4.2
 CATEGORIES = lib
 
 DESCRIPTION = GNU Multiple Precision floating-point arithmetic library
@@ -17,7 +17,7 @@ SPKG_DESC_CSWlibmpfr = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWlibmpfr = http://www.mpfr.org/
 
 RUNTIME_DEP_PKGS_CSWlibmpfr  = 
-PATCHFILES = patches
+#PATCHFILES = patches
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
