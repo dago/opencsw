@@ -1,4 +1,4 @@
-c6bc2f9c3d88e0488f0332a9d288dc39  patch-bindings-Makefile.in
+951bd5a3b688904d77f801621702ee99  patch-bindings-Makefile.in
 0d068a4648f3a52c79c00374fa0ef486  patch-bindings-perl-piped-Makefile.PL
 4fd31144a5e2799db7440d97430d3ab6  patch-bindings-perl-shared-Makefile.PL
 072482090287b462c8c092b2ead132da  patch-bindings-ruby-extconf.rb
