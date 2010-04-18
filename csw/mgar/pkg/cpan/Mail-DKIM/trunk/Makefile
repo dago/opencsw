@@ -14,6 +14,7 @@ endef
 
 PACKAGES = CSWpmmaildkim
 CATALOGNAME = pm_maildkim
+LICENSE = LICENSE
 ARCHALL = 1
 
 DEPENDS += cpan/Crypt-OpenSSL-RSA
