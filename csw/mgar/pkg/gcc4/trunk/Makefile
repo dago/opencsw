@@ -1,5 +1,5 @@
 GARNAME      = gcc
-GARVERSION   = 4.4.3
+GARVERSION   = 4.5.0
 CATEGORIES   = lang
 
 DESCRIPTION  = The GNU Compiler Collection
@@ -16,7 +16,7 @@ MASTER_SITES = $(GNU_MIRROR)/$(GARNAME)-$(GARVERSION)/
 # of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 ## build options
