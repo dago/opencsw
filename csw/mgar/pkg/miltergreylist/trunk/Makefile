@@ -1,5 +1,5 @@
 GARNAME = miltergreylist
-GARVERSION = 4.2.3
+GARVERSION = 4.2.4
 #RELEASE = rc1
 #DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTVERSION = $(GARVERSION)
@@ -16,7 +16,7 @@ MASTER_SITES = http://ftp.espci.fr/pub/milter-greylist/
 DISTFILES  = milter-greylist-$(DISTVERSION).tgz
 DISTFILES += COPYING
 
-REQUIRED_PKGS = CSWcurlrt CSWgeoip
+RUNTIME_DEP_PKGS = CSWcurlrt CSWgeoip
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
@@ -40,7 +40,7 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 USERGROUP = /opt/csw/etc/pkg/miltergreylist/cswusergroup
 SAMPLECONF = /etc/opt/csw/greylist.conf
-INITSMF = /etc/opt/csw/init.d/cswmiltergreylist
+INITSMF = /opt/csw/etc/init.d/cswmiltergreylist
 
 PROTOTYPE_MODIFIERS = 1
 PROTOTYPE_FILES_1 = /var/opt/csw/miltergreylist
@@ -73,8 +73,8 @@ install-custom:
 	@rmdir $(DESTDIR)/var/milter-greylist
 	@ginstall -d -m 755 $(DESTDIR)/opt/csw/etc/pkg/$(GARNAME)
 	@cp $(FILEDIR)/CSWmiltergreylist.ug $(DESTDIR)/opt/csw/etc/pkg/$(GARNAME)/cswusergroup
-	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
-	@cp $(FILEDIR)/CSWmiltergreylist.init $(DESTDIR)/etc/opt/csw/init.d/cswmiltergreylist
-	@chmod 755 $(DESTDIR)/etc/opt/csw/init.d/cswmiltergreylist
+	@ginstall -d -m 755 $(DESTDIR)/opt/csw/etc/init.d
+	@cp $(FILEDIR)/CSWmiltergreylist.init $(DESTDIR)/opt/csw/etc/init.d/cswmiltergreylist
+	@chmod 755 $(DESTDIR)/opt/csw/etc/init.d/cswmiltergreylist
 	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(MAKECOOKIE)
