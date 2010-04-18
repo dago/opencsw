@@ -22,7 +22,6 @@ DEPENDS += cpan/MailTools
 DEPENDS += cpan/Net-DNS
 
 RUNTIME_DEP_PKGS += CSWpmcryptosslrsa
-RUNTIME_DEP_PKGS += CSWpmdigestsha
 RUNTIME_DEP_PKGS += CSWpmdigestsha1
 RUNTIME_DEP_PKGS += CSWpmerror
 RUNTIME_DEP_PKGS += CSWpmmailtools
