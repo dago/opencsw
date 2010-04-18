@@ -28,6 +28,9 @@ CONFIGURE_ARGS += --with-proxy
 CONFIGURE_ARGS += --with-perl=yes
 CONFIGURE_ARGS += --with-perl-lib=vendor
 
+EXTRA_LIB += $(prefix)/bdb47/lib
+EXTRA_INC += $(prefix)/bdb47/include
+
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 
 RUNTIME_DEP_PKGS += CSWglib2
@@ -35,13 +38,7 @@ RUNTIME_DEP_PKGS += CSWiconv
 RUNTIME_DEP_PKGS += CSWosslrt
 RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWggettextrt
-RUNTIME_DEP_PKGS += CSWbdb
-
-CHECKPKG_OVERRIDES_CSWirssi += surplus-dependency|CSWiconv
-#CHECKPKG_OVERRIDES_CSWirssi += deprecated-library|opt/csw/bin/botti|Deprecated|Berkeley|DB|location|/opt/csw/lib/libdb-4.7.so
-#CHECKPKG_OVERRIDES_CSWirssi += deprecated-library|opt/csw/bin/irssi|Deprecated|Berkeley|DB|location|/opt/csw/lib/libdb-4.7.so
-
-#CHECKPKG_OVERRIDES_CSWirssi += symbol-not-found
+RUNTIME_DEP_PKGS += CSWbdb47
 
 TEST_TARGET = check
 
