@@ -1,18 +1,20 @@
 # dep to perl?
 
 GARNAME = dcc
-GARVERSION = 1.3.116
+GARVERSION = 1.3.122
 CATEGORIES = net
 
 DESCRIPTION = E-mail greylisting and a cooperative, distributed system to identify spam
 
-MASTER_SITES = http://www.rhyolite.com/dcc/source/
-DISTFILES  = $(GARNAME).tar.Z
+MASTER_SITES = http://www.rhyolite.com/src/dcc/old/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.Z
 
 LICENSE = LICENSE
 
+RUNTIME_DEP_PKGS += CSWperl
+
 # Upstream watch
-#UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.Z
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.Z
 
 #CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS  =
@@ -65,6 +67,9 @@ install-custom:
 	@( cd $(DESTDIR)/var/opt/csw/$(GARNAME) ; \
 	  sed 's/bonivart/dcc/' dcc_conf > tmp.sed ; \
 	  mv tmp.sed dcc_conf )
+	@( cd $(DESTDIR)/opt/csw/libexec/$(GARNAME) ; \
+	  sed 's/bonivart/dcc/' fix-map > tmp.sed ; \
+	  mv tmp.sed fix-map )
 #	@$(foreach FILE, $(CONFFILES), mv $(DESTDIR)/var/opt/csw/$(GARNAME)/$(FILE) $(DESTDIR)/var/opt/csw/$(GARNAME) ;)
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)/misc
 	@$(foreach FILE, $(DOCFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(docdir)/$(GARNAME)/$(FILE) ;)
