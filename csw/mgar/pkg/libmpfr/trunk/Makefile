@@ -19,6 +19,8 @@ SPKG_SOURCEURL_CSWlibmpfr = http://www.mpfr.org/
 RUNTIME_DEP_PKGS_CSWlibmpfr  = 
 #PATCHFILES = patches
 
+STRIP_LIBTOOL = 1
+
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
