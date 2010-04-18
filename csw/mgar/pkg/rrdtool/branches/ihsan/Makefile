@@ -84,6 +84,8 @@ MERGE_DIRS_isa-amd64 = $(libdir)
 
 STRIP_LIBTOOL = 1
 
+CHECKPKG_OVERRIDES_CSWrrd += bad-rpath-entry|/home/ihsan/mgar/pkg/rrdtool/branches/ihsan/work/solaris9-sparc/install-isa-sparcv8/opt/csw/lib
+
 include gar/category.mk
 # ugly fix to fix doc path
 #post-install-modulated:
