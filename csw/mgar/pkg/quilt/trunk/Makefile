@@ -90,6 +90,7 @@ CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggetopt
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWdiffutils
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggettext
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgpatch
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWcolumn
 
 # quilt_el overrides
 CHECKPKG_OVERRIDES_CSWquilt-el += surplus-dependency|CSWquilt
