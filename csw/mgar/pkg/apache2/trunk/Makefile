@@ -46,7 +46,7 @@ DISTFILES += update20to22
 
 RUNTIME_DEP_PKGS_CSWapache2        = CSWexpat CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2       += CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWzlib
-RUNTIME_DEP_PKGS_CSWapache2       += CSWsqlite3rt CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWapache2       += CSWsqlite3rt
 
 # The SMF support: you don't need to specify cswinitsmf any more.  You need to
 # make sure the the /etc/opt/csw/init.d/cswapache file gets installed during
