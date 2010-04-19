@@ -1,2 +1,4 @@
-8af338048eefc89879d1799aaeefc1e1  download/CSWpmlocalegettext.gspec
-f3d3f474a1458f37174c410dfef61a46  download/gettext-1.05.tar.gz
+40930028a14e3310e33dfdfe5fb9db37  COPYING
+6c1d3bcfd532e5ca5a5b3dcab8d49745  compatibility-with-POSIX-module.diff
+a6a34db43bbd5ed17a8565b9c7cc97c2  doc-update.diff
+f3d3f474a1458f37174c410dfef61a46  gettext-1.05.tar.gz
