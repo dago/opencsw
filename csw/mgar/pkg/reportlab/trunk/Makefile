@@ -1,7 +1,7 @@
 GARNAME = reportlab
-GARVERSION = 2.3
-CATEGORIES = lib
-DISTNAME = ReportLab_2_3
+GARVERSION = 2.4
+CATEGORIES = python
+DISTNAME = ReportLab_2_4
 
 DESCRIPTION = industry-strength PDF generating solution
 define BLURB
@@ -31,16 +31,6 @@ UFILES_REGEX = ReportLab_(\d+(?:\_\d+)*).tar.gz
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
-INSTALL_ARGS = --root=$(DESTDIR)
 
 include gar/category.mk
-
-install-custom:
-	    @echo " ==> Installing $(GARNAME)"
-		    @( cd $(WORKSRC) ; $(INSTALL_ENV) python ./setup.py install $(INSTALL_ARGS) )
-			    $(DONADA)
-
-post-install: copy-docs
-	    $(DONADA)
 
