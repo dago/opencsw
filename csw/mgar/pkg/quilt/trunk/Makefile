@@ -22,6 +22,24 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS =  $(DIRPATHS)
+CONFIGURE_ARGS += --with-bash=/opt/csw/bin/bash
+CONFIGURE_ARGS += --with-cp=/opt/csw/bin/gcp
+CONFIGURE_ARGS += --with-date=/opt/csw/bin/gdate
+CONFIGURE_ARGS += --with-perl=/opt/csw/bin/perl
+CONFIGURE_ARGS += --with-grep=/opt/csw/bin/ggrep
+CONFIGURE_ARGS += --with-tail=/opt/csw/bin/gtail
+CONFIGURE_ARGS += --with-tr=/opt/csw/bin/gtr
+CONFIGURE_ARGS += --with-sed=/opt/csw/bin/gsed
+CONFIGURE_ARGS += --with-awk=/opt/csw/bin/gawk
+CONFIGURE_ARGS += --with-column=/opt/csw/bin/column
+CONFIGURE_ARGS += --with-pod2man=/opt/csw/bin/pod2man
+CONFIGURE_ARGS += --with-getopt=/opt/csw/bin/ggetopt
+CONFIGURE_ARGS += --with-diff=/opt/csw/bin/gdiff
+CONFIGURE_ARGS += --with-mktemp=/opt/csw/bin/mktemp
+CONFIGURE_ARGS += --with-patch=/opt/csw/bin/gpatch
+CONFIGURE_ARGS += --with-diffstat=/opt/csw/bin/gdiffstat
+CONFIGURE_ARGS += --with-find=/opt/csw/bin/gfind
+CONFIGURE_ARGS += --with-sendmail=/usr/lib/sendmail
 
 include gar/category.mk
