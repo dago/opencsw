@@ -96,3 +96,7 @@ PATH := /opt/csw/gnu:$(PATH)
 # it seems they prefer the RPM name for this variable in their Makefile
 BUILD_ROOT = $(DESTDIR)
 EXTRA_COMMON_EXPORTS += BUILD_ROOT
+
+post-install-modulated:
+	@( gmkdir -p $(DESTDIR)/$(sysconfdir)/; \
+	   mv $(DESTDIR)/$(prefix)/etc/quilt.quiltrc $(DESTDIR)/$(sysconfdir) )
