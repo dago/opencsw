@@ -48,11 +48,7 @@ PATCHFILES += setup.diff
 # Test for sunaudiodev fails.
 SKIPTEST = 1
 
-EXTRA_INC += $(prefix)/X11/include
-EXTRA_LIB += $(prefix)/X11/lib
 EXTRA_LIB += $(prefix)/bdb47/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
@@ -115,7 +111,6 @@ RUNTIME_DEP_PKGS_CSWpython       += CSWsqlite3rt CSWzlib
 RUNTIME_DEP_PKGS_CSWpython-tk    += CSWpython
 RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtcl
 RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtk 
-RUNTIME_DEP_PKGS_CSWpython-tk    += CSWlibx11
 RUNTIME_DEP_PKGS_CSWpython-devel  = CSWpython
 RUNTIME_DEP_PKGS_CSWpython-test  += CSWpython
 
@@ -142,6 +137,9 @@ CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/opt/build|root/opt/csw/li
 # Amusingly, now the overrides file contains the bad data.
 CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/export/medusa|root/opt/csw/share/checkpkg/overrides/python
 CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/opt/build|root/opt/csw/share/checkpkg/overrides/python
+
+# http://lists.opencsw.org/pipermail/pkgsubmissions/2010-April/000648.html
+CHECKPKG_OVERRIDES_CSWpython-tk += linked-against-discouraged-library|_tkinter.so|libX11.so.4
 
 include gar/category.mk
 
