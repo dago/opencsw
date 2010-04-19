@@ -12,12 +12,15 @@ Quilt originally was based on Andrew Morton's patch scripts found at
 http://www.zip.com.au/~akpm/linux/patches/.
 endef
 
-PACKAGES = CSWquilt CSWquilt-el
+PACKAGES = CSWquilt CSWquilt-el CSWquilt-completion
 
 SPKG_DESC_CSWquilt-el = Emacs support for quilt
+SPKG_DESC_CSWquilt-completion = Bash completion support for quilt
 CATALOGNAME_CSWquilt-el = quilt_el
+CATALOGNAME_CSWquilt-completion = quilt_completion
 
 ARCHALL_CSWquilt-el = 1
+ARCHALL_CSWquilt-completion = 1
 
 RUNTIME_DEP_PKGS_CSWquilt =  CSWgfile CSWshutils CSWtextutils
 RUNTIME_DEP_PKGS_CSWquilt += CSWperl CSWgawk CSWgsed CSWbash CSWdiffstat
@@ -26,10 +29,12 @@ RUNTIME_DEP_PKGS_CSWquilt += CSWfindutils CSWggetopt CSWdiffutils
 RUNTIME_DEP_PKGS_CSWquilt += CSWgnulinks
 
 RUNTIME_DEP_PKGS_CSWquilt-el = CSWemacscommon CSWquilt
+RUNTIME_DEP_PKGS_CSWquilt-complation = CSWbashcmplt CSWquilt
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 PKGFILES_CSWquilt-el = $(datadir)/emacs/site-lisp/.*
+PKGFILES_CSWquilt-completion = $(prefix)/etc/.*
 
 MASTER_SITES = http://mirror.csclub.uwaterloo.ca/nongnu/quilt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
