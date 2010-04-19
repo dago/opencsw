@@ -1,3 +1,3 @@
-6e4ef001d11caf270e2ed7d1d7d43318  download/buildbot-0.7.11p3.tar.gz
-4c70db04b3514157aa746370ad282eeb  download/debug-0.7.11p3.patch
-a39720c9a13d73bbda054938d6a98c47  download/tail-0.7.11p3.patch
+5ba9559e2ef0d4e34a26815d95fc2d68  buildbot-0.7.12.tar.gz
+4c70db04b3514157aa746370ad282eeb  buildbot-debug.patch
+a39720c9a13d73bbda054938d6a98c47  buildbot-tail.patch

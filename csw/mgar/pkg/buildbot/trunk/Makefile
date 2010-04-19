@@ -3,9 +3,9 @@
 # $Id$
 
 GARNAME = buildbot
-GARVERSION = 0.7.11
-PATCHLEVEL = p3
-CATEGORIES = utils
+GARVERSION = 0.7.12
+PATCHLEVEL =
+CATEGORIES = python
 
 DESCRIPTION = A system to automate the compile/test cycle
 define BLURB
@@ -23,15 +23,17 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-PATCHFILES  = tail-$(GARVERSION)$(PATCHLEVEL).patch
-PATCHFILES += debug-$(GARVERSION)$(PATCHLEVEL).patch
+PATCHFILES  = buildbot-tail.patch
+PATCHFILES += buildbot-debug.patch
 DISTFILES  = $(GARNAME)-$(GARVERSION)$(PATCHLEVEL).tar.gz $(PATCHFILES)
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_CLASSES = none cswpycompile
+PYCOMPILE = 1
 
-RUNTIME_DEP_PKGS = CSWcswclassutils CSWpython CSWtwisted CSWzope CSWtextutils
+RUNTIME_DEP_PKGS += CSWcoreutils
+RUNTIME_DEP_PKGS += CSWtwisted
+RUNTIME_DEP_PKGS += CSWzope
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
@@ -39,11 +41,12 @@ BUILD_SCRIPTS = buildbot
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = buildbot
 
-PROTOTYPE_FILTER = awk ' \
-  $$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } \
-  { print }'
-
 WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)$(PATCHLEVEL)
+
+CHECKPKG_OVERRIDES_CSWbuildbot += unidentified-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWtwisted
+CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWzope
+CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWcoreutils
 
 build-buildbot:
 	(cd $(WORKSRC); python setup.py build)
@@ -58,5 +61,3 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 include gar/category.mk
-
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
