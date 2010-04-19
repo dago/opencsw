@@ -26,12 +26,12 @@ RUNTIME_DEP_PKGS_CSWquilt =  CSWgfile CSWshutils CSWtextutils
 RUNTIME_DEP_PKGS_CSWquilt += CSWperl CSWgawk CSWgsed CSWbash CSWdiffstat
 RUNTIME_DEP_PKGS_CSWquilt += CSWgpatch CSWmktemp CSWggrep CSWggettext
 RUNTIME_DEP_PKGS_CSWquilt += CSWfindutils CSWggetopt CSWdiffutils
-RUNTIME_DEP_PKGS_CSWquilt += CSWgnulinks
+RUNTIME_DEP_PKGS_CSWquilt += CSWgnulinks CSWcolumn
 
 RUNTIME_DEP_PKGS_CSWquilt-el = CSWemacscommon CSWquilt
 RUNTIME_DEP_PKGS_CSWquilt-complation = CSWbashcmplt CSWquilt
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWquilt)
 
 PKGFILES_CSWquilt-el = $(datadir)/emacs/site-lisp/.*
 PKGFILES_CSWquilt-completion = $(prefix)/etc/.*
