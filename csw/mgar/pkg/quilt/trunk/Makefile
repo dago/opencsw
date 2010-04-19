@@ -38,7 +38,7 @@ CONFIGURE_ARGS += --with-getopt=/opt/csw/bin/ggetopt
 CONFIGURE_ARGS += --with-diff=/opt/csw/bin/gdiff
 CONFIGURE_ARGS += --with-mktemp=/opt/csw/bin/mktemp
 CONFIGURE_ARGS += --with-patch=/opt/csw/bin/gpatch
-CONFIGURE_ARGS += --with-diffstat=/opt/csw/bin/gdiffstat
+CONFIGURE_ARGS += --with-diffstat=/opt/csw/bin/diffstat
 CONFIGURE_ARGS += --with-find=/opt/csw/bin/gfind
 CONFIGURE_ARGS += --with-sendmail=/usr/lib/sendmail
 CONFIGURE_ARGS += --without-rpmbuild
