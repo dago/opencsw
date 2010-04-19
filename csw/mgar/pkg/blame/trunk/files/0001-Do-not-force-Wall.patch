@@ -1,0 +1,39 @@
+From 7e1d85f98ff7cb76076701198d45c312baa30c66 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 19 Apr 2010 13:46:51 +0200
+Subject: [PATCH] Do not force -Wall
+
+---
+ src/Makefile.am |    2 +-
+ src/Makefile.in |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index af59b4a..2e1937c 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -20,7 +20,7 @@ blame_SOURCES = \
+ blame_LDADD = $(top_builddir)/lib/libmisc.a
+ AM_YFLAGS = -d
+ AM_LFLAGS = -f -8
+-AM_CFLAGS = -Wall
++AM_CFLAGS = 
+ if GCC
+ AM_CFLAGS += -W -Wno-format-y2k
+ endif
+diff --git a/src/Makefile.in b/src/Makefile.in
+index 1e2ec25..c709976 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -266,7 +266,7 @@ blame_SOURCES = \
+ blame_LDADD = $(top_builddir)/lib/libmisc.a
+ AM_YFLAGS = -d
+ AM_LFLAGS = -f -8
+-AM_CFLAGS = -Wall $(am__append_1)
++AM_CFLAGS = $(am__append_1)
+ AM_CPPFLAGS = -I$(top_srcdir)/lib
+ BUILT_SOURCES = parser.h
+ AUTOMAKE_OPTIONS = $(top_builddir)/lib/ansi2knr
+-- 
+1.7.0
+
