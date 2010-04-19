@@ -12,22 +12,38 @@ Quilt originally was based on Andrew Morton's patch scripts found at
 http://www.zip.com.au/~akpm/linux/patches/.
 endef
 
-RUNTIME_DEP_PKGS =  CSWgfile CSWshutils CSWtextutils
-RUNTIME_DEP_PKGS += CSWperl CSWgawk CSWgsed CSWbash CSWdiffstat CSWdiffutils
-RUNTIME_DEP_PKGS += CSWgpatch CSWmktemp CSWggrep CSWggettext CSWgnulinks
-RUNTIME_DEP_PKGS += CSWfindutils CSWggetopt
+PACKAGES = CSWquilt CSWquilt-el
+
+SPKG_DESC_CSWquilt-el = Emacs support for quilt
+CATALOGNAME_CSWquilt-el = quilt_el
+
+ARCHALL_CSWquilt-el = 1
+
+RUNTIME_DEP_PKGS_CSWquilt =  CSWgfile CSWshutils CSWtextutils
+RUNTIME_DEP_PKGS_CSWquilt += CSWperl CSWgawk CSWgsed CSWbash CSWdiffstat
+RUNTIME_DEP_PKGS_CSWquilt += CSWgpatch CSWmktemp CSWggrep CSWggettext
+RUNTIME_DEP_PKGS_CSWquilt += CSWfindutils CSWggetopt CSWdiffutils
+RUNTIME_DEP_PKGS_CSWquilt += CSWgnulinks
+
+RUNTIME_DEP_PKGS_CSWquilt-el = CSWemacscommon CSWquilt
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+
+PKGFILES_CSWquilt-el = $(datadir)/emacs/site-lisp/.*
 
 MASTER_SITES = http://mirror.csclub.uwaterloo.ca/nongnu/quilt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# We define upstream file regex so we can be notifed of new upstream
+# software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
+# If the url used to check for software update is different of
+# MASTER_SITES, then uncomment the next line. Otherwise it is set by
+# default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
+
+sysconfdir = /etc/opt/csw
 
 CONFIGURE_ARGS =  $(DIRPATHS)
 CONFIGURE_ARGS += --with-bash=/opt/csw/bin/bash
@@ -52,6 +68,7 @@ CONFIGURE_ARGS += --without-rpmbuild
 
 COMPILE_ELISP = 1
 
+# quilt overrides
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgsed
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgawk
@@ -68,6 +85,9 @@ CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggetopt
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWdiffutils
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggettext
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgpatch
+
+# quilt_el overrides
+CHECKPKG_OVERRIDES_CSWquilt-el += surplus-dependency|CSWquilt
 
 include gar/category.mk
 
