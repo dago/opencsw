@@ -25,8 +25,6 @@ UFILES_REGEX = Imaging-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
-INSTALL_ARGS = --root=$(DESTDIR)
 
 include gar/category.mk
 
