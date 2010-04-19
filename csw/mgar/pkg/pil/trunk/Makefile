@@ -12,7 +12,8 @@ endef
 MASTER_SITES = http://effbot.org/downloads/
 DISTFILES  = $(DISTNAME).tar.gz
 
-RUNTIME_DEP_PKGS_CSWpil = CSWftype2 CSWjpeg CSWpython 
+
+RUNTIME_DEP_PKGS_CSWpil = CSWlcmsrt CSWftype2 CSWjpeg CSWtcl CSWzlib CSWtk
 
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -26,9 +27,7 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
 
+CHECKPKG_OVERRIDES_CSWpil += license-missing
+
 include gar/category.mk
-
-post-install: copy-docs
-	        $(DONADA)
-
 
