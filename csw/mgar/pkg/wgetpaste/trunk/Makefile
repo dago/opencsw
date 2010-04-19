@@ -11,11 +11,12 @@ endef
 MASTER_SITES = http://wgetpaste.zlin.dk/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += wgetpaste.conf
+DISTFILES += COPYING
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS  = CSWbash
-RUNTIME_DEP_PKGS += CSWshutils
+RUNTIME_DEP_PKGS += CSWcoreutils
 RUNTIME_DEP_PKGS += CSWwget
 
 PATCHFILES  = 0001-Using-gwhoami-instead-of-whoami.patch
@@ -31,6 +32,13 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 INSTALL_SCRIPTS = wgetpaste
 TEST_SCRIPTS =
+
+CHECKPKG_OVERRIDES_CSWwgetpaste += surplus-dependency|CSWbash
+CHECKPKG_OVERRIDES_CSWwgetpaste += surplus-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWwgetpaste += surplus-dependency|CSWwget
+
+# CSWcoreutils haven't been released yet.
+CHECKPKG_OVERRIDES_CSWwgetpaste += unidentified-dependency|CSWcoreutils
 
 include gar/category.mk
 
