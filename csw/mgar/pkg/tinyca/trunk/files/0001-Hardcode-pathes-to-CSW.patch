@@ -1,0 +1,62 @@
+From f3297cac179fd07286c5c0a82033fd1b7b664c7d Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 19 Apr 2010 16:09:50 +0200
+Subject: [PATCH] Hardcode CSW pathes
+
+---
+ tinyca2 |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/tinyca2 b/tinyca2
+index 7a7998c..82db49c 100755
+--- a/tinyca2
++++ b/tinyca2
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ #
+ # $Id: tinyca2,v 1.6 2006/07/04 19:53:16 sm Exp $
+ #
+@@ -18,7 +18,7 @@
+ # along with this program; if not, write to the Free Software
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111, USA.
+ 
+-BEGIN { unshift(@INC, './lib'); # put here the location of the modules
++BEGIN { unshift(@INC, '/opt/csw/share/tinyca2/lib'); # put here the location of the modules
+ }
+ 
+ use strict;
+@@ -46,7 +46,7 @@ use KEY;
+ use TCONFIG;
+ 
+ setlocale(LC_MESSAGES, "");
+-bindtextdomain("tinyca2", "./locale/");
++bindtextdomain("tinyca2", "/opt/csw/share/locale/");
+ textdomain("tinyca2");
+ 
+ # https://bugs.gentoo.org/show_bug.cgi?id=78576
+@@ -55,9 +55,9 @@ $ENV{XLIB_SKIP_ARGB_VISUALS}= '1';
+ my $init = {};
+ 
+ # location of openssl
+-$init->{'opensslbin'} = "/usr/bin/openssl";
+-$init->{'zipbin'} = "/usr/bin/zip";
+-$init->{'tarbin'} = "/bin/tar";
++$init->{'opensslbin'} = "/opt/csw/bin/openssl";
++$init->{'zipbin'} = "/opt/csw/bin/zip";
++$init->{'tarbin'} = "/opt/csw/bin/tar";
+ 
+ if(not -x $init->{'opensslbin'}) {
+    printf(gettext("Can't execute %s.\n"), $init->{'opensslbin'});
+@@ -76,7 +76,7 @@ if(not -x $init->{'tarbin'}) {
+ }
+ 
+ # directory with the templates
+-$init->{'templatedir'} = "./templates";
++$init->{'templatedir'} = "/opt/csw/share/tinyca2/templates";
+ 
+ if(not -d $init->{'templatedir'}) {
+    print gettext("Can't find templatedir.\n");
+-- 
+1.7.0
+
