@@ -43,3 +43,5 @@ CONFIGURE_ARGS += --with-find=/opt/csw/bin/gfind
 CONFIGURE_ARGS += --with-sendmail=/usr/lib/sendmail
 
 include gar/category.mk
+
+PATH := /opt/csw/gnu:$(PATH)
