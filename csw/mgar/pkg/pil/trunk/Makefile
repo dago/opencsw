@@ -1,6 +1,6 @@
 GARNAME = pil
-GARVERSION = 1.1.6
-CATEGORIES = lib
+GARVERSION = 1.1.7
+CATEGORIES = python
 DISTNAME = Imaging-$(GARVERSION)
 
 
@@ -29,11 +29,6 @@ INSTALL_SCRIPTS = custom
 INSTALL_ARGS = --root=$(DESTDIR)
 
 include gar/category.mk
-
-install-custom:
-	        @echo " ==> Installing $(GARNAME)"
-			            @( cd $(WORKSRC) ; $(INSTALL_ENV) python ./setup.py install $(INSTALL_ARGS) )
-						                $(DONADA)
 
 post-install: copy-docs
 	        $(DONADA)
