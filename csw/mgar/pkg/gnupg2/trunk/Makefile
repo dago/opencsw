@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME    = gnupg
-GARVERSION = 2.0.13
+GARVERSION = 2.0.15
 CATEGORIES = apps
 
 DESCRIPTION = GnuPG is a complete and free replacement for PGP.
@@ -60,11 +60,8 @@ RUNTIME_DEP_PKGS_common += CSWgcrypt
 RUNTIME_DEP_PKGS_common += CSWggettextrt
 RUNTIME_DEP_PKGS_common += CSWgpgerr
 RUNTIME_DEP_PKGS_common += CSWiconv
-RUNTIME_DEP_PKGS_common += CSWlibassuan
-RUNTIME_DEP_PKGS_common += CSWlibidn
 RUNTIME_DEP_PKGS_common += CSWlibksba
 RUNTIME_DEP_PKGS_common += CSWoldaprt
-RUNTIME_DEP_PKGS_common += CSWosslrt
 RUNTIME_DEP_PKGS_common += CSWpth
 RUNTIME_DEP_PKGS_common += CSWreadline
 RUNTIME_DEP_PKGS_common += CSWzlib
@@ -72,6 +69,9 @@ RUNTIME_DEP_PKGS_common += CSWzlib
 
 RUNTIME_DEP_PKGS_CSWgnupg2 += $(RUNTIME_DEP_PKGS_common)
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWgnupg-agent
+RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibassuan
+RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibidn
+RUNTIME_DEP_PKGS_CSWgnupg2 += CSWosslrt
 
 RUNTIME_DEP_PKGS_CSWgnupg-agent  = CSWpinentry
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWgcrypt
