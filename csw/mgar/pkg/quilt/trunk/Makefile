@@ -53,3 +53,7 @@ CONFIGURE_ARGS += --without-rpmbuild
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
+
+# it seems they prefer the RPM name for this variable in their Makefile
+BUILD_ROOT = $(DESTDIR)
+EXTRA_COMMON_EXPORTS += BUILD_ROOT
