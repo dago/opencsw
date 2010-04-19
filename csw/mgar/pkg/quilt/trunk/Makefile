@@ -52,6 +52,23 @@ CONFIGURE_ARGS += --without-rpmbuild
 
 COMPILE_ELISP = 1
 
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgsed
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgawk
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWshutils
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWfindutils
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgnulinks
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgfile
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWtextutils
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggrep
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWdiffstat
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWmktemp
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWbash
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggetopt
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWdiffutils
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggettext
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgpatch
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
