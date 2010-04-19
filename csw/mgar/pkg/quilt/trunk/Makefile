@@ -12,6 +12,13 @@ Quilt originally was based on Andrew Morton's patch scripts found at
 http://www.zip.com.au/~akpm/linux/patches/.
 endef
 
+RUNTIME_DEP_PKGS =  CSWgfile CSWshutils CSWtextutils
+RUNTIME_DEP_PKGS += CSWperl CSWgawk CSWgsed CSWbash CSWdiffstat CSWdiffutils
+RUNTIME_DEP_PKGS += CSWgpatch CSWmktemp CSWggrep CSWggettext CSWgnulinks
+RUNTIME_DEP_PKGS += CSWfindutils CSWggetopt
+
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+
 MASTER_SITES = http://mirror.csclub.uwaterloo.ca/nongnu/quilt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
