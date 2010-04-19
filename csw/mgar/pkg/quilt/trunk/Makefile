@@ -41,6 +41,7 @@ CONFIGURE_ARGS += --with-patch=/opt/csw/bin/gpatch
 CONFIGURE_ARGS += --with-diffstat=/opt/csw/bin/gdiffstat
 CONFIGURE_ARGS += --with-find=/opt/csw/bin/gfind
 CONFIGURE_ARGS += --with-sendmail=/usr/lib/sendmail
+CONFIGURE_ARGS += --without-rpmbuild
 
 include gar/category.mk
 
