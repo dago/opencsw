@@ -50,6 +50,8 @@ CONFIGURE_ARGS += --with-find=/opt/csw/bin/gfind
 CONFIGURE_ARGS += --with-sendmail=/usr/lib/sendmail
 CONFIGURE_ARGS += --without-rpmbuild
 
+COMPILE_ELISP = 1
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
