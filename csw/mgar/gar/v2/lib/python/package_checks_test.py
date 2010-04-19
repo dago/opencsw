@@ -101,22 +101,36 @@ class TestCheckCatalogname_2(CheckpkgUnitTestHelper, unittest.TestCase):
     self.pkg_data["pkginfo"]["NAME"] = 'libsigc++_devel - This catalog name is good'
 
 
-class TestCheckSmfIntegration(CheckpkgUnitTestHelper, unittest.TestCase):
+class TestCheckSmfIntegrationBad(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckSmfIntegration'
   def CheckpkgTest(self):
     self.pkg_data["pkgmap"].append({
       "class": "none",
       "group": "bin",
-      "line": "1 f none /etc/opt/csw/init.d/foo 0644 root bin 36372 24688 1266395027",
+      "line": "1 f none /opt/csw/etc/init.d/foo 0644 root bin 36372 24688 1266395027",
       "mode": '0755',
-      "path": "/etc/opt/csw/init.d/foo",
+      "path": "/opt/csw/etc/init.d/foo",
       "type": "f",
       "user": "root"
     })
     self.error_mgr_mock.ReportError('init-file-missing-cswinitsmf-class',
-                                    '/etc/opt/csw/init.d/foo class=none')
+                                    '/opt/csw/etc/init.d/foo class=none')
 
-class TestCheckCatalognameGood(CheckpkgUnitTestHelper, unittest.TestCase):
+class TestCheckCheckSmfIntegrationGood(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSmfIntegration'
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "cswinitsmf",
+      "group": "bin",
+      "line": "1 f none /opt/csw/etc/init.d/foo 0644 root bin 36372 24688 1266395027",
+      "mode": '0755',
+      "path": "/opt/csw/etc/init.d/foo",
+      "type": "f",
+      "user": "root"
+    })
+
+
+class TestCheckCheckSmfIntegrationWrongLocation(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckSmfIntegration'
   def CheckpkgTest(self):
     self.pkg_data["pkgmap"].append({
@@ -128,6 +142,7 @@ class TestCheckCatalognameGood(CheckpkgUnitTestHelper, unittest.TestCase):
       "type": "f",
       "user": "root"
     })
+    self.error_mgr_mock.ReportError('init-file-wrong-location', '/etc/opt/csw/init.d/foo')
 
 
 class TestCatalognameLowercase_1(CheckpkgUnitTestHelper, unittest.TestCase):
