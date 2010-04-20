@@ -1,9 +1,9 @@
 GARNAME = FreezeThaw
-GARVERSION = 0.43
+GARVERSION = 0.5001
 CATEGORIES = cpan
 AUTHOR = ILYAZ
 
-DESCRIPTION = converting Perl structures to strings and back.
+DESCRIPTION = Converting Perl structures to strings and back.
 define BLURB
   Converts data to/from stringified form, appropriate for saving-to and
   reading-from permanent storage.  Deals with objects, circular lists,
@@ -11,8 +11,12 @@ define BLURB
   stringify operator yet.
 endef
 
-DISTFILES = $(call admfiles,CSWpmfreezethaw,depend prototype)
+MASTER_SITES = $(addsuffix modules/,$(CPAN_MIRRORS))
+DISTFILES = COPYING
+
+PACKAGES = CSWpmfreezethaw
+CATALOGNAME = pm_freezethaw
+
+ARCHALL = 1
 
 include gar/category.mk
-
-AUTHOR_ID := $(AUTHOR_ID)/modules
