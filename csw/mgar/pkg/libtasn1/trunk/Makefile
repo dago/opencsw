@@ -1,5 +1,5 @@
 GARNAME = libtasn1
-GARVERSION = 2.5
+GARVERSION = 2.6
 CATEGORIES = lib
 
 DESCRIPTION = GNU ASN1 library
@@ -27,6 +27,10 @@ SPKG_SOURCEURL = http://www.gnu.org/software/gnutls/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+# We don't need it and if defined the test breaks
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+
 BUILD64 = 1
 NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -37,6 +41,8 @@ TEST_TARGET = check
 MERGE_DIRS_isa-extra = $(libdir)
 
 PKGFILES_CSWlibtasn1devel = $(PKGFILES_DEVEL)
+
+CHECKPKG_OVERRIDES_CSWlibtasn1devel += surplus-dependency|CSWlibtasn1
 
 include gar/category.mk
 
