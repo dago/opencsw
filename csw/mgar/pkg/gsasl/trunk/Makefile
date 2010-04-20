@@ -1,5 +1,5 @@
 GARNAME = gsasl
-GARVERSION = 1.2
+GARVERSION = 1.4.4
 CATEGORIES = apps
 
 DESCRIPTION = GNU SASL binary
@@ -14,32 +14,55 @@ GNU_PROJ = gsasl
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PACKAGES = CSWlibgsasl CSWgsasl
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGES = CSWlibgsasl CSWlibgsasldevel CSWgsasl
+
+CATALOGNAME_CSWlibgsasl = libgsasl
+CATALOGNAME_CSWlibgsasldevel = libgsasl_devel
+CATALOGNAME_CSWgsasl = gsasl
+
 BUILD_DEP_PKGS = CSWkrb5libdev CSWgnulinks
-RUNTIME_DEP_PKGS_CSWlibgsasl = CSWggettextrt CSWiconv CSWkrb5lib CSWlibidn CSWlibntlm CSWreadline
+RUNTIME_DEP_PKGS_CSWlibgsasl = CSWggettextrt CSWkrb5lib CSWlibidn CSWlibntlm
+RUNTIME_DEP_PKGS_CSWlibgsasl += CSWgcrypt CSWgpgerr
 RUNTIME_DEP_PKGS_CSWgsasl = CSWlibgsasl CSWgnutls CSWggettextrt CSWiconv CSWkrb5lib CSWlibidn CSWlibntlm CSWreadline
+RUNTIME_DEP_PKGS_CSWgsasl += CSWgcrypt CSWgpgerr
+RUNTIME_DEP_PKGS_CSWlibgsasldevel = CSWlibgsasl CSWkrb5libdev
+
+SPKG_DESC_CSWlibgsasl = GNU SASL Library
+SPKG_DESC_CSWlibgsasl = GNU SASL Development Files
+SPKG_DESC_CSWgsasl = GNU SASL
 
 SPKG_SOURCEURL = http://www.gnu.org/software/$(GNU_PROJ)
 
+# We don't need it and if defined the test breaks
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# One test fails, reported upstream
-#TEST_TARGET = check
-TEST_TARGET = 
+TEST_TARGET = check
+
+# One test inside GNULib fails, reported upstream. This is most
+# probably harmless.
+SKIPTEST ?= 1
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
-PKGFILES_CSWlibgsasl  = $(includedir)/.*
-PKGFILES_CSWlibgsasl += $(libdir)/.*
-PKGFILES_CSWlibgsasl += $(mandir)/man3/.*
-PKGFILES_CSWlibgsasl += $(sharedstatedir)/locale/.*/libgsasl.mo
+# Make sure we do NOT add here /opt/csw/include/gsasl.h
+PKGFILES_CSWgsasl = $(bindir)/.*
+PKGFILES_CSWgsasl += $(infodir)/gsasl\..*
+PKGFILES_CSWgsasl += $(sharedstatedir)/.*/gsasl\..*
+PKGFILES_CSWgsasl += $(mandir)/.*/gsasl\..*
+
+PKGFILES_CSWlibgsasldevel = $(PKGFILES_DEVEL)
+
+CHECKPKG_OVERRIDES_CSWlibgsasl += bad-rpath-entry|/opt/csw/lib/
+CHECKPKG_OVERRIDES_CSWlibgsasldevel += surplus-dependency|CSWlibgsasl
+CHECKPKG_OVERRIDES_CSWlibgsasldevel += surplus-dependency|CSWkrb5libdev
 
 include gar/category.mk
 
 # Tests use 'grep -e'
 PATH := /opt/csw/gnu:$(PATH)
-
