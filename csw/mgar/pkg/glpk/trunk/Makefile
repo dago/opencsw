@@ -1,5 +1,5 @@
 GARNAME = glpk
-GARVERSION = 4.39
+GARVERSION = 4.43
 CATEGORIES = lib
 
 DESCRIPTION = GNU Linear Programming Kit
@@ -18,11 +18,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWlibglpk
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
