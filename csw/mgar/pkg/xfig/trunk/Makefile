@@ -31,7 +31,7 @@ CONFIGURE_SCRIPTS = $(WORKSRC)/Imakefile
 BUILD_OVERRIDE_VARS  = PNGLIBDIR PNGINC ZLIBDIR
 BUILD_OVERRIDE_VARS += JPEGLIBDIR JPEGINC
 BUILD_OVERRIDE_VARS += XPMLIBDIR XPMINC
-BUILD_OVERRIDE_VARS += XFIGLIBDIR XFIGDOCDIR
+BUILD_OVERRIDE_VARS += XFIGLIBDIR XFIGDOCDIR XAPPLOADDIR
 
 BUILD_OVERRIDE_VAR_PNGLIBDIR = $(libdir)
 BUILD_OVERRIDE_VAR_PNGINC = -I$(includedir)
@@ -41,8 +41,9 @@ BUILD_OVERRIDE_VAR_JPEGINC = -I$(includedir)
 BUILD_OVERRIDE_VAR_XPMLIBDIR = /usr/openwin/lib
 BUILD_OVERRIDE_VAR_XPMINC = -I/usr/openwin/include/X11
 
-BUILD_OVERRIDE_VAR_XFIGLIBDIR = $(libdir)/xfig
+BUILD_OVERRIDE_VAR_XFIGLIBDIR = $(libdir)/X11/xfig
 BUILD_OVERRIDE_VAR_XFIGDOCDIR = $(docdir)/xfig
+BUILD_OVERRIDE_VAR_XAPPLOADDIR = $(libdir)/X11/app-defaults
 
 # -DXFIGLIBDIR=\"/usr/openwin/lib/X11/xfig\" -DXFIGDOCDIR=\"/usr/local/xfig/doc\" -DPRINTCAP=\"/etc/printcap\"
 
@@ -50,13 +51,13 @@ TEST_SCRIPTS =
 
 INSTALL_ARGS = install.man install.html install.libs
 
-INSTALL_OVERRIDE_VARS = BINDIR MANPATH LIBDIR XFIGDOCDIR
+INSTALL_OVERRIDE_VARS = BINDIR MANPATH LIBDIR XFIGLIBDIR XFIGDOCDIR XAPPLOADDIR
 INSTALL_OVERRIDE_VAR_BINDIR = $(bindir)
 INSTALL_OVERRIDE_VAR_MANPATH = $(mandir)
 INSTALL_OVERRIDE_VAR_LIBDIR = $(libdir)
+INSTALL_OVERRIDE_VAR_XFIGLIBDIR = $(libdir)/X11/xfig
 INSTALL_OVERRIDE_VAR_XFIGDOCDIR = $(docdir)/xfig
-
-# INSTALL_SCRIPTS = custom
+INSTALL_OVERRIDE_VAR_XAPPLOADDIR = $(libdir)/X11/app-defaults
 
 include gar/category.mk
 
@@ -64,11 +65,3 @@ post-extract-modulated:
 	-find $(WORKSRC) -type d -exec chmod 755 \{\} \;
 	-find $(WORKSRC) -type f -exec chmod ugo+r \{\} \;
 	@$(MAKECOOKIE)
-
-
-#install-custom:
-#	ginstall -d $(DESTDIR)$(bindir)
-#	ginstall $(WORKSRC)/xearth $(DESTDIR)$(bindir)/xearth
-#	ginstall -d $(DESTDIR)$(mandir)/man1
-#	ginstall $(WORKSRC)/xearth.man $(DESTDIR)$(mandir)/man1/xearth.1
-#	@$(MAKECOOKIE)
