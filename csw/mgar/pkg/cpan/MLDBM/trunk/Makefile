@@ -1,9 +1,9 @@
 GARNAME = MLDBM
-GARVERSION = 2.01
+GARVERSION = 2.04
 CATEGORIES = cpan
-AUTHOR = CHAMAS
+AUTHOR = CHORNY
 
-DESCRIPTION = store multi-level hash structure in single level tied hash
+DESCRIPTION = Store multi-level hash structure in single level tied hash
 define BLURB
   This module can serve as a transparent interface to any TIEHASH package that
   is required to store arbitrary perl data, including nested references. Thus,
@@ -11,6 +11,13 @@ define BLURB
   within DBM databases.
 endef
 
-DISTFILES += CSWpmmldbm.gspec
+DISTFILES = COPYING
+
+DEP_PKGS = CSWpmfreezethaw
+
+PACKAGES = CSWpmmldbm
+CATALOGNAME = pm_mldbm
+
+ARCHALL = 1
 
 include gar/category.mk
