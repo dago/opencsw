@@ -22,4 +22,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
+# This is normal for amd64 on i386
+CHECKPKG_OVERRIDES_CSWlibglpk += soname-not-found|libm.so.2
+
 include gar/category.mk
