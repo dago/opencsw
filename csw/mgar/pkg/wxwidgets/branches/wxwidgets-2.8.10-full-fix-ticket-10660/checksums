@@ -1,0 +1,13 @@
+7059098afff46dca5882358490f18fef  0002-Define-WXBUILDING-when-building-wxWidgets-itself.patch
+45df2933ed2fa53f229feda01467db81  0002-Fixing-retarded-checks-for-libGL.patch
+b43431d188f76aa977e72a82ea90d019  0003-Don-t-define-_T-when-using-Sun-compiler-if-possible.patch
+225f6163a1c31d1f96a3b0548b338105  0003-vsscanf-support-via-ncursesw.patch
+559e00c4e1331d7afb2a7e097977aa51  0004-Don-t-use-_T-in-public-headers-used-under-Unix.patch
+d7e6a815ac53f9be240295e39ddaac99  0005-Predefine-wxNEEDS_T-to-fix-wxrc-compilation-with-Sun.patch
+969c363847e675dc4d3ad6b8871b96db  0005-stupid-vwscanf-workaround.patch
+d4a33d7a1a30965edf15b54bfb011174  libwx_gtk2u-2.8.so.0.2.0-i386
+6a5857bca9695738ba5e185aac4d26e7  libwx_gtk2u-2.8.so.0.2.0-sparc
+9f2495b8a4b9b91998a74164efc9ca3a  libwx_gtk2u_gl-2.8.so.0.2.0-i386
+5870955c6c23ec655c17b4da92548207  libwx_gtk2u_gl-2.8.so.0.2.0-sparc
+549ce5ebbba1fd489e52056ec2053698  updated-0001.patch
+05b32ca051651f4b1885a90f62969faf  wxWidgets-2.8.10.tar.gz

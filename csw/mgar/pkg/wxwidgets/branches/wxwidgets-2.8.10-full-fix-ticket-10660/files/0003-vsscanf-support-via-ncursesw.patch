@@ -1,0 +1,24 @@
+From 402daca1490a5ba6b0742011d72372680d261cc3 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 14 Nov 2009 22:47:42 +0100
+Subject: [PATCH] vsscanf support via ncursesw
+
+---
+ src/common/wxchar.cpp |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/src/common/wxchar.cpp b/src/common/wxchar.cpp
+index f594796..1550acc 100644
+--- a/src/common/wxchar.cpp
++++ b/src/common/wxchar.cpp
+@@ -15,6 +15,7 @@
+ 
+ // For compilers that support precompilation, includes "wx.h".
+ #include "wx/wxprec.h"
++#include "ncursesw/ncurses.h"
+ 
+ #ifdef __BORLANDC__
+     #pragma hdrstop
+-- 
+1.6.5.1
+
