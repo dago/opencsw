@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -z "$JVM_OPTS" ]
+then
+  JVM_OPTS="-Xmx512M"
+fi
+
+exec java $JVM_OPTS -jar /opt/csw/share/sbt/sbt-launch.jar "$@"
