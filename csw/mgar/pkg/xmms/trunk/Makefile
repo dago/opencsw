@@ -1,5 +1,9 @@
+# Copyright 2009 OpenCSW
+# Distributed under the terms of the GNU General Public License v2
+# $Id: Makefile 8335 2010-02-03 18:36:29Z wahwah $
+
 GARNAME = xmms
-GARVERSION = 1.2.10
+GARVERSION = 1.2.11
 CATEGORIES = gnome
 
 DESCRIPTION = The X MultiMedia System.
@@ -12,19 +16,30 @@ endef
 
 MASTER_SITES = http://www.xmms.org/files/1.2.x/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-DEPENDS = lib/libvorbis
-
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-glib-prefix=/usr/sfw
-CONFIGURE_ARGS += --with-gtk-prefix=/usr/sfw
+CONFIGURE_ARGS += --with-glib-prefix=$(prefix)
+CONFIGURE_ARGS += --with-gtk-prefix=$(prefix)
 CONFIGURE_ARGS += --with-ogg=$(prefix)
 CONFIGURE_ARGS += --with-vorbis=$(prefix)
 
 # No test suite
 TEST_SCRIPTS =
+
+DEP_PKGS_CSWxmms += CSWesound
+DEP_PKGS_CSWxmms += CSWmesa
+DEP_PKGS_CSWxmms += CSWlibx11
+DEP_PKGS_CSWxmms += CSWlibice
+DEP_PKGS_CSWxmms += CSWlibsm
+DEP_PKGS_CSWxmms += CSWlibogg
+DEP_PKGS_CSWxmms += CSWvorbis
+DEP_PKGS_CSWxmms += CSWiconv
+DEP_PKGS_CSWxmms += CSWlibxext
+DEP_PKGS_CSWxmms += CSWggettextrt
+DEP_PKGS_CSWxmms += CSWglib
+DEP_PKGS_CSWxmms += CSWzlib
+DEP_PKGS_CSWxmms += CSWgtk
+DEP_PKGS_CSWxmms += CSWmikmod
 
 include gar/category.mk
