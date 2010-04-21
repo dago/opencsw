@@ -28,10 +28,12 @@ VENDOR_URL = http://freeassociation.sourceforge.net/
 PACKAGES = CSWlibical CSWlibicaldevel
 
 CATALOGNAME_CSWlibical = libical
-CATALOGNAME_CSWliicaldevel = libical_devel
+CATALOGNAME_CSWlibicaldevel = libical_devel
 
 SPKG_DESC_CSWlibical = $(DESCRIPTION)
 SPKG_DESC_CSWlibicaldevel = Developer files for libical
+
+RUNTIME_DEP_PKGS_CSWlibicaldevel = CSWlibical
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -39,5 +41,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 PKGFILES_CSWlibicaldevel = $(PKGFILES_DEVEL)
+
+CHECKPKG_OVERRIDES_CSWlibicaldevel += surplus-dependency|CSWlibical
 
 include gar/category.mk
