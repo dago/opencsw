@@ -779,7 +779,6 @@ remerge: reset-merge merge
 reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-src
 	@rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
 	@rm -rf $(PKGROOT)
-	@$(DONADA)
 
 reset-merge-modulated:
 	@$(call _pmod,Reset merge state)
