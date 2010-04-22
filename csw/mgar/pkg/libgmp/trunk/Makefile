@@ -1,5 +1,5 @@
 GARNAME = gmp
-GARVERSION = 4.3.1
+GARVERSION = 4.3.2
 CATEGORIES = lib
 
 DESCRIPTION = GNU Multiple Precision Arithmetic Library
