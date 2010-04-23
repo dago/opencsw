@@ -59,8 +59,8 @@ EXTRA_DOCS = README.CSW $(PATCHFILES)
 
 EXTRA_LIB_garversion-2.3.43 = $(prefix)/bdb44/lib 
 EXTRA_INC_garversion-2.3.43 = $(prefix)/bdb44/include
-EXTRA_LIB_garversion-2.4.21 = $(prefix)/bdb47/lib 
-EXTRA_INC_garversion-2.4.21 = $(prefix)/bdb47/include
+EXTRA_LIB_garversion-2.4.21 = $(prefix)/bdb48/lib 
+EXTRA_INC_garversion-2.4.21 = $(prefix)/bdb48/include
 EXTRA_LIB = $(EXTRA_LIB_garversion-$(GARVERSION))
 EXTRA_INC = $(EXTRA_INC_garversion-$(GARVERSION))
 
