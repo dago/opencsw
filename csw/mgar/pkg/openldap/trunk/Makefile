@@ -1,8 +1,8 @@
 GARNAME = openldap
-GARVERSION = 2.4.19
+GARVERSION = 2.4.21
 CATEGORIES = server
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 2.3.43 2.4.19
+MODULATIONS_GARVERSION = 2.3.43 2.4.21
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
 define BLURB
@@ -20,10 +20,10 @@ DISTFILES += CSWoldap.postinstall
 DISTFILES += README.CSW openldaprc
 DISTFILES += cswopenldap openldap.xml svc-openldap
 
-PATCHFILES_isa-sparcv8-garversion-2.4.19 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-sparcv9-garversion-2.4.19 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-i386-garversion-2.4.19 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-amd64-garversion-2.4.19 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv8-garversion-2.4.21 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv9-garversion-2.4.21 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-i386-garversion-2.4.21 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-amd64-garversion-2.4.21 = patch-oldap-2.4.16-ntlm.diff
 PATCHFILES += patch-libtool-64bit.diff
 DISTFILES += patch-oldap-2.4.16-ntlm.diff
 
@@ -43,7 +43,7 @@ SPKG_DESC_CSWoldapclient = OpenLDAP client executables
 SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
 
-RUNTIME_DEP_PKGS_CSWoldap       = CSWbdb47 CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
+RUNTIME_DEP_PKGS_CSWoldap       = CSWbdb48 CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
 RUNTIME_DEP_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc
 RUNTIME_DEP_PKGS_CSWoldap      += CSWkrb5lib CSWlibicu CSWperl
 RUNTIME_DEP_PKGS_CSWoldapclient = CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWkrb5lib
@@ -59,8 +59,8 @@ EXTRA_DOCS = README.CSW $(PATCHFILES)
 
 EXTRA_LIB_garversion-2.3.43 = $(prefix)/bdb44/lib 
 EXTRA_INC_garversion-2.3.43 = $(prefix)/bdb44/include
-EXTRA_LIB_garversion-2.4.19 = $(prefix)/bdb47/lib 
-EXTRA_INC_garversion-2.4.19 = $(prefix)/bdb47/include
+EXTRA_LIB_garversion-2.4.21 = $(prefix)/bdb47/lib 
+EXTRA_INC_garversion-2.4.21 = $(prefix)/bdb47/include
 EXTRA_LIB = $(EXTRA_LIB_garversion-$(GARVERSION))
 EXTRA_INC = $(EXTRA_INC_garversion-$(GARVERSION))
 
@@ -100,9 +100,9 @@ MERGE_DIRS_isa-default-garversion-2.3.43 = $(libdir)
 MERGE_SCRIPTS_isa-default64-garversion-2.3.43 = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-2.3.43 = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-2.4.19 = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-2.4.19 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-2.4.19 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-2.4.21 = copy-all
+MERGE_SCRIPTS_isa-default64-garversion-2.4.21 = copy-relocated-only
+MERGE_DIRS_isa-default64-garversion-2.4.21 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 PKGFILES_CSWoldapclient  = $(bindir)/.*
 PKGFILES_CSWoldapclient += $(mandir)/man1/.*

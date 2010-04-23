@@ -2,7 +2,7 @@ c62a0bda87bc939e3c254edc8b7b546b  CSWoldap.postinstall
 892dba5f625755be024c30ea0055fd55  README.CSW
 c50f5c4040139b6cf57fcc08abffbee7  cswopenldap
 1b25281086eb146b8e11ebd33de086dc  openldap-2.3.43.tgz
-4a6dab2711fcf141f19bb680bc335887  openldap-2.4.19.tgz
+e7128c57b2bacd940e8906057c94ff26  openldap-2.4.21.tgz
 0e57547ad2b5fedca9f0bd4beaddfe39  openldap.xml
 ab2ac7519b092ce8d16124c5270bfec0  openldaprc
 93dc2a04fd943c198ad00edd4d88ce65  patch-libtool-64bit.diff
