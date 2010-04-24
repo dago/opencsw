@@ -43,12 +43,11 @@ SPKG_DESC_CSWoldapclient = OpenLDAP client executables
 SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
 
-RUNTIME_DEP_PKGS_CSWoldap       = CSWbdb48 CSWiconv CSWlibnet CSWlibtoolrt CSWoldaprt
+RUNTIME_DEP_PKGS_CSWoldap       = CSWbdb CSWlibnet CSWlibtoolrt 
 RUNTIME_DEP_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc
-RUNTIME_DEP_PKGS_CSWoldap      += CSWkrb5lib CSWlibicu CSWperl
-RUNTIME_DEP_PKGS_CSWoldapclient = CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWoldapdevel  = CSWoldaprt
-RUNTIME_DEP_PKGS_CSWoldaprt     = CSWlibnet CSWosslrt CSWsasl CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWoldap      += CSWlibicu CSWperl
+RUNTIME_DEP_PKGS_CSWoldapclient = CSWlibnet CSWosslrt CSWsasl 
+RUNTIME_DEP_PKGS_CSWoldaprt     = CSWlibnet CSWosslrt CSWsasl 
 
 SPKG_SOURCEURL = http://www.openldap.org
 
@@ -114,7 +113,8 @@ PKGFILES_CSWoldaprt  = $(PKGFILES_RT)
 PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
 PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
-INITSMF = /etc/opt/csw/init.d/cswopenldap
+# gives error: init file wrong location???
+#INITSMF = /etc/opt/csw/init.d/cswopenldap
 
 # There are plenty of cross-references. Ignore for now, but should be
 # investigated later.
