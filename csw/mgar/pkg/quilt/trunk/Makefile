@@ -22,7 +22,7 @@ CATALOGNAME_CSWquilt-completion = quilt_completion
 ARCHALL_CSWquilt-el = 1
 ARCHALL_CSWquilt-completion = 1
 
-RUNTIME_DEP_PKGS_CSWquilt =  CSWgfile CSWshutils CSWtextutils
+RUNTIME_DEP_PKGS_CSWquilt =  CSWcoreutils
 RUNTIME_DEP_PKGS_CSWquilt += CSWperl CSWgawk CSWgsed CSWbash CSWdiffstat
 RUNTIME_DEP_PKGS_CSWquilt += CSWgpatch CSWmktemp CSWggrep CSWggettext
 RUNTIME_DEP_PKGS_CSWquilt += CSWfindutils CSWggetopt CSWdiffutils
@@ -31,7 +31,7 @@ RUNTIME_DEP_PKGS_CSWquilt += CSWgnulinks CSWcolumn
 RUNTIME_DEP_PKGS_CSWquilt-el = CSWemacscommon CSWquilt
 RUNTIME_DEP_PKGS_CSWquilt-complation = CSWbashcmplt CSWquilt
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWquilt)
+BUILD_DEP_PKGS = $(filter-out CSWcoreutils, $(RUNTIME_DEP_PKGS_CSWquilt))
 
 PKGFILES_CSWquilt-el = $(datadir)/emacs/site-lisp/.*
 PKGFILES_CSWquilt-completion = $(prefix)/etc/.*
@@ -73,15 +73,15 @@ CONFIGURE_ARGS += --without-rpmbuild
 
 COMPILE_ELISP = 1
 
+CHECKPKG_OVERRIDES_CSWquilt += unidentified-dependency|CSWcoreutils
+
 # quilt overrides
+CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgsed
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgawk
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWshutils
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWfindutils
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgnulinks
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWgfile
-CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWtextutils
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWggrep
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWdiffstat
 CHECKPKG_OVERRIDES_CSWquilt += surplus-dependency|CSWmktemp
