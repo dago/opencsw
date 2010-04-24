@@ -3,9 +3,9 @@
 # $Id$
 
 GARNAME = hachoir-core
-GARVERSION = 1.2.1
+GARVERSION = 1.3.3
 CATEGORIES = python
-DESCRIPTION = allows to view and edit a binary stream field by field (core)
+DESCRIPTION = Allows to view and edit a binary stream field by field (core)
 define BLURB
   Hachoir is a Python library that allows to view and edit a binary stream
   field by field. In other words, Hachoir allows you to "browse" any binary
