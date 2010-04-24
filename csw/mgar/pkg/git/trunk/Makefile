@@ -46,7 +46,7 @@ RUNTIME_DEP_PKGS_CSWgitsvn = CSWgit CSWpmsvn
 
 RUNTIME_DEP_PKGS_CSWgitcvs = CSWgit CSWcvs CSWcvsps
 
-RUNTIME_DEP_PKGS_CSWgitemacs = CSWgit CSWemacs
+RUNTIME_DEP_PKGS_CSWgitemacs = CSWgit CSWemacscommon
 
 RUNTIME_DEP_PKGS_CSWgitdoc = CSWgit
 
@@ -128,6 +128,31 @@ INSTALL_ARGS = 	INSTALLDIRS=vendor \
 MERGE_EXCLUDE_STATICLIBS =
 
 ETCSERVICES = /opt/csw/etc/pkg/CSWgit/services
+
+CHECKPKG_OVERRIDES_CSWgitcompletion += surplus-dependency|CSWbash
+CHECKPKG_OVERRIDES_CSWgitcompletion += surplus-dependency|CSWbashcmplt
+CHECKPKG_OVERRIDES_CSWgitcompletion += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgitdoc += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgitdevel += discouraged-path-in-pkgmap|/opt/csw/lib/git/libgit.a
+CHECKPKG_OVERRIDES_CSWgitdevel += discouraged-path-in-pkgmap|/opt/csw/lib/git/libxdiff.a
+CHECKPKG_OVERRIDES_CSWgitdevel += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWpmerror
+CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWbash
+CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWosshclient
+CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWrsync
+CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWless
+CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWpmnetsmtpssl
+CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWpmtermreadkey
+CHECKPKG_OVERRIDES_CSWgitgui += surplus-dependency|CSWtk
+CHECKPKG_OVERRIDES_CSWgitgui += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgitemacs += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgitcvs += surplus-dependency|CSWcvsps
+CHECKPKG_OVERRIDES_CSWgitcvs += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgitcvs += surplus-dependency|CSWcvs
+CHECKPKG_OVERRIDES_CSWgitk += surplus-dependency|CSWtk
+CHECKPKG_OVERRIDES_CSWgitk += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgitsvn += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgitsvn += surplus-dependency|CSWpmsvn
 
 include gar/category.mk
 
