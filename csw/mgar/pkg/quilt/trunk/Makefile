@@ -106,3 +106,4 @@ EXTRA_COMMON_EXPORTS += BUILD_ROOT
 post-install-modulated:
 	@( gmkdir -p $(DESTDIR)/$(sysconfdir)/; \
 	   mv $(DESTDIR)/$(prefix)/etc/quilt.quiltrc $(DESTDIR)/$(sysconfdir) )
+	@$(MAKECOOKIE)
