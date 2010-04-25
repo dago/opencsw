@@ -116,13 +116,6 @@ PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 # gives error: init file wrong location???
 #INITSMF = /etc/opt/csw/init.d/cswopenldap
 
-# There are plenty of cross-references. Ignore for now, but should be
-# investigated later.
-CHECKPKG_OVERRIDES = symbol-not-found
-CHECKPKG_OVERRIDES_CSWoldapdevel  = symbol-not-found
-# The devel package depends on rt instead of the full package, that is ok.
-CHECKPKG_OVERRIDES_CSWoldapdevel += missing-dependency|CSWoldap
-
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
