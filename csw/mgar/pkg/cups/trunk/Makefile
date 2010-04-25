@@ -210,6 +210,11 @@ CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcups
 CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsclient
 CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsd
 
+# The following overrides are necessary because of a bug in krb5-config, please
+# see bug http://www.opencsw.org/bugtrack/view.php?id=4384
+CHECKPKG_OVERRIDES_CSWcupsd += bad-rpath-entry|/opt/csw/lib/|opt/csw/sbin/cupsd
+CHECKPKG_OVERRIDES_CSWlibcups += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libcups.so.2
+
 include gar/category.mk
 
 pre-configure-modulated:
