@@ -309,6 +309,10 @@ def CheckLicenseFile(pkg_data, error_mgr, logger, messenger):
   license_path = LICENSE_TMPL % catalogname
   pkgmap_paths = [x["path"] for x in pkgmap]
   if license_path not in pkgmap_paths:
+    messenger.Message("The license file needs to be placed "
+                      "at %s. Also see "
+                      "http://sourceforge.net/apps/trac/gar/wiki/CopyRight"
+                      % license_path)
     error_mgr.ReportError(
         "license-missing", license_path,
         "See http://sourceforge.net/apps/trac/gar/wiki/CopyRight")
@@ -566,6 +570,13 @@ def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger, messenger):
 def CheckBadPaths(pkg_data, error_mgr, logger, messenger):
   for regex in pkg_data["bad_paths"]:
     for file_name in pkg_data["bad_paths"][regex]:
+      messenger.Message("File %s contains bad content: %s. "
+                        "It's usually build-machine data. "
+                        "If it's a legacy file you can't modify, "
+                        "add an override "
+                        "for this file.  After doing so, run checkpkg "
+                        "again, you'll need to add an override for "
+                        "the override file too." % (file_name, regex))
       error_mgr.ReportError("file-with-bad-content", "%s %s" % (regex, file_name))
 
 
