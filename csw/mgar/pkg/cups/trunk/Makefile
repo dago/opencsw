@@ -171,6 +171,7 @@ CONFIGURE_ARGS += --with-menudir=$(datadir)/applications
 CONFIGURE_ARGS += --localedir=$(datadir)/locale
 CONFIGURE_ARGS += --with-rcdir=$(sysconfdir)
 CONFIGURE_ARGS += --with-icondir=$(datadir)/icons
+CONFIGURE_ARGS += --with-rcdir=/opt/csw/etc
 
 CONFIGURE_ARGS_DBG  = --enable-debug
 CONFIGURE_ARGS_DBG += --enable-debug-guards
@@ -202,9 +203,6 @@ PRIVATE_CUPS_INC = $(DESTDIR)$(includedir)/cups
 OPTIM_DBG = -g -xO0
 OPTIM = $(OPTIM_$(GARFLAVOR))
 export OPTIM
-
-INITDIR=/opt/csw/etc
-export INITDIR
 
 LICENSE = LICENSE.txt
 
