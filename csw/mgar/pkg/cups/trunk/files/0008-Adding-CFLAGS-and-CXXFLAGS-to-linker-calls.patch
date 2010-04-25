@@ -1,0 +1,95 @@
+From 31ab34144321ce16de1b72b2eba5d346561ca9ab Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 25 Apr 2010 12:39:37 +0200
+Subject: [PATCH 8/9] Adding CFLAGS and CXXFLAGS to linker calls.
+
+Fixes a problem in which the -xnorunpath and -norunpath options are not
+passed to the linker, causing spurious RPATH elements to be added.
+---
+ ppdc/Makefile      |   12 ++++++------
+ scheduler/Makefile |    4 ++--
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/ppdc/Makefile b/ppdc/Makefile
+index ee0f0e2..a9f238f 100644
+--- a/ppdc/Makefile
++++ b/ppdc/Makefile
+@@ -253,7 +253,7 @@ genstrings:		genstrings.o libcupsppdc.a ../cups/libcups.a \
+ 
+ ppdc:			ppdc.o $(LIBCUPSPPDC) ../cups/$(LIBCUPS)
+ 	echo Linking $@...
+-	$(CXX) $(LDFLAGS) -o $@ ppdc.o -L. -lcupsppdc $(LIBS)
++	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ppdc.o -L. -lcupsppdc $(LIBS)
+ 
+ 
+ ppdc-static:		ppdc.o libcupsppdc.a  ../cups/libcups.a foo.drv foo-fr.po
+@@ -272,7 +272,7 @@ ppdc-static:		ppdc.o libcupsppdc.a  ../cups/libcups.a foo.drv foo-fr.po
+ 
+ ppdhtml:			ppdhtml.o $(LIBCUPSPPDC) ../cups/$(LIBCUPS)
+ 	echo Linking $@...
+-	$(CXX) $(LDFLAGS) -o $@ ppdhtml.o -L. -lcupsppdc $(LIBS)
++	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ppdhtml.o -L. -lcupsppdc $(LIBS)
+ 
+ 
+ #
+@@ -281,7 +281,7 @@ ppdhtml:			ppdhtml.o $(LIBCUPSPPDC) ../cups/$(LIBCUPS)
+ 
+ ppdi:			ppdi.o $(LIBCUPSPPDC) ../cups/$(LIBCUPS)
+ 	echo Linking $@...
+-	$(CXX) $(LDFLAGS) -o $@ ppdi.o -L. -lcupsppdc $(LIBS)
++	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ppdi.o -L. -lcupsppdc $(LIBS)
+ 
+ 
+ ppdi-static:		ppdc-static ppdi.o libcupsppdc.a  ../cups/libcups.a
+@@ -308,7 +308,7 @@ ppdi-static:		ppdc-static ppdi.o libcupsppdc.a  ../cups/libcups.a
+ 
+ ppdmerge:			ppdmerge.o ../cups/$(LIBCUPS)
+ 	echo Linking $@...
+-	$(CXX) $(LDFLAGS) -o $@ ppdmerge.o $(LIBS)
++	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ppdmerge.o $(LIBS)
+ 
+ 
+ #
+@@ -317,7 +317,7 @@ ppdmerge:			ppdmerge.o ../cups/$(LIBCUPS)
+ 
+ ppdpo:			ppdpo.o $(LIBCUPSPPDC) ../cups/$(LIBCUPS)
+ 	echo Linking $@...
+-	$(CXX) $(LDFLAGS) -o $@ ppdpo.o -L. -lcupsppdc $(LIBS)
++	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ppdpo.o -L. -lcupsppdc $(LIBS)
+ 
+ 
+ #
+@@ -337,7 +337,7 @@ testcatalog:		testcatalog.o libcupsppdc.a ../cups/libcups.a
+ 
+ libcupsppdc.so.1 libcupsppdc.sl.1:	$(LIBOBJS) ../cups/$(LIBCUPS)
+ 	echo Linking $@...
+-	$(DSOXX) $(ARCHFLAGS) $(DSOFLAGS) -o $@ $(LIBOBJS) $(LINKCUPS)
++	$(DSOXX) $(CXXFLAGS) $(ARCHFLAGS) $(DSOFLAGS) -o $@ $(LIBOBJS) $(LINKCUPS)
+ 	$(RM) `basename $@ .1`
+ 	$(LN) $@ `basename $@ .1`
+ 
+diff --git a/scheduler/Makefile b/scheduler/Makefile
+index bcf1ff0..06b6919 100644
+--- a/scheduler/Makefile
++++ b/scheduler/Makefile
+@@ -296,7 +296,7 @@ framedhelp:
+ 
+ cupsd:	$(CUPSDOBJS) $(LIBCUPSMIME) ../cups/$(LIBCUPS)
+ 	echo Linking $@...
+-	$(CC) $(LDFLAGS) -o cupsd $(CUPSDOBJS) -L. -lcupsmime \
++	$(CC) $(CFLAGS) $(LDFLAGS) -o cupsd $(CUPSDOBJS) -L. -lcupsmime \
+ 		$(LIBZ) $(SSLLIBS) $(LIBSLP) $(LIBLDAP) $(PAMLIBS) \
+ 		$(LIBPAPER) $(LIBMALLOC) $(CUPSDLIBS) $(DNSSDLIBS) $(LIBS) \
+ 		$(LIBGSSAPI) $(LIBWRAP)
+@@ -336,7 +336,7 @@ cups-deviced:	cups-deviced.o util.o ../cups/$(LIBCUPS)
+ 
+ cups-driverd:	cups-driverd.o util.o ../cups/$(LIBCUPS) ../ppdc/$(LIBCUPSPPDC)
+ 	echo Linking $@...
+-	$(CXX) $(LDFLAGS) -o cups-driverd cups-driverd.o util.o \
++	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o cups-driverd cups-driverd.o util.o \
+ 		-L../ppdc -lcupsppdc $(LIBS)
+ 
+ 
+-- 
+1.7.0
+

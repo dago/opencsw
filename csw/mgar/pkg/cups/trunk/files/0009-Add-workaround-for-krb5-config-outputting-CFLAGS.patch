@@ -1,0 +1,26 @@
+From b1111f35ad829d2cbdbf9e1ba6ecfa7344a179bc Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 25 Apr 2010 12:45:00 +0200
+Subject: [PATCH 9/9] Add workaround for krb5-config outputting CFLAGS
+
+...in the configure script
+---
+ configure |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index fab858f..ec6b8d2 100755
+--- a/configure
++++ b/configure
+@@ -14501,7 +14501,7 @@ _ACEOF
+ 
+ 					CFLAGS="`$KRB5CONFIG --cflags` $CFLAGS"
+ 					CPPFLAGS="`$KRB5CONFIG --cflags` $CPPFLAGS"
+-					LIBGSSAPI="-lgss `$KRB5CONFIG --libs`"
++					LIBGSSAPI="-lgss `CFLAGS= $KRB5CONFIG --libs`"
+ fi
+ 
+ 				;;
+-- 
+1.7.0
+

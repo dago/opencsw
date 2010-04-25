@@ -55,6 +55,8 @@ PATCHFILES += 0003-Reference-counting-for-printers-only.patch
 PATCHFILES += 0006-Fail-compilation-if-no-SSL-impl-chosen.patch
 PATCHFILES += 0007-Solaris-zone-support-in-init-script.patch
 PATCHFILES += CFLAGS-leaking-to-C++-compiler.patch
+PATCHFILES += 0008-Adding-CFLAGS-and-CXXFLAGS-to-linker-calls.patch
+PATCHFILES += 0009-Add-workaround-for-krb5-config-outputting-CFLAGS.patch
 
 BUILD_DEP_PKGS  = CSWggettext
 BUILD_DEP_PKGS += CSWjpeg
@@ -216,11 +218,6 @@ CHECKPKG_OVERRIDES_CSWcupsd += bad-rpath-entry|/opt/csw/lib/|opt/csw/sbin/cupsd
 CHECKPKG_OVERRIDES_CSWlibcups += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libcups.so.2
 
 include gar/category.mk
-
-pre-configure-modulated:
-	# This command will fail, but it's okay, it's enough to get the job done.
-	(cd $(WORKSRC); autoreconf || true)
-	@$(MAKECOOKIE)
 
 post-install-modulated:
 	(cd $(DESTDIR)$(sysconfdir)/cups; \
