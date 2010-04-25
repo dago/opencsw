@@ -43,7 +43,7 @@ SPKG_DESC_CSWoldapclient = OpenLDAP client executables
 SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
 
-RUNTIME_DEP_PKGS_CSWoldap       = CSWbdb CSWlibnet CSWlibtoolrt 
+RUNTIME_DEP_PKGS_CSWoldap       = CSWbdb CSWbdb48 CSWlibnet CSWlibtoolrt 
 RUNTIME_DEP_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc
 RUNTIME_DEP_PKGS_CSWoldap      += CSWlibicu CSWperl
 RUNTIME_DEP_PKGS_CSWoldapclient = CSWlibnet CSWosslrt CSWsasl 
@@ -114,7 +114,11 @@ PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
 PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
 # gives error: init file wrong location???
-#INITSMF = /etc/opt/csw/init.d/cswopenldap
+INITSMF = /opt/csw/etc/init.d/cswopenldap
+#CHECKPKG_OVERRIDES_CSWoldap += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/cswopenldap|class=none
+#CHECKPKG_OVERRIDES_CSWoldap += init-file-wrong-location|/etc/opt/csw/init.d/cswopenldap
+
+ARCHALL_CSWoldapdevel = 1
 
 include gar/category.mk
 
