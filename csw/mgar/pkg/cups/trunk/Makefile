@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = cups
-GARVERSION = 1.4.2
+GARVERSION = 1.4.3
 CATEGORIES = net
 
 define BLURB
@@ -52,9 +52,9 @@ DISTFILES += client.conf.CSW
 PATCHFILES  = 0001-cswcups-for-service-name.patch
 PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
 PATCHFILES += 0003-Reference-counting-for-printers-only.patch
-PATCHFILES += 0005-Mapping-gnutls_record_recv-return-error-codes-to-err.patch
 PATCHFILES += 0006-Fail-compilation-if-no-SSL-impl-chosen.patch
 PATCHFILES += 0007-Solaris-zone-support-in-init-script.patch
+PATCHFILES += CFLAGS-leaking-to-C++-compiler.patch
 
 BUILD_DEP_PKGS  = CSWggettext
 BUILD_DEP_PKGS += CSWjpeg
@@ -94,7 +94,7 @@ RUNTIME_DEP_PKGS_CSWlibcups += CSWjpeg
 RUNTIME_DEP_PKGS_CSWlibcups += CSWpng
 RUNTIME_DEP_PKGS_CSWlibcups += CSWtiff
 RUNTIME_DEP_PKGS_CSWlibcups += CSWzlib
-RUNTIME_DEP_PKGS_CSWcupsdev += CSWcupsd
+RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcups
 
 
 PKGFILES_CSWlibcups  = $(libdir)/libcups.*
@@ -106,7 +106,7 @@ PKGFILES_CSWcupsdev += $(mandir)/man1/cups-config.1
 PKGFILES_CSWcupsdev += $(bindir)/cups-config
 PKGFILES_CSWcupsdev += $(datadir)/cups/ppdc.*
 PKGFILES_CSWcupsdev += $(datadir)/cups/drv.*
-PKGFILES_CSWcupsd  = $(sysconfdir)/init\.d/.*
+PKGFILES_CSWcupsd += $(prefix)/etc/init\.d/.*
 PKGFILES_CSWcupsd += $(sysconfdir)/rc.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/cupsd.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/interfaces.*
@@ -162,7 +162,7 @@ SPKG_DESC_CSWcupslinks  = Drop-in replacement for SUNWpcu and SUNWpcr
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 SAMPLECONF_CSWcupsd       = $(sysconfdir)/cups/cupsd\.conf\.CSW
 SAMPLECONF_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
-INITSMF                   = $(sysconfdir)/init\.d/cswcups
+INITSMF                   = $(prefix)/etc/init\.d/cswcups
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
@@ -203,9 +203,21 @@ OPTIM_DBG = -g -xO0
 OPTIM = $(OPTIM_$(GARFLAVOR))
 export OPTIM
 
+INITDIR=/opt/csw/etc
+export INITDIR
+
 LICENSE = LICENSE.txt
 
+CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcups
+CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsclient
+CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsd
+
 include gar/category.mk
+
+pre-configure-modulated:
+	# This command will fail, but it's okay, it's enough to get the job done.
+	(cd $(WORKSRC); autoreconf || true)
+	@$(MAKECOOKIE)
 
 post-install-modulated:
 	(cd $(DESTDIR)$(sysconfdir)/cups; \

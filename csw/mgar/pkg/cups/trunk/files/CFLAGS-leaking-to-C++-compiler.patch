@@ -1,0 +1,11 @@
+--- cups-1.4.3/config-scripts/cups-gssapi.m4.orig	2010-04-24 14:27:26.897008812 +0200
++++ cups-1.4.3/config-scripts/cups-gssapi.m4	2010-04-24 14:27:53.269633434 +0200
+@@ -35,7 +35,7 @@
+ 					AC_DEFINE(HAVE_GSSAPI, 1, [Whether GSSAPI is available])
+ 					CFLAGS="`$KRB5CONFIG --cflags` $CFLAGS"		
+ 					CPPFLAGS="`$KRB5CONFIG --cflags` $CPPFLAGS"		
+-					LIBGSSAPI="-lgss `$KRB5CONFIG --libs`")
++					LIBGSSAPI="-lgss `CFLAGS= $KRB5CONFIG --libs`")
+ 				;;
+ 			*)
+ 				# Other platforms just ask for GSSAPI
