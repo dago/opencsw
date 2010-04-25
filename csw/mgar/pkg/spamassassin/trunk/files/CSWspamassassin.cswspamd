@@ -21,7 +21,7 @@ ZONE= # used for initialization, do not change
 case "$1" in
   start)
     if [ -x /opt/csw/bin/spamd ]; then
-      if [ -d /var/opt/csw/spamassassin/3.003000 ]; then
+      if [ -d /var/opt/csw/spamassassin/3.003001 ]; then
         echo "Starting $PROG."
         /opt/csw/bin/spamd -d $OPTIONS
       else

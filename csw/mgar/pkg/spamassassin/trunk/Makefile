@@ -41,6 +41,26 @@ TEST_SCRIPTS = custom
 #TEST_SCRIPTS = 
 INSTALL_SCRIPTS = custom
 
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmaildkim
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmiosocketssl
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmipcountry
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmnetdns
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWrazor
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmdbi
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmnetaddrip
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmlibwww
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmimebase64
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmuri
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmailspf
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmhtmlparser
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmldap
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmiosocketinet6
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmailtools
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWzlib
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWgnupg
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWosslrt
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmiozlib
+
 include gar/category.mk
 
 WORKSRC = $(WORKDIR)/$(SPKG_NAME)-$(GARVERSION)
