@@ -127,6 +127,6 @@ DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 
 post-merge:
 	ginstall -D $(DOWNLOADDIR)/cswopenldap \
-		$(PKGROOT)/etc/opt/csw/init.d/cswopenldap
+		$(PKGROOT)/opt/csw/etc/init.d/cswopenldap
 	$(foreach F,$(EXTRA_DOCS),ginstall -D $(DOWNLOADDIR)/$F $(PKGROOT)$(docdir)/$(GARNAME)/$F;)
 	@$(MAKECOOKIE)
