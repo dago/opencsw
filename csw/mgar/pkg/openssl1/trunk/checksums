@@ -3,5 +3,5 @@
 c9de908daad1a31fca20329cb043ad3c  CSWossl1rt.preinstall
 b78faa440d6f6a2a07663de331678648  README.CSW
 904ceefa66b6b7b7e93ae0e9bc58bac8  changelog.CSW
-a15d8b6511963d2e67448a88b0667fce  more_configure_targets.patch
-cf5a32016bb9da0b9578099727bf15c9  openssl-1.0.0-beta3.tar.gz
+a8f10e3b109567d6caedf5113411ff4b  more_configure_targets.patch
+89eaa86e25b2845f920ec00ae4c864ed  openssl-1.0.0.tar.gz
