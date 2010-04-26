@@ -1,0 +1,25 @@
+diff --speed-large-files --minimal -Nru mktemp-1.6.orig/Makefile.in mktemp-1.6/Makefile.in
+--- mktemp-1.6.orig/Makefile.in	2008-08-17 17:38:34.000000000 +0200
++++ mktemp-1.6/Makefile.in	2008-12-02 18:53:03.208788742 +0100
+@@ -65,13 +65,14 @@
+ mantype = @MANTYPE@
+ 
+ # Where to install things...
+-prefix = @prefix@
+-exec_prefix = @exec_prefix@
+-bindir = @bindir@
+-sbindir = @sbindir@
+-sysconfdir = @sysconfdir@
+-mandir = @mandir@
+-datarootdir = @datarootdir@
++prefix = $(DESTDIR)@prefix@
++exec_prefix = $(DESTDIR)@exec_prefix@
++bindir = $(DESTDIR)@bindir@
++sbindir = $(DESTDIR)@sbindir@
++sysconfdir = $(DESTDIR)@sysconfdir@
++mandir = $(DESTDIR)@mandir@
++datarootdir = $(DESTDIR)@datarootdir@
++
+ 
+ #### End of system configuration section. ####
+ 
