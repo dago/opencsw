@@ -1,5 +1,5 @@
 GARNAME = mktemp
-GARVERSION = 1.6
+GARVERSION = 1.7
 CATEGORIES = utils
 
 DESCRIPTION = A small program to allow safe temporary file creation from shell scripts
@@ -18,7 +18,7 @@ LICENSE = LICENSE
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES = makefile-destdir.patch
+VENDOR_URL = http://www.mktemp.org/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
