@@ -38,6 +38,11 @@ def main():
     print "override them pasting the lines below to the GAR recipe."
     for tag in tags_after_overrides:
       print tag.ToGarSyntax()
+    print "Please note that checkpkg isn't suggesting you should "
+    print "use these overrides.  It only informs what the overrides could "
+    print "look like.  You need to understand what are the reported issues about"
+    print "and use your best judgement to decide whether to fix the underlying"
+    print "problems or override them."
   if unapplied_overrides:
     print "WARNING: Some overrides did not match any errors."
     print "         They can be removed, as they don't take any effect anyway."
