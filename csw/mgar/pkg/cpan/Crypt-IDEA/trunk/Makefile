@@ -8,6 +8,9 @@ define BLURB
   This perl extension is an implementation of the IDEA block cipher algorithm.
 endef
 
-DISTFILES = $(call admfiles,CSWpmcryptidea,depend prototype)
+PACKAGES = CSWpmcryptidea
+CATALOGNAME = pm_cryptidea
+
+LICENSE = COPYRIGHT
 
 include gar/category.mk
