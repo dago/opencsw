@@ -1,9 +1,9 @@
 GARNAME = Crypt-CBC
-GARVERSION = 2.22
+GARVERSION = 2.30
 CATEGORIES = cpan
 AUTHOR = LDS
 
-DESCRIPTION = encrypt data with cipher block chaining mode
+DESCRIPTION = Encrypt Data with Cipher Block Chaining Mode
 define BLURB
   This module is a Perl-only implementation of the cryptographic cipher block
   chaining mode (CBC). In combination with a block cipher such as DES or IDEA,
@@ -11,6 +11,11 @@ define BLURB
   encrypted messages are compatible with the encryption format used by SSLeay.
 endef
 
-DISTFILES += CSWpmcryptcbc.gspec
+DISTFILES = COPYING
+
+PACKAGES = CSWpmcryptcbc
+CATALOGNAME = pm_cryptcbc
+
+ARCHALL = 1
 
 include gar/category.mk
