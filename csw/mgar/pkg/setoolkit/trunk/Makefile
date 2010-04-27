@@ -39,9 +39,13 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = $(bindir)/se
 # Testsuite must be run as root
 SKIPTEST = 1
 
-# This is intended behaviour as the missing symbols are provided by the "se" binary
-# and the libs are to be used only by "se".
-CHECKPKG_OVERRIDES  = symbol-not-found|libsegui.so
-CHECKPKG_OVERRIDES += symbol-not-found|libsenet.so
+CHECKPKG_OVERRIDES_CSWsetoolkit += missing-dependency|CSWemacscommon
+CHECKPKG_OVERRIDES_CSWsetoolkit += linked-against-discouraged-library|libsegui.so|libX11.so.4
+CHECKPKG_OVERRIDES_CSWsetoolkit += linked-against-discouraged-library|libsegui.so|libX11.so.4
+CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/mon_cm|class=none
+CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/monlog|class=none
+CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/percol|class=none
+CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/va_monitor|class=none
+CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/vader|class=none
 
 include gar/category.mk
