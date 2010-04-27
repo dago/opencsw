@@ -47,5 +47,6 @@ CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/s
 CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/percol|class=none
 CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/va_monitor|class=none
 CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/vader|class=none
+CHECKPKG_OVERRIDES_CSWsetoolkit += soname-not-found|libm.so.2
 
 include gar/category.mk
