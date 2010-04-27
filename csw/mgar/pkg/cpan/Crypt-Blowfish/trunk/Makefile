@@ -1,5 +1,5 @@
 GARNAME = Crypt-Blowfish
-GARVERSION = 2.10
+GARVERSION = 2.12
 CATEGORIES = cpan
 AUTHOR = DPARIS
 
@@ -10,8 +10,9 @@ define BLURB
   size to ensure the strongest encryption possible from this module.
 endef
 
-DISTFILES += CSWpmcryptblowfish.gspec CSWpmcryptblowfish.depend
+PACKAGES = CSWpmcryptblowfish
+CATALOGNAME = pm_cryptblowfish
 
-DEPENDS += cpan/Crypt-CBC
+LICENSE = COPYRIGHT
 
 include gar/category.mk
