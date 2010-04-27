@@ -17,10 +17,12 @@ MASTER_SITES = http://cheeseshop.python.org/packages/source/h/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = py_hachoir_parser
+PACKAGES = CSWpy-hachoir-parser
+INCOMPATIBLE_PKGS = CSWhachoir-parser
 ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWpy-hachoir-core
-CHECKPKG_OVERRIDES_CSWhachoir-parser += surplus-dependency|CSWpy-hachoir-core
+CHECKPKG_OVERRIDES_CSWpy-hachoir-parser += surplus-dependency|CSWpy-hachoir-core
 # To be able to release it together with CSWhachoir-core.
-CHECKPKG_OVERRIDES_CSWhachoir-parser += unidentified-dependency|CSWpy-hachoir-core
+CHECKPKG_OVERRIDES_CSWpy-hachoir-parser += unidentified-dependency|CSWpy-hachoir-core
 TEST_SCRIPTS =
 include gar/category.mk
