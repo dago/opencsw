@@ -1,5 +1,5 @@
 GARNAME = help2man
-GARVERSION = 1.37.1
+GARVERSION = 1.38.1
 CATEGORIES = devel
 
 DESCRIPTION = A tool for automatically generating simple manual pages from program output
@@ -25,5 +25,7 @@ CONFIGURE_ARGS += --disable-nls
 TEST_SCRIPTS =
 
 ARCHALL = 1
+
+CHECKPKG_OVERRIDES_CSWhelp2man += surplus-dependency|CSWpmlocalegettext
 
 include gar/category.mk
