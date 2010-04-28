@@ -1,0 +1,45 @@
+GARNAME = password-gorilla
+GARVERSION = 1.4
+CATEGORIES = apps
+
+DESCRIPTION = A cross-platform, Tcl/Tk-based Password Manager
+define BLURB
+  The Password Gorilla helps you manage your logins. It stores all your user
+  names and passwords, along with login information and other notes, in a
+  securely encrypted file. A single "master password" is used to protect the
+  file. This way, you only need to remember the single master password, instead
+  of the many logins that you use. 
+endef
+
+VENDOR_URL   = http://www.fpx.de/fp/Software/Gorilla/
+MASTER_SITES = http://www.fpx.de/fp/Software/Gorilla/download/
+DISTNAME     = gorilla-$(GARVERSION)
+DISTFILES    = gorilla-$(GARVERSION).tar.gz
+UFILES_REGEX = gorilla-(\d+(?:\.\d+)*).tar.gz
+CATALOGNAME  = password_gorilla
+ARCHALL      = 1
+LICENSE      = LICENSE.txt
+
+RUNTIME_DEP_PKGS = CSWtk
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += -with-wish=$(bindir)/tclsh
+
+INSTALL_SCRIPTS = custom
+TEST_SCRIPTS    =
+
+include gar/category.mk
+
+install-custom: TCLPKGS = twofish blowfish sha1 pwsafe
+install-custom: TCLDEST = $(DESTDIR)$(datadir)/password-gorilla/
+install-custom:
+	$(foreach P,$(TCLPKGS),\
+		mkdir -p $(TCLDEST)$(P); \
+		cp -r $(WORKSRC)/$(P) $(TCLDEST)$(P); \
+	)
+	cp $(WORKSRC)/gorilla $(WORKSRC)/gorilla.tcl $(TCLDEST)
+	mkdir -p $(DESTDIR)$(bindir)
+	echo '#!/bin/sh\nexec $(datadir)/password-gorilla/gorilla' > \
+		$(DESTDIR)$(bindir)/password-gorilla
+	chmod 755 $(DESTDIR)$(bindir)/password-gorilla
+	$(MAKECOOKIE)
