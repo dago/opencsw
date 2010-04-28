@@ -184,10 +184,11 @@ DEF_BASE_PKGS += CSWpy-yaml
 DEF_BASE_PKGS += CSWpython
 DEF_BASE_PKGS += CSWtextutils
 DEF_BASE_PKGS += CSWwget
+DEF_BASE_PKGS += CSWgit
 
 ifdef GIT_REPOS
 # netcat and bash are for the gitproxy script.
-DEF_BASE_PKGS += CSWgit CSWnetcat
+DEF_BASE_PKGS += CSWnetcat
 endif
 
 PREREQUISITE_BASE_PKGS ?= $(DEF_BASE_PKGS)

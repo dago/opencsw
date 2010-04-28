@@ -236,7 +236,7 @@ check-upstream-and-mail:
 				echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
 		fi; \
 	fi
-		
+
 check-upstream: FILES2CHECK = $(call files2check)
 check-upstream: 
 	@if [ -n '$(FILES2CHECK)' ]; then \
@@ -476,18 +476,6 @@ normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	$(GARPATCH) < $(DOWNLOADDIR)/$*
 	@$(MAKECOOKIE)
-
-# This is used by makepatch
-%/gar-base.diff:
-	@echo " ==> Creating patch $@"
-	@EXTRACTDIR=$(SCRATCHDIR) COOKIEDIR=$(SCRATCHDIR)-$(COOKIEDIR) $(MAKE) extract
-	@PATCHDIR=$(SCRATCHDIR)/$(BASEWORKSRC) COOKIEDIR=$(SCRATCHDIR)-$(COOKIEDIR) $(MAKE) patch
-	@mv $(SCRATCHDIR)/$(BASEWORKSRC) $(WORKSRC_FIRSTMOD).orig
-	@( cd $(WORKDIR_FIRSTMOD); \
-		if gdiff --speed-large-files --minimal -Nru $(BASEWORKSRC).orig $(BASEWORKSRC) > gar-base.diff; then :; else \
-			cd $(CURDIR); \
-			mv -f $(WORKDIR_FIRSTMOD)/gar-base.diff $@; \
-		fi )
 
 ### PATCH FILE TYPE MAPPINGS ###
 # These rules specify which of the above patch action rules to use for a given

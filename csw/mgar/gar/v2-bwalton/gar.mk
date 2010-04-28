@@ -1,4 +1,3 @@
-
 #
 # $Id$
 #
@@ -390,8 +389,15 @@ extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
 extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
 		announce-modulation \
-		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated
+		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) $(if $(filter $(firstword $(MODULATIONS)),$(MODULATION)),post-extract-gitsnap) post-extract-$(MODULATION) post-extract-modulated
 	@$(DONADA)
+
+post-extract-gitsnap: $(EXTRACT_TARGETS)
+	@echo Snapshotting extracted source tree with git...
+	@( cd $(WORKSRC); git init; git add .; \
+		git commit -m "Upstream $(GARVERSION)"; \
+		git tag -a -m "Upstream $(GARVERSION)" upstream-$(GARVERSION) )
+	@$(MAKECOOKIE)
 
 # returns true if extract has completed successfully, false
 # otherwise
@@ -411,19 +417,36 @@ PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES) $(PATCHFILES_$(MODULATI
 patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
 
-patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) post-patch-$(MODULATION) post-patch-modulated
+patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) $(if $(filter $(firstword $(MODULATIONS)),$(MODULATION)),post-patch-gitsnap) post-patch-$(MODULATION) post-patch-modulated
 	@$(DONADA)
+
+post-patch-gitsnap: $(PATCH_TARGETS)
+	@echo Snapshotting patched source tree with git...
+	@( cd $(WORKSRC); \
+	  git checkout -b csw-$(GARVERSION) upstream-$(GARVERSION); \
+	  git add -A; git commit -m "CSW patches for $(GARVERSION)" )
+	@$(MAKECOOKIE)
 
 # returns true if patch has completed successfully, false
 # otherwise
 patch-p:
 	@$(foreach COOKIEFILE,$(PATCH_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
-# makepatch		- Grab the upstream source and diff against $(WORKSRC).  Since
-# 				  diff returns 1 if there are differences, we remove the patch
-# 				  file on "success".  Goofy diff.
-makepatch: $(SCRATCHDIR) $(FILEDIR) $(FILEDIR)/gar-base.diff
-	$(DONADA)
+# Allow generation of patches from modified work source.
+makepatch: $(FILEDIR)
+	@echo Makepatch: Checking for changes in work tree...
+	@( cd $(WORKSRC_FIRSTMOD); \
+		git add -A; \
+		git diff --cached --quiet; \
+		if test $$? -eq 0; then echo "No changes."; exit 1; fi )
+	@echo Makepatch: Capturing changes...
+	@(cd $(WORKSRC_FIRSTMOD); \
+		git commit; \
+		git format-patch HEAD~1; \
+		echo Add the following to your recipe and then; \
+		echo rerun: gmake makesums; \
+		echo PATCHFILES +=  0001*; \
+		mv 0001* $(abspath $(FILEDIR)) )
 
 # XXX: Allow patching of pristine sources separate from ISA directories
 # XXX: Use makepatch on global/
