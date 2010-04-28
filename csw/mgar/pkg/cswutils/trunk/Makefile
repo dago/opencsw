@@ -9,10 +9,10 @@ define BLURB
 endef
 
 SVNROOT = http://opencsw.svn.sourceforge.net/svnroot/opencsw/utilities/
-SVN_REV = 96
+SVN_REV = 104
 
 MASTER_SITES =
-SVN_FILES = submit_to_newpkgs.py compare_pkgs.py opencsw_lib.py
+SVN_FILES = compare_pkgs.py
 DISTFILES = COPYING
 DISTFILES += checkpkg checkpkg.8
 DISTFILES += cpan2pkg
@@ -20,8 +20,9 @@ DISTFILES += createpkg createpkg.8
 DISTFILES += stagepkg stagepkg.8
 DISTFILES += stagepkg stagepkg.8
 DISTFILES += $(foreach F,$(SVN_FILES),$(F)-r$(SVN_REV))
+DISTFILES += opencsw.py submitpkg
 
-RUNTIME_DEP_PKGS = CSWtextutils CSWfakeroot CSWperl
+RUNTIME_DEP_PKGS = CSWcoreutils CSWfakeroot CSWperl
 RUNTIME_DEP_PKGS += CSWpmyaml CSWpmlibwww CSWpmhtmltree
 RUNTIME_DEP_PKGS += CSWpython
 
@@ -36,10 +37,13 @@ SPKG_SOURCEURL = http://www.opencsw.org/
 
 ARCHALL = 1
 
-# The package contains 'checkpkg', which checks for bad pathes. Of
-# course the bad pathes are inside the package, because it is checked
-# for them. So disable the test.
-ENABLE_CHECK = 0
+CHECKPKG_OVERRIDES_CSWcswutils += unidentified-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmhtmltree
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWfakeroot
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmyaml
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmlibwww
 
 include gar/category.mk
 
@@ -47,6 +51,14 @@ include gar/category.mk
 $(foreach F,$(SVN_FILES),$(DOWNLOADDIR)/$(F)-r$(SVN_REV)):
 	svn export -r $(SVN_REV) $(SVNROOT)$(subst -r$(SVN_REV),,$(notdir $@))
 	mv $(subst -r$(SVN_REV),,$(notdir $@)) $@
+	@$(MAKECOOKIE)
+
+$(DOWNLOADDIR)/opencsw.py:
+	ln -s $(abspath gar/lib/python/opencsw.py) $(DOWNLOADDIR)/
+	@$(MAKECOOKIE)
+
+$(DOWNLOADDIR)/submitpkg:
+	ln -s $(abspath gar/bin/submitpkg) $(DOWNLOADDIR)/
 	@$(MAKECOOKIE)
 
 install-custom:
@@ -61,12 +73,12 @@ install-custom:
 	@ginstall $(WORKSRC)/createpkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall $(WORKSRC)/stagepkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall -d $(DESTDIR)$(libdir)/python/csw
-	@ginstall -m 644 $(WORKSRC)/opencsw_lib.py-r$(SVN_REV) \
-		$(DESTDIR)$(libdir)/python/csw/opencsw_lib.py
-	@for f in compare_pkgs.py submit_to_newpkgs.py; do \
+	@ginstall -m 644 $(WORKSRC)/opencsw.py \
+		$(DESTDIR)$(libdir)/python/csw/opencsw.py
+	@ginstall -m 644 $(WORKSRC)/submitpkg $(DESTDIR)$(bindir)/submitpkg
+	@for f in $(SVN_FILES); do \
 		ginstall -m 755 $(WORKSRC)/$${f}-r$(SVN_REV) \
 		$(DESTDIR)$(libdir)/python/csw/$${f}; \
 	done
 	@ln -s ../lib/python/csw/compare_pkgs.py $(DESTDIR)$(bindir)/comparepkg
-	@ln -s ../lib/python/csw/submit_to_newpkgs.py $(DESTDIR)$(bindir)/submitpkg
 	@$(MAKECOOKIE)

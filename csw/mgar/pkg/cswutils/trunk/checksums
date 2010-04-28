@@ -1,11 +1,11 @@
 091b12575ebc0e45cf8c3d8b43d8b638  COPYING
 59c261b5337c61ddda9146a2a97efc3d  checkpkg
 6ec3b6597e04714430987ccc199db3c4  checkpkg.8
-24881eb553044a5b437b7293f4138ba4  compare_pkgs.py-r96
+1fae82cde07f0d2eddb688a089e9de5b  compare_pkgs.py-r104
 9a637f6546cc50974159a987302d91c0  cpan2pkg
 93b6a811d303ce3be0050c5a7b3c8e69  createpkg
 a605598f30195f9ab1b29fc3944d3b31  createpkg.8
-6af12950bab350ecd2a14fe1e347b18b  opencsw_lib.py-r96
+ab6da685ca1ba45003e1a90a831a5883  opencsw.py
 cd4496ee27bf86d5c8bc656c9c5974be  stagepkg
 8908a0a898aa07a7a928b2b8bd8384f0  stagepkg.8
-bb90fa5379bcae922a499333951f5796  submit_to_newpkgs.py-r96
+d83f47f61a12b29ba50a5e83944fe4ff  submitpkg
