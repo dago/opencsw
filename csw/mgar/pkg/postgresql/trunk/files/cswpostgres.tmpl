@@ -60,11 +60,14 @@ if [ -f "${PGDATA}/postmaster.opts" ]; then
 fi
 
 # Exit if postgres user hasn't been created.
-if ! grep '^postgres:' /etc/passwd >/dev/null; then
-        getent passwd postgres >/dev/null
-        if [ $? -ne 0 ] ; then
-               exit 0
-        fi
+# FIXME: This bit of code is old. It might be obsolete.
+if grep '^postgres:' /etc/passwd >/dev/null; then
+	echo > /dev/null
+else
+  getent passwd postgres >/dev/null
+  if [ $? -ne 0 ] ; then
+         exit 0
+  fi
 fi
 
 # Change to /var/tmp, as pgctl etc. need to be started from
@@ -83,6 +86,7 @@ start)
 stop)
      echo "Stopping PostgreSQL database..."
      su postgres -c "${PGCTL} -D ${PGDATA} -l ${PGDATA}/postgresql.log stop"
+     true  # The previous command fails when there's no .pid file
      ;;
 
 restart)
