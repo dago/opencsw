@@ -462,5 +462,37 @@ class TestCheckVendorURL_Https(CheckpkgUnitTestHelper, unittest.TestCase):
     self.pkg_data["pkginfo"]["VENDOR"] = "https://www.example.com/"
 
 
+class TestCheckPythonPackageName(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = "CheckPythonPackageName"
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "none",
+      "group": "bin",
+      "line": "",
+      "mode": '0755',
+      "path": "/opt/csw/lib/python/site-packages/hachoir_parser/video/mov.py",
+      "type": "f",
+      "user": "root"
+    })
+    self.error_mgr_mock.ReportError('pkgname-does-not-start-with-CSWpy-')
+    self.error_mgr_mock.ReportError('catalogname-does-not-start-with-py_')
+
+
+class TestCheckPythonPackageName_good(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = "CheckPythonPackageName"
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "none",
+      "group": "bin",
+      "line": "",
+      "mode": '0755',
+      "path": "/opt/csw/lib/python/site-packages/hachoir_parser/video/mov.py",
+      "type": "f",
+      "user": "root"
+    })
+    self.pkg_data["basic_stats"]["catalogname"] = "py_foo"
+    self.pkg_data["basic_stats"]["pkgname"] = "CSWpy-foo"
+
+
 if __name__ == '__main__':
   unittest.main()
