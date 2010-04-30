@@ -25,21 +25,24 @@ RUNTIME_DEP_PKGS = CSWtk
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += -with-wish=$(bindir)/tclsh
 
+BUILD_SCRIPTS   =
 INSTALL_SCRIPTS = custom
 TEST_SCRIPTS    =
 
 include gar/category.mk
 
 install-custom: TCLPKGS = twofish blowfish sha1 pwsafe
-install-custom: TCLDEST = $(DESTDIR)$(datadir)/password-gorilla/
+install-custom: TCLDEST = $(DESTDIR)$(datadir)/password-gorilla
 install-custom:
 	$(foreach P,$(TCLPKGS),\
-		mkdir -p $(TCLDEST)$(P); \
-		cp -r $(WORKSRC)/$(P) $(TCLDEST)$(P); \
+		mkdir -p $(TCLDEST)/$(P); \
+		cp $(WORKSRC)/$(P)/* $(TCLDEST)/$(P); \
+		chmod 644 $(TCLDEST)/$(P)/*; \
 	)
 	cp $(WORKSRC)/gorilla $(WORKSRC)/gorilla.tcl $(TCLDEST)
 	mkdir -p $(DESTDIR)$(bindir)
 	echo '#!/bin/sh\nexec $(datadir)/password-gorilla/gorilla' > \
 		$(DESTDIR)$(bindir)/password-gorilla
 	chmod 755 $(DESTDIR)$(bindir)/password-gorilla
+	chmod 644 $(WORKSRC)/$(LICENSE)
 	$(MAKECOOKIE)
