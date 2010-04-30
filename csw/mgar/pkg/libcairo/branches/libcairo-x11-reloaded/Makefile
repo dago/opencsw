@@ -100,6 +100,8 @@ CHECKPKG_OVERRIDES_CSWcxlibcairodevel += surplus-dependency|CSWlibx11devel
 CHECKPKG_OVERRIDES_CSWcxlibcairodevel += surplus-dependency|CSWcxlibcairo
 CHECKPKG_OVERRIDES_CSWcxlibcairodevel += surplus-dependency|CSWlibxcbdevel
 CHECKPKG_OVERRIDES_CSWcxlibcairodevel += surplus-dependency|CSWlibxrenderdevel
+CHECKPKG_OVERRIDES_CSWlibcairo += soname-not-found|libm.so.2
+CHECKPKG_OVERRIDES_CSWcxlibcairo += soname-not-found|libm.so.2
 
 include gar/category.mk
 
