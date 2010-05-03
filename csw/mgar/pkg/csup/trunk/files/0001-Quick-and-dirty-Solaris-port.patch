@@ -1,0 +1,367 @@
+From 03b518d55e8a0784f3c76c99ffc76c6435543960 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 3 May 2010 15:29:26 +0200
+Subject: [PATCH] Quick and dirty Solaris port
+
+---
+ GNUmakefile |    3 ++-
+ diff.c      |    6 +++++-
+ keyword.c   |    2 ++
+ main.c      |    2 +-
+ misc.c      |   18 ++++++++++++++++--
+ misc.h      |   10 +++++++---
+ proto.c     |    2 ++
+ stream.c    |   12 ++++++++++++
+ strsep.c    |   58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ threads.c   |    2 ++
+ timegm.c    |   31 +++++++++++++++++++++++++++++++
+ token.l     |    2 ++
+ 12 files changed, 140 insertions(+), 8 deletions(-)
+ create mode 100644 strsep.c
+ create mode 100644 timegm.c
+
+diff --git a/GNUmakefile b/GNUmakefile
+index 73e840b..d5dc128 100644
+--- a/GNUmakefile
++++ b/GNUmakefile
+@@ -13,7 +13,8 @@ UNAME=	$(shell uname -s)
+ 
+ SRCS=	attrstack.c config.c detailer.c diff.c fattr.c fixups.c fnmatch.c \
+ 	globtree.c idcache.c keyword.c lister.c main.c misc.c mux.c pathcomp.c \
+-	parse.c proto.c status.c stream.c threads.c token.c updater.c
++	parse.c proto.c status.c stream.c threads.c token.c updater.c \
++	strsep.c timegm.c
+ OBJS=	$(SRCS:.c=.o)
+ 
+ WARNS=	-Wall -W -Wno-unused-parameter -Wmissing-prototypes -Wpointer-arith \
+diff --git a/diff.c b/diff.c
+index 7ced38e..b6e1d7d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -27,7 +27,11 @@
+  */
+ 
+ #include <assert.h>
++#if !defined(__sun)
+ #include <err.h>
++#else
++#include <stdio.h>
++#endif
+ #include <errno.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -136,7 +140,7 @@ diff_apply(struct stream *rd, struct stream *orig, struct stream *dest,
+ 	if (noeol) {
+ 		error = stream_truncate_rel(dest, -1);
+ 		if (error) {
+-			warn("stream_truncate_rel");
++			fprintf(stderr,"stream_truncate_rel");
+ 			return (-1);
+ 		}
+ 	}
+diff --git a/keyword.c b/keyword.c
+index 0cbb3f9..58f1786 100644
+--- a/keyword.c
++++ b/keyword.c
+@@ -27,7 +27,9 @@
+  */
+ 
+ #include <assert.h>
++#if !defined(__sun)
+ #include <err.h>
++#endif
+ #include <errno.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+diff --git a/main.c b/main.c
+index fa3b44d..4781169 100644
+--- a/main.c
++++ b/main.c
+@@ -26,7 +26,7 @@
+  * $FreeBSD: projects/csup/main.c,v 1.39 2006/03/07 12:02:13 mux Exp $
+  */
+ 
+-#include <sys/file.h>
++#include "/usr/ucbinclude/sys/file.h"
+ #include <sys/types.h>
+ #include <sys/socket.h>
+ 
+diff --git a/misc.c b/misc.c
+index 875e15c..6c720ac 100644
+--- a/misc.c
++++ b/misc.c
+@@ -31,7 +31,6 @@
+ #include <openssl/md5.h>
+ 
+ #include <assert.h>
+-#include <err.h>
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <limits.h>
+@@ -47,6 +46,21 @@
+ #include "main.h"
+ #include "misc.h"
+ 
++#if defined(__sun)
++#include <varargs.h> 
++void 
++err(int eval, const char* fmt, ...) { 
++        va_list	args; 
++        va_start( args ); 
++        fprintf( stderr, "ERROR: " );
++        fprintf( stderr, fmt, args ); 
++        va_end( args ); 
++        if( eval ) exit(eval); 
++} 
++#else
++#include <err.h>
++#endif
++
+ struct pattlist {
+ 	char **patterns;
+ 	size_t size;
+@@ -403,7 +417,7 @@ xasprintf(char **ret, const char *format, ...)
+ 	int rv;
+ 
+ 	va_start(ap, format);
+-	rv = vasprintf(ret, format, ap);
++	rv = vsprintf(ret, format, ap);
+ 	va_end(ap);
+ 	if (*ret == NULL)
+ 		err(1, "asprintf");
+diff --git a/misc.h b/misc.h
+index 51c2b53..5dee4bc 100644
+--- a/misc.h
++++ b/misc.h
+@@ -30,10 +30,10 @@
+ 
+ #include <openssl/md5.h>
+ 
+-#include <sys/types.h>
++#include <sys/inttypes.h>
+ 
+ /* If we're not compiling in a C99 environment, define the C99 types. */
+-#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 199901
++#if !defined(__sun) && (!defined(__STDC_VERSION__) || __STDC_VERSION__ < 199901)
+ 
+ #ifdef uint32_t
+ #undef uint32_t
+@@ -51,7 +51,11 @@
+ #define	uint8_t		u_int8_t
+ 
+ #else
+-#include <stdint.h>
++#include <inttypes.h>
++#include <time.h>
++/* Use substitute */
++void err(int eval, const char* fmt, ...);
++char * strsep (char **stringp, const char *delim);
+ #endif
+ 
+ /* This is a GCC-specific keyword but some other compilers (namely icc)
+diff --git a/proto.c b/proto.c
+index 5ddaba3..553c06b 100644
+--- a/proto.c
++++ b/proto.c
+@@ -33,7 +33,9 @@
+ #include <sys/stat.h>
+ 
+ #include <assert.h>
++#if !defined (__sun)
+ #include <err.h>
++#endif
+ #include <errno.h>
+ #include <netdb.h>
+ #include <pthread.h>
+diff --git a/stream.c b/stream.c
+index 91b0e80..ec46260 100644
+--- a/stream.c
++++ b/stream.c
+@@ -31,7 +31,11 @@
+ 
+ #include <assert.h>
+ #include <zlib.h>
++#if !defined(__sun)
+ #include <err.h>
++#else
++#include <stdio.h>
++#endif
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <stdarg.h>
+@@ -861,8 +865,10 @@ zfilter_init(struct stream *stream, void __unused *data)
+ 		state->zfree = zfilter_free;
+ 		state->opaque = Z_NULL;
+ 		rv = inflateInit(state);
++/*
+ 		if (rv != Z_OK)
+ 			errx(1, "inflateInit: %s", state->msg);
++*/
+ 		buf = buf_new(buf_size(stream->rdbuf));
+ 		zf->rdbuf = stream->rdbuf;
+ 		stream->rdbuf = buf;
+@@ -874,8 +880,10 @@ zfilter_init(struct stream *stream, void __unused *data)
+ 		state->zfree = zfilter_free;
+ 		state->opaque = Z_NULL;
+ 		rv = deflateInit(state, Z_DEFAULT_COMPRESSION);
++/*
+ 		if (rv != Z_OK)
+ 			errx(1, "deflateInit: %s", state->msg);
++*/
+ 		buf = buf_new(buf_size(stream->wrbuf));
+ 		zf->wrbuf = stream->wrbuf;
+ 		stream->wrbuf = buf;
+@@ -971,8 +979,10 @@ again:
+ 	lastin = state->avail_in;
+ 	lastout = state->avail_out;
+ 	rv = deflate(state, flags);
++/*
+ 	if (rv != Z_BUF_ERROR && rv != Z_OK && rv != Z_STREAM_END)
+ 		errx(1, "deflate: %s", state->msg);
++*/
+ 	ate = lastin - state->avail_in;
+ 	prod = lastout - state->avail_out;
+ 	buf_less(buf, ate);
+@@ -1026,8 +1036,10 @@ again:
+ 			return (0);
+ 		goto again;
+ 	}
++/*
+ 	if (rv != Z_STREAM_END && rv != Z_OK)
+ 		errx(1, "inflate: %s", state->msg);
++*/
+ 	if (rv == Z_STREAM_END)
+ 		zf->flags |= ZFILTER_EOF;
+ 	buf_more(buf, new);
+diff --git a/strsep.c b/strsep.c
+new file mode 100644
+index 0000000..9f2fdd2
+--- /dev/null
++++ b/strsep.c
+@@ -0,0 +1,58 @@
++/* Copyright (C) 2004, 2007 Free Software Foundation, Inc.
++
++   Written by Yoann Vandoorselaere <yoann@prelude-ids.org>.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 2, or (at your option)
++   any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software Foundation,
++   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
++
++#ifdef HAVE_CONFIG_H
++# include <config.h>
++#endif
++
++/* Specification.  */
++#include <string.h>
++
++char *
++strsep (char **stringp, const char *delim)
++{
++  char *start = *stringp;
++  char *ptr;
++
++  if (start == NULL)
++    return NULL;
++
++  /* Optimize the case of no delimiters.  */
++  if (delim[0] == '\0')
++    {
++      *stringp = NULL;
++      return start;
++    }
++
++  /* Optimize the case of one delimiter.  */
++  if (delim[1] == '\0')
++    ptr = strchr (start, delim[0]);
++  else
++    /* The general case.  */
++    ptr = strpbrk (start, delim);
++  if (ptr == NULL)
++    {
++      *stringp = NULL;
++      return start;
++    }
++
++  *ptr = '\0';
++  *stringp = ptr + 1;
++
++  return start;
++}
+diff --git a/threads.c b/threads.c
+index 2525a10..2dd8c64 100644
+--- a/threads.c
++++ b/threads.c
+@@ -27,7 +27,9 @@
+  */
+ 
+ #include <assert.h>
++#if !defined(__sun)
+ #include <err.h>
++#endif
+ #include <pthread.h>
+ #include <stdlib.h>
+ 
+diff --git a/timegm.c b/timegm.c
+new file mode 100644
+index 0000000..e028b4e
+--- /dev/null
++++ b/timegm.c
+@@ -0,0 +1,31 @@
++
++
++#include <time.h>
++
++time_t timegm(struct tm *t)
++{
++  time_t tl, tb;
++  struct tm *tg;
++
++  tl = mktime (t);
++  if (tl == -1)
++    {
++      t->tm_hour--;
++      tl = mktime (t);
++      if (tl == -1)
++        return -1; /* can't deal with output from strptime */
++      tl += 3600;
++    }
++  tg = gmtime (&tl);
++  tg->tm_isdst = 0;
++  tb = mktime (tg);
++  if (tb == -1)
++    {
++      tg->tm_hour--;
++      tb = mktime (tg);
++      if (tb == -1)
++        return -1; /* can't deal with output from gmtime */
++      tb += 3600;
++    }
++  return (tl - (tb - tl));
++}
+diff --git a/token.l b/token.l
+index 44e417b..6b218fc 100644
+--- a/token.l
++++ b/token.l
+@@ -27,7 +27,9 @@
+  * $FreeBSD: projects/csup/token.l,v 1.18 2006/03/07 02:13:55 mux Exp $
+  */
+ 
++#if !defined(__sun)
+ #include <err.h>
++#endif
+ #include <stdlib.h>
+ #include <string.h>
+ 
+-- 
+1.7.0
+
