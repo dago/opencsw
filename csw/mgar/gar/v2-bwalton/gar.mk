@@ -389,8 +389,39 @@ extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
 extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
 		announce-modulation \
-		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) $(if $(filter $(firstword $(MODULATIONS)),$(MODULATION)),post-extract-gitsnap) post-extract-$(MODULATION) post-extract-modulated
+		pre-extract-modulated pre-extract-$(MODULATION) pre-extract-git-check $(EXTRACT_TARGETS) $(if $(filter $(firstword $(MODULATIONS)),$(MODULATION)),post-extract-gitsnap) post-extract-$(MODULATION) post-extract-modulated
 	@$(DONADA)
+
+pre-extract-git-check:
+	@( if [ ! -f $(HOME)/.gitconfig ]; then \
+		name=`getent passwd $$USER | awk -F: '{print $$5}'`; \
+		echo "===================================================="; \
+		echo "You need to create a basic ~/.gitconfig."; \
+		echo "Try: "; \
+		echo "	git config --global user.email $$USER@opencsw.org"; \
+		echo "	git config --global user.name \"$$name\""; \
+		echo "===================================================="; \
+		exit 1; \
+	  else \
+		g_email=`git config --global user.email`; \
+		g_name=`git config --global user.name`; \
+		email=$$USER@opencsw.org; \
+		name=`getent passwd $$USER | awk -F: '{print $$5}'`; \
+		if [ -z "$$g_email" ]; then \
+		  echo "==================================================="; \
+		  echo "Your ~/.gitconfig doesn't define user.email.  Try:"; \
+		  echo "  git config --global user.email $$email"; \
+		  echo "==================================================="; \
+		  exit 1; \
+		elif [ -z "$$g_name" ]; then \
+		  echo "==================================================="; \
+		  echo "Your ~/.gitconfig doesn't define user.name.  Try:"; \
+		  echo "  git config --global user.name '$$name'"; \
+		  echo "==================================================="; \
+		  exit 1; \
+		fi; \
+	  fi )
+	@$(MAKECOOKIE)
 
 post-extract-gitsnap: $(EXTRACT_TARGETS)
 	@echo Snapshotting extracted source tree with git...
