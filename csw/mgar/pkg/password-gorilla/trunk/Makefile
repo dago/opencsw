@@ -29,6 +29,8 @@ BUILD_SCRIPTS   =
 INSTALL_SCRIPTS = custom
 TEST_SCRIPTS    =
 
+CHECKPKG_OVERRIDES_CSWpassword-gorilla += surplus-dependency|CSWtk
+
 include gar/category.mk
 
 install-custom: TCLPKGS = twofish blowfish sha1 pwsafe
