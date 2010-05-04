@@ -1,3 +1,9 @@
+nano (2.2.4,REV=2010.05.05)
+
+  * Version bump to 2.2.4.
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Wed,  5 May 2010 00:59:30 +0200
+
 nano (2.0.9,REV=2009.07.05)
 
   * Adopted and updated to 2.0.9. (Closes #2969, #3082)

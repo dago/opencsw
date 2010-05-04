@@ -1,5 +1,5 @@
 GARNAME = nano
-GARVERSION = 2.0.9
+GARVERSION = 2.2.4
 CATEGORIES = utils
 
 DESCRIPTION = Enhanced clone of the Pico text editor
@@ -10,11 +10,9 @@ define BLURB
   functionality".
 endef
 
-MASTER_SITES = http://www.nano-editor.org/dist/v2.0/
-SPKG_SOURCEURL = http://www.nano-editor.org/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWnano.postinstall CSWnano.postremove
-
+VENDOR_URL   = http://www.nano-editor.org/
+MASTER_SITES = http://www.nano-editor.org/dist/v2.2/
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWncurses
