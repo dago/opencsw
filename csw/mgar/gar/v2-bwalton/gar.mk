@@ -448,15 +448,8 @@ PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES) $(PATCHFILES_$(MODULATI
 patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
 
-patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) $(if $(filter $(firstword $(MODULATIONS)),$(MODULATION)),post-patch-gitsnap) post-patch-$(MODULATION) post-patch-modulated
+patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) post-patch-$(MODULATION) post-patch-modulated
 	@$(DONADA)
-
-post-patch-gitsnap: $(PATCH_TARGETS)
-	@echo Snapshotting patched source tree with git...
-	@( cd $(WORKSRC); \
-	  git checkout -b csw-$(GARVERSION) upstream-$(GARVERSION); \
-	  git add -A; git commit -m "CSW patches for $(GARVERSION)" )
-	@$(MAKECOOKIE)
 
 # returns true if patch has completed successfully, false
 # otherwise
