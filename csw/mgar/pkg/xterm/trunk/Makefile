@@ -1,5 +1,7 @@
-# TODO
-# ! Test app-defaults loading (cf. files/README.CSW)
+# TODO (release-critical prefixed with !, non release-critical with *)
+# * app-defaults are currently in $(prefix)/X11/etc/X11/app-defaults
+#   because of our libXt. Once the whole X11 mess is sorted, they
+#   might go to $(prefix)/etc/X11/app-defaults instead.
 GARNAME = xterm
 GARVERSION = 258
 CATEGORIES = apps
@@ -62,6 +64,10 @@ CONFIGURE_ARGS_DBG = --enable-trace --enable-warnings
 # of other CSW X11 libs with it ... o_O ...
 CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
 CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+
+# Xt app-default files need to go where Xt looks for them (one of
+# $(prefix)/X11/{etc,share,lib}/X11/app-defaults)
+CONFIGURE_ARGS += --with-app-defaults=$(prefix)/X11/etc/X11/app-defaults
 
 # Make sure to runtime link the same way that we link edited
 # * xterm link edit order is (-L/-R):  X11/lib/, lib/
