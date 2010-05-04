@@ -41,7 +41,11 @@ install-custom:
 		cp $(WORKSRC)/$(P)/* $(TCLDEST)/$(P); \
 		chmod 644 $(TCLDEST)/$(P)/*; \
 	)
-	ginstall -m755 $(WORKSRC)/gorilla $(WORKSRC)/gorilla.tcl $(TCLDEST)
+	ginstall -m755 \
+		$(WORKSRC)/gorilla \
+		$(WORKSRC)/gorilla.tcl \
+		$(WORKSRC)/isaac.tcl
+		$(TCLDEST)
 	mkdir -p $(DESTDIR)$(bindir)
 	echo '#!/bin/sh\nexec $(datadir)/password-gorilla/gorilla' > \
 		$(DESTDIR)$(bindir)/password-gorilla
