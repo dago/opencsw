@@ -1,5 +1,5 @@
 GARNAME = diffutils
-GARVERSION = 2.9
+GARVERSION = 3.0
 CATEGORIES = utils
 
 DESCRIPTION = Diff utilities
@@ -13,7 +13,8 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-DEP_PKGS = CSWggettextrt CSWiconv CSWlibsigsegv
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWlibsigsegv
+BUILD_DEP_PKGS = CSWtextutils CSWggettext CSWiconv CSWlibsigsegv
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
@@ -23,3 +24,12 @@ TEST_TARGET = check
 EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/lib/charset.alias
 
 include gar/category.mk
+
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(prefix)/gnu
+	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);)
+	@$(MAKECOOKIE)
+
+# We need GNU tail for the testsuite
+PATH := /opt/csw/gnu:$(PATH)
+
