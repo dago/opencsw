@@ -1,5 +1,7 @@
+# TODO
+# ! Test app-defaults loading (cf. files/README.CSW)
 GARNAME = xterm
-GARVERSION = 256
+GARVERSION = 258
 CATEGORIES = apps
 
 DESCRIPTION = Terminal emulator for the X Window System
