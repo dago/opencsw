@@ -424,10 +424,11 @@ pre-extract-git-check:
 	@$(MAKECOOKIE)
 
 post-extract-gitsnap: $(EXTRACT_TARGETS)
-	@echo Snapshotting extracted source tree with git...
+	@echo ' ==> Snapshotting extracted source tree with git'
 	@( cd $(WORKSRC); git init; git add .; \
 		git commit -m "Upstream $(GARVERSION)"; \
-		git tag -a -m "Upstream $(GARVERSION)" upstream-$(GARVERSION) )
+		git tag -am "Upstream $(GARVERSION)" upstream-$(GARVERSION); \
+		git checkout -b csw )
 	@$(MAKECOOKIE)
 
 # returns true if extract has completed successfully, false
