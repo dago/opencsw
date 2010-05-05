@@ -379,7 +379,7 @@ EXTRACT_TARGETS = $(or $(EXTRACT_TARGETS-$(MODULATION)),$(EXTRACT_TARGETS-defaul
 
 # We call an additional extract-modulated without resetting any variables so
 # a complete unpacked set goes to the global dir for packaging (like gspec)
-extract: checksum $(COOKIEDIR) pre-extract extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
+extract: checksum $(COOKIEDIR) pre-extract pre-extract-git-check extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
 	@$(DONADA)
 
 extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
@@ -389,7 +389,7 @@ extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
 extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
 		announce-modulation \
-		pre-extract-modulated pre-extract-$(MODULATION) pre-extract-git-check $(EXTRACT_TARGETS) $(if $(filter $(firstword $(MODULATIONS)),$(MODULATION)),post-extract-gitsnap) post-extract-$(MODULATION) post-extract-modulated
+		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) $(if $(filter global,$(MODULATION)),,post-extract-gitsnap) post-extract-$(MODULATION) post-extract-modulated
 	@$(DONADA)
 
 pre-extract-git-check:
