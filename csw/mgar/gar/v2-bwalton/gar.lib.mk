@@ -472,22 +472,17 @@ gz-patch-%:
 	@$(MAKECOOKIE)
 
 # apply normal patches (git format-patch output or old-style diff -r)
-# git should only be used in $(WORKSRC_FIRSTMOD)
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@( if [ -d "$(abspath $(WORKSRC)/.git)" ]; then \
-		if ggrep -q 'Subject:' $(abspath $(DOWNLOADDIR)/$*); then \
-			echo Adding git-style patch...; \
-			cd $(WORKSRC); git am $(abspath $(DOWNLOADDIR)/$*); \
-		else \
-			echo Adding old-style patch...; \
-			$(GARPATCH) < $(DOWNLOADDIR)/$*; \
-			cd $(WORKSRC); git add -A; \
-				git commit -am "old style patch: $*"; \
-		fi; \
-	  else \
+	@( if ggrep -q 'Subject:' $(abspath $(DOWNLOADDIR)/$*); then \
+		echo Adding git-style patch...; \
+		cd $(WORKSRC); git am $(abspath $(DOWNLOADDIR)/$*); \
+	   else \
+		echo Adding old-style patch...; \
 		$(GARPATCH) < $(DOWNLOADDIR)/$*; \
-	  fi )
+		cd $(WORKSRC); git add -A; \
+		git commit -am "old style patch: $*"; \
+	   fi )
 	@$(MAKECOOKIE)
 
 ### PATCH FILE TYPE MAPPINGS ###
