@@ -1,5 +1,5 @@
 GARNAME = atk
-GARVERSION = 1.29.92
+GARVERSION = 1.30.0
 CATEGORIES = lib
 
 DESCRIPTION = An accessibility toolkit for GNOME
@@ -35,5 +35,8 @@ TEST_TARGET = check
 
 PKGFILES_CSWlibatkdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibatkdevel += $(sharedstatedir)/gtk-doc/.*
+
+CHECKPKG_OVERRIDES_CSWlibatkdevel += surplus-dependency|CSWglib2devel
+CHECKPKG_OVERRIDES_CSWlibatkdevel += surplus-dependency|CSWlibatk
 
 include gar/category.mk
