@@ -9,8 +9,9 @@ endef
 
 MASTER_SITES = http://www.maier-komor.de/mtwrite/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-PATCHFILES  = 0001-Create-correct-man-directory.patch
-PATCHFILES += 0002-Calculate-threadcount-instead-of-hardcoding.patch
+PATCHFILES  = 0001-Use-man3-and-skip-intermediate-lib-dir.patch
+PATCHFILES += 0002-Hardcode-library-position.patch
+PATCHFILES += 0003-Fix-path-in-manpage.patch
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
