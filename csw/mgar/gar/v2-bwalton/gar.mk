@@ -449,13 +449,17 @@ PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES) $(PATCHFILES_$(MODULATI
 patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
 
-patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) post-patch-$(MODULATION) post-patch-modulated
+patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) post-patch-gitsnap post-patch-$(MODULATION) post-patch-modulated
 	@$(DONADA)
 
 # returns true if patch has completed successfully, false
 # otherwise
 patch-p:
 	@$(foreach COOKIEFILE,$(PATCH_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
+
+post-patch-gitsnap: $(WORKSRC) $(PATCH_TARGETS)
+	@( cd $(WORKSRC); git tag -am "CSW $(GARVERSION)" csw-$(GARVERSION) )
+	@$(MAKECOOKIE)
 
 # Allow generation of patches from modified work source.
 makepatch: $(FILEDIR)
