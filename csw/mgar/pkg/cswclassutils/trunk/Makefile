@@ -27,18 +27,20 @@ PROTOTYPE_FILES_cas = /usr/sadm/install/scripts/.*
 PROTOTYPE_USER_cas = bin
 PROTOTYPE_GROUP_cas = sys
 
+CHECKPKG_OVERRIDES_CSWcswclassutils += init-file-missing-cswinitsmf-class|/opt/csw/etc/init.d/csw.smf.sample|class=none
+
 include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@rm -rf $(DESTDIR)
-	@ginstall -m 0755 -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -m 0755 -d $(DESTDIR)/opt/csw/etc/init.d
 	@ginstall -m 0755 -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@ginstall -m 0755 -d $(DESTDIR)/usr/sadm/install/scripts
 	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/svc/manifest
 	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/svc/method
 	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/cswclassutils
-	@ginstall -m 0755 $(FILEDIR)/CSW$(GARNAME).csw.smf.sample $(DESTDIR)/etc/opt/csw/init.d/csw.smf.sample
+	@ginstall -m 0755 $(FILEDIR)/CSW$(GARNAME).csw.smf.sample $(DESTDIR)/opt/csw/etc/init.d/csw.smf.sample
 	@ginstall -m 0444 $(FILEDIR)/CSW$(GARNAME).README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
 	@$(foreach CAS,$(CASLIST),ginstall -m 0555 $(FILEDIR)/CSW$(GARNAME).$(CAS) $(DESTDIR)/usr/sadm/install/scripts/$(CAS);)
 	@$(MAKECOOKIE)
