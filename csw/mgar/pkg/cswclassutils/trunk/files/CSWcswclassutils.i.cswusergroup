@@ -170,6 +170,7 @@ create_user() {
   dir="$4"
   shell="$5"
   create="$6" 
+  nopass="$7"
 
   if getent passwd $user > /dev/null; then
     echo User $user already exists
@@ -194,9 +195,12 @@ create_user() {
   else
     exit_error "Failed to add user $user"
   fi
+  [ -n "$nopass" ] && set_user_nologin "$user"
 }
 
 set_user_nologin() {
+  user="$1"
+
   case "`uname -r`" in
   5.8|5.9)
     # for old solaris, we munge the shadow file manually.
@@ -221,7 +225,8 @@ set_user_nologin() {
   ;;
   *)
     # for modern solaris, use the built-in tools
-    if ! passwd -N $user; then
+    passwd -N $user
+    if [ $? -ne 0 ]; then
       exit_error "Setting NP for '$user' failed."
     fi
   ;;
@@ -256,8 +261,8 @@ while read src dest; do
     fi
 
     if [ -n "$user" ]; then
-      create_user "$user" "$group" "$gcos" "$dir" "$shell" "$create"
-      [ -n "$nopass" ] && set_user_nologin "$user"
+      create_user \
+        "$user" "$group" "$gcos" "$dir" "$shell" "$create" "$nopass"
     else
       echo No user to create
     fi
