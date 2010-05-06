@@ -22,7 +22,7 @@ CATALOGNAME_CSWlibatk      = libatk
 CATALOGNAME_CSWlibatkdevel = libatk_devel
 
 SPKG_DESC_CSWlibatk = $(DESCRIPTION)
-SPKG_DESC_CSWlibatk = Developer files for libatk
+SPKG_DESC_CSWlibatkdevel = Developer files for libatk
 
 RUNTIME_DEP_PKGS_CSWlibatk = CSWggettextrt CSWglib2
 RUNTIME_DEP_PKGS_CSWlibatkdevel = CSWlibatk CSWglib2devel
