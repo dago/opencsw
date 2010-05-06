@@ -28,8 +28,9 @@ while read src dest; do
 	  echo "svcname: $svcname; port/proto: $port_proto"
       fi
 
-      /usr/xpg4/bin/grep -q "^$svcname[[:space:]].*$port_proto.*$PKGINST" $svcfile
-      if [ $? -ne 0 ]; then
+      exists=`awk "\\\$1 == \"$svcname\" && \\\$2 == \"$port_proto\" { print \"found\" }" $svcfile`
+
+      if [ "$exists" != "found" ]; then
 	  echo "$svcname		$port_proto	# $PKGINST" >> $svcfile
       fi
   done
