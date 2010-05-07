@@ -5,7 +5,7 @@
  
  if (GD::Image->can('newFromJpeg')) {
 -  compare(test10('frog.jpg'),10);
-+  print "ok ",10," # Skip, see CPAN bug 49053\n";
++  print "ok ",10," # Skip, see CPAN bug 49053 at https://rt.cpan.org/Ticket/Display.html?id=49053\n";
  } else {
    print "ok ",10," # Skip, no JPEG support\n";
  }
