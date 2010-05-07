@@ -9,18 +9,21 @@ echo
 if [ "`cmp "$ETC1/pkgutil.conf" "$ETC1/pkgutil.conf.CSW"`" ]; then
   echo "/opt/csw/etc/pkgutil.conf modified, will not remove it."
 else
+  echo "Removing unmodified $ETC1/pkgutil.conf."
   /bin/rm $ETC1/pkgutil.conf
 fi
 
 if [ "`cmp "$ETC2/pkgutil.conf" "$ETC2/pkgutil.conf.CSW"`" ]; then
   echo "/etc/opt/csw/pkgutil.conf modified, will not remove it."
 else
+  echo "Removing unmodified $ETC2/pkgutil.conf."
   /bin/rm $ETC2/pkgutil.conf
 fi
 
 if [ "`cmp "$VAR/admin" "$VAR/admin.CSW"`" ]; then
   echo "/var/opt/csw/pkgutil/admin modified, will not remove it."
 else
+  echo "Removing unmodified $VAR/admin."
   /bin/rm $VAR/admin
 fi
 
