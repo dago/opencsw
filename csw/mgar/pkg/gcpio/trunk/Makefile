@@ -1,5 +1,5 @@
 GARNAME = cpio
-GARVERSION = 2.11
+GARVERSION = 2.10
 CATEGORIES = utils
 
 DESCRIPTION = GNU cpio
@@ -20,13 +20,15 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.gnu.org/software/cpio/
 
-RUNTIME_DEP_PKGS =
+DEP_PKGS = CSWggettextrt
+
+EXTRA_LINKER_FLAGS = -lnsl
 
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
 TEST_SCRIPTS =
 
-#EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
+EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
 include gar/category.mk
 
