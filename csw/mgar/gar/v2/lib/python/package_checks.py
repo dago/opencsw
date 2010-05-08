@@ -169,7 +169,7 @@ def CheckSmfIntegration(pkg_data, error_mgr, logger, messenger):
 
 
 def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
-  """Second versionof the library checking code.
+  """Second version of the library checking code.
 
   1. Collect all the data from the FS:
      {"<basename>": {"/path/1": ["CSWfoo1"], "/path/2": ["CSWfoo2"]}}
@@ -607,7 +607,9 @@ def CheckRpath(pkg_data, error_mgr, logger, messenger):
 
     for bad in sorted(not_matching):
       logger.debug("Bad rpath: %s", bad)
-      error_mgr.ReportError("bad-rpath-entry", bad)
+      error_mgr.ReportError(
+          "bad-rpath-entry",
+          "%s %s" % (bad, binary_info["path"]))
 
 
 def DisabledCheckForMissingSymbols(pkgs_data, debug):
@@ -673,6 +675,12 @@ def DisabledCheckForMissingSymbolsDumb(pkg_data, error_mgr, logger, messenger):
             "relocation bound to a symbol with STV_PROTECTED visibility"
             % (ldd_elem["symbol"], ldd_elem["path"]))
 
+
+def SetCheckFileCollissions(pkgs_data, error_mgr, logger, messenger):
+  for pkg_data in pkgs_data:
+    pass
+
+
 def CheckPythonPackageName(pkg_data, error_mgr, logger, messenger):
   """Checks for CSWpy-* and py_* package names."""
   pyfile_re = re.compile(r"/opt/csw/lib/python.*/.*")
@@ -698,4 +706,3 @@ def CheckPythonPackageName(pkg_data, error_mgr, logger, messenger):
         "For example, %s. "
         "However, the catalogname doesn't start with 'py_'."
         % repr(example_py_file))
-

@@ -11,6 +11,17 @@ DEPRECATED_LIBRARY_LOCATIONS = (
      "Please use /opt/csw/mysql5/..."),
 )
 
+DLOPEN_LIB_LOCATIONS = (
+    r'^opt/csw/lib/python/site-packages.*',
+)
+
+def IsDlopenLib(binary_path, locations=DLOPEN_LIB_LOCATIONS):
+  for location in locations:
+    location_re = re.compile(location)
+    if location_re.match(binary_path):
+      return True
+  return False
+
 def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
   pkgname = pkg_data["basic_stats"]["pkgname"]
   logger.debug("Package %s", pkgname)
@@ -47,8 +58,11 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
         orphan_sonames.append((soname, binary_info["path"]))
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
+    if IsDlopenLib(binary_path):
+      # dlopen binaries don't need RPATH and can't be analyzed this way.
+      continue
     error_mgr.ReportError(
-        pkgname, "soname-not-found", soname,
+        pkgname, "soname-not-found",
         "%s is needed by %s" % (soname, binary_path))
   # TODO: Report orphan sonames here
   return required_deps
