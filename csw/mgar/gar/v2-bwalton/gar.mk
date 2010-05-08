@@ -144,6 +144,7 @@ endef
 define _modulate_do
 $(call _modulate_target,extract,$(2),$(4))
 $(call _modulate_target,patch,$(2),$(4))
+$(call _modulate_target_nocookie,makepatch,$(2),$(4))
 $(call _modulate_target,configure,$(2),$(4))
 $(call _modulate_target_nocookie,reset-configure,$(2),$(4))
 $(call _modulate_target,build,$(2),$(4))
@@ -458,24 +459,32 @@ patch-p:
 	@$(foreach COOKIEFILE,$(PATCH_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
 post-patch-gitsnap: $(WORKSRC) $(PATCH_TARGETS)
+	@echo "Tagging top of current csw patch stack..."
 	@( cd $(WORKSRC); git tag -am "CSW $(GARVERSION)" csw-$(GARVERSION) )
 	@$(MAKECOOKIE)
 
+makepatch: $(addprefix patch-,$(MODULATIONS)) $(addprefix makepatch-,$(MODULATIONS))
+	@$(DONADA)
+
 # Allow generation of patches from modified work source.
-makepatch: $(FILEDIR)
-	@echo Makepatch: Checking for changes in work tree...
-	@( cd $(WORKSRC_FIRSTMOD); \
+makepatch-modulated: $(FILEDIR)
+	@echo " ==> Makepatch: Looking for changes in modulation $(MODULATION)"
+	@( cd $(WORKSRC); \
 		git add -A; \
 		git diff --cached --quiet; \
-		if test $$? -eq 0; then echo "No changes."; exit 1; fi )
-	@echo Makepatch: Capturing changes...
-	@(cd $(WORKSRC_FIRSTMOD); \
-		git commit; \
-		git format-patch HEAD~1; \
-		echo Add the following to your recipe and then; \
-		echo rerun: gmake makesums; \
-		echo PATCHFILES +=  0001*; \
-		mv 0001* $(abspath $(FILEDIR)) )
+		if test $$? -eq 0; then \
+			echo "No changes."; \
+		else \
+			echo "Capturing changes..."; \
+			git commit $(GIT_COMMIT_OPTS) && \
+			( git format-patch csw-$(GARVERSION); \
+			echo Add the following to your recipe and then; \
+			echo rerun: gmake makesums; \
+			echo PATCHFILES +=  0001*; \
+			echo "(or maybe PATCHFILES_$(MODULATION) ??)"; \
+			mv 0001* $(abspath $(FILEDIR)); ) \
+		fi )
+
 
 # XXX: Allow patching of pristine sources separate from ISA directories
 # XXX: Use makepatch on global/

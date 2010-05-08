@@ -50,6 +50,10 @@ ELISP_DIRS ?= $(datadir)/emacs/site-lisp $(EXTRA_ELISP_DIRS)
 GIT_PROXY_SCRIPT ?= $(abspath $(GARBIN))/gitproxy
 GIT_DEFAULT_TRACK = +refs/heads/master:refs/remotes/origin/master
 
+# if a user always wants --signoff, for example.  used in makepatch
+# by default, the -v will show the diff being committed...
+GIT_COMMIT_OPTS ?= -v
+
 # For parallel builds
 PARALLELMODULATIONS ?= 
 MULTITAIL ?= /opt/csw/bin/multitail

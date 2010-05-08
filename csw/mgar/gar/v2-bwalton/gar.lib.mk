@@ -475,7 +475,6 @@ gz-patch-%:
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@( if ggrep -q 'Subject:' $(abspath $(DOWNLOADDIR)/$*); then \
-		echo Adding git-style patch...; \
 		cd $(WORKSRC); git am $(abspath $(DOWNLOADDIR)/$*); \
 	   else \
 		echo Adding old-style patch...; \
