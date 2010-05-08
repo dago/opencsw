@@ -437,16 +437,21 @@ class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
 
 
 class TestCheckLibrariesDlopenLibs_1(CheckpkgUnitTestHelper, unittest.TestCase):
+  """For dlopen-style shared libraries, libraries from /opt/csw/lib should be
+  counted as dependencies.  It's only a heuristic though."""
   FUNCTION_NAME = 'SetCheckLibraries'
   def CheckpkgTest(self):
     binaries_dump_info = self.pkg_data["binaries_dump_info"]
     binaries_dump_info[0]["runpath"] = []
-    binaries_dump_info[0]["needed sonames"] = ["libnotfound.so"]
+    binaries_dump_info[0]["needed sonames"] = ["libbar.so"]
     binaries_dump_info[0]["path"] = 'opt/csw/lib/python/site-packages/foo.so'
     self.pkg_data["depends"] = tuple()
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
-    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libnotfound.so').AndReturn({
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libbar.so').AndReturn({
+       u'/opt/csw/lib': [u'CSWlibbar'],
+       u'/opt/csw/lib/sparcv9': [u'CSWlibbar'],
     })
+    self.error_mgr_mock.ReportError('CSWrsync', 'missing-dependency', u'CSWlibbar')
     self.pkg_data = [self.pkg_data]
 
 
