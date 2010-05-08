@@ -29,6 +29,8 @@ CATALOGNAME_CSWpy-libmagic = py_libmagic
 RUNTIME_DEP_PKGS_CSWfile += CSWlibmagic
 RUNTIME_DEP_PKGS_CSWfile += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibmagic += CSWzlib
+RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic
+RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
 
 # The "file" util is used during stripbin. As the newly build binary
 # requires libmagic which is not installed yet we must not use the
