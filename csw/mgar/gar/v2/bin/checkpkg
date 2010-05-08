@@ -58,10 +58,6 @@ readonly GREEN RED BOLD COLOR_RESET
 readonly selfpath="$0"
 readonly selfargs="$@"
 
-# always print out a warning message. (to stderr)
-# exit script, if quit_on_warn set
-
-
 cleanup(){
 	if [[ -d "$EXTRACTDIR" ]] ; then
 		rm -rf $EXTRACTDIR
@@ -81,13 +77,6 @@ cleanupset(){
     if [ "`echo $SETINF*`" != "$SETINF*" ]; then
 	rm $SETINF*
     fi
-}
-warnmsg(){
-	print WARNING: $* >/dev/fd/2
-	if [[ "$quit_on_warn" != "" ]] ; then
-		cleanup
-		exit 1
-	fi
 }
 
 # Print error message, and quit program.
@@ -117,9 +106,13 @@ SAVED_TAGS_FILE=error-tags.txt
 display_help=0
 SKIP_STATS_COLLECTION=0
 MD5_SUMS_CATALOG_FILE=""
+INSTALL_CONTENTS_FILES="/var/sadm/install/contents"
 
-while getopts hsdNM:o: opt; do
+while getopts hsdNM:o:c: opt; do
 	case "${opt}" in
+	  c)
+	    INSTALL_CONTENTS_FILES="${INSTALL_CONTENTS_FILES} ${OPTARG}"
+	    ;;
 	  s)
       SAVE_TAGS=1
       ;;
@@ -128,9 +121,6 @@ while getopts hsdNM:o: opt; do
       ;;
     d)
       DEBUG=1
-      ;;
-    e)
-      quit_on_warn=1
       ;;
     h)
       display_help=1
@@ -148,15 +138,22 @@ while getopts hsdNM:o: opt; do
 done
 shift $(( $OPTIND -1 ))
 
-readonly SAVE_TAGS SAVED_TAGS_FILE MD5_SUMS_CATALOG_FILE
+readonly INSTALL_CONTENTS_FILES
+readonly MD5_SUMS_CATALOG_FILE
+readonly SAVED_TAGS_FILE
+readonly SAVE_TAGS
+readonly SKIP_STATS_COLLECTION
 
 if [[ "${display_help}" -eq 1 ]] ; then
-	print 'Usage: checkpkg [options] pkg1 [pkg2 ....]'
-	print 'Options:'
-	print '   -s  save error tags on disk'
-	print '   -d  display debug messages'
-	print '   -e  exit on warnings (soon to be obsolete)'
-	exit 0
+  print 'Usage: checkpkg [options] pkg1 [pkg2 ....]'
+  print 'Options:'
+  print '   -c <file>  use an additional install/contents file'
+  print '   -s         save error tags on disk'
+  print '   -o <file>  save tag output to file'
+  print '   -d         display debug messages'
+  print '   -N         skip statistics collection'
+  print '   -M <file>  use package md5sums from a catalog file'
+  exit 0
 fi
 
 if [[ "${SAVE_TAGS}" -eq 1 ]]; then

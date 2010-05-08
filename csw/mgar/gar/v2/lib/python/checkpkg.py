@@ -113,7 +113,7 @@ OK: $repr($name) module found no problems.
 #end if
 #if $messages
 #for $msg in $messages
-$textwrap.fill($msg, 78, initial_indent="# ", subsequent_indent="# ")
+$textwrap.fill($msg, 78, initial_indent=" * ", subsequent_indent="   ")
 #end for
 #end if
 #if $gar_lines
@@ -206,7 +206,7 @@ class SystemPkgmap(object):
   CHECKPKG_DIR = ".checkpkg"
   SQLITE3_DBNAME_TMPL = "var-sadm-install-contents-cache-%s"
 
-  def __init__(self):
+  def __init__(self, system_pkgmap_files=None):
     """There is no need to re-parse it each time.
 
     Read it slowly the first time and cache it for later."""
@@ -218,6 +218,10 @@ class SystemPkgmap(object):
     self.file_mtime = None
     self.cache_mtime = None
     self.initialized = False
+    if not system_pkgmap_files:
+      self.system_pkgmap_files = [SYSTEM_PKGMAP]
+    else:
+      self.system_pkgmap_files = system_pkgmap_files
 
   def _LazyInitializeDatabase(self):
     if not self.initialized:
@@ -236,7 +240,7 @@ class SystemPkgmap(object):
         self.PurgeDatabase()
         self.PopulateDatabase()
     else:
-      print "Building a cache of %s." % SYSTEM_PKGMAP
+      print "Building a cache of %s." % self.system_pkgmap_files
       print "The cache will be kept in %s." % self.db_path
       if not os.path.exists(self.checkpkg_dir):
         logging.debug("Creating %s", self.checkpkg_dir)
@@ -279,15 +283,24 @@ class SystemPkgmap(object):
     egrep -v 'SUNWbcp|SUNWowbcp|SUNWucb' /var/sadm/install/contents |
         fgrep -f $EXTRACTDIR/liblist >$EXTRACTDIR/shortcatalog
     """
-    contents_length = os.stat(SYSTEM_PKGMAP).st_size
+    for pkgmap_path in self.system_pkgmap_files:
+      self._ProcessSystemPkgmap(pkgmap_path)
+    self._CreateDbIndex()
+    self.PopulatePackagesTable()
+    self.SetDatabaseMtime()
+    self.SetDatabaseSchemaVersion()
+    self.conn.commit()
+
+  def _ProcessSystemPkgmap(self, pkgmap_path):
+    contents_length = os.stat(pkgmap_path).st_size
     estimated_lines = contents_length / INSTALL_CONTENTS_AVG_LINE_LENGTH
-    system_pkgmap_fd = open(SYSTEM_PKGMAP, "r")
+    system_pkgmap_fd = open(pkgmap_path, "r")
     stop_re = re.compile("(%s)" % "|".join(self.STOP_PKGS))
     # Creating a data structure:
     # soname - {<path1>: <line1>, <path2>: <line2>, ...}
     logging.debug("Building sqlite3 cache db of the %s file",
-                  SYSTEM_PKGMAP)
-    print "Processing %s" % SYSTEM_PKGMAP
+                  pkgmap_path)
+    print "Processing %s" % pkgmap_path
     c = self.conn.cursor()
     count = itertools.count()
     sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
@@ -304,13 +317,12 @@ class SystemPkgmap(object):
       pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
       c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line.strip()))
     print "\rAll lines of %s were processed." % SYSTEM_PKGMAP
+
+  def _CreateDbIndex(self):
     print "Creating the main database index."
     sql = "CREATE INDEX basename_idx ON systempkgmap(basename);"
+    c = self.conn.cursor()
     c.execute(sql)
-    self.PopulatePackagesTable()
-    self.SetDatabaseMtime()
-    self.SetDatabaseSchemaVersion()
-    self.conn.commit()
 
   def _ParsePkginfoLine(self, line):
     fields = re.split(WS_RE, line)
