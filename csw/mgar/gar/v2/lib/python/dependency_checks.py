@@ -15,13 +15,6 @@ DLOPEN_LIB_LOCATIONS = (
     r'^opt/csw/lib/python/site-packages.*',
 )
 
-def IsDlopenLib(binary_path, locations=DLOPEN_LIB_LOCATIONS):
-  for location in locations:
-    location_re = re.compile(location)
-    if location_re.match(binary_path):
-      return True
-  return False
-
 def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
   pkgname = pkg_data["basic_stats"]["pkgname"]
   logger.debug("Package %s", pkgname)
@@ -35,12 +28,6 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
       logger.debug("%s @ %s: looking for %s in %s",
                    soname, binary_info["path"], binary_info["runpath"], path_list)
       runpath_list = binary_info["runpath"] + checkpkg.SYS_DEFAULT_RUNPATH
-      if IsDlopenLib(binary_info["path"]):
-        # This is a heuristic.  Libraries in certain paths lack the RPATH setting,
-        # but it's not a problem since they are dlopened.
-        for runpath in ("/opt/csw/lib", "/opt/csw/lib/64"):
-          if runpath not in runpath_list:
-            runpath_list.append(runpath)
       for runpath in runpath_list:
         resolved_path = checkpkg.ResolveSoname(runpath, soname, isalist, path_list)
         if resolved_path:

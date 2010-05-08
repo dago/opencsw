@@ -451,7 +451,9 @@ class TestCheckLibrariesDlopenLibs_1(CheckpkgUnitTestHelper, unittest.TestCase):
        u'/opt/csw/lib': [u'CSWlibbar'],
        u'/opt/csw/lib/sparcv9': [u'CSWlibbar'],
     })
-    self.error_mgr_mock.ReportError('CSWrsync', 'missing-dependency', u'CSWlibbar')
+    self.error_mgr_mock.ReportError('CSWrsync', 'soname-not-found',
+                                    'libbar.so is needed by '
+                                    'opt/csw/lib/python/site-packages/foo.so')
     self.pkg_data = [self.pkg_data]
 
 
