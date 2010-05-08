@@ -18,15 +18,15 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # These flags are not understood by Sun Studio
 CONFIGURE_ARGS += --disable-warnings
 TEST_TARGET = check
-PACKAGES = CSWfile CSWlibmagic CSWpy-magic
+PATCHFILES = 0001-libtool-dir-used-for-linking.patch
+PACKAGES = CSWfile CSWlibmagic CSWpy-libmagic
 PKGFILES_CSWlibmagic = $(PKGFILES_RT)
-PKGFILES_CSWpy-magic = later
+PKGFILES_CSWpy-libmagic = /opt/csw/lib/python.*
 SPKG_DESC_CSWfile = A file type guesser
 SPKG_DESC_CSWlibmagic = The library behind file(1)
-SPKG_DESC_CSWpy-magic = Python wrapper for libmagic
-CATALOGNAME_CSWpy-magic = py_magic
+SPKG_DESC_CSWpy-libmagic = Python extension for libmagic
+CATALOGNAME_CSWpy-libmagic = py_libmagic
 RUNTIME_DEP_PKGS_CSWfile += CSWlibmagic
-ARCHALL_CSWpy-magic = 1
 RUNTIME_DEP_PKGS_CSWfile += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibmagic += CSWzlib
 
@@ -35,14 +35,19 @@ RUNTIME_DEP_PKGS_CSWlibmagic += CSWzlib
 # newly built "file".
 IGNORE_DESTDIR = 1
 
+# Doesn't hurt to have this on.
+DISTUTILS_DEBUG = 1
+export DISTUTILS_DEBUG
+
 include gar/category.mk
 
-post-build-modulated-disabled:
+post-build-modulated:
 	# This fails for a mysterious reason.  Can't find libmagic (-lmagic).
+	# (cd $(WORKSRC)/python && python setup.py build --compiler=unix)
 	(cd $(WORKSRC)/python && python setup.py build)
 	@$(MAKECOOKIE)
 
 post-install-modulated:
 	(cd $(WORKSRC)/python && \
-		python setup.py install)
+		python setup.py install --root=$(DESTDIR) --prefix=$(prefix))
 	@$(MAKECOOKIE)
