@@ -34,7 +34,14 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
       path_list = path_and_pkg_by_soname[soname].keys()
       logger.debug("%s @ %s: looking for %s in %s",
                    soname, binary_info["path"], binary_info["runpath"], path_list)
-      for runpath in binary_info["runpath"] + checkpkg.SYS_DEFAULT_RUNPATH:
+      runpath_list = binary_info["runpath"] + checkpkg.SYS_DEFAULT_RUNPATH
+      if IsDlopenLib(binary_info["path"]):
+        # This is a heuristic.  Libraries in certain paths lack the RPATH setting,
+        # but it's not a problem since they are dlopened.
+        for runpath in ("/opt/csw/lib", "/opt/csw/lib/64"):
+          if runpath not in runpath_list:
+            runpath_list.append(runpath)
+      for runpath in runpath_list:
         resolved_path = checkpkg.ResolveSoname(runpath, soname, isalist, path_list)
         if resolved_path:
           logger.debug("%s needed by %s:",
@@ -58,9 +65,6 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
         orphan_sonames.append((soname, binary_info["path"]))
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
-    if IsDlopenLib(binary_path):
-      # dlopen binaries don't need RPATH and can't be analyzed this way.
-      continue
     error_mgr.ReportError(
         pkgname, "soname-not-found",
         "%s is needed by %s" % (soname, binary_path))
