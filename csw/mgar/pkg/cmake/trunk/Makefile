@@ -16,13 +16,14 @@ RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 SPKG_SOURCEURL = http://cmake.org/
 MASTER_SITES = http://cmake.org/files/v$(RELVER)/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+LICENSE = Copyright.txt
 
 PACKAGES = CSWcmake
 CATALOGNAME_CSWcmake = cmake
 SPKG_DESC_CSWcmake = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS_CSWcmake  = CSWcurlrt CSWexpat CSWlibidn CSWoldaprt
-RUNTIME_DEP_PKGS_CSWcmake += CSWosslrt CSWxmlrpc-c CSWzlib 
+RUNTIME_DEP_PKGS_CSWcmake  = CSWcurlrt CSWexpat
+RUNTIME_DEP_PKGS_CSWcmake += CSWzlib 
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
