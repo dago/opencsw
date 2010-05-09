@@ -48,7 +48,7 @@ CATALOGNAME_CSWsvn         = subversion
 CATALOGNAME_CSWsvn-contrib = subversion_contrib
 CATALOGNAME_CSWsvn-tools   = subversion_tools
 RUNTIME_DEP_PKGS_CSWsvn       = CSWapache2rt
-RUNTIME_DEP_PKGS_CSWsvn      += CSWbdb47
+RUNTIME_DEP_PKGS_CSWsvn      += CSWbdb48
 RUNTIME_DEP_PKGS_CSWsvn      += CSWexpat
 RUNTIME_DEP_PKGS_CSWsvn      += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWiconv
@@ -150,12 +150,11 @@ PATCHFILES += subversion161.diff
 PATCHFILES += 0001-make-subversion-sysconfigdir-as-it-should-be-for-csw.patch
 
 SVNLIB     = $(prefix)/lib/svn
-JDK        = /usr/jdk1.5.0_15
+JAVA_HOME  = /usr/jdk1.6.0_20
 
-EXTRA_INC  = $(JDK)/include
 EXTRA_INC += $(prefix)/apache2/include
 
-EXTRA_LIB  = /opt/csw/bdb47/lib
+EXTRA_LIB  = /opt/csw/bdb48/lib
 EXTRA_LIB += /opt/csw/apache2/lib
 EXTRA_LIB += $(SVNLIB)
 EXTRA_LINKER_FLAGS = -lintl -liconv
@@ -180,12 +179,12 @@ NODIRPATHS      = --libdir --libexecdir
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
 CONFIGURE_ARGS += --disable-mod-activation
 CONFIGURE_ARGS += --disable-static
-CONFIGURE_ARGS += --with-berkeley-db=db.h:/opt/csw/bdb47/include:/opt/csw/bdb47/lib:db
+CONFIGURE_ARGS += --with-berkeley-db=db.h:/opt/csw/bdb48/include:/opt/csw/bdb48/lib:db
 CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
-CONFIGURE_ARGS += --with-jdk=$(JDK)
+CONFIGURE_ARGS += --with-jdk=$(JAVA_HOME)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
