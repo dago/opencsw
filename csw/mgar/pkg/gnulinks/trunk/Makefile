@@ -7,6 +7,7 @@ VENDOR_URL = http://opencsw.org
 GLINKPKGS = CSWdiffutils CSWggettext CSWggettextrt CSWbison CSWbinutils
 GLINKPKGS += CSWgawk CSWgsed CSWggetopt CSWfindutils
 GLINKPKGS += CSWgmake CSWgpatch CSWgm4 CSWgwhois CSWgtar
+GLINKPKGS += CSWgfile CSWshutils CSWtextutils
 BUILD_DEP_PKGS = $(GLINKPKGS) CSWpkgutil CSWbash
 
 DESCRIPTION = Creates native symlinks for GNU tools in /opt/csw/gnu
