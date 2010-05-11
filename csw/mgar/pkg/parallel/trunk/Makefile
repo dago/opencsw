@@ -24,6 +24,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LICENSE = gpl-3.0.txt
 
+VENDOR_URL = http://www.gnu.org/software/parallel/
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
