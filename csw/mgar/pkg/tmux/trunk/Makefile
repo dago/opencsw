@@ -7,6 +7,7 @@ DESCRIPTION = Terminal Multiplexer
 SF_PROJ = $(GARNAME)
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = 0000-stdint.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
