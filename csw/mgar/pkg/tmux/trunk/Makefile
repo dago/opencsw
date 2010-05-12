@@ -7,16 +7,25 @@ DESCRIPTION = Terminal Multiplexer
 SF_PROJ = $(GARNAME)
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES = 0000-stdint.patch
+DISTFILES += COPYING
+PATCHFILES  = 0001-old-style-patch-0000-stdint.patch
+PATCHFILES += 0002-Fix-one-more-inttypes.h.patch
+PATCHFILES += 0003-Add-definitions-for-CMSG_SPACE.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS_CSWtmux += CSWlibevent
-BUILDDEPS = libevent_devel
+RUNTIME_DEP_PKGS = CSWlibevent
+BUILD_DEP_PKGS = CSWlibevent-devel
 
 CONFIGURE_ARGS = 
-INSTALL_ARGS = PREFIX=/opt/csw INSTALLDIR="/opt/csw/bin/ginstall -d" INSTALLBIN="/opt/csw/bin/ginstall -m 555" INSTALLMAN="/opt/csw/bin/ginstall -m 444"
+
+EXTRA_CPPFLAGS = -D__inline=inline
+
+INSTALL_ARGS  = PREFIX=/opt/csw
+INSTALL_ARGS += INSTALLDIR="/opt/csw/bin/ginstall -d"
+INSTALL_ARGS += INSTALLBIN="/opt/csw/bin/ginstall -m 555"
+INSTALL_ARGS += INSTALLMAN="/opt/csw/bin/ginstall -m 444"
 
 SKIPTEST = 1
 

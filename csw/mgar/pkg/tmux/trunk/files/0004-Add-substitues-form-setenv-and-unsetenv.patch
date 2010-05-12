@@ -1,0 +1,41 @@
+From 245b536b83117992d5cb13b766d592497b448a7c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 12 May 2010 15:04:26 +0200
+Subject: [PATCH 4/4] Add substitues form setenv and unsetenv
+
+---
+ window.c |   18 ++++++++++++++++++
+ 1 files changed, 18 insertions(+), 0 deletions(-)
+
+diff --git a/window.c b/window.c
+index a8668db..d28efc9 100644
+--- a/window.c
++++ b/window.c
+@@ -32,6 +32,24 @@
+ 
+ #include "tmux.h"
+ 
++#ifdef __sun
++void setenv(char *n, char *v, int x) {
++  char buf[256];
++  snprintf(buf,sizeof(buf),"%s=%s",n,v);
++  putenv(buf);
++}
++
++void unsetenv(char *env_name) {
++  extern char **environ;
++  char **cc;
++  int l;
++  l=strlen(env_name);
++  for (cc=environ;*cc!=NULL;cc++) {
++    if (strncmp(env_name,*cc,l)==0 && ((*cc)[l]=='='||(*cc)[l]=='\0')) break;
++  } for (; *cc != NULL; cc++) *cc=cc[1];
++}
++#endif
++
+ /*
+  * Each window is attached to a number of panes, each of which is a pty. This
+  * file contains code to handle them.
+-- 
+1.7.0
+
