@@ -29,6 +29,9 @@ RUNTIME_DEP_PKGS_CSWnetsnmp += CSWosslrt CSWtcpwrap CSWperl
 RUNTIME_DEP_PKGS_CSWnetsnmp-py += CSWnetsnmp CSWpython
 PKGFILES_CSWnetsnmp-py = $(libdir)/python.*
 
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=12694
 UPSTREAM_USE_SF = 1
@@ -43,7 +46,8 @@ CONFIGURE_ARGS += --with-sys-contact=unknown
 CONFIGURE_ARGS += --with-sys-location=unknown
 CONFIGURE_ARGS += --with-logfile=/var/log/snmpd.log
 CONFIGURE_ARGS += --with-persistent-directory=/opt/csw/var/net-snmp
-CONFIGURE_ARGS += '--with-mib-modules=ucd-snmp/diskio agentx mibII/mta_sendmail' 
+CONFIGURE_ARGS += '--with-mib-modules=ucd-snmp/diskio agentx mibII/mta_sendmail if-mib' 
+CONFIGURE_ARGS += '--enable-mfd-rewrites' 
 CONFIGURE_ARGS += '--with-libwrap=/opt/csw/lib' 
 CONFIGURE_ARGS += '--enable-ipv6' 
 CONFIGURE_ARGS += '--with-transports=UDP TCP Unix' 
@@ -59,7 +63,8 @@ PATCHFILES += Makefile.in.diff
 #LD_OPTIONS =
 #EXTRA_COMMON_EXPORTS = LD_OPTIONS
 
-EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
+EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
+EXTRA_MERGE_EXCLUDE_FILES += .*/perllocal.pod
 
 #TEST_TARGET =
 
