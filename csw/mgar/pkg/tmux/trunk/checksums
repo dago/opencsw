@@ -1,4 +1,5 @@
 eb2b06cbb9c101e1687caf727e747c68  0001-old-style-patch-0000-stdint.patch
 3a7d0d4c2610a3c0fb418d1db40be856  0002-Fix-one-more-inttypes.h.patch
 53b2c368d0e3746fe4c36c4e1a1bc81b  0003-Add-definitions-for-CMSG_SPACE.patch
+8ad333c4590c5ed45f1b4d0218ede7a7  COPYING
 748fbe7bb5f86812e19bd6005ff21a5a  tmux-1.2.tar.gz
