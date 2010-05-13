@@ -203,16 +203,10 @@ CONFIGURE_ARGS += --with-serf=$(prefix)
 #     tail -f $(WORKSRC)/tests.log | grep merge_tests.py
 TEST_TARGET  = check
 
-# Overrides
-CHECKPKG_OVERRIDES_CSWap2svn = symbol-not-found
-CHECKPKG_OVERRIDES_CSWrbsvn = symbol-not-found
-CHECKPKG_OVERRIDES_CSWsvn = symbol-not-found|libsvn_ra-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWpythonsvn = symbol-not-found
-CHECKPKG_OVERRIDES_CSWpmsvn = symbol-not-found
-
 include gar/category.mk
 
-BINDING_LANGS   = java perl python ruby
+#BINDING_LANGS   = java perl python ruby
+BINDING_LANGS   = java perl python 
 BINDING_TARGETS = $(addprefix svn-,$(BINDING_LANGS))
 
 PI_DEPENDS += copy-apache-templates
