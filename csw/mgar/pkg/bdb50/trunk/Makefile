@@ -83,7 +83,9 @@ include gar/category.mk
 LIBS += -lnsl
 export LIBS
 
-PATH := /usr/jdk1.6.0_07/bin:$(PATH)
+JAVA_HOME := /usr/jdk1.6.0_20
+export JAVA_HOME
+PATH := $(JAVA_HOME)/bin:$(PATH)
 export PATH
 
 configure-dist:
