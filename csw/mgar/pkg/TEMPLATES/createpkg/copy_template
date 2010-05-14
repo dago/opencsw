@@ -1,0 +1,55 @@
+#!/bin/ksh -p
+
+# This script is meant to be called with a current directory of
+# the top level. Or basically, whereever you want the template stuff
+# to be copied INTO.
+
+SVN="echo FAKEsvn "
+SVN="svn"
+
+function usage {
+	print Usage: $0 new-software-name
+	print This script creates a new subdir in subversion for the named
+	print software, and populates it with a barebones set of templates
+	print It will create it under your current directory
+
+	exit 1
+}
+
+case $1 in
+	""|-*)
+		usage
+	;;
+esac
+
+
+template_dir=`dirname $0`
+DESTDIR=$1/trunk
+
+
+mkdir -p $DESTDIR
+
+$SVN info >/dev/null
+if [[ $? -ne 0 ]] ; then
+	print ERROR: expected to be within subversion tree somewhere
+	print cannot continue
+	exit 1
+fi
+
+$SVN add $DESTDIR 
+cp $template_dir/Makefile* $DESTDIR
+cp $template_dir/prototype* $DESTDIR
+$template_dir/generate_pkginfo >$DESTDIR/pkginfo
+
+print ""
+print Created directory $1 locally, and in subversion
+print Things you still need to do:
+print ""
+print "  * Edit the pkginfo file fully"
+print "  * Create an appropriate copyright file"
+print "  * Choose ONE of the Makefiles, and remove the other"
+print "  * Edit the Makefile to have any required extra flags, etc"
+print "  * Fill in the rest of the prototype file"
+
+print ""
+print " (and dont forget to check everything in when you are done!)"
