@@ -1,0 +1,311 @@
+#!/bin/ksh -p
+
+# ksh high-level implentation of linux style "alternatives".
+# Author: Philip Brown, phil@bolthole.com, 2010
+# @(#) alternatives 1.6@(#)
+
+PRIORITIESDIR=/opt/csw/share/alternatives 
+MANUALDIR=/etc/opt/etc/alternatives  #manual override location
+AWK=nawk
+DEBUG=${DEBUG:-/bin/true}
+
+function usage {
+	prog=`basename $0`
+	print "Usage for $prog :"
+	print "  $prog --display {name}"
+	print "  $prog --auto {name}"
+	print "  $prog --set {name} {/full/path}"
+	# --config interactive chooser, not implemented at this time
+	print "  "
+	print " The following are provided for compatibility, but do not work"
+	print " in exactly the same way as linux variants"
+	print " See usage function code for more information."
+	print "  $prog --install {/full/path/name} {name} {#priority}"
+	print "  $prog --remove {name} {/full/path}"
+
+# I dont want to bloat up the usage message, so here's a little more doc
+#  
+# This program is a lightweight 'workalike' to the linux alternatives prog.
+# It is written with OpenCSW in mind, and is specificaly tailored for
+# our needs. You may find it useful in other fields, but be aware that
+# its primary purpose is to be simple, and flexible. NOT an exact clone.
+# Part of its flexibility comes from the fact that it is configuration-file
+# driven, NOT internal-database-driven
+#   The --install and --remove flags, while (hopefully) provided as
+# a convenience, do NOT install, or remove, anything.
+# Priorities are driven by configuration files delivered by our packages.
+# They get delivered to /opt/csw, which keeps things NFS friendly.
+# Things only get "installed" or "removed" on a per-SVR4 package basis
+# normally. (although technically, it would be possible to drop in your
+# own config file in either $PRIORITIESDIR or $MANUALDIR, and then
+# have things integrate with your own custom non-packaged software).
+#
+# There is NO ERROR CHECKING, or saving state of prior actions,
+# other than the --set comand. 
+# It is up to individual implementers to make sure that everyone providing
+#  an alternative for {name}, all have the same "slaves"
+#     (when I actualy support "slave" links, anyway)
+
+}
+
+
+# Usage: find_highest_prio {name}
+#   search through all conf files for {name}
+# print out the highest priority match. or, potentially nothing.
+function find_highest_prio {
+	if [[ "$1" == "" ]] ; then
+		print INTERNAL ERROR: find_highest_prio called with no args
+		return
+	fi
+	# I hate using cat, but its the only way to avoid nawk throwing a fit.
+	cat $PRIORITIESDIR/* $MANUALDIR/* 2>/dev/null |
+	$AWK '	BEGIN {save=""}
+		$2 == "'$1'" {if($4 > highest){
+				save=$0;
+				highest=$4
+				}
+		}
+		
+		END {print save}
+	'
+}
+
+if [[ $# -lt 1 ]] ; then
+	print error: need an argument
+	usage
+	exit 1
+fi
+
+
+############################################################
+# Start of subroutine area
+
+# Usage: print_alternatives shortname
+# This prints only the INSTALLED alternatives lines, not manual settings
+# Prints in priority-sorted order
+function print_alternatives {
+	if [[ $# != 1 ]] ; then print ERROR print_alternatives needs an arg; fi
+	cat $PRIORITIESDIR/* 2>/dev/null|
+		nawk '$2 == "'$1'" {print}' | sort -nr +3
+}
+# prints ONLY the manually set alternatives line, if present
+function print_manual_set {
+	if [[ $# != 1 ]] ; then print ERROR print_manual_set needs an arg; fi
+	
+	if [[ -f $MANUALDIR/$1 ]] ; then
+		nawk '$2 == "'$1'" {print}' $MANUALDIR/$1
+	else
+		return 1
+	fi
+}
+
+function fileerr_exit {
+	print Debug: potentially should check to see if /opt/csw is
+	print  specifically read-only, or we're in jumpstart, or something
+	print  before returning a bad status exit, perhaps
+	exit 1
+}
+
+# Called only by set_alternative.
+#  args:   {target} {shortname} {implementation-path}
+# Split out, because one "alternatives" line may have multiple "slave" links
+function set_link {
+	$DEBUG set_link called with: $1 $2 $3
+	if [[ $# -lt 3 ]] ; then
+		print ERROR: set_link needs 3 arguments
+		return 1
+	fi
+	
+	if [[ -h $1 ]] ; then
+		linktarget=`ls -l $1 | nawk '{print $NF}'`
+		if [[ "$linktarget" == "$3 ]] ; then
+			$DEBUG $1 already linked to $3
+			return 0
+		fi
+		
+		$DEBUG removing symlink $1
+		/bin/rm -f $1
+		if [[ $? -ne 0 ]] ; then
+			$DEBUG permission to remove $1 failed
+			filerr_exit
+		fi
+	fi
+	if [[ ! -f $1 ]] ; then
+		$DEBUG linking $1 to $3
+		ln -s $3 $1
+		if [[ $? -ne 0 ]] ; then
+			$DEBUG permission to create symlink for $1 failed
+			filerr_exit
+		fi
+		return 0
+	else
+		print ERROR: $1 exists, and is not symlink.
+		print Not installing $3 as $1
+		return 1
+	fi
+
+	## Note to self: check existing, and dont attempt to
+	## update if already set how we want it?
+	## Also, dont crash if /opt/csw is read-only.
+	## Just politely print warning, and exit cleanly.
+	## At least if running from jumpstart environment?
+	## ALSO, be paranoid and dont remove a "real" file, if
+	## one already exists in the target space.
+	## only a symlink
+}
+# set_alternative: mostly internal function. 
+# Usage: set_alternative {shortname} [ignore-path]
+# Goes and checks both standard configs, and manual config, for best fit.
+#
+#   2nd arg is used for being called through --remove/--ignore
+#
+function set_alternative {
+	typeset line
+	if [[ $# -lt 1 ]] ; then print ERROR set_alternative needs an arg; exit 1;fi
+
+
+	line=`print_manual_set $1`
+	## Design choice: deliberately leave in manual choice,
+	## even if --remove of that alternative is used.
+	## That way makes it easier to implement pkgrm for us.
+	if [[ "$2" != "" ]] ; then
+		echo $line | grep " $2 " >/dev/null
+		if [[ $? -eq 0 ]] ; then
+			$DEBUG Note: manual choice is currently $line
+		fi
+	fi
+
+
+	if [[ "$line" = "" ]] ; then
+		if [[ "$2" != "" ]] ; then
+			line=`print_alternatives $1|
+				nawk ' $3 != "'$2'" {print}' |head -1`
+		else
+			line=`print_alternatives $1|head -1`
+		fi
+	fi
+	if [[ "$line" = "" ]] ; then
+		print "No alternatives found for $1"
+		return 0;
+	fi
+	set $line
+	set_link $1 $2 $3
+	shift 4
+	while [[ "$1" != "" ]] ; do
+		set_link $1 $2 $3
+		shift 3
+	done
+	
+}
+
+function revert_to_auto {
+	case $1 in
+		*/*)
+			print Error: need short name for --auto
+			exit 1
+		;;
+	esac
+	if [[ -f "$MANUALDIR/$1" ]] ; then
+		$DEBUG removing manual setting for $1
+		rm "$MANUALDIR/$1"
+	else
+		$DEBUG no manual setting for $1 found
+	fi
+	set_alternative $1
+}
+
+# Usage: set_manual_prio shortname /full/path
+function set_manual_prio {
+	case $1 in
+		*/*)
+			print Error: need short name as first arg for --set
+			exit 1
+		;;
+	esac
+
+	check=`egrep -l "^[^ ]* $1 $2 " $PRIORITIESDIR/*`
+	if [[ "$check" == "" ]] ; then
+		print Error: no installed match found for $1 $2
+		exit 1
+	fi
+	# Note: target file may have more than one line in it!!
+
+	$DEBUG found match for $1: $check
+	rm -f $MANUALDIR/$1
+	ln -s $check $MANUALDIR/$1
+
+	set_alternative $1
+	
+}
+
+
+
+function display_choices {
+	case $1 in
+		*/*)
+			print Error: need short name as arg for --display
+			exit 1
+		;;
+	esac
+
+	if [[ -f $MANUALDIR/$1 ]] ; then
+		print Manual mode for $1 set. Paths are:
+		print_manual_set $1
+	fi
+	print Installed alternatives for $1 are:
+		print_alternatives $1
+}
+
+
+############################################################
+# Return to "main" area below
+
+## Comment on --remove arg:
+## It does not actually **remove* registration of alternative.
+## That is left for pkgrm.
+## What it does do, is reset link, while ignoring the specified alternative.
+## So for strict purposes, it would better be called "--ignore-and-set"
+## Left in original flag, but dual-implemented as --ignore
+##
+
+if [[ "$1" == "--remove" ]] ; then
+	$DEBUG Note: --remove is really only a temporary --ignore
+	$DEBUG You must rm or pkgrm the appropriate file in $PRIORITIESDIR to remove
+fi
+
+
+
+case $1 in
+	--install)
+		shift
+		print "(Note: ignoring arguments for --install except for '$2')"
+		$DEBUG "(Using files in $PRIORITIESDIR)"
+		set_alternative $2
+		;;
+	--remove|--ignore)    #args = shortname /local/path
+		shift
+		print "(Note: ignoring arguments for --remove except for '$1')"
+		$DEBUG "(Using files in $PRIORITIESDIR)"
+		set_alternative $1 $2
+		;;
+	--auto)
+		shift
+		revert_to_auto $1
+		;;
+	--display)
+		shift
+		display_choices $1
+		;;
+	--set)
+		shift
+		set_manual_prio $1 $2
+		;;
+	*)
+		print -- $1 is not a recognized command.
+		usage
+		
+		exit 1
+		;;
+esac
+
+
