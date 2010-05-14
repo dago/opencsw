@@ -10,8 +10,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += COPYING
 PATCHFILES  = 0001-old-style-patch-0000-stdint.patch
 PATCHFILES += 0002-Fix-one-more-inttypes.h.patch
-PATCHFILES += 0003-Add-definitions-for-CMSG_SPACE.patch
-PATCHFILES += 0004-Add-substitues-form-setenv-and-unsetenv.patch
+PATCHFILES += 0001-Add-Solaris-fixes.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
