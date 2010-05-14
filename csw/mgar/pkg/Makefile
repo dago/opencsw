@@ -9,6 +9,10 @@
 # This contains all directories containing packages
 SUBDIRS = cpan xfce
 
+
+MY_SVN_DIR=$(shell svn info | awk -F: '$$1=="URL"{print $$2":"$$3}' )
+
+
 FILTER_DIRS = CVS/
 
 default:
@@ -101,3 +105,12 @@ newpkg-%:
 	@echo
 	@echo "Your package is set up for editing at $*/trunk"
 
+
+TEMPLATES/createpkg:
+	@echo Checking out TEMPLATES directory...
+	svn --ignore-externals co $(MY_SVN_DIR)/TEMPLATES
+
+
+createpkg-%: TEMPLATES/createpkg
+	@TEMPLATES/createpkg/copy_template $*
+	
