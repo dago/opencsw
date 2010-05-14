@@ -10,6 +10,10 @@ endef
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+# This is already in trunk from r2347:
+#   <http://code.google.com/p/libarchive/source/diff?spec=svn2396&r=2347&format=side&path=/trunk/cpio/test/test_owner_parse.c>
+PATCHFILES = 0001-Check-against-gids-0-and-1-for-root-on-Solaris.patch
+
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
