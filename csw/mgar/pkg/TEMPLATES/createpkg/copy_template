@@ -27,7 +27,6 @@ template_dir=`dirname $0`
 DESTDIR=$1/trunk
 
 
-mkdir -p $DESTDIR
 
 $SVN info >/dev/null
 if [[ $? -ne 0 ]] ; then
@@ -36,9 +35,7 @@ if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
-# Note that apparently you cannot "skip a directory". you must
-# add the highest-level directory first
-$SVN add $1 
+$SVN mkdir --parents $DESTDIR
 
 cp $template_dir/Makefile* $DESTDIR
 cp $template_dir/prototype* $DESTDIR
