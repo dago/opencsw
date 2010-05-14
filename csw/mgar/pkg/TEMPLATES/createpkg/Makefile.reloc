@@ -14,7 +14,7 @@ package:	$(STDFILE) $(FILES)
 	touch package
 
 clean:
-	rm *.pkg.gz
+	rm -f *.pkg.gz package
 
 STDFILES=pkginfo copyright prototype
 

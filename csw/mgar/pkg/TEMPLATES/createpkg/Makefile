@@ -19,7 +19,7 @@ build:
 	cswstage
 
 clean:
-	rm *.pkg.gz
+	rm -f *.pkg.gz package
 
 STDFILES=pkginfo copyright prototype
 
