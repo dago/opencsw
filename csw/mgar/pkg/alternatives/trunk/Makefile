@@ -3,4 +3,4 @@ package:	alternatives
 	touch package
 
 clean:
-	rm *.pkg.gz
+	rm -f *.pkg.gz package
