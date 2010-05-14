@@ -4,7 +4,7 @@
 # the top level. Or basically, whereever you want the template stuff
 # to be copied INTO.
 
-SVN="echo FAKEsvn "
+#SVN="echo FAKEsvn "
 SVN="svn"
 
 function usage {
@@ -36,7 +36,10 @@ if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
-$SVN add $DESTDIR 
+# Note that apparently you cannot "skip a directory". you must
+# add the highest-level directory first
+$SVN add $1 
+
 cp $template_dir/Makefile* $DESTDIR
 cp $template_dir/prototype* $DESTDIR
 $template_dir/generate_pkginfo >$DESTDIR/pkginfo
