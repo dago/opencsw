@@ -1,0 +1,9 @@
+prefix=/opt/csw
+exec_prefix=/opt/csw
+libdir=/opt/csw/lib
+includedir=/opt/csw/include
+ 
+Name: RenderProto
+Description: Render extension headers from X11R7.5
+Version: 0.11
+Cflags: -I${includedir}
