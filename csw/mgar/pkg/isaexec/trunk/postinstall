@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# install script to copy over sun's isaexec, to
+# /opt/csw/bin
+# The reasons for this being:
+#  1. we dont have permission to redistribute it
+#  2. it has to be used via hard links
+#  3. odds are, /opt/csw will be on a different filesystem than /usr/lib
+#
+
+# Warning: Note that we may be installing to a zone, with shared
+#  read-only /opt/csw.
+
+if test -f $PKG_INSTALL_ROOT/opt/csw/bin/isaexec ; then
+	echo Skipping copy of isaexec since /opt/csw/bin/isaexec exists
+else
+	echo Copying $PKG_INSTALL_ROOT/usr/lib/isaexec to $PKG_INSTALL_ROOT/opt/csw/bin/isaexec
+	cp -p $PKG_INSTALL_ROOT/usr/lib/isaexec $PKG_INSTALL_ROOT/opt/csw/bin/isaexec || exit 1
+fi
+
+installf $PKGINST /opt/csw/bin/isaexec f
+installf -f $PKGINST

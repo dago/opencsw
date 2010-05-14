@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# remove script for CSW copy of sun's isaexec
+
+filename=`removef $PKGINST /opt/csw/bin/isaexec`
+
+if [ "$filename" = "" ] ; then
+	echo "Note: /opt/csw/bin/isaexec not clear for removal."
+	echo "Not removing"
+	exit 0
+fi
+
+# even if we are in a zone, just ignore failure here.
+rm -f $BASEDIR/opt/csw/bin/isaexec 2>/dev/null
+
+removef -f $PKGINST

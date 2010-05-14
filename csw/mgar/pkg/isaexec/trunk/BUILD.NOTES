@@ -1,0 +1,12 @@
+This package doesnt need much in the way of "building".
+This package is a hack around the issue that we dont have legal right
+to redistribute isaexec.
+
+You can almost just do pkgmk!
+
+You can use createpkg -r . if you like though.
+
+but remember to rename (SunOS5.8) and uncompress it!
+
+Note: DO NOT COMPRESS/gzip the package!
+ (so gzip can use it :-)

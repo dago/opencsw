@@ -11,6 +11,8 @@ CREATEPKG=createpkg -r `pwd`/cswstage
 
 package:	$(STDFILE) $(FILES)
 	$(CREATEPKG)
+	@echo just for isaexec, we need to UNgzip now...
+	gunzip *.pkg.gz  
 	touch package
 
 build:
@@ -19,8 +21,8 @@ build:
 	cswstage
 
 clean:
-	rm *.pkg.gz
+	rm -f *.pkg.gz package
 
 STDFILES=pkginfo copyright prototype
 
-FILES=YourFilesHere
+FILES=postinstall postremove

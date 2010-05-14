@@ -1,3 +1,6 @@
 i pkginfo
-i depend
 i copyright
+i postinstall
+i postremove
+d none /opt/csw 0755 root bin
+d none /opt/csw/bin 0755 root bin
