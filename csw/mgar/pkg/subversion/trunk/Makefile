@@ -67,9 +67,13 @@ PKGFILES_CSWsvn-devel     += $(docdir)/$(CATALOGNAME_CSWsvn-devel)/changelog.CSW
 
 PKGFILES_CSWsvn-contrib    = $(docdir)/subversion/contrib.*
 ARCHALL_CSWsvn-contrib     = 1
+RUNTIME_DEP_PKGS_CSWsvn-contrib += CSWperl CSWpython
+CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWemacscommon
 
 PKGFILES_CSWsvn-tools      = $(docdir)/subversion/tools.*
 ARCHALL_CSWsvn-tools       = 1
+RUNTIME_DEP_PKGS_CSWsvn-tools += CSWperl CSWruby CSWpython
+CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWemacscommon
 
 SPKG_DESC_CSWap2svn        = Subversion Modules for Apache 2.2
 CATALOGNAME_CSWap2svn      = ap2_subversion
@@ -83,6 +87,19 @@ SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
 PKGFILES_CSWjavasvn        = $(SVNLIB)/.*java.*
 PKGFILES_CSWjavasvn       += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWexpat CSWsvn CSWiconv CSWapache2rt
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWggettextrt CSWneon CSWoldaprt
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pm_subversion
@@ -90,6 +107,8 @@ PKGFILES_CSWpmsvn          = $(libdir)/perl.*
 PKGFILES_CSWpmsvn         += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
 PKGFILES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl CSWexpat CSWsvn CSWiconv CSWapache2rt
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWggettextrt CSWoldaprt
 
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
@@ -106,9 +125,13 @@ PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
 
 SPKG_DESC_CSWpythonsvn       = Subversion Python Language Binding
 CATALOGNAME_CSWpythonsvn     = pythonsvn
+RUNTIME_DEP_PKGS_CSWpythonsvn = CSWexpat CSWpython CSWsvn CSWiconv
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWapache2rt CSWggettextrt CSWoldaprt
 PKGFILES_CSWpythonsvn        = $(libdir)/python.*
 PKGFILES_CSWpythonsvn       += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn       += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
+CHECKPKG_OVERRIDES_CSWpythonsvn += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpythonsvn += catalogname-does-not-start-with-py_
 
 
 DISTFILES += CSWsvn.checkinstall
@@ -185,18 +208,6 @@ PI_DEPENDS += copy-apache-templates
 PI_DEPENDS += create-ra_dav-symlinks
 PI_DEPENDS += install-extras
 PI_DEPENDS += $(BINDING_TARGETS)
-
-CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWemacscommon
-CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWemacscommon
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWpythonsvn += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpythonsvn += catalogname-does-not-start-with-py_
-
 
 post-install-modulated: $(PI_DEPENDS)
 	$(MAKECOOKIE)
