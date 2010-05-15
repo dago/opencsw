@@ -58,15 +58,9 @@ RUNTIME_DEP_PKGS_CSWsvn      += CSWsasl
 RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf
 RUNTIME_DEP_PKGS_CSWsvn      += CSWsqlite3rt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWzlib
-RUNTIME_DEP_PKGS_CSWsvn-contrib += CSWperl
-RUNTIME_DEP_PKGS_CSWsvn-contrib += CSWpython
-RUNTIME_DEP_PKGS_CSWsvn-tools   += CSWperl
-RUNTIME_DEP_PKGS_CSWsvn-tools   += CSWpython
-RUNTIME_DEP_PKGS_CSWsvn-tools   += CSWruby
 
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
 CATALOGNAME_CSWsvn-devel   = subversion_devel
-RUNTIME_DEP_PKGS_CSWsvn-devel = CSWsvn
 ARCHALL_CSWsvn-devel       = 1
 PKGFILES_CSWsvn-devel      = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-devel     += $(docdir)/$(CATALOGNAME_CSWsvn-devel)/changelog.CSW
@@ -87,25 +81,11 @@ PKGFILES_CSWap2svn        += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
 
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
-RUNTIME_DEP_PKGS_CSWjavasvn   = CSWsvn
-RUNTIME_DEP_PKGS_CSWjavasvn  += CSWapache2rt
-RUNTIME_DEP_PKGS_CSWjavasvn  += CSWexpat
-RUNTIME_DEP_PKGS_CSWjavasvn  += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWjavasvn  += CSWiconv
-RUNTIME_DEP_PKGS_CSWjavasvn  += CSWneon
-RUNTIME_DEP_PKGS_CSWjavasvn  += CSWoldaprt
 PKGFILES_CSWjavasvn        = $(SVNLIB)/.*java.*
 PKGFILES_CSWjavasvn       += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW
 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pm_subversion
-RUNTIME_DEP_PKGS_CSWpmsvn     = CSWsvn
-RUNTIME_DEP_PKGS_CSWpmsvn    += CSWperl
-RUNTIME_DEP_PKGS_CSWpmsvn    += CSWapache2rt
-RUNTIME_DEP_PKGS_CSWpmsvn    += CSWexpat
-RUNTIME_DEP_PKGS_CSWpmsvn    += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWpmsvn    += CSWiconv
-RUNTIME_DEP_PKGS_CSWpmsvn    += CSWoldaprt
 PKGFILES_CSWpmsvn          = $(libdir)/perl.*
 PKGFILES_CSWpmsvn         += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
@@ -126,13 +106,6 @@ PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
 
 SPKG_DESC_CSWpythonsvn       = Subversion Python Language Binding
 CATALOGNAME_CSWpythonsvn     = pythonsvn
-RUNTIME_DEP_PKGS_CSWpythonsvn   = CSWsvn
-RUNTIME_DEP_PKGS_CSWpythonsvn  += CSWpython
-RUNTIME_DEP_PKGS_CSWpythonsvn  += CSWapache2rt
-RUNTIME_DEP_PKGS_CSWpythonsvn  += CSWexpat
-RUNTIME_DEP_PKGS_CSWpythonsvn  += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWpythonsvn  += CSWiconv
-RUNTIME_DEP_PKGS_CSWpythonsvn  += CSWoldaprt
 PKGFILES_CSWpythonsvn        = $(libdir)/python.*
 PKGFILES_CSWpythonsvn       += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn       += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
@@ -205,14 +178,25 @@ TEST_TARGET  = check
 
 include gar/category.mk
 
-#BINDING_LANGS   = java perl python ruby
-BINDING_LANGS   = java perl python 
+BINDING_LANGS   = java perl python ruby
 BINDING_TARGETS = $(addprefix svn-,$(BINDING_LANGS))
 
 PI_DEPENDS += copy-apache-templates
 PI_DEPENDS += create-ra_dav-symlinks
 PI_DEPENDS += install-extras
 PI_DEPENDS += $(BINDING_TARGETS)
+
+CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWemacscommon
+CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWemacscommon
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWpythonsvn += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpythonsvn += catalogname-does-not-start-with-py_
+
 
 post-install-modulated: $(PI_DEPENDS)
 	$(MAKECOOKIE)
@@ -296,8 +280,8 @@ svn-perl:
 svn-ruby:
 	@echo " ==> Building Ruby bindings"
 	touch $(WORKSRC)/subversion/bindings/swig/ruby/*.c
-	$(BUILD_ENV) gmake -f Makefile.gcc -C $(WORKSRC) swig-rb
-	$(INSTALL_ENV) gmake -f Makefile.gcc -C $(WORKSRC) install-swig-rb
+	$(BUILD_ENV) gmake -C $(WORKSRC) swig-rb
+	$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-rb
 	@$(MAKECOOKIE)
 
 svn-java:
