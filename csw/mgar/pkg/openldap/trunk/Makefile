@@ -115,9 +115,9 @@ PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
 INITSMF = /opt/csw/etc/init.d/cswopenldap
 
-CHECKPKG_OVERRIDES_CSWoldap += deprecated-library|opt/csw/libexec/amd64/openldap/back_perl-2.4.so.2.5.4|Deprecated|Berkeley|DB|location|/opt/csw/lib/libdb-4.7.so
-CHECKPKG_OVERRIDES_CSWoldap += deprecated-library|opt/csw/libexec/openldap/back_perl-2.4.so.2.5.4|Deprecated|Berkeley|DB|location|/opt/csw/lib/libdb-4.7.so
-CHECKPKG_OVERRIDES_CSWoldap += soname-not-found|libm.so.2
+#CHECKPKG_OVERRIDES_CSWoldap += deprecated-library|opt/csw/libexec/amd64/openldap/back_perl-2.4.so.2.5.4|Deprecated|Berkeley|DB|location|/opt/csw/lib/libdb-4.7.so
+#CHECKPKG_OVERRIDES_CSWoldap += deprecated-library|opt/csw/libexec/openldap/back_perl-2.4.so.2.5.4|Deprecated|Berkeley|DB|location|/opt/csw/lib/libdb-4.7.so
+#CHECKPKG_OVERRIDES_CSWoldap += soname-not-found|libm.so.2
 
 ARCHALL_CSWoldapdevel = 1
 
