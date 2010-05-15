@@ -37,6 +37,14 @@ fi
 
 $SVN mkdir --parents $DESTDIR
 
+svn propset svn:ignore -F /dev/fd/0 $DESTDIR <<EOF
+cookies
+download
+work
+cswstage
+EOF
+
+
 cp $template_dir/Makefile* $DESTDIR
 cp $template_dir/prototype* $DESTDIR
 $template_dir/generate_pkginfo >$DESTDIR/pkginfo
