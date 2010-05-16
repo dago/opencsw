@@ -52,7 +52,7 @@ RUNTIME_DEP_PKGS_CSWapache2       += CSWsqlite3rt
 # make sure the the /etc/opt/csw/init.d/cswapache file gets installed during
 # the post-install stage, and add "INITSMF = /etc/opt/csw/init.d/cswapache" to
 # the Makefile.
-INITSMF = /etc/opt/csw/init.d/cswapache2
+INITSMF = /opt/csw/etc/init.d/cswapache2
 
 pre-configure-modulated:
 	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); ./buildconf)
@@ -86,8 +86,8 @@ rename-httpd:
 
 # Copy in specialized templates
 copy-local-files:
-	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -d $(DESTDIR)/opt/csw/etc/init.d
+	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/opt/csw/etc/init.d
 	@ginstall $(WORKDIR)/httpd.conf.CSW $(APACHE_ROOT)/etc
 	@ginstall $(WORKDIR)/httpd-mpm.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
