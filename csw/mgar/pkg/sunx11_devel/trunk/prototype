@@ -7,5 +7,5 @@ d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/include/X11/Xregion.h=Xregion.h 0644 root bin
 f none /opt/csw/include/X11/extensions/render.h=render.h 0644 root bin
 f none /opt/csw/include/X11/extensions/renderproto.h=renderproto.h 0644 root bin
-f none /opt/csw/pkgconfig/x11.pc=x11.pc 0644 root bin
-f none /opt/csw/pkgconfig/renderproto.pc=renderproto.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/x11.pc=x11.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/renderproto.pc=renderproto.pc 0644 root bin
