@@ -122,7 +122,8 @@ FEATURES_libneon64.27 += libneon-minimal.so.27.2.3
 FEATURES_libneon64.27 += libneon-full.so.27.2.3
 
 # This comes from krb5-config --libs
-CHECKPKG_OVERRIDES_CSWneonfull += bad-rpath-entry|/opt/csw/lib/
+CHECKPKG_OVERRIDES_CSWneonfull += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libneon-full.so.26.0.4
+CHECKPKG_OVERRIDES_CSWneonfull += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libneon-full.so.27.2.3
 
 CHECKPKG_OVERRIDES_CSWneon-devel += surplus-dependency|CSWneon
 
