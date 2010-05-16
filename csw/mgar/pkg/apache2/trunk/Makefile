@@ -27,7 +27,7 @@ SPKG_DESC_CSWapache2-devel      = Apache2 Development Support
 CATALOGNAME_CSWapache2-devel    = apache2_devel
 ARCHALL_CSWapache2-devel        = 1
 #PKGFILES_CSWapache2-devel       = $(PKGFILES_DEVEL)
-PKGFILES_CSWapache2-devel       = $(APACHE_ROOT)/*.h
+PKGFILES_CSWapache2-devel       = $(APACHE_ROOT)/include/*.h
 
 
 # Contents for every package.
