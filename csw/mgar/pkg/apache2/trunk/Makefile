@@ -18,22 +18,7 @@ include files/config.mk
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
-PACKAGES  = CSWapache2 CSWapache2-devel
-
-# Descriptions for every package
-# SPKG_DESC_CSWapache2 = $(DESCRIPTION)
-
-SPKG_DESC_CSWapache2-devel      = Apache2 Development Support
-CATALOGNAME_CSWapache2-devel    = apache2_devel
-ARCHALL_CSWapache2-devel        = 1
-#PKGFILES_CSWapache2-devel       = $(PKGFILES_DEVEL)
-PKGFILES_CSWapache2-devel       = $(APACHE_ROOT)/include/*.h
-
-
-# Contents for every package.
-# You don't define PKGFILES_CSWapache2, it's going to be the default,
-# catch-all package.
-# PKGFILES_CSWapache2 =
+PACKAGES  = CSWapache2
 
 # Standard package bits
 DISTFILES += CSWapache2.killproc cswapache2
