@@ -550,5 +550,24 @@ class TestCheckDisallowedPaths_1(CheckpkgUnitTestHelper, unittest.TestCase):
         'or is not allowed for other reasons.')
 
 
+class TestCheckDisallowedPaths_2(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = "CheckDisallowedPaths"
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "none",
+      "group": "bin",
+      "line": "doesn't matter here",
+      "mode": '0755',
+      "path": "/opt/csw/man/man1/foo.1",
+      "type": "f",
+      "user": "root"
+    })
+    self.error_mgr_mock.GetCommonPaths('sparc').AndReturn([])
+    self.error_mgr_mock.ReportError(
+        'disallowed-path', 'opt/csw/man/man1/foo.1',
+        'This path is already provided by CSWcommon '
+        'or is not allowed for other reasons.')
+
+
 if __name__ == '__main__':
   unittest.main()

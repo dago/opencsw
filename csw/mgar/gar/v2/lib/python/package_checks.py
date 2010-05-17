@@ -23,13 +23,13 @@ from Cheetah import Template
 
 PATHS_ALLOWED_ONLY_IN = {
     # Leading slash must be removed.
-    "CSWcommon": ["opt",
-                  "opt/csw/man",
-                  "opt/csw/doc",
-                  "opt/csw/info",
-                  "opt/csw/share/locale/locale.alias"],
-    "CSWiconv": ["opt/csw/lib/charset.alias"],
-    "CSWtexinfo": ["opt/csw/share/info/dir"],
+    "CSWcommon":  [r"opt",
+                   r"opt/csw/man.*",
+                   r"opt/csw/doc",
+                   r"opt/csw/info",
+                   r"opt/csw/share/locale/locale.alias"],
+    "CSWiconv":   [r"opt/csw/lib/charset.alias"],
+    "CSWtexinfo": [r"opt/csw/share/info/dir"],
 }
 MAX_DESCRIPTION_LENGTH = 100
 LICENSE_TMPL = "/opt/csw/share/doc/%s/license"
@@ -536,15 +536,14 @@ def CheckDisallowedPaths(pkg_data, error_mgr, logger, messenger):
     paths_in_pkg.add(entry_path)
   for pkgname in paths_only_allowed_in:
     if pkgname != pkg_data["basic_stats"]["pkgname"]:
-      disallowed_paths = set(paths_only_allowed_in[pkgname])
-      intersection = disallowed_paths.intersection(paths_in_pkg)
-      if intersection:
-        logger.debug("Bad paths found: %s", intersection)
-        for bad_path in intersection:
-          error_mgr.ReportError(
-              "disallowed-path", bad_path,
-              "This path is already provided by CSWcommon "
-              "or is not allowed for other reasons.")
+      for disallowed_path in paths_only_allowed_in[pkgname]:
+        disallowed_re = re.compile(r"^%s$" % disallowed_path)
+        for path_in_pkg in paths_in_pkg:
+          if disallowed_re.match(path_in_pkg):
+            error_mgr.ReportError(
+                "disallowed-path", path_in_pkg,
+                "This path is already provided by %s "
+                "or is not allowed for other reasons." % pkgname)
 
 
 def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
