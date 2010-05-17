@@ -28,7 +28,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-PRESERVECONF = $(sharedstatedir)/www/phpldapadmin/config/config.php.CSW
+PRESERVECONF = $(sharedstatedir)/www/phpldapadmin/config/config.php
 
 LICENSE = LICENSE
 ARCHALL = 1
@@ -41,8 +41,9 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(sharedstatedir)/www
 	@cp -R $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/phpldapadmin
 	@(cd $(DESTDIR)$(sharedstatedir)/www/phpldapadmin/config; \
-		mv config.php.example config.php.CSW)
+		mv config.php.example config.php)
 	@find $(DESTDIR)$(sharedstatedir) -name .cvsignore -exec rm \{\} \;
+	@find $(DESTDIR)$(sharedstatedir) -name .gitignore -exec rm \{\} \;
 	@rm -rf $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin
 	@ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
 	@ln -s $(sharedstatedir)/www/phpldapadmin/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/phpldapadmin
