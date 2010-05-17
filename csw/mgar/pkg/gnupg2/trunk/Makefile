@@ -27,6 +27,12 @@ DISTFILES      = $(GARNAME)-$(GARVERSION).tar.bz2
 # made it into a release at the time of this packaging
 PATCHFILES = sm-libraries.patch
 
+# There's a problem with the testing framework which makes unit tests fail for
+# 2.0.15.  Filed upstream as:
+# https://bugs.g10code.com/gnupg/issue1214
+SKIPTEST ?= 1
+# Please remove this upon upgrade to 2.0.16.
+
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 NOISALIST  = 1
@@ -66,18 +72,22 @@ RUNTIME_DEP_PKGS_common += CSWpth
 RUNTIME_DEP_PKGS_common += CSWreadline
 RUNTIME_DEP_PKGS_common += CSWzlib
 
+# Not because of shared libraries.
+RUNTIME_DEP_PKGS_CSWgnupg2 += CSWgnupg-agent
+CHECKPKG_OVERRIDES_CSWgnupg2 += surplus-dependency|CSWgnupg-agent
 
 RUNTIME_DEP_PKGS_CSWgnupg2 += $(RUNTIME_DEP_PKGS_common)
-RUNTIME_DEP_PKGS_CSWgnupg2 += CSWgnupg-agent
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibassuan
-RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibidn
-RUNTIME_DEP_PKGS_CSWgnupg2 += CSWosslrt
 
-RUNTIME_DEP_PKGS_CSWgnupg-agent  = CSWpinentry
+# Pinentry is not because of shared libraries.
+RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWpinentry
+CHECKPKG_OVERRIDES_CSWgnupg-agent += surplus-dependency|CSWpinentry
+
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWgcrypt
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWgpgerr
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWiconv
+RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWlibassuan
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWpth
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWreadline
 
