@@ -29,7 +29,7 @@ PATHS_ALLOWED_ONLY_IN = {
                   "opt/csw/info",
                   "opt/csw/share/locale/locale.alias"],
     "CSWiconv": ["opt/csw/lib/charset.alias"],
-    "CSWtexinfp": ["opt/csw/share/info/dir"],
+    "CSWtexinfo": ["opt/csw/share/info/dir"],
 }
 MAX_DESCRIPTION_LENGTH = 100
 LICENSE_TMPL = "/opt/csw/share/doc/%s/license"
