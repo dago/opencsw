@@ -327,93 +327,98 @@ class TestCheckRpath(CheckpkgUnitTestHelper, unittest.TestCase):
     binaries_dump_info = self.pkg_data["binaries_dump_info"]
     binaries_dump_info[0]["runpath"] = testdata.rpaths.all_rpaths
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '$ORIGIN/..')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '$ORIGIN/../../../usr/lib/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '$ORIGIN/../../usr/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '$ORIGIN/../lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '$ORIGIN/../ure-link/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '../../../../../dist/bin')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '../../../../dist/bin')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '../../../dist/bin')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '../../dist/bin')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/bin')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/home/buysse/build/expect-5.42.1/cswstage/opt/csw/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/home/phil/build/gettext-0.14.1/gettext-tools/intl/.libs')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/medusa/kenmays/build/qt-x11-free-3.3.3/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/medusa/kenmays/build/s_qt/qt-x11-free-3.3.3/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/medusa/kenmays/build/sparc_qt/qt-x11-free-3.3.4/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/medusa/kenmays/build/sparc_qt/qt-x11-free-3.3.4/plugins/designer')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/export/medusa/kenmays/build/sparc_qt/qt-x11-free-3.3.4/plugins/sqldrivers')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/home/harpchad/local/sparc/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/lib/sparcv9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWcluster/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWmlib/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/rw7')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/stlport4')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/v8')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/v8plus')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/v8plusa')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/v8plusb')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/SUNWspro/lib/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/build/michael/synce-0.8.9-buildroot/opt/csw/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/$ISALIST')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw//lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/X11/lib/')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/bdb4/lib/')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/$')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/$$ISALIST')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/-R/opt/csw/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/\\$ISALIST')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/\\SALIST')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/lib/sparcv8plus+vis')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/mysql4//lib/mysql')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/nagios/lib/\\$ISALIST')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/openoffice.org/basis3.1/program')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/csw/openoffice.org/ure/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/cw/gcc3/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/forte8/SUNWspro/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/forte8/SUNWspro/lib/rw7')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/forte8/SUNWspro/lib/rw7/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/forte8/SUNWspro/lib/v8')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/forte8/SUNWspro/lib/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/schily/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/sfw/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS10/SUNWspro/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS10/SUNWspro/lib/rw7')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS10/SUNWspro/lib/v8')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS10/SUNWspro/lib/v8plus')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/rw7')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/rw7/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/stlport4')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/stlport4/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/v8')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/v8plus')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS11/SUNWspro/lib/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib/rw7')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib/rw7/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib/v8')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib/v8plusa')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio/SOS8/SUNWspro/lib/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/rw7')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/rw7/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/stlport4')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/stlport4/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/v8')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/opt/studio10/SUNWspro/lib/v9')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/oracle/product/9.2.0/lib32')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/X/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/local/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/local/openldap-2.3/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/sfw/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/ucblib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', '/usr/xpg4/lib')
-    self.error_mgr_mock.ReportError('bad-rpath-entry', 'RIGIN/../lib')
+    BAD_PATHS = [
+        '$ORIGIN/..',
+        '$ORIGIN/../../../usr/lib/v9',
+        '$ORIGIN/../../usr/lib',
+        '$ORIGIN/../lib',
+        '$ORIGIN/../ure-link/lib',
+        '../../../../../dist/bin',
+        '../../../../dist/bin',
+        '../../../dist/bin',
+        '../../dist/bin',
+        '/bin',
+        '/export/home/buysse/build/expect-5.42.1/cswstage/opt/csw/lib',
+        '/export/home/phil/build/gettext-0.14.1/gettext-tools/intl/.libs',
+        '/export/medusa/kenmays/build/qt-x11-free-3.3.3/lib',
+        '/export/medusa/kenmays/build/s_qt/qt-x11-free-3.3.3/lib',
+        '/export/medusa/kenmays/build/sparc_qt/qt-x11-free-3.3.4/lib',
+        '/export/medusa/kenmays/build/sparc_qt/qt-x11-free-3.3.4/plugins/designer',
+        '/export/medusa/kenmays/build/sparc_qt/qt-x11-free-3.3.4/plugins/sqldrivers',
+        '/home/harpchad/local/sparc/lib',
+        '/lib',
+        '/lib/sparcv9',
+        '/opt/SUNWcluster/lib',
+        '/opt/SUNWmlib/lib',
+        '/opt/SUNWspro/lib',
+        '/opt/SUNWspro/lib/rw7',
+        '/opt/SUNWspro/lib/stlport4',
+        '/opt/SUNWspro/lib/v8',
+        '/opt/SUNWspro/lib/v8plus',
+        '/opt/SUNWspro/lib/v8plusa',
+        '/opt/SUNWspro/lib/v8plusb',
+        '/opt/SUNWspro/lib/v9',
+        '/opt/build/michael/synce-0.8.9-buildroot/opt/csw/lib',
+        '/opt/csw/$ISALIST',
+        '/opt/csw//lib',
+        '/opt/csw/X11/lib/',
+        '/opt/csw/bdb4/lib/',
+        '/opt/csw/lib/',
+        '/opt/csw/lib/$',
+        '/opt/csw/lib/$$ISALIST',
+        '/opt/csw/lib/-R/opt/csw/lib',
+        '/opt/csw/lib/\\$ISALIST',
+        '/opt/csw/lib/\\SALIST',
+        '/opt/csw/lib/sparcv8plus+vis',
+        '/opt/csw/mysql4//lib/mysql',
+        '/opt/csw/nagios/lib/\\$ISALIST',
+        '/opt/csw/openoffice.org/basis3.1/program',
+        '/opt/csw/openoffice.org/ure/lib',
+        '/opt/cw/gcc3/lib',
+        '/opt/forte8/SUNWspro/lib',
+        '/opt/forte8/SUNWspro/lib/rw7',
+        '/opt/forte8/SUNWspro/lib/rw7/v9',
+        '/opt/forte8/SUNWspro/lib/v8',
+        '/opt/forte8/SUNWspro/lib/v9',
+        '/opt/schily/lib',
+        '/opt/sfw/lib',
+        '/opt/studio/SOS10/SUNWspro/lib',
+        '/opt/studio/SOS10/SUNWspro/lib/rw7',
+        '/opt/studio/SOS10/SUNWspro/lib/v8',
+        '/opt/studio/SOS10/SUNWspro/lib/v8plus',
+        '/opt/studio/SOS11/SUNWspro/lib',
+        '/opt/studio/SOS11/SUNWspro/lib/rw7',
+        '/opt/studio/SOS11/SUNWspro/lib/rw7/v9',
+        '/opt/studio/SOS11/SUNWspro/lib/stlport4',
+        '/opt/studio/SOS11/SUNWspro/lib/stlport4/v9',
+        '/opt/studio/SOS11/SUNWspro/lib/v8',
+        '/opt/studio/SOS11/SUNWspro/lib/v8plus',
+        '/opt/studio/SOS11/SUNWspro/lib/v9',
+        '/opt/studio/SOS8/SUNWspro/lib',
+        '/opt/studio/SOS8/SUNWspro/lib/rw7',
+        '/opt/studio/SOS8/SUNWspro/lib/rw7/v9',
+        '/opt/studio/SOS8/SUNWspro/lib/v8',
+        '/opt/studio/SOS8/SUNWspro/lib/v8plusa',
+        '/opt/studio/SOS8/SUNWspro/lib/v9',
+        '/opt/studio10/SUNWspro/lib',
+        '/opt/studio10/SUNWspro/lib/rw7',
+        '/opt/studio10/SUNWspro/lib/rw7/v9',
+        '/opt/studio10/SUNWspro/lib/stlport4',
+        '/opt/studio10/SUNWspro/lib/stlport4/v9',
+        '/opt/studio10/SUNWspro/lib/v8',
+        '/opt/studio10/SUNWspro/lib/v9',
+        '/oracle/product/9.2.0/lib32',
+        '/usr/X/lib',
+        '/usr/local/lib',
+        '/usr/local/openldap-2.3/lib',
+        '/usr/sfw/lib',
+        '/usr/ucblib',
+        '/usr/xpg4/lib',
+        'RIGIN/../lib',
+    ]
+    # Calculating the parameters on the fly, it allows to write it a terse manner.
+    for bad_path in BAD_PATHS:
+      self.error_mgr_mock.ReportError('bad-rpath-entry', '%s opt/csw/bin/sparcv9/rsync' % bad_path)
 
 
 class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
