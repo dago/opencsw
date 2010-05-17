@@ -14,20 +14,28 @@ endef
 
 MASTER_SITES = http://serf.googlecode.com/files/
 DISTFILES  = $(DISTNAME).tar.bz2
+PATCHFILES = 0001-Do-not-cast-lvalue-as-left-side-is-already-of-type-c.patch
 
 RUNTIME_DEP_PKGS_CSWlibserf = CSWapache2rt CSWexpat CSWiconv CSWoldaprt CSWosslrt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(DISTNAME)-(\d+(?:\.\d+)*).tar.bz2
 
+LICENSE = LICENSE
+
+# Make sure the current directory comes before everything else
+INCLUDE_FLAGS = -I. -I$(includedir)
+
+# We don't need it and if defined the test breaks
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+
 CONFIGURE_ARGS = $(DIRPATHS)
+# CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 
 TEST_TARGET = check
-
-CHECKPKG_OVERRIDES_CSWlibserf += license-missing
-
 
 include gar/category.mk
 
