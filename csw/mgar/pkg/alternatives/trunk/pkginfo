@@ -1,6 +1,6 @@
 PKG=CSWalternatives
 NAME=alternatives - an implementation of linux-style alternatives choice mgr
-VERSION=1.0,REV=2009.10.j17
+VERSION=1.0,REV=2009.10.17
 CATEGORY=system
 VENDOR=http://www.opencsw.org written and packaged for CSW by Philip Brown
 EMAIL=phil@opencsw.org
