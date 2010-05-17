@@ -2,12 +2,15 @@
 
 # ksh high-level implentation of linux style "alternatives".
 # Author: Philip Brown, phil@bolthole.com, 2010
-# @(#) alternatives 1.6@(#)
+# @(#) alternatives 1.8@(#)
 
 PRIORITIESDIR=/opt/csw/share/alternatives 
 MANUALDIR=/etc/opt/etc/alternatives  #manual override location
 AWK=nawk
 DEBUG=${DEBUG:-/bin/true}
+
+#echo DEBUG VERSION of $0: dont ship this
+#DEBUG=echo
 
 function usage {
 	prog=`basename $0`
@@ -19,11 +22,11 @@ function usage {
 	print "  "
 	print " The following are provided for compatibility, but do not work"
 	print " in exactly the same way as linux variants"
-	print " See usage function code for more information."
+	print " See comments in usage function code for more information."
 	print "  $prog --install {/full/path/name} {name} {#priority}"
 	print "  $prog --remove {name} {/full/path}"
 
-# I dont want to bloat up the usage message, so here's a little more doc
+# I dont want to bloat up the usage message, so here's some more docs
 #  
 # This program is a lightweight 'workalike' to the linux alternatives prog.
 # It is written with OpenCSW in mind, and is specificaly tailored for
@@ -32,20 +35,22 @@ function usage {
 # Part of its flexibility comes from the fact that it is configuration-file
 # driven, NOT internal-database-driven
 #   The --install and --remove flags, while (hopefully) provided as
-# a convenience, do NOT install, or remove, anything.
+# a convenience, do NOT install, or remove, any configuration. They just
+# update symlinks, "as appropriate"
+# 
 # Priorities are driven by configuration files delivered by our packages.
-# They get delivered to /opt/csw, which keeps things NFS friendly.
-# Things only get "installed" or "removed" on a per-SVR4 package basis
-# normally. (although technically, it would be possible to drop in your
+# They get delivered to /opt/csw/share/alternatives, which keeps things
+# NFS friendly.
+# Thes files should only get "installed" or "removed" on a per-SVR4 package 
+# basis normally. (although technically, it would be possible to drop in your
 # own config file in either $PRIORITIESDIR or $MANUALDIR, and then
 # have things integrate with your own custom non-packaged software).
 #
-# There is NO ERROR CHECKING, or saving state of prior actions,
+# There is almost NO ERROR CHECKING. There is no saving state of prior actions,
 # other than the --set comand. 
-# It is up to individual implementers to make sure that everyone providing
-#  an alternative for {name}, all have the same "slaves"
-#     (when I actualy support "slave" links, anyway)
-
+# It is up to individual packages to make sure that everyone providing
+#  an alternative for {name}, all have the same "slave entries", 
+#  if you choose to use slave entries
 }
 
 
@@ -101,8 +106,21 @@ function print_manual_set {
 
 function fileerr_exit {
 	print Debug: potentially should check to see if /opt/csw is
-	print  specifically read-only, or we're in jumpstart, or something
+	print  specifically read-only, or we are in jumpstart, or something
 	print  before returning a bad status exit, perhaps
+
+	case `/bin/id` in
+	  'uid=0('*)
+	  	:
+		;;
+	  *)
+	  	echo "Hey! Try running this as root whydoncha?"
+		exit 1
+	  ;;
+	esac
+
+	print If someone other than Phil is seeing this,  please let him know
+	
 	exit 1
 }
 
@@ -118,7 +136,7 @@ function set_link {
 	
 	if [[ -h $1 ]] ; then
 		linktarget=`ls -l $1 | nawk '{print $NF}'`
-		if [[ "$linktarget" == "$3 ]] ; then
+		if [[ "$linktarget" == "$3" ]] ; then
 			$DEBUG $1 already linked to $3
 			return 0
 		fi
@@ -127,7 +145,7 @@ function set_link {
 		/bin/rm -f $1
 		if [[ $? -ne 0 ]] ; then
 			$DEBUG permission to remove $1 failed
-			filerr_exit
+			fileerr_exit
 		fi
 	fi
 	if [[ ! -f $1 ]] ; then
@@ -135,7 +153,7 @@ function set_link {
 		ln -s $3 $1
 		if [[ $? -ne 0 ]] ; then
 			$DEBUG permission to create symlink for $1 failed
-			filerr_exit
+			fileerr_exit
 		fi
 		return 0
 	else
@@ -153,48 +171,101 @@ function set_link {
 	## one already exists in the target space.
 	## only a symlink
 }
-# set_alternative: mostly internal function. 
-# Usage: set_alternative {shortname} [ignore-path]
-# Goes and checks both standard configs, and manual config, for best fit.
-#
-#   2nd arg is used for being called through --remove/--ignore
-#
-function set_alternative {
-	typeset line
-	if [[ $# -lt 1 ]] ; then print ERROR set_alternative needs an arg; exit 1;fi
 
 
-	line=`print_manual_set $1`
-	## Design choice: deliberately leave in manual choice,
-	## even if --remove of that alternative is used.
-	## That way makes it easier to implement pkgrm for us.
-	if [[ "$2" != "" ]] ; then
-		echo $line | grep " $2 " >/dev/null
-		if [[ $? -eq 0 ]] ; then
-			$DEBUG Note: manual choice is currently $line
-		fi
+#Used for --remove.
+# removes the old symlinks.
+# pass in the "normal" cache file format.
+# Should be called ONLY IF THERE ARE NO MORE "alternatives" installed
+# or if, perhaps, the "current" alternative is the one being removed.
+function rm_alternative_links {
+	$DEBUG rm_alternative_links called with $@
+	# first one is special
+	if [[ -h $1 ]] ; then
+		rm -f $1
 	fi
-
-
-	if [[ "$line" = "" ]] ; then
-		if [[ "$2" != "" ]] ; then
-			line=`print_alternatives $1|
-				nawk ' $3 != "'$2'" {print}' |head -1`
-		else
-			line=`print_alternatives $1|head -1`
-		fi
-	fi
-	if [[ "$line" = "" ]] ; then
-		print "No alternatives found for $1"
-		return 0;
-	fi
-	set $line
-	set_link $1 $2 $3
 	shift 4
-	while [[ "$1" != "" ]] ; do
-		set_link $1 $2 $3
+	while [[ $# -ge 3 ]] ; do
+		rm -f $1
 		shift 3
 	done
+
+}
+
+# set_alternatives: mostly internal function. 
+# Usage: set_alternative {shortname} [ignore-path]
+#
+# Goes and checks both standard configs, and manual config, for best fit.
+# Mandatory first argument, is the "shortname" of the alternative.
+# Optional second argument implies "remove" mode, and needs to be
+#  a full path to one of the main implementations of an alternative.
+#  The line containing that, will then be ignored.
+#
+#
+function set_alternative {
+	typeset shortname remove_match line
+	$DEBUG set_alternative called with $*
+
+	if [[ $# -lt 1 ]] ; then
+		print ERROR set_alternative needs an arg; exit 1;
+	fi
+
+	shortname="$1"
+	remove_match="$2"
+
+
+	
+	line=`print_manual_set $shortname`
+	if [[ "$line" != "" ]] ; then
+		set $line
+		if [[ "$3" = "$remove_match" ]] ; then
+			$DEBUG Note: manual choice is currently $line
+			rm_alternative_links $line
+			line=""
+		fi
+		if [[ ! -f "$3" ]] ; then
+			print $0 Note: manual choice set, but is invalid.
+			print Ignoring $3
+			line=""
+		fi
+	fi
+
+	if [[ "$line" = "" ]] ; then
+		if [[ "$remove_match" != "" ]] ; then
+			line=`print_alternatives $shortname|
+				nawk ' $3 != "'$remove_match'" {print}' |
+				head -1`
+			if [[ "$line" = "" ]] ; then
+				line=`print_alternatives $shortname`
+				set $line
+				if [[ $3 = "$remove_match" ]] ; then
+					print Removing last alternative for $shortname
+					rm_alternative_links $line
+					return 0
+				fi
+			fi
+		else
+			line=`print_alternatives $shortname|head -1`
+		fi
+	fi
+
+
+	if [[ "$line" != "" ]] ; then
+		set $line
+		set_link $1 $2 $3
+		shift 4
+		while [[ "$1" != "" ]] ; do
+			set_link $1 $2 $3
+			shift 3
+		done
+		return 0
+	fi
+
+	# If we are here, then our "database" is internally
+	# inconsistent...?
+	print $0: Error 52: should not be in this code section.
+	print "Inconsistency with files in $PRIORITIESDIR ?"
+
 	
 }
 
@@ -269,8 +340,11 @@ function display_choices {
 ##
 
 if [[ "$1" == "--remove" ]] ; then
-	$DEBUG Note: --remove is really only a temporary --ignore
-	$DEBUG You must rm or pkgrm the appropriate file in $PRIORITIESDIR to remove
+	$DEBUG $0 $*
+	$DEBUG Note: --remove is really only temporary
+	$DEBUG   It works like --ignore
+	$DEBUG You must pkgrm or rm the appropriate file in $PRIORITIESDIR
+	$DEBUG to remove a "registration" for an alternative
 fi
 
 
@@ -278,8 +352,7 @@ fi
 case $1 in
 	--install)
 		shift
-		print "(Note: ignoring arguments for --install except for '$2')"
-		$DEBUG "(Using files in $PRIORITIESDIR)"
+		$DEBUG "($0 Using files in $PRIORITIESDIR)"
 		set_alternative $2
 		;;
 	--remove|--ignore)    #args = shortname /local/path
