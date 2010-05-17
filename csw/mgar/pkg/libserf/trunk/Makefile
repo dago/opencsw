@@ -37,6 +37,10 @@ CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
 
 TEST_TARGET = check
 
+# as long as apache does not depend on apr, serf as well 
+# does not depend on it
+CHECKPKG_OVERRIDES_CSWlibserf += missing-dependency|CSWapr
+
 include gar/category.mk
 
 #EXTRA_LDFLAGS = -R/opt/csw/bdb44/lib
