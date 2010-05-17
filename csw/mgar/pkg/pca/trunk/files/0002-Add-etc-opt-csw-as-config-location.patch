@@ -21,7 +21,7 @@ index 7788971..512dc4d 100644
      push (@conf, dirname($0)."/pca.conf");
      push (@conf, dirname($0)."/../etc/pca.conf");
      push (@conf, "/etc/pca.conf");
-+    push (@conf, "/etc/opt/csw/pca-proxy.conf");
++    push (@conf, "/etc/opt/csw/pca.conf");
      $ENV{HOME} && push (@conf, $ENV{HOME}."/.pca");
      push (@conf, "./pca.conf");
    }
