@@ -1,0 +1,114 @@
+From cc90c6fa3786e7ef68ef87fd8a8c84e32149f38c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 14 May 2010 15:05:03 +0200
+Subject: [PATCH] Add Solaris fixes
+
+---
+ compat.h        |   22 ++++++++++++++++++++++
+ compat/setenv.c |   46 ++++++++++++++++++++++++++++++++++++++++++++++
+ configure       |    3 ++-
+ 3 files changed, 70 insertions(+), 1 deletions(-)
+ create mode 100644 compat/setenv.c
+
+diff --git a/compat.h b/compat.h
+index b7a1d58..321b0ac 100644
+--- a/compat.h
++++ b/compat.h
+@@ -92,6 +92,28 @@ typedef uint64_t u_int64_t;
+ 	    (struct cmsghdr *)NULL)
+ #endif
+ 
++/*
++ * CMSG_ALIGN, CMS_SPACE and CMSG_LEN definitions are missing on Solaris.
++ * The substitutes have been taken from
++ *   http://mailman.videolan.org/pipermail/vlc-devel/2006-May/024402.html
++ */
++
++#ifndef CMSG_ALIGN
++#   ifdef __sun__
++#       define CMSG_ALIGN _CMSG_DATA_ALIGN
++#   else
++#       define CMSG_ALIGN(len) (((len)+sizeof(long)-1) & ~(sizeof(long)-1))
++#   endif
++#endif
++
++#ifndef CMSG_SPACE
++#   define CMSG_SPACE(len) (CMSG_ALIGN(sizeof(struct cmsghdr))+CMSG_ALIGN(len))
++#endif
++
++#ifndef CMSG_LEN
++#   define CMSG_LEN(len) (CMSG_ALIGN(sizeof(struct cmsghdr))+(len))
++#endif
++
+ #ifndef INFTIM
+ #define INFTIM -1
+ #endif
+diff --git a/compat/setenv.c b/compat/setenv.c
+new file mode 100644
+index 0000000..1b3d2fd
+--- /dev/null
++++ b/compat/setenv.c
+@@ -0,0 +1,46 @@
++/* $Id$ /*
++
++/*
++ * Copyright (c) 2004 Nicholas Marriott <nicm@users.sourceforge.net>
++ *
++ * Permission to use, copy, modify, and distribute this software for any
++ * purpose with or without fee is hereby granted, provided that the above
++ * copyright notice and this permission notice appear in all copies.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
++ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
++ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
++ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
++ * WHATSOEVER RESULTING FROM LOSS OF MIND, USE, DATA OR PROFITS, WHETHER
++ * IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
++ * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++ */
++
++#include <stdlib.h>
++
++#include "tmux.h"
++
++void
++setenv(char *n, char *v, int x)
++{
++	char	buf[256];
++
++	snprintf(buf, sizeof(buf), "%s=%s", n, v);
++	putenv(buf);
++}
++
++void
++unsetenv(char *env_name)
++{
++	extern char	**environ;
++	char		**cc;
++	int		l;
++
++	l = strlen(env_name);
++	for (cc=environ; *cc != NULL; cc++) {
++		if (strncmp(env_name, *cc, l) == 0 && ((*cc)[l] == '=' || (*cc)[l] == '\0'))
++			break;
++		}
++		for (; *cc != NULL; cc++)
++			*cc = cc[1];
++	}
+diff --git a/configure b/configure
+index 5d3c3b1..8f30560 100755
+--- a/configure
++++ b/configure
+@@ -164,7 +164,8 @@ SRCS+= osdep-sunos.c \
+ 	compat/vis.c \
+ 	compat/unvis.c \
+ 	compat/imsg-buffer.c \
+-	compat/imsg.c
++	compat/imsg.c \
++	compat/setenv.c
+ EOF
+ 	;;
+ # ------------------------------------------------------------------------------
+-- 
+1.7.0
+
