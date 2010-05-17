@@ -22,13 +22,17 @@ CONFIGURE_ARGS =
 
 EXTRA_CPPFLAGS = -D__inline=inline
 
-INSTALL_ARGS  = PREFIX=/opt/csw
-INSTALL_ARGS += INSTALLDIR="/opt/csw/bin/ginstall -d"
-INSTALL_ARGS += INSTALLBIN="/opt/csw/bin/ginstall -m 555"
-INSTALL_ARGS += INSTALLMAN="/opt/csw/bin/ginstall -m 444"
-
+# There is no testsuite
 SKIPTEST = 1
+
+INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
+
+install-custom:
+	ginstall -d $(DESTDIR)$(bindir)
+	ginstall $(WORKSRC)/tmux $(DESTDIR)$(bindir)
+	ginstall -d $(DESTDIR)$(mandir)/man1
+	ginstall $(WORKSRC)/tmux.1 $(DESTDIR)$(mandir)/man1
