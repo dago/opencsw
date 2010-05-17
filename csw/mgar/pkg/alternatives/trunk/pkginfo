@@ -1,4 +1,5 @@
 PKG=CSWalternatives
+ARCH=all
 NAME=alternatives - an implementation of linux-style alternatives choice mgr
 VERSION=1.0,REV=2009.10.17
 CATEGORY=system
