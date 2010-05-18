@@ -38,6 +38,9 @@ SPKG_DESC_CSWlibxrenderdevel  = $(DESCRIPTION) Development Package
 SPKG_DESC_CSWcxlibxrender = $(DESCRIPTION) (bound against OpenCSW X11)
 SPKG_DESC_CSWcxlibxrenderdevel  = $(DESCRIPTION) Development Package (bound against OpenCSW X11)
 
+ARCHALL_CSWcxlibxrenderdevel = 1
+ARCHALL_CSWlibxrenderdevel = 1
+
 PKGFILES_CSWlibxrenderdevel = /opt/csw/lib/.*\.pc /opt/csw/.*\.h
 PKGFILES_CSWlibxrender = /opt/csw/lib/.*so.* /opt/csw/share/doc/libxender/.*
 PKGFILES_CSWcxlibxrenderdevel = /opt/csw/X11/.*\.pc /opt/csw/X11.*\.h
@@ -65,5 +68,12 @@ PKGFILES_CSWlibxrenderdevel  = $(PKGFILES_DEVEL)
 CHECKPKG_OVERRIDES_CSWlibxrenderdevel += surplus-dependency|CSWlibxrender
 CHECKPKG_OVERRIDES_CSWlibxrender += linked-against-discouraged-library|libXrender.so.1.3.0|libX11.so.4
 CHECKPKG_OVERRIDES_CSWlibxrender += linked-against-discouraged-library|libXrender.so.1.3.0|libX11.so.4
+
+CHECKPKG_OVERRIDES_CSWcxlibxrenderdevel += archall-with-arch-paths|/opt/csw/X11/lib/amd64
+CHECKPKG_OVERRIDES_CSWcxlibxrenderdevel += archall-with-arch-paths|/opt/csw/X11/lib/amd64/pkgconfig
+CHECKPKG_OVERRIDES_CSWcxlibxrenderdevel += archall-with-arch-paths|/opt/csw/X11/lib/amd64/pkgconfig/xrender.pc
+CHECKPKG_OVERRIDES_CSWlibxrenderdevel += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig
+CHECKPKG_OVERRIDES_CSWlibxrenderdevel += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig
+CHECKPKG_OVERRIDES_CSWlibxrenderdevel += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig/xrender.pc
 
 include gar/category.mk
