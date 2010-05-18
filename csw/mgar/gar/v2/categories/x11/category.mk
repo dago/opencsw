@@ -21,7 +21,7 @@ _CATEGORY_CXXFLAGS = $(_CATEGORY_CFLAGS_$(GARCOMPILER))
 GREP = ggrep
 _CATEGORY_COMMON_EXPORTS = GREP
 
-prefix = $(BUILD_PREFIX)/X11
+prefix ?= $(BUILD_PREFIX)/X11
 
 # No tests scripts, thus there is no "gmake test" target
 TEST_SCRIPTS = 
