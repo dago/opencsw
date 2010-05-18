@@ -75,4 +75,10 @@ CHECKPKG_OVERRIDES_CSWcxlibxrenderdevel += archall-with-arch-paths|/opt/csw/X11/
 CHECKPKG_OVERRIDES_CSWlibxrenderdevel += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig
 CHECKPKG_OVERRIDES_CSWlibxrenderdevel += archall-with-arch-paths|/opt/csw/lib/amd64/pkgconfig/xrender.pc
 
+CHECKPKG_OVERRIDES_CSWlibxrenderdevel += archall-with-arch-paths|/opt/csw/lib/sparcv9/pkgconfig
+CHECKPKG_OVERRIDES_CSWlibxrenderdevel += archall-with-arch-paths|/opt/csw/lib/sparcv9/pkgconfig/xrender.pc
+CHECKPKG_OVERRIDES_CSWcxlibxrenderdevel += archall-with-arch-paths|/opt/csw/X11/lib/sparcv9
+CHECKPKG_OVERRIDES_CSWcxlibxrenderdevel += archall-with-arch-paths|/opt/csw/X11/lib/sparcv9/pkgconfig
+CHECKPKG_OVERRIDES_CSWcxlibxrenderdevel += archall-with-arch-paths|/opt/csw/X11/lib/sparcv9/pkgconfig/xrender.pc
+
 include gar/category.mk
