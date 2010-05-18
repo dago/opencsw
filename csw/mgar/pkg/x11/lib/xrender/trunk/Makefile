@@ -39,9 +39,9 @@ SPKG_DESC_CSWcxlibxrender = $(DESCRIPTION) (bound against OpenCSW X11)
 SPKG_DESC_CSWcxlibxrenderdevel  = $(DESCRIPTION) Development Package (bound against OpenCSW X11)
 
 PKGFILES_CSWlibxrenderdevel = /opt/csw/lib/.*\.pc /opt/csw/.*\.h
-PKGFILES_CSWlibxrender = /opt/csw/lib/.* /opt/csw/share/doc/libxender/.*
+PKGFILES_CSWlibxrender = /opt/csw/lib/.*so.* /opt/csw/share/doc/libxender/.*
 PKGFILES_CSWcxlibxrenderdevel = /opt/csw/X11/.*\.pc /opt/csw/X11.*\.h
-PKGFILES_CSWcxlibxrender = /opt/csw/X11/lib/.* /opt/csw/share/doc/cx_libxrender/.*
+PKGFILES_CSWcxlibxrender = /opt/csw/X11/lib/.*so.* /opt/csw/share/doc/cx_libxrender/.*
 
 prefix_cswx11 = $(BUILD_PREFIX)/X11
 prefix = $(or $(prefix_$(X11)),$(BUILD_PREFIX))
