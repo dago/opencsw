@@ -30,7 +30,8 @@ CATALOGNAME_CSWcxlibxrenderdevel = cx_libxrender_devel
 
 BUILD_DEP_PKGS = CSWx11renderproto CSWsunx11devel
 RUNTIME_DEP_PKGS_CSWlibxrenderdevel = CSWlibxrender
-RUNTIME_DEP_PKGS_CSWlibxrender = CSWx11common CSWlibx11
+RUNTIME_DEP_PKGS_CSWlibxrender = CSWx11common
+RUNTIME_DEP_PKGS_CSWcxlibxrender += CSWlibx11
 
 SPKG_DESC_CSWlibxrender = $(DESCRIPTION)
 SPKG_DESC_CSWlibxrenderdevel  = $(DESCRIPTION) Development Package
@@ -61,10 +62,8 @@ MERGE_DIRS_isa-default64-x11-cswx11 = $(libdir)
 
 PKGFILES_CSWlibxrenderdevel  = $(PKGFILES_DEVEL)
 
-include gar/category.mk
-
 CHECKPKG_OVERRIDES_CSWlibxrenderdevel += surplus-dependency|CSWlibxrender
 CHECKPKG_OVERRIDES_CSWlibxrender += linked-against-discouraged-library|libXrender.so.1.3.0|libX11.so.4
 CHECKPKG_OVERRIDES_CSWlibxrender += linked-against-discouraged-library|libXrender.so.1.3.0|libX11.so.4
-CHECKPKG_OVERRIDES_CSWlibxrender += surplus-dependency|CSWx11common
-CHECKPKG_OVERRIDES_CSWlibxrender += surplus-dependency|CSWlibx11
+
+include gar/category.mk
