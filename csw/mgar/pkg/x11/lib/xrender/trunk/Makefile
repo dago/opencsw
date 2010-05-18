@@ -37,7 +37,14 @@ SPKG_DESC_CSWlibxrenderdevel  = $(DESCRIPTION) Development Package
 SPKG_DESC_CSWcxlibxrender = $(DESCRIPTION) (bound against OpenCSW X11)
 SPKG_DESC_CSWcxlibxrenderdevel  = $(DESCRIPTION) Development Package (bound against OpenCSW X11)
 
-PKGFILES_CSWlibxrenderdevel  = $(PKGFILES_DEVEL)
+prefix_cswx11 = $(BUILD_PREFIX)/X11
+prefix = $(or $(prefix_$(X11)),$(BUILD_PREFIX))
+
+STRIP_LIBTOOL = 1
+
+BUILD64 = 1 
+NOISALIST = 1
+CONFIGURE_ARGS = $(DIRPATHS)
 
 MERGE_SCRIPTS_isa-default-x11-sunwx11 = copy-all
 MERGE_SCRIPTS_isa-default64-x11-sunwx11 = copy-relocated-only
@@ -47,15 +54,7 @@ MERGE_DIRS_isa-default-x11-cswx11 = $(libdir) $(includedir)
 MERGE_SCRIPTS_isa-default64-x11-cswx11 = copy-relocated-only
 MERGE_DIRS_isa-default64-x11-cswx11 = $(libdir)
 
-BUILD64 = 1 
-NOISALIST = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-STRIP_LIBTOOL = 1
+PKGFILES_CSWlibxrenderdevel  = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
-# this needs to be after the include as it's not a ?= in the x11
-# category...
-prefix_cswx11 = $(BUILD_PREFIX)/X11
-prefix = $(or $(prefix_$(X11)),$(BUILD_PREFIX))
