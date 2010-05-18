@@ -37,6 +37,11 @@ SPKG_DESC_CSWlibxrenderdevel  = $(DESCRIPTION) Development Package
 SPKG_DESC_CSWcxlibxrender = $(DESCRIPTION) (bound against OpenCSW X11)
 SPKG_DESC_CSWcxlibxrenderdevel  = $(DESCRIPTION) Development Package (bound against OpenCSW X11)
 
+PKGFILES_CSWlibxrenderdevel = /opt/csw/lib/.*\.pc /opt/csw/.*\.h
+PKGFILES_CSWlibxrender = /opt/csw/lib/.* /opt/csw/share/doc/libxender/.*
+PKGFILES_CSWcxlibxrenderdevel = /opt/csw/X11/.*\.pc /opt/csw/X11.*\.h
+PKGFILES_CSWcxlibxrender = /opt/csw/X11/lib/.* /opt/csw/share/doc/cx_libxrender/.*
+
 prefix_cswx11 = $(BUILD_PREFIX)/X11
 prefix = $(or $(prefix_$(X11)),$(BUILD_PREFIX))
 
@@ -58,3 +63,8 @@ PKGFILES_CSWlibxrenderdevel  = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
+CHECKPKG_OVERRIDES_CSWlibxrenderdevel += surplus-dependency|CSWlibxrender
+CHECKPKG_OVERRIDES_CSWlibxrender += linked-against-discouraged-library|libXrender.so.1.3.0|libX11.so.4
+CHECKPKG_OVERRIDES_CSWlibxrender += linked-against-discouraged-library|libXrender.so.1.3.0|libX11.so.4
+CHECKPKG_OVERRIDES_CSWlibxrender += surplus-dependency|CSWx11common
+CHECKPKG_OVERRIDES_CSWlibxrender += surplus-dependency|CSWlibx11
