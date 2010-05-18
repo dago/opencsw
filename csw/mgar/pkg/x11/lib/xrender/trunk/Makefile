@@ -29,8 +29,8 @@ CATALOGNAME_CSWcxlibxrender      = cx_libxrender
 CATALOGNAME_CSWcxlibxrenderdevel = cx_libxrender_devel
 
 BUILD_DEP_PKGS = CSWx11renderproto CSWsunx11devel
+
 RUNTIME_DEP_PKGS_CSWlibxrenderdevel = CSWlibxrender
-RUNTIME_DEP_PKGS_CSWlibxrender = CSWx11common
 RUNTIME_DEP_PKGS_CSWcxlibxrender += CSWlibx11
 
 SPKG_DESC_CSWlibxrender = $(DESCRIPTION)
