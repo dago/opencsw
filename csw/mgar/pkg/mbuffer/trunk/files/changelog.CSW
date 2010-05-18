@@ -1,3 +1,9 @@
+mbuffer (20100327,REV=2010.05.18)
+
+  * Version update to 20100327.
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Tue, 18 May 2010 21:58:05 +0200
+
 mbuffer (20091227,REV=2010.01.06)
 
   * Updated to new upstream release 20091227 (Closes #3912, #3980).

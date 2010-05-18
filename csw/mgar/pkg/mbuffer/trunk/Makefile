@@ -1,5 +1,5 @@
 GARNAME = mbuffer
-GARVERSION = 20091227
+GARVERSION = 20100327
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
@@ -19,11 +19,6 @@ SPKG_SOURCEURL = http://www.maier-komor.de/mbuffer.html
 
 LICENSE = LICENSE
 
-# The tests use background process and wait, but don't issue the wait
-# in the same shell as the background processes were launched in. Fix this.
-# Already submitted to upstream, maybe integrated in future versions.
-PATCHFILES = 0001-Makefile-put-background-jobs-in-same-shell-as-the-wa.patch
-
 # Required during packaging (for the "test" target)
 BUILD_DEP_PKGS  = CSWmktemp
 BUILD_DEP_PKGS += CSWgcc4core
@@ -42,6 +37,9 @@ TEST_TARGET = check
 # way to do this than to just put it into every build recipe which requires
 # libmhash though ...
 EXTRA_CPPFLAGS = -D__const=const
+
+# current9x doesn't know about libm.so.2 from the 64-bit modulated build
+CHECKPKG_OVERRIDES_CSWmbuffer += soname-not-found|libm.so.2
 
 include gar/category.mk
 
