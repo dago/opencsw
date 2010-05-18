@@ -41,6 +41,8 @@ EXTRA_CPPFLAGS = -D__const=const
 # current9x doesn't know about libm.so.2 from the 64-bit modulated build
 CHECKPKG_OVERRIDES_CSWmbuffer += soname-not-found|libm.so.2
 
+EXTRA_PAX_ARGS = '-s,ChangeLog$$,changelog,p'
+
 include gar/category.mk
 
 post-install-modulated: DOCS = ChangeLog README AUTHORS
