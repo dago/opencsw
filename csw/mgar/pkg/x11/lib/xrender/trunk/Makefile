@@ -17,15 +17,6 @@ DISTFILES = $(DISTNAME).tar.gz
 EXTRA_MODULATORS = X11
 MODULATIONS_X11 = sunwx11 cswx11
 
-# Legacy libraries
-# The idea is to have the legacy libs in /opt/csw/lib to guarantee the existing
-# apps will continue to work. The new lib in /opt/csw/X11/lib relies on the
-# OpenCSW-specific X11 libs, whereas the existing one in /opt/csw/lib links
-# against the Sun X11.
-LEGACYLIB = libXrender.so.1.2.2
-DISTFILES += $(LEGACYLIB)-i386
-DISTFILES += $(LEGACYLIB)-sparc
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = libXrender-(\d+(?:\.\d+)*).tar.gz
 
@@ -68,10 +59,3 @@ include gar/category.mk
 # category...
 prefix_cswx11 = $(BUILD_PREFIX)/X11
 prefix = $(or $(prefix_$(X11)),$(BUILD_PREFIX))
-
-post-merge:
-	ginstall -d $(PKGROOT)$(BUILD_PREFIX)/lib
-	cp $(DOWNLOADDIR)/$(LEGACYLIB)-$(GARCH)  $(PKGROOT)$(BUILD_PREFIX)/lib/$(LEGACYLIB)
-	gln -s $(LEGACYLIB) $(PKGROOT)$(BUILD_PREFIX)/lib/libXrender.so.1
-	gln -s $(LEGACYLIB) $(PKGROOT)$(BUILD_PREFIX)/lib/libXrender.so
-	@$(MAKECOOKIE)
