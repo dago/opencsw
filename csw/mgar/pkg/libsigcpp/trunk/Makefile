@@ -13,27 +13,28 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
 PACKAGES  = CSWlibsigc++
 PACKAGES += CSWlibsigc++devel
 SPKG_DESC_CSWlibsigc++ = Typesafe signal and callback system for C++
 SPKG_DESC_CSWlibsigc++devel = Header files and docs for libsigc++
 
-PKGFILES_CSWlibsigc++devel = /opt/csw/share/.*
-PKGFILES_CSWlibsigc++devel += /opt/csw/include/.*
-PKGFILES_CSWlibsigc++devel += /opt/csw/lib/pkgconfig/.*
-PKGFILES_CSWlibsigc++devel += /opt/csw/lib/sigc\+\+-2.0/include/.*
-
 CATALOGNAME_CSWlibsigc++= libsigc++
 CATALOGNAME_CSWlibsigc++devel = libsigc++_devel 
 
-CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 BUILD64 = 1
-NOISAEXEC = 1
+CONFIGURE_ARGS = $(DIRPATHS) --disable-static
+
 TEST_TARGET = check
 
+PKGFILES_CSWlibsigc++devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibsigc++devel += $(docdir)/.*
+PKGFILES_CSWlibsigc++devel += .*\.h
+PKGFILES_CSWlibsigc++devel += $(sharedstatedir)/.*
+
 include gar/category.mk
+
 PATH := /opt/csw/gnu:$(PATH)
+
+post-configure-modulated:
+	perl -pi -e 's,\|-xarch=,|-norunpath|-xarch=,' $(WORKSRC)/libtool
+	@$(MAKECOOKIE)
