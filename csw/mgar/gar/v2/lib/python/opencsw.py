@@ -92,6 +92,10 @@ class PackageError(Error):
   pass
 
 
+class CatalogLineParseError(Error):
+  pass
+
+
 def ParsePackageFileName(p):
   if p.endswith(".gz"):
     p = p[:-3]
@@ -1052,46 +1056,81 @@ class OpencswCatalog(object):
 
   def __init__(self, file_name):
     self.file_name = file_name
-    self.by_basename = {}
-    self.catalog_data = []
+    self.by_basename = None
+    self.catalog_data = None
 
-  def _GetCatalogData(self, fd):
-    cline_re_str = (
-        r"^"
-        r"(?P<catalogname>\S+)"
-        r"\s+"
-        r"(?P<version>\S+)"
-        r"\s+"
-        r"(?P<pkgname>\S+)"
-        r"\s+"
-        r"(?P<file_basename>\S+)"
-        r"\s+"
-        r"(?P<md5sum>\S+)"
-        r"\s+"
-        r"(?P<size>\S+)"
-        r"\s+"
-        r"(?P<deps>\S+)"
-        r"\s+"
-        r"(?P<none_thing>\S+)$"
-    )
-    cline_re = re.compile(cline_re_str)
-    for line in fd:
+  def _ParseCatalogLine(self, line):
+    cline_re_str_list = [
+        (
+            r"^"
+            # tmux
+            r"(?P<catalogname>\S+)"
+            r"\s+"
+            # 1.2,REV=2010.05.17
+            r"(?P<version>\S+)"
+            r"\s+"
+            # CSWtmux
+            r"(?P<pkgname>\S+)"
+            r"\s+"
+            # tmux-1.2,REV=2010.05.17-SunOS5.9-sparc-CSW.pkg.gz
+            r"(?P<file_basename>\S+)"
+            r"\s+"
+            # 145351cf6186fdcadcd169b66387f72f
+            r"(?P<md5sum>\S+)"
+            r"\s+"
+            # 214091
+            r"(?P<size>\S+)"
+            r"\s+"
+            # CSWcommon|CSWlibevent
+            r"(?P<deps>\S+)"
+            r"\s+"
+            # none
+            r"(?P<none_thing_1>\S+)"
+            # An optional empty field.
+            r"("
+              r"\s+"
+              # none\n'
+              r"(?P<none_thing_2>\S+)"
+            r")?"
+            r"$"
+        ),
+    ]
+    cline_re_list = [re.compile(x) for x in cline_re_str_list]
+    matched = False
+    d = None
+    for cline_re in cline_re_list:
       m = cline_re.match(line)
       if m:
         d = m.groupdict()
-        self.catalog_data.append(d)
-      else:
-        logging.debug("%s did not match the regex", repr(line))
+        matched = True
+        if not d:
+          raise CatalogLineParseError("Parsed %s data is empty" % repr(line))
+    if not matched:
+      raise CatalogLineParseError("No regexes matched %s" % repr(line))
+    return d
+
+  def _GetCatalogData(self, fd):
+    catalog_data = []
+    for line in fd:
+      try:
+        parsed = self._ParseCatalogLine(line)
+        catalog_data.append(parsed)
+      except CatalogLineParseError, e:
+        logging.error("Could not parse %s, %s", repr(line), e)
+    return catalog_data
 
   def GetCatalogData(self):
     if not self.catalog_data:
       fd = open(self.file_name, "r")
-      self._GetCatalogData(fd)
+      self.catalog_data = self._GetCatalogData(fd)
     return self.catalog_data
 
   def GetDataByBasename(self):
     if not self.by_basename:
+      self.by_basename = {}
       cd = self.GetCatalogData()
       for d in cd:
+        if "file_basename" not in d:
+          logging.error("%s is missing the file_basename field", d)
         self.by_basename[d["file_basename"]] = d
     return self.by_basename

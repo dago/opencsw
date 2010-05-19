@@ -47,7 +47,10 @@ def main():
     md5s_by_basename = catalog.GetDataByBasename()
     for pkg in packages:
       basename = os.path.basename(pkg.pkg_path)
-      pkg.md5sum = md5s_by_basename[basename]["md5sum"]
+      # It might be the case that a file is present on disk, but missing from
+      # the catalog file.
+      if basename in md5s_by_basename:
+        pkg.md5sum = md5s_by_basename[basename]["md5sum"]
   stats_list = [checkpkg.PackageStats(pkg) for pkg in packages]
   md5s_by_basename = None # To free memory
   catalog = None          # To free memory

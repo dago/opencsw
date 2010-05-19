@@ -394,6 +394,28 @@ class SubmitpkgTemplateUnitTest(unittest.TestCase):
                           searchList=[submitpkg_data])
     self.assertTrue(re.search(r"new package", unicode(t)), unicode(t))
 
+class OpencswCatalogUnitTest(unittest.TestCase):
+
+  def test_ParseCatalogLine_1(self):
+    line = (
+        'tmux 1.2,REV=2010.05.17 CSWtmux '
+        'tmux-1.2,REV=2010.05.17-SunOS5.9-sparc-CSW.pkg.gz '
+        '145351cf6186fdcadcd169b66387f72f 214091 '
+        'CSWcommon|CSWlibevent none none\n')
+    oc = opencsw.OpencswCatalog(None)
+    parsed = oc._ParseCatalogLine(line)
+    expected = {'catalogname': 'tmux',
+                'deps': 'CSWcommon|CSWlibevent',
+                'file_basename': 'tmux-1.2,REV=2010.05.17-SunOS5.9-sparc-CSW.pkg.gz',
+                'md5sum': '145351cf6186fdcadcd169b66387f72f',
+                'none_thing_1': 'none',
+                'none_thing_2': 'none',
+                'pkgname': 'CSWtmux',
+                'size': '214091',
+                'version': '1.2,REV=2010.05.17'}
+    self.assertEquals(expected, parsed)
+
+
 
 if __name__ == '__main__':
   unittest.main()
