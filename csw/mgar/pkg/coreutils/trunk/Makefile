@@ -45,6 +45,8 @@ CONFIGURE_ARGS += --enable-no-install-program=chcon
 # required for eaccess and not picked up automatically.
 EXTRA_LDFLAGS = -lgen
 
+PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/bin/gsu" { $$$$4 = "4555" }; { print }'
+
 ifneq ($(GARVERSION), 8.4)
 TEST_TARGET = check
 else
