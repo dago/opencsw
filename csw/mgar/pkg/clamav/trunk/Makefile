@@ -1,5 +1,5 @@
 GARNAME = clamav
-GARVERSION = 0.96
+GARVERSION = 0.96.1
 #DISTNAME = $(GARNAME)-devel-latest
 CATEGORIES = apps
 
@@ -33,6 +33,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
 
+#BUILD64 = 1
+#PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+#PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 #GARCOMPILER = GCC4
 
 # Seems to be a compiler bug forcing us to use -xO2 instead of -xO3
@@ -49,8 +53,7 @@ CONFIGURE_ARGS += --with-dbdir=/var/opt/csw/$(GARNAME)/db
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(GARNAME)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 CONFIGURE_ARGS += --enable-milter
-#CONFIGURE_ARGS += --enable-llvm
-CONFIGURE_ARGS += --disable-llvm
+#CONFIGURE_ARGS += --disable-llvm
 #CONFIGURE_ARGS += --enable-check
 CONFIGURE_ARGS += --enable-clamdtop
 
