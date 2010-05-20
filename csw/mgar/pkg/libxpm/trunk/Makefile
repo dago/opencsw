@@ -31,8 +31,10 @@ SPKG_DESC_CSWlibxpmdevel = X11 pixmap library development files
 BUILD_DEP_PKGS += CSWx11xproto
 BUILD_DEP_PKGS += CSWlibx11devel
 
-RUNTIME_DEP_PKGS_CSWlibxpm += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWxpm    += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWlibxpm_sparc += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWxpm          += CSWggettextrt
+
+RUNTIME_DEP_PKGS_CSWlibxpm += $(RUNTIME_DEP_PKGS_CSWlibxpm_$(GARCH))
 
 PKGFILES_CSWlibxpmdevel += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxpm      += $(PKGFILES_RT)
