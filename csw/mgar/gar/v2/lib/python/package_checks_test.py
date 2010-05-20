@@ -268,8 +268,9 @@ class TestCheckLinkingAgainstSunX11_Bad(CheckpkgUnitTestHelper, unittest.TestCas
          'soname': 'libImlib2.so.1',
          'soname_guessed': False,
     })
-    self.error_mgr_mock.ReportError('linked-against-discouraged-library',
-                                    'libImlib2.so.1.4.2 libX11.so.4')
+    # This no longer should throw an error.
+    # self.error_mgr_mock.ReportError('linked-against-discouraged-library',
+    #                                 'libImlib2.so.1.4.2 libX11.so.4')
 
 class TestSetCheckSharedLibraryConsistency2_1(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'SetCheckLibraries'

@@ -715,11 +715,15 @@ class CheckInterfaceBase(object):
   It wraps access to the /var/sadm/install/contents cache.
   """
 
-  def __init__(self, system_pkgmap=None):
+  def __init__(self, system_pkgmap=None, lines_dict=None):
     self.system_pkgmap = system_pkgmap
     if not self.system_pkgmap:
       self.system_pkgmap = SystemPkgmap()
     self.common_paths = {}
+    if lines_dict:
+      self.lines_dict = lines_dict
+    else:
+      self.lines_dict = {}
 
   def GetPkgmapLineByBasename(self, basename):
     """Proxies calls to self.system_pkgmap."""
@@ -734,6 +738,16 @@ class CheckInterfaceBase(object):
   def GetInstalledPackages(self):
     return self.system_pkgmap.GetInstalledPackages()
 
+  def _GetPathsForArch(self, arch):
+    if not arch in self.lines_dict:
+      file_name = os.path.join(
+          os.path.dirname(__file__), "..", "..", "etc", "commondirs-%s" % arch)
+      logging.debug("opening %s", file_name)
+      f = open(file_name, "r")
+      self.lines_dict[arch] = f.read().splitlines()
+      f.close()
+    return self.lines_dict[arch]
+
   def GetCommonPaths(self, arch):
     """Returns a list of paths for architecture, from gar/etc/commondirs*."""
     # TODO: If this was cached, it would save a significant amount of time.
@@ -744,12 +758,7 @@ class CheckInterfaceBase(object):
       archs = [arch]
     lines = []
     for arch in archs:
-      file_name = os.path.join(
-          os.path.dirname(__file__), "..", "..", "etc", "commondirs-%s" % arch)
-      logging.debug("opening %s", file_name)
-      f = open(file_name, "r")
-      lines.extend(f.read().splitlines())
-      f.close()
+      lines.extend(self._GetPathsForArch(arch))
     return lines
 
 

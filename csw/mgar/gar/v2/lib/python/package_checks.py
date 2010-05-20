@@ -48,7 +48,11 @@ MAX_CATALOGNAME_LENGTH = 20
 MAX_PKGNAME_LENGTH = 20
 ARCH_LIST = ["sparc", "i386", "all"]
 VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
-DO_NOT_LINK_AGAINST_THESE_SONAMES = set(["libX11.so.4"])
+
+# At some point, it was used to prevent people from linking against
+# libX11.so.4, but due to issues with 3D acceleration.
+DO_NOT_LINK_AGAINST_THESE_SONAMES = set([])
+
 DISCOURAGED_FILE_PATTERNS = (
     r"\.py[co]$",
     r"/lib\w+\.l?a$",
