@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 GARNAME = puppet
-GARVERSION = 0.25.4
+GARVERSION = 0.25.5
 CATEGORIES = apps
 
 define BLURB
@@ -22,17 +22,29 @@ endef
 
 MASTER_SITES = http://reductivelabs.com/downloads/puppet/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += cswpuppetd cswpuppetmasterd cswusergroup
+DISTFILES += cswpuppetd
+DISTFILES += cswpuppetmasterd
+DISTFILES += cswusergroup
+DISTFILES += CSWpuppet.cron.root
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-SPKG_SOURCEURL = http://reductivelabs.com/products/puppet/
+SPKG_SOURCEURL = http://www.puppetlabs.com/
 
-INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
-INITSMF += $(sysconfdir)/init\.d/cswpuppetmasterd
+# Handy when doing multiple updates per day.  Adds hours and minutes to the
+# timestamp.
+GARFLAVOR = DBG
+
+# Disabling SMF support for puppetd.  There are problems with it.  It's a
+# better choice to run it from cron.
+# INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
+INITSMF += $(prefix)/etc/init\.d/cswpuppetmasterd
 USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
+
+CHECKPKG_OVERRIDES_CSWpuppet += init-file-missing-cswinitsmf-class|/opt/csw/etc/init.d/cswpuppetd|class=none
 
 # Creating a separate package CSWpuppetmaster so that the cswpuppetmaster
 # service isn't started upon the installation of CSWpuppet.
-PACKAGES = CSWpuppet CSWpuppetmaster
+PACKAGES += CSWpuppetmaster
+PACKAGES += CSWpuppet
 
 SPKG_DESC_CSWpuppet       = System configuration management tool, client daemon
 SPKG_DESC_CSWpuppetmaster = System configuration management tool, server
@@ -42,7 +54,7 @@ RUNTIME_DEP_PKGS                 += CSWruby
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWpuppet
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWruby
 
-PKGFILES_CSWpuppetmaster  = $(sysconfdir)/init\.d/cswpuppetmasterd
+PKGFILES_CSWpuppetmaster  = $(prefix)/etc/init\.d/cswpuppetmasterd
 PKGFILES_CSWpuppetmaster += $(sbindir)/puppetmasterd
 PKGFILES_CSWpuppetmaster += $(mandir)/man8/puppetmasterd.8
 PKGFILES_CSWpuppetmaster += $(libdir)/.*/puppet/application/puppetmasterd.rb
@@ -60,8 +72,11 @@ INSTALL_SCRIPTS   = puppet
 PATCHFILES  = 0001-pkgutil-support.patch
 PATCHFILES += 0002-Using-the-single-option-of-pkgutil.patch
 
-CHECKPKG_OVERRIDES_CSWpuppet += surplus-dependency|CSWfacter
+CHECKPKG_OVERRIDES_CSWpuppet       += surplus-dependency|CSWfacter
 CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWpuppet
+
+CRONDIR = $(sysconfdir)/pkg/CSWpuppet/crontabs
+CRONTABS = $(CRONDIR)/root
 
 include gar/category.mk
 
@@ -69,9 +84,14 @@ install-puppet:
 	ginstall -m 755 -d $(DESTDIR)
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/puppet
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)/puppet/run
-	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
-	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(sysconfdir)/init.d
-	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 -d $(DESTDIR)$(prefix)/etc/init.d
+	# $(sysconfdir)/pkg/<pkgname>/crontabs
+	ginstall -m 755 -d $(DESTDIR)$(CRONDIR)
+	ginstall -m 644 \
+		$(FILEDIR)/CSWpuppet.cron.root \
+		$(DESTDIR)$(CRONDIR)/root
+	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(prefix)/etc/init.d
+	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(prefix)/etc/init.d
 	(cd $(WORKSRC) && \
 	gsed -e "s|/var/puppet|/var/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
 	gsed -e "s|/etc/puppet|/etc/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \

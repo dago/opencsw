@@ -1,0 +1,1 @@
+30 * * * * /opt/csw/bin/puppetd --no-daemon
