@@ -1,1 +1,7 @@
 037499ed708aaf72988cee60e5a8d96b  libtorrent-0.12.6.tar.gz
+373bec9d71c3cad06c669e26857ef14b  more-UNUSED.patch
+eb30844ace9f064a8fca5212f5a99fef  rlibtorrent-01-madvise.diff
+f2f3738edcbc8d7ccfa14e784f3af9c6  rlibtorrent-03-dh-generate.diff
+c13befd35c91a36f78151accdc70c62c  rlibtorrent-04-sunpro.diff
+0d1545bbc1e7c9f5d4de059c855b0f81  rlibtorrent-05-tracker-usable.diff
+9c0cccb56d3a03eeb14739d811259187  work-around-UNUSED.patch

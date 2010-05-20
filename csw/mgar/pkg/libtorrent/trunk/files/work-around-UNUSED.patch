@@ -1,0 +1,53 @@
+From 5a6aaf6dd0b924c323d591986117823457bdb387 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@current9s.(none)>
+Date: Thu, 20 May 2010 10:59:04 +0200
+Subject: [PATCH] work around __UNUSED
+
+---
+ rak/string_manip.h             |    2 ++
+ src/download/chunk_selector.cc |    2 ++
+ src/torrent/poll_kqueue.cc     |    2 ++
+ 3 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/rak/string_manip.h b/rak/string_manip.h
+index b3f3037..a4f1a6c 100644
+--- a/rak/string_manip.h
++++ b/rak/string_manip.h
+@@ -43,6 +43,8 @@
+ #include <iterator>
+ #include <locale>
+ 
++#define __UNUSED
++
+ namespace rak {
+ 
+ // Use these trim functions until n1872 is widely supported.
+diff --git a/src/download/chunk_selector.cc b/src/download/chunk_selector.cc
+index f814cb2..5685dc1 100644
+--- a/src/download/chunk_selector.cc
++++ b/src/download/chunk_selector.cc
+@@ -46,6 +46,8 @@
+ #include "chunk_selector.h"
+ #include "chunk_statistics.h"
+ 
++#define __UNUSED
++
+ namespace torrent {
+ 
+ // Consider making statistics a part of selector.
+diff --git a/src/torrent/poll_kqueue.cc b/src/torrent/poll_kqueue.cc
+index 9d4d68a..94e8115 100644
+--- a/src/torrent/poll_kqueue.cc
++++ b/src/torrent/poll_kqueue.cc
+@@ -53,6 +53,8 @@
+ #include <sys/time.h>
+ #endif
+ 
++#define __UNUSED
++
+ namespace torrent {
+ 
+ #ifdef USE_KQUEUE
+-- 
+1.7.1
+
