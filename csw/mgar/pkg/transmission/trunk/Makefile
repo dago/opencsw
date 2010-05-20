@@ -1,5 +1,5 @@
 GARNAME = transmission
-GARVERSION = 1.92
+GARVERSION = 1.93
 CATEGORIES = net
 
 DESCRIPTION = Fast, easy, and free multi-platform BitTorrent client
@@ -29,7 +29,7 @@ RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibatk
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibcairo
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibdbus
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibevent
-RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibxext
+#RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibxext
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWpango
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWzlib
@@ -62,11 +62,13 @@ EXTRA_INC = /opt/csw/X11/include
 EXTRA_LIB = /opt/csw/X11/lib 
 EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
-CONFIGURE_ARGS = $(DIRPATHS) --enable-gtk 
+CONFIGURE_ARGS = $(DIRPATHS) --enable-gtk --disable-silent-rules
 STRIP_LIBTOOL = 1
 
 TEST_TARGET = check
-CHECKPKG_OVERRIDES_CSWtransmissiongtk2 += symbol-not-found|transmission
+CHECKPKG_OVERRIDES_CSWtransmissiongtk2 += surplus-dependency|CSWtransmission
+CHECKPKG_OVERRIDES_CSWtransmissiongtk2 += surplus-dependency|CSWdbus
+
 
 include gar/category.mk
 PATH := /opt/csw/gnu:$(PATH)
