@@ -78,6 +78,8 @@ RUNTIME_DEP_PKGS_CSWncurses = CSWterminfo
 ARCHALL_CSWterminfo = 1
 PKGFILES_CSWterminfo = $(datadir)/terminfo.*
 
+CHECKPKG_OVERRIDES_CSWncurses += surplus-dependency|CSWterminfo
+
 include gar/category.mk
 
 LDFLAGS := $(filter-out -L%,$(LDFLAGS))
