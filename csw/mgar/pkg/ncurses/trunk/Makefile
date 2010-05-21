@@ -20,11 +20,11 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = patch-xcode.diff
 
 LICENSE = README
+
 PACKAGES = CSWncurses CSWterminfo
+
 SPKG_DESC_CSWncurses = A free software emulation of curses
 SPKG_DESC_CSWterminfo = Database of terminal information, part of ncurses
-PKGFILES_CSWterminfo = $(datadir)/terminfo.*
-ARCHALL_CSWterminfo = 1
 
 SPKG_SOURCEURL = http://www.gnu.org/software/ncurses/ncurses.html
 
@@ -74,6 +74,9 @@ MERGE_SCRIPTS_isa-sparcv9-widec-disable = copy-relocated-only copy-config-only
       MERGE_DIRS_isa-amd64-widec-enable = $(libdir)
 
 RUNTIME_DEP_PKGS_CSWncurses = CSWterminfo
+
+ARCHALL_CSWterminfo = 1
+PKGFILES_CSWterminfo = $(datadir)/terminfo.*
 
 include gar/category.mk
 
