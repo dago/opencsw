@@ -1,11 +1,12 @@
 #!/bin/sh
 #
+# $HeadURL$
+#
 # i.cswcrontab - Class action script
 #                for registration of crontab entries
 #
 #   Written and   maintained by Dagobert Michelsen
 # Rewritten and unmaintained by Maciej Bliziński
-#
 
 set -e
 set -u
