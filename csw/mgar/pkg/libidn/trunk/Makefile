@@ -1,5 +1,5 @@
 GARNAME = libidn
-GARVERSION = 1.18
+GARVERSION = 1.19
 CATEGORIES = lib
 
 DESCRIPTION = GNU IDN Library
@@ -30,5 +30,7 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+
+CHECKPKG_OVERRIDES_CSWlibidn += missing-dependency|CSWemacscommon
 
 include gar/category.mk
