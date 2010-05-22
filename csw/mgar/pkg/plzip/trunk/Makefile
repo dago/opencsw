@@ -1,5 +1,5 @@
 GARNAME = plzip
-GARVERSION = 0.5
+GARVERSION = 0.6
 CATEGORIES = utils
 
 DESCRIPTION = plzip is a lossless data compressor based on the LZMA algorithm.
