@@ -1,5 +1,5 @@
 GARNAME = lzlib
-GARVERSION = 0.9
+GARVERSION = 1.0
 CATEGORIES = lib
 
 DESCRIPTION = A lossless data compression library based on the LZMA algorithm

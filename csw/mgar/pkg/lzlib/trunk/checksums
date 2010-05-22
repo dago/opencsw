@@ -2,4 +2,4 @@
 ae8e904a8c07f7533b94eaf8bfb2075d  0001-Remove-Linux-specific-stuff-add-Solaris-specific-stu.patch
 fe24dd11cfece198006a781133fb13fa  0002-Change-linker-flags-for-shared-libs-to-be-Sun-Studio.patch
 dcb22fb244b8d124742cad9ddd18985a  0002-Use-ucb-echo-as-it-only-understands-n.patch
-65382168a05975e550f5381f99efc0c6  lzlib-0.9.tar.gz
+39bfe00964a03be95d51ebbe9104b337  lzlib-1.0.tar.gz
