@@ -71,8 +71,8 @@ RUNTIME_DEP_PKGS_common += CSWoldaprt
 RUNTIME_DEP_PKGS_common += CSWreadline
 RUNTIME_DEP_PKGS_common += CSWzlib
 
-RUNTIME_DEP_PKGS_common_isa-sparcv9 += CSWpth
-RUNTIME_DEP_PKGS_common += $(RUNTIME_DEP_PKGS_common_$(MODULATION))
+RUNTIME_DEP_PKGS_common_sparc += CSWpth
+RUNTIME_DEP_PKGS_common += $(RUNTIME_DEP_PKGS_common_$(GARCH))
 
 # Not because of shared libraries.
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWgnupg-agent
@@ -85,9 +85,9 @@ RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibassuan
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWpinentry
 CHECKPKG_OVERRIDES_CSWgnupg-agent += surplus-dependency|CSWpinentry
 
-RUNTIME_DEP_PKGS_CSWgnupg-agent_isa-sparcv9 += CSWpth
+RUNTIME_DEP_PKGS_CSWgnupg-agent_sparc += CSWpth
 
-RUNTIME_DEP_PKGS_CSWgnupg-agent += $(RUNTIME_DEP_PKGS_CSWgnupg-agent_$(MODULATION))
+RUNTIME_DEP_PKGS_CSWgnupg-agent += $(RUNTIME_DEP_PKGS_CSWgnupg-agent_$(GARCH))
 
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWgcrypt
 RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWggettextrt
