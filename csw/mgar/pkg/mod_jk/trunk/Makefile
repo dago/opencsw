@@ -1,5 +1,5 @@
 GARNAME = tomcat-connectors
-GARVERSION = 1.2.25
+GARVERSION = 1.2.30
 CATEGORIES = server
 
 DESCRIPTION = AJP connector module for Apache 2
