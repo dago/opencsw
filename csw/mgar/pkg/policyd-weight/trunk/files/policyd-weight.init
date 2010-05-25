@@ -1,0 +1,52 @@
+#!/sbin/sh
+
+#RC_KLEV 0,1,2,S
+#RC_SLEV 3
+
+# rc-script for CSWpolicyd-weight
+# Peter Bonivart, 2010-05-25
+
+# Source SMF includes
+[ -r /lib/svc/share/smf_include.sh ] && . /lib/svc/share/smf_include.sh
+
+# Source config file
+[ -r /etc/opt/csw/postfix/policyd-weight.conf ] && . /etc/opt/csw/postfix/policyd-weight.conf
+
+SERVICE=policyd-weight
+PATH=$PATH:/usr/bin:/opt/csw/bin
+
+ZONE= # used for initialization, do not change
+
+case "$1" in
+  start)
+        echo "Starting $SERVICE ..."
+        /opt/csw/sbin/policyd-weight -f /etc/opt/csw/postfix/policyd-weight.conf
+        ;;
+  stop)
+        echo "Stopping $SERVICE ..."
+        if [ -x /usr/bin/zonename ]; then
+          if [ "`/usr/bin/zonename`" = "global" ]; then
+            ZONE="-z global"
+          fi
+        fi
+        pkill $ZONE -x $SERVICE
+        ;;
+  restart)
+        echo "Restarting $SERVICE ... "
+        $0 stop
+        echo "Waiting for $SERVICE to stop: \c"
+        while ( pgrep $SERVICE > /dev/null )
+        do
+          echo ".\c"
+          sleep 1
+        done
+        echo
+        sleep 1
+        $0 start
+        ;;
+  *)
+        echo "Usage: `basename $0` { start | stop | restart}"
+        exit 1
+esac
+
+exit 0
