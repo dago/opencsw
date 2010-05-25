@@ -46,39 +46,21 @@ CONFIGURE_ARGS += --enable-sun-fkeys
 CONFIGURE_ARGS += --enable-warnings
 CONFIGURE_ARGS += --enable-wide-chars
 CONFIGURE_ARGS += --program-suffix=86 --with-xterm-symlink
+
+# Specify freetype linker flags, otherwise /opt/csw/X11/bin/xft-config is used
 CONFIGURE_ARGS += --with-freetype-cflags="-I$(includedir)/freetype2"
+CONFIGURE_ARGS += --with-freetype-libs="-lXft -lfontconfig -lfreetype"
 
 #GARFLAVOR = DBG
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 CONFIGURE_ARGS_DBG = --enable-trace --enable-warnings
 
-# Notes on CSW X11 libs:
-# Through CSW freetype, xterm depends on Xrender and Xft. Starting with 
-#
-# 	libxrender-0.9.4,REV=2009.06.11
-#	libxft2-2.1.13,REV=2009.06.15
-#
-# these libs moved to the CSW X11 libs prefix (/opt/csw/X11). Accordingly, 
-# we need to build against these X11 libs, otherwise ./configure bails out
-# when verifying the linkage to freetype. This unfortunatel drags a pile
-# of other CSW X11 libs with it ... o_O ...
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-
-# Xt app-default files need to go where Xt looks for them (one of
-# $(prefix)/X11/{etc,share,lib}/X11/app-defaults)
-CONFIGURE_ARGS += --with-app-defaults=$(prefix)/X11/etc/X11/app-defaults
-
-# Make sure to runtime link the same way that we link edited
-# * xterm link edit order is (-L/-R):  X11/lib/, lib/
-# * LD_OPTIONS would prepend (-R):  lib/
-# -> libs like libXft might be runtime linked from lib/ instead of X11/lib/
-LD_OPTIONS =
-EXTRA_LINKER_FLAGS = $(filter-out %ISALIST, $(RUNPATH_LINKER_FLAGS))
-
 # luit comes with snv_85 
 #   http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6662431
 #CONFIGURE_ARGS += --enable-luit
+
+# xterm doesn't rely on optimized libs, fasten startup
+NOISALIST = 1
 
 
 include gar/category.mk
