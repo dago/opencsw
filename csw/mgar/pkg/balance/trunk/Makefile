@@ -1,5 +1,5 @@
 GARNAME = balance
-GARVERSION = 3.42
+GARVERSION = 3.52
 CATEGORIES = net
 
 DESCRIPTION = A TCP proxy and load balancer
@@ -11,7 +11,7 @@ endef
 
 MASTER_SITES = http://www.inlab.de/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES = 0001-Adjust-Makefile.patch
+PATCHFILES = 0001-Adjust-Makefile-for-Solaris.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

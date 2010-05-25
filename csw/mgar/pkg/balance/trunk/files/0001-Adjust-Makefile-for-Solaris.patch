@@ -1,18 +1,18 @@
-From f39ca105749c5c407c8e0ff6d53ed0a1fee12470 Mon Sep 17 00:00:00 2001
+From 93c7b9720fa37dc44df91ed7ea26ff5c91ac40cf Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Fri, 6 Nov 2009 16:33:53 +0100
-Subject: [PATCH] Adjust Makefile
+Date: Tue, 25 May 2010 16:02:44 +0200
+Subject: [PATCH] Adjust Makefile for Solaris
 
 ---
- Makefile |   20 ++++++++++++--------
- 1 files changed, 12 insertions(+), 8 deletions(-)
+ Makefile |   21 ++++++++++++---------
+ 1 files changed, 12 insertions(+), 9 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 90a4b47..3c549ce 100644
+index 05c4ca5..a1ba163 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1,26 +1,28 @@
- # $Id: Makefile,v 1.45 2008/04/08 17:39:08 tommy Exp $
+@@ -1,26 +1,27 @@
+ # $Id: Makefile,v 1.9 2010/02/14 18:36:56 t Exp t $
  
  #CFLAGS=-g -I.
 -CFLAGS=-O2 -Wall -Wstrict-prototypes -Wuninitialized
@@ -27,26 +27,26 @@ index 90a4b47..3c549ce 100644
 +# BINDIR=/usr/sbin
 +# MANDIR=${BINDIR}/../man/man1
  
- # uncomment for Solaris
+ # uncomment for Solaris:
 -# LIBRARIES=-lsocket -lnsl
 -# INSTALL=/usr/ucb/install
+-# BINDIR=/usr/local/libexec
 +LIBRARIES=-lsocket -lnsl
 +INSTALL=/usr/ucb/install
- # BINDIR=/usr/local/libexec
 +BINDIR=/opt/csw/sbin
 +MANDIR=/opt/csw/share/man/man1
  
- # uncomment for Cygwin
+ # uncomment for Cygwin:
  # LIBRARIES=-L/usr/local/lib -lcygipc
  # BALANCE=balance.exe
  # ROOT=Administrators
  
 -CC=gcc
 +# CC=gcc
- RELEASE=3.42
+ RELEASE=3.52
  
  all: balance 
-@@ -48,9 +50,11 @@ clean:
+@@ -48,9 +49,11 @@ clean:
  	rm -f $(BALANCE) *.o balance.ps balance.pdf
  
  install:
@@ -61,5 +61,5 @@ index 90a4b47..3c549ce 100644
  	mkdir -p $(DESTDIR)/var/run/balance
  	chmod 1777 $(DESTDIR)/var/run/balance
 -- 
-1.6.5.1
+1.7.1
 
