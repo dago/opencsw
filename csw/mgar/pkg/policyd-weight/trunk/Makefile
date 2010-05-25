@@ -27,7 +27,7 @@ INSTALL_SCRIPTS = custom
 
 INITSMF = /opt/csw/etc/init.d/csw$(GARNAME)
 USERGROUP = /etc/opt/csw/pkg/CSW$(GARNAME)/cswusergroup
-SAMPLECONF  = /etc/opt/csw/postfix//policyd-weight.conf
+SAMPLECONF  = /etc/opt/csw/postfix/policyd-weight.conf
 
 CHECKPKG_OVERRIDES += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES += surplus-dependency|CSWpmnetdns
