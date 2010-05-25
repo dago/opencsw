@@ -1,5 +1,5 @@
 GARNAME = glib
-GARVERSION = 2.23.5
+GARVERSION = 2.25.7
 CATEGORIES = lib
 
 DESCRIPTION = The GLib library of C routines.
@@ -27,7 +27,13 @@ PATCHFILES += CMSG_LEN.patch
 
 # Bug reported upstream:
 #   https://bugzilla.gnome.org/show_bug.cgi?id=612300
-PATCHFILES += 0001-Use-G_STRFUNC-instead-of-explicit-gcc-only-__PRETTY_.patch
+# PATCHFILES += 0001-Use-G_STRFUNC-instead-of-explicit-gcc-only-__PRETTY_.patch
+
+PATCHFILES += 0001-Make-sure-we-have-the-include-for-major-minor.patch
+
+# We don't need it and if defined the test breaks
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
@@ -48,9 +54,7 @@ RUNTIME_DEP_PKGS_CSWglib2devel += CSWiconv
 RUNTIME_DEP_PKGS_CSWglib2devel += CSWpython
 RUNTIME_DEP_PKGS_CSWglib2devel += CSWzlib
 
-#TEST_TARGET = check
-TEST_TARGET = 
-SKIPTEST ?= 0
+TEST_TARGET = check
 
 #provided by iconv
 MERGE_EXCLUDE_FILES = .*/charset.alias

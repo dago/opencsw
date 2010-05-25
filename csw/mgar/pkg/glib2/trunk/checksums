@@ -1,6 +1,5 @@
-a87638e0505b6ff29efd8130450003c5  0001-Use-G_STRFUNC-instead-of-explicit-gcc-only-__PRETTY_.patch
 9f66027a275eb34d80a68ec8927bf66e  CMSG_LEN.patch
 f1f3c182f64be06ab57d8b01016af074  FIXED_STR.patch
-f249a94e8da086fd5d6e24dd4c1a1324  glib-2.23.5.tar.bz2
+ac4867b9450f8bf5f1075336a32a1a88  glib-2.25.7.tar.bz2
 8f683820d9ecab1abd9dbe81997ab9eb  glib-typedetect.patch
 bb2fb8eef43c995fea6c08563487ace6  gsize.patch
