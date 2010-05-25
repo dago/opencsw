@@ -9,6 +9,9 @@ define BLURB
   simple, easy to use, lightweight wrapper around the Amazon services.
 endef
 
+PACKAGES = CSWpy-boto
+CATALOGNAME = py_boto
+
 VENDOR_URL     = http://code.google.com/p/boto/
 MASTER_SITES   = $(GOOGLE_MIRROR)
 GOOGLE_PROJECT = boto
@@ -16,6 +19,7 @@ DISTNAME       = $(GOOGLE_PROJECT)-$(GARVERSION)
 DISTFILES      = $(DISTNAME).tar.gz
 UFILES_REGEX   = $(GOOGLE_PROJECT)-(\d+(?:\.\d+)*).tar.gz
 
+LICENSE = files/COPYING
 ARCHALL = 1
 
 include gar/category.mk
