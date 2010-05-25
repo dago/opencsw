@@ -23,11 +23,6 @@ DISTFILES    += COPYING
 
 RUNTIME_DEP_PKGS  = CSWfconfig
 RUNTIME_DEP_PKGS += CSWlibxft2
-RUNTIME_DEP_PKGS += CSWlibice
-RUNTIME_DEP_PKGS += CSWlibx11
-RUNTIME_DEP_PKGS += CSWlibxaw
-RUNTIME_DEP_PKGS += CSWlibxmu
-RUNTIME_DEP_PKGS += CSWlibxt
 
 # xterm Makefile doesn't have a test target
 TEST_TARGET =
