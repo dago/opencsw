@@ -1,3 +1,11 @@
+xterm (258,REV=2010.05.25)
+
+  * Updated to 258. (Fixes #4186)
+  * Reverted to Sun's X11 now that libXft and libXrender are available
+    as Sun X11 versions again.
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Tue, 25 May 2010 20:49:18 +0200
+
 xterm (251,REV=2009.11.23)
 
   * Updated to 251. (Fixes #3937, #3856)
