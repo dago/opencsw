@@ -16,6 +16,8 @@ PATCHFILES = 0001-Adjust-Makefile-for-Solaris.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+VENDOR_URL = http://www.inlab.de/balance.html
+
 CONFIGURE_SCRIPTS =
 
 TEST_SCRIPTS =
