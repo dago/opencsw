@@ -36,7 +36,6 @@ INSTALL_SCRIPTS = custom
 
 INITSMF = /opt/csw/etc/init.d/csw$(GARNAME)
 USERGROUP = /etc/opt/csw/pkg/CSW$(GARNAME)/cswusergroup
-SAMPLECONF  = /etc/opt/csw/policyd-weight.conf
 
 CHECKPKG_OVERRIDES += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES += surplus-dependency|CSWpmnetdns
@@ -48,7 +47,7 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/init.d
 	@ginstall -m 755 $(FILEDIR)/$(GARNAME).init $(DESTDIR)/opt/csw/etc/init.d/csw$(GARNAME)
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw
-	@ginstall -m 644 $(WORKSRC)/policyd-weight.conf.sample $(DESTDIR)/etc/opt/csw/policyd-weight.conf
+	@ginstall -m 644 $(WORKSRC)/policyd-weight.conf.sample $(DESTDIR)/etc/opt/csw/
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
 	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)/cswusergroup
 	@ginstall -m 755 -d $(DESTDIR)$(sbindir)
