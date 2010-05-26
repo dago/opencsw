@@ -10,6 +10,8 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+PATCHFILES = 0001-Comment-out-define-as-we-are-on-Sun-Studio.patch
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -36,5 +38,6 @@ include gar/category.mk
 PATH := /opt/csw/gnu:$(PATH)
 
 post-configure-modulated:
+	@# Make sure libtool keeps -norunpath during linking
 	perl -pi -e 's,\|-xarch=,|-norunpath|-xarch=,' $(WORKSRC)/libtool
 	@$(MAKECOOKIE)
