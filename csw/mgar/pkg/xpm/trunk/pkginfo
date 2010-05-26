@@ -1,0 +1,9 @@
+PKG=CSWxpm
+ARCH=sparc
+NAME=xpm - X11 pixmap library
+VERSION=3.5.8,REV=2010.05.24
+CATEGORY=application
+VENDOR=http://mirrors.usc.edu/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/xpm/trunk

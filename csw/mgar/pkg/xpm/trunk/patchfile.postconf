@@ -1,0 +1,11 @@
+--- config.h.orig	Wed May 26 10:09:02 2010
++++ config.h	Wed May 26 10:08:51 2010
+@@ -71,7 +71,7 @@
+ #define STDC_HEADERS 1
+ 
+ /* Define to 1 if you want to use the gettext() function. */
+-#define USE_GETTEXT 1
++/*#define USE_GETTEXT 1*/
+ 
+ /* Version number of package */
+ #define VERSION "3.5.8"
