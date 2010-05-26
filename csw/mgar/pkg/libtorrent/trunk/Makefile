@@ -35,14 +35,17 @@ SPKG_DESC_CSWlibtorrentdevel = Development files for libtorrent
 RUNTIME_DEP_PKGS_CSWlibtorrent      = CSWosslrt CSWlibsigc++
 RUNTIME_DEP_PKGS_CSWlibtorrentdevel = CSWlibtorrent
 
+BUILD64 = 1
+CONFIGURE_ARGS = $(DIRPATHS) --enable-shared --disable-static --disable-libtool-lock --disable-debug
+
+TEST_TARGET = check
+
 PKGFILES_CSWlibtorrentdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibtorrentdevel += $(docdir)/.*
 PKGFILES_CSWlibtorrentdevel += .*\.h
 PKGFILES_CSWlibtorrentdevel += $(sharedstatedir)/.*
 
-BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS) --enable-shared --disable-static --disable-libtool-lock --disable-debug
-TEST_TARGET = check
+CHECKPKG_OVERRIDES_CSWlibtorrentdevel += surplus-dependency|CSWlibtorrent
 
 include gar/category.mk
 
