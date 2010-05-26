@@ -1,1 +1,10 @@
+5fc8cb994a9878260814dd91cecb2bc4  0001-build-fixes.patch
+22451ae5516b8a5895152f2bff431879  0001-curl_get.patch
+04aee1b334f244111c1c17a60eda827d  0001-more-build-fixes.patch
+dbff5b0805244cf116e6c8a943e798eb  0001-more-build-fixes2.patch
+7490ec79bf9ab3fbc440af8798813da4  0001-scgi_task.cc.patch
 b804c45c01c40312926bcea6b55bb084  rtorrent-0.8.6.tar.gz
+b6545f8cb3978a2a9c7d08e69c261a2e  rtorrent-01-solaris.diff
+9c15ff7d338b93bb14ceef55e50e35da  rtorrent-04-sunpro.diff
+c9eb081ca192b5c4c222e6f0a6d5b2ae  rtorrent-05-sunpro-crash.diff
+373359da311cec3fe678ea55df5354c3  work-around-UNUSED.patch

@@ -1,0 +1,25 @@
+From 8be94bd57ea757706b5bf61eb62852a67fe85b52 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@testing9s.bo.opencsw.org>
+Date: Mon, 24 May 2010 15:21:55 +0200
+Subject: [PATCH] more-build-fixes2
+
+---
+ src/command_download.cc |    1 +
+ src/rpc/xmlrpc.cc       |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/src/rpc/xmlrpc.cc b/src/rpc/xmlrpc.cc
+index ba527c6..c81184e 100644
+--- a/src/rpc/xmlrpc.cc
++++ b/src/rpc/xmlrpc.cc
+@@ -46,6 +46,7 @@
+ 
+ #include "xmlrpc.h"
+ #include "parse_commands.h"
++#define __UNUSED
+ 
+ namespace rpc {
+ 
+-- 
+1.7.0
+

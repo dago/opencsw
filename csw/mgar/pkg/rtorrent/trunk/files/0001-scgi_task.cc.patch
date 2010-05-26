@@ -1,0 +1,50 @@
+From 3038e30d0be6df9dd3e3afb36220e5ca97e3c7e7 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@testing9s.bo.opencsw.org>
+Date: Sun, 23 May 2010 14:31:01 +0200
+Subject: [PATCH] scgi_task.cc
+
+---
+ src/rpc/scgi_task.cc |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/src/rpc/scgi_task.cc b/src/rpc/scgi_task.cc
+index 4f78335..bfed679 100644
+--- a/src/rpc/scgi_task.cc
++++ b/src/rpc/scgi_task.cc
+@@ -156,19 +156,19 @@ SCgiTask::event_read() {
+     } else if ((unsigned int)contentSize <= default_buffer_size) {
+       m_bufferSize = contentSize;
+ 
+-      std::memmove(m_buffer, m_body, std::distance(m_body, m_position));
+-      m_position = m_buffer + std::distance(m_body, m_position);
++      std::memmove(m_buffer, m_body, m_position - m_body);
++      m_position = m_buffer + (m_position - m_body);
+       m_body = m_buffer;
+ 
+     } else {
+-      realloc_buffer((m_bufferSize = contentSize) + 1, m_body, std::distance(m_body, m_position));
++      realloc_buffer((m_bufferSize = contentSize) + 1, m_body, m_position - m_body);
+ 
+-      m_position = m_buffer + std::distance(m_body, m_position);
++      m_position = m_buffer + (m_position - m_body);
+       m_body = m_buffer;
+     }
+   }
+ 
+-  if ((unsigned int)std::distance(m_buffer, m_position) != m_bufferSize)
++  if ((unsigned int)(m_position - m_buffer) != m_bufferSize)
+     return;
+ 
+   this_thread->poll()->remove_read(this);
+@@ -182,7 +182,7 @@ SCgiTask::event_read() {
+   }
+ 
+   // Close if the call failed, else stay open to write back data.
+-  if (!m_parent->receive_call(this, m_body, m_bufferSize - std::distance(m_buffer, m_body)))
++  if (!m_parent->receive_call(this, m_body, m_bufferSize - (m_body - m_buffer)))
+     close();
+ 
+   return;
+-- 
+1.7.0
+

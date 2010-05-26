@@ -1,0 +1,25 @@
+From 73b5cea8f2d71900227058ad3a222c8b98b628bf Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@testing9s.bo.opencsw.org>
+Date: Mon, 24 May 2010 13:55:39 +0200
+Subject: [PATCH] more-build-fixes
+
+---
+ src/input/text_input.cc |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/input/text_input.cc b/src/input/text_input.cc
+index 7e19e86..3e74af8 100644
+--- a/src/input/text_input.cc
++++ b/src/input/text_input.cc
+@@ -36,7 +36,7 @@
+ 
+ #include "config.h"
+ 
+-#include <ncurses.h>
++#include <ncursesw/ncurses.h>
+ 
+ #include "text_input.h"
+ 
+-- 
+1.7.0
+

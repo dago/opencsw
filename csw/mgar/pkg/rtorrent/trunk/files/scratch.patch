@@ -1,0 +1,64 @@
+--- rtorrent-0.8.2.orig/src/core/scheduler.cc   2008-05-07 08:19:11.000000000 -0400
++++ rtorrent-0.8.2/src/core/scheduler.cc        2008-06-25 02:19:20.043037414 -0400
+@@ -37,6 +37,7 @@
+ #include "config.h"
+
+ #include <algorithm>
++#include <rak/algorithm.h>
+ #include <rak/functional.h>
+ #include <torrent/exceptions.h>
+
+--- rtorrent-0.8.2.orig/src/rpc/scgi_task.cc    2008-05-07 08:19:10.000000000 -0400
++++ rtorrent-0.8.2/src/rpc/scgi_task.cc 2008-06-25 17:41:41.493886588 -0400
+@@ -134,7 +134,7 @@
+     if (current == m_buffer || *current != ':' || headerSize < 17 || headerSize > max_header_size)
+       goto event_read_failed;
+
+-    if (std::distance(++current, m_position) < headerSize + 1)
++    if (m_position - (++current) < headerSize + 1)
+       return;
+
+     if (std::memcmp(current, "CONTENT_LENGTH", 15) != 0)
+@@ -147,7 +147,7 @@
+       goto event_read_failed;
+
+     m_body = current + headerSize + 1;
+-    headerSize = std::distance(m_buffer, m_body);
++    headerSize = m_body - m_buffer;
+
+     if ((unsigned int)(contentSize + headerSize) < m_bufferSize) {
+       m_bufferSize = contentSize + headerSize;
+@@ -155,26 +155,26 @@
+     } else if ((unsigned int)contentSize <= default_buffer_size) {
+       m_bufferSize = contentSize;
+
+-      std::memmove(m_buffer, m_body, std::distance(m_body, m_position));
+-      m_position = m_buffer + std::distance(m_body, m_position);
++      std::memmove(m_buffer, m_body, m_position - m_body);
++      m_position = m_buffer + (m_position - m_body);
+       m_body = m_buffer;
+
+     } else {
+-      realloc_buffer((m_bufferSize = contentSize) + 1, m_body, std::distance(m_body, m_position));
++      realloc_buffer((m_bufferSize = contentSize) + 1, m_body, m_position - m_body);
+
+-      m_position = m_buffer + std::distance(m_body, m_position);
++      m_position = m_buffer + (m_position - m_body);
+       m_body = m_buffer;
+     }
+   }
+
+-  if ((unsigned int)std::distance(m_buffer, m_position) != m_bufferSize)
++  if ((unsigned int)(m_position - m_buffer) != m_bufferSize)
+     return;
+
+   control->poll()->remove_read(this);
+   control->poll()->insert_write(this);
+
+   // Close if the call failed, else stay open to write back data.
+-  if (!m_parent->receive_call(this, m_body, m_bufferSize - std::distance(m_buffer, m_body)))
++  if (!m_parent->receive_call(this, m_body, m_bufferSize - (m_body - m_buffer)))
+     close();
+
+   return;
+

@@ -2,26 +2,36 @@ GARNAME = rtorrent
 GARVERSION = 0.8.6
 CATEGORIES = apps
 
-DESCRIPTION = BitTorrent client.
+DESCRIPTION = Client for Unix, based on libtorrent 
 define BLURB
-  BitTorrent library written in C++ for *nix, with a focus on high performance and good code.
-  The library differentiates itself from other implementations by transfering directly from
-  file pages to the network stack. On high-bandwidth connections it is able to seed at 3 times
-  the speed of the official client. 
 endef
 
 MASTER_SITES = http://libtorrent.rakshasa.no/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-RUNTIME_DEP_PKGS = CSWlibtorrent
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+# Patches mostly from http://cr.opensolaris.org/~alz/bittorrent/raw_files/new/usr/src/cmd/rtorrent/
+PATCHFILES = rtorrent-01-solaris.diff 0001-curl_get.patch rtorrent-04-sunpro.diff 
+PATCHFILES += 0001-scgi_task.cc.patch rtorrent-05-sunpro-crash.diff work-around-UNUSED.patch 0001-build-fixes.patch
+PATCHFILES += 0001-more-build-fixes.patch 0001-more-build-fixes2.patch
 
-CONFIGURE_ARGS = $(DIRPATHS)
+EXTRA_CXXFLAGS = -D_RWSTD_ALLOCATOR -mt
+EXTRA_LDFLAGS  = -Wl,-zignore -Wl,-zcombreloc -Wl,-Bdirect
+
+CONFIGURE_ARGS = $(DIRPATHS) --disable-debug
+TEST_TARGET = check
 
 include gar/category.mk
+
+pre-configure-modulated:
+	cd $(WORKSRC) && aclocal-1.10 -I scripts && \
+  automake-1.10 --gnu && autoconf
+
+	$(MAKECOOKIE)
+
+
+#post-configure-modulated:
+#	perl -pi -e 's,\|-xarch=,|-norunpath|-xarch=,' $(WORKSRC)/libtool
+#	@$(MAKECOOKIE)

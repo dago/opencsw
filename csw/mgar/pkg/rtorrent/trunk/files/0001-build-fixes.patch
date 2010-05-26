@@ -1,0 +1,107 @@
+From 425fc5065dd4cc6f0b450ce7864f437eace4e82c Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@testing9s.bo.opencsw.org>
+Date: Mon, 24 May 2010 13:41:29 +0200
+Subject: [PATCH] build-fixes
+
+---
+ src/core/download_list.cc       |    1 +
+ src/core/poll_manager.cc        |    1 +
+ src/display/attributes.h        |    2 +-
+ src/display/window_file_list.cc |    3 ++-
+ src/input/bindings.h            |    2 +-
+ src/input/input_event.cc        |    2 +-
+ src/rpc/command_function.cc     |    1 +
+ 7 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/src/core/download_list.cc b/src/core/download_list.cc
+index 551f873..52bac0e 100644
+--- a/src/core/download_list.cc
++++ b/src/core/download_list.cc
+@@ -37,6 +37,7 @@
+ #include "config.h"
+ 
+ #include <algorithm>
++#include <rak/algorithm.h>
+ #include <iostream>
+ #include <sigc++/adaptors/bind.h>
+ #include <rak/functional.h>
+diff --git a/src/core/poll_manager.cc b/src/core/poll_manager.cc
+index 90df840..458fef5 100644
+--- a/src/core/poll_manager.cc
++++ b/src/core/poll_manager.cc
+@@ -37,6 +37,7 @@
+ #include "config.h"
+ 
+ #include <stdexcept>
++#include <unistd.h>
+ #include <rak/error_number.h>
+ 
+ #include "globals.h"
+diff --git a/src/display/attributes.h b/src/display/attributes.h
+index a4dcfa5..67245af 100644
+--- a/src/display/attributes.h
++++ b/src/display/attributes.h
+@@ -39,7 +39,7 @@
+ 
+ #include <string>
+ #include <vector>
+-#include <ncurses.h>
++#include <ncursesw/ncurses.h>
+ 
+ // Let us hail the creators of curses for being idiots. The only
+ // clever move they made was in the naming.
+diff --git a/src/display/window_file_list.cc b/src/display/window_file_list.cc
+index 540f493..9596f49 100644
+--- a/src/display/window_file_list.cc
++++ b/src/display/window_file_list.cc
+@@ -61,7 +61,8 @@ WindowFileList::WindowFileList(const ui::ElementFileList* element) :
+ // taking into account that some characters may be occupying two screen positions.
+ std::wstring
+ wstring_width(const std::string& i_str, int width) {
+-  wchar_t result[width + 1];
++  //wchar_t result[width + 1];
++  wchar_t* result = new wchar_t[width + 1];
+   size_t length = std::mbstowcs(result, i_str.c_str(), width);
+ 
+   // If not valid UTF-8 encoding, at least copy the printable characters.
+diff --git a/src/input/bindings.h b/src/input/bindings.h
+index 8b200db..657a513 100644
+--- a/src/input/bindings.h
++++ b/src/input/bindings.h
+@@ -38,7 +38,7 @@
+ #define RTORRENT_INPUT_BINDINGS_H
+ 
+ #include <map>
+-#include <ncurses.h>
++#include <ncursesw/ncurses.h>
+ #include <sigc++/functors/slot.h>
+ 
+ namespace input {
+diff --git a/src/input/input_event.cc b/src/input/input_event.cc
+index ce3078a..300269e 100644
+--- a/src/input/input_event.cc
++++ b/src/input/input_event.cc
+@@ -36,7 +36,7 @@
+ 
+ #include "config.h"
+ 
+-#include <ncurses.h>
++#include <ncursesw/ncurses.h>
+ #define NCURSES_ERR -1
+ 
+ #include "input_event.h"
+diff --git a/src/rpc/command_function.cc b/src/rpc/command_function.cc
+index 7f3c331..febca80 100644
+--- a/src/rpc/command_function.cc
++++ b/src/rpc/command_function.cc
+@@ -37,6 +37,7 @@
+ #include "config.h"
+ 
+ #include <algorithm>
++#include <rak/algorithm.h>
+ #include <functional>
+ #include <rak/functional.h>
+ 
+-- 
+1.7.0
+

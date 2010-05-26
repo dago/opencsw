@@ -1,0 +1,25 @@
+From 2f43d953cfe749e381cf0d011d37c7177dc25151 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@testing9s.bo.opencsw.org>
+Date: Sun, 23 May 2010 14:10:27 +0200
+Subject: [PATCH] curl_get
+
+---
+ src/core/curl_get.cc |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/core/curl_get.cc b/src/core/curl_get.cc
+index f0767b7..5c4b73c 100644
+--- a/src/core/curl_get.cc
++++ b/src/core/curl_get.cc
+@@ -88,7 +88,7 @@ CurlGet::start() {
+   curl_easy_setopt(m_handle, CURLOPT_NOSIGNAL,       (long)1);
+   curl_easy_setopt(m_handle, CURLOPT_FOLLOWLOCATION, (long)1);
+   curl_easy_setopt(m_handle, CURLOPT_MAXREDIRS,      (long)5);
+-  curl_easy_setopt(m_handle, CURLOPT_IPRESOLVE,      CURL_IPRESOLVE_V4);
++  curl_easy_setopt(m_handle, CURLOPT_IPRESOLVE,      CURL_IPRESOLVE_WHATEVER);
+   curl_easy_setopt(m_handle, CURLOPT_ENCODING,       "");
+ 
+   m_stack->add_get(this);
+-- 
+1.7.0
+

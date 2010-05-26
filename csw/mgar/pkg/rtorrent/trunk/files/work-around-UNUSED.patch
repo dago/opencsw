@@ -1,0 +1,25 @@
+From 5a6aaf6dd0b924c323d591986117823457bdb387 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@current9s.(none)>
+Date: Thu, 20 May 2010 10:59:04 +0200
+Subject: [PATCH] work around __UNUSED
+
+---
+ rak/string_manip.h             |    2 ++
+ 3 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/rak/string_manip.h b/rak/string_manip.h
+index b3f3037..a4f1a6c 100644
+--- a/rak/string_manip.h
++++ b/rak/string_manip.h
+@@ -43,6 +43,8 @@
+ #include <iterator>
+ #include <locale>
+ 
++#define __UNUSED
++
+ namespace rak {
+ 
+ // Use these trim functions until n1872 is widely supported.
+-- 
+1.7.1
+
