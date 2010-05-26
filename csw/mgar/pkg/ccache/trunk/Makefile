@@ -20,5 +20,6 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
+EXTRA_CFLAGS = -D__EXTENSIONS__
 
 include gar/category.mk
