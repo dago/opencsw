@@ -1,5 +1,4 @@
 # Todo:
-#
 # * Check sf project page for patches and threads related to CPU saturation
 # * Run some real world performance tests
 # * Submit feedback upstream: 
@@ -20,8 +19,13 @@ define BLURB
   delay jitter, datagram loss. 
 endef
 
+VENDOR_URL   = http://iperf.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=128336
+UPSTREAM_USE_SF = 1
 
 # Add some explicit language linkage declarations. 
 #
@@ -37,20 +41,9 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # function. The linkages must therefore match."
 PATCHFILES = gar-base.diff
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=128336
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
 TEST_SCRIPTS = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
-
-# Tell CC not to include additional directories in R*PATH, otherwise we end
-# up with something like
-# [11]    RUNPATH         /opt/csw/lib/$ISALIST:/opt/csw/lib:/opt/studio/SOS11/SUNWspro/lib/rw7:/opt/studio/SOS11/SUNWspro/lib:/opt/SUNWspro/lib:/usr/ccs/lib:/lib:/usr/lib
-# [12]    RPATH           /opt/csw/lib/$ISALIST:/opt/csw/lib:/opt/studio/SOS11/SUNWspro/lib/rw7:/opt/studio/SOS11/SUNWspro/lib:/opt/SUNWspro/lib:/usr/ccs/lib:/lib:/usr/lib
-EXTRA_CXX_FLAGS = -norunpath
 
 include gar/category.mk
 
