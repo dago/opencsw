@@ -47,6 +47,8 @@ TEST_SCRIPTS =
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+EXTRA_PAX_ARGS = '-s,ChangeLog,changelog,p'
+
 include gar/category.mk
 
 # * Get rid of gcc -Walls 
@@ -62,8 +64,9 @@ pre-configure-modulated:
 		$(WORKSRC)/src/Makefile.in
 	@$(MAKECOOKIE)
 
+post-install-modulated: DOCS = ChangeLog AUTHORS
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@(cd $(WORKSRC) && cp Changelog AUTHORS $(DOCDEST))
+	ginstall -d $(DOCDEST)
+	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
 	@$(MAKECOOKIE)
