@@ -15,13 +15,15 @@ PATCHFILES = 0001-Comment-out-define-as-we-are-on-Sun-Studio.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES  = CSWlibsigc++
-PACKAGES += CSWlibsigc++devel
-SPKG_DESC_CSWlibsigc++ = Typesafe signal and callback system for C++
+PACKAGES  = CSWlibsigc++ CSWlibsigc++devel
+
+SPKG_DESC_CSWlibsigc++      = Typesafe signal and callback system for C++
 SPKG_DESC_CSWlibsigc++devel = Header files and docs for libsigc++
 
-CATALOGNAME_CSWlibsigc++= libsigc++
+CATALOGNAME_CSWlibsigc++      = libsigc++
 CATALOGNAME_CSWlibsigc++devel = libsigc++_devel 
+
+RUNTIME_DEP_PKGS_CSWlibsigc++devel = CSWlibsigc++
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
@@ -32,6 +34,8 @@ PKGFILES_CSWlibsigc++devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibsigc++devel += $(docdir)/.*
 PKGFILES_CSWlibsigc++devel += .*\.h
 PKGFILES_CSWlibsigc++devel += $(sharedstatedir)/.*
+
+CHECKPKG_OVERRIDES_CSWlibsigc++devel += surplus-dependency|CSWlibsigc++
 
 include gar/category.mk
 
