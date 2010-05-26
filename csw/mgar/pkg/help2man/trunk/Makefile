@@ -1,5 +1,5 @@
 GARNAME = help2man
-GARVERSION = 1.38.1
+GARVERSION = 1.38.2
 CATEGORIES = devel
 
 DESCRIPTION = A tool for automatically generating simple manual pages from program output
