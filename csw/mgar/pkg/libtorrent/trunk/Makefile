@@ -32,7 +32,8 @@ CATALOGNAME_CSWlibtorrentdevel = libtorrent_devel
 SPKG_DESC_CSWlibtorrent      = BitTorrent library written in C++ for *nix
 SPKG_DESC_CSWlibtorrentdevel = Development files for libtorrent
 
-RUNTIME_DEP_PKGS_CSWlibtorrent = CSWosslrt CSWlibsigc++
+RUNTIME_DEP_PKGS_CSWlibtorrent      = CSWosslrt CSWlibsigc++
+RUNTIME_DEP_PKGS_CSWlibtorrentdevel = CSWlibtorrent
 
 PKGFILES_CSWlibtorrentdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibtorrentdevel += $(docdir)/.*
