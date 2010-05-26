@@ -56,9 +56,9 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
 	@ginstall -m 444 $(WORKSRC)/changes.txt $(DESTDIR)$(docdir)/$(CATALOGNAME)
 	@ginstall -m 444 $(WORKSRC)/documentation.txt $(DESTDIR)$(docdir)/$(CATALOGNAME)
-	@ginstall -m 755 $(WORKSRC)/todo.txt $(DESTDIR)$(docdir)/$(CATALOGNAME)
+	@ginstall -m 444 $(WORKSRC)/todo.txt $(DESTDIR)$(docdir)/$(CATALOGNAME)
 	@ginstall -m 755 -d $(DESTDIR)$(mandir)/man5
-	@ginstall -m 755 $(WORKSRC)/policyd-weight.conf.5 $(DESTDIR)$(mandir)/man5
+	@ginstall -m 644 $(WORKSRC)/policyd-weight.conf.5 $(DESTDIR)$(mandir)/man5
 	@ginstall -m 755 -d $(DESTDIR)$(mandir)/man8
-	@ginstall -m 755 $(WORKSRC)/policyd-weight.8 $(DESTDIR)$(mandir)/man8
+	@ginstall -m 644 $(WORKSRC)/policyd-weight.8 $(DESTDIR)$(mandir)/man8
 	@$(MAKECOOKIE)
