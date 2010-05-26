@@ -1,5 +1,5 @@
 GARNAME = pbzip2
-GARVERSION = 1.1.0
+GARVERSION = 1.1.1
 CATEGORIES = utils
 
 DESCRIPTION = Parallel BZIP2 Data Compression Software
@@ -38,7 +38,7 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 pre-build-modulated:
-	@gsed -i'' 's,-pthread,-I$(includedir) -L$(libdir),g;s,g++,$(CXX),;s,-O2,-fast $(CFLAGS),' $(WORKSRC)/Makefile
+	@gsed -i'' 's,-lpthread,-norunpath -lpthread,g;s,-pthread,-I$(includedir) -L$(libdir),g;s,g++,$(CXX),;s,-O2,-fast $(filter-out -xnorunpath,$(CFLAGS)),' $(WORKSRC)/Makefile
 
 install-custom:
 	[ ! -d "$(DESTDIR)$(mandir)/man1" ] && \
