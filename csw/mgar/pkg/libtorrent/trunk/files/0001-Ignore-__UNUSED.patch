@@ -1,16 +1,17 @@
-From 5a6aaf6dd0b924c323d591986117823457bdb387 Mon Sep 17 00:00:00 2001
-From: Jan Holzhueter <jh@current9s.(none)>
-Date: Thu, 20 May 2010 10:59:04 +0200
-Subject: [PATCH] work around __UNUSED
+From 6772f16c668c4e8567087d4c5fe2a4c9433a733e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 26 May 2010 15:37:18 +0200
+Subject: [PATCH] Ignore __UNUSED
 
 ---
  rak/string_manip.h             |    2 ++
  src/download/chunk_selector.cc |    2 ++
  src/torrent/poll_kqueue.cc     |    2 ++
- 3 files changed, 6 insertions(+), 0 deletions(-)
+ src/torrent/resume.cc          |    2 ++
+ 4 files changed, 8 insertions(+), 0 deletions(-)
 
 diff --git a/rak/string_manip.h b/rak/string_manip.h
-index b3f3037..a4f1a6c 100644
+index 4fb2554..9d66e96 100644
 --- a/rak/string_manip.h
 +++ b/rak/string_manip.h
 @@ -43,6 +43,8 @@
@@ -23,7 +24,7 @@ index b3f3037..a4f1a6c 100644
  
  // Use these trim functions until n1872 is widely supported.
 diff --git a/src/download/chunk_selector.cc b/src/download/chunk_selector.cc
-index f814cb2..5685dc1 100644
+index d3c956b..7f2df87 100644
 --- a/src/download/chunk_selector.cc
 +++ b/src/download/chunk_selector.cc
 @@ -46,6 +46,8 @@
@@ -36,18 +37,31 @@ index f814cb2..5685dc1 100644
  
  // Consider making statistics a part of selector.
 diff --git a/src/torrent/poll_kqueue.cc b/src/torrent/poll_kqueue.cc
-index 9d4d68a..94e8115 100644
+index 0375b91..1ade627 100644
 --- a/src/torrent/poll_kqueue.cc
 +++ b/src/torrent/poll_kqueue.cc
-@@ -53,6 +53,8 @@
- #include <sys/time.h>
- #endif
+@@ -56,6 +56,8 @@
+ 
+ #include <assert.h>
  
 +#define __UNUSED
 +
  namespace torrent {
  
  #ifdef USE_KQUEUE
+diff --git a/src/torrent/resume.cc b/src/torrent/resume.cc
+index a728830..59c7cf6 100644
+--- a/src/torrent/resume.cc
++++ b/src/torrent/resume.cc
+@@ -58,6 +58,8 @@
+ 
+ #include "resume.h"
+ 
++#define __UNUSED
++
+ namespace torrent {
+ 
+ void
 -- 
-1.7.1
+1.7.0
 

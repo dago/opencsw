@@ -16,30 +16,30 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-#Patches mostly from http://cr.opensolaris.org/~alz/bittorrent/raw_files/new/usr/src/lib/libtorrent/
-
+# Patches from http://cr.opensolaris.org/~alz/bittorrent/raw_files/new/usr/src/lib/libtorrent/
 PATCHFILES = rlibtorrent-04-sunpro.diff rlibtorrent-01-madvise.diff rlibtorrent-03-dh-generate.diff
-PATCHFILES += rlibtorrent-05-tracker-usable.diff work-around-UNUSED.patch more-UNUSED.patch
+PATCHFILES += rlibtorrent-05-tracker-usable.diff
 
+PATCHFILES += 0001-Ignore-__UNUSED.patch
 
-RUNTIME_DEP_PKGS_CSWlibtorrent += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibtorrent += CSWlibsigc++rt
+BUILD_DEP_pkgs = CSWossldevel CSWlibsigc++devel
 
-PACKAGES  = CSWlibtorrent
-PACKAGES += CSWlibtorrentdevel
-SPKG_DESC_CSWlibtorrent = BitTorrent library written in C++ for *nix
-SPKG_DESC_CSWlibtorrentdevel = Header files for libtorrent
+PACKAGES  = CSWlibtorrent CSWlibtorrentdevel
 
-CATALOGNAME_CSWlibtorrent= libtorrent
+CATALOGNAME_CSWlibtorrent      = libtorrent
 CATALOGNAME_CSWlibtorrentdevel = libtorrent_devel
+
+SPKG_DESC_CSWlibtorrent      = BitTorrent library written in C++ for *nix
+SPKG_DESC_CSWlibtorrentdevel = Development files for libtorrent
+
+RUNTIME_DEP_PKGS_CSWlibtorrent = CSWosslrt CSWlibsigc++
 
 PKGFILES_CSWlibtorrentdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibtorrentdevel += $(docdir)/.*
 PKGFILES_CSWlibtorrentdevel += .*\.h
 PKGFILES_CSWlibtorrentdevel += $(sharedstatedir)/.*
 
-#No 64bit build until libsigc++ is 64bit too
-#BUILD64 = 1
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS) --enable-shared --disable-static --disable-libtool-lock --disable-debug
 TEST_TARGET = check
 
