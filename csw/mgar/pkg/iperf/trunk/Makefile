@@ -1,10 +1,12 @@
 # Todo:
+# * Investigate 'redefined' warning messages for int types like INT64_MIN
 # * Check sf project page for patches and threads related to CPU saturation
 # * Run some real world performance tests
 # * Submit feedback upstream: 
 #   - Add AC_CHECK_FUNC or AC_SEARCH_LIBS for sched_yield() so that we get -lrt
 #   - Use PTHREAD_{LIBS,CFLAGS} to amend CFLAGS so that we get -lpthreads
 #   - Submit language linkage declarations patch for review
+#   - iperf_LDFLAGS: use LDFLAGS instead of CFLAGS
 # * Add changelog.CSW
 #
 GARNAME = iperf
@@ -50,10 +52,13 @@ include gar/category.mk
 # * Get rid of gcc -Walls 
 # * LIBS: Append -lrt for sched_yield()
 # * LIBS: Append -lpthread (upstream should use $PTHREAD_{LIBS,CFLAGS} instead
+# * Use LDFLAGS for iperf_LDFLAGS instead of CFLAGS *sigh*
 pre-configure-modulated:
-	@perl -pi -e 's|-Wall||; s|\@LIBS\@|\@LIBS\@ -lrt -lpthread|' \
+	perl -pi -e 's|-Wall||; s|\@LIBS\@|\@LIBS\@ -lrt -lpthread|' \
 		$(WORKSRC)/Makefile.in \
 		$(WORKSRC)/compat/Makefile.in \
+		$(WORKSRC)/src/Makefile.in
+	gsed -i 's,^iperf_LDFLAGS = @CFLAGS@,iperf_LDFLAGS = @LDFLAGS@,' \
 		$(WORKSRC)/src/Makefile.in
 	@$(MAKECOOKIE)
 
