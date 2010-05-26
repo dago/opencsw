@@ -50,6 +50,10 @@ CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --with-transports="UDP TCP Unix"
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
+# Disable testsuite until this has been fixed or /tmp will fill up:
+#   https://sourceforge.net/tracker/?func=detail&aid=3006962&group_id=12694&atid=112694
+SKIPTEST ?= 1
+
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
 
 MERGE_DIRS_isa-extra = $(libdir)
