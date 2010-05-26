@@ -33,6 +33,10 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
+# We must use the same compiler as Perl was compiled with or the compile
+# flags will not be properly recognized
+GARCOMPILER = SOS11
+
 BUILD64 = 1
 NOISAEXEC = 1
 
@@ -57,7 +61,8 @@ CONFIGURE_ARGS += --with-transports="UDP TCP Unix"
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_os-$(GAROSREL))
 
-# Some tests are failing, disable for now, investigate later!
+# Disable testsuite until this is fixed:
+#   https://sourceforge.net/tracker/?func=detail&aid=3007318&group_id=12694&atid=112694
 SKIPTEST ?= 1
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
