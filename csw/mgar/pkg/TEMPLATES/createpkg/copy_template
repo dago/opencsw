@@ -47,6 +47,7 @@ EOF
 
 
 cp $template_dir/Makefile* $DESTDIR
+cp $template_dir/README* $DESTDIR
 cp $template_dir/prototype* $DESTDIR
 $template_dir/generate_pkginfo >$DESTDIR/pkginfo
 print "OPENCSW_REPOSITORY=$MY_SVN_DIR/$DESTDIR" >>$DESTDIR/pkginfo

@@ -1,0 +1,47 @@
+This is a README for the "createpkg" style templates in the
+OpenCSW subversion tree. It gets copied to a brand new directory, when it
+is created with "make createpkg-softwarenamehere"
+
+Instructions:
+
+the first thing you should do, is
+
+  svn status
+
+with this, you will notice that no files in the directory are actually checked
+into subversion yet.  You should edit (or remove) the files as you deem 
+apropriate, and then
+
+  svn add   filename(s)
+
+the ones you want to keep in the repository.
+
+If you are doing a general-case binary build package, then you will next need
+to do the following:
+
+1. Set up your environment variables as appropriate, and/or
+  set the appropriate variables in Makefile
+
+2. mkdir build
+
+3.  extract the source tree of whatever you are building, in the build dir.
+
+4. make
+
+You also have a choice of some optional subtargets, such as
+  make  {configure,build,package,clean,reallyclean}
+
+If you wish a patch set to be applied to the source before configure, create
+a file called "patchfile.preconf" and put them there.
+
+If you wish a patch set to be applied to the source AFTER configure, but
+before compiling (for example, to hand-hack config.h) create a file called
+"patchfile.postconf"
+
+
+DONT FORGET to update all fields in the pkginfo file, and also to create
+appropriate copyright, depend and prototype files.
+If you dont know what to put into
+the prototype file, an initial build will most likely bomb out, after creating
+one for you in build/*/cswstage/prototype.
+

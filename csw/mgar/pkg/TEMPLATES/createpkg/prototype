@@ -1,3 +1,4 @@
 i pkginfo
 i depend
 i copyright
+f none /some/file/here 0755 root bin
