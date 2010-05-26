@@ -148,6 +148,7 @@ PATCHFILES += 0001-make-subversion-sysconfigdir-as-it-should-be-for-csw.patch
 SVNLIB     = $(prefix)/lib/svn
 JAVA_HOME  = /usr/jdk1.6.0_20
 
+EXTRA_INC  = /opt/csw/bdb48/include
 EXTRA_INC += $(prefix)/apache2/include
 
 EXTRA_LIB  = /opt/csw/bdb48/lib
