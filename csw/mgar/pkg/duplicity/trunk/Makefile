@@ -29,6 +29,12 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_PAX_ARGS  = '-s,/doc/$(GARNAME)-$(GARVERSION),/doc/$(GARNAME),p'
 
+CHECKPKG_OVERRIDES_CSWduplicity += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWduplicity += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWduplicity += surplus-dependency|CSWpy-boto
+CHECKPKG_OVERRIDES_CSWduplicity += surplus-dependency|CSWgnupg
+CHECKPKG_OVERRIDES_CSWduplicity += surplus-dependency|CSWncftp
+
 include gar/category.mk
 
 # Clean up the docdir a bit ... I wish pax wouldn't exit after the first match.
