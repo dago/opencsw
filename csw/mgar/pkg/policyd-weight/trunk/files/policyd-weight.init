@@ -11,6 +11,7 @@
 
 SERVICE=policyd-weight
 PATH=/opt/csw/bin:/opt/csw/sbin:/usr/bin:/usr/sbin
+export PATH
 
 ZONE= # used for initialization, do not change
 
