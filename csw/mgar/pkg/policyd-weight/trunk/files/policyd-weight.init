@@ -9,9 +9,6 @@
 # Source SMF includes
 [ -r /lib/svc/share/smf_include.sh ] && . /lib/svc/share/smf_include.sh
 
-# Source config file
-[ -r /etc/opt/csw/postfix/policyd-weight.conf ] && . /etc/opt/csw/postfix/policyd-weight.conf
-
 SERVICE=policyd-weight
 PATH=$PATH:/usr/bin:/opt/csw/bin
 
@@ -20,7 +17,7 @@ ZONE= # used for initialization, do not change
 case "$1" in
   start)
         echo "Starting $SERVICE ..."
-        /opt/csw/sbin/policyd-weight -f /etc/opt/csw/postfix/policyd-weight.conf
+        [ -r /etc/opt/csw/policyd-weight.conf ] && /opt/csw/sbin/policyd-weight -f /etc/opt/csw/policyd-weight.conf || /opt/csw/sbin/policyd-weight
         ;;
   stop)
         echo "Stopping $SERVICE ..."
