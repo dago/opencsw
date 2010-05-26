@@ -18,8 +18,7 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 # Couldn't find a parsable 'stable' releases page
 # UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS  = CSWpython
-RUNTIME_DEP_PKGS += CSWpy-boto
+RUNTIME_DEP_PKGS  = CSWpy-boto
 RUNTIME_DEP_PKGS += CSWlibrsync
 RUNTIME_DEP_PKGS += CSWgnupg
 RUNTIME_DEP_PKGS += CSWncftp
