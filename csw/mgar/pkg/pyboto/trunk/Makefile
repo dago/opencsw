@@ -24,6 +24,11 @@ ARCHALL = 1
 
 include gar/category.mk
 
+post-install-modulated:
+	ginstall -D $(WORKSRC)/README \
+		$(DESTDIR)$(docdir)/$(CATALOGNAME)/README
+	@$(MAKECOOKIE)
+
 # Install changelog.CSW
 post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
 install-changelog-%:
