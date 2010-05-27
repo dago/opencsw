@@ -29,12 +29,15 @@ build:	build/.config.done
 
 # dummy target for configure
 build/.config.done:
+	@echo Configuring with:
+	@echo CC=$(CC) $(CFLAGS)
+	@echo CXX=$(CXX) $(CXXFLAGS)
 	(cd $(BUILDDIR) ; \
 	test -f ../../patchfile.preconf && \
 		gpatch -p0 <../../patchfile.preconf ; \
-	./configure --prefix=/opt/csw --enable-static=no ; \
-	test -f ../../patchfile.postconf && \
-                 gpatch -p0 <../../patchfile.postconf )
+	./configure --prefix=/opt/csw ; \
+	if test -f ../../patchfile.postconf ; then \
+                 gpatch -p0 <../../patchfile.postconf ; fi)
 	touch build/.config.done
 
 
