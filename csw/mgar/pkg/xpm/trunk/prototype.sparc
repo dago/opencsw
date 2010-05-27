@@ -18,3 +18,8 @@ s none /opt/csw/lib/libXpm.so.4=libXpm.so.4.11.0
 s none /opt/csw/lib/libXpm.so=libXpm.so.4.11.0
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/xpm.pc 0644 root bin
+f none /opt/csw/lib/sparcv9/libXpm.so.4.11.0 0755 root bin
+s none /opt/csw/lib/sparcv9/libXpm.so.4=libXpm.so.4.11.0
+s none /opt/csw/lib/sparcv9/libXpm.so=libXpm.so.4.11.0
+d none /opt/csw/lib/sparcv9/pkgconfig 0755 root bin
+f none /opt/csw/lib/sparcv9/pkgconfig/xpm.pc 0644 root bin
