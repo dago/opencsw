@@ -1,25 +1,57 @@
-GARNAME = gawk
-GARVERSION = 3.1.3
-CATEGORIES = utils
+#This Makefile originally generated from a template under 
+# pkg/TEMPLATES/createpkg
+# You will most likely have to use GNU make to use it.
 
-DESCRIPTION = A pattern scanning and processing language.
-define BLURB
-    The awk utility interprets a special-purpose programming language that makes it
-    possible to handle simple data-reformatting jobs with just a few lines of code.
-endef
 
-MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+#Uncomment one of these definitions. The -b invokation,
+# is suitable for use with small packages, where you want to have a few files
+# in your top level src directory. It is also suitable for
+# "relocateable" packages. see the createpkg docs for more details.
+#CREATEPKG=createpkg -b `pwd`
+CREATEPKG=createpkg -r `pwd`/build/*/cswstage
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+BUILDDIR=build/*
 
-INSTALL_ARGS = $(foreach VAR, bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir infodir mandir includedir,$(VAR)=$($(VAR)))
 
-include gar/category.mk
 
-post-install:
-	(cd $(DESTDIR)$(bindir); ln -sf gawk awk)
-	$(MAKECOOKIE)
+STDFILES=pkginfo copyright prototype
+FILES=
+
+all:	build package
+
+
+build:	build/.config.done
+	(cd $(BUILDDIR) ; \
+	$(MAKE) ; \
+	stagepkg  )
+
+
+# dummy target for configure
+build/.config.done:
+	(cd $(BUILDDIR) ; \
+	test -f ../../patchfile.preconf && \
+		gpatch -p0 <../../patchfile.preconf ; \
+	./configure --prefix=/opt/csw --enable-static=no ; \
+	test -f ../../patchfile.postconf && \
+                 gpatch -p0 <../../patchfile.postconf )
+	touch build/.config.done
+
+
+# I tried depending this on   $(BUILDDIR)/config.log  but that didnt stick
+configure:	build/.config.done
+
+package:	$(STDFILE) $(FILES) build
+	$(CREATEPKG)
+
+
+
+pkgclean:
+	rm -f *.pkg.gz package
+
+clean:	pkgclean
+	cd $(BUILDDIR) && make clean
+
+reallyclean:	clean
+	rm -f $BUILDDIR/config.log $BUILDDIR/config.cache $BUILDDIR/config.status
+	rm -f build/.config.done	
