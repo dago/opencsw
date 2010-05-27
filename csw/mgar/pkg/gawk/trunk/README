@@ -1,0 +1,14 @@
+Fine-tuning notes on gawk building:
+
+if [ `uname -p` = i386 ] ; then
+CC=cc CFLAGS='-xstrconst -fast -xarch=386' ./configure --prefix=/opt/csw
+else
+CC=cc CFLAGS='-xstrconst -fast -xarch=v8' ./configure --prefix=/opt/csw
+fi
+
+
+# do NOT use  --program-prefix=g
+# For prototype fixups:
+#    change gawk-3.x.x if appropriate
+#    remove info/dir line
+#    change awk=gawk symlink to be for /opt/csw/gnu

@@ -1,0 +1,10 @@
+PKG=CSWgawk
+NAME=gawk - GNU AWK
+VERSION=3.1.8,REV=2010.05.26
+ARCH=i386
+CATEGORY=system
+VENDOR=http://ftp.gnu.org/pub/gnu/gawk packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/gawk/trunk
+CLASSES=none cswtexinfo
