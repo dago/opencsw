@@ -1,13 +1,10 @@
 # Todo:
-# * Investigate 'redefined' warning messages for int types like INT64_MIN
-# * Check sf project page for patches and threads related to CPU saturation
-# * Run some real world performance tests
 # * Submit feedback upstream: 
 #   - Add AC_CHECK_FUNC or AC_SEARCH_LIBS for sched_yield() so that we get -lrt
 #   - Use PTHREAD_{LIBS,CFLAGS} to amend CFLAGS so that we get -lpthreads
 #   - Submit language linkage declarations patch for review
 #   - iperf_LDFLAGS: use LDFLAGS instead of CFLAGS
-# * Add changelog.CSW
+# * #ifndef INT*_{MIN,MAX} in include/iperf-int.h to avoid redefined warnings
 #
 GARNAME = iperf
 GARVERSION = 2.0.4
@@ -69,4 +66,11 @@ post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
+	@$(MAKECOOKIE)
+
+# Install changelog.CSW
+post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
+install-changelog-%:
+	ginstall -D $(FILEDIR)/changelog.CSW \
+		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
 	@$(MAKECOOKIE)
