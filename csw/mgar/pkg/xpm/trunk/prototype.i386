@@ -1,0 +1,20 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/cxpm.1 0644 root bin
+f none /opt/csw/share/man/man1/sxpm.1 0644 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/sxpm 0755 root bin
+f none /opt/csw/bin/cxpm 0755 root bin
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/X11 0755 root bin
+f none /opt/csw/include/X11/xpm.h 0644 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libXpm.so.4.11.0 0755 root bin
+s none /opt/csw/lib/libXpm.so.4=libXpm.so.4.11.0
+s none /opt/csw/lib/libXpm.so=libXpm.so.4.11.0
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/xpm.pc 0644 root bin
