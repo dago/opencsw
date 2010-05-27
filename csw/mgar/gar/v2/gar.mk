@@ -425,11 +425,13 @@ pre-extract-git-check:
 	@$(MAKECOOKIE)
 
 post-extract-gitsnap: $(EXTRACT_TARGETS)
-	@echo ' ==> Snapshotting extracted source tree with git'
-	@( cd $(WORKSRC); git init; git add .; \
+	@( if [ -d "$(WORKSRC)" ]; then \
+		echo ' ==> Snapshotting extracted source tree with git'; \
+		cd $(WORKSRC); git init; git add .; \
 		git commit -m "Upstream $(GARVERSION)"; \
 		git tag -am "Upstream $(GARVERSION)" upstream-$(GARVERSION); \
-		git checkout -b csw )
+		git checkout -b csw; \
+	   fi )
 	@$(MAKECOOKIE)
 
 # returns true if extract has completed successfully, false
@@ -459,8 +461,12 @@ patch-p:
 	@$(foreach COOKIEFILE,$(PATCH_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
 post-patch-gitsnap: $(PATCH_TARGETS)
-	@echo "Tagging top of current csw patch stack..."
-	@( cd $(WORKSRC); git tag -am "CSW $(GARVERSION)" csw-$(GARVERSION) )
+
+	@( if [ -d "$(WORKSRC)/.git" ]; then \
+		echo "Tagging top of current csw patch stack..."; \
+		cd $(WORKSRC); \
+		git tag -am "CSW $(GARVERSION)" csw-$(GARVERSION); \
+	  fi )
 	@$(MAKECOOKIE)
 
 makepatch: $(addprefix patch-,$(MODULATIONS)) $(addprefix makepatch-,$(MODULATIONS))
@@ -468,8 +474,9 @@ makepatch: $(addprefix patch-,$(MODULATIONS)) $(addprefix makepatch-,$(MODULATIO
 
 # Allow generation of patches from modified work source.
 makepatch-modulated: $(FILEDIR)
-	@echo " ==> Makepatch: Looking for changes in modulation $(MODULATION)"
-	@( cd $(WORKSRC); \
+	@( if [ -d "$(WORKSRC)/.git" ]; then \
+		echo " ==> Makepatch: Looking for changes in modulation $(MODULATION)"; \
+		cd $(WORKSRC); \
 		git add -A; \
 		git diff --cached --quiet; \
 		if test $$? -eq 0; then \
@@ -483,8 +490,10 @@ makepatch-modulated: $(FILEDIR)
 			echo PATCHFILES +=  0001*; \
 			echo "(or maybe PATCHFILES_$(MODULATION) ??)"; \
 			mv 0001* $(abspath $(FILEDIR)); ) \
-		fi )
-
+		fi; \
+	    else \
+		echo "No extracted sources so we can't create patches..."; \
+	    fi )
 
 # XXX: Allow patching of pristine sources separate from ISA directories
 # XXX: Use makepatch on global/
