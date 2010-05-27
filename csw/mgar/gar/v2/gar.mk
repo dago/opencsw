@@ -1,4 +1,3 @@
-
 #
 # $Id$
 #
@@ -145,6 +144,7 @@ endef
 define _modulate_do
 $(call _modulate_target,extract,$(2),$(4))
 $(call _modulate_target,patch,$(2),$(4))
+$(call _modulate_target_nocookie,makepatch,$(2),$(4))
 $(call _modulate_target,configure,$(2),$(4))
 $(call _modulate_target_nocookie,reset-configure,$(2),$(4))
 $(call _modulate_target,build,$(2),$(4))
@@ -380,7 +380,7 @@ EXTRACT_TARGETS = $(or $(EXTRACT_TARGETS-$(MODULATION)),$(EXTRACT_TARGETS-defaul
 
 # We call an additional extract-modulated without resetting any variables so
 # a complete unpacked set goes to the global dir for packaging (like gspec)
-extract: checksum $(COOKIEDIR) pre-extract extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
+extract: checksum $(COOKIEDIR) pre-extract pre-extract-git-check extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
 	@$(DONADA)
 
 extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
@@ -390,8 +390,47 @@ extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
 extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
 		announce-modulation \
-		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated
+		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) $(if $(filter global,$(MODULATION)),,post-extract-gitsnap) post-extract-$(MODULATION) post-extract-modulated
 	@$(DONADA)
+
+pre-extract-git-check:
+	@( if [ ! -f $(HOME)/.gitconfig ]; then \
+		name=`getent passwd $$USER | awk -F: '{print $$5}'`; \
+		echo "===================================================="; \
+		echo "You need to create a basic ~/.gitconfig."; \
+		echo "Try: "; \
+		echo "	git config --global user.email $$USER@opencsw.org"; \
+		echo "	git config --global user.name \"$$name\""; \
+		echo "===================================================="; \
+		exit 1; \
+	  else \
+		g_email=`git config --global user.email`; \
+		g_name=`git config --global user.name`; \
+		email=$$USER@opencsw.org; \
+		name=`getent passwd $$USER | awk -F: '{print $$5}'`; \
+		if [ -z "$$g_email" ]; then \
+		  echo "==================================================="; \
+		  echo "Your ~/.gitconfig doesn't define user.email.  Try:"; \
+		  echo "  git config --global user.email $$email"; \
+		  echo "==================================================="; \
+		  exit 1; \
+		elif [ -z "$$g_name" ]; then \
+		  echo "==================================================="; \
+		  echo "Your ~/.gitconfig doesn't define user.name.  Try:"; \
+		  echo "  git config --global user.name '$$name'"; \
+		  echo "==================================================="; \
+		  exit 1; \
+		fi; \
+	  fi )
+	@$(MAKECOOKIE)
+
+post-extract-gitsnap: $(EXTRACT_TARGETS)
+	@echo ' ==> Snapshotting extracted source tree with git'
+	@( cd $(WORKSRC); git init; git add .; \
+		git commit -m "Upstream $(GARVERSION)"; \
+		git tag -am "Upstream $(GARVERSION)" upstream-$(GARVERSION); \
+		git checkout -b csw )
+	@$(MAKECOOKIE)
 
 # returns true if extract has completed successfully, false
 # otherwise
@@ -411,7 +450,7 @@ PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES) $(PATCHFILES_$(MODULATI
 patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
 
-patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) post-patch-$(MODULATION) post-patch-modulated
+patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) $(if $(filter global,$(MODULATION)),,post-patch-gitsnap) post-patch-$(MODULATION) post-patch-modulated
 	@$(DONADA)
 
 # returns true if patch has completed successfully, false
@@ -419,11 +458,33 @@ patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MO
 patch-p:
 	@$(foreach COOKIEFILE,$(PATCH_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
 
-# makepatch		- Grab the upstream source and diff against $(WORKSRC).  Since
-# 				  diff returns 1 if there are differences, we remove the patch
-# 				  file on "success".  Goofy diff.
-makepatch: $(SCRATCHDIR) $(FILEDIR) $(FILEDIR)/gar-base.diff
-	$(DONADA)
+post-patch-gitsnap: $(PATCH_TARGETS)
+	@echo "Tagging top of current csw patch stack..."
+	@( cd $(WORKSRC); git tag -am "CSW $(GARVERSION)" csw-$(GARVERSION) )
+	@$(MAKECOOKIE)
+
+makepatch: $(addprefix patch-,$(MODULATIONS)) $(addprefix makepatch-,$(MODULATIONS))
+	@$(DONADA)
+
+# Allow generation of patches from modified work source.
+makepatch-modulated: $(FILEDIR)
+	@echo " ==> Makepatch: Looking for changes in modulation $(MODULATION)"
+	@( cd $(WORKSRC); \
+		git add -A; \
+		git diff --cached --quiet; \
+		if test $$? -eq 0; then \
+			echo "No changes."; \
+		else \
+			echo "Capturing changes..."; \
+			git commit $(GIT_COMMIT_OPTS) && \
+			( git format-patch csw-$(GARVERSION); \
+			echo Add the following to your recipe and then; \
+			echo rerun: gmake makesums; \
+			echo PATCHFILES +=  0001*; \
+			echo "(or maybe PATCHFILES_$(MODULATION) ??)"; \
+			mv 0001* $(abspath $(FILEDIR)); ) \
+		fi )
+
 
 # XXX: Allow patching of pristine sources separate from ISA directories
 # XXX: Use makepatch on global/

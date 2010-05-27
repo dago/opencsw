@@ -50,6 +50,10 @@ ELISP_DIRS ?= $(datadir)/emacs/site-lisp $(EXTRA_ELISP_DIRS)
 GIT_PROXY_SCRIPT ?= $(abspath $(GARBIN))/gitproxy
 GIT_DEFAULT_TRACK = +refs/heads/master:refs/remotes/origin/master
 
+# if a user always wants --signoff, for example.  used in makepatch
+# by default, the -v will show the diff being committed...
+GIT_COMMIT_OPTS ?= -v
+
 # For parallel builds
 PARALLELMODULATIONS ?= 
 MULTITAIL ?= /opt/csw/bin/multitail
@@ -184,10 +188,11 @@ DEF_BASE_PKGS += CSWpy-yaml
 DEF_BASE_PKGS += CSWpython
 DEF_BASE_PKGS += CSWtextutils
 DEF_BASE_PKGS += CSWwget
+DEF_BASE_PKGS += CSWgit
 
 ifdef GIT_REPOS
 # netcat and bash are for the gitproxy script.
-DEF_BASE_PKGS += CSWgit CSWnetcat
+DEF_BASE_PKGS += CSWnetcat
 endif
 
 PREREQUISITE_BASE_PKGS ?= $(DEF_BASE_PKGS)
