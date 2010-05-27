@@ -11,8 +11,12 @@
 CREATEPKG=createpkg -r `pwd`/build/*/cswstage
 
 
-BUILDDIR=build/*
+BUILDDIR=build/libXpm*
 
+
+## hax for sparcv9
+RAWLIB=libXpm.so.4.11.0
+XPM_PC=build/libXpm-3.5.8/cswstage/opt/csw/lib/pkgconfig/xpm.pc
 
 
 STDFILES=pkginfo copyright prototype
@@ -27,6 +31,21 @@ build:	build/.config.done
 	stagepkg  )
 
 
+sparcv9:
+	(cd $(BUILDDIR)/src ; \
+	gmake clean;  \
+	gmake CFLAGS='-xstrconst -fast -xarch=v9' \
+	  LDFLAGS='-R/opt/csw/lib/sparcv9 -L/opt/csw/lib/sparcv9'  ; \
+	  strip .libs/$(RAWLIB); \
+	  cp .libs/$(RAWLIB) ../cswstage ; cd .. ;\
+	  sed 's:libdir=.*:/opt/csw/lib/sparcv9:' xpm.pc>cswstage/xpm.pc.sparcv9 ; \
+	echo sparcv9 build done  )
+
+hack:
+	( cd $(BUILDDIR) ; \
+	  sed 's:libdir=.*:/opt/csw/lib/sparcv9:' xpm.pc>cswstage/xpm.pc.sparcv9 )
+
+	
 # dummy target for configure
 build/.config.done:
 	(cd $(BUILDDIR) ; \
@@ -41,7 +60,8 @@ build/.config.done:
 # I tried depending this on   $(BUILDDIR)/config.log  but that didnt stick
 configure:	build/.config.done
 
-package:	$(STDFILE) $(FILES) build
+package:	$(STDFILE) $(FILES)
+	@echo Building package for `uname -p`
 	$(CREATEPKG)
 
 

@@ -1,13 +1,15 @@
-This is the first time Phil is doing an actual "needs compiling"
-package in svn.
-
-Current build methodology theory is as follows:
+Current build methodology for libXpm is as follows:
 
 mkdir build
 (extract source tarfile under there)
-(come back to this location)
-make
+come back to this location)
+ make
+ make package
 
 and it should just All Magically Work.
+except for sparc, where you have to do
 
-But this is only theory. i have to test it now :)
+make
+make sparcv9
+make package
+
