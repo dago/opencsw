@@ -1,5 +1,5 @@
 GARNAME = libxslt
-GARVERSION = 1.1.24
+GARVERSION = 1.1.26
 CATEGORIES = lib
 
 DESCRIPTION = XSLT engine for the XML Toolkit

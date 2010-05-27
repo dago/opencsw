@@ -1,2 +1,2 @@
-967047de707d0f20d7fa3b0d0916fdd9  download/fix-segfault-in-debug.patch
-e83ec5d27fc4c10c6f612879bea9a153  download/libxslt-1.1.24.tar.gz
+967047de707d0f20d7fa3b0d0916fdd9  fix-segfault-in-debug.patch
+e61d0364a30146aaa3001296f853b2b9  libxslt-1.1.26.tar.gz
