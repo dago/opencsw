@@ -23,6 +23,8 @@ SPKG_DESC_CSWlibsigc++devel = Header files and docs for libsigc++
 CATALOGNAME_CSWlibsigc++      = libsigc++
 CATALOGNAME_CSWlibsigc++devel = libsigc++_devel 
 
+# CSWsigc++ is the previous package name
+INCOMPATIBLE_PKGS_CSWlibsigc++ = CSWsigc++
 RUNTIME_DEP_PKGS_CSWlibsigc++devel = CSWlibsigc++
 
 BUILD64 = 1
