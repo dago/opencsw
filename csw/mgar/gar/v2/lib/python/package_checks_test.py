@@ -223,16 +223,25 @@ class TestCheckArchitectureSanity(CheckpkgUnitTestHelper, unittest.TestCase):
         'srv4-filename-architecture-mismatch',
         'pkginfo=i386 filename=rsync-3.0.7,REV=2010.02.17-SunOS5.8-sparc-CSW.pkg.gz')
 
-class TestCheckArchitectureVsContents(CheckpkgUnitTestHelper, unittest.TestCase):
+class TestCheckArchitectureVsContents_Devel_1(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckArchitectureVsContents'
   def CheckpkgTest(self):
-    # TODO: Update this.
-    # self.pkg_data["pkgmap"] = self.LoadData("example-1-pkgmap")
-    # self.pkg_data["binaries"] = []
-    # self.pkg_data["pkginfo"] = self.LoadData("example-1-pkginfo")
-    # errors = pc.CheckArchitectureVsContents(self.pkg_data_2, False)
-    # self.failIf(errors)
-    pass
+    self.pkg_data["binaries"] = []
+    self.pkg_data["binaries_dump_info"] = []
+    self.pkg_data["pkgmap"] = []
+    self.pkg_data["basic_stats"]["pkgname"] = "CSWfoo_devel"
+    self.pkg_data["pkginfo"]["ARCH"] = "all"
+    self.error_mgr_mock.ReportError('archall-devel-package', None, None)
+
+class TestCheckArchitectureVsContents_Devel_2(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckArchitectureVsContents'
+  def CheckpkgTest(self):
+    self.pkg_data["binaries"] = []
+    self.pkg_data["binaries_dump_info"] = []
+    self.pkg_data["pkgmap"] = []
+    self.pkg_data["basic_stats"]["pkgname"] = "CSWfoodev"
+    self.pkg_data["pkginfo"]["ARCH"] = "all"
+    self.error_mgr_mock.ReportError('archall-devel-package', None, None)
 
 class TestCheckFileNameSanity(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckFileNameSanity'

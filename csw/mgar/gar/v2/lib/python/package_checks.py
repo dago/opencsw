@@ -48,6 +48,10 @@ MAX_CATALOGNAME_LENGTH = 20
 MAX_PKGNAME_LENGTH = 20
 ARCH_LIST = ["sparc", "i386", "all"]
 VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
+# Pkgnames matching these regexes must not be ARCHALL = 1
+ARCH_SPECIFIC_PKGNAMES_RE_LIST = [
+    re.compile(r".*dev(el)?$"),
+]
 
 # At some point, it was used to prevent people from linking against
 # libX11.so.4, but due to issues with 3D acceleration.
@@ -361,6 +365,10 @@ def CheckArchitectureVsContents(pkg_data, error_mgr, logger, messenger):
         "archall-with-binaries",
         binary,
         "package contains binary %s" % binary))
+  for pkgname_re in ARCH_SPECIFIC_PKGNAMES_RE_LIST:
+    if pkgname_re.match(pkgname):
+      reasons_to_be_arch_specific.append((
+          "archall-devel-package", None, None))
   if arch == "all":
     for tag, param, desc in reasons_to_be_arch_specific:
       error_mgr.ReportError(tag, param, desc)
