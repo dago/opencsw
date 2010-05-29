@@ -60,6 +60,8 @@ PROTOTYPE_MODIFIERS = makesuid
 PROTOTYPE_FILES_makesuid = .*/sysstatd
 PROTOTYPE_PERMS_makesuid = 4755
 
+CHECKPKG_OVERRIDES_CSWsysstat += soname-not-found|libm.so.2|is|needed|by|opt/csw/sbin/amd64/sysstatd
+
 include gar/category.mk
 
 # We don't have a autoconf-style configure. The configure script
