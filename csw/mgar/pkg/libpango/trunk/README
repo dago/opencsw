@@ -1,0 +1,11 @@
+This is a "quickie" redo of pango, for our X11 recompile project
+( http://wiki.opencsw.org/project-x11-reloaded )
+
+It unfortunately does not have 64bit support, because Phil had
+ issues when trying to get that to work right. some kind of complaints from
+  glib.h includes or some such.
+
+Normally, this would delay release of the package. but since our X11
+is in dire straits, higher priority is given to "Fix X11 for 95%
+  of everyone" vs "hold this until 64bit is fixed".
+
