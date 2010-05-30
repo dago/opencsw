@@ -1,0 +1,25 @@
+--- configure.orig	Sun May 30 22:48:47 2010
++++ configure	Sun May 30 22:49:02 2010
+@@ -6105,7 +6105,7 @@
+ 
+ 
+ # Make sure we don't link to libstdc++ (needs de-gcc-fication)
+-CXXFLAGS="$CXXFLAGS -fno-rtti -fno-exceptions"
++CXXFLAGS="$CXXFLAGS"
+ 
+ 
+ #
+--- ./pango/opentype/hb-common.h.orig	Sun May 30 22:43:55 2010
++++ ./pango/opentype/hb-common.h	Sun May 30 22:47:35 2010
+@@ -27,7 +27,11 @@
+ #ifndef HB_COMMON_H
+ #define HB_COMMON_H
+ 
++#ifdef __SVR4
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
+ 
+ # ifdef __cplusplus
+ #  define HB_BEGIN_DECLS	extern "C" {
