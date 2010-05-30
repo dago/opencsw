@@ -34,7 +34,7 @@ build:	build/.config.done
 sparcv9:
 	(cd $(BUILDDIR)/src ; \
 	gmake clean;  \
-	gmake CFLAGS='-xstrconst -fast -xarch=v9' \
+	LD_OPTIONS="" gmake CFLAGS='-xstrconst -fast -xarch=v9' \
 	  LDFLAGS='-R/opt/csw/lib/sparcv9 -L/opt/csw/lib/sparcv9'  ; \
 	  strip .libs/$(RAWLIB); \
 	  cp .libs/$(RAWLIB) ../cswstage ; cd .. ;\
