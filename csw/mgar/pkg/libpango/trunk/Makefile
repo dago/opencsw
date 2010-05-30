@@ -44,7 +44,7 @@ all:	build package
 build:	build/.config.done
 	(cd $(BUILDDIR) ; \
 	$(MAKE) ; \
-	stagepkg ; cp COPYING cswstage/.)
+	MAKE=$(MAKE) stagepkg ; cp COPYING cswstage/.)
 
 
 # dummy target for configure
