@@ -1,6 +1,7 @@
 i pkginfo
 i copyright
 i depend
+i postinstall
 d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/pango-view 0755 root bin
 f none /opt/csw/bin/pango-querymodules 0755 root bin
