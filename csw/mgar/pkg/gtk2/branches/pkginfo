@@ -1,0 +1,8 @@
+PKG=CSWgtk2
+NAME=gtk2 - description goes here
+VERSION=2.18.9,REV=2010.05.31.philexperimental
+CATEGORY=application
+VENDOR=http://www.SOURCE-URL/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sf.net/svnroot/gar/csw/mgar/pkg/gtk2/branches/

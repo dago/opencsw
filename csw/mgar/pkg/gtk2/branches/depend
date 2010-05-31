@@ -1,0 +1,15 @@
+P CSWfconfig
+P CSWftype2
+P CSWggettextrt
+P CSWglib2
+P CSWgnutls
+P CSWjpeg
+P CSWkrb5lib
+P CSWlibatk
+P CSWlibcairo
+P CSWlibcups
+P CSWlibxrender
+P CSWpango
+P CSWpng
+P CSWtiff
+P CSWzlib
