@@ -38,6 +38,11 @@ CONFIGURE_ARGS += --disable-fast-install
 # There are no tests for this
 TEST_SCRIPTS =
 
+MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
+MERGE_DIRS_isa-extra = $(libdir)
+
+CHECKPKG_OVERRIDES_CSWgd += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libgd.so.2.0.0
+
 include gar/category.mk
 
 pre-configure-modulated:
