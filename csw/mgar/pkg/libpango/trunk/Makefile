@@ -75,7 +75,7 @@ sparcv9:
 package:	$(STDFILE) $(FILES)
 	createpkg -r `pwd`/build/*/cswstage
 	cd devel; createpkg -r `pwd`/../build/*/cswstage; cd ..
-	cd docj; createpkg -r `pwd`/../build/*/cswstage; cd ..
+	cd doc; createpkg -r `pwd`/../build/*/cswstage; cd ..
 	mv */*.pkg.gz .
 	
 
