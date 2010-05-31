@@ -1,0 +1,4 @@
+This package should never be shipped separatedly, but always as an ajunct
+to CSWpango, which contains the license file in 
+/opt/csw/share/gtk-doc/COPYING.pango
+
