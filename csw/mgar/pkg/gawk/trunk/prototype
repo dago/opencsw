@@ -98,6 +98,7 @@ l none /opt/csw/share/man/man1/gawk.1=pgawk.1
 f none /opt/csw/share/man/man1/igawk.1 0644 root bin
 d none /opt/csw/bin 0755 root bin
 f none /opt/csw/bin/pgawk-3.1.8 0755 root bin
+d none /opt/csw/gnu 0755 root bin
 s none /opt/csw/gnu/awk=../bin/gawk
 f none /opt/csw/bin/igawk 0755 root bin
 f none /opt/csw/bin/gawk-3.1.8 0755 root bin
