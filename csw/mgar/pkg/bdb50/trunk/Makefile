@@ -63,8 +63,6 @@ SPKG_DESC_CSWbdb50doc   = BerkeleyDB 5.0 documentation
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
-RUNTIME_DEP_PKGS_CSWbdb50devel = CSWbdb50
-
 LICENSE = LICENSE
 
 EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb50),'
@@ -77,6 +75,17 @@ EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
 
 PKGFILES_CSWbdb50doc = $(PKGFILES_DOC)
 PKGFILES_CSWbdb50devel = $(PKGFILES_DEVEL)
+
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/lib|opt/csw/bdb50/lib/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bdb50/lib/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bdb50/lib/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib|opt/csw/bdb50/lib/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7|opt/csw/bdb50/lib/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/v8|opt/csw/bdb50/lib/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/lib/sparcv9|opt/csw/bdb50/lib/sparcv9/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/SUNWspro/lib/sparc/64|opt/csw/bdb50/lib/sparcv9/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7/v9|opt/csw/bdb50/lib/sparcv9/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/sparc/64|opt/csw/bdb50/lib/sparcv9/libdb_cxx-5.0.so
 
 include gar/category.mk
 
