@@ -1,0 +1,8 @@
+PKG=CSWpangodoc
+NAME=libpango_doc - Pango HTML Documentation
+VERSION=1.26.2,REV=2010.05.30
+CATEGORY=application
+VENDOR=http://ftp.gnome.org/pub/GNOME/sources/pango packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sf.net/svnroot/gar/csw/mgar/pkg/libpango/trunk
