@@ -44,6 +44,8 @@ CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmhtmltree
 CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWfakeroot
 CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmyaml
 CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmlibwww
+CHECKPKG_OVERRIDES_CSWcswutils += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWcswutils += catalogname-does-not-start-with-py_
 
 include gar/category.mk
 
