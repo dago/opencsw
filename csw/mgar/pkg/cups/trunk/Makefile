@@ -79,7 +79,6 @@ CATALOGNAME_CSWcupslinks = cups_links
 ARCHALL_CSWcups      = 1
 ARCHALL_CSWcupslinks = 1
 ARCHALL_CSWcupsdoc   = 1
-ARCHALL_CSWcupsdev   = 1
 
 RUNTIME_DEP_PKGS_CSWcups  = CSWcupsd CSWcupsclient
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWgnutls
@@ -108,7 +107,7 @@ PKGFILES_CSWcupsdev += $(mandir)/man1/cups-config.1
 PKGFILES_CSWcupsdev += $(bindir)/cups-config
 PKGFILES_CSWcupsdev += $(datadir)/cups/ppdc.*
 PKGFILES_CSWcupsdev += $(datadir)/cups/drv.*
-PKGFILES_CSWcupsd += $(prefix)/etc/init\.d/.*
+PKGFILES_CSWcupsd += $(sysconfdir)/init\.d/.*
 PKGFILES_CSWcupsd += $(sysconfdir)/rc.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/cupsd.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/interfaces.*
@@ -164,7 +163,7 @@ SPKG_DESC_CSWcupslinks  = Drop-in replacement for SUNWpcu and SUNWpcr
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 SAMPLECONF_CSWcupsd       = $(sysconfdir)/cups/cupsd\.conf\.CSW
 SAMPLECONF_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
-INITSMF                   = $(prefix)/etc/init\.d/cswcups
+INITSMF                   = $(sysconfdir)/init\.d/cswcups
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
@@ -173,7 +172,11 @@ CONFIGURE_ARGS += --with-menudir=$(datadir)/applications
 CONFIGURE_ARGS += --localedir=$(datadir)/locale
 CONFIGURE_ARGS += --with-rcdir=$(sysconfdir)
 CONFIGURE_ARGS += --with-icondir=$(datadir)/icons
-CONFIGURE_ARGS += --with-rcdir=/opt/csw/etc
+
+# This breaks non-global sparse zone support.  The class action script is
+# executed in the global zone, but not in the non-global zones, if /opt is
+# shared.
+# CONFIGURE_ARGS += --with-rcdir=/opt/csw/etc
 
 CONFIGURE_ARGS_DBG  = --enable-debug
 CONFIGURE_ARGS_DBG += --enable-debug-guards
