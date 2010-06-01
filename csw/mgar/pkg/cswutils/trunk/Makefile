@@ -75,7 +75,7 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(libdir)/python/csw
 	@ginstall -m 644 $(WORKSRC)/opencsw.py \
 		$(DESTDIR)$(libdir)/python/csw/opencsw.py
-	@ginstall -m 644 $(WORKSRC)/submitpkg $(DESTDIR)$(bindir)/submitpkg
+	@ginstall -m 755 $(WORKSRC)/submitpkg $(DESTDIR)$(bindir)/submitpkg
 	@for f in $(SVN_FILES); do \
 		ginstall -m 755 $(WORKSRC)/$${f}-r$(SVN_REV) \
 		$(DESTDIR)$(libdir)/python/csw/$${f}; \
