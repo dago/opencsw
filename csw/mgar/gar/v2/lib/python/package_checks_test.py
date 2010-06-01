@@ -142,7 +142,8 @@ class TestCheckCheckSmfIntegrationWrongLocation(CheckpkgUnitTestHelper, unittest
       "type": "f",
       "user": "root"
     })
-    self.error_mgr_mock.ReportError('init-file-wrong-location', '/etc/opt/csw/init.d/foo')
+    # This is not an error.
+    # self.error_mgr_mock.ReportError('init-file-wrong-location', '/etc/opt/csw/init.d/foo')
 
 
 class TestCatalognameLowercase_1(CheckpkgUnitTestHelper, unittest.TestCase):

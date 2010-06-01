@@ -168,12 +168,16 @@ def CheckSmfIntegration(pkg_data, error_mgr, logger, messenger):
       error_mgr.ReportError(
           "init-file-missing-cswinitsmf-class",
           "%s class=%s" % (entry["path"], entry["class"]))
-    if "/etc/opt/csw/init.d" in entry["path"]:
-      messenger.Message("Init files should go into /opt/csw/etc/init.d, "
-                        "not /etc/opt/csw/init.d.")
-      error_mgr.ReportError(
-          "init-file-wrong-location",
-          entry["path"])
+
+    # This is not an error, in fact, putting files into
+    # /opt/csw/etc/init.d breaks packages.
+    #
+    # if "/etc/opt/csw/init.d" in entry["path"]:
+    #   messenger.Message("Init files should go into /opt/csw/etc/init.d, "
+    #                     "not /etc/opt/csw/init.d.")
+    #   error_mgr.ReportError(
+    #       "init-file-wrong-location",
+    #       entry["path"])
 
 
 def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
