@@ -1,5 +1,5 @@
 GARNAME = zlib
-GARVERSION = 1.2.4
+GARVERSION = 1.2.5
 CATEGORIES = lib
 
 DESCRIPTION = Zlib Data Compression Library

@@ -1,20 +1,11 @@
---- ../build-global/zlib-1.2.3/Makefile.in	2005-07-18 04:25:21.000000000 +0200
-+++ zlib-1.2.3/Makefile.in	2009-04-05 11:24:56.336506142 +0200
-@@ -43,7 +43,7 @@
- exec_prefix = ${prefix}
- libdir = ${exec_prefix}/lib
- includedir = ${prefix}/include
--mandir = ${prefix}/share/man
-+mandir = ${mandir}
- man3dir = ${mandir}/man3
- 
- OBJS = adler32.o compress.o crc32.o gzio.o uncompr.o deflate.o trees.o \
-@@ -134,7 +134,7 @@
+--- zlib-1.2.5/Makefile.in.orig	2010-05-26 12:54:35.283218000 +0200
++++ zlib-1.2.5/Makefile.in	2010-05-26 13:13:37.622441685 +0200
+@@ -137,7 +137,7 @@
  	-@mv objs/$*.o $@
  
  $(SHAREDLIBV): $(PIC_OBJS)
--	$(LDSHARED) $(SFLAGS) -o $@ $(PIC_OBJS) -lc
-+	$(LDSHARED) $(SFLAGS) -h $(SHAREDLIBM) -o $@ $(PIC_OBJS) -lc
+-	$(LDSHARED) $(SFLAGS) -o $@ $(PIC_OBJS) $(LDSHAREDLIBC) $(LDFLAGS)
++	$(LDSHARED) $(SFLAGS) -h $(SHAREDLIBM) -o $@ $(PIC_OBJS) $(LDSHAREDLIBC) $(LDFLAGS)
  	rm -f $(SHAREDLIB) $(SHAREDLIBM)
  	ln -s $@ $(SHAREDLIB)
  	ln -s $@ $(SHAREDLIBM)
