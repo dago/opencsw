@@ -20,7 +20,7 @@ DISTFILES += createpkg createpkg.8
 DISTFILES += stagepkg stagepkg.8
 DISTFILES += stagepkg stagepkg.8
 DISTFILES += $(foreach F,$(SVN_FILES),$(F)-r$(SVN_REV))
-DISTFILES += opencsw.py checkpkg.py submitpkg
+DISTFILES += opencsw.py checkpkg.py submit_to_newpkgs.py
 
 
 RUNTIME_DEP_PKGS = CSWcoreutils CSWfakeroot CSWperl
@@ -68,9 +68,10 @@ $(DOWNLOADDIR)/checkpkg.py:
 	ln -s $(abspath gar/lib/python/checkpkg.py) $(DOWNLOADDIR)/
 	@$(MAKECOOKIE)
 
-$(DOWNLOADDIR)/submitpkg:
-	ln -s $(abspath gar/bin/submitpkg) $(DOWNLOADDIR)/
+$(DOWNLOADDIR)/submit_to_newpkgs.py:
+	ln -s $(abspath gar/lib/python/submit_to_newpkgs.py) $(DOWNLOADDIR)/
 	@$(MAKECOOKIE)
+
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
@@ -84,12 +85,13 @@ install-custom:
 	@ginstall $(WORKSRC)/createpkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall $(WORKSRC)/stagepkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall -d $(DESTDIR)$(libdir)/python/csw
-	@ginstall -m 644 $(WORKSRC)/opencsw.py $(WORKSRC)/checkpkg.py \
+	@ginstall -m 755 $(WORKSRC)/opencsw.py $(WORKSRC)/checkpkg.py \
+			 $(WORKSRC)/submit_to_newpkgs.py \
 		$(DESTDIR)$(libdir)/python/csw/
-	@ginstall -m 755 $(WORKSRC)/submitpkg $(DESTDIR)$(bindir)/submitpkg
 	@for f in $(SVN_FILES); do \
 		ginstall -m 755 $(WORKSRC)/$${f}-r$(SVN_REV) \
 		$(DESTDIR)$(libdir)/python/csw/$${f}; \
 	done
 	@ln -s ../lib/python/csw/compare_pkgs.py $(DESTDIR)$(bindir)/comparepkg
+	@ln -s ../lib/python/csw/compare_pkgs.py $(DESTDIR)$(bindir)/submitpkg
 	@$(MAKECOOKIE)
