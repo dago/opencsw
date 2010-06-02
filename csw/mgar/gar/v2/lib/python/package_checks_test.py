@@ -109,12 +109,12 @@ class TestCheckSmfIntegrationBad(CheckpkgUnitTestHelper, unittest.TestCase):
       "group": "bin",
       "line": "1 f none /opt/csw/etc/init.d/foo 0644 root bin 36372 24688 1266395027",
       "mode": '0755',
-      "path": "/opt/csw/etc/init.d/foo",
+      "path": "/etc/opt/csw/init.d/foo",
       "type": "f",
       "user": "root"
     })
     self.error_mgr_mock.ReportError('init-file-missing-cswinitsmf-class',
-                                    '/opt/csw/etc/init.d/foo class=none')
+                                    '/etc/opt/csw/init.d/foo class=none')
 
 class TestCheckCheckSmfIntegrationGood(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckSmfIntegration'
@@ -124,7 +124,7 @@ class TestCheckCheckSmfIntegrationGood(CheckpkgUnitTestHelper, unittest.TestCase
       "group": "bin",
       "line": "1 f none /opt/csw/etc/init.d/foo 0644 root bin 36372 24688 1266395027",
       "mode": '0755',
-      "path": "/opt/csw/etc/init.d/foo",
+      "path": "/etc/opt/csw/init.d/foo",
       "type": "f",
       "user": "root"
     })
@@ -138,12 +138,11 @@ class TestCheckCheckSmfIntegrationWrongLocation(CheckpkgUnitTestHelper, unittest
       "group": "bin",
       "line": "1 f none /etc/opt/csw/init.d/foo 0644 root bin 36372 24688 1266395027",
       "mode": '0755',
-      "path": "/etc/opt/csw/init.d/foo",
+      "path": "/opt/csw/etc/init.d/foo",
       "type": "f",
       "user": "root"
     })
-    # This is not an error.
-    # self.error_mgr_mock.ReportError('init-file-wrong-location', '/etc/opt/csw/init.d/foo')
+    self.error_mgr_mock.ReportError('init-file-wrong-location', '/opt/csw/etc/init.d/foo')
 
 
 class TestCatalognameLowercase_1(CheckpkgUnitTestHelper, unittest.TestCase):

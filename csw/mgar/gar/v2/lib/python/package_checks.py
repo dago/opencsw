@@ -171,13 +171,14 @@ def CheckSmfIntegration(pkg_data, error_mgr, logger, messenger):
 
     # This is not an error, in fact, putting files into
     # /opt/csw/etc/init.d breaks packages.
-    #
-    # if "/etc/opt/csw/init.d" in entry["path"]:
-    #   messenger.Message("Init files should go into /opt/csw/etc/init.d, "
-    #                     "not /etc/opt/csw/init.d.")
-    #   error_mgr.ReportError(
-    #       "init-file-wrong-location",
-    #       entry["path"])
+
+    if "/opt/csw/etc/init.d" in entry["path"]:
+      messenger.Message("Init files under /opt result in broken packages, "
+                        "see http://lists.opencsw.org/pipermail/maintainers/"
+                        "2010-June/012145.html")
+      error_mgr.ReportError(
+          "init-file-wrong-location",
+          entry["path"])
 
 
 def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
