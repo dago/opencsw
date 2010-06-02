@@ -1,6 +1,7 @@
 091b12575ebc0e45cf8c3d8b43d8b638  COPYING
 59c261b5337c61ddda9146a2a97efc3d  checkpkg
 6ec3b6597e04714430987ccc199db3c4  checkpkg.8
+c7dfd7d9204b4e4f066eb33255c6e218  checkpkg.py
 2b5e6e6219b9ad9e48bcd119bd8a5f39  compare_pkgs.py-r133
 9a637f6546cc50974159a987302d91c0  cpan2pkg
 93b6a811d303ce3be0050c5a7b3c8e69  createpkg
