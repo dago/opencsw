@@ -22,10 +22,13 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-SAMPLECONF = /etc/opt/csw/snmptt.ini
+SAMPLECONF = /etc/opt/csw/snmptt.ini /etc/opt/csw/snmptt.conf
 
 CHECKPKG_OVERRIDES_CSWsnmptt += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWsnmptt += surplus-dependency|CSWpmcfginifls
+
+sysconfdir=/etc/opt/csw
+localstatedir=/var/opt/csw
 
 include gar/category.mk
 
@@ -36,9 +39,9 @@ install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir) 
 	ginstall -d $(DESTDIR)$(sbindir) 
-	ginstall -d $(DESTDIR)/etc/opt/csw/
-	ginstall -d $(DESTDIR)/var/opt/csw/log/snmptt
-	ginstall -d $(DESTDIR)/var/opt/csw/spool/snmptt/
+	ginstall -d $(DESTDIR)$(sysconfdir)/snmp
+	ginstall -d $(DESTDIR)$(localstatedir)/log/snmptt
+	ginstall -d $(DESTDIR)$(localstatedir)/spool/snmptt/
 	ginstall -d $(DOCDEST) $(DOCDEST)/examples
 
 	ginstall -m 755 $(addprefix $(WORKSRC)/, $(BIN)) $(DESTDIR)$(bindir)
@@ -46,11 +49,14 @@ install-custom:
 	gsed -i 's,/usr/bin/perl,/opt/csw/bin/perl,' $(DESTDIR)$(bindir)/*
 	gsed -i 's,/usr/bin/perl,/opt/csw/bin/perl,' $(DESTDIR)$(sbindir)/*
 
-	cp $(WORKSRC)/snmptt.ini $(DESTDIR)/etc/opt/csw/snmptt.ini
-	gsed \
+	cp $(WORKSRC)/snmptt.ini $(DESTDIR)$(sysconfdir)/snmp/snmptt.ini
+	gsed -i \
+		-e 's,/etc/snmp/,/etc/opt/csw/snmp/,' \
 		-e 's,/var/,/var/opt/csw/,' \
 		-e 's,/var/opt/csw/run/snmptt.pid,/var/run/cswsnmptt.pid,' \
-		$(DESTDIR)/etc/opt/csw/snmptt.ini
+		$(DESTDIR)$(sysconfdir)/snmp/snmptt.ini
+	cp $(WORKSRC)/examples/snmptt.conf.generic \
+		$(DESTDIR)$(sysconfdir)/snmp/snmptt.conf
 
 	cp $(WORKSRC)/examples/* $(WORKSRC)/sample-* $(DOCDEST)/examples
 	cp $(WORKSRC)/docs/* $(DOCDEST)
