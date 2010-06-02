@@ -14,6 +14,7 @@ DISTNAME     = $(GARNAME)_$(GARVERSION)
 DISTFILES    = $(GARNAME)_$(GARVERSION).tgz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWperl CSWpmcfginifls
 
 CONFIGURE_SCRIPTS =
@@ -22,6 +23,9 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 SAMPLECONF = /etc/opt/csw/snmptt.ini
+
+CHECKPKG_OVERRIDES_CSWsnmptt += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWsnmptt += surplus-dependency|CSWpmcfginifls
 
 include gar/category.mk
 
@@ -42,7 +46,7 @@ install-custom:
 	gsed -i 's,/usr/bin/perl,/opt/csw/bin/perl,' $(DESTDIR)$(bindir)/*
 	gsed -i 's,/usr/bin/perl,/opt/csw/bin/perl,' $(DESTDIR)$(sbindir)/*
 
-	cp $(WORKSRC)/snmptt.ini > $(DESTDIR)/etc/opt/csw/snmptt.ini
+	cp $(WORKSRC)/snmptt.ini $(DESTDIR)/etc/opt/csw/snmptt.ini
 	gsed \
 		-e 's,/var/,/var/opt/csw/,' \
 		-e 's,/var/opt/csw/run/snmptt.pid,/var/run/cswsnmptt.pid,' \
