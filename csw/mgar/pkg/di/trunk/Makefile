@@ -1,5 +1,5 @@
 GARNAME = di
-GARVERSION = 4.16
+GARVERSION = 4.24
 CATEGORIES = utils
 
 DESCRIPTION = Disk information utility
@@ -16,7 +16,18 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+DEP_PKGS = CSWggettextrt
+
+LICENSE = LICENSE
+
 CONFIGURE_SCRIPTS = 
+
+TEST_SCRIPTS =
+
+INSTALL_OVERRIDE_DIRS = prefix
 
 include gar/category.mk
 
+pre-install-modulated:
+	ginstall -d $(DESTDIR)$(bindir)
+	@$(MAKECOOKIE)
