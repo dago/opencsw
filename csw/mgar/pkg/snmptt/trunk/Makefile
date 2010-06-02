@@ -42,12 +42,13 @@ install-custom:
 	ginstall -d $(DESTDIR)$(sysconfdir)/snmp
 	ginstall -d $(DESTDIR)$(localstatedir)/log/snmptt
 	ginstall -d $(DESTDIR)$(localstatedir)/spool/snmptt/
-	ginstall -d $(DOCDEST) $(DOCDEST)/examples
 
 	ginstall -m 755 $(addprefix $(WORKSRC)/, $(BIN)) $(DESTDIR)$(bindir)
 	ginstall -m 755 $(addprefix $(WORKSRC)/,$(SBIN)) $(DESTDIR)$(sbindir)
-	gsed -i 's,/usr/bin/perl,/opt/csw/bin/perl,' $(DESTDIR)$(bindir)/*
-	gsed -i 's,/usr/bin/perl,/opt/csw/bin/perl,' $(DESTDIR)$(sbindir)/*
+	gsed -i \
+		-e 's,/usr/bin/perl,/opt/csw/bin/perl,' \
+		-e 's,/etc/snmp/,$(sysconfdir)/snmp/,' \
+		$(DESTDIR)$(bindir)/* $(DESTDIR)$(sbindir)/*
 
 	cp $(WORKSRC)/snmptt.ini $(DESTDIR)$(sysconfdir)/snmp/snmptt.ini
 	gsed -i \
@@ -58,6 +59,5 @@ install-custom:
 	cp $(WORKSRC)/examples/snmptt.conf.generic \
 		$(DESTDIR)$(sysconfdir)/snmp/snmptt.conf
 
-	cp $(WORKSRC)/examples/* $(WORKSRC)/sample-* $(DOCDEST)/examples
 	cp $(WORKSRC)/docs/* $(DOCDEST)
 	@$(MAKECOOKIE)
