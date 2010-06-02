@@ -47,6 +47,8 @@ CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmyaml
 CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmlibwww
 CHECKPKG_OVERRIDES_CSWcswutils += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWcswutils += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/lib/python/csw/checkpkg.py
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/opt/build|root/opt/csw/lib/python/csw/checkpkg.py
 
 include gar/category.mk
 
