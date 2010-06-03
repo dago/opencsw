@@ -1,0 +1,101 @@
+From 761384e70978e3a1b54dcfb6df9f1ffe6f1d493b Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 3 Jun 2010 19:49:45 +0200
+Subject: [PATCH] Use /etc/opt/csw/slack.conf
+
+---
+ doc/slack-intro  |    4 ++--
+ doc/slack.8      |    4 ++--
+ doc/slack.conf.5 |    4 ++--
+ slack.spec       |    2 +-
+ src/Slack.pm     |    2 +-
+ 5 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/doc/slack-intro b/doc/slack-intro
+index eb5d244..1c433ba 100644
+--- a/doc/slack-intro
++++ b/doc/slack-intro
+@@ -24,8 +24,8 @@ could write another backend and get your roles from DNS or LDAP or
+ something (I've never felt the need).
+ 
+ slack has a fair number of options to change its behavior, which can be
+-specified in an optional configuration file, /etc/slack.conf, on the
+-host running slack, or on the command line (which takes precedence over
++specified in an optional configuration file, /etc/opt/csw/slack.conf, on
++the host running slack, or on the command line (which takes precedence over
+ the config file).  The location of the config file can also be specified
+ on the command line.
+ 
+diff --git a/doc/slack.8 b/doc/slack.8
+index 5f8ec8a..eb9858a 100644
+--- a/doc/slack.8
++++ b/doc/slack.8
+@@ -48,7 +48,7 @@ Don't be verbose (Overrides previous uses of --verbose).
+ .TP
+ \fB\-C\fR, \fB\-\-config FILE\fR
+ Use the specfied FILE for configuration instead of the default,
+-.IR /etc/slack.conf .
++.IR /etc/opt/csw/slack.conf .
+ .TP
+ \fB\-s\fR, \fB\-\-source DIR\fR
+ Source directory for slack files
+@@ -172,7 +172,7 @@ slack --sleep 3600
+ 
+ 
+ .SH FILES
+-.I /etc/slack.conf
++.I /etc/opt/csw/slack.conf
+ .SH SEE ALSO
+ .BR slack.conf (5),
+ .BR rsync (1)
+diff --git a/doc/slack.conf.5 b/doc/slack.conf.5
+index 25b40da..0f5ce14 100644
+--- a/doc/slack.conf.5
++++ b/doc/slack.conf.5
+@@ -10,7 +10,7 @@ slack.conf \- configuration file for slack
+ 
+ .SH DESCRIPTION
+ The file
+-.I /etc/slack.conf
++.I /etc/opt/csw/slack.conf
+ contains configuration information for
+ .BR slack (8)
+ and its backends.  It should contain one keyword-value pair per line,
+@@ -95,7 +95,7 @@ A typical file might look like this:
+   BACKUP_DIR=/var/lib/slack/backups
+ 
+ .SH FILES
+-.I /etc/slack.conf
++.I /etc/opt/csw/slack.conf
+ .SH SEE ALSO
+ .BR slack (8),
+ .BR rsync (1)
+diff --git a/slack.spec b/slack.spec
+index 727083b..7176883 100644
+--- a/slack.spec
++++ b/slack.spec
+@@ -56,7 +56,7 @@ rm -rf %{buildroot}
+ 
+ %preun
+ if [ $1 = 0 ] ; then
+-    . /etc/slack.conf
++    . /etc/opt/csw/slack.conf
+     rm -rf "$CACHE"/*
+     rm -rf "$STAGE"
+ fi
+diff --git a/src/Slack.pm b/src/Slack.pm
+index 9f0a57d..1f9d682 100644
+--- a/src/Slack.pm
++++ b/src/Slack.pm
+@@ -19,7 +19,7 @@ $VERSION = '0.15.2';
+ @EXPORT    = qw();
+ @EXPORT_OK = qw();
+ 
+-$DEFAULT_CONFIG_FILE = '/etc/slack.conf';
++$DEFAULT_CONFIG_FILE = '/etc/opt/csw/slack.conf';
+ 
+ my $term;
+ 
+-- 
+1.7.1
+
