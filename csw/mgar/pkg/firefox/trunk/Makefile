@@ -1,7 +1,7 @@
 GARNAME = firefox
 GARVERSION = 3.0.18
 CATEGORIES = apps
-DISTNAME = $(GARNAME)
+DISTNAME = mozilla
 
 DESCRIPTION = Firefox Community Edition web browser
 define BLURB
@@ -20,7 +20,7 @@ PACKAGES 		= CSWfirefox
 CATALOGNAME_CSWfirefox 	= $(GARNAME)
 SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 
-BUILD_DEP_PKGS  = CSWgtk2devel CSWlibdbusdev CSWdbusglibdev CSWsqlite3devel CSWkbproto CSWrenderproto
+BUILD_DEP_PKGS  = CSWlibdbusdev CSWdbusglibdev CSWsqlite3devel CSWkbproto
 BUILD_DEP_PKGS += CSWxproto CSWlibpthreadstubs CSWlibxcb CSWlibxcbdevel CSWlibxft2 CSWlibxft2devel
 
 RUNTIME_DEP_PKGS_CSWfirefox  = CSWdbusglib
@@ -83,11 +83,10 @@ TEST_SCRIPTS =
 LICENSE = LICENSE
 
 # Variable for direct access to working dir
-WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
+WORK_BUILD   = $(WORKSRC)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
 post-extract:
-	mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORK_BUILD) 
 	cp $(FILEDIR)/stdbool.h $(WORK_BUILD)/memory/jemalloc
 	$(MAKECOOKIE)
 
