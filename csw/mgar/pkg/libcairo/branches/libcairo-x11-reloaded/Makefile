@@ -69,7 +69,7 @@ CONFIGURE_ARGS += --enable-gtk-doc --enable-test-surfaces=yes
 
 CONFIGURE_ARGS_sunwx11 += --x-includes=/usr/openwin/include
 CONFIGURE_ARGS_sunwx11 += --x-libraries=$(abspath /usr/openwin/lib/$(MM_LIBDIR))
-CONFIGURE_ARGS_sunwx11 += --enable-xlib-xrender=no --enable-xcb=no
+CONFIGURE_ARGS_sunwx11 += --enable-xcb=no
 CONFIGURE_ARGS_cswx11 += --x-includes=$(prefix)/include
 CONFIGURE_ARGS_cswx11 += --x-libraries=$(abspath $(prefix)/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS_cswx11 += --enable-xlib-xrender=yes --enable-xcb=yes
