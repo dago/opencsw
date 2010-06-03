@@ -18,7 +18,7 @@ DISTFILES     = $(DISTNAME).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibcairo CSWlibcairodevel CSWlibcairodoc
-PACKAGES += CSWcxlibcairo CSWcxlibcairodevel
+# PACKAGES += CSWcxlibcairo CSWcxlibcairodevel
 CATALOGNAME_CSWlibcairo      = libcairo
 CATALOGNAME_CSWlibcairodevel = libcairo_devel
 CATALOGNAME_CSWlibcairodoc   = libcairo_doc
@@ -31,16 +31,18 @@ SPKG_DESC_CSWlibcairodoc 	= $(DESCRIPTION) documentation
 SPKG_DESC_CSWcxlibcairo 	= $(DESCRIPTION) (bound against OpenCSW X11)
 SPKG_DESC_CSWcxlibcairodevel 	= $(DESCRIPTION) development package (bound against OpenCSW X11)
 
-BUILD_DEP_PKGS = CSWlibxrenderdevel CSWkbproto CSWrenderproto CSWlibspectre 
+#BUILD_DEP_PKGS = CSWlibxrenderdevel CSWkbproto CSWrenderproto CSWlibspectre 
+BUILD_DEP_PKGS = CSWlibxrenderdevel CSWlibspectre 
 
-RUNTIME_DEP_PKGS_CSWlibcairo      = CSWfconfig CSWftype2 CSWpixman CSWpng CSWzlib
+RUNTIME_DEP_PKGS_CSWlibcairo      = CSWfconfig CSWftype2 CSWpixman CSWpng CSWzlib CSWlibxrender
 RUNTIME_DEP_PKGS_CSWlibcairodevel = CSWlibcairo
 RUNTIME_DEP_PKGS_CSWlibcairodoc   = 
 RUNTIME_DEP_PKGS_CSWcxlibcairo    = CSWftype2 CSWpixman CSWlibxrender CSWlibxcb CSWxcbutil CSWzlib CSWpng CSWfconfig CSWlibx11
 RUNTIME_DEP_PKGS_CSWcxlibcairodevel = CSWcxlibcairo CSWlibxrenderdevel CSWlibxcbdevel CSWlibx11devel
 
 EXTRA_MODULATORS = X11
-MODULATIONS_X11 = sunwx11 cswx11
+#MODULATIONS_X11 = sunwx11 cswx11
+MODULATIONS_X11 = sunwx11 
 
 BUILD64 = 1
 
@@ -93,15 +95,11 @@ PKGFILES_CSWcxlibcairodevel += /opt/csw/X11/include/.*
 
 ARCHALL_CSWlibcairodoc = 1
 
-CHECKPKG_OVERRIDES_CSWlibcairo += linked-against-discouraged-library|libcairo.so.2.10800.10|libX11.so.4
-CHECKPKG_OVERRIDES_CSWlibcairo += linked-against-discouraged-library|libcairo.so.2.10800.10|libX11.so.4
 CHECKPKG_OVERRIDES_CSWlibcairodevel += surplus-dependency|CSWlibcairo
 CHECKPKG_OVERRIDES_CSWcxlibcairodevel += surplus-dependency|CSWlibx11devel
 CHECKPKG_OVERRIDES_CSWcxlibcairodevel += surplus-dependency|CSWcxlibcairo
 CHECKPKG_OVERRIDES_CSWcxlibcairodevel += surplus-dependency|CSWlibxcbdevel
 CHECKPKG_OVERRIDES_CSWcxlibcairodevel += surplus-dependency|CSWlibxrenderdevel
-CHECKPKG_OVERRIDES_CSWlibcairo += soname-not-found|libm.so.2
-CHECKPKG_OVERRIDES_CSWcxlibcairo += soname-not-found|libm.so.2
 
 include gar/category.mk
 
