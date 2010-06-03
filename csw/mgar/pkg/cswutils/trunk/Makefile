@@ -13,6 +13,10 @@ SVN_REV = 133
 
 MASTER_SITES =
 SVN_FILES = compare_pkgs.py
+
+# these are pulled from gar/lib/python
+PYFILES = opencsw.py checkpkg.py submit_to_newpkgs.py package_checks.py
+
 DISTFILES = COPYING
 DISTFILES += checkpkg checkpkg.8
 DISTFILES += cpan2pkg
@@ -20,8 +24,7 @@ DISTFILES += createpkg createpkg.8
 DISTFILES += stagepkg stagepkg.8
 DISTFILES += stagepkg stagepkg.8
 DISTFILES += $(foreach F,$(SVN_FILES),$(F)-r$(SVN_REV))
-DISTFILES += opencsw.py checkpkg.py submit_to_newpkgs.py
-
+DISTFILES += $(PYFILES)
 
 RUNTIME_DEP_PKGS = CSWcoreutils CSWfakeroot CSWperl
 RUNTIME_DEP_PKGS += CSWpmyaml CSWpmlibwww CSWpmhtmltree
@@ -60,18 +63,10 @@ $(foreach F,$(SVN_FILES),$(DOWNLOADDIR)/$(F)-r$(SVN_REV)):
 	mv $(subst -r$(SVN_REV),,$(notdir $@)) $@
 	@$(MAKECOOKIE)
 
-$(DOWNLOADDIR)/opencsw.py:
-	ln -s $(abspath gar/lib/python/opencsw.py) $(DOWNLOADDIR)/
+$(foreach PY,$(PYFILES),$(DOWNLOADDIR)/$(PY)):
+	@echo "Grabbing $@"
+	@ln -s $(abspath gar/lib/python/$(notdir $@)) $(DOWNLOADDIR)/
 	@$(MAKECOOKIE)
-
-$(DOWNLOADDIR)/checkpkg.py:
-	ln -s $(abspath gar/lib/python/checkpkg.py) $(DOWNLOADDIR)/
-	@$(MAKECOOKIE)
-
-$(DOWNLOADDIR)/submit_to_newpkgs.py:
-	ln -s $(abspath gar/lib/python/submit_to_newpkgs.py) $(DOWNLOADDIR)/
-	@$(MAKECOOKIE)
-
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
@@ -85,9 +80,10 @@ install-custom:
 	@ginstall $(WORKSRC)/createpkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall $(WORKSRC)/stagepkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall -d $(DESTDIR)$(libdir)/python/csw
-	@ginstall -m 755 $(WORKSRC)/opencsw.py $(WORKSRC)/checkpkg.py \
-			 $(WORKSRC)/submit_to_newpkgs.py \
-		$(DESTDIR)$(libdir)/python/csw/
+	@for f in $(PYFILES); do \
+		ginstall -m 755 $(WORKSRC)/$${f} \
+			$(DESTDIR)/$(libdir)/python/csw/; \
+	done
 	@for f in $(SVN_FILES); do \
 		ginstall -m 755 $(WORKSRC)/$${f}-r$(SVN_REV) \
 		$(DESTDIR)$(libdir)/python/csw/$${f}; \
