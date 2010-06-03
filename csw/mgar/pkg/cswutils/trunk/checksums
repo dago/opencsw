@@ -6,6 +6,7 @@ c7dfd7d9204b4e4f066eb33255c6e218  checkpkg.py
 9a637f6546cc50974159a987302d91c0  cpan2pkg
 93b6a811d303ce3be0050c5a7b3c8e69  createpkg
 a605598f30195f9ab1b29fc3944d3b31  createpkg.8
+111fa25630c9b8deaeddbad6295b933b  dependency_checks.py
 db1023c820a48161832687c20fcd0d70  opencsw.py
 359dbdbd4643470df1bf9dc7c115c23d  package_checks.py
 cd4496ee27bf86d5c8bc656c9c5974be  stagepkg
