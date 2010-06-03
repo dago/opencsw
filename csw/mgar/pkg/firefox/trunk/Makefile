@@ -34,7 +34,7 @@ RUNTIME_DEP_PKGS_CSWfirefox += CSWlibatk
 RUNTIME_DEP_PKGS_CSWfirefox += CSWlibcairo
 RUNTIME_DEP_PKGS_CSWfirefox += CSWlibdbus
 RUNTIME_DEP_PKGS_CSWfirefox += CSWlibgnome
-RUNTIME_DEP_PKGS_CSWfirefox += CSWlibx11
+RUNTIME_DEP_PKGS_CSWfirefox += CSWlibgnomeui
 RUNTIME_DEP_PKGS_CSWfirefox += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWfirefox += CSWpango
 RUNTIME_DEP_PKGS_CSWfirefox += CSWzlib
@@ -60,7 +60,7 @@ PATCHFILES += legacydb.manifest.mm.diff
 PATCHFILES += legacydb.config.mk.diff
 
 # pkg-config options
-EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
+#EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
 PERL=/opt/csw/bin/perl
 CXXFLAGS +=-xlibmil -xlibmopt -features=tmplife -norunpath
