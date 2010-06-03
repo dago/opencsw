@@ -1,0 +1,73 @@
+From a6dfb7252a1f9bac034817c517643ab689831261 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Thu, 3 Jun 2010 17:14:48 +0200
+Subject: [PATCH] Makefile: introduce CPPFLAGS/LDFLAGS/DESTDIR, make variables overridable
+
+This patch makes the Makefile more flexible when it comes to a different
+environment where compiler or linker flags like CPPFLAGS/LDFLAGS might be
+preset and where the installation shouldn't be located under /usr.
+---
+ Makefile |   26 ++++++++++++++------------
+ 1 files changed, 14 insertions(+), 12 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 6cbdf49..7b093d1 100755
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,6 @@
+ SHELL = /bin/sh
+ 
+-prefix = /usr
++prefix ?= /usr
+ exec_prefix = ${prefix}
+ bindir = ${exec_prefix}/bin
+ mandir = ${prefix}/share/man/man1
+@@ -9,6 +9,8 @@ CC ?= gcc
+ DEBUG = -g
+ CFLAGS ?= -O2
+ CFLAGS += $(DEBUG)
++CPPFLAGS ?= -I/usr/local/include
++LDFLAGS ?= -L/usr/local/lib -lpcap
+ SRC = src
+ DOC = doc
+ 
+@@ -19,25 +21,25 @@ INSTALL_DATA = ${INSTALL} -m 644
+ all: bittwist bittwistb bittwiste
+ 
+ bittwist:
+-	$(CC) $(CFLAGS) $(SRC)/bittwist.c -o $(SRC)/bittwist -I/usr/local/include -L/usr/local/lib -lpcap
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(SRC)/bittwist.c -o $(SRC)/bittwist $(LDFLAGS)
+ 
+ bittwistb:
+-	$(CC) $(CFLAGS) $(SRC)/bittwistb.c -o $(SRC)/bittwistb -I/usr/local/include -L/usr/local/lib -lpcap
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(SRC)/bittwistb.c -o $(SRC)/bittwistb $(LDFLAGS)
+ 
+ bittwiste:
+-	$(CC) $(CFLAGS) $(SRC)/bittwiste.c -o $(SRC)/bittwiste -I/usr/local/include -L/usr/local/lib -lpcap
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(SRC)/bittwiste.c -o $(SRC)/bittwiste $(LDFLAGS)
+ 
+ clean:
+ 	rm -f $(SRC)/bittwist $(SRC)/bittwistb $(SRC)/bittwiste
+ 
+ install:
+-	mkdir -p $(bindir)
+-	chmod 755 $(bindir)
+-	$(INSTALL_PROGRAM) $(SRC)/bittwist $(SRC)/bittwistb $(SRC)/bittwiste $(bindir)
+-	mkdir -p $(mandir)
+-	chmod 755 $(mandir)
+-	$(INSTALL_DATA) $(DOC)/bittwist.1 $(DOC)/bittwistb.1 $(DOC)/bittwiste.1 $(mandir)
++	mkdir -p $(DESTDIR)$(bindir)
++	chmod 755 $(DESTDIR)$(bindir)
++	$(INSTALL_PROGRAM) $(SRC)/bittwist $(SRC)/bittwistb $(SRC)/bittwiste $(DESTDIR)$(bindir)
++	mkdir -p $(DESTDIR)$(mandir)
++	chmod 755 $(DESTDIR)$(mandir)
++	$(INSTALL_DATA) $(DOC)/bittwist.1 $(DOC)/bittwistb.1 $(DOC)/bittwiste.1 $(DESTDIR)$(mandir)
+ 
+ uninstall:
+-	rm -f $(bindir)/bittwist $(bindir)/bittwistb $(bindir)/bittwiste
+-	rm -f $(mandir)/bittwist.1 $(mandir)/bittwistb.1 $(mandir)/bittwiste.1
++	rm -f $(addprefix $(DESTDIR)$(bindir)/,bittwist bittwistb bittwiste)
++	rm -f $(addprefix $(DESTDIR)$(mandir)/,bittwist.1 bittwistb.1 bittwiste.1)
+-- 
+1.7.1
+
