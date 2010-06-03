@@ -475,7 +475,7 @@ gz-patch-%:
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@( if ggrep -q 'Subject:' $(abspath $(DOWNLOADDIR)/$*); then \
-		cd $(WORKSRC); git am --ignore-space --ignore-whitespace $(abspath $(DOWNLOADDIR)/$*); \
+		cd $(WORKSRC); git am --ignore-space-change --ignore-whitespace $(abspath $(DOWNLOADDIR)/$*); \
 	   else \
 		echo Adding old-style patch...; \
 		$(GARPATCH) < $(DOWNLOADDIR)/$*; \
