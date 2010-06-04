@@ -64,4 +64,6 @@ PKGFILES_CSWgtk2doc = $(sharedstatedir)/gtk-doc/.*
 
 ARCHALL_CSWgtk2doc = 1
 
+PATCHFILES = gdkdnd-x11.c.diff
+
 include gar/category.mk
