@@ -1,5 +1,5 @@
 GARNAME = gtk2
-GARVERSION = 2.19.7
+GARVERSION = 2.18.9
 CATEGORIES = lib
 
 DESCRIPTION = GTK+, the multiplatform X11 toolkit for GUI development
@@ -42,17 +42,11 @@ RUNTIME_DEP_PKGS_CSWgtk2devel += CSWlibcairodevel CSWlibx11devel CSWlibxrenderde
 
 SPKG_SOURCEURL = http://www.gtk.org/
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-
 NOISAEXEC = 1
 NOISALIST = 1
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS += --disable-cups
 
 STRIP_LIBTOOL = 1
