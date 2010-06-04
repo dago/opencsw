@@ -5,7 +5,7 @@ CATEGORIES = xtra
 VENDOR_URL = http://opencsw.org
 
 GLINKPKGS =  CSWggettext CSWggettextrt CSWbison CSWbinutils
-GLINKPKGS += CSWgawk CSWgsed CSWggetopt CSWfindutils
+GLINKPKGS += CSWgsed CSWggetopt CSWfindutils
 GLINKPKGS += CSWgmake CSWgpatch CSWgm4 CSWgwhois CSWgtar
 BUILD_DEP_PKGS = $(GLINKPKGS) CSWpkgutil CSWbash
 
