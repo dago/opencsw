@@ -58,6 +58,11 @@ build/.config.done:
 # I tried depending this on   $(BUILDDIR)/config.log  but that didnt stick
 configure:	build/.config.done
 
+
+# Note: If you decide to do a full re ./configure, you may have to do
+# PKG_CONFIG_PATH=/opt/csw/lib/sparcv9, particularly if you
+# use glib. because that changes the #include paths as well !!
+#
 sparcv9:
 	(cd $(BUILDDIR)/src ; \
 	gmake clean;  \
