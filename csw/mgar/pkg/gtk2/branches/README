@@ -1,6 +1,18 @@
 Quickie rebuild of our gtk packge(s), to make the CSW-X11 clean.
 
-notes for hand-tweaking prototype file:
+SOLARIS 9 PATCHING NOTE::
+
+  Apparently, suns' patching is BROKEN!!
+   x86 latest patch set gets PROPER version of file for
+   /usr/openwin/share/include/X11/Xlibint.h
+   **sparc does not** !!!
+  So.. have to manually copy x86 version of file over to sparc, then it works!
+
+Oddity: the sun fingerprint database is corrupted !!
+
+  --------------------------------------------------
+
+notes for hand-tweaking gtk prototype file:
 
 remove .la files from /opt/csw/lib, but NOT modules dir or elsewhere
 
@@ -11,8 +23,8 @@ Fix whine about cannot find "default local directory monitor"?
  but actualy also triggered through libFAM failage.
  erm...?
 
-some websites believe,
-"makes me believe that it is
- caused by the gtk_file_chooser* code in gtkoptions.c. Probably a
- missing directory that the gtk code expects to be there."
+some websites believe :-- 
+ "makes me believe that it is caused by the gtk_file_chooser* code in
+  gtkoptions.c. Probably a missing directory that the gtk code expects to be
+  there."
 
