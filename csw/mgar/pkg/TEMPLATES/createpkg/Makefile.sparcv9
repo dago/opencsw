@@ -60,7 +60,7 @@ configure:	build/.config.done
 
 
 # Note: If you decide to do a full re ./configure, you may have to do
-# PKG_CONFIG_PATH=/opt/csw/lib/sparcv9, particularly if you
+# PKG_CONFIG_PATH=/opt/csw/lib/sparcv9/pkgconfig , particularly if you
 # use glib. because that changes the #include paths as well !!
 #
 sparcv9:
