@@ -34,4 +34,6 @@ post-extract-modulated:
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(sharedstatedir)/xbattle
 	cd $(WORKSRC) && cp -r xbos xbts xbas $(DESTDIR)$(sharedstatedir)/xbattle/
+	ginstall -d $(DESTDIR)$(docdir)/xbattle
+	cd $(WORKSRC) && cp -rp tutorial1 tutorial2 README $(DESTDIR)$(docdir)/xbattle
 	@$(MAKECOOKIE)
