@@ -38,15 +38,21 @@ package:  ### potentially want to handle "merge" type stuff here
 
 # initial announce here. more down below for individual targets
 sparc-32 sparc-64 i386-32 i386-64::
-	@echo building $@ target
+	@echo Building $@ target
 
 
-configure-$(ARCH)-32:	build/.configure-$(ARCH)-32.done	
-build-$(ARCH)-32:	build/.build-$(ARCH)-32.done		
-stage-$(ARCH)-32:	build/.stage-$(ARCH)-32.done		
-configure-$(ARCH)-64:	build/.configure-$(ARCH)-64.done	
-build-$(ARCH)-64:	build/.build-$(ARCH)-64.done		
-stage-$(ARCH)-64:	build/.stage-$(ARCH)-64.done		
+configure-$(ARCH)-32:	build/.configure-$(ARCH)-32.done
+	@echo $@ done
+build-$(ARCH)-32:	build/.build-$(ARCH)-32.done
+	@echo $@ done
+stage-$(ARCH)-32:	build/.stage-$(ARCH)-32.done
+	@echo $@ done
+configure-$(ARCH)-64:	build/.configure-$(ARCH)-64.done
+	@echo $@ done
+build-$(ARCH)-64:	build/.build-$(ARCH)-64.done
+	@echo $@ done
+stage-$(ARCH)-64:	build/.stage-$(ARCH)-64.done
+	@echo $@ done
 
 
 # split out generic $(ARCH) sections to specific platform if needed.
@@ -64,13 +70,11 @@ build/.stage-$(ARCH)-64.done:
 	
 
 
-$(ARCH)-32 ::   build/.configure-$(ARCH)-32.done \
-		build/.build-$(ARCH)-32.done \
-		build/.stage-$(ARCH)-32.done
+$(ARCH)-32 ::   configure-$(ARCH)-32 build-$(ARCH)-32 stage-$(ARCH)-32
 	@echo Completed $(ARCH)-32 configure, build and stage
 	touch build/.$(ARCH)-32.done
 
 
-$(ARCH)-64 ::  build/.$(ARCH)-32.done build/.configure-$(ARCH)-64.done build/.build-$(ARCH)-64.done build/.stage-$(ARCH)-64.done
+$(ARCH)-64 ::  stage-$(ARCH)-32 configure-$(ARCH)-64 build-$(ARCH)-64 stage-$(ARCH)-64
 	@echo Completed $@ configure, build and stage
 	touch build/.$(ARCH)-64.done
