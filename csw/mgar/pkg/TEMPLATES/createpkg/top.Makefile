@@ -11,5 +11,5 @@ DEFAULT_DIR=trunk
 # The -C means you must use gmake, unfortunately.
 
 garchive extract configure build package:
-	$(MAKE) -C  $(DEFAULT_DIR) $*
+	$(MAKE) -C  $(DEFAULT_DIR) $@
 

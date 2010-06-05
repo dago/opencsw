@@ -1,0 +1,76 @@
+# Eventually, move "Makefile.sparc" to here, and make it 
+# generic 64bit capable.?
+# you MUST build this with gnu make, unfortunately.
+# Mainly just because of the ARCH expansion
+
+# Organization: variable defintions up top,
+# targets in second half.
+
+ARCH := $(shell /bin/uname -p)
+
+LDFLAGS_32:=
+LDFLAGS_64=
+
+
+# DO NOT specify the arch-blah stuff such as -m64 here.
+# the individual targets will do that.
+# This is to allow these bits to normally be identical.
+
+CFLAGS_32 :=
+CFLAGS_64 := $(CFLAGS_32)
+CXXFLAGS_32 :=
+CXXFLAGS_64 := $(CXXFLAGS_64)
+
+# Keep this arch-neutral if possible. add arch-specific tweaks
+# to arch-specific target
+CONFIGURE=./configure --prefix=/opt/csw
+
+CONFIGURE_64_EXTRAS:= --libdir=/opt/csw/lib/64
+
+all:	$(ARCH)-32 $(ARCH)-64 package
+
+# ARCH-XX handles configure, build, and stage for its own combo
+# 
+
+
+package:  ### potentially want to handle "merge" type stuff here
+
+
+# initial announce here. more down below for individual targets
+sparc-32 sparc-64 i386-32 i386-64::
+	@echo building $@ target
+
+
+configure-$(ARCH)-32:	build/.configure-$(ARCH)-32.done	
+build-$(ARCH)-32:	build/.build-$(ARCH)-32.done		
+stage-$(ARCH)-32:	build/.stage-$(ARCH)-32.done		
+configure-$(ARCH)-64:	build/.configure-$(ARCH)-64.done	
+build-$(ARCH)-64:	build/.build-$(ARCH)-64.done		
+stage-$(ARCH)-64:	build/.stage-$(ARCH)-64.done		
+
+
+# split out generic $(ARCH) sections to specific platform if needed.
+# but it usually should not be.
+
+build/.$(ARCH)-32.done:	$(ARCH)-32
+
+
+build/.build-$(ARCH)-32.done build/.stage-$(ARCH)-32.done \
+build/.configure-$(ARCH)-32.done \
+build/.configure-$(ARCH)-64.done build/.build-$(ARCH)-64.done \
+build/.stage-$(ARCH)-64.done:
+	@echo debug: handling $@ target
+	touch $@
+	
+
+
+$(ARCH)-32 ::   build/.configure-$(ARCH)-32.done \
+		build/.build-$(ARCH)-32.done \
+		build/.stage-$(ARCH)-32.done
+	@echo Completed $(ARCH)-32 configure, build and stage
+	touch build/.$(ARCH)-32.done
+
+
+$(ARCH)-64 ::  build/.$(ARCH)-32.done build/.configure-$(ARCH)-64.done build/.build-$(ARCH)-64.done build/.stage-$(ARCH)-64.done
+	@echo Completed $@ configure, build and stage
+	touch build/.$(ARCH)-64.done
