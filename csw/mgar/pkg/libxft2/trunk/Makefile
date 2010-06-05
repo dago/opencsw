@@ -65,7 +65,7 @@ sparcv9:
 	  LDFLAGS='-R/opt/csw/lib/sparcv9 -L/opt/csw/lib/sparcv9'  ; \
 	  strip .libs/$(RAWLIB); \
 	  cp .libs/$(RAWLIB) ../cswstage ; cd .. ;\
-	  sed 's:libdir=.*:/opt/csw/lib/sparcv9:' xft.pc>cswstage/xft.pc.sparcv9 ; \
+	  sed 's:libdir=.*:libdir=/opt/csw/lib/sparcv9:' xft.pc>cswstage/xft.pc.sparcv9 ; \
 	echo sparcv9 build done  )
 
 
