@@ -47,6 +47,7 @@ EOF
 
 
 cp $template_dir/Makefile* $DESTDIR
+cp -i $template_dir/top.Makefile $DESTDIR/../Makefile
 cp $template_dir/README* $DESTDIR
 cp $template_dir/prototype* $DESTDIR
 $template_dir/generate_pkginfo $1 >$DESTDIR/pkginfo
