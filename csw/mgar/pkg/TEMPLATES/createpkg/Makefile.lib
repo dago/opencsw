@@ -1,9 +1,10 @@
 # This file is from TEMPLATES/createpkg/Makefile.lib
-# you MUST build this with gnu make, unfortunately.
-# Mainly just because of the ARCH expansion
+# You MUST build this with gnu make, unfortunately.
+# Mainly just because of the ARCH expansion, but also for "?="
 
 # Organization: variable defintions up top,
 # targets in second half.
+# Note that assignments with "?=" mean "assign if not already assigned.
 
 ARCH := $(shell /bin/uname -p)
 
@@ -14,19 +15,48 @@ SRCDIR= build/*
 # DO NOT specify the arch-blah stuff such as -m64 here.
 # the individual targets will do that.
 
-CFLAGS_COMMON   := -mt -xnorunpath
-CXXFLAGS_COMMON := -mt -norunpath
+CFLAGS_COMMON   ?= -mt -xnorunpath -xO2
+CXXFLAGS_COMMON ?= -mt -norunpath  -xO2
 
 # Keep this arch-neutral if possible. add arch-specific tweaks
 # to arch-specific target
 CONFIGURE=./configure --prefix=/opt/csw --enable-static=no
 
-CONFIGURE_64_EXTRAS:= --libdir=/opt/csw/lib/64 --libexecdir=/opt/csw/libexec/sparcv9
+CONFIGURE_64_sparc= --libexecdir=/opt/csw/libexec/sparcv9
+CONFIGURE_64_i386= --libexecdir=/opt/csw/libexec/amd64
+
+CONFIGURE_64_EXTRAS:= --libdir=/opt/csw/lib/64 $(CONFIGURE_64_$(ARCH))
+
+test:
+	@echo extras = $(CONFIGURE_64_EXTRAS)
+
+# Where do we keep local downloads of software src files
+ARCHIVEDIR ?= /home/src
+ARCHIVENAME=FillThisInHere.tar.foo
+
 
 all:	$(ARCH)-32 clean $(ARCH)-64 package
 
 # ARCH-XX handles configure, build, and stage for its own combo
 # 
+
+EXTRACTPROG=/bin/echo ERROR: UNKNOWN archive type ; exit 1 ;
+
+ifeq  ($(suffix $(ARCHIVENAME)), ".gz")
+	EXTRACTPROG=gtar zf
+endif
+ifeq  ($(suffix $(ARCHIVENAME)), ".bz2")
+	EXTRACTPROG=gtar jf
+endif
+
+extract:
+	test -d build || mkdir build
+	@if test -f  $(ARCHIVEDIR)/$(ARCHIVENAME) ; then \
+		( cd build && $(EXTRACTPROG) $(ARCHIVEDIR)/$(ARCHIVENAME) ) ; \
+	else echo Cannot extract - $(ARCHIVEDIR)/$(ARCHIVENAME) does not exist ;\
+		exit 1; \
+	fi
+	
 
 clean distclean:
 	$(MAKE) -C $(SRCDIR) $@
@@ -93,7 +123,7 @@ build/.configure-$(ARCH)-64.done:	build/.patch-preconf.done
 	(cd $(SRCDIR) ; \
 	  CFLAGS="$(CFLAGS_COMMON) -m64"  \
 	  CXXFLAGS="$(CXXFLAGS_COMMON) -m64" \
-	  PKG_CONFIG_PATH=/opt/csw/lib/sparcv9 \
+	  PKG_CONFIG_PATH=/opt/csw/lib/64 \
 	  $(CONFIGURE) $(CONFIGURE_64_EXTRAS)  )
 	if test -f patchfile.postconf ; then \
 	 gpatch -d $(SRCDIR) -p0  <patchfile.postconf ; fi
