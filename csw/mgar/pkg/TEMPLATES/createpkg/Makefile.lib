@@ -1,5 +1,4 @@
-# Eventually, move "Makefile.sparc" to here, and make it 
-# generic 64bit capable.?
+# This file is from TEMPLATES/createpkg/Makefile.lib
 # you MUST build this with gnu make, unfortunately.
 # Mainly just because of the ARCH expansion
 
@@ -8,32 +7,36 @@
 
 ARCH := $(shell /bin/uname -p)
 
-LDFLAGS_32:=
-LDFLAGS_64=
+LDFLAGS_COMMON :=
 
+SRCDIR= build/*
 
 # DO NOT specify the arch-blah stuff such as -m64 here.
 # the individual targets will do that.
-# This is to allow these bits to normally be identical.
 
-CFLAGS_32 :=
-CFLAGS_64 := $(CFLAGS_32)
-CXXFLAGS_32 :=
-CXXFLAGS_64 := $(CXXFLAGS_64)
+CFLAGS_COMMON   := -mt -xnorunpath
+CXXFLAGS_COMMON := -mt -norunpath
 
 # Keep this arch-neutral if possible. add arch-specific tweaks
 # to arch-specific target
-CONFIGURE=./configure --prefix=/opt/csw
+CONFIGURE=./configure --prefix=/opt/csw --enable-static=no
 
-CONFIGURE_64_EXTRAS:= --libdir=/opt/csw/lib/64
+CONFIGURE_64_EXTRAS:= --libdir=/opt/csw/lib/64 --libexecdir=/opt/csw/libexec/sparcv9
 
-all:	$(ARCH)-32 $(ARCH)-64 package
+all:	$(ARCH)-32 clean $(ARCH)-64 package
 
 # ARCH-XX handles configure, build, and stage for its own combo
 # 
 
+clean distclean:
+	$(MAKE) -C $(SRCDIR) $@
 
-package:  ### potentially want to handle "merge" type stuff here
+
+
+package patch garchive:
+	@echo make $@ not implemented yet
+	### potentially want to handle "merge" type stuff in 'package'
+	# we also want to handle multi-package thingies.
 
 
 # initial announce here. more down below for individual targets
@@ -61,14 +64,46 @@ stage-$(ARCH)-64:	build/.stage-$(ARCH)-64.done
 build/.$(ARCH)-32.done:	$(ARCH)-32
 
 
-build/.build-$(ARCH)-32.done build/.stage-$(ARCH)-32.done \
-build/.configure-$(ARCH)-32.done \
-build/.configure-$(ARCH)-64.done build/.build-$(ARCH)-64.done \
-build/.stage-$(ARCH)-64.done:
+build/.stage-$(ARCH)-32.done \
+build/.stage-$(ARCH)-64.done ::
 	@echo debug: handling $@ target
 	touch $@
-	
 
+
+# Since we share the same src tree, we should only need to
+# pre-configure patching one time for all.
+build/.patch-preconf.done:
+	if test -f patchfile.preconf ; then \
+	 gpatch -d $(SRCDIR) -p0  <patchfile.preconf ; fi
+	touch $@
+
+
+build/.configure-$(ARCH)-32.done:	build/.patch-preconf.done
+	@echo handling $@ target
+	(cd $(SRCDIR) ; \
+	  CFLAGS="$(CFLAGS_COMMON)" \
+	  CXXFLAGS="$(CXXFLAGS_COMMON)" \
+	  $(CONFIGURE) )
+	if test -f patchfile.postconf ; then \
+	 gpatch -d $(SRCDIR) -p0  <patchfile.postconf ; fi
+	touch $@
+
+build/.configure-$(ARCH)-64.done:	build/.patch-preconf.done
+	@echo handling $@ target
+	(cd $(SRCDIR) ; \
+	  CFLAGS="$(CFLAGS_COMMON) -m64"  \
+	  CXXFLAGS="$(CXXFLAGS_COMMON) -m64" \
+	  PKG_CONFIG_PATH=/opt/csw/lib/sparcv9 \
+	  $(CONFIGURE) $(CONFIGURE_64_EXTRAS)  )
+	if test -f patchfile.postconf ; then \
+	 gpatch -d $(SRCDIR) -p0  <patchfile.postconf ; fi
+	touch $@
+
+	
+build/.build-$(ARCH)-32.done build/.build-$(ARCH)-64.done::
+	(cd $(SRCDIR) ; \
+	  $(MAKE) $(MFLAGS) )	
+	touch $@
 
 $(ARCH)-32 ::   configure-$(ARCH)-32 build-$(ARCH)-32 stage-$(ARCH)-32
 	@echo Completed $(ARCH)-32 configure, build and stage
