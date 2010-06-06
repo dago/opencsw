@@ -1,15 +1,15 @@
 GARNAME = libtool
-GARVERSION = 2.2.6b
+GARVERSION = 2.2.8
 CATEGORIES = devel
 
 EXTRA_MODULATORS = GARVERSION GARCOMPILER
-MODULATIONS_GARVERSION = 1.5.26 2.2.6b
-MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS11
+MODULATIONS_GARVERSION = 1.5.26 2.2.8
+MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS11 SOS12
 
 # Modulate over compiler only for 2.2.6
 SKIP_MODULATIONS = $(foreach I,sparcv8 sparcv9 i386 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-1.5.26-garcompiler-$C))
 # Compile 64 bit libraries only with SOS11
-SKIP_MODULATIONS += $(foreach I,sparcv9 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-2.2.6b-garcompiler-$C))
+SKIP_MODULATIONS += $(foreach I,sparcv9 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-2.2.8-garcompiler-$C))
 
 DESCRIPTION = A generic library support tool
 define BLURB
@@ -23,15 +23,16 @@ SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION)
 DISTFILES    = $(SOURCEFILES)
 
 PATCH_LIBTOOL = patch-libtool.diff
-PATCHFILES_POSTINSTALL_isa-i386-garversion-2.2.6b-garcompiler-SOS11 = $(PATCH_LIBTOOL)
-PATCHFILES_POSTINSTALL_isa-sparcv8-garversion-2.2.6b-garcompiler-SOS11 = $(PATCH_LIBTOOL)
+PATCHFILES_POSTINSTALL_isa-i386-garversion-2.2.8-garcompiler-SOS11 = $(PATCH_LIBTOOL)
+PATCHFILES_POSTINSTALL_isa-sparcv8-garversion-2.2.8-garcompiler-SOS11 = $(PATCH_LIBTOOL)
 DISTFILES += $(PATCH_LIBTOOL)
 
 NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
 
-EXTRA_TAGS = gcc3 gcc4
+EXTRA_TAGS = gcc3 gcc4 sos12
 COMPILER_TAGNAME_GCC3 = gcc3
 COMPILER_TAGNAME_GCC4 = gcc4
+COMPILER_TAGNAME_SOS12 = sos12
 
 PACKAGES = CSWlibtool CSWlibtoolrt
 CATALOGNAME_CSWlibtoolrt = libtool_rt
@@ -59,14 +60,16 @@ TEST_TARGET = check
  MERGE_SCRIPTS_isa-default64-garversion-1.5.26-garcompiler-SOS11 = copy-relocated-only
     MERGE_DIRS_isa-default64-garversion-1.5.26-garcompiler-SOS11 = $(libdir)
 
-   MERGE_SCRIPTS_isa-default-garversion-2.2.6b-garcompiler-SOS11 = copy-all
- MERGE_SCRIPTS_isa-default64-garversion-2.2.6b-garcompiler-SOS11 = copy-relocated-only
-    MERGE_DIRS_isa-default64-garversion-2.2.6b-garcompiler-SOS11 = $(libdir)
+   MERGE_SCRIPTS_isa-default-garversion-2.2.8-garcompiler-SOS11 = copy-all
+ MERGE_SCRIPTS_isa-default64-garversion-2.2.8-garcompiler-SOS11 = copy-relocated-only
+    MERGE_DIRS_isa-default64-garversion-2.2.8-garcompiler-SOS11 = $(libdir)
 
-    MERGE_SCRIPTS_isa-default-garversion-2.2.6b-garcompiler-GCC3 = copy-tags
-    MERGE_SCRIPTS_isa-default-garversion-2.2.6b-garcompiler-GCC4 = copy-tags
+    MERGE_SCRIPTS_isa-default-garversion-2.2.8-garcompiler-GCC3 = copy-tags
+    MERGE_SCRIPTS_isa-default-garversion-2.2.8-garcompiler-GCC4 = copy-tags
 
 PKGFILES_CSWlibtoolrt = $(PKGFILES_RT)
+
+CHECKPKG_OVERRIDES_CSWlibtool += surplus-dependency|CSWlibtoolrt
 
 include gar/category.mk
 
@@ -77,6 +80,7 @@ patch-libtool:
 	cat $(WORKDIR)/$(PATCHFILES_POSTINSTALL_$(MODULATION)) | (cd $(DESTDIR)$(bindir) && gpatch -p1)
 	# Remove arch-specific flags from the libtool-compilation so they don't spoil the target build
 	perl -pi -e 's/^LTCFLAGS=.*/LTCFLAGS="-O"/' $(DESTDIR)$(bindir)/libtool
+	@$(MAKECOOKIE)
 
 install-libtool-%:
 	perl -ane 'print if( /^available_tags/ ); $$p = 1 if( /^# ### BEGIN LIBTOOL CONFIG/ ); print if( $$p ); $$p = 0 if( /^# ### END LIBTOOL CONFIG/ )' \
