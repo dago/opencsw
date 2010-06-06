@@ -16,8 +16,6 @@ PACKAGES = CSWlibxslt CSWlibxsltdevel CSWpylibxslt
 CATALOGNAME_CSWlibxsltdevel = libxslt_devel
 CATALOGNAME_CSWpylibxslt = py_libxslt
 
-PATCHFILES = fix-segfault-in-debug.patch
-
 BUILD_DEP_PKGS = CSWlibxml2 CSWlibxml2devel
 
 SPKG_DESC_CSWlibxslt =  XSLT engine runtime package
