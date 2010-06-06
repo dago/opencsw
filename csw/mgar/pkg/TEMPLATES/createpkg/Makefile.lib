@@ -32,8 +32,10 @@ test:
 
 # Where do we keep local downloads of software src files
 ARCHIVEDIR ?= /home/src
-ARCHIVENAME=FillThisInHere.tar.foo
+ARCHIVENAME ?= FillThisInHere.tar.foo
 
+# Only use ONE here. The name is used for compate with 'gar'.
+MASTER_SITES ?= http://www.url.here/download
 
 all:	$(ARCH)-32 clean $(ARCH)-64 package
 
@@ -62,8 +64,24 @@ clean distclean:
 	$(MAKE) -C $(SRCDIR) $@
 
 
+garchive:
+	@echo Call the fetch target instead: it does the same thing.
 
-package patch garchive:
+
+# Downloads the source code to the common ARCHIVEDIR
+fetch:	$(ARCHIVEDIR)/$(ARCHIVENAME)
+	@echo fetch done
+
+$(ARCHIVEDIR)/$(ARCHIVENAME):
+	wget -P $(ARCHIVEDIR) $(MASTER_SITES)/$(ARCHIVENAME)
+
+patch:
+	@echo patch: patching is handled automatically as part of the configure phase.
+
+
+
+
+package:
 	@echo make $@ not implemented yet
 	### potentially want to handle "merge" type stuff in 'package'
 	# we also want to handle multi-package thingies.
