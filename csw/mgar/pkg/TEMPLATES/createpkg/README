@@ -2,15 +2,24 @@ This is a README for the "createpkg" style templates in the
 OpenCSW subversion tree. It gets copied to a brand new directory, when it
 is created with "make createpkg-softwarenamehere"
 
-Instructions:
+CONTENTS:
+  Initial Setup
+  Make Targets
+  Make Timestamps
 
-the first thing you should do, is
+Initial Setup
+--------------------
+
+The first thing you should do, after creating your new directory with
+  "make  createpkg-softwarenamehere"
+is to cd into the directory and do
 
   svn status
 
-with this, you will notice that no files in the directory are actually checked
+With this, you will notice that no files in the directory are actually checked
 into subversion yet.  You should edit (or remove) the files as you deem 
-apropriate, and then
+apropriate. In particular, copy the speciifc Makefile.xxx to Makefile, and
+remove the others if you wish. Then,  
 
   svn add   filename(s)
 
@@ -22,14 +31,15 @@ to do the following:
 1. Set up your environment variables as appropriate, and/or
   set the appropriate variables in Makefile
 
-2. mkdir build
+2. (if 'gmake extract' does not work),
+   mkdir build, then extract the source tree of whatever you are building,
+   under the build dir.
 
-3.  extract the source tree of whatever you are building, in the build dir.
-
-4. make
+4. gmake
 
 You also have a choice of some optional subtargets, such as
-  make  {configure,build,package,clean,reallyclean}
+  make  {configure,build,package,clean,reallyclean}. See "Make Targets"
+  lower down for more details.
 
 If you wish a patch set to be applied to the source before configure, create
 a file called "patchfile.preconf" and put them there.
@@ -44,4 +54,43 @@ appropriate copyright, depend and prototype files.
 If you dont know what to put into
 the prototype file, an initial build will most likely bomb out, after creating
 one for you in build/*/cswstage/prototype.
+
+
+
+
+Make Targets
+--------------------
+The makefiles are current a work in progress. The most developed
+initially is "Makefile.lib".
+
+Currently aimed-for supported makefile targets are:
+
+ * extract
+ * sparc-32 sparc64 i386-32 i386-64
+ * configure-(ARCH)-(32/64)
+ * build-(ARCH)-(32/64)
+ * stage-(ARCH)-(32/64)
+ * clean
+ * distclean.
+
+Note that there is a single shared upstream source tree, that should be
+extracted under a "build" directory.
+The "clean" and "distclean" targets, are only pass-through targets, that
+will call the upstream source tree makefile with that argument.
+
+
+There are also assorted internal makefile targets which probably wont interest
+you. What MAY interest you, are the timestamp markers, described below.
+
+Make Timestamps
+--------------------
+
+Each major makefile target, has a "done" file marker. They are kept in
+dotfiles under the "build" directory.
+For example, the target "configure-sparc-32", will create a file,
+  build/.configure-sparc-32.done
+when successfully completed.
+
+If you wish to force a rebuild of a target, remove the corresponding
+".done" file, and do the make again.
 
