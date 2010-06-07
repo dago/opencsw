@@ -1,5 +1,5 @@
 GARNAME = pkgutil
-GARVERSION = 2.0b2
+GARVERSION = 2.0
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -19,6 +19,37 @@ DISTFILES += $(call admfiles,CSWpkgutil,prototype preremove postinstall)
 DISTFILES += build_sun_catalog.py
 DISTFILES += opencsw.py
 DISTFILES += cswcatalog
+
+PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
+
+CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWcswpkgloghooks
+CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWgnupg
+CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpkgutil
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|etc/opt/csw
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/bin
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/etc
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share/doc
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share/man
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|var/opt/csw
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|etc/opt/csw
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/bin
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/etc
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share/doc
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share/man
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|var/opt/csw
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|etc/opt/csw
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/bin
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/etc
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share/doc
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share/man
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|var/opt/csw
 
 PACKAGES = CSWpkgutil CSWpkgutilplus
 
