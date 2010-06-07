@@ -1,5 +1,5 @@
 GARNAME = glibmm
-GARVERSION = 2.20.0
+GARVERSION = 2.22.2
 CATEGORIES = lib
 
 DESCRIPTION = C++ interface to glib2
@@ -12,7 +12,6 @@ SPKG_DESC_CSWglibmm_devel = C++ interface to glib2 development files
 #RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 MASTER_SITES = $(GNOME_MIRROR)
-
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 
 BUILD64 = 1
