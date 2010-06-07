@@ -1,3 +1,5 @@
+# $Id$
+
 GARNAME = file
 GARVERSION = 5.04
 CATEGORIES = utils
@@ -18,7 +20,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # These flags are not understood by Sun Studio
 CONFIGURE_ARGS += --disable-warnings
 TEST_TARGET = check
-PATCHFILES = 0001-libtool-dir-used-for-linking.patch
+PATCHFILES += 0001-libtool-dir-used-for-linking.patch
+PATCHFILES += 0002-CSW-runpath.patch
 PACKAGES = CSWfile CSWlibmagic CSWpy-libmagic
 PKGFILES_CSWlibmagic = $(PKGFILES_RT)
 PKGFILES_CSWpy-libmagic = /opt/csw/lib/python.*
