@@ -1,5 +1,5 @@
 GARNAME = namebench
-GARVERSION = 1.2
+GARVERSION = 1.3
 CATEGORIES = python
 
 DESCRIPTION = DNS benchmark utility
@@ -20,5 +20,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 ARCHALL = 1
 
 TEST_SCRIPTS =
+
+CHECKPKG_OVERRIDES_CSWnamebench += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWnamebench += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWnamebench += surplus-dependency|CSWpython-tk
 
 include gar/category.mk
