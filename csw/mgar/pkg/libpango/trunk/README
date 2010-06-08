@@ -1,16 +1,47 @@
 This is a "quickie" redo of pango, for our X11 recompile project
 ( http://wiki.opencsw.org/project-x11-reloaded )
 
-It unfortunately does not have 64bit support, because Phil had
- issues when trying to get that to work right. some kind of complaints from
-  glib.h includes or some such.
+ALthough it's now becoming a little less "quickie" and a bit more
+"proper".
+64bit issues have been resolved.
 
-Normally, this would delay release of the package. but since our X11
-is in dire straits, higher priority is given to "Fix X11 for 95%
-  of everyone" vs "hold this until 64bit is fixed".
+It is in here, rather than in pkg/pango, because the software 'name'
+is libpango, so I thought this was the right dirname to use.
 
 
-include and pkgconfig files get split out into _devel. (see subdir)
-htmldoc gets split into _doc. 
-everything else stays in top level. 
+PROBLEM SHOOTING:
+
+If amd64 blows up about g-ir-scanner, then just remove it from config.status
+(Set INTROSPECTION_SCANNER to "")
+Actually, set all INTROSPECTION stuff to "", and then set
+S["HAVE_INTROSPECTION_FALSE"]=""
+S["HAVE_INTROSPECTION_TRUE"]="#"
+
+eeeexcept that doesnt seem to be enough, so we force --enable-introspection=no
+for the 64bit configs
+
+
+x86 also gets picky about the staging. Some problem with libfakeroot, at
+least on our build machine setup?
+
+You May have to manually redo the 32bit staging with
+  cd build/*;
+  gmake DESTDIR=$PWD/cswstage install
+
+
+
+TWEAKS FOR prototype files:
+
+
+
+*. include and pkgconfig files get split out into _devel. (see subdir)
+*. htmldoc gets split into _doc. 
+*. everything else stays in top level. 
+
+*. To get the 64bit libby stuffs, fgrep out "csw/lib" from a "pure" 
+   prototype, and then  sed s:/lib/:/lib/sparcv9/:  or amd64, as appropriate
+   Dont forget to update the devel package prototype if needed
+
+*. strip out .la files from top libdirs, but NOT from "modules" dirs!
+
 

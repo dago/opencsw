@@ -9,19 +9,19 @@ d none /opt/csw/etc 0755 root bin
 d none /opt/csw/etc/pango 0755 root bin
 f none /opt/csw/etc/pango/pangox.aliases 0644 root bin
 d none /opt/csw/lib 0755 root bin
-s none /opt/csw/lib/libpangoxft-1.0.so.0=libpangoxft-1.0.so.0.2600.2
-f none /opt/csw/lib/libpangoxft-1.0.so.0.2600.2 0755 root bin
-f none /opt/csw/lib/libpangocairo-1.0.so.0.2600.2 0755 root bin
-s none /opt/csw/lib/libpango-1.0.so=libpango-1.0.so.0.2600.2
-s none /opt/csw/lib/libpangox-1.0.so.0=libpangox-1.0.so.0.2600.2
-f none /opt/csw/lib/libpangox-1.0.so.0.2600.2 0755 root bin
-s none /opt/csw/lib/libpangoxft-1.0.so=libpangoxft-1.0.so.0.2600.2
-s none /opt/csw/lib/libpangoft2-1.0.so.0=libpangoft2-1.0.so.0.2600.2
-f none /opt/csw/lib/libpango-1.0.so.0.2600.2 0755 root bin
-s none /opt/csw/lib/libpangox-1.0.so=libpangox-1.0.so.0.2600.2
-s none /opt/csw/lib/libpangocairo-1.0.so=libpangocairo-1.0.so.0.2600.2
-s none /opt/csw/lib/libpangoft2-1.0.so=libpangoft2-1.0.so.0.2600.2
-s none /opt/csw/lib/libpangocairo-1.0.so.0=libpangocairo-1.0.so.0.2600.2
+s none /opt/csw/lib/libpangoxft-1.0.so.0=libpangoxft-1.0.so.0.2800.0
+f none /opt/csw/lib/libpangoxft-1.0.so.0.2800.0 0755 root bin
+f none /opt/csw/lib/libpangocairo-1.0.so.0.2800.0 0755 root bin
+s none /opt/csw/lib/libpango-1.0.so=libpango-1.0.so.0.2800.0
+s none /opt/csw/lib/libpangox-1.0.so.0=libpangox-1.0.so.0.2800.0
+f none /opt/csw/lib/libpangox-1.0.so.0.2800.0 0755 root bin
+s none /opt/csw/lib/libpangoxft-1.0.so=libpangoxft-1.0.so.0.2800.0
+s none /opt/csw/lib/libpangoft2-1.0.so.0=libpangoft2-1.0.so.0.2800.0
+f none /opt/csw/lib/libpango-1.0.so.0.2800.0 0755 root bin
+s none /opt/csw/lib/libpangox-1.0.so=libpangox-1.0.so.0.2800.0
+s none /opt/csw/lib/libpangocairo-1.0.so=libpangocairo-1.0.so.0.2800.0
+s none /opt/csw/lib/libpangoft2-1.0.so=libpangoft2-1.0.so.0.2800.0
+s none /opt/csw/lib/libpangocairo-1.0.so.0=libpangocairo-1.0.so.0.2800.0
 d none /opt/csw/lib/pango 0755 root bin
 d none /opt/csw/lib/pango/1.6.0 0755 root bin
 d none /opt/csw/lib/pango/1.6.0/modules 0755 root bin
@@ -49,8 +49,8 @@ f none /opt/csw/lib/pango/1.6.0/modules/pango-syriac-fc.so 0755 root bin
 f none /opt/csw/lib/pango/1.6.0/modules/pango-khmer-fc.so 0755 root bin
 f none /opt/csw/lib/pango/1.6.0/modules/pango-arabic-fc.la 0755 root bin
 f none /opt/csw/lib/pango/1.6.0/modules/pango-indic-fc.la 0755 root bin
-f none /opt/csw/lib/libpangoft2-1.0.so.0.2600.2 0755 root bin
-s none /opt/csw/lib/libpango-1.0.so.0=libpango-1.0.so.0.2600.2
+f none /opt/csw/lib/libpangoft2-1.0.so.0.2800.0 0755 root bin
+s none /opt/csw/lib/libpango-1.0.so.0=libpango-1.0.so.0.2800.0
 d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/man 0755 root bin
 d none /opt/csw/share/man/man1 0755 root bin
@@ -58,3 +58,45 @@ f none /opt/csw/share/man/man1/pango-querymodules.1 0644 root bin
 f none /opt/csw/share/man/man1/pango-view.1 0644 root bin
 d none /opt/csw/share/gtk-doc 0755 root bin
 f none /opt/csw/share/gtk-doc/COPYING.pango=COPYING 0644 root bin
+s none /opt/csw/lib/sparcv9/libpangoxft-1.0.so.0=libpangoxft-1.0.so.0.2800.0
+f none /opt/csw/lib/sparcv9/libpangoxft-1.0.so.0.2800.0 0755 root bin
+f none /opt/csw/lib/sparcv9/libpangocairo-1.0.so.0.2800.0 0755 root bin
+s none /opt/csw/lib/sparcv9/libpango-1.0.so=libpango-1.0.so.0.2800.0
+s none /opt/csw/lib/sparcv9/libpangox-1.0.so.0=libpangox-1.0.so.0.2800.0
+f none /opt/csw/lib/sparcv9/libpangox-1.0.so.0.2800.0 0755 root bin
+s none /opt/csw/lib/sparcv9/libpangoxft-1.0.so=libpangoxft-1.0.so.0.2800.0
+s none /opt/csw/lib/sparcv9/libpangoft2-1.0.so.0=libpangoft2-1.0.so.0.2800.0
+f none /opt/csw/lib/sparcv9/libpango-1.0.so.0.2800.0 0755 root bin
+s none /opt/csw/lib/sparcv9/libpangox-1.0.so=libpangox-1.0.so.0.2800.0
+s none /opt/csw/lib/sparcv9/libpangocairo-1.0.so=libpangocairo-1.0.so.0.2800.0
+s none /opt/csw/lib/sparcv9/libpangoft2-1.0.so=libpangoft2-1.0.so.0.2800.0
+s none /opt/csw/lib/sparcv9/libpangocairo-1.0.so.0=libpangocairo-1.0.so.0.2800.0
+d none /opt/csw/lib/sparcv9/pango 0755 root bin
+d none /opt/csw/lib/sparcv9/pango/1.6.0 0755 root bin
+d none /opt/csw/lib/sparcv9/pango/1.6.0/modules 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-hangul-fc.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-thai-fc.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-hebrew-fc.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-arabic-lang.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-basic-fc.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-tibetan-fc.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-tibetan-fc.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-arabic-lang.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-basic-fc.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-thai-fc.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-hebrew-fc.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-hangul-fc.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-arabic-fc.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-indic-fc.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-basic-x.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-khmer-fc.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-indic-lang.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-syriac-fc.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-basic-x.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-indic-lang.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-syriac-fc.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-khmer-fc.so 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-arabic-fc.la 0755 root bin
+f none /opt/csw/lib/sparcv9/pango/1.6.0/modules/pango-indic-fc.la 0755 root bin
+f none /opt/csw/lib/sparcv9/libpangoft2-1.0.so.0.2800.0 0755 root bin
+s none /opt/csw/lib/sparcv9/libpango-1.0.so.0=libpango-1.0.so.0.2800.0

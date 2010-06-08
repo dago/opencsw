@@ -44,3 +44,9 @@ f none /opt/csw/lib/pkgconfig/pangoft2.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/pango.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/pangox.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/pangoxft.pc 0644 root bin
+d none /opt/csw/lib/amd64/pkgconfig 0755 root bin
+f none /opt/csw/lib/amd64/pkgconfig/pangocairo.pc 0644 root bin
+f none /opt/csw/lib/amd64/pkgconfig/pangoft2.pc 0644 root bin
+f none /opt/csw/lib/amd64/pkgconfig/pango.pc 0644 root bin
+f none /opt/csw/lib/amd64/pkgconfig/pangox.pc 0644 root bin
+f none /opt/csw/lib/amd64/pkgconfig/pangoxft.pc 0644 root bin
