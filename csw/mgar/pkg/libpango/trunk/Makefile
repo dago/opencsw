@@ -159,7 +159,7 @@ build/.configure-$(ARCH)-32.done:	build/.patch-preconf.done
 
 build/.configure-$(ARCH)-64.done:	build/.patch-preconf.done
 	if test "$(ARCH)" = "i386" -a "`uname -r`" != "5.10" ; then \
-		echo Error: do 64bit for i386 on sol19 only ; exit 1 ; fi
+		echo Error: do 64bit for i386 on sol10 only ; exit 1 ; fi
 	@echo handling $@ target
 	(cd $(SRCDIR) ; \
 	  CFLAGS="$(CFLAGS_COMMON) -m64"  \
