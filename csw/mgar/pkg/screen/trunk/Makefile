@@ -26,6 +26,8 @@ CATALOGNAME = screen
 
 RUNTIME_DEP_PKGS = CSWterminfo
 
+CHECKPKG_OVERRIDES_CSWscrn += surplus-dependency|CSWterminfo
+
 PRESERVECONF = /etc/opt/csw/screenrc
 MIGRATE_FILES = screenrc
 
