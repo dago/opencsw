@@ -35,7 +35,7 @@ SRCDIR= build/*
 CFLAGS_COMMON   ?= -mt -xnorunpath -xO2
 CXXFLAGS_COMMON ?= -mt -norunpath  -xO2
 CFLAGS_sparc    ?= -xarch=v8
-CFLAGS_i386     ?= -xarch=i386
+CFLAGS_i386     ?= -xarch=386
 
 # Keep this arch-neutral if possible. add arch-specific tweaks
 # to arch-specific target
