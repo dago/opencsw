@@ -484,12 +484,13 @@ makepatch-modulated: $(FILEDIR)
 		else \
 			echo "Capturing changes..."; \
 			git commit $(GIT_COMMIT_OPTS) && \
-			( git format-patch csw-$(GARVERSION); \
+			( NEXTPATCH=`git log --pretty=oneline master..HEAD | wc -l | tr -d '[[:space:]]'`; \
+			git format-patch --start-number=$$NEXTPATCH csw-$(GARVERSION); \
 			echo Add the following to your recipe and then; \
 			echo rerun: gmake makesums; \
-			echo PATCHFILES +=  0001*; \
+			echo PATCHFILES +=  000$${NEXTPATCH}*; \
 			echo "(or maybe PATCHFILES_$(MODULATION) ??)"; \
-			mv 0001* $(abspath $(FILEDIR)); ) \
+			mv 000$${NEXTPATCH}*patch $(abspath $(FILEDIR)); ) \
 		fi; \
 	    else \
 		echo "No extracted sources so we can't create patches..."; \
