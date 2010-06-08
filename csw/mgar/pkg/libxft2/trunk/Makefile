@@ -43,9 +43,10 @@ CONFIGURE=./configure --prefix=/opt/csw --enable-static=no
 
 CONFIGURE_64_sparc= --libexecdir=/opt/csw/libexec/sparcv9
 CONFIGURE_64_i386= --libexecdir=/opt/csw/libexec/amd64
-
 CONFIGURE_64_EXTRAS:= --libdir=/opt/csw/lib/64 $(CONFIGURE_64_$(ARCH))
 
+LDFLAGS_64_sparc := -R/opt/csw/lib/sparcv9 -L/opt/csw/lib/sparcv9
+LDFLAGS_64_i386  := -R/opt/csw/lib/amd64 -L/opt/csw/lib/amd64
 
 
 CREATEPKG=createpkg -r `pwd`/build/*/cswstage
@@ -153,7 +154,7 @@ build/.configure-$(ARCH)-64.done:	build/.patch-preconf.done
 	(cd $(SRCDIR) ; \
 	  CFLAGS="$(CFLAGS_COMMON) -m64"  \
 	  CXXFLAGS="$(CXXFLAGS_COMMON) -m64" \
-	  LDFLAGS='-R/opt/csw/lib/sparcv9 -L/opt/csw/lib/sparcv9' \
+	  LDFLAGS="$(LDFLAGS_64_$(ARCH))" \
 	  PKG_CONFIG_PATH=/opt/csw/lib/64 \
 	  $(CONFIGURE) $(CONFIGURE_64_EXTRAS)  )
 	if test -f patchfile.postconf ; then \
@@ -161,7 +162,7 @@ build/.configure-$(ARCH)-64.done:	build/.patch-preconf.done
 	touch $@
 
 
-# See note about LDFLAGS higher up	
+# See note about LDFLAGS and ORIGIN, higher up	
 build/.build-$(ARCH)-32.done build/.build-$(ARCH)-64.done:
 	@echo handling $@ target
 	LD_OPTIONS='-R$$ORIGIN' $(MAKE) -C $(SRCDIR) $(MFLAGS)
