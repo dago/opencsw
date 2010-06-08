@@ -477,7 +477,7 @@ makepatch-modulated: $(FILEDIR)
 	@( if [ -d "$(WORKSRC)/.git" ]; then \
 		echo " ==> Makepatch: Looking for changes in modulation $(MODULATION)"; \
 		cd $(WORKSRC); \
-		git add -A; \
+		git add -u; \
 		git diff --cached --quiet; \
 		if test $$? -eq 0; then \
 			echo "No changes."; \
