@@ -1,0 +1,17 @@
+GARNAME = Class-Factory-Util
+GARVERSION = 1.7
+CATEGORIES = cpan
+AUTHOR = DROLSKY
+
+DESCRIPTION = Provide utility methods for factory classes
+define BLURB
+  Provide utility methods for factory classes
+endef
+
+DISTFILES += COPYING
+
+PACKAGES = CSWpmclassfactutil
+CATALOGNAME = pm_classfactutil
+ARCHALL = 1
+
+include gar/category.mk
