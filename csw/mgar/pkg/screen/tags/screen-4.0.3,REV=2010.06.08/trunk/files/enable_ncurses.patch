@@ -1,0 +1,23 @@
+diff -ur screen-4.0.3.orig/configure.in screen-4.0.3/configure.in
+--- screen-4.0.3.orig/configure.in	2003-06-03 13:58:24.000000000 +0200
++++ screen-4.0.3/configure.in	2010-01-10 01:58:58.248639453 +0100
+@@ -643,6 +643,9 @@
+ AC_CHECKING(for tgetent)
+ AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
+ olibs="$LIBS"
++LIBS="-lncurses $olibs"
++AC_CHECKING(libncurses)
++AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
+ LIBS="-lcurses $olibs"
+ AC_CHECKING(libcurses)
+ AC_TRY_LINK(,[
+@@ -658,9 +661,6 @@
+ LIBS="-ltermlib $olibs"
+ AC_CHECKING(libtermlib)
+ AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
+-LIBS="-lncurses $olibs"
+-AC_CHECKING(libncurses)
+-AC_TRY_LINK(,tgetent((char *)0, (char *)0);,,
+ AC_MSG_ERROR(!!! no tgetent - no screen))))))
+ 
+ AC_TRY_RUN([

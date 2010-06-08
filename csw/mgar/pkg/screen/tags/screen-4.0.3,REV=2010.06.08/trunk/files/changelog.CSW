@@ -1,0 +1,15 @@
+screen (4.0.3,REV=2010.01.10) unstable
+ 
+  * Now linked with opencsw libncurses.
+  * Added system-wide screenrc file.
+  * Moved configuration from /opt/csw/etc to /etc/opt/csw.
+  * Fixed terminfo problem (Closes: #4133).
+  * Added screen documentation files in the package.
+ 
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 10 Jan 2010 01:53:59 +0100
+
+screen (4.0.3) unstable
+ 
+  * New upstream version.
+ 
+ -- Yann Rouillard <yann@blastwave.org>  Wed, 23 Apr 2008 22:25:50 +0200
