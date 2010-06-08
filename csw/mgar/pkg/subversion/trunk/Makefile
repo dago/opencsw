@@ -81,7 +81,6 @@ RUNTIME_DEP_PKGS_CSWap2svn   += CSWiconv
 PKGFILES_CSWap2svn         = $(prefix)/apache2.*
 PKGFILES_CSWap2svn        += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
 
-CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWemacscommon
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
 PKGFILES_CSWjavasvn        = $(SVNLIB)/.*java.*
