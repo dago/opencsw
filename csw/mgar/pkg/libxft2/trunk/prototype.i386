@@ -10,9 +10,9 @@ f none /opt/csw/share/man/man1/xft-config.1 0644 root bin
 d none /opt/csw/share/man/man3 0755 root bin
 f none /opt/csw/share/man/man3/Xft.3 0644 root bin
 d none /opt/csw/lib 0755 root bin
-s none /opt/csw/lib/libXft.so=libXft.so.2.1.13
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/xft.pc 0644 root bin
+s none /opt/csw/lib/libXft.so=libXft.so.2.1.13
 s none /opt/csw/lib/libXft.so.2=libXft.so.2.1.13
 f none /opt/csw/lib/libXft.so.2.1.13 0755 root bin
 d none /opt/csw/include 0755 root bin
@@ -20,3 +20,8 @@ d none /opt/csw/include/X11 0755 root bin
 d none /opt/csw/include/X11/Xft 0755 root bin
 f none /opt/csw/include/X11/Xft/XftCompat.h 0644 root bin
 f none /opt/csw/include/X11/Xft/Xft.h 0644 root bin
+d none /opt/csw/lib/amd64/pkgconfig 0755 root bin
+f none /opt/csw/lib/amd64/pkgconfig/xft.pc=xft.pc 0644 root bin
+s none /opt/csw/lib/amd64/libXft.so=libXft.so.2.1.13
+s none /opt/csw/lib/amd64/libXft.so.2=libXft.so.2.1.13
+f none /opt/csw/lib/amd64/libXft.so.2.1.13=libXft.so.2.1.13 0755 root bin

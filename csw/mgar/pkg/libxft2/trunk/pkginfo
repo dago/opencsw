@@ -1,6 +1,6 @@
 PKG=CSWlibxft2
 NAME=libxft2 - A client-side font API for X applications
-VERSION=2.1.14,REV=2010.05.30
+VERSION=2.1.14,REV=2010.06.07
 CATEGORY=application
 VENDOR=http://xorg.freedesktop.org/releases/X11R7.5/src/lib/ packaged for CSW by Philip Brown
 HOTLINE=http://www.opencsw.org/bugtrack/

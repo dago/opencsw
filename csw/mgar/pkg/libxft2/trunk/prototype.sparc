@@ -21,7 +21,7 @@ d none /opt/csw/include/X11/Xft 0755 root bin
 f none /opt/csw/include/X11/Xft/XftCompat.h 0644 root bin
 f none /opt/csw/include/X11/Xft/Xft.h 0644 root bin
 d none /opt/csw/lib/sparcv9/pkgconfig 0755 root bin
-f none /opt/csw/lib/sparcv9/pkgconfig/xft.pc=xft.pc.sparcv9 0644 root bin
-s none /opt/csw/lib/sparcv9/libXft.so=lib/sparcv9Xft.so.2.1.13
-s none /opt/csw/lib/sparcv9/libXft.so.2=lib/sparcv9Xft.so.2.1.13
+f none /opt/csw/lib/sparcv9/pkgconfig/xft.pc=xft.pc 0644 root bin
+s none /opt/csw/lib/sparcv9/libXft.so=libXft.so.2.1.13
+s none /opt/csw/lib/sparcv9/libXft.so.2=libXft.so.2.1.13
 f none /opt/csw/lib/sparcv9/libXft.so.2.1.13=libXft.so.2.1.13 0755 root bin
