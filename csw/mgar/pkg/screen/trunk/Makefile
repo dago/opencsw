@@ -24,14 +24,14 @@ DOCFILES = FAQ INSTALL NEWS NEWS.3.5 NEWS.3.6 NEWS.3.7 NEWS.3.9 README TODO Chan
 PACKAGES = CSWscrn
 CATALOGNAME = screen
 
-RUNTIME_DEP_PKGS = CSWncurses
+RUNTIME_DEP_PKGS = CSWterminfo
 
 PRESERVECONF = /etc/opt/csw/screenrc
 MIGRATE_FILES = screenrc
 
 # we want to use opencsw libncurses and not solaris libcurses
 # so we modify configure.in so ncurses is tried before curses
-PATCHFILES += enable_ncurses.patch
+# PATCHFILES += enable_ncurses.patch
 
 # this patch increases the maximum number of simultaneously allowed 
 # windows per screen session.

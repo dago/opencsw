@@ -1,5 +1,4 @@
 18269762c8dbe1443730d1e23fddfd0c  changelog.CSW
-bc3ac54668be521328c598408cab2d60  enable_ncurses.patch
 8506fd205028a96c741e4037de6e3c42  screen-4.0.3.tar.gz
 ed83d7a9001fa159a367d699580c1dd2  screen-maxwin.patch
 3f25f108225cea31321046da5b033f6a  screen-utmp.patch
