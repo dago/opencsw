@@ -11,6 +11,12 @@ is libpango, so I thought this was the right dirname to use.
 
 PROBLEM SHOOTING:
 
+  'strip' (at least in cwstage) is BROKEN?
+    somehow eliminates the pango_fc_font_map_cache_ symbols from
+      libpangoft2-1.0.so, at least in sparc build
+    Somethin about bad fakeroot interaction.
+    So we call stagepkg with -m here.
+
 If amd64 blows up about g-ir-scanner, then just remove it from config.status
 (Set INTROSPECTION_SCANNER to "")
 Actually, set all INTROSPECTION stuff to "", and then set

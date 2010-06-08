@@ -185,7 +185,7 @@ build/.build-$(ARCH)-32.done build/.build-$(ARCH)-64.done:
 ## So, we remove all 64bit milestones
 build/.stage-$(ARCH)-32.done:
 	@echo Handling stage of $(ARCH)-32
-	(cd $(SRCDIR) ; MAKE=gmake stagepkg)
+	(cd $(SRCDIR) ; MAKE=gmake stagepkg -m)
 	@rm -f build/.*64.done
 	touch $@
 
