@@ -22,16 +22,18 @@ CONFIGURE_ARGS += --disable-warnings
 TEST_TARGET = check
 PATCHFILES += 0001-libtool-dir-used-for-linking.patch
 PATCHFILES += 0002-CSW-runpath.patch
-PACKAGES = CSWfile CSWlibmagic CSWpy-libmagic
-PKGFILES_CSWfile += $(bindir)/file
-PKGFILES_CSWfile += $(mandir)/man1/file\.1
+PACKAGES += CSWgfile
+PACKAGES += CSWlibmagic
+PACKAGES += CSWpy-libmagic
+PKGFILES_CSWgfile += $(bindir)/gfile
+PKGFILES_CSWgfile += $(mandir)/man1/gfile\.1
 PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
-SPKG_DESC_CSWfile = A file type guesser
+SPKG_DESC_CSWgfile = A file type guesser
 SPKG_DESC_CSWlibmagic = The library behind file(1)
 SPKG_DESC_CSWpy-libmagic = Python extension for libmagic
 CATALOGNAME_CSWpy-libmagic = py_libmagic
-RUNTIME_DEP_PKGS_CSWfile += CSWlibmagic
-RUNTIME_DEP_PKGS_CSWfile += CSWzlib
+RUNTIME_DEP_PKGS_CSWgfile += CSWlibmagic
+RUNTIME_DEP_PKGS_CSWgfile += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibmagic += CSWzlib
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
@@ -56,4 +58,7 @@ post-build-modulated:
 post-install-modulated:
 	(cd $(WORKSRC)/python && \
 		python setup.py install --root=$(DESTDIR) --prefix=$(prefix))
+	(cd $(DESTDIR) && \
+		mv $(DESTDIR)$(bindir)/file $(DESTDIR)$(bindir)/gfile && \
+		mv $(DESTDIR)$(mandir)/man1/file\.1 $(DESTDIR)$(mandir)/man1/gfile\.1)
 	@$(MAKECOOKIE)
