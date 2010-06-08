@@ -1,9 +1,9 @@
 GARNAME = CGI-Session
-GARVERSION = 4.10
+GARVERSION = 4.42
 CATEGORIES = cpan
-AUTHOR = SHERZODR
+AUTHOR = MARKSTOS
 
-DESCRIPTION = persistent session data in CGI applications
+DESCRIPTION = Persistent session data in CGI applications
 define BLURB
   CGI-Session is a Perl5 library that provides an easy, reliable and modular
   session management system across HTTP requests. Persistency is a key feature
@@ -12,6 +12,10 @@ define BLURB
   that and many more
 endef
 
-DISTFILES += $(call admfiles,CSWpmcgisession,depend prototype)
+DISTFILES += COPYING
+
+PACKAGES = CSWpmcgisession
+CATALOGNAME = pm_cgisession
+ARCHALL = 1
 
 include gar/category.mk
