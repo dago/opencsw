@@ -10,6 +10,6 @@ DEFAULT_DIR=trunk
 
 # The -C means you must use gmake, unfortunately.
 
-garchive extract configure build package:
+all package build garchive extract configure clean distclean reallyclean :
+	@echo Going to make $@ in $(DEFAULT_DIR)
 	$(MAKE) -C  $(DEFAULT_DIR) $@
-

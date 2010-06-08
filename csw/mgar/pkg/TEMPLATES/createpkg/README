@@ -60,10 +60,10 @@ one for you in build/*/cswstage/prototype.
 
 Make Targets
 --------------------
-The makefiles are current a work in progress. The most developed
-initially is "Makefile.lib".
+The makefiles are current a work in progress. The most fully developed
+at the moment is "Makefile.lib". 
 
-Currently aimed-for supported makefile targets are:
+Currently supported makefile targets are:
 
  * extract
  * sparc-32 sparc64 i386-32 i386-64
@@ -71,7 +71,9 @@ Currently aimed-for supported makefile targets are:
  * build-(ARCH)-(32/64)
  * stage-(ARCH)-(32/64)
  * clean
- * distclean.
+ * distclean
+ * reallyclean
+ * package
 
 Note that there is a single shared upstream source tree, that should be
 extracted under a "build" directory.
