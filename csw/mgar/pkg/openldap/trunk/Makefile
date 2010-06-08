@@ -114,8 +114,10 @@ PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
 PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
 INITSMF = /opt/csw/etc/init.d/cswopenldap
+CHECKPKG_OVERRIDES_CSWoldap += init-file-wrong-location|/opt/csw/etc/init.d/cswopenldap
 
 ARCHALL_CSWoldapdevel = 1
+CHECKPKG_OVERRIDES_CSWoldapdevel += archall-devel-package
 
 include gar/category.mk
 
