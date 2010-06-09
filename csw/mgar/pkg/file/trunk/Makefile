@@ -27,6 +27,7 @@ PACKAGES += CSWlibmagic
 PACKAGES += CSWpy-libmagic
 PKGFILES_CSWgfile += $(bindir)/gfile
 PKGFILES_CSWgfile += $(mandir)/man1/gfile\.1
+PKGFILES_CSWgfile += $(prefix)/gnu/file
 PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 SPKG_DESC_CSWgfile = A file type guesser
 SPKG_DESC_CSWlibmagic = The library behind file(1)
@@ -61,4 +62,7 @@ post-install-modulated:
 	(cd $(DESTDIR) && \
 		mv $(DESTDIR)$(bindir)/file $(DESTDIR)$(bindir)/gfile && \
 		mv $(DESTDIR)$(mandir)/man1/file\.1 $(DESTDIR)$(mandir)/man1/gfile\.1)
+	ginstall -d -m 755 $(DESTDIR)$(prefix)/gnu
+	(cd $(DESTDIR) && \
+		gln -s ../bin/gfile $(DESTDIR)$(prefix)/gnu/file)
 	@$(MAKECOOKIE)
