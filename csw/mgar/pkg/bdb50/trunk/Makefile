@@ -86,6 +86,12 @@ CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/lib/sparcv9|opt/csw/bdb50/lib/sp
 CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/SUNWspro/lib/sparc/64|opt/csw/bdb50/lib/sparcv9/libdb_cxx-5.0.so
 CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7/v9|opt/csw/bdb50/lib/sparcv9/libdb_cxx-5.0.so
 CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/sparc/64|opt/csw/bdb50/lib/sparcv9/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/lib/64|opt/csw/bdb50/lib/amd64/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/amd64|opt/csw/bdb50/lib/amd64/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7/amd64|opt/csw/bdb50/lib/amd64/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/usr/ccs/lib/amd64|opt/csw/bdb50/lib/amd64/libdb_cxx-5.0.so
+CHECKPKG_OVERRIDES_CSWbdb50 += bad-rpath-entry|/usr/lib/64|opt/csw/bdb50/lib/amd64/libdb_cxx-5.0.so
+
 
 include gar/category.mk
 
