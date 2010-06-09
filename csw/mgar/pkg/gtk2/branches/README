@@ -1,4 +1,19 @@
+Still need to do:  run strip on 64bit libs, cleanly
+  plus redo sparcv9 package, fix prototypes for
+    " opt/..."
+
+
 Quickie rebuild of our gtk packge(s), to make the CSW-X11 clean.
+
+prototype file tweaking:
+  remove .la files from /opt/csw/lib, but NOT modules dir or elsewhere
+  DOC_REGEX=gtk-doc
+  DEVEL_REGEX='[/]include[/]|aclocal|pkgconfig|demo'
+    #use egrep for the above
+
+  d none /opt/csw/share/gtk-doc 0755 root bin
+  f none /opt/csw/share/gtk-doc/COPYING.gtk2=COPYING 0644 root bin
+
 
 SOLARIS 9 PATCHING NOTE::
 
@@ -8,14 +23,9 @@ SOLARIS 9 PATCHING NOTE::
    **sparc does not** !!!
   So.. have to manually copy x86 version of file over to sparc, then it works!
 
-Oddity: the sun fingerprint database is corrupted !!
+   Oddity: the sun fingerprint database is corrupted !!
 
   --------------------------------------------------
-
-notes for hand-tweaking gtk prototype file:
-
-remove .la files from /opt/csw/lib, but NOT modules dir or elsewhere
-
 
 
 Fix whine about cannot find "default local directory monitor"?
@@ -27,4 +37,15 @@ some websites believe :--
  "makes me believe that it is caused by the gtk_file_chooser* code in
   gtkoptions.c. Probably a missing directory that the gtk code expects to be
   there."
+
+
+
+PROLEMS WITH COMPILE:
+gdk/x11/gdkasync.c will **not compile**,unless SUNWxwinc is up to date.
+ (Xlibint.h copied from the x86 version, as mentioned above)
+
+otherwise, it will error out with
+
+"gdkasync.c", line 280: undefined symbol: X_
+"gdkasync.c", line 280: syntax error before or at: GetInputFocus
 
