@@ -74,10 +74,6 @@ RUNTIME_DEP_PKGS_common += CSWzlib
 RUNTIME_DEP_PKGS_common_sparc += CSWpth
 RUNTIME_DEP_PKGS_common += $(RUNTIME_DEP_PKGS_common_$(GARCH))
 
-# Not because of shared libraries.
-RUNTIME_DEP_PKGS_CSWgnupg2 += CSWgnupg-agent
-CHECKPKG_OVERRIDES_CSWgnupg2 += surplus-dependency|CSWgnupg-agent
-
 RUNTIME_DEP_PKGS_CSWgnupg2 += $(RUNTIME_DEP_PKGS_common)
 RUNTIME_DEP_PKGS_CSWgnupg2 += CSWlibassuan
 
@@ -98,7 +94,7 @@ RUNTIME_DEP_PKGS_CSWgnupg-agent += CSWreadline
 
 
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS_common)
-BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWgnupg-agent)
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWgnupg2)
 
 TEST_TARGET = check
 
