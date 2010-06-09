@@ -1,0 +1,17 @@
+GARNAME = PDF-Reuse
+GARVERSION = 0.35
+CATEGORIES = cpan
+AUTHOR = LARSLUND
+
+DESCRIPTION = Reuse and mass produce PDF documents
+define BLURB
+  Reuse and mass produce PDF documents
+endef
+
+DISTFILES += COPYING
+
+PACKAGES = CSWpmpdfreuse
+CATALOGNAME = pm_pdfreuse
+ARCHALL = 1
+
+include gar/category.mk
