@@ -1,5 +1,0 @@
-- [CSWcommon, 'CSWcommon common - common files and dirs for CSW packages ']
-- [CSWisaexec, 'CSWisaexec isaexec - sneaky wrapper around Sun isaexec ']
-- [CSWiconv, 'CSWiconv libiconv - GNU iconv library ']
-- [CSWlibpopt, 'CSWlibpopt libpopt - Popt is a C library for parsing command line
-    parameters ']
