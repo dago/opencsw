@@ -14,6 +14,7 @@ import os
 import os.path
 import re
 import pprint
+import progressbar
 import socket
 import sqlite3
 import subprocess
@@ -292,6 +293,10 @@ class SystemPkgmap(object):
     self.conn.commit()
 
   def _ProcessSystemPkgmap(self, pkgmap_path):
+    # The progressbar library doesn't like to handle large numbers, and it
+    # displays up to 99% if we feed it a maxval in the range of hundreds of
+    # thousands.
+    progressbar_divisor = 100L
     contents_length = os.stat(pkgmap_path).st_size
     estimated_lines = contents_length / INSTALL_CONTENTS_AVG_LINE_LENGTH
     system_pkgmap_fd = open(pkgmap_path, "r")
@@ -304,10 +309,13 @@ class SystemPkgmap(object):
     c = self.conn.cursor()
     count = itertools.count()
     sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
+    bar = progressbar.ProgressBar()
+    bar.maxval = estimated_lines / progressbar_divisor
+    bar.start()
     for line in system_pkgmap_fd:
       i = count.next()
-      if not i % 1000:
-        print "\r~%3.1f%%" % (100.0 * i / estimated_lines,),
+      if not i % 100:
+        bar.update(i / progressbar_divisor)
       if stop_re.search(line):
         continue
       if line.startswith("#"):
@@ -316,7 +324,9 @@ class SystemPkgmap(object):
       pkgmap_entry_path = fields[0].split("=")[0]
       pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
       c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line.strip()))
-    print "\rAll lines of %s were processed." % SYSTEM_PKGMAP
+    # We rock at 101%!
+    bar.finish()
+    print "All lines of %s were processed." % SYSTEM_PKGMAP
 
   def _CreateDbIndex(self):
     print "Creating the main database index."
