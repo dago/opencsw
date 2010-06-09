@@ -119,6 +119,9 @@ CHECKPKG_OVERRIDES_CSWoldap += init-file-wrong-location|/opt/csw/etc/init.d/cswo
 ARCHALL_CSWoldapdevel = 1
 CHECKPKG_OVERRIDES_CSWoldapdevel += archall-devel-package
 
+# override because checking an amd binary on i386 is pointless
+CHECKPKG_OVERRIDES_CSWoldap += soname-not-found|libm.so.2|is|needed|by|opt/csw/libexec/amd64/openldap/back_perl-2.4.so.2.5.5
+
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
