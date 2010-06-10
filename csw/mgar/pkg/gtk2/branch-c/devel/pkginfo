@@ -5,4 +5,4 @@ CATEGORY=application
 VENDOR=http://www.gtk.org/ packaged for CSW by Philip Brown
 HOTLINE=http://www.opencsw.org/bugtrack/
 EMAIL=phil@opencsw.org
-OPENCSW_REPOSITORY=https://gar.svn.sf.net/svnroot/gar/csw/mgar/pkg/gtk2/branches/
+OPENCSW_REPOSITORY=https://gar.svn.sf.net/svnroot/gar/csw/mgar/pkg/gtk2/branch-c
