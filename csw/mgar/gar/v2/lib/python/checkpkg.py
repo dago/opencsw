@@ -314,7 +314,7 @@ class SystemPkgmap(object):
     bar.start()
     for line in system_pkgmap_fd:
       i = count.next()
-      if not i % 100:
+      if not i % 100 and (i / progressbar_divisor) <= bar.maxval:
         bar.update(i / progressbar_divisor)
       if stop_re.search(line):
         continue
