@@ -201,7 +201,8 @@ build/.stage-$(ARCH)-32.done:
 build/.stage-$(ARCH)-64.done:	$(SRCDIR)/cswstage
 	@echo ""
 	@(cd $(SRCDIR); gmake DESTDIR=`pwd`/tmpdest install )
-	@(cd $(SRCDIR)/tmpdest; tar cf - ./$(LIBDIR64_$(ARCH)) ) | (cd $(SRCDIR/cswstage; tar cf -))
+	@echo copying $(SRCDIR)/tmpdest/$(LIBDIR64_$(ARCH))
+	@(cd $(SRCDIR)/tmpdest; tar cf - ./$(LIBDIR64_$(ARCH)) ) | (cd $(SRCDIR)/cswstage; tar xf -)
 	cp $(SRCDIR)/COPYING $(SRCDIR)/cswstage/COPYING
 	@echo ""
 	touch $@
