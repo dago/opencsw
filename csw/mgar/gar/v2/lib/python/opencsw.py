@@ -12,10 +12,16 @@
 # the terms of the GNU General Public License version 2 as published by the
 # Free Software Foundation.
 
+ENABLE_HACHOIR = False
+
 import copy
 import datetime
 import difflib
+if ENABLE_HACHOIR:
+  import hachoir_parser as hp
+  import hachoir_core as hc
 import hashlib
+import magic
 import logging
 import os
 import os.path
@@ -654,6 +660,7 @@ class DirectoryFormatPackage(ShellMixin, object):
     self.pkginfo_dict = None
     self.binaries = None
     self.file_paths = None
+    self.files_metadata = None
 
   def GetCatalogname(self):
     """Returns the catalog name of the package.
@@ -781,8 +788,59 @@ class DirectoryFormatPackage(ShellMixin, object):
       raise PackageError("%s does not exist or is not a directory"
                          % self.directory)
 
+  def GetFilesMetadata(self):
+    """Returns a data structure with all the files plus their metadata.
+
+    [
+      {
+        "path": ...,
+        "mime_type": ...,
+      },
+    ]
+    """
+    if not self.files_metadata:
+      self.CheckPkgpathExists()
+      self.files_metadata = []
+      files_root = os.path.join(self.directory, "root")
+      if not os.path.exists(files_root):
+        return self.files_metadata
+      all_files = self.GetAllFilePaths()
+      def StripRe(x, strip_re):
+        return re.sub(strip_re, "", x)
+      root_re = re.compile(r"^root/")
+      magic_cookie = magic.open(0)
+      magic_cookie.load()
+      magic_cookie.setflags(magic.MAGIC_MIME)
+      for file_path in all_files:
+        file_info = {
+            "path": StripRe(file_path, root_re),
+            "mime_type": None,
+        }
+        full_path = unicode(self.MakeAbsolutePath(file_path))
+        if ENABLE_HACHOIR:
+          parser = hp.createParser(full_path)
+          if not parser:
+            print "Can't parse file %s" % (file_path)
+          else:
+            print "found file: %s, it's a %s" % (file_path, parser.mime_type)
+            file_info["mime_type"] = parser.mime_type
+            f =  parser["/header/machine"]
+            print "/header/machine: ", (f, f.display, f.value)
+            i = 0
+            while True:
+              try:
+                f = parser["/header"].getField(i)
+                print "Field", i, ": ", (f, f.display, f.value)
+              except hc.field.field.MissingField:
+                print "No field number", i
+                break
+              i += 1
+        file_info["mime_type"] = magic_cookie.file(full_path)
+        self.files_metadata.append(file_info)
+    return self.files_metadata
+
   def ListBinaries(self):
-    """Shells out to list all the binaries from a given package.
+    """Lists all the binaries from a given package.
 
     Original checkpkg code:
 
@@ -798,31 +856,28 @@ class DirectoryFormatPackage(ShellMixin, object):
     }
 
     Returns a list of absolute paths.
+
+    Now that there are files_metadata, this function can safely go away, once
+    all its callers are modified to use files_metadata instead.
     """
-    if not self.binaries:
+    bin_mimetypes = (
+        'application/x-executable',
+        'application/x-sharedlib',
+    )
+    if self.binaries is None:
       self.CheckPkgpathExists()
-      files_root = os.path.join(self.directory, "root")
-      if not os.path.exists(files_root):
-        return []
-      # FIXME: It thinks that ELFunctionMapper.html is a binary
-      find_tmpl = "find '%s' -print | xargs file | grep ELF | nawk -F: '{print $1}'"
-      find_proc = subprocess.Popen(find_tmpl % ".",
-                                   shell=True,
-                                   stdout=subprocess.PIPE,
-                                   cwd=files_root)
-      stdout, stderr = find_proc.communicate()
-      ret = find_proc.wait()
-      if ret:
-        logging.error("The %s command returned an error.", repr(find_tmpl))
-      dotslash_re = re.compile(r"^./")
-      def StripRe(x, strip_re):
-        return re.sub(strip_re, "", x)
-      self.binaries = [StripRe(x, dotslash_re) for x in stdout.splitlines()]
-      self.binaries = sorted(self.binaries)
+      files_metadata = self.GetFilesMetadata()
+      self.binaries = []
+      # The nested for-loop looks inefficient.
+      for file_info in files_metadata:
+        for mimetype in bin_mimetypes:
+          if mimetype in file_info["mime_type"]:
+            self.binaries.append(file_info["path"])
+      self.binaries.sort()
     return self.binaries
 
   def GetAllFilePaths(self):
-    """Similar to GetAllFilenames, but returns full paths."""
+    """Returns a list of all paths from the package."""
     if not self.file_paths:
       self.CheckPkgpathExists()
       remove_prefix = "%s/" % self.pkgpath
@@ -879,13 +934,16 @@ class DirectoryFormatPackage(ShellMixin, object):
     full_paths = self.GetAllFilePaths()
     files_by_pattern = {}
     for full_path in full_paths:
-      content = open(os.path.join(self.pkgpath, full_path), "rb").read()
+      content = open(self.MakeAbsolutePath(full_path), "rb").read()
       for regex in regex_list:
         if re.search(regex, content):
           if regex not in files_by_pattern:
             files_by_pattern[regex] = []
           files_by_pattern[regex].append(full_path)
     return files_by_pattern
+
+  def MakeAbsolutePath(self, p):
+    return os.path.join(self.pkgpath, p)
 
 
 class Pkgmap(object):
