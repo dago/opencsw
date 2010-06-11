@@ -190,7 +190,7 @@ DEF_BASE_PKGS += CSWpy-libmagic
 DEF_BASE_PKGS += CSWpy-progressbar
 DEF_BASE_PKGS += CSWpy-yaml
 DEF_BASE_PKGS += CSWpython
-DEF_BASE_PKGS += CSWtextutils
+DEF_BASE_PKGS += CSWcoreutils
 DEF_BASE_PKGS += CSWwget
 DEF_BASE_PKGS += CSWgit
 
