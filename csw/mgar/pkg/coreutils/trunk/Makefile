@@ -17,7 +17,7 @@ BUILD_DEP_PKGS += CSWgperf CSWgzip CSWperl CSWrsync CSWgtar CSWbash
 
 RUNTIME_DEP_PKGS = CSWiconv CSWggettextrt CSWlibgmp
 
-INCOMPATIBLE_PKGS = CSWgfile CSWshutils CSWtextutils
+INCOMPATIBLE_PKGS = CSWshutils CSWtextutils
 
 DESCRIPTION = GNU core utilities
 define BLURB
