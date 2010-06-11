@@ -13,6 +13,6 @@ DISTFILES += COPYING
 PACKAGES = CSWpmhtmltemplatepro
 CATALOGNAME = pm_htmltemplatepro
 
-RUNTIME_DEP_PKGS_CSWpmhtmltemplatepro += CSWpcrert
+RUNTIME_DEP_PKGS_CSWpmhtmltemplatepro += CSWpcrert CSWpmjson
 
 include gar/category.mk
