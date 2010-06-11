@@ -8,10 +8,11 @@ define BLURB
   Perl/XS module to use HTML Templates from CGI scripts
 endef
 
-#DISTFILES += COPYING
+DISTFILES += COPYING
 
 PACKAGES = CSWpmhtmltemplatepro
 CATALOGNAME = pm_htmltemplatepro
-#ARCHALL = 1
+
+RUNTIME_DEP_PKGS_CSWpmhtmltemplatepro += CSWpcrert
 
 include gar/category.mk

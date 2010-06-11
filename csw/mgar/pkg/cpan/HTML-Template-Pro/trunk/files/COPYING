@@ -1,0 +1,15 @@
+Copyright (C) 2005-2009 by I. Yu. Vlasenko.
+Pieces of code in Pro.pm and documentation of HTML::Template are
+copyright (C) 2000-2009 Sam Tregar (sam@tregar.com)
+Other contributors to the code base are listed in Changes.
+
+The template syntax, interface conventions and a large piece of documentation 
+of HTML::Template::Pro are based on CPAN module HTML::Template 
+by Sam Tregar, sam@tregar.com.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.4 or,
+at your option, any later version of Perl 5 you may have available,
+or, at your option, under the terms of the GNU Lesser General Public License 
+as published by the Free Software Foundation; either version 2 of the 
+License, or (at your option) any later version.
