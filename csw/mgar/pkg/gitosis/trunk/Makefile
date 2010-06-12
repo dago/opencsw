@@ -66,6 +66,12 @@ INETDCONF = /opt/csw/etc/pkg/CSWgitosis/inetd.conf
 
 PROTOTYPE_FILTER  = awk '$$$$3 ~ /\/var\/opt\/csw\/gitosis/ { $$$$2 = "ugfiles"; $$$$5 = "gitosis"; $$$$6 = "gitosis" }; { print }'
 
+CHECKPKG_OVERRIDES_CSWgitosis += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWgitosis += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWbash
+CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWpysetuptools
+CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWgit
+
 include gar/category.mk
 
 # this has to be after cswusergroup is added automatically...
