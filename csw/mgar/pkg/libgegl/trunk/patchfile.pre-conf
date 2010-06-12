@@ -1,0 +1,30 @@
+--- gegl/buffer/gegl-buffer.c.orig	Sat Jun 12 07:40:58 2010
++++ gegl/buffer/gegl-buffer.c	Sat Jun 12 07:42:13 2010
+@@ -35,6 +35,7 @@
+ #endif
+ 
+ #ifdef G_OS_WIN32
++#define NO_GLIB_BACKTRACE 1
+ #include <process.h>
+ #define getpid() _getpid()
+ #endif
+@@ -80,7 +81,7 @@
+ /* #define GEGL_BUFFER_DEBUG_ALLOCATIONS to print allocation stack
+  * traces for leaked GeglBuffers using GNU C libs backtrace_symbols()
+  */
+-#ifndef G_OS_WIN32
++#ifndef NO_GLIB_BACKTRACE 1
+ #include <execinfo.h>
+ #endif
+ 
+@@ -876,8 +877,8 @@
+ gegl_buffer_get_alloc_stack (void)
+ {
+   char  *result         = NULL;
+-#ifdef G_OS_WIN32
+-  result = g_strdup ("backtrack not available on win32\n");
++#ifdef NO_GLIB_BACKTRACE
++  result = g_strdup ("backtrack not available in this executable\n");
+ #else
+   void  *functions[MAX_N_FUNCTIONS];
+   int    n_functions    = 0;

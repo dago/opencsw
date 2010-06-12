@@ -1,0 +1,20 @@
+this thing has support for alll kinds of external progs:
+
+Optional dependencies:
+  asciidoc:        yes
+  enscript:        yes
+  GIO:             yes
+  GTK+:            yes
+  Ruby:            yes
+  Lua:             no  (usable lua not found)
+  Cairo:           yes
+  Pango:           yes
+  pangocairo:      yes
+  GDKPixbuf:       yes
+  JPEG:            yes
+  PNG:             yes
+  OpenEXR:         yes
+  rsvg:            yes
+  SDL:             yes
+  openraw:         no  (openraw library not found)
+  graphviz:        yes

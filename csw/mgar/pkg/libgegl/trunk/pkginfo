@@ -1,0 +1,8 @@
+PKG=CSWlibgegl
+NAME=libgegl - generic graphics library required by GIMP
+VERSION=0.1.2,REV=2010.06.12
+CATEGORY=system
+VENDOR=http://www.gegl.org/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/libgegl/trunk
