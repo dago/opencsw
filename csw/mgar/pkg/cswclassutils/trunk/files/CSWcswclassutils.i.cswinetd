@@ -58,7 +58,7 @@ while read src dest; do
 
   # we won't register with inetd if the service name isn't registered
   # in the global services file.
-  exists=`awk "\\\$1 == \"$svcname\" {print \"found\" }" /etc/services`
+  exists=`awk "\\\$1 == \"$svcname\" && \\\$2 ~ /$proto/ {print \"found\"; exit }" /etc/services`
   if [ "$exists" = "found" ]; then
       if [ -n "$DEBUG" ]; then
 	  echo "Installing inetd service:"
@@ -115,7 +115,7 @@ while read src dest; do
 	  echo "Inetd service '$svcname' should be disabled by default."
       fi
   else
-      echo "Service '$svcname' not found in /etc/inet/services.  Won't setup inetd for it."
+      echo "Service '$svcname' not found in /etc/services.  Won't setup inetd for it."
       exit 2
   fi
 done
