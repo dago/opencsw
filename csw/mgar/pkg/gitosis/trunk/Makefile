@@ -74,9 +74,6 @@ CHECKPKG_OVERRIDES_CSWgitosis += surplus-dependency|CSWgit
 
 include gar/category.mk
 
-# this has to be after cswusergroup is added automatically...
-SPKG_CLASSES += ugfiles
-
 # override the category exclusion
 _MERGE_EXCLUDE_CATEGORY =
 
