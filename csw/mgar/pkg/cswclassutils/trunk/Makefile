@@ -28,6 +28,7 @@ PROTOTYPE_USER_cas = bin
 PROTOTYPE_GROUP_cas = sys
 
 CHECKPKG_OVERRIDES_CSWcswclassutils += init-file-missing-cswinitsmf-class|/opt/csw/etc/init.d/csw.smf.sample|class=none
+CHECKPKG_OVERRIDES_CSWcswclassutils += init-file-wrong-location|/opt/csw/etc/init.d/csw.smf.sample
 
 include gar/category.mk
 
