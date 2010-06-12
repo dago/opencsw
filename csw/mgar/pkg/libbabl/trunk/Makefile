@@ -54,8 +54,8 @@ LDFLAGS_64_$(ARCH) := -R$(LIBDIR64_$(ARCH)) -L$(LIBDIR64_$(ARCH))
 CREATEPKG=createpkg -r `pwd`/build/*/cswstage
 
 
-#all:	$(ARCH)-32 build/.stage1 $(ARCH)-64 package
-all:	$(ARCH)-32 package
+all:	$(ARCH)-32 build/.stage1 $(ARCH)-64 package
+#all:	$(ARCH)-32 package
 
 # ARCH-XX handles configure, build, and stage for its own combo
 # 
@@ -64,7 +64,9 @@ EXTRACTPROG ?= /bin/echo ERROR: need to set EXTRACTPROG ; exit 1 ;
 
 
 
-extract:
+extract:	build/.extract.done
+
+build/.extract.done:
 	test -d build || mkdir build
 	@if test -f  $(ARCHIVEDIR)/$(ARCHIVENAME) ; then \
 		echo Extracting $(ARCHIVENAME) under build dir... ;\
@@ -72,6 +74,7 @@ extract:
 	else echo Cannot extract - $(ARCHIVEDIR)/$(ARCHIVENAME) does not exist ;\
 		exit 1; \
 	fi
+	touch build/.extract.done
 	
 
 clean distclean:
@@ -128,10 +131,11 @@ build/.$(ARCH)-32.done:	$(ARCH)-32
 
 build/.$(ARCH)-64.done:	$(ARCH)-64
 
+build:	extract
 
 # Since we share the same src tree, we should only need to
 # pre-configure patching one time for all.
-build/.patch-preconf.done:
+build/.patch-preconf.done:	build
 	if test -f patchfile.preconf ; then \
 	 gpatch -d $(SRCDIR) -p0  <patchfile.preconf ; fi
 	touch $@
@@ -193,10 +197,10 @@ build/.stage-$(ARCH)-32.done:
 # SO, odds are you'll have to write a customized target
 build/.stage-$(ARCH)-64.done:	$(SRCDIR)/cswstage
 	@echo ""
-	@echo debug: Using generic stage-64 routines
-	@echo relying on customized prototype file
-	@(cd $(SRCDIR)/*/.libs;  tar cf - lib*.so.*.*.* ) | (cd $(SRCDIR)/cswstage ; tar xf -)
-	@(cd $(SRCDIR); cp *.pc cswstage)
+	rm -rf cd $(SRCDIR)/tmpdest
+	cd $(SRCDIR) &&  $(MAKE) DESTDIR=`/bin/pwd`/tmpdest install
+	(cd $(SRCDIR)/tmpdest; tar cf - ./$(LIBDIR64_$(ARCH)) )| \
+	    (cd $(SRCDIR)/cswstage; tar xvf -)
 	@echo ""
 	touch $@
 
