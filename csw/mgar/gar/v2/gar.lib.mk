@@ -457,18 +457,24 @@ BASEWORKSRC = $(shell basename $(WORKSRC))
 xz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@xz -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
+	@( cd $(WORKSRC); git add -A; \
+		git commit -am "old xz-style patch: $*"; )
 	@$(MAKECOOKIE)
 
 # apply bzipped patches
 bz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@bzip2 -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
+	@( cd $(WORKSRC); git add -A; \
+		git commit -am "old bz-style patch: $*"; )
 	@$(MAKECOOKIE)
 
 # apply gzipped patches
 gz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@gzip -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
+	@( cd $(WORKSRC); git add -A; \
+		git commit -am "old gz-style patch: $*"; )
 	@$(MAKECOOKIE)
 
 # apply normal patches (git format-patch output or old-style diff -r)
