@@ -1,0 +1,22 @@
+From 90552d070008320ed0527da02c0b430469fa6865 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 12 Jun 2010 10:59:17 +0200
+Subject: [PATCH 01/10] Use bash for putman.sh
+
+---
+ putman.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/putman.sh b/putman.sh
+index 4aef625..f3fd249 100644
+--- a/putman.sh
++++ b/putman.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ 
+ # putman.sh - install a man page according to local custom
+ # vixie 27dec93 [original]
+-- 
+1.7.1
+

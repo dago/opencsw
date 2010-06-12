@@ -1,0 +1,63 @@
+From 26ff2aff82bb10f93561fd6b6db601e566d5e560 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 12 Jun 2010 11:03:03 +0200
+Subject: [PATCH 06/10] signal handlers and setenv
+
+---
+ cron.c |   26 ++++++++++++++++++++++++--
+ 1 files changed, 24 insertions(+), 2 deletions(-)
+
+diff --git a/cron.c b/cron.c
+index 5567dae..9d6f1af 100644
+--- a/cron.c
++++ b/cron.c
+@@ -29,6 +29,28 @@ static char rcsid[] = "$Id: cron.c,v 2.11 1994/01/15 20:43:43 vixie Exp $";
+ #include <sys/types.h>
+ #include <fcntl.h>
+ 
++/* Solaris 9 doens't have setenv.
++ * http://wiki.opencsw.org/porting-faq
++ */
++
++#ifdef __sun
++void setenv(char *n, char *v, int x) {
++  char buf[256];
++  snprintf(buf,sizeof(buf),"%s=%s",n,v);
++  putenv(buf);
++}
++
++void unsetenv(char *env_name) {
++  extern char **environ;
++  char **cc;
++  int l;
++  l=strlen(env_name);
++  for (cc=environ;*cc!=NULL;cc++) {
++    if (strncmp(env_name,*cc,l)==0 && ((*cc)[l]=='='||(*cc)[l]=='\0')) break;
++  } for (; *cc != NULL; cc++) *cc=cc[1];
++}
++#endif
++
+ static	void	usage __P((void)),
+ 		run_reboot_jobs __P((cron_db *)),
+ 		find_jobs __P((time_min, cron_db *, int, int)),
+@@ -414,7 +436,7 @@ cron_sleep(target)
+ 
+ #ifdef USE_SIGCHLD
+ static void
+-sigchld_handler(x) {
++sigchld_handler(int x) {
+ 	int save_errno = errno;
+ 	WAIT_T		waiter;
+ 	PID_T		pid;
+@@ -448,7 +470,7 @@ sigchld_handler(x) {
+ 
+ 
+ static void
+-sighup_handler(x) {
++sighup_handler(int x) {
+ 	log_close();
+ 
+ 	/* we should use sigaction for proper signal blocking as this 
+-- 
+1.7.1
+

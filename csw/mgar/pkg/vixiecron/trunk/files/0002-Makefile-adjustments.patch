@@ -1,0 +1,69 @@
+From 559fab561ce5b7367982b4bde57e919af5c2a0bb Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 12 Jun 2010 10:59:47 +0200
+Subject: [PATCH 02/10] Makefile adjustments
+
+---
+ Makefile |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 024b458..578b546 100644
+--- a/Makefile
++++ b/Makefile
+@@ -47,7 +47,7 @@
+ 
+ #################################### begin configurable stuff
+ #<<DESTROOT is assumed to have ./etc, ./bin, and ./man subdirectories>>
+-DESTROOT	=	$(DESTDIR)/usr
++DESTROOT	=	$(DESTDIR)/opt/csw
+ DESTSBIN	=	$(DESTROOT)/sbin
+ DESTBIN		=	$(DESTROOT)/bin
+ DESTMAN		=	$(DESTROOT)/share/man
+@@ -57,7 +57,7 @@ INCLUDE		=	-I.
+ #<<need getopt()>>
+ LIBS		= $(PAM_LIBS) $(SELINUX_LIBS) $(AUDIT_LIBS)
+ #<<optimize or debug?>>
+-OPTIM		=	-O2
++#OPTIM		=	-O2
+ #OPTIM		=	-g
+ #<<ATT or BSD or POSIX?>>
+ # (ATT untested)
+@@ -74,12 +74,12 @@ LINTFLAGS	=	-hbxa $(INCLUDE) $(COMPAT) $(DEBUGGING)
+ # Allow override from command line
+ DEBUG_DEFS = -DDEBUGGING=0   
+ # The -DUSE_SIGCHLD is needed for the Alpha port
+-DEFS = -DDEBIAN -DUSE_SIGCHLD $(DEBUG_DEFS) $(PAM_DEFS) $(SELINUX_DEFS)
++#DEFS = -DDEBIAN -DUSE_SIGCHLD $(DEBUG_DEFS) $(PAM_DEFS) $(SELINUX_DEFS)
+ #(SGI IRIX systems need this)
+ #DEFS		=	-D_BSD_SIGNALS -Dconst=
+ #<<the name of the BSD-like install program>>
+ #INSTALL = installbsd
+-INSTALL = install -s
++INSTALL = ginstall -s
+ #<<any special load flags>>
+ # LDFLAGS		=	-s
+ # Let install do the strip
+@@ -87,7 +87,7 @@ INSTALL = install -s
+ #################################### end configurable stuff
+ 
+ SHELL		=	/bin/sh
+-CFLAGS		=	$(OPTIM) $(INCLUDE) $(COMPAT) $(DEFS)
++# CFLAGS		=	$(OPTIM) $(INCLUDE) $(COMPAT) $(DEFS)
+ 
+ INFOS		=	README CHANGES FEATURES INSTALL CONVERSION THANKS MAIL
+ MANPAGES	=	bitstring.3 crontab.5 crontab.1 cron.8 putman.sh
+@@ -118,8 +118,8 @@ crontab		:	$(CRONTAB_OBJ)
+ 			$(CC) $(LDFLAGS) -o crontab $(CRONTAB_OBJ) $(LIBS)
+ 
+ install		:	all
+-			$(INSTALL) -c -m  755 -o root cron    $(DESTSBIN)/
+-			$(INSTALL) -c -m 4755 -o root crontab $(DESTBIN)/
++			$(INSTALL) -c -m  755 cron    $(DESTSBIN)/
++			$(INSTALL) -c -m 4755 crontab $(DESTBIN)/
+ 			sh putman.sh crontab.1 $(DESTMAN)
+ 			sh putman.sh cron.8    $(DESTMAN)
+ 			sh putman.sh crontab.5 $(DESTMAN)
+-- 
+1.7.1
+

@@ -1,0 +1,43 @@
+From e37182638e43cdab37021cd1ef6b41ea290c799d Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 12 Jun 2010 11:01:33 +0200
+Subject: [PATCH 04/10] Sun Studio detection
+
+---
+ compat.h |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/compat.h b/compat.h
+index 7990cce..14852f6 100644
+--- a/compat.h
++++ b/compat.h
+@@ -63,7 +63,7 @@
+ 
+ #ifndef POSIX
+ # if (BSD >= 199103) || defined(__linux__) || defined(__GNU__) || defined(ultrix) ||\
+-        defined(AIX) ||\ defined(HPUX) || defined(CONVEX) || defined(IRIX) || defined(__GLIBC__)
++        defined(AIX) || defined(HPUX) || defined(CONVEX) || defined(IRIX) || defined(__GLIBC__)
+ #  define POSIX
+ # endif
+ #endif
+@@ -81,7 +81,7 @@
+ #endif
+ 
+ #if (!defined(BSD) || (BSD < 198902)) && !defined(__linux__) && \
+-	!defined(IRIX) && !defined(NeXT) && !defined(HPUX) && !defined(__GNU__) && !defined(__GLIBC__)
++ 	!defined(IRIX) && !defined(UNICOS) && !defined(HPUX) && !defined(__GNU__) && !defined(__GLIBC__) && !defined(__SUNPRO_C)
+ # define NEED_STRCASECMP
+ #endif
+ 
+@@ -110,7 +110,7 @@
+ # define HAVE_SAVED_UIDS
+ #endif
+ 
+-#if !defined(ATT) && !defined(__linux__) && !defined(__GNU__) && !defined(IRIX) && !defined(UNICOS) && !defined(__GLIBC__)
++#if !defined(ATT) && !defined(__linux__) && !defined(__GNU__) && !defined(IRIX) && !defined(UNICOS) && !defined(__GLIBC__) && !defined(__SUNPRO_C)
+ # define USE_SIGCHLD
+ #endif
+ 
+-- 
+1.7.1
+

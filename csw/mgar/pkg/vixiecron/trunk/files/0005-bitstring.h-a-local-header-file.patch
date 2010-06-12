@@ -1,0 +1,25 @@
+From 62aec186248945918bfedbff9549689badbc66fc Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 12 Jun 2010 11:02:15 +0200
+Subject: [PATCH 05/10] bitstring.h a local header file
+
+---
+ cron.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/cron.h b/cron.h
+index 2ed89cc..dbd569a 100644
+--- a/cron.h
++++ b/cron.h
+@@ -32,7 +32,7 @@
+ 
+ #include <stdio.h>
+ #include <ctype.h>
+-#include <bitstring.h>
++#include "bitstring.h"
+ #include <pwd.h>
+ #include <sys/wait.h>
+ 
+-- 
+1.7.1
+

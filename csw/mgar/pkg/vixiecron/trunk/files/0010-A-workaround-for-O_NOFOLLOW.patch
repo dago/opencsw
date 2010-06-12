@@ -1,0 +1,63 @@
+From 3c362e317acc2fa1227bb9d80a893f7b56dcce78 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 12 Jun 2010 12:29:09 +0200
+Subject: [PATCH 10/10] A workaround for O_NOFOLLOW
+
+---
+ database.c |   26 ++++++++++++++++++++++++++
+ 1 files changed, 26 insertions(+), 0 deletions(-)
+
+diff --git a/database.c b/database.c
+index 5aef938..6b7cfcf 100644
+--- a/database.c
++++ b/database.c
+@@ -322,6 +322,7 @@ process_crontab(uname, fname, tabname, statbuf, new_db, old_db)
+ 	cron_db		*new_db;
+ 	cron_db		*old_db;
+ {
++        struct stat orig_st;
+ 	struct passwd	*pw = NULL;
+ 	int		crontab_fd = OK - 1;
+ 	user		*u;
+@@ -344,6 +345,21 @@ process_crontab(uname, fname, tabname, statbuf, new_db, old_db)
+ 
+         if (pw) {
+             /* Path for user crontabs (including root's!) */
++
++            /* Solaris 9 doesn't have O_NOFOLLOW.
++             *
++             * https://www.securecoding.cert.org/confluence/display/seccode/POS01-C.+Check+for+the+existence+of+links+when+dealing+with+files
++             */
++            if (lstat( tabname, &orig_st) != 0) {
++		log_it(fname, getpid(), "CAN'T LSTAT", tabname);
++		goto next_crontab;
++            }
++            if (!S_ISREG( orig_st.st_mode)) {
++                /* file is irregular or symlink */
++		log_it(fname, getpid(), "SYMLINK OR IRREGULAR FILE", tabname);
++		goto next_crontab;
++            }
++
+             if ((crontab_fd = open(tabname, O_RDONLY, 0)) < OK) {
+ 		/* crontab not accessible?
+ 		 */
+@@ -355,6 +371,16 @@ process_crontab(uname, fname, tabname, statbuf, new_db, old_db)
+ 		log_it(fname, getpid(), "FSTAT FAILED", tabname);
+ 		goto next_crontab;
+             }
++
++            /* Check that the device and inode numbers didn't change since the
++             * previous lstat() */
++            if (orig_st.st_dev != statbuf->st_dev ||
++                    orig_st.st_ino != statbuf->st_ino) {
++                /* file was tampered with during race window */
++		log_it(fname, getpid(), "FILE TAMPERED", tabname);
++		goto next_crontab;
++            }
++
+             /* Check to make sure that the crontab is owned by the correct user
+                (or root) */
+ 
+-- 
+1.7.1
+

@@ -1,0 +1,25 @@
+From f60f021c2e1cb1c0acf63298e4c6c8be1732a10f Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 12 Jun 2010 11:03:28 +0200
+Subject: [PATCH 07/10] Solaris 9 doesn't have O_NOFOLLOW
+
+---
+ database.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/database.c b/database.c
+index 11bcc72..5aef938 100644
+--- a/database.c
++++ b/database.c
+@@ -344,7 +344,7 @@ process_crontab(uname, fname, tabname, statbuf, new_db, old_db)
+ 
+         if (pw) {
+             /* Path for user crontabs (including root's!) */
+-            if ((crontab_fd = open(tabname, O_RDONLY|O_NOFOLLOW, 0)) < OK) {
++            if ((crontab_fd = open(tabname, O_RDONLY, 0)) < OK) {
+ 		/* crontab not accessible?
+ 		 */
+ 		log_it(fname, getpid(), "CAN'T OPEN", tabname);
+-- 
+1.7.1
+

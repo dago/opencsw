@@ -1,0 +1,30 @@
+From 0e050a2a22f934b9c2382de7c8dbb7a68f23e771 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 12 Jun 2010 11:04:00 +0200
+Subject: [PATCH 08/10] consts needed in externs.h
+
+---
+ externs.h |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/externs.h b/externs.h
+index b658235..89a868e 100644
+--- a/externs.h
++++ b/externs.h
+@@ -116,11 +116,11 @@ extern	int optind, opterr, optopt;
+ #endif
+ 
+ #ifdef NEED_STRCASECMP
+-extern	int		strcasecmp __P((char *, char *));
++extern	int		strcasecmp __P((const char *, const char *));
+ #endif
+ 
+ #ifdef NEED_STRDUP
+-extern	char		*strdup __P((char *));
++extern	char		*strdup __P((const char *));
+ #endif
+ 
+ #ifdef NEED_STRERROR
+-- 
+1.7.1
+

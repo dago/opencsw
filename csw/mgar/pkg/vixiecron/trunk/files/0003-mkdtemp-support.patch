@@ -1,0 +1,51 @@
+From d15a39dac7ea2c43ca664555f207eff82e7b4181 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 12 Jun 2010 11:00:43 +0200
+Subject: [PATCH 03/10] mkdtemp support
+
+---
+ compat.c |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/compat.c b/compat.c
+index 4fd78f6..aa1aa81 100644
+--- a/compat.c
++++ b/compat.c
+@@ -33,6 +33,8 @@ static char rcsid[] = "$Id: compat.c,v 1.6 1994/01/15 20:43:43 vixie Exp $";
+ #endif
+ #include <errno.h>
+ 
++#include <sys/types.h>
++#include <sys/stat.h>
+ 
+ /* the code does not depend on any of vfork's
+  * side-effects; it just uses it as a quick
+@@ -85,8 +87,8 @@ strerror(error)
+ #ifdef NEED_STRCASECMP
+ int
+ strcasecmp(left, right)
+-	char	*left;
+-	char	*right;
++	const char	*left;
++	const char	*right;
+ {
+ 	while (*left && (MkLower(*left) == MkLower(*right))) {
+ 		left++;
+@@ -214,6 +216,14 @@ flock(fd, operation)
+ #endif /*NEED_FLOCK*/
+ 
+ 
++/* Solaris 10 is missing mkdtemp */
++char *mkdtemp(char *template)
++{
++  if (!mktemp(template) || mkdir(template, 0700))
++    return NULL;
++  return template;
++}
++
+ #ifdef NEED_SETENV
+ int
+ setenv(name, value, overwrite)
+-- 
+1.7.1
+
