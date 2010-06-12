@@ -1,0 +1,8 @@
+PKG=CSWlibbabl
+NAME=libbabl - binary image conversion library required by gimp
+VERSION=01.2,REV=2010.06.12
+CATEGORY=application
+VENDOR=ftp://ftp.gtk.org/pub/babl packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/libbabl/trunk

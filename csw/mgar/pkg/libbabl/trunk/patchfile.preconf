@@ -1,0 +1,108 @@
+--- build/babl-0.1.2/babl/base/type-u16.c.orig	Sat Jun 12 03:51:43 2010
++++ build/babl-0.1.2/babl/base/type-u16.c	Sat Jun 12 03:52:11 2010
+@@ -18,7 +18,12 @@
+ 
+ #include "config.h"
+ #include <string.h>
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ #include <assert.h>
+ #include <math.h>
+ 
+--- build/babl-0.1.2/babl/base/type-u32.c.orig	Sat Jun 12 03:51:43 2010
++++ build/babl-0.1.2/babl/base/type-u32.c	Sat Jun 12 03:52:11 2010
+@@ -18,7 +18,12 @@
+ 
+ #include "config.h"
+ #include <string.h>
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ #include <assert.h>
+ #include <math.h>
+ 
+--- build/babl-0.1.2/babl/base/type-u8foo.c.orig	Sat Jun 12 03:47:35 2010
++++ build/babl-0.1.2/babl/base/type-u8foo.c	Sat Jun 12 03:48:29 2010
+@@ -19,7 +19,12 @@
+ #include "config.h"
+ #include <string.h>
+ #include <assert.h>
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ 
+ #include "babl-internal.h"
+ #include "babl-base.h"
+--- build/babl-0.1.2/tests/Makefile.in.orig	Sat Jun 12 04:01:58 2010
++++ build/babl-0.1.2/tests/Makefile.in	Sat Jun 12 04:02:38 2010
+@@ -338,7 +338,7 @@
+ top_srcdir = @top_srcdir@
+ TESTS_ENVIRONMENT = BABL_PATH=$(top_builddir)/extensions/.libs
+ AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/babl
+-AM_LDFLAGS = -pthread
++#AM_LDFLAGS = -pthread
+ LDADD = $(top_builddir)/babl/libbabl-@BABL_API_VERSION@.la \
+ 	$(MATH_LIB)
+ 
+--- build/babl-0.1.2/docs/Makefile.in.orig	Sat Jun 12 04:15:10 2010
++++ build/babl-0.1.2/docs/Makefile.in	Sat Jun 12 04:15:33 2010
+@@ -639,14 +639,14 @@
+ 	cp $< $@ 
+ 	(which mktemp > /dev/null 2>&1 && TMPFILE=`mktemp` || TMPFILE="/tmp/babl_build_tempfile" ;\
+ 	export BABL_PATH="$(top_builddir)/extensions:$(top_builddir)/extensions/.libs"; $(babl_html_dump) > $$TMPFILE;\
+-	$(SHELL) $(top_srcdir)/docs/tools/xml_insert.sh $@ BablBase $$TMPFILE;\
++	AWK=$(AWK) $(SHELL) $(top_srcdir)/docs/tools/xml_insert.sh $@ BablBase $$TMPFILE;\
+ 	rm -f $$TMPFILE )
+ 	echo -n "."
+ 
+-	$(SHELL) $(top_srcdir)/docs/tools/xml_insert.sh $@ BablFishPath BablFishPath.txt
+-	$(SHELL) $(top_srcdir)/docs/tools/xml_insert.sh $@ AUTHORS $(top_srcdir)/AUTHORS
+-	$(SHELL) $(top_srcdir)/docs/tools/xml_insert.sh $@ TODO $(top_srcdir)/TODO
+-	$(SHELL) $(top_srcdir)/docs/tools/xml_insert.sh $@ NEWS $(top_srcdir)/NEWS
++	AWK=$(AWK) $(SHELL) $(top_srcdir)/docs/tools/xml_insert.sh $@ BablFishPath BablFishPath.txt
++	AWK=$(AWK) $(SHELL) $(top_srcdir)/docs/tools/xml_insert.sh $@ AUTHORS $(top_srcdir)/AUTHORS
++	AWK=$(AWK) $(SHELL) $(top_srcdir)/docs/tools/xml_insert.sh $@ TODO $(top_srcdir)/TODO
++	AWK=$(AWK) $(SHELL) $(top_srcdir)/docs/tools/xml_insert.sh $@ NEWS $(top_srcdir)/NEWS
+ 	echo " [OK]"
+ 
+ distclean-local:
+--- build/babl-0.1.2/babl/babl-memory.c.orig	Tue Nov 24 04:07:18 2009
++++ build/babl-0.1.2/babl/babl-memory.c	Sat Jun 12 03:55:55 2010
+@@ -17,7 +17,12 @@
+  */
+ 
+ #include "config.h"
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
+--- build/babl-0.1.2/babl/babl-mutex.c.orig	Sat Jun 12 03:56:53 2010
++++ build/babl-0.1.2/babl/babl-mutex.c	Sat Jun 12 03:57:21 2010
+@@ -17,7 +17,12 @@
+  */
+ 
+ #include "config.h"
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
