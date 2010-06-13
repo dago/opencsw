@@ -25,13 +25,13 @@ function get_package_maintainer
 	_PACKAGE="$1"
 
 	# This has to be improved. Maintainer is retrieved from the web page. It will be replaced by a sql query
-	_MAINTAINER="`wget -q http://www.opencsw.org/packages.php/$_PACKAGE -O- | grep Maintainer | sed -e "s,.*/maintainers/\([^\'\\\"]*\).*,\1,g"`"
+	_MAINTAINER="`wget -q http://www.opencsw.org/packages/$_PACKAGE -O- | grep Maintainer | sed -e "s,.*/maintainers/\([^\'\\\"]*\).*,\1,g"`"
 
 	# In case Maintainer string is empty, try to find the maintainer from a gspec file
 	# It's a bit crappy, but it works in msot cases (but has to be replaced also)
 	if [ "$_MAINTAINER" -eq "" ] ; then
 		_PACKAGE="`grep bitname files/*.gspec | awk '{ print $3 }' | head -n 1`"
-		_MAINTAINER="`wget -q http://www.opencsw.org/packages.php/$_PACKAGE -O- | grep Maintainer | sed -e "s,.*/maintainers/\([^\'\\\"]*\).*,\1,g"`"
+		_MAINTAINER="`wget -q http://www.opencsw.org/packages/$_PACKAGE -O- | grep Maintainer | sed -e "s,.*/maintainers/\([^\'\\\"]*\).*,\1,g"`"
 	fi
 
 	echo "$_MAINTAINER"
