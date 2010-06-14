@@ -14,6 +14,10 @@ endef
 MASTER_SITES = ftp://oss.sgi.com/projects/fam/download/stable/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+# Taken from http://pkgbuild.svn.sourceforge.net/viewvc/pkgbuild/spec-files-extra/trunk/patches/
+PATCHFILES  = fam-oss-01.patch
+PATCHFILES += fam-oss-02.patch
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 

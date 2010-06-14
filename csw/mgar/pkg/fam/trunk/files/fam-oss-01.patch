@@ -1,0 +1,800 @@
+--- fam-2.6.10/include/BTree.h.orig	2006-03-13 09:32:01.000000000 +0530
++++ fam-2.6.10/include/BTree.h	2006-03-13 09:32:40.000000000 +0530
+@@ -236,7 +236,7 @@
+ //  to the right and returns them.
+ 
+ template <class Key, class Value>
+-BTree<Key, Value>::Closure
++struct BTree<Key, Value>::Closure
+ BTree<Key, Value>::Node::remove(unsigned j)
+ {
+     Key k = key[j];
+@@ -348,7 +348,7 @@
+ }
+ 
+ template <class Key, class Value>
+-BTree<Key, Value>::Closure
++struct BTree<Key, Value>::Closure
+ BTree<Key, Value>::Node::next(const Key& pred) const
+ {
+     if (!this)
+@@ -404,7 +404,7 @@
+ //  nodes as necessary on the way back.
+ 
+ template <class Key, class Value>
+-BTree<Key, Value>::Closure
++struct BTree<Key, Value>::Closure
+ BTree<Key, Value>::insert(Node *p, const Key& key, const Value& value)
+ {
+     if (!p) return Closure(key, value, NULL);
+@@ -499,7 +499,7 @@
+ //  Returns UNDER if node p is too small afterward, OK otherwise.
+ 
+ template <class Key, class Value>
+-BTree<Key, Value>::Status
++struct BTree<Key, Value>::Status
+ BTree<Key, Value>::underflow(Node *p, unsigned i)
+ {
+     assert(p);
+@@ -557,7 +557,7 @@
+ 
+ 
+ template <class Key, class Value>
+-BTree<Key, Value>::Closure
++struct BTree<Key, Value>::Closure
+ BTree<Key, Value>::remove_rightmost(Node *p)
+ {
+     int i = p->n;
+@@ -587,7 +587,7 @@
+ //  back up.
+ 
+ template <class Key, class Value>
+-BTree<Key, Value>::Status
++struct BTree<Key, Value>::Status
+ BTree<Key, Value>::remove(Node *p, const Key& key)
+ {
+     if (!p)
+--- fam-2.6.10/include/fam.h.orig	2006-03-13 09:36:21.000000000 +0530
++++ fam-2.6.10/include/fam.h	2006-03-13 11:30:53.000000000 +0530
+@@ -308,6 +308,11 @@
+ 
+ int FAMDebugLevel(FAMConnection *fc, int debugLevel);
+ 
++#if defined(__sun) || defined(__sun__)
++#include <inttypes.h>
++typedef uint32_t u_int32_t;
++#endif
++
+ #ifdef __cplusplus
+ }
+ #endif
+--- fam-2.6.10/fam/ClientConnection.c++.orig	2006-03-13 11:13:44.000000000 +0530
++++ fam-2.6.10/fam/ClientConnection.c++	2006-03-13 11:14:04.000000000 +0530
+@@ -57,7 +57,7 @@
+ }
+ 
+ void
+-ClientConnection::send_sockaddr_un(const sockaddr_un &sun)
++ClientConnection::send_sockaddr_un(const sockaddr_un &sun1)
+ {
+-    mprintf("%s", sun.sun_path);
++    mprintf("%s", sun1.sun_path);
+ }
+--- fam-2.6.10/fam/ServerHost.h.orig	2006-03-13 13:59:35.000000000 +0530
++++ fam-2.6.10/fam/ServerHost.h	2006-03-13 14:00:57.000000000 +0530
+@@ -23,6 +23,11 @@
+ #ifndef ServerHost_included
+ #define ServerHost_included
+ 
++#include "config.h"
++#if defined(__sun) || defined(__sun__)
++#include <stdio.h>
++#endif
++
+ #include <limits.h>
+ #include "Boolean.h"
+ #include "ClientInterest.h"
+@@ -101,7 +106,11 @@
+     private:
+ 
+ 	Request myrequest;
++#if defined(__sun) || defined(__sun__)
++	char mypath[FILENAME_MAX];
++#else
+ 	char mypath[NAME_MAX];
++#endif
+ 
+     };
+ 
+--- fam-2.6.10/fam/NetConnection.h.orig	2006-03-13 11:15:25.000000000 +0530
++++ fam-2.6.10/fam/NetConnection.h	2006-03-13 11:16:09.000000000 +0530
+@@ -27,6 +27,10 @@
+ #include "Boolean.h"
+ #include <limits.h>
+ 
++#if defined(__sun) || defined(__sun__)
++typedef uint32_t u_int32_t;
++#endif
++
+ //  NetConnection is an abstract base class that implements an event
+ //  driven, flow controlled reliable datagram connection over an
+ //  already open stream socket.
+--- fam-2.6.10/fam/LocalClient.h.orig	2006-03-13 13:49:51.000000000 +0530
++++ fam-2.6.10/fam/LocalClient.h	2006-03-13 13:50:08.000000000 +0530
+@@ -38,7 +38,7 @@
+ 
+ private:
+ 
+-    struct sockaddr_un sun;
++    struct sockaddr_un sun1;
+ 
+ };
+ 
+--- fam-2.6.10/fam/DirectoryScanner.h.orig	2006-03-13 11:23:13.000000000 +0530
++++ fam-2.6.10/fam/DirectoryScanner.h	2006-03-13 11:28:59.000000000 +0530
+@@ -27,7 +27,12 @@
+ 
+ #include <stddef.h>
+ #include <sys/types.h>
++#if defined(__sun) || defined(__sun__)
++#include <dirent.h>
++#define direct dirent
++#else
+ #include <sys/dir.h>
++#endif
+ 
+ #include "Event.h"
+ 
+--- fam-2.6.10/fam/TCP_Client.h.orig	2006-03-13 14:01:27.000000000 +0530
++++ fam-2.6.10/fam/TCP_Client.h	2006-03-13 14:01:53.000000000 +0530
+@@ -53,7 +53,7 @@
+     virtual void enqueue_scanner(Scanner *);
+     virtual void suggest_insecure_compat(const char *path);
+ 
+-    void send_sockaddr_un(sockaddr_un &sun) { conn.send_sockaddr_un(sun); }
++    void send_sockaddr_un(sockaddr_un &sun1) { conn.send_sockaddr_un(sun1); }
+ 
+ protected:
+     Cred cred;  //  if !is_valid, we believe the uid/gid in each client request.
+--- fam-2.6.10/fam/SmallTable.h.orig	2006-03-13 11:18:02.000000000 +0530
++++ fam-2.6.10/fam/SmallTable.h	2006-03-13 11:17:43.000000000 +0530
+@@ -98,7 +98,7 @@
+ }
+ 
+ template <class Tkey, class Tvalue>
+-SmallTable<Tkey, Tvalue>::Closure
++struct SmallTable<Tkey, Tvalue>::Closure
+ SmallTable<Tkey, Tvalue>::position(const Tkey& key) const
+ {
+     unsigned l = 0, r = n;
+--- fam-2.6.10/fam/Directory.c++.orig	2006-03-13 11:22:11.000000000 +0530
++++ fam-2.6.10/fam/Directory.c++	2006-03-13 11:28:29.000000000 +0530
+@@ -21,12 +21,16 @@
+ //  Temple Place - Suite 330, Boston MA 02111-1307, USA.
+ 
+ #include "Directory.h"
+-
+ #include <assert.h>
+ #include <errno.h>
+ #include <string.h>
+ #include <stdio.h>
++#if defined(__sun) || defined(__sun__)
++#include <dirent.h>
++#define direct dirent
++#else
+ #include <sys/dir.h>
++#endif
+ #include <sys/stat.h>
+ #include <sys/wait.h>
+ #include <unistd.h>
+--- fam-2.6.10/fam/FileSystem.h.orig	2006-03-13 12:15:17.000000000 +0530
++++ fam-2.6.10/fam/FileSystem.h	2006-03-13 13:14:31.000000000 +0530
+@@ -27,7 +27,14 @@
+ #include "Request.h"
+ #include "Set.h"
+ 
++#if defined(__sun) || defined(__sun__)
++struct mnttab;
++#define mntent mnttab
++
++#else
+ struct mntent;
++#endif
++
+ struct stat;
+ 
+ //  FileSystem is the abstract base class for a per-filesystem object.
+--- fam-2.6.10/fam/FileSystem.c++.orig	2006-03-13 09:13:19.000000000 +0530
++++ fam-2.6.10/fam/FileSystem.c++	2006-03-13 13:13:31.000000000 +0530
+@@ -22,7 +22,18 @@
+ 
+ #include "FileSystem.h"
+ 
+-#include <mntent.h>
++#if defined(__sun) || defined(__sun__)
++#include <stdio.h>
++#include <sys/mntent.h>
++#include <sys/mnttab.h>
++#define mnt_dir mnt_mountp
++#define mnt_fsname mnt_special
++#include <sys/mntent.h>
++
++#else
++#include <sys/mntent.h>
++#endif
++
+ #include <string.h>
+ 
+ #include "Event.h"
+--- fam-2.6.10/fam/NetConnection.c++.orig	2006-03-13 13:54:29.000000000 +0530
++++ fam-2.6.10/fam/NetConnection.c++	2006-03-13 13:55:05.000000000 +0530
+@@ -33,6 +33,10 @@
+ #include <unistd.h>
+ #include <netinet/in.h>
+ 
++#if defined(__sun) || defined(__sun__)
++#include <sys/filio.h>
++#endif
++
+ #include "Log.h"
+ #include "Scheduler.h"
+ 
+--- fam-2.6.10/fam/ClientConnection.h.orig	2006-03-13 11:13:27.000000000 +0530
++++ fam-2.6.10/fam/ClientConnection.h	2006-03-13 11:13:32.000000000 +0530
+@@ -49,7 +49,7 @@
+     ClientConnection(int fd, InputHandler, UnblockHandler, void *closure);
+ 
+     void send_event(const Event&, Request, const char *name);
+-    void send_sockaddr_un(const sockaddr_un &sun);
++    void send_sockaddr_un(const sockaddr_un &sun1);
+ 
+ protected:
+ 
+--- fam-2.6.10/fam/Scheduler.h.orig	2006-03-13 13:58:16.000000000 +0530
++++ fam-2.6.10/fam/Scheduler.h	2006-03-13 13:59:25.000000000 +0530
+@@ -23,6 +23,11 @@
+ #ifndef Scheduler_included
+ #define Scheduler_included
+ 
++#include "config.h"
++#if defined(__sun) || defined(__sun__)
++#include <memory.h>
++#endif
++
+ #include <sys/time.h>
+ #include <string.h>
+ 
+--- fam-2.6.10/fam/Log.c++.orig	2006-03-13 13:50:24.000000000 +0530
++++ fam-2.6.10/fam/Log.c++	2006-03-13 13:52:08.000000000 +0530
+@@ -264,6 +264,8 @@
+ //  New back end for assert() will log to syslog, put core file
+ //  in known directory.
+ 
++// I'm taking this out on Solaris ... -- cK
++#if !defined(__sun) && !defined(__sun__)
+ void __assert(const char *msg, const char *file, int line)
+ {
+     char *dirname = new char[strlen(Log::getName()) + 20];
+@@ -283,6 +285,7 @@
+     delete[] dirname;
+     abort();
+ }
++#endif
+ 
+ #endif /* !NDEBUG */
+ 
+--- fam-2.6.10/fam/RPC_TCP_Connector.c++.orig	2006-03-13 13:55:29.000000000 +0530
++++ fam-2.6.10/fam/RPC_TCP_Connector.c++	2006-03-13 15:45:21.000000000 +0530
+@@ -22,6 +22,10 @@
+ 
+ #include "RPC_TCP_Connector.h"
+ 
++#ifdef __cplusplus
++extern "C" {
++#endif
++
+ #include <errno.h>
+ #include <rpc/rpc.h>
+ #include <rpc/pmap_prot.h>
+@@ -31,6 +35,15 @@
+ #include <string.h>
+ #include <netdb.h>  // for rresvport
+ 
++#if defined(__sun) || defined(__sun__)
++#include <sys/filio.h>
++#include <rpc/clnt_soc.h>
++#endif
++
++#ifdef __cplusplus
++}
++#endif
++
+ #include "Log.h"
+ #include "Scheduler.h"
+ #include "Cred.h"  // for Cred::SuperUser
+@@ -101,7 +114,11 @@
+         deactivate();
+ 	return;
+     }
++#if defined(__sun) || defined(__sun__)
++    rc = connect(fd, (sockaddr *)&address, sizeof address);
++#else
+     rc = connect(fd, (const sockaddr *)&address, sizeof address);
++#endif
+     if (rc == 0)
+     {   sockfd = fd;
+ 	write_handler(fd, this);
+@@ -123,7 +140,11 @@
+     (void) Scheduler::remove_write_handler(fd);
+     RPC_TCP_Connector *conn = (RPC_TCP_Connector *) closure;
+     assert(fd == conn->sockfd);
++#if defined(__sun) || defined(__sun__)
++    int rc = connect(fd, (sockaddr *)(&conn->address), sizeof conn->address);
++#else
+     int rc = connect(fd, (const sockaddr *)(&conn->address), sizeof conn->address);
++#endif
+     if (rc < 0 && errno != EISCONN)
+     {
+ 	Log::perror("connect");
+--- fam-2.6.10/fam/FileSystemTable.h.orig	2006-03-13 13:43:07.000000000 +0530
++++ fam-2.6.10/fam/FileSystemTable.h	2006-03-13 13:44:19.000000000 +0530
+@@ -27,6 +27,10 @@
+ #include "SmallTable.h"
+ #include "StringTable.h"
+ 
++#if defined(__sun) || defined(__sun__)
++#define MOUNTED MNTTAB
++#endif
++
+ class Cred;
+ class Event;
+ class FileSystem;
+--- fam-2.6.10/fam/Listener.c++.orig	2006-03-13 13:44:57.000000000 +0530
++++ fam-2.6.10/fam/Listener.c++	2006-03-13 13:48:23.000000000 +0530
+@@ -37,6 +37,10 @@
+ #include <sys/un.h>
+ #include <unistd.h>
+ 
++#if defined(__sun) || defined(__sun__)
++#include <stdlib.h>
++#endif
++
+ #include <errno.h>
+ 
+ #include "Log.h"
+@@ -54,7 +58,7 @@
+     NegotiatingClient(int fd, uid_t u, struct sockaddr_un *s);
+     int sock;
+     uid_t uid;
+-    struct sockaddr_un sun;
++    struct sockaddr_un sun1;
+ };
+ 
+ BTree<int, NegotiatingClient *> negotiating_clients;
+@@ -207,18 +211,18 @@
+ 
+     char *tmpfile = tempnam("/tmp", ".fam");
+ #if defined(__FreeBSD__)
+-    sockaddr_un sun = { sizeof(sockaddr_un), AF_UNIX, "" };
++    sockaddr_un sun1 = { sizeof(sockaddr_un), AF_UNIX, "" };
+ #else
+-    sockaddr_un sun = { AF_UNIX, "" };
++    sockaddr_un sun1 = { AF_UNIX, "" };
+ #endif
+-    if(strlen(tmpfile) >= (sizeof(sun.sun_path) - 1))
++    if(strlen(tmpfile) >= (sizeof(sun1.sun_path) - 1))
+     {
+         Log::error("tmpnam() too long for sun_path (%d >= %d)!",
+-                   strlen(tmpfile), sizeof(sun.sun_path) - 1);
++                   strlen(tmpfile), sizeof(sun1.sun_path) - 1);
+         free(tmpfile);
+         return;
+     }
+-    strcpy(sun.sun_path, tmpfile);
++    strcpy(sun1.sun_path, tmpfile);
+     free(tmpfile);
+ 
+     Cred::SuperUser.become_user();
+@@ -229,22 +233,22 @@
+     }
+ 
+     Log::debug("client %s said uid %d; creating %s",
+-               inet_client.name(), uid, sun.sun_path);
++               inet_client.name(), uid, sun1.sun_path);
+ 
+-    unlink(sun.sun_path);
+-    if (bind(client_sock, (sockaddr *) &sun, sizeof sun) != 0)
++    unlink(sun1.sun_path);
++    if (bind(client_sock, (sockaddr *) &sun1, sizeof sun1) != 0)
+     {   Log::perror("localclient bind");
+ 	close(client_sock);
+         return;
+     }
+ 
+-    if (chmod(sun.sun_path, 0600) != 0)
++    if (chmod(sun1.sun_path, 0600) != 0)
+     {   Log::perror("localclient chmod");
+ 	close(client_sock);
+         return;
+     }
+ 
+-    if (chown(sun.sun_path, uid, (gid_t)-1) != 0)
++    if (chown(sun1.sun_path, uid, (gid_t)-1) != 0)
+     {   Log::perror("localclient chown");
+ 	close(client_sock);
+         return;
+@@ -252,7 +256,7 @@
+ 
+     //  Since we're going to start listening on this socket, set a task
+     //  to clean it up if we don't receive a connection within 60 seconds.
+-    NegotiatingClient *nc = new NegotiatingClient(client_sock, uid, &sun);
++    NegotiatingClient *nc = new NegotiatingClient(client_sock, uid, &sun1);
+     negotiating_clients.insert(client_sock, nc);
+     timeval nto;
+     gettimeofday(&nto, NULL);
+@@ -267,9 +271,9 @@
+ 
+     Scheduler::install_read_handler(client_sock, accept_localclient, NULL);
+     Log::debug("listening for requests for uid %d on descriptor %d (%s)",
+-               uid, client_sock, sun.sun_path);
++               uid, client_sock, sun1.sun_path);
+ 
+-    inet_client.send_sockaddr_un(sun);
++    inet_client.send_sockaddr_un(sun1);
+ }
+ 
+ void
+@@ -281,12 +285,12 @@
+     // Get the new socket.
+ 
+ #if defined(__FreeBSD__)
+-    struct sockaddr_un sun = { sizeof(sockaddr_un), AF_UNIX, "" };
++    struct sockaddr_un sun1 = { sizeof(sockaddr_un), AF_UNIX, "" };
+ #else
+-    struct sockaddr_un sun = { AF_UNIX, "" };
++    struct sockaddr_un sun1 = { AF_UNIX, "" };
+ #endif
+-    CONFIG_SOCKLEN_T sunlen = sizeof(sun);
+-    int client_fd = accept(ofd, (struct sockaddr *) &sun, &sunlen);
++    CONFIG_SOCKLEN_T sunlen = sizeof(sun1);
++    int client_fd = accept(ofd, (struct sockaddr *) &sun1, &sunlen);
+     if (client_fd < 0)
+     {
+ 	Log::perror("failed to accept new client");
+@@ -297,9 +301,9 @@
+     Scheduler::remove_onetime_task(cleanup_negotiation, nc);
+ 
+     Log::debug("client fd %d is local/trusted (socket %s, uid %d).",
+-               client_fd, nc->sun.sun_path, nc->uid);
++               client_fd, nc->sun1.sun_path, nc->uid);
+     Cred cred(nc->uid, client_fd);
+-    new LocalClient(client_fd, &(nc->sun), cred);
++    new LocalClient(client_fd, &(nc->sun1), cred);
+     // We don't need a reference to this object.  The constructor
+     // takes care of registering it with the Scheduler.
+ 
+@@ -349,7 +353,7 @@
+ #if defined(__FreeBSD__)
+     static sockaddr_un sun = { sizeof (sockaddr_un), AF_UNIX, "/tmp/.fam_socket" };
+ #else
+-    static sockaddr_un sun = { AF_UNIX, "/tmp/.fam_socket" };
++    static sockaddr_un sun1 = { AF_UNIX, "/tmp/.fam_socket" };
+ #endif
+ 
+     int sock = socket(PF_UNIX, SOCK_STREAM, 0);
+@@ -359,10 +363,10 @@
+     }
+     
+     struct stat sb;
+-    if (lstat(sun.sun_path, &sb) == 0 &&
++    if (lstat(sun1.sun_path, &sb) == 0 &&
+ 	sb.st_uid == 0 && S_ISSOCK(sb.st_mode))
+     {
+-	if (connect(sock, (sockaddr *) &sun, sizeof sun) == 0)
++	if (connect(sock, (sockaddr *) &sun1, sizeof sun1) == 0)
+ 	{   
+ 	    // Another fam is listening to /tmp/.fam_socket.
+ 	    // Pass our rendezvous fd to the other fam and
+@@ -387,13 +391,13 @@
+     //  We were unable to connect to another fam.
+     //	We'll create our own dirty ugly hack socket and accept connections.
+ 
+-    (void) unlink(sun.sun_path);
+-    if (bind(sock, (sockaddr *) &sun, sizeof sun) != 0)
++    (void) unlink(sun1.sun_path);
++    if (bind(sock, (sockaddr *) &sun1, sizeof sun1) != 0)
+     {   Log::perror("bind");
+ 	exit(1);
+     }
+ 
+-    if (chmod(sun.sun_path, 0700) != 0)
++    if (chmod(sun1.sun_path, 0700) != 0)
+     {   Log::perror("chmod");
+ 	exit(1);
+     }
+@@ -416,9 +420,9 @@
+     
+     //  Accept a new ugly connection.
+ 
+-    struct sockaddr_un sun;
+-    CONFIG_SOCKLEN_T sunlen = sizeof sun;
+-    int sock = accept(ugly, (struct sockaddr *)(&sun), &sunlen);
++    struct sockaddr_un sun1;
++    CONFIG_SOCKLEN_T sunlen = sizeof sun1;
++    int sock = accept(ugly, (struct sockaddr *)(&sun1), &sunlen);
+     if (sock < 0)
+     {   Log::perror("accept");
+ 	return;
+@@ -462,8 +466,8 @@
+ NegotiatingClient::NegotiatingClient(int fd, uid_t u, struct sockaddr_un *sunp)
+     : sock(fd), uid(u)
+ {
+-    sun.sun_family = AF_UNIX;
+-    strcpy(sun.sun_path, sunp->sun_path);
++    sun1.sun_family = AF_UNIX;
++    strcpy(sun1.sun_path, sunp->sun_path);
+ }
+ 
+ static void
+@@ -485,7 +489,7 @@
+     uid_t preveuid = geteuid();
+     if (preveuid) seteuid(0);
+     seteuid(nc->uid);
+-    unlink(nc->sun.sun_path);
++    unlink(nc->sun1.sun_path);
+     if (nc->uid) seteuid(0);
+     seteuid(preveuid);
+ 
+--- fam-2.6.10/fam/LocalClient.c++.orig	2006-03-13 13:49:04.000000000 +0530
++++ fam-2.6.10/fam/LocalClient.c++	2006-03-13 13:49:37.000000000 +0530
+@@ -33,13 +33,13 @@
+ : TCP_Client(LOCALHOST(), fd, cred)
+ {
+     assert(cred.is_valid());
+-    sun.sun_family = AF_UNIX;
+-    strncpy(sun.sun_path, addr->sun_path, sizeof(sun.sun_path));
+-    sun.sun_path[sizeof(sun.sun_path) - 1] = '\0';
++    sun1.sun_family = AF_UNIX;
++    strncpy(sun1.sun_path, addr->sun_path, sizeof(sun1.sun_path));
++    sun1.sun_path[sizeof(sun1.sun_path) - 1] = '\0';
+ }
+ 
+ LocalClient::~LocalClient()
+ {
+     if (geteuid() != cred.uid()) cred.become_user();
+-    unlink(sun.sun_path);
++    unlink(sun1.sun_path);
+ }
+--- fam-2.6.10/fam/FileSystemTable.c++.orig	2006-03-13 09:13:26.000000000 +0530
++++ fam-2.6.10/fam/FileSystemTable.c++	2006-03-13 18:05:59.000000000 +0530
+@@ -23,7 +23,17 @@
+ #include <stddef.h>
+ #include "FileSystemTable.h"
+ 
+-#include <mntent.h>
++#if defined(__sun) || defined(__sun__)
++#include <stdio.h>
++#include <sys/mntent.h>
++#include <sys/mnttab.h>
++#define mnt_dir mnt_mountp
++#define mnt_fsname mnt_special
++#define mnt_type mnt_fstype
++#else
++#include <sys/mntent.h>
++#endif
++
+ #include <stdlib.h>
+ #include <string.h>
+ 
+@@ -106,7 +116,11 @@
+ 
+     //  Read /etc/mtab.
+     Cred::SuperUser.become_user();
++#if defined(__sun) || defined(__sun__)
++    FILE *mtab = fopen(mtab_name, "r");
++#else
+     FILE *mtab = setmntent(mtab_name, "r");
++#endif
+     if(mtab == NULL)
+     {
+         Log::error("couldn't open %s for reading", mtab_name);
+@@ -114,8 +128,16 @@
+         return;
+     }
+     root = NULL;
++
++#if defined(__sun) || defined(__sun__)
++    struct mnttab mmp;
++    struct mnttab *mp = &mmp;
++    for ( ; (getmntent(mtab, mp) == 0); )
++    {
++#else
+     for (mntent *mp; ((mp = getmntent(mtab)) != NULL); )
+     {
++#endif
+ 	FileSystem *fs = fs_by_name ? fs_by_name->find(mp->mnt_dir) : NULL;
+ 	if (fs && fs->matches(*mp))
+ 	{
+@@ -172,7 +194,11 @@
+ 	if (!strcmp(mp->mnt_dir, "/"))
+ 	    root = fs;
+     }
++#if defined(__sun) || defined(__sun__)
++    fclose(mtab);
++#else
+     endmntent(mtab);
++#endif
+ 
+     if(root == NULL)
+     {
+--- fam-2.6.10/fam/NFSFileSystem.c++.orig	2006-03-13 09:13:34.000000000 +0530
++++ fam-2.6.10/fam/NFSFileSystem.c++	2006-03-13 14:16:45.000000000 +0530
+@@ -24,7 +24,16 @@
+ #include "NFSFileSystem.h"
+ 
+ #include <assert.h>
++#if defined(__sun) || defined(__sun__)
++#include <unistd.h>
++#include <sys/mnttab.h>
++#include <sys/mntent.h>
++#define mnt_fsname mnt_special
++#define mnt_opts mnt_mntopts
++#else
+ #include <mntent.h>
++#endif
++
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
+@@ -45,6 +54,9 @@
+     : FileSystem(mnt)
+ {
+     //  Extract the host name from the fs name.
++#if defined(__sun) || defined(__sun__)
++    long __name_max_ = sysconf(_SC_HOST_NAME_MAX);
++#endif
+ 
+     const char *fsname = mnt.mnt_fsname;
+     const char *colon = strchr(fsname, ':');
+@@ -55,13 +67,27 @@
+         assert(colon);
+         colon = fsname;
+     }
++
++#if defined(__sun) || defined(__sun__)
++    char hostname[__name_max_ + 1];
++#else
+     char hostname[NAME_MAX + 1];
++#endif
+     int hostnamelen = colon - fsname;
++
++#if defined(__sun) || defined(__sun__)
++    if(hostnamelen > __name_max_)
++    {
++        assert(hostnamelen <= __name_max_);
++        hostnamelen = __name_max_;
++    }
++#else
+     if(hostnamelen > NAME_MAX)
+     {
+         assert(hostnamelen <= NAME_MAX);
+         hostnamelen = NAME_MAX;
+     }
++#endif
+     strncpy(hostname, fsname, hostnamelen);
+     hostname[hostnamelen] = '\0';
+ 
+--- fam-2.6.10/libfam/Client.c++.orig	2006-03-13 11:11:23.000000000 +0530
++++ fam-2.6.10/libfam/Client.c++	2006-03-13 11:12:23.000000000 +0530
+@@ -129,13 +129,13 @@
+         return;
+     }
+ 
+-    struct sockaddr_un sun;
+-    memset(&sun, 0, sizeof sun);
+-    sun.sun_family = AF_UNIX;
++    struct sockaddr_un sun1;
++    memset(&sun1, 0, sizeof sun1);
++    sun1.sun_family = AF_UNIX;
+ 
+     //  We will block here, waiting for response from fam.
+     unsigned int nread = 0;
+-    char inbuf[sizeof(sun.sun_path)];
++    char inbuf[sizeof(sun1.sun_path)];
+     while(nread < sizeof(u_int32_t))
+     {
+         int rv = read(insock, inbuf + nread, sizeof(u_int32_t) - nread);
+@@ -150,7 +150,7 @@
+     u_int32_t mlen;
+     memcpy(&mlen, inbuf, sizeof(mlen));
+     mlen = ntohl(mlen);
+-    if (mlen >= sizeof(sun.sun_path))
++    if (mlen >= sizeof(sun1.sun_path))
+     {
+         close(insock);
+         sock = -8;
+@@ -169,8 +169,8 @@
+         }
+         nread += rv;
+     }
+-    strncpy(sun.sun_path, inbuf, mlen);
+-    sun.sun_path[mlen] = '\0';
++    strncpy(sun1.sun_path, inbuf, mlen);
++    sun1.sun_path[mlen] = '\0';
+ 
+     //  When we connected to the inet socket and told fam our UID, fam
+     //  created a new UNIX domain socket and sent its name to us.  Now
+@@ -182,7 +182,7 @@
+         sock = -10;
+         return;
+     }
+-    if (connect(sock, (const struct sockaddr *)&sun, sizeof(sun)) < 0)
++    if (connect(sock, (const struct sockaddr *)&sun1, sizeof(sun1)) < 0)
+     {
+         close(sock);
+         close(insock);
+--- fam-2.6.10/libfam/fam.c++.orig	2006-03-13 09:33:42.000000000 +0530
++++ fam-2.6.10/libfam/fam.c++	2006-03-13 09:37:19.000000000 +0530
+@@ -22,6 +22,9 @@
+ 
+ #include <sys/types.h>
+ #include <rpc/rpc.h>
++#if defined(__sun) || defined(__sun__)
++#include <rpc/rpcent.h>
++#endif
+ #include <sys/time.h>
+ #include <unistd.h>
+ #include <stdlib.h>
+--- fam-2.6.10/test/test.c++.orig	2006-03-13 14:04:55.000000000 +0530
++++ fam-2.6.10/test/test.c++	2006-03-13 14:05:36.000000000 +0530
+@@ -10,6 +10,12 @@
+ //#include <fcntl.h>
+ #include "fam.h"
+ //#include "Boolean.h"
++
++#include "config.h"
++#if defined(__sun) || defined(__sun__)
++#include <memory.h>
++#endif
++
+ /* 
+ 
+ FILE test.c - simple fam test program
+--- fam-2.6.10/configure.orig	2006-03-13 09:10:44.000000000 +0530
++++ fam-2.6.10/configure	2006-03-13 09:11:42.000000000 +0530
+@@ -9800,7 +9800,7 @@
+ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+-#include <mntent.h>
++#include <sys/mntent.h>
+ int
+ main ()
+ {
+@@ -9849,7 +9849,7 @@
+ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+-#include <mntent.h>
++#include <sys/mntent.h>
+ int
+ main ()
+ {
+@@ -9899,7 +9899,7 @@
+ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+-#include <mntent.h>
++#include <sys/mntent.h>
+ int
+ main ()
+ {
+@@ -9949,7 +9949,7 @@
+ cat confdefs.h >>conftest.$ac_ext
+ cat >>conftest.$ac_ext <<_ACEOF
+ /* end confdefs.h.  */
+-#include <mntent.h>
++#include <sys/mntent.h>
+ int
+ main ()
+ {

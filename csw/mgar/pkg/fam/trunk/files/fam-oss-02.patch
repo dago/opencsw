@@ -1,0 +1,20 @@
+--- fam-2.6.10/Makefile.orig	2006-03-13 15:47:02.000000000 +0530
++++ fam-2.6.10/Makefile	2006-03-13 15:47:04.000000000 +0530
+@@ -480,7 +480,7 @@
+ 	    "#  fam, the File Alteration Monitor, http://oss.sgi.com/projects/fam/" \
+ 	    "sgi_fam/1-2 stream rpc/tcp wait root $(DESTDIR)$(bindir)/fam fam"
+ 	@echo "Restarting inetd..."
+-	-@killall -HUP inetd
++	-@kill -HUP inetd
+ 
+ #  We don't remove $(libdir) from ld.so.conf here because we don't have
+ #  a way to tell whether we're the ones who added it, and other things
+@@ -489,7 +489,7 @@
+ 	-@$(EDITCONF) rpc remove 391002
+ 	-@$(EDITCONF) inetd.conf remove '\b(fam|FAM)\b'
+ 	@echo "Restarting inetd..."
+-	-@killall -HUP inetd
++	-@kill -HUP inetd
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+ .NOEXPORT:
