@@ -2,6 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
+# There is a problem with the test suite, which is affected by the presence of
+# .git directories in $(WORKSRC).  A temporary workaround might be to use gar
+# at r10011.
+
 GARNAME = sharutils
 GARVERSION = 4.9
 CATEGORIES = utils
