@@ -22,8 +22,15 @@ RUNTIME_DEP_PKGS_CSWgxmessage += CSWglib2
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWgtk2
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibatk
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibxext
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWpango
+EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
 include gar/category.mk
+
+post-install-modulated:
+	ln -s gxmessage $(DESTDIR)$(bindir)/gmessage
+	ln -s gxmessage $(DESTDIR)$(bindir)/xmessage
+	@$(MAKECOOKIE)
 
 # Otherwise it keeps finding /usr/bin/xgettext and failing.
 PATH := /opt/csw/gnu:$(PATH)
