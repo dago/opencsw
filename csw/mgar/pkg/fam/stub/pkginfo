@@ -1,0 +1,9 @@
+PKG=CSWfam
+NAME=fam - stub to pull in newer gamin package instead
+ARCH=all
+VERSION=2.70,REV=2010.06.15
+CATEGORY=application
+VENDOR=http://www.opencsw.org/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW__REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/fam/stub
