@@ -34,6 +34,7 @@ CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 
 PKGFILES_CSWlibsdldevel = $(PKGFILES_DEVEL)
 
+CHECKPKG_OVERRIDES_CSWlibsdl += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libSDL-1.2.so.0.11.3
 CHECKPKG_OVERRIDES_CSWlibsdldevel += surplus-dependency|CSWlibsdl
 
 include gar/category.mk
