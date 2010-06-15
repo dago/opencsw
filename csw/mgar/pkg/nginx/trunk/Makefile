@@ -1,5 +1,5 @@
 GARNAME = nginx
-GARVERSION = 0.7.65
+GARVERSION = 0.7.67
 CATEGORIES = server
 
 DESCRIPTION = HTTP server and mail proxy server
