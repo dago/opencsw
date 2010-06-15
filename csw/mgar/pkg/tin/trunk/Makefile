@@ -1,22 +1,22 @@
 GARNAME = tin
-GARVERSION = 1.8.3
+GARVERSION = 1.9.5
 CATEGORIES = net
 
-DESCRIPTION = terminal-based news reader
+DESCRIPTION = Terminal-based news reader
 define BLURB
   tin is an easy-to-use USENET news reader for the console using NNTP.
   It supports threading, scoring, different charsets, and many other
   useful things. It has also support for different languages.
 endef
 
-MASTER_SITES = ftp://ftp.tin.org/pub/news/clients/tin/stable/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWtin,prototype depend)
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
+MASTER_SITES = ftp://ftp.tin.org/pub/news/clients/tin/unstable/
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += COPYING
 PATCHFILES = configure.patch
+
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+DEP_PKGS = CSWpcrert CSWggettextrt CSWperl CSWlibidn CSWlibicu CSWiconv
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-coffee
@@ -33,6 +33,7 @@ TEST_TARGET =
 
 include gar/category.mk
 
-post-install:
+post-install-modulated:
 	/usr/ccs/bin/strip $(DESTDIR)$(prefix)/bin/tin
 	/usr/ccs/bin/mcs -d $(DESTDIR)$(prefix)/bin/tin
+
