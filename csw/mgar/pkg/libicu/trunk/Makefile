@@ -62,4 +62,12 @@ MERGE_DIRS_isa-default64-garversion-4.4.1 = $(libdir)
 
 PKGFILES_CSWlibicu = $(PKGFILES_RT)
 
+CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicui18n.so.44.1
+CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicule.so.44.1
+CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libiculx.so.44.1
+CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicuuc.so.44.1
+CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicutu.so.44.1
+CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicuio.so.44.1
+CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicutest.so.44.1
+
 include gar/category.mk
