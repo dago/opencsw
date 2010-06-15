@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = cswclassutils
-GARVERSION = 1.37
+GARVERSION = 1.38
 CATEGORIES = utils
 
 DESCRIPTION = CSW class action utilities
