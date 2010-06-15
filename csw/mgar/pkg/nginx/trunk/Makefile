@@ -19,7 +19,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWosslrt CSWpcrert CSWzlib
 
-PACKAGING_PLATFORMS  = solaris8-sparc  solaris8-i386
+PACKAGING_PLATFORMS  = solaris9-sparc  solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
