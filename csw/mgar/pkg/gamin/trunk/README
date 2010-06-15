@@ -1,0 +1,27 @@
+work-in=progress, to replace ancient "fam" demon,e tc, with the more modern
+replacement.
+
+Based on porting work done by sun, at
+
+http://src.opensolaris.org/source/xref/jds/spec-files/trunk/base-specs/gamin.spec
+
+
+
+specific patchfiles are at:
+
+
+http://src.opensolaris.org/source/raw/jds/spec-files/branches/opensolaris-2010-03/patches/gamin-01-all.diff
+
+http://src.opensolaris.org/source/xref/jds/spec-files/branches/opensolaris-2010-03/patches/gamin-02-gamin.diff
+
+(althoug the second one seems kinda useless)
+
+
+Note that you MUST RUN the following non-normal steps, since the sun pages
+tweak what are normally upstream files:
+
+
+ libtoolize --copy --force
+ aclocal
+ autoconf --force
+ automake -a -c -f
