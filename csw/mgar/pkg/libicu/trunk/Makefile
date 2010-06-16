@@ -47,10 +47,11 @@ WORKSRC = $(WORKDIR)/$(DISTNAME)/source
 # Using -I/opt/csw/include here puts it before the include of the newly built
 # software which breaks definitions
 CPPFLAGS = 
-LINKER_FLAGS =
+LINKER_FLAGS = -lCrun
 
 BUILD64 = 1
 NOISAEXEC = 1
+NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 MERGE_SCRIPTS_isa-default-garversion-4.2.1 = copy-only
