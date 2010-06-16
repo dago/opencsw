@@ -21,6 +21,7 @@ DEP_PKGS = CSWpcrert CSWggettextrt CSWperl CSWlibidn CSWlibicu CSWiconv
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-coffee
 CONFIGURE_ARGS += --enable-ipv6 --enable-curses
+CONFIGURE_ARGS += --with-pcre=$(prefix)
 CONFIGURE_ARGS += --x-includes=/usr/openwin/include
 CONFIGURE_ARGS += --x-libraries=/usr/openwin/lib 
 CONFIGURE_ARGS += --with-x --with-Xaw3d
