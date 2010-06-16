@@ -91,6 +91,7 @@ PKGFILES_CSWungif = .*/libungif\..*
 
 CHECKPKG_OVERRIDES_CSWungif += surplus-dependency|CSWgiflib
 CHECKPKG_OVERRIDES_CSWgiflibrt += bad-rpath-entry|/usr/openwin/lib/64|opt/csw/lib/sparcv9/libgif.so.4.1.6
+CHECKPKG_OVERRIDES_CSWgiflibrt += bad-rpath-entry|/usr/openwin/lib/64|opt/csw/lib/amd64/libgif.so.4.1.6
 CHECKPKG_OVERRIDES_CSWgiflibrt += linked-against-discouraged-library|libgif.so.4.1.6|libX11.so.4
 
 include gar/category.mk
