@@ -1,9 +1,9 @@
 GARNAME = Tree-DAG_Node
-GARVERSION = 1.05
+GARVERSION = 1.06
 CATEGORIES = cpan
-AUTHOR = SBURKE
+AUTHOR = COGENT
 
-DESCRIPTION = (super)class for representing nodes in a tree
+DESCRIPTION = Class for representing nodes in a tree
 define BLURB
   This class encapsulates/makes/manipulates objects that represent nodes in a
   tree structure. The tree structure is not an object itself, but is emergent
@@ -14,6 +14,10 @@ define BLURB
   two mothers).
 endef
 
-DISTFILES += CSWpmtreedagnode.gspec
+DISTFILES += COPYING
+
+PACKAGES = CSWpmtreedagnode
+CATALOGNAME = pm_treedagnode
+ARCHALL = 1
 
 include gar/category.mk
