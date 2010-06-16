@@ -2,6 +2,8 @@ GARNAME = nginx
 GARVERSION = 0.7.67
 CATEGORIES = server
 
+GARCOMPILER = SOS11
+
 DESCRIPTION = HTTP server and mail proxy server
 define BLURB
   Nginx (pronounced "engine x") is a free, open-source, high-performance
