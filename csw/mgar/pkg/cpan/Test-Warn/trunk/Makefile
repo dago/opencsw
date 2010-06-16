@@ -1,17 +1,21 @@
 GARNAME = Test-Warn
-GARVERSION = 0.08
+GARVERSION = 0.21
 CATEGORIES = cpan
-AUTHOR = BIGJ
+AUTHOR = CHORNY
 
-DESCRIPTION = extension to test methods for warnings
+DESCRIPTION = Extension to test methods for warnings
 define BLURB
-  This module provides a few convenience methods for testing warning based
-  code.
+    Extension to test methods for warnings
 endef
 
-DISTFILES += CSWpmtestwarn.gspec CSWpmtestwarn.depend
+MODDIST = $(GARNAME)-$(GARVERSION).zip
 
-DEPENDS += cpan/Test-Exception cpan/Test-Builder-Tester cpan/Sub-Uplevel
-DEPENDS += cpan/Array-Compare cpan/Tree-DAG_Node
+DISTFILES += COPYING
+
+PACKAGES = CSWpmtestwarn
+CATALOGNAME = pm_testwarn
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpmtreedagnode CSWpmsubuplevel 
 
 include gar/category.mk
