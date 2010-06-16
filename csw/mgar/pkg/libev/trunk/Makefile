@@ -17,9 +17,13 @@ MASTER_SITES = http://dist.schmorp.de/libev/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --includedir=/opt/csw/include/libev
 BUILD64 = 1
 NOISAEXEC = 1
 TEST_TARGET = check
 LICENSE = LICENSE
+CHECKPKG_OVERRIDES_CSWlibev += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libev.so.3.0.0
 include gar/category.mk
+
+post-install-modulated:
+	mv $(DESTDIR)$(includedir)/event.h $(DESTDIR)$(includedir)/ev-event.h
+	@$(MAKECOOKIE)
