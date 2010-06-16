@@ -1,0 +1,51 @@
+From 6fcc6bf1cc16c99496708fa3798dd3ccb91b7a36 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@testing9x.(none)>
+Date: Wed, 16 Jun 2010 14:35:28 +0200
+Subject: [PATCH] Replace crap installer with something more standard.
+
+---
+ Makefile.PL |   34 ++++++++++++++++------------------
+ 1 files changed, 16 insertions(+), 18 deletions(-)
+
+diff --git a/Makefile.PL b/Makefile.PL
+index 238bdf0..29ac063 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -1,18 +1,16 @@
+-use inc::Module::Install;
+-
+-name ('Data-ICal');
+-author ('Jesse Vincent <jesse@bestpractical.com>');
+-version_from ('lib/Data/ICal.pm');
+-abstract_from('lib/Data/ICal.pm');
+-license('perl');
+-build_requires('Test::More');
+-build_requires('Test::Warn');
+-build_requires('Test::NoWarnings');
+-build_requires('Test::LongString');
+-requires('Class::Accessor');
+-requires('Text::vFile::asData');
+-requires('MIME::QuotedPrint');
+-requires('Class::ReturnValue');
+-auto_install();
+-sign();
+-WriteAll;
++use ExtUtils::MakeMaker;
++WriteMakefile
++(
++          'PL_FILES' => {},
++          'INSTALLDIRS' => 'site',
++          'NAME' => 'Data::ICal',
++          'EXE_FILES' => [],
++          'VERSION_FROM' => 'lib/Data/ICal.pm',
++          'PREREQ_PM' => {
++                           'Test::More' => 0,
++                           'Test::Warn' => 0,
++                           'Test::NoWarnings' => 0,
++                           'Test::LongString' => 0
++                         }
++        )
++;
+-- 
+1.7.1
+
