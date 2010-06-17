@@ -49,9 +49,13 @@ DISTNAME = icu
 WORKSRC = $(WORKDIR)/$(DISTNAME)/source
 
 # Using -I/opt/csw/include here puts it before the include of the newly built
-# software which breaks definitions
+# software which breaks definitions, so make sure it is empty.
 CPPFLAGS = 
-LINKER_FLAGS = -lCrun
+
+# libCrun is needed for all libs, libCstd for libicui18n.so only
+# Not having these does not cause errors during build of libicu, but the
+# packages using the libs will bail out as they assume the libs are self-contained.
+LINKER_FLAGS = -lCrun -lCstd
 
 BUILD64 = 1
 NOISAEXEC = 1
