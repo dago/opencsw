@@ -90,5 +90,5 @@ install-custom:
 		$(DESTDIR)$(libdir)/python/csw/$${f}; \
 	done
 	@ln -s ../lib/python/csw/compare_pkgs.py $(DESTDIR)$(bindir)/comparepkg
-	@ln -s ../lib/python/csw/compare_pkgs.py $(DESTDIR)$(bindir)/submitpkg
+	@ln -s ../lib/python/csw/submit_to_newpkgs.py $(DESTDIR)$(bindir)/submitpkg
 	@$(MAKECOOKIE)
