@@ -203,7 +203,7 @@ build/.stage-$(ARCH)-64.done:	$(SRCDIR)/cswstage
 	@(cd $(SRCDIR); gmake DESTDIR=`pwd`/tmpdest install )
 	@echo copying $(SRCDIR)/tmpdest/$(LIBDIR64_$(ARCH))
 	@(cd $(SRCDIR)/tmpdest; tar cf - ./$(LIBDIR64_$(ARCH)) ) | (cd $(SRCDIR)/cswstage; tar xf -)
-	cp $(SRCDIR)/COPYING $(SRCDIR)/cswstage/COPYING
+	(cd $(SRCDIR) ; cp COPYING cswstage/.)
 	@echo ""
 	touch $@
 
