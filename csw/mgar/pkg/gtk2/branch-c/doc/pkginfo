@@ -1,5 +1,6 @@
 PKG=CSWgtk2doc
 NAME=gtk2_doc - Documentation for GTK toolkit
+ARCH=all
 VERSION=2.18.9,REV=2010.06.07
 CATEGORY=application
 VENDOR=http://www.gtk.org/ packaged for CSW by Philip Brown
