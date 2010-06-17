@@ -22,6 +22,10 @@ MASTER_SITES = $(addsuffix /,$(addprefix http://download.icu-project.org/files/i
 SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION), $(call filename,$(VERSION)))
 DISTFILES  = $(SOURCEFILES)
 
+# icu-config is broken with ECHO_N/ECHO_C detection:
+#   http://bugs.icu-project.org/trac/ticket/7768
+PATCHFILES = 0001-Add-workaround-for-echo-n.patch
+
 NOEXTRACT = $(filter-out $(call filename,$(GARVERSION)),$(SOURCEFILES))
 
 # File name regex to get notifications about upstream software releases
