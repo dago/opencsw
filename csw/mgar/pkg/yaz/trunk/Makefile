@@ -15,15 +15,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS_CSWyaz += CSWgcrypt
-RUNTIME_DEP_PKGS_CSWyaz += CSWgnutls
-RUNTIME_DEP_PKGS_CSWyaz += CSWreadline
-RUNTIME_DEP_PKGS_CSWyaz += CSWncurses
-RUNTIME_DEP_PKGS_CSWyaz += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWyaz += CSWgpgerr
-RUNTIME_DEP_PKGS_CSWyaz += CSWiconv
-RUNTIME_DEP_PKGS_CSWyaz += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWyaz += CSWzlib
+DEP_PKGS = CSWgcrypt CSWgnutls CSWreadline CSWncurses CSWlibxslt CSWgpgerr CSWiconv CSWlibxml2 CSWzlib CSWlibicu
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -31,5 +23,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 NOISAEXEC = 1
 MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 MERGE_DIRS_isa-extra = $(libdir)
+
+CHECKPKG_OVERRIDES_CSWyaz += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libyaz_icu.so.4.0.0
+CHECKPKG_OVERRIDES_CSWyaz += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libyaz_server.so.4.0.0
+CHECKPKG_OVERRIDES_CSWyaz += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libyaz.so.4.0.0
 
 include gar/category.mk
