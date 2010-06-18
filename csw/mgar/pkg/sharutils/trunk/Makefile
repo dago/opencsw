@@ -18,7 +18,10 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
-BUILD64 = 1
+# Apparently, 64 bit builds are frown upon:
+# http://lists.opencsw.org/pipermail/pkgsubmissions/2010-June/000907.html
+# BUILD64 = 1
+
 # To make the test use gmd5sum
 MD5SUM = gmd5sum
 RUNTIME_DEP_PKGS_CSWsharutils += CSWggettextrt
