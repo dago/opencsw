@@ -76,6 +76,16 @@ class PackageSubmissionError(Error):
   pass
 
 
+def RemoveOldFiles(basename_list, host, directory):
+  basename_str = " ".join(["%s/%s*" % (directory, x) for x in basename_list])
+  args = ["ssh", host, "rm -f %s" % basename_str]
+  logging.debug("Running: %s" % args)
+  ret = subprocess.call(args)
+  if ret:
+    msg = ("Removing % failed." % basename_str)
+    raise PackageSubmissionError(msg)
+
+
 def main():
   try:
     config = ConfigParser.SafeConfigParser()
@@ -100,6 +110,10 @@ def main():
                       dest="debug", default=False,
                       action="store_true",
                       help="Print debugging messages")
+    parser.add_option("--no-clean",
+                      dest="clean", default=True,
+                      action="store_false",
+                      help="Prevent submitpkg from deleting old files from newpkgs")
     (options, args) = parser.parse_args()
     file_names = args
     level = logging.INFO
@@ -156,14 +170,16 @@ def main():
   remote_package_files = []
   remote_package_references = []
   files_to_rsync = []
+  target_host = config.get(CONFIG_RELEASE_SECTION, "target host")
+  target_dir = config.get(CONFIG_RELEASE_SECTION, "target dir")
+  dst_arg = ("%s:%s" % (target_host, target_dir))
   for p in package_files:
-    dst_arg = ("%s:%s" % (config.get(CONFIG_RELEASE_SECTION, "target host"),
-                          config.get(CONFIG_RELEASE_SECTION, "target dir")))
     files_to_rsync.append(p)
     remote_package_files.append(dst_arg)
     package_base_file_name = os.path.split(p)[1]
     remote_package_references.append(dst_arg + "/" + package_base_file_name)
-  # TODO(maciej): rsync only once
+  if options.clean:
+    RemoveOldFiles(catalognames, target_host, target_dir)
   args = ["rsync", "-v"] + files_to_rsync + [dst_arg]
   logging.debug(args)
   try:

@@ -281,6 +281,7 @@ class StagingDir(object):
 
   def __repr__(self):
     return u"StagingDir(%s)" % repr(self.dir_path)
+
   def GetLatest(self, software, architectures=ARCHITECTURES):
     files = os.listdir(self.dir_path)
     package_files = []
