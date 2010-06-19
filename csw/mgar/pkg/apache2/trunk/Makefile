@@ -43,7 +43,10 @@ pre-configure-modulated:
 	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); ./buildconf)
 
 # Build Configuration
+#CONFIGURE_ARGS += --with-apr=$(prefix)
 CONFIGURE_ARGS += --with-mpm=prefork
+CONFIGURE_ARGS += --disable-static
+
 
 # Fixup target variables
 APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
@@ -59,8 +62,8 @@ FIXCONFIG_DIRS     = $(DESTDIR)
 FIXCONFIG_RMPATHS  = $(DESTDIR)
 FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr-util
 FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr-util/include
-FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr
-FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr/include
+#FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr
+#FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr/include
 
 post-install-modulated: rename-httpd copy-local-files create-templates
 
