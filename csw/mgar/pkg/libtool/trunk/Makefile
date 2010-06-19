@@ -4,11 +4,11 @@ CATEGORIES = devel
 
 EXTRA_MODULATORS = GARVERSION GARCOMPILER
 MODULATIONS_GARVERSION = 1.5.26 2.2.10
-MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS11 SOS12
+MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS12
 
 # Modulate over compiler only for 2.2.6
 SKIP_MODULATIONS = $(foreach I,sparcv8 sparcv9 i386 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-1.5.26-garcompiler-$C))
-# Compile 64 bit libraries only with SOS11
+# Compile 64 bit libraries only with SOS12
 SKIP_MODULATIONS += $(foreach I,sparcv9 amd64,$(foreach C,GCC3 GCC4,isa-$I-garversion-2.2.10-garcompiler-$C))
 
 DESCRIPTION = A generic library support tool
@@ -23,8 +23,8 @@ SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION)
 DISTFILES    = $(SOURCEFILES)
 
 PATCH_LIBTOOL = patch-libtool.diff
-PATCHFILES_POSTINSTALL_isa-i386-garversion-2.2.10-garcompiler-SOS11 = $(PATCH_LIBTOOL)
-PATCHFILES_POSTINSTALL_isa-sparcv8-garversion-2.2.10-garcompiler-SOS11 = $(PATCH_LIBTOOL)
+PATCHFILES_POSTINSTALL_isa-i386-garversion-2.2.10-garcompiler-SOS12 = $(PATCH_LIBTOOL)
+PATCHFILES_POSTINSTALL_isa-sparcv8-garversion-2.2.10-garcompiler-SOS12 = $(PATCH_LIBTOOL)
 DISTFILES += $(PATCH_LIBTOOL)
 
 NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
@@ -55,14 +55,14 @@ NOISAEXEC = 1
 SKIPTEST = 1
 TEST_TARGET = check
 
-   MERGE_SCRIPTS_isa-default-garversion-1.5.26-garcompiler-SOS11 = copy-only
-      MERGE_DIRS_isa-default-garversion-1.5.26-garcompiler-SOS11 = $(libdir)
- MERGE_SCRIPTS_isa-default64-garversion-1.5.26-garcompiler-SOS11 = copy-relocated-only
-    MERGE_DIRS_isa-default64-garversion-1.5.26-garcompiler-SOS11 = $(libdir)
+   MERGE_SCRIPTS_isa-default-garversion-1.5.26-garcompiler-SOS12 = copy-only
+      MERGE_DIRS_isa-default-garversion-1.5.26-garcompiler-SOS12 = $(libdir)
+ MERGE_SCRIPTS_isa-default64-garversion-1.5.26-garcompiler-SOS12 = copy-relocated-only
+    MERGE_DIRS_isa-default64-garversion-1.5.26-garcompiler-SOS12 = $(libdir)
 
-   MERGE_SCRIPTS_isa-default-garversion-2.2.10-garcompiler-SOS11 = copy-all
- MERGE_SCRIPTS_isa-default64-garversion-2.2.10-garcompiler-SOS11 = copy-relocated-only
-    MERGE_DIRS_isa-default64-garversion-2.2.10-garcompiler-SOS11 = $(libdir)
+   MERGE_SCRIPTS_isa-default-garversion-2.2.10-garcompiler-SOS12 = copy-all
+ MERGE_SCRIPTS_isa-default64-garversion-2.2.10-garcompiler-SOS12 = copy-relocated-only
+    MERGE_DIRS_isa-default64-garversion-2.2.10-garcompiler-SOS12 = $(libdir)
 
     MERGE_SCRIPTS_isa-default-garversion-2.2.10-garcompiler-GCC3 = copy-tags
     MERGE_SCRIPTS_isa-default-garversion-2.2.10-garcompiler-GCC4 = copy-tags
