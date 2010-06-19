@@ -12,7 +12,7 @@ endef
 MASTER_SITES  = http://apache.crihan.fr/dist/apr/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 LICENSE = LICENSE
-CATALOGNAME_CSWapr-utl = apr_util
+CATALOGNAME = apr_util
 
 RUNTIME_DEP_PKGS = CSWapr CSWiconv CSWsqlite3rt CSWunixodbc CSWexpat
 #RUNTIME_DEP_PKGS += CSWbdb48
