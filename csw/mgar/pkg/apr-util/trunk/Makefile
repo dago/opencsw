@@ -13,7 +13,7 @@ MASTER_SITES  = http://apache.crihan.fr/dist/apr/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS = CSWiconv
+RUNTIME_DEP_PKGS = CSWapr CSWiconv CSWsqlite3rt CSWunixodbc CSWexpat
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
