@@ -20,7 +20,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
-CONFIGURE_ARGS += --without-freetds
+CONFIGURE_ARGS += --without-freetds --without-sqlite2
 
 BUILD64 = 1
 STRIP_LIBTOOL = 1
