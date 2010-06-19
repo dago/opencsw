@@ -25,4 +25,9 @@ CONFIGURE_ARGS += --without-freetds --without-sqlite2
 BUILD64 = 1
 STRIP_LIBTOOL = 1
 
+CHECKPKG_OVERRIDES_CSWapr-util += pkginfo-bad-catalogname|apr-util
+CHECKPKG_OVERRIDES_CSWapr-util += rev-tag-missing-in-filename
+CHECKPKG_OVERRIDES_CSWapr-util += osrel-tag-not-specified
+CHECKPKG_OVERRIDES_CSWapr-util += filename-version-does-not-match-pkginfo-version|filename=util|pkginfo=1.3.9,REV=2010.06.19
+
 include gar/category.mk
