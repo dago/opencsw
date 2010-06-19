@@ -1,5 +1,5 @@
 GARNAME = fltk
-GARVERSION = 1.1.9
+GARVERSION = 1.1.10
 CATEGORIES = lib
 
 DESCRIPTION = Fast light Tool Kit
@@ -10,12 +10,16 @@ endef
 MASTER_SITES = http://ftp.easysw.com/pub/fltk/$(GARVERSION)/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.gz
-DISTFILES += $(call admfiles,CSWfltk, depend)
+PATCHFILES = makeinclude.in.diff Makefile.diff
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES = makeinclude.in.diff Makefile.diff
+VENDOR_URL = http://www.fltk.org/
 
+DEP_PKGS = CSWzlib CSWjpeg CSWpng
+
+BUILD64 = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 CONFIGURE_ARGS += --disable-localpng
@@ -25,5 +29,10 @@ CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-largefile
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --enable-shared 
+
+EXTRA_BUILD_EXPORTS = libdir
+
+MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
+MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk

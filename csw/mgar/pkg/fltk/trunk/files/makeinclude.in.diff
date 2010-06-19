@@ -1,12 +1,34 @@
-diff --speed-large-files --minimal -Nru fltk-1.1.9.orig/makeinclude.in fltk-1.1.9/makeinclude.in
---- fltk-1.1.9.orig/makeinclude.in	2008-02-26 16:26:08.000000000 +0100
-+++ fltk-1.1.9/makeinclude.in	2009-03-29 18:19:13.217084442 +0200
-@@ -83,7 +83,7 @@
+From 6b84ed88addcef4139cbfd9540ffd56ba12011f1 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 19 Jun 2010 22:18:12 +0200
+Subject: [PATCH] Adjust linker flags
+
+---
+ makeinclude.in |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/makeinclude.in b/makeinclude.in
+index 058ba7d..80c566b 100644
+--- a/makeinclude.in
++++ b/makeinclude.in
+@@ -79,7 +79,7 @@ IMGLIBBASENAME	= @IMGLIBBASENAME@
+ 
+ # libraries to link with:
+ AUDIOLIBS	= @AUDIOLIBS@
+-DSOFLAGS	= -L. @DSOFLAGS@
++DSOFLAGS	= -L. $(LDFLAGS) @DSOFLAGS@
+ LDFLAGS		= $(OPTIM) @LDFLAGS@
+ LDLIBS		= @LIBS@
+ GLDLIBS		= @GLLIB@ @LIBS@
+@@ -88,7 +88,7 @@ LINKFLTKGL	= @LINKFLTKGL@
  LINKFLTKFORMS	= @LINKFLTKFORMS@ @LINKFLTK@
  LINKFLTKIMG	= @LINKFLTKIMG@ @LINKFLTK@ $(IMAGELIBS)
  LINKSHARED	= @DSOLINK@ @LINKSHARED@ $(IMAGELIBS)
 -IMAGELIBS	= -L../lib @IMAGELIBS@
-+IMAGELIBS	= -L../lib -L/opt/csw/lib @IMAGELIBS@
++IMAGELIBS	= -L../lib -L$(libdir) @IMAGELIBS@
  
  # image libraries to build...
  IMAGEDIRS	= @JPEG@ @ZLIB@ @PNG@
+-- 
+1.7.1
+
