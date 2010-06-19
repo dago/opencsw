@@ -35,4 +35,8 @@ EXTRA_BUILD_EXPORTS = libdir
 MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 MERGE_DIRS_isa-extra = $(libdir)
 
+CHECKPKG_OVERRIDES_CSWfltk += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libfltk.so.1.1
+CHECKPKG_OVERRIDES_CSWfltk += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libfltk_forms.so.1.1
+CHECKPKG_OVERRIDES_CSWfltk += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libfltk_images.so.1.1
+
 include gar/category.mk
