@@ -1,5 +1,5 @@
 GARNAME = doxygen
-GARVERSION = 1.6.3
+GARVERSION = 1.7.0
 CATEGORIES = utils
 
 DESCRIPTION = A documentation system for programming languages
@@ -11,13 +11,17 @@ endef
 MASTER_SITES = http://ftp.stack.nl/pub/users/dimitri/
 DISTFILES  = $(GARNAME)-$(GARVERSION).src.tar.gz
 
+# This is needed until this is fixed:
+#   http://bugzilla.gnome.org/show_bug.cgi?id=621653
+PATCHFILES = 0001-Work-around-duplicate-definition-of-time-as-in-bug-6.patch
+
 PACKAGES = CSWdoxygen CSWdoxygendoc
 
 CATALOGNAME_CSWdoxygen = doxygen
 CATALOGNAME_CSWdoxygendoc = doxygen_doc
 
 SPKG_DESC_CSWdoxygen = A documentation system for programming languages
-SPKG_DESC_CSWdoxygendoc = doxygen documentation
+SPKG_DESC_CSWdoxygendoc = Documentation for doxygen
 
 LICENSE = LICENSE
 
@@ -54,5 +58,5 @@ include gar/category.mk
 PATH := $(PATH):/opt/csw/graphviz2/bin
 
 post-extract-modulated:
-	perl -pi -e ' s,(TMAKE_CFLAGS_RELEASE\s*=\s*)(.*),\1$(filter-out -I/opt/csw/include,$(CFLAGS)),; s,(TMAKE_CXXFLAGS_RELEASE\s*=\s*)(.*),\1$(filter-out -I/opt/csw/include,$(CXXFLAGS)) -norunpath,; ' $(WORKSRC)/tmake/lib/solaris-cc/tmake.conf
+	perl -pi -e ' s,(TMAKE_CFLAGS_RELEASE\s*=\s*)(.*),\1$(CFLAGS),; s,(TMAKE_CXXFLAGS_RELEASE\s*=\s*)(.*),\1$(CXXFLAGS),; s,(TMAKE_LFLAGS_RELEASE\s*=)(.*),\1$(LDFLAGS),; ' $(WORKSRC)/tmake/lib/solaris-cc/tmake.conf
 	@$(MAKECOOKIE)
