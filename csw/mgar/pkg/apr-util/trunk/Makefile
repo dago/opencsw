@@ -14,12 +14,15 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS = CSWapr CSWiconv CSWsqlite3rt CSWunixodbc CSWexpat
+#RUNTIME_DEP_PKGS += CSWbdb48
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
+#not yet
+#CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb48
 CONFIGURE_ARGS += --without-freetds --without-sqlite2
 
 BUILD64 = 1
