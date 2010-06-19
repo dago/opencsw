@@ -1,5 +1,5 @@
 GARNAME = maven2
-GARVERSION = 2.0.10
+GARVERSION = 2.2.1
 CATEGORIES = devel
 GARCH = all
 
@@ -24,8 +24,6 @@ endef
 
 MASTER_SITES = http://www.powertech.no/apache/dist/maven/binaries/
 DISTFILES  = apache-maven-$(GARVERSION)-bin.tar.gz
-DISTFILES += $(call admfiles,CSWmaven2,)
-DISTFILES += bin-mvn
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = apache-maven-(\d+(?:\.\d+)*)-bin.tar.gz
