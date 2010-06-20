@@ -464,9 +464,17 @@ class SystemPkgmap(object):
   def IsDatabaseUpToDate(self):
     f_mtime = self.GetFileMtime()
     d_mtime = self.GetDatabaseMtime()
-    logging.debug("f_mtime %s, d_time: %s", f_mtime, d_mtime)
-    fresh = self.GetFileMtime() <= self.GetDatabaseMtime()
+    logging.debug("IsDatabaseUpToDate: f_mtime %s, d_time: %s", f_mtime, d_mtime)
+    # Rounding up to integer seconds.  There is a race condition: 
+    # pkgadd finishes at 100.1
+    # checkpkg reads /var/sadm/install/contents at 100.2
+    # new pkgadd runs and finishes at 100.3
+    # subsequent checkpkg runs won't pick up the last change.
+    # I don't expect pkgadd to run under 1s.
+    fresh = int(f_mtime) <= int(d_mtime)
     good_version = self.GetDatabaseSchemaVersion() >= DB_SCHEMA_VERSION
+    logging.debug("IsDatabaseUpToDate: fresh=%s, good_version=%s",
+                  repr(fresh), repr(good_version))
     return fresh and good_version
 
   def SoftDropTable(self, tablename):
