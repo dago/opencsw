@@ -5,9 +5,9 @@ d none /opt/csw/libexec 0755 root bin
 f none /opt/csw/libexec/gam_server 0755 root bin
 d none /opt/csw/lib 0755 root bin
 s none /opt/csw/lib/libfam.so=libfam.so.0.0.0
-f none /opt/csw/lib/libgamin-1.so.0.1.9 0755 root bin
-s none /opt/csw/lib/libgamin-1.so=libgamin-1.so.0.1.9
-s none /opt/csw/lib/libgamin-1.so.0=libgamin-1.so.0.1.9
+f none /opt/csw/lib/libgamin-1.so.0.1.10 0755 root bin
+s none /opt/csw/lib/libgamin-1.so=libgamin-1.so.0.1.10
+s none /opt/csw/lib/libgamin-1.so.0=libgamin-1.so.0.1.10
 s none /opt/csw/lib/libfam.so.0=libfam.so.0.0.0
 f none /opt/csw/lib/libfam.so.0.0.0 0755 root bin
 d none /opt/csw/lib/pkgconfig 0755 root bin
@@ -24,8 +24,8 @@ f none /opt/csw/share/doc/gamin/COPYING=COPYING 0644 root bin
 
 d none /opt/csw/lib/sparcv9 0755 root bin
 s none /opt/csw/lib/sparcv9/libfam.so=libfam.so.0.0.0
-f none /opt/csw/lib/sparcv9/libgamin-1.so.0.1.9 0755 root bin
-s none /opt/csw/lib/sparcv9/libgamin-1.so=libgamin-1.so.0.1.9
-s none /opt/csw/lib/sparcv9/libgamin-1.so.0=libgamin-1.so.0.1.9
+f none /opt/csw/lib/sparcv9/libgamin-1.so.0.1.10 0755 root bin
+s none /opt/csw/lib/sparcv9/libgamin-1.so=libgamin-1.so.0.1.10
+s none /opt/csw/lib/sparcv9/libgamin-1.so.0=libgamin-1.so.0.1.10
 s none /opt/csw/lib/sparcv9/libfam.so.0=libfam.so.0.0.0
 f none /opt/csw/lib/sparcv9/libfam.so.0.0.0 0755 root bin

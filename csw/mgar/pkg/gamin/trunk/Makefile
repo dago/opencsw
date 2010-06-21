@@ -17,7 +17,7 @@
 
 # Where do we keep local downloads of software src files
 ARCHIVEDIR ?= /home/src
-ARCHIVENAME ?= gamin-0.1.9.tar.gz
+ARCHIVENAME ?= gamin-0.1.10.tar.gz
 EXTRACTPROG ?= /usr/sfw/bin/gtar zfx
 
 # Only use ONE here. The name is used for compat with 'gar'.
@@ -135,16 +135,19 @@ build/.$(ARCH)-64.done:	$(ARCH)-64
 # pre-configure patching one time for all.
 build/.patch-preconf.done:	build/.extract.done
 	gpatch -d $(SRCDIR) -p0  <patchfile.preconf
-	libtoolize --copy --force
-	aclocal
-	autoconf --force
-	automake -a -c -f
 	touch $@
 
+build/.specialconf:
+	(cd $(SRCDIR) ; libtoolize --copy --force ; aclocal; \
+	 autoconf --force ; \
+	 automake -a -c -f )
+	touch $@
+
+#	aclocal
 
 #Note: I WANT to use LDFLAGS=-R$$ORIGIN, but stupid libtool
 # wont allow it! so force it at build time
-build/.configure-$(ARCH)-32.done:	build/.patch-preconf.done
+build/.configure-$(ARCH)-32.done:	build/.patch-preconf.done build/.specialconf
 	@echo handling $@ target
 	(cd $(SRCDIR) ; \
 	  CFLAGS="$(CFLAGS_COMMON) $(CFLAGS_$(ARCH))" \

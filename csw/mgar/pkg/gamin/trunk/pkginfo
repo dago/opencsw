@@ -1,6 +1,6 @@
 PKG=CSWgamin
 NAME=gamin - GNOME replacement for FAM which watches for file alterations
-VERSION=0.1.9,REV=2010.06.15
+VERSION=0.1.10,REV=2010.06.18
 CATEGORY=application
 VENDOR=http://people.gnome.org/~veillard/gamin packaged for CSW by Philip Brown
 HOTLINE=http://www.opencsw.org/bugtrack/
