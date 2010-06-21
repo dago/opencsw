@@ -17,8 +17,7 @@ SPKG_SOURCEURL = http://www.libsdl.org/
 
 PACKAGES = CSWlibsdl CSWlibsdldevel
 
-RUNTIME_DEP_PKGS_CSWlibsdl = CSWiconv CSWlibx11 CSWlibxext
-RUNTIME_DEP_PKGS_CSWlibsdldevel = CSWlibsdl
+RUNTIME_DEP_PKGS_CSWlibsdl = CSWiconv
 
 CATALOGNAME_CSWlibsdl      = libsdl
 CATALOGNAME_CSWlibsdldevel = libsdl_devel
@@ -30,12 +29,9 @@ SPKG_DESC_CSWlibsdldevel  = Simple DirectMedia Layer library development files
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # needs esound in 64 bit
-# make sure it binds completely against new X11
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 PKGFILES_CSWlibsdldevel = $(PKGFILES_DEVEL)
 
