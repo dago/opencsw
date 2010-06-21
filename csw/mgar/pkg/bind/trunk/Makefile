@@ -2,12 +2,12 @@
 # owner/group for device files? (root:sys)
 
 GARNAME = bind
-GARVERSION = 9.7.0
-RELEASE = P2
-DISTVERSION = $(GARVERSION)-$(RELEASE)
-SPKG_VERSION = $(GARVERSION)$(RELEASE)
-DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+GARVERSION = 9.7.1
+#RELEASE = P2
+#DISTVERSION = $(GARVERSION)-$(RELEASE)
+#SPKG_VERSION = $(GARVERSION)$(RELEASE)
+#DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
 DESCRIPTION = ISC BIND DNS reference implementation
@@ -18,10 +18,10 @@ define BLURB
   high-volume and high-reliability applications.
 endef
 
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
-DISTFILES  = $(DISTNAME).tar.gz
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
-#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
+#DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWbindchroot.postinstall
 
 PACKAGES = CSWbind CSWbinddevel CSWlibbind CSWbindutils CSWbindchroot
@@ -58,8 +58,6 @@ CONFIGURE_ARGS += --enable-largefile
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/named
 
-#CHECKPKG_OVERRIDES = symbol-not-found
-
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
 PKGFILES_CSWbinddevel = $(PKGFILES_DEVEL)
@@ -75,7 +73,7 @@ PROTOTYPE_CLASS_1 = ugfiles
 PROTOTYPE_USER_1 = named
 PROTOTYPE_GROUP_1 = named
 
-INITSMF = /opt/csw/etc/init.d/cswnamed
+INITSMF = /etc/opt/csw/init.d/cswnamed
 SAMPLECONF  = /etc/opt/csw/named.conf
 SAMPLECONF += /etc/opt/csw/bind.keys
 SAMPLECONF += /etc/opt/csw/pkg/CSWbind/bind
@@ -83,9 +81,11 @@ USERGROUP = /etc/opt/csw/pkg/CSWbind/cswusergroup
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
 
+#CHECKPKG_OVERRIDES = symbol-not-found
 CHECKPKG_OVERRIDES_CSWbinddevel += surplus-dependency|CSWbind
 CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
 CHECKPKG_OVERRIDES_CSWbindchroot += surplus-dependency|CSWbind
+CHECKPKG_OVERRIDES_CSWbinddevel += archall-devel-package
 
 include gar/category.mk
 
@@ -93,9 +93,9 @@ DOCLIST = README.CSW db.127.0.0 db.localhost named.conf named.root rndc.key
 
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
-	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/init.d
-	@ginstall -m 755 $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/opt/csw/etc/init.d/cswnamed
-	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -m 755 $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
+#	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw
 	@ginstall -m 644 $(FILEDIR)/CSWbind.named.conf.CSW $(DESTDIR)/etc/opt/csw/named.conf
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWbind
 	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWbind/
