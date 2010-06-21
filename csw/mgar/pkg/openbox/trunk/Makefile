@@ -32,7 +32,7 @@ CFLAGS_i386     ?= -xarch=386
 
 # Keep this arch-neutral if possible. add arch-specific tweaks
 # to arch-specific target
-CONFIGURE=./configure X_CFLAGS=-I/opt/csw/include --prefix=/opt/csw --enable-static=no
+CONFIGURE=./configure  LIBS=-lsocket X_CFLAGS=-I/opt/csw/include --prefix=/opt/csw --enable-static=no
 
 
 

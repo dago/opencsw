@@ -3,7 +3,6 @@ i copyright
 i depend
 d none /opt/csw/lib 0755 root bin
 f none /opt/csw/lib/libobparser.so.21.0.9 0755 root bin
-f none /opt/csw/lib/libobparser.la 0755 root bin
 s none /opt/csw/lib/libobparser.so=libobparser.so.21.0.9
 f none /opt/csw/lib/libobrender.so.21.0.9 0755 root bin
 s none /opt/csw/lib/libobrender.so=libobrender.so.21.0.9
@@ -11,7 +10,6 @@ s none /opt/csw/lib/libobrender.so.21=libobrender.so.21.0.9
 s none /opt/csw/lib/libobparser.so.21=libobparser.so.21.0.9
 d none /opt/csw/lib/openbox 0755 root bin
 f none /opt/csw/lib/openbox/xdg-autostart 0755 root bin
-f none /opt/csw/lib/libobrender.la 0755 root bin
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/obrender-3.0.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/obparser-3.0.pc 0644 root bin
