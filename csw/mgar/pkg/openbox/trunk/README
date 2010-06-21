@@ -1,0 +1,20 @@
+This compile  is a bit odd.
+It is "intelligent" and adds -I/usr/openwin/include, but that actually
+breaks us.
+make sure to REMOVE it.
+
+it also "helpfully" adds a buncha junk such as -L /usr/openwin/lib.
+kill it
+
+
+Note that this package will benefit by having "obconf", and
+"openbox_themes" installed as well
+
+
+
+This thing passes in defines on the COMMAND LINE  (-Dxxx) 
+instead of having a civilized config.h file
+
+
+
+the "ShapeInput" ifdefs, are inspired by sawfish ifdefs that I saw.

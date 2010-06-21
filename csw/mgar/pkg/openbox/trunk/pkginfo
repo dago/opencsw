@@ -1,0 +1,8 @@
+PKG=CSWopenbox
+NAME=openbox - gtk based window manager
+VERSION=3.4.11.2,REV=2010.06.21
+CATEGORY=application
+VENDOR=http://openbox.org/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/openbox/trunk
