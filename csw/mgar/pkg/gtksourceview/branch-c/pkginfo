@@ -1,0 +1,8 @@
+PKG=CSWgtksourceview
+NAME=gtksourceview - syntax highlighting GtkTextView widget
+VERSION=2.11.2.0,REV=2010.06.22
+CATEGORY=application
+VENDOR=http://ftp.gnome.org/pub/gnome/sources/gtksourceview packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sf.net/svnroot/gar/csw/mgar/pkg/gtksourceview/branch-c
