@@ -318,6 +318,8 @@ fetch-list:
 	@$(foreach D,$(DYNSCRIPTS),echo "	$D";)
 	@echo "Git Repos tracked: "
 	@$(foreach R,$(GIT_REPOS),echo "       $R";)
+	@echo "All potential URLS: "
+	@$(foreach U,$(URLS),echo "       $U";)
 
 # fetch			- Retrieves $(DISTFILES) (and $(PATCHFILES) if defined)
 #				  into $(DOWNLOADDIR) as necessary.
