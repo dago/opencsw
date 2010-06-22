@@ -1,0 +1,20 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/obconf 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/obconf 0755 root bin
+f none /opt/csw/share/obconf/COPYING=COPYING 0644 root bin
+f none /opt/csw/share/obconf/video-display.png 0644 root bin
+f none /opt/csw/share/obconf/obconf.glade 0644 root bin
+d none /opt/csw/share/applications 0755 root bin
+f none /opt/csw/share/applications/obconf.desktop 0644 root bin
+d none /opt/csw/share/mimelnk 0755 root bin
+d none /opt/csw/share/mimelnk/application 0755 root bin
+f none /opt/csw/share/mimelnk/application/x-openbox-theme.desktop 0644 root bin
+d none /opt/csw/share/pixmaps 0755 root bin
+f none /opt/csw/share/pixmaps/obconf.png 0644 root bin
+d none /opt/csw/share/mime 0755 root bin
+d none /opt/csw/share/mime/packages 0755 root bin
+f none /opt/csw/share/mime/packages/obconf.xml 0644 root bin
