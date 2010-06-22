@@ -17,14 +17,18 @@ import pprint
 import progressbar
 import socket
 import sqlite3
+import sqlobject
+from sqlobject import sqlbuilder
 import subprocess
 import textwrap
 import yaml
 from Cheetah import Template
 import opencsw
 import package_checks
+import models as m
 
-DB_SCHEMA_VERSION = 2L
+DEBUG_BREAK_PKGMAP_AFTER = False
+DB_SCHEMA_VERSION = 3L
 PACKAGE_STATS_VERSION = 5L
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
@@ -32,6 +36,7 @@ NEEDED_SONAMES = "needed sonames"
 RUNPATH = "runpath"
 SONAME = "soname"
 CONFIG_MTIME = "mtime"
+CONFIG_DB_SCHEMA = "db_schema_version"
 WRITE_YAML = False
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
 DO_NOT_REPORT_MISSING = set([])
@@ -207,7 +212,7 @@ class SystemPkgmap(object):
   CHECKPKG_DIR = ".checkpkg"
   SQLITE3_DBNAME_TMPL = "var-sadm-install-contents-cache-%s"
 
-  def __init__(self, system_pkgmap_files=None):
+  def __init__(self, system_pkgmap_files=None, debug=False):
     """There is no need to re-parse it each time.
 
     Read it slowly the first time and cache it for later."""
@@ -223,59 +228,60 @@ class SystemPkgmap(object):
       self.system_pkgmap_files = [SYSTEM_PKGMAP]
     else:
       self.system_pkgmap_files = system_pkgmap_files
+    self.debug = debug
 
   def _LazyInitializeDatabase(self):
     if not self.initialized:
       self.InitializeDatabase()
 
-  def InitializeDatabase(self):
-    if os.path.exists(self.db_path):
+  def InitializeSqlobject(self):
+    if True:
       logging.debug("Connecting to the %s database.", self.db_path)
-      self.conn = sqlite3.connect(self.db_path)
-      if not self.IsDatabaseGoodSchema():
-        logging.warning("Old database schema detected. Dropping tables.")
-        self.PurgeDatabase(drop_tables=True)
-        self.CreateTables()
-      if not self.IsDatabaseUpToDate():
-        logging.warning("Rebuilding the package cache, can take a few minutes.")
-        self.PurgeDatabase()
-        self.PopulateDatabase()
+      self.sqo_conn = sqlobject.connectionForURI(
+          'sqlite:%s' % self.db_path, debug=(self.debug and False))
     else:
+      # TODO: Use a configuration file to store the credentials
+      logging.debug("Connecting MySQL.")
+      self.sqo_conn = sqlobject.connectionForURI(
+          'mysql://checkpkg:Nid3owlOn@mysql/checkpkg',
+          debug=(self.debug and False))
+    sqlobject.sqlhub.processConnection = self.sqo_conn
+
+  def InitializeRawDb(self):
+    """It's necessary for low level operations."""
+    if True:
+      logging.debug("Connecting to sqlite")
+      self.sqlite_conn = sqlite3.connect(self.db_path)
+
+  def InitializeDatabase(self):
+    """Refactor this class to first create CswFile with no primary key and no indexes.
+    """
+    need_to_create_tables = False
+    if not os.path.exists(self.db_path):
       print "Building a cache of %s." % self.system_pkgmap_files
       print "The cache will be kept in %s." % self.db_path
       if not os.path.exists(self.checkpkg_dir):
         logging.debug("Creating %s", self.checkpkg_dir)
         os.mkdir(self.checkpkg_dir)
-      self.conn = sqlite3.connect(self.db_path)
+      need_to_create_tables = True
+    self.InitializeRawDb()
+    self.InitializeSqlobject()
+    if not self.IsDatabaseGoodSchema():
+      logging.info("Old database schema detected.")
+      self.PurgeDatabase(drop_tables=True)
+      need_to_create_tables = True
+    if need_to_create_tables:
       self.CreateTables()
+    if not self.IsDatabaseUpToDate():
+      logging.info("Rebuilding the package cache, can take a few minutes.")
+      self.PurgeDatabase()
       self.PopulateDatabase()
     self.initialized = True
 
   def CreateTables(self):
-      c = self.conn.cursor()
-      c.execute("""
-          CREATE TABLE systempkgmap (
-            id INTEGER PRIMARY KEY,
-            basename TEXT,
-            path TEXT,
-            line TEXT
-          );
-      """)
-      logging.debug("Creating the config table.")
-      c.execute("""
-          CREATE TABLE config (
-            key VARCHAR(255) PRIMARY KEY,
-            float_value FLOAT,
-            int_value INTEGER,
-            str_value VARCHAR(255)
-          );
-      """)
-      c.execute("""
-          CREATE TABLE packages (
-            pkgname VARCHAR(255) PRIMARY KEY,
-            pkg_desc VARCHAR(255)
-          );
-      """)
+    m.CswConfig.createTable(ifNotExists=True)
+    m.CswPackage.createTable(ifNotExists=True)
+    m.CswFile.createTable(ifNotExists=True)
 
   def PopulateDatabase(self):
     """Imports data into the database.
@@ -286,35 +292,58 @@ class SystemPkgmap(object):
     """
     for pkgmap_path in self.system_pkgmap_files:
       self._ProcessSystemPkgmap(pkgmap_path)
-    self._CreateDbIndex()
+    self.SetDatabaseSchemaVersion()
     self.PopulatePackagesTable()
     self.SetDatabaseMtime()
-    self.SetDatabaseSchemaVersion()
-    self.conn.commit()
 
   def _ProcessSystemPkgmap(self, pkgmap_path):
+    """Update the database using data from pkgmap.
+
+    The strategy to only update the necessary bits:
+      - for each new row
+        - look it up in the db
+          - if doesn't exist, create it
+          - if exists, check the
+          TODO: continue this description
+    """
+    INSERT_SQL = """
+    INSERT INTO csw_file (basename, path, line)
+    VALUES (?, ?, ?);
+    """
+    sqlite_cursor = self.sqlite_conn.cursor()
+    break_after = DEBUG_BREAK_PKGMAP_AFTER
+    contents_length = os.stat(pkgmap_path).st_size
+    if break_after:
+      estimated_lines = break_after
+    else:
+      estimated_lines = contents_length / INSTALL_CONTENTS_AVG_LINE_LENGTH
     # The progressbar library doesn't like to handle large numbers, and it
     # displays up to 99% if we feed it a maxval in the range of hundreds of
     # thousands.
-    progressbar_divisor = 100L
-    contents_length = os.stat(pkgmap_path).st_size
-    estimated_lines = contents_length / INSTALL_CONTENTS_AVG_LINE_LENGTH
+    progressbar_divisor = int(estimated_lines / 1000)
+    if progressbar_divisor < 1:
+      progressbar_divisor = 1
+    update_period = 1L
+    # To help delete old records
     system_pkgmap_fd = open(pkgmap_path, "r")
     stop_re = re.compile("(%s)" % "|".join(self.STOP_PKGS))
     # Creating a data structure:
     # soname - {<path1>: <line1>, <path2>: <line2>, ...}
-    logging.debug("Building sqlite3 cache db of the %s file",
+    logging.debug("Building database cache db of the %s file",
                   pkgmap_path)
     print "Processing %s" % pkgmap_path
-    c = self.conn.cursor()
     count = itertools.count()
-    sql = "INSERT INTO systempkgmap (basename, path, line) VALUES (?, ?, ?);"
     bar = progressbar.ProgressBar()
     bar.maxval = estimated_lines / progressbar_divisor
     bar.start()
+    # I tried dropping the csw_file_basename_idx index to speed up operation,
+    # but after I measured the times, it turned out that it doesn't make any
+    # difference to the total runnng time.
+    # logging.info("Dropping csw_file_basename_idx")
+    # sqlite_cursor.execute("DROP INDEX csw_file_basename_idx;")
     for line in system_pkgmap_fd:
       i = count.next()
-      if not i % 100 and (i / progressbar_divisor) <= bar.maxval:
+      if not i % update_period and (i / progressbar_divisor) <= bar.maxval:
         bar.update(i / progressbar_divisor)
       if stop_re.search(line):
         continue
@@ -323,16 +352,27 @@ class SystemPkgmap(object):
       fields = re.split(WS_RE, line)
       pkgmap_entry_path = fields[0].split("=")[0]
       pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
-      c.execute(sql, (pkgmap_entry_base_name, pkgmap_entry_dir, line.strip()))
-    # We rock at 101%!
+      # The following SQLObject-driven inserts are 60 times slower than the raw
+      # sqlite API.
+      # pkgmap_entry = m.CswFile(basename=pkgmap_entry_base_name, path=pkgmap_entry_dir, line=line.strip())
+      # This page has some hints:
+      # http://www.mail-archive.com/sqlobject-discuss@lists.sourceforge.net/msg04641.html
+      # "These are simple straightforward INSERTs without any additional
+      # high-level burden - no SELECT, no caching, nothing. Fire and forget."
+      # sql = self.sqo_conn.sqlrepr(
+      #   sqlobject.sqlbuilder.Insert(m.CswFile.sqlmeta.table, values=record))
+      # self.sqo_conn.query(sql)
+      # ...unfortunately, it isn't any faster in practice.
+      # The fastest way is:
+      sqlite_cursor.execute(INSERT_SQL, [pkgmap_entry_base_name,
+                                         pkgmap_entry_dir,
+                                         line.strip()])
+      if break_after and i > break_after:
+        logging.warning("Breaking after %s for debugging purposes.", break_after)
+        break
     bar.finish()
-    print "All lines of %s were processed." % SYSTEM_PKGMAP
-
-  def _CreateDbIndex(self):
-    print "Creating the main database index."
-    sql = "CREATE INDEX basename_idx ON systempkgmap(basename);"
-    c = self.conn.cursor()
-    c.execute(sql)
+    self.sqlite_conn.commit()
+    logging.info("All lines of %s were processed.", pkgmap_path)
 
   def _ParsePkginfoLine(self, line):
     fields = re.split(WS_RE, line)
@@ -341,57 +381,73 @@ class SystemPkgmap(object):
     return pkgname, pkg_desc
 
   def PopulatePackagesTable(self):
+    logging.info("Updating the packages table")
     args = ["pkginfo"]
     pkginfo_proc = subprocess.Popen(args, stdout=subprocess.PIPE)
     stdout, stderr = pkginfo_proc.communicate()
     ret = pkginfo_proc.wait()
-    c = self.conn.cursor()
-    sql = """
-    INSERT INTO packages (pkgname, pkg_desc)
+    lines = stdout.splitlines()
+    bar = progressbar.ProgressBar()
+    bar.maxval = len(lines)
+    bar.start()
+    count = itertools.count()
+    INSERT_SQL = """
+    INSERT INTO csw_package (pkgname, pkg_desc)
     VALUES (?, ?);
     """
     for line in stdout.splitlines():
       pkgname, pkg_desc = self._ParsePkginfoLine(line)
-      try:
-        c.execute(sql, [pkgname, pkg_desc])
-      except sqlite3.IntegrityError, e:
-        logging.warn("pkgname %s throws an sqlite3.IntegrityError: %s",
-                     repr(pkgname), e)
+      # This is slow:
+      # pkg = m.CswPackage(pkgname=pkgname, pkg_desc=pkg_desc)
+      # This is much faster:
+      self.sqlite_conn.execute(INSERT_SQL, [pkgname, pkg_desc])
+      i = count.next()
+      bar.update(i)
+    # Need to commit, otherwise subsequent SQLObject calls will fail.
+    self.sqlite_conn.commit()
+    bar.finish()
 
   def SetDatabaseMtime(self):
-    c = self.conn.cursor()
-    sql = "DELETE FROM config WHERE key = ?;"
-    c.execute(sql, [CONFIG_MTIME])
     mtime = self.GetFileMtime()
-    logging.debug("Inserting the mtime (%s) into the database.", mtime)
-    sql = """
-    INSERT INTO config (key, float_value)
-    VALUES (?, ?);
-    """
-    c.execute(sql, [CONFIG_MTIME, mtime])
+    res = m.CswConfig.select(m.CswConfig.q.option_key==CONFIG_MTIME)
+    if res.count() == 0:
+      logging.debug("Inserting the mtime (%s) into the database.", mtime)
+      config_record = m.CswConfig(option_key=CONFIG_MTIME, float_value=mtime)
+    else:
+      logging.debug("Updating the mtime (%s) in the database.", mtime)
+      res.getOne().float_value = mtime
 
   def SetDatabaseSchemaVersion(self):
-    sql = """
-    INSERT INTO config (key, int_value)
-    VALUES (?, ?);
-    """
-    c = self.conn.cursor()
-    c.execute(sql, ["db_schema_version", DB_SCHEMA_VERSION])
-    logging.debug("Setting db_schema_version to %s", DB_SCHEMA_VERSION)
+    res = m.CswConfig.select(m.CswConfig.q.option_key==CONFIG_DB_SCHEMA)
+    if res.count() == 0:
+      version = m.CswConfig(option_key=CONFIG_DB_SCHEMA,
+                            int_value=DB_SCHEMA_VERSION)
+    else:
+      config_option = res.getOne()
+      config_option.int_value = DB_SCHEMA_VERSION
 
   def GetPkgmapLineByBasename(self, filename):
+    """Returns pkgmap lines by basename:
+      {
+        path1: line1,
+        path2: line2,
+      }
+    """
     self._LazyInitializeDatabase()
     if filename in self.cache:
       return self.cache[filename]
-    sql = "SELECT path, line FROM systempkgmap WHERE basename = ?;"
-    c = self.conn.cursor()
-    c.execute(sql, [filename])
+    # sql = "SELECT path, line FROM systempkgmap WHERE basename = ?;"
+    # c = self.conn.cursor()
+    # c.execute(sql, [filename])
+    res = m.CswFile.select(m.CswFile.q.basename==filename)
     lines = {}
-    for row in c:
-      lines[row[0]] = row[1]
+    for obj in res:
+      lines[obj.path] = obj.line
     if len(lines) == 0:
       logging.debug("Cache doesn't contain filename %s", filename)
     self.cache[filename] = lines
+    logging.debug("GetPkgmapLineByBasename(%s) --> %s",
+                  filename, lines)
     return lines
 
   def _InferPackagesFromPkgmapLine(self, line):
@@ -415,18 +471,12 @@ class SystemPkgmap(object):
 
   def GetDatabaseMtime(self):
     if not self.cache_mtime:
-      sql = """
-      SELECT float_value FROM config
-      WHERE key = ?;
-      """
-      c = self.conn.cursor()
-      c.execute(sql, [CONFIG_MTIME])
-      row = c.fetchone()
-      if not row:
-        # raise ConfigurationError("Could not find the mtime setting")
+      res = m.CswConfig.select(m.CswConfig.q.option_key==CONFIG_MTIME)
+      if res.count() == 1:
+        self.cache_mtime = res.getOne().float_value
+      elif res.count() < 1:
         self.cache_mtime = 1
-      else:
-        self.cache_mtime = row[0]
+    logging.debug("GetDatabaseMtime() --> %s", self.cache_mtime)
     return self.cache_mtime
 
   def GetFileMtime(self):
@@ -436,25 +486,15 @@ class SystemPkgmap(object):
     return self.file_mtime
 
   def GetDatabaseSchemaVersion(self):
-    sql = """
-    SELECT int_value FROM config
-    WHERE key = ?;
-    """
-    c = self.conn.cursor()
     schema_on_disk = 1L
-    try:
-      c.execute(sql, ["db_schema_version"])
-      for row in c:
-        schema_on_disk = row[0]
-    except sqlite3.OperationalError, e:
-      # : no such column: int_value
-      # The first versions of the database did not
-      # have the int_value field.
-      if re.search(r"int_value", str(e)):
-        # We assume it's the first schema version.
-        logging.debug("sqlite3.OperationalError, %s: guessing it's 1.", e)
-      else:
-        raise
+    if not m.CswConfig.tableExists():
+      return schema_on_disk;
+    res = m.CswConfig.select(m.CswConfig.q.option_key == CONFIG_DB_SCHEMA)
+    if res.count() < 1:
+      logging.info("No db schema value found, assuming %s.",
+                   schema_on_disk)
+    elif res.count() == 1:
+      schema_on_disk = res.getOne().int_value
     return schema_on_disk
 
   def IsDatabaseGoodSchema(self):
@@ -473,8 +513,8 @@ class SystemPkgmap(object):
     # I don't expect pkgadd to run under 1s.
     fresh = int(f_mtime) <= int(d_mtime)
     good_version = self.GetDatabaseSchemaVersion() >= DB_SCHEMA_VERSION
-    logging.debug("IsDatabaseUpToDate: fresh=%s, good_version=%s",
-                  repr(fresh), repr(good_version))
+    logging.debug("IsDatabaseUpToDate: good_version=%s, fresh=%s",
+                  repr(good_version), repr(fresh))
     return fresh and good_version
 
   def SoftDropTable(self, tablename):
@@ -486,31 +526,26 @@ class SystemPkgmap(object):
       logging.warn("sqlite3.OperationalError: %s", e)
 
   def PurgeDatabase(self, drop_tables=False):
-    c = self.conn.cursor()
     if drop_tables:
-      for table_name in ("config", "systempkgmap", "packages"):
-        self.SoftDropTable(table_name)
+      # for table_name in ("config", "systempkgmap", "packages"):
+      #   self.SoftDropTable(table_name)
+      for table in (m.CswConfig, m.CswFile, m.CswPackage):
+        if table.tableExists():
+          table.dropTable()
     else:
-      logging.info("Dropping the index.")
-      sql = "DROP INDEX basename_idx;"
-      try:
-        c.execute(sql)
-      except sqlite3.OperationalError, e:
-        logging.warn(e)
       logging.info("Deleting all rows from the cache database")
-      for table in ("config", "systempkgmap", "packages"):
-        try:
-          c.execute("DELETE FROM %s;" % table)
-        except sqlite3.OperationalError, e:
-          logging.warn("sqlite3.OperationalError: %s", e)
+      for table in (m.CswConfig, m.CswFile, m.CswPackage):
+        table.clearTable()
 
   def GetInstalledPackages(self):
-    """Returns a dictioary of all installed packages."""
+    """Returns a dictionary of all installed packages."""
     self._LazyInitializeDatabase()
-    c = self.conn.cursor()
-    sql = "SELECT pkgname, pkg_desc FROM packages;"
-    c.execute(sql)
-    return dict(x[0:2] for x in c)
+    # c = self.conn.cursor()
+    # sql = "SELECT pkgname, pkg_desc FROM packages;"
+    # c.execute(sql)
+    # return dict(x[0:2] for x in c)
+    res = m.CswPackage.select()
+    return dict([[str(x.pkgname), str(x.pkg_desc)] for x in res])
 
 
 def ExpandRunpath(runpath, isalist):
@@ -1368,7 +1403,7 @@ class PackageStats(object):
       elif d["sizediffused_file"]:
         response["state"] = 'sizes-diff-one-used'
         response["soname"] = None
-        response["path"] = "%s %s" % (d["sizediff_file1"], d["sizediff_file2"])
+        response["path"] = "%s" % (d["sizediffused_file"])
         response["symbol"] = None
       else:
         raise StdoutSyntaxError("Could not parse %s with %s"

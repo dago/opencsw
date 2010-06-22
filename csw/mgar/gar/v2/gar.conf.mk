@@ -188,6 +188,7 @@ DEF_BASE_PKGS += CSWpy-hachoir-core
 DEF_BASE_PKGS += CSWpy-hachoir-parser
 DEF_BASE_PKGS += CSWpy-libmagic
 DEF_BASE_PKGS += CSWpy-progressbar
+DEF_BASE_PKGS += CSWpy-sqlobject
 DEF_BASE_PKGS += CSWpy-yaml
 DEF_BASE_PKGS += CSWpython
 DEF_BASE_PKGS += CSWcoreutils

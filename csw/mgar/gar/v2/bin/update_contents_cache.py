@@ -5,6 +5,7 @@
 # This file only creates an instance of SystemPkgmap in order to update the
 # package cache (if necessary), and display the information about the update.
 
+import optparse
 import os
 import os.path
 import sys
@@ -18,8 +19,17 @@ sys.path.append(os.path.join(*path_list))
 import checkpkg
 
 def main():
-  logging.basicConfig(level=logging.INFO)
-  test_pkgmap = checkpkg.SystemPkgmap()
+  parser = optparse.OptionParser()
+  parser.add_option("-d", "--debug",
+      dest="debug",
+      default=False,
+      action="store_true")
+  (options, args) = parser.parse_args()
+  if options.debug:
+    logging.basicConfig(level=logging.DEBUG)
+  else:
+    logging.basicConfig(level=logging.INFO)
+  test_pkgmap = checkpkg.SystemPkgmap(debug=options.debug)
   test_pkgmap.InitializeDatabase()
 
 

@@ -244,7 +244,10 @@ else
 fi
 
 # /var/sadm/install/contents cache update
-${command_basedir}/update_contents_cache.py
+${command_basedir}/update_contents_cache.py ${extra_options}
+if [[ $? -ne 0 ]]; then
+	errmsg "Updating the contents cache has failed."
+fi
 if [[ "${SKIP_STATS_COLLECTION}" -eq 0 ]]; then
   # Collects package stats to be analyzed later
   ${command_basedir}/checkpkg_collect_stats.py \
