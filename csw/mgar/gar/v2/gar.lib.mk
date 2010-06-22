@@ -33,8 +33,12 @@ URLS = $(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFI
 # these 'dynamic script' targets to our fetch list
 URLS += $(foreach DYN,$(DYNSCRIPTS),dynscr://$(DYN))
 
+define gitsubst
+$(subst git-git,git,$(if $(findstring $(1)://,$(2)),$(patsubst $(1)%,git-$(1)%,$(call URLSTRIP,$(2)))))
+endef
+
 ifdef GIT_REPOS
-URLS += $(foreach R,$(GIT_REPOS),gitrepo://$(call GITPROJ,$(R)) $(subst http,git-http,$(call URLSTRIP,$(R))))
+URLS += $(foreach R,$(GIT_REPOS),gitrepo://$(call GITPROJ,$(R)) $(foreach gitproto,git http file ssh,$(call gitsubst,$(gitproto),$(R))))
 endif
 
 # Download the file if and only if it doesn't have a preexisting
@@ -82,6 +86,19 @@ git//%:
 	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
 		git remote add origin git://$*; \
 		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
+
+git-file//%:
+	@git clone --bare file:///$* $(PARTIALDIR)/$(call GITPROJ,$*)
+	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
+		git remote add origin file://$*; \
+		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
+
+git-ssh//%:
+	@git clone --bare ssh://$* $(PARTIALDIR)/$(call GITPROJ,$*)
+	@( cd $(PARTIALDIR)/$(call GITPROJ,$*); \
+		git remote add origin ssh://$*; \
+		git config remote.origin.fetch $(if $(GIT_REFS_$(call GITPROJ,$*)),$(GIT_REFS_$(call GITPROJ,$*)),$(GIT_DEFAULT_TRACK)); )
+
 
 # create ADMSCRIPTS 'on the fly' from variables defined by the caller
 # This version is private and should only be called from the non-private
