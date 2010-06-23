@@ -1,0 +1,11 @@
+AUTHOR
+    Originally by Ken Williams <ken@mathforum.org> and Dave Rolsky
+    <autarch@urth.org> for the HTML::Mason project. Important feedback
+    contributed by Jonathan Swartz <swartz@pobox.com>. Extended by Ken
+    Williams for the AI::Categorizer project.
+
+    Currently maintained by Ken Williams.
+
+COPYRIGHT
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.

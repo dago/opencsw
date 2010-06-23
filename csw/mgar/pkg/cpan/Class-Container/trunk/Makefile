@@ -13,7 +13,9 @@ define BLURB
   any of these objects.
 endef
 
-RUNTIME_DEP_PKGS = CSWpmprmsvldt
+DISTFILES = COPYING
+
+DEP_PKGS = CSWpmparamsvalidate
 
 PACKAGES = CSWpmclscontainer
 CATALOGNAME = pm_clscontainer
