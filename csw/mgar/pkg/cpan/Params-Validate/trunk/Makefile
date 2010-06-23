@@ -1,5 +1,5 @@
 GARNAME = Params-Validate
-GARVERSION = 0.94
+GARVERSION = 0.95
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
@@ -11,14 +11,25 @@ define BLURB
   unspecified additional parameters were passed in.
 endef
 
-PACKAGES = CSWpmparamsvalidate
-CATALOGNAME = pm_paramsvalidate
+# CSWpmprmsvldt is the old package. It is empty and depends on the new one.
+PACKAGES = CSWpmparamsvalidate CSWpmprmsvldt
+
+CATALOGNAME_CSWpmparamsvalidate = pm_paramsvalidate
+CATALOGNAME_CSWpmprmsvldt       = pm_prmsvldt
+
+SPKG_DESC_CSWpmparamsvalidate = $(DESCRIPTION)
+SPKG_DESC_CSWpmprmsvldt       = Empty stub depending on new package CSWpmparamsvalidate
+
+RUNTIME_DEP_PKGS_CSWpmprmsvldt = CSWpmparamsvalidate
+
+LICENSE = LICENSE
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/Build.PL
 BUILD_SCRIPTS = $(WORKSRC)/Build
 TEST_SCRIPTS = $(WORKSRC)/Build
 INSTALL_SCRIPTS = $(WORKSRC)/Build
 
-include gar/category.mk
+PKGFILES_CSWpmprmsvldt = NOFILES
+ARCHALL_CSWpmprmsvldt = 1
 
-LICENSE = LICENSE
+include gar/category.mk
