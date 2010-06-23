@@ -11,6 +11,8 @@ endef
 MASTER_SITES = ftp://ftp.debian.org/debian/pool/main/libl/$(GARNAME)/
 DISTFILES  = $(GARNAME)_$(GARVERSION).orig.tar.gz
 
+VENDOR_URL = http://www.t2-project.org/packages/liblockfile.html
+
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
