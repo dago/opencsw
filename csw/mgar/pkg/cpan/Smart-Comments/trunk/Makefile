@@ -22,6 +22,7 @@ ARCHALL = 1
 LICENSE = README
 
 RUNTIME_DEP_PKGS = CSWpmversion
+BUILD_DEP_PKGS += CSWpmtestpodcoverage
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
 
 include gar/category.mk
