@@ -1,0 +1,4 @@
+3b5017e3e326a65ae05c41cedca79fac  0001-Modify-Makefile-to-use-ginstall-instead-of-install.patch
+cf6672a7c23066ea1a591dfd6b023ad3  0002-Modify-Makefile.in-to-create-directories-first.patch
+4838df3eadab17ef0a547384a47b9a4b  0003-Stop-ginstall-setting-ownership.patch
+c24e2dfb4a2aab0263fe5ac1564d305e  liblockfile_1.08.orig.tar.gz
