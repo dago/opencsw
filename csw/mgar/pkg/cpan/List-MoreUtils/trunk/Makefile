@@ -12,6 +12,9 @@ endef
 PACKAGES = CSWpmlistmoreutils
 CATALOGNAME = pm_listmoreutils
 
+# This is the old package with the broken name
+INCOMPATIBLE_PKGS = CSWpmlistmoreut
+
 include gar/category.mk
 
 pre-merge-modulated:
