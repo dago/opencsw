@@ -24,5 +24,6 @@ ARCHALL = 1
 LICENSE = README
 
 RUNTIME_DEP_PKGS = CSWpmperl6export
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS)
 
 include gar/category.mk
