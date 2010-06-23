@@ -1,0 +1,24 @@
+From 17724440df75bb232a274e852d5731cbffd5ed04 Mon Sep 17 00:00:00 2001
+From: Andrew Robert Nicols <andrew.nicols@luns.net.uk>
+Date: Wed, 23 Jun 2010 11:01:36 +0200
+Subject: [PATCH 2/3] Modify Makefile.in to create directories first
+
+---
+ Makefile.in |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 2424969..af0028c 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -59,6 +59,7 @@ install_shared:	shared install_common
+ 		if test "$(ROOT)" = ""; then @LDCONFIG@; fi
+ 
+ install_common:
++		ginstall -d $(ROOT)/$(bindir) $(ROOT)/$(libdir) $(ROOT)/$(mandir)/man1 $(ROOT)/$(mandir)/man3 $(ROOT)/$(nfslockdir) $(ROOT)/$(includedir)
+ 		ginstall -m 644 lockfile.h maillock.h $(ROOT)$(includedir)
+ 		if [ "$(MAILGROUP)" != "" ]; then\
+ 		  ginstall -g $(MAILGROUP) -m 2755 dotlockfile $(ROOT)$(bindir);\
+-- 
+1.7.1
+
