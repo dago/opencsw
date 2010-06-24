@@ -395,35 +395,24 @@ extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) $(if $(filter global,$(MODULATION)),,post-extract-gitsnap) post-extract-$(MODULATION) post-extract-modulated
 	@$(DONADA)
 
+# This target ensures that the values used by git when making a commit
+# are more sane than they _could_ otherwise be by taking the hostname
+# to build the email address used.  If you want to submit patches with
+# an alternate email address, use git config yourself to override the
+# values.
 pre-extract-git-check:
-	@( if [ ! -f $(HOME)/.gitconfig ]; then \
-		name=`getent passwd $$USER | awk -F: '{print $$5}'`; \
-		echo "===================================================="; \
-		echo "You need to create a basic ~/.gitconfig."; \
-		echo "Try: "; \
-		echo "	git config --global user.email $$USER@opencsw.org"; \
-		echo "	git config --global user.name \"$$name\""; \
-		echo "===================================================="; \
-		exit 1; \
-	  else \
-		g_email=`git config --global user.email`; \
-		g_name=`git config --global user.name`; \
-		email=$$USER@opencsw.org; \
-		name=`getent passwd $$USER | awk -F: '{print $$5}'`; \
-		if [ -z "$$g_email" ]; then \
-		  echo "==================================================="; \
-		  echo "Your ~/.gitconfig doesn't define user.email.  Try:"; \
-		  echo "  git config --global user.email $$email"; \
-		  echo "==================================================="; \
-		  exit 1; \
-		elif [ -z "$$g_name" ]; then \
-		  echo "==================================================="; \
-		  echo "Your ~/.gitconfig doesn't define user.name.  Try:"; \
-		  echo "  git config --global user.name '$$name'"; \
-		  echo "==================================================="; \
-		  exit 1; \
-		fi; \
-	  fi )
+	@( g_email=`git config --global user.email`; \
+	g_name=`git config --global user.name`; \
+	email=$$USER@opencsw.org; \
+	name=`getent passwd $$USER | awk -F: '{print $$5}'`; \
+	if [ -z "$$g_email" ]; then \
+		echo "Setting User Email value to: $$email"; \
+		git config --global user.email "$$email"; \
+	fi; \
+	if [ -z "$$g_name" ]; then \
+		echo "Setting User Name value to: $$name"; \
+		git config --global user.name "$$name"; \
+	fi )
 	@$(MAKECOOKIE)
 
 post-extract-gitsnap: $(EXTRACT_TARGETS)
