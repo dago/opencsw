@@ -1,0 +1,17 @@
+GARNAME = Log-Any
+GARVERSION = 0.11
+CATEGORIES = cpan
+AUTHOR = JSWARTZ
+
+DESCRIPTION = Bringing loggers and listeners together
+define BLURB
+  Bringing loggers and listeners together
+endef
+
+DISTFILES += COPYING
+
+PACKAGES = CSWpmlogany
+CATALOGNAME = pm_logany
+ARCHALL = 1
+
+include gar/category.mk
