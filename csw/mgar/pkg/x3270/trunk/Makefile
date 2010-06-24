@@ -9,6 +9,9 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = suite3270-$(GARVERSION)-src.tgz
+DISTFILES += COPYING
+
+PATCHFILES = 0001-Add-Error-function.patch
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-src.tar.gz
@@ -21,6 +24,10 @@ BASEREL = 3.3
 # ws3270 = MinGW
 # SUBSYSTEMS = c3270 pr3287 s3270 tcl3270 wc3270 wpr3287 ws3270 x3270
 SUBSYSTEMS = c3270 pr3287 s3270 tcl3270 x3270
+
+DEP_PKGS = CSWiconv CSWtcl CSWreadline CSWosslrt CSWncurses
+
+EXTRA_LINKER_FLAGS = -liconv
 
 WORKSRC = $(WORKDIR)
 CONFIGURE_SCRIPTS = $(foreach S,$(SUBSYSTEMS),$(WORKDIR)/$S-$(BASEREL)/configure)

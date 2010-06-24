@@ -1,0 +1,29 @@
+From f17056fb38d8ad44449269999c7c272557f24960 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 24 Jun 2010 11:06:55 +0200
+Subject: [PATCH] Add Error function
+
+---
+ pr3287-3.3/pr3287.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/pr3287-3.3/pr3287.c b/pr3287-3.3/pr3287.c
+index 9f759c6..e749845 100644
+--- a/pr3287-3.3/pr3287.c
++++ b/pr3287-3.3/pr3287.c
+@@ -309,6 +309,12 @@ NewString(const char *s)
+ }
+ 
+ void
++Warning(const char *msg)
++{
++    errmsg(msg);
++}
++
++void
+ Error(const char *msg)
+ {
+     errmsg(msg);
+-- 
+1.7.1
+
