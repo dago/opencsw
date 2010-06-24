@@ -1,5 +1,5 @@
 GARNAME = ldns
-GARVERSION = 1.6.4
+GARVERSION = 1.6.5
 CATEGORIES = lib
 
 DESCRIPTION = A library for programs conforming to DNS RFCs and drafts
@@ -15,7 +15,7 @@ MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWldns.doxyparse.diff
 
-PACKAGING_PLATFORMS =  solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 
 PACKAGES = CSWldns CSWldnsdevel
 CATALOGNAME_CSWldns = ldns
@@ -40,7 +40,7 @@ EXTRA_BUILD_ISAS_i386 = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus
 
 RUNTIME_DEP_PKGS_CSWldns += CSWosslrt
-RUNTIME_DEP_PKGS_CSWldnsdevel += CSWldns
+#RUNTIME_DEP_PKGS_CSWldnsdevel += CSWldns
 
 PATCHFILES = CSWldns.doxyparse.diff
 
