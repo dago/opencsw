@@ -1,9 +1,9 @@
 GARNAME = HTML-Mason
-GARVERSION = 1.42
+GARVERSION = 1.45
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
-DESCRIPTION = high-performance, dynamic web site authoring system
+DESCRIPTION = High-performance, dynamic web site authoring system
 define BLURB
   Mason is a tool for building, serving and managing large web sites. Its
   features make it an ideal backend for high load sites serving dynamic
@@ -15,7 +15,8 @@ LICENSE = LICENSE
 PACKAGES = CSWpmhtmlmason
 CATALOGNAME = pm_htmlmason
 
-RUNTIME_DEP_PKGS  = CSWpmexceptcls CSWpmclscontainer CSWpmprmsvldt CSWpmcachecache
+BUILD_DEP_PKGS = CSWpmlogany CSWpmtestdeep
+RUNTIME_DEP_PKGS = CSWpmexceptcls CSWpmclscontainer CSWpmparamsvalidate CSWpmcachecache
 
 ARCHALL = 1
 
