@@ -1,0 +1,8 @@
+PKG=CSWbonobo2
+NAME=libbonobo2 - GNOME component and compound document system
+VERSION=2.24.3,REV=2010.06.25
+CATEGORY=application
+VENDOR=http://www.opencsw.org/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/libbonobo2/branch-c
