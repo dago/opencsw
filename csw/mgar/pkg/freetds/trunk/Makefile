@@ -14,7 +14,16 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-DEP_PKGS = CSWunixodbc CSWiconv CSWreadline CSWncurses
+PACKAGES = CSWfreetds CSWfreetdsdoc
+
+CATALOGNAME_CSWfreetds    = freetds
+CATALOGNAME_CSWfreetdsdoc = freetds_doc
+
+SPKG_DESC_CSWfreetds = $(DESCRIPTION)
+SPKG_DESC_CSWfreetdsdoc = Documentation for freetds
+
+RUNTIME_DEP_PKGS_CSWfreetds = CSWunixodbc CSWiconv CSWreadline CSWncurses
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWfreetds)
 
 sysconfdir = /etc/opt/csw
 
@@ -24,10 +33,13 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 MERGE_DIRS_isa-extra = $(libdir)
 
-EXTRA_PAX_ARGS = '-s,/doc/$(GARNAME)-$(GARVERSION),/doc/$(GARNAME),p'
+EXTRA_PAX_ARGS = '-s,.*{}$$,,p' '-s,/doc/$(GARNAME)-$(GARVERSION),/doc/$(GARNAME),p'
 
 PRESERVECONF = $(addprefix $(sysconfdir)/,freetds.conf locales.conf pool.conf)
 MIGRATE_FILES = freetds.conf locales.conf pool.conf
+
+ARCHALL_CSWfreetdsdoc = 1
+PKGFILES_CSWfreetdsdoc = $(PKGFILES_DOC)
 
 include gar/category.mk
 
