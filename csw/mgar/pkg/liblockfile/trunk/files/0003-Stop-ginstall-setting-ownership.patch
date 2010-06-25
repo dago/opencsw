@@ -1,7 +1,7 @@
-From f853374c16cbdcff6be49361de782a5af6854dfc Mon Sep 17 00:00:00 2001
+From ae84ed479df518fe78d5023267b31ef4148d5f72 Mon Sep 17 00:00:00 2001
 From: Andrew Robert Nicols <andrew.nicols@luns.net.uk>
 Date: Wed, 23 Jun 2010 11:06:33 +0200
-Subject: [PATCH 3/3] Stop ginstall setting ownership.
+Subject: [PATCH 3/4] Stop ginstall setting ownership.
 
 Solaris package creation takes care of changing ownership to root anyway.
 Without this, this fails on sparc only (bad fakeroot?)

@@ -20,11 +20,11 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
 
 # Patches for Makefile.in
-PATCHFILES = 0001-Modify-Makefile-to-use-ginstall-instead-of-install.patch 0002-Modify-Makefile.in-to-create-directories-first.patch 0003-Stop-ginstall-setting-ownership.patch
+PATCHFILES = 0001-Modify-Makefile-to-use-ginstall-instead-of-install.patch 0002-Modify-Makefile.in-to-create-directories-first.patch 0003-Stop-ginstall-setting-ownership.patch 0004-Use-h-option-instead-of-soname-to-the-linker-for-pre.patch 0005-Don-t-try-and-use-ldconfig.patch
 
 # Need to specify the installation prefix as the configuration script
 # doesn't handle different operating systems very well
-CONFIGURE_ARGS = $(DIRPATHS) --prefix=opt/csw
+CONFIGURE_ARGS = $(DIRPATHS) --prefix=opt/csw --enable-shared
 
 # liblockfile doesn't provide any tests so skip these
 SKIPTEST=1

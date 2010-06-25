@@ -1,0 +1,32 @@
+From 59f0e5beecc45d131b2b4f0da83d97dc9eea2b8c Mon Sep 17 00:00:00 2001
+From: Andrew Robert Nicols <andrew.nicols@luns.net.uk>
+Date: Fri, 25 Jun 2010 11:48:16 +0200
+Subject: [PATCH] Don't try and use ldconfig
+
+---
+ Makefile.in |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index c4368be..4cb13ac 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -56,7 +56,6 @@ install_shared:	shared install_common
+ 		ginstall -m 755 liblockfile.so \
+ 			$(ROOT)$(libdir)/liblockfile.so.$(VER)
+ 		ln -s liblockfile.so.$(VER) $(ROOT)$(libdir)/liblockfile.so
+-		if test "$(ROOT)" = ""; then @LDCONFIG@; fi
+ 
+ install_common:
+ 		ginstall -d $(ROOT)/$(bindir) $(ROOT)/$(libdir) $(ROOT)/$(mandir)/man1 $(ROOT)/$(mandir)/man3 $(ROOT)/$(nfslockdir) $(ROOT)/$(includedir)
+@@ -67,7 +66,6 @@ install_common:
+ 
+ install_nfslib:	nfslib
+ 		ginstall -m 755 nfslock.so.$(VER) $(ROOT)$(nfslockdir)
+-		if test "$(ROOT)" = ""; then @LDCONFIG@; fi
+ 
+ clean:
+ 		rm -f *.a *.o *.so *.so.* dotlockfile
+-- 
+1.7.1
+

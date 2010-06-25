@@ -1,7 +1,7 @@
-From 17724440df75bb232a274e852d5731cbffd5ed04 Mon Sep 17 00:00:00 2001
+From bba82f9e0d0bb3ace56570b9574a0b1e88431a14 Mon Sep 17 00:00:00 2001
 From: Andrew Robert Nicols <andrew.nicols@luns.net.uk>
 Date: Wed, 23 Jun 2010 11:01:36 +0200
-Subject: [PATCH 2/3] Modify Makefile.in to create directories first
+Subject: [PATCH 2/4] Modify Makefile.in to create directories first
 
 ---
  Makefile.in |    1 +
