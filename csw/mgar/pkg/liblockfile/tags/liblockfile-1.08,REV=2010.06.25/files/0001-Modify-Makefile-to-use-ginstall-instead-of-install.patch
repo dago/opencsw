@@ -1,0 +1,51 @@
+From e5126dad4292649c33fc0cb0405cc9add2af8f73 Mon Sep 17 00:00:00 2001
+From: Andrew Robert Nicols <andrew.nicols@luns.net.uk>
+Date: Wed, 23 Jun 2010 10:38:14 +0200
+Subject: [PATCH 1/4] Modify Makefile to use ginstall instead of install
+
+---
+ Makefile.in |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 7ae5406..2424969 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -50,26 +50,26 @@ xlockfile.o:	lockfile.c
+ 		$(CC) $(CFLAGS) -c lockfile.c -o xlockfile.o
+ 
+ install_static:	static install_common
+-		install -m 644 liblockfile.a $(ROOT)$(libdir)
++		ginstall -m 644 liblockfile.a $(ROOT)$(libdir)
+ 
+ install_shared:	shared install_common
+-		install -m 755 liblockfile.so \
++		ginstall -m 755 liblockfile.so \
+ 			$(ROOT)$(libdir)/liblockfile.so.$(VER)
+ 		ln -s liblockfile.so.$(VER) $(ROOT)$(libdir)/liblockfile.so
+ 		if test "$(ROOT)" = ""; then @LDCONFIG@; fi
+ 
+ install_common:
+-		install -m 644 lockfile.h maillock.h $(ROOT)$(includedir)
++		ginstall -m 644 lockfile.h maillock.h $(ROOT)$(includedir)
+ 		if [ "$(MAILGROUP)" != "" ]; then\
+-		  install -g $(MAILGROUP) -m 2755 dotlockfile $(ROOT)$(bindir);\
++		  ginstall -g $(MAILGROUP) -m 2755 dotlockfile $(ROOT)$(bindir);\
+ 		else \
+-		  install -g root -m 755 dotlockfile $(ROOT)$(bindir); \
++		  ginstall -g root -m 755 dotlockfile $(ROOT)$(bindir); \
+ 		fi
+-		install -m 644 *.1 $(ROOT)$(mandir)/man1
+-		install -m 644 *.3 $(ROOT)$(mandir)/man3
++		ginstall -m 644 *.1 $(ROOT)$(mandir)/man1
++		ginstall -m 644 *.3 $(ROOT)$(mandir)/man3
+ 
+ install_nfslib:	nfslib
+-		install -m 755 nfslock.so.$(VER) $(ROOT)$(nfslockdir)
++		ginstall -m 755 nfslock.so.$(VER) $(ROOT)$(nfslockdir)
+ 		if test "$(ROOT)" = ""; then @LDCONFIG@; fi
+ 
+ clean:
+-- 
+1.7.1
+

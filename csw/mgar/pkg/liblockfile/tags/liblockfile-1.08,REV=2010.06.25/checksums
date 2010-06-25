@@ -1,0 +1,6 @@
+e6d78df74c5e9a65e9df18628e610647  0001-Modify-Makefile-to-use-ginstall-instead-of-install.patch
+fa86673a2755afed0c1f46b5ba2523f7  0002-Modify-Makefile.in-to-create-directories-first.patch
+957831a9f8f32bdab40fcbf396d2f2b3  0003-Stop-ginstall-setting-ownership.patch
+3c439108a65d7f83ace5b431e29087ab  0004-Use-h-option-instead-of-soname-to-the-linker-for-pre.patch
+6f1540d5a19ae2c65396cdba9b6c292e  0005-Don-t-try-and-use-ldconfig.patch
+c24e2dfb4a2aab0263fe5ac1564d305e  liblockfile_1.08.orig.tar.gz

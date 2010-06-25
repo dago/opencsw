@@ -1,0 +1,31 @@
+From ae84ed479df518fe78d5023267b31ef4148d5f72 Mon Sep 17 00:00:00 2001
+From: Andrew Robert Nicols <andrew.nicols@luns.net.uk>
+Date: Wed, 23 Jun 2010 11:06:33 +0200
+Subject: [PATCH 3/4] Stop ginstall setting ownership.
+
+Solaris package creation takes care of changing ownership to root anyway.
+Without this, this fails on sparc only (bad fakeroot?)
+---
+ Makefile.in |    6 +-----
+ 1 files changed, 1 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index af0028c..040a426 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -61,11 +61,7 @@ install_shared:	shared install_common
+ install_common:
+ 		ginstall -d $(ROOT)/$(bindir) $(ROOT)/$(libdir) $(ROOT)/$(mandir)/man1 $(ROOT)/$(mandir)/man3 $(ROOT)/$(nfslockdir) $(ROOT)/$(includedir)
+ 		ginstall -m 644 lockfile.h maillock.h $(ROOT)$(includedir)
+-		if [ "$(MAILGROUP)" != "" ]; then\
+-		  ginstall -g $(MAILGROUP) -m 2755 dotlockfile $(ROOT)$(bindir);\
+-		else \
+-		  ginstall -g root -m 755 dotlockfile $(ROOT)$(bindir); \
+-		fi
++		ginstall -m 755 dotlockfile $(ROOT)$(bindir); \
+ 		ginstall -m 644 *.1 $(ROOT)$(mandir)/man1
+ 		ginstall -m 644 *.3 $(ROOT)$(mandir)/man3
+ 
+-- 
+1.7.1
+
