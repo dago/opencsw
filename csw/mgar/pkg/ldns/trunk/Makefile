@@ -23,6 +23,7 @@ CATALOGNAME_CSWldnsdevel = ldns_devel
 
 SPKG_DESC_CSWldns = $(DESCRIPTION)
 SPKG_DESC_CSWldnsdevel = $(DESCRIPTION) development package
+CHECKPKG_OVERRIDES_CSWldnsdevel += surplus-dependency|CSWldns
 
 SPKG_SOURCEURL = http://www.nlnetlabs.nl/projects/ldns/
 
@@ -40,7 +41,7 @@ EXTRA_BUILD_ISAS_i386 = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus
 
 RUNTIME_DEP_PKGS_CSWldns += CSWosslrt
-#RUNTIME_DEP_PKGS_CSWldnsdevel += CSWldns
+RUNTIME_DEP_PKGS_CSWldnsdevel += CSWldns
 
 PATCHFILES = CSWldns.doxyparse.diff
 
