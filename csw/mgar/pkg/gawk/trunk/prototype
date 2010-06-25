@@ -10,7 +10,7 @@ d none /opt/csw/share/info 0755 root bin
 f cswtexinfo /opt/csw/share/info/gawk.info 0644 root bin
 f cswtexinfo /opt/csw/share/info/gawkinet.info 0644 root bin
 d none /opt/csw/share/awk 0755 root bin
-f none /opt/csw/share/awk/COPYING.gawk 0644 root bin
+f none /opt/csw/share/awk/COPYING=COPYING 0644 root bin
 f none /opt/csw/share/awk/ftrans.awk 0644 root bin
 f none /opt/csw/share/awk/ord.awk 0644 root bin
 f none /opt/csw/share/awk/nextfile.awk 0644 root bin
