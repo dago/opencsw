@@ -1,5 +1,5 @@
 GARNAME = drill
-GARVERSION = 1.6.1
+GARVERSION = 1.6.5
 CATEGORIES = utils
 
 DESCRIPTION = A dig style dnssec aware dns debugging tool
@@ -11,6 +11,8 @@ endef
 MASTER_SITES = http://www.nlnetlabs.nl/projects/ldns/
 DISTFILES  = ldns-$(GARVERSION).tar.gz
 
+PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -20,6 +22,8 @@ UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns/
 
 DISTNAME = ldns-$(GARVERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)/drill
+
+LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS = CSWldns
 RUNTIME_DEP_PKGS += CSWosslrt
