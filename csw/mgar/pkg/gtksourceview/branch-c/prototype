@@ -7,6 +7,7 @@ f none /opt/csw/lib/pkgconfig/gtksourceview-2.0.pc 0644 root bin
 s none /opt/csw/lib/libgtksourceview-2.0.so=libgtksourceview-2.0.so.0.0.0
 s none /opt/csw/lib/libgtksourceview-2.0.so.0=libgtksourceview-2.0.so.0.0.0
 f none /opt/csw/lib/libgtksourceview-2.0.so.0.0.0 0755 root bin
+f none /opt/csw/lib/libgtksourceview-1.0.so.0 0755 root bin
 d none /opt/csw/include 0755 root bin
 d none /opt/csw/include/gtksourceview-2.0 0755 root bin
 d none /opt/csw/include/gtksourceview-2.0/gtksourceview 0755 root bin

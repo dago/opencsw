@@ -87,7 +87,17 @@ $(ARCHIVEDIR)/$(ARCHIVENAME):
 patch:
 	@echo patch: patching is handled automatically as part of the configure phase.
 
-package:
+stage-preserved:
+	@if test -f preserve-$(ARCH).tar ; then \
+		echo Copying preserved arch-specific files; \
+		cat preserve-$(ARCH).tar |(cd $(SRCDIR)/cswstage && tar xvf -);\
+	fi
+	@if test -f preserve.tar ; then \
+		echo Copying preserved arch-neutral files; \
+		cat preserve.tar |(cd $(SRCDIR)/cswstage && tar xvf -);\
+	fi
+		
+package:	stage-preserved
 	$(CREATEPKG)
 
 
