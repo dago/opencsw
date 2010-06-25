@@ -1,5 +1,5 @@
 GARNAME = sar2rrd
-GARVERSION = 2.4
+GARVERSION = 2.5
 CATEGORIES = utils
 
 DESCRIPTION = Generate RRDTool graphs from sar output
@@ -18,7 +18,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.trickytools.com/php/sar2rrd.php
 
-RUNTIME_DEP_PKGS = CSWrrd CSWperl CSWpmdatecalc
+RUNTIME_DEP_PKGS = CSWrrd CSWperl CSWpmdatecalc CSWpmxmlsimple
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -26,6 +26,12 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 ARCHALL = 1
+
+CHECKPKG_OVERRIDES_CSWsar2rrd += license-missing|/opt/csw/share/doc/sar2rrd/license
+CHECKPKG_OVERRIDES_CSWsar2rrd += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWsar2rrd += surplus-dependency|CSWpmdatecalc
+CHECKPKG_OVERRIDES_CSWsar2rrd += surplus-dependency|CSWpmxmlsimple
+CHECKPKG_OVERRIDES_CSWsar2rrd += surplus-dependency|CSWrrd
 
 include gar/category.mk
 
