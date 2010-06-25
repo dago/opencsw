@@ -1,3 +1,4 @@
+04c50cb4ab2c34aebf0413130776bfdd  0001-Fix-isinf.patch
 c6bc2f9c3d88e0488f0332a9d288dc39  patch-bindings-Makefile.in
 0d068a4648f3a52c79c00374fa0ef486  patch-bindings-perl-piped-Makefile.PL
 4fd31144a5e2799db7440d97430d3ab6  patch-bindings-perl-shared-Makefile.PL

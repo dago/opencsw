@@ -19,6 +19,8 @@ PATCHFILES += patch-bindings-ruby-extconf.rb
 PATCHFILES += patch-bindings-perl-piped-Makefile.PL
 PATCHFILES += patch-bindings-perl-shared-Makefile.PL
 
+PATCHFILES += 0001-Fix-isinf.patch
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
