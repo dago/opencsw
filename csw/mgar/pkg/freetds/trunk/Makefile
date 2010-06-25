@@ -36,7 +36,7 @@ MERGE_DIRS_isa-extra = $(libdir)
 EXTRA_PAX_ARGS = '-s,.*{}$$,,p' '-s,/doc/$(GARNAME)-$(GARVERSION),/doc/$(GARNAME),p'
 
 PRESERVECONF = $(addprefix $(sysconfdir)/,freetds.conf locales.conf pool.conf)
-MIGRATE_FILES = freetds.conf locales.conf pool.conf
+MIGRATE_FILES_CSWfreetds = freetds.conf locales.conf pool.conf
 
 ARCHALL_CSWfreetdsdoc = 1
 PKGFILES_CSWfreetdsdoc = $(PKGFILES_DOC)
