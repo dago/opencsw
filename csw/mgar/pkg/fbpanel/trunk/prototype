@@ -1,0 +1,40 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/fbpanel 0755 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/fbpanel 0755 root bin
+d none /opt/csw/share/fbpanel/images 0755 root bin
+f none /opt/csw/share/fbpanel/images/gnome-session-halt.png 0644 root bin
+f none /opt/csw/share/fbpanel/images/default.xpm 0644 root bin
+f none /opt/csw/share/fbpanel/images/logo.png 0644 root bin
+f none /opt/csw/share/fbpanel/images/gnome-session-reboot.png 0644 root bin
+f none /opt/csw/share/fbpanel/images/dclock_glyphs.png 0644 root bin
+f none /opt/csw/share/fbpanel/pager 0644 root bin
+f none /opt/csw/share/fbpanel/default 0644 root bin
+d none /opt/csw/lib 0755 root bin
+d none /opt/csw/lib/fbpanel 0755 root bin
+f none /opt/csw/lib/fbpanel/icons.so 0755 root bin
+f none /opt/csw/lib/fbpanel/net.so 0755 root bin
+f none /opt/csw/lib/fbpanel/wincmd.so 0755 root bin
+f none /opt/csw/lib/fbpanel/pager.so 0755 root bin
+f none /opt/csw/lib/fbpanel/mem.so 0755 root bin
+f none /opt/csw/lib/fbpanel/taskbar.so 0755 root bin
+f none /opt/csw/lib/fbpanel/genmon.so 0755 root bin
+f none /opt/csw/lib/fbpanel/cpu.so 0755 root bin
+f none /opt/csw/lib/fbpanel/deskno2.so 0755 root bin
+f none /opt/csw/lib/fbpanel/image.so 0755 root bin
+f none /opt/csw/lib/fbpanel/tray.so 0755 root bin
+f none /opt/csw/lib/fbpanel/menu.so 0755 root bin
+f none /opt/csw/lib/fbpanel/launchbar.so 0755 root bin
+f none /opt/csw/lib/fbpanel/space.so 0755 root bin
+f none /opt/csw/lib/fbpanel/separator.so 0755 root bin
+f none /opt/csw/lib/fbpanel/deskno.so 0755 root bin
+f none /opt/csw/lib/fbpanel/chart.so 0755 root bin
+f none /opt/csw/lib/fbpanel/dclock.so 0755 root bin
+f none /opt/csw/lib/fbpanel/tclock.so 0755 root bin
+d none /opt/csw/libexec 0755 root bin
+d none /opt/csw/libexec/fbpanel 0755 root bin
+f none /opt/csw/libexec/fbpanel/make_profile 0755 root bin
+f none /opt/csw/libexec/fbpanel/xlogout 0755 root bin

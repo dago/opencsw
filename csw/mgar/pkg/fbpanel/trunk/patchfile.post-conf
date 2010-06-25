@@ -1,0 +1,11 @@
+--- panel/Makefile.in.orig	2010-06-22 02:25:29.676465806 +0200
++++ panel/Makefile.in	2010-06-22 02:25:37.159948629 +0200
+@@ -5,7 +5,7 @@
+ #SRCS += configurator.c 
+ 
+ BINTARGET = fbpanel
+-LDFLAGS += $(GMODULE_LIBS)
++LDFLAGS += $(GMODULE_LIBS) -lX11
+ 
+ ifeq (enabled,$(STATIC_BUILD))
+ OBJS += $(wildcard $(TOPDIR)/plugins/*/*.o)

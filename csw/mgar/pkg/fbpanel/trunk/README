@@ -1,0 +1,40 @@
+fbpanel notes:
+
+first off.. THIS IS NOT OFFICIALLY RELEASED YET.
+ But I'm keeping my work in svn
+ (and a package in experimental)
+
+0.  configuration is WEEERID.and very nonportable.
+  takes GNU autoconf,and makes it dumber.
+  It breaks gmake MFLAGS=-j, among other things.
+
+1.   Have to have /opt/csw/gnu first in path.
+
+2. have to run configure with bash -x.
+   its already #!/bin/bash but that dont work?!?!?
+
+3. CC=gcc. its just got too many gnuisms.
+
+4. need to set cpu type in there somehow too...
+
+5. It uses /usr/share/icons/hicolor/*  as its icons path
+   So that means it technically depends on 
+   SUNWgnome-themes-share
+   We COULD get it to depend on CSWxfceiconthemes.
+   But better to get our own full independant sharable iconthemes package
+  eg: debian hicolor-icon-theme
+    Which is from FreeDesktop.org icon themes
+  Wait we ALREADY HAVE THAT, yay!
+  But.. it.. has.. no icons in it??!?!?
+
+  use gnome_icon_theme instead? nope...
+  CSWgnomethemes
+
+  THen need to set theme_engine or something...
+
+   gtk_icon_theme_load_icon() is at fault
+
+
+
+
+ 6. Need to FIX PLUGINS!! (net, cpu, mem)

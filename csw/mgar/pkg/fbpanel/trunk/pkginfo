@@ -1,0 +1,8 @@
+PKG=CSWfbpanel
+NAME=fbpanel - GUI panel for NETWM compliant window managers
+VERSION=6.0,REV=2010.06.22
+CATEGORY=application
+VENDOR=http://fbpanel.sourceforge.net/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/fbpanel/trunk
