@@ -1,7 +1,7 @@
 GARNAME = gconf2
 GNOME_PROJ = GConf
 GARVERSION = 2.28.1
-CATEGORIES = gnome
+CATEGORIES = apps
 
 DESCRIPTION = GNOME configuration database system
 define BLURB
@@ -28,7 +28,9 @@ STRIP_LIBTOOL = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
-
+CONFIGURE_ARGS += --disable-defaults-service
+#The "defaults service" requires polkit. and dbus.
+#We're better off without em.
 
 include gar/category.mk
 
