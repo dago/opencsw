@@ -18,8 +18,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://projects.gnome.org/gconf/
 
-BUILD64 = 1
-NOISAEXEC = 1
+
+#BUILD64 = 1
+#NOISAEXEC = 1
 
 TEST_TARGET = check
 
