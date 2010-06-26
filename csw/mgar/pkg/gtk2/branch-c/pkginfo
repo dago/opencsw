@@ -1,6 +1,6 @@
 PKG=CSWgtk2
 NAME=gtk2 - GTK toolkit for creating graphical user interfaces
-VERSION=2.18.9,REV=2010.06.07
+VERSION=2.18.9,REV=2010.06.17
 CATEGORY=application
 VENDOR=http://www.gtk.org/ packaged for CSW by Philip Brown
 HOTLINE=http://www.opencsw.org/bugtrack/
