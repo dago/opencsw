@@ -4,7 +4,7 @@
 
 
 # If you do NOT want to build 64bit libs, remove the $(ARCH)-64 from
-# the "all:" target.
+# the "all:" target. Or just use Makefile.lib32
 
 # If you DO want to, then leave it in, and also customize your
 #  the build/.stage-$(ARCH)-64.done    target(s),

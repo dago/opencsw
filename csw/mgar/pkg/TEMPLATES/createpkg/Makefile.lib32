@@ -10,11 +10,11 @@
 
 # Where do we keep local downloads of software src files
 ARCHIVEDIR ?= /home/src
-ARCHIVENAME ?= firefox-3.6.3.source.tar.bz2
+ARCHIVENAME ?= FooSoft.1.2.3.tar.gz
 EXTRACTPROG ?= /usr/sfw/bin/gtar jfx
 
 # Only use ONE here. The name is used for compat with 'gar'.
-MASTER_SITES ?= http://releases.mozilla.org/pub/mozilla.org/firefox/releases/3.6.3/source/
+MASTER_SITES ?= http://xorg.freedesktop.org/releases/X11R7.5/src/lib
 
 ARCH := $(shell /bin/uname -p)
 
