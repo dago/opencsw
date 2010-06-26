@@ -111,11 +111,13 @@ patch:
 	@echo patch: patching is handled automatically as part of the configure phase.
 
 stage-preserved:
-	if test -f preserve-$(ARCH).tar ; then \
-		cat preserve-$(ARCH).tar |(cd $SRCDIR/cswstage && tar xvf -);\
+	@if test -f preserve-$(ARCH).tar ; then \
+		echo Copying preserved arch-specific files; \
+		cat preserve-$(ARCH).tar |(cd $(SRCDIR)/cswstage && tar xvf -);\
 	fi
-	if test -f preserve.tar ; then \
-		cat preserve.tar |(cd $SRCDIR/cswstage && tar xvf -);\
+	@if test -f preserve.tar ; then \
+		echo Copying preserved arch-neutral files; \
+		cat preserve.tar |(cd $(SRCDIR)/cswstage && tar xvf -);\
 	fi
 		
 package:	stage-preserved
@@ -226,3 +228,7 @@ build-$(ARCH)-64:	build/.build-$(ARCH)-64.done
 stage-$(ARCH)-64:	build/.stage-$(ARCH)-64.done
 	@echo $@ done
 
+# manual targets
+pkgproto:
+	cat $(SRCDIR)/cswstage/prototype | sed 's/root root$$/root bin/'>prototype
+	@echo Dont forget to add a COPYING line !!
