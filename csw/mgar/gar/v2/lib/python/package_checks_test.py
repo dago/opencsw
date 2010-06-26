@@ -23,6 +23,7 @@ DEFAULT_DATA_MD5 = "461a24f02dd5020b4aa014b76f3ec2cc"
 DEFAULT_PKG_STATS = checkpkg.PackageStats(None, CHECKPKG_STATS_DIR, DEFAULT_DATA_MD5)
 DEFAULT_PKG_DATA = DEFAULT_PKG_STATS.GetAllStats()
 
+
 class CheckpkgUnitTestHelper(object):
   """Wraps common components of checkpkg tests."""
 
@@ -281,7 +282,8 @@ class TestCheckLinkingAgainstSunX11_Bad(CheckpkgUnitTestHelper, unittest.TestCas
     # self.error_mgr_mock.ReportError('linked-against-discouraged-library',
     #                                 'libImlib2.so.1.4.2 libX11.so.4')
 
-class TestSetCheckSharedLibraryConsistency2_1(CheckpkgUnitTestHelper, unittest.TestCase):
+class TestSetCheckSharedLibraryConsistency2_1(CheckpkgUnitTestHelper,
+                                              unittest.TestCase):
   FUNCTION_NAME = 'SetCheckLibraries'
   def CheckpkgTest(self):
     self.pkg_data = [td_1.pkg_data]
@@ -449,6 +451,76 @@ class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
         u'opt/csw/bin/sparcv9/rsync Deprecated Berkeley DB location '
         u'/opt/csw/lib/libdb-4.7.so')
     self.pkg_data = [self.pkg_data]
+
+
+class TestRemovePackagesUnderInstallation(unittest.TestCase):
+
+  def testRemoveNone(self):
+    paths_and_pkgs_by_soname = {
+        'libfoo.so.1': {u'/opt/csw/lib': [u'CSWlibfoo']}}
+    packages_to_be_installed = [u'CSWbar']
+    self.assertEqual(
+        paths_and_pkgs_by_soname,
+        pc.RemovePackagesUnderInstallation(paths_and_pkgs_by_soname,
+                                           packages_to_be_installed))
+
+  def testRemoveOne(self):
+    paths_and_pkgs_by_soname = {
+        'libfoo.so.1': {u'/opt/csw/lib': [u'CSWlibfoo']}}
+    packages_to_be_installed = [u'CSWlibfoo']
+    self.assertEqual(
+        {'libfoo.so.1': {}},
+        pc.RemovePackagesUnderInstallation(paths_and_pkgs_by_soname,
+                                           packages_to_be_installed))
+
+
+class TestSharedLibsInAnInstalledPackageToo(CheckpkgUnitTestHelper,
+                                            unittest.TestCase):
+  """If a shared library is provided by one of the packages that are in the set
+  under test, take into account that the installed library will be removed at
+  install time.
+
+  The idea for the test:
+    - Test two packages: CSWbar and CSWlibfoo
+    - CSWbar depends on a library from libfoo
+    - CSWlibfoo is installed
+    - The new CSWlibfoo is broken and is missing the library
+  """
+  FUNCTION_NAME = 'SetCheckLibraries'
+  # Contains only necessary bits.  The data listed in full.
+  CSWbar_DATA = {
+        'basic_stats': {'catalogname': 'bar',
+                        'pkgname': 'CSWbar',
+                        'stats_version': 1},
+        'binaries_dump_info': [{'base_name': 'bar',
+                                'needed sonames': ['libfoo.so.1'],
+                                'path': 'opt/csw/bin/bar',
+                                'runpath': ['/opt/csw/lib'],
+                                'soname': 'rsync',
+                                'soname_guessed': True}],
+        'depends': (('CSWlibfoo', None),),
+        'isalist': [],
+        'pkgmap': [],
+        }
+  CSWlibfoo_DATA = {
+        'basic_stats': {'catalogname': 'libfoo',
+                        'pkgname': 'CSWlibfoo',
+                        'stats_version': 1},
+        'binaries_dump_info': [],
+        'depends': [],
+        'isalist': [],
+        'pkgmap': [],
+      }
+  def CheckpkgTest(self):
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libfoo.so.1').AndReturn({
+       u'/opt/csw/lib': [u'CSWlibfoo'],
+    })
+    self.error_mgr_mock.ReportError(
+        'CSWbar',
+        'soname-not-found',
+        'libfoo.so.1 is needed by opt/csw/bin/bar')
+    self.error_mgr_mock.ReportError('CSWbar', 'surplus-dependency', 'CSWlibfoo')
+    self.pkg_data = [self.CSWbar_DATA, self.CSWlibfoo_DATA]
 
 
 class TestCheckLibrariesDlopenLibs_1(CheckpkgUnitTestHelper, unittest.TestCase):

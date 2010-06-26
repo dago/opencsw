@@ -181,6 +181,28 @@ def CheckSmfIntegration(pkg_data, error_mgr, logger, messenger):
           entry["path"])
 
 
+def RemovePackagesUnderInstallation(paths_and_pkgs_by_soname,
+                                    pkgs_to_be_installed):
+  """Emulates uninstallation of packages prior to installation
+  of the new ones.
+  {'libfoo.so.1': {u'/opt/csw/lib': [u'CSWlibfoo']}}
+  """
+  # for brevity
+  ptbi = set(pkgs_to_be_installed)
+  ppbs = paths_and_pkgs_by_soname
+  new_ppbs = {}
+  for soname in ppbs:
+    if soname not in new_ppbs:
+      new_ppbs[soname] = {}
+    for binary_path in ppbs[soname]:
+      for pkgname in ppbs[soname][binary_path]:
+        if pkgname not in ptbi:
+          if binary_path not in new_ppbs[soname]:
+            new_ppbs[soname][binary_path] = []
+          new_ppbs[soname][binary_path].append(pkgname)
+  return new_ppbs
+
+
 def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
   """Second version of the library checking code.
 
@@ -193,6 +215,7 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
      3.1. Resolve all NEEDED sonames
   """
   needed_sonames = []
+  pkgs_to_be_installed = [x["basic_stats"]["pkgname"] for x in pkgs_data]
   for pkg_data in pkgs_data:
     for binary_info in pkg_data["binaries_dump_info"]:
       needed_sonames.extend(binary_info["needed sonames"])
@@ -202,8 +225,11 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
   for needed_soname in needed_sonames:
     path_and_pkg_by_soname[needed_soname] = error_mgr.GetPathsAndPkgnamesByBasename(
         needed_soname)
+  # Removing files from packages that are to be installed.
+  path_and_pkg_by_soname = RemovePackagesUnderInstallation(
+      path_and_pkg_by_soname, pkgs_to_be_installed)
   # Adding overlay based on the given package set
-  # TODO: Emulate package removal
+  # Considering files from the set under examination.
   for pkg_data in pkgs_data:
     pkgname = pkg_data["basic_stats"]["pkgname"]
     for binary_info in pkg_data["binaries_dump_info"]:

@@ -78,24 +78,12 @@ PKGFILES_CSWpmrrd = $(libdir)/perl/.* $(sharedstatedir)/perl/.* .*\.3perl
 PKGFILES_CSWpy-rrdtool = $(libdir)/python/.*
 PKGFILES_CSWrbrrd = $(libdir)/ruby/.*
 
-CHECKPKG_OVERRIDES_CSWrrd += soname-not-found|libm.so.2|is|needed|by|opt/csw/bin/amd64/rrdcached
-CHECKPKG_OVERRIDES_CSWrrd += soname-not-found|libm.so.2|is|needed|by|opt/csw/bin/amd64/rrdcgi
-CHECKPKG_OVERRIDES_CSWrrd += soname-not-found|libm.so.2|is|needed|by|opt/csw/bin/amd64/rrdtool
-CHECKPKG_OVERRIDES_CSWrrd += soname-not-found|libm.so.2|is|needed|by|opt/csw/bin/amd64/rrdupdate
+CHECKPKG_OVERRIDES_CSWrrd += soname-not-found
 
 CHECKPKG_OVERRIDES_CSWrrd += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWrrd += surplus-dependency|CSWrrdrt
 
-CHECKPKG_OVERRIDES_CSWpy-rrdtool += missing-dependency|CSWrrd
-CHECKPKG_OVERRIDES_CSWpy-rrdtool += surplus-dependency|CSWrrdrt
-
-CHECKPKG_OVERRIDES_CSWpmrrd += missing-dependency|CSWrrd
-CHECKPKG_OVERRIDES_CSWpmrrd += surplus-dependency|CSWrrdrt
-
-CHECKPKG_OVERRIDES_CSWrbrrd += missing-dependency|CSWrrd
-CHECKPKG_OVERRIDES_CSWrbrrd += surplus-dependency|CSWrrdrt
-CHECKPKG_OVERRIDES_CSWrbrrd += bad-rpath-entry|/home/dam/mgar/pkg/rrdtool/branches/x11-reloaded/work/solaris9-sparc/install-isa-sparcv8/opt/csw/lib|opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.8/RRD.so
-CHECKPKG_OVERRIDES_CSWrbrrd += bad-rpath-entry|/home/dam/mgar/pkg/rrdtool/branches/x11-reloaded/work/solaris9-i386/install-isa-i386/opt/csw/lib|opt/csw/lib/ruby/site_ruby/1.8/i386-solaris2.8/RRD.so
+CHECKPKG_OVERRIDES_CSWrbrrd += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSWrbrrd += bad-rpath-entry
 
 include gar/category.mk
 
