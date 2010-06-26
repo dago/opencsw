@@ -2,6 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
+# There are failing unit tests; the issue is submitted upstream:
+# http://www.sqlalchemy.org/trac/ticket/1837
+
 GARNAME = sqlalchemy
 GARVERSION = 0.6.1
 CATEGORIES = python
