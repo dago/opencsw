@@ -1,6 +1,6 @@
 GARNAME = gconf2
 GNOME_PROJ = GConf
-GARVERSION = 2.28.0
+GARVERSION = 2.28.1
 CATEGORIES = gnome
 
 DESCRIPTION = GNOME configuration database system
@@ -23,18 +23,11 @@ NOISAEXEC = 1
 
 TEST_TARGET = check
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 
 include gar/category.mk
