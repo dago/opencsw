@@ -9,8 +9,13 @@ endef
 MASTER_SITES =  http://www.abisource.com/downloads/$(GARNAME)/$(GARVERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTNAME  = $(GARNAME)-$(GARVERSION)
+SPKG_SOURCEURL = http://www.abisource.com/projects/enchant/
 
-PACKAGES = CSWenchant CSWenchantrt CSWenchantdevel CSWenchantdoc
+
+# THe subpackages just arent worth it, sizewise
+# Leaving the other stuff in for 
+#PACKAGES = CSWenchant CSWenchantrt CSWenchantdevel CSWenchantdoc
+#
 CATALOGNAME_CSWenchant = enchant
 CATALOGNAME_CSWenchantrt = enchant_rt
 CATALOGNAME_CSWenchantdevel = enchant_devel
@@ -28,7 +33,7 @@ PKGFILES_CSWenchantdoc = $(sharedstatedir)/gtk-doc/.*
 
 ARCHALL_CSWenchantdoc = 1
 
-RUNTIME_DEP_PKGS_CSWenchant += CSWenchantrt
+#RUNTIME_DEP_PKGS_CSWenchant += CSWenchantrt
 RUNTIME_DEP_PKGS_CSWenchant += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWenchant += CSWglib2
 RUNTIME_DEP_PKGS_CSWenchantrt += CSWaspell
@@ -36,8 +41,8 @@ RUNTIME_DEP_PKGS_CSWenchantrt += CSWdbusglib
 RUNTIME_DEP_PKGS_CSWenchantrt += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWenchantrt += CSWglib2
 RUNTIME_DEP_PKGS_CSWenchantrt += CSWlibdbus
-RUNTIME_DEP_PKGS_CSWenchantdevel += CSWenchantrt
-RUNTIME_DEP_PKGS_CSWenchantdoc += 
+#RUNTIME_DEP_PKGS_CSWenchantdevel += CSWenchantrt
+#RUNTIME_DEP_PKGS_CSWenchantdoc += 
 
 BUILD_DEP_PKGS += CSWdbusglibdev
 
@@ -45,13 +50,16 @@ LICENSE = COPYING.LIB
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-SPKG_SOURCEURL = http://www.abisource.com/projects/enchant/
 
-CHECKPKG_OVERRIDES_CSWenchant += symbol-not-found|enchant-lsmod
-CHECKPKG_OVERRIDES_CSWenchant += symbol-not-found|enchant
-CHECKPKG_OVERRIDES_CSWenchantrt += symbol-not-found|libenchant_ispell.so
-CHECKPKG_OVERRIDES_CSWenchantrt += symbol-not-found|libenchant_aspell.so
-CHECKPKG_OVERRIDES_CSWenchantrt += symbol-not-found|libenchant_myspell.so
+#CHECKPKG_OVERRIDES_CSWenchant += symbol-not-found|enchant-lsmod
+#CHECKPKG_OVERRIDES_CSWenchant += symbol-not-found|enchant
+
+CHECKPKG_OVERRIDES_CSWenchant += soname-not-found|libenchant.so.1|is|needed|by|opt/csw/bin/enchant
+CHECKPKG_OVERRIDES_CSWenchant += soname-not-found|libenchant.so.1|is|needed|by|opt/csw/bin/enchant-lsmod
+
+#CHECKPKG_OVERRIDES_CSWenchantrt += symbol-not-found|libenchant_ispell.so
+#CHECKPKG_OVERRIDES_CSWenchantrt += symbol-not-found|libenchant_aspell.so
+#CHECKPKG_OVERRIDES_CSWenchantrt += symbol-not-found|libenchant_myspell.so
 
 
 NOISAEXEC = 1
