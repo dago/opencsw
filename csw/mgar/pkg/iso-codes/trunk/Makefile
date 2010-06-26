@@ -1,5 +1,5 @@
 GARNAME = iso-codes
-GARVERSION = 3.9
+GARVERSION = 3.17
 CATEGORIES = apps
 
 DESCRIPTION = Translations for names of various ISO standards
