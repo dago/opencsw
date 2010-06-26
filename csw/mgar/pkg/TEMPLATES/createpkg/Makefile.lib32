@@ -1,4 +1,4 @@
-# This file is from TEMPLATES/createpkg/Makefile.lib
+# This file is from TEMPLATES/createpkg/Makefile.lib32
 # You MUST build this with gnu make, unfortunately.
 # Mainly just because of the ARCH expansion, but also for "?="
 
