@@ -36,11 +36,15 @@ ARCHALL_CSWenchantdoc = 1
 #RUNTIME_DEP_PKGS_CSWenchant += CSWenchantrt
 RUNTIME_DEP_PKGS_CSWenchant += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWenchant += CSWglib2
-RUNTIME_DEP_PKGS_CSWenchantrt += CSWaspell
+RUNTIME_DEP_PKGS_CSWenchant += CSWaspell
+
+### I dont know why someting thinks it needs dbus.
+### neither /opt/csw/bin/enchant, nor its libs, needs it.
 RUNTIME_DEP_PKGS_CSWenchantrt += CSWdbusglib
+RUNTIME_DEP_PKGS_CSWenchantrt += CSWlibdbus
+
 RUNTIME_DEP_PKGS_CSWenchantrt += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWenchantrt += CSWglib2
-RUNTIME_DEP_PKGS_CSWenchantrt += CSWlibdbus
 #RUNTIME_DEP_PKGS_CSWenchantdevel += CSWenchantrt
 #RUNTIME_DEP_PKGS_CSWenchantdoc += 
 
