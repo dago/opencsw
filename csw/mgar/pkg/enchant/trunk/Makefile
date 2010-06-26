@@ -1,8 +1,8 @@
 GARNAME = enchant
-GARVERSION = 1.5.0
+GARVERSION = 1.6.0
 CATEGORIES = apps
 
-DESCRIPTION = A generic spell checking library
+DESCRIPTION = A wrapper library for various spell checking engines
 define BLURB
 endef
 
@@ -53,10 +53,6 @@ CHECKPKG_OVERRIDES_CSWenchantrt += symbol-not-found|libenchant_ispell.so
 CHECKPKG_OVERRIDES_CSWenchantrt += symbol-not-found|libenchant_aspell.so
 CHECKPKG_OVERRIDES_CSWenchantrt += symbol-not-found|libenchant_myspell.so
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 NOISAEXEC = 1
 #NOISALIST = 1
@@ -67,8 +63,6 @@ STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 TEST_TARGET = check
 
