@@ -1,0 +1,9 @@
+# Note: SUN libSM !
+
+Name: SM
+Description: X Session Management Library, Sun Version
+Version: 1.0.0
+#Requires: ice
+#Requires.private: ice
+#Cflags: -I${includedir}
+Libs: -lSM -lICE

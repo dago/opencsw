@@ -1,8 +1,9 @@
 PKG=CSWsunx11devel
 ARCH=all
 NAME=sunx11_devel - CSW utility layer for compiling software with Sun X11 libs
-VERSION=1.0,REV=2010.05.21
+VERSION=1.1,REV=2010.06.26
 CATEGORY=application
 VENDOR=http://www.opencsw.org/ packaged for CSW by Philip Brown
 HOTLINE=http://www.opencsw.org/bugtrack/
 EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/sunx11_devel/trunk

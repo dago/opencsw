@@ -9,8 +9,8 @@ f none /opt/csw/include/X11/extensions/render.h=render.h 0644 root bin
 f none /opt/csw/include/X11/extensions/renderproto.h=renderproto.h 0644 root bin
 f none /opt/csw/lib/pkgconfig/x11.pc=x11.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/renderproto.pc=renderproto.pc 0644 root bin
-f none /opt/csw/lib/pkgconfig/xproto.pc=xproto.pc 0644 root bin
-f none /opt/csw/lib/pkgconfig/xt.pc=xt.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/sm.pc=sm.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/xext.pc=xext.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/xextproto.pc=xextproto.pc 0644 root bin
-
+f none /opt/csw/lib/pkgconfig/xproto.pc=xproto.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/xt.pc=xt.pc 0644 root bin
