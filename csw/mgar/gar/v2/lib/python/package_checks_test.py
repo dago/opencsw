@@ -656,5 +656,47 @@ class TestCheckDisallowedPaths_2(CheckpkgUnitTestHelper, unittest.TestCase):
         'or is not allowed for other reasons.')
 
 
+class TestConflictingFiles(CheckpkgUnitTestHelper,
+                           unittest.TestCase):
+  """Throw an error if there's a conflicting file in the package set."""
+  FUNCTION_NAME = 'SetCheckFileConflicts'
+  # Contains only necessary bits.  The data listed in full.
+  CSWbar_DATA = {
+        'basic_stats': {'catalogname': 'bar',
+                        'pkgname': 'CSWbar',
+                        'stats_version': 1},
+        'binaries_dump_info': [],
+        'depends': tuple(),
+        'isalist': [],
+        'pkgmap': [
+          {
+            "type": "f",
+            "path": "/opt/csw/share/foo",
+          }
+        ],
+  }
+  # This one has a conflicting file, this time it's a link, for a change.
+  CSWfoo_DATA = {
+        'basic_stats': {'catalogname': 'foo',
+                        'pkgname': 'CSWfoo',
+                        'stats_version': 1},
+        'binaries_dump_info': [],
+        'depends': tuple(),
+        'isalist': [],
+        'pkgmap': [
+          {
+            "type": "l",
+            "path": "/opt/csw/share/foo",
+          }
+        ],
+  }
+  def CheckpkgTest(self):
+    self.error_mgr_mock.ReportError(
+        'CSWbar', 'file-conflict', '/opt/csw/share/foo CSWbar CSWfoo')
+    self.error_mgr_mock.ReportError(
+        'CSWfoo', 'file-conflict', '/opt/csw/share/foo CSWbar CSWfoo')
+    self.pkg_data = [self.CSWbar_DATA, self.CSWfoo_DATA]
+
+
 if __name__ == '__main__':
   unittest.main()

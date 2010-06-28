@@ -718,9 +718,32 @@ def DisabledCheckForMissingSymbolsDumb(pkg_data, error_mgr, logger, messenger):
             % (ldd_elem["symbol"], ldd_elem["path"]))
 
 
-def SetCheckFileCollissions(pkgs_data, error_mgr, logger, messenger):
+def SetCheckFileConflicts(pkgs_data, error_mgr, logger, messenger):
+  """Throw an error if two packages contain the same file.
+
+  Directories don't count.  The strategy is to create an in-memory index of
+  packages by filename.
+  """
+  pkgs_by_path = {}
+  # File types are described at:
+  # http://docs.sun.com/app/docs/doc/816-5174/pkgmap-4?l=en&n=1&a=view
+  file_types = set(["f", "l", "s", "p", "e"])
   for pkg_data in pkgs_data:
-    pass
+    pkgname = pkg_data["basic_stats"]["pkgname"]
+    for pkgmap_entry in pkg_data["pkgmap"]:
+      if pkgmap_entry["type"] in file_types:
+        if pkgmap_entry["path"] not in pkgs_by_path:
+          pkgs_by_path[pkgmap_entry["path"]] = set()
+        pkgs_by_path[pkgmap_entry["path"]].add(pkgname)
+  # Traversing the data structure
+  for file_path in pkgs_by_path:
+    if len(pkgs_by_path[file_path]) > 1:
+      pkgnames = sorted(pkgs_by_path[file_path])
+      for pkgname in pkgnames:
+        error_mgr.ReportError(
+            pkgname,
+            'file-conflict',
+            '%s %s' % (file_path, " ".join(pkgnames)))
 
 
 def CheckPythonPackageName(pkg_data, error_mgr, logger, messenger):
