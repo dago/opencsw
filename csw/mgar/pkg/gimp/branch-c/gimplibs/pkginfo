@@ -1,0 +1,8 @@
+PKG=CSWgimplibs
+NAME=gimplibs - useful shared libraries from the gimp
+VERSION=2.6.8,REV=2010.06.12
+CATEGORY=application
+VENDOR=http://www.gimp.org/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/gimp/branch-c

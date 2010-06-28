@@ -1,0 +1,41 @@
+Quickie notes for gimpq compilation.
+
+basically, this should be "gimp_minimal"
+
+note also: the configuration has that annoying 
+ configure: error: GNU gettext tools not found; required for intltool
+
+problem. so have to force /opt/csw/gnu first in PATH. which we do.
+
+
+WARNING: Before releasing a "real" package of this,
+  we have to split some stuffout of this beastie.
+  like, "gimplibs"., which xsane uses.
+  gimplibs is basically
+  /opt/csw/include/.*
+  /opt/csw/lib/lib.*
+  /opt/csw/lib/pkgconfig/.*
+
+
+
+
+DAAAAANG... the only gnomeish stuffs, is in the plugins? !?!?!  
+  Original had:
+  ./lib/gimp/2.0/plug-ins/helpbrowser
+  ./lib/gimp/2.0/plug-ins/uri
+  ./lib/gimp/2.0/plug-ins/svg
+
+  (Debian separates out gnome-vfs plugin (which is "uri")
+
+  oddly, new one seemed to have built helpbrowser WITHOUT gnome..??
+
+  Separate out python plugins (not IN plugin dir, funnily enough)
+     to gimp_python
+
+
+SEPARATE (upstream) PACKAGES:
+	gimp_help
+	gimp_extras
+	gimp_template
+	gimpprint
+
