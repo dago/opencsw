@@ -1,0 +1,5 @@
+issues: this provides libgtksourceview-2.0.so.0
+not libgtksourceview-1.0.so.0
+
+Sooo.. need to "preserve" older shared lib as backwards compat.
+
