@@ -57,7 +57,6 @@ f none /opt/csw/include/bonobo-activation-2.0/bonobo-activation/bonobo-activatio
 f none /opt/csw/include/bonobo-activation-2.0/bonobo-activation/bonobo-activation-register.h 0644 root bin
 d none /opt/csw/lib 0755 root bin
 s none /opt/csw/lib/libbonobo-2.so.0=libbonobo-2.so.0.0.0
-f none /opt/csw/lib/libbonobo-activation.la 0755 root bin
 d none /opt/csw/lib/orbit-2.0 0755 root bin
 f none /opt/csw/lib/orbit-2.0/Bonobo_module.so 0755 root bin
 f none /opt/csw/lib/orbit-2.0/Bonobo_module.la 0755 root bin
@@ -73,7 +72,6 @@ f none /opt/csw/lib/bonobo/servers/Bonobo_Sample_Echo.server 0644 root bin
 d none /opt/csw/lib/bonobo/monikers 0755 root bin
 f none /opt/csw/lib/bonobo/monikers/libmoniker_std_2.la 0755 root bin
 f none /opt/csw/lib/bonobo/monikers/libmoniker_std_2.so 0755 root bin
-f none /opt/csw/lib/libbonobo-2.la 0755 root bin
 d none /opt/csw/lib/bonobo-2.0 0755 root bin
 d none /opt/csw/lib/bonobo-2.0/samples 0755 root bin
 f none /opt/csw/lib/bonobo-2.0/samples/bonobo-echo-2 0755 root bin
