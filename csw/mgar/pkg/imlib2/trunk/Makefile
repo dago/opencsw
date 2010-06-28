@@ -1,5 +1,5 @@
 GARNAME = imlib2
-GARVERSION = 1.4.3
+GARVERSION = 1.4.4
 CATEGORIES = lib
 
 DESCRIPTION = Imlib 2 is the successor to Imlib, a powerful graphics library
@@ -18,17 +18,15 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS = CSWbzip2 CSWftype2 CSWgiflibrt CSWjpeg CSWlibid3tag
-RUNTIME_DEP_PKGS += CSWlibxext CSWpng CSWtiff CSWzlib CSWlibx11
-
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+RUNTIME_DEP_PKGS += CSWpng CSWtiff CSWzlib
 
 BUILD64 = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 TEST_TARGET = check
+
+MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
+MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
