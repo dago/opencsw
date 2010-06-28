@@ -1,0 +1,12 @@
+hacks:
+
+temporarily, we need to run with
+
+LIBSTARTUPNOTIFICATION_CFLAGS=" " \
+ LIBSTARTUPNOTIFICATION_LIBS=-lstartup_notification-1 \
+ gmake
+
+its a temp hack that does not belong in the official Makefile
+it should be fixed by our libstartup... package
+
+June 2010
