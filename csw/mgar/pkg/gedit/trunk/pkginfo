@@ -1,0 +1,8 @@
+PKG=CSWgedit
+NAME=gedit - The official GNOME text editor
+VERSION=2.30.3,REV=2010.06.26
+CATEGORY=application
+VENDOR=http://www.gnome.org/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/gedit/trunk
