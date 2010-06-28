@@ -1,6 +1,42 @@
 i pkginfo
 i depend
 i copyright
+s none /opt/csw/lib/libgimpcolor-2.0.so=libgimpcolor-2.0.so.0.600.8
+s none /opt/csw/lib/libgimpui-2.0.so.0=libgimpui-2.0.so.0.600.8
+f none /opt/csw/lib/libgimpwidgets-2.0.so.0.600.8 0755 root bin
+f none /opt/csw/lib/libgimpconfig-2.0.la 0755 root bin
+s none /opt/csw/lib/libgimpmodule-2.0.so=libgimpmodule-2.0.so.0.600.8
+s none /opt/csw/lib/libgimpmath-2.0.so=libgimpmath-2.0.so.0.600.8
+f none /opt/csw/lib/libgimpbase-2.0.so.0.600.8 0755 root bin
+f none /opt/csw/lib/libgimpcolor-2.0.so.0.600.8 0755 root bin
+f none /opt/csw/lib/libgimpmodule-2.0.la 0755 root bin
+f none /opt/csw/lib/libgimpmath-2.0.la 0755 root bin
+s none /opt/csw/lib/libgimpconfig-2.0.so=libgimpconfig-2.0.so.0.600.8
+s none /opt/csw/lib/libgimpthumb-2.0.so.0=libgimpthumb-2.0.so.0.600.8
+f none /opt/csw/lib/libgimpcolor-2.0.la 0755 root bin
+s none /opt/csw/lib/libgimpconfig-2.0.so.0=libgimpconfig-2.0.so.0.600.8
+s none /opt/csw/lib/libgimpbase-2.0.so.0=libgimpbase-2.0.so.0.600.8
+f none /opt/csw/lib/libgimp-2.0.la 0755 root bin
+f none /opt/csw/lib/libgimpconfig-2.0.so.0.600.8 0755 root bin
+f none /opt/csw/lib/libgimpbase-2.0.la 0755 root bin
+f none /opt/csw/lib/libgimpwidgets-2.0.la 0755 root bin
+s none /opt/csw/lib/libgimpthumb-2.0.so=libgimpthumb-2.0.so.0.600.8
+s none /opt/csw/lib/libgimp-2.0.so.0=libgimp-2.0.so.0.600.8
+f none /opt/csw/lib/libgimp-2.0.so.0.600.8 0755 root bin
+f none /opt/csw/lib/libgimpui-2.0.la 0755 root bin
+f none /opt/csw/lib/libgimpui-2.0.so.0.600.8 0755 root bin
+f none /opt/csw/lib/libgimpthumb-2.0.so.0.600.8 0755 root bin
+s none /opt/csw/lib/libgimpui-2.0.so=libgimpui-2.0.so.0.600.8
+s none /opt/csw/lib/libgimpwidgets-2.0.so.0=libgimpwidgets-2.0.so.0.600.8
+f none /opt/csw/lib/libgimpmath-2.0.so.0.600.8 0755 root bin
+s none /opt/csw/lib/libgimpwidgets-2.0.so=libgimpwidgets-2.0.so.0.600.8
+f none /opt/csw/lib/libgimpthumb-2.0.la 0755 root bin
+s none /opt/csw/lib/libgimpcolor-2.0.so.0=libgimpcolor-2.0.so.0.600.8
+s none /opt/csw/lib/libgimpmath-2.0.so.0=libgimpmath-2.0.so.0.600.8
+s none /opt/csw/lib/libgimpbase-2.0.so=libgimpbase-2.0.so.0.600.8
+s none /opt/csw/lib/libgimp-2.0.so=libgimp-2.0.so.0.600.8
+s none /opt/csw/lib/libgimpmodule-2.0.so.0=libgimpmodule-2.0.so.0.600.8
+f none /opt/csw/lib/libgimpmodule-2.0.so.0.600.8 0755 root bin
 d none /opt/csw/include 0755 root bin
 d none /opt/csw/include/gimp-2.0 0755 root bin
 d none /opt/csw/include/gimp-2.0/libgimpconfig 0755 root bin
