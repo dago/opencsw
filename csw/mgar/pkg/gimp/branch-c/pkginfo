@@ -1,4 +1,5 @@
 PKG=CSWgimp
+ARCH=all
 NAME=gimp - Graphics Image Manipulation Program fully installed
 VERSION=2.6.8,REV=2010.06.12
 CATEGORY=application
