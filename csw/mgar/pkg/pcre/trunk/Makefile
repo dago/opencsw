@@ -1,5 +1,5 @@
 GARNAME = pcre
-GARVERSION = 8.02
+GARVERSION = 8.10
 CATEGORIES = lib
 
 DESCRIPTION = Perl-compatible regular expression tools
@@ -12,6 +12,8 @@ endef
 
 MASTER_SITES = ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+
+PATCHFILES = 0001-Allow-norunpath-for-libtool.patch
 
 SPKG_SOURCEURL = http://www.pcre.org
 
