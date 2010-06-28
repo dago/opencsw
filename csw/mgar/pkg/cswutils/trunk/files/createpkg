@@ -23,12 +23,17 @@ if [[ "$1" = "-r" ]] ; then
 fi
 
 #This is only relevant for a relative-path package
-INSTALLBASEDIR=/opt/csw
+SRCBASEDIR=/opt/csw
 if [[ "$1" = "-b" ]] ; then
-	INSTALLBASEDIR="$2"
+	SRCBASEDIR="$2"
 	mode=relative
 	shift
 	shift
+	BASEDIR=`sed -n 's/^BASEDIR=//p' pkginfo`
+	if [[ "$BASEDIR" = "" ]] ; then
+		echo Note: no BASEDIR in pkginfo. Defaulting to /opt/csw
+		BASEDIR=/opt/csw
+	fi
 fi
 
 if [[ $# -ne 0 ]] ; then
@@ -84,8 +89,16 @@ if [[ "$mode" = "" ]] ; then
 fi
 
 PKG=`sed -n 's/^PKG=//p' pkginfo`
-PKGREV=`sed -n 's/^VERSION=//p' pkginfo`
+VERSIONVAR=`grep '^VERSION=' pkginfo`
+case $VERSIONVAR in
+	*YYYY.MM.DD*)
+		datestring=`date '+%Y.%m.%d'`
+		VERSIONVAR=`echo $VERSIONVAR|sed "s/YYYY.MM.DD/$datestring/"`
+		;;
+esac
+PKGREV=`echo $VERSIONVAR|sed -n 's/^VERSION=//p'`
 SOFTNAME=`sed -n 's/^NAME=//p' pkginfo|awk '{print $1}'`
+
 
 isLower(){
 	typeset -l LOWER=$1
@@ -105,9 +118,9 @@ if [ "$PKGREV" = "" -o "$SOFTNAME" = "" ] ; then
 fi
 
 if [[ "$mode" = "absolute" ]] ; then
-	pkgmk -r $ROOTDIR -a $ARCH -f $PROTO "$@"
+	pkgmk -r $ROOTDIR -a $ARCH -f $PROTO "$VERSIONVAR" "$@"
 else
-	pkgmk -b $INSTALLBASEDIR -a $ARCH -f $PROTO BASEDIR=/opt/csw "$@"
+	pkgmk -b $SRCBASEDIR -a $ARCH -f $PROTO BASEDIR=$BASEDIR "$VERSIONVAR" "$@"
 fi
 
 if [[ $? -ne 0 ]] ; then die package creation failed ; fi
@@ -129,7 +142,7 @@ fi
 if [[ "$mode" = "absolute" ]] ; then
 	print packaging of files under $ROOTDIR complete
 else
-	print packaging of files under $INSTALLBASEDIR complete
+	print packaging of files under $SRCBASEDIR complete
 fi
 
 echo gzipping pkgfile
