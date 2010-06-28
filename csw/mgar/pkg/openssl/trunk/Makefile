@@ -44,11 +44,28 @@ CATALOGNAME_CSWosslutils = openssl_utils
 RUNTIME_DEP_PKGS_CSWosslutils = CSWosslrt
 SPKG_CLASSES_CSWosslutils = none cswpreserveconf
 
+# openssl is a meta-package
+CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWosslutils
+CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWossldevel
+CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWosslrt
+
 # we use sun perl not csw one
 CHECKPKG_OVERRIDES_CSWosslutils += missing-dependency|CSWperl
 
-CHECKPKG_OVERRIDES_CSWossldevel += surplus-dependency|CSWosslrt
 CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWcacertificates
+# we will not recompile old 0.9.7 version for now
+CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7
+CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7
+
+# we do ship .a files in the devel package
+CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
+CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
+CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
+CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
+CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libcrypto.a
+CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libssl.a
+CHECKPKG_OVERRIDES_CSWossldevel += surplus-dependency|CSWosslrt
+
 
 
 ###### Upstream and opencsw files information #######
