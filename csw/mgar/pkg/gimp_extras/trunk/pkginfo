@@ -1,0 +1,10 @@
+PKG=CSWgimpextras
+NAME=gimp_extras - Extra brushes, palettes, and gradients for the gimp
+ARCH=all
+BASEDIR=/opt/csw/share/gimp/2.0
+VERSION=2.0.2,REV=2010.06.12
+CATEGORY=application
+VENDOR=http://www.gimp.org/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/gimp/branch-c
