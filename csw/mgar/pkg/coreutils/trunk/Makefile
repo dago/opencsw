@@ -40,7 +40,10 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 CONFIGURE_ARGS += --with-libintl-prefix=/opt/csw
 CONFIGURE_ARGS += --with-libiconv-prefix=/opt/csw
-CONFIGURE_ARGS += --enable-no-install-program=chcon
+# handle su manually to avoid needing fakeroot or some such.  this is now
+# explicitly required as we modify both --enable-*install-program  lists
+CONFIGURE_ARGS += --enable-no-install-program=chcon,su
+CONFIGURE_ARGS += --enable-install-program=hostname,arch
 
 # required for eaccess and not picked up automatically.
 EXTRA_LDFLAGS = -lgen
