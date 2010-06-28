@@ -15,7 +15,7 @@
 # 
 
 
-PATH=$PATH:/usr/sbin
+PATH=/opt/csw/bin:$PATH:/usr/sbin
 
 # this is actually a base for tmpfiles, not the full name
 TMPDIR=${TMPDIR:-/tmp}
