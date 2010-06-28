@@ -171,7 +171,7 @@ build:		build-$(ARCH)-32
 stage:		stage-$(ARCH)-32
 
 
-GIMPLIBS_EXPR='(/opt/csw/lib/lib|/opt/csw/include)'
+GIMPLIBS_EXPR='(/opt/csw/lib/lib|/opt/csw/lib/pkgconfig|/opt/csw/include)'
 
 LIBDOC_EXPR='gtk-doc/html/lib'
 #GIMP_GNOME_EXPR='depend'

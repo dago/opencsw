@@ -37,6 +37,10 @@ s none /opt/csw/lib/libgimpbase-2.0.so=libgimpbase-2.0.so.0.600.8
 s none /opt/csw/lib/libgimp-2.0.so=libgimp-2.0.so.0.600.8
 s none /opt/csw/lib/libgimpmodule-2.0.so.0=libgimpmodule-2.0.so.0.600.8
 f none /opt/csw/lib/libgimpmodule-2.0.so.0.600.8 0755 root bin
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/gimpthumb-2.0.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/gimpui-2.0.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/gimp-2.0.pc 0644 root bin
 d none /opt/csw/include 0755 root bin
 d none /opt/csw/include/gimp-2.0 0755 root bin
 d none /opt/csw/include/gimp-2.0/libgimpconfig 0755 root bin

@@ -215,10 +215,6 @@ d none /opt/csw/lib/gimp/2.0/interpreters 0755 root bin
 f none /opt/csw/lib/gimp/2.0/interpreters/default.interp 0644 root bin
 d none /opt/csw/lib/gimp/2.0/environ 0755 root bin
 f none /opt/csw/lib/gimp/2.0/environ/default.env 0644 root bin
-d none /opt/csw/lib/pkgconfig 0755 root bin
-f none /opt/csw/lib/pkgconfig/gimpthumb-2.0.pc 0644 root bin
-f none /opt/csw/lib/pkgconfig/gimpui-2.0.pc 0644 root bin
-f none /opt/csw/lib/pkgconfig/gimp-2.0.pc 0644 root bin
 d none /opt/csw/share 0755 root bin
 d none /opt/csw/share/gtk-doc 0755 root bin
 d none /opt/csw/share/gtk-doc/html 0755 root bin
