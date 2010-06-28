@@ -4,7 +4,7 @@ d615d703006bd9c81919ca3f6ffcf233  checkpkg
 cfa2e813bb04b2506c8d4763bb96d8b3  checkpkg.py
 2b5e6e6219b9ad9e48bcd119bd8a5f39  compare_pkgs.py-r133
 9a637f6546cc50974159a987302d91c0  cpan2pkg
-93b6a811d303ce3be0050c5a7b3c8e69  createpkg
+68c82dcd6955c4031e89bb9c9a1a9988  createpkg
 a605598f30195f9ab1b29fc3944d3b31  createpkg.8
 2cbdf8ec7baee8f43ae1773fa337c5f2  dependency_checks.py
 986dc7a5b2e005087359303ca395ee2c  opencsw.py
