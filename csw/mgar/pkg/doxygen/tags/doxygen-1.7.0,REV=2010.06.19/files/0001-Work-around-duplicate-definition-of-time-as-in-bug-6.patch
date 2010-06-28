@@ -1,0 +1,40 @@
+From 8c163f7a4234e4d2b961f7ea0b553a23016e9bbd Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 19 Jun 2010 22:29:53 +0200
+Subject: [PATCH] Work around duplicate definition of time as in bug #621653
+
+---
+ src/portable.cpp |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/portable.cpp b/src/portable.cpp
+index ff9b803..3060449 100644
+--- a/src/portable.cpp
++++ b/src/portable.cpp
+@@ -27,7 +27,7 @@ extern char **environ;
+ //#include "doxygen.h"
+ 
+ static double  sysElapsedTime;
+-static QTime   time;
++static QTime   qtime;
+ 
+ int  portable_system(const char *command,const char *args,bool commandHasConsole)
+ {
+@@ -378,12 +378,12 @@ int portable_pclose(FILE *stream)
+ 
+ void portable_sysTimerStart()
+ {
+-  time.start();
++  qtime.start();
+ }
+ 
+ void portable_sysTimerStop()
+ {
+-  sysElapsedTime+=((double)time.elapsed())/1000.0;
++  sysElapsedTime+=((double)qtime.elapsed())/1000.0;
+ }
+ 
+ double portable_getSysElapsedTime()
+-- 
+1.7.1
+
