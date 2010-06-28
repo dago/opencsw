@@ -1,5 +1,5 @@
 GARNAME = doxygen
-GARVERSION = 1.7.0
+GARVERSION = 1.7.1
 CATEGORIES = utils
 
 DESCRIPTION = A documentation system for programming languages
@@ -10,10 +10,6 @@ endef
 
 MASTER_SITES = http://ftp.stack.nl/pub/users/dimitri/
 DISTFILES  = $(GARNAME)-$(GARVERSION).src.tar.gz
-
-# This is needed until this is fixed:
-#   http://bugzilla.gnome.org/show_bug.cgi?id=621653
-PATCHFILES = 0001-Work-around-duplicate-definition-of-time-as-in-bug-6.patch
 
 PACKAGES = CSWdoxygen CSWdoxygendoc
 
