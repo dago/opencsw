@@ -1,4 +1,5 @@
 PKG=CSWgimpi18n
+ARCH=all
 NAME=gimp_i18n - internationalization files for gimp
 VERSION=2.6.8,REV=2010.06.12
 CATEGORY=application
