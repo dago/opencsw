@@ -1,0 +1,8 @@
+PKG=CSWgtkengines
+NAME=gtk_engines - A collection of basic theme engines for GTK+
+VERSION=2.18.5,REV=2010.06.29
+CATEGORY=application
+VENDOR=http://www.gnome.org/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/gtk_engines/trunk
