@@ -1,5 +1,7 @@
 P	CSWaalib
 P	CSWdbusglib
+P	CSWlibdbus
+P	CSWdbus
 P	CSWfconfig
 P	CSWftype2
 P	CSWggettextrt
@@ -12,7 +14,6 @@ P	CSWlcmsrt
 P	CSWlibatk
 P	CSWlibbabl
 P	CSWlibcairo
-P	CSWlibdbus
 P	CSWlibexif
 P	CSWlibgegl
 P	CSWlibrsvg
