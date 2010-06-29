@@ -1,0 +1,8 @@
+# This is where you customize some settings of your rbldnsd installation so
+# you don't have to edit the scripts themselves as they will be replaced during
+# upgrades.
+#
+# Peter Bonivart, OpenCSW
+
+# Options
+#OPTIONS=""

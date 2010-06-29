@@ -1,0 +1,43 @@
+#!/sbin/sh
+
+#RC_KLEV 0,1,2,S
+#RC_SLEV 3
+
+# rc-script for CSW rbldnsd
+# Peter Bonivart, 2010-06-29
+
+# Source config file
+[ -r /etc/opt/csw/pkg/CSWrbldnsd/rbldnsd ] && . /etc/opt/csw/pkg/CSWrbldnsd/rbldnsd
+
+SERVICE=rbldnsd
+ZONE= # used for initialization, do not change
+
+case "$1" in
+  start)
+    if [ -f /opt/csw/sbin/$SERVICE ]; then
+      echo "Starting $SERVICE ..."
+      /opt/csw/sbin/$SERVICE $OPTIONS
+    fi
+    ;;
+  stop)
+    echo "Shutting down $SERVICE ..."
+    if [ -x /usr/bin/zonename ]; then
+      if [ "`/usr/bin/zonename`" = "global" ]; then
+        ZONE="-z global"
+      fi
+    fi
+    pkill $ZONE -x $SERVICE
+    ;;
+  reload|refresh)
+    echo "Reloading $SERVICE ..."
+    if [ -x /usr/bin/zonename ]; then
+      if [ "`/usr/bin/zonename`" = "global" ]; then
+        ZONE="-z global"
+      fi
+    fi
+    pkill -HUP $ZONE -x $SERVICE
+    ;;
+  *)
+    echo "Usage: $0 { start | stop | reload | refresh }"
+    ;;
+esac
