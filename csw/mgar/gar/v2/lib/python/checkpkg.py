@@ -77,7 +77,7 @@ DEPENDENCY_FILENAME_REGEXES = (
 )
 
 REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
-Missing dependencies of $pkgname:
+Dependency issues of $pkgname:
 #end if
 #if $missing_deps
 #for $pkg, $reasons in $sorted($missing_deps)
@@ -540,10 +540,6 @@ class SystemPkgmap(object):
   def GetInstalledPackages(self):
     """Returns a dictionary of all installed packages."""
     self._LazyInitializeDatabase()
-    # c = self.conn.cursor()
-    # sql = "SELECT pkgname, pkg_desc FROM packages;"
-    # c.execute(sql)
-    # return dict(x[0:2] for x in c)
     res = m.CswPackage.select()
     return dict([[str(x.pkgname), str(x.pkg_desc)] for x in res])
 
