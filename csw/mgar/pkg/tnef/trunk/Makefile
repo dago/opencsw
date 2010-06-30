@@ -1,5 +1,5 @@
 GARNAME = tnef
-GARVERSION = 1.4.6
+GARVERSION = 1.4.7
 CATEGORIES = utils
 
 DESCRIPTION = Unpacks Microsoft TNEF MIME attachments
@@ -17,9 +17,11 @@ RUNTIME_DEP_PKGS = CSWggettextrt
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=57057
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = v(\d+(?:\.\d+)*)
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+#GARCOMPILER=GCC4
 CONFIGURE_ARGS = $(DIRPATHS)
+#OPT_FLAGS_SOS = -xO2
 
 NOISALIST = 1
 
