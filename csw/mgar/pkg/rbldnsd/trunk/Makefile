@@ -11,6 +11,7 @@ MASTER_SITES = http://www.corpit.ru/mjt/rbldnsd/
 DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
 DISTFILES += COPYING
 DISTFILES += rbldnsd
+DISTFILES += test
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -22,7 +23,7 @@ INSTALL_SCRIPTS = custom
 SKIPTEST = 1
 
 INITSMF = /etc/opt/csw/init.d/cswrbldnsd
-SAMPLECONF = /etc/opt/csw/pkg/CSWrbldnsd/rbldnsd
+SAMPLECONF = /etc/opt/csw/rbldnsd
 USERGROUP = /etc/opt/csw/pkg/CSWrbldnsd/cswusergroup
 
 include gar/category.mk
@@ -40,7 +41,8 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswrbldnsd $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
-	@ginstall -m 444 $(FILEDIR)/rbldnsd $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
+	@ginstall -m 644 $(FILEDIR)/rbldnsd $(DESTDIR)/etc/opt/csw
 	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)
+	@ginstall -m 644 $(FILEDIR)/test $(DESTDIR)/var/opt/csw/$(GARNAME)
 	@$(MAKECOOKIE)

@@ -5,4 +5,4 @@
 # Peter Bonivart, OpenCSW
 
 # Options (see "man rbldnsd" for all options)
-OPTIONS="-w /var/opt/csw/rbldnsd -b 127.0.0.1/53 -p /var/opt/csw/rbldnsd/rbldnsd.pid"
+OPTIONS="-w /var/opt/csw/rbldnsd -b 127.0.0.1/53 -p /var/opt/csw/rbldnsd/rbldnsd.pid test.com:ip4set:test"
