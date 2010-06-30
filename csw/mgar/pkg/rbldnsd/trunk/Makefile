@@ -17,14 +17,13 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS_CSWrbldnsd += CSWzlib
 
-#CONFIGURE_ARGS = $(DIRPATHS)
-
 INSTALL_SCRIPTS = custom
 
 SKIPTEST = 1
 
 INITSMF = /etc/opt/csw/init.d/cswrbldnsd
 SAMPLECONF = /etc/opt/csw/pkg/CSWrbldnsd/rbldnsd
+USERGROUP = /etc/opt/csw/pkg/CSWrbldnsd/cswusergroup
 
 include gar/category.mk
 
@@ -42,9 +41,6 @@ install-custom:
 	@ginstall -m 755 $(FILEDIR)/cswrbldnsd $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
 	@ginstall -m 444 $(FILEDIR)/rbldnsd $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
-#	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/named
-#	@touch $(DESTDIR)/var/opt/csw/named/named.pid
-#	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/named/chroot/dev
-#	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/named/chroot/etc/opt/csw
-#	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/named/chroot/var/named
+	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
+	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)
 	@$(MAKECOOKIE)
