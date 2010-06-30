@@ -27,8 +27,13 @@ DISTFILES += stagepkg stagepkg.8
 DISTFILES += $(foreach F,$(SVN_FILES),$(F)-r$(SVN_REV))
 DISTFILES += $(PYFILES)
 
-RUNTIME_DEP_PKGS = CSWcoreutils CSWfakeroot CSWperl
-RUNTIME_DEP_PKGS += CSWpmyaml CSWpmlibwww CSWpmhtmltree
+RUNTIME_DEP_PKGS += CSWcoreutils
+RUNTIME_DEP_PKGS += CSWfakeroot
+RUNTIME_DEP_PKGS += CSWperl
+RUNTIME_DEP_PKGS += CSWpmhtmltree
+RUNTIME_DEP_PKGS += CSWpmlibwww
+RUNTIME_DEP_PKGS += CSWpmyaml
+RUNTIME_DEP_PKGS += CSWpy-libmagic
 RUNTIME_DEP_PKGS += CSWpython
 
 WORKSRC = $(WORKDIR)
@@ -42,19 +47,15 @@ SPKG_SOURCEURL = http://www.opencsw.org/
 
 ARCHALL = 1
 
-CHECKPKG_OVERRIDES_CSWcswutils += unidentified-dependency|CSWcoreutils
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWcoreutils
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmhtmltree
 CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWfakeroot
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmyaml
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmhtmltree
 CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmlibwww
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmyaml
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpy-libmagic
 CHECKPKG_OVERRIDES_CSWcswutils += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWcswutils += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/lib/python/csw/checkpkg.py
-CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/opt/build|root/opt/csw/lib/python/csw/checkpkg.py
-CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/share/checkpkg/overrides/cswutils
-CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/opt/build|root/opt/csw/share/checkpkg/overrides/cswutils
 
 include gar/category.mk
 
