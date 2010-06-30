@@ -7,7 +7,7 @@
 # Peter Bonivart, 2010-06-29
 
 # Source config file
-[ -r /etc/opt/csw/pkg/CSWrbldnsd/rbldnsd ] && . /etc/opt/csw/pkg/CSWrbldnsd/rbldnsd
+[ -r /etc/opt/csw/rbldnsd ] && . /etc/opt/csw/rbldnsd
 
 SERVICE=rbldnsd
 ZONE= # used for initialization, do not change
