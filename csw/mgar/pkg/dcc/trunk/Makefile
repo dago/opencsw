@@ -1,12 +1,11 @@
-# dep to perl?
-
 GARNAME = dcc
-GARVERSION = 1.3.122
+GARVERSION = 1.3.127
 CATEGORIES = net
 
 DESCRIPTION = E-mail greylisting and a cooperative, distributed system to identify spam
 
-MASTER_SITES = http://www.rhyolite.com/src/dcc/old/
+#MASTER_SITES = http://www.rhyolite.com/src/dcc/old/
+MASTER_SITES = http://www.dcc-servers.net/dcc/source/old/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.Z
 
 LICENSE = LICENSE
