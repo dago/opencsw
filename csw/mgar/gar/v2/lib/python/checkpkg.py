@@ -45,9 +45,10 @@ DUMP_BIN = "/usr/ccs/bin/dump"
 PSTAMP_RE = r"(?P<username>\w+)@(?P<hostname>[\w\.-]+)-(?P<timestamp>\d+)"
 DESCRIPTION_RE = r"^([\S]+) - (.*)$"
 BAD_CONTENT_REGEXES = (
-    # No need to encode / obfuscate these, as overrides can be used.
-    r'/export/medusa',
-    r'/opt/build',
+    # Slightly obfuscating these by using the default concatenation of
+    # strings.
+    r'/export' r'/medusa',
+    r'/opt' r'/build',
 )
 
 SYSTEM_SYMLINKS = (
