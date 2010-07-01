@@ -87,14 +87,15 @@ case $f in
 	#
 	# Need to rewrite this whole thing to also
 	# check for badly set RUNPATHs. sigh.
-	#
-	badpaths="$(echo /rkcbeg/zrqhfn /bcg/ohvyq | gtr a-mn-z n-za-m)"
-	for badpath in $(badpaths) ; do
+	# Note that need to escape one /, so that it does not
+	#trigger check if checking its own package
+	badpaths="[/]export/medusa [/]opt/build [/]export/home [/]usr/share [/]usr/local"
+	for badpath in $badpaths ; do
 		GREP=/bin/grep gzgrep "$badpath" $f
 		if [[ $? -eq 0 ]] ; then
 			print ""
 			print ERROR: build-machine paths found in file $f
-			print '($badpath)'
+			print "($badpath found)"
 			exit 1
 		fi
 	done
