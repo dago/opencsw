@@ -1,6 +1,6 @@
 GARNAME = git
-GARVERSION = 1.7.1
-# PATCHLEVEL = rc1
+GARVERSION = 1.7.2
+PATCHLEVEL = rc1
 CATEGORIES = devel
 
 VENDOR_URL = http://git-scm.org/
