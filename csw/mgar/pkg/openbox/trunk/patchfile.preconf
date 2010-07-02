@@ -89,8 +89,16 @@
          g_free(program);
          g_strfreev(argv);
 --- parser/parse.c.orig	Fri Jul  2 19:59:36 2010
-+++ parser/parse.c	Fri Jul  2 20:00:14 2010
-@@ -429,16 +429,7 @@
++++ parser/parse.c	Fri Jul  2 20:09:11 2010
+@@ -415,6 +415,7 @@
+         xdg_config_dir_paths = slist_path_add(xdg_config_dir_paths,
+                                               g_build_filename
+                                               (G_DIR_SEPARATOR_S,
++					      "opt","csw",
+                                                "etc", "xdg", NULL),
+                                               (GSListFunc) g_slist_append);
+     }
+@@ -429,16 +430,7 @@
          xdg_data_dir_paths = slist_path_add(xdg_data_dir_paths,
                                              g_strdup(DATADIR),
                                              (GSListFunc) g_slist_append);
