@@ -1,0 +1,71 @@
+#!/opt/csw/bin/bash
+
+#export GCC=gcc3
+. ${HOME}/.pkgbuild
+. ${PKG_SOURCE_DIR}/CSW.env.sh
+. `dirname $0`/env
+
+set -x
+umask 022
+cd $PKG_BUILD_DIR
+
+rm -rf $PKG_PKGMK_ROOT
+mkdir $PKG_PKGMK_ROOT
+cd $PKG_BUILD_ROOT
+tar cf - * | (cd $PKG_PKGMK_ROOT; tar xvf -)
+cd $PKG_PKGMK_ROOT
+PGROUP=`/usr/xpg4/bin/id -n -g`
+pkgproto . | sort -k3 | sed -e 's| etc| /etc|' -e 's| opt| /opt|' -e 's| usr| /usr|' -e 's| var| /var|' -e "s/${LOGNAME} ${PGROUP}$/root bin/" > prototype
+CSWcommon="`awk '/CSWcommon/{print $1}' /var/sadm/install/contents | sed -e 's|=.*||'`"
+cp -p prototype /tmp/prototype.$$
+set +x
+# Pull out all paths found in CSWcommon
+for X in /opt $CSWcommon ; do
+  fgrep -v " ${X} " /tmp/prototype.$$ > /tmp/$$
+  mv /tmp/$$ /tmp/prototype.$$
+done
+# Do not specify owner and perms on paths that Solaris owns.
+for X in /etc /etc/init.d /etc/opt /var /var/opt /var/run ; do
+  Y=`echo $X | sed 's|/|\\\/|g'`
+  awk "\$3~/^$Y$/{print \$1,\$2,\$3,\"? ? ?\"}; \$3!~/^$Y$/{print \$0}" /tmp/prototype.$$ > /tmp/$$
+  mv /tmp/$$ /tmp/prototype.$$
+done
+# Do not specify owner and perms on paths that CSWcommon should own.
+for X in /opt/csw/etc /opt/csw/etc/default /opt/csw/etc/init.d /opt/csw/include /opt/csw/var/log ; do
+  Y=`echo $X | sed 's|/|\\\/|g'`
+  awk "\$3~/^$Y$/{print \$1,\$2,\$3,\"? ? ?\"}; \$3!~/^$Y$/{print \$0}" /tmp/prototype.$$ > /tmp/$$
+  mv /tmp/$$ /tmp/prototype.$$
+done
+set -x
+# Specify owner and group for certain hobbit files.
+#for X in /opt/csw/etc/hobbit /opt/csw/var/hobbit ; do
+#  Y=`echo $X | sed 's|/|\\\/|g'`
+#  awk "\$3~/^$Y$/{print \$1,\$2,\$3,\$4,\"hobbit hobbit\"}; \$3!~/^$Y$/{print \$0}" /tmp/prototype.$$ > /tmp/$$
+#  mv /tmp/$$ /tmp/prototype.$$
+#done
+mv /tmp/prototype.$$ prototype
+#cp -p ${PKG_SOURCE_DIR}/${PKG_PACKAGE_NAME}/prototype prototype
+cp -p ${PKG_SOURCE_DIR}/${PKG_PACKAGE_NAME}/copyright copyright
+echo "i copyright" >> prototype
+cp -p ${PKG_SOURCE_DIR}/${PKG_PACKAGE_NAME}/depend depend
+echo "i depend" >> prototype
+cp -p ${PKG_SOURCE_DIR}/${PKG_PACKAGE_NAME}/pkginfo pkginfo
+echo "i pkginfo" >> prototype
+#cp -p ${PKG_SOURCE_DIR}/${PKG_PACKAGE_NAME}/preinstall preinstall
+#echo "i preinstall" >> prototype
+cp -p ${PKG_SOURCE_DIR}/${PKG_PACKAGE_NAME}/postinstall postinstall
+echo "i postinstall" >> prototype
+cp -p ${PKG_SOURCE_DIR}/${PKG_PACKAGE_NAME}/preremove preremove
+echo "i preremove" >> prototype
+#cp -p ${PKG_SOURCE_DIR}/${PKG_PACKAGE_NAME}/postremove postremove
+#echo "i postremove" >> prototype
+
+createpkg -r .
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  exit $STATUS
+fi
+
+mv *.gz $PKG_PKG_DIR
+
+exit 0

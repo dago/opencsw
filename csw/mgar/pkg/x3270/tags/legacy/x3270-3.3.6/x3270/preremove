@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ "$PKG_INSTALL_ROOT" = "" ] ; then
+	PKG_INSTALL_ROOT="/"
+fi
+
+echo "Removing unmodified config files"
+for X in `${PKG_INSTALL_ROOT}/usr/bin/ls ${PKG_INSTALL_ROOT}/opt/csw/etc/x3270/*.CSW`; do
+  Y=`echo "$X" | ${PKG_INSTALL_ROOT}/usr/bin/sed 's|.CSW||'`
+  if ${PKG_INSTALL_ROOT}/usr/bin/cmp -s $X $Y; then
+    ${PKG_INSTALL_ROOT}/usr/bin/rm $Y
+  fi
+done
+
+exit 0

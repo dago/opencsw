@@ -1,0 +1,34 @@
+#!/opt/csw/bin/bash
+
+#export GCC=gcc3
+. ${HOME}/.pkgbuild
+. ${PKG_SOURCE_DIR}/CSW.env.sh
+. `dirname $0`/env
+
+set -x
+umask 022
+cd $PKG_BUILD_DIR
+
+rm -rf $PKG_PACKAGE_NAME
+mkdir $PKG_PACKAGE_NAME
+cd $PKG_PACKAGE_NAME
+/bin/gzip -dc ${PKG_SOURCE_DIR}/${PKG_TARBALL_NAME}-${PKG_PACKAGE_VERSION}.tgz | tar -xf -
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  exit $STATUS
+fi
+#cd $PKG_PACKAGE_NV
+[ `/opt/csw/bin/gid | /opt/csw/bin/gsed 's/[^=]*=\([0-9][0-9]*\).*$/\1/'` = '0' ] && /opt/csw/bin/gchown -Rhf root .
+[ `/opt/csw/bin/gid | /opt/csw/bin/gsed 's/[^=]*=\([0-9][0-9]*\).*$/\1/'` = '0' ] && /opt/csw/bin/gchgrp -Rhf other .
+/opt/csw/bin/gchmod -Rf a+rX,g-w,o-w .
+
+echo "Applying c3270-3.3_ncurses.patch"
+patch -p0 -s -b -V t < ${PKG_SOURCE_DIR}/c3270-3.3_ncurses.patch
+echo "Applying x3270-3.3.6_DBCS.patch"
+patch -p0 -s -b -V t < ${PKG_SOURCE_DIR}/x3270-3.3.6_DBCS.patch
+
+cp -p ${PKG_SOURCE_DIR}/README.CSW .
+
+/opt/csw/bin/gfind . -perm 000 -exec /opt/csw/bin/gchmod +r {} \;
+
+exit 0

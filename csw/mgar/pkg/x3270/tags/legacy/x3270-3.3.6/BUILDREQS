@@ -1,0 +1,1 @@
+/opt/csw/bin/pkg-get -i readline ncurses openssl libicu

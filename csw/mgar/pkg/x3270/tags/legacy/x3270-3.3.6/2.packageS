@@ -1,0 +1,28 @@
+#!/opt/csw/bin/bash
+
+#export GCC=gcc3
+. ${HOME}/.pkgbuild
+. ${PKG_SOURCE_DIR}/CSW.env.sh
+. `dirname $0`/env
+
+set -x
+umask 022
+cd $PKG_BUILD_DIR
+
+cd $PKG_PACKAGE_NAME
+PGROUP=`/usr/xpg4/bin/id -n -g`
+pkgproto .=/opt/csw/src/${PKG_PACKAGE_NV} | sort -k3 | sed -e 's| opt| /opt|' -e "s/${LOGNAME} ${PGROUP}$/root bin/" > prototype
+cp -p ${PKG_SOURCE_DIR}/${PKG_PACKAGE_NAME}/copyright copyright
+echo "i copyright" >> prototype
+cp -p ${PKG_SOURCE_DIR}/${PKG_PACKAGE_NAME}/pkginfoS pkginfo
+echo "i pkginfo" >> prototype
+createspkg -r .
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  exit $STATUS
+fi
+
+mv *.gz ${PKG_SPKG_DIR}
+rm prototype copyright pkginfo
+
+exit 0

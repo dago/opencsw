@@ -1,0 +1,106 @@
+#!/opt/csw/bin/bash
+
+#export GCC=gcc3
+. ${HOME}/.pkgbuild
+. ${PKG_SOURCE_DIR}/CSW.env.sh
+. `dirname $0`/env
+
+set -x
+umask 022
+cd $PKG_BUILD_DIR
+
+cd $PKG_PACKAGE_NAME
+[ -n "$PKG_BUILD_ROOT" -a "$PKG_BUILD_ROOT" != / ] && /opt/csw/bin/grm -rf $PKG_BUILD_ROOT
+
+makeinstall() {
+  if [ -n "$1" ]; then VAR=".${1}"; fi
+  /opt/csw/bin/gmake \
+	prefix=/opt/csw \
+	exec_prefix=/opt/csw \
+	bindir=/opt/csw/bin \
+	sbindir=/opt/csw/sbin \
+	sysconfdir=/opt/csw/etc \
+	datadir=/opt/csw/share \
+	includedir=/opt/csw/include \
+	libdir=/opt/csw/lib \
+	libexecdir=/opt/csw/libexec \
+	localstatedir=/opt/csw/var \
+	sharedstatedir=/opt/csw/com \
+	mandir=/opt/csw/share/man \
+	infodir=/opt/csw/share/info \
+  install${VAR} INSTALLROOT=$PKG_BUILD_ROOT \
+          INSTALL_ROOT=$PKG_BUILD_ROOT \
+          DESTDIR=$PKG_BUILD_ROOT $2
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  exit $STATUS
+fi
+unset VAR
+}
+
+cd c3270-${PKG_PACKAGE_SHORTVERSION}
+makeinstall
+makeinstall man
+/opt/csw/bin/ginstall -d ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/c3270
+/opt/csw/bin/gcp -pR html/ LICENSE README ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/c3270
+cd ..
+
+cd pr3287-${PKG_PACKAGE_SHORTVERSION}
+makeinstall
+makeinstall man
+/opt/csw/bin/ginstall -d ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/pr3287
+/opt/csw/bin/gcp -pR html/ LICENSE README ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/pr3287
+cd ..
+
+cd s3270-${PKG_PACKAGE_SHORTVERSION}
+makeinstall
+makeinstall man
+mkdir -p ${PKG_BUILD_ROOT}/opt/csw/lib/x3270
+cp -p x3270_glue.expect ${PKG_BUILD_ROOT}/opt/csw/lib/x3270/x3270_glue.expect
+  cd Examples
+  for X in `ls`; do
+    sed 's%/usr/local/bin/expect%/opt/csw/bin/expect%' $X > $X.out
+    mv -f $X.out $X
+  done
+  cd ..
+/opt/csw/bin/ginstall -d ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/s3270
+/opt/csw/bin/gcp -pR html/ Examples/ LICENSE README ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/s3270
+cd ..
+
+cd tcl3270-${PKG_PACKAGE_SHORTVERSION}
+makeinstall
+makeinstall man
+/opt/csw/bin/ginstall -d ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/tcl3270
+/opt/csw/bin/gcp -pR html/ Examples/ LICENSE README ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/tcl3270
+cd ..
+
+cd x3270-${PKG_PACKAGE_SHORTVERSION}
+PATH=$PATH:/usr/openwin/bin
+makeinstall byprefix
+#makeinstall "" "BINDIR=/opt/csw/bin MANDIR=/opt/csw/share/man/man1 LIBDIR=/opt/csw/lib/X11"
+#makeinstall man "BINDIR=/opt/csw/bin MANDIR=/opt/csw/share/man/man1 LIBDIR=/opt/csw/lib/X11"
+  cd Examples
+  for X in `ls`; do
+    sed 's%/usr/local/bin/expect%/opt/csw/bin/expect%' $X > $X.out
+    mv -f $X.out $X
+    sed 's%/usr/local/bin/bash%/bin/bash%' $X > $X.out
+    mv -f $X.out $X
+  done
+  cd ..
+/opt/csw/bin/ginstall -d ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/x3270
+/opt/csw/bin/gcp -pR html/ Examples/ LICENSE README ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/x3270
+cd ..
+
+for X in `/opt/csw/bin/gls ${PKG_BUILD_ROOT}/opt/csw/etc/x3270/*`; do
+  /opt/csw/bin/gmv ${X} ${X}.CSW
+done
+
+# installdoc ${PKG_SOURCE_DIR}/README.CSW
+/opt/csw/bin/ginstall -d ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}
+/opt/csw/bin/gcp -pR ${PKG_SOURCE_DIR}/README.CSW ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}
+
+${PKG_TOPDIR}/SOURCE/brp-strip /usr/ccs/bin/strip
+/opt/csw/bin/gchmod u+w ${PKG_BUILD_ROOT}${PKG_DOC_DIR}/${PKG_PACKAGE_NAME}/*/html/*
+/opt/csw/bin/gchmod a-wx ${PKG_BUILD_ROOT}/opt/csw/share/man/man?/*
+
+exit 0

@@ -1,0 +1,11 @@
+P CSWcommon	common - common files and dirs for CSW packages
+P CSWreadline	readline - library to enable interactive line editing
+P CSWosslrt	openssl_rt - Openssl runtime libraries
+P CSWlibicu	libicu - International Components for Unicode
+P CSWncurses	ncurses - ncurses library and utilities
+P CSWtcl	tcl - Tool Command Language
+P SUNWcsl	Core Solaris, (Shared Libs)
+P SUNWlibms	Sun WorkShop Bundled shared libm
+P SUNWxwice	ICE components
+P SUNWxwplt	X Window System platform software
+P SUNWxwrtl	X Window System & Graphics Runtime Library Links in /usr/lib

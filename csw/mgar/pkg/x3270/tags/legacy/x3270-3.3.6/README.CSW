@@ -1,0 +1,23 @@
+$Id: README.CSW 832 2007-08-16 01:22:30Z mike $
+
+x3270 Terminal Emulator
+
+*** Supporting software:
+/opt/csw/bin/pkg-get -i bash shutils fileutils binutils findutils
+/opt/csw/bin/pkg-get -i gmake gcc3core ggrep gsed gnulinks
+/opt/csw/bin/pkg-get -i readline ncurses openssl libicu
+
+*** Patches applied:
+c3270-3.3_ncurses.patch
+
+*** Configured with:
+./c3270-3.3/configure --prefix=/opt/csw --mandir=/opt/csw/share/man
+./pr3287-3.3/configure --prefix=/opt/csw --mandir=/opt/csw/share/man
+./s3270-3.3/configure --prefix=/opt/csw --mandir=/opt/csw/share/man
+./tcl3270-3.3/configure --prefix=/opt/csw --mandir=/opt/csw/share/man \
+  --with-tcl=8.4
+./x3270-3.3/configure --prefix=/opt/csw --mandir=/opt/csw/share/man \
+  --without-pr3287 --with-fontdir=/opt/csw/share/x3270
+
+*** Upgrading:
+

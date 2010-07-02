@@ -1,0 +1,8 @@
+PKG=CSWx3270
+NAME=x3270 - TN3270 Terminal Emulator
+CATEGORY=application
+VERSION=3.3.6
+VENDOR=http://www.geocities.com/SiliconValley/Peaks/7814/ packaged for CSW by Mike Arnold
+HOTLINE=http://www.blastwave.org/bugtrack/
+EMAIL=mike@blastwave.org
+DESC=An IBM 3270 terminal emulator.
