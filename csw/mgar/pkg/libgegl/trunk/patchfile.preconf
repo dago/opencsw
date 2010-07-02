@@ -28,3 +28,14 @@
  #else
    void  *functions[MAX_N_FUNCTIONS];
    int    n_functions    = 0;
+--- operations/generated/gamma.c.orig	2010-02-07 15:44:37.000000000 +0100
++++ operations/generated/gamma.c	2010-06-28 21:21:36.338178685 +0200
+@@ -36,7 +36,7 @@
+ #include "gegl-chant.h"
+ 
+ #include <math.h>
+-#ifdef _MSC_VER
++#if defined(_MSC_VER) || defined(__sun)
+ #define powf(a,b) ((gfloat)pow(a,b))
+ #endif
+ 
