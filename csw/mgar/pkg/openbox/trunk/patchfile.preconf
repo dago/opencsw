@@ -88,3 +88,23 @@
  
          g_free(program);
          g_strfreev(argv);
+--- parser/parse.c.orig	Fri Jul  2 19:59:36 2010
++++ parser/parse.c	Fri Jul  2 20:00:14 2010
+@@ -429,16 +429,7 @@
+         xdg_data_dir_paths = slist_path_add(xdg_data_dir_paths,
+                                             g_strdup(DATADIR),
+                                             (GSListFunc) g_slist_append);
+-        xdg_data_dir_paths = slist_path_add(xdg_data_dir_paths,
+-                                            g_build_filename
+-                                            (G_DIR_SEPARATOR_S,
+-                                             "usr", "local", "share", NULL),
+-                                            (GSListFunc) g_slist_append);
+-        xdg_data_dir_paths = slist_path_add(xdg_data_dir_paths,
+-                                            g_build_filename
+-                                            (G_DIR_SEPARATOR_S,
+-                                             "usr", "share", NULL),
+-                                            (GSListFunc) g_slist_append);
++	/* opencsw: removed /usr/share hardcodes. badbadbad */
+     }
+     xdg_data_dir_paths = slist_path_add(xdg_data_dir_paths,
+                                         g_strdup(xdg_data_home_path),
