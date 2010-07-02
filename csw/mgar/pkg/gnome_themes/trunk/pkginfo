@@ -1,0 +1,9 @@
+PKG=CSWgnomethemes
+NAME=gnome_themes - Official themes for the GNOME desktop environment
+ARCH=all
+VERSION=2.30.2,REV=2010.07.02
+CATEGORY=system
+VENDOR=http://www.gnome.org/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/gnome_themes/trunk
