@@ -1,5 +1,5 @@
-PKG=CSWgnomethemes
-NAME=gnome_themes - Official themes for the GNOME desktop environment
+PKG=CSWgnomethemeextras
+NAME=gnome_theme_extras - Extra themes for the GNOME desktop environment
 ARCH=all
 VERSION=2.22.0,REV=2010.07.02
 CATEGORY=system
