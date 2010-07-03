@@ -294,12 +294,16 @@ announce-modulation:
 	@echo "[===== NOW BUILDING: $(DISTNAME) MODULATION $(MODULATION): $(foreach M,$(MODULATORS),$M=$($M)) =====]"
 
 # prerequisite	- Make sure that the system is in a sane state for building the package
-PREREQUISITE_TARGETS = $(addprefix prerequisitepkg-,$(PREREQUISITE_BASE_PKGS) $(BUILD_DEP_PKGS) $(DEP_PKGS) $(foreach S,$(_PKG_SPECS),$(DEP_PKGS_$S))) $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
+ALL_PREREQ_PKGS = $(PREREQUISITE_BASE_PKGS) $(BUILD_DEP_PKGS) $(DEP_PKGS) $(foreach S,$(_PKG_SPECS),$(DEP_PKGS_$S))
+PREREQUISITE_TARGETS =  $(addprefix prerequisite-,$(PREREQUISITE_SCRIPTS))
 
 # Force to be called in global modulation
-prerequisite: $(if $(filter global,$(MODULATION)),announce pre-everything $(COOKIEDIR) $(DOWNLOADDIR) $(PARTIALDIR) $(addprefix dep-$(GARDIR)/,$(FETCHDEPS)) pre-prerequisite $(PREREQUISITE_TARGETS) post-prerequisite)
+prerequisite: $(if $(filter global,$(MODULATION)),announce pre-everything $(COOKIEDIR) $(DOWNLOADDIR) $(PARTIALDIR) $(addprefix dep-$(GARDIR)/,$(FETCHDEPS)) pre-prerequisite check-prereqs $(PREREQUISITE_TARGETS) post-prerequisite)
 	$(if $(filter-out global,$(MODULATION)),$(MAKE) -s MODULATION=global prerequisite)
 	$(DONADA)
+
+check-prereqs:
+	@$(abspath $(GARBIN)/check_for_deps) $(ALL_PREREQ_PKGS)
 
 prerequisitepkg-%:
 	@echo " ==> Verifying for installed package $*: \c"
