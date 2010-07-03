@@ -86,6 +86,26 @@ SYMBOLS_CHECK_ONLY_FOR = r"^CSWpm.*$"
 # Valid URLs in the VENDOR field in pkginfo
 VENDORURL_RE = r"^(http|ftp)s?\://.+\..+$"
 
+BASE_BINARY_PATHS = ('bin', 'lib', 'libexec')
+SPARCV8_PATHS = BASE_BINARY_PATHS + ('sparcv8', 'sparcv8-fsmuld',
+                                     'sparcv7', 'sparc')
+SPARCV8PLUS_PATHS = ('sparcv8plus+vis2', 'sparcv8plus+vis', 'sparcv8plus')
+SPARCV9_PATHS = ('sparcv9+vis2', 'sparcv9+vis', 'sparcv9')
+INTEL_386_PATHS = BASE_BINARY_PATHS + ('pentium_pro+mmx', 'pentium_pro',
+                                       'pentium+mmx', 'pentium',
+                                       'i486', 'i386', 'i86')
+AMD64_PATHS = ('amd64',)
+HACHOIR_MACHINES = {
+    # id: (name, allowed_paths)
+    -1: ("Unknown",   ()),
+     2: ("sparcv8",   SPARCV8_PATHS),
+     3: ("i386",      INTEL_386_PATHS),
+     6: ("i486",      INTEL_386_PATHS),
+    18: ("sparcv8+",  SPARCV8PLUS_PATHS),
+    43: ("sparcv9",   SPARCV9_PATHS),
+    62: ("amd64",     AMD64_PATHS),
+}
+
 
 def CatalognameLowercase(pkg_data, error_mgr, logger, messenger):
   catalogname = pkg_data["basic_stats"]["catalogname"]
@@ -771,3 +791,28 @@ def CheckPythonPackageName(pkg_data, error_mgr, logger, messenger):
         "For example, %s. "
         "However, the catalogname doesn't start with 'py_'."
         % repr(example_py_file))
+
+
+def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  for metadata in pkg_data["files_metadata"]:
+    if "machine_id" not in metadata:
+      continue
+    logger.debug("CheckArchitecture(): %s", metadata)
+    cpu_type, allowed_paths = HACHOIR_MACHINES[metadata["machine_id"]]
+    binary_path, unused_binary_name = os.path.split(metadata["path"])
+    unused_dir, binary_subdir = os.path.split(binary_path)
+    if binary_subdir not in allowed_paths:
+      error_mgr.ReportError(
+          "binary-wrong-architecture",
+          "id=%s name=%s subdir=%s" % (
+            metadata["machine_id"],
+            cpu_type,
+            binary_subdir))
+      messenger.Message(
+          "Files compiled for specific architectures must be placed in "
+          "subdirectories that match the architecture.  For more "
+          "information, visit "
+          "http://www.opencsw.org/extend-it/contribute-packages/"
+          "build-standards/"
+          "architecture-optimization-using-isaexec-and-isalist/")

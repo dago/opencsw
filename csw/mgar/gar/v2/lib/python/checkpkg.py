@@ -29,7 +29,7 @@ import models as m
 
 DEBUG_BREAK_PKGMAP_AFTER = False
 DB_SCHEMA_VERSION = 3L
-PACKAGE_STATS_VERSION = 5L
+PACKAGE_STATS_VERSION = 6L
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 WS_RE = re.compile(r"\s+")
 NEEDED_SONAMES = "needed sonames"
@@ -204,10 +204,7 @@ def ExtractBuildUsername(pkginfo):
 
 
 class SystemPkgmap(object):
-  """A class to hold and manipulate the /var/sadm/install/contents file.
-
-  TODO: Implement timestamp checking and refreshing the cache.
-  """
+  """A class to hold and manipulate the /var/sadm/install/contents file."""
 
   STOP_PKGS = ["SUNWbcp", "SUNWowbcp", "SUNWucb"]
   CHECKPKG_DIR = ".checkpkg"
@@ -1033,6 +1030,7 @@ class PackageStats(object):
       # This entry needs to be last because of the assumption in the
       # CollectStats() function.
       "basic_stats",
+      "files_metadata",
   ]
 
   def __init__(self, srv4_pkg, stats_basedir=None, md5sum=None):
@@ -1282,6 +1280,7 @@ class PackageStats(object):
     # in one of the previous runs, the basic_stats.pickle file is not there
     # or not updated, and the collection is started again.
     self.DumpObject(self.GetBasicStats(), "basic_stats")
+    self.DumpObject(dir_pkg.GetFilesMetadata(), "files_metadata")
     logging.debug("Statistics of %s have been collected.", repr(dir_pkg.pkgname))
 
   def GetAllStats(self):

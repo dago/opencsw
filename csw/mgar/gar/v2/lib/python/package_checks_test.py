@@ -655,6 +655,48 @@ class TestCheckDisallowedPaths_2(CheckpkgUnitTestHelper, unittest.TestCase):
         'This path is already provided by CSWcommon '
         'or is not allowed for other reasons.')
 
+class TestCheckArchitecture_sparcv8plus(CheckpkgUnitTestHelper,
+                                        unittest.TestCase):
+  FUNCTION_NAME = "CheckArchitecture"
+  def CheckpkgTest(self):
+    self.pkg_data["files_metadata"] = [
+       {'endian': 'Big endian',
+        'machine_id': 18,
+        'mime_type': 'application/x-executable; charset=binary',
+        'mime_type_by_hachoir': u'application/x-executable',
+        'path': 'opt/csw/bin/tree'},
+       {'mime_type': 'text/troff; charset=us-ascii',
+        'path': 'opt/csw/share/man/man1/tree.1'},
+       {'mime_type': 'text/plain; charset=us-ascii',
+        'path': 'opt/csw/share/doc/tree/license'}]
+    self.error_mgr_mock.ReportError('binary-wrong-architecture',
+                                    'id=18 name=sparcv8+ subdir=bin')
+
+
+class TestCheckArchitecture_sparcv8plus(CheckpkgUnitTestHelper,
+                                        unittest.TestCase):
+  FUNCTION_NAME = "CheckArchitecture"
+  def CheckpkgTest(self):
+    self.pkg_data["files_metadata"] = [
+       {'endian': 'Big endian',
+        'machine_id': 18,
+        'mime_type': 'application/x-executable; charset=binary',
+        'mime_type_by_hachoir': u'application/x-executable',
+        'path': 'opt/csw/bin/sparcv8plus/tree'},
+       ]
+
+
+class TestCheckArchitecture_sparcv8(CheckpkgUnitTestHelper,
+                                    unittest.TestCase):
+  FUNCTION_NAME = "CheckArchitecture"
+  def CheckpkgTest(self):
+    self.pkg_data["files_metadata"] = [
+       {'endian': 'Big endian',
+        'machine_id': 2,
+        'mime_type': 'application/x-executable; charset=binary',
+        'mime_type_by_hachoir': u'application/x-executable',
+        'path': 'opt/csw/bin/tree'}]
+
 
 class TestConflictingFiles(CheckpkgUnitTestHelper,
                            unittest.TestCase):
