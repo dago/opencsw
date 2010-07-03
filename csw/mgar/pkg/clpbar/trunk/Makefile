@@ -11,6 +11,7 @@ endef
 SPKG_SOURCEURL = http://clpbar.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJ = clpbar
+PATCHFILES += 0001-Allowing-to-modify-CFLAGS.patch
 
 DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
