@@ -1,5 +1,5 @@
 GARNAME      = dbus
-GARVERSION   = 1.3.0
+GARVERSION   = 1.3.1
 CATEGORIES   = lib
 
 DESCRIPTION  = DBus Message Bus System
@@ -48,6 +48,7 @@ EXTRA_CPPFLAGS = -D_XPG4_2
 BUILD64 = 1
 
 PATCHFILES += dbus-sysdeps-unix.c.diff
+PATCHFILES += dbus-sysdeps.h.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
