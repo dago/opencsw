@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# test if the messagebus group exist, if not create it
+eval getent group messagebus > /dev/null
+if test $? -gt 0
+then 
+	groupadd messagebus > /dev/null
+	echo group messagebus has been added
+	
+	eval getent group messagebus > /dev/null
+	if test $? -gt 0
+	then
+		echo ERROR: Failed to add group messagebus
+		exit 1
+	fi
+fi
+
+# test if the messagebus user exist, if not create it
+eval getent passwd messagebus > /dev/null
+if test $? -gt 0
+then 	
+	useradd -c "DBus daemon user" -g messagebus -d /opt/csw/share -s /bin/sh messagebus > /dev/null
+	echo user messagebus has been added
+
+	eval getent passwd messagebus > /dev/null
+	if test $? -gt 0
+	then 	
+		echo ERROR: Failed to add user messagebus
+		exit 1
+	fi
+fi
+
