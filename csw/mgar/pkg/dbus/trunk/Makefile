@@ -33,8 +33,12 @@ PKGFILES_CSWlibdbusdev += $(libdir)/dbus-1.0/.*
 PKGFILES_CSWlibdbus     = $(PKGFILES_RT)
 
 # Dependencies tracking
-RUNTIME_DEP_PKGS_CSWdbus        = CSWexpat CSWlibdbus CSWlibsm CSWlibice CSWlibx11 CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWdbus        = CSWexpat CSWlibdbus CSWcswclassutils
 RUNTIME_DEP_PKGS_CSWlibdbusdev  = CSWlibdbus
+
+CHECKPKG_OVERRIDES_CSWlibdbusdev += surplus-dependency|CSWlibdbus
+CHECKPKG_OVERRIDES_CSWdbus += action-class-only-in-pkginfo|cswinitsmf
+CHECKPKG_OVERRIDES_CSWdbus += action-class-only-in-pkginfo|cswcpsampleconf
 
 # SMF support
 SPKG_CLASSES_CSWdbus = none cswcpsampleconf cswinitsmf 
