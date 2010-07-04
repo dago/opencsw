@@ -14,7 +14,8 @@ endef
 SPKG_SOURCEURL = http://mama.indstate.edu/users/ice/tree/
 MASTER_SITES  = ftp://mama.indstate.edu/linux/tree/
 MASTER_SITES += http://www.sfr-fresh.com/linux/misc/
-PATCHFILES = solaris.patch
+PATCHFILES += solaris.patch
+PATCHFILES += 0002-Allowing-CFLAGS-from-GAR.patch
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 CONFIGURE_SCRIPTS =
