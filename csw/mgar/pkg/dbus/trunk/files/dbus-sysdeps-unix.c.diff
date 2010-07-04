@@ -15,7 +15,7 @@
    else
      {
 -      if (!_dbus_string_append (&servicedir_path, "/usr/local/share:/usr/share:"))
-+      if (!_dbus_string_append (&servicedir_path, "/opt/csw/share:"))
++      if (!_dbus_string_append (&servicedir_path, "/opt/csw/share:/usr/local/share:/usr/share:"))
          goto oom;
      }
 
@@ -24,7 +24,7 @@
    else
      {
 -      if (!_dbus_string_append (&servicedir_path, "/usr/local/share:/usr/share:"))
-+      if (!_dbus_string_append (&servicedir_path, "/opt/csw/share:"))
++      if (!_dbus_string_append (&servicedir_path, "/opt/csw/share:/usr/local/share:/usr/share:"))
          goto oom;
      }
 
