@@ -34,6 +34,7 @@ RUNTIME_DEP_PKGS += CSWpmhtmltree
 RUNTIME_DEP_PKGS += CSWpmlibwww
 RUNTIME_DEP_PKGS += CSWpmyaml
 RUNTIME_DEP_PKGS += CSWpy-libmagic
+RUNTIME_DEP_PKGS += CSWpy-hachoir-parser
 RUNTIME_DEP_PKGS += CSWpython
 
 WORKSRC = $(WORKDIR)
