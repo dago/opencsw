@@ -482,10 +482,16 @@ makepatch-modulated: $(FILEDIR)
 			( NEXTPATCH=`git log --pretty=oneline master..HEAD | wc -l | tr -d '[[:space:]]'`; \
 			git format-patch --start-number=$$NEXTPATCH csw-$(GARVERSION); \
 			echo Add the following to your recipe and then; \
+			NEWPATCHES=`echo 00*-*patch`; \
+			FILES_PATCHES=`for p in $$NEWPATCHES; do echo files/$$p; done`; \
 			echo rerun: gmake makesums; \
-			echo PATCHFILES +=  000$${NEXTPATCH}*; \
+			echo PATCHFILES +=  $$NEWPATCHES; \
 			echo "(or maybe PATCHFILES_$(MODULATION) ??)"; \
-			mv 000$${NEXTPATCH}*patch $(abspath $(FILEDIR)); ) \
+			echo "Don't forget:"; \
+			echo; \
+			echo "	svn add" $$FILES_PATCHES; \
+			echo; \
+			mv $$NEWPATCHES $(abspath $(FILEDIR)); ) \
 		fi; \
 	    else \
 		echo "No extracted sources so we can't create patches..."; \
