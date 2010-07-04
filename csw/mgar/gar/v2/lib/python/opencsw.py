@@ -460,11 +460,17 @@ class CswSrv4File(ShellMixin, object):
     if not os.path.isdir(destdir):
       raise PackageError("%s doesn't exist or is not a directory" % destdir)
     args = [os.path.join(os.path.dirname(__file__), "custom-pkgtrans"),
-           src_file, destdir, pkgname ]
-    pkgtrans_proc = subprocess.Popen(args)
-    pkgtrans_proc.communicate()
+            src_file,
+            destdir,
+            pkgname ]
+    pkgtrans_proc = subprocess.Popen(args,
+                                     stdout=subprocess.PIPE,
+                                     stderr=subprocess.PIPE)
+    stdout, stderr = pkgtrans_proc.communicate()
     ret = pkgtrans_proc.wait()
     if ret:
+      logging.error(stdout)
+      logging.error(stderr)
       logging.error("% has failed" % args)
 
   def GetPkgname(self):
@@ -827,9 +833,6 @@ class DirectoryFormatPackage(ShellMixin, object):
             machine_id = parser["/header/machine"].value
             file_info["machine_id"] = machine_id
             file_info["endian"] = parser["/header/endian"].display
-        else:
-          logging.debug("%s is not a binary, or hachoir is disabled.",
-                        full_path)
         self.files_metadata.append(file_info)
     return self.files_metadata
 
@@ -970,7 +973,7 @@ class Pkgmap(object):
       if strip:
         strip_re = re.compile(r"^%s" % strip)
         fields = [re.sub(strip_re, "", x) for x in fields]
-      logging.debug(fields)
+      # logging.debug(fields)
       line_to_add = None
       installed_path = None
       prototype_class = None
@@ -1185,7 +1188,6 @@ class OpencswCatalog(object):
 def IsBinary(file_info):
   """Returns True or False depending on file metadata."""
   is_a_binary = False
-  logging.debug("IsBinary(%s)", repr(file_info))
   for mimetype in BIN_MIMETYPES:
     if mimetype in file_info["mime_type"]:
       is_a_binary = True

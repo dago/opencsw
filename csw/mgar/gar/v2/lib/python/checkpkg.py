@@ -1122,9 +1122,6 @@ class PackageStats(object):
       binary_data["soname_guessed"] = False
       binary_data["base_name"] = binary_base_name
       if SONAME not in binary_data:
-        logging.debug("The %s binary doesn't provide a SONAME. "
-                      "(It might be an executable)",
-                     binary_base_name)
         # The binary doesn't tell its SONAME.  We're guessing it's the
         # same as the base file name.
         binary_data[SONAME] = binary_base_name

@@ -23,13 +23,17 @@ from Cheetah import Template
 
 PATHS_ALLOWED_ONLY_IN = {
     # Leading slash must be removed.
-    "CSWcommon":  [r"opt",
-                   r"opt/csw/man.*",
-                   r"opt/csw/doc",
-                   r"opt/csw/info",
-                   r"opt/csw/share/locale/locale.alias"],
-    "CSWiconv":   [r"opt/csw/lib/charset.alias"],
-    "CSWtexinfo": [r"opt/csw/share/info/dir"],
+    # Using strings where possible for performance.
+    "CSWcommon":  {"string": [
+                       r"opt",
+                       r"opt/csw/man",
+                       r"opt/csw/doc",
+                       r"opt/csw/info",
+                       r"opt/csw/share/locale/locale.alias",
+                   ],
+                   "regex": [r"opt/csw/man/.*"]},
+    "CSWiconv":   {"string": [r"opt/csw/lib/charset.alias"]},
+    "CSWtexinfo": {"string": [r"opt/csw/share/info/dir"]},
 }
 MAX_DESCRIPTION_LENGTH = 100
 LICENSE_TMPL = "/opt/csw/share/doc/%s/license"
@@ -69,14 +73,14 @@ RPATH_PARTS = {
     'subdir2': r"(?P<subdir2>/[\w\-\.]+)",
 }
 RPATH_WHITELIST = [
-    ("^"
-     "%(prefix)s"
-     "%(prefix_extra)s"
-     "/(lib|libexec)"
-     "%(subdirs)s"
-     "%(isalist)s?"
-     "%(subdir2)s?"
-     "$") % RPATH_PARTS,
+    (r"^"
+     r"%(prefix)s"
+     r"%(prefix_extra)s"
+     r"/(lib|libexec)"
+     r"%(subdirs)s"
+     r"%(isalist)s?"
+     r"%(subdir2)s?"
+     r"$") % RPATH_PARTS,
     r"^\$ORIGIN$",
     r"^/usr(/(ccs|dt|openwin))?/lib(/sparcv9)?$",
 ]
@@ -105,6 +109,27 @@ HACHOIR_MACHINES = {
     43: ("sparcv9",   SPARCV9_PATHS),
     62: ("amd64",     AMD64_PATHS),
 }
+
+def RemovePackagesUnderInstallation(paths_and_pkgs_by_soname,
+                                    pkgs_to_be_installed):
+  """Emulates uninstallation of packages prior to installation
+  of the new ones.
+  {'libfoo.so.1': {u'/opt/csw/lib': [u'CSWlibfoo']}}
+  """
+  # for brevity
+  ptbi = set(pkgs_to_be_installed)
+  ppbs = paths_and_pkgs_by_soname
+  new_ppbs = {}
+  for soname in ppbs:
+    if soname not in new_ppbs:
+      new_ppbs[soname] = {}
+    for binary_path in ppbs[soname]:
+      for pkgname in ppbs[soname][binary_path]:
+        if pkgname not in ptbi:
+          if binary_path not in new_ppbs[soname]:
+            new_ppbs[soname][binary_path] = []
+          new_ppbs[soname][binary_path].append(pkgname)
+  return new_ppbs
 
 
 def CatalognameLowercase(pkg_data, error_mgr, logger, messenger):
@@ -199,28 +224,6 @@ def CheckSmfIntegration(pkg_data, error_mgr, logger, messenger):
       error_mgr.ReportError(
           "init-file-wrong-location",
           entry["path"])
-
-
-def RemovePackagesUnderInstallation(paths_and_pkgs_by_soname,
-                                    pkgs_to_be_installed):
-  """Emulates uninstallation of packages prior to installation
-  of the new ones.
-  {'libfoo.so.1': {u'/opt/csw/lib': [u'CSWlibfoo']}}
-  """
-  # for brevity
-  ptbi = set(pkgs_to_be_installed)
-  ppbs = paths_and_pkgs_by_soname
-  new_ppbs = {}
-  for soname in ppbs:
-    if soname not in new_ppbs:
-      new_ppbs[soname] = {}
-    for binary_path in ppbs[soname]:
-      for pkgname in ppbs[soname][binary_path]:
-        if pkgname not in ptbi:
-          if binary_path not in new_ppbs[soname]:
-            new_ppbs[soname][binary_path] = []
-          new_ppbs[soname][binary_path].append(pkgname)
-  return new_ppbs
 
 
 def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
@@ -588,7 +591,16 @@ def CheckDisallowedPaths(pkg_data, error_mgr, logger, messenger):
       common_path = common_path[1:]
     common_paths.append(common_path)
   paths_only_allowed_in = copy.copy(PATHS_ALLOWED_ONLY_IN)
-  paths_only_allowed_in["CSWcommon"] += common_paths
+  ss = paths_only_allowed_in["CSWcommon"]["string"]
+  paths_only_allowed_in["CSWcommon"]["string"] = set(ss).union(common_paths)
+  # Compile all the regex expressions ahead of time.
+  for pkgname in paths_only_allowed_in:
+    if "regex" in paths_only_allowed_in[pkgname]:
+      regexes = paths_only_allowed_in[pkgname]["regex"]
+      paths_only_allowed_in[pkgname]["regex"] = map(re.compile, regexes)
+    if "string" in paths_only_allowed_in[pkgname]:
+      paths_only_allowed_in[pkgname]["string"] = set(
+          paths_only_allowed_in[pkgname]["string"])
   paths_in_pkg = set()
   for entry in pkg_data["pkgmap"]:
     entry_path = entry["path"]
@@ -599,14 +611,23 @@ def CheckDisallowedPaths(pkg_data, error_mgr, logger, messenger):
     paths_in_pkg.add(entry_path)
   for pkgname in paths_only_allowed_in:
     if pkgname != pkg_data["basic_stats"]["pkgname"]:
-      for disallowed_path in paths_only_allowed_in[pkgname]:
-        disallowed_re = re.compile(r"^%s$" % disallowed_path)
-        for path_in_pkg in paths_in_pkg:
-          if disallowed_re.match(path_in_pkg):
-            error_mgr.ReportError(
-                "disallowed-path", path_in_pkg,
-                "This path is already provided by %s "
-                "or is not allowed for other reasons." % pkgname)
+      if "string" in paths_only_allowed_in[pkgname]:
+        ss = paths_only_allowed_in[pkgname]["string"]
+        intersection =  ss.intersection(paths_in_pkg)
+        for path_in_pkg in intersection:
+          error_mgr.ReportError(
+              "disallowed-path", path_in_pkg,
+              "This path is already provided by %s "
+              "or is not allowed for other reasons." % pkgname)
+      if "regex" in paths_only_allowed_in[pkgname]:
+        rr = paths_only_allowed_in[pkgname]["regex"]
+        for disallowed_re in rr:
+          badpaths = filter(disallowed_re.match, paths_in_pkg)
+          for path_in_pkg in badpaths:
+              error_mgr.ReportError(
+                  "disallowed-path", path_in_pkg,
+                  "This path is already provided by %s "
+                  "or is not allowed for other reasons." % pkgname)
 
 
 def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
@@ -629,7 +650,7 @@ def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger, messenger):
                                 entry["path"])
 
 
-def CheckBadPaths(pkg_data, error_mgr, logger, messenger):
+def CheckBadContent(pkg_data, error_mgr, logger, messenger):
   for regex in pkg_data["bad_paths"]:
     for file_name in pkg_data["bad_paths"][regex]:
       messenger.Message("File %s contains bad content: %s. "
