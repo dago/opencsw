@@ -24,8 +24,7 @@ PACKAGES = CSWdbusglib CSWdbusglibdev
 CATALOGNAME_CSWdbusglib         = dbus_glib
 CATALOGNAME_CSWdbusglibdev      = dbus_glibdev
 
-RUNTIME_DEP_PKGS_CSWdbusglibdev	= CSWdbusglib
-RUNTIME_DEP_PKGS_CSWdbusglib    = CSWexpat CSWggettextrt CSWglib2 CSWiconv CSWsunmath CSWlibdbus
+RUNTIME_DEP_PKGS_CSWdbusglib    = CSWexpat CSWggettextrt CSWglib2 CSWlibdbus
 
 PKGFILES_CSWdbusglibdev  = $(PKGFILES_DEVEL)
 # PKGFILES_CSWdbusglibdev += $(prefix)/include/.*
