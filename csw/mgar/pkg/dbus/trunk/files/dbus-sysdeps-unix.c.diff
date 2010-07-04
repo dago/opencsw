@@ -10,21 +10,12 @@
 
  #ifdef HAVE_ERRNO_H
  #include <errno.h>
-@@ -3043,7 +3043,7 @@
-     return -1;
-   }
-
--#ifndef F_DUPFD_CLOEXEC
-+#ifdef F_DUPFD_CLOEXEC
-   if (!cloexec_done)
- #endif
-     {
 @@ -3268,7 +3271,7 @@
      }
    else
      {
 -      if (!_dbus_string_append (&servicedir_path, "/usr/local/share:/usr/share:"))
-+      if (!_dbus_string_append (&servicedir_path, "/opt/csw/share:/usr/local/share:/usr/share:"))
++      if (!_dbus_string_append (&servicedir_path, "/opt/csw/share:"))
          goto oom;
      }
 
@@ -33,7 +24,7 @@
    else
      {
 -      if (!_dbus_string_append (&servicedir_path, "/usr/local/share:/usr/share:"))
-+      if (!_dbus_string_append (&servicedir_path, "/opt/csw/share:/usr/local/share:/usr/share:"))
++      if (!_dbus_string_append (&servicedir_path, "/opt/csw/share:"))
          goto oom;
      }
 
