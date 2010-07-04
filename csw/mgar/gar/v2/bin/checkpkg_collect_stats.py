@@ -12,6 +12,7 @@ import os
 import os.path
 import subprocess
 import sys
+import progressbar
 
 # The following bit of code sets the correct path to Python libraries
 # distributed with GAR.
@@ -58,13 +59,18 @@ def main():
   stats_list.reverse()
   total_packages = len(stats_list)
   counter = itertools.count(1)
+  bar = progressbar.ProgressBar()
+  bar.maxval = total_packages
+  bar.start()
+  logging.debug("Making sure package statistics are collected.")
   while stats_list:
     # This way objects will get garbage collected as soon as they are removed
     # from the list by pop().  The destructor (__del__()) of the srv4 class
     # removes the temporary directory from the disk.  This allows to process
     # the whole catalog.
     stats_list.pop().CollectStats()
-    logging.debug("Collected stats %s of %s.", counter.next(), total_packages)
+    bar.update(counter.next())
+  bar.finish()
 
 if __name__ == '__main__':
   main()

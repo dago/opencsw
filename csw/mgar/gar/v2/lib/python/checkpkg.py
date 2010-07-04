@@ -731,6 +731,8 @@ class CheckpkgManagerBase(object):
 
   def GetOptimizedAllStats(self, stats_obj_list):
     pkgs_data = []
+    counter = itertools.count()
+    length = len(stats_obj_list)
     for stats_obj in stats_obj_list:
       # pkg_data = {}
       # This bit is tightly tied to the data structures returned by
@@ -738,7 +740,9 @@ class CheckpkgManagerBase(object):
       #
       # Python strings are already implementing the flyweight pattern. What's
       # left is lists and dictionaries.
-      logging.debug("Loading stats for %s", stats_obj.md5sum)
+      i = counter.next()
+      logging.debug("Loading stats for %s (%s/%s)",
+                    stats_obj.md5sum, i, length)
       raw_pkg_data = stats_obj.GetAllStats()
       pkg_data = raw_pkg_data
       pkgs_data.append(pkg_data)

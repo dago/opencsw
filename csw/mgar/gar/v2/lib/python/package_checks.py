@@ -50,7 +50,7 @@ OBSOLETE_DEPS = {
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
 MAX_CATALOGNAME_LENGTH = 20
 MAX_PKGNAME_LENGTH = 20
-ARCH_LIST = ["sparc", "i386", "all"]
+ARCH_LIST = opencsw.ARCHITECTURES
 VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
 # Pkgnames matching these regexes must not be ARCHALL = 1
 ARCH_SPECIFIC_PKGNAMES_RE_LIST = [
@@ -90,24 +90,50 @@ SYMBOLS_CHECK_ONLY_FOR = r"^CSWpm.*$"
 # Valid URLs in the VENDOR field in pkginfo
 VENDORURL_RE = r"^(http|ftp)s?\://.+\..+$"
 
-BASE_BINARY_PATHS = ('bin', 'lib', 'libexec')
-SPARCV8_PATHS = BASE_BINARY_PATHS + ('sparcv8', 'sparcv8-fsmuld',
-                                     'sparcv7', 'sparc')
+BASE_BINARY_PATHS = ('bin', 'sbin', 'lib', 'libexec', 'cgi-bin')
+SPARCV8_PATHS = ('sparcv8', 'sparcv8-fsmuld',
+                 'sparcv7', 'sparc')
 SPARCV8PLUS_PATHS = ('sparcv8plus+vis2', 'sparcv8plus+vis', 'sparcv8plus')
 SPARCV9_PATHS = ('sparcv9+vis2', 'sparcv9+vis', 'sparcv9')
-INTEL_386_PATHS = BASE_BINARY_PATHS + ('pentium_pro+mmx', 'pentium_pro',
-                                       'pentium+mmx', 'pentium',
-                                       'i486', 'i386', 'i86')
+INTEL_386_PATHS = ('pentium_pro+mmx', 'pentium_pro',
+                   'pentium+mmx', 'pentium',
+                   'i486', 'i386', 'i86')
 AMD64_PATHS = ('amd64',)
 HACHOIR_MACHINES = {
-    # id: (name, allowed_paths)
-    -1: ("Unknown",   ()),
-     2: ("sparcv8",   SPARCV8_PATHS),
-     3: ("i386",      INTEL_386_PATHS),
-     6: ("i486",      INTEL_386_PATHS),
-    18: ("sparcv8+",  SPARCV8PLUS_PATHS),
-    43: ("sparcv9",   SPARCV9_PATHS),
-    62: ("amd64",     AMD64_PATHS),
+    # id: (name, allowed_paths, disallowed_paths)
+    -1: {"name": "Unknown",
+         "allowed": (), "disallowed": (),
+         "type": "unknown"},
+     2: {"name": "sparcv8",
+         "type": opencsw.ARCH_SPARC,
+         "allowed": BASE_BINARY_PATHS + SPARCV8_PATHS,
+         "disallowed": SPARCV9_PATHS + INTEL_386_PATHS + AMD64_PATHS,
+        },
+     3: {"name": "i386",
+         "type": opencsw.ARCH_i386,
+         "allowed": INTEL_386_PATHS,
+         "disallowed": (),
+        },
+     6: {"name": "i486",
+         "type": opencsw.ARCH_i386,
+         "allowed": INTEL_386_PATHS,
+         "disallowed": (),
+         },
+    18: {"name": "sparcv8+",
+         "type": opencsw.ARCH_SPARC,
+         "allowed": SPARCV8PLUS_PATHS,
+         "disallowed": (),
+        },
+    43: {"name": "sparcv9",
+         "type": opencsw.ARCH_SPARC,
+         "allowed": SPARCV9_PATHS,
+         "disallowed": (),
+        },
+    62: {"name": "amd64",
+         "type": opencsw.ARCH_i386,
+         "allowed": AMD64_PATHS,
+         "disallowed": (),
+        },
 }
 
 def RemovePackagesUnderInstallation(paths_and_pkgs_by_soname,
@@ -433,6 +459,12 @@ def CheckArchitectureVsContents(pkg_data, error_mgr, logger, messenger):
                       "to keep it architecture-specific."
                       % (pkgname, arch))
     messenger.SuggestGarLine("ARCHALL_%s = 1" % pkgname)
+
+
+# TODO: Verify that architecture type of binaries matches the actual binaries.
+# Correlate architecture type from files_metadata and HACHOIR_MACHINES with
+# pkginfo.
+
 
 def CheckFileNameSanity(pkg_data, error_mgr, logger, messenger):
   basic_stats = pkg_data["basic_stats"]
@@ -820,20 +852,41 @@ def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
     if "machine_id" not in metadata:
       continue
     logger.debug("CheckArchitecture(): %s", metadata)
-    cpu_type, allowed_paths = HACHOIR_MACHINES[metadata["machine_id"]]
-    binary_path, unused_binary_name = os.path.split(metadata["path"])
-    unused_dir, binary_subdir = os.path.split(binary_path)
-    if binary_subdir not in allowed_paths:
+    machine_data = HACHOIR_MACHINES[metadata["machine_id"]]
+    cpu_type = machine_data["name"]
+    allowed_paths = set(machine_data["allowed"])
+    disallowed_paths = set(machine_data["disallowed"])
+    path_parts = set(metadata["path"].split(os.path.sep))
+    if not path_parts.intersection(allowed_paths):
       error_mgr.ReportError(
-          "binary-wrong-architecture",
-          "id=%s name=%s subdir=%s" % (
+          "binary-architecture-does-not-match-placement",
+          "file=%s arch_id=%s arch_name=%s" % (
+            metadata["path"],
             metadata["machine_id"],
-            cpu_type,
-            binary_subdir))
+            cpu_type))
       messenger.Message(
           "Files compiled for specific architectures must be placed in "
-          "subdirectories that match the architecture.  For more "
-          "information, visit "
+          "subdirectories that match the architecture.  "
+          "For example, a sparcv8+ binary must not be placed under "
+          "/opt/csw/lib, but under /opt/csw/lib/sparcv8plus.  "
+          "For more information, visit "
           "http://www.opencsw.org/extend-it/contribute-packages/"
           "build-standards/"
           "architecture-optimization-using-isaexec-and-isalist/")
+    else:
+      for bad_path in path_parts.intersection(disallowed_paths):
+        error_mgr.ReportError(
+          "binary-disallowed-placement",
+          "file=%s arch_id=%s arch_name=%s bad_path=%s" % (
+            metadata["path"],
+            metadata["machine_id"],
+            cpu_type,
+            bad_path))
+        messenger.Message(
+            "The %s binary is placed in a disallowed path.  "
+            "For example, a sparcv8+ binary must not be placed "
+            "under a directory named sparcv9.  "
+            "For more information, visit "
+            "http://www.opencsw.org/extend-it/contribute-packages/"
+            "build-standards/"
+            "architecture-optimization-using-isaexec-and-isalist/")

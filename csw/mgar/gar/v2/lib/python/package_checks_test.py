@@ -698,6 +698,32 @@ class TestCheckArchitecture_sparcv8(CheckpkgUnitTestHelper,
         'path': 'opt/csw/bin/tree'}]
 
 
+class TestCheckArchitecture_LibSubdir(CheckpkgUnitTestHelper,
+                                      unittest.TestCase):
+  FUNCTION_NAME = "CheckArchitecture"
+  def CheckpkgTest(self):
+    self.pkg_data["files_metadata"] = [
+       {'endian': 'Big endian',
+        'machine_id': 2,
+        'mime_type': 'application/x-sharedlib; charset=binary',
+        'path': 'opt/csw/lib/foo/subdir/libfoo.so.1'}]
+
+
+class TestCheckArchitecture_LibSubdirWrong(CheckpkgUnitTestHelper,
+                                      unittest.TestCase):
+  FUNCTION_NAME = "CheckArchitecture"
+  def CheckpkgTest(self):
+    self.pkg_data["files_metadata"] = [
+       {'endian': 'Big endian',
+        'machine_id': 2,
+        'mime_type': 'application/x-sharedlib; charset=binary',
+        'path': 'opt/csw/lib/sparcv9/foo/subdir/libfoo.so.1'}]
+    self.error_mgr_mock.ReportError(
+        'binary-wrong-wrong-placement',
+        'file=opt/csw/lib/sparcv9/foo/subdir/libfoo.so.1 '
+        'arch_id=2 arch_name=sparcv8 bad_path=sparcv9')
+
+
 class TestConflictingFiles(CheckpkgUnitTestHelper,
                            unittest.TestCase):
   """Throw an error if there's a conflicting file in the package set."""

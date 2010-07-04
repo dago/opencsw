@@ -30,7 +30,10 @@ import urllib2
 import checkpkg
 from Cheetah import Template
 
-ARCHITECTURES = ["i386", "sparc", "all"]
+ARCH_SPARC = "sparc"
+ARCH_i386 = "i386"
+ARCH_ALL = "all"
+ARCHITECTURES = [ARCH_SPARC, ARCH_i386, ARCH_ALL]
 MAJOR_VERSION = "major version"
 MINOR_VERSION = "minor version"
 PATCHLEVEL = "patchlevel"
