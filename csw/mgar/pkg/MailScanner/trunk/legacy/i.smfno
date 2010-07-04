@@ -1,0 +1,13 @@
+# i.smfno script
+
+# Copy the non-SMF specific files to the base directory.
+
+echo "Installing class <smfno>."
+
+while read src dest
+do
+  /usr/bin/cp $src $dest || exit 2
+  echo $dest
+done
+
+exit 0

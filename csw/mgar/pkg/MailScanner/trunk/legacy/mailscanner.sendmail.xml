@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+        Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
+        Use is subject to license terms.
+
+        ident   "@(#)cswmailscanner.sendmail.xml       1.11    04/12/16 SMI"
+
+        NOTE:  This service manifest is for CSWsendmail and is 
+        not editable; its contents will be overwritten by pkg-get 
+        upgrade.  Make customizations in a different file.
+
+	2008-07-03. Based on the manifest for CSWsendmail. /bonivart
+-->
+
+<service_bundle type='manifest' name='mailscannersendmail:mailscannersendmail'>
+
+<service
+        name='network/smtp/cswmailscannersendmail'
+        type='service'
+        version='1'>
+
+        <single_instance />
+
+        <dependency
+            name='fs-local'
+            grouping='require_all'
+            restart_on='none'
+            type='service'>
+                <service_fmri value='svc:/system/filesystem/local' />
+        </dependency>
+
+        <dependency
+            name='network-service'
+            grouping='require_all'
+            restart_on='none'
+            type='service'>
+                <service_fmri value='svc:/network/service' />
+        </dependency>
+
+        <dependency
+            name='name-services'
+            grouping='require_all'
+            restart_on='refresh'
+            type='service'>
+                <service_fmri value='svc:/milestone/name-services' />
+        </dependency>
+
+        <dependency
+            name='identity'
+            grouping='optional_all'
+            restart_on='refresh'
+            type='service'>
+                <service_fmri value='svc:/system/identity:domain' />
+        </dependency>
+
+        <dependency
+            name='system-log'
+            grouping='optional_all'
+            restart_on='none'
+            type='service'>
+                <service_fmri value='svc:/system/system-log' />
+        </dependency>
+
+        <instance name='default' enabled='false'>
+
+                <dependency
+                    name='config-file'
+                    grouping='require_all'
+                    restart_on='refresh'
+                    type='path'>
+                        <service_fmri
+                            value='file://localhost/opt/csw/etc/mail/sendmail.cf' />
+                </dependency>
+
+                <dependency
+                    name='nsswitch'
+                    grouping='require_all'
+                    restart_on='refresh'
+                    type='path'>
+                        <service_fmri
+                            value='file://localhost/etc/nsswitch.conf' />
+                </dependency>
+
+                <!--
+                If autofs is enabled, wait for it to get users' home
+                directories.
+                -->
+                <dependency
+                    name='autofs'
+                    grouping='optional_all'
+                    restart_on='none'
+                    type='service'>
+                        <service_fmri value='svc:/system/filesystem/autofs' />
+                </dependency>
+
+                <!--
+                Sendmail is hard-coded to sleep for 60 seconds if it cannot
+                determine the FQHN, so the timeout for start must be longer
+                than that.  For details, see
+                http://www.sendmail.org/vendor/sun/differences.html#3.2
+                -->
+
+                <exec_method
+                        type='method'
+                        name='start'
+                        exec='/var/opt/csw/svc/method/svc-mailscanner.sendmail start'
+                        timeout_seconds='120' />
+
+                <exec_method
+                        type='method'
+                        name='stop'
+                        exec='/var/opt/csw/svc/method/svc-mailscanner.sendmail stop %{restarter/contract}'
+                        timeout_seconds='60' />
+
+                <exec_method
+                        type='method'
+                        name='refresh'
+                        exec='/var/opt/csw/svc/method/svc-mailscanner.sendmail refresh'
+                        timeout_seconds='60' />
+
+                <property_group name='startd' type='framework'>
+                        <propval name='ignore_error' type='astring'
+                            value='core,signal' />
+                </property_group>
+
+                <property_group name='general' type='framework'>
+                        <propval name='action_authorization' type='astring'
+                                value='solaris.smf.manage.sendmail' />
+                </property_group>
+
+                <template>
+                        <common_name>
+                                <loctext xml:lang='C'>
+                                sendmail SMTP mail transfer agent
+                                </loctext>
+                        </common_name>
+                        <documentation>
+                                <manpage title='sendmail' section='1M'
+                                    manpath='/opt/csw/share/man' />
+                        </documentation>
+                </template>
+
+        </instance>
+
+        <stability value='Unstable' />
+
+</service>
+
+</service_bundle>

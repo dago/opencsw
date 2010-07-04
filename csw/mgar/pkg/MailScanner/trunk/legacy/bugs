@@ -1,0 +1,20 @@
+New
+===
+070713. DBI is required (for SA cache?), but is listed as optional.
+070711. What is clamd looking for in virus.scanners.conf? /bin/false for path?
+070711. Syslogging shows localhost instead of actual hostname.
+
+Fixed
+=====
+080409. Bug in update_bad_phishing_sites, logs as update.phishing.sites. FIX:
+        rewritten in Perl in 4.68.
+070815. Date::Parse (TimeDate) is required. Not listed with -v. FIX: fixed in
+        4.64.3.
+070816. check_mailscanner should use pgrep instead of complicated 4-line
+        grep that fails if path does not contain MailScanner. FIX: fixed in
+        4.63.8.
+070711. Why is a new incoming pid-dir created for a --lint? Or more importantly,
+        why is it not removed after the lint is finished? FIX: seems OK in 4.62.
+070711. MailScanner.pid left in /opt/csw/mailscanner, should be written to
+        /opt/csw/mailscanner/var. FIX: path in cswmailscanner (start script in
+        init.d) fixed.

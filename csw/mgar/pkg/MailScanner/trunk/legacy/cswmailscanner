@@ -1,0 +1,70 @@
+#!/sbin/sh
+
+# cswmailscanner - controls MailScanner
+# 2007-08-15 Peter Bonivart
+
+DIR=/opt/csw/mailscanner
+MSCONF=$DIR/etc/MailScanner.conf
+MS_LOCKFILE=$DIR/var/MailScanner.off
+PPID=$DIR/var/MailScanner.pid
+HOSTNAME=`hostname`
+export HOSTNAME
+
+case "$1" in
+  start)
+    [ -f "$MSCONF" ] || exit
+    msin=`grep '^Incoming Work Dir' /opt/csw/mailscanner/etc/MailScanner.conf | awk '{print $5}'`
+    msquar=`grep '^Quarantine Dir' /opt/csw/mailscanner/etc/MailScanner.conf | awk '{print $4}'`
+    if [ ! -d "$msin" ]; then
+      /usr/bin/mkdir -m 0755 "$msin"
+      /usr/bin/chown root:bin "$msin"
+    fi
+    if [ ! -d "$msquar" ]; then
+      /usr/bin/mkdir -m 0750 "$msquar"
+      /usr/bin/chown root:bin "$msquar"
+    fi
+    $DIR/bin/check_mailscanner
+    rm -f $MS_LOCKFILE
+    ;;
+  stop)
+    echo Shutting down MailScanner...
+    if [ -s "$PPID" ]; then
+      kill `cat $PPID`
+      > $PPID
+      touch $MS_LOCKFILE
+    else
+      echo MailScanner is not running
+    fi
+    ;;
+  restart)
+    echo Restarting MailScanner...
+    $0 stop
+    echo "Waiting for MailScanner to stop.\c"
+    while ( pgrep MailScanner > /dev/null )
+    do
+      echo ".\c"
+      sleep 1
+    done
+    echo
+    sleep 1
+    $0 start
+    ;;
+  reload)
+    echo Reloading MailScanner...
+    pkill -HUP -x MailScanner
+    ;;
+  status)
+    PID=`pgrep MailScanner`
+    if [ "$PID" ]; then
+      echo MailScanner running with pid $PID
+    else
+      echo MailScanner not running
+    fi
+    ;;
+  *)
+    echo "Usage: $0 { start | stop | restart | reload | status }"
+    exit 1
+    ;;
+esac
+
+exit 0

@@ -1,0 +1,13 @@
+# i.smfyes script
+
+# Copy the SMF specific files to the base directory.
+
+echo "Installing class <smfyes>."
+
+while read src dest
+do
+  /usr/bin/cp $src $dest || exit 2
+  echo $dest
+done
+
+exit 0

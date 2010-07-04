@@ -1,0 +1,20 @@
+--- SA.pm.orig	Wed Apr  9 13:13:37 2008
++++ SA.pm	Wed Apr  9 13:14:18 2008
+@@ -85,7 +85,7 @@
+     my $result;
+     # Do a trial run of awk to see if it is going to work on this system.
+     eval {
+-      $result = `echo 'Hello,World' | awk '{printf \"%s %s\\n\", strftime(\"%T\"), \$0}' 2>&1`;
++      $result = `echo 'Hello,World' | /opt/csw/bin/gawk '{printf \"%s %s\\n\", strftime(\"%T\"), \$0}' 2>&1`;
+       #print "Result is \"$result\"\n";
+     };
+     #print "Eval result = \"$@\"\n";
+@@ -96,7 +96,7 @@
+       #select STDERR; $| = 1;
+       # Re-open STDERR with the current time stuck on the front of each line.
+       # It should work okay as we have just tried it out.
+-      open STDERR, "| awk '{printf \"%s %s\\n\", strftime(\"%T\"), \$0}'";
++      open STDERR, "| /opt/csw/bin/gawk '{printf \"%s %s\\n\", strftime(\"%T\"), \$0}'";
+       select STDOUT;
+     } else {
+       print STDERR "\n\n*****\n";

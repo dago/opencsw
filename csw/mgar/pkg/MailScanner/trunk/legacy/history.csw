@@ -1,0 +1,122 @@
+2010-07-03 4.79.11-1,REV=2010.07.03
+----------
+- changed SA path from /opt/csw/etc/spamassassin to
+  /etc/opt/csw/spamassassin.
+- moved mailscanner.cf symlink to new SA location.
+- use /tmp for clamd socket.
+
+2009-10-01 4.78.17-1,REV=2009.10.01
+----------
+- no news related to the package itself.
+
+2009-06-01 4.77.8-1,REV=2009.06.01
+----------
+- no news related to the package itself.
+
+2009-05-12 4.76.25-1,REV=2009.05.12
+----------
+- no news related to the package itself.
+
+2009-05-04 4.76.24-3,REV=2009.05.04
+----------
+- no news related to the package itself.
+
+2009-04-22 4.75.11-1,REV=2009.04.22
+----------
+- no news related to the package itself.
+
+2009-01-21 4.74.16-1,REV=2009.01.21
+----------
+- added dir creation to postinstall script.
+- fixed path for ClamAV update monitoring.
+- fixed path for SpamAssassin Site Rules Dir.
+- fixed update_spamassassin script.
+- fixed svc-mailscanner.sendmail.
+
+2008-12-18 4.73.4-2,REV=2008.12.18
+----------
+- no news related to the package itself.
+
+2008-09-03 4.71.10-1,REV=2008.11.18
+----------
+- added dependency antiword.
+
+2008-08-06 4.70.7-1,REV=2008.08.06
+----------
+- added support for SMF.
+- added dependencies to pm_converttnef, pm_podescapes, pm_podsimple and
+  pm_testpod.
+- never released.
+
+2008-05-05 4.69.9-2,REV=2008.05.05
+----------
+- added dependency pm_olestoragelite.
+
+2008-04-14 4.68.8-1,REV=2008.04.14
+----------
+- changed paths to (g)awk in SA.pm to support timestamp feature when --debug-sa is used.
+- added dependencies to pm_mailtools, unrar and gawk.
+- removed dependency to pm_io since main Perl package is upgraded with new IO.
+- PERLLIB removed from rc-script.
+- wrapper /opt/csw/bin/MailScanner replaced with the old symlink.
+
+2008-01-04 4.66.5-2 (not officially released, only in testing)
+----------
+- new dependency pm_io, IO is included in core Perl but is too old.
+- PERLLIB added to rc-script to use new IO.
+- wrapper added to /opt/csw/bin/MailScanner to use new IO.
+
+2008-01-04 4.65.3-1,REV=2008.01.04
+----------
+- replace test -L with -h in preremove/postinstall scripts, caused error in
+  Solaris 8.
+
+2007-11-01 4.65.3-1
+----------
+- no news related to the package itself.
+
+2007-10-01 4.64.3-1
+----------
+- moved documentation to share/doc/mailscanner.
+
+2007-09-17 4.63.8-1,REV=2007.09.17
+----------
+- added dependency pm_syshostnamelong.
+
+2007-09-13 4.63.8-1
+----------
+- added official changelog.
+
+2007-09-03 4.63.7-2
+----------
+- add/remove symlink mailscanner.cf -> spam.assassin.prefs.conf.
+- removed unnecessary files (install guides for other OS:es and so on).
+- added history file to package.
+
+2007-08-16 4.62.9-3,REV=2007.08.16
+----------
+- Fixed init and cron scripts to better fit Solaris/CSW.
+
+2007-08-14 4.62.9-3
+----------
+- Modified to not need symlink from /opt. Changes to build script and prototype
+  stub. Updated README.CSW with upgrade info. Added CSWpmtimedate as dep.
+
+2007-07-11 4.61.7-2
+----------
+- Build script now fixes everything.
+
+2006-05-15 4.52.2-1,REV=2006.05.15
+----------
+- Added Sendmail as a dependency. Preinst and prerem scripts now removed and
+  postinst and postremo scripts are somewhat meaningful. First version built
+  with the build script.
+
+2006-05-12 4.52.2-1,REV=2006.05.12
+----------
+- Fixed dependency error (CSWpmtimedate incorrectly named).
+
+2006-05-11 4.52.2-1
+----------
+- First release. All scripts (preinst, postint, prerem, postrem) are just
+  dummies. Built on login since nothing needs to be compiled.

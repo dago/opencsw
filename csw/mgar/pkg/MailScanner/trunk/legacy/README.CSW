@@ -1,0 +1,56 @@
+README.CSW
+==========
+
+Quick Start
+-----------
+- Stop and disable Sendmail from Sun and CSW.
+- Start Sendmail with /etc/init.d/cswmailscanner.sendmail
+  (or svcadm enable cswmailscannersendmail).
+- Start MailScanner with /etc/init.d/cswmailscanner
+  (or svcadm enable cswmailscanner).
+
+Not So Quick Start
+------------------
+- Look through all configuration files in /opt/csw/mailscanner/etc and modify
+  as needed.
+- Use the cron scripts in /opt/csw/mailscanner/bin/cron to automate restart, 
+  quarantine cleaning, virus signature updates and so on.
+- Typical entries in crontab for root:
+-- 0,30 * * * * /opt/csw/mailscanner/bin/cron/check_MailScanner.cron
+--- Note: the above is not needed if you use SMF
+-- 0 * * * * /opt/csw/mailscanner/bin/cron/update_virus_scanners.cron
+-- 0 4 * * * /opt/csw/mailscanner/bin/cron/update_spamassassin.cron
+-- 0 4 * * * /opt/csw/mailscanner/bin/cron/clean.quarantine.cron
+- Mount MailScanner work folder as tmpfs, totally safe since Sendmail is
+  responsible for the message at all times. In /etc/vfstab add:
+-- swap - /var/spool/MailScanner/incoming tmpfs - yes -
+
+After Each Upgrade (IMPORTANT)
+------------------
+- Update your configuration files as necessary. Use tools like 
+  upgrade_MailScanner_conf and upgrade_languages_conf.
+- Typical use of upgrade_MailScanner_conf:
+-- # cd /opt/csw/mailscanner/etc
+-- # ../bin/upgrade_MailScanner_conf MailScanner.conf MailScanner.conf.CSW > MailScanner.new
+-- look through MailScanner.new before using it as MailScanner.conf.
+ 
+MailScanner with Clam AntiVirus and SpamAssassin
+------------------------------------------------
+- MailScanner comes configured to use Clam and SA if present.
+- You may need to configure Clam and SA to use web proxies, plugins, etc.
+-- IMPORTANT: make sure Clam can fetch updated virus signatures, test with "freshclam -v".
+- Run "MailScanner --lint" to see what MS thinks of Clam and SA.
+
+Notes
+-----
+- Both Sun and CSW Sendmail must be disabled.
+- Sendmail is controlled by rc-script (or SMF) included with this package.
+- MailScanner itself is controlled by another rc-script (or SMF).
+- For MailScanner info: http://www.mailscanner.info.
+
+Todo
+----
+- Control both Sendmail and MailScanner from the same rc-script.
+- Help with updating configuration files after upgrades.
+
+bonivart/100702

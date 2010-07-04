@@ -1,0 +1,35 @@
+# checkinstall script
+
+# 2008-07-03 Peter Bonivart
+
+trap `exit 3` 15
+
+# check csw.conf
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# Assign Solaris release class to install release specific files
+smf=no
+if [ -f $PKG_INSTALL_ROOT/usr/sbin/svccfg -a -f $PKG_INSTALL_ROOT/usr/sbin/svcadm ]; then
+  if [ "$use_smf" != "no" ]; then
+    smf=yes
+  fi
+fi
+
+if [ $smf = yes ]; then
+  CLASSES='none smfyes'
+else
+  CLASSES='none smfno'
+fi
+
+# Make env variables available to other packaging scripts
+
+cat >$1 <<!
+CLASSES='$CLASSES'
+!
+
+exit 0

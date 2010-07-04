@@ -1,0 +1,13 @@
+# This is where you customize some settings of your MailScanner installation so
+# you don't have to edit the scripts themselves as they will be replaced during
+# upgrades.
+#
+# Peter Bonivart, OpenCSW
+
+# Proxy settings
+#http_proxy=http://proxy.foo.bar
+#export http_proxy
+
+# Used by the update_spamassassin script
+# Example: "--channelfile /opt/csw/etc/spamassassin/sa.update.txt --gpgkey 123456"
+#SAUPDATEARGS=""

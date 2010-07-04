@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# postinstall for MailScanner
+# 2006-05-12 Peter Bonivart
+
+ECHO=/usr/bin/echo
+READ=/usr/bin/read
+SYM=/opt/csw/MailScanner
+
+$ECHO "Creating symlink from /opt to /opt/csw"
+if [ -h "$SYM" -o -f "$SYM" -o -d "$SYM" ]; then
+  $ECHO "$SYM already exists. Can not create symlink."
+else
+  /usr/bin/ln -s /opt/csw/mailscanner /opt/mailscanner
+fi
+
+#$ECHO "Installing start script"
+
+#$ECHO "MailScanner handles Sendmail, do you want to disable"
+#$ECHO "the Sendmail start script? [y] \c"
+#$READ a
+#if [ "$a" = "n" -o "$a" = "N" ]; then
+#  $ECHO "You need to modify the operation of Sendmail yourself"
+#else
+#  $ECHO "Disabled Sendmail start script by renaming /etc/init.d/cswsendmail"
+#  $ECHO "to cswsendmail.disabled"
+#fi
+
+#$ECHO "Queue directories prefix? [/var/spool] \c"
+#$READ a
+
+#$ECHO "Creating incoming queue directory"
+
+#$ECHO "Creating MailScanner work directory"
+
+#$ECHO "Setting ownership and permission on queue directories"
+
+$ECHO "Copying CSW-configuration files to default files"
+
+exit 0

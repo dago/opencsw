@@ -1,0 +1,10 @@
+PKG=CSWmailscanner
+NAME=mailscanner - A Free Anti-Virus and Anti-Spam Filter
+CATEGORY=application
+VENDOR=http://www.mailscanner.info packaged for CSW by Peter Bonivart
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=bonivart@opencsw.org
+ARCH=all
+BASEDIR=/opt/csw
+CSW_CATEGORY=mailsys,security
+CLASSES=none
