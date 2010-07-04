@@ -1,5 +1,5 @@
 6e26e51243c4551ac222112edf67b5db  CSWdbus.preinstall
 9222a44088c837eba62822e330de713f  cswdbus
 1aab02bdcac4d662d3760896790f0ede  dbus-1.3.1.tar.gz
-6856e34f9fb52f9fd569a80576556543  dbus-sysdeps-unix.c.diff
+862baa44c7b80476643ad76065607d92  dbus-sysdeps-unix.c.diff
 5d584064f7e6a50bf54750ae56d7e29e  dbus-sysdeps.h.diff
