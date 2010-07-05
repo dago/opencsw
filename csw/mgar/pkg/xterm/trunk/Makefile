@@ -1,9 +1,6 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
-# * app-defaults are currently in $(prefix)/X11/etc/X11/app-defaults
-#   because of our libXt. Once the whole X11 mess is sorted, they
-#   might go to $(prefix)/etc/X11/app-defaults instead.
 GARNAME = xterm
-GARVERSION = 258
+GARVERSION = 260
 CATEGORIES = apps
 
 DESCRIPTION = Terminal emulator for the X Window System
@@ -59,9 +56,6 @@ NOISALIST = 1
 
 
 include gar/category.mk
-
-# ./configure needs to find xft-config
-PATH := /opt/csw/X11/bin:$(PATH)
 
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated: CSWDOCS=README.CSW changelog.CSW
