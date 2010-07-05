@@ -24,6 +24,7 @@ import textwrap
 import yaml
 from Cheetah import Template
 import opencsw
+import overrides
 import package_checks
 import models as m
 import configuration as c
