@@ -55,6 +55,7 @@ CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmhtmltree
 CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmlibwww
 CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmyaml
 CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpy-libmagic
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpy-hachoir-parser
 CHECKPKG_OVERRIDES_CSWcswutils += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWcswutils += catalogname-does-not-start-with-py_
 
