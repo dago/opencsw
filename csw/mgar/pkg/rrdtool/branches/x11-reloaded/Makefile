@@ -24,7 +24,8 @@ PATCHFILES += 0001-Fix-isinf.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWrrd CSWrrdrt CSWpmrrd CSWpy-rrdtool CSWrbrrd
+# PACKAGES = CSWrrd CSWrrdrt CSWpmrrd CSWpy-rrdtool CSWrbrrd
+PACKAGES = CSWrrd
 
 CATALOGNAME_CSWrrd = rrdtool
 CATALOGNAME_CSWrrdrt = rrdtool_rt
@@ -38,7 +39,8 @@ SPKG_DESC_CSWpmrrd = RRDs: Access RRDtool as a shared module (part of RRDtool)
 SPKG_DESC_CSWpy-rrdtool = Python egg for RRD access (part of RRDtool)
 SPKG_DESC_CSWrbrrd = Ruby binding for RRD access (part of RRDtool)
 
-RUNTIME_DEP_PKGS_CSWrrd = CSWrrdrt CSWglib2 CSWpango CSWggettextrt CSWlibxml2 CSWlibcairo
+RUNTIME_DEP_PKGS_CSWrrd = CSWglib2 CSWpango CSWggettextrt CSWlibxml2 CSWlibcairo
+# RUNTIME_DEP_PKGS_CSWrrd += CSWrrdrt
 RUNTIME_DEP_PKGS_CSWrrdrt += CSWggettextrt CSWglib2 CSWlibcairo CSWpango CSWlibxml2
 RUNTIME_DEP_PKGS_CSWpmrrd = CSWperl CSWrrdrt
 RUNTIME_DEP_PKGS_CSWpy-rrdtool = CSWpython CSWrrdrt
@@ -68,7 +70,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
 TEST_TARGET = check
 
-MERGE_DIRS_isa-extra = $(bindir)
+MERGE_DIRS_isa-extra = $(libdir)
 MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod .*/\.packlist
 EXTRA_PAX_ARGS += -s ',^\.$(docdir)/$(GARNAME)-$(GARVERSION),.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME),'
@@ -84,6 +86,15 @@ CHECKPKG_OVERRIDES_CSWrrd += missing-dependency|CSWperl
 
 CHECKPKG_OVERRIDES_CSWrbrrd += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSWrbrrd += bad-rpath-entry
+
+# Take these out when the package are split again
+CHECKPKG_OVERRIDES_CSWrrd += binary-architecture-does-not-match-placement|file=opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.8/RRD.so|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWrrd += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWrrd += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWrrd += bad-rpath-entry|/home/dam/mgar/pkg/rrdtool/branches/x11-reloaded/work/solaris9-sparc/install-isa-sparcv8/opt/csw/lib|opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.8/RRD.so
+CHECKPKG_OVERRIDES_CSWrrd += bad-rpath-entry|/home/dam/mgar/pkg/rrdtool/branches/x11-reloaded/work/solaris9-i386/install-isa-i386/opt/csw/lib|opt/csw/lib/ruby/site_ruby/1.8/i386-solaris2.8/RRD.so
+CHECKPKG_OVERRIDES_CSWrrd += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWrrd += missing-dependency|CSWpython
 
 include gar/category.mk
 
