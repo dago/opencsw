@@ -1,5 +1,5 @@
 GARNAME = di
-GARVERSION = 4.24
+GARVERSION = 4.25
 CATEGORIES = utils
 
 DESCRIPTION = Disk information utility
@@ -12,7 +12,6 @@ endef
 
 MASTER_SITES = http://www.gentoo.com/di/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES = 0001-Fix-Solaris-detection.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
