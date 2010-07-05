@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = cswutils
-GARVERSION = 1.14.6
+GARVERSION = 1.14.7
 CATEGORIES = utils
 
 DESCRIPTION = Utilities for CSW maintainers
