@@ -1,0 +1,25 @@
+From 08eae7402b5bbc3dd9e3c3d1227f22c140014c00 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 10 Jun 2010 15:23:45 +0200
+Subject: [PATCH] Fix Solaris detection
+
+---
+ di.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/di.c b/di.c
+index d5adef2..32c3502 100644
+--- a/di.c
++++ b/di.c
+@@ -431,7 +431,7 @@ main (argc, argv)
+         /* change default display format here */
+     diopts->dispBlockSize = DI_VAL_1024 * DI_VAL_1024;
+     diopts->flags = 0;
+-#if ! SunOS /* Solaris loopback devices should be excluded */
++#if ! __SunOS /* Solaris loopback devices should be excluded */
+     diopts->flags |= DI_F_INCLUDE_LOOPBACK;
+ #endif
+     strcpy (diopts->sortType, "m"); /* default - sort by mount point */
+-- 
+1.7.1
+
