@@ -16,7 +16,6 @@ import copy
 import datetime
 import difflib
 import hachoir_parser as hp
-import hachoir_core as hc
 import hashlib
 import magic
 import logging
@@ -30,6 +29,11 @@ import urllib2
 import overrides
 import configuration as c
 from Cheetah import Template
+
+# Suppress unhelpful warnings
+# http://bitbucket.org/haypo/hachoir/issue/23
+import hachoir_core.config
+hachoir_core.config.quiet = True
 
 ARCH_SPARC = "sparc"
 ARCH_i386 = "i386"
