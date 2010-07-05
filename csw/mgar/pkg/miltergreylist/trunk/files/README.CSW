@@ -7,8 +7,7 @@ Installation
 1. If you're adding directly to your mc-file you should use this instead of
    what's in the official README since the location of the socket isn't correct.
 
-INPUT_MAIL_FILTER(`greylist', `S=local:/var/opt/csw/milter-greylist/milter-greyl
-ist.sock')
+INPUT_MAIL_FILTER(`greylist', `S=local:/var/opt/csw/miltergreylist/milter-greylist.sock')
 define(`confMILTER_MACROS_CONNECT', `j, {if_addr}')
 define(`confMILTER_MACROS_HELO', `{verify}, {cert_subject}')
 define(`confMILTER_MACROS_ENVFROM', `i, {auth_authen}')
@@ -23,4 +22,4 @@ define(`confMILTER_MACROS_ENVRCPT', `{greylist}')
 
 More info: http://milter-greylist.wikidot.com.
 
-bonivart/091013
+bonivart/100705
