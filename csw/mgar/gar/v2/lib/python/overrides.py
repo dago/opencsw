@@ -53,17 +53,17 @@ class Override(object):
     return basket_a == basket_b
 
 
-def ApplyOverrides(error_tags, overrides):
+def ApplyOverrides(error_tags, override_list):
   """Filters out all the error tags that overrides apply to.
 
   O(N * M), but N and M are always small.
   """
   tags_after_overrides = []
   applied_overrides = set([])
-  provided_overrides = set(copy.copy(overrides))
+  provided_overrides = set(copy.copy(override_list))
   for tag in error_tags:
     override_applies = False
-    for override in overrides:
+    for override in override_list:
       if override.DoesApply(tag):
         override_applies = True
         applied_overrides.add(override)

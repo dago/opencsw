@@ -15,13 +15,10 @@ import pprint
 import testdata.checkpkg_test_data_CSWdjvulibrert as td_1
 import testdata.checkpkg_pkgs_data_minimal as td_2
 import testdata.rpaths
+from testdata.rsync_pkg_stats import pkg_stats as rsync_stats
 
-BASE_DIR = os.path.dirname(__file__)
-TESTDATA_DIR = os.path.join(BASE_DIR, "testdata")
-CHECKPKG_STATS_DIR = os.path.join(TESTDATA_DIR, "stats")
-DEFAULT_DATA_MD5 = "461a24f02dd5020b4aa014b76f3ec2cc"
-DEFAULT_PKG_STATS = checkpkg.PackageStats(None, CHECKPKG_STATS_DIR, DEFAULT_DATA_MD5)
-DEFAULT_PKG_DATA = DEFAULT_PKG_STATS.GetAllStats()
+DEFAULT_PKG_STATS = None
+DEFAULT_PKG_DATA = rsync_stats
 
 
 class CheckpkgUnitTestHelper(object):

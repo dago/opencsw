@@ -31,7 +31,7 @@ import configuration as c
 import tag
 
 DEBUG_BREAK_PKGMAP_AFTER = False
-DB_SCHEMA_VERSION = 3L
+DB_SCHEMA_VERSION = 4L
 PACKAGE_STATS_VERSION = 6L
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 NEEDED_SONAMES = "needed sonames"
@@ -39,7 +39,6 @@ RUNPATH = "runpath"
 SONAME = "soname"
 CONFIG_MTIME = "mtime"
 CONFIG_DB_SCHEMA = "db_schema_version"
-WRITE_YAML = False
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
 DO_NOT_REPORT_MISSING = set([])
 DO_NOT_REPORT_MISSING_RE = [r"SUNW.*", r"\*SUNW.*"]
@@ -199,28 +198,66 @@ def ExtractMaintainerName(pkginfo):
 
 def ExtractBuildUsername(pkginfo):
   m = re.match(PSTAMP_RE, pkginfo["PSTAMP"])
-  if m:
-    return m.group("username")
-  else:
-    return None
+  return m.group("username") if m else None
 
 
-class SystemPkgmap(object):
+class DatabaseClient(object):
+
+  CHECKPKG_DIR = ".checkpkg"
+  SQLITE3_DBNAME_TMPL = "checkpkg-db-%(fqdn)s"
+  TABLES = (m.CswConfig,
+            m.CswFile,
+            m.CswPackage,
+            m.Srv4FileStats,
+            m.CheckpkgOverride)
+  sqo_conn = None
+  db_path = None
+
+  def __init__(self, debug=False):
+    self.debug = debug
+
+  @classmethod
+  def GetDatabasePath(cls):
+    if not cls.db_path:
+      dbname_dict = {'fqdn': socket.getfqdn()}
+      db_filename = cls.SQLITE3_DBNAME_TMPL % dbname_dict
+      home_dir = os.environ["HOME"]
+      cls.db_path = os.path.join(home_dir, cls.CHECKPKG_DIR, db_filename)
+    return cls.db_path
+
+  @classmethod
+  def InitializeSqlobject(cls):
+    """Establishes a database connection and stores it as a class member.
+
+    The idea is to share the database connection between instances.  It would
+    be solved even better if the connection was passed to the class
+    constructor.
+    """
+    if not cls.sqo_conn:
+      db_path = cls.GetDatabasePath()
+      cls.sqo_conn = sqlobject.connectionForURI('sqlite:%s' % db_path)
+      sqlobject.sqlhub.processConnection = cls.sqo_conn
+
+  def CreateTables(self):
+    for table in self.TABLES:
+      table.createTable(ifNotExists=True)
+
+  def IsDatabaseGoodSchema(self):
+    good_version = self.GetDatabaseSchemaVersion() >= DB_SCHEMA_VERSION
+    return good_version
+
+
+class SystemPkgmap(DatabaseClient):
   """A class to hold and manipulate the /var/sadm/install/contents file."""
 
   STOP_PKGS = ["SUNWbcp", "SUNWowbcp", "SUNWucb"]
-  CHECKPKG_DIR = ".checkpkg"
-  SQLITE3_DBNAME_TMPL = "var-sadm-install-contents-cache-%s"
 
   def __init__(self, system_pkgmap_files=None, debug=False):
     """There is no need to re-parse it each time.
 
     Read it slowly the first time and cache it for later."""
+    super(SystemPkgmap, self).__init__(debug=debug)
     self.cache = {}
-    self.checkpkg_dir = os.path.join(os.environ["HOME"], self.CHECKPKG_DIR)
-    self.fqdn = socket.getfqdn()
-    self.db_path = os.path.join(self.checkpkg_dir,
-                                self.SQLITE3_DBNAME_TMPL % self.fqdn)
     self.file_mtime = None
     self.cache_mtime = None
     self.initialized = False
@@ -228,41 +265,32 @@ class SystemPkgmap(object):
       self.system_pkgmap_files = [SYSTEM_PKGMAP]
     else:
       self.system_pkgmap_files = system_pkgmap_files
-    self.debug = debug
 
   def _LazyInitializeDatabase(self):
     if not self.initialized:
       self.InitializeDatabase()
 
-  def InitializeSqlobject(self):
-    if True:
-      logging.debug("Connecting to the %s database.", self.db_path)
-      self.sqo_conn = sqlobject.connectionForURI(
-          'sqlite:%s' % self.db_path, debug=(self.debug and False))
-    else:
-      # TODO: Use a configuration file to store the credentials
-      logging.debug("Connecting MySQL.")
-      self.sqo_conn = sqlobject.connectionForURI(
-          'mysql://checkpkg:Nid3owlOn@mysql/checkpkg',
-          debug=(self.debug and False))
-    sqlobject.sqlhub.processConnection = self.sqo_conn
-
   def InitializeRawDb(self):
     """It's necessary for low level operations."""
     if True:
       logging.debug("Connecting to sqlite")
-      self.sqlite_conn = sqlite3.connect(self.db_path)
+      self.sqlite_conn = sqlite3.connect(self.GetDatabasePath())
 
   def InitializeDatabase(self):
-    """Refactor this class to first create CswFile with no primary key and no indexes.
+    """Established the connection to the database.
+
+    TODO: Refactor this class to first create CswFile with no primary key and
+          no indexes.
     """
     need_to_create_tables = False
-    if not os.path.exists(self.db_path):
-      print "Building a cache of %s." % self.system_pkgmap_files
-      print "The cache will be kept in %s." % self.db_path
-      if not os.path.exists(self.checkpkg_dir):
-        logging.debug("Creating %s", self.checkpkg_dir)
-        os.mkdir(self.checkpkg_dir)
+    db_path = self.GetDatabasePath()
+    checkpkg_dir = os.path.join(os.environ["HOME"], self.CHECKPKG_DIR)
+    if not os.path.exists(db_path):
+      logging.info("Building the  cache database %s.", self.system_pkgmap_files)
+      logging.info("The cache will be kept in %s.", db_path)
+      if not os.path.exists(CHECKPKG_DIR):
+        logging.debug("Creating %s", checkpkg_dir)
+        os.mkdir(checkpkg_dir)
       need_to_create_tables = True
     self.InitializeRawDb()
     self.InitializeSqlobject()
@@ -277,11 +305,6 @@ class SystemPkgmap(object):
       self.PurgeDatabase()
       self.PopulateDatabase()
     self.initialized = True
-
-  def CreateTables(self):
-    m.CswConfig.createTable(ifNotExists=True)
-    m.CswPackage.createTable(ifNotExists=True)
-    m.CswFile.createTable(ifNotExists=True)
 
   def PopulateDatabase(self):
     """Imports data into the database.
@@ -497,10 +520,6 @@ class SystemPkgmap(object):
       schema_on_disk = res.getOne().int_value
     return schema_on_disk
 
-  def IsDatabaseGoodSchema(self):
-    good_version = self.GetDatabaseSchemaVersion() >= DB_SCHEMA_VERSION
-    return good_version
-
   def IsDatabaseUpToDate(self):
     f_mtime = self.GetFileMtime()
     d_mtime = self.GetDatabaseMtime()
@@ -517,24 +536,14 @@ class SystemPkgmap(object):
                   repr(good_version), repr(fresh))
     return fresh and good_version
 
-  def SoftDropTable(self, tablename):
-    c = self.conn.cursor()
-    try:
-      # This doesn't accept placeholders.
-      c.execute("DROP TABLE %s;" % tablename)
-    except sqlite3.OperationalError, e:
-      logging.warn("sqlite3.OperationalError: %s", e)
-
   def PurgeDatabase(self, drop_tables=False):
     if drop_tables:
-      # for table_name in ("config", "systempkgmap", "packages"):
-      #   self.SoftDropTable(table_name)
-      for table in (m.CswConfig, m.CswFile, m.CswPackage):
+      for table in self.TABLES:
         if table.tableExists():
           table.dropTable()
     else:
-      logging.info("Deleting all rows from the cache database")
-      for table in (m.CswConfig, m.CswFile, m.CswPackage):
+      logging.info("Truncating all tables")
+      for table in self.TABLES:
         table.clearTable()
 
   def GetInstalledPackages(self):
@@ -628,8 +637,6 @@ def ParseDumpOutput(dump_output):
   rpath = []
   for line in dump_output.splitlines():
     fields = re.split(c.WS_RE, line)
-    # TODO: Make it a unit test
-    # logging.debug("%s says: %s", DUMP_BIN, fields)
     if len(fields) < 3:
       continue
     if fields[1] == "NEEDED":
@@ -771,7 +778,7 @@ class CheckInterfaceBase(object):
 
   def GetCommonPaths(self, arch):
     """Returns a list of paths for architecture, from gar/etc/commondirs*."""
-    # TODO: If this was cached, it would save a significant amount of time.
+    # TODO: If this was cached, it could save a significant amount of time.
     assert arch in ('i386', 'sparc', 'all'), "Wrong arch: %s" % repr(arch)
     if arch == 'all':
       archs = ('i386', 'sparc')
@@ -897,8 +904,13 @@ def GetIsalist():
   return isalist
 
 
-class PackageStats(object):
-  """Collects stats about a package and saves it."""
+class PackageStats(DatabaseClient):
+  """Collects stats about a package and saves it.
+
+  TODO: Maintain a global database connection instead of creating one for each
+  instantiated object.
+  TODO: Store overrides in a separate table for performance.
+  """
   # This list needs to be synchronized with the CollectStats() method.
   STAT_FILES = [
       "bad_paths",
@@ -918,17 +930,20 @@ class PackageStats(object):
       "files_metadata",
   ]
 
-  def __init__(self, srv4_pkg, stats_basedir=None, md5sum=None):
+  def __init__(self, srv4_pkg, stats_basedir=None, md5sum=None, debug=False):
+    super(PackageStats, self).__init__(debug=debug)
     self.srv4_pkg = srv4_pkg
     self.md5sum = md5sum
     self.dir_format_pkg = None
     self.stats_path = None
     self.all_stats = {}
     self.stats_basedir = stats_basedir
+    self.db_pkg_stats = None
     if not self.stats_basedir:
       home = os.environ["HOME"]
       parts = [home, ".checkpkg", "stats"]
       self.stats_basedir = os.path.join(*parts)
+    self.InitializeSqlobject()
 
   def GetPkgchkData(self):
     ret, stdout, stderr = self.srv4_pkg.GetPkgchkOutput()
@@ -952,19 +967,30 @@ class PackageStats(object):
       self.stats_path = os.path.join(*parts)
     return self.stats_path
 
+  def GetDbObject(self):
+    if not self.db_pkg_stats:
+      md5_sum = self.GetMd5sum()
+      logging.debug("GetDbObject() md5_sum=%s", md5_sum)
+      res = m.Srv4FileStats.select(m.Srv4FileStats.q.md5_sum==md5_sum)
+      if not res.count():
+        logging.debug("%s are not in the db", md5_sum)
+        return None
+      else:
+        logging.debug("%s are in the db", md5_sum)
+        self.db_pkg_stats = res.getOne()
+    return self.db_pkg_stats
+
+
   def StatsExist(self):
     """Checks if statistics of a package exist.
 
     Returns:
       bool
     """
-    if not self.StatsDirExists():
+    pkg_stats = self.GetDbObject()
+    if not pkg_stats:
       return False
-    # More checks can be added in the future.
-    return True
-
-  def StatsDirExists(self):
-    return os.path.isdir(self.GetStatsPath())
+    return pkg_stats.stats_version == PACKAGE_STATS_VERSION
 
   def GetDirFormatPkg(self):
     if not self.dir_format_pkg:
@@ -1028,14 +1054,14 @@ class PackageStats(object):
 
   def GetOverrides(self):
     dir_pkg = self.GetDirFormatPkg()
-    overrides = dir_pkg.GetOverrides()
+    override_list = dir_pkg.GetOverrides()
     def OverrideToDict(override):
-      d = {}
-      d["pkgname"] = override.pkgname
-      d["tag_name"] = override.tag_name
-      d["tag_info"] = override.tag_info
-      return d
-    overrides_simple = [OverrideToDict(x) for x in overrides]
+      return {
+        "pkgname":  override.pkgname,
+        "tag_name":  override.tag_name,
+        "tag_info":  override.tag_info,
+      }
+    overrides_simple = [OverrideToDict(x) for x in override_list]
     return overrides_simple
 
   def GetLddMinusRlines(self):
@@ -1115,126 +1141,103 @@ class PackageStats(object):
 
   def CollectStats(self, force=False):
     """Lazy stats collection."""
-    if not self.StatsDirExists() or force:
-      self._CollectStats()
-      return
-    for stats_name in self.STAT_FILES + ["basic_stats"]:
-      file_name = in_file_name_pickle = os.path.join(
-          self.GetStatsPath(), "%s.pickle" % stats_name)
-      if not os.path.exists(file_name):
-        self._CollectStats()
-        return
-    f = open(file_name, "r")
-    obj = cPickle.load(f)
-    f.close()
-    saved_version = obj["stats_version"]
-    if saved_version < PACKAGE_STATS_VERSION:
-      self._CollectStats()
+    if force:
+      return self._CollectStats()
+    if not self.StatsExist():
+      return self._CollectStats()
+    return self.ReadSavedStats()
 
   def _CollectStats(self):
     """The list of variables needs to be synchronized with the one
     at the top of this class.
-
-    TODO:
-    - Run pkgchk against the package file.
-    - Grep all the files for bad paths.
     """
     stats_path = self.GetStatsPath()
     self.MakeStatsDir()
     dir_pkg = self.GetDirFormatPkg()
-    logging.info("Collecting %s package statistics.", repr(dir_pkg.pkgname))
-    self.DumpObject(dir_pkg.ListBinaries(), "binaries")
-    self.DumpObject(self.GetBinaryDumpInfo(), "binaries_dump_info")
-    self.DumpObject(dir_pkg.GetDependencies(), "depends")
-    self.DumpObject(GetIsalist(), "isalist")
-    self.DumpObject(self.GetOverrides(), "overrides")
-    self.DumpObject(self.GetPkgchkData(), "pkgchk")
-    self.DumpObject(dir_pkg.GetParsedPkginfo(), "pkginfo")
-    self.DumpObject(dir_pkg.GetPkgmap().entries, "pkgmap")
+    logging.debug("Collecting %s package statistics.", repr(dir_pkg.pkgname))
+    override_dicts = self.GetOverrides()
+    pkg_stats = {
+        "binaries": dir_pkg.ListBinaries(),
+        "binaries_dump_info": self.GetBinaryDumpInfo(),
+        "depends": dir_pkg.GetDependencies(),
+        "isalist": GetIsalist(),
+        "overrides": override_dicts,
+        "pkgchk": self.GetPkgchkData(),
+        "pkginfo": dir_pkg.GetParsedPkginfo(),
+        "pkgmap": dir_pkg.GetPkgmap().entries,
+        "bad_paths": dir_pkg.GetFilesContaining(BAD_CONTENT_REGEXES),
+        "basic_stats": self.GetBasicStats(),
+        "files_metadata": dir_pkg.GetFilesMetadata(),
+    }
+    db_pkg_stats = m.Srv4FileStats(md5_sum=self.GetMd5sum(),
+                                   pkgname=pkg_stats["basic_stats"]["pkgname"],
+                                   stats_version=PACKAGE_STATS_VERSION,
+                                   data=cPickle.dumps(pkg_stats))
+    # Inserting overrides as rows into the database
+    for override_dict in override_dicts:
+      o = m.CheckpkgOverride(srv4_file=db_pkg_stats,
+                             **override_dict)
+
     # The ldd -r reporting breaks on bigger packages during yaml saving.
     # It might work when yaml is disabled
     # self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
     # This check is currently disabled, let's save time by not collecting
     # these data.
     # self.DumpObject(self.GetDefinedSymbols(), "defined_symbols")
-    self.DumpObject(dir_pkg.GetFilesContaining(BAD_CONTENT_REGEXES), "bad_paths")
     # This one should be last, so that if the collection is interrupted
     # in one of the previous runs, the basic_stats.pickle file is not there
     # or not updated, and the collection is started again.
-    self.DumpObject(self.GetBasicStats(), "basic_stats")
-    self.DumpObject(dir_pkg.GetFilesMetadata(), "files_metadata")
+
     logging.debug("Statistics of %s have been collected.", repr(dir_pkg.pkgname))
+    return pkg_stats
 
   def GetAllStats(self):
-    if self.StatsExist():
+    logging.debug("GetAllStats()")
+    if not self.all_stats and self.StatsExist():
       self.all_stats = self.ReadSavedStats()
-    else:
-      self.CollectStats()
+    elif not self.all_stats:
+      self.all_stats = self.CollectStats()
     return self.all_stats
 
   def GetSavedOverrides(self):
     if not self.StatsExist():
       raise PackageError("Package stats not ready.")
-    override_stats = self.ReadObject("overrides")
-    override_list = [overrides.Override(**x) for x in override_stats]
+    pkg_stats = self.GetDbObject()
+    res = m.CheckpkgOverride.select(m.CheckpkgOverride.q.srv4_file==pkg_stats)
+    override_list = []
+    for db_override in res:
+      d = {
+          'pkgname': db_override.pkgname,
+          'tag_name': db_override.tag_name,
+          'tag_info': db_override.tag_info,
+      }
+      override_list.append(overrides.Override(**d))
     return override_list
 
-  def DumpObject(self, obj, name):
-    """Saves an object."""
-    stats_path = self.GetStatsPath()
-    # yaml
-    if WRITE_YAML:
-      out_file_name = os.path.join(stats_path, "%s.yml" % name)
-      logging.debug("DumpObject(): writing %s", repr(out_file_name))
-      f = open(out_file_name, "w")
-      f.write(yaml.safe_dump(obj))
-      f.close()
-    # pickle
-    out_file_name_pickle = os.path.join(stats_path, "%s.pickle" % name)
-    logging.debug("DumpObject(): writing %s", repr(out_file_name_pickle))
-    f = open(out_file_name_pickle, "wb")
-    cPickle.dump(obj, f)
-    f.close()
-    self.all_stats[name] = obj
-
-  def ReadObject(self, name):
-    """Reads an object."""
-    stats_path = self.GetStatsPath()
-    in_file_name = os.path.join(stats_path, "%s.yml" % name)
-    in_file_name_pickle = os.path.join(stats_path, "%s.pickle" % name)
-    if os.path.exists(in_file_name_pickle):
-      f = open(in_file_name_pickle, "r")
-      obj = cPickle.load(f)
-      f.close()
-    elif os.path.exists(in_file_name):
-      f = open(in_file_name, "r")
-      obj = yaml.safe_load(f)
-      f.close()
-    else:
-      raise PackageError("Can't read %s nor %s."
-                         % (in_file_name, in_file_name_pickle))
-    return obj
-
   def ReadSavedStats(self):
-    all_stats = {}
-    for name in self.STAT_FILES:
-      all_stats[name] = self.ReadObject(name)
-    return all_stats
+    if not self.all_stats:
+      md5_sum = self.GetMd5sum()
+      res = m.Srv4FileStats.select(m.Srv4FileStats.q.md5_sum==md5_sum)
+      self.all_stats = cPickle.loads(str(res.getOne().data))
+    return self.all_stats
 
   def _ParseLddDashRline(self, line):
     found_re = r"^\t(?P<soname>\S+)\s+=>\s+(?P<path_found>\S+)"
-    symbol_not_found_re = r"^\tsymbol not found:\s(?P<symbol>\S+)\s+\((?P<path_not_found>\S+)\)"
+    symbol_not_found_re = (r"^\tsymbol not found:\s(?P<symbol>\S+)\s+"
+                           r"\((?P<path_not_found>\S+)\)")
     only_so = r"^\t(?P<path_only>\S+)$"
-    version_so = r'^\t(?P<soname_version_not_found>\S+) \((?P<lib_name>\S+)\) =>\t \(version not found\)'
+    version_so = (r'^\t(?P<soname_version_not_found>\S+) '
+                  r'\((?P<lib_name>\S+)\) =>\t \(version not found\)')
     stv_protected = (r'^\trelocation \S+ symbol: (?P<relocation_symbol>\S+): '
                      r'file (?P<relocation_path>\S+): '
-                     r'relocation bound to a symbol with STV_PROTECTED visibility$')
-    sizes_differ = (r'^\trelocation \S+ sizes differ: (?P<sizes_differ_symbol>\S+)$')
+                     r'relocation bound to a symbol '
+                     r'with STV_PROTECTED visibility$')
+    sizes_differ = (r'^\trelocation \S+ sizes differ: '
+                    r'(?P<sizes_differ_symbol>\S+)$')
     sizes_info = (r'^\t\t\(file (?P<sizediff_file1>\S+) size=(?P<size1>0x\w+); '
                   r'file (?P<sizediff_file2>\S+) size=(?P<size2>0x\w+)\)$')
-    sizes_one_used = (
-        r'^\t\t(?P<sizediffused_file>\S+) size used; '
-        'possible insufficient data copied$')
+    sizes_one_used = (r'^\t\t(?P<sizediffused_file>\S+) size used; '
+                      r'possible insufficient data copied$')
     common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s)"
                  % (found_re, symbol_not_found_re, only_so, version_so,
                     stv_protected, sizes_differ, sizes_info, sizes_one_used))

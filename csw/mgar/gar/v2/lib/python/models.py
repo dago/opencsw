@@ -40,3 +40,15 @@ class CswFile(sqlobject.SQLObject):
   path = sqlobject.UnicodeCol(notNone=True)
   line = sqlobject.UnicodeCol(notNone=True)
   basename_idx = sqlobject.DatabaseIndex('basename')
+
+class Srv4FileStats(sqlobject.SQLObject):
+  md5_sum = sqlobject.UnicodeCol(notNone=True, unique=True)
+  pkgname = sqlobject.UnicodeCol(length=255, notNone=True)
+  stats_version = sqlobject.IntCol(notNone=True)
+  data = sqlobject.UnicodeCol(notNone=True)
+
+class CheckpkgOverride(sqlobject.SQLObject):
+  srv4_file = sqlobject.ForeignKey('Srv4FileStats')
+  pkgname = sqlobject.UnicodeCol(default=None)
+  tag_name = sqlobject.UnicodeCol(notNone=True)
+  tag_info = sqlobject.UnicodeCol(default=None)
