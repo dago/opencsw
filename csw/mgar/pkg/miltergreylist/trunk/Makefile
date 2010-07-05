@@ -16,6 +16,8 @@ MASTER_SITES = http://ftp.espci.fr/pub/milter-greylist/
 DISTFILES  = milter-greylist-$(DISTVERSION).tgz
 DISTFILES += COPYING
 
+PATCHFILES += 0001-Path-and-user-changes-in-conf-file.patch
+
 RUNTIME_DEP_PKGS = CSWcurlrt CSWgeoip CSWlibspf2
 
 # We define upstream file regex so we can be notifed of new upstream software release
