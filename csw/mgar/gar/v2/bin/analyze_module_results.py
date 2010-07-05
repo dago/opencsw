@@ -13,6 +13,7 @@ path_list = [os.path.dirname(__file__),
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 import opencsw
+import overrides
 
 def main():
   parser = optparse.OptionParser()
@@ -29,15 +30,15 @@ def main():
   for file_name in files:
     full_path = os.path.join(options.extractdir, file_name)
     error_tags.extend(checkpkg.ErrorTagsFromFile(full_path))
-  overrides = reduce(operator.add, overrides_list)
+  override_list = reduce(operator.add, overrides_list)
   (tags_after_overrides,
-   unapplied_overrides) = checkpkg.ApplyOverrides(error_tags, overrides)
+   unapplied_overrides) = overrides.ApplyOverrides(error_tags, override_list)
   exit_code = bool(tags_after_overrides)
   if tags_after_overrides:
     print "If any of the reported errors were false positives, you can"
     print "override them pasting the lines below to the GAR recipe."
-    for tag in tags_after_overrides:
-      print tag.ToGarSyntax()
+    for checkpkg_tag in tags_after_overrides:
+      print checkpkg_tag.ToGarSyntax()
     print "Please note that checkpkg isn't suggesting you should "
     print "use these overrides.  It only informs what the overrides could "
     print "look like.  You need to understand what are the reported issues about"

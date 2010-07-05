@@ -27,7 +27,8 @@ import shutil
 import subprocess
 import tempfile
 import urllib2
-import checkpkg
+import overrides
+import configuration as c
 from Cheetah import Template
 
 ARCH_SPARC = "sparc"
@@ -44,7 +45,6 @@ NO_VERSION_CHANGE = "no version change"
 REVISION_ADDED = "revision number added"
 PKG_URL_TMPL = "http://www.opencsw.org/packages/%s"
 CATALOG_URL = "http://mirror.opencsw.org/opencsw/current/i386/5.10/catalog"
-WS_RE = re.compile(r"\s+")
 BIN_MIMETYPES = (
     'application/x-executable',
     'application/x-sharedlib',
@@ -678,7 +678,7 @@ class DirectoryFormatPackage(ShellMixin, object):
     A bit hacky.  Looks for the first word of the NAME field in the package.
     """
     pkginfo = self.GetParsedPkginfo()
-    words = re.split(WS_RE, pkginfo["NAME"])
+    words = re.split(c.WS_RE, pkginfo["NAME"])
     return words[0]
 
   def GetParsedPkginfo(self):
@@ -785,7 +785,7 @@ class DirectoryFormatPackage(ShellMixin, object):
     # It needs to be a list because there might be duplicates and it's
     # necessary to carry that information.
     for line in fd:
-      fields = re.split(WS_RE, line)
+      fields = re.split(c.WS_RE, line)
       if fields[0] == "P":
         pkgname = fields[1]
         pkg_desc = " ".join(fields[1:])
@@ -897,15 +897,15 @@ class DirectoryFormatPackage(ShellMixin, object):
       return None
 
   def _ParseOverridesStream(self, stream):
-    overrides = []
+    override_list = []
     for line in stream:
       if line.startswith("#"):
         continue
-      overrides.append(checkpkg.ParseOverrideLine(line))
-    return overrides
+      override_list.append(overrides.ParseOverrideLine(line))
+    return override_list
 
   def GetOverrides(self):
-    """Returns overrides, a list of checkpkg.Override instances."""
+    """Returns overrides, a list of overrides.Override instances."""
     stream = self._GetOverridesStream()
     if stream:
       return self._ParseOverridesStream(stream)

@@ -19,6 +19,7 @@ import opencsw
 import pprint
 import textwrap
 import dependency_checks as depchecks
+import configuration as c
 from Cheetah import Template
 
 PATHS_ALLOWED_ONLY_IN = {
@@ -214,7 +215,7 @@ def CheckDescription(pkg_data, error_mgr, logger, messenger):
 
 
 def CheckVendorURL(pkg_data, error_mgr, logger, messenger):
-  vendorurl = opencsw.WS_RE.split(pkg_data["pkginfo"]["VENDOR"])[0]
+  vendorurl = c.WS_RE.split(pkg_data["pkginfo"]["VENDOR"])[0]
   if not re.match(VENDORURL_RE, vendorurl):
     error_mgr.ReportError("pkginfo-bad-vendorurl", vendorurl,
                           "Solution: add VENDOR_URL to GAR Recipe")
@@ -376,7 +377,7 @@ def CheckActionClasses(pkg_data, error_mgr, logger, messenger):
   pkgmap = pkg_data["pkgmap"]
   if "CLASSES" not in pkginfo:
     return
-  pkginfo_classes = set(re.split(opencsw.WS_RE, pkginfo["CLASSES"]))
+  pkginfo_classes = set(re.split(c.WS_RE, pkginfo["CLASSES"]))
   pkgmap_classes = set()
   for entry in pkgmap:
     if entry["class"]:  # might be None

@@ -26,12 +26,13 @@ from Cheetah import Template
 import opencsw
 import package_checks
 import models as m
+import configuration as c
+import tag
 
 DEBUG_BREAK_PKGMAP_AFTER = False
 DB_SCHEMA_VERSION = 3L
 PACKAGE_STATS_VERSION = 6L
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
-WS_RE = re.compile(r"\s+")
 NEEDED_SONAMES = "needed sonames"
 RUNPATH = "runpath"
 SONAME = "soname"
@@ -347,7 +348,7 @@ class SystemPkgmap(object):
         continue
       if line.startswith("#"):
         continue
-      fields = re.split(WS_RE, line)
+      fields = re.split(c.WS_RE, line)
       pkgmap_entry_path = fields[0].split("=")[0]
       pkgmap_entry_dir, pkgmap_entry_base_name = os.path.split(pkgmap_entry_path)
       # The following SQLObject-driven inserts are 60 times slower than the raw
@@ -373,7 +374,7 @@ class SystemPkgmap(object):
     logging.info("All lines of %s were processed.", pkgmap_path)
 
   def _ParsePkginfoLine(self, line):
-    fields = re.split(WS_RE, line)
+    fields = re.split(c.WS_RE, line)
     pkgname = fields[1]
     pkg_desc = u" ".join(fields[2:])
     return pkgname, pkg_desc
@@ -451,7 +452,7 @@ class SystemPkgmap(object):
   def _InferPackagesFromPkgmapLine(self, line):
     """A stub of a function, to be enhanced."""
     line = line.strip()
-    parts = re.split(WS_RE, line)
+    parts = re.split(c.WS_RE, line)
     return [parts[-1]]
 
   def GetPathsAndPkgnamesByBasename(self, filename):
@@ -625,7 +626,7 @@ def ParseDumpOutput(dump_output):
   runpath = []
   rpath = []
   for line in dump_output.splitlines():
-    fields = re.split(WS_RE, line)
+    fields = re.split(c.WS_RE, line)
     # TODO: Make it a unit test
     # logging.debug("%s says: %s", DUMP_BIN, fields)
     if len(fields) < 3:
@@ -646,38 +647,6 @@ def ParseDumpOutput(dump_output):
   binary_data["RPATH set"] = bool(rpath)
   binary_data["RUNPATH set"] = bool(runpath)
   return binary_data
-
-
-class CheckpkgTag(object):
-  """Represents a tag to be written to the checkpkg tag file."""
-
-  def __init__(self, pkgname, tag_name, tag_info=None, severity=None, msg=None):
-    self.pkgname = pkgname
-    self.tag_name = tag_name
-    self.tag_info = tag_info
-    self.severity = severity
-    self.msg = msg
-
-  def __repr__(self):
-    return (u"CheckpkgTag(%s, %s, %s)"
-            % (repr(self.pkgname),
-               repr(self.tag_name),
-               repr(self.tag_info)))
-
-  def ToGarSyntax(self):
-    """Presents the error tag using GAR syntax."""
-    msg_lines = []
-    if self.msg:
-      msg_lines.extend(textwrap(self.msg, 70,
-                                initial_indent="# ",
-                                subsequent_indent="# "))
-    if self.tag_info:
-      tag_postfix = "|%s" % self.tag_info.replace(" ", "|")
-    else:
-      tag_postfix = ""
-    msg_lines.append(u"CHECKPKG_OVERRIDES_%s += %s%s"
-                     % (self.pkgname, self.tag_name, tag_postfix))
-    return "\n".join(msg_lines)
 
 
 class CheckpkgManagerBase(object):
@@ -816,7 +785,7 @@ class CheckInterfaceBase(object):
 class IndividualCheckInterface(CheckInterfaceBase):
   """To be passed to the checking functions.
 
-  Wraps the creation of CheckpkgTag objects.
+  Wraps the creation of tag.CheckpkgTag objects.
   """
 
   def __init__(self, pkgname, system_pkgmap=None):
@@ -825,8 +794,8 @@ class IndividualCheckInterface(CheckInterfaceBase):
     self.errors = []
 
   def ReportError(self, tag_name, tag_info=None, msg=None):
-    tag = CheckpkgTag(self.pkgname, tag_name, tag_info, msg=msg)
-    self.errors.append(tag)
+    checkpkg_tag = tag.CheckpkgTag(self.pkgname, tag_name, tag_info, msg=msg)
+    self.errors.append(checkpkg_tag)
 
 
 class SetCheckInterface(CheckInterfaceBase):
@@ -837,8 +806,8 @@ class SetCheckInterface(CheckInterfaceBase):
     self.errors = []
 
   def ReportError(self, pkgname, tag_name, tag_info=None, msg=None):
-    tag = CheckpkgTag(pkgname, tag_name, tag_info, msg=msg)
-    self.errors.append(tag)
+    checkpkg_tag = tag.CheckpkgTag(pkgname, tag_name, tag_info, msg=msg)
+    self.errors.append(checkpkg_tag)
 
 
 class CheckpkgMessenger(object):
@@ -914,95 +883,6 @@ class CheckpkgManager2(CheckpkgManagerBase):
   def Run(self):
     self._AutoregisterChecks()
     return super(CheckpkgManager2, self).Run()
-
-
-def ParseTagLine(line):
-  """Parses a line from the tag.${module} file.
-
-  Returns a triplet of pkgname, tagname, tag_info.
-  """
-  level_1 = line.strip().split(":")
-  if len(level_1) > 1:
-    data_1 = ":".join(level_1[1:])
-    pkgname = level_1[0]
-  else:
-    data_1 = level_1[0]
-    pkgname = None
-  level_2 = re.split(WS_RE, data_1.strip())
-  tag_name = level_2[0]
-  if len(level_2) > 1:
-    tag_info = " ".join(level_2[1:])
-  else:
-    tag_info = None
-  return (pkgname, tag_name, tag_info)
-
-
-class Override(object):
-  """Represents an override of a certain checkpkg tag.
-
-  It's similar to checkpkg.CheckpkgTag, but serves a different purpose.
-  """
-
-  def __init__(self, pkgname, tag_name, tag_info):
-    self.pkgname = pkgname
-    self.tag_name = tag_name
-    self.tag_info = tag_info
-
-  def __repr__(self):
-    return (u"Override(%s, %s, %s)"
-            % (repr(self.pkgname), repr(self.tag_name), repr(self.tag_info)))
-
-  def DoesApply(self, tag):
-    """Figures out if this override applies to the given tag."""
-    basket_a = {}
-    basket_b = {}
-    if self.pkgname:
-      basket_a["pkgname"] = self.pkgname
-      basket_b["pkgname"] = tag.pkgname
-    if self.tag_info:
-      basket_a["tag_info"] = self.tag_info
-      basket_b["tag_info"] = tag.tag_info
-    basket_a["tag_name"] = self.tag_name
-    basket_b["tag_name"] = tag.tag_name
-    return basket_a == basket_b
-
-
-def ParseOverrideLine(line):
-  level_1 = line.split(":")
-  if len(level_1) > 1:
-    pkgname = level_1[0]
-    data_1 = ":".join(level_1[1:])
-  else:
-    pkgname = None
-    data_1 = level_1[0]
-  level_2 = re.split(WS_RE, data_1.strip())
-  if len(level_2) > 1:
-    tag_name = level_2[0]
-    tag_info = " ".join(level_2[1:])
-  else:
-    tag_name = level_2[0]
-    tag_info = None
-  return Override(pkgname, tag_name, tag_info)
-
-
-def ApplyOverrides(error_tags, overrides):
-  """Filters out all the error tags that overrides apply to.
-
-  O(N * M), but N and M are always small.
-  """
-  tags_after_overrides = []
-  applied_overrides = set([])
-  provided_overrides = set(copy.copy(overrides))
-  for tag in error_tags:
-    override_applies = False
-    for override in overrides:
-      if override.DoesApply(tag):
-        override_applies = True
-        applied_overrides.add(override)
-    if not override_applies:
-      tags_after_overrides.append(tag)
-  unapplied_overrides = provided_overrides.difference(applied_overrides)
-  return tags_after_overrides, unapplied_overrides
 
 
 def GetIsalist():
@@ -1417,6 +1297,6 @@ def ErrorTagsFromFile(file_name):
   for line in fd:
     if line.startswith("#"):
       continue
-    pkgname, tag_name, tag_info = ParseTagLine(line)
-    error_tags.append(CheckpkgTag(pkgname, tag_name, tag_info))
+    pkgname, tag_name, tag_info = tag.ParseTagLine(line)
+    error_tags.append(tag.CheckpkgTag(pkgname, tag_name, tag_info))
   return error_tags

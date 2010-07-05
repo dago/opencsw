@@ -14,6 +14,7 @@ from checkpkg_test           import *
 from example_test            import *
 from opencsw_test            import *
 from overrides_test          import *
+from tag_test                import *
 from package_checks_test     import *
 
 if __name__ == '__main__':

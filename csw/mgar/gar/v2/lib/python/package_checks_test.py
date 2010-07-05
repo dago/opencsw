@@ -719,7 +719,7 @@ class TestCheckArchitecture_LibSubdirWrong(CheckpkgUnitTestHelper,
         'mime_type': 'application/x-sharedlib; charset=binary',
         'path': 'opt/csw/lib/sparcv9/foo/subdir/libfoo.so.1'}]
     self.error_mgr_mock.ReportError(
-        'binary-wrong-wrong-placement',
+        'binary-disallowed-placement',
         'file=opt/csw/lib/sparcv9/foo/subdir/libfoo.so.1 '
         'arch_id=2 arch_name=sparcv8 bad_path=sparcv9')
 
