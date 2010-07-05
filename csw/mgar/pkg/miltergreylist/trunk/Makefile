@@ -41,7 +41,7 @@ INSTALL_SCRIPTS = custom
 USERGROUP = /opt/csw/etc/pkg/CSWmiltergreylist/cswusergroup
 SAMPLECONF = /etc/opt/csw/greylist.conf
 INITSMF = /etc/opt/csw/init.d/cswmiltergreylist
-POSTMSG = /opt/csw/share/doc/miltergreylist/README
+POSTMSG = /opt/csw/share/doc/miltergreylist/README.CSW
 
 PROTOTYPE_MODIFIERS = 1
 PROTOTYPE_FILES_1 = /var/opt/csw/miltergreylist
