@@ -1175,8 +1175,8 @@ class PackageStats(object):
     if not self.StatsExist():
       raise PackageError("Package stats not ready.")
     override_stats = self.ReadObject("overrides")
-    overrides = [Override(**x) for x in override_stats]
-    return overrides
+    override_list = [overrides.Override(**x) for x in override_stats]
+    return override_list
 
   def DumpObject(self, obj, name):
     """Saves an object."""
