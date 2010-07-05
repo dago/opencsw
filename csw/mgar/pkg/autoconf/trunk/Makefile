@@ -1,5 +1,5 @@
 GARNAME = autoconf
-GARVERSION = 2.65
+GARVERSION = 2.66
 CATEGORIES = devel
 
 DESCRIPTION = GNU auto-configuration tool
@@ -29,6 +29,10 @@ TEST_SCRIPTS =
 
 EXTRA_MERGE_EXCLUDE_FILES = $(infodir)/standards.info
 
+CHECKPKG_OVERRIDES_CSWautoconf += missing-dependency|CSWemacscommon
+CHECKPKG_OVERRIDES_CSWautoconf += surplus-dependency|CSWgm4
+CHECKPKG_OVERRIDES_CSWautoconf += surplus-dependency|CSWgawk
+
 include gar/category.mk
 
 # Package has two bad string which should be ignored:
@@ -36,6 +40,6 @@ include gar/category.mk
 #   ;;; from file /export/medusa/dam/build/csw/devel/autoconf/work/dam-ra.d/autoconf-2.61/lib/emacs/elc.15767/autotest-mode.el
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/emacs/site-lisp
 
-post-install:
+post-install-modulated:
 	@echo " ==> Fixing install anomalies"
 	@rm -f $(DESTDIR)$(prefix)/share/info/standards.info
