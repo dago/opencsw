@@ -1,0 +1,30 @@
+--- dbus-1.3.1.orig/dbus/dbus-sysdeps-unix.c    2009-07-16 16:04:55.000000000 +0200
++++ dbus-1.3.1/dbus/dbus-sysdeps-unix.c         2010-02-28 16:49:51.561773000 +0100
+@@ -54,6 +54,9 @@
+ #include <netinet/in.h>
+ #include <netdb.h>
+ #include <grp.h>
++#include <alloca.h>
++#define CMSG_SPACE(l) ((size_t)_CMSG_HDR_ALIGN(sizeof (struct cmsghdr) + (l)))
++#define CMSG_LEN(l) ((size_t)_CMSG_DATA_ALIGN(sizeof (struct cmsghdr)) + (l))
+
+ #ifdef HAVE_ERRNO_H
+ #include <errno.h>
+@@ -3268,7 +3271,7 @@
+     }
+   else
+     {
+-      if (!_dbus_string_append (&servicedir_path, "/usr/local/share:/usr/share:"))
++      if (!_dbus_string_append (&servicedir_path, "/opt/csw/share:/usr/local/share:/usr/share:"))
+         goto oom;
+     }
+
+@@ -3355,7 +3358,7 @@
+     }
+   else
+     {
+-      if (!_dbus_string_append (&servicedir_path, "/usr/local/share:/usr/share:"))
++      if (!_dbus_string_append (&servicedir_path, "/opt/csw/share:/usr/local/share:/usr/share:"))
+         goto oom;
+     }
+
