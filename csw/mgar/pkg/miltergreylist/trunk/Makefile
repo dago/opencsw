@@ -36,9 +36,10 @@ CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 
 TEST_SCRIPTS = 
 INSTALL_SCRIPTS = custom
-USERGROUP = /opt/csw/etc/pkg/miltergreylist/cswusergroup
+USERGROUP = /opt/csw/etc/pkg/CSWmiltergreylist/cswusergroup
 SAMPLECONF = /etc/opt/csw/greylist.conf
-INITSMF = /opt/csw/etc/init.d/cswmiltergreylist
+INITSMF = /etc/opt/csw/init.d/cswmiltergreylist
+POSTMSG = /opt/csw/share/doc/miltergreylist/README
 
 PROTOTYPE_MODIFIERS = 1
 PROTOTYPE_FILES_1 = /var/opt/csw/miltergreylist
@@ -65,10 +66,10 @@ install-custom:
 	@$(foreach DOC,$(DOCLIST),cp $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
 	@ginstall -d -m 755 $(DESTDIR)/var/opt/csw/$(GARNAME)
 	@rmdir $(DESTDIR)/var/milter-greylist
-	@ginstall -d -m 755 $(DESTDIR)/opt/csw/etc/pkg/$(GARNAME)
-	@cp $(FILEDIR)/CSWmiltergreylist.ug $(DESTDIR)/opt/csw/etc/pkg/$(GARNAME)/cswusergroup
-	@ginstall -d -m 755 $(DESTDIR)/opt/csw/etc/init.d
-	@cp $(FILEDIR)/CSWmiltergreylist.init $(DESTDIR)/opt/csw/etc/init.d/cswmiltergreylist
-	@chmod 755 $(DESTDIR)/opt/csw/etc/init.d/cswmiltergreylist
+	@ginstall -d -m 755 $(DESTDIR)/opt/csw/etc/pkg/CSW$(GARNAME)
+	@cp $(FILEDIR)/CSWmiltergreylist.ug $(DESTDIR)/opt/csw/etc/pkg/CSW$(GARNAME)/cswusergroup
+	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
+	@cp $(FILEDIR)/CSWmiltergreylist.init $(DESTDIR)/etc/opt/csw/init.d/cswmiltergreylist
+	@chmod 755 $(DESTDIR)/etc/opt/csw/init.d/cswmiltergreylist
 	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(MAKECOOKIE)

@@ -1,0 +1,32 @@
+From ac7a4154ceae818a9518fc0dd597458d2ffceb93 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Mon, 5 Jul 2010 18:07:02 +0200
+Subject: [PATCH] Path and user changes in conf file
+
+---
+ greylist.conf |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/greylist.conf b/greylist.conf
+index 04864fd..b49fd4d 100644
+--- a/greylist.conf
++++ b/greylist.conf
+@@ -5,11 +5,11 @@
+ # $Id: greylist.conf,v 1.45.2.1 2009/02/12 22:39:01 manu Exp $
+ #
+ 
+-pidfile "/var/run/milter-greylist.pid"
+-socket "/var/milter-greylist/milter-greylist.sock"
+-dumpfile "/var/milter-greylist/greylist.db" 600
++pidfile "/var/opt/csw/miltergreylist/milter-greylist.pid"
++socket "/var/opt/csw/miltergreylist/milter-greylist.sock"
++dumpfile "/var/opt/csw/miltergreylist/greylist.db" 600
+ dumpfreq 1
+-user "smmsp"
++user "greylist"
+ 
+ # Log milter-greylist activity to a file
+ #stat ">>/var/milter-greylist/greylist.log" \
+-- 
+1.7.1
+
