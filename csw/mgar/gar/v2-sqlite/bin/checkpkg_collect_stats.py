@@ -39,7 +39,7 @@ def main():
   args_display = args
   if len(args_display) > 5:
     args_display = args_display[:5] + ["...more..."]
-  logging.debug("Calling: %s, please be patient", args_display)
+  logging.debug("Processing: %s, please be patient", args_display)
   packages = [opencsw.CswSrv4File(x, options.debug) for x in args]
   if options.catalog_file:
     # Using cached md5sums to save time: injecting md5sums
