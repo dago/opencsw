@@ -266,12 +266,12 @@ class TestCheckLinkingAgainstSunX11_Bad(CheckpkgUnitTestHelper, unittest.TestCas
                             'libm.so.1',
                             'libc.so.1'],
          'path': 'opt/csw/lib/libImlib2.so.1.4.2',
-         'runpath': ['/opt/csw/lib/$ISALIST',
+         'runpath': ('/opt/csw/lib/$ISALIST',
                      '/opt/csw/lib',
                      '/usr/lib/$ISALIST',
                      '/usr/lib',
                      '/lib/$ISALIST',
-                     '/lib'],
+                     '/lib'),
          'soname': 'libImlib2.so.1',
          'soname_guessed': False,
     })
@@ -334,7 +334,7 @@ class TestCheckRpath(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckRpath'
   def CheckpkgTest(self):
     binaries_dump_info = self.pkg_data["binaries_dump_info"]
-    binaries_dump_info[0]["runpath"] = testdata.rpaths.all_rpaths
+    binaries_dump_info[0]["runpath"] = tuple(testdata.rpaths.all_rpaths)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     BAD_PATHS = [
         '$ORIGIN/..',
@@ -434,7 +434,7 @@ class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'SetCheckLibraries'
   def CheckpkgTest(self):
     binaries_dump_info = self.pkg_data["binaries_dump_info"]
-    binaries_dump_info[0]["runpath"] = ["/opt/csw/lib"]
+    binaries_dump_info[0]["runpath"] = ("/opt/csw/lib",)
     binaries_dump_info[0]["needed sonames"] = ["libdb-4.7.so"]
     self.pkg_data["depends"] = (("CSWfoo", None),)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
@@ -492,11 +492,11 @@ class TestSharedLibsInAnInstalledPackageToo(CheckpkgUnitTestHelper,
         'binaries_dump_info': [{'base_name': 'bar',
                                 'needed sonames': ['libfoo.so.1'],
                                 'path': 'opt/csw/bin/bar',
-                                'runpath': ['/opt/csw/lib'],
+                                'runpath': ('/opt/csw/lib',),
                                 'soname': 'rsync',
                                 'soname_guessed': True}],
         'depends': (('CSWlibfoo', None),),
-        'isalist': [],
+        'isalist': (),
         'pkgmap': [],
         }
   CSWlibfoo_DATA = {
@@ -505,7 +505,7 @@ class TestSharedLibsInAnInstalledPackageToo(CheckpkgUnitTestHelper,
                         'stats_version': 1},
         'binaries_dump_info': [],
         'depends': [],
-        'isalist': [],
+        'isalist': (),
         'pkgmap': [],
       }
   def CheckpkgTest(self):
@@ -526,7 +526,7 @@ class TestCheckLibrariesDlopenLibs_1(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'SetCheckLibraries'
   def CheckpkgTest(self):
     binaries_dump_info = self.pkg_data["binaries_dump_info"]
-    binaries_dump_info[0]["runpath"] = []
+    binaries_dump_info[0]["runpath"] = ()
     binaries_dump_info[0]["needed sonames"] = ["libbar.so"]
     binaries_dump_info[0]["path"] = 'opt/csw/lib/python/site-packages/foo.so'
     self.pkg_data["depends"] = tuple()
@@ -545,7 +545,7 @@ class TestCheckLibrariesDlopenLibs_2(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'SetCheckLibraries'
   def CheckpkgTest(self):
     binaries_dump_info = self.pkg_data["binaries_dump_info"]
-    binaries_dump_info[0]["runpath"] = []
+    binaries_dump_info[0]["runpath"] = ()
     binaries_dump_info[0]["needed sonames"] = ["libnotfound.so"]
     binaries_dump_info[0]["path"] = 'opt/csw/lib/foo.so'
     self.pkg_data["depends"] = tuple()

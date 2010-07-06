@@ -8,7 +8,7 @@ pkg_data = {
  'binaries_dump_info': [{'base_name': 'foo',
                          'needed sonames': [],
                          'path': 'opt/csw/bin/foo',
-                         'runpath': [
+                         'runpath': (
                                      '/opt/csw/1/lib',
                                      '/opt/csw/lib',
                                      '/lib',
@@ -16,7 +16,7 @@ pkg_data = {
                                      '/usr/lib/$ISALIST',
                                      '/usr/lib',
                                      '/lib/$ISALIST',
-                                     '/lib'],
+                                     '/lib'),
                          'soname': 'foo',
                          'soname_guessed': True}],
  'depends': [],
