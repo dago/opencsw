@@ -1,5 +1,5 @@
 GARNAME = glib
-GARVERSION = 2.25.7
+GARVERSION = 2.25.10
 CATEGORIES = lib
 
 DESCRIPTION = The GLib library of C routines.
@@ -20,7 +20,7 @@ MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
 
 PATCHFILES  = glib-typedetect.patch
-PATCHFILES += FIXED_STR.patch
+# PATCHFILES += FIXED_STR.patch
 PATCHFILES += gsize.patch
 # PATCHFILES += gconverter.patch
 PATCHFILES += CMSG_LEN.patch
@@ -30,6 +30,7 @@ PATCHFILES += CMSG_LEN.patch
 # PATCHFILES += 0001-Use-G_STRFUNC-instead-of-explicit-gcc-only-__PRETTY_.patch
 
 PATCHFILES += 0001-Make-sure-we-have-the-include-for-major-minor.patch
+PATCHFILES += 0001-Replace-.-not-understood-by-Sun-Studio.patch
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
@@ -43,6 +44,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 NOISAEXEC = 1
+
+BUILD_DEP_PKGS = CSWggettext
 
 RUNTIME_DEP_PKGS_CSWglib2 += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWglib2 += CSWiconv
@@ -65,3 +68,6 @@ PKGFILES_CSWglib2 += /opt/csw/share/locale/.*
 EXTRA_LDFLAGS = -lsocket
 
 include gar/category.mk
+
+# We need /opt/csw/gnu/gettext, /usr/bin/gettext bails out
+PATH := /opt/csw/gnu:$(PATH)
