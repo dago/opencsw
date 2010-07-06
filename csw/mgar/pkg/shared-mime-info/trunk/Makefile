@@ -1,5 +1,5 @@
 GARNAME = shared-mime-info
-GARVERSION = 0.70
+GARVERSION = 0.71
 CATEGORIES = lib
 
 DESCRIPTION = Freedesktop.org common MIME database
