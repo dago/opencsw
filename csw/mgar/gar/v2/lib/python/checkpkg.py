@@ -553,83 +553,105 @@ class SystemPkgmap(DatabaseClient):
     return dict([[str(x.pkgname), str(x.pkg_desc)] for x in res])
 
 
-def ExpandRunpath(runpath, isalist):
-  # Emulating $ISALIST expansion
-  if '$ISALIST' in runpath:
-    expanded_list = [runpath.replace('$ISALIST', isa) for isa in isalist]
-  else:
-    expanded_list = [runpath]
-  return expanded_list
+class LddEmulator(object):
+  """A class to emulate ldd(1)
 
-def ExpandSymlink(symlink, target, input_path):
-  # A lot of time is spent here, e.g. 13841985 calls, 206s.
-  # TODO: Optimize this.  Make it a class and add a cache?
-  symlink_re = re.compile(r"%s(/|$)" % symlink)
-  if re.search(symlink_re, input_path):
-    result = input_path.replace(symlink, target)
-  else:
-    result = input_path
-  return result
-
-def Emulate64BitSymlinks(runpath_list):
-  """Need to emulate the 64 -> amd64, 64 -> sparcv9 symlink
-
-  Since we don't know the architecture, we'll adding both amd64 and sparcv9.
-  It should be safe.
+  Used primarily to resolve SONAMEs and detect package dependencies.
   """
-  symlinked_list = []
-  for runpath in runpath_list:
-    for symlink, expansion_list in SYSTEM_SYMLINKS:
-      for target in expansion_list:
-        expanded = ExpandSymlink(symlink, target, runpath)
-        if expanded not in symlinked_list:
-          symlinked_list.append(expanded)
-  return symlinked_list
+  def __init__(self):
+    self.runpath_expand_cache = {}
+    self.symlink_expand_cache = {}
+    self.symlink64_cache = {}
+    self.runpath_sanitize_cache = {}
+
+  def ExpandRunpath(self, runpath, isalist):
+    key = (runpath, tuple(isalist))
+    if key not in self.runpath_expand_cache:
+      # Emulating $ISALIST expansion
+      if '$ISALIST' in runpath:
+        expanded_list = [runpath.replace('$ISALIST', isa) for isa in isalist]
+      else:
+        expanded_list = [runpath]
+      self.runpath_expand_cache[key] = expanded_list
+    return self.runpath_expand_cache[key]
+
+  def ExpandSymlink(self, symlink, target, input_path):
+    key = (symlink, target, input_path)
+    if key not in self.symlink_expand_cache:
+      # A lot of time is spent here, e.g. 13841985 calls, 206s.
+      # TODO: Optimize this.  Make it a class and add a cache?
+      symlink_re = re.compile(r"%s(/|$)" % symlink)
+      if re.search(symlink_re, input_path):
+        result = input_path.replace(symlink, target)
+      else:
+        result = input_path
+      self.symlink_expand_cache[key] = result
+    return self.symlink_expand_cache[key]
+
+  def Emulate64BitSymlinks(self, runpath_list):
+    """Need to emulate the 64 -> amd64, 64 -> sparcv9 symlink
+
+    Since we don't know the architecture, we'll adding both amd64 and sparcv9.
+    It should be safe.
+    """
+    key = tuple(runpath_list)
+    if key not in self.symlink64_cache:
+      symlinked_list = []
+      for runpath in runpath_list:
+        for symlink, expansion_list in SYSTEM_SYMLINKS:
+          for target in expansion_list:
+            expanded = self.ExpandSymlink(symlink, target, runpath)
+            if expanded not in symlinked_list:
+              symlinked_list.append(expanded)
+      self.symlink64_cache[key] = symlinked_list
+    return self.symlink64_cache[key]
+
+  def SanitizeRunpath(self, runpath):
+    if runpath not in self.runpath_sanitize_cache:
+      new_runpath = runpath
+      while True:
+        if new_runpath.endswith("/"):
+          new_runpath = new_runpath[:-1]
+        elif "//" in new_runpath:
+          new_runpath = new_runpath.replace("//", "/")
+        else:
+          break
+      self.runpath_sanitize_cache[runpath] = new_runpath
+    return self.runpath_sanitize_cache[runpath]
 
 
-def SanitizeRunpath(runpath):
-  while True:
-    if runpath.endswith("/"):
-      runpath = runpath[:-1]
-    elif "//" in runpath:
-      runpath = runpath.replace("//", "/")
-    else:
-      break
-  return runpath
+  def ResolveSoname(self, runpath, soname, isalist, path_list):
+    """Emulates ldd behavior, minimal implementation.
 
+    runpath: e.g. ["/opt/csw/lib/$ISALIST", "/usr/lib"]
+    soname: e.g. "libfoo.so.1"
+    isalist: e.g. ["sparcv9", "sparcv8"]
+    path_list: A list of paths where the soname is present, e.g.
+               ["/opt/csw/lib", "/opt/csw/lib/sparcv9"]
 
-def ResolveSoname(runpath, soname, isalist, path_list):
-  """Emulates ldd behavior, minimal implementation.
-
-  runpath: e.g. ["/opt/csw/lib/$ISALIST", "/usr/lib"]
-  soname: e.g. "libfoo.so.1"
-  isalist: e.g. ["sparcv9", "sparcv8"]
-  path_list: A list of paths where the soname is present, e.g.
-             ["/opt/csw/lib", "/opt/csw/lib/sparcv9"]
-
-  The function returns the one path.
-  """
-  runpath = SanitizeRunpath(runpath)
-  runpath_list = ExpandRunpath(runpath, isalist)
-  runpath_list = Emulate64BitSymlinks(runpath_list)
-  # Emulating the install time symlinks, for instance, if the prototype contains
-  # /opt/csw/lib/i386/foo.so.0 and /opt/csw/lib/i386 is a symlink to ".",
-  # the shared library ends up in /opt/csw/lib/foo.so.0 and should be
-  # findable even when RPATH does not contain $ISALIST.
-  original_paths_by_expanded_paths = {}
-  for p in path_list:
-    expanded_p_list = Emulate64BitSymlinks([p])
-    # We can't just expand and return; we need to return one of the paths given
-    # in the path_list.
-    for expanded_p in expanded_p_list:
-      original_paths_by_expanded_paths[expanded_p] = p
-  logging.debug("%s: looking for %s in %s",
-      soname, runpath_list, original_paths_by_expanded_paths.keys())
-  for runpath_expanded in runpath_list:
-    if runpath_expanded in original_paths_by_expanded_paths:
-      logging.debug("Found %s",
-                    original_paths_by_expanded_paths[runpath_expanded])
-      return original_paths_by_expanded_paths[runpath_expanded]
+    The function returns the one path.
+    """
+    runpath = self.SanitizeRunpath(runpath)
+    runpath_list = self.ExpandRunpath(runpath, isalist)
+    runpath_list = self.Emulate64BitSymlinks(runpath_list)
+    # Emulating the install time symlinks, for instance, if the prototype contains
+    # /opt/csw/lib/i386/foo.so.0 and /opt/csw/lib/i386 is a symlink to ".",
+    # the shared library ends up in /opt/csw/lib/foo.so.0 and should be
+    # findable even when RPATH does not contain $ISALIST.
+    original_paths_by_expanded_paths = {}
+    for p in path_list:
+      expanded_p_list = self.Emulate64BitSymlinks([p])
+      # We can't just expand and return; we need to return one of the paths given
+      # in the path_list.
+      for expanded_p in expanded_p_list:
+        original_paths_by_expanded_paths[expanded_p] = p
+    logging.debug("%s: looking for %s in %s",
+        soname, runpath_list, original_paths_by_expanded_paths.keys())
+    for runpath_expanded in runpath_list:
+      if runpath_expanded in original_paths_by_expanded_paths:
+        logging.debug("Found %s",
+                      original_paths_by_expanded_paths[runpath_expanded])
+        return original_paths_by_expanded_paths[runpath_expanded]
 
 
 def ParseDumpOutput(dump_output):
@@ -653,6 +675,10 @@ def ParseDumpOutput(dump_output):
     binary_data[RUNPATH].extend(runpath)
   elif rpath:
     binary_data[RUNPATH].extend(rpath)
+
+  # Converting runpath to a tuple, which is a hashable data type and can act as
+  # a key in a dict.
+  binary_data[RUNPATH] = tuple(binary_data[RUNPATH])
   binary_data["RUNPATH RPATH the same"] = (runpath == rpath)
   binary_data["RPATH set"] = bool(rpath)
   binary_data["RUNPATH set"] = bool(runpath)
@@ -880,7 +906,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
     count = itertools.count()
     bar = progressbar.ProgressBar()
     bar.maxval = len(pkgs_data) * len(self.individual_checks)
-    logging.info("Running checks.")
+    logging.info("Running individual checks.")
     bar.start()
     for pkg_data in pkgs_data:
       pkgname = pkg_data["basic_stats"]["pkgname"]
@@ -917,7 +943,7 @@ def GetIsalist():
   if ret:
     logging.error("Calling isalist has failed.")
   isalist = re.split(r"\s+", stdout.strip())
-  return isalist
+  return tuple(isalist)
 
 
 class PackageStats(DatabaseClient):

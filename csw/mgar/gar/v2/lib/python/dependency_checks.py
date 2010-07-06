@@ -21,6 +21,7 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
   orphan_sonames = []
   required_deps = []
   isalist = pkg_data["isalist"]
+  ldd_emulator = checkpkg.LddEmulator()
   for binary_info in pkg_data["binaries_dump_info"]:
     for soname in binary_info["needed sonames"]:
       resolved = False
@@ -32,10 +33,10 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
                    path_list)
       runpath_list = binary_info["runpath"] + checkpkg.SYS_DEFAULT_RUNPATH
       for runpath in runpath_list:
-        resolved_path = checkpkg.ResolveSoname(runpath,
-                                               soname,
-                                               isalist,
-                                               path_list)
+        resolved_path = ldd_emulator.ResolveSoname(runpath,
+                                                   soname,
+                                                   isalist,
+                                                   path_list)
         if resolved_path:
           logger.debug("%s needed by %s:",
                  soname, binary_info["path"])

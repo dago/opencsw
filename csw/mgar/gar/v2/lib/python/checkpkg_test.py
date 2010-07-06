@@ -39,55 +39,56 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
 
   def setUp(self):
     self.pkgmap_mocker = mox.Mox()
+    self.e = checkpkg.LddEmulator()
 
   def testExpandRunpath_1(self):
     isalist = ["foo", "bar"]
     runpath = "/opt/csw/lib/$ISALIST"
     expected = ["/opt/csw/lib/foo", "/opt/csw/lib/bar"]
-    self.assertEquals(expected, checkpkg.ExpandRunpath(runpath, isalist))
+    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist))
 
   def testExpandRunpath_2(self):
     isalist = ["foo", "bar"]
     runpath = "/opt/csw/mysql5/lib/$ISALIST/mysql"
     expected = ["/opt/csw/mysql5/lib/foo/mysql",
                 "/opt/csw/mysql5/lib/bar/mysql"]
-    self.assertEquals(expected, checkpkg.ExpandRunpath(runpath, isalist))
+    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist))
 
   def testEmulate64BitSymlinks_1(self):
     runpath_list = ["/opt/csw/mysql5/lib/foo/mysql/64"]
     expected = "/opt/csw/mysql5/lib/foo/mysql/amd64"
-    self.assertTrue(expected in checkpkg.Emulate64BitSymlinks(runpath_list))
+    self.assertTrue(expected in self.e.Emulate64BitSymlinks(runpath_list))
 
   def testEmulate64BitSymlinks_2(self):
     runpath_list = ["/opt/csw/mysql5/lib/64/mysql/foo"]
     expected = "/opt/csw/mysql5/lib/amd64/mysql/foo"
-    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    result = self.e.Emulate64BitSymlinks(runpath_list)
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
 
   def testEmulate64BitSymlinks_3(self):
     runpath_list = ["/opt/csw/mysql5/lib/64/mysql/foo"]
     expected = "/opt/csw/mysql5/lib/sparcv9/mysql/foo"
-    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    result = self.e.Emulate64BitSymlinks(runpath_list)
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
 
   def testEmulate64BitSymlinks_4(self):
     """No repeated paths because of symlink expansion"""
     runpath_list = ["/opt/csw/lib"]
     expected = "/opt/csw/lib"
-    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    result = self.e.Emulate64BitSymlinks(runpath_list)
     self.assertEquals(1, len(result), "len(%s) != %s" % (result, 1))
 
   def testEmulateSymlinks_3(self):
     runpath_list = ["/opt/csw/bdb4"]
     expected = "/opt/csw/bdb42"
-    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    result = self.e.Emulate64BitSymlinks(runpath_list)
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
 
   def testEmulateSymlinks_4(self):
     runpath_list = ["/opt/csw/bdb42"]
     expected = "/opt/csw/bdb42"
     not_expected = "/opt/csw/bdb422"
-    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    result = self.e.Emulate64BitSymlinks(runpath_list)
     self.assertTrue(expected in result,
                     "%s not in %s" % (expected, result))
     self.assertFalse(not_expected in result,
@@ -97,7 +98,7 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     """Install time symlink expansion."""
     runpath_list = ["/opt/csw/lib/i386"]
     expected = "/opt/csw/lib"
-    result = checkpkg.Emulate64BitSymlinks(runpath_list)
+    result = self.e.Emulate64BitSymlinks(runpath_list)
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
 
   def testEmulateSymlinks_6(self):
@@ -105,7 +106,7 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     runpath_list = ["/opt/csw/lib/i386"]
     expected = "/opt/csw/lib"
     not_expected = "/opt/csw/lib/i386"
-    result = checkpkg.ExpandSymlink("/opt/csw/lib/i386",
+    result = self.e.ExpandSymlink("/opt/csw/lib/i386",
                                     "/opt/csw/lib",
                                     "/opt/csw/lib/i386")
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
@@ -114,11 +115,11 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
 
   def testSanitizeRunpath_1(self):
     self.assertEqual("/opt/csw/lib",
-                     checkpkg.SanitizeRunpath("/opt/csw/lib/"))
+                     self.e.SanitizeRunpath("/opt/csw/lib/"))
 
   def testSanitizeRunpath_2(self):
     self.assertEqual("/opt/csw/lib",
-                     checkpkg.SanitizeRunpath("/opt//csw////lib/"))
+                     self.e.SanitizeRunpath("/opt//csw////lib/"))
 
 
 
@@ -137,18 +138,18 @@ class ParseDumpOutputUnitTest(unittest.TestCase):
                            'libnsl.so.1',
                            'libm.so.1',
                            'libz.so.1'],
-        'runpath': ['/opt/csw/lib/$ISALIST',
+        'runpath': ('/opt/csw/lib/$ISALIST',
                     '/opt/csw/lib',
                     '/opt/csw/mysql5/lib/$ISALIST',
                     '/opt/csw/mysql5/lib',
-                    '/opt/csw/mysql5/lib/$ISALIST/mysql'],
+                    '/opt/csw/mysql5/lib/$ISALIST/mysql'),
         'soname': 'libmysqlclient.so.15',
     }
     self.assertEqual(expected,
                      checkpkg.ParseDumpOutput(dump_1.DATA_DUMP_OUTPUT))
 
   def testEmpty(self):
-    expected_runpath = []
+    expected_runpath = ()
     self.assertEqual(
         expected_runpath,
         checkpkg.ParseDumpOutput(dump_2.DATA_DUMP_OUTPUT)["runpath"])
@@ -166,11 +167,11 @@ class ParseDumpOutputUnitTest(unittest.TestCase):
                            'libnsl.so.1',
                            'libm.so.1',
                            'libz.so.1'],
-        'runpath': ['/opt/csw/lib/$ISALIST',
+        'runpath': ('/opt/csw/lib/$ISALIST',
                     '/opt/csw/lib',
                     '/opt/csw/mysql5/lib/$ISALIST',
                     '/opt/csw/mysql5/lib',
-                    '/opt/csw/mysql5/lib/$ISALIST/mysql'],
+                    '/opt/csw/mysql5/lib/$ISALIST/mysql'),
         'soname': 'libmysqlclient.so.15',
     }
     self.assertEqual(

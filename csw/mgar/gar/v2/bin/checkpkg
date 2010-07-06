@@ -107,8 +107,9 @@ display_help=0
 SKIP_STATS_COLLECTION=0
 MD5_SUMS_CATALOG_FILE=""
 INSTALL_CONTENTS_FILES="/var/sadm/install/contents"
+ANALYZE=1
 
-while getopts hsdNM:o:c: opt; do
+while getopts hsdNM:o:c:A opt; do
 	case "${opt}" in
 	  c)
 	    INSTALL_CONTENTS_FILES="${INSTALL_CONTENTS_FILES} ${OPTARG}"
@@ -131,6 +132,9 @@ while getopts hsdNM:o:c: opt; do
     M)
       MD5_SUMS_CATALOG_FILE="${OPTARG}"
       ;;
+    A)
+      ANALYZE=0
+      ;;
     *)
       echo "Unknown option '${opt}'"
       ;;
@@ -143,6 +147,7 @@ readonly MD5_SUMS_CATALOG_FILE
 readonly SAVED_TAGS_FILE
 readonly SAVE_TAGS
 readonly SKIP_STATS_COLLECTION
+readonly ANALYZE
 
 if [[ "${display_help}" -eq 1 ]] ; then
   print 'Usage: checkpkg [options] pkg1 [pkg2 ....]'
@@ -153,6 +158,7 @@ if [[ "${display_help}" -eq 1 ]] ; then
   print '   -d         display debug messages'
   print '   -N         skip statistics collection'
   print '   -M <file>  use package md5sums from a catalog file'
+  print '   -A         Do not analyze the results.'
   exit 0
 fi
 
@@ -359,15 +365,20 @@ for tagfile in ${EXTRACTDIR}/tags.*; do
   fi
 done
 
+if [[ "${ANALYZE}" -eq 1 ]]; then
 # Collecting errors and applying the overrides.
 # This has to use the original files.
-${command_basedir}/analyze_module_results.py \
-    -e "${EXTRACTDIR}" \
-    "$@"
-if [[ "$?" -ne 0 ]]; then
-	errmsg "${RED}Modular checks are reporting errors.${COLOR_RESET}"
+  echo "Applying the overrides and analyzing the results."
+  ${command_basedir}/analyze_module_results.py \
+      -e "${EXTRACTDIR}" \
+      "$@"
+  if [[ "$?" -ne 0 ]]; then
+    errmsg "${RED}Modular checks are reporting errors.${COLOR_RESET}"
+  else
+    print "${GREEN}All modular tests were successful.${COLOR_RESET}"
+  fi
 else
-	print "${GREEN}All modular tests were successful.${COLOR_RESET}"
+	echo "Skipping result analysis."
 fi
 
 print ""
