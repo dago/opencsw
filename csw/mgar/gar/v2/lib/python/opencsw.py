@@ -894,7 +894,6 @@ class DirectoryFormatPackage(ShellMixin, object):
                              catalogname)
     # This might potentially cause a file descriptor leak, but I'm not going to
     # worry about that at this stage.
-    logging.debug("Trying to open %s", repr(file_path))
     if os.path.isfile(file_path):
       return open(file_path, "r")
     else:
@@ -980,7 +979,6 @@ class Pkgmap(object):
       if strip:
         strip_re = re.compile(r"^%s" % strip)
         fields = [re.sub(strip_re, "", x) for x in fields]
-      # logging.debug(fields)
       line_to_add = None
       installed_path = None
       prototype_class = None
@@ -1173,7 +1171,7 @@ class OpencswCatalog(object):
         parsed = self._ParseCatalogLine(line)
         catalog_data.append(parsed)
       except CatalogLineParseError, e:
-        logging.error("Could not parse %s, %s", repr(line), e)
+        logging.debug("Could not parse %s, %s", repr(line), e)
     return catalog_data
 
   def GetCatalogData(self):

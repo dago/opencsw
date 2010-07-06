@@ -562,6 +562,8 @@ def ExpandRunpath(runpath, isalist):
   return expanded_list
 
 def ExpandSymlink(symlink, target, input_path):
+  # A lot of time is spent here, e.g. 13841985 calls, 206s.
+  # TODO: Optimize this.  Make it a class and add a cache?
   symlink_re = re.compile(r"%s(/|$)" % symlink)
   if re.search(symlink_re, input_path):
     result = input_path.replace(symlink, target)
@@ -707,9 +709,13 @@ class CheckpkgManagerBase(object):
     return errors
 
   def GetOptimizedAllStats(self, stats_obj_list):
+    logging.info("Loading package statistics.")
     pkgs_data = []
     counter = itertools.count()
     length = len(stats_obj_list)
+    bar = progressbar.ProgressBar()
+    bar.maxval = length
+    bar.start()
     for stats_obj in stats_obj_list:
       # pkg_data = {}
       # This bit is tightly tied to the data structures returned by
@@ -718,11 +724,13 @@ class CheckpkgManagerBase(object):
       # Python strings are already implementing the flyweight pattern. What's
       # left is lists and dictionaries.
       i = counter.next()
-      logging.debug("Loading stats for %s (%s/%s)",
-                    stats_obj.md5sum, i, length)
+      # logging.debug("Loading stats for %s (%s/%s)",
+      #               stats_obj.md5sum, i, length)
       raw_pkg_data = stats_obj.GetAllStats()
       pkg_data = raw_pkg_data
       pkgs_data.append(pkg_data)
+      bar.update(i)
+    bar.finish()
     return pkgs_data
 
   def Run(self):
@@ -869,6 +877,11 @@ class CheckpkgManager2(CheckpkgManagerBase):
     logging.debug("All package statistics loaded.")
     messenger = CheckpkgMessenger()
     # Individual checks
+    count = itertools.count()
+    bar = progressbar.ProgressBar()
+    bar.maxval = len(pkgs_data) * len(self.individual_checks)
+    logging.info("Running checks.")
+    bar.start()
     for pkg_data in pkgs_data:
       pkgname = pkg_data["basic_stats"]["pkgname"]
       check_interface = IndividualCheckInterface(pkgname, pkgmap)
@@ -878,7 +891,10 @@ class CheckpkgManager2(CheckpkgManagerBase):
         function(pkg_data, check_interface, logger=logger, messenger=messenger)
         if check_interface.errors:
           errors[pkgname] = check_interface.errors
+        bar.update(count.next())
+    bar.finish()
     # Set checks
+    logging.info("Running set checks.")
     for function in self.set_checks:
       logger = logging.getLogger(function.__name__)
       check_interface = SetCheckInterface(pkgmap)
@@ -970,13 +986,12 @@ class PackageStats(DatabaseClient):
   def GetDbObject(self):
     if not self.db_pkg_stats:
       md5_sum = self.GetMd5sum()
-      logging.debug("GetDbObject() md5_sum=%s", md5_sum)
       res = m.Srv4FileStats.select(m.Srv4FileStats.q.md5_sum==md5_sum)
       if not res.count():
-        logging.debug("%s are not in the db", md5_sum)
+        # TODO: Change this bit to throw an exception if the object is not
+        # found.
         return None
       else:
-        logging.debug("%s are in the db", md5_sum)
         self.db_pkg_stats = res.getOne()
     return self.db_pkg_stats
 
@@ -1192,7 +1207,6 @@ class PackageStats(DatabaseClient):
     return pkg_stats
 
   def GetAllStats(self):
-    logging.debug("GetAllStats()")
     if not self.all_stats and self.StatsExist():
       self.all_stats = self.ReadSavedStats()
     elif not self.all_stats:

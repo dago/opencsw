@@ -1,9 +1,11 @@
 #!/opt/csw/bin/python2.6
 # $Id$
 
+import itertools
 import operator
 import optparse
 import os
+import progressbar
 import sys
 
 # The following bit of code sets the correct path to Python libraries
@@ -27,9 +29,16 @@ def main():
   overrides_list = [pkg.GetSavedOverrides() for pkg in pkgstats]
   files = os.listdir(options.extractdir)
   error_tags = []
+  no_files = len(files)
+  bar = progressbar.ProgressBar()
+  bar.maxval = no_files
+  bar.start()
+  counter = itertools.count()
   for file_name in files:
     full_path = os.path.join(options.extractdir, file_name)
     error_tags.extend(checkpkg.ErrorTagsFromFile(full_path))
+    bar.update(counter.next())
+  bar.finish()
   override_list = reduce(operator.add, overrides_list)
   (tags_after_overrides,
    unapplied_overrides) = overrides.ApplyOverrides(error_tags, override_list)
