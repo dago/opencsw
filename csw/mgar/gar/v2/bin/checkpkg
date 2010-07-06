@@ -319,7 +319,6 @@ for log_file in ${log_files}; do
 done
 
 # This check is special; it uses one executable for all the checks written in Python.
-print "Analyzing collected statistics..."
 ${command_basedir}/checkpkg_run_modules.py \
     ${extra_options} \
     -b "${checkpkg_stats_basedir}" \
@@ -352,6 +351,13 @@ if [[ "${DEBUG}" != "" ]]; then
     fi
 	done
 fi
+
+for tagfile in ${EXTRACTDIR}/tags.*; do
+  if [[ "${SAVE_TAGS}" -eq 1 ]]; then
+    echo "Saving ${tagfile} to ${SAVED_TAGS_FILE} (pwd = `pwd`)"
+    cat "${tagfile}" >> "${SAVED_TAGS_FILE}"
+  fi
+done
 
 # Collecting errors and applying the overrides.
 # This has to use the original files.
