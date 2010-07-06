@@ -40,6 +40,9 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
 CONFIGURE_ARGS += --enable-static
 
+# DTrace compilation fails for 64 bit, disable for now
+CONFIGURE_ARGS += --disable-dtrace
+
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
@@ -50,7 +53,7 @@ BUILD_DEP_PKGS = CSWggettext
 RUNTIME_DEP_PKGS_CSWglib2 += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWglib2 += CSWiconv
 RUNTIME_DEP_PKGS_CSWglib2 += CSWzlib
-RUNTIME_DEP_PKGS_CSWglib2devel += CSWfam
+RUNTIME_DEP_PKGS_CSWglib2devel += CSWgamin
 RUNTIME_DEP_PKGS_CSWglib2devel += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWglib2devel += CSWglib2
 RUNTIME_DEP_PKGS_CSWglib2devel += CSWiconv
