@@ -31,7 +31,7 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_soname):
                    binary_info["path"],
                    binary_info["runpath"],
                    path_list)
-      runpath_list = binary_info["runpath"] + checkpkg.SYS_DEFAULT_RUNPATH
+      runpath_list = binary_info["runpath"] + tuple(checkpkg.SYS_DEFAULT_RUNPATH)
       for runpath in runpath_list:
         resolved_path = ldd_emulator.ResolveSoname(runpath,
                                                    soname,
