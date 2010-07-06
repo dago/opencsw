@@ -288,7 +288,7 @@ class SystemPkgmap(DatabaseClient):
     if not os.path.exists(db_path):
       logging.info("Building the  cache database %s.", self.system_pkgmap_files)
       logging.info("The cache will be kept in %s.", db_path)
-      if not os.path.exists(CHECKPKG_DIR):
+      if not os.path.exists(checkpkg_dir):
         logging.debug("Creating %s", checkpkg_dir)
         os.mkdir(checkpkg_dir)
       need_to_create_tables = True
