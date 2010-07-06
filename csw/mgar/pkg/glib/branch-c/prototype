@@ -1,0 +1,36 @@
+i pkginfo
+i copyright
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/glib-1.2 0755 root bin
+f none /opt/csw/include/glib-1.2/glib.h 0644 root bin
+f none /opt/csw/include/glib-1.2/gmodule.h 0644 root bin
+d none /opt/csw/share 0755 root bin
+d none /opt/csw/share/info 0755 root bin
+f none /opt/csw/share/info/glib.info 0644 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/glib-config.1 0644 root bin
+d none /opt/csw/share/aclocal 0755 root bin
+f none /opt/csw/share/aclocal/glib.m4 0644 root bin
+d none /opt/csw/share/doc 0755 root bin
+d none /opt/csw/share/doc/glib 0755 root bin
+f none /opt/csw/share/doc/glib/COPYING=COPYING 0644 root bin
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/glib-config 0755 root bin
+d none /opt/csw/lib 0755 root bin
+s none /opt/csw/lib/libglib.so=libglib-1.2.so.0.0.10
+d none /opt/csw/lib/pkgconfig 0755 root bin
+f none /opt/csw/lib/pkgconfig/glib.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/gmodule.pc 0644 root bin
+f none /opt/csw/lib/pkgconfig/gthread.pc 0644 root bin
+s none /opt/csw/lib/libgthread.so=libgthread-1.2.so.0.0.10
+f none /opt/csw/lib/libglib-1.2.so.0.0.10 0755 root bin
+s none /opt/csw/lib/libgmodule.so=libgmodule-1.2.so.0.0.10
+d none /opt/csw/lib/glib 0755 root bin
+d none /opt/csw/lib/glib/include 0755 root bin
+f none /opt/csw/lib/glib/include/glibconfig.h 0644 root bin
+s none /opt/csw/lib/libglib-1.2.so.0=libglib-1.2.so.0.0.10
+s none /opt/csw/lib/libgthread-1.2.so.0=libgthread-1.2.so.0.0.10
+f none /opt/csw/lib/libgmodule-1.2.so.0.0.10 0755 root bin
+f none /opt/csw/lib/libgthread-1.2.so.0.0.10 0755 root bin
+s none /opt/csw/lib/libgmodule-1.2.so.0=libgmodule-1.2.so.0.0.10
