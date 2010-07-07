@@ -9,6 +9,9 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+
+# Add some missing files from gnulib until this is fixed:
+#   https://savannah.gnu.org/bugs/?30378
 PATCHFILES  = 0001-Add-missing-strnlen.c-from-GNUlib.patch
 PATCHFILES += 0002-Add-missing-m4-files.patch
 
