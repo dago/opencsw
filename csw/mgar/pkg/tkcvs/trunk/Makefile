@@ -1,5 +1,5 @@
 GARNAME = tkcvs
-GARVERSION = 8.2.1
+GARVERSION = 8.2.2
 CATEGORIES = apps
 
 DESCRIPTION = A graphical front-end to CVS and Subversion
