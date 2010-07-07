@@ -1,7 +1,7 @@
 GARNAME = seamonkey
 GARVERSION = 1.1.18
 CATEGORIES = apps
-DISTNAME = $(GARNAME)
+DISTNAME = mozilla
 
 DESCRIPTION = Seamonkey all-in-one internet application suite
 define BLURB
@@ -15,6 +15,9 @@ DISTFILES += CSWseamonkey.postremove CSWseamonkey.postinstall
 UFILES_REGEX = (\d+(?:\.\d+)*)
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/$(GARVERSION)/
 UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/
+
+# Build firefox only on solaris 10 platforms
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACKAGES       			= CSWseamonkey
 CATALOGNAME_CSWseamonkey 	= $(GARNAME)
@@ -38,7 +41,6 @@ RUNTIME_DEP_PKGS_CSWseamonkey += CSWlibgnomecanvas
 RUNTIME_DEP_PKGS_CSWseamonkey += CSWlibgnomeui
 RUNTIME_DEP_PKGS_CSWseamonkey += CSWlibidl
 RUNTIME_DEP_PKGS_CSWseamonkey += CSWlibpopt
-RUNTIME_DEP_PKGS_CSWseamonkey += CSWlibx11
 RUNTIME_DEP_PKGS_CSWseamonkey += CSWlibxft2
 RUNTIME_DEP_PKGS_CSWseamonkey += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWseamonkey += CSWorbit2
@@ -84,12 +86,8 @@ TEST_SCRIPTS =
 LICENSE = LICENSE
 
 # Variable for direct access to working dir
-WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
+WORK_BUILD   = $(WORKSRC)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
-
-post-extract:
-	mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORK_BUILD)
-	@$(MAKECOOKIE)
 
 pre-configure-modulated::
 	@cp $(FILEDIR)/.mozconfig  $(WORK_BUILD)/.mozconfig
