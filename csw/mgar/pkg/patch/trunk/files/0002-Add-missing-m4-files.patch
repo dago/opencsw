@@ -1,0 +1,76 @@
+From e70f6d46e9a2f6df77a234e0a0404588c39bd142 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 30 Jun 2010 16:23:10 +0200
+Subject: [PATCH 2/2] Add missing m4 files
+
+---
+ gl/m4/safe-read.m4 |   18 ++++++++++++++++++
+ gl/m4/strnlen.m4   |   31 +++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+), 0 deletions(-)
+ create mode 100644 gl/m4/safe-read.m4
+ create mode 100644 gl/m4/strnlen.m4
+
+diff --git a/gl/m4/safe-read.m4 b/gl/m4/safe-read.m4
+new file mode 100644
+index 0000000..7a89d0a
+--- /dev/null
++++ b/gl/m4/safe-read.m4
+@@ -0,0 +1,18 @@
++# safe-read.m4 serial 5
++dnl Copyright (C) 2002, 2003, 2005, 2006 Free Software Foundation, Inc.
++dnl This file is free software; the Free Software Foundation
++dnl gives unlimited permission to copy and/or distribute it,
++dnl with or without modifications, as long as this notice is preserved.
++
++AC_DEFUN([gl_SAFE_READ],
++[
++  AC_LIBOBJ([safe-read])
++
++  gl_PREREQ_SAFE_READ
++])
++
++# Prerequisites of lib/safe-read.c.
++AC_DEFUN([gl_PREREQ_SAFE_READ],
++[
++  AC_REQUIRE([gt_TYPE_SSIZE_T])
++])
+diff --git a/gl/m4/strnlen.m4 b/gl/m4/strnlen.m4
+new file mode 100644
+index 0000000..1c97859
+--- /dev/null
++++ b/gl/m4/strnlen.m4
+@@ -0,0 +1,31 @@
++# strnlen.m4 serial 10
++dnl Copyright (C) 2002-2003, 2005-2007, 2009 Free Software Foundation, Inc.
++dnl This file is free software; the Free Software Foundation
++dnl gives unlimited permission to copy and/or distribute it,
++dnl with or without modifications, as long as this notice is preserved.
++
++AC_DEFUN([gl_FUNC_STRNLEN],
++[
++  dnl Persuade glibc <string.h> to declare strnlen().
++  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
++
++  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
++  AC_CHECK_DECLS_ONCE([strnlen])
++  if test $ac_cv_have_decl_strnlen = no; then
++    HAVE_DECL_STRNLEN=0
++  fi
++
++  AC_FUNC_STRNLEN
++  if test $ac_cv_func_strnlen_working = no; then
++    # This is necessary because automake-1.6.1 doesn't understand
++    # that the above use of AC_FUNC_STRNLEN means we may have to use
++    # lib/strnlen.c.
++    #AC_LIBOBJ([strnlen])
++    AC_DEFINE([strnlen], [rpl_strnlen],
++      [Define to rpl_strnlen if the replacement function should be used.])
++    gl_PREREQ_STRNLEN
++  fi
++])
++
++# Prerequisites of lib/strnlen.c.
++AC_DEFUN([gl_PREREQ_STRNLEN], [:])
+-- 
+1.7.1
+

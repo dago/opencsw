@@ -9,7 +9,8 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
-PATCHFILES = 0001-Add-missing-strnlen.c-from-GNUlib.patch
+PATCHFILES  = 0001-Add-missing-strnlen.c-from-GNUlib.patch
+PATCHFILES += 0002-Add-missing-m4-files.patch
 
 PACKAGES = CSWgpatch
 
@@ -27,3 +28,14 @@ BUILD_ARGS = SHELL=bash
 TEST_TARGET = check
 
 include gar/category.mk
+
+post-extract-modulated:
+	@# GARs usage of .git for patching in the package confuses the upstream building as
+	@# if it was bootstrapped.
+	-echo "exit 0" > $(WORKSRC)/update-version.sh
+
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(prefix)/gnu
+	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);)
+	@$(MAKECOOKIE)
+
