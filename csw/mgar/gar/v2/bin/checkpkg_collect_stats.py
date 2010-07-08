@@ -62,7 +62,7 @@ def main():
   bar = progressbar.ProgressBar()
   bar.maxval = total_packages
   bar.start()
-  logging.debug("Making sure package statistics are collected.")
+  logging.info("Unpacking and examining the srv4 files needed.")
   while stats_list:
     # This way objects will get garbage collected as soon as they are removed
     # from the list by pop().  The destructor (__del__()) of the srv4 class

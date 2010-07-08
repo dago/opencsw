@@ -83,6 +83,7 @@ RPATH_WHITELIST = [
      r"%(subdir2)s?"
      r"$") % RPATH_PARTS,
     r"^\$ORIGIN$",
+    r"^\$ORIGIN/..$",
     r"^/usr(/(ccs|dt|openwin))?/lib(/sparcv9)?$",
 ]
 # Check ldd -r only for Perl modules
@@ -271,29 +272,33 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
       needed_sonames.extend(binary_info["needed sonames"])
   needed_sonames = sorted(set(needed_sonames))
   # Finding candidate libraries from the filesystem (/var/sadm/install/contents)
-  path_and_pkg_by_soname = {}
+  path_and_pkg_by_basename = {}
   for needed_soname in needed_sonames:
-    path_and_pkg_by_soname[needed_soname] = error_mgr.GetPathsAndPkgnamesByBasename(
+    path_and_pkg_by_basename[needed_soname] = error_mgr.GetPathsAndPkgnamesByBasename(
         needed_soname)
   # Removing files from packages that are to be installed.
-  path_and_pkg_by_soname = RemovePackagesUnderInstallation(
-      path_and_pkg_by_soname, pkgs_to_be_installed)
+  path_and_pkg_by_basename = RemovePackagesUnderInstallation(
+      path_and_pkg_by_basename, pkgs_to_be_installed)
   # Adding overlay based on the given package set
   # Considering files from the set under examination.
   for pkg_data in pkgs_data:
     pkgname = pkg_data["basic_stats"]["pkgname"]
-    for binary_info in pkg_data["binaries_dump_info"]:
-      soname = binary_info["soname"]
-      binary_path, basename = os.path.split(binary_info["path"])
+    # Processing the whole pkgmap.  There yet no verification whether the files
+    # that are put in here are actually shared libraries, or symlinks to shared
+    # libraries.  Implementing symlink resolution would be a nice bonus.
+    for pkgmap_entry in pkg_data["pkgmap"]:
+      if "path" not in pkgmap_entry: continue
+      if not pkgmap_entry["path"]: continue
+      binary_path, basename = os.path.split(pkgmap_entry["path"])
       if not binary_path.startswith('/'):
         binary_path = "/" + binary_path
-      if soname not in path_and_pkg_by_soname:
-        path_and_pkg_by_soname[soname] = {}
-      path_and_pkg_by_soname[soname][binary_path] = [pkgname]
+      if basename not in path_and_pkg_by_basename:
+        path_and_pkg_by_basename[basename] = {}
+      path_and_pkg_by_basename[basename][binary_path] = [pkgname]
   # Resolving sonames for each binary
   for pkg_data in pkgs_data:
     pkgname = pkg_data["basic_stats"]["pkgname"]
-    check_args = (pkg_data, error_mgr, logger, path_and_pkg_by_soname)
+    check_args = (pkg_data, error_mgr, logger, path_and_pkg_by_basename)
     req_pkgs_reasons = depchecks.Libraries(*check_args)
     req_pkgs_reasons.extend(depchecks.ByFilename(*check_args))
     missing_reasons_by_pkg = {}
@@ -664,9 +669,15 @@ def CheckDisallowedPaths(pkg_data, error_mgr, logger, messenger):
 
 
 def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
+  # Finding all shared libraries
+  shared_libs = []
+  for metadata in pkg_data["files_metadata"]:
+    if "sharedlib" in metadata["mime_type"]:
+      shared_libs.append(metadata["path"])
+  shared_libs = set(shared_libs)
   for binary_info in pkg_data["binaries_dump_info"]:
     for soname in binary_info["needed sonames"]:
-      if (".so" in binary_info["soname"]
+      if (binary_info["path"] in shared_libs
           and
           soname in DO_NOT_LINK_AGAINST_THESE_SONAMES):
         error_mgr.ReportError("linked-against-discouraged-library",

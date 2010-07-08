@@ -15,10 +15,11 @@ import pprint
 import testdata.checkpkg_test_data_CSWdjvulibrert as td_1
 import testdata.checkpkg_pkgs_data_minimal as td_2
 import testdata.rpaths
-from testdata.rsync_pkg_stats import pkg_stats as rsync_stats
+from testdata.rsync_pkg_stats import pkgstats as rsync_stats
+from testdata.ivtools_stats import pkgstats as ivtools_stats
 
 DEFAULT_PKG_STATS = None
-DEFAULT_PKG_DATA = rsync_stats
+DEFAULT_PKG_DATA = rsync_stats[0]
 
 
 class CheckpkgUnitTestHelper(object):
@@ -253,6 +254,7 @@ class TestCheckLinkingAgainstSunX11(CheckpkgUnitTestHelper, unittest.TestCase):
   def CheckpkgTest(self):
     self.pkg_data["binaries_dump_info"][0]["needed sonames"].append("libX11.so.4")
 
+
 class TestCheckLinkingAgainstSunX11_Bad(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckLinkingAgainstSunX11'
   def CheckpkgTest(self):
@@ -427,7 +429,7 @@ class TestCheckRpath(CheckpkgUnitTestHelper, unittest.TestCase):
     ]
     # Calculating the parameters on the fly, it allows to write it a terse manner.
     for bad_path in BAD_PATHS:
-      self.error_mgr_mock.ReportError('bad-rpath-entry', '%s opt/csw/bin/sparcv9/rsync' % bad_path)
+      self.error_mgr_mock.ReportError('bad-rpath-entry', '%s opt/csw/bin/sparcv8/rsync' % bad_path)
 
 
 class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
@@ -445,8 +447,7 @@ class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError(
         'CSWrsync',
         'deprecated-library',
-        u'opt/csw/bin/sparcv9/rsync Deprecated Berkeley DB location '
-        u'/opt/csw/lib/libdb-4.7.so')
+        u'opt/csw/bin/sparcv8/rsync Deprecated Berkeley DB location /opt/csw/lib/libdb-4.7.so')
     self.pkg_data = [self.pkg_data]
 
 
@@ -493,8 +494,10 @@ class TestSharedLibsInAnInstalledPackageToo(CheckpkgUnitTestHelper,
                                 'needed sonames': ['libfoo.so.1'],
                                 'path': 'opt/csw/bin/bar',
                                 'runpath': ('/opt/csw/lib',),
-                                'soname': 'rsync',
-                                'soname_guessed': True}],
+                                # Making sonames optional, because they are.
+                                # 'soname': 'rsync',
+                                # 'soname_guessed': True
+                                }],
         'depends': (('CSWlibfoo', None),),
         'isalist': (),
         'pkgmap': [],
@@ -761,6 +764,18 @@ class TestConflictingFiles(CheckpkgUnitTestHelper,
     self.error_mgr_mock.ReportError(
         'CSWfoo', 'file-conflict', '/opt/csw/share/foo CSWbar CSWfoo')
     self.pkg_data = [self.CSWbar_DATA, self.CSWfoo_DATA]
+
+
+class TestSetCheckSharedLibraryConsistencyIvtools(CheckpkgUnitTestHelper,
+                                                  unittest.TestCase):
+  """This tests for a case in which the SONAME that we're looking for doesn't
+  match the filename."""
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    self.pkg_data = ivtools_stats
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libComUnidraw.so').AndReturn({})
+    # This error is thrown, but it shouldn't be:
+    # ReportError('CSWivtools', 'soname-not-found', 'libComUnidraw.so is needed by opt/csw/bin/comdraw')
 
 
 if __name__ == '__main__':

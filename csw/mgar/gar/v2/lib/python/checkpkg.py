@@ -32,7 +32,7 @@ import tag
 
 DEBUG_BREAK_PKGMAP_AFTER = False
 DB_SCHEMA_VERSION = 4L
-PACKAGE_STATS_VERSION = 6L
+PACKAGE_STATS_VERSION = 8L
 SYSTEM_PKGMAP = "/var/sadm/install/contents"
 NEEDED_SONAMES = "needed sonames"
 RUNPATH = "runpath"
@@ -77,6 +77,8 @@ DEPENDENCY_FILENAME_REGEXES = (
     (r".*\.el$", u"CSWemacscommon"),
     (r".*\.elc$", u"CSWemacscommon"),
 )
+# Compiling the regexes ahead of time.
+DEPENDENCY_FILENAME_REGEXES = tuple([(re.compile(x), y) for x, y in DEPENDENCY_FILENAME_REGEXES])
 
 REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
 Dependency issues of $pkgname:
@@ -514,7 +516,7 @@ class SystemPkgmap(DatabaseClient):
       return schema_on_disk;
     res = m.CswConfig.select(m.CswConfig.q.option_key == CONFIG_DB_SCHEMA)
     if res.count() < 1:
-      logging.info("No db schema value found, assuming %s.",
+      logging.debug("No db schema value found, assuming %s.",
                    schema_on_disk)
     elif res.count() == 1:
       schema_on_disk = res.getOne().int_value
@@ -565,6 +567,8 @@ class LddEmulator(object):
     self.runpath_sanitize_cache = {}
 
   def ExpandRunpath(self, runpath, isalist):
+    # TODO: Implement $ORIGIN support
+    # Probably not here as it would make caching unusable.
     key = (runpath, tuple(isalist))
     if key not in self.runpath_expand_cache:
       # Emulating $ISALIST expansion
@@ -679,6 +683,8 @@ def ParseDumpOutput(dump_output):
   # Converting runpath to a tuple, which is a hashable data type and can act as
   # a key in a dict.
   binary_data[RUNPATH] = tuple(binary_data[RUNPATH])
+  # the NEEDED list must not be modified, converting to a tuple.
+  binary_data[NEEDED_SONAMES] = tuple(binary_data[NEEDED_SONAMES])
   binary_data["RUNPATH RPATH the same"] = (runpath == rpath)
   binary_data["RPATH set"] = bool(rpath)
   binary_data["RUNPATH set"] = bool(runpath)
@@ -1031,7 +1037,11 @@ class PackageStats(DatabaseClient):
     pkg_stats = self.GetDbObject()
     if not pkg_stats:
       return False
-    return pkg_stats.stats_version == PACKAGE_STATS_VERSION
+    if pkg_stats.stats_version != PACKAGE_STATS_VERSION:
+      pkg_stats.destroySelf()
+    else:
+      return True
+    return False
 
   def GetDirFormatPkg(self):
     if not self.dir_format_pkg:
@@ -1071,13 +1081,7 @@ class PackageStats(DatabaseClient):
       ret = dump_proc.wait()
       binary_data = ParseDumpOutput(stdout)
       binary_data["path"] = binary
-      binary_data["soname_guessed"] = False
       binary_data["base_name"] = binary_base_name
-      if SONAME not in binary_data:
-        # The binary doesn't tell its SONAME.  We're guessing it's the
-        # same as the base file name.
-        binary_data[SONAME] = binary_base_name
-        binary_data["soname_guessed"] = True
       binaries_dump_info.append(binary_data)
     return binaries_dump_info
 
