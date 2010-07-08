@@ -1,3 +1,9 @@
+xterm (260,REV=2010.07.08)
+
+  * Updated to 260. (Fixes #4473)
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Thu,  8 Jul 2010 21:40:22 +0200
+
 xterm (258,REV=2010.05.25)
 
   * Updated to 258. (Fixes #4186)
