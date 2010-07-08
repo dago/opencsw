@@ -30,6 +30,10 @@ LICENSE = COPYING
 ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWtcl CSWtk CSWtkdiff
 
+CHECKPKG_OVERRIDES_CSWtkcvs += surplus-dependency|CSWtcl
+CHECKPKG_OVERRIDES_CSWtkcvs += surplus-dependency|CSWtkdiff
+CHECKPKG_OVERRIDES_CSWtkcvs += surplus-dependency|CSWtk
+
 include gar/category.mk
 
 TCL_FILES = $(filter-out %/tkcvs.tcl,$(wildcard $(WORKSRC)/tkcvs/*.tcl))
