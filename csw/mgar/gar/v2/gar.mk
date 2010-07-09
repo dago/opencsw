@@ -304,6 +304,7 @@ prerequisite: $(if $(filter global,$(MODULATION)),announce pre-everything $(COOK
 
 check-prereqs:
 	@$(abspath $(GARBIN)/check_for_deps) $(ALL_PREREQ_PKGS)
+	@$(MAKECOOKIE)
 
 prerequisitepkg-%:
 	@echo " ==> Verifying for installed package $*: \c"
