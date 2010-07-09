@@ -339,7 +339,8 @@ class TestCheckRpath(CheckpkgUnitTestHelper, unittest.TestCase):
     binaries_dump_info[0]["runpath"] = tuple(testdata.rpaths.all_rpaths)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     BAD_PATHS = [
-        '$ORIGIN/..',
+        # Whether this is a valid rpath, is debatable.
+        # '$ORIGIN/..',
         '$ORIGIN/../../../usr/lib/v9',
         '$ORIGIN/../../usr/lib',
         '$ORIGIN/../lib',

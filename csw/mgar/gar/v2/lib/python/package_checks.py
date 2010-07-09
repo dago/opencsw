@@ -298,14 +298,18 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
   # Resolving sonames for each binary
   for pkg_data in pkgs_data:
     pkgname = pkg_data["basic_stats"]["pkgname"]
-    check_args = (pkg_data, error_mgr, logger, path_and_pkg_by_basename)
+    check_args = (pkg_data, error_mgr, logger, messenger,
+                  path_and_pkg_by_basename)
     req_pkgs_reasons = depchecks.Libraries(*check_args)
     req_pkgs_reasons.extend(depchecks.ByFilename(*check_args))
     missing_reasons_by_pkg = {}
     for pkg, reason in req_pkgs_reasons:
       if pkg not in missing_reasons_by_pkg:
-        missing_reasons_by_pkg[pkg] = set()
-      missing_reasons_by_pkg[pkg].add(reason)
+        missing_reasons_by_pkg[pkg] = list()
+      if len(missing_reasons_by_pkg[pkg]) < 4:
+        missing_reasons_by_pkg[pkg].append(reason)
+      elif len(missing_reasons_by_pkg[pkg]) == 4:
+        missing_reasons_by_pkg[pkg].append("...and more.")
     declared_deps = pkg_data["depends"]
     declared_deps_set = set([x[0] for x in declared_deps])
     req_pkgs_set = set([x[0] for x in req_pkgs_reasons])
@@ -876,7 +880,8 @@ def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
             metadata["path"],
             metadata["machine_id"],
             cpu_type))
-      messenger.Message(
+      messenger.OneTimeMessage(
+          "binary-placement",
           "Files compiled for specific architectures must be placed in "
           "subdirectories that match the architecture.  "
           "For example, a sparcv8+ binary must not be placed under "

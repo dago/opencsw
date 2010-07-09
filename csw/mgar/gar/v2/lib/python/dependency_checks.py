@@ -1,6 +1,7 @@
 # $Id$
 
 import checkpkg
+import os.path
 import re
 
 DEPRECATED_LIBRARY_LOCATIONS = (
@@ -17,7 +18,7 @@ DLOPEN_LIB_LOCATIONS = (
     r'^opt/csw/lib/python/site-packages.*',
 )
 
-def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_basename):
+def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename):
   pkgname = pkg_data["basic_stats"]["pkgname"]
   logger.debug("Libraries(): pkgname = %s", repr(pkgname))
   orphan_sonames = []
@@ -25,6 +26,7 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_basename):
   isalist = pkg_data["isalist"]
   ldd_emulator = checkpkg.LddEmulator()
   for binary_info in pkg_data["binaries_dump_info"]:
+    binary_path, binary_basename = os.path.split(binary_info["path"])
     for soname in binary_info["needed sonames"]:
       resolved = False
       path_list = path_and_pkg_by_basename[soname].keys()
@@ -35,11 +37,18 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_basename):
                    path_list)
       runpath_tuple = (tuple(binary_info["runpath"])
                       + tuple(checkpkg.SYS_DEFAULT_RUNPATH))
+      runpath_history = []
       for runpath in runpath_tuple:
-        resolved_path = ldd_emulator.ResolveSoname(runpath,
+        runpath = ldd_emulator.SanitizeRunpath(runpath)
+        runpath_list = ldd_emulator.ExpandRunpath(runpath, isalist, binary_path)
+        runpath_list = ldd_emulator.Emulate64BitSymlinks(runpath_list)
+        # To accumulate all the runpaths that we were looking at
+        runpath_history += runpath_list
+        resolved_path = ldd_emulator.ResolveSoname(runpath_list,
                                                    soname,
                                                    isalist,
-                                                   path_list)
+                                                   path_list,
+                                                   binary_path)
         if resolved_path:
           logger.debug("%s needed by %s:",
                  soname, binary_info["path"])
@@ -61,6 +70,10 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_basename):
           break
       if not resolved:
         orphan_sonames.append((soname, binary_info["path"]))
+        messenger.Message(
+            "%s could not be resolved for %s, with rpath %s, expanded to %s, "
+            "while the file was available at the following paths: %s"
+            % (soname, binary_info["path"], runpath_tuple, runpath_history, path_list))
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
     error_mgr.ReportError(
@@ -69,7 +82,7 @@ def Libraries(pkg_data, error_mgr, logger, path_and_pkg_by_basename):
   # TODO: Report orphan sonames here
   return required_deps
 
-def ByFilename(pkg_data, error_mgr, logger, path_and_pkg_by_basename):
+def ByFilename(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename):
   pkgname = pkg_data["basic_stats"]["pkgname"]
   req_pkgs_reasons = []
   dep_regexes = [(re.compile(x), x, y)

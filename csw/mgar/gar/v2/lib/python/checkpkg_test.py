@@ -45,14 +45,58 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     isalist = ["foo", "bar"]
     runpath = "/opt/csw/lib/$ISALIST"
     expected = ["/opt/csw/lib/foo", "/opt/csw/lib/bar"]
-    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist))
+    bin_path = "opt/csw/lib"
+    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
 
   def testExpandRunpath_2(self):
     isalist = ["foo", "bar"]
     runpath = "/opt/csw/mysql5/lib/$ISALIST/mysql"
     expected = ["/opt/csw/mysql5/lib/foo/mysql",
                 "/opt/csw/mysql5/lib/bar/mysql"]
-    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist))
+    bin_path = "opt/csw/lib"
+    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
+
+  def testExpandRunpath_OriginSimple(self):
+    isalist = ()
+    runpath = "$ORIGIN"
+    expected = ["/opt/csw/lib"]
+    bin_path = "opt/csw/lib"
+    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
+
+  def testExpandRunpath_OriginDots(self):
+    isalist = ()
+    runpath = "$ORIGIN/.."
+    expected = ["/opt/csw/lib"]
+    bin_path = "opt/csw/lib/subdir"
+    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
+
+  def testExpandRunpath_Caching(self):
+    """Make sure that the cache doesn't mess it up.
+
+    Two invocations, where the only difference is the binary path.
+    """
+    isalist = ()
+    runpath = "/opt/csw/lib/foo"
+    expected = ["/opt/csw/lib/foo"]
+    bin_path = "opt/csw/lib"
+    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
+    expected = ["/opt/csw/lib/foo"]
+    bin_path = "/opt/csw/lib/foo"
+    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
+
+  def testExpandRunpath_OriginCaching(self):
+    """Make sure that the cache doesn't mess it up.
+
+    Two invocations, where the only difference is the binary path.
+    """
+    isalist = ()
+    runpath = "$ORIGIN"
+    expected = ["/opt/csw/lib"]
+    bin_path = "opt/csw/lib"
+    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
+    expected = ["/opt/csw/foo/lib"]
+    bin_path = "/opt/csw/foo/lib"
+    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
 
   def testEmulate64BitSymlinks_1(self):
     runpath_list = ["/opt/csw/mysql5/lib/foo/mysql/64"]
@@ -130,14 +174,14 @@ class ParseDumpOutputUnitTest(unittest.TestCase):
         'RPATH set': True,
         'RUNPATH RPATH the same': True,
         'RUNPATH set': True,
-        'needed sonames': ['librt.so.1',
+        'needed sonames': ('librt.so.1',
                            'libresolv.so.2',
                            'libc.so.1',
                            'libgen.so.1',
                            'libsocket.so.1',
                            'libnsl.so.1',
                            'libm.so.1',
-                           'libz.so.1'],
+                           'libz.so.1'),
         'runpath': ('/opt/csw/lib/$ISALIST',
                     '/opt/csw/lib',
                     '/opt/csw/mysql5/lib/$ISALIST',
@@ -159,14 +203,14 @@ class ParseDumpOutputUnitTest(unittest.TestCase):
         'RPATH set': True,
         'RUNPATH RPATH the same': False,
         'RUNPATH set': False,
-        'needed sonames': ['librt.so.1',
+        'needed sonames': ('librt.so.1',
                            'libresolv.so.2',
                            'libc.so.1',
                            'libgen.so.1',
                            'libsocket.so.1',
                            'libnsl.so.1',
                            'libm.so.1',
-                           'libz.so.1'],
+                           'libz.so.1'),
         'runpath': ('/opt/csw/lib/$ISALIST',
                     '/opt/csw/lib',
                     '/opt/csw/mysql5/lib/$ISALIST',

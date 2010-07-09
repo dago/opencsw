@@ -18,6 +18,7 @@ import progressbar
 import socket
 import sqlite3
 import sqlobject
+import time
 from sqlobject import sqlbuilder
 import subprocess
 import textwrap
@@ -523,8 +524,10 @@ class SystemPkgmap(DatabaseClient):
     return schema_on_disk
 
   def IsDatabaseUpToDate(self):
-    f_mtime = self.GetFileMtime()
-    d_mtime = self.GetDatabaseMtime()
+    f_mtime_epoch = self.GetFileMtime()
+    d_mtime_epoch = self.GetDatabaseMtime()
+    f_mtime = time.gmtime(int(f_mtime_epoch))
+    d_mtime = time.gmtime(int(d_mtime_epoch))
     logging.debug("IsDatabaseUpToDate: f_mtime %s, d_time: %s", f_mtime, d_mtime)
     # Rounding up to integer seconds.  There is a race condition: 
     # pkgadd finishes at 100.1
@@ -532,7 +535,7 @@ class SystemPkgmap(DatabaseClient):
     # new pkgadd runs and finishes at 100.3
     # subsequent checkpkg runs won't pick up the last change.
     # I don't expect pkgadd to run under 1s.
-    fresh = int(f_mtime) <= int(d_mtime)
+    fresh = f_mtime <= d_mtime
     good_version = self.GetDatabaseSchemaVersion() >= DB_SCHEMA_VERSION
     logging.debug("IsDatabaseUpToDate: good_version=%s, fresh=%s",
                   repr(good_version), repr(fresh))
@@ -562,21 +565,45 @@ class LddEmulator(object):
   """
   def __init__(self):
     self.runpath_expand_cache = {}
+    self.runpath_origin_expand_cache = {}
     self.symlink_expand_cache = {}
     self.symlink64_cache = {}
     self.runpath_sanitize_cache = {}
 
-  def ExpandRunpath(self, runpath, isalist):
+  def ExpandRunpath(self, runpath, isalist, binary_path):
+    """Expands a signle runpath element.
+
+    Args:
+      runpath: e.g. "/opt/csw/lib/$ISALIST"
+      isalist: isalist elements
+      binary_path: Necessary to expand $ORIGIN
+    """
     # TODO: Implement $ORIGIN support
     # Probably not here as it would make caching unusable.
     key = (runpath, tuple(isalist))
     if key not in self.runpath_expand_cache:
-      # Emulating $ISALIST expansion
+      origin_present = False
+      # Emulating $ISALIST and $ORIGIN expansion
+      if '$ORIGIN' in runpath:
+        origin_present = True
+      if origin_present:
+        key_o = (runpath, tuple(isalist), binary_path)
+        if key_o in self.runpath_origin_expand_cache:
+          return self.runpath_origin_expand_cache[key_o]
+        else:
+          if not binary_path.startswith("/"):
+            binary_path = "/" + binary_path
+          runpath = runpath.replace('$ORIGIN', binary_path)
       if '$ISALIST' in runpath:
         expanded_list = [runpath.replace('$ISALIST', isa) for isa in isalist]
       else:
         expanded_list = [runpath]
-      self.runpath_expand_cache[key] = expanded_list
+      expanded_list = [os.path.abspath(p) for p in expanded_list]
+      if not origin_present:
+        self.runpath_expand_cache[key] = expanded_list
+      else:
+        self.runpath_origin_expand_cache[key_o] = expanded_list
+        return self.runpath_origin_expand_cache[key_o]
     return self.runpath_expand_cache[key]
 
   def ExpandSymlink(self, symlink, target, input_path):
@@ -624,7 +651,7 @@ class LddEmulator(object):
     return self.runpath_sanitize_cache[runpath]
 
 
-  def ResolveSoname(self, runpath, soname, isalist, path_list):
+  def ResolveSoname(self, runpath_list, soname, isalist, path_list, binary_path):
     """Emulates ldd behavior, minimal implementation.
 
     runpath: e.g. ["/opt/csw/lib/$ISALIST", "/usr/lib"]
@@ -635,9 +662,6 @@ class LddEmulator(object):
 
     The function returns the one path.
     """
-    runpath = self.SanitizeRunpath(runpath)
-    runpath_list = self.ExpandRunpath(runpath, isalist)
-    runpath_list = self.Emulate64BitSymlinks(runpath_list)
     # Emulating the install time symlinks, for instance, if the prototype contains
     # /opt/csw/lib/i386/foo.so.0 and /opt/csw/lib/i386 is a symlink to ".",
     # the shared library ends up in /opt/csw/lib/foo.so.0 and should be
@@ -862,10 +886,15 @@ class CheckpkgMessenger(object):
   """Class responsible for passing messages from checks to the user."""
   def __init__(self):
     self.messages = []
+    self.one_time_messages = {}
     self.gar_lines = []
 
   def Message(self, m):
     self.messages.append(m)
+
+  def OneTimeMessage(self, key, m):
+    if key not in self.one_time_messages:
+      self.one_time_messages[key] = m
 
   def SuggestGarLine(self, m):
     self.gar_lines.append(m)
@@ -934,7 +963,8 @@ class CheckpkgManager2(CheckpkgManagerBase):
       function(pkgs_data, check_interface, logger=logger, messenger=messenger)
       if check_interface.errors:
         errors = self.SetErrorsToDict(check_interface.errors, errors)
-    return errors, messenger.messages, messenger.gar_lines
+    messages = messenger.messages + messenger.one_time_messages.values()
+    return errors, messages, messenger.gar_lines
 
   def Run(self):
     self._AutoregisterChecks()
