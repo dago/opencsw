@@ -21,6 +21,8 @@ def main():
   parser.add_option("-d", "--debug", dest="debug",
                     default=False, action="store_true",
                     help="Turn on debugging messages")
+  parser.add_option("-p", "--print_stats", dest="print_stats",
+                    default=False, action="store_true")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -31,7 +33,10 @@ def main():
   srv4_pkgs = [opencsw.CswSrv4File(x) for x in filenames]
   pkgstats = [checkpkg.PackageStats(x) for x in srv4_pkgs]
   pkgstats = [x.GetAllStats() for x in pkgstats]
-  code.interact(local=locals())
+  if options.print_stats:
+    pprint.pprint(pkgstats)
+  else:
+    code.interact(local=locals())
 
 if __name__ == '__main__':
-	main()
+  main()
