@@ -28,6 +28,7 @@ RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
+CONFIGURE_ARGS += --with-rmt=/opt/csw/libexec/grmt
 TEST_SCRIPTS =
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
@@ -35,7 +36,6 @@ EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 include gar/category.mk
 
 post-install-modulated:
-	rm $(DESTDIR)/opt/csw/libexec/grmt
 	ginstall -d $(DESTDIR)$(prefix)/gnu
 	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);)
 	@$(MAKECOOKIE)
