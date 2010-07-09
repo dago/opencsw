@@ -24,7 +24,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.gnu.org/software/tar/
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
+BUILD_DEP_PKGS = CSWgcpio
+RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWgcpio
 
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
