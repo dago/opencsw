@@ -34,6 +34,8 @@ TEST_SCRIPTS =
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
+CHECKPKG_OVERRIDES_CSWgtar += surplus-dependency|CSWgcpio
+
 include gar/category.mk
 
 post-install-modulated:
