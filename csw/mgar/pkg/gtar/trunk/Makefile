@@ -35,6 +35,7 @@ EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 include gar/category.mk
 
 post-install-modulated:
+	rm $(DESTDIR)/opt/csw/libexec/grmt
 	ginstall -d $(DESTDIR)$(prefix)/gnu
 	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);)
 	@$(MAKECOOKIE)
