@@ -886,7 +886,10 @@ def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
           "subdirectories that match the architecture.  "
           "For example, a sparcv8+ binary must not be placed under "
           "/opt/csw/lib, but under /opt/csw/lib/sparcv8plus.  "
-          "For more information, visit "
+          "Typically, the case is that sparcv8+ binaries end up under bin/ "
+          "or under lib/ because of ignored CFLAGS.  "
+          "For more information about the OpenCSW binary placement policy, "
+          "visit "
           "http://www.opencsw.org/extend-it/contribute-packages/"
           "build-standards/"
           "architecture-optimization-using-isaexec-and-isalist/")
