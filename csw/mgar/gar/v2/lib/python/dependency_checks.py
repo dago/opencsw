@@ -70,10 +70,15 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename):
           break
       if not resolved:
         orphan_sonames.append((soname, binary_info["path"]))
+        if path_list:
+          path_msg = "was available at the following paths: %s." % path_list
+        else:
+          path_msg = ("was not present on the filesystem, "
+                      "nor in the packages under examination.")
         messenger.Message(
             "%s could not be resolved for %s, with rpath %s, expanded to %s, "
-            "while the file was available at the following paths: %s"
-            % (soname, binary_info["path"], runpath_tuple, runpath_history, path_list))
+            "while the file %s"
+            % (soname, binary_info["path"], runpath_tuple, runpath_history, path_msg))
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
     error_mgr.ReportError(
