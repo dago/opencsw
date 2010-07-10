@@ -1,5 +1,5 @@
 GARNAME = Net-IDN-Nameprep
-GARVERSION = 1.000
+GARVERSION = 1.100
 CATEGORIES = cpan
 AUTHOR = CFAERBER
 
@@ -14,7 +14,6 @@ ARCHALL = 1
 
 LICENSE = LICENSE
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+RUNTIME_DEP_PKGS += CSWpmunicodestrprep
 
 include gar/category.mk
