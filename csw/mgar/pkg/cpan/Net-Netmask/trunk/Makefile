@@ -14,7 +14,4 @@ PACKAGES = CSWpmnetnetmask
 CATALOGNAME = pm_netnetmask
 ARCHALL = 1
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
 include gar/category.mk
