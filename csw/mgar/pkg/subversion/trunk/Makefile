@@ -83,6 +83,13 @@ PKGFILES_CSWap2svn        += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
 
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWexpat
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWiconv
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWapache2rt
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWneon
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWoldaprt
 PKGFILES_CSWjavasvn        = $(SVNLIB)/.*java.*
 PKGFILES_CSWjavasvn       += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW
 
@@ -95,12 +102,26 @@ PKGFILES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
 
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWiconv
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWapache2rt
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWexpat
 PKGFILES_CSWrbsvn          = $(libdir)/ruby.*
 PKGFILES_CSWrbsvn         += $(SVNLIB)/.*swig_ruby.*
 PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
 
 SPKG_DESC_CSWpythonsvn       = Subversion Python Language Binding
 CATALOGNAME_CSWpythonsvn     = pythonsvn
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWexpat
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWpython
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsvn
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWiconv
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWapache2rt
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWoldaprt
 PKGFILES_CSWpythonsvn        = $(libdir)/python.*
 PKGFILES_CSWpythonsvn       += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn       += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
