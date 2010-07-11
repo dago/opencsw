@@ -1,6 +1,6 @@
 # $Id$
 GARNAME = openldap
-GARVERSION = 2.4.22
+GARVERSION = 2.4.23
 CATEGORIES = server
 
 DESCRIPTION = Brief description
