@@ -1,0 +1,66 @@
+From 15dad8e4d26c0e482e0fbb44fb8190faad852f27 Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Sun, 11 Jul 2010 15:31:43 +0200
+Subject: [PATCH] set shebang to /opt/csw/bin/perl
+
+---
+ master/_bin/munin-update.in    |    2 +-
+ node/bin/munindoc              |    2 +-
+ node/sbin/munin-node           |    2 +-
+ node/sbin/munin-node-configure |    2 +-
+ node/sbin/munin-run            |    2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/master/_bin/munin-update.in b/master/_bin/munin-update.in
+index 8ff7794..0d044ae 100755
+--- a/master/_bin/munin-update.in
++++ b/master/_bin/munin-update.in
+@@ -1,4 +1,4 @@
+-#! /usr/bin/perl
++#! /opt/csw/bin/perl
+ 
+ use warnings;
+ use strict;
+diff --git a/node/bin/munindoc b/node/bin/munindoc
+index e36f87b..e2334a1 100755
+--- a/node/bin/munindoc
++++ b/node/bin/munindoc
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- perl -*-
+ #
+ # This script provides the basis for a plugin documentation system for
+diff --git a/node/sbin/munin-node b/node/sbin/munin-node
+index 5980d5e..389e73e 100755
+--- a/node/sbin/munin-node
++++ b/node/sbin/munin-node
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- cperl -*-
+ #
+ # Copyright (C) 2002-2009 Audun Ytterdal, Jimmy Olsen, Tore Anderson,
+diff --git a/node/sbin/munin-node-configure b/node/sbin/munin-node-configure
+index b262924..c8a8dea 100755
+--- a/node/sbin/munin-node-configure
++++ b/node/sbin/munin-node-configure
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ # -*- cperl -*-
+ #
+ # Copyright (C) 2003-2006 Jimmy Olsen, Nicolai Langfeldt.
+diff --git a/node/sbin/munin-run b/node/sbin/munin-run
+index 3d28b6a..09fc71d 100755
+--- a/node/sbin/munin-run
++++ b/node/sbin/munin-run
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -wT
++#!/opt/csw/bin/perl -wT
+ # -*- perl -*-
+ 
+ # Copyright (C) 2004-2009
+-- 
+1.7.1
+

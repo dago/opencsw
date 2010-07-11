@@ -1,6 +1,16 @@
-diff --speed-large-files --minimal -Nru munin-1.4.3.orig/Makefile.config munin-1.4.3/Makefile.config
---- munin-1.4.3.orig/Makefile.config	2009-12-30 13:55:56.000000000 +0100
-+++ munin-1.4.3/Makefile.config	2010-01-27 12:26:29.445565248 +0100
+From 0298d86c798e9ad08f763a05932b3bdc1d5db118 Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Sun, 11 Jul 2010 18:03:49 +0200
+Subject: [PATCH] set paths to match OpenCSW
+
+---
+ Makefile.config |   42 ++++++++++++++++++++++--------------------
+ 1 files changed, 22 insertions(+), 20 deletions(-)
+
+diff --git a/Makefile.config b/Makefile.config
+index 84f155b..cacaf20 100644
+--- a/Makefile.config
++++ b/Makefile.config
 @@ -14,13 +14,15 @@
  # and LOGDIR as subdirectories.  Today, DBDIR contains configured
  # domains, as well as PLUGSTATE, and we risk collisions.
@@ -19,7 +29,7 @@ diff --speed-large-files --minimal -Nru munin-1.4.3.orig/Makefile.config munin-1
  
  # Server only - where to put munin-cron
  BINDIR     = $(PREFIX)/bin
-@@ -29,17 +31,17 @@
+@@ -29,47 +31,47 @@ BINDIR     = $(PREFIX)/bin
  SBINDIR    = $(PREFIX)/sbin
  
  # Where to put text and html documentation
@@ -42,7 +52,13 @@ diff --speed-large-files --minimal -Nru munin-1.4.3.orig/Makefile.config munin-1
  
  # Server only - spool directory for data gathered from nodes by
  # munin-gather - experimental.  Place on ramdisk to make munin
-@@ -52,24 +54,24 @@
+ # scale better.  On many versions of Linux as well as on Solaris
+ # /tmp will be a ramdisk.
+ 
+-SSPOOLDIR  = $(PREFIX)/spool
++SSPOOLDIR  = /tmp/muninspool
+ 
+ # Suggested directory name for a pulic ramdisk based tmp directory.
  # SSPOOLDIR := /tmp/muninspool
  
  # Client only - Where to put RRD files and other intenal data
@@ -72,7 +88,7 @@ diff --speed-large-files --minimal -Nru munin-1.4.3.orig/Makefile.config munin-1
  
  # The ruby interpreter to use (used by some plugins)
  RUBY       := /usr/bin/env ruby
-@@ -95,11 +97,11 @@
+@@ -95,11 +97,11 @@ JAVALIBDIR:= $(LIBDIR)
  GOODSH     := $(shell PATH=`getconf PATH` sh -c 'type sh | sed "s/.* //"')
  
  # Path of bash for bash specific plugins
@@ -86,7 +102,7 @@ diff --speed-large-files --minimal -Nru munin-1.4.3.orig/Makefile.config munin-1
  
  # Client only - Install plugins for this architecture
  OSTYPE     := $(shell uname | tr '[A-Z]' '[a-z]')
-@@ -111,7 +113,7 @@
+@@ -111,7 +113,7 @@ HOSTNAME   := $(shell hostname)
  # What is the safest way to create a tempfile.
  # Default is to figure it out by testing various methods.
  # Replace this with a known platform-specific method
@@ -95,7 +111,7 @@ diff --speed-large-files --minimal -Nru munin-1.4.3.orig/Makefile.config munin-1
  
  # Munin version number.
  VERSION    := $(shell ./getversion)
-@@ -126,9 +128,9 @@
+@@ -126,9 +128,9 @@ PLUGINUSER := nobody
  # Which command to use to check if the USER and GROUP to run Munin as, exists.
  # These will work on most modern OSes:
  #
@@ -108,9 +124,12 @@ diff --speed-large-files --minimal -Nru munin-1.4.3.orig/Makefile.config munin-1
  
  # For OSX, comment out the previous two lines and comment in these
  #
-@@ -159,4 +161,4 @@
+@@ -159,4 +161,4 @@ JAR        := jar
  JCVALID    := $(shell $(JC) -version >/dev/null 2>/dev/null && echo "yes")
  
  # Check whether setruid functionality can be used
 -HASSETR    := $(shell perl -e 'use Config; my @vars=("d_setruid", "d_setreuid", "d_setresuid"); foreach my $$var (@vars) { if ($$Config{$$var} eq "define") { print "1\n"; exit 0; } } print "0\n"; exit 0;' )
 +HASSETR    := $(shell /opt/csw/bin/perl -e 'use Config; my @vars=("d_setruid", "d_setreuid", "d_setresuid"); foreach my $$var (@vars) { if ($$Config{$$var} eq "define") { print "1\n"; exit 0; } } print "0\n"; exit 0;' )
+-- 
+1.7.1
+

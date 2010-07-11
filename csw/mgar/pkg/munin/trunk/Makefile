@@ -1,10 +1,10 @@
 GARNAME = munin
-GARVERSION = 1.4.3
+GARVERSION = 1.4.5
 CATEGORIES = apps
 
 SPKG_DESC_CSWmuninmaster = master component of the graphical network and system monitoring munin
 SPKG_DESC_CSWmuninnode = node component of the graphical network and system monitoring munin
-SPKG_DESC_CSWmunincommin = common files for munin node and master
+SPKG_DESC_CSWmunincommon = common files for munin node and master
 
 define BLURB
   Munin the monitoring tool surveys all your computers and remembers what it saw. It presents all the information in graphs through a web interface.
@@ -21,13 +21,13 @@ DISTFILES += cswusergroup
 DISTFILES += apache-munin.conf.CSW apache-munin-cgi.conf.CSW
 DISTFILES += README.CSW
 
-PATCHFILES += makefile.diff
-PATCHFILES += makefile.config.diff 
-PATCHFILES += sunos_memory.in.diff
-PATCHFILES += munin-node.conf.in.diff
-PATCHFILES += munin.conf.in.diff
-PATCHFILES += munin-graph.in.diff # match some paths to /{etc|var}/opt/csw/munin 
-PATCHFILES += perl.diff # shebang correctly set
+PATCHFILES += Makefile.patch
+PATCHFILES += Makefile.config.patch
+PATCHFILES += sunos_memory.in.patch
+PATCHFILES += munin-node.conf.in.patch
+PATCHFILES += munin.conf.in.patch
+PATCHFILES += munin-graph.in.patch # match some paths to /{etc|var}/opt/csw/munin 
+PATCHFILES += perl.patch # shebang correctly set
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz

@@ -1,0 +1,34 @@
+From fd284599a4d41b327f87750c92bbeb22935df8b6 Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Sun, 11 Jul 2010 15:01:31 +0200
+Subject: [PATCH] use top from OpenCSW
+
+---
+ plugins/node.d.sunos/memory.in |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/plugins/node.d.sunos/memory.in b/plugins/node.d.sunos/memory.in
+index 7b9300e..eeabbcb 100755
+--- a/plugins/node.d.sunos/memory.in
++++ b/plugins/node.d.sunos/memory.in
+@@ -17,7 +17,7 @@ top installed.
+ The following shows the default settings for this plugin:
+ 
+   [memory]
+-     env.top /usr/local/bin/top
++     env.top /opt/csw/bin/top
+ 
+ You can also set warning and critical limits with these env settings:
+ 
+@@ -61,7 +61,7 @@ Fixme: Using kstat would be much better
+ 
+ . $MUNIN_LIBDIR/plugins/plugin.sh
+ 
+-TOP=${top:-/usr/local/bin/top}
++TOP=${top:-/opt/csw/bin/top}
+ 
+ if [ "$1" = "autoconf" ]; then
+     if [ -x $TOP ] ; then
+-- 
+1.7.1
+
