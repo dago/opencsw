@@ -26,6 +26,7 @@ PATCHFILES += Makefile.config.patch
 PATCHFILES += sunos_memory.in.patch
 PATCHFILES += munin-node.conf.in.patch
 PATCHFILES += munin.conf.in.patch
+PATCHFILES += munin-htaccess.in.patch
 PATCHFILES += munin-graph.in.patch # match some paths to /{etc|var}/opt/csw/munin 
 PATCHFILES += perl.patch # shebang correctly set
 
