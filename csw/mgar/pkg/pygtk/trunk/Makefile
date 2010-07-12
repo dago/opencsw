@@ -1,5 +1,5 @@
 GARNAME = pygtk
-GARVERSION = 2.15.1
+GARVERSION = 2.17.0
 CATEGORIES = lang
 RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\.[0-9].*\)\.[0-9]*/\1/')
 
@@ -13,6 +13,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 STRIP_LIBTOOL = 1
 
 PACKAGES = CSWpygtk
+BUILD_DEP_PKGS = CSWpkgconfig CSWpygobject CSWglib2devel CSWlibatkdevel CSWpangodevel CSWpycairo CSWlibcairodevel CSWlibxcbdevel
 RUNTIME_DEP_PKGS_CSWpygtk  = CSWpython CSWfconfig CSWftype2 CSWggettextrt
 RUNTIME_DEP_PKGS_CSWpygtk += CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo
 RUNTIME_DEP_PKGS_CSWpygtk += CSWlibglade2 CSWlibxml2 CSWpango

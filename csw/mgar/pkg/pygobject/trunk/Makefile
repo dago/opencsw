@@ -1,9 +1,9 @@
 GARNAME = pygobject
-GARVERSION = 2.20.0
+GARVERSION = 2.21.1
 CATEGORIES = lang
 RELVER = $(shell echo $(GARVERSION) | gsed -e 's/\.[0-9]\+$$//')
 
-DESCRIPTION = pygobject support for Python
+DESCRIPTION = Python bindings for the GObject library
 define BLURB
   This is a Python language binding for gobject.
 endef

@@ -1,5 +1,5 @@
 GARNAME      = pycairo
-GARVERSION   = 1.8.6
+GARVERSION   = 1.8.8
 CATEGORIES   = lib
 
 DESCRIPTION  = Python binder for Cairo library
