@@ -96,4 +96,4 @@ d ugfiles /var/opt/csw/munin/db 0755 munin munin
 d ugfiles /var/opt/csw/munin/log 0755 munin munin
 d ugfiles /var/opt/csw/munin/run 0755 munin munin
 d ugfiles /var/opt/csw/munin/www 0755 munin munin
-f ugfiles /var/opt/csw/munin/www/.htaccess 0644 munin munin
+f cswpreserveconf /var/opt/csw/munin/www/.htaccess.CSW 0644 munin munin

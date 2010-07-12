@@ -83,6 +83,7 @@ install-custom:
 	#mv $(DESTDIR)/opt/csw/lib/plugins $(DESTDIR)/opt/csw/lib/munin_plugins
 	@mv $(DESTDIR)/etc/opt/csw/munin/munin-node.conf $(DESTDIR)/etc/opt/csw/munin/munin-node.conf.CSW
 	@mv $(DESTDIR)/etc/opt/csw/munin/munin.conf $(DESTDIR)/etc/opt/csw/munin/munin.conf.CSW
+	@mv $(DESTDIR)/var/opt/csw/munin/www/.htaccess $(DESTDIR)/var/opt/csw/munin/www/.htaccess.CSW
 	#@ginstall -d $(DESTDIR)/opt/csw/munin
 	@ginstall -d $(DESTDIR)/etc/opt/csw/munin/apache
 	@ginstall -m 644 $(FILEDIR)/apache-munin.conf.CSW $(DESTDIR)/etc/opt/csw/munin/apache/apache-munin.conf.CSW
