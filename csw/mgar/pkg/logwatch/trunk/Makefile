@@ -112,5 +112,5 @@ install-custom:
 		$(INSTALLDATA) logwatch.8 $(DESTDIR)$(MANDIR)/man8; \
 		$(INSTALLEXE) logwatch.wrapper $(DESTDIR)$(BINDIR)/logwatch; \
 		$(INSTALLDIR) $(DESTDIR)$(CRONDIR); \
-		echo "02 4 * * * /opt/csw/sbin/logwatch" > $(DESTDIR)$(CRONTABS) )
+		echo "02 4 * * * /opt/csw/bin/logwatch" > $(DESTDIR)$(CRONTABS) )
 	@$(MAKECOOKIE)
