@@ -82,14 +82,11 @@ PKGFILES_CSWap2svn        += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
 
 SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
-RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn
 PKGFILES_CSWjavasvn        = $(SVNLIB)/.*java.*
 PKGFILES_CSWjavasvn       += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW
 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pm_subversion
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWsvn
 PKGFILES_CSWpmsvn          = $(libdir)/perl.*
 PKGFILES_CSWpmsvn         += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
@@ -97,16 +94,12 @@ PKGFILES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
 
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
 PKGFILES_CSWrbsvn          = $(libdir)/ruby.*
 PKGFILES_CSWrbsvn         += $(SVNLIB)/.*swig_ruby.*
 PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
 
 SPKG_DESC_CSWpythonsvn       = Subversion Python Language Binding
 CATALOGNAME_CSWpythonsvn     = pythonsvn
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWpython
-RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsvn
 PKGFILES_CSWpythonsvn        = $(libdir)/python.*
 PKGFILES_CSWpythonsvn       += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn       += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
