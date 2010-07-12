@@ -1,0 +1,16 @@
+xscreensaver will complain about pam "possibly" not working because
+/etc/pam.conf has not been modified.
+I am leery to modify people's pam.conf files. but if you want to add
+it yourself, it expects the following in there:
+
+        xscreensaver    auth requisite          pam_authtok_get.so.1
+        xscreensaver    auth required           pam_dhkeys.so.1
+        xscreensaver    auth required           pam_unix_auth.so.1
+        xscreensaver    auth required           pam_dial_auth.so.1
+
+For Solaris 10, I believe it should be
+        xscreensaver    auth requisite          pam_authtok_get.so.1
+        xscreensaver    auth required           pam_dhkeys.so.1
+        xscreensaver    auth required           pam_unix_cred.so.1
+        xscreensaver    auth required           pam_unix_auth.so.1
+        xscreensaver    auth required           pam_dial_auth.so.1

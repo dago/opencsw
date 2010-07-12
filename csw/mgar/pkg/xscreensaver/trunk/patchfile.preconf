@@ -1,0 +1,88 @@
+diff --git hacks/asm6502.c hacks/asm6502.c
+index 90eed8d..5abe243 100644
+--- hacks/asm6502.c
++++ hacks/asm6502.c
+@@ -22,6 +22,8 @@
+ 
+ #define NDEBUG  /* Uncomment when done with debugging */
+ 
++#include "../config.h"
++
+ #include <stdlib.h>
+ #include <stdio.h>
+ /*#include <malloc.h>*/
+@@ -31,7 +33,12 @@
+ #include <assert.h>
+ #include <ctype.h>
+ #include <math.h>
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ #include <unistd.h>
+ 
+ #include "asm6502.h"
+diff --git hacks/fireworkx.c hacks/fireworkx.c
+index e0cfeee..687f7e2 100644
+--- hacks/fireworkx.c
++++ hacks/fireworkx.c
+@@ -28,6 +28,10 @@
+  */
+ 
+ #include <math.h>
++#ifdef __sun
++#define sqrtf(x) __sqrtf(x)
++#endif
++
+ #include "screenhack.h"
+ 
+ #define FWXVERSION "1.6"
+diff --git hacks/m6502.c hacks/m6502.c
+index 705af37..4f943bc 100644
+--- hacks/m6502.c
++++ hacks/m6502.c
+@@ -12,7 +12,14 @@
+  * Created: 07-May-2007 
+  */
+ 
+-#include <stdint.h> 
++#include "../config.h"
++#ifdef HAVE_STDINT_H
++#include <stdint.h>
++#endif
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++
+ #include <string.h>
+ #include "screenhack.h"
+ #include "analogtv.h"
+--- hacks/glx/glcells.c.orig	Fri Jul  9 18:55:25 2010
++++ hacks/glx/glcells.c	Fri Jul  9 18:57:16 2010
+@@ -28,6 +28,9 @@
+ 
+ #include "xlockmore.h"
+ #include <math.h>
++#ifdef __sun
++#define expf(f) __expf(f)
++#endif
+ 
+ /**********************************
+   DEFINES
+diff --git configure configure
+index e1e0f54..8cdefa0 100755
+--- configure
++++ configure
+@@ -17084,6 +17084,10 @@ if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
+ fi
+ rm -rf conftest*
+ 
++echo CSW FORCING have_mesa_gl=no
++have_mesa_gl=no
++ac_cv_have_mesa_gl=no
++
+   CPPFLAGS="$ac_save_CPPFLAGS"
+        fi
+ fi
