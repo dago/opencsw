@@ -8,6 +8,9 @@
 # targets in second half.
 # Note that assignments with "?=" mean "assign if not already assigned.
 
+# for intltool
+PATH:=/opt/csw/gnu:$(PATH)
+
 # Where do we keep local downloads of software src files
 ARCHIVEDIR ?= /home/src
 ARCHIVENAME ?= libgnomecanvas-2.30.1.tar.bz2
@@ -26,8 +29,8 @@ SRCDIR= build/*
 # DO NOT specify the arch-64 stuff such as -m64 here.
 # the individual targets will do that.
 
-CFLAGS_COMMON   ?= -mt -xnorunpath -xO2
-CXXFLAGS_COMMON ?= -mt -norunpath  -xO2
+CFLAGS_COMMON   ?= -mt -xnorunpath -xO3
+CXXFLAGS_COMMON ?= -mt -norunpath  -xO3
 CFLAGS_sparc    ?= -xarch=v8
 CFLAGS_i386     ?= -xarch=386
 

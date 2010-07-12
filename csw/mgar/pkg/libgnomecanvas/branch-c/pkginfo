@@ -1,5 +1,5 @@
 PKG=CSWlibgnomecanvas
-NAME=libgnomecanvas - description goes here
+NAME=libgnomecanvas - GNOME 2 canvas library
 VERSION=2.30.1,REV=2010.06.26
 CATEGORY=application
 VENDOR=http://www.gnome.org/ packaged for CSW by Philip Brown
