@@ -7,7 +7,7 @@ CATEGORIES = lang
 TEST_SCRIPTS =
 TEST_ARGS = test-all
 
-BUILD_DEP_PKGS =  CSWbdb48devel CSWgdbm CSWgfile CSWiconv CSWncurses
+BUILD_DEP_PKGS =  CSWbdb48devel CSWgdbm CSWcoreutils CSWiconv CSWncurses
 BUILD_DEP_PKGS += CSWreadline CSWzlib CSWossldevel
 
 PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymodeel
@@ -25,7 +25,7 @@ RUNTIME_DEP_PKGS_CSWrubydoc = CSWruby
 
 RUNTIME_DEP_PKGS_CSWrubytk = CSWruby CSWtk CSWtcl
 
-RUNTIME_DEP_PKGS_CSWrubydev = CSWruby CSWgfile
+RUNTIME_DEP_PKGS_CSWrubydev = CSWruby CSWcoreutils
 
 RUNTIME_DEP_PKGS_CSWrubymode = CSWemacscommon
 
@@ -109,6 +109,10 @@ EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
 else
 SOS12_LD_FLAGS =
 endif
+
+CHECKPKG_OVERRIDES_CSWrubydev += surplus-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWpython
 
 include gar/category.mk
 
