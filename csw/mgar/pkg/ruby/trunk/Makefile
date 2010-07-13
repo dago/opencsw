@@ -7,8 +7,8 @@ CATEGORIES = lang
 TEST_SCRIPTS =
 TEST_ARGS = test-all
 
-BUILD_DEP_PKGS = CSWbdb48devel CSWgdbm CSWgfile CSWiconv CSWncurses CSWossldevel
-BUILD_DEP_PKGS += CSWreadline CSWzlib
+BUILD_DEP_PKGS =  CSWbdb48devel CSWgdbm CSWgfile CSWiconv CSWncurses
+BUILD_DEP_PKGS += CSWreadline CSWzlib CSWossldevel
 
 PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymodeel
 
@@ -98,9 +98,6 @@ DISTNAME = $(GARNAME)-$(GARVERSION)-$(PATCHLEVEL)
 MERGE_EXCLUDE_STATICLIBS = 
 
 COMPILE_ELISP = 1
-
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
 
 ifdef USEGCC
 GARCOMPILER = GNU
