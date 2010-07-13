@@ -119,7 +119,10 @@ SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
 RBCONFIG = /opt/csw/lib/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb
 
-PI_TARGETS  = samples rbconfig rbscripts rubymode multiconfig
+PI_TARGETS  = samples rbconfig rbscripts rubymode
+ifndef USEGCC
+PI_TARGETS += multiconfig
+endif
 
 post-install-modulated: $(PI_TARGETS)
 	@$(MAKECOOKIE)
