@@ -63,8 +63,14 @@ ARCH_SPECIFIC_PKGNAMES_RE_LIST = [
 DO_NOT_LINK_AGAINST_THESE_SONAMES = set([])
 
 DISCOURAGED_FILE_PATTERNS = (
-    r"\.py[co]$",
-    r"/lib\w+\.l?a$",
+    (r"\.py[co]$", ("Python compiled files are supposed to be compiled using"
+                    "the cswpycompile class action script. For more "
+                    "information, see "
+                    "http://wiki.opencsw.org/cswclassutils-package")),
+    (r"/lib\w+\.l?a$", "Static libraries aren't necessary on Solaris."),
+    (r"opt/csw/var($|/)", ("The /opt/csw/var directory is not writable on "
+                            "sparse non-global zones.  "
+                            "Please use /var/opt/csw instead.")),
 )
 RPATH_PARTS = {
     'prefix': r"(?P<prefix>/opt/csw)",
@@ -689,13 +695,14 @@ def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
 
 
 def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger, messenger):
-  patterns = [re.compile(x) for x in DISCOURAGED_FILE_PATTERNS]
+  patterns = [(re.compile(x), y) for x, y in DISCOURAGED_FILE_PATTERNS]
   for entry in pkg_data["pkgmap"]:
     if entry["path"]:
-      for pattern in patterns:
-        if re.search(pattern, entry["path"]):
+      for pattern, msg in patterns:
+        if pattern.search(entry["path"]):
           error_mgr.ReportError("discouraged-path-in-pkgmap",
                                 entry["path"])
+          messenger.Message(msg)
 
 
 def CheckBadContent(pkg_data, error_mgr, logger, messenger):

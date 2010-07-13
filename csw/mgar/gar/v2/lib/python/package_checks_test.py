@@ -779,5 +779,27 @@ class TestSetCheckSharedLibraryConsistencyIvtools(CheckpkgUnitTestHelper,
     # ReportError('CSWivtools', 'soname-not-found', 'libComUnidraw.so is needed by opt/csw/bin/comdraw')
 
 
+class TestCheckDiscouragedFileNamePatterns(CheckpkgUnitTestHelper,
+                                           unittest.TestCase):
+  """Throw an error if there's a conflicting file in the package set."""
+  FUNCTION_NAME = 'CheckDiscouragedFileNamePatterns'
+  CSWfoo_DATA = {
+        'basic_stats': {'catalogname': 'foo',
+                        'pkgname': 'CSWfoo',
+                        'stats_version': 1},
+        'binaries_dump_info': [],
+        'depends': tuple(),
+        'isalist': [],
+        'pkgmap': [
+          { "type": "d", "path": "/opt/csw/var", },
+          { "type": "d", "path": "/opt/csw/bin", },
+        ],
+  }
+  def CheckpkgTest(self):
+    self.pkg_data = self.CSWfoo_DATA
+    self.error_mgr_mock.ReportError(
+        'discouraged-path-in-pkgmap', '/opt/csw/var')
+
+
 if __name__ == '__main__':
   unittest.main()
