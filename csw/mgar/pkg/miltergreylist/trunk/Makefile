@@ -1,5 +1,5 @@
 GARNAME = miltergreylist
-GARVERSION = 4.2.5
+GARVERSION = 4.2.6
 #RELEASE = rc1
 #DISTVERSION = $(GARVERSION)$(RELEASE)
 DISTVERSION = $(GARVERSION)
@@ -15,6 +15,9 @@ endef
 MASTER_SITES = http://ftp.espci.fr/pub/milter-greylist/
 DISTFILES  = milter-greylist-$(DISTVERSION).tgz
 DISTFILES += COPYING
+
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 PATCHFILES += 0001-Path-and-user-changes-in-conf-file.patch
 
