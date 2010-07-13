@@ -237,6 +237,8 @@ EOF
     if [ "$daemon" = "yes" -a "$AUTOENABLE" != "no" -a "$AUTOENABLE" != "false" ]; then
       load_smf_service_state "$FMRI/$service"
       if [ "$SMF_STATE" = "enabled" ]; then
+        echo "Clearing svc:/$FMRI/$service in case it's in the maintenance state..."
+        /usr/sbin/svcadm clear svc:/$FMRI/$service > /dev/null 2>&1
         echo Enabling svc:/$FMRI/$service ...
         /usr/sbin/svcadm enable svc:/$FMRI/$service > /dev/null 2>&1
       fi

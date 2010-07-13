@@ -1,4 +1,4 @@
-# $Id$
+# $HeadURL$
 
 GARNAME = cswclassutils
 GARVERSION = 1.38
@@ -27,7 +27,8 @@ PROTOTYPE_FILES_cas = /usr/sadm/install/scripts/.*
 PROTOTYPE_USER_cas = bin
 PROTOTYPE_GROUP_cas = sys
 
-CHECKPKG_OVERRIDES_CSWcswclassutils += init-file-missing-cswinitsmf-class|/opt/csw/etc/init.d/csw.smf.sample|class=none
+CHECKPKG_OVERRIDES_CSWcswclassutils += init-file-missing-cswinitsmf-class
+CHECKPKG_OVERRIDES_CSWcswclassutils += init-file-wrong-location
 CHECKPKG_OVERRIDES_CSWcswclassutils += init-file-wrong-location|/opt/csw/etc/init.d/csw.smf.sample
 
 include gar/category.mk

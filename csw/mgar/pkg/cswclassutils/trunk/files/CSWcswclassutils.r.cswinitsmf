@@ -16,6 +16,7 @@
 # 2009-04-24 Temporarily disabled the "persistent state" code until it can be used
 #            per service, not just per package
 # 2009-05-28 Enabled persistent state code again after receiving patch from Yann.
+# 2010-07-13 <maciej> Added support for removing custom manifests
 
 DEBUG=		# clear to disable debug, set to anything to enable
 
@@ -65,11 +66,41 @@ if [ "$DEBUG" ]; then
   echo PACKAGE: $PKGINST SMF: $smf
 fi
 
+# We need to find all the manifests before removing the files.  First, we'll
+# build the list of files to remove and we'll process them later.
+init_files=
+while read file
+do
+  init_files="${init_files} ${file}"
+done
+
 # Stop service
 if [ "$smf" = "yes" ]; then
+  manifests=
+  fmris=
+  for file in ${init_files}
+  do
+    if grep '^#MANIFEST' $file >/dev/null; then
+      new_manifest="`grep '^#MANIFEST' $file \
+                 | awk '{print $2}'`"
+      manifests="${manifests} ${new_manifest}"
+      # For foo FMRI, this outputs both foo and foo:default.  If both are
+      # attempted to be stopped, there are warnings printed to the screen, but
+      # they are harmless.
+      fmris="${fmris} `svccfg inventory ${new_manifest} \
+                       | tr '/' '\n' \
+                       | tail -1`"
+    fi
+  done
+
   # Find out FMRI complete with service name
-  FMRI=`grep ${PKGINST}$ /var/sadm/install/contents | grep "^/var/opt/csw/svc/manifest" | egrep '\.xml ' | cut -d'/' -f7- | awk -F'.xml' '{print $1}'`
-  for i in `echo $FMRI | tr '\n' ' '`
+  FMRI="`grep ${PKGINST}$ /var/sadm/install/contents \
+      | grep '^/var/opt/csw/svc/manifest' \
+      | egrep '\.xml ' \
+      | cut -d'/' -f7- \
+      | awk -F'.xml' '{print $1}'` \
+      ${fmris}"
+  for i in ${FMRI}
   do
     save_smf_state "$i"
     echo "Disabling svc:/$i ..."
@@ -89,7 +120,7 @@ fi
 
 # Remove files in class cswinitsmf
 echo "Removing class <cswinitsmf> ..."
-while read file
+for file in ${init_files}
 do
   echo $file
   if [ -d $file ]; then
