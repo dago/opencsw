@@ -1,7 +1,7 @@
 # $HeadURL$
 
 GARNAME = cswclassutils
-GARVERSION = 1.38
+GARVERSION = 1.39
 CATEGORIES = utils
 
 DESCRIPTION = CSW class action utilities
