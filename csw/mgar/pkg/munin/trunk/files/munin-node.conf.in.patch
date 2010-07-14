@@ -1,23 +1,25 @@
-From 272b43ac170c907476ad5698c960fd84b31996c3 Mon Sep 17 00:00:00 2001
+From 0ffc51f49ec0107bb5346871640a14f3f65b50bb Mon Sep 17 00:00:00 2001
 From: Juergen Arndt <ja@opencsw.org>
-Date: Sun, 11 Jul 2010 18:25:14 +0200
-Subject: [PATCH] munin-node.conf.in: set some paths for OpenCSW, change hostname to "yourhostname"
+Date: Wed, 14 Jul 2010 20:06:33 +0200
+Subject: [PATCH] munin-node.conf.in: set logfiles and log level, change hostname to "yourhostname"
 
 ---
- node/munin-node.conf.in |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ node/munin-node.conf.in |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/node/munin-node.conf.in b/node/munin-node.conf.in
-index 40793b2..67a92a5 100644
+index 40793b2..d25e14d 100644
 --- a/node/munin-node.conf.in
 +++ b/node/munin-node.conf.in
-@@ -3,8 +3,8 @@
+@@ -2,9 +2,9 @@
+ # Example config-file for munin-node
  #
  
- log_level 4
+-log_level 4
 -log_file @@LOGDIR@@/munin-node.log
 -pid_file @@STATEDIR@@/munin-node.pid
-+log_file /var/opt/csw/munin/munin-node.log
++log_level 1
++log_file /var/opt/csw/munin/log/munin-node.log
 +pid_file /var/opt/csw/munin/run/munin-node.pid
  
  background 1

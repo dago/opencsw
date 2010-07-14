@@ -35,7 +35,7 @@ start_munin_node ()
 {
         if [ -f $CONFIG_FILE ]; then
             wait 1
-            $BIN_FILE -c $CONFIG_FILE -d
+            $BIN_FILE -c $CONFIG_FILE
         fi
 }
 

@@ -7,12 +7,12 @@ e777f0ddea3e09d0faf72780ad782995  Makefile.config.patch
 e6bafa4aa3cba7fc16e444ad168b4cd1  README.CSW
 59409f4b412953283c3df4546fd4886c  apache-munin-cgi.conf.CSW
 e701d132ba0b6f3dcc90190860f5aa6b  apache-munin.conf.CSW
-31aec7f9a9a452cc6c75c1096c937fdd  cswmuninnode
+2e0173bf615787eaf37e551b956dc9b8  cswmuninnode
 50fa4a545f878d79e219891c6ac8d2d2  cswusergroup
 4ae84b9a27b686c3819d8d7b51d8cb4c  munin-1.4.5.tar.gz
 1a13b606a5c82958ed8e9bf139044988  munin-graph.in.patch
 e96eab2e321a33517d88dfbe1d510211  munin-htaccess.in.patch
-803021ab0539f83936c9adec6bd9336c  munin-node.conf.in.patch
+05a23869a8c0e637a423c2559c150b4f  munin-node.conf.in.patch
 e9d94e230c8719c5d7d3fe624e87bea2  munin.conf.in.patch
 c0e9f043fe5ea79a1fc7dfc91f09a961  perl.patch
 5673776262a0d1b2c386f45f0fd6a783  sunos_memory.in.patch
