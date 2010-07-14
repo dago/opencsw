@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = cswutils
-GARVERSION = 1.14.7
+GARVERSION = 1.15
 CATEGORIES = utils
 
 DESCRIPTION = Utilities for CSW maintainers
@@ -10,6 +10,9 @@ endef
 
 SVNROOT = http://opencsw.svn.sourceforge.net/svnroot/opencsw/utilities/
 SVN_REV = 133
+
+SVNROOT_gar = https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2/lib/python/
+SVN_REV_gar = HEAD
 
 MASTER_SITES =
 SVN_FILES = compare_pkgs.py
@@ -48,14 +51,7 @@ SPKG_SOURCEURL = http://www.opencsw.org/
 
 ARCHALL = 1
 
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWcoreutils
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWfakeroot
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmhtmltree
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmlibwww
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpmyaml
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpy-libmagic
-CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency|CSWpy-hachoir-parser
+CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency
 CHECKPKG_OVERRIDES_CSWcswutils += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWcswutils += catalogname-does-not-start-with-py_
 
@@ -69,7 +65,8 @@ $(foreach F,$(SVN_FILES),$(DOWNLOADDIR)/$(F)-r$(SVN_REV)):
 
 $(foreach PY,$(PYFILES),$(DOWNLOADDIR)/$(PY)):
 	@echo "Grabbing $@"
-	@ln -s $(abspath gar/lib/python/$(notdir $@)) $(DOWNLOADDIR)/
+	@svn export -r $(SVN_REV_gar) $(SVNROOT_gar)$(subst -r$(SVN_REV_gar),,$(notdir $@))
+	@mv $(subst -r$(SVN_REV_gar),,$(notdir $@)) $@
 	@$(MAKECOOKIE)
 
 install-custom:
