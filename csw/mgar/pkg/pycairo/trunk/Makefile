@@ -2,8 +2,10 @@ GARNAME      = pycairo
 GARVERSION   = 1.8.8
 CATEGORIES   = lib
 
-DESCRIPTION  = Python binder for Cairo library
+DESCRIPTION  = Python binding for Cairo library
 define BLURB
+  This package contains the pycairo Python module which implements
+  a binding the the cairo Library.
 endef
 
 MASTER_SITES  = http://www.cairographics.org/releases/
@@ -17,12 +19,12 @@ RUNTIME_DEP_PKGS += CSWcswclassutils
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-PACKAGES = CSWpycairo
+PACKAGES = CSWpy-cairo
 
-CATALOGNAME_CSWpycairo      = pycairo
-SPKG_DESC_CSWpycairo        = $(DESCRIPTION)
+CATALOGNAME_CSWpy-cairo      = pycairo
+SPKG_DESC_CSWpy-cairo        = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS_CSWpycairo = CSWlibcairo CSWpython
+RUNTIME_DEP_PKGS_CSWpy-cairo = CSWlibcairo CSWpython
 
 CAIRO_LIBS = -L/opt/csw/lib -R/opt/csw/lib/$$ISALIST -lcairo
 CAIRO_CFLAGS = -I/opt/csw/include -I/opt/csw/include/cairo
