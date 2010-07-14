@@ -21,7 +21,7 @@ RUNTIME_DEP_PKGS += CSWcswclassutils
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpy-cairo
 
-CATALOGNAME_CSWpy-cairo      = pycairo
+CATALOGNAME_CSWpy-cairo      = py_cairo
 SPKG_DESC_CSWpy-cairo        = $(DESCRIPTION)
 
 RUNTIME_DEP_PKGS_CSWpy-cairo = CSWlibcairo CSWpython
