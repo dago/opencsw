@@ -38,7 +38,9 @@ hachoir_core.config.quiet = True
 ARCH_SPARC = "sparc"
 ARCH_i386 = "i386"
 ARCH_ALL = "all"
+
 ARCHITECTURES = [ARCH_SPARC, ARCH_i386, ARCH_ALL]
+OS_RELS = [u"SunOS5.9", u"SunOS5.10"]
 MAJOR_VERSION = "major version"
 MINOR_VERSION = "minor version"
 PATCHLEVEL = "patchlevel"
@@ -290,16 +292,24 @@ class StagingDir(object):
   def __repr__(self):
     return u"StagingDir(%s)" % repr(self.dir_path)
 
-  def GetLatest(self, software, architectures=ARCHITECTURES):
+  def GetLatest(self, software, architectures=ARCHITECTURES, os_rels=OS_RELS):
     files = os.listdir(self.dir_path)
     package_files = []
-    for a in architectures:
-      relevant_pkgs = sorted(shutil.fnmatch.filter(files,
-                                                   "*-%s-*.pkg.gz" % a))
-      relevant_pkgs = sorted(shutil.fnmatch.filter(relevant_pkgs,
-                                                   "%s-*.pkg.gz" % software))
-      if relevant_pkgs:
-        package_files.append(relevant_pkgs[-1])
+    for os_rel in os_rels:
+      for a in architectures:
+        glob1 = "*-%s-%s-*.pkg.gz" % (os_rel, a)
+        logging.debug("files: %s", files)
+        logging.debug("glob1: %s", glob1)
+        relevant_pkgs = sorted(
+            shutil.fnmatch.filter(files, glob1))
+        logging.debug("relevant_pkgs: %s", relevant_pkgs)
+        glob2 = "%s-*.pkg.gz" % (software)
+        logging.debug("glob2: %s", glob2)
+        relevant_pkgs = sorted(
+            shutil.fnmatch.filter(relevant_pkgs, glob2))
+        logging.debug("relevant_pkgs: %s", relevant_pkgs)
+        if relevant_pkgs:
+          package_files.append(relevant_pkgs[-1])
     if not package_files:
       raise PackageError("Could not find %s in %s"
                          % (repr(software), repr(self.dir_path)))
