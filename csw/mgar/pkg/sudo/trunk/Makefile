@@ -1,5 +1,7 @@
+# $Id$
+
 GARNAME = sudo
-GARVERSION = 1.7.2p6
+GARVERSION = 1.7.3
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges
@@ -18,12 +20,14 @@ PATCHFILES = install.diff
 # upstream software release
 UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
 
-PACKAGES = CSWsudo CSWsudo-common
+PACKAGES += CSWsudo
+PACKAGES += CSWsudo-common
 
 CATALOGNAME_CSWsudo = sudo
 SPKG_DESC_CSWsudo = $(DESCRIPTION)
-SPKG_SOURCEURL_CSWsudo = http://www.sudo.ws
-RUNTIME_DEP_PKGS_CSWsudo = CSWsudo-common CSWggettextrt
+SPKG_SOURCEURL_CSWsudo = http://www.sudo.ws/sudo/
+RUNTIME_DEP_PKGS_CSWsudo += CSWsudo-common
+RUNTIME_DEP_PKGS_CSWsudo += CSWggettextrt
 
 CATALOGNAME_CSWsudo-common = sudo_common
 SPKG_DESC_CSWsudo-common = Common files for sudo
@@ -56,7 +60,7 @@ PKGFILES_CSWsudo  = $(bindir)/sudo\.minimal
 PKGFILES_CSWsudo += $(bindir)/sudoedit\.minimal
 
 PROTOTYPE_MODIFIERS = sudo
-PROTOTYPE_FILES_sudo = $(bindir)/sudo(|edit).minimal
+PROTOTYPE_FILES_sudo = $(bindir)/sudo(edit)?.minimal
 PROTOTYPE_PERMS_sudo = 4755
 
 LICENSE = LICENSE
