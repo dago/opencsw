@@ -33,6 +33,8 @@ CATALOGNAME_CSWsudo-common = sudo_common
 SPKG_DESC_CSWsudo-common = Common files for sudo
 SPKG_SOURCEURL_CSWsudo-common = http://www.sudo.ws
 RUNTIME_DEP_PKGS_CSWsudo-common = CSWggettextrt
+RUNTIME_DEP_PKGS_CSWsudo += CSWzlib
+RUNTIME_DEP_PKGS_CSWsudo-common += CSWzlib
 
 DISTFILES += CSWsudo-common.postinstall 
 
