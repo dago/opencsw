@@ -65,11 +65,19 @@ SPKG_DESC_CSWsvn-contrib   = Contributed subversion scripts
 CATALOGNAME_CSWsvn-contrib = subversion_contrib
 PKGFILES_CSWsvn-contrib    = $(docdir)/subversion/contrib.*
 ARCHALL_CSWsvn-contrib     = 1
+CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWemacscommon
 
 SPKG_DESC_CSWsvn-tools     = Additional subversion tools
 CATALOGNAME_CSWsvn-tools   = subversion_tools
 PKGFILES_CSWsvn-tools      = $(docdir)/subversion/tools.*
 ARCHALL_CSWsvn-tools       = 1
+CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWemacscommon
+
 
 SPKG_DESC_CSWap2svn        = Subversion Modules for Apache 2.2
 CATALOGNAME_CSWap2svn      = ap2_subversion
@@ -84,6 +92,19 @@ SPKG_DESC_CSWjavasvn       = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn     = javasvn
 PKGFILES_CSWjavasvn        = $(SVNLIB)/.*java.*
 PKGFILES_CSWjavasvn       += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWexpat
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWiconv
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWapache2rt
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWneon
+RUNTIME_DEP_PKGS_CSWjavasvn += CSWoldaprt
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pm_subversion
@@ -91,18 +112,42 @@ PKGFILES_CSWpmsvn          = $(libdir)/perl.*
 PKGFILES_CSWpmsvn         += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
 PKGFILES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWexpat
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWsvn
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWiconv
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWapache2rt
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWoldaprt
 
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
 PKGFILES_CSWrbsvn          = $(libdir)/ruby.*
 PKGFILES_CSWrbsvn         += $(SVNLIB)/.*swig_ruby.*
 PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWiconv
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWapache2rt
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWexpat
 
 SPKG_DESC_CSWpythonsvn       = Subversion Python Language Binding
 CATALOGNAME_CSWpythonsvn     = pythonsvn
 PKGFILES_CSWpythonsvn        = $(libdir)/python.*
 PKGFILES_CSWpythonsvn       += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn       += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWexpat
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWpython
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsvn
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWiconv
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWapache2rt
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWoldaprt
+CHECKPKG_OVERRIDES_CSWpythonsvn += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpythonsvn += catalogname-does-not-start-with-py_
+
 
 
 DISTFILES += CSWsvn.checkinstall
