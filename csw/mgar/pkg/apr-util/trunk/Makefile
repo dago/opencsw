@@ -22,6 +22,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
+CONFIGURE_ARGS += --with-ldap
 #not yet
 #CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb48
 CONFIGURE_ARGS += --without-freetds --without-sqlite2
