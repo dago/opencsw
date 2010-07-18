@@ -1,0 +1,22 @@
+GARNAME = sshguard
+GARVERSION = 1.5rc3
+CATEGORIES = net
+
+DESCRIPTION = Protects networked hosts from brute force attacks
+define BLURB
+  Protects networked hosts from brute force attacks
+endef
+
+MASTER_SITES = $(SF_MIRRORS)
+SF_PROJ = $(GARNAME)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+
+# We define upstream file regex so we can be notifed of new upstream software release
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+GARCOMPILER = GNU
+
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-firewall=hosts
+
+include gar/category.mk
