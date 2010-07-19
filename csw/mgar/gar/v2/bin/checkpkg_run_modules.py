@@ -3,10 +3,13 @@
 
 """This script runs all the checks written in Python."""
 
+import datetime
 import logging
+import os
 import os.path
 import sys
 import re
+import cProfile
 
 CHECKPKG_MODULE_NAME = "Second checkpkg API version"
 
@@ -34,10 +37,8 @@ def main():
                                             options.debug)
   # Running the checks, reporting and exiting.
   exit_code, screen_report, tags_report = check_manager.Run()
-  f = open(options.output, "w")
-  f.write(tags_report)
-  f.close()
-  if screen_report:
+  screen_report = unicode(screen_report)
+  if not options.quiet and screen_report:
     sys.stdout.write(screen_report)
   else:
     logging.debug("No screen report.")
@@ -45,4 +46,11 @@ def main():
 
 
 if __name__ == '__main__':
-  main()
+  if "--profile" in sys.argv:
+    t_str = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M")
+    home = os.environ["HOME"]
+    cprof_file_name = os.path.join(
+        home, ".checkpkg", "run-modules-%s.cprof" % t_str)
+    cProfile.run("main()", sort=1, filename=cprof_file_name)
+  else:
+    main()

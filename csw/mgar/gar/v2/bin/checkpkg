@@ -108,8 +108,10 @@ SKIP_STATS_COLLECTION=0
 MD5_SUMS_CATALOG_FILE=""
 INSTALL_CONTENTS_FILES="/var/sadm/install/contents"
 ANALYZE=1
+PROFILE=0
+QUIET=0
 
-while getopts hsdNM:o:c:A opt; do
+while getopts hsdNM:o:c:Apq opt; do
 	case "${opt}" in
 	  c)
 	    INSTALL_CONTENTS_FILES="${INSTALL_CONTENTS_FILES} ${OPTARG}"
@@ -135,6 +137,11 @@ while getopts hsdNM:o:c:A opt; do
     A)
       ANALYZE=0
       ;;
+    p)
+      PROFILE=1
+      ;;
+    q) QUIET=1
+      ;;
     *)
       echo "Unknown option '${opt}'"
       ;;
@@ -148,6 +155,8 @@ readonly SAVED_TAGS_FILE
 readonly SAVE_TAGS
 readonly SKIP_STATS_COLLECTION
 readonly ANALYZE
+readonly PROFILE
+readonly QUIET
 
 if [[ "${display_help}" -eq 1 ]] ; then
   print 'Usage: checkpkg [options] pkg1 [pkg2 ....]'
@@ -159,6 +168,8 @@ if [[ "${display_help}" -eq 1 ]] ; then
   print '   -N         skip statistics collection'
   print '   -M <file>  use package md5sums from a catalog file'
   print '   -A         Do not analyze the results.'
+  print '   -p         Enable profiling'
+  print '   -q         Display less messages'
   exit 0
 fi
 
@@ -242,6 +253,14 @@ done
 if [[ "${DEBUG}" != "" ]]; then
 	extra_options="--debug"
 fi
+if [[ "${PROFILE}" -eq 1 ]]; then
+	extra_options="${extra_options} --profile"
+fi
+if [[ "${QUIET}" -eq 1 ]]; then
+	quiet_options="--quiet"
+else
+	quiet_options=""
+fi
 
 if [[ -n "${MD5_SUMS_CATALOG_FILE}" ]]; then
 	catalog_options="--catalog=${MD5_SUMS_CATALOG_FILE}"
@@ -250,6 +269,8 @@ else
 fi
 
 # /var/sadm/install/contents cache update
+# TODO: Either remove this section or stop the stats collection phase from
+# updating the cache.
 ${command_basedir}/update_contents_cache.py ${extra_options}
 if [[ $? -ne 0 ]]; then
 	errmsg "Updating the contents cache has failed."
@@ -265,9 +286,6 @@ if [[ "${SKIP_STATS_COLLECTION}" -eq 0 ]]; then
   fi
 fi
 
-debugmsg "checkpkg_module_dir: '$checkpkg_module_dir'"
-log_files=""
-module_name_format="%-40s"
 # TODO: A performance problem. The following line means that the md5sums are
 # calculated once more.
 if [ "${MD5_SUMS_CATALOG_FILE}" ]; then
@@ -280,55 +298,12 @@ else
   md5sums=`gmd5sum "$@" | awk '{print $1}'`
 fi
 debugmsg "All md5 sums: ${md5sums}"
-if [[ -d "${checkpkg_module_dir}" ]]; then
-	for plugin in "${checkpkg_module_dir}/${checkpkg_module_tag}"*; do
-		if [[ -x "${plugin}" ]]; then
-			plugin_base_name=`basename ${plugin}`
-			plugin_log="${EXTRACTDIR}/${plugin_base_name}.log"
-			log_files="${log_files} ${plugin_log}"
-			plugin_name="`echo ${plugin} | sed -e 's+.*/checkpkg-++' | sed -e 's+\.py$++'`"
-			error_tag_file="tags.${plugin_name}"
-			debugmsg "Executing: ${plugin} $extra_options -b \"${checkpkg_stats_basedir}\"" \
-		           "-o \"${EXTRACTDIR}/${error_tag_file}\" `echo ${md5sums}`"
-			printf "${BOLD}${module_name_format}${COLOR_RESET} running..." "${plugin_name}"
-			${plugin} \
-				$extra_options \
-				-b "${checkpkg_stats_basedir}" \
-				-o "${EXTRACTDIR}/${error_tag_file}" \
-				${md5sums} \
-				> "${plugin_log}" 2>&1
-			if [[ "$?" -ne 0 ]]; then
-				printf "\r${module_name_format} ${RED}[ERROR]${COLOR_RESET}        \\n" \
-				       "${plugin_name}"
-				test_suite_ok=0
-			else
-				printf "\r${module_name_format} [Done]        \\n" "${plugin_name}"
-			fi
-		else
-			debugmsg "'${plugin}' is not executable"
-		fi
-	done
-else
-	debugmsg "module dir ${checkpkg_module_dir} does not exist"
-fi
 
-for log_file in ${log_files}; do
-	log_len=`gsed -e 's/\s\+//g' "${log_file}" | gtr -s '\n' | gwc -c | awk '{print $1}'`
-	if [[ "${log_len}" -gt 1 ]]; then
-		print "printing ${log_file}..."
-		debugmsg ">> LOG START: ${log_file}"
-		cat "${log_file}"
-		debugmsg "<< LOG END: ${log_file}"
-	else
-		debugmsg "-- LOG ${log_file} is empty"
-	fi
-done
-
-# This check is special; it uses one executable for all the checks written in Python.
+# Running the checks.
 ${command_basedir}/checkpkg_run_modules.py \
     ${extra_options} \
     -b "${checkpkg_stats_basedir}" \
-    -o "${EXTRACTDIR}/tags.python-checks" \
+    ${quiet_options} \
     ${md5sums}
 if [[ "$?" -ne 0 ]]; then
   print "There was a problem analyzing package stats."
@@ -339,38 +314,13 @@ if [[ ${test_suite_ok} -ne 1 ]]; then
 	errmsg "One or more tests have finished with an error."
 fi
 
-if [[ "${DEBUG}" != "" ]]; then
-	override_info_printed=0
-	for tagfile in ${EXTRACTDIR}/tags.*; do
-		if [[ -s "${tagfile}" ]]; then
-			if [[ "${override_info_printed}" -ne 1 ]]; then
-				echo "# You can use the following lines to create overrides"
-				echo "# See http://wiki.opencsw.org/checkpkg"
-				override_info_printed=1
-			fi
-			echo "# ${tagfile}:"
-			cat "${tagfile}"
-		fi
-    if [[ "${SAVE_TAGS}" -eq 1 ]]; then
-    	echo "Saving ${tagfile} to `pwd`/${SAVED_TAGS_FILE}"
-      cat "${tagfile}" >> "${SAVED_TAGS_FILE}"
-    fi
-	done
-fi
-
-for tagfile in ${EXTRACTDIR}/tags.*; do
-  if [[ "${SAVE_TAGS}" -eq 1 ]]; then
-    echo "Saving ${tagfile} to ${SAVED_TAGS_FILE} (pwd = `pwd`)"
-    cat "${tagfile}" >> "${SAVED_TAGS_FILE}"
-  fi
-done
-
 if [[ "${ANALYZE}" -eq 1 ]]; then
 # Collecting errors and applying the overrides.
 # This has to use the original files.
   echo "Applying the overrides and analyzing the results."
   ${command_basedir}/analyze_module_results.py \
-      -e "${EXTRACTDIR}" \
+      ${catalog_options} \
+      ${quiet_options} \
       "$@"
   if [[ "$?" -ne 0 ]]; then
     errmsg "${RED}Modular checks are reporting errors.${COLOR_RESET}"

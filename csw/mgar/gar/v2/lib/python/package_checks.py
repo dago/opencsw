@@ -13,6 +13,7 @@
 
 import copy
 import re
+import operator
 import os
 import checkpkg
 import opencsw
@@ -263,7 +264,7 @@ def CheckSmfIntegration(pkg_data, error_mgr, logger, messenger):
 def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
   """Second version of the library checking code.
 
-  1. Collect all the data from the FS:
+  1. Collect all the needed data from the FS:
      {"<basename>": {"/path/1": ["CSWfoo1"], "/path/2": ["CSWfoo2"]}}
      1.1. find all needed sonames
      1.2. get all the data for needed sonames
@@ -273,18 +274,33 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
   """
   needed_sonames = []
   pkgs_to_be_installed = [x["basic_stats"]["pkgname"] for x in pkgs_data]
+  paths_to_verify = set()
+  pkg_by_path = {}
+  logger.debug("Building needed_sonames, paths_to_verify and pkg_by_path...")
   for pkg_data in pkgs_data:
+    pkgname = pkg_data["basic_stats"]["pkgname"]
     for binary_info in pkg_data["binaries_dump_info"]:
       needed_sonames.extend(binary_info["needed sonames"])
+    # Creating an index of packages by path
+    for pkgmap_entry in pkg_data["pkgmap"]:
+      if "path" in pkgmap_entry and pkgmap_entry["path"]:
+        base_dir, basename = os.path.split(pkgmap_entry["path"])
+        paths_to_verify.add(base_dir)
+        paths_to_verify.add(pkgmap_entry["path"])
+        if pkgmap_entry["path"] not in pkg_by_path:
+          pkg_by_path[pkgmap_entry["path"]] = []
+        pkg_by_path[pkgmap_entry["path"]].append(pkgname)
   needed_sonames = sorted(set(needed_sonames))
   # Finding candidate libraries from the filesystem (/var/sadm/install/contents)
-  path_and_pkg_by_basename = {}
-  for needed_soname in needed_sonames:
-    path_and_pkg_by_basename[needed_soname] = error_mgr.GetPathsAndPkgnamesByBasename(
-        needed_soname)
+  path_and_pkg_by_basename = depchecks.GetPathAndPkgByBasename(
+      error_mgr, logger, needed_sonames)
   # Removing files from packages that are to be installed.
   path_and_pkg_by_basename = RemovePackagesUnderInstallation(
       path_and_pkg_by_basename, pkgs_to_be_installed)
+  # Populating the mapping using data from the local packages.  The call to
+  # GetPkgByFullPath will complete the mapping using data from the filesystem.
+  pkg_by_path = depchecks.GetPkgByFullPath(
+      error_mgr, logger, paths_to_verify, pkg_by_path)
   # Adding overlay based on the given package set
   # Considering files from the set under examination.
   for pkg_data in pkgs_data:
@@ -305,42 +321,64 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
   for pkg_data in pkgs_data:
     pkgname = pkg_data["basic_stats"]["pkgname"]
     check_args = (pkg_data, error_mgr, logger, messenger,
-                  path_and_pkg_by_basename)
+                  path_and_pkg_by_basename, pkg_by_path)
     req_pkgs_reasons = depchecks.Libraries(*check_args)
     req_pkgs_reasons.extend(depchecks.ByFilename(*check_args))
+    # This test needs more work, or potentially, architectural changes.
+    # by_directory_reasons = depchecks.ByDirectory(*check_args)
+    # req_pkgs_reasons.extend(by_directory_reasons)
     missing_reasons_by_pkg = {}
-    for pkg, reason in req_pkgs_reasons:
-      if pkg not in missing_reasons_by_pkg:
-        missing_reasons_by_pkg[pkg] = list()
-      if len(missing_reasons_by_pkg[pkg]) < 4:
-        missing_reasons_by_pkg[pkg].append(reason)
-      elif len(missing_reasons_by_pkg[pkg]) == 4:
-        missing_reasons_by_pkg[pkg].append("...and more.")
+    for reason_group in req_pkgs_reasons:
+      for pkg, reason in reason_group:
+        if pkg not in missing_reasons_by_pkg:
+          missing_reasons_by_pkg[pkg] = []
+        if len(missing_reasons_by_pkg[pkg]) < 4:
+          missing_reasons_by_pkg[pkg].append(reason)
+        elif len(missing_reasons_by_pkg[pkg]) == 4:
+          missing_reasons_by_pkg[pkg].append("...and more.")
     declared_deps = pkg_data["depends"]
     declared_deps_set = set([x[0] for x in declared_deps])
-    req_pkgs_set = set([x[0] for x in req_pkgs_reasons])
-    missing_deps = req_pkgs_set.difference(declared_deps_set)
+    missing_dep_groups = depchecks.MissingDepsFromReasonGroups(
+        req_pkgs_reasons, declared_deps_set)
     pkgs_to_remove = set()
     for regex_str in checkpkg.DO_NOT_REPORT_MISSING_RE:
       regex = re.compile(regex_str)
-      for dep_pkgname in missing_deps:
+      for dep_pkgname in reduce(operator.add, missing_dep_groups, []):
         if re.match(regex, dep_pkgname):
           pkgs_to_remove.add(dep_pkgname)
-    if pkgname in missing_deps:
+    if pkgname in reduce(operator.add, missing_dep_groups, []):
       pkgs_to_remove.add(pkgname)
     logger.debug("Removing %s from the list of missing pkgs.", pkgs_to_remove)
-    missing_deps = missing_deps.difference(pkgs_to_remove)
-    surplus_deps = declared_deps_set.difference(req_pkgs_set)
+    new_missing_dep_groups = set()
+    for missing_deps in missing_dep_groups:
+      new_missing_deps = set()
+      for dep in missing_deps:
+        if dep not in pkgs_to_remove:
+          new_missing_deps.add(dep)
+      if new_missing_deps:
+        new_missing_dep_groups.add(tuple(new_missing_deps))
+    potential_req_pkgs = set(
+        (x for x, y in reduce(operator.add, req_pkgs_reasons, [])))
+    missing_dep_groups = new_missing_dep_groups
+    surplus_deps = declared_deps_set.difference(potential_req_pkgs)
     surplus_deps = surplus_deps.difference(checkpkg.DO_NOT_REPORT_SURPLUS)
-    missing_deps_reasons = []
-    for missing_dep in missing_deps:
-      error_mgr.ReportError(pkgname, "missing-dependency", "%s" % (missing_dep))
-      missing_deps_reasons.append((missing_dep, missing_reasons_by_pkg[missing_dep]))
+    # Using an index to avoid duplicated reasons.
+    missing_deps_reasons_by_pkg = []
+    missing_deps_idx = set()
+    for missing_deps in missing_dep_groups:
+      error_mgr.ReportError(pkgname,
+                            "missing-dependency",
+                            " or ".join(missing_deps))
+      for missing_dep in missing_deps:
+        item = (missing_dep, tuple(missing_reasons_by_pkg[missing_dep]))
+        if item not in missing_deps_idx:
+          missing_deps_reasons_by_pkg.append(item)
+          missing_deps_idx.add(item)
     for surplus_dep in surplus_deps:
       error_mgr.ReportError(pkgname, "surplus-dependency", surplus_dep)
     namespace = {
         "pkgname": pkgname,
-        "missing_deps": missing_deps_reasons,
+        "missing_deps": missing_deps_reasons_by_pkg,
         "surplus_deps": surplus_deps,
         "orphan_sonames": None,
     }
@@ -349,9 +387,19 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
     if report.strip():
       for line in report.splitlines():
         messenger.Message(line)
-    for missing_dep in missing_deps:
-      messenger.SuggestGarLine(
-          "RUNTIME_DEP_PKGS_%s += %s" % (pkgname, missing_dep))
+    for missing_deps in missing_dep_groups:
+      alternatives = False
+      prefix = ""
+      if len(missing_deps) > 1:
+        alternatives = True
+        prefix = "  "
+      if alternatives:
+        messenger.SuggestGarLine("# One of the following:")
+      for missing_dep in missing_deps:
+        messenger.SuggestGarLine(
+            "%sRUNTIME_DEP_PKGS_%s += %s" % (prefix, pkgname, missing_dep))
+      if alternatives:
+        messenger.SuggestGarLine("# (end of the list of alternative dependencies)")
 
 
 def SetCheckDependencies(pkgs_data, error_mgr, logger, messenger):
@@ -682,8 +730,10 @@ def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
   # Finding all shared libraries
   shared_libs = []
   for metadata in pkg_data["files_metadata"]:
-    if "sharedlib" in metadata["mime_type"]:
-      shared_libs.append(metadata["path"])
+    if "mime_type" in metadata and metadata["mime_type"]:
+      # TODO: Find out where mime_type is missing and why
+      if "sharedlib" in metadata["mime_type"]:
+        shared_libs.append(metadata["path"])
   shared_libs = set(shared_libs)
   for binary_info in pkg_data["binaries_dump_info"]:
     for soname in binary_info["needed sonames"]:
@@ -695,14 +745,15 @@ def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
 
 
 def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger, messenger):
-  patterns = [(re.compile(x), y) for x, y in DISCOURAGED_FILE_PATTERNS]
+  patterns = [(x, re.compile(x), y) for x, y in DISCOURAGED_FILE_PATTERNS]
   for entry in pkg_data["pkgmap"]:
     if entry["path"]:
-      for pattern, msg in patterns:
-        if pattern.search(entry["path"]):
+      for pattern, pattern_re, msg in patterns:
+        if pattern_re.search(entry["path"]):
           error_mgr.ReportError("discouraged-path-in-pkgmap",
                                 entry["path"])
-          messenger.Message(msg)
+          messenger.OneTimeMessage(
+              "discouraged-path-in-pkgmap-%s" % pattern, msg)
 
 
 def CheckBadContent(pkg_data, error_mgr, logger, messenger):

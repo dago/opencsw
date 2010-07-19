@@ -20,15 +20,6 @@ class PackageStatsUnitTest(unittest.TestCase):
   def setUp(self):
     self.mocker = mox.Mox()
 
-  def testGetStatsPath(self):
-    mock_pkg = self.mocker.CreateMock(opencsw.CswSrv4File)
-    mock_pkg.GetMd5sum().AndReturn("abcdef")
-    self.mocker.ReplayAll()
-    sc = ccs.PackageStats(mock_pkg)
-    expected = "/home/joe/.checkpkg/stats/ab/abcdef"
-    self.assertEqual(expected, sc.GetStatsPath("/home/joe"))
-    self.mocker.VerifyAll()
-
 
 if __name__ == '__main__':
 	unittest.main()

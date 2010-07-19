@@ -34,6 +34,8 @@ def main():
   pkgstats = [checkpkg.PackageStats(x) for x in srv4_pkgs]
   pkgstats = [x.GetAllStats() for x in pkgstats]
   if options.print_stats:
+    print "import datetime"
+    print "pkgstats = ",
     pprint.pprint(pkgstats)
   else:
     code.interact(local=locals())

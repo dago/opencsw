@@ -3,6 +3,7 @@
 # $Id$
 
 import copy
+import datetime
 import unittest
 import package_checks as pc
 import checkpkg
@@ -16,7 +17,11 @@ import testdata.checkpkg_test_data_CSWdjvulibrert as td_1
 import testdata.checkpkg_pkgs_data_minimal as td_2
 import testdata.rpaths
 from testdata.rsync_pkg_stats import pkgstats as rsync_stats
+from testdata.tree_stats import pkgstats as tree_stats
 from testdata.ivtools_stats import pkgstats as ivtools_stats
+from testdata.sudo_stats import pkgstats as sudo_stats
+from testdata.javasvn_stats import pkgstats as javasvn_stats
+from testdata import stubs
 
 DEFAULT_PKG_STATS = None
 DEFAULT_PKG_DATA = rsync_stats[0]
@@ -27,28 +32,17 @@ class CheckpkgUnitTestHelper(object):
 
   def setUp(self):
     self.pkg_stats = DEFAULT_PKG_STATS
-    # self.pkg_data = self.pkg_stats.GetAllStats()
-    # This makes one of the test break. To be investigated.
     self.pkg_data = copy.deepcopy(DEFAULT_PKG_DATA)
     self.mocker = mox.Mox()
 
-  def testDefault(self):
+  def SetMessenger(self):
+    self.messenger = stubs.MessengerStub()
 
-    class LoggerStub(object):
-      def debug(self, debug_s, *kwords):
-        pass
-      def info(self, debug_s, *kwords):
-        pass
-    class MessengerStub(object):
-      def Message(self, m):
-        pass
-      def SuggestGarLine(self, m):
-        pass
-    # self.logger_mock = self.mocker.CreateMock(logging.Logger)
-    self.logger_mock = LoggerStub()
+  def testDefault(self):
+    self.logger_mock = stubs.LoggerStub()
     self.error_mgr_mock = self.mocker.CreateMock(
         checkpkg.IndividualCheckInterface)
-    self.messenger = MessengerStub()
+    self.SetMessenger()
     self.CheckpkgTest()
     self.mocker.ReplayAll()
     getattr(pc, self.FUNCTION_NAME)(self.pkg_data,
@@ -320,7 +314,14 @@ class TestSetCheckSharedLibraryConsistency2_1(CheckpkgUnitTestHelper,
        u'/lib/sparcv9': [u'SUNWcslr'],
        u'/usr/lib': [u'SUNWcsl'],
        u'/usr/lib/sparcv9': [u'SUNWcsl']})
-    self.error_mgr_mock.ReportError('CSWdjvulibrert', 'missing-dependency', u'CSWiconv')
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/lib').AndReturn([u"CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/doc').AndReturn([u"CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/lib/sparcv9').AndReturn([u"CSWcommon"])
+    self.error_mgr_mock.ReportError(
+        'CSWdjvulibrert', 'missing-dependency', u'CSWiconv')
 
 
 class TestCheckPstamp(CheckpkgUnitTestHelper, unittest.TestCase):
@@ -329,7 +330,8 @@ class TestCheckPstamp(CheckpkgUnitTestHelper, unittest.TestCase):
     self.pkg_data["pkginfo"]["PSTAMP"] = "build8s20090904191054"
     self.error_mgr_mock.ReportError(
         'pkginfo-pstamp-in-wrong-format', 'build8s20090904191054',
-        "It should be 'username@hostname-timestamp', but it's 'build8s20090904191054'.")
+        "It should be 'username@hostname-timestamp', but it's "
+        "'build8s20090904191054'.")
 
 
 class TestCheckRpath(CheckpkgUnitTestHelper, unittest.TestCase):
@@ -439,16 +441,27 @@ class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
     binaries_dump_info = self.pkg_data["binaries_dump_info"]
     binaries_dump_info[0]["runpath"] = ("/opt/csw/lib",)
     binaries_dump_info[0]["needed sonames"] = ["libdb-4.7.so"]
-    self.pkg_data["depends"] = (("CSWfoo", None),)
+    self.pkg_data["depends"] = (("CSWfoo", None),(u"CSWcommon", ""))
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
        u'/opt/csw/lib': [u'CSWfoo'],
        u'/opt/csw/lib/sparcv9': [u'CSWfoo'],
     })
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/man').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv8').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv9').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/doc').AndReturn(["CSWcommon"])
     self.error_mgr_mock.ReportError(
         'CSWrsync',
         'deprecated-library',
-        u'opt/csw/bin/sparcv8/rsync Deprecated Berkeley DB location /opt/csw/lib/libdb-4.7.so')
+        u'opt/csw/bin/sparcv8/rsync Deprecated Berkeley DB location '
+        u'/opt/csw/lib/libdb-4.7.so')
     self.pkg_data = [self.pkg_data]
 
 
@@ -524,6 +537,42 @@ class TestSharedLibsInAnInstalledPackageToo(CheckpkgUnitTestHelper,
     self.pkg_data = [self.CSWbar_DATA, self.CSWlibfoo_DATA]
 
 
+class TestSharedLibsOnlyIsalist(CheckpkgUnitTestHelper,
+                                            unittest.TestCase):
+  """/opt/csw/lib/$ISALIST in RPATH without the bare /opt/csw/lib."""
+  FUNCTION_NAME = 'SetCheckLibraries'
+  # Contains only necessary bits.  The data listed in full.
+  CSWbar_DATA = {
+        'basic_stats': {'catalogname': 'bar',
+                        'pkgname': 'CSWbar',
+                        'stats_version': 1},
+        'binaries_dump_info': [
+                               {'base_name': 'bar',
+                                'needed sonames': ['libfoo.so.1'],
+                                'path': 'opt/csw/bin/bar',
+                                'runpath': ('/opt/csw/lib/$ISALIST',),
+                               },
+                               {'base_name': 'libfoo.so.1',
+                                'needed sonames': (),
+                                'path': 'opt/csw/lib/libfoo.so.1',
+                                'runpath': ('/opt/csw/lib/$ISALIST',),
+                               },
+                              ],
+        # 'depends': (),
+        'depends': ((u"CSWcommon", ""),),
+        'isalist': ('foo'),
+        'pkgmap': [
+          { 'path': '/opt/csw/lib/libfoo.so.1', },
+          { 'path': '/opt/csw/bin/bar', },
+                  ],
+        }
+  def CheckpkgTest(self):
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libfoo.so.1').AndReturn({})
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/lib').AndReturn([u"CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/bin').AndReturn([u"CSWcommon"])
+    self.pkg_data = [self.CSWbar_DATA]
+
+
 class TestCheckLibrariesDlopenLibs_1(CheckpkgUnitTestHelper, unittest.TestCase):
   """For dlopen-style shared libraries, libraries from /opt/csw/lib should be
   counted as dependencies.  It's only a heuristic though."""
@@ -533,12 +582,22 @@ class TestCheckLibrariesDlopenLibs_1(CheckpkgUnitTestHelper, unittest.TestCase):
     binaries_dump_info[0]["runpath"] = ()
     binaries_dump_info[0]["needed sonames"] = ["libbar.so"]
     binaries_dump_info[0]["path"] = 'opt/csw/lib/python/site-packages/foo.so'
-    self.pkg_data["depends"] = tuple()
+    self.pkg_data["depends"] = ((u"CSWcommon", "This one provides directories"),)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libbar.so').AndReturn({
        u'/opt/csw/lib': [u'CSWlibbar'],
        u'/opt/csw/lib/sparcv9': [u'CSWlibbar'],
     })
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/man').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv8').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv9').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/doc').AndReturn(["CSWcommon"])
     self.error_mgr_mock.ReportError('CSWrsync', 'soname-not-found',
                                     'libbar.so is needed by '
                                     'opt/csw/lib/python/site-packages/foo.so')
@@ -552,12 +611,23 @@ class TestCheckLibrariesDlopenLibs_2(CheckpkgUnitTestHelper, unittest.TestCase):
     binaries_dump_info[0]["runpath"] = ()
     binaries_dump_info[0]["needed sonames"] = ["libnotfound.so"]
     binaries_dump_info[0]["path"] = 'opt/csw/lib/foo.so'
-    self.pkg_data["depends"] = tuple()
+    self.pkg_data["depends"] = ((u"CSWcommon","This is needed"),)
     self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
-    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libnotfound.so').AndReturn({
-    })
-    self.error_mgr_mock.ReportError('CSWrsync', 'soname-not-found',
-                                    'libnotfound.so is needed by opt/csw/lib/foo.so')
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename(
+        'libnotfound.so').AndReturn({})
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/man').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv8').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv9').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/doc').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.ReportError(
+        'CSWrsync', 'soname-not-found',
+        'libnotfound.so is needed by opt/csw/lib/foo.so')
     self.pkg_data = [self.pkg_data]
 
 
@@ -775,8 +845,106 @@ class TestSetCheckSharedLibraryConsistencyIvtools(CheckpkgUnitTestHelper,
   def CheckpkgTest(self):
     self.pkg_data = ivtools_stats
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libComUnidraw.so').AndReturn({})
-    # This error is thrown, but it shouldn't be:
-    # ReportError('CSWivtools', 'soname-not-found', 'libComUnidraw.so is needed by opt/csw/bin/comdraw')
+    self.error_mgr_mock.GetPkgByPath('/opt/csw').AndReturn([u"CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/lib').AndReturn([u"CSWcommon"])
+    # This may be enabled once checkpkg supports directory dependencies.
+    # self.error_mgr_mock.ReportError('CSWivtools', 'missing-dependency', u'CSWcommon')
+
+
+class TestSetCheckDirectoryDependencies(CheckpkgUnitTestHelper,
+                                        unittest.TestCase):
+  """Test whether appropriate files are provided."""
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def testDefault(self):
+    # This test is disabled
+    pass
+  def CheckpkgTest(self):
+    self.pkg_data = ivtools_stats
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libComUnidraw.so').AndReturn({})
+    self.error_mgr_mock.GetPkgByPath('/opt/csw').AndReturn([u"CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/lib').AndReturn([u"CSWcommon"])
+    self.error_mgr_mock.ReportError('CSWivtools', 'missing-dependency', u'CSWcommon')
+
+
+class TestSetCheckDirectoryDependenciesTree(CheckpkgUnitTestHelper,
+                                        unittest.TestCase):
+  """Test whether appropriate files are provided."""
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def testDefault(self):
+    # This test is disabled
+    pass
+  def CheckpkgTest(self):
+    self.pkg_data = tree_stats
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",),
+    })
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/share/man').AndReturn(
+        [u'CSWgdbm', u'CSWlibnet', u'CSWbinutils', u'CSWtcpwrap',
+          u'CSWenscript', u'CSWffcall', u'CSWflex', u'CSWfltk', u'CSWfping',
+          u'CSWglib', u'CSWgmake', u'CSWgstreamer', u'CSWgtk', u'CSWgwhois',
+          u'CSWbonobo2', u'CSWkrb5libdev', u'CSWksh', u'CSWlibgphoto2',
+          u'CSWmikmod', u'CSWlibxine', u'CSWlsof', u'CSWngrep', u'CSWocaml',
+          u'CSWpmmd5', u'CSWpmlclemktxtsimple', u'CSWpmtextdiff', u'CSWsasl',
+          u'CSWpmprmsvldt', u'CSWpmmathinterpolate', u'CSWpmprmscheck',
+          u'CSWrdist', u'CSWsbcl', u'CSWtetex', u'CSWnetcat', u'CSWjikes',
+          u'CSWfoomaticfilters', u'CSWlibgnome', u'CSWexpect', u'CSWdejagnu',
+          u'CSWnetpbm', u'CSWpmmailsendmail', u'CSWgnomedocutils', u'CSWnmap',
+          u'CSWsetoolkit', u'CSWntop', u'CSWtransfig', u'CSWxmms',
+          u'CSWpstoedit', u'CSWgdb', u'CSWschilybase', u'CSWschilyutils',
+          u'CSWstar', u'CSWfindutils', u'CSWfakeroot', u'CSWautogen',
+          u'CSWpmmimetools', u'CSWpmclsautouse', u'CSWpmlogmessage',
+          u'CSWpmlogmsgsimple', u'CSWpmsvnsimple', u'CSWpmlistmoreut',
+          u'CSWpmunivrequire', u'CSWpmiodigest', u'CSWpmsvnmirror',
+          u'CSWpmhtmltmpl', u'CSWemacscommon', u'CSWcommon', u'CSWgnuplot',
+          u'CSWpkgget', u'CSWsamefile', u'CSWpmnetdnsreslvprg',
+          u'CSWpmx11protocol', u'CSWmono', u'CSWgstplugins',
+          u'CSWgnomedesktop', u'CSWevince', u'CSWgedit', u'CSWfacter',
+          u'CSWpmiopager', u'CSWxpm', u'CSWgawk', u'CSWpmcfginifls',
+          u'CSWlibxft2', u'CSWpango', u'CSWgtk2', u'CSWpkgutil'])
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/bin').AndReturn( [u'CSWlibnet',
+      u'CSWbinutils', u'CSWenscript', u'CSWflex', u'CSWfltk', u'CSWglib',
+      u'CSWgmake', u'CSWgstreamer', u'CSWgtk', u'CSWgtkmmdevel', u'CSWgwhois',
+      u'CSWbonobo2', u'CSWimlib', u'CSWjove', u'CSWkrb5libdev', u'CSWksh',
+      u'CSWlibgphoto2', u'CSWmikmod', u'CSWlibxine', u'CSWlsof', u'CSWngrep',
+      u'CSWtcl', u'CSWtk', u'CSWocaml', u'CSWpmlclemktxtsimple',
+      u'CSWpmnetsnmp', u'CSWpstree', u'CSWqt', u'CSWrdist', u'CSWsbcl',
+      u'CSWsdlsound', u'CSWt1lib', u'CSWtaglibgcc', u'CSWtetex', u'CSWcvs',
+      u'CSWnetcat', u'CSWemacschooser', u'CSWhtmltidy', u'CSWgperf',
+      u'CSWjikes', u'CSWfoomaticfilters', u'CSWlibgnome', u'CSWlibbonoboui',
+      u'CSWexpect', u'CSWdejagnu', u'CSWnetpbm', u'CSWgnomedocutils',
+      u'CSWmbrowse', u'CSWnmap', u'CSWsetoolkit', u'CSWntop', u'CSWtransfig',
+      u'CSWisaexec', u'CSWguile', u'CSWlibxml', u'CSWxmms', u'CSWhevea',
+      u'CSWopensp', u'CSWpstoedit', u'CSWlibdvdreaddevel', u'CSWvte',
+      u'CSWgdb', u'CSWcryptopp', u'CSWschilybase', u'CSWschilyutils',
+      u'CSWstar', u'CSWlatex2html', u'CSWfindutils', u'CSWfakeroot',
+      u'CSWautogen', u'CSWlibotf', u'CSWlibotfdevel', u'CSWpmsvnmirror',
+      u'CSWlibm17n', u'CSWm17ndb', u'CSWlibm17ndevel', u'CSWzope',
+      u'CSWemacsbincommon', u'CSWemacs', u'CSWcommon', u'CSWgnuplot',
+      u'CSWpkgget', u'CSWsamefile', u'CSWmono', u'CSWgstplugins',
+      u'CSWgnomemenus', u'CSWgnomedesktop', u'CSWnautilus', u'CSWevince',
+      u'CSWggv', u'CSWgedit', u'CSWlibofx', u'CSWfacter', u'CSWxpm',
+      u'CSWgawk', u'CSWlibxft2', u'CSWpango', u'CSWgtk2', u'CSWpkgutil',
+      u'CSWlibgegl'])
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/share/doc').AndReturn(
+      [u'CSWcairomm', u'CSWtcpwrap', u'CSWfltk', u'CSWgsfonts',
+        u'CSWlibsigc++rt', u'CSWglibmmdevel', u'CSWgstreamer', u'CSWgtkmm2',
+        u'CSWksh', u'CSWlibgphoto2', u'CSWlibxine', u'CSWmeanwhile',
+        u'CSWsasl', u'CSWsbcl', u'CSWsilctoolkit', u'CSWt1lib',
+        u'CSWtaglibgcc', u'CSWtetex', u'CSWgperf', u'CSWjikes', u'CSWlibgnome',
+        u'CSWdejagnu', u'CSWnetpbm', u'CSWlibgnomeui', u'CSWsetoolkit',
+        u'CSWgtksourceview', u'CSWhevea', u'CSWopensprt', u'CSWopensp',
+        u'CSWplotutilrt', u'CSWplotutildevel', u'CSWpstoeditrt',
+        u'CSWpstoedit', u'CSWpstoeditdevel', u'CSWopenspdevel',
+        u'CSWlibdvdread', u'CSWlibdvdreaddevel', u'CSWschilyutils', u'CSWstar',
+        u'CSWautogenrt', u'CSWlatex2html', u'CSWautogen', u'CSWlibotf',
+        u'CSWlibotfdevel', u'CSWgcc3corert', u'CSWgcc3g++rt', u'CSWlibofxrt',
+        u'CSWgcc3adart', u'CSWgcc3rt', u'CSWgcc3g++', u'CSWgcc3ada',
+        u'CSWgcc3', u'CSWlibm17n', u'CSWm17ndb', u'CSWlibm17ndevel',
+        u'CSWgcc2core', u'CSWgcc2g++', u'CSWgcc3g77rt', u'CSWgcc3g77',
+        u'CSWgcc4g95', u'CSWemacscommon', u'CSWemacsbincommon', u'CSWemacs',
+        u'CSWcommon', u'CSWbashcmplt', u'CSWcacertificates', u'CSWgstplugins',
+        u'CSWgnomemenus', u'CSWgnomedesktop', u'CSWnautilus', u'CSWlibofx',
+        u'CSWgamin', u'CSWpkgutil', u'CSWgcc3core', u'CSWgnomemime2'])
 
 
 class TestCheckDiscouragedFileNamePatterns(CheckpkgUnitTestHelper,
@@ -799,6 +967,238 @@ class TestCheckDiscouragedFileNamePatterns(CheckpkgUnitTestHelper,
     self.pkg_data = self.CSWfoo_DATA
     self.error_mgr_mock.ReportError(
         'discouraged-path-in-pkgmap', '/opt/csw/var')
+
+
+class TestSetCheckDirectoryDepsTwoPackages(CheckpkgUnitTestHelper,
+                                           unittest.TestCase):
+  """Test whether appropriate files are provided.
+  
+  This is a stupid test and can be removed if becomes annoying.
+  """
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def testDefault(self):
+    # This test is disabled
+    pass
+  def CheckpkgTest(self):
+    self.pkg_data = sudo_stats
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",)})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdl.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",)})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libintl.so.8').AndReturn({
+      "/opt/csw/lib": (u"CSWggettextrt",)})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libnsl.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",),
+      "/usr/lib/sparcv9": (u"SUNWcslx"),})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libpam.so.1').AndReturn({
+      "/usr/dt/lib": (u"SUNWdtbas",),
+      "/usr/lib": (u"SUNWcsl",),
+      "/usr/lib/sparcv9": (u"SUNWcslx"),
+    })
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsocket.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",),
+      "/usr/lib/sparcv9": (u"SUNWcslx"),
+    })
+    common_path_pkgs = [u'CSWgdbm', u'CSWbinutils', u'CSWcommon']
+    paths_to_check = [
+        '/opt/csw/share/man', '/opt/csw/bin', '/opt/csw/share', '/var/opt/csw',
+        '/opt/csw/etc', '/opt/csw/sbin', '/opt/csw', '/opt/csw/share/doc']
+    for path in paths_to_check:
+      self.error_mgr_mock.GetPkgByPath(path).AndReturn(common_path_pkgs)
+    self.error_mgr_mock.ReportError('CSWsudo', 'surplus-dependency', 'CSWalternatives')
+    self.error_mgr_mock.ReportError('CSWsudo', 'surplus-dependency', 'CSWsudo-common')
+
+
+class TestSetCheckDirectoryDepsMissing(CheckpkgUnitTestHelper,
+                                           unittest.TestCase):
+  """Test whether appropriate files are provided.
+
+  This is a stupid test and can be removed if becomes annoying.
+  """
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def testDefault(self):
+    # This test is disabled
+    pass
+  def CheckpkgTest(self):
+    self.pkg_data = sudo_stats
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",)})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdl.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",)})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libintl.so.8').AndReturn({
+      "/opt/csw/lib": (u"CSWggettextrt",)})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libnsl.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",),
+      "/usr/lib/sparcv9": (u"SUNWcslx"),})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libpam.so.1').AndReturn({
+      "/usr/dt/lib": (u"SUNWdtbas",),
+      "/usr/lib": (u"SUNWcsl",),
+      "/usr/lib/sparcv9": (u"SUNWcslx"),
+    })
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsocket.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",),
+      "/usr/lib/sparcv9": (u"SUNWcslx"),
+    })
+    common_path_pkgs = [u'CSWgdbm', u'CSWbinutils', u'CSWcommon']
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/share/man').AndReturn([])
+    paths_to_check = [
+        '/opt/csw/bin', '/opt/csw/share', '/var/opt/csw',
+        '/opt/csw/etc', '/opt/csw/sbin', '/opt/csw', '/opt/csw/share/doc']
+    for path in paths_to_check:
+      self.error_mgr_mock.GetPkgByPath(path).AndReturn(common_path_pkgs)
+    # This is the critical test here.
+    self.error_mgr_mock.ReportError('CSWsudo-common', 'base-dir-not-found', '/opt/csw/share/man')
+    self.error_mgr_mock.ReportError('CSWsudo', 'surplus-dependency', 'CSWalternatives')
+    self.error_mgr_mock.ReportError('CSWsudo', 'surplus-dependency', 'CSWsudo-common')
+
+
+class TestSetCheckDoubleDepends(CheckpkgUnitTestHelper, unittest.TestCase):
+  """This is a class that was used for debugging.
+
+  It can be removed if becomes annoying.
+  """
+  FUNCTION_NAME = 'SetCheckLibraries'
+
+  def SetMessenger(self):
+    self.messenger = self.mocker.CreateMock(stubs.MessengerStub)
+
+  def CheckpkgTest(self):
+    self.pkg_data = javasvn_stats
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libCrun.so.1').AndReturn({u'/usr/lib': [u'SUNWlibC'], u'/usr/lib/sparcv9': [u'SUNWlibCx']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libCstd.so.1').AndReturn({u'/usr/lib': [u'SUNWlibC'], u'/usr/lib/sparcv9': [u'SUNWlibCx']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libapr-1.so.0').AndReturn({u'/opt/csw/apache2/lib': [u'CSWapache2rt'], u'/opt/csw/lib': [u'CSWapr'], u'/opt/csw/lib/sparcv9': [u'CSWapr']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libaprutil-1.so.0').AndReturn({u'/opt/csw/apache2/lib': [u'CSWapache2rt']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/libp/sparcv9': [u'SUNWdplx'], u'/usr/lib/sparcv9': [u'SUNWcslx']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdl.so.1').AndReturn({u'/etc/lib': [u'SUNWcsr'], u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libexpat.so.1').AndReturn({u'/opt/csw/lib': [u'CSWexpat'], u'/opt/csw/lib/sparcv9': [u'CSWexpat']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libiconv.so.2').AndReturn({u'/opt/csw/lib': [u'CSWiconv'], u'/opt/csw/lib/sparcv9': [u'CSWiconv']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libintl.so.8').AndReturn({u'/opt/csw/lib': [u'CSWggettextrt'], u'/opt/csw/lib/sparcv9': [u'CSWggettextrt']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('liblber-2.4.so.2').AndReturn({u'/opt/csw/lib': [u'CSWoldaprt'], u'/opt/csw/lib/sparcv9': [u'CSWoldaprt']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libldap-2.4.so.2').AndReturn({u'/opt/csw/lib': [u'CSWoldaprt'], u'/opt/csw/lib/sparcv9': [u'CSWoldaprt']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libneon.so.27').AndReturn({u'/opt/csw/lib': [u'CSWneon'], u'/opt/csw/lib/sparcv9': [u'CSWneon']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libnsl.so.1').AndReturn({u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libpthread.so.1').AndReturn({u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('librt.so.1').AndReturn({u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsendfile.so.1').AndReturn({u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsocket.so.1').AndReturn({u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsvn_client-1.so.0').AndReturn({u'/opt/csw/lib/svn': [u'CSWsvn']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsvn_delta-1.so.0').AndReturn({u'/opt/csw/lib/svn': [u'CSWsvn']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsvn_diff-1.so.0').AndReturn({u'/opt/csw/lib/svn': [u'CSWsvn']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsvn_fs-1.so.0').AndReturn({u'/opt/csw/lib/svn': [u'CSWsvn']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsvn_ra-1.so.0').AndReturn({u'/opt/csw/lib/svn': [u'CSWsvn']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsvn_repos-1.so.0').AndReturn({u'/opt/csw/lib/svn': [u'CSWsvn']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsvn_subr-1.so.0').AndReturn({u'/opt/csw/lib/svn': [u'CSWsvn']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsvn_wc-1.so.0').AndReturn({u'/opt/csw/lib/svn': [u'CSWsvn']})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libuuid.so.1').AndReturn({u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']})
+
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/lib').AndReturn([u'CSWgdbm',
+      u'CSWlibnet', u'CSWbinutils', u'CSWcairomm', u'CSWtcpwrap',
+      u'CSWkrb5lib', u'CSWffcall', u'CSWflex', u'CSWfreeglut',
+      u'CSWgcc2corert', u'CSWgcc2g++rt', u'CSWgstreamer', u'CSWgtk',
+      u'CSWgtkspell', u'CSWimlib', u'CSWjove', u'CSWksh', u'CSWlibgphoto2',
+      u'CSWmikmod', u'CSWlibsigsegv', u'CSWlibxine', u'CSWmeanwhile',
+      u'CSWtcl', u'CSWtk', u'CSWocaml', u'CSWpmmd5', u'CSWpmlclemktxtsimple',
+      u'CSWpmtextdiff', u'CSWsasl', u'CSWpmmathinterpolate', u'CSWpmprmscheck',
+      u'CSWsbcl', u'CSWsdlsound', u'CSWsdlttf', u'CSWsilctoolkit', u'CSWt1lib',
+      u'CSWtaglibgcc', u'CSWtetex', u'CSWimaprt', u'CSWimap-devel',
+      u'CSWgnomevfs2', u'CSWlibgnomecups', u'CSWlibgnomeprint',
+      u'CSWlibgnomeprintui', u'CSWlibgsf', u'CSWhtmltidy',
+      u'CSWfoomaticfilters', u'CSWexpect', u'CSWnetpbm', u'CSWpmmailsendmail',
+      u'CSWgnomedocutils', u'CSWguilelib12', u'CSWlibgadu', u'CSWsetoolkit',
+      u'CSWntop', u'CSWtransfig', u'CSWsdlnet', u'CSWguile', u'CSWlibxml',
+      u'CSWxmms', u'CSWhevea', u'CSWopensprt', u'CSWplotutilrt',
+      u'CSWplotutildevel', u'CSWpstoeditrt', u'CSWpstoeditdevel',
+      u'CSWopenspdevel', u'CSWlibdvdread', u'CSWlibdvdreaddevel', u'CSWvte',
+      u'CSWcryptopp', u'CSWschilybase', u'CSWautogenrt', u'CSWlatex2html',
+      u'CSWfindutils', u'CSWfakeroot', u'CSWautogen', u'CSWpmmimetools',
+      u'CSWlibotf', u'CSWlibotfdevel', u'CSWgcc3corert', u'CSWgcc3g++rt',
+      u'CSWlibofxrt', u'CSWgcc3adart', u'CSWpmclsautouse', u'CSWpmlogmessage',
+      u'CSWpmlogmsgsimple', u'CSWpmsvnsimple', u'CSWpmunivrequire',
+      u'CSWpmiodigest', u'CSWpmsvnmirror', u'CSWlibm17n', u'CSWlibm17ndevel',
+      u'CSWzope', u'CSWpmhtmltmpl', u'CSWgcc3g77rt', u'CSWcommon',
+      u'CSWgnuplot', u'CSWpmx11protocol', u'CSWx11sshaskp', u'CSWmono',
+      u'CSWlibwnck', u'CSWgstplugins', u'CSWgnomemenus', u'CSWgnomedesktop',
+      u'CSWeel', u'CSWnautilus', u'CSWevince', u'CSWggv', u'CSWfacter',
+      u'CSWpmiopager', u'CSWxpm', u'CSWpmcfginifls', u'CSWlibxft2',
+      u'CSWpango', u'CSWgtk2', u'CSWgamin', u'CSWgcc3core', u'CSWlibbabl',
+      u'CSWgtkengines', u'CSWglib', u'CSWbonobo2', u'CSWlibgnomecanvas',
+      u'CSWgtksourceview', u'CSWgedit', u'CSWlibgnome', u'CSWlibbonoboui',
+      u'CSWlibgnomeui', u'CSWlibgegl'])
+
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/share/doc').AndReturn([u'CSWcairomm',
+      u'CSWtcpwrap', u'CSWgsfonts', u'CSWgstreamer', u'CSWksh',
+      u'CSWlibgphoto2', u'CSWlibxine', u'CSWmeanwhile', u'CSWsasl', u'CSWsbcl',
+      u'CSWsilctoolkit', u'CSWt1lib', u'CSWtaglibgcc', u'CSWtetex',
+      u'CSWgperf', u'CSWjikes', u'CSWdejagnu', u'CSWnetpbm', u'CSWsetoolkit',
+      u'CSWhevea', u'CSWopensprt', u'CSWopensp', u'CSWplotutilrt',
+      u'CSWplotutildevel', u'CSWpstoeditrt', u'CSWpstoedit',
+      u'CSWpstoeditdevel', u'CSWopenspdevel', u'CSWlibdvdread',
+      u'CSWlibdvdreaddevel', u'CSWschilyutils', u'CSWstar', u'CSWautogenrt',
+      u'CSWlatex2html', u'CSWautogen', u'CSWlibotf', u'CSWlibotfdevel',
+      u'CSWgcc3corert', u'CSWgcc3g++rt', u'CSWlibofxrt', u'CSWgcc3adart',
+      u'CSWgcc3rt', u'CSWgcc3g++', u'CSWgcc3ada', u'CSWgcc3', u'CSWlibm17n',
+      u'CSWm17ndb', u'CSWlibm17ndevel', u'CSWgcc2core', u'CSWgcc2g++',
+      u'CSWgcc3g77rt', u'CSWgcc3g77', u'CSWgcc4g95', u'CSWemacscommon',
+      u'CSWemacsbincommon', u'CSWemacs', u'CSWcommon', u'CSWbashcmplt',
+      u'CSWcacertificates', u'CSWgstplugins', u'CSWgnomemenus',
+      u'CSWgnomedesktop', u'CSWnautilus', u'CSWlibofx', u'CSWgamin',
+      u'CSWpkgutil', u'CSWgcc3core', u'CSWgnomemime2', u'CSWglib'])
+
+    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWneon')
+    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWapache2rt')
+    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWoldaprt')
+    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWggettextrt')
+    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWapache2rt or CSWapr')
+    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWexpat')
+    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWsvn')
+    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWiconv')
+    self.messenger.Message(u'Dependency issues of CSWjavasvn:')
+    self.messenger.Message(u'CSWapache2rt, reasons:')
+    self.messenger.Message(u' - provides /opt/csw/apache2/lib/libaprutil-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u' - provides /opt/csw/apache2/lib/libapr-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWapache2rt')
+    # Here's the debugged and fixed duplicated dependency report.
+    # self.messenger.Message(u'CSWapache2rt, reasons:')
+    # self.messenger.Message(u' - provides /opt/csw/apache2/lib/libaprutil-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    # self.messenger.Message(u' - provides /opt/csw/apache2/lib/libapr-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    # self.messenger.Message(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWapache2rt')
+    self.messenger.Message(u'CSWapr, reasons:')
+    self.messenger.Message(u' - provides /opt/csw/lib/libapr-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWapr')
+    self.messenger.Message(u'CSWexpat, reasons:')
+    self.messenger.Message(u' - provides /opt/csw/lib/libexpat.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWexpat')
+    self.messenger.Message(u'CSWggettextrt, reasons:')
+    self.messenger.Message(u' - provides /opt/csw/lib/libintl.so.8 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWggettextrt')
+    self.messenger.Message(u'CSWiconv, reasons:')
+    self.messenger.Message(u' - provides /opt/csw/lib/libiconv.so.2 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWiconv')
+    self.messenger.Message(u'CSWneon, reasons:')
+    self.messenger.Message(u' - provides /opt/csw/lib/libneon.so.27 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWneon')
+    self.messenger.Message(u'CSWoldaprt, reasons:')
+    self.messenger.Message(u' - provides /opt/csw/lib/libldap-2.4.so.2 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u' - provides /opt/csw/lib/liblber-2.4.so.2 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWoldaprt')
+    self.messenger.Message(u'CSWsvn, reasons:')
+    self.messenger.Message(u' - provides /opt/csw/lib/svn/libsvn_repos-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u' - provides /opt/csw/lib/svn/libsvn_client-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u' - provides /opt/csw/lib/svn/libsvn_wc-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u' - provides /opt/csw/lib/svn/libsvn_ra-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')
+    self.messenger.Message(u' - ...and more.')
+    self.messenger.Message(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn')
+    self.messenger.SuggestGarLine(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWneon')
+    self.messenger.SuggestGarLine(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWapache2rt')
+    self.messenger.SuggestGarLine(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWoldaprt')
+    self.messenger.SuggestGarLine(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWggettextrt')
+    self.messenger.SuggestGarLine('# One of the following:')
+    self.messenger.SuggestGarLine(u'  RUNTIME_DEP_PKGS_CSWjavasvn += CSWapache2rt')
+    self.messenger.SuggestGarLine(u'  RUNTIME_DEP_PKGS_CSWjavasvn += CSWapr')
+    self.messenger.SuggestGarLine('# (end of the list of alternative dependencies)')
+    self.messenger.SuggestGarLine(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWexpat')
+    self.messenger.SuggestGarLine(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn')
+    self.messenger.SuggestGarLine(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWiconv')
 
 
 if __name__ == '__main__':

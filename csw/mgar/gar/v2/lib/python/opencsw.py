@@ -25,6 +25,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+import time
 import urllib2
 import overrides
 import configuration as c
@@ -38,7 +39,6 @@ hachoir_core.config.quiet = True
 ARCH_SPARC = "sparc"
 ARCH_i386 = "i386"
 ARCH_ALL = "all"
-
 ARCHITECTURES = [ARCH_SPARC, ARCH_i386, ARCH_ALL]
 OS_RELS = [u"SunOS5.9", u"SunOS5.10"]
 MAJOR_VERSION = "major version"
@@ -436,6 +436,7 @@ class CswSrv4File(ShellMixin, object):
     self.debug = debug
     self.pkgname = None
     self.md5sum = None
+    self.mtime = None
 
   def __repr__(self):
     return u"CswSrv4File(%s)" % repr(self.pkg_path)
@@ -456,6 +457,9 @@ class CswSrv4File(ShellMixin, object):
       gzip_suffix = ".gz"
       pkg_suffix = ".pkg"
       if self.pkg_path.endswith("%s%s" % (pkg_suffix, gzip_suffix)):
+        # Causing the class to stat the .gz file.  This call throws away the
+        # result, but the result will be cached as a class instance member.
+        self.GetMtime()
         base_name_gz = os.path.split(self.pkg_path)[1]
         shutil.copy(self.pkg_path, self.GetWorkDir())
         self.pkg_path = os.path.join(self.GetWorkDir(), base_name_gz)
@@ -503,6 +507,14 @@ class CswSrv4File(ShellMixin, object):
       self.pkgname = stdout.strip()
       logging.debug("GetPkgname(): %s", repr(self.pkgname))
     return self.pkgname
+
+  def GetMtime(self):
+    if not self.mtime:
+      # This fails if the file is not there.
+      s = os.stat(self.pkg_path)
+      t = time.gmtime(s.st_mtime)
+      self.mtime = datetime.datetime(*t[:6])
+    return self.mtime
 
   def TransformToDir(self):
     """Transforms the file to the directory format.
@@ -560,6 +572,11 @@ class CswSrv4File(ShellMixin, object):
     stdout, stderr = pkgchk_proc.communicate()
     ret = pkgchk_proc.wait()
     return ret, stdout, stderr
+
+  def GetFileMtime(self):
+    if not self.mtime:
+      self.mtime = os.stat(self.pkg_path).st_mtime
+    return self.mtime
 
   def __del__(self):
     if self.workdir:
@@ -832,15 +849,19 @@ class DirectoryFormatPackage(ShellMixin, object):
       def StripRe(x, strip_re):
         return re.sub(strip_re, "", x)
       root_re = re.compile(r"^root/")
-      magic_cookie = magic.open(0)
-      magic_cookie.load()
-      magic_cookie.setflags(magic.MAGIC_MIME)
+      file_magic = FileMagic()
       for file_path in all_files:
         full_path = unicode(self.MakeAbsolutePath(file_path))
         file_info = {
             "path": StripRe(file_path, root_re),
-            "mime_type": magic_cookie.file(full_path),
+            "mime_type": file_magic.GetFileMimeType(full_path)
         }
+        if not file_info["mime_type"]:
+          logging.error("Could not establish the mime type of %s",
+                        full_path)
+          # We really don't want that, as it misses binaries.
+          raise PackageError("Could not establish the mime type of %s"
+                             % full_path)
         if IsBinary(file_info):
           parser = hp.createParser(full_path)
           if not parser:
@@ -1200,6 +1221,7 @@ class OpencswCatalog(object):
         self.by_basename[d["file_basename"]] = d
     return self.by_basename
 
+
 def IsBinary(file_info):
   """Returns True or False depending on file metadata."""
   is_a_binary = False
@@ -1209,9 +1231,45 @@ def IsBinary(file_info):
   if not file_info["mime_type"]:
     # This should never happen, but it seems to have happened at least once.
     # TODO: Find the affected data and figure out why.
-    return false
+    raise PackageError("file_info is missing mime_type:" % file_info)
   for mimetype in BIN_MIMETYPES:
     if mimetype in file_info["mime_type"]:
       is_a_binary = True
       break
   return is_a_binary
+
+
+class FileMagic(object):
+  """Libmagic sometimes returns None, which I think is a bug.
+  Trying to come up with a way to work around that.
+  """
+
+  def __init__(self):
+    self.cookie_count = 0
+    self.magic_cookie = None
+
+  def _GetCookie(self):
+    magic_cookie = magic.open(self.cookie_count)
+    self.cookie_count += 1
+    magic_cookie.load()
+    magic_cookie.setflags(magic.MAGIC_MIME)
+    return magic_cookie
+
+  def _LazyInit(self):
+    if not self.magic_cookie:
+      self.magic_cookie = self._GetCookie()
+
+  def GetFileMimeType(self, full_path):
+    """Trying to run magic.file() a few times, not accepting None."""
+    self._LazyInit()
+    mime = None
+    for i in xrange(10):
+      mime = self.magic_cookie.file(full_path)
+      if mime:
+        break;
+      else:
+        # Returned mime is null. Re-initializing the cookie and trying again.
+        logging.error("magic_cookie.file(%s) returned None. Retrying.",
+                      full_path)
+        self.magic_cookie = self._GetCookie()
+    return mime

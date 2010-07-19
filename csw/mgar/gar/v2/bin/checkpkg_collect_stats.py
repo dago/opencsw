@@ -22,14 +22,16 @@ sys.path.append(os.path.join(*path_list))
 import checkpkg
 import opencsw
 
-
 def main():
   parser = optparse.OptionParser()
   parser.add_option("-d", "--debug", dest="debug",
                     default=False, action="store_true",
                     help="Turn on debugging messages")
-  parser.add_option("-c", "--catalog", dest="catalog_file",
+  parser.add_option("-c", "--catalog", dest="catalog",
                     help="Catalog file")
+  parser.add_option("-p", "--profile", dest="profile",
+                    default=False, action="store_true",
+                    help="A disabled option")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -39,30 +41,20 @@ def main():
   args_display = args
   if len(args_display) > 5:
     args_display = args_display[:5] + ["...more..."]
+  file_list = args
   logging.debug("Processing: %s, please be patient", args_display)
-  packages = [opencsw.CswSrv4File(x, options.debug) for x in args]
-  if options.catalog_file:
-    # Using cached md5sums to save time: injecting md5sums
-    # from the catalog.
-    catalog = opencsw.OpencswCatalog(options.catalog_file)
-    md5s_by_basename = catalog.GetDataByBasename()
-    for pkg in packages:
-      basename = os.path.basename(pkg.pkg_path)
-      # It might be the case that a file is present on disk, but missing from
-      # the catalog file.
-      if basename in md5s_by_basename:
-        pkg.md5sum = md5s_by_basename[basename]["md5sum"]
-  stats_list = [checkpkg.PackageStats(pkg) for pkg in packages]
-  md5s_by_basename = None # To free memory
-  catalog = None          # To free memory
-  del(packages)
+  stats_list = checkpkg.StatsListFromCatalog(
+      file_list, options.catalog, options.debug)
+  # Reversing the item order in the list, so that the pop() method can be used
+  # to get packages, and the order of processing still matches the one in the
+  # catalog file.
   stats_list.reverse()
   total_packages = len(stats_list)
   counter = itertools.count(1)
+  logging.info("Juicing the srv4 package stream files...")
   bar = progressbar.ProgressBar()
   bar.maxval = total_packages
   bar.start()
-  logging.info("Unpacking and examining the srv4 files needed.")
   while stats_list:
     # This way objects will get garbage collected as soon as they are removed
     # from the list by pop().  The destructor (__del__()) of the srv4 class

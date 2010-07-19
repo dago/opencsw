@@ -24,6 +24,11 @@ def main():
       dest="debug",
       default=False,
       action="store_true")
+  parser.add_option("-p", "--profile",
+      dest="profile",
+      default=False,
+      action="store_true",
+      help="A disabled option")
   (options, args) = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)

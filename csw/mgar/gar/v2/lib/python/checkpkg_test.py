@@ -44,14 +44,15 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
   def testExpandRunpath_1(self):
     isalist = ["foo", "bar"]
     runpath = "/opt/csw/lib/$ISALIST"
-    expected = ["/opt/csw/lib/foo", "/opt/csw/lib/bar"]
+    expected = ["/opt/csw/lib", "/opt/csw/lib/foo", "/opt/csw/lib/bar"]
     bin_path = "opt/csw/lib"
     self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
 
   def testExpandRunpath_2(self):
     isalist = ["foo", "bar"]
     runpath = "/opt/csw/mysql5/lib/$ISALIST/mysql"
-    expected = ["/opt/csw/mysql5/lib/foo/mysql",
+    expected = ["/opt/csw/mysql5/lib/mysql",
+                "/opt/csw/mysql5/lib/foo/mysql",
                 "/opt/csw/mysql5/lib/bar/mysql"]
     bin_path = "opt/csw/lib"
     self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
@@ -93,9 +94,22 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     runpath = "$ORIGIN"
     expected = ["/opt/csw/lib"]
     bin_path = "opt/csw/lib"
-    self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
+    self.assertEquals(expected,
+                      self.e.ExpandRunpath(runpath, isalist, bin_path))
     expected = ["/opt/csw/foo/lib"]
     bin_path = "/opt/csw/foo/lib"
+    self.assertEquals(expected,
+                      self.e.ExpandRunpath(runpath, isalist, bin_path))
+
+  def testExpandRunpath_OnlyIsalist(self):
+    """Make sure that the cache doesn't mess it up.
+
+    Two invocations, where the only difference is the binary path.
+    """
+    isalist = ("bar",)
+    runpath = "/opt/csw/lib/$ISALIST"
+    expected = ["/opt/csw/lib", "/opt/csw/lib/bar"]
+    bin_path = "opt/csw/lib"
     self.assertEquals(expected, self.e.ExpandRunpath(runpath, isalist, bin_path))
 
   def testEmulate64BitSymlinks_1(self):
@@ -232,6 +246,37 @@ class SystemPkgmapUnitTest(unittest.TestCase):
                 'cswclassutils - CSW class action utilities')
     spkgmap = checkpkg.SystemPkgmap()
     self.assertEqual(expected, spkgmap._ParsePkginfoLine(line))
+
+  def test_InferPackagesFromPkgmapLine(self):
+    line = ("/opt/csw/sbin d none 0755 root bin CSWfping CSWbonobo2 "
+            "CSWkrb5libdev CSWsasl CSWschilybase CSWschilyutils CSWstar "
+            "CSWcommon CSWcacertificates CSWfacter")
+    expected = ["CSWfping", "CSWbonobo2", "CSWkrb5libdev", "CSWsasl",
+                "CSWschilybase", "CSWschilyutils", "CSWstar", "CSWcommon",
+                "CSWcacertificates", "CSWfacter"]
+    spkgmap = checkpkg.SystemPkgmap()
+    self.assertEqual(expected, spkgmap._InferPackagesFromPkgmapLine(line))
+
+  def test_InferPackagesFromPkgmapLine_2(self):
+    line = ("/usr/lib/sparcv9/libpthread.so.1 f none 0755 root bin 41296 28258 "
+            "1018129099 SUNWcslx")
+    expected = ["SUNWcslx"]
+    spkgmap = checkpkg.SystemPkgmap()
+    self.assertEqual(expected, spkgmap._InferPackagesFromPkgmapLine(line))
+
+  def test_InferPackagesFromPkgmapLine_3(self):
+    line = ("/usr/lib/libCrun.so.1 f none 0755 root bin 63588 "
+            "6287 1256043984 SUNWlibC")
+    expected = ["SUNWlibC"]
+    spkgmap = checkpkg.SystemPkgmap()
+    self.assertEqual(expected, spkgmap._InferPackagesFromPkgmapLine(line))
+
+  def test_InferPackagesFromPkgmapLine_4(self):
+    line = ("/opt/csw/apache2/lib/libapr-1.so.0=libapr-1.so.0.3.8 s none "
+            "CSWapache2rt")
+    expected = ["CSWapache2rt"]
+    spkgmap = checkpkg.SystemPkgmap()
+    self.assertEqual(expected, spkgmap._InferPackagesFromPkgmapLine(line))
 
 
 class PackageStatsUnitTest(unittest.TestCase):
@@ -384,7 +429,7 @@ class CheckpkgManager2UnitTest(unittest.TestCase):
     }
     screen_report, tags_report = m.FormatReports(tags, [], [])
     expected = u'# Tags reported by testname module\nCSWfoo: foo-tag foo-info\n'
-    self.assertEqual(expected, tags_report)
+    self.assertEqual(expected, unicode(tags_report))
 
   def test_2(self):
     m = checkpkg.CheckpkgManager2("testname", "/tmp", ["CSWfoo"])
@@ -400,8 +445,22 @@ class CheckpkgManager2UnitTest(unittest.TestCase):
                 u'CSWfoo: foo-tag foo-info\n'
                 u'CSWfoo: bar-tag bar-info\n'
                 u'CSWfoo: baz-tag\n')
-    self.assertEqual(expected, tags_report)
+    self.assertEqual(expected, unicode(tags_report))
 
+
+class SliceListUnitTest(unittest.TestCase):
+
+  def testOne(self):
+    l = [1, 2, 3, 4, 5]
+    s = 1
+    expected = [[1], [2], [3], [4], [5]]
+    self.assertTrue(expected, checkpkg.SliceList(l, s))
+
+  def testTwo(self):
+    l = [1, 2, 3, 4, 5]
+    s = 2
+    expected = [[1, 2], [3, 4], [5]]
+    self.assertTrue(expected, checkpkg.SliceList(l, s))
 
 
 if __name__ == '__main__':
