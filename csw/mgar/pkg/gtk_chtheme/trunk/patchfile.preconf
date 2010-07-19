@@ -1,0 +1,29 @@
+diff --git Makefile Makefile
+index 0113972..e400b89 100644
+--- Makefile
++++ Makefile
+@@ -3,8 +3,10 @@ include Metadata
+ CFLAGS := $(if $(RPM_OPT_FLAGS), $(RPM_OPT_FLAGS), $(CFLAGS))
+ 
+ LDFLAGS = $(shell pkg-config --libs gtk+-2.0)
+-CFLAGS += -Wall
+-CFLAGS += $(shell pkg-config --cflags gtk+-2.0) -DGTK_DISABLE_BROKEN -DGTK_DISABLE_DEPRECATED
++CFLAGS += 
++CFLAGS += $(shell pkg-config --cflags gtk+-2.0) 
++# Using these, makes it not even compile? why are they in here?!?
++#-DGTK_DISABLE_BROKEN -DGTK_DISABLE_DEPRECATED
+ CFLAGS += -DPROJNAME='"$(PROJNAME)"' -DVERSION='"$(VERSION)"'
+ CPPFLAGS =
+ CXXFLAGS =
+diff --git Metadata Metadata
+index f53ec09..e5510cc 100644
+--- Metadata
++++ Metadata
+@@ -11,6 +11,6 @@ The aim is to make theme preview and selection as slick as possible. Themes\
+ installed on the system are presented for selection and previewed on the fly.\
+ A large variety of widgets provides a comprehensive demonstration.
+ 
+-PREFIX = /usr
++PREFIX = /opt/csw
+ BINDIR = $(PREFIX)/bin
+ MANDIR = $(PREFIX)/share/man
