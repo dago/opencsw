@@ -29,7 +29,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
 CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-ssl
-CONFIGURE_ARGS += --with-berkeley-db=$(prefix)/bdb48
+CONFIGURE_ARGS += --with-dbm=$(prefix)/bdb48
 CONFIGURE_ARGS += --without-freetds --without-sqlite2
 
 BUILD64 = 1
