@@ -3,6 +3,7 @@ ab8a00cad3c3650318a3e552505e2715  checkpkg
 6ec3b6597e04714430987ccc199db3c4  checkpkg.8
 569fb6bb35e1c4b31e6574377d762803  checkpkg.py
 2b5e6e6219b9ad9e48bcd119bd8a5f39  compare_pkgs.py-r133
+3b39b38198465ada00a5e609ddb93fca  configuration.py
 9a637f6546cc50974159a987302d91c0  cpan2pkg
 68c82dcd6955c4031e89bb9c9a1a9988  createpkg
 a605598f30195f9ab1b29fc3944d3b31  createpkg.8
@@ -13,3 +14,4 @@ e80684a3e4e9b6c36db796789dd8fdbf  package_checks.py
 cd4496ee27bf86d5c8bc656c9c5974be  stagepkg
 8908a0a898aa07a7a928b2b8bd8384f0  stagepkg.8
 a9da7bd75daa9e8bce5dfa6c1d4e534d  submit_to_newpkgs.py
+46d9b1dcc02cad223ec3323014f2fa54  tag.py

@@ -19,7 +19,7 @@ SVN_FILES = compare_pkgs.py
 
 # these are pulled from gar/lib/python
 PYFILES = opencsw.py checkpkg.py submit_to_newpkgs.py package_checks.py
-PYFILES += dependency_checks.py overrides.py
+PYFILES += dependency_checks.py overrides.py configuration.py tag.py
 
 DISTFILES = COPYING
 DISTFILES += checkpkg checkpkg.8
