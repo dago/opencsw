@@ -4,6 +4,10 @@ import checkpkg
 import os.path
 import re
 
+# This shared library is present on Solaris 10 on amd64, but it's missing on
+# Solaris 8 on i386.  It's okay if it's missing.
+ALLOWED_ORPHAN_SONAMES = set([u"libm.so.2"])
+
 DEPRECATED_LIBRARY_LOCATIONS = (
     ("/opt/csw/lib", "libdb-4.7.so", "Deprecated Berkeley DB location"),
     ("/opt/csw/lib/mysql", "libmysqlclient_r.so.15",
@@ -105,9 +109,10 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
             % (soname, binary_info["path"], runpath_tuple, runpath_history, path_msg))
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
-    error_mgr.ReportError(
-        pkgname, "soname-not-found",
-        "%s is needed by %s" % (soname, binary_path))
+    if soname not in ALLOWED_ORPHAN_SONAMES:
+      error_mgr.ReportError(
+          pkgname, "soname-not-found",
+          "%s is needed by %s" % (soname, binary_path))
   # TODO: Report orphan sonames here
   return required_deps
 

@@ -68,10 +68,6 @@ SYS_DEFAULT_RUNPATH = [
 
 CONTENT_PKG_RE = r"^\*?(CSW|SUNW)[0-9a-zA-Z\-]?[0-9a-z\-]+$"
 
-# This shared library is present on Solaris 10 on amd64, but it's missing on
-# Solaris 8 on i386.  It's okay if it's missing.
-ALLOWED_ORPHAN_SONAMES = set([u"libm.so.2"])
-
 REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
 Dependency issues of $pkgname:
 #end if

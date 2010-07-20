@@ -21,6 +21,7 @@ from testdata.tree_stats import pkgstats as tree_stats
 from testdata.ivtools_stats import pkgstats as ivtools_stats
 from testdata.sudo_stats import pkgstats as sudo_stats
 from testdata.javasvn_stats import pkgstats as javasvn_stats
+from testdata.neon_stats import pkgstats as neon_stats
 from testdata import stubs
 
 DEFAULT_PKG_STATS = None
@@ -462,6 +463,34 @@ class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
         'deprecated-library',
         u'opt/csw/bin/sparcv8/rsync Deprecated Berkeley DB location '
         u'/opt/csw/lib/libdb-4.7.so')
+    self.pkg_data = [self.pkg_data]
+
+
+class TestSetCheckLibmLinking(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    binaries_dump_info = self.pkg_data["binaries_dump_info"]
+    binaries_dump_info[0]["runpath"] = ("/opt/csw/lib",)
+    binaries_dump_info[0]["needed sonames"] = ["libm.so.2"]
+    self.pkg_data["depends"] = ((u"CSWcommon", ""),)
+    self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libm.so.2').AndReturn({
+    })
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/man').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv8').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv9').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/doc').AndReturn(["CSWcommon"])
+    # self.error_mgr_mock.ReportError(
+    #     'CSWrsync',
+    #     'deprecated-library',
+    #     u'opt/csw/bin/sparcv8/rsync Deprecated Berkeley DB location '
+    #     u'/opt/csw/lib/libdb-4.7.so')
     self.pkg_data = [self.pkg_data]
 
 
@@ -1199,6 +1228,18 @@ class TestSetCheckDoubleDepends(CheckpkgUnitTestHelper, unittest.TestCase):
     self.messenger.SuggestGarLine(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWexpat')
     self.messenger.SuggestGarLine(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn')
     self.messenger.SuggestGarLine(u'RUNTIME_DEP_PKGS_CSWjavasvn += CSWiconv')
+
+
+class TestCheckWrongArchitecture(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckWrongArchitecture'
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+    self.error_mgr_mock.ReportError(
+        'binary-wrong-architecture',
+        'file=opt/csw/lib/sparcv9/libneon.so.27.2.0 pkginfo-says=i386 actual-binary=sparc')
+    self.error_mgr_mock.ReportError(
+        'binary-wrong-architecture',
+        'file=opt/csw/lib/sparcv9/libneon.so.26.0.4 pkginfo-says=i386 actual-binary=sparc')
 
 
 if __name__ == '__main__':

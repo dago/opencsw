@@ -968,3 +968,20 @@ def CheckArchitecture(pkg_data, error_mgr, logger, messenger):
             "http://www.opencsw.org/extend-it/contribute-packages/"
             "build-standards/"
             "architecture-optimization-using-isaexec-and-isalist/")
+
+
+def CheckWrongArchitecture(pkg_data, error_mgr, logger, messenger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  filename_arch = pkg_data["basic_stats"]["parsed_basename"]["arch"]
+  pkginfo_arch = pkg_data["pkginfo"]["ARCH"]
+  files_metadata = pkg_data["files_metadata"]
+  for file_metadata in files_metadata:
+    if opencsw.IsBinary(file_metadata):
+      machine = HACHOIR_MACHINES[file_metadata["machine_id"]]
+      if machine["type"] != pkginfo_arch:
+        error_mgr.ReportError(
+            "binary-wrong-architecture",
+            "file=%s pkginfo-says=%s actual-binary=%s" % (
+              file_metadata["path"],
+              pkginfo_arch,
+              machine["type"]))
