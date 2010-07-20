@@ -3,11 +3,11 @@
 
 GARNAME = bind
 GARVERSION = 9.7.1
-#RELEASE = P2
-#DISTVERSION = $(GARVERSION)-$(RELEASE)
-#SPKG_VERSION = $(GARVERSION)$(RELEASE)
-#DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
-#WORKSRC = $(WORKDIR)/$(DISTNAME)
+RELEASE = P2
+DISTVERSION = $(GARVERSION)-$(RELEASE)
+SPKG_VERSION = $(GARVERSION)$(RELEASE)
+DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
 DESCRIPTION = ISC BIND DNS reference implementation
@@ -18,10 +18,10 @@ define BLURB
   high-volume and high-reliability applications.
 endef
 
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
-#DISTFILES  = $(DISTNAME).tar.gz
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
+DISTFILES  = $(DISTNAME).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
+#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWbindchroot.postinstall
 
 PACKAGES = CSWbind CSWbinddevel CSWlibbind CSWbindutils CSWbindchroot
