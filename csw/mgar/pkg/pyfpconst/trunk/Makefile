@@ -1,6 +1,6 @@
 # Copyright 2009 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
-# $Id: Makefile 10551 2010-07-20 17:49:50Z wahwah $
+# $Id$
 
 GARNAME = fpconst
 GARVERSION = 0.7.2
