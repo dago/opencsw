@@ -21,7 +21,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ARCHALL_CSWpy-soappy = 1
 LICENSE = LICENSE
 TEST_SCRIPTS =
-DEP_PKGS = CSWpy-fpconst
-CHECKPKG_OVERRIDES_CSWpy-soappy += surplus-dependency|CSWpy-fpconst
+DEP_PKGS = CSWpyfpconst
+CHECKPKG_OVERRIDES_CSWpy-soappy += surplus-dependency|CSWpyfpconst
 
 include gar/category.mk
