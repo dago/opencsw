@@ -103,10 +103,12 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
         else:
           path_msg = ("was not present on the filesystem, "
                       "nor in the packages under examination.")
-        messenger.Message(
-            "%s could not be resolved for %s, with rpath %s, expanded to %s, "
-            "while the file %s"
-            % (soname, binary_info["path"], runpath_tuple, runpath_history, path_msg))
+        if soname not in ALLOWED_ORPHAN_SONAMES:
+          messenger.Message(
+              "%s could not be resolved for %s, with rpath %s, expanded to %s, "
+              "while the file %s"
+              % (soname, binary_info["path"],
+                 runpath_tuple, runpath_history, path_msg))
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
     if soname not in ALLOWED_ORPHAN_SONAMES:
