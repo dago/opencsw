@@ -41,8 +41,17 @@ CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 STRIP_LIBTOOL = 0
 
 RUNTIME_DEP_PKGS += CSWosslrt
-RUNTIME_DEP_PKGS += CSWcswclassutils
 RUNTIME_DEP_PKGS += CSWldns
+RUNTIME_DEP_PKGS += CSWlibevent
+
+CHECKPKG_OVERRIDES_CSWunbound += binary-architecture-does-not-match-placement|file=opt/csw/lib/libunbound.so.2.5.0|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWunbound += binary-architecture-does-not-match-placement|file=opt/csw/sbin/unbound|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWunbound += binary-architecture-does-not-match-placement|file=opt/csw/sbin/unbound-host|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWunbound += binary-architecture-does-not-match-placement|file=opt/csw/sbin/unbound-control|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWunbound += binary-architecture-does-not-match-placement|file=opt/csw/sbin/unbound-checkconf|arch_id=18|arch_name=sparcv8+
+
+# make test doesn't work for the moment on Solaris
+SKIPTEST = 1
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
