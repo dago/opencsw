@@ -16,23 +16,31 @@ EXTRACTPROG ?= /usr/sfw/bin/gtar jfx
 # Only use ONE here. The name is used for compat with 'gar'.
 MASTER_SITES ?= http://sourceforge.net/projects/fbpanel/files/fbpanel/6.0/
 
+PATH := /opt/csw/gnu:/opt/csw/gcc4/bin:$(PATH)
+
 ARCH := $(shell /bin/uname -p)
 
 LDFLAGS_COMMON :=
 
 SRCDIR= build/*
 
-# DO NOT specify the arch-64 stuff such as -m64 here.
-# the individual targets will do that.
-
+CC=cc
 CFLAGS_COMMON   ?= -mt -xnorunpath -xO2
 CXXFLAGS_COMMON ?= -mt -norunpath  -xO2
 CFLAGS_sparc    ?= -xarch=v8
 CFLAGS_i386     ?= -xarch=386
 
-# Keep this arch-neutral if possible. add arch-specific tweaks
-# to arch-specific target
-CONFIGURE=./configure --prefix=/opt/csw
+#CC=gcc
+#CFLAGS_sparc    ?= -mcpu=v8
+#CFLAGS_i386     ?= -xarch=386
+
+# WARNING: this is NOT a GNU-standard autoconfig
+#  This is W.i.e.r.d.
+
+BUILD_ENV = CFLAGS="$(CFLAGS_COMMON) $(CFLAGS_$(ARCH))" \
+	CPPFLAGS="-I/opt/csw/include" CC=$(CC)
+
+CONFIGURE=bash ./configure  --prefix=/opt/csw
 
 
 
@@ -111,14 +119,13 @@ build/.patch-preconf.done:	build/.extract.done
 	touch $@
 
 
-#Note: I WANT to use LDFLAGS=-R$$ORIGIN, but stupid libtool
-# wont allow it! so force it at build time
+#Note: I WANT to use LDFLAGS=-R$$ORIGIN, etc. but 
+# their wierd build system wont allow it! so force it at build time
+# Note also.. this is NOT the "normal" GNU autoconf !!
 build/.configure-$(ARCH)-32.done:	build/.patch-preconf.done
 	@echo handling $@ target
 	(cd $(SRCDIR) ; \
-	  CFLAGS="$(CFLAGS_COMMON) $(CFLAGS_$(ARCH))" \
-	  CXXFLAGS="$(CXXFLAGS_COMMON)" \
-	  LDFLAGS='-R/opt/csw/lib -L/opt/csw/lib' \
+	  $(BUILD_ENV) \
 	  $(CONFIGURE) )
 	if test -f patchfile.postconf ; then \
 	 gpatch -d $(SRCDIR) -p0  <patchfile.postconf ; fi
@@ -126,9 +133,13 @@ build/.configure-$(ARCH)-32.done:	build/.patch-preconf.done
 
 
 # See note about LDFLAGS and ORIGIN, higher up	
+# Also note that since fbpanel comes with 'modules', using
+# $ORIGIN wont work as desired. 
+#  AAAND.. it has a custom "rules.mk", so it tends to ignore
+# the normally-set configure-time CFLAGS and so on. arg.
 build/.build-$(ARCH)-32.done:
 	@echo handling $@ target
-	LD_OPTIONS='-R$$ORIGIN' $(MAKE) -C $(SRCDIR) $(MFLAGS)
+	LD_OPTIONS='-R/opt/csw/lib' $(BUILD_ENV) $(MAKE) -C $(SRCDIR) $(MFLAGS)
 	touch $@
 
 

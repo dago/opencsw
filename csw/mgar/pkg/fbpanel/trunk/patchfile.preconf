@@ -1,0 +1,56 @@
+--- scripts/custom.sh.orig	Sun Feb 21 11:05:12 2010
++++ scripts/custom.sh	Mon Jul 19 19:49:30 2010
+@@ -17,15 +17,15 @@
+ # Custom
+ add_feature dependency "disable dependency tracking" disabled
+ 
+-add_var glib_cflags "glib cflags" '`RFS=$rfs scripts/rfs-pkg-config --cflags glib-2.0`'
+-add_var gtk_cflags "gtk cflags" '`RFS=$rfs scripts/rfs-pkg-config --cflags gtk+-2.0`'
++add_var glib_cflags "glib cflags" '`pkg-config --cflags glib-2.0`'
++add_var gtk_cflags "gtk cflags" '`pkg-config --cflags gtk+-2.0`'
+ 
+-add_var glib_libs "glib libs" '`RFS=$rfs scripts/rfs-pkg-config --libs glib-2.0`'
+-add_var gtk_libs "gtk libs" '`RFS=$rfs scripts/rfs-pkg-config --libs gtk+-2.0`'
++add_var glib_libs "glib libs" '`pkg-config --libs glib-2.0`'
++add_var gtk_libs "gtk libs" '`pkg-config --libs gtk+-2.0`'
+ 
+ add_var cflagsx "C flags" '-I$topdir/panel $glib_cflags $gtk_cflags -fPIC'
+ add_var ldflagsx "linker flags" '$glib_libs $gtk_libs'
+ 
+-add_var gmodule_libs "gmodule libs" '`scripts/rfs-pkg-config --libs gmodule-2.0`'
++add_var gmodule_libs "gmodule libs" '`pkg-config --libs gmodule-2.0`'
+ 
+-add_feature static_build "build all pluginis into main binary" disabled
++#add_feature static_build "build all pluginis into main binary" disabled
+--- rules.mk.orig	Thu Jul 22 20:09:19 2010
++++ rules.mk	Thu Jul 22 20:09:43 2010
+@@ -35,12 +35,12 @@
+ ##
+ # if CFLAGS wasn't set by package builder set it to -O2
+ # warnings on, and path to #include <config.h>
+-ifeq ($(DEBUG),enabled)
+-	override CFLAGS = -Wall -I$(TOPDIR) -g -Werror 
+-else
+-	CFLAGS += -O2 -Wall -I$(TOPDIR) 
+-endif
+-
++#ifeq ($(DEBUG),enabled)
++#	override CFLAGS = -Wall -I$(TOPDIR) -g -Werror 
++#else
++#	CFLAGS += -O2 -Wall -I$(TOPDIR) 
++#endif
++	CFLAGS += -I$(TOPDIR) 
+  
+ T := $(subst $(TOPDIR)/,,$(CURDIR)/)
+ T := $(subst /, ,$(T))
+--- dbg.h.orig	Thu Jul 22 20:16:35 2010
++++ dbg.h	Thu Jul 22 20:22:59 2010
+@@ -1,5 +1,8 @@
+ #include <stdio.h>
+ 
++#ifdef __SUNPRO_C 
++#define __FUNCTION__ __func__
++#endif
+ #define ERR(fmt, args...) fprintf(stderr, fmt, ## args)
+ #define DBG2(fmt, args...) fprintf(stderr, "%s:%s:%-5d: " fmt, __FILE__,  __FUNCTION__, __LINE__, ## args)
+ #define DBGE2(fmt, args...)       fprintf(stderr, fmt, ## args)

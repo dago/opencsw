@@ -4,20 +4,12 @@ first off.. THIS IS NOT OFFICIALLY RELEASED YET.
  But I'm keeping my work in svn
  (and a package in experimental)
 
-0.  configuration is WEEERID.and very nonportable.
-  takes GNU autoconf,and makes it dumber.
-  It breaks gmake MFLAGS=-j, among other things.
+it has a few problems. Problems first, Notes, lower down.
 
-1.   Have to have /opt/csw/gnu first in path.
+PROBLEMS:
 
-2. have to run configure with bash -x.
-   its already #!/bin/bash but that dont work?!?!?
 
-3. CC=gcc. its just got too many gnuisms.
-
-4. need to set cpu type in there somehow too...
-
-5. It uses /usr/share/icons/hicolor/*  as its icons path
+*. It uses /usr/share/icons/hicolor/*  as its icons path
    So that means it technically depends on 
    SUNWgnome-themes-share
    We COULD get it to depend on CSWxfceiconthemes.
@@ -32,9 +24,28 @@ first off.. THIS IS NOT OFFICIALLY RELEASED YET.
 
   THen need to set theme_engine or something...
 
-   gtk_icon_theme_load_icon() is at fault
 
 
+*. Need to FIX PLUGINS!! (net, cpu, mem)
+ (which requires porting. See patches to xfce_systemtray for
+  that sort of thing)
 
 
- 6. Need to FIX PLUGINS!! (net, cpu, mem)
+NOTES:
+
+*.  configuration is WEEERID.and very nonportable.
+  takes GNU autoconf,and makes it dumber.
+  It breaks gmake MFLAGS=-j, among other things.
+
+*.   Have to have /opt/csw/gnu first in path.. fixed in makefile
+
+*. have to run configure with bash.
+   its already #!/bin/bash but that dont work?!?!?
+
+*.   It has some kind of WEIIIIERD "rfs-scripts-xxxx" wrappers
+     aroung things like pkg-config. Arrg.
+     And it does it by hacking configure, to do
+     "source scripts/custom.sh"
+
+     Now provide own custom.sh
+

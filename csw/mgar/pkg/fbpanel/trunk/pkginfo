@@ -1,6 +1,6 @@
 PKG=CSWfbpanel
 NAME=fbpanel - GUI panel for NETWM compliant window managers
-VERSION=6.0,REV=2010.06.22
+VERSION=6.0,REV=YYYY.MM.DD
 CATEGORY=application
 VENDOR=http://fbpanel.sourceforge.net/ packaged for CSW by Philip Brown
 HOTLINE=http://www.opencsw.org/bugtrack/
