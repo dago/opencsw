@@ -2,7 +2,7 @@ GARNAME = plzip
 GARVERSION = 0.6
 CATEGORIES = utils
 
-DESCRIPTION = plzip is a lossless data compressor based on the LZMA algorithm.
+DESCRIPTION = A lossless data compressor based on the LZMA algorithm
 define BLURB
   Lzip is a lossless data compressor based on the LZMA algorithm, with very safe
   integrity checking and a user interface similar to the one of gzip or bzip2. Lzip
@@ -14,7 +14,7 @@ endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/ 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES  = 0001-Use-inttypes-instead-of-stdint.patch
+PATCHFILES  = 0001-Add-prototype-for-kill-2.patch
 PATCHFILES += 0002-Use-ucb-echo.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
