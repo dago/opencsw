@@ -1,5 +1,5 @@
 GARNAME = namebench
-GARVERSION = 1.3
+GARVERSION = 1.3.1
 CATEGORIES = python
 
 DESCRIPTION = DNS benchmark utility
