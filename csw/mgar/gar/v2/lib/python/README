@@ -6,5 +6,10 @@ Development plan for checkpkg:
 	speed up checking if stats are already collected)
 - Store run history and display stats from each run
 - Shorten the on-screen output, add commands to display override lines
-- Move the set check stats outside of checking functions, remove the special status of dependency checking functions
+- Move the set check stats outside of checking functions, remove the special
+	status of dependency checking functions; add a progress bar for it.
 - Restructure the error reporting, group them by errors.
+
+
+Known problems:
+- libmagic fails sometimes when processing the whole catalog
