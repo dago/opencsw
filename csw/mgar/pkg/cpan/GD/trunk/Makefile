@@ -20,24 +20,26 @@ CATALOGNAME = pm_gd
 
 LICENSE = LICENSE
 
-DEP_PKGS = CSWftype2 CSWgd CSWiconv CSWjpeg CSWpng
-DEP_PKGS += CSWzlib CSWlibxpm CSWlibx11 CSWfconfig
+RUNTIME_DEP_PKGS = CSWftype2 CSWgd CSWiconv CSWjpeg CSWpng
+RUNTIME_DEP_PKGS += CSWzlib CSWfconfig CSWxpm
+
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWlibxpmdevel
 
 # These don't actually do anything as the pathes are already confgured
 CONFIGURE_ARGS  = lib_gd_path $(libdir)
 CONFIGURE_ARGS += lib_ft_path $(libdir)
 CONFIGURE_ARGS += lib_png_path $(libdir)
 CONFIGURE_ARGS += lib_jpeg_path $(libdir)
-CONFIGURE_ARGS += lib_xpm_path /usr/openwin/lib
+# This does not work due to different inclusion pathes
+# CONFIGURE_ARGS += lib_xpm_path /usr/openwin/lib
+CONFIGURE_ARGS += lib_xpm_path $(libdir)
 CONFIGURE_ARGS += lib_zlib_path $(libdir)
 
 NOISALIST = 1
-EXTRA_LIB = $(prefix)/X11/lib
 
-BUILD_OVERRIDE_VARS = CCFLAGS LD
+# BUILD_OVERRIDE_VARS = CCFLAGS LD
+BUILD_OVERRIDE_VARS = CCFLAGS
 # Don't use hardcoded -Wformat=0
 BUILD_OVERRIDE_VAR_CCFLAGS =
-# Force hardcode binding to OpenCSW X11
-BUILD_OVERRIDE_VAR_LD = $(CC) -L$(prefix)/X11/lib
 
 include gar/category.mk
