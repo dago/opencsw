@@ -11,8 +11,8 @@ DISTFILES  = mysql-$(GARVERSION).gem
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 
-CONFIGURE_SCRIPT = 
-TEST_SCRIPT = 
+CONFIGURE_SCRIPTS = 
+TEST_SCRIPTS = 
 
 
 include gar/category.mk
