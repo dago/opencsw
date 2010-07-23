@@ -38,6 +38,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 INSTALL_ARGS = vimdir=/opt/csw/etc/vim
 
+CHECKPKG_OVERRIDES_CSWasciidoc += surplus-dependency|CSWggetopt
+CHECKPKG_OVERRIDES_CSWasciidoc += surplus-dependency|CSWgnulinks
+
 include gar/category.mk
 
 # until the autoconf stuff is included upstream, we'll maintain and import our
