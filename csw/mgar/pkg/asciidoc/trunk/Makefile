@@ -25,7 +25,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += $(AUTOFILES)
 
 PATCHFILES = handle-csw-etc-paths.patch
-PATCHFILES += add-csw-gnu-path-to-a2x.patch
+PATCHFILES += 0002-Add-opt-csw-gnu-bin-to-PATH-in-a2x.py.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=67797

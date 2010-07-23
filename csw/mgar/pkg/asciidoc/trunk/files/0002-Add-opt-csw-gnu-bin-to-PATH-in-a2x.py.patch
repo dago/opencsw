@@ -1,0 +1,30 @@
+From 5f2985d65ac801a12e44f0054543a476dc783f97 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 23 Jul 2010 02:14:34 +0200
+Subject: [PATCH] Add /opt/csw/{gnu,bin} to PATH in a2x.py
+
+This allows us to leverage the gnu tools which is what the app was
+written against.  It prevents blowups when non-gnu tools get gnu
+options passed.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ a2x.py |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/a2x.py b/a2x.py
+index 186ccdf..d117086 100755
+--- a/a2x.py
++++ b/a2x.py
+@@ -63,6 +63,8 @@ XSLTPROC_OPTS = ''
+ 
+ OPTIONS = None  # These functions read verbose and dry_run command options.
+ 
++os.environ["PATH"] = "/opt/csw/gnu:/opt/csw/bin:" + os.environ["PATH"]
++
+ def errmsg(msg):
+     sys.stderr.write('%s: %s\n' % (PROG,msg))
+ 
+-- 
+1.7.1
+
