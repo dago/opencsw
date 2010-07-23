@@ -1,0 +1,25 @@
+From e64811a62b8fefe02d0fbc6c406e629c35d93f7a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 12 May 2010 14:38:28 +0200
+Subject: [PATCH 2/3] Fix one more inttypes.h
+
+---
+ compat/asprintf.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/compat/asprintf.c b/compat/asprintf.c
+index cb5282b..66b73d5 100644
+--- a/compat/asprintf.c
++++ b/compat/asprintf.c
+@@ -18,7 +18,7 @@
+ 
+ #include <stdarg.h>
+ #include <stdio.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <string.h>
+ 
+ #include "tmux.h"
+-- 
+1.7.0
+
