@@ -1,4 +1,4 @@
-From e64811a62b8fefe02d0fbc6c406e629c35d93f7a Mon Sep 17 00:00:00 2001
+From 5b87d0623c11043f670ec4e2d11197a9030edda1 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
 Date: Wed, 12 May 2010 14:38:28 +0200
 Subject: [PATCH 2/3] Fix one more inttypes.h
@@ -21,5 +21,5 @@ index cb5282b..66b73d5 100644
  
  #include "tmux.h"
 -- 
-1.7.0
+1.7.1
 

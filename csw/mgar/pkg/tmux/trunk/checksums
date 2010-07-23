@@ -1,5 +1,5 @@
-13c90823861d90f79620de09cd5ff0a5  0001-Add-Solaris-fixes.patch
-eb2b06cbb9c101e1687caf727e747c68  0001-old-style-patch-0000-stdint.patch
-3a7d0d4c2610a3c0fb418d1db40be856  0002-Fix-one-more-inttypes.h.patch
+58b41f4648140297ed218db06a023450  0001-old-style-patch-0000-stdint.patch
+6d6be91f763e1b4c15ec8145efbda66e  0002-Fix-one-more-inttypes.h.patch
+2a87ff8258d61d719a3b046a6d68d2d2  0003-Add-fix-for-missing-MAXHOSTNAMELEN.patch
 8ad333c4590c5ed45f1b4d0218ede7a7  COPYING
-748fbe7bb5f86812e19bd6005ff21a5a  tmux-1.2.tar.gz
+96e60cb206de2db0610b9fb6a64c2251  tmux-1.3.tar.gz

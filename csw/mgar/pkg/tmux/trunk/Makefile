@@ -1,5 +1,5 @@
 GARNAME = tmux
-GARVERSION = 1.2
+GARVERSION = 1.3
 CATEGORIES = apps
 
 DESCRIPTION = Terminal Multiplexer
@@ -8,9 +8,10 @@ SF_PROJ = $(GARNAME)
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += COPYING
+
 PATCHFILES  = 0001-old-style-patch-0000-stdint.patch
 PATCHFILES += 0002-Fix-one-more-inttypes.h.patch
-PATCHFILES += 0001-Add-Solaris-fixes.patch
+PATCHFILES += 0003-Add-fix-for-missing-MAXHOSTNAMELEN.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
