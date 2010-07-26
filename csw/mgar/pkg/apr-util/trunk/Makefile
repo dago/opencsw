@@ -15,18 +15,18 @@ LICENSE = LICENSE
 CATALOGNAME = apr_util
 
 RUNTIME_DEP_PKGS = CSWapr CSWiconv CSWsqlite3rt CSWunixodbc CSWexpat
-RUNTIME_DEP_PKGS += CSWbdb47 CSWoldaprt
+RUNTIME_DEP_PKGS += CSWbdb48 CSWoldaprt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# We need this to get bdb47/lib into the runpath
-EXTRA_LIB = $(prefix)/bdb47/lib
+# We need this to get bdb48/lib into the runpath
+EXTRA_LIB = $(prefix)/bdb48/lib
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
 CONFIGURE_ARGS += --with-ldap
-CONFIGURE_ARGS += --with-berkeley-db=/opt/csw/bdb47
+CONFIGURE_ARGS += --with-berkeley-db=/opt/csw/bdb48
 CONFIGURE_ARGS += --without-freetds --without-sqlite2
 
 #BUILD64 = 1
