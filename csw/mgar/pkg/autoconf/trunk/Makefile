@@ -17,6 +17,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = 0001-Prefer-CSW-tools.patch
 
+# Unified patches From https://trac.macports.org/changeset/69401
+PATCHFILES += 0002-Add-patches-from-https-trac.macports.org-changeset-6.patch
+
 BUILD_DEP_PKGS = CSWhelp2man
 RUNTIME_DEP_PKGS = CSWgawk CSWgm4 CSWperl
 
