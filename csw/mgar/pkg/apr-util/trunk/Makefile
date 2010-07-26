@@ -29,7 +29,7 @@ CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-berkeley-db=/opt/csw/bdb48
 CONFIGURE_ARGS += --without-freetds --without-sqlite2
 
-#BUILD64 = 1
+BUILD64 = 1
 STRIP_LIBTOOL = 1
 
 include gar/category.mk
