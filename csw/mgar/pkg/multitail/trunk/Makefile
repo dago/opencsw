@@ -1,5 +1,5 @@
 GARNAME = multitail
-GARVERSION = 5.2.2
+GARVERSION = 5.2.6
 CATEGORIES = utils
 
 DESCRIPTION = View one or multiple files like the original tail program
@@ -19,9 +19,7 @@ MASTER_SITES = http://www.vanheusden.com/multitail/
 DISTFILES = $(GARNAME)-$(GARVERSION).tgz
 LICENSE = license.txt
 
-SPKG_CLASSES = none cswcpsampleconf
-
-RUNTIME_DEP_PKGS = CSWncurses CSWcswclassutils
+RUNTIME_DEP_PKGS = CSWncurses
 
 CONFIGURE_SCRIPTS = 
 TEST_SCRIPTS =
@@ -30,12 +28,15 @@ INSTALL_SCRIPTS = custom
 # Adjust path to configuration file and compiler options
 PATCHFILES = patch-CSW.diff
 
+sysconfdir = /etc/opt/csw
+
 # Use provided Solaris Makefile
 BUILD_ARGS  = -f makefile.solaris_sunwspro
 
-PROTOTYPE_FILTER  = awk '\
-	$$$$3 ~ /multitail.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-	 { print }'
+PRESERVECONF = .*/multitail\.conf\.CSW
+MIGRATE_FILES = multitail.conf
+
+CHECKPKG_OVERRIDES_CSWmultitail += missing-dependency|CSWperl
 
 include gar/category.mk
 

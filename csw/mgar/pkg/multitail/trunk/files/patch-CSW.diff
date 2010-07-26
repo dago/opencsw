@@ -7,7 +7,7 @@ diff -ur multitail-5.2.2.orig/help.c multitail-5.2.2/help.c
  		"the MultiTail configurationfile which is located",
 -		"in /etc/multitail.conf. The keybindings only",
 -		"work in the main screen.",
-+		"in /opt/csw/etc/multitail.conf. The keybindings",
++		"in /etc/opt/csw/multitail.conf. The keybindings",
 +		"only work in the main screen.",
  		"In this screen, you can press the followking",
  		"keys:",
@@ -38,7 +38,7 @@ diff -ur multitail-5.2.2.orig/manual.html multitail-5.2.2/manual.html
  from multitail.conf. In multitail.conf you set by entering regular
  expressions what color to use for what "patterns". By default, MultiTail
 -looks for multitail.conf in the current directory and in the /etc directory.
-+looks for multitail.conf in the /opt/csw/etc directory.
++looks for multitail.conf in the /etc/opt/csw directory.
  With the '-z' parameter you can explicitly define what file it should use.<BR>
  An example:
  <PRE>
@@ -50,7 +50,7 @@ diff -ur multitail-5.2.2.orig/mt.c multitail-5.2.2/mt.c
  			printf("your mailfile): mail-check is disabled.\n");
  			printf("You can prevent this message by adding the line 'check_mail:0' ");
 -			printf("in /etc/multitail.conf or in .multitailrc in your home-directory.\n\n");
-+			printf("in /opt/csw/etc/multitail.conf or in .multitailrc in your home-directory.\n\n");
++			printf("in /etc/opt/csw/multitail.conf or in .multitailrc in your home-directory.\n\n");
  			printf("Press enter to continue...");
  			fflush(NULL);
  			getchar();
