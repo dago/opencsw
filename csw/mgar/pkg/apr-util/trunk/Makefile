@@ -20,6 +20,9 @@ RUNTIME_DEP_PKGS += CSWbdb47 CSWoldaprt
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+# We need this to get bdb47/lib into the runpath
+EXTRA_LIB = $(prefix)/bdb47/lib
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
 CONFIGURE_ARGS += --with-ldap
