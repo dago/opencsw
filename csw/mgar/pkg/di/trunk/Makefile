@@ -1,5 +1,5 @@
 GARNAME = di
-GARVERSION = 4.25
+GARVERSION = 4.26
 CATEGORIES = utils
 
 DESCRIPTION = Disk information utility
