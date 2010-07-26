@@ -49,7 +49,7 @@ NOISAEXEC = 1
 
 # Make configure options
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-threadsafe --disable-debug
+CONFIGURE_ARGS += --enable-threadsafe --disable-debug --disable-tcl  
 CONFIGURE_ARGS += --with-readline-inc="-I/opt/csw/include/readline"
 
 TEST_SCRIPTS =
