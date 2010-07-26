@@ -29,7 +29,11 @@ CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-berkeley-db=/opt/csw/bdb48
 CONFIGURE_ARGS += --without-freetds --without-sqlite2
 
-BUILD64 = 1
+#BUILD64 = 1
+#reason is that no sparcv9 binaries are built for some reason and checkpkg suggests:
+#CHECKPKG_OVERRIDES_CSWapr-util += binary-disallowed-placement|file=opt/csw/lib/sparcv9/libaprutil-1.so.0.3.9|arch_id=2|arch_name=sparcv8|bad_path=sparcv9
+
+
 STRIP_LIBTOOL = 1
 
 include gar/category.mk
