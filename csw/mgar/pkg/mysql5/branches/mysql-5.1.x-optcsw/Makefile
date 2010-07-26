@@ -5,7 +5,7 @@
 PROJ_NAME = mysql
 GARNAME = $(PROJ_NAME)51
 BASE_VERSION = 5.1
-PATCHLEVEL = 44
+PATCHLEVEL = 49
 GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
@@ -130,14 +130,11 @@ RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSWzlib
 RUNTIME_DEP_PKGS_CSW$(GARNAME)rt          = CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)rt         += CSWzlib
-RUNTIME_DEP_PKGS_CSW$(GARNAME)bench       = CSW$(GARNAME)
 RUNTIME_DEP_PKGS_CSW$(GARNAME)bench      += CSWperl
 RUNTIME_DEP_PKGS_CSW$(GARNAME)client      = CSW$(GARNAME)rt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWncurses
 RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWzlib
-RUNTIME_DEP_PKGS_CSW$(GARNAME)devel       = CSW$(GARNAME)rt
-RUNTIME_DEP_PKGS_CSW$(GARNAME)test        = CSW$(GARNAME)
 RUNTIME_DEP_PKGS_CSW$(GARNAME)test       += CSWperl
 
 MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-$(BASE_VERSION)/
@@ -200,11 +197,12 @@ PROTOTYPE_GROUP_dbdir = mysql
 PROTOTYPE_PERMS_dbdir = 0700
 PROTOTYPE_CLASS_dbdir = ugfiles
 
+CHECKPKG_OVERRIDES_CSWmysql51 += surplus-dependency|CSWmysql51client
+CHECKPKG_OVERRIDES_CSWmysql51rt += bad-rpath-entry
+
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
-
-CHECKPKG_OVERRIDES_CSWmysql51devel += missing-dependency|CSWmysql51
 
 test-custom:
 	alias sh=/usr/bin/bash;                                 \
@@ -212,14 +210,14 @@ test-custom:
 		perl mysql-test-run.pl --mem --big-test --force \
 		--skip-test=archive-big --skip-test=/gis/
 
-pre-configure-modulated:
-	# To work around the following libtool version mismatch problem:
-	# libtool: Version mismatch error.  This is libtool 2.2.6, but the
-	# libtool: definition of this LT_INIT comes from libtool 2.2.6b.
-	# libtool: You should recreate aclocal.m4 with macros from libtool 2.2.6
-	# http://lists.opencsw.org/pipermail/maintainers/2009-December/005066.html
-	cd $(WORKSRC) && autoreconf --force --install --symlink
-	@$(MAKECOOKIE)
+# pre-configure-modulated:
+# 	# To work around the following libtool version mismatch problem:
+# 	# libtool: Version mismatch error.  This is libtool 2.2.6, but the
+# 	# libtool: definition of this LT_INIT comes from libtool 2.2.6b.
+# 	# libtool: You should recreate aclocal.m4 with macros from libtool 2.2.6
+# 	# http://lists.opencsw.org/pipermail/maintainers/2009-December/005066.html
+# 	cd $(WORKSRC) && autoreconf --force --install --symlink
+# 	@$(MAKECOOKIE)
 
 post-merge:
 	ginstall -m 755 -d $(PKGROOT)$(localstatedir)
