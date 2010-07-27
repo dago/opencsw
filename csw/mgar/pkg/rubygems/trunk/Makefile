@@ -1,5 +1,5 @@
 GARNAME = rubygems
-GARVERSION = 1.3.5
+GARVERSION = 1.3.7
 CATEGORIES = xtra
 
 DESCRIPTION = Ruby package manager
@@ -10,7 +10,7 @@ endef
 
 
 SPKG_SOURCEURL = http://rubyforge.org/projects/rubygems/
-MASTER_SITES   = http://rubyforge.org/frs/download.php/60718/
+MASTER_SITES   = http://rubyforge.org/frs/download.php/70696/
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
