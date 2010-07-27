@@ -5,8 +5,8 @@ MASTER_SITES ?= http://rubygems.org/downloads/
 # This is common to most modules - override in module makefile if different
 GEMNAME ?= $(GARNAME)
 GEMVERSION ?= $(GARVERSION)
-MODDIST   ?= $(GEMNAME)-$(GEMVERSION).gem
-DISTFILES += $(MODDIST)
+GEMFILE   ?= $(GEMNAME)-$(GEMVERSION).gem
+DISTFILES += $(GEMFILE)
 
 # Tests are enabled by default, unless overridden at the test level
 ENABLE_TEST ?= 1
@@ -31,16 +31,30 @@ _CATEGORY_CHECKPKG_OVERRIDES = surplus-dependency
 # - dependency generation
 # - link to rubyforge
 
+LICENSE ?= MIT-LICENSE
+
 CONFIGURE_SCRIPTS ?=
 BUILD_SCRIPTS ?= 
 TEST_SCRIPTS ?= 
 INSTALL_SCRIPTS = rbgem
 
+# The description starts with the ruby gems name, it will often start with a lowercase character
+CHECKPKG_OVERRIDES_CSWactionmailer += pkginfo-description-not-starting-with-uppercase
+
+gem-extract-%:
+	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
+	@gem unpack $(DOWNLOADDIR)/$* --target $(WORKDIR)
+	@$(MAKECOOKIE)
+
+extract-archive-%.gem: gem-extract-%.gem
+	@$(MAKECOOKIE)
+
 include gar/gar.mk
 
 GEMDIR ?= $(libdir)/ruby/gems/1.8
 install-rbgem:
-	( cd $(WORKSRC)/..; gem install --ignore-dependencies --local --no-test --install-dir $(DESTDIR)$(GEMDIR) $(DISTFILES) )
+	gem install --ignore-dependencies --local --no-test --install-dir $(DESTDIR)$(GEMDIR) $(DOWNLOADDIR)/$(GEMFILE)
+	@$(MAKECOOKIE)
 
 # Check for a CPAN module version update
 update-check:
