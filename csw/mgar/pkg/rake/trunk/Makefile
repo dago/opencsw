@@ -26,6 +26,8 @@ BUILD_SCRIPTS     =
 CONFIGURE_SCRIPTS =
 INSTALL_SCRIPTS   = ruby
 
+VENDOR_URL = http://rake.rubyforge.org/
+
 include gar/category.mk
 
 install-ruby:
