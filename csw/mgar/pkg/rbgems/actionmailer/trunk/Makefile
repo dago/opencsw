@@ -9,4 +9,6 @@ endef
 PACKAGES = CSWactionmailer
 CATALOGNAME = rb_actionmailer
 
+ARCHALL = 1
+
 include gar/category.mk
