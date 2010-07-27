@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = unixodbc
-GARVERSION = 2.2.14
+GARVERSION = 2.3.0
 CATEGORIES = lib
 
 DESCRIPTION = ODBC drivers for Unix systems
@@ -11,19 +11,23 @@ define BLURB
 endef
 DL_NAME = unixODBC
 MASTER_SITES = http://www.unixodbc.org/
-DISTFILES  = $(DL_NAME)-$(GARVERSION).tar.gz
+DISTNAME = $(DL_NAME)-$(GARVERSION)
+DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += cswmigrateconf
-WORKSRC = $(WORKDIR)/$(DL_NAME)-$(GARVERSION)
 UFILES_REGEX = $(DL_NAME)-(\d+(?:\.\d+)*).tar.gz
-RUNTIME_DEP_PKGS  = CSWiconv
-RUNTIME_DEP_PKGS += CSWreadline
-sysconfdir = /etc/opt/csw
-localstatedir = /var/opt/csw
+RUNTIME_DEP_PKGS_CSWunixodbc  = CSWiconv
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWreadline
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibtoolrt
+sysconfdir = /etc$(prefix)
+localstatedir = /var$(prefix)
 CONFIGURE_ARGS = $(DIRPATHS) --enable-gui=no
 BUILD64 = 1
 SAMPLECONF = \/etc\/opt\/csw\/odbc(inst|).ini
 MIGRATECONF = \/etc\/opt\/csw\/pkg\/$(GARNAME)\/cswmigrateconf
 TEST_SCRIPTS =
+LICENSE = COPYING
+
+include gar/category.mk
 
 post-install-modulated:
 	(cd $(DESTDIR)$(sysconfdir); \
@@ -33,5 +37,3 @@ post-install-modulated:
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/$(GARNAME)
 	ginstall -m 644 $(FILEDIR)/cswmigrateconf $(DESTDIR)$(sysconfdir)/pkg/$(GARNAME)
 	@$(MAKECOOKIE)
-
-include gar/category.mk
