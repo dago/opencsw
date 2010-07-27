@@ -13,7 +13,10 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWzsh,postinstall postremove)
 
+LICENSE = LICENCE
+
 RUNTIME_DEP_PKGS = CSWiconv CSWncurses CSWpcrert CSWgdbm
+BUILD_DEP_PKGS = CSWpcre
 
 SPKG_SOURCEURL = http://www.zsh.org
 
@@ -32,3 +35,6 @@ include gar/category.mk
 # Use term.h from ncurses or we get compile errors
 #   http://www.zsh.org/mla/workers/2007/msg01236.html
 CPPFLAGS := -I$(includedir)/ncursesw $(CPPFLAGS)
+
+post-install:
+	cp -p files/_pkgutil $(DESTDIR)$(sharedstatedir)/$(GARNAME)/functions
