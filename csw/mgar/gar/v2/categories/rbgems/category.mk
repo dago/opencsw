@@ -1,3 +1,5 @@
+# these packages will all depend on rubygems and ruby
+_EXTRA_GAR_PKGS += CSWrubygems CSWruby
 
 # Set the CPAN mirror in gar.conf.mk
 MASTER_SITES ?= http://rubygems.org/downloads/
@@ -62,4 +64,3 @@ update-check:
 	@echo " ==> Update Check: $(GARNAME) $(GARVERSION)"
 	@echo " ==> AUTO UPDATE CHECK FOR $(GARNAME) IS DISABLED" ; \
 	fi
-	
