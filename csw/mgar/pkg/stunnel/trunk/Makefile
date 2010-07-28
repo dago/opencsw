@@ -5,7 +5,7 @@
 #       to pthreads .. truss doesn't show /dev/zero usage on Solaris 10
 #       Test on Solaris 8 / 9 for comparison
 GARNAME = stunnel
-GARVERSION = 4.27
+GARVERSION = 4.33
 CATEGORIES = net
 
 DESCRIPTION = Universal SSL Wrapper
@@ -25,7 +25,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS = CSWzlib CSWosslrt CSWtcpwrap CSWcswclassutils
 
 # Make stunnel.conf-sample.in honor $localstatedir adjustments
-PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
+#PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw

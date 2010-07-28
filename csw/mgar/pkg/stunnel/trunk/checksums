@@ -1,2 +1,2 @@
-8d6730bd87af222c3ff66547e82d8d7f  download/gar-base.diff
-3c655d815576f50046a1c28744b88681  download/stunnel-4.27.tar.gz
+c8d5c69008fef019b86d743207309524  0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
+559a864066d8cc4afd8a97682c90d41c  stunnel-4.33.tar.gz
