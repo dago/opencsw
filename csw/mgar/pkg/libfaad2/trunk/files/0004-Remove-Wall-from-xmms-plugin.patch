@@ -1,0 +1,46 @@
+From 761b095edbd318055af35eaabe68fd1b9c213dec Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 28 Jul 2010 11:11:37 +0200
+Subject: [PATCH] Remove -Wall from xmms plugin
+
+---
+ plugins/xmms/src/Makefile.am |    4 ++--
+ plugins/xmms/src/Makefile.in |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/plugins/xmms/src/Makefile.am b/plugins/xmms/src/Makefile.am
+index 6249bb3..b373f39 100644
+--- a/plugins/xmms/src/Makefile.am
++++ b/plugins/xmms/src/Makefile.am
+@@ -1,9 +1,9 @@
+-local_CFLAGS=`$(XMMS_CONFIG) --cflags` -Wall
++local_CFLAGS=`$(XMMS_CONFIG) --cflags`
+ local_LDFLAGS=`$(XMMS_CONFIG) --libs`
+ libdir = `$(XMMS_CONFIG) --input-plugin-dir`
+ lib_LTLIBRARIES = libmp4.la
+ 
+-libmp4_la_CFLAGS = $(local_CFLAGS) -Wall \
++libmp4_la_CFLAGS = $(local_CFLAGS) \
+        -I$(top_srcdir)/include -I$(top_srcdir)/common/mp4ff
+ 
+ libmp4_la_LIBADD = $(top_builddir)/libfaad/libfaad.la \
+diff --git a/plugins/xmms/src/Makefile.in b/plugins/xmms/src/Makefile.in
+index 4d0b6c6..dfca4b0 100644
+--- a/plugins/xmms/src/Makefile.in
++++ b/plugins/xmms/src/Makefile.in
+@@ -186,10 +186,10 @@ sbindir = @sbindir@
+ sharedstatedir = @sharedstatedir@
+ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+-local_CFLAGS = `$(XMMS_CONFIG) --cflags` -Wall
++local_CFLAGS = `$(XMMS_CONFIG) --cflags`
+ local_LDFLAGS = `$(XMMS_CONFIG) --libs`
+ lib_LTLIBRARIES = libmp4.la
+-libmp4_la_CFLAGS = $(local_CFLAGS) -Wall \
++libmp4_la_CFLAGS = $(local_CFLAGS) \
+        -I$(top_srcdir)/include -I$(top_srcdir)/common/mp4ff
+ 
+ libmp4_la_LIBADD = $(top_builddir)/libfaad/libfaad.la \
+-- 
+1.7.1
+

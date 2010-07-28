@@ -1,4 +1,5 @@
 03a038258ea594c90c9b58e8572a262b  0001-Remove-iquote-from-CFLAGS-unknown-to-SS.patch
 ea595fc8a7759c1ca424bcb226c52975  0002-Use-inline-suitable-for-SS.patch
 548781681ae7b3ad6e3ae9c2ff556f11  0003-Use-inttypes-instead-of-stdint.patch
+55549d920bf05c0b6ad3f36f10d450ff  0004-Remove-Wall-from-xmms-plugin.patch
 4c332fa23febc0e4648064685a3d4332  faad2-2.7.tar.bz2
