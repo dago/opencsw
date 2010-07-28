@@ -44,7 +44,7 @@ pre-configure-modulated:
 
 # Build Configuration
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
-CONFIGURE_ARGS += --with-apr-util=$(prefix)/bin/apr-1-config
+CONFIGURE_ARGS += --with-apr-util=$(prefix)/bin/apu-1-config
 CONFIGURE_ARGS += --with-mpm=prefork
 CONFIGURE_ARGS += --disable-static
 
