@@ -52,8 +52,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_SCRIPTS = py-yaml
 
+CHECKPKG_OVERRIDES_CSWpy-yaml += surplus-dependency|CSWpy-yaml-rt
+
+include gar/category.mk
+
 build-py-yaml:
 	(cd $(WORKSRC); $(BUILD_ENV) python setup.py --with-libyaml build)
 	@$(MAKECOOKIE)
-
-include gar/category.mk
