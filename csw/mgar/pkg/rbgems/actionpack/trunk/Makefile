@@ -15,4 +15,6 @@ LICENSE = MIT-LICENSE
 
 GEM_DEPS = CSWgem-activesupport CSWgem-rack
 
+ARCHALL = 1
+
 include gar/category.mk
