@@ -1,5 +1,5 @@
-# these packages will all depend on rubygems and ruby
-_EXTRA_GAR_PKGS += CSWrubygems CSWruby
+# We must have rubygems (and hence ruby) installed to package a gem.
+DEF_BASE_PKGS += CSWrubygems
 
 # Set the CPAN mirror in gar.conf.mk
 MASTER_SITES ?= http://rubygems.org/downloads/
