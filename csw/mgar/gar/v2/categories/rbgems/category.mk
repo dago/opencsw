@@ -13,8 +13,6 @@ DISTFILES += $(GEMFILE)
 # Tests are enabled by default, unless overridden at the test level
 ENABLE_TEST ?= 1
 
-CONFIGURE_SCRIPTS ?=
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX ?= $(GEMNAME)-(\d+(?:\.\d+)*).gem
 USTREAM_MASTER_SITE ?= $(SPKG_SOURCEURL)
@@ -53,7 +51,7 @@ extract-archive-%.gem: gem-extract-%.gem
 
 include gar/gar.mk
 
-GEMDIR ?= $(libdir)/ruby/gems/1.8
+GEMDIR ?= $(shell ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 install-rbgem:
 	gem install --ignore-dependencies --local --no-test --install-dir $(DESTDIR)$(GEMDIR) $(DOWNLOADDIR)/$(GEMFILE)
 	@$(MAKECOOKIE)
