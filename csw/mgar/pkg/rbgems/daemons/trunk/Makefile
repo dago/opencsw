@@ -1,0 +1,17 @@
+GARNAME = daemons
+GARVERSION = 1.1.0
+CATEGORIES = rbgems
+
+DESCRIPTION = Brief description
+define BLURB
+  Daemons provides an easy way to wrap existing ruby scripts (for example a self-written server) to be run as a daemon and to be controlled by simple start/stop/restart commands. You can also call blocks as daemons and control them from the parent or just daemonize the current process. Besides this basic functionality, daemons offers many advanced features like exception backtracing and logging (in case your ruby script crashes) and monitoring and automatic restarting of your processes if they crash.
+endef
+
+PACKAGES = CSWgem-daemons
+CATALOGNAME = gem_daemons
+
+LICENSE = LICENSE
+
+ARCHALL = 1
+
+include gar/category.mk
