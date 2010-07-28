@@ -2,11 +2,11 @@
 1414d06fab1530484a508927a0de4154  0002-cast-user_info-pw_gid-to-gid_t.patch
 5415f365f1b0f7a179d1efc25f45bbee  0003-OpenCSW-perl-for-tests.patch
 8ab232cd4d232b3cda3bbced93f80237  0004-basedir-and-datadir-in-the-cnf-files.patch
-c8c2ef6365a9bd9b71fac6198d3eeef8  CSWmysql51.postinstall
-a652ccff001c328178f4b0ed9bfebbd6  CSWmysql51.preinstall
+16ec677592108d1eec22ca4f9f3d09e2  CSWmysql51.postinstall
+615c16877afb48ce809a849c1c5dbc35  CSWmysql51.preinstall
 e691b0cf00a3925ac55c1844045d6e30  ChangeLog
 e42afb5ec1b1ab02d2ec3b46d0922636  README.CSW
-0974c28c048437612c6a0ace93460d3b  cswmysql51
+ac9af0e13c6e075ac87f19fdf171776d  cswmysql51
 67228e1f096fe08a94f4267439a4ec36  cswusergroup
 a90d87a71fa3c23dff6d78afc8e3184c  mysql-5.1.49.tar.gz
 90b7cfcd11ab56e021a195a6a085fa21  quick_start-csw
