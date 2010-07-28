@@ -43,8 +43,8 @@ pre-configure-modulated:
 	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); ./buildconf)
 
 # Build Configuration
-CONFIGURE_ARGS += --with-apr=$(prefix)
-CONFIGURE_ARGS += --with-apr-util=$(prefix)
+CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
+CONFIGURE_ARGS += --with-apr-util=$(prefix)/bin/apr-1-config
 CONFIGURE_ARGS += --with-mpm=prefork
 CONFIGURE_ARGS += --disable-static
 
