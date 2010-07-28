@@ -1,8 +1,8 @@
-mbuffer (20100327,REV=2010.05.18)
+mbuffer (20100526,REV=2010.07.28)
 
-  * Version update to 20100327 (Closes #4407).
+  * Version update to 20100526 (Closes #4407).
 
- -- Sebastian Kayser <skayser@opencsw.org>  Tue, 18 May 2010 21:58:05 +0200
+ -- Sebastian Kayser <skayser@opencsw.org>  Wed, 28 Jul 2010 23:34:54 +0200
 
 mbuffer (20091227,REV=2010.01.06)
 
