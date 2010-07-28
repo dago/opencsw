@@ -1,0 +1,18 @@
+GARNAME = haml
+GARVERSION = 3.0.15
+CATEGORIES = rbgems
+
+DESCRIPTION = HTML Abstraction Markup Language
+define BLURB
+  Haml (HTML Abstraction Markup Language) is a layer on top of XHTML or XML that's designed to express the structure of XHTML or XML documents in a non-repetitive, elegant, easy way, using indentation rather than closing tags and allowing Ruby to be embedded with ease. It was originally envisioned as a plugin for Ruby on Rails, but it can function as a stand-alone templating engine.
+endef
+
+PACKAGES = CSWgem-haml
+CATALOGNAME = gem_haml
+
+ARCHALL = 1
+
+# This is just one file with an emacs mode
+CHECKPKG_OVERRIDES_CSWgem-haml += missing-dependency|CSWemacscommon
+
+include gar/category.mk
