@@ -10,6 +10,11 @@ GEMVERSION ?= $(GARVERSION)
 GEMFILE   ?= $(GEMNAME)-$(GEMVERSION).gem
 DISTFILES += $(GEMFILE)
 
+ifndef PACKAGES
+PACKAGES = CSWgem-$(GEMNAME)
+CATALOGNAME_$(PACKAGES) = gem_$(GEMNAME)
+endif
+
 # Tests are enabled by default, unless overridden at the test level
 ENABLE_TEST ?= 1
 
@@ -17,7 +22,6 @@ ENABLE_TEST ?= 1
 UFILES_REGEX ?= $(GEMNAME)-(\d+(?:\.\d+)*).gem
 USTREAM_MASTER_SITE ?= $(SPKG_SOURCEURL)
 
-_CATEGORY_SPKG_DESC = $(GEMNAME): $(SPKG_DESC)
 _CATEGORY_PKGINFO = echo "RUBY_GEM_NAME=$(GEMNAME)";
 
 # _MERGE_EXCLUDE_CATEGORY = .*/perllocal\.pod .*/\.packlist
@@ -37,9 +41,6 @@ CONFIGURE_SCRIPTS ?=
 BUILD_SCRIPTS ?= 
 TEST_SCRIPTS ?= 
 INSTALL_SCRIPTS = rbgem
-
-# The description starts with the ruby gems name, it will often start with a lowercase character
-CHECKPKG_OVERRIDES_CSWactionmailer += pkginfo-description-not-starting-with-uppercase
 
 gem-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
