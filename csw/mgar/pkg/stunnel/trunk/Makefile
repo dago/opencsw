@@ -17,19 +17,15 @@ define BLURB
   the daemon's code. 
 endef
 
+VENDOR_URL   = http://www.stunnel.org
 MASTER_SITES = http://www.stunnel.org/download/stunnel/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-
-SPKG_SOURCEURL = http://www.stunnel.org
-SPKG_CLASSES = none cswcpsampleconf cswinitsmf
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWzlib CSWosslrt CSWtcpwrap CSWcswclassutils
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
 # Make stunnel.conf-sample.in honor $localstatedir adjustments
-PATCHFILES = gar-base.diff
+PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
@@ -40,11 +36,16 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw
 # No test target available
 TEST_SCRIPTS =
 
-PROTOTYPE_FILTER  = awk '\
-	$$$$3 ~ /cswstunnel$$$$/ { $$$$2 = "cswinitsmf" } \
-	$$$$3 ~ /stunnel.pem.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } \
-	$$$$3 ~ /\/var\/opt\/csw\/lib\/stunnel/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
-	{ print }'
+sysconfdir=/etc/opt/csw
+localstatedir=/var/opt/csw
+
+INITSMF = $(sysconfdir)/init.d/cswstunnel
+SAMPLECONF = $(sysconfdir)/stunnel.pem
+
+PROTOTYPE_MODIFIERS = restrict
+PROTOTYPE_FILES_restrict = $(localstatedir)/lib/stunnel.*
+PROTOTYPE_USER_restrict  = nobody
+PROTOTYPE_GROUP_restrict = nobody
 
 include gar/category.mk
 
@@ -61,19 +62,17 @@ post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
 post-install-modulated: DOCS=AUTHORS BUGS CREDITS ChangeLog TODO
 post-install-modulated: DOCS+= doc/stunnel.*html
 post-install-modulated:
-	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -m 755 $(FILEDIR)/CSWstunnel.cswstunnel \
-		$(DESTDIR)/etc/opt/csw/init.d/cswstunnel
-	@mv $(DESTDIR)$(sysconfdir)/stunnel/stunnel.pem \
-		$(DESTDIR)$(sysconfdir)/stunnel/stunnel.pem.CSW
+	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 $(FILEDIR)/CSWstunnel.cswstunnel \
+		$(DESTDIR)$(sysconfdir)/init.d/cswstunnel
 
 	# create pidfile directory
-	@ginstall -d $(DESTDIR)/var/opt/csw/run/stunnel
+	ginstall -d $(DESTDIR)/var/opt/csw/run/stunnel
 
 	# stunnel installs several random sample scripts, cgi scripts, and
 	# a .spec file with unadjusted paths. Leave them out for now and
 	# only include specific files
-	@rm -rf $(DOCDEST)/*
-	@$(foreach D,$(DOCS),cp $(WORKSRC)/$(D) $(DOCDEST);)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	rm -rf $(DOCDEST)/*
+	$(foreach D,$(DOCS),cp $(WORKSRC)/$(D) $(DOCDEST);)
+	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@$(MAKECOOKIE)
