@@ -22,10 +22,10 @@ MASTER_SITES = http://www.stunnel.org/download/stunnel/src/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS = CSWzlib CSWosslrt CSWtcpwrap CSWcswclassutils
+RUNTIME_DEP_PKGS = CSWzlib CSWosslrt CSWtcpwrap
 
 # Make stunnel.conf-sample.in honor $localstatedir adjustments
-#PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
+PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
@@ -46,6 +46,8 @@ PROTOTYPE_MODIFIERS = restrict
 PROTOTYPE_FILES_restrict = $(localstatedir)/lib/stunnel.*
 PROTOTYPE_USER_restrict  = nobody
 PROTOTYPE_GROUP_restrict = nobody
+
+EXTRA_PAX_ARGS = '-s,ChangeLog$$,changelog,p'
 
 include gar/category.mk
 
