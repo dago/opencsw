@@ -8,8 +8,6 @@ endef
 
 LICENSE = README
 
-GEMPKGNAME = activesup
-
 ARCHALL = 1
 
 include gar/category.mk
