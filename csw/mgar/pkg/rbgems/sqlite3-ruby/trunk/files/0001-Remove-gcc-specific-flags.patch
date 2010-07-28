@@ -1,0 +1,32 @@
+From be44bd9b7a143ec7fd737c1d67fdee19a2c17592 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 28 Jul 2010 14:40:01 +0200
+Subject: [PATCH] Remove gcc specific flags
+
+---
+ ext/sqlite3/extconf.rb |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/ext/sqlite3/extconf.rb b/ext/sqlite3/extconf.rb
+index 5898927..88bfc6c 100644
+--- a/ext/sqlite3/extconf.rb
++++ b/ext/sqlite3/extconf.rb
+@@ -6,13 +6,12 @@ require 'mkmf'
+ 
+ RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
+ 
+-sqlite = dir_config('sqlite3', ['/usr/local', '/opt/local', '/usr'])
++sqlite = dir_config('sqlite3', ['/opt/csw'])
+ 
+ if RUBY_PLATFORM =~ /mswin/
+   $CFLAGS << ' -W3'
+ else
+-  $CFLAGS << ' -O3 -Wall -Wcast-qual -Wwrite-strings -Wconversion' <<
+-             ' -Wmissing-noreturn -Winline'
++  $CFLAGS << ''
+ end
+ 
+ def asplode missing
+-- 
+1.7.1
+
