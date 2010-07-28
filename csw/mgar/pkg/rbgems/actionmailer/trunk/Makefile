@@ -6,8 +6,12 @@ DESCRIPTION = Test and deliver emails sent from a single service layer
 define BLURB
 endef
 
-PACKAGES = CSWactionmailer
-CATALOGNAME = rb_actionmailer
+PACKAGES = CSWgem-actionmailer
+CATALOGNAME = gem_actionmailer
+
+DEP_PKGS = CSWgem-actionpack
+
+LICENSE = MIT-LICENSE
 
 ARCHALL = 1
 
