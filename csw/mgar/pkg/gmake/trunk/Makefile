@@ -1,5 +1,5 @@
 GARNAME = make
-GARVERSION = 3.80
+GARVERSION = 3.82
 CATEGORIES = devel
 
 DESCRIPTION = Controls generation of executables and other compile-related tasks
@@ -18,8 +18,22 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+PACKAGES = CSWgmake
+CATALOGNAME = gmake
+
+VENDOR_URL = http://www.gnu.org/software/make/
+
+DEP_PKGS = CSWggettextrt
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --program-prefix=g
 
 TEST_TARGET = check
 
 include gar/category.mk
+
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(prefix)/gnu
+	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);)
+	@$(MAKECOOKIE)
+
