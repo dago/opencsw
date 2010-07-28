@@ -1,7 +1,6 @@
 # We must have rubygems (and hence ruby) installed to package a gem.
 DEF_BASE_PKGS += CSWrubygems
 
-# Set the CPAN mirror in gar.conf.mk
 MASTER_SITES ?= http://rubygems.org/downloads/
 
 # This is common to most modules - override in module makefile if different
@@ -10,10 +9,19 @@ GEMVERSION ?= $(GARVERSION)
 GEMFILE   ?= $(GEMNAME)-$(GEMVERSION).gem
 DISTFILES += $(GEMFILE)
 
-ifndef PACKAGES
-PACKAGES = CSWgem-$(GEMNAME)
-CATALOGNAME_$(PACKAGES) = gem_$(GEMNAME)
-endif
+GEMPKGNAME ?= $(GEMNAME)
+GEMCATALOGNAME ?= $(GEMPKGNAME)
+
+# PACKAGES ?= CSWgem-$(GEMPKGNAME) CSWgem-$(GEMPKGNAME)-doc
+PACKAGES ?= CSWgem-$(GEMPKGNAME)
+CATALOGNAME_CSWgem-$(GEMPKGNAME) ?= gem_$(GEMCATALOGNAME)
+CATALOGNAME_CSWgem-$(GEMPKGNAME)-doc ?= gem_$(GEMCATALOGNAME)_doc
+
+SPKG_DESC_CSWgem-$(GEMPKGNAME)-doc ?= $(or $(SPKG_DESC_CSWgem-$(GEMPKGNAME)),$(SPKG_DESC)) documentation
+
+# RUNTIME_DEP_PKGS_CSWgem-$(GEMPKGNAME) ?= $(shell gem specification $(DOWNLOADDIR)/$(GEMFILE) | $(GARBIN)/gemdeps.rb)
+
+# GEM_DEPENDENCY_PKGS ?= $(RUNTIME_DEP_PKGS_CSWgem-$(GEMPKGNAME))
 
 # Tests are enabled by default, unless overridden at the test level
 ENABLE_TEST ?= 1
@@ -37,14 +45,19 @@ _CATEGORY_CHECKPKG_OVERRIDES = surplus-dependency
 
 LICENSE ?= MIT-LICENSE
 
-CONFIGURE_SCRIPTS ?=
+GEMDIR ?= $(shell ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+
+CONFIGURE_SCRIPTS ?= check-gem-deps
 BUILD_SCRIPTS ?= 
 TEST_SCRIPTS ?= 
-INSTALL_SCRIPTS = rbgem
+INSTALL_SCRIPTS ?= rbgem
+
+# Allow splitting of documentation automatically
+PKGFILES_CSWgem-$(GEMPKGNAME)-doc ?= $(GEMDIR)/doc/.*
 
 gem-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
-	@gem unpack $(DOWNLOADDIR)/$* --target $(WORKDIR)
+	gem unpack $(DOWNLOADDIR)/$* --target $(WORKDIR)
 	@$(MAKECOOKIE)
 
 extract-archive-%.gem: gem-extract-%.gem
@@ -52,7 +65,13 @@ extract-archive-%.gem: gem-extract-%.gem
 
 include gar/gar.mk
 
-GEMDIR ?= $(shell ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
+# During the configure phase we check that all dependend modules are available
+configure-check-gem-deps: GEM_DEPS?=$(addprefix CSWgem-,$(shell gem specification $(DOWNLOADDIR)/$(GEMFILE) | $(GARBIN)/gemdeps.rb))
+configure-check-gem-deps:
+	@echo "=== Checking dependencies of GEM $(GEMFILE) ==="
+	@$(GARBIN)/check_for_deps $(GEM_DEPS)
+	@$(MAKECOOKIE)
+
 install-rbgem:
 	gem install --ignore-dependencies --local --no-test --install-dir $(DESTDIR)$(GEMDIR) $(DOWNLOADDIR)/$(GEMFILE)
 	@$(MAKECOOKIE)
@@ -61,5 +80,4 @@ install-rbgem:
 update-check:
 	@# TBD!
 	@echo " ==> Update Check: $(GARNAME) $(GARVERSION)"
-	@echo " ==> AUTO UPDATE CHECK FOR $(GARNAME) IS DISABLED" ; \
-	fi
+	@echo " ==> AUTO UPDATE CHECK FOR $(GARNAME) IS DISABLED"
