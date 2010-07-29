@@ -12,7 +12,7 @@ PATCHFILES = 0001-Remove-gcc-specific-flags.patch
 PACKAGES = CSWgem-sqlite3ruby
 CATALOGNAME = gem_sqlite3ruby
 
-BUILD_DEP_PKGS = CSWsqlite3devel
+BUILD_DEP_PKGS = CSWsqlite3devel CSWgem-hoe
 RUNTIME_DEP_PKGS = CSWsqlite3rt
 
 LICENSE = LICENSE
@@ -32,7 +32,13 @@ build-ruby-setup:
 	@$(MAKECOOKIE)
 
 install-ruby-setup:
-	cd $(WORKSRC) && ruby setup.rb install \
-		--prefix=$(DESTDIR)
+	#cd $(WORKSRC) && ruby setup.rb install --prefix=$(DESTDIR)
+	cd $(WORKSRC) && rake gem && \
+        gem install \
+		--ignore-dependencies \
+		--local \
+		--no-test \
+		--install-dir $(DESTDIR)$(GEMDIR) \
+		pkg/$(GEMFILE)
 	@$(MAKECOOKIE)
 
