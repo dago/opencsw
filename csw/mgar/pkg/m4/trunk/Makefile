@@ -20,7 +20,7 @@ SPKG_SOURCEURL = http://www.gnu.org/software/m4/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS = CSWlibsigsegv
+DEP_PKGS = CSWlibsigsegv
 
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
 TEST_SCRIPTS =
