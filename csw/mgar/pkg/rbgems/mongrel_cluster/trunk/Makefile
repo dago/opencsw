@@ -1,0 +1,19 @@
+GARNAME = mongrel_cluster
+GARVERSION = 1.0.5
+CATEGORIES = rbgems
+
+DESCRIPTION = Mongrel plugin for managing multiple Mongrel processes
+define BLURB
+  Mongrel plugin that provides commands and Capistrano tasks for managing multiple Mongrel processes
+endef
+
+PACKAGES = CSWgem-mongrelclust
+CATALOGNAME = gem_mongrelclust
+
+LICENSE = LICENSE
+
+DEP_PKGS = CSWgem-gemplugin CSWgem-mongrel
+
+ARCHALL = 1
+
+include gar/category.mk
