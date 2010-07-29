@@ -13,7 +13,7 @@ PATCHFILES += 0002-Add-DESTDIR-support.patch
 PACKAGES = CSWgem-pg
 CATALOGNAME = gem_pg
 
-BUILD_DEP_PKGS = CSWpostgresql CSWgem-rakecompiler
+BUILD_DEP_PKGS = CSWpostgresql CSWgem-rakecompiler CSWgem-rdoc
 RUNTIME_DEP_PKGS = CSWlibpq
 
 LICENSE = LICENSE
@@ -36,7 +36,10 @@ build-ruby-setup:
 	cd $(WORKSRC) && ruby setup.rb setup
 	@$(MAKECOOKIE)
 
-install-ruby-setup: GEM_BUILD_FLAGS=--with-pg-config=/opt/csw/postgresql/bin/pg_config32
+PGCONFIG-sparc = pg_config32
+PGCONFIG-i386 = pg_config
+
+install-ruby-setup: GEM_BUILD_FLAGS=--with-pg-config=/opt/csw/postgresql/bin/$(PGCONFIG-$(GARCH))
 install-ruby-setup:
 	# cd $(WORKSRC) && ruby setup.rb install \
 	#	--prefix=$(DESTDIR)
