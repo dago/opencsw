@@ -1,0 +1,25 @@
+From 078997843bef14704571421c3b7c0c2d62ca62d4 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 29 Jul 2010 17:55:35 +0200
+Subject: [PATCH] Remove gcc specific Wall
+
+---
+ ext/extconf.rb |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+diff --git a/ext/extconf.rb b/ext/extconf.rb
+index 40a4be4..eed6f93 100644
+--- a/ext/extconf.rb
++++ b/ext/extconf.rb
+@@ -119,8 +119,6 @@ have_func 'PQsetClientEncoding'
+ # unistd.h confilicts with ruby/win32.h when cross compiling for win32 and ruby 1.9.1
+ have_header 'unistd.h' unless enable_config("static-build")
+ 
+-$CFLAGS << ' -Wall'
+-
+ create_header()
+ create_makefile( "pg_ext" )
+ 
+-- 
+1.7.1
+

@@ -1,0 +1,3 @@
+ecef2abc5d9e924913fa7ef6c434e46b  0001-Remove-gcc-specific-Wall.patch
+7e0928edce56bfe7ec4e3b17157e0004  0002-Add-DESTDIR-support.patch
+fa129ab6d009cf32502cfda2bf1614b5  pg-0.9.0.gem
