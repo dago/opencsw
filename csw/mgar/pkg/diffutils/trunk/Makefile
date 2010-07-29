@@ -14,7 +14,9 @@ DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWlibsigsegv
-BUILD_DEP_PKGS = CSWtextutils CSWggettext CSWiconv CSWlibsigsegv
+BUILD_DEP_PKGS = CSWggettext CSWiconv CSWlibsigsegv
+
+VENDOR_URL = http://www.gnu.org/software/diffutils/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
