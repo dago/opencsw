@@ -10,6 +10,10 @@ endef
 PACKAGES = CSWgem-rdoc
 CATALOGNAME = gem_rdoc
 
+LICENSE = LICENSE.txt
+
 ARCHALL = 1
+
+EXTRA_GEM_INSTALL_ARGS = --no-rdoc --no-ri
 
 include gar/category.mk
