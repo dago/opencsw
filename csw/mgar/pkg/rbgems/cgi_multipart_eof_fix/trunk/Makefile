@@ -1,0 +1,17 @@
+GARNAME = cgi_multipart_eof_fix
+GARVERSION = 2.5.0
+CATEGORIES = rbgems
+
+DESCRIPTION = Fix an exploitable bug in CGI multipart parsing
+define BLURB
+  Fix an exploitable bug in CGI multipart parsing.
+endef
+
+PACKAGES = CSWgem-cgimultipfix
+CATALOGNAME = gem_cgimultipfix
+
+LICENSE = LICENSE
+
+ARCHALL = 1
+
+include gar/category.mk
