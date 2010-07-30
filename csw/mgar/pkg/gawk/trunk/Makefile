@@ -25,7 +25,7 @@ SRCDIR= build/*
 # DO NOT specify the arch-64 stuff such as -m64 here.
 # the individual targets will do that.
 
-CFLAGS_COMMON   ?= -mt -xnorunpath -fast
+CFLAGS_COMMON   ?= -mt -xnorunpath -fast -xstrconst
 CXXFLAGS_COMMON ?= -mt -norunpath  -fast
 CFLAGS_sparc    ?= -xarch=v8
 CFLAGS_i386     ?= -xarch=386
