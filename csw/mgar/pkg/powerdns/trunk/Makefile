@@ -27,7 +27,6 @@ LICENSE = $(FILEDIR)/LICENSE
 
 GARCOMPILER = GCC3
 PACKAGING_PLATFORMS +=  solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS +=  solaris10-sparc solaris10-i386
 SKIPTEST = 1
 EXTRA_LD_OPTIONS = -R/opt/csw/mysql5/lib/mysql
 
