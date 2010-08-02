@@ -1,0 +1,25 @@
+From 71226a11a4f50d7f8466e9cf4b12c81fbd914e01 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 2 Aug 2010 15:27:04 +0200
+Subject: [PATCH 4/4] Add one more scratch channel or compilation fails
+
+---
+ player/lib/audio/faad/all.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/player/lib/audio/faad/all.h b/player/lib/audio/faad/all.h
+index 95e3379..eed2896 100644
+--- a/player/lib/audio/faad/all.h
++++ b/player/lib/audio/faad/all.h
+@@ -67,7 +67,7 @@ enum
+     BChans	= 1,	/* back channels: left surround, right surround */
+     BCenter	= 0,	/* 1 if decoder has back center channel */
+     LChans	= 1,	/* LFE channels */
+-    XChans	= 1,	/* scratch space for parsing unused channels */  
++    XChans	= 2,	/* scratch space for parsing unused channels */  
+ #endif
+     
+     Chans	= FChans + SChans + BChans + LChans + XChans
+-- 
+1.7.1
+

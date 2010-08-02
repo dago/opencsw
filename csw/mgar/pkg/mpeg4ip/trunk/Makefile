@@ -23,6 +23,10 @@ PATCHFILES  = mpeg4ip-1.6.1-mjj.patch
 
 # PATCHFILES += 0001-Bootstrap-again.patch
 
+PATCHFILES  = 0002-Move-external-function-definition-out-of-function.patch
+PATCHFILES += 0003-Change-type-from-Void-to-void.patch
+PATCHFILES += 0004-Add-one-more-scratch-channel-or-compilation-fails.patch
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 

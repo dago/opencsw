@@ -1,3 +1,4 @@
-a4a8aebe0781d30df528d53fea11fdcf  SDL_sunaudio.c.diff
-0ae174e13da77a783e636aa2904b7c90  mpeg4ip-1.6.1-mjj.patch
+9b430ffe944b42f73dce89c0d9b03b07  0002-Move-external-function-definition-out-of-function.patch
+d05631e273402d4b1f7a99bb96099cf8  0003-Change-type-from-Void-to-void.patch
+9379c5f5331a18f163f64ff32f6feffd  0004-Add-one-more-scratch-channel-or-compilation-fails.patch
 cd81b566cf2fafc7318f58be8998182c  mpeg4ip-1.6.1.tar.gz

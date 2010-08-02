@@ -1,0 +1,25 @@
+From d2a7cdb5c15f21c7a6d8bf3f8ea18255579afe56 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 2 Aug 2010 15:26:10 +0200
+Subject: [PATCH 3/4] Change type from Void to void
+
+---
+ common/video/iso-mpeg4/src/type_basic.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/common/video/iso-mpeg4/src/type_basic.cpp b/common/video/iso-mpeg4/src/type_basic.cpp
+index 8739ad6..7ef1575 100644
+--- a/common/video/iso-mpeg4/src/type_basic.cpp
++++ b/common/video/iso-mpeg4/src/type_basic.cpp
+@@ -317,7 +317,7 @@ Void CMotionVector::computeMV ()
+ 	iHalfY = m_vctTrueHalfPel.y - iMVY * 2;
+ }
+ 
+-Void CMotionVector::setToZero (Void)
++Void CMotionVector::setToZero (void)
+ {
+ 	memset (this, 0, sizeof (*this));
+ }
+-- 
+1.7.1
+

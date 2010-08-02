@@ -1,0 +1,27 @@
+From cc938eabcd2d71d827d01250f843b11becd8e385 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 2 Aug 2010 15:25:06 +0200
+Subject: [PATCH 2/4] Move external function definition out of function
+
+---
+ lib/SDLAudio/src/audio/sun/SDL_sunaudio.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lib/SDLAudio/src/audio/sun/SDL_sunaudio.c b/lib/SDLAudio/src/audio/sun/SDL_sunaudio.c
+index 670aeb2..5a321d5 100644
+--- a/lib/SDLAudio/src/audio/sun/SDL_sunaudio.c
++++ b/lib/SDLAudio/src/audio/sun/SDL_sunaudio.c
+@@ -163,9 +163,9 @@ void DSP_WaitAudio(_THIS)
+ #endif
+ }
+ 
++static Uint8 snd2au(int sample);
+ void DSP_PlayAudio(_THIS)
+ {
+-	static Uint8 snd2au(int sample);
+ 	/* Write the audio data */
+ 	if ( ulaw_only ) {
+ 		/* Assuming that this->spec.freq >= 8000 Hz */
+-- 
+1.7.1
+
