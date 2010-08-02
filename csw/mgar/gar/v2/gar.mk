@@ -237,7 +237,13 @@ endef
 #################### DIRECTORY MAKERS ####################
 
 # This is to make dirs as needed by the base rules
-$(sort $(DOWNLOADDIR) $(PARTIALDIR) $(COOKIEDIR) $(WORKSRC) $(addprefix $(WORKROOTDIR)/build-,global $(MODULATIONS)) $(EXTRACTDIR) $(FILEDIR) $(SCRATCHDIR) $(PKGROOT) $(INSTALL_DIRS) $(INSTALLISADIR) $(GARCHIVEDIR) $(GARPKGDIR) $(STAGINGDIR)) $(COOKIEDIR)/%:
+$(sort $(DOWNLOADDIR) $(PARTIALDIR) $(COOKIEDIR) $(WORKSRC) $(addprefix $(WORKROOTDIR)/build-,global $(MODULATIONS)) $(EXTRACTDIR) $(FILEDIR) $(SCRATCHDIR) $(PKGROOT) $(INSTALL_DIRS) $(INSTALLISADIR) $(GARCHIVEDIR) $(GARPKGDIR) $(STAGINGDIR)):
+	@if test -d $@; then : ; else \
+		ginstall -d $@; \
+		echo "ginstall -d $@"; \
+	fi
+
+$(COOKIEDIR)/%:
 	@if test -d $@; then : ; else \
 		ginstall -d $@; \
 		echo "ginstall -d $@"; \
