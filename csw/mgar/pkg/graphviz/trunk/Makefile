@@ -220,11 +220,7 @@ CONFIGURE_ARGS += --disable-r
 CONFIGURE_ARGS += --enable-static --enable-shared
 
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
 EXTRA_LD_FLAGS = -lm
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 STRIP_LIBTOOL=1
 
