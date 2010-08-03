@@ -1,5 +1,5 @@
 GARNAME = nsd
-GARVERSION = 3.2.5
+GARVERSION = 3.2.6
 CATEGORIES = server
 
 DESCRIPTION = An authoritative only non-recursive name server
@@ -42,9 +42,9 @@ CONFIGURE_ARGS += --with-xfrdfile=/var/opt/csw/nsd/xfrd.state
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/var/opt/csw/nsd
-	@ginstall -d $(DESTDIR)/opt/csw/etc/init.d
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSWnsd
-	@ginstall -m 755 $(FILEDIR)/cswnsd $(DESTDIR)/opt/csw/etc/init.d/cswnsd
+	@ginstall -m 755 $(FILEDIR)/cswnsd $(DESTDIR)/etc/opt/csw/init.d/cswnsd
 	@mv $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.sample $(DESTDIR)/etc/opt/csw/nsd/nsd.conf.CSW
 	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWnsd/cswusergroup
 
