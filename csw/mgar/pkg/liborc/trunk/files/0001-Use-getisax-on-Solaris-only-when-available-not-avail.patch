@@ -1,0 +1,26 @@
+From 7dea861f0db034574600ce648c173dd1a359e61c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 3 Aug 2010 10:28:33 +0200
+Subject: [PATCH] Use getisax on Solaris only when available (not available before Solaris 10)
+
+---
+ orc/orccpu-x86.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/orc/orccpu-x86.c b/orc/orccpu-x86.c
+index a63e8db..8e62ed3 100644
+--- a/orc/orccpu-x86.c
++++ b/orc/orccpu-x86.c
+@@ -54,7 +54,9 @@
+ /***** i386, amd64 *****/
+ 
+ #if defined(__sun)
++#if defined(_SYS_AUXV_386_H)
+ #define USE_I386_GETISAX
++#endif
+ #else
+ #define USE_I386_CPUID
+ #endif
+-- 
+1.7.1
+
