@@ -20,7 +20,7 @@ diff -ur multitail-5.2.2.orig/makefile.solaris_sunwspro multitail-5.2.2/makefile
  
 -DESTDIR=/
 -CONFIG_FILE=$(DESTDIR)/etc/multitail.conf
-+CONFIG_FILE=$(prefix)/etc/multitail.conf
++CONFIG_FILE=$(sysconfdir)/multitail.conf
  
 -DEBUG=#-g -D_DEBUG #-pg #-fprofile-arcs
 -CFLAGS=${EXTRA_CFLAGS} -O2 -I/usr/local/include/ -D_STDC_C99 -DVERSION=\"$(VERSION)\" $(DEBUG) -DCONFIG_FILE=\"$(CONFIG_FILE)\"
