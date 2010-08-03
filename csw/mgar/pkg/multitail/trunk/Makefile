@@ -33,7 +33,7 @@ sysconfdir = /etc/opt/csw
 # Use provided Solaris Makefile
 BUILD_ARGS  = -f makefile.solaris_sunwspro
 
-PRESERVECONF = .*/multitail\.conf\.CSW
+PRESERVECONF = .*/multitail\.conf
 MIGRATE_FILES = multitail.conf
 
 CHECKPKG_OVERRIDES_CSWmultitail += missing-dependency|CSWperl
@@ -46,15 +46,15 @@ install-custom: EXTRA_DATA += colors-example.pl colors-example.sh
 install-custom: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 install-custom: DATADEST = $(DESTDIR)$(datadir)/$(GARNAME)
 install-custom:
-	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall -d $(DESTDIR)$(mandir)/man1
-	@ginstall -d $(DESTDIR)$(sysconfdir)
-	@ginstall -m 755 $(WORKSRC)/multitail $(DESTDIR)$(bindir)
-	@ginstall -m 644 $(WORKSRC)/multitail.1 $(DESTDIR)$(mandir)/man1
-	@ginstall -m 644 $(WORKSRC)/multitail.conf \
-		$(DESTDIR)$(sysconfdir)/multitail.conf.CSW
-	@ginstall -d $(DATADEST) $(DOCDEST)
-	@(cd $(WORKSRC); ginstall -m 644 $(EXTRA_DATA) $(DATADEST))
-	@(cd $(WORKSRC); ginstall -m 644 $(EXTRA_DOCS) $(DOCDEST))
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
+	ginstall -d $(DESTDIR)$(bindir)
+	ginstall -d $(DESTDIR)$(mandir)/man1
+	ginstall -d $(DESTDIR)$(sysconfdir)
+	ginstall -m 755 $(WORKSRC)/multitail $(DESTDIR)$(bindir)
+	ginstall -m 644 $(WORKSRC)/multitail.1 $(DESTDIR)$(mandir)/man1
+	ginstall -m 644 $(WORKSRC)/multitail.conf \
+		$(DESTDIR)$(sysconfdir)/multitail.conf
+	ginstall -d $(DATADEST) $(DOCDEST)
+	(cd $(WORKSRC); ginstall -m 644 $(EXTRA_DATA) $(DATADEST))
+	(cd $(WORKSRC); ginstall -m 644 $(EXTRA_DOCS) $(DOCDEST))
+	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@$(MAKECOOKIE)

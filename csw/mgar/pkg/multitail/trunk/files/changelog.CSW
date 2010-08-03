@@ -1,3 +1,10 @@
+multitail (5.2.6,REV=2010.08.03)
+
+  * Version bump to 5.2.6.
+  * Moved configuration directory from /opt/csw/etc to /etc/opt/csw.
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Tue,  3 Aug 2010 11:39:40 +0200
+
 multitail (5.2.2,REV=2009.05.20)
 
   * Initial release.
