@@ -26,7 +26,7 @@ SPKG_DESC_CSWpy-cairo        = $(DESCRIPTION)
 
 RUNTIME_DEP_PKGS_CSWpy-cairo = CSWlibcairo CSWpython
 
-CAIRO_LIBS = -L/opt/csw/lib -R/opt/csw/lib/$$ISALIST -lcairo
+CAIRO_LIBS = -L/opt/csw/lib -R/opt/csw/lib/\$$ISALIST -lcairo
 CAIRO_CFLAGS = -I/opt/csw/include -I/opt/csw/include/cairo
 EXTRA_CONFIGURE_EXPORTS += CAIRO_LIBS CAIRO_CFLAGS
 CONFIGURE_ARGS = $(DIRPATHS)
