@@ -1,5 +1,5 @@
 GARNAME      = pycairo
-GARVERSION   = 1.8.8
+GARVERSION   = 1.8.10
 CATEGORIES   = lib
 
 DESCRIPTION  = Python binding for Cairo library
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES  = http://www.cairographics.org/releases/
-DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES     = py2cairo-$(GARVERSION).tar.gz
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc 
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
@@ -18,7 +18,7 @@ RUNTIME_DEP_PKGS += CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = py2cairo-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpy-cairo
 
 CATALOGNAME_CSWpy-cairo      = py_cairo
