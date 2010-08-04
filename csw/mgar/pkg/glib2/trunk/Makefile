@@ -48,7 +48,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 BUILD64 = 1
 NOISAEXEC = 1
 
-BUILD_DEP_PKGS = CSWggettext CSWperl
+BUILD_DEP_PKGS = CSWggettext
 
 RUNTIME_DEP_PKGS_CSWglib2 += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWglib2 += CSWiconv
@@ -59,6 +59,7 @@ RUNTIME_DEP_PKGS_CSWglib2devel += CSWglib2
 RUNTIME_DEP_PKGS_CSWglib2devel += CSWiconv
 RUNTIME_DEP_PKGS_CSWglib2devel += CSWpython
 RUNTIME_DEP_PKGS_CSWglib2devel += CSWzlib
+RUNTIME_DEP_PKGS_CSWglib2devel += CSWperl
 
 # Some tests fail, they may be harmless, disable for now, but check later!
 SKIPTEST ?= 1
