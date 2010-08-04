@@ -85,6 +85,22 @@ PKGFILES_CSWorcaweb += $(mandir)/man1/orca\.1
 PKGFILES_CSWorcaweb += /var/opt/csw/.*
 PKGFILES_CSWorcaweb += /etc/opt/csw/init.d/csworca
 
+# This one is purely optional
+CHECKPKG_OVERRIDES_CSWorca += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/csworca_services|class=none
+
+# Checkpkg can't track Perl dependencies
+CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWgawk
+CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWrrd
+CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWpmtimedate
+CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWpmmathinterpolate
+CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWbzip2
+CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWsetoolkit
+CHECKPKG_OVERRIDES_CSWorcaweb += surplus-dependency|CSWrrd
+CHECKPKG_OVERRIDES_CSWorcaweb += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWorcaweb += surplus-dependency|CSWpmtimedate
+CHECKPKG_OVERRIDES_CSWorcaweb += surplus-dependency|CSWpmmathinterpolate
+
 include gar/category.mk
 
 post-install-modulated:
