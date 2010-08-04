@@ -19,13 +19,25 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-# TODO:
-# - Add stuff from contrib
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_SOURCEURL = http://mtx.opensource-sw.net/
+LICENSE = LICENSE
+LICENSE_CSWmtxcontrib = contrib/README
+
+PACKAGES = CSWmtx CSWmtxcontrib
+
+CATALOGNAME_CSWmtx = mtx
+CATALOGNAME_CSWmtxcontrib = mtx_contrib
+
+SPKG_DESC_CSWmtx = Control tape autoloaders
+SPKG_DESC_CSWmtxcontrib = MTX contributed scripts
+
+RUNTIME_DEP_PKGS_CSWmtxcontrib = CSWmtx CSWtk
+
+VENDOR_URL = http://mtx.opensource-sw.net/
+
+CONTRIBDIR = $(sharedstatedir)/mtx/contrib
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -33,8 +45,22 @@ TEST_TARGET =
 
 INSTALL_OVERRIDE_DIRS = sbindir mandir
 
+ARCHALL_CSWmtxcontrib = 1
+
+PKGFILES_CSWmtxcontrib = $(CONTRIBDIR)/.*
+
+CHECKPKG_OVERRIDES_CSWmtxcontrib += surplus-dependency|CSWtk
+CHECKPKG_OVERRIDES_CSWmtxcontrib += surplus-dependency|CSWmtx
+
 include gar/category.mk
 
+post-extract-modulated:
+	-cd $(WORKSRC)/contrib; gzip -c -d mtxctl-0.0.2.tar.gz | tar xvf -
+	@$(MAKECOOKIE)
+
 post-install-modulated:
-	ginstall $(WORKSRC)/contrib/config_sgen_solaris.sh $(DESTDIR)$(sbindir)
+	ginstall -d $(DESTDIR)$(CONTRIBDIR)
+	ginstall $(WORKSRC)/contrib/config_sgen_solaris.sh $(DESTDIR)$(CONTRIBDIR)/
+	ginstall $(WORKSRC)/contrib/mtxctl/mtxctl.tk $(DESTDIR)$(CONTRIBDIR)/mtxctl
+	perl -pi -e 's,#!/usr/freeware/bin/wish -f,#!/opt/csw/bin/wish -f,' $(DESTDIR)$(CONTRIBDIR)/mtxctl
 	@$(MAKECOOKIE)
