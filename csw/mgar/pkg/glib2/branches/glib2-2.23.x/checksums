@@ -1,0 +1,8 @@
+39b575a4c1dd2234a88d755a13332458  0001-Make-sure-we-have-the-include-for-major-minor.patch
+a87638e0505b6ff29efd8130450003c5  0001-Use-G_STRFUNC-instead-of-explicit-gcc-only-__PRETTY_.patch
+9f66027a275eb34d80a68ec8927bf66e  CMSG_LEN.patch
+f1f3c182f64be06ab57d8b01016af074  FIXED_STR.patch
+ed4a6616a70705b56babe709787431d4  gconverter.patch
+72e6eadc16d7022376ecef12c6fe905e  glib-2.23.6.tar.bz2
+8f683820d9ecab1abd9dbe81997ab9eb  glib-typedetect.patch
+bb2fb8eef43c995fea6c08563487ace6  gsize.patch
