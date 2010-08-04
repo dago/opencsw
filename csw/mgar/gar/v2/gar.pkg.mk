@@ -587,8 +587,8 @@ endef
 define licensefile
 $(strip 
   $(or 
-    $(call findlicensefile,$(or $(LICENSE_$(1)),$(LICENSE_FULL_$(1)))) 
-    $(call findlicensefile,$(or $(LICENSE),$(LICENSE_FULL))), 
+    $(call findlicensefile,$(or $(LICENSE_$(1)),$(LICENSE_FULL_$(1)))),
+    $(call findlicensefile,$(or $(LICENSE),$(LICENSE_FULL))),
   ) 
 )
 endef
