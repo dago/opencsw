@@ -18,6 +18,7 @@ case "$1" in
     ;;
 
   stop)
+    rmdir /etc/opt/csw/orcallator.cfg.lock
     if test -f /var/run/orca.pid; then
       kill `cat /var/run/orca.pid`
       rm -f /var/run/orca.pid
