@@ -48,7 +48,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 BUILD64 = 1
 NOISAEXEC = 1
 
-BUILD_DEP_PKGS = CSWggettext
+BUILD_DEP_PKGS = CSWggettext CSWperl
 
 RUNTIME_DEP_PKGS_CSWglib2 += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWglib2 += CSWiconv
