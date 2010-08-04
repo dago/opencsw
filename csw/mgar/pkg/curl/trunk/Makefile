@@ -39,15 +39,9 @@ SPKG_SOURCEURL = http://curl.haxx.se
 EXTRA_MODULATORS = FEATURES
 MODULATIONS_FEATURES = minimal full
 
-# amd64 is built without openldap because there are no libs available right now (Mantis 3028)
-EXTRA_CONFIGURE_ARGS_LDAP_isa-sparcv8 = --enable-ldap --enable-ldaps
-EXTRA_CONFIGURE_ARGS_LDAP_isa-sparcv9 = --enable-ldap --enable-ldaps
-EXTRA_CONFIGURE_ARGS_LDAP_isa-i386    = --enable-ldap --enable-ldaps
-EXTRA_CONFIGURE_ARGS_LDAP_isa-amd64   = --disable-ldap
-
 EXTRA_CONFIGURE_ARGS_features-minimal = --disable-ldap --without-libssh2 --disable-ares
 EXTRA_CONFIGURE_ARGS_features-full    = --enable-ares --with-spnego=$(libdir)
-EXTRA_CONFIGURE_ARGS_features-full   += $(EXTRA_CONFIGURE_ARGS_LDAP_isa-$(ISA))
+EXTRA_CONFIGURE_ARGS_features-full   += --enable-ldap --enable-ldaps
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw/ssl
