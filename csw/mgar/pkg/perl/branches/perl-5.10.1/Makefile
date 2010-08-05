@@ -19,7 +19,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWperl CSWperldoc
 ARCHALL_CSWperldoc = 1
-RUNTIME_DEP_PKGS_CSWperl = CSWbdb47 CSWgdbm
+RUNTIME_DEP_PKGS_CSWperl = CSWbdb48 CSWgdbm
 RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
 INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
 
@@ -27,6 +27,8 @@ SPKG_DESC_CSWperl = $(DESCRIPTION)
 SPKG_DESC_CSWperldoc = Perl documentation
 
 LICENSE = Copying
+
+CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 
 # Core module updates
 #MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
@@ -69,8 +71,8 @@ CONFIGURE_SCRIPTS = perl
 # Compatable with all prior patch revs
 INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0
 
-# Force use of db-4.7
-PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.7 -ldl -lm -lpthread -lc -lperl
+# Force use of db-4.8
+PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl
 
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(GARVERSION)
@@ -101,6 +103,7 @@ CONFIGURE_ARGS += -Duselargefiles
 CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
+#CONFIGURE_ARGS += -Dusedtrace
 CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
@@ -108,8 +111,8 @@ CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
 CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/lib"
 CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 
-EXTRA_LIB += $(prefix)/bdb47/lib
-EXTRA_INC += $(prefix)/bdb47/include
+EXTRA_LIB += $(prefix)/bdb48/lib
+EXTRA_INC += $(prefix)/bdb48/include
 
 #EXTRA_LDFLAGS = -lperl
 EXTRA_LDFLAGS = -L$(libdir) -lperl
