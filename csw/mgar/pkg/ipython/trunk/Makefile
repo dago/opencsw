@@ -9,7 +9,7 @@ define BLURB
 	or other textual content for output generation on the web
 endef
 
-MASTER_SITES = http://ipython.scipy.org/dist/
+MASTER_SITES = http://ipython.scipy.org/dist/$(GARVERSION)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 ARCHALL_CSWipython = 1
