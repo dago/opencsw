@@ -1,0 +1,49 @@
+From c876a8c9db773cccaf4da87a7a30d95bff0e42d9 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Aug 2010 15:32:10 +0200
+Subject: [PATCH 2/6] Use putenv instead of setenv
+
+---
+ conf.c |    6 ++++++
+ unix.c |    6 ++++++
+ 2 files changed, 12 insertions(+), 0 deletions(-)
+
+diff --git a/conf.c b/conf.c
+index 337d0cf..21802b8 100644
+--- a/conf.c
++++ b/conf.c
+@@ -159,7 +159,13 @@ conf_t *conf_load( int argc, char *argv[] )
+ 			/* Backward compatibility; older BitlBees passed this
+ 			   info using a command-line flag. Allow people to
+ 			   upgrade from such a version for now. */
++#if(__sun)
++			char dummy[100];
++			g_snprintf( dummy, sizeof( dummy ), "_BITLBEE_RESTART_STATE=%s", optarg );
++			putenv( dummy );
++#else
+ 			setenv( "_BITLBEE_RESTART_STATE", optarg, 0 );
++#endif
+ 		}
+ 		else if( opt == 'u' )
+ 		{
+diff --git a/unix.c b/unix.c
+index d58395a..fbf64ef 100644
+--- a/unix.c
++++ b/unix.c
+@@ -155,7 +155,13 @@ int main( int argc, char *argv[] )
+ 		
+ 		chdir( old_cwd );
+ 		
++#if(__sun)
++		char dummy[100];
++		g_snprintf( dummy, sizeof( dummy ), "_BITLBEE_RESTART_STATE=%s", fn );
++		putenv( dummy );
++#else
+ 		setenv( "_BITLBEE_RESTART_STATE", fn, 1 );
++#endif
+ 		g_free( fn );
+ 		
+ 		close( global.listen_socket );
+-- 
+1.7.1
+

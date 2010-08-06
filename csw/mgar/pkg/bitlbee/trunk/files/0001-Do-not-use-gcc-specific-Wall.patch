@@ -1,0 +1,37 @@
+From 7069c4750ecf45a92810d9610ee040206b8afc41 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Aug 2010 14:49:34 +0200
+Subject: [PATCH 1/6] Do not use gcc-specific -Wall
+
+---
+ Makefile     |    1 -
+ lib/Makefile |    1 -
+ 2 files changed, 0 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 15db509..fd49aef 100644
+--- a/Makefile
++++ b/Makefile
+@@ -25,7 +25,6 @@ endif
+ 
+ # Expansion of variables
+ subdirobjs = $(foreach dir,$(subdirs),$(dir)/$(dir).o)
+-CFLAGS += -Wall
+ 
+ all: $(OUTFILE)
+ 	$(MAKE) -C doc
+diff --git a/lib/Makefile b/lib/Makefile
+index 441634c..d1149b0 100644
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -11,7 +11,6 @@
+ # [SH] Program variables
+ objects = arc.o base64.o $(EVENT_HANDLER) http_client.o ini.o md5.o misc.o oauth.o proxy.o sha1.o $(SSL_CLIENT) url.o xmltree.o
+ 
+-CFLAGS += -Wall
+ LFLAGS += -r
+ 
+ # [SH] Phony targets
+-- 
+1.7.1
+

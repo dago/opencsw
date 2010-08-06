@@ -1,0 +1,64 @@
+From 389ee34d25b02a9ad2df1da49d9f6035766f3c45 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Aug 2010 15:34:40 +0200
+Subject: [PATCH 4/6] Use inttypes.h instead of stdint.h
+
+---
+ lib/md5.h          |    4 ++++
+ lib/sha1.h         |    4 ++++
+ protocols/nogaim.h |    6 ++++++
+ 3 files changed, 14 insertions(+), 0 deletions(-)
+
+diff --git a/lib/md5.h b/lib/md5.h
+index 094507b..3ba2858 100644
+--- a/lib/md5.h
++++ b/lib/md5.h
+@@ -26,7 +26,11 @@
+ 
+ #include <sys/types.h>
+ #include <gmodule.h>
++#if(__sun)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
+ 
+ typedef uint8_t md5_byte_t;
+ typedef struct MD5Context {
+diff --git a/lib/sha1.h b/lib/sha1.h
+index 368c066..4ef8ac9 100644
+--- a/lib/sha1.h
++++ b/lib/sha1.h
+@@ -23,7 +23,11 @@
+ #ifndef _SHA1_H_
+ #define _SHA1_H_
+ 
++#if(__sun)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
+ #include <gmodule.h>
+ 
+ #ifndef _SHA_enum_
+diff --git a/protocols/nogaim.h b/protocols/nogaim.h
+index 48a8041..27ef511 100644
+--- a/protocols/nogaim.h
++++ b/protocols/nogaim.h
+@@ -38,7 +38,13 @@
+ #ifndef _NOGAIM_H
+ #define _NOGAIM_H
+ 
++#if(__sun)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
++
++#include "lib/events.h"
+ 
+ #include "bitlbee.h"
+ #include "account.h"
+-- 
+1.7.1
+

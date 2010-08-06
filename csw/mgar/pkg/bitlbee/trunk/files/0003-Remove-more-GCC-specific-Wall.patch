@@ -1,0 +1,90 @@
+From cdcf79c13688a644aa23d8421a43f93f00386d69 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Aug 2010 15:33:32 +0200
+Subject: [PATCH 3/6] Remove more GCC specific -Wall
+
+---
+ protocols/Makefile         |    1 -
+ protocols/jabber/Makefile  |    1 -
+ protocols/msn/Makefile     |    1 -
+ protocols/oscar/Makefile   |    1 -
+ protocols/twitter/Makefile |    1 -
+ protocols/yahoo/Makefile   |    2 +-
+ 6 files changed, 1 insertions(+), 6 deletions(-)
+
+diff --git a/protocols/Makefile b/protocols/Makefile
+index 18d79e8..b360808 100644
+--- a/protocols/Makefile
++++ b/protocols/Makefile
+@@ -20,7 +20,6 @@ subdirobjs = $(PROTOOBJS)
+ 
+ # Expansion of variables
+ subdirobjs := $(join $(subdirs),$(addprefix /,$(subdirobjs)))
+-CFLAGS += -Wall
+ LFLAGS += -r
+ 
+ # [SH] Phony targets
+diff --git a/protocols/jabber/Makefile b/protocols/jabber/Makefile
+index e7a505b..f41e616 100644
+--- a/protocols/jabber/Makefile
++++ b/protocols/jabber/Makefile
+@@ -11,7 +11,6 @@
+ # [SH] Program variables
+ objects = conference.o io.o iq.o jabber.o jabber_util.o message.o presence.o sasl.o
+ 
+-CFLAGS += -Wall
+ LFLAGS += -r
+ 
+ # [SH] Phony targets
+diff --git a/protocols/msn/Makefile b/protocols/msn/Makefile
+index 6a58861..4089eda 100644
+--- a/protocols/msn/Makefile
++++ b/protocols/msn/Makefile
+@@ -11,7 +11,6 @@
+ # [SH] Program variables
+ objects = msn.o msn_util.o ns.o passport.o sb.o tables.o
+ 
+-CFLAGS += -Wall
+ LFLAGS += -r
+ 
+ # [SH] Phony targets
+diff --git a/protocols/oscar/Makefile b/protocols/oscar/Makefile
+index 2792f22..5e9307d 100644
+--- a/protocols/oscar/Makefile
++++ b/protocols/oscar/Makefile
+@@ -11,7 +11,6 @@
+ # [SH] Program variables
+ objects = admin.o auth.o bos.o buddylist.o chat.o chatnav.o conn.o icq.o im.o info.o misc.o msgcookie.o rxhandlers.o rxqueue.o search.o service.o snac.o ssi.o stats.o tlv.o txqueue.o oscar_util.o oscar.o
+ 
+-CFLAGS += -Wall
+ LFLAGS += -r
+ 
+ # [SH] Phony targets
+diff --git a/protocols/twitter/Makefile b/protocols/twitter/Makefile
+index ca1e469..111ae4b 100644
+--- a/protocols/twitter/Makefile
++++ b/protocols/twitter/Makefile
+@@ -11,7 +11,6 @@
+ # [SH] Program variables
+ objects = twitter.o twitter_http.o twitter_lib.o
+ 
+-CFLAGS += -Wall
+ LFLAGS += -r
+ 
+ # [SH] Phony targets
+diff --git a/protocols/yahoo/Makefile b/protocols/yahoo/Makefile
+index b4fe56e..a38a1cb 100644
+--- a/protocols/yahoo/Makefile
++++ b/protocols/yahoo/Makefile
+@@ -11,7 +11,7 @@
+ # [SH] Program variables
+ objects = yahoo.o crypt.o libyahoo2.o yahoo_fn.o yahoo_httplib.o yahoo_util.o
+ 
+-CFLAGS += -Wall -DSTDC_HEADERS -DHAVE_STRING_H -DHAVE_STRCHR -DHAVE_MEMCPY -DHAVE_GLIB
++CFLAGS += -DSTDC_HEADERS -DHAVE_STRING_H -DHAVE_STRCHR -DHAVE_MEMCPY -DHAVE_GLIB
+ LFLAGS += -r
+ 
+ # [SH] Phony targets
+-- 
+1.7.1
+

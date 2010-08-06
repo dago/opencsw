@@ -1,0 +1,25 @@
+From 484c67ccecd26bde8992d79a8a2260fa91bfef40 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Aug 2010 16:00:48 +0200
+Subject: [PATCH] Honour CPPFLAGS
+
+---
+ configure |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/configure b/configure
+index 24f60d7..756d144 100755
+--- a/configure
++++ b/configure
+@@ -159,6 +159,8 @@ fi
+ echo CFLAGS=$CFLAGS >> Makefile.settings
+ echo CFLAGS+=-I`pwd` -I`pwd`/lib -I`pwd`/protocols -I. >> Makefile.settings
+ 
++echo CFLAGS+=$CPPFLAGS >> Makefile.settings
++
+ echo CFLAGS+=-DHAVE_CONFIG_H >> Makefile.settings
+ 
+ if [ -n "$CC" ]; then
+-- 
+1.7.1
+

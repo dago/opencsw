@@ -1,0 +1,209 @@
+From 858b58c86e8a1150d7ca3ab3f8ae5c8b83ad5f36 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 6 Aug 2010 15:37:29 +0200
+Subject: [PATCH 5/6] Do not return values in void functions and make second argument in ternary explicit
+
+---
+ irc_commands.c              |    3 ++-
+ lib/oauth.c                 |    2 +-
+ lib/xmltree.c               |    3 ++-
+ protocols/jabber/jabber.c   |    4 ++--
+ protocols/jabber/message.c  |    4 ++--
+ protocols/msn/msn.c         |    2 +-
+ protocols/nogaim.c          |   13 +++++++------
+ protocols/yahoo/libyahoo2.c |    9 +++++----
+ 8 files changed, 22 insertions(+), 18 deletions(-)
+
+diff --git a/irc_commands.c b/irc_commands.c
+index 7a286ce..e1a2201 100644
+--- a/irc_commands.c
++++ b/irc_commands.c
+@@ -38,7 +38,8 @@ static void irc_cmd_pass( irc_t *irc, char **cmd )
+ 		   command last. (Possibly it won't send it at all if it turns
+ 		   out we don't require it, which will break this feature.)
+ 		   Try to identify using the given password. */
+-		return root_command( irc, send_cmd );
++		root_command( irc, send_cmd );
++		return;
+ 	}
+ 	/* Handling in pre-logged-in state, first see if this server is
+ 	   password-protected: */
+diff --git a/lib/oauth.c b/lib/oauth.c
+index c60a5a5..57dd10f 100644
+--- a/lib/oauth.c
++++ b/lib/oauth.c
+@@ -59,7 +59,7 @@ static char *oauth_sign( const char *method, const char *url,
+ 	else
+ 	{
+ 		g_snprintf( (gchar*) key, HMAC_BLOCK_SIZE + 1, "%s&%s",
+-		            oi->sp->consumer_secret, oi->token_secret ? : "" );
++		            oi->sp->consumer_secret, oi->token_secret ? oi->token_secret : "" );
+ 	}
+ 	
+ 	/* Inner part: H(K XOR 0x36, text) */
+diff --git a/lib/xmltree.c b/lib/xmltree.c
+index 31f8ee9..3da6e42 100644
+--- a/lib/xmltree.c
++++ b/lib/xmltree.c
+@@ -214,7 +214,8 @@ void xt_cleanup( struct xt_parser *xt, struct xt_node *node, int depth )
+ 		return;
+ 	
+ 	if( node == NULL )
+-		return xt_cleanup( xt, xt->root, depth );
++		xt_cleanup( xt, xt->root, depth );
++		return;
+ 	
+ 	if( node->flags & XT_SEEN && node == xt->root )
+ 	{
+diff --git a/protocols/jabber/jabber.c b/protocols/jabber/jabber.c
+index 75351d0..c24d231 100644
+--- a/protocols/jabber/jabber.c
++++ b/protocols/jabber/jabber.c
+@@ -366,7 +366,7 @@ static void jabber_get_info( struct im_connection *ic, char *who )
+ 		imcb_log( ic, "Buddy %s (%d) information:", bud->full_jid, bud->priority );
+ 		if( bud->away_state )
+ 			imcb_log( ic, "Away state: %s", bud->away_state->full_name );
+-		imcb_log( ic, "Status message: %s", bud->away_message ? : "(none)" );
++		imcb_log( ic, "Status message: %s", bud->away_message ? bud->away_message : "(none)" );
+ 		
+ 		bud = bud->next;
+ 	}
+@@ -381,7 +381,7 @@ static void jabber_set_away( struct im_connection *ic, char *state_txt, char *me
+ 	/* state_txt == NULL -> Not away.
+ 	   Unknown state -> fall back to the first defined away state. */
+ 	jd->away_state = state_txt ? jabber_away_state_by_name( state_txt )
+-	                 ? : jabber_away_state_list : NULL;
++	                 ? jabber_away_state_by_name( state_txt ) : jabber_away_state_list : NULL;
+ 	
+ 	g_free( jd->away_message );
+ 	jd->away_message = ( message && *message ) ? g_strdup( message ) : NULL;
+diff --git a/protocols/jabber/message.c b/protocols/jabber/message.c
+index fa915bd..86dd6f5 100644
+--- a/protocols/jabber/message.c
++++ b/protocols/jabber/message.c
+@@ -58,7 +58,7 @@ xt_status jabber_pkt_message( struct xt_node *node, gpointer data )
+ 			    ( inv = xt_find_node( c->children, "invite" ) ) )
+ 			{
+ 				room = from;
+-				from = xt_find_attr( inv, "from" ) ? : from;
++				from = xt_find_attr( inv, "from" ) ? xt_find_attr( inv, "from" ) : from;
+ 
+ 				g_string_append_printf( fullmsg, "<< \002BitlBee\002 - Invitation to chatroom %s >>\n", room );
+ 				if( ( reason = xt_find_node( inv->children, "reason" ) ) && reason->text_len > 0 )
+@@ -71,7 +71,7 @@ xt_status jabber_pkt_message( struct xt_node *node, gpointer data )
+ 			if( bud )
+ 			{
+ 				bud->last_msg = time( NULL );
+-				from = bud->ext_jid ? : bud->bare_jid;
++				from = bud->ext_jid ? bud->ext_jid : bud->bare_jid;
+ 			}
+ 			else
+ 				*s = 0; /* We need to generate a bare JID now. */
+diff --git a/protocols/msn/msn.c b/protocols/msn/msn.c
+index 7dbdb9d..0e7e73c 100644
+--- a/protocols/msn/msn.c
++++ b/protocols/msn/msn.c
+@@ -153,7 +153,7 @@ static void msn_set_away( struct im_connection *ic, char *state, char *message )
+ 	struct msn_data *md = ic->proto_data;
+ 	
+ 	if( state )
+-		md->away_state = msn_away_state_by_name( state ) ? :
++		md->away_state = msn_away_state_by_name( state ) ? msn_away_state_by_name( state ) :
+ 		                 msn_away_state_list + 1;
+ 	else
+ 		md->away_state = msn_away_state_list;
+diff --git a/protocols/nogaim.c b/protocols/nogaim.c
+index 2248d11..12940a3 100644
+--- a/protocols/nogaim.c
++++ b/protocols/nogaim.c
+@@ -578,7 +578,7 @@ void imcb_ask_auth( struct im_connection *ic, const char *handle, const char *re
+ 		realname_ = g_strdup_printf( " (%s)", realname );
+ 	
+ 	s = g_strdup_printf( "The user %s%s wants to add you to his/her buddy list.",
+-	                     handle, realname_ ?: "" );
++	                     handle, realname_ ? realname_ : "" );
+ 	
+ 	g_free( realname_ );
+ 	
+@@ -600,7 +600,8 @@ static void imcb_ask_add_cb_yes( void *data )
+ 	
+ 	cbd->ic->acc->prpl->add_buddy( cbd->ic, cbd->handle, NULL );
+ 	
+-	return imcb_ask_add_cb_no( data );
++	imcb_ask_add_cb_no( data );
++	return;
+ }
+ 
+ void imcb_ask_add( struct im_connection *ic, const char *handle, const char *realname )
+@@ -971,7 +972,7 @@ void imcb_chat_msg( struct groupchat *c, const char *who, char *msg, uint32_t fl
+ 		char *ts = NULL;
+ 		if( set_getbool( &ic->irc->set, "display_timestamps" ) )
+ 			ts = format_timestamp( ic->irc, sent_at );
+-		irc_privmsg( ic->irc, u, "PRIVMSG", c->channel, ts ? : "", wrapped );
++		irc_privmsg( ic->irc, u, "PRIVMSG", c->channel, ts ? ts : "", wrapped );
+ 		g_free( ts );
+ 	}
+ 	else
+@@ -1302,17 +1303,17 @@ int imc_away_send_update( struct im_connection *ic )
+ 		return 0;
+ 	
+ 	away = set_getstr( &ic->acc->set, "away" ) ?
+-	     : set_getstr( &ic->irc->set, "away" );
++	     set_getstr( &ic->acc->set, "away" ) : set_getstr( &ic->irc->set, "away" );
+ 	if( away && *away )
+ 	{
+ 		GList *m = ic->acc->prpl->away_states( ic );
+ 		msg = ic->acc->flags & ACC_FLAG_AWAY_MESSAGE ? away : NULL;
+-		away = imc_away_state_find( m, away, &msg ) ? : m->data;
++		away = imc_away_state_find( m, away, &msg ) ? imc_away_state_find( m, away, &msg ) : m->data;
+ 	}
+ 	else if( ic->acc->flags & ACC_FLAG_STATUS_MESSAGE )
+ 	{
+ 		away = NULL;
+-		msg = set_getstr( &ic->acc->set, "status" ) ?
++		msg = set_getstr( &ic->acc->set, "status" ) ? set_getstr( &ic->acc->set, "status" )
+ 		    : set_getstr( &ic->irc->set, "status" );
+ 	}
+ 	
+diff --git a/protocols/yahoo/libyahoo2.c b/protocols/yahoo/libyahoo2.c
+index 1bfc2e5..eeab5a1 100644
+--- a/protocols/yahoo/libyahoo2.c
++++ b/protocols/yahoo/libyahoo2.c
+@@ -2366,7 +2366,8 @@ static void yahoo_https_auth_token_finish(struct http_request *req)
+ 		goto fail;
+ 	}
+ 	
+-	return yahoo_https_auth_init(had);
++	yahoo_https_auth_init(had);
++	return;
+ 	
+ fail:
+ 	g_free(had->token);
+@@ -4369,7 +4370,7 @@ void yahoo_accept_buddy_ymsg13(int id,const char* me,const char* who){
+ 	struct yahoo_packet* pkt=NULL;
+ 	pkt= yahoo_packet_new(YAHOO_SERVICE_CONTACT_YMSG13,YAHOO_STATUS_AVAILABLE,0);
+ 
+-	yahoo_packet_hash(pkt,1,me ?: yd->user);	
++	yahoo_packet_hash(pkt,1,me ? me : yd->user);	
+ 	yahoo_packet_hash(pkt,5,who);
+ 	yahoo_packet_hash(pkt,13,"1");
+ 	yahoo_packet_hash(pkt,334,"0");
+@@ -4388,13 +4389,13 @@ void yahoo_reject_buddy_ymsg13(int id,const char* me,const char* who,const char*
+ 	struct yahoo_packet* pkt=NULL;
+ 	pkt= yahoo_packet_new(YAHOO_SERVICE_CONTACT_YMSG13,YAHOO_STATUS_AVAILABLE,0);
+ 
+-	yahoo_packet_hash(pkt,1,me ?: yd->user);	
++	yahoo_packet_hash(pkt,1,me ? me : yd->user);	
+ 	yahoo_packet_hash(pkt,5,who);
+ //	yahoo_packet_hash(pkt,241,YAHOO_PROTO_VER);
+ 	yahoo_packet_hash(pkt,13,"2");
+ 	yahoo_packet_hash(pkt,334,"0");
+ 	yahoo_packet_hash(pkt,97,"1");
+-	yahoo_packet_hash(pkt,14,msg?:"");
++	yahoo_packet_hash(pkt,14,msg? msg :"");
+ 
+ 	yahoo_send_packet(yid, pkt, 0);
+ 	yahoo_packet_free(pkt);
+-- 
+1.7.1
+

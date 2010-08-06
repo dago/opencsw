@@ -1,0 +1,8 @@
+86455864950f3515af0aa3139261116d  0001-Do-not-use-gcc-specific-Wall.patch
+eb620e3a4a5039257e82e5b79b11a53e  0002-Use-putenv-instead-of-setenv.patch
+35de44f17737a50ef0a76116244eae9e  0003-Remove-more-GCC-specific-Wall.patch
+16477a0ba0a265d4d36bfbed00a5018d  0004-Use-inttypes.h-instead-of-stdint.h.patch
+bbeb1ac0c41643a7f0a90e81a7cc0f18  0005-Do-not-return-values-in-void-functions-and-make-seco.patch
+a019ebad5677f5f85a4c18e3ad584bb0  0006-Remove-definition-on-Solaris-confusing-includes.patch
+f370d257f076fbd269edbff912d281d1  0007-Honour-CPPFLAGS.patch
+e1fbbd9d96ec7c2377b1b286689c1b83  bitlbee-1.2.8.tar.gz
