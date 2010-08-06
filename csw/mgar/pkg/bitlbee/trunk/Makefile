@@ -14,6 +14,8 @@ endef
 MASTER_SITES = http://get.bitlbee.org/src/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+# Use these patches until this is fixed:
+#   http://bugs.bitlbee.org/bitlbee/ticket/667
 PATCHFILES  = 0001-Do-not-use-gcc-specific-Wall.patch
 PATCHFILES += 0002-Use-putenv-instead-of-setenv.patch
 PATCHFILES += 0003-Remove-more-GCC-specific-Wall.patch
@@ -28,16 +30,12 @@ PATCHFILES += 0007-Honour-CPPFLAGS.patch
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Build mechanism ignores CPPFLAGS
-# EXTRA_CFLAGS = $(CPPFLAGS)
-
 BUILD_DEP_PKGS = CSWossldevel CSWlibevent-devel CSWggettext CSWglib2devel
 RUNTIME_DEP_PKGS = CSWosslrt CSWlibevent CSWggettextrt CSWglib2
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
-# bash configure --prefix=/opt/csw --ssl=openssl --events=libevent
 CONFIGURE_SCRIPTS = custom
 CONFIGURE_ARGS  = --prefix=$(prefix)
 CONFIGURE_ARGS += --etcdir=$(sysconfdir)
