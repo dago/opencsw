@@ -62,5 +62,6 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(CONTRIBDIR)
 	ginstall $(WORKSRC)/contrib/config_sgen_solaris.sh $(DESTDIR)$(CONTRIBDIR)/
 	ginstall $(WORKSRC)/contrib/mtxctl/mtxctl.tk $(DESTDIR)$(CONTRIBDIR)/mtxctl
-	perl -pi -e 's,#!/usr/freeware/bin/wish -f,#!/opt/csw/bin/wish -f,' $(DESTDIR)$(CONTRIBDIR)/mtxctl
+	ginstall $(WORKSRC)/contrib/mtxctl/README $(DESTDIR)$(CONTRIBDIR)/README.mtxctl
+	perl -pi -e 's,#!/usr/freeware/bin/wish -f,#!/opt/csw/bin/wish -f,; s,/usr/freeware/bin/mtx,/opt/csw/sbin/mtx,' $(DESTDIR)$(CONTRIBDIR)/mtxctl
 	@$(MAKECOOKIE)
