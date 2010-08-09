@@ -1,18 +1,18 @@
-From 858b58c86e8a1150d7ca3ab3f8ae5c8b83ad5f36 Mon Sep 17 00:00:00 2001
+From 5c47bf0d30984ad5197eac31cc8132c537d23e0b Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Fri, 6 Aug 2010 15:37:29 +0200
-Subject: [PATCH 5/6] Do not return values in void functions and make second argument in ternary explicit
+Date: Mon, 9 Aug 2010 13:17:38 +0200
+Subject: [PATCH 5/7] Do not return values in void functions and make second argument in ternary explicit
 
 ---
  irc_commands.c              |    3 ++-
  lib/oauth.c                 |    2 +-
- lib/xmltree.c               |    3 ++-
+ lib/xmltree.c               |    5 ++++-
  protocols/jabber/jabber.c   |    4 ++--
  protocols/jabber/message.c  |    4 ++--
  protocols/msn/msn.c         |    2 +-
  protocols/nogaim.c          |   13 +++++++------
  protocols/yahoo/libyahoo2.c |    9 +++++----
- 8 files changed, 22 insertions(+), 18 deletions(-)
+ 8 files changed, 24 insertions(+), 18 deletions(-)
 
 diff --git a/irc_commands.c b/irc_commands.c
 index 7a286ce..e1a2201 100644
@@ -42,16 +42,18 @@ index c60a5a5..57dd10f 100644
  	
  	/* Inner part: H(K XOR 0x36, text) */
 diff --git a/lib/xmltree.c b/lib/xmltree.c
-index 31f8ee9..3da6e42 100644
+index 31f8ee9..b0a945c 100644
 --- a/lib/xmltree.c
 +++ b/lib/xmltree.c
-@@ -214,7 +214,8 @@ void xt_cleanup( struct xt_parser *xt, struct xt_node *node, int depth )
+@@ -214,7 +214,10 @@ void xt_cleanup( struct xt_parser *xt, struct xt_node *node, int depth )
  		return;
  	
  	if( node == NULL )
 -		return xt_cleanup( xt, xt->root, depth );
++	{
 +		xt_cleanup( xt, xt->root, depth );
 +		return;
++	}
  	
  	if( node->flags & XT_SEEN && node == xt->root )
  	{

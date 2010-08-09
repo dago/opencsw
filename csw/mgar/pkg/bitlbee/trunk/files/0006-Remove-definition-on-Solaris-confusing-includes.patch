@@ -1,7 +1,7 @@
-From 442db668872dfbe469e8b272a86109511f45523f Mon Sep 17 00:00:00 2001
+From 980174d20a57b873612760176c750a8ff70c769b Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
 Date: Fri, 6 Aug 2010 15:38:01 +0200
-Subject: [PATCH 6/6] Remove definition on Solaris confusing includes
+Subject: [PATCH 6/7] Remove definition on Solaris confusing includes
 
 ---
  protocols/twitter/twitter_lib.c |    5 ++++-

@@ -1,8 +1,8 @@
-86455864950f3515af0aa3139261116d  0001-Do-not-use-gcc-specific-Wall.patch
-eb620e3a4a5039257e82e5b79b11a53e  0002-Use-putenv-instead-of-setenv.patch
-35de44f17737a50ef0a76116244eae9e  0003-Remove-more-GCC-specific-Wall.patch
-16477a0ba0a265d4d36bfbed00a5018d  0004-Use-inttypes.h-instead-of-stdint.h.patch
-bbeb1ac0c41643a7f0a90e81a7cc0f18  0005-Do-not-return-values-in-void-functions-and-make-seco.patch
-a019ebad5677f5f85a4c18e3ad584bb0  0006-Remove-definition-on-Solaris-confusing-includes.patch
-f370d257f076fbd269edbff912d281d1  0007-Honour-CPPFLAGS.patch
+ae9718936480f859cf6b0d39ec93e04f  0001-Do-not-use-gcc-specific-Wall.patch
+6fb308585251a3ec0e251609e1128952  0002-Use-putenv-instead-of-setenv.patch
+0a8b0c91ad0798dbc04b30fd507939ca  0003-Remove-more-GCC-specific-Wall.patch
+923dcd920f8b344cef23f885dda940bf  0004-Use-inttypes.h-instead-of-stdint.h.patch
+a13a0dc7e11f2b7ba8910177b6f1ee82  0005-Do-not-return-values-in-void-functions-and-make-seco.patch
+b4cf29e2d43be14af89df872f56c0aa4  0006-Remove-definition-on-Solaris-confusing-includes.patch
+9b14d3589eebd1302b1882dfd4f237d2  0007-Honour-CPPFLAGS.patch
 e1fbbd9d96ec7c2377b1b286689c1b83  bitlbee-1.2.8.tar.gz

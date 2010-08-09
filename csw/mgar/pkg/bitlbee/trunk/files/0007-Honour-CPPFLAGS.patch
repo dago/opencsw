@@ -1,14 +1,14 @@
-From 484c67ccecd26bde8992d79a8a2260fa91bfef40 Mon Sep 17 00:00:00 2001
+From 640bf1ba78d06215f0e7141fd50ddba0b58b350b Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
 Date: Fri, 6 Aug 2010 16:00:48 +0200
-Subject: [PATCH] Honour CPPFLAGS
+Subject: [PATCH 7/7] Honour CPPFLAGS
 
 ---
  configure |    2 ++
  1 files changed, 2 insertions(+), 0 deletions(-)
 
 diff --git a/configure b/configure
-index 24f60d7..756d144 100755
+index 24f60d7..4232a2c 100755
 --- a/configure
 +++ b/configure
 @@ -159,6 +159,8 @@ fi

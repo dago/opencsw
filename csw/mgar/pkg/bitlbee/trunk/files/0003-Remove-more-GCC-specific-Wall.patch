@@ -1,7 +1,7 @@
-From cdcf79c13688a644aa23d8421a43f93f00386d69 Mon Sep 17 00:00:00 2001
+From b09578c0ef70005711273da60809f3a0c1773e80 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
 Date: Fri, 6 Aug 2010 15:33:32 +0200
-Subject: [PATCH 3/6] Remove more GCC specific -Wall
+Subject: [PATCH 3/7] Remove more GCC specific -Wall
 
 ---
  protocols/Makefile         |    1 -

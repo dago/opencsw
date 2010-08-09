@@ -1,7 +1,7 @@
-From 389ee34d25b02a9ad2df1da49d9f6035766f3c45 Mon Sep 17 00:00:00 2001
+From a4e33ef8a76bde2a9d4644fb584d79a7d05cfffb Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
 Date: Fri, 6 Aug 2010 15:34:40 +0200
-Subject: [PATCH 4/6] Use inttypes.h instead of stdint.h
+Subject: [PATCH 4/7] Use inttypes.h instead of stdint.h
 
 ---
  lib/md5.h          |    4 ++++

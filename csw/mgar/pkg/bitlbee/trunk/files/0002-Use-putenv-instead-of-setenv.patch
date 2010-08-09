@@ -1,7 +1,7 @@
-From c876a8c9db773cccaf4da87a7a30d95bff0e42d9 Mon Sep 17 00:00:00 2001
+From ea865e1a0ea5f1b863726932b9e1b5e3b7a68fb1 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
 Date: Fri, 6 Aug 2010 15:32:10 +0200
-Subject: [PATCH 2/6] Use putenv instead of setenv
+Subject: [PATCH 2/7] Use putenv instead of setenv
 
 ---
  conf.c |    6 ++++++
