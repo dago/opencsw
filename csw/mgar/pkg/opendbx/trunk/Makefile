@@ -1,0 +1,66 @@
+GARNAME = opendbx
+GARVERSION = 1.4.5
+CATEGORIES = lib
+
+DESCRIPTION = A C library for accessing databases with a single API
+define BLURB
+  OpenDBX is an extremely lightweight but extensible C library for
+  accessing databases with a single API. It provides a clean and simple
+  interface across all supported databases that leads to an elegant
+  code design automatically. Currently MySQL, PostgreSQL, SQLite
+  (v2 & 3), MSSQL and Sybase are supported and backends for more native
+  database APIs can be written easily. If you want your application to
+  support different databases with little effort, this is definitively
+  the right thing for you!
+endef
+
+MASTER_SITES = http://www.linuxnetworks.de/opendbx/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+
+PACKAGES = CSWopendbx CSWopendbxdevel
+CATALOGNAME_CSWopendbx = opendbx
+CATALOGNAME_CSWopendbxdevel = opendbx_devel
+
+SPKG_DESC_CSWopendbx = $(DESCRIPTION)
+SPKG_DESC_CSWopendbxdevel = $(DESCRIPTION) development package
+
+# File name regex to get notifications about upstream software releases
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+# If the url used to check for software update is different of MASTER_SITES, then 
+# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
+# UPSTREAM_MASTER_SITES = 
+
+GARCOMPILER = GCC4
+BUILD64 = 1
+#EXTRA_BUILD_ISAS_i386 = pentium_pro
+#EXTRA_BUILD_ISAS_sparc = sparcv8plus
+EXTRA_LIB = /opt/csw/mysql5/lib/mysql
+EXTRA_INC = /opt/csw/mysql5/include/mysql
+
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-utils
+CONFIGURE_ARGS += --with-backends=mysql
+
+PKGFILES_CSWopendbxdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWopendbx = $(PKGFILES_RT)
+
+#CONFIGURE_ARGS += --with-backends=oracle
+#EXTRA_LIB = /opt/csw/instantclient_10_2
+#EXTRA_INC = /opt/csw/instantclient_10_2/sdk/include
+#RUNTIME_DEP_PKGS_CSWopendbx += CSWorainstclient102
+#CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/libopendbx.so.1.2.0
+#CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/$ISALIST|opt/csw/lib/libopendbx.so.1.2.0
+#CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/libopendbxplus.so.1.0.0
+#CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/$ISALIST|opt/csw/lib/libopendbxplus.so.1.0.0
+#CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/opendbx/liboraclebackend.so.1.2.0
+#CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/$ISALIST|opt/csw/lib/opendbx/liboraclebackend.so.1.2.0
+
+CHECKPKG_OVERRIDES_CSWopendbxdevel += surplus-dependency|CSWopendbx
+
+RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWopendbx += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWopendbxdevel += CSWopendbx
+
+include gar/category.mk
