@@ -2,7 +2,7 @@
 1414d06fab1530484a508927a0de4154  0002-cast-user_info-pw_gid-to-gid_t.patch
 5415f365f1b0f7a179d1efc25f45bbee  0003-OpenCSW-perl-for-tests.patch
 8ab232cd4d232b3cda3bbced93f80237  0004-basedir-and-datadir-in-the-cnf-files.patch
-16ec677592108d1eec22ca4f9f3d09e2  CSWmysql51.postinstall
+07d91851bd734c60ad98dc2b39fafe0b  CSWmysql51.postinstall
 615c16877afb48ce809a849c1c5dbc35  CSWmysql51.preinstall
 e691b0cf00a3925ac55c1844045d6e30  ChangeLog
 e42afb5ec1b1ab02d2ec3b46d0922636  README.CSW

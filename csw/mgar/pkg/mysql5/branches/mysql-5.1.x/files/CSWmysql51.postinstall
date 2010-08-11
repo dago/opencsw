@@ -3,7 +3,7 @@
 # $Id$
 #
 
-MYSQLDATADIR=/var/opt/csw/mysql5
+MYSQLDATADIR=/var/opt/csw/mysql51
 if [ ! -d "${MYSQLDATADIR}/mysql" ] ; then
   echo "No database directory found in the default location:"
   echo "${MYSQLDATADIR}/mysql"
