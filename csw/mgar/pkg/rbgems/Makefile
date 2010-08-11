@@ -36,29 +36,20 @@ newpkg-%: catalogname = $(shell echo $(call lcase,$*) | tr -d ':-' )
 newpkg-%: dir = $(subst ::,-,$*)
 newpkg-%:
 	@svn mkdir $(dir) $(dir)/tags $(dir)/branches $(dir)/trunk $(dir)/trunk/files
-	@(echo "GARNAME = $(dir)";                                \
-	echo "GARVERSION = 1.0";                                        \
-	echo "CATEGORIES = rbgems";                                       \
-	echo "AUTHOR = MYSELF";                                         \
-	echo "";                                                        \
-	echo "DESCRIPTION = Brief description";                         \
-	echo "define BLURB";                                            \
-	echo "  Long description";                                      \
-	echo "endef";                                                   \
-	echo "";                                                        \
-	echo "PACKAGES = CSW$(catalogname)";                                \
-	echo "CATALOGNAME = rb_$(catalogname)";                               \
-	echo "";                                                        \
-	echo "include gar/category.mk";                                 \
-	) > $(dir)/trunk/Makefile
-	@touch $(dir)/trunk/checksums
-	@svn add $(dir)/trunk/Makefile $(dir)/trunk/checksums
-	@echo "cookies\ndownload\nwork\n" | svn propset svn:ignore -F /dev/fd/0 $(dir)/trunk
-	@echo "gar https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2" | svn propset svn:externals -F /dev/fd/0 $(dir)/trunk
+
 	@if [ -d ../../gar/v2 ]; then \
 	  ln -s ../../../../gar/v2 $(dir)/trunk/gar; \
+	  cd $(dir)/trunk/gar; svn update; \
 	else \
 	  svn co https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 $(dir)/trunk/gar; \
 	fi
+	@echo "gar https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2" | svn propset svn:externals -F /dev/fd/0 $(dir)/trunk
+	@(cd $(dir)/trunk/; gem fetch $*; gar/bin/gem2pkg *gem > Makefile; rm *gem)
+	@( cd $(dir)/trunk; gmake fetch; gmake makesums; gmake garchive );
+	@svn add $(dir)/trunk/Makefile $(dir)/trunk/checksums
+	@echo "work\n" | svn propset svn:ignore -F /dev/fd/0 $(dir)/trunk
 	@echo
 	@echo "Your package is set up for editing at $(dir)/trunk"
+
+
+
