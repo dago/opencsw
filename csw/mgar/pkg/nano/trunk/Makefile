@@ -1,5 +1,5 @@
 GARNAME = nano
-GARVERSION = 2.2.4
+GARVERSION = 2.2.5
 CATEGORIES = utils
 
 DESCRIPTION = Enhanced clone of the Pico text editor
