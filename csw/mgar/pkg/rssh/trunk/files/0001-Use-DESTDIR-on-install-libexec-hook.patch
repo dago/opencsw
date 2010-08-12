@@ -1,0 +1,39 @@
+From a30ed2e3fe48241790889fc5bdc831e2a79caa67 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 12 Aug 2010 09:40:15 +0200
+Subject: [PATCH] Use DESTDIR on install-libexec-hook
+
+---
+ Makefile.am |    2 +-
+ Makefile.in |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 5c1be5f..018ea4b 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -16,7 +16,7 @@ base=`echo @PACKAGE_STRING@|tr " " "-"`
+ 	$(CC) -c $(DEFS) $(ourdefs) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $<
+ 
+ install-exec-hook:
+-	chmod u+s $(libexecdir)/rssh_chroot_helper
++	chmod u+s $(DESTDIR)$(libexecdir)/rssh_chroot_helper
+ 
+ rpm:	dist
+ 	rpmbuild -ta --sign $(base).tar.gz
+diff --git a/Makefile.in b/Makefile.in
+index 790c780..515affd 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -830,7 +830,7 @@ uninstall-man: uninstall-man1 uninstall-man5
+ 	$(CC) -c $(DEFS) $(ourdefs) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $<
+ 
+ install-exec-hook:
+-	chmod u+s $(libexecdir)/rssh_chroot_helper
++	chmod u+s $(DESTDIR)$(libexecdir)/rssh_chroot_helper
+ 
+ rpm:	dist
+ 	rpmbuild -ta --sign $(base).tar.gz
+-- 
+1.7.1
+
