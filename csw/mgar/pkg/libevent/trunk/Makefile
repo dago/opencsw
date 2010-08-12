@@ -1,15 +1,15 @@
 GARNAME = libevent
-GARVERSION = 1.4.13
+GARVERSION = 1.4.14b
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.1a 1.4.13
+MODULATIONS_GARVERSION = 1.1a 1.4.14b
 
 SKIP_MODULATIONS = isa-sparcv9-garversion-1.1a
 SKIP_MODULATIONS += isa-amd64-garversion-1.1a
 
 DISTVERSION-1.1a = 1.1a
-DISTVERSION-1.4.13 = 1.4.13-stable
+DISTVERSION-1.4.14b = 1.4.14b-stable
 
 DESCRIPTION = Event notification library
 define BLURB
@@ -22,6 +22,10 @@ endef
 MASTER_SITES = http://www.monkey.org/~provos/
 SOURCEFILES = $(foreach V,$(MODULATIONS_GARVERSION),$(GARNAME)-$(DISTVERSION-$V).tar.gz)
 DISTFILES += $(SOURCEFILES)
+
+# From http://www.monkey.org/~provos/libevent/LICENSE
+DISTFILES += LICENSE
+LICENSE = LICENSE
 
 NOEXTRACT = $(filter-out $(GARNAME)-$(DISTVERSION-$(GARVERSION)).tar.gz,$(SOURCEFILES))
 
@@ -53,12 +57,17 @@ MERGE_DIRS_isa-default-garversion-1.1a = $(libdir)
 MERGE_SCRIPTS_isa-extra-garversion-1.1a = copy-relocated-only
 MERGE_DIRS_isa-extra-garversion-1.1a = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-1.4.13 = copy-all
-MERGE_SCRIPTS_isa-extra-garversion-1.4.13 = copy-relocated-only
-MERGE_DIRS_isa-extra-garversion-1.4.13 = $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-1.4.14b = copy-all
+MERGE_SCRIPTS_isa-extra-garversion-1.4.14b = copy-relocated-only
+MERGE_DIRS_isa-extra-garversion-1.4.14b = $(libdir)
 
 PKGFILES_CSWlibevent-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibevent-devel += $(bindir)/.*
+
+# This is just for the rpcgen
+CHECKPKG_OVERRIDES_CSWlibevent-devel += missing-dependency|CSWpython
+
+CHECKPKG_OVERRIDES_CSWlibevent-devel += surplus-dependency|CSWlibevent
 
 include gar/category.mk
 
