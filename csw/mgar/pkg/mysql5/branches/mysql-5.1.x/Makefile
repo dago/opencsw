@@ -42,7 +42,7 @@ PACKAGES += CSW$(GARNAME)test
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
-PATCHFILES += 0004-basedir-and-datadir-in-the-cnf-files.patch
+PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
 
 SPKG_DESC_CSW$(GARNAME)       = Multithreaded SQL database
 SPKG_DESC_CSW$(GARNAME)bench  = MySQL $(BASE_VERSION) benchmarking
