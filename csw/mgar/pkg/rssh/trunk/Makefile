@@ -22,16 +22,28 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.pizzashack.org/rssh/
 
+BUILD_DEP_PKGS = CSWossh CSWcvs CSWrdist CSWrsync
+
+# We need at least OpenSSH, the other programs are optional
+RUNTIME_DEP_PKGS = CSWossh
+
 sysconfdir = /etc/opt/csw
 MIGRATE_FILES = rssh.conf
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-scp=$(bindir)/scp
+CONFIGURE_ARGS += --with-sftp-server=$(libexecdir)/sftp-server
+CONFIGURE_ARGS += --with-cvs=$(bindir)/cvs
+CONFIGURE_ARGS += --with-rdist=$(bindir)/rdist
+CONFIGURE_ARGS += --with-rsync=$(bindir)/rsync
 
 TEST_TARGET = check
 
 PROTOTYPE_MODIFIERS = makesuid
 PROTOTYPE_FILES_makesuid = $(libexecdir)/rssh_chroot_helper
 PROTOTYPE_PERMS_makesuid = 4755
+
+CHECKPKG_OVERRIDES_CSWrssh += surplus-dependency|CSWossh
 
 include gar/category.mk
 
