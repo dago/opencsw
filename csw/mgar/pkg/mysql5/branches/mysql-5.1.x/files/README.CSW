@@ -1,7 +1,7 @@
-MySQL 5 OpenCSW package
+MySQL 5.1 OpenCSW package
 =======================
 
-* http://www.opencsw.org/packages/mysql5
+* http://www.opencsw.org/packages/mysql51
 
 The package has been reworked from the ground up, using GAR.  Up until this
 moment, the mysql5 package was in the version from before the fork.  The new
@@ -12,7 +12,7 @@ considered necessary.
 * Read only /opt/csw support
   - data in /var/opt/csw
   - configuration in /etc/opt/csw
-* The prefix is still /opt/csw/mysql5, but all the binaries are now linked from
+* The prefix is still /opt/csw/mysql51, but all the binaries are now linked from
   /opt/csw, so that the standard PATH setting allows to use them
 * The startup script is now in /etc/opt/csw/init.d
 * SMF support is handled by cswclassutils

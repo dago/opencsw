@@ -7,30 +7,30 @@
 # 700.
 #
 # First time installation can use quick_start-csw in
-#   /opt/csw/mysql5/share/mysql to build the mysql database for the
+#   /opt/csw/mysql51/share/mysql to build the mysql database for the
 #   grant tables.  Or create the initial database yourself.
 #
 # Use my.cnf for startup options.  See MySQL documention
 #   for 'Using Option Files'.
-# Support for mysql5rc still remains in this startup script.
+# Support for mysql51rc still remains in this startup script.
 #
 
 RETVAL=0
-MYSQLHOME=/opt/csw/mysql5
-MYSQL_VAR=/var/opt/csw/mysql5
+MYSQLHOME=/opt/csw/mysql51
+MYSQL_VAR=/var/opt/csw/mysql51
 MYSQLD_DATADIR=$MYSQL_VAR
 MYSQLD_PID_FILE=$MYSQL_VAR/mysql.pid
 CONFFILE=$MYSQL_VAR/my.cnf
 
 #
 # Source configuration
-[ -r /opt/csw/mysql5/etc/mysql5rc ] && . /opt/csw/mysql5/etc/mysql5rc
-[ -r /etc/opt/csw/mysql5rc ] && . /etc/opt/csw/mysql5rc
+[ -r /opt/csw/mysql51/etc/mysql51rc ] && . /opt/csw/mysql51/etc/mysql51rc
+[ -r /etc/opt/csw/mysql51rc ] && . /etc/opt/csw/mysql51rc
 
 # To get started quickly, copy a sample configuration file from
 #   $MYSQLHOME/share/mysql
 # For example,
-#  cp /opt/csw/mysql5/share/mysql/my-medium.cnf /opt/csw/mysql5/var/my.cnf
+#  cp /opt/csw/mysql51/share/mysql/my-medium.cnf /opt/csw/mysql51/var/my.cnf
 #
 # Or, manually follow the database creation steps below, and have
 # mysql just use defaults for everything.
@@ -72,7 +72,7 @@ start_it() {
     printf "%-60s" "Starting mysqld: "
 # 2006-03-11
 # This script no longer creates the default database. You may create the
-# default database manually or use /opt/csw/mysql5/share/mysql/quick_start-csw
+# default database manually or use /opt/csw/mysql51/share/mysql/quick_start-csw
 #    if [ ! -d "$MYSQLHOME/var/mysql" ] ; then
 #        echo MySQL core database has not been created.
 #         echo Creating it now...

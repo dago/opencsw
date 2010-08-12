@@ -8,8 +8,8 @@
 # This script creates a default database with the small-memory footprint.
 # Input may be provided for DATADIR and DEFAULTS_FILE
 #
-BASEDIR=/opt/csw/mysql5
-MYSQL_VAR=/var/opt/csw/mysql5
+BASEDIR=/opt/csw/mysql51
+MYSQL_VAR=/var/opt/csw/mysql51
 DEFAULTS_FILE=$BASEDIR/my.cnf
 SAVE_DEFAULTS_FILE=$MYSQL_VAR/my.cnf
 MYSQLD_USER=mysql
@@ -115,7 +115,7 @@ chown -R mysql:mysql $MYSQLD_DATADIR
 #
 # Update --datadir in the cnf file with the correct value if file was copied
 if [ x"$CNFCOPIED" = xyes ]; then
-    sed -e "s|/var/opt/csw/mysql5|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
+    sed -e "s|/var/opt/csw/mysql51|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
     mv $DEFAULTS_FILE.new $DEFAULTS_FILE
 fi
 
@@ -123,17 +123,17 @@ fi
 # Ending message
 echo
 echo "###  The following messages are from quick_start-csw."
-echo "See /opt/csw/mysql5/share/mysql/doc/README.CSW for packaging changes."
+echo "See /opt/csw/mysql51/share/mysql/doc/README.CSW for packaging changes."
 echo "Please ignore references to starting mysqld_safe in the messages above."
 echo "  These messages are from mysql_install_db.  See the following"
-echo "  for starting CSWmysql5."
+echo "  for starting CSWmysql51."
 smf=no
 if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ; then smf=yes ; fi
 if [ $smf = yes ]
 then
-    echo "To start mysqld; run \`svcadm enable cswmysql5\` on Solaris 10 or later"
+    echo "To start mysqld; run \`svcadm enable cswmysql51\` on Solaris 10 or later"
 else
-    echo "To start mysqld; run \`/etc/opt/csw/init.d/cswmysql start\` on Solaris 9 or earlier"
+    echo "To start mysqld; run \`/etc/opt/csw/init.d/cswmysql51 start\` on Solaris 9 or earlier"
 fi
 
 exit 0
