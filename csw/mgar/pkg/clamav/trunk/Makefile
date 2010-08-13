@@ -1,5 +1,5 @@
 GARNAME = clamav
-GARVERSION = 0.96.1
+GARVERSION = 0.96.2
 #DISTNAME = $(GARNAME)-devel-latest
 CATEGORIES = apps
 
@@ -34,8 +34,8 @@ PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
 
 #BUILD64 = 1
-#PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
-#PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 #GARCOMPILER = GCC4
 
@@ -68,8 +68,8 @@ PROTOTYPE_FILES_1 = \/var\/opt\/csw\/clamav.*
 PROTOTYPE_CLASS_1 = ugfiles
 PROTOTYPE_USER_1 = clamav
 
-INITSMF  = /opt/csw/etc/init.d/cswclamd
-INITSMF += /opt/csw/etc/init.d/cswclamav-milter
+INITSMF  = /etc/opt/csw/init.d/cswclamd
+INITSMF += /etc/opt/csw/init.d/cswclamav-milter
 SAMPLECONF  = /etc/opt/csw/clamd.conf
 SAMPLECONF += /etc/opt/csw/clamav-milter.conf
 SAMPLECONF += /etc/opt/csw/freshclam.conf
@@ -96,9 +96,9 @@ DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
 
 post-install-modulated:
 	@echo " ==> Post-install for $(GARNAME) (custom)"
-	@ginstall -d $(DESTDIR)/opt/csw/etc/init.d
-	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamd $(DESTDIR)/opt/csw/etc/init.d/cswclamd
-	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamav-milter $(DESTDIR)/opt/csw/etc/init.d/cswclamav-milter
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamd $(DESTDIR)/etc/opt/csw/init.d/cswclamd
+	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamav-milter $(DESTDIR)/etc/opt/csw/init.d/cswclamav-milter
 	@ginstall -d $(DESTDIR)$(sysconfdir)/pkg/CSWclamav
 	@ginstall -m 644 $(FILEDIR)/CSWclamav.cswusergroup $(DESTDIR)$(sysconfdir)/pkg/CSWclamav/cswusergroup
 	@ginstall -d $(DOCDEST)
