@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = httpd
-GARVERSION = 2.2.15
+GARVERSION = 2.2.16
 CATEGORIES = server
 
 DESCRIPTION = A high performance HTTP server.
