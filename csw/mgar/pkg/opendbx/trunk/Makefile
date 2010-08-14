@@ -37,8 +37,12 @@ GARCOMPILER = GCC4
 BUILD64 = 1
 #EXTRA_BUILD_ISAS_i386 = pentium_pro
 #EXTRA_BUILD_ISAS_sparc = sparcv8plus
-EXTRA_LIB = $(abspath $(prefix)/mysql5/lib/$(MM_LIBDIR)/mysql)
+
 EXTRA_INC = /opt/csw/mysql5/include/mysql
+EXTRA_LINKER_DIRS_32 = $(prefix)/mysql5/lib/mysql
+EXTRA_LINKER_DIRS_64 = $(prefix)/mysql5/lib/64/mysql
+EXTRA_LINKER_FLAGS = -L$(EXTRA_LINKER_DIRS_$(MEMORYMODEL))
+EXTRA_RUNPATH_LINKER_FLAGS = -R$(EXTRA_LINKER_DIRS_$(MEMORYMODEL))
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-utils
