@@ -17,12 +17,14 @@ endef
 MASTER_SITES = http://www.linuxnetworks.de/opendbx/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PACKAGES = CSWopendbx CSWopendbxdevel
+PACKAGES = CSWopendbx CSWopendbxdevel CSWopendbxmysql
 CATALOGNAME_CSWopendbx = opendbx
 CATALOGNAME_CSWopendbxdevel = opendbx_devel
+CATALOGNAME_CSWopendbxmysql = opendbx_mysql
 
 SPKG_DESC_CSWopendbx = $(DESCRIPTION)
-SPKG_DESC_CSWopendbxdevel = $(DESCRIPTION) development package
+SPKG_DESC_CSWopendbxdevel = $(DESCRIPTION), development package
+SPKG_DESC_CSWopendbxmysql = $(DESCRIPTION), mysql backend package
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -35,7 +37,7 @@ GARCOMPILER = GCC4
 BUILD64 = 1
 #EXTRA_BUILD_ISAS_i386 = pentium_pro
 #EXTRA_BUILD_ISAS_sparc = sparcv8plus
-EXTRA_LIB = /opt/csw/mysql5/lib/mysql
+EXTRA_LIB = $(abspath $(prefix)/mysql5/lib/$(MM_LIBDIR)/mysql)
 EXTRA_INC = /opt/csw/mysql5/include/mysql
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -43,7 +45,7 @@ CONFIGURE_ARGS += --disable-utils
 CONFIGURE_ARGS += --with-backends=mysql
 
 PKGFILES_CSWopendbxdevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWopendbx = $(PKGFILES_RT)
+PKGFILES_CSWopendbxmysql = $(call baseisadirs,$(libdir),opendbx/libmysqlbackend.*) 
 
 #CONFIGURE_ARGS += --with-backends=oracle
 #EXTRA_LIB = /opt/csw/instantclient_10_2
@@ -57,10 +59,14 @@ PKGFILES_CSWopendbx = $(PKGFILES_RT)
 #CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/$ISALIST|opt/csw/lib/opendbx/liboraclebackend.so.1.2.0
 
 CHECKPKG_OVERRIDES_CSWopendbxdevel += surplus-dependency|CSWopendbx
+CHECKPKG_OVERRIDES_CSWopendbxmysql += surplus-dependency|CSWopendbx
 
 RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWopendbx += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWopendbxdevel += CSWopendbx
+RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWzlib
+RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWmysql5rt
 
 include gar/category.mk
