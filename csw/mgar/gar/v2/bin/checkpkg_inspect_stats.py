@@ -35,7 +35,7 @@ def main():
   logging.debug("Collecting statistics about given package files.")
   filenames = []
   md5s = []
-  md5_re = re.compile(r"[0123456789abcdef]{32}")
+  md5_re = re.compile(r"^[0123456789abcdef]{32}$")
   for arg in args:
     if md5_re.match(arg):
       md5s.append(arg)
@@ -48,7 +48,7 @@ def main():
   bar.start()
   counter = itertools.count()
   for pkg in srv4_pkgs:
-    pkgstat_objs.append(checkpkg.PackageStats(x, debug=options.debug))
+    pkgstat_objs.append(checkpkg.PackageStats(pkg, debug=options.debug))
     bar.update(counter.next())
   for md5 in md5s:
     pkgstat_objs.append(checkpkg.PackageStats(None, md5sum=md5, debug=options.debug))
@@ -66,7 +66,7 @@ def main():
   if options.print_stats:
     print "import datetime"
     print "pkgstat_objs = ",
-    pprint.pprint(pkgstat_objs)
+    pprint.pprint(pkgstats)
   else:
     code.interact(local=locals())
 
