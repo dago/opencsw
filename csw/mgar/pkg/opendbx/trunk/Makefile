@@ -39,6 +39,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GCC4
 BUILD64 = 1
+PACKAGING_PLATFORMS +=  solaris9-sparc solaris9-i386
 
 EXTRA_INC =  $(prefix)/mysql5/include/mysql $(prefix)/instantclient_10_2/sdk/include
 EXTRA_LINKER_DIRS_MYSQL_32 = $(prefix)/mysql5/lib/mysql
