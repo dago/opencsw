@@ -366,6 +366,9 @@ _PROTOTYPE_MODIFIERS = | perl -ane '\
 		$$F[1] = "cswalternatives" if( $$F[2] =~ m,^/opt/csw/share/alternatives/[^/]+$$, );\
                 print join(" ",@F),"\n";'
 
+_PROTOTYPE_MODIFIERS += | ( cat; \
+		$(foreach SPEC,$(_PKG_SPECS),if test -f "$(WORKDIR_GLOBAL)/checkpkg_override.$(SPEC)";then echo "i checkpkg_override=checkpkg_override.$(SPEC)"; fi;))
+
 
 # This file contains all installed pathes. This can be used as a starting point
 # for distributing files to individual packages.
@@ -682,7 +685,7 @@ merge-checkpkgoverrides-%:
 	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/checkpkg/overrides
 	$(_DBG)($(foreach O,$(or $(CHECKPKG_OVERRIDES_$*),$(CHECKPKG_OVERRIDES)) $(_CATEGORY_CHECKPKG_OVERRIDES),echo "$O";)) | \
 		perl -F'\|' -ane 'unshift @F,"$*"; $$F[0].=":"; print join(" ",@F );' \
-		> $(PKGROOT)/opt/csw/share/checkpkg/overrides/$(call catalogname,$*)
+		> $(WORKDIR_GLOBAL)/checkpkg_override.$*
 	@$(MAKECOOKIE)
 
 merge-checkpkgoverrides: $(foreach S,$(SPKG_SPECS),$(if $(or $(CHECKPKG_OVERRIDES_$S),$(CHECKPKG_OVERRIDES),$(_CATEGORY_CHECKPKG_OVERRIDES)),merge-checkpkgoverrides-$S))

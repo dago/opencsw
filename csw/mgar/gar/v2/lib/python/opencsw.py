@@ -917,17 +917,18 @@ class DirectoryFormatPackage(ShellMixin, object):
         self.file_paths.extend([f.replace(remove_prefix, "") for f in full_paths])
     return self.file_paths
 
-  def _GetOverridesStream(self):
-    catalogname = self.GetCatalogname()
-    file_path = os.path.join(self.directory,
-                             "root",
-                             "opt/csw/share/checkpkg/overrides",
-                             catalogname)
+  def _GetOverridesStream(self, file_path):
     # This might potentially cause a file descriptor leak, but I'm not going to
     # worry about that at this stage.
+    # NB, the whole catalog run doesn't seem to be suffering. (~2500 packages)
+    #
+    # There is a race condition here, but it's executing sequentially, I don't
+    # expect any concurrency problems.
     if os.path.isfile(file_path):
+      logging.debug("Opening %s override file." % repr(file_path))
       return open(file_path, "r")
     else:
+      logging.debug("Override file %s not found." % repr(file_path))
       return None
 
   def _ParseOverridesStream(self, stream):
@@ -940,11 +941,22 @@ class DirectoryFormatPackage(ShellMixin, object):
 
   def GetOverrides(self):
     """Returns overrides, a list of overrides.Override instances."""
-    stream = self._GetOverridesStream()
-    if stream:
-      return self._ParseOverridesStream(stream)
-    else:
-      return list()
+    overrides = []
+    catalogname = self.GetCatalogname()
+    override_paths = (
+        [self.directory,
+         "root",
+         "opt/csw/share/checkpkg/overrides", catalogname],
+        [self.directory,
+         "install",
+         "checkpkg_override"],
+    )
+    for override_path in override_paths:
+      file_path = os.path.join(*override_path)
+      stream = self._GetOverridesStream(file_path)
+      if stream:
+        overrides.extend(self._ParseOverridesStream(stream))
+    return overrides
 
   def GetFileContent(self, pkg_file_path):
     if pkg_file_path.startswith("/"):
