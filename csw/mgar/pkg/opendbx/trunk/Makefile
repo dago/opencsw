@@ -17,14 +17,16 @@ endef
 MASTER_SITES = http://www.linuxnetworks.de/opendbx/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PACKAGES = CSWopendbx CSWopendbxdevel CSWopendbxmysql
+PACKAGES = CSWopendbx CSWopendbxdevel CSWopendbxmysql CSWopendbxsqlite3
 CATALOGNAME_CSWopendbx = opendbx
 CATALOGNAME_CSWopendbxdevel = opendbx_devel
 CATALOGNAME_CSWopendbxmysql = opendbx_mysql
+CATALOGNAME_CSWopendbxsqlite3 = opendbx_sqlite3
 
 SPKG_DESC_CSWopendbx = $(DESCRIPTION)
 SPKG_DESC_CSWopendbxdevel = $(DESCRIPTION), development package
 SPKG_DESC_CSWopendbxmysql = $(DESCRIPTION), mysql backend package
+SPKG_DESC_CSWopendbxsqlite3 = $(DESCRIPTION), sqlite3 backend package
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -46,10 +48,11 @@ EXTRA_RUNPATH_LINKER_FLAGS = -R$(EXTRA_LINKER_DIRS_$(MEMORYMODEL))
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-utils
-CONFIGURE_ARGS += --with-backends=mysql
+CONFIGURE_ARGS += --with-backends="mysql sqlite3"
 
 PKGFILES_CSWopendbxdevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWopendbxmysql = $(call baseisadirs,$(libdir),opendbx/libmysqlbackend.*) 
+PKGFILES_CSWopendbxsqlite3 = $(call baseisadirs,$(libdir),opendbx/libsqlite3backend.*) 
 
 #CONFIGURE_ARGS += --with-backends=oracle
 #EXTRA_LIB = /opt/csw/instantclient_10_2
@@ -64,6 +67,7 @@ PKGFILES_CSWopendbxmysql = $(call baseisadirs,$(libdir),opendbx/libmysqlbackend.
 
 CHECKPKG_OVERRIDES_CSWopendbxdevel += surplus-dependency|CSWopendbx
 CHECKPKG_OVERRIDES_CSWopendbxmysql += surplus-dependency|CSWopendbx
+CHECKPKG_OVERRIDES_CSWopendbxsqlite3 += surplus-dependency|CSWopendbx
 
 RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc4g++rt
@@ -72,5 +76,7 @@ RUNTIME_DEP_PKGS_CSWopendbxdevel += CSWopendbx
 RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWzlib
 RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWmysql5rt
+RUNTIME_DEP_PKGS_CSWopendbxsqlite3 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWopendbxsqlite3 += CSWsqlite3rt
 
 include gar/category.mk
