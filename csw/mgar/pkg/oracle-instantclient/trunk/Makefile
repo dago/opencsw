@@ -72,9 +72,15 @@ TARGETDIR_64 = 64
 MERGE_SCRIPTS_isa-default = copy-all
 MERGE_SCRIPTS_isa-default64 = copy-all
 
+# Libraries are cluttered all over the place, we can't change that.
+CHECKPKG_OVERRIDES_CSWorainstclient102 += binary-architecture-does-not-match-placement
+
+# The runpath entries are for Oracle- and Sun-Cluster and therefor don't conform to OpenCSW specs.
+CHECKPKG_OVERRIDES_CSWorainstclient102 += bad-rpath-entry
+
 # The libraries are relocated. It is expected from the client to set
 # LD_LIBRARY_PATH as described by Oracle.
-CHECKPKG_OVERRIDES = symbol-not-found
+CHECKPKG_OVERRIDES_CSWorainstclient102 += soname-not-found
 
 include gar/category.mk
 
