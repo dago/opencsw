@@ -44,9 +44,14 @@ SPKG_DESC_CSWkrb5libdev      = MIT Kerberos 5 developer libraries
 SPKG_DESC_CSWkrb5user        = MIT Kerberos 5 user tools
 
 RUNTIME_DEP_PKGS_CSWkrb5adminserver = CSWkrb5kdc CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWkrb5adminserver += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWkrb5kdc = CSWkrb5lib CSWkrb5user
+RUNTIME_DEP_PKGS_CSWkrb5kdc += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWkrb5lib += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWkrb5libdev = CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWkrb5libdev += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWkrb5user = CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWkrb5user += CSWosslrt CSWoldaprt CSWggettextrt
 
 LICENSE = doc/copyright.texinfo
 
@@ -64,6 +69,7 @@ CONFIGURE_ARGS += --disable-static --disable-profiled
 CONFIGURE_ARGS += --with-ldap
 
 BUILD64 = 1
+NOISAEXEC = 1
 
 BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 BUILD_SCRIPTS += $(WORKSRC)/doc/Makefile
@@ -101,6 +107,10 @@ PKGFILES_CSWkrb5libdev += $(bindir)/(uuclient|sim_client|sclient|krb5-config|gss
 #PKGFILES_CSWkrb5user += $(mandir)/man1/($(USER_BINS))\.1
 #PKGFILES_CSWkrb5user += $(sharedstatedir)/examples/krb5/krb5.conf
 #PKGFILES_CSWkrb5user += $(bindir)/($(USER_BINS))
+
+CHECKPKG_OVERRIDES_CSWkrb5adminserver += surplus-dependency|CSWkrb5kdc
+CHECKPKG_OVERRIDES_CSWkrb5kdc += surplus-dependency|CSWkrb5user
+CHECKPKG_OVERRIDES_CSWkrb5user += discouraged-path-in-pkgmap|/opt/csw/var/krb5kdc
 
 include gar/category.mk
 
