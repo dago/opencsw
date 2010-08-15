@@ -366,9 +366,9 @@ _PROTOTYPE_MODIFIERS = | perl -ane '\
 		$$F[1] = "cswalternatives" if( $$F[2] =~ m,^/opt/csw/share/alternatives/[^/]+$$, );\
                 print join(" ",@F),"\n";'
 
-_PROTOTYPE_MODIFIERS += | ( cat; \
-		$(foreach SPEC,$(_PKG_SPECS),if test -f "$(WORKDIR_GLOBAL)/checkpkg_override.$(SPEC)";then echo "i checkpkg_override=checkpkg_override.$(SPEC)"; fi;))
-
+define checkpkg_override_filter
+  | ( cat; if test -f "$(WORKDIR_GLOBAL)/checkpkg_override.$(1)";then echo "i checkpkg_override=checkpkg_override.$(1)"; fi)
+endef
 
 # This file contains all installed pathes. This can be used as a starting point
 # for distributing files to individual packages.
@@ -401,13 +401,11 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 				-I $(call licensedir,$*)/license \
 				-I /etc/opt/csw/pkg/$*/cswmigrateconf \
 		      		-I /opt/csw/share/alternatives/$(call catalogname,$*) \
-				-I /opt/csw/share/checkpkg/overrides/$(call catalogname,$*) \
 		      )\
 		      $(foreach S,$(filter-out $*,$(SPKG_SPECS)),\
 				-X $(call licensedir,$S)/license \
 				-X /etc/opt/csw/pkg/$S/cswmigrateconf \
 				-X /opt/csw/share/alternatives/$(call catalogname,$S) \
-				-X /opt/csw/share/checkpkg/overrides/$(call catalogname,$S) \
 		      ) \
 		      $(foreach I,$(EXTRA_PKGFILES_INCLUDED) $(EXTRA_PKGFILES_INCLUDED_$*),-i '$I') \
 		      $(foreach X,$(EXTRA_PKGFILES_EXCLUDED) $(EXTRA_PKGFILES_EXCLUDED_$*),-x '$X') \
@@ -418,9 +416,9 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	               ) \
 	              <$(PROTOTYPE); \
 	   if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi \
-	  ) $(_CSWCLASS_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  ) $(call checkpkg_override_filter,$*) $(_CSWCLASS_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	else \
-	  cat $(PROTOTYPE) $(_CSWCLASS_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  cat $(PROTOTYPE) $(call checkpkg_override_filter,$*) $(_CSWCLASS_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	fi
 
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
