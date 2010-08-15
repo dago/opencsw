@@ -70,8 +70,8 @@ class TestDescription(CheckpkgUnitTestHelper, unittest.TestCase):
 class TestDescriptionLong(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckDescription'
   def CheckpkgTest(self):
-    self.pkg_data["pkginfo"]["NAME"] = 'foo - ' 'A' * 200
-    self.error_mgr_mock.ReportError('pkginfo-description-too-long', 'length=1394')
+    self.pkg_data["pkginfo"]["NAME"] = 'foo - ' + ('A' * 200)
+    self.error_mgr_mock.ReportError('pkginfo-description-too-long', 'length=200')
 
 
 class TestDescriptionNotCapitalized(CheckpkgUnitTestHelper, unittest.TestCase):
