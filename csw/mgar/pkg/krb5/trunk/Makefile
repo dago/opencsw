@@ -1,5 +1,5 @@
 GARNAME = krb5
-GARVERSION = 1.7
+GARVERSION = 1.8.3
 CATEGORIES = server
 
 DESCRIPTION = MIT Kerberos 5
@@ -11,16 +11,19 @@ define BLURB
   Kerberos is available in many commercial products as well.
 endef
 
-MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/1.7/
+MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/1.8/
+MASTER_SITES += http://web.mit.edu/kerberos/dist/krb5-appl/1.0/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-signed.tar
+# DISTFILES += krb5-appl-1.0.1-signed.tar
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-signed.tar
 
 PATCHFILES  = patch-man2html-perl.patch
 PATCHFILES += 0002-libintl-for-kproplog.patch
-PATCHFILES += 0003-local-libraries-first-when-linking.patch
+#PATCHFILES += 0003-local-libraries-first-when-linking.patch
 PATCHFILES += 0004-libkdb_ldap-isblank-define.patch
+PATCHFILES += 0005-Add-strings.h-to-setenv.c-for-strlen-and-other-stuff.patch
 
 BUILD_DEP_PKGS = CSWtcl
 
@@ -106,12 +109,13 @@ CFLAGS := $(strip $(CFLAGS) -L$(libdir) -D__EXTENSIONS__)
 CXXFLAGS := $(strip $(CXXFLAGS) -D__EXTENSIONS__)
 #LDFLAGS := $(strip $(LDFLAGS))
 
-EXTRA_LINKER_FLAGS := $(LD_OPTIONS)
+EXTRA_LINKER_FLAGS := $(LD_OPTIONS) -llber
 LD_OPTIONS :=
 
 post-extract-modulated:
 	@# TODO: Check signature
-	@cd $(WORKDIR) && (gzip -c -d $(GARNAME)-$(GARVERSION).tar.gz | tar xf -)
+	-cd $(WORKDIR) && (gzip -c -d $(GARNAME)-$(GARVERSION).tar.gz | tar xf -)
+	#-cd $(WORKDIR) && (gzip -c -d krb5-appl-1.0.1.tar.gz | tar xf -)
 	@$(MAKECOOKIE)
 
 install-custom:
