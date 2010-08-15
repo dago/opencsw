@@ -73,7 +73,14 @@ configure-check-gem-deps:
 	@$(MAKECOOKIE)
 
 install-rbgem:
-	gem install --ignore-dependencies --local --no-test --install-dir $(DESTDIR)$(GEMDIR) $(DOWNLOADDIR)/$(GEMFILE)
+	gem install \
+		--ignore-dependencies \
+		--local \
+		--no-test \
+		--install-dir $(DESTDIR)$(GEMDIR) \
+		$(EXTRA_GEM_INSTALL_ARGS) \
+		$(DOWNLOADDIR)/$(GEMFILE) \
+		$(if $(GEM_BUILD_FLAGS),-- --build-flags $(GEM_BUILD_FLAGS))
 	@$(MAKECOOKIE)
 
 # Check for a CPAN module version update
