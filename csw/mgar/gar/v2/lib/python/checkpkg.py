@@ -67,6 +67,7 @@ SYS_DEFAULT_RUNPATH = [
 ]
 
 CONTENT_PKG_RE = r"^\*?(CSW|SUNW)[0-9a-zA-Z\-]?[0-9a-z\-]+$"
+MD5_RE = r"^[0123456789abcdef]{32}$"
 
 REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
 Dependency issues of $pkgname:
@@ -1527,3 +1528,31 @@ def SliceList(l, size):
   idxes = xrange(0, len(l), size)
   sliced = [l[i:i+size] for i in idxes]
   return sliced
+
+def IsMd5(s):
+  # For optimization, move the compilation elsewhere.
+  md5_re = re.compile(MD5_RE)
+  return md5_re.match(s)
+
+def GetPackageStatsByFilenamesOrMd5s(args, debug=False):
+  filenames = []
+  md5s = []
+  for arg in args:
+    if IsMd5(arg):
+      md5s.append(arg)
+    else:
+      filenames.append(arg)
+  srv4_pkgs = [opencsw.CswSrv4File(x) for x in filenames]
+  pkgstat_objs = []
+  bar = progressbar.ProgressBar()
+  bar.maxval = len(md5s) + len(srv4_pkgs)
+  bar.start()
+  counter = itertools.count()
+  for pkg in srv4_pkgs:
+    pkgstat_objs.append(PackageStats(pkg, debug=debug))
+    bar.update(counter.next())
+  for md5 in md5s:
+    pkgstat_objs.append(PackageStats(None, md5sum=md5, debug=debug))
+    bar.update(counter.next())
+  bar.finish()
+  return pkgstat_objs

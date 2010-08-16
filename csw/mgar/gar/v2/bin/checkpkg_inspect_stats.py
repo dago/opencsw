@@ -33,27 +33,9 @@ def main():
   else:
     logging.basicConfig(level=logging.INFO)
   logging.debug("Collecting statistics about given package files.")
-  filenames = []
-  md5s = []
-  md5_re = re.compile(r"^[0123456789abcdef]{32}$")
-  for arg in args:
-    if md5_re.match(arg):
-      md5s.append(arg)
-    else:
-      filenames.append(arg)
-  srv4_pkgs = [opencsw.CswSrv4File(x) for x in filenames]
-  pkgstat_objs = []
-  bar = progressbar.ProgressBar()
-  bar.maxval = len(md5s) + len(srv4_pkgs)
-  bar.start()
-  counter = itertools.count()
-  for pkg in srv4_pkgs:
-    pkgstat_objs.append(checkpkg.PackageStats(pkg, debug=options.debug))
-    bar.update(counter.next())
-  for md5 in md5s:
-    pkgstat_objs.append(checkpkg.PackageStats(None, md5sum=md5, debug=options.debug))
-    bar.update(counter.next())
-  bar.finish()
+  pkgstat_objs = checkpkg.GetPackageStatsByFilenamesOrMd5s(
+      args,
+      options.debug)
   bar = progressbar.ProgressBar()
   bar.maxval = len(pkgstat_objs)
   bar.start()

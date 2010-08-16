@@ -8,6 +8,9 @@ import models as m
 import sqlobject
 import logging
 import code
+import os
+import os.path
+import socket
 import sys
 from Cheetah.Template import Template
 
@@ -28,7 +31,7 @@ stats_version:  $stats_version
 """
 
 def GetPkg(some_id):
-  logging.debug("Selecting from db: %s", some_id)
+  logging.debug("Selecting from db: %s", repr(some_id))
   res = m.Srv4FileStats.select(
       sqlobject.OR(
         m.Srv4FileStats.q.md5_sum==some_id,
@@ -60,7 +63,11 @@ def main():
     args = args[1:]
 
   # db_path = checkpkg.DatabaseClient.GetDatabasePath()
-  db_path = '/home/maciej/.checkpkg/checkpkg-db-current9s'
+  # db_path = '/home/maciej/.checkpkg/checkpkg-db-current9s'
+  db_path = os.path.join(
+      os.environ["HOME"],
+      ".checkpkg",
+      "checkpkg-db-%s" % socket.getfqdn())
   sqo_conn = sqlobject.connectionForURI('sqlite:%s' % db_path)
   sqlobject.sqlhub.processConnection = sqo_conn
 
