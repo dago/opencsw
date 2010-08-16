@@ -6,6 +6,7 @@
 import optparse
 import models as m
 import sqlobject
+import cPickle
 import logging
 import code
 import os
@@ -15,7 +16,9 @@ import sys
 from Cheetah.Template import Template
 
 USAGE = """usage: %prog show errors <md5sum> [ ... ]
-       %prog show pkg <pkgname> [ ... ]"""
+       %prog show pkg <pkgname> [ ... ]
+       %prog gen-html <md5sum> [ ... ]
+       """
 SHOW_PKG_TMPL = """catalogname:    $catalogname
 pkgname:        $pkginst.pkgname
 basename:       $basename
@@ -28,6 +31,150 @@ latest:         $latest
 version_string: $version_string
 rev:            $rev
 stats_version:  $stats_version
+"""
+
+REVIEW_REQ_TMPL = """<html>
+#import pprint
+<head>
+<title>
+#for pkg in $pkgstats
+$pkg.pkginfo.PKG
+#end for
+</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<style type="text/css">
+body { font-family: sans-serif; }
+p, td, li { font-size: 11px; }
+h1 { font-size: 16px; }
+h2 { font-size: 15px; }
+h3 { font-size: 14px; }
+h4 { font-size: 13px; }
+pre { background-color: #EEE; }
+ul.code {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+ul.code li {
+  font-family: monospace;
+  background-color: #EEE;
+}
+</style>
+</head>
+<body>
+#for pkg in $pkgstats
+  <h1>$pkg.basic_stats.pkg_basename</h1>
+  <h2>Basic stats</h2>
+  <table>
+#for key in ('md5_sum', 'pkgname', 'stats_version', 'pkg_basename', 'catalogname')
+  <tr>
+  <td>
+  $key
+  </td>
+  <td>
+  <code>$pkg.basic_stats[$key]</code>
+  </td>
+  </tr>
+#end for
+  </table>
+  <p>parsed basename</p>
+  <pre>
+$pprint.pformat($pkg.basic_stats.parsed_basename)
+  </pre>
+  <h2>pkginfo</h2>
+  <table>
+#for key, val in $pkg.pkginfo.iteritems
+  <tr>
+  <td
+  style="border: 1px solid gray;"
+  >$key</td>
+  <td style="font-family: monospace; border: 1px solid gray;"
+  >$val</td>
+  </tr>
+#end for
+  </table>
+#if $pkg.binaries_dump_info
+  <h2>binaries_dump_info</h2>
+  <ul>
+#for bin in $pkg["binaries_dump_info"]
+	<li>
+	<strong>$bin.path</strong>
+## ['base_name', 'RUNPATH RPATH the same', 'runpath', 'RPATH set', 'needed sonames', 'path', 'RUNPATH set']
+	<ul>
+  <li> runpath: <code>$bin.runpath</code> </li>
+	<li> needed sonames: <code>$bin["needed sonames"]</code> </li>
+  </ul>
+	</li>
+#end for
+	</ul>
+#end if
+#if $pkg.depends
+  <h2>depends</h2>
+  <ul>
+#for depend_pkg, depend_desc in $pkg.depends
+  <li>
+  $depend_desc
+  </li>
+#end for
+  </ul>
+#end if
+#if $pkg.files_metadata
+  <h2>files metadata</h2>
+  <table>
+#for md in $pkg.files_metadata
+  <tr>
+  <td> $md.path </td>
+  <td> $md.mime_type </td>
+  </tr>
+#end for
+  </table>
+#end if
+#if $pkg.isalist
+  <h2>isalist</h2>
+  <p>$pkg.isalist</p>
+#end if
+#if $pkg.mtime
+  <h2>mtime</h2>
+  <p>
+  $pkg.mtime
+  </p>
+#end if
+#if $pkg.overrides
+  <h2>overrides</h2>
+  <ul>
+#for override in $pkg.overrides
+	<li>
+	$override.pkgname
+	$override.tag_name
+  $override.tag_info
+	</li>
+#end for
+  </ul>
+#end if
+  <h2>pkgchk</h2>
+  <p>stdout</p>
+  <pre>
+#for l in $pkg.pkgchk.stdout_lines
+$l
+#end for
+  </pre>
+  <p>stderr</p>
+  <pre>
+#for l in $pkg.pkgchk.stderr_lines
+$l
+#end for
+  </pre>
+  <h2>pkgmap</h2>
+  <ul class="code">
+#for entry in $pkg.pkgmap
+	<li>
+	$entry.line
+	</li>
+#end for
+  </ul>
+#end for
+</body>
+</html>
 """
 
 def GetPkg(some_id):
@@ -61,9 +208,9 @@ def main():
   if command == 'show':
     subcommand = args[0]
     args = args[1:]
+  else:
+    subcommand = None
 
-  # db_path = checkpkg.DatabaseClient.GetDatabasePath()
-  # db_path = '/home/maciej/.checkpkg/checkpkg-db-current9s'
   db_path = os.path.join(
       os.environ["HOME"],
       ".checkpkg",
@@ -90,7 +237,13 @@ def main():
       srv4 = GetPkg(md5_sum)
       t = Template(SHOW_PKG_TMPL, searchList=[srv4])
       sys.stdout.write(unicode(t))
-
+  if command == 'gen-html':
+    pkgstats = []
+    for md5_sum in md5_sums:
+      srv4 = GetPkg(md5_sum)
+      pkgstats.append(cPickle.loads(str(srv4.data)))
+    t = Template(REVIEW_REQ_TMPL, searchList=[srv4, {"pkgstats": pkgstats}])
+    sys.stdout.write(unicode(t))
 
 
 if __name__ == '__main__':
