@@ -1,0 +1,39 @@
+From 3463cbf826b2ac1eb4e96d997e1830e7af0a495b Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 16 Aug 2010 17:05:23 +0200
+Subject: [PATCH] sys/inttypes.h instead of stdint.h
+
+---
+ compiler/cpp/src/parse/t_const_value.h |    2 +-
+ compiler/cpp/src/parse/t_type.h        |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/compiler/cpp/src/parse/t_const_value.h b/compiler/cpp/src/parse/t_const_value.h
+index 5bfaeb2..e975571 100644
+--- a/compiler/cpp/src/parse/t_const_value.h
++++ b/compiler/cpp/src/parse/t_const_value.h
+@@ -21,7 +21,7 @@
+ #define T_CONST_VALUE_H
+ 
+ #include "t_enum.h"
+-#include <stdint.h>
++#include <sys/inttypes.h>
+ #include <map>
+ #include <vector>
+ 
+diff --git a/compiler/cpp/src/parse/t_type.h b/compiler/cpp/src/parse/t_type.h
+index 4ce2eda..93ff2ff 100644
+--- a/compiler/cpp/src/parse/t_type.h
++++ b/compiler/cpp/src/parse/t_type.h
+@@ -23,7 +23,7 @@
+ #include <string>
+ #include <map>
+ #include <cstring>
+-#include <stdint.h>
++#include <sys/inttypes.h>
+ #include "t_doc.h"
+ 
+ // What's worse?  This, or making a src/parse/non_inlined.cc?
+-- 
+1.7.1
+
