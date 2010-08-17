@@ -73,6 +73,7 @@ PROTOTYPE_MODIFIERS = makesgid
 PROTOTYPE_FILES_makesgid = $(sbindir)/post(drop|queue)
 PROTOTYPE_GROUP_makesgid = postdrop
 PROTOTYPE_PERMS_makesgid = 2755
+PROTOTYPE_CLASS_makesgid = ugfiles
 
 # Make $(DEF_QUEUE_DIR) subdirs accessible/writable to postfix only
 PROTOTYPE_MODIFIERS += spooldir
