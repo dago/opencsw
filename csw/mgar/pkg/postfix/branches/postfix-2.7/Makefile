@@ -12,7 +12,9 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 # ! Build, install and test package (works? spool permissions ok?)
 #   WRT to permissions, run "postfix set-permissions" and compare
-# * Ship simple default configuration
+# * Ship simple default configuration (restrict mynetworks to 127.0.0.1?)
+# * alias_database points to /etc/mail/aliases, symlink
+#   /etc/opt/csw/postfix/aliases to /etc/mail/aliases?
 #
 # NICE TO KNOW
 # - 2.4.6,REV=2008.05.28 preserves modified configuration files via
@@ -283,6 +285,10 @@ install-custom:
     # Helper script for spool location migration (2.4.x -> 2.6.x)
 	ginstall -Dm 755 $(FILEDIR)/migrate-queuefiles.sh \
 		$(DESTDIR)$(docdir)/$(GARNAME)/scripts/migrate-queuefiles.sh
+
+	# Upgrade notice for users upgrading from the 2.4 package
+	ginstall -Dm 644 $(FILEDIR)/README.upgradefrom.24 \
+		$(DESTDIR)$(docdir)/$(GARNAME)/README.upgradefrom.24
 	@$(MAKECOOKIE)
 
 # Fails. A subsequent manual verify-config run is successfull,
