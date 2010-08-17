@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = sudo
-GARVERSION = 1.7.3
+GARVERSION = 1.7.4p2
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges
