@@ -1,3 +1,14 @@
+#
+#
+# !!! This package can be built in two flavors, a regular one with full
+# !!! features enabled and one with a core feature set, i.e. reduced
+# !!! dependencies (package name suffix: -simple).
+# !!! To build the simplified set, the whole build needs to run with
+# !!! BUILDTYPE=simple. Further details below. By now this needs to be
+# !!! carried out manually. Ideas to automate the process of building
+# !!! the two packages are welcome.
+#
+#
 # TODO (release-critical prefixed with !, non release-critical with *)
 # ! Build, install and test package (works? spool permissions ok?)
 #   WRT to permissions, run "postfix set-permissions" and compare
@@ -154,7 +165,11 @@ BUILD_DEP_PKGS += CSWpcre
 RUNTIME_DEP_PKGS += CSWpcrert
 
 # Activate support for hash and btree lookup tables
-# http://www.postfix.org/DB_README.html
+# http://www.postfix.org/DB_README.html. !! Takeaway: Use same DB as SASL !!
+# "If you compile Postfix with a different Berkeley DB implementation,
+# then every Postfix program will dump core because either the system library,
+# the SASL library, or Postfix itself ends up using the wrong version."
+#
 FEATURES += -DHAS_DB
 INCLUDES += -I/opt/csw/bdb42/include 
 AUXLIBS  += -L/opt/csw/bdb42/lib -R/opt/csw/bdb42/lib -ldb-4.2
