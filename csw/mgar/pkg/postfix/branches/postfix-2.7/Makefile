@@ -62,7 +62,7 @@ USERGROUP   = $(sysconfdir)/pkg/CSW$(GARNAME)/cswusergroup
 # For the sake of simplicity and user choice we dropped the automatic
 # replacement of the /usr/{lib,bin} sendmail binaries. Ref.
 # http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5313
-POSTMSG     = $(DOCDIR)/$(GARNAME)/README.upgradefrom.24
+POSTMSG     = $(docdir)/$(GARNAME)/README.upgradefrom.24
 
 # For file permissions reference and verification purposes, postfix ships
 # /opt/csw/libexec/postfix/postfix-files which contains a list of the
