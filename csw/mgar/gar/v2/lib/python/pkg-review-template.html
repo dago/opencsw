@@ -1,5 +1,6 @@
+## This is a Cheetah template
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-#import pprint
 <head>
 <title>
 #for pkg in $pkgstats
@@ -51,9 +52,36 @@ table.gently-lined th {
 </style>
 </head>
 <body>
+  <h1><a name="toc">Table of contents</a></h1>
+  <ul class="toc">
 #for pkg in $pkgstats
-  <h1>$pkg.basic_stats.pkg_basename</h1>
-  <h2>Build source code</h2>
+    <li>
+      <a href="#${pkg.basic_stats.md5_sum}">
+        ${pkg.basic_stats.pkg_basename}
+      </a>
+      <ul>
+        <li><a href="#${pkg.basic_stats.md5_sum}-pkginfo">pkginfo</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-binaries_dump_info">binaries_dump_info</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-depends">depends</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-files_metadata">files_metadata</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-overrides">overrides</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-pkgmap">pkgmap</a></li>
+      </ul>
+    </li>
+#end for
+  </ul>
+
+#for pkg in $pkgstats
+  <h1>
+    ${pkg.basic_stats.pkgname}
+    &mdash;
+    <a name="${pkg.basic_stats.md5_sum}">${pkg.basic_stats.pkg_basename}</a>
+  </h1>
+  <h2>
+    <a name="${pkg.basic_stats.md5_sum}-source">
+      Build source code
+    </a>
+  </h2>
 #if $pkg.build_src
   <p>
     <a href="$pkg.build_src">
@@ -80,7 +108,7 @@ table.gently-lined th {
   $key
   </td>
   <td>
-  <code>$pkg.basic_stats[$key]</code>
+  <code style="font-weight: bold;">$pkg.basic_stats[$key]</code>
   </td>
   </tr>
 #end for
@@ -135,7 +163,11 @@ table.gently-lined th {
     <td>$pkg.basic_stats.parsed_basename.vendortag</td>
   </tr>
   </table>
-  <h2>pkginfo</h2>
+  <h2>
+    <a name="${pkg.basic_stats.md5_sum}-pkginfo">
+      pkginfo
+    </a>
+  </h2>
   <table class="gently-lined">
   <tr>
   <th>Key</th>
@@ -151,7 +183,11 @@ table.gently-lined th {
 #end for
   </table>
 #if $pkg.binaries_dump_info
-  <h2>binaries_dump_info</h2>
+  <h2>
+    <a name="${pkg.basic_stats.md5_sum}-binaries_dump_info">
+      binaries_dump_info
+    </a>
+  </h2>
   <ul>
 #for bin in $pkg["binaries_dump_info"]
   <li>
@@ -189,7 +225,11 @@ table.gently-lined th {
   </ul>
 #end if
 #if $pkg.depends
-  <h2>depends</h2>
+  <h2>
+    <a name="${pkg.basic_stats.md5_sum}-depends">
+      depends
+    </a>
+  </h2>
   <ul>
 #for depend_pkg, depend_desc in $pkg.depends
   <li>
@@ -201,7 +241,11 @@ table.gently-lined th {
   </ul>
 #end if
 #if $pkg.files_metadata
-  <h2>files metadata</h2>
+  <h2>
+    <a name="${pkg.basic_stats.md5_sum}-files_metadata">
+      files metadata
+    </a>
+  </h2>
   <table class="gently-lined">
   <tr>
     <th>path</th>
@@ -252,7 +296,11 @@ table.gently-lined th {
   </p>
 #end if
 #if $pkg.overrides
-  <h2>overrides</h2>
+  <h2>
+    <a name="${pkg.basic_stats.md5_sum}-overrides">
+      overrides
+    </a>
+  </h2>
   <ul>
 #for override in $pkg.overrides
   <li>
@@ -276,7 +324,11 @@ $l
 $l
 #end for
   </pre>
-  <h2>pkgmap</h2>
+  <h2>
+    <a name="${pkg.basic_stats.md5_sum}-pkgmap">
+      pkgmap
+    </a>
+  </h2>
   <ul class="code">
 #for entry in $pkg.pkgmap
   <li>
