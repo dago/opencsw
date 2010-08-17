@@ -82,6 +82,13 @@ PROTOTYPE_USER_spooldir  = postfix
 PROTOTYPE_PERMS_spooldir = 0700
 PROTOTYPE_CLASS_spooldir = ugfiles
 
+# Make $(DEF_DATA_DIR) writable by postfix (used for master.lock)
+PROTOTYPE_MODIFIERS += lockdir
+PROTOTYPE_FILES_lockdir = $(DEF_DATA_DIR)
+PROTOTYPE_USER_lockdir  = postfix
+PROTOTYPE_PERMS_lockdir = 0700
+PROTOTYPE_CLASS_lockdir = ugfiles
+
 # Make $(DEF_QUEUE_DIR)/maildrop accessible by postdrop group
 PROTOTYPE_MODIFIERS += maildrop
 PROTOTYPE_FILES_maildrop = $(DEF_QUEUE_DIR)/maildrop
