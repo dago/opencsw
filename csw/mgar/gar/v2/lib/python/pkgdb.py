@@ -61,8 +61,29 @@ ul.code li {
   font-family: monospace;
   background-color: #EEE;
 }
+ul.clean {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
 span.warning {
   background-color: #DDF;
+}
+table.framed td {
+  border: 1px solid #DDD;
+}
+td.numeric {
+  text-align: right;
+}
+table.gently-lined td {
+  border-bottom: 1px solid #DDD;
+  margin: 0px;
+  padding: 2px;
+}
+table.gently-lined th {
+  border-bottom: 2px solid black;
+  margin: 0px;
+  padding: 2px;
 }
 </style>
 </head>
@@ -102,18 +123,67 @@ span.warning {
 #end for
   </table>
   <h3>parsed basename</h3>
-  <pre>
-$pprint.pformat($pkg.basic_stats.parsed_basename)
-  </pre>
+  <table class="framed">
+  <!--
+
+{'arch': 'i386',
+ 'catalogname': 'mysql51',
+ 'full_version_string': '5.1.49,REV=2010.08.12',
+ 'osrel': 'SunOS5.9',
+ 'revision_info': {'REV': '2010.08.12'},
+ 'vendortag': 'CSW',
+ 'version': '5.1.49',
+ 'version_info': {'major version': '5',
+                  'minor version': '1',
+                  'patchlevel': '49'}}
+
+  mysql51-5.1.49,REV=2010.08.12-SunOS5.9-i386-CSW.pkg.gz
+  -->
+  <tr>
+    <th>catalogname</th>
+    <th>full_version_string</th>
+    <th>(version)</th>
+    <th>(version_info)</th>
+    <th>(revision_info)</th>
+    <th>osrel</th>
+    <th>arch</th>
+    <th>vendortag</th>
+  </tr>
+  <tr>
+    <td>$pkg.basic_stats.parsed_basename.catalogname</td>
+    <td>$pkg.basic_stats.parsed_basename.full_version_string</td>
+    <td>$pkg.basic_stats.parsed_basename.version</td>
+    <td>
+      <ul class="clean">
+#for key, val in $pkg.basic_stats.parsed_basename.version_info.iteritems
+        <li>$key: $val</li>
+#end for
+      </ul>
+    </td>
+    <td>
+      <ul class="clean">
+#for key, val in $pkg.basic_stats.parsed_basename.revision_info.iteritems
+        <li>$key: $val</li>
+#end for
+      </ul>
+    </td>
+    <td>$pkg.basic_stats.parsed_basename.osrel</td>
+    <td>$pkg.basic_stats.parsed_basename.arch</td>
+    <td>$pkg.basic_stats.parsed_basename.vendortag</td>
+  </tr>
+  </table>
   <h2>pkginfo</h2>
-  <table>
+  <table class="gently-lined">
+  <tr>
+  <th>Key</th>
+  <th>Value</th>
+  </tr>
 #for key, val in $pkg.pkginfo.iteritems
   <tr>
   <td
-  style="border: 1px solid #DDD;"
   >$key</td>
-  <td style="font-family: monospace; border: 1px solid #DDD;"
-  >$val</td>
+  <td
+  ><code>$val</code></td>
   </tr>
 #end for
   </table>
@@ -169,32 +239,27 @@ $pprint.pformat($pkg.basic_stats.parsed_basename)
 #end if
 #if $pkg.files_metadata
   <h2>files metadata</h2>
-  <table>
+  <table class="gently-lined">
   <tr>
     <th>path</th>
     <th>mimetype</th>
-    <th>machine_id</th>
     <th>machine name</th>
+    <!--
     <th>endian</th>
+    -->
   </tr>
 #for md in $pkg.files_metadata
   <tr>
   <td> $md.path </td>
   <td> $md.mime_type </td>
-  <td>
-#if "machine_id" in $md
-  $md.machine_id
-#else
-  &nbsp;
-#end if
-  </td>
-  <td>
+  <td style="text-align: center;">
 #if "machine_id" in $md
   $hachoir_machines[$md.machine_id].name
 #else
   &nbsp;
 #end if
   </td>
+  <!--
   <td>
 #if "endian" in $md
   $md.endian
@@ -202,13 +267,20 @@ $pprint.pformat($pkg.basic_stats.parsed_basename)
   &nbsp;
 #end if
   </td>
+  -->
   </tr>
 #end for
   </table>
 #end if
 #if $pkg.isalist
   <h2>isalist</h2>
-  <p>$pkg.isalist</p>
+  <ul class="code">
+#for isa in $pkg.isalist
+	  <li>
+	    $isa
+	  </li>
+#end for
+  </ul>
 #end if
 #if $pkg.mtime
   <h2>mtime</h2>
