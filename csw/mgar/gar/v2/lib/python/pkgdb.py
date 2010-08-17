@@ -57,6 +57,8 @@ def main():
   parser.add_option("-d", "--debug", dest="debug",
                     default=False, action="store_true",
                     help="Turn on debugging messages")
+  parser.add_option("-t", "--pkg-review-template", dest="pkg_review_template",
+                    help="A Cheetah template used for package review reports.")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -104,17 +106,20 @@ def main():
       data = cPickle.loads(str(srv4.data))
       if "OPENCSW_REPOSITORY" in data["pkginfo"]:
         build_src = data["pkginfo"]["OPENCSW_REPOSITORY"]
-        build_src = re.sub(r"@(\d+)$", r"?rev=\1", build_src)
+        build_src = re.sub(r"@(\d+)$", r"", build_src)
       else:
         build_src = None
       data["build_src"] = build_src
       pkgstats.append(data)
     # This assumes the program is run as "bin/pkgdb", and not "lib/python/pkgdb.py".
-    tmpl_filename = os.path.join(os.path.split(__file__)[0],
-                                 "..",
-                                 "lib",
-                                 "python",
-                                 "pkg-review-template.html")
+    if not options.pkg_review_template:
+      tmpl_filename = os.path.join(os.path.split(__file__)[0],
+                                   "..",
+                                   "lib",
+                                   "python",
+                                   "pkg-review-template.html")
+    else:
+      tmpl_filename = options.pkg_review_template
     tmpl_str = open(tmpl_filename, "r").read()
     t = Template(tmpl_str, searchList=[{
       "pkgstats": pkgstats,
