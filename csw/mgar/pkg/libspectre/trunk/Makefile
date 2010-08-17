@@ -1,5 +1,5 @@
 GARNAME = libspectre
-GARVERSION = 0.2.5
+GARVERSION = 0.2.6
 CATEGORIES = lib
 
 DESCRIPTION = A small library for rendering Postscript documents
