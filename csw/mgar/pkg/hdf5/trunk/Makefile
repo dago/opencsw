@@ -1,9 +1,9 @@
 GARNAME = hdf5
-GARVERSION = 1.8.4
+GARVERSION = 1.8.5
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.6.10 1.8.4
+MODULATIONS_GARVERSION = 1.6.10 1.8.5
 
 SKIP_MODULATIONS = isa-sparcv9-garversion-1.6.10
 SKIP_MODULATIONS += isa-amd64-garversion-1.6.10
@@ -50,9 +50,9 @@ MERGE_DIRS_isa-default-garversion-1.6.10 = $(libdir)
 MERGE_SCRIPTS_isa-extra-garversion-1.6.10 = copy-relocated-only
 MERGE_DIRS_isa-extra-garversion-1.6.10 = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-1.8.4 = copy-all
-MERGE_SCRIPTS_isa-extra-garversion-1.8.4 = copy-relocated-only
-MERGE_DIRS_isa-extra-garversion-1.8.4 = $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-1.8.5 = copy-all
+MERGE_SCRIPTS_isa-extra-garversion-1.8.5 = copy-relocated-only
+MERGE_DIRS_isa-extra-garversion-1.8.5 = $(libdir)
 
 PKGFILES_CSWhdf5rt = $(PKGFILES_RT)
 
