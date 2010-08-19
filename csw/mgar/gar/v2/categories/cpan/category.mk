@@ -42,6 +42,10 @@ _CATEGORY_GSPEC_INCLUDE ?= csw_cpan_dyngspec.gspec
 # Perl module dependencies can not be properly tracked right now
 _CATEGORY_CHECKPKG_OVERRIDES = surplus-dependency
 
+# The string starts with the module name - the maintainer has no influence if
+# upstream chose uppercase or not as case must match.
+_CATEGORY_CHECKPKG_OVERRIDES += pkginfo-description-not-starting-with-uppercase
+
 include gar/gar.mk
 
 CONFIGURE_ENV += PERL5LIB=$(PERL5LIB)
