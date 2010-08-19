@@ -18,9 +18,13 @@ DISTFILES += CSWtcsh.postremove
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+LICENSE = Copyright
+
 RUNTIME_DEP_PKGS = CSWiconv
 
-SPKG_SOURCEURL = http://www.tcsh.org/
+VENDOR_URL = http://www.tcsh.org/
+
+EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
