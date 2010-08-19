@@ -1,0 +1,22 @@
+#!/bin/sh
+PATH=/usr/bin
+export PATH
+
+SHELLS=/etc/shells
+TCSH=/opt/csw/bin/tcsh
+
+if [ -z "${PKG_INSTALL_ROOT}" -o "${PKG_INSTALL_ROOT}" = "/" ]
+then
+	RSHELLS=${SHELLS}
+	RTCSH=${TCSH}
+else
+	RSHELLS=${PKG_INSTALL_ROOT}${SHELLS}
+	RTCSH=${TCSH}
+fi
+
+if /usr/bin/grep "^${RTCSH}" ${RSHELLS} > /dev/null 2>&1; then
+	/usr/bin/perl -i -pwe '$_ = "" if m%^'${RTCSH}'%' ${RSHELLS}
+	echo "REMOVED ${RTCSH} from ${RSHELLS}."
+else
+	echo "${RSHELLS} UNCHANGED because it did not contain entry ${RTCSH}."
+fi
