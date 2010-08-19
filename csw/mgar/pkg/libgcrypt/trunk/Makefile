@@ -1,5 +1,5 @@
 GARNAME = libgcrypt
-GARVERSION = 1.4.5
+GARVERSION = 1.4.6
 CATEGORIES = lib
 
 DESCRIPTION = GNU libgcrypt
