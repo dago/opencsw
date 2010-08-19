@@ -1,5 +1,5 @@
 GARNAME = unrar
-GARVERSION = 3.9.7
+GARVERSION = 3.9.10
 CATEGORIES = utils
 
 DESCRIPTION = RAR archive extractor
