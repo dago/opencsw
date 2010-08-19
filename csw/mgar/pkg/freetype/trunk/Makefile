@@ -1,5 +1,5 @@
 GARNAME = freetype
-GARVERSION = 2.3.12
+GARVERSION = 2.4.2
 CATEGORIES = lib
 
 DESCRIPTION = A free and portable TrueType font rendering engine
