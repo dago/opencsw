@@ -26,6 +26,11 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+# They have strange pathes all over the place and fix it with LD_LIBRARY_PATH during execution
+CHECKPKG_OVERRIDES  = binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES += bad-rpath-entry
+CHECKPKG_OVERRIDES += soname-not-found
+
 include gar/category.mk
 
 install-custom:
