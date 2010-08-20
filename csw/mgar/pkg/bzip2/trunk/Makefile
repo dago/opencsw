@@ -2,13 +2,7 @@ GARNAME = bzip2
 GARVERSION = 1.0.5
 CATEGORIES = utils
 
-# BUILD_DEP_PKGS =  CSWggettext CSWgit
-
-# RUNTIME_DEP_PKGS = CSWiconv CSWggettextrt
-
-# INCOMPATIBLE_PKGS =
-
-DESCRIPTION = bzip2 Compressiion Utility
+DESCRIPTION = bzip2 Compression Utility
 define BLURB
 bzip2 is a freely available, patent free, high-quality data compressor. It typically
 compresses files to within 10% to 15% of the best available techniques (the PPM family of
@@ -28,6 +22,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES    = CSWbzip2
 CATALOGNAME = bzip2
+
+LICENSE = LICENSE
+
+CHECKPKG_OVERRIDES_CSWbzip2 += pkginfo-description-not-starting-with-uppercase|bzip2|Compression|Utility
 
 BUILD64     = 1
 GARCOMPILER = SOS12
@@ -50,7 +48,7 @@ include gar/category.mk
 
 PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
 OBJDIR    = $(WORKDIR)/$(DISTNAME)
-DOCFILES  = CHANGES LICENSE README manual.html manual.pdf manual.xml
+DOCFILES  = CHANGES README manual.html manual.pdf manual.xml
 BINFILES  = bzip2 bzdiff bzgrep bzip2recover bzmore
 LIBFILES  = libbz2.so.1.0.5
 INCFILES  = bzlib.h
