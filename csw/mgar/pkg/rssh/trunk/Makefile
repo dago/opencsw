@@ -29,6 +29,7 @@ RUNTIME_DEP_PKGS = CSWossh
 
 sysconfdir = /etc/opt/csw
 MIGRATE_FILES = rssh.conf
+PRESERVECONF = $(sysconfdir)/rssh.conf
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-scp=$(bindir)/scp
