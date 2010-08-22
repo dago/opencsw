@@ -27,11 +27,14 @@ LICENSE = LICENSE
 
 CHECKPKG_OVERRIDES_CSWbzip2 += pkginfo-description-not-starting-with-uppercase|bzip2|Compression|Utility
 
-BUILD64     = 1
-GARCOMPILER = SOS12
+BUILD64              = 1
+NOISAEXEC            = 1
+MERGE_DIRS_isa-extra = $(libdir)
 
-CFLAGS  += -KPIC -D_FILE_OFFSET_BITS=64 -fast $(SOS12_CC_FLAGS)
-LDFLAGS += $(SOS12_LD_FLAGS) $(RUNPATH_LINKER_FLAGS)
+EXTRA_CFLAGS  += -KPIC -D_FILE_OFFSET_BITS=64
+LDFLAGS += $(LD_OPTIONS)
+# CFLAGS  += -KPIC -D_FILE_OFFSET_BITS=64 -fast $(SOS12_CC_FLAGS)
+# LDFLAGS += $(SOS12_LD_FLAGS) $(RUNPATH_LINKER_FLAGS)
 
 BUILD_ARGS = CC="$(CC)" CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
 
@@ -40,14 +43,16 @@ TEST_SCRIPTS      = custom
 CONFIGURE_SCRIPTS =
 INSTALL_SCRIPTS   = custom
 
+# The tests will fail if CSWbzip2 isn't already installed, since the runpath for
+# bzip2 goes through /opt/csw/lib/... instead of . - just help it out here.
 LD_LIBRARY_PATH=.
 export LD_LIBRARY_PATH
 EXTRA_TEST_EXPORTS = LD_LIBRARY_PATH
 
 include gar/category.mk
 
-PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
-OBJDIR    = $(WORKDIR)/$(DISTNAME)
+#PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
+#OBJDIR    = $(WORKDIR)/$(DISTNAME)
 DOCFILES  = CHANGES README manual.html manual.pdf manual.xml
 BINFILES  = bzip2 bzdiff bzgrep bzip2recover bzmore
 LIBFILES  = libbz2.so.1.0.5
@@ -69,26 +74,26 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@# install the libraries
 	@( for file in $(LIBFILES) ; do \
-	     ginstall -c -m 755 $(OBJDIR)/$$file $(DESTDIR)$(libdir) ; \
+	     ginstall -c -m 755 $(WORKSRC)/$$file $(DESTDIR)$(libdir) ; \
 	   done )
 	@ln -s -f $(DESTDIR)$(libdir)/libbz2.so.1.0.5 $(DESTDIR)$(libdir)/libbz2.so
 	@ln -s -f $(DESTDIR)$(libdir)/libbz2.so.1.0.5 $(DESTDIR)$(libdir)/libbz2.so.1.0
 	@# install the binaries
 	@( for file in $(BINFILES) ; do \
-	     ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(bindir) ; \
+	     ginstall -m 755 $(WORKSRC)/$$file $(DESTDIR)$(bindir) ; \
 	   done )
-	@ginstall -m 755 $(OBJDIR)/bzip2 $(DESTDIR)$(bindir)/bunzip2
-	@ginstall -m 755 $(OBJDIR)/bzip2 $(DESTDIR)$(bindir)/bzcat
-	@ln -s -f $(DESTDIR)$(bindir)/bzgrep $(DESTDIR)$(bindir)/bzegrep
-	@ln -s -f $(DESTDIR)$(bindir)/bzgrep $(DESTDIR)$(bindir)/bzfgrep
-	@ln -s -f $(DESTDIR)$(bindir)/bzmore $(DESTDIR)$(bindir)/bzless
-	@ln -s -f $(DESTDIR)$(bindir)/bzdiff $(DESTDIR)$(bindir)/bzcmp
+	@ginstall -m 755 $(WORKSRC)/bzip2 $(DESTDIR)$(bindir)/bunzip2
+	@ginstall -m 755 $(WORKSRC)/bzip2 $(DESTDIR)$(bindir)/bzcat
+	@ln -f $(DESTDIR)$(bindir)/bzgrep $(DESTDIR)$(bindir)/bzegrep
+	@ln -f $(DESTDIR)$(bindir)/bzgrep $(DESTDIR)$(bindir)/bzfgrep
+	@ln -f $(DESTDIR)$(bindir)/bzmore $(DESTDIR)$(bindir)/bzless
+	@ln -f $(DESTDIR)$(bindir)/bzdiff $(DESTDIR)$(bindir)/bzcmp
 	@# install the include files
 	@( for file in $(INCFILES) ; do \
-	     ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(includedir) ; \
+	     ginstall -m 644 $(WORKSRC)/$$file $(DESTDIR)$(includedir) ; \
 	   done )
 	@# install the doc files
 	@( for file in $(DOCFILES) ; do \
-	     ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(docdir)/$(GARNAME) ; \
+	     ginstall -m 644 $(WORKSRC)/$$file $(DESTDIR)$(docdir)/$(GARNAME) ; \
 	   done )
 	@$(MAKECOOKIE)
