@@ -31,13 +31,37 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw
 
-EXTRA_CFLAGS = -fast -xnolibmopt
+# Use OPT_FLAGS_SOS instead instead of CFLAGS_EXTRA, because we want -fast
+# to be first, and to have portions of it overridden by the ISA specific
+# items per modulation.  Otherwise, we end up with everything being 'native',
+# because that's what -fast does if it's last in the list.
+OPT_FLAGS_SOS = -fast -xnolibmopt
+
+EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis
+## EXTRA_BUILD_ISAS_i386  = ???
+
+# CHECKPKG_OVERRIDES_CSWfindutils += surplus-dependency|CSWiconv
 
 # Test target requires GNU diff
 TEST_TARGET = check
 TEST_ARGS = "PATH=/opt/csw/gnu:$$PATH"
 
-# Few of the tests fail, not yet further investigated
+# 12 of the tests fail:
+# iregex1.old-O0
+# iregex1.new-O0
+# iregex1.old-O1
+# iregex1.new-O1
+# iregex1.old-O2
+# iregex1.new-O2
+# iregex1.old-O3
+# iregex1.new-O3
+# 
+# FAIL: parent.old-O0, /home/gmarler/svnwork/findutils/trunk/work/solaris9-sparc/build-isa-sparcv8/findutils-4.4.2/find/testsuite/../oldfind: .: Permission denied
+# FAIL: parent.old-O1, /home/gmarler/svnwork/findutils/trunk/work/solaris9-sparc/build-isa-sparcv8/findutils-4.4.2/find/testsuite/../oldfind: .: Permission denied
+# FAIL: parent.old-O2, /home/gmarler/svnwork/findutils/trunk/work/solaris9-sparc/build-isa-sparcv8/findutils-4.4.2/find/testsuite/../oldfind: .: Permission denied
+# FAIL: parent.old-O3, /home/gmarler/svnwork/findutils/trunk/work/solaris9-sparc/build-isa-sparcv8/findutils-4.4.2/find/testsuite/../oldfind: .: Permission denied
+
+# Skipping until the above are rectified
 SKIPTEST = 1
 
 include gar/category.mk
@@ -50,6 +74,8 @@ include gar/category.mk
 # configure:37775: checking how to link with libintl
 # configure:37777: result: /opt/csw/lib/libintl.so -R/opt/csw/lib
 #
+
 post-configure-modulated:
 	@perl -pi -e 's|-R/opt/csw/lib||' $(WORKSRC)/*/Makefile
 	@$(MAKECOOKIE)
+
