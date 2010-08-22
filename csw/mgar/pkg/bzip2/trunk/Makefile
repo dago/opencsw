@@ -33,8 +33,6 @@ MERGE_DIRS_isa-extra = $(libdir)
 
 EXTRA_CFLAGS  += -KPIC -D_FILE_OFFSET_BITS=64
 LDFLAGS += $(LD_OPTIONS)
-# CFLAGS  += -KPIC -D_FILE_OFFSET_BITS=64 -fast $(SOS12_CC_FLAGS)
-# LDFLAGS += $(SOS12_LD_FLAGS) $(RUNPATH_LINKER_FLAGS)
 
 BUILD_ARGS = CC="$(CC)" CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
 
@@ -51,8 +49,6 @@ EXTRA_TEST_EXPORTS = LD_LIBRARY_PATH
 
 include gar/category.mk
 
-#PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
-#OBJDIR    = $(WORKDIR)/$(DISTNAME)
 DOCFILES  = CHANGES README manual.html manual.pdf manual.xml
 BINFILES  = bzip2 bzdiff bzgrep bzip2recover bzmore
 LIBFILES  = libbz2.so.1.0.5
