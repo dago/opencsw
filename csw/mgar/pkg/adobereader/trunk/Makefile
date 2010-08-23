@@ -1,15 +1,20 @@
 # $Id$
 GARNAME = adobereader
-GARVERSION = 9.3.4
+GARVERSION_sparc = 8.1.7
+GARVERSION_i386 = 9.3.4
+GARVERSION = $(GARVERSION_$(GARCH))
 CATEGORIES = apps
 
 DESCRIPTION = Adobe Acrobat Reader
 define BLURB
-  Long description
 endef
 
-MASTER_SITES = ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/$(GARVERSION)/enu/
-DISTFILES  = AdbeRdr$(GARVERSION)-1_i486solaris_enu.tar.bz2
+MASTER_SITES  = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(shell echo $(GARVERSION_sparc) | cut -d. -f1).x/$(GARVERSION_sparc)/enu/
+MASTER_SITES += ftp://ftp.adobe.com/pub/adobe/reader/unix/$(shell echo $(GARVERSION_i386) | cut -d. -f1).x/$(GARVERSION_i386)/enu/
+DISTFILES_sparc  = AdobeReader_enu-$(GARVERSION_sparc)-1.sparc.tar.bz2
+DISTFILES_i386  = AdbeRdr$(GARVERSION_i386)-1_i486solaris_enu.tar.bz2
+DISTFILES = $(DISTFILES_sparc) $(DISTFILES_i386)
+NOEXTRACT = $(filter-out $(DISTFILES_$(GARCH)),$(DISTFILES))
 DISTNAME = AdobeReader
 
 # File name regex to get notifications about upstream software releases
@@ -38,4 +43,17 @@ install-custom:
 	cd $(WORKSRC) && ./INSTALL --install_path=$(DESTDIR)$(sharedstatedir)
 	ginstall -d $(DESTDIR)$(bindir)
 	ln -s ../share/Adobe/Reader9/bin/acroread $(DESTDIR)$(bindir)/acroread
+	@$(MAKECOOKIE)
+
+post-install-modulated:
+	cd $(DESTDIR); find . -type d -name "* *" | \
+	while read F; do \
+		N=`echo $$F | tr ' ' '_'`; \
+		mv "$$F" $$N; \
+	done;
+	cd $(DESTDIR); find . -type f -name "* *" | \
+	while read F; do \
+		N=`echo $$F | tr ' ' '_'`; \
+		mv "$$F" $$N; \
+	done;
 	@$(MAKECOOKIE)
