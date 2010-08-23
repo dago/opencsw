@@ -1,5 +1,5 @@
 GARNAME      = sqlite3
-GARVERSION   = 3.6.23.1
+GARVERSION   = 3.7.1
 CATEGORIES   = lib
 
 DESCRIPTION  = An embeddable SQL engine in a C library
@@ -12,6 +12,9 @@ endef
 MASTER_SITES = http://sqlite.org/
 DISTNAME = sqlite-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.gz 
+DISTFILES += copyright-release.html
+
+LICENSE = copyright-release.html
 
 PATCHFILES = gar-base.diff
 PATCHFILES += shell.c.diff
@@ -35,12 +38,6 @@ PKGFILES_CSWsqlite3devel = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWsqlite3  = CSWsqlite3rt
 RUNTIME_DEP_PKGS_CSWsqlite3 += CSWreadline
 RUNTIME_DEP_PKGS_CSWsqlite3 += CSWncurses
-
-CHECKPKG_OVERRIDES_CSWsqlite3devel += license-missing|/opt/csw/share/doc/sqlite3_devel/license
-CHECKPKG_OVERRIDES_CSWsqlite3rt += license-missing|/opt/csw/share/doc/sqlite3_rt/license
-CHECKPKG_OVERRIDES_CSWsqlite3 += license-missing|/opt/csw/share/doc/sqlite3/license
-CHECKPKG_OVERRIDES_CSWsqlite3rt += file-with-bad-content|/export/medusa|root/opt/csw/lib/tcl8.4/sqlite3/libtclsqlite3.so
-CHECKPKG_OVERRIDES_CSWsqlite3rt += file-with-bad-content|/export/medusa|root/opt/csw/share/checkpkg/overrides/sqlite3_rt
 
 BUILD_DEP_PKGS = CSWreadline CSWncurses
 
