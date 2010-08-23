@@ -37,7 +37,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-GARCOMPILER = GCC4
+GARCOMPILER = GCC3
 BUILD64 = 1
 PACKAGING_PLATFORMS +=  solaris9-sparc solaris9-i386
 
@@ -64,27 +64,34 @@ CHECKPKG_OVERRIDES_CSWopendbxsqlite3 += surplus-dependency|CSWopendbx
 CHECKPKG_OVERRIDES_CSWopendbxoracle += surplus-dependency|CSWopendbx
 
 CHECKPKG_OVERRIDES_CSWopendbxsqlite3 += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/amd64/opendbx/libsqlite3backend.so.1.2.0
+CHECKPKG_OVERRIDES_CSWopendbxsqlite3 += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/opendbx/libsqlite3backend.so.1.2.0
 CHECKPKG_OVERRIDES_CSWopendbxsqlite3 += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/opendbx/libsqlite3backend.so.1.2.0
 CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/amd64/libopendbx.so.1.2.0
 CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/amd64/libopendbxplus.so.1.0.0
 CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/libopendbx.so.1.2.0
 CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/libopendbxplus.so.1.0.0
+CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/libopendbx.so.1.2.0
+CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/libopendbxplus.so.1.0.
+CHECKPKG_OVERRIDES_CSWopendbx += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/libopendbxplus.so.1.0.0
 CHECKPKG_OVERRIDES_CSWopendbxmysql += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/amd64/opendbx/libmysqlbackend.so.1.2.0
 CHECKPKG_OVERRIDES_CSWopendbxmysql += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/opendbx/libmysqlbackend.so.1.2.0
+CHECKPKG_OVERRIDES_CSWopendbxmysql += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/opendbx/libmysqlbackend.so.1.2.0
 CHECKPKG_OVERRIDES_CSWopendbxoracle += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/amd64/opendbx/liboraclebackend.so.1.2.0
+CHECKPKG_OVERRIDES_CSWopendbxoracle += bad-rpath-entry|/opt/csw/instantclient_10_2/64|opt/csw/lib/sparcv9/opendbx/liboraclebackend.so.1.2.0
 CHECKPKG_OVERRIDES_CSWopendbxoracle += bad-rpath-entry|/opt/csw/instantclient_10_2|opt/csw/lib/opendbx/liboraclebackend.so.1.2.0
 CHECKPKG_OVERRIDES_CSWopendbxoracle += missing-dependency|CSWorainstclient102
 
-RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc3corert
+RUNTIME_DEP_PKGS_CSWopendbx += CSWgcc3g++rt
 RUNTIME_DEP_PKGS_CSWopendbx += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWopendbxdevel += CSWopendbx
-RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWgcc3corert
 RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWzlib
 RUNTIME_DEP_PKGS_CSWopendbxmysql += CSWmysql5rt
-RUNTIME_DEP_PKGS_CSWopendbxsqlite3 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWopendbxsqlite3 += CSWgcc3corert
 RUNTIME_DEP_PKGS_CSWopendbxsqlite3 += CSWsqlite3rt
-RUNTIME_DEP_PKGS_CSWopendbxoracle += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWopendbxoracle += CSWgcc3corert
 RUNTIME_DEP_PKGS_CSWopendbxoracle += CSWopendbx
+RUNTIME_DEP_PKGS_CSWopendbxoracle += CSWorainstclient102
 
 include gar/category.mk
