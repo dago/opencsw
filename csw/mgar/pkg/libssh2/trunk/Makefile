@@ -1,5 +1,5 @@
 GARNAME = libssh2
-GARVERSION = 1.2.5
+GARVERSION = 1.2.7
 CATEGORIES = lib
 
 DESCRIPTION = A Library Implementing the SSH2 Protocol
@@ -13,6 +13,7 @@ endef
 MASTER_SITES = http://www.libssh2.org/download/
 SPKG_SOURCEURL = http://www.libssh2.org
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+# PATCHFILES = 0001-_libssh2_wait_socket-select-on-separate-fd_sets-for-.patch
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
