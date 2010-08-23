@@ -4,6 +4,12 @@
 # May be used/copied freely
 #
 
+# extra checks and warnings to help people run this manually
+if [ "$PKG" = "" ] ; then
+	echo ERROR: PKG env variable must be set
+	exit 1
+fi
+
 while read dest ; do
 	# reminder: $dest will already have $PKG_INSTALL_ROOT prepended for us
 
@@ -23,6 +29,12 @@ while read dest ; do
 	preservedir=$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG
 	confbasename=`basename $confdest`
 	preservedconf=$preservedir/$confbasename
+
+	overridedir=`sed -n  's/.*CSWDESTDIR=\([^ ]*\).*/\1/p' $src`
+	if [ "$overridedir" != "" ] ; then
+		# basename will not change so dont need to reset that
+		confdest=$PKG_INSTALL_ROOT/$overridedir/$basename
+	fi
 
 	if [ -f $confdest ] ; then
 		if cmp $confdest $dest >/dev/null ; then

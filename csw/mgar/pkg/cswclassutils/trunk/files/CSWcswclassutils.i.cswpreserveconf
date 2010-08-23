@@ -10,11 +10,29 @@
 # May be used/copied freely
 #
 
+# extra checks and warnings to help people run this manually
+if [ "$PKG" = "" ] ; then
+	echo ERROR: PKG env variable must be set
+	exit 1
+fi
 
 while read src dest ; do
 	cp $src $dest
-
+	if [ $? -ne 0 ] ; then
+		# It's technically "okay" if the copy fails in some situations.
+		# For example, if we have shared root and the file is already
+		# there. Except I dont think we would be run in that case
+		# anyway. erm..
+		if [ ! -f $src ] ; then
+			echo ERROR: src $src does not exist
+			exit 1
+		fi
+	fi
 	# reminder: $dest will already have $PKG_INSTALL_ROOT prepended for us
+
+	# We always copy to $dest. However, the purpose of this script
+	# is to make a second copy of this "sample" config,
+	# to the "real" location
 
 	case $dest in
 		*.csw)
@@ -28,9 +46,16 @@ while read src dest ; do
 			exit 1
 			;;
 	esac
+
 	preservedir=$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG
 	confbasename=`basename $confdest`
 	preservedconf=$preservedir/$confbasename
+
+	overridedir=`sed -n  's/.*CSWDESTDIR=\([^ ]*\).*/\1/p' $src`
+	if [ "$overridedir" != "" ] ; then
+		# basename will not change so dont need to reset that
+		confdest=$PKG_INSTALL_ROOT/$overridedir/$basename
+	fi
 
 	if [ -f $preservedconf ] ; then
 		echo Restoring $preservedconf
@@ -55,7 +80,16 @@ while read src dest ; do
 			chown $user:$group $confdest
 		fi
 	fi
+	copied="done"
 done
+
+if [ "$copied"  = "" ] ; then
+	echo WARNING: we were called, but no filenames were given.
+	echo "You may have to manually run this script ( $0 )"
+	echo "and pass it the name of the config files in the package."
+	echo "Or, copy over the appropriate config files by hand yourself,"
+	echo "to their proper destinations .
+fi
 
 echo ""
 
