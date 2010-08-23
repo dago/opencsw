@@ -1,5 +1,5 @@
 GARNAME = curl
-GARVERSION = 7.20.0
+GARVERSION = 7.21.0
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers.
@@ -65,6 +65,8 @@ SKIPTEST = 1
 
 # isa-sparcv8-features-minimal isa-sparcv8-features-full isa-sparcv9-features-minimal isa-sparcv9-features-full
 
+# TBD: Unify curlbuild.h with something like diff -D (sparcv9|amd64) curlbuild-32.h curlbuild-64.h > curlbuild.h
+# Inspired from http://cvs.opensolaris.org/source/xref/sfw/usr/src/cmd/apr/apr-1.3/Makefile.sfw
 EXTRA_PAX_ARGS_32 = -s ",^\.$(includedir)/curl/curlbuild.h$$,.$(includedir)/curl/curlbuild-32.h,p"
 EXTRA_PAX_ARGS_64 = -s ",^\.$(includedir)/curl/curlbuild.h$$,.$(includedir)/curl/curlbuild-64.h,p"
 EXTRA_PAX_ARGS_32 += -s ",$(libdir)/libcurl\.so\.4\.2\.0$$,$(libdir_install)/libcurl-$(FEATURES).so.4.2.0,p"
