@@ -41,5 +41,8 @@ LD_LIBRARY_PATH=../.lib
 export LD_LIBRARY_PATH
 EXTRA_TEST_EXPORTS = LD_LIBRARY_PATH
 
+# TBD: This is dependent on 32/64, make sure to have both in separate pathes:
+#   /opt/csw/share/build-1/apr_rules.mk
+
 include gar/category.mk
 
