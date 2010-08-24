@@ -1,0 +1,29 @@
+From 3f19c6f14fe8ea820abbc632e547d6301241aba7 Mon Sep 17 00:00:00 2001
+From: Jake Goerzen <jgoerzen@opencsw.org>
+Date: Tue, 24 Aug 2010 05:34:17 +0200
+Subject: [PATCH] fix compiling on Solaris
+
+---
+ drivers/drv_sun.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/drivers/drv_sun.c b/drivers/drv_sun.c
+index cc99488..11b824c 100644
+--- a/drivers/drv_sun.c
++++ b/drivers/drv_sun.c
+@@ -85,6 +85,12 @@ extern int fputs(const char *, FILE *);
+ #define SOUNDDEVICE "/dev/audio"
+ #endif
+ 
++/* Solaris doesn't have these */
++#ifdef SOLARIS
++#define AUDIO_ENCODING_SLINEAR AUDIO_ENCODING_LINEAR
++#define AUDIO_ENCODING_ULINEAR AUDIO_ENCODING_LINEAR8
++#endif
++
+ /* Compatibility defines, for old *BSD or SunOS systems */
+ #ifndef AUDIO_ENCODING_PCM16
+ #define AUDIO_ENCODING_PCM16 AUDIO_ENCODING_LINEAR
+-- 
+1.7.1
+

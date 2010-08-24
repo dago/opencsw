@@ -1,16 +1,18 @@
 GARNAME = libmikmod
-GARVERSION = 3.2.0
-RELEASE = beta2
-DISTVERSION = $(GARVERSION)-$(RELEASE)
+GARVERSION = 3.1.11
+DISTVERSION = $(GARVERSION)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 CATEGORIES = lib
-DESCRIPTION = library for MOD audio files and other types
+DESCRIPTION = Library for MOD audio files and other types
 define BLURB
-  library supporting many formats, including mod, s3m, it, and xm. Originally a player for MS-DOS,
+  Library supporting many formats, including mod, s3m, it, and xm. Originally a player for MS-DOS,
 endef
 
 MASTER_SITES = http://mikmod.raphnet.net/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = libmikmod-3.1.11-a.diff
+PATCHFILES += 0001-fix-compiling-on-Solaris.patch
+LICENSE = COPYING.LIB
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
