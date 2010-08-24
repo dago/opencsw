@@ -1,1 +1,3 @@
-19fc0879aebd1610813a23bd84726362  libmikmod-3.2.0-beta2.tar.gz
+622ea40e54c8fbd371eb9d8943f17b37  0001-fix-compiling-on-Solaris.patch
+5e56be5a32eecf3cfa195379a5ecb0ef  libmikmod-3.1.11-a.diff
+705106da305e8de191549f1e7393185c  libmikmod-3.1.11.tar.gz
