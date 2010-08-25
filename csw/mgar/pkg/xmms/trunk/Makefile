@@ -27,19 +27,15 @@ CONFIGURE_ARGS += --with-vorbis=$(prefix)
 # No test suite
 TEST_SCRIPTS =
 
-DEP_PKGS_CSWxmms += CSWesound
-DEP_PKGS_CSWxmms += CSWmesa
-DEP_PKGS_CSWxmms += CSWlibx11
-DEP_PKGS_CSWxmms += CSWlibice
-DEP_PKGS_CSWxmms += CSWlibsm
-DEP_PKGS_CSWxmms += CSWlibogg
-DEP_PKGS_CSWxmms += CSWvorbis
-DEP_PKGS_CSWxmms += CSWiconv
-DEP_PKGS_CSWxmms += CSWlibxext
-DEP_PKGS_CSWxmms += CSWggettextrt
-DEP_PKGS_CSWxmms += CSWglib
-DEP_PKGS_CSWxmms += CSWzlib
-DEP_PKGS_CSWxmms += CSWgtk
-DEP_PKGS_CSWxmms += CSWmikmod
+RUNTIME_DEP_PKGS_CSWxmms += CSWglib
+RUNTIME_DEP_PKGS_CSWxmms += CSWmesa
+RUNTIME_DEP_PKGS_CSWxmms += CSWesound
+RUNTIME_DEP_PKGS_CSWxmms += CSWvorbis
+RUNTIME_DEP_PKGS_CSWxmms += CSWlibogg
+RUNTIME_DEP_PKGS_CSWxmms += CSWmikmod
+RUNTIME_DEP_PKGS_CSWxmms += CSWiconv
+RUNTIME_DEP_PKGS_CSWxmms += CSWgtk
+RUNTIME_DEP_PKGS_CSWxmms += CSWzlib
+RUNTIME_DEP_PKGS_CSWxmms += CSWggettextrt
 
 include gar/category.mk
