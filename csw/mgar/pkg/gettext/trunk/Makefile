@@ -1,5 +1,5 @@
 GARNAME = gettext
-GARVERSION = 0.17
+GARVERSION = 0.18.1.1
 CATEGORIES = lib
 
 DESCRIPTION = GNU locale utilities
