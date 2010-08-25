@@ -78,6 +78,8 @@ $(foreach P,$(SPKG_SPECS),$(if $(REQUIRED_PKGS_$P),$(error The deprecated variab
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
+BUNDLE ?= $(GARNAME)
+
 # pkgname - Get the name of a package from a gspec-name or package-name
 #
 # This is a safety function. In sane settings it should return the name
@@ -570,6 +572,7 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "OPENCSW_CATALOGNAME=$(call catalogname,$*)"; \
 	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
 	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
+	echo "OPENCSW_BUNDLE=$(BUNDLE)"; \
 	$(_CATEGORY_PKGINFO) \
 	) >$@
 
