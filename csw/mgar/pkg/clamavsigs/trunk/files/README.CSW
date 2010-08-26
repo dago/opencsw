@@ -1,0 +1,11 @@
+README.CSW
+==========
+- You can find signature databases to download at http://sanesecurity.co.uk.
+
+- You can adjust the time of the download to ease the load on the servers.
+  Please do not use even hours since so many others already do, use a random
+  minute every hour instead. DO NOT DOWNLOAD MORE THAN ONCE EVERY HOUR!
+
+- You should probably set up log rotation.
+
+2010-08-26/Peter Bonivart, OpenCSW
