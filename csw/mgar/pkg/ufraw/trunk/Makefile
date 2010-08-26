@@ -1,5 +1,7 @@
+# $Id$
+
 GARNAME = ufraw
-GARVERSION = 0.16
+GARVERSION = 0.17
 CATEGORIES = apps
 
 DESCRIPTION = A tool for reading and manipulating raw images from digital cameras
