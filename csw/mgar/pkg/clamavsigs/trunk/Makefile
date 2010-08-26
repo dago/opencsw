@@ -24,7 +24,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWrsync
 CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWgnupg
-CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWsocat
+#CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWsocat
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -33,6 +33,7 @@ INSTALL_SCRIPTS = custom
 
 SAMPLECONF = /etc/opt/csw/clamav-unofficial-sigs.conf
 POSTMSG = /opt/csw/share/doc/clamavsigs/README.CSW
+CRONTABS = /etc/opt/csw/pkg/CSWclamavsigs/crontabs/root
 
 include gar/category.mk
 
@@ -41,9 +42,9 @@ DOCLIST = CHANGELOG INSTALL README
 install-custom:
 	@echo " ==> Installing $(GARNAME) (custom)"
 	@echo worksrc: $(WORKSRC)
-	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/CSWclamavsigs/crontabs
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWclamavsigs/crontabs
 	@ginstall -m 644 $(WORKSRC)/clamav-unofficial-sigs.conf $(DESTDIR)/etc/opt/csw
-	@ginstall -m 644 $(FILEDIR)/crontab.root $(DESTDIR)/etc/opt/csw/CSWclamavsigs/crontabs/root
+	@ginstall -m 644 $(FILEDIR)/crontab.root $(DESTDIR)/etc/opt/csw/pkg/CSWclamavsigs/crontabs/root
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
 	@$(foreach DOC,$(DOCLIST),cp $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
 	@ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)
