@@ -30,7 +30,6 @@ EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/share/info/dir
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw
-CONFIGURE_ARGS += --without-included-regex
 
 # Use OPT_FLAGS_SOS instead instead of CFLAGS_EXTRA, because we want -fast
 # to be first, and to have portions of it overridden by the ISA specific
