@@ -27,10 +27,7 @@ DISTFILES += libintl.so.2.s
 DISTFILES += libintl.so.3.i
 DISTFILES += libintl.so.3.s
 
-#Apply two bug fixes from gnulib, retrieved from:
-#http://git.savannah.gnu.org/cgit/gnulib.git/tree/tests/test-wcwidth.c
-#blob: 582a8aa2e87a8235186aa3b1e402bbf03e6646a7
-PATCHFILES = test-wcwidth.patch
+PATCHFILES += 0001-Use-the-auto-detected-SHELL-to-run-convert-archive.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
@@ -39,9 +36,6 @@ CONFIGURE_ARGS += --with-included-glib
 CONFIGURE_ARGS += --with-included-libcroco
 #No glibc
 CONFIGURE_ARGS += --with-included-gettext
-
-#Fix acl bug http://savannah.gnu.org/bugs/?21604
-EXTRA_LD_FLAGS = -lsec
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 

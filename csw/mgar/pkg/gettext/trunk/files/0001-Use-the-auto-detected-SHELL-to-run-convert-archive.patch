@@ -1,0 +1,39 @@
+From 5ab8effba3fe58f3adf06190be6e27ada75f2658 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 26 Aug 2010 03:44:59 +0200
+Subject: [PATCH] Use the auto-detected SHELL to run convert-archive
+
+The convert-archive script was failing on Solaris due to a nested {}
+construct that it's broken /bin/sh couldn't handle.  We now force the
+use of the auto-detected POSIX-compliant SHELL to run that script.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ gettext-tools/misc/Makefile.in |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gettext-tools/misc/Makefile.in b/gettext-tools/misc/Makefile.in
+index 8d2b112..bc42b35 100644
+--- a/gettext-tools/misc/Makefile.in
++++ b/gettext-tools/misc/Makefile.in
+@@ -1533,7 +1533,7 @@ archive.git.tar.gz: archive.dir.tar.gz
+ 	else \
+ 	  inputfile='$(srcdir)'/archive.dir.tar.gz; \
+ 	fi; \
+-	./convert-archive dir git "$$inputfile" $@
++	$(SHELL) ./convert-archive dir git "$$inputfile" $@
+ 
+ # The archive.cvs.tar.gz is generated from archive.dir.tar.gz.
+ archive.cvs.tar.gz: archive.dir.tar.gz
+@@ -1542,7 +1542,7 @@ archive.cvs.tar.gz: archive.dir.tar.gz
+ 	else \
+ 	  inputfile='$(srcdir)'/archive.dir.tar.gz; \
+ 	fi; \
+-	./convert-archive dir cvs "$$inputfile" $@
++	$(SHELL) ./convert-archive dir cvs "$$inputfile" $@
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
+-- 
+1.7.1
+

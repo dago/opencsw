@@ -1,3 +1,4 @@
+a772021542b5c511ea9542a06996ed64  0001-Use-the-auto-detected-SHELL-to-run-convert-archive.patch
 3dd55b952826d2b32f51308f2f91aa89  gettext-0.18.1.1.tar.gz
 d44a9a6ec0952bad7ad07026ccb42a10  libgettextlib-0.14.1.so.i
 ff0219d47dbc11034b55872172488e01  libgettextlib-0.14.1.so.s
@@ -5,4 +6,3 @@ ff0219d47dbc11034b55872172488e01  libgettextlib-0.14.1.so.s
 3ab768083f6ecc5cada151e49be21aa0  libintl.so.2.s
 ceb5de2326a4726d3710fe1512b84592  libintl.so.3.i
 88db7322e263a00f24269a7f364fdc2d  libintl.so.3.s
-710effbaef82fd7db1d807e5aa46154a  test-wcwidth.patch
