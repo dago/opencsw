@@ -24,6 +24,9 @@ CONFIGURE_ARGS += --with-gtk-prefix=$(prefix)
 CONFIGURE_ARGS += --with-ogg=$(prefix)
 CONFIGURE_ARGS += --with-vorbis=$(prefix)
 
+# Needed for opengl plugin
+EXTRA_CPPFLAGS = -DSUN_OGL_NO_VERTEX_MACROS
+
 # No test suite
 TEST_SCRIPTS =
 
