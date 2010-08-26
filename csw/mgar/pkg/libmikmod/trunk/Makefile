@@ -8,6 +8,7 @@ define BLURB
   Library supporting many formats, including mod, s3m, it, and xm. Originally a player for MS-DOS,
 endef
 
+PACKAGES = CSWmikmod
 MASTER_SITES = http://mikmod.raphnet.net/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = libmikmod-3.1.11-a.diff
