@@ -30,6 +30,7 @@ EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/share/info/dir
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw
+CONFIGURE_ARGS += --without-included-regex
 
 # Use OPT_FLAGS_SOS instead instead of CFLAGS_EXTRA, because we want -fast
 # to be first, and to have portions of it overridden by the ISA specific
@@ -38,9 +39,9 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw
 OPT_FLAGS_SOS = -fast -xnolibmopt
 
 EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis
-## EXTRA_BUILD_ISAS_i386  = ???
+EXTRA_BUILD_ISAS_i386  = pentium_pro
 
-# CHECKPKG_OVERRIDES_CSWfindutils += surplus-dependency|CSWiconv
+CHECKPKG_OVERRIDES_CSWfindutils += surplus-dependency|CSWiconv
 
 # Test target requires GNU diff
 TEST_TARGET = check
@@ -61,7 +62,7 @@ TEST_ARGS = "PATH=/opt/csw/gnu:$$PATH"
 # FAIL: parent.old-O2, /home/gmarler/svnwork/findutils/trunk/work/solaris9-sparc/build-isa-sparcv8/findutils-4.4.2/find/testsuite/../oldfind: .: Permission denied
 # FAIL: parent.old-O3, /home/gmarler/svnwork/findutils/trunk/work/solaris9-sparc/build-isa-sparcv8/findutils-4.4.2/find/testsuite/../oldfind: .: Permission denied
 
-# Skipping until the above are rectified
+# Skipping until the above are rectified - if they ever are
 SKIPTEST = 1
 
 include gar/category.mk
