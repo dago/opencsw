@@ -67,6 +67,9 @@ PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext.sh /opt/csw/share/java/libintl.j
 PKGFILES_CSWggettextrt += /opt/csw/share/locale/.*
 PKGFILES_CSWggettextdoc  = $(PKGFILES_DOC)
 
+CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWggettextdoc += surplus-dependency|CSWggettext
+
 include gar/category.mk
 
 #Include old libraries for compatibility with existing packages
