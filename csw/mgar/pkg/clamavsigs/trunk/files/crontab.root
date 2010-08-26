@@ -1,0 +1,1 @@
+33 * * * * /opt/csw/bin/clamav-unofficial-sigs.sh -c /etc/opt/csw/clamav-unofficial-sigs.conf

@@ -1,0 +1,22 @@
+From 94a7fce468968cbf1d23619408c72ec57f73404c Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Thu, 26 Aug 2010 16:25:41 +0200
+Subject: [PATCH] use-ksh-instead-of-sh-on-solaris
+
+---
+ clamav-unofficial-sigs.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/clamav-unofficial-sigs.sh b/clamav-unofficial-sigs.sh
+index fa801f4..9d4aafc 100755
+--- a/clamav-unofficial-sigs.sh
++++ b/clamav-unofficial-sigs.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/ksh
+ 
+ # This script freely provided by Bill Landry (bill@inetmsg.com).
+ # Comments, suggestions, and recommendations for improving this
+-- 
+1.7.1
+
