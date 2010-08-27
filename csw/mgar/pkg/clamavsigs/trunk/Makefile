@@ -12,19 +12,20 @@ endef
 MASTER_SITES = http://www.inetmsg.com/pub/
 DISTFILES  = clamav-unofficial-sigs-$(GARVERSION).tar.gz
 PATCHFILES = 0001-use-ksh-instead-of-sh-on-solaris.patch
+PATCHFILES += 0002-make-defaults-match-csw-clamav.patch
 
 LICENSE = LICENSE
 ARCHALL = 1
 
-#RUNTIME_DEP_PKGS = CSWgnupg CSWrsync CSWsocat
-RUNTIME_DEP_PKGS = CSWgnupg CSWrsync
+RUNTIME_DEP_PKGS = CSWgnupg CSWrsync CSWcurl CSWsocat
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWrsync
 CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWgnupg
-#CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWsocat
+CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWsocat
+CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWcurl
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
