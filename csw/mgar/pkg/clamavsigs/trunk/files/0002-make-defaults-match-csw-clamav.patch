@@ -1,0 +1,56 @@
+From 67723bc685d6e163406f95665b1046d583177b22 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Fri, 27 Aug 2010 12:40:16 +0200
+Subject: [PATCH] make-defaults-match-csw-clamav
+
+---
+ clamav-unofficial-sigs.conf |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/clamav-unofficial-sigs.conf b/clamav-unofficial-sigs.conf
+index d18f2c4..3267f04 100644
+--- a/clamav-unofficial-sigs.conf
++++ b/clamav-unofficial-sigs.conf
+@@ -31,7 +31,7 @@
+ # and optionally socat.  It's been reported that on Sun systems, the GNU utilities
+ # should be used rather than the default Sun OS versions of these utilities.
+ 
+-PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
++PATH="/opt/csw/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
+ export PATH
+ 
+ # Set the appropriate ClamD user and group accounts for your system.
+@@ -42,10 +42,10 @@ clam_group="clamav"
+ 
+ # Set path to ClamAV database files location.  If unsure, check
+ # your clamd.conf file for the "DatabaseDirectory" path setting.
+-clam_dbs="/var/lib/clamav"
++clam_dbs="/var/opt/csw/clamav/db"
+ 
+ # Set path to clamd.pid file (see clamd.conf for path location).
+-clamd_pid="/var/run/clamd.pid"
++clamd_pid="/var/opt/csw/clamav/clamd.pid"
+ 
+ # To enable "ham" (non-spam) directory scanning and removal of
+ # signatures that trigger on ham messages, uncomment the following
+@@ -76,7 +76,7 @@ reload_opt="clamdscan --reload"  # Default
+ # the script will still run).  You will also need to set the correct
+ # path to your clamd socket file (if unsure of the path, check the
+ # "LocalSocket" setting in your clamd.conf file for socket location).
+-#clamd_socket="/var/run/clamd.socket"
++clamd_socket="/tmp/clamd.socket"
+ 
+ # If you would like to attempt to restart ClamD if detected not running,
+ # uncomment the next 2 lines.  Confirm the path to the "clamd_lock" file
+@@ -256,7 +256,7 @@ curl_proxy=""
+ 
+ # After you have completed the configuration of this file, set the
+ # following variable to "yes".
+-user_configuration_complete="no"
++user_configuration_complete="yes"
+ 
+ ################################################################################
+ #                          END OF USER CONFIGURATION                           #
+-- 
+1.7.1
+
