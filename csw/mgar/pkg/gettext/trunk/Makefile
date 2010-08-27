@@ -72,6 +72,8 @@ CHECKPKG_OVERRIDES_CSWggettextdoc += surplus-dependency|CSWggettext
 
 include gar/category.mk
 
+PATH := /opt/csw/gnu:$(PATH)
+
 #Include old libraries for compatibility with existing packages
 #  TODO: Convert to modulated builds
 post-install-isa-sparcv8:
@@ -92,7 +94,6 @@ post-install-isa-sparcv9:
 post-install-isa-i386:
 	@mkdir $(INSTALLISADIR)/opt/csw/share/java
 	@mv $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar $(INSTALLISADIR)/opt/csw/share/java
-	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
 	@cp $(FILEDIR)/libgettextlib-0.14.1.so.i $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
 	@cp $(FILEDIR)/libintl.so.2.i $(INSTALLISADIR)/opt/csw/lib/libintl.so.2
 	@cp $(FILEDIR)/libintl.so.3.i $(INSTALLISADIR)/opt/csw/lib/libintl.so.3
