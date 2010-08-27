@@ -9,6 +9,7 @@ define BLURB
 endef
 
 PACKAGES = CSWmikmod
+CATALOGNAME = libmikmod
 MASTER_SITES = http://mikmod.raphnet.net/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = libmikmod-3.1.11-a.diff
