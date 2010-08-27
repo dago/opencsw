@@ -106,10 +106,18 @@ def main():
       data = cPickle.loads(str(srv4.data))
       if "OPENCSW_REPOSITORY" in data["pkginfo"]:
         build_src = data["pkginfo"]["OPENCSW_REPOSITORY"]
-        build_src = re.sub(r"@(\d+)$", r"", build_src)
+        build_src_url_svn = re.sub(r'([^@]*).*', r'\1/Makefile', build_src)
+        build_src_url_trac = re.sub(
+            r'https://gar.svn.(sf|sourceforge).net/svnroot/gar/([^@]+)@(.*)',
+            r'http://sourceforge.net/apps/trac/gar/browser/\2/Makefile?rev=\3',
+            build_src)
       else:
         build_src = None
+        build_src_url_svn = None
+        build_src_url_trac = None
       data["build_src"] = build_src
+      data["build_src_url_svn"] = build_src_url_svn
+      data["build_src_url_trac"] = build_src_url_trac
       pkgstats.append(data)
     # This assumes the program is run as "bin/pkgdb", and not "lib/python/pkgdb.py".
     if not options.pkg_review_template:
