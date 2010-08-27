@@ -1,4 +1,5 @@
 ## This is a Cheetah template
+## $Id$
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
@@ -59,14 +60,6 @@ table.gently-lined th {
       <a href="#${pkg.basic_stats.md5_sum}">
         ${pkg.basic_stats.pkg_basename}
       </a>
-      <ul>
-        <li><a href="#${pkg.basic_stats.md5_sum}-pkginfo">pkginfo</a></li>
-        <li><a href="#${pkg.basic_stats.md5_sum}-binaries_dump_info">binaries_dump_info</a></li>
-        <li><a href="#${pkg.basic_stats.md5_sum}-depends">depends</a></li>
-        <li><a href="#${pkg.basic_stats.md5_sum}-files_metadata">files_metadata</a></li>
-        <li><a href="#${pkg.basic_stats.md5_sum}-overrides">overrides</a></li>
-        <li><a href="#${pkg.basic_stats.md5_sum}-pkgmap">pkgmap</a></li>
-      </ul>
     </li>
 #end for
   </ul>
@@ -78,16 +71,33 @@ table.gently-lined th {
     <a name="${pkg.basic_stats.md5_sum}">${pkg.basic_stats.pkg_basename}</a>
   </h1>
   <h2>
+    Sections
+  </h2>
+      <ul>
+        <li><a href="#${pkg.basic_stats.md5_sum}-pkginfo">pkginfo</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-binaries_dump_info">binaries_dump_info</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-depends">depends</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-files_metadata">files_metadata</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-overrides">overrides</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-pkgmap">pkgmap</a></li>
+      </ul>
+  <h2>
     <a name="${pkg.basic_stats.md5_sum}-source">
       Build source code
     </a>
   </h2>
 #if $pkg.build_src
-  <p>
-    <a href="$pkg.build_src">
-      $pkg.build_src
-    </a>
-  </p>
+  <ul>
+    <li>$pkg.build_src</li>
+    <li>
+      <a href="$pkg.build_src_url_svn">Makefile</a>
+      (in Subversion, may link to a later revision)
+    </li>
+    <li>
+      <a href="$pkg.build_src_url_trac">Makefile</a>
+      (in Trac view, always links to the correct file revision)
+    </li>
+  </ul>
 #else
   <p>
     <span style="warning">
