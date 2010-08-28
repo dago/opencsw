@@ -80,6 +80,7 @@ PKGFILES_CSWggettextel = .*site-lisp.*
 
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWggettextdoc += surplus-dependency|CSWggettext
+CHECKPKG_OVERRIDES_CSWggettextel += surplus-dependency|CSWggettext
 
 include gar/category.mk
 
