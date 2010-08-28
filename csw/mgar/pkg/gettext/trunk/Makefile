@@ -81,6 +81,8 @@ PKGFILES_CSWggettextel = .*site-lisp.*
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWggettextdoc += surplus-dependency|CSWggettext
 CHECKPKG_OVERRIDES_CSWggettextel += surplus-dependency|CSWggettext
+# This lib is legacy from the old versions and can't be updated (easily)
+CHECKPKG_OVERRIDES_CSWggettext += bad-rpath-entry|/export/home/phil/build/gettext-0.14.1/gettext-tools/intl/.libs|opt/csw/lib/sparcv9/libgettextlib-0.14.1.so 
 
 include gar/category.mk
 
