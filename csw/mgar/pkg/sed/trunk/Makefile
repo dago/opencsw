@@ -35,11 +35,23 @@ CONFIGURE_ARGS += --with-included-gettext
 
 TEST_TARGET = check
 
+SHELL = /bin/bash
+
+EXTRA_MERGE_EXCLUDE_FILES = $(sharedstatedir)/.*locale.alias
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/charset.alias
+
 include gar/category.mk
 
 # Make sure we are using gnu tools (esp. sed)
 PATH := /opt/csw/gnu:$(PATH)
 
-EXTRA_MERGE_EXCLUDE_FILES = $(sharedstatedir)/.*locale.alias
-EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/charset.alias
+post-merge:
+	@(cd $(PKGROOT)$(prefix); \
+		mkdir gnu; cd gnu; \
+		for f in ../bin/g*; do \
+			echo Linking $$f; \
+			base=$$(basename $$f); \
+			gln -s $$f ./$${base/g/}; \
+		done )
+	@$(MAKECOOKIE)
 
