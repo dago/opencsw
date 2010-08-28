@@ -7,14 +7,18 @@ define BLURB
 	GNU gettext utilities are a set of tools that provides a framework to help other GNU packages produce multi-lingual messages
 endef
 
-PACKAGES = CSWggettextrt CSWggettextdoc CSWggettext
+PACKAGES = CSWggettextrt CSWggettextdoc CSWggettext CSWggettext_el
 CATALOGNAME_CSWggettext = ggettext
 CATALOGNAME_CSWggettextdoc = ggettextdoc
 CATALOGNAME_CSWggettextrt = ggettextrt
+CATALOGNAME_CSWggettextel = ggettext_el
 SPKG_DESC_CSWggettext = GNU locale utilities and development headers
 SPKG_DESC_CSWggettextdoc = GNU locale documentation
 SPKG_DESC_CSWggettextrt = GNU locale runtime
+SPKG_DESC_CSWggettextel = Emacs support for po file editting
 ARCHALL_CSWggettextdoc = 1
+
+COMPILE_ELISP = 1
 
 MASTER_SITES = $(GNU_MIRROR)
 
@@ -47,6 +51,7 @@ RUNTIME_DEP_PKGS_CSWggettextrt = CSWiconv
 RUNTIME_DEP_PKGS_CSWggettext = CSWggettextrt CSWiconv CSWexpat CSWncurses
 RUNTIME_DEP_PKGS_CSWggettext = CSWlibxml2
 RUNTIME_DEP_PKGS_CSWggettextdoc = CSWggettext
+RUNTIME_DEP_PKGS_CSWggettextel = CSWggettext CSWemacscommon
 
 #NOTE: gettext tests are sensitive to bash environment variables, make sure
 #      custom paths are prefixed by $PATH, may be better to set aside
@@ -68,6 +73,7 @@ PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext /opt/csw/bin/gngettext /opt/csw/
 PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext.sh /opt/csw/share/java/libintl.jar
 PKGFILES_CSWggettextrt += /opt/csw/share/locale/.*
 PKGFILES_CSWggettextdoc  = $(PKGFILES_DOC)
+PKGFILES_CSWggettextel = .*site-lisp.*
 
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWggettextdoc += surplus-dependency|CSWggettext
