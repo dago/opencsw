@@ -5,7 +5,7 @@ CATEGORIES = xtra
 VENDOR_URL = http://opencsw.org
 
 GLINKPKGS =  CSWggettext CSWggettextrt CSWbison CSWbinutils
-GLINKPKGS += CSWgsed CSWggetopt CSWfindutils CSWgwhois
+GLINKPKGS += CSWggetopt CSWfindutils CSWgwhois
 BUILD_DEP_PKGS = $(GLINKPKGS) CSWpkgutil CSWbash
 
 DESCRIPTION = Creates native symlinks for GNU tools in /opt/csw/gnu
