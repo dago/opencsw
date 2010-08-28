@@ -54,7 +54,7 @@ RUNTIME_DEP_PKGS_CSWggettextrt = CSWiconv
 RUNTIME_DEP_PKGS_CSWggettext = CSWggettextrt CSWiconv CSWexpat CSWncurses
 RUNTIME_DEP_PKGS_CSWggettext = CSWlibxml2
 RUNTIME_DEP_PKGS_CSWggettextdoc = CSWggettext
-RUNTIME_DEP_PKGS_CSWggettextel = CSWggettext CSWemacscommon
+RUNTIME_DEP_PKGS_CSWggettextel = CSWggettext CSWemacscommon
 
 #NOTE: gettext tests are sensitive to bash environment variables, make sure
 #      custom paths are prefixed by $PATH, may be better to set aside
