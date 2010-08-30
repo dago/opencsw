@@ -15,6 +15,12 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.lz
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.lz
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = --prefix=$(prefix)
+CONFIGURE_ARGS += CXX="$(CXX)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)" LDFLAGS="$(LDFLAGS)"
+
+TEST_TARGET = check
+
+INSTALL_OVERRIDE_VARS = INSTALL
+INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
 
 include gar/category.mk
