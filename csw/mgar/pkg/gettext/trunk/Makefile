@@ -35,6 +35,7 @@ DISTFILES += libintl.so.3.i
 DISTFILES += libintl.so.3.s
 
 PATCHFILES += 0001-Use-the-auto-detected-SHELL-to-run-convert-archive.patch
+PATCHFILES += 0002-Update-ltmain.sh-to-prevent-libtool-stripping-runpat.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
