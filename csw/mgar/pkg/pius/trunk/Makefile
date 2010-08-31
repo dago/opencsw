@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = pius
-GARVERSION = 2.0.3
+GARVERSION = 2.0.7
 CATEGORIES = apps
 DESCRIPTION = A tool for signing and email all UIDs on a set of PGP keys.
 define BLURB
@@ -20,6 +20,7 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 INSTALL_SCRIPTS = pius
 TEST_SCRIPTS =
+PATCHFILES += 0001-Using-opt-csw-paths.patch
 
 include gar/category.mk
 

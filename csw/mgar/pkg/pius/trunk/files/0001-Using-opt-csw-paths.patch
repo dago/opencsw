@@ -1,0 +1,31 @@
+From c61133192236ba6fe94b82d9402488ae40048f4f Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 31 Aug 2010 12:19:11 +0200
+Subject: [PATCH] Using /opt/csw paths.
+
+---
+ pius |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pius b/pius
+index b8ea27a..ed79f26 100755
+--- a/pius
++++ b/pius
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/opt/csw/bin/python
+ """A utility to sign all UIDs on a list of PGP keys and PGP/Mime encrypt-email
+ them to the respective emails."""
+ 
+@@ -43,7 +43,7 @@ MODE_AGENT = 2
+ 
+ HOME = os.environ.get('HOME')
+ GNUPGHOME = os.environ.get('GNUPGHOME', os.path.join(HOME, '.gnupg'))
+-DEFAULT_GPG_PATH = '/usr/bin/gpg'
++DEFAULT_GPG_PATH = '/opt/csw/bin/gpg'
+ DEFAULT_KEYRING = os.path.join(GNUPGHOME, 'pubring.gpg')
+ DEFAULT_TMP_DIR = '/tmp/pius_tmp'
+ DEFAULT_OUT_DIR = '/tmp/pius_out'
+-- 
+1.7.1
+
