@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = vsftpd
-GARVERSION = 2.2.2
+GARVERSION = 2.3.2
 CATEGORIES = server
 
 DESCRIPTION = A very secure and fast FTP server.
@@ -31,11 +31,10 @@ PACKAGES = CSWvsftpd
 
 RUNTIME_DEP_PKGS  = CSWtcpwrap 
 RUNTIME_DEP_PKGS += CSWosslrt 
-RUNTIME_DEP_PKGS += CSWcswclassutils
 
 # adding configuration handling classes
 # (init/smf classes are dynamically added in checkinstall)
-SPKG_CLASSES = none cswpreserveconf cswusergroup cswinitsmf
+#SPKG_CLASSES = none cswpreserveconf cswusergroup cswinitsmf
 
 
 ###### Upstream and opencsw files information #######
@@ -44,11 +43,15 @@ SPKG_CLASSES = none cswpreserveconf cswusergroup cswinitsmf
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWvsftpd.prototype CSWvsftpd.preinstall
+DISTFILES += CSWvsftpd.preinstall
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist
 DISTFILES += cswvsftpd cswvsftpd.xml vsftpd.smf_wrapper
 DISTFILES += cswusergroup 
+
+PRESERVECONF = /opt/csw/etc/vsftpd/vsftpd.conf /opt/csw/etc/vsftpd/vsftpd.userlist
+USERGROUP = /opt/csw/etc/pkg/CSWvsftpd/cswusergroup
+INITSMF = /etc/opt/csw/init.d/cswvsftpd
 
 # build options are set by modifying 
 # builddefs.h, so we patch it to enable
@@ -93,6 +96,10 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
+# /opt/csw/include is not take in account 
+# by vsftp build system
+CFLAGS += -I$(includedir)
+
 # dummyinc must be the last include directory
 # to search
 ifeq ($(GARCOMPILER),GNU)
@@ -110,7 +117,6 @@ pre-install-modulated:
 	( ginstall -d $(DESTDIR)$(sbindir); \
 	 ginstall -d $(DESTDIR)$(mandir)/man5; \
 	 ginstall -d $(DESTDIR)$(mandir)/man8; \
-	 ln -sf $(DESTDIR)$(mandir) $(DESTDIR)$(prefix)/man; \
 	 ginstall -d $(DESTDIR)$(docdir)/vsftpd )
 
 
@@ -132,3 +138,4 @@ merge-doc-files:
 	done
 	ginstall -D "$(WORKDIR_FIRSTMOD)/changelog.CSW" "$(PKGROOT)$(docdir)/vsftpd/changelog.CSW"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/README.CSW" "$(PKGROOT)$(docdir)/vsftpd/README.CSW"
+
