@@ -10,8 +10,6 @@
 #
 #
 # TODO (release-critical prefixed with !, non release-critical with *)
-# ! Build, install and test package (works? spool permissions ok?)
-#   WRT to permissions, run "postfix set-permissions" and compare
 # * Ship simple default configuration (restrict mynetworks to 127.0.0.1?)
 # * alias_database points to /etc/mail/aliases, symlink
 #   /etc/opt/csw/postfix/aliases to /etc/mail/aliases?

@@ -1,4 +1,4 @@
-postfix (2.7.1,REV=2010.07.30)
+postfix (2.7.1,REV=2010.09.01)
 
   * Adopted and updated to 2.7.1. (Closes #3580, #3700, #3970)
   * Moved spool directory to /var/opt/csw/spool/postfix. (Closes #3946)
@@ -10,4 +10,4 @@ postfix (2.7.1,REV=2010.07.30)
   * Doesn't automatically substitute system sendmail binaries any more.
     Please refer to README.CSW instead. (Closes #1943, #2964, #3060) 
 
- -- Sebastian Kayser <skayser@opencsw.org>  Fri, 30 Jul 2010 15:10:26 +0200
+ -- Sebastian Kayser <skayser@opencsw.org>  Wed,  1 Sep 2010 00:29:32 +0200
