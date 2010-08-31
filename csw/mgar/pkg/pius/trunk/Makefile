@@ -22,6 +22,8 @@ BUILD_SCRIPTS =
 INSTALL_SCRIPTS = pius
 TEST_SCRIPTS =
 PATCHFILES += 0001-Using-opt-csw-paths.patch
+CHECKPKG_OVERRIDES_CSWpius += surplus-dependency|CSWgnupg
+CHECKPKG_OVERRIDES_CSWpius += surplus-dependency|CSWpython
 
 include gar/category.mk
 
