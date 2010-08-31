@@ -1,5 +1,5 @@
 GARNAME      = sqlite3
-GARVERSION   = 3.7.1
+GARVERSION   = 3.7.2
 CATEGORIES   = lib
 
 DESCRIPTION  = An embeddable SQL engine in a C library
