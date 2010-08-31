@@ -1,3 +1,10 @@
+vsftpd (2.3.2,REV=2010.08.31) unstable
+
+  * New upstream version.
+  * [Build system] Switched to GAR dynamic prototype.
+
+ -- Yann Rouillard <yann@opencsw.org>  Tue, 31 Aug 2010 15:39:11 +0200
+
 vsftpd (2.2.2,REV=2009.12.04) unstable
 
   * New upstream version.
