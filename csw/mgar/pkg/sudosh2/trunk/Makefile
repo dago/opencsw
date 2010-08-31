@@ -1,8 +1,8 @@
-# TODO/Issues
-# - Submit 001- (DESTDIR) and 002- (man page) patches upstream
-# - clearenvironment is not documented in sudosh.conf(5), others?
+# TODO (release-critical prefixed with !, non release-critical with *)
+# * Submit 001- (DESTDIR) and 002- (man page) patches upstream
+# * clearenvironment is not documented in sudosh.conf(5), others?
 GARNAME = sudosh2
-GARVERSION = 1.0.2
+GARVERSION = 1.0.4
 CATEGORIES = apps
 
 DESCRIPTION = Extensive auditing of user shell usage
@@ -20,11 +20,11 @@ define BLURB
   Sudosh2 is a fork of sudosh (by Douglas Hanks).
 endef
 
-SPKG_SOURCEURL = http://sudosh2.sf.net
-MASTER_SITES   = $(SF_MIRRORS)
-DISTFILES      = $(GARNAME)-$(GARVERSION).tgz
-DISTFILES     += CSWsudosh2.postinstall
-DISTFILES     += CSWsudosh2.postremove
+VENDOR_URL    = http://sudosh2.sf.net
+MASTER_SITES  = $(SF_MIRRORS)
+DISTFILES     = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES    += CSWsudosh2.postinstall
+DISTFILES    += CSWsudosh2.postremove
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
@@ -57,9 +57,6 @@ PATCHFILES  = 001-installsudosh.conf-destdir.patch
 PATCHFILES += 002-strip-man-page-blank.patch
 # The binary is called sudosh (not sudosh2 - only leave sudosh2 in the title)
 PATCHFILES += 003-adjust-sudosh-man-binary-name.patch
-# sudosh-replay leaks FDs on listing sessions
-# http://sourceforge.net/tracker/?func=detail&aid=2040342&group_id=213047&atid=1024149
-PATCHFILES += 004-replay-close-fds.patch
 
 include gar/category.mk
 
