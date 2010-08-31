@@ -7,18 +7,16 @@ define BLURB
 	GNU gettext utilities are a set of tools that provides a framework to help other GNU packages produce multi-lingual messages
 endef
 
-PACKAGES = CSWggettextrt CSWggettextdoc CSWggettext CSWggettextel
+PACKAGES = CSWggettextrt CSWggettextdoc CSWggettext
 
 ARCHALL_CSWggettextel = 1
 
 CATALOGNAME_CSWggettext = ggettext
 CATALOGNAME_CSWggettextdoc = ggettextdoc
 CATALOGNAME_CSWggettextrt = ggettextrt
-CATALOGNAME_CSWggettextel = ggettextel
 SPKG_DESC_CSWggettext = GNU locale utilities and development headers
 SPKG_DESC_CSWggettextdoc = GNU locale documentation
 SPKG_DESC_CSWggettextrt = GNU locale runtime
-SPKG_DESC_CSWggettextel = Emacs support for gettext po file editting
 ARCHALL_CSWggettextdoc = 1
 
 COMPILE_ELISP = 1
@@ -55,7 +53,6 @@ RUNTIME_DEP_PKGS_CSWggettextrt = CSWiconv
 RUNTIME_DEP_PKGS_CSWggettext = CSWggettextrt CSWiconv CSWexpat CSWncurses
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibxml2
 RUNTIME_DEP_PKGS_CSWggettextdoc = CSWggettext
-RUNTIME_DEP_PKGS_CSWggettextel = CSWggettext CSWemacscommon
 
 #NOTE: gettext tests are sensitive to bash environment variables, make sure
 #      custom paths are prefixed by $PATH, may be better to set aside
@@ -77,13 +74,14 @@ PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext /opt/csw/bin/gngettext /opt/csw/
 PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext.sh /opt/csw/share/java/libintl.jar
 PKGFILES_CSWggettextrt += /opt/csw/share/locale/.*
 PKGFILES_CSWggettextdoc  = $(PKGFILES_DOC)
-PKGFILES_CSWggettextel = .*site-lisp.*
 
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWggettextdoc += surplus-dependency|CSWggettext
 CHECKPKG_OVERRIDES_CSWggettextel += surplus-dependency|CSWggettext
 # This lib is legacy from the old versions and can't be updated (easily)
 CHECKPKG_OVERRIDES_CSWggettext += bad-rpath-entry|/export/home/phil/build/gettext-0.14.1/gettext-tools/intl/.libs|opt/csw/lib/sparcv9/libgettextlib-0.14.1.so 
+# just until checkpkg doesn't squawk about this.
+CHECKPKG_OVERRIDES_CSWggettext += missing-dependency|CSWemacscommon
 
 include gar/category.mk
 
