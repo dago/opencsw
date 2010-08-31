@@ -20,7 +20,7 @@ CATALOGNAME = apr_util
 LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS = CSWapr CSWiconv CSWsqlite3rt CSWunixodbc CSWexpat
-RUNTIME_DEP_PKGS += CSWbdb48 CSWoldaprt CSWosslrt CSWsasl CSWlibnet
+RUNTIME_DEP_PKGS += CSWbdb48 CSWoldaprt 
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
