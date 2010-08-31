@@ -4,7 +4,7 @@ eeaf77528b2da0c7730323838f30b7ef  README.CSW
 778420c7a9c47afb78eff3957f5d07a5  changelog.CSW
 54c1c39c6bfa8747a4457f135fd5bca1  csw_build_system.patch
 a9e994d2b57999b76a0e03503745c01a  csw_paths.patch
-98e1d831801985daf5ce2ed01fbc0efd  cswusergroup
+3dc08f17f383de22b400f1af00ff7ef6  cswusergroup
 796d46089f9e9c25c897a34e0dcfadc8  cswvsftpd
 93173edf9931b8eb835c6d0177a7c6bd  cswvsftpd.xml
 83d13bd15ec4c0de2695640b7407c700  destdir.patch

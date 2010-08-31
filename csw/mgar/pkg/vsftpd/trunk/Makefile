@@ -53,6 +53,13 @@ PRESERVECONF = /opt/csw/etc/vsftpd/vsftpd.conf /opt/csw/etc/vsftpd/vsftpd.userli
 USERGROUP = /opt/csw/etc/pkg/CSWvsftpd/cswusergroup
 INITSMF = /etc/opt/csw/init.d/cswvsftpd
 
+# The vsftpd user home directory has special rights
+PROTOTYPE_MODIFIERS = empty
+PROTOTYPE_FILES_empty = \/opt\/csw\/var\/empty\/vsftpd
+PROTOTYPE_PERMS_empty = 0700
+PROTOTYPE_USER_empty = root
+PROTOTYPE_GROUP_empty = sys
+
 # build options are set by modifying 
 # builddefs.h, so we patch it to enable
 # ssl and tcp wrapper support
@@ -120,7 +127,7 @@ pre-install-modulated:
 	 ginstall -d $(DESTDIR)$(docdir)/vsftpd )
 
 
-post-merge: merge-doc-files merge-config-files merge-init-file
+post-merge: merge-doc-files merge-config-files merge-init-file merge-empty-directory
 
 merge-init-file:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswvsftpd" "$(PKGROOT)/etc/opt/csw/init.d/cswvsftpd"
@@ -139,3 +146,5 @@ merge-doc-files:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/changelog.CSW" "$(PKGROOT)$(docdir)/vsftpd/changelog.CSW"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/README.CSW" "$(PKGROOT)$(docdir)/vsftpd/README.CSW"
 
+merge-empty-directory:
+	ginstall -d "$(PKGROOT)$(localstatedir)/empty/vsftpd"
