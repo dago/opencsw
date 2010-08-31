@@ -13,7 +13,7 @@
 #   originate in our downrev Kerberos libs.
 #
 GARNAME = dante
-GARVERSION = 1.2.0
+GARVERSION = 1.2.1
 CATEGORIES = net
 
 DESCRIPTION = Dante SOCKS packages
@@ -85,6 +85,7 @@ pre-configure-modulated:
 	# Kerberos linking fails with the shipped libtool, so make ./configure
 	# use /opt/csw/bin/libtool (similar to what Debian does). See
 	# http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5275
+	# Disabled for now, c.f. "Known issues" at the top of this Makefile
 	#gsed -ie 's,^LIBTOOL=.*,LIBTOOL=/opt/csw/bin/libtool,' \
 	#	$(WORKSRC)/configure
 	@$(MAKECOOKIE)
@@ -109,7 +110,8 @@ post-install-libsocks:
 	cp $(FILEDIR)/socks.conf.CSW $(DESTDIR)$(sysconfdir)/socks.conf
 
 	# /bin/sh doesn't understand "if ! test", reported to dante-bugs@inet.no
-	# Should be fixed in the next release, so upon version bump, verify and drop
+	# for 1.2.0. Should have be fixed in the next release, but wasn't with 1.2.1.
+	# Upon version bump, verify and drop if obsolete.
 	gsed -i -e 's,/bin/sh,/usr/bin/bash,' $(DESTDIR)$(bindir)/socksify
 	@$(MAKECOOKIE)
 
