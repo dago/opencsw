@@ -20,13 +20,13 @@ CATALOGNAME = apr_util
 LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS = CSWapr CSWiconv CSWsqlite3rt CSWunixodbc CSWexpat
-RUNTIME_DEP_PKGS += CSWbdb47 CSWoldaprt CSWosslrt CSWsasl CSWlibnet
+RUNTIME_DEP_PKGS += CSWbdb48 CSWoldaprt CSWosslrt CSWsasl CSWlibnet
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# We need this to get bdb47/lib into the runpath
-EXTRA_LIB = $(prefix)/bdb47/lib
+# We need this to get bdb48/lib into the runpath
+EXTRA_LIB = $(prefix)/bdb48/lib
 
 # It looks like Solars 9 x86 has a problem with libuuid, investigate later:
 # testing9x# cd /usr/lib
@@ -38,7 +38,7 @@ NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
 CONFIGURE_ARGS += --with-ldap
-CONFIGURE_ARGS += --with-berkeley-db=/opt/csw/bdb47
+CONFIGURE_ARGS += --with-berkeley-db=/opt/csw/bdb48
 CONFIGURE_ARGS += --without-freetds --without-sqlite2
 
 #BUILD64 = 1
