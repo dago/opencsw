@@ -1,3 +1,9 @@
+sudosh2 (1.0.4,REV=2010.09.01)
+
+  * Version bump to 1.0.4. (Closes #4487)
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Wed,  1 Sep 2010 01:06:14 +0200
+
 sudosh2 (1.0.2,REV=2009.12.02)
 
   * Applied file handle leak patch so that sudosh-replay doesn't run out of
