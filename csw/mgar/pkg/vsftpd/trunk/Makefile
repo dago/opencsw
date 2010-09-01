@@ -127,7 +127,7 @@ pre-install-modulated:
 	 ginstall -d $(DESTDIR)$(docdir)/vsftpd )
 
 
-post-merge: merge-doc-files merge-config-files merge-init-file merge-empty-directory
+post-merge: merge-doc-files merge-config-files merge-init-file merge-special-directories
 
 merge-init-file:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswvsftpd" "$(PKGROOT)/etc/opt/csw/init.d/cswvsftpd"
@@ -148,3 +148,5 @@ merge-doc-files:
 
 merge-empty-directory:
 	ginstall -d "$(PKGROOT)/var/opt/csw/empty/vsftpd"
+	ginstall -d "$(PKGROOT)/var/opt/csw/ftp"
+	
