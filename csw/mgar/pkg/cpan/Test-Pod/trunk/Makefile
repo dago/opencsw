@@ -1,7 +1,7 @@
 GARNAME = Test-Pod
-GARVERSION = 1.41
+GARVERSION = 1.44
 CATEGORIES = cpan
-AUTHOR = PETDANCE
+AUTHOR = DWHEELER
 
 DESCRIPTION = Check for POD errors in files
 define BLURB
@@ -9,11 +9,12 @@ define BLURB
   do the heavy lifting.
 endef
 
+DISTFILES += COPYING
+
 PACKAGES = CSWpmtestpod
 CATALOGNAME = pm_testpod
 
-REQUIRED_PKGS = CSWpmiostringy CSWpmpodsimple
-PREREQUISITE_PKGS = $(REQUIRED_PKGS) CSWpmtestsimple
+RUNTIME_DEP_PKGS += CSWpmpodsimple
 
 ARCHALL = 1
 
