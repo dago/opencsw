@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = Python
-GARVERSION = 2.6.5
+GARVERSION = 2.6.6
 CATEGORIES = lang
 
 # Known issues:
@@ -9,6 +9,8 @@ CATEGORIES = lang
 # - No 64-bit build
 # - ctypes module doesn't compile
 #   - http://forums.sun.com/thread.jspa?threadID=5148204
+#   - http://bugs.python.org/issue4902
+#     - Python-2.6.1/Modules/_ctypes/libffi/src/x86/sysv.S
 
 SPKG_SOURCEURL = http://python.org/download/releases/$(GARVERSION)
 
@@ -44,10 +46,12 @@ PATCHFILES += pyport.diff
 PATCHFILES += site.diff
 PATCHFILES += python-config-in.diff
 PATCHFILES += setup.diff
+PATCHFILES += 0001-FFI_DEFAULT_ABI-to-use-__i386.patch
 
 # Test for sunaudiodev fails.
 SKIPTEST = 1
 
+EXTRA_INC += $(prefix)/bdb47/include
 EXTRA_LIB += $(prefix)/bdb47/lib
 
 BASECFLAGS = $(CFLAGS)
@@ -134,12 +138,18 @@ LICENSE = LICENSE
 # These won't be fixed.
 CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/export/medusa|root/opt/csw/lib/libpython2.5.so.1.0
 CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/opt/build|root/opt/csw/lib/libpython2.5.so.1.0
-# Amusingly, now the overrides file contains the bad data.
-CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/export/medusa|root/opt/csw/share/checkpkg/overrides/python
-CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/opt/build|root/opt/csw/share/checkpkg/overrides/python
 
-# http://lists.opencsw.org/pipermail/pkgsubmissions/2010-April/000648.html
-CHECKPKG_OVERRIDES_CSWpython-tk += linked-against-discouraged-library|_tkinter.so|libX11.so.4
+# This is an exception, since these are original Python packages.
+CHECKPKG_OVERRIDES_CSWpython-test  += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython-test  += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython-tk    += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython-tk    += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWidle         += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWidle         += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython-devel += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython-devel += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython       += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython       += catalogname-does-not-start-with-py_
 
 include gar/category.mk
 
