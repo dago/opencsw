@@ -45,6 +45,36 @@ SPKG_CLASSES_CSWosshclient = none cswpreserveconf
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
 
+PKGFILES_CSWossh = $(sbindir)/.*
+PKGFILES_CSWossh += $(docdir)/openssh/.*
+PKGFILES_CSWossh += $(mandir)/man5/sshd_config.5
+PKGFILES_CSWossh += $(mandir)/man8/sftp-server.8
+PKGFILES_CSWossh += $(mandir)/man8/sshd.8
+PKGFILES_CSWossh += $(libexecdir)/sftp-server
+PKGFILES_CSWossh += $(sysconfdir)/ssh/sshd_config.CSW
+PKGFILES_CSWossh += $(sysconfdir)/ssh/moduli.CSW
+PKGFILES_CSWossh += /var/empty
+PKGFILES_CSWossh += /etc$(prefix)/init.d/cswopenssh
+PKGFILES_CSWossh += /var$(prefix)/svc/manifest/network/cswopenssh.xml
+
+PKGFILES_CSWosshclient = $(bindir)/.*
+PKGFILES_CSWosshclient += $(docdir)/openssh_client/.*
+PKGFILES_CSWosshclient += $(mandir)/man1/.*
+PKGFILES_CSWosshclient += $(mandir)/man5/ssh_config.5
+PKGFILES_CSWosshclient += $(mandir)/man8/ssh-keysign.8
+PKGFILES_CSWosshclient += $(libexecdir)/ssh-keysign
+PKGFILES_CSWosshclient += $(sysconfdir)/ssh/ssh_config.CSW
+
+PROTOTYPE_MODIFIERS = setuid
+PROTOTYPE_FILES_setuid = $(libexecdir)/ssh-keysign
+PROTOTYPE_PERMS_setuid = 4711
+
+
+PRESERVECONF = /opt/csw/etc/ssh/sshd_config
+PRESERVECONF += /opt/csw/etc/ssh/ssh_config
+PRESERVECONF += /opt/csw/etc/ssh/moduli
+INITSMF = /etc/opt/csw/init.d/cswopenssh
+
 # The openssh package installs the server and the client
 CHECKPKG_OVERRIDES_CSWossh = surplus-dependency|CSWosshclient
 
@@ -56,9 +86,8 @@ MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sx
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*p\d+).tar.gz
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWossh.prototype CSWossh.preinstall CSWossh.checkinstall
-DISTFILES += CSWosshlpk.prototype CSWosshlpk.preinstall CSWosshlpk.checkinstall
-DISTFILES += CSWosshclient.prototype
+DISTFILES += CSWossh.preinstall CSWossh.checkinstall
+DISTFILES += CSWosshlpk.preinstall CSWosshlpk.checkinstall
 DISTFILES += changelog.CSW
 
 DISTFILES += cswopenssh sshd.smf_wrapper cswopenssh.xml
@@ -78,10 +107,11 @@ PATCHFILES += no_x_forwarding_bug.patch
 
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
-DOCFILES += README.platform README.privsep README.smartcard README.tun TODO WARNING.RNG    
+DOCFILES += README.platform README.privsep README.tun TODO WARNING.RNG    
 
 # we're using conf handling class from the cswclassutils package
 RUNTIME_DEP_PKGS += CSWcswclassutils
+
 
 
 ##### Build and installation information #####
@@ -133,11 +163,12 @@ post-configure-modulated:
 	@$(MAKECOOKIE)
 
 # adding documentation files
-pre-package: merge-config-files merge-doc-files merge-init-files merge-contrib-files
+pre-package: merge-config-files merge-doc-files merge-init-files merge-contrib-files merge-special-directories
 
 merge-contrib-files:
 	ginstall -D "$(WORKSRC_FIRSTMOD)/contrib/ssh-copy-id" "$(PKGROOT)/$(bindir)/ssh-copy-id"
 	ginstall -D "$(WORKSRC_FIRSTMOD)/contrib/ssh-copy-id.1" "$(PKGROOT)/$(mandir)/man1/ssh-copy-id.1"
+	chmod -x "$(PKGROOT)/$(mandir)/man1/ssh-copy-id.1"
 
 merge-init-files:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswopenssh" "$(PKGROOT)/etc/opt/csw/init.d/cswopenssh"
@@ -149,19 +180,17 @@ merge-doc-files:
 	for DOCDIR in $(foreach _PKG,$(PACKAGES),$(call catalogname,$(_PKG))); do \
 		ginstall -d $(PKGROOT)/$(docdir)/$$DOCDIR; \
 		(cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$$DOCDIR/); \
+		(cd $(PKGROOT)/$(docdir)/$$DOCDIR && chmod -x $(DOCFILES)); \
 		ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$$DOCDIR/; \
 	done
 	@$(MAKECOOKIE)
 
 merge-config-files:
-	ginstall $(PKGROOT)/$(sysconfdir)/ssh/ssh_config $(PKGROOT)/$(sysconfdir)/ssh/ssh_config.CSW 
-	ginstall $(PKGROOT)/$(sysconfdir)/ssh/moduli $(PKGROOT)/$(sysconfdir)/ssh/moduli.CSW 
 	# we change some default value in the server config file
-	sed -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g' \
-		-e 's,/usr/libexec/,/opt/csw/libexec/,g' \
-		-e 's,^ *# *UsePAM *.*,UsePAM yes,g' \
-		-e 's,^ *# *PrintMotd *.*,PrintMotd no,g' \
-	       	-e 's,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config" > "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW
+	perl -pi -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g; s,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW"
+	perl -pi -e 's,^ *# *UsePAM *.*,UsePAM yes,g, s,^ *# *PrintMotd *.*,PrintMotd no,g; s,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW" 
 	@$(MAKECOOKIE)
 
-
+merge-special-directories:
+	ginstall -d $(PKGROOT)/var/empty
+	ginstall -d $(PKGROOT)$(sysconfdir)/CSWossh
