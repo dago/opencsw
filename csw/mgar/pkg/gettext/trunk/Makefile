@@ -61,6 +61,7 @@ TEST_TARGET = check
 
 #provided by iconv
 MERGE_EXCLUDE_FILES  = .*/charset.alias
+MERGE_EXCLUDE_FILES += .*/locale.alias
 MERGE_EXCLUDE_FILES += .*/iconv.m4
 MERGE_EXCLUDE_FILES += /opt/csw/bin/$(ISA)/.*
 
