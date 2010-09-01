@@ -1,18 +1,26 @@
 GARNAME = Apache-DBI
-GARVERSION = 0.94
+GARVERSION = 1.08
 CATEGORIES = cpan
 AUTHOR = ABH
 
-DESCRIPTION = initiate a persistent database connection
+DESCRIPTION = Initiate a persistent database connection
 define BLURB
-  This module initiates a persistent database connection.
+  These modules are supposed to be used with the Apache server together with 
+  an embedded perl interpreter like mod_perl. They provide support for basic 
+  authentication and authorization as well as support for persistent database 
+  connections via Perl's Database Independent Interface (DBI). 
 endef
 
-DISTFILES += CSWpmapachedbi.gspec CSWpmapachedbi.depend
+DISTFILES = COPYING
 
-DEPENDS += cpan/DBI
+PACKAGES = CSWpmapachedbi
+CATALOGNAME = pm_apachedbi
+
+DEP_PKGS = CSWmodperl CSWpmdbi CSWpmdigestsha1
 
 # Tests require MySQL to be running
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
+
+ARCHALL = 1
 
 include gar/category.mk
