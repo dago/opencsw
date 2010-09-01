@@ -1890,9 +1890,9 @@ diff -Nur openssh-5.4p1.orig/key.h openssh-5.4p1/key.h
 --- openssh-5.4p1.orig/key.h	2010-02-26 21:55:05.000000000 +0100
 +++ openssh-5.4p1/key.h	2010-03-13 00:40:17.733623904 +0100
 @@ -37,6 +37,7 @@
- 	KEY_DSA,
- 	KEY_RSA_CERT,
  	KEY_DSA_CERT,
+ 	KEY_RSA_CERT_V00,
+ 	KEY_DSA_CERT_V00,
 +	KEY_NULL,
  	KEY_UNSPEC
  };
