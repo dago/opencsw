@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = openssl
-GARVERSION = 1.0.0
+GARVERSION = 1.0.0a
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
@@ -48,10 +48,27 @@ PKGFILES_CSWossl1utils += $(prefix)/ssl/misc/.*
 PKGFILES_CSWossl1utils += $(prefix)/ssl/openssl\.cnf $(sysconfdir)/ssl/openssl\.cnf.*
 PKGFILES_CSWossl1utils += $(docdir)/openssl1_utils/.*
 
-PROTOTYPE_MODIFIERS = conf
-PROTOTYPE_FILES_conf = $(sysconfdir)/ssl/openssl.cnf.CSW
-PROTOTYPE_CLASS_conf = cswpreserveconf
-PROTOTYPE_PERMS_conf = 0644
+
+PRESERVECONF = $(sysconfdir)/ssl/openssl.cnf
+
+# We use SUN perl, not the opencsw one
+CHECKPKG_OVERRIDES_CSWossl1utils += missing-dependency|CSWperl
+
+CHECKPKG_OVERRIDES_CSWossl1rt += surplus-dependency|CSWcacertificates
+
+# We ship the .a files in the devel package
+CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
+CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
+ifeq ($(GARCH),sparc)
+CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
+CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
+else
+CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
+CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
+CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
+CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
+endif
+CHECKPKG_OVERRIDES_CSWossl1devel += surplus-dependency|CSWossl1rt
 
 
 ###### Upstream and opencsw files information #######
@@ -71,6 +88,12 @@ DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS R
 # solaris-pentium_pro-cc and solaris-sparcv9+vis-cc
 PATCHFILES = more_configure_targets.patch
 
+# Since 1.0.0, openssl tries to install x64 libraries in $(prefix)/64 directory
+# we prefer to rely on gar system to take of this so we remove this using this
+# patch
+PATCHFILES += dont_use_slash_64_directory.patch
+
+LICENSE = LICENSE
 
 ##### Build and installation information #####
 
@@ -122,7 +145,7 @@ INSTALL_ARGS += MANDIR=$(mandir)
 include gar/category.mk
 
 
-pre-configure-modulated: 
+pre-configure-modulated:
 	echo " ==> Creating configure script"
 	cd $(WORKSRC) && ln -nf Configure configure
 	@$(MAKECOOKIE)
@@ -158,4 +181,4 @@ install-certs:
 	rm -rf $(PKGROOT)/$(prefix)/etc/ssl/private && ln -s ../../../../etc/opt/csw/ssl/private $(PKGROOT)/$(prefix)/etc/ssl/private 
 	@$(MAKECOOKIE)
 
-post-merge: install-certs install-changelog install-doc
+pre-package: install-certs install-changelog install-doc
