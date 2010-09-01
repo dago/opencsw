@@ -18,7 +18,7 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
    tunable_chown_upload_mode = 0600;
  
 -  install_str_setting("/usr/share/empty", &tunable_secure_chroot_dir);
-+  install_str_setting("/opt/csw/var/empty/vsftpd", &tunable_secure_chroot_dir);
++  install_str_setting("/var/opt/csw/empty/vsftpd", &tunable_secure_chroot_dir);
    install_str_setting("ftp", &tunable_ftp_username);
    install_str_setting("root", &tunable_chown_username);
    install_str_setting("/var/log/xferlog", &tunable_xferlog_file);
