@@ -695,7 +695,8 @@ class LddEmulator(object):
     return self.runpath_sanitize_cache[runpath]
 
 
-  def ResolveSoname(self, runpath_list, soname, isalist, path_list, binary_path):
+  def ResolveSoname(self, runpath_list, soname, isalist,
+                    path_list, binary_path):
     """Emulates ldd behavior, minimal implementation.
 
     runpath: e.g. ["/opt/csw/lib/$ISALIST", "/usr/lib"]
@@ -717,8 +718,9 @@ class LddEmulator(object):
       # in the path_list.
       for expanded_p in expanded_p_list:
         original_paths_by_expanded_paths[expanded_p] = p
-    # logging.debug("%s: looking for %s in %s",
-    #     soname, runpath_list, original_paths_by_expanded_paths.keys())
+    logging.debug(
+        "%s: looking for %s in %s",
+        soname, runpath_list, original_paths_by_expanded_paths.keys())
     for runpath_expanded in runpath_list:
       if runpath_expanded in original_paths_by_expanded_paths:
         # logging.debug("Found %s",

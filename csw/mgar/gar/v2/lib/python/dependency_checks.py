@@ -30,6 +30,77 @@ DEPENDENCY_FILENAME_REGEXES = (
 
 PREFERRED_DIRECTORY_PROVIDERS = set([u"CSWcommon"])
 
+def ProcessSoname(
+    ldd_emulator,
+    soname, path_and_pkg_by_basename, binary_info, isalist, binary_path, logger,
+    error_mgr,
+    pkgname, messenger):
+  """This is not an ideal name for a function.
+
+  Returns:
+    orphan_sonames
+  """
+  orphan_sonames = []
+  required_deps = []
+  resolved = False
+  path_list = path_and_pkg_by_basename[soname].keys()
+  runpath_tuple = (
+      tuple(binary_info["runpath"])
+      + tuple(checkpkg.SYS_DEFAULT_RUNPATH))
+  runpath_history = []
+  alternative_deps = set()
+  first_lib = None
+  for runpath in runpath_tuple:
+    runpath = ldd_emulator.SanitizeRunpath(runpath)
+    runpath_list = ldd_emulator.ExpandRunpath(runpath, isalist, binary_path)
+    runpath_list = ldd_emulator.Emulate64BitSymlinks(runpath_list)
+    # To accumulate all the runpaths that we were looking at
+    runpath_history += runpath_list
+    resolved_path = ldd_emulator.ResolveSoname(runpath_list,
+                                               soname,
+                                               isalist,
+                                               path_list,
+                                               binary_path)
+    if resolved_path:
+      resolved = True
+      req_pkgs = path_and_pkg_by_basename[soname][resolved_path]
+      reason = ("provides %s/%s needed by %s"
+                % (resolved_path, soname, binary_info["path"]))
+      # Looking for deprecated libraries.  However, only alerting if the
+      # deprecated library is the first one found in the RPATH.  For example,
+      # libdb-4.7.so is found in CSWbdb and CSWbdb47, and it's important to
+      # throw an error if the RPATH is ("/opt/csw/lib", "/opt/csw/bdb47/lib"),
+      # and not to throw an error if RPATH is ("/opt/csw/bdb47/lib",
+      # "/opt/csw/lib")
+      if not first_lib:
+        first_lib = (resolved_path, soname)
+        for bad_path, bad_soname, msg in DEPRECATED_LIBRARY_LOCATIONS:
+          if resolved_path == bad_path and soname == bad_soname:
+            logger.debug("Bad lib found: %s/%s", bad_path, bad_soname)
+            error_mgr.ReportError(
+                pkgname,
+                "deprecated-library",
+                ("%s %s %s/%s"
+                 % (binary_info["path"], msg, resolved_path, soname)))
+      for req_pkg in req_pkgs:
+        alternative_deps.add((req_pkg, reason))
+  required_deps.append(list(alternative_deps))
+  if not resolved:
+    orphan_sonames.append((soname, binary_info["path"]))
+    if path_list:
+      path_msg = "was available at the following paths: %s." % path_list
+    else:
+      path_msg = ("was not present on the filesystem, "
+                  "nor in the packages under examination.")
+    if soname not in ALLOWED_ORPHAN_SONAMES:
+      messenger.Message(
+          "%s could not be resolved for %s, with rpath %s, expanded to %s, "
+          "while the file %s"
+          % (soname, binary_info["path"],
+             runpath_tuple, runpath_history, path_msg))
+  return orphan_sonames, required_deps
+
+
 def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
               pkg_by_path):
   """Checks shared libraries.
@@ -49,66 +120,20 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
   """
   pkgname = pkg_data["basic_stats"]["pkgname"]
   logger.debug("Libraries(): pkgname = %s", repr(pkgname))
-  orphan_sonames = []
-  required_deps = []
   isalist = pkg_data["isalist"]
   ldd_emulator = checkpkg.LddEmulator()
+  orphan_sonames = []
+  required_deps = []
   for binary_info in pkg_data["binaries_dump_info"]:
     binary_path, binary_basename = os.path.split(binary_info["path"])
     for soname in binary_info["needed sonames"]:
-      resolved = False
-      path_list = path_and_pkg_by_basename[soname].keys()
-      # logger.debug("%s @ %s: looking for %s in %s",
-      #              soname,
-      #              binary_info["path"],
-      #              binary_info["runpath"],
-      #              path_list)
-      runpath_tuple = (tuple(binary_info["runpath"])
-                      + tuple(checkpkg.SYS_DEFAULT_RUNPATH))
-      runpath_history = []
-      alternative_deps = set()
-      for runpath in runpath_tuple:
-        runpath = ldd_emulator.SanitizeRunpath(runpath)
-        runpath_list = ldd_emulator.ExpandRunpath(runpath, isalist, binary_path)
-        runpath_list = ldd_emulator.Emulate64BitSymlinks(runpath_list)
-        # To accumulate all the runpaths that we were looking at
-        runpath_history += runpath_list
-        resolved_path = ldd_emulator.ResolveSoname(runpath_list,
-                                                   soname,
-                                                   isalist,
-                                                   path_list,
-                                                   binary_path)
-        if resolved_path:
-          resolved = True
-          req_pkgs = path_and_pkg_by_basename[soname][resolved_path]
-          reason = ("provides %s/%s needed by %s"
-                    % (resolved_path, soname, binary_info["path"]))
-          # Looking for deprecated libraries.
-          for bad_path, bad_soname, msg in DEPRECATED_LIBRARY_LOCATIONS:
-            if resolved_path == bad_path and soname == bad_soname:
-              logger.debug("Bad lib found: %s/%s", bad_path, bad_soname)
-              error_mgr.ReportError(
-                  pkgname,
-                  "deprecated-library",
-                  ("%s %s %s/%s"
-                   % (binary_info["path"], msg, resolved_path, soname)))
-          for req_pkg in req_pkgs:
-            alternative_deps.add((req_pkg, reason))
-      # print "alternative_deps:", alternative_deps
-      required_deps.append(list(alternative_deps))
-      if not resolved:
-        orphan_sonames.append((soname, binary_info["path"]))
-        if path_list:
-          path_msg = "was available at the following paths: %s." % path_list
-        else:
-          path_msg = ("was not present on the filesystem, "
-                      "nor in the packages under examination.")
-        if soname not in ALLOWED_ORPHAN_SONAMES:
-          messenger.Message(
-              "%s could not be resolved for %s, with rpath %s, expanded to %s, "
-              "while the file %s"
-              % (soname, binary_info["path"],
-                 runpath_tuple, runpath_history, path_msg))
+      orphan_sonames_tmp, required_deps_tmp = ProcessSoname(
+          ldd_emulator,
+          soname, path_and_pkg_by_basename, binary_info, isalist, binary_path, logger,
+          error_mgr,
+          pkgname, messenger)
+      orphan_sonames.extend(orphan_sonames_tmp)
+      required_deps.extend(required_deps_tmp)
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
     if soname not in ALLOWED_ORPHAN_SONAMES:

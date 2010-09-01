@@ -325,7 +325,9 @@ class TestLibraries(unittest.TestCase):
         checkpkg.SetCheckInterface)
     self.pkg_data = copy.deepcopy(sudo_stats)
 
-  def testOne(self):
+  def testLibrariesRpathOrder(self):
+    # pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
+    # pkg_by_path
     pass
 
 

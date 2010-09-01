@@ -466,6 +466,66 @@ class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
     self.pkg_data = [self.pkg_data]
 
 
+class TestDeprecatedLibraries_GoodRpath(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    binaries_dump_info = self.pkg_data["binaries_dump_info"]
+    binaries_dump_info[0]["runpath"] = ("/opt/csw/bdb47/lib", "/opt/csw/lib",)
+    binaries_dump_info[0]["needed sonames"] = ["libdb-4.7.so"]
+    self.pkg_data["depends"] = (("CSWbad", None),(u"CSWcommon", ""))
+    self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
+       u'/opt/csw/bdb47/lib':         [u'CSWbad'],
+       u'/opt/csw/bdb47lib/sparcv9': [u'CSWbad'],
+       u'/opt/csw/lib':               [u'CSWgood'],
+       u'/opt/csw/lib/sparcv9':       [u'CSWgood'],
+    })
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/man').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv8').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv9').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/doc').AndReturn(["CSWcommon"])
+    # There should be no error here, since /opt/csw/bdb47/lib is first in the RPATH.
+    self.pkg_data = [self.pkg_data]
+
+
+class TestDeprecatedLibraries_BadRpath(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    binaries_dump_info = self.pkg_data["binaries_dump_info"]
+    binaries_dump_info[0]["runpath"] = ("/opt/csw/lib", "/opt/csw/bdb47/lib",)
+    binaries_dump_info[0]["needed sonames"] = ["libdb-4.7.so"]
+    self.pkg_data["depends"] = (("CSWbad", None),(u"CSWcommon", ""))
+    self.pkg_data["binaries_dump_info"] = binaries_dump_info[0:1]
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libdb-4.7.so').AndReturn({
+       u'/opt/csw/bdb47/lib':         [u'CSWbad'],
+       u'/opt/csw/bdb47lib/sparcv9': [u'CSWbad'],
+       u'/opt/csw/lib':               [u'CSWgood'],
+       u'/opt/csw/lib/sparcv9':       [u'CSWgood'],
+    })
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/man').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv8').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/bin/sparcv9').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.GetPkgByPath(
+        '/opt/csw/share/doc').AndReturn(["CSWcommon"])
+    self.error_mgr_mock.ReportError(
+        'CSWrsync',
+        'deprecated-library',
+        u'opt/csw/bin/sparcv8/rsync Deprecated Berkeley DB location '
+        u'/opt/csw/lib/libdb-4.7.so')
+    self.pkg_data = [self.pkg_data]
+
+
 class TestSetCheckLibmLinking(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'SetCheckLibraries'
   def CheckpkgTest(self):
