@@ -16,4 +16,6 @@ CATALOGNAME = pm_convertbinhex
 
 ARCHALL = 1
 
+SKIPTEST = 1
+
 include gar/category.mk
