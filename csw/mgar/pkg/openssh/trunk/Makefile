@@ -13,9 +13,9 @@
 ###### Package information #######
 
 GARNAME = openssh
-GARVERSION = 5.4p1
+GARVERSION = 5.6p1
 GSSKEX_PATCH_VERSION = $(GARVERSION)
-GSSKEX_PATCH_DATE = 20100313
+GSSKEX_PATCH_DATE = 20100901
 CATEGORIES = server
 
 DESCRIPTION = OpenSSH Secure Shell
@@ -45,6 +45,9 @@ SPKG_CLASSES_CSWosshclient = none cswpreserveconf
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
 
+# The openssh package installs the server and the client
+CHECKPKG_OVERRIDES_CSWossh = surplus-dependency|CSWosshclient
+
 ###### Upstream and OpenCSW files information #######
 
 MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sxw.org.uk/computing/patches/
@@ -72,14 +75,6 @@ PATCHFILES += don_t_use_TIOCSCTTY.patch
 # Fix a X11 forwarding bug on machine installed with ipv6 disabled
 # see https://bugzilla.mindrot.org/show_bug.cgi?id=1457
 PATCHFILES += no_x_forwarding_bug.patch
-
-# Fix an incorrect usage of getcwd under Solaris
-# see https://bugzilla.mindrot.org/show_bug.cgi?id=1739
-PATCHFILES += derelativise_path_bugfix.patch
-
-# AuthorizedKeysFile option value should not be derelativized !!
-# see https://bugzilla.mindrot.org/show_bug.cgi?id=1739
-PATCHFILES += dont_derelativise_authorizedkeysfile_option.patch
 
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
@@ -131,8 +126,14 @@ pre-configure:
 	cd $(WORKSRC) && autoconf
 	@$(MAKECOOKIE)
 
+# kr5config returns the -R/opt/csw/lib/ which is considered not valid by checkpkg
+# manually fixing this until the bug is fixed (see https://www.opencsw.org/mantis/view.php?id=4384 )
+post-configure-modulated:
+	cd $(WORKSRC) && perl -pi -e 's,-R/opt/csw/lib/ ,-R/opt/csw/lib ,' Makefile
+	@$(MAKECOOKIE)
+
 # adding documentation files
-post-merge: merge-config-files merge-doc-files merge-init-files merge-contrib-files
+pre-package: merge-config-files merge-doc-files merge-init-files merge-contrib-files
 
 merge-contrib-files:
 	ginstall -D "$(WORKSRC_FIRSTMOD)/contrib/ssh-copy-id" "$(PKGROOT)/$(bindir)/ssh-copy-id"
