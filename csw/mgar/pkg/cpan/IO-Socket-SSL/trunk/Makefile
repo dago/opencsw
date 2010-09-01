@@ -1,9 +1,9 @@
 GARNAME = IO-Socket-SSL
-GARVERSION = 0.97
+GARVERSION = 1.33
 CATEGORIES = cpan
-AUTHOR = BEHROOZI
+AUTHOR = SULLR
 
-DESCRIPTION = nearly transparent SSL encapsulation for IO::Socket::INET.
+DESCRIPTION = Nearly transparent SSL encapsulation for IO::Socket::INET.
 define BLURB
   This module is a true drop-in replacement for IO::Socket::INET that uses SSL
   to encrypt data before it is transferred to a remote server or client.
@@ -13,8 +13,13 @@ define BLURB
   extra bonus, it works perfectly with mod_perl.
 endef
 
-DISTFILES += CSWpmiosocketssl.gspec CSWpmiosocketssl.depend
+DISTFILES += COPYING
 
-DEPENDS += cpan/Net-SSLeay
+PACKAGES = CSWpmiosocketssl
+CATALOGNAME = pm_iosocketssl
+
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpmnetssleay
 
 include gar/category.mk
