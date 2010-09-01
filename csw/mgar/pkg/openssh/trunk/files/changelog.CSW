@@ -3,6 +3,7 @@ openssh (5.6p1,REV=2010.09.01) unstable
   * New upstream release.
   * Removed patch applied upstream (derelativise_path_bugfix.patch 
   and dont_derelativise_authorizedkeysfile_option.patch).
+  * [Build system] Switched to dynamic prototype.
 
  -- Yann Rouillard <yann@opencsw.org>  Wed, 01 Sep 2010 23:25:24 +0200
 
