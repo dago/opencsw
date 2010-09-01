@@ -5,4 +5,9 @@ if /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/bin/getent passwd ftp >/dev/null 2>
 	if [ -z "$FTP_HOME" ] || [ ! -d "$FTP_HOME" ]; then
 		echo "WARNING: the ftp user doesn't have a valid home directory !" 
 	fi
+else
+	# we manually create the ftp home directory if the ftp user doesn't exist
+	#  cswusergroup action class can create the directory but populates it
+	# with skeleton files and we want an empty directory
+	mkdir -p "$PKG_INSTALL_ROOT/var/opt/csw/ftp"
 fi
