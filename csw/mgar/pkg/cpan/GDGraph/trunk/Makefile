@@ -1,15 +1,20 @@
 GARNAME = GDGraph
-GARVERSION = 1.43
+GARVERSION = 1.44
 CATEGORIES = cpan
-AUTHOR = MVERB
+AUTHOR = BWARFIELD
 
-DESCRIPTION = graph plotting module
+DESCRIPTION = Graph plotting module
 define BLURB
   GD::Graph is a perl5 module to create charts using the GD module.
 endef
 
-DISTFILES += CSWpmgdgraph.gspec CSWpmgdgraph.depend
+DISTFILES = COPYING
 
-DEPENDS += cpan/GDTextUtil
+PACKAGES = CSWpmgdgraph
+CATALOGNAME = pm_gdgraph
+
+DEP_PKGS = CSWpmgdtextut
+
+ARCHALL = 1
 
 include gar/category.mk
