@@ -1,9 +1,9 @@
 GARNAME = IP-Country
-GARVERSION = 2.23
+GARVERSION = 2.27
 CATEGORIES = cpan
 AUTHOR = NWETTERS
 
-DESCRIPTION = fast lookup of country codes from IP addresses
+DESCRIPTION = Fast lookup of country codes from IP addresses
 define BLURB
   Finding the home country of a client using only the IP address can be
   difficult. Looking up the domain name associated with that address can
@@ -12,8 +12,12 @@ define BLURB
   country.
 endef
 
-DISTFILES += CSWpmipcountry.gspec CSWpmipcountry.depend
+DISTFILES += COPYING
 
-DEPENDS += cpan/Geography-Countries
+PACKAGES = CSWpmipcountry
+CATALOGNAME = pm_ipcountry
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpmgeocountries
 
 include gar/category.mk
