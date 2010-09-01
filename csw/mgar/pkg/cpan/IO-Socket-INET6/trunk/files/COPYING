@@ -1,0 +1,17 @@
+AUTHOR and COPYRIGHT
+This program is based on IO::Socket::INET by Graham Barr <gbarr@pobox.com>
+and currently maintained by the Perl Porters.
+
+Modified by Rafael Martinez Torres <rmartine@fdi.ucm.es> and
+Euro6IX project.
+
+Further modified by Shlomi Fish <shlomif@iglu.org.il>.
+
+Copyright (c) 2003- Rafael Martinez Torres <rmartine@fdi.ucm.es>.
+Copyright (c) 2003- Euro6IX project.
+Copyright (c) 1996-8 Graham Barr <gbarr@pobox.com>.
+
+All rights reserved.
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
