@@ -10,6 +10,11 @@ define BLURB
   patch information.
 endef
 
-DISTFILES += $(call admfiles,CSWpmpatchreader,prototype)
+DISTFILES = COPYING
+
+PACKAGES = CSWpmpatchreader
+CATALOGNAME = pm_patchreader
+
+ARCHALL = 1
 
 include gar/category.mk
