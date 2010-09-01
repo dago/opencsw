@@ -147,4 +147,4 @@ merge-doc-files:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/README.CSW" "$(PKGROOT)$(docdir)/vsftpd/README.CSW"
 
 merge-empty-directory:
-	ginstall -d "$(PKGROOT)$(localstatedir)/empty/vsftpd"
+	ginstall -d "$(PKGROOT)/var/opt/csw/empty/vsftpd"
