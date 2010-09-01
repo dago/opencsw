@@ -54,16 +54,30 @@ CHECKPKG_OVERRIDES_CSWosslutils += missing-dependency|CSWperl
 
 CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWcacertificates
 # we will not recompile old 0.9.7 version for now
+ifeq ($(GARCH),sparc) 
 CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7
 CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7
+else
+CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/amd64/libcrypto.so.0.9.7
+CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/pentium_pro/libssl.so.0.9.7
+endif
 
 # we do ship .a files in the devel package
+ifeq ($(GARCH),sparc) 
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libcrypto.a
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libssl.a
+else
+CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
+CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
+CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
+CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
+endif
+
+
 CHECKPKG_OVERRIDES_CSWossldevel += surplus-dependency|CSWosslrt
 
 
