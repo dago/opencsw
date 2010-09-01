@@ -10,8 +10,13 @@ define BLURB
   attachment, you may want to use this module.
 endef
 
-DISTFILES += CSWpmconverttnef.gspec
+DISTFILES += COPYING
 
-DEPENDS += cpan/MIME-tools
+PACKAGES = CSWpmconverttnef
+CATALOGNAME = pm_converttnef
+
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpmmimetools
 
 include gar/category.mk
