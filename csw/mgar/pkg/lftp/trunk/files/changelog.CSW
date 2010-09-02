@@ -1,4 +1,4 @@
-lftp (4.0.9,REV=2010.09.02) unstable
+lftp (4.0.10,REV=2010.09.02) unstable
 
   * Added socks5 support (closees: #4481).
 
