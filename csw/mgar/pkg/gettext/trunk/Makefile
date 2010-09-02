@@ -24,13 +24,6 @@ COMPILE_ELISP = 1
 MASTER_SITES = $(GNU_MIRROR)
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#Include earlier library revisions for compatibility with existing packages
-DISTFILES += libgettextlib-0.14.1.so.i
-DISTFILES += libgettextlib-0.14.1.so.s
-DISTFILES += libintl.so.2.i
-DISTFILES += libintl.so.2.s
-DISTFILES += libintl.so.3.i
-DISTFILES += libintl.so.3.s
 
 PATCHFILES += 0001-Use-the-auto-detected-SHELL-to-run-convert-archive.patch
 PATCHFILES += 0002-Update-ltmain.sh-to-prevent-libtool-stripping-runpat.patch
