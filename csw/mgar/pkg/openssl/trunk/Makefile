@@ -54,7 +54,7 @@ CHECKPKG_OVERRIDES_CSWosslutils += missing-dependency|CSWperl
 
 CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWcacertificates
 # we will not recompile old 0.9.7 version for now
-ifeq ($(GARCH),sparc) 
+ifeq ($(shell /usr/bin/uname -p),sparc) 
 CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7
 CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7
 else
@@ -63,7 +63,7 @@ CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt
 endif
 
 # we do ship .a files in the devel package
-ifeq ($(GARCH),sparc) 
+ifeq ($(shell /usr/bin/uname -p),sparc) 
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
@@ -105,9 +105,6 @@ PATCHFILES = more_configure_targets.patch
 LICENSE=LICENSE
 
 ##### Build and installation information #####
-
-GARCOMPILER = SOS11
-
 
 # The list of instructions set for which we will 
 # provide optimized libraries and binaries
@@ -202,4 +199,4 @@ install-oldlibs-%:
 	cd $(PKGROOT) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -
 	@$(MAKECOOKIE)
 
-post-merge: install-certs install-oldlibs install-changelog install-doc
+pre-package: install-certs install-oldlibs install-changelog install-doc
