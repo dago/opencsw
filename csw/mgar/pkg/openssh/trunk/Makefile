@@ -36,12 +36,12 @@ PACKAGES = CSWossh CSWosshclient
 CATALOGNAME_CSWossh = openssh
 SPKG_DESC_CSWossh = OpenSSH Secure Shell server 
 RUNTIME_DEP_PKGS_CSWossh = CSWosslrt CSWtcpwrap CSWzlib CSWkrb5lib CSWosshclient
-SPKG_CLASSES_CSWossh = none cswpreserveconf cswinitsmf
+SPKG_CLASSES_CSWossh = none cswmigrateconf cswpreserveconf cswinitsmf
 
 CATALOGNAME_CSWosshclient = openssh_client
 SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client 
 RUNTIME_DEP_PKGS_CSWosshclient = CSWosslrt CSWzlib CSWkrb5lib 
-SPKG_CLASSES_CSWosshclient = none cswpreserveconf
+SPKG_CLASSES_CSWosshclient = none cswmigrateconf cswpreserveconf
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
 
@@ -53,9 +53,9 @@ PKGFILES_CSWossh += $(mandir)/man8/sshd.8
 PKGFILES_CSWossh += $(libexecdir)/sftp-server
 PKGFILES_CSWossh += $(sysconfdir)/ssh/sshd_config.CSW
 PKGFILES_CSWossh += $(sysconfdir)/ssh/moduli.CSW
-PKGFILES_CSWossh += /var/empty
-PKGFILES_CSWossh += /etc$(prefix)/init.d/cswopenssh
-PKGFILES_CSWossh += /var$(prefix)/svc/manifest/network/cswopenssh.xml
+PKGFILES_CSWossh += $(localstatedir)/empty
+PKGFILES_CSWossh += $(sysconfdir)/init.d/cswopenssh
+PKGFILES_CSWossh += $(localstatedir)/svc/manifest/network/cswopenssh.xml
 
 PKGFILES_CSWosshclient = $(bindir)/.*
 PKGFILES_CSWosshclient += $(docdir)/openssh_client/.*
@@ -69,11 +69,14 @@ PROTOTYPE_MODIFIERS = setuid
 PROTOTYPE_FILES_setuid = $(libexecdir)/ssh-keysign
 PROTOTYPE_PERMS_setuid = 4711
 
+PRESERVECONF = $(sysconfdir)/ssh/sshd_config
+PRESERVECONF += $(sysconfdir)/ssh/ssh_config
+PRESERVECONF += $(sysconfdir)/ssh/moduli
+INITSMF = $(sysconfdir)/init.d/cswopenssh
 
-PRESERVECONF = /opt/csw/etc/ssh/sshd_config
-PRESERVECONF += /opt/csw/etc/ssh/ssh_config
-PRESERVECONF += /opt/csw/etc/ssh/moduli
-INITSMF = /etc/opt/csw/init.d/cswopenssh
+MIGRATE_FILES_CSWossh = module sshd_config
+MIGRATE_FILES_CSWosshclient = ssh_config
+MIGRATE_SOURCE_DIR = $(prefix)/etc/ssh
 
 # The openssh package installs the server and the client
 CHECKPKG_OVERRIDES_CSWossh = surplus-dependency|CSWosshclient
@@ -116,12 +119,20 @@ RUNTIME_DEP_PKGS += CSWcswclassutils
 
 ##### Build and installation information #####
 
+
+# to support shared /opt/csw setup
+# see http://wiki.opencsw.org/shared-opt-csw-setup
+localstatedir 	= /var$(prefix)
+sysconfdir 	= /etc$(prefix)
+
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-kerberos5=$(prefix)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)/ssh
 CONFIGURE_ARGS += --with-solaris-contracts
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
+CONFIGURE_ARGS += --with-privsep-path=$(localstatedir)/empty
 
 TEST_SCRIPTS	=
 
@@ -192,5 +203,5 @@ merge-config-files:
 	@$(MAKECOOKIE)
 
 merge-special-directories:
-	ginstall -d $(PKGROOT)/var/empty
+	ginstall -d $(PKGROOT)$(localstatedir)/empty
 	ginstall -d $(PKGROOT)$(sysconfdir)/CSWossh
