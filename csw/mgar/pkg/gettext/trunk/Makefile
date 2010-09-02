@@ -84,6 +84,8 @@ CHECKPKG_OVERRIDES_CSWggettext += bad-rpath-entry|/export/home/phil/build/gettex
 # just until checkpkg doesn't squawk about this.
 CHECKPKG_OVERRIDES_CSWggettext += missing-dependency|CSWemacscommon
 
+SHELL = /bin/bash
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
@@ -93,26 +95,21 @@ PATH := /opt/csw/gnu:$(PATH)
 post-install-isa-sparcv8:
 	@mkdir $(INSTALLISADIR)/opt/csw/share/java
 	@mv $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar $(INSTALLISADIR)/opt/csw/share/java
-	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
-	@cp $(FILEDIR)/libintl.so.2.s $(INSTALLISADIR)/opt/csw/lib/libintl.so.2
-	@cp $(FILEDIR)/libintl.so.3.s $(INSTALLISADIR)/opt/csw/lib/libintl.so.3
-	$(DONADA)
+	@( for f in $(FILEDIR)/*.s; do gcp $$f $(INSTALLISADIR)/opt/csw/lib/$$(gbasename $$f .s); done )
+	$(MAKECOOKIE)
 
 post-install-isa-sparcv9:
 	@rm $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar
-	@cp $(FILEDIR)/libgettextlib-0.14.1.so.s9 $(INSTALLISADIR)/opt/csw/lib/64/libgettextlib-0.14.1.so
-	@cp $(FILEDIR)/libintl.so.2.s9 $(INSTALLISADIR)/opt/csw/lib/64/libintl.so.2
-	@cp $(FILEDIR)/libintl.so.3.s9 $(INSTALLISADIR)/opt/csw/lib/64/libintl.so.3
-	$(DONADA)
+	@( for f in $(FILEDIR)/*.s9; do gcp $$f $(INSTALLISADIR)/opt/csw/lib/$$(gbasename $$f .s9); done )
+	$(MAKECOOKIE)
 
 post-install-isa-i386:
 	@mkdir $(INSTALLISADIR)/opt/csw/share/java
 	@mv $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar $(INSTALLISADIR)/opt/csw/share/java
-	@cp $(FILEDIR)/libgettextlib-0.14.1.so.i $(INSTALLISADIR)/opt/csw/lib/libgettextlib-0.14.1.so
-	@cp $(FILEDIR)/libintl.so.2.i $(INSTALLISADIR)/opt/csw/lib/libintl.so.2
-	@cp $(FILEDIR)/libintl.so.3.i $(INSTALLISADIR)/opt/csw/lib/libintl.so.3
-	$(DONADA)
+	@( for f in $(FILEDIR)/*.i; do gcp $$f $(INSTALLISADIR)/opt/csw/lib/$$(gbasename $$f .i); done )
+	$(MAKECOOKIE)
 
 post-install-isa-amd64:
 	@rm $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar
-	$(DONADA)
+	@( for f in $(FILEDIR)/*.amd64; do gcp $$f $(INSTALLISADIR)/opt/csw/lib/$$(gbasename $$f .amd64); done )
+	$(MAKECOOKIE)
