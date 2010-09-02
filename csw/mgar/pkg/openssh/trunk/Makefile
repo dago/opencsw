@@ -36,12 +36,10 @@ PACKAGES = CSWossh CSWosshclient
 CATALOGNAME_CSWossh = openssh
 SPKG_DESC_CSWossh = OpenSSH Secure Shell server 
 RUNTIME_DEP_PKGS_CSWossh = CSWosslrt CSWtcpwrap CSWzlib CSWkrb5lib CSWosshclient
-SPKG_CLASSES_CSWossh = none cswmigrateconf cswpreserveconf cswinitsmf
 
 CATALOGNAME_CSWosshclient = openssh_client
 SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client 
 RUNTIME_DEP_PKGS_CSWosshclient = CSWosslrt CSWzlib CSWkrb5lib 
-SPKG_CLASSES_CSWosshclient = none cswmigrateconf cswpreserveconf
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
 
@@ -56,6 +54,7 @@ PKGFILES_CSWossh += $(sysconfdir)/ssh/moduli.CSW
 PKGFILES_CSWossh += $(localstatedir)/empty
 PKGFILES_CSWossh += $(sysconfdir)/init.d/cswopenssh
 PKGFILES_CSWossh += $(localstatedir)/svc/manifest/network/cswopenssh.xml
+PKGFILES_CSWossh += $(prefix)/etc/pkg/CSWossh/cswusergroup
 
 PKGFILES_CSWosshclient = $(bindir)/.*
 PKGFILES_CSWosshclient += $(docdir)/openssh_client/.*
@@ -74,6 +73,7 @@ PRESERVECONF = $(sysconfdir)/ssh/sshd_config
 PRESERVECONF += $(sysconfdir)/ssh/ssh_config
 PRESERVECONF += $(sysconfdir)/ssh/moduli
 INITSMF = $(sysconfdir)/init.d/cswopenssh
+USERGROUP = $(prefix)/etc/pkg/CSWossh/cswusergroup
 
 MIGRATE_FILES_CSWossh = moduli sshd_config
 MIGRATE_FILES_CSWossh += ssh_host_dsa_key ssh_host_dsa_key.pub ssh_host_rsa_key ssh_host_rsa_key.pub ssh_host_key ssh_host_key.pub
@@ -96,9 +96,10 @@ MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sx
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*p\d+).tar.gz
 
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSWossh.preinstall CSWossh.checkinstall
-DISTFILES += CSWosshlpk.preinstall CSWosshlpk.checkinstall
+DISTFILES += CSWossh.checkinstall
+DISTFILES += CSWosshlpk.checkinstall
 DISTFILES += changelog.CSW
+DISTFILES += cswusergroup
 
 DISTFILES += cswopenssh sshd.smf_wrapper cswopenssh.xml
 
@@ -157,7 +158,6 @@ ifdef LPK
 	CATALOGNAME_CSWosshlpk = openssh_lpk
 	SPKG_DESC_CSWosshlpk = $(SPKG_DESC_CSWossh) with ldap public key support
 	RUNTIME_DEP_PKGS_CSWosshlpk = $(RUNTIME_DEP_PKGS_CSWossh) CSWoldaprt
-	SPKG_CLASSES_CSWosshlpk = none cswpreserveconf cswinitsmf
 	MASTER_SITES += http://openssh-lpk.googlecode.com/svn/trunk/patch/contrib/
 	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
 	CONFIGURE_ARGS += --with-ldap
@@ -195,7 +195,6 @@ merge-init-files:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswopenssh.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswopenssh.xml"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/sshd.smf_wrapper" "$(PKGROOT)/opt/csw/sbin/sshd.smf_wrapper"
 
-
 merge-doc-files:
 	for DOCDIR in $(foreach _PKG,$(PACKAGES),$(call catalogname,$(_PKG))); do \
 		ginstall -d $(PKGROOT)/$(docdir)/$$DOCDIR; \
@@ -209,9 +208,10 @@ merge-config-files:
 	# we change some default value in the server config file
 	perl -pi -e 's,/etc/ssh/,$(sysconfdir)/ssh/,g; s,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW"
 	perl -pi -e 's,^ *# *UsePAM *.*,UsePAM yes,g, s,^ *# *PrintMotd *.*,PrintMotd no,g; s,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW" 
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswusergroup" "$(PKGROOT)$(prefix)/etc/pkg/CSWossh/cswusergroup"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/THIS_LOCATION_IS_DEPRECATED" "$(PKGROOT)/$(prefix)/etc/ssh/THIS_LOCATION_IS_DEPRECATED"
 	@$(MAKECOOKIE)
 
 merge-special-directories:
 	ginstall -d $(PKGROOT)$(localstatedir)/empty
-	ginstall -d $(PKGROOT)$(sysconfdir)/CSWossh
+	ginstall -d $(PKGROOT)$(sysconfdir)/pkg/CSWossh
