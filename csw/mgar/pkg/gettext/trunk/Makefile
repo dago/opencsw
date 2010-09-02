@@ -42,7 +42,7 @@ BUILD64 = 1
 NOISAEXEC = 1
 STRIP_LIBTOOL = 1
 
-RUNTIME_DEP_PKGS_CSWggettextrt = CSWiconv
+RUNTIME_DEP_PKGS_CSWggettextrt = CSWiconv CSWlibxml2 CSWncurses
 RUNTIME_DEP_PKGS_CSWggettext = CSWggettextrt CSWiconv CSWexpat CSWncurses
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibxml2
 RUNTIME_DEP_PKGS_CSWggettextdoc = CSWggettext
