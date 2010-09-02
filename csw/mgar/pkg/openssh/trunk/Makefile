@@ -53,7 +53,6 @@ PKGFILES_CSWossh += $(mandir)/man8/sshd.8
 PKGFILES_CSWossh += $(libexecdir)/sftp-server
 PKGFILES_CSWossh += $(sysconfdir)/ssh/sshd_config.CSW
 PKGFILES_CSWossh += $(sysconfdir)/ssh/moduli.CSW
-PKGFILES_CSWossh += $(prefix)/etc/ssh/THIS_LOCATION_IS_DEPRECATED
 PKGFILES_CSWossh += $(localstatedir)/empty
 PKGFILES_CSWossh += $(sysconfdir)/init.d/cswopenssh
 PKGFILES_CSWossh += $(localstatedir)/svc/manifest/network/cswopenssh.xml
@@ -76,14 +75,15 @@ PRESERVECONF += $(sysconfdir)/ssh/ssh_config
 PRESERVECONF += $(sysconfdir)/ssh/moduli
 INITSMF = $(sysconfdir)/init.d/cswopenssh
 
-MIGRATE_FILES_CSWossh = moduli sshd_config 
+MIGRATE_FILES_CSWossh = moduli sshd_config
 MIGRATE_FILES_CSWossh += ssh_host_dsa_key ssh_host_dsa_key.pub ssh_host_rsa_key ssh_host_rsa_key.pub ssh_host_key ssh_host_key.pub
-MIGRATE_FILES_CSWossh += shosts.equiv 
-MIGRATE_FILES_CSWossh += sshrc 
+MIGRATE_FILES_CSWossh += shosts.equiv
+MIGRATE_FILES_CSWossh += sshrc
 MIGRATE_FILES_CSWosshclient = ssh_config
 MIGRATE_FILES_CSWosshclient += ssh_known_hosts ssh_known_hosts2
 MIGRATE_FILES_CSWosshclient += ssh_prng_cmds
 MIGRATE_SOURCE_DIR = $(prefix)/etc/ssh
+MIGRATE_DEST_DIR = $(sysconfdir)/ssh
 
 # The openssh package installs the server and the client
 CHECKPKG_OVERRIDES_CSWossh = surplus-dependency|CSWosshclient
@@ -101,6 +101,8 @@ DISTFILES += CSWosshlpk.preinstall CSWosshlpk.checkinstall
 DISTFILES += changelog.CSW
 
 DISTFILES += cswopenssh sshd.smf_wrapper cswopenssh.xml
+
+DISTFILES += THIS_LOCATION_IS_DEPRECATED
 
 LICENSE = LICENCE
 
@@ -207,7 +209,7 @@ merge-config-files:
 	# we change some default value in the server config file
 	perl -pi -e 's,/etc/ssh/,$(sysconfdir)/ssh/,g; s,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW"
 	perl -pi -e 's,^ *# *UsePAM *.*,UsePAM yes,g, s,^ *# *PrintMotd *.*,PrintMotd no,g; s,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW" 
-	ginstall -D "$(WORKDIR_FIRSTMOD)/THIS_LOCATION_IS_DEPRECATED" "$(PKGROOT)/$(sysconfdir)/ssh/THIS_LOCATION_IS_DEPRECATED"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/THIS_LOCATION_IS_DEPRECATED" "$(PKGROOT)/$(prefix)/etc/ssh/THIS_LOCATION_IS_DEPRECATED"
 	@$(MAKECOOKIE)
 
 merge-special-directories:

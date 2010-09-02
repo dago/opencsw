@@ -12,7 +12,7 @@
 
 PATH=/usr/bin:/opt/csw/bin:/usr/sbin
 
-KEYDIR=/opt/csw/etc/ssh
+KEYDIR=/etc/opt/csw/ssh
 PIDFILE=/var/run/sshd.pid
 case $1 in 
 'start')
@@ -28,7 +28,7 @@ case $1 in
                 fi     
         fi
 
-        [ -x /opt/csw/sbin/sshd ] && [ -f /opt/csw/etc/ssh/sshd_config ] && /opt/csw/sbin/sshd &
+        [ -x /opt/csw/sbin/sshd ] && [ -f /etc/opt/csw/ssh/sshd_config ] && /opt/csw/sbin/sshd &
         ;;
 'stop')
         #

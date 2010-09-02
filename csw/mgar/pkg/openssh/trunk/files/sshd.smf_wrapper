@@ -2,7 +2,7 @@
 
 PATH=/usr/bin:/opt/csw/bin:/usr/sbin
 
-KEYDIR=/opt/csw/etc/ssh
+KEYDIR=/etc/opt/csw/ssh
 PIDFILE=/var/run/sshd.pid
 if [ -x /opt/csw/bin/ssh-keygen ]; then
 	if [ ! -f "$KEYDIR/ssh_host_rsa_key" ]; then
