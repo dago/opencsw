@@ -934,7 +934,9 @@ class CheckInterfaceBase(object):
   def GetCommonPaths(self, arch):
     """Returns a list of paths for architecture, from gar/etc/commondirs*."""
     # TODO: If this was cached, it could save a significant amount of time.
-    assert arch in ('i386', 'sparc', 'all'), "Wrong arch: %s" % repr(arch)
+    if arch not in ('i386', 'sparc', 'all'):
+      logging.warn("Wrong arch: %s", repr(arch))
+      return []
     if arch == 'all':
       archs = ('i386', 'sparc')
     else:
