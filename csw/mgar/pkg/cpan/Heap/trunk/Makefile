@@ -1,9 +1,9 @@
 GARNAME = Heap
-GARVERSION = 0.71
+GARVERSION = 0.80
 CATEGORIES = cpan
 AUTHOR = JMM
 
-DESCRIPTION = extensions for keeping data partially sorted
+DESCRIPTION = Extensions for keeping data partially sorted
 define BLURB
   The Heap collection of modules provide routines that manage a heap of
   elements.  A heap is a partially sorted structure that is always able to
@@ -11,6 +11,11 @@ define BLURB
   if a reversed compare routine is provided).
 endef
 
-DISTFILES = $(call admfiles,CSWpmheap,depend prototype)
+DISTFILES = COPYING
+
+PACKAGES = CSWpmheap
+CATALOGNAME = pm_heap
+
+ARCHALL = 1
 
 include gar/category.mk
