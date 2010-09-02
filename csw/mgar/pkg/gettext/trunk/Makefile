@@ -75,6 +75,9 @@ CHECKPKG_OVERRIDES_CSWggettextdoc += surplus-dependency|CSWggettext
 CHECKPKG_OVERRIDES_CSWggettextel += surplus-dependency|CSWggettext
 # This lib is legacy from the old versions and can't be updated (easily)
 CHECKPKG_OVERRIDES_CSWggettext += bad-rpath-entry|/export/home/phil/build/gettext-0.14.1/gettext-tools/intl/.libs|opt/csw/lib/sparcv9/libgettextlib-0.14.1.so 
+# A few more legacy libs that we can't update.
+CHECKPKG_OVERRIDES_CSWggettextrt += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextlib-0.17.so
+CHECKPKG_OVERRIDES_CSWggettextrt += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextsrc-0.17.so
 # just until checkpkg doesn't squawk about this.
 CHECKPKG_OVERRIDES_CSWggettext += missing-dependency|CSWemacscommon
 
