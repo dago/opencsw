@@ -53,6 +53,7 @@ PKGFILES_CSWossh += $(mandir)/man8/sshd.8
 PKGFILES_CSWossh += $(libexecdir)/sftp-server
 PKGFILES_CSWossh += $(sysconfdir)/ssh/sshd_config.CSW
 PKGFILES_CSWossh += $(sysconfdir)/ssh/moduli.CSW
+PKGFILES_CSWossh += $(prefix)/etc/ssh/THIS_LOCATION_IS_DEPRECATED
 PKGFILES_CSWossh += $(localstatedir)/empty
 PKGFILES_CSWossh += $(sysconfdir)/init.d/cswopenssh
 PKGFILES_CSWossh += $(localstatedir)/svc/manifest/network/cswopenssh.xml
@@ -64,6 +65,7 @@ PKGFILES_CSWosshclient += $(mandir)/man5/ssh_config.5
 PKGFILES_CSWosshclient += $(mandir)/man8/ssh-keysign.8
 PKGFILES_CSWosshclient += $(libexecdir)/ssh-keysign
 PKGFILES_CSWosshclient += $(sysconfdir)/ssh/ssh_config.CSW
+PKGFILES_CSWosshclient += $(prefix)/etc/ssh/THIS_LOCATION_IS_DEPRECATED
 
 PROTOTYPE_MODIFIERS = setuid
 PROTOTYPE_FILES_setuid = $(libexecdir)/ssh-keysign
@@ -74,8 +76,13 @@ PRESERVECONF += $(sysconfdir)/ssh/ssh_config
 PRESERVECONF += $(sysconfdir)/ssh/moduli
 INITSMF = $(sysconfdir)/init.d/cswopenssh
 
-MIGRATE_FILES_CSWossh = module sshd_config
+MIGRATE_FILES_CSWossh = moduli sshd_config 
+MIGRATE_FILES_CSWossh += ssh_host_dsa_key ssh_host_dsa_key.pub ssh_host_rsa_key ssh_host_rsa_key.pub ssh_host_key ssh_host_key.pub
+MIGRATE_FILES_CSWossh += shosts.equiv 
+MIGRATE_FILES_CSWossh += sshrc 
 MIGRATE_FILES_CSWosshclient = ssh_config
+MIGRATE_FILES_CSWosshclient += ssh_known_hosts ssh_known_hosts2
+MIGRATE_FILES_CSWosshclient += ssh_prng_cmds
 MIGRATE_SOURCE_DIR = $(prefix)/etc/ssh
 
 # The openssh package installs the server and the client
@@ -198,8 +205,9 @@ merge-doc-files:
 
 merge-config-files:
 	# we change some default value in the server config file
-	perl -pi -e 's,/etc/ssh/,/opt/csw/etc/ssh/,g; s,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW"
+	perl -pi -e 's,/etc/ssh/,$(sysconfdir)/ssh/,g; s,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW"
 	perl -pi -e 's,^ *# *UsePAM *.*,UsePAM yes,g, s,^ *# *PrintMotd *.*,PrintMotd no,g; s,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW" 
+	ginstall -D "$(WORKDIR_FIRSTMOD)/THIS_LOCATION_IS_DEPRECATED" "$(PKGROOT)/$(sysconfdir)/ssh/THIS_LOCATION_IS_DEPRECATED"
 	@$(MAKECOOKIE)
 
 merge-special-directories:
