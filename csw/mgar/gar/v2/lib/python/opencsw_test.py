@@ -117,6 +117,20 @@ class ParsePackageFileNameTest(unittest.TestCase):
       self.assertEqual(catalogname, compiled["catalogname"])
       self.assertEqual(pkg_version, compiled["full_version_string"])
 
+  def testParsePackageFileName_RichpSe(self):
+    file_name = "RICHPse-3.5.1.pkg.gz"
+    parsed = opencsw.ParsePackageFileName(file_name)
+    self.assertEqual(parsed["version"], "3.5.1")
+    self.assertEqual(parsed["vendortag"], "UNKN")
+    self.assertEqual(parsed["arch"], "unknown")
+    self.assertEqual(parsed["osrel"], "unspecified")
+    self.assertEqual(parsed["catalogname"], "RICHPse")
+
+  def testParsePackageFileName_Nonsense(self):
+    """Checks if the function can sustain a non-conformant string."""
+    file_name = "What if I wrote a letter to my grandma here?"
+    parsed = opencsw.ParsePackageFileName(file_name)
+
 
 class ParsePackageFileNameTest_2(unittest.TestCase):
 
@@ -141,6 +155,28 @@ class ParsePackageFileNameTest_2(unittest.TestCase):
     file_name = "achievo-0.8.4-all-CSW.pkg.gz"
     parsed = opencsw.ParsePackageFileName(file_name)
     self.assertEqual("unspecified", parsed["osrel"])
+
+
+class ParseVersionStringTest(unittest.TestCase):
+
+  def test_NoRev(self):
+    data = "1.2.3"
+    expected = ('1.2.3', {
+      'minor version': '2',
+      'patchlevel': '3',
+      'major version': '1'},
+      {})
+    self.assertEqual(expected, opencsw.ParseVersionString(data))
+
+  def test_Text(self):
+    data = "That, sir, is a frab-rication! It's wabbit season!"
+    opencsw.ParseVersionString(data)
+
+  def test_Empty(self):
+    data = ""
+    opencsw.ParseVersionString(data)
+    expected = ('', {'major version': ''}, {})
+    self.assertEqual(expected, opencsw.ParseVersionString(data))
 
 
 class UpgradeTypeTest(unittest.TestCase):
