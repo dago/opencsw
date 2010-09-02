@@ -13,7 +13,7 @@ endef
 DISTFILES = COPYING
 
 PACKAGES = CSWpmhtmlformat
-CATALOGANME = pm_htmlformat
+CATALOGNAME = pm_htmlformat
 
 DEP_PKGS = CSWpmfontafm CSWpmhtmltree
 
