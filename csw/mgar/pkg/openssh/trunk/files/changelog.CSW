@@ -1,4 +1,4 @@
-openssh (5.6p1,REV=2010.09.01) unstable
+openssh (5.6p1,REV=2010.09.02) unstable
 
   * New upstream release.
   * Removed patch applied upstream (derelativise_path_bugfix.patch 
@@ -7,8 +7,9 @@ openssh (5.6p1,REV=2010.09.01) unstable
   * Moved privilege separation directory from /var/empty to
   /var/opt/csw/var/empty.
   * [Build system] Switched to dynamic prototype.
+  * [Build system] Switched to cswclassutils for user/group creation.
 
- -- Yann Rouillard <yann@opencsw.org>  Wed, 01 Sep 2010 23:25:24 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 02 Sep 2010 23:25:24 +0200
 
 openssh (5.4p1,REV=2010.03.25) unstable
 
