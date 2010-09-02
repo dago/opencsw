@@ -64,6 +64,7 @@ MERGE_EXCLUDE_FILES += /opt/csw/bin/$(ISA)/.*
 #PKGFILES_CSWggettextrt += $(call baseisadirs,$(libdir),libgettextpo\..*) 
 #so use this for now
 PKGFILES_CSWggettextrt  = .*/libintl\.so.* .*/libasprintf\.so.* .*/libgettextpo\.so.*
+PKGFILES_CSWggettextrt  = .*/libgettext.*\.so.*
 PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext /opt/csw/bin/gngettext /opt/csw/bin/genvsubst
 PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext.sh /opt/csw/share/java/libintl.jar
 PKGFILES_CSWggettextrt += /opt/csw/share/locale/.*
