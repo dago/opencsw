@@ -1,3 +1,9 @@
+lftp (4.0.9,REV=2010.09.02) unstable
+
+  * Added socks5 support (closees: #4481).
+
+ -- Yann Rouillard <yann@opencsw.org>  Thu, 02 Sep 2010 23:35:37 +0200
+
 lftp (4.0.9,REV=2010.06.25) unstable
 
   * New upstream release.

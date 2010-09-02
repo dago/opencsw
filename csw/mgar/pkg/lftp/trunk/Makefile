@@ -24,7 +24,7 @@ endef
 PACKAGES = CSWlftp
 CATALOGNAME_CSWlftp = lftp
 
-RUNTIME_DEP_PKGS = CSWexpat CSWggettextrt CSWiconv CSWosslrt CSWreadline 
+RUNTIME_DEP_PKGS = CSWexpat CSWggettextrt CSWiconv CSWosslrt CSWreadline CSWlibsocks
 
 
 ###### Upstream and opencsw files information #######
@@ -60,6 +60,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # previous maintainer compiled with openssl
 # instead of gnutls, no need to change that
 CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
+# Requested see https://www.opencsw.org/mantis/view.php?id=4481
+CONFIGURE_ARGS += --with-socksdante
 
 TEST_SCRIPTS =
 
