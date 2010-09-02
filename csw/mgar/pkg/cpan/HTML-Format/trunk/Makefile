@@ -13,10 +13,20 @@ endef
 DISTFILES = COPYING
 
 PACKAGES = CSWpmhtmlformat
-CATALOGNAME = pm_htmlformat
+CATALOGNAME_CSWpmhtmlformat = pm_htmlformat
 
-DEP_PKGS = CSWpmfontafm CSWpmhtmltree
+# Legacy package
+PACKAGES += CSWpmhtmlfmt
+CATALOGNAME_CSWpmhtmlfmt = pm_htmlfmt
+
+SPKG_DESC_CSWpmhtmlformat = $(DESCRIPTION)
+SPKG_DESC_CSWpmhtmlfmt = Deprecated, empty stub to CSWpmhtmlformat
+
+DEP_PKGS_CSWpmhtmlformat = CSWpmfontafm CSWpmhtmltree
+RUNTIME_DEP_PKGS_CSWpmhtmlfmt = CSWpmhtmlformat
 
 ARCHALL = 1
+
+PKGFILES_CSWpmhtmlfmt = NOFILES
 
 include gar/category.mk
