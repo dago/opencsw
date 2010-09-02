@@ -57,9 +57,6 @@ CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWcacertificates
 ifeq ($(shell /usr/bin/uname -p),sparc) 
 CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7
 CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7
-else
-CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/amd64/libcrypto.so.0.9.7
-CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/pentium_pro/libssl.so.0.9.7
 endif
 
 # we do ship .a files in the devel package
