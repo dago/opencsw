@@ -67,6 +67,11 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
+# we re-run autoconf because we patched a m4 file
+pre-configure:
+	cd $(WORKSRC) && autoconf
+	@$(MAKECOOKIE)
+
 post-merge:
 	@ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)/$(docdir)/lftp/changelog.CSW
 	@rm $(PKGROOT)/$(libdir)/charset.alias
