@@ -32,7 +32,7 @@
 				restart_on='restart'
 				type='path'>
 				<service_fmri
-					value='file://localhost/opt/csw/etc/ssh/sshd_config' />
+					value='file://localhost/etc/opt/csw/ssh/sshd_config' />
 			</dependency>
 
 			<dependent
@@ -73,7 +73,7 @@
 				<manpage
 					title='sshd'
 					section='1M'
-					manpath='/opt/csw/man'/>
+					manpath='/opt/csw/share/man'/>
 			</documentation>
 		</template>
 	</service>
