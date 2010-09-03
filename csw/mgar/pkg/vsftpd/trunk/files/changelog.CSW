@@ -1,3 +1,10 @@
+vsftpd (2.3.2,REV=2010.09.03) UNRELEASED
+
+  * Configuration file migration from /opt/csw/etc/vsftpd to
+  /etc/opt/csw/vsftpd.
+
+ -- Yann Rouillard <yann@opencsw.org>  Fri, 03 Sep 2010 14:21:04 +0200
+
 vsftpd (2.3.2,REV=2010.08.31) unstable
 
   * New upstream version.
