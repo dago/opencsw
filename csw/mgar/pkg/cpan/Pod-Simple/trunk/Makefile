@@ -1,7 +1,7 @@
 GARNAME = Pod-Simple
-GARVERSION = 3.07
+GARVERSION = 3.14
 CATEGORIES = cpan
-AUTHOR = ARANDAL
+AUTHOR = DWHEELER
 
 DESCRIPTION = Framework for parsing Pod
 define BLURB
@@ -13,13 +13,8 @@ endef
 
 DISTFILES = COPYING
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
 PACKAGES = CSWpmpodsimple
 CATALOGNAME = pm_podsimple
 ARCHALL = 1
-
-RUNTIME_DEP_PKGS = CSWpmpodescapes
 
 include gar/category.mk
