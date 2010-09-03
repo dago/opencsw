@@ -1,0 +1,4 @@
+$Id$
+
+This directory holds unit test input data.  There currently is no better place
+to put them, so they have to be distributed together with the main GAR code.
