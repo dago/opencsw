@@ -32,10 +32,6 @@ PACKAGES = CSWvsftpd
 RUNTIME_DEP_PKGS  = CSWtcpwrap 
 RUNTIME_DEP_PKGS += CSWosslrt 
 
-# adding configuration handling classes
-# (init/smf classes are dynamically added in checkinstall)
-#SPKG_CLASSES = none cswpreserveconf cswusergroup cswinitsmf
-
 
 ###### Upstream and opencsw files information #######
 
@@ -49,9 +45,11 @@ DISTFILES += vsftpd.conf vsftpd.userlist
 DISTFILES += cswvsftpd cswvsftpd.xml vsftpd.smf_wrapper
 DISTFILES += cswusergroup 
 
-PRESERVECONF = /opt/csw/etc/vsftpd/vsftpd.conf /opt/csw/etc/vsftpd/vsftpd.userlist
-USERGROUP = /opt/csw/etc/pkg/CSWvsftpd/cswusergroup
+PRESERVECONF = $(sysconfdir)/vsftpd/vsftpd.conf $(sysconfdir)/vsftpd/vsftpd.userlist
+USERGROUP = /etc/opt/csw/pkg/CSWvsftpd/cswusergroup
 INITSMF = /etc/opt/csw/init.d/cswvsftpd
+
+MIGRATE_FILES = vsftpd
 
 # The vsftpd user home directory has special rights
 PROTOTYPE_MODIFIERS = empty
@@ -102,6 +100,11 @@ CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+# to support shared /opt/csw setup
+# see http://wiki.opencsw.org/shared-opt-csw-setup
+localstatedir   = /var$(prefix)
+sysconfdir      = /etc$(prefix)
 
 # /opt/csw/include is not take in account 
 # by vsftp build system
