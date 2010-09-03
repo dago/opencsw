@@ -78,6 +78,7 @@ CHECKPKG_OVERRIDES_CSWggettext += bad-rpath-entry|/export/home/phil/build/gettex
 # A few more legacy libs that we can't update.
 CHECKPKG_OVERRIDES_CSWggettextrt += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextlib-0.17.so
 CHECKPKG_OVERRIDES_CSWggettextrt += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextsrc-0.17.so
+CHECKPKG_OVERRIDES_CSWggettextrt += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextpo.so.0.4.0
 # just until checkpkg doesn't squawk about this.
 CHECKPKG_OVERRIDES_CSWggettext += missing-dependency|CSWemacscommon
 
