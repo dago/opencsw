@@ -14,7 +14,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PATCHFILES = 0001-Make-sure-to-find-newly-built-libs-earlier.patch
 
-PACKAGES = CSWar-util
+PACKAGES = CSWapr-util
 CATALOGNAME = apr_util
 
 LICENSE = LICENSE
