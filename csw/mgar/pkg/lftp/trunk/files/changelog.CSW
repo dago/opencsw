@@ -1,6 +1,8 @@
-lftp (4.0.10,REV=2010.09.02) unstable
+lftp (4.0.10,REV=2010.09.03) unstable
 
+  * New upstream release.
   * Added socks5 support (closees: #4481).
+  * Configuration file migration from /opt/csw/etc to /etc/opt/csw.
 
  -- Yann Rouillard <yann@opencsw.org>  Thu, 02 Sep 2010 23:35:37 +0200
 

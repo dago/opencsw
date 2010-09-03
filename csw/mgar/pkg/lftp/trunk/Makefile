@@ -51,10 +51,16 @@ PATCHFILES += sun_cc_no_restrict.patch
 
 PATCHFILES += dont_use_csw_getopt_h.patch
 
-PRESERVECONF = /opt/csw/etc/lftp.conf
+PRESERVECONF = $(sysconfdir)/lftp.conf
+
+MIGRATE_FILES_CSWlftp = lftp.conf
 
 ##### Build and installation information #####
 
+# to support shared /opt/csw setup
+# see http://wiki.opencsw.org/shared-opt-csw-setup
+localstatedir   = /var$(prefix)
+sysconfdir      = /etc$(prefix)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # previous maintainer compiled with openssl
