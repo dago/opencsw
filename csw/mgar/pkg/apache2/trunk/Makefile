@@ -75,8 +75,8 @@ rename-httpd:
 
 # Copy in specialized templates
 copy-local-files:
-	@ginstall -d $(DESTDIR)/opt/csw/etc/init.d
-	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/opt/csw/etc/init.d
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall $(WORKDIR)/httpd.conf.CSW $(APACHE_ROOT)/etc
 	@ginstall $(WORKDIR)/httpd-mpm.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
