@@ -733,6 +733,8 @@ ccenv:
 	@echo
 	@echo "    C Compiler: $(CC)"
 	@echo "  C++ Compiler: $(CXX)"
+	@echo "  F77 Compiler: $(F77)"
+	@echo "   FC Compiler: $(FC)"
 	@echo
 	@echo "Compiler ISA generation matrix:"
 	@echo
