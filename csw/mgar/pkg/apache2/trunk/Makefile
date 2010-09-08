@@ -30,8 +30,8 @@ DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
 RUNTIME_DEP_PKGS_CSWapache2        = CSWexpat CSWiconv
-RUNTIME_DEP_PKGS_CSWapache2       += CSWlibnet CSWoldaprt CSWosslrt CSWsasl CSWzlib
-RUNTIME_DEP_PKGS_CSWapache2       += CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-utiSWapr-util
 
 # The SMF support: you don't need to specify cswinitsmf any more.  You need to
 # make sure the the /etc/opt/csw/init.d/cswapache file gets installed during
