@@ -33,6 +33,9 @@ RUNTIME_DEP_PKGS_CSWapache2        = CSWexpat CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util
 
+# We need this to get bdb48/lib into the runpath
+EXTRA_LIB = $(prefix)/bdb48/lib
+
 # The SMF support: you don't need to specify cswinitsmf any more.  You need to
 # make sure the the /etc/opt/csw/init.d/cswapache file gets installed during
 # the post-install stage, and add "INITSMF = /etc/opt/csw/init.d/cswapache" to
