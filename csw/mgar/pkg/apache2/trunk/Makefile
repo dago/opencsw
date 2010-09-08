@@ -31,7 +31,7 @@ DISTFILES += update20to22
 
 RUNTIME_DEP_PKGS_CSWapache2        = CSWexpat CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
-RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util
+RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util CSWbdb48
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
