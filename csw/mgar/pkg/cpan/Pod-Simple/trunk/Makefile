@@ -17,4 +17,6 @@ PACKAGES = CSWpmpodsimple
 CATALOGNAME = pm_podsimple
 ARCHALL = 1
 
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3\/.*
+
 include gar/category.mk
