@@ -25,6 +25,11 @@ ARCHALL = 1
 
 LICENSE = LICENSE.TXT
 
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
+INSTALL_SCRIPTS = custom
+TEST_SCRIPTS =
+
 ## The tarball just dumps into the current directory, no archive name
 WORKSRC = $(WORKDIR)
 
