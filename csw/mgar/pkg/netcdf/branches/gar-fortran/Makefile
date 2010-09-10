@@ -10,7 +10,7 @@ SPKG_SOURCEURL = http://www.unidata.ucar.edu/software/netcdf/
 MASTER_SITES = http://www.unidata.ucar.edu/downloads/netcdf/ftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-## LICENSE =
+LICENSE = COPYRIGHT
 RUNTIME_DEP_PKGS = CSWcurlrt CSWhdf5rt CSWgcc4gfortranrt
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWautoconf CSWautomake CSWtetex CSWgcc4gfortran
 ## CFLAGS AND LDFLAGS are necessary due to problems with the fortran bindings when
