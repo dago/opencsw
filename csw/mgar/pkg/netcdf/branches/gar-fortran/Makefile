@@ -125,10 +125,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## ETCSERVICES = <file containing an entry for /etc/services>
 ## INETDCONF = <file containing an inetd.conf formatted entry>
 ## A list of runtime package dependencies in the form of CSWfoo.
-RUNTIME_DEP_PKGS = CSWcurlrt CSWhdf5rt
+RUNTIME_DEP_PKGS = CSWcurlrt CSWhdf5rt CSWgcc4gfortranrt
 ##
 ## A list of packages necessary to build this package
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWautoconf CSWautomake CSWtetex
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWautoconf CSWautomake CSWtetex CSWgcc4gfortran
 ##
 ## When using non-empty $(PACKAGES):
 ## RUNTIME_DEP_PKGS_CSWpkgname =
@@ -162,7 +162,7 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWautoconf CSWautomake CSWtetex
 ##
 ## CFLAGS AND LDFLAGS are necessary due to problems with the fortran bindings when
 ## building 64-bit
-## BUILD_ARGS = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
+BUILD_ARGS = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
 ##
 ## Arguments passed to the ./configure script.
 CONFIGURE_ARGS = $(DIRPATHS) \
@@ -178,30 +178,51 @@ CONFIGURE_ARGS = $(DIRPATHS) \
 		 --with-hdf5=/opt/csw \
 		 --with-zlib=/opt/csw
 
+## 64 bit build fails in fortran binding tests
+BUILD64 = 0
+## CONFIGURE_ENV = 
+
+## Needed for "Large file support" in NetCDF
+EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
+
 ##
-BUILD64 = 1
-#CONFIGURE_ENV = CC=suncc CXX=sunCC F77=sunf77 FFLAGS="-dalign" FC=sunf95 \
-#		FCFLAGS="-dalign"
-#CONFIGURE_ENV = CC=cc CXX=CC F77=f77 FC=f95
-#EXTRA_CFLAGS = -g
-EXTRA_CPPFLAGS = -DsunFortran -D__FUNCTION__=__func__ -D_FILE_OFFSET_BITS=64
-#EXTRA_CXXFLAGS = -g
-## EXTRA_LDFLAGS =
+## The compiler to use. Defaults to SOS11, can be also: SOS12, GCC3, GCC4.
+## Use GCC4 since the fortran to C binding process with Sun Studio require 
+## non-redistributable libs in /opt/SUNWspro
+GARCOMPILER = GCC4
+
+## Add GCC4 lib dir to CFLAGS and friends because gcc3core_rt puts it's 
+## libgcc_s.so in /opt/csw/lib and this breaks the build in all sorts of weird 
+## places.
+## Rationale: Automake keeps wanting to put /opt/csw/lib in the front of the 
+## -L options during the linking phase, so the GCC3 libgcc_s gets pulled in 
+## first and an unresolved symbol error occurs. By adding to the 
+## CFLAGS/FFLAGS/FCFLAGS/CXXFLAGS, it is pulled in before AM_LDFLAGS in the 
+## linking stage in most automake-generated Makefiles. Ugly hack but it works.
+##
+## Adding -dalign to *FLAGS in attempt to fix bus error in nf_test/ftst_vars4
+## in fuction nf_put_vlen_element
+EXTRA_CFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+EXTRA_FFLAGS= -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+EXTRA_FCFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+
+## Need to figure out a way to get the runtime linker in some tests to work
+## Next line is an ugly hack, need to ask the GAR Cabal for ideas.
+## EXTRA_LDFLAGS = -R/opt/csw/gcc4/lib/$(MM_LIBDIR)
+
 ## EXTRA_INC =
 ## EXTRA_LIB =
 ## GARFLAVOR =
 ## INSTALL_ARGS =
-OPT_FLAGS_SOS = -fast
+#OPT_FLAGS_SOS = -fast -g
 ## OPT_FLAGS_GCC = -O2 -pipe
-##
-## The compiler to use. Defaults to SOS11, can be also: SOS12, GCC3, GCC4.
-## GARCOMPILER = SOS11
-##
-# Remove the following rules and uncomment the
-# include before building.
-#all: .DEFAULT
-#.DEFAULT:
-#	@true
+
 
 include gar/category.mk
 
+## During the 32-bit sparc build, the C++ bindings were barfing with an error 
+## about undefined symbol __sync_fetch_and_add_4 in libnetcdf_c++
+## Per http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
+## replacing -march=v8 with -m32 seems to solve the problem
+ARCHFLAGS_GCC4_sparcv8 = -m32
