@@ -11,8 +11,10 @@ MASTER_SITES = http://www.unidata.ucar.edu/downloads/netcdf/ftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
-RUNTIME_DEP_PKGS = CSWcurlrt CSWhdf5rt CSWgcc4gfortranrt
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWautoconf CSWautomake CSWtetex CSWgcc4gfortran
+RUNTIME_DEP_PKGS = CSWcurlrt CSWhdf5rt CSWgcc4gfortranrt CSWzlib CSWgcc4corert \
+		   CSWoldaprt CSWlibcares CSWlibidn CSWgcc4g++rt CSWosslrt
+
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWtetex CSWgcc4gfortran
 ## CFLAGS AND LDFLAGS are necessary due to problems with the fortran bindings when
 ## building 64-bit
 BUILD_ARGS = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
@@ -31,7 +33,7 @@ CONFIGURE_ARGS = $(DIRPATHS) \
 		 --with-zlib=/opt/csw
 
 ## 64 bit build fails in fortran binding tests
-BUILD64 = 0
+#BUILD64 = 0
 
 ## Needed for "Large file support" in NetCDF
 EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
@@ -63,4 +65,4 @@ include gar/category.mk
 ## about undefined symbol __sync_fetch_and_add_4 in libnetcdf_c++
 ## Per http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
 ## replacing -march=v8 with -m32 seems to solve the problem
-ARCHFLAGS_GCC4_sparcv8 = -m32
+ARCHFLAGS_GCC4_sparcv8 = -m32 -mcpu=v8
