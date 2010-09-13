@@ -3,7 +3,7 @@ GARVERSION = 0.08
 CATEGORIES = cpan
 AUTHOR = PODMASTER
 
-DESCRIPTION = extension for scrubbing/sanitizing html
+DESCRIPTION = Perl extension for scrubbing/sanitizing html
 define BLURB
   If you wanna "scrub" or "sanitize" html input in a reliable an flexible
   fashion, then this module is for you.  I wasn't satisfied with
@@ -11,8 +11,13 @@ define BLURB
   write something similar that works directly with HTML::Parser.
 endef
 
-DISTFILES += CSWpmhtmlscrubber.gspec CSWpmhtmlscrubber.depend
+PACKAGES = CSWpmhtmlscrubber
+CATALOGNAME = pm_htmlscrubber
 
-DEPENDS += cpan/HTML-Parser
+DEP_PKGS = CSWpmhtmlparser
+
+LICENSE = LICENSE
+
+ARCHALL = 1
 
 include gar/category.mk
