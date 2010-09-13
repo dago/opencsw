@@ -1,0 +1,25 @@
+From df895cf263b747cf383180289c0fa87fe45bdc37 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 13 Sep 2010 13:31:26 +0200
+Subject: [PATCH] Don't ask questions
+
+---
+ Config.PL |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Config.PL b/Config.PL
+index a89d837..0e14cbc 100644
+--- a/Config.PL
++++ b/Config.PL
+@@ -72,7 +72,7 @@ nmake.exe may be found at ftp://ftp.microsoft.com/Softlib/MSLFILES/nmake15.exe\n
+ }
+ 
+ print "\nSpecify$new defaults for Mail::Sender? (y/N) ";
+-$res = <STDIN>;
++# $res = <STDIN>;
+ exit unless $res =~ /^y$/i;
+ 
+ if (! $configfile) {
+-- 
+1.7.1
+
