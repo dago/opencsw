@@ -15,8 +15,11 @@ define BLURB
   HTML - from the data, which you generate in the Perl script.
 endef
 
-DISTFILES += $(call admfiles,CSWpmhtmltmpl,prototype)
+PACKAGES = CSWpmhtmltmpl
+CATALOGNAME = pm_htmltemplate
 
-CONFIGURE_ARGS = -n
+LICENSE = GPL
+
+ARCHALL = 1
 
 include gar/category.mk
