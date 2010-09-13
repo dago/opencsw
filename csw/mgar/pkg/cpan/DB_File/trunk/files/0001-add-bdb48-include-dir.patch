@@ -1,0 +1,25 @@
+From 6d697175848d0c15f2d451307a24df68babd13af Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Mon, 13 Sep 2010 15:16:37 +0200
+Subject: [PATCH] add-bdb48-include-dir
+
+---
+ Makefile.PL |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile.PL b/Makefile.PL
+index a586a04..6cb8fbd 100644
+--- a/Makefile.PL
++++ b/Makefile.PL
+@@ -44,7 +44,7 @@ my $WALL = '' ;
+ WriteMakefile(
+ 	NAME 		=> 'DB_File',
+ 	LIBS 		=> ["-L${LIB_DIR} $LIBS"],
+-	INC		=> "-I$INC_DIR",
++	INC		=> "-I$INC_DIR -I/opt/csw/bdb48/include",
+     VERSION_FROM	=> 'DB_File.pm',
+ 	XS_VERSION      => eval MM->parse_version('DB_File.pm'),
+ 	XSPROTOARG	=> '-noprototypes',
+-- 
+1.7.1
+
