@@ -11,10 +11,10 @@ MASTER_SITES = http://www.unidata.ucar.edu/downloads/netcdf/ftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
-RUNTIME_DEP_PKGS = CSWcurlrt CSWhdf5rt CSWgcc4gfortranrt CSWzlib CSWgcc4corert \
-		   CSWoldaprt CSWlibcares CSWlibidn CSWgcc4g++rt CSWosslrt
+RUNTIME_DEP_PKGS = CSWcurlrt CSWhdf5rt CSWgcc3g77rt CSWzlib CSWgcc3corert \
+		   CSWoldaprt CSWlibcares CSWlibidn CSWgcc3g++rt CSWosslrt
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWtetex CSWgcc4gfortran
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWtetex CSWgcc3g77
 ## CFLAGS AND LDFLAGS are necessary due to problems with the fortran bindings when
 ## building 64-bit
 BUILD_ARGS = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
@@ -33,15 +33,15 @@ CONFIGURE_ARGS = $(DIRPATHS) \
 		 --with-zlib=/opt/csw
 
 ## 64 bit build fails in fortran binding tests
-#BUILD64 = 0
+BUILD64 = 1
 
 ## Needed for "Large file support" in NetCDF
 EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
 
-## Use GCC4 since the fortran to C binding process with Sun Studio require 
 ## non-redistributable libs in /opt/SUNWspro
-GARCOMPILER = GCC4
+GARCOMPILER = GCC3
 
+DEBUG_PACKAGING = 1
 ## Add GCC4 lib dir to CFLAGS and friends because gcc3core_rt puts it's 
 ## libgcc_s.so in /opt/csw/lib and this breaks the build in all sorts of weird 
 ## places.
@@ -53,12 +53,11 @@ GARCOMPILER = GCC4
 ##
 ## Adding -dalign to *FLAGS in attempt to fix bus error in nf_test/ftst_vars4
 ## in fuction nf_put_vlen_element
-EXTRA_CFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-EXTRA_FFLAGS= -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-EXTRA_FCFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_CFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_FFLAGS= -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_FCFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
 ## OPT_FLAGS_GCC = -O2 -pipe
-
 include gar/category.mk
 
 ## During the 32-bit sparc build, the C++ bindings were barfing with an error 
