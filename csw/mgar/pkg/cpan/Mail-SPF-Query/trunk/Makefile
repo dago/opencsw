@@ -1,17 +1,24 @@
 GARNAME = Mail-SPF-Query
-GARVERSION = 1.997
+GARVERSION = 1.999.1
 CATEGORIES = cpan
-AUTHOR = FREESIDE
+AUTHOR = JMEHNLE
 
-DESCRIPTION = query sender policy framework
+DESCRIPTION = Query Sender Policy Framework for an IP,email,helo
 define BLURB
   The SPF protocol relies on sender domains to describe their designated
   outbound mailers in DNS. Given an email address, Mail::SPF::Query determines
   the legitimacy of an SMTP client IP.
 endef
 
-DISTFILES += CSWpmmailspfqry.gspec CSWpmmailspfqry.depend
+MASTER_SITES = $(addsuffix mail-spf-query/,$(CPAN_MIRRORS))
 
-DEPENDS += cpan/Net-DNS cpan/Net-CIDR-Lite cpan/Sys-Hostname-Long cpan/URI
+DISTFILES = COPYING
+
+PACKAGES = CSWpmmailspfqry
+CATALOGNAME = pm_mailspfqry
+
+DEP_PKGS = CSWpmnetcidrlite CSWpmnetdns CSWpmsyshostnamelong CSWpmuri
+
+ARCHALL = 1
 
 include gar/category.mk
