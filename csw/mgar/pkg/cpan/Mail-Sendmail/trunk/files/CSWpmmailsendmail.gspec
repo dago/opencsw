@@ -1,4 +1,0 @@
-%var            bitname pm_mailsendmail
-%var            pkgname CSWpmmailsendmail
-%var            arch all
-%include        url file://%{PKGLIB}/csw_cpan.gspec
