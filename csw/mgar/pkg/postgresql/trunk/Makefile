@@ -84,22 +84,11 @@ SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)-dev = PostgreSQL $(BASE_VERSION).x Dev
 SPKG_DESC_CSWlibpq-$(BASE_VERSION_G)          = PostgreSQL $(BASE_VERSION).x Libraries
 
 RUNTIME_DEP_PKGS_CSWpostgresql                        = CSWpostgresql-$(BASE_VERSION_G)
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibpq-$(BASE_VERSION_G)
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWosslrt
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWreadline
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWzlib
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)      = CSWkrb5lib CSWlibpq-$(BASE_VERSION_G) CSWlibxml2 CSWlibxslt CSWosslrt CSWreadline CSWzlib CSWlibgnugetopt
+RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)           = CSWkrb5lib CSWlibxml2 CSWlibxslt CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)-dev  = CSWpostgresql-$(BASE_VERSION_G)
 
 ARCHALL_CSWpostgresql                       = 1
-ARCHALL_CSWpostgresql-$(BASE_VERSION_G)-doc = 1
 ARCHALL_CSWpostgresql-$(BASE_VERSION_G)-doc = 1
 
 LICENSE = COPYRIGHT
@@ -164,31 +153,9 @@ INITSMF = /etc$(prefix)/init\.d/$(initscript_base_name)
 USERGROUP = /etc/opt/csw/pkg/postgresql/cswusergroup_$(VERSION_NODOT)
 PRESERVECONF = $(sysconfdir)/postgresql\.conf
 
-BIN_NAMES  = clusterdb
-BIN_NAMES += createdb
-BIN_NAMES += createlang
-BIN_NAMES += createuser
-BIN_NAMES += dropdb
-BIN_NAMES += droplang
-BIN_NAMES += dropuser
-BIN_NAMES += ecpg
-BIN_NAMES += initdb
-BIN_NAMES += oid2name
-BIN_NAMES += pg_config
-BIN_NAMES += pg_controldata
-BIN_NAMES += pg_ctl
-BIN_NAMES += pg_dump
-BIN_NAMES += pg_dumpall
-BIN_NAMES += pg_resetxlog
-BIN_NAMES += pg_restore
-BIN_NAMES += pg_standby
-BIN_NAMES += pgbench
-BIN_NAMES += postgres
-BIN_NAMES += postmaster
-BIN_NAMES += psql
-BIN_NAMES += reindexdb
-BIN_NAMES += vacuumdb
-BIN_NAMES += vacuumlo
+BIN_NAMES  = clusterdb createdb createlang createuser dropdb droplang dropuser ecpg initdb oid2name
+BIN_NAMES += pg_config pg_controldata pg_ctl pg_dump pg_dumpall pg_resetxlog pg_restore pg_standby
+BIN_NAMES += pgbench postgres postmaster psql reindexdb vacuumdb vacuumlo
 
 PGDATA = $(localstatedir)/pgdata
 
@@ -198,6 +165,9 @@ PROTOTYPE_USER_pgdata = postgres
 PROTOTYPE_GROUP_pgdata = sys
 PROTOTYPE_PERMS_pgdata = 0700
 PROTOTYPE_CLASS_pgdata = ugfiles
+
+CHECKPKG_OVERRIDES_CSWpostgresql += surplus-dependency|CSWpostgresql-84
+CHECKPKG_OVERRIDES_CSWpostgresql-84-dev += surplus-dependency|CSWpostgresql-84
 
 include gar/category.mk
 
