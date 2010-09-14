@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
+
+# Migration of the configuration files?
+/usr/bin/test -d $PKG_INSTALL_ROOT/opt/csw/etc/puppet || /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/ln -s /etc/opt/csw/puppet /opt/csw/etc/puppet
+/usr/bin/test -d $PKG_INSTALL_ROOT/etc/puppet || /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/ln -s /opt/csw/etc/puppet /etc/puppet
+/usr/bin/test -d $PKG_INSTALL_ROOT/opt/csw/var/puppet || /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/ln -s /var/opt/csw/puppet /opt/csw/var/puppet
+/usr/bin/test -d $PKG_INSTALL_ROOT/var/puppet || /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/ln -s /var/opt/csw/puppet /var/puppet
+
+# Replaced with INITSMF
+
+exit 0
+
+touch $PKG_INSTALL_ROOT/etc/opt/csw/puppet/puppet.conf
+/usr/bin/test -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf && . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+/usr/bin/test -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf && . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+if [ "$autoenable_daemons" != "no" ] ; then
+    /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/sbin/svccfg import /opt/csw/var/svc/manifest/puppetd.xml || /bin/true
+    /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/sbin/svcadm enable svc:network/puppetd  || /bin/true
+fi
