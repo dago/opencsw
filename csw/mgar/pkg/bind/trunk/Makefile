@@ -2,13 +2,15 @@
 # owner/group for device files? (root:sys)
 
 GARNAME = bind
-GARVERSION = 9.7.1
-RELEASE = P2
-DISTVERSION = $(GARVERSION)-$(RELEASE)
-SPKG_VERSION = $(GARVERSION)$(RELEASE)
-DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+GARVERSION = 9.7.2
 CATEGORIES = net
+
+# Enable these for Px-releases
+#RELEASE = P2
+#DISTVERSION = $(GARVERSION)-$(RELEASE)
+#SPKG_VERSION = $(GARVERSION)$(RELEASE)
+#DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
@@ -18,10 +20,14 @@ define BLURB
   high-volume and high-reliability applications.
 endef
 
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
-DISTFILES  = $(DISTNAME).tar.gz
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
-#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+# Enable these for Px-releases
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
+#DISTFILES  = $(DISTNAME).tar.gz
+
+# Disable these for Px-releases
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+
 DISTFILES += CSWbindchroot.postinstall
 
 PACKAGES = CSWbind CSWbinddevel CSWlibbind CSWbindutils CSWbindchroot
