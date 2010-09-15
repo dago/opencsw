@@ -85,6 +85,7 @@ SPKG_DESC_CSWlibpq-$(BASE_VERSION_G)          = PostgreSQL $(BASE_VERSION).x Lib
 
 RUNTIME_DEP_PKGS_CSWpostgresql                        = CSWpostgresql-$(BASE_VERSION_G)
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibgnugetopt
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibpq-$(BASE_VERSION_G)
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibxml2
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibxslt
@@ -97,6 +98,9 @@ RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWlibxslt
 RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWzlib
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)-dev  = CSWpostgresql-$(BASE_VERSION_G)
+
+CHECKPKG_OVERRIDES_CSWpostgresql += surplus-dependency|CSWpostgresql-84
+CHECKPKG_OVERRIDES_CSWpostgresql-84-dev += surplus-dependency|CSWpostgresql-84
 
 ARCHALL_CSWpostgresql                       = 1
 ARCHALL_CSWpostgresql-$(BASE_VERSION_G)-doc = 1
@@ -156,7 +160,7 @@ PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-doc += $(prefix)/share/doc.*
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-dev  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibpq-$(BASE_VERSION_G)           = $(PKGFILES_RT)
 PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir)/64
-PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(prefix)/share/checkpkg/overrides/libpq$(BASE_VERSION_G)
+PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir).*lib(pq|pgtypes|ecpg)\.so.*
 
 # initscript_base_name = cswpostgres_$(subst .,_,$(BASE_VERSION))
 initscript_base_name = cswpostgres_$(VERSION_NODOT)
