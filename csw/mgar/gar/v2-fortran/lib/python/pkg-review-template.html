@@ -50,6 +50,18 @@ table.gently-lined th {
   margin: 0px;
   padding: 2px;
 }
+ul.error_tags li {
+  list-style: none;
+  background-color: #FDD;
+  padding: 0px;
+  margin: 0px;
+}
+ul.overrides li {
+  list-style: none;
+  background-color: #FFD;
+  padding: 0px;
+  margin: 0px;
+}
 </style>
 </head>
 <body>
@@ -75,6 +87,8 @@ table.gently-lined th {
   </h2>
       <ul>
         <li><a href="#${pkg.basic_stats.md5_sum}-pkginfo">pkginfo</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-error_tags">error tags</a></li>
+        <li><a href="#${pkg.basic_stats.md5_sum}-overrides">overrides</a></li>
         <li><a href="#${pkg.basic_stats.md5_sum}-binaries_dump_info">binaries_dump_info</a></li>
         <li><a href="#${pkg.basic_stats.md5_sum}-depends">depends</a></li>
         <li><a href="#${pkg.basic_stats.md5_sum}-files_metadata">files_metadata</a></li>
@@ -192,6 +206,49 @@ table.gently-lined th {
   </tr>
 #end for
   </table>
+
+  <h2>
+    <a name="${pkg.basic_stats.md5_sum}-error_tags">
+      Error tags
+    </a>
+  </h2>
+#if $pkg.error_tags
+  <ul class="error_tags">
+#for etag in $pkg.error_tags
+  <li>
+      <code>
+        $etag.pkgname
+        $etag.tag_name
+        $etag.tag_info
+      </code>
+    </li>
+#end for
+  </ul>
+#else
+  <p>No error tags.</p>
+#end if
+
+  <h2>
+    <a name="${pkg.basic_stats.md5_sum}-overrides">
+      Overrides
+    </a>
+  </h2>
+#if $pkg.overrides
+  <ul class="overrides">
+#for override in $pkg.overrides
+    <li>
+      <code>
+        $override.pkgname
+        $override.tag_name
+        $override.tag_info
+      </code>
+    </li>
+#end for
+  </ul>
+#else
+  <p>No overrides.</p>
+#end if
+
 #if $pkg.binaries_dump_info
   <h2>
     <a name="${pkg.basic_stats.md5_sum}-binaries_dump_info">
