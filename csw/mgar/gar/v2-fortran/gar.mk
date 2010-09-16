@@ -151,6 +151,7 @@ $(call _modulate_target_nocookie,reset-configure,$(2),$(4))
 $(call _modulate_target,build,$(2),$(4))
 $(call _modulate_target_nocookie,reset-build,$(2),$(4))
 $(call _modulate_target,test,$(2),$(4))
+$(call _modulate_target_nocookie,reset-test,$(2),$(4))
 $(call _modulate_target,install,$(2),$(4))
 $(call _modulate_target_nocookie,reset-install,$(2),$(4))
 #$(call _modulate_target,merge,$(2),$(4))
@@ -404,7 +405,9 @@ extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
 extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
 		announce-modulation \
-		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated $(if $(filter global,$(MODULATION)),,post-extract-gitsnap)
+		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated \
+		$(if $(filter global,$(MODULATION)),,post-extract-gitsnap) \
+		$(foreach FILE,$(EXPANDVARS),expandvars-$(FILE))
 	@$(DONADA)
 
 # This target ensures that the values used by git when making a commit
@@ -441,6 +444,15 @@ post-extract-gitsnap: $(EXTRACT_TARGETS)
 # otherwise
 extract-p:
 	@$(foreach COOKIEFILE,$(EXTRACT_TARGETS), test -e $(COOKIEDIR)/$(COOKIEFILE) ;)
+
+# The rule takes all files from EXPANDVARS and replaces all occurrences of @<var>@ in the file
+# with the values of <var> from the Makefile.
+_var_definitions = $(foreach VAR,$(shell perl -ne 'print "$$1 " if( /@([^@]+)@/ )' <$1),$(VAR)=$($(VAR)))
+
+expandvars-%:
+	$(call _var_definitions,$(WORKDIR)/$*) perl -i-unexpanded -npe 's/@([^@]+)@/$$ENV{$$1}/e' $(WORKDIR)/$*
+	@$(MAKECOOKIE)
+
 
 # checkpatch	- Do a "patch -C" instead of a "patch".  Note
 # 				  that it may give incorrect results if multiple
@@ -555,6 +567,7 @@ reconfigure: reset-configure configure
 reset-configure: $(addprefix reset-configure-,$(MODULATIONS))
 	rm -f $(COOKIEDIR)/configure
 
+# XXX: pre-*, post-*
 reset-configure-modulated:
 	rm -f $(addprefix $(COOKIEDIR)/,$(CONFIGURE_TARGETS))
 
@@ -578,6 +591,16 @@ build-modulated-check:
 build-modulated: verify-isa configure-modulated pre-build-modulated pre-build-$(MODULATION) $(BUILD_TARGETS) post-build-$(MODULATION) post-build-modulated
 	@$(MAKECOOKIE)
 
+.PHONY: reset-build reset-build-modulated
+rebuild: reset-build build
+
+reset-build: $(addprefix reset-build-,$(MODULATIONS))
+	rm -f $(COOKIEDIR)/build
+
+# XXX: pre-*, post-*
+reset-build-modulated: $(patsubst build-%,clean-%,$(BUILD_TARGETS))
+	rm -f $(addprefix $(COOKIEDIR)/,pre-build-modulated $(BUILD_TAGRETS) post-build-modulated))
+
 # returns true if build has completed successfully, false
 # otherwise
 build-p:
@@ -590,6 +613,8 @@ test: pre-test $(addprefix test-,$(MODULATIONS)) post-test
 
 test-modulated: build-modulated pre-test-modulated pre-test-$(MODULATION) $(TEST_TARGETS) post-test-$(MODULATION) post-test-modulated
 	$(DONADA)
+
+# XXX: retest
 
 # strip - Strip executables
 ifneq ($(GARFLAVOR),DBG)

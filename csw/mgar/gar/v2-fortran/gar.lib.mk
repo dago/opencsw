@@ -629,6 +629,41 @@ build-%/setup.py:
 	@( cd $* ; $(BUILD_ENV) python ./setup.py $(PYBUILD_CMD) $(BUILD_ARGS) )
 	@$(MAKECOOKIE)
 
+#################### CLEAN RULES ####################
+
+CLEAN_ARGS ?= clean
+ 
+# build from a standard gnu-style makefile's default rule.
+clean-%/Makefile:
+	@echo " ==> Running clean in $*"
+	@$(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(CLEAN_ARGS)
+	@rm -f $(COOKIEDIR)/build-$*
+
+clean-%/makefile:
+	@echo " ==> Running clean in $*"
+	@$(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(CLEAN_ARGS)
+	@rm -f $(COOKIEDIR)/build-$*
+
+clean-%/GNUmakefile:
+	@echo " ==> Running clean in $*"
+	@$(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(CLEAN_ARGS)
+	@rm -f $(COOKIEDIR)/build-$*
+
+clean-%/Jamfile:
+	$(error *** Don't know how to clean Jamfiles)
+
+clean-%/Rakefile:
+	$(error *** Don't know how to clean Rakefiles)
+
+clean-%/rakefile:
+	$(error *** Don't know how to clean Rakefiles)
+
+clean-%/setup.rb:
+	$(error *** Don't know how to clean Ruby setups)
+
+clean-%/setup.py:
+	$(error *** Don't know how to clean Python builds)
+
 #################### TEST RULES ####################
 
 TEST_TARGET ?= test
