@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 GARNAME = puppet
-GARVERSION = 0.25.5
+GARVERSION = 2.6.1
 CATEGORIES = apps
 
 define BLURB
@@ -36,10 +36,8 @@ GARFLAVOR = DBG
 # Disabling SMF support for puppetd.  There are problems with it.  It's a
 # better choice to run it from cron.
 # INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
-INITSMF += $(prefix)/etc/init\.d/cswpuppetmasterd
+INITSMF += /etc$(prefix)/init\.d/cswpuppetmasterd
 USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
-
-CHECKPKG_OVERRIDES_CSWpuppet += init-file-missing-cswinitsmf-class|/opt/csw/etc/init.d/cswpuppetd|class=none
 
 # Creating a separate package CSWpuppetmaster so that the cswpuppetmaster
 # service isn't started upon the installation of CSWpuppet.
@@ -77,6 +75,8 @@ CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWpuppet
 
 CRONDIR = $(sysconfdir)/pkg/CSWpuppet/crontabs
 CRONTABS = $(CRONDIR)/root
+CHECKPKG_OVERRIDES_CSWpuppet += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/cswpuppetd|class=none
+CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWruby
 
 include gar/category.mk
 
@@ -84,14 +84,14 @@ install-puppet:
 	ginstall -m 755 -d $(DESTDIR)
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/puppet
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)/puppet/run
-	ginstall -m 755 -d $(DESTDIR)$(prefix)/etc/init.d
+	ginstall -m 755 -d $(DESTDIR)/etc$(prefix)/init.d
 	# $(sysconfdir)/pkg/<pkgname>/crontabs
 	ginstall -m 755 -d $(DESTDIR)$(CRONDIR)
 	ginstall -m 644 \
 		$(FILEDIR)/CSWpuppet.cron.root \
 		$(DESTDIR)$(CRONDIR)/root
-	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(prefix)/etc/init.d
-	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(prefix)/etc/init.d
+	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)/etc$(prefix)/init.d
+	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)/etc$(prefix)/init.d
 	(cd $(WORKSRC) && \
 	gsed -e "s|/var/puppet|/var/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
 	gsed -e "s|/etc/puppet|/etc/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
