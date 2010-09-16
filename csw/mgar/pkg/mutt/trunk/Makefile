@@ -1,5 +1,5 @@
 GARNAME = mutt
-GARVERSION = 1.5.20
+GARVERSION = 1.5.21
 CATEGORIES = apps
 
 EXTRA_MODULATORS = SLANG
@@ -101,6 +101,14 @@ ALTERNATIVE_slang = $(bindir)/mutt mutt $(bindir)/mutt-slang 200
 
 # This warning from checkpkg is obviously wrong...
 CHECKPKG_OVERRIDES_CSWmutt-base = missing-dependency|CSWperl
+
+# These overrides are specific to the structure of the package
+CHECKPKG_OVERRIDES_CSWmutt += surplus-dependency|CSWmutt-ncurses
+CHECKPKG_OVERRIDES_CSWmutt += surplus-dependency|CSWmutt-slang
+CHECKPKG_OVERRIDES_CSWmutt-ncurses += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWmutt-ncurses += surplus-dependency|CSWmutt-base
+CHECKPKG_OVERRIDES_CSWmutt-slang += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWmutt-slang += surplus-dependency|CSWmutt-base
 
 include gar/category.mk
 
