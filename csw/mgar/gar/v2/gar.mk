@@ -151,6 +151,7 @@ $(call _modulate_target_nocookie,reset-configure,$(2),$(4))
 $(call _modulate_target,build,$(2),$(4))
 $(call _modulate_target_nocookie,reset-build,$(2),$(4))
 $(call _modulate_target,test,$(2),$(4))
+$(call _modulate_target_nocookie,reset-test,$(2),$(4))
 $(call _modulate_target,install,$(2),$(4))
 $(call _modulate_target_nocookie,reset-install,$(2),$(4))
 #$(call _modulate_target,merge,$(2),$(4))
@@ -555,6 +556,7 @@ reconfigure: reset-configure configure
 reset-configure: $(addprefix reset-configure-,$(MODULATIONS))
 	rm -f $(COOKIEDIR)/configure
 
+# XXX: pre-*, post-*
 reset-configure-modulated:
 	rm -f $(addprefix $(COOKIEDIR)/,$(CONFIGURE_TARGETS))
 
@@ -578,6 +580,16 @@ build-modulated-check:
 build-modulated: verify-isa configure-modulated pre-build-modulated pre-build-$(MODULATION) $(BUILD_TARGETS) post-build-$(MODULATION) post-build-modulated
 	@$(MAKECOOKIE)
 
+.PHONY: reset-build reset-build-modulated
+rebuild: reset-build build
+
+reset-build: $(addprefix reset-build-,$(MODULATIONS))
+	rm -f $(COOKIEDIR)/build
+
+# XXX: pre-*, post-*
+reset-build-modulated: $(patsubst build-%,clean-%,$(BUILD_TARGETS))
+	rm -f $(addprefix $(COOKIEDIR)/,pre-build-modulated $(BUILD_TAGRETS) post-build-modulated))
+
 # returns true if build has completed successfully, false
 # otherwise
 build-p:
@@ -590,6 +602,8 @@ test: pre-test $(addprefix test-,$(MODULATIONS)) post-test
 
 test-modulated: build-modulated pre-test-modulated pre-test-$(MODULATION) $(TEST_TARGETS) post-test-$(MODULATION) post-test-modulated
 	$(DONADA)
+
+# XXX: retest
 
 # strip - Strip executables
 ifneq ($(GARFLAVOR),DBG)
