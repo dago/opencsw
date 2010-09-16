@@ -1,5 +1,5 @@
 GARNAME = libksba
-GARVERSION = 1.0.6
+GARVERSION = 1.0.8
 CATEGORIES = lib
 
 DESCRIPTION = Libksba is a CMS and X.509 access library
