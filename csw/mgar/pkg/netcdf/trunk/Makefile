@@ -33,21 +33,35 @@ CONFIGURE_ARGS = $(DIRPATHS) \
 		 --with-zlib=/opt/csw
 
 ## 64 bit build fails in fortran binding tests
-## Disabling 64 bit builds until we can tweak GAR to handle Fortran  & ARCH
-BUILD64 = 0
+BUILD64 = 1
 
 ## Needed for "Large file support" in NetCDF
 EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
 
-## Can't use Sun Studio with shared libs:
-##  * non-redistributable libs in /opt/SUNWspro prevent Sun Studio
-## Can't use GCC4
-##  * C++ is way broken for 32-bit Sparc
-##    During the 32-bit sparc build, the C++ bindings were barfing with an error
-##    about undefined symbol __sync_fetch_and_add_4 in libnetcdf_c++
-##    http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
-##  * Fortran to C bindings fail test on 64-bit sparc
+## non-redistributable libs in /opt/SUNWspro
 GARCOMPILER = GCC3
 
 DEBUG_PACKAGING = 1
+## Add GCC4 lib dir to CFLAGS and friends because gcc3core_rt puts it's 
+## libgcc_s.so in /opt/csw/lib and this breaks the build in all sorts of weird 
+## places.
+## Rationale: Automake keeps wanting to put /opt/csw/lib in the front of the 
+## -L options during the linking phase, so the GCC3 libgcc_s gets pulled in 
+## first and an unresolved symbol error occurs. By adding to the 
+## CFLAGS/FFLAGS/FCFLAGS/CXXFLAGS, it is pulled in before AM_LDFLAGS in the 
+## linking stage in most automake-generated Makefiles. Ugly hack but it works.
+##
+## Adding -dalign to *FLAGS in attempt to fix bus error in nf_test/ftst_vars4
+## in fuction nf_put_vlen_element
+#EXTRA_CFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_FFLAGS= -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_FCFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+## OPT_FLAGS_GCC = -O2 -pipe
 include gar/category.mk
+
+## During the 32-bit sparc build, the C++ bindings were barfing with an error 
+## about undefined symbol __sync_fetch_and_add_4 in libnetcdf_c++
+## Per http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
+## replacing -march=v8 with -m32 seems to solve the problem
+ARCHFLAGS_GCC4_sparcv8 = -m32 -mcpu=v8
