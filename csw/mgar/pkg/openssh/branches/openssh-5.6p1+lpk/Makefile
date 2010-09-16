@@ -152,14 +152,18 @@ TEST_SCRIPTS	=
 
 # we always register the lpk related files so checksum 
 # is the same with LPK enabled or not
-DISTFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
+# Patch taken from http://code.google.com/p/openssh-lpk/issues/detail?id=7
+# and modified with
+#   perl -e 's/--- g/--- /; s/\+{3} g/+++ /' -pi 
+# as all filenames seem to be prefixed with 'g' and redone patch for
+# patchdirlevel 1 instead of 0
+DISTFILES += 0001-This-is-a-forward-port-of-the-OpenSSH-LPK-support-pa.patch
 ifdef LPK
 	PACKAGES = CSWosshlpk
 	CATALOGNAME_CSWosshlpk = openssh_lpk
 	SPKG_DESC_CSWosshlpk = $(SPKG_DESC_CSWossh) with ldap public key support
 	RUNTIME_DEP_PKGS_CSWosshlpk = $(RUNTIME_DEP_PKGS_CSWossh) CSWoldaprt
-	MASTER_SITES += http://openssh-lpk.googlecode.com/svn/trunk/patch/contrib/
-	PATCHFILES += contrib-openssh-lpk-5.2p1-0.3.9.patch
+	PATCHFILES += 0001-This-is-a-forward-port-of-the-OpenSSH-LPK-support-pa.patch
 	CONFIGURE_ARGS += --with-ldap
 	DOCFILES += openssh-lpk_openldap.schema openssh-lpk_sun.schema lpk-user-example.txt README.lpk
 	
@@ -167,6 +171,10 @@ ifdef LPK
 	SPKG_DESC_CSWosshclient = 
 endif
 
+CHECKPKG_OVERRIDES_CSWosshlpk += bad-rpath-entry|/opt/csw/lib/
+CHECKPKG_OVERRIDES_CSWosshlpk += bad-rpath-entry|/opt/csw/lib/
+CHECKPKG_OVERRIDES_CSWosshlpk += init-file-wrong-location|/etc/opt/csw/init.d/cswopenssh
+CHECKPKG_OVERRIDES_CSWosshlpk += surplus-dependency|CSWosshclient
 
 include gar/category.mk
 
@@ -184,6 +192,7 @@ post-configure-modulated:
 
 # adding documentation files
 pre-package: merge-config-files merge-doc-files merge-init-files merge-contrib-files merge-special-directories
+	@$(MAKECOOKIE)
 
 merge-contrib-files:
 	ginstall -D "$(WORKSRC_FIRSTMOD)/contrib/ssh-copy-id" "$(PKGROOT)/$(bindir)/ssh-copy-id"
@@ -202,7 +211,6 @@ merge-doc-files:
 		(cd $(PKGROOT)/$(docdir)/$$DOCDIR && chmod -x $(DOCFILES)); \
 		ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$$DOCDIR/; \
 	done
-	@$(MAKECOOKIE)
 
 merge-config-files:
 	# we change some default value in the server config file
@@ -210,7 +218,6 @@ merge-config-files:
 	perl -pi -e 's,^ *# *UsePAM *.*,UsePAM yes,g, s,^ *# *PrintMotd *.*,PrintMotd no,g; s,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW" 
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswusergroup" "$(PKGROOT)$(prefix)/etc/pkg/CSWossh/cswusergroup"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/THIS_LOCATION_IS_DEPRECATED" "$(PKGROOT)/$(prefix)/etc/ssh/THIS_LOCATION_IS_DEPRECATED"
-	@$(MAKECOOKIE)
 
 merge-special-directories:
 	ginstall -d $(PKGROOT)$(localstatedir)/empty

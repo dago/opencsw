@@ -1,18 +1,63 @@
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/Makefile.in openssh-5.2p1+lpk/Makefile.in
---- openssh-5.2p1.orig/Makefile.in	2008-11-05 06:20:46.000000000 +0100
-+++ openssh-5.2p1+lpk/Makefile.in	2009-03-22 15:59:08.607515800 +0100
-@@ -86,7 +86,7 @@
- 	auth-krb5.o \
+From bf2274fb19b2da6b8b3b6c51111d912e19b3128c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 21 Apr 2010 11:14:45 +0200
+Subject: [PATCH] This is a forward-port of the OpenSSH LPK support patch.
+
+It adds support for storing OpenSSH public keys in LDAP. It also supports
+grouping of machines in the LDAP data to limit users to specific machines.
+
+The latest homepage for the LPK project is:
+http://code.google.com/p/openssh-lpk/
+
+The 0.3.10 version of the patch includes a fix for 64-bit platforms, as
+discovered by Gentoo, where the bind timeout and search timeout values were not
+being parsed correctly: http://bugs.gentoo.org/210110
+
+Forward-ported-from: openssh-lpk-5.1p1-0.3.10.patch
+---
+ Makefile.in                 |    2 +-
+ README.lpk                  |  267 ++++++++++++++++++++
+ auth-rsa.c                  |   86 +++++++
+ auth2-pubkey.c              |   73 ++++++
+ config.h.in                 |    3 +
+ configure                   |   81 ++++++
+ configure.ac                |   32 +++
+ ldapauth.c                  |  575 +++++++++++++++++++++++++++++++++++++++++++
+ ldapauth.h                  |  124 ++++++++++
+ lpk-user-example.txt        |  117 +++++++++
+ openssh-lpk_openldap.schema |   19 ++
+ openssh-lpk_sun.schema      |   21 ++
+ servconf.c                  |  169 +++++++++++++
+ servconf.h                  |    7 +
+ sshd.c                      |   14 +
+ sshd_config                 |   15 ++
+ sshd_config.5               |   56 +++++
+ 17 files changed, 1660 insertions(+), 1 deletions(-)
+ create mode 100644 README.lpk
+ create mode 100644 ldapauth.c
+ create mode 100644 ldapauth.h
+ create mode 100644 lpk-user-example.txt
+ create mode 100644 openssh-lpk_openldap.schema
+ create mode 100644 openssh-lpk_sun.schema
+
+diff --git a/Makefile.in b/Makefile.in
+index 69e3567..b15d85d 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -91,7 +91,7 @@ SSHDOBJS=sshd.o auth-rhosts.o auth-passwd.o auth-rsa.o auth-rh-rsa.o \
  	auth2-gss.o gss-serv.o gss-serv-krb5.o \
  	loginrec.o auth-pam.o auth-shadow.o auth-sia.o md5crypt.o \
--	audit.o audit-bsm.o platform.o sftp-server.o sftp-common.o
-+	audit.o audit-bsm.o platform.o ldapauth.o sftp-server.o sftp-common.o
+ 	audit.o audit-bsm.o platform.o sftp-server.o sftp-common.o \
+-	roaming_common.o roaming_serv.o
++	roaming_common.o roaming_serv.o ldapauth.o
  
- MANPAGES	= moduli.5.out scp.1.out ssh-add.1.out ssh-agent.1.out ssh-keygen.1.out ssh-keyscan.1.out ssh.1.out sshd.8.out sftp-server.8.out sftp.1.out ssh-rand-helper.8.out ssh-keysign.8.out sshd_config.5.out ssh_config.5.out
- MANPAGES_IN	= moduli.5 scp.1 ssh-add.1 ssh-agent.1 ssh-keygen.1 ssh-keyscan.1 ssh.1 sshd.8 sftp-server.8 sftp.1 ssh-rand-helper.8 ssh-keysign.8 sshd_config.5 ssh_config.5
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/README.lpk openssh-5.2p1+lpk/README.lpk
---- openssh-5.2p1.orig/README.lpk	1970-01-01 01:00:00.000000000 +0100
-+++ openssh-5.2p1+lpk/README.lpk	2009-03-22 15:59:08.672813997 +0100
+ MANPAGES	= moduli.5.out scp.1.out ssh-add.1.out ssh-agent.1.out ssh-keygen.1.out ssh-keyscan.1.out ssh.1.out sshd.8.out sftp-server.8.out sftp.1.out ssh-rand-helper.8.out ssh-keysign.8.out ssh-pkcs11-helper.8.out sshd_config.5.out ssh_config.5.out
+ MANPAGES_IN	= moduli.5 scp.1 ssh-add.1 ssh-agent.1 ssh-keygen.1 ssh-keyscan.1 ssh.1 sshd.8 sftp-server.8 sftp.1 ssh-rand-helper.8 ssh-keysign.8 ssh-pkcs11-helper.8 sshd_config.5 ssh_config.5
+diff --git a/README.lpk b/README.lpk
+new file mode 100644
+index 0000000..d0b6de0
+--- /dev/null
++++ b/README.lpk
 @@ -0,0 +1,267 @@
 +OpenSSH LDAP PUBLIC KEY PATCH 
 +Copyright (c) 2003 Eric AUGE (eau@phear.org)
@@ -281,10 +326,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/README.lpk op
 +- CONTACT :
 +  - Eric AUGE <eau@phear.org>
 +  - Andrea Barisani <andrea@inversepath.com>
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/auth-rsa.c openssh-5.2p1+lpk/auth-rsa.c
---- openssh-5.2p1.orig/auth-rsa.c	2008-07-02 14:37:30.000000000 +0200
-+++ openssh-5.2p1+lpk/auth-rsa.c	2009-03-22 15:59:08.132715250 +0100
-@@ -174,10 +174,96 @@
+diff --git a/auth-rsa.c b/auth-rsa.c
+index 65571a8..107fcaf 100644
+--- a/auth-rsa.c
++++ b/auth-rsa.c
+@@ -177,10 +177,96 @@ auth_rsa_key_allowed(struct passwd *pw, BIGNUM *client_n, Key **rkey)
  	FILE *f;
  	u_long linenum = 0;
  	Key *key;
@@ -381,12 +427,13 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/auth-rsa.c op
  	/* The authorized keys. */
  	file = authorized_keys_file(pw);
  	debug("trying public RSA key file %s", file);
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/auth2-pubkey.c openssh-5.2p1+lpk/auth2-pubkey.c
---- openssh-5.2p1.orig/auth2-pubkey.c	2008-07-04 04:54:25.000000000 +0200
-+++ openssh-5.2p1+lpk/auth2-pubkey.c	2009-03-22 15:59:08.102307504 +0100
-@@ -55,6 +55,10 @@
- #include "monitor_wrap.h"
+diff --git a/auth2-pubkey.c b/auth2-pubkey.c
+index 51aa774..7a3a27b 100644
+--- a/auth2-pubkey.c
++++ b/auth2-pubkey.c
+@@ -58,6 +58,10 @@
  #include "misc.h"
+ #include "authfile.h"
  
 +#ifdef WITH_LDAP_PUBKEY
 +#include "ldapauth.h"
@@ -395,7 +442,7 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/auth2-pubkey.
  /* import */
  extern ServerOptions options;
  extern u_char *session_id2;
-@@ -187,10 +191,79 @@
+@@ -187,10 +191,79 @@ user_key_allowed2(struct passwd *pw, Key *key, char *file)
  	u_long linenum = 0;
  	Key *found;
  	char *fp;
@@ -475,10 +522,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/auth2-pubkey.
  	debug("trying public key file %s", file);
  	f = auth_openkeyfile(file, pw, options.strict_modes);
  
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/config.h.in openssh-5.2p1+lpk/config.h.in
---- openssh-5.2p1.orig/config.h.in	2009-02-23 01:18:12.000000000 +0100
-+++ openssh-5.2p1+lpk/config.h.in	2009-03-22 15:59:08.195639244 +0100
-@@ -563,6 +563,9 @@
+diff --git a/config.h.in b/config.h.in
+index a61dec6..eba6884 100644
+--- a/config.h.in
++++ b/config.h.in
+@@ -575,6 +575,9 @@
  /* Define to 1 if you have the <linux/if_tun.h> header file. */
  #undef HAVE_LINUX_IF_TUN_H
  
@@ -488,10 +536,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/config.h.in o
  /* Define if your libraries define login() */
  #undef HAVE_LOGIN
  
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/configure openssh-5.2p1+lpk/configure
---- openssh-5.2p1.orig/configure	2009-02-23 01:18:14.000000000 +0100
-+++ openssh-5.2p1+lpk/configure	2009-03-22 15:59:08.400328912 +0100
-@@ -1340,6 +1340,7 @@
+diff --git a/configure b/configure
+index 7c19fc2..8ebf2e1 100755
+--- a/configure
++++ b/configure
+@@ -1340,6 +1340,7 @@ Optional Packages:
    --with-tcp-wrappers[=PATH] Enable tcpwrappers support (optionally in PATH)
    --with-libedit[=PATH]   Enable libedit support for sftp
    --with-audit=module     Enable EXPERIMENTAL audit support (modules=debug,bsm)
@@ -499,7 +548,7 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/configure ope
    --with-ssl-dir=PATH     Specify path to OpenSSL installation
    --without-openssl-header-check Disable OpenSSL version consistency check
    --with-ssl-engine       Enable OpenSSL (hardware) ENGINE support
-@@ -12767,6 +12768,85 @@
+@@ -12845,6 +12846,85 @@ echo "$as_me: error: Unknown audit module $withval" >&2;}
  fi
  
  
@@ -585,7 +634,7 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/configure ope
  
  
  
-@@ -30543,6 +30623,7 @@
+@@ -30786,6 +30866,7 @@ echo "                   SELinux support: $SELINUX_MSG"
  echo "                 Smartcard support: $SCARD_MSG"
  echo "                     S/KEY support: $SKEY_MSG"
  echo "              TCP Wrappers support: $TCPW_MSG"
@@ -593,10 +642,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/configure ope
  echo "              MD5 password support: $MD5_MSG"
  echo "                   libedit support: $LIBEDIT_MSG"
  echo "  Solaris process contract support: $SPC_MSG"
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/configure.ac openssh-5.2p1+lpk/configure.ac
---- openssh-5.2p1.orig/configure.ac	2009-02-16 05:37:03.000000000 +0100
-+++ openssh-5.2p1+lpk/configure.ac	2009-03-22 15:59:08.490709251 +0100
-@@ -1314,6 +1314,37 @@
+diff --git a/configure.ac b/configure.ac
+index a9960a7..d3d85ca 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1323,6 +1323,37 @@ AC_ARG_WITH(audit,
  	esac ]
  )
  
@@ -634,7 +684,7 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/configure.ac 
  dnl    Checks for library functions. Please keep in alphabetical order
  AC_CHECK_FUNCS( \
  	arc4random \
-@@ -4163,6 +4194,7 @@
+@@ -4185,6 +4216,7 @@ echo "                   SELinux support: $SELINUX_MSG"
  echo "                 Smartcard support: $SCARD_MSG"
  echo "                     S/KEY support: $SKEY_MSG"
  echo "              TCP Wrappers support: $TCPW_MSG"
@@ -642,9 +692,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/configure.ac 
  echo "              MD5 password support: $MD5_MSG"
  echo "                   libedit support: $LIBEDIT_MSG"
  echo "  Solaris process contract support: $SPC_MSG"
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/ldapauth.c openssh-5.2p1+lpk/ldapauth.c
---- openssh-5.2p1.orig/ldapauth.c	1970-01-01 01:00:00.000000000 +0100
-+++ openssh-5.2p1+lpk/ldapauth.c	2009-03-22 15:59:08.528655666 +0100
+diff --git a/ldapauth.c b/ldapauth.c
+new file mode 100644
+index 0000000..133483e
+--- /dev/null
++++ b/ldapauth.c
 @@ -0,0 +1,575 @@
 +/* 
 + * $Id: openssh-lpk-4.3p1-0.3.7.patch,v 1.3 2006/04/18 15:29:09 eau Exp $
@@ -1221,9 +1273,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/ldapauth.c op
 +}
 +
 +#endif /* WITH_LDAP_PUBKEY */
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/ldapauth.h openssh-5.2p1+lpk/ldapauth.h
---- openssh-5.2p1.orig/ldapauth.h	1970-01-01 01:00:00.000000000 +0100
-+++ openssh-5.2p1+lpk/ldapauth.h	2009-03-22 15:59:08.546217262 +0100
+diff --git a/ldapauth.h b/ldapauth.h
+new file mode 100644
+index 0000000..ba70958
+--- /dev/null
++++ b/ldapauth.h
 @@ -0,0 +1,124 @@
 +/*
 + * $Id: openssh-lpk-4.3p1-0.3.7.patch,v 1.3 2006/04/18 15:29:09 eau Exp $ 
@@ -1349,9 +1403,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/ldapauth.h op
 +int ldap_ismember(ldap_opt_t *, const char *);
 +
 +#endif
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/lpk-user-example.txt openssh-5.2p1+lpk/lpk-user-example.txt
---- openssh-5.2p1.orig/lpk-user-example.txt	1970-01-01 01:00:00.000000000 +0100
-+++ openssh-5.2p1+lpk/lpk-user-example.txt	2009-03-22 15:59:08.575379694 +0100
+diff --git a/lpk-user-example.txt b/lpk-user-example.txt
+new file mode 100644
+index 0000000..1528fc0
+--- /dev/null
++++ b/lpk-user-example.txt
 @@ -0,0 +1,117 @@
 +
 +Post to ML -> User Made Quick Install Doc.
@@ -1470,9 +1526,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/lpk-user-exam
 +puTTY). Login should succeed.
 +
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/openssh-lpk_openldap.schema openssh-5.2p1+lpk/openssh-lpk_openldap.schema
---- openssh-5.2p1.orig/openssh-lpk_openldap.schema	1970-01-01 01:00:00.000000000 +0100
-+++ openssh-5.2p1+lpk/openssh-lpk_openldap.schema	2009-03-22 15:59:08.635476950 +0100
+diff --git a/openssh-lpk_openldap.schema b/openssh-lpk_openldap.schema
+new file mode 100644
+index 0000000..5f5512a
+--- /dev/null
++++ b/openssh-lpk_openldap.schema
 @@ -0,0 +1,19 @@
 +#
 +# LDAP Public Key Patch schema for use with openssh-ldappubkey
@@ -1493,9 +1551,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/openssh-lpk_o
 +	DESC 'MANDATORY: OpenSSH LPK objectclass'
 +	MUST ( sshPublicKey $ uid ) 
 +	)
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/openssh-lpk_sun.schema openssh-5.2p1+lpk/openssh-lpk_sun.schema
---- openssh-5.2p1.orig/openssh-lpk_sun.schema	1970-01-01 01:00:00.000000000 +0100
-+++ openssh-5.2p1+lpk/openssh-lpk_sun.schema	2009-03-22 15:59:08.653640345 +0100
+diff --git a/openssh-lpk_sun.schema b/openssh-lpk_sun.schema
+new file mode 100644
+index 0000000..c5e0214
+--- /dev/null
++++ b/openssh-lpk_sun.schema
 @@ -0,0 +1,21 @@
 +#
 +# LDAP Public Key Patch schema for use with openssh-ldappubkey
@@ -1518,9 +1578,10 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/openssh-lpk_s
 +	DESC 'MANDATORY: OpenSSH LPK objectclass'
 +	MUST ( sshPublicKey $ uid ) 
 +	)
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/servconf.c openssh-5.2p1+lpk/servconf.c
---- openssh-5.2p1.orig/servconf.c	2009-01-28 06:31:23.000000000 +0100
-+++ openssh-5.2p1+lpk/servconf.c	2009-03-22 16:02:52.456008387 +0100
+diff --git a/servconf.c b/servconf.c
+index f9e2f2d..078b581 100644
+--- a/servconf.c
++++ b/servconf.c
 @@ -42,6 +42,10 @@
  #include "channels.h"
  #include "groupaccess.h"
@@ -1532,33 +1593,32 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/servconf.c op
  static void add_listen_addr(ServerOptions *, char *, int);
  static void add_one_listen_addr(ServerOptions *, char *, int);
  
-@@ -128,6 +132,25 @@
- 	options->adm_forced_command = NULL;
- 	options->chroot_directory = NULL;
+@@ -131,6 +135,24 @@ initialize_server_options(ServerOptions *options)
  	options->zero_knowledge_password_authentication = -1;
+ 	options->revoked_keys_file = NULL;
+ 	options->trusted_user_ca_keys = NULL;
 +#ifdef WITH_LDAP_PUBKEY
-+ 	/* XXX dirty */
-+ 	options->lpk.ld = NULL;
-+ 	options->lpk.on = -1;
-+ 	options->lpk.servers = NULL;
-+ 	options->lpk.u_basedn = NULL;
-+ 	options->lpk.g_basedn = NULL;
-+ 	options->lpk.binddn = NULL;
-+ 	options->lpk.bindpw = NULL;
-+ 	options->lpk.sgroup = NULL;
-+ 	options->lpk.filter = NULL;
-+ 	options->lpk.fgroup = NULL;
-+ 	options->lpk.l_conf = NULL;
-+ 	options->lpk.tls = -1;
-+ 	options->lpk.b_timeout.tv_sec = -1;
-+ 	options->lpk.s_timeout.tv_sec = -1;
-+ 	options->lpk.flags = FLAG_EMPTY;
++	/* XXX dirty */
++	options->lpk.ld = NULL;
++	options->lpk.on = -1;
++	options->lpk.servers = NULL;
++	options->lpk.u_basedn = NULL;
++	options->lpk.g_basedn = NULL;
++	options->lpk.binddn = NULL;
++	options->lpk.bindpw = NULL;
++	options->lpk.sgroup = NULL;
++	options->lpk.filter = NULL;
++	options->lpk.fgroup = NULL;
++	options->lpk.l_conf = NULL;
++	options->lpk.tls = -1;
++	options->lpk.b_timeout.tv_sec = -1;
++	options->lpk.s_timeout.tv_sec = -1;
++	options->lpk.flags = FLAG_EMPTY;
 +#endif
-+
  }
  
  void
-@@ -261,8 +284,34 @@
+@@ -265,6 +287,32 @@ fill_default_server_options(ServerOptions *options)
  		options->permit_tun = SSH_TUNMODE_NO;
  	if (options->zero_knowledge_password_authentication == -1)
  		options->zero_knowledge_password_authentication = 0;
@@ -1589,14 +1649,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/servconf.c op
 +	    options->lpk.l_conf = _DEFAULT_LPK_LDP;
 +#endif
  
--	/* Turn privilege separation on by default */
-+	/* Turn privilege separation on by default */
+ 	/* Turn privilege separation on by default */
  	if (use_privsep == -1)
- 		use_privsep = 1;
- 
-@@ -307,6 +356,12 @@
- 	sUsePrivilegeSeparation, sAllowAgentForwarding,
- 	sZeroKnowledgePasswordAuthentication,
+@@ -312,6 +360,12 @@ typedef enum {
+ 	sZeroKnowledgePasswordAuthentication, sHostCertificate,
+ 	sRevokedKeys, sTrustedUserCAKeys,
  	sDeprecated, sUnsupported
 +#ifdef WITH_LDAP_PUBKEY
 +	,sLdapPublickey, sLdapServers, sLdapUserDN
@@ -1607,10 +1664,10 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/servconf.c op
  } ServerOpCodes;
  
  #define SSHCFG_GLOBAL	0x01	/* allowed in main section of sshd_config */
-@@ -417,6 +472,20 @@
- 	{ "clientalivecountmax", sClientAliveCountMax, SSHCFG_GLOBAL },
- 	{ "authorizedkeysfile", sAuthorizedKeysFile, SSHCFG_GLOBAL },
- 	{ "authorizedkeysfile2", sAuthorizedKeysFile2, SSHCFG_GLOBAL },
+@@ -432,6 +486,20 @@ static struct {
+ 	{ "hostcertificate", sHostCertificate, SSHCFG_GLOBAL },
+ 	{ "revokedkeys", sRevokedKeys, SSHCFG_ALL },
+ 	{ "trustedusercakeys", sTrustedUserCAKeys, SSHCFG_ALL },
 +#ifdef WITH_LDAP_PUBKEY
 +	{ _DEFAULT_LPK_TOKEN, sLdapPublickey, SSHCFG_GLOBAL },
 +	{ _DEFAULT_SRV_TOKEN, sLdapServers, SSHCFG_GLOBAL },
@@ -1625,10 +1682,10 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/servconf.c op
 +	{ _DEFAULT_STI_TOKEN, sSearchTimeout, SSHCFG_GLOBAL },
 +	{ _DEFAULT_LDP_TOKEN, sLdapConf, SSHCFG_GLOBAL },
 +#endif
- 	{ "useprivilegeseparation", sUsePrivilegeSeparation, SSHCFG_GLOBAL },
- 	{ "acceptenv", sAcceptEnv, SSHCFG_GLOBAL },
- 	{ "permittunnel", sPermitTunnel, SSHCFG_GLOBAL },
-@@ -1307,6 +1376,107 @@
+ 	{ NULL, sBadOption, 0 }
+ };
+ 
+@@ -1349,6 +1417,107 @@ process_server_config_line(ServerOptions *options, char *line,
  		while (arg)
  		    arg = strdelim(&cp);
  		break;
@@ -1736,9 +1793,10 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/servconf.c op
  
  	default:
  		fatal("%s line %d: Missing handler for opcode %s (%d)",
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/servconf.h openssh-5.2p1+lpk/servconf.h
---- openssh-5.2p1.orig/servconf.h	2009-01-28 06:31:23.000000000 +0100
-+++ openssh-5.2p1+lpk/servconf.h	2009-03-22 15:59:08.809800401 +0100
+diff --git a/servconf.h b/servconf.h
+index 860009f..fd113c2 100644
+--- a/servconf.h
++++ b/servconf.h
 @@ -16,6 +16,10 @@
  #ifndef SERVCONF_H
  #define SERVCONF_H
@@ -1750,7 +1808,7 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/servconf.h op
  #define MAX_PORTS		256	/* Max # ports. */
  
  #define MAX_ALLOW_USERS		256	/* Max # users on allow list. */
-@@ -147,6 +151,9 @@
+@@ -150,6 +154,9 @@ typedef struct {
  	int	use_pam;		/* Enable auth via PAM */
  
  	int	permit_tun;
@@ -1760,10 +1818,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/servconf.h op
  
  	int	num_permitted_opens;
  
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/sshd.c openssh-5.2p1+lpk/sshd.c
---- openssh-5.2p1.orig/sshd.c	2009-01-28 06:31:23.000000000 +0100
-+++ openssh-5.2p1+lpk/sshd.c	2009-03-22 15:59:08.862544731 +0100
-@@ -126,6 +126,10 @@
+diff --git a/sshd.c b/sshd.c
+index bc0d275..e82e102 100644
+--- a/sshd.c
++++ b/sshd.c
+@@ -127,6 +127,10 @@ int allow_severity;
  int deny_severity;
  #endif /* LIBWRAP */
  
@@ -1774,7 +1833,7 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/sshd.c openss
  #ifndef O_NOCTTY
  #define O_NOCTTY	0
  #endif
-@@ -1483,6 +1487,16 @@
+@@ -1530,6 +1534,16 @@ main(int ac, char **av)
  		exit(1);
  	}
  
@@ -1791,10 +1850,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/sshd.c openss
  	debug("sshd version %.100s", SSH_RELEASE);
  
  	/* Store privilege separation user for later use if required. */
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/sshd_config openssh-5.2p1+lpk/sshd_config
---- openssh-5.2p1.orig/sshd_config	2008-07-02 14:35:43.000000000 +0200
-+++ openssh-5.2p1+lpk/sshd_config	2009-03-22 15:59:08.899356863 +0100
-@@ -109,6 +109,21 @@
+diff --git a/sshd_config b/sshd_config
+index 72fbae3..381b390 100644
+--- a/sshd_config
++++ b/sshd_config
+@@ -107,6 +107,21 @@
  # no default banner path
  #Banner none
  
@@ -1816,10 +1876,11 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/sshd_config o
  # override default of no subsystems
  Subsystem	sftp	/usr/libexec/sftp-server
  
-diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/sshd_config.5 openssh-5.2p1+lpk/sshd_config.5
---- openssh-5.2p1.orig/sshd_config.5	2009-02-23 01:00:24.000000000 +0100
-+++ openssh-5.2p1+lpk/sshd_config.5	2009-03-22 15:59:08.944067497 +0100
-@@ -1005,6 +1005,62 @@
+diff --git a/sshd_config.5 b/sshd_config.5
+index 2f54102..cb86374 100644
+--- a/sshd_config.5
++++ b/sshd_config.5
+@@ -1043,6 +1043,62 @@ Specifies the full pathname of the
  program.
  The default is
  .Pa /usr/X11R6/bin/xauth .
@@ -1882,3 +1943,6 @@ diff -Nuar --exclude '*.rej' --exclude '*.orig' openssh-5.2p1.orig/sshd_config.5
  .El
  .Sh TIME FORMATS
  .Xr sshd 8
+-- 
+1.7.0
+
