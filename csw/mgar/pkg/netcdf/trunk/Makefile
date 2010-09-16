@@ -19,12 +19,14 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWtetex CSWgcc3g77
 ## building 64-bit
 BUILD_ARGS = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
 
+CONFIGURE_ENV = F77=$(F77) FC=$(FC) CC=$(CC) CXX=$(CXX)
 CONFIGURE_ARGS = $(DIRPATHS) \
 		 --enable-netcdf-4 \
 		 --enable-dap \
 		 --enable-ncgen4 \
 		 --enable-shared \
 		 --enable-separate-fortran \
+		 --disable-f90 \
 		 --enable-cxx4 \
 		 --enable-docs-install \
 		 --enable-udunits \
