@@ -1,5 +1,5 @@
 GARNAME = yasm
-GARVERSION = 1.0.0
+GARVERSION = 1.1.0
 CATEGORIES = devel
 
 DESCRIPTION = A complete rewrite of the NASM assembler
