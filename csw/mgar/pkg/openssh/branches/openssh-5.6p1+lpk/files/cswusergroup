@@ -1,0 +1,1 @@
+sshd:nogroup:sshd nonpriv user:/var/run:/bin/false:::NP
