@@ -1,5 +1,5 @@
 GARNAME = libassuan
-GARVERSION = 2.0.0
+GARVERSION = 2.0.1
 CATEGORIES = lib
 
 DESCRIPTION = IPC library used by some GnuPG related software
@@ -8,6 +8,10 @@ endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libassuan/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+
+# Use this patch unless this is fixed:
+#   https://bugs.g10code.com/gnupg/issue1282
+PATCHFILES = 0001-Add-INADDR_NONE-for-Solaris.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
