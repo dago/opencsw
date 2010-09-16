@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = netcdf
-GARVERSION = 4.1.1
+GARVERSION = 3.6.3
 CATEGORIES = lib
 DESCRIPTION = machine-independent data formats for array-oriented scientific data
 SPKG_SOURCEURL = http://www.unidata.ucar.edu/software/netcdf/
@@ -21,18 +21,10 @@ BUILD_ARGS = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" FFLAGS="$(FFLAGS)" FCFLAGS=
 
 CONFIGURE_ENV = F77=$(F77) FC=$(FC) CC=$(CC) CXX=$(CXX)
 CONFIGURE_ARGS = $(DIRPATHS) \
-		 --enable-netcdf-4 \
-		 --enable-dap \
-		 --enable-ncgen4 \
 		 --enable-shared \
 		 --enable-separate-fortran \
 		 --disable-f90 \
-		 --enable-cxx4 \
-		 --enable-docs-install \
-		 --enable-udunits \
-		 --disable-logging \
-		 --with-hdf5=/opt/csw \
-		 --with-zlib=/opt/csw
+		 --enable-docs-install
 
 ## 64 bit build fails in fortran binding tests
 BUILD64 = 1
