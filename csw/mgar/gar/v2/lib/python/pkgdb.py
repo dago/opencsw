@@ -154,7 +154,7 @@ def main():
       t = Template(SHOW_PKG_TMPL, searchList=[srv4])
       sys.stdout.write(unicode(t))
   if command == 'gen-html':
-    g = HtmlGenerator(md5_sums)
+    g = HtmlGenerator(md5_sums, options.pkg_review_template)
     sys.stdout.write(g.GenerateHtml())
 
 
