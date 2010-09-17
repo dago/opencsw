@@ -1,5 +1,5 @@
 GARNAME = libserf
-GARVERSION = 0.6.1
+GARVERSION = 0.7.0
 DISTNAME = serf-$(GARVERSION)
 CATEGORIES = lib
 
@@ -14,7 +14,6 @@ endef
 
 MASTER_SITES = http://serf.googlecode.com/files/
 DISTFILES  = $(DISTNAME).tar.bz2
-PATCHFILES = 0001-Do-not-cast-lvalue-as-left-side-is-already-of-type-c.patch
 
 RUNTIME_DEP_PKGS_CSWlibserf = CSWapache2rt CSWexpat CSWiconv CSWoldaprt CSWosslrt CSWzlib
 
@@ -22,6 +21,8 @@ RUNTIME_DEP_PKGS_CSWlibserf = CSWapache2rt CSWexpat CSWiconv CSWoldaprt CSWosslr
 UFILES_REGEX = $(DISTNAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LICENSE = LICENSE
+
+VENDOR_URL = http://code.google.com/p/serf/
 
 # Make sure the current directory comes before everything else
 INCLUDE_FLAGS = -I. -I$(includedir)
@@ -43,7 +44,6 @@ CHECKPKG_OVERRIDES_CSWlibserf += missing-dependency|CSWapr
 
 include gar/category.mk
 
-#EXTRA_LDFLAGS = -R/opt/csw/bdb44/lib
 APR_LIBTOOL = $(shell /opt/csw/apache2/bin/apr-config --apr-libtool)
 post-configure-modulated:
 	gcp $(APR_LIBTOOL) $(WORKSRC)
