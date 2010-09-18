@@ -109,7 +109,7 @@ post-install-modulated: rename-httpd copy-local-files create-templates
 
 rename-httpd:
 	@if test -f $(APACHE_ROOT)/sbin/httpd ; then \
-	    ( cd $(APACHE_ROOT)/sbin ; mv httpd httpd.prefork ) ; \
+	    ( cd $(APACHE_ROOT)/sbin ; mv httpd httpd.$(MPM) ) ; \
 	fi
 
 # Copy in specialized templates
