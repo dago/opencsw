@@ -39,8 +39,8 @@ CATALOGNAME_CSWap2worker = ap2_worker
 CATALOGNAME_CSWap2suexec = ap2_suexec
 
 SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
-SPKG_DESC_CSWapache2rt = A high performance Unix-based HTTP server.
-SPKG_DESC_CSWapache2c = A high performance Unix-based HTTP server.
+SPKG_DESC_CSWapache2rt = Apache2 runtime support.
+SPKG_DESC_CSWapache2c = Apache2 core files.
 SPKG_DESC_CSWapache2-devel = The development files for Apache2.
 SPKG_DESC_CSWapache2-manual = The Apache2 manual files.
 SPKG_DESC_CSWap2prefork = The standard preforking mpm for Apache2.
