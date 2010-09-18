@@ -13,6 +13,13 @@ endef
 # work around dumb checkpkg not recognizing the license file ...
 LICENSE = LICENSE
 
+# Build multiple mpm's and merge them all into one install
+EXTRA_MODULATORS = MPM
+MODULATIONS_MPM = prefork worker
+
+MERGE_SCRIPTS_isa-default-mpm-prefork = copy-all
+MERGE_SCRIPTS_isa-default-mpm-worker = copy-only
+
 include files/config.mk
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -78,9 +85,8 @@ pre-configure-modulated:
 # Build Configuration
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/bin/apu-1-config
-CONFIGURE_ARGS += --with-mpm=prefork
+CONFIGURE_ARGS += --with-mpm=$(MPM)
 CONFIGURE_ARGS += --disable-static
-
 
 # Fixup target variables
 APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
