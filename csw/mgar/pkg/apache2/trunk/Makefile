@@ -56,6 +56,8 @@ DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
+INCOMPATIBLE_PKGS_CSWapache2	   = CSWapache2c CSWapache2rt
+
 RUNTIME_DEP_PKGS_CSWapache2	   = CSWap2prefork
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
