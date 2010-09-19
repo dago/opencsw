@@ -89,6 +89,8 @@ CONFIGURE_ARGS += --with-mpm=$(MPM)
 CONFIGURE_ARGS += --disable-static
 ifneq ($(MPM),prefork)
 CONFIGURE_ARGS += --enable-modules=none
+else
+CONFIGURE_ARGS += --enable-mods-shared=all
 endif
 
 # Fixup target variables
