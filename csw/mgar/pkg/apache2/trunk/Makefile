@@ -63,6 +63,7 @@ RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 CHECKPKG_OVERRIDES_CSWap2suexec  += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-devel += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-manual += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
@@ -72,6 +73,11 @@ EXTRA_LIB = $(prefix)/bdb48/lib
 # the post-install stage, and add "INITSMF = /etc/opt/csw/init.d/cswapache" to
 # the Makefile.
 INITSMF = /etc/opt/csw/init.d/cswapache2
+
+ALTERNATIVES_CSWapache2 = prefork worker event
+ALTERNATIVE_prefork = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.prefork 100
+ALTERNATIVE_worker = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.worker 50
+ALTERNATIVE_event = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.event 40
 
 pre-configure-modulated:
 	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); ./buildconf)
