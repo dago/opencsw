@@ -74,11 +74,9 @@ CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2worker  += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2event   += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2suexec  += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWap2prefork
 CHECKPKG_OVERRIDES_CSWapache2-devel += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-manual += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWbdb48
-CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapr-util
+CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWap2prefork
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
