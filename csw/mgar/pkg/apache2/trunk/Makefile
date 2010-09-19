@@ -26,25 +26,18 @@ include files/config.mk
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
-PACKAGES  = CSWapache2 CSWapache2-devel CSWapache2-manual
-PACKAGES += CSWap2prefork CSWap2worker CSWap2event CSWap2suexec
+PACKAGES  = CSWapache2 CSWapache2-devel CSWapache2-manual CSWap2suexec
 
 ARCHALL_CSWapache2-manual = 1
 
 CATALOGNAME_CSWapache2 = apache2
 CATALOGNAME_CSWapache2-devel = apache2_devel
 CATALOGNAME_CSWapache2-manual = apache2_manual
-CATALOGNAME_CSWap2prefork = ap2_prefork
-CATALOGNAME_CSWap2worker = ap2_worker
-CATALOGNAME_CSWap2event = ap2_event
 CATALOGNAME_CSWap2suexec = ap2_suexec
 
 SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
 SPKG_DESC_CSWapache2-devel = The development files for Apache2.
 SPKG_DESC_CSWapache2-manual = The Apache2 manual files.
-SPKG_DESC_CSWap2prefork = The standard preforking mpm for Apache2.
-SPKG_DESC_CSWap2worker = The standard threaded worker mpm for Apache2.
-SPKG_DESC_CSWap2event = The standard event mpm for Apache2.
 SPKG_DESC_CSWap2suexec = The standard suEXEC binary for Apache2.
 
 # Standard package bits
@@ -56,29 +49,20 @@ DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
-INCOMPATIBLE_PKGS_CSWapache2	   = CSWapache2c CSWapache2rt
 
-RUNTIME_DEP_PKGS_CSWapache2	   = CSWap2prefork
+INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2rt CSWap2worker CSWap2perfork
+INCOMPATIBLE_PKGS_CSWapache2 += CSWapache2c
+
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-devel  = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
-RUNTIME_DEP_PKGS_CSWap2event	   = CSWapache2 CSWapr-util CSWexpat
-RUNTIME_DEP_PKGS_CSWap2event	  += CSWbdb48 CSWapr CSWiconv
-RUNTIME_DEP_PKGS_CSWap2prefork	   = CSWapache2 CSWapr-util CSWexpat
-RUNTIME_DEP_PKGS_CSWap2prefork	  += CSWbdb48 CSWapr CSWiconv
-RUNTIME_DEP_PKGS_CSWap2worker	   = CSWapache2 CSWapr-util CSWexpat
-RUNTIME_DEP_PKGS_CSWap2worker	  += CSWbdb48 CSWapr CSWiconv
 
-CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWap2worker  += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWap2event   += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2suexec  += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-devel += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-manual += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWap2prefork
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
@@ -109,9 +93,6 @@ APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
 LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
-PKGFILES_CSWap2prefork = .*sbin/httpd.prefork
-PKGFILES_CSWap2event = .*sbin/httpd.event
-PKGFILES_CSWap2worker = .*sbin/httpd.worker
 PKGFILES_CSWap2suexec = .*sbin/suexec .*libexecdir/.*suexec.* .*/man/.*suexec.*
 PKGFILES_CSWapache2-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
