@@ -19,6 +19,7 @@ MODULATIONS_MPM = prefork worker event
 
 MERGE_SCRIPTS_isa-default-mpm-prefork = copy-all
 MERGE_SCRIPTS_isa-default-mpm-worker = copy-all
+MERGE_SCRIPTS_isa-default-mpm-event = copy-all
 
 include files/config.mk
 
