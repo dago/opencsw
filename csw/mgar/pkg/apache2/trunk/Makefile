@@ -109,10 +109,6 @@ APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
 LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
-PKGFILES_CSWapache2  = .*libexecdir/.*so .*etc/.*
-PKGFILES_CSWapache2 += .*share/htdocs.* .*share/error.* .*share/icons.*
-PKGFILES_CSWapache2 += .*var/.*
-PKGFILES_CSWapache2 += .*man/man8/.*apxs.* .*share/build/.*  .*sbin/apxs
 PKGFILES_CSWap2prefork = .*sbin/httpd.prefork
 PKGFILES_CSWap2event = .*sbin/httpd.event
 PKGFILES_CSWap2worker = .*sbin/httpd.worker
