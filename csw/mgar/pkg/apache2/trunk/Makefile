@@ -102,17 +102,17 @@ APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
 LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
-PKGFILES_CSWapache2c = $(libexecdir)/.*so $(sysconfdir)/.* $(sbindir)/.*
-PKGFILES_CSWapache2c = $(sharedstatedir)/.* $(localstatedir)/.*
-PKGFILES_CSWapache2rt = $(bindir)/ap.*config $(mandir)/man8/.*apxs.*
-PKGFILES_CSWapache2rt += $(libdir)/.*apr.* $(libdir)/apr-util-1/.*
-PKGFILES_CSWapache2rt += $(sharedstatedir)/build/.*  $(sbindir)/apxs
-PKGFILES_CSWap2prefork = $(sbindir)/httpd.prefork
-PKGFILES_CSWap2event = $(sbindir)/httpd.event
-PKGFILES_CSWap2worker = $(sbindir)/httpd.worker
-PKGFILES_CSWap2suexec = .*suexec.*
+PKGFILES_CSWapache2c = .*libexecdir/.*so .*etc/.*
+PKGFILES_CSWapache2c = .*share/.* .*var/.*
+PKGFILES_CSWapache2rt = .*/bin/ap.*config .*man/man8/.*apxs.*
+PKGFILES_CSWapache2rt += .*lib/.*apr.* .*lib/apr-util-1/.*
+PKGFILES_CSWapache2rt += .*share/build/.*  .*sbin/apxs
+PKGFILES_CSWap2prefork = .*sbin/httpd.prefork
+PKGFILES_CSWap2event = .*sbin/httpd.event
+PKGFILES_CSWap2worker = .*sbin/httpd.worker
+PKGFILES_CSWap2suexec = .*sbin/suexec .*libexecdir/.*suexec.* .*/man/.*suexec.*
 PKGFILES_CSWapache2-devel = $(PKGFILES_DEVEL)
-PKGFILES_CSWapache2-manual = $(docdir)/manual/.* $(sysconfdir)/extra/httpd-manual.conf
+PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
 
 include gar/category.mk
 include files/rules.mk
