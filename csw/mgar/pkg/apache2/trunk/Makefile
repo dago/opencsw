@@ -102,11 +102,10 @@ APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
 LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
+PKGFILES_CSWapache2 = /opt/csw/apache2/
 PKGFILES_CSWapache2c = .*libexecdir/.*so .*etc/.*
 PKGFILES_CSWapache2c = .*share/.* .*var/.*
-PKGFILES_CSWapache2rt = .*/bin/ap.*config .*man/man8/.*apxs.*
-PKGFILES_CSWapache2rt += .*lib/.*apr.* .*lib/apr-util-1/.*
-PKGFILES_CSWapache2rt += .*share/build/.*  .*sbin/apxs
+PKGFILES_CSWapache2rt = .*man/man8/.*apxs.* .*share/build/.*  .*sbin/apxs
 PKGFILES_CSWap2prefork = .*sbin/httpd.prefork
 PKGFILES_CSWap2event = .*sbin/httpd.event
 PKGFILES_CSWap2worker = .*sbin/httpd.worker
