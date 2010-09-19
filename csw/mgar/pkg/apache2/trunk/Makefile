@@ -84,6 +84,7 @@ INITSMF = /etc/opt/csw/init.d/cswapache2
 
 pre-configure-modulated:
 	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); ./buildconf)
+	$(MAKECOOKIE)
 
 # Build Configuration
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
