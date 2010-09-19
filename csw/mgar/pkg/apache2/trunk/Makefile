@@ -26,13 +26,10 @@ include files/config.mk
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
-PACKAGES  = CSWapache2 CSWapache2rt CSWapache2c
-PACKAGES += CSWapache2-devel CSWapache2-manual
+PACKAGES  = CSWapache2 CSWapache2-devel CSWapache2-manual
 PACKAGES += CSWap2prefork CSWap2worker CSWap2event CSWap2suexec
 
 CATALOGNAME_CSWapache2 = apache2
-CATALOGNAME_CSWapache2rt = apache2rt
-CATALOGNAME_CSWapache2c = apache2c
 CATALOGNAME_CSWapache2-devel = apache2_devel
 CATALOGNAME_CSWapache2-manual = apache2_manual
 CATALOGNAME_CSWap2prefork = ap2_prefork
@@ -41,8 +38,6 @@ CATALOGNAME_CSWap2event = ap2_event
 CATALOGNAME_CSWap2suexec = ap2_suexec
 
 SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
-SPKG_DESC_CSWapache2rt = Apache2 runtime support.
-SPKG_DESC_CSWapache2c = Apache2 core files.
 SPKG_DESC_CSWapache2-devel = The development files for Apache2.
 SPKG_DESC_CSWapache2-manual = The Apache2 manual files.
 SPKG_DESC_CSWap2prefork = The standard preforking mpm for Apache2.
@@ -60,13 +55,9 @@ DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 
 RUNTIME_DEP_PKGS_CSWapache2	   = CSWapache2c CSWap2prefork
-RUNTIME_DEP_PKGS_CSWapache2c       = CSWexpat CSWiconv
-RUNTIME_DEP_PKGS_CSWapache2c      += CSWoldaprt CSWosslrt CSWzlib
-RUNTIME_DEP_PKGS_CSWapache2c      += CSWapr CSWapr-util CSWbdb48
-RUNTIME_DEP_PKGS_CSWapache2c	   = CSWapache2rt
-RUNTIME_DEP_PKGS_CSWapache2rt      = CSWexpat CSWiconv
-RUNTIME_DEP_PKGS_CSWapache2rt     += CSWoldaprt CSWosslrt CSWzlib
-RUNTIME_DEP_PKGS_CSWapache2rt     += CSWapr CSWapr-util CSWbdb48
+RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv
+RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-devel  = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2prefork	   = CSWapache2
@@ -102,10 +93,10 @@ APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
 LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
-PKGFILES_CSWapache2 = /opt/csw/apache2/
-PKGFILES_CSWapache2c = .*libexecdir/.*so .*etc/.*
-PKGFILES_CSWapache2c = .*share/.* .*var/.*
-PKGFILES_CSWapache2rt = .*man/man8/.*apxs.* .*share/build/.*  .*sbin/apxs
+PKGFILES_CSWapache2  = .*libexecdir/.*so .*etc/.*
+PKGFILES_CSWapache2 += .*share/htdocs.* .*share/error.* .*share/icons.*
+PKGFILES_CSWapache2 += .*var/.*
+PKGFILES_CSWapache2 += .*man/man8/.*apxs.* .*share/build/.*  .*sbin/apxs
 PKGFILES_CSWap2prefork = .*sbin/httpd.prefork
 PKGFILES_CSWap2event = .*sbin/httpd.event
 PKGFILES_CSWap2worker = .*sbin/httpd.worker
