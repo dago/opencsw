@@ -28,7 +28,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # The PACKAGES variable tell GAR which packages to build
 PACKAGES  = CSWapache2 CSWapache2rt CSWapache2c
 PACKAGES += CSWapache2-devel CSWapache2-manual
-PACKAGES += CSWap2prefork CSWap2worker CSWap2suexec
+PACKAGES += CSWap2prefork CSWap2worker CSWap2event CSWap2suexec
 
 CATALOGNAME_CSWapache2 = apache2
 CATALOGNAME_CSWapache2rt = apache2rt
@@ -37,6 +37,7 @@ CATALOGNAME_CSWapache2-devel = apache2_devel
 CATALOGNAME_CSWapache2-manual = apache2_manual
 CATALOGNAME_CSWap2prefork = ap2_prefork
 CATALOGNAME_CSWap2worker = ap2_worker
+CATALOGNAME_CSWap2event = ap2_event
 CATALOGNAME_CSWap2suexec = ap2_suexec
 
 SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
@@ -46,6 +47,7 @@ SPKG_DESC_CSWapache2-devel = The development files for Apache2.
 SPKG_DESC_CSWapache2-manual = The Apache2 manual files.
 SPKG_DESC_CSWap2prefork = The standard preforking mpm for Apache2.
 SPKG_DESC_CSWap2worker = The standard threaded worker mpm for Apache2.
+SPKG_DESC_CSWap2event = The standard event mpm for Apache2.
 SPKG_DESC_CSWap2suexec = The standard suEXEC binary for Apache2.
 
 # Standard package bits
