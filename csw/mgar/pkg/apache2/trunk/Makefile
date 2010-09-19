@@ -15,7 +15,7 @@ LICENSE = LICENSE
 
 # Build multiple mpm's and merge them all into one install
 EXTRA_MODULATORS = MPM
-MODULATIONS_MPM = prefork worker
+MODULATIONS_MPM = prefork worker event
 
 MERGE_SCRIPTS_isa-default-mpm-prefork = copy-all
 MERGE_SCRIPTS_isa-default-mpm-worker = copy-all
