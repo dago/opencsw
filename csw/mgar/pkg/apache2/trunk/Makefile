@@ -29,6 +29,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES  = CSWapache2 CSWapache2-devel CSWapache2-manual
 PACKAGES += CSWap2prefork CSWap2worker CSWap2event CSWap2suexec
 
+ARCHALL_CSWapache2-manual = 1
+
 CATALOGNAME_CSWapache2 = apache2
 CATALOGNAME_CSWapache2-devel = apache2_devel
 CATALOGNAME_CSWapache2-manual = apache2_manual
