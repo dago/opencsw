@@ -23,6 +23,8 @@ DISTNAME = gtk+-$(GARVERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += CSWgtk2.postinstall
 
+PATCHFILES = gdkdnd-x11.c.diff
+
 PACKAGES = CSWgtk2 CSWgtk2devel CSWgtk2doc
 
 CATALOGNAME_CSWgtk2 = gtk2
@@ -35,10 +37,14 @@ SPKG_DESC_CSWgtk2doc = A feature rich toolkit for creating graphical user interf
 
 BUILD_DEP_PKGS = CSWbash
 RUNTIME_DEP_PKGS_CSWgtk2 = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWjpeg CSWlibatk
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibcairo CSWlibx11 CSWlibxrender CSWpango CSWpng CSWtiff
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibxcomposite CSWlibxcursor CSWlibxdamage CSWlibxext CSWlibxfixes CSWlibxinerama CSWlibxrandr
-RUNTIME_DEP_PKGS_CSWgtk2devel  = CSWgtk2 CSWglib2devel CSWatkdevel
-RUNTIME_DEP_PKGS_CSWgtk2devel += CSWlibcairodevel CSWlibx11devel CSWlibxrenderdevel CSWpangodevel
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibcairo CSWlibxrender CSWpango CSWpng CSWtiff
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibcups
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWgnutls
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWzlib
+RUNTIME_DEP_PKGS_CSWgtk2 += CSWkrb5lib
+
+RUNTIME_DEP_PKGS_CSWgtk2devel  = CSWgtk2 CSWglib2devel CSWlibatkdevel
+RUNTIME_DEP_PKGS_CSWgtk2devel += CSWlibcairodevel CSWlibxrenderdevel CSWpangodevel
 
 SPKG_SOURCEURL = http://www.gtk.org/
 
@@ -47,7 +53,10 @@ NOISALIST = 1
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-cups
+
+CONFIGURE_ARGS-32 += --enable-cups
+CONFIGURE_ARGS-64 += --disable-cups
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 STRIP_LIBTOOL = 1
 
@@ -64,6 +73,13 @@ PKGFILES_CSWgtk2doc = $(sharedstatedir)/gtk-doc/.*
 
 ARCHALL_CSWgtk2doc = 1
 
-PATCHFILES = gdkdnd-x11.c.diff
+CHECKPKG_OVERRIDES_CSWgtk2 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/gtk-2.0/2.10.0/printbackends/libprintbackend-cups.so
+
+CHECKPKG_OVERRIDES_CSWgtk2devel += surplus-dependency|CSWglib2devel
+CHECKPKG_OVERRIDES_CSWgtk2devel += surplus-dependency|CSWpangodevel
+CHECKPKG_OVERRIDES_CSWgtk2devel += surplus-dependency|CSWlibatkdevel
+CHECKPKG_OVERRIDES_CSWgtk2devel += surplus-dependency|CSWgtk2
+CHECKPKG_OVERRIDES_CSWgtk2devel += surplus-dependency|CSWlibxrenderdevel
+CHECKPKG_OVERRIDES_CSWgtk2devel += surplus-dependency|CSWlibcairodevel
 
 include gar/category.mk
