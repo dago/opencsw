@@ -10,6 +10,9 @@ define BLURB
   best around in terms of functionality, efficiency, security and speed.
 endef
 
+# Source location
+MASTER_SITES  = http://www.ibiblio.com/pub/mirrors/apache/httpd/
+
 # work around dumb checkpkg not recognizing the license file ...
 LICENSE = LICENSE
 
@@ -21,7 +24,19 @@ MERGE_SCRIPTS_isa-default-mpm-prefork = copy-all
 MERGE_SCRIPTS_isa-default-mpm-worker = copy-all
 MERGE_SCRIPTS_isa-default-mpm-event = copy-all
 
-include files/config.mk
+# Visitor information
+SPKG_SOURCEURL = http://httpd.apache.org/
+
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += config.layout
+# Standard package bits
+DISTFILES += CSWapache2.killproc cswapache2
+
+# Configuration templates
+DISTFILES += httpd.conf.CSW
+DISTFILES += httpd-mpm.conf.CSW
+DISTFILES += httpd-ssl.conf.CSW
+DISTFILES += update20to22
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -39,16 +54,6 @@ SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
 SPKG_DESC_CSWapache2-devel = The development files for Apache2.
 SPKG_DESC_CSWapache2-manual = The Apache2 manual files.
 SPKG_DESC_CSWap2suexec = The standard suEXEC binary for Apache2.
-
-# Standard package bits
-DISTFILES += CSWapache2.killproc cswapache2
-
-# Configuration templates
-DISTFILES += httpd.conf.CSW
-DISTFILES += httpd-mpm.conf.CSW
-DISTFILES += httpd-ssl.conf.CSW
-DISTFILES += update20to22
-
 
 INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2rt CSWap2worker CSWap2perfork
 INCOMPATIBLE_PKGS_CSWapache2 += CSWapache2c
@@ -79,18 +84,51 @@ ALTERNATIVE_prefork = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.
 ALTERNATIVE_worker = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.worker 50
 ALTERNATIVE_event = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.event 40
 
-pre-configure-modulated:
-	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); ./buildconf)
-	$(MAKECOOKIE)
-
 # Build Configuration
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
 CONFIGURE_ARGS += --with-apr-util=$(prefix)/bin/apu-1-config
 CONFIGURE_ARGS += --with-mpm=$(MPM)
 CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --enable-layout=csw
+CONFIGURE_ARGS += --enable-rule=SSL_EXPERIMENTAL
+CONFIGURE_ARGS += --enable-ssl
+CONFIGURE_ARGS += --with-z=$(prefix)
+CONFIGURE_ARGS += --with-ssl=$(prefix)
+
 ifneq ($(MPM),prefork)
 CONFIGURE_ARGS += --enable-modules=none
 else
+CONFIGURE_ARGS += --enable-suexec
+CONFIGURE_ARGS += --with-suexec-caller=nobody
+CONFIGURE_ARGS += --with-suexec-docroot=$(prefix)/apache2/share/htdocs
+CONFIGURE_ARGS += --with-suexec-userdir=public_html
+CONFIGURE_ARGS += --with-suexec-uidmin=100
+CONFIGURE_ARGS += --with-suexec-gidmin=100
+CONFIGURE_ARGS += --with-suexec-logfile=$(prefix)/apache2/var/log/suexec_log
+CONFIGURE_ARGS += --with-suexec-bin=$(prefix)/apache2/sbin/suexec
+CONFIGURE_ARGS += --enable-authn-alias
+CONFIGURE_ARGS += --enable-authnz-ldap
+CONFIGURE_ARGS += --enable-file-cache
+CONFIGURE_ARGS += --enable-cache
+CONFIGURE_ARGS += --enable-disk-cache
+CONFIGURE_ARGS += --enable-mem-cache
+CONFIGURE_ARGS += --enable-bucketeer
+CONFIGURE_ARGS += --enable-charset-lite
+CONFIGURE_ARGS += --enable-ldap
+CONFIGURE_ARGS += --enable-log-forensic
+CONFIGURE_ARGS += --enable-mime-magic
+CONFIGURE_ARGS += --enable-cern-meta
+CONFIGURE_ARGS += --enable-usertrack
+CONFIGURE_ARGS += --enable-unique-id
+CONFIGURE_ARGS += --enable-version
+CONFIGURE_ARGS += --enable-proxy
+CONFIGURE_ARGS += --enable-proxy-connect
+CONFIGURE_ARGS += --enable-proxy-ftp
+CONFIGURE_ARGS += --enable-proxy-http
+CONFIGURE_ARGS += --enable-proxy-ajp
+CONFIGURE_ARGS += --enable-proxy-balancer
+CONFIGURE_ARGS += --enable-cgid
+CONFIGURE_ARGS += --enable-dav-lock
 CONFIGURE_ARGS += --enable-mods-shared=all
 endif
 
@@ -104,16 +142,18 @@ PKGFILES_CSWapache2-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
 
 include gar/category.mk
-include files/rules.mk
 
 CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
 
 FIXCONFIG_DIRS     = $(DESTDIR)
 FIXCONFIG_RMPATHS  = $(DESTDIR)
-#FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr-util
-#FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr-util/include
-#FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr
-#FIXCONFIG_RMPATHS += $(CURDIR)/$(WORKSRC)/$(GARNAME)-$(GARVERSION)/srclib/apr/include
+
+pre-configure-modulated:
+	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); ./buildconf)
+	@gsed -e s,INSTALL_PREFIX,$(prefix)/apache2,g \
+		$(WORKDIR)/config.layout > $(WORKDIR)/$(GARNAME)-$(GARVERSION)/config.layout
+	@$(MAKECOOKIE)
+
 
 post-install-modulated: rename-httpd copy-local-files create-templates
 
