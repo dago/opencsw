@@ -164,9 +164,9 @@ rename-httpd:
 copy-local-files:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall $(WORKDIR)/httpd.conf.CSW $(APACHE_ROOT)/etc
-	@ginstall $(WORKDIR)/httpd-mpm.conf.CSW $(APACHE_ROOT)/etc/extra
-	@ginstall $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
+	@ginstall -m0644 $(WORKDIR)/httpd.conf.CSW $(APACHE_ROOT)/etc
+	@ginstall -m0644 $(WORKDIR)/httpd-mpm.conf.CSW $(APACHE_ROOT)/etc/extra
+	@ginstall -m0644 $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
 
 # Create stock templates
