@@ -82,4 +82,8 @@ CHECKPKG_OVERRIDES_CSWgtk2devel += surplus-dependency|CSWgtk2
 CHECKPKG_OVERRIDES_CSWgtk2devel += surplus-dependency|CSWlibxrenderdevel
 CHECKPKG_OVERRIDES_CSWgtk2devel += surplus-dependency|CSWlibcairodevel
 
+# There are a *ton* of different libs on amd64 available that are not installed on Solaris 9.
+# Skip this complete test for now.
+CHECKPKG_OVERRIDES_CSWgtk2 += soname-not-found
+
 include gar/category.mk
