@@ -1,5 +1,5 @@
 GARNAME = clamav
-GARVERSION = 0.96.2
+GARVERSION = 0.96.3
 #DISTNAME = $(GARNAME)-devel-latest
 CATEGORIES = apps
 
