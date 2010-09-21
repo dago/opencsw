@@ -1,0 +1,28 @@
+From 6925aace1b489a5ffb0265c7fdc7edc3def7d995 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 26 Jul 2010 08:03:17 +0200
+Subject: [PATCH] Use libc not libcrypt
+
+---
+ configure.in |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 7374723..1c181c7 100644
+--- a/configure.in
++++ b/configure.in
+@@ -860,7 +860,10 @@ AC_SEARCH_LIBS(setsockopt, socket)
+ # This may get things to compile even if bind-8 is installed
+ AC_SEARCH_LIBS(bind, bind)
+ # Check if crypt() exists in libc or libcrypt, sets LIBS if needed
+-AC_SEARCH_LIBS(crypt, crypt, AC_DEFINE(HAVE_CRYPT, 1, [crypt]))
++## AC_SEARCH_LIBS(crypt, crypt, AC_DEFINE(HAVE_CRYPT, 1, [crypt]))
++# For crypt() on Solaris use libc, not libcrypt
++AC_CHECK_LIB(c, crypt)
++AC_CHECK_FUNC(crypt, AC_DEFINE([HAVE_CRYPT], [1], [crypt]))
+ # See if we need a library for address lookup.
+ AC_SEARCH_LIBS(inet_aton, [socket nsl resolv])
+ 
+-- 
+1.7.1
+
