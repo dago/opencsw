@@ -1,16 +1,16 @@
 GARNAME = libevent
-GARVERSION = 2.0.4
+GARVERSION = 2.0.7
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION
-#MODULATIONS_GARVERSION = 1.1a 2.0.4
-MODULATIONS_GARVERSION = 2.0.4
+#MODULATIONS_GARVERSION = 1.1a 1.4.14b 2.0.7
+MODULATIONS_GARVERSION = 2.0.7
 
 SKIP_MODULATIONS = isa-sparcv9-garversion-1.1a
 SKIP_MODULATIONS += isa-amd64-garversion-1.1a
 
 DISTVERSION-1.1a = 1.1a
-DISTVERSION-2.0.4 = 2.0.4-alpha
+DISTVERSION-2.0.7 = 2.0.7-rc
 
 DESCRIPTION = Event notification library
 define BLURB
@@ -24,11 +24,13 @@ MASTER_SITES = http://www.monkey.org/~provos/
 SOURCEFILES = $(foreach V,$(MODULATIONS_GARVERSION),$(GARNAME)-$(DISTVERSION-$V).tar.gz)
 DISTFILES += $(SOURCEFILES)
 
+DISTNAME = $(GARNAME)-$(DISTVERSION-$(GARVERSION))
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-alpha.tar.gz
 
-PATCHFILES += 0001-Detect-broken-unsetenv-at-unit-test-runtime.patch
-PATCHFILES += 0001-Fix-getaddrinfo-with-protocol-unset-on-Solaris-9.patch
+# PATCHFILES += 0001-Detect-broken-unsetenv-at-unit-test-runtime.patch
+# PATCHFILES += 0001-Fix-getaddrinfo-with-protocol-unset-on-Solaris-9.patch
 
 NOEXTRACT = $(filter-out $(GARNAME)-$(DISTVERSION-$(GARVERSION)).tar.gz,$(SOURCEFILES))
 
@@ -47,8 +49,6 @@ SPKG_DESC_CSWlibevent-devel = Event notification library header files
 
 SPKG_SOURCEURL = http://www.monkey.org/~provos/libevent/
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION-$(GARVERSION))
-
 BUILD64 = 1
 NOISAEXEC = 1
 CONFIGURE_ARGS  = $(DIRPATHS) 
@@ -60,9 +60,9 @@ MERGE_DIRS_isa-default-garversion-1.1a = $(libdir)
 MERGE_SCRIPTS_isa-extra-garversion-1.1a = copy-relocated-only
 MERGE_DIRS_isa-extra-garversion-1.1a = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-2.0.4 = copy-all
-MERGE_SCRIPTS_isa-extra-garversion-2.0.4 = copy-relocated-only
-MERGE_DIRS_isa-extra-garversion-2.0.4 = $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-2.0.7 = copy-all
+MERGE_SCRIPTS_isa-extra-garversion-2.0.7 = copy-relocated-only
+MERGE_DIRS_isa-extra-garversion-2.0.7 = $(libdir)
 
 PKGFILES_CSWlibevent-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibevent-devel += $(bindir)/.*
