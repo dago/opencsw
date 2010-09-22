@@ -53,6 +53,8 @@ RUNTIME_DEP_PKGS_CSWsvn      += CSWsasl
 RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf
 RUNTIME_DEP_PKGS_CSWsvn      += CSWsqlite3rt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWzlib
+RUNTIME_DEP_PKGS_CSWsvn      += CSWapr
+RUNTIME_DEP_PKGS_CSWsvn      += CSWapr-util
 
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
 CATALOGNAME_CSWsvn-devel   = subversion_devel
@@ -87,6 +89,7 @@ RUNTIME_DEP_PKGS_CSWap2svn   += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWap2svn   += CSWiconv
 PKGFILES_CSWap2svn            = $(prefix)/apache2.*
 PKGFILES_CSWap2svn           += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
+CHECKPKG_OVERRIDES_CSWap2svn += surplus-dependency|CSWapache2
 
 SPKG_DESC_CSWjavasvn           = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn         = javasvn
@@ -102,9 +105,7 @@ RUNTIME_DEP_PKGS_CSWjavasvn   += CSWoldaprt
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pm_subversion
@@ -186,6 +187,8 @@ PROTOTYPE_CLASS_cswpycompile = cswpycompile
 # Can this be re-done as a version agnostic regex? Couldn't get this to work :/
 # EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/perl/(?!site_perl)
 EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/perl/5.*
+
+STRIP_LIBTOOL = 1
 
 NODIRPATHS      = --libdir --libexecdir
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
