@@ -1,5 +1,5 @@
 GARNAME = grep
-GARVERSION = 2.6.3
+GARVERSION = 2.7
 CATEGORIES = utils
 
 DESCRIPTION = GNU grep
@@ -23,7 +23,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.xz
 PACKAGES = CSWggrep
 CATALOGNAME = ggrep
 
-DEP_PKGS = CSWggettextrt CSWpcrert
+DEP_PKGS = CSWggettextrt CSWiconv CSWpcrert
+
+EXTRA_LINKER_FLAGS = -liconv
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
