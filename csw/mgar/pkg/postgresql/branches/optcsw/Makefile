@@ -40,7 +40,7 @@ libdir_install = $(prefix)$(version_dependent)/lib
 # libdir = $(prefix)$(version_dependent)/lib
 # Otherwise initdb can't find the right libraries, see:
 # http://archives.postgresql.org/pgsql-general/2010-01/msg00422.php
-libdir = $(abspath $(prefix)$(version_dependent)/$(MM_LIBDIR))
+libdir = $(abspath $(prefix)$(version_dependent)/lib/$(MM_LIBDIR))
 localstatedir = /var$(prefix)/$(GARNAME)/$(BASE_VERSION)
 sysconfdir = /etc$(prefix)/$(GARNAME)/$(BASE_VERSION)
 datadir = $(prefix)/share/$(GARNAME)/$(BASE_VERSION)
@@ -62,8 +62,7 @@ DISTFILES += cswpostgres.tmpl
 DISTFILES += cswusergroup.tmpl
 DISTFILES += postgresql.conf.tmpl
 DISTFILES += README-CSW.txt
-# DISTFILES += CSWpostgresql-$(BASE_VERSION_G).postinstall
-include files/CSWpostgresql-$(BASE_VERSION_G).postinstall
+DISTFILES += CSWpostgresql-$(BASE_VERSION_G).postinstall
 
 PACKAGES += CSWpostgresql
 PACKAGES += CSWlibpq-$(BASE_VERSION_G)
@@ -160,12 +159,13 @@ PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-doc += $(prefix)/share/doc.*
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-dev  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibpq-$(BASE_VERSION_G)           = $(PKGFILES_RT)
 PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir)/64
-PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir).*lib(pq|pgtypes|ecpg)\.so.*
+# PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir).*lib(pq|pgtypes|ecpg)\.so.*
+PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir).*libpq\.so.*
 
 # initscript_base_name = cswpostgres_$(subst .,_,$(BASE_VERSION))
 initscript_base_name = cswpostgres_$(VERSION_NODOT)
 INITSMF = /etc$(prefix)/init\.d/$(initscript_base_name)
-USERGROUP = /etc/opt/csw/pkg/postgresql/cswusergroup_$(VERSION_NODOT)
+USERGROUP = /etc$(prefix)/pkg/postgresql/cswusergroup_$(VERSION_NODOT)
 PRESERVECONF = $(sysconfdir)/postgresql\.conf
 
 BIN_NAMES  = clusterdb
@@ -215,12 +215,24 @@ post-install-modulated:
 	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
 	@$(MAKECOOKIE)
 
+post-extract:
+	gsed -ie 's+@sysconfdir@+$(sysconfdir)+g' \
+		$(WORKDIR)/CSWpostgresql-$(BASE_VERSION_G).postinstall
+	gsed -ie 's+@PGDATA@+$(PGDATA)+g' \
+		$(WORKDIR)/CSWpostgresql-$(BASE_VERSION_G).postinstall
+	gsed -ie 's+@bindir@+$(bindir)+g' \
+		$(WORKDIR)/CSWpostgresql-$(BASE_VERSION_G).postinstall
+	gsed -ie 's+@VERSION_NODOT@+$(VERSION_NODOT)+g' \
+		$(WORKDIR)/CSWpostgresql-$(BASE_VERSION_G).postinstall
+	@$(MAKECOOKIE)
+
 post-merge:
 	ginstall -d $(PKGROOT)/etc$(prefix)/init.d
 	gsed \
 		-e 's+@PGDATA@+$(PGDATA)+g' \
 		-e 's+@sysconfdir@+$(sysconfdir)+g' \
 		-e 's+@bindir@+$(bindir)+g' \
+		-e 's+@VERSION_NODOT@+$(VERSION_NODOT)+g' \
 		< $(FILEDIR)/cswpostgres.tmpl \
 		> $(WORKDIR)/$(initscript_base_name)
 	ginstall \
