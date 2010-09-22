@@ -41,7 +41,6 @@ libdir_install = $(exec_prefix)/lib/$(pgsubdir)
 localstatedir = /var$(prefix)/$(pgsubdir)
 sysconfdir = /etc$(prefix)/$(pgsubdir)
 datadir = $(prefix)/share/$(pgsubdir)
-# TODO: docdir is not honoured, installation still goes to /opt/csw/share/doc/postgresql
 docdir = $(prefix)/share/doc/$(GARNAME)-$(BASE_VERSION)
 includedir = $(prefix)/include/$(pgsubdir)
 infodir = $(datadir)/info
@@ -151,8 +150,6 @@ TEST_TARGET = check
 # CSWpostgresql is a generic wrapper always pointing to the latest release
 PKGFILES_CSWpostgresql                        = NOFILES
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-doc  = $(PKGFILES_DOC)
-# Use this workaound until $(docdir) is honoured
-PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-doc += $(prefix)/share/doc.*
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-dev  = $(PKGFILES_DEVEL)
 
 PKGFILES_CSWlibpq-$(BASE_VERSION_G)           = $(call baseisadirs,$(libdir),libpq\.so(\.\d+)*)
@@ -255,10 +252,6 @@ post-merge:
 	ginstall -d $(PKGROOT)$(docdir)
 	# ginstall $(WORKDIR)/README-CSW.txt $(PKGROOT)$(docdir)
 	ginstall -m 755 -d $(PKGROOT)$(prefix)/bin
-	# TBD: Do alternatives here
-	#for b in $(BIN_NAMES); do \
-	#  gln -s ..$(version_dependent)/bin/$${b} $(PKGROOT)$(prefix)/bin/$${b}; \
-	#done
 	ginstall -d $(PKGROOT)$(PGDATA)
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
 	for L in $(notdir $(wildcard $(PKGROOT)$(libdir)/libpq.*)); do \
