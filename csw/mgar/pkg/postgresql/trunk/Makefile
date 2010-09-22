@@ -31,27 +31,25 @@ SPKG_SOURCEURL = http://www.postgresql.org/
 define BLURB
 endef
 
-version_dependent = /lib/$(GARNAME)/$(BASE_VERSION)
-bindir_install = $(prefix)$(version_dependent)/bin
-bindir = $(prefix)$(version_dependent)/bin
-sbindir_install = $(prefix)$(version_dependent)/sbin
-sbindir = $(prefix)$(version_dependent)/sbin
-libdir_install = $(prefix)$(version_dependent)/lib
+pgsubdir = $(GARNAME)$(BASE_VERSION_G)
+bindir_install = $(exec_prefix)/bin/$(pgsubdir)
+sbindir_install = $(exec_prefix)/sbin/$(pgsubdir)
+libdir_install = $(exec_prefix)/lib/$(pgsubdir)
 # libdir = $(prefix)$(version_dependent)/lib
 # Otherwise initdb can't find the right libraries, see:
 # http://archives.postgresql.org/pgsql-general/2010-01/msg00422.php
-libdir = $(abspath $(prefix)$(version_dependent)/$(MM_LIBDIR))
-localstatedir = /var$(prefix)/$(GARNAME)/$(BASE_VERSION)
-sysconfdir = /etc$(prefix)/$(GARNAME)/$(BASE_VERSION)
-datadir = $(prefix)/share/$(GARNAME)/$(BASE_VERSION)
+localstatedir = /var$(prefix)/$(pgsubdir)
+sysconfdir = /etc$(prefix)/$(pgsubdir)
+datadir = $(prefix)/share/$(pgsubdir)
+# TODO: docdir is not honoured, installation still goes to /opt/csw/share/doc/postgresql
 docdir = $(prefix)/share/doc/$(GARNAME)-$(BASE_VERSION)
-includedir = $(prefix)/include/$(GARNAME)/$(BASE_VERSION)
+includedir = $(prefix)/include/$(pgsubdir)
 infodir = $(datadir)/info
-libexecdir_install = $(prefix)/libexec/$(GARNAME)/$(BASE_VERSION)
+libexecdir_install = $(exec_prefix)/libexec/$(pgsubdir)
 lispdir = $(datadir)/emacs/site-lisp
 mandir = $(datadir)/man
-sharedstatedir = $(prefix)/share/$(GARNAME)/$(BASE_VERSION)
-sourcedir = $(prefix)/src/$(GARNAME)/$(BASE_VERSION)
+sharedstatedir = $(prefix)/share/$(pgsubdir)
+sourcedir = $(prefix)/src/$(pgsubdir)
 
 MIGRATE_FILES_CSWpostgresql-$(BASE_VERSION_G)    = postgresql.conf
 MIGRATE_DEST_DIR_CSWpostgresql-$(BASE_VERSION_G) = $(sysconfdir)
@@ -93,10 +91,7 @@ RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWosslrt
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWreadline
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWlibxslt
 RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWzlib
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)-dev  = CSWpostgresql-$(BASE_VERSION_G)
 
 CHECKPKG_OVERRIDES_CSWpostgresql += surplus-dependency|CSWpostgresql-84
@@ -131,7 +126,6 @@ BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-includes=/opt/csw/include
-CONFIGURE_ARGS += --with-library=$(abspath /opt/csw/lib/$(MM_LIBDIR))
 
 # # Perl support only in the 32-bit version
 # CONFIGURE_ARGS_isa-sparcv8 += --with-perl
@@ -154,13 +148,15 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
 SKIPTEST ?= 1
 TEST_TARGET = check
 
-PKGFILES_CSWpostgresql                        = $(prefix)/bin/.*
+# CSWpostgresql is a generic wrapper always pointing to the latest release
+PKGFILES_CSWpostgresql                        = NOFILES
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-doc  = $(PKGFILES_DOC)
+# Use this workaound until $(docdir) is honoured
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-doc += $(prefix)/share/doc.*
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-dev  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibpq-$(BASE_VERSION_G)           = $(PKGFILES_RT)
+
+PKGFILES_CSWlibpq-$(BASE_VERSION_G)           = $(call baseisadirs,$(libdir),libpq\.so(\.\d+)*)
 PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir)/64
-PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir).*lib(pq|pgtypes|ecpg)\.so.*
 
 # initscript_base_name = cswpostgres_$(subst .,_,$(BASE_VERSION))
 initscript_base_name = cswpostgres_$(VERSION_NODOT)
@@ -241,9 +237,17 @@ post-merge:
 	ginstall -d $(PKGROOT)$(docdir)
 	# ginstall $(WORKDIR)/README-CSW.txt $(PKGROOT)$(docdir)
 	ginstall -m 755 -d $(PKGROOT)$(prefix)/bin
-	for b in $(BIN_NAMES); do \
-	  gln -s ..$(version_dependent)/bin/$${b} $(PKGROOT)$(prefix)/bin/$${b}; \
-	done
+	# TBD: Do alternatives here
+	#for b in $(BIN_NAMES); do \
+	#  gln -s ..$(version_dependent)/bin/$${b} $(PKGROOT)$(prefix)/bin/$${b}; \
+	#done
 	ginstall -d $(PKGROOT)$(PGDATA)
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
+	for L in $(notdir $(wildcard $(PKGROOT)$(libdir)/libpq.*)); do \
+		gln -s $(pgsubdir)/$$L $(PKGROOT)$(libpath_install)/$$L; \
+	done
+	mkdir -p $(PKGROOT)$(libpath_install)/$(ISA_DEFAULT64)
+	for L in $(notdir $(wildcard $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libpq.*)); do \
+		gln -s ../$(pgsubdir)/$(ISA_DEFAULT64)/$$L $(PKGROOT)$(libpath_install)/$(ISA_DEFAULT64)/$$L; \
+	done
 	@$(MAKECOOKIE)
