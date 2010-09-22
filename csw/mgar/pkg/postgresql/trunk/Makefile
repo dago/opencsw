@@ -156,6 +156,7 @@ PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-doc += $(prefix)/share/doc.*
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-dev  = $(PKGFILES_DEVEL)
 
 PKGFILES_CSWlibpq-$(BASE_VERSION_G)           = $(call baseisadirs,$(libdir),libpq\.so(\.\d+)*)
+PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(call baseisadirs,$(libpath_install),libpq\.so(\.\d+)*)
 PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir)/64
 
 # initscript_base_name = cswpostgres_$(subst .,_,$(BASE_VERSION))
@@ -198,6 +199,23 @@ PROTOTYPE_USER_pgdata = postgres
 PROTOTYPE_GROUP_pgdata = sys
 PROTOTYPE_PERMS_pgdata = 0700
 PROTOTYPE_CLASS_pgdata = ugfiles
+
+# This is one of the rare cases where a protoype filter is needed.
+# Do not copy this for other Makefiles unless you understand exactly what it does!!
+# (explanation: It adds -isaexec to the isaexec-name of the binaries to be isaexec'ed)
+PROTOTYPE_FILTER = perl -npe 's,=/opt/csw/bin/isaexec,-isaexec=/opt/csw/bin/isaexec,'
+
+# ISAEXEC_FILES = $(addsuffix -isaexec,$(foreach B,$(BIN_NAMES),$(bindir_install)/$B))
+ALTERNATIVES_CSWpostgresql-$(BASE_VERSION_G) = $(GARNAME)$(BASE_VERSION_G)-32 $(GARNAME)$(BASE_VERSION_G)-64 $(GARNAME)$(BASE_VERSION_G)-auto
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-32 = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(ISA_DEFAULT)/$(firstword $(BIN_NAMES)) 100
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-32 += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$(ISA_DEFAULT)/$B)
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-64 = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(ISA_DEFAULT64)/$(firstword $(BIN_NAMES)) 200
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-64 += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$(ISA_DEFAULT64)/$B)
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-auto = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(firstword $(BIN_NAMES))-isaexec 300
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-auto += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$B-isaexec)
+
+# checkpkg does not detect this dependency automatically
+CHECKPKG_OVERRIDES_CSWpostgresql-84 += surplus-dependency|CSWalternatives
 
 include gar/category.mk
 
