@@ -1,4 +1,0 @@
-50c285b06a7843509d5a1d6ae7310153  0001-Detect-broken-unsetenv-at-unit-test-runtime.patch
-8f00dfd6a27eb8ab308014ef15bb1883  0001-Detect-setenv-unsetenv-skip-main-base_environ-test.patch
-cfb3d03f400a75503595795b60a05244  0001-Fix-getaddrinfo-with-protocol-unset-on-Solaris-9.patch
-dbc50f32af9f2ade151a0737e5edf205  libevent-2.0.4-alpha.tar.gz
