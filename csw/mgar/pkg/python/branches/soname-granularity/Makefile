@@ -78,6 +78,8 @@ PACKAGES += CSWpython
 PACKAGES += CSWpython-devel
 PACKAGES += CSWpython-test
 PACKAGES += CSWpython-tk
+PACKAGES += CSWlibpython25
+PACKAGES += CSWlibpython26
 
 INCOMPATIBLE_PKGS_CSWpython = CSWpydistutils
 
@@ -99,24 +101,35 @@ PKGFILES_CSWpython-test += $(libdir)/python/distutils/tests.*
 PKGFILES_CSWpython-test += $(libdir)/python/json/tests.*
 PKGFILES_CSWpython-test += $(libdir)/python/lib2to3/tests.*
 PKGFILES_CSWpython-test += $(libdir)/python/sqlite3/test.*
+PKGFILES_CSWlibpython25 += $(libdir)/libpython2\.5.*
+PKGFILES_CSWlibpython26 += $(libdir)/libpython2\.6.*
 
 ARCHALL_CSWpython-test = 1
 ARCHALL_CSWidle        = 1
 
-RUNTIME_DEP_PKGS_CSWidle          = CSWpython CSWpython-tk
+RUNTIME_DEP_PKGS_CSWidle         += CSWpython
+RUNTIME_DEP_PKGS_CSWidle         += CSWpython-tk
 RUNTIME_DEP_PKGS_CSWpython       += CSWbdb47
 RUNTIME_DEP_PKGS_CSWpython       += CSWbzip2
 RUNTIME_DEP_PKGS_CSWpython       += CSWgdbm
 RUNTIME_DEP_PKGS_CSWpython       += CSWggettextrt 
+RUNTIME_DEP_PKGS_CSWpython       += CSWlibpython26
 RUNTIME_DEP_PKGS_CSWpython       += CSWncurses
 RUNTIME_DEP_PKGS_CSWpython       += CSWosslrt
 RUNTIME_DEP_PKGS_CSWpython       += CSWreadline 
-RUNTIME_DEP_PKGS_CSWpython       += CSWsqlite3rt CSWzlib
+RUNTIME_DEP_PKGS_CSWpython       += CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWpython       += CSWzlib
+RUNTIME_DEP_PKGS_CSWpython-tk    += CSWlibpython26
 RUNTIME_DEP_PKGS_CSWpython-tk    += CSWpython
 RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtcl
 RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtk 
-RUNTIME_DEP_PKGS_CSWpython-devel  = CSWpython
+RUNTIME_DEP_PKGS_CSWpython-devel += CSWpython
 RUNTIME_DEP_PKGS_CSWpython-test  += CSWpython
+
+# There are packages depending on libpython2.5, and listing CSWpython as the
+# dependency.
+DEP_PKGS_CSWpython               += CSWlibpython25
+DEP_PKGS_CSWpython               += CSWlibpython26
 
 # This could be handled by automatic dependency detection
 CHECKPKG_OVERRIDES_CSWidle += surplus-dependency|CSWpython-tk
@@ -126,17 +139,21 @@ CATALOGNAME_CSWpython       = python
 CATALOGNAME_CSWpython-devel = python_devel
 CATALOGNAME_CSWpython-tk    = python_tk
 CATALOGNAME_CSWpython-test  = python_test
+CATALOGNAME_CSWlibpython25  = libpython25
+CATALOGNAME_CSWlibpython26  = libpython26
 
 SPKG_DESC_CSWidle         = Python IDE
 SPKG_DESC_CSWpython       = A high-level scripting language.
 SPKG_DESC_CSWpython-devel = Development Files for Python
 SPKG_DESC_CSWpython-tk    = Python Tk Interface (TkInter)
 SPKG_DESC_CSWpython-test  = Python Test modules
+SPKG_DESC_CSWlibpython25  = Python shared library (2.5)
+SPKG_DESC_CSWlibpython26  = Python shared library (2.6)
 
 LICENSE = LICENSE
 
 # These won't be fixed.
-CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWlibpython25 += file-with-bad-content
 
 # This is an exception, since these are original Python packages.
 CHECKPKG_OVERRIDES_CSWpython-test  += pkgname-does-not-start-with-CSWpy-
