@@ -1,5 +1,7 @@
 *** Important information - please make sure you read this ! ***
 
+$Id$
+
 *** Migrating from older versions ***
 
 If you have upgraded from a previous 8.0, 8.1 or 8.2 version of PostgreSQL, 

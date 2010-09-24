@@ -1,6 +1,8 @@
 # Copyright 2009 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+#
+# Based on the Ubuntu PostgreSQL package.
 
 # This BUILD is NOT READY!  It needs work before it's usable.
 
@@ -14,18 +16,17 @@
 # example of it.   (gmake repackage may produce the right output)
 
 GARNAME = postgresql
-BASE_VERSION = 8.4
+BASE_VERSION = 9.0
 # How to make one automatically?
-VERSION_NODOT = 8_4
-BASE_VERSION_G = 84
-PATCHLEVEL = 4
+VERSION_NODOT = 9_0
+BASE_VERSION_G = 90
+PATCHLEVEL = 0
 GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
-DESCRIPTION = An advanced open source database
 SPKG_SOURCEURL = http://www.postgresql.org/
 
 define BLURB
@@ -40,12 +41,12 @@ libdir_install = $(prefix)$(version_dependent)/lib
 # libdir = $(prefix)$(version_dependent)/lib
 # Otherwise initdb can't find the right libraries, see:
 # http://archives.postgresql.org/pgsql-general/2010-01/msg00422.php
-libdir = $(abspath $(prefix)$(version_dependent)/$(MM_LIBDIR))
+libdir = $(abspath $(prefix)$(version_dependent)/lib/$(MM_LIBDIR))
 localstatedir = /var$(prefix)/$(GARNAME)/$(BASE_VERSION)
-sysconfdir = /etc$(prefix)/$(GARNAME)/$(BASE_VERSION)
+sysconfdir = /etc$(prefix)/postgresql-common
 datadir = $(prefix)/share/$(GARNAME)/$(BASE_VERSION)
-docdir = $(prefix)/share/doc/$(GARNAME)-$(BASE_VERSION)
-includedir = $(prefix)/include/$(GARNAME)/$(BASE_VERSION)
+docdir = $(prefix)/share/doc/$(GARNAME)-doc-$(BASE_VERSION)
+includedir = $(prefix)/include/postgresql/
 infodir = $(datadir)/info
 libexecdir_install = $(prefix)/libexec/$(GARNAME)/$(BASE_VERSION)
 lispdir = $(datadir)/emacs/site-lisp
@@ -62,11 +63,11 @@ DISTFILES += cswpostgres.tmpl
 DISTFILES += cswusergroup.tmpl
 DISTFILES += postgresql.conf.tmpl
 DISTFILES += README-CSW.txt
-# DISTFILES += CSWpostgresql-$(BASE_VERSION_G).postinstall
-include files/CSWpostgresql-$(BASE_VERSION_G).postinstall
+DISTFILES += CSWpostgresql-$(BASE_VERSION_G).postinstall
 
 PACKAGES += CSWpostgresql
-PACKAGES += CSWlibpq-$(BASE_VERSION_G)
+PACKAGES += CSWlibpq
+PACKAGES += CSWlibpq-devel
 PACKAGES += CSWpostgresql-$(BASE_VERSION_G)
 PACKAGES += CSWpostgresql-$(BASE_VERSION_G)-dev
 PACKAGES += CSWpostgresql-$(BASE_VERSION_G)-doc
@@ -74,36 +75,36 @@ PACKAGES += CSWpostgresql-$(BASE_VERSION_G)-doc
 CATALOGNAME_CSWpostgresql-$(BASE_VERSION_G)      = postgresql_$(BASE_VERSION_G)
 CATALOGNAME_CSWpostgresql-$(BASE_VERSION_G)-doc  = postgresql_$(BASE_VERSION_G)_doc
 CATALOGNAME_CSWpostgresql-$(BASE_VERSION_G)-dev  = postgresql_$(BASE_VERSION_G)_devel
-CATALOGNAME_CSWlibpq-$(BASE_VERSION_G)           = libpq$(BASE_VERSION_G)
+CATALOGNAME_CSWlibpq                             = libpq
 CATALOGNAME_CSWpostgresql                        = postgresql
 
 SPKG_DEST_CSWpostgresql                       = An advanced open source database, a metapackage
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)     = An advanced open source database, version $(BASE_VERSION).x
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)-doc = PostgreSQL $(BASE_VERSION).x Documentation
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)-dev = PostgreSQL $(BASE_VERSION).x Developer Files
-SPKG_DESC_CSWlibpq-$(BASE_VERSION_G)          = PostgreSQL $(BASE_VERSION).x Libraries
+SPKG_DESC_CSWlibpq                            = PostgreSQL C client library (built from $(BASE_VERSION).x sources)
+SPKG_DESC_CSWlibpq-devel                      = PostgreSQL C client headers (built from $(BASE_VERSION).x sources)
 
 RUNTIME_DEP_PKGS_CSWpostgresql                        = CSWpostgresql-$(BASE_VERSION_G)
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibgnugetopt
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibpq-$(BASE_VERSION_G)
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibpq
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibxml2
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibxslt
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWosslrt
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWreadline
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibpq-$(BASE_VERSION_G)          += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibpq                            += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWlibpq                            += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibpq                            += CSWlibxslt
+RUNTIME_DEP_PKGS_CSWlibpq                            += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibpq                            += CSWzlib
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)-dev  = CSWpostgresql-$(BASE_VERSION_G)
 
-CHECKPKG_OVERRIDES_CSWpostgresql += surplus-dependency|CSWpostgresql-84
-CHECKPKG_OVERRIDES_CSWpostgresql-84-dev += surplus-dependency|CSWpostgresql-84
+CHECKPKG_OVERRIDES_CSWpostgresql += surplus-dependency|CSWpostgresql-90
+CHECKPKG_OVERRIDES_CSWpostgresql-90-dev += surplus-dependency|CSWpostgresql-90
 
 ARCHALL_CSWpostgresql                       = 1
-ARCHALL_CSWpostgresql-$(BASE_VERSION_G)-doc = 1
 ARCHALL_CSWpostgresql-$(BASE_VERSION_G)-doc = 1
 
 LICENSE = COPYRIGHT
@@ -154,18 +155,45 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
 SKIPTEST ?= 1
 TEST_TARGET = check
 
-PKGFILES_CSWpostgresql                        = $(prefix)/bin/.*
+PKGFILES_CSWpostgresql                        = NOFILES
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-doc  = $(PKGFILES_DOC)
-PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-doc += $(prefix)/share/doc.*
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-dev  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibpq-$(BASE_VERSION_G)           = $(PKGFILES_RT)
-PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir)/64
-PKGFILES_CSWlibpq-$(BASE_VERSION_G)          += $(libdir).*lib(pq|pgtypes|ecpg)\.so.*
+
+PKGFILES_CSWlibpq  = $(call baseisadirs,$(libdir),libpq\.so(\.\d+)*)
+PKGFILES_CSWlibpq += $(call baseisadirs,$(libpath_install),libpq\.so(\.\d+)*)
+PKGFILES_CSWlibpq += $(libdir)/64
+
+#
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/internal/.*
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/libpq-fe.h
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/libpq-events.h
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/libpq/libpq-fs.h
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/pg_config.*.h
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/postgres_ext.h
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/catalog/pg_type.h /usr/include/postgresql/catalog
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/catalog/genbki.h /usr/include/postgresql/catalog
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/nodes/nodes.h /usr/include/postgresql/nodes
+# PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/utils/(elog|errcodes|palloc).h /usr/include/postgresql/utils
+# Need to move these.
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/utils/(elog|errcodes|palloc).h
+# PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/{c,pg_config,pg_config_manual,pg_config_os,port,pg_trace}.h /usr/include/postgresql/
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/(c|pg_config|pg_config_manual|pg_config_os|port|pg_trace}.h
+# PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/postgres{,_fe,_ext}.h /usr/include/postgresql/
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/postgres(|_fe|_ext}.h
+# PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/mb/pg_wchar.h /usr/include/postgresql/mb
+PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/mb/pg_wchar.h
+PKGFILES_CSWlibpq-devel += $(prefix)/lib/libpq.so
+# PKGFILES_CSWlibpq-devel += $(prefix)/lib/postgresql/8.4/bin/pg_config usr/bin
+# Needs to be moved
+PKGFILES_CSWlibpq-devel += $(prefix)/bin/pg_config
+PKGFILES_CSWlibpq-devel += $(prefix)/share/postgresql/8.4/man/man1/pg_config.1
+PKGFILES_CSWlibpq-devel += $(prefix)/share/locale/*/LC_MESSAGES/pg_config-8.4.mo
+
 
 # initscript_base_name = cswpostgres_$(subst .,_,$(BASE_VERSION))
 initscript_base_name = cswpostgres_$(VERSION_NODOT)
 INITSMF = /etc$(prefix)/init\.d/$(initscript_base_name)
-USERGROUP = /etc/opt/csw/pkg/postgresql/cswusergroup_$(VERSION_NODOT)
+USERGROUP = /etc$(prefix)/pkg/postgresql/cswusergroup_$(VERSION_NODOT)
 PRESERVECONF = $(sysconfdir)/postgresql\.conf
 
 BIN_NAMES  = clusterdb
@@ -203,6 +231,25 @@ PROTOTYPE_GROUP_pgdata = sys
 PROTOTYPE_PERMS_pgdata = 0700
 PROTOTYPE_CLASS_pgdata = ugfiles
 
+EXPANDVARS  = CSWpostgresql-$(BASE_VERSION_G).postinstall
+EXPANDVARS += cswpostgres.tmpl
+# This is one of the rare cases where a protoype filter is needed.
+# Do not copy this for other Makefiles unless you understand exactly what it does!!
+# (explanation: It adds -isaexec to the isaexec-name of the binaries to be isaexec'ed)
+PROTOTYPE_FILTER = perl -npe 's,=/opt/csw/bin/isaexec,-isaexec=/opt/csw/bin/isaexec,'
+
+# ISAEXEC_FILES = $(addsuffix -isaexec,$(foreach B,$(BIN_NAMES),$(bindir_install)/$B))
+ALTERNATIVES_CSWpostgresql-$(BASE_VERSION_G) = $(GARNAME)$(BASE_VERSION_G)-32 $(GARNAME)$(BASE_VERSION_G)-64 $(GARNAME)$(BASE_VERSION_G)-auto
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-32 = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(ISA_DEFAULT)/$(firstword $(BIN_NAMES)) 100
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-32 += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$(ISA_DEFAULT)/$B)
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-64 = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(ISA_DEFAULT64)/$(firstword $(BIN_NAMES)) 200
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-64 += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$(ISA_DEFAULT64)/$B)
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-auto = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(firstword $(BIN_NAMES))-isaexec 300
+ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-auto += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$B-isaexec)
+
+# checkpkg does not detect this dependency automatically
+CHECKPKG_OVERRIDES_CSWpostgresql-$(BASE_VERSION_G) += surplus-dependency|CSWalternatives
+
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
@@ -213,18 +260,26 @@ post-build-modulated:
 
 post-install-modulated:
 	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
+	ginstall -d -m 755 $(DESTDIR)$(prefix)/bin
+	[ -r $(DESTDIR)$(bindir)/pg_config ] && \
+	gmv -v $(DESTDIR)$(bindir)/pg_config $(DESTDIR)$(prefix)/bin || true
+	ginstall -d -m 755 $(DESTDIR)/include/postgresql/utils
+	for f in elog.h errcodes.h palloc.h; do \
+		[ -r $(DESTDIR)$(includedir)/utils/$${f} ] && \
+			gmv -v $(DESTDIR)$(includedir)/utils/$${f} \
+			$(DESTDIR)$(prefix)/include/postgresql/utils/ || true; \
+	done
+	for f in c.h pg_config.h pg_config_manual.h pg_config_os,port.h pg_trace.h ; do \
+		[ -f $(DESTDIR)$(prefix)/include/postgresql/8.4/server/$${f} ] && \
+		gmv -v $(DESTDIR)$(prefix)/include/postgresql/8.4/server/$${f} \
+			$(DESTDIR)/$(prefix)/include/postgresql/ || true; \
+	done
 	@$(MAKECOOKIE)
 
 post-merge:
 	ginstall -d $(PKGROOT)/etc$(prefix)/init.d
-	gsed \
-		-e 's+@PGDATA@+$(PGDATA)+g' \
-		-e 's+@sysconfdir@+$(sysconfdir)+g' \
-		-e 's+@bindir@+$(bindir)+g' \
-		< $(FILEDIR)/cswpostgres.tmpl \
-		> $(WORKDIR)/$(initscript_base_name)
 	ginstall \
-		$(WORKDIR)/$(initscript_base_name) \
+		$(WORKDIR)/cswpostgres.tmpl \
 		$(PKGROOT)/etc$(prefix)/init.d/$(initscript_base_name)
 	ginstall -d $(PKGROOT)/etc$(prefix)/pkg/$(GARNAME)
 	gsed -e 's+@PGDATA@+$(PGDATA)+g' \
@@ -241,9 +296,16 @@ post-merge:
 	ginstall -d $(PKGROOT)$(docdir)
 	# ginstall $(WORKDIR)/README-CSW.txt $(PKGROOT)$(docdir)
 	ginstall -m 755 -d $(PKGROOT)$(prefix)/bin
-	for b in $(BIN_NAMES); do \
-	  gln -s ..$(version_dependent)/bin/$${b} $(PKGROOT)$(prefix)/bin/$${b}; \
-	done
+	# for b in $(BIN_NAMES); do \
+	#   gln -s ..$(version_dependent)/bin/$${b} $(PKGROOT)$(prefix)/bin/$${b}; \
+	# done
 	ginstall -d $(PKGROOT)$(PGDATA)
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
+	for L in $(notdir $(wildcard $(PKGROOT)$(libdir)/libpq.*)); do \
+		gln -s $(pgsubdir)/$$L $(PKGROOT)$(libpath_install)/$$L; \
+	done
+	mkdir -p $(PKGROOT)$(libpath_install)/$(ISA_DEFAULT64)
+	for L in $(notdir $(wildcard $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libpq.*)); do \
+		gln -s ../$(pgsubdir)/$(ISA_DEFAULT64)/$$L $(PKGROOT)$(libpath_install)/$(ISA_DEFAULT64)/$$L; \
+	done
 	@$(MAKECOOKIE)

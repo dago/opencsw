@@ -23,41 +23,9 @@
 
 # Defaults
 [ -z "${PGDATA}" ] && PGDATA=@PGDATA@
-[ -z "${PGCTL}" ] && PGCTL=@bindir@/sparcv8/pg_ctl
-[ -z "${PGINIT}" ] && PGINIT=@bindir@/sparcv8/initdb
+[ -z "${PGCTL}" ] && PGCTL=@bindir@/pg_ctl
+[ -z "${PGINIT}" ] && PGINIT=@bindir@/initdb
 
-
-# The following attempts to catch any mistakes in the server
-# version - it checks if the 64-bit server was last run. If so,
-# it forces the 64-bit server, otherwise it won't start up!
-# And vice-versa for the 32-bit server...
-#
-# This version doesn't check the i386/amd64 architectures.
-if [ -f "${PGDATA}/postmaster.opts" ]; then
-  if grep 'sparcv9' ${PGDATA}/postmaster.opts > /dev/null; then
-    echo ${PGCTL} | grep "sparcv8" > /dev/null
-    if [ $? -eq 0 ]; then
-      echo "Warning: 32-bit server was specified in /etc/init.d/cswpostgres,"
-      echo "         but 64-bit version was last run. Using 64-bit server..."
-    fi
-    PGCTL=@bindir@/sparcv9/pg_ctl
-    PGINIT=@bindir@/sparcv9/initdb
-  elif grep 'sparcv8' ${PGDATA}/postmaster.opts > /dev/null; then
-    # Detected 32-bit server last used
-    echo "${PGCTL}" | grep "sparcv8" > /dev/null
-    if [ $? -ne 0 ]; then
-      echo "Warning: 64-bit server was specified in /etc/init.d/cswpostgres,"
-      echo "         but 32-bit version was last run. Using 32-bit server..."
-    fi
-    PGCTL=@bindir@/sparcv8/pg_ctl
-    PGINIT=@bindir@/sparcv8/initdb
-  else
-  	echo "Couldn't detect whether the previously run version was 32 or 64-bit."
-  	echo "Running the default."
-  	PGCTL=@bindir@/pg_ctl
-  	PGINIT=@bindir@/initdb
-  fi
-fi
 
 # Exit if postgres user hasn't been created.
 # FIXME: This bit of code is old. It might be obsolete.
@@ -107,11 +75,11 @@ init)
      # create and initialise data directory
      echo "Creating PostgreSQL data directory at ${PGDATA}..."
      # Create it, unless it's already there and empty
-     [ -d ${PGDATA} -a `ls -l ${PGDATA} 2> /dev/null | wc -l` -eq 1 ] || mkdir -p "${PGDATA}"
+     [ -d "${PGDATA}" -a `ls -l ${PGDATA} 2> /dev/null | wc -l` -eq 1 ] || mkdir -p "${PGDATA}"
      chown postgres "${PGDATA}"
      chmod 0700 "${PGDATA}"
      echo "Initialising PostgreSQL database..."
-     su postgres -c "${PGINIT} -D ${PGDATA} -E utf-8"
+     su postgres -c "\"${PGINIT}\" -D \"${PGDATA}\" -E utf-8"
      ;;
 
 *)
