@@ -1,0 +1,11 @@
+--- Python-2.6.1/Tools/faqwiz/faqconf.py	2005-12-11 20:02:24.000000000 -0600
++++ faqconf.py	2009-02-08 18:17:58.938102953 -0600
+@@ -21,7 +21,7 @@
+ OWNEREMAIL = "nobody@anywhere.org"      # Email for feedback
+ HOMEURL = "http://www.python.org"       # Related home page
+ HOMENAME = "Python home"                # Name of related home page
+-RCSBINDIR = "/usr/local/bin/"           # Directory containing RCS commands
++RCSBINDIR = "/opt/csw/bin/"           # Directory containing RCS commands
+                                         # (must end in a slash)
+ 
+ # Parameters you can normally leave alone
