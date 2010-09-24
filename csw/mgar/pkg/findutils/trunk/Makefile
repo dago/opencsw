@@ -71,11 +71,6 @@ include gar/category.mk
 # configure:37777: result: /opt/csw/lib/libintl.so -R/opt/csw/lib
 #
 
-
-pre-configure-modulated:
-	cd $(WORKSRC) && bash ./import-gnulib.sh
-	@$(MAKECOOKIE)
-
 post-configure-modulated:
 	@perl -pi -e 's|-R/opt/csw/lib||' $(WORKSRC)/*/Makefile
 	@$(MAKECOOKIE)
