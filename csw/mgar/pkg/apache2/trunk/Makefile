@@ -18,11 +18,10 @@ LICENSE = LICENSE
 
 # Build multiple mpm's and merge them all into one install
 EXTRA_MODULATORS = MPM
-MODULATIONS_MPM = prefork worker event
+MODULATIONS_MPM = prefork worker
 
 MERGE_SCRIPTS_isa-default-mpm-prefork = copy-all
 MERGE_SCRIPTS_isa-default-mpm-worker = copy-all
-MERGE_SCRIPTS_isa-default-mpm-event = copy-all
 
 # Visitor information
 SPKG_SOURCEURL = http://httpd.apache.org/
@@ -79,10 +78,9 @@ EXTRA_LIB = $(prefix)/bdb48/lib
 # the Makefile.
 INITSMF = /etc/opt/csw/init.d/cswapache2
 
-ALTERNATIVES_CSWapache2 = prefork worker event
+ALTERNATIVES_CSWapache2 = prefork worker
 ALTERNATIVE_prefork = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.prefork 100
 ALTERNATIVE_worker = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.worker 50
-ALTERNATIVE_event = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.event 40
 
 # Build Configuration
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
