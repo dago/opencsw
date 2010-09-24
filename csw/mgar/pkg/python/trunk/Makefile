@@ -136,8 +136,7 @@ SPKG_DESC_CSWpython-test  = Python Test modules
 LICENSE = LICENSE
 
 # These won't be fixed.
-CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/export/medusa|root/opt/csw/lib/libpython2.5.so.1.0
-CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/opt/build|root/opt/csw/lib/libpython2.5.so.1.0
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content
 
 # This is an exception, since these are original Python packages.
 CHECKPKG_OVERRIDES_CSWpython-test  += pkgname-does-not-start-with-CSWpy-
