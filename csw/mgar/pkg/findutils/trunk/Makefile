@@ -1,5 +1,3 @@
-# Todo
-# * Non-maintainer upload, needs to be checked by Chris
 GARNAME = findutils
 GARVERSION = 4.4.2
 CATEGORIES = utils
@@ -37,9 +35,6 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw
 # because that's what -fast does if it's last in the list.
 OPT_FLAGS_SOS = -fast -xnolibmopt
 
-EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis
-EXTRA_BUILD_ISAS_i386  = pentium_pro
-
 CHECKPKG_OVERRIDES_CSWfindutils += surplus-dependency|CSWiconv
 
 # Test target requires GNU diff
@@ -61,8 +56,9 @@ TEST_ARGS = "PATH=/opt/csw/gnu:$$PATH"
 # FAIL: parent.old-O2, /home/gmarler/svnwork/findutils/trunk/work/solaris9-sparc/build-isa-sparcv8/findutils-4.4.2/find/testsuite/../oldfind: .: Permission denied
 # FAIL: parent.old-O3, /home/gmarler/svnwork/findutils/trunk/work/solaris9-sparc/build-isa-sparcv8/findutils-4.4.2/find/testsuite/../oldfind: .: Permission denied
 
-# Skipping until the above are rectified - if they ever are
-SKIPTEST = 1
+# Skip tests until the following is resolved, or we can backport the fixes as patches
+#   https://savannah.gnu.org/bugs/?30883
+SKIPTEST ?= 1
 
 include gar/category.mk
 
@@ -75,7 +71,20 @@ include gar/category.mk
 # configure:37777: result: /opt/csw/lib/libintl.so -R/opt/csw/lib
 #
 
+
+pre-configure-modulated:
+	cd $(WORKSRC) && bash ./import-gnulib.sh
+	@$(MAKECOOKIE)
+
 post-configure-modulated:
 	@perl -pi -e 's|-R/opt/csw/lib||' $(WORKSRC)/*/Makefile
+	@$(MAKECOOKIE)
+
+#
+# Provide /opt/csw/gnu links via this target
+#
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(prefix)/gnu
+	$(foreach G,$(notdir $(wildcard $(DESTDIR)$(bindir)/*)),ln -s ../bin/$G $(DESTDIR)$(prefix)/gnu/$(patsubst g%,%,$G);)
 	@$(MAKECOOKIE)
 
