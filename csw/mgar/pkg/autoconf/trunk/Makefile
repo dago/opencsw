@@ -1,5 +1,5 @@
 GARNAME = autoconf
-GARVERSION = 2.67
+GARVERSION = 2.68
 CATEGORIES = devel
 
 DESCRIPTION = GNU auto-configuration tool
@@ -27,7 +27,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 # Tests take a loooooonnng time.
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
 
 EXTRA_MERGE_EXCLUDE_FILES = $(infodir)/standards.info
 
