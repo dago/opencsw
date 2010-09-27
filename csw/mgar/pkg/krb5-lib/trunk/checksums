@@ -1,5 +1,1 @@
-ddcb250250f96a457798b469b3a813e8  0002-libintl-for-kproplog.patch
-2f4671672bce98d1157b49ba7b6846c3  0003-local-libraries-first-when-linking.patch
-f0bec7c3f02810838559e1dd764b111e  0004-libkdb_ldap-isblank-define.patch
-9f7b3402b4731a7fa543db193bf1b564  krb5-1.7-signed.tar
-6c2c7718f024c85f66fdc26398090c23  patch-man2html-perl.patch
+7c5f38e31ee744cb538eed2301096b93  krb5-1.8.3-signed.tar
