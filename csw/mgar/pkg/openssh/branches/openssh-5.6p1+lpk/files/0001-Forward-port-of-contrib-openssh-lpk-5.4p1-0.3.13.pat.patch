@@ -1,19 +1,8 @@
-From bf2274fb19b2da6b8b3b6c51111d912e19b3128c Mon Sep 17 00:00:00 2001
+From d0af21b088353701c2bcf102c10bd3ec23059c89 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Wed, 21 Apr 2010 11:14:45 +0200
-Subject: [PATCH] This is a forward-port of the OpenSSH LPK support patch.
+Date: Mon, 27 Sep 2010 11:12:38 +0200
+Subject: [PATCH] Forward-port of contrib-openssh-lpk-5.4p1-0.3.13.patch
 
-It adds support for storing OpenSSH public keys in LDAP. It also supports
-grouping of machines in the LDAP data to limit users to specific machines.
-
-The latest homepage for the LPK project is:
-http://code.google.com/p/openssh-lpk/
-
-The 0.3.10 version of the patch includes a fix for 64-bit platforms, as
-discovered by Gentoo, where the bind timeout and search timeout values were not
-being parsed correctly: http://bugs.gentoo.org/210110
-
-Forward-ported-from: openssh-lpk-5.1p1-0.3.10.patch
 ---
  Makefile.in                 |    2 +-
  README.lpk                  |  267 ++++++++++++++++++++
@@ -22,17 +11,18 @@ Forward-ported-from: openssh-lpk-5.1p1-0.3.10.patch
  config.h.in                 |    3 +
  configure                   |   81 ++++++
  configure.ac                |   32 +++
- ldapauth.c                  |  575 +++++++++++++++++++++++++++++++++++++++++++
- ldapauth.h                  |  124 ++++++++++
+ ldapauth.c                  |  574 +++++++++++++++++++++++++++++++++++++++++++
+ ldapauth.h                  |  127 ++++++++++
  lpk-user-example.txt        |  117 +++++++++
  openssh-lpk_openldap.schema |   19 ++
  openssh-lpk_sun.schema      |   21 ++
- servconf.c                  |  169 +++++++++++++
+ servconf.c                  |  194 +++++++++++++++
  servconf.h                  |    7 +
  sshd.c                      |   14 +
- sshd_config                 |   15 ++
+ sshd_config                 |   16 ++
  sshd_config.5               |   56 +++++
- 17 files changed, 1660 insertions(+), 1 deletions(-)
+ version.h                   |    3 +-
+ 18 files changed, 1690 insertions(+), 2 deletions(-)
  create mode 100644 README.lpk
  create mode 100644 ldapauth.c
  create mode 100644 ldapauth.h
@@ -41,7 +31,7 @@ Forward-ported-from: openssh-lpk-5.1p1-0.3.10.patch
  create mode 100644 openssh-lpk_sun.schema
 
 diff --git a/Makefile.in b/Makefile.in
-index 69e3567..b15d85d 100644
+index 5654d43..174c0cd 100644
 --- a/Makefile.in
 +++ b/Makefile.in
 @@ -91,7 +91,7 @@ SSHDOBJS=sshd.o auth-rhosts.o auth-passwd.o auth-rsa.o auth-rh-rsa.o \
@@ -327,7 +317,7 @@ index 0000000..d0b6de0
 +  - Eric AUGE <eau@phear.org>
 +  - Andrea Barisani <andrea@inversepath.com>
 diff --git a/auth-rsa.c b/auth-rsa.c
-index 65571a8..107fcaf 100644
+index 56702d1..49909aa 100644
 --- a/auth-rsa.c
 +++ b/auth-rsa.c
 @@ -177,10 +177,96 @@ auth_rsa_key_allowed(struct passwd *pw, BIGNUM *client_n, Key **rkey)
@@ -428,12 +418,12 @@ index 65571a8..107fcaf 100644
  	file = authorized_keys_file(pw);
  	debug("trying public RSA key file %s", file);
 diff --git a/auth2-pubkey.c b/auth2-pubkey.c
-index 51aa774..7a3a27b 100644
+index 35cf79c..4bd6e05 100644
 --- a/auth2-pubkey.c
 +++ b/auth2-pubkey.c
-@@ -58,6 +58,10 @@
- #include "misc.h"
+@@ -59,6 +59,10 @@
  #include "authfile.h"
+ #include "match.h"
  
 +#ifdef WITH_LDAP_PUBKEY
 +#include "ldapauth.h"
@@ -442,7 +432,7 @@ index 51aa774..7a3a27b 100644
  /* import */
  extern ServerOptions options;
  extern u_char *session_id2;
-@@ -187,10 +191,79 @@ user_key_allowed2(struct passwd *pw, Key *key, char *file)
+@@ -265,10 +269,79 @@ user_key_allowed2(struct passwd *pw, Key *key, char *file)
  	u_long linenum = 0;
  	Key *found;
  	char *fp;
@@ -455,11 +445,11 @@ index 51aa774..7a3a27b 100644
  	temporarily_use_uid(pw);
  
 +#ifdef WITH_LDAP_PUBKEY
-+ 	found_key = 0;
-+ 	/* allocate a new key type */
-+ 	found = key_new(key->type);
++	found_key = 0;
++	/* allocate a new key type */
++	found = key_new(key->type);
 + 
-+ 	/* first check if the options is enabled, then try.. */
++	/* first check if the options is enabled, then try.. */
 +	if (options.lpk.on) {
 +	    debug("[LDAP] trying LDAP first uid=%s",pw->pw_name);
 +	    if (ldap_ismember(&options.lpk, pw->pw_name) > 0) {
@@ -523,10 +513,10 @@ index 51aa774..7a3a27b 100644
  	f = auth_openkeyfile(file, pw, options.strict_modes);
  
 diff --git a/config.h.in b/config.h.in
-index a61dec6..eba6884 100644
+index 4ff407f..18b1162 100644
 --- a/config.h.in
 +++ b/config.h.in
-@@ -575,6 +575,9 @@
+@@ -578,6 +578,9 @@
  /* Define to 1 if you have the <linux/if_tun.h> header file. */
  #undef HAVE_LINUX_IF_TUN_H
  
@@ -537,10 +527,10 @@ index a61dec6..eba6884 100644
  #undef HAVE_LOGIN
  
 diff --git a/configure b/configure
-index 7c19fc2..8ebf2e1 100755
+index ef3bb0f..55ce9b8 100755
 --- a/configure
 +++ b/configure
-@@ -1340,6 +1340,7 @@ Optional Packages:
+@@ -1341,6 +1341,7 @@ Optional Packages:
    --with-tcp-wrappers[=PATH] Enable tcpwrappers support (optionally in PATH)
    --with-libedit[=PATH]   Enable libedit support for sftp
    --with-audit=module     Enable EXPERIMENTAL audit support (modules=debug,bsm)
@@ -548,7 +538,7 @@ index 7c19fc2..8ebf2e1 100755
    --with-ssl-dir=PATH     Specify path to OpenSSL installation
    --without-openssl-header-check Disable OpenSSL version consistency check
    --with-ssl-engine       Enable OpenSSL (hardware) ENGINE support
-@@ -12845,6 +12846,85 @@ echo "$as_me: error: Unknown audit module $withval" >&2;}
+@@ -12985,6 +12986,85 @@ echo "$as_me: error: Unknown audit module $withval" >&2;}
  fi
  
  
@@ -634,7 +624,7 @@ index 7c19fc2..8ebf2e1 100755
  
  
  
-@@ -30786,6 +30866,7 @@ echo "                   SELinux support: $SELINUX_MSG"
+@@ -30921,6 +31001,7 @@ echo "                   SELinux support: $SELINUX_MSG"
  echo "                 Smartcard support: $SCARD_MSG"
  echo "                     S/KEY support: $SKEY_MSG"
  echo "              TCP Wrappers support: $TCPW_MSG"
@@ -643,10 +633,10 @@ index 7c19fc2..8ebf2e1 100755
  echo "                   libedit support: $LIBEDIT_MSG"
  echo "  Solaris process contract support: $SPC_MSG"
 diff --git a/configure.ac b/configure.ac
-index a9960a7..d3d85ca 100644
+index 637e7b5..e4201e7 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1323,6 +1323,37 @@ AC_ARG_WITH(audit,
+@@ -1346,6 +1346,37 @@ AC_ARG_WITH(audit,
  	esac ]
  )
  
@@ -684,7 +674,7 @@ index a9960a7..d3d85ca 100644
  dnl    Checks for library functions. Please keep in alphabetical order
  AC_CHECK_FUNCS( \
  	arc4random \
-@@ -4185,6 +4216,7 @@ echo "                   SELinux support: $SELINUX_MSG"
+@@ -4188,6 +4219,7 @@ echo "                   SELinux support: $SELINUX_MSG"
  echo "                 Smartcard support: $SCARD_MSG"
  echo "                     S/KEY support: $SKEY_MSG"
  echo "              TCP Wrappers support: $TCPW_MSG"
@@ -694,10 +684,10 @@ index a9960a7..d3d85ca 100644
  echo "  Solaris process contract support: $SPC_MSG"
 diff --git a/ldapauth.c b/ldapauth.c
 new file mode 100644
-index 0000000..133483e
+index 0000000..cf1e7f0
 --- /dev/null
 +++ b/ldapauth.c
-@@ -0,0 +1,575 @@
+@@ -0,0 +1,574 @@
 +/* 
 + * $Id: openssh-lpk-4.3p1-0.3.7.patch,v 1.3 2006/04/18 15:29:09 eau Exp $
 + */
@@ -734,11 +724,6 @@ index 0000000..133483e
 +
 +#include "ldapauth.h"
 +#include "log.h"
-+
-+static char *attrs[] = {
-+    PUBKEYATTR,
-+    NULL
-+};
 +
 +/* filter building infos */
 +#define FILTER_GROUP_PREFIX "(&(objectclass=posixGroup)"
@@ -1073,6 +1058,10 @@ index 0000000..133483e
 +    LDAPMessage *res, *e;
 +    char * filter;
 +    int i;
++    char *attrs[] = {
++      l->pub_key_attr,
++      NULL
++    };
 +
 +    if ((!k) || (!l))
 +         return NULL;
@@ -1124,7 +1113,7 @@ index 0000000..133483e
 +        debug("[LDAP] duplicate entries, using the FIRST entry returned");
 +
 +    e = ldap_first_entry(l->ld, res);
-+    k->keys = ldap_get_values_len(l->ld, e, PUBKEYATTR);
++    k->keys = ldap_get_values_len(l->ld, e, l->pub_key_attr);
 +    k->num = ldap_count_values_len(k->keys);
 +
 +    ldap_msgfree(res);
@@ -1275,10 +1264,10 @@ index 0000000..133483e
 +#endif /* WITH_LDAP_PUBKEY */
 diff --git a/ldapauth.h b/ldapauth.h
 new file mode 100644
-index 0000000..ba70958
+index 0000000..337714d
 --- /dev/null
 +++ b/ldapauth.h
-@@ -0,0 +1,124 @@
+@@ -0,0 +1,127 @@
 +/*
 + * $Id: openssh-lpk-4.3p1-0.3.7.patch,v 1.3 2006/04/18 15:29:09 eau Exp $ 
 + */
@@ -1328,6 +1317,8 @@ index 0000000..ba70958
 +#define _DEFAULT_STI_TOKEN "LpkSearchTimelimit"
 +#define _DEFAULT_LDP_TOKEN "LpkLdapConf"
 +
++#define _DEFAULT_PUB_TOKEN "LpkPubKeyAttr"
++
 +/* default options */
 +#define _DEFAULT_LPK_ON 0
 +#define _DEFAULT_LPK_SERVERS NULL
@@ -1341,6 +1332,7 @@ index 0000000..ba70958
 +#define _DEFAULT_LPK_BTIMEOUT 10
 +#define _DEFAULT_LPK_STIMEOUT 10
 +#define _DEFAULT_LPK_LDP NULL
++#define _DEFAULT_LPK_PUB "sshPublicKey"
 +
 +/* flags */
 +#define FLAG_EMPTY	    0x00000000
@@ -1354,7 +1346,6 @@ index 0000000..ba70958
 +/* defines */
 +#define FAILURE -1
 +#define SUCCESS 0
-+#define PUBKEYATTR "sshPublicKey"
 +
 +/* 
 + *
@@ -1382,6 +1373,7 @@ index 0000000..ba70958
 +    struct timeval b_timeout;   /* bind timeout */
 +    struct timeval s_timeout;   /* search timeout */
 +    unsigned int flags;		/* misc flags (reconnection, future use?) */
++    char * pub_key_attr;	/* Pubkey-Attribute */
 +} ldap_opt_t;
 +
 +typedef struct ldap_keys {
@@ -1579,7 +1571,7 @@ index 0000000..c5e0214
 +	MUST ( sshPublicKey $ uid ) 
 +	)
 diff --git a/servconf.c b/servconf.c
-index f9e2f2d..078b581 100644
+index 986a5b9..627c269 100644
 --- a/servconf.c
 +++ b/servconf.c
 @@ -42,6 +42,10 @@
@@ -1593,10 +1585,10 @@ index f9e2f2d..078b581 100644
  static void add_listen_addr(ServerOptions *, char *, int);
  static void add_one_listen_addr(ServerOptions *, char *, int);
  
-@@ -131,6 +135,24 @@ initialize_server_options(ServerOptions *options)
- 	options->zero_knowledge_password_authentication = -1;
- 	options->revoked_keys_file = NULL;
- 	options->trusted_user_ca_keys = NULL;
+@@ -108,6 +112,25 @@ initialize_server_options(ServerOptions *options)
+ 	options->num_allow_groups = 0;
+ 	options->num_deny_groups = 0;
+ 	options->ciphers = NULL;
 +#ifdef WITH_LDAP_PUBKEY
 +	/* XXX dirty */
 +	options->lpk.ld = NULL;
@@ -1614,14 +1606,15 @@ index f9e2f2d..078b581 100644
 +	options->lpk.b_timeout.tv_sec = -1;
 +	options->lpk.s_timeout.tv_sec = -1;
 +	options->lpk.flags = FLAG_EMPTY;
++	options->lpk.pub_key_attr = NULL;
 +#endif
- }
- 
- void
-@@ -265,6 +287,32 @@ fill_default_server_options(ServerOptions *options)
- 		options->permit_tun = SSH_TUNMODE_NO;
+ 	options->macs = NULL;
+ 	options->protocol = SSH_PROTO_UNKNOWN;
+ 	options->gateway_ports = -1;
+@@ -267,6 +290,35 @@ fill_default_server_options(ServerOptions *options)
  	if (options->zero_knowledge_password_authentication == -1)
  		options->zero_knowledge_password_authentication = 0;
+ 
 +#ifdef WITH_LDAP_PUBKEY
 +	if (options->lpk.on == -1)
 +	    options->lpk.on = _DEFAULT_LPK_ON;
@@ -1647,45 +1640,65 @@ index f9e2f2d..078b581 100644
 +	    options->lpk.s_timeout.tv_sec = _DEFAULT_LPK_STIMEOUT;
 +	if (options->lpk.l_conf == NULL)
 +	    options->lpk.l_conf = _DEFAULT_LPK_LDP;
++	if (options->lpk.pub_key_attr == NULL)
++	    options->lpk.pub_key_attr = _DEFAULT_LPK_PUB;
 +#endif
- 
++
  	/* Turn privilege separation on by default */
  	if (use_privsep == -1)
-@@ -312,6 +360,12 @@ typedef enum {
+ 		use_privsep = 1;
+@@ -313,6 +365,12 @@ typedef enum {
  	sZeroKnowledgePasswordAuthentication, sHostCertificate,
- 	sRevokedKeys, sTrustedUserCAKeys,
+ 	sRevokedKeys, sTrustedUserCAKeys, sAuthorizedPrincipalsFile,
  	sDeprecated, sUnsupported
 +#ifdef WITH_LDAP_PUBKEY
 +	,sLdapPublickey, sLdapServers, sLdapUserDN
 +	,sLdapGroupDN, sBindDN, sBindPw, sMyGroup
 +	,sLdapFilter, sForceTLS, sBindTimeout
-+	,sSearchTimeout, sLdapConf
++	,sSearchTimeout, sLdapConf ,sLpkPubKeyAttr 
 +#endif
  } ServerOpCodes;
  
  #define SSHCFG_GLOBAL	0x01	/* allowed in main section of sshd_config */
-@@ -432,6 +486,20 @@ static struct {
- 	{ "hostcertificate", sHostCertificate, SSHCFG_GLOBAL },
- 	{ "revokedkeys", sRevokedKeys, SSHCFG_ALL },
- 	{ "trustedusercakeys", sTrustedUserCAKeys, SSHCFG_ALL },
+@@ -423,6 +481,21 @@ static struct {
+ 	{ "clientalivecountmax", sClientAliveCountMax, SSHCFG_GLOBAL },
+ 	{ "authorizedkeysfile", sAuthorizedKeysFile, SSHCFG_ALL },
+ 	{ "authorizedkeysfile2", sAuthorizedKeysFile2, SSHCFG_ALL },
 +#ifdef WITH_LDAP_PUBKEY
-+	{ _DEFAULT_LPK_TOKEN, sLdapPublickey, SSHCFG_GLOBAL },
-+	{ _DEFAULT_SRV_TOKEN, sLdapServers, SSHCFG_GLOBAL },
-+	{ _DEFAULT_USR_TOKEN, sLdapUserDN, SSHCFG_GLOBAL },
-+	{ _DEFAULT_GRP_TOKEN, sLdapGroupDN, SSHCFG_GLOBAL },
-+	{ _DEFAULT_BDN_TOKEN, sBindDN, SSHCFG_GLOBAL },
-+	{ _DEFAULT_BPW_TOKEN, sBindPw, SSHCFG_GLOBAL },
-+	{ _DEFAULT_MYG_TOKEN, sMyGroup, SSHCFG_GLOBAL },
-+	{ _DEFAULT_FIL_TOKEN, sLdapFilter, SSHCFG_GLOBAL },
-+	{ _DEFAULT_TLS_TOKEN, sForceTLS, SSHCFG_GLOBAL },
-+	{ _DEFAULT_BTI_TOKEN, sBindTimeout, SSHCFG_GLOBAL },
-+	{ _DEFAULT_STI_TOKEN, sSearchTimeout, SSHCFG_GLOBAL },
-+	{ _DEFAULT_LDP_TOKEN, sLdapConf, SSHCFG_GLOBAL },
++        { _DEFAULT_LPK_TOKEN, sLdapPublickey, SSHCFG_GLOBAL },
++        { _DEFAULT_SRV_TOKEN, sLdapServers, SSHCFG_GLOBAL },
++        { _DEFAULT_USR_TOKEN, sLdapUserDN, SSHCFG_GLOBAL },
++        { _DEFAULT_GRP_TOKEN, sLdapGroupDN, SSHCFG_GLOBAL },
++        { _DEFAULT_BDN_TOKEN, sBindDN, SSHCFG_GLOBAL },
++        { _DEFAULT_BPW_TOKEN, sBindPw, SSHCFG_GLOBAL },
++        { _DEFAULT_MYG_TOKEN, sMyGroup, SSHCFG_GLOBAL },
++        { _DEFAULT_FIL_TOKEN, sLdapFilter, SSHCFG_GLOBAL },
++        { _DEFAULT_TLS_TOKEN, sForceTLS, SSHCFG_GLOBAL },
++        { _DEFAULT_BTI_TOKEN, sBindTimeout, SSHCFG_GLOBAL },
++        { _DEFAULT_STI_TOKEN, sSearchTimeout, SSHCFG_GLOBAL },
++        { _DEFAULT_LDP_TOKEN, sLdapConf, SSHCFG_GLOBAL },
++        { "LpkPubKeyAttr", sLpkPubKeyAttr, SSHCFG_GLOBAL },
 +#endif
- 	{ NULL, sBadOption, 0 }
- };
+ 	{ "useprivilegeseparation", sUsePrivilegeSeparation, SSHCFG_GLOBAL},
+ 	{ "acceptenv", sAcceptEnv, SSHCFG_GLOBAL },
+ 	{ "permittunnel", sPermitTunnel, SSHCFG_ALL },
+@@ -666,6 +739,7 @@ process_server_config_line(ServerOptions *options, char *line,
+ 	int cmdline = 0, *intptr, value, n;
+ 	SyslogFacility *log_facility_ptr;
+ 	LogLevel *log_level_ptr;
++ 	unsigned long lvalue, *longptr;
+ 	ServerOpCodes opcode;
+ 	int port;
+ 	u_int i, flags = 0;
+@@ -680,6 +754,7 @@ process_server_config_line(ServerOptions *options, char *line,
+ 	if (!arg || !*arg || *arg == '#')
+ 		return 0;
+ 	intptr = NULL;
++	longptr = NULL;
+ 	charptr = NULL;
+ 	opcode = parse_token(arg, filename, linenum, &flags);
  
-@@ -1349,6 +1417,107 @@ process_server_config_line(ServerOptions *options, char *line,
+@@ -1364,6 +1439,125 @@ process_server_config_line(ServerOptions *options, char *line,
  		while (arg)
  		    arg = strdelim(&cp);
  		break;
@@ -1775,11 +1788,20 @@ index f9e2f2d..078b581 100644
 +			*intptr = value;
 +		break;
 +	case sBindTimeout:
-+		intptr = (int *) &options->lpk.b_timeout.tv_sec;
-+		goto parse_int;
++		longptr = (unsigned long *) &options->lpk.b_timeout.tv_sec;
++parse_ulong:
++		arg = strdelim(&cp);
++		if (!arg || *arg == '\0')
++			fatal("%s line %d: missing integer value.",
++			    filename, linenum);
++		lvalue = atol(arg);
++		if (*activep && *longptr == -1)
++			*longptr = lvalue;
++		break;
++
 +	case sSearchTimeout:
-+		intptr = (int *) &options->lpk.s_timeout.tv_sec;
-+		goto parse_int;
++		longptr = (unsigned long *) &options->lpk.s_timeout.tv_sec;
++		goto parse_ulong;
 +		break;
 +	case sLdapConf:
 +		arg = cp;
@@ -1789,12 +1811,21 @@ index f9e2f2d..078b581 100644
 +		options->lpk.l_conf = xstrdup(arg);
 +		memset(arg, 0, strlen(arg));
 +		break;
++	case sLpkPubKeyAttr:
++		arg = cp;
++                if (!arg || *arg == '\0')
++                    fatal("%s line %d: missing pubkeyattr",filename,linenum);
++                arg[strlen(arg)] = '\0';
++                options->lpk.pub_key_attr = xstrdup(arg);
++                memset(arg,0,strlen(arg));
++                break;
++
 +#endif
  
  	default:
  		fatal("%s line %d: Missing handler for opcode %s (%d)",
 diff --git a/servconf.h b/servconf.h
-index 860009f..fd113c2 100644
+index 45d2a2a..a2ffbbe 100644
 --- a/servconf.h
 +++ b/servconf.h
 @@ -16,6 +16,10 @@
@@ -1819,7 +1850,7 @@ index 860009f..fd113c2 100644
  	int	num_permitted_opens;
  
 diff --git a/sshd.c b/sshd.c
-index bc0d275..e82e102 100644
+index a7d3ee5..bc84ca1 100644
 --- a/sshd.c
 +++ b/sshd.c
 @@ -127,6 +127,10 @@ int allow_severity;
@@ -1833,7 +1864,7 @@ index bc0d275..e82e102 100644
  #ifndef O_NOCTTY
  #define O_NOCTTY	0
  #endif
-@@ -1530,6 +1534,16 @@ main(int ac, char **av)
+@@ -1539,6 +1543,16 @@ main(int ac, char **av)
  		exit(1);
  	}
  
@@ -1851,10 +1882,10 @@ index bc0d275..e82e102 100644
  
  	/* Store privilege separation user for later use if required. */
 diff --git a/sshd_config b/sshd_config
-index 72fbae3..381b390 100644
+index 72fbae3..fdafc31 100644
 --- a/sshd_config
 +++ b/sshd_config
-@@ -107,6 +107,21 @@
+@@ -107,6 +107,22 @@
  # no default banner path
  #Banner none
  
@@ -1872,15 +1903,16 @@ index 72fbae3..381b390 100644
 +#LpkForceTLS no
 +#LpkSearchTimelimit 3
 +#LpkBindTimelimit 3
++#LpkPubKeyAttr sshPublicKey
 +
  # override default of no subsystems
  Subsystem	sftp	/usr/libexec/sftp-server
  
 diff --git a/sshd_config.5 b/sshd_config.5
-index 2f54102..cb86374 100644
+index 596a728..38f784b 100644
 --- a/sshd_config.5
 +++ b/sshd_config.5
-@@ -1043,6 +1043,62 @@ Specifies the full pathname of the
+@@ -1092,6 +1092,62 @@ Specifies the full pathname of the
  program.
  The default is
  .Pa /usr/X11R6/bin/xauth .
@@ -1943,6 +1975,18 @@ index 2f54102..cb86374 100644
  .El
  .Sh TIME FORMATS
  .Xr sshd 8
+diff --git a/version.h b/version.h
+index 67d78dc..643b03b 100644
+--- a/version.h
++++ b/version.h
+@@ -2,5 +2,6 @@
+ 
+ #define SSH_VERSION	"OpenSSH_5.6"
+ 
++#define SSH_LPK		"lpk"
+ #define SSH_PORTABLE	"p1"
+-#define SSH_RELEASE	SSH_VERSION SSH_PORTABLE
++#define SSH_RELEASE	SSH_VERSION SSH_PORTABLE SSH_LPK
 -- 
-1.7.0
+1.7.2.2
 
