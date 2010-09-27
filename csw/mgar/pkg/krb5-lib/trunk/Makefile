@@ -1,5 +1,5 @@
 GARNAME = krb5
-GARVERSION = 1.7
+GARVERSION = 1.8.3
 CATEGORIES = server
 
 DESCRIPTION = MIT Kerberos 5
@@ -11,7 +11,7 @@ define BLURB
   Kerberos is available in many commercial products as well.
 endef
 
-MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/1.7/
+MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/$(shell echo $(GARVERSION) | awk -F. '{print $$1"."$$2}')/
 DISTFILES  = $(GARNAME)-$(GARVERSION)-signed.tar
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -19,8 +19,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-signed.tar
 
 PATCHFILES  = patch-man2html-perl.patch
 PATCHFILES += 0002-libintl-for-kproplog.patch
-PATCHFILES += 0003-local-libraries-first-when-linking.patch
+# PATCHFILES += 0003-local-libraries-first-when-linking.patch
 PATCHFILES += 0004-libkdb_ldap-isblank-define.patch
+PATCHFILES += 0005-Add-strings.h-to-setenv.c-for-strlen-and-other-stuff.patch
 
 BUILD_DEP_PKGS = CSWtcl
 
@@ -38,10 +39,12 @@ LICENSE = doc/copyright.texinfo
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
+NOISAEXEC = 1
+BUILD64 = 1
+
+# We turn off almost everything as we are just interested in the library.
+NODIRPATHS = --docdir
 CONFIGURE_ARGS  = $(DIRPATHS)
-ifeq ($(ISA),i386)
-CONFIGURE_ARGS += --with-tcl=$(prefix)
-endif
 # --enable-ipv6 is deprecated and autodetected
 #CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-kdc-replay-cache --enable-dns-for-realm
@@ -49,7 +52,9 @@ CONFIGURE_ARGS += --disable-thread-support
 CONFIGURE_ARGS += --disable-static --disable-profiled
 CONFIGURE_ARGS += --without-ldap
 
-BUILD64 = 1
+CONFIGURE_ARGS-32 += --with-tcl=$(prefix)
+CONFIGURE_ARGS-64 += --without-tcl
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 
@@ -76,34 +81,10 @@ CFLAGS := $(strip $(CFLAGS) -L$(libdir) -D__EXTENSIONS__)
 CXXFLAGS := $(strip $(CXXFLAGS) -D__EXTENSIONS__)
 #LDFLAGS := $(strip $(LDFLAGS))
 
-EXTRA_LINKER_FLAGS := $(LD_OPTIONS)
-LD_OPTIONS :=
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 post-extract-modulated:
 	@# TODO: Check signature
 	@cd $(WORKDIR) && (gzip -c -d $(GARNAME)-$(GARVERSION).tar.gz | tar xf -)
 	@$(MAKECOOKIE)
-
-post-merge:
-	ginstall -m 755 -d $(PKGROOT)$(datadir)/checkpkg/overrides
-	(echo "CSWkrb5lib: symbol-not-found"; \
-	 echo "CSWkrb5libdev: symbol-not-found sclient"; \
-	) > $(PKGROOT)$(datadir)/checkpkg/overrides/krb5_lib
-	@$(MAKECOOKIE)
-
-# Notes: Potential solutions for the overrides integration in GAR:
-#
-# OVERRIDES_CSWkrb5lib = a_name
-# OVERRIDES_CSWkrb5lib_a_name = symbol-not-found
-#
-# Or:
-#
-# define OVERRIDES_CSWkrb5lib
-# symbol-not-found
-# endef
-#
-# Note: In either case, the result content should be:
-#
-# CSWkrb5lib: symbol-not-found
-#
-# ...placed in /opt/csw/share/checkpkg/overrides/krb5_lib
