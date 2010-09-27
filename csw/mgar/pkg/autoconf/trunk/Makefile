@@ -18,6 +18,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PATCHFILES = 0001-Prefer-CSW-tools.patch
 
 BUILD_DEP_PKGS = CSWhelp2man
+
+# We need the Fortran runtime libs or the Fortran tests with fail
+BUILD_DEP_PKGS += CSWss12f95rt
+
 RUNTIME_DEP_PKGS = CSWgawk CSWgm4 CSWperl
 
 VENDOR_URL = http://www.gnu.org/software/autoconf/
