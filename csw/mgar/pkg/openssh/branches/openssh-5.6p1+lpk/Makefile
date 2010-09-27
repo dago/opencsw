@@ -18,6 +18,9 @@ GSSKEX_PATCH_VERSION = $(GARVERSION)
 GSSKEX_PATCH_DATE = 20100902
 CATEGORIES = server
 
+EXTRA_MODULATORS = LPK
+MODULATIONS_LPK = no yes
+
 DESCRIPTION = OpenSSH Secure Shell
 
 define BLURB
@@ -31,11 +34,15 @@ define BLURB
 endef
 
 
-PACKAGES = CSWossh CSWosshclient
+PACKAGES = CSWossh CSWosshlpk CSWosshclient
 
 CATALOGNAME_CSWossh = openssh
 SPKG_DESC_CSWossh = OpenSSH Secure Shell server 
 RUNTIME_DEP_PKGS_CSWossh = CSWosslrt CSWtcpwrap CSWzlib CSWkrb5lib CSWosshclient
+
+CATALOGNAME_CSWosshlpk = openssh_lpk
+SPKG_DESC_CSWosshlpk = OpenSSH Secure Shell server with ldap public key support
+RUNTIME_DEP_PKGS_CSWosshlpk = CSWosslrt CSWtcpwrap CSWzlib CSWkrb5lib CSWoldaprt CSWossh
 
 CATALOGNAME_CSWosshclient = openssh_client
 SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client 
@@ -43,7 +50,8 @@ RUNTIME_DEP_PKGS_CSWosshclient = CSWosslrt CSWzlib CSWkrb5lib
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
 
-PKGFILES_CSWossh = $(sbindir)/.*
+PKGFILES_CSWossh = $(sbindir)/sshd-nolpk
+PKGFILES_CSWossh += $(sbindir)/sshd.smf_wrapper
 PKGFILES_CSWossh += $(docdir)/openssh/.*
 PKGFILES_CSWossh += $(mandir)/man5/sshd_config.5
 PKGFILES_CSWossh += $(mandir)/man8/sftp-server.8
@@ -55,6 +63,9 @@ PKGFILES_CSWossh += $(localstatedir)/empty
 PKGFILES_CSWossh += $(sysconfdir)/init.d/cswopenssh
 PKGFILES_CSWossh += $(localstatedir)/svc/manifest/network/cswopenssh.xml
 PKGFILES_CSWossh += $(prefix)/etc/pkg/CSWossh/cswusergroup
+
+PKGFILES_CSWosshlpk = $(sbindir)/sshd-lpk
+PKGFILES_CSWosshlpk += $(docdir)/openssh_lpk/.*
 
 PKGFILES_CSWosshclient = $(bindir)/.*
 PKGFILES_CSWosshclient += $(docdir)/openssh_client/.*
@@ -107,8 +118,12 @@ DISTFILES += THIS_LOCATION_IS_DEPRECATED
 
 LICENSE = LICENCE
 
+# LDAP Public Key Patch, forward port from
+#   http://code.google.com/p/openssh-lpk/source/browse/#svn/trunk/patch/contrib
+PATCHFILES = 0001-Forward-port-of-contrib-openssh-lpk-5.4p1-0.3.13.pat.patch
+
 # The GSSAPI key exchange patch
-PATCHFILES = openssh-$(GSSKEX_PATCH_VERSION)-gsskex-all-$(GSSKEX_PATCH_DATE).patch
+PATCHFILES += openssh-$(GSSKEX_PATCH_VERSION)-gsskex-all-$(GSSKEX_PATCH_DATE).patch
 
 # Prevent TIOCSCTTY from being used to avoid error:
 # ioctl(TIOCSCTTY): Invalid argument
@@ -121,11 +136,7 @@ PATCHFILES += no_x_forwarding_bug.patch
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
 DOCFILES += README.platform README.privsep README.tun TODO WARNING.RNG    
-
-# we're using conf handling class from the cswclassutils package
-RUNTIME_DEP_PKGS += CSWcswclassutils
-
-
+DOCFILES_LPK = openssh-lpk_openldap.schema openssh-lpk_sun.schema lpk-user-example.txt README.lpk
 
 ##### Build and installation information #####
 
@@ -135,6 +146,9 @@ RUNTIME_DEP_PKGS += CSWcswclassutils
 localstatedir 	= /var$(prefix)
 sysconfdir 	= /etc$(prefix)
 
+# libldap is not self-contained and needs explicit linking against liblber.so
+EXTRA_LD_FLAGS-lpk-yes = -L/opt/csw/lib -llber
+EXTRA_LD_FLAGS += $(EXTRA_LD_FLAGS-lpk-$(LPK))
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-kerberos5=$(prefix)
@@ -144,37 +158,27 @@ CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-privsep-path=$(localstatedir)/empty
 
+CONFIGURE_ARGS-lpk-yes = --with-ldap
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-lpk-$(LPK))
+
 TEST_SCRIPTS	=
 
+MERGE_SCRIPTS_isa-default-lpk-no = copy-all
+MERGE_SCRIPTS_isa-default-lpk-yes = copy-only
+MERGE_DIRS_isa-default-lpk-yes = $(sbindir)
 
-## Optional addition to add Ldap Public Key support 
-## see http://code.google.com/p/openssh-lpk/
+EXTRA_PAX_ARGS_lpk-no = -s ",\.$(sbindir)/sshd$$,.$(sbindir)/sshd-nolpk,p"
+EXTRA_PAX_ARGS_lpk-yes = -s ",\.$(sbindir)/sshd$$,.$(sbindir)/sshd-lpk,p" -s ",.*,,"
+EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_lpk-$(LPK))
 
-# we always register the lpk related files so checksum 
-# is the same with LPK enabled or not
-# Patch taken from http://code.google.com/p/openssh-lpk/issues/detail?id=7
-# and modified with
-#   perl -e 's/--- g/--- /; s/\+{3} g/+++ /' -pi 
-# as all filenames seem to be prefixed with 'g' and redone patch for
-# patchdirlevel 1 instead of 0
-DISTFILES += 0001-This-is-a-forward-port-of-the-OpenSSH-LPK-support-pa.patch
-ifdef LPK
-	PACKAGES = CSWosshlpk
-	CATALOGNAME_CSWosshlpk = openssh_lpk
-	SPKG_DESC_CSWosshlpk = $(SPKG_DESC_CSWossh) with ldap public key support
-	RUNTIME_DEP_PKGS_CSWosshlpk = $(RUNTIME_DEP_PKGS_CSWossh) CSWoldaprt
-	PATCHFILES += 0001-This-is-a-forward-port-of-the-OpenSSH-LPK-support-pa.patch
-	CONFIGURE_ARGS += --with-ldap
-	DOCFILES += openssh-lpk_openldap.schema openssh-lpk_sun.schema lpk-user-example.txt README.lpk
-	
-	# we must reset the CSWosshclient description to avoid a bug in the automatic dependancy generation
-	SPKG_DESC_CSWosshclient = 
-endif
+ALTERNATIVES_CSWossh    = nolpk
+ALTERNATIVES_CSWosshlpk = lpk
+ALTERNATIVE_nolpk = $(sbindir)/sshd sshd $(sbindir)/sshd-nolpk 100
+ALTERNATIVE_lpk   = $(sbindir)/sshd sshd $(sbindir)/sshd-lpk 200
 
-CHECKPKG_OVERRIDES_CSWosshlpk += bad-rpath-entry|/opt/csw/lib/
-CHECKPKG_OVERRIDES_CSWosshlpk += bad-rpath-entry|/opt/csw/lib/
-CHECKPKG_OVERRIDES_CSWosshlpk += init-file-wrong-location|/etc/opt/csw/init.d/cswopenssh
-CHECKPKG_OVERRIDES_CSWosshlpk += surplus-dependency|CSWosshclient
+CHECKPKG_OVERRIDES_CSWossh += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWosshlpk += surplus-dependency|CSWossh
+CHECKPKG_OVERRIDES_CSWosshlpk += surplus-dependency|CSWalternatives
 
 include gar/category.mk
 
@@ -190,35 +194,35 @@ post-configure-modulated:
 	cd $(WORKSRC) && perl -pi -e 's,-R/opt/csw/lib/ ,-R/opt/csw/lib ,' Makefile
 	@$(MAKECOOKIE)
 
-# adding documentation files
-pre-package: merge-config-files merge-doc-files merge-init-files merge-contrib-files merge-special-directories
-	@$(MAKECOOKIE)
+post-install-modulated: install-config-files install-doc-files-lpk-$(LPK) install-init-files install-contrib-files install-special-directories
 
-merge-contrib-files:
-	ginstall -D "$(WORKSRC_FIRSTMOD)/contrib/ssh-copy-id" "$(PKGROOT)/$(bindir)/ssh-copy-id"
-	ginstall -D "$(WORKSRC_FIRSTMOD)/contrib/ssh-copy-id.1" "$(PKGROOT)/$(mandir)/man1/ssh-copy-id.1"
+install-contrib-files:
+	ginstall -D "$(WORKSRC)/contrib/ssh-copy-id" "$(PKGROOT)/$(bindir)/ssh-copy-id"
+	ginstall -D "$(WORKSRC)/contrib/ssh-copy-id.1" "$(PKGROOT)/$(mandir)/man1/ssh-copy-id.1"
 	chmod -x "$(PKGROOT)/$(mandir)/man1/ssh-copy-id.1"
 
-merge-init-files:
-	ginstall -D "$(WORKDIR_FIRSTMOD)/cswopenssh" "$(PKGROOT)/etc/opt/csw/init.d/cswopenssh"
-	ginstall -D "$(WORKDIR_FIRSTMOD)/cswopenssh.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswopenssh.xml"
-	ginstall -D "$(WORKDIR_FIRSTMOD)/sshd.smf_wrapper" "$(PKGROOT)/opt/csw/sbin/sshd.smf_wrapper"
+install-init-files:
+	ginstall -D "$(WORKDIR)/cswopenssh" "$(PKGROOT)/etc/opt/csw/init.d/cswopenssh"
+	ginstall -D "$(WORKDIR)/cswopenssh.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswopenssh.xml"
+	ginstall -D "$(WORKDIR)/sshd.smf_wrapper" "$(PKGROOT)/opt/csw/sbin/sshd.smf_wrapper"
 
-merge-doc-files:
-	for DOCDIR in $(foreach _PKG,$(PACKAGES),$(call catalogname,$(_PKG))); do \
-		ginstall -d $(PKGROOT)/$(docdir)/$$DOCDIR; \
-		(cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$$DOCDIR/); \
-		(cd $(PKGROOT)/$(docdir)/$$DOCDIR && chmod -x $(DOCFILES)); \
-		ginstall $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$$DOCDIR/; \
-	done
+install-doc-files-lpk-no:
+	ginstall -d $(PKGROOT)/$(docdir)/openssh
+	(cd $(WORKSRC_FIRSTMOD) && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/openssh/)
+	(cd $(PKGROOT)/$(docdir)/openssh && chmod -x $(DOCFILES))
+	ginstall $(WORKDIR)/changelog.CSW $(PKGROOT)/$(docdir)/openssh/
 
-merge-config-files:
+install-doc-files-lpk-yes:
+	ginstall -d $(PKGROOT)/$(docdir)/openssh_lpk
+	cd $(WORKSRC) && ginstall $(DOCFILES_LPK) $(PKGROOT)/$(docdir)/openssh_lpk/
+
+install-config-files:
 	# we change some default value in the server config file
 	perl -pi -e 's,/etc/ssh/,$(sysconfdir)/ssh/,g; s,/usr/libexec/,/opt/csw/libexec/,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW"
 	perl -pi -e 's,^ *# *UsePAM *.*,UsePAM yes,g, s,^ *# *PrintMotd *.*,PrintMotd no,g; s,^ *# *X11Forwarding *.*,X11Forwarding yes,g' "$(PKGROOT)/$(sysconfdir)/ssh/sshd_config.CSW" 
-	ginstall -D "$(WORKDIR_FIRSTMOD)/cswusergroup" "$(PKGROOT)$(prefix)/etc/pkg/CSWossh/cswusergroup"
-	ginstall -D "$(WORKDIR_FIRSTMOD)/THIS_LOCATION_IS_DEPRECATED" "$(PKGROOT)/$(prefix)/etc/ssh/THIS_LOCATION_IS_DEPRECATED"
+	ginstall -D "$(WORKDIR)/cswusergroup" "$(PKGROOT)$(prefix)/etc/pkg/CSWossh/cswusergroup"
+	ginstall -D "$(WORKDIR)/THIS_LOCATION_IS_DEPRECATED" "$(PKGROOT)/$(prefix)/etc/ssh/THIS_LOCATION_IS_DEPRECATED"
 
-merge-special-directories:
+install-special-directories:
 	ginstall -d $(PKGROOT)$(localstatedir)/empty
 	ginstall -d $(PKGROOT)$(sysconfdir)/pkg/CSWossh
