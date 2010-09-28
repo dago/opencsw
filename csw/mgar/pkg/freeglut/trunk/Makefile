@@ -29,4 +29,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
+# No 64 bit libs on Solaris 9 x86
+CHECKPKG_OVERRIDES_CSWfreeglut += soname-not-found|libXxf86vm.so.1|is|needed|by|opt/csw/lib/amd64/libglut.so.3.9.0
+
 include gar/category.mk
