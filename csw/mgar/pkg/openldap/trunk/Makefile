@@ -68,6 +68,14 @@ localstatedir = /var/opt/csw
 
 MIGRATECONF = openldap
 
+# Is this causing this?
+#   https://www.opencsw.org/mantis/view.php?id=4555
+NOISALIST = 1
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+
+NODIRPATHS = --docdir
+
 BUILD64 = 1
 NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -76,20 +84,28 @@ CONFIGURE_ARGS += --enable-lmpasswd
 CONFIGURE_ARGS += --enable-modules
 CONFIGURE_ARGS += --enable-rlookups
 CONFIGURE_ARGS += --enable-slp
-# Disable TCPwrappers in 64 bit until the libraries are available
-#   <http://opencsw.org/mantis/view.php?id=3748>
-CONFIGURE_ARGS_32 = --enable-wrappers
-# spasswd requires Cyrus SASL
-CONFIGURE_ARGS_32 += --enable-spasswd
-# Disable Cyrus SASL in 64 bit until the libraries are available
-#   <http://opencsw.org/mantis/view.php?id=3749>
-CONFIGURE_ARGS_64 += --without-cyrus-sasl
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 CONFIGURE_ARGS += --enable-backends=mod
 CONFIGURE_ARGS += --enable-overlays=mod
 
 # Disable MySQL Cluster
 CONFIGURE_ARGS += --disable-ndb
+
+# Disable TCPwrappers in 64 bit until the libraries are available
+#   <http://opencsw.org/mantis/view.php?id=3748>
+CONFIGURE_ARGS_32 = --enable-wrappers
+# spasswd requires Cyrus SASL
+CONFIGURE_ARGS_32 += --enable-spasswd
+
+# Disable Cyrus SASL in 64 bit until the libraries are available
+#   <http://opencsw.org/mantis/view.php?id=3749>
+CONFIGURE_ARGS_64 += --without-cyrus-sasl
+
+# We have Perl only for 32 bit:
+#   <http://opencsw.org/mantis/view.php?id=4484>
+CONFIGURE_ARGS_32 += --enable-perl=mod
+CONFIGURE_ARGS_64 += --enable-perl=no
+
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
 SKIPTEST ?= 1
 TEST_TARGET = check
@@ -102,6 +118,10 @@ MERGE_DIRS_isa-default64-garversion-2.3.43 = $(libdir)
 MERGE_SCRIPTS_isa-default-garversion-2.4.22 = copy-all
 MERGE_SCRIPTS_isa-default64-garversion-2.4.22 = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-2.4.22 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+
+# Perl backend is built, although it has been told not to.
+EXTRA_PAX_ARGS = -s,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
+EXTRA_PAX_ARGS = -s,.*/opt/csw/libexec/amd64/openldap/back_perl.*,,
 
 PKGFILES_CSWoldapclient  = $(bindir)/.*
 PKGFILES_CSWoldapclient += $(mandir)/man1/.*
@@ -118,9 +138,6 @@ CHECKPKG_OVERRIDES_CSWoldap += init-file-wrong-location|/opt/csw/etc/init.d/cswo
 
 ARCHALL_CSWoldapdevel = 1
 CHECKPKG_OVERRIDES_CSWoldapdevel += archall-devel-package
-
-# override because checking an amd binary on i386 is pointless
-CHECKPKG_OVERRIDES_CSWoldap += soname-not-found|libm.so.2|is|needed|by|opt/csw/libexec/amd64/openldap/back_perl-2.4.so.2.5.5
 
 include gar/category.mk
 
