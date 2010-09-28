@@ -1,0 +1,27 @@
+From 32ffda7617d493a749b236f946fa1e4c2cc56537 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 28 Sep 2010 12:26:53 +0200
+Subject: [PATCH] Do not use gcc-specific flags
+
+---
+ configure |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index bcaecab..bc3efc2 100755
+--- a/configure
++++ b/configure
+@@ -23977,8 +23977,8 @@ fi
+ CPPFLAGS="$CPPFLAGS -I\${top_srcdir}/src"
+ 
+ # Warning flags
+-CPPFLAGS="${CPPFLAGS} -Wall -Wpointer-arith -Wcast-align -Wcast-qual -Wshadow -Wsign-compare"
+-CFLAGS="${CFLAGS} -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs"
++#CPPFLAGS="${CPPFLAGS} -Wall -Wpointer-arith -Wcast-align -Wcast-qual -Wshadow -Wsign-compare"
++#CFLAGS="${CFLAGS} -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs"
+ 
+ # Build HTML documentatin?
+ # Extract the first word of "doxygen", so it can be a program name with args.
+-- 
+1.7.3
+

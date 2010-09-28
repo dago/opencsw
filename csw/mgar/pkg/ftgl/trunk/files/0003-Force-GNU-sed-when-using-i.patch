@@ -1,0 +1,25 @@
+From 2302430dbe3c40beb52c30b62dfe999f61e76d4d Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 28 Sep 2010 13:07:12 +0200
+Subject: [PATCH 3/3] Force GNU sed when using -i
+
+---
+ docs/Makefile.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/docs/Makefile.in b/docs/Makefile.in
+index 2deabd6..1e52bae 100644
+--- a/docs/Makefile.in
++++ b/docs/Makefile.in
+@@ -455,7 +455,7 @@ stamp-eps: $(PNGS)
+ html/doxygen.css: stamp-doxygen
+ stamp-doxygen: doxygen.cfg stamp-eps
+ 	$(DOXYGEN) $^
+-	sed -i 's/%FTGL/FTGL/' html/*html
++	gsed -i 's/%FTGL/FTGL/' html/*html
+ 	touch $@
+ 
+ latex/ftgl.pdf: stamp-latex
+-- 
+1.7.3
+
