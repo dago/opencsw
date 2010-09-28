@@ -37,19 +37,19 @@ DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork README.CSW.ap2_worker
+DISTFILES += README.CSW.apache2rt
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
 PACKAGES  = CSWapache2 CSWapache2-devel CSWapache2-manual CSWap2suexec
 
-
 NEED_DUMMY_AP2 = 1
 
 ifeq ($(NEED_DUMMY_AP2), 1)
 # These packages are dummy versions to make dependencies nicer
 # as various things depend on CSWap2prefork currently
-PACKAGES += CSWap2prefork CSWap2worker
+PACKAGES += CSWap2prefork CSWap2worker CSWapache2rt
 endif
 
 ARCHALL_CSWapache2-manual = 1
@@ -65,6 +65,7 @@ CATALOGNAME_CSWap2suexec = ap2_suexec
 ifeq ($(NEED_DUMMY_AP2), 1)
 CATALOGNAME_CSWap2prefork = ap2_prefork
 CATALOGNAME_CSWap2worker = ap2_worker
+CATALOGNAME_CSWapache2rt = apache2rt
 endif
 
 SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
@@ -74,11 +75,12 @@ SPKG_DESC_CSWap2suexec = The standard suEXEC binary for Apache2.
 ifeq ($(NEED_DUMMY_AP2), 1)
 SPKG_DESC_CSWap2prefork = A dummy stub for the old prefork mpm package
 SPKG_DESC_CSWap2worker = A dummy stub for the old worker mpm package
+SPKG_DESC_CSWapache2rt = A dummy stub for the old apache2rt package
 endif
 
-INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2rt CSWapache2c
+INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2c
 ifneq ($(NEED_DUMMY_AP2), 1)
-INCOMPATIBLE_PKGS_CSWapache2 += CSWap2prefork CSWap2worker
+INCOMPATIBLE_PKGS_CSWapache2 += CSWap2prefork CSWap2worker CSWapache2rt
 endif
 
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv
@@ -90,6 +92,7 @@ RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 ifeq ($(NEED_DUMMY_AP2), 1)
 RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2
+RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 endif
 
 CHECKPKG_OVERRIDES_CSWap2suexec  += surplus-dependency|CSWapache2
@@ -99,6 +102,7 @@ CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 ifeq ($(NEED_DUMMY_AP2), 1)
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 endif
 
 # We need this to get bdb48/lib into the runpath
@@ -171,6 +175,7 @@ PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
 ifeq ($(NEED_DUMMY_AP2), 1)
 PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.*
+PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 endif
 
 include gar/category.mk
