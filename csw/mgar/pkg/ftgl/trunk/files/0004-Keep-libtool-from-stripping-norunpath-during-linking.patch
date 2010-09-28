@@ -1,0 +1,25 @@
+From 69188e3dd08b92b9447ceb4f4dd4eb6a768b707f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 28 Sep 2010 13:54:31 +0200
+Subject: [PATCH 4/4] Keep libtool from stripping -norunpath during linking
+
+---
+ .auto/ltmain.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/.auto/ltmain.sh b/.auto/ltmain.sh
+index 0bf3848..bda2ca2 100644
+--- a/.auto/ltmain.sh
++++ b/.auto/ltmain.sh
+@@ -1676,7 +1676,7 @@ EOF
+       # -F/path gives path to uninstalled frameworks, gcc on darwin
+       # @file GCC response files
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+-      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*)
++      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-xnorunpath|-norunpath)
+ 
+ 	# Unknown arguments in both finalize_command and compile_command need
+ 	# to be aesthetically quoted because they are evaled later.
+-- 
+1.7.3
+
