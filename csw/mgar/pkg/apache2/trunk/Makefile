@@ -56,6 +56,7 @@ ARCHALL_CSWapache2-manual = 1
 ifeq ($(NEED_DUMMY_AP2), 1)
 ARCHALL_CSWap2prefork = 1
 ARCHALL_CSWap2worker = 1
+ARCHALL_CSWapache2rt = 1
 endif
 
 CATALOGNAME_CSWapache2 = apache2
