@@ -36,6 +36,7 @@ DISTFILES += httpd.conf.CSW
 DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
+DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork README.CSW.ap2_worker
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -163,6 +164,10 @@ STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 PKGFILES_CSWap2suexec = .*sbin/suexec .*libexecdir/.*suexec.* .*/man/.*suexec.*
 PKGFILES_CSWapache2-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
+ifeq ($(NEED_DUMMY_AP2), 1)
+PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
+PKGFILES_CSWap2worker = .*share/doc/ap2_worker.*
+endif
 
 include gar/category.mk
 
@@ -178,7 +183,14 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 
-post-install-modulated: rename-httpd copy-local-files create-templates
+post-install-modulated: rename-httpd copy-local-files create-templates copy-readmes
+
+copy-readmes:
+	@(cd $(WORKDIR); for f in README.CSW*; do \
+		p=`echo $$f | sed 's/README.CSW.//'`; \
+		ginstall -d -m0755 $(DESTDIR)/$(prefix)/share/doc/$$p; \
+		ginstall -m 0644 $$f $(DESTDIR)/$(prefix)/share/doc/$$p/README.CSW; \
+	done)
 
 rename-httpd:
 	@if test -f $(APACHE_ROOT)/sbin/httpd ; then \
