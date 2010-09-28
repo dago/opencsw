@@ -1,5 +1,5 @@
 GARNAME = transmission
-GARVERSION = 1.93
+GARVERSION = 2.04
 CATEGORIES = net
 
 DESCRIPTION = Fast, easy, and free multi-platform BitTorrent client
@@ -8,7 +8,7 @@ endef
 MASTER_SITES = http://mirrors.m0k.org/transmission/files/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 PATCHFILES = icons-makefile.patch
-#PATCHFILES += linker-include.patch
+PATCHFILES += 0002-add-setenv-patch.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.bz2
@@ -29,18 +29,21 @@ RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibatk
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibcairo
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibdbus
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibevent
-#RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibxext
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWpango
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWzlib
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWdbus
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWgconf2
+RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWiconv
+
 
 RUNTIME_DEP_PKGS_CSWtransmission = CSWcurlrt
 RUNTIME_DEP_PKGS_CSWtransmission += CSWlibevent
 RUNTIME_DEP_PKGS_CSWtransmission += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWtransmission += CSWosslrt
 RUNTIME_DEP_PKGS_CSWtransmission += CSWzlib
+RUNTIME_DEP_PKGS_CSWtransmission += CSWiconv
+
 
 
 
@@ -56,14 +59,16 @@ CATALOGNAME_CSWtransmission = transmission
 CATALOGNAME_CSWtransmissiongtk2 = transmission_gtk2
 
 
-EXTRA_CFLAGS = -DNO_SYS_QUEUE_H -lresolv 
+#EXTRA_CFLAGS = -DNO_SYS_QUEUE_H -lresolv 
+EXTRA_CFLAGS = -DNO_SYS_QUEUE_H
+EXTRA_LD_OPTIONS = -L/opt/csw/lib -liconv 
 
-EXTRA_INC = /opt/csw/X11/include
-EXTRA_LIB = /opt/csw/X11/lib 
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+#EXTRA_INC = /opt/csw/X11/include
+#EXTRA_LIB = /opt/csw/X11/lib 
+#EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 
 CONFIGURE_ARGS = $(DIRPATHS) --enable-gtk --disable-silent-rules
-STRIP_LIBTOOL = 1
+#STRIP_LIBTOOL = 1
 
 TEST_TARGET = check
 CHECKPKG_OVERRIDES_CSWtransmissiongtk2 += surplus-dependency|CSWtransmission
