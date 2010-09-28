@@ -1,0 +1,74 @@
+From 92b7f7a86d9fa0a356c57087b944d37ee24a0231 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 28 Sep 2010 14:08:03 +0200
+Subject: [PATCH 2/2] Fix windows line ending and wrong endif
+
+---
+ progs/demos/smooth_opengl3/smooth_opengl3.c |   44 +++++++++++++--------------
+ 1 files changed, 21 insertions(+), 23 deletions(-)
+
+diff --git a/progs/demos/smooth_opengl3/smooth_opengl3.c b/progs/demos/smooth_opengl3/smooth_opengl3.c
+index a36f090..8784759 100755
+--- a/progs/demos/smooth_opengl3/smooth_opengl3.c
++++ b/progs/demos/smooth_opengl3/smooth_opengl3.c
+@@ -93,8 +93,7 @@ void checkError(const char *functionName)
+ 
+ typedef ptrdiff_t ourGLsizeiptr;
+ typedef char ourGLchar;
+-
+-#if defined(WIN32)
++
+ #ifndef APIENTRY
+ #define APIENTRY
+ #endif
+@@ -118,27 +117,26 @@ typedef void (APIENTRY *PFNGLVERTEXATTRIBPOINTERPROC) (GLuint index, GLint size,
+ typedef void (APIENTRY *PFNGLENABLEVERTEXATTRIBARRAYPROC) (GLuint index);
+ typedef GLint (APIENTRY *PFNGLGETUNIFORMLOCATIONPROC) (GLuint program, const ourGLchar *name);
+ typedef void (APIENTRY *PFNGLUNIFORMMATRIX4FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
+-#endif  /* defined(WIN32) */
+-
+-PFNGLGENBUFFERSPROC gl_GenBuffers;
+-PFNGLBINDBUFFERPROC gl_BindBuffer;
+-PFNGLBUFFERDATAPROC gl_BufferData;
+-PFNGLCREATESHADERPROC gl_CreateShader;
+-PFNGLSHADERSOURCEPROC gl_ShaderSource;
+-PFNGLCOMPILESHADERPROC gl_CompileShader;
+-PFNGLCREATEPROGRAMPROC gl_CreateProgram;
+-PFNGLATTACHSHADERPROC gl_AttachShader;
+-PFNGLLINKPROGRAMPROC gl_LinkProgram;
+-PFNGLUSEPROGRAMPROC gl_UseProgram;
+-PFNGLGETSHADERIVPROC gl_GetShaderiv;
+-PFNGLGETSHADERINFOLOGPROC gl_GetShaderInfoLog;
+-PFNGLGETPROGRAMIVPROC gl_GetProgramiv;
+-PFNGLGETPROGRAMINFOLOGPROC gl_GetProgramInfoLog;
+-PFNGLGETATTRIBLOCATIONPROC gl_GetAttribLocation;
+-PFNGLVERTEXATTRIBPOINTERPROC gl_VertexAttribPointer;
+-PFNGLENABLEVERTEXATTRIBARRAYPROC gl_EnableVertexAttribArray;
+-PFNGLGETUNIFORMLOCATIONPROC gl_GetUniformLocation;
+-PFNGLUNIFORMMATRIX4FVPROC gl_UniformMatrix4fv;
++
++PFNGLGENBUFFERSPROC gl_GenBuffers;
++PFNGLBINDBUFFERPROC gl_BindBuffer;
++PFNGLBUFFERDATAPROC gl_BufferData;
++PFNGLCREATESHADERPROC gl_CreateShader;
++PFNGLSHADERSOURCEPROC gl_ShaderSource;
++PFNGLCOMPILESHADERPROC gl_CompileShader;
++PFNGLCREATEPROGRAMPROC gl_CreateProgram;
++PFNGLATTACHSHADERPROC gl_AttachShader;
++PFNGLLINKPROGRAMPROC gl_LinkProgram;
++PFNGLUSEPROGRAMPROC gl_UseProgram;
++PFNGLGETSHADERIVPROC gl_GetShaderiv;
++PFNGLGETSHADERINFOLOGPROC gl_GetShaderInfoLog;
++PFNGLGETPROGRAMIVPROC gl_GetProgramiv;
++PFNGLGETPROGRAMINFOLOGPROC gl_GetProgramInfoLog;
++PFNGLGETATTRIBLOCATIONPROC gl_GetAttribLocation;
++PFNGLVERTEXATTRIBPOINTERPROC gl_VertexAttribPointer;
++PFNGLENABLEVERTEXATTRIBARRAYPROC gl_EnableVertexAttribArray;
++PFNGLGETUNIFORMLOCATIONPROC gl_GetUniformLocation;
++PFNGLUNIFORMMATRIX4FVPROC gl_UniformMatrix4fv;
+ 
+ void initExtensionEntries(void) 
+ {
+-- 
+1.7.3
+
