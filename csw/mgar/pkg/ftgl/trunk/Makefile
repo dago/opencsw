@@ -28,7 +28,8 @@ CATALOGNAME_CSWftgldevel = ftgl_devel
 SPKG_DESC_CSWftgl = $(DESCRIPTION)
 SPKG_DESC_CSWftgldevel = FTGL Development Files
 
-DEP_PKGS_CSWftgl = CSWmesa CSWzlib CSWftype2
+DEP_PKGS_CSWftgl = CSWmesa CSWzlib CSWftype2 CSWfreeglut
+CHECKPKG_OVERRIDES_CSWftgl = surplus-dependency|CSWfreeglut
 RUNTIME_DEP_PKGS_CSWftgldevel = CSWftgl
 CHECKPKG_OVERRIDES_CSWftgldevel = surplus-dependency|CSWftgl
 
@@ -36,15 +37,25 @@ PKGFILES_CSWftgl = $(PKGFILES_RT)
 
 NOISAEXEC = 1
 NOISALIST = 1
+BUILD64 = 1
 
-# First we need CSWfreeglut in 64 bit
-# BUILD64 = 1
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 # Needed for __func__ used in Patch 0002
 EXTRA_CXXFLAGS = -features=extensions -norunpath
 EXTRA_LDFLAGS = -lm
+#EXTRA_LIB-5.10 = /usr/X11/lib
+#EXTRA_LIB = $(EXTRA_LIB-$(GAROSREL))
 
 CONFIGURE_ARGS = $(DIRPATHS)
+#CONFIGURE_ARGS += --x-includes=/usr/openwin/include
+#CONFIGURE_ARGS += --x-libraries=$(abspath /usr/openwin/lib/$(MM_LIBDIR))
+#CONFIGURE_ARGS-5.9 += --with-gl-inc=$(includedir)
+#CONFIGURE_ARGS-5.9 += --with-gl-lib=$(libdir)
+#CONFIGURE_ARGS-5.10 += --with-gl-inc=/usr/X11/include
+#CONFIGURE_ARGS-5.10 += --with-gl-lib=$(abspath /usr/X11/lib/$(MM_LIBDIR))
+#CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(GAROSREL))
 CONFIGURE_ARGS += --with-gl-inc=$(includedir)
 CONFIGURE_ARGS += --with-gl-lib=$(libdir)
 CONFIGURE_ARGS += --with-glut-inc=$(includedir)
