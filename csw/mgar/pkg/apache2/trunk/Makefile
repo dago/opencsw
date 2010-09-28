@@ -114,6 +114,8 @@ EXTRA_LIB = $(prefix)/bdb48/lib
 # the Makefile.
 INITSMF = /etc/opt/csw/init.d/cswapache2
 
+POSTMSG_CSWapache2 = /opt/csw/share/doc/apache2/README.CSW
+
 ALTERNATIVES_CSWapache2 = prefork worker
 ALTERNATIVE_prefork = /opt/csw/apache2/sbin/httpd httpd /opt/csw/apache2/sbin/httpd.prefork 100
 ALTERNATIVE_worker = /opt/csw/apache2/sbin/httpd httpd /opt/csw/apache2/sbin/httpd.worker 50
