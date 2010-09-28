@@ -42,20 +42,39 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # The PACKAGES variable tell GAR which packages to build
 PACKAGES  = CSWapache2 CSWapache2-devel CSWapache2-manual CSWap2suexec
 
+
+NEED_DUMMY_AP2 = 1
+
+ifeq ($(NEED_DUMMY_AP2), 1)
+# These packages are dummy versions to make dependencies nicer
+# as various things depend on CSWap2prefork currently
+PACKAGES += CSWap2prefork CSWap2worker
+endif
+
 ARCHALL_CSWapache2-manual = 1
 
 CATALOGNAME_CSWapache2 = apache2
 CATALOGNAME_CSWapache2-devel = apache2_devel
 CATALOGNAME_CSWapache2-manual = apache2_manual
 CATALOGNAME_CSWap2suexec = ap2_suexec
+ifeq ($(NEED_DUMMY_AP2), 1)
+CATALOGNAME_CSWap2prefork = ap2_prefork
+CATALOGNAME_CSWap2worker = ap2_worker
+endif
 
 SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
 SPKG_DESC_CSWapache2-devel = The development files for Apache2.
 SPKG_DESC_CSWapache2-manual = The Apache2 manual files.
 SPKG_DESC_CSWap2suexec = The standard suEXEC binary for Apache2.
+ifeq ($(NEED_DUMMY_AP2), 1)
+SPKG_DESC_CSWap2prefork = A dummy stub for the old prefork mpm package
+SPKG_DESC_CSWap2worker = A dummy stub for the old worker mpm package
+endif
 
-INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2rt CSWap2worker CSWap2perfork
-INCOMPATIBLE_PKGS_CSWapache2 += CSWapache2c
+INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2rt CSWapache2c
+ifneq ($(NEED_DUMMY_AP2), 1)
+INCOMPATIBLE_PKGS_CSWapache2 += CSWap2prefork CSWap2worker
+endif
 
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
@@ -63,11 +82,19 @@ RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-devel  = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
+ifeq ($(NEED_DUMMY_AP2), 1)
+RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2
+RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2
+endif
 
 CHECKPKG_OVERRIDES_CSWap2suexec  += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-devel += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-manual += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
+ifeq ($(NEED_DUMMY_AP2), 1)
+CHECPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
+CHECPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2
+endif
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
