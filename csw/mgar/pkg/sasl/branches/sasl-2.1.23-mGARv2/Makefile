@@ -12,9 +12,8 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
-WORKSRC = $(WORKDIR)/cyrus-$(GARNAME)-$(GARVERSION)
-
-DISTFILES = cyrus-$(GARNAME)-$(GARVERSION).tar.gz
+DISTNAME = cyrus-$(GARNAME)-$(GARVERSION)
+DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += cswsaslauthd.init saslauthd.init.CSW
 DISTFILES += README.sasl README.saslauthd
 
@@ -29,10 +28,13 @@ CATALOGNAME_CSWsaslauthd = saslauthd
 CATALOGNAME_CSWsaslgssapi = sasl_gssapi
 CATALOGNAME_CSWsaslsql = sasl_sql
 
-RUNTIME_DEP_PKGS_CSWsasl = CSWosslrt CSWbdb47
+RUNTIME_DEP_PKGS_CSWsasl = CSWosslrt CSWbdb47 CSWoldaprt CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWsaslauthd = CSWosslrt CSWoldaprt CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWsaslgssapi = CSWsasl CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWsaslsql = CSWsasl CSWlibpq CSWmysql5rt CSWsqlite
+
+CHECKPKG_OVERRIDES_CSWsaslgssapi += surplus-dependency|CSWsasl
+CHECKPKG_OVERRIDES_CSWsaslsql += surplus-dependency|CSWsasl
 
 SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
 SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
@@ -42,28 +44,25 @@ SPKG_DESC_CSWsaslsql = Cyrus Simple Authentication and Security Layer SQL Bindin
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = cyrus-$(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-# It is a long way to 64 bits...
-BUILD64 = 1
-
-# Do not use LD_OPTIONS as it breaks tests by using the installed libraries
-# before the newly built ones.
-NOISALIST = 1
-EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
-LD_OPTIONS =
-
 EXTRA_CFLAGS = -D__EXTENSIONS__
 
 BUILD_ENV = _REENTRANT=1
 
-EXTRA_LIB += $(prefix)/bdb47/lib
-# EXTRA_LIB += $(prefix)/mysql5/lib
-# EXTRA_LIB += $(prefix)/postgresql/lib
+EXTRA_LIB = $(prefix)/bdb47/lib
 
 EXTRA_INC = /opt/csw/mysql5/include/mysql
 EXTRA_INC += /opt/csw/postgresql/include
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
+
+# Do not use LD_OPTIONS as it breaks tests by using the installed libraries
+# before the newly built ones.
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+LD_OPTIONS =
+
+BUILD64 = 1
+NOISALIST = 1
 
 NODIRPATHS = --docdir
 
@@ -76,13 +75,13 @@ CONFIGURE_ARGS += --with-bdb-libdir=/opt/csw/bdb47/lib
 CONFIGURE_ARGS += --with-bdb-incdir=/opt/csw/bdb47/include/ 
 CONFIGURE_ARGS += --with-saslauthd=$(localstatedir)/saslauthd 
 CONFIGURE_ARGS += --with-ipctype=unix 
-CONFIGURE_ARGS += --with-ldap=$(prefix)
+CONFIGURE_ARGS += --with-ldap=$(libdir)
 # Autoconf tries to find the directory with the shared lib in it. Because of the
 # ISA suffix for 64 bit we must specify the exact library location and add
 # the include directories manually.
 CONFIGURE_ARGS += --with-mysql=$(abspath $(prefix)/mysql5/lib/$(MM_LIBDIR)/mysql)
 CONFIGURE_ARGS += --with-pgsql=$(abspath $(prefix)/postgresql/lib/$(MM_LIBDIR))
-CONFIGURE_ARGS += --with-openssl=$(prefix)
+CONFIGURE_ARGS += --with-openssl=$(libdir)
 CONFIGURE_ARGS += --with-dbpath=$(sysconfdir)/sasldb2
 CONFIGURE_ARGS += --with-plugindir=$(libdir)/sasl2 
 CONFIGURE_ARGS += --enable-login
