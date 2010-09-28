@@ -97,8 +97,8 @@ CHECKPKG_OVERRIDES_CSWapache2-devel += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-manual += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 ifeq ($(NEED_DUMMY_AP2), 1)
-CHECPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
-CHECPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2
 endif
 
 # We need this to get bdb48/lib into the runpath
