@@ -79,8 +79,8 @@ EXTRA_LIB = $(prefix)/bdb48/lib
 INITSMF = /etc/opt/csw/init.d/cswapache2
 
 ALTERNATIVES_CSWapache2 = prefork worker
-ALTERNATIVE_prefork = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.prefork 100
-ALTERNATIVE_worker = /opt/csw/apache2/sbin/httpd httpd /opt/apache2/sbin/httpd.worker 50
+ALTERNATIVE_prefork = /opt/csw/apache2/sbin/httpd httpd /opt/csw/apache2/sbin/httpd.prefork 100
+ALTERNATIVE_worker = /opt/csw/apache2/sbin/httpd httpd /opt/csw/apache2/sbin/httpd.worker 50
 
 # Build Configuration
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
