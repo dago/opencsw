@@ -18,7 +18,13 @@ LICENSE = LICENSE
 
 # Build multiple mpm's and merge them all into one install
 EXTRA_MODULATORS = MPM
-MODULATIONS_MPM = prefork worker
+# !!!NOTE, NOTE, NOTE!!! prefork must be last as it's the one where
+# all modules are built.  This affects the default httpd.conf that
+# gets generated.  The other modulations will generate httpd.conf
+# files that lack the important LoadModule lines.  This is primarily
+# useful at version bump time when files/httpd.conf.CSW may need an
+# update to reflect new modules, etc.
+MODULATIONS_MPM = worker prefork
 
 MERGE_SCRIPTS_isa-default-mpm-prefork = copy-all
 MERGE_SCRIPTS_isa-default-mpm-worker = copy-all
