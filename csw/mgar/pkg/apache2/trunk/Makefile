@@ -31,6 +31,9 @@ DISTFILES += config.layout
 # Standard package bits
 DISTFILES += CSWapache2.killproc cswapache2
 
+DISTFILES += CSWapache2.preinstall CSWapache2postinstall
+DISTFILES += CSWap2suexec.postinstall CSWap2suexec.preremove
+
 # Configuration templates
 DISTFILES += httpd.conf.CSW
 DISTFILES += httpd-mpm.conf.CSW
