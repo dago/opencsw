@@ -41,7 +41,6 @@ DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
 DISTFILES += CSWap2suexec.postinstall CSWap2suexec.preremove
 
 # Configuration templates
-DISTFILES += httpd.conf.CSW
 DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
@@ -212,20 +211,22 @@ copy-readmes:
 		ginstall -d -m0755 $(DESTDIR)/$(prefix)/share/doc/$$p; \
 		ginstall -m 0644 $$f $(DESTDIR)/$(prefix)/share/doc/$$p/README.CSW; \
 	done)
+	@$(MAKECOOKIE)
 
 rename-httpd:
 	@if test -f $(APACHE_ROOT)/sbin/httpd ; then \
 	    ( cd $(APACHE_ROOT)/sbin ; mv httpd httpd.$(MPM) ) ; \
 	fi
 
+
 # Copy in specialized templates
 copy-local-files:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -m0644 $(WORKDIR)/httpd.conf.CSW $(APACHE_ROOT)/etc
 	@ginstall -m0644 $(WORKDIR)/httpd-mpm.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall -m0644 $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
+	@$(MAKECOOKIE)
 
 # Create stock templates
 template_list  = share/htdocs/index.html
@@ -247,3 +248,11 @@ create-templates:
 				gmv -v $$file $$file.CSW ; \
 			done )
 	@$(MAKECOOKIE)
+
+
+post-merge:
+	@(cd $(PKGROOT)/$(prefix)/apache2/etc/; \
+	perl -pi -e "s/User.*daemon.*/User \@USER\@/; s/Group.*daemon.*/Group \@GROUP\@/; s/#ServerName www.example.com:80/ServerName \@HOSTNAME\@:80/; s/ServerAdmin you\@example.com/ServerAdmin \@ADMIN\@/" httpd.conf; \
+		mv httpd.conf httpd.conf.CSW )
+	@$(MAKECOOKIE)
+
