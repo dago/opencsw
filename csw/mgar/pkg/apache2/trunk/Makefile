@@ -254,7 +254,7 @@ create-templates:
 
 post-merge:
 	@(cd $(PKGROOT)/$(prefix)/apache2/etc/; \
-	perl -pi -e "s/User.*daemon.*/User \@USER\@/; s/Group.*daemon.*/Group \@GROUP\@/; s/#ServerName www.example.com:80/ServerName \@HOSTNAME\@:80/; s/ServerAdmin you\@example.com/ServerAdmin \@ADMIN\@/" httpd.conf; \
+	perl -pi -e 's/User.*daemon.*/User \@USER\@/; s/Group.*daemon.*/Group \@GROUP\@/; s/#ServerName www.example.com:80/ServerName \@HOSTNAME\@:80/; s/ServerAdmin you\@example.com/ServerAdmin \@ADMIN\@/; s/^(LoadModule.*suexec.*)/#$$1/' httpd.conf; \
 		mv httpd.conf httpd.conf.CSW )
 	@$(MAKECOOKIE)
 
