@@ -80,7 +80,6 @@ CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWemacscommon
 
-
 SPKG_DESC_CSWap2svn           = Subversion Modules for Apache 2.2
 CATALOGNAME_CSWap2svn         = ap2_subversion
 RUNTIME_DEP_PKGS_CSWap2svn    = CSWsvn
@@ -98,10 +97,12 @@ PKGFILES_CSWjavasvn           += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.C
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWexpat
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWsvn
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWiconv
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWapache2rt
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWneon
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWjavasvn   += CSWapr-util
+RUNTIME_DEP_PKGS_CSWjavasvn   += CSWbdb48
+RUNTIME_DEP_PKGS_CSWjavasvn   += CSWapr
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
@@ -117,9 +118,11 @@ RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWexpat
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWiconv
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWapache2rt
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWapr-util
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWbdb48
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWapr
 
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
@@ -129,10 +132,12 @@ PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWiconv
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWapache2rt
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWexpat
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWapr-util
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWbdb48
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWapr
 
 SPKG_DESC_CSWpythonsvn           = Subversion Python Language Binding
 CATALOGNAME_CSWpythonsvn         = pythonsvn
@@ -143,9 +148,11 @@ RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWexpat
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWpython
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWsvn
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWiconv
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWapache2rt
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWapr-util
+RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWbdb48
+RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWapr
 CHECKPKG_OVERRIDES_CSWpythonsvn += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpythonsvn += catalogname-does-not-start-with-py_
 
@@ -165,9 +172,9 @@ PATCHFILES += 0001-make-subversion-sysconfigdir-as-it-should-be-for-csw.patch
 SVNLIB     = $(prefix)/lib/svn
 JAVA_HOME  = /usr/jdk1.6.0_20
 
-EXTRA_INC += $(prefix)/apache2/include
+#EXTRA_INC += $(prefix)/apache2/include
 
-EXTRA_LIB += /opt/csw/apache2/lib
+#EXTRA_LIB += /opt/csw/apache2/lib
 EXTRA_LIB += /opt/csw/bdb48/lib
 EXTRA_LIB += $(SVNLIB)
 EXTRA_LINKER_FLAGS = -lintl -liconv
@@ -175,7 +182,7 @@ EXTRA_LINKER_FLAGS = -lintl -liconv
 # Only add $ISALIST to dirs which ship optimized versions (done by explicitly
 # excluding those lib dirs which are known not to ship optimized versions).
 RUNPATH_ISALIST  = $(libdir)
-RUNPATH_ISALIST += $(filter-out /opt/csw/apache2/lib $(SVNLIB),$(EXTRA_LIB)) 
+#RUNPATH_ISALIST += $(filter-out /opt/csw/apache2/lib $(SVNLIB),$(EXTRA_LIB)) 
 
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 PROTOTYPE_MODIFIERS += cswpycompile
@@ -196,8 +203,8 @@ CONFIGURE_ARGS += --disable-mod-activation
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --with-berkeley-db=db.h:/opt/csw/bdb48/include:/opt/csw/bdb48/lib:db
 CONFIGURE_ARGS += --enable-javahl
-CONFIGURE_ARGS += --with-apr=$(prefix)/apache2/bin/apr-config
-CONFIGURE_ARGS += --with-apr-util=$(prefix)/apache2/bin/apu-config
+CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
+CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-jdk=$(JAVA_HOME)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
