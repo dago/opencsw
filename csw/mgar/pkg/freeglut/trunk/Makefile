@@ -9,6 +9,8 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
+# Use these patches until this is fixed:
+#   http://sourceforge.net/tracker/index.php?func=detail&aid=3077828&group_id=1032&atid=101032
 PATCHFILES  = 0001-Add-support-for-Sun.patch
 PATCHFILES += 0002-Fix-windows-line-ending-and-wrong-endif.patch
 
