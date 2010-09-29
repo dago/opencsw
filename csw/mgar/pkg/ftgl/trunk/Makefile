@@ -12,6 +12,8 @@ MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(GARNAME)-$(FILEVERSION).tar.bz2
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 
+# Use these patches until this is fixed:
+#   http://sourceforge.net/tracker/?func=detail&atid=980351&aid=3077204&group_id=202130
 PATCHFILES  = 0001-Do-not-use-gcc-specific-flags.patch 
 PATCHFILES += 0002-Use-Sun-Studio-__func__-instead-of-gcc-__FUNCTION__.patch
 PATCHFILES += 0003-Force-GNU-sed-when-using-i.patch
@@ -37,7 +39,9 @@ PKGFILES_CSWftgl = $(PKGFILES_RT)
 
 NOISAEXEC = 1
 NOISALIST = 1
-BUILD64 = 1
+# Unless the Solaris 10 compilation problem with both SUNW mesa and CSW mesa
+# installed exists disable 64 bit for now.
+# BUILD64 = 1
 
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
