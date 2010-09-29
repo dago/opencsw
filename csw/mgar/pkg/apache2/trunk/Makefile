@@ -189,6 +189,8 @@ PKGFILES_CSWap2worker = .*share/doc/ap2_worker.*
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 endif
 
+PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/apache2/sbin/suexec" { $$$$4 = "4755" }; { print }'
+
 include gar/category.mk
 
 CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
