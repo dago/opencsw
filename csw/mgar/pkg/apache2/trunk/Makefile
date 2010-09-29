@@ -175,7 +175,7 @@ APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
 LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
-PKGFILES_CSWap2suexec = .*sbin/suexec .*libexecdir/.*suexec.* .*/man/.*suexec.*
+PKGFILES_CSWap2suexec = .*sbin/suexec .*libexec/.*suexec.* .*/man/.*suexec.*
 PKGFILES_CSWapache2-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
 ifeq ($(NEED_DUMMY_AP2), 1)
