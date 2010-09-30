@@ -1,0 +1,24 @@
+From 6874fe23f37b83f6d4813b8f5e6dcaf435a7051a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 30 Sep 2010 15:13:31 +0200
+Subject: [PATCH] Make sure we have a prototype for sqrt
+
+---
+ src/core/vectors.h |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/src/core/vectors.h b/src/core/vectors.h
+index ef87c23..783b5ac 100644
+--- a/src/core/vectors.h
++++ b/src/core/vectors.h
+@@ -29,6 +29,7 @@
+ #define VECTORS_H
+ 
+ #include <cmath>
++#include <math.h>
+ 
+ template<class T> class vec2 {
+ public:
+-- 
+1.7.2.2
+
