@@ -10,8 +10,8 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmpdfreuse
-CATALOGNAME = pm_pdfreuse
+PACKAGES = CSWpmcryptpasswdmd5
+CATALOGNAME = pm_cryptpasswdmd5
 ARCHALL = 1
 
 include gar/category.mk
