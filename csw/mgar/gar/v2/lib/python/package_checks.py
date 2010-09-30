@@ -91,7 +91,7 @@ RPATH_WHITELIST = [
      r"$") % RPATH_PARTS,
     r"^\$ORIGIN$",
     r"^\$ORIGIN/..$",
-    r"^/usr(/(ccs|dt|openwin))?/lib(/sparcv9)?$",
+    r"^/usr(/(ccs|dt|openwin))?/lib(/(sparcv9|amd64|64))?$",
 ]
 # Check ldd -r only for Perl modules
 SYMBOLS_CHECK_ONLY_FOR = r"^CSWpm.*$"
