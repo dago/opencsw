@@ -14,4 +14,6 @@ PACKAGES = CSWpmpasswdunix
 CATALOGNAME = pm_passwdunix
 ARCHALL = 1
 
+RUNTIME_DEP_PKGS += CSWpmcryptpasswdmd5 CSWpmstructcompare
+
 include gar/category.mk
