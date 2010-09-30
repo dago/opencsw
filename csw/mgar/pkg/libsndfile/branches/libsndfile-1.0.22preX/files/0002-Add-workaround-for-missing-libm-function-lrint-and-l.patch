@@ -1,0 +1,28 @@
+From 4f81962de709e59c180ed95e3a7ed4e49af38b95 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 29 Oct 2009 12:41:49 +0100
+Subject: [PATCH] Add workaround for missing libm function lrint and lrintf
+
+---
+ src/common.h |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/src/common.h b/src/common.h
+index f41f96a..f4ba69a 100644
+--- a/src/common.h
++++ b/src/common.h
+@@ -839,5 +839,11 @@ int sf_dither_float		(const SF_DITHER_INFO *dither, const float *in, float *out,
+ int sf_dither_double	(const SF_DITHER_INFO *dither, const double *in, double *out, int count) ;
+ #endif
+ 
++/* Taken from http://www.mail-archive.com/qemu-devel@nongnu.org/msg00314.html */
++#define lrint(d)                ((int32_t)rint(d))
++#define llrint(d)               ((int64_t)rint(d))
++#define lrintf(f)               ((int32_t)rint(f))
++#define llrintf(f)              ((int64_t)rint(f))
++
+ #endif /* SNDFILE_COMMON_H */
+ 
+-- 
+1.6.5
+

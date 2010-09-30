@@ -1,0 +1,35 @@
+From a21ce86ac37888255ad9a4018c27f866e3ff1ebf Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 29 Oct 2009 13:22:02 +0100
+Subject: [PATCH 2/3] Workaround mising stdint.h and Sun Studio shortcoming
+
+---
+ tests/utils.h |   12 +++++++++++-
+ 1 files changed, 11 insertions(+), 1 deletions(-)
+
+diff --git a/tests/utils.h b/tests/utils.h
+index ee70e2c..9a108cd 100644
+--- a/tests/utils.h
++++ b/tests/utils.h
+@@ -29,7 +29,17 @@
+ extern "C" {
+ #endif	/* __cplusplus */
+ 
+-#include <stdint.h>
++#include <sys/types.h>
++#define lrint(d)                ((int32_t)rint(d))
++#define lrintf(f)               ((int32_t)rint(f))
++
++#  if (__STDC_VERSION__ >= 199901L) /* C99 */ || \
++    (defined(__SUNPRO_C) && defined(__C99FEATURES__))
++#   define __func__ __func__
++#  else
++#   define __func__ "<unknown>"
++#  endif
++
+ #include <stdarg.h>
+ 
+ #define SF_COUNT_TO_LONG(x)	((long) (x))
+-- 
+1.6.5
+
