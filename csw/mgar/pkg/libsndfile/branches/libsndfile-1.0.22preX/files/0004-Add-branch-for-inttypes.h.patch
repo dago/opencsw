@@ -1,0 +1,28 @@
+From 5640cb876215cfdeaa24794ca996f2164b6a5b10 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 30 Sep 2010 11:09:08 +0200
+Subject: [PATCH 4/4] Add branch for inttypes.h
+
+---
+ programs/common.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/programs/common.c b/programs/common.c
+index 75ae602..d7d58b1 100644
+--- a/programs/common.c
++++ b/programs/common.c
+@@ -35,7 +35,11 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <ctype.h>
++#if HAVE_STDINT_H
+ #include <stdint.h>
++#elif HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ 
+ #include <sndfile.h>
+ 
+-- 
+1.7.3
+
