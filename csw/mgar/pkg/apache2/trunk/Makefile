@@ -43,7 +43,7 @@ DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
 DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
-DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork README.CSW.ap2_worker
+DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -56,13 +56,12 @@ NEED_DUMMY_AP2 = 1
 ifeq ($(NEED_DUMMY_AP2), 1)
 # These packages are dummy versions to make dependencies nicer
 # as various things depend on CSWap2prefork currently
-PACKAGES += CSWap2prefork CSWap2worker CSWapache2rt
+PACKAGES += CSWap2prefork CSWapache2rt
 endif
 
 ARCHALL_CSWapache2-manual = 1
 ifeq ($(NEED_DUMMY_AP2), 1)
 ARCHALL_CSWap2prefork = 1
-ARCHALL_CSWap2worker = 1
 ARCHALL_CSWapache2rt = 1
 endif
 
@@ -72,7 +71,6 @@ CATALOGNAME_CSWapache2-manual = apache2_manual
 CATALOGNAME_CSWap2suexec = ap2_suexec
 ifeq ($(NEED_DUMMY_AP2), 1)
 CATALOGNAME_CSWap2prefork = ap2_prefork
-CATALOGNAME_CSWap2worker = ap2_worker
 CATALOGNAME_CSWapache2rt = apache2rt
 endif
 
@@ -82,13 +80,12 @@ SPKG_DESC_CSWapache2-manual = The Apache2 manual files.
 SPKG_DESC_CSWap2suexec = The standard suEXEC binary for Apache2.
 ifeq ($(NEED_DUMMY_AP2), 1)
 SPKG_DESC_CSWap2prefork = A dummy stub for the old prefork mpm package
-SPKG_DESC_CSWap2worker = A dummy stub for the old worker mpm package
 SPKG_DESC_CSWapache2rt = A dummy stub for the old apache2rt package
 endif
 
-INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2c
+INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2c CSWap2worker
 ifneq ($(NEED_DUMMY_AP2), 1)
-INCOMPATIBLE_PKGS_CSWapache2 += CSWap2prefork CSWap2worker CSWapache2rt
+INCOMPATIBLE_PKGS_CSWapache2 += CSWap2prefork CSWapache2rt
 endif
 
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv
@@ -99,7 +96,6 @@ RUNTIME_DEP_PKGS_CSWapache2-devel  = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 ifeq ($(NEED_DUMMY_AP2), 1)
 RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2
-RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 endif
 
@@ -109,7 +105,6 @@ CHECKPKG_OVERRIDES_CSWapache2-manual += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 ifeq ($(NEED_DUMMY_AP2), 1)
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 endif
 
@@ -187,7 +182,6 @@ PKGFILES_CSWapache2-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
 ifeq ($(NEED_DUMMY_AP2), 1)
 PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
-PKGFILES_CSWap2worker = .*share/doc/ap2_worker.*
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 endif
 
