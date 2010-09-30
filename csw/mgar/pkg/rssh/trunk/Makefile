@@ -25,7 +25,9 @@ VENDOR_URL = http://www.pizzashack.org/rssh/
 BUILD_DEP_PKGS = CSWossh CSWcvs CSWrdist CSWrsync
 
 # We need at least OpenSSH, the other programs are optional
-RUNTIME_DEP_PKGS = CSWossh
+# Looks like I was wrong: even that one is optional. See
+#   https://www.opencsw.org/mantis/view.php?id=4549
+# RUNTIME_DEP_PKGS = CSWossh
 
 sysconfdir = /etc/opt/csw
 MIGRATE_FILES = rssh.conf
@@ -44,7 +46,7 @@ PROTOTYPE_MODIFIERS = makesuid
 PROTOTYPE_FILES_makesuid = $(libexecdir)/rssh_chroot_helper
 PROTOTYPE_PERMS_makesuid = 4755
 
-CHECKPKG_OVERRIDES_CSWrssh += surplus-dependency|CSWossh
+# CHECKPKG_OVERRIDES_CSWrssh += surplus-dependency|CSWossh
 
 include gar/category.mk
 
