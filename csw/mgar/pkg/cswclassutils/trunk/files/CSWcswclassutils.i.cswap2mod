@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# i.cswap2mod - Class action script for installing apache2 modules
+#
+# $Id$
+#
+# Written by Ben Walton
+#
+# 2010-09-29 First Release
+#
+
+AP2_PREFIX=/opt/csw/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_LIBEXEC=$AP2_PREFIX/libexec
+AP2_CONFDIR=$AP2_PREFIX/etc
+AP2_CONFIG=$AP2_CONFDIR/httpd.conf
+AP2_APXS=$AP2_BINDIR/apxs
+
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+
+while read src dest; do
+      # Place the file first
+      /usr/bin/cp -p $src $dest || exit 2
+      echo $dest
+      
+      CONF=$PKG_INSTALL_ROOT/$AP2_CONFIG
+      APXS=$PKG_INSTALL_ROOT/$AP2_APXS
+      MODFILE=`basename $dest`
+      MODNAME=`echo $MODFILE | sed 's/mod_//; s/\.so$//'`
+
+      # This check ensures we have an httpd.conf where we expect it
+      # and that apxs is available.  This (hopefully) prevents us from
+      # doing anything if the local system has completely reworked the
+      # etc/ file structure
+      if [ -f "$CONF" -a -x "$APXS" ]; then
+	  # Enable the module
+	  chroot $PKG_INSTALL_ROOT \
+	      $APXS -e -a -n $MODNAME $MODFILE
+	  cat <<END
+
+
+NOTICE: The $MODNAME module was enabled in httpd.conf but the server
+was not restarted.  Please modify httpd.conf as appropriate and
+restart apache.
+
+
+END
+      fi
+done
+
+exit 0
