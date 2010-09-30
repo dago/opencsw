@@ -38,7 +38,6 @@ DISTFILES += config.layout
 DISTFILES += CSWapache2.killproc cswapache2
 
 DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
-DISTFILES += CSWap2suexec.postinstall CSWap2suexec.preremove
 
 # Configuration templates
 DISTFILES += httpd-mpm.conf.CSW
