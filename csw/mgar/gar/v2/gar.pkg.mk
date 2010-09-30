@@ -185,6 +185,10 @@ ETCSERVICES += $(_ETCSERVICES_FILES)
 # This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
 TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
 
+# if AP2_MODS is set, files matching this pattern will have cswap2mod
+# set as their class
+AP2_MODFILES ?= /opt/csw/apache2/libexec/.*\.so $(EXTRA_AP2_MODFILES)
+
 # - set class for all config files
 _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
@@ -197,6 +201,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(CRONTABS),$$F[1] = "cswcrontab" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(if $(AP2_MODS),$(foreach FILE,$(AP2_MODFILES),$$F[1] = "cswap2mod" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		print join(" ",@F),"\n";'
 
 # If you add another filter above, also add the class to this list. It is used
@@ -216,6 +221,7 @@ _CSWCLASSES += cswpycompile
 _CSWCLASSES += cswinetd
 _CSWCLASSES += cswinitsmf
 _CSWCLASSES += cswtexinfo
+_CSWCLASSES += cswap2mod
 _CSWCLASSES += cswpostmsg
 
 # Make sure the configuration files always have a .CSW suffix and rename the
