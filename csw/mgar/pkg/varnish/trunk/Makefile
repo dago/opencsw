@@ -21,9 +21,17 @@ VENDOR_URL = http://www.varnish-cache.org
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
+# Otherwise testsuite is failing
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
 include gar/category.mk
+
+pre-configure-modulated:
+	-cd $(WORKSRC) && autoreconf -fi
+	@$(MAKECOOKIE)
