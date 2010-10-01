@@ -1,5 +1,5 @@
 GARNAME = asciidoc
-GARVERSION = 8.5.3
+GARVERSION = 8.6.1
 CATEGORIES = utils
 
 DESCRIPTION = An Documentation Generator
@@ -18,7 +18,7 @@ CATALOGNAME_CSWasciidoc = asciidoc
 
 ARCHALL_CSWasciidoc = 1
 
-RUNTIME_DEP_PKGS_CSWasciidoc = CSWpython CSWgnulinks CSWggetopt
+RUNTIME_DEP_PKGS_CSWasciidoc = CSWpython CSWggetopt
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
@@ -39,7 +39,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 INSTALL_ARGS = vimdir=/opt/csw/etc/vim
 
 CHECKPKG_OVERRIDES_CSWasciidoc += surplus-dependency|CSWggetopt
-CHECKPKG_OVERRIDES_CSWasciidoc += surplus-dependency|CSWgnulinks
 
 include gar/category.mk
 
