@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# r.cswap2mod - Class action script for removing apache2 modules
+#
+# Written by Ben Walton
+#
+# 2010-09-29 First Release
+#
+
+AP2_PREFIX=/opt/csw/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_LIBEXEC=$AP2_PREFIX/libexec
+AP2_CONFDIR=$AP2_PREFIX/etc
+AP2_CONFIG=$AP2_CONFDIR/httpd.conf
+AP2_APXS=$AP2_BINDIR/apxs
+
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+
+while read dest; do
+      echo $dest
+      
+      CONF=$PKG_INSTALL_ROOT/$AP2_CONFIG
+      APXS=$PKG_INSTALL_ROOT/$AP2_APXS
+      MODFILE=`basename $dest`
+      MODNAME=`echo $MODFILE | sed 's/mod_//; s/\.so$//'`
+
+      if [ -f "$CONF" -a -x "$APXS" ]; then
+	  # Disable the module
+	  chroot $PKG_INSTALL_ROOT \
+	      $APXS -e -A -n $MODNAME $MODFILE
+	  conftouched=1
+      fi
+
+      # Now actually remove the file.
+      /usr/bin/rm -f $dest || exit 2
+done
+
+if [ "$conftouched" = "1" ]; then
+	  cat <<END
+
+
+NOTICE: One or more apache modules was disabled in your apache
+configuration.  Please review these changes and restart apache as
+required.
+
+
+END
+fi
+
+exit 0
