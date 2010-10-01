@@ -2,12 +2,18 @@
 #
 # i.cswap2mod - Class action script for installing apache2 modules
 #
-# $Id$
-#
 # Written by Ben Walton
 #
 # 2010-09-29 First Release
 #
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
 
 AP2_PREFIX=/opt/csw/apache2
 AP2_BINDIR=$AP2_PREFIX/sbin
@@ -28,24 +34,46 @@ while read src dest; do
       MODFILE=`basename $dest`
       MODNAME=`echo $MODFILE | sed 's/mod_//; s/\.so$//'`
 
-      # This check ensures we have an httpd.conf where we expect it
-      # and that apxs is available.  This (hopefully) prevents us from
-      # doing anything if the local system has completely reworked the
-      # etc/ file structure
+      # Modules will be enabled by default, but a global kill switch
+      # is checked , followed by a module specific value.  Thus,
+      # either ap2_enable_modules or ap2_enable_suexec (for example)
+      # could disable activation of the suexec module.  The 
+      #
+      # This value is passed to apxs (-a: add, enable; -A: add,
+      # disable)
+      enmod=-a
+
+      if [ "$ap2_enable_modules" = "no" ]; then
+	  enmod=-A
+      fi
+
+      eval ap2_mod_specific="\$ap2_enable_$MODNAME"
+      if [ "$ap2_mod_specific" = "no" ]; then
+	  enmod=-A
+      elif [ "$ap2_mod_specific" = "yes" ]; then
+	  enmod=-a
+      fi
+
       if [ -f "$CONF" -a -x "$APXS" ]; then
-	  # Enable the module
+	  # Add the module module, optionally enabling it by default
 	  chroot $PKG_INSTALL_ROOT \
-	      $APXS -e -a -n $MODNAME $MODFILE
+	      $APXS -e $enmod -n $MODNAME $MODFILE
+	  conftouched=1
+      fi
+done
+
+if [ "$conftouched" = "1" ]; then
 	  cat <<END
 
 
-NOTICE: The $MODNAME module was enabled in httpd.conf but the server
-was not restarted.  Please modify httpd.conf as appropriate and
-restart apache.
+NOTICE: One or more LoadModule lines was added to your httpd.conf.
+Depending on your csw.conf settings for ap2_enable_modules or the
+ap2_enable_\$modulename they may be enabled.  Please review the
+changes, make any futher modifications and then restart apache as
+required.
 
 
 END
-      fi
-done
+fi
 
 exit 0
