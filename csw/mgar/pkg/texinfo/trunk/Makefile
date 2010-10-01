@@ -34,6 +34,11 @@ TEST_TARGET = check
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
+# Are these really needed? May investigate deeply later.
+CHECKPKG_OVERRIDES_CSWtexinfo += surplus-dependency|CSWbash
+CHECKPKG_OVERRIDES_CSWtexinfo += surplus-dependency|CSWgsed
+CHECKPKG_OVERRIDES_CSWtexinfo += surplus-dependency|CSWiconv
+
 include gar/category.mk
 
 post-extract-modulated:
