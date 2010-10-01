@@ -9,10 +9,12 @@ if test -f ${BASE}/share/info/dir -a -w ${BASE}/share/info/dir || \
    touch ${BASE}/share/info/dir 2>/dev/null; then
 
   echo "Registering existing texinfo-files..."
-  FILES=`ls ${BASE}/share/info/*.info ${BASE}/share/info/*.info-*`
-  for i in $FILES; do
-    ${BASE}/bin/install-info $i ${BASE}/share/info/dir 2> /dev/null
-  done
+  FILES=${BASE}/share/info/*
+  if [ "${FILES}" != "${BASE}/share/info/*" ]; then
+    for i in $FILES; do
+      ${BASE}/bin/install-info $i ${BASE}/share/info/dir 2> /dev/null
+    done
+  fi
 else
   echo "Skip registering pages as ${BASE}/share/info/dir is not writable"
 fi
