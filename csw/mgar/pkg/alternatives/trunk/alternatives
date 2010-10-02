@@ -5,7 +5,7 @@
 # @(#) alternatives 1.8@(#)
 
 PRIORITIESDIR=/opt/csw/share/alternatives 
-MANUALDIR=/etc/opt/etc/alternatives  #manual override location
+MANUALDIR=/etc/opt/csw/alternatives  #manual override location
 AWK=nawk
 DEBUG=${DEBUG:-/bin/true}
 
@@ -18,7 +18,8 @@ function usage {
 	print "  $prog --display {name}"
 	print "  $prog --auto {name}"
 	print "  $prog --set {name} {/full/path}"
-	# --config interactive chooser, not implemented at this time
+	print "  $prog --config {name}"
+	print "  $prog --list"
 	print "  "
 	print " The following are provided for compatibility, but do not work"
 	print " in exactly the same way as linux variants"
@@ -86,13 +87,24 @@ fi
 # Start of subroutine area
 
 # Usage: print_alternatives shortname
-# This prints only the INSTALLED alternatives lines, not manual settings
+# This prints only the INSTALLED alternatives lines for named software.
+#  Does not display whether or not any have been manually chosen.
 # Prints in priority-sorted order
+# This is used both as a user-facing display, and also internally
+#
 function print_alternatives {
 	if [[ $# != 1 ]] ; then print ERROR print_alternatives needs an arg; fi
 	cat $PRIORITIESDIR/* 2>/dev/null|
 		nawk '$2 == "'$1'" {print}' | sort -nr +3
 }
+
+# User facing function.
+# enables "alternatives --list"
+function list_alternatives {
+	print "List of installed software that uses the alternatives system:"
+	cat $PRIORITIESDIR/* 2>/dev/null| nawk '{print $2}' | sort -u
+}
+
 # prints ONLY the manually set alternatives line, if present
 function print_manual_set {
 	if [[ $# != 1 ]] ; then print ERROR print_manual_set needs an arg; fi
@@ -294,6 +306,13 @@ function set_manual_prio {
 		;;
 	esac
 
+	if [[ ! -d $MANUALDIR ]] ; then
+		mkdir $MANUALDIR 2>/dev/null
+	fi
+	if [[ ! -d $MANUALDIR ]] ; then
+		print Error: $MANUALDIR does not exist. Cannot continue
+		exit 1
+	fi
 	check=`egrep -l "^[^ ]* $1 $2 " $PRIORITIESDIR/*`
 	if [[ "$check" == "" ]] ; then
 		print Error: no installed match found for $1 $2
@@ -327,6 +346,38 @@ function display_choices {
 		print_alternatives $1
 }
 
+function config_alternative {
+	case $1 in
+		*/*)
+			print Error: need short name as arg for --config
+			exit 1
+			;;
+		"")
+			print Error: Need a name for --config
+			exit 1
+		;;
+	esac
+	print "Chooser for software '$1'"
+	print_alternatives $1 |nawk '{print $4,$1,$3}'
+	print "Input the priority number for your desired choice, or 0 to quit"
+
+	read prio
+	case $prio in
+		0|Q|q)
+			print Quitting without change
+			exit 0
+		;;
+	esac
+	fullpath=`cat $PRIORITIESDIR/* |
+	  nawk '$2 == "'$1'" && $4 == "'$prio'" {print $3}'`
+
+	if [[ "$fullpath" = "" ]] ; then
+		print Error: no match for priority $prio
+		exit 1
+	fi
+
+	set_manual_prio $1 $fullpath
+}
 
 ############################################################
 # Return to "main" area below
@@ -365,9 +416,16 @@ case $1 in
 		shift
 		revert_to_auto $1
 		;;
+	--list)
+		list_alternatives
+		;;
 	--display)
 		shift
 		display_choices $1
+		;;
+	--config)
+		shift
+		config_alternative $1
 		;;
 	--set)
 		shift
