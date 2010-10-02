@@ -45,6 +45,8 @@ DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
+DISTFILES += README.CSW.ap2worker CSWap2worker.postinstall
+
 DISTFILES += i.cswap2mod r.cswap2mod
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
