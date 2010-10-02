@@ -40,7 +40,6 @@ DISTFILES += CSWapache2.killproc cswapache2
 DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
 
 # Configuration templates
-DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
@@ -218,7 +217,6 @@ rename-httpd:
 copy-local-files:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -m0644 $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
 	@$(MAKECOOKIE)
 
@@ -247,7 +245,9 @@ create-templates:
 
 post-merge:
 	@(cd $(PKGROOT)/$(prefix)/apache2/etc/; \
-	perl -pi -e 's/User.*daemon.*/User \@USER\@/; s/Group.*daemon.*/Group \@GROUP\@/; s/#ServerName www.example.com:80/ServerName \@HOSTNAME\@:80/; s/ServerAdmin you\@example.com/ServerAdmin \@ADMIN\@/; s/^(LoadModule.*suexec.*)/#$$1/' httpd.conf; \
-		mv httpd.conf httpd.conf.CSW )
+		for f in httpd.conf extra/httpd-ssl.conf; do \
+			perl -pi -e 's/User.*daemon.*/User \@USER\@/; s/Group.*daemon.*/Group \@GROUP\@/; s/#ServerName www.example.com:80/ServerName \@HOSTNAME\@:80/; s/ServerAdmin you\@example.com/ServerAdmin \@ADMIN\@/; s/^(LoadModule.*suexec.*)/#$$1/' $$f; \
+			mv $$f $$f.CSW; \
+		done )
 	@$(MAKECOOKIE)
 
