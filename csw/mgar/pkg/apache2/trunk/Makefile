@@ -40,7 +40,6 @@ DISTFILES += CSWapache2.killproc cswapache2
 DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
 
 # Configuration templates
-DISTFILES += httpd-mpm.conf.CSW
 DISTFILES += httpd-ssl.conf.CSW
 DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
@@ -219,7 +218,6 @@ rename-httpd:
 copy-local-files:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall $(WORKDIR)/cswapache2 $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -m0644 $(WORKDIR)/httpd-mpm.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall -m0644 $(WORKDIR)/httpd-ssl.conf.CSW $(APACHE_ROOT)/etc/extra
 	@ginstall $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
 	@$(MAKECOOKIE)
@@ -234,6 +232,7 @@ template_list += etc/extra/httpd-languages.conf
 template_list += etc/extra/httpd-multilang-errordoc.conf
 template_list += etc/extra/httpd-userdir.conf
 template_list += etc/extra/httpd-vhosts.conf
+template_list += etc/extra/httpd-mpm.conf
 template_list += etc/magic
 template_list += etc/mime.types
 
