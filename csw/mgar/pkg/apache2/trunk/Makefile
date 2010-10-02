@@ -108,7 +108,7 @@ EXTRA_LIB = $(prefix)/bdb48/lib
 INITSMF = /etc/opt/csw/init.d/cswapache2
 
 POSTMSG = /opt/csw/share/doc/apache2/README.CSW
-POSTMSG += /opt/csw/share/docs/ap2_worker/README.CSW
+POSTMSG += /opt/csw/share/doc/ap2_worker/README.CSW
 
 AP2_MODS = 1
 AP2_MODFILES = /opt/csw/apache2/libexec/.*suexec.*\.so
