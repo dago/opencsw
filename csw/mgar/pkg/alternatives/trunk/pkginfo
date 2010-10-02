@@ -1,9 +1,9 @@
 PKG=CSWalternatives
 ARCH=all
 NAME=alternatives - an implementation of linux-style alternatives choice mgr
-VERSION=1.0,REV=2010.05.21
+VERSION=1.1,REV=YYYY.MM.DD
 CATEGORY=system
 VENDOR=http://www.opencsw.org written and packaged for CSW by Philip Brown
 EMAIL=phil@opencsw.org
 HOTLINE=http://www.opencsw.org/bugtrack/
-PSTAMP=cswalternatives v1.0
+PSTAMP=cswalternatives v1.1
