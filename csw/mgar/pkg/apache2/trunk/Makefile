@@ -174,7 +174,7 @@ PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.*
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
-PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/apache2/sbin/suexec" { $$$$4 = "4755" }; { print }'
+PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/apache2/sbin/suexec" { $$$$4 = "4755" }; $$$$3 ~ /cswap2mod/ { $$$$4 = "0555" }; { print }'
 
 include gar/category.mk
 
@@ -197,7 +197,7 @@ install-cas:
 	@(cd $(WORKDIR); \
 		ginstall -d -m0755 $(CASD); \
 		for f in *cswap2mod; do \
-			ginstall -m 0555 $$f $(CASD); \
+			ginstall -m 0755 $$f $(CASD); \
 		done)
 
 copy-readmes:
