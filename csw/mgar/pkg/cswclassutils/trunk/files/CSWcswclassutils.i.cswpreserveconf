@@ -88,7 +88,7 @@ if [ "$copied"  = "" ] ; then
 	echo "You may have to manually run this script ( $0 )"
 	echo "and pass it the name of the config files in the package."
 	echo "Or, copy over the appropriate config files by hand yourself,"
-	echo "to their proper destinations .
+	echo "to their proper destinations ."
 fi
 
 echo ""
