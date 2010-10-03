@@ -9,4 +9,4 @@
 # alternatives set httpd symlink.
 
 
-exec chroot $PKG_INSTALL_ROOT /opt/csw/sbin/alternatives --set httpd /opt/csw/apache2/sbin/httpd.worker
+exec chroot ${PKG_INSTALL_ROOT:-/} /opt/csw/sbin/alternatives --set httpd /opt/csw/apache2/sbin/httpd.worker
