@@ -1,7 +1,7 @@
 GARNAME = CPANPLUS
-GARVERSION = 0.076
+GARVERSION = 0.9007
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = API and CLI access to the CPAN mirrors
 define BLURB
@@ -9,21 +9,21 @@ define BLURB
   interactive shells, commandline programs, etc, that use this API.
 endef
 
-DISTFILES += $(call admfiles,CSWpmcpanplus,depend prototype)
+DISTFILES += COPYING
 
-DEPENDS += cpan/Archive-Extract
-DEPENDS += cpan/File-Fetch
-DEPENDS += cpan/IPC-Cmd
-DEPENDS += cpan/Locale-Maketext-Simple
-DEPENDS += cpan/Log-Message
-DEPENDS += cpan/Module-CoreList
-DEPENDS += cpan/Module-Load
-DEPENDS += cpan/Module-Load-Conditional
-DEPENDS += cpan/Module-Loaded
-DEPENDS += cpan/Module-Pluggable
-DEPENDS += cpan/Object-Accessor
-DEPENDS += cpan/Package-Constants
-DEPENDS += cpan/Params-Check
-DEPENDS += cpan/Term-UI
+PACKAGES = CSWpmcpanplus
+CATALOGNAME = pm_cpanplus
+
+RUNTIME_DEP_PKGS += CSWpmarchiveextract CSWpmfilefetch CSWpmipccmd
+RUNTIME_DEP_PKGS += CSWpmlclemktxtsimple CSWpmlogmessage CSWpmmodcorelist
+RUNTIME_DEP_PKGS += CSWpmmodload CSWpmmodloadcond CSWpmmodloaded
+RUNTIME_DEP_PKGS += CSWpmmoduleplug CSWpmobjaccessor CSWpmpkgconst
+RUNTIME_DEP_PKGS += CSWpmprmscheck CSWpmtermui
+
+ARCHALL = 1
+
+SKIPTEST = 1
+
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3\/.* .*\/man\/man1\/.*
 
 include gar/category.mk
