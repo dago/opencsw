@@ -101,7 +101,7 @@ function print_alternatives {
 # User facing function.
 # enables "alternatives --list"
 function list_alternatives {
-	print "List of installed software that uses the alternatives system:"
+	echo "List of installed software that uses the alternatives system:"
 	cat $PRIORITIESDIR/* 2>/dev/null| nawk '{print $2}' | sort -u
 }
 
