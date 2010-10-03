@@ -64,7 +64,7 @@ function find_highest_prio {
 		return
 	fi
 	# I hate using cat, but its the only way to avoid nawk throwing a fit.
-	cat $PRIORITIESDIR/* $MANUALDIR/* 2>/dev/null |
+	cat $PRIORITIESDIR/* $MANUALDIR/$1 2>/dev/null |
 	$AWK '	BEGIN {save=""}
 		$2 == "'$1'" {if($4 > highest){
 				save=$0;
@@ -205,6 +205,8 @@ function rm_alternative_links {
 }
 
 # set_alternatives: mostly internal function. 
+#  It "sets" only in the sense of making the symlink for the binary(s)
+#  
 # Usage: set_alternative {shortname} [ignore-path]
 #
 # Goes and checks both standard configs, and manual config, for best fit.
@@ -323,6 +325,9 @@ function set_manual_prio {
 	$DEBUG found match for $1: $check
 	rm -f $MANUALDIR/$1
 	ln -s $check $MANUALDIR/$1
+	# I use a symlink, so that way, the manual set does not take
+	# effect if the package has been removed.. but it is remembered
+	# if the package is coming right back, hopefully.
 
 	set_alternative $1
 	
