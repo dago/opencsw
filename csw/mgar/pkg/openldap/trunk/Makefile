@@ -1,8 +1,8 @@
 GARNAME = openldap
-GARVERSION = 2.4.22
+GARVERSION = 2.4.23
 CATEGORIES = server
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 2.3.43 2.4.22
+MODULATIONS_GARVERSION = 2.3.43 2.4.23
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
 define BLURB
@@ -20,10 +20,10 @@ DISTFILES += CSWoldap.postinstall
 DISTFILES += README.CSW openldaprc
 DISTFILES += cswopenldap openldap.xml svc-openldap
 
-PATCHFILES_isa-sparcv8-garversion-2.4.22 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-sparcv9-garversion-2.4.22 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-i386-garversion-2.4.22 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-amd64-garversion-2.4.22 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv8-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv9-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-i386-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-amd64-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
 PATCHFILES += patch-libtool-64bit.diff
 DISTFILES += patch-oldap-2.4.16-ntlm.diff
 
@@ -58,8 +58,8 @@ EXTRA_DOCS = README.CSW $(PATCHFILES)
 
 EXTRA_LIB_garversion-2.3.43 = $(prefix)/bdb44/lib 
 EXTRA_INC_garversion-2.3.43 = $(prefix)/bdb44/include
-EXTRA_LIB_garversion-2.4.22 = $(prefix)/bdb48/lib 
-EXTRA_INC_garversion-2.4.22 = $(prefix)/bdb48/include
+EXTRA_LIB_garversion-2.4.23 = $(prefix)/bdb48/lib 
+EXTRA_INC_garversion-2.4.23 = $(prefix)/bdb48/include
 EXTRA_LIB = $(EXTRA_LIB_garversion-$(GARVERSION))
 EXTRA_INC = $(EXTRA_INC_garversion-$(GARVERSION))
 
@@ -115,9 +115,9 @@ MERGE_DIRS_isa-default-garversion-2.3.43 = $(libdir)
 MERGE_SCRIPTS_isa-default64-garversion-2.3.43 = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-2.3.43 = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-2.4.22 = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-2.4.22 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-2.4.22 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-2.4.23 = copy-all
+MERGE_SCRIPTS_isa-default64-garversion-2.4.23 = copy-relocated-only
+MERGE_DIRS_isa-default64-garversion-2.4.23 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 # Perl backend is built, although it has been told not to.
 EXTRA_PAX_ARGS = -s,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
