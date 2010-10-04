@@ -43,7 +43,6 @@ DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
 DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
-DISTFILES += README.CSW.ap2_worker CSWap2worker.postinstall
 
 DISTFILES += i.cswap2mod r.cswap2mod
 
@@ -58,7 +57,6 @@ PACKAGES += CSWap2prefork CSWapache2rt CSWap2worker
 ARCHALL_CSWapache2-manual = 1
 ARCHALL_CSWap2prefork = 1
 ARCHALL_CSWapache2rt = 1
-ARCHALL_CSWap2worker = 1
 
 CATALOGNAME_CSWapache2 = apache2
 CATALOGNAME_CSWapache2-devel = apache2_devel
@@ -72,9 +70,9 @@ SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
 SPKG_DESC_CSWapache2-devel = The development files for Apache2.
 SPKG_DESC_CSWapache2-manual = The Apache2 manual files.
 SPKG_DESC_CSWap2suexec = The standard suEXEC binary for Apache2.
-SPKG_DESC_CSWap2prefork = A stub for the old prefork mpm package
-SPKG_DESC_CSWap2prefork = A stub for the old prefork mpm package
-SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package
+SPKG_DESC_CSWap2worker = The apache worker mpm.
+SPKG_DESC_CSWap2prefork = A stub for the old prefork mpm package.
+SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package.
 
 INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2c
 
@@ -85,7 +83,8 @@ RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-devel  = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2
-RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2
+RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWosslrt CSWapr CSWexpat
+RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWbdb48 CSWapr-util CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
 CHECKPKG_OVERRIDES_CSWap2suexec  += surplus-dependency|CSWapache2
@@ -94,6 +93,7 @@ CHECKPKG_OVERRIDES_CSWapache2-manual += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 
 # We need this to get bdb48/lib into the runpath
@@ -106,14 +106,14 @@ EXTRA_LIB = $(prefix)/bdb48/lib
 INITSMF = /etc/opt/csw/init.d/cswapache2
 
 POSTMSG = /opt/csw/share/doc/apache2/README.CSW
-POSTMSG += /opt/csw/share/doc/ap2_worker/README.CSW
 
 AP2_MODS = 1
 AP2_MODFILES = /opt/csw/apache2/libexec/.*suexec.*\.so
 
-ALTERNATIVES_CSWapache2 = prefork worker
-ALTERNATIVE_prefork = /opt/csw/apache2/sbin/httpd httpd /opt/csw/apache2/sbin/httpd.prefork 100
-ALTERNATIVE_worker = /opt/csw/apache2/sbin/httpd httpd /opt/csw/apache2/sbin/httpd.worker 50
+ALTERNATIVES_CSWapache2 = prefork
+ALTERNATIVES_CSWap2worker = worker
+ALTERNATIVE_prefork = /opt/csw/apache2/sbin/httpd httpd /opt/csw/apache2/sbin/httpd.prefork 50
+ALTERNATIVE_worker = /opt/csw/apache2/sbin/httpd httpd /opt/csw/apache2/sbin/httpd.worker 100
 
 # Build Configuration
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config
@@ -170,7 +170,7 @@ PKGFILES_CSWap2suexec = .*sbin/suexec .*libexec/.*suexec.* .*/man/.*suexec.*
 PKGFILES_CSWapache2-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
 PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
-PKGFILES_CSWap2worker = .*share/doc/ap2_worker.*
+PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
 PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/apache2/sbin/suexec" { $$$$4 = "4755" }; $$$$3 ~ /cswap2mod/ { $$$$4 = "0555" }; { print }'
