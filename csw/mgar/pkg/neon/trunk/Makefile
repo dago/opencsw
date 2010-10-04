@@ -1,9 +1,9 @@
 GARNAME = neon
-GARVERSION = 0.29.3
+GARVERSION = 0.29.4
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION FEATURES
-MODULATIONS_GARVERSION = 0.26.4 0.29.3
+MODULATIONS_GARVERSION = 0.26.4 0.29.4
 MODULATIONS_FEATURES = minimal full
 
 DESCRIPTION = Neon HTTP and WebDAV client library
@@ -44,7 +44,7 @@ CONFIGURE_ARGS_features-minimal = --without-libproxy --without-pakchois --withou
 CONFIGURE_ARGS_features-full = --with-libproxy --with-packchois
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --enable-shared --enable-static
 CONFIGURE_ARGS += --with-ssl=openssl
 CONFIGURE_ARGS += --with-expat
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_features-$(FEATURES))
@@ -56,7 +56,7 @@ NOISAEXEC = 1
 INSTALL_OVERRIDE_VARS = docdir
 INSTALL_OVERRIDE_VAR_docdir = $(datadir)/doc/neon
 
-# isa-sparcv8-garversion-0.26.4-features-minimal isa-sparcv8-garversion-0.26.4-features-full isa-sparcv8-garversion-0.29.3-features-minimal isa-sparcv8-garversion-0.29.3-features-full isa-sparcv9-garversion-0.26.4-features-minimal isa-sparcv9-garversion-0.26.4-features-full isa-sparcv9-garversion-0.29.3-features-minimal isa-sparcv9-garversion-0.29.3-features-full
+# isa-sparcv8-garversion-0.26.4-features-minimal isa-sparcv8-garversion-0.26.4-features-full isa-sparcv8-garversion-0.29.4-features-minimal isa-sparcv8-garversion-0.29.4-features-full isa-sparcv9-garversion-0.26.4-features-minimal isa-sparcv9-garversion-0.26.4-features-full isa-sparcv9-garversion-0.29.4-features-minimal isa-sparcv9-garversion-0.29.4-features-full
 
 # We select pkgconfig for minimal library bindings. As libneon is self-contained (links
 # to all necessary libs directly) the full version can simly be linked in.
@@ -78,13 +78,13 @@ MERGE_DIRS_isa-default-garversion-0.26.4-features-full = $(libdir)
 MERGE_SCRIPTS_isa-default64-garversion-0.26.4-features-full = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-0.26.4-features-full = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-0.29.3-features-minimal = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-0.29.3-features-minimal = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-0.29.3-features-minimal = $(bindir) $(sbindir) $(libexecdir) $(libdir)
-MERGE_SCRIPTS_isa-default-garversion-0.29.3-features-full = copy-only
-MERGE_DIRS_isa-default-garversion-0.29.3-features-full = $(libdir)
-MERGE_SCRIPTS_isa-default64-garversion-0.29.3-features-full = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-0.29.3-features-full = $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-0.29.4-features-minimal = copy-all
+MERGE_SCRIPTS_isa-default64-garversion-0.29.4-features-minimal = copy-relocated-only
+MERGE_DIRS_isa-default64-garversion-0.29.4-features-minimal = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-0.29.4-features-full = copy-only
+MERGE_DIRS_isa-default-garversion-0.29.4-features-full = $(libdir)
+MERGE_SCRIPTS_isa-default64-garversion-0.29.4-features-full = copy-relocated-only
+MERGE_DIRS_isa-default64-garversion-0.29.4-features-full = $(libdir)
 
 EXTRA_LINKER_FLAGS = -lintl
 
@@ -141,20 +141,23 @@ include gar/category.mk
 # 32/64 bit detection is done by looking at the last directory component and
 # guessing by ISA if it is 32 or 64 bit
 
-post-merge: _LDFLAGS-32=
-post-merge: _LDFLAGS-64=-64
-post-merge:
-post-merge:
-	cd $(WORKDIR); touch empty.c; $(CC) -G -c empty.c
-	cd $(WORKDIR); touch empty64.c; $(CC) -m64 -G -c empty64.c
-	$(foreach L,$(FEATURE_LIBRARIES),\
-		ld $(_LDFLAGS-$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L))))))) \
-			-G -h $(word 2,$(FEATURES_$L)) -o $(WORKDIR)/stub-$(notdir $(firstword $(FEATURES_$L))) $(WORKDIR)/empty$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L)))))).o;\
-		ld $(_LDFLAGS-$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L))))))) \
-			-R $(patsubst %/,%,$(dir $(firstword $(FEATURES_$L)))) \
-			-G -h `/usr/ccs/bin/dump -Lv $(dir $(firstword $(FEATURES_$L)))/$(word 2,$(FEATURES_$L)) | awk '$$2 == "SONAME" { print $$3 }'` \
-			-o $(PKGROOT)$(firstword $(FEATURES_$L)) \
-			$(foreach F,$(wordlist 3,$(words $(FEATURES_$L)),$(FEATURES_$L)),-f $F) \
-			$(WORKDIR)/stub-$(notdir $(firstword $(FEATURES_$L))); \
-	)
-	@$(MAKECOOKIE)
+#post-merge: _LDFLAGS-32=
+#post-merge: _LDFLAGS-64=-64
+#post-merge:
+#post-merge:
+#	cd $(WORKDIR); touch empty.c; $(CC) -G -c empty.c
+#	cd $(WORKDIR); touch empty64.c; $(CC) -m64 -G -c empty64.c
+#	$(foreach L,$(FEATURE_LIBRARIES),\
+#		ld $(_LDFLAGS-$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L))))))) \
+#			-G -h $(word 2,$(FEATURES_$L)) -o $(WORKDIR)/stub-$(notdir $(firstword $(FEATURES_$L))) $(WORKDIR)/empty$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L)))))).o;\
+#		ld $(_LDFLAGS-$(MEMORYMODEL_$(lastword $(subst /, ,$(dir $(firstword $(FEATURES_$L))))))) \
+#			-R $(patsubst %/,%,$(dir $(firstword $(FEATURES_$L)))) \
+#			-G -h `/usr/ccs/bin/dump -Lv $(dir $(firstword $(FEATURES_$L)))/$(word 2,$(FEATURES_$L)) | awk '$$2 == "SONAME" { print $$3 }'` \
+#			-o $(PKGROOT)$(firstword $(FEATURES_$L)) \
+#			$(foreach F,$(wordlist 3,$(words $(FEATURES_$L)),$(FEATURES_$L)),-F $F) \
+#			$(WORKDIR)/stub-$(notdir $(firstword $(FEATURES_$L))); \
+#	)
+#	@$(MAKECOOKIE)
+
+# ld -G -o ~/libtidy-minimal.so -z allextract -h libtidy.so.26 -F libtidy-full.so.26 /opt/csw/lib/libtidy.a 
+
