@@ -128,6 +128,11 @@ CONFIGURE_ARGS += --with-ssl=$(prefix)
 
 ifneq ($(MPM),prefork)
 CONFIGURE_ARGS += --enable-modules=none
+CONFIGURE_ARGS += --disable-authn-file
+CONFIGURE_ARGS += --disable-authn-default
+CONFIGURE_ARGS += --disable-authz-host
+CONFIGURE_ARGS += --disable-authz-user
+CONFIGURE_ARGS += --disable-auth-basic
 else
 CONFIGURE_ARGS += --enable-suexec
 CONFIGURE_ARGS += --with-suexec-caller=nobody
