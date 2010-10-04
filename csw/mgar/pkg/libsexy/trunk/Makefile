@@ -4,7 +4,9 @@ CATEGORIES = lib
 
 DESCRIPTION = Sexy URLs
 define BLURB
-  Long description
+  libsexy is a collection of GTK+ widgets that extend the functionality of
+  such standard widgets as GtkEntry and GtkLabel by subclassing them and
+  working around the limitations of the widgets.
 endef
 
 MASTER_SITES = http://releases.chipx86.com/libsexy/libsexy/
@@ -28,15 +30,6 @@ RUNTIME_DEP_PKGS_CSWlibsexydevel = CSWlibsexy
 
 VENDOR_URL = http://www.chipx86.com/blog/tag/libsexy/
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-
-# Remove when move towards csw x11 has been finished
-LARCH_sparcv9 = sparcv9
-LARCH_amd64   = amd64
-EXTRA_LINKER_FLAGS = /usr/openwin/lib/$(LARCH_$(ISA))/libXext.so
-
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -44,5 +37,7 @@ TEST_TARGET = check
 
 PKGFILES_CSWlibsexydevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibsexydevel += $(sharedstatedir)/gtk-doc/.*
+
+CHECKPKG_OVERRIDES_CSWlibsexydevel += surplus-dependency|CSWlibsexy
 
 include gar/category.mk
