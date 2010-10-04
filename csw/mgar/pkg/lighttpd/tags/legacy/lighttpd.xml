@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<!--
+    Copyright 2005 Sergiusz Pawlowicz.  All rights reserved.
+    http://pawlowicz.name/
+    Use is subject to license terms.
+
+    ident       "0.1"
+    Modified for CSWlighttpd by David Rio Deiros 01/07
+-->
+
+<service_bundle type='manifest' name='lighttpd'>
+
+<service
+        name='network/lighttpd'
+        type='service'
+        version='1'>
+
+        <!--
+          Because we may have multiple instances of network/http
+          provided by different implementations, we keep dependencies
+          and methods within the instance.
+        -->
+
+        <instance name='lighttpd' enabled='false'>
+                <dependency name='loopback'
+                    grouping='require_all'
+                    restart_on='error'
+                    type='service'>
+                        <service_fmri value='svc:/network/loopback:default'/>
+                </dependency>
+
+                <dependency name='physical'
+                    grouping='optional_all'
+                    restart_on='error'
+                    type='service'>
+                        <service_fmri value='svc:/network/physical:default'/>
+                </dependency>
+
+                <dependency name='multiuser-server'
+                    grouping='require_all'
+                    restart_on='error'
+                    type='service'>
+                        <service_fmri value='svc:/milestone/multi-user-server:default'/>
+                </dependency>
+
+                <exec_method
+                        type='method'
+                        name='start'
+                        exec='/opt/csw/lib/svc/method/cswlighttpd start'
+                        timeout_seconds='60' />
+
+                <exec_method
+                        type='method'
+                        name='stop'
+                        exec='/opt/csw/lib/svc/method/cswlighttpd stop'
+                        timeout_seconds='60' />
+
+                <exec_method
+                        type='method'
+                        name='refresh'
+                        exec='/opt/csw/lib/svc/method/cswlighttpd refresh'
+                        timeout_seconds='60' />
+
+                <property_group name='startd' type='framework'>
+                        <!-- sub-process core dumps shouldn't restart
+                                session -->
+                        <propval name='ignore_error' type='astring'
+                                value='core,signal' />
+                </property_group>
+
+        </instance>
+
+        <template>
+                <common_name>
+                        <loctext xml:lang='C'>
+                                Lighttpd HTTP server
+                        </loctext>
+                </common_name>
+                <documentation>
+                        <manpage title='lighttpd' section='1M' />
+                        <doc_link name='lighttpd.net'
+                                uri='http://www.lighttpd.net/' />
+                </documentation>
+        </template>
+</service>
+
+</service_bundle>

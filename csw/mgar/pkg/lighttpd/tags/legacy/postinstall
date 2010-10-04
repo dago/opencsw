@@ -1,0 +1,68 @@
+# lighttpd - postinstall script
+# 
+if [ "$PKG_INSTALL_ROOT" = "" ]
+then 
+  PKG_INSTALL_ROOT=/
+  CONFDIR="/opt/csw/etc"
+else
+  CONFDIR="$PKG_INSTALL_ROOT/opt/csw/etc"
+fi
+
+# daemons are started by default
+enable_daemon=yes
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# If defined, autoenable for the specific daemon name takes precedence
+if [ "$autoenable_lighttpd" = "no" ] ; then
+  enable_daemon=no
+elif [ "$autoenable_daemons" = "no" -a ! -n "$autoenable_lighttpd" ] ; then
+  enable_daemon=no
+fi
+
+# We don't want to overwrite the lighttpd.conf the user may have already installed
+case "$autoenable_demons" in
+  ""|"yes")
+    if [ ! -f $CONFDIR/lighttpd.conf ]; then
+      echo copying default template lighttpd.conf.CSW to lighttpd.conf
+      cp -p $CONFDIR/lighttpd.conf.CSW $CONFDIR/lighttpd.conf
+    else
+      echo lighttpd.conf already exists. Not copying lighttpd.conf.CSW
+    fi
+    ;;
+esac
+
+# Set variable smf depending on the availability of SMF binaries
+smf=no
+if [ -f $PKG_INSTALL_ROOT/usr/sbin/svccfg -a -f $PKG_INSTALL_ROOT/usr/sbin/svcadm ]; then
+  smf=yes
+fi
+
+# let's add lighttpd to the smf framework if necessary (we won't enable it yet)
+if [ $smf = yes ]; then
+  echo "Configuring service in SMF"
+  /usr/sbin/svccfg import /opt/csw/var/svc/manifest/network/lighttpd.xml >/dev/null 2>&1
+  /usr/sbin/svcadm disable svc:network/lighttpd >/dev/null 2>&1
+  echo "Lighttpd is using Service Management Facility."
+  echo "  The FMRI is: svc:network/lighttpd"
+fi
+
+if [ "$PKG_INSTALL_ROOT" = "" ] ; then PKG_INSTALL_ROOT=/ ; fi
+
+# Let's enable the daemon (if necessary)
+if [ "$enable_daemon" = "yes" -a "$PKG_INSTALL_ROOT" = "/" ]; then
+  echo "Starting lighttpd"
+  if [ $smf = no ]; then
+    /etc/init.d/cswlighttpd start >/dev/null 2>&1
+  else
+    /usr/sbin/svcadm enable svc:network/lighttpd >/dev/null 2>&1
+  fi
+fi
+
+exit 0
