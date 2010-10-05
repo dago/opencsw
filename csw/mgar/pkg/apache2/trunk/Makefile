@@ -50,9 +50,10 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
 PACKAGES  = CSWapache2 CSWapache2-devel CSWapache2-manual CSWap2suexec
+PACKAGES += CSWap2worker
 # These packages are dummy versions to make dependencies nicer
 # as various things depend on CSWap2prefork currently
-PACKAGES += CSWap2prefork CSWapache2rt CSWap2worker
+PACKAGES += CSWap2prefork CSWapache2rt
 
 ARCHALL_CSWapache2-manual = 1
 ARCHALL_CSWap2prefork = 1
