@@ -1,7 +1,7 @@
 GARNAME = squid
 GARVERSION = 2.7
 CATEGORIES = server
-RELEASE = STABLE6
+RELEASE = STABLE9
 DISTVERSION = $(GARVERSION).$(RELEASE)
 DISTNAME = $(GARNAME)-$(DISTVERSION)
 RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9]\).*\.[0-9]*/\1/')
@@ -17,7 +17,7 @@ PACKAGES = CSWsquid
 CATALOGNAME_CSWsquid = squid
 SPKG_DESC_CSWsquid = $(DESCRIPTION)
 SPKG_CLASSES_CSWsquid = none cswinitsmf
-RUNTIME_DEP_PKGS_CSWsquid = CSWoldaprt CSWosslrt CSWsasl CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWsquid = CSWoldaprt CSWosslrt CSWsasl
 PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsquid$$$$/ { $$$$2 = "cswinitsmf" } { print }'
 
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(GARVERSION)/
