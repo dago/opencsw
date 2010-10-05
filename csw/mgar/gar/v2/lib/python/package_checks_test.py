@@ -81,6 +81,18 @@ class TestDescriptionNotCapitalized(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError('pkginfo-description-not-starting-with-uppercase',
                                     'lowercase')
 
+class TestCheckEmailGood(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckEmail'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["EMAIL"] = 'somebody@opencsw.org'
+
+
+class TestCheckEmailBadDomain(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckEmail'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["EMAIL"] = 'somebody@opencsw.com'
+    self.error_mgr_mock.ReportError('pkginfo-email-not-opencsw-org', 'email=somebody@opencsw.com')
+
 
 class TestCheckCatalogname_1(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckCatalogname'
