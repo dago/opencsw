@@ -50,6 +50,7 @@ OBSOLETE_DEPS = {
     },
 }
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
+EMAIL_RE = re.compile(r"^.*@opencsw.org$")
 MAX_CATALOGNAME_LENGTH = 20
 MAX_PKGNAME_LENGTH = 20
 ARCH_LIST = opencsw.ARCHITECTURES
@@ -619,6 +620,16 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
         "pkginfo-nonstandard-architecture",
         pkginfo["ARCH"],
         "known architectures: %s" % ARCH_LIST)
+
+
+def CheckEmail(pkg_data, error_mgr, logger, messenger):
+  """Checks the e-mail address."""
+  catalogname = pkg_data["basic_stats"]["catalogname"]
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  pkginfo = pkg_data["pkginfo"]
+  if not re.match(EMAIL_RE, pkginfo["EMAIL"]):
+    error_mgr.ReportError("pkginfo-email-not-opencsw-org",
+                          "email=%s" % pkginfo["EMAIL"])
 
 
 def CheckPstamp(pkg_data, error_mgr, logger, messenger):
