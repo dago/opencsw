@@ -1,5 +1,5 @@
 GARNAME = alarm-clock
-GARVERSION = 1.3
+GARVERSION = 1.4.1
 CATEGORIES = gnome
 
 DESCRIPTION = A simple interface for reminding about birthdays, appointments and important dates
@@ -9,7 +9,7 @@ define BLURB
   very easily even by a non-power user and fits perfectly into the GNOME Desktop.
 endef
 
-MASTER_SITES = http://alarm-clock.pl/media/distfiles/
+MASTER_SITES = http://alarm-clock.pl/downloads/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -19,7 +19,7 @@ PACKAGES = CSWalarmclock
 CATALOGNAME = alarmclock
 
 RUNTIME_DEP_PKGS  = CSWdbusglib CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgstreamer CSWgtk2
-RUNTIME_DEP_PKGS += CSWlibatk CSWlibcairo CSWlibdbus CSWlibnotify CSWlibxml2 CSWpango
+RUNTIME_DEP_PKGS += CSWlibatk CSWlibcairo CSWlibdbus CSWlibnotify CSWlibxml2 CSWpango CSWlibunique
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -33,6 +33,9 @@ EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
 STRIP_LIBTOOL = 1
 
 TEST_TARGET = check
+
+INSTALL_OVERRIDE_VARS = alarmclockdocdir
+INSTALL_OVERRIDE_VAR_alarmclockdocdir = $(docdir)/$(CATALOGNAME)
 
 include gar/category.mk
 
