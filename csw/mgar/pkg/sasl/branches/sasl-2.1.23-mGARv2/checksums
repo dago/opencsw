@@ -1,8 +1,1 @@
-0ae8b5fe39e9b2ce940284fb85de9303  README.sasl
-95b3cae3de944bf6602ad83cb04f3f32  README.saslauthd
-62cc0bee2337e4937fcfa847f7bdf26a  cswsaslauthd.init
-2eb0e48106f0e9cd8001e654f267ecbc  cyrus-sasl-2.1.23.tar.gz
-48af784184961368ce250c7b33d207b8  ltmain.diff
-40b526754554c46d5b134f5ca21fe371  saslauthd-doc.diff
-21cbef68d9f2dc2447326cbda8bf842e  saslauthd-groff.diff
-b190992e18cc7add35a6934d896a1130  saslauthd.init.CSW
+8b5a26d973523b0676026ad4f45e5e6d  cyrus-sasl-2.1.24rc1.tar.gz
