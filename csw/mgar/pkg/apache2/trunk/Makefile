@@ -196,7 +196,7 @@ LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
 PKGFILES_CSWap2suexec = .*sbin/suexec .*libexec/.*suexec.* .*/man/.*suexec.*
-PKGFILES_CSWapache2-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWapache2-devel = .*include/.* .*\.(a|la) .*share/build/.*
 PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
 PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
