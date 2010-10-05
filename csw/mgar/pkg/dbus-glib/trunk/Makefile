@@ -4,9 +4,11 @@ CATEGORIES   = lib
 
 DESCRIPTION  = DBus GLib Bindings
 define BLURB
-This package provides the bindings between GLib and DBus
-
-D-Bus is a message bus system, a simple way for applications to talk to one another. In addition to interprocess communication, D-Bus helps coordinate process lifecycle; it makes it simple and reliable to code a "single instance" application or daemon, and to launch applications and daemons on demand when their services are needed.
+  This package provides the bindings between GLib and DBus.
+  D-Bus is a message bus system, a simple way for applications to talk to one another.
+  In addition to interprocess communication, D-Bus helps coordinate process lifecycle;
+  it makes it simple and reliable to code a "single instance" application or daemon,
+  and to launch applications and daemons on demand when their services are needed.
 endef
 
 MASTER_SITES  = http://dbus.freedesktop.org/releases/dbus-glib/
@@ -24,20 +26,21 @@ PACKAGES = CSWdbusglib CSWdbusglibdev
 CATALOGNAME_CSWdbusglib         = dbus_glib
 CATALOGNAME_CSWdbusglibdev      = dbus_glibdev
 
+BUILD_DEP_PKGS = CSWglib2devel CSWlibdbusdev
 RUNTIME_DEP_PKGS_CSWdbusglib    = CSWexpat CSWggettextrt CSWglib2 CSWlibdbus
+RUNTIME_DEP_PKGS_CSWdbusglibdev = CSWdbusglib CSWglib2devel CSWlibdbusdev
 
 PKGFILES_CSWdbusglibdev  = $(PKGFILES_DEVEL)
-# PKGFILES_CSWdbusglibdev += $(prefix)/include/.*
-# PKGFILES_CSWdbusglibdev += $(prefix)/lib/.*\.a
-# PKGFILES_CSWdbusglibdev += $(prefix)/lib/pkgconfig/.*
 
-#CPPFLAGS += -I$(DESTDIR)/opt/csw/include/dbus-1.0
-#CPPFLAGS += -I$(DESTDIR)/opt/csw/lib/dbus-1.0/include
-
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-tests 
 
-# BUILD64 = 1
+BUILD64 = 1
+
+# These development dependencies are needed
+CHECKPKG_OVERRIDES_CSWdbusglibdev += surplus-dependency|CSWdbusglib
+CHECKPKG_OVERRIDES_CSWdbusglibdev += surplus-dependency|CSWlibdbusdev
+CHECKPKG_OVERRIDES_CSWdbusglibdev += surplus-dependency|CSWglib2devel
 
 include gar/category.mk
 
