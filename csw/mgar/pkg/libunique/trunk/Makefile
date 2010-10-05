@@ -17,54 +17,54 @@ MASTER_SITES =  $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTNAME  = $(GARNAME)-$(GARVERSION)
 
-PACKAGES = CSWlibunique CSWlibuniquedevel CSWlibuniquedoc
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+
+PACKAGES = CSWlibunique CSWlibuniquedevel
 CATALOGNAME_CSWlibunique = libunique
 CATALOGNAME_CSWlibuniquedevel = libunique_devel
-CATALOGNAME_CSWlibuniquedoc = libunique_doc
 
 SPKG_DESC_CSWlibunique += Library for writing single instance application
 SPKG_DESC_CSWlibuniquedevel += Library for writing single instance application - developer package
-SPKG_DESC_CSWlibuniquedoc += Library for writing single instance application - documentation
 
 RUNTIME_DEP_PKGS_CSWlibunique += CSWfconfig CSWftype2 CSWggettextrt CSWglib2
-RUNTIME_DEP_PKGS_CSWlibunique += CSWgtk2 CSWlibatk CSWlibcairo CSWlibx11 CSWpango
-RUNTIME_DEP_PKGS_CSWlibunique += CSWdbusglib CSWlibdbus CSWlibxext
-RUNTIME_DEP_PKGS_CSWlibuniquedevel += CSWlibunique
-RUNTIME_DEP_PKGS_CSWlibuniquedoc += CSWlibunique
+RUNTIME_DEP_PKGS_CSWlibunique += CSWgtk2 CSWlibatk CSWlibcairo CSWpango
+RUNTIME_DEP_PKGS_CSWlibunique += CSWdbusglib CSWlibdbus
+RUNTIME_DEP_PKGS_CSWlibuniquedevel += CSWlibunique CSWglib2devel CSWgtk2devel CSWlibatkdevel CSWlibcairodevel CSWpangodevel
 
 BUILD_DEP_PKGS += CSWdbusglibdev
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
-
 SPKG_SOURCEURL = http://live.gnome.org/LibUnique
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+NOISAEXEC = 1
+NOISALIST = 1
 
-#NOISAEXEC = 1
-#NOISALIST = 1
-# libdbus not 64-bit yet
+# This needs to be fixed first before we can build 64 bit:
+#   https://www.opencsw.org/mantis/view.php?id=4565
 #BUILD64 = 1
 
-PKGFILES_CSWlibuniquedevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibuniquedoc = $(sharedstatedir)/gtk-doc/.*
-
-ARCHALL_CSWlibuniquedoc = 1
-
-LIBS = -lsocket -lnsl
-export LIBS
+EXTRA_LINKER_FLAGS = -lsocket -lnsl
 
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+# This needs a newer GTK, 2.18.x does not have it, reenable when GTK has been updated
+CONFIGURE_ARGS += --enable-introspection=no
 
 TEST_TARGET = check
+
+ARCHALL_CSWlibuniquedoc = 1
+
+PKGFILES_CSWlibuniquedevel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibuniquedevel += $(sharedstatedir)/gtk-doc/.*
+
+CHECKPKG_OVERRIDES_CSWlibuniquedevel += surplus-dependency|CSWlibunique
+CHECKPKG_OVERRIDES_CSWlibuniquedevel += surplus-dependency|CSWlibcairodevel
+CHECKPKG_OVERRIDES_CSWlibuniquedevel += surplus-dependency|CSWpangodevel
+CHECKPKG_OVERRIDES_CSWlibuniquedevel += surplus-dependency|CSWlibatkdevel
+CHECKPKG_OVERRIDES_CSWlibuniquedevel += surplus-dependency|CSWglib2devel
+CHECKPKG_OVERRIDES_CSWlibuniquedevel += surplus-dependency|CSWgtk2devel
 
 include gar/category.mk
 
