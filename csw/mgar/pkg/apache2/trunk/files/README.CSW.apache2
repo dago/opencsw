@@ -4,12 +4,13 @@ Please note that some recent changes to packages may affect the way
 you're used to working with the CSW apache2 packages.
 
 In the past, CSWap2prefork and CSWap2worker delivered a specific mpm
-module for use with apache2.  We now ship both mpm modules as part of
-CSWapache2 and allow you to toggle between them using the alternatives
-support that recently materialized.  The default mpm is prefork.
+module for use with apache2.  We now ship the prefork mpm as part of
+CSWapache2 while the worker mpm remains in CSWap2worker.
 
-We still provide CSWap2prefork and CSWap2worker for the time being,
-but they're dummy packages used only to fill dependencies.
+Each httpd mpm is installed using the new alternatives framework.
+When CSWap2worker is installed, it registers a higher priority httpd,
+thus it is activated as httpd.  You can change this at any time using
+the alternatives command.
 
 Thanks
 -The OpenCSW apache2 team.
