@@ -27,20 +27,27 @@ BUILD_DEP_PKGS = CSWglib2devel CSWgtk2devel CSWpangodevel
 RUNTIME_DEP_PKGS_CSWlibnotify  = CSWdbusglib CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
 RUNTIME_DEP_PKGS_CSWlibnotify += CSWlibatk CSWlibcairo CSWlibdbus CSWpango
 
-RUNTIME_DEP_PKGS_CSWlibnotifydevel = CSWlibnotify
+RUNTIME_DEP_PKGS_CSWlibnotifydevel = CSWlibnotify CSWglib2devel CSWgtk2devel CSWpangodevel
 
-# Remove when move towards csw x11 has been finished
-LARCH_sparcv9 = sparcv9
-LARCH_amd64   = amd64
-EXTRA_LINKER_FLAGS = /usr/openwin/lib/$(LARCH_$(ISA))/libXext.so
+EXTRA_INC = $(libdir_install)/dbus-1.0/include
 
-# Enable when libdbus is done in 64 bit
-# BUILD64 = 1
+# Enable when CSWdbusglib is done in 64 bit
+BUILD64 = 1
+NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
 PKGFILES_CSWlibnotifydevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibnotifydevel += $(sharedstatedir)/gtk-doc/.*
+
+CHECKPKG_OVERRIDES_CSWlibnotifydevel += surplus-dependency|CSWlibnotify
+CHECKPKG_OVERRIDES_CSWlibnotifydevel += surplus-dependency|CSWglib2devel
+CHECKPKG_OVERRIDES_CSWlibnotifydevel += surplus-dependency|CSWgtk2devel
+CHECKPKG_OVERRIDES_CSWlibnotifydevel += surplus-dependency|CSWpangodevel
+
+CHECKPKG_OVERRIDES_CSWlibnotify += soname-not-found|libmlib.so.2|is|needed|by|opt/csw/lib/amd64/libnotify.so.1.1.3
+CHECKPKG_OVERRIDES_CSWlibnotify += soname-not-found|libmlib.so.2|is|needed|by|opt/csw/bin/amd64/notify-send
+
 
 include gar/category.mk
