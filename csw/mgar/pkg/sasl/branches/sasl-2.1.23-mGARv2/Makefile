@@ -1,5 +1,6 @@
 GARNAME = sasl
-GARVERSION = 2.1.23
+GARVERSION = 2.1.24
+FILEVERSION = $(GARVERSION)rc1
 CATEGORIES = lib
 
 DESCRIPTION = Simple Authentication and Security Layer
@@ -13,11 +14,11 @@ endef
 
 MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
 DISTNAME = cyrus-$(GARNAME)-$(GARVERSION)
-DISTFILES = $(DISTNAME).tar.gz
+DISTFILES = cyrus-$(GARNAME)-$(FILEVERSION).tar.gz
 DISTFILES += cswsaslauthd.init saslauthd.init.CSW
 DISTFILES += README.sasl README.saslauthd
 
-PATCHFILES = saslauthd-doc.diff saslauthd-groff.diff ltmain.diff
+# PATCHFILES = saslauthd-doc.diff saslauthd-groff.diff ltmain.diff
 
 PACKAGES = CSWsasl CSWsaslauthd CSWsaslgssapi CSWsaslsql
 
@@ -50,7 +51,8 @@ BUILD_ENV = _REENTRANT=1
 
 EXTRA_LIB = $(prefix)/bdb47/lib
 
-EXTRA_INC = /opt/csw/mysql5/include/mysql
+EXTRA_INC  = /opt/csw/include/gssapi
+EXTRA_INC += /opt/csw/mysql5/include/mysql
 EXTRA_INC += /opt/csw/postgresql/include
 
 sysconfdir = /etc/opt/csw
