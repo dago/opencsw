@@ -129,11 +129,34 @@ CONFIGURE_ARGS += --with-ssl=$(prefix)
 
 ifneq ($(MPM),prefork)
 CONFIGURE_ARGS += --enable-modules=none
+CONFIGURE_ARGS += --disable-actions
+CONFIGURE_ARGS += --disable-alias
 CONFIGURE_ARGS += --disable-authn-file
 CONFIGURE_ARGS += --disable-authn-default
 CONFIGURE_ARGS += --disable-authz-host
 CONFIGURE_ARGS += --disable-authz-user
+CONFIGURE_ARGS += --disable-authz-groupfile 
+CONFIGURE_ARGS += --disable-authz-default
 CONFIGURE_ARGS += --disable-auth-basic
+CONFIGURE_ARGS += --disable-asis
+CONFIGURE_ARGS += --disable-auth
+CONFIGURE_ARGS += --disable-autoindex
+CONFIGURE_ARGS += --disable-cgi
+CONFIGURE_ARGS += --disable-cgid
+CONFIGURE_ARGS += --disable-charset-lite
+CONFIGURE_ARGS += --disable-dir
+CONFIGURE_ARGS += --disable-env
+CONFIGURE_ARGS += --disable-filter
+CONFIGURE_ARGS += --disable-imap
+CONFIGURE_ARGS += --disable-include
+CONFIGURE_ARGS += --disable-log-config
+CONFIGURE_ARGS += --disable-mime
+CONFIGURE_ARGS += --disable-negotiation
+CONFIGURE_ARGS += --disable-setenvif
+CONFIGURE_ARGS += --disable-ssl
+CONFIGURE_ARGS += --disable-status
+CONFIGURE_ARGS += --disable-userdir
+CONFIGURE_ARGS += --disable-version
 else
 CONFIGURE_ARGS += --enable-suexec
 CONFIGURE_ARGS += --with-suexec-caller=nobody
