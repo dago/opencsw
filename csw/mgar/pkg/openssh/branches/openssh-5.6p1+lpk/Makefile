@@ -33,6 +33,7 @@ define BLURB
   and supports all SSH protocol versions.
 endef
 
+BUILD_DEP_PKGS = CSWkrb5libdev CSWoldapdevel
 
 PACKAGES = CSWossh CSWosshlpk CSWosshclient
 
