@@ -84,7 +84,7 @@ RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-devel  = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2
-RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWosslrt CSWapr CSWexpat
+RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWapr CSWexpat
 RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWbdb48 CSWapr-util CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
