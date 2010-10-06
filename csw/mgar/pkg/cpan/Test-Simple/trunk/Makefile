@@ -1,5 +1,5 @@
 GARNAME = Test-Simple
-GARVERSION = 0.94
+GARVERSION = 0.96
 CATEGORIES = cpan
 AUTHOR = MSCHWERN
 
@@ -11,9 +11,15 @@ define BLURB
   (a drop-in replacement for this one).
 endef
 
+DISTFILES = COPYING
+
 PACKAGES = CSWpmtestsimple
 CATALOGNAME = pm_testsimple
 
 ARCHALL = 1
+
+# Skip manpages as they are also in CSWperldoc. See
+#   https://www.opencsw.org/mantis/view.php?id=4567
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3\/.* .*\/man\/man1\/.*
 
 include gar/category.mk
