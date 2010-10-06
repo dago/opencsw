@@ -1,7 +1,7 @@
 GARNAME = IPC-Cmd
-GARVERSION = 0.46
+GARVERSION = 0.60
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = Finding and running system commands made easy
 define BLURB
@@ -9,16 +9,14 @@ define BLURB
   independent but have them still work.
 endef
 
+DISTFILES += COPYING
+
 PACKAGES = CSWpmipccmd
 CATALOGNAME = pm_ipccmd 
 ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple CSWpmmodloadcond CSWpmprmscheck
 
-include gar/category.mk
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
-post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
+include gar/category.mk
