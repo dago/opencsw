@@ -1,14 +1,7 @@
-# Locale-Maketext-Simple 0.19 lacks Makefile.PL
-# Locale-Maketext-Simple 0.20 requires higher MakeMaker rev than we have
-#   Warning: prerequisite ExtUtils::MakeMaker 6.42 not found. We have 6.30.
-#
 GARNAME = Locale-Maketext-Simple
-GARVERSION = 0.18
+GARVERSION = 0.21
 CATEGORIES = cpan
-AUTHOR = $(AUTHOR_$(GARVERSION))
-AUTHOR_0.18 = AUDREYT
-AUTHOR_0.19 = JESSE
-AUTHOR_0.20 = JESSE
+AUTHOR = JESSE
 
 DESCRIPTION = Simple interface to Locale::Maketext::Lexicon
 define BLURB
@@ -16,16 +9,14 @@ define BLURB
   to alleviate the need of creating Language Classes for module authors.
 endef
 
+DISTFILES += COPYING
+
 PACKAGES = CSWpmlclemktxtsimple
 CATALOGNAME = pm_lclemktxtsimple 
 ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWpmlclemktxtlex
 
-include gar/category.mk
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
-post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
+include gar/category.mk
