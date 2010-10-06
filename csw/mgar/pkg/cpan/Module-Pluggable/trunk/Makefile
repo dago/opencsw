@@ -12,9 +12,15 @@ define BLURB
   those into class names.  Optionally it instantiates those classes for you.
 endef
 
+DISTFILES = COPYING
+
 PACKAGES = CSWpmmoduleplug
 CATALOGNAME = pm_moduleplug
 
 ARCHALL = 1
+
+# Skip manpages as they are also in CSWperldoc. See
+#   https://www.opencsw.org/mantis/view.php?id=4573
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3\/.* .*\/man\/man1\/.*
 
 include gar/category.mk
