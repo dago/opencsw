@@ -10,16 +10,14 @@ define BLURB
   must be named.
 endef
 
+DISTFILES += COPYING
+
 PACKAGES = CSWpmprmscheck 
 CATALOGNAME = pm_prmscheck 
 ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple
 
-include gar/category.mk
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
-post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
+include gar/category.mk
