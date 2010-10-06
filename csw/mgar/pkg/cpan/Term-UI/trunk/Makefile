@@ -1,5 +1,5 @@
 GARNAME = Term-UI
-GARVERSION = 0.14
+GARVERSION = 0.20
 CATEGORIES = cpan
 AUTHOR = KANE
 
@@ -10,10 +10,14 @@ define BLURB
   answer was not proper and re-issuing the question.
 endef
 
-DISTFILES = $(call admfiles,CSWpmtermui,depend prototype)
+DISTFILES += COPYING
 
-DEPENDS += cpan/Params-Check
-DEPENDS += cpan/Locale-Maketext-Simple
-DEPENDS += cpan/Log-Message-Simple
+PACKAGES = CSWpmtermui
+CATALOGNAME = pm_termui
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpmlclemktxtsimple CSWpmlogmsgsimple CSWpmprmscheck
+
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
 include gar/category.mk
