@@ -1,5 +1,5 @@
 GARNAME = ExtUtils-CBuilder
-GARVERSION = 0.2603
+GARVERSION = 0.2703
 CATEGORIES = cpan
 AUTHOR = DAGOLDEN
 
@@ -13,11 +13,15 @@ define BLURB
   goal!
 endef
 
+DISTFILES = COPYING
+
 PACKAGES = CSWpmextutcbuilder
 CATALOGNAME = pm_extutcbuilder
 
 ARCHALL = 1
 
-SPKG_VERSION = 0.26.03
+# Skip manpages as they are also in CSWperldoc. See
+#   https://www.opencsw.org/mantis/view.php?id=4572
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3\/.* .*\/man\/man1\/.*
 
 include gar/category.mk
