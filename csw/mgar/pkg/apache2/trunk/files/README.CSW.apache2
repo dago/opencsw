@@ -10,7 +10,9 @@ CSWapache2 while the worker mpm remains in CSWap2worker.
 Each httpd mpm is installed using the new alternatives framework.
 When CSWap2worker is installed, it registers a higher priority httpd,
 thus it is activated as httpd (manual restart required).  You can
-change this at any time using the alternatives command.
+change this at any time using the alternatives command.  See
+/opt/csw/sbin/alternatives --help for information on how you can do
+this.
 
 Thanks
 -The OpenCSW apache2 team.
