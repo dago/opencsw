@@ -1,7 +1,7 @@
 GARNAME = File-Fetch
-GARVERSION = 0.10
+GARVERSION = 0.24
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = A generic file fetching mechanism
 define BLURB
@@ -10,11 +10,17 @@ define BLURB
   different means.
 endef
 
-DISTFILES += $(call admfiles,CSWpmfilefetch,depend prototype)
+DISTFILES += COPYING
 
-DEPENDS += cpan/IPC-Cmd
-DEPENDS += cpan/Params-Check
-DEPENDS += cpan/Module-Load-Conditional
-DEPENDS += cpan/Locale-Maketext-Simple
+PACKAGES = CSWpmfilefetch
+CATALOGNAME = pm_filefetch
+
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpmipccmd CSWpmlclemktxtsimple CSWpmmodloadcond CSWpmprmscheck
+
+SKIPTEST = 1
+
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
 include gar/category.mk
