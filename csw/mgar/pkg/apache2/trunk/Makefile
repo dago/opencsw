@@ -82,14 +82,15 @@ INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2c
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util CSWbdb48
+RUNTIME_DEP_PKGS_CSWapache2	  += CSWap2apxs
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-devel  = CSWapache2 CSWap2apxs
-RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2 CSWap2apxs
+RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWapr CSWexpat
 RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWbdb48 CSWapr-util CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
-RUNTIME_DEP_PKGS_CSWap2apxs	   = CSWperl CSWapache2
+RUNTIME_DEP_PKGS_CSWap2apxs	   = CSWperl
 
 CHECKPKG_OVERRIDES_CSWap2suexec  += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-devel += surplus-dependency|CSWapache2
@@ -100,10 +101,7 @@ CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2apxs += surplus-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWap2apxs += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWap2suexec += surplus-dependency|CSWap2apxs
 CHECKPKG_OVERRIDES_CSWapache2-devel += surplus-dependency|CSWap2apxs
-
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
