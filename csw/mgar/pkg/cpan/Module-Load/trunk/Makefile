@@ -16,6 +16,6 @@ CATALOGNAME = pm_modload
 
 ARCHALL = 1
 
-EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod .*\/man\/man3.* .*\/man\/man1.*
 
 include gar/category.mk
