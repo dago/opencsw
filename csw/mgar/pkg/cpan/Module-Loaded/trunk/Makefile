@@ -1,7 +1,7 @@
 GARNAME = Module-Loaded
-GARVERSION = 0.02
+GARVERSION = 0.06
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = Mark modules as loaded or unloaded
 define BLURB
@@ -13,14 +13,12 @@ define BLURB
   unloaded.
 endef
 
+DISTFILES += COPYING
+
 PACKAGES = CSWpmmodloaded
 CATALOGNAME = pm_modloaded
 ARCHALL = 1
 
-include gar/category.mk
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
-post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
+include gar/category.mk
