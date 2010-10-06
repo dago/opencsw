@@ -1,5 +1,5 @@
 GARNAME = Module-Load-Conditional
-GARVERSION = 0.36
+GARVERSION = 0.38
 CATEGORIES = cpan
 AUTHOR = BINGOS
 
@@ -17,13 +17,6 @@ ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWpmprmscheck CSWpmmodload CSWpmlclemktxtsimple
 
-CHECKPKG_OVERRIDES_CSWpmmodloadcond += surplus-dependency|CSWpmprmscheck
-CHECKPKG_OVERRIDES_CSWpmmodloadcond += surplus-dependency|CSWpmmodload
-CHECKPKG_OVERRIDES_CSWpmmodloadcond += surplus-dependency|CSWpmlclemktxtsimple
-
-DEPENDS += cpan/Params-Check
-DEPENDS += cpan/Module-Load
-DEPENDS += cpan/Locale-Maketext-Simple
-DEPENDS += cpan/version
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
 include gar/category.mk
