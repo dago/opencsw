@@ -1,5 +1,5 @@
 GARNAME = ExtUtils-ParseXS
-GARVERSION = 2.2002
+GARVERSION = 2.2206
 CATEGORIES = cpan
 AUTHOR = DAGOLDEN
 
@@ -12,6 +12,8 @@ define BLURB
   values.
 endef
 
+DISTFILES = COPYING
+
 PACKAGES = CSWpmextutparsexs
 CATALOGNAME = pm_extutparsexs
 
@@ -19,6 +21,8 @@ ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWpmextutcbuilder
 
-SPKG_VERSION = 2.20.02
+# Skip manpages as they are also in CSWperldoc. See
+#   https://www.opencsw.org/mantis/view.php?id=4571
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3\/.* .*\/man\/man1\/.*
 
 include gar/category.mk

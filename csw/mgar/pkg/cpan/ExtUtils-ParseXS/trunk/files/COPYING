@@ -1,0 +1,9 @@
+    Copyright 2002-2009 by Ken Williams, David Golden and other
+    contributors. All rights reserved.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+    Based on the ExtUtils::xsubpp code by Larry Wall and the Perl 5 Porters,
+    which was released under the same license terms.
+
