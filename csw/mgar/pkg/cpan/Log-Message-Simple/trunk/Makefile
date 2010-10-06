@@ -1,13 +1,15 @@
 GARNAME = Log-Message-Simple
-GARVERSION = 0.04
+GARVERSION = 0.06
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
-DESCRIPTION = Standardized logging facilities using the Log::Message module
+DESCRIPTION = Simplified interface to Log::Message
 define BLURB
   This module provides standardized logging facilities using the Log::Message
   module.
 endef
+
+DISTFILES += COPYING
 
 PACKAGES = CSWpmlogmsgsimple 
 CATALOGNAME = pm_logmsgsimple 
@@ -15,10 +17,6 @@ ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWpmlogmessage
 
-include gar/category.mk
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(CATALOGNAME)
-post-install-modulated:
-	@ginstall -d $(DOCDEST)
-	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)
-	@$(MAKECOOKIE)
+include gar/category.mk
