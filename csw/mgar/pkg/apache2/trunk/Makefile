@@ -96,6 +96,7 @@ CHECKPKG_OVERRIDES_CSWap2suexec  += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-devel += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2-manual += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWap2apxs
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWalternatives
