@@ -1,6 +1,6 @@
 GARNAME = jdk6
-SPKG_VERSION = 1.6.0_16
-GARVERSION = 6u16
+SPKG_VERSION = 1.6.0_21
+GARVERSION = 6u21
 CATEGORIES = lang
 
 DESCRIPTION = Java Development Kit 6
@@ -31,7 +31,7 @@ CATALOGNAME_CSWjre = jre
 ARCHALL_CSWjdk = 1
 ARCHALL_CSWjre = 1
 
-LICENSE = LICENSE
+LICENSE = COPYRIGHT
 
 SPKG_DESC_CSWjdk6 = Java Development Kit 6
 SPKG_DESC_CSWjre6 = Java Runtime Environment 6
