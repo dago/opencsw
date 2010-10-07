@@ -1,5 +1,5 @@
 GARNAME = Compress-Raw-Zlib
-GARVERSION = 2.024
+GARVERSION = 2.030
 CATEGORIES = cpan
 AUTHOR = PMQS
 
@@ -9,9 +9,13 @@ define BLURB
   compression library.
 endef
 
-RUNTIME_DEP_PKGS = CSWzlib
+DISTFILES += COPYING
 
 CATALOGNAME = pm_compressrawzlib
 PACKAGES = CSWpmcompressrawzlib
+
+RUNTIME_DEP_PKGS += CSWzlib
+
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
 include gar/category.mk
