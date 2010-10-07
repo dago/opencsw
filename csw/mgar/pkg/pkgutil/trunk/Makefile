@@ -1,3 +1,6 @@
+# Do not update gar, new gar doesn't work on sol8! If removed, recreate with:
+# svn co -r 9999 https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 gar
+
 GARNAME = pkgutil
 GARVERSION = 2.2b1
 CATEGORIES = utils
