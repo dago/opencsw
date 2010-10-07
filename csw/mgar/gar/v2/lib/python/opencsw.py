@@ -150,6 +150,7 @@ def ParsePackageFileName(p):
   }
   return data
 
+
 def ParseVersionString(s):
   version_bits = re.split("_|,", s)
   version_str = version_bits[0]
@@ -170,6 +171,10 @@ def ParseVersionString(s):
       if not "extra_strings" in revision_info:
         revision_info["extra_strings"] = []
       revision_info["extra_strings"].append(version_bit)
+  # Bits of parsed version must be hashable; especially extra_strings in
+  # revision_info.
+  if "extra_strings" in revision_info:
+    revision_info["extra_strings"] = tuple(revision_info["extra_strings"])
   return version_str, version_info, revision_info
 
 

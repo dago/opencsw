@@ -174,8 +174,25 @@ class ParseVersionStringTest(unittest.TestCase):
 
   def test_Empty(self):
     data = ""
-    opencsw.ParseVersionString(data)
     expected = ('', {'major version': ''}, {})
+    self.assertEqual(expected, opencsw.ParseVersionString(data))
+
+  def testExtraStringsHashable(self):
+    data = "2.7,REV=2009.06.18_STABLE6"
+    expected = (
+        '2.7',
+        {
+          'minor version': '7',
+          'major version': '2'},
+        {
+          # Here's the important bit: all parts of the parsed version
+          # must be hashable for submitpkg to work.
+          'extra_strings': ('STABLE6',),
+          'REV': '2009.06.18',
+        }
+    )
+    result = opencsw.ParseVersionString(data)
+    hash(result[2]['extra_strings'])
     self.assertEqual(expected, opencsw.ParseVersionString(data))
 
 
