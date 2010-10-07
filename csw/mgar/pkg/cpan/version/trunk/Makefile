@@ -1,5 +1,5 @@
 GARNAME = version
-GARVERSION = 0.80
+GARVERSION = 0.82
 CATEGORIES = cpan
 AUTHOR = JPEACOCK
 
@@ -10,7 +10,11 @@ define BLURB
   5.10.0.
 endef
 
+DISTFILES += COPYING
+
 PACKAGES = CSWpmversion
 CATALOGNAME = pm_version
+
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
 include gar/category.mk
