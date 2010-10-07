@@ -277,7 +277,7 @@ post-merge:
 		for f in httpd.conf extra/httpd-ssl.conf; do \
 		perl -pi -e 's/User.*daemon.*/User \@USER\@/; \
 		s/Group.*daemon.*/Group \@GROUP\@/; \
-		s/#ServerName www.example.com:80/ServerName \@HOSTNAME\@:80/; \
+		s/#*ServerName www.example.com/ServerName \@HOSTNAME\@/; \
 		s/ServerAdmin you\@example.com/ServerAdmin \@ADMIN\@/; \
 		s/^(LoadModule.*suexec.*)/#$$1/; \
 		s/^#(Include.*httpd-mpm.conf)/$$1/; \
