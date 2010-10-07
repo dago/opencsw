@@ -275,8 +275,14 @@ create-templates:
 post-merge:
 	@(cd $(PKGROOT)/$(prefix)/apache2/etc/; \
 		for f in httpd.conf extra/httpd-ssl.conf; do \
-			perl -pi -e 's/User.*daemon.*/User \@USER\@/; s/Group.*daemon.*/Group \@GROUP\@/; s/#ServerName www.example.com:80/ServerName \@HOSTNAME\@:80/; s/ServerAdmin you\@example.com/ServerAdmin \@ADMIN\@/; s/^(LoadModule.*suexec.*)/#$$1/' $$f; \
-			mv $$f $$f.CSW; \
+		perl -pi -e 's/User.*daemon.*/User \@USER\@/; \
+		s/Group.*daemon.*/Group \@GROUP\@/; \
+		s/#ServerName www.example.com:80/ServerName \@HOSTNAME\@:80/; \
+		s/ServerAdmin you\@example.com/ServerAdmin \@ADMIN\@/; \
+		s/^(LoadModule.*suexec.*)/#$$1/; \
+		s/^#(Include.*httpd-mpm.conf)/$$1/; \
+		s/^#(Include.*httpd-ssl.conf)/$$1/' $$f; \
+		mv $$f $$f.CSW; \
 		done )
 	@$(MAKECOOKIE)
 
