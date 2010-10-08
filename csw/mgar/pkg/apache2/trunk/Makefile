@@ -77,7 +77,7 @@ SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package.
 
 INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2c
 
-RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv
+RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv CSWosslutils
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
