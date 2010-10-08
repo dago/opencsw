@@ -1,6 +1,7 @@
 #!/bin/sh
 
-CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+ROOT=${PKG_INSTALL_ROOT:-/}
+CSW_PREFIX=${ROOT}/opt/csw
 AP2_PREFIX=$CSW_PREFIX/apache2
 AP2_BINDIR=$AP2_PREFIX/sbin
 AP2_LIBEXEC=$AP2_PREFIX/libexec
@@ -71,5 +72,10 @@ do
         cp $filepath.CSW $filepath
     fi
 done
+
+if [ ! -f $AP2_CONFDIR/server.crt -a ! -f $AP2_CONFDIR/server.key ]; then
+    echo Generating dummy ssl key and certificate...
+    chroot ${ROOT} perl -e 'print "TS\nWestfarthing\nHobbiton\n\n\nBilbo Baggins\nbilbo@example.net\n\n\n";' | chroot ${ROOT} openssl req -new -newkey rsa:1024 -days 365 -nodes -x509 -keyout /opt/csw/apache2/etc/server.key  -out /opt/csw/apache2/etc/server.crt >/dev/null 2>&1
+fi
 
 exit 0
