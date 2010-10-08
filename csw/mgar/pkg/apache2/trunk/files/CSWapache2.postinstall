@@ -77,7 +77,18 @@ if [ ! -f $AP2_CONFDIR/server.crt -a ! -f $AP2_CONFDIR/server.key ]; then
     echo Generating dummy ssl key and certificate...
     # this is likely overkill for a dummy cert, but why not
     umask 0077
-    chroot ${ROOT} perl -e 'print "TS\nWestfarthing\nHobbiton\n\n\nBilbo Baggins\nbilbo@example.net\n\n\n";' | chroot ${ROOT} openssl req -new -newkey rsa:1024 -days 365 -nodes -x509 -keyout /opt/csw/apache2/etc/server.key  -out /opt/csw/apache2/etc/server.crt >/dev/null 2>&1
+    set -x
+    cat <<EOF | /usr/sbin/chroot ${ROOT} /opt/csw/bin/openssl req -new -newkey rsa:1024 -days 365 -nodes -x509 -keyout /opt/csw/apache2/etc/server.key  -out /opt/csw/apache2/etc/server.crt >/dev/null
+TS
+Westfarthing
+Hobbiton
+
+
+Bilbo Baggins
+bilbo@example.net
+
+
+EOF
 fi
 
 exit 0
