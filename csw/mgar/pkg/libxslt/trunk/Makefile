@@ -43,7 +43,14 @@ STRIP_LIBTOOL = 1
 
 RUNTIME_DEP_PKGS_CSWlibxslt = CSWgcrypt CSWgpgerr CSWiconv CSWlibxml2 CSWzlib
 RUNTIME_DEP_PKGS_CSWlibxsltdevel = CSWlibxslt
-RUNTIME_DEP_PKGS_CSWpylibxslt = CSWpython CSWlibxslt
+RUNTIME_DEP_PKGS_CSWpylibxslt  = CSWpython
+RUNTIME_DEP_PKGS_CSWpylibxslt += CSWlibxslt
+RUNTIME_DEP_PKGS_CSWpylibxslt += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWpylibxslt += CSWzlib
+RUNTIME_DEP_PKGS_CSWpylibxslt += CSWgpgerr
+RUNTIME_DEP_PKGS_CSWpylibxslt += CSWgcrypt
+RUNTIME_DEP_PKGS_CSWpylibxslt += CSWiconv
+
 
 PKGFILES_CSWlibxsltdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxsltdevel += $(docdir)/libxslt-$(GARVERSION)/.*
