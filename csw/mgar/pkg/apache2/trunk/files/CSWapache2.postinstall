@@ -8,6 +8,8 @@ AP2_LIBEXEC=$AP2_PREFIX/libexec
 AP2_CONFDIR=$AP2_PREFIX/etc
 AP2_EXTRADIR=$AP2_CONFDIR/extra
 
+
+
 UPGRADE_CONFIGS="\
     httpd.conf \
     ssl.conf \
@@ -16,6 +18,8 @@ UPGRADE_CONFIGS="\
     "
 # Don't overwrite config if it exists
 warn_update=0
+# For use in config files and certificate generation
+hostname=`hostname`
 echo "Checking configuration files:"
 for file in $UPGRADE_CONFIGS; do
     config=$AP2_CONFDIR/$file
@@ -29,7 +33,6 @@ for file in $UPGRADE_CONFIGS; do
         perl -i -plne 's#PidFile /var#PidFile var#'
     elif [ -f "$config.CSW" ]; then
         echo "Creating $config from template"
-        hostname=`hostname`
         sed -e s,@HOSTNAME@,$hostname,g   \
             -e s,@USER@,nobody,g          \
             -e s,@GROUP@,nobody,g         \
@@ -77,14 +80,13 @@ if [ ! -f $AP2_CONFDIR/server.crt -a ! -f $AP2_CONFDIR/server.key ]; then
     echo Generating dummy ssl key and certificate...
     # this is likely overkill for a dummy cert, but why not
     umask 0077
-    set -x
-    cat <<EOF | /usr/sbin/chroot ${ROOT} /opt/csw/bin/openssl req -new -newkey rsa:1024 -days 365 -nodes -x509 -keyout /opt/csw/apache2/etc/server.key  -out /opt/csw/apache2/etc/server.crt >/dev/null
+    cat <<EOF | /usr/sbin/chroot ${ROOT} /opt/csw/bin/openssl req -new -newkey rsa:1024 -days 365 -nodes -x509 -keyout /opt/csw/apache2/etc/server.key  -out /opt/csw/apache2/etc/server.crt >/dev/null 2>&1
 TS
 Westfarthing
 Hobbiton
 
 
-Bilbo Baggins
+$hostname
 bilbo@example.net
 
 
