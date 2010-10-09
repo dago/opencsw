@@ -12,16 +12,18 @@ MASTER_SITES = ftp://xmlsoft.org/libxslt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES += 0001-Forcefully-disable-version-script-use.patch
 
-PACKAGES = CSWlibxslt CSWlibxsltdevel CSWpylibxslt
+PACKAGES = CSWlibxslt CSWlibxsltdevel CSWpy-libxslt
+
+INCOMPATIBLE_PKGS_CSWpy-libxslt = CSWpylibxslt
 
 CATALOGNAME_CSWlibxsltdevel = libxslt_devel
-CATALOGNAME_CSWpylibxslt = py_libxslt
+CATALOGNAME_CSWpy-libxslt = py_libxslt
 
 BUILD_DEP_PKGS = CSWlibxml2 CSWlibxml2devel
 
 SPKG_DESC_CSWlibxslt =  XSLT engine runtime package
 SPKG_DESC_CSWlibxsltdevel = XSLT engine development package
-SPKG_DESC_CSWpylibxslt = XSLT engine python package
+SPKG_DESC_CSWpy-libxslt = XSLT engine python package
 
 SPKG_SOURCEURL = http://xmlsoft.org/XSLT/
 TEST_TARGET = check
@@ -43,22 +45,22 @@ STRIP_LIBTOOL = 1
 
 RUNTIME_DEP_PKGS_CSWlibxslt = CSWgcrypt CSWgpgerr CSWiconv CSWlibxml2 CSWzlib
 RUNTIME_DEP_PKGS_CSWlibxsltdevel = CSWlibxslt
-RUNTIME_DEP_PKGS_CSWpylibxslt  = CSWpython
-RUNTIME_DEP_PKGS_CSWpylibxslt += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWpylibxslt += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpylibxslt += CSWzlib
-RUNTIME_DEP_PKGS_CSWpylibxslt += CSWgpgerr
-RUNTIME_DEP_PKGS_CSWpylibxslt += CSWgcrypt
-RUNTIME_DEP_PKGS_CSWpylibxslt += CSWiconv
+RUNTIME_DEP_PKGS_CSWpy-libxslt  = CSWpython
+RUNTIME_DEP_PKGS_CSWpy-libxslt += CSWlibxslt
+RUNTIME_DEP_PKGS_CSWpy-libxslt += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWpy-libxslt += CSWzlib
+RUNTIME_DEP_PKGS_CSWpy-libxslt += CSWgpgerr
+RUNTIME_DEP_PKGS_CSWpy-libxslt += CSWgcrypt
+RUNTIME_DEP_PKGS_CSWpy-libxslt += CSWiconv
 
 
 PKGFILES_CSWlibxsltdevel  = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxsltdevel += $(docdir)/libxslt-$(GARVERSION)/.*
 PKGFILES_CSWlibxsltdevel += $(libdir)/xsltConf.sh
 PKGFILES_CSWlibxsltdevel += $(call isadirs,$(libdir),xsltConf.sh)
-PKGFILES_CSWpylibxslt = $(libdir)/python.*
-PKGFILES_CSWpylibxslt += $(docdir)/libxslt-python-$(GARVERSION)/.*
+PKGFILES_CSWpy-libxslt = $(libdir)/python.*
+PKGFILES_CSWpy-libxslt += $(docdir)/libxslt-python-$(GARVERSION)/.*
 
-CHECKPKG_OVERRIDES = symbol-not-found|libxsltmod.so
+CHECKPKG_OVERRIDES_CSWlibxsltdevel += surplus-dependency|CSWlibxslt
 
 include gar/category.mk
