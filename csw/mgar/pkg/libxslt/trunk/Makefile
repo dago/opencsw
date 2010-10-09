@@ -10,6 +10,7 @@ endef
 
 MASTER_SITES = ftp://xmlsoft.org/libxslt/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES += 0001-Forcefully-disable-version-script-use.patch
 
 PACKAGES = CSWlibxslt CSWlibxsltdevel CSWpylibxslt
 
