@@ -21,10 +21,19 @@ def IsLibraryLinkable(file_path):
                   + INTEL_386_PATHS + AMD64_PATHS)
   # Need to escape the plus signs because of the regex usage below.
   arch_subdirs = [x.replace(r"+", r"\+") for x in arch_subdirs]
-  linkable_re = re.compile(r"^opt/csw(/([^\/]+(?!lib)))*/lib(/(%s))?$"
+  linkable_re = re.compile(r"^opt/csw(/([^\/]+))*/lib(/(%s))?$"
                            % "|".join(arch_subdirs))
+  blacklist = [
+      # If it has two lib components, it's a private lib.
+      re.compile(r"^opt/csw/.*lib.*lib.*"),
+  ]
   file_dir, file_basename = os.path.split(file_path)
-  return bool(linkable_re.match(file_dir))
+  if linkable_re.match(file_dir):
+    for regex in blacklist:
+      if regex.match(file_dir):
+        return False
+    return True
+  return False
 
 
 def SanitizeWithChar(s, c):
