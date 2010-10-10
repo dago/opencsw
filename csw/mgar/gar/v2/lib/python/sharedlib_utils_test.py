@@ -1,6 +1,18 @@
 #!/usr/bin/env python2.6
 # $Id$
 
+"""Tests for the shared library utilities.
+
+TODO: Implement infering library names in context, for example:
+
+opt/csw/lib/libboinc.so.6.7.4
+opt/csw/lib/libboinc_api.so.6.7.4
+opt/csw/lib/libboinc_graphics2.so.6.7.4
+opt/csw/lib/libboinc_zip.so.6.7.4
+"""
+
+__author__ = "Maciej Blizinski <maciej@opencsw.org>"
+
 import re
 import unittest
 import mox
@@ -51,6 +63,9 @@ class UtilitiesUnitTest(unittest.TestCase):
     self.assertEqual(False, su.IsLibraryLinkable(
       "opt/csw/share/Adobe/Reader8/Reader/sparcsolaris/lib"
       "/libcrypto.so.0.9.6"))
+
+
+class MakePackageNameBySonameUnitTest(unittest.TestCase):
 
   def testMakePackageNameBySonameSimple(self):
     soname = "libfoo.so.0"
@@ -130,6 +145,9 @@ class UtilitiesUnitTest(unittest.TestCase):
     )
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
+
+
+class MakePackageNameBySonameUnitTest(unittest.TestCase):
 
   def testSanitizeWithChar(self):
     self.assertEqual("foo_0", su.SanitizeWithChar("foo-0", "_"))
