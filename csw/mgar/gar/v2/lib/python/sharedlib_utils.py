@@ -1,3 +1,5 @@
+# $Id$
+
 import re
 import os.path
 
@@ -23,3 +25,14 @@ def MakePackageNameBySoname(soname):
       "%(basename)s-%(version)s" % keywords,
   ]
   return pkgname_list, catalogname_list
+
+
+def GetSharedLibs(pkg_data):
+  # Finding all shared libraries
+  shared_libs = []
+  for metadata in pkg_data["files_metadata"]:
+    if "mime_type" in metadata and metadata["mime_type"]:
+      # TODO: Find out where mime_type is missing and why
+      if "sharedlib" in metadata["mime_type"]:
+        shared_libs.append(metadata["path"])
+  return shared_libs

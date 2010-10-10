@@ -738,19 +738,8 @@ def CheckDisallowedPaths(pkg_data, error_mgr, logger, messenger):
                   "or is not allowed for other reasons." % pkgname)
 
 
-def GetSharedLibs(pkg_data):
-  # Finding all shared libraries
-  shared_libs = []
-  for metadata in pkg_data["files_metadata"]:
-    if "mime_type" in metadata and metadata["mime_type"]:
-      # TODO: Find out where mime_type is missing and why
-      if "sharedlib" in metadata["mime_type"]:
-        shared_libs.append(metadata["path"])
-  return shared_libs
-
-
 def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
-  shared_libs = set(GetSharedLibs(pkg_data))
+  shared_libs = set(su.GetSharedLibs(pkg_data))
   for binary_info in pkg_data["binaries_dump_info"]:
     for soname in binary_info["needed sonames"]:
       if (binary_info["path"] in shared_libs
@@ -1006,7 +995,7 @@ def CheckWrongArchitecture(pkg_data, error_mgr, logger, messenger):
 def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
   placement_re = re.compile("/opt/csw/lib")
   pkgname = pkg_data["basic_stats"]["pkgname"]
-  shared_libs = set(GetSharedLibs(pkg_data))
+  shared_libs = set(su.GetSharedLibs(pkg_data))
   for binary_info in pkg_data["binaries_dump_info"]:
     if binary_info["path"] in shared_libs:
       if su.IsLibraryLinkable(binary_info["path"]):
