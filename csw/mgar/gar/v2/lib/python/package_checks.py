@@ -1109,11 +1109,23 @@ def CheckPackagesWithHeaderFilesMustContainTheSoFile(pkg_data, error_mgr, logger
   pass
 
 
-def SharedLibraryNameMustBeAsubstringOfSoname():
+def CheckSharedLibraryNameMustBeAsubstringOfSoname(
+    pkg_data, error_mgr, logger, messenger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  for binary_info in pkg_data["binaries_dump_info"]:
+    if "soname" in binary_info:
+      if binary_info["soname"] not in binary_info["base_name"]:
+        error_mgr.ReportError(
+            "soname-not-part-of-filename",
+            "soname=%s "
+            "filename=%s"
+            % (binary_info["soname"], binary_info["base_name"]))
+
+
+def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
+    pkg_data, error_mgr, logger, messenger):
   pass
 
-def SonameMustNotBeEqualToFileNameIfFilenameEndsWithSo():
-  pass
-
-def LinkableSoFileMustBeAsymlink():
+def CheckLinkableSoFileMustBeAsymlink(
+    pkg_data, error_mgr, logger, messenger):
   pass
