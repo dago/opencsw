@@ -1,0 +1,28 @@
+From 0f90de9b021e8f34d4d41df23385a659408be908 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 10 Oct 2010 22:34:31 +0200
+Subject: [PATCH] Make sure -m64 is passed to the linker
+
+---
+ admin/ltmain.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/admin/ltmain.sh b/admin/ltmain.sh
+index 27ee8c4..7dcd4cd 100644
+--- a/admin/ltmain.sh
++++ b/admin/ltmain.sh
+@@ -1323,9 +1323,9 @@ EOF
+ 	esac
+         compile_command="$compile_command $arg"
+         finalize_command="$finalize_command $arg"
+-        if test "$with_gcc" = "yes" ; then
++        #if test "$with_gcc" = "yes" ; then
+           compiler_flags="$compiler_flags $arg"
+-        fi
++        #fi
+         continue
+         ;;
+ 
+-- 
+1.7.3
+
