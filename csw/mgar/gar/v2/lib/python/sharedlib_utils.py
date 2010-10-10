@@ -1,5 +1,6 @@
 # $Id$
 
+import copy
 import re
 import os.path
 
@@ -132,12 +133,19 @@ def MakePackageNameBySonameCollection(sonames):
     # to the pkgname and soname at the end of the function.
     if candidate.startswith("lib"):
       candidate = candidate[3:]
-    m = SONAME_VERSION_RE.search(candidate)
+    m = re.search("\.so", candidate)
+    candidate = re.sub("\.so.*$", "", candidate)
     common_substring_candidates.append(candidate)
-  lcs = CollectionLongestCommonSubstring(common_substring_candidates)
-  pkgname = "CSWlib%s.%s" % (SanitizeWithChar(lcs, "-"), common_version)
-  catalogname = "lib%s.%s" % (SanitizeWithChar(lcs, "_"), common_version)
-  return pkgname, catalogname
+  lcs = CollectionLongestCommonSubstring(copy.copy(common_substring_candidates))
+  pkgnames = [
+      "CSW" + SanitizeWithChar("lib%s%s" % (lcs, common_version), "-"),
+      "CSW" + SanitizeWithChar("lib%s-%s" % (lcs, common_version), "-"),
+  ]
+  catalognames = [
+      SanitizeWithChar("lib%s%s" % (lcs, common_version), "_"),
+      SanitizeWithChar("lib%s_%s" % (lcs, common_version), "_"),
+  ]
+  return pkgnames, catalognames
 
 
 def LongestCommonSubstring(S, T):
