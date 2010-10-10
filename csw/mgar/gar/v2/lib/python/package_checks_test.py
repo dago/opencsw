@@ -1340,5 +1340,23 @@ class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckpkgUnitTestHelper, unit
         'shared-lib-package-contains-so-symlink', 'file=/opt/csw/lib/sparcv9/libneon.so')
 
 
+class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
+    CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryNameMustBeAsubstringOfSoname'
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+
+
+class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
+    CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryNameMustBeAsubstringOfSoname'
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["binaries_dump_info"][3]["base_name"] = "foo.so.1"
+    self.error_mgr_mock.ReportError(
+        'soname-not-part-of-filename',
+        'soname=libneon.so.27 filename=foo.so.1')
+
+
 if __name__ == '__main__':
   unittest.main()
