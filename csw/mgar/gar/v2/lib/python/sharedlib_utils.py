@@ -21,7 +21,7 @@ def IsLibraryLinkable(file_path):
                   + INTEL_386_PATHS + AMD64_PATHS)
   # Need to escape the plus signs because of the regex usage below.
   arch_subdirs = [x.replace(r"+", r"\+") for x in arch_subdirs]
-  linkable_re = re.compile(r"^opt/csw(/([^\/]+))*/lib(/(%s))?$"
+  linkable_re = re.compile(r"^opt/csw/lib(/(%s))?$"
                            % "|".join(arch_subdirs))
   blacklist = [
       # If it has two lib components, it's a private lib.
