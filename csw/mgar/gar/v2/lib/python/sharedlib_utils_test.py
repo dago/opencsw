@@ -47,6 +47,11 @@ class UtilitiesUnitTest(unittest.TestCase):
       "opt/csw/lib/erlang/lib/megaco-3.6.0.1/priv/lib"
       "/megaco_flex_scanner_drv_mt.so"))
 
+  def testIsLibraryLinkableInShared(self):
+    self.assertEqual(False, su.IsLibraryLinkable(
+      "opt/csw/share/Adobe/Reader8/Reader/sparcsolaris/lib"
+      "/libcrypto.so.0.9.6"))
+
   def testMakePackageNameBySonameSimple(self):
     soname = "libfoo.so.0"
     expected = (
