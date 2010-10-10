@@ -1000,15 +1000,21 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         policy_pkgname_list, policy_catalogname_list = tmp
         if pkgname not in policy_pkgname_list:
           error_mgr.ReportError(
-              "shared-lib-wrong-pkgname",
+              "shared-lib-pkgname-mismatch",
               "file=%s pkgname=%s expected=%s"
               % (binary_info["path"], pkgname, policy_pkgname_list))
           messenger.OneTimeMessage(
               soname,
-              "Shared libraries that other software might link "
-              "to, need to be separated out into own packages. "
-              "In this case, the suggested package names are %s."
-              % policy_pkgname_list)
+              "This shared library (%s) is in a directory indicating that it "
+              "is likely to be linked to by other programs.  If this is the "
+              "case, the library is best packaged separately, in a package "
+              "with a library-specific name.  Examples of such names include: "
+              "%s. If this library is not meant to be linked to by other "
+              "packages, it's best moved to a 'private' directory.  "
+              "For example, instead of /opt/csw/lib/foo.so, "
+              "try /opt/csw/lib/projectname/foo.so."
+              % (binary_info["path"], policy_pkgname_list))
+
 
 
 def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messenger):
