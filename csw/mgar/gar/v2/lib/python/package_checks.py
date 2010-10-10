@@ -102,14 +102,6 @@ SYMBOLS_CHECK_ONLY_FOR = r"^CSWpm.*$"
 VENDORURL_RE = r"^(http|ftp)s?\://.+\..+$"
 
 BASE_BINARY_PATHS = ('bin', 'sbin', 'lib', 'libexec', 'cgi-bin')
-SPARCV8_PATHS = ('sparcv8', 'sparcv8-fsmuld',
-                 'sparcv7', 'sparc')
-SPARCV8PLUS_PATHS = ('sparcv8plus+vis2', 'sparcv8plus+vis', 'sparcv8plus')
-SPARCV9_PATHS = ('sparcv9+vis2', 'sparcv9+vis', 'sparcv9')
-INTEL_386_PATHS = ('pentium_pro+mmx', 'pentium_pro',
-                   'pentium+mmx', 'pentium',
-                   'i486', 'i386', 'i86')
-AMD64_PATHS = ('amd64',)
 HACHOIR_MACHINES = {
     # id: (name, allowed_paths, disallowed_paths)
     -1: {"name": "Unknown",
@@ -117,33 +109,33 @@ HACHOIR_MACHINES = {
          "type": "unknown"},
      2: {"name": "sparcv8",
          "type": opencsw.ARCH_SPARC,
-         "allowed": BASE_BINARY_PATHS + SPARCV8_PATHS,
-         "disallowed": SPARCV9_PATHS + INTEL_386_PATHS + AMD64_PATHS,
+         "allowed": BASE_BINARY_PATHS + su.SPARCV8_PATHS,
+         "disallowed": su.SPARCV9_PATHS + su.INTEL_386_PATHS + su.AMD64_PATHS,
         },
      3: {"name": "i386",
          "type": opencsw.ARCH_i386,
-         "allowed": BASE_BINARY_PATHS + INTEL_386_PATHS,
-         "disallowed": SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS + AMD64_PATHS,
+         "allowed": BASE_BINARY_PATHS + su.INTEL_386_PATHS,
+         "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS,
         },
      6: {"name": "i486",
          "type": opencsw.ARCH_i386,
-         "allowed": INTEL_386_PATHS,
-         "disallowed": SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS + AMD64_PATHS,
+         "allowed": su.INTEL_386_PATHS,
+         "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS,
          },
     18: {"name": "sparcv8+",
          "type": opencsw.ARCH_SPARC,
-         "allowed": SPARCV8PLUS_PATHS,
-         "disallowed": SPARCV8_PATHS + SPARCV9_PATHS + AMD64_PATHS + INTEL_386_PATHS,
+         "allowed": su.SPARCV8PLUS_PATHS,
+         "disallowed": su.SPARCV8_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS + su.INTEL_386_PATHS,
         },
     43: {"name": "sparcv9",
          "type": opencsw.ARCH_SPARC,
-         "allowed": SPARCV9_PATHS,
-         "disallowed": INTEL_386_PATHS + AMD64_PATHS,
+         "allowed": su.SPARCV9_PATHS,
+         "disallowed": su.INTEL_386_PATHS + su.AMD64_PATHS,
         },
     62: {"name": "amd64",
          "type": opencsw.ARCH_i386,
-         "allowed": AMD64_PATHS,
-         "disallowed": SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS,
+         "allowed": su.AMD64_PATHS,
+         "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS,
         },
 }
 
@@ -1017,3 +1009,21 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
               "to, need to be separated out into own packages. "
               "In this case, the suggested package names are %s."
               % policy_pkgname_list)
+
+def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messenger):
+  """If it's a package with shared libraries, it should not contain the .so file.
+
+  For example, libfoo.so.1 should not be in the same package as libfoo.so,
+  because the latter is used for linking during compilation, and the former is
+  a shared object that needs to be phased out at some point.
+  """
+  placement_re = re.compile("/opt/csw/lib")
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  shared_libs = set(su.GetSharedLibs(pkg_data))
+  if shared_libs:
+    # If the package contains shared libraries, it must not contain
+    # corrersponding .so files, which are used during linking.
+    pass
+
+def CheckPackagesWithHeaderFilesMustContainTheSoFile(pkg_data, error_mgr, logger, messenger):
+  pass
