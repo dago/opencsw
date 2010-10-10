@@ -1015,6 +1015,21 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
       # If the sonames aren't uniform, there's no point in trying to match
       # sonames versus pkgname.
       check_names = False
+    else:
+      if multilib_pkgname != pkgname:
+        error_mgr.ReportError(
+            "shared-lib-pkgname-mismatch",
+            "sonames=%s "
+            "pkgname=%s "
+            "expected=%s "
+            % (sorted(set(sonames)), pkgname, multilib_pkgname))
+        messenger.Message(
+            "The collection of sonames (%s) "
+            "is expected to be in package "
+            "named %s, but the package name is %s.
+            "More information: "
+            "http://wiki.opencsw.org/checkpkg-error-tags"
+            % (sonames, multilib_pkgname, pkgname))
   if check_names:
     for soname, binary_info in linkable_shared_libs:
       tmp = su.MakePackageNameBySoname(soname)
@@ -1026,7 +1041,17 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
             "soname=%s "
             "pkgname=%s "
             "expected=%s"
+            "More information: "
+            "http://wiki.opencsw.org/checkpkg-error-tags"
             % (binary_info["path"], soname, pkgname, policy_pkgname_list))
+        suggested_pkgname = policy_pkgname_list[0]
+        messenger.SuggestGarLine(
+            "PACKAGES += %s" % suggested_pkgname)
+        messenger.SuggestGarLine(
+            "PKGFILES_%s += %s" % (suggested_pkgname, binary_info["path"]))
+        lib_basename, lib_filename = os.path.split(binary_info["path"])
+        messenger.SuggestGarLine(
+            "PKGFILES_%s += %s/%s.*" % (suggested_pkgname, lib_basename, soname))
         messenger.OneTimeMessage(
             soname,
             "This shared library (%s) is in a directory indicating that it "
@@ -1061,6 +1086,10 @@ def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messe
           error_mgr.ReportError(
               "shared-lib-package-contains-so-symlink",
               "file=%s" % entry["path"])
+          messenger.SuggestGarLine("# (If %s-devel doesn't exist yet)" % pkgname)
+          messenger.SuggestGarLine("PACKAGES += %s-devel" % pkgname)
+          messenger.SuggestGarLine(
+              "PKGFILES_%s-devel += %s" % (pkgname, entry["path"]))
           messenger.Message(
               "The package contains shared libraries together with the "
               "symlink of the form libfoo.so -> libfoo.so.1.  "
@@ -1079,4 +1108,14 @@ def CheckPackagesWithHeaderFilesMustContainTheSoFile(pkg_data, error_mgr, logger
     1. Contains .h but not .so
     2. Contains .so but not .h
   """
+  pass
+
+
+def SharedLibraryNameMustBeAsubstringOfSoname():
+  pass
+
+def SonameMustNotBeEqualToFileNameIfFilenameEndsWithSo():
+  pass
+
+def LinkableSoFileMustBeAsymlink():
   pass

@@ -22,12 +22,10 @@ import time
 from sqlobject import sqlbuilder
 import subprocess
 import textwrap
-import yaml
 from Cheetah import Template
 import database
 
-import opencsw
-import overrides
+import package
 import package_checks
 import package_stats
 import models as m
@@ -411,7 +409,7 @@ class SystemPkgmap(database.DatabaseClient):
       config_option.int_value = database.DB_SCHEMA_VERSION
     except sqlobject.main.SQLObjectNotFound, e:
       version = m.CswConfig(option_key=CONFIG_DB_SCHEMA,
-                            int_value=DB_SCHEMA_VERSION)
+                            int_value=database.DB_SCHEMA_VERSION)
 
   def GetPkgmapLineByBasename(self, filename):
     """Returns pkgmap lines by basename:
@@ -1075,7 +1073,7 @@ def GetPackageStatsByFilenamesOrMd5s(args, debug=False):
     pkgstat_objs.append(package_stats.PackageStats(pkg, debug=debug))
     bar.update(counter.next())
   for md5 in md5s:
-    pkgstat_objs.append(PackageStats(None, md5sum=md5, debug=debug))
+    pkgstat_objs.append(package_stats.PackageStats(None, md5sum=md5, debug=debug))
     bar.update(counter.next())
   bar.finish()
   return pkgstat_objs
