@@ -21,6 +21,7 @@ import pprint
 import textwrap
 import dependency_checks as depchecks
 import configuration as c
+import sharedlib_utils as su
 from Cheetah import Template
 
 PATHS_ALLOWED_ONLY_IN = {
@@ -737,7 +738,7 @@ def CheckDisallowedPaths(pkg_data, error_mgr, logger, messenger):
                   "or is not allowed for other reasons." % pkgname)
 
 
-def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
+def GetSharedLibs(pkg_data):
   # Finding all shared libraries
   shared_libs = []
   for metadata in pkg_data["files_metadata"]:
@@ -745,7 +746,11 @@ def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
       # TODO: Find out where mime_type is missing and why
       if "sharedlib" in metadata["mime_type"]:
         shared_libs.append(metadata["path"])
-  shared_libs = set(shared_libs)
+  return shared_libs
+
+
+def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
+  shared_libs = set(GetSharedLibs(pkg_data))
   for binary_info in pkg_data["binaries_dump_info"]:
     for soname in binary_info["needed sonames"]:
       if (binary_info["path"] in shared_libs
@@ -996,3 +1001,30 @@ def CheckWrongArchitecture(pkg_data, error_mgr, logger, messenger):
               file_metadata["path"],
               pkginfo_arch,
               machine["type"]))
+
+
+def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
+  placement_re = re.compile("/opt/csw/lib")
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  shared_libs = set(GetSharedLibs(pkg_data))
+  for binary_info in pkg_data["binaries_dump_info"]:
+    if binary_info["path"] in shared_libs:
+      if su.IsLibraryLinkable(binary_info["path"]):
+        # It is a shared library and other projects might link to it.
+        if "soname" in binary_info and binary_info["soname"]:
+          soname = binary_info["soname"]
+        else:
+          soname = os.path.split(binary_info["path"])[1]
+        tmp = su.MakePackageNameBySoname(soname)
+        policy_pkgname_list, policy_catalogname_list = tmp
+        if pkgname not in policy_pkgname_list:
+          error_mgr.ReportError(
+              "shared-lib-wrong-pkgname",
+              "file=%s pkgname=%s expected=%s"
+              % (binary_info["path"], pkgname, policy_pkgname_list))
+          messenger.OneTimeMessage(
+              soname,
+              "Shared libraries that other software might link "
+              "to, need to be separated out into own packages. "
+              "In this case, the suggested package names are %s."
+              % policy_pkgname_list)

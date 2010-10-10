@@ -1314,5 +1314,27 @@ class TestCheckWrongArchitecture(CheckpkgUnitTestHelper, unittest.TestCase):
         'file=opt/csw/lib/sparcv9/libneon.so.26.0.4 pkginfo-says=i386 actual-binary=sparc')
 
 
+class TestCheckSharedLibraryNamingPolicy(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryNamingPolicy'
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+    self.error_mgr_mock.ReportError(
+        'shared-lib-wrong-pkgname',
+        "file=opt/csw/lib/libneon.so.26.0.4 pkgname=CSWneon "
+        "expected=['CSWlibneon26', 'CSWlibneon-26']")
+    self.error_mgr_mock.ReportError(
+        'shared-lib-wrong-pkgname',
+        "file=opt/csw/lib/libneon.so.27.2.0 pkgname=CSWneon "
+        "expected=['CSWlibneon27', 'CSWlibneon-27']")
+    self.error_mgr_mock.ReportError(
+        'shared-lib-wrong-pkgname',
+        "file=opt/csw/lib/sparcv9/libneon.so.26.0.4 pkgname=CSWneon "
+        "expected=['CSWlibneon26', 'CSWlibneon-26']")
+    self.error_mgr_mock.ReportError(
+        'shared-lib-wrong-pkgname',
+        "file=opt/csw/lib/sparcv9/libneon.so.27.2.0 pkgname=CSWneon "
+        "expected=['CSWlibneon27', 'CSWlibneon-27']")
+
+
 if __name__ == '__main__':
   unittest.main()
