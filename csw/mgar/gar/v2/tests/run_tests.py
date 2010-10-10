@@ -18,6 +18,7 @@ from dependency_checks_test  import *
 from sharedlib_utils_test    import *
 from catalog_test            import *
 from package_test            import *
+from package_stats_test      import *
 
 # These are very slow GAR tests, which I'm disabling for now.
 # from example_test            import *

@@ -102,10 +102,6 @@ class PackageError(Error):
   pass
 
 
-class CatalogLineParseError(Error):
-  pass
-
-
 def ParsePackageFileName(p):
   if p.endswith(".gz"):
     p = p[:-3]

@@ -1,7 +1,10 @@
 #!/usr/bin/env python2.6
 
-import magic
+import hashlib
+import logging
 import subprocess
+
+import magic
 import hachoir_parser as hp
 
 # Suppress unhelpful warnings

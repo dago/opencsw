@@ -1,6 +1,17 @@
 #!/usr/bin/env python2.6
 
+import os
 import re
+import logging
+
+
+class Error(Exception):
+  pass
+
+
+class CatalogLineParseError(Error):
+  pass
+
 
 class OpencswCatalogBuilder(object):
 
