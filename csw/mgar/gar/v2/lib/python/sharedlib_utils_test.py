@@ -42,6 +42,11 @@ class UtilitiesUnitTest(unittest.TestCase):
     p = "opt/csw/lib/gnucash/libgncmod-stylesheets.so.0.0.0"
     self.assertEqual(False, su.IsLibraryLinkable(p))
 
+  def testIsLibraryLinkablePrivateLib(self):
+    self.assertEqual(False, su.IsLibraryLinkable(
+      "opt/csw/lib/erlang/lib/megaco-3.6.0.1/priv/lib"
+      "/megaco_flex_scanner_drv_mt.so"))
+
   def testMakePackageNameBySonameSimple(self):
     soname = "libfoo.so.0"
     expected = (
