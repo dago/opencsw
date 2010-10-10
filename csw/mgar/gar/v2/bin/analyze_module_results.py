@@ -17,6 +17,7 @@ path_list = [os.path.dirname(__file__),
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 import overrides
+import package_stats
 
 BEFORE_OVERRIDES = """If any of the reported errors were false positives, you
 can override them pasting the lines below to the GAR recipe."""
@@ -48,7 +49,7 @@ def main():
   # It might be a good idea to store the error tags in the database and
   # eliminate the need to access the directory with the error tag files.
 
-  pkgstats = checkpkg.StatsListFromCatalog(filenames, options.catalog)
+  pkgstats = package_stats.StatsListFromCatalog(filenames, options.catalog)
   overrides_list = [pkg.GetSavedOverrides() for pkg in pkgstats]
   override_list = reduce(operator.add, overrides_list)
   error_tags = reduce(operator.add, [stat.GetSavedErrorTags() for stat in pkgstats])
