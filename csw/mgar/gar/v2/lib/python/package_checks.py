@@ -987,6 +987,7 @@ def CheckWrongArchitecture(pkg_data, error_mgr, logger, messenger):
 def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
   pkgname = pkg_data["basic_stats"]["pkgname"]
   shared_libs = set(su.GetSharedLibs(pkg_data))
+  linkable_shared_libs = []
   for binary_info in pkg_data["binaries_dump_info"]:
     if binary_info["path"] in shared_libs:
       if su.IsLibraryLinkable(binary_info["path"]):
@@ -995,27 +996,49 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
           soname = binary_info["soname"]
         else:
           soname = os.path.split(binary_info["path"])[1]
-        tmp = su.MakePackageNameBySoname(soname)
-        policy_pkgname_list, policy_catalogname_list = tmp
-        if pkgname not in policy_pkgname_list:
-          error_mgr.ReportError(
-              "shared-lib-pkgname-mismatch",
-              "file=%s "
-              "soname=%s "
-              "pkgname=%s "
-              "expected=%s"
-              % (binary_info["path"], soname, pkgname, policy_pkgname_list))
-          messenger.OneTimeMessage(
-              soname,
-              "This shared library (%s) is in a directory indicating that it "
-              "is likely to be linked to by other programs.  If this is the "
-              "case, the library is best packaged separately, in a package "
-              "with a library-specific name.  Examples of such names include: "
-              "%s. If this library is not meant to be linked to by other "
-              "packages, it's best moved to a 'private' directory.  "
-              "For example, instead of /opt/csw/lib/foo.so, "
-              "try /opt/csw/lib/projectname/foo.so."
-              % (binary_info["path"], policy_pkgname_list))
+        linkable_shared_libs.append((soname, binary_info))
+  check_names = True
+  if len(linkable_shared_libs) > 1:
+    sonames = [x[0] for x in linkable_shared_libs]
+    multilib_pkgname = su.MakePackageNameBySonameCollection(sonames)
+    if not multilib_pkgname:
+      error_mgr.ReportError(
+          "non-uniform-lib-versions-in-package",
+          "sonames=%s"
+          % sorted(set(sonames)))
+      messenger.Message(
+          "Package %s contains shared libraries with sonames that "
+          "don't have compatible versions: %s.  This means that "
+          "they are best placed in own packages, with each package "
+          "named after library name and version. "
+          % (pkgname, sonames))
+      # If the sonames aren't uniform, there's no point in trying to match
+      # sonames versus pkgname.
+      check_names = False
+  if check_names:
+    for soname, binary_info in linkable_shared_libs:
+      tmp = su.MakePackageNameBySoname(soname)
+      policy_pkgname_list, policy_catalogname_list = tmp
+      if pkgname not in policy_pkgname_list:
+        error_mgr.ReportError(
+            "shared-lib-pkgname-mismatch",
+            "file=%s "
+            "soname=%s "
+            "pkgname=%s "
+            "expected=%s"
+            % (binary_info["path"], soname, pkgname, policy_pkgname_list))
+        messenger.OneTimeMessage(
+            soname,
+            "This shared library (%s) is in a directory indicating that it "
+            "is likely to be linked to by other programs.  If this is the "
+            "case, the library is best packaged separately, in a package "
+            "with a library-specific name.  Examples of such names include: "
+            "%s. If this library is not meant to be linked to by other "
+            "packages, it's best moved to a 'private' directory.  "
+            "For example, instead of /opt/csw/lib/foo.so, "
+            "try /opt/csw/lib/projectname/foo.so. "
+            "More information: http://wiki.opencsw.org/checkpkg-error-tags"
+            % (binary_info["path"], policy_pkgname_list))
 
 
 

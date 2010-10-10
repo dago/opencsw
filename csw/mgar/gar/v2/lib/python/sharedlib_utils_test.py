@@ -160,6 +160,14 @@ class MakePackageNameBySonameCollectionUnitTest(unittest.TestCase):
     )
     self.assertEqual(expected, su.MakePackageNameBySonameCollection(sonames))
 
+  def testMakePackageNameBySonameCollectionRepeated(self):
+    sonames = ["libfoo.so.0", "libfoo.so.0"]
+    expected = (
+        ["CSWlibfoo0", "CSWlibfoo-0"],
+        ["libfoo0", "libfoo_0"],
+    )
+    self.assertEqual(expected, su.MakePackageNameBySonameCollection(sonames))
+
   def testMakePackageNameBySonameCollectionBdb(self):
     sonames = ["libfoo.so.0", "libfoo_util.so.0"]
     expected = (

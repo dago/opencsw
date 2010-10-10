@@ -134,6 +134,3 @@ class OpencswCatalog(object):
           logging.error("%s is missing the file_basename field", d)
         self.by_basename[d["file_basename"]] = d
     return self.by_basename
-
-
-
