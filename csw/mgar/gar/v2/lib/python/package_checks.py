@@ -1010,6 +1010,7 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
               "In this case, the suggested package names are %s."
               % policy_pkgname_list)
 
+
 def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messenger):
   """If it's a package with shared libraries, it should not contain the .so file.
 
