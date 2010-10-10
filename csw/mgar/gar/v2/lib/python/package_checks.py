@@ -1046,10 +1046,10 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         messenger.SuggestGarLine(
             "PACKAGES += %s" % suggested_pkgname)
         messenger.SuggestGarLine(
-            "PKGFILES_%s += %s" % (suggested_pkgname, binary_info["path"]))
+            "PKGFILES_%s += /%s" % (suggested_pkgname, binary_info["path"]))
         lib_basename, lib_filename = os.path.split(binary_info["path"])
         messenger.SuggestGarLine(
-            "PKGFILES_%s += %s/%s.*" % (suggested_pkgname, lib_basename, soname))
+            "PKGFILES_%s += /%s/%s.*" % (suggested_pkgname, lib_basename, soname))
         messenger.OneTimeMessage(
             soname,
             "This shared library (%s) is in a directory indicating that it "
@@ -1087,7 +1087,7 @@ def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messe
           messenger.SuggestGarLine("# (If %s-devel doesn't exist yet)" % pkgname)
           messenger.SuggestGarLine("PACKAGES += %s-devel" % pkgname)
           messenger.SuggestGarLine(
-              "PKGFILES_%s-devel += %s" % (pkgname, entry["path"]))
+              "PKGFILES_%s-devel += /%s" % (pkgname, entry["path"]))
           messenger.Message(
               "The package contains shared libraries together with the "
               "symlink of the form libfoo.so -> libfoo.so.1.  "
