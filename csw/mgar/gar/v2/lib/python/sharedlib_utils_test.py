@@ -27,8 +27,8 @@ class UtilitiesUnitTest(unittest.TestCase):
     self.assertTrue(su.IsLibraryLinkable("opt/csw/lib/amd64/libfoo.so.0.2"))
 
   def testIsLibraryLinkablePrefix(self):
-    p = "opt/csw/customprefix/lib/libfoo.so.0.2"
-    self.assertTrue(su.IsLibraryLinkable(p))
+    self.assertFalse(
+        su.IsLibraryLinkable("opt/csw/customprefix/lib/libfoo.so.0.2"))
 
   def testIsLibraryLinkableLibexecFalse(self):
     p = "opt/csw/libexec/bar"
