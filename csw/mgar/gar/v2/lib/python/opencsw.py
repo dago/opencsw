@@ -488,7 +488,8 @@ class CswSrv4File(ShellMixin, object):
         self.gunzipped_path = self.pkg_path
       else:
         raise Error("The file name should end in either "
-                    "%s or %s." % (gzip_suffix, pkg_suffix))
+                    "%s or %s, but it's %s."
+                    % (gzip_suffix, pkg_suffix, repr(self.pkg_path)))
     return self.gunzipped_path
 
   def Pkgtrans(self, src_file, destdir, pkgname):
