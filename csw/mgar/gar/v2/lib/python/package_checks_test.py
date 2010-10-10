@@ -1,4 +1,4 @@
-#!/opt/csw/bin/python2.6
+#!/usr/bin/env python2.6
 # coding=utf-8
 # $Id$
 
@@ -1319,29 +1319,8 @@ class TestCheckSharedLibraryNamingPolicy(CheckpkgUnitTestHelper, unittest.TestCa
   def CheckpkgTest(self):
     self.pkg_data = neon_stats[0]
     self.error_mgr_mock.ReportError(
-        'shared-lib-pkgname-mismatch',
-        "file=opt/csw/lib/libneon.so.26.0.4 "
-        "soname=libneon.so.26 "
-        "pkgname=CSWneon "
-        "expected=['CSWlibneon26', 'CSWlibneon-26']")
-    self.error_mgr_mock.ReportError(
-        'shared-lib-pkgname-mismatch',
-        "file=opt/csw/lib/libneon.so.27.2.0 "
-        "soname=libneon.so.27 "
-        "pkgname=CSWneon "
-        "expected=['CSWlibneon27', 'CSWlibneon-27']")
-    self.error_mgr_mock.ReportError(
-        'shared-lib-pkgname-mismatch',
-        "file=opt/csw/lib/sparcv9/libneon.so.26.0.4 "
-        "soname=libneon.so.26 "
-        "pkgname=CSWneon "
-        "expected=['CSWlibneon26', 'CSWlibneon-26']")
-    self.error_mgr_mock.ReportError(
-        'shared-lib-pkgname-mismatch',
-        "file=opt/csw/lib/sparcv9/libneon.so.27.2.0 "
-        "soname=libneon.so.27 "
-        "pkgname=CSWneon "
-        "expected=['CSWlibneon27', 'CSWlibneon-27']")
+        'non-uniform-lib-versions-in-package',
+        "sonames=['libneon.so.26', 'libneon.so.27']")
 
 
 class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckpkgUnitTestHelper, unittest.TestCase):
