@@ -1000,8 +1000,11 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         if pkgname not in policy_pkgname_list:
           error_mgr.ReportError(
               "shared-lib-pkgname-mismatch",
-              "file=%s pkgname=%s expected=%s"
-              % (binary_info["path"], pkgname, policy_pkgname_list))
+              "file=%s "
+              "soname=%s "
+              "pkgname=%s "
+              "expected=%s"
+              % (binary_info["path"], soname, pkgname, policy_pkgname_list))
           messenger.OneTimeMessage(
               soname,
               "This shared library (%s) is in a directory indicating that it "
