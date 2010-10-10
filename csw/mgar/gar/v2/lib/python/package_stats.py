@@ -7,6 +7,7 @@ import re
 import catalog
 import database
 import package
+import overrides
 import models as m
 import tag
 

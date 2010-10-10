@@ -22,6 +22,7 @@ from testdata.ivtools_stats import pkgstats as ivtools_stats
 from testdata.sudo_stats import pkgstats as sudo_stats
 from testdata.javasvn_stats import pkgstats as javasvn_stats
 from testdata.neon_stats import pkgstats as neon_stats
+from testdata.bdb48_stats import pkgstat_objs as bdb48_stats
 from testdata import stubs
 
 DEFAULT_PKG_STATS = None
@@ -1321,6 +1322,12 @@ class TestCheckSharedLibraryNamingPolicy(CheckpkgUnitTestHelper, unittest.TestCa
     self.error_mgr_mock.ReportError(
         'non-uniform-lib-versions-in-package',
         "sonames=['libneon.so.26', 'libneon.so.27']")
+
+
+class TestCheckSharedLibraryNamingPolicyBerkeley(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryNamingPolicy'
+  def CheckpkgTest(self):
+    self.pkg_data = bdb48_stats[0]
 
 
 class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckpkgUnitTestHelper, unittest.TestCase):

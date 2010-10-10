@@ -14,19 +14,12 @@
 
 import copy
 import datetime
-import difflib
-import hashlib
 import logging
 import os
 import os.path
 import re
 import shutil
-import subprocess
-import tempfile
-import time
 import urllib2
-import overrides
-import configuration as c
 from Cheetah import Template
 import sharedlib_utils as su
 
