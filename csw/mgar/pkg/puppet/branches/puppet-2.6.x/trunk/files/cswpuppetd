@@ -1,0 +1,122 @@
+#!/bin/sh
+#
+# $Id$
+#
+# /etc/opt/csw/init.d/cswpuppetd
+#
+#   2009-10-21 Maciej Blizinski
+#
+#     * Introduced start/stop/reload as functions
+#     * Distinguishing between reload and restart
+#     * Made the script zone-friendly
+#     * Supported custom pid file locations.
+#
+#   2009-11-23 Gary Law
+#     * changed sbindir
+
+. /lib/svc/share/smf_include.sh
+
+prefix="/opt/csw"
+exec_prefix="/opt/csw"
+sysconfdir="/etc/csw/opt"
+sbindir="/opt/csw/sbin"
+localstatedir="/var/opt/csw"
+
+
+start_puppetd() {
+  cd /
+  # Start daemons.
+  ${sbindir}/puppetd
+}
+
+reload_puppetd() {
+  if [ -r $pidfile ]; then
+    kill -HUP `cat $pidfile`
+  fi
+}
+
+stop_puppetd() {
+  if [ -r $pidfile ]; then
+    pid=`cat $pidfile`
+    kill $pid
+  fi
+}
+
+get_current_pid() {
+  if [ -x /usr/bin/zonename ]; then
+    zone=`/usr/bin/zonename`
+    zoneopts="-z $zone"
+  else
+    zoneopts=""
+  fi
+  pgrep $zoneopts puppetd
+}
+
+# Returns a line with certain string from a config file.
+get_line_with() {
+  __s="$1"
+  __f="$2"
+  cat "${__f}" \
+    | sed -e 's/^ *//' \
+    | grep -v '^#' \
+    | grep "${__s}"
+}
+
+get_pid_file() {
+  # The default pid file is /var/opt/csw/puppet/run/puppetd.pid
+  # but a different pid file can be set in puppet.conf.
+  __pidfile="/var/opt/csw/puppet/run/puppetd.pid"
+  conffile="/etc/opt/csw/puppet/puppet.conf"
+  if [ -r "$conffile" ]; then
+    pid_line=`get_line_with pidfile ${conffile}`
+    if [ -n "${pid_line}" ]; then
+      echo "${pid_line}" | cut -d= -f2 | tr -d ' '
+      return
+    fi
+  fi
+  echo "${__pidfile}"
+}
+
+pidfile=`get_pid_file`
+
+case "$1" in
+  start)
+    printf "Starting Puppet client services:"
+    start_puppetd
+    printf " puppetd"
+    echo ""
+    ;;
+  stop)
+    printf "Stopping Puppet client services:"
+    stop_puppetd
+    printf " puppetd"
+    echo ""
+    ;;
+  restart)
+    printf "Restarting Puppet client services:"
+    stop_puppetd
+    start_puppetd
+    printf " puppetd"
+    echo ""
+    ;;
+  reload)
+    printf "Reloading Puppet client services:"
+    reload_puppetd
+    printf " puppetd"
+    echo ""
+    ;;
+  status)
+    if [ -f $pidfile ]; then
+      pid=`cat $pidfile`
+      curpid=`get_current_pid`
+      if [ "$pid" -eq "$curpid" ]; then
+        exit 0
+      else
+        exit 1
+      fi
+    else
+      exit 1
+    fi
+    ;;
+esac
+exit 0
