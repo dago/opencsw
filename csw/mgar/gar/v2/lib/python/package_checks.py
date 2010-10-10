@@ -1026,7 +1026,7 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         messenger.Message(
             "The collection of sonames (%s) "
             "is expected to be in package "
-            "named %s, but the package name is %s.
+            "named %s, but the package name is %s. "
             "More information: "
             "http://wiki.opencsw.org/checkpkg-error-tags"
             % (sonames, multilib_pkgname, pkgname))
@@ -1041,8 +1041,6 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
             "soname=%s "
             "pkgname=%s "
             "expected=%s"
-            "More information: "
-            "http://wiki.opencsw.org/checkpkg-error-tags"
             % (binary_info["path"], soname, pkgname, policy_pkgname_list))
         suggested_pkgname = policy_pkgname_list[0]
         messenger.SuggestGarLine(
