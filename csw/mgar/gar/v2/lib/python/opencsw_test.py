@@ -352,18 +352,6 @@ class PackageGroupNameTest(unittest.TestCase):
                                                repr(expected_name),
                                                repr(result)))
 
-  def testLongestCommonSubstring_1(self):
-    self.assertEqual(set(["foo"]), opencsw.LongestCommonSubstring("foo", "foo"))
-
-  def testLongestCommonSubstring_2(self):
-    self.assertEqual(set([]), opencsw.LongestCommonSubstring("foo", "bar"))
-
-  def testLongestCommonSubstring_3(self):
-    self.assertEqual(set(["bar"]), opencsw.LongestCommonSubstring("barfoobar", "bar"))
-
-  def testLongestCommonSubstring_4(self):
-    self.assertEqual(set(['bcd', 'hij']), opencsw.LongestCommonSubstring("abcdefghijk", "bcdhij"))
-
 
 class PkgmapUnitTest(unittest.TestCase):
 
@@ -446,28 +434,6 @@ class SubmitpkgTemplateUnitTest(unittest.TestCase):
     t = Template.Template(opencsw.SUBMITPKG_TMPL,
                           searchList=[submitpkg_data])
     self.assertTrue(re.search(r"new package", unicode(t)), unicode(t))
-
-class OpencswCatalogUnitTest(unittest.TestCase):
-
-  def test_ParseCatalogLine_1(self):
-    line = (
-        'tmux 1.2,REV=2010.05.17 CSWtmux '
-        'tmux-1.2,REV=2010.05.17-SunOS5.9-sparc-CSW.pkg.gz '
-        '145351cf6186fdcadcd169b66387f72f 214091 '
-        'CSWcommon|CSWlibevent none none\n')
-    oc = opencsw.OpencswCatalog(None)
-    parsed = oc._ParseCatalogLine(line)
-    expected = {'catalogname': 'tmux',
-                'deps': 'CSWcommon|CSWlibevent',
-                'file_basename': 'tmux-1.2,REV=2010.05.17-SunOS5.9-sparc-CSW.pkg.gz',
-                'md5sum': '145351cf6186fdcadcd169b66387f72f',
-                'none_thing_1': 'none',
-                'none_thing_2': 'none',
-                'pkgname': 'CSWtmux',
-                'size': '214091',
-                'version': '1.2,REV=2010.05.17'}
-    self.assertEquals(expected, parsed)
-
 
 
 if __name__ == '__main__':

@@ -12,6 +12,7 @@ INTEL_386_PATHS = ('pentium_pro+mmx', 'pentium_pro',
                    'i486', 'i386', 'i86')
 AMD64_PATHS = ('amd64',)
 LEGIT_CHAR_RE = re.compile(r"[a-zA-Z0-9\+]+")
+SONAME_VERSION_RE = re.compile("^(?P<name>.*)\.so\.(?P<version>[\d\.]+)$")
 
 class SonameParsingException(Exception):
   pass
@@ -51,7 +52,7 @@ def MakePackageNameBySoname(soname):
   """
   soname_re = re.compile(r"(?P<basename>[\w\+]+([\.\-]+[\w\+]+)*)"
                          r"\.so"
-                         r"(\.(?P<version>\d+)(\..*)?)?"
+                         r"(\.(?P<version>[\d\.]+))?"
                          r"$")
   m = soname_re.match(soname)
   if not m:
@@ -97,3 +98,74 @@ def GetSharedLibs(pkg_data):
       if "sharedlib" in metadata["mime_type"]:
         shared_libs.append(metadata["path"])
   return shared_libs
+
+
+def GetCommonVersion(sonames):
+  versions = []
+  for soname in sonames:
+    m = SONAME_VERSION_RE.search(soname)
+    if m:
+      versions.append(m.groupdict()["version"])
+  versions_set = set(versions)
+  if len(versions_set) > 1 or not versions_set:
+    return None
+  else:
+    return versions_set.pop()
+
+
+def MakePackageNameBySonameCollection(sonames):
+  """Finds a name for a collection of sonames.
+
+  Try to find the largest common prefix in the sonames, and establish
+  whether there is a common version to them.
+  """
+  common_version = GetCommonVersion(sonames)
+  if not common_version:
+    # If the sonames don't have a common version, they shouldn't be together
+    # in one package.
+    return None
+  common_substring_candidates = []
+  for soname in sonames:
+    candidate = soname
+    # We always want such package to start with the prefix "lib".  Therefore,
+    # we're stripping the prefix "lib" if it exists, and we're adding it back
+    # to the pkgname and soname at the end of the function.
+    if candidate.startswith("lib"):
+      candidate = candidate[3:]
+    m = SONAME_VERSION_RE.search(candidate)
+    common_substring_candidates.append(candidate)
+  lcs = CollectionLongestCommonSubstring(common_substring_candidates)
+  pkgname = "CSWlib%s.%s" % (SanitizeWithChar(lcs, "-"), common_version)
+  catalogname = "lib%s.%s" % (SanitizeWithChar(lcs, "_"), common_version)
+  return pkgname, catalogname
+
+
+def LongestCommonSubstring(S, T):
+  """Stolen from Wikibooks
+
+  http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Longest_common_substring#Python"""
+  m = len(S); n = len(T)
+  L = [[0] * (n+1) for i in xrange(m+1)]
+  LCS = set()
+  longest = 0
+  for i in xrange(m):
+    for j in xrange(n):
+      if S[i] == T[j]:
+        v = L[i][j] + 1
+        L[i+1][j+1] = v
+        if v > longest:
+          longest = v
+          LCS = set()
+        if v == longest:
+          LCS.add(S[i-v+1:i+1])
+  return LCS
+
+
+def CollectionLongestCommonSubstring(collection):
+  current_substring = collection.pop()
+  while collection and current_substring:
+    substring_set = LongestCommonSubstring(current_substring,
+                                           collection.pop())
+    if substring_set:
+      current_substring = list(substring_set)[0]
+  return current_substring

@@ -1,4 +1,4 @@
-#!/opt/csw/bin/python2.6
+#!/usr/bin/env python2.6
 # $Id$
 
 import re
@@ -60,6 +60,14 @@ class UtilitiesUnitTest(unittest.TestCase):
     )
     self.assertEqual(expected, su.MakePackageNameBySoname(soname))
 
+  def testMakePackageNameBySonameMinorVersion(self):
+    soname = "libfoo.so.0.1"
+    expected = (
+        ["CSWlibfoo0-1", "CSWlibfoo-0-1"],
+        ["libfoo0_1", "libfoo_0_1"],
+    )
+    self.assertEqual(expected, su.MakePackageNameBySoname(soname))
+
   def testMakePackageNameBySonameApr(self):
     soname = "libapr-1.so.0"
     expected = (
@@ -88,7 +96,7 @@ class UtilitiesUnitTest(unittest.TestCase):
                      su.MakePackageNameBySoname(soname))
 
   def testMakePackageNameBySonameComplexApr(self):
-    soname = "libapr-1.so.10.0.0"
+    soname = "libapr-1.so.10"
     expected = (
        ['CSWlibapr-110', 'CSWlibapr-1-10'],
        ['libapr_110', 'libapr_1_10']
@@ -125,6 +133,59 @@ class UtilitiesUnitTest(unittest.TestCase):
 
   def testSanitizeWithChar(self):
     self.assertEqual("foo_0", su.SanitizeWithChar("foo-0", "_"))
+
+
+class GetCommonVersionUnitTest(unittest.TestCase):
+
+  def testGetCommonVersionSimple(self):
+    sonames = ["libfoo.so.0", "libfoo_util.so.0"]
+    self.assertEqual("0", su.GetCommonVersion(sonames))
+
+  def testGetCommonVersionMore(self):
+    sonames = ["libfoo.so.0.2.1", "libfoo_util.so.0.2.1"]
+    self.assertEqual("0.2.1", su.GetCommonVersion(sonames))
+
+  def testGetCommonVersionInvalid(self):
+    sonames = ["libfoo.so.0.2.1", "libfoo_util.so.0.2.3"]
+    self.assertEqual(None, su.GetCommonVersion(sonames))
+
+
+class MakePackageNameBySonameCollectionUnitTest(unittest.TestCase):
+
+  def testMakePackageNameBySonameCollectionTwo(self):
+    sonames = ["libfoo.so.0", "libfoo_util.so.0"]
+    expected = (
+        ["CSWlibfoo0", "CSWlibfoo-0"],
+        ["libfoo0", "libfoo_0"],
+    )
+    self.assertEqual(expected, su.MakePackageNameBySonameCollection(sonames))
+
+  def testMakePackageNameBySonameCollectionBdb(self):
+    sonames = ["libfoo.so.0", "libfoo_util.so.0"]
+    expected = (
+        ["CSWlibfoo0", "CSWlibfoo-0"],
+        ["libfoo0", "libfoo_0"],
+    )
+    self.assertEqual(expected, su.MakePackageNameBySonameCollection(sonames))
+
+  def testMakePackageNameBySonameCollectionNoCommonVersion(self):
+    sonames = ["libfoo.so.0", "libfoo_util.so.1"]
+    self.assertEqual(None, su.MakePackageNameBySonameCollection(sonames))
+
+
+class CommomSubstringTest(unittest.TestCase):
+
+  def testLongestCommonSubstring_1(self):
+    self.assertEqual(set(["foo"]), su.LongestCommonSubstring("foo", "foo"))
+
+  def testLongestCommonSubstring_2(self):
+    self.assertEqual(set([]), su.LongestCommonSubstring("foo", "bar"))
+
+  def testLongestCommonSubstring_3(self):
+    self.assertEqual(set(["bar"]), su.LongestCommonSubstring("barfoobar", "bar"))
+
+  def testLongestCommonSubstring_4(self):
+    self.assertEqual(set(['bcd', 'hij']), su.LongestCommonSubstring("abcdefghijk", "bcdhij"))
 
 
 if __name__ == '__main__':
