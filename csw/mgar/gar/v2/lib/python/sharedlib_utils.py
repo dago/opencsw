@@ -26,6 +26,7 @@ def IsLibraryLinkable(file_path):
   blacklist = [
       # If it has two lib components, it's a private lib.
       re.compile(r"^opt/csw/.*lib.*lib.*"),
+      re.compile(r"^opt/csw/share.*lib.*"),
   ]
   file_dir, file_basename = os.path.split(file_path)
   if linkable_re.match(file_dir):
