@@ -1336,5 +1336,15 @@ class TestCheckSharedLibraryNamingPolicy(CheckpkgUnitTestHelper, unittest.TestCa
         "expected=['CSWlibneon27', 'CSWlibneon-27']")
 
 
+class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryPkgDoesNotHaveTheSoFile'
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+    self.error_mgr_mock.ReportError(
+        'shared-lib-package-contains-so-symlink', 'file=/opt/csw/lib/libneon.so')
+    self.error_mgr_mock.ReportError(
+        'shared-lib-package-contains-so-symlink', 'file=/opt/csw/lib/sparcv9/libneon.so')
+
+
 if __name__ == '__main__':
   unittest.main()

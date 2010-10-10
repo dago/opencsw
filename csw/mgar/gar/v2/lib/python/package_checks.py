@@ -985,7 +985,6 @@ def CheckWrongArchitecture(pkg_data, error_mgr, logger, messenger):
 
 
 def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
-  placement_re = re.compile("/opt/csw/lib")
   pkgname = pkg_data["basic_stats"]["pkgname"]
   shared_libs = set(su.GetSharedLibs(pkg_data))
   for binary_info in pkg_data["binaries_dump_info"]:
@@ -1024,13 +1023,34 @@ def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messe
   because the latter is used for linking during compilation, and the former is
   a shared object that needs to be phased out at some point.
   """
-  placement_re = re.compile("/opt/csw/lib")
   pkgname = pkg_data["basic_stats"]["pkgname"]
   shared_libs = set(su.GetSharedLibs(pkg_data))
+  shared_libs = filter(su.IsLibraryLinkable, shared_libs)
   if shared_libs:
     # If the package contains shared libraries, it must not contain
     # corrersponding .so files, which are used during linking.
-    pass
+    for entry in pkg_data["pkgmap"]:
+      if entry["path"]:
+        if entry["path"].endswith(".so") and entry["type"] == "s":
+          error_mgr.ReportError(
+              "shared-lib-package-contains-so-symlink",
+              "file=%s" % entry["path"])
+          messenger.Message(
+              "The package contains shared libraries together with the "
+              "symlink of the form libfoo.so -> libfoo.so.1.  "
+              "In this case: %s.  "
+              "This kind of symlink should not be together with the shared "
+              "libraries; it is only used during compiling and linking.  "
+              "The best practice "
+              "is to put the shared libraries into a separate package, and "
+              "the .so file together with the header files in the devel "
+              "package." % entry["path"])
+
 
 def CheckPackagesWithHeaderFilesMustContainTheSoFile(pkg_data, error_mgr, logger, messenger):
+  """Generated two kinds of messages:
+
+    1. Contains .h but not .so
+    2. Contains .so but not .h
+  """
   pass
