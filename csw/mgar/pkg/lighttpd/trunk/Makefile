@@ -1,23 +1,20 @@
-# $Id$
 GARNAME = lighttpd
-GARVERSION = 1.0
-CATEGORIES = category
+GARVERSION = 1.4.28
+CATEGORIES = devel
 
-DESCRIPTION = Brief description
+DESCRIPTION = lighttpd - Security, speed, compliance, and flexibility http server
 define BLURB
-  Long description
+  Security, speed, compliance, and flexibility -- all of these describe lighttpd
+  (pron. lighty) which is rapidly redefining efficiency of a webserver; as it is
+  designed and optimized for high performance environments. With a small memory
+  footprint compared to other web-servers, effective management of the cpu-load,
+  and advanced feature set (FastCGI, SCGI, Auth, Output-Compression,
+  URL-Rewriting and many more) lighttpd is the perfect solution for every server
+  that is suffering load problems. And best of all it's Open Source licensed
+  under the revised BSD license. 
 endef
 
-MASTER_SITES = 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-CONFIGURE_ARGS = $(DIRPATHS)
+MASTER_SITES = http://download.lighttpd.net/lighttpd/releases-1.4.x/
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 
 include gar/category.mk
