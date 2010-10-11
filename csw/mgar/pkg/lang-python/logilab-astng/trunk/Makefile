@@ -16,4 +16,6 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyc
 ARCHALL_CSWpy-logilab-astng = 1
+RUNTIME_DEP_PKGS_CSWpy-logilab-astng = CSWpy-logilab-common
+CHECKPKG_OVERRIDES_CSWpy-logilab-astng += surplus-dependency|CSWpy-logilab-common
 include gar/category.mk
