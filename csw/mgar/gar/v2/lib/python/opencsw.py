@@ -42,24 +42,6 @@ BIN_MIMETYPES = (
     'application/x-executable',
     'application/x-sharedlib',
 )
-ADMIN_FILE_CONTENT = """
-basedir=default
-runlevel=nocheck
-conflict=nocheck
-setuid=nocheck
-action=nocheck
-partial=nocheck
-instance=unique
-idepend=quit
-rdepend=quit
-space=quit
-authentication=nocheck
-networktimeout=10
-networkretries=5
-keystore=/var/sadm/security
-proxy=
-"""
-
 SUBMITPKG_TMPL = """From: $from
 To: $to
 #if $cc

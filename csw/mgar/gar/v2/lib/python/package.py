@@ -1,17 +1,52 @@
 #!/usr/bin/env python2.6
 
+import datetime
+import difflib
+import hachoir_parser as hp
 import hashlib
 import logging
-import os
-import subprocess
-
 import magic
-import hachoir_parser as hp
+import os
+import re
+import shutil
+import subprocess
+import tempfile
+import time
+
+import configuration as c
+import opencsw
+import overrides
 
 # Suppress unhelpful warnings
 # http://bitbucket.org/haypo/hachoir/issue/23
 import hachoir_core.config
 hachoir_core.config.quiet = True
+
+
+ADMIN_FILE_CONTENT = """
+basedir=default
+runlevel=nocheck
+conflict=nocheck
+setuid=nocheck
+action=nocheck
+partial=nocheck
+instance=unique
+idepend=quit
+rdepend=quit
+space=quit
+authentication=nocheck
+networktimeout=10
+networkretries=5
+keystore=/var/sadm/security
+proxy=
+"""
+
+class Error(Exception):
+  pass
+
+
+class PackageError(Error):
+  pass
 
 
 class ShellMixin(object):
@@ -218,13 +253,13 @@ class DirectoryFormatPackage(ShellMixin, object):
   def GetParsedPkginfo(self):
     if not self.pkginfo_dict:
       pkginfo_fd = open(self.GetPkginfoFilename(), "r")
-      self.pkginfo_dict = ParsePkginfo(pkginfo_fd)
+      self.pkginfo_dict = opencsw.ParsePkginfo(pkginfo_fd)
       pkginfo_fd.close()
     return self.pkginfo_dict
 
   def GetSrv4FileName(self):
     """Guesses the Srv4FileName based on the package directory contents."""
-    return PkginfoToSrv4Name(self.GetParsedPkginfo())
+    return opencsw.PkginfoToSrv4Name(self.GetParsedPkginfo())
 
   def ToSrv4(self, target_dir):
     target_file_name = self.GetSrv4FileName()
@@ -242,7 +277,7 @@ class DirectoryFormatPackage(ShellMixin, object):
 
   def GetPkgmap(self, analyze_permissions=False, strip=None):
     fd = open(os.path.join(self.directory, "pkgmap"), "r")
-    return Pkgmap(fd, analyze_permissions, strip)
+    return opencsw.Pkgmap(fd, analyze_permissions, strip)
 
   def SetPkginfoEntry(self, key, value):
     pkginfo = self.GetParsedPkginfo()
@@ -305,7 +340,7 @@ class DirectoryFormatPackage(ShellMixin, object):
   def ResetNameProperty(self):
     """Sometimes, NAME= contains useless data. This method resets them."""
     pkginfo_dict = self.GetParsedPkginfo()
-    catalog_name = PkgnameToCatName(pkginfo_dict["PKG"])
+    catalog_name = opencsw.PkgnameToCatName(pkginfo_dict["PKG"])
     description = pkginfo_dict["DESC"]
     pkginfo_name = "%s - %s" % (catalog_name, description)
     self.SetPkginfoEntry("NAME", pkginfo_name)
@@ -365,7 +400,7 @@ class DirectoryFormatPackage(ShellMixin, object):
           # We really don't want that, as it misses binaries.
           raise PackageError("Could not establish the mime type of %s"
                              % full_path)
-        if IsBinary(file_info):
+        if opencsw.IsBinary(file_info):
           parser = hp.createParser(full_path)
           if not parser:
             logging.warning("Can't parse file %s", file_path)
@@ -404,7 +439,7 @@ class DirectoryFormatPackage(ShellMixin, object):
       self.binaries = []
       # The nested for-loop looks inefficient.
       for file_info in files_metadata:
-        if IsBinary(file_info):
+        if opencsw.IsBinary(file_info):
           self.binaries.append(file_info["path"])
       self.binaries.sort()
     return self.binaries

@@ -1087,7 +1087,7 @@ def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messe
           messenger.SuggestGarLine("# (If %s-devel doesn't exist yet)" % pkgname)
           messenger.SuggestGarLine("PACKAGES += %s-devel" % pkgname)
           messenger.SuggestGarLine(
-              "PKGFILES_%s-devel += /%s" % (pkgname, entry["path"]))
+              "PKGFILES_%s-devel += %s" % (pkgname, entry["path"]))
           messenger.Message(
               "The package contains shared libraries together with the "
               "symlink of the form libfoo.so -> libfoo.so.1.  "

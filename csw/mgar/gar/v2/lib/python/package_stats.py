@@ -1,17 +1,43 @@
 #!/usr/bin/env python2.6
 
+import copy
 import cPickle
+import logging
 import os
 import re
+import sqlobject
+import subprocess
 
 import catalog
+import checkpkg
 import database
 import package
+import opencsw
 import overrides
 import models as m
 import tag
 
+DUMP_BIN = "/usr/ccs/bin/dump"
 PACKAGE_STATS_VERSION = 9L
+BAD_CONTENT_REGEXES = (
+    # Slightly obfuscating these by using the default concatenation of
+    # strings.
+    r'/export' r'/medusa',
+    r'/opt' r'/build',
+)
+
+
+class Error(Exception):
+  pass
+
+
+class PackageError(Error):
+  pass
+
+
+class StdoutSyntaxError(Error):
+  pass
+
 
 class PackageStats(database.DatabaseClient):
   """Collects stats about a package and saves it.
@@ -112,7 +138,7 @@ class PackageStats(database.DatabaseClient):
       dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
       stdout, stderr = dump_proc.communicate()
       ret = dump_proc.wait()
-      binary_data = ParseDumpOutput(stdout)
+      binary_data = checkpkg.ParseDumpOutput(stdout)
       binary_data["path"] = binary
       binary_data["base_name"] = binary_base_name
       binaries_dump_info.append(binary_data)
@@ -235,7 +261,7 @@ class PackageStats(database.DatabaseClient):
         "binaries": dir_pkg.ListBinaries(),
         "binaries_dump_info": self.GetBinaryDumpInfo(),
         "depends": dir_pkg.GetDependencies(),
-        "isalist": GetIsalist(),
+        "isalist": checkpkg.GetIsalist(),
         "overrides": override_dicts,
         "pkgchk": self.GetPkgchkData(),
         "pkginfo": dir_pkg.GetParsedPkginfo(),
