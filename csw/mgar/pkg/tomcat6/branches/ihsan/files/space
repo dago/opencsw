@@ -1,3 +1,0 @@
-# No additional space is actually needed.
-# In fact, only one set of the Solaris release specific files are installed.
-# So the space required for this package is less than what is in pkgmap.
