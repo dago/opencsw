@@ -28,6 +28,8 @@ DISTNAME = AdobeReader
 
 LICENSE = AdobeReader/ReadMe.htm
 
+PACKAGING_PLATFORMS = solaris9-sparc solaris10-i386
+
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
