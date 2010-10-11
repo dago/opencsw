@@ -17,4 +17,6 @@ EXTRA_MERGE_EXCLUDE_FILES = .*\.pyc
 # The software name is 'pylint'.
 CHECKPKG_OVERRIDES_CSWpylint += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpylint += catalogname-does-not-start-with-py_
+RUNTIME_DEP_PKGS_CSWpylint = CSWpy-logilab-astng
+CHECKPKG_OVERRIDES_CSWpylint += surplus-dependency|CSWpy-logilab-astng
 include gar/category.mk
