@@ -551,11 +551,13 @@ endef
 
 # Make sure every producable package contains specific descriptions.
 # We explicitly ignore NOPACKAGE here to disallow circumventing the check.
+$(if $(filter-out $(firstword $(SPKG_SPECS)),$(SPKG_SPECS)),\
+	$(foreach P,$(SPKG_SPECS),\
+		$(if $(SPKG_DESC_$(P)),,$(error Multiple packages defined and SPKG_DESC_$(P) is not set.))))
+
 $(foreach P,$(SPKG_SPECS),\
-  $(foreach Q,$(filter-out $P,$(SPKG_SPECS)),\
-    $(if $(shell if test "$(SPKG_DESC_$P)" = "$(SPKG_DESC_$Q)"; then echo ERROR; fi),\
-      $(error The package descriptions for $P and $Q are identical, please make sure all package descriptions are unique by setting SPKG_DESC_<pkg> for each package) \
-)))
+  $(foreach Q,$(filter-out $(P),$(SPKG_SPECS)),\
+	$(if $(filter-out $(sort $(SPKG_DESC_$(P))),$(sort $(SPKG_DESC_$(P)) $(SPKG_DESC_$(Q)))),,$(error The package descriptions for $(P) [$(if $(SPKG_DESC_$(P)),$(SPKG_DESC_$(P)),<not set>)] and $(Q) [$(if $(SPKG_DESC_$(Q)),$(SPKG_DESC_$(Q)),<not set>)] are identical.  Please make sure that all descriptions are unique by setting SPKG_DESC_<pkg> for each package.))))
 
 .PRECIOUS: $(WORKDIR)/%.pkginfo
 
