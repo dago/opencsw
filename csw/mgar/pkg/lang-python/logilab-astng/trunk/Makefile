@@ -6,8 +6,8 @@ GARNAME = logilab-astng
 GARVERSION = 0.20.3
 CATEGORIES = python
 DESCRIPTION = Python Abstract Syntax Tree New Generation
-PACKAGES = CSWpy-astng
-CATALOGNAME_CSWpy-astng = py_astng
+PACKAGES = CSWpy-logilab-astng
+CATALOGNAME_CSWpy-logilab-astng = py_logilab_astng
 define BLURB
 endef
 SPKG_SOURCEURL = http://www.logilab.org/856
