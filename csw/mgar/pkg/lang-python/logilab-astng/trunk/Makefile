@@ -15,5 +15,5 @@ MASTER_SITES = http://ftp.logilab.org/pub/astng/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyc
-ARCHALL_CSWpy-astng = 1
+ARCHALL_CSWpy-logilab-astng = 1
 include gar/category.mk
