@@ -27,7 +27,6 @@
 # 6. Tell how to send it (no automatic sending for now)
 
 import ConfigParser
-import datetime
 import logging
 import optparse
 import os
