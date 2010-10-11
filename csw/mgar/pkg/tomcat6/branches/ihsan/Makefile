@@ -21,6 +21,7 @@ UFILES_REGEX = v(\d+(?:\.\d+)*)
 PACKAGES = CSWtomcat6
 CATALOGNAME = tomcat6
 LICENSE = LICENSE
+ARCHALL = 1
 
 CONFIGURE_SCRIPTS = none
 BUILD_SCRIPTS     = none
@@ -32,13 +33,14 @@ INITSMF = /etc/opt/csw/init.d/csw$(GARNAME)
 USERGROUP = /etc/opt/csw/pkg/$(GARNAME)/cswusergroup
 PRESERVECONF = /etc/opt/csw/$(GARNAME)/conf/.*
 
-PROTOTYPE_MODIFIERS = varuser etcperm
-
+PROTOTYPE_MODIFIERS     = varuser etcperm
 PROTOTYPE_FILES_varuser = /var/opt/csw/$(GARNAME)/.*
 PROTOTYPE_USER_varuser  = tomcat
 PROTOTYPE_GROUP_varuser = tomcat
 PROTOTYPE_FILES_etcperm = /etc/opt/csw/$(GARNAME)/conf/.*\.CSW
-PROTOTYPE_PERMS_etcperm = 0644
+PROTOTYPE_PERMS_etcperm = 0640
+PROTOTYPE_USER_etcperm  = tomcat
+PROTOTYPE_GROUP_etcperm = tomcat
 
 MIGRATE_SOURCE_DIR = /opt/csw/etc/$(GARNAME)/conf
 MIGRATE_DEST_DIR = /etc/opt/csw/$(GARNAME)/conf
