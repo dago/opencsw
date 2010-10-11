@@ -1011,7 +1011,7 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
           "don't have compatible versions: %s.  This means that "
           "they are best placed in own packages, with each package "
           "named after library name and version. "
-          % (pkgname, sonames))
+          % (pkgname, sorted(set(sonames))))
       # If the sonames aren't uniform, there's no point in trying to match
       # sonames versus pkgname.
       check_names = False
@@ -1030,6 +1030,7 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
             "More information: "
             "http://wiki.opencsw.org/checkpkg-error-tags"
             % (sonames, multilib_pkgname, pkgname))
+        check_names = False
   if check_names:
     for soname, binary_info in linkable_shared_libs:
       tmp = su.MakePackageNameBySoname(soname)
