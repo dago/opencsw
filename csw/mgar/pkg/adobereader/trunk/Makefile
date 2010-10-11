@@ -11,10 +11,11 @@ DESCRIPTION = Adobe Acrobat Reader
 define BLURB
 endef
 
-MASTER_SITES  = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(shell echo $(GARVERSION_sparc) | cut -d. -f1).x/$(GARVERSION_sparc)/enu/
-MASTER_SITES += ftp://ftp.adobe.com/pub/adobe/reader/unix/$(shell echo $(GARVERSION_i386) | cut -d. -f1).x/$(GARVERSION_i386)/enu/
-DISTFILES_sparc  = AdobeReader_enu-$(FILEVERSION_sparc)-1.sparc.tar.bz2
-DISTFILES_i386  = AdbeRdr$(FILEVERSION_i386)-1_i486solaris_enu.tar.bz2
+MASTER_SITES_sparc = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(shell echo $(GARVERSION_sparc) | cut -d. -f1).x/$(GARVERSION_sparc)/enu/
+MASTER_SITES_i386 = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(shell echo $(GARVERSION_i386) | cut -d. -f1).x/$(GARVERSION_i386)/enu/
+MASTER_SITES = $(MASTER_SITES_sparc) $(MASTER_SITES_i386)
+DISTFILES_sparc = AdobeReader_enu-$(FILEVERSION_sparc)-1.sparc.tar.bz2
+DISTFILES_i386 = AdbeRdr$(FILEVERSION_i386)-1_i486solaris_enu.tar.bz2
 DISTFILES = $(DISTFILES_sparc) $(DISTFILES_i386)
 NOEXTRACT = $(filter-out $(DISTFILES_$(GARCH)),$(DISTFILES))
 DISTNAME = AdobeReader
@@ -27,6 +28,8 @@ DISTNAME = AdobeReader
 # UPSTREAM_MASTER_SITES = 
 
 LICENSE = AdobeReader/ReadMe.htm
+
+VENDOR_URL = $(MASTER_SITES_$(GARCH))
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris10-i386
 
