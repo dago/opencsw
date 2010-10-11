@@ -20,23 +20,19 @@ LICENSE = COPYING.MPL
 
 VENDOR_URL = http://developer.kde.org/~wheeler/taglib.html
 
-# CSWtaglibgcc is an empty stub to CSWtaglib
-PACKAGES = CSWtaglib CSWtaglibgcc
+PACKAGES = CSWtaglib CSWtaglibdevel
 
-CATALOGNAME_CSWtaglib    = taglib
-CATALOGNAME_CSWtaglibgcc = taglib_gcc
+CATALOGNAME_CSWtaglib = taglib
+CATALOGNAME_CSWtaglibdevel = taglib_devel
 
-SPKG_DESC_CSWtaglib    = $(DESCRIPTION)
-SPKG_DESC_CSWtaglibgcc = Stub to CSWtaglib no longer compiled with gcc
-
-ARCHALL_CSWtaglibgcc = 1
+SPKG_DESC_CSWtaglib = $(DESCRIPTION)
+SPKG_DESC_CSWtaglibdevel = Developer files for taglib
 
 RUNTIME_DEP_PKGS_CSWtaglib = CSWzlib
+RUNTIME_DEP_PKGS_CSWtaglibdevel = CSWtaglib
+CHECKPKG_OVERRIDES_CSWtaglibdevel += surplus-dependency|CSWtaglib
 
-RUNTIME_DEP_PKGS_CSWtaglibgcc = CSWtaglib
-CHECKPKG_OVERRIDES_CSWtaglibgcc += surplus-dependency|CSWtaglib
-
-PKGFILES_CSWtaglibgcc = NONE
+PKGFILES_CSWtaglibdevel = $(PKGFILES_DEVEL)
 
 EXTRA_LD_FLAGS += -lCstd -lCrun -lc -lm
 
