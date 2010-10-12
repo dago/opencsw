@@ -25,7 +25,7 @@ PACKAGING_PLATFORMS  = solaris9-sparc  solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
-EXTRA_BUILD_ISAS_sparc = sparcv9
+EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv9
 
 NGINXCPU_i386        = pentium
 NGINXCPU_pentium_pro = pentium3
