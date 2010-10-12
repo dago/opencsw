@@ -30,10 +30,6 @@ UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
-# Previous Library for compatability
-DISTFILES += libpython2.5.so.1.0-isa-sparcv8
-DISTFILES += libpython2.5.so.1.0-isa-i386
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -78,8 +74,7 @@ PACKAGES += CSWpython
 PACKAGES += CSWpython-devel
 PACKAGES += CSWpython-test
 PACKAGES += CSWpython-tk
-PACKAGES += CSWlibpython25
-PACKAGES += CSWlibpython26
+PACKAGES += CSWlibpython2-6-1-0
 
 INCOMPATIBLE_PKGS_CSWpython = CSWpydistutils
 
@@ -88,6 +83,7 @@ PKGFILES_CSWidle += $(bindir)/idle
 PKGFILES_CSWpython-devel  = $(includedir)/.*
 PKGFILES_CSWpython-devel += $(libdir)/.*/config/.*
 PKGFILES_CSWpython-devel += $(bindir)/.*config.*
+PKGFILES_CSWpython-devel += $(libdir)/libpython2.6.so
 # No idea why would this be in CSWpython, and no good idea for a better package
 # to put it.
 PKGFILES_CSWpython-devel += $(bindir)/smtpd.py
@@ -101,8 +97,7 @@ PKGFILES_CSWpython-test += $(libdir)/python/distutils/tests.*
 PKGFILES_CSWpython-test += $(libdir)/python/json/tests.*
 PKGFILES_CSWpython-test += $(libdir)/python/lib2to3/tests.*
 PKGFILES_CSWpython-test += $(libdir)/python/sqlite3/test.*
-PKGFILES_CSWlibpython25 += $(libdir)/libpython2\.5.*
-PKGFILES_CSWlibpython26 += $(libdir)/libpython2\.6.*
+PKGFILES_CSWlibpython2-6-1-0 += $(libdir)/libpython2\.6\.so\..*
 
 ARCHALL_CSWpython-test = 1
 ARCHALL_CSWidle        = 1
@@ -113,13 +108,13 @@ RUNTIME_DEP_PKGS_CSWpython       += CSWbdb47
 RUNTIME_DEP_PKGS_CSWpython       += CSWbzip2
 RUNTIME_DEP_PKGS_CSWpython       += CSWgdbm
 RUNTIME_DEP_PKGS_CSWpython       += CSWggettextrt 
-RUNTIME_DEP_PKGS_CSWpython       += CSWlibpython26
+RUNTIME_DEP_PKGS_CSWpython       += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpython       += CSWncurses
 RUNTIME_DEP_PKGS_CSWpython       += CSWosslrt
 RUNTIME_DEP_PKGS_CSWpython       += CSWreadline 
 RUNTIME_DEP_PKGS_CSWpython       += CSWsqlite3rt
 RUNTIME_DEP_PKGS_CSWpython       += CSWzlib
-RUNTIME_DEP_PKGS_CSWpython-tk    += CSWlibpython26
+RUNTIME_DEP_PKGS_CSWpython-tk    += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpython-tk    += CSWpython
 RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtcl
 RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtk 
@@ -128,8 +123,7 @@ RUNTIME_DEP_PKGS_CSWpython-test  += CSWpython
 
 # There are packages depending on libpython2.5, and listing CSWpython as the
 # dependency.
-DEP_PKGS_CSWpython               += CSWlibpython25
-DEP_PKGS_CSWpython               += CSWlibpython26
+RUNTIME_DEP_PKGS_CSWpython               += CSWlibpython2-5-1-0
 
 # This could be handled by automatic dependency detection
 CHECKPKG_OVERRIDES_CSWidle += surplus-dependency|CSWpython-tk
@@ -139,21 +133,16 @@ CATALOGNAME_CSWpython       = python
 CATALOGNAME_CSWpython-devel = python_devel
 CATALOGNAME_CSWpython-tk    = python_tk
 CATALOGNAME_CSWpython-test  = python_test
-CATALOGNAME_CSWlibpython25  = libpython25
-CATALOGNAME_CSWlibpython26  = libpython26
+CATALOGNAME_CSWlibpython2-6-1-0  = libpython2_6_1_0
 
-SPKG_DESC_CSWidle         = Python IDE
-SPKG_DESC_CSWpython       = A high-level scripting language.
-SPKG_DESC_CSWpython-devel = Development Files for Python
-SPKG_DESC_CSWpython-tk    = Python Tk Interface (TkInter)
-SPKG_DESC_CSWpython-test  = Python Test modules
-SPKG_DESC_CSWlibpython25  = Python shared library (2.5)
-SPKG_DESC_CSWlibpython26  = Python shared library (2.6)
+SPKG_DESC_CSWidle              = Python IDE
+SPKG_DESC_CSWpython            = A high-level scripting language.
+SPKG_DESC_CSWpython-devel      = Development Files for Python
+SPKG_DESC_CSWpython-tk         = Python Tk Interface (TkInter)
+SPKG_DESC_CSWpython-test       = Python Test modules
+SPKG_DESC_CSWlibpython2-6-1-0  = Python shared library (2.6)
 
 LICENSE = LICENSE
-
-# These won't be fixed.
-CHECKPKG_OVERRIDES_CSWlibpython25 += file-with-bad-content
 
 # This is an exception, since these are original Python packages.
 CHECKPKG_OVERRIDES_CSWpython-test  += pkgname-does-not-start-with-CSWpy-
@@ -166,15 +155,6 @@ CHECKPKG_OVERRIDES_CSWpython-devel += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython-devel += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython       += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython       += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython       += surplus-dependency|CSWlibpython2-5-1-0
 
 include gar/category.mk
-
-post-install-modulated: install-deprecated-libs
-	@$(MAKECOOKIE)
-
-install-deprecated-libs:
-	echo "===> Installing deprecated Libraries into $(libdir)"
-	cp $(DOWNLOADDIR)/libpython2.5.so.1.0-$(MODULATION) \
-		$(DESTDIR)$(libdir)/libpython2.5.so.1.0
-	cd $(DESTDIR)$(libdir); ln -s libpython2.5.so.1.0 libpython2.5.so
-	@$(MAKECOOKIE)
