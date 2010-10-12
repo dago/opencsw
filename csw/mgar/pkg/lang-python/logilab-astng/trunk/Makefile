@@ -10,7 +10,7 @@ PACKAGES = CSWpy-logilab-astng
 CATALOGNAME_CSWpy-logilab-astng = py_logilab_astng
 define BLURB
 endef
-SPKG_SOURCEURL = http://www.logilab.org/856
+SPKG_SOURCEURL = http://www.logilab.org/project/logilab-astng
 MASTER_SITES = http://ftp.logilab.org/pub/astng/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
