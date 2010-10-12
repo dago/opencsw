@@ -31,7 +31,7 @@ SPKG_SOURCEURL = http://www.puppetlabs.com/
 
 # Handy when doing multiple updates per day.  Adds hours and minutes to the
 # timestamp.
-GARFLAVOR = DBG
+GARFLAVOR ?= OPT
 
 # Disabling SMF support for puppetd.  There are problems with it.  It's a
 # better choice to run it from cron.
