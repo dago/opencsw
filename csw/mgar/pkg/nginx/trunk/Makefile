@@ -66,7 +66,7 @@ CONFIGURE_ARGS += --with-http_stub_status_module
 TEST_SCRIPTS =
 
 INITSMF      = $(sysconfdir)/init.d/cswnginx
-PRESERVECONF = $(sysconfdir)/nginx/fastcgi.conf $(sysconfdir)/nginx/fastcgi_params $(sysconfdir)/nginx/mime.types $(sysconfdir)/nginx/nginx.conf
+PRESERVECONF = $(sysconfdir)/nginx/fastcgi.conf $(sysconfdir)/nginx/fastcgi_params $(sysconfdir)/nginx/mime.types $(sysconfdir)/nginx/nginx.conf $(sysconfdir)/nginx/scgi_params $(sysconfdir)/nginx/uwsgi_params
 
 NGINXDOCS  = CHANGES CHANGES.ru LICENSE README
 
