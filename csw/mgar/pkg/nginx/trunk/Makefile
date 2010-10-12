@@ -12,7 +12,7 @@ endef
 
 MASTER_SITES = http://sysoev.ru/nginx/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += cswnginx
+DISTFILES += cswnginx sunc.diff
 
 LICENSE = LICENSE
 
@@ -74,8 +74,8 @@ NGINXDOCS  = CHANGES CHANGES.ru LICENSE README
 include gar/category.mk
 
 pre-configure-modulated:
-	cd $(WORKSRC)/auto/cc; \
-	gpatch -p $(WORKDIR)/sunc.diff
+	gpatch -d $(WORKSRC)/auto/cc -i ../../../../../../$(WORKDIR)/sunc.diff
+	$(MAKECOOKIE)
 
 post-configure-modulated:
 	gsed -i  s#/...ISALIST#/'$$ISALIST'# $(WORKSRC)/objs/ngx_auto_config.h
