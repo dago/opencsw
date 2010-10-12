@@ -11,8 +11,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://sysoev.ru/nginx/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += cswnginx sunc.diff
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES   += cswnginx
 
 LICENSE = LICENSE
 
@@ -24,16 +24,26 @@ RUNTIME_DEP_PKGS = CSWosslrt CSWpcrert CSWzlib CSWperl
 PACKAGING_PLATFORMS  = solaris9-sparc  solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
-EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv9
+# default sparc arch is set to sparcv8plus because nginx contains
+# assembler parts specific to v8plus and v9 arches:
+#	.inline ngx_casa,0
+#	casa    [%o2] 0x80, %o1, %o0
+#	.end
+#
+#	.inline ngx_casxa,0
+#	casxa   [%o2] 0x80, %o1, %o0
+#	.end
 
-NGINXCPU_i386        = pentium
-NGINXCPU_pentium_pro = pentium3
-NGINXCPU_sparcv8     = sparc
-NGINXCPU_sparcv8plus = sparc32
-NGINXCPU_sparcv9     = sparc64
-NGINXCPU_$(ISA)     ?= $(ISA)
-NGINXCPU             = $(NGINXCPU_$(ISA))
+ISA_DEFAULT_sparc      = sparcv8plus
+EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
+EXTRA_BUILD_ISAS_sparc = sparcv9
+
+NGINXCPU_i386          = pentium
+NGINXCPU_pentium_pro   = pentium3
+NGINXCPU_sparcv8plus   = sparc32
+NGINXCPU_sparcv9       = sparc64
+NGINXCPU_$(ISA)       ?= $(ISA)
+NGINXCPU               = $(NGINXCPU_$(ISA))
 
 CFLAGS =
 
@@ -72,10 +82,6 @@ NGINXDOCS  = CHANGES CHANGES.ru LICENSE README
 
 
 include gar/category.mk
-
-pre-configure-modulated:
-	gpatch -d $(WORKSRC)/auto/cc -i ../../../../../../$(WORKDIR)/sunc.diff
-	$(MAKECOOKIE)
 
 post-configure-modulated:
 	gsed -i  s#/...ISALIST#/'$$ISALIST'# $(WORKSRC)/objs/ngx_auto_config.h
