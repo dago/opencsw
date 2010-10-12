@@ -1,33 +1,53 @@
+# $Id$
+
 GARNAME = pil
 GARVERSION = 1.1.7
 CATEGORIES = python
 DISTNAME = Imaging-$(GARVERSION)
 
-
-DESCRIPTION = Python Imaging Library
 define BLURB
-  Long description
+	The Python Imaging Library (PIL) adds image processing capabilities to your
+	Python interpreter. This library supports many file formats, and provides
+	powerful image processing and graphics capabilities.
 endef
 
 MASTER_SITES = http://effbot.org/downloads/
 DISTFILES  = $(DISTNAME).tar.gz
 
+PACKAGES = CSWpy-pil CSWpil
 
-RUNTIME_DEP_PKGS_CSWpil = CSWlcmsrt CSWftype2 CSWjpeg CSWtcl CSWzlib CSWtk
+SPKG_DESC_CSWpy-pil = Python Imaging Library
+SPKG_DESC_CSWpil = An empty transitional package
 
+CATALOGNAME_CSWpy-pil = py_pil
+CATALOGNAME_CSWpil    = pil
 
-# We define upstream file regex so we can be notifed of new upstream software release
+ARCHALL_CSWpil = 1
+
+PKGFILES_CSWpil = NONE
+
+RUNTIME_DEP_PKGS_CSWpy-pil += CSWftype2
+RUNTIME_DEP_PKGS_CSWpy-pil += CSWjpeg
+RUNTIME_DEP_PKGS_CSWpy-pil += CSWlcmsrt
+RUNTIME_DEP_PKGS_CSWpy-pil += CSWtcl
+RUNTIME_DEP_PKGS_CSWpy-pil += CSWtk
+RUNTIME_DEP_PKGS_CSWpy-pil += CSWzlib
+
+RUNTIME_DEP_PKGS_CSWpil += CSWpy-pil
+
 UFILES_REGEX = Imaging-(\d+(?:\.\d+)*).tar.gz
+EXTRA_MERGE_EXCLUDE_FILES = .*\.pyc
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+# The empty transitional package still has the dependency on CSWpython added by
+# GAR.  It's not really necessary, becayse CSWpy-pil depends on Python too, but
+# it doesn't do any harm either.
+CHECKPKG_OVERRIDES_CSWpil += surplus-dependency|CSWpython
+# Transitional dependency.
+CHECKPKG_OVERRIDES_CSWpil += surplus-dependency|CSWpy-pil
 
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
 TEST_SCRIPTS =
 
-CHECKPKG_OVERRIDES_CSWpil += license-missing
+LICENSE = README
 
 include gar/category.mk
 
