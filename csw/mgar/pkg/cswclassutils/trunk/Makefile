@@ -83,9 +83,6 @@ PROTOTYPE_FILES_cas = /usr/sadm/install/scripts/.*
 PROTOTYPE_USER_cas = bin
 PROTOTYPE_GROUP_cas = sys
 
-CHECKPKG_OVERRIDES_CSWcswclassutils += init-file-missing-cswinitsmf-class
-CHECKPKG_OVERRIDES_CSWcswclassutils += init-file-wrong-location
-CHECKPKG_OVERRIDES_CSWcswclassutils += init-file-wrong-location|/opt/csw/etc/init.d/csw.smf.sample
 
 # set a unique description for each CAS
 $(foreach C,$(CSWCLASSES),$(call spkg_desc,$(C)))
@@ -98,6 +95,15 @@ $(foreach C,$(CSWCLASSES),$(call catname,$(C)))
 
 # tell checkpkg to ignore the surplus dep on the subpkgs
 $(foreach C,$(CSWCLASSES),$(call surplus_dep,$(C)))
+
+# Add non-auto changes to checkpkg overrides, pkg files, etc.
+
+PKGFILES_CSWcas-initsmf += /opt/csw/etc/init.d/.*
+PKGFILES_CSWcas-initsmf += /var/opt/csw/svc/.*
+
+CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-missing-cswinitsmf-class
+CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location
+CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location|/opt/csw/etc/init.d/csw.smf.sample
 
 include gar/category.mk
 
