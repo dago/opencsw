@@ -15,7 +15,6 @@ PATCHFILES += 0001-Forcefully-disable-version-script-use.patch
 PACKAGES = CSWlibxslt CSWlibxsltdevel CSWpy-libxslt
 
 INCOMPATIBLE_PKGS_CSWpy-libxslt = CSWpylibxslt
-INCOMPATIBLE_PKGS_CSWlibxslt = CSWpylibxslt
 
 CATALOGNAME_CSWlibxsltdevel = libxslt_devel
 CATALOGNAME_CSWpy-libxslt = py_libxslt
