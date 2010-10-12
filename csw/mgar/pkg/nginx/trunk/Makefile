@@ -25,14 +25,16 @@ PACKAGING_PLATFORMS  = solaris9-sparc  solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
-EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv9
+EXTRA_BUILD_ISAS_sparc = sparcv9
 
 NGINXCPU_i386        = pentium
 NGINXCPU_pentium_pro = pentium3
-NGINXCPU_sparcv8plus = sparc32
+NGINXCPU_sparcv8     = sparc32
 NGINXCPU_sparcv9     = sparc64
 NGINXCPU_$(ISA)     ?= $(ISA)
 NGINXCPU             = $(NGINXCPU_$(ISA))
+
+CHECKPKG_OVERRIDES_CSWnginx += binary-architecture-does-not-match-placement|file=opt/csw/sbin/sparcv8/nginx|arch_id=18|arch_name=sparcv8+
 
 CFLAGS =
 
