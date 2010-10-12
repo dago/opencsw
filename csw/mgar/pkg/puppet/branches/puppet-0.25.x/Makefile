@@ -35,11 +35,11 @@ GARFLAVOR = DBG
 
 # Disabling SMF support for puppetd.  There are problems with it.  It's a
 # better choice to run it from cron.
-# INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
-INITSMF += $(prefix)/etc/init\.d/cswpuppetmasterd
+INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
+# INITSMF += $(prefix)/etc/init\.d/cswpuppetmasterd
 USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 
-CHECKPKG_OVERRIDES_CSWpuppet += init-file-missing-cswinitsmf-class|/opt/csw/etc/init.d/cswpuppetd|class=none
+CHECKPKG_OVERRIDES_CSWpuppetmaster += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/cswpuppetmasterd|class=none
 
 # Creating a separate package CSWpuppetmaster so that the cswpuppetmaster
 # service isn't started upon the installation of CSWpuppet.
@@ -54,7 +54,7 @@ RUNTIME_DEP_PKGS                 += CSWruby
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWpuppet
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWruby
 
-PKGFILES_CSWpuppetmaster  = $(prefix)/etc/init\.d/cswpuppetmasterd
+PKGFILES_CSWpuppetmaster  = $(sysconfdir)/init\.d/cswpuppetmasterd
 PKGFILES_CSWpuppetmaster += $(sbindir)/puppetmasterd
 PKGFILES_CSWpuppetmaster += $(mandir)/man8/puppetmasterd.8
 PKGFILES_CSWpuppetmaster += $(libdir)/.*/puppet/application/puppetmasterd.rb
@@ -84,14 +84,14 @@ install-puppet:
 	ginstall -m 755 -d $(DESTDIR)
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/puppet
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)/puppet/run
-	ginstall -m 755 -d $(DESTDIR)$(prefix)/etc/init.d
+	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
 	# $(sysconfdir)/pkg/<pkgname>/crontabs
 	ginstall -m 755 -d $(DESTDIR)$(CRONDIR)
 	ginstall -m 644 \
 		$(FILEDIR)/CSWpuppet.cron.root \
 		$(DESTDIR)$(CRONDIR)/root
-	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(prefix)/etc/init.d
-	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(prefix)/etc/init.d
+	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(sysconfdir)/init.d
 	(cd $(WORKSRC) && \
 	gsed -e "s|/var/puppet|/var/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
 	gsed -e "s|/etc/puppet|/etc/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
