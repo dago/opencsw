@@ -56,6 +56,7 @@ CONFIGURE_ARGS += --error-log-path=$(localstatedir)/nginx/logs/error.log
 CONFIGURE_ARGS += --http-log-path=$(localstatedir)/nginx/logs/access.log
 CONFIGURE_ARGS += --with-md5=YES
 CONFIGURE_ARGS += --with-sha1=YES
+CONFIGURE_ARGS += --with-http_addition_module
 CONFIGURE_ARGS += --with-http_dav_module
 CONFIGURE_ARGS += --with-http_flv_module
 CONFIGURE_ARGS += --with-http_realip_module
