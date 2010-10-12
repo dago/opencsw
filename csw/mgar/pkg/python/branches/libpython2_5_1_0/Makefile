@@ -138,11 +138,11 @@ CATALOGNAME_CSWpython-test  = python_test
 CATALOGNAME_CSWlibpython2-5-1-0  = libpython2_5_1_0
 CATALOGNAME_CSWlibpython2-6-1-0  = libpython2_6_1_0
 
-SPKG_DESC_CSWidle         = Python IDE
-SPKG_DESC_CSWpython       = A high-level scripting language.
-SPKG_DESC_CSWpython-devel = Development Files for Python
-SPKG_DESC_CSWpython-tk    = Python Tk Interface (TkInter)
-SPKG_DESC_CSWpython-test  = Python Test modules
+SPKG_DESC_CSWidle              = Python IDE
+SPKG_DESC_CSWpython            = A high-level scripting language.
+SPKG_DESC_CSWpython-devel      = Development Files for Python
+SPKG_DESC_CSWpython-tk         = Python Tk Interface (TkInter)
+SPKG_DESC_CSWpython-test       = Python Test modules
 SPKG_DESC_CSWlibpython2-5-1-0  = Python shared library (2.5)
 SPKG_DESC_CSWlibpython2-6-1-0  = Python shared library (2.6)
 
