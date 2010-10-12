@@ -1,0 +1,27 @@
+Fellow maintainers:
+
+cswclassutils is now a shell package for several subpackages that
+primarily consist of nothing more than a single i, r CAS pair.  The
+GAR recipe is setup such that all you normally need to do to add a new
+CAS is to add the scripts to the files/ directory, following the
+naming convention CSWcswclassutils.[ir].csw$name (eg:
+CSWcswclassutils.i.cswpycompile).
+
+To release an update of a script pair that you tend, do:
+
+1. Update the script(s) appropriately.
+2. Bump the version number in Makefile
+3. Commit changes to svn.
+4. gmake package-CSWcas-$name (eg: package-CSWcas-initsmf)
+
+All of the GAR stuff is dynamically generated.  You can override these
+values if desired, but in most cases this won't be required.
+
+You should get a package file with a filename like:
+
+cas_$name-X.Y.Z,REV=%Y.%m.%d...
+
+Ask on the list if you have any questions about this..
+
+Thanks
+-Ben
