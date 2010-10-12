@@ -30,6 +30,10 @@ UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
+# Previous Library for compatability
+DISTFILES += libpython2.5.so.1.0-isa-sparcv8
+DISTFILES += libpython2.5.so.1.0-isa-i386
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
@@ -171,7 +175,7 @@ post-install-modulated: install-deprecated-libs
 
 install-deprecated-libs:
 	echo "===> Installing deprecated Libraries into $(libdir)"
-	cp $(FILEDIR)/libpython2.5.so.1.0-$(MODULATION) \
+	cp $(DOWNLOADDIR)/libpython2.5.so.1.0-$(MODULATION) \
 		$(DESTDIR)$(libdir)/libpython2.5.so.1.0
 	cd $(DESTDIR)$(libdir); ln -s libpython2.5.so.1.0 libpython2.5.so
 	@$(MAKECOOKIE)
