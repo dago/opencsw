@@ -101,6 +101,11 @@ $(foreach C,$(CSWCLASSES),$(call surplus_dep,$(C)))
 PKGFILES_CSWcas-initsmf += /opt/csw/etc/init.d/.*
 PKGFILES_CSWcas-initsmf += /var/opt/csw/svc/.*
 
+# Mark these as _extra_ so they're applied after the excludes, which would
+# include files from the other packages and thus clash.
+PKGFILES_CSWcas-inetd_SHARED += /var/opt/csw/cswclassutils
+PKGFILES_CSWcas-pycompile_SHARED += /var/opt/csw/cswclassutils
+
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-missing-cswinitsmf-class
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location|/opt/csw/etc/init.d/csw.smf.sample
