@@ -13,11 +13,11 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
 STRIP_LIBTOOL = 1
 
-PACKAGES = CSWpy-gobject
-RUNTIME_DEP_PKGS_CSWpy-gobject  = CSWpython CSWggettextrt CSWglib2
+PACKAGES = CSWpygobject
+RUNTIME_DEP_PKGS_CSWpygobject  = CSWpython CSWggettextrt CSWglib2
 
-CATALOGNAME_CSWpy-gobject = py_gobject
-SPKG_DESC_CSWpy-gobject = $(DESCRIPTION)
+CATALOGNAME_CSWpygobject = py_gobject
+SPKG_DESC_CSWpygobject = $(DESCRIPTION)
 PYCOMPILE = 1
 
 PATCHFILES = 0001-forcing-lglib-2.0.patch
@@ -31,5 +31,8 @@ CONFIGURE_ARGS += --without-ffi
 ## Tests require gtk, but gtk requries gobject
 TEST_TARGET = check
 TEST_SCRIPTS =
+
+# This package predates the convention and renaming is problematic
+CHECKPKG_OVERRIDES_CSWpygobject += pkgname-does-not-start-with-CSWpy-
 
 include gar/category.mk
