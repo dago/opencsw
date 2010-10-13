@@ -5,6 +5,8 @@
 # Written and maintained by Ben Walton
 #
 # 2009-10-02 Initial release
+# 2010-10-12 Update to ensure TMPDIR exists (Ben Walton)
+#
 
 # set DEBUG to any value to enable trace output
 DEBUG=
@@ -76,7 +78,9 @@ while read src dest; do
 
 	  manifest=$outdir/$svcname-$proto.xml
 
-	  TMPOUT=/var/opt/csw/cswclassutils/$svcname.$$
+	  TMPDIR=/var/opt/csw/cswclassutils
+	  [ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
+	  TMPOUT=$TMPDIR/$svcname.$$
 
 	  echo "$inetdsvc" > $TMPOUT
 
