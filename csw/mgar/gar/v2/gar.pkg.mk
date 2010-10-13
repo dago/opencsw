@@ -454,6 +454,7 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 # actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),CSWalternatives)
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswap2mod")')),CSWapache2)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
 
 # The final "true" is for packages without dependencies to make the shell happy as "( )" is not allowed.
@@ -564,6 +565,7 @@ $(foreach P,$(SPKG_SPECS),\
 # The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
 $(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
 $(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),cswalternatives)
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswap2mod")')),cswap2mod)
 $(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(shell cat $(WORKDIR)/$*.prototype | perl -e 'while(<>){@F=split;$$c{$$F[1]}++};$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$c{$C});)')
 
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
