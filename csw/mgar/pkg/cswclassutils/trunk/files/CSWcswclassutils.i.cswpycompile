@@ -8,6 +8,7 @@
 #
 # 2009-05-25 First Release
 # 2009-10-14 Update to only compile package specific files (Ben Walton)
+# 2010-10-12 Update to ensure creation of TMPDIR  (Ben Walton)
 #
 
 # Force Path for the script to use
@@ -22,7 +23,10 @@ if [ "${DEBUG}" ]; then
     echo PACKAGE: $PKGINST
 fi
 
-TMPPY=/var/opt/csw/cswclassutils/pycomp.$$.`date +%Y%m%d%H%M%S`.py
+
+TMPDIR=/var/opt/csw/cswclassutils
+[ -d "$TMPDIR" ] || mkdir -p "$TMPDIR"
+TMPPY=$TMPDIR/pycomp.$$.`date +%Y%m%d%H%M%S`.py
 
 cat <<EOF > $TMPPY
 import py_compile
