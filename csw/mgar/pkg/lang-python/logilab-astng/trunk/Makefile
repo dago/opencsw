@@ -19,3 +19,6 @@ ARCHALL_CSWpy-logilab-astng = 1
 RUNTIME_DEP_PKGS_CSWpy-logilab-astng = CSWpy-logilab-common
 CHECKPKG_OVERRIDES_CSWpy-logilab-astng += surplus-dependency|CSWpy-logilab-common
 include gar/category.mk
+post-install-modulated:
+	rm $(DESTDIR)/opt/csw/lib/python/site-packages/logilab/__init__.py
+	@$(MAKECOOKIE)
