@@ -1,0 +1,175 @@
+From 070eb10bb70272feecaacd7d4e875bc241751d0a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 13 Oct 2010 20:11:40 +0200
+Subject: [PATCH 3/3] Ugly shell fixes and force gnome-config to be there
+
+---
+ check/check-cflags           |    2 +-
+ check/check-conflicts        |    2 +-
+ check/check-define-variable  |    2 +-
+ check/check-idirafter        |    2 +-
+ check/check-includedir       |    2 +-
+ check/check-libs             |    2 +-
+ check/check-libs-private     |    2 +-
+ check/check-missing          |    2 +-
+ check/check-requires-private |    2 +-
+ check/check-whitespace       |    2 +-
+ check/common                 |    2 +-
+ check/gnome-config           |    1 +
+ 12 files changed, 12 insertions(+), 11 deletions(-)
+ create mode 120000 check/gnome-config
+
+diff --git a/check/check-cflags b/check/check-cflags
+index eb2d6bc..8c89731 100755
+--- a/check/check-cflags
++++ b/check/check-cflags
+@@ -2,7 +2,7 @@
+ 
+ # Make sure we're POSIX
+ if [ "$PKG_CONFIG_SHELL_IS_POSIX" != "1" ]; then
+-    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH` exec sh $0 "$@"
++    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH`:`pwd` exec bash $0 "$@"
+ fi
+ 
+ set -e
+diff --git a/check/check-conflicts b/check/check-conflicts
+index 8092ba9..9b6d378 100755
+--- a/check/check-conflicts
++++ b/check/check-conflicts
+@@ -2,7 +2,7 @@
+ 
+ # Make sure we're POSIX
+ if [ "$PKG_CONFIG_SHELL_IS_POSIX" != "1" ]; then
+-    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH` exec sh $0 "$@"
++    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH`:`pwd` exec bash $0 "$@"
+ fi
+ 
+ set -e
+diff --git a/check/check-define-variable b/check/check-define-variable
+index bf8aebe..60f651e 100755
+--- a/check/check-define-variable
++++ b/check/check-define-variable
+@@ -2,7 +2,7 @@
+ 
+ # Make sure we're POSIX
+ if [ "$PKG_CONFIG_SHELL_IS_POSIX" != "1" ]; then
+-    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH` exec sh $0 "$@"
++    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH`:`pwd` exec bash $0 "$@"
+ fi
+ 
+ set -e
+diff --git a/check/check-idirafter b/check/check-idirafter
+index 7abd2dc..b4f9446 100755
+--- a/check/check-idirafter
++++ b/check/check-idirafter
+@@ -2,7 +2,7 @@
+ 
+ # Make sure we're POSIX
+ if [ "$PKG_CONFIG_SHELL_IS_POSIX" != "1" ]; then
+-    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH` exec sh $0 "$@"
++    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH`:`pwd` exec bash $0 "$@"
+ fi
+ 
+ set -e
+diff --git a/check/check-includedir b/check/check-includedir
+index d78ec24..98b8682 100755
+--- a/check/check-includedir
++++ b/check/check-includedir
+@@ -2,7 +2,7 @@
+ 
+ # Make sure we're POSIX
+ if [ "$PKG_CONFIG_SHELL_IS_POSIX" != "1" ]; then
+-    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH` exec sh $0 "$@"
++    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH`:`pwd` exec bash $0 "$@"
+ fi
+ 
+ set -e
+diff --git a/check/check-libs b/check/check-libs
+index 9b1b495..dfef4cc 100755
+--- a/check/check-libs
++++ b/check/check-libs
+@@ -2,7 +2,7 @@
+ 
+ # Make sure we're POSIX
+ if [ "$PKG_CONFIG_SHELL_IS_POSIX" != "1" ]; then
+-    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH` exec sh $0 "$@"
++    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH`:`pwd` exec bash $0 "$@"
+ fi
+ 
+ set -e
+diff --git a/check/check-libs-private b/check/check-libs-private
+index 961962b..5f79fba 100755
+--- a/check/check-libs-private
++++ b/check/check-libs-private
+@@ -2,7 +2,7 @@
+ 
+ # Make sure we're POSIX
+ if [ "$PKG_CONFIG_SHELL_IS_POSIX" != "1" ]; then
+-    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH` exec sh $0 "$@"
++    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH`:`pwd` exec bash $0 "$@"
+ fi
+ 
+ set -e
+diff --git a/check/check-missing b/check/check-missing
+index fba43a7..300519b 100755
+--- a/check/check-missing
++++ b/check/check-missing
+@@ -2,7 +2,7 @@
+ 
+ # Make sure we're POSIX
+ if [ "$PKG_CONFIG_SHELL_IS_POSIX" != "1" ]; then
+-    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH` exec sh $0 "$@"
++    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH`:`pwd` exec bash $0 "$@"
+ fi
+ 
+ . ${srcdir}/common
+diff --git a/check/check-requires-private b/check/check-requires-private
+index 45115ee..4803097 100755
+--- a/check/check-requires-private
++++ b/check/check-requires-private
+@@ -2,7 +2,7 @@
+ 
+ # Make sure we're POSIX
+ if [ "$PKG_CONFIG_SHELL_IS_POSIX" != "1" ]; then
+-    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH` exec sh $0 "$@"
++    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH`:`pwd` exec bash $0 "$@"
+ fi
+ set -e
+ 
+diff --git a/check/check-whitespace b/check/check-whitespace
+index 31a413c..607cacf 100755
+--- a/check/check-whitespace
++++ b/check/check-whitespace
+@@ -2,7 +2,7 @@
+ 
+ # Make sure we're POSIX
+ if [ "$PKG_CONFIG_SHELL_IS_POSIX" != "1" ]; then
+-    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH` exec sh $0 "$@"
++    PKG_CONFIG_SHELL_IS_POSIX=1 PATH=`getconf PATH`:`pwd` exec bash $0 "$@"
+ fi
+ 
+ set -e
+diff --git a/check/common b/check/common
+index 57aa806..ef96b68 100644
+--- a/check/common
++++ b/check/common
+@@ -22,7 +22,7 @@ run_test () {
+         exit 1
+     fi
+ 
+-    R=$(${pkgconfig} $ARGS 2>&1 | sed -e 's,^[[:space:]]*,,' -e 's,[[:space:]]*$,,')
++    R=$(${pkgconfig} $ARGS 2>&1 | /opt/csw/bin/gsed -e 's,^[[:space:]]*,,' -e 's,[[:space:]]*$,,')
+     if [ "$R" != "$RESULT" ]; then
+ 	echo "${pkgconfig} $ARGS :"
+ 	echo "'$R' != '$RESULT'"
+diff --git a/check/gnome-config b/check/gnome-config
+new file mode 120000
+index 0000000..7d77455
+--- /dev/null
++++ b/check/gnome-config
+@@ -0,0 +1 @@
++/usr/bin/true
+\ No newline at end of file
+-- 
+1.7.3
+

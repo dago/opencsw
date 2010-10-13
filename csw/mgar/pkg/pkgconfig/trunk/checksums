@@ -1,4 +1,3 @@
-64d266fb8acf7df52088b9796f928b60  download/fixme.sh
-8d47301467b9f5932f56562585ebc068  download/gsed-check.patch
-73a8bc0d5ab5236dcb183460bc0311e4  download/manpage-macro.patch
-d922a88782b64441d06547632fd85744  download/pkg-config-0.23.tar.gz
+8d47301467b9f5932f56562585ebc068  gsed-check.patch
+73a8bc0d5ab5236dcb183460bc0311e4  manpage-macro.patch
+a3270bab3f4b69b7dc6dbdacbcae9745  pkg-config-0.25.tar.gz
