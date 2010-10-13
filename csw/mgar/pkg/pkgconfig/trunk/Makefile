@@ -1,5 +1,5 @@
 GARNAME = pkg-config
-GARVERSION = 0.23
+GARVERSION = 0.25
 CATEGORIES = devel
 
 DESCRIPTION = Tool for determining the configuration of installed software
@@ -14,27 +14,24 @@ endef
 
 MASTER_SITES = http://pkg-config.freedesktop.org/releases/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += fixme.sh
 
 PACKAGES = CSWpkgconfig
+CATALOGNAME = pkgconfig
 
 SPKG_SOURCEURL = http://pkg-config.freedesktop.org
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-PATCHFILES  = gsed-check.patch
-PATCHFILES += manpage-macro.patch
+PATCHFILES  = manpage-macro.patch
+PATCHFILES += 0001-Ugly-shell-fixes-and-force-gnome-config-to-be-there.patch
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2
+DEP_PKGS = CSWggettextrt CSWglib2
 
-CONFIGURE_ARGS = $(DIRPATHS) --with-installed-glib
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --docdir=$(docdir)/$(CATALOGNAME)
+CONFIGURE_ARGS += --with-installed-glib
 
 TEST_TARGET = check
 
 include gar/category.mk
-
-post-configure-modulated:
-	@echo " ==> Fixing libtool .la-files"
-	@$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
-	@$(MAKECOOKIE)
