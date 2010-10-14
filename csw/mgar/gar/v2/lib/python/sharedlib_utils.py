@@ -4,6 +4,7 @@ import copy
 import re
 import os.path
 
+
 SPARCV8_PATHS = ('sparcv8', 'sparcv8-fsmuld',
                  'sparcv7', 'sparc')
 SPARCV8PLUS_PATHS = ('sparcv8plus+vis2', 'sparcv8plus+vis', 'sparcv8plus')
@@ -15,8 +16,10 @@ AMD64_PATHS = ('amd64',)
 LEGIT_CHAR_RE = re.compile(r"[a-zA-Z0-9\+]+")
 SONAME_VERSION_RE = re.compile("^(?P<name>.*)\.so\.(?P<version>[\d\.]+)$")
 
+
 class SonameParsingException(Exception):
   pass
+
 
 def IsLibraryLinkable(file_path):
   arch_subdirs = (SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS
@@ -107,11 +110,13 @@ def GetCommonVersion(sonames):
     m = SONAME_VERSION_RE.search(soname)
     if m:
       versions.append(m.groupdict()["version"])
+    else:
+      versions.append("")
   versions_set = set(versions)
   if len(versions_set) > 1 or not versions_set:
-    return None
+    return (False, None)
   else:
-    return versions_set.pop()
+    return (True, versions_set.pop())
 
 
 def MakePackageNameBySonameCollection(sonames):
@@ -120,8 +125,8 @@ def MakePackageNameBySonameCollection(sonames):
   Try to find the largest common prefix in the sonames, and establish
   whether there is a common version to them.
   """
-  common_version = GetCommonVersion(sonames)
-  if not common_version:
+  common_version_exists, common_version = GetCommonVersion(sonames)
+  if not common_version_exists:
     # If the sonames don't have a common version, they shouldn't be together
     # in one package.
     return None
@@ -139,12 +144,16 @@ def MakePackageNameBySonameCollection(sonames):
   lcs = CollectionLongestCommonSubstring(copy.copy(common_substring_candidates))
   pkgnames = [
       "CSW" + SanitizeWithChar("lib%s%s" % (lcs, common_version), "-"),
-      "CSW" + SanitizeWithChar("lib%s-%s" % (lcs, common_version), "-"),
   ]
+  dashed = "CSW" + SanitizeWithChar("lib%s-%s" % (lcs, common_version), "-")
+  if dashed not in pkgnames:
+    pkgnames.append(dashed)
   catalognames = [
       SanitizeWithChar("lib%s%s" % (lcs, common_version), "_"),
-      SanitizeWithChar("lib%s_%s" % (lcs, common_version), "_"),
   ]
+  underscored = SanitizeWithChar("lib%s_%s" % (lcs, common_version), "_")
+  if underscored not in catalognames:
+    catalognames.append(underscored)
   return pkgnames, catalognames
 
 

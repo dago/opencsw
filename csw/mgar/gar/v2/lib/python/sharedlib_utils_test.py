@@ -157,15 +157,19 @@ class GetCommonVersionUnitTest(unittest.TestCase):
 
   def testGetCommonVersionSimple(self):
     sonames = ["libfoo.so.0", "libfoo_util.so.0"]
-    self.assertEqual("0", su.GetCommonVersion(sonames))
+    self.assertEqual((True, "0"), su.GetCommonVersion(sonames))
 
   def testGetCommonVersionMore(self):
     sonames = ["libfoo.so.0.2.1", "libfoo_util.so.0.2.1"]
-    self.assertEqual("0.2.1", su.GetCommonVersion(sonames))
+    self.assertEqual((True, "0.2.1"), su.GetCommonVersion(sonames))
 
   def testGetCommonVersionInvalid(self):
     sonames = ["libfoo.so.0.2.1", "libfoo_util.so.0.2.3"]
-    self.assertEqual(None, su.GetCommonVersion(sonames))
+    self.assertEqual((False, None), su.GetCommonVersion(sonames))
+
+  def testGetCommonVersionEndsWithSo(self):
+    sonames = ["libfoo1.so", "libfoo1.so"]
+    self.assertEqual((True, ""), su.GetCommonVersion(sonames))
 
 
 class MakePackageNameBySonameCollectionUnitTest(unittest.TestCase):
@@ -197,6 +201,14 @@ class MakePackageNameBySonameCollectionUnitTest(unittest.TestCase):
   def testMakePackageNameBySonameCollectionNoCommonVersion(self):
     sonames = ["libfoo.so.0", "libfoo_util.so.1"]
     self.assertEqual(None, su.MakePackageNameBySonameCollection(sonames))
+
+  def testMakePackageNameBySonameCollectionMultipleSo(self):
+    sonames = ["libfoo1.so", "libfoo1.so"]
+    expected = (
+        ["CSWlibfoo1"],
+        ["libfoo1"],
+    )
+    self.assertEqual(expected, su.MakePackageNameBySonameCollection(sonames))
 
 
 class CommomSubstringTest(unittest.TestCase):
