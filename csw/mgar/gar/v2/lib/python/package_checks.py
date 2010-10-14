@@ -1014,6 +1014,30 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
           % (pkgname, sorted(set(sonames))))
       # If the sonames aren't uniform, there's no point in trying to match
       # sonames versus pkgname.
+      for soname, binary_info in linkable_shared_libs:
+        lib_path, lib_basename = os.path.split(binary_info["path"])
+        messenger.SuggestGarLine(
+            "# Suggesting how to separate out %s"
+            % soname)
+        messenger.SuggestGarLine(
+            "# You will most probably need to further edit these lines. "
+            "Use with caution!")
+        tmp = su.MakePackageNameBySoname(soname)
+        policy_pkgname_list, policy_catalogname_list = tmp
+        messenger.SuggestGarLine("PACKAGES += %s" % policy_pkgname_list[0])
+        messenger.SuggestGarLine(
+            "CATALOGNAME_%s += %s"
+            % (policy_pkgname_list[0], policy_catalogname_list[0]))
+        messenger.SuggestGarLine(
+            "PKGFILES_%s += /%s"
+            % (policy_pkgname_list[0], os.path.join(lib_path, lib_basename)))
+        messenger.SuggestGarLine(
+            "PKGFILES_%s += /%s\.[0-9\.]+"
+            % (policy_pkgname_list[0], os.path.join(lib_path, soname)))
+        messenger.SuggestGarLine(
+            "RUNTIME_DEP_PKGS_%s += %s"
+            % (pkgname, policy_pkgname_list[0]))
+
       check_names = False
     else:
       if multilib_pkgname != pkgname:
