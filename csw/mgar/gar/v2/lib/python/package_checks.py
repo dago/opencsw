@@ -999,34 +999,35 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         linkable_shared_libs.append((soname, binary_info))
   check_names = True
   if len(linkable_shared_libs) > 1:
-    sonames = [x[0] for x in linkable_shared_libs]
-    multilib_pkgname = su.MakePackageNameBySonameCollection(sonames)
-    if not multilib_pkgname:
+    sonames = sorted(set([x[0] for x in linkable_shared_libs]))
+    tmp = su.MakePackageNameBySonameCollection(sonames)
+    multilib_pkgnames, multilib_catalogname = tmp
+    if not multilib_pkgnames:
       error_mgr.ReportError(
           "non-uniform-lib-versions-in-package",
           "sonames=%s"
-          % sorted(set(sonames)))
+          % (sonames))
       messenger.Message(
-          "Package %s contains shared libraries with sonames that "
-          "don't have compatible versions: %s.  This means that "
-          "they are best placed in own packages, with each package "
-          "named after library name and version. "
-          % (pkgname, sorted(set(sonames))))
+          "Package %s contains shared libraries, and their soname "
+          "versions are not in sync: %s.  This means that "
+          "each soname is likely to be retired at a different time "
+          "and each soname is best placed in a separate package, "
+          "named after soname and version. "
+          % (pkgname, sonames))
       # If the sonames aren't uniform, there's no point in trying to match
       # sonames versus pkgname.
+      messenger.SuggestGarLine(
+          "# Suggesting how to separate out shared libraries.")
+      messenger.SuggestGarLine(
+          "# You will most probably need to further edit these lines. "
+          "Use with caution!")
       for soname, binary_info in linkable_shared_libs:
         lib_path, lib_basename = os.path.split(binary_info["path"])
-        messenger.SuggestGarLine(
-            "# Suggesting how to separate out %s"
-            % soname)
-        messenger.SuggestGarLine(
-            "# You will most probably need to further edit these lines. "
-            "Use with caution!")
         tmp = su.MakePackageNameBySoname(soname)
         policy_pkgname_list, policy_catalogname_list = tmp
         messenger.SuggestGarLine("PACKAGES += %s" % policy_pkgname_list[0])
         messenger.SuggestGarLine(
-            "CATALOGNAME_%s += %s"
+            "CATALOGNAME_%s = %s"
             % (policy_pkgname_list[0], policy_catalogname_list[0]))
         messenger.SuggestGarLine(
             "PKGFILES_%s += /%s"
@@ -1034,26 +1035,31 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         messenger.SuggestGarLine(
             "PKGFILES_%s += /%s\.[0-9\.]+"
             % (policy_pkgname_list[0], os.path.join(lib_path, soname)))
+        pkginfo = pkg_data["pkginfo"]
+        description = " ".join(pkginfo["NAME"].split(" ")[2:])
+        messenger.SuggestGarLine(
+            "SPKG_DESC_%s += %s, %s"
+            % (policy_pkgname_list[0], description, soname))
         messenger.SuggestGarLine(
             "RUNTIME_DEP_PKGS_%s += %s"
             % (pkgname, policy_pkgname_list[0]))
 
       check_names = False
     else:
-      if multilib_pkgname != pkgname:
+      if pkgname not in multilib_pkgnames:
         error_mgr.ReportError(
             "shared-lib-pkgname-mismatch",
             "sonames=%s "
             "pkgname=%s "
             "expected=%s "
-            % (sorted(set(sonames)), pkgname, multilib_pkgname))
+            % (sonames, pkgname, multilib_pkgnames))
         messenger.Message(
             "The collection of sonames (%s) "
             "is expected to be in package "
             "named %s, but the package name is %s. "
             "More information: "
             "http://wiki.opencsw.org/checkpkg-error-tags"
-            % (sonames, multilib_pkgname, pkgname))
+            % (sonames, multilib_pkgnames, pkgname))
         check_names = False
   if check_names:
     for soname, binary_info in linkable_shared_libs:
