@@ -3,12 +3,19 @@
 GARNAME = Python
 GARVERSION = 3.1.2
 CATEGORIES = lang
+VER = 3.1
+DVER = 3-1
+UVER = 3_1
+PVER = python$(VER)
+CVER = 31
 
 # Known issues:
 #
 # - No 64-bit build
 # - ctypes module doesn't compile
 #   - http://forums.sun.com/thread.jspa?threadID=5148204
+#   - http://bugs.python.org/issue4902
+#     - Python-2.6.1/Modules/_ctypes/libffi/src/x86/sysv.S
 
 SPKG_SOURCEURL = http://python.org/download/releases/$(GARVERSION)
 
@@ -43,10 +50,10 @@ PATCHFILES += multiprocess.diff
 # Test for sunaudiodev fails.
 SKIPTEST = 1
 
-EXTRA_INC += $(prefix)/X11/include
-EXTRA_LIB += $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+# EXTRA_INC += $(prefix)/X11/include
+# EXTRA_LIB += $(prefix)/X11/lib
+# EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+# EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
@@ -67,74 +74,95 @@ EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 # use prototype filters to set the class 
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
-PACKAGES  = CSWidle31
-PACKAGES += CSWpython31
-PACKAGES += CSWpython31-devel
-PACKAGES += CSWpython31-test
-PACKAGES += CSWpython31-tk
+PACKAGES  = CSWidle$(CVER)
+PACKAGES += CSWpython$(CVER)
+PACKAGES += CSWpython$(CVER)-devel
+PACKAGES += CSWpython$(CVER)-test
+PACKAGES += CSWpython$(CVER)-tk
+PACKAGES += CSWlibpython$(DVER)-1-0
 
-INCOMPATIBLE_PKGS_CSWpython31 = CSWpydistutils
+INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
 
-PKGFILES_CSWidle31  = $(libdir)/.*/idlelib/.*
-PKGFILES_CSWidle31 += $(bindir)/idle
-PKGFILES_CSWpython31-devel  = $(includedir)/.*
-PKGFILES_CSWpython31-devel += $(libdir)/.*/config/.*
-PKGFILES_CSWpython31-devel += $(bindir)/.*config.*
-# No idea why would this be in CSWpython31, and no good idea for a better package
+PKGFILES_CSWidle$(CVER)  = $(libdir)/.*/idlelib/.*
+PKGFILES_CSWidle$(CVER) += $(bindir)/idle
+PKGFILES_CSWpython$(CVER)-devel  = $(includedir)/.*
+PKGFILES_CSWpython$(CVER)-devel += $(libdir)/.*/config/.*
+PKGFILES_CSWpython$(CVER)-devel += $(bindir)/.*config.*
+PKGFILES_CSWpython-devel += $(libdir)/libpython$(VER).so
+# No idea why would this be in CSWpython, and no good idea for a better package
 # to put it.
-PKGFILES_CSWpython31-devel += $(bindir)/smtpd.py
-PKGFILES_CSWpython31-tk  = $(libdir)/.*/lib-tk/.*
-PKGFILES_CSWpython31-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
-PKGFILES_CSWpython31-test  = $(libdir)/python/test/.*
-PKGFILES_CSWpython31-test += $(libdir)/python/bsddb/test.*
-PKGFILES_CSWpython31-test += $(libdir)/python/ctypes/test.*
-PKGFILES_CSWpython31-test += $(libdir)/python/email/test.*
-PKGFILES_CSWpython31-test += $(libdir)/python/distutils/tests.*
-PKGFILES_CSWpython31-test += $(libdir)/python/json/tests.*
-PKGFILES_CSWpython31-test += $(libdir)/python/lib2to3/tests.*
-PKGFILES_CSWpython31-test += $(libdir)/python/sqlite3/test.*
+PKGFILES_CSWpython$(CVER)-devel += $(bindir)/smtpd.py
+PKGFILES_CSWpython$(CVER)-tk  = $(libdir)/.*/lib-tk/.*
+PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
+PKGFILES_CSWpython$(CVER)-test  = $(libdir)/python/test/.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/bsddb/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/ctypes/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/email/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/distutils/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/json/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/lib2to3/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/sqlite3/test.*
+PKGFILES_CSWlibpython$(DVER)-1-0 += $(libdir)/libpython$(VER)\.so\.([0-9\.]+)
 
-ARCHALL_CSWpython31-test = 1
-ARCHALL_CSWidle31        = 1
+ARCHALL_CSWpython$(CVER)-test = 1
+ARCHALL_CSWidle$(CVER)        = 1
 
-RUNTIME_DEP_PKGS_CSWidle31         += CSWpython31
-RUNTIME_DEP_PKGS_CSWidle31         += CSWpython31-tk
-RUNTIME_DEP_PKGS_CSWpython31       += CSWbzip2
-RUNTIME_DEP_PKGS_CSWpython31       += CSWgdbm
-RUNTIME_DEP_PKGS_CSWpython31       += CSWggettextrt 
-RUNTIME_DEP_PKGS_CSWpython31       += CSWncurses
-RUNTIME_DEP_PKGS_CSWpython31       += CSWosslrt
-RUNTIME_DEP_PKGS_CSWpython31       += CSWreadline 
-RUNTIME_DEP_PKGS_CSWpython31       += CSWsqlite3rt CSWzlib
-RUNTIME_DEP_PKGS_CSWpython31-tk    += CSWpython31
-RUNTIME_DEP_PKGS_CSWpython31-tk    += CSWtcl
-RUNTIME_DEP_PKGS_CSWpython31-tk    += CSWtk 
-RUNTIME_DEP_PKGS_CSWpython31-tk    += CSWlibx11
-RUNTIME_DEP_PKGS_CSWpython31-devel += CSWpython31
-RUNTIME_DEP_PKGS_CSWpython31-test  += CSWpython31
+RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)-tk
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbzip2
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWgdbm
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWggettextrt 
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWncurses
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWreadline 
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWzlib
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtcl
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtk 
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-devel += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-test  += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWlibpython$(DVER)-1-0 += CSWggettextrt
 
 # This could be handled by automatic dependency detection
-CHECKPKG_OVERRIDES_CSWidle31 += surplus-dependency|CSWpython31-tk
+CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
 
-CATALOGNAME_CSWidle31         = idle_31
-CATALOGNAME_CSWpython31       = python_31
-CATALOGNAME_CSWpython31-devel = python_31_devel
-CATALOGNAME_CSWpython31-tk    = python_31_tk
-CATALOGNAME_CSWpython31-test  = python_31_test
+CATALOGNAME_CSWidle$(CVER)         = idle_$(CVER)
+CATALOGNAME_CSWpython$(CVER)       = python_$(CVER)
+CATALOGNAME_CSWpython$(CVER)-devel = python_$(CVER)_devel
+CATALOGNAME_CSWpython$(CVER)-tk    = python_$(CVER)_tk
+CATALOGNAME_CSWpython$(CVER)-test  = python_$(CVER)_test
+CATALOGNAME_CSWlibpython$(DVER)-1-0  = libpython$(UVER)_1_0
 
-SPKG_DESC_CSWidle31         = Python IDE
-SPKG_DESC_CSWpython31       = A high-level scripting language, 3.1 series
-SPKG_DESC_CSWpython31-devel = Development Files for Python
-SPKG_DESC_CSWpython31-tk    = Python Tk Interface (TkInter)
-SPKG_DESC_CSWpython31-test  = Python Test modules
+SPKG_DESC_CSWidle$(CVER)         = Python IDE
+SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
+SPKG_DESC_CSWpython$(CVER)-devel = Development Files for Python
+SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
+SPKG_DESC_CSWpython$(CVER)-test  = Python Test modules
+SPKG_DESC_CSWlibpython$(DVER)-1-0  = Python shared library ($(VER))
 
-CHECKPKG_OVERRIDES_CSWpython31 += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWpython31-test += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWpython31-test += surplus-dependency|CSWpython31
-CHECKPKG_OVERRIDES_CSWidle31 += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWidle31 += surplus-dependency|CSWpython31
-CHECKPKG_OVERRIDES_CSWpython31-devel += surplus-dependency|CSWpython31
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-test += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-test += surplus-dependency|CSWpython$(CVER)
+CHECKPKG_OVERRIDES_CSWidle$(CVER) += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += surplus-dependency|CSWpython$(CVER)
 
 LICENSE = LICENSE
+
+# This is an exception, since these are original Python packages.
+CHECKPKG_OVERRIDES_CSWidle$(CVER)         += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWidle$(CVER)         += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += surplus-dependency|CSWpython$(CVER)
 
 include gar/category.mk
