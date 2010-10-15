@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+#RC_KNUM 20
+#RC_SNUM 88
+#RC_KLEV 0,1,S
+#RC_SLEV 2
+#AUTOENABLE no
+#
+
+case "$1" in
+  start)
+	[ ! -d /var/run/proftpd ] && mkdir /var/run/proftpd
+	/opt/csw/sbin/proftpd
+	;;
+  stop)
+	pkill -f "\/opt\/csw\/sbin\/proftpd"
+	sleep 1
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  refresh)
+	[ -f /var/run/proftpd/proftpd.pid ] && kill -HUP `cat /var/run/proftpd/proftpd.pid`
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|refresh}"
+	exit 1
+esac
+
+exit 0
