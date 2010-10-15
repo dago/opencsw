@@ -20,11 +20,9 @@ RUNTIME_DEP_PKGS += CSWcswclassutils
 # new upstream software release
 UFILES_REGEX = py2cairo-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpy-cairo
+CATALOGNAME      = py_cairo
 
-CATALOGNAME_CSWpy-cairo      = py_cairo
-SPKG_DESC_CSWpy-cairo        = $(DESCRIPTION)
-
-RUNTIME_DEP_PKGS_CSWpy-cairo = CSWlibcairo CSWpython
+RUNTIME_DEP_PKGS = CSWlibcairo CSWpython
 
 CAIRO_LIBS = -L/opt/csw/lib -R/opt/csw/lib/\$$ISALIST -lcairo
 CAIRO_CFLAGS = -I/opt/csw/include -I/opt/csw/include/cairo
