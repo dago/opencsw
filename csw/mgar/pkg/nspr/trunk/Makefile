@@ -8,7 +8,7 @@
 
 GARNAME = nspr
 MAJOR_VERSION = 4
-MIN_VERSION = 8
+MIN_VERSION = 8.6
 GARVERSION = $(MAJOR_VERSION).$(MIN_VERSION)
 CATEGORIES = lib
 
@@ -23,17 +23,28 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += LICENSE
 PATCHFILES  = nspr-4.6.1-config.patch
 
-PACKAGES = CSWnspr CSWnspr-devel
-PKGFILES_CSWnspr-devel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWnspr-devel += $(bindir).*nspr-config
-PKGFILES_CSWnspr-devel += .*/nspr\.pc
-PKGFILES_CSWnspr-devel += .*compile-et\.pl
+PACKAGES += CSWnspr
+PACKAGES += CSWnspr-devel
+PACKAGES += CSWlibnspr4-devel
+PACKAGES += CSWlibnspr4
+PKGFILES_CSWlibnspr4-devel += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibnspr4-devel += $(bindir).*nspr-config
+PKGFILES_CSWlibnspr4-devel += .*/nspr\.pc
+PKGFILES_CSWlibnspr4-devel += .*compile-et\.pl
+PKGFILES_CSWnspr         = Invisible-Pink-Unicorn
+PKGFILES_CSWnspr-devel   = Flying-Spaghetti-Monster
 
-SPKG_DESC_CSWnspr = Netscape Portable Runtime
-SPKG_DESC_CSWnspr-devel = Netscape Portable Runtime header files
-CATALOGNAME_CSWnspr-devel = nspr_devel
-RUNTIME_DEP_PKGS_CSWnspr-devel  = CSWnspr
-RUNTIME_DEP_PKGS_CSWnspr-devel += CSWperl
+SPKG_DESC_CSWnspr        = Empty, transitional package (CSWnspr)
+SPKG_DESC_CSWnspr-devel  = Empty, transitional package (CSWnspr-devel)
+SPKG_DESC_CSWlibnspr4       = Netscape Portable Runtime
+SPKG_DESC_CSWlibnspr4-devel = Netscape Portable Runtime, header files
+CATALOGNAME_CSWnspr-devel   = nspr_devel
+CATALOGNAME_CSWlibnspr4-devel   = nspr4_devel
+RUNTIME_DEP_PKGS_CSWnspr        = CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWnspr-devel  = CSWlibnspr4-devel
+RUNTIME_DEP_PKGS_CSWlibnspr4-devel  = CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWlibnspr4-devel += CSWperl
+ARCHALL_CSWnspr = 1
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -58,16 +69,26 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS_isa-sparcv9 = --enable-64bit
 CONFIGURE_ARGS_isa-amd64 = --enable-64bit
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
-CONFIGURE_ARGS_OPT  = --enable-optimize="-xO3"
+CONFIGURE_ARGS_OPT += --enable-optimize="-xO3"
 CONFIGURE_ARGS_OPT += --disable-debug
 CONFIGURE_ARGS_OPT += --enable-strip
-CONFIGURE_ARGS_DBG  = --enable-debug
+CONFIGURE_ARGS_DBG += --enable-debug
 CONFIGURE_ARGS_DBG += --disable-strip
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 BUILD64 = 1
 
 LICENSE = LICENSE
+
+# Checkpkg suggests CSWlibp (the longest common substring), but we want the
+# three libraries to be in one package.
+CHECKPKG_OVERRIDES_CSWlibnspr4 += shared-lib-pkgname-mismatch
+
+CHECKPKG_OVERRIDES_CSWlibnspr4-devel += surplus-dependency|CSWlibnspr4
+
+# For transitional packages
+CHECKPKG_OVERRIDES_CSWnspr += surplus-dependency|CSWlibnspr4
+CHECKPKG_OVERRIDES_CSWnspr-devel += surplus-dependency|CSWlibnspr4-devel
 
 include gar/category.mk
 
