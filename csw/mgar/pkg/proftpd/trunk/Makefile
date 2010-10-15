@@ -40,7 +40,6 @@ CONFIGURE_ARGS += --prefix=$(prefix)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 CONFIGURE_ARGS += --localstatedir=/var/run/proftpd
 CONFIGURE_ARGS += --mandir=$(prefix)/share/man
-CONFIGURE_ARGS += --docdir=$(prefix)/share/doc/proftpd
 CONFIGURE_ARGS += --enable-facl
 CONFIGURE_ARGS += --enable-openssl
 CONFIGURE_ARGS += --enable-sendfile
