@@ -1,6 +1,8 @@
 GARNAME = proftpd
-GARVERSION = 1.3.1
+GARVERSION = 1.3.3b
 CATEGORIES = server
+
+GARCOMPILER = GCC3
 
 DESCRIPTION = Advanced, incredibly configurable and secure FTP daemon
 define BLURB
@@ -13,46 +15,55 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.proftpd.org/distrib/source/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWproftpd,)
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES   += cswproftpd
+
+LICENSE      = COPYING
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-CONFIGURE_ARGS = $(DIRPATHS)
+RUNTIME_DEP_PKGS = CSWosslrt CSWtcpwrap CSWggettextrt CSWiconv
 
-# No test suite
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+
+EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
+EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv9
+
+sysconfdir=/etc/opt/csw
+localstatedir=/var/opt/csw
+
+CONFIGURE_ENV   = install_user=$(USER) install_group=csw
+
+CONFIGURE_ARGS += --prefix=$(prefix)
+CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
+CONFIGURE_ARGS += --localstatedir=/var/run/proftpd
+CONFIGURE_ARGS += --mandir=$(prefix)/share/man
+CONFIGURE_ARGS += --docdir=$(prefix)/share/doc/proftpd
+CONFIGURE_ARGS += --enable-facl
+CONFIGURE_ARGS += --enable-openssl
+CONFIGURE_ARGS += --enable-sendfile
+CONFIGURE_ARGS += --enable-nls
+CONFIGURE_ARGS += --enable-ctrls
+CONFIGURE_ARGS += --enable-buffer-size=8192
+CONFIGURE_ARGS += --with-includes=$(prefix)/include:$(prefix)/include/openssl
+CONFIGURE_ARGS += --with-modules=mod_rewrite:mod_ifsession:mod_ratio:mod_tls:mod_readme:mod_auth_pam:mod_wrap:mod_radius:mod_ban
+
 TEST_SCRIPTS =
 
-INSTALL_SCRIPTS = custom
+INITSMF      = $(sysconfdir)/init.d/cswproftpd
+PRESERVECONF = $(sysconfdir)/proftpd.conf
 
-PROFTPDBIN=ftpcount ftpdctl ftpshut ftptop ftpwho
-PROFTPDDOC=doc sample-configurations
-PROFTPDMAN1=utils/ftpcount.1 utils/ftptop.1 utils/ftpwho.1
-PROFTPDMAN5=src/xferlog.5
-PROFTPDMAN8=src/ftpdctl.8 src/proftpd.8
-
-install-custom:
-	ginstall -d $(DESTDIR)$(prefix)/etc
-	ginstall -d $(DESTDIR)$(prefix)/bin
-	ginstall -d $(DESTDIR)$(prefix)/sbin
-	ginstall -d $(DESTDIR)$(prefix)/var/proftpd
-	ginstall -d $(DESTDIR)$(prefix)/share/doc/proftpd
-	ginstall -d $(DESTDIR)$(prefix)/share/man/man1
-	ginstall -d $(DESTDIR)$(prefix)/share/man/man5
-	ginstall -d $(DESTDIR)$(prefix)/share/man/man8
-	cd $(WORKSRC); \
-	cp sample-configurations/basic.conf proftpd.conf.CSW; \
-	cp proftpd.conf.CSW $(DESTDIR)$(prefix)/etc; \
-	cp $(PROFTPDBIN) $(DESTDIR)$(prefix)/bin; \
-	cp proftpd $(DESTDIR)$(prefix)/sbin; \
-	chmod 755 $(DESTDIR)$(prefix)/sbin/proftpd; \
-	cp -r $(PROFTPDDOC) $(DESTDIR)$(prefix)/share/doc/proftpd; \
-	cp -r $(PROFTPDDOC) $(DESTDIR)$(prefix)/share/doc/proftpd; \
-	cp $(PROFTPDMAN1) $(DESTDIR)$(prefix)/share/man/man1; \
-	cp $(PROFTPDMAN1) $(DESTDIR)$(prefix)/share/man/man5; \
-	cp $(PROFTPDMAN1) $(DESTDIR)$(prefix)/share/man/man8 
-	$(MAKECOOKIE)
+PROFTPDDOC   = doc sample-configurations COPYING NEWS README RELEASE_NOTES
 
 
 include gar/category.mk
+
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -d $(DESTDIR)$(prefix)/share/doc/proftpd
+	ginstall -d $(DESTDIR)$(localstatedir)/proftpd
+	ginstall -d $(DESTDIR)$(localstatedir)/proftpd/logs
+	cp $(WORKDIR)/cswproftpd $(DESTDIR)$(sysconfdir)/init.d/
+	cd $(WORKSRC); cp -r $(PROFTPDDOC) $(DESTDIR)$(prefix)/share/doc/proftpd
+	$(MAKECOOKIE)
