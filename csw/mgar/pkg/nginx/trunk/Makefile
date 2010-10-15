@@ -14,7 +14,7 @@ MASTER_SITES = http://sysoev.ru/nginx/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += cswnginx
 
-LICENSE = LICENSE
+LICENSE      = LICENSE
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
@@ -78,7 +78,7 @@ TEST_SCRIPTS =
 INITSMF      = $(sysconfdir)/init.d/cswnginx
 PRESERVECONF = $(sysconfdir)/nginx/fastcgi.conf $(sysconfdir)/nginx/fastcgi_params $(sysconfdir)/nginx/mime.types $(sysconfdir)/nginx/nginx.conf $(sysconfdir)/nginx/scgi_params $(sysconfdir)/nginx/uwsgi_params
 
-NGINXDOCS  = CHANGES CHANGES.ru LICENSE README
+NGINXDOCS    = CHANGES CHANGES.ru LICENSE README
 
 
 include gar/category.mk
