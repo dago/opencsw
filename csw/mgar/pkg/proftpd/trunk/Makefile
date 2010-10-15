@@ -48,7 +48,7 @@ CONFIGURE_ARGS += --enable-nls
 CONFIGURE_ARGS += --enable-ctrls
 CONFIGURE_ARGS += --enable-buffer-size=8192
 CONFIGURE_ARGS += --with-includes=$(prefix)/include:$(prefix)/include/openssl
-CONFIGURE_ARGS += --with-modules=mod_rewrite:mod_ifsession:mod_ratio:mod_tls:mod_readme:mod_auth_pam:mod_radius:mod_ban
+CONFIGURE_ARGS += --with-modules=mod_rewrite:mod_ifsession:mod_ratio:mod_tls:mod_readme:mod_auth_pam:mod_radius:mod_ban:mod_wrap2:mod_wrap2_file
 
 TEST_SCRIPTS =
 
