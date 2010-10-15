@@ -34,6 +34,7 @@ sysconfdir=/etc/opt/csw
 localstatedir=/var/opt/csw
 
 CONFIGURE_ENV   = install_user=$(USER) install_group=csw
+CONFIGURE_ENV  += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
 
 CONFIGURE_ARGS += --prefix=$(prefix)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
