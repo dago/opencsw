@@ -27,7 +27,7 @@ RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 
-EXTRA_BUILD_ISAS_i386  = pentium_pro amd64
+EXTRA_BUILD_ISAS_i386  = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv9
 
 sysconfdir=/etc/opt/csw
