@@ -23,7 +23,7 @@ LICENSE      = COPYING
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-RUNTIME_DEP_PKGS = CSWosslrt CSWtcpwrap CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 
@@ -48,7 +48,7 @@ CONFIGURE_ARGS += --enable-nls
 CONFIGURE_ARGS += --enable-ctrls
 CONFIGURE_ARGS += --enable-buffer-size=8192
 CONFIGURE_ARGS += --with-includes=$(prefix)/include:$(prefix)/include/openssl
-CONFIGURE_ARGS += --with-modules=mod_rewrite:mod_ifsession:mod_ratio:mod_tls:mod_readme:mod_auth_pam:mod_wrap:mod_radius:mod_ban
+CONFIGURE_ARGS += --with-modules=mod_rewrite:mod_ifsession:mod_ratio:mod_tls:mod_readme:mod_auth_pam:mod_radius:mod_ban
 
 TEST_SCRIPTS =
 
