@@ -33,6 +33,7 @@ import os
 import subprocess
 import sys
 import opencsw
+import tag
 
 
 CONFIG_INFO = """Create a file in ~/.releases.ini with the following content:
@@ -85,6 +86,29 @@ def RemoveOldFiles(basename_list, host, directory):
     raise PackageSubmissionError(msg)
 
 
+def RsyncFiles(files_to_rsync, dst_arg):
+  args = ["rsync", "-v"] + files_to_rsync + [dst_arg]
+  logging.debug(args)
+  try:
+    ret = subprocess.call(args)
+  except OSError, e:
+    raise PackageSubmissionError(
+        "Couldn't run %s, is the binary "
+        "in the $PATH? The error was: %s" % (repr(args[0]), e))
+  if ret:
+    msg = ("Copying %s to %s has failed. "
+           "Are you on the login host?" % (p, dst_arg))
+    logging.error(msg)
+    raise PackageSubmissionError(msg)
+
+
+class FileSetChecker(object):
+
+  def CheckFiles(self, file_list):
+    """Checks a set of files. Reports error tags."""
+    pass
+
+
 def main():
   try:
     config = ConfigParser.SafeConfigParser()
@@ -113,6 +137,10 @@ def main():
                       dest="clean", default=True,
                       action="store_false",
                       help="Prevent submitpkg from deleting old files from newpkgs")
+    parser.add_option("-n", "--dry-run",
+                      dest="dry_run",
+                      default=False, action="store_true",
+                      help="")
     (options, args) = parser.parse_args()
     file_names = args
     level = logging.INFO
@@ -179,19 +207,11 @@ def main():
     remote_package_references.append(dst_arg + "/" + package_base_file_name)
   if options.clean:
     RemoveOldFiles(catalognames, target_host, target_dir)
-  args = ["rsync", "-v"] + files_to_rsync + [dst_arg]
-  logging.debug(args)
-  try:
-    ret = subprocess.call(args)
-  except OSError, e:
-    raise PackageSubmissionError(
-        "Couldn't run %s, is the binary "
-        "in the $PATH? The error was: %s" % (repr(args[0]), e))
-  if ret:
-    msg = ("Copying %s to %s has failed. "
-           "Are you on the login host?" % (p, dst_arg))
-    logging.error(msg)
-    raise PackageSubmissionError(msg)
+  if options.dry_run:
+    print "files_to_rsync", files_to_rsync
+    print "dst_arg", dst_arg
+  else:
+    RsyncFiles(files_to_rsync, dst_arg)
   nm = opencsw.NewpkgMailer(
       catalognames, remote_package_references,
       release_mgr_name=release_mgr_name,
@@ -200,18 +220,22 @@ def main():
       sender_email=config.get(CONFIG_RELEASE_SECTION, "sender email"),
       release_cc=release_cc)
   mail_text = nm.FormatMail()
-  fd = open(DEFAULT_FILE_NAME, "w")
-  fd.write(mail_text)
-  fd.close()
-  text_editor = nm.GetEditorName(os.environ)
-  args = [text_editor, DEFAULT_FILE_NAME]
-  editor_ret = subprocess.call(args)
-  if editor_ret:
-    raise Error("File editing has failed.")
-  print
-  print "Your e-mail hasn't been sent yet!"
-  print "Issue the following command to have it sent:"
-  print "sendmail -t < %s" % DEFAULT_FILE_NAME
+  if options.dry_run:
+    print "Not writing the e-mail to disk."
+    print mail_text
+  else:
+    fd = open(DEFAULT_FILE_NAME, "w")
+    fd.write(mail_text)
+    fd.close()
+    text_editor = nm.GetEditorName(os.environ)
+    args = [text_editor, DEFAULT_FILE_NAME]
+    editor_ret = subprocess.call(args)
+    if editor_ret:
+      raise Error("File editing has failed.")
+    print
+    print "Your e-mail hasn't been sent yet!"
+    print "Issue the following command to have it sent:"
+    print "sendmail -t < %s" % DEFAULT_FILE_NAME
 
 
 if __name__ == '__main__':
