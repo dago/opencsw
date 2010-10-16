@@ -105,8 +105,27 @@ def RsyncFiles(files_to_rsync, dst_arg):
 class FileSetChecker(object):
 
   def CheckFiles(self, file_list):
-    """Checks a set of files. Reports error tags."""
-    pass
+    """Checks a set of files. Returns error tags."""
+    catalognames_by_arch = {
+        "i386": set(),
+        "sparc": set(),
+    }
+    for file_path in file_list:
+      pkg_path, basename = os.path.split(file_path)
+      parsed = opencsw.ParsePackageFileName(basename)
+      if parsed["arch"] == "all":
+        for arch in ("i386", "sparc"):
+          catalognames_by_arch[arch].add(parsed["catalogname"])
+      else:
+        catalognames_by_arch[parsed["arch"]].add(parsed["catalogname"])
+    i386 = catalognames_by_arch["i386"]
+    sparc = catalognames_by_arch["sparc"]
+    tags = []
+    for catalogname in i386.difference(sparc):
+      tags.append(tag.CheckpkgTag(None, "sparc-arch-missing", catalogname))
+    for catalogname in sparc.difference(i386):
+      tags.append(tag.CheckpkgTag(None, "i386-arch-missing", catalogname))
+    return tags
 
 
 def main():

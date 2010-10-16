@@ -35,6 +35,19 @@ class CheckpkgTag(object):
                      % (self.pkgname, self.tag_name, tag_postfix))
     return "\n".join(msg_lines)
 
+  def __eq__(self, other):
+    value = (
+        self.pkgname == other.pkgname
+          and
+        self.tag_name == other.tag_name
+          and
+        self.tag_info == other.tag_info
+          and
+        self.severity == other.severity
+          and
+        self.msg == other.msg)
+    return value
+
 
 def ParseTagLine(line):
   """Parses a line from the tag.${module} file.
