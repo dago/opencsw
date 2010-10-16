@@ -224,6 +224,15 @@ def main():
     remote_package_files.append(dst_arg)
     package_base_file_name = os.path.split(p)[1]
     remote_package_references.append(dst_arg + "/" + package_base_file_name)
+  fc = FileSetChecker()
+  error_tags = fc.CheckFiles(files_to_rsync)
+  if error_tags:
+    for error_tag in error_tags:
+      print error_tag
+    print(
+        "There is a package that is available for one architecture, "
+        "but not the other.")
+    sys.exit(1)
   if options.clean:
     RemoveOldFiles(catalognames, target_host, target_dir)
   if options.dry_run:
