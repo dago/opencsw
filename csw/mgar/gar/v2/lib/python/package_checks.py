@@ -1001,7 +1001,10 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
   if len(linkable_shared_libs) > 1:
     sonames = sorted(set([x[0] for x in linkable_shared_libs]))
     tmp = su.MakePackageNameBySonameCollection(sonames)
-    multilib_pkgnames, multilib_catalogname = tmp
+    if tmp:
+      multilib_pkgnames, multilib_catalogname = tmp
+    else:
+      multilib_pkgnames, multilib_catalogname = (None, None)
     if not multilib_pkgnames:
       error_mgr.ReportError(
           "non-uniform-lib-versions-in-package",
