@@ -32,7 +32,7 @@ CATALOGNAME_CSWlib$(GARNAME)-2-5-1 = lib$(GARNAME)_2_5_1
 CATALOGNAME_CSWlib$(GARNAME)-devel = lib$(GARNAME)_devel
 
 PKGFILES_CSWlib$(GARNAME)-devel = $(includedir).*
-PKGFILES_CSWlib$(GARNAME)-devel = $(libdir)/lib$(GARNAME)\.so
+PKGFILES_CSWlib$(GARNAME)-devel = $(libdir)(/[^/]+)?/lib$(GARNAME)\.so
 
 SPKG_DESC_CSWlib$(GARNAME)-2-5-1 = Google\'s open source JavaScript engine
 SPKG_DESC_CSWlib$(GARNAME)-devel = Header files for V8
@@ -42,7 +42,14 @@ RUNTIME_DEP_PKGS_CSWlib$(GARNAME)-2-5-1 += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWlib$(GARNAME)-devel += CSWlib$(GARNAME)-2-5-1
 CHECKPKG_OVERRIDES_CSWlib$(GARNAME)-devel += surplus-dependency|CSWlib$(GARNAME)-2-5-1
 
+# 64-bit support via a special scons option; passing CFLAGS and CXXFLAGS does
+# not work here.
+SCONS_ARCH_isa-amd64 = arch=x64
+SCONS_ARCH += $(SCONS_ARCH_$(MODULATION))
+
 LICENSE = LICENSE
+
+BUILD64 = 1
 
 include gar/category.mk
 
@@ -56,6 +63,7 @@ build-$(GARNAME):
 		 SHCXX=/opt/csw/gcc4/bin/g++ \
 		 LINKFLAGS='-R/opt/csw/gcc4/lib' \
 		 scons -Y .. \
+		 $(SCONS_ARCH) \
 		 visibility=default library=shared toolchain=gcc soname=on -j3)
 	@$(MAKECOOKIE)
 
