@@ -3,53 +3,50 @@
 # $Id$
 
 GARNAME = v8
-GARVERSION = bleeding_edge
+GARVERSION = 2.5.1
+# GARVERSION = bleeding_edge
 CATEGORIES = lib
-DESCRIPTION = Google\'s open source JavaScript engine
 define BLURB
+Google's open source JavaScript engine
 endef
-SPKG_SOURCEURL = http://code.google.com/p/v8/
+SPKG_SOURCEURL = http://code.google.com/p/$(GARNAME)/
 
-MASTER_SITES = svn-http://v8.googlecode.com/svn/branches/
-# svn checkout http://v8.googlecode.com/svn/branches/bleeding_edge/ v8
-# PATCHFILES += 0001-uninitialized-member-v8-internal-Sampler-synchronous.patch
-DISTFILES  = $(GARVERSION)
-NOCHECKSUM = $(GARVERSION)
-DISTNAME = $(GARVERSION)
-# $(GARNAME)-$(GARVERSION).tar.gz
-# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = svn-http//$(GARNAME).googlecode.com/svn/branches/
+DISTFILES  = bleeding_edge
+NOCHECKSUM = bleeding_edge
+DISTNAME = bleeding_edge
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
 BUILD_DEP_PKGS += CSWscons
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = v8
-INSTALL_SCRIPTS = v8
+BUILD_SCRIPTS = $(GARNAME)
+INSTALL_SCRIPTS = $(GARNAME)
 TEST_SCRIPTS =
 GARCOMPILER = GNU
 SONAME_V = 2.5.1
 
 PACKAGING_PLATFORMS = solaris10-i386
 
-PACKAGES += CSWlibv8-2-5-1
-PACKAGES += CSWlibv8-devel
-CATALOGNAME_CSWlibv8-2-5-1 = libv8_2_5_1
-CATALOGNAME_CSWlibv8-devel = libv8_devel
+PACKAGES += CSWlib$(GARNAME)-2-5-1
+PACKAGES += CSWlib$(GARNAME)-devel
+CATALOGNAME_CSWlib$(GARNAME)-2-5-1 = lib$(GARNAME)_2_5_1
+CATALOGNAME_CSWlib$(GARNAME)-devel = lib$(GARNAME)_devel
 
-PKGFILES_CSWlibv8-devel = $(includedir).*
-PKGFILES_CSWlibv8-devel = $(libdir)/libv8\.so
+PKGFILES_CSWlib$(GARNAME)-devel = $(includedir).*
+PKGFILES_CSWlib$(GARNAME)-devel = $(libdir)/lib$(GARNAME)\.so
 
-SPKG_DESC_CSWlibv8-2-5-1 = Google\'s open source JavaScript engine
-SPKG_DESC_CSWlibv8-devel = Header files for V8
+SPKG_DESC_CSWlib$(GARNAME)-2-5-1 = Google\'s open source JavaScript engine
+SPKG_DESC_CSWlib$(GARNAME)-devel = Header files for V8
 
-RUNTIME_DEP_PKGS_CSWlibv8-2-5-1 += CSWgcc4g++rt
-RUNTIME_DEP_PKGS_CSWlibv8-2-5-1 += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWlibv8-devel += CSWlibv8-2-5-1
-CHECKPKG_OVERRIDES_CSWlibv8-devel += surplus-dependency|CSWlibv8-2-5-1
+RUNTIME_DEP_PKGS_CSWlib$(GARNAME)-2-5-1 += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWlib$(GARNAME)-2-5-1 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlib$(GARNAME)-devel += CSWlib$(GARNAME)-2-5-1
+CHECKPKG_OVERRIDES_CSWlib$(GARNAME)-devel += surplus-dependency|CSWlib$(GARNAME)-2-5-1
 
 LICENSE = LICENSE
 
 include gar/category.mk
 
-build-v8:
+build-$(GARNAME):
 	(cd $(WORKSRC); mkdir -p build-solaris; \
 		 CC=/opt/csw/gcc4/bin/gcc \
 		 CXX=/opt/csw/gcc4/bin/g++ \
@@ -62,10 +59,10 @@ build-v8:
 		 visibility=default library=shared toolchain=gcc soname=on -j3)
 	@$(MAKECOOKIE)
 
-install-v8:
+install-$(GARNAME):
 	ginstall -d -m 755 $(DESTDIR)$(libdir)
-	ginstall -m 755 $(WORKSRC)/libv8-$(SONAME_V).so $(DESTDIR)$(libdir)
-	ln -sf libv8-$(SONAME_V).so $(DESTDIR)$(libdir)/libv8.so
+	ginstall -m 755 $(WORKSRC)/lib$(GARNAME)-$(SONAME_V).so $(DESTDIR)$(libdir)
+	ln -sf lib$(GARNAME)-$(SONAME_V).so $(DESTDIR)$(libdir)/lib$(GARNAME).so
 	ginstall -d -m 755 $(DESTDIR)$(includedir)
 	for f in $(WORKSRC)/include/*.h; do \
 		ginstall -m 644 $${f} $(DESTDIR)$(includedir); \
