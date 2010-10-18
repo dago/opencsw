@@ -11,8 +11,11 @@ DESCRIPTION = Adobe Acrobat Reader
 define BLURB
 endef
 
-MASTER_SITES_sparc = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(shell echo $(GARVERSION_sparc) | cut -d. -f1).x/$(GARVERSION_sparc)/enu/
-MASTER_SITES_i386 = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(shell echo $(GARVERSION_i386) | cut -d. -f1).x/$(GARVERSION_i386)/enu/
+MAJORVERSION_sparc = $(shell echo $(GARVERSION_sparc) | cut -d. -f1)
+MAJORVERSION_i386  = $(shell echo $(GARVERSION_i386) | cut -d. -f1)
+
+MASTER_SITES_sparc = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(MAJORVERSION_sparc).x/$(GARVERSION_sparc)/enu/
+MASTER_SITES_i386 = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(MAJORVERSION_i386).x/$(GARVERSION_i386)/enu/
 MASTER_SITES = $(MASTER_SITES_sparc) $(MASTER_SITES_i386)
 DISTFILES_sparc = AdobeReader_enu-$(FILEVERSION_sparc)-1.sparc.tar.bz2
 DISTFILES_i386 = AdbeRdr$(FILEVERSION_i386)-1_i486solaris_enu.tar.bz2
@@ -43,15 +46,24 @@ CHECKPKG_OVERRIDES  = binary-architecture-does-not-match-placement
 CHECKPKG_OVERRIDES += bad-rpath-entry
 CHECKPKG_OVERRIDES += soname-not-found
 
+# Can't check the library depepdency as this is done via LD_LIBRARY_PATH in the run scri√pt
+CHECKPKG_OVERRIDES_sparc += surplus-dependency|CSWpango
+CHECKPKG_OVERRIDES += $(CHECKPKG_OVERRIDES_$(GARCH))
+
+RUNTIME_DEP_PKGS_sparc = CSWpango
+RUNTIME_DEP_PKGS  = $(RUNTIME_DEP_PKGS_$(GARCH))
+
 include gar/category.mk
 
 install-custom:
 	ginstall -d $(DESTDIR)$(sharedstatedir)
 	cd $(WORKSRC) && ./INSTALL --install_path=$(DESTDIR)$(sharedstatedir)
 	ginstall -d $(DESTDIR)$(bindir)
-	ln -s ../share/Adobe/Reader9/bin/acroread $(DESTDIR)$(bindir)/acroread
+	ln -s ../share/Adobe/Reader$(MAJORVERSION_$(GARCH))/bin/acroread $(DESTDIR)$(bindir)/acroread
 	@$(MAKECOOKIE)
 
+# Entries with spaces in the filepath are not allowed in the pkgmap.
+# Adjust the directory path to the help pages in 8.1.7
 post-install-modulated:
 	cd $(DESTDIR); find . -type d -name "* *" | \
 	while read F; do \
@@ -63,4 +75,10 @@ post-install-modulated:
 		N=`echo $$F | tr ' ' '_'`; \
 		mv "$$F" $$N; \
 	done;
+	@$(MAKECOOKIE)
+
+# The older Sparc version needs libpangoxft-1.0.so.0 from CSWpango (or another location)
+# Make sure it can be found by explicitly setting LD_LIBRARY_PATH in environment setting
+post-install-isa-sparcv8:
+	perl -i -npe 'if( /^ACRO_LD_LIBRARY_PATH=/ ) { print "LD_LIBRARY_PATH=$(libdir)\n" }' $(DESTDIR)$(sharedstatedir)/Adobe/Reader$(MAJORVERSION_$(GARCH))/bin/acroread
 	@$(MAKECOOKIE)
