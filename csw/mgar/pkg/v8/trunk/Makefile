@@ -42,6 +42,8 @@ SPKG_DESC_CSWlibv8-devel = Header files for V8
 
 RUNTIME_DEP_PKGS_CSWlibv8-2-5-1 += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWlibv8-2-5-1 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibv8-devel += CSWlibv8-2-5-1
+CHECKPKG_OVERRIDES_CSWlibv8-devel += surplus-dependency|CSWlibv8-2-5-1
 
 LICENSE = LICENSE
 
