@@ -6,11 +6,11 @@ GARVERSION = 9.7.2
 CATEGORIES = net
 
 # Enable these for Px-releases
-#RELEASE = P2
-#DISTVERSION = $(GARVERSION)-$(RELEASE)
-#SPKG_VERSION = $(GARVERSION)$(RELEASE)
-#DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
-#WORKSRC = $(WORKDIR)/$(DISTNAME)
+RELEASE = P2
+DISTVERSION = $(GARVERSION)-$(RELEASE)
+SPKG_VERSION = $(GARVERSION)$(RELEASE)
+DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
@@ -21,12 +21,12 @@ define BLURB
 endef
 
 # Enable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
-#DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
+DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
+#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
@@ -87,11 +87,13 @@ USERGROUP = /etc/opt/csw/pkg/CSWbind/cswusergroup
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
 
-#CHECKPKG_OVERRIDES = symbol-not-found
-CHECKPKG_OVERRIDES_CSWbinddevel += surplus-dependency|CSWbind
-CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
-CHECKPKG_OVERRIDES_CSWbindchroot += surplus-dependency|CSWbind
-CHECKPKG_OVERRIDES_CSWbinddevel += archall-devel-package
+CHECKPKG_OVERRIDES_CSWlibbind += non-uniform-lib-versions-in-package|sonames=['libbind9.so.60',|'libdns.so.69',|'libisc.so.62',|'libisccc.so.60',|'libisccfg.so.62',|'liblwres.so.60']
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libbind9.so
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libdns.so
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libisc.so
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libisccc.so
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libisccfg.so
+CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/liblwres.so
 
 include gar/category.mk
 
