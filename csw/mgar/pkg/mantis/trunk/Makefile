@@ -1,5 +1,5 @@
 GARNAME = mantisbt
-GARVERSION = 1.2.0
+GARVERSION = 1.2.3
 CATEGORIES = apps
 
 DESCRIPTION = Mantis is a free popular web-based bugtracking system
@@ -35,13 +35,19 @@ SPKG_SOURCEURL = http://www.mantisbt.org/
 
 POSTMSG = $(docdir)/$(CATALOGNAME)/$(PACKAGES).postmsg
 
+CHECKPKG_OVERRIDES_CSWmantis += surplus-dependency|CSWphp5mysql
+CHECKPKG_OVERRIDES_CSWmantis += surplus-dependency|CSWap2modphp5
+CHECKPKG_OVERRIDES_CSWmantis += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWmantis += surplus-dependency|CSWphp5session
+
 include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(GARNAME)"
 	ginstall -d $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs
-	cd $(WORKSRC) && tar cf - . | ( cd $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs; tar xvf - )
-	find $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs -name .cvsignore -exec rm \{\} \;
+	(echo ".git"; echo ".cvsignore") >$(WORKDIR)/tarexclude
+	cd $(WORKSRC) && tar cfX - $(abspath $(WORKDIR)/tarexclude) . | ( cd $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs; tar xvf - )
+	#find $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs -name .cvsignore -exec rm \{\} \;
 	ginstall -d $(DESTDIR)$(prefix)/apache2/share/htdocs
 	ln -s $(sharedstatedir)/www/mantis/htdocs $(DESTDIR)$(prefix)/apache2/share/htdocs/mantis
 	ginstall -d $(PKGROOT)$(docdir)/$(CATALOGNAME)/
