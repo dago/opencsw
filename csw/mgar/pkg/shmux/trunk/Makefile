@@ -25,6 +25,8 @@ RUNTIME_DEP_PKGS = CSWpcrert
 # release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 
+LICENSE = LICENSE
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
