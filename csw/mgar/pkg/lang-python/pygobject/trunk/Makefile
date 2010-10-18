@@ -13,24 +13,25 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
 STRIP_LIBTOOL = 1
 
-PACKAGES = CSWpy-gobject-devel CSWpygobject CSWlibpyglib-2-0-python0 
+PACKAGES = CSWpy-gobject-devel CSWpy-gobject CSWlibpyglib-2-0-py0 
 
-CATALOGNAME_CSWpygobject = py_gobject
-SPKG_DESC_CSWpygobject = $(DESCRIPTION)
-CHECKPKG_OVERRIDES_CSWpygobject += pkgname-does-not-start-with-CSWpy-
-RUNTIME_DEP_PKGS_CSWpygobject = CSWpython CSWggettextrt CSWglib2
-RUNTIME_DEP_PKGS_CSWpygobject += CSWlibpyglib-2-0-python0
-PKGFILES_CSWpygobject = $(libdir)/python/site-packages/.*
+CATALOGNAME_CSWpy-gobject = py_gobject
+SPKG_DESC_CSWpy-gobject = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWpy-gobject = CSWpython CSWggettextrt CSWglib2
+RUNTIME_DEP_PKGS_CSWpy-gobject += CSWlibpyglib-2-0-py0
+INCOMPATIBLE_PKGS_CSWpy-gobject = CSWpygobject
+PKGFILES_CSWpy-gobject = $(libdir)/python/site-packages/.*
 
-SPKG_DESC_CSWlibpyglib-2-0-python0 = Runtime library for the Python GObject library
-CATALOGNAME_CSWlibpyglib-2-0-python0 = libpyglib_2_0_python0
-PKGFILES_CSWlibpyglib-2-0-python0 = $(libdir)/libpyglib-2.0-python.so.0.*
-RUNTIME_DEP_PKGS_CSWlibpyglib-2-0-python0 = CSWggettextrt CSWglib2
+SPKG_DESC_CSWlibpyglib-2-0-py0 = Runtime library for the Python GObject library
+CATALOGNAME_CSWlibpyglib-2-0-py0 = libpyglib_2_0_py0
+PKGFILES_CSWlibpyglib-2-0-py0 = $(libdir)/libpyglib-2.0-python.so.0.*
+RUNTIME_DEP_PKGS_CSWlibpyglib-2-0-py0 = CSWggettextrt CSWglib2
 
+# soname results in a package name that is too long so it was shortened
+CHECKPKG_OVERRIDES_CSWlibpyglib-2-0-py0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libpyglib-2.0-python.so.0.0.0|soname=libpyglib-2.0-python.so.0|pkgname=CSWlibpyglib-2-0-py0|expected=['CSWlibpyglib-2-0-python0',|'CSWlibpyglib-2-0-python-0']
 SPKG_DESC_CSWpy-gobject-devel = Development files for the Python GObject library
 CATALOGNAME_CSWpy-gobject-devel = py_gobject_devel
 RUNTIME_DEP_PKGS_CSWpy-gobject-devel = CSWpython
-ARCHALL_CSWpy-gobject-devel = 1
 
 PYCOMPILE = 1
 
@@ -45,8 +46,5 @@ CONFIGURE_ARGS += --without-ffi
 ## Tests require gtk, but gtk requries gobject
 TEST_TARGET = check
 TEST_SCRIPTS =
-
-# This package predates the convention and renaming is problematic
-CHECKPKG_OVERRIDES_CSWpygobject += pkgname-does-not-start-with-CSWpy-
 
 include gar/category.mk
