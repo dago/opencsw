@@ -1,8 +1,8 @@
 GARNAME = mtools
-GARVERSION = 4.0.13
+GARVERSION = 4.0.15
 CATEGORIES = utils
 
-DESCRIPTION = read/write/list/format DOS disks under Unix
+DESCRIPTION = Read/write/list/format DOS disks under Unix
 define BLURB
   Mtools is a collection of utilities to access MS-DOS disks from GNU
   and Unix without mounting them. It supports long file names, OS/2 Xdf
@@ -10,17 +10,15 @@ define BLURB
   3 1/2 disk).
 endef
 
-MASTER_SITES = http://ftp.gnu.org/gnu/mtools/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-PATCHFILES = 0001-Removeprototypes-unknown-to-Sun-Studio.patch
+MASTER_SITES = $(GNU_MIRROR)
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.lz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.lz
 
-# X11 is also used, but Openwin X11 is sufficient.
 RUNTIME_DEP_PKGS = CSWiconv
 
-EXTRA_LINKER_FLAGS = -liconv
+EXTRA_LINKER_FLAGS = -liconv -lnsl
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
