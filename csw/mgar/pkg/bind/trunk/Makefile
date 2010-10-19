@@ -67,7 +67,18 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw/named
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
 PKGFILES_CSWbinddevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibbind   = $(libdir)/.*
+PKGFILES_CSWlibbind += /opt/csw/lib/libbind9.so.60.*
+PKGFILES_CSWlibbind += /opt/csw/lib/libdns.so.69.*
+PKGFILES_CSWlibbind += /opt/csw/lib/libisc.so.62.*
+PKGFILES_CSWlibbind += /opt/csw/lib/libisccc.so.60.*
+PKGFILES_CSWlibbind += /opt/csw/lib/libisccfg.so.62.*
+PKGFILES_CSWlibbind += /opt/csw/lib/liblwres.so.60.*
+PKGFILES_CSWbinddevel += /opt/csw/lib/libbind9.so
+PKGFILES_CSWbinddevel += /opt/csw/lib/libdns.so
+PKGFILES_CSWbinddevel += /opt/csw/lib/libisc.so
+PKGFILES_CSWbinddevel += /opt/csw/lib/libisccc.so
+PKGFILES_CSWbinddevel += /opt/csw/lib/libisccfg.so
+PKGFILES_CSWbinddevel += /opt/csw/lib/liblwres.so
 PKGFILES_CSWbindutils = $(bindir)/.*
 PKGFILES_CSWbindchroot = .*chroot.*
 
@@ -92,12 +103,6 @@ CHECKPKG_OVERRIDES_CSWbindchroot += surplus-dependency|CSWbind
 CHECKPKG_OVERRIDES_CSWbinddevel += archall-devel-package
 CHECKPKG_OVERRIDES_CSWbinddevel += surplus-dependency|CSWbind
 CHECKPKG_OVERRIDES_CSWlibbind += non-uniform-lib-versions-in-package|sonames=['libbind9.so.60',|'libdns.so.69',|'libisc.so.62',|'libisccc.so.60',|'libisccfg.so.62',|'liblwres.so.60']
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libbind9.so
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libdns.so
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libisc.so
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libisccc.so
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libisccfg.so
-CHECKPKG_OVERRIDES_CSWlibbind += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/liblwres.so
 
 include gar/category.mk
 
