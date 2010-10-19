@@ -67,18 +67,8 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw/named
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
 PKGFILES_CSWbinddevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibbind += /opt/csw/lib/libbind9.so.60.*
-PKGFILES_CSWlibbind += /opt/csw/lib/libdns.so.69.*
-PKGFILES_CSWlibbind += /opt/csw/lib/libisc.so.62.*
-PKGFILES_CSWlibbind += /opt/csw/lib/libisccc.so.60.*
-PKGFILES_CSWlibbind += /opt/csw/lib/libisccfg.so.62.*
-PKGFILES_CSWlibbind += /opt/csw/lib/liblwres.so.60.*
-PKGFILES_CSWbinddevel += /opt/csw/lib/libbind9.so
-PKGFILES_CSWbinddevel += /opt/csw/lib/libdns.so
-PKGFILES_CSWbinddevel += /opt/csw/lib/libisc.so
-PKGFILES_CSWbinddevel += /opt/csw/lib/libisccc.so
-PKGFILES_CSWbinddevel += /opt/csw/lib/libisccfg.so
-PKGFILES_CSWbinddevel += /opt/csw/lib/liblwres.so
+PKGFILES_CSWbinddevel += .*\.so
+PKGFILES_CSWlibbind = .*\.so\..*
 PKGFILES_CSWbindutils = $(bindir)/.*
 PKGFILES_CSWbindchroot = .*chroot.*
 
