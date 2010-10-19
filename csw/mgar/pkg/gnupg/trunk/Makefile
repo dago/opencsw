@@ -1,5 +1,5 @@
 GARNAME    = gnupg
-GARVERSION = 1.4.10
+GARVERSION = 1.4.11
 CATEGORIES = apps
 
 DESCRIPTION = GnuPG is a complete and free replacement for PGP.
@@ -19,9 +19,6 @@ DISTFILES      = $(GARNAME)-$(GARVERSION).tar.bz2
 # new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-RUNPATHQUOTE = 1
-BUILD64    = 1
-
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libcurl=$(prefix)
 CONFIGURE_ARGS += --with-ldap=$(prefix)
@@ -36,7 +33,10 @@ CONFIGURE_ARGS += --enable-threads=solaris
 CONFIGURE_ARGS += --disable-asm
 
 EXTRA_MERGE_EXCLUDE_FILES += .*/charset.alias
-PROTOTYPE_FILTER = awk '$$$$3 ~/\/gpg$$$$/ { $$$$4 = 4755 } { print }'
+
+PROTOTYPE_MODIFIERS = suid
+PROTOTYPE_FILES_suid = .*/gpg
+PROTOTYPE_PERMS_suid = 4755
 
 RUNTIME_DEP_PKGS_CSWgnupg  = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
 RUNTIME_DEP_PKGS_CSWgnupg += CSWoldaprt CSWreadline CSWzlib
