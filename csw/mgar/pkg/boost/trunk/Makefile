@@ -1,5 +1,5 @@
 GARNAME = boost
-GARVERSION = 1.33.0
+GARVERSION = 1.44.0
 CATEGORIES = lib
 
 DESCRIPTION = A collection of C++ libraries
@@ -17,25 +17,34 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
 DISTVERSION = $(subst .,_,$(GARVERSION))
-DISTFILES  = $(GARNAME)_$(DISTVERSION).tar.bz2
-DISTFILES += CSWboost.gspec
+DISTNAME = $(GARNAME)_$(DISTVERSION)
+DISTFILES  = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=7586
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-WORKSRC = $(WORKDIR)/$(GARNAME)_$(DISTVERSION)
+PACKAGES = CSWboost
+CATALOGNAME_CSWboost = boost
+
+LICENSE = LICENSE_1_0.txt
+
+BUILD_DEP_PKGS += CSWstar
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 INSTALL_SCRIPTS = bjam
 
 BUILD_ARGS  = --prefix=$(DESTDIR)$(prefix)
-BUILD_ARGS += -sTOOLS=sunpro
-BUILD_ARGS += --with-python-root=$(prefix)
+BUILD_ARGS += toolset=sun
+#BUILD_ARGS += --with-python-root=$(prefix)
 
 TEST_SCRIPTS =
+
+JAMDIR_sparc = solarissparc
+JAMDIR_i386 = solarisx86
+JAMDIR = $(JAMDIR_$(GARCH))
 
 include gar/category.mk
 
@@ -43,13 +52,19 @@ PYTHON_ROOT = $(prefix)
 PYTHON_VERSION = 2.3
 export PYTHON_ROOT PYTHON_VERSION
 
-pre-configure:
-	( cd $(WORKSRC)/tools/build/jam_src ; \
+# Boost is not extractable with SUNW tar nor GNU tar :-(
+tar-bz-extract-%:
+	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
+	/opt/csw/bin/star -bz -x -C $(EXTRACTDIR) -f $(DOWNLOADDIR)/$*
+	@$(MAKECOOKIE)
+
+pre-configure-modulated:
+	( cd $(WORKSRC)/tools/jam/src ; \
 	  ./build.sh sunpro ; \
 	  mkdir -p $(DESTDIR)$(bindir) ; \
-	  mv bin.solaris/bjam $(DESTDIR)$(bindir) )
+	  mv bin.$(JAMDIR)/bjam $(DESTDIR)$(bindir) )
 	@$(MAKECOOKIE)
 
 install-bjam:
-	( cd $(WORKSRC) ; bjam $(BUILD_ARGS) install ) || exit 1
+	( cd $(WORKSRC) ; which bjam; bjam $(BUILD_ARGS) install ) || exit 1
 	@$(MAKECOOKIE)
