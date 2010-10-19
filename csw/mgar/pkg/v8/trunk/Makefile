@@ -31,8 +31,8 @@ PACKAGES += CSWlib$(GARNAME)-devel
 CATALOGNAME_CSWlib$(GARNAME)-2-5-1 = lib$(GARNAME)_2_5_1
 CATALOGNAME_CSWlib$(GARNAME)-devel = lib$(GARNAME)_devel
 
-PKGFILES_CSWlib$(GARNAME)-devel = $(includedir).*
-PKGFILES_CSWlib$(GARNAME)-devel = $(libdir)(/[^/]+)?/lib$(GARNAME)\.so
+PKGFILES_CSWlib$(GARNAME)-devel += $(includedir).*
+PKGFILES_CSWlib$(GARNAME)-devel += $(libdir)(/[^/]+)?/lib$(GARNAME)\.so
 
 SPKG_DESC_CSWlib$(GARNAME)-2-5-1 = Google\'s open source JavaScript engine
 SPKG_DESC_CSWlib$(GARNAME)-devel = Header files for V8
