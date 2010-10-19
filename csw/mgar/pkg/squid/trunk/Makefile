@@ -15,16 +15,25 @@ endef
 
 PACKAGES = CSWsquid
 CATALOGNAME_CSWsquid = squid
-SPKG_DESC_CSWsquid = $(DESCRIPTION)
-SPKG_CLASSES_CSWsquid = none cswinitsmf
 RUNTIME_DEP_PKGS_CSWsquid = CSWoldaprt CSWosslrt CSWsasl
-PROTOTYPE_FILTER = awk '$$$$3 ~/\/init.d\/cswsquid$$$$/ { $$$$2 = "cswinitsmf" } { print }'
+PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
+INITSMF = /etc/opt/csw/init.d/csw$(GARNAME)
+PRESERVECONF = /etc/opt/csw/$(GARNAME)/cachemgr.conf
+PRESERVECONF = /etc/opt/csw/$(GARNAME)/squid.conf
+PRESERVECONF = /etc/opt/csw/$(GARNAME)/mime.conf
+
+MIGRATE_SOURCE_DIR = /opt/csw/etc
+MIGRATE_DEST_DIR = /etc/opt/csw/$(GARNAME)
+MIGRATE_FILES  = cachemgr.conf
+MIGRATE_FILES += mime.conf
+MIGRATE_FILES += squid.conf
 
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(GARVERSION)/
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += CSWsquid.postinstall CSWsquid.preremove cswsquid squid.conf.CSW
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/$(GARNAME)
 CONFIGURE_ARGS += --datadir=$(datadir)/$(GARNAME)
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(GARNAME)
 CONFIGURE_ARGS += --enable-arp-acl
@@ -61,9 +70,6 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/logs
 	ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/cache
-	gcp $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/opt/csw/init.d/
-	chmod 0755 $(DESTDIR)/etc/opt/csw/init.d/cswsquid
-	grm $(DESTDIR)$(sysconfdir)/squid.conf
-	gcp $(DOWNLOADDIR)/squid.conf.CSW $(DESTDIR)$(sysconfdir)/
+	ginstall -m 755 $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/opt/csw/init.d/cswsquid
 	@$(MAKECOOKIE)
 
