@@ -1,0 +1,95 @@
+From 933babaed72b895ac309bd1591ba6386e3193002 Mon Sep 17 00:00:00 2001
+From: Kester Habermann <kester@opencsw.org>
+Date: Wed, 20 Oct 2010 11:37:44 +0200
+Subject: [PATCH] fixed install-target in makefile
+
+---
+ Makefile.in |   38 ++++++++++++++++++++------------------
+ 1 files changed, 20 insertions(+), 18 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 78f5e95..1225685 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -61,8 +61,8 @@ DATE		= @DATE@
+ 
+ prefix		= @prefix@
+ bindir		= $(prefix)/bin
+-catdir		= $(prefix)/man/cat$(manext)
+-mandir		= $(prefix)/man/man$(manext)
++catdir		= $(prefix)/share/man/cat$(manext)
++mandir		= $(prefix)/share/man/man$(manext)
+ manext		= 1
+ shrlibdir	= $(shrlibtop)/$(PROGNAME)-$(VERSION)
+ shrlibtop       = $(prefix)/share/lib/$(PROGNAME)
+@@ -599,17 +599,18 @@ html:	$(HTMLFILES)
+ install:	install-exe install-shrlib install-man install-show
+ 
+ install-exe:	uninstall-exe
++	-$(MKDIR) $(DESTDIR)$(bindir)
+ 	if test -f $(PROGNAME) ; \
+ 	then \
+-		$(CP) $(PROGNAME) $(bindir)/$(PROGNAME) ; \
+-		$(LN) $(bindir)/$(PROGNAME) $(bindir)/$(PROGNAME)-$(VERSION) ; \
++		$(CP) $(PROGNAME) $(DESTDIR)$(bindir)/$(PROGNAME) ; \
++		$(LN) $(DESTDIR)$(bindir)/$(PROGNAME) $(DESTDIR)$(bindir)/$(PROGNAME)-$(VERSION) ; \
+ 	else \
+ 		for f in $(SHFILES) ; \
+ 		do \
+ 			g=`basename $$f .sh` ; \
+-			$(SEDCMD) $$f | $(CHECKSUM) > $(bindir)/$$g ; \
+-			$(LN) $(bindir)/$$g $(bindir)/$$g-$(VERSION) ; \
+-			$(CHMOD) 775 $(bindir)/$$g $(bindir)/$$g-$(VERSION) ; \
++			$(SEDCMD) $$f | $(CHECKSUM) > $(DESTDIR)$(bindir)/$$g ; \
++			$(LN) $(DESTDIR)$(bindir)/$$g $(DESTDIR)$(bindir)/$$g-$(VERSION) ; \
++			$(CHMOD) 775 $(DESTDIR)$(bindir)/$$g $(DESTDIR)$(bindir)/$$g-$(VERSION) ; \
+ 		done ; \
+ 	fi
+ 
+@@ -625,31 +626,32 @@ install-ftp:	dist
+ 	$(LS) -l $(FTPDIR)/$(PROGNAME)*
+ 
+ install-man:	uninstall-man
++	-$(MKDIR) $(DESTDIR)$(mandir)
+ 	for f in $(MANFILES) ; \
+ 	do \
+ 		g=`basename $$f .man` ; \
+-		$(SEDCMD) $$f | $(CHECKSUM) > $(mandir)/$$g.$(manext) ; \
+-		$(CHMOD) 664 $(mandir)/$$g.$(manext) ; \
++		$(SEDCMD) $$f | $(CHECKSUM) > $(DESTDIR)$(mandir)/$$g.$(manext) ; \
++		$(CHMOD) 664 $(DESTDIR)$(mandir)/$$g.$(manext) ; \
+ 	done
+ 
+ install-show:
+ 	@echo ''
+ 	@echo Installed files...
+-	@$(LS) -l $(bindir)/$(PROGNAME) $(bindir)/$(PROGNAME)-$(VERSION)
+-	@$(LS) -l $(mandir)/$(PROGNAME).$(manext)
+-	@if test -d $(shrlibdir) ; then $(LS) -lR $(shrlibdir)/* ; fi
++	@$(LS) -l $(DESTDIR)$(bindir)/$(PROGNAME) $(DESTDIR)$(bindir)/$(PROGNAME)-$(VERSION)
++	@$(LS) -l $(DESTDIR)$(mandir)/$(PROGNAME).$(manext)
++	@if test -d $(DESTDIR)$(shrlibdir) ; then $(LS) -lR $(DESTDIR)$(shrlibdir)/* ; fi
+ 	@echo ''
+ 
+ install-shrlib:	uninstall-shrlib
+-	-$(MKDIR) $(shrlibtop)
+-	@if test -d $(shrlibtop) ; then true ; else echo Cannot create $(shrlibtop) ; exit 1 ; fi
+-	-$(MKDIR) $(shrlibdir)
+-	@if test -d $(shrlibdir) ; then true ; else echo Cannot create $(shrlibdir) ; exit 1 ; fi
++	-$(MKDIR) $(DESTDIR)$(shrlibtop)
++	@if test -d $(DESTDIR)$(shrlibtop) ; then true ; else echo Cannot create $(DESTDIR)$(shrlibtop) ; exit 1 ; fi
++	-$(MKDIR) $(DESTDIR)$(shrlibdir)
++	@if test -d $(shrlibdir) ; then true ; else echo Cannot create $(DESTDIR)$(shrlibdir) ; exit 1 ; fi
+ 	for f in $(SHRLIBFILES) ; \
+ 	do \
+-		$(SEDCMD) < $$f > $(shrlibdir)/$$f ; \
++		$(SEDCMD) < $$f > $(DESTDIR)$(shrlibdir)/$$f ; \
+ 	done
+-	$(CHMOD) 664 $(shrlibdir)/*
++	$(CHMOD) 664 $(DESTDIR)$(shrlibdir)/*
+ 
+ maintainer-clean:	distclean cleandocs
+ 	@echo "This command is intended for maintainers to use;"
+-- 
+1.7.1
+
