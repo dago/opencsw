@@ -30,7 +30,8 @@ MIGRATE_FILES += squid.conf
 
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(GARVERSION)/
 DISTFILES = $(DISTNAME).tar.bz2
-DISTFILES += CSWsquid.postinstall CSWsquid.preremove cswsquid squid.conf.CSW
+DISTFILES += cswsquid
+
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/$(GARNAME)
@@ -57,6 +58,12 @@ CONFIGURE_ARGS += --with-large-files
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 
 TEST_TARGET = check
+
+PROTOTYPE_MODIFIERS      = varuser
+PROTOTYPE_FILES_varuser  = /var/opt/csw/squid/cache
+PROTOTYPE_FILES_varuser += /var/opt/csw/squid/logs
+PROTOTYPE_USER_varuser   = nobody
+PROTOTYPE_GROUP_varuser  = nobody
 
 include gar/category.mk
 
