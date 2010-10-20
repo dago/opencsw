@@ -19,12 +19,12 @@
 #SLAPD_DEBUG_LEVEL=0
 
 # -f slapd-config-file. Specifies the slapd configuration file.
-#SLAPD_CONFIG_FILE=/opt/csw/etc/openldap/slapd.conf
+#SLAPD_CONFIG_FILE=/etc/opt/csw/openldap/slapd.conf
 
 # -F slapd-config-directory. Specifies the slapd configuration directory
 #  for use with the cn=config backend.
 #  You must create this directory yourself.
-#SLAPD_CONFIG_DIR=/opt/csw/etc/openldap/slapd.d
+#SLAPD_CONFIG_DIR=/etc/opt/csw/openldap/slapd.d
 
 # -g group. slapd will run with the specified group name or id.
 #SLAPD_GROUP=daemon
@@ -60,13 +60,13 @@
 #SLURPD_SYSLOG_LEVEL=0
 
 # -f slapd-config-file. Specifies the slapd configuration file.
-#SLURPD_CONFIG_FILE=/opt/csw/etc/openldap/slapd.conf
+#SLURPD_CONFIG_FILE=/etc/opt/csw/openldap/slapd.conf
 
 # -r replication-log-file.  Directory must be created.
-#SLURPD_REPL_LOG_FILE=/opt/csw/var/openldap-slurp/log
+#SLURPD_REPL_LOG_FILE=/var/opt/csw/openldap-slurp/log
 
 # -t tmp-dir.  Directory must be created.
-#SLURPD_TMP_DIR=/opt/csw/var/openldap-slurp/tmp
+#SLURPD_TMP_DIR=/var/opt/csw/openldap-slurp/tmp
 
 # -o one-shot mode
 #SLURPD_ONE_SHOT=true
