@@ -22,7 +22,7 @@ CATALOGNAME_CSWldns = ldns
 CATALOGNAME_CSWldnsdevel = ldns_devel
 
 SPKG_DESC_CSWldns = $(DESCRIPTION)
-SPKG_DESC_CSWldnsdevel = $(DESCRIPTION) development package
+SPKG_DESC_CSWldnsdevel = "$(DESCRIPTION) development package"
 CHECKPKG_OVERRIDES_CSWldnsdevel += surplus-dependency|CSWldns
 
 SPKG_SOURCEURL = http://www.nlnetlabs.nl/projects/ldns/
