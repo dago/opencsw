@@ -13,8 +13,8 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.math.utah.edu/pub/misc/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
-PATCHFILES = 0001-fixed-install-target-in-makefile.patch
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+PATCHFILES = 0001-fixed-make-install-target.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz

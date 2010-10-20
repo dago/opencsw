@@ -1,14 +1,14 @@
-From 933babaed72b895ac309bd1591ba6386e3193002 Mon Sep 17 00:00:00 2001
+From 384dc4cc022b87aafef94fd1010fadd9ca0ce015 Mon Sep 17 00:00:00 2001
 From: Kester Habermann <kester@opencsw.org>
-Date: Wed, 20 Oct 2010 11:37:44 +0200
-Subject: [PATCH] fixed install-target in makefile
+Date: Wed, 20 Oct 2010 12:17:04 +0200
+Subject: [PATCH] fixed make-install target
 
 ---
  Makefile.in |   38 ++++++++++++++++++++------------------
  1 files changed, 20 insertions(+), 18 deletions(-)
 
 diff --git a/Makefile.in b/Makefile.in
-index 78f5e95..1225685 100644
+index 78f5e95..d0a26bd 100644
 --- a/Makefile.in
 +++ b/Makefile.in
 @@ -61,8 +61,8 @@ DATE		= @DATE@
@@ -79,7 +79,7 @@ index 78f5e95..1225685 100644
 +	-$(MKDIR) $(DESTDIR)$(shrlibtop)
 +	@if test -d $(DESTDIR)$(shrlibtop) ; then true ; else echo Cannot create $(DESTDIR)$(shrlibtop) ; exit 1 ; fi
 +	-$(MKDIR) $(DESTDIR)$(shrlibdir)
-+	@if test -d $(shrlibdir) ; then true ; else echo Cannot create $(DESTDIR)$(shrlibdir) ; exit 1 ; fi
++	@if test -d $(DESTDIR)$(shrlibdir) ; then true ; else echo Cannot create $(DESTDIR)$(shrlibdir) ; exit 1 ; fi
  	for f in $(SHRLIBFILES) ; \
  	do \
 -		$(SEDCMD) < $$f > $(shrlibdir)/$$f ; \
@@ -91,5 +91,5 @@ index 78f5e95..1225685 100644
  maintainer-clean:	distclean cleandocs
  	@echo "This command is intended for maintainers to use;"
 -- 
-1.7.1
+1.7.3
 
