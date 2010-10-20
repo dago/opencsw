@@ -2,10 +2,10 @@
 
 PATH=/usr/bin
 CSWPREFIX=/opt/csw
-CSWETC=${CSWPREFIX}/etc
+CSWETC=/etc/opt/csw
 CSWSBIN=${CSWPREFIX}/sbin
 SQUID_DAEMON=${CSWSBIN}/squid
-SQUID_CONF=${CSWETC}/squid.conf
+SQUID_CONF=${CSWETC}/squid/squid.conf
 SQUID_PIDFILE=/var/opt/csw/squid/logs/squid.pid
 
 if [ -f /lib/svc/share/smf_include.sh ]; then
