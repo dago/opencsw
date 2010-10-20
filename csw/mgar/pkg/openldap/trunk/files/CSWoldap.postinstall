@@ -78,8 +78,8 @@ if [ "$enable_daemon" = "yes" ] ; then
   [ -r $BASEDIR/opt/csw/etc/openldaprc ] && . $BASEDIR/opt/csw/etc/openldaprc
   [ -r $BASEDIR/etc/opt/csw/openldaprc ] && . $BASEDIR/etc/opt/csw/openldaprc
 
-  # Make sure required vars are set.  Actually these are the compiled defaults
-  DEF_SLAPD_CONFIG_FILE=$BASEDIR/opt/csw/etc/openldap/slapd.conf
+  # Make sure required vars are set.  Config directory is /etc/opt/csw/openldap
+  DEF_SLAPD_CONFIG_FILE=$BASEDIR/etc/opt/csw/openldap/slapd.conf
   SLAPD_CONFIG_FILE=${SLAPD_CONFIG_FILE:=$DEF_SLAPD_CONFIG_FILE}
   SLURPD_CONFIG_FILE=${SLURPD_CONFIG_FILE:=$DEF_SLAPD_CONFIG_FILE}
 

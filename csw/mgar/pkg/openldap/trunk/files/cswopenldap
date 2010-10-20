@@ -39,8 +39,8 @@ SLURPD=/opt/csw/libexec/slurpd
 [ -r /etc/opt/csw/openldaprc ] && . /etc/opt/csw/openldaprc
 
 # Make sure required vars are set.  Actually these are the compiled defaults
-DEF_SLAPD_CONFIG_FILE=/opt/csw/etc/openldap/slapd.conf
-DEF_SLAPD_CONFIG_DIR=/opt/csw/etc/openldap/slapd.d
+DEF_SLAPD_CONFIG_FILE=/etc/opt/csw/openldap/slapd.conf
+DEF_SLAPD_CONFIG_DIR=/etc/opt/csw/openldap/slapd.d
 
 # If a conf file has been created, assume we should start up.
 
