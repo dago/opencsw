@@ -1,5 +1,0 @@
-%var            bitname svncpp
-%var            pkgname CSWsvncpp
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%var            desc Subversion C++ language binding
-%copyright      url file://%{WORKSRC}/COPYING

@@ -1,5 +1,6 @@
 GARNAME = rapidsvn
 GARVERSION = 0.12.0-1
+SPKG_VERSION = $(subst -,.,$(GARVERSION))
 CATEGORIES = utils
 
 DESCRIPTION = GUI front-end for the Subversion revision system
@@ -15,52 +16,67 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 # DISTFILES += $(call admfiles,CSWrapidsvn,depend prototype)
 # DISTFILES += $(call admfiles,CSWsvncpp,depend prototype)
 
+PATCHFILES  = 0001-Use-explicit-constructor-for-wxString.patch
+PATCHFILES += 0002-Make-sure-to-pass-norunpath-through-libtool.patch
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGES = CSWrapidsvn CSWlibsvncpp3
+
+CATALOGNAME_CSWrapidsvn = rapidsvn
+CATALOGNAME_CSWlibsvncpp3 = libsvncpp3
+
+SPKG_DESC_CSWrapidsvn = $(DESCRIPTION)
+SPKG_DESC_CSWlibsvncpp3 = Subversion C++ language binding
+
 SPKG_SOURCEURL = http://rapidsvn.tigris.org/
+
 BUILD_DEP_PKGS = CSWsvn-devel CSWapache2-devel
 
-# RapidSVN 0.9.1 omits the manpage from the dist archive
-# DISTFILES += rapidsvn.xml
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWwxwidgetscommon
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWapr
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWwxwidgetsgtk2
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWexpat
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWbdb48
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWncurses
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWapr-util
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWsunmath
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWiconv
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWlibsvncpp3
+RUNTIME_DEP_PKGS_CSWrapidsvn += CSWsvn
 
-# Remove gcc C/CXXFLAGS, and fix autoconf tests
-# PATCHFILES += configure.diff
+BUILD_DEP_PKGS += CSWdocbookxsl
+DOCBOOK_MANPAGE = $(sharedstatedir)/sgml/docbook/xsl-stylesheets/manpages/docbook.xsl
 
-# This should be separated out of CSWkdelibsgcc
-# KSGML = $(prefix)/kde-gcc/share/apps/ksgmltools2
-# DOCBOOK_MANPAGE = $(KSGML)/docbook/xsl/manpages/docbook.xsl
+APR_CONFIG = $(bindir)/apr-1-config
+APU_CONFIG = $(bindir)/apu-1-config
+SVNLIBDIR = $(libdir)/svn
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-apr-config=$(prefix)/apache2/bin/apr-1-config
-CONFIGURE_ARGS += --with-apu-config=$(prefix)/apache2/bin/apu-1-config
-CONFIGURE_ARGS += --with-svn-lib=$(libdir)/svn
+CONFIGURE_ARGS += --with-apr-config=$(APR_CONFIG)
+CONFIGURE_ARGS += --with-apu-config=$(APU_CONFIG)
+CONFIGURE_ARGS += --with-svn-lib=$(SVNLIBDIR)
 CONFIGURE_ARGS += --with-svn-include=$(includedir)
-# CONFIGURE_ARGS += --with-docbook-xsl-manpages=$(DOCBOOK_MANPAGE)
+CONFIGURE_ARGS += --with-docbook-xsl-manpages=$(DOCBOOK_MANPAGE)
 
-# EXTRA_LIB = $(prefix)/bdb43/lib $(SVNLIB)
-# EXTRA_INC = $(prefix)/bdb43/include
+# This must match the apr bdb binding. We need this to make sure
+# libdb.so is found at the correct place.
+EXTRA_LIB = $(SVNLIBDIR) $(prefix)/bdb48/lib
 
 TEST_TARGET = check
 
+PKGFILES_CSWlibsvncpp3 = $(PKGFILES_RT)
+PKGFILES_CSWlibsvncpp3 += $(PKGFILES_DEVEL)
+
+# We don't have a devel package
+CHECKPKG_OVERRIDES_CSWlibsvncpp3 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libsvncpp.so
+
 include gar/category.mk
 
-# pre-configure:
-# 	@echo " ==> Regenerating build tools..."
-# 	@(cd $(WORKSRC) ; \
-# 		aclocal                       && \
-# 		autoconf                      && \
-# 		libtoolize --automake --force && \
-# 		aclocal                       && \
-# 		automake -a )
-# 	@$(MAKECOOKIE)
-
-# pre-build:
-# 	@cp $(WORKDIR)/rapidsvn.xml $(WORKSRC)/doc/manpage
-
-# post-install:
-# 	install -d $(DESTDIR)$(mandir)/man1
-# 	( cd $(WORKSRC)/doc/manpage ; make manpage-yes )
-# 	install $(WORKSRC)/doc/manpage/rapidsvn.1 $(DESTDIR)$(mandir)/man1
-# 	@$(MAKECOOKIE)
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(mandir)/man1
+	ginstall $(WORKSRC)/doc/manpage/rapidsvn.1 $(DESTDIR)$(mandir)/man1
+	@$(MAKECOOKIE)
 
