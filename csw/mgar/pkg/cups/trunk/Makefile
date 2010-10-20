@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = cups
-GARVERSION = 1.4.3
+GARVERSION = 1.4.4
 CATEGORIES = net
 
 define BLURB
@@ -71,7 +71,12 @@ BUILD_DEP_PKGS += SUNWslpu
 
 UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
 
-PACKAGES  = CSWlibcups CSWcupsd CSWcupsclient CSWcupsdoc CSWcupsdev CSWcups
+PACKAGES += CSWlibcups
+PACKAGES += CSWcupsd
+PACKAGES += CSWcupsclient
+PACKAGES += CSWcupsdoc
+PACKAGES += CSWcupsdev
+PACKAGES += CSWcups
 PACKAGES += CSWcupslinks
 
 INCOMPATIBLE_PKGS_CSWcupslinks = SUNWpcr SUNWpcu
@@ -80,25 +85,16 @@ ARCHALL_CSWcups      = 1
 ARCHALL_CSWcupslinks = 1
 ARCHALL_CSWcupsdoc   = 1
 
-RUNTIME_DEP_PKGS_CSWcups  = CSWcupsd CSWcupsclient
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWgnutls
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups
+RUNTIME_DEP_PKGS_CSWcups += CSWcupsd
+RUNTIME_DEP_PKGS_CSWcups += CSWcupsclient
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
-RUNTIME_DEP_PKGS_CSWcupsd += CSWgnutls
 RUNTIME_DEP_PKGS_CSWcupsd += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcups
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus
-RUNTIME_DEP_PKGS_CSWcupsd += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWcupsd += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibcups += CSWgnutls
-RUNTIME_DEP_PKGS_CSWlibcups += CSWjpeg
-RUNTIME_DEP_PKGS_CSWlibcups += CSWpng
-RUNTIME_DEP_PKGS_CSWlibcups += CSWtiff
-RUNTIME_DEP_PKGS_CSWlibcups += CSWzlib
 RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcups
 
 
-PKGFILES_CSWlibcups  = $(libdir)/libcups.*
+PKGFILES_CSWlibcups  = NONE
 PKGFILES_CSWcupsdoc  = $(datadir)/doc
 PKGFILES_CSWcupsdoc += $(datadir)/doc/.*
 PKGFILES_CSWcupsdoc += $(datadir)/cups/examples.*
@@ -107,6 +103,12 @@ PKGFILES_CSWcupsdev += $(mandir)/man1/cups-config.1
 PKGFILES_CSWcupsdev += $(bindir)/cups-config
 PKGFILES_CSWcupsdev += $(datadir)/cups/ppdc.*
 PKGFILES_CSWcupsdev += $(datadir)/cups/drv.*
+PKGFILES_CSWcupsdev += $(libdir)/libcups.so
+PKGFILES_CSWcupsdev += $(libdir)/libcupscgi.so
+PKGFILES_CSWcupsdev += $(libdir)/libcupsdriver.so
+PKGFILES_CSWcupsdev += $(libdir)/libcupsimage.so
+PKGFILES_CSWcupsdev += $(libdir)/libcupsmime.so
+PKGFILES_CSWcupsdev += $(libdir)/libcupsppdc.so
 PKGFILES_CSWcupsd += $(sysconfdir)/init\.d/.*
 PKGFILES_CSWcupsd += $(sysconfdir)/rc.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/cupsd.*
@@ -153,12 +155,105 @@ PKGFILES_CSWcupslinks  = /usr/sbin/.*
 PKGFILES_CSWcupslinks += /usr/bin/.*
 
 SPKG_DESC_CSWcups       = Common Unix Printing System
-SPKG_DESC_CSWlibcups    = CUPS libraries
+SPKG_DESC_CSWlibcups    = Empty transitional package (was: CUPS libraries)
 SPKG_DESC_CSWcupsd      = CUPS daemon
 SPKG_DESC_CSWcupsclient = CUPS client binaries
 SPKG_DESC_CSWcupsdoc    = CUPS documentation
 SPKG_DESC_CSWcupsdev    = CUPS header files
 SPKG_DESC_CSWcupslinks  = Drop-in replacement for SUNWpcu and SUNWpcr
+
+# Packages compliant with the shared library policy.
+PACKAGES += CSWlibcups2
+CATALOGNAME_CSWlibcups2 = libcups2
+PKGFILES_CSWlibcups2 += /opt/csw/lib/libcups.so.2
+PKGFILES_CSWlibcups2 += /opt/csw/lib/libcups.so.2\.[0-9\.]+
+SPKG_DESC_CSWlibcups2 += CUPS libraries, libcups.so.2
+RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcups2
+PACKAGES += CSWlibcupscgi1
+CATALOGNAME_CSWlibcupscgi1 = libcupscgi1
+PKGFILES_CSWlibcupscgi1 += /opt/csw/lib/libcupscgi.so.1
+PKGFILES_CSWlibcupscgi1 += /opt/csw/lib/libcupscgi.so.1\.[0-9\.]+
+SPKG_DESC_CSWlibcupscgi1 += CUPS libraries, libcupscgi.so.1
+RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcupscgi1
+PACKAGES += CSWlibcupsdriver1
+CATALOGNAME_CSWlibcupsdriver1 = libcupsdriver1
+PKGFILES_CSWlibcupsdriver1 += /opt/csw/lib/libcupsdriver.so.1
+PKGFILES_CSWlibcupsdriver1 += /opt/csw/lib/libcupsdriver.so.1\.[0-9\.]+
+SPKG_DESC_CSWlibcupsdriver1 += CUPS libraries, libcupsdriver.so.1
+RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcupsdriver1
+PACKAGES += CSWlibcupsimage2
+CATALOGNAME_CSWlibcupsimage2 = libcupsimage2
+PKGFILES_CSWlibcupsimage2 += /opt/csw/lib/libcupsimage.so.2
+PKGFILES_CSWlibcupsimage2 += /opt/csw/lib/libcupsimage.so.2\.[0-9\.]+
+SPKG_DESC_CSWlibcupsimage2 += CUPS libraries, libcupsimage.so.2
+RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcupsimage2
+PACKAGES += CSWlibcupsmime1
+CATALOGNAME_CSWlibcupsmime1 = libcupsmime1
+PKGFILES_CSWlibcupsmime1 += /opt/csw/lib/libcupsmime.so.1
+PKGFILES_CSWlibcupsmime1 += /opt/csw/lib/libcupsmime.so.1\.[0-9\.]+
+SPKG_DESC_CSWlibcupsmime1 += CUPS libraries, libcupsmime.so.1
+RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcupsmime1
+PACKAGES += CSWlibcupsppdc1
+CATALOGNAME_CSWlibcupsppdc1 = libcupsppdc1
+PKGFILES_CSWlibcupsppdc1 += /opt/csw/lib/libcupsppdc.so.1
+PKGFILES_CSWlibcupsppdc1 += /opt/csw/lib/libcupsppdc.so.1\.[0-9\.]+
+SPKG_DESC_CSWlibcupsppdc1 += CUPS libraries, libcupsppdc.so.1
+RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcupsppdc1
+
+RUNTIME_DEP_PKGS_CSWlibcups += CSWosslrt
+RUNTIME_DEP_PKGS_CSWcupsd += CSWosslrt
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWosslrt
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcupsimage2
+
+ARCHALL_CSWlibcups = 1
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsppdc1
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupscgi1
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsdriver1
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsmime1
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsimage2
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWtiff
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWpng
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWjpeg
+RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibcups2
+
+# Since CSWlibcups is an empty transitional package
+CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcupsppdc1
+CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcupsdriver1
+CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcups2
+CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcupsmime1
+CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcupsimage2
+CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWosslrt
+CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcupscgi1
+
+# The development package needs all the libraries
+RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupsppdc1
+RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupsdriver1
+RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupsmime1
+RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupsimage2
+RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupscgi1
+
+# ...and the overrides:
+CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupsppdc1
+CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupsdriver1
+CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcups2
+CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupsmime1
+CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupsimage2
+CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupscgi1
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 SAMPLECONF_CSWcupsd       = $(sysconfdir)/cups/cupsd\.conf\.CSW
@@ -218,7 +313,7 @@ CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsd
 # The following overrides are necessary because of a bug in krb5-config, please
 # see bug http://www.opencsw.org/bugtrack/view.php?id=4384
 CHECKPKG_OVERRIDES_CSWcupsd += bad-rpath-entry|/opt/csw/lib/|opt/csw/sbin/cupsd
-CHECKPKG_OVERRIDES_CSWlibcups += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libcups.so.2
+CHECKPKG_OVERRIDES_CSWlibcups2 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libcups.so.2
 
 include gar/category.mk
 
