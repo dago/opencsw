@@ -1,0 +1,25 @@
+From 8091f955a87fa70dbdd5427019378f1e3145d28a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 20 Oct 2010 12:48:10 +0200
+Subject: [PATCH] Use explicit constructor for wxString
+
+---
+ src/verblist.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/verblist.cpp b/src/verblist.cpp
+index 4cda14f..1a99e46 100644
+--- a/src/verblist.cpp
++++ b/src/verblist.cpp
+@@ -71,7 +71,7 @@ VerbList::GetCount() const
+ const wxString &
+ VerbList::GetName(size_t /*index*/) const
+ {
+-  return wxT("");
++  return wxString(wxT(""));
+ }
+ 
+ 
+-- 
+1.7.3
+
