@@ -54,7 +54,7 @@ SPKG_SOURCEURL = http://www.openldap.org
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-EXTRA_DOCS = README.CSW $(PATCHFILES)
+EXTRA_DOCS = README.CSW $(PATCHFILES) openldaprc
 
 EXTRA_LIB_garversion-2.3.43 = $(prefix)/bdb44/lib 
 EXTRA_INC_garversion-2.3.43 = $(prefix)/bdb44/include
@@ -147,5 +147,5 @@ DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 post-merge:
 	ginstall -D $(DOWNLOADDIR)/cswopenldap \
 		$(PKGROOT)/opt/csw/etc/init.d/cswopenldap
-	$(foreach F,$(EXTRA_DOCS),ginstall -D $(DOWNLOADDIR)/$F $(PKGROOT)$(docdir)/$(GARNAME)/$F;)
+	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(DOWNLOADDIR)/$F $(PKGROOT)$(docdir)/$(GARNAME)/$F;)
 	@$(MAKECOOKIE)
