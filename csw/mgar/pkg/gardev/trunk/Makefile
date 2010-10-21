@@ -31,7 +31,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-CHECKPKG_OVERRIDES_CSWgardevel += unidentified-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWgardevel += archall-devel-package
 CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWlftp
 CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWgmake
 CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWgsed
