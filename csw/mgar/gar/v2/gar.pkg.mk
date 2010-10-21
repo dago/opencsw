@@ -286,10 +286,11 @@ isadirs = $(foreach ISA,$(ISALIST),$(1)/$(subst +,\+,$(subst -,\-,$(ISA)))/$(2))
 baseisadirs = $(1)/$(2) $(call isadirs,$(1),$(2))
 
 # PKGFILES_RT selects files belonging to a runtime package
-PKGFILES_RT += $(call baseisadirs,$(libdir),[^/]*\.so(\.\d+)*)
+PKGFILES_RT += $(call baseisadirs,$(libdir),[^/]*\.so\.\d+(\.\d+)*)
 
 # PKGFILES_DEVEL selects files belonging to a developer package
 PKGFILES_DEVEL += $(call baseisadirs,$(bindir),[^/]*-config)
+PKGFILES_DEVEL += $(call baseisadirs,$(libdir),[^/]*\.so)
 PKGFILES_DEVEL += $(call baseisadirs,$(libdir),[^/]*\.(a|la))
 PKGFILES_DEVEL += $(call baseisadirs,$(libdir),pkgconfig(/.*)?)
 PKGFILES_DEVEL += $(includedir)/.*
