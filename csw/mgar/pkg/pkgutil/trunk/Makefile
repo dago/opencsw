@@ -2,7 +2,7 @@
 # svn co -r 9999 https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 gar
 
 GARNAME = pkgutil
-GARVERSION = 2.2b1
+GARVERSION = 2.2
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
