@@ -20,6 +20,9 @@ RUNTIME_DEP_PKGS_CSWgardevel  = CSWgmake CSWgtar CSWggrep CSWdiffutils
 RUNTIME_DEP_PKGS_CSWgardevel += CSWwget CSWfindutils CSWgsed CSWcoreutils
 RUNTIME_DEP_PKGS_CSWgardevel += CSWgawk CSWbzip2 CSWlftp CSWgit CSWnetcat
 RUNTIME_DEP_PKGS_CSWgardevel += CSWsvn CSWpython CSWpy-cheetah
+RUNTIME_DEP_PKGS_CSWgardevel += CSWxz CSWgfile CSWpy-hachoir-core
+RUNTIME_DEP_PKGS_CSWgardevel += CSWpy-hachoir-parser CSWpy-libmagic
+RUNTIME_DEP_PKGS_CSWgardevel += CSWpy-progressbar CSWpy-sqlobject CSWpy-yaml
 
 MASTER_SITES = 
 
@@ -45,6 +48,14 @@ CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWgit
 CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWgawk
 CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWdiffutils
 CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWnetcat
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWxz
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWgfile
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWpy-hachoir-core
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWpy-hachoir-parser
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWpy-libmagic
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWpy-progressbar
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWpy-sqlobject
+CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWpy-yaml
 
 include gar/category.mk
 
