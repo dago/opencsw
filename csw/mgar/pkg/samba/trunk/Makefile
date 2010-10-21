@@ -1,5 +1,5 @@
 GARNAME = samba
-GARVERSION = 3.4.3
+GARVERSION = 3.5.6
 CATEGORIES = apps
 
 DESCRIPTION = Tools to access a servers filespace and printers via SMB (server)
