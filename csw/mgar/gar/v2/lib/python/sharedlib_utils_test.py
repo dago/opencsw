@@ -191,6 +191,9 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
 
+
+class MakePackageNameBySonameUnitTest(unittest.TestCase):
+
   def testSanitizeWithChar(self):
     self.assertEqual("foo_0", su.SanitizeWithChar("foo-0", "_"))
 
