@@ -10,6 +10,10 @@
 # def CheckSomething(pkg_data, error_mgr, logger, messenger):
 #   logger.debug("Checking something.")
 #   error_mgr.ReportError("something-is-wrong")
+#
+# TODO(maciej): In general, the development package should depend on all the libraries.
+# TODO(maciej): If foo.so links to foo.so.1, the devel package should depend on
+#               the library package.
 
 import copy
 import re
