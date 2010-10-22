@@ -241,6 +241,9 @@ class DirectoryFormatPackage(ShellMixin, object):
     self.file_paths = None
     self.files_metadata = None
 
+  def __repr__(self):
+    return u"<DirectoryFormatPackage directory=%s>" % repr(self.directory)
+
   def GetCatalogname(self):
     """Returns the catalog name of the package.
 
