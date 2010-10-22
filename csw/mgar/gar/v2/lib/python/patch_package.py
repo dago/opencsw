@@ -5,6 +5,7 @@
 # Usage:
 # patchpkg --dir /tmp/foo --patch foo.patch --catalogname foo
 
+import datetime
 import optparse
 import logging
 import package
@@ -56,8 +57,11 @@ class PackageSurgeon(package.ShellMixin):
     self.Transform()
     pkginfo = self.dir_pkg.GetParsedPkginfo()
     # version = pkginfo["VERSION"]
-    pprint.pprint(pkginfo)
+    date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+    self.parsed_filename["revision_info"]["REV"] = date_str
+    new_filename = opencsw.ComposePackageFileName(self.parsed_filename)
     pprint.pprint(self.parsed_filename)
+    pprint.pprint(new_filename)
 
 
 def main():

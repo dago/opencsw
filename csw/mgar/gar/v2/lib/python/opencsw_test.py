@@ -157,6 +157,14 @@ class ParsePackageFileNameTest_2(unittest.TestCase):
     self.assertEqual("unspecified", parsed["osrel"])
 
 
+class ComposePackageFileNameUnitTest(unittest.TestCase):
+
+  def testSimple(self):
+    file_name = 'mysql5client-5.0.87,REV=2010.02.28-SunOS5.8-i386-CSW.pkg.gz'
+    parsed = opencsw.ParsePackageFileName(file_name)
+    self.assertEquals(file_name, opencsw.ComposePackageFileName(parsed))
+
+
 class ParseVersionStringTest(unittest.TestCase):
 
   def test_NoRev(self):

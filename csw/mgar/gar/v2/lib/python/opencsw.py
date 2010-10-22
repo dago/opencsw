@@ -116,6 +116,18 @@ def ParsePackageFileName(p):
   return data
 
 
+def ComposePackageFileName(parsed_filename):
+  file_name = 'mysql5client-5.0.87,REV=2010.02.28-SunOS5.8-i386-CSW.pkg.gz'
+  tmpl = "%(catalogname)s-%(new_version)s-%(osrel)s-%(arch)s-%(vendortag)s.pkg.gz"
+  version_string = parsed_filename["version"]
+  revision_info = parsed_filename["revision_info"]
+  for key in sorted(revision_info.keys()):
+    version_string += ",%s=%s" % (key, revision_info[key])
+  new_data = copy.copy(parsed_filename)
+  new_data["new_version"] = version_string
+  return tmpl % new_data
+
+
 def ParseVersionString(s):
   version_bits = re.split("_|,", s)
   version_str = version_bits[0]
