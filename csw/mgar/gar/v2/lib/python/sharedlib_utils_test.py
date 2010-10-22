@@ -146,6 +146,54 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
 
+  def testMakePackageNameBySonameMoreDot(self):
+    soname = "libgettextlib-0.14.1.so"
+    expected = (
+        ['CSWlibgettextlib-0-14-1'],
+        ['libgettextlib_0_14_1'],
+    )
+    self.assertEqual(expected,
+                     su.MakePackageNameBySoname(soname))
+
+  def testMakePackageNameBySonameComplexApr(self):
+    soname = "libapr-1.so.10.0.0"
+    expected = (
+       ['CSWlibapr-110', 'CSWlibapr-1-10'],
+       ['libapr_110', 'libapr_1_10']
+    )
+    self.assertEqual(expected,
+                     su.MakePackageNameBySoname(soname))
+
+  def testMakePackageNameBySonamePlus(self):
+    soname = "libstdc++.so.6"
+    expected = (
+       ['CSWlibstdc++6', 'CSWlibstdc++-6'],
+       ['libstdc++6', 'libstdc++_6']
+    )
+    self.assertEqual(expected,
+                     su.MakePackageNameBySoname(soname))
+
+  def testMakePackageNameBySonamePlus(self):
+    soname = "libdnet.1"
+    expected = (
+       ['CSWlibdnet1', 'CSWlibdnet-1'],
+       ['libdnet1', 'libdnet_1']
+    )
+    self.assertEqual(expected,
+                     su.MakePackageNameBySoname(soname))
+
+  def testMakePackageNameUppercase(self):
+    soname = "libUpperCase.so.1"
+    expected = (
+       ['CSWlibuppercase1', 'CSWlibuppercase-1'],
+       ['libuppercase1', 'libuppercase_1']
+    )
+    self.assertEqual(expected,
+                     su.MakePackageNameBySoname(soname))
+
+  def testSanitizeWithChar(self):
+    self.assertEqual("foo_0", su.SanitizeWithChar("foo-0", "_"))
+
 
 class MakePackageNameBySonameUnitTest(unittest.TestCase):
 
