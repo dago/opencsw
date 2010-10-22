@@ -159,10 +159,26 @@ class ParsePackageFileNameTest_2(unittest.TestCase):
 
 class ComposePackageFileNameUnitTest(unittest.TestCase):
 
+  def setUp(self):
+    self.parsed = {'arch': 'i386',
+                   'catalogname': 'mysql5client',
+                   'full_version_string': '5.0.87,REV=2010.02.28',
+                   'osrel': 'SunOS5.8',
+                   'revision_info': {'REV': '2010.02.28'},
+                   'vendortag': 'CSW',
+                   'version': '5.0.87',
+                   'version_info': {'major version': '5',
+                                    'minor version': '0',
+                                    'patchlevel': '87'}}
+
   def testSimple(self):
     file_name = 'mysql5client-5.0.87,REV=2010.02.28-SunOS5.8-i386-CSW.pkg.gz'
-    parsed = opencsw.ParsePackageFileName(file_name)
-    self.assertEquals(file_name, opencsw.ComposePackageFileName(parsed))
+    self.assertEquals(file_name, opencsw.ComposePackageFileName(self.parsed))
+
+  def testMoreRev(self):
+    file_name = 'mysql5client-5.0.87,REV=2010.02.28,foo=bar-SunOS5.8-i386-CSW.pkg.gz'
+    self.parsed["revision_info"]["foo"] = "bar"
+    self.assertEquals(file_name, opencsw.ComposePackageFileName(self.parsed))
 
 
 class ParseVersionStringTest(unittest.TestCase):
