@@ -590,3 +590,58 @@ class PackageComparator(object):
       less_proc.wait()
     else:
       print "No differences found."
+
+
+class PackageSurgeon(ShellMixin):
+  """Takes an OpenCSW gzipped package and performs surgery on it.
+
+  Sows it up, adjusts checksums, and puts it back together.
+  """
+
+  def __init__(self, pkg_path, debug):
+    self.debug = debug
+    self.pkg_path = pkg_path
+    self.srv4 = CswSrv4File(pkg_path)
+    self.dir_pkg = None
+    self.exported_dir = None
+    self.parsed_filename = opencsw.ParsePackageFileName(self.pkg_path)
+
+  def Transform(self):
+    if not self.dir_pkg:
+      self.dir_pkg = self.srv4.GetDirFormatPkg()
+      logging.debug(repr(self.dir_pkg))
+      # subprocess.call(["tree", self.dir_pkg.directory])
+
+  def Export(self, dest_dir):
+    self.Transform()
+    if not self.exported_dir:
+      basedir, pkgname = os.path.split(self.dir_pkg.directory)
+      self.exported_dir = os.path.join(dest_dir, pkgname)
+      shutil.copytree(
+          self.dir_pkg.directory,
+          self.exported_dir)
+      subprocess.call(["git", "init"], cwd=self.exported_dir)
+      subprocess.call(["git", "add", "."], cwd=self.exported_dir)
+      subprocess.call(["git", "commit", "-a", "-m", "Initial commit"],
+                      cwd=self.exported_dir)
+    else:
+      logging.warn("The package was already exported to %s",
+                   self.exported_dir)
+
+  def Patch(self, patch_file):
+    self.Transform()
+    args = ["gpatch", "-p", "1", "-d", self.dir_pkg.directory, "-i", patch_file]
+    logging.debug(args)
+    subprocess.call(args)
+
+  def ToSrv4(self, dest_dir):
+    self.Transform()
+    pkginfo = self.dir_pkg.GetParsedPkginfo()
+    date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+    self.parsed_filename["revision_info"]["REV"] = date_str
+    new_filename = opencsw.ComposePackageFileName(self.parsed_filename)
+    # Plan:
+    # - Update the version in the pkginfo
+    # - Update the pkgmap file, setting the checksums
+    # - Transform it back to the srv4 form
+    # - gzip it.
