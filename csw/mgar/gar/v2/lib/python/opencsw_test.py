@@ -172,11 +172,11 @@ class ComposePackageFileNameUnitTest(unittest.TestCase):
                                     'patchlevel': '87'}}
 
   def testSimple(self):
-    file_name = 'mysql5client-5.0.87,REV=2010.02.28-SunOS5.8-i386-CSW.pkg.gz'
+    file_name = 'mysql5client-5.0.87,REV=2010.02.28-SunOS5.8-i386-CSW.pkg'
     self.assertEquals(file_name, opencsw.ComposePackageFileName(self.parsed))
 
   def testMoreRev(self):
-    file_name = 'mysql5client-5.0.87,REV=2010.02.28,foo=bar-SunOS5.8-i386-CSW.pkg.gz'
+    file_name = 'mysql5client-5.0.87,REV=2010.02.28_foo=bar-SunOS5.8-i386-CSW.pkg'
     self.parsed["revision_info"]["foo"] = "bar"
     self.assertEquals(file_name, opencsw.ComposePackageFileName(self.parsed))
 
