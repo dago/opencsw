@@ -125,8 +125,12 @@ def ComposePackageFileName(parsed_filename):
   tmpl = "%(catalogname)s-%(new_version)s-%(osrel)s-%(arch)s-%(vendortag)s.pkg"
   version_string = parsed_filename["version"]
   revision_info = parsed_filename["revision_info"]
-  for key in sorted(revision_info.keys()):
-    version_string += ",%s=%s" % (key, revision_info[key])
+  if revision_info:
+    version_string += ","
+    rev_lst = []
+    for key in sorted(revision_info.keys()):
+      rev_lst.append("%s=%s" % (key, revision_info[key]))
+    version_string += "_".join(rev_lst)
   new_data = copy.copy(parsed_filename)
   new_data["new_version"] = version_string
   return tmpl % new_data
