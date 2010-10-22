@@ -100,7 +100,7 @@ class CswSrv4File(ShellMixin, object):
       pkg_suffix = ".pkg"
       if self.pkg_path.endswith("%s%s" % (pkg_suffix, gzip_suffix)):
         # Causing the class to stat the .gz file.  This call throws away the
-        # result, but the result will be cached as a class instance member.
+        # result, but the result will be cached as a object member.
         self.GetMtime()
         base_name_gz = os.path.split(self.pkg_path)[1]
         shutil.copy(self.pkg_path, self.GetWorkDir())
@@ -264,8 +264,11 @@ class DirectoryFormatPackage(ShellMixin, object):
     """Guesses the Srv4FileName based on the package directory contents."""
     return opencsw.PkginfoToSrv4Name(self.GetParsedPkginfo())
 
-  def ToSrv4(self, target_dir):
-    target_file_name = self.GetSrv4FileName()
+  def ToSrv4(self, target_dir, file_name=None):
+    if not file_name:
+      target_file_name = self.GetSrv4FileName()
+    else:
+      target_file_name = file_name
     target_path = os.path.join(target_dir, target_file_name)
     if os.path.exists(target_path):
       return target_path
@@ -637,11 +640,18 @@ class PackageSurgeon(ShellMixin):
   def ToSrv4(self, dest_dir):
     self.Transform()
     pkginfo = self.dir_pkg.GetParsedPkginfo()
-    date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+    date_str = datetime.datetime.now().strftime("%Y.%m.%d")
     self.parsed_filename["revision_info"]["REV"] = date_str
     new_filename = opencsw.ComposePackageFileName(self.parsed_filename)
     # Plan:
     # - Update the version in the pkginfo
+    version_string = opencsw.ComposeVersionString(
+        self.parsed_filename["version"],
+        self.parsed_filename["revision_info"])
+    logging.debug("New version string: %s", repr(version_string))
+    self.dir_pkg.SetPkginfoEntry("VERSION", version_string)
     # - Update the pkgmap file, setting the checksums
     # - Transform it back to the srv4 form
-    # - gzip it.
+    target_dir, old_path = os.path.split(self.pkg_path)
+    logging.debug("Transforming into %s", new_filename)
+    self.dir_pkg.ToSrv4(target_dir, new_filename)
