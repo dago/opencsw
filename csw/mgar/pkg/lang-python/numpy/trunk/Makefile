@@ -3,17 +3,36 @@
 # $Id$
 
 GARNAME = numpy
-GARVERSION = 1.4.1
+GARVERSION = 1.5.1rc1
 CATEGORIES = python
-DESCRIPTION = The fundamental package needed for scientific computing with Python
+
+DESCRIPTION = Standard numerical array library for python
 define BLURB
+  numpy is the standard numerical array library for python, the successor
+  to Numeric and numarray. numpy provides fast operations for homogeneous
+  data sets and common mathematical operations like correlations, standard
+  deviation, fourier transforms, and convolutions.
 endef
+
 SPKG_SOURCEURL = http://numpy.scipy.org/
-PACKAGES = CSWpy-numpy
-CATALOGNAME_CSWpy-numpy = py_numpy
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-TEST_SCRIPTS =
+
+PACKAGES = CSWpy-numpy
+CATALOGNAME = py_numpy
+
+RUNTIME_DEP_PKGS_CSWpy-numpy += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-numpy += CSWss12f95rt
+RUNTIME_DEP_PKGS_CSWpy-numpy += CSWsunmath
+
 LICENSE = LICENSE.txt
+
+export ATLAS = None
+export BLAS = $(CC_HOME)/lib/libsunperf.so
+export LAPACK = $(libdir)/libsunmath.so
+
+TEST_SCRIPTS =
+INSTALL_ARGS += --root=$(DESTDIR)
+
 include gar/category.mk
