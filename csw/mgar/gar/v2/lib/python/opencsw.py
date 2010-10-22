@@ -117,8 +117,12 @@ def ParsePackageFileName(p):
 
 
 def ComposePackageFileName(parsed_filename):
-  file_name = 'mysql5client-5.0.87,REV=2010.02.28-SunOS5.8-i386-CSW.pkg.gz'
-  tmpl = "%(catalogname)s-%(new_version)s-%(osrel)s-%(arch)s-%(vendortag)s.pkg.gz"
+  """Composes package name, based on a parsed filename data structure.
+
+  Does not use the version_string property, but builds the version from
+  the basic version plus revision info.
+  """
+  tmpl = "%(catalogname)s-%(new_version)s-%(osrel)s-%(arch)s-%(vendortag)s.pkg"
   version_string = parsed_filename["version"]
   revision_info = parsed_filename["revision_info"]
   for key in sorted(revision_info.keys()):
