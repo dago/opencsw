@@ -49,22 +49,6 @@ def SanitizeWithChar(s, c):
   return c.join(parts).lower()
 
 
-
-def SanitizeWithChar(s, c):
-  parts = LEGIT_CHAR_RE.findall(s)
-  if "so" in parts:
-    parts.remove("so")
-  return c.join(parts).lower()
-
-
-
-def SanitizeWithChar(s, c):
-  parts = LEGIT_CHAR_RE.findall(s)
-  if "so" in parts:
-    parts.remove("so")
-  return c.join(parts).lower()
-
-
 def MakePackageNameBySoname(soname):
   """Find the package name based on the soname.
 
