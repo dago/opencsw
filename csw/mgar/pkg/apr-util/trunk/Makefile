@@ -50,4 +50,18 @@ CONFIGURE_ARGS += --without-freetds --without-sqlite2
 #   http://cvs.opensolaris.org/source/xref/sfw/usr/src/cmd/apr/apr-1.3/Makefile.sfw
 # for some unification.
 
+# add new checkpkg remarks for the moment to get security fix out
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbd_odbc.so
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbd_sqlite3.so
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbm_db.so
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_ldap.so
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libaprutil-1.so
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-pkgname-mismatch|file=opt/csw/lib/libaprutil-1.so.0.3.10|soname=libaprutil-1.so.0|pkgname=CSWapr-util|expected=['CSWlibaprutil-10',|'CSWlibaprutil-1-0']
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbd_odbc.so
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbd_sqlite3.so
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbm_db.so
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_ldap.so
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libaprutil-1.so
+
+
 include gar/category.mk
