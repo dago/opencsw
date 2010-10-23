@@ -18,6 +18,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += cswunbound
 DISTFILES += cswusergroup
 
+PATCHFILES += 0001-disable-default-cflags-on-sparc.patch
+
 SPKG_CLASSES = none cswusergroup cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswunbound$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/CSWunbound\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/unbound\/unbound.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
@@ -35,6 +37,7 @@ CONFIGUTE_ARGS += --with-solaris-threads
 CONFIGURE_ARGS += --with-ldns=/opt/csw
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-libevent=/opt/csw
+CONFIGURE_ARGS += --with-libexpat=/opt/csw
 CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
