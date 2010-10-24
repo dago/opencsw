@@ -76,17 +76,6 @@ EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
 PKGFILES_CSWbdb51doc = $(PKGFILES_DOC)
 PKGFILES_CSWbdb51devel = $(PKGFILES_DEVEL)
 
-CHECKPKG_OVERRIDES_CSWbdb51 += bad-rpath-entry|/lib|opt/csw/bdb51/lib/libdb_cxx-5.1.so
-CHECKPKG_OVERRIDES_CSWbdb51 += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bdb51/lib/libdb_cxx-5.1.so
-CHECKPKG_OVERRIDES_CSWbdb51 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib|opt/csw/bdb51/lib/libdb_cxx-5.1.so
-CHECKPKG_OVERRIDES_CSWbdb51 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7|opt/csw/bdb51/lib/libdb_cxx-5.1.so
-CHECKPKG_OVERRIDES_CSWbdb51 += bad-rpath-entry|/lib/64|opt/csw/bdb51/lib/amd64/libdb_cxx-5.1.so
-CHECKPKG_OVERRIDES_CSWbdb51 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/amd64|opt/csw/bdb51/lib/amd64/libdb_cxx-5.1.so
-CHECKPKG_OVERRIDES_CSWbdb51 += bad-rpath-entry|/opt/studio/SOS12/SUNWspro/lib/rw7/amd64|opt/csw/bdb51/lib/amd64/libdb_cxx-5.1.so
-CHECKPKG_OVERRIDES_CSWbdb51 += bad-rpath-entry|/usr/ccs/lib/amd64|opt/csw/bdb51/lib/amd64/libdb_cxx-5.1.so
-CHECKPKG_OVERRIDES_CSWbdb51 += bad-rpath-entry|/usr/lib/64|opt/csw/bdb51/lib/amd64/libdb_cxx-5.1.so
-
-
 include gar/category.mk
 
 LIBS += -lnsl
