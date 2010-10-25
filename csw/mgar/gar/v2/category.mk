@@ -2,8 +2,10 @@
 # This makefile is to be included from Makefiles in each category
 # directory.
 
-ifeq (,$(wildcard gar/categories/$(CATEGORIES)/category.mk))
-  $(error The category '$(CATEGORIES)' is invalid. Valid categories are $(patsubst gar/categories/%,%,$(wildcard gar/categories/*)))
+GARDIR ?= gar/
+
+ifeq (,$(wildcard $(GARDIR)/categories/$(CATEGORIES)/category.mk))
+  $(error The category '$(CATEGORIES)' is invalid. Valid categories are: $(patsubst $(GARDIR)/categories/%,%,$(wildcard $(GARDIR)/categories/*)))
 endif
 
-include gar/categories/$(CATEGORIES)/category.mk
+include $(GARDIR)/categories/$(CATEGORIES)/category.mk
