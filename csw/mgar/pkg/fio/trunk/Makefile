@@ -24,6 +24,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES += 0001-Honour-GAR-CFLAGS-and-use-inttypes.h-instead-of-stdi.patch
 PATCHFILES += 0002-Honor-prefix-when-installing-fio.patch
+PATCHFILES += 0003-Install-man-pages.patch
 
 # CLOCK_MONOTONIC undefined / not present on Solaris 9
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -42,6 +43,11 @@ include gar/category.mk
 
 # install target requires ginstall as install
 PATH := /opt/csw/gnu/:$(PATH)
+
+post-install-modulated:
+	mkdir -p $(PKGROOT)$(docdir)/fio/examples
+	cp $(WORKSRC)/examples/* $(PKGROOT)$(docdir)/fio/examples/
+	@$(MAKECOOKIE)
 
 # Install changelog.CSW
 post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
