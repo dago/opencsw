@@ -1,0 +1,28 @@
+From 447f5383adbdb2f23496bebd1cd38a0bd0f4289b Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Tue, 26 Oct 2010 01:48:43 +0200
+Subject: [PATCH] Honor GAR-provided default bindir and mandir
+
+... in particular mandir was not set according to our standards.
+---
+ Makefile.solaris |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.solaris b/Makefile.solaris
+index 76b2ed5..165a7a0 100644
+--- a/Makefile.solaris
++++ b/Makefile.solaris
+@@ -32,8 +32,8 @@ OBJS += engines/solarisaio.o
+ 
+ INSTALL = install
+ prefix ?= /usr/local
+-bindir = $(prefix)/bin
+-mandir = $(prefix)/man
++bindir ?= $(prefix)/bin
++mandir ?= $(prefix)/man
+ 
+ %.o: %.c
+ 	$(CC) -o $*.o -c $(CFLAGS) $<
+-- 
+1.7.3
+

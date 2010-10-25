@@ -25,6 +25,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 PATCHFILES += 0001-Honour-GAR-CFLAGS-and-use-inttypes.h-instead-of-stdi.patch
 PATCHFILES += 0002-Honor-prefix-when-installing-fio.patch
 PATCHFILES += 0003-Install-man-pages.patch
+PATCHFILES += 0004-Honor-GAR-provided-default-bindir-and-mandir.patch
 
 # CLOCK_MONOTONIC undefined / not present on Solaris 9
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
