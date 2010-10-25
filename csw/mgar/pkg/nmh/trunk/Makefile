@@ -1,0 +1,29 @@
+# $Id$
+GARNAME = nmh
+GARVERSION = 1.3
+CATEGORIES = apps
+
+DESCRIPTION = Powerful electronic mail handling system
+define BLURB
+ This is the nmh mail user agent, a command-line based mail reader that
+ is powerful and extensible. Unlike most mail user agents, nmh is not a
+ single program, rather it is a set of programs that are run from the
+ shell. This allows the user to utilize the full power of the Unix
+ shell in conjunction with nmh.
+endef
+
+MASTER_SITES = http://download.savannah.gnu.org/releases/$(GARNAME)/
+DISTFILES  = nmh-$(GARVERSION).tar.gz
+SPKG_SOURCEURL = http://www.nongnu.org/nmh/
+UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+
+RUNTIME_DEP_PKGS += CSWiconv
+PATCHFILES += 0000-skip-chgrp-of-inc.patch
+LICENSE = COPYRIGHT
+
+CONFIGURE_ARGS = --enable-pop --enable-masquerade='' --with-mts=sendmail \
+  --prefix=$(prefix) --mandir=$(mandir) --datadir=$(datadir)/nmh \
+  --libdir=$(libdir)/nmh --sysconfdir=$(sysconfdir)/nmh 
+TEST_SCRIPTS =
+
+include gar/category.mk
