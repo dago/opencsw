@@ -17,7 +17,6 @@ LICENSE = LICENSE
 
 BUILD_DEP_PKGS = CSWpython-devel CSWlibpq
 RUNTIME_DEP_PKGS_CSWpy-psycopg2 = CSWlibpython2-6-1-0 CSWlibpq
-CHECKPKG_OVERRIDES_CSWpy-psycopg2 += surplus-dependency|CSWlibpq
 
 MASTER_SITES = http://initd.org/psycopg/tarballs/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
