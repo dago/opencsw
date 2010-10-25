@@ -29,8 +29,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-# for libpq-fe.h
+# for libpq-fe.h and libpq
 EXTRA_CFLAGS = -I/opt/csw/postgresql/include
+EXTRA_LDFLAGS = -L/opt/csw/postgresql/lib -R/opt/csw/postgresql/lib
 
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
