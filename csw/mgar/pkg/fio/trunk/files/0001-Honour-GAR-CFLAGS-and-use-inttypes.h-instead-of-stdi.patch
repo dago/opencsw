@@ -1,0 +1,51 @@
+From 1cb080dfc54133ed065f877c8dc8a03296822003 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Mon, 25 Oct 2010 19:27:38 +0200
+Subject: [PATCH] Honour GAR CFLAGS and use inttypes.h instead of stdint.h (missing on Sol9)
+
+---
+ Makefile.solaris |    2 +-
+ crc/md5.c        |    2 +-
+ crc/md5.h        |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.solaris b/Makefile.solaris
+index e7ff53c..571bfb9 100644
+--- a/Makefile.solaris
++++ b/Makefile.solaris
+@@ -1,5 +1,5 @@
+ CC	= gcc
+-CFLAGS	= -Wall -O2 -g -D_GNU_SOURCE -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DFIO_INC_DEBUG
++CFLAGS	:= $(CFLAGS) -D_GNU_SOURCE -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DFIO_INC_DEBUG
+ PROGS	= fio
+ SCRIPTS = fio_generate_plots
+ OBJS = gettime.o fio.o ioengines.o init.o stat.o log.o time.o filesetup.o \
+diff --git a/crc/md5.c b/crc/md5.c
+index 8f9adb2..fd49cf1 100644
+--- a/crc/md5.c
++++ b/crc/md5.c
+@@ -2,7 +2,7 @@
+  * Shamelessly lifted from the 2.6 kernel (crypto/md5.c)
+  */
+ #include <string.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include "md5.h"
+ 
+ static void md5_transform(uint32_t *hash, uint32_t const *in)
+diff --git a/crc/md5.h b/crc/md5.h
+index 6747d30..04c8ad1 100644
+--- a/crc/md5.h
++++ b/crc/md5.h
+@@ -1,7 +1,7 @@
+ #ifndef MD5_H
+ #define MD5_H
+ 
+-#include <stdint.h>
++#include <inttypes.h>
+ 
+ #define MD5_DIGEST_SIZE		16
+ #define MD5_HMAC_BLOCK_SIZE	64
+-- 
+1.7.3
+
