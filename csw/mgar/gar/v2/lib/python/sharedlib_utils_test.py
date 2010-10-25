@@ -56,22 +56,30 @@ class UtilitiesUnitTest(unittest.TestCase):
       "opt/csw/share/Adobe/Reader8/Reader/sparcsolaris/lib"
       "/libcrypto.so.0.9.6"))
 
+  def testIsLibraryLinkableInPrefix(self):
+    """This could be considered linkable.
+    
+    Reason: It has the form of "/opt/csw/foo/lib/libfoo.so.1"."""
+    self.assertEqual(False, su.IsLibraryLinkable(
+      "opt/csw/boost-gcc/lib"
+      "/libboost_wserialization.so.1.44.0"))
+
 
 class MakePackageNameBySonameUnitTest(unittest.TestCase):
 
   def testMakePackageNameBySonameSimple(self):
     soname = "libfoo.so.0"
     expected = (
-        ["CSWlibfoo0", "CSWlibfoo-0"],
-        ["libfoo0", "libfoo_0"],
+        ["CSWlibfoo0"],
+        ["libfoo0"],
     )
     self.assertEqual(expected, su.MakePackageNameBySoname(soname))
 
   def testMakePackageNameBySonameMinorVersion(self):
     soname = "libfoo.so.0.1"
     expected = (
-        ["CSWlibfoo0-1", "CSWlibfoo-0-1"],
-        ["libfoo0_1", "libfoo_0_1"],
+        ["CSWlibfoo0-1"],
+        ["libfoo0_1"],
     )
     self.assertEqual(expected, su.MakePackageNameBySoname(soname))
 
@@ -143,6 +151,12 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
     expected = (
         ['CSWlibgettextlib-0-14-1'],
         ['libgettextlib_0_14_1'],
+
+  def testMakePackageNameDashesNoDashes(self):
+    soname = "libpyglib-2.0-python.so.0"
+    expected = (
+       ['CSWlibpyglib2-0python0'],
+       ['libpyglib2_0python0'],
     )
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
@@ -195,6 +209,15 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
   def testSanitizeWithChar(self):
     self.assertEqual("foo_0", su.SanitizeWithChar("foo-0", "_"))
 
+  def testSonameToStringWithCharAlphaDigit(self):
+    self.assertEqual("foo0", su.SonameToStringWithChar("foo-0", "_"))
+
+  def testSonameToStringWithCharDigitDigit(self):
+    self.assertEqual("foo0_0", su.SonameToStringWithChar("foo-0-0", "_"))
+
+  def testSonameToStringWithCharDigitDigit(self):
+    self.assertEqual("foo_bar0_0", su.SonameToStringWithChar("foo-bar-0-0", "_"))
+
 
 class GetCommonVersionUnitTest(unittest.TestCase):
 
@@ -220,24 +243,24 @@ class MakePackageNameBySonameCollectionUnitTest(unittest.TestCase):
   def testMakePackageNameBySonameCollectionTwo(self):
     sonames = ["libfoo.so.0", "libfoo_util.so.0"]
     expected = (
-        ["CSWlibfoo0", "CSWlibfoo-0"],
-        ["libfoo0", "libfoo_0"],
+        ["CSWlibfoo0"],
+        ["libfoo0"],
     )
     self.assertEqual(expected, su.MakePackageNameBySonameCollection(sonames))
 
   def testMakePackageNameBySonameCollectionRepeated(self):
     sonames = ["libfoo.so.0", "libfoo.so.0"]
     expected = (
-        ["CSWlibfoo0", "CSWlibfoo-0"],
-        ["libfoo0", "libfoo_0"],
+        ["CSWlibfoo0"],
+        ["libfoo0"],
     )
     self.assertEqual(expected, su.MakePackageNameBySonameCollection(sonames))
 
   def testMakePackageNameBySonameCollectionBdb(self):
     sonames = ["libfoo.so.0", "libfoo_util.so.0"]
     expected = (
-        ["CSWlibfoo0", "CSWlibfoo-0"],
-        ["libfoo0", "libfoo_0"],
+        ["CSWlibfoo0"],
+        ["libfoo0"],
     )
     self.assertEqual(expected, su.MakePackageNameBySonameCollection(sonames))
 

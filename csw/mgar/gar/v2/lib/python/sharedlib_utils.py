@@ -42,7 +42,39 @@ def IsLibraryLinkable(file_path):
   return False
 
 
+def SonameToStringWithChar(s, c):
+  """Sanitization function tailored at package names.
+
+  It only inserts separators where digits of letters would be jammed
+  togeher.  For example, foo-0 becomes foo0, but foo-0-0 becomes foo0-0."""
+  def CharType(mychar):
+    if mychar.isalpha():
+      return "alpha"
+    elif mychar.isdigit():
+      return "digit"
+    else:
+      return "unknown"
+  parts = LEGIT_CHAR_RE.findall(s)
+  if "so" in parts:
+    parts.remove("so")
+  prev_type = "unknown"
+  new_parts = []
+  for part in parts:
+    first_type = CharType(part[0])
+    need_sep = False
+    if (first_type == prev_type
+        and
+        (prev_type == "digit" or prev_type == "alpha")):
+      need_sep = True
+    if need_sep:
+      new_parts.append(c)
+    new_parts.append(part)
+    prev_type = first_type
+  return "".join(new_parts).lower()
+
+
 def SanitizeWithChar(s, c):
+  """Generic string sanitization function."""
   parts = LEGIT_CHAR_RE.findall(s)
   if "so" in parts:
     parts.remove("so")
@@ -74,8 +106,8 @@ def MakePackageNameBySoname(soname):
   keywords_catalogname = {}
   for key in parsed:
     if parsed[key]:
-      keywords_pkgname[key] = SanitizeWithChar(parsed[key], "-")
-      keywords_catalogname[key] = SanitizeWithChar(parsed[key], "_")
+      keywords_pkgname[key] = SonameToStringWithChar(parsed[key], "-")
+      keywords_catalogname[key] = SonameToStringWithChar(parsed[key], "_")
     else:
       keywords_pkgname[key] = ""
       keywords_catalogname[key] = ""
@@ -143,15 +175,15 @@ def MakePackageNameBySonameCollection(sonames):
     common_substring_candidates.append(candidate)
   lcs = CollectionLongestCommonSubstring(copy.copy(common_substring_candidates))
   pkgnames = [
-      "CSW" + SanitizeWithChar("lib%s%s" % (lcs, common_version), "-"),
+      "CSW" + SonameToStringWithChar("lib%s%s" % (lcs, common_version), "-"),
   ]
-  dashed = "CSW" + SanitizeWithChar("lib%s-%s" % (lcs, common_version), "-")
+  dashed = "CSW" + SonameToStringWithChar("lib%s-%s" % (lcs, common_version), "-")
   if dashed not in pkgnames:
     pkgnames.append(dashed)
   catalognames = [
-      SanitizeWithChar("lib%s%s" % (lcs, common_version), "_"),
+      SonameToStringWithChar("lib%s%s" % (lcs, common_version), "_"),
   ]
-  underscored = SanitizeWithChar("lib%s_%s" % (lcs, common_version), "_")
+  underscored = SonameToStringWithChar("lib%s_%s" % (lcs, common_version), "_")
   if underscored not in catalognames:
     catalognames.append(underscored)
   return pkgnames, catalognames
