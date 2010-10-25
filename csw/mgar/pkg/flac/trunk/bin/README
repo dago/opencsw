@@ -1,0 +1,6 @@
+This directory was causing me trouble on Mac OS X, because apparently "cc" and
+"CC" are the same file on OS X!
+
+I've renamed them; I'm sorry if your build is broken!
+
+--Maciej
