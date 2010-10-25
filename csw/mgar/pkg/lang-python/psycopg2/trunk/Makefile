@@ -15,9 +15,9 @@ PACKAGES = CSWpy-psycopg2
 CATALOGNAME = py_psycopg2
 LICENSE = LICENSE
 
-BUILD_DEP_PKGS = CSWpython-devel
-RUNTIME_DEP_PKGS_CSWpy-psycopg2 = SUNWpostgr-libs
-RUNTIME_DEP_PKGS_CSWpy-psycopg2 += CSWlibpython2-6-1-0
+BUILD_DEP_PKGS = CSWpython-devel CSWlibpq
+RUNTIME_DEP_PKGS_CSWpy-psycopg2 = CSWlibpython2-6-1-0 CSWlibpq
+CHECKPKG_OVERRIDES_CSWpy-psycopg2 += surplus-dependency|CSWlibpq
 
 MASTER_SITES = http://initd.org/psycopg/tarballs/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
@@ -28,6 +28,9 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
+
+# for libpq-fe.h
+EXTRA_CFLAGS = -I/opt/csw/postgresql/include
 
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
