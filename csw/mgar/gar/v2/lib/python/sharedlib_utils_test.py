@@ -1,15 +1,7 @@
 #!/usr/bin/env python2.6
 # $Id$
 
-"""Tests for the shared library utilities.
-
-TODO: Implement infering library names in context, for example:
-
-opt/csw/lib/libboinc.so.6.7.4
-opt/csw/lib/libboinc_api.so.6.7.4
-opt/csw/lib/libboinc_graphics2.so.6.7.4
-opt/csw/lib/libboinc_zip.so.6.7.4
-"""
+"""Tests for the shared library utilities."""
 
 __author__ = "Maciej Blizinski <maciej@opencsw.org>"
 
