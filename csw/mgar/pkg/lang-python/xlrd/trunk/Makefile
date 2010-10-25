@@ -13,8 +13,8 @@ define BLURB
 endef
 
 # 1st char of GARNAME is the directory name
-MASTER_SITE_DIR = $(echo GARNAME | cut -c 1)
-MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(GARNAME)
+MASTER_SITE_DIR = $(shell echo $(GARNAME) | cut -c 1)
+MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(GARNAME)/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
