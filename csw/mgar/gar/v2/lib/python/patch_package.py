@@ -69,7 +69,6 @@ class PackageSurgeon(package.ShellMixin):
     pprint.pprint(new_filename)
 
 
->>>>>>> mGAR v2: patchpkg, new function to compose package names.
 def main():
   parser = optparse.OptionParser()
   parser.add_option("--srv4-file", "-s", dest="srv4_file",
