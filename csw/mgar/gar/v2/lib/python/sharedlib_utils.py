@@ -132,15 +132,6 @@ def MakePackageNameBySoname(soname):
   catalogname_list = [
       "%(basename)s%(sep)s%(version)s" % keywords_catalogname,
   ]
-  # if keywords_pkgname["version"]:
-  #   candidate_catalogname = (
-  #     "%(basename)s%(version)s" % keywords_catalogname)
-  #   if candidate_catalogname not in catalogname_list:
-  #     pkgname_list.append(candidate_catalogname)
-  #   candidate_pkgname = (
-  #     "CSW%(basename)s-%(version)s" % keywords_pkgname)
-  #   if candidate_pkgname not in pkgname_list:
-  #     pkgname_list.append(candidate_pkgname)
   return pkgname_list, catalogname_list
 
 
