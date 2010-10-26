@@ -1,0 +1,29 @@
+From a793e4025581c9840eb053d57368aa74cb8e3e87 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 20 May 2010 18:07:22 +0200
+Subject: [PATCH] FFI_DEFAULT_ABI to use __i386
+
+---
+ Modules/_ctypes/libffi/src/x86/ffitarget.h |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Modules/_ctypes/libffi/src/x86/ffitarget.h b/Modules/_ctypes/libffi/src/x86/ffitarget.h
+index 8178d06..d54d210 100644
+--- a/Modules/_ctypes/libffi/src/x86/ffitarget.h
++++ b/Modules/_ctypes/libffi/src/x86/ffitarget.h
+@@ -54,10 +54,10 @@ typedef enum ffi_abi {
+ #endif
+ 
+   /* ---- Intel x86 and AMD x86-64 - */
+-#if !defined(X86_WIN32) && (defined(__i386__) || defined(__x86_64__))
++#if !defined(X86_WIN32) && (defined(__i386__) || defined(__i386) || defined(__x86_64__))
+   FFI_SYSV,
+   FFI_UNIX64,   /* Unix variants all use the same ABI for x86-64  */
+-#ifdef __i386__
++#if defined(__i386__) || defined(__i386)
+   FFI_DEFAULT_ABI = FFI_SYSV,
+ #else
+   FFI_DEFAULT_ABI = FFI_UNIX64,
+-- 
+1.7.1
+

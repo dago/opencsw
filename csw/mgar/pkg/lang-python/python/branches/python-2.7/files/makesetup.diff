@@ -1,0 +1,20 @@
+--- Python-2.6.1/Modules/makesetup	2007-09-05 06:47:34.000000000 -0500
++++ ./makesetup	2009-02-07 23:03:55.374463810 -0600
+@@ -214,10 +214,15 @@
+ 			glmodule.c) ;;
+ 			/*) ;;
+ 			\$*) ;;
+-			*) src='$(srcdir)/'"$srcdir/$src";;
++			*)  src='$(srcdir)/'"$srcdir/$src";;
+ 			esac
+ 			case $doconfig in
+-			no)	cc="$cc \$(CCSHARED) \$(CFLAGS) \$(CPPFLAGS)";;
++			no)	case $src in
++                *bsddb.*)
++                    cc="$cc -I\$(DBINC) \$(CCSHARED) \$(CFLAGS) \$(CPPFLAGS)";;
++                *) 
++                    cc="$cc  \$(CCSHARED) \$(CFLAGS) \$(CPPFLAGS)";;
++                esac;;
+ 			*)
+ 				cc="$cc \$(PY_CFLAGS)";;
+ 			esac
