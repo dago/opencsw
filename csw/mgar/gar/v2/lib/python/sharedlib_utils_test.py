@@ -30,10 +30,6 @@ class UtilitiesUnitTest(unittest.TestCase):
   def testIsLibraryLinkableAmd64(self):
     self.assertTrue(su.IsLibraryLinkable("opt/csw/lib/amd64/libfoo.so.0.2"))
 
-  def testIsLibraryLinkablePrefix(self):
-    self.assertFalse(
-        su.IsLibraryLinkable("opt/csw/customprefix/lib/libfoo.so.0.2"))
-
   def testIsLibraryLinkableLibexecFalse(self):
     p = "opt/csw/libexec/bar"
     self.assertEqual(False, su.IsLibraryLinkable(p))
@@ -47,20 +43,24 @@ class UtilitiesUnitTest(unittest.TestCase):
     self.assertEqual(False, su.IsLibraryLinkable(p))
 
   def testIsLibraryLinkablePrivateLib(self):
-    self.assertEqual(False, su.IsLibraryLinkable(
+    self.assertFalse(su.IsLibraryLinkable(
       "opt/csw/lib/erlang/lib/megaco-3.6.0.1/priv/lib"
       "/megaco_flex_scanner_drv_mt.so"))
 
   def testIsLibraryLinkableInShared(self):
-    self.assertEqual(False, su.IsLibraryLinkable(
+    self.assertFalse(su.IsLibraryLinkable(
       "opt/csw/share/Adobe/Reader8/Reader/sparcsolaris/lib"
       "/libcrypto.so.0.9.6"))
 
+  def testIsLibraryLinkablePrefix(self):
+    self.assertTrue(
+        su.IsLibraryLinkable("opt/csw/customprefix/lib/libfoo.so.0.2"))
+
   def testIsLibraryLinkableInPrefix(self):
     """This could be considered linkable.
-    
+
     Reason: It has the form of "/opt/csw/foo/lib/libfoo.so.1"."""
-    self.assertEqual(False, su.IsLibraryLinkable(
+    self.assertTrue(su.IsLibraryLinkable(
       "opt/csw/boost-gcc/lib"
       "/libboost_wserialization.so.1.44.0"))
 
@@ -151,6 +151,7 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
     expected = (
         ['CSWlibgettextlib-0-14-1'],
         ['libgettextlib_0_14_1'],
+    )
 
   def testMakePackageNameDashesNoDashes(self):
     soname = "libpyglib-2.0-python.so.0"
