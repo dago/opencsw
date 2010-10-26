@@ -21,6 +21,7 @@
 #            Support custom manifests (Bug ID 0003636)
 # 2009-08-05 Set new timeout values for manifest (Bug ID 0003764)
 # 2009-08-10 Fix autoenable bug (Bug ID 0003785)
+# 2010-10-25 Fix grep bug in FMRI 'dot in name' detection (Bug ID 0004588)
 
 DEBUG=		# clear to disable debug, set to anything to enable
 SVCDIR=/var/opt/csw/svc
@@ -92,7 +93,7 @@ do
     FMRI=
     if [ "`grep '^#FMRI' $dest`" ]; then
       FMRI=`grep '^#FMRI' $dest | awk '{print $2}'`
-      if [ "`echo $FMRI | grep '.'`" ]; then
+      if [ "`echo $FMRI | grep '\.'`" ]; then
         echo "WARNING! FMRI path contained an illegal dot (removed)"
         FMRI=`echo $FMRI | sed 's/\.//g'`
         echo "New FMRI path: $FMRI"
