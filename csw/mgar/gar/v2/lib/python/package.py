@@ -657,4 +657,6 @@ class PackageSurgeon(ShellMixin):
     self.dir_pkg.ToSrv4(target_dir, new_filename)
     # - Update the pkgmap file, setting the checksums
     # - Transform it back to the srv4 form
-    # - gzip it.
+    target_dir, old_path = os.path.split(self.pkg_path)
+    logging.debug("Transforming into %s", new_filename)
+    self.dir_pkg.ToSrv4(target_dir, new_filename)
