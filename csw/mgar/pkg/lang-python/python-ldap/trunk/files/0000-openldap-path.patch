@@ -1,6 +1,6 @@
-From c2685c786b9dd496fcebc9efab78942851e8bf1d Mon Sep 17 00:00:00 2001
+From 92b69bbbee79a5f80085290dacf8af607692740e Mon Sep 17 00:00:00 2001
 From: Kester Habermann <kester@opencsw.org>
-Date: Tue, 26 Oct 2010 10:02:40 +0200
+Date: Tue, 26 Oct 2010 10:57:19 +0200
 Subject: [PATCH] openldap-path
 
 ---
@@ -8,7 +8,7 @@ Subject: [PATCH] openldap-path
  1 files changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/setup.cfg b/setup.cfg
-index cf765ab..3860a0f 100644
+index cf765ab..f039820 100644
 --- a/setup.cfg
 +++ b/setup.cfg
 @@ -2,8 +2,8 @@
@@ -18,7 +18,7 @@ index cf765ab..3860a0f 100644
 -library_dirs = /usr/local/openldap-2.3/lib
 -include_dirs = /usr/local/openldap-2.3/include /usr/include/sasl
 +library_dirs = /opt/csw/lib
-+include_dirs = /opt/csw/include /usr/include/sasl
++include_dirs = /opt/csw/include /opt/csw/include/sasl
  
  [egg_info]
  tag_build = 
