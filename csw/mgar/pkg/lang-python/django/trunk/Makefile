@@ -7,7 +7,7 @@
 # http://bugs.python.org/issue7208
 
 GARNAME = django
-GARVERSION = 1.1.1
+GARVERSION = 1.2.3
 CATEGORIES = python
 
 DESCRIPTION = A high-level Python Web framework
@@ -23,16 +23,17 @@ endef
 SPKG_SOURCEURL = http://www.djangoproject.com/
 
 MASTER_SITES = http://www.djangoproject.com/download/$(GARVERSION)/tarball/
-DISTFILES  = Django-$(GARVERSION).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 PACKAGES = CSWpy-django
 CATALOGNAME_CSWpy-django = py_django
 ARCHALL = 1
 UFILES_REGEX = Django-(\d+(?:\.\d+)*).tar.gz
-WORKSRC = $(WORKDIR)/Django-$(GARVERSION)
+DISTNAME = Django-$(GARVERSION)
 RUNTIME_DEP_PKGS =
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpython-devel
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
+LICENSE = LICENSE
 # There's a problem that the download URL of the Django source tarball does not
 # contain the file name. The browser is being redirected instead. Hard-coding
 # the URL and using a custom target to fit the rest of mGAR.
