@@ -86,8 +86,8 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
   def testMakePackageNameBySonameApr(self):
     soname = "libapr-1.so.0"
     expected = (
-        ['CSWlibapr-10', 'CSWlibapr-1-0'],
-        ['libapr_10', 'libapr_1_0']
+        ['CSWlibapr1-0'],
+        ['libapr1_0']
     )
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
@@ -95,8 +95,8 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
   def testMakePackageNameBySonameDot(self):
     soname = "libbabl-0.1.so.0"
     expected = (
-        ['CSWlibbabl-0-10', 'CSWlibbabl-0-1-0'],
-        ['libbabl_0_10', 'libbabl_0_1_0']
+        ['CSWlibbabl0-1-0'],
+        ['libbabl0_1_0']
     )
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
@@ -104,8 +104,8 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
   def testMakePackageNameBySonameMoreDot(self):
     soname = "libgettextlib-0.14.1.so"
     expected = (
-        ['CSWlibgettextlib-0-14-1'],
-        ['libgettextlib_0_14_1'],
+        ['CSWlibgettextlib0-14-1'],
+        ['libgettextlib0_14_1'],
     )
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
@@ -122,17 +122,17 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
   def testMakePackageNameBySonamePlus(self):
     soname = "libstdc++.so.6"
     expected = (
-       ['CSWlibstdc++6', 'CSWlibstdc++-6'],
-       ['libstdc++6', 'libstdc++_6']
+       ['CSWlibstdc++6'],
+       ['libstdc++6']
     )
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
 
-  def testMakePackageNameBySonamePlus(self):
+  def testMakePackageNameBySonameNoVersion(self):
     soname = "libdnet.1"
     expected = (
-       ['CSWlibdnet1', 'CSWlibdnet-1'],
-       ['libdnet1', 'libdnet_1']
+       ['CSWlibdnet1'],
+       ['libdnet1']
     )
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
@@ -140,18 +140,11 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
   def testMakePackageNameUppercase(self):
     soname = "libUpperCase.so.1"
     expected = (
-       ['CSWlibuppercase1', 'CSWlibuppercase-1'],
-       ['libuppercase1', 'libuppercase_1']
+       ['CSWlibuppercase1'],
+       ['libuppercase1']
     )
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
-
-  def testMakePackageNameBySonameMoreDot(self):
-    soname = "libgettextlib-0.14.1.so"
-    expected = (
-        ['CSWlibgettextlib-0-14-1'],
-        ['libgettextlib_0_14_1'],
-    )
 
   def testMakePackageNameDashesNoDashes(self):
     soname = "libpyglib-2.0-python.so.0"
@@ -162,50 +155,29 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
 
+  def testMakePackageNameDashesNoDashesPython(self):
+    soname = "libpython3.1.so.1.0"
+    expected = (
+       ['CSWlibpython3-1-1-0'],
+       ['libpython3_1_1_0'],
+    )
+    self.assertEqual(expected,
+                     su.MakePackageNameBySoname(soname))
+
   def testMakePackageNameBySonameComplexApr(self):
     soname = "libapr-1.so.10.0.0"
     expected = (
-       ['CSWlibapr-110', 'CSWlibapr-1-10'],
-       ['libapr_110', 'libapr_1_10']
-    )
-    self.assertEqual(expected,
-                     su.MakePackageNameBySoname(soname))
-
-  def testMakePackageNameBySonamePlus(self):
-    soname = "libstdc++.so.6"
-    expected = (
-       ['CSWlibstdc++6', 'CSWlibstdc++-6'],
-       ['libstdc++6', 'libstdc++_6']
-    )
-    self.assertEqual(expected,
-                     su.MakePackageNameBySoname(soname))
-
-  def testMakePackageNameBySonamePlus(self):
-    soname = "libdnet.1"
-    expected = (
-       ['CSWlibdnet1', 'CSWlibdnet-1'],
-       ['libdnet1', 'libdnet_1']
-    )
-    self.assertEqual(expected,
-                     su.MakePackageNameBySoname(soname))
-
-  def testMakePackageNameUppercase(self):
-    soname = "libUpperCase.so.1"
-    expected = (
-       ['CSWlibuppercase1', 'CSWlibuppercase-1'],
-       ['libuppercase1', 'libuppercase_1']
+       ['CSWlibapr1-10-0-0'],
+       ['libapr1_10_0_0']
     )
     self.assertEqual(expected,
                      su.MakePackageNameBySoname(soname))
 
 
-class MakePackageNameBySonameUnitTest(unittest.TestCase):
+class SanitizationUnitTest(unittest.TestCase):
 
   def testSanitizeWithChar(self):
     self.assertEqual("foo_0", su.SanitizeWithChar("foo-0", "_"))
-
-
-class MakePackageNameBySonameUnitTest(unittest.TestCase):
 
   def testSanitizeWithChar(self):
     self.assertEqual("foo_0", su.SanitizeWithChar("foo-0", "_"))
@@ -218,6 +190,9 @@ class MakePackageNameBySonameUnitTest(unittest.TestCase):
 
   def testSonameToStringWithCharDigitDigit(self):
     self.assertEqual("foo_bar0_0", su.SonameToStringWithChar("foo-bar-0-0", "_"))
+
+  def testSonameToStringWithCharPython(self):
+    self.assertEqual("libpython3_1_1_0", su.SonameToStringWithChar("libpython3.1.so.1.0", "_"))
 
 
 class GetCommonVersionUnitTest(unittest.TestCase):
