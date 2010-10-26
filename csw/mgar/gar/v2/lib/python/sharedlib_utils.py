@@ -69,7 +69,7 @@ def SonameToStringWithChar(s, c):
     if need_sep:
       new_parts.append(c)
     new_parts.append(part)
-    prev_type = first_type
+    prev_type = CharType(part[-1])
   return "".join(new_parts).lower()
 
 
@@ -86,6 +86,19 @@ def MakePackageNameBySoname(soname):
 
   Returns a pair of pkgname, catalogname.
   """
+  def AddSeparator(d, sep):
+    "Adds a separator based on the neighboring of two digits."
+    dc = copy.copy(d)
+    if dc["version"]:
+      if (dc["basename"][-1].isdigit()
+          and
+          dc["version"][0].isdigit()):
+        dc["sep"] = sep
+      else:
+        dc["sep"] = ""
+    else:
+      dc["sep"] = ""
+    return dc
   soname_re = re.compile(r"(?P<basename>[\w\+]+([\.\-]+[\w\+]+)*)"
                          r"\.so"
                          r"(\.(?P<version>[\d\.]+))?"
@@ -111,17 +124,23 @@ def MakePackageNameBySoname(soname):
     else:
       keywords_pkgname[key] = ""
       keywords_catalogname[key] = ""
-  pkgname_list = [
-      "CSW%(basename)s%(version)s" % keywords_pkgname,
-  ]
+  pkgname_list = []
+  keywords_pkgname = AddSeparator(keywords_pkgname, "-")
+  pkgname_list.append(
+      "CSW%(basename)s%(sep)s%(version)s" % keywords_pkgname)
+  keywords_catalogname = AddSeparator(keywords_catalogname, "_")
   catalogname_list = [
-      "%(basename)s%(version)s" % keywords_catalogname,
+      "%(basename)s%(sep)s%(version)s" % keywords_catalogname,
   ]
-  if keywords_pkgname["version"]:
-    catalogname_list.append(
-      "%(basename)s_%(version)s" % keywords_catalogname)
-    pkgname_list.append(
-      "CSW%(basename)s-%(version)s" % keywords_pkgname)
+  # if keywords_pkgname["version"]:
+  #   candidate_catalogname = (
+  #     "%(basename)s%(version)s" % keywords_catalogname)
+  #   if candidate_catalogname not in catalogname_list:
+  #     pkgname_list.append(candidate_catalogname)
+  #   candidate_pkgname = (
+  #     "CSW%(basename)s-%(version)s" % keywords_pkgname)
+  #   if candidate_pkgname not in pkgname_list:
+  #     pkgname_list.append(candidate_pkgname)
   return pkgname_list, catalogname_list
 
 
