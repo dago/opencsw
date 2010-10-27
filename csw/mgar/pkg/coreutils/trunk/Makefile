@@ -1,5 +1,5 @@
 GARNAME = coreutils
-GARVERSION = 8.4
+GARVERSION = 8.6
 CATEGORIES = utils
 
 # seq has issues related to the handling of long double's with -O2.
@@ -8,7 +8,7 @@ CATEGORIES = utils
 # OPT_FLAGS_GCC = -O1 -pipe
 
 # building with gcc gets us extra tools (eg: stdbuf)
-# GARCOMPILER = GCC4
+GARCOMPILER = GCC4
 
 SHELL = /opt/csw/bin/bash
 
@@ -28,7 +28,6 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES = 0001-Enhance-Solaris-ACL-error-handling.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
