@@ -49,7 +49,7 @@ EXTRA_LDFLAGS = -lgen
 
 PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/bin/gsu" { $$$$4 = "4555" }; { print }'
 
-ifneq ($(GARVERSION), 8.4)
+ifneq ($(GARVERSION), 8.6)
 TEST_TARGET = check
 else
 TEST_SCRIPTS =
