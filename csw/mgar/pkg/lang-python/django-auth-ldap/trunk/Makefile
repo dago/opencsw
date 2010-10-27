@@ -14,7 +14,6 @@ CHECKPKG_OVERRIDES_CSWpy-django-auth-ldap += pkgname-too-long
 # checkpkg can't detect python run time dependencies
 CHECKPKG_OVERRIDES_CSWpy-django-auth-ldap += surplus-dependency|CSWpy-ldap
 CHECKPKG_OVERRIDES_CSWpy-django-auth-ldap += surplus-dependency|CSWpy-django
-CHECKPKG_OVERRIDES_CSWpy-django-auth-ldap += unidentified-dependency|CSWpy-django
 
 DESCRIPTION = Django LDAP authentication backend
 define BLURB
