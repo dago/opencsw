@@ -19,11 +19,16 @@ define BLURB
   generation without modifying the views.
 endef
 
-# 1st char of GARNAME is the directory name
-MASTER_SITE_DIR = $(shell echo $(GARNAME) | cut -c 1)
-MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(GARNAME)/
+MASTER_SITES = http://github.com/mirumee/$(GARNAME)/tarball/master/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+
+# There's a problem that the download URL of the source tarball does not
+# contain the file name. The browser is being redirected instead. Hard-coding
+# the URL and using a custom target to fit the rest of mGAR.
+http//github.com/mirumee/$(GARNAME)/tarball/master/$(GARNAME)-$(GARVERSION).tar.gz:
+	@wget $(WGET_OPTS) -T 30 -c -P $(PARTIALDIR) -O $(DISTFILES) http://github.com/mirumee/$(GARNAME)/tarball/master/
+
 
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =
