@@ -11,6 +11,7 @@ BUILD_DEP_PKGS =  CSWbdb48devel CSWgdbm CSWcoreutils CSWiconv CSWncurses
 BUILD_DEP_PKGS += CSWreadline CSWzlib CSWossldevel
 
 PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymodeel
+PACKAGES += CSWlibruby1
 
 ARCHALL_CSWrubydoc = 1
 ARCHALL_CSWrubymode = 1
@@ -43,6 +44,9 @@ define BLURB
 endef
 
 SPKG_DESC_CSWruby  = $(DESCRIPTION)
+
+SPKG_DESC_CSWlibruby1 = The libruby.so.1* files
+
 SPKG_DESC_CSWrubydoc = Documentation for Ruby
 
 SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
@@ -58,10 +62,14 @@ PKGFILES_CSWrubydoc = $(datadir)/ri/.* $(docdir)/ruby/sample.*
 PKGFILES_CSWrubytk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
 PKGFILES_CSWrubydev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
+PKGFILES_CSWrubydev += /opt/csw/lib/libruby.so
 
 PKGFILES_CSWrubymode = $(datadir)/emacs/site-lisp/.*elc$
 
 PKGFILES_CSWrubymodeel = $(datadir)/emacs/site-lisp/.*el$
+
+PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.so.1
+PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.so.1.*
 
 CATALOGNAME_CSWrubymodeel = rubymode_el
 
