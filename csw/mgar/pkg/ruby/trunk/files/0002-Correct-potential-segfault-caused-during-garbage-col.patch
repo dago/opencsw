@@ -1,0 +1,31 @@
+From 59b6ed9081932b52f0f5fb1be2fdd51d3d3cb3b4 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 28 Oct 2010 03:49:46 +0200
+Subject: [PATCH] Correct potential segfault caused during garbage collection
+
+This fix was suggested at: http://www.ruby-forum.com/topic/198545
+
+It's an attempt to stop ruby from segfaulting during heavy object
+allocation.  This is in effort to resolve Mantis ID 4399.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ gc.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/gc.c b/gc.c
+index 4b1bd37..326c907 100644
+--- a/gc.c
++++ b/gc.c
+@@ -433,7 +433,7 @@ rb_newobj()
+     if (during_gc)
+ 	rb_bug("object allocation during garbage collection phase");
+ 
+-    if (ruby_gc_stress || !freelist) garbage_collect();
++    if (ruby_gc_stress || !freelist || !freelist->as.free.next) garbage_collect();
+ 
+     obj = (VALUE)freelist;
+     freelist = freelist->as.free.next;
+-- 
+1.7.3
+
