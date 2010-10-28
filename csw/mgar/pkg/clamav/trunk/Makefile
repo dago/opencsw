@@ -1,5 +1,5 @@
 GARNAME = clamav
-GARVERSION = 0.96.3
+GARVERSION = 0.96.4
 #DISTNAME = $(GARNAME)-devel-latest
 CATEGORIES = apps
 
@@ -18,11 +18,13 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 #DISTFILES  = $(GARNAME)-devel-latest.tar.gz
 
-PACKAGES = CSWclamav CSWlibclamav
+PACKAGES = CSWclamav CSWlibclamav CSWlibclamav-devel
 CATALOGNAME_CSWclamav = clamav
 SPKG_DESC_CSWclamav = $(DESCRIPTION)
 CATALOGNAME_CSWlibclamav = libclamav
 SPKG_DESC_CSWlibclamav = $(DESCRIPTION) Library
+CATALOGNAME_CSWlibclamav-devel = libclamav_devel
+SPKG_DESC_CSWlibclamav-devel = $(DESCRIPTION) Development
 
 RUNTIME_DEP_PKGS_CSWclamav = CSWlibclamav CSWzlib CSWbzip2 CSWiconv CSWncurses CSWlibtoolrt
 RUNTIME_DEP_PKGS_CSWlibclamav = CSWzlib CSWbzip2 CSWiconv CSWlibtoolrt
@@ -59,8 +61,8 @@ CONFIGURE_ARGS += --enable-clamdtop
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
-PKGFILES_CSWlibclamav  = $(libdir)/.*
-PKGFILES_CSWlibclamav += $(includedir)/.*
+PKGFILES_CSWlibclamav-devel  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibclamav  = $(PKGFILES_RT)
 PKGFILES_CSWlibclamav += $(docdir)/libclamav/.*
 
 PROTOTYPE_MODIFIERS = 1
@@ -82,6 +84,8 @@ MIGRATE_DEST_DIR_CSWclamav = /etc/opt/csw
 SPKG_SOURCEURL = http://www.clamav.net
 
 TEST_TARGET = check
+
+CHECKPKG_OVERRIDES_CSWlibclamav += shared-lib-pkgname-mismatch
 
 include gar/category.mk
 
