@@ -42,6 +42,7 @@ define BLURB
   closures.
 endef
 
+SPKG_DESC_CSWruby  = $(DESCRIPTION)
 SPKG_DESC_CSWrubydoc = Documentation for Ruby
 
 SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
