@@ -1,5 +1,5 @@
 GARNAME = proftpd
-GARVERSION = 1.3.3b
+GARVERSION = 1.3.3c
 CATEGORIES = server
 
 GARCOMPILER = GCC3
@@ -23,31 +23,40 @@ LICENSE      = COPYING
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv CSWgcc3corert CSWoldaprt CSWzlib CSWmysql5rt
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 
 EXTRA_BUILD_ISAS_i386  = pentium_pro
-EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv9
+EXTRA_BUILD_ISAS_sparc = sparcv9
+
+MYSQLISA_pentium_pro  = i386
+MYSQLISA_$(ISA)      ?= $(ISA)
+MYSQLISA              = $(MYSQLISA_$(ISA))
 
 sysconfdir=/etc/opt/csw
 localstatedir=/var/opt/csw
 
 CONFIGURE_ENV   = install_user=$(USER) install_group=csw
 CONFIGURE_ENV  += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
+LD_OPTIONS     += -R$(prefix)/mysql5/lib/mysql/\$$ISALIST
 
 CONFIGURE_ARGS += --prefix=$(prefix)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 CONFIGURE_ARGS += --localstatedir=/var/run/proftpd
 CONFIGURE_ARGS += --mandir=$(prefix)/share/man
+CONFIGURE_ARGS += --libexecdir=$(prefix)/lib/proftpd
+CONFIGURE_ARGS += --enable-dso --disable-static
 CONFIGURE_ARGS += --enable-facl
 CONFIGURE_ARGS += --enable-openssl
 CONFIGURE_ARGS += --enable-sendfile
 CONFIGURE_ARGS += --enable-nls
 CONFIGURE_ARGS += --enable-ctrls
 CONFIGURE_ARGS += --enable-buffer-size=8192
-CONFIGURE_ARGS += --with-includes=$(prefix)/include:$(prefix)/include/openssl
-CONFIGURE_ARGS += --with-modules=mod_rewrite:mod_ifsession:mod_ratio:mod_tls:mod_readme:mod_auth_pam:mod_radius:mod_ban:mod_wrap2:mod_wrap2_file
+CONFIGURE_ARGS += --with-includes=$(prefix)/include:$(prefix)/include/openssl:$(prefix)/include/mysql
+CONFIGURE_ARGS += --with-libraries=$(prefix)/lib/mysql/$(MYSQLISA)
+CONFIGURE_ARGS += --with-modules=mod_auth_pam:mod_tls:mod_tls_shmcache:mod_wrap2
+CONFIGURE_ARGS += --with-shared=mod_ban:mod_ctrls_admin:mod_ifsession:mod_ldap:mod_radius:mod_ratio:mod_readme:mod_rewrite:mod_shaper:mod_sql:mod_sql_mysql:mod_wrap2_file
 
 TEST_SCRIPTS =
 
