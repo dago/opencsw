@@ -1,5 +1,5 @@
 GARNAME = sudo
-GARVERSION = 1.7.2p5
+GARVERSION = 1.7.4p4
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges (LDAP Enabled)
