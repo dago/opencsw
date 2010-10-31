@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 GARNAME = amanda
-GARVERSION = 2.6.1p2
+GARVERSION = 3.2.0
 CATEGORIES = apps
 
 DESCRIPTION = The Advanced Maryland Automatic Network Disk Archiver
