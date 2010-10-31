@@ -137,7 +137,12 @@ INITSMF = /opt/csw/etc/init.d/cswopenldap
 CHECKPKG_OVERRIDES_CSWoldap += init-file-wrong-location|/opt/csw/etc/init.d/cswopenldap
 
 ARCHALL_CSWoldapdevel = 1
-CHECKPKG_OVERRIDES_CSWoldapdevel += archall-devel-package
+#CHECKPKG_OVERRIDES_CSWoldapdevel += archall-devel-package
+
+#CHECKPKG_OVERRIDES_CSWoldapdevel += archall-with-arch-paths|/opt/csw/lib/sparcv9/liblber.so
+#CHECKPKG_OVERRIDES_CSWoldapdevel += archall-with-arch-paths|/opt/csw/lib/sparcv9/libldap.so
+#CHECKPKG_OVERRIDES_CSWoldapdevel += archall-with-arch-paths|/opt/csw/lib/sparcv9/libldap_r.so
+#CHECKPKG_OVERRIDES_CSWoldaprt += non-uniform-lib-versions-in-package|sonames=['liblber-2.3.so.0',|'liblber-2.4.so.2',|'libldap-2.3.so.0',|'libldap-2.4.so.2',|'libldap_r-2.3.so.0',|'libldap_r-2.4.so.2']
 
 include gar/category.mk
 
