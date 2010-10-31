@@ -1,5 +1,5 @@
 GARNAME = cmake
-GARVERSION = 2.8.1
+GARVERSION = 2.8.2
 CATEGORIES = devel
 
 DESCRIPTION = Cross-platform make
