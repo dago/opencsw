@@ -120,10 +120,10 @@ CHECKPKG_OVERRIDES_CSWcurlrt += missing-dependency|CSWoldaprt
 CHECKPKG_OVERRIDES_CSWcurlrt += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWcurlrtfull += soname-not-part-of-filename|soname=libcurl.so.4|filename=libcurl-full.so.4.2.0
 CHECKPKG_OVERRIDES_CSWcurlrtfull += soname-not-part-of-filename|soname=libcurl.so.4|filename=libcurl-full.so.4.2.0
-CHECKPKG_OVERRIDES_CSWcurlrtfull += shared-lib-pkgname-mismatch|sonames=['libcurl.so.4']|pkgname=CSWcurlrtfull|expected=['CSWlibcurl4']|
 CHECKPKG_OVERRIDES_CSWcurlrtfull += file-conflict|/opt/csw/lib/sparcv9/libcurl-full.so.4.2.0|CSWcurlrt|CSWcurlrtfull
 CHECKPKG_OVERRIDES_CSWcurlrtfull += file-conflict|/opt/csw/lib/libcurl-full.so.4.2.0|CSWcurlrt|CSWcurlrtfull
 CHECKPKG_OVERRIDES_CSWcurlrtfull += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWcurlrtfull += shared-lib-pkgname-mismatch|sonames=['libcurl.so.4']|pkgname=CSWcurlrtfull|expected=['CSWlibcurl4']|
 
 # end checkpkg happiness section
 
