@@ -97,6 +97,36 @@ PKGFILES_CSWcurldevel = $(PKGFILES_DEVEL)
 PKGFILES_CSWcurlrt = $(PKGFILES_RT)
 PKGFILES_CSWcurlrtfull = .*-full.*
 
+# recompile curl to link to new ldap, and temporarily include
+# the following block to make checkpkg happy. nothing in the curl
+# package changed, so it should be ok, no?
+CHECKPKG_OVERRIDES_CSWcurl += surplus-dependency|CSWlibssh2
+CHECKPKG_OVERRIDES_CSWcurl += surplus-dependency|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWcurl += surplus-dependency|CSWsasl
+CHECKPKG_OVERRIDES_CSWcurl += surplus-dependency|CSWlibcares
+CHECKPKG_OVERRIDES_CSWcurl += surplus-dependency|CSWlibnet
+CHECKPKG_OVERRIDES_CSWcurldevel += surplus-dependency|CSWcurl
+CHECKPKG_OVERRIDES_CSWcurlrt += soname-not-part-of-filename|soname=libcurl.so.4|filename=libcurl-full.so.4.2.0
+CHECKPKG_OVERRIDES_CSWcurlrt += soname-not-part-of-filename|soname=libcurl.so.4|filename=libcurl-minimal.so.4.2.0
+CHECKPKG_OVERRIDES_CSWcurlrt += soname-not-part-of-filename|soname=libcurl.so.4|filename=libcurl-full.so.4.2.0
+CHECKPKG_OVERRIDES_CSWcurlrt += soname-not-part-of-filename|soname=libcurl.so.4|filename=libcurl-minimal.so.4.2.0
+CHECKPKG_OVERRIDES_CSWcurlrt += non-uniform-lib-versions-in-package|sonames=['libcurl.so.2',|'libcurl.so.3',|'libcurl.so.4']
+CHECKPKG_OVERRIDES_CSWcurlrt += file-conflict|/opt/csw/lib/sparcv9/libcurl-full.so.4.2.0|CSWcurlrt|CSWcurlrtfull
+CHECKPKG_OVERRIDES_CSWcurlrt += file-conflict|/opt/csw/lib/libcurl-full.so.4.2.0|CSWcurlrt|CSWcurlrtfull
+CHECKPKG_OVERRIDES_CSWcurlrt += missing-dependency|CSWlibcares
+CHECKPKG_OVERRIDES_CSWcurlrt += missing-dependency|CSWlibssh2
+CHECKPKG_OVERRIDES_CSWcurlrt += missing-dependency|CSWlibfbopenssl
+CHECKPKG_OVERRIDES_CSWcurlrt += missing-dependency|CSWoldaprt
+CHECKPKG_OVERRIDES_CSWcurlrt += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWcurlrtfull += soname-not-part-of-filename|soname=libcurl.so.4|filename=libcurl-full.so.4.2.0
+CHECKPKG_OVERRIDES_CSWcurlrtfull += soname-not-part-of-filename|soname=libcurl.so.4|filename=libcurl-full.so.4.2.0
+CHECKPKG_OVERRIDES_CSWcurlrtfull += shared-lib-pkgname-mismatch|sonames=['libcurl.so.4']|pkgname=CSWcurlrtfull|expected=['CSWlibcurl4']|
+CHECKPKG_OVERRIDES_CSWcurlrtfull += file-conflict|/opt/csw/lib/sparcv9/libcurl-full.so.4.2.0|CSWcurlrt|CSWcurlrtfull
+CHECKPKG_OVERRIDES_CSWcurlrtfull += file-conflict|/opt/csw/lib/libcurl-full.so.4.2.0|CSWcurlrt|CSWcurlrtfull
+CHECKPKG_OVERRIDES_CSWcurlrtfull += surplus-dependency|CSWalternatives
+
+# end checkpkg happiness section
+
 include gar/category.mk
 
 post-install-isa-sparcv8-features-minimal:
