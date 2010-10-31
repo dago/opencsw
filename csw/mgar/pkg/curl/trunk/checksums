@@ -1,6 +1,1 @@
-e1a2a773e93a39f3c04cab92c55bf197  curl-7.21.0.tar.bz2
-f6e1a6d234d7f6811bb1c598ba9b7c8f  curlbuild.h
-a09fcad6dfcd9636061dfab7598357be  libcurl.so.2.0.2.i
-b46b41659b805013740eeb76e759af4b  libcurl.so.2.0.2.s
-30e826ef67b6ce799b32154250014dd9  libcurl.so.3.0.0.i
-b63de55fb90feba487b1fd21e751d248  libcurl.so.3.0.0.s
+ca96df88e044c7c25d19692ec8b250b2  curl-7.21.2.tar.bz2
