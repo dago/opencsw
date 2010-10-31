@@ -5,7 +5,7 @@
 # - USERGROUP doesn't work yet, wrong usage?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 GARNAME = dovecot
-GARVERSION = 1.1.20
+GARVERSION = 1.2.15
 CATEGORIES = server
 
 DESCRIPTION = Secure IMAP server
@@ -17,7 +17,7 @@ define BLURB
 endef
 
 SPKG_SOURCEURL = http://dovecot.org/
-MASTER_SITES   = http://dovecot.org/releases/1.1/
+MASTER_SITES   = http://dovecot.org/releases/1.2/
 DISTFILES      = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
