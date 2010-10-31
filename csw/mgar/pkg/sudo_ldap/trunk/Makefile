@@ -23,8 +23,11 @@ PACKAGES = CSWsudoldap
 CATALOGNAME_CSWsudoldap = sudo_ldap
 SPKG_DESC_CSWsudoldap = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudoldap = http://www.sudo.ws
-RUNTIME_DEP_PKGS_CSWsudoldap = CSWsudo-common CSWggettextrt CSWoldaprt 
+RUNTIME_DEP_PKGS_CSWsudoldap = CSWsudo-common CSWggettextrt CSWoldaprt CSWzlib
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWsudoldap) CSWggettext
+
+CHECKPKG_OVERRIDES_CSWsudoldap += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWsudoldap += surplus-dependency|CSWsudo-common
 
 LOGPATH = /var/opt/csw/log/sudo
 
