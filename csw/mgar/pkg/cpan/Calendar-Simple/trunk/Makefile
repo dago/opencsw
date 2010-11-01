@@ -15,4 +15,6 @@ CATALOGNAME = pm_calendarsimple
 
 ARCHALL = 1
 
+LICENSE=files/COPYING
+
 include gar/category.mk
