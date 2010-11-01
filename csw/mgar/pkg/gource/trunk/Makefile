@@ -9,12 +9,25 @@ endef
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
-PATCHFILES = 0001-Make-sure-we-have-a-prototype-for-sqrt.patch
+PATCHFILES  = 0001-Make-sure-we-have-a-prototype-for-sqrt.patch
+PATCHFILES += 0002-Use-double-functions-and-proper-casts-in-lack-of-flo.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+RUNTIME_DEP_PKGS_CSWgource += CSWlibsdl
+RUNTIME_DEP_PKGS_CSWgource += CSWpng
+RUNTIME_DEP_PKGS_CSWgource += CSWmesa
+RUNTIME_DEP_PKGS_CSWgource += CSWstlport
+RUNTIME_DEP_PKGS_CSWgource += CSWpcrert
+RUNTIME_DEP_PKGS_CSWgource += CSWftgl
+RUNTIME_DEP_PKGS_CSWgource += CSWsdlimage
+RUNTIME_DEP_PKGS_CSWgource += CSWglew
+RUNTIME_DEP_PKGS_CSWgource += CSWjpeg
+
 EXTRA_CXXFLAGS = -library=stlport4
 CONFIGURE_ARGS = $(DIRPATHS)
+
+TEST_TARGET = check
 
 include gar/category.mk
