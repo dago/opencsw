@@ -10,11 +10,20 @@ define BLURB
     represents the weeks in the month. The second level array contains the actual days.
 endef
 
-PACKAGES = CSWpmcalendarsimple
-CATALOGNAME = pm_calendarsimple
+# CSWpmcalendarsimp is the old package.  It is empty and depends on the new one
+PACKAGES = CSWpmcalendarsimple CSWpmcalendarsimp
+CATALOGNAME_CSWpmcalendarsimple = pm_calendarsimple
+CATALOGNAME_CSWpmcalendarsimp   = pm_calendarsimp
 
-ARCHALL = 1
+SPKG_DESC_CSWpmcalendarsimple = $(DESCRIPTION)
+SPKG_DESC_CSWpmcalendarsimp   = Empty stub depending on new package CSWpmcalendarsimple
+
+RUNTIME_DEP_PKGS_CSWpmcalendarsimp = CSWpmcalendarsimple
 
 LICENSE=files/COPYING
+
+PKGFILES_CSWpmcalendarsimp = NOFILES
+ARCHALL = 1
+
 
 include gar/category.mk
