@@ -35,14 +35,10 @@ CONFIGURE_ENV   = install_user=$(USER) install_group=csw
 CONFIGURE_ENV  += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
 EXTRA_LIB       = $(prefix)/mysql5/lib/mysql
 
+NODIRPATHS      = --libexecdir --localstatedir
 CONFIGURE_ARGS += $(DIRPATHS)
-# These are now taken from DIRPATHS
-#CONFIGURE_ARGS += --prefix=$(prefix)
-#CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
-# TODO: Adjust the variables so $DIRPATHES contains the correct locations
-#CONFIGURE_ARGS += --localstatedir=/var/run/proftpd
-#CONFIGURE_ARGS += --mandir=$(prefix)/share/man
-#CONFIGURE_ARGS += --libexecdir=$(prefix)/lib/proftpd
+CONFIGURE_ARGS += --libexecdir=$(prefix)/libexec/proftpd
+CONFIGURE_ARGS += --localstatedir=/var/run/proftpd
 CONFIGURE_ARGS += --enable-dso --disable-static
 CONFIGURE_ARGS += --enable-facl
 CONFIGURE_ARGS += --enable-openssl
@@ -77,4 +73,5 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(localstatedir)/proftpd/logs
 	cp $(WORKDIR)/cswproftpd $(DESTDIR)$(sysconfdir)/init.d/
 	cd $(WORKSRC); cp -r $(PROFTPDDOC) $(DESTDIR)$(prefix)/share/doc/proftpd
+	rm -f $(DESTDIR)$(prefix)/libexec/proftpd/*.la
 	$(MAKECOOKIE)
