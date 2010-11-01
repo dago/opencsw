@@ -22,10 +22,13 @@ PACKAGES = CSWtaglibgcc
 CATALOGNAME = taglib_gcc
 
 RUNTIME_DEP_PKGS_CSWtaglibgcc += CSWzlib
-RUNTIME_DEP_PKGS_CSWtaglibgcc += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWtaglibgcc += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWtaglibgcc += CSWgcc3corert
+RUNTIME_DEP_PKGS_CSWtaglibgcc += CSWgcc3g++rt
 
-GARCOMPILER = GCC4
+# This does not work with gcc4 as the kde-gcc stuff is compiled
+# with gcc3 and the runtime libs for gcc3 and gcc4 are slightly
+# incompatib√le.
+GARCOMPILER = GCC3
 
 EXTRA_LD_FLAGS = -lc -lm
 
