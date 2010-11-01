@@ -1,0 +1,116 @@
+From 3a19f7de7499cbd0a15be6aab3412813b08bcbaa Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 1 Nov 2010 16:17:23 +0100
+Subject: [PATCH] Use double functions and proper casts in lack of float-functions
+
+---
+ src/commitlog.cpp   |    2 +-
+ src/core/fxfont.cpp |    4 ++--
+ src/dirnode.cpp     |    4 ++--
+ src/gource.cpp      |   12 ++++++------
+ 4 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/src/commitlog.cpp b/src/commitlog.cpp
+index a884ba1..59d7f24 100644
+--- a/src/commitlog.cpp
++++ b/src/commitlog.cpp
+@@ -248,7 +248,7 @@ RCommitFile::RCommitFile(const std::string& filename, const std::string& action,
+ 
+     //prepend a root slash
+     if(this->filename[0] != '/') {
+-        this->filename.insert(0, 1, '/');
++        this->filename.insert((unsigned)0, 1, '/');
+     }
+ 
+     this->action   = action;
+diff --git a/src/core/fxfont.cpp b/src/core/fxfont.cpp
+index 956e8ce..1cb0969 100644
+--- a/src/core/fxfont.cpp
++++ b/src/core/fxfont.cpp
+@@ -96,8 +96,8 @@ void FXFont::render(float x, float y, const std::string & text) const{
+ 
+ 
+     if(round) {
+-        x = roundf(x);
+-        y = roundf(y);
++        x = floor(x);
++        y = floor(y);
+     }
+ 
+     glPushMatrix();
+diff --git a/src/dirnode.cpp b/src/dirnode.cpp
+index 9a05002..5b20209 100644
+--- a/src/dirnode.cpp
++++ b/src/dirnode.cpp
+@@ -537,7 +537,7 @@ void RDirNode::calcRadius() {
+     //this->dir_radius_sqrt = sqrt(dir_radius); //dir_radius_sqrt is not used
+ 
+ //    this->parent_radius = std::max(1.0, parent_circ / PI);
+-    this->parent_radius = std::max(1.0, sqrt(total_file_area) * gGourceDirPadding);
++    this->parent_radius = std::max(1.0, (double) sqrt(total_file_area) * gGourceDirPadding);
+ }
+ 
+ float RDirNode::distanceToParent() const{
+@@ -778,7 +778,7 @@ vec2f RDirNode::calcFileDest(int max_files, int file_no) {
+ 
+     float frac = arc * 0.5 + arc * file_no;
+ 
+-    vec2f dest = vec2f(sinf(frac*PI*2.0), cosf(frac*PI*2.0));
++    vec2f dest = vec2f(sin(frac*PI*2.0), cos(frac*PI*2.0));
+ 
+     return dest;
+ }
+diff --git a/src/gource.cpp b/src/gource.cpp
+index 0249c93..81ef726 100644
+--- a/src/gource.cpp
++++ b/src/gource.cpp
+@@ -684,7 +684,7 @@ void Gource::keyPress(SDL_KeyboardEvent *e) {
+ 
+         if (e->keysym.unicode == SDLK_EQUALS || e->keysym.unicode == SDLK_PLUS) {
+             if(gGourceSettings.days_per_second>=1.0) {
+-                gGourceSettings.days_per_second = std::min(30.0f, floorf(gGourceSettings.days_per_second) + 1.0f);
++                gGourceSettings.days_per_second = std::min(30.0f, floor(gGourceSettings.days_per_second) + 1.0f);
+             } else {
+                 gGourceSettings.days_per_second = std::min(1.0f, gGourceSettings.days_per_second * 2.0f);
+             }
+@@ -692,7 +692,7 @@ void Gource::keyPress(SDL_KeyboardEvent *e) {
+ 
+         if (e->keysym.unicode == SDLK_MINUS) {
+             if(gGourceSettings.days_per_second>1.0) {
+-                gGourceSettings.days_per_second = std::max(0.0f, floorf(gGourceSettings.days_per_second) - 1.0f);
++                gGourceSettings.days_per_second = std::max(0.0f, floor(gGourceSettings.days_per_second) - 1.0f);
+             } else {
+                 gGourceSettings.days_per_second = std::max(0.0f, gGourceSettings.days_per_second * 0.5f);
+             }
+@@ -717,7 +717,7 @@ void Gource::keyPress(SDL_KeyboardEvent *e) {
+         if(e->keysym.unicode == SDLK_PERIOD) {
+ 
+             if(time_scale>=1.0) {
+-                time_scale = std::min(4.0f, floorf(time_scale) + 1.0f);
++                time_scale = std::min(4.0f, floor(time_scale) + 1.0f);
+             } else {
+                 time_scale = std::min(1.0f, time_scale * 2.0f);
+             }
+@@ -726,7 +726,7 @@ void Gource::keyPress(SDL_KeyboardEvent *e) {
+         if(e->keysym.unicode == SDLK_COMMA) {
+ 
+             if(time_scale>1.0) {
+-                time_scale = std::max(0.0f, floorf(time_scale) - 1.0f);
++                time_scale = std::max(0.0f, floor(time_scale) - 1.0f);
+             } else {
+                 time_scale = std::max(0.25f, time_scale * 0.5f);
+             }
+@@ -1320,8 +1320,8 @@ void Gource::logic(float t, float dt) {
+     //apply rotation
+     if(rotate_angle != 0.0f) {
+ 
+-        float s = sinf(rotate_angle);
+-        float c = cosf(rotate_angle);
++        float s = sin(rotate_angle);
++        float c = cos(rotate_angle);
+ 
+         root->rotate(s, c);
+ 
+-- 
+1.7.2.2
+
