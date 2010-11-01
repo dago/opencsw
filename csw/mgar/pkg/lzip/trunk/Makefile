@@ -14,10 +14,8 @@ endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/ 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES  = 0001-Make-configure-use-bash.patch
-PATCHFILES += 0002-Use-inttypes-instead-of-stdint.patch
-PATCHFILES += 0003-Make-testsuite-use-ucb-echo.patch
-
+PATCHFILES  = 0001-inttypes.h-instead-of-stdint.h.patch
+PATCHFILES += 0002-inttypes.h-instead-of-stdint.h.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
