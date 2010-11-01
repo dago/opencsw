@@ -1,28 +1,30 @@
-From c426b27d2b6a35acafc157182c21f15ebcb97a69 Mon Sep 17 00:00:00 2001
+From 71dcf5a7f7d60e9c0a4fe9bc4bd61e250a61c066 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
-Date: Sun, 31 Oct 2010 02:43:48 +0100
+Date: Mon, 1 Nov 2010 02:03:57 +0100
 Subject: [PATCH] Force ld to embed the proper SONAME for libruby
 
-Set LIBRUBY_DLDFLAGS in the solaris section of the configure script
-in order to force ld to pass the appropriate -h when building libruby.
+Ensure that LIBRUBY_DLDFLAGS is set in the solaris section of the configure
+script even when not using gcc.  This ensures that -h $(libname) is passed
+properly when building shared objects.
 
 Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
- configure |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ configure |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
 diff --git a/configure b/configure
-index 0badcbd..5753333 100755
+index 0badcbd..8dd9f62 100755
 --- a/configure
 +++ b/configure
-@@ -10696,6 +10696,7 @@ if test "$enable_shared" = 'yes'; then
- 	SOLIBS='$(LIBS)'
- 	LIBRUBY_SO='lib$(RUBY_SO_NAME).so.$(MAJOR)'
+@@ -10698,6 +10698,8 @@ if test "$enable_shared" = 'yes'; then
  	LIBRUBY_ALIASES='lib$(RUBY_SO_NAME).so.$(MAJOR).$(MINOR).$(TEENY) lib$(RUBY_SO_NAME).so'
-+	LIBRUBY_DLDFLAGS="-h ${LIBRUBY_SO}"
  	if test "$GCC" = yes; then
  	    LIBRUBY_DLDFLAGS="$DLDFLAGS "'-Wl,-h,$(@F)'
++	else
++	    LIBRUBY_DLDFLAGS="$DLDFLAGS "'-h $(@F)'
  	fi
+ 	XLDFLAGS="$XLDFLAGS "'-R${libdir}'
+  	;;
 -- 
 1.7.3
 
