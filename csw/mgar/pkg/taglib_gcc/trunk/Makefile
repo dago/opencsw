@@ -29,9 +29,25 @@ GARCOMPILER = GCC4
 
 EXTRA_LD_FLAGS = -lc -lm
 
+# Do not use -O2, see below.
+OPT_FLAGS_GCC = -pipe
+
 prefix = $(BUILD_PREFIX)/kde-gcc
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
+# This is a legacy lib, don't care too much about the naming for now.
+CHECKPKG_OVERRIDES_CSWtaglibgcc += shared-lib-package-contains-so-symlink|file=/opt/csw/kde-gcc/lib/libtag.so
+CHECKPKG_OVERRIDES_CSWtaglibgcc += shared-lib-package-contains-so-symlink|file=/opt/csw/kde-gcc/lib/libtag_c.so
+CHECKPKG_OVERRIDES_CSWtaglibgcc += non-uniform-lib-versions-in-package|sonames=['libtag.so.1',|'libtag_c.so.0']
+CHECKPKG_OVERRIDES_CSWtaglibgcc += shared-lib-package-contains-so-symlink|file=/opt/csw/kde-gcc/lib/libtag.so
+CHECKPKG_OVERRIDES_CSWtaglibgcc += shared-lib-package-contains-so-symlink|file=/opt/csw/kde-gcc/lib/libtag_c.so
+
 include gar/category.mk
+
+# Do not use any optimization or __sync_fetch_and_add_4 will be used which
+# is undefined. -O2 is hardwired at many places, so dynamically rip it out.
+pre-configure-modulated:
+	perl -i -npe 's/-O2//' $(WORKSRC)/configure
+	@$(MAKECOOKIE)
