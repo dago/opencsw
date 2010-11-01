@@ -56,7 +56,7 @@ INITSMF      = $(sysconfdir)/init.d/cswproftpd
 PRESERVECONF = $(sysconfdir)/proftpd.conf
 
 PROFTPDDOC   = doc sample-configurations COPYING NEWS README RELEASE_NOTES
-
+CONTRIBUTILS = ftpasswd ftpmail ftpquota
 
 include gar/category.mk
 
@@ -73,5 +73,6 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(localstatedir)/proftpd/logs
 	cp $(WORKDIR)/cswproftpd $(DESTDIR)$(sysconfdir)/init.d/
 	cd $(WORKSRC); cp -r $(PROFTPDDOC) $(DESTDIR)$(prefix)/share/doc/proftpd
+	cd $(WORKSRC)/contrib ; cp $(CONTRIBUTILS) $(DESTDIR)$(bindir)
 	rm -f $(DESTDIR)$(prefix)/libexec/proftpd/*.la
 	$(MAKECOOKIE)
