@@ -1,7 +1,7 @@
-From c09e736df974dbe9be9ae1bcace4de5a8cfbeac6 Mon Sep 17 00:00:00 2001
-From: Dagobert Michelsen <dam@opencsw.org>
-Date: Fri, 19 Feb 2010 14:48:40 +0100
-Subject: [PATCH 2/3] Use inttypes instead of stdint
+From e434ca6f4d7f1157d0e0e74b26739333b81d8d80 Mon Sep 17 00:00:00 2001
+From: THURNER rupert <rupert@opencsw.org>
+Date: Mon, 1 Nov 2010 16:51:34 -0500
+Subject: [PATCH] replace stdint.h with inttypes.h
 
 ---
  decoder.cc     |    2 +-
@@ -11,7 +11,7 @@ Subject: [PATCH 2/3] Use inttypes instead of stdint
  4 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/decoder.cc b/decoder.cc
-index 4e3a8fc..4aadc86 100644
+index 03d2ca6..c0c4759 100644
 --- a/decoder.cc
 +++ b/decoder.cc
 @@ -24,7 +24,7 @@
@@ -24,7 +24,7 @@ index 4e3a8fc..4aadc86 100644
  #include "lzip.h"
  #include "decoder.h"
 diff --git a/encoder.cc b/encoder.cc
-index 27d3db0..d38f2a8 100644
+index e10142a..f58fcb2 100644
 --- a/encoder.cc
 +++ b/encoder.cc
 @@ -23,7 +23,7 @@
@@ -37,10 +37,10 @@ index 27d3db0..d38f2a8 100644
  #include "lzip.h"
  #include "encoder.h"
 diff --git a/lziprecover.cc b/lziprecover.cc
-index dda4b5e..dfb1fc1 100644
+index 3f1b130..c2b218f 100644
 --- a/lziprecover.cc
 +++ b/lziprecover.cc
-@@ -30,7 +30,7 @@
+@@ -32,7 +32,7 @@
  #include <string>
  #include <vector>
  #include <fcntl.h>
@@ -48,9 +48,9 @@ index dda4b5e..dfb1fc1 100644
 +#include <inttypes.h>
  #include <unistd.h>
  #include <sys/stat.h>
- 
+ #if defined(__MSVCRT__)
 diff --git a/main.cc b/main.cc
-index 1f12805..90c3686 100644
+index 193f4ac..26b1b23 100644
 --- a/main.cc
 +++ b/main.cc
 @@ -33,7 +33,8 @@
@@ -64,5 +64,5 @@ index 1f12805..90c3686 100644
  #include <utime.h>
  #include <sys/stat.h>
 -- 
-1.6.5.1
+1.7.3
 
