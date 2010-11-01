@@ -1,5 +1,5 @@
 GARNAME = lzip
-GARVERSION = 1.10
+GARVERSION = 1.11
 CATEGORIES = utils
 
 DESCRIPTION = A lossless data compressor based on the LZMA algorithm

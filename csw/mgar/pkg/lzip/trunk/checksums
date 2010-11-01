@@ -1,4 +1,1 @@
-c88ba40a011ff3bb3fb1a36a1d5d1832  0001-Make-configure-use-bash.patch
-b9048c2b7eb8974a7cd9d6486aaa4d4a  0002-Use-inttypes-instead-of-stdint.patch
-095a3aafd43cbd99dd12c78e7cc336c0  0003-Make-testsuite-use-ucb-echo.patch
-84879f20450a69a94e125a67f4724d12  lzip-1.10.tar.gz
+ba9d0a705e47bcd2b73145d238aa7b58  lzip-1.11.tar.gz
