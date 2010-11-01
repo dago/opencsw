@@ -23,23 +23,19 @@ LICENSE      = COPYING
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv CSWgcc3corert CSWoldaprt CSWzlib CSWmysql5rt
+RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv CSWgcc3corert CSWoldaprt CSWzlib CSWmysql5rt CSWsqlite3rt
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 
 EXTRA_BUILD_ISAS_i386  = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv9
 
-MYSQLISA_pentium_pro  = i386
-MYSQLISA_$(ISA)      ?= $(ISA)
-MYSQLISA              = $(MYSQLISA_$(ISA))
-
 sysconfdir=/etc/opt/csw
 localstatedir=/var/opt/csw
 
 CONFIGURE_ENV   = install_user=$(USER) install_group=csw
 CONFIGURE_ENV  += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
-LD_OPTIONS     += -R$(prefix)/mysql5/lib/mysql/\$$ISALIST
+EXTRA_LIB       = $(prefix)/mysql5/lib/mysql
 
 CONFIGURE_ARGS += --prefix=$(prefix)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
@@ -54,9 +50,8 @@ CONFIGURE_ARGS += --enable-nls
 CONFIGURE_ARGS += --enable-ctrls
 CONFIGURE_ARGS += --enable-buffer-size=8192
 CONFIGURE_ARGS += --with-includes=$(prefix)/include:$(prefix)/include/openssl:$(prefix)/include/mysql
-CONFIGURE_ARGS += --with-libraries=$(prefix)/lib/mysql/$(MYSQLISA)
-CONFIGURE_ARGS += --with-modules=mod_auth_pam:mod_tls:mod_tls_shmcache:mod_wrap2
-CONFIGURE_ARGS += --with-shared=mod_ban:mod_ctrls_admin:mod_ifsession:mod_ldap:mod_radius:mod_ratio:mod_readme:mod_rewrite:mod_shaper:mod_sql:mod_sql_mysql:mod_wrap2_file
+CONFIGURE_ARGS += --with-modules=mod_facl
+CONFIGURE_ARGS += --with-shared=mod_auth_pam:mod_ban:mod_ctrls_admin:mod_dynmasq:mod_exec:mod_ident:mod_ifsession:mod_ldap:mod_load:mod_quotatab:mod_quotatab_file:mod_quotatab_ldap:mod_quotatab_radius:mod_quotatab_sql:mod_radius:mod_ratio:mod_readme:mod_rewrite:mod_sftp:mod_sftp_pam:mod_sftp_sql:mod_shaper:mod_site_misc:mod_sql:mod_sql_mysql:mod_sql_passwd:mod_sql_sqlite:mod_tls:mod_tls_shmcache:mod_unique_id:mod_wrap2:mod_wrap2_file:mod_wrap2_sql
 
 TEST_SCRIPTS =
 
@@ -67,6 +62,12 @@ PROFTPDDOC   = doc sample-configurations COPYING NEWS README RELEASE_NOTES
 
 
 include gar/category.mk
+
+post-configure-modulated:
+	gsed -i s/\^LDFLAGS=/#LDFLAGS=/ $(WORKSRC)/contrib/mod_load/Makefile
+	gsed -i s/\^LDFLAGS=/#LDFLAGS=/ $(WORKSRC)/contrib/mod_sftp/Makefile
+	gsed -i s/\^LDFLAGS=/#LDFLAGS=/ $(WORKSRC)/contrib/mod_wrap2/Makefile
+	$(MAKECOOKIE)
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
