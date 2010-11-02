@@ -33,14 +33,14 @@ ISAEXEC_EXCLUDE_FILES  = $(bindir)/ftpasswd $(bindir)/ftpmail $(bindir)/ftpquota
 
 sysconfdir             = /etc/opt/csw
 localstatedir          = /var/opt/csw
-libexecdir_install     = $(exec_prefix)/lib/proftpd
 
 CONFIGURE_ENV   = install_user=$(USER) install_group=csw
 CONFIGURE_ENV  += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
 EXTRA_LIB       = $(prefix)/mysql5/lib/mysql
 
-NODIRPATHS      = --localstatedir
+NODIRPATHS      = --localstatedir --libexecdir
 CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --libexecdir=$(libdir)/proftpd
 CONFIGURE_ARGS += --localstatedir=/var/run/proftpd
 CONFIGURE_ARGS += --enable-dso --disable-static
 CONFIGURE_ARGS += --enable-facl
