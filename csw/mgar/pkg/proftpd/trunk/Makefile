@@ -28,11 +28,12 @@ RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv CSWgcc3corert CSWoldaprt CSW
 EXTRA_BUILD_ISAS_i386  = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv9
 
-ISAEXEC_DIRS = $(bindir) $(sbindir)
+ISAEXEC_DIRS           = $(bindir) $(sbindir)
+ISAEXEC_EXCLUDE_FILES  = $(bindir)/ftpasswd $(bindir)/ftpmail $(bindir)/ftpquota $(bindir)/prxs
 
-sysconfdir = /etc/opt/csw
-localstatedir = /var/opt/csw
-libexecdir_install = $(exec_prefix)/libexec/proftpd
+sysconfdir             = /etc/opt/csw
+localstatedir          = /var/opt/csw
+libexecdir_install     = $(exec_prefix)/lib/proftpd
 
 CONFIGURE_ENV   = install_user=$(USER) install_group=csw
 CONFIGURE_ENV  += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
@@ -76,5 +77,6 @@ post-install-modulated:
 	cp $(WORKDIR)/cswproftpd $(DESTDIR)$(sysconfdir)/init.d/
 	cd $(WORKSRC); cp -r $(PROFTPDDOC) $(DESTDIR)$(prefix)/share/doc/proftpd
 	cd $(WORKSRC)/contrib ; cp $(CONTRIBUTILS) $(DESTDIR)$(bindir)
-	rm -f $(DESTDIR)$(prefix)/libexec/proftpd/*.la
+	rm -f $(DESTDIR)$(libexecdir_install)/*.la
+	rm -f $(DESTDIR)$(libexecdir_install)/$(ISA)/*.la
 	$(MAKECOOKIE)
