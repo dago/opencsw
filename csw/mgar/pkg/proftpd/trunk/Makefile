@@ -28,6 +28,8 @@ RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv CSWgcc3corert CSWoldaprt CSW
 EXTRA_BUILD_ISAS_i386  = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv9
 
+ISAEXEC_DIRS = $(bindir) $(sbindir)
+
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 libexecdir_install = $(exec_prefix)/libexec/proftpd
