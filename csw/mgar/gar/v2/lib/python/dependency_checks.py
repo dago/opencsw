@@ -26,6 +26,7 @@ DEPENDENCY_FILENAME_REGEXES = (
     (r".*\.py$",   (u"CSWpython",)),
     (r".*\.rb$",   (u"CSWruby",)),
     (r".*\.elc?$", (u"CSWemacscommon",)),
+    (r"/opt/csw/apache2/", (u"CSWapache2",)),
 )
 
 PREFERRED_DIRECTORY_PROVIDERS = set([u"CSWcommon"])

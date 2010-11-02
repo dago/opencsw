@@ -5,7 +5,7 @@ import copy
 import mox
 import unittest
 import pprint
-import dependency_checks as depchecks
+import dependency_checks
 from testdata import stubs
 from testdata.tree_stats import pkgstats as tree_stats
 from testdata.sudo_stats import pkgstats as sudo_stats
@@ -26,7 +26,7 @@ class TestGetPkgByFullPath(unittest.TestCase):
     logger_stub = stubs.LoggerStub()
     self.assertEqual(
         expected,
-        depchecks.GetPkgByFullPath(self.error_mgr_mock,
+        dependency_checks.GetPkgByFullPath(self.error_mgr_mock,
                                    logger_stub,
                                    path_list,
                                    pkg_by_path))
@@ -54,7 +54,7 @@ class TestGetPkgByFullPath(unittest.TestCase):
         '/opt/csw/lib/libfoo.so.1': ['CSWbar']}
     self.assertEqual(
         expected,
-        depchecks.GetPkgByFullPath(self.error_mgr_mock,
+        dependency_checks.GetPkgByFullPath(self.error_mgr_mock,
                                    logger_stub,
                                    paths_to_verify,
                                    pkg_by_path))
@@ -156,7 +156,7 @@ class TestByDirectory(unittest.TestCase):
            u'CSWlibxft2', u'CSWpango', u'CSWgtk2', u'CSWpkgutil'],
        '/opt/csw/share/man/man1': ['CSWtree'],
        '/opt/csw/share/man/man1/tree.1': ['CSWtree']}
-    result = depchecks.ByDirectory(self.pkg_data,
+    result = dependency_checks.ByDirectory(self.pkg_data,
                           self.error_mgr_mock,
                           self.logger_stub,
                           self.messenger_stub,
@@ -182,7 +182,7 @@ class TestByDirectory(unittest.TestCase):
        '/opt/csw/share/man': [u'CSWcommon', u'CSWgnuplot'],
        '/opt/csw/share/man/man1': ['CSWtree'],
        '/opt/csw/share/man/man1/tree.1': ['CSWtree']}
-    result = depchecks.ByDirectory(self.pkg_data,
+    result = dependency_checks.ByDirectory(self.pkg_data,
                           self.error_mgr_mock,
                           self.logger_stub,
                           self.messenger_stub,
@@ -220,7 +220,7 @@ class TestByDirectory(unittest.TestCase):
        '/opt/csw/share/man': [u'CSWcommon', u'CSWgnuplot'],
        '/opt/csw/share/man/man1': ['CSWtree'],
        '/opt/csw/share/man/man1/tree.1': ['CSWtree']}
-    result = depchecks.Libraries(self.pkg_data,
+    result = dependency_checks.Libraries(self.pkg_data,
                           self.error_mgr_mock,
                           self.logger_stub,
                           self.messenger_stub,
@@ -290,9 +290,9 @@ class TestByDirectory(unittest.TestCase):
      [(u'SUNWlibC', u'provides /usr/lib/libCstd.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
      [(u'SUNWlibC', u'provides /usr/lib/libCrun.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')]]
 
-    # pkg_by_path is not important for depchecks.Libraries.
+    # pkg_by_path is not important for dependency_checks.Libraries.
     pkg_by_path = {}
-    result = depchecks.Libraries(self.pkg_data,
+    result = dependency_checks.Libraries(self.pkg_data,
                           self.error_mgr_mock,
                           self.logger_stub,
                           self.messenger_stub,
@@ -310,7 +310,7 @@ class TestMissingDepsFromReasonGroups(unittest.TestCase):
     ]
     declared_deps = set([u"CSWfoo2"])
     expected = [[u"CSWbar"]]
-    result = depchecks.MissingDepsFromReasonGroups(
+    result = dependency_checks.MissingDepsFromReasonGroups(
         reason_groups, declared_deps)
     self.assertEqual(result, expected)
 
@@ -330,7 +330,29 @@ class TestLibraries(unittest.TestCase):
     # pkg_by_path
     pass
 
-
+  def testByFilename(self):
+    self.pkg_data = tree_stats[0]
+    self.pkg_data["pkgmap"] = [
+        {'class': 'none',
+         'line': 'not important',
+         'mode': '0755',
+         'path': '/opt/csw/apache2/bin/foo',
+         'type': 'f',
+         'group': 'bin',
+         'user': 'root'}]
+    self.mocker.ReplayAll()
+    result = dependency_checks.ByFilename(
+        self.pkg_data,
+        self.error_mgr_mock,
+        self.logger_stub,
+        self.messenger_stub,
+        None, None)
+    self.mocker.VerifyAll()
+    expected = [[
+      (u'CSWapache2',
+       "found file(s) matching /opt/csw/apache2/, "
+       "e.g. '/opt/csw/apache2/bin/foo'")]]
+    self.assertEqual(expected, result)
 
 if __name__ == '__main__':
   unittest.main()
