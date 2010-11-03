@@ -13,3 +13,16 @@ Development plan for checkpkg:
 
 Known problems:
 - libmagic fails sometimes when processing the whole catalog
+
+Dependencies:
+
+It's possible to develop checkpkg on a non-Solaris platform, using unit
+tests as means to run various bits of code.  Here's the dependency list
+for Ubuntu.
+
+  python-cheetah
+  python-hachoir-parser
+  python-magic
+  python-mox
+  python-progressbar
+  python-yaml
