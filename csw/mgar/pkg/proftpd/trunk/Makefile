@@ -2,8 +2,6 @@ GARNAME = proftpd
 GARVERSION = 1.3.3c
 CATEGORIES = server
 
-GARCOMPILER = GCC3
-
 DESCRIPTION = Advanced, incredibly configurable and secure FTP daemon
 define BLURB
   ProFTPD is a proven, high-performance, scalable FTP server written from
@@ -23,23 +21,16 @@ LICENSE      = COPYING
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv CSWgcc3corert CSWoldaprt CSWzlib CSWmysql5rt CSWsqlite3rt
+RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv CSWoldaprt CSWzlib CSWmysql5rt CSWsqlite3rt
 
-EXTRA_BUILD_ISAS_i386  = pentium_pro
+EXTRA_BUILD_ISAS_i386  = amd64
 EXTRA_BUILD_ISAS_sparc = sparcv9
 
 ISAEXEC_DIRS           = $(bindir) $(sbindir)
 ISAEXEC_EXCLUDE_FILES  = $(bindir)/ftpasswd $(bindir)/ftpmail $(bindir)/ftpquota $(bindir)/prxs
 
-PR_LIBEXEC_sparcv8    = $(prefix)/lib/proftpd
-PR_LIBEXEC_i386       = $(prefix)/lib/proftpd
-PR_LIBEXEC_$(ISA)    ?= $(prefix)/lib/$(ISA)/proftpd
-PR_LIBEXEC            = $(PR_LIBEXEC_$(ISA))
-
-EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro = $(prefix)/lib/pentium_pro $(prefix)/lib/pentium_pro/.* $(prefix)/lib/pkgconfig.*
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9     = $(prefix)/lib/sparcv9 $(prefix)/lib/sparcv9/.*
-EXTRA_MERGE_SCRIPTS_isa-pentium_pro = copy-proftpd-lib
-EXTRA_MERGE_SCRIPTS_isa-sparcv9     = copy-proftpd-lib
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64   = $(prefix)/bin/amd64/ftpasswd $(prefix)/bin/amd64/ftpmail $(prefix)/bin/amd64/ftpquota $(prefix)/bin/amd64/prxs
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = $(prefix)/bin/sparcv9/ftpasswd $(prefix)/bin/sparcv9/ftpmail $(prefix)/bin/sparcv9/ftpquota $(prefix)/bin/sparcv9/prxs
 
 sysconfdir      = /etc/opt/csw
 localstatedir   = /var/opt/csw
@@ -48,11 +39,12 @@ MIGRATE_FILES   = proftpd.conf
 
 CONFIGURE_ENV   = install_user=$(USER) install_group=csw
 CONFIGURE_ENV  += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
+CONFIGURE_ENV  += LD_LIBRARY_PATH="$(libdir)"
 EXTRA_LIB       = $(prefix)/mysql5/lib/mysql
 
 NODIRPATHS      = --localstatedir --libexecdir
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += --libexecdir=$(PR_LIBEXEC)
+CONFIGURE_ARGS += --libexecdir=$(libdir)/proftpd
 CONFIGURE_ARGS += --localstatedir=/var/run/proftpd
 CONFIGURE_ARGS += --enable-dso --disable-static
 CONFIGURE_ARGS += --enable-facl
@@ -89,14 +81,5 @@ post-install-modulated:
 	cp $(WORKDIR)/cswproftpd $(DESTDIR)$(sysconfdir)/init.d/
 	cd $(WORKSRC); cp -r $(PROFTPDDOC) $(DESTDIR)$(prefix)/share/doc/proftpd
 	cd $(WORKSRC)/contrib ; cp $(CONTRIBUTILS) $(DESTDIR)$(bindir)
-	rm -f $(DESTDIR)$(libexecdir_install)/*.la
-	rm -f $(DESTDIR)$(libexecdir_install)/$(ISA)/*.la
+	rm -f $(DESTDIR)$(PR_LIBEXEC)/*.la
 	$(MAKECOOKIE)
-
-merge-copy-proftpd-lib:
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v \
-		$(foreach DIR,$(PR_LIBEXEC_$(ISA)),-s ",^\.\($(DIR)/\),\1,p") -s ",.*,," \
-		. $(PKGROOT) \
-		)
-	@$(MAKECOOKIE)
-
