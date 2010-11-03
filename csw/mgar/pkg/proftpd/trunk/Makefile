@@ -31,10 +31,15 @@ EXTRA_BUILD_ISAS_sparc = sparcv9
 ISAEXEC_DIRS           = $(bindir) $(sbindir)
 ISAEXEC_EXCLUDE_FILES  = $(bindir)/ftpasswd $(bindir)/ftpmail $(bindir)/ftpquota $(bindir)/prxs
 
-sysconfdir             = /etc/opt/csw
-localstatedir          = /var/opt/csw
+PR_LIBEXEC_sparcv8    = $(prefix)/lib/proftpd
+PR_LIBEXEC_i386       = $(prefix)/lib/proftpd
+PR_LIBEXEC_$(ISA)    ?= $(prefix)/lib/$(ISA)/proftpd
+PR_LIBEXEC            = $(PR_LIBEXEC_$(ISA))
 
-MIGRATE_FILES = proftpd.conf
+sysconfdir      = /etc/opt/csw
+localstatedir   = /var/opt/csw
+
+MIGRATE_FILES   = proftpd.conf
 
 CONFIGURE_ENV   = install_user=$(USER) install_group=csw
 CONFIGURE_ENV  += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
@@ -42,7 +47,7 @@ EXTRA_LIB       = $(prefix)/mysql5/lib/mysql
 
 NODIRPATHS      = --localstatedir --libexecdir
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += --libexecdir=$(libdir)/proftpd
+CONFIGURE_ARGS += --libexecdir=$(PR_LIBEXEC)
 CONFIGURE_ARGS += --localstatedir=/var/run/proftpd
 CONFIGURE_ARGS += --enable-dso --disable-static
 CONFIGURE_ARGS += --enable-facl
