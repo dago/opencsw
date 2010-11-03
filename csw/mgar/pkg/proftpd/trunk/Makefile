@@ -34,6 +34,8 @@ ISAEXEC_EXCLUDE_FILES  = $(bindir)/ftpasswd $(bindir)/ftpmail $(bindir)/ftpquota
 sysconfdir             = /etc/opt/csw
 localstatedir          = /var/opt/csw
 
+MIGRATE_FILES = proftpd.conf
+
 CONFIGURE_ENV   = install_user=$(USER) install_group=csw
 CONFIGURE_ENV  += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
 EXTRA_LIB       = $(prefix)/mysql5/lib/mysql
