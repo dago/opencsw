@@ -56,6 +56,8 @@ RUNTIME_DEP_PKGS_CSWruby19tk = CSWruby19 CSWtk CSWtcl
 RUNTIME_DEP_PKGS_CSWruby19dev = CSWruby19
 RUNTIME_DEP_PKGS_CSWruby19ri = CSWruby19
 
+SPKG_DESC_CSWruby19 = $(DESCRIPTION)
+
 SPKG_DESC_CSWruby19samples = Example programs for Ruby 1.9
 
 SPKG_DESC_CSWruby19ri = Ruby 1.9 Interactive Reference
