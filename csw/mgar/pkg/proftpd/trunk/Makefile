@@ -36,6 +36,11 @@ PR_LIBEXEC_i386       = $(prefix)/lib/proftpd
 PR_LIBEXEC_$(ISA)    ?= $(prefix)/lib/$(ISA)/proftpd
 PR_LIBEXEC            = $(PR_LIBEXEC_$(ISA))
 
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro = $(prefix)/lib/pentium_pro $(prefix)/lib/pentium_pro/.* $(prefix)/lib/pkgconfig.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9     = $(prefix)/lib/sparcv9 $(prefix)/lib/sparcv9/.*
+EXTRA_MERGE_SCRIPTS_isa-pentium_pro = copy-proftpd-lib
+EXTRA_MERGE_SCRIPTS_isa-sparcv9     = copy-proftpd-lib
+
 sysconfdir      = /etc/opt/csw
 localstatedir   = /var/opt/csw
 
@@ -87,3 +92,11 @@ post-install-modulated:
 	rm -f $(DESTDIR)$(libexecdir_install)/*.la
 	rm -f $(DESTDIR)$(libexecdir_install)/$(ISA)/*.la
 	$(MAKECOOKIE)
+
+merge-copy-proftpd-lib:
+	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v \
+		$(foreach DIR,$(PR_LIBEXEC_$(ISA)),-s ",^\.\($(DIR)/\),\1,p") -s ",.*,," \
+		. $(PKGROOT) \
+		)
+	@$(MAKECOOKIE)
+
