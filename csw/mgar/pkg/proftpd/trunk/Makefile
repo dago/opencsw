@@ -75,11 +75,11 @@ post-configure-modulated:
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
-	ginstall -d $(DESTDIR)$(prefix)/share/doc/proftpd
+	ginstall -d $(DESTDIR)$(docdir)/proftpd
 	ginstall -d $(DESTDIR)$(localstatedir)/proftpd
 	ginstall -d $(DESTDIR)$(localstatedir)/proftpd/logs
 	cp $(WORKDIR)/cswproftpd $(DESTDIR)$(sysconfdir)/init.d/
-	cd $(WORKSRC); cp -r $(PROFTPDDOC) $(DESTDIR)$(prefix)/share/doc/proftpd
+	cd $(WORKSRC); cp -r $(PROFTPDDOC) $(DESTDIR)$(docdir)/proftpd
 	cd $(WORKSRC)/contrib ; cp $(CONTRIBUTILS) $(DESTDIR)$(bindir)
-	rm -f $(DESTDIR)$(PR_LIBEXEC)/*.la
+	rm -f $(DESTDIR)$(libdir)/proftpd/*.la
 	$(MAKECOOKIE)
