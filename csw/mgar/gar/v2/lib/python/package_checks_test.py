@@ -215,16 +215,9 @@ class TestSetCheckDependenciesTwoPkgsGood(CheckpkgUnitTestHelper, unittest.TestC
     self.error_mgr_mock.GetInstalledPackages().AndReturn(installed)
 
 
-class TestSetCheckDependenciesDoNotReportSurplusForDevel(
-    CheckpkgUnitTestHelper, unittest.TestCase):
-  FUNCTION_NAME = 'SetCheckLibraries'
-  def CheckpkgTest(self):
-    self.pkg_data_single = self.pkg_data
-    self.pkg_data = [self.pkg_data_single]
-    self.pkg_data[0]["basic_stats"]["pkgname"] = "CSWfoo-devel"
-    self.pkg_data[0]["depends"].append(["CSWfoo", ""])
-    self.pkg_data[0]["depends"].append(["CSWbar", ""])
-    self.pkg_data[0]["depends"].append(["CSWlibiconv", ""])
+class DatabaseMockingMixin(object):
+
+  def MockDbInteraction(self):
     # Mocking out the interaction with the database
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
       "/usr/lib": (u"SUNWcsl",)})
@@ -247,6 +240,33 @@ class TestSetCheckDependenciesDoNotReportSurplusForDevel(
         '/opt/csw/bin/sparcv9', '/opt/csw/share/doc']
     for pth in paths_to_check:
       self.error_mgr_mock.GetPkgByPath(pth).AndReturn(common_path_pkgs)
+
+
+class TestSetCheckDependenciesDoNotReportSurplusForDevel(
+    DatabaseMockingMixin, CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    self.pkg_data_single = self.pkg_data
+    self.pkg_data = [self.pkg_data_single]
+    self.pkg_data[0]["basic_stats"]["pkgname"] = "CSWfoo-devel"
+    self.pkg_data[0]["depends"].append(["CSWfoo", ""])
+    self.pkg_data[0]["depends"].append(["CSWbar", ""])
+    self.pkg_data[0]["depends"].append(["CSWlibiconv", ""])
+    self.MockDbInteraction()
+    # There should be no error about the dependency on CSWfoo or CSWbar.
+
+
+class TestSetCheckDependenciesDoNotReportSurplusForDev(
+    DatabaseMockingMixin, CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    self.pkg_data_single = self.pkg_data
+    self.pkg_data = [self.pkg_data_single]
+    self.pkg_data[0]["basic_stats"]["pkgname"] = "CSWfoo-dev"
+    self.pkg_data[0]["depends"].append(["CSWfoo", ""])
+    self.pkg_data[0]["depends"].append(["CSWbar", ""])
+    self.pkg_data[0]["depends"].append(["CSWlibiconv", ""])
+    self.MockDbInteraction()
     # There should be no error about the dependency on CSWfoo or CSWbar.
 
 

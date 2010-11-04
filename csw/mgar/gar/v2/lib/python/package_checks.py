@@ -69,6 +69,12 @@ ARCH_SPECIFIC_PKGNAMES_RE_LIST = [
 # libX11.so.4, but due to issues with 3D acceleration.
 DO_NOT_LINK_AGAINST_THESE_SONAMES = set([])
 
+# Regarding surplus libraries reports
+DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
+DO_NOT_REPORT_SURPLUS_FOR = [r"CSW[a-z\-]+-dev(el)?"]
+DO_NOT_REPORT_MISSING = set([])
+DO_NOT_REPORT_MISSING_RE = [r"\*?SUNW.*"]
+
 DISCOURAGED_FILE_PATTERNS = (
     (r"\.py[co]$", ("Python compiled files are supposed to be compiled using"
                     "the cswpycompile class action script. For more "
@@ -339,7 +345,7 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
     missing_dep_groups = depchecks.MissingDepsFromReasonGroups(
         req_pkgs_reasons, declared_deps_set)
     pkgs_to_remove = set()
-    for regex_str in checkpkg.DO_NOT_REPORT_MISSING_RE:
+    for regex_str in DO_NOT_REPORT_MISSING_RE:
       regex = re.compile(regex_str)
       for dep_pkgname in reduce(operator.add, missing_dep_groups, []):
         if re.match(regex, dep_pkgname):
@@ -359,7 +365,10 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
         (x for x, y in reduce(operator.add, req_pkgs_reasons, [])))
     missing_dep_groups = new_missing_dep_groups
     surplus_deps = declared_deps_set.difference(potential_req_pkgs)
-    surplus_deps = surplus_deps.difference(checkpkg.DO_NOT_REPORT_SURPLUS)
+    surplus_deps = surplus_deps.difference(DO_NOT_REPORT_SURPLUS)
+    for regex_str in DO_NOT_REPORT_SURPLUS_FOR:
+      if surplus_deps and re.match(regex_str, pkgname):
+        surplus_deps = set()
     # Using an index to avoid duplicated reasons.
     missing_deps_reasons_by_pkg = []
     missing_deps_idx = set()
