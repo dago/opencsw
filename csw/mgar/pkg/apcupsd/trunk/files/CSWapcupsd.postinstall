@@ -1,4 +1,0 @@
-if [ -f $BASEDIR/opt/csw/etc/apcupsd/apcupsd.conf ] ; then
-	echo "moving configuration file to /etc/opt/csw/apcupsd"
-	mv $BASEDIR/opt/csw/etc/apcupsd/apcupsd.conf $BASEDIR/etc/opt/csw/apcupsd/apcupsd.conf
-fi
