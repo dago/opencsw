@@ -270,6 +270,20 @@ class TestSetCheckDependenciesDoNotReportSurplusForDev(
     # There should be no error about the dependency on CSWfoo or CSWbar.
 
 
+class TestSetCheckDependenciesDoNotReportSurplusForDevNoDash(
+    DatabaseMockingMixin, CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    self.pkg_data_single = self.pkg_data
+    self.pkg_data = [self.pkg_data_single]
+    self.pkg_data[0]["basic_stats"]["pkgname"] = "CSWfoodev"
+    self.pkg_data[0]["depends"].append(["CSWfoo", ""])
+    self.pkg_data[0]["depends"].append(["CSWbar", ""])
+    self.pkg_data[0]["depends"].append(["CSWlibiconv", ""])
+    self.MockDbInteraction()
+    # There should be no error about the dependency on CSWfoo or CSWbar.
+
+
 class TestCheckDependsOnSelf(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckDependsOnSelf'
   def CheckpkgTest(self):
