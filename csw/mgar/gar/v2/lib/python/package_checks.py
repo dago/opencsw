@@ -71,7 +71,7 @@ DO_NOT_LINK_AGAINST_THESE_SONAMES = set([])
 
 # Regarding surplus libraries reports
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
-DO_NOT_REPORT_SURPLUS_FOR = [r"CSW[a-z\-]+-dev(el)?"]
+DO_NOT_REPORT_SURPLUS_FOR = [r"CSW[a-z\-]+dev(el)?"]
 DO_NOT_REPORT_MISSING = set([])
 DO_NOT_REPORT_MISSING_RE = [r"\*?SUNW.*"]
 
