@@ -1,52 +1,32 @@
 #! /bin/sh
 #
-# apcupsd      This shell script takes care of starting and stopping
-#	       the apcupsd UPS monitoring daemon.
+#RC_KNUM 21
+#RC_SNUM 89
+#RC_KLEV 0
+#RC_SLEV 1,2
+#AUTOENABLE no
 #
-# chkconfig: 2345 20 99
-# description: apcupsd monitors power and takes action if necessary
-#
-#  Update October 7th, 2001 - CPE
-#
-APCPID=/var/run/apcupsd.pid
-DISTVER="Solaris"
-POWERFAILDIR=/opt/csw/etc/apcupsd
-LOCKDIR=/var/spool/locks
-SBINDIR=/opt/csw/sbin
-
-return=" Done."
-
 
 case "$1" in
-    start)
-	rm -f ${POWERFAILDIR}/powerfail
-	echo "Starting apcupsd power management ...\c"
-	${SBINDIR}/apcupsd || return="	Failed."
-	touch ${LOCKDIR}/apcupsd
-	echo "$return"
-    ;;
-    stop)
-	echo "Stopping apcupsd power management ...\c"
-	if [ -f ${APCPID} ]; then
-		THEPID=`cat ${APCPID}`
-		kill ${THEPID} || return=" Failed."
-		rm -f ${APCPID}
-	else
-		return=" Failed."
-	fi
+  start)
+	rm -f /etc/powerfail
+	/opt/csw/sbin/apcupsd
+	touch /var/spool/locks/apcupsd
+	;;
+  stop)
+	pkill -f "\/opt\/csw\/sbin\/apcupsd"
 	rm -f ${LOCKDIR}/apcupsd
-	echo "$return"
-    ;;
-    restart)
-       $0 stop
-       $0 start
-    ;;
-    status)
-       ${SBINDIR}/apcaccess status
-    ;;
-    *)
-    echo "Usage: $0 {start|stop|restart|status}"
-    exit 1
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  status)
+	/opt/csw/sbin/apcaccess status
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|status}"
+	exit 1
 esac
 
 exit 0
