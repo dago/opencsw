@@ -1,0 +1,6 @@
+Our build of GNU tar does not include the GNU "rmt" program. That is a part
+of our gcpio package. If you wish to use GNU rmt, please install
+our gcpio package, and GNU tar should automatically make use of it.
+
+If you wish to use the Solaris rmt, you could try 
+ln -s /usr/sbin/rmt /opt/csw/libexec/grmt 
