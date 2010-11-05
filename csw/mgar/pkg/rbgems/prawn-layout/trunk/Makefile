@@ -12,8 +12,8 @@ endef
 DISTFILES = COPYING
 LICENSE = COPYING
 
-PACKAGES = CSWgem-prawnlayout
-CATALOGNAME = gem_prawnlayout
+PACKAGES = CSWgem-prawn-layout
+CATALOGNAME = gem_prawn_layout
 
 ARCHALL = 1
 
