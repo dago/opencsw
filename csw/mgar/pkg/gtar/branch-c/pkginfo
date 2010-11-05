@@ -1,0 +1,8 @@
+PKG=CSWgtar
+NAME=gtar - GNU tape archiver
+VERSION=1.24,REV=YYYY.MM.DD
+CATEGORY=application
+VENDOR=http://www.gnu.org/software/tar/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/gtar/branch-c
