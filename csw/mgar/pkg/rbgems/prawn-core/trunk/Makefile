@@ -8,8 +8,7 @@ define BLURB
   Prawn is a fast, tiny, and nimble PDF generator for Ruby 
 endef
 
-PACKAGES = CSWgem-prawn-core
-CATALOGNAME = gem_prawn_core
+GEMPKGNAME = prawncore
 
 LICENSE = LICENSE
 
