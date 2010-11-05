@@ -9,8 +9,7 @@ define BLURB
   permisions to Prawn. 
 endef
 
-PACKAGES = CSWgem-prawn-security
-CATALOGNAME = gem_prawn_security
+GEMPKGNAME = prawnsecurity
 
 LICENSE = LICENSE
 
