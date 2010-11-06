@@ -1,9 +1,12 @@
 GARNAME = sox
-GARVERSION = 14.3.0
+GARVERSION = 14.3.1
 CATEGORIES = apps
 
-DESCRIPTION = Sound Processing Tool
+DESCRIPTION = Swiss Army Knife of sound processing utilities
 define BLURB
+  SoX is the Swiss Army Knife of sound processing utilities. It can convert
+  audio files to other popular audio file types and also apply sound effects
+  and filters during the conversion.
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
@@ -16,13 +19,27 @@ PATCHFILES = 0001-Disable-stdio-hack-to-rewind-pipes.patch
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_SOURCEURL = http://sox.sourceforge.net/
+VENDOR_URL = http://sox.sourceforge.net/
 
-# XXX: Add gsm, lpc10 and wavpack
-RUNTIME_DEP_PKGS = CSWvorbis CSWlibogg CSWlibmad CSWlame CSWlibid3tag
-RUNTIME_DEP_PKGS += CSWflac CSWlibao CSWlibsndfile CSWpng CSWwavpack CSWzlib
+PACKAGES = CSWsox CSWlibsox1 CSWlibsoxdevel
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+CATALOGNAME_CSWsox         = sox
+CATALOGNAME_CSWlibsox1     = libsox
+CATALOGNAME_CSWlibsoxdevel = libsox_devel
+
+SPKG_DESC_CSWsox         = $(DESCRIPTION)
+SPKG_DESC_CSWlibsox1     = SOX Library for Audio Processing
+SPKG_DESC_CSWlibsoxdevel = SOX Library Development Files
+
+RUNTIME_DEP_PKGS_CSWsox = CSWlibsox1 CSWvorbis CSWlibogg CSWlibmad CSWlame CSWlibid3tag
+RUNTIME_DEP_PKGS_CSWsox += CSWflac CSWlibao CSWlibsndfile CSWpng CSWwavpack CSWzlib CSWlibmagic
+
+RUNTIME_DEP_PKGS_CSWlibsox1 = CSWvorbis CSWlibogg CSWlibmad CSWlame CSWlibid3tag
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWflac CSWlibao CSWlibsndfile CSWpng CSWwavpack CSWzlib CSWlibmagic
+
+RUNTIME_DEP_PKGS_CSWlibsoxdevel = CSWlibsox1
+
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWsox)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS +=  --without-libltdl
@@ -32,5 +49,8 @@ NOISAEXEC = 1
 TEST_TARGET = check
 
 MERGE_DIRS_isa-extra = $(libdir)
+
+PKGFILES_CSWlibsox1 = $(PKGFILES_RT)
+PKGFILES_CSWlibsoxdevel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
