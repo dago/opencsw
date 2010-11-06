@@ -1,0 +1,21 @@
+CONFIGURATION (from the README file)
+-------------
+Add the following line to your Sendmail "m4" configuration file.
+
+INPUT_MAIL_FILTER(`mimedefang', `S=unix:/var/spool/MIMEDefang/mimedefang.sock, F
+=T, T=S:360s;R:360s;E:15m')
+
+(If you keep your spool directory elsewhere, use its location instead of
+/var/spool/MIMEDefang/mimedefang.sock)
+
+The "T=..." equate increases the default timeouts for milter, which are
+way too small.
+
+To configure your filter, you have to edit the file
+`/etc/mail/mimedefang-filter'. This is a Perl source file, so you have
+to know Perl. Go ahead and read the man pages mimedefang(8),
+mimedefang.pl(8) and mimedefang-filter(5). There are some sample
+filters in the examples directory.
+
+-- 
+Peter Bonivart, OpenCSW, 2010-11-06
