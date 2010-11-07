@@ -1,9 +1,1 @@
-e407a4b179bd7de72b3e8c21f309f9b7  CSWnagios.checkinstall
-e131ac989a8b7f10de8eb40fdd0b4120  CSWnagios.postinstall
-7926d365165ee1ad76a7ddb5308bdbff  CSWnagios.preinstall
-92437323de0cceaa58c6238ec9e6c954  CSWnagios.preremove
-26c7d23a186dbb0aea6d0e4ba6a7be63  CSWnagios.prototype
-0c26e222285ad2666ca0ecf6c85cebf8  cswnagios
-f3161bcb7c65f89707ee37b0a8d861d5  install-opts.diff
-d4655ee8c95c9679fd4fd53dac34bbe3  nagios-3.2.1.tar.gz
-91407bdea2047b6ff5a1542550933144  patch.diff
+fe1be46e6976a52acdb021a782b5d04b  nagios-3.2.3.tar.gz
