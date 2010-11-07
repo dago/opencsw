@@ -63,6 +63,12 @@ PKGMAP_2 = """: 1 18128
 1 i preinstall 1488 45678 125630250
 """
 
+PKGMAP_3 = """1 d none /opt/csw/apache2/ap2mod 0755 root bin
+1 e build /opt/csw/apache2/ap2mod/suexec ? ? ? 1472 50478 1289099700
+1 d none /opt/csw/apache2/libexec 0755 root bin
+1 f none /opt/csw/apache2/libexec/mod_suexec.so 0755 root bin 6852 52597 1289092061
+"""
+
 SUBMITPKG_DATA_1 = {
     'NEW_PACKAGE': 'new package',
     'to': u'Release Manager <somebody@example.com>',
@@ -403,6 +409,9 @@ class PkgmapUnitTest(unittest.TestCase):
     pkgmap = opencsw.Pkgmap(PKGMAP_2.splitlines())
     self.assertTrue("cswcpsampleconf" in pkgmap.entries_by_class)
 
+  def test_4(self):
+    pkgmap = opencsw.Pkgmap(PKGMAP_3.splitlines())
+    self.assertTrue("build" in pkgmap.entries_by_class)
 
 class IndexByUnitTest(unittest.TestCase):
 
