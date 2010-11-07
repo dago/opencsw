@@ -1,69 +1,21 @@
 #!/sbin/sh
 
 #RC_KLEV 0,1,S
-#RC_SLEV 2
+#RC_SLEV 3
 
-# rc-script for CSW MimeDefang
-# Peter Bonivart, 2010-11-06
+# rc-script for CSW MIMEDefang
+# Peter Bonivart, 2010-11-07
 
 # Source config file
-#[ -r /etc/opt/csw/pkg/CSWbind/bind ] && . /etc/opt/csw/pkg/CSWbind/bind
+[ -r /etc/opt/csw/pkg/CSWmimedefang/mimedefang ] && . /etc/opt/csw/pkg/CSWmimedefang/mimedefang
 
-ZONE= # used for initialization, do not change
-
-case "$1" in
-  start)
-    if [ -f /opt/csw/sbin/named -a -f /etc/opt/csw/named.conf ]; then
-      echo "Starting bind."
-      if [ -n "$ROOTDIR" ]; then
-        echo ROOTDIR set to $ROOTDIR
-        ROOTDIR="-t $ROOTDIR"
-      fi
-      # ulimit -n 1024
-      /opt/csw/sbin/named -u named $OPTIONS $ROOTDIR &
-    fi
-    ;;
-  stop)
-    echo "Shutting down bind."
-    if [ -x /usr/bin/zonename ]; then
-      if [ "`/usr/bin/zonename`" = "global" ]; then
-        ZONE="-z global"
-      fi
-    fi
-    pkill $ZONE -x named
-    ;;
-  reload|refresh)
-    echo "Reloading bind."
-    if [ -x /usr/bin/zonename ]; then
-      if [ "`/usr/bin/zonename`" = "global" ]; then
-        ZONE="-z global"
-      fi
-    fi
-    pkill -HUP $ZONE -x named
-    ;;
-  *)
-    echo "Usage: $0 { start | stop | reload | refresh }"
-    ;;
-esac
-#!/bin/sh
-#
-# FreeBSD/NetBSD start/stop script for MIMEDefang.
-#
-# PROVIDE: mimedefang
-# REQUIRE: LOGIN
-# BEFORE: mail
-# KEYWORD: shutdown
-
+ulimit -n 1024
 RETVAL=0
 prog='mimedefang'
-SPOOLDIR='/var/opt/csw/mimedefang/MIMEDefang'
+SPOOLDIR='/var/opt/csw/mimedefang'
 PID="$SPOOLDIR/$prog.pid"
 MXPID="$SPOOLDIR/$prog-multiplexor.pid"
 
-# These lines keep SpamAssassin happy.  Not needed if you
-# aren't using SpamAssassin.
-HOME="$SPOOLDIR"
-export HOME
 # Is the program executable?  We search in /usr/bin and /usr/local/bin.
 
 if [ -x /opt/csw/bin/$prog ] ; then
@@ -80,8 +32,16 @@ fi
 LC_ALL=C
 export LC_ALL
 
+# Create spool directory if needed
+
+if [ ! -d $SPOOLDIR ] ; then
+    mkdir -m 755 $SPOOLDIR
+    chown defang:defang $SPOOLDIR
+    chmod 750 $SPOOLDIR
+fi
+
 # The settings which follow are defaults.  You can override them by
-# placing assignments in /etc/mail/mimedefang.conf
+# placing assignments in /opt/csw/etc/mimedefang.conf
 
 # The socket used by mimedefang to communicate with sendmail
 # SOCKET=$SPOOLDIR/mimedefang.sock
@@ -140,11 +100,6 @@ MX_LOG=yes
 # or >0 to reserve slaves for loopback connections
 LOOPBACK_RESERVED_CONNECTIONS=-1
 
-# If you want new connections to be allowed to queue, set the
-# next variable to yes.  Normally, only existing connections are
-# allowed to queue requests for work.
-ALLOW_NEW_CONNECTIONS_TO_QUEUE=no
-
 # Set to yes if you want the stats file flushed after each entry
 # MX_FLUSH_STATS=no
 
@@ -197,10 +152,6 @@ MX_MAXIMUM=10
 # considered dead.  The default is 30 seconds; we suggest 600.
 MX_BUSY=600
 
-# Maximum number of concurrent recipok requests on a per-domain basis.
-# 0 means no limit
-MX_RECIPOK_PERDOMAIN_LIMIT=0
-
 # Extra sendmail macros to pass.  Actually, you can add any extra
 # mimedefang options here...
 # MD_EXTRA="-a auth_author"
@@ -211,41 +162,8 @@ MX_RECIPOK_PERDOMAIN_LIMIT=0
 # Multiplexor queue timeout -- default is 30 seconds
 # MX_QUEUE_TIMEOUT=30
 
-# Set to yes if you don't want MIMEDefang to see invalid recipients.
-# Only works with Sendmail 8.14.0 and later.
-# MD_SKIP_BAD_RCPTS=no
-
 # SUBFILTER specifies which filter rules file to use
-# SUBFILTER=/etc/mail/mimedefang-filter
-
-
-# Source configuration
-if [ -f /etc/mail/$prog.conf ] ; then
-    . /etc/mail/$prog.conf
-fi
-
-# BSD specific setup
-if [ -f /etc/rc.subr ]
-then
-    . /etc/rc.subr
-
-    name=$prog
-    rcvar=`set_rcvar`
-    # default to not enabled, enable in rc.conf
-    eval $rcvar=\${$rcvar:-NO}
-
-    load_rc_config $name
-
-    pidfile=$MXPID
-    procname=$PROGDIR/$prog-multiplexor
-    start_cmd="start_it"
-    stop_cmd="stop_it"
-    sig_reload="INT"
-    reread_cmd="reread_it"
-    # provide both "reload", the FreeBSD default, with a direct signal to
-    # the multiplexor, and "reread", the MIMEDefang default, using md-mx-ctrl
-    extra_commands="reload reread"
-fi
+# SUBFILTER=/opt/csw/etc/mimedefang-filter
 
 # Make sure required vars are set
 SOCKET=${SOCKET:=$SPOOLDIR/$prog.sock}
@@ -298,7 +216,6 @@ start_it() {
 	`[ -n "$MX_QUEUE_SIZE" ] && echo "-q $MX_QUEUE_SIZE"` \
 	`[ -n "$MX_QUEUE_TIMEOUT" ] && echo "-Q $MX_QUEUE_TIMEOUT"` \
 	`[ -n "$MX_NOTIFIER" ] && echo "-O $MX_NOTIFIER"` \
-	`[ -n "$MX_RECIPOK_PERDOMAIN_LIMIT" ] && echo "-y $MX_RECIPOK_PERDOMAIN_LIMIT"` \
 	-s $MX_SOCKET
     RETVAL=$?
     if [ $RETVAL = 0 ] ; then
@@ -322,7 +239,6 @@ start_it() {
 	`[ "$MX_RECIPIENT_CHECK" = "yes" ] && echo "-t"` \
 	`[ "$KEEP_FAILED_DIRECTORIES" = "yes" ] && echo "-k"` \
 	`[ "$MD_EXTRA" != "" ] && echo $MD_EXTRA` \
-	`[ "$MD_SKIP_BAD_RCPTS" = "yes" ] && echo "-N"` \
 	`[ "$ALLOW_NEW_CONNECTIONS_TO_QUEUE" = "yes" ] && echo "-q"` \
 	-p $SOCKET
     RETVAL=$?
@@ -350,6 +266,9 @@ stop_it() {
     else
 	echo "[FAILED]"
     fi
+
+    rm -f $SOCKET > /dev/null 2>&1
+    rm -f $PID > /dev/null 2>&1
 
     # Stop daemon
     printf "%-60s" "Shutting down $prog-multiplexor: "
@@ -395,7 +314,23 @@ stop_it() {
     rm -f $PID > /dev/null 2>&1
 }
 
-reread_it() {
+# See how we were called.
+case "$1" in
+  start)
+  start_it
+    ;;
+
+  stop)
+  stop_it $2
+    ;;
+
+  restart)
+    stop_it wait
+    start_it
+    RETVAL=$?
+    ;;
+
+  reread|reload|refresh)
 	if [ -x $PROGDIR/md-mx-ctrl ] ; then
 	    $PROGDIR/md-mx-ctrl -s $MX_SOCKET reread > /dev/null 2>&1
 	    RETVAL=$?
@@ -418,37 +353,10 @@ reread_it() {
 		echo "Could not find process-ID of $prog-multiplexor"
 	    fi
 	fi
-}
-
-if type run_rc_command > /dev/null 2>&1
-then
-    # NetBSD/FreeBSD compatible startup script
-    run_rc_command "$1"
-    exit $RETVAL
-fi
-
-# See how we were called.
-case "$1" in
-  start)
-  start_it
-    ;;
-
-  stop)
-  stop_it $2
-    ;;
-
-  restart)
-    stop_it wait
-    start_it
-    RETVAL=$?
-    ;;
-
-  reread|reload)
-    reread_it
     ;;
 
   *)
-    echo "Usage: $0 {start|stop|restart|reread|reload}"
+    echo "Usage: $0 {start|stop|restart|reread|reload|refresh}"
     exit 1
 esac
 
