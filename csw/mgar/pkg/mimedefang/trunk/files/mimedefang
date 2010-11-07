@@ -1,11 +1,11 @@
-# This is where you customize some settings of your MimeDefang installation so
+# This is where you customize some settings of your MIMEDefang installation so
 # you don't have to edit the scripts themselves as they will be replaced during
 # upgrades.
 #
 # Peter Bonivart, OpenCSW
 
 # The spool directory
-# SPOOLDIR=/var/spool/MIMEDefang
+# SPOOLDIR=/var/opt/csw/mimedefang/MIMEDefang
 
 # The socket used by mimedefang to communicate with sendmail
 # SOCKET=$SPOOLDIR/mimedefang.sock
