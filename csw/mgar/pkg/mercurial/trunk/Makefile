@@ -20,6 +20,7 @@ BUILD_SCRIPTS = $(WORKSRC)/setup.py
 TEST_SCRIPTS      =
 #TEST_TARGET = #tests
 
+RUNTIME_DEP_PKGS_CSWmercurial += CSWlibpython2-6-1-0
 CHECKPKG_OVERRIDES_CSWmercurial += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWmercurial += catalogname-does-not-start-with-py_
 
