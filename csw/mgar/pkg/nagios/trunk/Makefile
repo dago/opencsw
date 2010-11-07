@@ -1,5 +1,5 @@
 GARNAME = nagios
-GARVERSION = 3.2.1
+GARVERSION = 3.2.3
 CATEGORIES = apps
 
 DESCRIPTION = Nagios network monitoring base package (no plugins)
@@ -63,7 +63,7 @@ INSTALL_ARGS += install-init
 INSTALL_ARGS += install-commandmode
 
 LD_OPTIONS += -R/opt/csw/lib
-LD_OPTIONS -= -R/opt/csw/nagios/lib
+LD_OPTIONS += -R/opt/csw/nagios/lib
 
 include gar/category.mk
 
