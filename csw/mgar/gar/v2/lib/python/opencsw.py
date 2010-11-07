@@ -522,6 +522,7 @@ class Pkgmap(object):
       "s": "symlink",
       "l": "link",
       "i": "script",
+      "e": "editable file"
   }
 
   def __init__(self, input, permissions=False,
@@ -552,6 +553,11 @@ class Pkgmap(object):
         if self.analyze_permissions:
           line_to_add += " %s" % fields[4]
         mode, user, group = fields[4:7]
+      elif line_type in ('e'):
+        # Editable files
+        line_to_add = fields[3]
+        installed_path = fields[3]
+        prototype_class = fields[2]
       elif line_type in ('s', 'l'):
         # soft- and hardlinks
         link_from, link_to = fields[3].split("=")
