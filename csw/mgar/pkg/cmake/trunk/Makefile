@@ -24,6 +24,8 @@ SPKG_DESC_CSWcmake = $(DESCRIPTION)
 
 RUNTIME_DEP_PKGS_CSWcmake  = CSWcurlrt CSWexpat
 RUNTIME_DEP_PKGS_CSWcmake += CSWzlib 
+RUNTIME_DEP_PKGS_CSWcmake += CSWosslrt
+
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
