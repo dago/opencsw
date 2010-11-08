@@ -23,6 +23,11 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWbzip2 CSWzlib
 
+# Let make invocations refer to $(MAKE) not "make". Otherwise gmake flags
+# might be passed to invocations of make (via $MAKEFLAGS) which make
+# doesn't understand. This particulary pertains to ~skayser/bin/mgar.
+PATCHFILES += 0001-Use-MAKE-instead-of-a-hardcoded-make.patch
+
 TEST_SCRIPTS =
 
 # configure doesn't understand most of the $(DIRPATHS) arguments
