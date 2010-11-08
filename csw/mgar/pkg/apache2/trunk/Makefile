@@ -88,14 +88,9 @@ RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWapr CSWexpat
 RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWbdb48 CSWapr-util CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
-CHECKPKG_OVERRIDES_CSWap2suexec   += dependency-listed-more-than-once|CSWapache2
-CHECKPKG_OVERRIDES_CSWap2suexec   += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWapache2-devel += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWapache2-manual += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 
@@ -111,7 +106,7 @@ INITSMF = /etc/opt/csw/init.d/cswapache2
 POSTMSG = /opt/csw/share/doc/apache2/README.CSW
 
 AP2_MODS = 1
-AP2_MODFILES = /opt/csw/apache2/libexec/.*suexec.*\.so
+AP2_MODFILES = *suexec*\.so
 
 ALTERNATIVES_CSWapache2 = prefork
 ALTERNATIVES_CSWap2worker = worker
@@ -198,6 +193,7 @@ LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
 PKGFILES_CSWap2suexec = .*sbin/suexec .*libexec/.*suexec.* .*/man/.*suexec.*
+PKGFILES_CSWap2suexec += .*ap2mod.*suexec
 PKGFILES_CSWapache2-devel = .*include/.* .*\.(a|la)
 PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
 PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
