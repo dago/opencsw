@@ -188,9 +188,9 @@ ETCSERVICES += $(_ETCSERVICES_FILES)
 # This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
 TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
 
-# if AP2_MODS is set, files matching this pattern will have cswap2mod
-# set as their class
-AP2_MODFILES ?= /opt/csw/apache2/libexec/.*\.so $(EXTRA_AP2_MODFILES)
+# if AP2_MODS is set, files matching this shell glob (passed to find)
+# will have 'build' set as their class
+AP2_MODFILES ?= opt/csw/apache2/libexec/*so $(EXTRA_AP2_MODFILES)
 
 # - set class for all config files
 _CSWCLASS_FILTER = | perl -ane '\
@@ -204,7 +204,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(CRONTABS),$$F[1] = "cswcrontab" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
-		$(if $(AP2_MODS),$(foreach FILE,$(AP2_MODFILES),$$F[1] = "cswap2mod" if( $$F[2] =~ m(^$(FILE)$$) );))\
+		$(if $(AP2_MODS),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/apache2/ap2mod/.*));) \
 		print join(" ",@F),"\n";'
 
 # If you add another filter above, also add the class to this list. It is used
@@ -224,7 +224,6 @@ _CSWCLASSES += cswpycompile
 _CSWCLASSES += cswinetd
 _CSWCLASSES += cswinitsmf
 _CSWCLASSES += cswtexinfo
-_CSWCLASSES += cswap2mod
 _CSWCLASSES += cswpostmsg
 
 # Make sure the configuration files always have a .CSW suffix and rename the
@@ -458,7 +457,6 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 # actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),CSWalternatives)
-$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswap2mod")')),CSWapache2)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
 
 # The final "true" is for packages without dependencies to make the shell happy as "( )" is not allowed.
@@ -569,7 +567,7 @@ $(foreach P,$(SPKG_SPECS),\
 # The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
 $(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
 $(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),cswalternatives)
-$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswap2mod")')),cswap2mod)
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "build")')),build)
 $(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(shell cat $(WORKDIR)/$*.prototype | perl -e 'while(<>){@F=split;$$c{$$F[1]}++};$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$c{$C});)')
 
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
@@ -637,6 +635,9 @@ reset-merge-license:
 merge-classutils: merge-migrateconf merge-usergroup merge-inetdconf merge-etcservices
 
 reset-merge-classutils: reset-merge-migrateconf reset-merge-usergroup reset-merge-inetdconf reset-merge-etcservices
+
+reset-merge-ap2mod:
+	@rm -f $(COOKIEDIR)/post-merge-ap2mod
 
 merge-migrateconf: $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),merge-migrateconf-$S))
 	@$(MAKECOOKIE)

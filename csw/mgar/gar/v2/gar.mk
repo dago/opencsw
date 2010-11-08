@@ -805,7 +805,7 @@ endef
 
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge merge-do merge-license merge-classutils merge-checkpkgoverrides merge-alternatives $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
+merge: checksum pre-merge merge-do merge-license merge-classutils merge-checkpkgoverrides merge-alternatives $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) $(if $(AP2_MODS),post-merge-ap2mod) post-merge
 	@$(DONADA)
 
 merge-do: $(if $(PARALLELMODULATIONS),merge-parallel,merge-sequential)
@@ -833,6 +833,9 @@ merge-watch: $(addprefix $(WORKROOTDIR)/build-,global $(MODULATIONS))
 		echo "Building all ISAs in parallel. Please see the individual logfiles for details:";$(foreach M,$(MODULATIONS),echo "- $(WORKROOTDIR)/build-$M/build.log";)\
 	)
 
+post-merge-ap2mod:
+	$(GARBIN)/ap2mod_build_scripts $(PKGROOT) $(AP2_MODFILES)
+	@$(MAKECOOKIE)
 
 # This merges the 
 merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $(MERGE_TARGETS) post-merge-$(MODULATION) post-merge-modulated
@@ -881,7 +884,7 @@ merge-copy-config-only:
 .PHONY: remerge reset-merge reset-merge-modulated
 remerge: reset-merge merge
 
-reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-src
+reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-ap2mod reset-merge-src
 	@rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
 	@rm -rf $(PKGROOT)
 
