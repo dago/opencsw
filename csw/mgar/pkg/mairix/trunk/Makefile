@@ -1,5 +1,5 @@
 GARNAME = mairix
-GARVERSION = 0.21
+GARVERSION = 0.22
 CATEGORIES = utils
 
 DESCRIPTION = An index and search tool for Maildir, MH, or mbox
@@ -17,16 +17,13 @@ define BLURB
     of the matched messages.)
 endef
 
+VENDOR_URL   = http://www.rpcurnow.force9.co.uk/mairix/
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-SPKG_SOURCEURL = http://www.rpcurnow.force9.co.uk/mairix/
+DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWbzip2 CSWzlib
 
 TEST_SCRIPTS =
-
-# Mention option -x in the help message (-h)
-PATCHFILES  = patch-excerpt.diff
 
 # configure doesn't understand most of the $(DIRPATHS) arguments
 CONFIGURE_ARGS = --prefix=/opt/csw
@@ -53,3 +50,10 @@ post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	$(MAKECOOKIE)
+
+# Install changelog.CSW
+post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
+install-changelog-%:
+	ginstall -D $(FILEDIR)/changelog.CSW \
+		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
+	@$(MAKECOOKIE)
