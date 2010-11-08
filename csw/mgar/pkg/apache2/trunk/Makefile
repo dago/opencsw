@@ -44,8 +44,6 @@ DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
 
-DISTFILES += i.cswap2mod r.cswap2mod
-
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
@@ -200,8 +198,6 @@ PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
-PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/apache2/sbin/suexec" { $$$$4 = "4755" }; $$$$3 ~ /cswap2mod/ { $$$$4 = "0555" }; { print }'
-
 include gar/category.mk
 
 CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
@@ -216,15 +212,7 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 
-post-install-modulated: rename-httpd copy-local-files create-templates copy-readmes install-cas
-
-install-cas: CASD = $(DESTDIR)/usr/sadm/install/scripts
-install-cas:
-	@(cd $(WORKDIR); \
-		ginstall -d -m0755 $(CASD); \
-		for f in *cswap2mod; do \
-			ginstall -m 0755 $$f $(CASD); \
-		done)
+post-install-modulated: rename-httpd copy-local-files create-templates copy-readmes
 
 copy-readmes:
 	@(cd $(WORKDIR); for f in README.CSW*; do \
