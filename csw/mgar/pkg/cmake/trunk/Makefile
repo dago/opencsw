@@ -1,3 +1,5 @@
+# $Id$
+
 GARNAME = cmake
 GARVERSION = 2.8.2
 CATEGORIES = devel
@@ -41,30 +43,15 @@ CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
 # switch off tests as two of them fail
 TEST_TARGET  = 
 
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/lib|opt/csw/bin/ccmake
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/ccmake
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/ccmake
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bin/ccmake
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/lib|opt/csw/bin/cmake
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/cmake
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/cmake
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bin/cmake
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/lib|opt/csw/bin/cpack
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/cpack
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/cpack
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bin/cpack
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/lib|opt/csw/bin/ctest
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/ctest
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/ctest
-CHECKPKG_OVERRIDES_CSWcmake += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bin/ctest
-
-
 include gar/category.mk
 
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Modules
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Templates
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)$(docdir)
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/man/man1
+
+EXTRA_CFLAGS = -xnorunpath
+EXTRA_CXXFLAGS = -norunpath
 
 pre-configure:
 	@echo $(DIRPATHS)
