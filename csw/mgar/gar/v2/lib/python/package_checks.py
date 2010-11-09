@@ -1041,6 +1041,8 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         lib_path, lib_basename = os.path.split(binary_info["path"])
         tmp = su.MakePackageNameBySoname(soname)
         policy_pkgname_list, policy_catalogname_list = tmp
+        messenger.SuggestGarLine("# The following lines define a new package: "
+                                 "%s" % policy_pkgname_list[0])
         messenger.SuggestGarLine("PACKAGES += %s" % policy_pkgname_list[0])
         messenger.SuggestGarLine(
             "CATALOGNAME_%s = %s"
@@ -1059,6 +1061,8 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         messenger.SuggestGarLine(
             "RUNTIME_DEP_PKGS_%s += %s"
             % (pkgname, policy_pkgname_list[0]))
+        messenger.SuggestGarLine(
+            "# The end of %s definition" % policy_pkgname_list[0])
 
       check_names = False
     else:
