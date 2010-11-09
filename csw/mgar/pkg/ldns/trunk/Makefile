@@ -1,5 +1,5 @@
 GARNAME = ldns
-GARVERSION = 1.6.6
+GARVERSION = 1.6.7
 CATEGORIES = lib
 
 DESCRIPTION = A library for programs conforming to DNS RFCs and drafts
@@ -17,13 +17,13 @@ DISTFILES += CSWldns.doxyparse.diff
 
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 
-PACKAGES = CSWldns CSWldnsdevel
-CATALOGNAME_CSWldns = ldns
-CATALOGNAME_CSWldnsdevel = ldns_devel
+PACKAGES = CSWlibldns1 CSWlibldnsdevel
+CATALOGNAME_CSWlibldns1 = libldns1
+CATALOGNAME_CSWldnsdevel = libldns_devel
 
-SPKG_DESC_CSWldns = $(DESCRIPTION)
-SPKG_DESC_CSWldnsdevel = $(DESCRIPTION) development package
-CHECKPKG_OVERRIDES_CSWldnsdevel += surplus-dependency|CSWldns
+SPKG_DESC_CSWlibldns1 = $(DESCRIPTION)
+SPKG_DESC_CSWlibldnsdevel = $(DESCRIPTION) development package
+CHECKPKG_OVERRIDES_CSWlibldnsdevel += surplus-dependency|CSWlibldns1
 
 SPKG_SOURCEURL = http://www.nlnetlabs.nl/projects/ldns/
 
@@ -40,14 +40,20 @@ BUILD64 = 1
 EXTRA_BUILD_ISAS_i386 = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus
 
-RUNTIME_DEP_PKGS_CSWldns += CSWosslrt
-RUNTIME_DEP_PKGS_CSWldnsdevel += CSWldns
+RUNTIME_DEP_PKGS_CSWlibldns1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWldnsdevel += CSWlibldns1
+
+INCOMPATIBLE_PKGS_CSWlibldns1 = CSWldns
+INCOMPATIBLE_PKGS_CSWldnsdevel = CSWldnsdevel
 
 PATCHFILES = CSWldns.doxyparse.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --enable-sha2
+
+# Gost requiers OpenSSL 1.0
+CONFIGURE_ARGS += --disable-gost
 
 MERGE_DIRS_isa-sparcv9 = $(libdir)
 MERGE_DIRS_isa-sparcv8plus = $(libdir)
@@ -56,7 +62,7 @@ MERGE_DIRS_isa-pentium_pro = $(libdir)
 
 TEST_TARGET =
 
-PKGFILES_CSWldnsdevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWldnsrt = $(PKGFILES_RT)
+PKGFILES_CSWlibldnsdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibldnsrt = $(PKGFILES_RT)
 
 include gar/category.mk
