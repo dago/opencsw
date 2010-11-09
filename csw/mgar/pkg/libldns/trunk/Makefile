@@ -44,7 +44,7 @@ RUNTIME_DEP_PKGS_CSWlibldns1 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWldnsdevel += CSWlibldns1
 
 INCOMPATIBLE_PKGS_CSWlibldns1 = CSWldns
-INCOMPATIBLE_PKGS_CSWldnsdevel = CSWldnsdevel
+INCOMPATIBLE_PKGS_CSWlibldnsdevel = CSWldnsdevel
 
 PATCHFILES = CSWldns.doxyparse.diff
 
