@@ -38,6 +38,8 @@ SPKG_DESC_CSWlibnet = Libnet Package Construction Library (Legacy)
 SPKG_DESC_CSWlibnet1 = Libnet Package Construction Library
 SPKG_DESC_CSWlibnetdevel = Libnet Development Files
 
+SPKG_VERSION_CSWlibnet = 1.0.2a
+
 RUNTIME_DEP_PKGS_CSWlibnetdevel = CSWlibnet1
 
 BUILD64 = 1
