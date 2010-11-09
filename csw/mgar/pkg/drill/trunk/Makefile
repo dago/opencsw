@@ -1,5 +1,5 @@
 GARNAME = drill
-GARVERSION = 1.6.5
+GARVERSION = 1.6.7
 CATEGORIES = utils
 
 DESCRIPTION = A dig style dnssec aware dns debugging tool
@@ -25,7 +25,7 @@ WORKSRC = $(WORKDIR)/$(DISTNAME)/drill
 
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS = CSWldns
+RUNTIME_DEP_PKGS = CSWlibldns1
 RUNTIME_DEP_PKGS += CSWosslrt
 
 CONFIGURE_ARGS = $(DIRPATHS)
