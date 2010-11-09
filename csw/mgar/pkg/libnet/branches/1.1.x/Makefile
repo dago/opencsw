@@ -1,5 +1,5 @@
 GARNAME = libnet
-GARVERSION = 1.1.4
+GARVERSION = 1.1.5
 CATEGORIES = lib
 
 DESCRIPTION = The libnet packet construction library
@@ -18,61 +18,62 @@ endef
 SF_PROJ = libnet-dev
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += libnet.so.1.0.2.i
+DISTFILES += libnet.so.1.0.2.s
+PATCHFILES = 0001-Fix-missing-uint-instead-of-u_int.patch
 
 LICENSE = doc/COPYING
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_SOURCEURL = http://github.com/sam-github/libnet
+VENDOR_URL = http://github.com/sam-github/libnet
+
+PACKAGES = CSWlibnet CSWlibnet1 CSWlibnetdevel
+
+CATALOGNAME_CSWlibnet = libnet
+CATALOGNAME_CSWlibnet1 = libnet1
+CATALOGNAME_CSWlibnetdevel = libnet_devel
+
+SPKG_DESC_CSWlibnet = Libnet Package Construction Library (Legacy)
+SPKG_DESC_CSWlibnet1 = Libnet Package Construction Library
+SPKG_DESC_CSWlibnetdevel = Libnet Development Files
+
+RUNTIME_DEP_PKGS_CSWlibnetdevel = CSWlibnet1
 
 BUILD64 = 1
-
-#PATCHFILES = buildpatch
-#PATCHFILES += libnet_pblock_coalesce_leak.patch
-#PATCHFILES += libnet-cq-end-loop.patch
-#PATCHFILES += libnet_build_ntp.patch
-#PATCHFILES += libnet_checksum.c.patch
-
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_SCRIPTS =
+TEST_TARGET = check
+
+PKGFILES_CSWlibnet  = $(libdir)/libnet.so
+PKGFILES_CSWlibnet += $(libdir)/libnet.so.1.0.2
+PKGFILES_CSWlibnet1  = $(call baseisadirs,$(libdir),[^/]*\.so\.1)
+PKGFILES_CSWlibnet1 += $(call baseisadirs,$(libdir),[^/]*\.so\.1\.6(\.\d+)*)
+
+# These overrides are for the legacy library which should just
+# stay the way it is.
+CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libnet.so
+CHECKPKG_OVERRIDES_CSWlibnet += bad-rpath-entry
+# CHECKPKG_OVERRIDES_CSWlibnet += bad-rpath-entry|$ORIGIN/../lib|opt/csw/lib/libnet.so.1.0.2
+CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-pkgname-mismatch|file=opt/csw/lib/libnet.so.1.0.2|soname=libnet.so.1.0.2|pkgname=CSWlibnet|expected=['CSWlibnet1-0-2']
+CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libnet.so
 
 include gar/category.mk
 
-#post-extract-$(MODULATION):
-#	( cp $(FILEDIR)/ltmain.sh $(WORKROOTDIR)/build-$(MODULATION)/$(DISTNAME) ) 
-#	( cp $(FILEDIR)/libnet.pc.in $(WORKROOTDIR)/build-$(MODULATION)/$(DISTNAME)/src )
-#	@$(MAKECOOKIE)
-#
-#post-install-modulated:
-#	@ginstall -d $(DESTDIR)$(bindir)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/libnet-config $(DESTDIR)$(bindir)
-#	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/BUGS $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/CHANGELOG $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/CONTRIB $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/COPYING $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/DESIGN_NOTES $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/MIGRATION $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/PACKET_BUILDING $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/PORTED $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/RAWSOCKET_NON_SEQUITUR $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/TODO $(DESTDIR)$(docdir)/$(GARNAME)
-#	@ginstall -d $(DESTDIR)$(mandir)/man3
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/man/man3/libnet-functions.h.3 $(DESTDIR)$(mandir)/man3
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/man/man3/libnet-headers.h.3 $(DESTDIR)$(mandir)/man3
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/man/man3/libnet-macros.h.3 $(DESTDIR)$(mandir)/man3
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/man/man3/libnet.h.3 $(DESTDIR)$(mandir)/man3
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/man/man3/libnet_802_1q_hdr.3 $(DESTDIR)$(mandir)/man3
-#	@ginstall -m 444 $(WORKDIR)/$(DISTNAME)/doc/man/man3/libnet_802_1x_hdr.3 $(DESTDIR)$(mandir)/man3
-#	@$(MAKECOOKIE)
+post-install-isa-sparcv8:
+	ginstall -d $(DESTDIR)$(libdir)
+	cp $(WORKDIR)/libnet.so.1.0.2.s $(DESTDIR)$(libdir)/libnet.so.1.0.2
+	rm $(DESTDIR)$(libdir)/libnet.so
+	ln -s libnet.so.1.0.2 $(DESTDIR)$(libdir)/libnet.so
+	mkdir $(DESTDIR)$(libdir)/libnet-new
+	ln -s ../libnet.so.1 $(DESTDIR)$(libdir)/libnet-new/libnet.so
+	@$(MAKECOOKIE)
 
-#post-install-isa-sparcv8:
-#	@ginstall -d $(DESTDIR)$(libdir)
-#	@cp $(FILEDIR)/libnet.so.1.0.2.s $(INSTALLISADIR)/opt/csw/lib/libnet.so.1.0.2
-#	@$(MAKECOOKIE)
-#
-#post-install-isa-i386:
-#	@ginstall -d $(DESTDIR)$(libdir)
-#	@cp $(FILEDIR)/libnet.so.1.0.2.i $(INSTALLISADIR)/opt/csw/lib/libnet.so.1.0.2
-#	@$(MAKECOOKIE)
+post-install-isa-i386:
+	ginstall -d $(DESTDIR)$(libdir)
+	cp $(WORKDIR)/libnet.so.1.0.2.i $(DESTDIR)$(libdir)/libnet.so.1.0.2
+	rm $(DESTDIR)$(libdir)/libnet.so
+	ln -s libnet.so.1.0.2 $(DESTDIR)$(libdir)/libnet.so
+	mkdir $(DESTDIR)$(libdir)/libnet-new
+	ln -s ../libnet.so.1 $(DESTDIR)$(libdir)/libnet-new/libnet.so
+	@$(MAKECOOKIE)
