@@ -24,7 +24,7 @@ VENDOR_URL = http://sox.sourceforge.net/
 PACKAGES = CSWsox CSWlibsox1 CSWlibsoxdevel
 
 CATALOGNAME_CSWsox         = sox
-CATALOGNAME_CSWlibsox1     = libsox
+CATALOGNAME_CSWlibsox1     = libsox1
 CATALOGNAME_CSWlibsoxdevel = libsox_devel
 
 SPKG_DESC_CSWsox         = $(DESCRIPTION)
