@@ -13,8 +13,16 @@ for a in $*; do
 	modname=$(echo $modfile | sed 's/mod_//; s/\.so$//')
 	ap2modfile=$AP2MODS/$modname
 	cat <<EOF > $ap2modfile
-!install
+
 PIR=\${PKG_INSTALL_ROOT:-'/'}
+AP2_PREFIX=/opt/csw/apache2
+AP2_BINDIR=\$AP2_PREFIX/sbin
+AP2_LIBEXEC=\$AP2_PREFIX/libexec
+AP2_CONFDIR=\$AP2_PREFIX/etc
+AP2_CONFIG=\$AP2_CONFDIR/httpd.conf
+AP2_APXS=\$AP2_BINDIR/apxs
+
+if [ "\$1" = install ]; then
 
 touch \$PIR/$ap2modfile
 
@@ -25,13 +33,6 @@ fi
 if [ -f \$PIR/etc/opt/csw/csw.conf ] ; then
   . \$PIR/etc/opt/csw/csw.conf
 fi
-
-AP2_PREFIX=/opt/csw/apache2
-AP2_BINDIR=\$AP2_PREFIX/sbin
-AP2_LIBEXEC=\$AP2_PREFIX/libexec
-AP2_CONFDIR=\$AP2_PREFIX/etc
-AP2_CONFIG=\$AP2_CONFDIR/httpd.conf
-AP2_APXS=\$AP2_BINDIR/apxs
 
 # Modules will be enabled by default, but a global kill switch
 # is checked , followed by a module specific value.  Thus,
@@ -57,20 +58,13 @@ if [ -f "\$PIR/\$AP2_CONFIG" -a -x "\$PIR/\$AP2_APXS" ]; then
     chroot \$PIR \$AP2_APXS -e \$enmod -n $modname $modfile
 fi
 
-!remove
-PIR=\${PKG_INSTALL_ROOT:-'/'}
+else
 
 rm \$PIR/$ap2modfile
 
-AP2_PREFIX=/opt/csw/apache2
-AP2_BINDIR=\$AP2_PREFIX/sbin
-AP2_LIBEXEC=\$AP2_PREFIX/libexec
-AP2_CONFDIR=\$AP2_PREFIX/etc
-AP2_CONFIG=\$AP2_CONFDIR/httpd.conf
-AP2_APXS=\$AP2_BINDIR/apxs
-
 if [ -f "\$PIR/\$AP2_CONFIG" -a -x "\$PIR/\$AP2_APXS" ]; then
-  chroot \$PIR \$APXS -e -A -n $modname $modfile
+  chroot \$PIR \$AP2_APXS -e -A -n $modname $modfile
+fi
 fi
 EOF
     done
