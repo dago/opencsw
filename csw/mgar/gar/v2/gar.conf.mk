@@ -629,6 +629,11 @@ CPAN_SITES  += http://mirrors.kernel.org/cpan
 CPAN_MIRRORS = $(foreach S,$(CPAN_SITES),$(S)/authors/id/$(AUTHOR_ID)/)
 CPAN_FIRST_MIRROR = $(firstword $(CPAN_SITES))/authors/id
 
+# Python Package Index
+PYPI_PROJECT ?= $(GARNAME)
+PYPI_SUBDIR = $(shell echo $(PYPI_PROJECT) | cut -c 1)
+PYPI_MIRROR = http://pypi.python.org/packages/source/$(PYPI_SUBDIR)/$(PYPI_PROJECT)/
+
 # Package dir
 GARPACKAGE = $(shell basename $(CURDIR))
 
