@@ -1,5 +1,5 @@
 GARNAME = unbound
-GARVERSION = 1.4.6
+GARVERSION = 1.4.7
 CATEGORIES = server
 
 DESCRIPTION = A validating, recursive, and caching DNS resolver
@@ -9,8 +9,10 @@ define BLUR
   a server, but are linked into an application) are easily possible.
 endef
 
-PACKAGES = CSWunbound
-CATALOGNAME = unbound
+PACKAGES = CSWunbound CSWlibunbound2 CSWunbound-devel
+CATALOGNAME_CSWunbound = unbound
+CATALOGNAME_CSWlibunbound2 = libunbound2
+CATALOGNAME_CSWunbound-devel = unbound_devel
 LICENSE = LICENSE
 
 MASTER_SITES = http://unbound.net/downloads/
@@ -18,9 +20,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += cswunbound
 DISTFILES += cswusergroup
 
-PATCHFILES += 0001-disable-default-cflags-on-sparc.patch
-
-SPKG_CLASSES = none cswusergroup cswcpsampleconf cswinitsmf
+SPKG_CLASSES_CSWunbound = none cswusergroup cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswunbound$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/CSWunbound\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/unbound\/unbound.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -41,11 +41,28 @@ CONFIGURE_ARGS += --with-libexpat=/opt/csw
 CONFIGURE_ARGS += --with-pidfile=/var/run/unbound.pid
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
+# Gost requiers OpenSSL 1.0
+CONFIGURE_ARGS += --disable-gost
+
 STRIP_LIBTOOL = 0
 
-RUNTIME_DEP_PKGS += CSWosslrt
-RUNTIME_DEP_PKGS += CSWldns
-RUNTIME_DEP_PKGS += CSWlibevent
+SPKG_DESC_CSWunbound = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWunbound += CSWlibunbound2
+RUNTIME_DEP_PKGS_CSWunbound += CSWexpat
+RUNTIME_DEP_PKGS_CSWunbound += CSWlibevent
+RUNTIME_DEP_PKGS_CSWunbound += CSWlibldns1
+RUNTIME_DEP_PKGS_CSWunbound += CSWosslrt
+
+SPKG_DESC_CSWlibunbound2 = Library implementing DNS resolution and validation
+#PKGFILES_CSWlibunbound2 += /opt/csw/lib/libunbound.so.2.*
+PKGFILES_CSWlibunbound2 += $(PKGFILES_RT)
+RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibldns1
+RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibevent
+
+SPKG_DESC_CSWunbound-devel = $(DESCRIPTION) development package
+#PKGFILES_CSWunbound-devel += /opt/csw/lib/libunbound.so
+PKGFILES_CSWunbound-devel += $(PKGFILES_DEVEL)
 
 # make test doesn't work for the moment on Solaris
 SKIPTEST = 1
