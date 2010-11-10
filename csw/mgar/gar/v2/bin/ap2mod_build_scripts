@@ -24,7 +24,7 @@ AP2_APXS=\$AP2_BINDIR/apxs
 
 if [ "\$1" = install ]; then
 
-touch \$PIR/$ap2modfile
+echo "File created by \$PKGINST during install.  Please do not remove." > \$PIR/$ap2modfile
 
 # Source csw.conf, if it exists
 if [ -f \$PIR/opt/csw/etc/csw.conf ] ; then
