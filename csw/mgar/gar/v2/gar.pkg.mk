@@ -456,16 +456,19 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 # The dependencies to CSWcswclassutils and CSWtexinfo are only added if there are files
 # actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(_CATEGORY_RUNTIME_DEP_PKGS)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),CSWalternatives)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
 
-# The final "true" is for packages without dependencies to make the shell happy as "( )" is not allowed.
+$(WORKDIR)/%.depend: _DEP_PKGS=$(or $(RUNTIME_DEP_PKGS_ONLY_$*),$(RUNTIME_DEP_PKGS_ONLY),$(sort $(_EXTRA_GAR_PKGS)) $(or $(RUNTIME_DEP_PKGS_$*),$(RUNTIME_DEP_PKGS),$(DEP_PKGS_$*),$(DEP_PKGS)))
 $(WORKDIR)/%.depend: $(WORKDIR)
-	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(RUNTIME_DEP_PKGS_$*)$(RUNTIME_DEP_PKGS)$(DEP_PKGS)$(DEP_PKGS_$*)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
+# The final "true" is for packages without dependencies to make the shell happy as "( )" is not allowed.
+$(WORKDIR)/%.depend:
+	$(_DBG)$(if $(_DEP_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
 		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
 			echo "I $(PKG)";\
 		)\
-		$(foreach PKG,$(sort $(_EXTRA_GAR_PKGS)) $(or $(RUNTIME_DEP_PKGS_$*),$(RUNTIME_DEP_PKGS),$(DEP_PKGS_$*),$(DEP_PKGS)),\
+		$(foreach PKG,$(_DEP_PKGS),\
 			$(if $(SPKG_DESC_$(PKG)), \
 				echo "P $(PKG) $(call catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
 				echo "$(shell (/usr/bin/pkginfo $(PKG) || echo "P $(PKG) - ") | $(GAWK) '{ $$1 = "P"; print } ')"; \

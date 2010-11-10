@@ -39,6 +39,8 @@ SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
 _MERGE_EXCLUDE_CATEGORY = .*/perllocal\.pod .*/\.packlist
 _CATEGORY_GSPEC_INCLUDE ?= csw_cpan_dyngspec.gspec
 
+_CATEGORY_RUNTIME_DEP_PKGS ?= CSWperl
+
 # Perl module dependencies can not be properly tracked right now
 _CATEGORY_CHECKPKG_OVERRIDES = surplus-dependency
 
