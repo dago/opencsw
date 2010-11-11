@@ -20,6 +20,33 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += cswunbound
 DISTFILES += cswusergroup
 
+EXTRA_BUILD_ISAS_i386  = pentium_pro
+EXTRA_BUILD_ISAS_sparc = sparcv8plus
+
+MERGE_DIRS_isa-sparcv8plus  = $(libdir)
+MERGE_DIRS_isa-sparcv8plus += $(sbindir)
+MERGE_DIRS_isa-pentium_pro  = $(libdir)
+MERGE_DIRS_isa-pentium_pro += $(sbindir)
+
+ISAXEC_DIRS = $(sbindir)
+ISAEXEC_EXCLUDE_FILES  = $(sbindir)/unbound-anchor
+ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-checkconf
+ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control
+ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control-setup
+ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-host
+
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro  = $(prefix)/sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-checkconf
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-control
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-control-setup
+EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-host
+
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus  = $(prefix)/sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-checkconf
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control-setup
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-host
+
 SPKG_CLASSES_CSWunbound = none cswusergroup cswcpsampleconf cswinitsmf
 PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswunbound$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/CSWunbound\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/unbound\/unbound.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
 
@@ -54,14 +81,12 @@ RUNTIME_DEP_PKGS_CSWunbound += CSWlibldns1
 RUNTIME_DEP_PKGS_CSWunbound += CSWosslrt
 
 SPKG_DESC_CSWlibunbound2 = Library implementing DNS resolution and validation
-#PKGFILES_CSWlibunbound2 += /opt/csw/lib/libunbound.so.2.*
 PKGFILES_CSWlibunbound2 += $(PKGFILES_RT)
 RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibldns1
 RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibunbound2 += CSWlibevent
 
 SPKG_DESC_CSWunbound-devel = $(DESCRIPTION) development package
-#PKGFILES_CSWunbound-devel += /opt/csw/lib/libunbound.so
 PKGFILES_CSWunbound-devel += $(PKGFILES_DEVEL)
 
 # make test doesn't work for the moment on Solaris
