@@ -1,9 +1,9 @@
 GARNAME = Devel-Size
-GARVERSION = 0.64
+GARVERSION = 0.71
 CATEGORIES = cpan
-AUTHOR = DSUGAL
+AUTHOR = TELS
 
-DESCRIPTION = extension for finding the memory usage of Perl variables
+DESCRIPTION = Extension for finding the memory usage of Perl variables
 define BLURB
   This module figures out the real sizes of Perl variables in bytes. Call
   functions with a reference to the variable you want the size of. If the
@@ -11,6 +11,10 @@ define BLURB
   variable is a hash or an array, use a reference when calling.
 endef
 
-DISTFILES += CSWpmdevsize.gspec
+MASTER_SITES = $(addsuffix devel/,$(CPAN_MIRRORS))
+DISTFILES = COPYING
+
+PACKAGES = CSWpmdevelsize
+CATALOGNAME = pm_develsize
 
 include gar/category.mk
