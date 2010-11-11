@@ -37,8 +37,9 @@ UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns
 LICENSE = LICENSE
 
 BUILD64 = 1
-EXTRA_BUILD_ISAS_i386 = pentium_pro
-EXTRA_BUILD_ISAS_sparc = sparcv8plus
+EXTRA_BUILD_ISAS_i386   = pentium_pro
+EXTRA_BUILD_ISAS_sparc  = sparcv8plus
+EXTRA_BUILD_ISAS_sparc += sparcv8plus+vis
 
 RUNTIME_DEP_PKGS_CSWlibldns1 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibldnsdevel += CSWlibldns1
