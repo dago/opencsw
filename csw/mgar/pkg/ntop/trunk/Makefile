@@ -15,6 +15,13 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
 
+DISTFILES  += cswntop
+EXPANDVARS += cswntop
+DISTFILES  += ntop.conf.CSW
+EXPANDVARS += ntop.conf.CSW
+
+INITSMF = /etc/opt/csw/init.d/cswntop
+
 PATCHFILES  = 0001-Fix-misplaced-endif.patch
 PATCHFILES += 0002-Do-not-redeclare-__builtin_alloca.patch
 PATCHFILES += 0003-Check-for-uint_-in-addition-to-u_int_.patch
@@ -46,6 +53,8 @@ CONFIGURE_SCRIPTS = $(WORKSRC)/autogen.sh
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
+
+PRESERVECONF = $(sysconfdir)/ntop.conf
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gdbm-lib=/opt/csw/lib
@@ -85,3 +94,8 @@ pre-configure-modulated:
 	cp /opt/csw/share/aclocal/libtool.m4 $(WORKSRC)/libtool.m4.in
 	@$(MAKECOOKIE)
 
+post-install-modulated:
+	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	ginstall $(WORKDIR)/cswntop $(DESTDIR)/etc/opt/csw/init.d/cswntop
+	ginstall $(WORKDIR)/ntop.conf.CSW $(DESTDIR)$(sysconfdir)/ntop/ntop.conf.CSW
+	@$(MAKECOOKIE)

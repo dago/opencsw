@@ -1,0 +1,171 @@
+#
+# Configuration sample file for csw ntop v3.0
+# v1.0
+#
+# It is strongly recommended that you read ntop documentation 
+# to know more about configuration parameters.
+#
+##########################
+# CONFIGURATION PARAMETERS
+##########################
+
+#-a | --access-log-file
+# Use this parameter to logging HTTP requests.
+--access-log-file @localstatedir@/ntop/access.log
+
+#-b | --disable-decoders
+# This parameter disables protocol decoders
+
+#-c | --sticky-hosts
+# Use this parameter to prevent idle hosts from being purged from memory.
+# DO NOT USE THIS unless you are on a small, very static network, or you have LOTS of memory.
+
+#-d | --daemon
+# This parameter causes ntop to become a daemon.
+--daemon
+
+#-e | --max-table-rows
+# This defines the maximum number of lines that ntop will display on each generated HTML page.
+
+#-f | --traffic-dump-file
+# This parameter causes ntop to read data from a file, typically a tcpdump capture or the output from one of the ntop packet capture options.
+
+#-g | --track-local-hosts
+# Use this parameter to tell ntop to capture data only about local hosts.
+
+#-i | --interface
+# Specifies the network interface or interfaces to be used by ntop for network monitoring.
+# Default is the 1st ethernet device, e.g: hme0
+# To monitor NO ethernet interfaces (for example a system collecting data only from netFlow probes), use --interface none
+	
+#-j | --create-other-packets
+# This parameter causes ntop to create a dump file of the other network traffic captured.
+
+#-k | --filter-expression-in-extra-frame
+# When this parameter is used, the current filter expression is displayed in an extra frame and thus is always visible.
+
+#-l | --pcap-log
+# This parameter causes a dump file to be created of the network traffic captured by ntop in tcpdump (pcap) format.
+
+#-m | --local-subnets
+# This parameter allows the user to define additional networks and subnetworks whose traffic is also considered local in ntop reports. You can mix CIDR and network/netmask notation.
+
+#-n | --numeric-ip-addresses
+# This parameter causes ntop to skip DNS resolution.
+
+#-o | --no-mac
+# This allows ntop to link the logical addresses to a physical machine with multiple addresses, This is used if you observe ntop being confused by 'changing' addresses.
+
+#-p | --protocols
+# This parameter is used to specify the TCP/UDP protocols that ntop will monitor.
+# It can be either a file or a list. To point ntop to a file specify it's name: -p /var/opt/csw/ntop/protocol.list
+# Or to give an explicit list: --protocols="HTTP=http|www|https|3128,FTP=ftp|ftp-data"
+
+#-q | --create-suspicious-packets
+# This parameter tells ntop to create a dump file of suspicious packets.
+
+#-r | --refresh-time
+# Specifies the delay (in seconds) between automatic screen updates, The default is 3 seconds.
+
+#-s | --no-promiscuous
+# Use this parameter to prevent from setting the interface(s) into promiscuous mode.
+
+	
+#-t | --trace-level
+# This parameter specifies the information level of messages that you wish ntop to display (on stdout or to the log), default is --trace-level 3
+#--trace-level 0 # FATALERROR only
+#--trace-level 1 # ERROR and above only
+#--trace-level 2 # WARNING and above only
+#--trace-level 3 # INFO, WARNING and ERRORs - the default
+#--trace-level 4 # NOISY - everything
+#--trace-level 6 # NOISY + MSGID
+#--trace-level 7 # NOISY + MSGID + file/line
+
+#-u | --user
+# Specifies the user ntop should run as after it initializes.
+#NOTE: This should not be root unless you really understand the security risks. In order to prevent this by accident, the only way to run ntop as root is to explicitly specify -u root. Dont do it.
+--user nobody
+
+#-x -X
+# ntop creates a new hash/list entry for each new host/TCP session seen.
+
+#-w | --http-server
+#-W | --https-server
+# These parameters specify the port (and optionally the address (i.e. interface)) of the ntop web server, ntop offers both an http:// and https:// web server.  These parameters tell ntop which ports (and interfaces) to offer this web server on.
+# Default is -w 3000 -W 0 (https disable)
+# Neither - say ntop is running only as a netFlow probe:
+# -w 0 -W 0
+# You can also limit ntop to listening on a specific interface. For example:
+# -w 127.0.0.1:3000  # Listens only on the loopback interface at port 3000
+--http-server 3000
+--https-server 0
+
+#-z | --disable-sessions
+# This parameter disables TCP session tracking. Use it for better performance or when you don't really need/care to track sessions.
+
+#-B | --filter-expression
+# Filters allows the user to restrict the traffic seen by ntop on just about any imaginable item, using bpf (Berkeley Packet Filter) expressions, you can check bdf documentation on tcpdump man page.
+# NOTE: The filter expression MUST be in quotes.
+# -B "net 192.168.1.88/30"
+# You can limit traffic to that from (src) or to (dst) a specific host:
+# -B "src host www.mycompany.com"
+# -B "dst host www.mycompany.com"
+# You can limit it to a specific protocol, including src/dst:
+# -B "port ssh"
+# -B "src port ssh"
+# -B "dst port ssh"
+
+#-C
+# This instruments ntop to be used in two configurations: host and network mode.
+
+#-D | --domain
+# This identifies the local domain suffix, e.g. ntop.org. It may be necessary, if ntop is having difficulty determining it from the interface.
+
+#-F | --flow-spec
+# It is used to specify network flows similar to more powerful applications such as NeTraMet.
+# The format is <flow-label>='<matching expression>'[,<flow-label>='<matching expression>']
+
+#-K | --enable-debug
+# Use this parameter to send log messages to the system log instead of stdout.
+
+#-L | --use-syslog=facility
+# Use this parameter to send log messages to the system log instead of stdout. By default, ntop writes it's messages to stdout (the terminal).
+--use-syslog=local3
+
+#-M | --no-interface-merge
+# This option instructs ntop not to merge network interfaces together. This means that ntop will collect statistics for each interface and report them separately.
+
+#-O | --output-packet-path
+# This parameter defines the base path for the ntop-suspicious-pkts.XXX.pcap and normal packet dump files.
+
+#-P | --db-file-path
+#-Q | --spool-file-path
+# These parameters specify where ntop stores database files.
+# The directories named must allow read/write and file creation by the ntop user. For security, nobody else should have even read access to these files.
+# There are two types, temporary - that is ones which need not be retained from ntop run to ntop run, and permanent, which must be retained (or recreated).
+# The permanent databases are the preferences, "prefsCache.db" and the password file, "ntop_pw.db". These are stored in the -P | --db-file-path specified location, If only -P | --db-file-path is specified, it is used for both types of databases.
+# NOTE: Use absolute paths
+--db-file-path /var/opt/csw/ntop
+
+#-U | --mapper
+# Specifies the URL of the mapper.pl utility.
+
+#--disable-instantsessionpurge
+# This switch makes ntop respect the timeouts for completed sessions. It is NOT the default because a busy web server may have 100s or 1000s of completed sessions and this would significantly increase the amount of memory ntop uses.
+
+#--disable-mutexextrainfo
+# On some OSes, the system calls used to collect this informatio (getpid() and gettimeofday()) are expensive.
+# This option disables the extra information.
+
+#--disable-schedyield
+# ntop uses sched_yield() calls for better interactive performance. Under some situations, primarily under RedHat Linux 8.0, this can deadlock, causing the ntop web server to stop responding, although ntop appears to still be operational according to the ps command. Use this switch to disable these calls, IF you are seeing deadlocks.
+
+#--pcap_setnonblock
+# Return ntop to the old (v2.1) behavior on a memory error. The default of stopcap enabled makes the web interface available albeit with static content until ntop is shutdown.
+
+#--skip-version-check
+# By default, ntop accesses a remote file to periodically check if the most current version is running. This option disables that check.
+--skip-version-check
+
+--w3c
+# By default, ntop generates displayable but not great html. This flag tells ntop to generate 'BETTER' (but not perfect) w3c compliant html 4.01 output.

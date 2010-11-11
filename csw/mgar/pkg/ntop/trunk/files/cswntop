@@ -3,8 +3,8 @@
 # ntop startup script for ntop v3.0
 # v1.0
 #
-BINDIR=/opt/csw/bin
-CONF=/opt/csw/etc/ntop/ntop.conf
+BINDIR=@bindir@
+CONF=@sysconfdir@/ntop/ntop.conf
 
  if [ ! -f "$CONF" ]; then
   echo "Configuration file not found."
@@ -12,7 +12,7 @@ CONF=/opt/csw/etc/ntop/ntop.conf
  else
   DATADIR=`/usr/bin/egrep "^\--db-file-path|^-P" "$CONF" | /usr/bin/cut -f2 -d" "`
   if [ -z "$DATADIR" ]; then
-   DATADIR=/var/opt/csw/ntop
+   DATADIR=@localstatedir@/ntop
    EXTRA="-P ${DATADIR}"
   fi
  fi
