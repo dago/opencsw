@@ -1,5 +1,5 @@
 GARNAME = Class-Autouse
-GARVERSION = 1.27
+GARVERSION = 1.29
 CATEGORIES = cpan
 AUTHOR = ADAMK
 
@@ -11,6 +11,20 @@ define BLURB
   large amounts of memory, and decrease the script load time a great deal.
 endef
 
-DISTFILES = $(call admfiles,CSWpmclsautouse,depend prototype)
+PACKAGES = CSWpmclassautouse CSWpmclsautouse
+
+CATALOGNAME_CSWpmclassautouse = pm_classautouse
+CATALOGNAME_CSWpmclsautouse = pm_clsautouse
+
+SPKG_DESC_CSWpmclassautouse = $(DESCRIPTION)
+SPKG_DESC_CSWpmclsautouse = Empty stub as contents has been moved to CSWpmclassautouse
+
+RUNTIME_DEP_PKGS_ONLY_CSWpmclsautouse = CSWpmclassautouse
+
+LICENSE = LICENSE
+
+ARCHALL = 1
+
+PKGFILES_CSWpmclsautouse = NOFILES
 
 include gar/category.mk
