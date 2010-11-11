@@ -3,7 +3,7 @@ GARVERSION = 1.5
 CATEGORIES = cpan
 AUTHOR = EDAVIS
 
-DESCRIPTION = a module for sorting of revision-like numbers.
+DESCRIPTION = A module for sorting of revision-like numbers
 define BLURB
   Sort::Versions allows easy sorting of mixed non-numeric and numeric strings,
   like the 'version numbers' that many shared library systems and revision
@@ -13,6 +13,20 @@ define BLURB
   undoubtedly be found.
 endef
 
-DISTFILES += $(call admfiles,CSWpmsortver,prototype)
+DISTFILES = COPYING
+
+PACKAGES = CSWpmsortversions CSWpmsortver
+
+CATALOGNAME_CSWpmsortversions = pm_sortversions
+CATALOGNAME_CSWpmsortver = pm_sortver
+
+SPKG_DESC_CSWpmsortversions = $(DESCRIPTION)
+SPKG_DESC_CSWpmsortver = Empty stub as contents has been moved to CSWpmsortversions
+
+RUNTIME_DEP_PKGS_ONLY_CSWpmsortver = CSWpmsortversions
+
+ARCHALL = 1
+
+PKGFILES_CSWpmsortver = NOFILES
 
 include gar/category.mk
