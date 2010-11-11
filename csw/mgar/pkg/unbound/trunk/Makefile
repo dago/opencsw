@@ -20,6 +20,8 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += cswunbound
 DISTFILES += cswusergroup
 
+VENDOR_URL = http://unbound.net
+
 EXTRA_BUILD_ISAS_i386  = pentium_pro
 EXTRA_BUILD_ISAS_sparc = sparcv8plus
 
@@ -47,17 +49,15 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-control-setup
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus += $(prefix)/sbin/unbound-host
 
-SPKG_CLASSES_CSWunbound = none cswusergroup cswcpsampleconf cswinitsmf
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswunbound$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/CSWunbound\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/unbound\/unbound.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
+# SPKG_CLASSES_CSWunbound = none cswusergroup cswcpsampleconf cswinitsmf
+# PROTOTYPE_FILTER = awk '$$$$3 ~ /\/init.d\/cswunbound$$$$/ { $$$$2 = "cswinitsmf" } $$$$3 ~ /\/CSWunbound\/cswusergroup$$$$/ { $$$$2 = "cswusergroup" } $$$$3 ~ /\/unbound\/unbound.conf.CSW$$$$/ { $$$$2 = "cswcpsampleconf" } { print }'
+
+INITSMF = /etc/opt/csw/init.d/cswunbound
+USERGROUP = /etc/opt/csw/pkg/CSWunbound/cswusergroup
+SAMPLECONF = /etc/opt/csw/unbound/unbound.conf
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-PACKAGING_PLATFORMS +=  solaris9-sparc solaris9-i386
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGUTE_ARGS += --with-solaris-threads
@@ -92,13 +92,15 @@ PKGFILES_CSWunbound-devel += $(PKGFILES_DEVEL)
 # make test doesn't work for the moment on Solaris
 SKIPTEST = 1
 
+include gar/category.mk
+
 post-install-modulated:
-	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -m 755 $(FILEDIR)/cswunbound $(DESTDIR)/etc/opt/csw/init.d/cswunbound
-	@ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSWunbound
-	@ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWunbound/cswusergroup
-	@mv $(DESTDIR)/etc/opt/csw/unbound/unbound.conf $(DESTDIR)/etc/opt/csw/unbound/unbound.conf.CSW
-	@chmod 444 $(DESTDIR)/etc/opt/csw/unbound/unbound.conf.CSW
+	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	ginstall -m 755 $(FILEDIR)/cswunbound $(DESTDIR)/etc/opt/csw/init.d/cswunbound
+	ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSWunbound
+	ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWunbound/cswusergroup
+	#mv $(DESTDIR)/etc/opt/csw/unbound/unbound.conf $(DESTDIR)/etc/opt/csw/unbound/unbound.conf.CSW
+	#chmod 444 $(DESTDIR)/etc/opt/csw/unbound/unbound.conf.CSW
+	chmod 444 $(DESTDIR)/etc/opt/csw/unbound/unbound.conf
 	@$(MAKECOOKIE)
 
-include gar/category.mk
