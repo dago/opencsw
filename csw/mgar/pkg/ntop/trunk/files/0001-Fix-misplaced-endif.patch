@@ -1,0 +1,27 @@
+From 7ba230598efb6fc4636c0bb18b0d340d723e3d75 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 11 Nov 2010 10:46:42 +0100
+Subject: [PATCH 1/4] Fix misplaced #endif
+
+---
+ address.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/address.c b/address.c
+index 73d8046..59436e1 100644
+--- a/address.c
++++ b/address.c
+@@ -239,9 +239,9 @@ void* dequeueAddress(void *_i) {
+ 	    he = &_hp;
+ 	  else
+ 	    he = NULL;
+-#endif
+ 	} else
+ 	  he = NULL;
++#endif
+ #else
+ 	he = gethostbyaddr(theAddr, size, family);
+ #endif
+-- 
+1.7.3
+

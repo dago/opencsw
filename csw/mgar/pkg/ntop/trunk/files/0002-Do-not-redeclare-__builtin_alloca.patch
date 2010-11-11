@@ -1,0 +1,24 @@
+From b41a4c15c708ee01cf91a9d20dca3b6ae095370a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 11 Nov 2010 10:50:20 +0100
+Subject: [PATCH 2/4] Do not redeclare __builtin_alloca
+
+---
+ argv.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/argv.c b/argv.c
+index 9212e85..84b02c6 100644
+--- a/argv.c
++++ b/argv.c
+@@ -28,6 +28,7 @@ Cambridge, MA 02139, USA.  */
+ #else /* not __GNUC__ */
+ #ifdef sparc
+ #include <alloca.h>
++/* This is declared at least on Solaris 9, maybe this should better be detected during configure-time?
+ extern char *__builtin_alloca();  /* Stupid include file doesn't declare it */
+ #else
+ #ifdef _AIX
+-- 
+1.7.3
+
