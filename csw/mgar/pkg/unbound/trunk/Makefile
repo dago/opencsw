@@ -101,6 +101,5 @@ post-install-modulated:
 	ginstall -m 755 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWunbound/cswusergroup
 	#mv $(DESTDIR)/etc/opt/csw/unbound/unbound.conf $(DESTDIR)/etc/opt/csw/unbound/unbound.conf.CSW
 	#chmod 444 $(DESTDIR)/etc/opt/csw/unbound/unbound.conf.CSW
-	chmod 444 $(DESTDIR)/etc/opt/csw/unbound/unbound.conf
 	@$(MAKECOOKIE)
 
