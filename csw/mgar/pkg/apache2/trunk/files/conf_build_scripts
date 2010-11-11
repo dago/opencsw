@@ -7,7 +7,7 @@ AP2_CONF=$AP2_ROOT/etc
 
 cd $ROOT/$AP2_CONF;
 
-for f in $(find . -name '*conf'); do
+for f in $(find . -type f | grep -v original/ ); do
     echo "...processing $f"
 
     cat <<EOF > $f.new
@@ -18,6 +18,8 @@ AP2_CONF=\$AP2_ROOT/etc
 if [ "\$1" = install ]; then
   cat <<EOS > \$AP2_CONF/$f.CSW
 EOF
+
+perl -pi -e 's/\$/\\\$/g' $f
 cat $f >> $f.new
 
 cat <<EOF >> $f.new
