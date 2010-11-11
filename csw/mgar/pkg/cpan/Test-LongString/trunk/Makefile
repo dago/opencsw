@@ -1,5 +1,5 @@
 GARNAME = Test-LongString
-GARVERSION = 0.11
+GARVERSION = 0.14
 CATEGORIES = cpan
 AUTHOR = RGARCIA
 
@@ -12,8 +12,20 @@ define BLURB
   module for you.
 endef
 
-DISTFILES += $(call admfiles,CSWpmtestlongstr,)
+DISTFILES = COPYING
 
-BUILDDEPS += cpan/Test-Builder-Tester
+PACKAGES = CSWpmtestlongstring CSWpmtestlongstr
+
+CATALOGNAME_CSWpmtestlongstring = pm_testlongstring
+CATALOGNAME_CSWpmtestlongstr = pm_testlongstr
+
+SPKG_DESC_CSWpmtestlongstring = $(DESCRIPTION)
+SPKG_DESC_CSWpmtestlongstr = Empty stub as contents has been moved to CSWpmtestlongstring
+
+RUNTIME_DEP_PKGS_ONLY_CSWpmtestlongstr = CSWpmtestlongstring
+
+ARCHALL = 1
+
+PKGFILES_CSWpmtestlongstr = NOFILES
 
 include gar/category.mk
