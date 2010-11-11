@@ -1,0 +1,110 @@
+#!/sbin/sh
+#
+# ntop startup script for ntop v3.0
+# v1.0
+#
+BINDIR=/opt/csw/bin
+CONF=/opt/csw/etc/ntop/ntop.conf
+
+ if [ ! -f "$CONF" ]; then
+  echo "Configuration file not found."
+  exit 1
+ else
+  DATADIR=`/usr/bin/egrep "^\--db-file-path|^-P" "$CONF" | /usr/bin/cut -f2 -d" "`
+  if [ -z "$DATADIR" ]; then
+   DATADIR=/var/opt/csw/ntop
+   EXTRA="-P ${DATADIR}"
+  fi
+ fi
+ PIDFILE=${DATADIR}/ntop.pid
+
+case $1 in
+'start')
+	DAEMON_MODE=`/usr/bin/egrep "^\--daemon|^-d" "$CONF"`
+	if [ -z "$DAEMON_MODE" ];then 
+	 echo "No configured as a daemon."
+	 exit 1
+	fi
+	NTOPUSER=`/usr/bin/egrep "^\--user|^-u" "$CONF" | /usr/bin/cut -f2 -d" "`
+	NTOPGROUP=`/usr/bin/egrep "^${NTOPUSER}:" /etc/passwd | /usr/bin/cut -f4 -d":" `
+	if [ -z "$NTOPGROUP" ]; then
+	 echo "Invalid ntop user ${NTOPUSER}"
+	 exit 1
+        fi
+	if [ -z "$NTOPUSER" ]; then 
+	 NTOPUSER=nobody
+	 EXTRA="${EXTRA} -u ${NTOPUSER}"
+	fi
+	if [ ! -d "$DATADIR" ];then
+  	 /usr/bin/mkdir -p ${DATADIR}
+	 /usr/bin/chown ${NTOPUSER}:${NTOPGROUP} ${DATADIR}
+	 /usr/bin/chmod 0711 ${DATADIR}
+        fi
+	if [ ! -f "$DATADIR/ntop_pw.db" ];then
+	 echo "No password database !"
+	 exit 1;
+	fi
+	HTTP=`/usr/bin/egrep "^\--http-server|^-w" "$CONF" | /usr/bin/cut -f2 -d" "`
+	if [ -z "$HTTP" ];then
+	 EXTRA=" ${EXTRA} -w 3000"
+	fi
+	HTTPS=`/usr/bin/egrep "^\--http-servers|^-W" "$CONF" | /usr/bin/cut -f2 -d" "`
+	if [ -z "$HTTPS" ];then
+	 EXTRA=" ${EXTRA} -W 0"
+	fi
+	INTERFACES=`/usr/bin/egrep "^\--interfaces|^-i" "$CONF" | /usr/bin/cut -f2 -d" "`
+	if [ -z "$INTERFACES" ];then
+	 for i in `/sbin/ifconfig -a |/usr/bin/grep "^[a-z0-9]*:"`
+          do
+           /usr/bin/echo $i | /usr/bin/grep "^[a-z0-9]*:" >/dev/null 2>&1       
+           if [ $? -eq 1 ]; then
+            continue
+           fi
+           m=`/usr/bin/echo ${i} | /usr/bin/sed 's/:[0-9]*:*//'`
+           if [ "$m" = "lo0" ]; then
+            continue
+           fi
+           net_device_list="${net_device_list} ${m}"
+          done
+         net_device_list=`/usr/bin/echo $net_device_list | /usr/bin/sort -u`
+         interfaces=0;
+         set -- $net_device_list
+         for i
+         do
+          if [ ${interfaces} -gt 0 ]; then
+           INTERFACES="${i},${INTERFACES}"
+          else
+           INTERFACES="${i}"
+          fi
+          interfaces=`/usr/bin/expr ${interfaces} + 1`
+         done
+        fi
+	if [ ${interfaces} -gt 1 ]; then
+	 EXTRA=" ${EXTRA} -i ${INTERFACES}"
+	fi
+	LOG=`/usr/bin/egrep "^\--use-syslog|^-L" "$CONF" | /usr/bin/cut -f2 -d" "`
+	if [ -z "$LOG" ];then
+	 EXTRA=" ${EXTRA} --use-syslog=local3"
+	fi
+
+        /usr/bin/echo "Start ntop network traffic usage monitor..."
+	if [ -z "$EXTRA" ];then 
+         $BINDIR/ntop @${CONF}
+	else
+	 $BINDIR/ntop ${EXTRA} @${CONF}
+	fi
+	 
+        ;;
+'stop')
+
+        echo "Stop ntop network traffic usage monitor..."
+        if [ -f "$PIDFILE" ]; then
+                /usr/bin/kill -TERM `/usr/bin/cat $PIDFILE`
+        fi
+        ;;
+
+*)
+        echo "Usage: $0 { start | stop }"
+        exit 1
+        ;;
+esac
