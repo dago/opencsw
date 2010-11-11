@@ -1,0 +1,39 @@
+#!/bin/bash
+
+ROOT=$1
+
+AP2_ROOT=/opt/csw/apache2
+AP2_CONF=$AP2_ROOT/etc
+
+cd $ROOT/$AP2_CONF;
+
+for f in $(find . -name '*conf'); do
+    if [ ! -f "$f.bak" ]; then
+	perl -pi.bak -e 's/\$/\\\$/g' $f
+    fi 
+
+    cat <<EOF > $f.new
+PIR=\${PKG_INSTALL_ROOT:-/}
+AP2_ROOT=\$PIR/$AP2_ROOT
+AP2_CONF=\$AP2_ROOT/etc
+
+if [ "\$1" = install ]; then
+  cat <<EOS > \$AP2_CONF/$f.CSW
+EOF
+cat $f >> $f.new
+
+cat <<EOF >> $f.new
+EOS
+
+if [ ! -f \$AP2_CONF/$f ]; then
+  cp -p \$AP2_CONF/$f.CSW \$AP2_CONF/$f
+fi
+
+else
+  rm \$AP2_CONF/$f
+fi
+
+EOF
+
+mv $f.new $f
+done
