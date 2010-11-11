@@ -8,9 +8,7 @@ AP2_CONF=$AP2_ROOT/etc
 cd $ROOT/$AP2_CONF;
 
 for f in $(find . -name '*conf'); do
-    if [ ! -f "$f.bak" ]; then
-	perl -pi.bak -e 's/\$/\\\$/g' $f
-    fi 
+    echo "...processing $f"
 
     cat <<EOF > $f.new
 PIR=\${PKG_INSTALL_ROOT:-/}
