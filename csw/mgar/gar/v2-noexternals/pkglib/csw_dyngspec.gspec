@@ -1,0 +1,4 @@
+%include        url file://%{PKGLIB}/csw_vars.gspec
+%include        url file://%{PKGLIB}/csw_prototype.gspec
+%pkginfo        url file://%{WORKSRC}/csw/pkginfo
+%include        url file://%{PKGLIB}/std_depend.gspec

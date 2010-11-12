@@ -1,0 +1,130 @@
+# BEGIN smf/postinstall
+#
+# Copyright 2006 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This code is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# postinstall script which restore the previous state of 
+# services (enabled/disabled/...)
+#
+
+# returns the list of frmi defined in a given manifest file
+get_fmri_list ()
+{
+    /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svccfg inventory "$1" | awk -F: ' NF > 2 { print $0 }'
+}
+
+
+# retrieve the previous state of a service
+load_smf_service_state ()
+{
+    SERVICE_STATE="disabled"
+
+    STATE=`$BASEDIR/usr/bin/svcs -Ho STATE $1 2>/dev/null`
+    if [ $? -eq 0 ]; then
+        if [ "$STATE" = "online" ]; then
+            SERVICE_STATE="enabled"
+            return 0
+        fi
+    fi
+
+    if [ -f "$STATE_FILE" ]; then
+        set -- `/usr/bin/awk " \\\$1 == \"$1\" { print \\\$2 } " "$STATE_FILE"`
+        if [ "$1" = "enabled" ]; then
+            SERVICE_STATE="enabled"
+        fi
+        return 0
+    fi
+    return 1
+}
+
+
+# retrieve the autoenable value for the given service
+get_autoenable ()
+{
+    SERVICE_STATE=""
+
+    for _FILE in /opt/csw/etc/csw.conf /etc/opt/csw/csw.conf; do
+        if [ -f "$PKG_INSTALL_ROOT/$_FILE" ]; then
+            . "$PKG_INSTALL_ROOT/$_FILE"
+        fi
+    done
+
+    if [ -n "$1" ]; then
+	eval SERVICE_STATE=\$autoenable_$1
+    fi
+    if [ -z "$SERVICE_STATE" ]; then
+	SERVICE_STATE="$autoenable_daemons"
+    fi
+
+    if [ "$SERVICE_STATE" != "no" ]; then
+        SERVICE_STATE="enabled"
+        return 0
+    else
+        SERVICE_STATE="disabled"
+        return 1
+    fi
+}
+
+if [ -z "$PKG_INSTALL_ROOT" ]; then 
+    PKG_INSTALL_ROOT=/
+fi
+
+# is SMF available ?
+if [ "$SMF" = "yes" ]; then
+
+    STATE_FILE="$PKG_INSTALL_ROOT/var/tmp/$PKG.smfinfo" 
+
+    for FILE in $MANIFEST_FILES; do
+        for FMRI in `get_fmri_list "$FILE"`; do
+            load_smf_service_state "$FMRI"
+            # no previous service state, so we rely on autoenable
+            # configuration variable, if this service can be autoenabled !
+            if [ "$?" -ne 0 ] && [ "$CAN_BE_AUTOENABLED" != "no" ]; then
+                get_autoenable $SERVICE_NAME
+            fi    
+
+            # we copy the configuration file to be able 
+            # to enable the service
+            for CONF_FILE in $SERVICE_CONF_FILES; do
+                if [ ! -f $CONF_FILE ]; then
+                    cp ${CONF_FILE}.CSW $CONF_FILE
+                fi
+            done
+
+            if [ "$SERVICE_STATE" = "enabled" ]; then
+                /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm enable "$FMRI" >/dev/null 2>&1
+            else
+                /usr/sbin/chroot "$PKG_INSTALL_ROOT" /usr/sbin/svcadm disable "$FMRI" >/dev/null 2>&1
+            fi
+        done
+    done
+
+    rm -f "$STATE_FILE"
+
+else
+    # with init scripts, we don't save/restore the state
+    # This behaviour was refused by Phil Brown
+    for FILE in $INIT_FILES; do
+	if get_autoenable $SERVICE_NAME; then
+            if [ "$CAN_BE_AUTOENABLED" != "no" ]; then
+                # we copy the service configuration file to be able 
+                # to enable the service
+                for CONF_FILE in $SERVICE_CONF_FILES; do
+                    if [ ! -f $CONF_FILE ]; then
+                        cp ${CONF_FILE}.CSW $CONF_FILE
+                    fi
+                done
+            fi
+            /usr/sbin/chroot "$PKG_INSTALL_ROOT" "$FILE" start
+        fi
+    done
+
+fi
+
+true
+# END smf/postinstall
