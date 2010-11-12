@@ -24,6 +24,7 @@ ifneq ($(abspath /),/)
 $(error Your version of 'make' is too old: $(MAKE_VERSION). Please make sure you are using at least 3.81)
 endif
 
+# Still required? GARDIR should be pre-set by the top-level category.mk
 GARDIR ?= gar
 GARBIN  = $(GARDIR)/bin
 
@@ -135,7 +136,7 @@ merge-$(2): BUILDHOST=$$(call modulation2host)
 merge-$(2):
 	@echo "[===== Building modulation '$(2)' on host '$$(BUILDHOST)' =====]"
 	$$(if $$(and $$(BUILDHOST),$$(filter-out $$(THISHOST),$$(BUILDHOST))),\
-		$(SSH) $$(BUILDHOST) "PATH=$$(PATH) $(MAKE) -C $$(CURDIR) $(if $(GAR_PLATFORM),GAR_PLATFORM=$(GAR_PLATFORM)) MODULATION=$(2) $(3) merge-modulated",\
+		$(SSH) $$(BUILDHOST) "PATH=$$(PATH) GARDIR=$(GARDIR) MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $$(CURDIR) $(if $(GAR_PLATFORM),GAR_PLATFORM=$(GAR_PLATFORM)) MODULATION=$(2) $(3) merge-modulated",\
 		$(MAKE) $(if $(GAR_PLATFORM),GAR_PLATFORM=$(GAR_PLATFORM)) MODULATION=$(2) $(3) merge-modulated\
 	)
 	@# The next line has intentionally been left blank to explicitly terminate this make rule
