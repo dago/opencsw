@@ -212,7 +212,7 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 
-post-install-modulated: rename-httpd copy-local-files create-templates copy-readmes
+post-install-modulated: rename-httpd copy-local-files copy-readmes
 
 copy-readmes:
 	@(cd $(WORKDIR); for f in README.CSW*; do \
@@ -235,40 +235,27 @@ copy-local-files:
 	@ginstall $(WORKDIR)/update20to22 $(APACHE_ROOT)/sbin
 	@$(MAKECOOKIE)
 
-# Create stock templates
-template_list  = share/htdocs/index.html
-template_list += etc/extra/httpd-autoindex.conf
-template_list += etc/extra/httpd-dav.conf
-template_list += etc/extra/httpd-default.conf
-template_list += etc/extra/httpd-info.conf
-template_list += etc/extra/httpd-languages.conf
-template_list += etc/extra/httpd-multilang-errordoc.conf
-template_list += etc/extra/httpd-userdir.conf
-template_list += etc/extra/httpd-vhosts.conf
-template_list += etc/extra/httpd-mpm.conf
-template_list += etc/magic
-template_list += etc/mime.types
-
 create-templates:
-	@echo "  => Creating template files"
-	@( cd $(DESTDIR)$(prefix)/apache2 ; \
-			for file in $(template_list) ; do \
-				gmv -v $$file $$file.CSW ; \
-			done )
 	@$(MAKECOOKIE)
 
 
-post-merge:
+post-merge: create-templates
+	@echo "  => Creating template files"
+	@$(FILEDIR)/conf_build_scripts $(PKGROOT)
+	@echo "  => Modifying template files for specific cases"
 	@(cd $(PKGROOT)/$(prefix)/apache2/etc/; \
-		for f in httpd.conf extra/httpd-ssl.conf; do \
-		perl -pi -e 's/User.*daemon.*/User \@USER\@/; \
-		s/Group.*daemon.*/Group \@GROUP\@/; \
-		s/#*ServerName www.example.com/ServerName \@HOSTNAME\@/; \
-		s/ServerAdmin you\@example.com/ServerAdmin \@ADMIN\@/; \
+               for f in httpd.conf.CSW extra/httpd-ssl.conf.CSW; do \
+		echo ...$$f; \
+		perl -pi -e 's/#*ServerName www.example.com:(80|443)/EOS\necho ServerName `hostname`:$$1 >> \$$TEMPLATE;\ncat <<EOS >>\$$TEMPLATE/; \
+		s/#*ServerAdmin you\@example.com/EOS\necho ServerAdmin root@`hostname` >> \$$TEMPLATE;\ncat <<EOS >>\$$TEMPLATE/; \
+		s/^User.*daemon/User nobody/; \
+		s/^Group.*daemon/Group nobody/; \
 		s/^(LoadModule.*suexec.*)/#$$1/; \
 		s/^#(Include.*httpd-mpm.conf)/$$1/; \
 		s/^#(Include.*httpd-ssl.conf)/$$1/' $$f; \
-		mv $$f $$f.CSW; \
-		done )
+               done )
+
+
+
 	@$(MAKECOOKIE)
 
