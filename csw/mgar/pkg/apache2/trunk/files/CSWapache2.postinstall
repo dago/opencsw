@@ -31,12 +31,6 @@ for file in $UPGRADE_CONFIGS; do
         fi
         # Ensure that the PidFile is pointed at ServerRoot relative path.
         perl -i -plne 's#PidFile /var#PidFile var#'
-    elif [ -f "$config.CSW" ]; then
-        echo "Creating $config from template"
-        sed -e s,@HOSTNAME@,$hostname,g   \
-            -e s,@USER@,nobody,g          \
-            -e s,@GROUP@,nobody,g         \
-            -e s,@ADMIN@,root@$hostname,g $config.CSW > $config
     fi
 done
 
@@ -49,32 +43,6 @@ cat << EOF
 
 EOF
 fi
-
-# Copy templates
-template_list="\
-    share/htdocs/index.html \
-    etc/extra/httpd-autoindex.conf \
-    etc/extra/httpd-dav.conf \
-    etc/extra/httpd-default.conf \
-    etc/extra/httpd-info.conf \
-    etc/extra/httpd-languages.conf \
-    etc/extra/httpd-multilang-errordoc.conf \
-    etc/extra/httpd-userdir.conf \
-    etc/extra/httpd-vhosts.conf \
-    etc/magic \
-    etc/mime.types"
-
-echo Copying CSW templates:
-for file in $template_list
-do
-    filepath=$AP2_PREFIX/$file
-    if [ -f "$filepath" ]; then
-        echo "  preserving $filepath"
-    elif [ -f "$filepath.CSW" ]; then
-        echo "  creating $filepath"
-        cp $filepath.CSW $filepath
-    fi
-done
 
 if [ ! -f $AP2_CONFDIR/server.crt -a ! -f $AP2_CONFDIR/server.key ]; then
     echo Generating dummy ssl key and certificate...
