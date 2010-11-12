@@ -32,7 +32,7 @@ if [ ! -f \$AP2_CONF/$f ]; then
 fi
 
 else
-  rm \$AP2_CONF/$f
+  rm \$TEMPLATE
 fi
 
 EOF
