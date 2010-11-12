@@ -44,8 +44,7 @@ SKIPTEST = 1
 LICENSE = LICENSE
 
 EXTRA_BUILD_ISAS_i386   = pentium_pro
-EXTRA_BUILD_ISAS_sparc  = sparcv8plus
-EXTRA_BUILD_ISAS_sparc  = sparcv8plus+vis
+EXTRA_BUILD_ISAS_sparc  = sparcv8plus sparcv8plus+vis
 
 MERGE_DIRS_isa-sparcv8plus  = $(libdir)
 MERGE_DIRS_isa-sparcv8plus += $(sbindir)
