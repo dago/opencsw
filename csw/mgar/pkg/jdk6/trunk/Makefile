@@ -85,6 +85,15 @@ shell-extract-archive-%:
 extract-archive-%.sh: shell-extract-archive-%.sh
 	@$(MAKECOOKIE)
 
+# We package upstream as is, no chance to change anything.
+CHECKPKG_OVERRIDES_CSWjdk += surplus-dependency|CSWjdk6
+CHECKPKG_OVERRIDES_CSWjdk6 += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWjdk6 += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSWjre += surplus-dependency|CSWjre6
+CHECKPKG_OVERRIDES_CSWjre6 += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWjre6 += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSWjre6 += soname-not-found
+
 include gar/category.mk
 
 install-custom:
@@ -92,7 +101,7 @@ install-custom:
 
 	@rm -rf $(DESTDIR)$(prefix)/java
 	@ginstall -d $(DESTDIR)$(prefix)/java/jdk
-	@(cd $(WORKDIR); pax -r -w $(DISTNAME) $(DESTDIR)$(prefix)/java/jdk)
+	@(cd $(WORKDIR); pax -r -w -s ',.*/\.git.*,,' $(DISTNAME) $(DESTDIR)$(prefix)/java/jdk)
 	@rm -f $(DESTDIR)$(prefix)/java/jdk/latest
 	@gln -sf jdk6 $(DESTDIR)$(prefix)/java/jdk/latest
 	@rm -f $(DESTDIR)$(prefix)/java/jdk/jdk6
