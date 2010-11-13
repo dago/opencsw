@@ -7,8 +7,7 @@ define BLURB
 Apache Tomcat is the servlet container that is used in the official Reference Implementation for the Java Servlet and JavaServer Pages technologies. The Java Servlet and JavaServer Pages specifications are developed by Sun under the Java Community Process.
 endef
 
-UPSTREAM_MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-7/
-MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-7/v$(GARVERSION)/bin/
+MASTER_SITES  = http://mirror.switch.ch/mirror/apache/dist//tomcat/tomcat-7/v7.0.4-beta/bin/
 DISTFILES     = apache-tomcat-$(GARVERSION).tar.gz
 PKGDIST       = apache-tomcat-$(GARVERSION).tar.gz
 DISTFILES    += CSWtomcat7.gspec CSWtomcat7.prototype CSWtomcat7.depend preremove postinstall preinstall checkinstall space i.smfno i.smfyes svc-tomcat7 tomcat7.xml tomcat7 cswtomcat7
