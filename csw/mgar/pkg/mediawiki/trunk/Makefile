@@ -1,5 +1,5 @@
 GARNAME = mediawiki
-GARVERSION = 1.14.0
+GARVERSION = 1.16.0
 CATEGORIES = apps
 RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 DESCRIPTION = A free software wiki package written in PHP
@@ -10,7 +10,7 @@ define BLURB
 	by many other wikis, including this website, the home of MediaWiki. 
 endef
 
-MASTER_SITES = http://download.wikimedia.org/mediawiki/$(RELVER)/
+MASTER_SITES = http://noc.wikimedia.org/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += CSWmediawiki.postinstall CSWmediawiki.preremove 
 DISTFILES += httpd-mediawiki.conf.CSW README.CSW
