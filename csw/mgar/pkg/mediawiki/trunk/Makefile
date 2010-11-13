@@ -21,7 +21,10 @@ RELOCATE_PREFIX = /opt/csw/share/www
 CATALOGNAME_CSWmediawiki = mediawiki
 SPKG_DESC_CSWmediawiki = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS_CSWmediawiki  = CSWphp5 CSWapache2c
+RUNTIME_DEP_PKGS_CSWmediawiki  = CSWphp5 
+CHECKPKG_OVERRIDES_CSWmediawiki += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWmediawiki += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWmediawiki += missing-dependency|CSWperl
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
