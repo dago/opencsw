@@ -1,0 +1,19 @@
+# tomcat6 - i.smfno script
+#
+# Copy the non-SMF specific files to the base directory.
+# The files to copy are:
+# /etc/init.d/cswtomcat6=cswtomcat6
+# /etc/rc0.d/K15cswtomcat6=/etc/init.d/cswtomcat6
+# /etc/rc1.d/K15cswtomcat6=/etc/init.d/cswtomcat6
+# /etc/rc2.d/K15cswtomcat6=/etc/init.d/cswtomcat6
+# /etc/rc3.d/S40cswtomcat6=/etc/init.d/cswtomcat6
+# /etc/rcS.d/K15cswtomcat6=/etc/init.d/cswtomcat6
+#
+echo "Installing class <smfno>."
+while read src dest
+do
+        # Do copy
+        /usr/bin/cp $src $dest || exit 2
+        echo $dest
+done
+exit 0
