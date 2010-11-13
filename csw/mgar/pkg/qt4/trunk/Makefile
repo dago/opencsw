@@ -1,5 +1,5 @@
 GARNAME = qt4
-GARVERSION = 4.6.0
+GARVERSION = 4.7.1
 CATEGORIES = lib
 
 DESCRIPTION = TrollTech C++ application framework
