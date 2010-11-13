@@ -1,5 +1,5 @@
 GARNAME     = php5
-GARVERSION  = 5.2.11
+GARVERSION  = 5.3.3
 CATEGORIES  = lang
 SF_PROJ     = $(shell echo $(GARNAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJ)-$(GARVERSION)
@@ -61,7 +61,7 @@ PATCHFILES += php-bug-45557-fix.diff
 
 # PHP Extensions
 EXTDIRLIST = $(shell ls -d extensions/*)
-include $(foreach X,$(EXTDIRLIST),$(X)/Makefile)
+#include $(foreach X,$(EXTDIRLIST),$(X)/Makefile)
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 
