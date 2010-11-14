@@ -1,7 +1,7 @@
 # $Id$
 
 GARNAME = Trac
-GARVERSION = 0.11.7
+GARVERSION = 0.12.1
 CATEGORIES = python
 
 DESCRIPTION = Integrated SCM and Project Management
@@ -24,6 +24,13 @@ ARCHALL_CSWtrac = 1
 
 CATALOGNAME_CSWtrac    = trac
 SPKG_DESC_CSWtrac      = Integrated SCM and Project Management
+
+CHECKPKG_OVERRIDES_CSWtrac += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWtrac += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWpysetuptools
+CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWgenshi
+CHECKPKG_OVERRIDES_CSWtrac += surplus-dependency|CSWpythonsvn
+
 
 TEST_SCRIPTS           =
 
