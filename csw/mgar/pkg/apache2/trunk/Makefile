@@ -198,7 +198,7 @@ PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/apache2\/etc\/.*CSW/ { $$$$1 = "e"; $$$$2 = "build"; $$$$4 = "?"; $$$$5 = "?"; $$$$6 = "?"}; { print }'
+PROTOTYPE_FILTER = gawk '$$$$3 ~ /apache2\/etc/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"; $$$$4 = "?"; $$$$5 ="?"; $$$$6 = "?"}; {print}'
 
 include gar/category.mk
 
