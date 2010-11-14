@@ -242,20 +242,14 @@ create-templates:
 
 
 post-merge: create-templates
-	@echo "  => Creating template files"
-	@$(FILEDIR)/conf_build_scripts $(PKGROOT)
-	@echo "  => Modifying template files for specific cases"
-	@(cd $(PKGROOT)/$(prefix)/apache2/etc/; \
-               for f in httpd.conf.CSW extra/httpd-ssl.conf.CSW; do \
-		echo ...$$f; \
-		perl -pi -e 's/#*ServerName www.example.com:(80|443)/EOS\necho ServerName `hostname`:$$1 >> \$$TEMPLATE\ncat <<EOS >>\$$TEMPLATE/; \
-		s/#*ServerAdmin you\@example.com/EOS\necho ServerAdmin root@`hostname` >> \$$TEMPLATE\ncat <<EOS >>\$$TEMPLATE/; \
-		s/^User.*daemon/User nobody/; \
-		s/^Group.*daemon/Group nobody/; \
-		s/^(LoadModule.*suexec.*)/#$$1/; \
-		s/^#(Include.*httpd-mpm.conf)/$$1/; \
-		s/^#(Include.*httpd-ssl.conf)/$$1/' $$f; \
-               done )
-	@cp -p $(WORKDIR)/server.crt.build_cas $(PKGROOT)/$(prefix)/apache2/etc/server.crt.CSW
+	@echo "  => Creating template files and CAS shell scripts..."
+	@( cd $(PKGROOT)/opt/csw/apache2/etc; \
+		for f in *conf extra/* mime* magic*; do \
+			echo "...$$f"; \
+			mv $$f $$f.CSW; \
+			$(abspath $(FILEDIR))/build_cas_template $$f > $$f; \
+		done )
+	@echo "  => Creating ssl server.crt build CAS template."
+	@cp -p $(WORKDIR)/server.crt.build_cas $(PKGROOT)/$(prefix)/apache2/etc/server.crt
 	@$(MAKECOOKIE)
 

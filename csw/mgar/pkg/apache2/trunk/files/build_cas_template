@@ -1,0 +1,28 @@
+#!/bin/bash
+
+cat <<EOF
+#!/bin/sh
+
+if [ "\$1" = install ]; then
+PIR=\${PKG_INSTALL_ROOT:-/}
+AP2_DIR=\$PIR/opt/csw/apache2
+AP2_CONF=\$AP2_DIR/etc/
+
+CONF_FILE=\$AP2_CONF/$1
+
+if [ ! -f "\$CONF_FILE" ]; then
+   cp -p \$CONF_FILE.CSW \$CONF_FILE
+   host=\`hostname\`
+   perl -pi \
+   	-e "s/#*ServerName www.example.com(80|443)/ServerName \$host:\\\$1/;" \
+	-e "s/#*ServerAdmin you\@example.com/ServerAdmin root@\$host/;" \
+	-e "s/^User.*daemon/User nobody/;" \
+	-e "s/^Group.*daemon/Group nobody/;" \
+	-e "s/^(LoadModule.*suexec.*)/#\$1/;" \
+	-e "s/^#(Include.*httpd-mpm.conf)/\$1/;" \
+	-e "s/^#(Include.*httpd-ssl.conf)/\$1/;" \$CONF_FILE
+else
+   # preserve ourselves with no changes
+   cat \$CONF_FILE
+fi
+EOF
