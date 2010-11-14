@@ -12,10 +12,9 @@ CONF_FILE=\$AP2_CONF/$1
 if [ "\$1" = install ]; then
    if [ ! -f "\$CONF_FILE" ]; then
       cp -p \$CONF_FILE.CSW \$CONF_FILE
-      host=\`hostname\`
       perl -pi \
-   	-e "s/#*ServerName www.example.com(80|443)/ServerName \$host:\\\$1/;" \
-	-e "s/#*ServerAdmin you\@example.com/ServerAdmin root@\$host/;" \
+	-e "s/#*ServerName.*www.example.com/ServerName \`hostname\`/;" \
+	-e "s/#*ServerAdmin you\@example.com/ServerAdmin root@\`hostname\`/;" \
 	-e "s/^User.*daemon/User nobody/;" \
 	-e "s/^Group.*daemon/Group nobody/;" \
 	-e "s/^(LoadModule.*suexec.*)/#\$1/;" \
