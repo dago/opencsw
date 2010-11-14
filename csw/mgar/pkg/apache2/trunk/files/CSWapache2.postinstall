@@ -44,21 +44,4 @@ cat << EOF
 EOF
 fi
 
-if [ ! -f $AP2_CONFDIR/server.crt -a ! -f $AP2_CONFDIR/server.key ]; then
-    echo Generating dummy ssl key and certificate...
-    # this is likely overkill for a dummy cert, but why not
-    umask 0077
-    cat <<EOF | /usr/sbin/chroot ${ROOT} /opt/csw/bin/openssl req -new -newkey rsa:1024 -days 365 -nodes -x509 -keyout /opt/csw/apache2/etc/server.key  -out /opt/csw/apache2/etc/server.crt >/dev/null 2>&1
-TS
-Westfarthing
-Hobbiton
-
-
-$hostname
-bilbo@example.net
-
-
-EOF
-fi
-
 exit 0
