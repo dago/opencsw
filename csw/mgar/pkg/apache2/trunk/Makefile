@@ -248,8 +248,8 @@ post-merge: create-templates
 	@(cd $(PKGROOT)/$(prefix)/apache2/etc/; \
                for f in httpd.conf.CSW extra/httpd-ssl.conf.CSW; do \
 		echo ...$$f; \
-		perl -pi -e 's/#*ServerName www.example.com:(80|443)/EOS\necho ServerName `hostname`:$$1 >> \$$TEMPLATE;\ncat <<EOS >>\$$TEMPLATE/; \
-		s/#*ServerAdmin you\@example.com/EOS\necho ServerAdmin root@`hostname` >> \$$TEMPLATE;\ncat <<EOS >>\$$TEMPLATE/; \
+		perl -pi -e 's/#*ServerName www.example.com:(80|443)/EOS\necho ServerName `hostname`:$$1 >> \$$TEMPLATE\ncat <<EOS >>\$$TEMPLATE/; \
+		s/#*ServerAdmin you\@example.com/EOS\necho ServerAdmin root@`hostname` >> \$$TEMPLATE\ncat <<EOS >>\$$TEMPLATE/; \
 		s/^User.*daemon/User nobody/; \
 		s/^Group.*daemon/Group nobody/; \
 		s/^(LoadModule.*suexec.*)/#$$1/; \
