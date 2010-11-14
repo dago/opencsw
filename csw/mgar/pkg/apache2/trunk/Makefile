@@ -40,7 +40,7 @@ DISTFILES += CSWapache2.killproc cswapache2
 DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
 
 # Configuration templates
-DISTFILES += update20to22
+DISTFILES += update20to22 server.crt.build_cas
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
 
@@ -256,5 +256,6 @@ post-merge: create-templates
 		s/^#(Include.*httpd-mpm.conf)/$$1/; \
 		s/^#(Include.*httpd-ssl.conf)/$$1/' $$f; \
                done )
+	@cp -p $(WORKDIR)/server.crt.build_cas $(PKGROOT)/$(prefix)/apache2/etc/server.crt.CSW
 	@$(MAKECOOKIE)
 
