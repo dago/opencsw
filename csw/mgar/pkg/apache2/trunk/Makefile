@@ -198,6 +198,8 @@ PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
+PROTOTYPE_FILTER = awk '$$$$3 ~ /\/apache2\/etc\/.*CSW/ { $$$$1 = "e"; $$$$2 = "build"; $$$$4 = "?"; $$$$5 = "?"; $$$$6 = "?"}; { print }'
+
 include gar/category.mk
 
 CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
@@ -254,8 +256,5 @@ post-merge: create-templates
 		s/^#(Include.*httpd-mpm.conf)/$$1/; \
 		s/^#(Include.*httpd-ssl.conf)/$$1/' $$f; \
                done )
-
-
-
 	@$(MAKECOOKIE)
 
