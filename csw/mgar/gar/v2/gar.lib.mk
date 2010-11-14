@@ -516,7 +516,7 @@ gz-patch-%:
 # apply normal patches (git format-patch output or old-style diff -r)
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@( if ggrep -q 'Subject:' $(abspath $(DOWNLOADDIR)/$*); then \
+	@( if ggrep -q 'diff --git' $(abspath $(DOWNLOADDIR)/$*); then \
 		cd $(WORKSRC); git am --ignore-space-change --ignore-whitespace $(abspath $(DOWNLOADDIR)/$*); \
 	   else \
 		echo Adding old-style patch...; \
