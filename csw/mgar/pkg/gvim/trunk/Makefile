@@ -1,6 +1,6 @@
 GARNAME = vim
-DISTVERSION = 7.2
-PATCHREV = 320
+DISTVERSION = 7.3
+PATCHREV = 055
 GARVERSION = $(DISTVERSION).$(PATCHREV)
 CATEGORIES = utils
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -21,18 +21,12 @@ MASTER_SITES += ftp://ftp.vim.org/pub/vim/extra/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/unix/
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
-DISTFILES += $(GARNAME)-$(DISTVERSION)-lang.tar.gz
-DISTFILES += $(GARNAME)-$(DISTVERSION)-extra.tar.gz
 DISTFILES += gvim.desktop
 DISTFILES += COPYING
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
-PATCHFILES += vimtutor.patch
 
 WORKSRC = $(WORKDIR)/$(GARNAME)$(subst .,,$(DISTVERSION))
-
-EXTRA_PKG_CONFIG_DIRS = /opt/csw/X11/lib
-EXTRA_LDFLAGS = -R /opt/csw/X11/lib
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(GARNAME)
@@ -42,9 +36,6 @@ CONFIGURE_ARGS += --enable-multibyte
 CONFIGURE_ARGS += --enable-cscope
 CONFIGURE_ARGS += --with-vim-name="vim-x11"
 CONFIGURE_ARGS += --enable-gui=gnome2
-CONFIGURE_ARGS += --x-includes=/opt/csw/X11/include
-CONFIGURE_ARGS += --x-libraries=/opt/csw/X11/lib
-
 
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
@@ -52,11 +43,13 @@ BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
 PATCHDIRLEVEL = 0
 
 RUNTIME_DEP_PKGS_CSWgvim  = CSWvimrt CSWbonobo2 CSWfconfig CSWftype2 CSWgconf2
-RUNTIME_DEP_PKGS_CSWgvim += CSWggettextrt CSWglib2 CSWgnomekeyring CSWgnomevfs2 CSWgtk2
+RUNTIME_DEP_PKGS_CSWgvim += CSWggettextrt CSWglib2 CSWgnomevfs2 CSWgtk2
 RUNTIME_DEP_PKGS_CSWgvim += CSWiconv CSWlibart CSWlibatk CSWlibbonoboui CSWlibcairo
 RUNTIME_DEP_PKGS_CSWgvim += CSWlibgnome CSWlibgnomecanvas CSWlibgnomeui CSWlibpopt
-RUNTIME_DEP_PKGS_CSWgvim += CSWlibxml2 CSWlibxrender CSWncurses CSWorbit2 CSWpango
-RUNTIME_DEP_PKGS_CSWgvim += CSWperl CSWpng CSWzlib CSWlibx11
+RUNTIME_DEP_PKGS_CSWgvim += CSWncurses CSWorbit2 CSWpango
+
+# It is ok to depend on the base files
+CHECKPKG_OVERRIDES_CSWgvim += surplus-dependency|CSWvimrt
 
 INSTALL_SCRIPTS = minimal
 
