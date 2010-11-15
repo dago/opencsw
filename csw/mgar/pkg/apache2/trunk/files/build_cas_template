@@ -11,6 +11,7 @@ CONF_FILE=\$AP2_CONF/$1
 
 if [ "\$1" = install ]; then
    if [ ! -f "\$CONF_FILE" ]; then
+      echo "Installing \$CONF_FILE from CSW template."
       cp -p \$CONF_FILE.CSW \$CONF_FILE
       perl -pi \
 	-e "s/#*ServerName.*www.example.com/ServerName \`hostname\`/;" \
@@ -23,6 +24,8 @@ if [ "\$1" = install ]; then
 
       chown root:bin \$CONF_FILE
       chmod 644 \$CONF_FILE
+   else
+      echo "Not updating \$CONF_FILE.  It already exists."
    fi
 else
    # preserve ourselves with no changes
