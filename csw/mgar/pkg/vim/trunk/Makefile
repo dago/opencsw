@@ -1,6 +1,6 @@
 GARNAME = vim
 DISTVERSION = 7.3
-PATCHREV = 011
+PATCHREV = 055
 GARVERSION = $(DISTVERSION).$(PATCHREV)
 CATEGORIES = utils
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -25,16 +25,12 @@ MASTER_SITES += ftp://ftp.vim.org/pub/vim/extra/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/unix/
 
 DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
-# There are no extra files for Vim 7.3, everything is in the main archive.
-#DISTFILES += $(GARNAME)-$(DISTVERSION)-lang.tar.gz
-#DISTFILES += $(GARNAME)-$(DISTVERSION)-extra.tar.gz
 DISTFILES += vimrc
 DISTFILES += vimrc.tiny
 DISTFILES += gvimrc
 DISTFILES += COPYING
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
-#PATCHFILES += vimtutor.patch
 
 WORKSRC = $(WORKDIR)/$(GARNAME)$(subst .,,$(DISTVERSION))
 
