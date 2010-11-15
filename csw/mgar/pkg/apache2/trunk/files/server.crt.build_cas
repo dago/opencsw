@@ -1,13 +1,14 @@
-# On installation, generate a dummy ssl certificate
+#!/bin/sh
+
+# On installation, generate a dummy ssl certificate (if required)
 
 PIR=${PKG_INSTALL_ROOT:-/}
 AP2_PREFIX=/opt/csw/apache2
 AP2_CONFDIR=$AP2_PREFIX/etc
 
 if [ "$1" = install ]; then
-    echo "A dummy file created during ${PKGINST} installation." > ${PIR}/$AP2_CONF/server.crt.CSW
     if [ ! -f $PIR/$AP2_CONFDIR/server.crt -a ! -f $PIR/$AP2_CONFDIR/server.key ]; then
-	echo Generating dummy ssl key and certificate...
+	echo Generating dummy ssl key and certificate... >&2
         # this is likely overkill for a dummy cert, but why not
 	umask 0077
 	cat <<EOF | /usr/sbin/chroot ${PIR} /opt/csw/bin/openssl req -new -newkey rsa:1024 -days 365 -nodes -x509 -keyout $AP2_CONFDIR/server.key  -out $AP2_CONFDIR/server.crt >/dev/null 2>&1
@@ -16,12 +17,13 @@ Westfarthing
 Hobbiton
 
 
-$hostname
+`hostname`
 bilbo@example.net
 
 
 EOF
     fi
 else
-    rm ${PIR}/$AP2_CONF/server.crt.CSW
+    # this is so that the build class picks up the file and re-instates it
+    cat ${PIR}/$AP2_CONF/server.crt
 fi
