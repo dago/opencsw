@@ -37,7 +37,7 @@ DISTFILES += config.layout
 # Standard package bits
 DISTFILES += CSWapache2.killproc cswapache2
 
-DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
+DISTFILES += CSWapache2.preinstall
 
 # Configuration templates
 DISTFILES += update20to22 server.crt.build_cas
