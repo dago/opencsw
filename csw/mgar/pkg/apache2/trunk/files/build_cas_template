@@ -14,7 +14,7 @@ if [ "\$1" = install ]; then
       cp -p \$CONF_FILE.CSW \$CONF_FILE
       perl -pi \
 	-e "s/#*ServerName.*www.example.com/ServerName \`hostname\`/;" \
-	-e "s/#*ServerAdmin you\@example.com/ServerAdmin root@\`hostname\`/;" \
+	-e "s/#*ServerAdmin you\@example.com/ServerAdmin root\@\`hostname\`/;" \
 	-e "s/^User.*daemon/User nobody/;" \
 	-e "s/^Group.*daemon/Group nobody/;" \
 	-e 's/^(LoadModule.*suexec.*)/#\$1/;' \
