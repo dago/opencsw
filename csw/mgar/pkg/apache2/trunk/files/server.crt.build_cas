@@ -26,5 +26,5 @@ EOF
     fi
 else
     # this is so that the build class picks up the file and re-instates it
-    cat ${PIR}/$AP2_CONF/server.crt
+    cat $PIR/$AP2_CONFDIR/server.crt
 fi
