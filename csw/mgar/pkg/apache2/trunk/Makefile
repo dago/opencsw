@@ -198,7 +198,7 @@ PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
-PROTOTYPE_FILTER = gawk '$$$$3 ~ /apache2\/etc/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"}; {print}'
+PROTOTYPE_FILTER = gawk '$$$$3 ~ /apache2\/etc/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"}; $$$$3 ~ /server.crt/ { $$$$4 = "0600" }; {print}'
 
 include gar/category.mk
 
@@ -250,6 +250,7 @@ post-merge: create-templates
 			$(abspath $(FILEDIR))/build_cas_template $$f > $$f; \
 		done )
 	@echo "  => Creating ssl server.crt build CAS template."
-	@cp -p $(WORKDIR)/server.crt.build_cas $(PKGROOT)/$(prefix)/apache2/etc/server.crt
+	@(cp -p $(WORKDIR)/server.crt.build_cas $(PKGROOT)/$(prefix)/apache2/etc/server.crt; \
+		chmod 600 $(PKGROOT/$(prefix)/apache2/etc/server.crt )
 	@$(MAKECOOKIE)
 
