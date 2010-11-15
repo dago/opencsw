@@ -27,7 +27,7 @@ if [ "\$1" = install ]; then
    else
       echo "Not updating $1.  It already exists." >&2
       if [ -n "\`grep mod_auth.so \$CONF_FILE\`" ]; then
-         echo "Updating the syntax to 2.2 format though..."
+         echo "Updating the syntax to 2.2 format though..." >&2
          \${PIR}/\$AP2_DIR/sbin/update20to22 \$CONF_FILE >&2
       fi
    fi
