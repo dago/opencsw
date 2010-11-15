@@ -26,7 +26,7 @@ if [ "\$1" = install ]; then
       chmod 644 \$CONF_FILE
    else
       echo "Not updating \$CONF_FILE.  It already exists."
-      if [ -n "`grep mod_auth.so \$CONF_FILE`" ]; then
+      if [ -n "\`grep mod_auth.so \$CONF_FILE\`" ]; then
          echo "Updating the syntax to 2.2 format though..."
          \${PIR}/\$AP2_DIR/sbin/update20to22 \$CONF_FILE
       fi
