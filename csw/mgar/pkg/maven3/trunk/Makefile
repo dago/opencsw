@@ -1,7 +1,6 @@
 GARNAME = maven3
 GARVERSION = 3.0
 CATEGORIES = devel
-GARCH = all
 
 DESCRIPTION = Java software project management and comprehension tool
 define BLURB
@@ -23,7 +22,10 @@ attempts to deal with:
 endef
 
 MASTER_SITES = http://www.powertech.no/apache/dist/maven/binaries/
-DISTFILES  = apache-maven-$(GARVERSION)-bin.tar.gz
+DISTNAME = apache-maven-$(GARVERSION)
+DISTFILES  = $(DISTNAME)-bin.tar.gz
+
+LICENSE = LICENSE.txt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = apache-maven-(\d+(?:\.\d+)*)-bin.tar.gz
@@ -31,15 +33,18 @@ UFILES_REGEX = apache-maven-(\d+(?:\.\d+)*)-bin.tar.gz
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
-INSTALL_SCRIPTS = common
+INSTALL_SCRIPTS = custom
+
+ARCHALL = 1
 
 include gar/category.mk
 
-install-common:
+install-custom: MAVENHOME=$(DESTDIR)$(sharedstatedir)/maven3/home
+install-custom:
 	mkdir -p $(DESTDIR)/opt/csw/bin
-	rm -rf $(DESTDIR)/opt/csw/share/maven3
-	mkdir -p $(DESTDIR)/opt/csw/share/maven3
-	cp -r $(WORKDIR)/apache-maven-$(GARVERSION)/ $(DESTDIR)/opt/csw/share/maven3/home
-	cp $(WORKDIR)/bin-mvn $(DESTDIR)/opt/csw/bin/mvn
-	chmod +x $(DESTDIR)/opt/csw/bin/mvn
+	rm -rf $(MAVENHOME)
+	mkdir -p $(MAVENHOME)
+	(cd $(WORKDIR)/$(DISTNAME); pax -r -w -s ',.*/\.git.*,,' . $(MAVENHOME))
+	#cp $(WORKDIR)/bin-mvn $(DESTDIR)/opt/csw/bin/mvn
+	#chmod +x $(DESTDIR)/opt/csw/bin/mvn
 	$(MAKECOOKIE)
