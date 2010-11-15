@@ -11,7 +11,7 @@ CONF_FILE=\$AP2_CONF/$1
 
 if [ "\$1" = install ]; then
    if [ ! -f "\$CONF_FILE" ]; then
-      echo "Installing \$CONF_FILE from CSW template." >&2
+      echo "Installing $1 from CSW template." >&2
       cp -p \$CONF_FILE.CSW \$CONF_FILE
       perl -pi \
 	-e "s/#*ServerName.*www.example.com/ServerName \`hostname\`/;" \
@@ -25,13 +25,14 @@ if [ "\$1" = install ]; then
       chown root:bin \$CONF_FILE
       chmod 644 \$CONF_FILE
    else
-      echo "Not updating \$CONF_FILE.  It already exists." >&2
+      echo "Not updating $1.  It already exists." >&2
       if [ -n "\`grep mod_auth.so \$CONF_FILE\`" ]; then
          echo "Updating the syntax to 2.2 format though..."
          \${PIR}/\$AP2_DIR/sbin/update20to22 \$CONF_FILE >&2
       fi
    fi
 else
+   echo "Not removing $1." >&2
    # preserve ourselves with no changes
    cat \$CONF_FILE
 fi
