@@ -17,9 +17,9 @@ if [ "\$1" = install ]; then
 	-e "s/#*ServerAdmin you\@example.com/ServerAdmin root@\`hostname\`/;" \
 	-e "s/^User.*daemon/User nobody/;" \
 	-e "s/^Group.*daemon/Group nobody/;" \
-	-e "s/^(LoadModule.*suexec.*)/#\$1/;" \
-	-e "s/^#(Include.*httpd-mpm.conf)/\$1/;" \
-	-e "s/^#(Include.*httpd-ssl.conf)/\$1/;" \$CONF_FILE
+	-e 's/^(LoadModule.*suexec.*)/#\$1/;' \
+	-e 's/^#(Include.*httpd-mpm.conf)/\$1/;' \
+	-e 's/^#(Include.*httpd-ssl.conf)/\$1/;' \$CONF_FILE
    fi
 else
    # preserve ourselves with no changes
