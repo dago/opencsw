@@ -62,6 +62,15 @@ PKGFILES_CSWvimrt = /opt/csw/share/.*
 # Note: Tests require controlling terminal
 TEST_TARGET = test
 
+CHECKPKG_OVERRIDES_CSWvim += surplus-dependency|CSWvimrt
+# We have .el files, but that is purely optional
+CHECKPKG_OVERRIDES_CSWvimrt += missing-dependency|CSWemacscommon
+# Some tools need Perl and one is hardcoded to CSW Perl:
+#   /opt/csw/share/vim/vim73/tools/efm_perl.pl
+# Maybe the tools should be separated package depending on CSWperl.
+# Overwrite for the moment.
+CHECKPKG_OVERRIDES_CSWvimrt += missing-dependency|CSWperl
+
 include gar/category.mk
 
 post-configure: make-interps-lazy
