@@ -251,6 +251,6 @@ post-merge: create-templates
 		done )
 	@echo "  => Creating ssl server.crt build CAS template."
 	@(cp -p $(WORKDIR)/server.crt.build_cas $(PKGROOT)/$(prefix)/apache2/etc/server.crt; \
-		chmod 600 $(PKGROOT/$(prefix)/apache2/etc/server.crt )
+		chmod 600 $(PKGROOT)/$(prefix)/apache2/etc/server.crt )
 	@$(MAKECOOKIE)
 
