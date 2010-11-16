@@ -3,7 +3,7 @@
 # $Id$
 
 GARNAME = cups
-GARVERSION = 1.4.4
+GARVERSION = 1.4.5
 CATEGORIES = net
 
 define BLURB
