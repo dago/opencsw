@@ -34,7 +34,7 @@ use Getopt::Long;
 our $pgm = $0;
 our $cswdir = '/opt/csw';
 our $makecmd = "$cswdir/bin/gmake";
-our $maxsoftnmlen = 20;
+our $maxsoftnmlen = 29;
 our $bwurl = 'http://www.opencsw.org';
 our $bwfsearch = '/filesearch.php';
 our @msearchpath = (  # Perl module search path
