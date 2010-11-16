@@ -207,8 +207,8 @@ if [ "$basedir" != "" ] ; then
 	print basedir="'$basedir'"
 fi
 
-if [[ ${#software} -gt 20 ]] ; then errmsg $f: software name greater than 20 chars ; fi
-if [[ ${#pkgname} -gt 20 ]] ; then errmsg $f: pkg name greater than 20 chars; fi
+if [[ ${#software} -gt 29 ]] ; then errmsg $f: software name greater than 29 chars ; fi
+if [[ ${#pkgname} -gt 32 ]] ; then errmsg $f: pkg name greater than 32 chars; fi
 
 if [ "$software" = "" ] ; then errmsg $f: software field not set properly in NAME ; fi
 if [ "$pkgname" = "" ] ; then errmsg $f: pkgname field blank ; fi
