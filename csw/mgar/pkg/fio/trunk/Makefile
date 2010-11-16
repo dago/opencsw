@@ -1,7 +1,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 
 GARNAME = fio
-GARVERSION = 1.44
+GARVERSION = 1.44.2
 CATEGORIES = apps
 
 DESCRIPTION = Flexible I/O Tester
