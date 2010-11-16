@@ -7,11 +7,12 @@ AP2_PREFIX=/opt/csw/apache2
 AP2_CONFDIR=$AP2_PREFIX/etc
 
 if [ "$1" = install ]; then
+    # this gets captured and placed by the build CAS
+    echo This is a dummy file but still a part of CSWapache2
+    echo Please do not remove.
+
     if [ ! -f $PIR/$AP2_CONFDIR/server.crt -a ! -f $PIR/$AP2_CONFDIR/server.key ]; then
 	echo Generating dummy ssl key and certificate... >&2
-	# this gets captured and placed by the build CAS
-	echo This is a dummy file but still a part of CSWapache2
-	echo Please do not remove.
 
         # this is likely overkill for a dummy cert, but why not
 	cat <<EOF | /usr/sbin/chroot ${PIR} /opt/csw/bin/openssl req -new -newkey rsa:1024 -days 365 -nodes -x509 -keyout $AP2_CONFDIR/server.key  -out $AP2_CONFDIR/server.crt >/dev/null 2>&1
@@ -27,6 +28,8 @@ bilbo@example.net
 EOF
 	chmod 600 $AP2_CONFDIR/server.key $AP2_CONFDIR/server.crt
 	chown root:bin $AP2_CONFDIR/server.key $AP2_CONFDIR/server.crt
+    else
+	echo "Not touching existing SSL files." >&2
     fi
 fi
 
