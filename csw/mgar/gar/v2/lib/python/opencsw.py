@@ -38,6 +38,7 @@ NO_VERSION_CHANGE = "no version change"
 REVISION_ADDED = "revision number added"
 PKG_URL_TMPL = "http://www.opencsw.org/packages/%s"
 CATALOG_URL = "http://mirror.opencsw.org/opencsw/current/i386/5.10/catalog"
+KNOWN_PKGNAME_PREFIXES = ["SUNW", "FJSV", "CSW"]
 SUBMITPKG_TMPL = """From: $from
 To: $to
 #if $cc
@@ -435,10 +436,9 @@ def PkgnameToCatName(pkgname):
   SUNWbashS --> sunw_bash_s
   SUNWPython --> sunw_python
 
-  Incomprehensible, but unit tested!
+  This function is incomprehensible, but unit tested!
   """
-  known_prefixes = ["SUNW", "FJSV", "CSW"]
-  for prefix in known_prefixes:
+  for prefix in KNOWN_PKGNAME_PREFIXES:
     if pkgname.startswith(prefix):
       unused, tmp_prefix, the_rest = pkgname.partition(prefix)
       pkgname = tmp_prefix + "_" + the_rest
@@ -467,12 +467,6 @@ def CatalogNameGroupName(catalogname_list):
   catalogname_list = copy.copy(catalogname_list)
   if len(catalogname_list) == 1:
     return catalogname_list[0]
-  #current_substring = catalogname_list.pop()
-  #while catalogname_list and current_substring:
-  #  substring_set = su.LongestCommonSubstring(current_substring,
-  #                                            catalogname_list.pop())
-  #  if substring_set:
-  #    current_substring = list(substring_set)[0]
   current_substring = su.CollectionLongestCommonSubstring(catalogname_list)
   # If it's something like foo_, make it foo.
   while current_substring and not current_substring[-1].isalnum():
