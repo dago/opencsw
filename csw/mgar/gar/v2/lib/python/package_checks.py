@@ -56,8 +56,8 @@ OBSOLETE_DEPS = {
 }
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
 EMAIL_RE = re.compile(r"^.*@opencsw.org$")
-MAX_CATALOGNAME_LENGTH = 20
-MAX_PKGNAME_LENGTH = 20
+MAX_CATALOGNAME_LENGTH = 29
+MAX_PKGNAME_LENGTH = 32
 ARCH_LIST = opencsw.ARCHITECTURES
 VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
 # Pkgnames matching these regexes must not be ARCHALL = 1
