@@ -30,8 +30,8 @@
 #             arbitrary flags to slapd.
 
 RETVAL=0
-SLAPD=/opt/csw/libexec/slapd
-SLURPD=/opt/csw/libexec/slurpd
+SLAPD=@libexecdir@/slapd
+SLURPD=@libexecdir@/slurpd
 
 # Source startup options
 [ -r /lib/svc/share/smf_include.sh ] && . /lib/svc/share/smf_include.sh
@@ -92,7 +92,7 @@ start_it() {
     fi
 
     printf "%-60s" "Starting openldap-slurpd: " 
-    	/opt/csw/libexec/slurpd \
+    	$SLURPD \
 	    `[ -n "$SLURPD_DEBUG_LEVEL" ] && echo "-d $SLURPD_DEBUG_LEVEL"` \
 	    `[ -n "$SLURPD_SYSLOG_LEVEL" ] && echo "-s $SLURPD_SYSLOG_LEVEL"` \
 	    `[ -n "$SLURPD_CONFIG_FILE" ] && echo "-f $SLURPD_CONFIG_FILE"` \
