@@ -4,9 +4,6 @@
 #
 if [ "$PKG_INSTALL_ROOT" = "" ] ; then PKG_INSTALL_ROOT=/ ; fi
 
-# Run libtool to 'finish' library installation
-chroot $PKG_INSTALL_ROOT /opt/csw/bin/libtool --finish /opt/csw/libexec/openldap >/dev/null 2>&1
-
 # Build log file name
 installdir=${BASEDIR}@localstatedir@/openldap
 installlog=${installdir}/install-`date '+%Y%m%d%H%M%S'`
