@@ -169,4 +169,6 @@ post-merge:
 	ginstall -D $(WORKDIR)/cswopenldap \
 		$(PKGROOT)/opt/csw/etc/init.d/cswopenldap
 	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(WORKDIR)/$F $(PKGROOT)$(docdir)/$(GARNAME)/$F;)
+	@# Enable BDB backend so OpenLDAP can start
+	perl -pi -e 's/#\s*(modulepath)/$$1/; s/#\s*(moduleload\s*back_bdb.la)/$$1/' $(PKGROOT)$(sysconfdir)/openldap/slapd.conf
 	@$(MAKECOOKIE)
