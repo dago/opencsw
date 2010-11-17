@@ -11,7 +11,7 @@ import subprocess
 import catalog
 import checkpkg
 import database
-import package
+import inspective_package
 import opencsw
 import overrides
 import models as m
@@ -459,7 +459,7 @@ class PackageStats(database.DatabaseClient):
 
 
 def StatsListFromCatalog(file_name_list, catalog_file_name=None, debug=False):
-  packages = [package.CswSrv4File(x, debug) for x in file_name_list]
+  packages = [inspective_package.InspectiveCswSrv4File(x, debug) for x in file_name_list]
   if catalog_file_name:
     catalog_obj = catalog.OpencswCatalog(catalog_file_name)
     md5s_by_basename = catalog_obj.GetDataByBasename()

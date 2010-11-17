@@ -170,7 +170,7 @@ class CswSrv4File(ShellMixin, object):
       if len(dirs) != 1:
         raise Error("Need exactly one package in the package stream: "
                     "%s." % (dirs))
-      self.dir_format_pkg = self.DIR_FORMAT_CLS(dirs[0])
+      self.dir_format_pkg = self.GetDirFormatClass()(dirs[0])
       self.transformed = True
 
   def GetDirFormatPkg(self):
