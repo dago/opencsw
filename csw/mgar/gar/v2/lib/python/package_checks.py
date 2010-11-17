@@ -986,7 +986,7 @@ def CheckWrongArchitecture(pkg_data, error_mgr, logger, messenger):
   pkginfo_arch = pkg_data["pkginfo"]["ARCH"]
   files_metadata = pkg_data["files_metadata"]
   for file_metadata in files_metadata:
-    if opencsw.IsBinary(file_metadata):
+    if su.IsBinary(file_metadata):
       machine = HACHOIR_MACHINES[file_metadata["machine_id"]]
       if machine["type"] != pkginfo_arch:
         error_mgr.ReportError(

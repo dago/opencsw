@@ -38,10 +38,6 @@ NO_VERSION_CHANGE = "no version change"
 REVISION_ADDED = "revision number added"
 PKG_URL_TMPL = "http://www.opencsw.org/packages/%s"
 CATALOG_URL = "http://mirror.opencsw.org/opencsw/current/i386/5.10/catalog"
-BIN_MIMETYPES = (
-    'application/x-executable',
-    'application/x-sharedlib',
-)
 SUBMITPKG_TMPL = """From: $from
 To: $to
 #if $cc
@@ -589,20 +585,3 @@ class Pkgmap(object):
         if entry["class"]:  # might be None
           self.classes.add(entry["class"])
     return self.classes
-
-
-def IsBinary(file_info):
-  """Returns True or False depending on file metadata."""
-  is_a_binary = False
-  if "mime_type" not in file_info:
-    # This would be a problem in the data.
-    return False
-  if not file_info["mime_type"]:
-    # This should never happen, but it seems to have happened at least once.
-    # TODO: Find the affected data and figure out why.
-    raise PackageError("file_info is missing mime_type:" % file_info)
-  for mimetype in BIN_MIMETYPES:
-    if mimetype in file_info["mime_type"]:
-      is_a_binary = True
-      break
-  return is_a_binary

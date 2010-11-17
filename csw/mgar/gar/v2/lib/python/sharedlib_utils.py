@@ -15,6 +15,10 @@ INTEL_386_PATHS = ('pentium_pro+mmx', 'pentium_pro',
 AMD64_PATHS = ('amd64',)
 LEGIT_CHAR_RE = re.compile(r"[a-zA-Z0-9\+]+")
 SONAME_VERSION_RE = re.compile("^(?P<name>.*)\.so\.(?P<version>[\d\.]+)$")
+BIN_MIMETYPES = (
+    'application/x-executable',
+    'application/x-sharedlib',
+)
 
 
 class SonameParsingException(Exception):
@@ -228,3 +232,20 @@ def CollectionLongestCommonSubstring(collection):
     if substring_set:
       current_substring = list(substring_set)[0]
   return current_substring
+
+
+def IsBinary(file_info):
+  """Returns True or False depending on file metadata."""
+  is_a_binary = False
+  if "mime_type" not in file_info:
+    # This would be a problem in the data.
+    return False
+  if not file_info["mime_type"]:
+    # This should never happen, but it seems to have happened at least once.
+    # TODO: Find the affected data and figure out why.
+    raise PackageError("file_info is missing mime_type:" % file_info)
+  for mimetype in BIN_MIMETYPES:
+    if mimetype in file_info["mime_type"]:
+      is_a_binary = True
+      break
+  return is_a_binary
