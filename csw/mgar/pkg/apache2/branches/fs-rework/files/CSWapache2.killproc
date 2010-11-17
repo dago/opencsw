@@ -1,0 +1,30 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+AP2_PREFIX=$CSW_PREFIX/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_HTTPD=$AP2_BINDIR/httpd
+AP2_CTRL=$AP2_BINDIR/apachectl
+AP2_CONF=$AP2_PREFIX/httpd.conf
+SVCADM=/usr/sbin/svcadm
+
+[ ! -f "$AP2_CONF" ] && exit 0
+
+# Stop apache
+if [ -z "$PKG_INSTALL_ROOT" ]; then
+    echo Stopping apache...
+    if [ -x "$AP2_HTTPD" ]; then
+        if [ -x "$SVCADM" ]; then
+            $SVCADM disable cswapache2
+        elif [ -x "$AP2_CTRL" ]; then
+            $AP2_CTRL -k stop
+        fi
+        sleep 2
+    fi
+
+    if [ -n "`pgrep -f apache2/sbin/httpd`" ]; then
+        /usr/bin/pkill -f apache2/sbin/httpd
+    fi
+fi
+
+exit 0

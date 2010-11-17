@@ -1,0 +1,39 @@
+#!/bin/bash
+
+cat <<EOF
+#!/bin/sh
+
+PIR=\${PKG_INSTALL_ROOT:-/}
+AP2_DIR=\$PIR/opt/csw/apache2
+AP2_CONF=\$AP2_DIR/etc/
+
+CONF_FILE=\$AP2_CONF/$1
+
+if [ "\$1" = install ]; then
+   if [ ! -f "\$CONF_FILE" ]; then
+      echo "Installing $1 from CSW template." >&2
+      cp -p \$CONF_FILE.CSW \$CONF_FILE
+      perl -pi \
+	-e "s/#*ServerName.*www.example.com/ServerName \`hostname\`/;" \
+	-e "s/#*ServerAdmin you\@example.com/ServerAdmin root\@\`hostname\`/;" \
+	-e "s/^User.*daemon/User nobody/;" \
+	-e "s/^Group.*daemon/Group nobody/;" \
+	-e 's/^(LoadModule.*suexec.*)/#\$1/;' \
+	-e 's/^#(Include.*httpd-mpm.conf)/\$1/;' \
+	-e 's/^#(Include.*httpd-ssl.conf)/\$1/;' \$CONF_FILE
+
+      chown root:bin \$CONF_FILE
+      chmod 644 \$CONF_FILE
+   else
+      echo "Not updating $1.  It already exists." >&2
+      if [ -n "\`grep mod_auth.so \$CONF_FILE\`" ]; then
+         echo "Updating the syntax to 2.2 format though..." >&2
+         \${PIR}/\$AP2_DIR/sbin/update20to22 \$CONF_FILE >&2
+      fi
+   fi
+else
+   echo "Not removing $1." >&2
+   # preserve ourselves with no changes
+   cat \$CONF_FILE
+fi
+EOF
