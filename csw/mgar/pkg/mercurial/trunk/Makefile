@@ -1,5 +1,5 @@
 GARNAME = mercurial
-GARVERSION = 1.7
+GARVERSION = 1.7.1
 CATEGORIES = python
 
 DESCRIPTION = Fast, lightweight Source Control Management system
