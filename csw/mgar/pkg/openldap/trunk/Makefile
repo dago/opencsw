@@ -21,6 +21,7 @@ DISTFILES += README.CSW openldaprc
 DISTFILES += cswopenldap openldap.xml
 
 EXPANDVARS = cswopenldap
+EXPANDVARS += CSWoldap.postinstall
 
 PATCHFILES_isa-sparcv8-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
 PATCHFILES_isa-sparcv9-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
@@ -58,10 +59,14 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_DOCS = README.CSW $(PATCHFILES) openldaprc
 
+# This is old, stick to BerkeleyDB 4.4
 EXTRA_LIB_garversion-2.3.43 = $(prefix)/bdb44/lib 
 EXTRA_INC_garversion-2.3.43 = $(prefix)/bdb44/include
-EXTRA_LIB_garversion-2.4.23 = $(prefix)/bdb48/lib 
-EXTRA_INC_garversion-2.4.23 = $(prefix)/bdb48/include
+
+# This is also used during EXPANDVARS
+bdbdir = $(prefix)/bdb48
+EXTRA_LIB_garversion-2.4.23 = $(bdbdir)/lib 
+EXTRA_INC_garversion-2.4.23 = $(bdbdir)/include
 EXTRA_LIB = $(EXTRA_LIB_garversion-$(GARVERSION))
 EXTRA_INC = $(EXTRA_INC_garversion-$(GARVERSION))
 

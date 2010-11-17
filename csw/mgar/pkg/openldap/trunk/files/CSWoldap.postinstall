@@ -8,31 +8,33 @@ if [ "$PKG_INSTALL_ROOT" = "" ] ; then PKG_INSTALL_ROOT=/ ; fi
 chroot $PKG_INSTALL_ROOT /opt/csw/bin/libtool --finish /opt/csw/libexec/openldap >/dev/null 2>&1
 
 # Build log file name
-installlog=${BASEDIR}/opt/csw/var/openldap/install-`date '+%Y%m%d%H%M%S'`
+installdir=${BASEDIR}@localstatedir@/openldap
+installlog=${installdir}/install-`date '+%Y%m%d%H%M%S'`
 
 # Upgrade and verify bdb database files for openldap.
 #
-DB_HOME=${BASEDIR}/opt/csw/var/openldap-data
+DB_HOME=${BASEDIR}@localstatedir@/openldap-data
 
 if [ -f ${BASEDIR}$DB_HOME/*.bdb ] ; then
         cd ${BASEDIR}$DB_HOME
 
         # Update the database environment to the new value
+	mkdir -p ${installdir}
         echo "Running db_recover on $DB_HOME" >>$installlog
-        chroot $PKG_INSTALL_ROOT /opt/csw/bdb4/bin/db_recover -h $DB_HOME >>$installlog 2>&1
+        chroot $PKG_INSTALL_ROOT @bdbdir@/bin/db_recover -h $DB_HOME >>$installlog 2>&1
 
         # Upgrade each file.  This does nothing if no upgrade is needed.
         echo "Running db_upgrade on $DB_HOME" >>$installlog
         for each_db in `ls *.bdb`
         do
-          chroot $PKG_INSTALL_ROOT /opt/csw/bdb4/bin/db_upgrade -h $DB_HOME $each_db >>$installlog 2>&1
+          chroot $PKG_INSTALL_ROOT @bdbdir@/bin/db_upgrade -h $DB_HOME $each_db >>$installlog 2>&1
         done
 
         # Verify each file
         echo "Running db_verify on $DB_HOME" >>$installlog
         for each_db in `ls *.bdb`
         do
-          chroot $PKG_INSTALL_ROOT /opt/csw/bdb4/bin/db_verify -h $DB_HOME -o $each_db >>$installlog 2>&1
+          chroot $PKG_INSTALL_ROOT @bdbdir@/bin/db_verify -h $DB_HOME -o $each_db >>$installlog 2>&1
         done
 fi
 
