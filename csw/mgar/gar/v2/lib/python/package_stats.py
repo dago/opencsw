@@ -103,9 +103,9 @@ class PackageStats(database.DatabaseClient):
       return True
     return False
 
-  def GetDirFormatPkg(self):
+  def GetInspectivePkg(self):
     if not self.dir_format_pkg:
-      self.dir_format_pkg = self.srv4_pkg.GetDirFormatPkg()
+      self.dir_format_pkg = self.srv4_pkg.GetInspectivePkg()
     return self.dir_format_pkg
 
   def GetMtime(self):
@@ -125,7 +125,7 @@ class PackageStats(database.DatabaseClient):
         raise
 
   def GetBinaryDumpInfo(self):
-    dir_pkg = self.GetDirFormatPkg()
+    dir_pkg = self.GetInspectivePkg()
     # Binaries. This could be split off to a separate function.
     # man ld.so.1 for more info on this hack
     env = copy.copy(os.environ)
@@ -145,7 +145,7 @@ class PackageStats(database.DatabaseClient):
     return binaries_dump_info
 
   def GetBasicStats(self):
-    dir_pkg = self.GetDirFormatPkg()
+    dir_pkg = self.GetInspectivePkg()
     basic_stats = {}
     basic_stats["stats_version"] = PACKAGE_STATS_VERSION
     basic_stats["pkg_path"] = self.srv4_pkg.pkg_path
@@ -158,7 +158,7 @@ class PackageStats(database.DatabaseClient):
     return basic_stats
 
   def GetOverrides(self):
-    dir_pkg = self.GetDirFormatPkg()
+    dir_pkg = self.GetInspectivePkg()
     override_list = dir_pkg.GetOverrides()
     def OverrideToDict(override):
       return {
@@ -171,7 +171,7 @@ class PackageStats(database.DatabaseClient):
 
   def GetLddMinusRlines(self):
     """Returns ldd -r output."""
-    dir_pkg = self.GetDirFormatPkg()
+    dir_pkg = self.GetInspectivePkg()
     binaries = dir_pkg.ListBinaries()
     ldd_output = {}
     for binary in binaries:
@@ -205,7 +205,7 @@ class PackageStats(database.DatabaseClient):
       0000000000 U abort
       0000097616 T aliases_lookup
     """
-    dir_pkg = self.GetDirFormatPkg()
+    dir_pkg = self.GetInspectivePkg()
     binaries = dir_pkg.ListBinaries()
     defined_symbols = {}
 
@@ -254,7 +254,7 @@ class PackageStats(database.DatabaseClient):
     """The list of variables needs to be synchronized with the one
     at the top of this class.
     """
-    dir_pkg = self.GetDirFormatPkg()
+    dir_pkg = self.GetInspectivePkg()
     logging.debug("Collecting %s package statistics.", repr(dir_pkg.pkgname))
     override_dicts = self.GetOverrides()
     pkg_stats = {
