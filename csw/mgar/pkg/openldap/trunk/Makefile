@@ -18,7 +18,9 @@ SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION)
 DISTFILES  = $(SOURCEFILES)
 DISTFILES += CSWoldap.postinstall
 DISTFILES += README.CSW openldaprc
-DISTFILES += cswopenldap openldap.xml svc-openldap
+DISTFILES += cswopenldap openldap.xml
+
+EXPANDVARS = cswopenldap
 
 PATCHFILES_isa-sparcv8-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
 PATCHFILES_isa-sparcv9-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
@@ -62,6 +64,9 @@ EXTRA_LIB_garversion-2.4.23 = $(prefix)/bdb48/lib
 EXTRA_INC_garversion-2.4.23 = $(prefix)/bdb48/include
 EXTRA_LIB = $(EXTRA_LIB_garversion-$(GARVERSION))
 EXTRA_INC = $(EXTRA_INC_garversion-$(GARVERSION))
+
+# Not released yet.
+#EXTRA_LDFLAGS = -L$(libdir)/libnet-new
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
@@ -123,6 +128,12 @@ MERGE_DIRS_isa-default64-garversion-2.4.23 = $(bindir) $(sbindir) $(libexecdir) 
 EXTRA_PAX_ARGS = -s,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
 EXTRA_PAX_ARGS = -s,.*/opt/csw/libexec/amd64/openldap/back_perl.*,,
 
+# Make sure we do not use the 2.3 .so-links in any case
+EXTRA_MERGE_EXCLUDE_FILES_isa-i386-garversion-2.3.43 = .*\.so
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64-garversion-2.3.43 = .*\.so
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-2.3.43 = .*\.so
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9-garversion-2.3.43 = .*\.so
+
 PKGFILES_CSWoldapclient  = $(bindir)/.*
 PKGFILES_CSWoldapclient += $(mandir)/man1/.*
 
@@ -136,13 +147,13 @@ PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 INITSMF = /opt/csw/etc/init.d/cswopenldap
 CHECKPKG_OVERRIDES_CSWoldap += init-file-wrong-location|/opt/csw/etc/init.d/cswopenldap
 
-ARCHALL_CSWoldapdevel = 1
-#CHECKPKG_OVERRIDES_CSWoldapdevel += archall-devel-package
+# New libnet not released yet
+CHECKPKG_OVERRIDES_CSWoldap += deprecated-library
+CHECKPKG_OVERRIDES_CSWoldapclient += deprecated-library
+CHECKPKG_OVERRIDES_CSWoldaprt += deprecated-library
 
-#CHECKPKG_OVERRIDES_CSWoldapdevel += archall-with-arch-paths|/opt/csw/lib/sparcv9/liblber.so
-#CHECKPKG_OVERRIDES_CSWoldapdevel += archall-with-arch-paths|/opt/csw/lib/sparcv9/libldap.so
-#CHECKPKG_OVERRIDES_CSWoldapdevel += archall-with-arch-paths|/opt/csw/lib/sparcv9/libldap_r.so
-#CHECKPKG_OVERRIDES_CSWoldaprt += non-uniform-lib-versions-in-package|sonames=['liblber-2.3.so.0',|'liblber-2.4.so.2',|'libldap-2.3.so.0',|'libldap-2.4.so.2',|'libldap_r-2.3.so.0',|'libldap_r-2.4.so.2']
+# Split libraries later
+CHECKPKG_OVERRIDES_CSWoldaprt += non-uniform-lib-versions-in-package
 
 include gar/category.mk
 
@@ -150,7 +161,7 @@ CFLAGS := $(filter-out -I%,$(CFLAGS))
 DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 
 post-merge:
-	ginstall -D $(DOWNLOADDIR)/cswopenldap \
+	ginstall -D $(WORKDIR)/cswopenldap \
 		$(PKGROOT)/opt/csw/etc/init.d/cswopenldap
-	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(DOWNLOADDIR)/$F $(PKGROOT)$(docdir)/$(GARNAME)/$F;)
+	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(WORKDIR)/$F $(PKGROOT)$(docdir)/$(GARNAME)/$F;)
 	@$(MAKECOOKIE)
