@@ -7,6 +7,7 @@ if [ "$PKG_INSTALL_ROOT" = "" ] ; then PKG_INSTALL_ROOT=/ ; fi
 # Build log file name
 installdir=${BASEDIR}@localstatedir@/openldap
 installlog=${installdir}/install-`date '+%Y%m%d%H%M%S'`
+mkdir -p ${installdir}
 
 # Upgrade and verify bdb database files for openldap.
 #
@@ -16,7 +17,6 @@ if [ -f ${BASEDIR}$DB_HOME/*.bdb ] ; then
         cd ${BASEDIR}$DB_HOME
 
         # Update the database environment to the new value
-	mkdir -p ${installdir}
         echo "Running db_recover on $DB_HOME" >>$installlog
         chroot $PKG_INSTALL_ROOT @bdbdir@/bin/db_recover -h $DB_HOME >>$installlog 2>&1
 
