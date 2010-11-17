@@ -140,7 +140,7 @@ class InspectiveCswSrv4File(package.CswSrv4File):
   # The presence of this method makes it explicit that we want an inspective
   # version of the directory format package.
   def GetInspectivePkg(self):
-    return self.GetDirFormatPackage()
+    return self.GetDirFormatPkg()
 
   def GetDirFormatClass(self):
     return InspectivePackage
