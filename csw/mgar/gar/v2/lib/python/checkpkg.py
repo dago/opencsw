@@ -26,6 +26,7 @@ from Cheetah import Template
 import database
 
 import package
+import inspective_package
 import package_checks
 import package_stats
 import models as m
@@ -1063,7 +1064,7 @@ def GetPackageStatsByFilenamesOrMd5s(args, debug=False):
       md5s.append(arg)
     else:
       filenames.append(arg)
-  srv4_pkgs = [package.CswSrv4File(x) for x in filenames]
+  srv4_pkgs = [inspective_package.InspectiveCswSrv4File(x) for x in filenames]
   pkgstat_objs = []
   bar = progressbar.ProgressBar()
   bar.maxval = len(md5s) + len(srv4_pkgs)

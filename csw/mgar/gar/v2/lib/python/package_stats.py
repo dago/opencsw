@@ -244,15 +244,20 @@ class PackageStats(database.DatabaseClient):
     sym = { 'address': fields[0], 'type': fields[1], 'name': fields[2] }
     return sym
 
-  def CollectStats(self, force=False):
+  def CollectStats(self, force=False, register_files=False):
     """Lazy stats collection."""
     if force or not self.StatsExist():
-      return self._CollectStats()
+      return self._CollectStats(register_files=register_files)
     return self.ReadSavedStats()
 
-  def _CollectStats(self):
+  def _CollectStats(self, register_files):
     """The list of variables needs to be synchronized with the one
     at the top of this class.
+
+    Args:
+        register_files: Whether to register all files in the database, so that
+                        they can be used for file collision checking.
+
     """
     dir_pkg = self.GetInspectivePkg()
     logging.debug("Collecting %s package statistics.", repr(dir_pkg.pkgname))
