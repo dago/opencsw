@@ -67,6 +67,7 @@ PKGFILES_CSWossh += $(prefix)/etc/pkg/CSWossh/cswusergroup
 
 PKGFILES_CSWosshlpk = $(sbindir)/sshd-lpk
 PKGFILES_CSWosshlpk += $(docdir)/openssh_lpk/.*
+PKGFILES_CSWosshlpk += $(sysconfdir)/openldap.*
 
 PKGFILES_CSWosshclient = $(bindir)/.*
 PKGFILES_CSWosshclient += $(docdir)/openssh_client/.*
@@ -216,6 +217,8 @@ install-doc-files-lpk-no:
 install-doc-files-lpk-yes:
 	ginstall -d $(PKGROOT)/$(docdir)/openssh_lpk
 	cd $(WORKSRC) && ginstall $(DOCFILES_LPK) $(PKGROOT)/$(docdir)/openssh_lpk/
+	ginstall -d $(PKGROOT)$(sysconfdir)/openldap/schema
+	ginstall $(WORKSRC)/openssh-lpk_openldap.schema $(PKGROOT)$(sysconfdir)/openldap/schema/openssh-lpk.schema
 
 install-config-files:
 	# we change some default value in the server config file
