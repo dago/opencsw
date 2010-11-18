@@ -13,7 +13,7 @@
 ###### Package information #######
 
 GARNAME = openssl
-GARVERSION = 0.9.8o
+GARVERSION = 0.9.8p
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
@@ -153,8 +153,8 @@ OLDLIBS                 = 0.9.7m
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
 ifdef PKCS11
-	PATCHFILES += pkcs11_engine-0.9.8h.patch.2008-07-29
-	CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)) 
+	PATCHFILES += pkcs11_engine-0.9.8o.patch.2010-09-03
+	CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) 
 endif 
 
 include gar/category.mk
