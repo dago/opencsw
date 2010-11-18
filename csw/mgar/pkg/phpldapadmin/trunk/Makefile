@@ -21,6 +21,12 @@ DISTFILES += CSWphpldapadmin.preinstall
 UPSTREAM_MASTER_SITES = https://sourceforge.net/projects/phpldapadmin/files/
 UFILES_REGEX = (\d+(?:\.\d+)*).tgz
 
+RUNTIME_DEP_PKGS  = CSWapache2
+RUNTIME_DEP_PKGS += CSWap2modphp5
+RUNTIME_DEP_PKGS += CSWphp5session
+RUNTIME_DEP_PKGS += CSWphp5gettext
+RUNTIME_DEP_PKGS += CSWphp5ldap
+
 SPKG_SOURCEURL = http://phpldapadmin.sourceforge.net/
 
 CONFIGURE_SCRIPTS =
