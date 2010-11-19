@@ -9,8 +9,6 @@ LICENSE = PKG-INFO
 RUNTIME_DEP_PKGS += CSWpy-django 
 RUNTIME_DEP_PKGS += CSWpy-ldap
 
-CHECKPKG_OVERRIDES_CSWpy-django-auth-ldap += pkgname-too-long
-
 # checkpkg can't detect python run time dependencies
 CHECKPKG_OVERRIDES_CSWpy-django-auth-ldap += surplus-dependency|CSWpy-ldap
 CHECKPKG_OVERRIDES_CSWpy-django-auth-ldap += surplus-dependency|CSWpy-django
