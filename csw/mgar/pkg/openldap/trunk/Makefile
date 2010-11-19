@@ -30,6 +30,12 @@ PATCHFILES_isa-amd64-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
 PATCHFILES += patch-libtool-64bit.diff
 DISTFILES += patch-oldap-2.4.16-ntlm.diff
 
+# Maybe in
+#   /opt/csw/share/man/man5/ldap.conf.5
+# the string
+#   /usr/local/var/ldapi
+# should be replaced by something more sane in the future.
+
 NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tgz,$(SOURCEFILES))
 
 LICENSE = COPYRIGHT
