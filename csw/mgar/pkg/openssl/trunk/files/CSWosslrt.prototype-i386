@@ -1,6 +1,4 @@
-s none /opt/csw/lib/amd64/libcrypto.so=libcrypto.so.0.9.8
 f none /opt/csw/lib/amd64/libcrypto.so.0.9.8 0755 root bin
-s none /opt/csw/lib/amd64/libssl.so=libssl.so.0.9.8
 f none /opt/csw/lib/amd64/libssl.so.0.9.8 0755 root bin
 d none /opt/csw/lib/engines 0755 root bin
 f none /opt/csw/lib/engines/lib4758cca.so 0555 root bin
@@ -12,10 +10,8 @@ f none /opt/csw/lib/engines/libgmp.so 0555 root bin
 f none /opt/csw/lib/engines/libnuron.so 0555 root bin
 f none /opt/csw/lib/engines/libsureware.so 0555 root bin
 f none /opt/csw/lib/engines/libubsec.so 0555 root bin
-s none /opt/csw/lib/libcrypto.so=libcrypto.so.0.9.8
 f none /opt/csw/lib/libcrypto.so.0.9.7 0555 root bin
 f none /opt/csw/lib/libcrypto.so.0.9.8 0555 root bin
-s none /opt/csw/lib/libssl.so=libssl.so.0.9.8
 f none /opt/csw/lib/libssl.so.0.9.7 0555 root bin
 f none /opt/csw/lib/libssl.so.0.9.8 0555 root bin
 d none /opt/csw/lib/pentium_pro 0755 root bin

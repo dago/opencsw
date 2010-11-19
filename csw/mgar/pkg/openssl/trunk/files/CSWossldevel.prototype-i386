@@ -70,11 +70,15 @@ f none /opt/csw/include/openssl/x509_vfy.h 0644 root bin
 f none /opt/csw/include/openssl/x509v3.h 0644 root bin
 f none /opt/csw/lib/libssl.a 0644 root bin
 f none /opt/csw/lib/libcrypto.a 0644 root bin 
+s none /opt/csw/lib/libcrypto.so=libcrypto.so.0.9.8
+s none /opt/csw/lib/libssl.so=libssl.so.0.9.8
 d none /opt/csw/lib/pentium_pro 0755 root bin
 f none /opt/csw/lib/pentium_pro/libcrypto.a 0644 root bin
 f none /opt/csw/lib/pentium_pro/libssl.a 0644 root bin
 f none /opt/csw/lib/amd64/libcrypto.a 0644 root bin
 f none /opt/csw/lib/amd64/libssl.a 0644 root bin
+s none /opt/csw/lib/amd64/libcrypto.so=libcrypto.so.0.9.8
+s none /opt/csw/lib/amd64/libssl.so=libssl.so.0.9.8
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/libcrypto.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/libssl.pc 0644 root bin
