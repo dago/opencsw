@@ -51,6 +51,10 @@ CHECKPKG_OVERRIDES_CSWdoxygendoc = missing-dependency|CSWpython
 # I can't get -norunpath to CXX, override for now
 CHECKPKG_OVERRIDES_CSWdoxygen += bad-rpath-entry
 
+# Use CSW Perl instead of #!/usr/local/bin/perl in
+#   /opt/csw/share/doc/doxygen/examples/Makefile
+# some time...
+
 include gar/category.mk
 
 # For 'dot'
