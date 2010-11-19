@@ -1,0 +1,69 @@
+From 58974984d2356dbe92326769535f7ca7eb6c6588 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 19 Nov 2010 14:30:36 +0100
+Subject: [PATCH] Use inttypes.h instead of stdint.h and add signal.h
+
+---
+ main.cc   |    3 ++-
+ zcmp.cc   |    2 +-
+ zdiff.cc  |    3 ++-
+ zutils.cc |    2 +-
+ 4 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/main.cc b/main.cc
+index bc7c5fb..fc598df 100644
+--- a/main.cc
++++ b/main.cc
+@@ -28,7 +28,8 @@
+ #include <vector>
+ #include <dirent.h>
+ #include <fcntl.h>
+-#include <stdint.h>
++#include <inttypes.h>
++#include <signal.h>
+ #include <unistd.h>
+ #include <sys/stat.h>
+ #if defined(__MSVCRT__) || defined(__OS2__)
+diff --git a/zcmp.cc b/zcmp.cc
+index caa7852..32275b6 100644
+--- a/zcmp.cc
++++ b/zcmp.cc
+@@ -27,7 +27,7 @@
+ #include <string>
+ #include <vector>
+ #include <fcntl.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <unistd.h>
+ #include <sys/stat.h>
+ #if defined(__MSVCRT__) || defined(__OS2__)
+diff --git a/zdiff.cc b/zdiff.cc
+index d01f492..138a75b 100644
+--- a/zdiff.cc
++++ b/zdiff.cc
+@@ -27,7 +27,8 @@
+ #include <string>
+ #include <vector>
+ #include <fcntl.h>
+-#include <stdint.h>
++#include <inttypes.h>
++#include <signal.h>
+ #include <unistd.h>
+ #include <sys/stat.h>
+ #if defined(__MSVCRT__) || defined(__OS2__)
+diff --git a/zutils.cc b/zutils.cc
+index 5451534..367e933 100644
+--- a/zutils.cc
++++ b/zutils.cc
+@@ -22,7 +22,7 @@
+ #include <cstdlib>
+ #include <cstring>
+ #include <string>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <unistd.h>
+ #include <sys/wait.h>
+ 
+-- 
+1.7.3
+

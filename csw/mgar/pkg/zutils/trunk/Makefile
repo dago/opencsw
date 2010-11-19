@@ -1,5 +1,5 @@
 GARNAME = zutils
-GARVERSION = 0.7
+GARVERSION = 0.8
 CATEGORIES = utils
 
 DESCRIPTION = Utilities to deal with compressed and non-compressed files
@@ -14,15 +14,19 @@ endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/zutils/
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES  = 0001-Use-inttypes-instead-of-stdint.patch
+PATCHFILES  = 0001-Use-inttypes.h-instead-of-stdint.h-and-add-signal.h.patch
 PATCHFILES += 0002-Use-correct-path-on-testsuite.patch
 PATCHFILES += 0003-Use-Zutils-instead-of-zutils.patch
+PATCHFILES += 0004-Fix-ambinguity-to-str.insert.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS = CSWhelp2man CSWlzip
+
+# The lzip binary is used from the scripts which is not detected by checkpkg
 RUNTIME_DEP_PKGS = CSWlzip
+CHECKPKG_OVERRIDES_CSWzutils += surplus-dependency|CSWlzip
 
 VENDOR_URL = http://www.nongnu.org/zutils/zutils.html
 

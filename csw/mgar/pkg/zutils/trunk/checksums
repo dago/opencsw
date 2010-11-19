@@ -1,4 +1,1 @@
-649455382564a2724f207badf40a26eb  0001-Use-inttypes-instead-of-stdint.patch
-fce5a15a5f23bb5e3e44009823031c5f  0002-Use-correct-path-on-testsuite.patch
-b6d252ee0235190dac20876097d451d0  0003-Use-Zutils-instead-of-zutils.patch
-c9163bbaf3c6e84044b86b58fa9fe3ff  zutils-0.7.tar.gz
+e7607d23b62ef3c4c74baed04a79ec6d  zutils-0.8.tar.gz
