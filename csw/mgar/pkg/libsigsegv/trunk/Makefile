@@ -1,8 +1,8 @@
 GARNAME = libsigsegv
-GARVERSION = 2.8
+GARVERSION = 2.9
 CATEGORIES = lib
 EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 2.6 2.8
+MODULATIONS_GARVERSION = 2.6 2.9
 
 DESCRIPTION = A library for catching and handling segmentation faults
 define BLURB
@@ -20,6 +20,27 @@ NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz, $(SOURCEFILES))
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGES += CSWlibsigsegv0
+PACKAGES += CSWlibsigsegv2
+PACKAGES += CSWlibsigsegv-devel
+PACKAGES += CSWlibsigsegv
+
+CATALOGNAME_CSWlibsigsegv0 = libsigsegv0
+CATALOGNAME_CSWlibsigsegv2 = libsigsegv2
+CATALOGNAME_CSWlibsigsegv-devel = libsigsegv_devel
+CATALOGNAME_CSWlibsigsegv = libsigsegv
+
+SPKG_DESC_CSWlibsigsegv0 = A library for catching and handling segmentation faults, libsigsegv.so.0
+SPKG_DESC_CSWlibsigsegv2 = A library for catching and handling segmentation faults, libsigsegv.so.2
+SPKG_DESC_CSWlibsigsegv = Empty stub as contents has been moved to CSWlibsigsegv0
+SPKG_DESC_CSWlibsigsegv-devel = Development files for libsigsegv
+
+# This is a legacy stub dependency only. Remove after last package to CSWlibsigsegv has been updated.
+RUNTIME_DEP_PKGS_CSWlibsigsegv = CSWlibsigsegv0
+CHECKPKG_OVERRIDES_CSWlibsigsegv += surplus-dependency|CSWlibsigsegv0
+
+ARCHALL_CSWlibsigsegv = 1
+
 SPKG_SOURCEURL = http://www.gnu.org/software/libsigsegv/
 
 BUILD64 = 1
@@ -33,8 +54,14 @@ MERGE_DIRS_isa-default-garversion-2.6 = $(libdir)
 MERGE_SCRIPTS_isa-default64-garversion-2.6 = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-2.6 = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-2.8 = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-2.8 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-2.8 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-2.9 = copy-all
+MERGE_SCRIPTS_isa-default64-garversion-2.9 = copy-relocated-only
+MERGE_DIRS_isa-default64-garversion-2.9 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+
+PKGFILES_CSWlibsigsegv0 += $(call baseisadirs,$(libdir),[^/]*\.so\.0\.[0-9\.]+)
+PKGFILES_CSWlibsigsegv2 += $(call baseisadirs,$(libdir),[^/]*\.so\.2\.[0-9\.]+)
+PKGFILES_CSWlibsigsegv = NOFILES
+PKGFILES_CSWlibsigsegv-devel = $(PKGFILES_DEVEL)
+
 
 include gar/category.mk
