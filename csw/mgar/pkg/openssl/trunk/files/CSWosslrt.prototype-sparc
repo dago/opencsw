@@ -8,10 +8,8 @@ f none /opt/csw/lib/engines/libgmp.so 0555 root bin
 f none /opt/csw/lib/engines/libnuron.so 0555 root bin
 f none /opt/csw/lib/engines/libsureware.so 0555 root bin
 f none /opt/csw/lib/engines/libubsec.so 0555 root bin
-s none /opt/csw/lib/libcrypto.so=libcrypto.so.0.9.8
 f none /opt/csw/lib/libcrypto.so.0.9.7 0555 root bin
 f none /opt/csw/lib/libcrypto.so.0.9.8 0555 root bin
-s none /opt/csw/lib/libssl.so=libssl.so.0.9.8
 f none /opt/csw/lib/libssl.so.0.9.7 0555 root bin
 f none /opt/csw/lib/libssl.so.0.9.8 0555 root bin
 f none /opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7 0755 root bin
@@ -20,8 +18,6 @@ f none /opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7 0755 root bin
 f none /opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.8 0755 root bin
 f none /opt/csw/lib/sparcv9/libcrypto.so.0.9.7 0755 root bin
 f none /opt/csw/lib/sparcv9/libcrypto.so.0.9.8 0755 root bin
-s none /opt/csw/lib/sparcv9/libcrypto.so=libcrypto.so.0.9.8
-s none /opt/csw/lib/sparcv9/libcrypto.so.0=libcrypto.so.0.9.8
 s none /opt/csw/lib/sparcv9/libssl.so=libssl.so.0.9.8
 s none /opt/csw/lib/sparcv9/libssl.so.0=libssl.so.0.9.8
 f none /opt/csw/lib/sparcv9/libssl.so.0.9.7 0755 root bin
