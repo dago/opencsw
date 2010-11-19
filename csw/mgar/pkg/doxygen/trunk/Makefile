@@ -1,5 +1,5 @@
 GARNAME = doxygen
-GARVERSION = 1.7.1
+GARVERSION = 1.7.2
 CATEGORIES = utils
 
 DESCRIPTION = A documentation system for programming languages
@@ -47,6 +47,9 @@ PKGFILES_CSWdoxygendoc = $(PKGFILES_DOC)
 # There are some Python examples in there, but pulling in Python unconditionally
 # for these tiny examples seems overkill.
 CHECKPKG_OVERRIDES_CSWdoxygendoc = missing-dependency|CSWpython
+
+# I can't get -norunpath to CXX, override for now
+CHECKPKG_OVERRIDES_CSWdoxygen += bad-rpath-entry
 
 include gar/category.mk
 
