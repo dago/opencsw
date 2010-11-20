@@ -80,9 +80,6 @@ PROTOTYPE_FTYPE_shell = e
 
 ##### Build and installation information #####
 
-CHECKPKG_OVERRIDES_CSWbash += action-class-only-in-pkginfo|build
-
-
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
