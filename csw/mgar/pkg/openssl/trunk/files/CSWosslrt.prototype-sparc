@@ -18,10 +18,10 @@ f none /opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7 0755 root bin
 f none /opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.8 0755 root bin
 f none /opt/csw/lib/sparcv9/libcrypto.so.0.9.7 0755 root bin
 f none /opt/csw/lib/sparcv9/libcrypto.so.0.9.8 0755 root bin
-s none /opt/csw/lib/sparcv9/libssl.so=libssl.so.0.9.8
-s none /opt/csw/lib/sparcv9/libssl.so.0=libssl.so.0.9.8
+s none /opt/csw/lib/sparcv9/libcrypto.so.0=libcrypto.so.0.9.8
 f none /opt/csw/lib/sparcv9/libssl.so.0.9.7 0755 root bin
 f none /opt/csw/lib/sparcv9/libssl.so.0.9.8 0755 root bin
+s none /opt/csw/lib/sparcv9/libssl.so.0=libssl.so.0.9.8
 d none /opt/csw/share/doc/openssl_rt 0755 root bin
 d none /opt/csw/ssl 0755 root bin
 s none /opt/csw/ssl/certs=../etc/ssl/certs
