@@ -77,7 +77,7 @@ f none /opt/csw/lib/sparcv8plus+vis/libssl.a 0644 root bin
 f none /opt/csw/lib/sparcv9/libcrypto.a 0644 root bin
 f none /opt/csw/lib/sparcv9/libssl.a 0644 root bin
 s none /opt/csw/lib/sparcv9/libcrypto.so=libcrypto.so.0.9.8
-s none /opt/csw/lib/sparcv9/libcrypto.so.0=libcrypto.so.0.9.8
+s none /opt/csw/lib/sparcv9/libssl.so=libssl.so.0.9.8
 d none /opt/csw/lib/pkgconfig 0755 root bin
 f none /opt/csw/lib/pkgconfig/libcrypto.pc 0644 root bin
 f none /opt/csw/lib/pkgconfig/libssl.pc 0644 root bin

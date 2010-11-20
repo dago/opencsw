@@ -53,6 +53,10 @@ CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWosslrt
 CHECKPKG_OVERRIDES_CSWosslutils += missing-dependency|CSWperl
 
 CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWcacertificates
+
+# this package doesn't yet obey the new shared libraries standard
+CHECKPKG_OVERRIDES_CSWosslrt += non-uniform-lib-versions-in-package|sonames=['libcrypto.so.0.9.7',|'libcrypto.so.0.9.8',|'libssl.so.0.9.7',|'libssl.so.0.9.8']
+
 # we will not recompile old 0.9.7 version for now
 ifeq ($(shell /usr/bin/uname -p),sparc) 
 CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7
@@ -73,10 +77,6 @@ CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
 endif
-
-
-CHECKPKG_OVERRIDES_CSWossldevel += surplus-dependency|CSWosslrt
-
 
 
 ###### Upstream and opencsw files information #######
