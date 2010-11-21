@@ -7,7 +7,7 @@
     libdir:        ${exec_prefix}/lib
     libexecdir:    ${exec_prefix}/libexec
     mandir:        ${exec_prefix}/man
-    sysconfdir:    ${exec_prefix}/etc
+    sysconfdir:    /etc/${prefix}
     datadir:       ${prefix}/share
     installbuilddir: ${datadir}/build
     errordir:      ${datadir}/error
@@ -16,8 +16,8 @@
     manualdir:     ${datadir}/manual
     cgidir:        ${datadir}/cgi-bin
     includedir:    ${exec_prefix}/include
-    localstatedir: ${prefix}/var
+    localstatedir: /var/opt/csw/apache2
     runtimedir:    /var/run
-    logfiledir:    ${localstatedir}/log
+    logfiledir:    /var/opt/csw/log/apache2
     proxycachedir: ${datadir}/proxy
 </Layout>
