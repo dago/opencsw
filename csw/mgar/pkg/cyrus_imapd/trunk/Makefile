@@ -33,19 +33,76 @@ PACKAGES = CSWcyrusimapd CSWcyrusimapdutils CSWpmcyrus
 
 SPKG_DESC_CSWcyrusimapd = Pop and Imap server from the Cyrus mail system
 CATALOGNAME_CSWcyrusimapd = cyrus_imapd
-RUNTIME_DEP_PKGS_CSWcyrusimapd = CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWtcpwrap CSWnetsnmp CSWpcrert
-SPKG_CLASSES_CSWcyrusimapd = none services cswpreserveconf cswinitsmf
+RUNTIME_DEP_PKGS_CSWcyrusimapd = CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWnetsnmp CSWpcrert CSWzlib
+#SPKG_CLASSES_CSWcyrusimapd = none services cswpreserveconf cswinitsmf
 
 SPKG_DESC_CSWcyrusimapdutils = Various admin utilities for Cyrus Imapd/Popd
 CATALOGNAME_CSWcyrusimapdutils = cyrus_imapd_utils
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils = CSWpmcyrus CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWpcrert
-SPKG_CLASSES_CSWcyrusimapdutils = none 
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils = CSWpmcyrus CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWpcrert CSWzlib
+#SPKG_CLASSES_CSWcyrusimapdutils = none 
 
 SPKG_DESC_CSWpmcyrus = Perl interface to Cyrus Imap functions
 CATALOGNAME_CSWpmcyrus = pm_cyrus
-RUNTIME_DEP_PKGS_CSWpmcyrus = CSWperl CSWbdb42 CSWosslrt CSWsasl
-SPKG_CLASSES_CSWpmcyrus = none
+RUNTIME_DEP_PKGS_CSWpmcyrus = CSWperl CSWbdb42 CSWosslrt CSWsasl CSWzlib
+#SPKG_CLASSES_CSWpmcyrus = none
 
+PKGFILES_CSWcyrusimapd = $(sbindir)/arbitronsort 
+PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-dohash 
+PKGFILES_CSWcyrusimapd += $(sbindir)/masssievec 
+PKGFILES_CSWcyrusimapd += $(sbindir)/migrate-metadata 
+PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-mkdirs 
+PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-mknewsgroups 
+PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-rehash 
+PKGFILES_CSWcyrusimapd += $(sbindir)/translatesieve 
+PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-undohash 
+PKGFILES_CSWcyrusimapd += $(sbindir)/sievec 
+PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-master 
+PKGFILES_CSWcyrusimapd += $(sbindir)/make_md5 
+PKGFILES_CSWcyrusimapd += $(sbindir)/make_sha1 
+PKGFILES_CSWcyrusimapd += $(sbindir)/reconstruct 
+PKGFILES_CSWcyrusimapd += $(sbindir)/quota 
+PKGFILES_CSWcyrusimapd += $(sbindir)/ipurge 
+PKGFILES_CSWcyrusimapd += $(sbindir)/cyrdump 
+PKGFILES_CSWcyrusimapd += $(sbindir)/chk_cyrus 
+PKGFILES_CSWcyrusimapd += $(sbindir)/cvt_cyrusdb 
+PKGFILES_CSWcyrusimapd += $(sbindir)/deliver 
+PKGFILES_CSWcyrusimapd += $(sbindir)/ctl_mboxlist 
+PKGFILES_CSWcyrusimapd += $(sbindir)/ctl_deliver 
+PKGFILES_CSWcyrusimapd += $(sbindir)/ctl_cyrusdb 
+PKGFILES_CSWcyrusimapd += $(sbindir)/squatter 
+PKGFILES_CSWcyrusimapd += $(sbindir)/mbexamine 
+PKGFILES_CSWcyrusimapd += $(sbindir)/mbpath 
+PKGFILES_CSWcyrusimapd += $(sbindir)/cyr_expire 
+PKGFILES_CSWcyrusimapd += $(sbindir)/arbitron 
+PKGFILES_CSWcyrusimapd += $(sbindir)/tls_prune
+PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus
+PKGFILES_CSWcyrusimapd += $(docdir)/cyrus_imapd/.*
+PKGFILES_CSWcyrusimapd += $(mandir)/man5/.*
+PKGFILES_CSWcyrusimapd += $(mandir)/man8/.*
+PKGFILES_CSWcyrusimapd += $(libexecdir)/cyrus
+PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus/imapd.conf.CSW
+PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus/cyrus.conf.CSW
+PKGFILES_CSWcyrusimapd += $(localstatedir)/cyrus
+PKGFILES_CSWcyrusimapd += $(sysconfdir)/init.d/cswcyrus
+PKGFILES_CSWcyrusimapd += $(localstatedir)/svc/manifest/network/cswcyrus.xml
+
+PRESERVECONF = $(sysconfdir)/cyrus/imapd.conf
+PRESERVECONF += $(sysconfdir)/cyrus/cyrus.conf
+INITSMF = $(sysconfdir)/init.d/cswcyrus
+ETCSERVICES = /etc/opt/csw/pkg/CSWcyrusimapd/services
+
+LICENSE = COPYRIGHT
+
+PKGFILES_CSWcyrusimapdutils = $(bindir)/.*
+PKGFILES_CSWcyrusimapd += $(mandir)/man1/.*
+PKGFILES_CSWcyrusimapd += $(docdir)/cyrus_imapd_utils/.*
+
+PKGFILES_CSWpmcyrus = $(perllib)/.*
+PKGFILES_CSWpmcyrus += $(mandir)/man3/Cyrus::.*
+PKGFILES_CSWpmcyrus += $(docdir)/pm_cyrus/.*
+
+
+CHECKPKG_OVERRIDES_CSWcyrusimapdutils += surplus-dependency|CSWpmcyrus
 
 ###### Upstream and opencsw files information #######
 
@@ -57,14 +114,12 @@ UFILES_REGEX = $(shell echo $(GARNAME) | tr '_' '-')-(\d+(?:\.\d+)*).tar.gz
 DISTNAME = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION)
 
 DISTFILES  = $(DISTNAME).tar.gz
-DISTFILES += CSWcyrusimapd.prototype CSWcyrusimapd.preinstall CSWcyrusimapd.checkinstall
+DISTFILES += CSWcyrusimapd.preinstall CSWcyrusimapd.checkinstall
 DISTFILES += cyrus_imapd.changelog.CSW README.CSW
-DISTFILES += i.services r.services services
+DISTFILES += services
 DISTFILES += cswcyrus cswcyrus.xml
 DISTFILES += imapd.conf cyrus.conf
 
-DISTFILES += CSWpmcyrus.prototype
-DISTFILES += CSWcyrusimapdutils.prototype
 DISTFILES += cyrus_imapd_utils.changelog.CSW
 DISTFILES += pm_cyrus.changelog.CSW
 
@@ -96,6 +151,12 @@ PATCHFILES += restore_allowplaintext_default.patch
 #   <http://www.opencsw.org/mantis/view.php?id=3766>
 PATCHFILES += 0001-Force-linkage-to-libperl.so.patch
 
+# Fix config2header so it works with argument like
+# "CC=/path/to/CC arg1 arg2"
+# mandatory to work with assignment like
+# "CC="/opt/SUNWspro/bin/cc -xrunpath"
+PATCHFILES += 0002-fix-config2header.patch
+
 #GARCOMPILER = GNU
 #GNU_CC_OPT = -g
 #GNU_LD_OPT = -g
@@ -116,6 +177,7 @@ CONFIGURE_ARGS += --enable-idled
 CONFIGURE_ARGS += --enable-murder 
 CONFIGURE_ARGS += --enable-replication
 CONFIGURE_ARGS += --with-snmp=$(prefix)
+CONFIGURE_ARGS += --with-libwrap=$(prefix)
 
 # we add the args so perl libraries are installed
 # in the correct path
@@ -162,8 +224,7 @@ pre-merge:
 
 post-merge:
 	# we provide our class action scripts to modify /etc/inet/services
-	ginstall $(WORKDIR_FIRSTMOD)/*.services $(WORKDIR)/
-	ginstall -D $(WORKDIR_FIRSTMOD)/services $(PKGROOT)/etc/inet/services
+	ginstall -D $(WORKDIR_FIRSTMOD)/services $(PKGROOT)/etc/opt/csw/pkg/CSWcyrusimapd/services
 	
 	# configuration and init file installation
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswcyrus" "$(PKGROOT)/etc/opt/csw/init.d/cswcyrus"
@@ -171,6 +232,14 @@ post-merge:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/imapd.conf" "$(PKGROOT)/$(sysconfdir)/cyrus/imapd.conf.CSW"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cyrus.conf" "$(PKGROOT)/$(sysconfdir)/cyrus/cyrus.conf.CSW"
 
+	( cd "$(PKGROOT)$(libexecdir)/cyrus/" && \
+		for E in sievec cyrus-master make_md5 make_sha1 \
+			reconstruct quota ipurge cyrdump chk_cyrus \
+			cvt_cyrusdb deliver ctl_mboxlist ctl_deliver \
+			ctl_cyrusdb squatter mbexamine mbpath cyr_expire \
+			arbitron tls_prune; do \
+			mv -f $$E ../../sbin/$$E && ln -sf ../../sbin/$$E; \
+		done )
 
 	# we install binary under tools as part of the package
 	cp -r $(WORKSRC_FIRSTMOD)/tools/* $(PKGROOT)$(sbindir)
@@ -198,4 +267,7 @@ post-merge:
 	# we fix some permission problems
 	chmod -R u+w "$(PKGROOT)/"
 
+	# let's remove pod files
+	gfind $(PKGROOT)$(perllib) -name "perllocal.pod" -exec rm '{}' ';'
+	
 	@$(MAKECOOKIE)
