@@ -1,0 +1,242 @@
+PKCS#11 engine support for OpenSSL 0.9.8l
+=========================================
+
+[Nov 19, 2009]
+
+Contents:
+
+Overview
+Revisions of the patch for 0.9.8 branch
+FAQs
+Feedback
+
+Overview
+========
+
+This patch containing code available in OpenSolaris adds support for PKCS#11
+engine into OpenSSL and implements PKCS#11 v2.20. It is to be applied against
+OpenSSL 0.9.8l source code distribution as shipped by OpenSSL.Org. Your system
+must provide PKCS#11 backend otherwise the patch is useless. You provide the
+PKCS#11 library name during the build configuration phase, see below.
+
+Patch can be applied like this:
+
+	# NOTE: use gtar if on Solaris
+	tar xfzv openssl-0.9.8l.tar.gz
+	# now download the patch to the current directory
+	# ...
+	cd openssl-0.9.8l
+	# NOTE: must use gpatch if on Solaris (is part of the system)
+	patch -p1 < path-to/pkcs11_engine-0.9.8l.patch.2009-11-19
+
+It is designed to support pure acceleration for RSA, DSA, DH and all the
+symetric ciphers and message digest algorithms that PKCS#11 and OpenSSL share
+except for missing support for patented algorithms MDC2, RC3, RC5 and IDEA.
+
+According to the PKCS#11 providers installed on your machine, it can support
+following mechanisms:
+
+	RSA, DSA, DH, RAND, DES-CBC, DES-EDE3-CBC, DES-ECB, DES-EDE3, RC4,
+	AES-128-CBC, AES-192-CBC, AES-256-CBC, AES-128-ECB, AES-192-ECB,
+	AES-256-ECB, AES-128-CTR, AES-192-CTR, AES-256-CTR, MD5, SHA1, SHA224,
+	SHA256, SHA384, SHA512
+
+Note that for AES counter mode the application must provide their own EVP
+functions since OpenSSL doesn't support counter mode through EVP yet. You may
+see OpenSSH source code (cipher.c) to get the idea how to do that. SunSSH is an
+example of code that uses the PKCS#11 engine and deals with the fork-safety
+problem (see engine.c and packet.c files if interested).
+
+You must provide the location of PKCS#11 library in your system to the
+configure script. You will be instructed to do that when you try to run the
+config script:
+
+	$ ./config 
+	Operating system: i86pc-whatever-solaris2
+	Configuring for solaris-x86-cc
+	You must set --pk11-libname for PKCS#11 library.
+	See README.pkcs11 for more information.
+
+Taking openCryptoki project on Linux AMD64 box as an example, you would run
+configure script like this:
+
+	./config --pk11-libname=/usr/lib64/pkcs11/PKCS11_API.so
+
+To check whether newly built openssl really supports PKCS#11 it's enough to run
+"apps/openssl engine" and look for "(pkcs11) PKCS #11 engine support" in the
+output. If you see no PKCS#11 engine support check that the built openssl binary
+and the PKCS#11 library from --pk11-libname don't conflict on 32/64 bits.
+
+The patch, during various phases of development, was tested on Solaris against
+PKCS#11 engine available from Solaris Cryptographic Framework (Solaris 10 and
+OpenSolaris) and also on Linux using PKCS#11 libraries from openCryptoki project
+(see openCryptoki website http://sourceforge.net/projects/opencryptoki for more
+information). Some Linux distributions even ship those libraries with the
+system. The patch should work on any system that is supported by OpenSSL itself
+and has functional PKCS#11 library.
+
+The patch contains "RSA Security Inc. PKCS #11 Cryptographic Token Interface
+(Cryptoki)" - files cryptoki.h, pkcs11.h, pkcs11f.h and pkcs11t.h which are
+copyrighted by RSA Security Inc., see pkcs11.h for more information.
+
+Other added/modified code in this patch is copyrighted by Sun Microsystems,
+Inc. and is released under the OpenSSL license (see LICENSE file for more
+information).
+
+Revisions of the patch for 0.9.8 branch
+=======================================
+
+2009-11-19
+- adjusted for OpenSSL version 0.9.8l
+
+- bugs and RFEs:
+
+	6479874 OpenSSL should support RSA key by reference/hardware keystores
+	6896677 PKCS#11 engine's hw_pk11_err.h needs to be split
+	6732677 make check to trigger Solaris specific code automatic in the
+		PKCS#11 engine
+
+2009-03-11
+- adjusted for OpenSSL version 0.9.8j 
+
+- README.pkcs11 moved out of the patch, and is shipped together with it in a
+  tarball instead so that it can be read before the patch is applied.
+
+- fixed bugs:
+
+	6804216 pkcs#11 engine should support a key length range for RC4
+	6734038 Apache SSL web server using the pkcs11 engine fails to start if
+		meta slot is disabled
+
+2008-12-02
+- fixed bugs and RFEs (most of the work done by Vladimir Kotal)
+
+	6723504 more granular locking in PKCS#11 engine
+	6667128 CRYPTO_LOCK_PK11_ENGINE assumption does not hold true
+	6710420 PKCS#11 engine source should be lint clean
+	6747327 PKCS#11 engine atfork handlers need to be aware of guys who take
+		it seriously
+	6746712 PKCS#11 engine source code should be cstyle clean
+	6731380 return codes of several functions are not checked in the PKCS#11
+		engine code
+	6746735 PKCS#11 engine should use extended FILE space API
+	6734038 Apache SSL web server using the pkcs11 engine fails to start if
+		meta slot is disabled
+
+2008-08-01
+- fixed bug
+
+	6731839 OpenSSL PKCS#11 engine no longer uses n2cp for symmetric ciphers
+		and digests
+
+- Solaris specific code for slot selection made automatic
+
+2008-07-29
+- update the patch to OpenSSL 0.9.8h version
+- pkcs11t.h updated to the latest version:
+
+	6545665 make CKM_AES_CTR available to non-kernel users
+
+- fixed bugs in the engine code:
+
+	6602801 PK11_SESSION cache has to employ reference counting scheme for
+		asymmetric key operations
+	6605538 pkcs11 functions C_FindObjects[{Init,Final}]() not called
+		atomically
+	6607307 pkcs#11 engine can't read RSA private keys
+	6652362 pk11_RSA_finish() is cutting corners
+	6662112 pk11_destroy_{rsa,dsa,dh}_key_objects() use locking in
+		suboptimal way
+	6666625 pk11_destroy_{rsa,dsa,dh}_key_objects() should be more
+		resilient to destroy failures
+	6667273 OpenSSL engine should not use free() but OPENSSL_free()
+	6670363 PKCS#11 engine fails to reuse existing symmetric keys
+	6678135 memory corruption in pk11_DH_generate_key() in pkcs#11 engine
+	6678503 DSA signature conversion in pk11_dsa_do_verify() ignores size
+		of big numbers leading to failures
+	6706562 pk11_DH_compute_key() returns 0 in case of failure instead of
+		-1
+	6706622 pk11_load_{pub,priv}key create corrupted RSA key references
+	6707129 return values from BN_new() in pk11_DH_generate_key() are not
+		checked
+	6707274 DSA/RSA/DH PKCS#11 engine operations need to be resistant to
+		structure reuse
+	6707782 OpenSSL PKCS#11 engine pretends to be aware of
+		OPENSSL_NO_{RSA,DSA,DH}
+	defines but fails miserably
+	6709966 make check_new_*() to return values to indicate cache hit/miss
+	6705200 pk11_dh struct initialization in PKCS#11 engine is missing
+		generate_params parameter
+	6709513 PKCS#11 engine sets IV length even for ECB modes
+	6728296 buffer length not initialized for C_(En|De)crypt_Final() in the
+		PKCS#11 engine
+	6728871 PKCS#11 engine must reset global_session in pk11_finish()
+
+- new features and enhancements:
+
+	6562155 OpenSSL pkcs#11 engine needs support for SHA224/256/384/512
+	6685012 OpenSSL pkcs#11 engine needs support for new cipher modes
+	6725903 OpenSSL PKCS#11 engine shouldn't use soft token for symmetric
+		ciphers and digests
+
+2007-10-15
+- update for 0.9.8f version
+- update for "6607670 teach pkcs#11 engine how to use keys be reference"
+
+2007-10-02
+- draft for "6607670 teach pkcs#11 engine how to use keys be reference"
+- draft for "6607307 pkcs#11 engine can't read RSA private keys"
+
+2007-09-26
+- 6375348 Using pkcs11 as the SSLCryptoDevice with Apache/OpenSSL causes
+	  significant performance drop
+- 6573196 memory is leaked when OpenSSL is used with PKCS#11 engine
+
+2007-05-25
+- 6558630 race in OpenSSL pkcs11 engine when using symetric block ciphers
+
+2007-05-19
+- initial patch for 0.9.8e using latest OpenSolaris code
+
+FAQs
+====
+
+(1) my build failed on Linux distro with this error:
+
+../libcrypto.a(hw_pk11.o): In function `pk11_library_init':
+hw_pk11.c:(.text+0x20f5): undefined reference to `pthread_atfork'
+
+Answer:
+
+	- don't use "no-threads" when configuring
+	- if you didn't then OpenSSL failed to create a threaded library by
+	  default. You may manually edit Configure and try again. Look for the
+	  architecture that Configure printed, for example:
+
+Configured for linux-elf.
+
+	- then edit Configure, find string "linux-elf" (inluding the quotes),
+	  and add flags to support threads to the 4th column of the 2nd string.
+	  If you build with GCC then adding "-pthread" should be enough. With
+	  "linux-elf" as an example, you would add " -pthread" right after
+	  "-D_REENTRANT", like this:
+
+....-O3 -fomit-frame-pointer -Wall::-D_REENTRANT -pthread::-ldl:.....
+
+(2) I'm using MinGW/MSYS environment and get undeclared reference error for
+pthread_atfork() function when trying to build OpenSSL with the patch.
+
+Answer:
+
+	Sorry, pthread_atfork() is not implemented in the current pthread-win32
+	(as of Nov 2009). You can not use the patch there.
+
+
+Feedback
+========
+
+Please send feedback to security-discuss@opensolaris.org. The patch was
+created by Jan.Pechanec@Sun.COM from code available in OpenSolaris.
+
+Latest version should be always available on http://blogs.sun.com/janp.
+
