@@ -40,7 +40,7 @@ DISTFILES += CSWapache2.killproc cswapache2
 DISTFILES += CSWapache2.preinstall
 
 # Configuration templates
-DISTFILES += update20to22 server.crt.build_cas
+DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
 
@@ -198,7 +198,7 @@ PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
-PROTOTYPE_FILTER = gawk '$$$$3 ~ /apache2\/etc/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"}; $$$$3 ~ /server.crt.CSW/ { $$$$1 = "e"; $$$$2 = "build"; $$$$4 = "0600" }; {print}'
+PROTOTYPE_FILTER = gawk '$$$$3 ~ /apache2\/etc/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"}; {print}'
 
 include gar/category.mk
 
@@ -249,7 +249,4 @@ post-merge: create-templates
 			mv $$f $$f.CSW; \
 			$(abspath $(FILEDIR))/build_cas_template $$f > $$f; \
 		done )
-	@echo "  => Creating ssl server.crt build CAS template."
-	@(cp -p $(WORKDIR)/server.crt.build_cas $(PKGROOT)/$(prefix)/apache2/etc/server.crt.CSW; \
-		chmod 600 $(PKGROOT)/$(prefix)/apache2/etc/server.crt.CSW )
 	@$(MAKECOOKIE)
