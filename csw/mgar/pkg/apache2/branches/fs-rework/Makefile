@@ -243,7 +243,7 @@ create-templates:
 
 post-merge: create-templates
 	@echo "  => Creating template files and CAS shell scripts..."
-	@( cd $(PKGROOT)/opt/csw/apache2/etc; \
+	@( cd $(PKGROOT)/etc/opt/csw/apache2/; \
 		for f in *conf extra/* mime* magic*; do \
 			echo "...$$f"; \
 			mv $$f $$f.CSW; \
