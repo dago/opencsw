@@ -57,7 +57,6 @@ PKGFILES_CSWphp5devel += $(mandir)/man1/php-config.1
 PKGFILES_CSWphp5devel += $(mandir)/man1/phpize.1
 
 PATCHFILES += configure.diff
-PATCHFILES += php-bug-45557-fix.diff
 
 # PHP Extensions
 EXTDIRLIST = $(shell ls -d extensions/*)
@@ -79,6 +78,8 @@ CONFIGURE_ARGS += --enable-magic-quotes
 CONFIGURE_ARGS += --enable-spl=shared
 CONFIGURE_ARGS += --with-pcre-regex
 CONFIGURE_ARGS += --with-pear=shared
+CONFIGURE_ARGS += --with-pear=shared
+CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
