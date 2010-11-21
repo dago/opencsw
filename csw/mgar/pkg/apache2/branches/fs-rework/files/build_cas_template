@@ -19,8 +19,7 @@ if [ "\$1" = install ]; then
 	-e "s/^User.*daemon/User nobody/;" \
 	-e "s/^Group.*daemon/Group nobody/;" \
 	-e 's/^(LoadModule.*suexec.*)/#\$1/;' \
-	-e 's/^#(Include.*httpd-mpm.conf)/\$1/;' \
-	-e 's/^#(Include.*httpd-ssl.conf)/\$1/;' \$CONF_FILE
+	-e 's/^#(Include.*httpd-mpm.conf)/\$1/;' \$CONF_FILE
 
       chown root:bin \$CONF_FILE
       chmod 644 \$CONF_FILE
