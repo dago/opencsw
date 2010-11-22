@@ -28,5 +28,11 @@ where the configuration will be unique on most machines.
 
 *****************************************************
 
+The default log directory is now /var/opt/csw/log/apache2.  Old logs
+are not touched and the configuration will honour the old location.  You
+should updated this and move the logs manually.
+
+*****************************************************
+
 Thanks
 -The OpenCSW apache2 team.
