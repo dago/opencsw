@@ -23,6 +23,10 @@ if [ "\$1" = install ]; then
          echo "Updating the syntax to 2.2 format though..." >&2
          \${PIR}/\$AP2_DIR/sbin/update20to22 \$NEW_CONF_FILE >&2
       fi
+
+      # ensure we use the config files from the new location 
+      perl -pi \
+         -e "s/etc\//\/etc\/opt\/csw\/apache2\//" \$NEW_CONF_FILE
    else
       # so, we're not an existing or 'needs migration' install, we must
       # install from the templates.
