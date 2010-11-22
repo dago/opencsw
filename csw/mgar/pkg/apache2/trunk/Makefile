@@ -198,7 +198,7 @@ PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
-PROTOTYPE_FILTER = gawk '$$$$3 ~ /apache2\/etc/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"}; {print}'
+PROTOTYPE_FILTER = gawk '$$$$3 ~ /etc\/opt\/csw\/apache2/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"}; {print}'
 
 include gar/category.mk
 
@@ -243,7 +243,7 @@ create-templates:
 
 post-merge: create-templates
 	@echo "  => Creating template files and CAS shell scripts..."
-	@( cd $(PKGROOT)/opt/csw/apache2/etc; \
+	@( cd $(PKGROOT)/etc/opt/csw/apache2/; \
 		for f in *conf extra/* mime* magic*; do \
 			echo "...$$f"; \
 			mv $$f $$f.CSW; \
