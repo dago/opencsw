@@ -1,0 +1,43 @@
+From 9a204d8f2275609a613bbb27f69c4155ef4a497a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 22 Nov 2010 17:13:48 +0100
+Subject: [PATCH] Make sure for-loop is not empty
+
+---
+ doc/Makefile.in |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/doc/Makefile.in b/doc/Makefile.in
+index ec95c51..8c6aa6a 100644
+--- a/doc/Makefile.in
++++ b/doc/Makefile.in
+@@ -382,7 +382,7 @@ ctags-recursive:
+ 	done
+ 
+ ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
+-	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
++	list='x$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
+ 	unique=`for i in $$list; do \
+ 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+ 	  done | \
+@@ -408,7 +408,7 @@ TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+ 	      tags="$$tags $$include_option=$$here/$$subdir/TAGS"; \
+ 	  fi; \
+ 	done; \
+-	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
++	list='x$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
+ 	unique=`for i in $$list; do \
+ 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+ 	  done | \
+@@ -423,7 +423,7 @@ ctags: CTAGS
+ CTAGS: ctags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+ 		$(TAGS_FILES) $(LISP)
+ 	tags=; \
+-	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
++	list='x$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
+ 	unique=`for i in $$list; do \
+ 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+ 	  done | \
+-- 
+1.7.3
+

@@ -10,12 +10,16 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 
+PATCHFILES = 0001-Make-sure-for-loop-is-not-empty.patch
+
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
+# Tests for i386 fail in /Dia/Objects/Istar - goal/Copy with
+#   g_str_hash (100) + 16
+TEST_TARGET ?= check
 
 RUNTIME_DEP_PKGS_CSWdia += CSWlibxslt
 RUNTIME_DEP_PKGS_CSWdia += CSWlibatk
