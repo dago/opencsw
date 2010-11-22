@@ -1,0 +1,39 @@
+From 110d57854830c674d7dbacb65331df0995d0d3ee Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 22 Nov 2010 16:40:39 +0100
+Subject: [PATCH 4/4] Do not use link against libstdc++
+
+---
+ src/Makefile.in   |    2 +-
+ tests/Makefile.in |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Makefile.in b/src/Makefile.in
+index 2d7c678..7bd2c79 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -186,7 +186,7 @@ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ INCLUDES = -I$(top_srcdir)/include
+-LDADD = $(top_builddir)/libemf/libEMF.la -lstdc++ -lm
++LDADD = $(top_builddir)/libemf/libEMF.la -lm
+ all: all-am
+ 
+ .SUFFIXES:
+diff --git a/tests/Makefile.in b/tests/Makefile.in
+index 4e5ecfb..5c8fdb4 100644
+--- a/tests/Makefile.in
++++ b/tests/Makefile.in
+@@ -202,7 +202,7 @@ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ INCLUDES = -I$(top_srcdir)/include
+-LDADD = $(top_builddir)/libemf/libEMF.la -lstdc++
++LDADD = $(top_builddir)/libemf/libEMF.la
+ TESTS = docheck1 docheck2 docheck3
+ EXTRA_DIST = docheck1 docheck2 docheck3 emfs/check1.emf emfs/check3.emf
+ MOSTLYCLEANFILES = check1.emf check2.emf check3.emf
+-- 
+1.7.3
+
