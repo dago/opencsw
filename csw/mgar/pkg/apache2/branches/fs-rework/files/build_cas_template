@@ -5,9 +5,11 @@ cat <<EOF
 
 PIR=\${PKG_INSTALL_ROOT:-/}
 AP2_DIR=\$PIR/opt/csw/apache2
-AP2_CONF=\$AP2_DIR/etc/
+AP2_CONF=\$PIR/etc/opt/csw/apache2
+OLD_CONF=\$PIR/\$AP2_DIR/etc
 
-CONF_FILE=\$AP2_CONF/$1
+NEW_CONF_FILE=\$AP2_CONF/$1
+OLD_CONF_FILE=\$OLD_CONF/$1
 
 if [ "\$1" = install ]; then
    if [ -f "\$NEW_CONF_FILE" ]; then
