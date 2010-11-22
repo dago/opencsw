@@ -4,9 +4,9 @@ cat <<EOF
 #!/bin/sh
 
 PIR=\${PKG_INSTALL_ROOT:-/}
-AP2_DIR=\$PIR/opt/csw/apache2
+AP2_DIR=/opt/csw/apache2
 AP2_CONF=\$PIR/etc/opt/csw/apache2
-OLD_CONF=\$PIR/\$AP2_DIR/etc
+OLD_CONF=\$PIR\$AP2_DIR/etc
 
 NEW_CONF_FILE=\$AP2_CONF/$1
 OLD_CONF_FILE=\$OLD_CONF/$1
