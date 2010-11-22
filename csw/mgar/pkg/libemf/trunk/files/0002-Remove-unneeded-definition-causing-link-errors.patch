@@ -1,0 +1,32 @@
+From 313b74dc289993a8a41974545df95d2e41f16978 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 22 Nov 2010 15:43:35 +0100
+Subject: [PATCH 2/2] Remove unneeded definition causing link errors
+
+---
+ include/libEMF/wine/winbase.h |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/include/libEMF/wine/winbase.h b/include/libEMF/wine/winbase.h
+index 366a777..3abb6b1 100644
+--- a/include/libEMF/wine/winbase.h
++++ b/include/libEMF/wine/winbase.h
+@@ -1802,6 +1802,7 @@ LONG        WINAPI InterlockedIncrement(PLONG);
+ VOID        WINAPI SetLastError(DWORD);
+ #endif  /* __i386__ && __GNUC__ */
+ 
++#if 0
+ /* FIXME: should handle platforms where sizeof(void*) != sizeof(long) */
+ static inline PVOID WINAPI InterlockedCompareExchangePointer( PVOID *dest, PVOID xchg, PVOID compare )
+ {
+@@ -1812,6 +1813,7 @@ static inline PVOID WINAPI InterlockedExchangePointer( PVOID *dest, PVOID val )
+ {
+     return (PVOID)InterlockedExchange( (PLONG)dest, (LONG)val );
+ }
++#endif
+ 
+ #ifdef __WINE__
+ #define GetCurrentProcess() ((HANDLE)0xffffffff)
+-- 
+1.7.3
+
