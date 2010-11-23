@@ -66,6 +66,9 @@ PATCHFILES = $(shell LEVEL=1; \
 # opencsw bash use /etc/bash.bashrc and /etc/bash.bash_logout files
 PATCHFILES += use_system_bashrc_and_logout.patch
 
+# add /opt/csw/bin in the hardcoded paths used for auto-selecting the EDITOR variable
+PATCHFILES += 0001-bashbug-editor-path.patch
+
 LICENSE = COPYING
 
 # we add CSW bash to the /etc/shells files using the build script
