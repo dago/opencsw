@@ -1,14 +1,14 @@
-From 9a204d8f2275609a613bbb27f69c4155ef4a497a Mon Sep 17 00:00:00 2001
+From 109bdcb02d7e43bf9b3d15382dd54681b09edc29 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Mon, 22 Nov 2010 17:13:48 +0100
+Date: Tue, 23 Nov 2010 11:09:26 +0100
 Subject: [PATCH] Make sure for-loop is not empty
 
 ---
- doc/Makefile.in |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ doc/Makefile.in |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/doc/Makefile.in b/doc/Makefile.in
-index ec95c51..8c6aa6a 100644
+index ec95c51..85a9b44 100644
 --- a/doc/Makefile.in
 +++ b/doc/Makefile.in
 @@ -382,7 +382,7 @@ ctags-recursive:
@@ -38,6 +38,15 @@ index ec95c51..8c6aa6a 100644
  	unique=`for i in $$list; do \
  	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
  	  done | \
+@@ -589,7 +589,7 @@ uninstall-am: uninstall-local
+ install-data-local: $(distfiles)
+ 	-(cd $(DESTDIR)$(helpdir) && rm -f C && ln -s en C)
+ 	$(mkinstalldirs) $(sysdoc)
+-	for i in $^; do \
++	for i in x $^; do \
+ 	  if test -f "$$i"; then  \
+ 	    echo "installing $$i" ;\
+ 	    $(INSTALL_DATA) $$i $(sysdoc)/$$(basename $$i); \
 -- 
 1.7.3
 
