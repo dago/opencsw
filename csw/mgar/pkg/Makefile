@@ -59,7 +59,7 @@ report-%:
 # ...
 
 garlinks:
-	@(svn propget svn:externals -R | perl -ane 'next if( /^$$/ ); if( $$F[1] eq "-" ) { ($$path,$$sep,$$dir,$$link)=@F; } else { ($$dir,$$link) = @F; } ($$upsteps=$$path)=~s![^/]+!..!g;(($$linkdest=$$link))=~ s!https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar!$$upsteps!;print "Linking $$path/$$dir to ../$$linkdest", symlink("../$$linkdest","$$path/$$dir") ? "" : " failed", "\n";')
+	@(svn propget svn:externals -R | perl -ane 'next if( /^$$/ ); if( $$F[1] eq "-" ) { ($$path,$$sep,$$dir,$$link)=@F; } else { ($$dir,$$link) = @F; } ($$upsteps=$$path)=~s![^/]+!..!g;(($$linkdest=$$link))=~ s!https://gar.svn.(?:sourceforge|sf).net/svnroot/gar/csw/mgar!$$upsteps!;unlink("$$path/$$dir"); print "Linking $$path/$$dir to ../$$linkdest", symlink("../$$linkdest","$$path/$$dir") ? "" : " failed", "\n";')
 
 pkglist:
 	@for i in $(filter-out $(FILTER_DIRS),$(foreach D,. $(SUBDIRS),$(wildcard $D/*/))) ; do \
@@ -79,7 +79,7 @@ newpkg-%:
 	echo "endef";                                                   								\
 	echo "";                                                        								\
 	echo "MASTER_SITES = ";                                         								\
-	echo "DISTFILES  = $$(GARNAME)-$$(GARVERSION).tar.gz";          								\
+	echo "DISTFILES  = $$(DISTNAME).tar.gz";          								\
 	echo "";                                                        								\
 	echo "# File name regex to get notifications about upstream software releases";  	\
 	echo "UFILES_REGEX = $$(GARNAME)-(\d+(?:\.\d+)*).tar.gz";										\
