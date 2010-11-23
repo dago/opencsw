@@ -13,6 +13,9 @@ PATCHFILES = 0001-Use-CS_UNITEXT_TYPE-only-when-available.patch
 EXTRA_MODULATORS = DBDRIVER
 MODULATIONS_DBDRIVER = ocs freetds
 
+# I just don't have Sybase x86 OCS in 32 bit
+SKIP_MODULATIONS = isa-i386-dbdriver-ocs
+
 PACKAGES = CSWpmdbdsybase CSWpmdbdsybaseftds
 
 CATALOGNAME_CSWpmdbdsybase = pm_dbdsybase
