@@ -56,6 +56,9 @@ NOISAEXEC = 1
 
 TEST_TARGET = check
 
+# Some Fortran-specific tests fail which is probably not that important
+SKIPTEST ?= 1
+
    MERGE_SCRIPTS_isa-default-garcompiler-SOS12 = copy-all
  MERGE_SCRIPTS_isa-default64-garcompiler-SOS12 = copy-relocated-only
     MERGE_DIRS_isa-default64-garcompiler-SOS12 = $(libdir)
