@@ -1,6 +1,6 @@
 GARNAME = clamav
-GARVERSION = 0.96.4
-#DISTNAME = $(GARNAME)-devel-latest
+GARVERSION = 0.96.5
+DISTNAME = $(GARNAME)-devel-latest
 CATEGORIES = apps
 
 DESCRIPTION = Clam AntiVirus
@@ -13,10 +13,10 @@ define BLURB
 endef
 
 SF_PROJ = clamav
-MASTER_SITES = $(SF_MIRRORS)
-#MASTER_SITES = http://www.clamav.net/snapshot/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES  = $(GARNAME)-devel-latest.tar.gz
+#MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = http://www.clamav.net/snapshot/
+#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(GARNAME)-devel-latest.tar.gz
 
 PACKAGES = CSWclamav CSWlibclamav CSWlibclamav-devel
 CATALOGNAME_CSWclamav = clamav
