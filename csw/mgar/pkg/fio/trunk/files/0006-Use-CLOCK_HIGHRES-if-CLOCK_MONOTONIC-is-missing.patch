@@ -1,0 +1,30 @@
+From b397b31970a4bba209fdd7d7e82d9ab0868ba0e2 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Wed, 24 Nov 2010 11:21:12 +0100
+Subject: [PATCH] Use CLOCK_HIGHRES if CLOCK_MONOTONIC is missing
+
+Needed for Solaris 9 where CLOCK_MONOTONIC isn't available. Samba
+follows a similar approach, cf.
+http://git.samba.org/samba.git/?p=samba.git;a=blob;f=lib/replace/system/time.h;h=5fce4dbc45b4203fe8a79c732692d3fd90aeb51e;hb=HEAD
+---
+ engines/posixaio.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/engines/posixaio.c b/engines/posixaio.c
+index f27ad8c..0ca6818 100644
+--- a/engines/posixaio.c
++++ b/engines/posixaio.c
+@@ -12,6 +12,10 @@
+ 
+ #include "../fio.h"
+ 
++#ifndef CLOCK_MONOTONIC
++#define CLOCK_MONOTONIC CLOCK_HIGHRES
++#endif /* CLOCK_MONOTONIC isn't available on Solaris 9 */
++
+ #ifdef FIO_HAVE_POSIXAIO
+ 
+ struct posixaio_data {
+-- 
+1.7.3
+

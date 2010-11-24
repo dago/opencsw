@@ -1,4 +1,12 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
+#
+# ! Solaris 9 is missing getopt_long
+#   gcc -mtune=i686 -O2 -pipe -m32 -march=i386 -D__EXTENSIONS__ -D_GNU_SOURCE -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DFIO_INC_DEBUG -o fio gettime.o fio.o ioengines.o init.o stat.o log.o time.o filesetup.o eta.o verify.o memory.o io_u.o parse.o mutex.o options.o rbtree.o fifo.o smalloc.o filehash.o lib/strsep.o helpers.o solaris.o profile.o debug.o lib/rand.o lib/flist_sort.o lib/num2str.o crc/crc7.o crc/crc16.o crc/crc32.o crc/crc32c.o crc/crc32c-intel.o crc/crc64.o crc/sha1.o crc/sha256.o crc/sha512.o crc/md5.o engines/cpu.o engines/mmap.o engines/posixaio.o engines/sync.o engines/null.o engines/net.o engines/solarisaio.o  -lpthread -lm -ldl -laio -lrt -lnsl -lsocket
+#   Undefined                       first referenced
+#   symbol                             in file
+#   getopt_long_only                    init.o
+#
+
 
 GARNAME = fio
 GARVERSION = 1.44.2
@@ -23,16 +31,11 @@ DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES += 0001-Honour-GAR-CFLAGS-and-use-inttypes.h-instead-of-stdi.patch
-PATCHFILES += 0002-Honor-prefix-when-installing-fio.patch
 PATCHFILES += 0003-Install-man-pages.patch
-PATCHFILES += 0004-Honor-GAR-provided-default-bindir-and-mandir.patch
-
 # Should be integrated in future releases,
 # cf. http://www.spinics.net/lists/fio/msg00580.html
 PATCHFILES += 0005-Warn-on-missing-direct-IO-support.patch
-
-# CLOCK_MONOTONIC undefined / not present on Solaris 9
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PATCHFILES += 0006-Use-CLOCK_HIGHRES-if-CLOCK_MONOTONIC-is-missing.patch
 
 # fio compiler/compiler.h #errors out non gcc compilers
 GARCOMPILER  = GCC3
@@ -44,10 +47,12 @@ BUILD_ARGS = -f Makefile.solaris
 TEST_SCRIPTS =
 INSTALL_ARGS = -f Makefile.solaris
 
-include gar/category.mk
+INSTALL_OVERRIDE_VARS = INSTALL prefix mandir
+INSTALL_OVERRIDE_VAR_INSTALL = $(bindir)/ginstall
+INSTALL_OVERRIDE_VAR_prefix  = $(prefix)
+INSTALL_OVERRIDE_VAR_mandir  = $(mandir)
 
-# install target requires ginstall as install
-PATH := /opt/csw/gnu/:$(PATH)
+include gar/category.mk
 
 post-install-modulated:
 	mkdir -p $(PKGROOT)$(docdir)/fio/examples
