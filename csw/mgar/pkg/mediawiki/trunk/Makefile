@@ -41,7 +41,7 @@ PATH = /opt/csw/php5/bin:$(PATH)
 install-custom:
 	@ginstall -d $(DESTDIR)$(RELOCATE_PREFIX)/mediawiki
 	@cd $(WORKSRC); \
-		/usr/bin/pax -rw -v ./ $(abspath $(DESTDIR)$(RELOCATE_PREFIX)/mediawiki)
+		/usr/bin/pax -rw -v ./ -s ',.*/\.git.*,,' $(abspath $(DESTDIR)$(RELOCATE_PREFIX)/mediawiki)
 	@ginstall -D $(DOWNLOADDIR)/README.CSW \
 		$(DESTDIR)$(RELOCATE_PREFIX)/mediawiki/documentation/README.CSW
 	@ginstall -D $(DOWNLOADDIR)/httpd-mediawiki.conf.CSW \
