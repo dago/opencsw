@@ -52,11 +52,13 @@ SPKG_DESC_CSWoldapclient = OpenLDAP client executables
 SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
 
-RUNTIME_DEP_PKGS_CSWoldap       = CSWbdb48 CSWlibnet CSWlibtoolrt 
-RUNTIME_DEP_PKGS_CSWoldap      += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc
-RUNTIME_DEP_PKGS_CSWoldap      += CSWlibicu CSWperl
+RUNTIME_DEP_PKGS_CSWoldap  = CSWbdb48 CSWlibnet CSWlibtoolrt 
+RUNTIME_DEP_PKGS_CSWoldap += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc
+RUNTIME_DEP_PKGS_CSWoldap += CSWlibicu CSWperl
+RUNTIME_DEP_PKGS_CSWoldap += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWoldapclient = CSWlibnet CSWosslrt CSWsasl 
-RUNTIME_DEP_PKGS_CSWoldaprt     = CSWlibnet CSWosslrt CSWsasl 
+RUNTIME_DEP_PKGS_CSWoldapclient += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWoldaprt = CSWlibnet CSWosslrt CSWsasl 
 
 SPKG_SOURCEURL = http://www.openldap.org
 
@@ -102,6 +104,9 @@ CONFIGURE_ARGS += --enable-rlookups
 CONFIGURE_ARGS += --enable-slp
 CONFIGURE_ARGS += --enable-backends=mod
 CONFIGURE_ARGS += --enable-overlays=mod
+
+# Is the absence of this arg causing https://www.opencsw.org/mantis/view.php?id=4468 ?
+CONFIGURE_ARGS += --enable-dynamic
 
 # Disable MySQL Cluster
 CONFIGURE_ARGS += --disable-ndb
