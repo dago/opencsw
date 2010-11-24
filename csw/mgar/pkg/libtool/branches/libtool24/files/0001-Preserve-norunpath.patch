@@ -1,0 +1,33 @@
+From 61f2e8e198520e36e898b2c52e06abfa1f2e0f3b Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 24 Nov 2010 10:45:07 +0100
+Subject: [PATCH] Preserve -norunpath
+
+---
+ libltdl/config/ltmain.m4sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/libltdl/config/ltmain.m4sh b/libltdl/config/ltmain.m4sh
+index 0418007..9792193 100644
+--- a/libltdl/config/ltmain.m4sh
++++ b/libltdl/config/ltmain.m4sh
+@@ -5040,6 +5040,7 @@ func_mode_link ()
+       # -64, -mips[0-9]      enable 64-bit mode for the SGI compiler
+       # -r[0-9][0-9]*        specify processor for the SGI compiler
+       # -xarch=*, -xtarget=* enable 64-bit mode for the Sun compiler
++      # -norunpath, -xnorunpath do not include compiler path in RPATH
+       # +DA*, +DD*           enable 64-bit mode for the HP compiler
+       # -q*                  compiler args for the IBM compiler
+       # -m*, -t[45]*, -txscale* architecture-specific flags for GCC
+@@ -5051,7 +5052,7 @@ func_mode_link ()
+       # -O*, -flto*, -fwhopr*, -fuse-linker-plugin GCC link-time optimization
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+       -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|--sysroot=*| \
+-      -O*|-flto*|-fwhopr*|-fuse-linker-plugin)
++      -O*|-flto*|-fwhopr*|-fuse-linker-plugin|-norunpath|-xnorunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+-- 
+1.7.1
+

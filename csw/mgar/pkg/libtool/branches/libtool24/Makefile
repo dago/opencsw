@@ -21,10 +21,12 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.xz
 
-PATCH_LIBTOOL = patch-libtool.diff
-PATCHFILES_POSTINSTALL_isa-i386-garversion-2.4-garcompiler-SOS12 = $(PATCH_LIBTOOL)
-PATCHFILES_POSTINSTALL_isa-sparcv8-garversion-2.4-garcompiler-SOS12 = $(PATCH_LIBTOOL)
+PATCH_LIBTOOL = 0002-Forward-port-GCC-tags-patch.patch
+PATCHFILES_POSTINSTALL_isa-i386-garcompiler-SOS12 = $(PATCH_LIBTOOL)
+PATCHFILES_POSTINSTALL_isa-sparcv8-garcompiler-SOS12 = $(PATCH_LIBTOOL)
 DISTFILES += $(PATCH_LIBTOOL)
+
+PATCHFILES  = 0001-Preserve-norunpath.patch
 
 EXTRA_TAGS = gcc3 gcc4 sos12
 COMPILER_TAGNAME_GCC3 = gcc3
