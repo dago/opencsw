@@ -15,6 +15,8 @@ PATCHFILES = 0001-Make-sure-for-loop-is-not-empty.patch
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+VENDOR_URL = http://live.gnome.org/Dia
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # Tests for i386 fail in /Dia/Objects/Istar - goal/Copy with
