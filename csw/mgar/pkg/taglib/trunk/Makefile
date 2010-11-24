@@ -41,4 +41,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
+CHECKPKG_OVERRIDES_CSWtaglib += non-uniform-lib-versions-in-package|sonames=['libtag.so.1',|'libtag_c.so.0']
+
 include gar/category.mk
