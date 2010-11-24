@@ -1,0 +1,24 @@
+From fce8a30df709f83e231a78f8d82765850c5fa6cf Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Wed, 24 Nov 2010 08:31:14 +0100
+Subject: [PATCH] Warn on missing direct IO support
+
+---
+ ioengines.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/ioengines.c b/ioengines.c
+index e0b0f22..35471ad 100644
+--- a/ioengines.c
++++ b/ioengines.c
+@@ -402,6 +402,7 @@ int td_io_open_file(struct thread_data *td, struct fio_file *f)
+ 
+ 		if (ret) {
+ 			td_verror(td, ret, "fio_set_odirect");
++			log_err("fio: the file system does not seem to support direct IO\n");
+ 			goto err;
+ 		}
+ 	}
+-- 
+1.7.3
+
