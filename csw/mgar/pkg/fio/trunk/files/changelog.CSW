@@ -1,5 +1,5 @@
-fio (1.44.2,REV=2010.11.16)
+fio (1.44.2,REV=2010.11.24)
 
   * Initial release.
 
- -- Sebastian Kayser <skayser@opencsw.org>  Tue, 16 Nov 2010 13:07:30 +0100
+ -- Sebastian Kayser <skayser@opencsw.org>  Wed, 24 Nov 2010 08:11:31 +0100
