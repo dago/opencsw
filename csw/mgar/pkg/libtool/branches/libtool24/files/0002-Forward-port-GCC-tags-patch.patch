@@ -1,16 +1,26 @@
-diff -Naur lt-orig/libtool lt-patched/libtool
---- lt-orig/libtool	2009-09-03 20:43:39.235079615 +0200
-+++ lt-patched/libtool	2009-09-03 20:56:11.509318512 +0200
-@@ -682,6 +682,8 @@
+From 184e7e0619ef31887fc1986e368d48f0a3677b6b Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 24 Nov 2010 11:15:29 +0100
+Subject: [PATCH] Forward-port GCC tags patch
+
+---
+ libtool |   24 ++++++++++++++++++------
+ 1 files changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/libtool b/libtool
+index 4539216..8ac45c1 100755
+--- a/libtool
++++ b/libtool
+@@ -576,6 +576,8 @@ $lt_unset CDPATH
  # positional parameter $0, within a function call, is the name of the
  # function.
  progpath="$0"
 +confpath="$0"
 +tagspath="$0"
  
- # The name of this program:
- # In the unlikely event $progname began with a '-', it would play havoc with
-@@ -1128,11 +1130,11 @@
+ 
+ 
+@@ -1347,11 +1349,11 @@ func_config ()
      re_endcf='^# ### END LIBTOOL'
  
      # Default configuration.
@@ -24,7 +34,7 @@ diff -Naur lt-orig/libtool lt-patched/libtool
      done
  
      exit $?
-@@ -1182,14 +1184,14 @@
+@@ -1401,14 +1403,14 @@ func_enable_tag ()
    case $tagname in
      CC) ;;
      *)
@@ -41,30 +51,24 @@ diff -Naur lt-orig/libtool lt-patched/libtool
  	eval "$extractedcf"
        else
  	func_error "ignoring unknown tag $tagname"
-@@ -1303,7 +1305,21 @@
+@@ -1609,6 +1611,16 @@ func_enable_tag "$optarg"
  
-       -*)		func_fatal_help "unrecognized option \`$opt'"	;;
- 
--      *)		nonopt="$opt"
-+      *)		case `which "$opt"` in
-+			/opt/csw/gcc3/bin/*)
-+				. /opt/csw/share/libtool/gcc3.conf
-+				tagspath=/opt/csw/share/libtool/gcc3.tags
-+				;;
-+			/opt/csw/gcc4/bin/*)
-+				. /opt/csw/share/libtool/gcc4.conf
-+				tagspath=/opt/csw/share/libtool/gcc4.tags
-+				;;
-+			esac
-+
-+
-+
-+
-+nonopt="$opt"
- 			break
- 			;;
-     esac
-@@ -1530,9 +1546,9 @@
+   # save first non-option argument
+   if test "$#" -gt 0; then
++    case `which "$opt"` in
++      /opt/csw/gcc3/bin/*)
++        . /opt/csw/share/libtool/gcc3.conf
++        tagspath=/opt/csw/share/libtool/gcc3.tags
++        ;;
++      /opt/csw/gcc4/bin/*)
++        . /opt/csw/share/libtool/gcc4.conf
++        tagspath=/opt/csw/share/libtool/gcc4.tags
++        ;;
++    esac
+     nonopt="$opt"
+     shift
+   fi
+@@ -1828,9 +1840,9 @@ func_infer_tag ()
        # if we don't check for them as well.
        *)
  	for z in $available_tags; do
@@ -76,3 +80,6 @@ diff -Naur lt-orig/libtool lt-patched/libtool
  	    CC_quoted=
  	    for arg in $CC; do
  	      # Double-quote args containing other shell metacharacters.
+-- 
+1.7.3
+
