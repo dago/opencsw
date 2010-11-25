@@ -20,6 +20,7 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.xz
+DISTFILES += README.CSW
 
 PATCH_LIBTOOL = 0002-Forward-port-GCC-tags-patch.patch
 PATCHFILES_POSTINSTALL_isa-i386-garcompiler-SOS12 = $(PATCH_LIBTOOL)
@@ -81,6 +82,8 @@ include gar/category.mk
 
 post-install-modulated: $(if $(PATCHFILES_POSTINSTALL_$(MODULATION)),patch-libtool)
 post-install-modulated: $(if $(COMPILER_TAGNAME_$(GARCOMPILER)),install-libtool-$(COMPILER_TAGNAME_$(GARCOMPILER)))
+	ginstall -d $(DESTDIR)$(docdir)/libtool
+	ginstall $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/libtool/README.CSW
 
 patch-libtool:
 	cat $(WORKDIR)/$(PATCHFILES_POSTINSTALL_$(MODULATION)) | (cd $(DESTDIR)$(bindir) && gpatch -p1)
