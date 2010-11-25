@@ -38,7 +38,7 @@ CONFIGURE_ARGS += --with-vim-name="vim-x11"
 CONFIGURE_ARGS += --enable-gui=gnome2
 
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
-BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim72"
+BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim73"
 
 PATCHDIRLEVEL = 0
 
