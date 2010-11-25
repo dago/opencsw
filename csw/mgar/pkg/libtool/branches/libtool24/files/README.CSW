@@ -1,0 +1,4 @@
+This version of libtool has been patched to keep the options
+  -norunpath -xnorunpath
+and do not strip them out.
+
