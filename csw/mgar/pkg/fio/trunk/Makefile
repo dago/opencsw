@@ -1,12 +1,4 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
-#
-# ! Solaris 9 is missing getopt_long
-#   gcc -mtune=i686 -O2 -pipe -m32 -march=i386 -D__EXTENSIONS__ -D_GNU_SOURCE -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DFIO_INC_DEBUG -o fio gettime.o fio.o ioengines.o init.o stat.o log.o time.o filesetup.o eta.o verify.o memory.o io_u.o parse.o mutex.o options.o rbtree.o fifo.o smalloc.o filehash.o lib/strsep.o helpers.o solaris.o profile.o debug.o lib/rand.o lib/flist_sort.o lib/num2str.o crc/crc7.o crc/crc16.o crc/crc32.o crc/crc32c.o crc/crc32c-intel.o crc/crc64.o crc/sha1.o crc/sha256.o crc/sha512.o crc/md5.o engines/cpu.o engines/mmap.o engines/posixaio.o engines/sync.o engines/null.o engines/net.o engines/solarisaio.o  -lpthread -lm -ldl -laio -lrt -lnsl -lsocket
-#   Undefined                       first referenced
-#   symbol                             in file
-#   getopt_long_only                    init.o
-#
-
 
 GARNAME = fio
 GARVERSION = 1.44.2
@@ -30,12 +22,24 @@ MASTER_SITES = http://brick.kernel.dk/snaps/
 DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
+# On Solaris 9 getopt_long isn't part of the OS, thus we pull in CSWlibgnugetopt
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
+RUNTIME_DEP_PKGS = $(RUNTIME_DEP_PKGS_$(GAROSREL))
+RUNTIME_DEP_PKGS_5.9 = CSWlibgnugetopt
+
+EXTRA_BUILD_EXPORTS = EXTLIBS
+EXTLIBS = $(EXTLIBS_$(GAROSREL))
+EXTLIBS_5.9 = -lgnugetopt
+# / On Solaris 9 getopt_long isn't part of the OS
+
 PATCHFILES += 0001-Honour-GAR-CFLAGS-and-use-inttypes.h-instead-of-stdi.patch
-PATCHFILES += 0003-Install-man-pages.patch
-# Should be integrated in future releases,
-# cf. http://www.spinics.net/lists/fio/msg00580.html
-PATCHFILES += 0005-Warn-on-missing-direct-IO-support.patch
 PATCHFILES += 0006-Use-CLOCK_HIGHRES-if-CLOCK_MONOTONIC-is-missing.patch
+
+# These ones went upstream, should be integrated in post 1.44.2 releases
+# cf. http://www.spinics.net/lists/fio/msg00580.html
+#     http://www.spinics.net/lists/fio/msg00582.html
+PATCHFILES += 0003-Install-man-pages.patch
+PATCHFILES += 0005-Warn-on-missing-direct-IO-support.patch
 
 # fio compiler/compiler.h #errors out non gcc compilers
 GARCOMPILER  = GCC3
