@@ -1,0 +1,109 @@
+From b011265657248a4c5a6f34733b7c1b6c39d01f67 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 25 Nov 2010 14:58:07 +0100
+Subject: [PATCH 2/2] Do not require posixAccount
+
+---
+ README.lpk  |    7 ++-----
+ ldapauth.c  |   25 +------------------------
+ sshd_config |    2 +-
+ 3 files changed, 4 insertions(+), 30 deletions(-)
+
+diff --git a/README.lpk b/README.lpk
+index d0b6de0..2d7ac42 100644
+--- a/README.lpk
++++ b/README.lpk
+@@ -58,7 +58,6 @@ example schema:
+   * LDAP user(/group) entry (look at users.ldif (& groups.ldif)):
+         User entry:
+ 	- attached to the 'ldapPublicKey' objectclass
+-	- attached to the 'posixAccount' objectclass
+ 	- with a filled 'sshPublicKey' attribute 
+ 	Example:
+ 		dn: uid=eau,ou=users,dc=cuckoos,dc=net
+@@ -111,7 +110,7 @@ example schema:
+ 
+   7 tokens are added to sshd_config :
+   # here is the new patched ldap related tokens
+-  # entries in your LDAP must be posixAccount & strongAuthenticationUser & posixGroup
++  # entries in your LDAP must be strongAuthenticationUser & posixGroup
+   UseLPK yes								# look the pub key into LDAP
+   LpkServers ldap://10.31.32.5/ ldap://10.31.32.4 ldap://10.31.32.3	# which LDAP server for users ? (URL format)
+   LpkUserDN  ou=users,dc=foobar,dc=net					# which base DN for users ?
+@@ -133,7 +132,6 @@ example schema:
+ 
+   # you add this to the user entry in the LDIF file :
+   [...]
+-  objectclass: posixAccount
+   objectclass: ldapPublicKey
+   [...]
+   sshPubliKey: ssh-dss AAAABDh12DDUR2...
+@@ -159,8 +157,7 @@ example schema:
+   Blocking a user account can be done directly from the LDAP (if sshd is using RSAAuth + ldap only).
+ 
+ - RULES :  
+-  Entry in the LDAP server must respect 'posixAccount' and 'ldapPublicKey' which are defined in core.schema. 
+-  and the additionnal lpk.schema.
++  Entry in the LDAP server must respect 'ldapPublicKey' which are defined in the additionnal lpk.schema.
+ 
+   This patch could allow a smooth transition between standard auth (/etc/passwd) and complete LDAP based authentication 
+   (pamldap, nss_ldap, etc..).
+diff --git a/ldapauth.c b/ldapauth.c
+index cf1e7f0..118a4cc 100644
+--- a/ldapauth.c
++++ b/ldapauth.c
+@@ -54,29 +54,6 @@
+         return FAILURE; \
+     } \
+     snprintf(buffer, REQUEST_GROUP_SIZE(prefilter,pwname), prefilter, pwname)
+-/*
+-XXX OLD group building macros
+-#define REQUEST_GROUP_SIZE(grp, uid) (size_t) (strlen(grp)+strlen(uid)+46)
+-#define REQUEST_GROUP(buffer,pwname,grp) \
+-    buffer = (char *) calloc(REQUEST_GROUP_SIZE(grp, pwname), sizeof(char)); \
+-    if (!buffer) { \
+-        perror("calloc()"); \
+-        return FAILURE; \
+-    } \
+-    snprintf(buffer,REQUEST_GROUP_SIZE(grp,pwname),"(&(objectclass=posixGroup)(cn=%s)(memberUid=%s))",grp,pwname)
+-    */
+-
+-/*
+-XXX stock upstream version without extra filter support
+-#define REQUEST_USER_SIZE(uid) (size_t) (strlen(uid)+64)
+-#define REQUEST_USER(buffer, pwname) \
+-    buffer = (char *) calloc(REQUEST_USER_SIZE(pwname), sizeof(char)); \
+-    if (!buffer) { \
+-        perror("calloc()"); \
+-        return NULL; \
+-    } \
+-    snprintf(buffer,REQUEST_USER_SIZE(pwname),"(&(objectclass=posixAccount)(objectclass=ldapPublicKey)(uid=%s))",pwname)
+-   */
+ 
+ #define REQUEST_USER_SIZE(uid, filter) (size_t) (strlen(uid)+64+(filter != NULL ? strlen(filter) : 0))
+ #define REQUEST_USER(buffer, pwname, customfilter) \
+@@ -86,7 +63,7 @@ XXX stock upstream version without extra filter support
+         return NULL; \
+     } \
+     snprintf(buffer, REQUEST_USER_SIZE(pwname, customfilter), \
+-    	"(&(objectclass=posixAccount)(objectclass=ldapPublicKey)(uid=%s)%s)", \
++    	"(&(objectclass=ldapPublicKey)(uid=%s)%s)", \
+ 	pwname, (customfilter != NULL ? customfilter : ""))
+ 
+ /* some portable and working tokenizer, lame though */
+diff --git a/sshd_config b/sshd_config
+index fdafc31..3d658d8 100644
+--- a/sshd_config
++++ b/sshd_config
+@@ -108,7 +108,7 @@
+ #Banner none
+ 
+ # here are the new patched ldap related tokens
+-# entries in your LDAP must have posixAccount & ldapPublicKey objectclass
++# entries in your LDAP must have ldapPublicKey objectclass
+ #UseLPK yes
+ #LpkLdapConf /etc/ldap.conf
+ #LpkServers  ldap://10.1.7.1/ ldap://10.1.7.2/
+-- 
+1.7.3
+
