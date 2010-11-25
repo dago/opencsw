@@ -123,6 +123,7 @@ LICENSE = LICENCE
 # LDAP Public Key Patch, forward port from
 #   http://code.google.com/p/openssh-lpk/source/browse/#svn/trunk/patch/contrib
 PATCHFILES = 0001-Forward-port-of-contrib-openssh-lpk-5.4p1-0.3.13.pat.patch
+PATCHFILES += 0002-Do-not-require-posixAccount.patch
 
 # The GSSAPI key exchange patch
 PATCHFILES += openssh-$(GSSKEX_PATCH_VERSION)-gsskex-all-$(GSSKEX_PATCH_DATE).patch
