@@ -1142,6 +1142,19 @@ class TestCheckDiscouragedFileNamePatterns(CheckpkgUnitTestHelper,
         'discouraged-path-in-pkgmap', '/opt/csw/var')
 
 
+class TestCheckDiscouragedFileNamePatternsGit(CheckpkgUnitTestHelper,
+                                              unittest.TestCase):
+  FUNCTION_NAME = 'CheckDiscouragedFileNamePatterns'
+  def CheckpkgTest(self):
+    # The data need to be copied, because otherwise all other tests will
+    # also process modified data.
+    self.pkg_data = copy.deepcopy(rsync_stats[0])
+    self.pkg_data["pkgmap"].append(
+            { "type": "f", "path": "/opt/csw/share/.git/foo", })
+    self.error_mgr_mock.ReportError(
+            'discouraged-path-in-pkgmap', '/opt/csw/share/.git/foo')
+
+
 class TestSetCheckDirectoryDepsTwoPackages(CheckpkgUnitTestHelper,
                                            unittest.TestCase):
   """Test whether appropriate files are provided.

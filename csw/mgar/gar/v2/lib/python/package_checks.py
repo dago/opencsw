@@ -84,6 +84,10 @@ DISCOURAGED_FILE_PATTERNS = (
     (r"opt/csw/var($|/)", ("The /opt/csw/var directory is not writable on "
                             "sparse non-global zones.  "
                             "Please use /var/opt/csw instead.")),
+    (r"\.git", ("Git files in most cases shouldn't be included in "
+                "a package.")),
+    (r"\.CVS", ("CVS files in most cases shouldn't be included in "
+                "a package.")),
 )
 RPATH_PARTS = {
     'prefix': r"(?P<prefix>/opt/csw)",
