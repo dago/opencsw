@@ -396,7 +396,7 @@ EXTRACT_TARGETS = $(or $(EXTRACT_TARGETS-$(MODULATION)),$(EXTRACT_TARGETS-defaul
 
 # We call an additional extract-modulated without resetting any variables so
 # a complete unpacked set goes to the global dir for packaging (like gspec)
-extract: checksum $(COOKIEDIR) pre-extract pre-extract-git-check extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
+extract: checksum $(COOKIEDIR) pre-extract $(if $(NOGITPATCH),,pre-extract-git-check) extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
 	@$(DONADA)
 
 extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
@@ -407,7 +407,7 @@ extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
 		announce-modulation \
 		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated \
-		$(if $(filter global,$(MODULATION)),,post-extract-gitsnap) \
+		$(if $(filter global,$(MODULATION)),,$(if $(NOGITPATCH),,post-extract-gitsnap)) \
 		$(foreach FILE,$(EXPANDVARS),expandvars-$(FILE))
 	@$(DONADA)
 
@@ -468,7 +468,7 @@ PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES) $(PATCHFILES_$(MODULATI
 patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
 
-patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) $(if $(filter global,$(MODULATION)),,post-patch-gitsnap) post-patch-$(MODULATION) post-patch-modulated
+patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) $(if $(filter global,$(MODULATION)),,$(if $(NOGITPATCH),,post-patch-gitsnap)) post-patch-$(MODULATION) post-patch-modulated
 	@$(DONADA)
 
 # returns true if patch has completed successfully, false
@@ -485,7 +485,11 @@ post-patch-gitsnap: $(PATCH_TARGETS)
 	  fi )
 	@$(MAKECOOKIE)
 
-makepatch: $(addprefix patch-,$(MODULATIONS)) $(addprefix makepatch-,$(MODULATIONS))
+makepatch: $(if $(NOGITPATCH),makepatch-nogit,$(addprefix patch-,$(MODULATIONS)) $(addprefix makepatch-,$(MODULATIONS)))
+	@$(DONADA)
+
+makepatch-nogit:
+	@echo You set NOGITPATCH in your build recipe.  I can't create a patch.
 	@$(DONADA)
 
 # Allow generation of patches from modified work source.
