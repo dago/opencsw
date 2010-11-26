@@ -46,7 +46,7 @@ CONFIGURE_ARGS += --enable-multibyte
 CONFIGURE_ARGS += --enable-cscope
 
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
-BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim73"
+BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim$(subst .,,$(DISTVERSION))"
 
 PATCHDIRLEVEL = 0
 
