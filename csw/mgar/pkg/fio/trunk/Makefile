@@ -63,6 +63,7 @@ post-install-modulated:
 	cp $(WORKSRC)/examples/* $(DESTDIR)$(docdir)/fio/examples/
 	cp $(WORKSRC)/README $(DESTDIR)$(docdir)/fio/
 	cp $(WORKSRC)/HOWTO $(DESTDIR)$(docdir)/fio/
+	perl -pi -e 's,/bin/sh,/bin/bash,' $(DESTDIR)$(bindir)/fio_generate_plots
 	@$(MAKECOOKIE)
 
 # Install changelog.CSW
