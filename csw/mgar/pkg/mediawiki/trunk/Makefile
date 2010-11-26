@@ -18,6 +18,10 @@ DISTFILES += httpd-mediawiki.conf.CSW README.CSW
 ALLOW_RELOCATE = 1
 RELOCATE_PREFIX = /opt/csw/share/www
 
+# we don't want to use git to manage patches for this one as we'd
+# then need to avoid copying in the .git dir in install-custom.
+NOGITPATCH = 1
+
 CATALOGNAME_CSWmediawiki = mediawiki
 SPKG_DESC_CSWmediawiki = $(DESCRIPTION)
 
@@ -41,7 +45,7 @@ PATH = /opt/csw/php5/bin:$(PATH)
 install-custom:
 	@ginstall -d $(DESTDIR)$(RELOCATE_PREFIX)/mediawiki
 	@cd $(WORKSRC); \
-		/usr/bin/pax -rw -v ./ -s ',.*/\.git.*,,' $(abspath $(DESTDIR)$(RELOCATE_PREFIX)/mediawiki)
+		/usr/bin/pax -rw -v ./ $(abspath $(DESTDIR)$(RELOCATE_PREFIX)/mediawiki)
 	@ginstall -D $(DOWNLOADDIR)/README.CSW \
 		$(DESTDIR)$(RELOCATE_PREFIX)/mediawiki/documentation/README.CSW
 	@ginstall -D $(DOWNLOADDIR)/httpd-mediawiki.conf.CSW \
