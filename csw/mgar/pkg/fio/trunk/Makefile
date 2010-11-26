@@ -59,8 +59,10 @@ INSTALL_OVERRIDE_VAR_mandir  = $(mandir)
 include gar/category.mk
 
 post-install-modulated:
-	mkdir -p $(PKGROOT)$(docdir)/fio/examples
-	cp $(WORKSRC)/examples/* $(PKGROOT)$(docdir)/fio/examples/
+	mkdir -p $(DESTDIR)$(docdir)/fio/examples
+	cp $(WORKSRC)/examples/* $(DESTDIR)$(docdir)/fio/examples/
+	cp $(WORKSRC)/README $(DESTDIR)$(docdir)/fio/
+	cp $(WORKSRC)/HOWTO $(DESTDIR)$(docdir)/fio/
 	@$(MAKECOOKIE)
 
 # Install changelog.CSW
