@@ -1,0 +1,28 @@
+From fdeecebd75b2c65ba516026dcbf2c25b239eb830 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 27 Nov 2010 14:42:01 +0100
+Subject: [PATCH] Update path in documentation to be CSW-proper.
+
+Change /usr/share to /opt/csw/share in the git-init documentation.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Documentation/git-init.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index 00d4a12..3180a1f 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -114,7 +114,7 @@ The template directory used will (in order):
+ 
+  - The `init.templatedir` configuration variable.
+ 
+- - The default template directory: `/usr/share/git-core/templates`.
++ - The default template directory: `/opt/csw/share/git-core/templates`.
+ 
+ The default template directory includes some directory structure, some
+ suggested "exclude patterns", and copies of sample "hook" files.
+-- 
+1.7.3
+
