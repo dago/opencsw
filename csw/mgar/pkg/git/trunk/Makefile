@@ -181,6 +181,7 @@ post-build-modulated:
 	@( cd $(WORKSRC); $(MAKE) -C contrib/emacs )
 
 post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(GARNAME)
+post-install-modulated: CONTHOOKS=$(GD)/contrib/hooks
 post-install-modulated: BD=$(DESTDIR)/$(bashconfdir)/bash_completion.d
 post-install-modulated: ID=$(DESTDIR)/$(includedir)/git
 post-install-modulated: LD=$(DESTDIR)/$(libdir_install)/git
@@ -211,4 +212,7 @@ post-install-modulated:
 		ginstall -c -m 0755 -d $(BD); \
 		cp contrib/completion/* \
 			$(BD)/ )
+	@( cd $(WORKSRC)/contrib/hooks; \
+		ginstall -c -d -m 0755 $(CONTHOOKS); \
+		ginstall -c -m 0644 post-receive-email $(CONTHOOKS) )
 	@$(MAKECOOKIE)
