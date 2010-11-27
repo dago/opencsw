@@ -1,0 +1,31 @@
+From 937605b8ae8eac2bf669af619f60eed3b3b42d23 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 27 Nov 2010 15:11:49 +0100
+Subject: [PATCH 3/3] Alter the value of _PATH_DEFPATH when paths.h not present
+
+Since solaris doesn't provide paths.h, we won't get a system value
+for _PATH_DEFPATH.  This is handled by conditionally setting it, but
+the value includes /usr/local/bin as the first item.  We'll swap that
+out for /opt/csw/bin instead.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ git-compat-util.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 2af8d3e..762f620 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -184,7 +184,7 @@ extern char *gitbasename(char *);
+ #include <paths.h>
+ #endif
+ #ifndef _PATH_DEFPATH
+-#define _PATH_DEFPATH "/usr/local/bin:/usr/bin:/bin"
++#define _PATH_DEFPATH "/opt/csw/bin:/usr/bin:/bin"
+ #endif
+ 
+ #ifndef STRIP_EXTENSION
+-- 
+1.7.3
+

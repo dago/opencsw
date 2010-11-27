@@ -87,6 +87,7 @@ GIT_TREEISH_git.git = v$(GARVERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
 DISTFILES = CSWgit.postinstall
 
 PATCHFILES += 0001-Update-path-in-documentation-to-be-CSW-proper.patch
+PATCHFILES += 0002-Alter-the-value-of-_PATH_DEFPATH-when-paths.h-not-pr.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
