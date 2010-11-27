@@ -88,6 +88,7 @@ DISTFILES = CSWgit.postinstall
 
 PATCHFILES += 0001-Update-path-in-documentation-to-be-CSW-proper.patch
 PATCHFILES += 0002-Alter-the-value-of-_PATH_DEFPATH-when-paths.h-not-pr.patch
+PATCHFILES += 0003-Update-path-in-sample-hook-file.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
