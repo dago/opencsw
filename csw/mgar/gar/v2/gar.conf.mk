@@ -145,6 +145,11 @@ perllib            ?= $(libdir)/perl
 perlcswlib         ?= $(perllib)/csw
 perlpackroot       ?= $(perlcswlib)/auto
 
+# This Variable is only used if you make your package relocatable
+# using ALLOW_RELOCATE, it will allow you to change your default
+# directory for BASEDIR
+RELOCATE_PREFIX    ?= $(prefix)
+
 # These variables are used to construct pathes. If you temporarily reset the above
 # variables for special install locations (like /opt/csw/bin/bdb44/) the definitions
 # here make sure the binaries for the make process are still found.
