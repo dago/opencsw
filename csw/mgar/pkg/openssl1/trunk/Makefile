@@ -181,4 +181,9 @@ install-certs:
 	rm -rf $(PKGROOT)/$(prefix)/etc/ssl/private && ln -s ../../../../etc/opt/csw/ssl/private $(PKGROOT)/$(prefix)/etc/ssl/private 
 	@$(MAKECOOKIE)
 
-pre-package: install-certs install-changelog install-doc
+remove-generic-so-files:
+	gfind $(PKGROOT)/$(libdir) -name "libcrypto.so" -exec rm '{}' ';'
+	gfind $(PKGROOT)/$(libdir) -name "libssl.so" -exec rm '{}' ';'
+
+
+pre-package: install-certs install-changelog install-doc remove-generic-so-files
