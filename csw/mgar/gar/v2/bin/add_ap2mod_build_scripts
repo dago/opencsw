@@ -1,0 +1,68 @@
+#!/bin/bash
+
+cd "$1"
+
+BUILDSCRIPTS=opt/csw/apache2/ap2mod
+
+for f in $(find . -name "$2" -print0); do
+    modfile=$(basename $f)
+    modname=$(echo $modfile | sed 's/mod_//; s/\.so//')
+    
+
+    [ -d "$BUILDSCRIPTS" ] || mkdir -p "$BUILDSCRIPTS"
+
+    cat <<EOF > $BUILDSCRIPTS/${modname}
+PIR=\${PKG_INSTALL_ROOT:-'/'}
+AP2_PREFIX=/opt/csw/apache2
+AP2_BINDIR=\$AP2_PREFIX/sbin
+AP2_LIBEXEC=\$AP2_PREFIX/libexec
+AP2_CONFDIR=/etc/opt/csw/apache2/
+AP2_CONFIG=\$AP2_CONFDIR/httpd.conf
+AP2_APXS=\$AP2_BINDIR/apxs
+
+if [ "\$1" = install ]; then
+
+echo "File created by \$PKGINST during install.  Please do not remove." > \$PIR/opt/csw/apache2/ap2mod/$modname
+
+# Source csw.conf, if it exists
+if [ -f \$PIR/opt/csw/etc/csw.conf ] ; then
+  . \$PIR/opt/csw/etc/csw.conf
+fi
+if [ -f \$PIR/etc/opt/csw/csw.conf ] ; then
+  . \$PIR/etc/opt/csw/csw.conf
+fi
+
+# Modules will be enabled by default, but a global kill switch
+# is checked , followed by a module specific value.  Thus,
+# either ap2_enable_modules or ap2_enable_suexec (for example)
+# could disable activation of the suexec module.  The 
+#
+# This value is passed to apxs (-a: add, enable; -A: add,
+# disable)
+enmod=-a
+
+if [ "\$ap2_enable_modules" = "no" ]; then
+    enmod=-A
+fi
+
+if [ "\$ap2_enable_suexec" = "no" ]; then
+    enmod=-A
+elif [ "" = "yes" ]; then
+    enmod=-a
+fi
+
+if [ -f "\$PIR/\$AP2_CONFIG" -a -x "\$PIR/\$AP2_APXS" ]; then
+    # Add the module module, optionally enabling it by default
+    chroot \$PIR \$AP2_APXS -e \$enmod -n $modname $modfile
+fi
+
+else
+
+rm \$PIR/opt/csw/apache2/ap2mod/$modname
+
+if [ -f "\$PIR/\$AP2_CONFIG" -a -x "\$PIR/\$AP2_APXS" ]; then
+  chroot \$PIR \$AP2_APXS -e -A -n $modname $modfile
+fi
+fi
+EOF
+done
