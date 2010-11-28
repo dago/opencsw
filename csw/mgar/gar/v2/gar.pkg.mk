@@ -385,12 +385,16 @@ endef
 # for distributing files to individual packages.
 PROTOTYPE = $(WORKDIR)/prototype
 
+define dontrelocate
+	$(shell gsed -i -e 's,\(.\) .* \($(1)[\s/]*\),\1 norelocate /\2,g' $(2))
+endef
+
 # Dynamic prototypes work like this:
 # - A prototype from DISTFILES takes precedence over 
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
-	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=/ >$@
+	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=$(if $(ALLOW_RELOCATE),,'/') >$@ 
 
 # pathfilter lives in bin/pathfilter and takes care of including/excluding paths from
 # a prototype (see "perldoc bin/pathfilter"). We employ it here to:
@@ -431,6 +435,7 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	else \
 	  cat $(PROTOTYPE) $(call checkpkg_override_filter,$*) $(_CSWCLASS_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	fi
+	$(if $(ALLOW_RELOCATE),$(call dontrelocate,opt,$(PROTOTYPE)))
 
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 	$(_DBG)cat $(WORKDIR)/$*.prototype >$@
@@ -582,7 +587,8 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "VENDOR=$(call pkgvar,SPKG_VENDOR,$*)"; \
 	echo "EMAIL=$(call pkgvar,SPKG_EMAIL,$*)"; \
 	echo "PSTAMP=$(LOGNAME)@$(shell hostname)-$(shell date '+%Y%m%d%H%M%S')"; \
-	echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*)"; \
+	$(if $(ALLOW_RELOCATE),echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*) norelocate"; \
+	,echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*)";) \
 	echo "HOTLINE=http://www.opencsw.org/bugtrack/"; \
 	echo "OPENCSW_CATALOGNAME=$(call catalogname,$*)"; \
 	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
@@ -590,6 +596,7 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "OPENCSW_BUNDLE=$(BUNDLE)"; \
 	$(_CATEGORY_PKGINFO) \
 	) >$@
+	$(if $(ALLOW_RELOCATE),echo "BASEDIR=$(RELOCATE_PREFIX)" >>$@)
 
 
 # findlicensefile - Find an existing file for a given license name

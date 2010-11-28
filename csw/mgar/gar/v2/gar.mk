@@ -843,14 +843,14 @@ merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $
 
 # Copy the whole tree verbatim
 merge-copy-all: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") \
 		. $(PKGROOT))
 	@$(MAKECOOKIE)
 
 # Copy only the merge directories
 merge-copy-only: $(PKGROOT)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") -s ",.*,," \
 		. $(PKGROOT) \
 	)
@@ -858,7 +858,7 @@ merge-copy-only: $(PKGROOT)
 
 # Copy the whole tree and relocate the directories in $(MERGE_DIRS)
 merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") \
 		. $(PKGROOT) \
 	)
@@ -866,7 +866,7 @@ merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
 
 # Copy only the relocated directories
 merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") -s ",.*,," \
 		 . $(PKGROOT) \
 	)
@@ -874,7 +874,7 @@ merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
 
 # Copy 
 merge-copy-config-only:
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		-s ",^\(\.$(bindir)/.*-config\)\$$,\1,p" \
 		-s ",.*,," \
 		. $(PKGROOT) \
