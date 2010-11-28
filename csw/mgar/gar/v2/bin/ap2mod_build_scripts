@@ -18,7 +18,7 @@ PIR=\${PKG_INSTALL_ROOT:-'/'}
 AP2_PREFIX=/opt/csw/apache2
 AP2_BINDIR=\$AP2_PREFIX/sbin
 AP2_LIBEXEC=\$AP2_PREFIX/libexec
-AP2_CONFDIR=\$AP2_PREFIX/etc
+AP2_CONFDIR=/etc/opt/csw/apache2
 AP2_CONFIG=\$AP2_CONFDIR/httpd.conf
 AP2_APXS=\$AP2_BINDIR/apxs
 
