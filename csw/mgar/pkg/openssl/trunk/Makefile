@@ -10,6 +10,9 @@
 # software causes damage.
 #####################################################################
 
+# Uncomment to enable PKCS11 engine
+# PKCS11 = 1
+
 ###### Package information #######
 
 GARNAME = openssl
@@ -103,6 +106,12 @@ LICENSE=LICENSE
 
 ##### Build and installation information #####
 
+# Sun Studio 12 incorrectly outputs v8plus code instead of
+# v8 code under Solaris 10 so we use Sun Studio 12 update 1
+ifneq ($(shell /usr/bin/uname -r),5.9)
+	GARCOMPILER = SOS12U1
+endif
+
 # The list of instructions set for which we will 
 # provide optimized libraries and binaries
 EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
@@ -153,8 +162,11 @@ OLDLIBS                 = 0.9.7m
 
 # support for pkcs11 engine http://blogs.sun.com/chichang1/entry/how_to_integrate_pkcs11_engine
 ifdef PKCS11
+	PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
+ifneq ($(shell /usr/bin/uname -r),5.9) 
 	PATCHFILES += pkcs11_engine-0.9.8o.patch.2010-09-03
 	CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) 
+endif
 endif 
 
 include gar/category.mk
