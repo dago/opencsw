@@ -15,7 +15,7 @@
 PID_FILE="/var/run/cyrus-master.pid"
 COMMAND=/opt/csw/sbin/cyrus-master
 
-[ -f /opt/csw/etc/cyrus/cyrus.conf ] || exit 0
+[ -f /etc/opt/csw/cyrus/cyrus.conf ] || exit 0
 
 check_proc ()
 {

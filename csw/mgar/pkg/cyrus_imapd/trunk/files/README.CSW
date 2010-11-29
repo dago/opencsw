@@ -4,8 +4,8 @@ Notes for Cyrus Imap
 
 - Cyrus configuration
 
-Rename /opt/csw/etc/cyrus/imapd.conf.CSW to /opt/csw/etc/cyrus/imapd.conf and
- /opt/csw/etc/cyrus/cyrus.conf.CSW to /opt/csw/etc/cyrus/cyrus.conf
+Rename /etc/opt/csw/cyrus/imapd.conf.CSW to /etc/opt/csw/cyrus/imapd.conf and
+ /etc/opt/csw/cyrus/cyrus.conf.CSW to /etc/opt/csw/cyrus/cyrus.conf
 and customize these files according to your needs.
 
 Warning: daemons which can only be launched from the master process live in
@@ -29,24 +29,24 @@ So to have authentication working:
 	- configure it
 	- launch the daemon, /etc/init.d/cswsaslauthd start
 	- add the cyrus user to the sasl group, usermod -G sasl cyrus
-	- launch or relaunch cyrus, /etc/init.d/cswcyrus start
+	- launch or relaunch cyrus, /etc/init.d/cswcyrus start or svcadm restart cswcyrus
 
 Authentication should be working.
 
 You can also directly use Cyrus Imap directly with berkeleydb (or mysql, or postgres) 
 user databases. You must then change the sasl_pwcheck_method parameter to auxprop
-in /opt/csw/etc/cyrus/imapd.conf, but remember that Cyrus runs as the cyrus user, so
+in /etc/opt/csw/cyrus/imapd.conf, but remember that Cyrus runs as the cyrus user, so
 for example, berkeleydb databases files will have to be readable by the cyrus user.
 
 
 - Enable SSL/TLS
 
 To enable ssl and tls for Imap/Pop/..., create the certificate and fill accordingly the 
-paramaters tls_cert_file and tls_key_file in /opt/csw/etc/cyrus/imapd.conf.
+paramaters tls_cert_file and tls_key_file in /etc/opt/csw/cyrus/imapd.conf.
 You can use different certificates for each service by using parameters <service>_tls_cert_file 
 and <service>_tls_key_file (imap_tls_cert_file, pop3_tls_key_file, imaps_tls_key_file, ...).
 
-Then for ssl, also uncomment the lines concerning pops and imaps in /opt/csw/etc/cyrus/cyrus.conf
+Then for ssl, also uncomment the lines concerning pops and imaps in /etc/opt/csw/cyrus/cyrus.conf
 
 
 - Configure Sendmail to deliver to cyrus mailboxes
@@ -54,7 +54,7 @@ Then for ssl, also uncomment the lines concerning pops and imaps in /opt/csw/etc
 You will have to add the following lines in  sendmail.mc:
 
 define(`confLOCAL_MAILER', `cyrusv2')dnl
-define(`CYRUSV2_MAILER_ARGS', `FILE /opt/csw/var/cyrus/config/socket/lmtp')dnl
+define(`CYRUSV2_MAILER_ARGS', `FILE /var/opt/csw/cyrus/config/socket/lmtp')dnl
 MAILER(`cyrusv2')dnl
 
 
@@ -63,7 +63,7 @@ communication, change the CYRUSV2_MAILER_ARGS line with this one:
 
 define(`CYRUSV2_MAILER_ARGS', `TCP name_of_the_cyrus_host lmtp')dnl
 
-and enable lmtp tcp listening by uncommenting this line in /opt/csw/etc/cyrus/cyrus.conf:
+and enable lmtp tcp listening by uncommenting this line in /etc/opt/csw/cyrus/cyrus.conf:
 
 lmtp         cmd="lmtpd" listen="lmtp" prefork=0
 
@@ -102,7 +102,7 @@ Several patches have been applied so Cyrus is more useable in production environ
    available in the Fedora Core package and own-made.
    These patches make Cyrus more tolerant with non-standard emails sent by a lot of bad 
    mail user agent, they allow respectively to accept 8bits characters in header 
-   (configurable in /opt/csw/etc/cyrus/imapd.conf), to accept email with colon-less From 
+   (configurable in /etc/opt/csw/cyrus/imapd.conf), to accept email with colon-less From 
    ("From john@doe") header and to allow email with a bare newline in it.
  
  

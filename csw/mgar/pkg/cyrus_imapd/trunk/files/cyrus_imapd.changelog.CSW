@@ -1,7 +1,8 @@
 cyrus_imapd (2.3.16,REV=2010.11.21) unstable
 
   * Added missing zlib dependancy.
-  * Removed useless tcpwrap depandancy.
+  * Moved configuration from /opt/csw/etc/cyrus to /etc/opt/csw/cyrus/.
+  * Moved default cyrus directiry from /opt/csw/var/cyrus to /var/opt/csw/cyrus.
   * [gar] switched do dynamic prototype.
 
  -- Yann Rouillard <yann@opencsw.org>  Sun, 21 Nov 2010 15:25:09 +0100

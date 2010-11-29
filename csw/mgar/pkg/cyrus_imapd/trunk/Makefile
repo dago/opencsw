@@ -33,7 +33,7 @@ PACKAGES = CSWcyrusimapd CSWcyrusimapdutils CSWpmcyrus
 
 SPKG_DESC_CSWcyrusimapd = Pop and Imap server from the Cyrus mail system
 CATALOGNAME_CSWcyrusimapd = cyrus_imapd
-RUNTIME_DEP_PKGS_CSWcyrusimapd = CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWnetsnmp CSWpcrert CSWzlib
+RUNTIME_DEP_PKGS_CSWcyrusimapd = CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWnetsnmp CSWpcrert CSWzlib CSWtcpwrap
 #SPKG_CLASSES_CSWcyrusimapd = none services cswpreserveconf cswinitsmf
 
 SPKG_DESC_CSWcyrusimapdutils = Various admin utilities for Cyrus Imapd/Popd
@@ -46,56 +46,33 @@ CATALOGNAME_CSWpmcyrus = pm_cyrus
 RUNTIME_DEP_PKGS_CSWpmcyrus = CSWperl CSWbdb42 CSWosslrt CSWsasl CSWzlib
 #SPKG_CLASSES_CSWpmcyrus = none
 
-PKGFILES_CSWcyrusimapd = $(sbindir)/arbitronsort 
-PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-dohash 
-PKGFILES_CSWcyrusimapd += $(sbindir)/masssievec 
-PKGFILES_CSWcyrusimapd += $(sbindir)/migrate-metadata 
-PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-mkdirs 
-PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-mknewsgroups 
-PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-rehash 
-PKGFILES_CSWcyrusimapd += $(sbindir)/translatesieve 
-PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-undohash 
-PKGFILES_CSWcyrusimapd += $(sbindir)/sievec 
-PKGFILES_CSWcyrusimapd += $(sbindir)/cyrus-master 
-PKGFILES_CSWcyrusimapd += $(sbindir)/make_md5 
-PKGFILES_CSWcyrusimapd += $(sbindir)/make_sha1 
-PKGFILES_CSWcyrusimapd += $(sbindir)/reconstruct 
-PKGFILES_CSWcyrusimapd += $(sbindir)/quota 
-PKGFILES_CSWcyrusimapd += $(sbindir)/ipurge 
-PKGFILES_CSWcyrusimapd += $(sbindir)/cyrdump 
-PKGFILES_CSWcyrusimapd += $(sbindir)/chk_cyrus 
-PKGFILES_CSWcyrusimapd += $(sbindir)/cvt_cyrusdb 
-PKGFILES_CSWcyrusimapd += $(sbindir)/deliver 
-PKGFILES_CSWcyrusimapd += $(sbindir)/ctl_mboxlist 
-PKGFILES_CSWcyrusimapd += $(sbindir)/ctl_deliver 
-PKGFILES_CSWcyrusimapd += $(sbindir)/ctl_cyrusdb 
-PKGFILES_CSWcyrusimapd += $(sbindir)/squatter 
-PKGFILES_CSWcyrusimapd += $(sbindir)/mbexamine 
-PKGFILES_CSWcyrusimapd += $(sbindir)/mbpath 
-PKGFILES_CSWcyrusimapd += $(sbindir)/cyr_expire 
-PKGFILES_CSWcyrusimapd += $(sbindir)/arbitron 
-PKGFILES_CSWcyrusimapd += $(sbindir)/tls_prune
+PKGFILES_CSWcyrusimapd = $(sbindir)/.*
 PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus
 PKGFILES_CSWcyrusimapd += $(docdir)/cyrus_imapd/.*
 PKGFILES_CSWcyrusimapd += $(mandir)/man5/.*
 PKGFILES_CSWcyrusimapd += $(mandir)/man8/.*
-PKGFILES_CSWcyrusimapd += $(libexecdir)/cyrus
+PKGFILES_CSWcyrusimapd += $(libexecdir)/cyrus.*
 PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus/imapd.conf.CSW
 PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus/cyrus.conf.CSW
-PKGFILES_CSWcyrusimapd += $(localstatedir)/cyrus
-PKGFILES_CSWcyrusimapd += $(sysconfdir)/init.d/cswcyrus
-PKGFILES_CSWcyrusimapd += $(localstatedir)/svc/manifest/network/cswcyrus.xml
+PKGFILES_CSWcyrusimapd += /etc$(prefix)/init.d/cswcyrus
+PKGFILES_CSWcyrusimapd += /var/$(prefix)/svc/manifest/network/cswcyrus.xml
+PKGFILES_CSWcyrusimapd += $(localstatedir)/cyrus.*
+
+PROTOTYPE_MODIFIERS = cyrusdir
+PROTOTYPE_FILES_cyrusdir = $(localstatedir)/cyrus.*
+PROTOTYPE_USER_cyrusdir = cyrus
+PROTOTYPE_GROUP_cyrusdir = mail
 
 PRESERVECONF = $(sysconfdir)/cyrus/imapd.conf
 PRESERVECONF += $(sysconfdir)/cyrus/cyrus.conf
-INITSMF = $(sysconfdir)/init.d/cswcyrus
-ETCSERVICES = /etc/opt/csw/pkg/CSWcyrusimapd/services
+INITSMF = /etc$(prefix)/init.d/cswcyrus
+ETCSERVICES = /etc/$(prefix)/pkg/CSWcyrusimapd/services
 
 LICENSE = COPYRIGHT
 
 PKGFILES_CSWcyrusimapdutils = $(bindir)/.*
-PKGFILES_CSWcyrusimapd += $(mandir)/man1/.*
-PKGFILES_CSWcyrusimapd += $(docdir)/cyrus_imapd_utils/.*
+PKGFILES_CSWcyrusimapdutils += $(mandir)/man1/.*
+PKGFILES_CSWcyrusimapdutils += $(docdir)/cyrus_imapd_utils/.*
 
 PKGFILES_CSWpmcyrus = $(perllib)/.*
 PKGFILES_CSWpmcyrus += $(mandir)/man3/Cyrus::.*
@@ -122,6 +99,9 @@ DISTFILES += imapd.conf cyrus.conf
 
 DISTFILES += cyrus_imapd_utils.changelog.CSW
 DISTFILES += pm_cyrus.changelog.CSW
+
+# We move from /opt/csw/{etc,var} to /{etc,var}/opt/csw
+MIGRATE_FILES_CSWcyrusimapd = cyrus
 
 # compile_et is not provided by krb5lib_dev so we must provide our own version
 # taken from the krb5 source.
@@ -163,6 +143,11 @@ PATCHFILES += 0002-fix-config2header.patch
 
 ##### Build and installation information #####
 
+# to support shared /opt/csw setup
+# see http://wiki.opencsw.org/shared-opt-csw-setup
+localstatedir   = /var$(prefix)
+sysconfdir      = /etc$(prefix)
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-cyrus-prefix=$(prefix)
 CONFIGURE_ARGS += --with-service-path=$(libexecdir)/cyrus 
@@ -184,6 +169,8 @@ CONFIGURE_ARGS += --with-libwrap=$(prefix)
 INSTALL_ARGS = INSTALLDIRS=vendor
 
 TEST_SCRIPTS = 
+
+CYRUS_DAEMONS = fud idled imapd lmtpd lmtpproxyd mupdate notifyd pop3d pop3proxyd proxyd sieved smmapd timsieved
 
 include gar/category.mk
 
@@ -233,18 +220,25 @@ post-merge:
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cyrus.conf" "$(PKGROOT)/$(sysconfdir)/cyrus/cyrus.conf.CSW"
 
 	( cd "$(PKGROOT)$(libexecdir)/cyrus/" && \
-		for E in sievec cyrus-master make_md5 make_sha1 \
-			reconstruct quota ipurge cyrdump chk_cyrus \
-			cvt_cyrusdb deliver ctl_mboxlist ctl_deliver \
-			ctl_cyrusdb squatter mbexamine mbpath cyr_expire \
-			arbitron tls_prune; do \
-			mv -f $$E ../../sbin/$$E && ln -sf ../../sbin/$$E; \
+		for E in *; do \
+			echo $(CYRUS_DAEMONS) | grep -w $$E >/dev/null && continue; \
+			[ -L $$E ] || ( mv -f $$E ../../sbin/$$E && ln -sf ../../sbin/$$E ); \
 		done )
-
+	
+	# let's create the directory structure where mails 
+	# and other cyrus stuffs will be stored
+	for D in sieve config/proc config/db config/socket config/log \
+		config/msg config/ptclient mail mail/stage.; do \
+		mkdir -p "$(PKGROOT)/$(localstatedir)/cyrus/$$D"; \
+	done
+	
 	# we install binary under tools as part of the package
 	cp -r $(WORKSRC_FIRSTMOD)/tools/* $(PKGROOT)$(sbindir)
-	ginstall -D $(PKGROOT)$(sbindir)/arbitronsort.pl $(PKGROOT)$(sbindir)/arbitronsort
-
+	[ -f "$(PKGROOT)$(sbindir)/arbitronsort.pl" ] && mv "$(PKGROOT)$(sbindir)/arbitronsort.pl" "$(PKGROOT)$(sbindir)/arbitronsort"
+	for F in config2header config2man not-mkdep migrate-metadata mupdate-loadgen.pl upgradesieve convert-sieve.pl; do \
+		rm -f $(PKGROOT)$(sbindir)/$$F; \
+	done
+	
 	# we want perl script to use opencsw perl
 	perl -pi -e 's/exec\s+perl/exec \/opt\/csw\/bin\/perl/g' $(PKGROOT)$(sbindir)/* $(PKGROOT)$(bindir)/*
 	( for FILE in convert-sieve.pl mupdate-loadgen.pl translatesieve undohash upgradesieve arbitronsort; do \
@@ -259,9 +253,9 @@ post-merge:
 	  done )
 
 	# we rename some tools with too generic names
-	ginstall -D $(PKGROOT)/$(sbindir)/mkimap $(PKGROOT)/$(sbindir)/mkdirs
+	mv $(PKGROOT)/$(sbindir)/mkimap $(PKGROOT)/$(sbindir)/mkdirs
 	( for FILE in mkdirs mknewsgroups dohash undohash rehash; do \
-		ginstall -D $(PKGROOT)/$(sbindir)/$$FILE $(PKGROOT)/$(sbindir)/cyrus-$$FILE; \
+		mv $(PKGROOT)/$(sbindir)/$$FILE $(PKGROOT)/$(sbindir)/cyrus-$$FILE; \
 	  done )
 	
 	# we fix some permission problems
@@ -269,5 +263,7 @@ post-merge:
 
 	# let's remove pod files
 	gfind $(PKGROOT)$(perllib) -name "perllocal.pod" -exec rm '{}' ';'
+	# and CVS directories
+	 gfind $(PKGROOT) -type d -depth -name "CVS" -exec rm -rf '{}' ';'
 	
 	@$(MAKECOOKIE)
