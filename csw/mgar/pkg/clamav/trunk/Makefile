@@ -1,6 +1,6 @@
 GARNAME = clamav
 GARVERSION = 0.96.5
-DISTNAME = $(GARNAME)-devel-latest
+#DISTNAME = $(GARNAME)-devel-latest
 CATEGORIES = apps
 
 DESCRIPTION = Clam AntiVirus
@@ -13,21 +13,27 @@ define BLURB
 endef
 
 SF_PROJ = clamav
-#MASTER_SITES = $(SF_MIRRORS)
-MASTER_SITES = http://www.clamav.net/snapshot/
-#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES  = $(GARNAME)-devel-latest.tar.gz
+MASTER_SITES = $(SF_MIRRORS)
+#MASTER_SITES = http://www.clamav.net/snapshot/
+DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+#DISTFILES  = $(GARNAME)-devel-latest.tar.gz
 
-PACKAGES = CSWclamav CSWlibclamav CSWlibclamav-devel
+PACKAGES = CSWclamav CSWlibclam6 CSWlibclamav-devel
+
 CATALOGNAME_CSWclamav = clamav
 SPKG_DESC_CSWclamav = $(DESCRIPTION)
-CATALOGNAME_CSWlibclamav = libclamav
-SPKG_DESC_CSWlibclamav = $(DESCRIPTION) Library
+
+CATALOGNAME_CSWlibclamav = libclam6
+SPKG_DESC_CSWlibclam6 = $(DESCRIPTION) Library
+
 CATALOGNAME_CSWlibclamav-devel = libclamav_devel
 SPKG_DESC_CSWlibclamav-devel = $(DESCRIPTION) Development
 
-RUNTIME_DEP_PKGS_CSWclamav = CSWlibclamav CSWzlib CSWbzip2 CSWiconv CSWncurses CSWlibtoolrt
-RUNTIME_DEP_PKGS_CSWlibclamav = CSWzlib CSWbzip2 CSWiconv CSWlibtoolrt
+RUNTIME_DEP_PKGS_CSWclamav = CSWlibclam6 CSWzlib CSWbzip2 CSWiconv CSWncurses
+RUNTIME_DEP_PKGS_CSWclamav += CSWlibltdl7
+
+RUNTIME_DEP_PKGS_CSWlibclam6 = CSWzlib CSWbzip2 CSWiconv
+RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibltdl7
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -61,9 +67,9 @@ CONFIGURE_ARGS += --enable-clamdtop
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
-PKGFILES_CSWlibclamav-devel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibclamav  = $(PKGFILES_RT)
-PKGFILES_CSWlibclamav += $(docdir)/libclamav/.*
+PKGFILES_CSWlibclamav-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibclam6  = $(PKGFILES_RT)
+PKGFILES_CSWlibclam6 += $(docdir)/libclamav/.*
 
 PROTOTYPE_MODIFIERS = 1
 PROTOTYPE_FILES_1 = \/var\/opt\/csw\/clamav.*
@@ -85,7 +91,9 @@ SPKG_SOURCEURL = http://www.clamav.net
 
 TEST_TARGET = check
 
-CHECKPKG_OVERRIDES_CSWlibclamav += shared-lib-pkgname-mismatch
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.7|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=['CSWlibclamav6']
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.7|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=['CSWlibclamunrar6']
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.7|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=['CSWlibclamunrar-iface6']
 
 include gar/category.mk
 
