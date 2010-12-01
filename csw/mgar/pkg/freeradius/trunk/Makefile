@@ -1,5 +1,5 @@
 GARNAME = freeradius
-GARVERSION = 2.1.6
+GARVERSION = 2.1.10
 CATEGORIES = server
 
 DESCRIPTION = A free RADIUS server implementation
@@ -25,7 +25,8 @@ GARCOMPILER = GCC3
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-system-libtool
+## 2.1.10 requires using included libtool instead of system
+#CONFIGURE_ARGS += --with-system-libtool
 CONFIGURE_ARGS += --without-rlm_sqlippool
 CONFIGURE_ARGS += --without-rlm_sql_mysql
 CONFIGURE_ARGS += --without-rlm_sql_postgresql
