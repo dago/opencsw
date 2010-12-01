@@ -34,6 +34,7 @@ RUNTIME_DEP_PKGS_CSWclamav += CSWlibltdl7
 
 RUNTIME_DEP_PKGS_CSWlibclam6 = CSWzlib CSWbzip2 CSWiconv
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibltdl7
+INCOMPATIBLE_PKGS_CSWlibclam6 = CSWlibclamav
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
