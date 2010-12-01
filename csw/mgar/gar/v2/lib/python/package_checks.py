@@ -1101,6 +1101,9 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         messenger.SuggestGarLine(
             "PACKAGES += %s" % suggested_pkgname)
         messenger.SuggestGarLine(
+            "CATALOGNAME_%s = %s"
+            % (suggested_pkgname, policy_catalogname_list[0]))
+        messenger.SuggestGarLine(
             "PKGFILES_%s += /%s" % (suggested_pkgname, binary_info["path"]))
         lib_basename, lib_filename = os.path.split(binary_info["path"])
         messenger.SuggestGarLine(
