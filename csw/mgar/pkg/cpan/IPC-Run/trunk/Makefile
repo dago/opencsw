@@ -1,9 +1,9 @@
 GARNAME = IPC-Run
-GARVERSION = 0.78
+GARVERSION = 0.89
 CATEGORIES = cpan
-AUTHOR = RBS
+AUTHOR = TODDR
 
-DESCRIPTION = system and background procs w/ piping, redirs, ptys (Unix, Win32)
+DESCRIPTION = Provides system() and background procs w/ piping, redirs, ptys
 define BLURB
   IPC::Run allows you run and interact with child processes using files,
   pipes, and pseudo-ttys. Both system()-style and scripted usages are
@@ -11,6 +11,11 @@ define BLURB
   supported and may be mixed.
 endef
 
-DISTFILES += $(call admfiles,CSWpmipcrun,prototype)
+PACKAGES = CSWpmipcrun
+CATALOGNAME = CSWpmipcrun
+
+LICENSE = LICENSE
+
+ARCHALL = 1
 
 include gar/category.mk
