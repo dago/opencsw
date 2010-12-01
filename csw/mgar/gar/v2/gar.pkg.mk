@@ -877,7 +877,7 @@ platforms:
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) GAR_PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
@@ -892,7 +892,7 @@ platforms:
 			echo " (built on this host)";\
 			  $(MAKE) -s GAR_PLATFORM=$P _pkgshow;echo;,\
 			echo " (built on host '$(PACKAGING_HOST_$P)')";\
-			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) -s GAR_PLATFORM=$P _pkgshow";echo;\
+			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $(CURDIR) -s GAR_PLATFORM=$P _pkgshow";echo;\
 		)\
 	)
 	@$(MAKECOOKIE)
@@ -903,7 +903,7 @@ platforms-%:
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) -s GAR_PLATFORM=$P $* && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P $*" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P $*" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
