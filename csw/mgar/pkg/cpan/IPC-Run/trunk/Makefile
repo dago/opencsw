@@ -12,7 +12,7 @@ define BLURB
 endef
 
 PACKAGES = CSWpmipcrun
-CATALOGNAME = CSWpmipcrun
+CATALOGNAME = pm_ipcrun
 
 LICENSE = LICENSE
 
