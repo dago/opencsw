@@ -18,16 +18,16 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 #DISTFILES  = $(GARNAME)-devel-latest.tar.gz
 
-PACKAGES = CSWclamav CSWlibclam6 CSWlibclamav-devel
+PACKAGES = CSWclamav CSWlibclam6 CSWlibclam6-devel
 
 CATALOGNAME_CSWclamav = clamav
 SPKG_DESC_CSWclamav = $(DESCRIPTION)
 
-CATALOGNAME_CSWlibclamav = libclam6
+CATALOGNAME_CSWlibclam6 = libclam6
 SPKG_DESC_CSWlibclam6 = $(DESCRIPTION) Library
 
-CATALOGNAME_CSWlibclamav-devel = libclamav_devel
-SPKG_DESC_CSWlibclamav-devel = $(DESCRIPTION) Development
+CATALOGNAME_CSWlibclam6-devel = libclam6_devel
+SPKG_DESC_CSWlibclam6-devel = $(DESCRIPTION) Development
 
 RUNTIME_DEP_PKGS_CSWclamav = CSWlibclam6 CSWzlib CSWbzip2 CSWiconv CSWncurses
 RUNTIME_DEP_PKGS_CSWclamav += CSWlibltdl7
@@ -35,6 +35,8 @@ RUNTIME_DEP_PKGS_CSWclamav += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibclam6 = CSWzlib CSWbzip2 CSWiconv
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibltdl7
 INCOMPATIBLE_PKGS_CSWlibclam6 = CSWlibclamav
+
+INCOMPATIBLE_PKGS_CSWlibclam6-devel = CSWlibclamav-devel
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -68,7 +70,7 @@ CONFIGURE_ARGS += --enable-clamdtop
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
-PKGFILES_CSWlibclamav-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibclam6-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibclam6  = $(PKGFILES_RT)
 PKGFILES_CSWlibclam6 += $(docdir)/libclamav/.*
 
