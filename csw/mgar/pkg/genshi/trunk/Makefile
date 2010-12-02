@@ -1,5 +1,5 @@
 GARNAME    = Genshi
-GARVERSION = 0.5.1
+GARVERSION = 0.6
 CATEGORIES = python
 
 DESCRIPTION = Python toolkit for generation of output for the web
@@ -9,20 +9,23 @@ define BLURB
 	or other textual content for output generation on the web
 endef
 
-MASTER_SITES           = http://ftp.edgewall.com/pub/genshi/
-SPKG_SOURCEURL         = http://genshi.edgewall.org/wiki/TracDownload
-DISTFILES              = $(GARNAME)-$(GARVERSION).tar.bz2
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX           = (\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = http://ftp.edgewall.com/pub/genshi/
+DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+
+UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWgenshi
-ARCHALL_CSWtrac = 1
+CATALOGNAME = genshi
 
-CATALOGNAME_CSWgenshi  = genshi
-SPKG_DESC_CSWgenshi    = $(DESCRIPTION)
+ARCHALL = 1
 
-TEST_SCRIPTS           =
+VENDOR_URL = http://genshi.edgewall.org/
+
+TEST_SCRIPTS =
+
+# This is a legacy name, don't change for now
+CHECKPKG_OVERRIDES_CSWgenshi += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWgenshi += catalogname-does-not-start-with-py_
 
 include gar/category.mk
 
