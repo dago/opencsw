@@ -13,6 +13,8 @@ endef
 PACKAGES = CSWpmmailspf
 CATALOGNAME = pm_mailspf
 
+LICENSE = LICENSE
+
 # Required packages due to bug reports
 #   http://www.opencsw.org/mantis/view.php?id=4139
 #   http://www.opencsw.org/mantis/view.php?id=4140
