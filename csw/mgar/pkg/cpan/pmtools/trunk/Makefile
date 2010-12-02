@@ -1,13 +1,17 @@
 GARNAME = pmtools
-GARVERSION = 1.01
+GARVERSION = 1.10
 CATEGORIES = cpan
 AUTHOR = MLFISHER
 
 DESCRIPTION = Tools for managing installed Perl modules.
 define BLURB
-	# Blurb goes here
 endef
 
-DISTFILES = $(call admfiles,CSWpmtools,prototype)
+DISTFILES = COPYING
+
+PACKAGES = CSWpmtools
+CATALOGNAME = pmtools
+
+ARCHALL = 1
 
 include gar/category.mk
