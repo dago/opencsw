@@ -1,9 +1,15 @@
 # vim: ft=make ts=4 sw=4 noet
-# This makefile is to be included from Makefiles in each category
-# directory.
+#
+# This Makefile is the main entry point to GAR and is included by
+# each package build description. As such, the file name 'category.mk'
+# is slightly misleading and could be subject to future change.
+#
 
-ifeq (,$(wildcard gar/categories/$(CATEGORIES)/category.mk))
-  $(error The category '$(CATEGORIES)' is invalid. Valid categories are $(patsubst gar/categories/%,%,$(wildcard gar/categories/*)))
+# Determine this file's directory, i.e. the GAR base directory
+GARDIR := $(dir $(lastword $(MAKEFILE_LIST)))
+
+ifeq (,$(wildcard $(GARDIR)/categories/$(CATEGORIES)/category.mk))
+  $(error The category '$(CATEGORIES)' is invalid. Valid categories are: $(patsubst $(GARDIR)/categories/%,%,$(wildcard $(GARDIR)/categories/*)))
 endif
 
-include gar/categories/$(CATEGORIES)/category.mk
+include $(GARDIR)/categories/$(CATEGORIES)/category.mk

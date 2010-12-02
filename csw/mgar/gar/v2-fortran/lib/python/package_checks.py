@@ -10,6 +10,10 @@
 # def CheckSomething(pkg_data, error_mgr, logger, messenger):
 #   logger.debug("Checking something.")
 #   error_mgr.ReportError("something-is-wrong")
+#
+# TODO(maciej): In general, the development package should depend on all the libraries.
+# TODO(maciej): If foo.so links to foo.so.1, the devel package should depend on
+#               the library package.
 
 import copy
 import re
@@ -21,6 +25,7 @@ import pprint
 import textwrap
 import dependency_checks as depchecks
 import configuration as c
+import sharedlib_utils as su
 from Cheetah import Template
 
 PATHS_ALLOWED_ONLY_IN = {
@@ -50,8 +55,9 @@ OBSOLETE_DEPS = {
     },
 }
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
-MAX_CATALOGNAME_LENGTH = 20
-MAX_PKGNAME_LENGTH = 20
+EMAIL_RE = re.compile(r"^.*@opencsw.org$")
+MAX_CATALOGNAME_LENGTH = 29
+MAX_PKGNAME_LENGTH = 32
 ARCH_LIST = opencsw.ARCHITECTURES
 VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
 # Pkgnames matching these regexes must not be ARCHALL = 1
@@ -63,6 +69,12 @@ ARCH_SPECIFIC_PKGNAMES_RE_LIST = [
 # libX11.so.4, but due to issues with 3D acceleration.
 DO_NOT_LINK_AGAINST_THESE_SONAMES = set([])
 
+# Regarding surplus libraries reports
+DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
+DO_NOT_REPORT_SURPLUS_FOR = [r"CSW[a-z\-]+dev(el)?"]
+DO_NOT_REPORT_MISSING = set([])
+DO_NOT_REPORT_MISSING_RE = [r"\*?SUNW.*"]
+
 DISCOURAGED_FILE_PATTERNS = (
     (r"\.py[co]$", ("Python compiled files are supposed to be compiled using"
                     "the cswpycompile class action script. For more "
@@ -72,6 +84,10 @@ DISCOURAGED_FILE_PATTERNS = (
     (r"opt/csw/var($|/)", ("The /opt/csw/var directory is not writable on "
                             "sparse non-global zones.  "
                             "Please use /var/opt/csw instead.")),
+    (r"\.git", ("Git files in most cases shouldn't be included in "
+                "a package.")),
+    (r"\.CVS", ("CVS files in most cases shouldn't be included in "
+                "a package.")),
 )
 RPATH_PARTS = {
     'prefix': r"(?P<prefix>/opt/csw)",
@@ -91,7 +107,7 @@ RPATH_WHITELIST = [
      r"$") % RPATH_PARTS,
     r"^\$ORIGIN$",
     r"^\$ORIGIN/..$",
-    r"^/usr(/(ccs|dt|openwin))?/lib(/sparcv9)?$",
+    r"^/usr(/(ccs|dt|openwin))?/lib(/(sparcv9|amd64|64))?$",
 ]
 # Check ldd -r only for Perl modules
 SYMBOLS_CHECK_ONLY_FOR = r"^CSWpm.*$"
@@ -100,14 +116,6 @@ SYMBOLS_CHECK_ONLY_FOR = r"^CSWpm.*$"
 VENDORURL_RE = r"^(http|ftp)s?\://.+\..+$"
 
 BASE_BINARY_PATHS = ('bin', 'sbin', 'lib', 'libexec', 'cgi-bin')
-SPARCV8_PATHS = ('sparcv8', 'sparcv8-fsmuld',
-                 'sparcv7', 'sparc')
-SPARCV8PLUS_PATHS = ('sparcv8plus+vis2', 'sparcv8plus+vis', 'sparcv8plus')
-SPARCV9_PATHS = ('sparcv9+vis2', 'sparcv9+vis', 'sparcv9')
-INTEL_386_PATHS = ('pentium_pro+mmx', 'pentium_pro',
-                   'pentium+mmx', 'pentium',
-                   'i486', 'i386', 'i86')
-AMD64_PATHS = ('amd64',)
 HACHOIR_MACHINES = {
     # id: (name, allowed_paths, disallowed_paths)
     -1: {"name": "Unknown",
@@ -115,33 +123,33 @@ HACHOIR_MACHINES = {
          "type": "unknown"},
      2: {"name": "sparcv8",
          "type": opencsw.ARCH_SPARC,
-         "allowed": BASE_BINARY_PATHS + SPARCV8_PATHS,
-         "disallowed": SPARCV9_PATHS + INTEL_386_PATHS + AMD64_PATHS,
+         "allowed": BASE_BINARY_PATHS + su.SPARCV8_PATHS,
+         "disallowed": su.SPARCV9_PATHS + su.INTEL_386_PATHS + su.AMD64_PATHS,
         },
      3: {"name": "i386",
          "type": opencsw.ARCH_i386,
-         "allowed": BASE_BINARY_PATHS + INTEL_386_PATHS,
-         "disallowed": SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS + AMD64_PATHS,
+         "allowed": BASE_BINARY_PATHS + su.INTEL_386_PATHS,
+         "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS,
         },
      6: {"name": "i486",
          "type": opencsw.ARCH_i386,
-         "allowed": INTEL_386_PATHS,
-         "disallowed": SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS + AMD64_PATHS,
+         "allowed": su.INTEL_386_PATHS,
+         "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS,
          },
     18: {"name": "sparcv8+",
          "type": opencsw.ARCH_SPARC,
-         "allowed": SPARCV8PLUS_PATHS,
-         "disallowed": SPARCV8_PATHS + SPARCV9_PATHS + AMD64_PATHS + INTEL_386_PATHS,
+         "allowed": su.SPARCV8PLUS_PATHS,
+         "disallowed": su.SPARCV8_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS + su.INTEL_386_PATHS,
         },
     43: {"name": "sparcv9",
          "type": opencsw.ARCH_SPARC,
-         "allowed": SPARCV9_PATHS,
-         "disallowed": INTEL_386_PATHS + AMD64_PATHS,
+         "allowed": su.SPARCV9_PATHS,
+         "disallowed": su.INTEL_386_PATHS + su.AMD64_PATHS,
         },
     62: {"name": "amd64",
          "type": opencsw.ARCH_i386,
-         "allowed": AMD64_PATHS,
-         "disallowed": SPARCV8_PATHS + SPARCV8PLUS_PATHS + SPARCV9_PATHS,
+         "allowed": su.AMD64_PATHS,
+         "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS,
         },
 }
 
@@ -341,7 +349,7 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
     missing_dep_groups = depchecks.MissingDepsFromReasonGroups(
         req_pkgs_reasons, declared_deps_set)
     pkgs_to_remove = set()
-    for regex_str in checkpkg.DO_NOT_REPORT_MISSING_RE:
+    for regex_str in DO_NOT_REPORT_MISSING_RE:
       regex = re.compile(regex_str)
       for dep_pkgname in reduce(operator.add, missing_dep_groups, []):
         if re.match(regex, dep_pkgname):
@@ -361,7 +369,10 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
         (x for x, y in reduce(operator.add, req_pkgs_reasons, [])))
     missing_dep_groups = new_missing_dep_groups
     surplus_deps = declared_deps_set.difference(potential_req_pkgs)
-    surplus_deps = surplus_deps.difference(checkpkg.DO_NOT_REPORT_SURPLUS)
+    surplus_deps = surplus_deps.difference(DO_NOT_REPORT_SURPLUS)
+    for regex_str in DO_NOT_REPORT_SURPLUS_FOR:
+      if surplus_deps and re.match(regex_str, pkgname):
+        surplus_deps = set()
     # Using an index to avoid duplicated reasons.
     missing_deps_reasons_by_pkg = []
     missing_deps_idx = set()
@@ -621,6 +632,16 @@ if [ "$hotline" = "" ] ; then errmsg $f: HOTLINE field blank ; fi
         "known architectures: %s" % ARCH_LIST)
 
 
+def CheckEmail(pkg_data, error_mgr, logger, messenger):
+  """Checks the e-mail address."""
+  catalogname = pkg_data["basic_stats"]["catalogname"]
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  pkginfo = pkg_data["pkginfo"]
+  if not re.match(EMAIL_RE, pkginfo["EMAIL"]):
+    error_mgr.ReportError("pkginfo-email-not-opencsw-org",
+                          "email=%s" % pkginfo["EMAIL"])
+
+
 def CheckPstamp(pkg_data, error_mgr, logger, messenger):
   pkginfo = pkg_data["pkginfo"]
   if "PSTAMP" in pkginfo:
@@ -727,14 +748,7 @@ def CheckDisallowedPaths(pkg_data, error_mgr, logger, messenger):
 
 
 def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
-  # Finding all shared libraries
-  shared_libs = []
-  for metadata in pkg_data["files_metadata"]:
-    if "mime_type" in metadata and metadata["mime_type"]:
-      # TODO: Find out where mime_type is missing and why
-      if "sharedlib" in metadata["mime_type"]:
-        shared_libs.append(metadata["path"])
-  shared_libs = set(shared_libs)
+  shared_libs = set(su.GetSharedLibs(pkg_data))
   for binary_info in pkg_data["binaries_dump_info"]:
     for soname in binary_info["needed sonames"]:
       if (binary_info["path"] in shared_libs
@@ -976,7 +990,7 @@ def CheckWrongArchitecture(pkg_data, error_mgr, logger, messenger):
   pkginfo_arch = pkg_data["pkginfo"]["ARCH"]
   files_metadata = pkg_data["files_metadata"]
   for file_metadata in files_metadata:
-    if opencsw.IsBinary(file_metadata):
+    if su.IsBinary(file_metadata):
       machine = HACHOIR_MACHINES[file_metadata["machine_id"]]
       if machine["type"] != pkginfo_arch:
         error_mgr.ReportError(
@@ -985,3 +999,205 @@ def CheckWrongArchitecture(pkg_data, error_mgr, logger, messenger):
               file_metadata["path"],
               pkginfo_arch,
               machine["type"]))
+
+
+def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  shared_libs = set(su.GetSharedLibs(pkg_data))
+  linkable_shared_libs = []
+  for binary_info in pkg_data["binaries_dump_info"]:
+    if binary_info["path"] in shared_libs:
+      if su.IsLibraryLinkable(binary_info["path"]):
+        # It is a shared library and other projects might link to it.
+        if "soname" in binary_info and binary_info["soname"]:
+          soname = binary_info["soname"]
+        else:
+          soname = os.path.split(binary_info["path"])[1]
+        linkable_shared_libs.append((soname, binary_info))
+  check_names = True
+  if len(linkable_shared_libs) > 1:
+    sonames = sorted(set([x[0] for x in linkable_shared_libs]))
+    tmp = su.MakePackageNameBySonameCollection(sonames)
+    if tmp:
+      multilib_pkgnames, multilib_catalogname = tmp
+    else:
+      multilib_pkgnames, multilib_catalogname = (None, None)
+    if not multilib_pkgnames:
+      error_mgr.ReportError(
+          "non-uniform-lib-versions-in-package",
+          "sonames=%s"
+          % (sonames))
+      messenger.Message(
+          "Package %s contains shared libraries, and their soname "
+          "versions are not in sync: %s.  This means that "
+          "each soname is likely to be retired at a different time "
+          "and each soname is best placed in a separate package, "
+          "named after soname and version. "
+          % (pkgname, sonames))
+      # If the sonames aren't uniform, there's no point in trying to match
+      # sonames versus pkgname.
+      messenger.SuggestGarLine(
+          "# Suggesting how to separate out shared libraries.")
+      messenger.SuggestGarLine(
+          "# You will most probably need to further edit these lines. "
+          "Use with caution!")
+      for soname, binary_info in linkable_shared_libs:
+        lib_path, lib_basename = os.path.split(binary_info["path"])
+        tmp = su.MakePackageNameBySoname(soname)
+        policy_pkgname_list, policy_catalogname_list = tmp
+        messenger.SuggestGarLine("# The following lines define a new package: "
+                                 "%s" % policy_pkgname_list[0])
+        messenger.SuggestGarLine("PACKAGES += %s" % policy_pkgname_list[0])
+        messenger.SuggestGarLine(
+            "CATALOGNAME_%s = %s"
+            % (policy_pkgname_list[0], policy_catalogname_list[0]))
+        messenger.SuggestGarLine(
+            "PKGFILES_%s += /%s"
+            % (policy_pkgname_list[0], os.path.join(lib_path, lib_basename)))
+        messenger.SuggestGarLine(
+            "PKGFILES_%s += /%s\.[0-9\.]+"
+            % (policy_pkgname_list[0], os.path.join(lib_path, soname)))
+        pkginfo = pkg_data["pkginfo"]
+        description = " ".join(pkginfo["NAME"].split(" ")[2:])
+        messenger.SuggestGarLine(
+            "SPKG_DESC_%s += %s, %s"
+            % (policy_pkgname_list[0], description, soname))
+        messenger.SuggestGarLine(
+            "RUNTIME_DEP_PKGS_%s += %s"
+            % (pkgname, policy_pkgname_list[0]))
+        messenger.SuggestGarLine(
+            "# The end of %s definition" % policy_pkgname_list[0])
+
+      check_names = False
+    else:
+      if pkgname not in multilib_pkgnames:
+        error_mgr.ReportError(
+            "shared-lib-pkgname-mismatch",
+            "sonames=%s "
+            "pkgname=%s "
+            "expected=%s "
+            % (sonames, pkgname, multilib_pkgnames))
+        messenger.Message(
+            "The collection of sonames (%s) "
+            "is expected to be in package "
+            "named %s, but the package name is %s. "
+            "More information: "
+            "http://wiki.opencsw.org/checkpkg-error-tags"
+            % (sonames, multilib_pkgnames, pkgname))
+        check_names = False
+  if check_names:
+    for soname, binary_info in linkable_shared_libs:
+      tmp = su.MakePackageNameBySoname(soname)
+      policy_pkgname_list, policy_catalogname_list = tmp
+      if pkgname not in policy_pkgname_list:
+        error_mgr.ReportError(
+            "shared-lib-pkgname-mismatch",
+            "file=%s "
+            "soname=%s "
+            "pkgname=%s "
+            "expected=%s"
+            % (binary_info["path"], soname, pkgname, policy_pkgname_list))
+        suggested_pkgname = policy_pkgname_list[0]
+        messenger.SuggestGarLine(
+            "PACKAGES += %s" % suggested_pkgname)
+        messenger.SuggestGarLine(
+            "CATALOGNAME_%s = %s"
+            % (suggested_pkgname, policy_catalogname_list[0]))
+        messenger.SuggestGarLine(
+            "PKGFILES_%s += /%s" % (suggested_pkgname, binary_info["path"]))
+        lib_basename, lib_filename = os.path.split(binary_info["path"])
+        messenger.SuggestGarLine(
+            "PKGFILES_%s += /%s/%s.*" % (suggested_pkgname, lib_basename, soname))
+        messenger.OneTimeMessage(
+            soname,
+            "This shared library (%s) is in a directory indicating that it "
+            "is likely to be linked to by other programs.  If this is the "
+            "case, the library is best packaged separately, in a package "
+            "with a library-specific name.  Examples of such names include: "
+            "%s. If this library is not meant to be linked to by other "
+            "packages, it's best moved to a 'private' directory.  "
+            "For example, instead of /opt/csw/lib/foo.so, "
+            "try /opt/csw/lib/projectname/foo.so. "
+            "More information: http://wiki.opencsw.org/checkpkg-error-tags"
+            % (binary_info["path"], policy_pkgname_list))
+
+
+def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messenger):
+  """If it's a package with shared libraries, it should not contain the .so file.
+
+  For example, libfoo.so.1 should not be in the same package as libfoo.so,
+  because the latter is used for linking during compilation, and the former is
+  a shared object that needs to be phased out at some point.
+  """
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  shared_libs = set(su.GetSharedLibs(pkg_data))
+  shared_libs = filter(su.IsLibraryLinkable, shared_libs)
+  if shared_libs:
+    # If the package contains shared libraries, it must not contain
+    # corrersponding .so files, which are used during linking.
+    for entry in pkg_data["pkgmap"]:
+      if entry["path"]:
+        if entry["path"].endswith(".so") and entry["type"] == "s":
+          error_mgr.ReportError(
+              "shared-lib-package-contains-so-symlink",
+              "file=%s" % entry["path"])
+          messenger.SuggestGarLine("# (If %s-devel doesn't exist yet)" % pkgname)
+          messenger.SuggestGarLine("PACKAGES += %s-devel" % pkgname)
+          messenger.SuggestGarLine(
+              "PKGFILES_%s-devel += %s" % (pkgname, entry["path"]))
+          messenger.Message(
+              "The package contains shared libraries together with the "
+              "symlink of the form libfoo.so -> libfoo.so.1.  "
+              "In this case: %s.  "
+              "This kind of symlink should not be together with the shared "
+              "libraries; it is only used during compiling and linking.  "
+              "The best practice "
+              "is to put the shared libraries into a separate package, and "
+              "the .so file together with the header files in the devel "
+              "package." % entry["path"])
+
+def CheckPackagesWithHeaderFilesMustContainTheSoFile(pkg_data, error_mgr, logger, messenger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  shared_libs = set(su.GetSharedLibs(pkg_data))
+  shared_libs = filter(su.IsLibraryLinkable, shared_libs)
+  if shared_libs:
+    # If the package contains shared libraries, it must not contain
+    # corrersponding .so files, which are used during linking.
+    for entry in pkg_data["pkgmap"]:
+      if entry["path"]:
+        if entry["path"].endswith(".so") and entry["type"] == "s":
+          error_mgr.ReportError(
+              "shared-lib-package-contains-so-symlink",
+              "file=%s" % entry["path"])
+          messenger.Message(
+              "The package contains shared libraries together with the "
+              "symlink of the form libfoo.so -> libfoo.so.1.  "
+              "In this case: %s.  "
+              "This kind of symlink should not be together with the shared "
+              "libraries; it is only used during compiling and linking.  "
+              "The best practice "
+              "is to put the shared libraries into a separate package, and "
+              "the .so file together with the header files in the devel "
+              "package." % entry["path"])
+
+
+def CheckSharedLibraryNameMustBeAsubstringOfSoname(
+    pkg_data, error_mgr, logger, messenger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  for binary_info in pkg_data["binaries_dump_info"]:
+    if "soname" in binary_info:
+      if binary_info["soname"] not in binary_info["base_name"]:
+        error_mgr.ReportError(
+            "soname-not-part-of-filename",
+            "soname=%s "
+            "filename=%s"
+            % (binary_info["soname"], binary_info["base_name"]))
+
+
+def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
+    pkg_data, error_mgr, logger, messenger):
+  pass
+
+def CheckLinkableSoFileMustBeAsymlink(
+    pkg_data, error_mgr, logger, messenger):
+  pass

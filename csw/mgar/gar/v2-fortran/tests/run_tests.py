@@ -1,4 +1,4 @@
-#!/opt/csw/bin/python2.6
+#!/usr/bin/env python2.6
 # $Id$
 
 import unittest
@@ -15,6 +15,11 @@ from opencsw_test            import *
 from tag_test                import *
 from package_checks_test     import *
 from dependency_checks_test  import *
+from sharedlib_utils_test    import *
+from catalog_test            import *
+from package_test            import *
+from package_stats_test      import *
+from submit_to_newpkgs_test  import *
 
 # These are very slow GAR tests, which I'm disabling for now.
 # from example_test            import *

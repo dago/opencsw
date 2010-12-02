@@ -89,8 +89,10 @@ sub get_file_list_lftp
 	$ftp_proxy_cmd = "set ftp:proxy $ENV{ftp_proxy};" if exists $ENV{ftp_proxy};
 	$http_proxy_cmd = "set http:proxy $ENV{HTTP_PROXY};" if exists $ENV{HTTP_PROXY};
 	$http_proxy_cmd = "set http:proxy $ENV{http_proxy};" if exists $ENV{http_proxy};
+	$https_proxy_cmd = "set https:proxy $ENV{HTTPS_PROXY};" if exists $ENV{HTTPS_PROXY};
+	$https_proxy_cmd = "set https:proxy $ENV{https_proxy};" if exists $ENV{https_proxy};
 
-	open (FH, "lftp -q -c \"set net:timeout 30; set net:max-retries 16; $ftp_proxy_cmd $http_proxy_cmd open $url/ && ls\" 2>/dev/null |");
+	open (FH, "lftp -q -c \"set net:timeout 30; set net:max-retries 16; $ftp_proxy_cmd $http_proxy_cmd $https_proxy_cmd open $url/ && ls\" 2>/dev/null |");
 
 	while (my $line = <FH>) {
 		my @cols = split (/\s+/, $line);

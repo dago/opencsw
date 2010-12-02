@@ -1,3 +1,4 @@
+#!/opt/csw/bin/python2.6
 # $Id$
 # coding=utf-8
 
@@ -18,6 +19,11 @@ class CheckpkgTagUnitTest(unittest.TestCase):
   def testToGarSyntaxWithParamWithSpacees(self):
     t = tag.CheckpkgTag("CSWfoo", "bar", "a b c")
     self.assertEquals(u'CHECKPKG_OVERRIDES_CSWfoo += bar|a|b|c', t.ToGarSyntax())
+
+  def testComparison(self):
+    t1 = tag.CheckpkgTag("CSWfoo", "bar", "a b c")
+    t2 = tag.CheckpkgTag("CSWfoo", "bar", "a b c")
+    self.assertEquals(t1, t2)
 
 
 class ParseTagLineUnitTest(unittest.TestCase):

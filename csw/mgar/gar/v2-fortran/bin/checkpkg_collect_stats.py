@@ -21,6 +21,7 @@ path_list = [os.path.dirname(__file__),
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 import opencsw
+import package_stats
 
 def main():
   parser = optparse.OptionParser()
@@ -43,7 +44,7 @@ def main():
     args_display = args_display[:5] + ["...more..."]
   file_list = args
   logging.debug("Processing: %s, please be patient", args_display)
-  stats_list = checkpkg.StatsListFromCatalog(
+  stats_list = package_stats.StatsListFromCatalog(
       file_list, options.catalog, options.debug)
   # Reversing the item order in the list, so that the pop() method can be used
   # to get packages, and the order of processing still matches the one in the

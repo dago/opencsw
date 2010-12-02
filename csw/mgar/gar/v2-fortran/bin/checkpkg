@@ -236,7 +236,7 @@ done
 # "checkpkg-".
 
 test_suite_ok=1
-checkpkg_module_dir=${command_basedir}/../lib/checkpkg.d
+checkpkg_module_dir="${command_basedir}/../lib/checkpkg.d"
 checkpkg_module_tag="checkpkg-"
 checkpkg_stats_basedir="${HOME}/.checkpkg/stats"
 
@@ -317,15 +317,14 @@ fi
 if [[ "${ANALYZE}" -eq 1 ]]; then
 # Collecting errors and applying the overrides.
 # This has to use the original files.
-  echo "Applying the overrides and analyzing the results."
   ${command_basedir}/analyze_module_results.py \
       ${catalog_options} \
       ${quiet_options} \
       "$@"
   if [[ "$?" -ne 0 ]]; then
-    errmsg "${RED}Modular checks are reporting errors.${COLOR_RESET}"
+    errmsg "${RED}Checkpkg has reported errors.${COLOR_RESET}"
   else
-    print "${GREEN}All modular tests were successful.${COLOR_RESET}"
+    print "${GREEN}Checkpkg reports no errors.${COLOR_RESET}"
   fi
 else
 	echo "Skipping result analysis."
