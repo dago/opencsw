@@ -11,37 +11,50 @@ MASTER_SITES = http://www.unidata.ucar.edu/downloads/netcdf/ftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
-RUNTIME_DEP_PKGS = CSWcurlrt CSWhdf5rt CSWgcc3g77rt CSWzlib CSWgcc3corert \
-		   CSWoldaprt CSWlibcares CSWlibidn CSWgcc3g++rt CSWosslrt
+RUNTIME_DEP_PKGS  = CSWcurlrt CSWhdf5rt CSWzlib
+RUNTIME_DEP_PKGS += CSWoldaprt CSWlibcares CSWlibidn CSWosslrt
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWtetex CSWgcc3g77
+BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS) CSWtetex 
+BUILD_DEP_PKGS += CSWgcc4gfortran
+
 ## CFLAGS AND LDFLAGS are necessary due to problems with the fortran bindings when
 ## building 64-bit
-BUILD_ARGS = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
+BUILD_ARGS  = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" 
+BUILD_ARGS += FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
+## CXXFLAGS are necessary due to the gcc3core_rt problem noted below
+BUILD_ARGS += CXXFLAGS="$(CXXFLAGS)"
 
+## Test args need to be the same otherwise various tests don't link
+TEST_ARGS = $(BUILD_ARGS)
+
+## Originally, non-redistributable libs in /opt/SUNWspro. Fixed as of late, try with studio again?
+GARCOMPILER = GCC4
 CONFIGURE_ENV = F77=$(F77) FC=$(FC) CC=$(CC) CXX=$(CXX)
-CONFIGURE_ARGS = $(DIRPATHS) \
-		 --enable-netcdf-4 \
-		 --enable-dap \
-		 --enable-ncgen4 \
-		 --enable-shared \
-		 --enable-separate-fortran \
-		 --disable-f90 \
-		 --enable-cxx4 \
-		 --enable-docs-install \
-		 --enable-udunits \
-		 --disable-logging \
-		 --with-hdf5=/opt/csw \
-		 --with-zlib=/opt/csw
+## Attempt to fix problem with configure not finding libgfortran.so.3 when 
+## compiling with GCC4
+CONFIGURE_ENV += LD_LIBRARY_PATH=/opt/csw/gcc4/lib/$(MM_LIBDIR)
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-netcdf-4
+## DAP is disabled due to bugs on Sparc Solaris 9 GCC4. Bug filed with UCAR
+#CONFIGURE_ARGS += --enable-dap
+CONFIGURE_ARGS += --disable-dap
+CONFIGURE_ARGS += --enable-ncgen4
+CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --enable-separate-fortran
+CONFIGURE_ARGS += --enable-cxx4
+CONFIGURE_ARGS += --enable-docs-install
+CONFIGURE_ARGS += --enable-udunits
+CONFIGURE_ARGS += --disable-logging
+CONFIGURE_ARGS += --with-hdf5=/opt/csw
+CONFIGURE_ARGS += --with-zlib=/opt/csw
 
 ## 64 bit build fails in fortran binding tests
-BUILD64 = 1
+#BUILD64 = 1
 
 ## Needed for "Large file support" in NetCDF
 EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
 
-## non-redistributable libs in /opt/SUNWspro
-GARCOMPILER = GCC3
 
 DEBUG_PACKAGING = 1
 ## Add GCC4 lib dir to CFLAGS and friends because gcc3core_rt puts it's 
@@ -55,15 +68,15 @@ DEBUG_PACKAGING = 1
 ##
 ## Adding -dalign to *FLAGS in attempt to fix bus error in nf_test/ftst_vars4
 ## in fuction nf_put_vlen_element
-#EXTRA_CFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-#EXTRA_FFLAGS= -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-#EXTRA_FCFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-#EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+EXTRA_CFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+EXTRA_FFLAGS= -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+EXTRA_FCFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
 ## OPT_FLAGS_GCC = -O2 -pipe
-include gar/category.mk
 
 ## During the 32-bit sparc build, the C++ bindings were barfing with an error 
 ## about undefined symbol __sync_fetch_and_add_4 in libnetcdf_c++
-## Per http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
-## replacing -march=v8 with -m32 seems to solve the problem
-ARCHFLAGS_GCC4_sparcv8 = -m32 -mcpu=v8
+## From Porting FAQ: http://wiki.opencsw.org/porting-faq#toc5
+OPT_FLAGS_GCC = 
+
+include gar/category.mk
