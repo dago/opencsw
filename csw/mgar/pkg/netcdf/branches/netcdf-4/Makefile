@@ -27,16 +27,17 @@ BUILD_ARGS += CXXFLAGS="$(CXXFLAGS)"
 ## Test args need to be the same otherwise various tests don't link
 TEST_ARGS = $(BUILD_ARGS)
 
-## Originally, non-redistributable libs in /opt/SUNWspro. Fixed as of late, try with studio again?
 GARCOMPILER = GCC4
-CONFIGURE_ENV = F77=$(F77) FC=$(FC) CC=$(CC) CXX=$(CXX)
 ## Attempt to fix problem with configure not finding libgfortran.so.3 when 
 ## compiling with GCC4
 CONFIGURE_ENV += LD_LIBRARY_PATH=/opt/csw/gcc4/lib/$(MM_LIBDIR)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += F77=$(F77) FC=$(FC) CC=$(CC) CXX=$(CXX)
+CONFIGURE_ARGS += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
 CONFIGURE_ARGS += --enable-netcdf-4
-## DAP is disabled due to bugs on Sparc Solaris 9 GCC4. Bug filed with UCAR
+## DAP is disabled due to bugs on Sparc Solaris 9 GCC4. Bug filed with UCAR:
+## netCDF #ARO-502165
 #CONFIGURE_ARGS += --enable-dap
 CONFIGURE_ARGS += --disable-dap
 CONFIGURE_ARGS += --enable-ncgen4
@@ -49,8 +50,7 @@ CONFIGURE_ARGS += --disable-logging
 CONFIGURE_ARGS += --with-hdf5=/opt/csw
 CONFIGURE_ARGS += --with-zlib=/opt/csw
 
-## 64 bit build fails in fortran binding tests
-#BUILD64 = 1
+BUILD64 = 1
 
 ## Needed for "Large file support" in NetCDF
 EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
