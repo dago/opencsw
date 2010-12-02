@@ -14,6 +14,9 @@ DEPRECATED_LIBRARY_LOCATIONS = (
      "Please use /opt/csw/mysql5/..."),
     ("/opt/csw/lib/mysql", "libmysqlclient.so.15",
      "Please use /opt/csw/mysql5/..."),
+    ("/opt/csw/lib", "libnet.so",
+     "Please use -L/opt/csw/lib/libnet-new for linking. "
+     "See more at http://wiki.opencsw.org/project-libnet"),
 )
 
 DLOPEN_LIB_LOCATIONS = (
@@ -26,6 +29,7 @@ DEPENDENCY_FILENAME_REGEXES = (
     (r".*\.py$",   (u"CSWpython",)),
     (r".*\.rb$",   (u"CSWruby",)),
     (r".*\.elc?$", (u"CSWemacscommon",)),
+    (r"/opt/csw/apache2/", (u"CSWapache2",)),
 )
 
 PREFERRED_DIRECTORY_PROVIDERS = set([u"CSWcommon"])

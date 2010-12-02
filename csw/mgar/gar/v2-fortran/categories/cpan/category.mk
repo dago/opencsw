@@ -31,13 +31,15 @@ SPKG_SOURCEURL := $(SPKG_SOURCEURL)/~$(call TOLOWER,$(AUTHOR))
 UFILES_REGEX ?= $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 USTREAM_MASTER_SITE ?= $(SPKG_SOURCEURL)
 
-_CATEGORY_SPKG_DESC = $(GARNAME): $(SPKG_DESC)
+$(foreach P,$(PACKAGES),$(eval _CATEGORY_SPKG_DESC_$P = $$(GARNAME): $$(or $$(SPKG_DESC_$P),$$(SPKG_DESC))))
 _CATEGORY_PKGINFO = echo "PERL_MODULE_NAME=$(GARNAME)";
 
 SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
 
 _MERGE_EXCLUDE_CATEGORY = .*/perllocal\.pod .*/\.packlist
 _CATEGORY_GSPEC_INCLUDE ?= csw_cpan_dyngspec.gspec
+
+_CATEGORY_RUNTIME_DEP_PKGS ?= CSWperl
 
 # Perl module dependencies can not be properly tracked right now
 _CATEGORY_CHECKPKG_OVERRIDES = surplus-dependency

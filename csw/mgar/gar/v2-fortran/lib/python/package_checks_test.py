@@ -1,4 +1,4 @@
-#!/opt/csw/bin/python2.6
+#!/usr/bin/env python2.6
 # coding=utf-8
 # $Id$
 
@@ -22,6 +22,7 @@ from testdata.ivtools_stats import pkgstats as ivtools_stats
 from testdata.sudo_stats import pkgstats as sudo_stats
 from testdata.javasvn_stats import pkgstats as javasvn_stats
 from testdata.neon_stats import pkgstats as neon_stats
+from testdata.bdb48_stats import pkgstat_objs as bdb48_stats
 from testdata import stubs
 
 DEFAULT_PKG_STATS = None
@@ -80,6 +81,18 @@ class TestDescriptionNotCapitalized(CheckpkgUnitTestHelper, unittest.TestCase):
     self.pkg_data["pkginfo"]["NAME"] = 'foo - lowercase'
     self.error_mgr_mock.ReportError('pkginfo-description-not-starting-with-uppercase',
                                     'lowercase')
+
+class TestCheckEmailGood(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckEmail'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["EMAIL"] = 'somebody@opencsw.org'
+
+
+class TestCheckEmailBadDomain(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckEmail'
+  def CheckpkgTest(self):
+    self.pkg_data["pkginfo"]["EMAIL"] = 'somebody@opencsw.com'
+    self.error_mgr_mock.ReportError('pkginfo-email-not-opencsw-org', 'email=somebody@opencsw.com')
 
 
 class TestCheckCatalogname_1(CheckpkgUnitTestHelper, unittest.TestCase):
@@ -165,7 +178,8 @@ class TestSetCheckDependencies(CheckpkgUnitTestHelper, unittest.TestCase):
     self.pkg_data[0]["depends"].append(["CSWmarsian", "A package from Mars."])
     installed = ["CSWcommon", "CSWisaexec", "CSWiconv", "CSWlibpopt"]
     self.error_mgr_mock.GetInstalledPackages().AndReturn(installed)
-    self.error_mgr_mock.ReportError('CSWrsync', 'unidentified-dependency', 'CSWmarsian')
+    self.error_mgr_mock.ReportError(
+        'CSWrsync', 'unidentified-dependency', 'CSWmarsian')
 
 
 class TestSetCheckDependenciesGood(CheckpkgUnitTestHelper, unittest.TestCase):
@@ -201,7 +215,76 @@ class TestSetCheckDependenciesTwoPkgsGood(CheckpkgUnitTestHelper, unittest.TestC
     self.error_mgr_mock.GetInstalledPackages().AndReturn(installed)
 
 
-class TestCheckCheckDependsOnSelf(CheckpkgUnitTestHelper, unittest.TestCase):
+class DatabaseMockingMixin(object):
+
+  def MockDbInteraction(self):
+    # Mocking out the interaction with the database
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",)})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libiconv.so.2').AndReturn({
+      "/opt/csw/lib": (u"CSWlibiconv",)})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libnsl.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",),
+      "/usr/lib/sparcv9": (u"SUNWcslx"),})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libpopt.so.0').AndReturn({
+      "/opt/csw/lib": (u"CSWlibpopt",)})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsec.so.1').AndReturn({
+      "/usr/lib": (u"SUNWfoo",),
+      "/usr/lib/sparcv9": (u"SUNWfoo"),})
+    self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsocket.so.1').AndReturn({
+      "/usr/lib": (u"SUNWcsl",),
+      "/usr/lib/sparcv9": (u"SUNWcslx"),})
+    common_path_pkgs = [u'CSWgdbm', u'CSWbinutils', u'CSWcommon']
+    paths_to_check = [
+        '/opt/csw/share/man', '/opt/csw/bin', '/opt/csw/bin/sparcv8',
+        '/opt/csw/bin/sparcv9', '/opt/csw/share/doc']
+    for pth in paths_to_check:
+      self.error_mgr_mock.GetPkgByPath(pth).AndReturn(common_path_pkgs)
+
+
+class TestSetCheckDependenciesDoNotReportSurplusForDevel(
+    DatabaseMockingMixin, CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    self.pkg_data_single = self.pkg_data
+    self.pkg_data = [self.pkg_data_single]
+    self.pkg_data[0]["basic_stats"]["pkgname"] = "CSWfoo-devel"
+    self.pkg_data[0]["depends"].append(["CSWfoo", ""])
+    self.pkg_data[0]["depends"].append(["CSWbar", ""])
+    self.pkg_data[0]["depends"].append(["CSWlibiconv", ""])
+    self.MockDbInteraction()
+    # There should be no error about the dependency on CSWfoo or CSWbar.
+
+
+class TestSetCheckDependenciesDoNotReportSurplusForDev(
+    DatabaseMockingMixin, CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    self.pkg_data_single = self.pkg_data
+    self.pkg_data = [self.pkg_data_single]
+    self.pkg_data[0]["basic_stats"]["pkgname"] = "CSWfoo-dev"
+    self.pkg_data[0]["depends"].append(["CSWfoo", ""])
+    self.pkg_data[0]["depends"].append(["CSWbar", ""])
+    self.pkg_data[0]["depends"].append(["CSWlibiconv", ""])
+    self.MockDbInteraction()
+    # There should be no error about the dependency on CSWfoo or CSWbar.
+
+
+class TestSetCheckDependenciesDoNotReportSurplusForDevNoDash(
+    DatabaseMockingMixin, CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'SetCheckLibraries'
+  def CheckpkgTest(self):
+    self.pkg_data_single = self.pkg_data
+    self.pkg_data = [self.pkg_data_single]
+    self.pkg_data[0]["basic_stats"]["pkgname"] = "CSWfoodev"
+    self.pkg_data[0]["depends"].append(["CSWfoo", ""])
+    self.pkg_data[0]["depends"].append(["CSWbar", ""])
+    self.pkg_data[0]["depends"].append(["CSWlibiconv", ""])
+    self.MockDbInteraction()
+    # There should be no error about the dependency on CSWfoo or CSWbar.
+
+
+class TestCheckDependsOnSelf(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckDependsOnSelf'
   def CheckpkgTest(self):
     self.pkg_data["depends"].append(["CSWrsync", ""])
@@ -554,6 +637,7 @@ class TestSharedLibsInAnInstalledPackageToo(CheckpkgUnitTestHelper,
         'isalist': (),
         'pkgmap': [],
       }
+
   def CheckpkgTest(self):
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libfoo.so.1').AndReturn({
        u'/opt/csw/lib': [u'CSWlibfoo'],
@@ -998,6 +1082,19 @@ class TestCheckDiscouragedFileNamePatterns(CheckpkgUnitTestHelper,
         'discouraged-path-in-pkgmap', '/opt/csw/var')
 
 
+class TestCheckDiscouragedFileNamePatternsGit(CheckpkgUnitTestHelper,
+                                              unittest.TestCase):
+  FUNCTION_NAME = 'CheckDiscouragedFileNamePatterns'
+  def CheckpkgTest(self):
+    # The data need to be copied, because otherwise all other tests will
+    # also process modified data.
+    self.pkg_data = copy.deepcopy(rsync_stats[0])
+    self.pkg_data["pkgmap"].append(
+            { "type": "f", "path": "/opt/csw/share/.git/foo", })
+    self.error_mgr_mock.ReportError(
+            'discouraged-path-in-pkgmap', '/opt/csw/share/.git/foo')
+
+
 class TestSetCheckDirectoryDepsTwoPackages(CheckpkgUnitTestHelper,
                                            unittest.TestCase):
   """Test whether appropriate files are provided.
@@ -1026,8 +1123,7 @@ class TestSetCheckDirectoryDepsTwoPackages(CheckpkgUnitTestHelper,
     })
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libsocket.so.1').AndReturn({
       "/usr/lib": (u"SUNWcsl",),
-      "/usr/lib/sparcv9": (u"SUNWcslx"),
-    })
+      "/usr/lib/sparcv9": (u"SUNWcslx"),})
     common_path_pkgs = [u'CSWgdbm', u'CSWbinutils', u'CSWcommon']
     paths_to_check = [
         '/opt/csw/share/man', '/opt/csw/bin', '/opt/csw/share', '/var/opt/csw',
@@ -1076,9 +1172,12 @@ class TestSetCheckDirectoryDepsMissing(CheckpkgUnitTestHelper,
     for path in paths_to_check:
       self.error_mgr_mock.GetPkgByPath(path).AndReturn(common_path_pkgs)
     # This is the critical test here.
-    self.error_mgr_mock.ReportError('CSWsudo-common', 'base-dir-not-found', '/opt/csw/share/man')
-    self.error_mgr_mock.ReportError('CSWsudo', 'surplus-dependency', 'CSWalternatives')
-    self.error_mgr_mock.ReportError('CSWsudo', 'surplus-dependency', 'CSWsudo-common')
+    self.error_mgr_mock.ReportError(
+        'CSWsudo-common', 'base-dir-not-found', '/opt/csw/share/man')
+    self.error_mgr_mock.ReportError(
+        'CSWsudo', 'surplus-dependency', 'CSWalternatives')
+    self.error_mgr_mock.ReportError(
+        'CSWsudo', 'surplus-dependency', 'CSWsudo-common')
 
 
 class TestSetCheckDoubleDepends(CheckpkgUnitTestHelper, unittest.TestCase):
@@ -1240,6 +1339,49 @@ class TestCheckWrongArchitecture(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError(
         'binary-wrong-architecture',
         'file=opt/csw/lib/sparcv9/libneon.so.26.0.4 pkginfo-says=i386 actual-binary=sparc')
+
+
+class TestCheckSharedLibraryNamingPolicy(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryNamingPolicy'
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+    self.error_mgr_mock.ReportError(
+        'non-uniform-lib-versions-in-package',
+        "sonames=['libneon.so.26', 'libneon.so.27']")
+
+
+class TestCheckSharedLibraryNamingPolicyBerkeley(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryNamingPolicy'
+  def CheckpkgTest(self):
+    self.pkg_data = bdb48_stats[0]
+
+
+class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryPkgDoesNotHaveTheSoFile'
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+    self.error_mgr_mock.ReportError(
+        'shared-lib-package-contains-so-symlink', 'file=/opt/csw/lib/libneon.so')
+    self.error_mgr_mock.ReportError(
+        'shared-lib-package-contains-so-symlink', 'file=/opt/csw/lib/sparcv9/libneon.so')
+
+
+class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
+    CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryNameMustBeAsubstringOfSoname'
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+
+
+class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
+    CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryNameMustBeAsubstringOfSoname'
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["binaries_dump_info"][3]["base_name"] = "foo.so.1"
+    self.error_mgr_mock.ReportError(
+        'soname-not-part-of-filename',
+        'soname=libneon.so.27 filename=foo.so.1')
 
 
 if __name__ == '__main__':

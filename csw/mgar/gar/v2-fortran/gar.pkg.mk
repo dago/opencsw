@@ -152,7 +152,10 @@ endif
 SPKG_DESC      ?= $(DESCRIPTION)
 SPKG_VERSION   ?= $(GARVERSION)
 SPKG_CATEGORY  ?= application
-SPKG_SOURCEURL ?= $(firstword $(VENDOR_URL) $(MASTER_SITES) $(GIT_REPOS))
+SPKG_SOURCEURL ?= $(firstword $(VENDOR_URL) \
+			$(if $(filter $(GNU_MIRROR),$(MASTER_SITES)),http://www.gnu.org/software/$(GNU_PROJ)) \
+			$(MASTER_SITES) \
+			$(GIT_REPOS))
 SPKG_VENDOR    ?= $(SPKG_SOURCEURL) packaged for CSW by $(SPKG_PACKAGER)
 SPKG_PSTAMP    ?= $(LOGNAME)@$(shell hostname)-$(call _REVISION)-$(shell date '+%Y%m%d%H%M%S')
 SPKG_BASEDIR   ?= $(prefix)
@@ -185,6 +188,10 @@ ETCSERVICES += $(_ETCSERVICES_FILES)
 # This is the default path for texinfo pages to be picked up. Extend or replace as necessary.
 TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
 
+# if AP2_MODS is set, files matching this shell glob (passed to find)
+# will have 'build' set as their class
+AP2_MODFILES ?= opt/csw/apache2/libexec/*so $(EXTRA_AP2_MODFILES)
+
 # - set class for all config files
 _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
@@ -197,6 +204,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(CRONTABS),$$F[1] = "cswcrontab" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(if $(AP2_MODS),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/apache2/ap2mod/.*));) \
 		print join(" ",@F),"\n";'
 
 # If you add another filter above, also add the class to this list. It is used
@@ -238,7 +246,7 @@ $(call SETONCE,SPKG_REVSTAMP,REV=$(shell date '+%Y.%m.%d'))
 endif
 
 # Where we find our mkpackage global templates
-PKGLIB = $(CURDIR)/$(GARDIR)/pkglib
+PKGLIB = $(GARDIR)/pkglib
 
 PKG_EXPORTS  = GARNAME GARVERSION DESCRIPTION CATEGORIES GARCH GARDIR GARBIN
 PKG_EXPORTS += CURDIR WORKDIR WORKDIR_FIRSTMOD WORKSRC WORKSRC_FIRSTMOD PKGROOT
@@ -277,10 +285,11 @@ isadirs = $(foreach ISA,$(ISALIST),$(1)/$(subst +,\+,$(subst -,\-,$(ISA)))/$(2))
 baseisadirs = $(1)/$(2) $(call isadirs,$(1),$(2))
 
 # PKGFILES_RT selects files belonging to a runtime package
-PKGFILES_RT += $(call baseisadirs,$(libdir),[^/]*\.so(\.\d+)*)
+PKGFILES_RT += $(call baseisadirs,$(libdir),[^/]*\.so\.\d+(\.\d+)*)
 
 # PKGFILES_DEVEL selects files belonging to a developer package
 PKGFILES_DEVEL += $(call baseisadirs,$(bindir),[^/]*-config)
+PKGFILES_DEVEL += $(call baseisadirs,$(libdir),[^/]*\.so)
 PKGFILES_DEVEL += $(call baseisadirs,$(libdir),[^/]*\.(a|la))
 PKGFILES_DEVEL += $(call baseisadirs,$(libdir),pkgconfig(/.*)?)
 PKGFILES_DEVEL += $(includedir)/.*
@@ -376,12 +385,16 @@ endef
 # for distributing files to individual packages.
 PROTOTYPE = $(WORKDIR)/prototype
 
+define dontrelocate
+	$(shell gsed -i -e 's,\(.\) .* \($(1)[\s/]*\),\1 norelocate /\2,g' $(2))
+endef
+
 # Dynamic prototypes work like this:
 # - A prototype from DISTFILES takes precedence over 
 
 # Pulled in from pkglib/csw_prototype.gspec
 $(PROTOTYPE): $(WORKDIR) merge
-	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=/ >$@
+	$(_DBG)cswproto -c $(GARDIR)/etc/commondirs-$(GARCH) -r $(PKGROOT) $(PKGROOT)=$(if $(ALLOW_RELOCATE),,'/') >$@ 
 
 # pathfilter lives in bin/pathfilter and takes care of including/excluding paths from
 # a prototype (see "perldoc bin/pathfilter"). We employ it here to:
@@ -422,6 +435,7 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	else \
 	  cat $(PROTOTYPE) $(call checkpkg_override_filter,$*) $(_CSWCLASS_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	fi
+	$(if $(ALLOW_RELOCATE),$(call dontrelocate,opt,$(PROTOTYPE)))
 
 $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 	$(_DBG)cat $(WORKDIR)/$*.prototype >$@
@@ -447,16 +461,19 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 # The dependencies to CSWcswclassutils and CSWtexinfo are only added if there are files
 # actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(_CATEGORY_RUNTIME_DEP_PKGS)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),CSWalternatives)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
 
-# The final "true" is for packages without dependencies to make the shell happy as "( )" is not allowed.
+$(WORKDIR)/%.depend: _DEP_PKGS=$(or $(RUNTIME_DEP_PKGS_ONLY_$*),$(RUNTIME_DEP_PKGS_ONLY),$(sort $(_EXTRA_GAR_PKGS)) $(or $(RUNTIME_DEP_PKGS_$*),$(RUNTIME_DEP_PKGS),$(DEP_PKGS_$*),$(DEP_PKGS)))
 $(WORKDIR)/%.depend: $(WORKDIR)
-	$(_DBG)$(if $(_EXTRA_GAR_PKGS)$(RUNTIME_DEP_PKGS_$*)$(RUNTIME_DEP_PKGS)$(DEP_PKGS)$(DEP_PKGS_$*)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
+# The final "true" is for packages without dependencies to make the shell happy as "( )" is not allowed.
+$(WORKDIR)/%.depend:
+	$(_DBG)$(if $(_DEP_PKGS)$(INCOMPATIBLE_PKGS)$(INCOMPATIBLE_PKGS_$*), \
 		($(foreach PKG,$(INCOMPATIBLE_PKGS_$*) $(INCOMPATIBLE_PKGS),\
 			echo "I $(PKG)";\
 		)\
-		$(foreach PKG,$(sort $(_EXTRA_GAR_PKGS)) $(or $(RUNTIME_DEP_PKGS_$*),$(RUNTIME_DEP_PKGS),$(DEP_PKGS_$*),$(DEP_PKGS)),\
+		$(foreach PKG,$(_DEP_PKGS),\
 			$(if $(SPKG_DESC_$(PKG)), \
 				echo "P $(PKG) $(call catalogname,$(PKG)) - $(SPKG_DESC_$(PKG))";, \
 				echo "$(shell (/usr/bin/pkginfo $(PKG) || echo "P $(PKG) - ") | $(GAWK) '{ $$1 = "P"; print } ')"; \
@@ -545,17 +562,20 @@ endef
 
 # Make sure every producable package contains specific descriptions.
 # We explicitly ignore NOPACKAGE here to disallow circumventing the check.
+$(if $(filter-out $(firstword $(SPKG_SPECS)),$(SPKG_SPECS)),\
+	$(foreach P,$(SPKG_SPECS),\
+		$(if $(SPKG_DESC_$(P)),,$(error Multiple packages defined and SPKG_DESC_$(P) is not set.))))
+
 $(foreach P,$(SPKG_SPECS),\
-  $(foreach Q,$(filter-out $P,$(SPKG_SPECS)),\
-    $(if $(shell if test "$(SPKG_DESC_$P)" = "$(SPKG_DESC_$Q)"; then echo ERROR; fi),\
-      $(error The package descriptions for $P and $Q are identical, please make sure all package descriptions are unique by setting SPKG_DESC_<pkg> for each package) \
-)))
+  $(foreach Q,$(filter-out $(P),$(SPKG_SPECS)),\
+	$(if $(filter-out $(subst  ,_,$(SPKG_DESC_$(P))),$(subst  ,_,$(SPKG_DESC_$(Q)))),,$(error The package descriptions for $(P) [$(if $(SPKG_DESC_$(P)),$(SPKG_DESC_$(P)),<not set>)] and $(Q) [$(if $(SPKG_DESC_$(Q)),$(SPKG_DESC_$(Q)),<not set>)] are identical.  Please make sure that all descriptions are unique by setting SPKG_DESC_<pkg> for each package.))))
 
 .PRECIOUS: $(WORKDIR)/%.pkginfo
 
 # The texinfo filter has been taken out of the normal filters as TEXINFO has a default.
 $(WORKDIR)/%.pkginfo: $(WORKDIR)/%.prototype
 $(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),cswalternatives)
+$(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "build")')),build)
 $(WORKDIR)/%.pkginfo: SPKG_CLASSES += $(shell cat $(WORKDIR)/$*.prototype | perl -e 'while(<>){@F=split;$$c{$$F[1]}++};$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$c{$C});)')
 
 $(WORKDIR)/%.pkginfo: $(WORKDIR)
@@ -567,7 +587,8 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "VENDOR=$(call pkgvar,SPKG_VENDOR,$*)"; \
 	echo "EMAIL=$(call pkgvar,SPKG_EMAIL,$*)"; \
 	echo "PSTAMP=$(LOGNAME)@$(shell hostname)-$(shell date '+%Y%m%d%H%M%S')"; \
-	echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*)"; \
+	$(if $(ALLOW_RELOCATE),echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*) norelocate"; \
+	,echo "CLASSES=$(call pkgvar,SPKG_CLASSES,$*)";) \
 	echo "HOTLINE=http://www.opencsw.org/bugtrack/"; \
 	echo "OPENCSW_CATALOGNAME=$(call catalogname,$*)"; \
 	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
@@ -575,6 +596,7 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "OPENCSW_BUNDLE=$(BUNDLE)"; \
 	$(_CATEGORY_PKGINFO) \
 	) >$@
+	$(if $(ALLOW_RELOCATE),echo "BASEDIR=$(RELOCATE_PREFIX)" >>$@)
 
 
 # findlicensefile - Find an existing file for a given license name
@@ -623,6 +645,9 @@ reset-merge-license:
 merge-classutils: merge-migrateconf merge-usergroup merge-inetdconf merge-etcservices
 
 reset-merge-classutils: reset-merge-migrateconf reset-merge-usergroup reset-merge-inetdconf reset-merge-etcservices
+
+reset-merge-ap2mod:
+	@rm -f $(COOKIEDIR)/post-merge-ap2mod
 
 merge-migrateconf: $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),merge-migrateconf-$S))
 	@$(MAKECOOKIE)
@@ -852,7 +877,7 @@ platforms:
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) GAR_PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
@@ -867,7 +892,7 @@ platforms:
 			echo " (built on this host)";\
 			  $(MAKE) -s GAR_PLATFORM=$P _pkgshow;echo;,\
 			echo " (built on host '$(PACKAGING_HOST_$P)')";\
-			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) -s GAR_PLATFORM=$P _pkgshow";echo;\
+			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $(CURDIR) -s GAR_PLATFORM=$P _pkgshow";echo;\
 		)\
 	)
 	@$(MAKECOOKIE)
@@ -878,7 +903,7 @@ platforms-%:
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) -s GAR_PLATFORM=$P $* && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P $*" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P $*" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\

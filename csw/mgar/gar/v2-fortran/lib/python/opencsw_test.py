@@ -1,4 +1,4 @@
-#!/opt/csw/bin/python2.6
+#!/usr/bin/env python2.6
 # $Id$
 
 import copy
@@ -63,6 +63,12 @@ PKGMAP_2 = """: 1 18128
 1 i preinstall 1488 45678 125630250
 """
 
+PKGMAP_3 = """1 d none /opt/csw/apache2/ap2mod 0755 root bin
+1 e build /opt/csw/apache2/ap2mod/suexec ? ? ? 1472 50478 1289099700
+1 d none /opt/csw/apache2/libexec 0755 root bin
+1 f none /opt/csw/apache2/libexec/mod_suexec.so 0755 root bin 6852 52597 1289092061
+"""
+
 SUBMITPKG_DATA_1 = {
     'NEW_PACKAGE': 'new package',
     'to': u'Release Manager <somebody@example.com>',
@@ -117,6 +123,20 @@ class ParsePackageFileNameTest(unittest.TestCase):
       self.assertEqual(catalogname, compiled["catalogname"])
       self.assertEqual(pkg_version, compiled["full_version_string"])
 
+  def testParsePackageFileName_RichpSe(self):
+    file_name = "RICHPse-3.5.1.pkg.gz"
+    parsed = opencsw.ParsePackageFileName(file_name)
+    self.assertEqual(parsed["version"], "3.5.1")
+    self.assertEqual(parsed["vendortag"], "UNKN")
+    self.assertEqual(parsed["arch"], "unknown")
+    self.assertEqual(parsed["osrel"], "unspecified")
+    self.assertEqual(parsed["catalogname"], "RICHPse")
+
+  def testParsePackageFileName_Nonsense(self):
+    """Checks if the function can sustain a non-conformant string."""
+    file_name = "What if I wrote a letter to my grandma here?"
+    parsed = opencsw.ParsePackageFileName(file_name)
+
 
 class ParsePackageFileNameTest_2(unittest.TestCase):
 
@@ -141,6 +161,69 @@ class ParsePackageFileNameTest_2(unittest.TestCase):
     file_name = "achievo-0.8.4-all-CSW.pkg.gz"
     parsed = opencsw.ParsePackageFileName(file_name)
     self.assertEqual("unspecified", parsed["osrel"])
+
+
+class ComposePackageFileNameUnitTest(unittest.TestCase):
+
+  def setUp(self):
+    self.parsed = {'arch': 'i386',
+                   'catalogname': 'mysql5client',
+                   'full_version_string': '5.0.87,REV=2010.02.28',
+                   'osrel': 'SunOS5.8',
+                   'revision_info': {'REV': '2010.02.28'},
+                   'vendortag': 'CSW',
+                   'version': '5.0.87',
+                   'version_info': {'major version': '5',
+                                    'minor version': '0',
+                                    'patchlevel': '87'}}
+
+  def testSimple(self):
+    file_name = 'mysql5client-5.0.87,REV=2010.02.28-SunOS5.8-i386-CSW.pkg'
+    self.assertEquals(file_name, opencsw.ComposePackageFileName(self.parsed))
+
+  def testMoreRev(self):
+    file_name = 'mysql5client-5.0.87,REV=2010.02.28_foo=bar-SunOS5.8-i386-CSW.pkg'
+    self.parsed["revision_info"]["foo"] = "bar"
+    self.assertEquals(file_name, opencsw.ComposePackageFileName(self.parsed))
+
+
+class ParseVersionStringTest(unittest.TestCase):
+
+  def test_NoRev(self):
+    data = "1.2.3"
+    expected = ('1.2.3', {
+      'minor version': '2',
+      'patchlevel': '3',
+      'major version': '1'},
+      {})
+    self.assertEqual(expected, opencsw.ParseVersionString(data))
+
+  def test_Text(self):
+    data = "That, sir, is a frab-rication! It's wabbit season!"
+    opencsw.ParseVersionString(data)
+
+  def test_Empty(self):
+    data = ""
+    expected = ('', {'major version': ''}, {})
+    self.assertEqual(expected, opencsw.ParseVersionString(data))
+
+  def testExtraStringsHashable(self):
+    data = "2.7,REV=2009.06.18_STABLE6"
+    expected = (
+        '2.7',
+        {
+          'minor version': '7',
+          'major version': '2'},
+        {
+          # Here's the important bit: all parts of the parsed version
+          # must be hashable for submitpkg to work.
+          'extra_strings': ('STABLE6',),
+          'REV': '2009.06.18',
+        }
+    )
+    result = opencsw.ParseVersionString(data)
+    hash(result[2]['extra_strings'])
+    self.assertEqual(expected, opencsw.ParseVersionString(data))
 
 
 class UpgradeTypeTest(unittest.TestCase):
@@ -299,18 +382,6 @@ class PackageGroupNameTest(unittest.TestCase):
                                                repr(expected_name),
                                                repr(result)))
 
-  def testLongestCommonSubstring_1(self):
-    self.assertEqual(set(["foo"]), opencsw.LongestCommonSubstring("foo", "foo"))
-
-  def testLongestCommonSubstring_2(self):
-    self.assertEqual(set([]), opencsw.LongestCommonSubstring("foo", "bar"))
-
-  def testLongestCommonSubstring_3(self):
-    self.assertEqual(set(["bar"]), opencsw.LongestCommonSubstring("barfoobar", "bar"))
-
-  def testLongestCommonSubstring_4(self):
-    self.assertEqual(set(['bcd', 'hij']), opencsw.LongestCommonSubstring("abcdefghijk", "bcdhij"))
-
 
 class PkgmapUnitTest(unittest.TestCase):
 
@@ -338,6 +409,9 @@ class PkgmapUnitTest(unittest.TestCase):
     pkgmap = opencsw.Pkgmap(PKGMAP_2.splitlines())
     self.assertTrue("cswcpsampleconf" in pkgmap.entries_by_class)
 
+  def test_4(self):
+    pkgmap = opencsw.Pkgmap(PKGMAP_3.splitlines())
+    self.assertTrue("build" in pkgmap.entries_by_class)
 
 class IndexByUnitTest(unittest.TestCase):
 
@@ -393,28 +467,6 @@ class SubmitpkgTemplateUnitTest(unittest.TestCase):
     t = Template.Template(opencsw.SUBMITPKG_TMPL,
                           searchList=[submitpkg_data])
     self.assertTrue(re.search(r"new package", unicode(t)), unicode(t))
-
-class OpencswCatalogUnitTest(unittest.TestCase):
-
-  def test_ParseCatalogLine_1(self):
-    line = (
-        'tmux 1.2,REV=2010.05.17 CSWtmux '
-        'tmux-1.2,REV=2010.05.17-SunOS5.9-sparc-CSW.pkg.gz '
-        '145351cf6186fdcadcd169b66387f72f 214091 '
-        'CSWcommon|CSWlibevent none none\n')
-    oc = opencsw.OpencswCatalog(None)
-    parsed = oc._ParseCatalogLine(line)
-    expected = {'catalogname': 'tmux',
-                'deps': 'CSWcommon|CSWlibevent',
-                'file_basename': 'tmux-1.2,REV=2010.05.17-SunOS5.9-sparc-CSW.pkg.gz',
-                'md5sum': '145351cf6186fdcadcd169b66387f72f',
-                'none_thing_1': 'none',
-                'none_thing_2': 'none',
-                'pkgname': 'CSWtmux',
-                'size': '214091',
-                'version': '1.2,REV=2010.05.17'}
-    self.assertEquals(expected, parsed)
-
 
 
 if __name__ == '__main__':

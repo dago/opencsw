@@ -181,6 +181,7 @@ all_rpaths = set([
      '/usr/local/lib',
      '/usr/local/openldap-2.3/lib',
      '/usr/openwin/lib',
+     '/usr/openwin/lib/64',
      '/usr/sfw/lib',
      '/usr/ucblib',
      '/usr/xpg4/lib',

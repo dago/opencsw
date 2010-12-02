@@ -27,7 +27,7 @@ GIT_TREEISH = $(if $(GIT_TREEISH_$(1)),$(GIT_TREEISH_$(1)),HEAD)
 
 #################### FETCH RULES ####################
 
-URLS = $(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(ALLFILES_PATCHFILES)))
+URLS := $(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(ALLFILES_PATCHFILES)))
 
 # if the caller has defined _postinstall, etc targets for a package, add
 # these 'dynamic script' targets to our fetch list
@@ -339,6 +339,12 @@ tar-lz-extract-%:
 	@lzip -dc $(DOWNLOADDIR)/$* | gtar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
 	@$(MAKECOOKIE)
 
+# rule to extract files with tar and lzma
+tar-lzma-extract-%:
+	@echo " ==> Extracting $(DOWNLOADDIR)/$*"
+	@lzma -dc $(DOWNLOADDIR)/$* | gtar $(TAR_ARGS) -xf - -C $(EXTRACTDIR)
+	@$(MAKECOOKIE)
+
 # extract compressed single files
 gz-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
@@ -362,6 +368,12 @@ lz-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
 	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
 	@lzip -d $(WORKDIR)/$*
+	@$(MAKECOOKIE)
+
+lzma-extract-%:
+	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
+	@cp $(DOWNLOADDIR)/$* $(WORKDIR)/
+	@lzma -d $(WORKDIR)/$*
 	@$(MAKECOOKIE)
 
 # extra dependency rule for git repos, that will allow the user
@@ -431,6 +443,9 @@ extract-archive-%.tar.xz: tar-xz-extract-%.tar.xz
 extract-archive-%.tar.lz: tar-lz-extract-%.tar.lz
 	@$(MAKECOOKIE)
 
+extract-archive-%.tar.lzma: tar-lzma-extract-%.tar.lzma
+	@$(MAKECOOKIE)
+
 extract-archive-%.zip: zip-extract-%.zip
 	@$(MAKECOOKIE)
 
@@ -450,6 +465,9 @@ extract-archive-%.xz: xz-extract-%.xz
 	@$(MAKECOOKIE)
 
 extract-archive-%.lz: lz-extract-%.lz
+	@$(MAKECOOKIE)
+
+extract-archive-%.lzma: lzma-extract-%.lzma
 	@$(MAKECOOKIE)
 
 extract-archive-%.git: git-extract-%.git
@@ -498,7 +516,7 @@ gz-patch-%:
 # apply normal patches (git format-patch output or old-style diff -r)
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@( if ggrep -q 'Subject:' $(abspath $(DOWNLOADDIR)/$*); then \
+	@( if ggrep -q 'diff --git' $(abspath $(DOWNLOADDIR)/$*); then \
 		cd $(WORKSRC); git am --ignore-space-change --ignore-whitespace $(abspath $(DOWNLOADDIR)/$*); \
 	   else \
 		echo Adding old-style patch...; \

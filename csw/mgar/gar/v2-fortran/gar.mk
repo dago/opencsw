@@ -11,20 +11,11 @@
 # Comment this out to make much verbosity
 #.SILENT:
 
-#ifeq ($(origin GARDIR), undefined)
-#GARDIR := $(CURDIR)/../..
-#endif
-
-#GARDIR ?= ../..
-#ifeq ($(origin GARDIR), undefined)
-#GARDIR := $(CURDIR)/../..
-#endif
-
 ifneq ($(abspath /),/)
 $(error Your version of 'make' is too old: $(MAKE_VERSION). Please make sure you are using at least 3.81)
 endif
 
-GARDIR ?= gar
+# $(GARDIR) is pre-set by the top-level category.mk
 GARBIN  = $(GARDIR)/bin
 
 DIRSTODOTS = $(subst . /,./,$(patsubst %,/..,$(subst /, ,/$(1))))
@@ -135,7 +126,7 @@ merge-$(2): BUILDHOST=$$(call modulation2host)
 merge-$(2):
 	@echo "[===== Building modulation '$(2)' on host '$$(BUILDHOST)' =====]"
 	$$(if $$(and $$(BUILDHOST),$$(filter-out $$(THISHOST),$$(BUILDHOST))),\
-		$(SSH) $$(BUILDHOST) "PATH=$$(PATH) $(MAKE) -C $$(CURDIR) $(if $(GAR_PLATFORM),GAR_PLATFORM=$(GAR_PLATFORM)) MODULATION=$(2) $(3) merge-modulated",\
+		$(SSH) $$(BUILDHOST) "PATH=$$(PATH) MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $$(CURDIR) $(if $(GAR_PLATFORM),GAR_PLATFORM=$(GAR_PLATFORM)) MODULATION=$(2) $(3) merge-modulated",\
 		$(MAKE) $(if $(GAR_PLATFORM),GAR_PLATFORM=$(GAR_PLATFORM)) MODULATION=$(2) $(3) merge-modulated\
 	)
 	@# The next line has intentionally been left blank to explicitly terminate this make rule
@@ -395,7 +386,7 @@ EXTRACT_TARGETS = $(or $(EXTRACT_TARGETS-$(MODULATION)),$(EXTRACT_TARGETS-defaul
 
 # We call an additional extract-modulated without resetting any variables so
 # a complete unpacked set goes to the global dir for packaging (like gspec)
-extract: checksum $(COOKIEDIR) pre-extract pre-extract-git-check extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
+extract: checksum $(COOKIEDIR) pre-extract $(if $(NOGITPATCH),,pre-extract-git-check) extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
 	@$(DONADA)
 
 extract-global: $(if $(filter global,$(MODULATION)),extract-modulated)
@@ -406,7 +397,7 @@ extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		$(addprefix dep-$(GARDIR)/,$(EXTRACTDEPS)) \
 		announce-modulation \
 		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated \
-		$(if $(filter global,$(MODULATION)),,post-extract-gitsnap) \
+		$(if $(filter global,$(MODULATION)),,$(if $(NOGITPATCH),,post-extract-gitsnap)) \
 		$(foreach FILE,$(EXPANDVARS),expandvars-$(FILE))
 	@$(DONADA)
 
@@ -467,7 +458,7 @@ PATCH_TARGETS = $(addprefix patch-extract-,$(PATCHFILES) $(PATCHFILES_$(MODULATI
 patch: pre-patch $(addprefix patch-,$(MODULATIONS)) post-patch
 	@$(DONADA)
 
-patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) $(if $(filter global,$(MODULATION)),,post-patch-gitsnap) post-patch-$(MODULATION) post-patch-modulated
+patch-modulated: extract-modulated $(WORKSRC) pre-patch-modulated pre-patch-$(MODULATION) $(PATCH_TARGETS) $(if $(filter global,$(MODULATION)),,$(if $(NOGITPATCH),,post-patch-gitsnap)) post-patch-$(MODULATION) post-patch-modulated
 	@$(DONADA)
 
 # returns true if patch has completed successfully, false
@@ -484,7 +475,11 @@ post-patch-gitsnap: $(PATCH_TARGETS)
 	  fi )
 	@$(MAKECOOKIE)
 
-makepatch: $(addprefix patch-,$(MODULATIONS)) $(addprefix makepatch-,$(MODULATIONS))
+makepatch: $(if $(NOGITPATCH),makepatch-nogit,$(addprefix patch-,$(MODULATIONS)) $(addprefix makepatch-,$(MODULATIONS)))
+	@$(DONADA)
+
+makepatch-nogit:
+	@echo You set NOGITPATCH in your build recipe.  I can't create a patch.
 	@$(DONADA)
 
 # Allow generation of patches from modified work source.
@@ -805,7 +800,7 @@ endef
 
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge merge-do merge-license merge-classutils merge-checkpkgoverrides merge-alternatives $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) post-merge
+merge: checksum pre-merge merge-do merge-license merge-classutils merge-checkpkgoverrides merge-alternatives $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) $(if $(AP2_MODS),post-merge-ap2mod) post-merge
 	@$(DONADA)
 
 merge-do: $(if $(PARALLELMODULATIONS),merge-parallel,merge-sequential)
@@ -833,6 +828,9 @@ merge-watch: $(addprefix $(WORKROOTDIR)/build-,global $(MODULATIONS))
 		echo "Building all ISAs in parallel. Please see the individual logfiles for details:";$(foreach M,$(MODULATIONS),echo "- $(WORKROOTDIR)/build-$M/build.log";)\
 	)
 
+post-merge-ap2mod:
+	$(GARBIN)/ap2mod_build_scripts $(PKGROOT) $(AP2_MODFILES)
+	@$(MAKECOOKIE)
 
 # This merges the 
 merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $(MERGE_TARGETS) post-merge-$(MODULATION) post-merge-modulated
@@ -840,14 +838,14 @@ merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $
 
 # Copy the whole tree verbatim
 merge-copy-all: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") \
 		. $(PKGROOT))
 	@$(MAKECOOKIE)
 
 # Copy only the merge directories
 merge-copy-only: $(PKGROOT)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") -s ",.*,," \
 		. $(PKGROOT) \
 	)
@@ -855,7 +853,7 @@ merge-copy-only: $(PKGROOT)
 
 # Copy the whole tree and relocate the directories in $(MERGE_DIRS)
 merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") \
 		. $(PKGROOT) \
 	)
@@ -863,7 +861,7 @@ merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
 
 # Copy only the relocated directories
 merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") -s ",.*,," \
 		 . $(PKGROOT) \
 	)
@@ -871,7 +869,7 @@ merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
 
 # Copy 
 merge-copy-config-only:
-	$(_DBG_MERGE)(cd $(INSTALLISADIR); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
 		-s ",^\(\.$(bindir)/.*-config\)\$$,\1,p" \
 		-s ",.*,," \
 		. $(PKGROOT) \
@@ -881,7 +879,7 @@ merge-copy-config-only:
 .PHONY: remerge reset-merge reset-merge-modulated
 remerge: reset-merge merge
 
-reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-src
+reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-ap2mod reset-merge-src
 	@rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
 	@rm -rf $(PKGROOT)
 

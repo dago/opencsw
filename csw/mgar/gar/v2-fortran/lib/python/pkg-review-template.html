@@ -264,6 +264,20 @@ ul.overrides li {
   <li>
     base name: <code>$bin.base_name</code>
   </li>
+#if 'soname' in $bin
+  <li>
+    soname:
+    <ul>
+      <li>
+        <code>
+          <a href="http://www.opencsw.org/packagesContainingFile/?fileName=$bin.soname&searchsubmit=1">
+            $bin.soname
+          </a>
+        </code>
+      </li>
+    </ul>
+  </li>
+#end if
   <li> runpath:
     <ul>
 #for runpath_el in $bin.runpath
