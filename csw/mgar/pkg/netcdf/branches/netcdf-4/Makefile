@@ -5,14 +5,14 @@
 GARNAME = netcdf
 GARVERSION = 4.1.1
 CATEGORIES = lib
-DESCRIPTION = machine-independent data formats for array-oriented scientific data
+DESCRIPTION = Machine-independent data formats for array-oriented scientific data
 SPKG_SOURCEURL = http://www.unidata.ucar.edu/software/netcdf/
 MASTER_SITES = http://www.unidata.ucar.edu/downloads/netcdf/ftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
-RUNTIME_DEP_PKGS  = CSWcurlrt CSWhdf5rt CSWzlib
-RUNTIME_DEP_PKGS += CSWoldaprt CSWlibcares CSWlibidn CSWosslrt
+RUNTIME_DEP_PKGS  = CSWhdf5rt CSWzlib
+RUNTIME_DEP_PKGS += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4g++rt
 
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS) CSWtetex 
 BUILD_DEP_PKGS += CSWgcc4gfortran
