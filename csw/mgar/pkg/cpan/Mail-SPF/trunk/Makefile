@@ -16,7 +16,11 @@ CATALOGNAME = pm_mailspf
 # Required packages due to bug reports
 #   http://www.opencsw.org/mantis/view.php?id=4139
 #   http://www.opencsw.org/mantis/view.php?id=4140
-RUNTIME_DEP_PKGS = CSWpmversion CSWpmnetaddrip
+DEP_PKGS = CSWpmversion CSWpmnetaddrip
+
+# One more required package due to bug report
+#   https://www.opencsw.org/mantis/view.php?id=4623
+DEP_PKGS += CSWpmerror
 
 ARCHALL = 1
 
