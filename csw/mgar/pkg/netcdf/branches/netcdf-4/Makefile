@@ -11,11 +11,67 @@ MASTER_SITES = http://www.unidata.ucar.edu/downloads/netcdf/ftp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
-RUNTIME_DEP_PKGS  = CSWhdf5rt CSWzlib
-RUNTIME_DEP_PKGS += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4g++rt
 
-BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS) CSWtetex 
+BUILD_DEP_PKGS += CSWhdf5rt CSWzlib
+BUILD_DEP_PKGS += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4g++rt
+BUILD_DEP_PKGS += CSWtetex 
 BUILD_DEP_PKGS += CSWgcc4gfortran
+
+PACKAGES = CSWnetcdf
+CATALOGNAME_CSWnetcdf = netcdf
+SPKG_DESC_CSWnetcdf = Machine-independent data formats for array-oriented scientific data
+RUNTIME_DEP_PKGS_CSWnetcdf += CSWhdf5rt
+RUNTIME_DEP_PKGS_CSWnetcdf += CSWzlib
+RUNTIME_DEP_PKGS_CSWnetcdf += CSWlibnetcdf6
+
+PACKAGES += CSWlibnetcdf6
+CATALOGNAME_CSWlibnetcdf6 = libnetcf6
+PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/libnetcdf.so.6.0.0
+PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/libnetcdf.so.6\.[0-9\.]+
+PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/libnetcdf.so.6
+PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/sparcv9/libnetcdf.so.6.0.0
+PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/sparcv9/libnetcdf.so.6\.[0-9\.]+
+PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/sparcv9/libnetcdf.so.6
+SPKG_DESC_CSWlibnetcdf6 = Machine-independent data formats for array-oriented scientific data, libnetcdf.so.6
+RUNTIME_DEP_PKGS_CSWlibnetcdf6  = CSWhdf5rt
+RUNTIME_DEP_PKGS_CSWlibnetcdf6 += CSWgcc4corert
+
+PACKAGES += CSWlibnetcdf-c++5
+CATALOGNAME_CSWlibnetcdf-c++5 = libnetcdf_c++5
+PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/libnetcdf_c\+\+.so.5.0.0
+PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/libnetcdf_c\+\+.so.5\.[0-9\.]+
+PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/libnetcdf_c\+\+.so.5
+PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/sparcv9/libnetcdf_c\+\+.so.5.0.0
+PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/sparcv9/libnetcdf_c\+\+.so.5\.[0-9\.]+
+PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/sparcv9/libnetcdf_c\+\+.so.5
+SPKG_DESC_CSWlibnetcdf-c++5 += Machine-independent data formats for array-oriented scientific data, libnetcdf_c++.so.5
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5  = CSWhdf5rt
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5 += CSWgcc4corert CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5 += CSWlibnetcdf6
+
+PACKAGES += CSWlibnetcdff5
+CATALOGNAME_CSWlibnetcdff5 = libnetcdff5
+PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/libnetcdff.so.5.0.0
+PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/libnetcdff.so.5\.[0-9\.]+
+PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/libnetcdff.so.5
+PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/sparcv9/libnetcdff.so.5.0.0
+PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/sparcv9/libnetcdff.so.5\.[0-9\.]+
+PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/sparcv9/libnetcdff.so.5
+SPKG_DESC_CSWlibnetcdff5 = Machine-independent data formats for array-oriented scientific data, libnetcdff.so.5
+RUNTIME_DEP_PKGS_CSWlibnetcdff5  = CSWhdf5rt
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWgcc4gfortranrt CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibnetcdf6
+
+PACKAGES += CSWnetcdf-devel
+CATALOGNAME_CSWnetcdf-devel = netcdf_devel
+SPKG_DESC_CSWnetcdf-devel = Development files for NetCDF 
+PKGFILES_CSWnetcdf-devel += /opt/csw/lib/libnetcdf.so
+PKGFILES_CSWnetcdf-devel += /opt/csw/lib/libnetcdf_c\+\+.so
+PKGFILES_CSWnetcdf-devel += /opt/csw/lib/libnetcdff.so
+PKGFILES_CSWnetcdf-devel += /opt/csw/lib/sparcv9/libnetcdf.so
+PKGFILES_CSWnetcdf-devel += /opt/csw/lib/sparcv9/libnetcdf_c\+\+.so
+PKGFILES_CSWnetcdf-devel += /opt/csw/lib/sparcv9/libnetcdff.so
+PKGFILES_CSWnetcdf-devel += $(PKGFILES_DEVEL)
 
 ## CFLAGS AND LDFLAGS are necessary due to problems with the fortran bindings when
 ## building 64-bit
