@@ -6,7 +6,7 @@ GARVERSION = 9.7.2
 CATEGORIES = net
 
 # Enable these for Px-releases
-RELEASE = P2
+RELEASE = P3
 DISTVERSION = $(GARVERSION)-$(RELEASE)
 SPKG_VERSION = $(GARVERSION)$(RELEASE)
 DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
@@ -91,7 +91,6 @@ SPKG_SOURCEURL = http://www.isc.org/software/bind
 CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
 CHECKPKG_OVERRIDES_CSWbindchroot += surplus-dependency|CSWbind
 CHECKPKG_OVERRIDES_CSWbinddevel += archall-devel-package
-CHECKPKG_OVERRIDES_CSWbinddevel += surplus-dependency|CSWbind
 CHECKPKG_OVERRIDES_CSWlibbind += non-uniform-lib-versions-in-package|sonames=['libbind9.so.60',|'libdns.so.69',|'libisc.so.62',|'libisccc.so.60',|'libisccfg.so.62',|'liblwres.so.60']
 
 include gar/category.mk
