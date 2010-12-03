@@ -1,10 +1,10 @@
 GARNAME = dhcp
 GARVERSION = 4.2.0
-#RELEASE = P1
-#DISTVERSION = $(GARVERSION)-$(RELEASE)
-#SPKG_VERSION = $(GARVERSION)$(RELEASE)
-#DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
-#WORKSRC = $(WORKDIR)/$(DISTNAME)
+RELEASE = P1
+DISTVERSION = $(GARVERSION)-$(RELEASE)
+SPKG_VERSION = $(GARVERSION)$(RELEASE)
+DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
 DESCRIPTION = ISC DHCP reference implementation
@@ -17,7 +17,7 @@ endef
 
 MASTER_SITES = http://ftp.isc.org/isc/dhcp/
 DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 
 LICENSE = LICENSE
 
@@ -27,13 +27,11 @@ RUNTIME_DEP_PKGS_CSWdhcp = CSWosslrt
 SPKG_DESC_CSWdhcp = ISC DHCP reference implementation
 
 RUNTIME_DEP_PKGS_CSWdhcpdevel = CSWdhcp
+SPKG_DESC_CSWdhcpdevel = ISC DHCP development package
 CATALOGNAME_CSWdhcpdevel = dhcp_devel
 ARCHALL_CSWdhcpdevel = 1
 
 UFILES_REGEX = ($(GARNAME)-\d+(?:\.\d+)*).tar.gz
-
-CHECKPKG_OVERRIDES_CSWdhcpdevel += archall-devel-package
-CHECKPKG_OVERRIDES_CSWdhcpdevel += surplus-dependency|CSWdhcp
 
 GARCOMPILER = GNU
 TEST_TARGET = check
