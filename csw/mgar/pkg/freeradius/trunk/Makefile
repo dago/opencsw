@@ -20,15 +20,26 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://freeradius.org/
 
-GARCOMPILER = GCC3
+GARCOMPILER = GCC4
 
-STRIP_LIBTOOL = 1
+# Stripping libtool breaks the build in versions <=2.1.7
+#STRIP_LIBTOOL = 1
 
-CONFIGURE_ARGS = $(DIRPATHS)
-## 2.1.10 requires using included libtool instead of system
-#CONFIGURE_ARGS += --with-system-libtool
+## Some of the RLM Submodules don't seem to pick up the include paths without 
+## setting CFLAGS
+EXTRA_CFLAGS  = -I/opt/csw/include
+#EXTRA_CFLAGS += -DIE_LIBTOOL_DIE
+#CONFIGURE_ENV = CFLAGS="$(CFLAGS)"
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += CC=$(CC) CXX=$(CXX) F77=$(F77) FC=$(FC)
+CONFIGURE_ARGS += CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)"
+CONFIGURE_ARGS += CPPFLAGS="$(CPPFLAGS)" FCFLAGS="$(FCFLAGS)"
+CONFIGURE_ARGS += LDFLAGS="$(LDFLAGS)"
+CONFIGURE_ARGS += --with-system-libtool
+CONFIGURE_ARGS += --with-system-libltld
 CONFIGURE_ARGS += --without-rlm_sqlippool
-CONFIGURE_ARGS += --without-rlm_sql_mysql
+CONFIGURE_ARGS += --with-rlm_sql_mysql
 CONFIGURE_ARGS += --without-rlm_sql_postgresql
 CONFIGURE_ARGS += --without-rlm_sql_db2
 CONFIGURE_ARGS += --without-rlm_sql_firebird
@@ -36,23 +47,27 @@ CONFIGURE_ARGS += --without-rlm_sql_freetds
 CONFIGURE_ARGS += --without-rlm_sql_iodbc
 CONFIGURE_ARGS += --without-rlm_sql_oracle
 CONFIGURE_ARGS += --without-rlm_sql_sybase
-CONFIGURE_ARGS += --without-rlm_sql_unixodbc
-CONFIGURE_ARGS += --without-rlm-ldap
+CONFIGURE_ARGS += --with-rlm_sql_unixodbc
+CONFIGURE_ARGS += --with-rlm-ldap
 CONFIGURE_ARGS += --without-rlm_eap_ikev2
 CONFIGURE_ARGS += --without-rlm_eap_sim
-CONFIGURE_ARGS += --without-rlm_eap_tls
+CONFIGURE_ARGS += --with-rlm_eap_tls
 CONFIGURE_ARGS += --without-rlm_eap_peap
 CONFIGURE_ARGS += --without-rlm_eap_ttls
 CONFIGURE_ARGS += --without-rlm_eap_tnc
-CONFIGURE_ARGS += --without-rlm_krb5
+CONFIGURE_ARGS += --with-rlm_krb5
 CONFIGURE_ARGS += --without-rlm_dbm
 CONFIGURE_ARGS += --without-rlm_otp
-CONFIGURE_ARGS += --without-rlm_pam
-CONFIGURE_ARGS += --without-rlm_python
-CONFIGURE_ARGS += --without-snmp
+CONFIGURE_ARGS += --with-rlm_pam
+CONFIGURE_ARGS += --with-rlm_python
+CONFIGURE_ARGS += --with-snmp
+CONFIGURE_ARGS += --with-rlm_counter-include-dir=/opt/csw/include
+CONFIGURE_ARGS += --with-rlm_counter-lib-dir=/opt/csw/lib/$(MM_LIBDIR)
 
 # No tests available
 TEST_TARGET =
+
+INSTALL_ARGS += R=$(DESTDIR)
 
 include gar/category.mk
 
