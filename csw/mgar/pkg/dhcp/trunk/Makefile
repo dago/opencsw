@@ -53,6 +53,8 @@ SAMPLECONF = /etc/opt/csw/dhcpd.conf /etc/opt/csw/dhclient.conf /var/opt/csw/dhc
 
 SPKG_SOURCEURL = https://www.isc.org/software/dhcp
 
+CHECKPKG_OVERRIDES_CSWdhcpdevel += archall-devel-package
+
 include gar/category.mk
 
 install-custom:
