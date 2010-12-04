@@ -12,9 +12,9 @@
 #RC_SLEV 3
 #FMRI network
 
-APACHE_HOME=/opt/csw/apache2
-CONF_FILE=$APACHE_HOME/etc/httpd.conf
-APACHECTL=$APACHE_HOME/sbin/apachectl
+CONF_FILE=/etc/opt/csw/apache2/httpd.conf
+APACHECTL=/opt/csw/apache2/sbin/apachectl
+SERVERCRT=/etc/opt/csw/apache2/server.crt
 
 [ ! -f "$CONF_FILE" ] && exit 0
 [ ! -x "$APACHECTL" ] && exit 0
@@ -22,7 +22,7 @@ APACHECTL=$APACHE_HOME/sbin/apachectl
 case "$1" in
 start)
     cmd=$1
-    if [ -f "$APACHE_HOME/etc/server.crt" ]; then
+    if [ -f "$SERVERCRT" ]; then
         cmd="$cmd -DSSL"
     fi
     ;;
