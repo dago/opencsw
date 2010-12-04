@@ -84,6 +84,9 @@ PKGFILES_CSWnetcdf-devel += /opt/csw/lib/amd64/libnetcdf.so
 PKGFILES_CSWnetcdf-devel += /opt/csw/lib/amd64/libnetcdf_c\+\+.so
 PKGFILES_CSWnetcdf-devel += /opt/csw/lib/amd64/libnetcdff.so
 PKGFILES_CSWnetcdf-devel += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf6
+RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdff5
+RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf-c++5
 
 ## CFLAGS AND LDFLAGS are necessary due to problems with the fortran bindings when
 ## building 64-bit
@@ -146,5 +149,11 @@ EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
 ## about undefined symbol __sync_fetch_and_add_4 in libnetcdf_c++
 ## From Porting FAQ: http://wiki.opencsw.org/porting-faq#toc5
 OPT_FLAGS_GCC = 
+
+## The development package should pull in the various libs since it's hard to
+## link against what isn't there
+CHECKPKG_OVERRIDES_CSWnetcdf-devel += surplus-dependency|CSWlibnetcdf-c++5
+CHECKPKG_OVERRIDES_CSWnetcdf-devel += surplus-dependency|CSWlibnetcdf6
+CHECKPKG_OVERRIDES_CSWnetcdf-devel += surplus-dependency|CSWlibnetcdff5
 
 include gar/category.mk
