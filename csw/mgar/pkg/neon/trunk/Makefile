@@ -1,9 +1,9 @@
 GARNAME = neon
-GARVERSION = 0.29.4
+GARVERSION = 0.29.5
 CATEGORIES = lib
 
 EXTRA_MODULATORS = GARVERSION FEATURES
-MODULATIONS_GARVERSION = 0.26.4 0.29.4
+MODULATIONS_GARVERSION = 0.26.4 0.29.5
 MODULATIONS_FEATURES = minimal full
 
 DESCRIPTION = Neon HTTP and WebDAV client library
@@ -56,7 +56,7 @@ NOISAEXEC = 1
 INSTALL_OVERRIDE_VARS = docdir
 INSTALL_OVERRIDE_VAR_docdir = $(datadir)/doc/neon
 
-# isa-sparcv8-garversion-0.26.4-features-minimal isa-sparcv8-garversion-0.26.4-features-full isa-sparcv8-garversion-0.29.4-features-minimal isa-sparcv8-garversion-0.29.4-features-full isa-sparcv9-garversion-0.26.4-features-minimal isa-sparcv9-garversion-0.26.4-features-full isa-sparcv9-garversion-0.29.4-features-minimal isa-sparcv9-garversion-0.29.4-features-full
+# isa-sparcv8-garversion-0.26.4-features-minimal isa-sparcv8-garversion-0.26.4-features-full isa-sparcv8-garversion-0.29.5-features-minimal isa-sparcv8-garversion-0.29.5-features-full isa-sparcv9-garversion-0.26.4-features-minimal isa-sparcv9-garversion-0.26.4-features-full isa-sparcv9-garversion-0.29.5-features-minimal isa-sparcv9-garversion-0.29.5-features-full
 
 # We select pkgconfig for minimal library bindings. As libneon is self-contained (links
 # to all necessary libs directly) the full version can simly be linked in.
@@ -78,13 +78,13 @@ MERGE_DIRS_isa-default-garversion-0.26.4-features-full = $(libdir)
 MERGE_SCRIPTS_isa-default64-garversion-0.26.4-features-full = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-0.26.4-features-full = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-0.29.4-features-minimal = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-0.29.4-features-minimal = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-0.29.4-features-minimal = $(bindir) $(sbindir) $(libexecdir) $(libdir)
-MERGE_SCRIPTS_isa-default-garversion-0.29.4-features-full = copy-only
-MERGE_DIRS_isa-default-garversion-0.29.4-features-full = $(libdir)
-MERGE_SCRIPTS_isa-default64-garversion-0.29.4-features-full = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-0.29.4-features-full = $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-0.29.5-features-minimal = copy-all
+MERGE_SCRIPTS_isa-default64-garversion-0.29.5-features-minimal = copy-relocated-only
+MERGE_DIRS_isa-default64-garversion-0.29.5-features-minimal = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-garversion-0.29.5-features-full = copy-only
+MERGE_DIRS_isa-default-garversion-0.29.5-features-full = $(libdir)
+MERGE_SCRIPTS_isa-default64-garversion-0.29.5-features-full = copy-relocated-only
+MERGE_DIRS_isa-default64-garversion-0.29.5-features-full = $(libdir)
 
 EXTRA_LINKER_FLAGS = -lintl
 
