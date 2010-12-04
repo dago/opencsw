@@ -22,7 +22,7 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 GARNAME = subversion
-GARVERSION = 1.6.13
+GARVERSION = 1.6.15
 CATEGORIES = utils
 
 DESCRIPTION = Version control rethought
