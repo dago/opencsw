@@ -1431,6 +1431,7 @@ class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
   FUNCTION_NAME = 'CheckSharedLibraryNameMustBeAsubstringOfSoname'
   def CheckpkgTest(self):
     self.pkg_data = neon_stats[0]
+    # TODO: Implement this
 
 
 class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
@@ -1442,6 +1443,25 @@ class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
     self.error_mgr_mock.ReportError(
         'soname-not-part-of-filename',
         'soname=libneon.so.27 filename=foo.so.1')
+
+
+class TestCheckDocDir(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckDocDir'
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+    self.pkg_data["pkgmap"].append({
+      "class": "none",
+      "group": "bin",
+      "line": "",
+      "mode": '0755',
+      "path": "/opt/csw/share/doc/alien/license",
+      "type": "f",
+      "user": "root"
+    })
+    self.error_mgr_mock.ReportError(
+        'wrong-docdir',
+        'expected=/opt/csw/shared/doc/neon/... '
+        'in-package=/opt/csw/share/doc/alien/license')
 
 
 if __name__ == '__main__':
