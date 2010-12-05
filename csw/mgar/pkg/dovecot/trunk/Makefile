@@ -5,7 +5,7 @@
 # - USERGROUP doesn't work yet, wrong usage?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 GARNAME = dovecot
-GARVERSION = 1.2.15
+GARVERSION = 1.2.16
 CATEGORIES = server
 
 DESCRIPTION = Secure IMAP server
@@ -34,7 +34,7 @@ SPKG_DESC_CSWdovecot-devel = Dovecot secure IMAP server header files
 SPKG_DESC_CSWdovecot-sieve = Dovecot secure IMAP server sieve plugin
 
 RUNTIME_DEP_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt CSWlibpq
-RUNTIME_DEP_PKGS_CSWdovecot      += CSWsasl CSWsqlite3 CSWzlib CSWlibnet
+RUNTIME_DEP_PKGS_CSWdovecot      += CSWsasl CSWsqlite3rt CSWzlib CSWlibnet
 RUNTIME_DEP_PKGS_CSWdovecot      += CSWbzip2 CSWiconv CSWcswclassutils
 RUNTIME_DEP_PKGS_CSWdovecot      += CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWdovecot-devel = CSWdovecot
