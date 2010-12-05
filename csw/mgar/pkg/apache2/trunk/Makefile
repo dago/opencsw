@@ -246,6 +246,6 @@ post-merge: create-templates
 			echo "...$$f"; \
 			mv $$f $$f.CSW; \
 			$(abspath $(FILEDIR))/build_cas_template $$f > $$f; \
-			$(abspath $(FILEDIR))/ssl_cas_template server.crt > ssl_cert_migration.CSW; \
-		done )
+		done; \
+		cp $(abspath $(FILEDIR))/ssl_cas_template ssl_cert_migration.CSW )
 	@$(MAKECOOKIE)
