@@ -198,7 +198,7 @@ PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
-PROTOTYPE_FILTER = gawk '$$$$3 ~ /etc\/opt\/csw\/apache2/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"}; {print}'
+PROTOTYPE_FILTER = gawk '$$$$3 ~ /etc\/opt\/csw\/apache2/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"}; $$$$3 ~ /ssl_cert_migration.CSW/ {$$$$1 = "e"; $$$$2 = "build"}; {print}'
 
 include gar/category.mk
 
@@ -208,11 +208,9 @@ FIXCONFIG_DIRS     = $(DESTDIR)
 FIXCONFIG_RMPATHS  = $(DESTDIR)
 
 pre-configure-modulated:
-	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); ./buildconf)
 	@gsed -e s,INSTALL_PREFIX,$(prefix)/apache2,g \
 		$(WORKDIR)/config.layout > $(WORKDIR)/$(GARNAME)-$(GARVERSION)/config.layout
 	@$(MAKECOOKIE)
-
 
 post-install-modulated: rename-httpd copy-local-files copy-readmes
 
@@ -248,5 +246,6 @@ post-merge: create-templates
 			echo "...$$f"; \
 			mv $$f $$f.CSW; \
 			$(abspath $(FILEDIR))/build_cas_template $$f > $$f; \
+			$(abspath $(FILEDIR))/ssl_cas_template server.crt > ssl_cert_migration.CSW; \
 		done )
 	@$(MAKECOOKIE)
