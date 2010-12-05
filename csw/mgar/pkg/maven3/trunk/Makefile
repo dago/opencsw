@@ -1,6 +1,6 @@
 GARNAME = maven3
 GARVERSION = 3.0
-CATEGORIES = devel
+CATEGORIES = java
 
 DESCRIPTION = Java software project management and comprehension tool
 define BLURB

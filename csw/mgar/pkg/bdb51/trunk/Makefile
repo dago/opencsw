@@ -52,14 +52,19 @@ TEST_SCRIPTS =
 PACKAGES = CSWbdb51 CSWbdb51devel CSWbdb51doc
 
 CATALOGNAME_CSWbdb51      = berkeleydb51
+SPKG_DESC_CSWbdb51        = BerkeleyDB 5.1 embedded database libraries and utilities
+RUNTIME_DEP_PKGS_CSWbdb51 += CSWbdb51devel
+
 CATALOGNAME_CSWbdb51devel = berkeleydb51_devel
+SPKG_DESC_CSWbdb51devel   = BerkeleyDB 5.1 development support
+PKGFILES_CSWbdb51devel    = $(PKGFILES_DEVEL)
+
 CATALOGNAME_CSWbdb51doc   = berkeleydb51_doc
+SPKG_DESC_CSWbdb51doc     = BerkeleyDB 5.1 documentation
+PKGFILES_CSWbdb51doc      = $(PKGFILES_DOC)
 
 ARCHALL_CSWbdb51doc = 1
 
-SPKG_DESC_CSWbdb51      = BerkeleyDB 5.1 embedded database libraries and utilities
-SPKG_DESC_CSWbdb51devel = BerkeleyDB 5.1 development support
-SPKG_DESC_CSWbdb51doc   = BerkeleyDB 5.1 documentation
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
@@ -73,8 +78,6 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.* $(libdir)/db.jar
 # because GAR expects license to be a file instead of a directory
 EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
 
-PKGFILES_CSWbdb51doc = $(PKGFILES_DOC)
-PKGFILES_CSWbdb51devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
