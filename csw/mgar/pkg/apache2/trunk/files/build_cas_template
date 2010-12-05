@@ -24,12 +24,13 @@ if [ "\$1" = install ]; then
          \${PIR}/\$AP2_DIR/sbin/update20to22 \$NEW_CONF_FILE >&2
       fi
 
+      # handle the new path to default ssl key files.
+      perl -pi \
+         -e "s#/opt/csw/apache2/etc/server.crt#/etc/opt/csw/apache2/server.crt#; s#/opt/csw/apache2/etc/server.key#/etc/opt/csw/apache2/server.key#" \$NEW_CONF_FILE
+
       # ensure we use the config files from the new location 
       perl -pi \
          -e "s/etc\//\/etc\/opt\/csw\/apache2\//" \$NEW_CONF_FILE
-
-      perl -pi \
-         -e "s/\/opt\/csw\/apache2\/\/etc\/opt/\/etc\/opt\/csw\/apache2\//" \$NEW_CONF_FILE
    else
       # so, we're not an existing or 'needs migration' install, we must
       # install from the templates.
