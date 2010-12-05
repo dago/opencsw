@@ -27,6 +27,9 @@ if [ "\$1" = install ]; then
       # ensure we use the config files from the new location 
       perl -pi \
          -e "s/etc\//\/etc\/opt\/csw\/apache2\//" \$NEW_CONF_FILE
+
+      perl -pi \
+         -e "s/\/opt\/csw\/apache2\/\/etc\/opt/\/etc\/opt\/csw\/apache2\//" \$NEW_CONF_FILE
    else
       # so, we're not an existing or 'needs migration' install, we must
       # install from the templates.
