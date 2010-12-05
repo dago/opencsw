@@ -616,8 +616,9 @@ class LddEmulator(object):
   def Emulate64BitSymlinks(self, runpath_list):
     """Need to emulate the 64 -> amd64, 64 -> sparcv9 symlink
 
-    Since we don't know the architecture, we'll adding both amd64 and sparcv9.
-    It should be safe.
+    Since we don't know the architecture, we are adding both amd64 and
+    sparcv9.  It should be safe - there are other checks that make sure
+    that right architectures are in the right directories.
     """
     key = tuple(runpath_list)
     if key not in self.symlink64_cache:
@@ -633,15 +634,7 @@ class LddEmulator(object):
 
   def SanitizeRunpath(self, runpath):
     if runpath not in self.runpath_sanitize_cache:
-      new_runpath = runpath
-      while True:
-        if new_runpath.endswith("/"):
-          new_runpath = new_runpath[:-1]
-        elif "//" in new_runpath:
-          new_runpath = new_runpath.replace("//", "/")
-        else:
-          break
-      self.runpath_sanitize_cache[runpath] = new_runpath
+      self.runpath_sanitize_cache[runpath] = os.path.normpath(runpath)
     return self.runpath_sanitize_cache[runpath]
 
 
