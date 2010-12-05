@@ -1,5 +1,5 @@
 GARNAME = gst-plugins-bad
-GARVERSION = 0.10.17
+GARVERSION = 0.10.20
 CATEGORIES = gnome
 
 DESCRIPTION = GStreamer plugins (Bad)
