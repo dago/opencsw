@@ -1,5 +1,5 @@
 GARNAME = perl
-GARVERSION = 5.8.8
+GARVERSION = 5.10.1
 CATEGORIES = lang
 
 DESCRIPTION = A high-level, general-purpose programming language
@@ -19,41 +19,44 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 
 PACKAGES = CSWperl CSWperldoc
 ARCHALL_CSWperldoc = 1
-RUNTIME_DEP_PKGS_CSWperl = CSWbdb47 CSWgdbm
+RUNTIME_DEP_PKGS_CSWperl = CSWbdb48 CSWgdbm
 RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
 INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
+
 SPKG_DESC_CSWperl = $(DESCRIPTION)
 SPKG_DESC_CSWperldoc = Perl documentation
 
 LICENSE = Copying
 
+CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
+
 # Core module updates
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
-CORE_UPDATES  += PathTools-3.30
-CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
+#CORE_UPDATES  += PathTools-3.30
+#CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
 
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/L/LD/LDS/
-CORE_UPDATES  += CGI.pm-3.44
-CORE_OBSOLETE += CGI*
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/L/LD/LDS/
+#CORE_UPDATES  += CGI.pm-3.44
+#CORE_OBSOLETE += CGI*
 
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
-CORE_UPDATES  += Test-Simple-0.92
-CORE_OBSOLETE += Test/Builder* Test/More.pm Test/Simple.pm Test/Tutorial.pm
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
+#CORE_UPDATES  += Test-Simple-0.92
+#CORE_OBSOLETE += Test/Builder* Test/More.pm Test/Simple.pm Test/Tutorial.pm
 
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/T/TJ/TJENNESS/
-CORE_UPDATES  += File-Temp-0.22
-CORE_OBSOLETE += File/Temp.pm
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/T/TJ/TJENNESS/
+#CORE_UPDATES  += File-Temp-0.22
+#CORE_OBSOLETE += File/Temp.pm
 
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/G/GB/GBARR/
-CORE_UPDATES  += IO-1.25
-CORE_OBSOLETE += IO/Socket* IO/IO* IO/Socket.pm IO/Select.pm IO/Seekable.pm IO/Poll.pm IO/Pipe.pm IO/Handle.pm IO/File.pm IO/Dir.pm IO.pm
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/G/GB/GBARR/
+#CORE_UPDATES  += IO-1.25
+#CORE_OBSOLETE += IO/Socket* IO/IO* IO/Socket.pm IO/Select.pm IO/Seekable.pm IO/Poll.pm IO/Pipe.pm IO/Handle.pm IO/File.pm IO/Dir.pm IO.pm
 
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/A/AM/AMS/
-CORE_UPDATES  += Storable-2.20
-CORE_OBSOLETE += Storable/* Storable.pm
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/A/AM/AMS/
+#CORE_UPDATES  += Storable-2.20
+#CORE_OBSOLETE += Storable/* Storable.pm
 
-MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
-CORE_UPDATES  += ExtUtils-MakeMaker-6.54
+#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
+#CORE_UPDATES  += ExtUtils-MakeMaker-6.54
 #CORE_OBSOLETE += ExtUtils/*
 
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
@@ -66,12 +69,10 @@ LIBDEPS += lib/gdbm
 CONFIGURE_SCRIPTS = perl
 
 # Compatable with all prior patch revs
-PL_MAJOR   = 5.8
-PL_PATCH   = 0 2 4 6 7
-INC_COMPAT = $(foreach REV,$(PL_PATCH),$(PL_MAJOR).$(REV))
+INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0
 
-# Force use of db-4.7
-PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.7 -ldl -lm -lpthread -lc -lperl
+# Force use of db-4.8
+PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl
 
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(GARVERSION)
@@ -102,6 +103,7 @@ CONFIGURE_ARGS += -Duselargefiles
 CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
+#CONFIGURE_ARGS += -Dusedtrace
 CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
@@ -109,11 +111,11 @@ CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
 CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/lib"
 CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 
-EXTRA_LIB += $(prefix)/bdb47/lib
-EXTRA_INC += $(prefix)/bdb47/include
+EXTRA_LIB += $(prefix)/bdb48/lib
+EXTRA_INC += $(prefix)/bdb48/include
 
 #EXTRA_LDFLAGS = -lperl
-EXTRA_LDFLAGS = -L/opt/csw/lib/libperl.so
+EXTRA_LDFLAGS = -L$(libdir) -lperl
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
 PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
@@ -126,10 +128,20 @@ EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
 # Tests take a long time
 TEST_SCRIPTS =
 
+# Make sure we don't include the path to the newly built perl as the
+# library is not in place yet.
+IGNORE_DESTDIR = 1
+
 # Do not exclude static libs as at least DynaLoader.a is needed for XS compilation
 MERGE_EXCLUDE_STATICLIBS =
 
 include gar/category.mk
+
+post-extract-modulated:
+	mkdir -p $(WORKSRC)
+	gln -s libperl.so.5.10.1 $(WORKSRC)/libperl.so
+	@$(MAKECOOKIE)
+
 ifneq ($(CORE_UPDATES),)
 POST_TARGETS = install-core-updates
 include files/updatecore.mk
