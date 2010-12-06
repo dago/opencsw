@@ -101,8 +101,6 @@ debugmsg() {
 # TODO: Options to add:
 #  - Use an pre-cached (from a catalog file?) list of md5 sums
 #  - Don't use the data from /var/sadm/install/contents
-SAVE_TAGS=0
-SAVED_TAGS_FILE=error-tags.txt
 display_help=0
 SKIP_STATS_COLLECTION=0
 MD5_SUMS_CATALOG_FILE=""
@@ -116,12 +114,6 @@ while getopts hsdNM:o:c:Apq opt; do
 	  c)
 	    INSTALL_CONTENTS_FILES="${INSTALL_CONTENTS_FILES} ${OPTARG}"
 	    ;;
-	  s)
-      SAVE_TAGS=1
-      ;;
-    o)
-      SAVED_TAGS_FILE="${OPTARG}"
-      ;;
     d)
       DEBUG=1
       ;;
@@ -151,8 +143,6 @@ shift $(( $OPTIND -1 ))
 
 readonly INSTALL_CONTENTS_FILES
 readonly MD5_SUMS_CATALOG_FILE
-readonly SAVED_TAGS_FILE
-readonly SAVE_TAGS
 readonly SKIP_STATS_COLLECTION
 readonly ANALYZE
 readonly PROFILE
@@ -162,21 +152,15 @@ if [[ "${display_help}" -eq 1 ]] ; then
   print 'Usage: checkpkg [options] pkg1 [pkg2 ....]'
   print 'Options:'
   print '   -c <file>  use an additional install/contents file'
-  print '   -s         save error tags on disk'
-  print '   -o <file>  save tag output to file'
   print '   -d         display debug messages'
   print '   -N         skip statistics collection'
   print '   -M <file>  use package md5sums from a catalog file'
   print '   -A         Do not analyze the results.'
   print '   -p         Enable profiling'
   print '   -q         Display less messages'
+  print ''
+  print 'Error tags are saved to the sqlite database.'
   exit 0
-fi
-
-if [[ "${SAVE_TAGS}" -eq 1 ]]; then
-  if [[ -f "${SAVED_TAGS_FILE}" ]]; then
-  	rm "${SAVED_TAGS_FILE}"
-  fi
 fi
 
 # a unique filename for the list of package deps and libs we see in a 'set'

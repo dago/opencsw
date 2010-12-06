@@ -81,15 +81,28 @@ def ParsePackageFileName(p):
     p = p[:-4]
   bits = p.split("-")
   catalogname = bits[0]
-  version, version_info, revision_info = ParseVersionString(bits[1])
+  if len(bits) < 2:
+    version, version_info, revision_info = None, None, None
+    full_version_string = None
+  else:
+    version, version_info, revision_info = ParseVersionString(bits[1])
+    full_version_string = bits[1]
   if len(bits) == 5:
     osrel, arch, vendortag = bits[2:5]
-  else:
+  elif len(bits) == 4:
     arch, vendortag = bits[2:4]
+    osrel = "unspecified"
+  elif len(bits) == 3:
+    arch = bits[2]
+    vendortag = "UNKN"
+    osrel = "unspecified"
+  else:
+    arch = "unknown"
+    vendortag = "UNKN"
     osrel = "unspecified"
   data = {
       'catalogname': catalogname,
-      'full_version_string': bits[1],
+      'full_version_string': full_version_string,
       'version': version,
       'version_info': version_info,
       'revision_info': revision_info,

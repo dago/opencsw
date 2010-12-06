@@ -163,30 +163,6 @@ class ParsePackageFileNameTest_2(unittest.TestCase):
     self.assertEqual("unspecified", parsed["osrel"])
 
 
-class ComposePackageFileNameUnitTest(unittest.TestCase):
-
-  def setUp(self):
-    self.parsed = {'arch': 'i386',
-                   'catalogname': 'mysql5client',
-                   'full_version_string': '5.0.87,REV=2010.02.28',
-                   'osrel': 'SunOS5.8',
-                   'revision_info': {'REV': '2010.02.28'},
-                   'vendortag': 'CSW',
-                   'version': '5.0.87',
-                   'version_info': {'major version': '5',
-                                    'minor version': '0',
-                                    'patchlevel': '87'}}
-
-  def testSimple(self):
-    file_name = 'mysql5client-5.0.87,REV=2010.02.28-SunOS5.8-i386-CSW.pkg'
-    self.assertEquals(file_name, opencsw.ComposePackageFileName(self.parsed))
-
-  def testMoreRev(self):
-    file_name = 'mysql5client-5.0.87,REV=2010.02.28_foo=bar-SunOS5.8-i386-CSW.pkg'
-    self.parsed["revision_info"]["foo"] = "bar"
-    self.assertEquals(file_name, opencsw.ComposePackageFileName(self.parsed))
-
-
 class ParseVersionStringTest(unittest.TestCase):
 
   def test_NoRev(self):
@@ -204,25 +180,8 @@ class ParseVersionStringTest(unittest.TestCase):
 
   def test_Empty(self):
     data = ""
+    opencsw.ParseVersionString(data)
     expected = ('', {'major version': ''}, {})
-    self.assertEqual(expected, opencsw.ParseVersionString(data))
-
-  def testExtraStringsHashable(self):
-    data = "2.7,REV=2009.06.18_STABLE6"
-    expected = (
-        '2.7',
-        {
-          'minor version': '7',
-          'major version': '2'},
-        {
-          # Here's the important bit: all parts of the parsed version
-          # must be hashable for submitpkg to work.
-          'extra_strings': ('STABLE6',),
-          'REV': '2009.06.18',
-        }
-    )
-    result = opencsw.ParseVersionString(data)
-    hash(result[2]['extra_strings'])
     self.assertEqual(expected, opencsw.ParseVersionString(data))
 
 

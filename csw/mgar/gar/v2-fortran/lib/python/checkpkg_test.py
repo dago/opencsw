@@ -341,5 +341,23 @@ class SliceListUnitTest(unittest.TestCase):
     self.assertTrue(expected, checkpkg.SliceList(l, s))
 
 
+class LddEmulartorUnitTest(unittest.TestCase):
+
+  def setUp(self):
+    self.pkgmap_mocker = mox.Mox()
+    self.e = checkpkg.LddEmulator()
+
+  def testResolveSoname_1(self):
+    # runpath_list, soname, isalist, path_list, binary_path
+    runpath_list = ["/opt/csw/bdb47/lib", "/opt/csw/lib"]
+    soname = "foo.so.1"
+    path_list = ["/opt/csw/lib", "/opt/csw/bdb47/lib", "/usr/lib"]
+    binary_path = "unused"
+    isalist = ["amd64"]
+    result = self.e.ResolveSoname(runpath_list, soname, isalist,
+                                  path_list, binary_path)
+    self.assertEqual("/opt/csw/bdb47/lib", result)
+
+
 if __name__ == '__main__':
   unittest.main()

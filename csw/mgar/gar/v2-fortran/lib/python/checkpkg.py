@@ -616,8 +616,9 @@ class LddEmulator(object):
   def Emulate64BitSymlinks(self, runpath_list):
     """Need to emulate the 64 -> amd64, 64 -> sparcv9 symlink
 
-    Since we don't know the architecture, we'll adding both amd64 and sparcv9.
-    It should be safe.
+    Since we don't know the architecture, we are adding both amd64 and
+    sparcv9.  It should be safe - there are other checks that make sure
+    that right architectures are in the right directories.
     """
     key = tuple(runpath_list)
     if key not in self.symlink64_cache:
@@ -633,19 +634,12 @@ class LddEmulator(object):
 
   def SanitizeRunpath(self, runpath):
     if runpath not in self.runpath_sanitize_cache:
-      new_runpath = runpath
-      while True:
-        if new_runpath.endswith("/"):
-          new_runpath = new_runpath[:-1]
-        elif "//" in new_runpath:
-          new_runpath = new_runpath.replace("//", "/")
-        else:
-          break
-      self.runpath_sanitize_cache[runpath] = new_runpath
+      self.runpath_sanitize_cache[runpath] = os.path.normpath(runpath)
     return self.runpath_sanitize_cache[runpath]
 
 
-  def ResolveSoname(self, runpath_list, soname, isalist, path_list, binary_path):
+  def ResolveSoname(self, runpath_list, soname, isalist,
+                    path_list, binary_path):
     """Emulates ldd behavior, minimal implementation.
 
     runpath: e.g. ["/opt/csw/lib/$ISALIST", "/usr/lib"]
@@ -667,8 +661,9 @@ class LddEmulator(object):
       # in the path_list.
       for expanded_p in expanded_p_list:
         original_paths_by_expanded_paths[expanded_p] = p
-    # logging.debug("%s: looking for %s in %s",
-    #     soname, runpath_list, original_paths_by_expanded_paths.keys())
+    logging.debug(
+        "%s: looking for %s in %s",
+        soname, runpath_list, original_paths_by_expanded_paths.keys())
     for runpath_expanded in runpath_list:
       if runpath_expanded in original_paths_by_expanded_paths:
         # logging.debug("Found %s",
@@ -883,7 +878,9 @@ class CheckInterfaceBase(object):
   def GetCommonPaths(self, arch):
     """Returns a list of paths for architecture, from gar/etc/commondirs*."""
     # TODO: If this was cached, it could save a significant amount of time.
-    assert arch in ('i386', 'sparc', 'all'), "Wrong arch: %s" % repr(arch)
+    if arch not in ('i386', 'sparc', 'all'):
+      logging.warn("Wrong arch: %s", repr(arch))
+      return []
     if arch == 'all':
       archs = ('i386', 'sparc')
     else:
