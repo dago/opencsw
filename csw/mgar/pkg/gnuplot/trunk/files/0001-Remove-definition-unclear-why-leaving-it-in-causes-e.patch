@@ -1,0 +1,25 @@
+From 0935ad8425969e358de4ba22b7bdf3f0b967b9c9 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 6 Dec 2010 13:36:41 +0100
+Subject: [PATCH] Remove definition, unclear why leaving it in causes errors
+
+---
+ src/syscfg.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/syscfg.h b/src/syscfg.h
+index 1921f63..83e107e 100644
+--- a/src/syscfg.h
++++ b/src/syscfg.h
+@@ -415,7 +415,7 @@ typedef RETSIGTYPE (*sigfunc)__PROTO((void));
+ #  ifdef __cplusplus
+ typedef bool _Bool;
+ #  else
+-typedef unsigned char _Bool;
++typedef unsigned char _Bool_;
+ #  endif
+ # endif
+ # define bool _Bool
+-- 
+1.7.3
+
