@@ -1196,7 +1196,7 @@ def CheckSharedLibraryNameMustBeAsubstringOfSoname(
 
 def CheckDocDir(pkg_data, error_mgr, logger, messenger):
   pkgname = pkg_data["basic_stats"]["pkgname"]
-  docpath_re = re.compile(r"/opt/csw/share/doc/(?P<docname>[^/]+)/.*")
+  docpath_re = re.compile(r"/opt/csw/share/doc/(?P<docname>[^/]+)/license")
   for pkgmap_entry in pkg_data["pkgmap"]:
     if "path" not in pkgmap_entry: continue
     if not pkgmap_entry["path"]: continue
