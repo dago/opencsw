@@ -114,7 +114,13 @@ CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 EXTRA_LIB += $(prefix)/bdb48/lib
 EXTRA_INC += $(prefix)/bdb48/include
 
-#EXTRA_LDFLAGS = -lperl
+# Somehow the CPPFLAGS do not make it into the compile environment.
+# Add them explicitly here, otherwise specifically the bdb48/include will
+# not make it resulting in db.h not to be found and DB_File.pm not to be built
+# as reported here:
+#   https://www.opencsw.org/mantis/view.php?id=4544
+EXTRA_CFLAGS = $(CPPFLAGS)
+
 EXTRA_LDFLAGS = -L$(libdir) -lperl
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
