@@ -1445,23 +1445,31 @@ class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
         'soname=libneon.so.27 filename=foo.so.1')
 
 
-class TestCheckDocDir(CheckpkgUnitTestHelper, unittest.TestCase):
+class TestCheckDocDirLicense(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckDocDir'
   def CheckpkgTest(self):
     self.pkg_data = neon_stats[0]
     self.pkg_data["pkgmap"].append({
-      "class": "none",
-      "group": "bin",
-      "line": "",
-      "mode": '0755',
+      "class": "none", "type": "f", "line": "",
+      "user": "root", "group": "bin", "mode": '0755',
       "path": "/opt/csw/share/doc/alien/license",
-      "type": "f",
-      "user": "root"
     })
     self.error_mgr_mock.ReportError(
         'wrong-docdir',
         'expected=/opt/csw/shared/doc/neon/... '
         'in-package=/opt/csw/share/doc/alien/license')
+
+
+class TestCheckDocDirRandomFile(CheckpkgUnitTestHelper, unittest.TestCase):
+  "A random file should not trigger the message; only license files."
+  FUNCTION_NAME = 'CheckDocDir'
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+    self.pkg_data["pkgmap"].append({
+      "class": "none", "type": "f", "line": "",
+      "user": "root", "group": "bin", "mode": '0755',
+      "path": "/opt/csw/share/doc/alien/random_file",
+    })
 
 
 if __name__ == '__main__':
