@@ -135,6 +135,12 @@ IGNORE_DESTDIR = 1
 # Do not exclude static libs as at least DynaLoader.a is needed for XS compilation
 MERGE_EXCLUDE_STATICLIBS =
 
+# Splitting of a separate libperl.so requires more work and careful planning.
+# Override for now.
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.10.1|soname=libperl.so.5.10.1|pkgname=CSWperl|expected=['CSWlibperl5-10-1']
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
+
 include gar/category.mk
 
 post-extract-modulated:
