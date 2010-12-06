@@ -58,9 +58,8 @@ CORE_UPDATES  += ExtUtils-MakeMaker-6.54
 
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
-# Dependencies
-#LIBDEPS += bdb48/lib
-LIBDEPS += lib/gdbm
+# Make sure we don't pick up the newly build Perl but rely on the system Perl for GAR operations
+IGNORE_DESTDIR = 1
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl

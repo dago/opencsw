@@ -2,11 +2,11 @@
 
 # Install core updates
 install-core-updates: remove-obsolete-modules
-	@for d in "" $(CORE_UPDATES) ; do \
+	for d in "" $(CORE_UPDATES) ; do \
 		test -z "$$d" && continue ; \
 		echo " ==> Applying core update: $$d" ; \
 		( cd $(WORKDIR)/$$d ; \
-		$(CONFIGURE_ENV) perl Makefile.PL ; \
+		$(CONFIGURE_ENV) LD_LIBRARY_PATH=$(abspath $(WORKSRC)) $(DESTDIR)$(bindir)/perl Makefile.PL ; \
 		$(BUILD_ENV) make ; \
 		$(TEST_ENV) make test ; \
 		$(INSTALL_ENV) make install INSTALLDIRS=perl DESTDIR=$(DESTDIR) ) ; \
