@@ -83,9 +83,6 @@ PKGFILES_CSWbdb48devel = $(includedir)/.*
 # Compiler run pathes, skip for now.
 CHECKPKG_OVERRIDES_CSWbdb48 += bad-rpath-entry
 
-# Docs are in a directory named after the main package
-CHECKPKG_OVERRIDES_CSWbdb48doc += wrong-docdir
-
 include gar/category.mk
 
 LIBS += -lnsl
