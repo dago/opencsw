@@ -1448,7 +1448,7 @@ class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
 class TestCheckDocDirLicense(CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckDocDir'
   def CheckpkgTest(self):
-    self.pkg_data = neon_stats[0]
+    self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["pkgmap"].append({
       "class": "none", "type": "f", "line": "",
       "user": "root", "group": "bin", "mode": '0755',
@@ -1464,7 +1464,7 @@ class TestCheckDocDirRandomFile(CheckpkgUnitTestHelper, unittest.TestCase):
   "A random file should not trigger the message; only license files."
   FUNCTION_NAME = 'CheckDocDir'
   def CheckpkgTest(self):
-    self.pkg_data = neon_stats[0]
+    self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["pkgmap"].append({
       "class": "none", "type": "f", "line": "",
       "user": "root", "group": "bin", "mode": '0755',
