@@ -1,4 +1,4 @@
-# Copyright 2009 OpenCSW
+# Copyright 2009,2010 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -8,7 +8,10 @@ CATEGORIES = lib
 DESCRIPTION = Machine-independent data formats for array-oriented scientific data
 SPKG_SOURCEURL = http://www.unidata.ucar.edu/software/netcdf/
 MASTER_SITES = http://www.unidata.ucar.edu/downloads/netcdf/ftp/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  += $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  += CSWlibnetcdf6.cswreleasemgr
+DISTFILES  += CSWlibnetcdff5.cswreleasemgr
+DISTFILES  += CSWlibnetcdf-c++5.cswreleasemgr
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
 
@@ -38,6 +41,7 @@ PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/amd64/libnetcdf.so.6
 SPKG_DESC_CSWlibnetcdf6 = Machine-independent data formats for array-oriented scientific data, libnetcdf.so.6
 RUNTIME_DEP_PKGS_CSWlibnetcdf6  = CSWhdf5rt
 RUNTIME_DEP_PKGS_CSWlibnetcdf6 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibnetcdf6 += CSWgcc4core # Mantis Bug #4497, missing 64 symlink
 
 PACKAGES += CSWlibnetcdf-c++5
 CATALOGNAME_CSWlibnetcdf-c++5 = libnetcdf_c++5
@@ -52,7 +56,7 @@ PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/amd64/libnetcdf_c\+\+.so.5\.[0-9\.]+
 PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/amd64/libnetcdf_c\+\+.so.5
 SPKG_DESC_CSWlibnetcdf-c++5 += Machine-independent data formats for array-oriented scientific data, libnetcdf_c++.so.5
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5  = CSWhdf5rt
-RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5 += CSWgcc4corert CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5 += CSWgcc4corert CSWgcc4core CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5 += CSWlibnetcdf6
 
 PACKAGES += CSWlibnetcdff5
@@ -68,7 +72,7 @@ PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/amd64/libnetcdff.so.5\.[0-9\.]+
 PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/amd64/libnetcdff.so.5
 SPKG_DESC_CSWlibnetcdff5 = Machine-independent data formats for array-oriented scientific data, libnetcdff.so.5
 RUNTIME_DEP_PKGS_CSWlibnetcdff5  = CSWhdf5rt
-RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWgcc4gfortranrt CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4core
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibnetcdf6
 
 PACKAGES += CSWnetcdf-devel
@@ -143,11 +147,11 @@ EXTRA_CFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
 EXTRA_FFLAGS= -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
 EXTRA_FCFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
 EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-## OPT_FLAGS_GCC = -O2 -pipe
 
 ## During the 32-bit sparc build, the C++ bindings were barfing with an error 
 ## about undefined symbol __sync_fetch_and_add_4 in libnetcdf_c++
 ## From Porting FAQ: http://wiki.opencsw.org/porting-faq#toc5
+## OPT_FLAGS_GCC = -O2 -pipe
 OPT_FLAGS_GCC = 
 
 ## The development package should pull in the various libs since it's hard to
@@ -155,5 +159,11 @@ OPT_FLAGS_GCC =
 CHECKPKG_OVERRIDES_CSWnetcdf-devel += surplus-dependency|CSWlibnetcdf-c++5
 CHECKPKG_OVERRIDES_CSWnetcdf-devel += surplus-dependency|CSWlibnetcdf6
 CHECKPKG_OVERRIDES_CSWnetcdf-devel += surplus-dependency|CSWlibnetcdff5
+
+## Mantis bug 4497 means there's no 64 symlink in CSWgcc4corert so you can't
+## link against these libraries without CSWgcc4core
+CHECKPKG_OVERRIDES_CSWlibnetcdf-c++5 += surplus-dependency|CSWgcc4core
+CHECKPKG_OVERRIDES_CSWlibnetcdf6     += surplus-dependency|CSWgcc4core
+CHECKPKG_OVERRIDES_CSWlibnetcdff5    += surplus-dependency|CSWgcc4core
 
 include gar/category.mk
