@@ -1,5 +1,5 @@
 GARNAME = db
-GARVERSION = 4.8.26
+GARVERSION = 4.8.30
 CATEGORIES = lib
 
 DESCRIPTION = Berkeley DB 4.8
@@ -83,7 +83,7 @@ include gar/category.mk
 LIBS += -lnsl
 export LIBS
 
-PATH := /usr/jdk1.6.0_07/bin:$(PATH)
+PATH := /usr/jdk1.6.0_20/bin:$(PATH)
 export PATH
 
 configure-dist:
