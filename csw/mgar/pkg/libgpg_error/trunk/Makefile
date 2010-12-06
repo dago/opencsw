@@ -1,5 +1,5 @@
 GARNAME = libgpg-error
-GARVERSION = 1.9
+GARVERSION = 1.10
 CATEGORIES = lib
 
 DESCRIPTION = GNU gpg related library
@@ -16,7 +16,7 @@ CATALOGNAME = libgpg_error
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-SPKG_SOURCEURL = http://www.gnupg.org/download/
+VENDOR_URL = http://www.gnupg.org/download/
 
 RUNTIME_DEP_PKGS = CSWggettextrt
 
