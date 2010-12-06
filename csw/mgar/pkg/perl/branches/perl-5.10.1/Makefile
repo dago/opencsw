@@ -114,7 +114,13 @@ CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 EXTRA_LIB += $(prefix)/bdb48/lib
 EXTRA_INC += $(prefix)/bdb48/include
 
-#EXTRA_LDFLAGS = -lperl
+# Somehow the CPPFLAGS do not make it into the compile environment.
+# Add them explicitly here, otherwise specifically the bdb48/include will
+# not make it resulting in db.h not to be found and DB_File.pm not to be built
+# as reported here:
+#   https://www.opencsw.org/mantis/view.php?id=4544
+EXTRA_CFLAGS = $(CPPFLAGS)
+
 EXTRA_LDFLAGS = -L$(libdir) -lperl
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
@@ -135,6 +141,12 @@ IGNORE_DESTDIR = 1
 # Do not exclude static libs as at least DynaLoader.a is needed for XS compilation
 MERGE_EXCLUDE_STATICLIBS =
 
+# No libperl.so splitting for now, this involves many other things and
+# therefore very careful planning first.
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.10.1|soname=libperl.so.5.10.1|pkgname=CSWperl|expected=['CSWlibperl5-10-1']
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
+
 include gar/category.mk
 
 post-extract-modulated:
@@ -149,7 +161,7 @@ endif
 
 # How to configure Perl
 configure-perl:
-	@(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -des)
+	(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -des)
 	@$(MAKECOOKIE)
 
 # Make links to libperl
