@@ -51,6 +51,10 @@ CONFIGURE_ARGS += ac_cv_type__Bool=no
 
 #CONFIGURE_ARGS += --with-texdir=
 
+# Make sure we don't run the interactive displays from demo/
+EXTRA_TEST_EXPORTS = DISPLAY
+DISPLAY =
+
 TEST_TARGET = check
 
 include gar/category.mk
