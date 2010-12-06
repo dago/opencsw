@@ -1,5 +1,5 @@
 GARNAME = coreutils
-GARVERSION = 8.6
+GARVERSION = 8.7
 CATEGORIES = utils
 
 # seq has issues related to the handling of long double's with -O2.
