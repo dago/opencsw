@@ -166,4 +166,7 @@ CHECKPKG_OVERRIDES_CSWlibnetcdf-c++5 += surplus-dependency|CSWgcc4core
 CHECKPKG_OVERRIDES_CSWlibnetcdf6     += surplus-dependency|CSWgcc4core
 CHECKPKG_OVERRIDES_CSWlibnetcdff5    += surplus-dependency|CSWgcc4core
 
+## Git patching is failing on a remerge/repackage
+NOGITPATCH = 1
+
 include gar/category.mk
