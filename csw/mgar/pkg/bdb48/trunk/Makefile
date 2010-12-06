@@ -64,6 +64,8 @@ SPKG_DESC_CSWbdb48doc   = BerkeleyDB 4.8 documentation
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
 RUNTIME_DEP_PKGS_CSWbdb48devel = CSWbdb48
+CHECKPKG_OVERRIDES_CSWbdb48devel += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWbdb48 += missing-dependency|CSWbdb48devel
 
 LICENSE = LICENSE
 
@@ -76,7 +78,13 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.* $(libdir)/db.jar
 EXTRA_MERGE_EXCLUDE_FILES = .*/license.*
 
 PKGFILES_CSWbdb48doc = $(PKGFILES_DOC)
-PKGFILES_CSWbdb48devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWbdb48devel = $(includedir)/.*
+
+# Compiler run pathes, skip for now.
+CHECKPKG_OVERRIDES_CSWbdb48 += bad-rpath-entry
+
+# Docs are in a directory named after the main package
+CHECKPKG_OVERRIDES_CSWbdb48doc += wrong-docdir
 
 include gar/category.mk
 
