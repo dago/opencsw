@@ -28,7 +28,8 @@ if [ "\$1" = install ]; then
       # update various uses of the var/ paths.
       # ensure we use the config files from the new location 
       perl -pi \
-         -e "s#/opt/csw/apache2/etc/server.crt#/etc/opt/csw/apache2/server.crt#; s#/opt/csw/apache2/etc/server.key#/etc/opt/csw/apache2/server.key#" \
+         -e "s#/opt/csw/apache2/etc/server.crt#/etc/opt/csw/apache2/server.crt#" \
+         -e s#/opt/csw/apache2/etc/server.key#/etc/opt/csw/apache2/server.key#" \
          -e "s#/opt/csw/apache2/var/log/#/var/opt/csw/log/apache2/#" \ 
          -e "s#\"/opt/csw/apache2/var/#\"/var/opt/csw/apache2/#" \
          -e "s#\"var/log/#\"/var/opt/csw/log/apache2/#" \
