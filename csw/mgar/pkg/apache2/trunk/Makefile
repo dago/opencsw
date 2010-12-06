@@ -198,7 +198,7 @@ PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
-PROTOTYPE_FILTER = gawk '$$$$3 ~ /etc\/opt\/csw\/apache2/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"}; $$$$3 ~ /ssl_cert_migration.CSW/ {$$$$1 = "e"; $$$$2 = "build"}; {print}'
+PROTOTYPE_FILTER = gawk '$$$$3 ~ /etc\/opt\/csw\/apache2/ && $$$$1 == "f" && $$$$3 !~ /CSW/ && $$$$3 !~ /original/ {$$$$1 = "e"; $$$$2 = "build"}; $$$$3 ~ /ssl_cert_migration.CSW/ {$$$$1 = "e"; $$$$2 = "build"}; $$$$3 ~ /index.html.CSW/ {$$$$1 = "e"; $$$$2 = "build"}; {print}'
 
 include gar/category.mk
 
@@ -247,5 +247,8 @@ post-merge: create-templates
 			mv $$f $$f.CSW; \
 			$(abspath $(FILEDIR))/build_cas_template $$f > $$f; \
 		done; \
-		cp $(abspath $(FILEDIR))/ssl_cas_template ssl_cert_migration.CSW )
+	   cd $(PKGROOT)/opt/csw/apache2/share/htdocs; \
+		rm index.html; \
+		cp $(abspath $(FILEDIR))/index_cas_template index.html.CSW; \
+	   cp $(abspath $(FILEDIR))/ssl_cas_template ssl_cert_migration.CSW )
 	@$(MAKECOOKIE)
