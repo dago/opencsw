@@ -18,36 +18,12 @@ SPKG_SOURCEURL = http://freeradius.org/
 LICENSE = LICENSE
 GARCOMPILER = GCC4
 
-
 # Stripping libtool breaks the build in versions <=2.1.7
 #STRIP_LIBTOOL = 1
 
 ## Some of the RLM Submodules don't seem to pick up the include paths without 
 ## setting CFLAGS
 EXTRA_CFLAGS  = -I/opt/csw/include
-#EXTRA_CFLAGS += -DIE_LIBTOOL_DIE
-#CONFIGURE_ENV = CFLAGS="$(CFLAGS)"
-
-#EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/lib/libltdl.so.*
-#EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/lib/sparcv9/libltdl.so.*
-#EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/lib/amd64/libltdl.so.*
-#EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/include/ltdl.h
-
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibpcap
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWosslrt
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWgdbm
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWreadline
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWfreeradius += CSWgcc4corert
-
-## Can't get perl to link cleanly
-## Still get noise about a missing dependency due to an included example 
-## script in raddb
-#RUNTIME_DEP_PKGS_CSWfreeradius += CSWperl
-CHECKPKG_OVERRIDES_CSWfreeradius += missing-dependency|CSWperl
 
 # Put libraries (including all of the modules) in /opt/csw/lib/freeradius
 libdir     = $(abspath $(libdir_install)/$(GARNAME)/$(MM_LIBDIR))
@@ -81,6 +57,64 @@ CONFIGURE_ARGS += --without-rlm_eap_ikev2
 CONFIGURE_ARGS += --without-rlm_sql_unixodbc
 CONFIGURE_ARGS += --without-rlm_eap_tnc
 
+## Individual Package definitions start here
+
+PACKAGES += CSWfreeradius
+CATALOGNAME_CSWfreeradius = $(GARNAME)
+SPKG_DESC_CSWfreeradius = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibpcap
+RUNTIME_DEP_PKGS_CSWfreeradius += CSWosslrt
+RUNTIME_DEP_PKGS_CSWfreeradius += CSWgdbm
+RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWfreeradius += CSWreadline
+RUNTIME_DEP_PKGS_CSWfreeradius += CSWgcc4corert
+
+## Kerberos
+PACKAGES += CSWfreeradius-krb5
+CATALOGNAME_CSWfreeradius-krb5 = freeradius_krb5
+SPKG_DESC_CSWfreeradius-krb5 = Kerberos 5 Module rlm_krb5 for FreeRADIUS
+PKGFILES_CSWfreeradius-krb5 += $(raddbdir)/modules/krb5
+PKGFILES_CSWfreeradius-krb5 += $(docdir)/rlm_krb5
+PKGFILES_CSWfreeradius-krb5 += /opt/csw/lib/freeradius/rlm_krb5\.so
+PKGFILES_CSWfreeradius-krb5 += /opt/csw/lib/freeradius/rlm_krb5-2\.1\.[0-9]+\.so
+RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWfreeradius
+RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWgcc4corert
+
+## LDAP
+PACKAGES += CSWfreeradius-ldap
+CATALOGNAME_CSWfreeradius-ldap = freeradias_ldap
+SPKG_DESC_CSWfreeradius-ldap = LDAP Module rlm_ldap for FreeRADIUS
+PKGFILES_CSWfreeradius-ldap += $(raddbdir)/ldap\.attrmap
+PKGFILES_CSWfreeradius-ldap += $(raddbdir)/modules/ldap
+PKGFILES_CSWfreeradius-ldap += $(docdir)/ldap_howto.rst
+PKGFILES_CSWfreeradius-ldap += $(docdir)/RADIUS-LDAP-eDirectory
+PKGFILES_CSWfreeradius-ldap += $(docdir)/rlm_ldap
+PKGFILES_CSWfreeradius-ldap += $(docdir)/examples/openldap.schema
+PKGFILES_CSWfreeradius-ldap += /opt/csw/lib/freeradius/rlm_ldap\.so
+PKGFILES_CSWfreeradius-ldap += /opt/csw/lib/freeradius/rlm_ldap-2\.1\.[0-9]+\.so
+RUNTIME_DEP_PKGS_CSWfreeradius-ldap += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWfreeradius-ldap += CSWfreeradius
+RUNTIME_DEP_PKGS_CSWfreeradius-ldap += CSWgcc4corert
+
+## Perl support
+## Disabling Perl due to linker issues and weird makefiles
+#PACKAGES += CSWfreeradius-perl
+#CATALOGNAME_CSWfreeradius-perl = freeradius-perl
+#SPKG_DESC_CSWfreeradius-perl = Perl Module rlm_perl for FreeRADIUS
+#RUNTIME_DEP_PKGS_CSWfreeradius-perl += CSWperl
+#RUNTIME_DEP_PKGS_CSWfreeradius-perl += CSWfreeradius
+#PKGFILES_CSWfreeradius-perl += $(raddbdir)/example.pl
+#rlm_perl_inc = $(shell /opt/csw/bin/perl -e 'use Config; print "$$Config{archlib}\n"')/CORE
+#CONFIGURE_ARGS += --with-rlm_perl_include_dir=$(rlm_perl_inc)
+## Comment out the following lines when building Perl
+CONFIGURE_ARGS += --without-rlm_perl
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/example.pl
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/modules/perl
+## End perl exclusion lines
+
+## PostgreSQL support
 ## Disabling Postgresql because it's going to take a bunch of weird
 ## Makefile hackery of these non-automake Makefiles to get the RPATH right
 #BUILD_DEP_PKGS += CSWpostgresql
@@ -88,19 +122,19 @@ CONFIGURE_ARGS += --without-rlm_eap_tnc
 #rlm_pgsql_inc = $(shell /opt/csw/postgresql/bin/$(ISA)/pg_config --includedir)
 #CONFIGURE_ARGS += --with-rlm_sql_postgresql_lib_dir=$(rlm_pgsql_lib)
 #CONFIGURE_ARGS += --with-rlm_sql_postgresql_include_dir=$(rlm_pgsql_inc)
+## Comment out the following lines when building PostgreSQL support
 CONFIGURE_ARGS += --without-rlm_sql_postgresql
+## End pgsql exclusion lines
 
 ## Disabling MySQL because it's going to take a bunch of weird
 ## Makefile hackery of these non-automake Makefiles to get the RPATH right
 #BUILD_DEP_PKGS += CSWmysql5devel
 #CONFIGURE_ARGS += --with-mysql-lib-dir=/opt/csw/mysql5/lib/$(ISA)/mysql
 #CONFIGURE_ARGS += --with-mysql-include-dir=/opt/csw/mysql5/include
+## Comment out the following lines when building mysql support
 CONFIGURE_ARGS += --without-rlm_sql_mysql
+## End mysql exclusion lines
 
-## Disabling Perl due to linker issues and weird makefiles
-#rlm_perl_inc = $(shell /opt/csw/bin/perl -e 'use Config; print "$$Config{archlib}\n"')/CORE
-#CONFIGURE_ARGS += --with-rlm_perl_include_dir=$(rlm_perl_inc)
-CONFIGURE_ARGS += --without-rlm_perl
 
 # No tests available
 TEST_TARGET =
