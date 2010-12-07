@@ -1,0 +1,25 @@
+From 9b90310b830099acbd0b7339f534970e74d47c3a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 7 Dec 2010 12:09:29 +0100
+Subject: [PATCH 2/8] Fix nullpointer bug
+
+---
+ src/pacparser.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/pacparser.c b/src/pacparser.c
+index 315f854..dd6a840 100644
+--- a/src/pacparser.c
++++ b/src/pacparser.c
+@@ -112,7 +112,7 @@ resolve_host(const char *hostname, char *ipaddr_list, int max_results)
+     if (ipaddr_list[0] == '\0') sprintf(ipaddr_list, "%s", ipaddr);
+     else sprintf(ipaddr_list, "%s;%s", ipaddr_list, ipaddr);
+   }
+-  freeaddrinfo(ai);
++  freeaddrinfo(result);
+   return 0;
+ }
+ 
+-- 
+1.7.3.2
+

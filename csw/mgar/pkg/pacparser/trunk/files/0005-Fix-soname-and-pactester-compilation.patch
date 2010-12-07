@@ -1,0 +1,34 @@
+From e285a716d2a06a4da42f24d4d72b74e094896444 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 7 Dec 2010 13:30:08 +0100
+Subject: [PATCH 5/8] Fix soname and pactester compilation
+
+---
+ src/Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index af7a410..b3abb27 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -38,7 +38,7 @@ LIB_VER = 1
+ SO_SUFFIX = so
+ LIBRARY = $(LIBRARY_NAME).$(SO_SUFFIX).$(LIB_VER)
+ MKSHLIB = $(CC) -shared
+-LIB_OPTS = -Wl,-soname=$(LIBRARY)
++LIB_OPTS = -h $(LIBRARY)
+ SHFLAGS = -fPIC
+ SMCFLAGS = -DHAVE_VA_COPY -DVA_COPY=va_copy $(CFLAGS)
+ 
+@@ -92,7 +92,7 @@ $(LIBRARY_LINK): $(LIBRARY)
+ 	ln -sf $(LIBRARY) $(LIBRARY_LINK)
+ 
+ pactester: pactester.c pacparser.h $(LIBRARY_LINK)
+-	$(CC) pactester.c -o pactester -L. -lpacparser -I. -lsocket -lnsl
++	$(CC) $(CFLAGS) pactester.c -o pactester -L. -lpacparser -I. -lsocket -lnsl
+ 
+ testpactester: pactester
+ 	echo "Running tests for pactester."
+-- 
+1.7.3.2
+

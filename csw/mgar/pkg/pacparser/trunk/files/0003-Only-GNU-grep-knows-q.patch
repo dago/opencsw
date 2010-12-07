@@ -1,0 +1,25 @@
+From 72f1b20d04215976c6df42f40d10b90e8cbf6773 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 7 Dec 2010 12:09:46 +0100
+Subject: [PATCH 3/8] Only GNU grep knows -q
+
+---
+ tests/runtests.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/tests/runtests.sh b/tests/runtests.sh
+index 616cc6a..09a6b1e 100755
+--- a/tests/runtests.sh
++++ b/tests/runtests.sh
+@@ -23,7 +23,7 @@ fi
+ 
+ while read line
+   do
+-    echo "$line" | grep -q "^#" && continue
++    echo "$line" | ggrep -q "^#" && continue
+     PARAMS=$(echo "$line"|cut -d"|" -f1)
+     EXPECTED_RESULT=$(echo $line|cut -d"|" -f2)
+     RESULT=$($PACTESTER -p $PACFILE $PARAMS)
+-- 
+1.7.3.2
+
