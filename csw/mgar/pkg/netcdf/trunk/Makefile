@@ -22,7 +22,7 @@ BUILD_DEP_PKGS += CSWgcc4gfortran
 
 PACKAGES = CSWnetcdf
 CATALOGNAME_CSWnetcdf = netcdf
-SPKG_DESC_CSWnetcdf = Machine-independent data formats for array-oriented scientific data
+SPKG_DESC_CSWnetcdf = NetCDF - Machine-independent data formats for array-oriented scientific data
 RUNTIME_DEP_PKGS_CSWnetcdf += CSWhdf5rt
 RUNTIME_DEP_PKGS_CSWnetcdf += CSWzlib
 RUNTIME_DEP_PKGS_CSWnetcdf += CSWlibnetcdf6
@@ -38,7 +38,7 @@ PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/sparcv9/libnetcdf.so.6
 PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/amd64/libnetcdf.so.6.0.0
 PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/amd64/libnetcdf.so.6\.[0-9\.]+
 PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/amd64/libnetcdf.so.6
-SPKG_DESC_CSWlibnetcdf6 = Machine-independent data formats for array-oriented scientific data, libnetcdf.so.6
+SPKG_DESC_CSWlibnetcdf6 = C shared library for netcdf - libnetcdf.so.6 
 RUNTIME_DEP_PKGS_CSWlibnetcdf6  = CSWhdf5rt
 RUNTIME_DEP_PKGS_CSWlibnetcdf6 += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWlibnetcdf6 += CSWgcc4core # Mantis Bug #4497, missing 64 symlink
@@ -54,7 +54,7 @@ PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/sparcv9/libnetcdf_c\+\+.so.5
 PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/amd64/libnetcdf_c\+\+.so.5.0.0
 PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/amd64/libnetcdf_c\+\+.so.5\.[0-9\.]+
 PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/amd64/libnetcdf_c\+\+.so.5
-SPKG_DESC_CSWlibnetcdf-c++5 += Machine-independent data formats for array-oriented scientific data, libnetcdf_c++.so.5
+SPKG_DESC_CSWlibnetcdf-c++5 += C++ shared library for netcdf - libnetcdf_c++.so.5
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5  = CSWhdf5rt
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5 += CSWgcc4corert CSWgcc4core CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5 += CSWlibnetcdf6
@@ -70,7 +70,7 @@ PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/sparcv9/libnetcdff.so.5
 PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/amd64/libnetcdff.so.5.0.0
 PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/amd64/libnetcdff.so.5\.[0-9\.]+
 PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/amd64/libnetcdff.so.5
-SPKG_DESC_CSWlibnetcdff5 = Machine-independent data formats for array-oriented scientific data, libnetcdff.so.5
+SPKG_DESC_CSWlibnetcdff5 = Fortran shared libraries for netcdf - libnetcdff.so.5 
 RUNTIME_DEP_PKGS_CSWlibnetcdff5  = CSWhdf5rt
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4core
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibnetcdf6
@@ -130,8 +130,6 @@ BUILD64 = 1
 ## Needed for "Large file support" in NetCDF
 EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
 
-
-DEBUG_PACKAGING = 1
 ## Add GCC4 lib dir to CFLAGS and friends because gcc3core_rt puts it's 
 ## libgcc_s.so in /opt/csw/lib and this breaks the build in all sorts of weird 
 ## places.
@@ -153,12 +151,6 @@ EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
 ## From Porting FAQ: http://wiki.opencsw.org/porting-faq#toc5
 ## OPT_FLAGS_GCC = -O2 -pipe
 OPT_FLAGS_GCC = 
-
-## Mantis bug 4497 means there's no 64 symlink in CSWgcc4corert so you can't
-## link against these libraries without CSWgcc4core
-CHECKPKG_OVERRIDES_CSWlibnetcdf-c++5 += surplus-dependency|CSWgcc4core
-CHECKPKG_OVERRIDES_CSWlibnetcdf6     += surplus-dependency|CSWgcc4core
-CHECKPKG_OVERRIDES_CSWlibnetcdff5    += surplus-dependency|CSWgcc4core
 
 ## Git patching is failing on a remerge/repackage
 NOGITPATCH = 1
