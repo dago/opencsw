@@ -256,6 +256,12 @@ def CheckSmfIntegration(pkg_data, error_mgr, logger, messenger):
       error_mgr.ReportError(
           "init-file-missing-cswinitsmf-class",
           "%s class=%s" % (entry["path"], entry["class"]))
+      messenger.Message(
+          "The init file %s in the package has the %s class, while it "
+          "should have the cswinitsmf class, which takes advantage of "
+          "the SMF integration automation from cswclassutils."
+          % (entry["path"], entry["class"]))
+      messenger.SuggestGarLine("INITSMF = %s" % entry["path"])
 
     # This is not an error, in fact, putting files into
     # /opt/csw/etc/init.d breaks packages.
