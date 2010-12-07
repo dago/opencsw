@@ -35,6 +35,8 @@ raddbdir   = $(sysconfdir)/raddb
 # move all of the var stuff to /var/opt/csw
 localstatedir = /var$(prefix)
 
+PRESERVECONF = $(raddbdir)/.*
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += CC=$(CC) CXX=$(CXX) F77=$(F77) FC=$(FC)
 CONFIGURE_ARGS += CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)"
@@ -142,7 +144,7 @@ TEST_TARGET =
 
 INSTALL_ARGS += R=$(DESTDIR)
 
-INITSMF = /etc/opt/csw/init.d/cswapache2
+INITSMF = /etc/opt/csw/init.d/cswfreeradius
 
 include gar/category.mk
 
