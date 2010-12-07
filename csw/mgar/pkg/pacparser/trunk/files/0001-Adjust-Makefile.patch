@@ -1,0 +1,55 @@
+From 8460d62468b9c2067ee473da0e1013a869b2791f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 7 Dec 2010 12:09:01 +0100
+Subject: [PATCH 1/8] Adjust Makefile
+
+---
+ src/Makefile |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index 804dd86..b1cc23f 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -38,9 +38,9 @@ LIB_VER = 1
+ SO_SUFFIX = so
+ LIBRARY = $(LIBRARY_NAME).$(SO_SUFFIX).$(LIB_VER)
+ MKSHLIB = $(CC) -shared
+-LIB_OPTS = -Wl,-soname=$(LIBRARY) -Wl,-exclude-libs=libjs.a
++LIB_OPTS = -Wl,-soname=$(LIBRARY)
+ SHFLAGS = -fPIC
+-SMCFLAGS = -DHAVE_VA_COPY -DVA_COPY=__va_copy
++SMCFLAGS = -DHAVE_VA_COPY -DVA_COPY=va_copy
+ 
+ ifeq ($(OS_ARCH),Darwin)
+   SO_SUFFIX = dylib
+@@ -51,7 +51,7 @@ ifeq ($(OS_ARCH),Darwin)
+   SMCFLAGS =
+ endif
+ 
+-CFLAGS = -g -DXP_UNIX -Wall -DVERSION=$(VERSION)
++CFLAGS = -g -DXP_UNIX -DVERSION=$(VERSION)
+ 
+ ifndef PYTHON
+   PYTHON = python
+@@ -72,7 +72,7 @@ MAN_PREFIX = $(PREFIX)/share/man
+ all: testpactester
+ 
+ spidermonkey/js/src: spidermonkey/js-?.?.?.tar.gz
+-	tar xzvf spidermonkey/js-?.?.?.tar.gz -C spidermonkey
++	gtar xzvf spidermonkey/js-?.?.?.tar.gz -C spidermonkey
+ 
+ jsapi_buildstamp: spidermonkey/js/src
+ 	cd spidermonkey && SMCFLAGS="$(SHFLAGS) $(SMCFLAGS)" $(MAKE) jsapi
+@@ -92,7 +92,7 @@ $(LIBRARY_LINK): $(LIBRARY)
+ 	ln -sf $(LIBRARY) $(LIBRARY_LINK)
+ 
+ pactester: pactester.c pacparser.h $(LIBRARY_LINK)
+-	$(CC) pactester.c -o pactester -lpacparser -L. -I.
++	$(CC) pactester.c -o pactester -L. -lpacparser -I. -lsocket -lnsl
+ 
+ testpactester: pactester
+ 	echo "Running tests for pactester."
+-- 
+1.7.3.2
+

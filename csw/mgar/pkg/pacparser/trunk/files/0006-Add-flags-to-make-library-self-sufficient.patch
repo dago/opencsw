@@ -1,0 +1,25 @@
+From cd3ca684d7f4955c964ffb666d31ca5a396941c2 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 7 Dec 2010 13:37:57 +0100
+Subject: [PATCH 6/8] Add flags to make library self-sufficient
+
+---
+ src/Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index b3abb27..66b2263 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -59,7 +59,7 @@ endif
+ 
+ # Spidermonkey library.
+ CFLAGS += -Ispidermonkey/js/src
+-LDFLAGS += -lm
++LDFLAGS += -lm -lsocket -lnsl
+ 
+ LIBRARY_LINK = $(LIBRARY_NAME).$(SO_SUFFIX)
+ PREFIX := $(DESTDIR)$(PREFIX)
+-- 
+1.7.3.2
+

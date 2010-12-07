@@ -1,0 +1,34 @@
+From 1a11df76feae6867b665d5e7c2d70ad8151a0823 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 7 Dec 2010 15:44:37 +0100
+Subject: [PATCH 8/8] Always set myIpAddr to 127.0.0.1 or tests on current9x fails
+
+---
+ tests/runtests.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/runtests.sh b/tests/runtests.sh
+index 09a6b1e..61663f8 100755
+--- a/tests/runtests.sh
++++ b/tests/runtests.sh
+@@ -26,7 +26,7 @@ while read line
+     echo "$line" | ggrep -q "^#" && continue
+     PARAMS=$(echo "$line"|cut -d"|" -f1)
+     EXPECTED_RESULT=$(echo $line|cut -d"|" -f2)
+-    RESULT=$($PACTESTER -p $PACFILE $PARAMS)
++    RESULT=$($PACTESTER -c 127.0.0.1 -p $PACFILE $PARAMS)
+     if [ $? != 0 ]; then
+       echo "pactester execution failed."
+       echo "Command tried: $PACTESTER -p $PACFILE $PARAMS"
+@@ -39,7 +39,7 @@ while read line
+     [ $DEBUG ] && echo "Params: $PARAMS"
+     if [ "$RESULT" != "$EXPECTED_RESULT" ]; then
+       echo "Test failed: got \"$RESULT\", expected \"$EXPECTED_RESULT\""
+-      echo "Command tried: $PACTESTER -p $PACFILE $PARAMS"
++      echo "Command tried: $PACTESTER -c 127.0.0.1 -p $PACFILE $PARAMS"
+       echo "Running with debug mode on..."
+       echo "DEBUG=1 $PACTESTER -p $PACFILE $PARAMS"
+       DEBUG=1 $PACTESTER -p $PACFILE $PARAMS
+-- 
+1.7.3.2
+
