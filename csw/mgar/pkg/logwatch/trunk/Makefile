@@ -31,7 +31,6 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-CHECKPKG_OVERRIDES_CSWlogwatch += unidentified-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_CSWlogwatch += surplus-dependency|CSWggrep
 CHECKPKG_OVERRIDES_CSWlogwatch += surplus-dependency|CSWfortune
 CHECKPKG_OVERRIDES_CSWlogwatch += surplus-dependency|CSWcoreutils
