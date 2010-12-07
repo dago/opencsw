@@ -35,7 +35,18 @@ raddbdir   = $(sysconfdir)/raddb
 # move all of the var stuff to /var/opt/csw
 localstatedir = /var$(prefix)
 
-PRESERVECONF = $(raddbdir)/.*
+PRESERVECONF += $(raddbdir)/.*\.conf
+PRESERVECONF += $(raddbdir)/acct_users
+PRESERVECONF += $(raddbdir)/attrs.*
+PRESERVECONF += $(raddbdir)/dictionary
+PRESERVECONF += $(raddbdir)/certs/.*.cnf
+PRESERVECONF += $(raddbdir)/hints
+PRESERVECONF += $(raddbdir)/huntgroups
+PRESERVECONF += $(raddbdir)/ldap.attrmap
+PRESERVECONF += $(raddbdir)/policy.txt
+PRESERVECONF += $(raddbdir)/preproxy_users
+PRESERVECONF += $(raddbdir)/sql/.*/.*\.conf
+PRESERVECONF += $(raddbdir)/users
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += CC=$(CC) CXX=$(CXX) F77=$(F77) FC=$(FC)
