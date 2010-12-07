@@ -28,7 +28,7 @@ RUNTIME_DEP_PKGS_CSWnetcdf += CSWzlib
 RUNTIME_DEP_PKGS_CSWnetcdf += CSWlibnetcdf6
 
 PACKAGES += CSWlibnetcdf6
-CATALOGNAME_CSWlibnetcdf6 = libnetcf6
+CATALOGNAME_CSWlibnetcdf6 = libnetcdf6
 PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/libnetcdf.so.6.0.0
 PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/libnetcdf.so.6\.[0-9\.]+
 PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/libnetcdf.so.6
@@ -153,12 +153,6 @@ EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
 ## From Porting FAQ: http://wiki.opencsw.org/porting-faq#toc5
 ## OPT_FLAGS_GCC = -O2 -pipe
 OPT_FLAGS_GCC = 
-
-## The development package should pull in the various libs since it's hard to
-## link against what isn't there
-CHECKPKG_OVERRIDES_CSWnetcdf-devel += surplus-dependency|CSWlibnetcdf-c++5
-CHECKPKG_OVERRIDES_CSWnetcdf-devel += surplus-dependency|CSWlibnetcdf6
-CHECKPKG_OVERRIDES_CSWnetcdf-devel += surplus-dependency|CSWlibnetcdff5
 
 ## Mantis bug 4497 means there's no 64 symlink in CSWgcc4corert so you can't
 ## link against these libraries without CSWgcc4core
