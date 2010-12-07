@@ -84,7 +84,7 @@ RUNTIME_DEP_PKGS_CSWfreeradius-krb5 += CSWgcc4corert
 
 ## LDAP
 PACKAGES += CSWfreeradius-ldap
-CATALOGNAME_CSWfreeradius-ldap = freeradias_ldap
+CATALOGNAME_CSWfreeradius-ldap = freeradius_ldap
 SPKG_DESC_CSWfreeradius-ldap = LDAP Module rlm_ldap for FreeRADIUS
 PKGFILES_CSWfreeradius-ldap += $(raddbdir)/ldap\.attrmap
 PKGFILES_CSWfreeradius-ldap += $(raddbdir)/modules/ldap
