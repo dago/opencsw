@@ -35,7 +35,8 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 TEST_SCRIPTS =
 
 ## GMT doesn't use the GNU convention for unpacked tarballs
-WORKSRC = $(WORKDIR)/GMT$(GARVERSION)
+#WORKSRC = $(WORKDIR)/GMT$(GARVERSION)
+DISTNAME = GMT$(GMT_VERSION)
 
 ## Arguments passed to the ./configure script. Configure ignores the various
 ## environment variables so we have to pass CFLAGS and friends
@@ -60,7 +61,10 @@ DEBUG_PACKAGING = 1
 ## order to make a map of any real substance
 CHECKPKG_OVERRIDES_CSWgmt += surplus-dependency|CSWgmtcoast
 
+INSTALL_ARGS = install-all
+
 ## Gar's license file finding routine isn't aware of how to find files when WORKSRC has been redefined, so we need to put the license file somewhere that it can find.
-post-install-modulated:
-	@cp $(WORKSRC)/LICENSE.TXT $(WORKDIR)/COPYING
+#post-install-modulated:
+#	@cp $(WORKSRC)/LICENSE.TXT $(WORKDIR)/COPYING
+LICENSE = LICENSE.TXT
 include gar/category.mk
