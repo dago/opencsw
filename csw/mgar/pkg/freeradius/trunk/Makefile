@@ -9,6 +9,7 @@ endef
 
 MASTER_SITES = ftp://ftp.freeradius.org:/pub/freeradius/
 DISTFILES  = $(GARNAME)-server-$(GARVERSION).tar.gz
+DISTFILES += cswfreeradius
 DISTNAME = $(GARNAME)-server-$(GARVERSION)
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -141,6 +142,16 @@ TEST_TARGET =
 
 INSTALL_ARGS += R=$(DESTDIR)
 
+INITSMF = /etc/opt/csw/init.d/cswapache2
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
+
+post-install-modulated: copy-local-files
+
+# Copy in specialized templates
+copy-local-files:
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall $(WORKDIR)/cswfreeradius $(DESTDIR)/etc/opt/csw/init.d
+	@$(MAKECOOKIE)
