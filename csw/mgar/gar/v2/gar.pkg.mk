@@ -463,7 +463,7 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(_CATEGORY_RUNTIME_DEP_PKGS)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),CSWalternatives)
-$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(foreach P,$(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C " if( $$F[1] eq "$C");)')),CSWcas-$(subst csw,,$(P)))
 
 $(WORKDIR)/%.depend: _DEP_PKGS=$(or $(RUNTIME_DEP_PKGS_ONLY_$*),$(RUNTIME_DEP_PKGS_ONLY),$(sort $(_EXTRA_GAR_PKGS)) $(or $(RUNTIME_DEP_PKGS_$*),$(RUNTIME_DEP_PKGS),$(DEP_PKGS_$*),$(DEP_PKGS)))
 $(WORKDIR)/%.depend: $(WORKDIR)
