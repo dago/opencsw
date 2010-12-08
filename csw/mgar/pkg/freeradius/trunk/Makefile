@@ -43,6 +43,7 @@ PRESERVECONF += $(raddbdir)/certs/.*.cnf
 PRESERVECONF += $(raddbdir)/hints
 PRESERVECONF += $(raddbdir)/huntgroups
 PRESERVECONF += $(raddbdir)/ldap.attrmap
+PRESERVECONF += $(raddbdir)/modules/.*
 PRESERVECONF += $(raddbdir)/policy.txt
 PRESERVECONF += $(raddbdir)/preproxy_users
 PRESERVECONF += $(raddbdir)/sql/.*/.*\.conf
@@ -61,15 +62,21 @@ CONFIGURE_ARGS += --enable-ltdl-install=no
 CONFIGURE_ARGS += --enable-strict-dependencies
 CONFIGURE_ARGS += --enable-developer
 CONFIGURE_ARGS += --with-large-files --with-updfromto --with-edir
-CONFIGURE_ARGS += --without-rlm_sql_firebird
-CONFIGURE_ARGS += --without-rlm_sql_freetds
-CONFIGURE_ARGS += --without-rlm_sql_iodbc
-CONFIGURE_ARGS += --without-rlm_sql_oracle
-CONFIGURE_ARGS += --without-rlm_sql_sybase
-CONFIGURE_ARGS += --without-rlm_sql_db2
 CONFIGURE_ARGS += --without-rlm_eap_ikev2
 CONFIGURE_ARGS += --without-rlm_sql_unixodbc
 CONFIGURE_ARGS += --without-rlm_eap_tnc
+
+# We probably won't ever build these database bindings
+CONFIGURE_ARGS += --without-rlm_sql_firebird
+CONFIGURE_ARGS += --without-rlm_sql_freetds
+CONFIGURE_ARGS += --without-rlm_sql_iodbc
+CONFIGURE_ARGS += --without-rlm_sql_sybase
+CONFIGURE_ARGS += --without-rlm_sql_db2
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/mssql
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/mssql/.*
+CONFIGURE_ARGS += --without-rlm_sql_oracle
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/oracle
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/oracle/.*
 
 ## Individual Package definitions start here
 
@@ -138,6 +145,8 @@ EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/modules/perl
 #CONFIGURE_ARGS += --with-rlm_sql_postgresql_include_dir=$(rlm_pgsql_inc)
 ## Comment out the following lines when building PostgreSQL support
 CONFIGURE_ARGS += --without-rlm_sql_postgresql
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/postgresql
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/postgresql/.*
 ## End pgsql exclusion lines
 
 ## Disabling MySQL because it's going to take a bunch of weird
@@ -147,6 +156,8 @@ CONFIGURE_ARGS += --without-rlm_sql_postgresql
 #CONFIGURE_ARGS += --with-mysql-include-dir=/opt/csw/mysql5/include
 ## Comment out the following lines when building mysql support
 CONFIGURE_ARGS += --without-rlm_sql_mysql
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/mysql
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/mysql/.*
 ## End mysql exclusion lines
 
 
