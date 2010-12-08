@@ -177,5 +177,5 @@ post-install-modulated: copy-local-files
 # Copy in specialized templates
 copy-local-files:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall $(WORKDIR)/cswfreeradius $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall $(WORKDIR)/cswfreeradius $(DESTDIR)/etc/opt/csw/init.d/cswfreeradius
 	@$(MAKECOOKIE)
