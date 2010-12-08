@@ -70,7 +70,7 @@ ARCH_SPECIFIC_PKGNAMES_RE_LIST = [
 DO_NOT_LINK_AGAINST_THESE_SONAMES = set([])
 
 # Regarding surplus libraries reports
-DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
+DO_NOT_REPORT_SURPLUS = [r"^CSWcommon$", r"^CSWcswclassutils$", r"^CSWcas-", r"^CSWisaexec$"]
 DO_NOT_REPORT_SURPLUS_FOR = [r"CSW[a-z\-]+dev(el)?"]
 DO_NOT_REPORT_MISSING = set([])
 DO_NOT_REPORT_MISSING_RE = [r"\*?SUNW.*"]
@@ -375,7 +375,12 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
         (x for x, y in reduce(operator.add, req_pkgs_reasons, [])))
     missing_dep_groups = new_missing_dep_groups
     surplus_deps = declared_deps_set.difference(potential_req_pkgs)
-    surplus_deps = surplus_deps.difference(DO_NOT_REPORT_SURPLUS)
+    no_report_surplus = set()
+    for sp_regex in DO_NOT_REPORT_SURPLUS:
+      for maybe_surplus in surplus_deps:
+        if re.match(sp_regex, maybe_surplus):
+          no_report_surplus.add(maybe_surplus)
+    surplus_deps = surplus_deps.difference(no_report_surplus)
     for regex_str in DO_NOT_REPORT_SURPLUS_FOR:
       if surplus_deps and re.match(regex_str, pkgname):
         surplus_deps = set()
