@@ -120,13 +120,13 @@ class DynamicGarBuild(GarBuild):
     os.mkdir(self.filedir)
     self.install_files = []
     self.garvars = {
-        "GARNAME": "testbuild",
+        "NAME": "testbuild",
         "DESCRIPTION": u"A test package from %s" % self,
         "CATEGORIES": "lib",
         "CONFIGURE_ARGS": "$(DIRPATHS)",
         "SPKG_SOURCEURL": "http://www.opencsw.org/",
         "MASTER_SITES": "",
-        "GARVERSION": "0.0.1",
+        "VERSION": "0.0.1",
         "CONFIGURE_SCRIPTS": "",
         "BUILD_SCRIPTS": "",
         "TEST_SCRIPTS": "",

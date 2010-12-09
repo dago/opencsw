@@ -28,7 +28,7 @@ while (<>) {
         next;
     }
     print "Updating $module to $newvers\n";
-    my $rpat = "s/^(GARVERSION).*\$/\$1 = $newvers/";
+    my $rpat = "s/^(VERSION).*\$/\$1 = $newvers/";
     system("perl -i.bak -plne '$rpat' $module/Makefile")
         and die "Failed to upgrade $module\n";
     system("gmake -C $module update")

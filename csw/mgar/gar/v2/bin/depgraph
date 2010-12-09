@@ -49,7 +49,7 @@ sub makeDigraph {
 
             my ($garname, @deps);
             foreach (@lines) {
-                if (/^GARNAME\s*=\s*(\S*)\s*$/) {
+                if (/^NAME\s*=\s*(\S*)\s*$/) {
                     $garname = $1;
                     next;
                 }

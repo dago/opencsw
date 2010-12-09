@@ -15,6 +15,16 @@ ifneq ($(abspath /),/)
 $(error Your version of 'make' is too old: $(MAKE_VERSION). Please make sure you are using at least 3.81)
 endif
 
+# Prepare for the GARNAME & GARVERSION to NAME & VERSION migration. While the
+# recipes have not been adjusted, we will accept both variables. Once the
+# adjustment has been carried out, delete these two lines and uncomment the
+# deprecation errors below.
+NAME ?= $(GARNAME)
+VERSION ?= $(GARVERSION)
+
+#$(if $(GARNAME),$(error The deprecated variable 'GARNAME' is defined, please replace it with 'NAME'))
+#$(if $(GARVERSION),$(error The deprecated variable 'GARVERSION' is defined, please replace it with 'VERSION'))
+
 # $(GARDIR) is pre-set by the top-level category.mk
 GARBIN  = $(GARDIR)/bin
 
@@ -33,7 +43,7 @@ GITPROJ = $(lastword $(subst /, ,$(1)))
 PARALLELMFLAGS ?= $(MFLAGS)
 export PARALLELMFLAGS
 
-DISTNAME ?= $(GARNAME)-$(GARVERSION)
+DISTNAME ?= $(NAME)-$(VERSION)
 
 DYNSCRIPTS = $(foreach PKG,$(SPKG_SPECS),$(foreach SCR,$(ADMSCRIPTS),$(if $(value $(PKG)_$(SCR)), $(PKG).$(SCR))))
 _LOCALFILES = $(notdir $(wildcard files/*))
@@ -57,9 +67,9 @@ endif
 # For rules that do nothing, display what dependencies they
 # successfully completed
 #DONADA = @echo "	[$@] complete.  Finished rules: $+"
-#DONADA = @touch $(COOKIEDIR)/$@; echo "	[$@] complete for $(GARNAME)."
+#DONADA = @touch $(COOKIEDIR)/$@; echo "	[$@] complete for $(NAME)."
 COOKIEFILE = $(COOKIEDIR)/$(patsubst $(COOKIEDIR)/%,%,$1)
-DONADA = @touch $(call COOKIEFILE,$@); echo "	[$@] complete for $(GARNAME)."
+DONADA = @touch $(call COOKIEFILE,$@); echo "	[$@] complete for $(NAME)."
 
 
 # TODO: write a stub rule to print out the name of a rule when it
@@ -425,8 +435,8 @@ post-extract-gitsnap: $(EXTRACT_TARGETS)
 	@( if [ -d "$(WORKSRC)" ]; then \
 		echo ' ==> Snapshotting extracted source tree with git'; \
 		cd $(WORKSRC); git init; git add .; \
-		git commit -m "Upstream $(GARVERSION)"; \
-		git tag -am "Upstream $(GARVERSION)" upstream-$(GARVERSION); \
+		git commit -m "Upstream $(VERSION)"; \
+		git tag -am "Upstream $(VERSION)" upstream-$(VERSION); \
 		git checkout -b csw; \
 	   fi )
 	@$(MAKECOOKIE)
@@ -471,7 +481,7 @@ post-patch-gitsnap: $(PATCH_TARGETS)
 	@( if [ -d "$(WORKSRC)/.git" ]; then \
 		echo "Tagging top of current csw patch stack..."; \
 		cd $(WORKSRC); \
-		git tag -am "CSW $(GARVERSION)" csw-$(GARVERSION); \
+		git tag -am "CSW $(VERSION)" csw-$(VERSION); \
 	  fi )
 	@$(MAKECOOKIE)
 
@@ -495,7 +505,7 @@ makepatch-modulated: $(FILEDIR)
 			echo "Capturing changes..."; \
 			git commit $(GIT_COMMIT_OPTS) && \
 			( NEXTPATCH=`git log --pretty=oneline master..HEAD | wc -l | tr -d '[[:space:]]'`; \
-			git format-patch --start-number=$$NEXTPATCH csw-$(GARVERSION); \
+			git format-patch --start-number=$$NEXTPATCH csw-$(VERSION); \
 			echo Add the following to your recipe and then; \
 			NEWPATCHES=`echo 00*-*patch`; \
 			FILES_PATCHES=`for p in $$NEWPATCHES; do echo files/$$p; done`; \

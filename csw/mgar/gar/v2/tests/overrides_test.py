@@ -13,7 +13,7 @@ class OverridesUnitTest_1(unittest.TestCase):
   def testOneOverride(self):
     """Checks that CHECKPKG_OVERRIDES variable creates an override."""
     mybuild = gartest.DynamicGarBuild()
-    mybuild.SetGarVariable("GARNAME", "overrides-test")
+    mybuild.SetGarVariable("NAME", "overrides-test")
     mybuild.SetGarVariable("CATALOGNAME", "overrides_test")
     mybuild.SetGarVariable("CHECKPKG_OVERRIDES",
                            "example-tag|example-parameter")
@@ -33,7 +33,7 @@ class OverridesUnitTest_1(unittest.TestCase):
   def testTwoOverriders(self):
     """Checks that CHECKPKG_OVERRIDES variable creates overrides."""
     mybuild = gartest.DynamicGarBuild()
-    mybuild.SetGarVariable("GARNAME", "overrides-test")
+    mybuild.SetGarVariable("NAME", "overrides-test")
     mybuild.SetGarVariable("CATALOGNAME", "overrides_test")
     mybuild.SetGarVariable(
         "CHECKPKG_OVERRIDES",
@@ -58,7 +58,7 @@ class OverridesUnitTest_1(unittest.TestCase):
 #     """http://sourceforge.net/apps/trac/gar/ticket/17"""
 #     overr_file_1 = "/opt/csw/share/checkpkg/overrides/overrides_test_1"
 #     mybuild = gartest.DynamicGarBuild()
-#     mybuild.SetGarVariable("GARNAME", "overrides-test")
+#     mybuild.SetGarVariable("NAME", "overrides-test")
 #     mybuild.SetGarVariable("PACKAGES", "CSWoverrides-test-1 "
 #                                        "CSWoverrides-test-2")
 #     mybuild.SetGarVariable("CATALOGNAME_CSWoverrides-test-1",

@@ -4,8 +4,8 @@ DEF_BASE_PKGS += CSWrubygems
 MASTER_SITES ?= http://rubygems.org/downloads/
 
 # This is common to most modules - override in module makefile if different
-GEMNAME ?= $(GARNAME)
-GEMVERSION ?= $(GARVERSION)
+GEMNAME ?= $(NAME)
+GEMVERSION ?= $(VERSION)
 GEMFILE   ?= $(GEMNAME)-$(GEMVERSION).gem
 DISTFILES += $(GEMFILE)
 
@@ -86,5 +86,5 @@ install-rbgem:
 # Check for a CPAN module version update
 update-check:
 	@# TBD!
-	@echo " ==> Update Check: $(GARNAME) $(GARVERSION)"
-	@echo " ==> AUTO UPDATE CHECK FOR $(GARNAME) IS DISABLED"
+	@echo " ==> Update Check: $(NAME) $(VERSION)"
+	@echo " ==> AUTO UPDATE CHECK FOR $(NAME) IS DISABLED"

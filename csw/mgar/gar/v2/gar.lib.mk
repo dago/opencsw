@@ -200,7 +200,7 @@ check-upstream-and-mail:
 			else \
 				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
 					PACKAGE_UP_TO_DATE=1; \
-					echo "$(GARNAME) : Package is up-to-date. Current version is $$FILE" ; \
+					echo "$(NAME) : Package is up-to-date. Current version is $$FILE" ; \
 				else \
 					NEW_FILES="$$FILE $$NEW_FILES"; \
 				fi; \
@@ -209,11 +209,11 @@ check-upstream-and-mail:
 		done; \
 		if test -z "$$NEW_FILES" ; then \
 			if [ ! -n '$(UFILES_REGEX)' ]; then \
-				echo "$(GARNAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
+				echo "$(NAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
 #				{ echo ""; \
-#				  echo "Hello dear $(GARNAME) maintainer,"; \
+#				  echo "Hello dear $(NAME) maintainer,"; \
 #				  echo ""; \
-#				  echo "The upstream notification job has detected that $(GARNAME) is not configured for automatic upstream file update detection."; \
+#				  echo "The upstream notification job has detected that $(NAME) is not configured for automatic upstream file update detection."; \
 #				  echo ""; \
 #				  echo "Please consider updating your package. Documentation is available from this link : http://www.opencsw.org" ; \
 #				  echo ""; \
@@ -221,22 +221,22 @@ check-upstream-and-mail:
 #				  echo ""; \
 #				  echo "--"; \
 #				  echo "Kindest regards"; \
-#				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+#				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(NAME) upstream update notification' $(NAME); \
 			else \
 				if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
-					echo "$(GARNAME) : Warning no files to check ! $(FILES2CHECK)" ; \
-					echo "$(GARNAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
-					echo "$(GARNAME) :     DISTNAME is $(DISTNAME)" ; \
-					echo "$(GARNAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
-					echo "$(GARNAME) : Please check configuration" ; \
+					echo "$(NAME) : Warning no files to check ! $(FILES2CHECK)" ; \
+					echo "$(NAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
+					echo "$(NAME) :     DISTNAME is $(DISTNAME)" ; \
+					echo "$(NAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
+					echo "$(NAME) : Please check configuration" ; \
 				fi; \
 			fi; \
 		else \
-			echo "$(GARNAME) : new upstream files available: $$NEW_FILES"; \
+			echo "$(NAME) : new upstream files available: $$NEW_FILES"; \
 			{	echo ""; \
-				echo "Hello dear $(GARNAME) maintainer,"; \
+				echo "Hello dear $(NAME) maintainer,"; \
 				echo ""; \
-				echo "The upstream notification job has detected the availability of new files for $(GARNAME)."; \
+				echo "The upstream notification job has detected the availability of new files for $(NAME)."; \
 				echo ""; \
 				echo "The following upstream file(s):"; \
 				echo "    $$NEW_FILES"; \
@@ -250,7 +250,7 @@ check-upstream-and-mail:
 				echo ""; \
 				echo "--"; \
 				echo "Kindest regards"; \
-				echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(GARNAME) upstream update notification' $(GARNAME); \
+				echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(NAME) upstream update notification' $(NAME); \
 		fi; \
 	fi
 
@@ -266,7 +266,7 @@ check-upstream:
 			else \
 				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
 					PACKAGE_UP_TO_DATE=1; \
-					echo "$(GARNAME) : Package is up-to-date. Current version is $$FILE" ; \
+					echo "$(NAME) : Package is up-to-date. Current version is $$FILE" ; \
 				else \
 					NEW_FILES="$$FILE $$NEW_FILES"; \
 				fi; \
@@ -275,18 +275,18 @@ check-upstream:
 		done; \
 		if test -z "$$NEW_FILES" ; then \
 			if [ ! -n '$(UFILES_REGEX)' ]; then \
-				echo "$(GARNAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
+				echo "$(NAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
 			else \
 				if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
-					echo "$(GARNAME) : Warning no files to check ! $(FILES2CHECK)" ; \
-					echo "$(GARNAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
-					echo "$(GARNAME) :     DISTNAME is $(DISTNAME)" ; \
-					echo "$(GARNAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
-					echo "$(GARNAME) : Please check configuration" ; \
+					echo "$(NAME) : Warning no files to check ! $(FILES2CHECK)" ; \
+					echo "$(NAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
+					echo "$(NAME) :     DISTNAME is $(DISTNAME)" ; \
+					echo "$(NAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
+					echo "$(NAME) : Please check configuration" ; \
 				fi; \
 			fi; \
 		else \
-			echo "$(GARNAME) : new upstream files available: $$NEW_FILES"; \
+			echo "$(NAME) : new upstream files available: $$NEW_FILES"; \
 		fi; \
 	fi
 	
@@ -380,7 +380,7 @@ lzma-extract-%:
 # to supply an alternate target at their discretion
 git-extract-%:
 	@echo " ===> Extracting Git Repo $(DOWNLOADDIR)/$* (Treeish: $(call GIT_TREEISH,$*))"
-	git --bare archive --prefix=$(GARNAME)-$(GARVERSION)/ --remote=file://$(abspath $(DOWNLOADDIR))/$*/ $(call GIT_TREEISH,$*) | gtar -xf - -C $(EXTRACTDIR)
+	git --bare archive --prefix=$(NAME)-$(VERSION)/ --remote=file://$(abspath $(DOWNLOADDIR))/$*/ $(call GIT_TREEISH,$*) | gtar -xf - -C $(EXTRACTDIR)
 	@$(MAKECOOKIE)
 
 # rule to extract files with unzip
@@ -768,8 +768,8 @@ install-%/setup.py:
 
 # pkg-config scripts
 install-%-config:
-	mkdir -p $(STAGINGDIR)/$(GARNAME)
-	cp -f $(DESTDIR)$(bindir)/$*-config $(STAGINGDIR)/$(GARNAME)/
+	mkdir -p $(STAGINGDIR)/$(NAME)
+	cp -f $(DESTDIR)$(bindir)/$*-config $(STAGINGDIR)/$(NAME)/
 	$(MAKECOOKIE)
 
 ######################################

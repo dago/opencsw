@@ -27,6 +27,6 @@ scm-update-ignores:
 	$(GARDIR)/bin/svnignore work cookies download
 
 scm-tag-release:
-	$(SVN) cp ../trunk ../tags/$(GARNAME)-$(GARVERSION)$(SPKG_REVSTAMP)
+	$(SVN) cp ../trunk ../tags/$(NAME)-$(VERSION)$(SPKG_REVSTAMP)
 
 .PHONY: scm-help scm-update-all scm-update-package scm-update-gar scm-update-ignores scm-tag-release

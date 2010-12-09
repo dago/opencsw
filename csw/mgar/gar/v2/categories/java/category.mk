@@ -1,7 +1,7 @@
 # http://jakarta.apache.org/commons
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX ?= commons-$(GARNAME)-(\d+(?:\.\d+)*)-bin.tar.gz
+UFILES_REGEX ?= commons-$(NAME)-(\d+(?:\.\d+)*)-bin.tar.gz
 USTREAM_MASTER_SITE ?= $(SPKG_SOURCEURL)
 
 # Includes the rest of gar
