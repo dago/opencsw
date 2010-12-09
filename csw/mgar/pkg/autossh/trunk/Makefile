@@ -1,4 +1,6 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
+# ! As soon as AUTOSSH_PORT is set, the invocation of autossh will
+#   pass wrong options to ssh.
 # * man page doesn't properly format on Solaris. Upstream notified on
 #   2009-06-24, intends to work on it, has access to his own Solaris
 #   box. In case of a new upstream version, verify whether man page
