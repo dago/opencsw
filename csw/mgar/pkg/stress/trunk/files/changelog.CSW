@@ -1,0 +1,6 @@
+stress (1.0.4,REV=2010.12.09)
+
+  * Upstream version bump to 1.0.4
+  * Ship stress.1 man page. (Closes #3665)
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Thu,  9 Dec 2010 02:00:00 +0100
