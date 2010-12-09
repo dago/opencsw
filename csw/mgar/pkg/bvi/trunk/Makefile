@@ -4,13 +4,15 @@ CATEGORIES = utils
 
 DESCRIPTION = A vi-like binary file (hex) editor
 define BLURB
-  Long description
+  The bvi is a display-oriented editor for binary files, based on the vi
+  texteditor. If you are familiar with vi, just start the editor and begin
+  to edit! A bmore program is also included in the package. If you never
+  heard about vi, maybe bvi is not the best choice for you. 
 endef
 
+VENDOR_URL   = http://bvi.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).src.tar.gz
-
-# We define upstream file regex so we can be notifed of new upstream software release
+DISTFILES    = $(GARNAME)-$(GARVERSION).src.tar.gz
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).src.tar.gz
 UPSTREAM_MASTER_SITES = http://sourceforge.net/projects/bvi/files/
 
