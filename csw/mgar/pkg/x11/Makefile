@@ -30,14 +30,14 @@ newpkg-%:
 	@svn mkdir $* $*/tags $*/branches $*/trunk $*/trunk/files
 	@(echo "GARNAME = $*";                                     \
 	echo "GARVERSION = 1.0";                                        \
-	echo "CATEGORIES = category";                                   \
+	echo "CATEGORIES = x11";                                   \
 	echo "";                                                        \
 	echo "DESCRIPTION = Brief description";                         \
 	echo "define BLURB";                                            \
 	echo "  Long description";                                      \
 	echo "endef";                                                   \
 	echo "";                                                        \
-	echo "MASTER_SITES = ";                                         \
+	echo "MASTER_SITES = $$(XORG_LIB_MASTER_SITE)";                                         \
 	echo "DISTFILES  = $$(GARNAME)-$$(GARVERSION).tar.gz";          \
 	echo "";                                                        								\
 	echo "# We define upstream file regex so we can be notifed of new upstream software release";  	\
