@@ -1,3 +1,9 @@
+# TODO (release-critical prefixed with !, non release-critical with *)
+#
+# ! Re-enable the integrated PHP extension builds. This either requires
+#   performance enhancements to GAR or a completely different approach.
+#   Details documented below.
+#
 GARNAME     = php5
 GARVERSION  = 5.3.3
 CATEGORIES  = lang
@@ -18,10 +24,10 @@ define BLURB
 	available.
 endef
 
+VENDOR_URL     = http://www.php.net/
 MASTER_SITES   = http://us.php.net/distributions/
-SPKG_SOURCEURL = http://www.php.net/
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
-STRIP_DIRS    += $(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
+STRIP_DIRS    := $(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
 
 DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
@@ -29,7 +35,7 @@ DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 PACKAGES = CSWphp5 CSWphp5devel
 
 CATALOGNAME_CSWphp5        = php5
-SPKG_DESC_CSWphp5          = A High-Level Scripting Languages
+SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 CATALOGNAME_CSWphp5devel   = php5_devel
 SPKG_DESC_CSWphp5devel     = Development files for php5
 RUNTIME_DEP_PKGS_CSWphp5      = CSWexpat CSWggettextrt CSWiconv CSWpng CSWsqlite
@@ -58,9 +64,17 @@ PKGFILES_CSWphp5devel += $(mandir)/man1/phpize.1
 
 PATCHFILES += configure.diff
 
-# PHP Extensions
-EXTDIRLIST = $(shell ls -d extensions/*)
-#include $(foreach X,$(EXTDIRLIST),$(X)/Makefile)
+# PHP Extensions, currently deactivated
+#
+# GAR needs performance enhancements to handle an integrated build with
+# all the extensions otherwise the build takes ages.
+# 1) File downloads are triggered via gmake invocations -> s l o w !!
+# 2) Unless gmake is called -r there are heaps of implicit rule searches
+#      for the included Makefiles (gmake tries to remake them)
+# 3) ... TBD, probably more
+#
+EXTENSION_MAKEFILES := $(wildcard extensions/*/Makefile)
+#include $(EXTENSION_MAKEFILES)
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 
