@@ -201,3 +201,9 @@ copy-local-files:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall $(WORKDIR)/cswfreeradius $(DESTDIR)/etc/opt/csw/init.d/cswfreeradius
 	@$(MAKECOOKIE)
+
+clean-local: nuke-local-cookie
+
+nuke-local-cookie:
+	@echo Removing all copy-local-files build cookies
+	rm -f work/*/cookies/*/copy-local-files
