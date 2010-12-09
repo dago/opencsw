@@ -1,3 +1,9 @@
+# TODO (release-critical prefixed with !, non release-critical with *)
+#
+# ! Requires http://incrtcl.sourceforge.net/itcl/ (running password-gorilla
+#   currently fails with "The Password Gorilla requires the [incr Tcl] add-on
+#   to Tcl. Please install the [incr Tcl] package."
+#
 GARNAME = password-gorilla
 GARVERSION = 1.4
 CATEGORIES = apps
