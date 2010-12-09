@@ -1,6 +1,6 @@
 GARNAME = iozone
 GARVERSION = 3.291
-VERSION = $(shell echo $(GARVERSION) | sed -e 's/\./_/g')
+DISTVERSION = $(shell echo $(GARVERSION) | sed -e 's/\./_/g')
 CATEGORIES = apps
 
 DESCRIPTION = IO benchmarking tool
@@ -11,16 +11,15 @@ define BLURB
   many operating systems.
 endef
 
+VENDOR_URL    = http://www.iozone.org/
 MASTER_SITES  = http://www.iozone.org/src/current/
 MASTER_SITES += http://www.iozone.org/docs/
-DISTFILES  = $(GARNAME)$(VERSION).tar
-DISTFILES += vx_ioctl.h
-DISTFILES += $(call admfiles,CSWiozone)
+UFILES_REGEX  = $(GARNAME)(\d+(?:\.\d+)*).tar
+DISTFILES     = $(GARNAME)$(DISTVERSION).tar
+DISTFILES    += vx_ioctl.h
+DISTFILES    += $(call admfiles,CSWiozone)
 
-DISTNAME = $(GARNAME)$(VERSION)
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*).tar
+DISTNAME      = $(GARNAME)$(DISTVERSION)
 
 PATCHFILES = patch-vx_ioctl.diff
 
