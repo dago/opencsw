@@ -26,8 +26,6 @@ DISTFILES    = cacti-$(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES   += cswusergroup CSWspine.postinstall
 WORKSRC      = $(WORKDIR)/cacti-$(GARNAME)-$(GARVERSION)
 
-LICENSE = LICENSE
-
 PATCHFILES += configure.diff
 PATCHFILES += spine.h.diff
 PATCHFILES += util.c.diff
@@ -54,6 +52,8 @@ SKIPTEST = 1
 sysconfdir = /etc/opt/csw
 PRESERVECONF = $(sysconfdir)/spine.conf
 
+EXTRA_PAX_ARGS = '-s,ChangeLog,changelog,p'
+
 include gar/category.mk
 
 configure-custom:
@@ -67,20 +67,13 @@ configure-custom:
 	( cd $(WORKSRC) ; ./configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
+install-custom: EXTRA_DOCS = README LICENSE LICENSE.LGPL ChangeLog
 install-custom: BINDIR = $(DESTDIR)$(bindir)
 install-custom: CFGDIR = $(DESTDIR)$(sysconfdir)
 install-custom: DOCDEST = $(DESTDIR)$(docdir)/spine
 install-custom:
 	ginstall -d $(DOCDEST)
-	ginstall -m 644 $(WORKSRC)/LICENSE $(DOCDEST)
-	ginstall -m 644 $(WORKSRC)/README $(DOCDEST)
-	ginstall -m 644 $(WORKSRC)/README-WINDOWS $(DOCDEST)
-	ginstall -m 644 $(WORKSRC)/INSTALL $(DOCDEST)
-	ginstall -m 644 $(WORKSRC)/LICENSE.LGPL $(DOCDEST)
-	ginstall -m 644 $(WORKSRC)/COPYING $(DOCDEST)
-	ginstall -m 644 $(WORKSRC)/ChangeLog $(DOCDEST)
-	ginstall -d $(BINDIR)
-	ginstall -m 755 $(WORKSRC)/spine $(BINDIR)
-	ginstall -d $(CFGDIR)
-	ginstall -m 644 $(WORKSRC)/spine.conf $(CFGDIR)/spine.conf
+	(cd $(WORKSRC); ginstall -m 644 $(EXTRA_DOCS) $(DOCDEST))
+	ginstall -Dm 755 $(WORKSRC)/spine $(BINDIR)
+	ginstall -Dm 644 $(WORKSRC)/spine.conf $(CFGDIR)/spine.conf
 	@$(MAKECOOKIE)
