@@ -4,8 +4,8 @@ XFCE_VERSION   ?= 4.6.1
 XFCE_MIRROR     = $(XFCE_ROOT)/archive/xfce-$(XFCE_VERSION)/src/
 
 MASTER_SITES   ?= $(XFCE_MIRROR)
-GARVERSION     ?= $(XFCE_VERSION)
-PKGDIST        ?= $(GARNAME)-$(GARVERSION).tar.bz2
+VERSION     ?= $(XFCE_VERSION)
+PKGDIST        ?= $(NAME)-$(VERSION).tar.bz2
 DISTFILES      += $(PKGDIST)
 
 # Compiler options

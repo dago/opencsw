@@ -14,8 +14,8 @@ begin
   blurb = spec.description.gsub("\n", ' ').squeeze.lstrip
 
   puts <<"EOF"
-GARNAME = #{spec.name}
-GARVERSION = #{spec.version}
+NAME = #{spec.name}
+VERSION = #{spec.version}
 CATEGORIES = rbgems
 
 DESCRIPTION = #{spec.summary}

@@ -595,13 +595,13 @@ endif
 #
 
 # Gnome
-GNOME_PROJ  ?= $(GARNAME)
+GNOME_PROJ  ?= $(NAME)
 GNOME_ROOT   = http://ftp.gnome.org/pub/GNOME/sources
-GNOME_SUBV   = $(shell echo $(GARVERSION) | awk -F. '{print $$1"."$$2}')
+GNOME_SUBV   = $(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')
 GNOME_MIRROR = $(GNOME_ROOT)/$(GNOME_PROJ)/$(GNOME_SUBV)/
 
 # SourceForge
-SF_PROJ     ?= $(GARNAME)
+SF_PROJ     ?= $(NAME)
 SF_MIRRORS  ?= http://downloads.sourceforge.net/$(SF_PROJ)/
 # Keep this for compatibility
 SF_MIRROR    = $(firstword $(SF_MIRRORS))
@@ -609,18 +609,18 @@ SF_PROJECT_SHOWFILE ?= http://sourceforge.net/project/showfiles.php?group_id
 UPSTREAM_USE_SF	?= 0
 
 # Google Code
-GOOGLE_PROJECT ?= $(GARNAME)
+GOOGLE_PROJECT ?= $(NAME)
 GOOGLE_MIRROR  ?= http://$(GOOGLE_PROJECT).googlecode.com/files/
 
 # Berlios
-BERLIOS_PROJECT ?= $(GARNAME)
+BERLIOS_PROJECT ?= $(NAME)
 BERLIOS_MIRROR ?= http://download.berlios.de/$(BERLIOS_PROJECT)/ http://download2.berlios.de/$(BERLIOS_PROJECT)/
 
 # GNU
 GNU_SITE     = http://mirrors.kernel.org
 GNU_GNUROOT  = $(GNU_SITE)/gnu
 GNU_NGNUROOT = $(GNU_SITE)/non-gnu
-GNU_PROJ    ?= $(GARNAME)
+GNU_PROJ    ?= $(NAME)
 GNU_MIRROR   = $(GNU_GNUROOT)/$(GNU_PROJ)/
 GNU_NMIRROR  = $(GNU_NGNUROOT)/$(GNU_PROJ)/
 
@@ -635,7 +635,7 @@ CPAN_MIRRORS = $(foreach S,$(CPAN_SITES),$(S)/authors/id/$(AUTHOR_ID)/)
 CPAN_FIRST_MIRROR = $(firstword $(CPAN_SITES))/authors/id
 
 # Python Package Index
-PYPI_PROJECT ?= $(GARNAME)
+PYPI_PROJECT ?= $(NAME)
 PYPI_SUBDIR = $(shell echo $(PYPI_PROJECT) | cut -c 1)
 PYPI_MIRROR = http://pypi.python.org/packages/source/$(PYPI_SUBDIR)/$(PYPI_PROJECT)/
 

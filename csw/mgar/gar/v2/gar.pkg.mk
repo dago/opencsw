@@ -22,8 +22,8 @@ endif
 PKGINFO ?= /usr/bin/pkginfo
 
 # You can use either PACKAGES with dynamic gspec-files or explicitly add gspec-files to DISTFILES.
-# Do "PACKAGES = CSWmypkg" when you build a package whose GARNAME is not the package name.
-# If no explicit gspec-files have been defined the default name for the package is CSW$(GARNAME).
+# Do "PACKAGES = CSWmypkg" when you build a package whose NAME is not the package name.
+# If no explicit gspec-files have been defined the default name for the package is CSW$(NAME).
 # The whole processing is done from _PKG_SPECS, which includes all packages to be build.
 
 # SRCPACKAGE_BASE is the name of the package containing the sourcefiles for all packages
@@ -31,8 +31,8 @@ PKGINFO ?= /usr/bin/pkginfo
 # SRCPACKAGE is the name of the package containing the sources
 
 ifeq ($(origin PACKAGES), undefined)
-PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(GARNAME))
-CATALOGNAME    ?= $(if $(filter %.gspec,$(DISTFILES)),,$(GARNAME))
+PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(NAME))
+CATALOGNAME    ?= $(if $(filter %.gspec,$(DISTFILES)),,$(NAME))
 SRCPACKAGE_BASE = $(firstword $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
 SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE))
@@ -78,7 +78,7 @@ $(foreach P,$(SPKG_SPECS),$(if $(REQUIRED_PKGS_$P),$(error The deprecated variab
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
-BUNDLE ?= $(GARNAME)
+BUNDLE ?= $(NAME)
 
 # pkgname - Get the name of a package from a gspec-name or package-name
 #
@@ -150,7 +150,7 @@ endif
 
 
 SPKG_DESC      ?= $(DESCRIPTION)
-SPKG_VERSION   ?= $(GARVERSION)
+SPKG_VERSION   ?= $(VERSION)
 SPKG_CATEGORY  ?= application
 SPKG_SOURCEURL ?= $(firstword $(VENDOR_URL) \
 			$(if $(filter $(GNU_MIRROR),$(MASTER_SITES)),http://www.gnu.org/software/$(GNU_PROJ)) \
@@ -248,7 +248,7 @@ endif
 # Where we find our mkpackage global templates
 PKGLIB = $(GARDIR)/pkglib
 
-PKG_EXPORTS  = GARNAME GARVERSION DESCRIPTION CATEGORIES GARCH GARDIR GARBIN
+PKG_EXPORTS  = NAME VERSION DESCRIPTION CATEGORIES GARCH GARDIR GARBIN
 PKG_EXPORTS += CURDIR WORKDIR WORKDIR_FIRSTMOD WORKSRC WORKSRC_FIRSTMOD PKGROOT
 PKG_EXPORTS += SPKG_REVSTAMP SPKG_PKGNAME SPKG_DESC SPKG_VERSION SPKG_CATEGORY
 PKG_EXPORTS += SPKG_VENDOR SPKG_EMAIL SPKG_PSTAMP SPKG_BASEDIR SPKG_CLASSES
@@ -484,7 +484,7 @@ $(WORKDIR)/%.depend:
 # Dynamic gspec-files are constructed as follows:
 # - Packages using dynamic gspec-files must be listed in PACKAGES
 # - There is a default of PACKAGES containing one packages named CSW
-#   followed by the GARNAME. It can be changed by setting PACKAGES explicitly.
+#   followed by the NAME. It can be changed by setting PACKAGES explicitly.
 # - The name of the generated package is always the same as listed in PACKAGES
 # - The catalog name defaults to the suffix following CSW of the package name,
 #   but can be customized by setting CATALOGNAME_<pkg> = <catalogname-of-pkg>
@@ -930,13 +930,13 @@ submitpkg-%: _PKGURL=$(shell svn info .. | $(GAWK) '$$1 == "URL:" { print $$2 }'
 submitpkg-%:
 	@$(if $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),\
 		$(error You have local files not in the repository. Please commit everything before submitting a package))
-	$(SVN) -m "$(GARNAME): Tag as release $(SPKG_VERSION),$(SPKG_REVSTAMP)$(if $(filter default,$*),, for project '$*')" cp $(_PKGURL)/trunk $(_PKGURL)/tags/$(if $(filter default,$*),,$*_)$(GARNAME)-$(SPKG_VERSION),$(SPKG_REVSTAMP)
+	$(SVN) -m "$(NAME): Tag as release $(SPKG_VERSION),$(SPKG_REVSTAMP)$(if $(filter default,$*),, for project '$*')" cp $(_PKGURL)/trunk $(_PKGURL)/tags/$(if $(filter default,$*),,$*_)$(NAME)-$(SPKG_VERSION),$(SPKG_REVSTAMP)
 
 # dependb - update the dependency database
 #
 dependb:
 	@dependb --db $(SPKG_DEPEND_DB) \
-             --parent $(CATEGORIES)/$(GARNAME) \
+             --parent $(CATEGORIES)/$(NAME) \
              --add $(DEPENDS)
 
 # pkgenv - dump the packaging environment
