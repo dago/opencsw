@@ -35,6 +35,8 @@ raddbdir   = $(sysconfdir)/raddb
 # move all of the var stuff to /var/opt/csw
 localstatedir = /var$(prefix)
 
+
+## Configuration directory
 PRESERVECONF += $(raddbdir)/.*\.conf
 PRESERVECONF += $(raddbdir)/acct_users
 PRESERVECONF += $(raddbdir)/attrs.*
@@ -48,6 +50,26 @@ PRESERVECONF += $(raddbdir)/policy.txt
 PRESERVECONF += $(raddbdir)/preproxy_users
 PRESERVECONF += $(raddbdir)/sql/.*/.*\.conf
 PRESERVECONF += $(raddbdir)/users
+PRESERVECONF += $(raddbdir)/sites-available/buffered-sql
+PRESERVECONF += $(raddbdir)/sites-available/coa
+PRESERVECONF += $(raddbdir)/sites-available/control-socket
+PRESERVECONF += $(raddbdir)/sites-available/copy-acct-to-home-server
+PRESERVECONF += $(raddbdir)/sites-available/decoupled-accounting
+PRESERVECONF += $(raddbdir)/sites-available/default
+PRESERVECONF += $(raddbdir)/sites-available/dhcp
+PRESERVECONF += $(raddbdir)/sites-available/dynamic-clients
+PRESERVECONF += $(raddbdir)/sites-available/example
+PRESERVECONF += $(raddbdir)/sites-available/inter-tunnel
+PRESERVECONF += $(raddbdir)/sites-available/originate-coa
+PRESERVECONF += $(raddbdir)/sites-available/proxy-inner-tunnel
+PRESERVECONF += $(raddbdir)/sites-available/robust-proxy-accounting
+PRESERVECONF += $(raddbdir)/sites-available/status
+PRESERVECONF += $(raddbdir)/sites-available/virtual.example.com
+PRESERVECONF += $(raddbdir)/sites-available/vmps
+
+## Additional Config cleanups
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sites-enabled/control-socket
+EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sites-enabled/inner-tunnel
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += CC=$(CC) CXX=$(CXX) F77=$(F77) FC=$(FC)
