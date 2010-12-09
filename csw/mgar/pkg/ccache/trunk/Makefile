@@ -22,4 +22,8 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 EXTRA_CFLAGS = -D__EXTENSIONS__
 
+# Unset $PWD (which isn't changed on gmake -C) so that test.sh uses `pwd`
+PWD=
+TEST_EXPORTS=PWD
+
 include gar/category.mk
