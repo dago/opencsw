@@ -1,6 +1,6 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 GARNAME = xterm
-GARVERSION = 260
+GARVERSION = 267
 CATEGORIES = apps
 
 DESCRIPTION = Terminal emulator for the X Window System
