@@ -14,6 +14,7 @@ import time
 import configuration as c
 import opencsw
 import overrides
+import shell
 
 ADMIN_FILE_CONTENT = """
 basedir=default
@@ -41,24 +42,7 @@ class PackageError(Error):
   pass
 
 
-class ShellMixin(object):
-
-  def ShellCommand(self, args, quiet=False):
-    logging.debug("Calling: %s", repr(args))
-    if quiet:
-      process = subprocess.Popen(args,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
-      stdout, stderr = process.communicate()
-      retcode = process.wait()
-    else:
-      retcode = subprocess.call(args)
-    if retcode:
-      raise Error("Running %s has failed." % repr(args))
-    return retcode
-
-
-class CswSrv4File(ShellMixin, object):
+class CswSrv4File(shell.ShellMixin, object):
   """Represents a package in the srv4 format (pkg)."""
 
   def __init__(self, pkg_path, debug=False):
@@ -71,6 +55,7 @@ class CswSrv4File(ShellMixin, object):
     self.pkgname = None
     self.md5sum = None
     self.mtime = None
+    self.stat = None
 
   def __repr__(self):
     return u"CswSrv4File(%s)" % repr(self.pkg_path)
@@ -143,13 +128,19 @@ class CswSrv4File(ShellMixin, object):
       logging.debug("GetPkgname(): %s", repr(self.pkgname))
     return self.pkgname
 
+  def _Stat(self):
+    if not self.stat:
+      self.stat = os.stat(self.pkg_path)
+    return self.stat
+
   def GetMtime(self):
-    if not self.mtime:
-      # This fails if the file is not there.
-      s = os.stat(self.pkg_path)
-      t = time.gmtime(s.st_mtime)
-      self.mtime = datetime.datetime(*t[:6])
-    return self.mtime
+    s = self._Stat()
+    t = time.gmtime(s.st_mtime)
+    self.mtime = datetime.datetime(*t[:6])
+
+  def GetSize(self):
+    s = self._Stat()
+    return s.st_size
 
   def TransformToDir(self):
     """Transforms the file to the directory format.
@@ -202,17 +193,12 @@ class CswSrv4File(ShellMixin, object):
 
   def GetPkgchkOutput(self):
     """Returns: (exit code, stdout, stderr)."""
-    args = ["pkgchk", "-d", self.GetGunzippedPath(), "all"]
+    args = ["/usr/sbin/pkgchk", "-d", self.GetGunzippedPath(), "all"]
     pkgchk_proc = subprocess.Popen(
         args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = pkgchk_proc.communicate()
     ret = pkgchk_proc.wait()
     return ret, stdout, stderr
-
-  def GetFileMtime(self):
-    if not self.mtime:
-      self.mtime = os.stat(self.pkg_path).st_mtime
-    return self.mtime
 
   def __del__(self):
     if self.workdir:
@@ -225,7 +211,7 @@ class CswSrv4File(ShellMixin, object):
     return DirectoryFormatPackage
 
 
-class DirectoryFormatPackage(ShellMixin, object):
+class DirectoryFormatPackage(shell.ShellMixin, object):
   """Represents a package in the directory format.
 
   Allows some read-write operations.
@@ -478,7 +464,7 @@ class PackageComparator(object):
       print "No differences found."
 
 
-class PackageSurgeon(ShellMixin):
+class PackageSurgeon(shell.ShellMixin):
   """Takes an OpenCSW gzipped package and performs surgery on it.
 
   Sows it up, adjusts checksums, and puts it back together.

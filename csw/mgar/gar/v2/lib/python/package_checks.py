@@ -27,6 +27,8 @@ import dependency_checks as depchecks
 import configuration as c
 import sharedlib_utils as su
 from Cheetah import Template
+import common_constants
+import logging
 
 PATHS_ALLOWED_ONLY_IN = {
     # Leading slash must be removed.
@@ -58,7 +60,7 @@ ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
 EMAIL_RE = re.compile(r"^.*@opencsw.org$")
 MAX_CATALOGNAME_LENGTH = 29
 MAX_PKGNAME_LENGTH = 32
-ARCH_LIST = opencsw.ARCHITECTURES
+ARCH_LIST = common_constants.ARCHITECTURES
 VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
 # Pkgnames matching these regexes must not be ARCHALL = 1
 ARCH_SPECIFIC_PKGNAMES_RE_LIST = [
@@ -122,32 +124,32 @@ HACHOIR_MACHINES = {
          "allowed": (), "disallowed": (),
          "type": "unknown"},
      2: {"name": "sparcv8",
-         "type": opencsw.ARCH_SPARC,
+         "type": common_constants.ARCH_SPARC,
          "allowed": BASE_BINARY_PATHS + su.SPARCV8_PATHS,
          "disallowed": su.SPARCV9_PATHS + su.INTEL_386_PATHS + su.AMD64_PATHS,
         },
      3: {"name": "i386",
-         "type": opencsw.ARCH_i386,
+         "type": common_constants.ARCH_i386,
          "allowed": BASE_BINARY_PATHS + su.INTEL_386_PATHS,
          "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS,
         },
      6: {"name": "i486",
-         "type": opencsw.ARCH_i386,
+         "type": common_constants.ARCH_i386,
          "allowed": su.INTEL_386_PATHS,
          "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS,
          },
     18: {"name": "sparcv8+",
-         "type": opencsw.ARCH_SPARC,
+         "type": common_constants.ARCH_SPARC,
          "allowed": su.SPARCV8PLUS_PATHS,
          "disallowed": su.SPARCV8_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS + su.INTEL_386_PATHS,
         },
     43: {"name": "sparcv9",
-         "type": opencsw.ARCH_SPARC,
+         "type": common_constants.ARCH_SPARC,
          "allowed": su.SPARCV9_PATHS,
          "disallowed": su.INTEL_386_PATHS + su.AMD64_PATHS,
         },
     62: {"name": "amd64",
-         "type": opencsw.ARCH_i386,
+         "type": common_constants.ARCH_i386,
          "allowed": su.AMD64_PATHS,
          "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS,
         },
@@ -890,7 +892,7 @@ def DisabledCheckForMissingSymbolsDumb(pkg_data, error_mgr, logger, messenger):
             % (ldd_elem["symbol"], ldd_elem["path"]))
 
 
-def SetCheckFileConflicts(pkgs_data, error_mgr, logger, messenger):
+def SetCheckFileCollisions(pkgs_data, error_mgr, logger, messenger):
   """Throw an error if two packages contain the same file.
 
   Directories don't count.  The strategy is to create an in-memory index of
@@ -899,14 +901,34 @@ def SetCheckFileConflicts(pkgs_data, error_mgr, logger, messenger):
   pkgs_by_path = {}
   # File types are described at:
   # http://docs.sun.com/app/docs/doc/816-5174/pkgmap-4?l=en&n=1&a=view
-  file_types = set(["f", "l", "s", "p", "e"])
+  skip_file_types = set(["d"])
+  pkgnames = set(x["basic_stats"]["pkgname"] for x in pkgs_data)
   for pkg_data in pkgs_data:
     pkgname = pkg_data["basic_stats"]["pkgname"]
     for pkgmap_entry in pkg_data["pkgmap"]:
-      if pkgmap_entry["type"] in file_types:
+      if pkgmap_entry["path"] and pkgmap_entry["type"] not in skip_file_types:
         if pkgmap_entry["path"] not in pkgs_by_path:
           pkgs_by_path[pkgmap_entry["path"]] = set()
         pkgs_by_path[pkgmap_entry["path"]].add(pkgname)
+        pkgs_in_db = error_mgr.GetPkgByPath(pkgmap_entry["path"])
+
+        # We need to simulate package removal before next install.  We want to
+        # throw an error if two new packages have a conflict; however, we
+        # don't want to throw an error in the following scenario:
+        #
+        # db:
+        # CSWfoo with /opt/csw/bin/foo
+        #
+        # new:
+        # CSWfoo - empty
+        # CSWfoo-utils with /opt/csw/bin/foo
+        #
+        # Here, CSWfoo-utils conflicts with CSWfoo from the database; but we
+        # don't need to check against CSWfoo in the database, but with with
+        # one in the package set under examination instead.
+        pkgs_in_db = pkgs_in_db.difference(pkgnames)
+
+        pkgs_by_path[pkgmap_entry["path"]].update(pkgs_in_db)
   # Traversing the data structure
   for file_path in pkgs_by_path:
     if len(pkgs_by_path[file_path]) > 1:
@@ -914,7 +936,7 @@ def SetCheckFileConflicts(pkgs_data, error_mgr, logger, messenger):
       for pkgname in pkgnames:
         error_mgr.ReportError(
             pkgname,
-            'file-conflict',
+            'file-collision',
             '%s %s' % (file_path, " ".join(pkgnames)))
 
 
@@ -1087,7 +1109,7 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
             "sonames=%s "
             "pkgname=%s "
             "expected=%s "
-            % (sonames, pkgname, multilib_pkgnames))
+            % (",".join(sonames), pkgname, ",".join(multilib_pkgnames)))
         messenger.Message(
             "The collection of sonames (%s) "
             "is expected to be in package "
@@ -1107,7 +1129,9 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
             "soname=%s "
             "pkgname=%s "
             "expected=%s"
-            % (binary_info["path"], soname, pkgname, policy_pkgname_list))
+            % (binary_info["path"],
+               soname, pkgname,
+               ",".join(policy_pkgname_list)))
         suggested_pkgname = policy_pkgname_list[0]
         messenger.SuggestGarLine(
             "PACKAGES += %s" % suggested_pkgname)

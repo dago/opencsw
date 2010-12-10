@@ -7,6 +7,7 @@ import datetime
 import unittest
 import package_checks as pc
 import checkpkg
+import checkpkg_lib
 import yaml
 import os.path
 import mox
@@ -43,7 +44,7 @@ class CheckpkgUnitTestHelper(object):
   def testDefault(self):
     self.logger_mock = stubs.LoggerStub()
     self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg.IndividualCheckInterface)
+        checkpkg_lib.IndividualCheckInterface)
     self.SetMessenger()
     self.CheckpkgTest()
     self.mocker.ReplayAll()
@@ -971,7 +972,7 @@ class TestCheckArchitecture_LibSubdirWrong(CheckpkgUnitTestHelper,
 class TestConflictingFiles(CheckpkgUnitTestHelper,
                            unittest.TestCase):
   """Throw an error if there's a conflicting file in the package set."""
-  FUNCTION_NAME = 'SetCheckFileConflicts'
+  FUNCTION_NAME = 'SetCheckFileCollisions'
   # Contains only necessary bits.  The data listed in full.
   CSWbar_DATA = {
         'basic_stats': {'catalogname': 'bar',
@@ -1003,10 +1004,14 @@ class TestConflictingFiles(CheckpkgUnitTestHelper,
         ],
   }
   def CheckpkgTest(self):
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/share/foo').AndReturn(
+        frozenset(['CSWfoo', 'CSWbar']))
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/share/foo').AndReturn(
+        frozenset(['CSWfoo', 'CSWbar']))
     self.error_mgr_mock.ReportError(
-        'CSWbar', 'file-conflict', '/opt/csw/share/foo CSWbar CSWfoo')
+        'CSWbar', 'file-collision', '/opt/csw/share/foo CSWbar CSWfoo')
     self.error_mgr_mock.ReportError(
-        'CSWfoo', 'file-conflict', '/opt/csw/share/foo CSWbar CSWfoo')
+        'CSWfoo', 'file-collision', '/opt/csw/share/foo CSWbar CSWfoo')
     self.pkg_data = [self.CSWbar_DATA, self.CSWfoo_DATA]
 
 
