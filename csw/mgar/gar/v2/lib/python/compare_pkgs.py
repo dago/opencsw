@@ -19,6 +19,7 @@ $Id: compare_pkgs.py 124 2010-02-18 07:28:10Z wahwah $
 import logging
 import optparse
 import opencsw
+import package
 
 USAGE = """Compares two packages with the same catalogname.
 
@@ -56,7 +57,7 @@ def main():
   pkg_dir_b = opencsw.StagingDir(options.package_dir_b)
   pkg_path_a = pkg_dir_a.GetLatest(options.catalog_name)[-1]
   pkg_path_b = pkg_dir_b.GetLatest(options.catalog_name)[-1]
-  pc = opencsw.PackageComparator(
+  pc = package.PackageComparator(
                          pkg_path_a,
                          pkg_path_b,
                          permissions=options.permissions,
