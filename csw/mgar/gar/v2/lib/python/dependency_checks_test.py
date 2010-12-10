@@ -1,6 +1,6 @@
 #!/opt/csw/bin/python2.6
 
-import checkpkg_lib
+import checkpkg
 import copy
 import mox
 import unittest
@@ -20,7 +20,7 @@ class TestGetPkgByFullPath(unittest.TestCase):
     expected = {'/foo': ['CSWfoo'], '/foo/bar': ['CSWbar']}
     self.mocker = mox.Mox()
     self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg_lib.SetCheckInterface)
+        checkpkg.SetCheckInterface)
     self.error_mgr_mock.GetPkgByPath('/foo/bar').AndReturn(["CSWbar"])
     self.mocker.ReplayAll()
     logger_stub = stubs.LoggerStub()
@@ -42,7 +42,7 @@ class TestGetPkgByFullPath(unittest.TestCase):
                    '/opt/csw/lib/libfoo.so.1': ['CSWbar']}
     self.mocker = mox.Mox()
     self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg_lib.SetCheckInterface)
+        checkpkg.SetCheckInterface)
     self.error_mgr_mock.GetPkgByPath('/opt/csw/lib').AndReturn(["CSWcommon"])
     self.error_mgr_mock.GetPkgByPath('/opt/csw/bin').AndReturn(["CSWcommon"])
     self.mocker.ReplayAll()
@@ -68,7 +68,7 @@ class TestByDirectory(unittest.TestCase):
     self.logger_stub = stubs.LoggerStub()
     self.messenger_stub = stubs.MessengerStub()
     self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg_lib.SetCheckInterface)
+        checkpkg.SetCheckInterface)
     self.pkg_data = copy.deepcopy(tree_stats[0])
 
   def testByDirectory_1(self):
@@ -322,7 +322,7 @@ class TestLibraries(unittest.TestCase):
     self.logger_stub = stubs.LoggerStub()
     self.messenger_stub = stubs.MessengerStub()
     self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg_lib.SetCheckInterface)
+        checkpkg.SetCheckInterface)
     self.pkg_data = copy.deepcopy(sudo_stats)
 
   def testLibrariesRpathOrder(self):

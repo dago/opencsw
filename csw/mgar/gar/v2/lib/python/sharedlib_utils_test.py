@@ -268,11 +268,5 @@ class CommomSubstringTest(unittest.TestCase):
     self.assertEqual(set(['bcd', 'hij']), su.LongestCommonSubstring("abcdefghijk", "bcdhij"))
 
 
-class GetIsalistUnitTest(unittest.TestCase):
-
-  def testGetIsalistSparc(self):
-    self.assertTrue("sparcv8plus+vis" in su.GetIsalist("sparc"))
-
-
 if __name__ == '__main__':
   unittest.main()

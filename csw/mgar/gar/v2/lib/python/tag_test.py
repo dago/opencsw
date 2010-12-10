@@ -5,6 +5,27 @@
 import unittest
 import tag
 
+
+class CheckpkgTagUnitTest(unittest.TestCase):
+
+  def testToGarSyntaxNoParam(self):
+    t = tag.CheckpkgTag("CSWfoo", "bar")
+    self.assertEquals(u'CHECKPKG_OVERRIDES_CSWfoo += bar', t.ToGarSyntax())
+
+  def testToGarSyntaxWithParam(self):
+    t = tag.CheckpkgTag("CSWfoo", "bar", "parameter")
+    self.assertEquals(u'CHECKPKG_OVERRIDES_CSWfoo += bar|parameter', t.ToGarSyntax())
+
+  def testToGarSyntaxWithParamWithSpacees(self):
+    t = tag.CheckpkgTag("CSWfoo", "bar", "a b c")
+    self.assertEquals(u'CHECKPKG_OVERRIDES_CSWfoo += bar|a|b|c', t.ToGarSyntax())
+
+  def testComparison(self):
+    t1 = tag.CheckpkgTag("CSWfoo", "bar", "a b c")
+    t2 = tag.CheckpkgTag("CSWfoo", "bar", "a b c")
+    self.assertEquals(t1, t2)
+
+
 class ParseTagLineUnitTest(unittest.TestCase):
 
   def testParseTagLine1(self):

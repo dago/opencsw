@@ -3,10 +3,8 @@
 import copy
 import re
 import os.path
-import common_constants
 
 
-# TODO: Merge with common_constants
 SPARCV8_PATHS = ('sparcv8', 'sparcv8-fsmuld',
                  'sparcv7', 'sparc')
 SPARCV8PLUS_PATHS = ('sparcv8plus+vis2', 'sparcv8plus+vis', 'sparcv8plus')
@@ -23,11 +21,7 @@ BIN_MIMETYPES = (
 )
 
 
-class Error(Exception):
-  pass
-
-
-class ArchitectureError(Error):
+class SonameParsingException(Exception):
   pass
 
 
@@ -255,20 +249,3 @@ def IsBinary(file_info):
       is_a_binary = True
       break
   return is_a_binary
-
-
-def ArchByString(s):
-    if s == 'sparc':
-      return common_constants.ARCH_SPARC
-    elif s in ('i386', 'x86'):
-      return common_constants.ARCH_i386
-    elif s == 'all':
-      return common_constants.ARCH_ALL
-    else:
-      raise ArchitectureError(
-          "Cannot map architecture %s to a constant." % s)
-
-
-def GetIsalist(str_arch):
-  arch = ArchByString(str_arch)
-  return common_constants.ISALISTS_BY_ARCH[arch]

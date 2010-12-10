@@ -20,6 +20,21 @@ class CheckpkgTag(object):
                repr(self.tag_name),
                repr(self.tag_info)))
 
+  def ToGarSyntax(self):
+    """Presents the error tag using GAR syntax."""
+    msg_lines = []
+    if self.msg:
+      msg_lines.extend(textwrap(self.msg, 70,
+                                initial_indent="# ",
+                                subsequent_indent="# "))
+    if self.tag_info:
+      tag_postfix = "|%s" % self.tag_info.replace(" ", "|")
+    else:
+      tag_postfix = ""
+    msg_lines.append(u"CHECKPKG_OVERRIDES_%s += %s%s"
+                     % (self.pkgname, self.tag_name, tag_postfix))
+    return "\n".join(msg_lines)
+
   def __eq__(self, other):
     value = (
         self.pkgname == other.pkgname

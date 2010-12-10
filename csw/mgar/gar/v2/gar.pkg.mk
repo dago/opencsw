@@ -52,7 +52,6 @@ GARSYSTEMVERSION ?= $(shell $(SVN) propget svn:externals $(CURDIR) | perl -ane '
 GARPKG_v1 = CSWgar-v1
 GARPKG_v2 = CSWgar-v2
 RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
-CATALOG_RELEASE ?= current
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
@@ -843,11 +842,7 @@ package-p:
 # pkgcheck - check if the package is compliant
 #
 pkgcheck: $(foreach SPEC,$(_PKG_SPECS),package-$(SPEC))
-	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg \
-		--architecture "$(GARCH)" \
-		--os-releases "$(SPKG_OSNAME)" \
-		--catalog-release "$(CATALOG_RELEASE)" \
-		$(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage --tmpdir $(SPKG_TMPDIR) -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
+	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg $(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage --tmpdir $(SPKG_TMPDIR) -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
 	@$(MAKECOOKIE)
 
 pkgcheck-p:
