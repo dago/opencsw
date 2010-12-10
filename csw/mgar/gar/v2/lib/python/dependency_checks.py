@@ -3,6 +3,7 @@
 import checkpkg
 import os.path
 import re
+import ldd_emul
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -125,7 +126,7 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
   pkgname = pkg_data["basic_stats"]["pkgname"]
   logger.debug("Libraries(): pkgname = %s", repr(pkgname))
   isalist = pkg_data["isalist"]
-  ldd_emulator = checkpkg.LddEmulator()
+  ldd_emulator = ldd_emul.LddEmulator()
   orphan_sonames = []
   required_deps = []
   for binary_info in pkg_data["binaries_dump_info"]:

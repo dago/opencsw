@@ -2,6 +2,7 @@ import datetime
 pkgstats = [{'bad_paths': {},
   'basic_stats': {'catalogname': 'tree',
                   'md5_sum': '1e43fa1c7e637b25d9356ad516ae0403',
+                  'size': 42L,
                   'parsed_basename': {'arch': 'sparc',
                                       'catalogname': 'tree',
                                       'full_version_string': '1.5.3,REV=2010.07.05',

@@ -22,12 +22,8 @@ import shutil
 import urllib2
 from Cheetah import Template
 import sharedlib_utils as su
+import common_constants
 
-ARCH_SPARC = "sparc"
-ARCH_i386 = "i386"
-ARCH_ALL = "all"
-ARCHITECTURES = [ARCH_SPARC, ARCH_i386, ARCH_ALL]
-OS_RELS = [u"SunOS5.8", u"SunOS5.9", u"SunOS5.10"]
 MAJOR_VERSION = "major version"
 MINOR_VERSION = "minor version"
 PATCHLEVEL = "patchlevel"
@@ -297,7 +293,10 @@ class StagingDir(object):
   def __repr__(self):
     return u"StagingDir(%s)" % repr(self.dir_path)
 
-  def GetLatest(self, software, architectures=ARCHITECTURES, os_rels=OS_RELS):
+  def GetLatest(self,
+                software,
+                architectures=common_constants.ARCHITECTURES,
+                os_rels=common_constants.OS_RELS):
     files = os.listdir(self.dir_path)
     package_files = []
     for os_rel in os_rels:
