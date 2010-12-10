@@ -1,0 +1,28 @@
+From 5681effaf10777b63024bbd78d384c841cb4287c Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Tue, 26 Oct 2010 12:51:45 +0200
+Subject: [PATCH] Escape nested double quotes
+
+Solaris /bin/bash chokes otherwise.
+---
+ test.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/test.sh b/test.sh
+index 230d021..f438ae9 100755
+--- a/test.sh
++++ b/test.sh
+@@ -9051,8 +9051,8 @@ while read PF KEYW ADDR IPPORT SCM_ENABLE SCM_RECV SCM_TYPE SCM_NAME ROOT SCM_VA
+ do
+ if [ -z "$PF" ] || [[ "$PF" == \#* ]]; then continue; fi
+ #
+-pf="$(echo "$PF" |tr A-Z a-z)"
+-proto="$(echo "$KEYW" |tr A-Z a-z)"
++pf="$(echo \"$PF\" |tr A-Z a-z)"
++proto="$(echo \"$KEYW\" |tr A-Z a-z)"
+ NAME=${KEYW}SCM_$SCM_TYPE
+ case "$TESTS" in
+ *%functions%*|*%$pf%*|*%dgram%*|*%udp%*|*%$proto%*|*%recv%*|*%ancillary%*|*%$ROOT%*|*%$NAME%*)
+-- 
+1.7.3
+
