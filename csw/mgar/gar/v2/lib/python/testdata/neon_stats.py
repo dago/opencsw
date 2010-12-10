@@ -2,7 +2,6 @@ import datetime
 pkgstats = [{'bad_paths': {},
   'basic_stats': {'catalogname': 'neon',
                   'md5_sum': 'd74a2f65ef0caff0bdde7310007764a8',
-                  'size': 42L,
                   'parsed_basename': {'arch': 'i386',
                                       'catalogname': 'neon',
                                       'full_version_string': '0.29.0,REV=2009.09.14',
