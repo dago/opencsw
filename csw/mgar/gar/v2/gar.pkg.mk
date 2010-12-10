@@ -708,7 +708,6 @@ reset-merge-etcservices:
 
 merge-checkpkgoverrides-%:
 	@echo "[ Generating checkpkg override for package $* ]"
-	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/checkpkg/overrides
 	$(_DBG)($(foreach O,$(or $(CHECKPKG_OVERRIDES_$*),$(CHECKPKG_OVERRIDES)) $(_CATEGORY_CHECKPKG_OVERRIDES),echo "$O";)) | \
 		perl -F'\|' -ane 'unshift @F,"$*"; $$F[0].=":"; print join(" ",@F );' \
 		> $(WORKDIR_GLOBAL)/checkpkg_override.$*
