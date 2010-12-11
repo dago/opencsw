@@ -1,21 +1,27 @@
 #!/usr/bin/env python2.6
 
-import copy
 import cPickle
+import copy
+import itertools
 import logging
 import os
+import progressbar
 import re
 import sqlobject
 import subprocess
 
 import catalog
 import checkpkg
+import ldd_emul
 import database
 import inspective_package
 import opencsw
 import overrides
 import models as m
 import tag
+import sharedlib_utils
+
+from sqlobject import sqlbuilder
 
 DUMP_BIN = "/usr/ccs/bin/dump"
 PACKAGE_STATS_VERSION = 9L
@@ -39,27 +45,21 @@ class StdoutSyntaxError(Error):
   pass
 
 
-class PackageStats(database.DatabaseClient):
-  """Collects stats about a package and saves it.
-
-  TODO: Maintain a global database connection instead of creating one for each
-  instantiated object.
-  TODO: Store overrides in a separate table for performance.
+class PackageStatsMixin(object):
+  """Collects stats about a package and saves them.
   """
 
   def __init__(self, srv4_pkg, stats_basedir=None, md5sum=None, debug=False):
-    super(PackageStats, self).__init__(debug=debug)
+    super(PackageStatsMixin, self).__init__()
     self.srv4_pkg = srv4_pkg
     self.md5sum = md5sum
     self.dir_format_pkg = None
     self.all_stats = {}
-    self.stats_basedir = stats_basedir
     self.db_pkg_stats = None
-    if not self.stats_basedir:
-      home = os.environ["HOME"]
-      parts = [home, ".checkpkg", "stats"]
-      self.stats_basedir = os.path.join(*parts)
-    self.InitializeSqlobject()
+
+  def __unicode__(self):
+    return (u"<PackageStats srv4_pkg=%s md5sum=%s>"
+            % (self.srv4_pkg, self.md5sum))
 
   def GetPkgchkData(self):
     ret, stdout, stderr = self.srv4_pkg.GetPkgchkOutput()
@@ -78,15 +78,15 @@ class PackageStats(database.DatabaseClient):
   def GetDbObject(self):
     if not self.db_pkg_stats:
       md5_sum = self.GetMd5sum()
+      logging.debug(u"GetDbObject(): %s md5sum: %s", self, md5_sum)
       res = m.Srv4FileStats.select(m.Srv4FileStats.q.md5_sum==md5_sum)
-      if not res.count():
-        # TODO: Change this bit to throw an exception if the object is not
-        # found.
-        return None
-      else:
+      try:
         self.db_pkg_stats = res.getOne()
+      except sqlobject.SQLObjectNotFound, e:
+        logging.debug(u"GetDbObject(): %s not found", md5_sum)
+        return None
+      logging.debug(u"GetDbObject(): %s succeeded", md5_sum)
     return self.db_pkg_stats
-
 
   def StatsExist(self):
     """Checks if statistics of a package exist.
@@ -110,6 +110,9 @@ class PackageStats(database.DatabaseClient):
 
   def GetMtime(self):
     return self.srv4_pkg.GetMtime()
+
+  def GetSize(self):
+    return self.srv4_pkg.GetSize()
 
   def _MakeDirP(self, dir_path):
     """mkdir -p equivalent.
@@ -138,7 +141,7 @@ class PackageStats(database.DatabaseClient):
       dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
       stdout, stderr = dump_proc.communicate()
       ret = dump_proc.wait()
-      binary_data = checkpkg.ParseDumpOutput(stdout)
+      binary_data = ldd_emul.ParseDumpOutput(stdout)
       binary_data["path"] = binary
       binary_data["base_name"] = binary_base_name
       binaries_dump_info.append(binary_data)
@@ -155,6 +158,7 @@ class PackageStats(database.DatabaseClient):
     basic_stats["pkgname"] = dir_pkg.pkgname
     basic_stats["catalogname"] = dir_pkg.GetCatalogname()
     basic_stats["md5_sum"] = self.GetMd5sum()
+    basic_stats["size"] = self.GetSize()
     return basic_stats
 
   def GetOverrides(self):
@@ -262,27 +266,47 @@ class PackageStats(database.DatabaseClient):
     dir_pkg = self.GetInspectivePkg()
     logging.debug("Collecting %s package statistics.", repr(dir_pkg.pkgname))
     override_dicts = self.GetOverrides()
+    basic_stats = self.GetBasicStats()
+    # This would be better inferred from pkginfo, and not from the filename, but
+    # there are packages with 'i386' in the pkgname and 'all' as the
+    # architecture.
+    arch = basic_stats["parsed_basename"]["arch"]
     pkg_stats = {
         "binaries": dir_pkg.ListBinaries(),
         "binaries_dump_info": self.GetBinaryDumpInfo(),
         "depends": dir_pkg.GetDependencies(),
-        "isalist": checkpkg.GetIsalist(),
+        "isalist": sharedlib_utils.GetIsalist(arch),
         "overrides": override_dicts,
         "pkgchk": self.GetPkgchkData(),
         "pkginfo": dir_pkg.GetParsedPkginfo(),
         "pkgmap": dir_pkg.GetPkgmap().entries,
         "bad_paths": dir_pkg.GetFilesContaining(BAD_CONTENT_REGEXES),
-        "basic_stats": self.GetBasicStats(),
+        "basic_stats": basic_stats,
         "files_metadata": dir_pkg.GetFilesMetadata(),
         "mtime": self.GetMtime(),
     }
-    pkgname = pkg_stats["basic_stats"]["pkgname"]
-    # Getting sqlobject representations.
+    self.SaveStats(pkg_stats)
+    logging.debug("Statistics of %s have been collected.", repr(dir_pkg.pkgname))
+    return pkg_stats
+
+  @classmethod
+  def GetOrSetPkginst(cls, pkgname):
     try:
       pkginst = m.Pkginst.select(m.Pkginst.q.pkgname==pkgname).getOne()
     except sqlobject.main.SQLObjectNotFound, e:
       logging.debug(e)
       pkginst = m.Pkginst(pkgname=pkgname)
+    return pkginst
+
+  @classmethod
+  def SaveStats(cls, pkg_stats, register=False):
+    """Saves a data structure to the database.
+
+    Does not require an instance.
+    """
+    pkgname = pkg_stats["basic_stats"]["pkgname"]
+    # Getting sqlobject representations.
+    pkginst = cls.GetOrSetPkginst(pkgname)
     try:
       res = m.Architecture.select(
           m.Architecture.q.name==pkg_stats["pkginfo"]["ARCH"])
@@ -290,6 +314,14 @@ class PackageStats(database.DatabaseClient):
     except sqlobject.main.SQLObjectNotFound, e:
       logging.debug(e)
       arch = m.Architecture(name=pkg_stats["pkginfo"]["ARCH"])
+    try:
+      filename_arch = m.Architecture.select(
+          m.Architecture.q.name
+            ==
+          pkg_stats["basic_stats"]["parsed_basename"]["arch"]).getOne()
+    except sqlobject.main.SQLObjectNotFound, e:
+      filename_arch = m.Architecture(
+          name=pkg_stats["basic_stats"]["parsed_basename"]["arch"])
     parsed_basename = pkg_stats["basic_stats"]["parsed_basename"]
     os_rel_name = parsed_basename["osrel"]
     try:
@@ -321,22 +353,28 @@ class PackageStats(database.DatabaseClient):
       if "REV" in parsed_basename["revision_info"]:
         rev = parsed_basename["revision_info"]["REV"]
     # Creating the object in the database.
+    data_obj = m.Srv4FileStatsBlob(
+        pickle=cPickle.dumps(pkg_stats))
     db_pkg_stats = m.Srv4FileStats(
-        md5_sum=self.GetMd5sum(),
-        pkginst=pkginst,
-        catalogname=pkg_stats["basic_stats"]["catalogname"],
-        stats_version=PACKAGE_STATS_VERSION,
-        os_rel=os_rel,
         arch=arch,
         basename=pkg_stats["basic_stats"]["pkg_basename"],
-        maintainer=maintainer,
+        catalogname=pkg_stats["basic_stats"]["catalogname"],
+        data_obj=data_obj,
+        use_to_generate_catalogs=True,
+        filename_arch=filename_arch,
         latest=True,
-        version_string=parsed_basename["full_version_string"],
+        maintainer=maintainer,
+        md5_sum=pkg_stats["basic_stats"]["md5_sum"],
+        size=pkg_stats["basic_stats"]["size"],
+        mtime=pkg_stats["mtime"],
+        os_rel=os_rel,
+        pkginst=pkginst,
+        registered=register,
         rev=rev,
-        mtime=self.GetMtime(),
-        data=cPickle.dumps(pkg_stats))
+        stats_version=PACKAGE_STATS_VERSION,
+        version_string=parsed_basename["full_version_string"])
     # Inserting overrides as rows into the database
-    for override_dict in override_dicts:
+    for override_dict in pkg_stats["overrides"]:
       o = m.CheckpkgOverride(srv4_file=db_pkg_stats,
                              **override_dict)
 
@@ -349,9 +387,52 @@ class PackageStats(database.DatabaseClient):
     # This one should be last, so that if the collection is interrupted
     # in one of the previous runs, the basic_stats.pickle file is not there
     # or not updated, and the collection is started again.
+    return db_pkg_stats
 
-    logging.debug("Statistics of %s have been collected.", repr(dir_pkg.pkgname))
-    return pkg_stats
+  @classmethod
+  def ImportPkg(cls, pkg_stats, replace=False):
+    """Registers a package in the database.
+
+    Srv4FileStats
+    CswFile
+    """
+    pkgname = pkg_stats["basic_stats"]["pkgname"]
+    md5_sum = pkg_stats["basic_stats"]["md5_sum"]
+    try:
+      stats = m.Srv4FileStats.select(
+         m.Srv4FileStats.q.md5_sum==md5_sum).getOne()
+    except sqlobject.SQLObjectNotFound, e:
+      stats = cls.SaveStats(pkg_stats, register=False)
+    if stats.registered and not replace:
+      logging.debug(
+          "@classmethod ImportPkg(): "
+          "Package %s is already registered. Exiting.", stats)
+      return stats
+    stats.RemoveAllCswFiles()
+    for pkgmap_entry in pkg_stats["pkgmap"]:
+      if not pkgmap_entry["path"]:
+        continue
+      pkginst = cls.GetOrSetPkginst(pkgname)
+      try:
+        # The line might be not decodable using utf-8
+        line_u = pkgmap_entry["line"].decode("utf-8")
+        f_path, basename = os.path.split(
+            pkgmap_entry["path"].decode('utf-8'))
+      except UnicodeDecodeError, e:
+        line_u = pkgmap_entry["line"].decode("latin1")
+        f_path, basename = os.path.split(
+            pkgmap_entry["path"].decode('latin1'))
+        # If this fails too, code change will be needed.
+      f = m.CswFile(
+          basename=basename,
+          path=f_path,
+          line=line_u,
+          pkginst=pkginst,
+          srv4_file=stats)
+    # At this point, we've registered the srv4 file.
+    # Setting the registered bit to True
+    stats.registered = True
+    return stats
 
   def GetAllStats(self):
     if not self.all_stats and self.StatsExist():
@@ -386,7 +467,7 @@ class PackageStats(database.DatabaseClient):
     if not self.all_stats:
       md5_sum = self.GetMd5sum()
       res = m.Srv4FileStats.select(m.Srv4FileStats.q.md5_sum==md5_sum)
-      self.all_stats = cPickle.loads(str(res.getOne().data))
+      self.all_stats = cPickle.loads(str(res.getOne().data_obj.pickle))
     return self.all_stats
 
   def _ParseLddDashRline(self, line):
@@ -476,3 +557,51 @@ def StatsListFromCatalog(file_name_list, catalog_file_name=None, debug=False):
         pkg.md5sum = md5s_by_basename[basename]["md5sum"]
   stats_list = [PackageStats(pkg) for pkg in packages]
   return stats_list
+
+
+class StatsCollector(object):
+  """Takes a list of files and makes sure they're put in a database."""
+
+  def __init__(self, logger=None, debug=False):
+    if logger:
+      self.logger = logger
+    else:
+      self.logger = logging
+    self.debug = debug
+
+  def CollectStatsFromFiles(self, file_list, catalog_file):
+    args_display = file_list
+    if len(args_display) > 5:
+      args_display = args_display[:5] + ["...more..."]
+    self.logger.debug("Processing: %s, please be patient", args_display)
+    stats_list = StatsListFromCatalog(
+        file_list, catalog_file, self.debug)
+    data_list = []
+    # Reversing the item order in the list, so that the pop() method can be used
+    # to get packages, and the order of processing still matches the one in the
+    # catalog file.
+    stats_list.reverse()
+    total_packages = len(stats_list)
+    if not total_packages:
+      raise PackageError("The length of package list is zero.")
+    counter = itertools.count(1)
+    self.logger.info("Juicing the srv4 package stream files...")
+    pbar = progressbar.ProgressBar()
+    pbar.maxval = total_packages
+    pbar.start()
+    while stats_list:
+      # This way objects will get garbage collected as soon as they are removed
+      # from the list by pop().  The destructor (__del__()) of the srv4 class
+      # removes the temporary directory from the disk.  This allows to process
+      # the whole catalog.
+      stats = stats_list.pop()
+      stats.CollectStats()
+      data_list.append(stats.GetAllStats())
+      pbar.update(counter.next())
+    pbar.finish()
+    return data_list
+
+
+class PackageStats(PackageStatsMixin):
+  """Without the implicit database initialiation."""
+  pass

@@ -21,9 +21,11 @@ It's possible to develop checkpkg on a non-Solaris platform, using unit
 tests as means to run various bits of code.  Here's the dependency list
 for Ubuntu.
 
-  python-cheetah
-  python-hachoir-parser
-  python-magic
-  python-mox
-  python-progressbar
+sudo aptitude install \
+  python-cheetah \
+  python-hachoir-parser \
+  python-magic \
+  python-mox \
+  python-progressbar \
+  python-sqlobject \
   python-yaml

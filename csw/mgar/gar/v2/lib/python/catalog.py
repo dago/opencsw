@@ -123,6 +123,7 @@ class OpencswCatalog(object):
   def _GetCatalogData(self, fd):
     catalog_data = []
     for line in fd:
+      if line.startswith("#"): continue
       try:
         parsed = self._ParseCatalogLine(line)
         catalog_data.append(parsed)
