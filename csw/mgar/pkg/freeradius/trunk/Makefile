@@ -10,6 +10,8 @@ endef
 MASTER_SITES = ftp://ftp.freeradius.org:/pub/freeradius/
 DISTFILES  = $(GARNAME)-server-$(GARVERSION).tar.gz
 DISTFILES += cswfreeradius
+DISTFILES += server.pem
+DISTFILES += ca.pem
 DISTNAME = $(GARNAME)-server-$(GARVERSION)
 
 UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
@@ -194,16 +196,17 @@ include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
 
-post-install-modulated: copy-local-files
-
-# Copy in specialized templates
-copy-local-files:
+post-install-modulated:
+	### Copy init script
+	@echo "Installing init script..."
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall $(WORKDIR)/cswfreeradius $(DESTDIR)/etc/opt/csw/init.d/cswfreeradius
+
+	# Copy self-signed sample cert
+	@echo "Installing sample certificate files..."
+	@ginstall -m 600 $(WORKDIR)/ca.pem $(DESTDIR)/$(raddbdir)/certs/
+	@ginstall -m 600 $(WORKDIR)/server.pem $(DESTDIR)/$(raddbdir)/certs/
+
+	# Set the Make cookie
 	@$(MAKECOOKIE)
 
-clean-local: nuke-local-cookie
-
-nuke-local-cookie:
-	@echo Removing all copy-local-files build cookies
-	rm -f work/*/cookies/*/copy-local-files
