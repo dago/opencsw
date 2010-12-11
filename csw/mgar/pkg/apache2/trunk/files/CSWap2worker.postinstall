@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# this is a special handler for the worker mpm of apache2.  As we ship
+# the init/smf script with the primary package (which provides the
+# default prefork mpm), there is no hook to auto-(re)start apache when
+# this package gets installed.  Unfortunately, the postinstall script
+# is the best way to handle this situation.
+
+CSW_PREFIX=/opt/csw
+AP2_PREFIX=$CSW_PREFIX/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_HTTPD=$AP2_BINDIR/httpd
+AP2_CTRL=$AP2_BINDIR/apachectl
+AP2_CONF=/etc/opt/csw/apache2/httpd.conf
+SVCADM=/usr/sbin/svcadm
+
+# only worry about stop/start if we're not installing via jumpstart or
+# similar
+if [ -z "$PKG_INSTALL_ROOT" ]; then
+    [ ! -f "$AP2_CONF" ] && exit 0
+
+    # Source csw.conf, if it exists
+    if [ -f /opt/csw/etc/csw.conf ] ; then
+	. /opt/csw/etc/csw.conf
+    fi
+    if [ -f /etc/opt/csw/csw.conf ] ; then
+	. /etc/opt/csw/csw.conf
+    fi
+
+    daemon=yes
+    if [ "$autoenable_daemons" = "no" ]; then
+	daemon=no
+    fi
+    if [ "$autoenable_cswapache2" = "no" ]; then
+	daemon=no
+    elif [ "$autoenable_cswapache2" = "yes" ]; then
+	daemon=yes
+    fi
+
+    if [ "$daemon" = "yes" -a -x "$AP2_HTTPD" ]; then
+        if [ -x "$SVCADM" ]; then
+	    $SVCADM disable cswapache2
+	    $SVCADM enable cswapache2
+        elif [ -x "$AP2_CTRL" ]; then
+	    $AP2_CTRL -k stop
+	    $AP2_CTRL -k start
+        fi
+        sleep 2
+    fi
+fi
+
+exit 0
