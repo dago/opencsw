@@ -50,8 +50,17 @@ class InspectivePackage(package.DirectoryFormatPackage):
           logging.error("Could not establish the mime type of %s",
                         full_path)
           # We really don't want that, as it misses binaries.
-          raise package.PackageError("Could not establish the mime type of %s"
-                             % full_path)
+          msg = (
+              "It was not possible to establish the mime type of %s.  "
+              "It's a known problem which occurs when indexing a large "
+              "number of packages in a single run.  "
+              "It's probably caused by a bug in libmagic, or a bug in "
+              "libmagic Python bindings. "
+              "Currently, there is no fix for it.  "
+              "You have to restart your process - it "
+              "will probably finish successfully when do you that."
+              % full_path)
+          raise package.PackageError(msg)
         if sharedlib_utils.IsBinary(file_info):
           parser = hp.createParser(full_path)
           if not parser:
