@@ -16,10 +16,13 @@ endef
 
 MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += $(call admfiles,CSWexim,depend prototype postinstall postremove \
+DISTFILES += $(call admfiles,CSWexim prototype postinstall postremove \
 	preinstall preremove request space checkinstall)
 DISTFILES += Makefile.patch exim_install.patch spf2.patch
 DISTFILES += i.smfyes i.smfno
+
+RUNTIME_DEP_PKGS_CSWexim = CSWiconv CSWoldaprt CSWosslrt CSWsasl
+RUNTIME_DEP_PKGS_CSWexim = CSWmysql5rt CSWlibpq CSWlibspf2 CSWggettext
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
