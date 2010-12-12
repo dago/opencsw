@@ -426,15 +426,6 @@ class InstallContentsImporter(object):
     pbar.maxval = len(contents) / progressbar_divisor
     pbar.start()
     cleaned_pkgs = set()
-    INSERT_SQL = """
-    INSERT INTO csw_file
-    (basename, path, line, pkginst_id, srv4_file_id)
-    VALUES
-    (?, ?, ?, ?, ?);
-    """
-    conn = m.CswFile._connection.getConnection()
-    cur = conn.cursor()
-    params_list = []
     for d in contents:
       i = count.next()
       if not i % update_period and (i / progressbar_divisor) <= pbar.maxval:
@@ -468,21 +459,18 @@ class InstallContentsImporter(object):
           cleaned_pkgs.add(sqo_srv4)
         sqo_pkginst = self._GetPkginst(pkgname)
         f_path, f_basename = os.path.split(d["path"])
-        # This is really slow.
-        # csw_file = m.CswFile(pkginst=sqo_pkginst,
-        #     line=d["line"], path=f_path, basename=f_basename,
-        #     srv4_file=sqo_srv4)
-        params_list.append(
-            (f_basename, f_path, d["line"], sqo_pkginst.id, sqo_srv4.id))
-
-        # It's quicker to collect the set first, and then run queries
-        # against the database only once, at the end of the function.
+        # This is really slow (one run ~1h), but works.
+        # To speed it up, raw SQL + cursor.executemany() could be used, but
+        # there's a incompatibility between MySQL and sqlite drivers:
+        # MySQL:  INSERT ... VALUES (%s, %s, %s);
+        # sqlite: INSERT ... VALUES (?, ?, ?);
+        # For now, using the sqlobject ORM which is slow, but at least
+        # handles compatibility issues.
+        csw_file = m.CswFile(pkginst=sqo_pkginst,
+            line=d["line"], path=f_path, basename=f_basename,
+            srv4_file=sqo_srv4)
         srv4_files_to_catalog.add(sqo_srv4)
     pbar.finish()
-    logging.info(
-        "Inserting all files using one cursor.executemany() call.  "
-        "There's no progressbar for this operation.")
-    cur.executemany(INSERT_SQL, params_list)
     logging.debug(
         "Registering all the fake srv4 files in all catalogs.")
     for sqo_srv4 in srv4_files_to_catalog:
@@ -492,7 +480,7 @@ class InstallContentsImporter(object):
 
   def ComposeFakeSrv4Md5(self, pkgname, osrel, arch):
     """Returns a fake md5 sum of a fake srv4 package.
-
+ 
     For the purposes of fake srv4 packages for SUNW stuff.
     """
     key = pkgname + osrel + arch
