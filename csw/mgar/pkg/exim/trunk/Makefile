@@ -17,7 +17,7 @@ endef
 MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWexim prototype postinstall postremove \
-	preinstall preremove request checkinstall)
+	 preremove request checkinstall)
 DISTFILES += Makefile.patch exim_install.patch spf2.patch
 DISTFILES += i.smfyes i.smfno
 
@@ -56,6 +56,10 @@ TEST_TARGET =
 # We use this to strip binaries after we're done building
 BINS =  exim exim_dbmbuild exim_dumpdb exim_fixdb exim_lock exim_tidydb
 BINS += eximon.bin
+
+UGPATH=/etc/opt/csw/pkg/CSWexim
+UGENTRY = "exim:exim:CSW Exim User:/var/opt/csw/spool/exim:/bin/false:::NP"
+USERGROUP = $(UGPATH)/cswusergroup
 
 include gar/category.mk
 
@@ -97,3 +101,7 @@ post-install:
 	cp -p $(DOC_LIST) $(DESTDIR)$(prefix)/share/doc/exim)
 	gzip -f $(DESTDIR)$(prefix)/share/doc/exim/ChangeLog
 	gzip -f $(DESTDIR)$(prefix)/share/doc/exim/spec.txt
+
+post-merge:
+	@( cd $(PKGROOT); mkdir -p ./$(UGPATH); \
+		echo "$(UGENTRY)" > ./$(UGPATH)/cswusergroup" )
