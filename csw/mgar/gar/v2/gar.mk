@@ -15,15 +15,8 @@ ifneq ($(abspath /),/)
 $(error Your version of 'make' is too old: $(MAKE_VERSION). Please make sure you are using at least 3.81)
 endif
 
-# Prepare for the GARNAME & GARVERSION to NAME & VERSION migration. While the
-# recipes have not been adjusted, we will accept both variables. Once the
-# adjustment has been carried out, delete these two lines and uncomment the
-# deprecation errors below.
-NAME ?= $(GARNAME)
-VERSION ?= $(GARVERSION)
-
-#$(if $(GARNAME),$(error The deprecated variable 'GARNAME' is defined, please replace it with 'NAME'))
-#$(if $(GARVERSION),$(error The deprecated variable 'GARVERSION' is defined, please replace it with 'VERSION'))
+$(if $(GARNAME),$(error The deprecated variable 'GARNAME' is defined, please replace it with 'NAME'))
+$(if $(GARVERSION),$(error The deprecated variable 'GARVERSION' is defined, please replace it with 'VERSION'))
 
 # $(GARDIR) is pre-set by the top-level category.mk
 GARBIN  = $(GARDIR)/bin
