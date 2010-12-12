@@ -57,6 +57,7 @@ PATCHFILES += 0007-Solaris-zone-support-in-init-script.patch
 PATCHFILES += CFLAGS-leaking-to-C++-compiler.patch
 PATCHFILES += 0008-Adding-CFLAGS-and-CXXFLAGS-to-linker-calls.patch
 PATCHFILES += 0009-Add-workaround-for-krb5-config-outputting-CFLAGS.patch
+PATCHFILES += 0009-giving-precedence-to-statvfs-in-printers.c.patch
 
 BUILD_DEP_PKGS  = CSWggettext
 BUILD_DEP_PKGS += CSWjpeg
@@ -77,12 +78,19 @@ PACKAGES += CSWcupsclient
 PACKAGES += CSWcupsdoc
 PACKAGES += CSWcupsdev
 PACKAGES += CSWcups
-PACKAGES += CSWcupslinks
 
-INCOMPATIBLE_PKGS_CSWcupslinks = SUNWpcr SUNWpcu
-CATALOGNAME_CSWcupslinks = cups_links
+
+# The problematic cupslinks package
+# PACKAGES += CSWcupslinks
+# INCOMPATIBLE_PKGS_CSWcupslinks = SUNWpcr SUNWpcu
+# CATALOGNAME_CSWcupslinks = cups_links
+# ARCHALL_CSWcupslinks = 1
+# PKGFILES_CSWcupslinks  = /usr/sbin/.*
+# PKGFILES_CSWcupslinks += /usr/bin/.*
+# SPKG_DESC_CSWcupslinks  = Drop-in replacement for SUNWpcu and SUNWpcr
+# CUPSLINKS_TARGET = cupslinks
+
 ARCHALL_CSWcups      = 1
-ARCHALL_CSWcupslinks = 1
 ARCHALL_CSWcupsdoc   = 1
 
 RUNTIME_DEP_PKGS_CSWcups += CSWcupsd
@@ -91,6 +99,7 @@ RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
 RUNTIME_DEP_PKGS_CSWcupsd += CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus
 RUNTIME_DEP_PKGS_CSWcupsd += CSWzlib
+RUNTIME_DEP_PKGS_CSWcupsd += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcups
 
 
@@ -151,8 +160,6 @@ PKGFILES_CSWcupsclient += $(mandir)/man5/client.conf.5
 PKGFILES_CSWcupsclient += $(mandir)/man5/ppdcfile\.5
 PKGFILES_CSWcupsclient += $(mandir)/man7/(drv|notifier)\.7
 PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
-PKGFILES_CSWcupslinks  = /usr/sbin/.*
-PKGFILES_CSWcupslinks += /usr/bin/.*
 
 SPKG_DESC_CSWcups       = Common Unix Printing System
 SPKG_DESC_CSWlibcups    = Empty transitional package (was: CUPS libraries)
@@ -160,7 +167,6 @@ SPKG_DESC_CSWcupsd      = CUPS daemon
 SPKG_DESC_CSWcupsclient = CUPS client binaries
 SPKG_DESC_CSWcupsdoc    = CUPS documentation
 SPKG_DESC_CSWcupsdev    = CUPS header files
-SPKG_DESC_CSWcupslinks  = Drop-in replacement for SUNWpcu and SUNWpcr
 
 # Packages compliant with the shared library policy.
 PACKAGES += CSWlibcups2
@@ -255,6 +261,9 @@ CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupsmime1
 CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupsimage2
 CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupscgi1
 
+CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsclient
+CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsd
+
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 SAMPLECONF_CSWcupsd       = $(sysconfdir)/cups/cupsd\.conf\.CSW
 SAMPLECONF_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
@@ -312,12 +321,12 @@ CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsd
 
 # The following overrides are necessary because of a bug in krb5-config, please
 # see bug http://www.opencsw.org/bugtrack/view.php?id=4384
-CHECKPKG_OVERRIDES_CSWcupsd += bad-rpath-entry|/opt/csw/lib/|opt/csw/sbin/cupsd
-CHECKPKG_OVERRIDES_CSWlibcups2 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libcups.so.2
+CHECKPKG_OVERRIDES_CSWcupsd += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSWlibcups2 += bad-rpath-entry
 
 include gar/category.mk
 
-post-install-modulated:
+post-install-modulated: $(CUPSLINKS_TARGET)
 	(cd $(DESTDIR)$(sysconfdir)/cups; \
 	echo "Making .CSW configs in $(DESTDIR)$(sysconfdir)/cups"; \
 	for i in cupsd.conf; do \
@@ -330,6 +339,13 @@ post-install-modulated:
 	ginstall -m 644 \
 		$(FILEDIR)/client.conf.CSW \
 		$(DESTDIR)$(sysconfdir)/cups/client.conf.CSW
+	for f in $(DESTDIR)$(libdir)/cups/backend/*; do \
+		chmod 0700 $${f}; \
+	done
+	@$(MAKECOOKIE)
+
+cupslinks:
+	# https://www.opencsw.org/mantis/view.php?id=2924
 	ginstall -d -m 755 $(DESTDIR)/usr/bin
 	for f in cancel lp lpoptions lppassd lpq lpr lprm lpstat; do \
 		ln -s ../../opt/csw/bin/$$f $(DESTDIR)/usr/bin/$$f; \
@@ -338,7 +354,3 @@ post-install-modulated:
 	for f in accept lpadmin lpc lpinfo lpmove reject; do \
 		ln -s ../../opt/csw/sbin/$$f $(DESTDIR)/usr/sbin/$$f; \
 	done
-	for f in $(DESTDIR)$(libdir)/cups/backend/*; do \
-		chmod 0700 $${f}; \
-	done
-	@$(MAKECOOKIE)

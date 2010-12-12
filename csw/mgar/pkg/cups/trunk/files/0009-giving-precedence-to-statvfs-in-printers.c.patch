@@ -1,0 +1,42 @@
+From 6773ba8aafda87c8f4a5ebee4fd919037cd24f35 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 12 Dec 2010 03:24:12 +0100
+Subject: [PATCH] giving precedence to statvfs in printers.c
+
+---
+ scheduler/printers.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/scheduler/printers.c b/scheduler/printers.c
+index 0b8aff1..31bcbc4 100644
+--- a/scheduler/printers.c
++++ b/scheduler/printers.c
+@@ -490,19 +490,19 @@ cupsdCreateCommonData(void)
+   * or the filesystem is larger than 2TiB, always report INT_MAX.
+   */
+ 
+-#ifdef HAVE_STATFS
+-  if (statfs(RequestRoot, &spoolinfo))
++#ifdef HAVE_STATVFS
++  if (statvfs(RequestRoot, &spoolinfo))
+     k_supported = INT_MAX;
+-  else if ((spoolsize = (double)spoolinfo.f_bsize * spoolinfo.f_blocks / 1024) >
++  else if ((spoolsize = (double)spoolinfo.f_frsize * spoolinfo.f_blocks / 1024) >
+                INT_MAX)
+     k_supported = INT_MAX;
+   else
+     k_supported = (int)spoolsize;
+ 
+-#elif defined(HAVE_STATVFS)
+-  if (statvfs(RequestRoot, &spoolinfo))
++#elif defined(HAVE_STATFS)
++  if (statfs(RequestRoot, &spoolinfo))
+     k_supported = INT_MAX;
+-  else if ((spoolsize = (double)spoolinfo.f_frsize * spoolinfo.f_blocks / 1024) >
++  else if ((spoolsize = (double)spoolinfo.f_bsize * spoolinfo.f_blocks / 1024) >
+                INT_MAX)
+     k_supported = INT_MAX;
+   else
+-- 
+1.7.3.2
+
