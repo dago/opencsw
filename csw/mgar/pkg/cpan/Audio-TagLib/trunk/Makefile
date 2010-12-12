@@ -1,5 +1,5 @@
-GARNAME = Audio-TagLib
-GARVERSION = 1.50_01
+NAME = Audio-TagLib
+VERSION = 1.50_01
 CATEGORIES = cpan
 AUTHOR = DONGXU
 

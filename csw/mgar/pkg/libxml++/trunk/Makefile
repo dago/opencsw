@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = libxml++
-GARVERSION = 2.30.1
+NAME = libxml++
+VERSION = 2.30.1
 CATEGORIES = lib
 
 DESCRIPTION = C++ wrapper for the libxml XML parser library
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 EXTRA_CONFIGURE_EXPORTS = MAKE
 MAKE = gmake

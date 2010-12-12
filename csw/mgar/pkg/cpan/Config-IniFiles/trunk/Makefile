@@ -1,5 +1,5 @@
-GARNAME = Config-IniFiles
-GARVERSION = 2.38
+NAME = Config-IniFiles
+VERSION = 2.38
 CATEGORIES = cpan
 AUTHOR = WADG
 

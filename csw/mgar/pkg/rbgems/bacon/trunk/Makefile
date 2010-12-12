@@ -1,5 +1,5 @@
-GARNAME = bacon
-GARVERSION = 1.1.0
+NAME = bacon
+VERSION = 1.1.0
 CATEGORIES = rbgems
 
 DESCRIPTION = A small RSpec clone

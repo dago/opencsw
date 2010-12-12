@@ -1,5 +1,5 @@
-GARNAME = actionpack
-GARVERSION = 2.3.8
+NAME = actionpack
+VERSION = 2.3.8
 CATEGORIES = rbgems
 
 DESCRIPTION = Eases web-request routing, handling, and response as a half-way front, half-way page controller

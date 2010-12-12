@@ -1,5 +1,5 @@
-GARNAME = proftpd
-GARVERSION = 1.3.3c
+NAME = proftpd
+VERSION = 1.3.3c
 CATEGORIES = server
 
 DESCRIPTION = Advanced, incredibly configurable and secure FTP daemon
@@ -13,13 +13,13 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.proftpd.org/distrib/source/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 DISTFILES   += cswproftpd
 
 LICENSE      = COPYING
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv CSWoldaprt CSWzlib CSWmysql5rt CSWsqlite3rt
 

@@ -1,5 +1,5 @@
-GARNAME = tin
-GARVERSION = 1.9.5
+NAME = tin
+VERSION = 1.9.5
 CATEGORIES = net
 
 DESCRIPTION = Terminal-based news reader
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.tin.org/pub/news/clients/tin/unstable/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 PATCHFILES = configure.patch
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS = CSWpcrert CSWggettextrt CSWperl CSWlibidn CSWlibicu CSWiconv
 

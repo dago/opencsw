@@ -1,5 +1,5 @@
-GARNAME = gtkwave
-GARVERSION = 3.2.3
+NAME = gtkwave
+VERSION = 3.2.3
 CATEGORIES = devel
 
 DESCRIPTION = Brief description
@@ -7,11 +7,11 @@ define BLURB
   Long description
 endef
 
-SF_PROJ = $(GARNAME)
+SF_PROJ = $(NAME)
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PREREQUISITE_BASE_PKGS = CSWtofrodos
 

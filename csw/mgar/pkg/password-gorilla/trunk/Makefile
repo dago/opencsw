@@ -4,8 +4,8 @@
 #   currently fails with "The Password Gorilla requires the [incr Tcl] add-on
 #   to Tcl. Please install the [incr Tcl] package."
 #
-GARNAME = password-gorilla
-GARVERSION = 1.4
+NAME = password-gorilla
+VERSION = 1.4
 CATEGORIES = apps
 
 DESCRIPTION = A cross-platform, Tcl/Tk-based Password Manager
@@ -19,8 +19,8 @@ endef
 
 VENDOR_URL   = http://www.fpx.de/fp/Software/Gorilla/
 MASTER_SITES = http://www.fpx.de/fp/Software/Gorilla/download/
-DISTNAME     = gorilla-$(GARVERSION)
-DISTFILES    = gorilla-$(GARVERSION).tar.gz
+DISTNAME     = gorilla-$(VERSION)
+DISTFILES    = gorilla-$(VERSION).tar.gz
 UFILES_REGEX = gorilla-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME  = password_gorilla
 ARCHALL      = 1

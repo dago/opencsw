@@ -1,5 +1,5 @@
-GARNAME = Convert-ASCII-Armour
-GARVERSION = 1.4
+NAME = Convert-ASCII-Armour
+VERSION = 1.4
 CATEGORIES = cpan
 AUTHOR = VIPUL
 

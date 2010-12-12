@@ -1,5 +1,5 @@
-GARNAME = B-Generate
-GARVERSION = 1.26
+NAME = B-Generate
+VERSION = 1.26
 CATEGORIES = cpan
 AUTHOR = RURBAN
 

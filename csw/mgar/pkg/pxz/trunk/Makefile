@@ -1,5 +1,5 @@
-GARNAME = pxz
-GARVERSION = 4.999.9beta.20091201git
+NAME = pxz
+VERSION = 4.999.9beta.20091201git
 CATEGORIES = utils
 
 DESCRIPTION = pxz is a lossless data compressor based on the LZMA algorithm.
@@ -11,10 +11,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://jnovy.fedorapeople.org/pxz/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.xz
+DISTFILES  = $(NAME)-$(VERSION).tar.xz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

@@ -1,5 +1,5 @@
-GARNAME = system-tray-applet
-GARVERSION = 0.15
+NAME = system-tray-applet
+VERSION = 0.15
 CATEGORIES = gnome
 
 DESCRIPTION = Gnome 2 System Tray Applet
@@ -7,11 +7,11 @@ define BLURB
   System tray for Gnome panel.
 endef
 
-MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(GARNAME)/$(GARVERSION)/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(NAME)/$(VERSION)/
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -1,5 +1,5 @@
-GARNAME = xmlto
-GARVERSION = 0.0.23
+NAME = xmlto
+VERSION = 0.0.23
 CATEGORIES = utils
 
 BUILD_DEP_PKGS += CSWmktemp CSWfindutils CSWdocbookxsl CSWlibxslt
@@ -16,8 +16,8 @@ for the conversion you want and applies it using an external XSL-T processor.
 It also performs any necessary post-processing.
 endef
 
-MASTER_SITES = https://fedorahosted.org/releases/x/m/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+MASTER_SITES = https://fedorahosted.org/releases/x/m/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # Our gcp (from the very old fileutils) spits out warnings about -P changing
 # meanings.  xmlto is depending on the new meaning.  We'll explicitly use
@@ -41,7 +41,7 @@ CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWlibxslt
 CHECKPKG_OVERRIDES_CSWxmlto += surplus-dependency|CSWw3m
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # we don't link to anything besides libc and libm.
 NORUNPATH = 1

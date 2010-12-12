@@ -1,5 +1,5 @@
-GARNAME = libgda
-GARVERSION = 3.99.14
+NAME = libgda
+VERSION = 3.99.14
 CATEGORIES = gnome
 
 DESCRIPTION = GNU Data Access
@@ -13,14 +13,14 @@ define BLURB
 endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTNAME  = $(NAME)-$(VERSION)
 
 RUNTIME_DEP_PKGS += CSWggettextrt CSWglib2 CSWiconv CSWlibxml2 CSWlibxslt
 RUNTIME_DEP_PKGS += CSWncurses CSWreadline CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CFLAGS += -D__FUNCTION__=__func__
 CXXFLAGS += -D__FUNCTION__=__func__

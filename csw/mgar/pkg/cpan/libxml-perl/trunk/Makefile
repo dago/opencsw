@@ -1,5 +1,5 @@
-GARNAME = libxml-perl
-GARVERSION = 0.08
+NAME = libxml-perl
+VERSION = 0.08
 CATEGORIES = cpan
 AUTHOR = KMACLEOD
 

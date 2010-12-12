@@ -7,8 +7,8 @@
 # - 2.4.6,REV=2008.05.28 preserves modified configuration files via
 #   package-shipped CAS class csw_conf.
 #
-GARNAME = postfix
-GARVERSION = 2.6.5
+NAME = postfix
+VERSION = 2.6.5
 CATEGORIES = server
 
 DESCRIPTION = A high-performance mail transport agent
@@ -24,8 +24,8 @@ endef
 
 VENDOR_URL   = http://www.postfix.org
 MASTER_SITES = ftp://ftp.porcupine.org/mirrors/postfix-release/official/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE      = LICENSE TLS_LICENSE
 
 # Tag configuration files for handling via cswclassutils
@@ -43,13 +43,13 @@ CONFIG_FILES += virtual
 SAMPLECONF   := $(addprefix $(CONFIG_BASE), $(CONFIG_FILES))
 
 sysconfdir  = /etc/opt/csw
-INITSMF     = $(sysconfdir)/init.d/csw$(GARNAME)
-USERGROUP   = $(sysconfdir)/pkg/CSW$(GARNAME)/cswusergroup
+INITSMF     = $(sysconfdir)/init.d/csw$(NAME)
+USERGROUP   = $(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
 
 # For the sake of simplicity and user choice we dropped the automatic
 # replacement of the /usr/{lib,bin} sendmail binaries. Ref.
 # http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5313
-POSTMSG     = $(DOCDIR)/$(GARNAME)/README.upgradefrom.24
+POSTMSG     = $(DOCDIR)/$(NAME)/README.upgradefrom.24
 
 # For file permissions reference and verification purposes, postfix ships
 # /opt/csw/libexec/postfix/postfix-files which contains a list of the
@@ -140,8 +140,8 @@ DEFAULTS=\
 # Eventually it might be nice two have a bare-bones postfix in the catalog
 # as not everyone might want to pull in all the extra deps from CSWpostfix.
 ifeq ($(BUILDTYPE),simple)
-PACKAGES = CSW$(GARNAME)-simple
-CATALOGNAME = $(GARNAME)_simple
+PACKAGES = CSW$(NAME)-simple
+CATALOGNAME = $(NAME)_simple
 else
 # Make sure libraries in the default location can be found
 AUXLIBS = $(LDFLAGS)
@@ -256,7 +256,7 @@ install-custom:
 
     # Helper script for spool location migration (2.4.x -> 2.6.x)
 	ginstall -Dm 755 $(FILEDIR)/migrate-queuefiles.sh \
-		$(DESTDIR)$(docdir)/$(GARNAME)/scripts/migrate-queuefiles.sh
+		$(DESTDIR)$(docdir)/$(NAME)/scripts/migrate-queuefiles.sh
 	@$(MAKECOOKIE)
 
 # Fails. A subsequent manual verify-config run is successfull,

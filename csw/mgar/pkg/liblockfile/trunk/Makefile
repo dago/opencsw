@@ -1,5 +1,5 @@
-GARNAME = liblockfile
-GARVERSION = 1.08
+NAME = liblockfile
+VERSION = 1.08
 CATEGORIES = apps
 
 DESCRIPTION = Liblockfile is a shared library with NFS-safe locking functions.
@@ -8,13 +8,13 @@ define BLURB
 	includes the command line utility ``dotlockfile''.
 endef
 
-MASTER_SITES = ftp://ftp.debian.org/debian/pool/main/libl/$(GARNAME)/
-DISTFILES  = $(GARNAME)_$(GARVERSION).orig.tar.gz
+MASTER_SITES = ftp://ftp.debian.org/debian/pool/main/libl/$(NAME)/
+DISTFILES  = $(NAME)_$(VERSION).orig.tar.gz
 
 VENDOR_URL = http://www.t2-project.org/packages/liblockfile.html
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The copyright information is stored in the COPYRIGHT file
 LICENSE = COPYRIGHT

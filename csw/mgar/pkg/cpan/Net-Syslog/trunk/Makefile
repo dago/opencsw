@@ -1,5 +1,5 @@
-GARNAME = Net-Syslog
-GARVERSION = 0.04
+NAME = Net-Syslog
+VERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = LHOWARD
 

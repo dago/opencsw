@@ -1,4 +1,4 @@
-GARNAME = xfdesktop
+NAME = xfdesktop
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Desktop Manager
@@ -6,13 +6,13 @@ define BLURB
    Xfce Desktop Manager 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # DISTFILES += CSWxfcedesktop.depend CSWxfcedesktop.gspec CSWxfcedesktop.prototype
 # DISTFILES += CSWxfcedesktopdoc.depend CSWxfcedesktopdoc.gspec CSWxfcedesktopdoc.prototype
 DISTFILES += $(call admfiles,CSWxfcedesktop, depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 TEST_SCRIPTS = none
 

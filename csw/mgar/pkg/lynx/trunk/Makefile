@@ -1,5 +1,5 @@
-GARNAME = lynx
-GARVERSION = 2.8.7
+NAME = lynx
+VERSION = 2.8.7
 CATEGORIES = net
 
 DESCRIPTION = lynx - text browser for the World Wide Web
@@ -12,15 +12,15 @@ define BLURB
 endef
 
 MASTER_SITES = http://lynx.isc.org/release/
-DISTFILES  = $(GARNAME)$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)$(VERSION).tar.bz2
 DISTFILES += COPYING
 
 DEP_PKGS = CSWbzip2 CSWncurses CSWosslrt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-WORKSRC = $(WORKDIR)/$(subst .,-,$(GARNAME)$(GARVERSION))
+WORKSRC = $(WORKDIR)/$(subst .,-,$(NAME)$(VERSION))
 
 sysconfdir = /etc/opt/csw
 

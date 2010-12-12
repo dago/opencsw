@@ -15,8 +15,8 @@
 
 ###### Package information #######
 
-GARNAME = openssl
-GARVERSION = 0.9.8q
+NAME = openssl
+VERSION = 0.9.8q
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
@@ -87,9 +87,9 @@ endif
 MASTER_SITES = http://www.openssl.org/source/ http://openssl.org/news/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 DISTFILES += CSWossl.prototype
 DISTFILES += CSWosslrt.checkinstall CSWosslrt.preinstall CSWosslrt.postinstall CSWosslrt.prototype-i386 CSWosslrt.prototype-sparc
 DISTFILES += CSWossldevel.prototype-i386 CSWossldevel.prototype-sparc

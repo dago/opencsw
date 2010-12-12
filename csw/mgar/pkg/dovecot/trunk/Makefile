@@ -4,8 +4,8 @@
 # - SSL certs to /etc/opt/csw/ssl?
 # - USERGROUP doesn't work yet, wrong usage?
 # - /var/run/dovecot instead of /var/opt/csw/run?
-GARNAME = dovecot
-GARVERSION = 1.2.16
+NAME = dovecot
+VERSION = 1.2.16
 CATEGORIES = server
 
 DESCRIPTION = Secure IMAP server
@@ -18,8 +18,8 @@ endef
 
 SPKG_SOURCEURL = http://dovecot.org/
 MASTER_SITES   = http://dovecot.org/releases/1.2/
-DISTFILES      = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES      = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX   = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Sieve plugin is packaged via a post-package hook (see package-sieveplugin:)
 PACKAGES  = CSWdovecot CSWdovecot-devel CSWdovecot-sieve
@@ -106,7 +106,7 @@ pre-install-modulated:
 		$(WORKSRC)/dovecot-example.conf
 	@$(MAKECOOKIE)
 
-post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
 post-install-modulated: CSWDOCS=README.CSW changelog.CSW
 post-install-modulated: SSLDIR = $(DESTDIR)/opt/csw/ssl
@@ -163,7 +163,7 @@ build-and-install-sieveplugin:
 	rm -rf $(SIEVEDIST)*
 	@$(MAKECOOKIE)
 
-# Sieve plugin needs to be packaged with version != $(GARVERSION)
+# Sieve plugin needs to be packaged with version != $(VERSION)
 package-sieveplugin:
 	gmake -o post-package \
 		NOPACKAGE="CSWdovecot CSWdovecot-devel" SPKG_VERSION=$(SIEVEVERSION) \

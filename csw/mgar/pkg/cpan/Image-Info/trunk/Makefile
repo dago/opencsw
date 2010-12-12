@@ -1,5 +1,5 @@
-GARNAME = Image-Info
-GARVERSION = 1.16
+NAME = Image-Info
+VERSION = 1.16
 CATEGORIES = cpan
 AUTHOR = GAAS
 

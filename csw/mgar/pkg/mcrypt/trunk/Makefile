@@ -1,5 +1,5 @@
-GARNAME = mcrypt
-GARVERSION = 2.6.8
+NAME = mcrypt
+VERSION = 2.6.8
 CATEGORIES = lib
 
 DESCRIPTION = GPL replacement for Unix crypt that supports a wide range of algorithms and modes
@@ -11,11 +11,11 @@ endef
 
 SF_PROJ = mcrypt
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0001-Do-not-use-Wall-on-Sun-Compiler.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 NOISALIST = 1

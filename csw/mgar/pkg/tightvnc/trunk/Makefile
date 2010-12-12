@@ -1,5 +1,5 @@
-GARNAME = tightvnc
-GARVERSION = 1.3.10
+NAME = tightvnc
+VERSION = 1.3.10
 CATEGORIES = utils
 
 DESCRIPTION = TightVNC server is a free remote control package derived from the popular VNC software
@@ -12,7 +12,7 @@ endef
 
 SF_PROJ = vnc-tight
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION)_unixsrc.tar.bz2
+DISTFILES  = $(NAME)-$(VERSION)_unixsrc.tar.bz2
 DISTFILES += vncservers
 DISTFILES += cswvncserver
 DISTFILES += vncserver-wrapper.sh
@@ -22,7 +22,7 @@ CATALOGNAME_CSWvncv = vncviewer
 SPKG_SOURCEURL = http://www.tightvnc.org/
 UPSTREAM_USE_SF = 1
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=14067
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)_unixsrc.tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)_unixsrc.tar.bz2
 DISTNAME = vnc_unixsrc
 PKGFILES_CSWvncv  = $(bindir)/vncviewer
 PKGFILES_CSWvncv += $(mandir)/man1/vncviewer\.1

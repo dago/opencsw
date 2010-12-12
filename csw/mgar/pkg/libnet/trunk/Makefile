@@ -1,5 +1,5 @@
-GARNAME = libnet
-GARVERSION = 1.0.2a
+NAME = libnet
+VERSION = 1.0.2a
 CATEGORIES = lib
 
 DESCRIPTION = The libnet packet construction library
@@ -16,17 +16,17 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.packetfactory.net/libnet/dist/deprecated/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 LICENSE = doc/COPYING
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.packetfactory.net/libnet/
 
 BUILD64 = 1
 
-DISTNAME = Libnet-$(GARVERSION)
+DISTNAME = Libnet-$(VERSION)
 
 PATCHFILES = Makefile.in.diff
 PATCHFILES += configure.diff

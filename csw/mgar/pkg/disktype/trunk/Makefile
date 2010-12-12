@@ -1,5 +1,5 @@
-GARNAME = disktype
-GARVERSION = 9
+NAME = disktype
+VERSION = 9
 CATEGORIES = utils
 
 DESCRIPTION = Detection of content format of a disk or disk image
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # The provided manpage doesn't work with Solaris nroff.
 # See for details bug #1055:
@@ -17,7 +17,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
 DISTFILES += disktype.1
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE
 

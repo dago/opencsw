@@ -1,5 +1,5 @@
-GARNAME = Test-LongString
-GARVERSION = 0.14
+NAME = Test-LongString
+VERSION = 0.14
 CATEGORIES = cpan
 AUTHOR = RGARCIA
 

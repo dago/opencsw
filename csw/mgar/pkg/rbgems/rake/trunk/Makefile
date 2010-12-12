@@ -1,5 +1,5 @@
-GARNAME = rake
-GARVERSION = 0.8.7
+NAME = rake
+VERSION = 0.8.7
 CATEGORIES = rbgems
 
 DESCRIPTION = Make-like program implemented in Ruby

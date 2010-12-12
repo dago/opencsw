@@ -1,5 +1,5 @@
-GARNAME = Text-Quoted
-GARVERSION = 1.10
+NAME = Text-Quoted
+VERSION = 1.10
 CATEGORIES = cpan
 AUTHOR = JESSE
 

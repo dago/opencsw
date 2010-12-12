@@ -1,5 +1,5 @@
-GARNAME = Lingua-PT-Stemmer
-GARVERSION = 0.01
+NAME = Lingua-PT-Stemmer
+VERSION = 0.01
 CATEGORIES = cpan
 AUTHOR = XERN
 

@@ -1,5 +1,5 @@
-GARNAME = mod_svn_view
-GARVERSION = 0.0.0
+NAME = mod_svn_view
+VERSION = 0.0.0
 CATEGORIES = server
 
 DESCRIPTION = Subversion repository viewer
@@ -16,9 +16,9 @@ endef
 #DEPENDS += server/mod_highlight server/apache2
 
 # SVN only at this time
-#MASTER_SITES = http://www.outoforder.cc/downloads/$(GARNAME)/
-#MASTER_SITES = svn-http://svn.outoforder.cc/svn/$(GARNAME)/trunk/
-#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+#MASTER_SITES = http://www.outoforder.cc/downloads/$(NAME)/
+#MASTER_SITES = svn-http://svn.outoforder.cc/svn/$(NAME)/trunk/
+#DISTFILES  = $(NAME)-$(VERSION).tar.gz
 #DISTFILES += $(call admfiles,CSWap2modsvnview,)
 
 CONFIGURE_ARGS = $(DIRPATHS)

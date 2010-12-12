@@ -1,5 +1,5 @@
-GARNAME = balance
-GARVERSION = 3.52
+NAME = balance
+VERSION = 3.52
 CATEGORIES = net
 
 DESCRIPTION = A TCP proxy and load balancer
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.inlab.de/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-Adjust-Makefile-for-Solaris.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.inlab.de/balance.html
 

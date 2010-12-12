@@ -1,5 +1,5 @@
-GARNAME = libIDL
-GARVERSION = 0.8.14
+NAME = libIDL
+VERSION = 0.8.14
 CATEGORIES = lib
 
 DESCRIPTION = Library for handling CORBA IDL
@@ -10,14 +10,14 @@ MASTER_SITES = $(GNOME_MIRROR)
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2
 
-SPKG_SOURCEURL = http://projects.gnome.org/$(GARNAME)/
+SPKG_SOURCEURL = http://projects.gnome.org/$(NAME)/
 
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 STRIP_LIBTOOL = 1
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 NOISAEXEC = 1

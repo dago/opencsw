@@ -1,5 +1,5 @@
-GARNAME = Test-Builder-Tester
-GARVERSION = 1.01
+NAME = Test-Builder-Tester
+VERSION = 1.01
 CATEGORIES = cpan
 AUTHOR = MARKF
 

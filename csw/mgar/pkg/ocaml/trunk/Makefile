@@ -1,5 +1,5 @@
-GARNAME = ocaml
-GARVERSION = 3.11.2
+NAME = ocaml
+VERSION = 3.11.2
 CATEGORIES = lang
 
 DESCRIPTION = Brief description
@@ -8,9 +8,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://caml.inria.fr/pub/distrib/ocaml-3.11/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # UPSTREAM_MASTER_SITES = 
 

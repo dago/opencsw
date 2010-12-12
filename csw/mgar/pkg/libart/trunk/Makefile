@@ -1,5 +1,5 @@
-GARNAME = libart_lgpl
-GARVERSION = 2.3.20
+NAME = libart_lgpl
+VERSION = 2.3.20
 CATEGORIES = lib
 
 DESCRIPTION = libart - High performance 2D graphics library
@@ -15,12 +15,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWlibart
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 

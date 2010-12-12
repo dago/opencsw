@@ -1,5 +1,5 @@
-GARNAME = Python
-GARVERSION = 3.0
+NAME = Python
+VERSION = 3.0
 CATEGORIES = lang
 PACKAGES = CSWpython3 CSWpython3-tk CSWidle3
 
@@ -15,13 +15,13 @@ define BLURB
 endef
 
 SPKG_SOURCEURL = http://www.python.org/
-MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
+MASTER_SITES = http://www.python.org/ftp/python/$(VERSION)/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Patches
 PATCHFILES += 

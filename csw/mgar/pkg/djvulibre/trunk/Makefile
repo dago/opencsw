@@ -1,5 +1,5 @@
-GARNAME = djvulibre
-GARVERSION = 3.5.22
+NAME = djvulibre
+VERSION = 3.5.22
 CATEGORIES = apps
 
 DESCRIPTION = DjVu standalone viewer, browser plug-in, command line tools
@@ -7,8 +7,8 @@ define BLURB
 endef
 
 SF_PROJ = djvu
-MASTER_SITES = $(SF_MIRRORS)/DjVuLibre/$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = $(SF_MIRRORS)/DjVuLibre/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWdjvulibre CSWdjvulibrert CSWdjvulibredevel
 CATALOGNAME_CSWdjvulibre = djvulibre

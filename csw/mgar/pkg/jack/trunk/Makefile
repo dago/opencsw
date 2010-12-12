@@ -1,5 +1,5 @@
-GARNAME = jack
-GARVERSION = 1.9.3
+NAME = jack
+VERSION = 1.9.3
 CATEGORIES = lib
 
 DESCRIPTION = A system for handling real-time, low latency audio and MIDI
@@ -15,10 +15,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.grame.fr/~letz/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 

@@ -1,5 +1,5 @@
-GARNAME = Module-ScanDeps
-GARVERSION = 0.54
+NAME = Module-ScanDeps
+VERSION = 0.54
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
 

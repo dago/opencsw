@@ -1,5 +1,5 @@
-GARNAME = Module-Refresh
-GARVERSION = 0.13
+NAME = Module-Refresh
+VERSION = 0.13
 CATEGORIES = cpan
 AUTHOR = JESSE
 

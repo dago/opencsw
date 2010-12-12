@@ -1,5 +1,5 @@
-GARNAME = daemons
-GARVERSION = 1.1.0
+NAME = daemons
+VERSION = 1.1.0
 CATEGORIES = rbgems
 
 DESCRIPTION = Brief description

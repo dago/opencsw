@@ -1,5 +1,5 @@
-GARNAME = flphoto
-GARVERSION = 1.2
+NAME = flphoto
+VERSION = 1.2
 CATEGORIES = apps
 
 DESCRIPTION = basic image management and display program based on the FLTK toolkit
@@ -8,11 +8,11 @@ flPhoto is a basic image management and display program based on the FLTK toolki
 endef
 
 MASTER_SITES = http://easynews.dl.sourceforge.net/sourceforge/fltk/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.gz
+DISTFILES  = $(NAME)-$(VERSION)-source.tar.gz
 DISTFILES += $(call admfiles,CSWflphoto, prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 
 PATCHFILES = Fl_Image_Display.cxx.diff

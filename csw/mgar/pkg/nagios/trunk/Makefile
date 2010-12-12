@@ -1,5 +1,5 @@
-GARNAME = nagios
-GARVERSION = 3.2.3
+NAME = nagios
+VERSION = 3.2.3
 CATEGORIES = apps
 
 DESCRIPTION = Nagios network monitoring base package (no plugins)
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWnagios.checkinstall CSWnagios.preinstall CSWnagios.preremove CSWnagios.prototype CSWnagios.postinstall
 DISTFILES += cswnagios
 

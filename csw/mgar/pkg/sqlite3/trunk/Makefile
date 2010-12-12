@@ -1,5 +1,5 @@
-GARNAME      = sqlite3
-GARVERSION   = 3.7.2
+NAME      = sqlite3
+VERSION   = 3.7.2
 CATEGORIES   = lib
 
 DESCRIPTION  = An embeddable SQL engine in a C library
@@ -10,7 +10,7 @@ endef
 
 # Download informations
 MASTER_SITES = http://sqlite.org/
-DISTNAME = sqlite-$(GARVERSION)
+DISTNAME = sqlite-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz 
 DISTFILES += copyright-release.html
 

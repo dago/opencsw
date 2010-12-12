@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = mpg321
-GARVERSION = 0.2.11
+NAME = mpg321
+VERSION = 0.2.11
 DISTFILE_SUFFIX = -2
 CATEGORIES = apps
 
@@ -12,13 +12,13 @@ SPKG_SOURCEURL = http://mpg321.sourceforge.net/
 define BLURB
 endef
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION)$(DISTFILE_SUFFIX).tar.gz
+DISTFILES  = $(NAME)-$(VERSION)$(DISTFILE_SUFFIX).tar.gz
 RUNTIME_DEP_PKGS_CSWmpg321 += CSWlibao
 RUNTIME_DEP_PKGS_CSWmpg321 += CSWlibid3tag
 RUNTIME_DEP_PKGS_CSWmpg321 += CSWlibmad
 RUNTIME_DEP_PKGS_CSWmpg321 += CSWzlib
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS_CSWmpg321)
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 # A fix for an inline function and 'symbol not found'.

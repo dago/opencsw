@@ -1,5 +1,5 @@
-GARNAME = mod_fastcgi
-GARVERSION = 2.4.6
+NAME = mod_fastcgi
+VERSION = 2.4.6
 CATEGORIES = server
 
 DESCRIPTION = Apache 2.x FastCGI module
@@ -9,12 +9,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.fastcgi.com/dist/
-DISTFILES += $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(NAME)-$(VERSION).tar.gz
 ADMFILES   = depend prototype postinstall preremove copyright
 DISTFILES += $(call admfiles,CSWap2modfastcgi,$(ADMFILES))
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Allow fcgi to compile against Apache 2.2.  From
 # http://www.fastcgi.com/archives/fastcgi-developers/2005-December/004060.html
@@ -34,7 +34,7 @@ pre-build:
 	@( cd $(WORKSRC) ; cp Makefile.AP2 Makefile )
 	@$(MAKECOOKIE)
 
-pkgdocs = $(DESTDIR)$(docdir)/$(GARNAME)
+pkgdocs = $(DESTDIR)$(docdir)/$(NAME)
 post-install:
 	@install -d $(pkgdocs)
 	@cp $(WORKSRC)/docs/* $(WORKSRC)/README $(WORKSRC)/CHANGES $(pkgdocs)

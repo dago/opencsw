@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = moonbuggy
-GARVERSION = 1.0.51
+NAME = moonbuggy
+VERSION = 1.0.51
 CATEGORIES = apps
 
 DESCRIPTION = Moon-buggy is a simple character graphics game
@@ -9,8 +9,8 @@ Moon-buggy is a simple character graphics game where you drive some kind of car 
 endef
 
 MASTER_SITES = http://seehuhn.de/media/programs/ 
-DISTFILES  = moon-buggy-$(GARVERSION).tar.gz
-DISTNAME = moon-buggy-$(GARVERSION)
+DISTFILES  = moon-buggy-$(VERSION).tar.gz
+DISTNAME = moon-buggy-$(VERSION)
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = moon-buggy-(\d+(?:\.\d+)*).tar.gz

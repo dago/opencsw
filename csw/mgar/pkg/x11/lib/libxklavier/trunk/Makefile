@@ -1,5 +1,5 @@
-GARNAME = libxklavier
-GARVERSION = 4.0
+NAME = libxklavier
+VERSION = 4.0
 CATEGORIES = x11
 
 DESCRIPTION = X11 high-level API for X Keyboard Extension
@@ -10,11 +10,11 @@ define BLURB
   software (layout indicators etc).
 endef
 
-MASTER_SITES = http://downloads.sourceforge.net/project/gswitchit/libxklavier/$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+MASTER_SITES = http://downloads.sourceforge.net/project/gswitchit/libxklavier/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWlibxklavier CSWlibxklavierdevel
 

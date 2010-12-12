@@ -1,5 +1,5 @@
-GARNAME = Date-Simple
-GARVERSION = 3.02
+NAME = Date-Simple
+VERSION = 3.02
 CATEGORIES = cpan
 AUTHOR = YVES
 

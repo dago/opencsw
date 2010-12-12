@@ -1,5 +1,5 @@
-GARNAME = plzip
-GARVERSION = 0.6
+NAME = plzip
+VERSION = 0.6
 CATEGORIES = utils
 
 DESCRIPTION = A lossless data compressor based on the LZMA algorithm
@@ -13,12 +13,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/ 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0001-Add-prototype-for-kill-2.patch
 PATCHFILES += 0002-Use-ucb-echo.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS = CSWlzlib
 

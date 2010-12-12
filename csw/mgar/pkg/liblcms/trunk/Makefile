@@ -1,10 +1,10 @@
-GARNAME = lcms
-GARVERSION = 1.18a
+NAME = lcms
+VERSION = 1.18a
 CATEGORIES = apps
-LCMS_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z]//g')
-LCMS_RELEASE := $(shell echo $(GARVERSION) | sed -e 's/[^a-z]//g')
+LCMS_VERSION := $(shell echo $(VERSION) | sed -e 's/[a-z]//g')
+LCMS_RELEASE := $(shell echo $(VERSION) | sed -e 's/[^a-z]//g')
 
-DISTNAME = $(GARNAME)-$(LCMS_VERSION)
+DISTNAME = $(NAME)-$(LCMS_VERSION)
 DESCRIPTION = The little color management system and tools
 define BLURB
 	Little cms intends to be a small-footprint, speed optimized 
@@ -18,7 +18,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.littlecms.com/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWlcms 
 CATALOGNAME_CSWlcms = lcms
@@ -28,7 +28,7 @@ RUNTIME_DEP_PKGS_CSWlcms   = CSWjpeg CSWtiff CSWzlib
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 STRIP_LIBTOOL = 1

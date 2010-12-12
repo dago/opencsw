@@ -1,5 +1,5 @@
-GARNAME = kile
-GARVERSION = 1.9.3
+NAME = kile
+VERSION = 1.9.3
 CATEGORIES = apps
 
 DESCRIPTION = An integrated LaTeX environment
@@ -11,13 +11,13 @@ endef
 
 SF_PROJ = kile
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWkile,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=79945
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
 
 # Compile with GCC
 GARCOMPILER = GNU

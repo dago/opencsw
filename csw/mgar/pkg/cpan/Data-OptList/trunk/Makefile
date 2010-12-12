@@ -1,5 +1,5 @@
-GARNAME = Data-OptList
-GARVERSION = 0.106
+NAME = Data-OptList
+VERSION = 0.106
 CATEGORIES = cpan
 AUTHOR = RJBS
 

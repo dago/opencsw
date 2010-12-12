@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = moc
-GARVERSION = 2.4.4
+NAME = moc
+VERSION = 2.4.4
 CATEGORIES = lib
 DESCRIPTION = Music On Console
 define BLURB
@@ -11,8 +11,8 @@ endef
 SPKG_SOURCEURL = http://moc.daper.net/
 MASTER_SITES = ftp://ftp.daper.net/pub/soft/moc/stable/
 PATCHFILES = remove-export-dynamic.patch
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 CONFIGURE_ARGS = $(DIRPATHS)
 EXTRA_LDFLAGS = -lsocket
 

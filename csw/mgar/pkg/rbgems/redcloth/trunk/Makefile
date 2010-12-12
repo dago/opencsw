@@ -1,5 +1,5 @@
-GARNAME = redcloth
-GARVERSION = 4.2.3
+NAME = redcloth
+VERSION = 4.2.3
 CATEGORIES = rbgems
 
 DESCRIPTION = Textile parser for Ruby
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 GEMNAME = RedCloth
-DISTNAME = $(GEMNAME)-$(GARVERSION)
+DISTNAME = $(GEMNAME)-$(VERSION)
 GEMPKGNAME = redcloth
 
 LICENSE = COPYING

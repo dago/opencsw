@@ -1,5 +1,5 @@
-GARNAME = unzip
-GARVERSION = 6.0
+NAME = unzip
+VERSION = 6.0
 CATEGORIES = utils
 
 DESCRIPTION = Info-Zip UnZip extraction utility for archives compressed in .zip format
@@ -12,7 +12,7 @@ DISTNAME = unzip60
 DISTFILES  = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.info-zip.org/
 

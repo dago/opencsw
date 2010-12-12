@@ -1,5 +1,5 @@
-GARNAME = imagemagick
-GARVERSION = 6.6.0
+NAME = imagemagick
+VERSION = 6.6.0
 GARSUBREV = 5
 CATEGORIES = lib
 
@@ -33,9 +33,9 @@ PKGFILES_CSWpmimagemagick = $(libdir)/perl/.*
 ARCHALL_CSWimagemagickdoc = 1
 
 MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/
-DISTFILES  = ImageMagick-$(GARVERSION)-$(GARSUBREV).tar.bz2
+DISTFILES  = ImageMagick-$(VERSION)-$(GARSUBREV).tar.bz2
 
-DISTNAME = ImageMagick-$(GARVERSION)-$(GARSUBREV)
+DISTNAME = ImageMagick-$(VERSION)-$(GARSUBREV)
 
 SPKG_SOURCEURL = http://www.imagemagick.org
 
@@ -148,7 +148,7 @@ include gar/category.mk
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(GARSUBREV)
 
 post-install-isa-sparcv8:
-	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
+	@ln -s ImageMagick-$(VERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
 	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.2.9.s.tar.bz2 |tar xf -)
 	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.5.2.s.tar.bz2 |tar xf -)
 	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
@@ -156,7 +156,7 @@ post-install-isa-sparcv8:
 	@$(MAKECOOKIE)
 
 post-install-isa-i386:
-	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
+	@ln -s ImageMagick-$(VERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
 	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.2.9.i.tar.bz2 |tar xf -)
 	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.5.2.i.tar.bz2 |tar xf -)
 	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1

@@ -1,5 +1,5 @@
-GARNAME = Geo-IP-PurePerl
-GARVERSION = 1.23
+NAME = Geo-IP-PurePerl
+VERSION = 1.23
 CATEGORIES = cpan
 AUTHOR = BORISZ
 
@@ -10,11 +10,11 @@ define BLURB
   Geo::IP which is a XS wrapper around the GeoIP C library, available from CPAN
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpmgeoippureperl,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWgeolitedb
 
@@ -23,7 +23,7 @@ EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 include gar/category.mk
 
 post-configure-modulated:
-	@echo " ==> Post-configure for $(GARNAME) (custom)"
+	@echo " ==> Post-configure for $(NAME) (custom)"
 	@( cd $(WORKSRC)/lib/Geo/IP ; \
 	   sed 's/\/usr\/local\/share\/GeoIP\/GeoIP.dat/\/opt\/csw\/share\/GeoIP\/GeoIP.dat/' PurePerl.pm > tmp.sed ; \
 	   mv tmp.sed PurePerl.pm )

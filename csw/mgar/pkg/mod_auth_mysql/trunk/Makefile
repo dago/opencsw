@@ -1,5 +1,5 @@
-GARNAME = mod_auth_mysql
-GARVERSION = 3.0.0
+NAME = mod_auth_mysql
+VERSION = 3.0.0
 CATEGORIES = server
 
 DESCRIPTION = Implements basic authentication on top of MySQL
@@ -9,7 +9,7 @@ endef
 
 SF_PROJ = modauthmysql
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES += $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES += $(NAME)-$(VERSION).tar.gz
 ADMFILES   = depend prototype postinstall preremove copyright
 DISTFILES += $(call admfiles,CSWap2modauthmysql,$(ADMFILES))
 
@@ -57,7 +57,7 @@ install-custom:
 	$(DONADA)
 
 COPYFILES = CONFIGURE CHANGES README
-DOCDEST   = $(DESTDIR)$(docdir)/$(GARNAME)
+DOCDEST   = $(DESTDIR)$(docdir)/$(NAME)
 
 post-install:
 	@mkdir -p $(DOCDEST)

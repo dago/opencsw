@@ -12,8 +12,8 @@
 
 ###### Package information #######
 
-GARNAME = rlwrap
-GARVERSION = 0.37
+NAME = rlwrap
+VERSION = 0.37
 CATEGORIES = utils
 
 DESCRIPTION = A readline wrapper
@@ -33,9 +33,9 @@ CHECKPKG_OVERRIDES_CSWrlwrap += missing-dependency|CSWperl
 MASTER_SITES = http://utopia.knoware.nl/~hlub/uck/rlwrap/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += changelog.CSW
 
 # replace setenv with putenv
@@ -52,8 +52,8 @@ pre-configure:
 		cd $(WORKSRC) && autoconf
 
 post-merge:
-	        @ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(GARNAME)/changelog.CSW
+	        @ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW
 	        @( for FILE in AUTHORS BUGS INSTALL NEWS README TODO; do \
-	                 ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)$(docdir)/$(GARNAME)/`basename $$FILE`; \
+	                 ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)$(docdir)/$(NAME)/`basename $$FILE`; \
 	         done )
 

@@ -1,5 +1,5 @@
-GARNAME = make
-GARVERSION = 3.82
+NAME = make
+VERSION = 3.82
 CATEGORIES = devel
 
 DESCRIPTION = Controls generation of executables and other compile-related tasks
@@ -13,10 +13,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWgmake
 CATALOGNAME = gmake

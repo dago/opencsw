@@ -1,5 +1,5 @@
-GARNAME = Search-Xapian
-GARVERSION = 1.0.16.0
+NAME = Search-Xapian
+VERSION = 1.0.16.0
 CATEGORIES = cpan
 AUTHOR = OLLY
 

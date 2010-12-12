@@ -1,5 +1,5 @@
-GARNAME = liboil
-GARVERSION = 0.3.17
+NAME = liboil
+VERSION = 0.3.17
 CATEGORIES = lib
 
 DESCRIPTION = A library of simple functions that are optimized for various CPUs
@@ -18,7 +18,7 @@ PATCHFILES = 0001-Use-inttypes.h.patch
 PATCHFILES += 0002-Enable-getisax-only-for-Solaris-10.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWliboil CSWliboildevel
 

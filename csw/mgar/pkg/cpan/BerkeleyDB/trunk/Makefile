@@ -1,5 +1,5 @@
-GARNAME = BerkeleyDB
-GARVERSION = 0.43
+NAME = BerkeleyDB
+VERSION = 0.43
 CATEGORIES = cpan
 AUTHOR = PMQS
 

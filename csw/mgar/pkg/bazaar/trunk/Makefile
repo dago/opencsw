@@ -1,5 +1,5 @@
-GARNAME = bzr
-GARVERSION = 1.17
+NAME = bzr
+VERSION = 1.17
 #PATCHREV = .1
 CATEGORIES = devel
 
@@ -11,11 +11,11 @@ define BLURB
   to work, and you can try it out in five minutes. 
 endef
 
-MASTER_SITES = http://launchpad.net/bzr/$(GARVERSION)/$(GARVERSION)$(PATHREV)/+download/
-DISTFILES  = $(GARNAME)-$(GARVERSION)$(PATHREV).tar.gz
+MASTER_SITES = http://launchpad.net/bzr/$(VERSION)/$(VERSION)$(PATHREV)/+download/
+DISTFILES  = $(NAME)-$(VERSION)$(PATHREV).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)$(PATHREV)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)$(PATHREV)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS += CSWcswclassutils
 

@@ -1,5 +1,5 @@
-GARNAME = meta_programming
-GARVERSION = 0.2.2
+NAME = meta_programming
+VERSION = 0.2.2
 CATEGORIES = rbgems
 
 DESCRIPTION = Collection of meta-programming methods for Ruby

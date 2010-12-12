@@ -1,5 +1,5 @@
-GARNAME = nginx
-GARVERSION = 0.8.53
+NAME = nginx
+VERSION = 0.8.53
 CATEGORIES = server
 
 GARCOMPILER = SOS11
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://sysoev.ru/nginx/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 DISTFILES   += cswnginx
 
 LICENSE      = LICENSE

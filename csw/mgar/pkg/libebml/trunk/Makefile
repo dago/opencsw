@@ -1,5 +1,5 @@
-GARNAME = libebml
-GARVERSION = 0.7.8
+NAME = libebml
+VERSION = 0.7.8
 CATEGORIES = lib
 
 DESCRIPTION = Library for Extensible Binary Meta Language
@@ -7,11 +7,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://dl.matroska.org/downloads/libebml/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PATCHFILES = libebml-shared-library.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.matroska.org/
 

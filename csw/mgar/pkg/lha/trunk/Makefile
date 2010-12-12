@@ -1,7 +1,7 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = lha
-GARVERSION = 1.14i-ac20050924p1
-SPKG_VERSION = $(shell echo $(GARVERSION) | tr '-' '_')
+NAME = lha
+VERSION = 1.14i-ac20050924p1
+SPKG_VERSION = $(shell echo $(VERSION) | tr '-' '_')
 CATEGORIES = utils
 
 DESCRIPTION = File archiving/compression program
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://sourceforge.jp/projects/lha/releases/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS = CSWiconv
 

@@ -1,5 +1,5 @@
-GARNAME = multitail
-GARVERSION = 5.2.6
+NAME = multitail
+VERSION = 5.2.6
 CATEGORIES = utils
 
 DESCRIPTION = View one or multiple files like the original tail program
@@ -16,7 +16,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.vanheusden.com/multitail/
-DISTFILES = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES = $(NAME)-$(VERSION).tgz
 LICENSE = license.txt
 
 RUNTIME_DEP_PKGS = CSWncurses
@@ -43,8 +43,8 @@ include gar/category.mk
 install-custom: EXTRA_DOCS = readme.txt thanks.txt manual.html
 install-custom: EXTRA_DATA = convert-geoip.pl convert-simple.pl
 install-custom: EXTRA_DATA += colors-example.pl colors-example.sh
-install-custom: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
-install-custom: DATADEST = $(DESTDIR)$(datadir)/$(GARNAME)
+install-custom: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
+install-custom: DATADEST = $(DESTDIR)$(datadir)/$(NAME)
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(mandir)/man1

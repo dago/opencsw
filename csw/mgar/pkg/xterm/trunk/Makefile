@@ -1,6 +1,6 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
-GARNAME = xterm
-GARVERSION = 267
+NAME = xterm
+VERSION = 267
 CATEGORIES = apps
 
 DESCRIPTION = Terminal emulator for the X Window System
@@ -14,8 +14,8 @@ endef
 
 VENDOR_URL    = http://invisible-island.net/xterm/
 MASTER_SITES  = ftp://invisible-island.net/xterm/
-DISTFILES     = $(GARNAME)-$(GARVERSION).tgz
-UFILES_REGEX  = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+DISTFILES     = $(NAME)-$(VERSION).tgz
+UFILES_REGEX  = $(NAME)-(\d+(?:\.\d+)*).tgz
 DISTFILES    += COPYING
 
 RUNTIME_DEP_PKGS  = CSWfconfig
@@ -57,7 +57,7 @@ NOISALIST = 1
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: CSWDOCS=README.CSW changelog.CSW
 post-install-modulated: DOCS=xterm.log.html ctlseqs.txt
 post-install-modulated:

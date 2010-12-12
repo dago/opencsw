@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = libxcb
-GARVERSION = 1.5
+NAME = libxcb
+VERSION = 1.5
 CATEGORIES = x11
 
 DESCRIPTION = The XCB library
@@ -11,14 +11,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://xcb.freedesktop.org/dist/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 BUILD_DEP_PKGS = CSWlibxaudevel CSWlibpthreadstubs CSWdoxygen CSWpython CSWxcbproto CSWgraphviz2
 RUNTIME_DEP_PKGS_CSWlibxcb = CSWlibxau
 PACKAGES = CSWlibxcb CSWlibxcbdevel CSWlibxcbdoc
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_DESC_CSWlibxcb      = The XCB library
 SPKG_DESC_CSWlibxcbdevel = The XCB library development package

@@ -1,4 +1,4 @@
-GARNAME = kdetoys
+NAME = kdetoys
 CATEGORIES = kde
 
 DESCRIPTION = Fun apps for KDE (gcc3)

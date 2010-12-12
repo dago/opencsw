@@ -1,21 +1,21 @@
 # $Id$
-GARNAME = adobereader
-GARVERSION_sparc = 8.1.7
+NAME = adobereader
+VERSION_sparc = 8.1.7
 FILEVERSION_sparc = 8.1.7
-GARVERSION_i386 = 9.4.1
+VERSION_i386 = 9.4.1
 FILEVERSION_i386 = 9.4.1
-GARVERSION = $(GARVERSION_$(GARCH))
+VERSION = $(VERSION_$(GARCH))
 CATEGORIES = apps
 
 DESCRIPTION = Adobe Acrobat Reader
 define BLURB
 endef
 
-MAJORVERSION_sparc = $(shell echo $(GARVERSION_sparc) | cut -d. -f1)
-MAJORVERSION_i386  = $(shell echo $(GARVERSION_i386) | cut -d. -f1)
+MAJORVERSION_sparc = $(shell echo $(VERSION_sparc) | cut -d. -f1)
+MAJORVERSION_i386  = $(shell echo $(VERSION_i386) | cut -d. -f1)
 
-MASTER_SITES_sparc = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(MAJORVERSION_sparc).x/$(GARVERSION_sparc)/enu/
-MASTER_SITES_i386 = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(MAJORVERSION_i386).x/$(GARVERSION_i386)/enu/
+MASTER_SITES_sparc = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(MAJORVERSION_sparc).x/$(VERSION_sparc)/enu/
+MASTER_SITES_i386 = ftp://ftp.adobe.com/pub/adobe/reader/unix/$(MAJORVERSION_i386).x/$(VERSION_i386)/enu/
 MASTER_SITES = $(MASTER_SITES_sparc) $(MASTER_SITES_i386)
 DISTFILES_sparc = AdobeReader_enu-$(FILEVERSION_sparc)-1.sparc.tar.bz2
 DISTFILES_i386 = AdbeRdr$(FILEVERSION_i386)-1_i486solaris_enu.tar.bz2
@@ -24,7 +24,7 @@ NOEXTRACT = $(filter-out $(DISTFILES_$(GARCH)),$(DISTFILES))
 DISTNAME = AdobeReader
 
 # File name regex to get notifications about upstream software releases
-# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

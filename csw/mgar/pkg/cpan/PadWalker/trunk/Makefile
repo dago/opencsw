@@ -1,5 +1,5 @@
-GARNAME = PadWalker
-GARVERSION = 1.7
+NAME = PadWalker
+VERSION = 1.7
 CATEGORIES = cpan
 AUTHOR = ROBIN
 
@@ -15,7 +15,7 @@ CATALOGNAME = pm_padwalker
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)

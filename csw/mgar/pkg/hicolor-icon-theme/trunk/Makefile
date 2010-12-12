@@ -1,5 +1,5 @@
-GARNAME = hicolor-icon-theme
-GARVERSION = 0.5
+NAME = hicolor-icon-theme
+VERSION = 0.5
 CATEGORIES = xtra
 
 DESCRIPTION = Default Gtk icon theme.
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://freedesktop.org/Software/icon-theme/releases/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/configure
 BUILD_SCRIPTS = $(WORKSRC)/Makefile

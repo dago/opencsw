@@ -1,5 +1,5 @@
-GARNAME = clusterssh
-GARVERSION = 3.28
+NAME = clusterssh
+VERSION = 3.28
 CATEGORIES = net
 
 DESCRIPTION = ClusterSSH controls a number of xterm windows via a single graphical console window
@@ -9,9 +9,9 @@ define BLURB
   ssh connection.
 endef
 
-SF_PROJ = $(GARNAME)
+SF_PROJ = $(NAME)
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=89139
 UPSTREAM_USE_SF = 1

@@ -1,6 +1,6 @@
-GARNAME = mkrdns
-GARVERSION = 3.3
-REAL_VERSION = $(subst .,_,$(GARVERSION))
+NAME = mkrdns
+VERSION = 3.3
+REAL_VERSION = $(subst .,_,$(VERSION))
 CATEGORIES = utils
 
 DESCRIPTION = An automatic reverse DNS zone generator
@@ -13,9 +13,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://sites.google.com/a/kluge.net/mkrdns/
-DISTNAME     = $(GARNAME)-$(REAL_VERSION)
+DISTNAME     = $(NAME)-$(REAL_VERSION)
 DISTFILES    = $(DISTNAME).gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\_\d+)*).gz
+UFILES_REGEX = $(NAME)-(\d+(?:\_\d+)*).gz
 
 # Regular download ends up with a file name including heaps of 
 # redirect-related query variables, we need sth. more plain
@@ -28,7 +28,7 @@ INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
-install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 install-custom:
 	mkdir -p $(DESTDIR)$(mandir)/man8
 	cp $(WORKDIR)/$(DISTNAME) $(WORKDIR)/mkrdns

@@ -1,5 +1,5 @@
-GARNAME = plib
-GARVERSION = 1.8.5
+NAME = plib
+VERSION = 1.8.5
 CATEGORIES = lib
 
 DESCRIPTION = A Suite of Portable Game Libraries
@@ -7,10 +7,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://plib.sourceforge.net/dist/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://plib.sourceforge.net
 

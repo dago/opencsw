@@ -1,5 +1,5 @@
-GARNAME = rubyforge
-GARVERSION = 2.0.4
+NAME = rubyforge
+VERSION = 2.0.4
 CATEGORIES = rbgems
 
 DESCRIPTION = A script which automates a limited set of rubyforge operations

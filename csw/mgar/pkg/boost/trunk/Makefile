@@ -1,5 +1,5 @@
-GARNAME = boost
-GARVERSION = 1.44.0
+NAME = boost
+VERSION = 1.44.0
 CATEGORIES = lib
 
 DESCRIPTION = A collection of C++ libraries
@@ -15,9 +15,9 @@ define BLURB
   programming style of the Standard Template Library (STL).
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
-DISTVERSION = $(subst .,_,$(GARVERSION))
-DISTNAME = $(GARNAME)_$(DISTVERSION)
+MASTER_SITES = $(SF_MIRROR)/$(NAME)/
+DISTVERSION = $(subst .,_,$(VERSION))
+DISTNAME = $(NAME)_$(DISTVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release

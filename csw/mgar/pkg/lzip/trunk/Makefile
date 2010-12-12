@@ -1,5 +1,5 @@
-GARNAME = lzip
-GARVERSION = 1.11
+NAME = lzip
+VERSION = 1.11
 CATEGORIES = utils
 
 DESCRIPTION = A lossless data compressor based on the LZMA algorithm
@@ -13,11 +13,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/ 
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0001-inttypes.h-instead-of-stdint.h.patch
 PATCHFILES += 0002-inttypes.h-instead-of-stdint.h.patch
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.nongnu.org/lzip/lzip.html
 

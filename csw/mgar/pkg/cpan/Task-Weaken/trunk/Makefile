@@ -1,5 +1,5 @@
-GARNAME = Task-Weaken
-GARVERSION = 1.03
+NAME = Task-Weaken
+VERSION = 1.03
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

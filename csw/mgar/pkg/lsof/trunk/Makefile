@@ -1,5 +1,5 @@
-GARNAME = lsof
-GARVERSION = 4.83
+NAME = lsof
+VERSION = 4.83
 CATEGORIES = utils
 
 DESCRIPTION = List open files
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/
-TOPDIST   = $(GARNAME)_$(GARVERSION)
+TOPDIST   = $(NAME)_$(VERSION)
 SRCDIST   = $(TOPDIST)_src
 DISTFILES = $(TOPDIST).tar.bz2
 DISTFILES += lsof-license
@@ -20,7 +20,7 @@ WORKSRC   = $(WORKDIR)/$(TOPDIST)/$(SRCDIST)
 SPKG_SOURCEURL = http://people.freebsd.org/~abe/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)_(\d+(?:\.\d+)*).tar.bz2
 
 LICENSE = lsof-license
 
@@ -72,7 +72,7 @@ test-custom:
 	$(MAKECOOKIE)
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) $(GARVERSION) for $(MODULATION)"
+	@echo " ==> Installing $(NAME) $(VERSION) for $(MODULATION)"
 	echo DESTDIR: $(DESTDIR)
 	@( cd $(WORKSRC) ; \
 		ginstall -d $(DESTDIR)$(bindir) ; \

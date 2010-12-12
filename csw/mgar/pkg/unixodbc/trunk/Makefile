@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = unixodbc
-GARVERSION = 2.3.0
+NAME = unixodbc
+VERSION = 2.3.0
 CATEGORIES = lib
 
 DESCRIPTION = ODBC drivers for Unix systems
@@ -11,7 +11,7 @@ define BLURB
 endef
 DL_NAME = unixODBC
 MASTER_SITES = http://www.unixodbc.org/
-DISTNAME = $(DL_NAME)-$(GARVERSION)
+DISTNAME = $(DL_NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += cswmigrateconf
 UFILES_REGEX = $(DL_NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -23,7 +23,7 @@ localstatedir = /var$(prefix)
 CONFIGURE_ARGS = $(DIRPATHS) --enable-gui=no
 BUILD64 = 1
 SAMPLECONF = \/etc\/opt\/csw\/odbc(inst|).ini
-MIGRATECONF = \/etc\/opt\/csw\/pkg\/$(GARNAME)\/cswmigrateconf
+MIGRATECONF = \/etc\/opt\/csw\/pkg\/$(NAME)\/cswmigrateconf
 TEST_SCRIPTS =
 LICENSE = COPYING
 
@@ -34,6 +34,6 @@ post-install-modulated:
 	for f in odbc.ini odbcinst.ini; do \
 		mv "$${f}" "$${f}.CSW"; \
 	done)
-	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/$(GARNAME)
-	ginstall -m 644 $(FILEDIR)/cswmigrateconf $(DESTDIR)$(sysconfdir)/pkg/$(GARNAME)
+	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/$(NAME)
+	ginstall -m 644 $(FILEDIR)/cswmigrateconf $(DESTDIR)$(sysconfdir)/pkg/$(NAME)
 	@$(MAKECOOKIE)

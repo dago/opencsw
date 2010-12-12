@@ -1,5 +1,5 @@
-GARNAME = wget
-GARVERSION = 1.12
+NAME = wget
+VERSION = 1.12
 CATEGORIES = net
 
 DESCRIPTION = A network utility to retrieve files from the Web
@@ -14,10 +14,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.gnu.org/software/wget/
 

@@ -1,5 +1,5 @@
-GARNAME = libsoup
-GARVERSION = 2.29.91
+NAME = libsoup
+VERSION = 2.29.91
 CATEGORIES = gnome
   
  
@@ -7,7 +7,7 @@ DESCRIPTION = HTTP client/server library for GNOME
 define BLURB
 endef
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += old_libs_i386.tar.bz2
 DISTFILES += old_libs_sparc.tar.bz2
 
@@ -50,7 +50,7 @@ CHECKPKG_OVERRIDES += symbol-not-found|libsoup-2.0.so.0.0.0
 # Possible bug in checkpkg
 CHECKPKG_OVERRIDES += symbol-not-found|libsoup-gnome-2.4.so.1.2.0
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 EXTRA_INC = /opt/csw/X11/include
 EXTRA_LIB = /opt/csw/X11/lib 

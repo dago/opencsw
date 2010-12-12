@@ -1,4 +1,4 @@
-GARNAME = xfprint
+NAME = xfprint
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Printing Helper
@@ -6,14 +6,14 @@ define BLURB
    Xfce Printing Helper 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # DISTFILES += CSWxfceprint.depend CSWxfceprint.gspec CSWxfceprint.prototype
 # DISTFILES += CSWxfceprintdoc.depend CSWxfceprintdoc.gspec CSWxfceprintdoc.prototype
 # DISTFILES += CSWlibxfceprint.depend CSWlibxfceprint.gspec CSWlibxfceprint.prototype
 # DISTFILES += CSWlibxfceprintdev.depend CSWlibxfceprintdev.gspec CSWlibxfceprintdev.prototype
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 DISTFILES += $(call admfiles,CSWxfceprint, depend)
 

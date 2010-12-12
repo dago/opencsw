@@ -1,5 +1,5 @@
-GARNAME = Graphics-ColorNames
-GARVERSION = 2.11
+NAME = Graphics-ColorNames
+VERSION = 2.11
 CATEGORIES = cpan
 AUTHOR = RRWO
 

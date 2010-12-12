@@ -1,5 +1,5 @@
-GARNAME = djbdns
-GARVERSION = 1.05
+NAME = djbdns
+VERSION = 1.05
 CATEGORIES = apps
 
 DESCRIPTION = retrieve and publish Domain Name System information
@@ -32,11 +32,11 @@ and is not required if your secondary is a BIND DNS server.
 endef
 
 MASTER_SITES = http://cr.yp.to/djbdns/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWdjbdns,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 FILES = axfr-get axfrdns axfrdns-conf dnscache dnscache-conf dnsfilter dnsip dnsipq dnsmx dnsname dnsq dnsqr dnstrace dnstracesort dnstxt pickdns pickdns-conf pickdns-data random-ip rbldns rbldns-conf rbldns-data tinydns tinydns-conf tinydns-data tinydns-edit tinydns-get walldns walldns-conf
@@ -51,17 +51,17 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 configure-custom:
-	@echo "==> Configuring $(GARNAME)"
+	@echo "==> Configuring $(NAME)"
 	@cd $(WORKSRC)/ && sed "s|/usr/local|$(prefix)|g" < conf-home > conf-home.csw && mv conf-home.csw conf-home
 	@$(MAKECOOKIE)
 
 build-custom:
-	@echo "==> building $(GARNAME)"
+	@echo "==> building $(NAME)"
 	@cd $(WORKSRC) && PATH=/opt/csw/gnu:/opt/csw/gcc3/bin/:/usr/bin/:$PATH && export PATH && make
 	@$(MAKECOOKIE)
 
 install-custom:
-	@echo "==> installing $(GARNAME)"
+	@echo "==> installing $(NAME)"
 	@echo "==> to $(DESTDIR)$(prefix)/bin"
 	@rm -rf   $(DESTDIR)$(prefix)
 	@mkdir -p $(DESTDIR)$(prefix)/bin

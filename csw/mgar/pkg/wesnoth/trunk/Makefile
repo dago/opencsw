@@ -1,5 +1,5 @@
-GARNAME = wesnoth
-GARVERSION = 1.6.5
+NAME = wesnoth
+VERSION = 1.6.5
 CATEGORIES = apps
 
 DESCRIPTION = A free turn-based strategy game with a fanasy theme
@@ -8,12 +8,12 @@ define BLURB
 endef
 
 MASTER_SITES += $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=89495
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
 
 PATCHFILES = language.cpp.diff
 PATCHFILES += configure.diff

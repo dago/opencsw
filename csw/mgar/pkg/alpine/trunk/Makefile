@@ -1,5 +1,5 @@
-GARNAME = alpine
-GARVERSION = 2.00
+NAME = alpine
+VERSION = 2.00
 CATEGORIES = apps
 
 DESCRIPTION = Alpine Messaging System
@@ -14,7 +14,7 @@ endef
 
 MASTER_SITES = ftp://ftp.cac.washington.edu/alpine/
 SPKG_SOURCEURL = http://www.washington.edu/alpine/
-DISTFILES  = $(GARNAME).tar.bz2
+DISTFILES  = $(NAME).tar.bz2
 
 PACKAGES = CSWalpine
 CATALOGNAME_CSWalpine = alpine
@@ -22,7 +22,7 @@ SPKG_DESC_CSWalpine = $(DESCRIPTION)
 
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 ##  Needs gcc to compile imap support since ucbcc 
 ##  does not work on the buildfarm. GCC 4 does not work

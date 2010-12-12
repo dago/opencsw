@@ -1,5 +1,5 @@
-GARNAME = pound2
-GARVERSION = 2.4.5
+NAME = pound2
+VERSION = 2.4.5
 CATEGORIES = net
 
 DESCRIPTION = reverse proxy load balancer
@@ -12,11 +12,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.apsis.ch/pound/
-DISTFILES  = Pound-$(GARVERSION).tgz
-DISTNAME   = Pound-$(GARVERSION)
+DISTFILES  = Pound-$(VERSION).tgz
+DISTNAME   = Pound-$(VERSION)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 # we require
 RUNTIME_DEP_PKGS = CSWosslrt CSWpcrert
@@ -46,8 +46,8 @@ install-custom:
 	ginstall -d $(DESTDIR)$(mandir)/man8
 	ginstall -m 644 $(WORKSRC)/pound.8 $(DESTDIR)$(mandir)/man8/pound2.8
 	ginstall -m 644 $(WORKSRC)/poundctl.8 $(DESTDIR)$(mandir)/man8/pound2ctl.8
-	ginstall -d $(DESTDIR)$(sysconfdir)/$(GARNAME)
-	ginstall -m 644 $(FILEDIR)/pound2-sample.cfg $(DESTDIR)$(sysconfdir)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(sysconfdir)/$(NAME)
+	ginstall -m 644 $(FILEDIR)/pound2-sample.cfg $(DESTDIR)$(sysconfdir)/$(NAME)
 	ginstall -d $(DESTDIR)/var/opt/csw/run
 
 docs-list  = $(WORKSRC)/README
@@ -56,8 +56,8 @@ docs-list += $(WORKSRC)/CHANGELOG
 docs-list += $(WORKSRC)/z2_2_5_1.py
 docs-list += $(WORKSRC)/z2_2_6_1.py
 install-docs:
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	@( for file in $(docs-list) ; do \
-		ginstall -m 644 $$file $(DESTDIR)$(docdir)/$(GARNAME) ; \
+		ginstall -m 644 $$file $(DESTDIR)$(docdir)/$(NAME) ; \
 			done )
 	@$(MAKECOOKIE)

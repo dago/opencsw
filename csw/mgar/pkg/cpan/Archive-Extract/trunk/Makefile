@@ -1,5 +1,5 @@
-GARNAME = Archive-Extract
-GARVERSION = 0.16
+NAME = Archive-Extract
+VERSION = 0.16
 CATEGORIES = cpan
 AUTHOR = KANE
 

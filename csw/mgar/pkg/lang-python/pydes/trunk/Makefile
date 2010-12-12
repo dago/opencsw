@@ -1,5 +1,5 @@
-GARNAME = pyDes
-GARVERSION = 2.0.0
+NAME = pyDes
+VERSION = 2.0.0
 CATEGORIES = lang
 
 DESCRIPTION = implementation of the DES encryption algorithm
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://pydes.sourceforge.net/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz

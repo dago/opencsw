@@ -1,8 +1,8 @@
-GARNAME = lzop
-GARVERSION = 1.03
+NAME = lzop
+VERSION = 1.03
 #RELEASE = rc1
-#DISTVERSION = $(GARVERSION)$(RELEASE)
-#DISTNAME = $(GARNAME)-$(DISTVERSION)
+#DISTVERSION = $(VERSION)$(RELEASE)
+#DISTNAME = $(NAME)-$(DISTVERSION)
 CATEGORIES = utils
 
 DESCRIPTION = LZO file compressor
@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.lzop.org/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION)$(RELEASE).tar.gz
+DISTFILES  = $(NAME)-$(VERSION)$(RELEASE).tar.gz
 
 PACKAGES = CSWlzop
 CATALOGNAME = lzop
@@ -24,7 +24,7 @@ SPKG_SOURCEURL = http://www.lzop.org
 RUNTIME_DEP_PKGS = CSWlzo
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_TARGET = check
 
@@ -37,10 +37,10 @@ include gar/category.mk
 #SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 
 DOCS = AUTHORS NEWS README THANKS doc/magic
-DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 
 post-install-modulated:
-	@echo " ==> Post-install for $(GARNAME) (custom)"
+	@echo " ==> Post-install for $(NAME) (custom)"
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)
 	@$(MAKECOOKIE)

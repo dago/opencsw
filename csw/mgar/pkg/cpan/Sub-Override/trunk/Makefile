@@ -1,5 +1,5 @@
-GARNAME = Sub-Override
-GARVERSION = 0.08
+NAME = Sub-Override
+VERSION = 0.08
 CATEGORIES = cpan
 AUTHOR = OVID
 

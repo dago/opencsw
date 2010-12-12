@@ -1,5 +1,5 @@
-GARNAME = Biblio-EndnoteStyle
-GARVERSION = 0.05
+NAME = Biblio-EndnoteStyle
+VERSION = 0.05
 CATEGORIES = cpan
 AUTHOR = MIRK
 

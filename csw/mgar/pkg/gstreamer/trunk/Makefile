@@ -1,5 +1,5 @@
-GARNAME = gstreamer
-GARVERSION = 0.10.26
+NAME = gstreamer
+VERSION = 0.10.26
 CATEGORIES = gnome
 
 DESCRIPTION = Open source multimedia framework
@@ -14,10 +14,10 @@ PACKAGES = CSWgstreamer
 CATALOGNAME = gstreamer
 
 MASTER_SITES = http://gstreamer.freedesktop.org/src/gstreamer/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-debug

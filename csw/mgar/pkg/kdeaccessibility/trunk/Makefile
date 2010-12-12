@@ -1,4 +1,4 @@
-GARNAME = kdeaccessibility
+NAME = kdeaccessibility
 CATEGORIES = kde
 
 DESCRIPTION = Accessibility apps for KDE environment (gcc3)

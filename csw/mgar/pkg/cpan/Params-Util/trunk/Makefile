@@ -1,5 +1,5 @@
-GARNAME = Params-Util
-GARVERSION = 1.00
+NAME = Params-Util
+VERSION = 1.00
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

@@ -1,5 +1,5 @@
-GARNAME = libsmi
-GARVERSION = 0.4.8
+NAME = libsmi
+VERSION = 0.4.8
 CATEGORIES = lib
 
 DESCRIPTION = Allows management applications to access SMI MIB module definitions
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.ibr.cs.tu-bs.de/pub/local/libsmi/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibsmi CSWlibsmimibs 
 

@@ -1,5 +1,5 @@
-GARNAME = Archive-Zip
-GARVERSION = 1.30
+NAME = Archive-Zip
+VERSION = 1.30
 CATEGORIES = cpan
 AUTHOR = ADAMK
 
@@ -25,6 +25,6 @@ LICENSE = LICENSE
 RUNTIME_DEP_PKGS = CSWpmiocompress
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 include gar/category.mk

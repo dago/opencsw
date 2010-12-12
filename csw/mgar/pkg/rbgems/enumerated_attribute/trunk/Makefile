@@ -1,5 +1,5 @@
-GARNAME = enumerated_attribute
-GARVERSION = 0.2.13
+NAME = enumerated_attribute
+VERSION = 0.2.13
 CATEGORIES = rbgems
 
 DESCRIPTION = Enumerated model attributes and view helpers

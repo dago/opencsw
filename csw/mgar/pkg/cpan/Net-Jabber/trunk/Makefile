@@ -1,5 +1,5 @@
-GARNAME = Net-Jabber
-GARVERSION = 2.0
+NAME = Net-Jabber
+VERSION = 2.0
 CATEGORIES = cpan
 AUTHOR = REATMON
 

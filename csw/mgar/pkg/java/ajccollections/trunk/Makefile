@@ -1,7 +1,7 @@
 SHORTNAME = collections
-GARVERSION = 3.2.1
+VERSION = 3.2.1
 
-GARNAME = commons-$(SHORTNAME)
+NAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
 DESCRIPTION = Apache Jakarta Commons Collections
@@ -13,7 +13,7 @@ endef
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
 
 # Set archive filename
-DISTFILES = $(GARNAME)-$(GARVERSION)-bin.tar.gz
+DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
 DISTFILES += $(call admfiles,CSWajccollect,)
@@ -27,7 +27,7 @@ SPKG_DESC_CSWajccollectdoc = $(DESCRIPTION) documentation package
 RUNTIME_DEP_PKGS_CSWajccollect  = CSWajcdigester
 
 # Defines package content
-PKGFILES_CSWajccollect     	 = $(prefix)/share/doc/$(GARNAME)/LICENSE.txt
+PKGFILES_CSWajccollect     	 = $(prefix)/share/doc/$(NAME)/LICENSE.txt
 PKGFILES_CSWajccollect   	+= $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -44,11 +44,11 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
 	@gcp -fp $(WORKSRC)/$(DISTNAME)/commons-collections-3.2.1.jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-3.2.jar ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-3.jar ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
-	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)/LICENSE-documentation.txt
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-3.2.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-3.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
+	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/LICENSE-documentation.txt
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)

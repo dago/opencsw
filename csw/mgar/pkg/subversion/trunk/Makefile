@@ -21,8 +21,8 @@
 #   ...and send the patch to the subversion dev mailing list.
 #   http://subversion.apache.org/mailing-lists.html
 
-GARNAME = subversion
-GARVERSION = 1.6.15
+NAME = subversion
+VERSION = 1.6.15
 CATEGORIES = utils
 
 DESCRIPTION = Version control rethought
@@ -34,8 +34,8 @@ endef
 VENDOR_URL   = http://subversion.apache.org/
 MASTER_SITES = http://subversion.tigris.org/downloads/
 #MASTER_SITES = http://orac.ece.utexas.edu/pub/svn/1.6.7/yuletide-eggnog/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+DISTFILES    = $(NAME)-$(VERSION).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES  = CSWsvn CSWsvn-devel CSWap2svn CSWpmsvn
 PACKAGES += CSWpythonsvn CSWrbsvn CSWjavasvn

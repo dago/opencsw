@@ -1,5 +1,5 @@
-GARNAME = Carp-Clan
-GARVERSION = 6.04
+NAME = Carp-Clan
+VERSION = 6.04
 CATEGORIES = cpan
 AUTHOR = STBEY
 

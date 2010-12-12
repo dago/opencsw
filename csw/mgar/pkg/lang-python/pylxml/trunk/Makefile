@@ -1,8 +1,8 @@
 # TODO
 # - Move this to a pymodules/ subdirectory with the rest of the
 #   python modules (similar to the cpan directory).
-GARNAME = pylxml
-GARVERSION = 2.2.4
+NAME = pylxml
+VERSION = 2.2.4
 CATEGORIES = python
 
 DESCRIPTION = Easy to use and powerful libxml2/libxslt binding for Python
@@ -15,7 +15,7 @@ endef
 
 VENDOR_URL   = http://codespeak.net/lxml/
 MASTER_SITES = http://pypi.python.org/packages/source/l/lxml/
-DISTNAME     = lxml-$(GARVERSION)
+DISTNAME     = lxml-$(VERSION)
 DISTFILES    = $(DISTNAME).tar.gz
 UFILES_REGEX = lxml-(\d+(?:\.\d+)*).tar.gz
 

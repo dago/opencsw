@@ -11,8 +11,8 @@
 # It's for users to build the package locally.
 FONTDIR = /usr/openwin/lib/X11/fonts/TrueType
 
-GARNAME = msttcorefonts
-GARVERSION = 1.3_4
+NAME = msttcorefonts
+VERSION = 1.3_4
 CATEGORIES = lib
 DESCRIPTION = Microsoft True Type fonts
 define BLURB
@@ -33,8 +33,8 @@ EXE_FONT_FILES += arialb32.exe
 EXE_FONT_FILES += arial32.exe
 EXE_FONT_FILES += andale32.exe
 DISTFILES  = $(EXE_FONT_FILES)
-# DISTFILES += msttcorefonts-$(GARVERSION).spec
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+# DISTFILES += msttcorefonts-$(VERSION).spec
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME_MSFTcorefonts = msttcorefonts
 ARCHALL = 1
 PACKAGES = MSFTcorefonts

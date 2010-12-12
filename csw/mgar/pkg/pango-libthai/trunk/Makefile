@@ -1,5 +1,5 @@
-GARNAME = pango-libthai
-GARVERSION = 0.1.4
+NAME = pango-libthai
+VERSION = 0.1.4
 CATEGORIES = lib
 
 DESCRIPTION = Pango bindings for Thai language support
@@ -8,11 +8,11 @@ endef
 
 SF_PROJ = libthai
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=34448
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWlibthai
 

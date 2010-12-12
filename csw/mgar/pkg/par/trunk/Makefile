@@ -1,5 +1,5 @@
-GARNAME = package
-GARVERSION = 1.0
+NAME = package
+VERSION = 1.0
 CATEGORIES = category
 
 DESCRIPTION = Brief description
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpackage,)
 
 # We define upstream file regex so we can be notifed of new upstream software release

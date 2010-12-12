@@ -1,5 +1,5 @@
-GARNAME = libxml2
-GARVERSION = 2.7.7
+NAME = libxml2
+VERSION = 2.7.7
 CATEGORIES = lib
 
 DESCRIPTION = XML Parser Library
@@ -8,11 +8,11 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://xmlsoft.org/libxml2/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = ld-symbol-handling-fixup.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibxml2 CSWlibxml2devel CSWpylibxml2
 
@@ -48,8 +48,8 @@ STRIP_LIBTOOL = 1
 MERGE_SCRIPTS_isa-default64 = copy-relocated-only copy-config-only
 MERGE_DIRS_isa-default64 = $(libdir)
 
-EXTRA_PAX_ARGS  = -s ",^\.$(docdir)/libxml2-$(GARVERSION),.$(docdir)/libxml2,p"
-EXTRA_PAX_ARGS += -s ",^\.$(docdir)/libxml2-python-$(GARVERSION),.$(docdir)/pylibxml2,p"
+EXTRA_PAX_ARGS  = -s ",^\.$(docdir)/libxml2-$(VERSION),.$(docdir)/libxml2,p"
+EXTRA_PAX_ARGS += -s ",^\.$(docdir)/libxml2-python-$(VERSION),.$(docdir)/pylibxml2,p"
 EXTRA_PAX_ARGS += -s ",^\.$(libdir)/python[^/]*,.$(libdir)/python,p"
 
 PKGFILES_CSWlibxml2devel  = $(PKGFILES_DEVEL)

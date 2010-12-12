@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = p4
-GARVERSION = 09.1
+NAME = p4
+VERSION = 09.1
 CATEGORIES = utils
 DESCRIPTION = Perforce command-line client
 define BLURB
@@ -22,34 +22,34 @@ P4ARCH_amd64 = x86_64
 P4ARCH_sparcv8 = sparc
 P4ARCH_sparcv9 = sparc64
 P4ARCH = $(P4ARCH_$(KERNELISA))
-# MASTER_SITES  = http://www.perforce.com/downloads/perforce/r$(GARVERSION)/bin.$(P4OS)$(P4ARCH)/
+# MASTER_SITES  = http://www.perforce.com/downloads/perforce/r$(VERSION)/bin.$(P4OS)$(P4ARCH)/
 MASTER_SITES += http://www.perforce.com/perforce/contracts/
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 DISTFILES  =
-DISTFILES += p4-$(GARVERSION)-solaris10x86
-DISTFILES += p4-$(GARVERSION)-solaris10x86_64
-DISTFILES += p4-$(GARVERSION)-solaris10sparc
-DISTFILES += p4-$(GARVERSION)-solaris10sparc64
+DISTFILES += p4-$(VERSION)-solaris10x86
+DISTFILES += p4-$(VERSION)-solaris10x86_64
+DISTFILES += p4-$(VERSION)-solaris10sparc
+DISTFILES += p4-$(VERSION)-solaris10sparc64
 DISTFILES += commercial.pdf
 
-work/solaris%/download/p4-$(GARVERSION)-solaris10x86:
-	wget http://www.perforce.com/downloads/perforce/r$(GARVERSION)/bin.solaris10x86/p4 \
+work/solaris%/download/p4-$(VERSION)-solaris10x86:
+	wget http://www.perforce.com/downloads/perforce/r$(VERSION)/bin.solaris10x86/p4 \
 		-P $(PARTIALDIR) \
 		-O $@
 
-work/solaris%/download/p4-$(GARVERSION)-solaris10x86_64:
-	wget http://www.perforce.com/downloads/perforce/r$(GARVERSION)/bin.solaris10x86_64/p4 \
+work/solaris%/download/p4-$(VERSION)-solaris10x86_64:
+	wget http://www.perforce.com/downloads/perforce/r$(VERSION)/bin.solaris10x86_64/p4 \
 		-P $(PARTIALDIR) \
 		-O $@
 
-work/solaris%/download/p4-$(GARVERSION)-solaris10sparc:
-	wget http://www.perforce.com/downloads/perforce/r$(GARVERSION)/bin.solaris10sparc/p4 \
+work/solaris%/download/p4-$(VERSION)-solaris10sparc:
+	wget http://www.perforce.com/downloads/perforce/r$(VERSION)/bin.solaris10sparc/p4 \
 		-P $(PARTIALDIR) \
 		-O $@
 
-work/solaris%/download/p4-$(GARVERSION)-solaris10sparc64:
-	wget http://www.perforce.com/downloads/perforce/r$(GARVERSION)/bin.solaris10sparc64/p4 \
+work/solaris%/download/p4-$(VERSION)-solaris10sparc64:
+	wget http://www.perforce.com/downloads/perforce/r$(VERSION)/bin.solaris10sparc64/p4 \
 		-P $(PARTIALDIR) \
 		-O $@
 
@@ -67,7 +67,7 @@ build-p4:
 
 install-p4:
 	ginstall -m 755 -d $(DESTDIR)$(bindir)
-	ginstall -m 755 $(WORKDIR)/p4-$(GARVERSION)-solaris10$(P4ARCH) $(DESTDIR)$(bindir)/p4
+	ginstall -m 755 $(WORKDIR)/p4-$(VERSION)-solaris10$(P4ARCH) $(DESTDIR)$(bindir)/p4
 	ginstall -m 755 -d $(DESTDIR)$(docdir)/p4
 	ginstall -m 644 $(DOWNLOADDIR)/commercial.pdf $(DESTDIR)$(docdir)/p4
 	@$(MAKECOOKIE)

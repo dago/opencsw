@@ -1,5 +1,5 @@
-GARNAME = indent
-GARVERSION = 2.2.10
+NAME = indent
+VERSION = 2.2.10
 CATEGORIES = utils
 
 DESCRIPTION = C language source code formatting program 
@@ -11,12 +11,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # texinfo2man doesn't belong in the package
 EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/bin/texinfo2man
@@ -46,7 +46,7 @@ pre-build-modulated:
 	rm $(WORKSRC)/man/indent.1
 	@$(MAKECOOKIE)
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)

@@ -1,5 +1,5 @@
-GARNAME = libgpod
-GARVERSION = 0.7.2
+NAME = libgpod
+VERSION = 0.7.2
 CATEGORIES = lib
 
 DESCRIPTION = Interface to Apple iPods
@@ -12,7 +12,7 @@ endef
 
 SF_PROJ = gtkpod
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS_CSWlibgpod += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWlibgpod += CSWglib2
@@ -22,7 +22,7 @@ RUNTIME_DEP_PKGS_CSWlibgpod += CSWlibxml2
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=67873
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME).(\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME).(\d+(?:\.\d+)*)
 
 GARCOMPILER = SOS12
 #GARCOMPILER = GNU

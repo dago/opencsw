@@ -1,8 +1,8 @@
-GARNAME = bind
-GARVERSION = 9.4.3
+NAME = bind
+VERSION = 9.4.3
 RELEASE = P3
-DISTVERSION = $(GARVERSION)-$(RELEASE)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
+DISTVERSION = $(VERSION)-$(RELEASE)
+DISTNAME = $(NAME)-$(DISTVERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
@@ -14,10 +14,10 @@ define BLURB
   high-volume and high-reliability applications.
 endef
 
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
-#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+DISTFILES  = $(NAME)-$(VERSION)-$(RELEASE).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+#DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWbind CSWbinddevel CSWlibbind CSWbindutils
 
@@ -78,14 +78,14 @@ SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 DOCLIST = README.CSW db.127.0.0 db.localhost named.conf named.root rndc.key
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
 	@cp $(FILEDIR)/CSWbind.named.conf.CSW $(DESTDIR)/etc/opt/csw/named.conf.CSW
 	@ginstall -d $(DESTDIR)/opt/csw/etc/CSWbind
 	@cp $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/CSWbind/
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
 	( cd $(WORKSRC) ; \
 	  gmake DESTDIR=$(DESTDIR) install )
 	@ginstall -d $(DESTDIR)/var/opt/csw/named

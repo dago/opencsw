@@ -1,5 +1,5 @@
-GARNAME = MARC-Crosswalk-DublinCore
-GARVERSION = 0.02
+NAME = MARC-Crosswalk-DublinCore
+VERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = BRICAS
 

@@ -1,5 +1,5 @@
-GARNAME = which
-GARVERSION = 2.20
+NAME = which
+VERSION = 2.20
 CATEGORIES = utils
 
 DESCRIPTION = locate a command and display its pathname or alias
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWwhich,)
 
 # We define upstream file regex so we can be notifed of new upstream software release

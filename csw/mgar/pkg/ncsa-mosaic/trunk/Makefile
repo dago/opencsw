@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = ncsa-mosaic
-GARVERSION = 2.7b6
+NAME = ncsa-mosaic
+VERSION = 2.7b6
 PACKAGES = CSWncsa-mosaic
 CATALOGNAME_CSWncsa-mosaic = ncsa_mosaic
 CATEGORIES = apps
@@ -21,7 +21,7 @@ PATCHFILES += 0005-Adding-opt-csw-include-lib-for-png.h.patch
 PATCHFILES += 0006-sys-inttypes.h-instead-of-stdint.h.patch
 PATCHFILES += 0007-Adding-opt-csw-include-for-png.patch
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = mosaic
 INSTALL_SCRIPTS = mosaic

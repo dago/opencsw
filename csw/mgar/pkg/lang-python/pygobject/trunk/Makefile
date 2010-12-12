@@ -1,15 +1,15 @@
-GARNAME = pygobject
-GARVERSION = 2.21.1
+NAME = pygobject
+VERSION = 2.21.1
 CATEGORIES = lang
-RELVER = $(shell echo $(GARVERSION) | gsed -e 's/\.[0-9]\+$$//')
+RELVER = $(shell echo $(VERSION) | gsed -e 's/\.[0-9]\+$$//')
 
 DESCRIPTION = Python bindings for the GObject library
 define BLURB
   This is a Python language binding for gobject.
 endef
 
-MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(GARNAME)/$(RELVER)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(NAME)/$(RELVER)/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 STRIP_LIBTOOL = 1
 

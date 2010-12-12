@@ -1,5 +1,5 @@
-GARNAME = siege
-GARVERSION = 2.69
+NAME = siege
+VERSION = 2.69
 CATEGORIES = xtra
 
 DESCRIPTION = A http regression testing and benchmarking utility
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://sid.joedog.org/pub/siege/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
 RUNTIME_DEP_PKGS = CSWosslrt

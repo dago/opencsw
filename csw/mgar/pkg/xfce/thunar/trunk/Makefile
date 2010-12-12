@@ -1,5 +1,5 @@
-GARNAME = Thunar
-GARVERSION = 0.9.0
+NAME = Thunar
+VERSION = 0.9.0
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Thunar File Manager
@@ -7,7 +7,7 @@ define BLURB
    Xfce Thunar File Manager 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # DISTFILES += CSWxfcethunar.depend CSWxfcethunar.gspec CSWxfcethunar.prototype
 # DISTFILES += CSWlibxfcethunar.depend CSWlibxfcethunar.gspec CSWlibxfcethunar.prototype
 # DISTFILES += CSWxfcethunardoc.depend CSWxfcethunardoc.gspec CSWxfcethunardoc.prototype
@@ -19,7 +19,7 @@ DISTFILES  += $(call admfiles,CSWxfcethunar, depend)
 # PATCHFILES += thunar-vfs-thumb-jpeg.c.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 TEST_SCRIPTS = none
 

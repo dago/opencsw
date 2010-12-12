@@ -1,5 +1,5 @@
-GARNAME = achievo
-GARVERSION = 1.4.3
+NAME = achievo
+VERSION = 1.4.3
 CATEGORIES = apps
 
 DESCRIPTION = A flexible web-based resource management tool for business environments
@@ -10,10 +10,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.achievo.org/downloads/achievo/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.achievo.org
 

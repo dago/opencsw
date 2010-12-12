@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id: Makefile 8335 2010-02-03 18:36:29Z wahwah $
 
-GARNAME = xmms
-GARVERSION = 1.2.11
+NAME = xmms
+VERSION = 1.2.11
 CATEGORIES = gnome
 
 DESCRIPTION = The X MultiMedia System.
@@ -15,8 +15,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.xmms.org/files/1.2.x/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-glib-prefix=$(prefix)

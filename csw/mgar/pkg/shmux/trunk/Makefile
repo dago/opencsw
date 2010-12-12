@@ -1,7 +1,7 @@
 # Todo
 # * Review patches from http://cr.opensolaris.org/~lilyli/shmux/
-GARNAME = shmux
-GARVERSION = 1.0.2
+NAME = shmux
+VERSION = 1.0.2
 CATEGORIES = utils
 
 DESCRIPTION = Executes the same command on many hosts in parallel
@@ -17,13 +17,13 @@ endef
 
 SPKG_SOURCEURL = http://web.taranis.org/shmux/
 MASTER_SITES = http://web.taranis.org/shmux/dist/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 RUNTIME_DEP_PKGS = CSWpcrert
 
 # We define upstream file regex so we can be notifed of new upstream software 
 # release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 LICENSE = LICENSE
 
@@ -31,7 +31,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)

@@ -1,5 +1,5 @@
-GARNAME = zshdb
-GARVERSION = 0_gitcurrent
+NAME = zshdb
+VERSION = 0_gitcurrent
 # PATCHLEVEL = 75eadce
 CATEGORIES = utils
 
@@ -16,7 +16,7 @@ GIT_USE_PROXY = 1
 # DISTFILES = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWzsh
 

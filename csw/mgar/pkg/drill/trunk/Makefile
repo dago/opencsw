@@ -1,5 +1,5 @@
-GARNAME = drill
-GARVERSION = 1.6.7
+NAME = drill
+VERSION = 1.6.7
 CATEGORIES = utils
 
 DESCRIPTION = A dig style dnssec aware dns debugging tool
@@ -9,18 +9,18 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.nlnetlabs.nl/projects/ldns/
-DISTFILES  = ldns-$(GARVERSION).tar.gz
+DISTFILES  = ldns-$(VERSION).tar.gz
 
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns/
 
-DISTNAME = ldns-$(GARVERSION)
+DISTNAME = ldns-$(VERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)/drill
 
 LICENSE = LICENSE

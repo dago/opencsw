@@ -1,6 +1,6 @@
-GARNAME = clamav
-GARVERSION = 0.96.5
-#DISTNAME = $(GARNAME)-devel-latest
+NAME = clamav
+VERSION = 0.96.5
+#DISTNAME = $(NAME)-devel-latest
 CATEGORIES = apps
 
 DESCRIPTION = Clam AntiVirus
@@ -15,8 +15,8 @@ endef
 SF_PROJ = clamav
 MASTER_SITES = $(SF_MIRRORS)
 #MASTER_SITES = http://www.clamav.net/snapshot/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-#DISTFILES  = $(GARNAME)-devel-latest.tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+#DISTFILES  = $(NAME)-devel-latest.tar.gz
 
 PACKAGES = CSWclamav CSWlibclam6 CSWlibclam6-devel
 
@@ -39,7 +39,7 @@ INCOMPATIBLE_PKGS_CSWlibclam6 = CSWlibclamav
 INCOMPATIBLE_PKGS_CSWlibclam6-devel = CSWlibclamav-devel
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
@@ -60,8 +60,8 @@ sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-clamav
 # unrecognized by 0.95rc1? CONFIGURE_ARGS += --with-sendmail=$(libdir)/sendmail
-CONFIGURE_ARGS += --with-dbdir=/var/opt/csw/$(GARNAME)/db
-CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(GARNAME)
+CONFIGURE_ARGS += --with-dbdir=/var/opt/csw/$(NAME)/db
+CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(NAME)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 CONFIGURE_ARGS += --enable-milter
 #CONFIGURE_ARGS += --disable-llvm
@@ -107,10 +107,10 @@ DOCS += docs/clamdoc.pdf
 DOCS += docs/phishsigs_howto.pdf
 DOCS += docs/signatures.pdf
 
-DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 
 post-install-modulated:
-	@echo " ==> Post-install for $(GARNAME) (custom)"
+	@echo " ==> Post-install for $(NAME) (custom)"
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamd $(DESTDIR)/etc/opt/csw/init.d/cswclamd
 	@ginstall -m 755 $(FILEDIR)/CSWclamav.cswclamav-milter $(DESTDIR)/etc/opt/csw/init.d/cswclamav-milter

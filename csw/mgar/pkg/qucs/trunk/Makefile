@@ -1,5 +1,5 @@
-GARNAME = qucs
-GARVERSION = 0.0.15
+NAME = qucs
+VERSION = 0.0.15
 CATEGORIES = devel
 
 DESCRIPTION = Integrated circuit simulator
@@ -7,14 +7,14 @@ DESCRIPTION = Integrated circuit simulator
 #  Long description
 #endef
 
-SF_PROJ = $(GARNAME)
+SF_PROJ = $(NAME)
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0000-Missing-include.patch
 PATCHFILES += 0001-Replace-bin-sh-with-bin-bash.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

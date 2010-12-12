@@ -1,5 +1,5 @@
-GARNAME = pngwriter
-GARVERSION = 0.5.4
+NAME = pngwriter
+VERSION = 0.5.4
 CATEGORIES = lib
 
 DESCRIPTION = A C++ library for creating PNG images
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES += $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://pngwriter.sourceforge.net
 
@@ -38,7 +38,7 @@ ARCHALL_CSWpngwriterdoc = 1
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=69758
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = Makefiles.diff
 

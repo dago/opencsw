@@ -1,5 +1,5 @@
-GARNAME = htmldoc
-GARVERSION = 1.8.27
+NAME = htmldoc
+VERSION = 1.8.27
 CATEGORIES = apps
 
 DESCRIPTION = converts HTML files and web pages into indexed HTML PostScript and PDF
@@ -10,8 +10,8 @@ define BLURB
 endef
 
 PACKAGES = CSWhtmldoc-common CSWhtmldoc
-CATALOGNAME_CSWhtmldoc = $(GARNAME)
-CATALOGNAME_CSWhtmldoc-common = $(GARNAME)_common
+CATALOGNAME_CSWhtmldoc = $(NAME)
+CATALOGNAME_CSWhtmldoc-common = $(NAME)_common
 SPKG_DESC_CSWhtmldoc = $(DESCRIPTION)
 SPKG_DESC_CSWhtmldoc-common = This package contains the htmldoc files common to all architectures.
 ARCHALL_CSWhtmldoc-common = 1
@@ -23,8 +23,8 @@ RUNTIME_DEP_PKGS_CSWhtmldoc += CSWhtmldoc-common
 PKGFILES_CSWhtmldoc = $(bindir)/.*
 PKGFILES_CSWhtmldoc-common = $(datadir)/.*
 
-MASTER_SITES = http://ftp.easysw.com/pub/htmldoc/$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
+MASTER_SITES = http://ftp.easysw.com/pub/htmldoc/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION)-source.tar.bz2
 #DISTFILES    += $(call admfiles,CSWhtmldoc, )
 #DISTFILES    += $(call admfiles,CSWhtmldoc-common, )
 
@@ -33,7 +33,7 @@ LICENSE = COPYING.txt
 SPKG_SOURCEURL = http://www.htmldoc.org
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-source.tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-source.tar.bz2
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

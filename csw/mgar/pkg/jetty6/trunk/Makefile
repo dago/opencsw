@@ -1,5 +1,5 @@
-GARNAME = jetty6
-GARVERSION = 6.1.14
+NAME = jetty6
+VERSION = 6.1.14
 CATEGORIES = server
 GARCH=all
 
@@ -14,11 +14,11 @@ demonstration, distribution or deployment. It is available on all Java
 supported platforms.
 endef
 
-MASTER_SITES = http://dist.codehaus.org/jetty/jetty-$(GARVERSION)/
-DISTFILES  = jetty-$(GARVERSION).zip default-jetty6 etc-README.txt share-jetty.xml bin-create-instance
+MASTER_SITES = http://dist.codehaus.org/jetty/jetty-$(VERSION)/
+DISTFILES  = jetty-$(VERSION).zip default-jetty6 etc-README.txt share-jetty.xml bin-create-instance
 DISTFILES += cswjetty6 cswjetty6.xml svc-cswjetty6
-DISTFILES += $(call admfiles,CSW$(GARNAME),prototype csw_usrgrp_config postinstall)
-DISTFILES += $(call admfiles,CSW$(GARNAME)doc,prototype)
+DISTFILES += $(call admfiles,CSW$(NAME),prototype csw_usrgrp_config postinstall)
+DISTFILES += $(call admfiles,CSW$(NAME)doc,prototype)
 
 RUNTIME_DEP_PKGS = 
 
@@ -37,7 +37,7 @@ SKIPTEST = 1
 include gar/category.mk
 
 COPY_FILES=LICENSES README.txt VERSION.txt etc lib resources/log4j.properties start.jar javadoc
-TO_COPY=$(foreach file,$(COPY_FILES),cp $(WORKDIR)/jetty-$(GARVERSION)/$(COPY_FILES) $(DESTDIR)/opt/csw/share/jetty6/$(COPY_FILES))
+TO_COPY=$(foreach file,$(COPY_FILES),cp $(WORKDIR)/jetty-$(VERSION)/$(COPY_FILES) $(DESTDIR)/opt/csw/share/jetty6/$(COPY_FILES))
 
 install-custom:
 	mkdir -p $(DESTDIR)/opt/csw/share
@@ -45,11 +45,11 @@ install-custom:
 	mkdir -p $(DESTDIR)/etc/default
 	mkdir -p $(DESTDIR)/etc/opt/csw/jetty6/instances
 	# Save a couple of files before pruning the unwanted stuff
-	cp $(WORKDIR)/jetty-$(GARVERSION)/bin/jetty.sh $(DESTDIR)/etc/init.d/cswjetty6
+	cp $(WORKDIR)/jetty-$(VERSION)/bin/jetty.sh $(DESTDIR)/etc/init.d/cswjetty6
 	rm -rf $(DESTDIR)/opt/csw/share/jetty6
 	mkdir -p $(DESTDIR)/opt/csw/share/jetty6/home
 	mkdir -p $(DESTDIR)/opt/csw/share/jetty6/home/resources
-	$(foreach file,$(COPY_FILES),cp -r $(WORKDIR)/jetty-$(GARVERSION)/$(file) $(DESTDIR)/opt/csw/share/jetty6/home/$(file) &&) true
+	$(foreach file,$(COPY_FILES),cp -r $(WORKDIR)/jetty-$(VERSION)/$(file) $(DESTDIR)/opt/csw/share/jetty6/home/$(file) &&) true
 	rm -rf $(DESTDIR)/opt/csw/share/jetty6/home/lib/ext/libsetuid.so
 	mkdir -p $(DESTDIR)/opt/csw/share/jetty6/bin
 	mkdir -p $(DESTDIR)/opt/csw/share/jetty6/etc

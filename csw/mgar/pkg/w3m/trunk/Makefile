@@ -1,5 +1,5 @@
-GARNAME = w3m
-GARVERSION = 0.5.2
+NAME = w3m
+VERSION = 0.5.2
 CATEGORIES = apps
 
 DESCRIPTION = Text-based web browser
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://w3m.sourceforge.net/
 
@@ -20,7 +20,7 @@ RUNTIME_DEP_PKGS += CSWggettextrt CSWlibgc CSWosslrt CSWzlib
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=39518
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

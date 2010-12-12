@@ -1,5 +1,5 @@
-GARNAME = db
-GARVERSION = 4.2.52
+NAME = db
+VERSION = 4.2.52
 CATEGORIES = lib
 
 DESCRIPTION = Stub package as contents moved to CSWbdb42

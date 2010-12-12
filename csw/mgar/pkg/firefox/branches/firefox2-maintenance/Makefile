@@ -1,19 +1,19 @@
-GARNAME = firefox
-GARVERSION = 2.0.0.20
+NAME = firefox
+VERSION = 2.0.0.20
 CATEGORIES = apps
-DISTNAME = $(GARNAME)
+DISTNAME = $(NAME)
 
 DESCRIPTION = Firefox Community Edition web browser
 define BLURB
 The award-winning, free Web browser is better than ever. Browse the Web with confidence - Firefox protects you from viruses, spyware and pop-ups. Enjoy improvements to performance, ease of use and privacy. It's easy to import your favorites and settings and get started. Download Firefox now and get the most out of the Web. 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
+DISTFILES  = $(NAME)-$(VERSION)-source.tar.bz2
 DISTFILES += $(call admfiles,CSWfirefox, postinstall postremove )
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
-MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
+MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(VERSION)/source/
 UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/
 
 PERL="/opt/csw/bin/perl"
@@ -28,7 +28,7 @@ PATCHFILES = autoconf.mk.in.diff
 TEST_SCRIPTS =
 
 # Variable for direct access to working dir
-WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
+WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(NAME)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
 # Dependencies tracking
@@ -72,8 +72,8 @@ pre-install:
 	( cp $(FILEDIR)/firefox.desktop $(WORK_INSTALL)/opt/csw/share/applications/firefox.desktop )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/gnome/mime-info )
 	( cp $(FILEDIR)/firefox.keys $(WORK_INSTALL)/opt/csw/share/gnome/mime-info/firefox.keys )
-	@ginstall -d $(WORK_INSTALL)$(datadir)/doc/$(GARNAME)
-	@gcp -fp $(WORK_BUILD)/LICENSE $(WORK_INSTALL)$(datadir)/doc/$(GARNAME)/License.txt
+	@ginstall -d $(WORK_INSTALL)$(datadir)/doc/$(NAME)
+	@gcp -fp $(WORK_BUILD)/LICENSE $(WORK_INSTALL)$(datadir)/doc/$(NAME)/License.txt
 
 post-install:
 	( gfind $(WORK_INSTALL)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )

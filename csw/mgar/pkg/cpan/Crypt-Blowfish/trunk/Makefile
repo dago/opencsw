@@ -1,5 +1,5 @@
-GARNAME = Crypt-Blowfish
-GARVERSION = 2.12
+NAME = Crypt-Blowfish
+VERSION = 2.12
 CATEGORIES = cpan
 AUTHOR = DPARIS
 

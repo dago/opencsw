@@ -1,5 +1,5 @@
-GARNAME = cdecl
-GARVERSION = 2.5
+NAME = cdecl
+VERSION = 2.5
 CATEGORIES = utils
 
 DESCRIPTION = C declaration guide/tool
@@ -7,12 +7,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cdecl.org/files/
-DISTNAME = cdecl-blocks-$(GARVERSION)
+DISTNAME = cdecl-blocks-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 PATCHFILES = 0001-Remove-keyword-for-Sun-Studio.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-blocks-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-blocks-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.cdecl.org/
 
@@ -33,8 +33,8 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 install-custom:
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	ginstall $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	ginstall $(WORKSRC)/README $(DESTDIR)$(docdir)/$(NAME)
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall $(WORKSRC)/cdecl $(DESTDIR)$(bindir)/cdecl
 	gln -s cdecl $(DESTDIR)$(bindir)/c++decl

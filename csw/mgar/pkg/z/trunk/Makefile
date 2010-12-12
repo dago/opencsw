@@ -1,5 +1,5 @@
-GARNAME = z
-GARVERSION = 2.6.1
+NAME = z
+VERSION = 2.6.1
 CATEGORIES = utils
 
 DESCRIPTION = A simple, safe and convenient front-end for various compression programs
@@ -10,10 +10,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cs.indiana.edu/~kinzler/z/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =

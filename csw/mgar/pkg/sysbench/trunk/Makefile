@@ -5,8 +5,8 @@
 #  - Fix mysql dependency. It currently builds against SUNWmysqlu;
 #    this needs to be changed to CSWmysql5rt
 #
-GARNAME = sysbench
-GARVERSION = 0.4.7
+NAME = sysbench
+VERSION = 0.4.7
 CATEGORIES = utils
 
 DESCRIPTION = System evaluation benchmark
@@ -17,7 +17,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://umn.dl.sourceforge.net/sourceforge/sysbench/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 #DISTFILES += $(call admfiles,CSWsysbench,)
 DISTFILES += $(call admfiles,CSWsysbench,depend prototype)
 

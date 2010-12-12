@@ -1,5 +1,5 @@
-GARNAME = Mail-Sender
-GARVERSION = 0.8.16
+NAME = Mail-Sender
+VERSION = 0.8.16
 CATEGORIES = cpan
 AUTHOR = JENDA
 

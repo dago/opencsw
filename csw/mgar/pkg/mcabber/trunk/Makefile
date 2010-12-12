@@ -1,5 +1,5 @@
-GARNAME = mcabber
-GARVERSION = 0.9.9
+NAME = mcabber
+VERSION = 0.9.9
 CATEGORIES = utils
 
 DESCRIPTION = A small terminal-based Jabber client
@@ -11,10 +11,10 @@ external action triggers.
 endef
 
 MASTER_SITES = http://www.lilotux.net/~mikael/mcabber/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 SPKG_SOURCEURL = http://www.lilotux.net/~mikael/mcabber/
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS = CSWncurses CSWossldevel CSWotrdevel
 BUILD_DEP_PKGS += CSWaspell CSWggettext CSWglib2devel CSWpkgconfig
@@ -64,7 +64,7 @@ post-install-modulated:
 	@perl -pi -e '\
 		s|/usr/share/ssl/certs/ca-bundle.crt|/opt/csw/ssl/certs/ca-certificates.crt|;' \
 		$(WORKSRC)/mcabberrc.example
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(WORKSRC)/mcabberrc.example $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(WORKSRC)/ChangeLog $(DESTDIR)$(docdir)/$(GARNAME)/changelog
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	@cp $(WORKSRC)/mcabberrc.example $(DESTDIR)$(docdir)/$(NAME)
+	@cp $(WORKSRC)/ChangeLog $(DESTDIR)$(docdir)/$(NAME)/changelog
 	@$(MAKECOOKIE)

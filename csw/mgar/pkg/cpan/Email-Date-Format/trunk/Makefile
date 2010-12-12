@@ -1,5 +1,5 @@
-GARNAME = Email-Date-Format
-GARVERSION = 1.002
+NAME = Email-Date-Format
+VERSION = 1.002
 CATEGORIES = cpan
 AUTHOR = RJBS
 

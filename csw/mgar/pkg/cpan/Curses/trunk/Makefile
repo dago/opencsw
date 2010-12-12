@@ -1,5 +1,5 @@
-GARNAME = Curses
-GARVERSION = 1.06
+NAME = Curses
+VERSION = 1.06
 CATEGORIES = cpan
 AUTHOR = WPS
 

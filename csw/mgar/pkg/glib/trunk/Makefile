@@ -1,9 +1,9 @@
-GARNAME = glib
-GARVERSION = 1.3.15
+NAME = glib
+VERSION = 1.3.15
 CATEGORIES = lib
 
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.2.10 1.3.15
+EXTRA_MODULATORS = VERSION
+MODULATIONS_VERSION = 1.2.10 1.3.15
 
 SKIP_MODULATIONS = isa-sparcv9-garversion-1.2.10 isa-amd64-garversion-1.2.10
 
@@ -14,10 +14,10 @@ define BLURB
 endef
 
 GNOME_SUBV_FUNC = $(shell echo $1 | awk -F. '{print $$1"."$$2}')
-MASTER_SITES = $(sort $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GNOME_ROOT)/$(GNOME_PROJ)/$(call GNOME_SUBV_FUNC,$(VERSION))/))
-SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION), $(GARNAME)-$(VERSION).tar.gz)
+MASTER_SITES = $(sort $(foreach VERSION,$(MODULATIONS_VERSION),$(GNOME_ROOT)/$(GNOME_PROJ)/$(call GNOME_SUBV_FUNC,$(VERSION))/))
+SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_VERSION), $(NAME)-$(VERSION).tar.gz)
 DISTFILES  = $(SOURCEFILES)
-NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz,$(SOURCEFILES))
 PATCHFILES-1.3.15  = 0001-gtkdoc-mkhtml-returns-1-even-on-warnings.patch
 PATCHFILES-1.3.15 += 0002-Don-t-break-when-index.sgml-is-not-there.patch
 PATCHFILES_isa-i386-garversion-1.3.15 = $(PATCHFILES-1.3.15)
@@ -43,12 +43,12 @@ NOISAEXEC = 1
 # Only needed for 1.3.x
 SGML_CATALOG_FILES = /etc/opt/csw/sgml/catalog
 EXTRA_BUILD_EXPORT-1.3.15 = SGML_CATALOG_FILES
-EXTRA_BUILD_EXPORTS = $(EXTRA_BUILD_EXPORT-$(GARVERSION))
+EXTRA_BUILD_EXPORTS = $(EXTRA_BUILD_EXPORT-$(VERSION))
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # There are three possible harmless tests failing for 1.3.15 64 bit, so skip for now
 TEST_SCRIPTS_isa-default-garversion-1.2.10 = $(WORKSRC)/Makefile

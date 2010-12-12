@@ -1,5 +1,5 @@
-GARNAME = libproxy
-GARVERSION = 0.3.0
+NAME = libproxy
+VERSION = 0.3.0
 CATEGORIES = lib
 
 DESCRIPTION = A library that provides automatic proxy configuration management
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://libproxy.googlecode.com/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += SunStudio-have-no-stdc99-flag.patch
 DISTFILES += Solaris8-have-no-stdc99-flag.patch
 DISTFILES += stdfiles.patch
@@ -100,7 +100,7 @@ PKGFILES_CSWlibproxygnome = $(libdir).*/config_gnome.so
 
 ARCHALL_CSWpy-libproxy = 1
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_LINKER_FLAGS = -lnsl
 

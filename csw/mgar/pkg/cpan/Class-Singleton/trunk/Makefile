@@ -1,5 +1,5 @@
-GARNAME = Class-Singleton
-GARVERSION = 1.4
+NAME = Class-Singleton
+VERSION = 1.4
 CATEGORIES = cpan
 AUTHOR = ABW
 

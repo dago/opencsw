@@ -1,5 +1,5 @@
-GARNAME = GeoIP
-GARVERSION = 1.4.6
+NAME = GeoIP
+VERSION = 1.4.6
 CATEGORIES = net
 
 DESCRIPTION = GeoIP C API
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://geolite.maxmind.com/download/geoip/api/c/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWgeoip CSWgeoipdevel
 RUNTIME_DEP_PKGS_CSWgeoip = CSWgeolitedb CSWzlib CSWgcc3corert
@@ -19,7 +19,7 @@ SPKG_DESC_CSWgeoip = $(DESCRIPTION)
 SPKG_DESC_CSWgeoipdevel = GeoIP C API development support
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GCC4
 TEST_TARGET = check

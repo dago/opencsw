@@ -1,9 +1,9 @@
-GARNAME = hdf5
-GARVERSION = 1.8.5
+NAME = hdf5
+VERSION = 1.8.5
 CATEGORIES = lib
 
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.6.10 1.8.5
+EXTRA_MODULATORS = VERSION
+MODULATIONS_VERSION = 1.6.10 1.8.5
 
 SKIP_MODULATIONS = isa-sparcv9-garversion-1.6.10
 SKIP_MODULATIONS += isa-amd64-garversion-1.6.10
@@ -18,10 +18,10 @@ endef
 
 MASTER_SITES = http://www.hdfgroup.org/ftp/HDF5/current/src/
 MASTER_SITES += http://www.hdfgroup.org/ftp/HDF5/current16/src/
-SOURCEFILES = $(foreach V,$(MODULATIONS_GARVERSION),$(GARNAME)-$V.tar.gz)
+SOURCEFILES = $(foreach V,$(MODULATIONS_VERSION),$(NAME)-$V.tar.gz)
 DISTFILES += $(SOURCEFILES)
 
-NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz,$(SOURCEFILES))
 
 PACKAGES = CSWhdf5rt CSWhdf5
 
@@ -35,7 +35,7 @@ SPKG_DESC_CSWhdf5 = HDF5 (Hierarchical Data Format 5) Software Utilities
 SPKG_DESC_CSWhdf5rt = HDF5 (Hierarchical Data Format 5) Software Runtime Libraries
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.hdfgroup.org/HDF5/
 

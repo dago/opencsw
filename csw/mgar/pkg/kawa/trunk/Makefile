@@ -1,12 +1,12 @@
-GARNAME = kawa
-GARVERSION = 1.9.1
+NAME = kawa
+VERSION = 1.9.1
 CATEGORIES = utils
 ARCHALL = 1
 
 DESCRIPTION = Java implementation of Scheme and a framework for implementing high-level and dynamic languages
 
 MASTER_SITES = ftp://ftp.gnu.org/pub/gnu/kawa/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += bin-kawa
 
 REQUIRED_PKG = CSWrlwrap

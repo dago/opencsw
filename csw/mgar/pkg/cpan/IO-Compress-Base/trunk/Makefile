@@ -1,5 +1,5 @@
-GARNAME = IO-Compress-Base
-GARVERSION = 2.020
+NAME = IO-Compress-Base
+VERSION = 2.020
 CATEGORIES = cpan
 AUTHOR = PMQS
 

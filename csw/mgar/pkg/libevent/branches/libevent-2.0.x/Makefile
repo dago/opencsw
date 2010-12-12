@@ -1,10 +1,10 @@
-GARNAME = libevent
-GARVERSION = 2.0.7
+NAME = libevent
+VERSION = 2.0.7
 CATEGORIES = lib
 
-EXTRA_MODULATORS = GARVERSION
-#MODULATIONS_GARVERSION = 1.1a 1.4.14b 2.0.7
-MODULATIONS_GARVERSION = 2.0.7
+EXTRA_MODULATORS = VERSION
+#MODULATIONS_VERSION = 1.1a 1.4.14b 2.0.7
+MODULATIONS_VERSION = 2.0.7
 
 SKIP_MODULATIONS = isa-sparcv9-garversion-1.1a
 SKIP_MODULATIONS += isa-amd64-garversion-1.1a
@@ -21,18 +21,18 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.monkey.org/~provos/
-SOURCEFILES = $(foreach V,$(MODULATIONS_GARVERSION),$(GARNAME)-$(DISTVERSION-$V).tar.gz)
+SOURCEFILES = $(foreach V,$(MODULATIONS_VERSION),$(NAME)-$(DISTVERSION-$V).tar.gz)
 DISTFILES += $(SOURCEFILES)
 
-DISTNAME = $(GARNAME)-$(DISTVERSION-$(GARVERSION))
+DISTNAME = $(NAME)-$(DISTVERSION-$(VERSION))
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-alpha.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-alpha.tar.gz
 
 # PATCHFILES += 0001-Detect-broken-unsetenv-at-unit-test-runtime.patch
 # PATCHFILES += 0001-Fix-getaddrinfo-with-protocol-unset-on-Solaris-9.patch
 
-NOEXTRACT = $(filter-out $(GARNAME)-$(DISTVERSION-$(GARVERSION)).tar.gz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out $(NAME)-$(DISTVERSION-$(VERSION)).tar.gz,$(SOURCEFILES))
 
 LICENSE = LICENSE
 

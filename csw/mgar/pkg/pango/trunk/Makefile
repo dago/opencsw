@@ -1,5 +1,5 @@
-GARNAME = libpango
-GARVERSION = 1.24.5
+NAME = libpango
+VERSION = 1.24.5
 CATEGORIES = lib
 
 DESCRIPTION = A framework for the layout and rendering of international text
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/pango/1.24/
-DISTNAME = pango-$(GARVERSION)
+DISTNAME = pango-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += CSWpango.postinstall
 

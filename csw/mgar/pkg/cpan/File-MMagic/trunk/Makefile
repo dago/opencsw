@@ -1,5 +1,5 @@
-GARNAME = File-MMagic
-GARVERSION = 1.27
+NAME = File-MMagic
+VERSION = 1.27
 CATEGORIES = cpan
 AUTHOR = KNOK
 

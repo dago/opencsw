@@ -1,5 +1,5 @@
-GARNAME = Opcodes
-GARVERSION = 0.10
+NAME = Opcodes
+VERSION = 0.10
 CATEGORIES = cpan
 AUTHOR = RURBAN
 

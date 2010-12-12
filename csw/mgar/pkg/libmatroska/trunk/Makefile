@@ -1,5 +1,5 @@
-GARNAME = libmatroska
-GARVERSION = 0.8.1
+NAME = libmatroska
+VERSION = 0.8.1
 CATEGORIES = lib
 
 DESCRIPTION = A C++ libary to parse Matroska files (.mkv and .mka)
@@ -7,11 +7,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://dl.matroska.org/downloads/libmatroska/libmatroska-0.8.1.tar.bz2
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PATCHFILES = libmatroska-shared-library.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.matroska.org/
 

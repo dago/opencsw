@@ -1,5 +1,5 @@
-GARNAME = daemontools
-GARVERSION = 0.76
+NAME = daemontools
+VERSION = 0.76
 CATEGORIES = utils
 
 DESCRIPTION = A collection of tools for managing UNIX services
@@ -8,14 +8,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://cr.yp.to/daemontools/ http://www.fefe.de/daemontools/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWdaemontools,)
-WORKSRC = $(WORKDIR)/admin/$(GARNAME)-$(GARVERSION)
+WORKSRC = $(WORKDIR)/admin/$(NAME)-$(VERSION)
 
 #PATCHFILES = daemontools-0.70-man.diff.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 
 CONFIGURE_SCRIPTS = custom

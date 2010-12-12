@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header$
 
-GARNAME = shout-python
-GARVERSION = 0.2.1
+NAME = shout-python
+VERSION = 0.2.1
 CATEGORIES = python
 
 DESCRIPTION = Python bindings for libshout 2

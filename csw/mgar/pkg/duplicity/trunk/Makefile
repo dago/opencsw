@@ -1,5 +1,5 @@
-GARNAME = duplicity
-GARVERSION = 0.6.08b
+NAME = duplicity
+VERSION = 0.6.08b
 CATEGORIES = python
 
 DESCRIPTION = Encrypted bandwidth-efficient backup using the rsync algorithm
@@ -14,9 +14,9 @@ endef
 
 VENDOR_URL   = http://duplicity.nongnu.org/
 MASTER_SITES = http://code.launchpad.net/duplicity/0.6-series/0.6.08b/+download/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 # Couldn't find a parsable 'stable' releases page
-# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS  = CSWpy-boto
 RUNTIME_DEP_PKGS += CSWlibrsync
@@ -26,7 +26,7 @@ RUNTIME_DEP_PKGS += CSWncftp
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 
-EXTRA_PAX_ARGS  = '-s,/doc/$(GARNAME)-$(GARVERSION),/doc/$(GARNAME),p'
+EXTRA_PAX_ARGS  = '-s,/doc/$(NAME)-$(VERSION),/doc/$(NAME),p'
 
 CHECKPKG_OVERRIDES_CSWduplicity += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWduplicity += catalogname-does-not-start-with-py_

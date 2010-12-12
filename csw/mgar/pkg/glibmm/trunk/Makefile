@@ -1,5 +1,5 @@
-GARNAME = glibmm
-GARVERSION = 2.22.2
+NAME = glibmm
+VERSION = 2.22.2
 CATEGORIES = lib
 
 DESCRIPTION = C++ interface to glib2
@@ -12,7 +12,7 @@ SPKG_DESC_CSWglibmm_devel = C++ interface to glib2 development files
 #RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 BUILD64 = 1
 NOISAEXEC = 1
@@ -21,7 +21,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 MAKE = gmake
 EXTRA_CONFIGURE_EXPORTS = MAKE
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 TEST_TARGET = check
 

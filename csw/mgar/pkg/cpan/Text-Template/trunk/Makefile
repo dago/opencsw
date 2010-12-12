@@ -1,5 +1,5 @@
-GARNAME = Text-Template
-GARVERSION = 1.44
+NAME = Text-Template
+VERSION = 1.44
 CATEGORIES = cpan
 AUTHOR = MJD
 

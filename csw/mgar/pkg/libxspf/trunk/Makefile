@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = libxspf
-GARVERSION = 1.2.0
+NAME = libxspf
+VERSION = 1.2.0
 CATEGORIES = lib
 
 DESCRIPTION = XSPF Playlist Reading and Writing Support for C++ Applications
@@ -9,10 +9,10 @@ endef
 
 SF_PROJ = libspiff
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.lzma
+DISTFILES  = $(NAME)-$(VERSION).tar.lzma
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.lzma
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.lzma
 
 PACKAGES = CSWlibxspf4 CSWlibxspfdevel
 

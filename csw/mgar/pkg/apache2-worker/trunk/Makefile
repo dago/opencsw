@@ -1,5 +1,5 @@
-GARNAME = httpd
-GARVERSION = 2.2.13
+NAME = httpd
+VERSION = 2.2.13
 CATEGORIES = server
 
 DESCRIPTION = A high performance Unix-based HTTP server.
@@ -23,7 +23,7 @@ include gar/category.mk
 include ../../apache2/trunk/files/rules.mk
 
 pre-configure-modulated:
-	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); \
+	(cd $(WORKDIR)/$(NAME)-$(VERSION); \
 	./buildconf)
 
 # Build Configuration

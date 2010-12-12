@@ -1,5 +1,5 @@
-GARNAME = libxine
-GARVERSION = 1.1.8
+NAME = libxine
+VERSION = 1.1.8
 CATEGORIES = apps
 
 DESCRIPTION = Xine-lib 1.1.8
@@ -10,7 +10,7 @@ endef
 SF_PROJ = xine
 MASTER_SITES = http://prdownloads.sourceforge.net/xine/
 
-DISTFILES  = xine-lib-$(GARVERSION).tar.bz2
+DISTFILES  = xine-lib-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlibxine,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -36,5 +36,5 @@ include gar/category.mk
 
 #Fixing the directory names, (this code is actually called xine-lib.)
 post-extract:
-	( if test -d $(WORKDIR)/xine-lib-$(GARVERSION); then mv $(WORKDIR)/xine-lib-$(GARVERSION) $(WORKDIR)/$(DISTNAME); fi )
+	( if test -d $(WORKDIR)/xine-lib-$(VERSION); then mv $(WORKDIR)/xine-lib-$(VERSION) $(WORKDIR)/$(DISTNAME); fi )
 	@$(MAKECOOKIE)

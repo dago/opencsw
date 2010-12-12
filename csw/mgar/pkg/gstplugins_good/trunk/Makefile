@@ -1,5 +1,5 @@
-GARNAME = gst-plugins-good
-GARVERSION = 0.10.18
+NAME = gst-plugins-good
+VERSION = 0.10.18
 CATEGORIES = gnome
 
 DESCRIPTION = GStreamer plugins (Good)
@@ -11,13 +11,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://gstreamer.freedesktop.org/src/gst-plugins-good/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWgstpluginsgood
 CATALOGNAME = gstplugins_good
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS += CSWzlib CSWspeex CSWpng CSWlibice CSWlibx11 CSWgtk2 CSWvorbis
 DEP_PKGS += CSWlibxml2 CSWliboil CSWlibcairo CSWjpeg CSWglib2 CSWgconf2

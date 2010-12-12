@@ -1,5 +1,5 @@
-GARNAME = apr-iconv
-GARVERSION = 1.2.1
+NAME = apr-iconv
+VERSION = 1.2.1
 CATEGORIES = lib
 
 DESCRIPTION = Apache Portable Runtime Utilities
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES  = http://apache.crihan.fr/dist/apr/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 LICENSE = LICENSE
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)/bin/apr-1-config

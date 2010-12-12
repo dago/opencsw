@@ -1,4 +1,4 @@
-GARNAME = xfce-utils
+NAME = xfce-utils
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Utilities
@@ -6,14 +6,14 @@ define BLURB
    Xfce Utilities 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSWxfceutils.depend CSWxfceutils.gspec CSWxfceutils.prototype
 DISTFILES += CSWxfceutilsdoc.depend CSWxfceutilsdoc.gspec CSWxfceutilsdoc.prototype
 
 # PATCHFILES = xinitrc.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 TEST_SCRIPTS = none
 

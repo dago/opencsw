@@ -1,5 +1,5 @@
-GARNAME = passenger
-GARVERSION = 2.2.15
+NAME = passenger
+VERSION = 2.2.15
 CATEGORIES = rbgems
 
 DESCRIPTION = Passenger is an Apache module for Ruby on Rails support

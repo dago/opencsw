@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = buildbot
-GARVERSION = 0.7.12
+NAME = buildbot
+VERSION = 0.7.12
 PATCHLEVEL =
 CATEGORIES = python
 
@@ -25,9 +25,9 @@ endef
 MASTER_SITES = $(SF_MIRROR)
 PATCHFILES  = buildbot-tail.patch
 PATCHFILES += buildbot-debug.patch
-DISTFILES  = $(GARNAME)-$(GARVERSION)$(PATCHLEVEL).tar.gz $(PATCHFILES)
+DISTFILES  = $(NAME)-$(VERSION)$(PATCHLEVEL).tar.gz $(PATCHFILES)
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PYCOMPILE = 1
 
@@ -41,7 +41,7 @@ BUILD_SCRIPTS = buildbot
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = buildbot
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)$(PATCHLEVEL)
+WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)$(PATCHLEVEL)
 
 CHECKPKG_OVERRIDES_CSWbuildbot += unidentified-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_CSWbuildbot += surplus-dependency|CSWtwisted

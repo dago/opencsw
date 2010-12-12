@@ -1,5 +1,5 @@
-GARNAME = Text-DoubleMetaphone
-GARVERSION = 0.07
+NAME = Text-DoubleMetaphone
+VERSION = 0.07
 CATEGORIES = cpan
 AUTHOR = MAURICE
 

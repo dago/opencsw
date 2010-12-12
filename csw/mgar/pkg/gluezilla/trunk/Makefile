@@ -1,5 +1,5 @@
-GARNAME = gluezilla
-GARVERSION = 2.6
+NAME = gluezilla
+VERSION = 2.6
 CATEGORIES = apps
 
 DESCRIPTION = Mono Runtime
@@ -11,9 +11,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.novell.com/pub/mono/sources/mono/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2 
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2 
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

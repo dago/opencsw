@@ -1,5 +1,5 @@
-GARNAME = xapian-bindings
-GARVERSION = 1.0.11
+NAME = xapian-bindings
+VERSION = 1.0.11
 CATEGORIES = lib
 
 EXTRA_MODULATORS = BINDING
@@ -13,12 +13,12 @@ define BLURB
   advanced indexing and search facilities to applications.
 endef
 
-MASTER_SITES = http://oligarchy.co.uk/xapian/$(GARVERSION)/
+MASTER_SITES = http://oligarchy.co.uk/xapian/$(VERSION)/
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWpyxapian CSWrbxapian
 CATALOGNAME_CSWpyxapian = py_xapian

@@ -1,5 +1,5 @@
-GARNAME = PerlIO-via-Bzip2
-GARVERSION = 0.02
+NAME = PerlIO-via-Bzip2
+VERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = ARJEN
 

@@ -1,5 +1,5 @@
-GARNAME = libmpeg2
-GARVERSION = 0.5.1
+NAME = libmpeg2
+VERSION = 0.5.1
 CATEGORIES = lib
 
 DESCRIPTION = A free MPEG-2 video stream decoder
@@ -7,7 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://libmpeg2.sourceforge.net/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0001-Don-t-use-arm-specific-assembly-on-Sparc.patch
 PATCHFILES += 0002-Fix-return-type-for-Sun-Studio.patch
 PATCHFILES += 0003-Add-missing-m4-files.patch
@@ -15,7 +15,7 @@ PATCHFILES += 0004-Add-missing-libtool.patch
 PATCHFILES += 0005-Add-missing-autostuff.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibmpeg2 CSWmpeg2dec
 

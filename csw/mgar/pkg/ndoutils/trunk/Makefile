@@ -1,5 +1,5 @@
-GARNAME = ndoutils
-GARVERSION = 1.4b7
+NAME = ndoutils
+VERSION = 1.4b7
 CATEGORIES = apps
 
 SPKG_DESC_CSWndoutils2x = NDOutils for nagios 2.x
@@ -12,7 +12,7 @@ endef
 SF_PROJ = nagios
 MASTER_SITES = $(SF_MIRRORS)
 #MASTER_SITES = http://mesh.dl.sourceforge.net/sourceforge/nagios/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWndoutils2x, prototype postinstall)
 DISTFILES += $(call admfiles,CSWndoutils3x, prototype postinstall)
 DISTFILES += cswndoutils

@@ -1,4 +1,4 @@
-GARNAME = libxfcegui4
+NAME = libxfcegui4
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Widget Library 
@@ -6,12 +6,12 @@ define BLURB
    Xfce Widget Library 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # Don't forget to add this after checking dependencies with panel CSWlibxfcegui4dep.preinstall
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Catalog description
 PACKAGES = CSWlibxfcegui4 CSWlibxfcegui4devel CSWlibxfcegui4doc

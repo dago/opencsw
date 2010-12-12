@@ -1,5 +1,5 @@
-GARNAME = PatchReader
-GARVERSION = 0.9.5
+NAME = PatchReader
+VERSION = 0.9.5
 CATEGORIES = cpan
 AUTHOR = JKEISER
 

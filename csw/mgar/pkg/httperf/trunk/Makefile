@@ -12,8 +12,8 @@
 #        current : function(int, pointer to pointer to char, pointer to char) returning int
 #        previous: function(int, pointer to const pointer to char, pointer to const char) returning int : "/usr/include/unistd.h", line 282
 #
-GARNAME = httperf
-GARVERSION = 0.9.0
+NAME = httperf
+VERSION = 0.9.0
 CATEGORIES = apps
 
 DESCRIPTION = A tool for measuring web server performance.
@@ -33,8 +33,8 @@ endef
 
 VENDOR_URL   = http://code.google.com/p/httperf/
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # License taken from one of the .c files in lieu of an official COPYING
 DISTFILES   += COPYING
@@ -61,7 +61,7 @@ pre-configure-modulated:
 	autoreconf -fi $(WORKSRC)
 	@$(MAKECOOKIE)
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	ginstall -D $(WORKSRC)/AUTHORS $(DOCDEST)/AUTHORS
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)

@@ -1,5 +1,5 @@
-GARNAME = ftgl
-GARVERSION = 2.1.3rc5
+NAME = ftgl
+VERSION = 2.1.3rc5
 FILEVERSION = 2.1.3-rc5
 DISTVERSION = 2.1.3~rc5
 CATEGORIES = lib
@@ -9,8 +9,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(FILEVERSION).tar.bz2
-DISTNAME = $(GARNAME)-$(DISTVERSION)
+DISTFILES  = $(NAME)-$(FILEVERSION).tar.bz2
+DISTNAME = $(NAME)-$(DISTVERSION)
 
 # Use these patches until this is fixed:
 #   http://sourceforge.net/tracker/?func=detail&atid=980351&aid=3077204&group_id=202130
@@ -20,7 +20,7 @@ PATCHFILES += 0003-Force-GNU-sed-when-using-i.patch
 PATCHFILES += 0004-Keep-libtool-from-stripping-norunpath-during-linking.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWftgl CSWftgldevel
 

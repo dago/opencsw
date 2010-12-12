@@ -1,5 +1,5 @@
-GARNAME = rrdtool
-GARVERSION = 1.4.3
+NAME = rrdtool
+VERSION = 1.4.3
 CATEGORIES = utils
 
 DESCRIPTION = Time-series data logging and graphing
@@ -9,8 +9,8 @@ define BLURB
   RRDtool is magnitudes faster than MRTG and extremely configurable.
 endef
 
-MASTER_SITES = http://oss.oetiker.ch/$(GARNAME)/pub/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://oss.oetiker.ch/$(NAME)/pub/
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES += patch-src-Makefile.in
 PATCHFILES += patch-src-rrd_open.c
@@ -22,7 +22,7 @@ PATCHFILES += patch-bindings-perl-shared-Makefile.PL
 PATCHFILES += 0001-Fix-isinf.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # PACKAGES = CSWrrd CSWrrdrt CSWpmrrd CSWpy-rrdtool CSWrbrrd
 PACKAGES = CSWrrd
@@ -63,7 +63,7 @@ CONFIGURE_ARGS_32 = --enable-python --enable-ruby --with-ruby-options=CFLAGS= --
 CONFIGURE_ARGS_64 = --disable-python --disable-ruby --disable-perl
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --docdir=$(sharedstatedir)/doc/$(GARNAME)
+CONFIGURE_ARGS += --docdir=$(sharedstatedir)/doc/$(NAME)
 CONFIGURE_ARGS += --disable-lua --disable-tcl
 CONFIGURE_ARGS += --with-libintl-prefix=$(libdir)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
@@ -73,7 +73,7 @@ TEST_TARGET = check
 MERGE_DIRS_isa-extra = $(libdir)
 MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod .*/\.packlist
-EXTRA_PAX_ARGS += -s ',^\.$(docdir)/$(GARNAME)-$(GARVERSION),.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME),'
+EXTRA_PAX_ARGS += -s ',^\.$(docdir)/$(NAME)-$(VERSION),.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME),'
 
 PKGFILES_CSWrrdrt = $(PKGFILES_RT)
 PKGFILES_CSWpmrrd = $(libdir)/perl/.* $(sharedstatedir)/perl/.* .*\.3perl

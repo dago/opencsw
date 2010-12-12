@@ -1,5 +1,5 @@
-GARNAME = irssi
-GARVERSION = 0.8.15
+NAME = irssi
+VERSION = 0.8.15
 CATEGORIES = apps
 
 DESCRIPTION = IRC client with IPv6, proxy, bot, socks and Perl support
@@ -13,8 +13,8 @@ endef
 
 VENDOR_URL   = http://www.irssi.org/
 MASTER_SITES = http://www.irssi.org/files/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 

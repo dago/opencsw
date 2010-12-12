@@ -1,5 +1,5 @@
-GARNAME = comand
-GARVERSION = 1.0
+NAME = comand
+VERSION = 1.0
 CATEGORIES = meta
 
 DESCRIPTION = Temporary meta target for C. Omand

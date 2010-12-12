@@ -1,5 +1,5 @@
-GARNAME = fontconfig
-GARVERSION = 2.8.0
+NAME = fontconfig
+VERSION = 2.8.0
 CATEGORIES = lib
 
 DESCRIPTION = A library for configuring and customizing font access.
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.fontconfig.org/release/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 DISTFILES += CSWfconfig.postinstall
 
 PATCHFILES = fix-zerowidth-struct.patch
@@ -19,7 +19,7 @@ PATCHFILES = fix-zerowidth-struct.patch
 RUNTIME_DEP_PKGS = CSWexpat CSWftype2 CSWzlib CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 PACKAGES = CSWfconfig

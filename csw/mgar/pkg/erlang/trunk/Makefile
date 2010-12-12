@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = erlang
-GARVERSION = 1.0
+NAME = erlang
+VERSION = 1.0
 CATEGORIES = category
 
 DESCRIPTION = Brief description
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

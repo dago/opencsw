@@ -1,5 +1,5 @@
-GARNAME = haml
-GARVERSION = 3.0.15
+NAME = haml
+VERSION = 3.0.15
 CATEGORIES = rbgems
 
 DESCRIPTION = HTML Abstraction Markup Language

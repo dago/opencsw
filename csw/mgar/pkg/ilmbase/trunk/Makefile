@@ -1,5 +1,5 @@
-GARNAME = ilmbase
-GARVERSION = 1.0.1
+NAME = ilmbase
+VERSION = 1.0.1
 CATEGORIES = lib
 
 DESCRIPTION = Base libraries used by OpenEXR
@@ -21,7 +21,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.savannah.nongnu.org/releases/openexr/ 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += libHalf.so.2.0.2.i
 DISTFILES += libHalf.so.2.0.2.s
 DISTFILES += libIex.so.2.0.2.i
@@ -52,7 +52,7 @@ SPKG_SOURCEURL = http://www.openexr.com
 
 LICENSE = LICENSE
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_MASTER_SITES = http://download.savannah.nongnu.org/releases/openexr/
 
 CONFIGURE_ARGS = $(DIRPATHS)

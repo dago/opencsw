@@ -1,5 +1,5 @@
-GARNAME = avantfax
-GARVERSION = 3.1.2
+NAME = avantfax
+VERSION = 3.1.2
 SF_PROJ = avantfax
 CATEGORIES = apps
 
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 DISTFILES += $(call admfiles,CSWavantfax,depend preinstall postinstall)
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -31,7 +31,7 @@ SPKG_SOURCEURL = http://www.avantfax.com
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	@rm -rf $(DESTDIR)$(sharedstatedir)/www/avantfax
 	@ginstall -d $(DESTDIR)$(sharedstatedir)/www/avantfax
 	@cp -rp $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/avantfax/htdocs

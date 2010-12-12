@@ -1,5 +1,5 @@
-GARNAME = libgc
-GARVERSION = 7.0
+NAME = libgc
+VERSION = 7.0
 CATEGORIES = lib
 
 DESCRIPTION = A garbage collector for C and C++
@@ -13,12 +13,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.hpl.hp.com/personal/Hans_Boehm/gc/gc_source/
-DISTFILES  = gc-$(GARVERSION).tar.gz
+DISTFILES  = gc-$(VERSION).tar.gz
 
-DISTNAME = gc-$(GARVERSION)
+DISTNAME = gc-$(VERSION)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

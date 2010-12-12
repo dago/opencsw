@@ -1,5 +1,5 @@
-GARNAME = Test-Manifest
-GARVERSION = 1.17
+NAME = Test-Manifest
+VERSION = 1.17
 CATEGORIES = cpan
 AUTHOR = BDFOY
 

@@ -1,5 +1,5 @@
-GARNAME = resin
-GARVERSION = 3.0.9
+NAME = resin
+VERSION = 3.0.9
 CATEGORIES = server
 
 DESCRIPTION = JSP and Servlet engine.
@@ -11,14 +11,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.caucho.com/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 #DISTFILES += CSWresin.gspec
 #DISTFILES += CSWap2modcaucho.gspec
 
 #DEPENDS = server/apache2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS  = --prefix=$(prefix)/resin
 CONFIGURE_ARGS += --enable-jni

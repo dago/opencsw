@@ -1,5 +1,5 @@
-GARNAME = sqlite3-ruby
-GARVERSION = 1.3.1
+NAME = sqlite3-ruby
+VERSION = 1.3.1
 CATEGORIES = rbgems
 
 DESCRIPTION = Ruby interface to SQLite3

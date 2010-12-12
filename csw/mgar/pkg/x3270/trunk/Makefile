@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = x3270
-GARVERSION = $(BASEREL).10ga5
+NAME = x3270
+VERSION = $(BASEREL).10ga5
 CATEGORIES = apps
 
 DESCRIPTION = An IBM 3270 terminal emulator
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = suite3270-$(GARVERSION)-src.tgz
+DISTFILES  = suite3270-$(VERSION)-src.tgz
 DISTFILES += COPYING
 
 CONVERSIONS  = ibm-1027_P100-1995.cnv
@@ -21,7 +21,7 @@ DISTFILES += $(CONVERSIONS)
 PATCHFILES = 0001-Add-Error-function.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-src.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-src.tar.gz
 
 VENDOR_URL = http://x3270.sourceforge.net/
 

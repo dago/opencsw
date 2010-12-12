@@ -1,5 +1,5 @@
-GARNAME = CSWmeta_example
-GARVERSION = 1.0
+NAME = CSWmeta_example
+VERSION = 1.0
 CATEGORIES = meta
 
 DESCRIPTION = Example meta package

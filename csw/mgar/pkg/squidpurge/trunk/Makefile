@@ -1,5 +1,5 @@
-GARNAME = purge
-GARVERSION = 20040201
+NAME = purge
+VERSION = 20040201
 CATEGORIES = net
 
 DESCRIPTION = Purge squid cache entries.
@@ -13,11 +13,11 @@ endef
 BASEURL = http://www.wa.apana.org.au/~dean
 SPKG_SRCURL  = $(BASEURL)/squidpurge/
 MASTER_SITES = $(BASEURL)/sources/
-DISTFILES = $(GARNAME)-$(GARVERSION)-src.tar.gz
-WORKSRC = $(WORKDIR)/$(GARNAME)
+DISTFILES = $(NAME)-$(VERSION)-src.tar.gz
+WORKSRC = $(WORKDIR)/$(NAME)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-src.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-src.tar.gz
 
 DISTFILES += $(call admfiles,CSWsquidpurge,prototype copyright)
 

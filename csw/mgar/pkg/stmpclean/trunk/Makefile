@@ -1,5 +1,5 @@
-GARNAME = stmpclean
-GARVERSION = 0.3
+NAME = stmpclean
+VERSION = 0.3
 CATEGORIES = apps
 
 DESCRIPTION = Removes old files from the specified directory
@@ -16,11 +16,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://shlang.com/stmpclean/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
-BUILD_ARGS = $(GARNAME)
+BUILD_ARGS = $(NAME)
 INSTALL_SCRIPTS = custom
 TEST_SCRIPTS =
 
@@ -32,18 +32,18 @@ include gar/category.mk
 # http://www.gnu.org/s/libc/manual/html_node/openlog.html
 pre-build-modulated:
 	gsed -i -e '/^CFLAGS/d' $(WORKSRC)/Makefile
-	gsed -i -e 's/| LOG_PERROR//' $(WORKSRC)/$(GARNAME).c
+	gsed -i -e 's/| LOG_PERROR//' $(WORKSRC)/$(NAME).c
 	@$(MAKECOOKIE)
 
-install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 install-custom: DOCS=README FAQ
 install-custom:
 	ginstall -d $(DOCDEST)
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(mandir)/man8
 
-	ginstall -m755 $(WORKSRC)/$(GARNAME) $(DESTDIR)$(bindir)/$(GARNAME)
-	cp $(WORKSRC)/$(GARNAME).8 $(DESTDIR)$(mandir)/man8/
+	ginstall -m755 $(WORKSRC)/$(NAME) $(DESTDIR)$(bindir)/$(NAME)
+	cp $(WORKSRC)/$(NAME).8 $(DESTDIR)$(mandir)/man8/
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	@$(MAKECOOKIE)

@@ -1,5 +1,5 @@
-GARNAME = Class-Loader
-GARVERSION = 2.03
+NAME = Class-Loader
+VERSION = 2.03
 CATEGORIES = cpan
 AUTHOR = VIPUL
 

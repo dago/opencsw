@@ -1,6 +1,6 @@
-GARNAME = neon29
-GARVERSION = 0.29.5
-DISTNAME = neon-$(GARVERSION)
+NAME = neon29
+VERSION = 0.29.5
+DISTNAME = neon-$(VERSION)
 CATEGORIES = lib
 
 DESCRIPTION = Neon HTTP and WebDAV client library

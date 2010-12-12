@@ -1,5 +1,5 @@
-GARNAME = libtorrent
-GARVERSION = 0.12.6
+NAME = libtorrent
+VERSION = 0.12.6
 CATEGORIES = lib
 
 DESCRIPTION = BitTorrent library written in C++ for *nix.
@@ -11,10 +11,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://libtorrent.rakshasa.no/downloads/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Patches from http://cr.opensolaris.org/~alz/bittorrent/raw_files/new/usr/src/lib/libtorrent/
 PATCHFILES = rlibtorrent-04-sunpro.diff rlibtorrent-01-madvise.diff rlibtorrent-03-dh-generate.diff

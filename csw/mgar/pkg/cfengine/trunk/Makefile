@@ -1,5 +1,5 @@
-GARNAME = cfengine
-GARVERSION = 2.2.10
+NAME = cfengine
+VERSION = 2.2.10
 CATEGORIES = utils
 
 DESCRIPTION = A tool for administering Networks of Diverse Machines
@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cfengine.org/tarballs/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 
 PACKAGES = CSWcfengine CSWcfenginedoc
 PKGFILES_CSWcfenginedoc  = .*/share/info/.*
@@ -29,7 +29,7 @@ SPKG_DESC_CSWcfenginedoc = Cfengine documentation
 ARCHALL_CSWcfenginedoc = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-DCE

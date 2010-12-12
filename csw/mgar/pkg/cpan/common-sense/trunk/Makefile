@@ -1,5 +1,5 @@
-GARNAME = common-sense
-GARVERSION = 3.0
+NAME = common-sense
+VERSION = 3.0
 CATEGORIES = cpan
 AUTHOR = MLEHMANN
 

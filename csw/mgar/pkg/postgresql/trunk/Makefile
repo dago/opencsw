@@ -13,13 +13,13 @@
 # TODO: The isaexec part in GAR doesn't work very well.  Let's write a minimal
 # example of it.   (gmake repackage may produce the right output)
 
-GARNAME = postgresql
+NAME = postgresql
 BASE_VERSION = 8.4
 # How to make one automatically?
 VERSION_NODOT = 8_4
 BASE_VERSION_G = 84
 PATCHLEVEL = 4
-GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
+VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 
 # Useful when making a series of builds on the same day
@@ -31,7 +31,7 @@ SPKG_SOURCEURL = http://www.postgresql.org/
 define BLURB
 endef
 
-pgsubdir = $(GARNAME)$(BASE_VERSION_G)
+pgsubdir = $(NAME)$(BASE_VERSION_G)
 bindir_install = $(exec_prefix)/bin/$(pgsubdir)
 sbindir_install = $(exec_prefix)/sbin/$(pgsubdir)
 libdir_install = $(exec_prefix)/lib/$(pgsubdir)
@@ -41,7 +41,7 @@ libdir_install = $(exec_prefix)/lib/$(pgsubdir)
 localstatedir = /var$(prefix)/$(pgsubdir)
 sysconfdir = /etc$(prefix)/$(pgsubdir)
 datadir = $(prefix)/share/$(pgsubdir)
-docdir = $(prefix)/share/doc/$(GARNAME)-$(BASE_VERSION)
+docdir = $(prefix)/share/doc/$(NAME)-$(BASE_VERSION)
 includedir = $(prefix)/include/$(pgsubdir)
 infodir = $(datadir)/info
 libexecdir_install = $(exec_prefix)/libexec/$(pgsubdir)
@@ -53,8 +53,8 @@ sourcedir = $(prefix)/src/$(pgsubdir)
 MIGRATE_FILES_CSWpostgresql-$(BASE_VERSION_G)    = postgresql.conf
 MIGRATE_DEST_DIR_CSWpostgresql-$(BASE_VERSION_G) = $(sysconfdir)
 
-MASTER_SITES = http://wwwmaster.postgresql.org/redir/53/h/source/v$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+MASTER_SITES = http://wwwmaster.postgresql.org/redir/53/h/source/v$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += cswpostgres.tmpl
 DISTFILES += cswusergroup.tmpl
 DISTFILES += postgresql.conf.tmpl
@@ -203,13 +203,13 @@ PROTOTYPE_CLASS_pgdata = ugfiles
 PROTOTYPE_FILTER = perl -npe 's,=/opt/csw/bin/isaexec,-isaexec=/opt/csw/bin/isaexec,'
 
 # ISAEXEC_FILES = $(addsuffix -isaexec,$(foreach B,$(BIN_NAMES),$(bindir_install)/$B))
-ALTERNATIVES_CSWpostgresql-$(BASE_VERSION_G) = $(GARNAME)$(BASE_VERSION_G)-32 $(GARNAME)$(BASE_VERSION_G)-64 $(GARNAME)$(BASE_VERSION_G)-auto
-ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-32 = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(ISA_DEFAULT)/$(firstword $(BIN_NAMES)) 100
-ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-32 += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$(ISA_DEFAULT)/$B)
-ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-64 = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(ISA_DEFAULT64)/$(firstword $(BIN_NAMES)) 200
-ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-64 += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$(ISA_DEFAULT64)/$B)
-ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-auto = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(firstword $(BIN_NAMES))-isaexec 300
-ALTERNATIVE_$(GARNAME)$(BASE_VERSION_G)-auto += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$B-isaexec)
+ALTERNATIVES_CSWpostgresql-$(BASE_VERSION_G) = $(NAME)$(BASE_VERSION_G)-32 $(NAME)$(BASE_VERSION_G)-64 $(NAME)$(BASE_VERSION_G)-auto
+ALTERNATIVE_$(NAME)$(BASE_VERSION_G)-32 = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(ISA_DEFAULT)/$(firstword $(BIN_NAMES)) 100
+ALTERNATIVE_$(NAME)$(BASE_VERSION_G)-32 += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$(ISA_DEFAULT)/$B)
+ALTERNATIVE_$(NAME)$(BASE_VERSION_G)-64 = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(ISA_DEFAULT64)/$(firstword $(BIN_NAMES)) 200
+ALTERNATIVE_$(NAME)$(BASE_VERSION_G)-64 += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$(ISA_DEFAULT64)/$B)
+ALTERNATIVE_$(NAME)$(BASE_VERSION_G)-auto = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(firstword $(BIN_NAMES))-isaexec 300
+ALTERNATIVE_$(NAME)$(BASE_VERSION_G)-auto += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$B-isaexec)
 
 # checkpkg does not detect this dependency automatically
 CHECKPKG_OVERRIDES_CSWpostgresql-84 += surplus-dependency|CSWalternatives
@@ -237,12 +237,12 @@ post-merge:
 	ginstall \
 		$(WORKDIR)/$(initscript_base_name) \
 		$(PKGROOT)/etc$(prefix)/init.d/$(initscript_base_name)
-	ginstall -d $(PKGROOT)/etc$(prefix)/pkg/$(GARNAME)
+	ginstall -d $(PKGROOT)/etc$(prefix)/pkg/$(NAME)
 	gsed -e 's+@PGDATA@+$(PGDATA)+g' \
 		< $(FILEDIR)/cswusergroup.tmpl \
 		> $(WORKDIR)/cswusergroup
 	ginstall $(WORKDIR)/cswusergroup \
-		$(PKGROOT)/etc$(prefix)/pkg/$(GARNAME)/cswusergroup_$(VERSION_NODOT)
+		$(PKGROOT)/etc$(prefix)/pkg/$(NAME)/cswusergroup_$(VERSION_NODOT)
 	ginstall -d $(PKGROOT)$(sysconfdir)
 	gsed -e 's+@PGDATA@+$(PGDATA)+g' \
 		< $(FILEDIR)/postgresql.conf.tmpl \

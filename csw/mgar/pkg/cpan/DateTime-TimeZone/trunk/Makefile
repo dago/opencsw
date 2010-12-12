@@ -1,5 +1,5 @@
-GARNAME = DateTime-TimeZone
-GARVERSION = 1.16
+NAME = DateTime-TimeZone
+VERSION = 1.16
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 

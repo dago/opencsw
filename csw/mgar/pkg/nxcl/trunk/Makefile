@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = nxcl
-GARVERSION = 0.9
+NAME = nxcl
+VERSION = 0.9
 CATEGORIES = utils
 
 DESCRIPTION = A library for the Free NX client
@@ -12,14 +12,14 @@ define BLURB
 endef
 
 DL_NAME = freenx-client
-WORKSRC = $(WORKDIR)/$(DL_NAME)-$(GARVERSION)/nxcl
+WORKSRC = $(WORKDIR)/$(DL_NAME)-$(VERSION)/nxcl
 
 docdir = $(datadir)/doc
 
-PATCHFILES = doc-$(GARVERSION).patch
+PATCHFILES = doc-$(VERSION).patch
 
 MASTER_SITES = http://download.berlios.de/freenx/
-DISTFILES  = $(DL_NAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(DL_NAME)-$(VERSION).tar.bz2
 DISTFILES += $(PATCHFILES)
 
 

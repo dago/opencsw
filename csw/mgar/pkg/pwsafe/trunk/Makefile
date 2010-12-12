@@ -1,5 +1,5 @@
-GARNAME = pwsafe
-GARVERSION = 0.1.6
+NAME = pwsafe
+VERSION = 0.1.6
 CATEGORIES = utils
 
 DESCRIPTION = command-line password database.

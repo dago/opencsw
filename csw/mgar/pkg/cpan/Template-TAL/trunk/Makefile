@@ -1,5 +1,5 @@
-GARNAME = Template-TAL
-GARVERSION = 0.9
+NAME = Template-TAL
+VERSION = 0.9
 CATEGORIES = cpan
 AUTHOR = TOMI
 

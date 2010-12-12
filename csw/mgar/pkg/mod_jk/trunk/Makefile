@@ -1,5 +1,5 @@
-GARNAME = tomcat-connectors
-GARVERSION = 1.2.30
+NAME = tomcat-connectors
+VERSION = 1.2.30
 CATEGORIES = server
 
 DESCRIPTION = AJP connector module for Apache 2
@@ -20,21 +20,21 @@ define BLURB
   been ported to JK.
 endef
 
-MASTER_SITES = http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/jk-$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-src.tar.gz
+MASTER_SITES = http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/jk-$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION)-src.tar.gz
 ADMINFILES = depend prototype postinstall preremove space
 DISTFILES += $(call admfiles,CSWap2modjk,$(ADMINFILES))
 DISTFILES += httpd-jk.conf.CSW
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-src.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-src.tar.gz
 
 AUXCONFIG += workers.properties
 AUXCONFIG += workers.properties.minimal
 AUXCONFIG += uriworkermap.properties
 DISTFILES += $(AUXCONFIG)
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)-src/native
+WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)-src/native
 
 # Make apxs install to the temp dir
 PATCHFILES += install.diff

@@ -1,5 +1,5 @@
-GARNAME = ntop
-GARVERSION = 4.0.3
+NAME = ntop
+VERSION = 4.0.3
 CATEGORIES = net
 
 DESCRIPTION = A network traffic usage monitor
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 DISTFILES  += cswntop
 EXPANDVARS += cswntop

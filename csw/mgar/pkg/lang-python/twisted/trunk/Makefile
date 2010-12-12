@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = twisted
+NAME = twisted
 MAJ_VERSION = 10.1
 PATCHLEVEL = 0
-GARVERSION = $(MAJ_VERSION).$(PATCHLEVEL)
+VERSION = $(MAJ_VERSION).$(PATCHLEVEL)
 CATEGORIES = python
 
 define BLURB
@@ -16,10 +16,10 @@ endef
 
 PACKAGES      = CSWpy-twisted CSWtwisted
 UPSTREAM_NAME = Twisted
-DISTNAME      = $(UPSTREAM_NAME)-$(GARVERSION)
-MASTER_SITES  = http://tmrc.mit.edu/mirror/$(GARNAME)/$(UPSTREAM_NAME)/$(MAJ_VERSION)/
+DISTNAME      = $(UPSTREAM_NAME)-$(VERSION)
+MASTER_SITES  = http://tmrc.mit.edu/mirror/$(NAME)/$(UPSTREAM_NAME)/$(MAJ_VERSION)/
 DISTFILES     = $(DISTNAME).tar.bz2
-UFILES_REGEX  = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX  = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 TEST_SCRIPTS  = 
 LICENSE       = LICENSE
 PKGFILES_CSWtwisted = NONE

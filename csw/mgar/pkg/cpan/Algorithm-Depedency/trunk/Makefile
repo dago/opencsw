@@ -1,5 +1,5 @@
-GARNAME = Algorithm-Dependency
-GARVERSION = 1.110
+NAME = Algorithm-Dependency
+VERSION = 1.110
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

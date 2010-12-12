@@ -6,8 +6,8 @@
 # For a short discussion see:
 # http://lists.opencsw.org/pipermail/maintainers/2009-July/003406.html
 #
-GARNAME = libiconv
-GARVERSION = 1.13.1
+NAME = libiconv
+VERSION = 1.13.1
 CATEGORIES = lib
 
 DESCRIPTION = GNU iconv library
@@ -22,8 +22,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # We have to take care of the package naming. We once had CSWiconv
 # (pkgname) as libiconv (software name). Now we have a consistent

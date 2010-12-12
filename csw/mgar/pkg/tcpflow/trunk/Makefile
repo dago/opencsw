@@ -1,5 +1,5 @@
-GARNAME = tcpflow
-GARVERSION = 0.21
+NAME = tcpflow
+VERSION = 0.21
 CATEGORIES = net
 
 DESCRIPTION = A TCP Flow Recorder
@@ -14,10 +14,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.circlemud.org/pub/jelson/tcpflow/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
 RUNTIME_DEP_PKGS = CSWlibpcap

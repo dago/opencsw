@@ -1,5 +1,5 @@
-GARNAME = nano
-GARVERSION = 2.2.5
+NAME = nano
+VERSION = 2.2.5
 CATEGORIES = utils
 
 DESCRIPTION = Enhanced clone of the Pico text editor
@@ -12,8 +12,8 @@ endef
 
 VENDOR_URL   = http://www.nano-editor.org/
 MASTER_SITES = http://www.nano-editor.org/dist/v2.2/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWncurses
 
@@ -32,7 +32,7 @@ CONFIGURE_ARGS += --disable-wrapping-as-root
 include gar/category.mk
 
 post-install-modulated: DOCS=AUTHORS THANKS UPGRADE
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)/examples
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)

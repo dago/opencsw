@@ -1,5 +1,5 @@
-GARNAME = koffice
-GARVERSION = 1.6.3
+NAME = koffice
+VERSION = 1.6.3
 CATEGORIES = kde
 
 DESCRIPTION = KDE Web Development Environment (gcc3)
@@ -7,13 +7,13 @@ define BLURB
   LONG DESCRIPTION
 endef
 
-MASTER_SITES = $(KDE_ROOT)/$(KDE_DIST)/$(GARNAME)-$(GARVERSION)/src/
+MASTER_SITES = $(KDE_ROOT)/$(KDE_DIST)/$(NAME)-$(VERSION)/src/
 #DISTFILES   += Templates, addons, etc...
 DISTFILES   += $(call admfiles,CSWkofficegcc,)
 DISTFILES   += $(call admfiles,CSWkofficeaddons,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-#UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+#UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEPENDS +=
 

@@ -1,5 +1,5 @@
-GARNAME = wmf
-GARVERSION = 0.2.8.4
+NAME = wmf
+VERSION = 0.2.8.4
 CATEGORIES = lib
 
 DESCRIPTION = Library and tools for manipulating Windows metafiles
@@ -12,8 +12,8 @@ endef
 
 SF_PROJ = wvware
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = libwmf-$(GARVERSION).tar.gz
-DISTNAME = libwmf-$(GARVERSION)
+DISTFILES  = libwmf-$(VERSION).tar.gz
+DISTNAME = libwmf-$(VERSION)
 
 SPKG_SOURCEURL = http://wvware.sourceforge.net
 

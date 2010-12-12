@@ -1,5 +1,5 @@
-GARNAME = Array-Compare
-GARVERSION = 1.13
+NAME = Array-Compare
+VERSION = 1.13
 CATEGORIES = cpan
 AUTHOR = DAVECROSS
 

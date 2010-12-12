@@ -1,5 +1,5 @@
-GARNAME = dcraw
-GARVERSION = 8.77
+NAME = dcraw
+VERSION = 8.77
 CATEGORIES = utils
 
 DESCRIPTION = Raw Digital Photo Decoder

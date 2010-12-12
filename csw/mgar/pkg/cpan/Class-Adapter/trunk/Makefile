@@ -1,5 +1,5 @@
-GARNAME = Class-Adapter
-GARVERSION = 1.07
+NAME = Class-Adapter
+VERSION = 1.07
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

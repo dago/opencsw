@@ -1,5 +1,5 @@
-GARNAME = mongrel
-GARVERSION = 1.1.5
+NAME = mongrel
+VERSION = 1.1.5
 CATEGORIES = rbgems
 
 DESCRIPTION = A small fast HTTP library and server that runs Rails, Camping, Nitro and Iowa apps

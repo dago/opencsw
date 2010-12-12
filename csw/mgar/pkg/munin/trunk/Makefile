@@ -1,5 +1,5 @@
-GARNAME = munin
-GARVERSION = 1.4.5
+NAME = munin
+VERSION = 1.4.5
 CATEGORIES = apps
 
 SPKG_DESC_CSWmuninmaster = master component of the graphical network and system monitoring munin
@@ -12,7 +12,7 @@ endef
 
 SF_PROJ = munin
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWmuninmaster.postinstall
 DISTFILES += CSWmuninmaster.prototype CSWmuninmaster.postinstall
 DISTFILES += CSWmuninnode.prototype cswmuninnode

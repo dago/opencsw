@@ -1,5 +1,5 @@
-GARNAME = libksba
-GARVERSION = 1.0.8
+NAME = libksba
+VERSION = 1.0.8
 CATEGORIES = lib
 
 DESCRIPTION = Libksba is a CMS and X.509 access library
@@ -11,10 +11,10 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libksba/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARVERSION)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(VERSION)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.gnupg.org/related_software/libksba/
 

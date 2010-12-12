@@ -1,5 +1,5 @@
-GARNAME      = pixman
-GARVERSION   = 0.16.0
+NAME      = pixman
+VERSION   = 0.16.0
 CATEGORIES   = lib
 
 DESCRIPTION = The pixel-manipulation library for X and cairo
@@ -7,10 +7,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cairographics.org/releases/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Same as from gar/x11/categories/x11/category.mk
 EXTRA_CFLAGS = -xlibmil -errtags=yes -erroff=E_EMPTY_DECLARATION

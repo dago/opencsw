@@ -1,5 +1,5 @@
-GARNAME = a52dec
-GARVERSION = 0.7.4
+NAME = a52dec
+VERSION = 0.7.4
 CATEGORIES = lib
 
 DESCRIPTION = A free ATSC A/52 stream decoder
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://liba52.sourceforge.net/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += liba52.pc-32 liba52.pc-64
 
 # We define upstream file regex so we can be notifed of new upstream software release

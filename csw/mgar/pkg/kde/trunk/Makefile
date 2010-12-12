@@ -1,4 +1,4 @@
-GARNAME = kde
+NAME = kde
 CATEGORIES = kde
 
 DESCRIPTION = The K Desktop Environment (KDE) (gcc3)

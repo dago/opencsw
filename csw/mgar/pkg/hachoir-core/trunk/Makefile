@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = hachoir-core
-GARVERSION = 1.3.3
+NAME = hachoir-core
+VERSION = 1.3.3
 CATEGORIES = python
 DESCRIPTION = Allows to view and edit a binary stream field by field (core)
 define BLURB
@@ -13,9 +13,9 @@ define BLURB
   of fields, where the smallest field is just one bit.
 endef
 SPKG_SOURCEURL = http://bitbucket.org/haypo/hachoir/wiki/Home
-MASTER_SITES = http://cheeseshop.python.org/packages/source/h/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = http://cheeseshop.python.org/packages/source/h/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = py_hachoir_core
 PACKAGES = CSWpy-hachoir-core
 ARCHALL = 1

@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = cpptest
-GARVERSION = 1.1.1
+NAME = cpptest
+VERSION = 1.1.1
 CATEGORIES = utils
 
 DESCRIPTION = Unit testing framework for handling automated tests in C++
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibcpptest0 CSWlibcpptestdevel
 

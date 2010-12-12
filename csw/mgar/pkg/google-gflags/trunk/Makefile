@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = gflags
-GARVERSION = 1.3
+NAME = gflags
+VERSION = 1.3
 CATEGORIES = lib
 DESCRIPTION = a library that implements commandline flags processing
 define BLURB
@@ -15,8 +15,8 @@ endef
 SPKG_SOURCEURL = http://code.google.com/p/google-gflags/
 MASTER_SITES = $(GOOGLE_MIRROR)
 GOOGLE_PROJECT = google-gflags
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64 = 1

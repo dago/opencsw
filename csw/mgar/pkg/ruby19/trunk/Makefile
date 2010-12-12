@@ -1,5 +1,5 @@
-GARNAME = ruby19
-GARVERSION = 1.9.1
+NAME = ruby19
+VERSION = 1.9.1
 PATCHLEVEL = p376
 CATEGORIES = lang
 
@@ -10,13 +10,13 @@ CATEGORIES = lang
 #
 # [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=543805
 # [2] http://redmine.ruby-lang.org/issues/show/2609
-ifneq ($(GARVERSION)$(PATCHLEVEL), 1.9.1p376)
+ifneq ($(VERSION)$(PATCHLEVEL), 1.9.1p376)
 TEST_TARGET = check
 else
 TEST_SCRIPTS = 
 endif
 
-DISTNAME = ruby-$(GARVERSION)-$(PATCHLEVEL)
+DISTNAME = ruby-$(VERSION)-$(PATCHLEVEL)
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -79,7 +79,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of
 # MASTER_SITES, then uncomment the next line. Otherwise it is set by
@@ -127,22 +127,22 @@ multiconfig:
 	@gln -n -s $(RBCONFIG).SOS12 $(DESTDIR)$(RBCONFIG)
 	@gcp $(FILEDIR)/cswrbconfig $(DESTDIR)/opt/csw/bin/cswrbconfig19
 	@chmod 755 $(DESTDIR)/opt/csw/bin/cswrbconfig19
-	@ginstall -c -d -m 0755 $(DESTDIR)$(docdir)/$(GARNAME)/
-	@ginstall -c -m 0644 $(FILEDIR)/README.csw $(DESTDIR)$(docdir)/$(GARNAME)/
+	@ginstall -c -d -m 0755 $(DESTDIR)$(docdir)/$(NAME)/
+	@ginstall -c -m 0644 $(FILEDIR)/README.csw $(DESTDIR)$(docdir)/$(NAME)/
 	@$(MAKECONFIG)
 
 # Fix up rbconfig
 rbconfig:
 	@gsed -i -e s,$(DESTDIR),, \
-		$(DESTDIR)$(libdir)/$(GARNAME)/$(GARVERSION)/$(GARCH)-solaris2.9/rbconfig.rb
+		$(DESTDIR)$(libdir)/$(NAME)/$(VERSION)/$(GARCH)-solaris2.9/rbconfig.rb
 	@$(MAKECOOKIE)
 
 # Copy samples
 samples:
-	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)/
-	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/$(GARNAME)/
+	@mkdir -p $(DESTDIR)$(docdir)/$(NAME)/
+	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/$(NAME)/
 	@for ext in bigdecimal tk win32ole ; do \
-		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/$(GARNAME)/sample/$$ext ; \
+		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/$(NAME)/sample/$$ext ; \
 	done
 	@$(MAKECOOKIE)
 
@@ -150,5 +150,5 @@ samples:
 rbscripts:
 	@echo " ==> Fixing shebang path in distributed ruby scripts"
 	@find $(DESTDIR)$(prefix) -type f -name '*.rb' -exec \
-		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/$(GARNAME)}g" {} \;
+		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/$(NAME)}g" {} \;
 	@$(MAKECOOKIE)

@@ -1,5 +1,5 @@
-GARNAME = HTML-Element-Extended
-GARVERSION = 1.17
+NAME = HTML-Element-Extended
+VERSION = 1.17
 CATEGORIES = cpan
 AUTHOR = MSISK
 

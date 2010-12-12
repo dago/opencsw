@@ -12,9 +12,9 @@
 
 ###### Package information #######
 
-GARNAME = openssh
-GARVERSION = 5.4p1
-GSSKEX_PATCH_VERSION = $(GARVERSION)
+NAME = openssh
+VERSION = 5.4p1
+GSSKEX_PATCH_VERSION = $(VERSION)
 GSSKEX_PATCH_DATE = 20100313
 CATEGORIES = server
 
@@ -50,9 +50,9 @@ PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i38
 MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sxw.org.uk/computing/patches/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*p\d+).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*p\d+).tar.gz
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWossh.prototype CSWossh.preinstall CSWossh.checkinstall
 DISTFILES += CSWosshlpk.prototype CSWosshlpk.preinstall CSWosshlpk.checkinstall
 DISTFILES += CSWosshclient.prototype

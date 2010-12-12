@@ -1,4 +1,4 @@
-GARNAME = xfce4-session
+NAME = xfce4-session
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Session Manager
@@ -6,14 +6,14 @@ define BLURB
    Xfce Session Manager 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # DISTFILES += CSWxfcesession.depend CSWxfcesession.gspec CSWxfcesession.prototype
 # DISTFILES += CSWlibxfcesession.depend CSWlibxfcesession.gspec CSWlibxfcesession.prototype
 # DISTFILES += CSWxfcesessiondoc.depend CSWxfcesessiondoc.gspec CSWxfcesessiondoc.prototype
 # DISTFILES += CSWlibxfcesessiondev.depend CSWlibxfcesessiondev.gspec CSWlibxfcesessiondev.prototype
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 DISTFILES += $(call admfiles,CSWxfcesession, depend)
 

@@ -1,4 +1,4 @@
-GARNAME = kdelibs
+NAME = kdelibs
 CATEGORIES = kde
 
 DESCRIPTION = Base set of libraries needed by KDE programs (gcc3)

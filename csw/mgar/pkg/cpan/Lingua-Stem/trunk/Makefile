@@ -1,5 +1,5 @@
-GARNAME = Lingua-Stem
-GARVERSION = 0.84
+NAME = Lingua-Stem
+VERSION = 0.84
 CATEGORIES = cpan
 AUTHOR = SNOWHARE
 

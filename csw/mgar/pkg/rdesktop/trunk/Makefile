@@ -1,5 +1,5 @@
-GARNAME = rdesktop
-GARVERSION = 1.6.0
+NAME = rdesktop
+VERSION = 1.6.0
 CATEGORIES = apps
 
 DESCRIPTION = RDP client for Windows NT/2000/2003/XP Terminal Server
@@ -13,12 +13,12 @@ CATALOGNAME_CSWrdesktop = rdesktop
 MASTER_SITES = $(SF_MIRROR)
 SPKG_SOURCEURL = http://www.rdesktop.org/
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-openssl=/opt/csw
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS_CSWrdesktop = CSWiconv CSWosslrt
 

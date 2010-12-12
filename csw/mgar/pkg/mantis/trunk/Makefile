@@ -1,5 +1,5 @@
-GARNAME = mantisbt
-GARVERSION = 1.2.3
+NAME = mantisbt
+VERSION = 1.2.3
 CATEGORIES = apps
 
 DESCRIPTION = Mantis is a free popular web-based bugtracking system
@@ -13,14 +13,14 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWmantis.preinstall
 DISTFILES += CSWmantis.postmsg
 
 PACKAGES = CSWmantis
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = doc/LICENSE
 RUNTIME_DEP_PKGS = CSWapache2 CSWap2modphp5 CSWphp5mysql CSWphp5session
@@ -43,7 +43,7 @@ CHECKPKG_OVERRIDES_CSWmantis += surplus-dependency|CSWphp5session
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	ginstall -d $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs
 	(echo ".git"; echo ".cvsignore") >$(WORKDIR)/tarexclude
 	cd $(WORKSRC) && tar cfX - $(abspath $(WORKDIR)/tarexclude) . | ( cd $(DESTDIR)$(sharedstatedir)/www/mantis/htdocs; tar xvf - )

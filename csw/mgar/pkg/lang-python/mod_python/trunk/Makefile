@@ -1,5 +1,5 @@
-GARNAME = mod_python
-GARVERSION = 3.3.1
+NAME = mod_python
+VERSION = 3.3.1
 CATEGORIES = server
 
 DESCRIPTION = an Apache/Python integration module
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.ibiblio.org/pub/mirrors/apache/httpd/modpython/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 DISTFILES += postinstall preremove space
 
 PACKAGES = CSWap2modpython

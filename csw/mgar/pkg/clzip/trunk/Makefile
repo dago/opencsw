@@ -1,5 +1,5 @@
-GARNAME = clzip
-GARVERSION = 1.0
+NAME = clzip
+VERSION = 1.0
 CATEGORIES = utils
 
 DESCRIPTION = a lossless data compressor based on the LZMA algorithm
@@ -7,13 +7,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://mirrors.zerg.biz/nongnu/lzip/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0001-Do-not-use-gcc-CFLAGS.patch
 PATCHFILES += 0002-Do-not-use-gcc-CFLAGS.patch
 PATCHFILES += 0003-Use-inttypes-instead-of-stdint.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 NODIRPATHS = --includedir
 CONFIGURE_ARGS = $(DIRPATHS)

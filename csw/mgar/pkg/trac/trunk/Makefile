@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = Trac
-GARVERSION = 0.12.1
+NAME = Trac
+VERSION = 0.12.1
 CATEGORIES = python
 
 DESCRIPTION = Integrated SCM and Project Management
@@ -15,7 +15,7 @@ endef
 
 MASTER_SITES           = http://ftp.edgewall.com/pub/trac/
 SPKG_SOURCEURL         = http://trac.edgewall.org/wiki/TracDownload
-DISTFILES              = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES              = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX           = (\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWtrac

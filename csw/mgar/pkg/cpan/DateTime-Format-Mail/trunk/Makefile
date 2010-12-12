@@ -1,5 +1,5 @@
-GARNAME = DateTime-Format-Mail
-GARVERSION = 0.3001
+NAME = DateTime-Format-Mail
+VERSION = 0.3001
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 

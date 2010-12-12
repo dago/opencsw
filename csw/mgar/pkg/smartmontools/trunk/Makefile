@@ -1,5 +1,5 @@
-GARNAME = smartmontools
-GARVERSION = 5.38
+NAME = smartmontools
+VERSION = 5.38
 CATEGORIES = utils
 
 DESCRIPTION = S.M.A.R.T. disk monitoring tools
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://smartmontools.sourceforge.net/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsmartmontools, postinstall depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -23,7 +23,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/smartmontools/
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(GARNAME)
+CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(NAME)
 CONFIGURE_ARGS += --with-initscriptdir=/etc/opt/csw/init.d
 
 TEST_TARGET = check

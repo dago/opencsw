@@ -1,5 +1,5 @@
-GARNAME = libntlm
-GARVERSION = 1.2
+NAME = libntlm
+VERSION = 1.2
 CATEGORIES = lib
 
 DESCRIPTION = Microsoft WinNT domain authentication library
@@ -15,7 +15,7 @@ MASTER_SITES = http://josefsson.org/libntlm/releases/
 DISTFILES  = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://josefsson.org/libntlm/
 

@@ -1,5 +1,5 @@
-GARNAME = Proc-ProcessTable
-GARVERSION = 0.45
+NAME = Proc-ProcessTable
+VERSION = 0.45
 CATEGORIES = cpan
 AUTHOR = DURIST
 

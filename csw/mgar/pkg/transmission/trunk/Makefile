@@ -1,12 +1,12 @@
-GARNAME = transmission
-GARVERSION = 2.04
+NAME = transmission
+VERSION = 2.04
 CATEGORIES = net
 
 DESCRIPTION = Fast, easy, and free multi-platform BitTorrent client
 define BLURB
 endef
 MASTER_SITES = http://mirrors.m0k.org/transmission/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PATCHFILES = icons-makefile.patch
 PATCHFILES += 0002-add-setenv-patch.patch
 

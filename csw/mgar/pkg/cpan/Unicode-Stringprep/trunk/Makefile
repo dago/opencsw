@@ -1,5 +1,5 @@
-GARNAME = Unicode-Stringprep
-GARVERSION = 1.103
+NAME = Unicode-Stringprep
+VERSION = 1.103
 CATEGORIES = cpan
 AUTHOR = CFAERBER
 

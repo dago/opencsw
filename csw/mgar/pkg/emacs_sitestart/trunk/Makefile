@@ -1,9 +1,9 @@
-GARNAME = emacs_sitestart
-GARVERSION = 1.0
+NAME = emacs_sitestart
+VERSION = 1.0
 CATEGORIES = xtra
 
 PACKAGES = CSWemacssitestart
-CATALOGNAME = $(GARNAME)
+CATALOGNAME = $(NAME)
 
 DESCRIPTION = Emacs support for autoloading functionality at startup
 
@@ -14,7 +14,7 @@ DISTFILES  = COPYING site-start.el
 
 # We define upstream file regex so we can be notifed of new upstream
 # software r elease
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of
 # MASTER_SITES, then uncomment the next line. Otherwise it is set by

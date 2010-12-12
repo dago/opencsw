@@ -1,5 +1,5 @@
-GARNAME = Class-Autouse
-GARVERSION = 1.29
+NAME = Class-Autouse
+VERSION = 1.29
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

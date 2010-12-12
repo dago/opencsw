@@ -1,5 +1,5 @@
-GARNAME = lzo
-GARVERSION = 2.03
+NAME = lzo
+VERSION = 2.03
 CATEGORIES = utils
 
 DESCRIPTION = LZO compression library
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.oberhumer.com/opensource/lzo/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.oberhumer.com/opensource/lzo/
 

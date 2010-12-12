@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = libxdg-basedir
-GARVERSION = 1.0.2
+NAME = libxdg-basedir
+VERSION = 1.0.2
 CATEGORIES = lib
 DESCRIPTION = Implements functions according to the XDG Base Directory Specification
 define BLURB
@@ -18,8 +18,8 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://n.ethz.ch/student/nevillm/download/libxdg-basedir
 MASTER_SITES = http://n.ethz.ch/~nevillm/download/libxdg-basedir/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWlibxdgbasedir
 CATALOGNAME = libxdg_basedir
 TEST_TARGET = check

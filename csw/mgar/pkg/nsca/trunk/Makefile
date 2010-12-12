@@ -1,5 +1,5 @@
-GARNAME = nsca
-GARVERSION = 2.7.2
+NAME = nsca
+VERSION = 2.7.2
 CATEGORIES = apps
 
 SPKG_DESC_CSWnsca = Nagios service check acceptor
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://mesh.dl.sourceforge.net/sourceforge/nagios/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 #
 ## Distfiles for CSWnsca

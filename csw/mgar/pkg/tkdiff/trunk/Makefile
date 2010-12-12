@@ -1,5 +1,5 @@
-GARNAME = tkdiff
-GARVERSION = 4.1.4
+NAME = tkdiff
+VERSION = 4.1.4
 CATEGORIES = utils
 
 DESCRIPTION = A graphical diff tool
@@ -7,12 +7,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTNAME = $(GARNAME)-$(GARVERSION)-unix
+DISTNAME = $(NAME)-$(VERSION)-unix
 DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES = force-csw-wish.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-unix.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-unix.tar.gz
 
 DEP_PKGS = CSWtk
 

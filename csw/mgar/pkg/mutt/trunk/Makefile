@@ -1,5 +1,5 @@
-GARNAME = mutt
-GARVERSION = 1.5.21
+NAME = mutt
+VERSION = 1.5.21
 CATEGORIES = apps
 
 EXTRA_MODULATORS = SLANG
@@ -16,9 +16,9 @@ endef
 
 VENDOR_URL   = http://www.mutt.org
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 DISTFILES   += CSWmutt.postmsg
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = COPYRIGHT
 

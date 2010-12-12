@@ -1,5 +1,5 @@
-GARNAME = Gnome2-Canvas
-GARVERSION = 1.001
+NAME = Gnome2-Canvas
+VERSION = 1.001
 CATEGORIES = cpan
 AUTHOR = RMCFARLA
 

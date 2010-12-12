@@ -1,5 +1,5 @@
-GARNAME = libglade
-GARVERSION = 0.17
+NAME = libglade
+VERSION = 0.17
 CATEGORIES = lib
 
 DESCRIPTION = library to load Glade XML user interface files at runtime
@@ -8,11 +8,11 @@ Libglade is a library that performs a similar job to the C source output routine
 endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/libglade/0.17/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibglade,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-nls
 

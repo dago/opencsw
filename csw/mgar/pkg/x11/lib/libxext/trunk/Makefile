@@ -1,5 +1,5 @@
-GARNAME = libxext
-GARVERSION = 1.1.1
+NAME = libxext
+VERSION = 1.1.1
 CATEGORIES = x11
 
 DESCRIPTION = X11 miscellaneous extensions library1
@@ -11,11 +11,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libXext-$(GARVERSION)
+DISTNAME = libXext-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS = CSWx11xextproto CSWlibx11devel CSWlibxaudevel
 

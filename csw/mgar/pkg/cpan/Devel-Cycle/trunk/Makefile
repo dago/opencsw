@@ -1,5 +1,5 @@
-GARNAME = Devel-Cycle
-GARVERSION = 1.07
+NAME = Devel-Cycle
+VERSION = 1.07
 CATEGORIES = cpan
 AUTHOR = LDS
 

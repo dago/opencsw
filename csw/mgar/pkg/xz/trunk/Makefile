@@ -1,5 +1,5 @@
-GARNAME = xz
-GARVERSION = 4.999.9beta
+NAME = xz
+VERSION = 4.999.9beta
 CATEGORIES = utils
 
 DESCRIPTION = XZ Utils is free data compression software with high compression ratio
@@ -11,11 +11,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://tukaani.org/xz/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-Do-not-force-inclusion-of-stdint.h.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWxz CSWlzma
 

@@ -1,5 +1,5 @@
-GARNAME = orca
-GARVERSION = snapshot-r535
+NAME = orca
+VERSION = snapshot-r535
 SPKG_VERSION = snapshot_r535
 CATEGORIES = utils
 
@@ -27,11 +27,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.orcaware.com/orca/pub/snapshots/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += csworcallator csworcallator.xml svc-csworcallator
 DISTFILES += csworca_services
 DISTFILES += csworca
-PATCHFILES  = $(GARNAME)-$(GARVERSION)-se-3.5.0.patch
+PATCHFILES  = $(NAME)-$(VERSION)-se-3.5.0.patch
 PATCHFILES += fix-start-orcallator.patch
 
 PACKAGES = CSWorca CSWorcaweb
@@ -45,7 +45,7 @@ SPKG_DESC_CSWorcaweb = Performance Data Viewer
 SPKG_SOURCEURL = http://www.orcaware.com/orca
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD_DEP_PKGS = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2 CSWsetoolkit
 

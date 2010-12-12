@@ -6,9 +6,9 @@
 # using it as documentation while working away at this project. It will be 
 # tidied up before I submit it for official review.
 
-GARNAME = MPlayer
-GARVERSION = 1.0rc2
-GARVERSION_Blue = 1.7
+NAME = MPlayer
+VERSION = 1.0rc2
+VERSION_Blue = 1.7
 CATEGORIES = apps
 
 DESCRIPTION = MPlayer is a movie player which runs on many systems
@@ -27,10 +27,10 @@ MASTER_SITES = http://www3.mplayerhq.hu/MPlayer/releases/ http://www3.mplayerhq.
 GARCOMPILER = GCC4
 GNU_CC_HOME = /opt/csw/gcc4
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTFILES += Blue-$(GARVERSION_Blue).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES += Blue-$(VERSION_Blue).tar.bz2
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 LICENSE = LICENSE
 
 PACKAGES = CSWmplayer
@@ -180,7 +180,7 @@ TEST_SCRIPTS =
 # so I have to set this variable after the main include.
 
 # Disabling for non-isaexec build, it breaks the depend generation path
-# DESTIMG=$(GARNAME)-$(ISA)
+# DESTIMG=$(NAME)-$(ISA)
 
 ###Optimisation section###
 #

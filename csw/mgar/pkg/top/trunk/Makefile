@@ -1,5 +1,5 @@
-GARNAME = top
-GARVERSION = 3.7
+NAME = top
+VERSION = 3.7
 CATEGORIES = apps
 
 DESCRIPTION = Unix system state reporter
@@ -8,7 +8,7 @@ endef
 
 SF_PROJ = unixtop
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://www.unixtop.org/
 

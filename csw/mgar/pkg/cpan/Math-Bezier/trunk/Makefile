@@ -1,5 +1,5 @@
-GARNAME = Math-Bezier
-GARVERSION = 0.01
+NAME = Math-Bezier
+VERSION = 0.01
 CATEGORIES = cpan
 AUTHOR = ABW
 

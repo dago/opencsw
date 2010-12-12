@@ -1,5 +1,5 @@
-GARNAME = Statistics-Descriptive
-GARVERSION = 2.6
+NAME = Statistics-Descriptive
+VERSION = 2.6
 CATEGORIES = cpan
 AUTHOR = COLINK
 

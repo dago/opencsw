@@ -1,8 +1,8 @@
 #
 # TODO: Consider adding this patch: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549484
 
-GARNAME = freehdl
-GARVERSION = 0.0.7
+NAME = freehdl
+VERSION = 0.0.7
 CATEGORIES = devel
 
 DESCRIPTION = A free, open source, GPL'ed VHDL simulator
@@ -16,13 +16,13 @@ To develop a VHDL simulator that:
 endef
 
 MASTER_SITES = http://freehdl.seul.org/~enaroska/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0000-Mirring-strings.h-include.patch
 PATCHFILES += 0001-Use-OpenCSW-pkg-config.patch
 PATCHFILES += fix_seg_fault_2-1.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

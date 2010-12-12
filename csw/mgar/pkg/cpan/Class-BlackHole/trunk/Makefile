@@ -1,5 +1,5 @@
-GARNAME = Class-BlackHole
-GARVERSION = 0.04
+NAME = Class-BlackHole
+VERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = SBURKE
 

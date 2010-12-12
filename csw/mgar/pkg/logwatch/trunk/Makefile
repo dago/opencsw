@@ -1,5 +1,5 @@
-GARNAME = logwatch
-GARVERSION = 7.3.6
+NAME = logwatch
+VERSION = 7.3.6
 CATEGORIES = utils
 
 ARCHALL = 1
@@ -13,12 +13,12 @@ Logwatch is a customizable log analysis system. Logwatch parses through your sys
 endef
 
 MASTER_SITES = ftp://ftp.kaybee.org/pub/linux/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = fix-manpage-paths.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of
 # MASTER_SITES, then uncomment the next line. Otherwise it is set by
@@ -39,7 +39,7 @@ CHECKPKG_OVERRIDES_CSWlogwatch += surplus-dependency|CSWgawk
 include gar/category.mk
 
 sysconfdir = /etc/opt/csw
-CRONDIR = $(sysconfdir)/pkg/CSW$(GARNAME)/crontabs
+CRONDIR = $(sysconfdir)/pkg/CSW$(NAME)/crontabs
 CRONTABS = $(CRONDIR)/root
 
 INSTALL = /opt/csw/bin/ginstall
@@ -48,11 +48,11 @@ INSTALLEXE = $(INSTALL) -m 0755
 INSTALLDATA = $(INSTALL) -m 0644
 
 BINDIR = $(bindir)
-SHAREDIR = $(datadir)/$(GARNAME)
+SHAREDIR = $(datadir)/$(NAME)
 MANDIR = $(datadir)/man
-DOCDIR = $(datadir)/doc/$(GARNAME)
-CONFDIR = $(sysconfdir)/$(GARNAME)
-TMPDIR = /var/opt/csw/$(GARNAME)
+DOCDIR = $(datadir)/doc/$(NAME)
+CONFDIR = $(sysconfdir)/$(NAME)
+TMPDIR = /var/opt/csw/$(NAME)
 
 post-extract-modulated:
 	cp $(FILEDIR)/logwatch.wrapper $(WORKSRC)/

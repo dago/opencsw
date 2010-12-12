@@ -1,5 +1,5 @@
-GARNAME = sasl
-GARVERSION = 2.1.22
+NAME = sasl
+VERSION = 2.1.22
 CATEGORIES = lib
 
 DESCRIPTION = Simple Authentication and Security Layer
@@ -17,12 +17,12 @@ MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail
 # Visitor information
 SPKG_SOURCEURL = http://asg.web.cmu.edu/sasl/
 
-WORKSRC = $(WORKDIR)/cyrus-$(GARNAME)-$(GARVERSION)
+WORKSRC = $(WORKDIR)/cyrus-$(NAME)-$(VERSION)
 
-DISTFILES = cyrus-$(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = cyrus-$(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = cyrus-$(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = cyrus-$(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_ENV = _REENTRANT=1
 

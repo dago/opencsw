@@ -1,5 +1,5 @@
-GARNAME = ExtUtils-XSBuilder
-GARVERSION = 0.28
+NAME = ExtUtils-XSBuilder
+VERSION = 0.28
 CATEGORIES = cpan
 AUTHOR = GRICHTER
 

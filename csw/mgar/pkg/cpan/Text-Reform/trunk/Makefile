@@ -1,5 +1,5 @@
-GARNAME = Text-Reform
-GARVERSION = 1.20
+NAME = Text-Reform
+VERSION = 1.20
 CATEGORIES = cpan
 AUTHOR = CHORNY
 

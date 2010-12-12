@@ -1,5 +1,5 @@
-GARNAME = exempi
-GARVERSION = 2.1.1
+NAME = exempi
+VERSION = 2.1.1
 CATEGORIES = lib
 
 DESCRIPTION = Exempi is an implementation of XMP
@@ -15,9 +15,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://libopenraw.freedesktop.org/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWexempi CSWexempidevel
 CATALOGNAME_CSWexempi = exempi

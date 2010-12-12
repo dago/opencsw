@@ -1,5 +1,5 @@
-GARNAME = json-glib
-GARVERSION = 0.9.2
+NAME = json-glib
+VERSION = 0.9.2
 CATEGORIES = gnome
 
 DESCRIPTION = Library providing serialization and deserialization support for the JSON format
@@ -16,7 +16,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWjson-glib CSWjson-glibdevel CSWjson-glibdoc
 CATALOGNAME_CSWjson-glib = json_glib
@@ -36,7 +36,7 @@ RUNTIME_DEP_PKGS_CSWjson-glib += CSWggettextrt CSWglib2
 RUNTIME_DEP_PKGS_CSWjson-glibdevel += CSWjson-glib
 RUNTIME_DEP_PKGS_CSWjson-glibdoc += CSWjson-glib
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://live.gnome.org/JsonGlib
 

@@ -1,5 +1,5 @@
-GARNAME = sed
-GARVERSION = 4.2.1
+NAME = sed
+VERSION = 4.2.1
 CATEGORIES = utils
 
 PACKAGES = CSWgsed
@@ -14,10 +14,10 @@ endef
 SPKG_DESC_CSWgsed = $(DESCRIPTION)
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES = $(NAME)-$(VERSION).tar.gz 
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Use GNU because of issue with syntax containing ellipsis in lib/regcomp.c. 
 # See http://markmail.org/message/7ki46iiok3ddu3sa

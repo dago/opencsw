@@ -1,5 +1,5 @@
-GARNAME = ghostscript
-GARVERSION = 8.70
+NAME = ghostscript
+VERSION = 8.70
 CATEGORIES = apps
 
 DESCRIPTION = Ghostscript, a PostScript and PDF interpreter for previewing, conversion and printing
@@ -7,7 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWgs
 CATALOGNAME_CSWgs = ghostscript

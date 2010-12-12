@@ -1,5 +1,5 @@
-GARNAME = gtk-doc
-GARVERSION = 1.11
+NAME = gtk-doc
+VERSION = 1.11
 CATEGORIES = gnome
 
 DESCRIPTION = GTK-Doc is used to document C code.
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWgtk-doc.postinstall
 DISTFILES += CSWgtk-doc.postremove
 CATALOGNAME_CSWgtk-doc = gtk_doc
@@ -22,7 +22,7 @@ RUNTIME_DEP_PKGS += CSWperl CSWpython CSWsgmlcommon CSWxmlcommon
 RUNTIME_DEP_PKGS += CSWdocbookxsl CSWopenjade CSWgnomedocutils
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 ARCHALL = 1
 

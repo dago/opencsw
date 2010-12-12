@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = idzebra
-GARVERSION = 2.0.43
+NAME = idzebra
+VERSION = 2.0.43
 CATEGORIES = lib
 
 DESCRIPTION = A high-performance, general-purpose structured text indexing and retrieval engine
@@ -8,9 +8,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.indexdata.dk/pub/zebra/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE.zebra
 

@@ -1,5 +1,5 @@
-GARNAME = Template-Extract
-GARVERSION = 0.40
+NAME = Template-Extract
+VERSION = 0.40
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
 

@@ -1,5 +1,5 @@
-GARNAME = tcl
-GARVERSION = 8.5.6
+NAME = tcl
+VERSION = 8.5.6
 CATEGORIES = lang
 
 DESCRIPTION = Tcl programming language
@@ -9,7 +9,7 @@ endef
 SF_PROJ = tcl
 MASTER_SITES = $(SF_MIRRORS)
 
-DISTNAME = $(GARNAME)$(GARVERSION)
+DISTNAME = $(NAME)$(VERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
 DISTFILES += $(call admfiles,CSWtcl85,)
 
@@ -24,7 +24,7 @@ SPKG_SOURCEURL = http://www.tcl.tk/
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*)-src.tar.gz
+UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*)-src.tar.gz
 
 BUILD64 = 1
 NOISAEXEC = 1

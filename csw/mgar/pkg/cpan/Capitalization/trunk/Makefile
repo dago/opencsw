@@ -1,5 +1,5 @@
-GARNAME = capitalization
-GARVERSION = 0.03
+NAME = capitalization
+VERSION = 0.03
 CATEGORIES = cpan
 AUTHOR = MIYAGAWA
 

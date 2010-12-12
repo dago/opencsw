@@ -1,5 +1,5 @@
-GARNAME = freeciv
-GARVERSION = 2.1.8
+NAME = freeciv
+VERSION = 2.1.8
 CATEGORIES = apps
 
 DESCRIPTION = a free turn-based multiplayer strategy game
@@ -8,13 +8,13 @@ Freeciv is a Free and Open Source empire-building strategy game inspired by the 
 endef
 
 MASTER_SITES += $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWfreeciv, depend prototype )
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=138322
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 

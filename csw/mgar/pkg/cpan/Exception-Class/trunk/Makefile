@@ -1,5 +1,5 @@
-GARNAME = Exception-Class
-GARVERSION = 1.23
+NAME = Exception-Class
+VERSION = 1.23
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 

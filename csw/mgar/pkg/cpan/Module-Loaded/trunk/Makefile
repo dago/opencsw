@@ -1,5 +1,5 @@
-GARNAME = Module-Loaded
-GARVERSION = 0.06
+NAME = Module-Loaded
+VERSION = 0.06
 CATEGORIES = cpan
 AUTHOR = BINGOS
 

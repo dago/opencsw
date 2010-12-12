@@ -1,5 +1,5 @@
-GARNAME = bundler
-GARVERSION = 0.9.26
+NAME = bundler
+VERSION = 0.9.26
 CATEGORIES = rbgems
 
 DESCRIPTION = Manages an application's dependencies through its entire life,

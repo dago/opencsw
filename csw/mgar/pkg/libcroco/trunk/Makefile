@@ -1,5 +1,5 @@
-GARNAME = libcroco
-GARVERSION = 0.6.2
+NAME = libcroco
+VERSION = 0.6.2
 CATEGORIES = gnome
 
 DESCRIPTION = A CSS parsing and manipulation toolkit
@@ -10,10 +10,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2 CSWlibxml2
 

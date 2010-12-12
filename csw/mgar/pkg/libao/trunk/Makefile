@@ -1,5 +1,5 @@
-GARNAME = libao
-GARVERSION = 1.0.0
+NAME = libao
+VERSION = 1.0.0
 CATEGORIES = lib
 
 DESCRIPTION = Cross-platform audio library
@@ -10,14 +10,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/ao/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://www.xiph.org/ao/
 
 DEP_PKGS = CSWesound
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 

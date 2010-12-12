@@ -1,5 +1,5 @@
-GARNAME = gtkpod
-GARVERSION = 0.99.14
+NAME = gtkpod
+VERSION = 0.99.14
 CATEGORIES = apps
 
 DESCRIPTION = gtk2 application for Apple iPods
@@ -14,7 +14,7 @@ endef
 VENDOR_URL = http://www.gtkpod.org
 SF_PROJ = gtkpod
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 #PATCHFILES  = file_convert.diff
 PATCHFILES = configure.in.diff
 
@@ -39,7 +39,7 @@ RUNTIME_DEP_PKGS_CSWgtkpod += CSWvorbis
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=67873
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
 
 #GARCOMPILER = GNU
 

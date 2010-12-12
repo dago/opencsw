@@ -1,5 +1,5 @@
-GARNAME = Test-Inline
-GARVERSION = 0.16
+NAME = Test-Inline
+VERSION = 0.16
 CATEGORIES = cpan
 AUTHOR = MSCHWERN
 

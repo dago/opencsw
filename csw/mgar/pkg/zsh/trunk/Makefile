@@ -1,5 +1,5 @@
-GARNAME = zsh
-GARVERSION = 4.3.10
+NAME = zsh
+VERSION = 4.3.10
 CATEGORIES = devel
 
 DESCRIPTION = Powerful UNIX shell
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWzsh,postinstall postremove)
 
 LICENSE = LICENCE
@@ -27,7 +27,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-maildir-support
-CONFIGURE_ARGS += --enable-fndir=$(sharedstatedir)/$(GARNAME)/functions
+CONFIGURE_ARGS += --enable-fndir=$(sharedstatedir)/$(NAME)/functions
 CONFIGURE_ARGS += --enable-pcre
 
 include gar/category.mk
@@ -37,4 +37,4 @@ include gar/category.mk
 CPPFLAGS := -I$(includedir)/ncursesw $(CPPFLAGS)
 
 post-install:
-	cp -p files/_pkgutil $(DESTDIR)$(sharedstatedir)/$(GARNAME)/functions
+	cp -p files/_pkgutil $(DESTDIR)$(sharedstatedir)/$(NAME)/functions

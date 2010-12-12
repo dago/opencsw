@@ -1,5 +1,5 @@
-GARNAME = gsm
-GARVERSION = 1.0.13
+NAME = gsm
+VERSION = 1.0.13
 CATEGORIES = utils
 
 DESCRIPTION = GSM 06.10 lossy speech compression
@@ -7,10 +7,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://user.cs.tu-berlin.de/~jutta/gsm/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://user.cs.tu-berlin.de/~jutta/toast.html
 

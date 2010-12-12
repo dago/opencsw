@@ -1,5 +1,5 @@
-GARNAME = libsigc++
-GARVERSION = 2.2.7
+NAME = libsigc++
+VERSION = 2.2.7
 CATEGORIES = lib
 
 DESCRIPTION = Typesafe signal and callback system for C++
@@ -8,12 +8,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = 0001-Comment-out-define-as-we-are-on-Sun-Studio.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES  = CSWlibsigc++ CSWlibsigc++devel
 

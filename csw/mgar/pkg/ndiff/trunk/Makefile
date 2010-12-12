@@ -1,5 +1,5 @@
-GARNAME = ndiff
-GARVERSION = 2.00
+NAME = ndiff
+VERSION = 2.00
 CATEGORIES = utils
 
 DESCRIPTION = Compare putatively similar files, ignoring small numeric differences
@@ -13,11 +13,11 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.math.utah.edu/pub/misc/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-fixed-make-install-target.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS_CSWndiff += CSWlibgmp
 BUILD_DEP_PKGS = 

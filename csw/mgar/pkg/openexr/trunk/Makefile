@@ -1,5 +1,5 @@
-GARNAME = openexr
-GARVERSION = 1.6.1
+NAME = openexr
+VERSION = 1.6.1
 CATEGORIES = lib
 
 DESCRIPTION = High dynamic-range (HDR) image file format developed by Industrial Light & Magic
@@ -18,7 +18,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://savannah.nongnu.org/download/openexr/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += libIlmImf.so.2.0.2.i
 DISTFILES += libIlmImf.so.2.0.2.s
 
@@ -52,7 +52,7 @@ CHECKPKG_OVERRIDES_CSWopenexrdevel += missing-dependency|CSWopenexr
 
 LICENSE = LICENSE 
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES += ltmain.sh.patch
 PATCHFILES += makePreview.cpp.patch

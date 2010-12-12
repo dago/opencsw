@@ -1,5 +1,5 @@
-GARNAME = asciidoc
-GARVERSION = 8.6.1
+NAME = asciidoc
+VERSION = 8.6.1
 CATEGORIES = utils
 
 DESCRIPTION = An Documentation Generator
@@ -21,7 +21,7 @@ ARCHALL_CSWasciidoc = 1
 RUNTIME_DEP_PKGS_CSWasciidoc = CSWpython CSWggetopt
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(AUTOFILES)
 
 PATCHFILES = handle-csw-etc-paths.patch

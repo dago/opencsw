@@ -1,5 +1,5 @@
-GARNAME = mharc
-GARVERSION = 0.7.3
+NAME = mharc
+VERSION = 0.7.3
 CATEGORIES = utils
 GARCH = all
 

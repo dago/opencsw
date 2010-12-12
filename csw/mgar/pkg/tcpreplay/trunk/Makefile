@@ -2,8 +2,8 @@
 #
 # ! build state unknown, work in progress, please verify
 #
-GARNAME = tcpreplay
-GARVERSION = 3.4.4
+NAME = tcpreplay
+VERSION = 3.4.4
 CATEGORIES = apps
 
 DESCRIPTION = Tool to replay saved tcpdump files at arbitrary speeds
@@ -20,8 +20,8 @@ endef
 
 VENDOR_URL   = http://tcpreplay.sf.net
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libpcap=$(prefix)

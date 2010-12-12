@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = googlemock
-GARVERSION = 1.4.0
+NAME = googlemock
+VERSION = 1.4.0
 CATEGORIES = lib
 DESCRIPTION = a library for writing and using C++ mock classes
 define BLURB
@@ -13,8 +13,8 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://code.google.com/p/googlemock/
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = gmock-$(GARVERSION).tar.gz
-WORKSRC = $(WORKDIR)/gmock-$(GARVERSION)
+DISTFILES  = gmock-$(VERSION).tar.gz
+WORKSRC = $(WORKDIR)/gmock-$(VERSION)
 UFILES_REGEX = gmock-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 

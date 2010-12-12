@@ -1,5 +1,5 @@
-GARNAME = Lingua-Stem-Ru
-GARVERSION = 0.01
+NAME = Lingua-Stem-Ru
+VERSION = 0.01
 CATEGORIES = cpan
 AUTHOR = ALGDR
 

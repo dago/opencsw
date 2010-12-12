@@ -1,5 +1,5 @@
-GARNAME = mod_fcgid
-GARVERSION = 2.3.5
+NAME = mod_fcgid
+VERSION = 2.3.5
 CATEGORIES = lib
 
 DESCRIPTION = FastCGI module with fine grained process spawn/lifetime control
@@ -14,8 +14,8 @@ endef
 
 VENDOR_URL   = http://httpd.apache.org/mod_fcgid/
 MASTER_SITES = http://apache.mirroring.de/httpd/mod_fcgid/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE      = LICENSE-FCGID
 
 PACKAGES = CSWap2modfcgid

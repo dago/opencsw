@@ -2,16 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = pylint
-GARVERSION = 0.21.3
+NAME = pylint
+VERSION = 0.21.3
 CATEGORIES = python
 DESCRIPTION = Python code static checker
 define BLURB
 endef
 SPKG_SOURCEURL = http://pypi.python.org/pypi/pylint
 MASTER_SITES = http://pypi.python.org/packages/source/p/pylint/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 ARCHALL_CSWpylint = 1
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyc
 # The software name is 'pylint'.

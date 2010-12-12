@@ -1,5 +1,5 @@
-GARNAME = Filesys-Df
-GARVERSION = 0.92
+NAME = Filesys-Df
+VERSION = 0.92
 CATEGORIES = cpan
 AUTHOR = IGUTHRIE
 
@@ -8,13 +8,13 @@ define BLURB
   This module provides a way to obtain filesystem disk space information.
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
 PACKAGES = CSWpmfilesysdf
 CATALOGNAME = pm_filesysdf
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
 

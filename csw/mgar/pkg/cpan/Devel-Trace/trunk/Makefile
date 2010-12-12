@@ -1,5 +1,5 @@
-GARNAME = Devel-Trace
-GARVERSION = 0.10
+NAME = Devel-Trace
+VERSION = 0.10
 CATEGORIES = cpan
 AUTHOR = MJD
 

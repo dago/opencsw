@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = httpd
-GARVERSION = 2.2.17
+NAME = httpd
+VERSION = 2.2.17
 CATEGORIES = server
 
 DESCRIPTION = A high performance HTTP server.
@@ -32,7 +32,7 @@ MERGE_SCRIPTS_isa-default-mpm-worker = copy-all
 # Visitor information
 SPKG_SOURCEURL = http://httpd.apache.org/
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += config.layout
 # Standard package bits
 DISTFILES += CSWapache2.killproc cswapache2
@@ -44,7 +44,7 @@ DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
 PACKAGES  = CSWapache2 CSWapache2-devel CSWapache2-manual CSWap2suexec
@@ -208,9 +208,9 @@ FIXCONFIG_DIRS     = $(DESTDIR)
 FIXCONFIG_RMPATHS  = $(DESTDIR)
 
 pre-configure-modulated:
-	(cd $(WORKDIR)/$(GARNAME)-$(GARVERSION); ./buildconf)
+	(cd $(WORKDIR)/$(NAME)-$(VERSION); ./buildconf)
 	@gsed -e s,INSTALL_PREFIX,$(prefix)/apache2,g \
-		$(WORKDIR)/config.layout > $(WORKDIR)/$(GARNAME)-$(GARVERSION)/config.layout
+		$(WORKDIR)/config.layout > $(WORKDIR)/$(NAME)-$(VERSION)/config.layout
 	@$(MAKECOOKIE)
 
 

@@ -1,5 +1,5 @@
-GARNAME = Text-Autoformat
-GARVERSION = 1.13
+NAME = Text-Autoformat
+VERSION = 1.13
 CATEGORIES = cpan
 AUTHOR = DCONWAY
 

@@ -1,5 +1,5 @@
-GARNAME = Text-Format
-GARVERSION = 0.52
+NAME = Text-Format
+VERSION = 0.52
 CATEGORIES = cpan
 AUTHOR = GABOR
 
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 DISTFILES = COPYING
-DISTNAME = $(GARNAME)$(GARVERSION)
+DISTNAME = $(NAME)$(VERSION)
 MODDIST = $(DISTNAME).tar.gz
 
 PACKAGES = CSWpmtextformat

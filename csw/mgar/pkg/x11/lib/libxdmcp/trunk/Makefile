@@ -1,5 +1,5 @@
-GARNAME = libxdmcp
-GARVERSION = 1.0.3
+NAME = libxdmcp
+VERSION = 1.0.3
 CATEGORIES = x11
 
 DESCRIPTION = X11 display manager control protocol library
@@ -9,11 +9,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libXdmcp-$(GARVERSION)
+DISTNAME = libXdmcp-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibxdmcp CSWlibxdmcpdevel
 CATALOGNAME_CSWlibxdmcp = libxdmcp

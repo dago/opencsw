@@ -1,5 +1,5 @@
-GARNAME      = pycairo
-GARVERSION   = 1.8.10
+NAME      = pycairo
+VERSION   = 1.8.10
 CATEGORIES   = lib
 
 DESCRIPTION  = Python binding for Cairo library
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES  = http://www.cairographics.org/releases/
-DISTFILES     = py2cairo-$(GARVERSION).tar.gz
+DISTFILES     = py2cairo-$(VERSION).tar.gz
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc 
 PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'

@@ -1,6 +1,6 @@
-GARNAME = mod_auth_pam
+NAME = mod_auth_pam
 ABIVERSION = 2.0
-GARVERSION = 1.1.1
+VERSION = 1.1.1
 CATEGORIES = server
 
 DESCRIPTION = Implements basic authentication on top of PAM
@@ -13,17 +13,17 @@ define BLURB
 endef
 
 MASTER_SITES = http://pam.sourceforge.net/mod_auth_pam/dist/
-DISTFILES  = $(GARNAME)-$(ABIVERSION)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(ABIVERSION)-$(VERSION).tar.gz
 CSWadmin   = depend prototype postinstall preremove space
 DISTFILES += $(call admfiles,CSWap2modauthpam,$(CSWadmin))
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-(\d+(?:\.\d+)*).tar.gz
 
 # Fix up installation routine
 PATCHFILES += install.diff
 
-WORKSRC = $(WORKDIR)/$(GARNAME)
+WORKSRC = $(WORKDIR)/$(NAME)
 
 CONFIGURE_SCRIPTS =
 

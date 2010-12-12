@@ -1,5 +1,5 @@
-GARNAME = Data-Serializer
-GARVERSION = 0.49
+NAME = Data-Serializer
+VERSION = 0.49
 CATEGORIES = cpan
 AUTHOR = NEELY
 

@@ -12,8 +12,8 @@
 
 ###### Package information #######
 
-GARNAME = cadaver
-GARVERSION = 0.23.3
+NAME = cadaver
+VERSION = 0.23.3
 CATEGORIES = net
 
 DESCRIPTION = WebDAV commandline tool
@@ -35,14 +35,14 @@ MASTER_SITES = http://www.webdav.org/cadaver/
 UPSTREAM_MASTER_SITES = http://www.webdav.org/cadaver/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWcadav.prototype
 DISTFILES += changelog.CSW
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 
 ##### Build and installation information #####
@@ -55,5 +55,5 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 post-merge:
-	@ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)$(docdir)/$(GARNAME)/changelog.CSW
+	@ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW
 

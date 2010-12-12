@@ -1,5 +1,5 @@
-GARNAME = pnp
-GARVERSION = 0.4.14
+NAME = pnp
+VERSION = 0.4.14
 CATEGORIES = apps
 
 DESCRIPTION = visualization of nagios performance data using RRD databases
@@ -9,7 +9,7 @@ endef
 
 SF_PROJ = pnp4nagios
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpnp, prototype )
 DISTFILES += cswpnp
 

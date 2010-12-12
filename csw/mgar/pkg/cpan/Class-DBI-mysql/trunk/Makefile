@@ -1,5 +1,5 @@
-GARNAME = Class-DBI-mysql
-GARVERSION = 1.00
+NAME = Class-DBI-mysql
+VERSION = 1.00
 CATEGORIES = cpan
 AUTHOR = TMTM
 

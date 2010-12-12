@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = libev
-GARVERSION = 3.9
+NAME = libev
+VERSION = 3.9
 CATEGORIES = lib
 DESCRIPTION = A high performance event handling library
 define BLURB
@@ -14,8 +14,8 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://software.schmorp.de/pkg/libev.html
 MASTER_SITES = http://dist.schmorp.de/libev/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS  = $(DIRPATHS)
 BUILD64 = 1
 NOISAEXEC = 1

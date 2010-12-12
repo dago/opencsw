@@ -1,5 +1,5 @@
-GARNAME = sgml-common
-GARVERSION = 0.6.3
+NAME = sgml-common
+VERSION = 0.6.3
 #since categories are a bit of a relic and this doesn't fit better anywhere
 #else anyway...
 CATEGORIES = xtra
@@ -36,11 +36,11 @@ RUNTIME_DEP_PKGS_CSWsgmlcommon = CSWbash CSWggrep CSWgsed
 EXTRA_FILES = xml.dcl html.dcl xml.soc html.soc
 
 MASTER_SITES = ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 DISTFILES += $(EXTRA_FILES)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = sgml-common-0.6.3-docdir.patch sgml-common-automake.patch
 PATCHFILES += sgml-common-quotes.patch sgml-common-umask.patch

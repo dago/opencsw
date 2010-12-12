@@ -1,8 +1,8 @@
 # TODO
 # - Move this to a pymodules/ subdirectory with the rest of the
 #   python modules (similar to the cpan directory).
-GARNAME = pysoappy
-GARVERSION = 0.11.4
+NAME = pysoappy
+VERSION = 0.11.4
 CATEGORIES = python
 
 DESCRIPTION = SOAP library for python
@@ -21,7 +21,7 @@ endef
 SPKG_SOURCEURL = http://pywebsvcs.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJ = pywebsvcs
-DISTNAME = SOAPpy-$(GARVERSION)
+DISTNAME = SOAPpy-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
 ARCHALL = 1

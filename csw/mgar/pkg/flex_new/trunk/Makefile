@@ -1,5 +1,5 @@
-GARNAME = flex
-GARVERSION = 2.5.35
+NAME = flex
+VERSION = 2.5.35
 CATEGORIES = devel
 
 DESCRIPTION = A tool for generating text-scanning programs.
@@ -15,7 +15,7 @@ SPKG_SOURCEURL = http://flex.sourceforge.net/
 
 SF_PROJ = flex
 MASTER_SITES = $(SF_MIRRORS)
-DISTNAME = flex-$(GARVERSION)
+DISTNAME = flex-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 PACKAGES = CSWflex-new
@@ -24,7 +24,7 @@ CATALOGNAME = flex_new
 RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 NOISALIST = 1
-CONFIGURE_ARGS = --prefix=$(libexecdir)/$(GARNAME)-$(GARVERSION)
+CONFIGURE_ARGS = --prefix=$(libexecdir)/$(NAME)-$(VERSION)
 
 TEST_TARGET = check
 
@@ -35,7 +35,7 @@ TEST_ENV += PATH=$(prefix)/gnu:$(PATH)
 
 post-install-modulated:
 	@mkdir -p $(DESTDIR)$(bindir)
-	@gln -sf ../libexec/$(GARNAME)-$(GARVERSION)/bin/flex $(DESTDIR)$(bindir)/newflex
-	@gln -sf ../libexec/$(GARNAME)-$(GARVERSION)/bin/flex $(DESTDIR)$(bindir)/flex-$(GARVERSION)
-	@rm -f $(DESTDIR)$(libexecdir)/$(GARNAME)-$(GARVERSION)/info/dir
+	@gln -sf ../libexec/$(NAME)-$(VERSION)/bin/flex $(DESTDIR)$(bindir)/newflex
+	@gln -sf ../libexec/$(NAME)-$(VERSION)/bin/flex $(DESTDIR)$(bindir)/flex-$(VERSION)
+	@rm -f $(DESTDIR)$(libexecdir)/$(NAME)-$(VERSION)/info/dir
 	@$(MAKECOOKIE)

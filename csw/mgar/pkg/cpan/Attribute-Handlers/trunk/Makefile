@@ -1,5 +1,5 @@
-GARNAME = Attribute-Handlers
-GARVERSION = 0.78
+NAME = Attribute-Handlers
+VERSION = 0.78
 CATEGORIES = cpan
 AUTHOR = ABERGMAN
 

@@ -1,5 +1,5 @@
-GARNAME      = gcc
-GARVERSION   = 4.5.0
+NAME      = gcc
+VERSION   = 4.5.0
 CATEGORIES   = lang
 
 DESCRIPTION  = The GNU Compiler Collection
@@ -9,12 +9,12 @@ define BLURB
 	for these languages (libstdc++, libgcj,...).
 endef
 
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
-MASTER_SITES = $(GNU_MIRROR)/$(GARNAME)-$(GARVERSION)/
+DISTFILES    = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 
 # We define upstream file regex so we can be notifed 
 # of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386

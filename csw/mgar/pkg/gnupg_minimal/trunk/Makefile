@@ -1,5 +1,5 @@
-GARNAME    = gnupg
-GARVERSION = 1.4.9
+NAME    = gnupg
+VERSION = 1.4.9
 CATEGORIES = apps
 
 DESCRIPTION = GnuPG without keyserver access and optional algorithms, except RSA (enable-minimal configure)
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/gnupg/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 PACKAGES = CSWgnupgminimal

@@ -1,5 +1,5 @@
-GARNAME = imapsync
-GARVERSION = 1.267
+NAME = imapsync
+VERSION = 1.267
 CATEGORIES = utils
 
 DESCRIPTION = IMAP synchronization, copy and migration tool
@@ -16,7 +16,7 @@ endef
 SPKG_SOURCEURL = http://freshmeat.net/projects/imapsync/
 
 MASTER_SITES = http://www.linux-france.org/prj/imapsync/dist/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 DISTFILES += $(call admfiles,CSWimapsync,)
 
 RUNTIME_DEP_PKGS  = CSWperl CSWpmmailimapclient CSWpmdatemanip CSWpmiosocketssl
@@ -35,10 +35,10 @@ CONFIGURE_ARGS = $(DIRPATHS)
 install-imapsync:
 	@ginstall -d $(DESTDIR)$(bindir)
 	@ginstall -d $(DESTDIR)$(mandir)/man1
-	@sed 's#/usr/bin/perl#/opt/csw/bin/perl#' $(WORKSRC)/$(GARNAME) \
-		> $(DESTDIR)$(bindir)/$(GARNAME)
-	@chmod 755 $(DESTDIR)$(bindir)/$(GARNAME)
-	@pod2man $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/$(GARNAME).1
+	@sed 's#/usr/bin/perl#/opt/csw/bin/perl#' $(WORKSRC)/$(NAME) \
+		> $(DESTDIR)$(bindir)/$(NAME)
+	@chmod 755 $(DESTDIR)$(bindir)/$(NAME)
+	@pod2man $(WORKSRC)/$(NAME) > $(DESTDIR)$(mandir)/man1/$(NAME).1
 	@$(MAKECOOKIE)
 
 include gar/category.mk

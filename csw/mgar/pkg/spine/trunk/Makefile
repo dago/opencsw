@@ -6,8 +6,8 @@
 # * Document and merge patches, ./configure LD* hack really required?!
 # * libtool hack really required?
 #
-GARNAME = spine
-GARVERSION = 0.8.7e
+NAME = spine
+VERSION = 0.8.7e
 CATEGORIES = apps
 
 DESCRIPTION = Very fast poller for cacti
@@ -22,9 +22,9 @@ endef
 
 VENDOR_URL   = http://www.cacti.net/
 MASTER_SITES = http://www.cacti.net/downloads/spine/
-DISTFILES    = cacti-$(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = cacti-$(NAME)-$(VERSION).tar.gz
 DISTFILES   += cswusergroup CSWspine.postinstall
-WORKSRC      = $(WORKDIR)/cacti-$(GARNAME)-$(GARVERSION)
+WORKSRC      = $(WORKDIR)/cacti-$(NAME)-$(VERSION)
 
 PATCHFILES += configure.diff
 PATCHFILES += spine.h.diff

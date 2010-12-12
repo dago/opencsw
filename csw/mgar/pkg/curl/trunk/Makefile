@@ -1,5 +1,5 @@
-GARNAME = curl
-GARVERSION = 7.21.2
+NAME = curl
+VERSION = 7.21.2
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers.
@@ -14,14 +14,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://curl.haxx.se/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += libcurl.so.3.0.0.s
 DISTFILES += libcurl.so.2.0.2.s
 DISTFILES += libcurl.so.3.0.0.i
 DISTFILES += libcurl.so.2.0.2.i
 DISTFILES += curlbuild.h
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWcurl CSWcurlrt CSWcurlrtfull CSWcurldevel
 CATALOGNAME_CSWcurl       = curl

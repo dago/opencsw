@@ -1,5 +1,5 @@
-GARNAME = Net-DNS-Resolver-Programmable
-GARVERSION = v0.003
+NAME = Net-DNS-Resolver-Programmable
+VERSION = v0.003
 CATEGORIES = cpan
 AUTHOR = JMEHNLE
 

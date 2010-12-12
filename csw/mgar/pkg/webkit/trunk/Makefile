@@ -1,5 +1,5 @@
-GARNAME = webkit
-GARVERSION = 1.1.15.4
+NAME = webkit
+VERSION = 1.1.15.4
 CATEGORIES = gnome
 
 DESCRIPTION = Portable web rendering engine
@@ -7,8 +7,8 @@ define BLURB
 endef
 
 MASTER_SITES =  http://www.webkitgtk.org/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTNAME  = $(NAME)-$(VERSION)
 
 PACKAGES = CSWwebkit CSWwebkitdevel CSWwebkitdoc
 CATALOGNAME_CSWwebkit = webkit
@@ -25,7 +25,7 @@ RUNTIME_DEP_PKGS_CSWwebkitdoc += CSWwebkit
 BUILD_DEP_PKGS += CSWenchantdevel CSWgperf CSWlibicudevel CSWlibsoupdevel
 BUILD_DEP_PKGS += CSWgstreamer
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.webkitgtk.org/
 

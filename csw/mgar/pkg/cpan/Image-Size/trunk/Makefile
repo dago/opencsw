@@ -1,5 +1,5 @@
-GARNAME = Image-Size
-GARVERSION = 3.01
+NAME = Image-Size
+VERSION = 3.01
 CATEGORIES = cpan
 AUTHOR = RJRAY
 

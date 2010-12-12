@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = mailutils
-GARVERSION = 2.2
+NAME = mailutils
+VERSION = 2.2
 CATEGORIES = utils
 
 DESCRIPTION = A collection of mail related utilities
@@ -11,7 +11,7 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(DISTNAME).tar.xz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://savannah.gnu.org/projects/mailutils/
 

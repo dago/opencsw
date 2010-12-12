@@ -1,5 +1,5 @@
-GARNAME = ruby-net-ldap
-GARVERSION = 0.0.4
+NAME = ruby-net-ldap
+VERSION = 0.0.4
 CATEGORIES = rbgems
 
 DESCRIPTION = An LDAP support library written in pure Ruby

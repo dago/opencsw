@@ -1,5 +1,5 @@
-GARNAME = wavpack
-GARVERSION = 4.60.1
+NAME = wavpack
+VERSION = 4.60.1
 CATEGORIES = lib
 
 DESCRIPTION = Open audio compression format
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.wavpack.com/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS = CSWiconv
 

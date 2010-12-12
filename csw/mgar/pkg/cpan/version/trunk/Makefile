@@ -1,5 +1,5 @@
-GARNAME = version
-GARVERSION = 0.82
+NAME = version
+VERSION = 0.82
 CATEGORIES = cpan
 AUTHOR = JPEACOCK
 

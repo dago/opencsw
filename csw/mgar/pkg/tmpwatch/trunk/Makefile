@@ -1,5 +1,5 @@
-GARNAME = tmpwatch
-GARVERSION = 2.10.1
+NAME = tmpwatch
+VERSION = 2.10.1
 CATEGORIES = apps
 
 DESCRIPTION = Removes files which haven't been accessed for a period of time
@@ -12,8 +12,8 @@ endef
 
 VENDOR_URL   = https://fedorahosted.org/tmpwatch/
 MASTER_SITES = https://fedorahosted.org/releases/t/m/tmpwatch/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+DISTFILES    = $(NAME)-$(VERSION).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =

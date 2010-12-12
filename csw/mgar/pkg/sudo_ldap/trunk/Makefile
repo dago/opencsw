@@ -1,5 +1,5 @@
-GARNAME = sudo
-GARVERSION = 1.7.4p4
+NAME = sudo
+VERSION = 1.7.4p4
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges (LDAP Enabled)
@@ -11,12 +11,12 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 PATCHFILES = install.diff
 
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
-UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
+UFILES_REGEX = $(NAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
 
 PACKAGES = CSWsudoldap 
 

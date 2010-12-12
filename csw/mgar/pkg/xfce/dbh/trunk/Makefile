@@ -1,5 +1,5 @@
-GARNAME      = dbh
-GARVERSION   = 1.0.24
+NAME      = dbh
+VERSION   = 1.0.24
 CATEGORIES   = xfce
 XFCE_VERSION = 4.2.3.2
 
@@ -8,13 +8,13 @@ define BLURB
   Disk based hash tables
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-PKGDIST    = $(GARNAME)-$(GARVERSION).tar.gz	
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+PKGDIST    = $(NAME)-$(VERSION).tar.gz	
 
 #DISTFILES += $(call admfiles,CSWdbh, )
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Package description
 CATALOGNAME = dbh

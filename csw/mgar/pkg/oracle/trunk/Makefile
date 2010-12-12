@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = oracle
-GARVERSION = 10.2.0
+NAME = oracle
+VERSION = 10.2.0
 CATEGORIES = apps
 define BLURB
 endef
@@ -28,7 +28,7 @@ PROTOTYPE_FILTER = awk '$$$$3 ~/\/extjob$$$$/ \
 	{ $$$$4 = 3755; $$$$5 = "nobody"; $$$$6 = "nobody" } \
 	{ print }'
 
-ORACLE_HOME = $(prefix)/product/$(GARVERSION)/Db_1
+ORACLE_HOME = $(prefix)/product/$(VERSION)/Db_1
 
 include gar/category.mk
 

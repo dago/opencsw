@@ -1,5 +1,5 @@
-GARNAME = Text-CSV_XS
-GARVERSION = 0.70
+NAME = Text-CSV_XS
+VERSION = 0.70
 CATEGORIES = cpan
 AUTHOR = HMBRAND
 
@@ -17,6 +17,6 @@ CATALOGNAME = pm_textcsvxs
 INCOMPATIBLE_PKGS = CSWpmttextcsvxs
 
 # This module uses .tgz instead of .tar.gz :-(
-MODDIST = $(GARNAME)-$(GARVERSION).tgz
+MODDIST = $(NAME)-$(VERSION).tgz
 
 include gar/category.mk

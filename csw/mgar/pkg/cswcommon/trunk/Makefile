@@ -1,5 +1,5 @@
-GARNAME = cswcommon
-GARVERSION = 1.4.6
+NAME = cswcommon
+VERSION = 1.4.6
 CATEGORIES = utils
 
 DESCRIPTION = Installs some useful standard CSW filesystem symlinks and files

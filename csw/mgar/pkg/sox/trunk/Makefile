@@ -1,5 +1,5 @@
-GARNAME = sox
-GARVERSION = 14.3.1
+NAME = sox
+VERSION = 14.3.1
 CATEGORIES = apps
 
 DESCRIPTION = Swiss Army Knife of sound processing utilities
@@ -17,7 +17,7 @@ DISTFILES = $(DISTNAME).tar.gz
 # But as we only need the library in 64 bit anyway this shouldn't hurt.
 PATCHFILES = 0001-Disable-stdio-hack-to-rewind-pipes.patch
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://sox.sourceforge.net/
 

@@ -1,5 +1,5 @@
-GARNAME = Digest-BubbleBabble
-GARVERSION = 0.01
+NAME = Digest-BubbleBabble
+VERSION = 0.01
 CATEGORIES = cpan
 AUTHOR = BTROTT
 

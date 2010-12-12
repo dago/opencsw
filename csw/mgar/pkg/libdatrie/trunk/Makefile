@@ -1,5 +1,5 @@
-GARNAME = libdatrie
-GARVERSION = 0.2.2
+NAME = libdatrie
+VERSION = 0.2.2
 CATEGORIES = lib
 
 DESCRIPTION = Double array tree library
@@ -7,10 +7,10 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://linux.thai.net/pub/ThaiLinux/software/libthai/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://linux.thai.net/~thep/datrie/datrie.html
 

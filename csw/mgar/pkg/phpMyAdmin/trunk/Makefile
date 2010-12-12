@@ -1,5 +1,5 @@
-GARNAME = phpMyAdmin
-GARVERSION = 3.2.2
+NAME = phpMyAdmin
+VERSION = 3.2.2
 CATEGORIES = apps
 
 DESCRIPTION = Effective MySQL Management
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://garr.dl.sourceforge.net/sourceforge/phpmyadmin/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-all-languages.tar.bz2
+DISTFILES  = $(NAME)-$(VERSION)-all-languages.tar.bz2
 
 PACKAGES = CSWphpmyadmin
 CATALOGNAME = phpmyadmin
@@ -22,7 +22,7 @@ RUNTIME_DEP_PKGS  = CSWapache2 CSWap2modphp5 CSWmysql5 CSWphp5 CSWphp5gd CSWphp5
 RUNTIME_DEP_PKGS += CSWphp5mysqli CSWphp5session CSWphp5mbstring CSWphp5ctype CSWphp5zip
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-all-languages.tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-all-languages.tar.bz2
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -35,7 +35,7 @@ SPKG_SOURCEURL = http://www.phpmyadmin.net
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)$(prefix)/share/www/phpmyadmin
 	@ginstall -d $(DESTDIR)$(prefix)/share/www
 	@cp -R $(WORKSRC)-all-languages $(DESTDIR)$(prefix)/share/www/phpmyadmin

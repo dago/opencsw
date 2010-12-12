@@ -1,5 +1,5 @@
-GARNAME = sar2rrd
-GARVERSION = 2.5
+NAME = sar2rrd
+VERSION = 2.5
 CATEGORIES = utils
 
 DESCRIPTION = Generate RRDTool graphs from sar output
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.trickytools.com/downloads/
-DISTFILES  = $(GARNAME)-$(GARVERSION).pl
-DISTFILES += $(GARNAME)-graph-$(GARVERSION).pl
+DISTFILES  = $(NAME)-$(VERSION).pl
+DISTFILES += $(NAME)-graph-$(VERSION).pl
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.trickytools.com/php/sar2rrd.php
 
@@ -43,6 +43,6 @@ post-extract-modulated:
 
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
-	ginstall $(WORKDIR)/$(GARNAME)-$(GARVERSION).pl $(DESTDIR)$(bindir)/$(GARNAME)
-	ginstall $(WORKDIR)/$(GARNAME)-graph-$(GARVERSION).pl $(DESTDIR)$(bindir)/$(GARNAME)-graph
+	ginstall $(WORKDIR)/$(NAME)-$(VERSION).pl $(DESTDIR)$(bindir)/$(NAME)
+	ginstall $(WORKDIR)/$(NAME)-graph-$(VERSION).pl $(DESTDIR)$(bindir)/$(NAME)-graph
 	@$(MAKECOOKIE)

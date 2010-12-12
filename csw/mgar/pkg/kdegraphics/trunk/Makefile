@@ -1,4 +1,4 @@
-GARNAME = kdegraphics
+NAME = kdegraphics
 CATEGORIES = kde
 
 DESCRIPTION = Graphic utilities for KDE (gcc3)

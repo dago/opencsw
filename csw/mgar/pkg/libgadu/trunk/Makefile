@@ -1,5 +1,5 @@
-GARNAME = libgadu
-GARVERSION = 1.8.2
+NAME = libgadu
+VERSION = 1.8.2
 CATEGORIES = lib
 SPKG_SOURCEURL = http://toxygen.net/libgadu
 
@@ -9,7 +9,7 @@ GARCOMPILER = GNU
 DESCRIPTION = Gadu-Gadu protocol implementation library
 
 MASTER_SITES = http://toxygen.net/libgadu/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibgadu,depend prototype)
 
 #No tests

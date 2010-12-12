@@ -1,5 +1,5 @@
-GARNAME = Readonly
-GARVERSION = 1.03
+NAME = Readonly
+VERSION = 1.03
 CATEGORIES = cpan
 AUTHOR = ROODE
 

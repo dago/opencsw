@@ -1,5 +1,5 @@
-GARNAME = openjade
-GARVERSION = 1.3.2
+NAME = openjade
+VERSION = 1.3.2
 CATEGORIES = apps
 
 BUILD_DEP_PKGS = CSWopenspdevel
@@ -21,7 +21,7 @@ XML, RTF, TeX, MIF (FrameMaker), SGML, or XML.
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWopenjade.postinstall CSWopenjade.preremove
 
 PATCHFILES = openjade-1.3.1-nsl.patch
@@ -33,7 +33,7 @@ PATCHFILES = openjade-1.3.1-nsl.patch
 GARCOMPILER = GCC3
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
-CONFIGURE_ARGS += --datadir=$(datadir)/sgml/$(GARNAME)
+CONFIGURE_ARGS += --datadir=$(datadir)/sgml/$(NAME)
 CONFIGURE_ARGS += --enable-splibdir=$(libdir)
 CONFIGURE_ARGS += --enable-default-catalog=$(sysconfdir)/sgml/catalog
 CONFIGURE_ARGS += --disable-static
@@ -46,8 +46,8 @@ sysconfdir = /etc/opt/csw
 
 include gar/category.mk
 
-sgmldir = $(DESTDIR)/$(datadir)/sgml/$(GARNAME)
-sgmldoc = $(DESTDIR)/$(docdir)/$(GARNAME)
+sgmldir = $(DESTDIR)/$(datadir)/sgml/$(NAME)
+sgmldoc = $(DESTDIR)/$(docdir)/$(NAME)
 INSTALL = /opt/csw/bin/ginstall -c
 INSTALL_DATA = $(INSTALL) -m 0644
 INSTALL_DIR = $(INSTALL) -m 0755 -d
@@ -72,7 +72,7 @@ post-install-modulated:
 		$(INSTALL_DATA) dsssl/style-sheet.dtd $(sgmldir); \
 		$(INSTALL_DIR) $(DESTDIR)/$(sysconfdir)/sgml; \
 		cd $(DESTDIR)/$(sysconfdir)/sgml; \
-		touch $(GARNAME).soc)
+		touch $(NAME).soc)
 	@echo Installing docs.
 	@( cd $(WORKSRC); \
 		$(INSTALL_DIR) $(sgmldoc); \

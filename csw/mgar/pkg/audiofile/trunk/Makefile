@@ -1,5 +1,5 @@
-GARNAME = audiofile
-GARVERSION = 0.2.7
+NAME = audiofile
+VERSION = 0.2.7
 CATEGORIES = lib
 
 DESCRIPTION = Silicon Graphics Audio File Library
@@ -13,13 +13,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.68k.org/~michael/audiofile/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # Delivered from the Michael Pruett (upstream author)
 PATCHFILES = 0001-Add-missing-headers-for-C99.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 

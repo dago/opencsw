@@ -1,5 +1,5 @@
-GARNAME = Config-Augeas
-GARVERSION = 0.701
+NAME = Config-Augeas
+VERSION = 0.701
 CATEGORIES = cpan
 AUTHOR = DDUMONT
 

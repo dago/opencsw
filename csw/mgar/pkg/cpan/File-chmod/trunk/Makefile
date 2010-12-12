@@ -1,5 +1,5 @@
-GARNAME = File-chmod
-GARVERSION = 0.32
+NAME = File-chmod
+VERSION = 0.32
 CATEGORIES = cpan
 AUTHOR = PINYAN
 

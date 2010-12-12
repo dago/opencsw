@@ -1,5 +1,5 @@
-GARNAME = Devel-LexAlias
-GARVERSION = 0.04
+NAME = Devel-LexAlias
+VERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = RCLAMP
 
@@ -17,7 +17,7 @@ BUILD_DEP_PKGS = CSWpmdevelcaller CSWpmpadwalker
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)

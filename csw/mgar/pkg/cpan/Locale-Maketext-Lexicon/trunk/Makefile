@@ -1,5 +1,5 @@
-GARNAME = Locale-Maketext-Lexicon
-GARVERSION = 0.77
+NAME = Locale-Maketext-Lexicon
+VERSION = 0.77
 CATEGORIES = cpan
 AUTHOR = DRTECH
 

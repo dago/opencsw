@@ -1,5 +1,5 @@
-GARNAME = mm
-GARVERSION = 1.4.2
+NAME = mm
+VERSION = 1.4.2
 CATEGORIES = lib
 
 DESCRIPTION = Shared Memory Allocation abstraction library.
@@ -13,13 +13,13 @@ define BLURB
   structures inside those shared memory segments.
 endef
 
-MASTER_SITES = ftp://ftp.ossp.org/pkg/lib/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = ftp://ftp.ossp.org/pkg/lib/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibmm,prototype)
 DISTFILES += libmm.so.13.0.20.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static

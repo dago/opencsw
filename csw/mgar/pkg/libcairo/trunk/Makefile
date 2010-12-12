@@ -1,5 +1,5 @@
-GARNAME      = libcairo
-GARVERSION   = 1.8.8
+NAME      = libcairo
+VERSION   = 1.8.8
 CATEGORIES   = lib
 
 DESCRIPTION  = The Cairo 2D Graphics Library
@@ -8,11 +8,11 @@ Cairo is a 2D graphics library with support for multiple output devices. Current
 endef
 
 MASTER_SITES  = http://www.cairographics.org/releases/
-DISTNAME      = cairo-$(GARVERSION)
+DISTNAME      = cairo-$(VERSION)
 DISTFILES     = $(DISTNAME).tar.gz 
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibcairo CSWlibcairodevel CSWlibcairodoc
 CATALOGNAME_CSWlibcairo      = libcairo

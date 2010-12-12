@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = dia-shapes
-GARVERSION = 1.0
+NAME = dia-shapes
+VERSION = 1.0
 CATEGORIES = category
 
 DESCRIPTION = Shapes for dia
@@ -45,7 +45,7 @@ MASTER_SITES = $(foreach S,$(SHAPES),http://dia-installer.de/shapes/$S/)
 DISTFILES  = $(foreach S,$(SHAPES),$S.zip)
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # /opt/csw/share/dia/shapes
 

@@ -1,5 +1,5 @@
-GARNAME = docbook
-GARVERSION = 1.68.1
+NAME = docbook
+VERSION = 1.68.1
 CATEGORIES = lib
 
 DESCRIPTION = docbook xsl stylesheets
@@ -11,8 +11,8 @@ define BLURB
   HTML Help, and JavaHelp.
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
-DISTFILES = $(GARNAME)-xsl-$(GARVERSION).tar.bz2
+MASTER_SITES = $(SF_MIRROR)/$(NAME)/
+DISTFILES = $(NAME)-xsl-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=21935

@@ -1,5 +1,5 @@
-GARNAME = Schedule-At
-GARVERSION = 1.10
+NAME = Schedule-At
+VERSION = 1.10
 CATEGORIES = cpan
 AUTHOR = JOSERODR
 

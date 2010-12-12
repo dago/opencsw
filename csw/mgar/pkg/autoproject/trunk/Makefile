@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = autoproject
-GARVERSION = 0.20
+NAME = autoproject
+VERSION = 0.20
 
 CATEGORIES = apps
 DESCRIPTION = A utility for automated configuration of GNU autotools
@@ -20,10 +20,10 @@ define BLURB
 
 endef
 SPKG_SOURCEURL = http://packages.debian.org/unstable/devel/autoproject
-MASTER_SITES = http://ftp.de.debian.org/debian/pool/main/a/$(GARNAME)/
-DISTFILES  = $(GARNAME)_$(GARVERSION).orig.tar.gz
+MASTER_SITES = http://ftp.de.debian.org/debian/pool/main/a/$(NAME)/
+DISTFILES  = $(NAME)_$(VERSION).orig.tar.gz
 PATCHFILES = 0001-gawk-and-ggrep.patch
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWautomake CSWbash CSWgawk CSWggrep
 TEST_SCRIPTS =

@@ -1,5 +1,5 @@
-GARNAME = findutils
-GARVERSION = 4.4.2
+NAME = findutils
+VERSION = 4.4.2
 CATEGORIES = utils
 
 DESCRIPTION = A set of utilities for searching a filesystem
@@ -14,13 +14,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWfindutils.postinstall
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_MERGE_EXCLUDE_FILES  = /opt/csw/lib/charset.alias 
 EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/share/info/dir

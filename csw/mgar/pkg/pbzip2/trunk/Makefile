@@ -1,5 +1,5 @@
-GARNAME = pbzip2
-GARVERSION = 1.1.1
+NAME = pbzip2
+VERSION = 1.1.1
 CATEGORIES = utils
 
 DESCRIPTION = Parallel BZIP2 Data Compression Software
@@ -11,10 +11,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://compression.ca/pbzip2/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
@@ -46,6 +46,6 @@ install-custom:
 	ginstall -m 0644 $(WORKSRC)/pbzip2.1 $(DESTDIR)$(mandir)/man1
 	[ ! -d "$(DESTDIR)$(bindir)" ] && \
 		ginstall -d $(DESTDIR)$(bindir)
-	ginstall -m 0755 $(WORKSRC)/$(GARNAME) $(DESTDIR)$(bindir)
-	ln -s -f $(bindir)/$(GARNAME) $(DESTDIR)$(bindir)/pbunzip2
-	ln -s -f $(bindir)/$(GARNAME) $(DESTDIR)$(bindir)/pbzcat
+	ginstall -m 0755 $(WORKSRC)/$(NAME) $(DESTDIR)$(bindir)
+	ln -s -f $(bindir)/$(NAME) $(DESTDIR)$(bindir)/pbunzip2
+	ln -s -f $(bindir)/$(NAME) $(DESTDIR)$(bindir)/pbzcat

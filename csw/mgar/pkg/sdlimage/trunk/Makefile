@@ -1,5 +1,5 @@
-GARNAME = SDL_image
-GARVERSION = 1.2.10
+NAME = SDL_image
+VERSION = 1.2.10
 CATEGORIES = lib
 
 DESCRIPTION = SDL image file loading library
@@ -8,12 +8,12 @@ SDL image library loads images as SDL surfaces, and supports the following forma
 endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_image/release/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWsdlimage
 RUNTIME_DEP_PKGS = CSWlibsdl
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 TEST_SCRIPTS =

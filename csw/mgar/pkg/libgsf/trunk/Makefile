@@ -1,5 +1,5 @@
-GARNAME = libgsf
-GARVERSION = 1.14.11
+NAME = libgsf
+VERSION = 1.14.11
 CATEGORIES = gnome
 
 DESCRIPTION = GNOME Structured File Library
@@ -11,14 +11,14 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 BUILD_DEP_PKGS += CSWgnulinks CSWgtk-doc CSWglib2devel CSWlibxml2devel
 
 RUNTIME_DEP_PKGS += CSWbonobo2 CSWbzip2 CSWgconf2 CSWggettextrt CSWglib2
 RUNTIME_DEP_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_LD_OPTIONS = -L../gsf/.libs -L../../gsf/.libs
 

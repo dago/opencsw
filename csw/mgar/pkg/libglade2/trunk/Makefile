@@ -1,7 +1,7 @@
-GARNAME = libglade
-GARVERSION = 2.6.4
+NAME = libglade
+VERSION = 2.6.4
 CATEGORIES = lib
-RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\.[0-9].*\)\.[0-9]*/\1/')
+RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\.[0-9].*\)\.[0-9]*/\1/')
 
 DESCRIPTION = library to load Glade XML user interface files at runtime
 define BLURB
@@ -9,7 +9,7 @@ Libglade is a library that performs a similar job to the C source output routine
 endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/libglade/$(RELVER)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWlibglade2
 CATALOGNAME = libglade2
@@ -21,7 +21,7 @@ RUNTIME_DEP_PKGS += CSWgtk2 CSWlibatk CSWlibcairo CSWlibxml2 CSWpango
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib

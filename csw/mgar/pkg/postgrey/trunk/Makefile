@@ -1,5 +1,5 @@
-GARNAME = postgrey
-GARVERSION = 1.32
+NAME = postgrey
+VERSION = 1.32
 CATEGORIES = net
 
 DESCRIPTION = Postfix policy server implementing greylisting
@@ -8,14 +8,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://postgrey.schweikert.ch/pub/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS  = CSWperl CSWpmiomultiplex CSWpmnetserver
 RUNTIME_DEP_PKGS += CSWbdb48 CSWpostfix CSWpmberkeleydb
 
 ARCHALL = 1
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -32,7 +32,7 @@ PATCHFILES = postgrey.p
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWpostgrey.init $(DESTDIR)/opt/csw/etc/init.d/cswpostgrey
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/postfix
@@ -43,12 +43,12 @@ install-custom:
 	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWpostgrey/cswusergroup
 	@ginstall -m 755 -d $(DESTDIR)$(sbindir)
 	@ginstall -m 755 $(WORKSRC)/postgrey $(DESTDIR)$(sbindir)
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 444 $(WORKSRC)/Changes $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 444 $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 755 $(WORKSRC)/policy-test $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 755 $(WORKSRC)/contrib/postgreyreport $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+	@ginstall -m 444 $(WORKSRC)/Changes $(DESTDIR)$(docdir)/$(NAME)
+	@ginstall -m 444 $(WORKSRC)/README $(DESTDIR)$(docdir)/$(NAME)
+	@ginstall -m 755 $(WORKSRC)/policy-test $(DESTDIR)$(docdir)/$(NAME)
+	@ginstall -m 755 $(WORKSRC)/contrib/postgreyreport $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -m 755 -d $(DESTDIR)$(mandir)/man1
-	@pod2man --section=1 $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/$(GARNAME).1
-	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)
+	@pod2man --section=1 $(WORKSRC)/$(NAME) > $(DESTDIR)$(mandir)/man1/$(NAME).1
+	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(NAME)
 	@$(MAKECOOKIE)

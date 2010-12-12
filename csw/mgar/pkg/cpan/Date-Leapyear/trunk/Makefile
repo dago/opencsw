@@ -1,5 +1,5 @@
-GARNAME = Date-Leapyear
-GARVERSION = 1.72
+NAME = Date-Leapyear
+VERSION = 1.72
 CATEGORIES = cpan
 AUTHOR = RBOW
 

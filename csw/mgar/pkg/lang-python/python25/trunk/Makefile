@@ -1,11 +1,11 @@
-GARNAME = Python
-GARVERSION = 2.5.1
+NAME = Python
+VERSION = 2.5.1
 GARRELEASE =
-DISTVERSION = $(GARVERSION)$(GARRELEASE)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
+DISTVERSION = $(VERSION)$(GARRELEASE)
+DISTNAME = $(NAME)-$(DISTVERSION)
 CATEGORIES = lang
 
-SPKG_SOURCEURL = http://www.python.org/download/releases/$(GARVERSION)
+SPKG_SOURCEURL = http://www.python.org/download/releases/$(VERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -18,7 +18,7 @@ define BLURB
   an extension language for applications that need a programmable interface.
 endef
 
-MASTER_SITES = http://www.python.org/ftp/python/$(GARVERSION)/
+MASTER_SITES = http://www.python.org/ftp/python/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://www.python.org/ftp/python/
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWpython,depend prototype)

@@ -1,6 +1,6 @@
-GARNAME = mod_perl
+NAME = mod_perl
 DISTVERSION = 2.0.4
-GARVERSION = $(subst -,,$(DISTVERSION))
+VERSION = $(subst -,,$(DISTVERSION))
 CATEGORIES = cpan
 AUTHOR = GOZER
 

@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = fontforge
+NAME = fontforge
 VERSION_DATESTAMP = 20090923
-GARVERSION = 0.$(VERSION_DATESTAMP)
+VERSION = 0.$(VERSION_DATESTAMP)
 CATEGORIES = lib
 DESCRIPTION = An outline font editor
 define BLURB

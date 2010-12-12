@@ -1,5 +1,5 @@
-GARNAME = tunctl
-GARVERSION = 1.5
+NAME = tunctl
+VERSION = 1.5
 CATEGORIES = net
 
 DESCRIPTION = Used to set up and maintain persistent TUN/TAP network interface
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://garr.dl.sourceforge.net/sourceforge/tunctl/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # since there is no configure script, this is intentionally left empty
 CONFIGURE_ARGS = $(DIRPATHS)

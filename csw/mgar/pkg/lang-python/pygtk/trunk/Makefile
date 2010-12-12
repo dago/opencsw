@@ -1,7 +1,7 @@
-GARNAME = pygtk
-GARVERSION = 2.17.0
+NAME = pygtk
+VERSION = 2.17.0
 CATEGORIES = lang
-RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\.[0-9].*\)\.[0-9]*/\1/')
+RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\.[0-9].*\)\.[0-9]*/\1/')
 
 DESCRIPTION = Python bindings for the GTK library
 define BLURB
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/pygtk/$(RELVER)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 STRIP_LIBTOOL = 1
 
 PACKAGES = CSWpy-gtk

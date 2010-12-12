@@ -1,5 +1,5 @@
-GARNAME = icinga
-GARVERSION = 0.8.1
+NAME = icinga
+VERSION = 0.8.1
 CATEGORIES = apps
 
 DESCRIPTION = icinga network monitoring base package (no plugins)
@@ -8,7 +8,7 @@ endef
 
 SF_PROJ = icinga
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWicinga, prototype)
 DISTFILES += cswicinga
 DISTFILES += cswusergroup

@@ -1,5 +1,5 @@
-GARNAME = wireshark
-GARVERSION = 1.4.0
+NAME = wireshark
+VERSION = 1.4.0
 CATEGORIES = apps
 
 DESCRIPTION = Wireshark (was Ethereal) is a free network protocol analyzer
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 RUNTIME_DEP_PKGS_CSWwireshark += CSWgcrypt CSWgeoip CSWggettextrt CSWglib2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWgpgerr CSWgtk2 CSWkrb5lib CSWlibpcap 
@@ -27,7 +27,7 @@ CHECKPKG_OVERRIDES_CSWwireshark += bad-rpath-entry|/opt/csw/lib/|opt/csw/bin/tsh
 CHECKPKG_OVERRIDES_CSWwireshark += bad-rpath-entry|/opt/csw/lib/|opt/csw/bin/wireshark
 CHECKPKG_OVERRIDES_CSWwireshark += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libwireshark.so.0.0.1
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.wireshark.org/
 

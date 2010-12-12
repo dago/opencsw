@@ -1,5 +1,5 @@
-GARNAME = pmtools
-GARVERSION = 1.10
+NAME = pmtools
+VERSION = 1.10
 CATEGORIES = cpan
 AUTHOR = MLFISHER
 

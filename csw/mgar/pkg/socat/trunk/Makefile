@@ -19,8 +19,8 @@
 #   also ask why here strings (<<<) are used over here docs (<<EOM).
 #   Solaris 9 bin bash doesn't support here strings.
 #
-GARNAME = socat
-GARVERSION = 1.7.1.3
+NAME = socat
+VERSION = 1.7.1.3
 CATEGORIES = net
 
 DESCRIPTION = Multipurpose relay for bidirectional data transfer
@@ -36,8 +36,8 @@ endef
 
 VENDOR_URL   = http://www.dest-unreach.org/socat/
 MASTER_SITES = http://www.dest-unreach.org/socat/download/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 
 RUNTIME_DEP_PKGS = CSWosslrt CSWreadline CSWtcpwrap
@@ -123,7 +123,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: 
 	ginstall -d $(DOCDEST)
 	cp $(FILEDIR)/changelog.CSW $(FILEDIR)/README.CSW $(DOCDEST)

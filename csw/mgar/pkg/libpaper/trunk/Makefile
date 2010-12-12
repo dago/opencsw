@@ -1,5 +1,5 @@
-GARNAME = libpaper
-GARVERSION = 1.1.23+nmu1
+NAME = libpaper
+VERSION = 1.1.23+nmu1
 #GARSUBREV = nmu1
 CATEGORIES = lib
 
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.us.debian.org/debian/pool/main/libp/libpaper/
-#DISTFILES  = $(GARNAME)_$(GARVERSION)+$(GARSUBREV).tar.gz
-DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
-DISTNAME = $(GARNAME)-$(GARVERSION)
-#DISTNAME = $(GARNAME)-$(GARVERSION)+$(GARSUBREV)
+#DISTFILES  = $(NAME)_$(VERSION)+$(GARSUBREV).tar.gz
+DISTFILES  = $(NAME)_$(VERSION).tar.gz
+DISTNAME = $(NAME)-$(VERSION)
+#DISTNAME = $(NAME)-$(VERSION)+$(GARSUBREV)
 
 PACKAGES = CSWlibpaper 
 #PACKAGES = CSWlibpaper CSWlibpaperdevel
@@ -27,7 +27,7 @@ RUNTIME_DEP_PKGS_CSWlibpaper =
 
 #PKGFILES_CSWlibpaperdevel = $(PKGFILES_DEVEL)
 
-UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)_(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_MASTER_SITES = $(MASTER_SITES)
 
 EXTRA_CFLAGS = -Xc

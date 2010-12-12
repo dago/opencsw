@@ -1,6 +1,6 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
-GARNAME = gpicview
-GARVERSION = 0.2.1
+NAME = gpicview
+VERSION = 0.2.1
 CATEGORIES = utils
 
 DESCRIPTION = A Simple and Fast Image Viewer for X
@@ -10,7 +10,7 @@ endef
 VENDOR_URL   = http://lxde.sourceforge.net/gpicview/
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJ      = lxde
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS += CSWlibatk
 RUNTIME_DEP_PKGS += CSWggettextrt

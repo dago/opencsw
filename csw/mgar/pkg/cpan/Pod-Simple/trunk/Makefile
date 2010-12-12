@@ -1,5 +1,5 @@
-GARNAME = Pod-Simple
-GARVERSION = 3.14
+NAME = Pod-Simple
+VERSION = 3.14
 CATEGORIES = cpan
 AUTHOR = DWHEELER
 

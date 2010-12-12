@@ -1,5 +1,5 @@
-GARNAME = csup
-GARVERSION = snap
+NAME = csup
+VERSION = snap
 PATCHLEVEL = 20060318
 CATEGORIES = apps
 
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.mu.org/~mux/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-$(PATCHLEVEL).tgz
+DISTFILES  = $(NAME)-$(VERSION)-$(PATCHLEVEL).tgz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz

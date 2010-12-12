@@ -1,5 +1,5 @@
-GARNAME = rake
-GARVERSION = 0.8.3
+NAME = rake
+VERSION = 0.8.3
 CATEGORIES = rbgems
 
 DESCRIPTION = Rake is make for ruby

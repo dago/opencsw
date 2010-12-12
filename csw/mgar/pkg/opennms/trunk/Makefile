@@ -1,5 +1,5 @@
-GARNAME = opennms
-GARVERSION = 1.6.10
+NAME = opennms
+VERSION = 1.6.10
 CATEGORIES = java
 
 DESCRIPTION = enterprise grade network management platform
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-source-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-source-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

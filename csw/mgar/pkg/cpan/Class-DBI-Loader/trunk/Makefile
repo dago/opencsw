@@ -1,5 +1,5 @@
-GARNAME = Class-DBI-Loader
-GARVERSION = 0.03
+NAME = Class-DBI-Loader
+VERSION = 0.03
 CATEGORIES = cpan
 AUTHOR = IKEBE
 

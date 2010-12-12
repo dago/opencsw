@@ -1,5 +1,5 @@
-GARNAME = amarok
-GARVERSION = 1.4.8
+NAME = amarok
+VERSION = 1.4.8
 CATEGORIES = apps
 
 DESCRIPTION = Amarok is the music player for Linux and Unix with an intuitive interface
@@ -8,12 +8,12 @@ define BLURB
   is also widely used on other desktop environments
 endef
 
-MASTER_SITES = ftp://ftp.kde.org/pub/kde/stable/amarok/$(GARVERSION)/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+MASTER_SITES = ftp://ftp.kde.org/pub/kde/stable/amarok/$(VERSION)/src/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWamarok,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PATCHFILES = disable-broken-languages.diff
 PATCHFILES += gpod-stdint.h.diff

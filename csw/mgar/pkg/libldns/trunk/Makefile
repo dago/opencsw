@@ -1,5 +1,5 @@
-GARNAME = ldns
-GARVERSION = 1.6.7
+NAME = ldns
+VERSION = 1.6.7
 CATEGORIES = lib
 
 DESCRIPTION = A library for programs conforming to DNS RFCs and drafts
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.nlnetlabs.nl/downloads/ldns/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWldns.doxyparse.diff
 
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
@@ -28,7 +28,7 @@ CHECKPKG_OVERRIDES_CSWlibldnsdevel += surplus-dependency|CSWlibldns1
 SPKG_SOURCEURL = http://www.nlnetlabs.nl/projects/ldns/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

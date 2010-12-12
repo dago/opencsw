@@ -1,5 +1,5 @@
-GARNAME = cups
-GARVERSION = 1.3.11
+NAME = cups
+VERSION = 1.3.11
 CATEGORIES = net
 
 define BLURB
@@ -18,11 +18,11 @@ CUPS_MIRRORS += http://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub
 CUPS_MIRRORS += ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub
 CUPS_MIRRORS += http://ftp.rz.tu-bs.de/pub/mirror/ftp.easysw.com/ftp/pub
 # Complete the mirror paths by adding /cups/x.y.z/ at the end.
-FULL_MIRRORS = $(foreach S,$(CUPS_MIRRORS),$(S)/$(GARNAME)/$(GARVERSION)/)
+FULL_MIRRORS = $(foreach S,$(CUPS_MIRRORS),$(S)/$(NAME)/$(VERSION)/)
 MASTER_SITES += $(FULL_MIRRORS)
 
-PATCHFILES = Makefile-cups-$(GARVERSION).patch
-DISTFILES  = cups-$(GARVERSION)-source.tar.bz2 $(PATCHFILES)
+PATCHFILES = Makefile-cups-$(VERSION).patch
+DISTFILES  = cups-$(VERSION)-source.tar.bz2 $(PATCHFILES)
 DISTFILES += CSWcupsd.postremove
 
 BUILD_DEP_PKGS  = CSWggettext

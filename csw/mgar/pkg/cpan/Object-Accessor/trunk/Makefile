@@ -1,5 +1,5 @@
-GARNAME = Object-Accessor
-GARVERSION = 0.34
+NAME = Object-Accessor
+VERSION = 0.34
 CATEGORIES = cpan
 AUTHOR = KANE
 

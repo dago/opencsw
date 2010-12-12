@@ -1,5 +1,5 @@
-GARNAME = PerlIO-via-dynamic
-GARVERSION = 0.13
+NAME = PerlIO-via-dynamic
+VERSION = 0.13
 CATEGORIES = cpan
 AUTHOR = CLKAO
 

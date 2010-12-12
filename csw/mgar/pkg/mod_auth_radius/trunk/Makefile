@@ -1,5 +1,5 @@
-GARNAME = mod_auth_radius
-GARVERSION = 1.5.8
+NAME = mod_auth_radius
+VERSION = 1.5.8
 CATEGORIES = server
 
 DESCRIPTION = Apache RADIUS authentication module
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.freeradius.org/pub/radius/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar
+DISTFILES  = $(NAME)-$(VERSION).tar
 DISTFILES += CSWap2modauthradius.postinstall CSWap2modauthradius.preremove
 DISTFILES += COPYING
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar
 
 VENDOR_URL = http://freeradius.org/mod_auth_radius/
 
@@ -46,7 +46,7 @@ build-custom:
 	cd $(WORKSRC) && $(APXS) -c mod_auth_radius-2.0.c
 	$(MAKECOOKIE)
 
-install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 install-custom:
 	mkdir -p $(AP2_LIBEXEC)
 	cd $(WORKSRC) && $(APXS) -S LIBEXECDIR=$(AP2_LIBEXEC) -i mod_auth_radius-2.0.la

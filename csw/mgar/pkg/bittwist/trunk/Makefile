@@ -1,8 +1,8 @@
 # TODO
 # ! Doesn't compile as it requires ifaddrs.h which isn't available on Sol 10
 #   http://www.gnu.org/software/gnulib/manual/html_node/ifaddrs_002eh.html
-GARNAME = bittwist
-GARVERSION = 1.1
+NAME = bittwist
+VERSION = 1.1
 CATEGORIES = apps
 
 DESCRIPTION = Libpcap-based ethernet packet generator
@@ -15,8 +15,8 @@ endef
 
 VENDOR_URL   = http://bittwist.sf.net
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES    = $(GARNAME)-linux-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-linux-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-linux-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-linux-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES += 0001-Makefile-introduce-CPPFLAGS-LDFLAGS-DESTDIR-make-var.patch
 

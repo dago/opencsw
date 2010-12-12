@@ -1,5 +1,5 @@
-GARNAME = shared-mime-info
-GARVERSION = 0.71
+NAME = shared-mime-info
+VERSION = 0.71
 CATEGORIES = lib
 
 DESCRIPTION = Freedesktop.org common MIME database
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://freedesktop.org/~hadess/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD_DEP_PKGS = CSWgnulinks
 

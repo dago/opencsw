@@ -1,6 +1,6 @@
-GARNAME = spamassassin
+NAME = spamassassin
 SPKG_NAME = Mail-SpamAssassin
-GARVERSION = 3.3.1
+VERSION = 3.3.1
 CATEGORIES = net
 
 DESCRIPTION = Mail filter with a wide range of tests
@@ -12,8 +12,8 @@ endef
 
 #MASTER_SITES = http://people.apache.org/~jm/devel/
 MASTER_SITES = http://apache.dataphone.se/spamassassin/source/
-DISTFILES  = $(SPKG_NAME)-$(GARVERSION).tar.gz
-#DISTFILES  = $(SPKG_NAME)-$(GARVERSION)-rc3.tar.gz
+DISTFILES  = $(SPKG_NAME)-$(VERSION).tar.gz
+#DISTFILES  = $(SPKG_NAME)-$(VERSION)-rc3.tar.gz
 DISTFILES += COPYING
 
 RUNTIME_DEP_PKGS  = CSWgnupg CSWosslrt CSWperl CSWpmdbi
@@ -63,7 +63,7 @@ CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmiozlib
 
 include gar/category.mk
 
-WORKSRC = $(WORKDIR)/$(SPKG_NAME)-$(GARVERSION)
+WORKSRC = $(WORKDIR)/$(SPKG_NAME)-$(VERSION)
 SPKG_SOURCEURL = http://spamassassin.apache.org/
 
 ifeq ($(shell uname -p), sparc)
@@ -73,32 +73,32 @@ else
 endif
 
 configure-custom:
-	@echo " ==> Configuring $(GARNAME) (custom)"
+	@echo " ==> Configuring $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	   perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/etc/opt/csw/spamassassin LOCALSTATEDIR=/var/opt/csw/spamassassin CONTACT_ADDRESS=postmaster )
 	@$(MAKECOOKIE)
 
 pre-build-modulated:
-	@echo " ==> Pre-build $(GARNAME) (custom)"
+	@echo " ==> Pre-build $(NAME) (custom)"
 	@( cd $(WORKSRC)/spamc ; \
 	   sed 's/CFLAGS = /CFLAGS = $(SEDCFLAGS) /' Makefile.in > Makefile.tmp ; \
 	   cp Makefile.tmp Makefile.in )
 	@$(MAKECOOKIE)
 
 build-custom:
-	@echo " ==> Building $(GARNAME) (custom)"
+	@echo " ==> Building $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	   gmake )
 	@$(MAKECOOKIE)
 
 test-custom:
-	@echo " ==> Testing $(GARNAME) (custom)"
+	@echo " ==> Testing $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	   gmake test )
 	@$(MAKECOOKIE)
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)/opt/csw/etc/init.d/cswspamd
@@ -106,16 +106,16 @@ install-custom:
 	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWspamassassin/cswusergroup
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/spamassassin
 	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.spamd.CSW $(DESTDIR)/etc/opt/csw/spamassassin/spamd.CSW
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(FILEDIR)/CSWspamassassin.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
-	@cp $(FILEDIR)/CSWspamassassin.README.spamd $(DESTDIR)$(docdir)/$(GARNAME)/README.spamd
-	@cp $(FILEDIR)/CSWspamassassin.postmsg $(DESTDIR)$(docdir)/$(GARNAME)/README.upgrade
-	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+	@cp $(FILEDIR)/CSWspamassassin.README.CSW $(DESTDIR)$(docdir)/$(NAME)/README.CSW
+	@cp $(FILEDIR)/CSWspamassassin.README.spamd $(DESTDIR)$(docdir)/$(NAME)/README.spamd
+	@cp $(FILEDIR)/CSWspamassassin.postmsg $(DESTDIR)$(docdir)/$(NAME)/README.upgrade
+	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(NAME)
 	echo "WORKSRC: $(WORKSRC)"
 	@( cd $(WORKSRC) ; \
 	   gmake DESTDIR=$(DESTDIR) install )
 	@( cd $(WORKSRC) ; \
-	   cp -r C* INSTALL NOTICE README TRADEMARK U* ldap/ sql/ procmailrc.example sample-* $(DESTDIR)$(docdir)/$(GARNAME)/ )
+	   cp -r C* INSTALL NOTICE README TRADEMARK U* ldap/ sql/ procmailrc.example sample-* $(DESTDIR)$(docdir)/$(NAME)/ )
 	@( cd $(DESTDIR)/etc/opt/csw/spamassassin ; \
 	   mv local.cf local.cf.CSW ; \
 	   mv init.pre init.pre.CSW ; \

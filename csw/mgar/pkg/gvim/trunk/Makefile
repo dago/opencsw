@@ -1,7 +1,7 @@
-GARNAME = vim
+NAME = vim
 DISTVERSION = 7.3
 PATCHREV = 055
-GARVERSION = $(DISTVERSION).$(PATCHREV)
+VERSION = $(DISTVERSION).$(PATCHREV)
 CATEGORIES = utils
 SPKG_SOURCEURL = http://www.vim.org/download.php
 DESCRIPTION = Vi IMproved with GTK+ support
@@ -20,16 +20,16 @@ MASTER_SITES += ftp://ftp.vim.org/pub/vim/patches/$(DISTVERSION)/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/extra/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/unix/
 
-DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(DISTVERSION).tar.bz2
 DISTFILES += gvim.desktop
 DISTFILES += COPYING
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
 
-WORKSRC = $(WORKDIR)/$(GARNAME)$(subst .,,$(DISTVERSION))
+WORKSRC = $(WORKDIR)/$(NAME)$(subst .,,$(DISTVERSION))
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(GARNAME)
+CONFIGURE_ARGS += --with-global-runtime=$(sharedstatedir)/$(NAME)
 CONFIGURE_ARGS += --with-features=huge
 CONFIGURE_ARGS += --with-tlib=ncurses
 CONFIGURE_ARGS += --enable-multibyte

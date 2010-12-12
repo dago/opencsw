@@ -1,5 +1,5 @@
-GARNAME = libtheora
-GARVERSION = 1.1.1
+NAME = libtheora
+VERSION = 1.1.1
 CATEGORIES = lib
 
 DESCRIPTION = Theora video codec support library
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/theora/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 SPKG_SOURCEURL = http://www.theora.org
 
@@ -32,6 +32,6 @@ CONFIGURE_ARGS += --disable-asm
 
 TEST_TARGET = check
 
-EXTRA_PAX_ARGS += -s ',^\.$(docdir)/$(GARNAME)-$(GARVERSION),.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME),'
+EXTRA_PAX_ARGS += -s ',^\.$(docdir)/$(NAME)-$(VERSION),.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME),'
 
 include gar/category.mk

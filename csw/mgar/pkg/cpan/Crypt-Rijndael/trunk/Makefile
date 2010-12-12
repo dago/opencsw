@@ -1,5 +1,5 @@
-GARNAME = Crypt-Rijndael
-GARVERSION = 1.09
+NAME = Crypt-Rijndael
+VERSION = 1.09
 CATEGORIES = cpan
 AUTHOR = BDFOY
 

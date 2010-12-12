@@ -1,5 +1,5 @@
-GARNAME = Log-Log4perl
-GARVERSION = 1.25
+NAME = Log-Log4perl
+VERSION = 1.25
 CATEGORIES = cpan
 AUTHOR = MSCHILLI
 

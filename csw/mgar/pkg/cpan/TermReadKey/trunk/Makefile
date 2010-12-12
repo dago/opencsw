@@ -1,5 +1,5 @@
-GARNAME = TermReadKey
-GARVERSION = 2.30
+NAME = TermReadKey
+VERSION = 2.30
 CATEGORIES = cpan
 AUTHOR = JSTOWE
 

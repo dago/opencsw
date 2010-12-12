@@ -1,5 +1,5 @@
-GARNAME = activeresource
-GARVERSION = 2.3.8
+NAME = activeresource
+VERSION = 2.3.8
 CATEGORIES = rbgems
 
 DESCRIPTION = Wraps web resources in model classes

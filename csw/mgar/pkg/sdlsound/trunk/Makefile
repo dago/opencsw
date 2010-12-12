@@ -1,5 +1,5 @@
-GARNAME = SDL_sound
-GARVERSION = 1.0.1
+NAME = SDL_sound
+VERSION = 1.0.1
 CATEGORIES = lib
 
 DESCRIPTION = A library that handles the decoding of several popular sound file formats
@@ -8,11 +8,11 @@ SDL_sound is a library that handles the decoding of several popular sound file f
 endef
 
 MASTER_SITES = http://icculus.org/SDL_sound/downloads/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsdlsound,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =

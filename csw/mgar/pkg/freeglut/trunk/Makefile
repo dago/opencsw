@@ -1,5 +1,5 @@
-GARNAME = freeglut
-GARVERSION = 2.6.0
+NAME = freeglut
+VERSION = 2.6.0
 CATEGORIES = lib
 
 DESCRIPTION = OpenSourced alternative to the OpenGL Utility Toolkit
@@ -7,7 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # Use these patches until this is fixed:
 #   http://sourceforge.net/tracker/index.php?func=detail&aid=3077828&group_id=1032&atid=101032
@@ -15,7 +15,7 @@ PATCHFILES  = 0001-Add-support-for-Sun.patch
 PATCHFILES += 0002-Fix-windows-line-ending-and-wrong-endif.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://freeglut.sourceforge.net/
 

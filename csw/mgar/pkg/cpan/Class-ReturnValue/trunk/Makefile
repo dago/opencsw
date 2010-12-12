@@ -1,5 +1,5 @@
-GARNAME = Class-ReturnValue
-GARVERSION = 0.55
+NAME = Class-ReturnValue
+VERSION = 0.55
 CATEGORIES = cpan
 AUTHOR = JESSE
 

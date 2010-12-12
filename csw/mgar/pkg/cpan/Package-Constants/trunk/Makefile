@@ -1,5 +1,5 @@
-GARNAME = Package-Constants
-GARVERSION = 0.02
+NAME = Package-Constants
+VERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = KANE
 

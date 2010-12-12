@@ -1,6 +1,6 @@
-GARNAME = gconf2
+NAME = gconf2
 GNOME_PROJ = GConf
-GARVERSION = 2.28.1
+VERSION = 2.28.1
 CATEGORIES = apps
 
 DESCRIPTION = GNOME configuration database system
@@ -11,10 +11,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTNAME = GConf-$(GARVERSION)
+DISTNAME = GConf-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://projects.gnome.org/gconf/
 

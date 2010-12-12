@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = lua
-GARVERSION = 5.1.4
+NAME = lua
+VERSION = 5.1.4
 CATEGORIES = lang
 
 DESCRIPTION = Light-weight language designed for extending applications
@@ -13,10 +13,10 @@ endef
 
 SPKG_SOURCEURL = http://www.lua.org/
 MASTER_SITES = http://www.lua.org/ftp/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = dynamic.patch
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
 

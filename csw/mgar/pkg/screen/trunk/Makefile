@@ -1,5 +1,5 @@
-GARNAME = screen
-GARVERSION = 4.0.3
+NAME = screen
+VERSION = 4.0.3
 CATEGORIES = utils
 
 DESCRIPTION = A window manager that multiplexes a physical terminal.
@@ -13,8 +13,8 @@ endef
 
 VENDOR_URL   = http://www.gnu.org/software/screen/
 MASTER_SITES = http://ftp.gnu.org/gnu/screen/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES += screenrc
 DISTFILES += changelog.CSW
@@ -58,9 +58,9 @@ pre-configure-modulated:
 
 post-merge:
 	for FILE in $(DOCFILES); do \
-		ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)/$(docdir)/$(GARNAME)/$$FILE; \
+		ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)/$(docdir)/$(NAME)/$$FILE; \
 	done
 	ginstall -D $(WORKDIR_FIRSTMOD)/screenrc $(PKGROOT)/etc/$(prefix)/screenrc.CSW
-	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(GARNAME)/changelog.CSW
+	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(NAME)/changelog.CSW
 	@$(MAKECOOKIE)
 

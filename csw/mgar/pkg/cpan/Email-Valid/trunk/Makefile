@@ -1,5 +1,5 @@
-GARNAME = Email-Valid
-GARVERSION = 0.15
+NAME = Email-Valid
+VERSION = 0.15
 CATEGORIES = cpan
 AUTHOR = MAURICE
 

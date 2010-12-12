@@ -1,4 +1,4 @@
-GARNAME = kdeartwork
+NAME = kdeartwork
 CATEGORIES = kde
 
 DESCRIPTION = Additional artwork for KDE (gcc3)

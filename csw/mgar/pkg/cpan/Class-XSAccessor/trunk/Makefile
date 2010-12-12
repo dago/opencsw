@@ -1,5 +1,5 @@
-GARNAME = Class-XSAccessor
-GARVERSION = 1.05
+NAME = Class-XSAccessor
+VERSION = 1.05
 CATEGORIES = cpan
 AUTHOR = SMUELLER
 

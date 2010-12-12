@@ -1,6 +1,6 @@
-GARNAME = setoolkit
-GARVERSION = 3.5.1
-DISTNAME = $(GARNAME)-$(GARVERSION)
+NAME = setoolkit
+VERSION = 3.5.1
+DISTNAME = $(NAME)-$(VERSION)
 CATEGORIES = utils
 
 DESCRIPTION = A system performance monitoring tool

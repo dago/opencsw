@@ -1,10 +1,10 @@
-GARNAME = libflac
-GARVERSION = 1.2.1
+NAME = libflac
+VERSION = 1.2.1
 CATEGORIES = lib
 
-EXTRA_MODULATORS = GARVERSION
+EXTRA_MODULATORS = VERSION
 # Version 1.1.2 is the last to contain libflac.so.7 where most of the binaries depend on
-MODULATIONS_GARVERSION = 1.0.4 1.1.2 1.2.1
+MODULATIONS_VERSION = 1.0.4 1.1.2 1.2.1
 
 # There was no 64 bit legacy version. Do not provide it as new binaries should
 # link against the new version.
@@ -26,11 +26,11 @@ endef
 
 SF_PROJ = flac
 MASTER_SITES = $(SF_MIRRORS)
-DISTNAME = $(SF_PROJ)-$(GARVERSION)
-SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(SF_PROJ)-$(VERSION).tar.gz)
+DISTNAME = $(SF_PROJ)-$(VERSION)
+SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VERSION),$(SF_PROJ)-$(VERSION).tar.gz)
 DISTFILES = $(SOURCEFILES)
 
-NOEXTRACT = $(filter-out $(SF_PROJ)-$(GARVERSION).tar.gz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out $(SF_PROJ)-$(VERSION).tar.gz,$(SOURCEFILES))
 
 PATCHFILES_isa-sparcv8-garversion-1.1.2 = libtool-64bit.patch
 PATCHFILES_isa-sparcv9-garversion-1.1.2 = libtool-64bit.patch

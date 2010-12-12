@@ -1,5 +1,5 @@
-GARNAME = File-Flat
-GARVERSION = 1.04
+NAME = File-Flat
+VERSION = 1.04
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

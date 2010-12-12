@@ -1,5 +1,5 @@
-GARNAME = image-editor
-GARVERSION = 2.1.355
+NAME = image-editor
+VERSION = 2.1.355
 CATEGORIES = java
 
 DESCRIPTION = Java Image Editor
@@ -13,7 +13,7 @@ DISTFILES += ImageEditor
 DISTFILES += License.txt
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWimageeditor
 CATALOGNAME_CSWimageeditor = imageeditor

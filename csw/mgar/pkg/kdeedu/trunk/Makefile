@@ -1,4 +1,4 @@
-GARNAME = kdeedu
+NAME = kdeedu
 CATEGORIES = kde
 
 DESCRIPTION = Collection of educational apps for KDE (gcc3)

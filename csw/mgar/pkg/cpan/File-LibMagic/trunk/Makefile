@@ -1,5 +1,5 @@
-GARNAME = File-LibMagic
-GARVERSION = 0.96
+NAME = File-LibMagic
+VERSION = 0.96
 CATEGORIES = cpan
 AUTHOR = FITZNER
 
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 DISTFILES = COPYING
-MODDIST = $(GARNAME)-$(GARVERSION).tgz
+MODDIST = $(NAME)-$(VERSION).tgz
 
 DEP_PKGS = CSWfile CSWzlib
 

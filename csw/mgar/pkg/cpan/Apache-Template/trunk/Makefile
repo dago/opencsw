@@ -1,5 +1,5 @@
-GARNAME = Apache-Template
-GARVERSION = 0.09
+NAME = Apache-Template
+VERSION = 0.09
 CATEGORIES = cpan
 AUTHOR = ABW
 

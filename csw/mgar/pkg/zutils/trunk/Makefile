@@ -1,5 +1,5 @@
-GARNAME = zutils
-GARVERSION = 0.8
+NAME = zutils
+VERSION = 0.8
 CATEGORIES = utils
 
 DESCRIPTION = Utilities to deal with compressed and non-compressed files
@@ -13,14 +13,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/zutils/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0001-Use-inttypes.h-instead-of-stdint.h-and-add-signal.h.patch
 PATCHFILES += 0002-Use-correct-path-on-testsuite.patch
 PATCHFILES += 0003-Use-Zutils-instead-of-zutils.patch
 PATCHFILES += 0004-Fix-ambinguity-to-str.insert.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS = CSWhelp2man CSWlzip
 

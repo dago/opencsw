@@ -4,8 +4,8 @@
 #   --> Why should /dev/zero be required at all? google suggests relation
 #       to pthreads .. truss doesn't show /dev/zero usage on Solaris 10
 #       Test on Solaris 8 / 9 for comparison
-GARNAME = stunnel
-GARVERSION = 4.33
+NAME = stunnel
+VERSION = 4.33
 CATEGORIES = net
 
 DESCRIPTION = Universal SSL Wrapper
@@ -19,8 +19,8 @@ endef
 
 VENDOR_URL   = http://www.stunnel.org
 MASTER_SITES = http://www.stunnel.org/download/stunnel/src/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWzlib CSWosslrt CSWtcpwrap
 
@@ -60,7 +60,7 @@ pre-build-modulated:
 		$(WORKSRC)/tools/Makefile
 	@$(MAKECOOKIE)
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: DOCS=AUTHORS BUGS CREDITS ChangeLog TODO
 post-install-modulated: DOCS+= doc/stunnel.*html
 post-install-modulated:

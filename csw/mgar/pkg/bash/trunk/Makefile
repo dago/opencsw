@@ -12,8 +12,8 @@
 
 ###### Package information #######
 
-GARNAME = bash
-GARVERSION = 4.1.7
+NAME = bash
+VERSION = 4.1.7
 CATEGORIES = devel
 
 DESCRIPTION = A sh-compatible command language interpreter
@@ -21,8 +21,8 @@ define BLURB
   GNU Bash is an sh-compatible command language interpreter that executes commands read from the standard input or from a file. Bash also incorporates useful features from the Korn and C shells (ksh and csh). Bash is intended to be a conforming implementation of the IEEE POSIX Shell and Tools specification (IEEE Working Group 1003.2).
 endef
 
-BASH_VERSION = $(shell echo $(GARVERSION)c | cut -d. -f1-2)
-BASH_PATCHLEVEL = $(shell echo -n $(GARVERSION) | cut -d. -f3)
+BASH_VERSION = $(shell echo $(VERSION)c | cut -d. -f1-2)
+BASH_PATCHLEVEL = $(shell echo -n $(VERSION) | cut -d. -f3)
 
 PACKAGES = CSWbash
 
@@ -42,8 +42,8 @@ UFILES_REGEX = bash-(\d+\.\d+).tar.gz $(PATCHFILE_PREFIX)-(\d+)
 MASTER_SITES = $(GNU_MIRROR)/bash-$(BASH_VERSION)-patches/
 # Main archive location
 MASTER_SITES += $(GNU_MIRROR)
-DISTNAME = $(GARNAME)-$(BASH_VERSION)
-DISTFILES  = $(GARNAME)-$(BASH_VERSION).tar.gz
+DISTNAME = $(NAME)-$(BASH_VERSION)
+DISTFILES  = $(NAME)-$(BASH_VERSION).tar.gz
 DISTFILES += changelog.CSW
 
 # build action script to modify /etc/shells at package installation and removal time
@@ -96,9 +96,9 @@ pre-configure:
 
 post-merge:
 	@( for FILE in README RBASH NEWS NOTES POSIX AUTHORS doc/FAQ doc/INTRO; do \
-		 ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)$(docdir)/$(GARNAME)/`basename $$FILE`; \
+		 ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)$(docdir)/$(NAME)/`basename $$FILE`; \
 	done )
-	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(GARNAME)/changelog.CSW
+	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW
 	ginstall -D $(WORKDIR_FIRSTMOD)/shells $(PKGROOT)/etc/shells
 	( cd "$(PKGROOT)/$(bindir)" && rm -f rbash && ln -sf bash rbash )
 	rm -f $(PKGROOT)/$(infodir)/bash.info

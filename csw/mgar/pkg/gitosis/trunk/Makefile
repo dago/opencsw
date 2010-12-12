@@ -1,5 +1,5 @@
-GARNAME = gitosis
-GARVERSION = 0.2
+NAME = gitosis
+VERSION = 0.2
 # This represents the tip of master as of 20090516.  It is ahead of
 # release/0.2
 PATCHLEVEL = 73a03
@@ -24,11 +24,11 @@ if [ $$? -eq 0 ]; then
 	/usr/sbin/usermod -s /opt/csw/bin/bash gitosis
 fi
 
-echo See $(docdir)/$(GARNAME)/README.csw for first use instructions.
+echo See $(docdir)/$(NAME)/README.csw for first use instructions.
 endef
 
 PACKAGES = CSWgitosis
-CATALOGNAME_CSWgitosis = $(GARNAME)
+CATALOGNAME_CSWgitosis = $(NAME)
 ARCHALL_CSWgitosis = 1
 
 BUILD_DEP_PKGS_CSWgitosis = CSWpython CSWpysetuptools
@@ -44,7 +44,7 @@ GIT_TREEISH_gitosis.git = $(PATCHLEVEL)
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of
 # MASTER_SITES, then uncomment the next line. Otherwise it is set by
@@ -59,7 +59,7 @@ INSTALL_ARGS = --root $(DESTDIR) --single-version-externally-managed
 
 GITOSISHOME = /var/opt/csw/gitosis
 CSWUG = gitosis:gitosis:Gitosis Host:$(GITOSISHOME):/opt/csw/bin/bash:::NP
-CSWPKGD = $(INSTALLISADIR)/opt/csw/etc/pkg/CSW$(GARNAME)
+CSWPKGD = $(INSTALLISADIR)/opt/csw/etc/pkg/CSW$(NAME)
 
 USERGROUP = /opt/csw/etc/pkg/CSWgitosis/cswusergroup
 INETDCONF = /opt/csw/etc/pkg/CSWgitosis/inetd.conf

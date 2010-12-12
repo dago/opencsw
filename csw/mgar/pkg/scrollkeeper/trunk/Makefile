@@ -1,5 +1,5 @@
-GARNAME = scrollkeeper
-GARVERSION = 0.3.14
+NAME = scrollkeeper
+VERSION = 0.3.14
 CATEGORIES = utils
 
 DESCRIPTION = a cataloging system for documentation on open systems
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://scrollkeeper.sourceforge.net/
 

@@ -1,5 +1,5 @@
-GARNAME = liblasi
-GARVERSION = 1.1.0
+NAME = liblasi
+VERSION = 1.1.0
 CATEGORIES = lib
 
 SF_PROJ      = lasi
@@ -24,8 +24,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(SOURCENAME)-$(GARVERSION).tar.gz
-DISTNAME = $(SOURCENAME)-$(GARVERSION)
+DISTFILES  = $(SOURCENAME)-$(VERSION).tar.gz
+DISTNAME = $(SOURCENAME)-$(VERSION)
 
 SPKG_SOURCEURL = http://unifont.org/lasi/
 
@@ -70,11 +70,11 @@ EXTRA_COMMON_EXPORTS = CMAKE_CXX_FLAGS
 
 include gar/category.mk
 
-#WORKSRC = $(WORKDIR)/$(SOURCENAME)-$(GARVERSION)
+#WORKSRC = $(WORKDIR)/$(SOURCENAME)-$(VERSION)
 
 
 configure-custom:
-	@echo " ==> Configuring $(GARNAME) (custom)"
+	@echo " ==> Configuring $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 		cmake	-DCMAKE_INSTALL_PREFIX="$(prefix)" \
       -DCMAKE_INSTALL_EXEC_PREFIX:PATH="$(exec_prefix)" \
@@ -90,20 +90,20 @@ configure-custom:
 	@$(MAKECOOKIE)
 
 build-custom:
-	@echo " ==> Building $(GARNAME) (custom)"
+	@echo " ==> Building $(NAME) (custom)"
 	@( cd $(WORKSRC) ; gmake )
 	@$(MAKECOOKIE)
 
 test-custom:
-	@echo " ==> Testing $(GARNAME) (custom)"
+	@echo " ==> Testing $(NAME) (custom)"
 	@( cd $(WORKSRC) ; gmake  test)
 	@$(MAKECOOKIE)
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 		gmake install DESTDIR=$(DESTDIR) ; \
-		mv $(DESTDIR)/opt/csw/share/doc/$(DISTNAME) $(DESTDIR)/opt/csw/share/doc/$(GARNAME) ; \
-		mv $(DESTDIR)/opt/csw/share/lasi$(GARVERSION)/* $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/ ; \
-		rmdir $(DESTDIR)/opt/csw/share/lasi$(GARVERSION) )
+		mv $(DESTDIR)/opt/csw/share/doc/$(DISTNAME) $(DESTDIR)/opt/csw/share/doc/$(NAME) ; \
+		mv $(DESTDIR)/opt/csw/share/lasi$(VERSION)/* $(DESTDIR)/opt/csw/share/doc/$(NAME)/ ; \
+		rmdir $(DESTDIR)/opt/csw/share/lasi$(VERSION) )
 	@$(MAKECOOKIE)

@@ -10,8 +10,8 @@
 # "../../lib/server/CConfig.h", line 145: Error: Use ";" to terminate declarations.
 # "../../lib/server/CConfig.h", line 145: Error: A declaration was expected instead of ">"
 #
-GARNAME = synergy
-GARVERSION = 1.3.4
+NAME = synergy
+VERSION = 1.3.4
 CATEGORIES = apps
 
 DESCRIPTION = Software-based TCP/IP "KVM" switch
@@ -25,8 +25,8 @@ endef
 VENDOR_URL     = http://synergy-foss.org/
 MASTER_SITES   = $(GOOGLE_MIRROR)
 GOOGLE_PROJECT = synergy-plus
-DISTFILES      = synergy-plus-$(GARVERSION).tar.gz
-DISTNAME       = synergy-plus-$(GARVERSION)
+DISTFILES      = synergy-plus-$(VERSION).tar.gz
+DISTNAME       = synergy-plus-$(VERSION)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = http://synergy-foss.org/pm/projects/synergy/tabs/download
@@ -55,7 +55,7 @@ TEST_SCRIPTS =
 
 post-install:
 	ginstall -d $(DESTDIR)$(sysconfdir)
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)/images
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)/images
 	ginstall -m 644 \
 		$(WORKSRC)/examples/synergy.conf \
 		$(DESTDIR)$(sysconfdir)/synergy.conf.example
@@ -64,10 +64,10 @@ post-install:
 		$(WORKSRC)/AUTHORS \
 		$(WORKSRC)/NEWS \
 		$(WORKSRC)/doc/*.html \
-		$(DESTDIR)$(docdir)/$(GARNAME)
+		$(DESTDIR)$(docdir)/$(NAME)
 	ginstall -m 644 \
 		$(WORKSRC)/doc/images/* \
-		$(DESTDIR)$(docdir)/$(GARNAME)/images
+		$(DESTDIR)$(docdir)/$(NAME)/images
 	@$(MAKECOOKIE)
 
 include gar/category.mk

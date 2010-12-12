@@ -1,5 +1,5 @@
-GARNAME = aide
-GARVERSION = 0.13.1
+NAME = aide
+VERSION = 0.13.1
 CATEGORIES = utils
 
 DESCRIPTION = Advanced Intrusion Detection Environment
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += aide.conf
 
 # Disable Sun ACLs for now until bug #2887984 is fixed:
@@ -22,7 +22,7 @@ DISTFILES += aide.conf
 PATCHFILES += 0002-Add-missing-prototypes-for-db_sql.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWcurlrt CSWgcrypt CSWgpgerr CSWlibidn CSWlibmhash CSWlibpq
 RUNTIME_DEP_PKGS += CSWoldaprt CSWosslrt CSWzlib

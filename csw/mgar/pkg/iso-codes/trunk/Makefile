@@ -1,5 +1,5 @@
-GARNAME = iso-codes
-GARVERSION = 3.17
+NAME = iso-codes
+VERSION = 3.17
 CATEGORIES = apps
 
 DESCRIPTION = Translations for names of various ISO standards
@@ -10,14 +10,14 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://pkg-isocodes.alioth.debian.org/pub/pkg-isocodes/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGES = CSWiso-codes
 CATALOGNAME = iso_codes
 SPKG_SOURCEURL = http://alioth.debian.org/projects/pkg-isocodes/
  
 LICENSE = LICENSE
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = psycopg2
-GARVERSION = 2.2.2
+NAME = psycopg2
+VERSION = 2.2.2
 CATEGORIES = python
 
 DESCRIPTION = Psycopg2 is a PostgreSQL adapter for Python
@@ -19,10 +19,10 @@ BUILD_DEP_PKGS = CSWpython-devel CSWlibpq
 RUNTIME_DEP_PKGS_CSWpy-psycopg2 = CSWlibpython2-6-1-0 CSWlibpq
 
 MASTER_SITES = http://initd.org/psycopg/tarballs/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

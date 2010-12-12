@@ -1,5 +1,5 @@
-GARNAME = fftw
-GARVERSION = 3.2.2
+NAME = fftw
+VERSION = 3.2.2
 CATEGORIES = lib
 
 DESCRIPTION = Library for computing the discrete Fourier transform (DFT)
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.fftw.org/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.fftw.org/
 

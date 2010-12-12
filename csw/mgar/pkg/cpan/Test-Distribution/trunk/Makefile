@@ -1,5 +1,5 @@
-GARNAME = Test-Distribution
-GARVERSION = 2.00
+NAME = Test-Distribution
+VERSION = 2.00
 CATEGORIES = cpan
 AUTHOR = SRSHAH
 

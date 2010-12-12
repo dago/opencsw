@@ -1,5 +1,5 @@
-GARNAME = liboggz
-GARVERSION = 1.1.0
+NAME = liboggz
+VERSION = 1.1.0
 CATEGORIES = lib
 
 DESCRIPTION = A commandline tool for manipulating Ogg files
@@ -14,12 +14,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/liboggz/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-Remove-linker-version.patch
 PATCHFILES += 0002-Add-getopt.h.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS = CSWdoxygen
 RUNTIME_DEP_PKGS = CSWlibogg

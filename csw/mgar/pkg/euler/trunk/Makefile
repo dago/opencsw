@@ -1,5 +1,5 @@
-GARNAME = euler
-GARVERSION = 1.61.0
+NAME = euler
+VERSION = 1.61.0
 CATEGORIES = apps
 
 DESCRIPTION = EULER interactive computing with real, complex numbers and matrices
@@ -15,11 +15,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 PATCHFILES = 0001-Remove-static-setting-of-CFLAGS.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tz
 
 RUNTIME_DEP_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
 RUNTIME_DEP_PKGS += CSWlibatk CSWlibcairo CSWlibxext CSWpango

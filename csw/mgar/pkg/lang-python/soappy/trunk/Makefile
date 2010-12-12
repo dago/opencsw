@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = SOAPpy
-GARVERSION = 0.12.0
+NAME = SOAPpy
+VERSION = 0.12.0
 CATEGORIES = python
 DESCRIPTION = SOAP library for Python
 define BLURB
@@ -16,8 +16,8 @@ PACKAGES = CSWpy-soappy
 CATALOGNAME_CSWpy-soappy = py_soappy
 PATCHFILES += python-soappy_0.12.0-4.diff.gz
 SF_PROJ = pywebsvcs
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 ARCHALL_CSWpy-soappy = 1
 LICENSE = LICENSE
 TEST_SCRIPTS =

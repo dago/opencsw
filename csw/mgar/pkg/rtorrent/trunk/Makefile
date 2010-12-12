@@ -1,5 +1,5 @@
-GARNAME = rtorrent
-GARVERSION = 0.8.6
+NAME = rtorrent
+VERSION = 0.8.6
 CATEGORIES = apps
 
 DESCRIPTION = Client for Unix, based on libtorrent 
@@ -7,10 +7,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://libtorrent.rakshasa.no/downloads/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Patches mostly from http://cr.opensolaris.org/~alz/bittorrent/raw_files/new/usr/src/cmd/rtorrent/
 PATCHFILES = rtorrent-01-solaris.diff 0001-curl_get.patch rtorrent-04-sunpro.diff 

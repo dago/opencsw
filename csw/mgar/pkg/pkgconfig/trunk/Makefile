@@ -1,5 +1,5 @@
-GARNAME = pkg-config
-GARVERSION = 0.25
+NAME = pkg-config
+VERSION = 0.25
 CATEGORIES = devel
 
 DESCRIPTION = Tool for determining the configuration of installed software
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://pkg-config.freedesktop.org/releases/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWpkgconfig
 CATALOGNAME = pkgconfig
@@ -21,7 +21,7 @@ CATALOGNAME = pkgconfig
 SPKG_SOURCEURL = http://pkg-config.freedesktop.org
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES  = manpage-macro.patch
 PATCHFILES += 0001-Ugly-shell-fixes-and-force-gnome-config-to-be-there.patch

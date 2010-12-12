@@ -1,5 +1,5 @@
-GARNAME = meanwhile
-GARVERSION = 1.0.2
+NAME = meanwhile
+VERSION = 1.0.2
 CATEGORIES = lib
 
 #Need to use either gcc or studio 12 with -features=extensions
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWmeanwhile,depend prototype)
 PATCHFILES += ft_fix.patch
 PATCHFILES += presence_fix_v2.patch

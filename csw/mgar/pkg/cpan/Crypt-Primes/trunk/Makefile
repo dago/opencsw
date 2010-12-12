@@ -1,5 +1,5 @@
-GARNAME = Crypt-Primes
-GARVERSION = 0.50
+NAME = Crypt-Primes
+VERSION = 0.50
 CATEGORIES = cpan
 AUTHOR = VIPUL
 

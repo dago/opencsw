@@ -1,5 +1,5 @@
-GARNAME = libschroedinger
-GARVERSION = 1.0.7
+NAME = libschroedinger
+VERSION = 1.0.7
 CATEGORIES = lib
 
 DESCRIPTION = A cross-platform implementation of the Dirac video compression specification
@@ -12,12 +12,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://diracvideo.org/download/schroedinger/
-DISTNAME = schroedinger-$(GARVERSION)
+DISTNAME = schroedinger-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES = 0001-Avoid-using-FUNCTION-and-stdint.h.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://diracvideo.org/
 

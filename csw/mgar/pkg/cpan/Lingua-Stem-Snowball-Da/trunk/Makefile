@@ -1,5 +1,5 @@
-GARNAME = Lingua-Stem-Snowball-Da
-GARVERSION = 1.01
+NAME = Lingua-Stem-Snowball-Da
+VERSION = 1.01
 CATEGORIES = cpan
 AUTHOR = CINE
 

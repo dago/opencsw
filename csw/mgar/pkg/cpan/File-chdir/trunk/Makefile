@@ -1,5 +1,5 @@
-GARNAME = File-chdir
-GARVERSION = 0.06
+NAME = File-chdir
+VERSION = 0.06
 CATEGORIES = cpan
 AUTHOR = MSCHWERN
 

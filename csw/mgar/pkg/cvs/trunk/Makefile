@@ -1,5 +1,5 @@
-GARNAME = cvs
-GARVERSION = 1.11.23
+NAME = cvs
+VERSION = 1.11.23
 CATEGORIES = utils
 
 DESCRIPTION = Concurrent Versioning System
@@ -15,7 +15,7 @@ define BLURB
   various operations and works well over a wide area network.
 endef
 
-MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/stable/$(GARVERSION)/
+MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/stable/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/stable/
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWcvs,)

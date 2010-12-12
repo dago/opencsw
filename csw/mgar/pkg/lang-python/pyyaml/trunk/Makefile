@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header$
 
-GARNAME = pyyaml
-GARVERSION = 3.09
+NAME = pyyaml
+VERSION = 3.09
 CATEGORIES = python
 
 PROJ_NAME = PyYAML
@@ -29,8 +29,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://pyyaml.org/download/pyyaml/
-DISTFILES  = $(PROJ_NAME)-$(GARVERSION).tar.gz
-DISTNAME = $(PROJ_NAME)-$(GARVERSION)
+DISTFILES  = $(PROJ_NAME)-$(VERSION).tar.gz
+DISTNAME = $(PROJ_NAME)-$(VERSION)
 SPKG_SOURCEURL = http://pyyaml.org/wiki/PyYAML
 LICENSE = LICENSE
 
@@ -48,7 +48,7 @@ SPKG_DESC_CSWpy-yaml-rt = Runtime libraries for YAML parser and emitter
 ARCHALL_CSWpy-yaml = 1
 PKGFILES_CSWpy-yaml-rt = /opt/csw/lib/python/site-packages/.*\.so
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_SCRIPTS = py-yaml
 

@@ -1,5 +1,5 @@
-GARNAME = DateTime-Locale
-GARVERSION = 0.45
+NAME = DateTime-Locale
+VERSION = 0.45
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 

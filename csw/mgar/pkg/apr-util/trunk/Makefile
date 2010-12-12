@@ -1,5 +1,5 @@
-GARNAME = apr-util
-GARVERSION = 1.3.10
+NAME = apr-util
+VERSION = 1.3.10
 CATEGORIES = lib
 
 DESCRIPTION = Apache Portable Runtime Utilities
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES  = http://apache.crihan.fr/dist/apr/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = 0001-Make-sure-to-find-newly-built-libs-earlier.patch
 
@@ -23,7 +23,7 @@ RUNTIME_DEP_PKGS = CSWapr CSWiconv CSWsqlite3rt CSWunixodbc CSWexpat
 RUNTIME_DEP_PKGS += CSWbdb48 CSWoldaprt 
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib

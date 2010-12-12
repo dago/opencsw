@@ -1,5 +1,5 @@
-GARNAME = polkit
-GARVERSION = 0.96
+NAME = polkit
+VERSION = 0.96
 CATEGORIES = lib
 
 DESCRIPTION = PolicyKit
@@ -15,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://cgit.freedesktop.org/PolicyKit/snapshot/
-DISTNAME  = PolicyKit-$(GARVERSION)
+DISTNAME  = PolicyKit-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 UFILES_REGEX = PolicyKit-(\d+(?:\.\d+)*).tar.gz

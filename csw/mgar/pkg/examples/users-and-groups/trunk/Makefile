@@ -15,8 +15,8 @@
 # User cswuser has been added
 
 
-GARNAME = users_and_groups
-GARVERSION = 0.1
+NAME = users_and_groups
+VERSION = 0.1
 CATEGORIES = lib
 DESCRIPTION = An example build adding users, groups and files owned by them
 define BLURB
@@ -33,7 +33,7 @@ CATALOGNAME_$(MAIN_PKGNAME) = users_and_groups
 USERGROUP = /etc/opt/csw/pkg/$(MAIN_PKGNAME)/cswusergroup
 
 PROTOTYPE_MODIFIERS = example
-PROTOTYPE_FILES_example = $(datadir)/$(GARNAME)
+PROTOTYPE_FILES_example = $(datadir)/$(NAME)
 PROTOTYPE_USER_example = cswuser
 PROTOTYPE_GROUP_example = cswgroup
 PROTOTYPE_PERMS_example = 0700
@@ -48,4 +48,4 @@ install-example:
 	ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/$(MAIN_PKGNAME)
 
 post-merge:
-	ginstall -m 755 -d $(PKGROOT)$(datadir)/$(GARNAME)
+	ginstall -m 755 -d $(PKGROOT)$(datadir)/$(NAME)

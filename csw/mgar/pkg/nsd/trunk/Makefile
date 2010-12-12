@@ -1,5 +1,5 @@
-GARNAME = nsd
-GARVERSION = 3.2.6
+NAME = nsd
+VERSION = 3.2.6
 CATEGORIES = server
 
 DESCRIPTION = An authoritative only non-recursive name server
@@ -16,7 +16,7 @@ SPKG_SOURCE_URL = http://www.nlnetlabs.nl/projects/nsd/
 UPSTREAM_MASTER_SITES = http://www.nlnetlabs.nl/downloads/nsd/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWnsd
 RUNTIME_DEP_PKGS = CSWosslrt
@@ -25,7 +25,7 @@ SPKG_DESC = An authoritative only non-recursive name server
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 LICENSE = LICENSE
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswusergroup
 DISTFILES += cswnsd
 

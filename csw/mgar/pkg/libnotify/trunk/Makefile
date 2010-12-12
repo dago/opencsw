@@ -1,5 +1,5 @@
-GARNAME = libnotify
-GARVERSION = 0.4.5
+NAME = libnotify
+VERSION = 0.4.5
 CATEGORIES = gnome
 
 DESCRIPTION = Notification library of the Galago desktop presence framework
@@ -7,10 +7,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.galago-project.org/files/releases/source/libnotify/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWlibnotify CSWlibnotifydevel
 

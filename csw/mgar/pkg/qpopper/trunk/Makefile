@@ -1,6 +1,6 @@
-GARNAME = qpopper
-GARVERSION = 4.0.19
-WORKSRC = $(WORKDIR)/$(GARNAME)$(GARVERSION)
+NAME = qpopper
+VERSION = 4.0.19
+WORKSRC = $(WORKDIR)/$(NAME)$(VERSION)
 CATEGORIES = apps
 
 DESCRIPTION = The most widely-used POP3 server for Unix
@@ -12,11 +12,11 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.qualcomm.com/eudora/servers/unix/popper/
-DISTFILES  = $(GARNAME)$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)$(VERSION).tar.gz
 DISTFILES += README.CSW
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWqpopper
 CATALOGNAME_CSWqpopper = qpopper
@@ -34,15 +34,15 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Install for $(GARNAME) (custom)"
-	@ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
-	@cp $(FILEDIR)/inetd.conf $(DESTDIR)/etc/opt/csw/pkg/CSW$(GARNAME)
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@echo " ==> Install for $(NAME) (custom)"
+	@ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
+	@cp $(FILEDIR)/inetd.conf $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -d $(DESTDIR)$(sbindir)
 	@ginstall -d $(DESTDIR)$(mandir)/man8
 	@( cd $(WORKSRC) ; \
-	   cp License.txt $(DESTDIR)$(docdir)/$(GARNAME)/license ; \
+	   cp License.txt $(DESTDIR)$(docdir)/$(NAME)/license ; \
 	   cp popper/popper $(DESTDIR)$(sbindir) ; \
 	   cp man/* $(DESTDIR)$(mandir)/man8 )
-	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)

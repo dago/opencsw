@@ -1,5 +1,5 @@
-GARNAME = xtitle
-GARVERSION = 1.0.2
+NAME = xtitle
+VERSION = 1.0.2
 CATEGORIES = utils
 
 DESCRIPTION = Set the window's title and/or icon name to the script's arguments
@@ -10,10 +10,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cs.indiana.edu/~kinzler/xtitle/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 VENDOR_URL = http://www.cs.indiana.edu/~kinzler/xtitle/
 

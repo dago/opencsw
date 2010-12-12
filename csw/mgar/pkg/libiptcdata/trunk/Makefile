@@ -1,5 +1,5 @@
-GARNAME = libiptcdata
-GARVERSION = 1.0.4
+NAME = libiptcdata
+VERSION = 1.0.4
 CATEGORIES = lib
 
 DESCRIPTION = IPTC Tag Parsing Library
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES += $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://libiptcdata.sourceforge.net
 
@@ -41,7 +41,7 @@ ARCHALL_CSWlibiptcdatadoc = 1
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=130582
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 

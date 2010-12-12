@@ -1,5 +1,5 @@
-GARNAME = poppler-data
-GARVERSION = 0.4.0
+NAME = poppler-data
+VERSION = 0.4.0
 CATEGORIES = lib
 
 DESCRIPTION = Poppler is a PDF rendering library based on the xpdf-3.0 code base
@@ -10,9 +10,9 @@ PACKAGES = CSWpopplerdata
 CATALOGNAME_CSWpopplerdata = poppler_data
 
 MASTER_SITES = http://poppler.freedesktop.org/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # UPSTREAM_MASTER_SITES = 
 

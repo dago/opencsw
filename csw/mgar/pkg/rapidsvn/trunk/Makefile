@@ -1,6 +1,6 @@
-GARNAME = rapidsvn
-GARVERSION = 0.12.0-1
-SPKG_VERSION = $(subst -,.,$(GARVERSION))
+NAME = rapidsvn
+VERSION = 0.12.0-1
+SPKG_VERSION = $(subst -,.,$(VERSION))
 CATEGORIES = utils
 
 DESCRIPTION = GUI front-end for the Subversion revision system
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.rapidsvn.org/download/release/0.12/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # DISTFILES += $(call admfiles,CSWrapidsvn,depend prototype)
 # DISTFILES += $(call admfiles,CSWsvncpp,depend prototype)
 
@@ -20,7 +20,7 @@ PATCHFILES  = 0001-Use-explicit-constructor-for-wxString.patch
 PATCHFILES += 0002-Make-sure-to-pass-norunpath-through-libtool.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWrapidsvn CSWlibsvncpp3
 

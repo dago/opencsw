@@ -2,8 +2,8 @@
 #
 # ! build state unknown, work in progress, please verify
 #
-GARNAME = perdition
-GARVERSION = 1.18
+NAME = perdition
+VERSION = 1.18
 CATEGORIES = server
 
 DESCRIPTION = POP3 and IMAP4 proxy server with high capacity in mind.
@@ -18,8 +18,8 @@ define BLURB
 endef
 
 VENDOR_URL   = http://horms.net/projects/perdition/
-MASTER_SITES = http://horms.net/projects/perdition/download/$(GARVERSION)/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://horms.net/projects/perdition/download/$(VERSION)/
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = (\d+(?:\.\d+)*)
 UPSTREAM_MASTER_SITES = http://horms.net/projects/perdition/download/
 

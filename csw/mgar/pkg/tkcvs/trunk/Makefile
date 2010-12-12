@@ -1,5 +1,5 @@
-GARNAME = tkcvs
-GARVERSION = 8.2.2
+NAME = tkcvs
+VERSION = 8.2.2
 CATEGORIES = apps
 
 DESCRIPTION = A graphical front-end to CVS and Subversion
@@ -11,11 +11,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.twobarleycorns.net/
-DISTNAME = $(GARNAME)_$(subst .,_,$(GARVERSION))
-DISTFILES  = $(GARNAME)_$(subst .,_,$(GARVERSION)).tar.gz
+DISTNAME = $(NAME)_$(subst .,_,$(VERSION))
+DISTFILES  = $(NAME)_$(subst .,_,$(VERSION)).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)_(\d+(?:_\d+)*).tar.gz
+UFILES_REGEX = $(NAME)_(\d+(?:_\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
@@ -40,7 +40,7 @@ TCL_FILES = $(filter-out %/tkcvs.tcl,$(wildcard $(WORKSRC)/tkcvs/*.tcl))
 IMAGE_FILES = $(wildcard $(WORKSRC)/tkcvs/bitmaps/*.gif $(WORKSRC)/tkcvs/bitmaps/*.xbm)
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	@ginstall -D $(WORKSRC)/tkcvs/tkcvs.tcl $(DESTDIR)$(prefix)/bin/tkcvs
 	perl -i -plne "s{^exec wish}{exec ${bindir}/wish}g" $(DESTDIR)$(prefix)/bin/tkcvs
 	@ginstall -D $(WORKSRC)/tkcvs/tkcvs.1 $(DESTDIR)$(prefix)/share/man/man1/tkcvs.1

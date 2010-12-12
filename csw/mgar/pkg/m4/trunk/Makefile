@@ -1,5 +1,5 @@
-GARNAME = m4
-GARVERSION = 1.4.15
+NAME = m4
+VERSION = 1.4.15
 CATEGORIES = utils
 
 DESCRIPTION = GNU m4 Unix macro processor
@@ -11,14 +11,14 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnu.org/gnu/m4/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWgm4
 
 SPKG_SOURCEURL = http://www.gnu.org/software/m4/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS = CSWlibsigsegv
 

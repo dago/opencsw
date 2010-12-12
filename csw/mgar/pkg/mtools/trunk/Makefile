@@ -1,5 +1,5 @@
-GARNAME = mtools
-GARVERSION = 4.0.15
+NAME = mtools
+VERSION = 4.0.15
 CATEGORIES = utils
 
 DESCRIPTION = Read/write/list/format DOS disks under Unix
@@ -11,10 +11,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.lz
+DISTFILES  = $(NAME)-$(VERSION).tar.lz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.lz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.lz
 
 RUNTIME_DEP_PKGS = CSWiconv
 

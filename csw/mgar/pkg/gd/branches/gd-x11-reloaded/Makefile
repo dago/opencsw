@@ -1,5 +1,5 @@
-GARNAME = gd
-GARVERSION = 2.0.35
+NAME = gd
+VERSION = 2.0.35
 CATEGORIES = lib
 
 DESCRIPTION = A library used for dynamic image creation
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.libgd.org/releases/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWgd
 CATALOGNAME = gd
@@ -21,7 +21,7 @@ CATALOGNAME = gd
 RUNTIME_DEP_PKGS_CSWgd  = CSWfconfig CSWftype2 CSWiconv 
 RUNTIME_DEP_PKGS_CSWgd += CSWjpeg CSWpng CSWxpm CSWzlib
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 STRIP_LIBTOOL = 1

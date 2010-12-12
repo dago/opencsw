@@ -1,5 +1,5 @@
-GARNAME = gettext
-GARVERSION = 1.05
+NAME = gettext
+VERSION = 1.05
 CATEGORIES = cpan
 AUTHOR = PVANDRY
 

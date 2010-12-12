@@ -1,5 +1,5 @@
-GARNAME = rdoc
-GARVERSION = 2.5.9
+NAME = rdoc
+VERSION = 2.5.9
 CATEGORIES = rbgems
 
 DESCRIPTION = Produce documentation for one or more Ruby source files

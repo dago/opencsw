@@ -5,8 +5,8 @@
 #             The existing Makefile included the libraries under files/
 #                                                                  - Trygve
 
-GARNAME = guile
-GARVERSION = 1.8.7
+NAME = guile
+VERSION = 1.8.7
 CATEGORIES = lib
 
 DESCRIPTION = GNU extensibility library
@@ -23,10 +23,10 @@ RUNTIME_DEP_PKGS += CSWncurses
 RUNTIME_DEP_PKGS += CSWreadline
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 

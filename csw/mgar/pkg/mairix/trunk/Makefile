@@ -1,5 +1,5 @@
-GARNAME = mairix
-GARVERSION = 0.22
+NAME = mairix
+VERSION = 0.22
 CATEGORIES = utils
 
 DESCRIPTION = An index and search tool for Maildir, MH, or mbox
@@ -19,7 +19,7 @@ endef
 
 VENDOR_URL   = http://www.rpcurnow.force9.co.uk/mairix/
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWbzip2 CSWzlib
 
@@ -50,7 +50,7 @@ pre-build-modulated:
 	$(MAKECOOKIE)
 
 post-install-modulated: DOCS = ACKNOWLEDGEMENTS NEWS README dotmairixrc.eg
-post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@$(foreach DOC,$(DOCS),ginstall -m 644 $(WORKSRC)/$(DOC) $(DOCDEST);)

@@ -1,5 +1,5 @@
-GARNAME = w3c-libwww
-GARVERSION = 5.4.0
+NAME = w3c-libwww
+VERSION = 5.4.0
 CATEGORIES = lib
 
 DESCRIPTION = A library used for dynamic image creation
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.w3.org/Library/Distribution
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 PACKAGES = CSWlibwww
 CATALOGNAME_CSWlibwww = w3c_libwww
@@ -25,7 +25,7 @@ SPKG_DESC_CSWgd = $(DESCRIPTION)
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 #BUILD64 = 1
 #NOISAEXEC = 1

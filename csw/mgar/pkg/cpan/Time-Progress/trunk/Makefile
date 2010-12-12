@@ -1,5 +1,5 @@
-GARNAME = Time-Progress
-GARVERSION = 1.5
+NAME = Time-Progress
+VERSION = 1.5
 CATEGORIES = cpan
 AUTHOR = CADE
 

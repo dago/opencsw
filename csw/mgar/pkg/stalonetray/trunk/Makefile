@@ -1,5 +1,5 @@
-GARNAME = stalonetray
-GARVERSION = 0.7.6
+NAME = stalonetray
+VERSION = 0.7.6
 CATEGORIES = apps
 
 DESCRIPTION = Stand-alone freedesktop.org and KDE system tray
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # No test target for stalonetray
 TEST_SCRIPTS =
@@ -22,7 +22,7 @@ CONFIGURE_ARGS_OPT = --disable-debug
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: DOCS = README AUTHORS stalonetrayrc.sample
 post-install-modulated:
 	ginstall -d $(DOCDEST) 

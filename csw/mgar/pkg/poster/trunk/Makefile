@@ -1,5 +1,5 @@
-GARNAME = poster
-GARVERSION = 20050907
+NAME = poster
+VERSION = 20050907
 CATEGORIES = apps
 
 DESCRIPTION = Create large posters out of PostScript pages
@@ -12,8 +12,8 @@ endef
 
 VENDOR_URL   = http://packages.debian.org/lenny/poster
 MASTER_SITES = http://ftp.debian.org/debian/pool/main/p/poster/
-DISTFILES    = $(GARNAME)_$(GARVERSION).orig.tar.gz
-UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).orig.tar.gz
+DISTFILES    = $(NAME)_$(VERSION).orig.tar.gz
+UFILES_REGEX = $(NAME)_(\d+(?:\.\d+)*).orig.tar.gz
 
 # Trivial build w/o configure and test
 CONFIGURE_SCRIPTS =

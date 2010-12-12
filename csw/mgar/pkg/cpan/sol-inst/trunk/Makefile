@@ -1,5 +1,5 @@
-GARNAME = sol-inst
-GARVERSION = 0.90a
+NAME = sol-inst
+VERSION = 0.90a
 CATEGORIES = cpan
 AUTHOR = CHRISJ
 
@@ -9,7 +9,7 @@ define BLURB
   information on a Solaris system.
 endef
 
-UFILES_REGEX ?= $(GARNAME)-((\d+(?:\.\d+)*)(a)?).tar.gz
+UFILES_REGEX ?= $(NAME)-((\d+(?:\.\d+)*)(a)?).tar.gz
 
 WORKSRC = $(WORKDIR)/Solaris
 

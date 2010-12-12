@@ -1,5 +1,5 @@
-GARNAME = giflib
-GARVERSION = 4.1.6
+NAME = giflib
+VERSION = 4.1.6
 CATEGORIES = lib
 
 DESCRIPTION = A library for reading and writing gif images
@@ -10,10 +10,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWgiflib CSWgiflibrt CSWx11giflib CSWx11giflibrt CSWgiflibdoc CSWungif
 

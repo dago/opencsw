@@ -4,16 +4,16 @@
 
 GARFLAVOR = DBG
 
-GARNAME = awesome
-GARVERSION = 3.4.4
+NAME = awesome
+VERSION = 3.4.4
 CATEGORIES = apps
 DESCRIPTION = A tiling window manager for X
 define BLURB
 endef
 SPKG_SOURCEURL = http://awesome.naquadah.org/
 MASTER_SITES = http://awesome.naquadah.org/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = awesome
 INSTALL_SCRIPTS = awesome

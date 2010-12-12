@@ -1,5 +1,5 @@
-GARNAME = Sort-Versions
-GARVERSION = 1.5
+NAME = Sort-Versions
+VERSION = 1.5
 CATEGORIES = cpan
 AUTHOR = EDAVIS
 

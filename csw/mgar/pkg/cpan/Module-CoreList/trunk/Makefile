@@ -1,5 +1,5 @@
-GARNAME = Module-CoreList
-GARVERSION = 2.26
+NAME = Module-CoreList
+VERSION = 2.26
 CATEGORIES = cpan
 AUTHOR = BINGOS
 

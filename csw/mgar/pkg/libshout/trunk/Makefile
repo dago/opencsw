@@ -1,5 +1,5 @@
-GARNAME = libshout
-GARVERSION = 2.2.2
+NAME = libshout
+VERSION = 2.2.2
 CATEGORIES = lib
 
 DESCRIPTION = Icecast library
@@ -7,10 +7,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.us.xiph.org/releases/libshout/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWlibogg CSWtheora CSWvorbis
 PRERQUISITE_PKGS = $(RUNTIME_DEP_PKGS)

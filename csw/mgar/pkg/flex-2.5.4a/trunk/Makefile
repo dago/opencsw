@@ -1,5 +1,5 @@
-GARNAME = flex
-GARVERSION = 2.5.4
+NAME = flex
+VERSION = 2.5.4
 CATEGORIES = devel
 
 DESCRIPTION = older version of the 'flex' parser generator

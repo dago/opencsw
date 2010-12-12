@@ -1,5 +1,5 @@
-GARNAME = jhead
-GARVERSION = 2.7
+NAME = jhead
+VERSION = 2.7
 CATEGORIES = utils
 
 DESCRIPTION = EXIF parser for JPEG images
@@ -8,11 +8,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.sentex.net/~mwandel/jhead/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWjhead.gspec CSWjhead.prototype
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = makefile.patch
 

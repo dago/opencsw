@@ -1,5 +1,5 @@
-GARNAME = magit
-GARVERSION = 0.7
+NAME = magit
+VERSION = 0.7
 PATCHLEVEL = magit_0.7
 CATEGORIES = utils
 
@@ -40,8 +40,8 @@ pre-configure-modulated:
 # Debian, remove this...
 post-install-modulated:
 	@(cd $(WORKSRC); \
-		mkdir -p $(DESTDIR)/$(docdir)/$(GARNAME); \
-		cp README AUTHORS NEWS $(DESTDIR)/$(docdir)/$(GARNAME) )
+		mkdir -p $(DESTDIR)/$(docdir)/$(NAME); \
+		cp README AUTHORS NEWS $(DESTDIR)/$(docdir)/$(NAME) )
 	@echo Setting up emacs site-start...
 	@(cd $(DESTDIR); mkdir -p opt/csw/share/emacs/site-lisp/site-start.d; \
 		mv opt/csw/etc/emacs/site-start.d/50magit.el opt/csw/share/emacs/site-lisp/site-start.d/magit.el )

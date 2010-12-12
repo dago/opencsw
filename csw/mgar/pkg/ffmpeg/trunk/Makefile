@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = ffmpeg
-GARVERSION = 0.5
+NAME = ffmpeg
+VERSION = 0.5
 CATEGORIES = lib
 
 DESCRIPTION = Very fast video and audio converter (includes libavcodec)
@@ -18,7 +18,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 PATCHFILES = gnu-grep.patch
 PATCHFILES += 0001-Use-inttypes-instead-of-stdint.patch
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 NOISAEXEC = 1

@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = libxpm
-GARVERSION = 3.5.8
+NAME = libxpm
+VERSION = 3.5.8
 CATEGORIES = x11
 
 DESCRIPTION = X11 pixmap library
@@ -14,10 +14,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libXpm-$(GARVERSION)
+DISTNAME = libXpm-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # CSWxpm is the legacy library
 PACKAGES = CSWlibxpm CSWlibxpmdevel CSWxpm

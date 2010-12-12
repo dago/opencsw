@@ -1,4 +1,4 @@
-GARNAME = exo
+NAME = exo
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Extensions Library 
@@ -6,8 +6,8 @@ define BLURB
    Xfce Extensions Library 
 endef
 
-GARVERSION = 0.3.4
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+VERSION = 0.3.4
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # DISTFILES += CSWxfceexo.depend CSWxfceexo.gspec CSWxfceexo.prototype
 # DISTFILES += CSWxfcelibexo.depend CSWxfcelibexo.gspec CSWxfcelibexo.prototype
 # DISTFILES += CSWxfceexodoc.depend CSWxfceexodoc.gspec CSWxfceexodoc.prototype
@@ -15,7 +15,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWxfceexo, depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 #  Patch for the exo-mount.c file
 # PATCHFILES = exo.diff

@@ -1,5 +1,5 @@
-GARNAME = firefox-l10n
-GARVERSION = 3.0.14
+NAME = firefox-l10n
+VERSION = 3.0.14
 CATEGORIES = apps
 
 DESCRIPTION = Firefox language pack :
@@ -36,12 +36,12 @@ $(foreach LOCALE_NAME, $(LANG), $(eval CATALOGNAME_CSWffox-l10n-$(LOCALE_NAME) =
 $(foreach LOCALE_NAME, $(LANG), $(eval PKGFILES_CSWffox-l10n-$(LOCALE_NAME) = .*langpack-$(LOCALE_NAME).*))
 
 # Defines the content to be downloaded
-MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/linux-i686/xpi/
+MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/$(VERSION)/linux-i686/xpi/
 DISTFILES = License
 $(foreach LOCALE_NAME, $(LANG), $(eval DISTFILES += $(LOCALE_NAME).xpi))
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
@@ -66,7 +66,7 @@ post-extract-modulated:
 	$(MAKECOOKIE)
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 
 	for LOCALE_NAME in $(foreach L, $(LANG), $(L)); do \
 		PKG_EXTENSION=`grep "em:id=" "$(WORKROOTDIR)/build-$(MODULATIONS)/$$LOCALE_NAME/install.rdf" | cut -d\" -f 2` ; \

@@ -1,8 +1,8 @@
-GARVERSION = 0.11
+VERSION = 0.11
 CATEGORIES = devel
 PROTONAME = renderproto
-GARNAME = $(PROTONAME)
-DISTNAME = $(PROTONAME)-$(GARVERSION)
+NAME = $(PROTONAME)
+DISTNAME = $(PROTONAME)-$(VERSION)
 
 DESCRIPTION = Render extension headers from modular X.org
 define BLURB
@@ -11,7 +11,7 @@ endef
 	
 X11_RELEASE_VERSION = X11R7.5
 MASTER_SITES = http://xorg.freedesktop.org/releases/$(X11_RELEASE_VERSION)/src/proto/
-DISTFILES = $(PROTONAME)-$(GARVERSION).tar.gz
+DISTFILES = $(PROTONAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz

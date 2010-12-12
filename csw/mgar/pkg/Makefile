@@ -69,8 +69,8 @@ pkglist:
 newpkg-%:
 	@svn mkdir $* $*/tags $*/branches $*/trunk $*/trunk/files
 	@(echo '# $$Id$$';   								\
-	echo "GARNAME = $*";                                     								\
-	echo "GARVERSION = 1.0";                                        								\
+	echo "NAME = $*";                                     								\
+	echo "VERSION = 1.0";                                        								\
 	echo "CATEGORIES = category";                                   								\
 	echo "";                                                        								\
 	echo "DESCRIPTION = Brief description";                         								\
@@ -82,7 +82,7 @@ newpkg-%:
 	echo "DISTFILES  = $$(DISTNAME).tar.gz";          								\
 	echo "";                                                        								\
 	echo "# File name regex to get notifications about upstream software releases";  	\
-	echo "UFILES_REGEX = $$(GARNAME)-(\d+(?:\.\d+)*).tar.gz";										\
+	echo "UFILES_REGEX = $$(NAME)-(\d+(?:\.\d+)*).tar.gz";										\
 	echo "";                                                        								\
 	echo "# If the url used to check for software update is different of MASTER_SITES, then ";   	\
 	echo "# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES"; 	\

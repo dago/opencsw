@@ -1,9 +1,9 @@
-GARNAME = readline
-GARVERSION = 6.1
+NAME = readline
+VERSION = 6.1
 CATEGORIES = lib
 
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 4.3 5.2 6.1
+EXTRA_MODULATORS = VERSION
+MODULATIONS_VERSION = 4.3 5.2 6.1
 
 DESCRIPTION = GNU readline
 define BLURB
@@ -16,7 +16,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(foreach V,$(MODULATIONS_GARVERSION),$(GARNAME)-$(V).tar.gz)
+DISTFILES  = $(foreach V,$(MODULATIONS_VERSION),$(NAME)-$(V).tar.gz)
 
 PATCHFILES_isa-sparcv8-garversion-6.1 = patch-history.3.diff
 PATCHFILES_isa-sparcv9-garversion-6.1 = patch-history.3.diff
@@ -26,7 +26,7 @@ PATCHFILES_isa-amd64-garversion-6.1 = patch-history.3.diff
 RUNTIME_DEP_PKGS = CSWncurses
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 

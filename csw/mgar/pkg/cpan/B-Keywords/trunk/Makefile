@@ -1,5 +1,5 @@
-GARNAME = B-Keywords
-GARVERSION = 1.09
+NAME = B-Keywords
+VERSION = 1.09
 CATEGORIES = cpan
 AUTHOR = JJORE
 
@@ -14,7 +14,7 @@ ARCHALL = 1
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)

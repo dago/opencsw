@@ -1,5 +1,5 @@
-GARNAME = nagvis
-GARVERSION = 1.4.5
+NAME = nagvis
+VERSION = 1.4.5
 CATEGORIES = apps
 
 SPKG_DESC_CSWnagvis = visualization addon for nagios
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWnagvis.prototype
 

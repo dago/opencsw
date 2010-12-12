@@ -1,5 +1,5 @@
-GARNAME = yaz
-GARVERSION = 4.0.9
+NAME = yaz
+VERSION = 4.0.9
 CATEGORIES = utils
 
 DESCRIPTION = Toolkit for Z39.50/SRW/SRU clients and servers
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.indexdata.dk/pub/yaz/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE
 

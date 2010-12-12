@@ -1,5 +1,5 @@
-GARNAME = pen
-GARVERSION = 0.18.0
+NAME = pen
+VERSION = 0.18.0
 CATEGORIES = utils
 
 DESCRIPTION = Simple load balancer
@@ -12,13 +12,13 @@ endef
 
 MASTER_SITES = ftp://siag.nu/pub/pen/
 MASTER_SITES += http://siag.nu/pub/pen/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software 
 # release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-CONFIGURE_ARGS = $(DIRPATHS) --with-docdir=$(docdir)/$(GARNAME)
+CONFIGURE_ARGS = $(DIRPATHS) --with-docdir=$(docdir)/$(NAME)
 
 # no tests, well...
 TEST_SCRIPTS =

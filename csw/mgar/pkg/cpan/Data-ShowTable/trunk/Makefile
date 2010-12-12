@@ -1,5 +1,5 @@
-GARNAME = Data-ShowTable
-GARVERSION = 3.3
+NAME = Data-ShowTable
+VERSION = 3.3
 CATEGORIES = cpan
 AUTHOR = AKSTE
 

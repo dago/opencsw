@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = rssh
-GARVERSION = 2.3.3
+NAME = rssh
+VERSION = 2.3.3
 CATEGORIES = utils
 
 DESCRIPTION = A restricted shell for use with OpenSSH
@@ -13,12 +13,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = 0001-Use-DESTDIR-on-install-libexec-hook.patch 
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.pizzashack.org/rssh/
 
@@ -51,6 +51,6 @@ PROTOTYPE_PERMS_makesuid = 4755
 include gar/category.mk
 
 post-install-modulated:
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	cd $(WORKSRC) && ginstall -m 0644 CHROOT INSTALL README SECURITY $(DESTDIR)$(docdir)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	cd $(WORKSRC) && ginstall -m 0644 CHROOT INSTALL README SECURITY $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)

@@ -1,5 +1,5 @@
-GARNAME = Object-Realize-Later
-GARVERSION = 0.18
+NAME = Object-Realize-Later
+VERSION = 0.18
 CATEGORIES = cpan
 AUTHOR = MARKOV
 

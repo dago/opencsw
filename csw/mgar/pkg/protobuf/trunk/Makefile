@@ -7,8 +7,8 @@
 # About using stlport4
 # http://developers.sun.com/solaris/articles/cmp_stlport_libCstd.html
 
-GARNAME = protobuf
-GARVERSION = 2.3.0
+NAME = protobuf
+VERSION = 2.3.0
 CATEGORIES = lib
 define BLURB
 	Protocol Buffers are a way of encoding structured data in an efficient yet
@@ -17,8 +17,8 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://code.google.com/p/protobuf/
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PATCHFILES += 0001-Patches-from-GAR.patch
 PATCHFILES += 0002-std-map-in-two-more-files.patch
 PATCHFILES += OutputDirectoryIsFileError-unittest.patch

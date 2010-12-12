@@ -1,5 +1,5 @@
-GARNAME = Mail-Box-Parser-C
-GARVERSION = 3.006
+NAME = Mail-Box-Parser-C
+VERSION = 3.006
 CATEGORIES = cpan
 AUTHOR = MARKOV
 

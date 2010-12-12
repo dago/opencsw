@@ -1,8 +1,8 @@
-GARNAME = miltergreylist
-GARVERSION = 4.2.6
+NAME = miltergreylist
+VERSION = 4.2.6
 #RELEASE = rc1
-#DISTVERSION = $(GARVERSION)$(RELEASE)
-DISTVERSION = $(GARVERSION)
+#DISTVERSION = $(VERSION)$(RELEASE)
+DISTVERSION = $(VERSION)
 DISTNAME = milter-greylist-$(DISTVERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
@@ -24,7 +24,7 @@ PATCHFILES += 0001-Path-and-user-changes-in-conf-file.patch
 RUNTIME_DEP_PKGS = CSWcurlrt CSWgeoip CSWlibspf2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS  = --prefix=/opt/csw
@@ -54,27 +54,27 @@ PROTOTYPE_USER_1 = greylist
 
 include gar/category.mk
 
-#WORKSRC := $(WORKDIR)/$(GARNAME)-$(GARVERSION)b1
+#WORKSRC := $(WORKDIR)/$(NAME)-$(VERSION)b1
 SPKG_SOURCEURL = http://hcpnet.free.fr/milter-greylist
 #SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 
 DOCLIST = README ChangeLog greylist.conf greylist2.conf milter-greylist.m4
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	   gmake DESTDIR=$(DESTDIR) install )
 	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw
 	@mv $(DESTDIR)/etc/mail/greylist.conf $(DESTDIR)/etc/opt/csw/greylist.conf
 	@rmdir $(DESTDIR)/etc/mail
-	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(GARNAME)
-	@$(foreach DOC,$(DOCLIST),cp $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
-	@ginstall -d -m 755 $(DESTDIR)/var/opt/csw/$(GARNAME)
+	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(NAME)
+	@$(foreach DOC,$(DOCLIST),cp $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
+	@ginstall -d -m 755 $(DESTDIR)/var/opt/csw/$(NAME)
 	@rmdir $(DESTDIR)/var/milter-greylist
-	@ginstall -d -m 755 $(DESTDIR)/opt/csw/etc/pkg/CSW$(GARNAME)
-	@cp $(FILEDIR)/CSWmiltergreylist.ug $(DESTDIR)/opt/csw/etc/pkg/CSW$(GARNAME)/cswusergroup
+	@ginstall -d -m 755 $(DESTDIR)/opt/csw/etc/pkg/CSW$(NAME)
+	@cp $(FILEDIR)/CSWmiltergreylist.ug $(DESTDIR)/opt/csw/etc/pkg/CSW$(NAME)/cswusergroup
 	@ginstall -d -m 755 $(DESTDIR)/etc/opt/csw/init.d
 	@cp $(FILEDIR)/CSWmiltergreylist.init $(DESTDIR)/etc/opt/csw/init.d/cswmiltergreylist
 	@chmod 755 $(DESTDIR)/etc/opt/csw/init.d/cswmiltergreylist
-	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(GARNAME)
+	@cp $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)

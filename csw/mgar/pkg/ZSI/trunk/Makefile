@@ -1,8 +1,8 @@
 # BEWARE: 
 # For now this build recipe relies on gar/v2-skayser for the python category
 #
-GARNAME = ZSI
-GARVERSION = 2.0
+NAME = ZSI
+VERSION = 2.0
 CATEGORIES = python
 
 DESCRIPTION = Web services for Python programmers, both client and servers.
@@ -20,7 +20,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJ = pywebsvcs/$(DISTNAME)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://pywebsvcs.sf.net/
 PACKAGES = CSWpyzsi

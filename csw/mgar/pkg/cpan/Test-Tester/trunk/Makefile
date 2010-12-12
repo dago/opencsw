@@ -1,5 +1,5 @@
-GARNAME = Test-Tester
-GARVERSION = 0.107
+NAME = Test-Tester
+VERSION = 0.107
 CATEGORIES = cpan
 AUTHOR = FDALY
 

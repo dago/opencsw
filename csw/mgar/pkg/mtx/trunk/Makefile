@@ -1,5 +1,5 @@
-GARNAME = mtx
-GARVERSION = 1.3.12
+NAME = mtx
+VERSION = 1.3.12
 CATEGORIES = utils
 
 DESCRIPTION = Control tape autoloaders
@@ -17,10 +17,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE
 LICENSE_CSWmtxcontrib = contrib/README

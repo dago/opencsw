@@ -5,8 +5,8 @@
 # ! Include default configuration
 # * Use the shipped Makefile optimization flags
 #
-GARNAME = haproxy
-GARVERSION = 1.4.1
+NAME = haproxy
+VERSION = 1.4.1
 CATEGORIES = apps
 
 DESCRIPTION = Reliable, high performance TCP/HTTP load balancer
@@ -23,8 +23,8 @@ endef
 
 VENDOR_URL   = http://haproxy.1wt.eu/
 MASTER_SITES = http://haproxy.1wt.eu/download/1.4/src/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_MASTER_SITES = $(VENDOR_URL)
 
 # Heavily optimized, supported for gcc, didn't dare to touch
@@ -41,14 +41,14 @@ BUILD_ARGS = \
 
 INSTALL_ARGS = \
 	PREFIX=$(prefix) \
-	DOCDIR=$(docdir)/$(GARNAME)
+	DOCDIR=$(docdir)/$(NAME)
 
 include gar/category.mk
 
 # Makefile contains references to install
 PATH := /opt/csw/gnu:$(PATH)
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	mkdir -p $(DOCDEST)
 	cp -r $(WORKSRC)/examples $(DOCDEST)

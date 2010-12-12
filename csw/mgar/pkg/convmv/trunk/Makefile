@@ -1,5 +1,5 @@
-GARNAME = convmv
-GARVERSION = 1.14
+NAME = convmv
+VERSION = 1.14
 CATEGORIES = utils
 
 DESCRIPTION = Converts filenames from one encoding to another
@@ -19,12 +19,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.j3e.de/linux/convmv/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 LICENSE = GPL2
 ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = 
@@ -39,7 +39,7 @@ post-extract-modulated:
 	@perl -pi -e 's|\tinstall|\tginstall|' $(WORKSRC)/Makefile
 	@$(MAKECOOKIE)
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@(cd $(WORKSRC); cp CREDITS Changes TODO $(DOCDEST))

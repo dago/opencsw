@@ -1,6 +1,6 @@
-GARNAME = sasl
-GARVERSION = 2.1.24
-FILEVERSION = $(GARVERSION)rc1
+NAME = sasl
+VERSION = 2.1.24
+FILEVERSION = $(VERSION)rc1
 CATEGORIES = lib
 
 DESCRIPTION = Simple Authentication and Security Layer
@@ -13,8 +13,8 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
-DISTNAME = cyrus-$(GARNAME)-$(GARVERSION)
-DISTFILES = cyrus-$(GARNAME)-$(FILEVERSION).tar.gz
+DISTNAME = cyrus-$(NAME)-$(VERSION)
+DISTFILES = cyrus-$(NAME)-$(FILEVERSION).tar.gz
 DISTFILES += cswsaslauthd.init saslauthd.init.CSW
 DISTFILES += README.sasl README.saslauthd
 
@@ -43,7 +43,7 @@ SPKG_DESC_CSWsaslgssapi = Cyrus Simple Authentication and Security Layer GSSAPI 
 SPKG_DESC_CSWsaslsql = Cyrus Simple Authentication and Security Layer SQL Binding
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = cyrus-$(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = cyrus-$(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_CFLAGS = -D__EXTENSIONS__
 

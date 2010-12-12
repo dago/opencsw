@@ -1,7 +1,7 @@
 # Uses an undocumented ioctl interface, limited binary compatibility.
 # Build from Solaris 8 works on Solaris 8 & 9, Solaris 10 needs separate build
-GARNAME = tcpdrop
-GARVERSION = 1.4
+NAME = tcpdrop
+VERSION = 1.4
 CATEGORIES = net
 
 DESCRIPTION = Tool to drop TCP sessions
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://shrike.submonkey.net/~ceri/util/tcpdrop-solaris/
-DISTFILES = $(GARNAME)-solaris.tar.gz
+DISTFILES = $(NAME)-solaris.tar.gz
 DISTNAME = tcpdrop-solaris
 SPKG_SOURCEURL = http://typo.submonkey.net/pages/tcpdrop-solaris
 LICENSE = $(WORKSRC)/README
@@ -22,7 +22,7 @@ NORUNPATH = 1
 
 include gar/category.mk
 
-install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 install-custom:
 	mkdir -p $(DOCDEST)
 	cp $(FILEDIR)/changelog.CSW $(WORKSRC)/README $(DOCDEST)

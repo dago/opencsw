@@ -1,5 +1,5 @@
-GARNAME = exiftool
-GARVERSION = 7.73
+NAME = exiftool
+VERSION = 7.73
 CATEGORIES = cpan
 
 DESCRIPTION = Read, Write and Edit Image File Meta Information
@@ -8,7 +8,7 @@ define BLURB
   reading, writing and editing meta information in image, audio and video files.
 endef
 
-DISTNAME = Image-ExifTool-$(GARVERSION)
+DISTNAME = Image-ExifTool-$(VERSION)
 
 MASTER_SITES = http://owl.phy.queensu.ca/~phil/exiftool/
 MODDIST =

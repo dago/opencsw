@@ -1,5 +1,5 @@
-GARNAME = libexif
-GARVERSION = 0.6.19
+NAME = libexif
+VERSION = 0.6.19
 CATEGORIES = lib
 
 DESCRIPTION = EXIF Tag Parsing Library
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 SPKG_SOURCEURL = http://libexif.sourceforge.net
 

@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME    = gnupg
-GARVERSION = 2.0.15
+NAME    = gnupg
+VERSION = 2.0.15
 CATEGORIES = apps
 
 DESCRIPTION = GnuPG is a complete and free replacement for PGP.
@@ -19,7 +19,7 @@ SPKG_DESC_CSWgnupg-agent   = GNU privacy guard - password agent
 
 SPKG_SOURCEURL = http://www.gnupg.org/
 MASTER_SITES   = ftp://ftp.gnupg.org/gcrypt/gnupg/
-DISTFILES      = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES      = $(NAME)-$(VERSION).tar.bz2
 
 # fix some missing libraries for Keyserver tools and gpgsm
 # Bug ID 996 filed up stream along with patch

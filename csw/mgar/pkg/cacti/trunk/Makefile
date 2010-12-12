@@ -1,5 +1,5 @@
-GARNAME = cacti
-GARVERSION = 0.8.7e
+NAME = cacti
+VERSION = 0.8.7e
 CATEGORIES = apps
 
 DESCRIPTION = a network graphing solution based on RRDtool
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cacti.net/downloads/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 #DISTFILES += CSWcacti.prototype CSWcacti.preinstall
 DISTFILES += CSWcacti.prototype CSWcacti.postinstall
 

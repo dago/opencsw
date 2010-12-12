@@ -1,5 +1,5 @@
-GARNAME = Compress-Bzip2
-GARVERSION = 2.09
+NAME = Compress-Bzip2
+VERSION = 2.09
 CATEGORIES = cpan
 AUTHOR = ARJAY
 

@@ -1,5 +1,5 @@
-GARNAME = mibdump
-GARVERSION = 0.1.2
+NAME = mibdump
+VERSION = 0.1.2
 CATEGORIES = utils
 
 DESCRIPTION = Allows management applications to access SMI MIB module definitions
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.ibr.cs.tu-bs.de/pub/local/libsmi/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.ibr.cs.tu-bs.de/projects/libsmi/
 

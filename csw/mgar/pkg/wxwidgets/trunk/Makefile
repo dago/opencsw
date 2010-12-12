@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = wxWidgets
-GARVERSION = 2.8.10
+NAME = wxWidgets
+VERSION = 2.8.10
 CATEGORIES = lib
 define BLURB
   wxWidgets lets developers create applications for Win32, Mac OS X, GTK+, X11,
@@ -18,12 +18,12 @@ endef
 # More details below, look for 'unicode'.
 PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
 
-EXTRA_MODULATORS = GARVERSION
+EXTRA_MODULATORS = VERSION
 
 # Once upon a time, this build also supported the version 2.8.5 for backward
 # compatibility. Unfortunately, it was segfaulting.  As a workaround, binary
 # files copied from the old package have been provided.
-MODULATIONS_GARVERSION = 2.8.10
+MODULATIONS_VERSION = 2.8.10
 
 MERGE_SCRIPTS_isa-i386-garversion-2.8.5 = copy-only
 MERGE_DIRS_isa-i386-garversion-2.8.5 = $(libdir)
@@ -32,8 +32,8 @@ MERGE_DIRS_isa-sparcv8-garversion-2.8.5 = $(libdir)
 MERGE_SCRIPTS_isa-i386-garversion-2.8.10 = copy-all
 MERGE_SCRIPTS_isa-sparcv8-garversion-2.8.10 = copy-all
 
-SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tar.gz)
-NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
+SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VERSION),$(NAME)-$(VERSION).tar.gz)
+NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz,$(SOURCEFILES))
 DISTFILES  = $(SOURCEFILES)
 DISTFILES += libwx_gtk2u-2.8.so.0.2.0-i386
 DISTFILES += libwx_gtk2u-2.8.so.0.2.0-sparc
@@ -64,7 +64,7 @@ PATCHFILES_isa-sparcv8-garversion-2.8.10  = 0001-Patches-from-http-trac.wxwidget
 PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0002-Fixing-retarded-checks-for-libGL.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0003-vsscanf-support-via-ncursesw.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0005-stupid-vwscanf-workaround.patch
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES  = CSWwxwidgetscommon
 PACKAGES += CSWwxwidgetsdevel
 PACKAGES += CSWwxwidgetsgtk2
@@ -162,7 +162,7 @@ EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
 # The 2.8.5 version has been compiled as a monolithic library.  Building it the
 # same way for backwards compatibility.
 CONFIGURE_ARGS_garversion-2.8.5 = --enable-monolithic
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_garversion-$(GARVERSION))
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_garversion-$(VERSION))
 
 INSTALL_SCRIPTS = wxwidgets
 

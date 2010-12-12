@@ -1,5 +1,5 @@
-GARNAME = gengetopt
-GARVERSION = 2.22.4
+NAME = gengetopt
+VERSION = 2.22.4
 CATEGORIES = utils
 
 DESCRIPTION = parses the command line options
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.gnu.org/software/gengetopt/
 

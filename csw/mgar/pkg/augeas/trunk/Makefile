@@ -1,5 +1,5 @@
-GARNAME = augeas
-GARVERSION = 0.7.0
+NAME = augeas
+VERSION = 0.7.0
 CATEGORIES = lib
 
 DESCRIPTION = A configuration editing tool
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://augeas.net/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0001-Do-not-use-_N-already-taken-on-Solaris.patch
 PATCHFILES += 0002-Hack-in-isblank-as-gnutools-dont-seem-to-be-used.patch
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://augeas.net
 

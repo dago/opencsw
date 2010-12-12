@@ -1,7 +1,7 @@
-GARNAME = libmikmod
-GARVERSION = 3.1.11
-DISTVERSION = $(GARVERSION)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
+NAME = libmikmod
+VERSION = 3.1.11
+DISTVERSION = $(VERSION)
+DISTNAME = $(NAME)-$(DISTVERSION)
 CATEGORIES = lib
 DESCRIPTION = Library for MOD audio files and other types
 define BLURB
@@ -11,7 +11,7 @@ endef
 PACKAGES = CSWmikmod
 CATALOGNAME = libmikmod
 MASTER_SITES = http://mikmod.raphnet.net/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = libmikmod-3.1.11-a.diff
 PATCHFILES += 0001-fix-compiling-on-Solaris.patch
 LICENSE = COPYING.LIB

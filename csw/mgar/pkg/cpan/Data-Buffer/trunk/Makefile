@@ -1,5 +1,5 @@
-GARNAME = Data-Buffer
-GARVERSION = 0.04
+NAME = Data-Buffer
+VERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = BTROTT
 

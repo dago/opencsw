@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = freetds
-GARVERSION = 0.82
+NAME = freetds
+VERSION = 0.82
 CATEGORIES = lib
 
 DESCRIPTION = Implementation of the TDS protocol used by MS SQL Server and Sybase
@@ -10,9 +10,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.ibiblio.org/pub/Linux/ALPHA/freetds/stable/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWfreetds CSWfreetdsdoc
 
@@ -33,7 +33,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 MERGE_DIRS_isa-extra = $(libdir)
 
-EXTRA_PAX_ARGS = '-s,.*{}$$,,p' '-s,/doc/$(GARNAME)-$(GARVERSION),/doc/$(GARNAME),p'
+EXTRA_PAX_ARGS = '-s,.*{}$$,,p' '-s,/doc/$(NAME)-$(VERSION),/doc/$(NAME),p'
 
 PRESERVECONF = $(addprefix $(sysconfdir)/,freetds.conf locales.conf pool.conf)
 MIGRATE_FILES_CSWfreetds = freetds.conf locales.conf pool.conf

@@ -1,10 +1,10 @@
-GARNAME = sudo
-GARVERSION = 1.7.2
+NAME = sudo
+VERSION = 1.7.2
 CATEGORIES = utils
 RELEASE = p4
 
-DISTVERSION = $(GARVERSION)$(RELEASE)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
+DISTVERSION = $(VERSION)$(RELEASE)
+DISTNAME = $(NAME)-$(DISTVERSION)
 
 DESCRIPTION = Provides limited super user privileges
 define BLURB
@@ -15,12 +15,12 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
-DISTFILES  = $(GARNAME)-$(DISTVERSION).tar.gz 
+DISTFILES  = $(NAME)-$(DISTVERSION).tar.gz 
 PATCHFILES = install.diff
 
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
-UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
+UFILES_REGEX = $(NAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
 
 PACKAGES = CSWsudo CSWsudo-common
 

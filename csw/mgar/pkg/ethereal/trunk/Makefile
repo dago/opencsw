@@ -1,5 +1,5 @@
-GARNAME = ethereal
-GARVERSION = 0.99.0
+NAME = ethereal
+VERSION = 0.99.0
 CATEGORIES = net
 
 DESCRIPTION = A GUI network protocol analyzer.
@@ -14,7 +14,7 @@ MASTER_SITES = http://www.ethereal.com/distribution/
 DISTFILES = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 DEPENDS += lib/libpcap
 DEPENDS += lib/gtk2

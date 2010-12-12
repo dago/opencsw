@@ -1,4 +1,4 @@
-GARNAME = kdegames
+NAME = kdegames
 CATEGORIES = kde
 
 DESCRIPTION = Games for KDE (gcc3)

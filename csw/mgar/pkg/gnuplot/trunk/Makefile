@@ -1,5 +1,5 @@
-GARNAME = gnuplot
-GARVERSION = 4.4.2
+NAME = gnuplot
+VERSION = 4.4.2
 CATEGORIES = utils
 
 DESCRIPTION = The Gnuplot Plotting Utility
@@ -8,12 +8,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = 0001-Remove-definition-unclear-why-leaving-it-in-causes-e.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.gnuplot.info/
 

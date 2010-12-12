@@ -2,16 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = startup-notification
-GARVERSION = 0.9
+NAME = startup-notification
+VERSION = 0.9
 CATEGORIES = lib
 DESCRIPTION = Reference implementation of the startup notification protocol
 define BLURB
 endef
 SPKG_SOURCEURL = http://www.freedesktop.org/wiki/Software/startup-notification
 MASTER_SITES = http://www.freedesktop.org/software/startup-notification/releases/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = startup_notif
 PACKAGES = CSWstartupnotif
 CONFIGURE_ARGS = $(DIRPATHS)

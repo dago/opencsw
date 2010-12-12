@@ -1,5 +1,5 @@
-GARNAME = Compress-Raw-Bzip2
-GARVERSION = 2.031
+NAME = Compress-Raw-Bzip2
+VERSION = 2.031
 CATEGORIES = cpan
 AUTHOR = PMQS
 

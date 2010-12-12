@@ -1,5 +1,5 @@
-GARNAME = librsync
-GARVERSION = 0.9.7
+NAME = librsync
+VERSION = 0.9.7
 CATEGORIES = lib
 
 DESCRIPTION = Library with the rolling-checksum algorithm known from rsync
@@ -11,8 +11,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS_CSWlibrsync += CSWbzip2
 RUNTIME_DEP_PKGS_CSWlibrsync += CSWlibpopt

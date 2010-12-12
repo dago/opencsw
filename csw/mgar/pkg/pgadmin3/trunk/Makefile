@@ -2,16 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = pgadmin3
-GARVERSION = 1.10.0
+NAME = pgadmin3
+VERSION = 1.10.0
 CATEGORIES = apps
 DESCRIPTION = An administration and development platform for PostgreSQL
 define BLURB
 endef
 SPKG_SOURCEURL = http://www.pgadmin.org/
-MASTER_SITES = http://wwwmaster.postgresql.org/redir/76/h/pgadmin3/release/v$(GARVERSION)/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = http://wwwmaster.postgresql.org/redir/76/h/pgadmin3/release/v$(VERSION)/src/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS += CSWpostgresql
 RUNTIME_DEP_PKGS += CSWkrb5lib
 RUNTIME_DEP_PKGS += CSWlibpq

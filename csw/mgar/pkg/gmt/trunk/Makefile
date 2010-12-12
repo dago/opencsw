@@ -4,8 +4,8 @@
 
 GMT_VERSION = 4.5.3
 
-GARNAME = gmt
-GARVERSION = $(GMT_VERSION)
+NAME = gmt
+VERSION = $(GMT_VERSION)
 CATEGORIES = apps
 DESCRIPTION = Generic Mapping Tools
 define BLURB
@@ -35,7 +35,7 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 TEST_SCRIPTS =
 
 ## GMT doesn't use the GNU convention for unpacked tarballs
-#WORKSRC = $(WORKDIR)/GMT$(GARVERSION)
+#WORKSRC = $(WORKDIR)/GMT$(VERSION)
 DISTNAME = GMT$(GMT_VERSION)
 
 ## Arguments passed to the ./configure script. Configure ignores the various

@@ -1,5 +1,5 @@
-GARNAME = scponly
-GARVERSION = 4.8
+NAME = scponly
+VERSION = 4.8
 CATEGORIES = xtra
 
 DESCRIPTION = A Restricted Shell
@@ -11,7 +11,7 @@ endef
 
 VENDOR_URL   = http://sublimation.org/scponly/
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES    = $(NAME)-$(VERSION).tgz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

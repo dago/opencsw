@@ -1,4 +1,4 @@
-GARNAME = xfce4-mixer
+NAME = xfce4-mixer
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Volume Control
@@ -6,12 +6,12 @@ define BLURB
    Xfce Volume Control 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # DISTFILES += CSWxfcemixer.depend CSWxfcemixer.gspec CSWxfcemixer.prototype
 DISTFILES += $(call admfiles,CSWxfcemixer, depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 TEST_SCRIPTS = none
 

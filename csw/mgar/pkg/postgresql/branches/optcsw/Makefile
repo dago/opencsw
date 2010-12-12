@@ -13,13 +13,13 @@
 # TODO: The isaexec part in GAR doesn't work very well.  Let's write a minimal
 # example of it.   (gmake repackage may produce the right output)
 
-GARNAME = postgresql
+NAME = postgresql
 BASE_VERSION = 8.4
 # How to make one automatically?
 VERSION_NODOT = 8_4
 BASE_VERSION_G = 84
 PATCHLEVEL = 4
-GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
+VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 
 # Useful when making a series of builds on the same day
@@ -31,7 +31,7 @@ SPKG_SOURCEURL = http://www.postgresql.org/
 define BLURB
 endef
 
-version_dependent = /lib/$(GARNAME)/$(BASE_VERSION)
+version_dependent = /lib/$(NAME)/$(BASE_VERSION)
 bindir_install = $(prefix)$(version_dependent)/bin
 bindir = $(prefix)$(version_dependent)/bin
 sbindir_install = $(prefix)$(version_dependent)/sbin
@@ -41,23 +41,23 @@ libdir_install = $(prefix)$(version_dependent)/lib
 # Otherwise initdb can't find the right libraries, see:
 # http://archives.postgresql.org/pgsql-general/2010-01/msg00422.php
 libdir = $(abspath $(prefix)$(version_dependent)/lib/$(MM_LIBDIR))
-localstatedir = /var$(prefix)/$(GARNAME)/$(BASE_VERSION)
-sysconfdir = /etc$(prefix)/$(GARNAME)/$(BASE_VERSION)
-datadir = $(prefix)/share/$(GARNAME)/$(BASE_VERSION)
-docdir = $(prefix)/share/doc/$(GARNAME)-$(BASE_VERSION)
-includedir = $(prefix)/include/$(GARNAME)/$(BASE_VERSION)
+localstatedir = /var$(prefix)/$(NAME)/$(BASE_VERSION)
+sysconfdir = /etc$(prefix)/$(NAME)/$(BASE_VERSION)
+datadir = $(prefix)/share/$(NAME)/$(BASE_VERSION)
+docdir = $(prefix)/share/doc/$(NAME)-$(BASE_VERSION)
+includedir = $(prefix)/include/$(NAME)/$(BASE_VERSION)
 infodir = $(datadir)/info
-libexecdir_install = $(prefix)/libexec/$(GARNAME)/$(BASE_VERSION)
+libexecdir_install = $(prefix)/libexec/$(NAME)/$(BASE_VERSION)
 lispdir = $(datadir)/emacs/site-lisp
 mandir = $(datadir)/man
-sharedstatedir = $(prefix)/share/$(GARNAME)/$(BASE_VERSION)
-sourcedir = $(prefix)/src/$(GARNAME)/$(BASE_VERSION)
+sharedstatedir = $(prefix)/share/$(NAME)/$(BASE_VERSION)
+sourcedir = $(prefix)/src/$(NAME)/$(BASE_VERSION)
 
 MIGRATE_FILES_CSWpostgresql-$(BASE_VERSION_G)    = postgresql.conf
 MIGRATE_DEST_DIR_CSWpostgresql-$(BASE_VERSION_G) = $(sysconfdir)
 
-MASTER_SITES = http://wwwmaster.postgresql.org/redir/53/h/source/v$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+MASTER_SITES = http://wwwmaster.postgresql.org/redir/53/h/source/v$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += cswpostgres.tmpl
 DISTFILES += cswusergroup.tmpl
 DISTFILES += postgresql.conf.tmpl
@@ -238,12 +238,12 @@ post-merge:
 	ginstall \
 		$(WORKDIR)/$(initscript_base_name) \
 		$(PKGROOT)/etc$(prefix)/init.d/$(initscript_base_name)
-	ginstall -d $(PKGROOT)/etc$(prefix)/pkg/$(GARNAME)
+	ginstall -d $(PKGROOT)/etc$(prefix)/pkg/$(NAME)
 	gsed -e 's+@PGDATA@+$(PGDATA)+g' \
 		< $(FILEDIR)/cswusergroup.tmpl \
 		> $(WORKDIR)/cswusergroup
 	ginstall $(WORKDIR)/cswusergroup \
-		$(PKGROOT)/etc$(prefix)/pkg/$(GARNAME)/cswusergroup_$(VERSION_NODOT)
+		$(PKGROOT)/etc$(prefix)/pkg/$(NAME)/cswusergroup_$(VERSION_NODOT)
 	ginstall -d $(PKGROOT)$(sysconfdir)
 	gsed -e 's+@PGDATA@+$(PGDATA)+g' \
 		< $(FILEDIR)/postgresql.conf.tmpl \

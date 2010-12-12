@@ -1,5 +1,5 @@
-GARNAME = Text-Wrapper
-GARVERSION = 1.02
+NAME = Text-Wrapper
+VERSION = 1.02
 CATEGORIES = cpan
 AUTHOR = CJM
 

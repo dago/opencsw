@@ -1,5 +1,5 @@
-GARNAME = Text-Diff
-GARVERSION = 0.35
+NAME = Text-Diff
+VERSION = 0.35
 CATEGORIES = cpan
 AUTHOR = RBS
 

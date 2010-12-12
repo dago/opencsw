@@ -1,5 +1,5 @@
-GARNAME = PerlIO-via-symlink
-GARVERSION = 0.05
+NAME = PerlIO-via-symlink
+VERSION = 0.05
 CATEGORIES = cpan
 AUTHOR = CLKAO
 

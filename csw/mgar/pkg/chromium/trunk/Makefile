@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = chromium
+NAME = chromium
 CHROMIUM_REVISION = 32797
-GARVERSION = 0.$(CHROMIUM_REVISION)
+VERSION = 0.$(CHROMIUM_REVISION)
 CATEGORIES = lib
 DESCRIPTION = An open-source web browser
 define BLURB
@@ -13,7 +13,7 @@ SPKG_SOURCEURL =
 MASTER_SITES = http://build.chromium.org/buildbot/archives/
 # DISTFILES  = chromium.r$(CHROMIUM_REVISION).tgz
 DISTFILES   =
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS = CSWnspr CSWnss CSWffmpeg
 # CSWpyxml must be uninstalled
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnspr-devel CSWlibxcbdevel CSWffmpeg CSWgperf CSWpython

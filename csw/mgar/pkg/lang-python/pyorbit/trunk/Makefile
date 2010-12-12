@@ -1,7 +1,7 @@
-GARNAME = pyorbit
-GARVERSION = 2.24.0
+NAME = pyorbit
+VERSION = 2.24.0
 CATEGORIES = lang
-RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
+RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 
 DESCRIPTION = ORBit2 CORBA support for Python
 define BLURB
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.acc.umu.se/pub/GNOME/sources/pyorbit/$(RELVER)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 STRIP_LIBTOOL = 1
 
 PACKAGES = CSWpyorbit

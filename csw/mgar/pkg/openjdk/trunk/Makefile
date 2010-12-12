@@ -1,6 +1,6 @@
-GARNAME = openjdk
+NAME = openjdk
 SPKG_VERSION = 7.ea.b118.11
-GARVERSION = 7.b118.11
+VERSION = 7.b118.11
 CATEGORIES = lang
 
 DESCRIPTION = OpenJDK 7
@@ -14,7 +14,7 @@ SUFFIXES_i386  = i586 x64
 SUFFIXES = $(SUFFIXES_sparc) $(SUFFIXES_i386)
 
 DISTNAME = jdk$(SPKG_VERSION)
-DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(GARVERSION)-solaris-$S.sh)
+DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(VERSION)-solaris-$S.sh)
 
 DISTFILES  = openjdk-7-ea-src-b118-11_nov_2010.zip
 DISTFILES += $(foreach S,$(SUFFIXES),jdk-7-ea-plug-b118-solaris-$S-11_nov_2010.jar)
@@ -63,7 +63,7 @@ extract-archive-%.sh: shell-extract-archive-%.sh
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 
 	@rm -rf $(DESTDIR)$(prefix)/java
 	@ginstall -d $(DESTDIR)$(prefix)/java/jdk

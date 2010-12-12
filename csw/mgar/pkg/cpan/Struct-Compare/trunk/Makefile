@@ -1,5 +1,5 @@
-GARNAME = Struct-Compare
-GARVERSION = 1.0.1
+NAME = Struct-Compare
+VERSION = 1.0.1
 CATEGORIES = cpan
 AUTHOR = ZENSPIDER
 

@@ -1,5 +1,5 @@
-GARNAME = libvanessa-logger
-GARVERSION = 0.0.8
+NAME = libvanessa-logger
+VERSION = 0.0.8
 CATEGORIES = lib
 
 DESCRIPTION = Generic logging library
@@ -12,9 +12,9 @@ define BLURB
 endef
 
 VENDOR_URL   = http://www.vergenet.net/linux/vanessa/
-MASTER_SITES = $(VENDOR_URL)/download/vanessa_logger/$(GARVERSION)/
-DISTFILES    = vanessa_logger-$(GARVERSION).tar.gz
-DISTNAME     = vanessa_logger-$(GARVERSION)
+MASTER_SITES = $(VENDOR_URL)/download/vanessa_logger/$(VERSION)/
+DISTFILES    = vanessa_logger-$(VERSION).tar.gz
+DISTNAME     = vanessa_logger-$(VERSION)
 UFILES_REGEX = (\d+(?:\.\d+)*)
 UPSTREAM_MASTER_SITES = $(VENDOR_URL)/download/vanessa_logger/
 

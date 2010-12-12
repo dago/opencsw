@@ -1,5 +1,5 @@
-GARNAME = Template-Toolkit
-GARVERSION = 2.22
+NAME = Template-Toolkit
+VERSION = 2.22
 CATEGORIES = cpan
 AUTHOR = ABW
 

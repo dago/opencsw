@@ -1,5 +1,5 @@
-GARNAME = perl
-GARVERSION = 5.10.1
+NAME = perl
+VERSION = 5.10.1
 CATEGORIES = lang
 
 DESCRIPTION = A high-level, general-purpose programming language
@@ -15,7 +15,7 @@ endef
 MASTER_SITES   = http://www.cpan.org/src/
 SPKG_SOURCEURL = http://www.cpan.org/src
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWperl CSWperldoc
 ARCHALL_CSWperldoc = 1
@@ -75,7 +75,7 @@ INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0
 PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl
 
 # Configuration flags
-CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(GARVERSION)
+CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION)
 CONFIGURE_ARGS += -Dcc=$(CC)
 CONFIGURE_ARGS += -Dccflags="$(CFLAGS)"
 CONFIGURE_ARGS += -Dccversion="$(CC_VERSION)"
@@ -83,7 +83,7 @@ CONFIGURE_ARGS += -Dcf_email=$(SPKG_EMAIL)
 CONFIGURE_ARGS += -Dinc_version_list="$(INC_COMPAT)"
 CONFIGURE_ARGS += -Dld=$(CC)
 CONFIGURE_ARGS += -Dldflags="$(LDFLAGS)"
-CONFIGURE_ARGS += -Dlibperl=libperl.so.$(GARVERSION)
+CONFIGURE_ARGS += -Dlibperl=libperl.so.$(VERSION)
 CONFIGURE_ARGS += -Dlocincpth=$(includedir)
 CONFIGURE_ARGS += -Dloclibpth=$(libdir)
 CONFIGURE_ARGS += -Dman1dir=$(mandir)/man1
@@ -93,7 +93,7 @@ CONFIGURE_ARGS += -Dman3ext=3perl
 CONFIGURE_ARGS += -Doptimize="$(OPTFLAGS)"
 CONFIGURE_ARGS += -Dperladmin="root@localhost"
 CONFIGURE_ARGS += -Dprefix=$(prefix)
-CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(GARVERSION)
+CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION)
 CONFIGURE_ARGS += -Dsitearch=$(libdir)/perl/site_perl
 CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/site_perl
 CONFIGURE_ARGS += -Dsiteman1dir=$(mandir)/man1
@@ -166,33 +166,33 @@ configure-perl:
 
 # Make links to libperl
 POST_TARGETS += libperl
-LIB_MINOR = $(shell echo $(GARVERSION) | cut -f1-2 -d.)
-LIB_PATH  = $(libdir)/perl/$(GARVERSION)/CORE
+LIB_MINOR = $(shell echo $(VERSION) | cut -f1-2 -d.)
+LIB_PATH  = $(libdir)/perl/$(VERSION)/CORE
 libperl:
 	@( cd $(DESTDIR)$(libdir) ; \
-		mv $(DESTDIR)$(LIB_PATH)/libperl.so.$(GARVERSION) \
+		mv $(DESTDIR)$(LIB_PATH)/libperl.so.$(VERSION) \
 		$(DESTDIR)$(libdir) ; \
-		chmod 755 $(DESTDIR)$(libdir)/libperl.so.$(GARVERSION) ; \
-		ln -s libperl.so.$(GARVERSION) libperl.so.$(LIB_MINOR) ; \
-		ln -s libperl.so.$(GARVERSION) libperl.so )
+		chmod 755 $(DESTDIR)$(libdir)/libperl.so.$(VERSION) ; \
+		ln -s libperl.so.$(VERSION) libperl.so.$(LIB_MINOR) ; \
+		ln -s libperl.so.$(VERSION) libperl.so )
 	@$(MAKECOOKIE)
 #	echo YOUAREHERE
-#	( cd $(DESTDIR)$(libdir)/perl/$(GARVERSION)/${TARGET}/CORE ; \
-#	   chmod 755 libperl.so.$(GARVERSION) ; \
+#	( cd $(DESTDIR)$(libdir)/perl/$(VERSION)/${TARGET}/CORE ; \
+#	   chmod 755 libperl.so.$(VERSION) ; \
 #	   rm libperl.so.$(LIB_MINOR) libperl.so ; \
-#	   ln -s libperl.so.$(GARVERSION) libperl.so.$(LIB_MINOR) ; \
-#	   ln -s libperl.so.$(GARVERSION) libperl.so )
-#	( cd $(DESTDIR)$(libdir)/perl/$(GARVERSION)/${TARGET} ; \
+#	   ln -s libperl.so.$(VERSION) libperl.so.$(LIB_MINOR) ; \
+#	   ln -s libperl.so.$(VERSION) libperl.so )
+#	( cd $(DESTDIR)$(libdir)/perl/$(VERSION)/${TARGET} ; \
 #	   rm libperl* ; \
-#	   ln -s CORE/libperl.so.$(GARVERSION) libperl.so.$(GARVERSION) ; \
-#	   ln -s CORE/libperl.so.$(GARVERSION) libperl.so.$(LIB_MINOR) ; \
-#	   ln -s CORE/libperl.so.$(GARVERSION) libperl.so )
+#	   ln -s CORE/libperl.so.$(VERSION) libperl.so.$(VERSION) ; \
+#	   ln -s CORE/libperl.so.$(VERSION) libperl.so.$(LIB_MINOR) ; \
+#	   ln -s CORE/libperl.so.$(VERSION) libperl.so )
 #	$(MAKECOOKIE)
 
 # Remove build paths from Config
 POST_TARGETS += perlconf
 perlconf:
-	@( cd $(DESTDIR)$(libdir)/perl/$(GARVERSION) ; \
+	@( cd $(DESTDIR)$(libdir)/perl/$(VERSION) ; \
         /bin/perl -i -lne "\
             next if /config_arg[1-9]/; \
             s/^config_args=.+$$/config_args=''/; \
@@ -201,7 +201,7 @@ perlconf:
             s,-[LR]$(DESTDIR)$(libdir),,g; \
             s,( -I$(includedir))+,\$$1,g; \
             s,( -[LR]$(libdir))+,\$$1,g; \
-            s,-R $(libdir)/perl/$(GARVERSION)/CORE,-R $(libdir),; \
+            s,-R $(libdir)/perl/$(VERSION)/CORE,-R $(libdir),; \
             s, (-L)?$(CC_HOME)\S+,,g; \
             if (/^\w+=/) { \
                 s/\s{2,}(\-)/ \-/g; \

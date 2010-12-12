@@ -1,5 +1,5 @@
-GARNAME = Number-Format
-GARVERSION = 1.73
+NAME = Number-Format
+VERSION = 1.73
 CATEGORIES = cpan
 AUTHOR = WRW
 

@@ -1,5 +1,5 @@
-GARNAME = Data-Flow
-GARVERSION = 0.09
+NAME = Data-Flow
+VERSION = 0.09
 CATEGORIES = cpan
 AUTHOR = ILYAZ
 

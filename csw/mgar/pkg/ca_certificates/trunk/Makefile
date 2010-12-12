@@ -1,5 +1,5 @@
-GARNAME = ca-certificates
-GARVERSION = $(shell date '+%Y%m%d')
+NAME = ca-certificates
+VERSION = $(shell date '+%Y%m%d')
 CATEGORIES = xtra
 
 DESCRIPTION = CA certificates

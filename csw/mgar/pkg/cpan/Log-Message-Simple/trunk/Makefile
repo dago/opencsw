@@ -1,5 +1,5 @@
-GARNAME = Log-Message-Simple
-GARVERSION = 0.06
+NAME = Log-Message-Simple
+VERSION = 0.06
 CATEGORIES = cpan
 AUTHOR = BINGOS
 

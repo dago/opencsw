@@ -1,5 +1,5 @@
-GARNAME = Lingua-Stem-It
-GARVERSION = 0.02
+NAME = Lingua-Stem-It
+VERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = ACALPINI
 

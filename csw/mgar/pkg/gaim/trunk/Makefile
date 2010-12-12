@@ -1,5 +1,5 @@
-GARNAME = gaim
-GARVERSION = 2.0.0beta3
+NAME = gaim
+VERSION = 2.0.0beta3
 CATEGORIES = gnome
 
 DESCRIPTION = A GTK2-based instant messaging client.
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=3157

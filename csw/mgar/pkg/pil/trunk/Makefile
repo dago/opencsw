@@ -1,9 +1,9 @@
 # $Id$
 
-GARNAME = pil
-GARVERSION = 1.1.7
+NAME = pil
+VERSION = 1.1.7
 CATEGORIES = python
-DISTNAME = Imaging-$(GARVERSION)
+DISTNAME = Imaging-$(VERSION)
 
 define BLURB
 	The Python Imaging Library (PIL) adds image processing capabilities to your

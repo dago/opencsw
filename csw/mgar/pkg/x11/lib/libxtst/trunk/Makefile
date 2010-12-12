@@ -1,5 +1,5 @@
-GARNAME = libxtst
-GARVERSION = 1.1.0
+NAME = libxtst
+VERSION = 1.1.0
 CATEGORIES = x11
 
 DESCRIPTION = The Xtst Library
@@ -8,11 +8,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libXtst-$(GARVERSION)
+DISTNAME = libXtst-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibxtst CSWlibxtstdevel
 

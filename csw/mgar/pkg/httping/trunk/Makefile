@@ -2,8 +2,8 @@
 # - Options -C, -6, and -y not documented in man page. Reported upstream,
 #   feedback pending.
 #
-GARNAME = httping
-GARVERSION = 1.4.1
+NAME = httping
+VERSION = 1.4.1
 CATEGORIES = net
 
 DESCRIPTION = Httping is like 'ping' but for http-requests.
@@ -15,8 +15,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.vanheusden.com/httping/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tgz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+DISTFILES    = $(NAME)-$(VERSION).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 RUNTIME_DEP_PKGS = CSWosslrt
 
@@ -44,6 +44,6 @@ LICENSE = license.txt
 include gar/category.mk
 
 post-install-modulated:
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	cp $(FILEDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	cp $(FILEDIR)/changelog.CSW $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)

@@ -1,5 +1,5 @@
-GARNAME = Crypt-Random
-GARVERSION = 1.25
+NAME = Crypt-Random
+VERSION = 1.25
 CATEGORIES = cpan
 AUTHOR = VIPUL
 

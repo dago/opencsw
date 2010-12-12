@@ -1,5 +1,5 @@
-GARNAME = qt
-GARVERSION = 4.3.2
+NAME = qt
+VERSION = 4.3.2
 CATEGORIES = lib
 
 DESCRIPTION = TrollTech C++ application framework
@@ -11,7 +11,7 @@ endef
 GARCOMPILER = GNU
 
 MASTER_SITES = ftp://ftp.trolltech.com/qt/source/
-DISTNAME = qt-x11-opensource-src-$(GARVERSION)
+DISTNAME = qt-x11-opensource-src-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 #DISTFILES += $(call admfiles,CSWqt4gcc,depend prototype)
 DISTFILES += $(call admfiles,CSWqt4gcc,)

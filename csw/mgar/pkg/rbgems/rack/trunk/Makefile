@@ -1,5 +1,5 @@
-GARNAME = rack
-GARVERSION = 1.1.0
+NAME = rack
+VERSION = 1.1.0
 CATEGORIES = rbgems
 
 DESCRIPTION = A minimal interface for developing web applications in Ruby

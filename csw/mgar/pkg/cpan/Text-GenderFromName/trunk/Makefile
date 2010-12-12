@@ -1,5 +1,5 @@
-GARNAME = Text-GenderFromName
-GARVERSION = 0.32
+NAME = Text-GenderFromName
+VERSION = 0.32
 CATEGORIES = cpan
 AUTHOR = EDALY
 

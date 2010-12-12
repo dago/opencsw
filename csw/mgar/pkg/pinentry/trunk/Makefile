@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = pinentry
-GARVERSION = 0.7.6
+NAME = pinentry
+VERSION = 0.7.6
 CATEGORIES = utils
 DESCRIPTION = Allows entering passwords into gpg-agent.
 define BLURB
@@ -20,8 +20,8 @@ PATCHFILES += 0005-Importing-getopt-posix-gnulib-module.patch
 PATCHFILES += 0006-enabling-gnulib-getopt-module.patch
 EXTRA_CFLAGS = -D__EXTENSIONS__
 EXTRA_CXXFLAGS = -D__EXTENSIONS__
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS  = CSWfconfig
 RUNTIME_DEP_PKGS += CSWftype2
 RUNTIME_DEP_PKGS += CSWggettextrt

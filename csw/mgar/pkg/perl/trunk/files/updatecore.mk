@@ -16,7 +16,7 @@ install-core-updates: remove-obsolete-modules
 # Remove obsolete modules
 remove-obsolete-modules:
 	@echo " ==> Removing obsolete modules"
-	@( cd $(DESTDIR)$(datadir)/perl/$(GARVERSION) ; \
+	@( cd $(DESTDIR)$(datadir)/perl/$(VERSION) ; \
 		grm -vrf $(CORE_OBSOLETE) )
 	@$(MAKECOOKIE)
 

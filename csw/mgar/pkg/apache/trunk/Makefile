@@ -1,5 +1,5 @@
-GARNAME = apache
-GARVERSION = 1.3.36
+NAME = apache
+VERSION = 1.3.36
 CATEGORIES = server
 
 DESCRIPTION = A high performance Unix-based HTTP server.
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.ibiblio.org/pub/mirrors/apache/httpd/
-DISTFILES = $(GARNAME)_$(GARVERSION).tar.gz
+DISTFILES = $(NAME)_$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)_(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(prefix)

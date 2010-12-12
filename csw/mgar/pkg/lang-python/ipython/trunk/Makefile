@@ -1,5 +1,5 @@
-GARNAME    = ipython
-GARVERSION = 0.10
+NAME    = ipython
+VERSION = 0.10
 CATEGORIES = lang
 
 DESCRIPTION = Python toolkit for generation of output for the web
@@ -9,8 +9,8 @@ define BLURB
 	or other textual content for output generation on the web
 endef
 
-MASTER_SITES = http://ipython.scipy.org/dist/$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://ipython.scipy.org/dist/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 ARCHALL_CSWipython = 1
 PACKAGES = CSWipython
@@ -26,7 +26,7 @@ SPKG_DESC_CSWipython   = $(DESCRIPTION)
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS   = $(WORKSRC)/setup.py

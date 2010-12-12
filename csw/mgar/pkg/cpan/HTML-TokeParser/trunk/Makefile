@@ -1,5 +1,5 @@
-GARNAME = HTML-TokeParser-Simple
-GARVERSION = 3.15
+NAME = HTML-TokeParser-Simple
+VERSION = 3.15
 CATEGORIES = cpan
 AUTHOR = OVID
 

@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = ss12f95rt
-GARVERSION = 20100927
+NAME = ss12f95rt
+VERSION = 20100927
 CATEGORIES = lib
 
 DESCRIPTION = Sun Studio 12u1 Fortran 95 Runtime Libraries
@@ -13,7 +13,7 @@ DISTFILES  = DistributionREADME.txt
 VENDOR_URL = http://developers.sun.com/sunstudio/documentation/ss12u1/DistributionREADME.txt
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = DistributionREADME.txt
 

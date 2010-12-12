@@ -1,19 +1,19 @@
-GARNAME = dcc
-GARVERSION = 1.3.127
+NAME = dcc
+VERSION = 1.3.127
 CATEGORIES = net
 
 DESCRIPTION = E-mail greylisting and a cooperative, distributed system to identify spam
 
 #MASTER_SITES = http://www.rhyolite.com/src/dcc/old/
 MASTER_SITES = http://www.dcc-servers.net/dcc/source/old/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.Z
+DISTFILES  = $(NAME)-$(VERSION).tar.Z
 
 LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS += CSWperl
 
 # Upstream watch
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.Z
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.Z
 
 #CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS  =
@@ -58,7 +58,7 @@ DOCFILES = CHANGES FAQ.txt INSTALL.txt RESTRICTIONS misc/README misc/dcc.m4 misc
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@( cd $(WORKSRC) ; \
 	   sed 's/DCC_GRP.*=bin/DCC_GRP     =csw/' Makefile.inc > tmp.sed ; \
@@ -68,16 +68,16 @@ install-custom:
 	   mv tmp.sed Makefile ; \
 	   cd .. ; \
 	   gmake install )
-	@( cd $(DESTDIR)/var/opt/csw/$(GARNAME) ; \
+	@( cd $(DESTDIR)/var/opt/csw/$(NAME) ; \
 	  sed 's/bonivart/dcc/' dcc_conf > tmp.sed ; \
 	  mv tmp.sed dcc_conf )
-	@( cd $(DESTDIR)/opt/csw/libexec/$(GARNAME) ; \
+	@( cd $(DESTDIR)/opt/csw/libexec/$(NAME) ; \
 	  sed 's/bonivart/dcc/' fix-map > tmp.sed ; \
 	  mv tmp.sed fix-map )
-#	@$(foreach FILE, $(CONFFILES), mv $(DESTDIR)/var/opt/csw/$(GARNAME)/$(FILE) $(DESTDIR)/var/opt/csw/$(GARNAME) ;)
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)/misc
-	@$(foreach FILE, $(DOCFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(docdir)/$(GARNAME)/$(FILE) ;)
-	@cp $(FILEDIR)/CSWdcc.INSTALL.CSW.txt $(DESTDIR)$(docdir)/$(GARNAME)/INSTALL.CSW.txt
-	@cp $(FILEDIR)/CSWdcc.dcc.xml $(DESTDIR)$(docdir)/$(GARNAME)/dcc.xml
-	@cp $(FILEDIR)/CSWdcc.svc-dcc $(DESTDIR)$(docdir)/$(GARNAME)/svc-dcc
+#	@$(foreach FILE, $(CONFFILES), mv $(DESTDIR)/var/opt/csw/$(NAME)/$(FILE) $(DESTDIR)/var/opt/csw/$(NAME) ;)
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)/misc
+	@$(foreach FILE, $(DOCFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(docdir)/$(NAME)/$(FILE) ;)
+	@cp $(FILEDIR)/CSWdcc.INSTALL.CSW.txt $(DESTDIR)$(docdir)/$(NAME)/INSTALL.CSW.txt
+	@cp $(FILEDIR)/CSWdcc.dcc.xml $(DESTDIR)$(docdir)/$(NAME)/dcc.xml
+	@cp $(FILEDIR)/CSWdcc.svc-dcc $(DESTDIR)$(docdir)/$(NAME)/svc-dcc
 	@$(MAKECOOKIE)

@@ -6,8 +6,8 @@
 # it echoes the entered password.
 # http://bugs.python.org/issue7208
 
-GARNAME = django
-GARVERSION = 1.2.3
+NAME = django
+VERSION = 1.2.3
 CATEGORIES = python
 
 DESCRIPTION = A high-level Python Web framework
@@ -22,13 +22,13 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://www.djangoproject.com/
 
-MASTER_SITES = http://www.djangoproject.com/download/$(GARVERSION)/tarball/
+MASTER_SITES = http://www.djangoproject.com/download/$(VERSION)/tarball/
 DISTFILES  = $(DISTNAME).tar.gz
 PACKAGES = CSWpy-django
 CATALOGNAME_CSWpy-django = py_django
 ARCHALL = 1
 UFILES_REGEX = Django-(\d+(?:\.\d+)*).tar.gz
-DISTNAME = Django-$(GARVERSION)
+DISTNAME = Django-$(VERSION)
 RUNTIME_DEP_PKGS =
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpython-devel
 CONFIGURE_SCRIPTS =
@@ -37,8 +37,8 @@ LICENSE = LICENSE
 # There's a problem that the download URL of the Django source tarball does not
 # contain the file name. The browser is being redirected instead. Hard-coding
 # the URL and using a custom target to fit the rest of mGAR.
-http//www.djangoproject.com/download/$(GARVERSION)/tarball/Django-$(GARVERSION).tar.gz:
-	@wget $(WGET_OPTS) -T 30 -c -P $(PARTIALDIR) http://www.djangoproject.com/download/$(GARVERSION)/tarball
+http//www.djangoproject.com/download/$(VERSION)/tarball/Django-$(VERSION).tar.gz:
+	@wget $(WGET_OPTS) -T 30 -c -P $(PARTIALDIR) http://www.djangoproject.com/download/$(VERSION)/tarball
 
 include gar/category.mk
 

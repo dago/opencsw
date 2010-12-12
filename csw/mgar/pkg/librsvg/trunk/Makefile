@@ -1,5 +1,5 @@
-GARNAME = librsvg
-GARVERSION = 2.26
+NAME = librsvg
+VERSION = 2.26
 GARSUBREV = 0
 CATEGORIES = lib
 
@@ -15,12 +15,12 @@ define BLURB
 	Also, more information on librsvg can be found at librsvg.sf.net
 endef
 
-SPKG_VERSION= $(GARVERSION).$(GARSUBREV)
+SPKG_VERSION= $(VERSION).$(GARSUBREV)
 
-MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/librsvg/$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).$(GARSUBREV).tar.bz2
+MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/librsvg/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).$(GARSUBREV).tar.bz2
 
-DISTNAME = $(GARNAME)-$(GARVERSION).$(GARSUBREV)
+DISTNAME = $(NAME)-$(VERSION).$(GARSUBREV)
 
 SPKG_SOURCEURL = http://librsvg.sourceforge.net 
 
@@ -106,7 +106,7 @@ ARCHALL_CSWlibrsvgdoc = 1
 BUILD_DEP_PKGS += CSWmozilla
 BUILD_DEP_PKGS += CSWlibxml2devel
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Upstream develops on gcc only 
 PATCHFILES = pdiff.patch

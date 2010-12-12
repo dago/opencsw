@@ -1,5 +1,5 @@
-GARNAME = snort
-GARVERSION = 2.8.5
+NAME = snort
+VERSION = 2.8.5
 CATEGORIES = net
 
 DESCRIPTION = The open source Network Intrusion Detection System
@@ -13,13 +13,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://dl.snort.org/snort-current/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS  = CSWpcrert CSWlibpcap CSWgcc4corert
 #RUNTIME_DEP_PKGS += CSWosslrt CSWmysql4rt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 

@@ -1,5 +1,5 @@
-GARNAME = String-ShellQuote
-GARVERSION = 1.03
+NAME = String-ShellQuote
+VERSION = 1.03
 CATEGORIES = cpan
 AUTHOR = ROSCH
 

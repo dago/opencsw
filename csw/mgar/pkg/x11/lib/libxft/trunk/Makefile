@@ -1,5 +1,5 @@
-GARNAME = libXft
-GARVERSION = 2.1.14
+NAME = libXft
+VERSION = 2.1.14
 CATEGORIES = x11
 
 DESCRIPTION = A client-side font API for X applications
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # Legacy libraries
 # The idea is to have the legacy libs in /opt/csw/lib to guarantee the existing
@@ -34,7 +34,7 @@ SPKG_DESC_CSWlibxft2 = $(DESCRIPTION)
 SPKG_DESC_CSWlibxft2devel = $(DESCRIPTION) development package
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 NOISALIST = 1

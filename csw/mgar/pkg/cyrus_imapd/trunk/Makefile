@@ -12,8 +12,8 @@
 
 ###### Package information #######
 
-GARNAME = cyrus_imapd
-GARVERSION = 2.3.16
+NAME = cyrus_imapd
+VERSION = 2.3.16
 CATEGORIES = server
 
 DESCRIPTION = Pop and Imap server from the Cyrus mail system
@@ -83,12 +83,12 @@ CHECKPKG_OVERRIDES_CSWcyrusimapdutils += surplus-dependency|CSWpmcyrus
 
 ###### Upstream and opencsw files information #######
 
-MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/ http://email.uoa.gr/download/cyrus/cyrus-imapd-$(GARVERSION)/
+MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/ http://email.uoa.gr/download/cyrus/cyrus-imapd-$(VERSION)/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(shell echo $(GARNAME) | tr '_' '-')-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(shell echo $(NAME) | tr '_' '-')-(\d+(?:\.\d+)*).tar.gz
 
-DISTNAME = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION)
+DISTNAME = $(shell echo $(NAME) | tr '_' '-')-$(VERSION)
 
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += CSWcyrusimapd.preinstall CSWcyrusimapd.checkinstall
@@ -112,7 +112,7 @@ DISTFILES += install-upgrade
 
 # University of Athens patchs to allow autocreation of mailboxes
 # and autocreation of sub-lolders for filter rules
-PATCHFILES = cyrus-imapd-$(GARVERSION)-autocreate-0.10-0.diff cyrus-imapd-$(GARVERSION)-autosieve-0.6.0.diff 
+PATCHFILES = cyrus-imapd-$(VERSION)-autocreate-0.10-0.diff cyrus-imapd-$(VERSION)-autosieve-0.6.0.diff 
  
 # This patch makes cyrus more tolerant with mails containing
 # invalid From headers 

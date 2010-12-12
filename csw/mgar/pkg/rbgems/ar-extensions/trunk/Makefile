@@ -1,5 +1,5 @@
-GARNAME = ar-extensions
-GARVERSION = 0.9.2
+NAME = ar-extensions
+VERSION = 0.9.2
 CATEGORIES = rbgems
 
 DESCRIPTION = Extends ActiveRecord functionality

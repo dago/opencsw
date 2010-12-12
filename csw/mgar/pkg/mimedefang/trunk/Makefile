@@ -1,5 +1,5 @@
-GARNAME = mimedefang
-GARVERSION = 2.71
+NAME = mimedefang
+VERSION = 2.71
 CATEGORIES = net
 
 DESCRIPTION = Framework for filtering e-mail using Sendmail milter API, C and Perl
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.mimedefang.com/static/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://www.mimedefang.com
 
@@ -57,13 +57,13 @@ include gar/category.mk
 DOCLIST = Changelog README README.NONROOT README.SECURITY README.SOPHIE README.SPAMASSASSIN README.VEXIRA examples contrib SpamAssassin tests gen-ip-validator.pl
 
 post-install-modulated:
-	@echo " ==> Post-install $(GARNAME) (custom)"
+	@echo " ==> Post-install $(NAME) (custom)"
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswmimedefang $(DESTDIR)/etc/opt/csw/init.d/
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWmimedefang
 	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWmimedefang/
 	@ginstall -m 644 $(FILEDIR)/mimedefang $(DESTDIR)/etc/opt/csw/pkg/CSWmimedefang/
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@$(foreach DOC,$(DOCLIST),cp -r $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+	@$(foreach DOC,$(DOCLIST),cp -r $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
 	@ginstall -m 444 $(FILEDIR)/README.CSW $(DESTDIR)/opt/csw/share/doc/mimedefang/
 	@$(MAKECOOKIE)

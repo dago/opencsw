@@ -1,5 +1,5 @@
-GARNAME = netpbm
-GARVERSION = 10.26.43
+NAME = netpbm
+VERSION = 10.26.43
 CATEGORIES = utils
 
 DESCRIPTION = Netpbm is a toolkit for manipulation of graphic images
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES += $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz netpbm-doc.tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz netpbm-doc.tgz
 DISTFILES += CSWnetpbm.gspec CSWnetpbm.postinstall
 
 PATCHFILES = netpbm-config.diff netpbm-makefile.diff csw-perl.diff makeman.diff manweb.diff cflags-fix.diff netpbm-pm_config.h.diff 

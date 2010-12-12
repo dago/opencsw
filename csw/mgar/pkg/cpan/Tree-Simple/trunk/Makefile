@@ -1,5 +1,5 @@
-GARNAME = Tree-Simple
-GARVERSION = 1.16
+NAME = Tree-Simple
+VERSION = 1.16
 CATEGORIES = cpan
 AUTHOR = STEVAN
 

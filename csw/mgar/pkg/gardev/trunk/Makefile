@@ -1,5 +1,5 @@
-GARNAME = gar_devel
-GARVERSION = 1.0
+NAME = gar_devel
+VERSION = 1.0
 CATEGORIES = devel
 
 VENDOR_URL = http://opencsw.org
@@ -59,7 +59,7 @@ CHECKPKG_OVERRIDES_CSWgardevel += surplus-dependency|CSWpy-yaml
 
 include gar/category.mk
 
-install-custom: DOCDIR=$(DESTDIR)/$(docdir)/$(GARNAME)
+install-custom: DOCDIR=$(DESTDIR)/$(docdir)/$(NAME)
 install-custom: $(WORKSRC)
 	@(gmkdir -p $(DOCDIR); \
 		cp $(FILEDIR)/README.csw $(DOCDIR); \

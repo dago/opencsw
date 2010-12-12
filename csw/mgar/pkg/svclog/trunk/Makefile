@@ -1,5 +1,5 @@
-GARNAME = svclog
-GARVERSION = 1.5
+NAME = svclog
+VERSION = 1.5
 CATEGORIES = apps
 
 DESCRIPTION = Displays log file content for SMF services

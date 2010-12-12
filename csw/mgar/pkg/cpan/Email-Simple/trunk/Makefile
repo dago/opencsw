@@ -1,5 +1,5 @@
-GARNAME = Email-Simple
-GARVERSION = 2.100
+NAME = Email-Simple
+VERSION = 2.100
 CATEGORIES = cpan
 AUTHOR = RJBS
 

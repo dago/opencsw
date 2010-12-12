@@ -3,8 +3,8 @@
 # See branches/sync-pkgname for an attempt to sync the CSW pkg name to
 # the upstream name and split off a devel pkg.
 #
-GARNAME = libiconv
-GARVERSION = 1.13.1
+NAME = libiconv
+VERSION = 1.13.1
 CATEGORIES = lib
 
 DESCRIPTION = GNU iconv library
@@ -19,8 +19,8 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Package naming is a bit unfortunate CSWiconv vs. libiconv :/ but
 # that's not something i want to change right now. CSWiconv has
@@ -61,7 +61,7 @@ CONFIGURE_ARGS += --disable-rpath
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)

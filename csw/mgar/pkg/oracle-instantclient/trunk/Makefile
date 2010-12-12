@@ -1,5 +1,5 @@
-GARNAME = orainstclient
-GARVERSION = 10.2.0.4.0
+NAME = orainstclient
+VERSION = 10.2.0.4.0
 CATEGORIES = apps
 
 DESCRIPTION = Oracle Instant Client
@@ -87,7 +87,7 @@ include gar/category.mk
 $(foreach A,sparc i386,$(foreach S,32 64,$(foreach T,instantclient sdk sqlplus,$(foreach F,$(DISTFILES_$A-$S-$T),$(eval $(call custom-zip-extract,$F,$A-$S))))))
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	#ginstall -d $(DESTDIR)$(bindir)
 	#ginstall $(WORKDIR)/$(GARCH)-$(MEMORYMODEL)/instantclient_10_2/genezi $(DESTDIR)$(bindir)
 	#chrpath -r $(libdir) $(DESTDIR)$(bindir)/genezi

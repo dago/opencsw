@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = dia
-GARVERSION = 0.97
+NAME = dia
+VERSION = 0.97
 CATEGORIES = apps
 
 DESCRIPTION = A GTK+ based diagram creation program
@@ -8,12 +8,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PATCHFILES = 0001-Make-sure-for-loop-is-not-empty.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://live.gnome.org/Dia
 

@@ -1,5 +1,5 @@
-GARNAME = esound
-GARVERSION = 0.2.41
+NAME = esound
+VERSION = 0.2.41
 CATEGORIES = lib
 
 DESCRIPTION = EsounD, The Enlightened Sound Daemon
@@ -12,11 +12,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 RUNTIME_DEP_PKGS = CSWaudiofile
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # TODO on next release:
 # - Move config file from /opt/csw/etc to /etc/opt/csw

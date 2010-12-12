@@ -1,5 +1,5 @@
-GARNAME = Gtk2-Ex-PodViewer
-GARVERSION = 0.13
+NAME = Gtk2-Ex-PodViewer
+VERSION = 0.13
 CATEGORIES = cpan
 AUTHOR = GBROWN
 

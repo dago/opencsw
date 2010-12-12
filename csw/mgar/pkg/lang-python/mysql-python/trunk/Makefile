@@ -1,5 +1,5 @@
-GARNAME = MySQL-python
-GARVERSION = 1.2.2
+NAME = MySQL-python
+VERSION = 1.2.2
 CATEGORIES = lang
 
 DESCRIPTION = MySQL support for Python
@@ -7,9 +7,9 @@ define BLURB
   MySQL support for Python
 endef
 
-SF_PROJ = $(call TOLOWER,$(GARNAME))
+SF_PROJ = $(call TOLOWER,$(NAME))
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWpymysql
 RUNTIME_DEP_PKGS_CSWpymysql = CSWmysql5rt CSWpython-rt CSWosslrt CSWzlib

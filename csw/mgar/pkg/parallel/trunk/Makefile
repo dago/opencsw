@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = parallel
-GARVERSION = 20100424
+NAME = parallel
+VERSION = 20100424
 CATEGORIES = utils
 
 DESCRIPTION = Shell tool for executing jobs in parallel
@@ -16,11 +16,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += gpl-3.0.txt
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LICENSE = gpl-3.0.txt
 

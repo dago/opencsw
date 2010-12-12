@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = libical
-GARVERSION = 0.44
+NAME = libical
+VERSION = 0.44
 CATEGORIES = lib
 
 DESCRIPTION = Library that implements the iCal protocols in RFC2445, RFC2446, RFC2447
@@ -9,7 +9,7 @@ endef
 
 SF_PROJ = freeassociation
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # Fix testsuite until this is resolved:
 #   http://sourceforge.net/tracker/?func=detail&aid=2988172&group_id=16077&atid=116077
@@ -21,7 +21,7 @@ PATCHFILES = 0001-Use-putenv-instead-of-setenv.patch
 PATCHFILES += 0002-libical-icaltz-util-sol10.diff.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://freeassociation.sourceforge.net/
 

@@ -1,8 +1,8 @@
 # Do not update gar, new gar doesn't work on sol8! If removed, recreate with:
 # svn co -r 9999 https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 gar
 
-GARNAME = pkgutil
-GARVERSION = 2.2
+NAME = pkgutil
+VERSION = 2.2
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -17,7 +17,7 @@ endef
 COMMON_PKG_DEPENDS = 
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).zip
+DISTFILES  = $(NAME)-$(VERSION).zip
 
 DISTFILES += $(call admfiles,CSWpkgutil,prototype preremove postinstall)
 #DISTFILES += $(call admfiles,CSWpkgutil,preremove postinstall)
@@ -65,7 +65,7 @@ PKGFILES_CSWpkgutilplus += .*cswcatalog
 ARCHALL_CSWpkgutilplus = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).zip
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).zip
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -78,32 +78,32 @@ WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://pkgutil.wikidot.com/
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg-hooks/preargproc.d
-	@ginstall -m 644 $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
-	@ginstall -m 755 $(WORKSRC)/pkgutillog $(DESTDIR)/etc/opt/csw/pkg-hooks/preargproc.d/01-CSW$(GARNAME)plus-log
+	@ginstall -m 644 $(WORKSRC)/$(NAME).conf $(DESTDIR)/etc/opt/csw/$(NAME).conf.CSW
+	@ginstall -m 755 $(WORKSRC)/pkgutillog $(DESTDIR)/etc/opt/csw/pkg-hooks/preargproc.d/01-CSW$(NAME)plus-log
 	@ginstall -m 755 -d $(DESTDIR)$(bindir)
-	@ginstall -m 755 $(WORKSRC)/$(GARNAME) $(WORKSRC)/bldcat $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
+	@ginstall -m 755 $(WORKSRC)/$(NAME) $(WORKSRC)/bldcat $(WORKSRC)/chkcat $(DESTDIR)$(bindir)
 	@ginstall -m 755 $(FILEDIR)/cswcatalog $(DESTDIR)$(bindir)
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc
-	@ginstall -m 644 $(WORKSRC)/$(GARNAME).conf $(DESTDIR)/opt/csw/etc/$(GARNAME).conf.CSW
-	@ginstall -m 755 -d $(DESTDIR)/opt/csw/libexec/$(GARNAME)
-#	@ginstall -m 755 $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(GARNAME)/
-	@ginstall -m 755 $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(GARNAME)/wget
-	@ginstall -m 755 $(FILEDIR)/build_sun_catalog.py $(FILEDIR)/opencsw.py $(DESTDIR)/opt/csw/libexec/$(GARNAME)
+	@ginstall -m 644 $(WORKSRC)/$(NAME).conf $(DESTDIR)/opt/csw/etc/$(NAME).conf.CSW
+	@ginstall -m 755 -d $(DESTDIR)/opt/csw/libexec/$(NAME)
+#	@ginstall -m 755 $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(NAME)/
+	@ginstall -m 755 $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(NAME)/wget
+	@ginstall -m 755 $(FILEDIR)/build_sun_catalog.py $(FILEDIR)/opencsw.py $(DESTDIR)/opt/csw/libexec/$(NAME)
 	@ln -s ../libexec/pkgutil/build_sun_catalog.py $(DESTDIR)$(bindir)/build_sun_catalog
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 444 $(WORKSRC)/readme $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)/
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)plus
-	@ginstall -m 444 $(WORKSRC)/license $(DESTDIR)$(docdir)/$(GARNAME)plus/
-	@ginstall -m 444 $(WORKSRC)/readme.pkgutilplus $(DESTDIR)$(docdir)/$(GARNAME)plus/readme
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+	@ginstall -m 444 $(WORKSRC)/readme $(WORKSRC)/license $(DESTDIR)$(docdir)/$(NAME)/
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)plus
+	@ginstall -m 444 $(WORKSRC)/license $(DESTDIR)$(docdir)/$(NAME)plus/
+	@ginstall -m 444 $(WORKSRC)/readme.pkgutilplus $(DESTDIR)$(docdir)/$(NAME)plus/readme
 	@ginstall -m 755 -d $(DESTDIR)$(mandir)/man1
-	@pod2man --section=1 $(WORKSRC)/$(GARNAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
+	@pod2man --section=1 $(WORKSRC)/$(NAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
 	@pod2man --section=1 $(WORKSRC)/bldcat > $(DESTDIR)$(mandir)/man1/bldcat.1
 	@pod2man --section=1 $(WORKSRC)/chkcat > $(DESTDIR)$(mandir)/man1/chkcat.1
 	@chmod 444 $(DESTDIR)$(mandir)/man1/*
-	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)/packages
-	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(GARNAME)/pkgask
-	@ginstall -m 644 $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(GARNAME)/admin.CSW
+	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(NAME)/packages
+	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(NAME)/pkgask
+	@ginstall -m 644 $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(NAME)/admin.CSW
 	@$(MAKECOOKIE)

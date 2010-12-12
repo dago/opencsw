@@ -1,5 +1,5 @@
-GARNAME = xjobs
-GARVERSION = 20100915
+NAME = xjobs
+VERSION = 20100915
 CATEGORIES = utils
 
 DESCRIPTION = Executes jobs in parallel similar to xargs
@@ -15,12 +15,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.maier-komor.de/xjobs/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 SPKG_SOURCEURL = http://www.maier-komor.de/xjobs.html
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

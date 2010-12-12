@@ -2,8 +2,8 @@
 # * Build fails due to missing fts.h -> incooperate from gnulib
 # * Go through README to implement correct file ownership / modes
 # * Use cswusergroups to add slocate group
-GARNAME = slocate
-GARVERSION = 3.1
+NAME = slocate
+VERSION = 3.1
 CATEGORIES = utils
 
 DESCRIPTION = Secure locate alternative
@@ -16,11 +16,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://slocate.trakker.ca/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 SPKG_SOURCEURL = http://slocate.trakker.ca/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
 BUILD_ARGS = PATH=/opt/csw/gnu:$(PATH) \

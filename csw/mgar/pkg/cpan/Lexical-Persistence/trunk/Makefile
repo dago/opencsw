@@ -1,5 +1,5 @@
-GARNAME = Lexical-Persistence
-GARVERSION = 0.98
+NAME = Lexical-Persistence
+VERSION = 0.98
 CATEGORIES = cpan
 AUTHOR = RCAPUTO
 
@@ -15,7 +15,7 @@ RUNTIME_DEP_PKGS = CSWpmpadwalker CSWpmdevellexalias
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)

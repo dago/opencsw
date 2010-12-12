@@ -1,4 +1,4 @@
-GARNAME = kde4libs
+NAME = kde4libs
 DISTNAME = kdelibs
 CATEGORIES = kde4
 

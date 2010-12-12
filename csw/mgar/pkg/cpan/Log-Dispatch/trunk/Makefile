@@ -1,5 +1,5 @@
-GARNAME = Log-Dispatch
-GARVERSION = 2.26
+NAME = Log-Dispatch
+VERSION = 2.26
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 

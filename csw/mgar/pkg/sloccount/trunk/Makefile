@@ -1,5 +1,5 @@
-GARNAME = sloccount
-GARVERSION = 2.24
+NAME = sloccount
+VERSION = 2.24
 CATEGORIES = utils
 
 DESCRIPTION = A suite of programs for counting physical source lines of code.
@@ -11,12 +11,12 @@ define BLURB
   comes with analysis tools.
 endef
 
-MASTER_SITES = http://www.dwheeler.com/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://www.dwheeler.com/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWsloc.gspec
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Listen to the environment...
 PATCHFILES = make.diff

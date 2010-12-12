@@ -1,5 +1,5 @@
-GARNAME = sbt
-GARVERSION = 0.7.3
+NAME = sbt
+VERSION = 0.7.3
 CATEGORIES = devel
 ARCHALL = 1
 
@@ -7,7 +7,7 @@ DESCRIPTION = A build tool for Scala
 
 VENDOR_URL   = http://code.google.com/p/simple-build-tool/
 MASTER_SITES = http://simple-build-tool.googlecode.com/files/
-DISTFILES  = sbt-launch-$(GARVERSION).jar
+DISTFILES  = sbt-launch-$(VERSION).jar
 DISTFILES += sbt
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -26,9 +26,9 @@ include gar/category.mk
 
 post-merge:
 	mkdir -p $(PKGROOT)/opt/csw/share/doc/sbt/
-	(cd $(PKGROOT)/opt/csw/share/doc/sbt; jar xfv $(abspath $(WORKDIR_FIRSTMOD))/sbt-launch-$(GARVERSION).jar LICENSE)
+	(cd $(PKGROOT)/opt/csw/share/doc/sbt; jar xfv $(abspath $(WORKDIR_FIRSTMOD))/sbt-launch-$(VERSION).jar LICENSE)
 	mv $(PKGROOT)/opt/csw/share/doc/sbt/LICENSE $(PKGROOT)/opt/csw/share/doc/sbt/license
 	ginstall -D $(WORKDIR_FIRSTMOD)/sbt $(PKGROOT)/opt/csw/bin/sbt
-	ginstall -D $(WORKDIR_FIRSTMOD)/sbt-launch-$(GARVERSION).jar $(PKGROOT)/opt/csw/share/sbt/sbt-launch-$(GARVERSION).jar 
-	ln -s sbt-launch-$(GARVERSION).jar $(PKGROOT)/opt/csw/share/sbt/sbt-launch.jar
+	ginstall -D $(WORKDIR_FIRSTMOD)/sbt-launch-$(VERSION).jar $(PKGROOT)/opt/csw/share/sbt/sbt-launch-$(VERSION).jar 
+	ln -s sbt-launch-$(VERSION).jar $(PKGROOT)/opt/csw/share/sbt/sbt-launch.jar
 	@$(MAKECOOKIE)

@@ -1,5 +1,5 @@
-GARNAME = libapreq2
-GARVERSION = 2.12
+NAME = libapreq2
+VERSION = 2.12
 CATEGORIES = cpan
 AUTHOR = JOESUF
 

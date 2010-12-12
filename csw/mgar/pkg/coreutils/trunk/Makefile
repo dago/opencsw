@@ -1,5 +1,5 @@
-GARNAME = coreutils
-GARVERSION = 8.7
+NAME = coreutils
+VERSION = 8.7
 CATEGORIES = utils
 
 # seq has issues related to the handling of long double's with -O2.
@@ -27,11 +27,11 @@ Previously these utilities were offered as three individual sets of GNU utilitie
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
@@ -49,7 +49,7 @@ EXTRA_LDFLAGS = -lgen
 
 PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/bin/gsu" { $$$$4 = "4555" }; { print }'
 
-ifneq ($(GARVERSION), 8.6)
+ifneq ($(VERSION), 8.6)
 TEST_TARGET = check
 else
 TEST_SCRIPTS =

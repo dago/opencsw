@@ -1,5 +1,5 @@
-GARNAME = mpfr
-GARVERSION = 2.4.2
+NAME = mpfr
+VERSION = 2.4.2
 CATEGORIES = lib
 
 DESCRIPTION = GNU Multiple Precision floating-point arithmetic library
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.mpfr.org/mpfr-current/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWlibmpfr
 CATALOGNAME_CSWlibmpfr = libmpfr
@@ -21,7 +21,7 @@ RUNTIME_DEP_PKGS_CSWlibmpfr  =
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 STRIP_LIBTOOL = 1

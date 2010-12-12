@@ -1,5 +1,5 @@
-GARNAME = qt4
-GARVERSION = 4.7.1
+NAME = qt4
+VERSION = 4.7.1
 CATEGORIES = lib
 
 DESCRIPTION = TrollTech C++ application framework
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://get.qt.nokia.com/qt/source/
-DISTFILES    = qt-everywhere-opensource-src-$(GARVERSION).tar.gz
+DISTFILES    = qt-everywhere-opensource-src-$(VERSION).tar.gz
 #DISTFILES   += $(call admfiles,CSWqt4,depend prototype-sparc prototype-i386)
 #DISTFILES   += $(call admfiles,CSWqt4-devel,depend prototype-sparc prototype-i386)
 #DISTFILES   += $(call admfiles,CSWqt4-docs,prototype)
@@ -20,7 +20,7 @@ UFILES_REGEX = qt-everywhere-opensource-src-(\d+(?:\.\d+)*).tar.gz
 # The PACKAGES variable tell GAR which packages to build
 #PACKAGES  = CSWqt4 CSWqt4-devel
 
-WORKSRC = $(WORKDIR)/qt-everywhere-opensource-src-$(GARVERSION)
+WORKSRC = $(WORKDIR)/qt-everywhere-opensource-src-$(VERSION)
 RUNTIME_DEP_PKGS_CSWqt4 = CSWfconfig CSWftype2 CSWggettext CSWglib2 CSWjpeg CSWlibxrender CSWpng CSWtiff CSWzlib 
 #RUNTIME_DEP_PKGS_CSWqt4-devel = CSWqt4
 

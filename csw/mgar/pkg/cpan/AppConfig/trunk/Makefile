@@ -1,5 +1,5 @@
-GARNAME = AppConfig
-GARVERSION = 1.66
+NAME = AppConfig
+VERSION = 1.66
 CATEGORIES = cpan
 AUTHOR = ABW
 

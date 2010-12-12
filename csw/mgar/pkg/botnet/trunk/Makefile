@@ -1,5 +1,5 @@
-GARNAME = botnet
-GARVERSION = 0.8
+NAME = botnet
+VERSION = 0.8
 CATEGORIES = net
 
 DESCRIPTION = Botnet detector plugin for SpamAssassin
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://people.ucsc.edu/~jrudd/spamassassin/
-DISTFILES  = Botnet-$(GARVERSION).tar
+DISTFILES  = Botnet-$(VERSION).tar
 
 RUNTIME_DEP_PKGS = CSWspamassassin CSWperl
 
@@ -37,13 +37,13 @@ MAINFILES =  Botnet.pm Botnet.cf
 DOCFILES = Botnet.api.txt Botnet.credits.txt Botnet.txt Botnet.variants.txt INSTALL
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/Botnet.pl $(DESTDIR)$(bindir)
 	@ginstall -d $(DESTDIR)/etc/opt/csw/spamassassin
 	@$(foreach FILE, $(MAINFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)/etc/opt/csw/spamassassin ;)
 	@chmod 644 $(DESTDIR)/etc/opt/csw/spamassassin/Botnet.cf
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@$(foreach FILE, $(DOCFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(docdir)/$(GARNAME) ;)
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	@$(foreach FILE, $(DOCFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(docdir)/$(NAME) ;)
 	@$(MAKECOOKIE)

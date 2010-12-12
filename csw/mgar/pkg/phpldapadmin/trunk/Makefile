@@ -1,5 +1,5 @@
-GARNAME = phpldapadmin
-GARVERSION = 1.2.0.5
+NAME = phpldapadmin
+VERSION = 1.2.0.5
 CATEGORIES = apps
 
 DESCRIPTION = Web-based LDAP browser to manage your LDAP server
@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 DISTFILES += CSWphpldapadmin.preinstall
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -42,7 +42,7 @@ ARCHALL = 1
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	@rm -rf $(DESTDIR)$(sharedstatedir)/www/phpldapadmin
 	@ginstall -d $(DESTDIR)$(sharedstatedir)/www
 	@cp -R $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/phpldapadmin

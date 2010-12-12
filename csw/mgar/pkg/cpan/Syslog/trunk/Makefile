@@ -1,5 +1,5 @@
-GARNAME = Unix-Syslog
-GARVERSION = 0.97
+NAME = Unix-Syslog
+VERSION = 0.97
 CATEGORIES = cpan
 AUTHOR = MHARNISCH
 

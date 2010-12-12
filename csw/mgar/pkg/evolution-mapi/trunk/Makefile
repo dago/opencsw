@@ -1,5 +1,5 @@
-GARNAME = evolution-mapi
-GARVERSION = 0.28.2
+NAME = evolution-mapi
+VERSION = 0.28.2
 CATEGORIES = gnome
 
 DESCRIPTION = Evolution extension for MS Exchange 2007 servers
@@ -9,8 +9,8 @@ define BLURB
 endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTNAME  = $(NAME)-$(VERSION)
 
 PACKAGES = CSWevolutionmapi CSWevolutionmapidev CSWevolutionmapidoc
 CATALOGNAME_CSWevolutionmapi = evolution_mapi
@@ -32,7 +32,7 @@ PKGFILES_CSWevolutionmapidoc = $(sharedstatedir)/gtk-doc/.*
 
 ARCHALL_CSWevolutionmapidoc = 1
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://projects.gnome.org/evolution
 

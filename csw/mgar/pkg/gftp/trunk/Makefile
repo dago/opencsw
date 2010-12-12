@@ -1,5 +1,5 @@
-GARNAME = gftp
-GARVERSION = 2.0.19
+NAME = gftp
+VERSION = 2.0.19
 CATEGORIES = utils
 
 DESCRIPTION = A file transfer client with text and graphical user interfaces.
@@ -8,10 +8,10 @@ A multithreaded file transfer client supporting FTP, FTPS (control connection on
 endef
 
 MASTER_SITES = http://www.gftp.org/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgftp, depend )
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 PATCHFILES = lock.c.diff
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += LDFLAGS=-lrt

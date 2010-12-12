@@ -1,5 +1,5 @@
-GARNAME = gst-plugins-base
-GARVERSION = 0.10.26
+NAME = gst-plugins-base
+VERSION = 0.10.26
 CATEGORIES = gnome
 
 DESCRIPTION = Base GStreamer plugins handling various media types
@@ -12,13 +12,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://gstreamer.freedesktop.org/src/gst-plugins-base/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWgstplugins
 CATALOGNAME = gstplugins
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS += CSWgstreamer CSWliboil CSWglib2 CSWgnomevfs2 CSWlibogg
 DEP_PKGS += CSWgconf2 CSWggettextrt CSWlibxml2 CSWtheora CSWvorbis

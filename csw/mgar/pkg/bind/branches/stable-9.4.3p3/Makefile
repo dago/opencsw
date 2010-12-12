@@ -1,8 +1,8 @@
-GARNAME = bind
-GARVERSION = 9.4.3
+NAME = bind
+VERSION = 9.4.3
 RELEASE = P3
-DISTVERSION = $(GARVERSION)-$(RELEASE)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
+DISTVERSION = $(VERSION)-$(RELEASE)
+DISTNAME = $(NAME)-$(DISTVERSION)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
@@ -15,8 +15,8 @@ define BLURB
 endef
 
 UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-$(RELEASE).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+DISTFILES  = $(NAME)-$(VERSION)-$(RELEASE).tar.gz
 DISTFILES += $(call admfiles,CSWbind,preinstall postinstall preremove)
 
 LICENSE = COPYRIGHT
@@ -42,7 +42,7 @@ SPKG_SOURCEURL = http://www.isc.org/software/bind
 #SPKG_CLASSES = none cswinitsmf
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
 #	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 #	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
@@ -50,13 +50,13 @@ install-custom:
 	@cp $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/init.d/cswnamed
 	@ginstall -d $(DESTDIR)/etc/opt/csw
 	@cp $(FILEDIR)/CSWbind.named.conf.CSW $(DESTDIR)/etc/opt/csw/named.conf.CSW
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(FILEDIR)/CSWbind.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
-	@cp $(FILEDIR)/CSWbind.db.127.0.0 $(DESTDIR)$(docdir)/$(GARNAME)/db.127.0.0
-	@cp $(FILEDIR)/CSWbind.db.localhost $(DESTDIR)$(docdir)/$(GARNAME)/db.localhost
-	@cp $(FILEDIR)/CSWbind.named.conf $(DESTDIR)$(docdir)/$(GARNAME)/named.conf
-	@cp $(FILEDIR)/CSWbind.named.root $(DESTDIR)$(docdir)/$(GARNAME)/named.root
-	@cp $(FILEDIR)/CSWbind.rndc.key $(DESTDIR)$(docdir)/$(GARNAME)/rndc.key
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	@cp $(FILEDIR)/CSWbind.README.CSW $(DESTDIR)$(docdir)/$(NAME)/README.CSW
+	@cp $(FILEDIR)/CSWbind.db.127.0.0 $(DESTDIR)$(docdir)/$(NAME)/db.127.0.0
+	@cp $(FILEDIR)/CSWbind.db.localhost $(DESTDIR)$(docdir)/$(NAME)/db.localhost
+	@cp $(FILEDIR)/CSWbind.named.conf $(DESTDIR)$(docdir)/$(NAME)/named.conf
+	@cp $(FILEDIR)/CSWbind.named.root $(DESTDIR)$(docdir)/$(NAME)/named.root
+	@cp $(FILEDIR)/CSWbind.rndc.key $(DESTDIR)$(docdir)/$(NAME)/rndc.key
 	( cd $(WORKSRC) ; \
 	  gmake DESTDIR=$(DESTDIR) install )
 	@$(MAKECOOKIE)

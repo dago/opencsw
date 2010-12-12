@@ -1,5 +1,5 @@
-GARNAME = Unicode-String
-GARVERSION = 2.09
+NAME = Unicode-String
+VERSION = 2.09
 CATEGORIES = cpan
 AUTHOR = GAAS
 

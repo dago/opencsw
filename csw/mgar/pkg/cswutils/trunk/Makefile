@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = cswutils
-GARVERSION = 1.15
+NAME = cswutils
+VERSION = 1.15
 CATEGORIES = utils
 
 DESCRIPTION = Utilities for CSW maintainers

@@ -1,5 +1,5 @@
-GARNAME = smbldap-tools
-GARVERSION = 0.9.4
+NAME = smbldap-tools
+VERSION = 0.9.4
 CATEGORIES = utils
 
 DESCRIPTION = smbldap-tools 
@@ -9,11 +9,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.gna.org/smbldap-tools/packages/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 DISTFILES += $(call admfiles,CSWsmbldap-tools,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 #BUILD_DEP_PKGS = CSWpmldap CSWpmdigestsha1 CSWpmunicodemap
 

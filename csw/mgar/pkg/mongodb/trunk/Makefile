@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = mongodb
-GARVERSION = 1.6.3
+NAME = mongodb
+VERSION = 1.6.3
 
 # http://fastdl.mongodb.org/src/mongodb-src-r1.6.3.tar.gz
 CATEGORIES = lib
@@ -12,9 +12,9 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://www.mongodb.org/
 MASTER_SITES = http://fastdl.mongodb.org/src/
-DISTNAME = $(GARNAME)-src-r$(GARVERSION)
+DISTNAME = $(NAME)-src-r$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = mongo
 INSTALL_SCRIPTS = mongo

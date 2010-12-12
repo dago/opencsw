@@ -6,8 +6,8 @@
 #
 # [1] http://garylaw.net/packages/puppet-build.sh
 
-GARNAME = puppet
-GARVERSION = 2.6.1
+NAME = puppet
+VERSION = 2.6.1
 CATEGORIES = apps
 
 define BLURB
@@ -21,12 +21,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://reductivelabs.com/downloads/puppet/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswpuppetd
 DISTFILES += cswpuppetmasterd
 DISTFILES += cswusergroup
 DISTFILES += CSWpuppet.cron.root
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://www.puppetlabs.com/
 
 # Handy when doing multiple updates per day.  Adds hours and minutes to the

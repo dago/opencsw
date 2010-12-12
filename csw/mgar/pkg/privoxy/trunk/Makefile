@@ -3,8 +3,8 @@
 # against the current CSWprivoxy package by someone with regards to (at
 # least) log rotation.
 #
-GARNAME = privoxy
-GARVERSION = 3.0.12
+NAME = privoxy
+VERSION = 3.0.12
 CATEGORIES = net
 
 DESCRIPTION = A web proxy with advanced filtering capabilities
@@ -19,8 +19,8 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJ = ijbswa
-DISTFILES  = $(GARNAME)-$(GARVERSION)-stable-src.tar.gz
-DISTNAME = $(GARNAME)-$(GARVERSION)-stable
+DISTFILES  = $(NAME)-$(VERSION)-stable-src.tar.gz
+DISTNAME = $(NAME)-$(VERSION)-stable
 
 SPKG_SOURCEURL = http://www.privoxy.org/
 SPKG_CLASSES = none cswusergroup cswcpsampleconf cswinitsmf
@@ -28,7 +28,7 @@ SPKG_CLASSES = none cswusergroup cswcpsampleconf cswinitsmf
 RUNTIME_DEP_PKGS = CSWclassutils CSWpcrert CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-stable-src.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-stable-src.tar.gz
 
 TEST_SCRIPTS =
 

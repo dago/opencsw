@@ -1,5 +1,5 @@
-GARNAME = gnutls
-GARVERSION = 2.8.6
+NAME = gnutls
+VERSION = 2.8.6
 CATEGORIES = lib
 
 DESCRIPTION = GNU Transport Layer Security libraries and tools
@@ -17,7 +17,7 @@ SPKG_DESC_CSWgnutlsdevel = GNU Transport Layer Security development headers and 
 
 MASTER_SITES = $(GNU_MIRROR)
 MASTER_SITES += http://alpha.gnu.org/gnu/gnutls/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += libgnutls-openssl.so.13.i
 DISTFILES += libgnutls-openssl.so.13.s
 DISTFILES += libgnutls.so.13.i
@@ -26,7 +26,7 @@ DISTFILES += libgnutls.so.13.s
 SPKG_SOURCEURL = http://www.gnu.org/software/gnutls/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =

@@ -1,5 +1,5 @@
-GARNAME = Data-Hierarchy
-GARVERSION = 0.34
+NAME = Data-Hierarchy
+VERSION = 0.34
 CATEGORIES = cpan
 AUTHOR = CLKAO
 

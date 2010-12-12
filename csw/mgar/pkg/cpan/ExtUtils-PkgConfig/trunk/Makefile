@@ -1,5 +1,5 @@
-GARNAME = ExtUtils-PkgConfig
-GARVERSION = 1.12
+NAME = ExtUtils-PkgConfig
+VERSION = 1.12
 CATEGORIES = cpan
 AUTHOR = TSCH
 

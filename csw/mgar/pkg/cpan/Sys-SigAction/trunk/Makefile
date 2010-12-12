@@ -1,5 +1,5 @@
-GARNAME = Sys-SigAction
-GARVERSION = 0.11
+NAME = Sys-SigAction
+VERSION = 0.11
 CATEGORIES = cpan
 AUTHOR = LBAXTER
 

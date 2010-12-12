@@ -1,5 +1,5 @@
-GARNAME = activerecord
-GARVERSION = 2.3.8
+NAME = activerecord
+VERSION = 2.3.8
 CATEGORIES = rbgems
 
 DESCRIPTION = Implements the ActiveRecord pattern (Fowler, PoEAA) for ORM
