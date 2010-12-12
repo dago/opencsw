@@ -17,7 +17,7 @@ endef
 MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWexim prototype postinstall postremove \
-	preinstall preremove request space checkinstall)
+	preinstall preremove request checkinstall)
 DISTFILES += Makefile.patch exim_install.patch spf2.patch
 DISTFILES += i.smfyes i.smfno
 
