@@ -1,5 +1,5 @@
-GARNAME = Digest-Nilsimsa
-GARVERSION = 0.06
+NAME = Digest-Nilsimsa
+VERSION = 0.06
 CATEGORIES = cpan
 AUTHOR = VIPUL
 

@@ -1,5 +1,5 @@
-GARNAME = Spiffy
-GARVERSION = 0.30
+NAME = Spiffy
+VERSION = 0.30
 CATEGORIES = cpan
 AUTHOR = INGY
 

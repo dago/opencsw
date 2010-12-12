@@ -1,5 +1,5 @@
-GARNAME = axel
-GARVERSION = 2.4
+NAME = axel
+VERSION = 2.4
 CATEGORIES = utils
 
 DESCRIPTION = Lightweight command-line download accelerator
@@ -15,8 +15,8 @@ endef
 SPKG_SOURCEURL = http://axel.alioth.debian.org/
 MASTER_SITES   = http://alioth.debian.org/frs/download.php/$(DOWNLOAD_ID)/
 DOWNLOAD_ID    = 3015
-DISTFILES      = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES      = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX   = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # upstream_watch currently uses lftp and lftp only lists files when
 # they are offered via the SAME scheme as the requested page. The
@@ -45,7 +45,7 @@ pre-build-modulated:
 	perl -pi -e 's/-Wall//g' $(WORKSRC)/Makefile
 	@$(MAKECOOKIE)
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)

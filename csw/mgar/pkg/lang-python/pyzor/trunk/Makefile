@@ -1,5 +1,5 @@
-GARNAME = pyzor
-GARVERSION = 0.4.0
+NAME = pyzor
+VERSION = 0.4.0
 CATEGORIES = utils
 
 DESCRIPTION = A collaborative, networked system to detect and block spam
@@ -9,14 +9,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.pyzor.org/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PATCHFILES = client.py.diff
 PATCHFILES += pyzor.diff
 PATCHFILES += pyzord.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

@@ -1,5 +1,5 @@
-GARNAME = libxrender
-GARVERSION = 0.9.5
+NAME = libxrender
+VERSION = 0.9.5
 CATEGORIES = x11
 
 DESCRIPTION = X Render Extension Library
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libXrender-$(GARVERSION)
+DISTNAME = libXrender-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
 EXTRA_MODULATORS = X11

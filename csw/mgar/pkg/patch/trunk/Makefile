@@ -1,5 +1,5 @@
-GARNAME = patch
-GARVERSION = 2.6.1
+NAME = patch
+VERSION = 2.6.1
 CATEGORIES = utils
 
 DESCRIPTION = GNU patch utility
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES = $(NAME)-$(VERSION).tar.gz 
 
 # Add some missing files from gnulib until this is fixed:
 #   https://savannah.gnu.org/bugs/?30378
@@ -18,7 +18,7 @@ PATCHFILES += 0002-Add-missing-m4-files.patch
 PACKAGES = CSWgpatch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS = CSWlibgnugetopt
 

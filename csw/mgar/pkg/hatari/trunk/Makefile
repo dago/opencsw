@@ -1,5 +1,5 @@
-GARNAME = hatari
-GARVERSION = 1.3.1
+NAME = hatari
+VERSION = 1.3.1
 CATEGORIES = apps
 
 DESCRIPTION = Atari ST emulator
@@ -8,11 +8,11 @@ Hatari is an Atari ST and STE emulator for GNU/Linux, BSD, BeOS, Mac OS X and ot
 endef
 
 MASTER_SITES = http://download.berlios.de/hatari/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGES = CSWhatari
 RUNTIME_DEP_PKGS = CSWlibsdl CSWpng CSWpython CSWreadline CSWzlib
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LICENSE = gpl.txt
 PATCHFILES = solaris8-compile.patch

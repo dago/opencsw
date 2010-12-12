@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = guppy
-GARVERSION = 0.1.9
+NAME = guppy
+VERSION = 0.1.9
 CATEGORIES = python
 DESCRIPTION  = Programming environment providing object and heap memory sizing,
 DESCRIPTION += profiling and analysis
@@ -11,8 +11,8 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://guppy-pe.sourceforge.net/
 MASTER_SITES = http://pypi.python.org/packages/source/g/guppy/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpy-guppy
 CATALOGNAME_CSWpy-guppy = py_guppy
 TEST_SCRIPTS =

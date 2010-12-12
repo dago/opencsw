@@ -1,5 +1,5 @@
-GARNAME = curb
-GARVERSION = 0.7.8
+NAME = curb
+VERSION = 0.7.8
 CATEGORIES = rbgems
 
 DESCRIPTION = libcurl bindings for ruby

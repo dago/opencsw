@@ -1,5 +1,5 @@
-GARNAME = ganglia
-GARVERSION = 3.1.4
+NAME = ganglia
+VERSION = 3.1.4
 CATEGORIES = utils
 
 # How should we set this?
@@ -20,7 +20,7 @@ endef
 
 SF_PROJ = ganglia
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWgangliaweb.postinstall CSWgangliaweb.preremove
 DISTFILES += httpd-ganglia.conf.CSW cswgmond cswgmetad
 
@@ -62,7 +62,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 
 # This is attachment #45 from Ganglia bug
 #   http://bugzilla.ganglia.info/cgi-bin/bugzilla/show_bug.cgi?id=77
-#PATCHFILES = $(GARNAME)-$(GARVERSION)-solaris-cc.patch
+#PATCHFILES = $(NAME)-$(VERSION)-solaris-cc.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -91,10 +91,10 @@ CONFIGURE_ARGS += --disable-python
 # so we skip it.  This should be re-assessed with each new release
 # from upstream.  Proposed fixes for the test suite to be submitted
 # upstream.
-ifeq ($(GARVERSION),3.1.3)
+ifeq ($(VERSION),3.1.3)
 TEST_SCRIPTS = 
 endif
-ifeq ($(GARVERSION),3.1.4)
+ifeq ($(VERSION),3.1.4)
 TEST_SCRIPTS =
 endif
 
@@ -161,7 +161,7 @@ install-custom:
 		do cp -R "$${CONF_FILE}" $(DESTDIR)$(ETCGANGLIA)/conf.d/"$${CONF_FILE}.CSW" ; done
 	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/example.conf.CSW \
 		$(DESTDIR)$(ETCGANGLIA)/conf.d/multicpu.conf.CSW
-ifeq ($(GARVERSION),3.1.2)
+ifeq ($(VERSION),3.1.2)
 	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/modgstatus.conf.CSW
 endif
 	@ginstall -d $(DESTDIR)/opt/csw/var/ganglia/rrds

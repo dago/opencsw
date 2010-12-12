@@ -1,5 +1,5 @@
-GARNAME = maven2
-GARVERSION = 2.2.1
+NAME = maven2
+VERSION = 2.2.1
 CATEGORIES = devel
 GARCH = all
 
@@ -23,7 +23,7 @@ attempts to deal with:
 endef
 
 MASTER_SITES = http://www.powertech.no/apache/dist/maven/binaries/
-DISTFILES  = apache-maven-$(GARVERSION)-bin.tar.gz
+DISTFILES  = apache-maven-$(VERSION)-bin.tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = apache-maven-(\d+(?:\.\d+)*)-bin.tar.gz
@@ -39,7 +39,7 @@ install-common:
 	mkdir -p $(DESTDIR)/opt/csw/bin
 	rm -rf $(DESTDIR)/opt/csw/share/maven2
 	mkdir -p $(DESTDIR)/opt/csw/share/maven2
-	cp -r $(WORKDIR)/apache-maven-$(GARVERSION)/ $(DESTDIR)/opt/csw/share/maven2/home
+	cp -r $(WORKDIR)/apache-maven-$(VERSION)/ $(DESTDIR)/opt/csw/share/maven2/home
 	cp $(WORKDIR)/bin-mvn $(DESTDIR)/opt/csw/bin/mvn
 	chmod +x $(DESTDIR)/opt/csw/bin/mvn
 	$(MAKECOOKIE)

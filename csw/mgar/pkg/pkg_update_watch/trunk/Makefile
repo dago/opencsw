@@ -1,5 +1,5 @@
-GARNAME = pkg_update_watch
-GARVERSION = 1.0
+NAME = pkg_update_watch
+VERSION = 1.0
 CATEGORIES = utils
 
 DESCRIPTION = Package updates watcher

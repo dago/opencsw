@@ -1,5 +1,5 @@
-GARNAME = Mail-Sendmail
-GARVERSION = 0.79
+NAME = Mail-Sendmail
+VERSION = 0.79
 CATEGORIES = cpan
 AUTHOR = MIVKOVIC
 

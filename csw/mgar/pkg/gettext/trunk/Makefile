@@ -1,5 +1,5 @@
-GARNAME = gettext
-GARVERSION = 0.18.1.1
+NAME = gettext
+VERSION = 0.18.1.1
 CATEGORIES = lib
 
 DESCRIPTION = GNU locale utilities
@@ -23,7 +23,7 @@ COMPILE_ELISP = 1
 
 MASTER_SITES = $(GNU_MIRROR)
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES += 0001-Use-the-auto-detected-SHELL-to-run-convert-archive.patch
 PATCHFILES += 0002-Update-ltmain.sh-to-prevent-libtool-stripping-runpat.patch
@@ -36,7 +36,7 @@ CONFIGURE_ARGS += --with-included-libcroco
 #No glibc
 CONFIGURE_ARGS += --with-included-gettext
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 NOISAEXEC = 1

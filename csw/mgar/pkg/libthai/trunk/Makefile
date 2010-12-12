@@ -1,5 +1,5 @@
-GARNAME = libthai
-GARVERSION = 0.1.12
+NAME = libthai
+VERSION = 0.1.12
 CATEGORIES = lib
 
 DESCRIPTION = Thai language support routines
@@ -13,12 +13,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://linux.thai.net/pub/thailinux/software/libthai/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-Remove-unknown-compiler-macro.patch
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=34448
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibthai CSWlibthaidevel
 

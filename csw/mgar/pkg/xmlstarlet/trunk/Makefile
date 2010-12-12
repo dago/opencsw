@@ -1,5 +1,5 @@
-GARNAME = xmlstarlet
-GARVERSION = 1.0.2
+NAME = xmlstarlet
+VERSION = 1.0.2
 CATEGORIES = utils
 
 DESCRIPTION = XML transformation utility
@@ -14,7 +14,7 @@ endef
 SF_PROJ = xmlstar
 MASTER_SITES = $(SF_MIRRORS)
 MASTER_SITES += http://xmlstar.sourceforge.net/downloads/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWiconv CSWlibxml2 CSWlibxslt CSWzlib   
 

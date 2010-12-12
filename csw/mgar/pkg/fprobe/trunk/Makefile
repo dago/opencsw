@@ -1,5 +1,5 @@
-GARNAME = fprobe
-GARVERSION = 1.1
+NAME = fprobe
+VERSION = 1.1
 CATEGORIES = net
 
 DESCRIPTION = Tool that collect network traffic data
@@ -9,13 +9,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.sourceforge.net/project/fprobe/fprobe/1.1/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # we require
 RUNTIME_DEP_PKGS = CSWlibpcap
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

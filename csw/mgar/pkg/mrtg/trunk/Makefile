@@ -1,5 +1,5 @@
-GARNAME = mrtg
-GARVERSION = 2.16.3
+NAME = mrtg
+VERSION = 2.16.3
 CATEGORIES = utils
 
 DESCRIPTION = Multi Router Traffic Grapher (network monitor)
@@ -9,7 +9,7 @@ define BLURB
 	provide a LIVE visual representation of this traffic.
 endef
 
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 VENDOR_URL = http://oss.oetiker.ch/mrtg/
 MASTER_SITES = http://oss.oetiker.ch/mrtg/pub/
@@ -18,7 +18,7 @@ PACKAGES = CSWmrtg
 CATALOGNAME = mrtg
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGING_PLATFORMS =  solaris8-sparc solaris8-i386
 

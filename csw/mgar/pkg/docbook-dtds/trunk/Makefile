@@ -4,8 +4,8 @@
 # 4.5 and 5.0 support and have our version number track the highest docbook
 # version supplied in the package.
 
-GARNAME = docbookdtds
-GARVERSION = 4.5
+NAME = docbookdtds
+VERSION = 4.5
 
 CATEGORIES = xtra
 

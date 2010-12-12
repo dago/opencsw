@@ -1,5 +1,5 @@
-GARNAME = gource
-GARVERSION = 0.28
+NAME = gource
+VERSION = 0.28
 CATEGORIES = apps
 
 DESCRIPTION = Software version control visualization
@@ -7,13 +7,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES  = 0001-Make-sure-we-have-a-prototype-for-sqrt.patch
 PATCHFILES += 0002-Use-double-functions-and-proper-casts-in-lack-of-flo.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS += CSWlibsdl
 DEP_PKGS += CSWpng

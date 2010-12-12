@@ -1,6 +1,6 @@
-GARNAME = gnomevfs2
+NAME = gnomevfs2
 GNOME_PROJ = gnome-vfs
-GARVERSION = 2.24.2
+VERSION = 2.24.2
 CATEGORIES = gnome
 
 DESCRIPTION = GnomeVFS - Filesystem Abstraction library
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
-DISTNAME = $(GNOME_PROJ)-$(GARVERSION)
+DISTNAME = $(GNOME_PROJ)-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
 PACKAGES = CSWgnomevfs2 CSWgnomevfs2devel CSWgnomevfs2doc
@@ -26,7 +26,7 @@ RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWdbusglib CSWlibdbus CSWlibxext CSWpango
 RUNTIME_DEP_PKGS_CSWgnomevfs2devel += CSWgnomevfs2
 RUNTIME_DEP_PKGS_CSWgnomevfs2doc += CSWgnomevfs2
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://projects.gnome.org/gnome-vfs/
 

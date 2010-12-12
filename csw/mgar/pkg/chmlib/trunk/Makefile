@@ -1,5 +1,5 @@
-GARNAME = chmlib
-GARVERSION = 0.40
+NAME = chmlib
+VERSION = 0.40
 CATEGORIES = lib
 
 DESCRIPTION = Library designed for accessing MS ITSS files (chm)
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.jedrea.com/chmlib/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PATCHFILES =  0001-gnulib-import-getopt-posix.patch
 PATCHFILES += 0002-integrate-gnulib-into-the-auto-tool-files.patch
@@ -20,7 +20,7 @@ PATCHFILES += 0003-add-dummy-config.h-file.patch
 PATCHFILES += 0004-add-autoconf-checks-for-lnsl-and-lsocket.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 NOISAEXEC = 1
@@ -41,6 +41,6 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 post-install-modulated:
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	$(foreach D,$(DOCS),ginstall $(WORKSRC)/$D $(DESTDIR)$(docdir)/$(GARNAME)/$D;)
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	$(foreach D,$(DOCS),ginstall $(WORKSRC)/$D $(DESTDIR)$(docdir)/$(NAME)/$D;)
 	@$(MAKECOOKIE)

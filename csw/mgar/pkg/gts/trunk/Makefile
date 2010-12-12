@@ -1,5 +1,5 @@
-GARNAME = gts
-GARVERSION = 0.7.6
+NAME = gts
+VERSION = 0.7.6
 CATEGORIES = lib
 
 DESCRIPTION = GNU Triangulated Surface Library
@@ -14,12 +14,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS) 
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://gts.sourceforge.net/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

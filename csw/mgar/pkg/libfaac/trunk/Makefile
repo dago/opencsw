@@ -1,5 +1,5 @@
-GARNAME = libfaac
-GARVERSION = 1.28
+NAME = libfaac
+VERSION = 1.28
 CATEGORIES = lib
 
 DESCRIPTION = AAC encoder library and tool
@@ -9,11 +9,11 @@ endef
 
 SF_PROJ = faac
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(SF_PROJ)-$(GARVERSION).tar.bz2
-DISTNAME = $(SF_PROJ)-$(GARVERSION)
+DISTFILES  = $(SF_PROJ)-$(VERSION).tar.bz2
+DISTNAME = $(SF_PROJ)-$(VERSION)
 
 PACKAGES = CSWfaac
-CATALOGNAME = $(GARNAME)
+CATALOGNAME = $(NAME)
 
 SPKG_SOURCEURL = http://www.audiocoding.com/
 

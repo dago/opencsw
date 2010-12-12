@@ -1,5 +1,5 @@
-GARNAME = libpcap
-GARVERSION = 1.1.1
+NAME = libpcap
+VERSION = 1.1.1
 CATEGORIES = lib
 
 DESCRIPTION = System-independent interface for user-level packet capture
@@ -8,12 +8,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.tcpdump.org/release/ 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 LICENSE = LICENSE
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibpcap CSWlibpcapdevel
 

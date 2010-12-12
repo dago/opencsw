@@ -1,5 +1,5 @@
-GARNAME = SVK
-GARVERSION = 2.2.3
+NAME = SVK
+VERSION = 2.2.3
 CATEGORIES = cpan
 AUTHOR = CLKAO
 
@@ -18,8 +18,8 @@ RUNTIME_DEP_PKGS += CSWpmpathclass CSWpmperlioeol CSWpmperlioviadyn CSWpmperliov
 RUNTIME_DEP_PKGS += CSWpmpodsimple CSWpmregexpshellish CSWpmsvn CSWpmsvnmirror CSWpmsvnsimple CSWpmtermreadkey
 RUNTIME_DEP_PKGS += CSWpmtimedate CSWpmunivrequire CSWpmuri CSWpmyaml CSWpmyamlsyck
 
-MODDIST = $(GARNAME)-v$(GARVERSION).tar.gz
-WORKSRC = $(WORKDIR)/$(GARNAME)-v$(GARVERSION)
+MODDIST = $(NAME)-v$(VERSION).tar.gz
+WORKSRC = $(WORKDIR)/$(NAME)-v$(VERSION)
 
 PACKAGES = CSWsvk
 CATALOGNAME = svk

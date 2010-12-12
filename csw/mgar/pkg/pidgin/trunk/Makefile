@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = pidgin
-GARVERSION = 2.6.6
+NAME = pidgin
+VERSION = 2.6.6
 CATEGORIES = apps
 
 DESCRIPTION = Multi-protocol IM client
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)

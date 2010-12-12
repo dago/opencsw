@@ -1,5 +1,5 @@
-GARNAME = babl
-GARVERSION = 0.1.2
+NAME = babl
+VERSION = 0.1.2
 CATEGORIES = gnome
 
 DESCRIPTION = babl is a dynamic, any to any, pixel format translation library
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/gimp/babl/0.1/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

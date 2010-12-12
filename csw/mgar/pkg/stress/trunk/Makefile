@@ -1,7 +1,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-GARNAME = stress
-GARVERSION = 1.0.4
+NAME = stress
+VERSION = 1.0.4
 CATEGORIES = apps
 
 DESCRIPTION = A deliberately simple workload generator for POSIX systems
@@ -15,8 +15,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://weather.ou.edu/~apw/projects/stress/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

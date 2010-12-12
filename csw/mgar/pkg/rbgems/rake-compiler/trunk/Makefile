@@ -1,5 +1,5 @@
-GARNAME = rake-compiler
-GARVERSION = 0.7.0
+NAME = rake-compiler
+VERSION = 0.7.0
 CATEGORIES = rbgems
 
 DESCRIPTION = Build and package Ruby extensions in C and Java

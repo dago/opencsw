@@ -1,5 +1,5 @@
-GARNAME = xmlrpc-c
-GARVERSION = 1.16.13
+NAME = xmlrpc-c
+VERSION = 1.16.13
 SVN_REVISION = 1679
 CATEGORIES = lib
 
@@ -35,7 +35,7 @@ RUNTIME_DEP_PKGS_CSWxmlrpc-c  = CSWcurlrt CSWlibidn CSWoldaprt CSWosslrt CSWzlib
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-#UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+#UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 #BUILD64 = 1
 #NOISAEXEC = 1

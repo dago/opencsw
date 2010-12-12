@@ -1,5 +1,5 @@
-GARNAME = lighttpd
-GARVERSION = 1.4.28
+NAME = lighttpd
+VERSION = 1.4.28
 CATEGORIES = devel
 
 DESCRIPTION = lighttpd - Security, speed, compliance, and flexibility http server
@@ -15,6 +15,6 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.lighttpd.net/lighttpd/releases-1.4.x/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 include gar/category.mk

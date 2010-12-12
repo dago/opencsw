@@ -1,5 +1,5 @@
-GARNAME = libvorbis
-GARVERSION = 1.3.1
+NAME = libvorbis
+VERSION = 1.3.1
 CATEGORIES = lib
 
 DESCRIPTION = Vorbis codec library.
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/vorbis/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWvorbis
 CATALOGNAME = libvorbis
@@ -21,7 +21,7 @@ SPKG_SOURCEURL = http://www.vorbis.com/
 BUILD64 = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_LD_FLAGS = -L$(libdir) -lsunmath -lm
 

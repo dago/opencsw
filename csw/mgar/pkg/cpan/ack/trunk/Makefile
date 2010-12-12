@@ -1,5 +1,5 @@
-GARNAME = ack
-GARVERSION = 1.94
+NAME = ack
+VERSION = 1.94
 CATEGORIES = cpan
 AUTHOR = PETDANCE
 
@@ -28,7 +28,7 @@ post-extract-modulated:
 		$(WORKSRC)/squash
 	@$(MAKECOOKIE)
 
-install-custom: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+install-custom: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(mandir)/man1

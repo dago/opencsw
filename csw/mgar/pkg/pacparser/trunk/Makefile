@@ -1,7 +1,7 @@
 # $Id$
-GARNAME = pacparser
-GARVERSION = 1.2.6
-#SPKG_VERSION = $(subst -,.,$(GARVERSION))
+NAME = pacparser
+VERSION = 1.2.6
+#SPKG_VERSION = $(subst -,.,$(VERSION))
 CATEGORIES = lib
 
 DESCRIPTION = A library to parse proxy auto-config (PAC) files
@@ -32,7 +32,7 @@ PATCHFILES += 0007-Add-config-for-spidermonkey-i386.patch
 PATCHFILES += 0008-Always-set-myIpAddr-to-127.0.0.1-or-tests-on-current.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWpacparser CSWlibpacparser1 CSWlibpacparser-devel CSWpy-libpacparser
 CATALOGNAME_CSWpacparser = pacparser

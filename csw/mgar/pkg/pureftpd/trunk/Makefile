@@ -4,8 +4,8 @@
 # - ldap
 # - mysql 
 # - pgsql
-GARNAME = pureftpd
-GARVERSION = 1.0.27
+NAME = pureftpd
+VERSION = 1.0.27
 CATEGORIES = net
 SRCNAME = pure-ftpd
 
@@ -19,14 +19,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.pureftpd.org/pub/pure-ftpd/releases/
-DISTFILES  = $(SRCNAME)-$(GARVERSION).tar.gz
-WORKSRC = $(WORKDIR)/$(SRCNAME)-$(GARVERSION)
+DISTFILES  = $(SRCNAME)-$(VERSION).tar.gz
+WORKSRC = $(WORKDIR)/$(SRCNAME)-$(VERSION)
 
 # we require openssl for tls
 RUNTIME_DEP_PKGS = CSWosslrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # configure args
 CONFIGURE_ARGS  = $(DIRPATHS)

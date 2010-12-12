@@ -10,8 +10,8 @@
 # i depend=CSWmodulatedpkg.depend
 # i pkginfo=CSWmodulatedpkg.pkginfo
 
-GARNAME = modulatedpkg
-GARVERSION = 2.0
+NAME = modulatedpkg
+VERSION = 2.0
 CATEGORIES = utils
 DESCRIPTION = An example of a modulated package
 define BLURB
@@ -21,17 +21,17 @@ BUILD_SCRIPTS =
 INSTALL_SCRIPTS = example
 TEST_SCRIPTS =
 
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.0 1.1 2.0
+EXTRA_MODULATORS = VERSION
+MODULATIONS_VERSION = 1.0 1.1 2.0
 MERGE_SCRIPTS_isa-sparcv8-garversion-1.0 = copy-all
 MERGE_SCRIPTS_isa-sparcv8-garversion-1.1 = copy-all
 MERGE_SCRIPTS_isa-sparcv8-garversion-2.0 = copy-all
 
-# A really simple installator, creating different files for each GARVERSION.
+# A really simple installator, creating different files for each VERSION.
 install-example:
 	ginstall -d -m 755 $(DESTDIR)$(datadir)
-	echo "This file belongs to the $(GARNAME)-$(GARVERSION)." \
-		> $(DESTDIR)$(datadir)/example-$(GARVERSION).txt
+	echo "This file belongs to the $(NAME)-$(VERSION)." \
+		> $(DESTDIR)$(datadir)/example-$(VERSION).txt
 	@$(MAKECOOKIE)
 
 include gar/category.mk

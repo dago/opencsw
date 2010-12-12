@@ -1,5 +1,5 @@
-GARNAME = ldapvi
-GARVERSION = 1.7
+NAME = ldapvi
+VERSION = 1.7
 CATEGORIES = utils
 
 DESCRIPTION = Interactive LDAP client for Unix terminals
@@ -10,13 +10,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.lichteblau.com/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWreadline CSWglib2 CSWlibpopt
 RUNTIME_DEP_PKGS += CSWosslrt CSWsasl CSWoldaprt
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES = patch-putenv.diff
 
@@ -32,9 +32,9 @@ SPKG_SOURCEURL = http://www.lichteblau.com/ldapvi/
 include gar/category.mk
 
 install-custom:
-	ginstall -d $(DESTDIR)$(bindir) $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(sharedstatedir)/doc/$(GARNAME)
+	ginstall -d $(DESTDIR)$(bindir) $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(sharedstatedir)/doc/$(NAME)
 	cd $(WORKSRC) && ginstall -m 755 ldapvi $(DESTDIR)$(bindir)
 	cd $(WORKSRC) && ginstall -m 644 ldapvi.1 $(DESTDIR)$(mandir)/man1
 	cd $(WORKSRC) && ginstall -m 644 manual/manual.css manual/manual.xml manual/bg.png manual/html.xsl \
-		$(DESTDIR)$(sharedstatedir)/doc/$(GARNAME)
+		$(DESTDIR)$(sharedstatedir)/doc/$(NAME)
 

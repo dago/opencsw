@@ -1,5 +1,5 @@
-GARNAME = Graphics-ColorNames-WWW
-GARVERSION = 1.13
+NAME = Graphics-ColorNames-WWW
+VERSION = 1.13
 CATEGORIES = cpan
 AUTHOR = CFAERBER
 

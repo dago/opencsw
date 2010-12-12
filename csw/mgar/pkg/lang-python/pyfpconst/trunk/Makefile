@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = fpconst
-GARVERSION = 0.7.2
+NAME = fpconst
+VERSION = 0.7.2
 PACKAGES = CSWpyfpconst
 CATALOGNAME_CSWpyfpconst = py_fpconst
 CATEGORIES = python
@@ -15,9 +15,9 @@ define BLURB
   (NegInf), as well as functions to test for these values.
 endef
 SPKG_SOURCEURL = http://pypi.python.org/pypi/fpconst/
-MASTER_SITES = http://pypi.python.org/packages/source/f/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = http://pypi.python.org/packages/source/f/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 TEST_SCRIPTS =
 ARCHALL_CSWpy-fpconst = 1
 LICENSE = README

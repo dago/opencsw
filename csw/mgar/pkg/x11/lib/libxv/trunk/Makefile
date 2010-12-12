@@ -1,5 +1,5 @@
-GARNAME = libxv
-GARVERSION = 1.0.4
+NAME = libxv
+VERSION = 1.0.4
 CATEGORIES = x11
 
 DESCRIPTION = The Xv Library
@@ -8,11 +8,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libXv-$(GARVERSION)
+DISTNAME = libXv-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # BUILD_DEP_PKGS = CSWxvideoproto
 

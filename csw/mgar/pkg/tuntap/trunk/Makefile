@@ -1,5 +1,5 @@
-GARNAME = tuntap
-GARVERSION = 1.1
+NAME = tuntap
+VERSION = 1.1
 CATEGORIES = net
 
 DESCRIPTION = TUN and TAP virtual network kernel drivers
@@ -18,7 +18,7 @@ DISTNAME = tuntap
 DISTFILES = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

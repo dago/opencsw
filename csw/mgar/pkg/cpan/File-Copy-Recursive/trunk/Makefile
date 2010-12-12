@@ -1,5 +1,5 @@
-GARNAME = File-Copy-Recursive
-GARVERSION = 0.38
+NAME = File-Copy-Recursive
+VERSION = 0.38
 CATEGORIES = cpan
 AUTHOR = DMUEY
 

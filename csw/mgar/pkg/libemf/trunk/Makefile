@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = libemf
-GARVERSION = 1.0.4
+NAME = libemf
+VERSION = 1.0.4
 CATEGORIES = lib
 
 DESCRIPTION = Library implementation of ECMA-234 API for the generation of enhanced metafiles
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTNAME = libEMF-$(GARVERSION)
+DISTNAME = libEMF-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 
 PATCHFILES  = 0001-Add-__sparc-and-__i386-in-addition-to-__-__.patch
@@ -32,7 +32,7 @@ RUNTIME_DEP_PKGS_CSWlibemf-devel = CSWlibemf1
 VENDOR_URL = http://libemf.sourceforge.net/
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # *We* can do 64 bit, but the tests dump core in CSWglib2 2.23.5,REV=2010.03.09
 # Re-enable when glib2 gets refreshed.

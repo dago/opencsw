@@ -1,5 +1,5 @@
-GARNAME = Array-Window
-GARVERSION = 1.00
+NAME = Array-Window
+VERSION = 1.00
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

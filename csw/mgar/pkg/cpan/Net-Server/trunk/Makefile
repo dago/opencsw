@@ -1,5 +1,5 @@
-GARNAME = Net-Server
-GARVERSION = 0.97
+NAME = Net-Server
+VERSION = 0.97
 CATEGORIES = cpan
 AUTHOR = RHANDOM
 

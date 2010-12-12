@@ -4,8 +4,8 @@
 #   as the README says that there are known, yet unsolved Solaris autoconf
 #   recipe problems
 #
-GARNAME = mtr
-GARVERSION = 0.75
+NAME = mtr
+VERSION = 0.75
 CATEGORIES = net
 
 DESCRIPTION = Combined traceroute and ping utility
@@ -23,8 +23,8 @@ endef
 
 VENDOR_URL   = http://www.bitwizard.nl/mtr/
 MASTER_SITES = ftp://ftp.bitwizard.nl/mtr/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Build the base package without X support and have an additional one that
 # supports X. http://article.gmane.org/gmane.os.solaris.opencsw.maintainers/5090

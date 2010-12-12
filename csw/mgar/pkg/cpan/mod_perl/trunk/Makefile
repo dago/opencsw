@@ -1,5 +1,5 @@
-GARNAME = mod_perl
-GARVERSION = 1.31
+NAME = mod_perl
+VERSION = 1.31
 CATEGORIES = cpan
 AUTHOR = GOZER
 

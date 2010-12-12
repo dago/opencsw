@@ -1,5 +1,5 @@
-GARNAME = Env-Path
-GARVERSION = 0.18
+NAME = Env-Path
+VERSION = 0.18
 CATEGORIES = cpan
 AUTHOR = DSB
 

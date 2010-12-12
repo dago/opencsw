@@ -2,18 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = evince
+NAME = evince
 GNOME_VERSION = 2.24
-GARVERSION = $(GNOME_VERSION).2
+VERSION = $(GNOME_VERSION).2
 CATEGORIES = gnome
 DESCRIPTION = Document viewer for multiple document formats
 define BLURB
 endef
 GARFLAVOR = DBG
 SPKG_SOURCEURL = http://projects.gnome.org/evince/
-MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(GARNAME)/$(GNOME_VERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(NAME)/$(GNOME_VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS_DBG = --enable-debug
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))

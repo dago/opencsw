@@ -1,5 +1,5 @@
-GARNAME = File-Fetch
-GARVERSION = 0.24
+NAME = File-Fetch
+VERSION = 0.24
 CATEGORIES = cpan
 AUTHOR = BINGOS
 

@@ -1,5 +1,5 @@
-GARNAME = mysql
-GARVERSION = 4.1.18
+NAME = mysql
+VERSION = 4.1.18
 CATEGORIES = server
 
 DESCRIPTION = A fast SQL database server.
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://mysql.he.net/Downloads/MySQL-4.1/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWmysql4,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DB_USER = mysqld
 

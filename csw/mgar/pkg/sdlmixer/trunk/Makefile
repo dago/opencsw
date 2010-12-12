@@ -1,5 +1,5 @@
-GARNAME = SDL_mixer
-GARVERSION = 1.2.11
+NAME = SDL_mixer
+VERSION = 1.2.11
 CATEGORIES = lib
 
 DESCRIPTION = Multi-channel audio mixer library
@@ -8,14 +8,14 @@ SDL mixer supports any number of simultaneously playing channels of 16 bit stere
 endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_mixer/release/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWsdlmixer
 RUNTIME_DEP_PKGS = CSWlibsdl
 EXTRA_LDFLAGS = -lm
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = --prefix=$(prefix) --disable-static
 TEST_SCRIPTS =

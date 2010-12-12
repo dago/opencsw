@@ -1,5 +1,5 @@
-GARNAME = pcb
-GARVERSION = 20081128
+NAME = pcb
+VERSION = 20081128
 CATEGORIES = apps
 
 DESCRIPTION = PCB is a tool for the layout of printed circuit boards
@@ -12,11 +12,11 @@ define BLURB
 	reduce layout time. 
 endef
 
-SF_PROJ = $(GARNAME)
+SF_PROJ = $(NAME)
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTFILES += CSW$(GARNAME).postinstall
-DISTFILES += CSW$(GARNAME).preremove
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += CSW$(NAME).postinstall
+DISTFILES += CSW$(NAME).preremove
 
 SPKG_SOURCEURL = http://pcb.gpleda.org
 
@@ -51,7 +51,7 @@ BUILD_DEP_PKGS += CSWkbproto
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=73743
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

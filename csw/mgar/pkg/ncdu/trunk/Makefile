@@ -1,5 +1,5 @@
-GARNAME = ncdu
-GARVERSION = 1.6
+NAME = ncdu
+VERSION = 1.6
 CATEGORIES = utils
 
 DESCRIPTION = Ncurses version of the famous old 'du' unix
@@ -13,8 +13,8 @@ endef
 
 SPKG_SOURCEURL = http://dev.yorhel.nl/ncdu/
 MASTER_SITES   = http://dev.yorhel.nl/download/
-DISTFILES      = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES      = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX   = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWncurses
 
@@ -27,7 +27,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)

@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = rxvt-unicode
-GARVERSION = 9.07
+NAME = rxvt-unicode
+VERSION = 9.07
 CATEGORIES = apps
 
 DESCRIPTION = A VT102 emulator for the X window system (pron. ouR XVT, unicode)
@@ -19,9 +19,9 @@ define BLURB
 endef
 
 MASTER_SITES         = http://dist.schmorp.de/rxvt-unicode/
-DISTFILES            = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES            = $(NAME)-$(VERSION).tar.bz2
 DISTFILES           += urxvt-wrapper
-UFILES_REGEX         = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX         = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 SPKG_SOURCEURL       = http://software.schmorp.de/pkg/rxvt-unicode.html
 PACKAGES             = CSWurxvt
 CATALOGNAME_CSWurxvt = urxvt

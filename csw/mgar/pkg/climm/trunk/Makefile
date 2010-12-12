@@ -1,5 +1,5 @@
-GARNAME = climm
-GARVERSION = 0.6.1
+NAME = climm
+VERSION = 0.6.1
 CATEGORIES = net
 
 DESCRIPTION = terminal-based ICQ client
@@ -9,12 +9,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.climm.org/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 DISTFILES += $(call admfiles,CSWclimm,prototype depend)
 DISTFILES += climm.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 PATCHFILES = climm.patch
 

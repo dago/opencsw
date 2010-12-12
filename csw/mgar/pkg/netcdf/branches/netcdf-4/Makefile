@@ -2,14 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = netcdf
-GARVERSION = 4.1.1
+NAME = netcdf
+VERSION = 4.1.1
 CATEGORIES = lib
 DESCRIPTION = Machine-independent data formats for array-oriented scientific data
 SPKG_SOURCEURL = http://www.unidata.ucar.edu/software/netcdf/
 MASTER_SITES = http://www.unidata.ucar.edu/downloads/netcdf/ftp/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
 
 BUILD_DEP_PKGS += CSWhdf5rt CSWzlib

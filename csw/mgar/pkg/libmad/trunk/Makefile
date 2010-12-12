@@ -1,5 +1,5 @@
-GARNAME = libmad
-GARVERSION = 0.15.1b
+NAME = libmad
+VERSION = 0.15.1b
 CATEGORIES = lib
 
 DESCRIPTION = MPEG Audio Decoder
@@ -15,7 +15,7 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += mad-32.pc mad-64.pc
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.underbit.com/products/mad/
 

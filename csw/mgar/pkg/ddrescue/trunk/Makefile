@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = ddrescue
-GARVERSION = 1.13
+NAME = ddrescue
+VERSION = 1.13
 CATEGORIES = utils
 
 DESCRIPTION = A data recovery tool
@@ -10,10 +10,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.lz
+DISTFILES  = $(NAME)-$(VERSION).tar.lz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.lz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.lz
 
 CONFIGURE_ARGS = --prefix=$(prefix)
 CONFIGURE_ARGS += CXX="$(CXX)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)" LDFLAGS="$(LDFLAGS)"

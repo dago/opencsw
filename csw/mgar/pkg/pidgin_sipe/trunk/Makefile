@@ -1,5 +1,5 @@
-GARNAME = pidgin-sipe
-GARVERSION = 1.5.0
+NAME = pidgin-sipe
+VERSION = 1.5.0
 CATEGORIES = lib
 
 DESCRIPTION = Pidgin Plug-in SIPE (Sip Exchange Protocol)
@@ -10,7 +10,7 @@ endef
 SF_PROJ = sipe
 MASTER_SITES = $(SF_MIRRORS)
 UPSTREAM_USE_SF = 1
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGES = CSWpidginsipe
 CATALOGNAME_CSWpidginsipe = pidgin_sipe
 SPKG_DESC_CSWpidginsipe = $(DESCRIPTION)
@@ -19,7 +19,7 @@ RUNTIME_DEP_PKGS_CSWpidginsipe  = CSWpidgin
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz2
 
 STRIP_LIBTOOL = 1
 

@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = tinyca2
-GARVERSION = 0.7.5
+NAME = tinyca2
+VERSION = 0.7.5
 CATEGORIES = utils
 
 DESCRIPTION = Graphical userinterface to manage a small CA
@@ -15,12 +15,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://tinyca.sm-zone.net/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += COPYING
 PATCHFILES = 0001-Hardcode-pathes-to-CSW.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS = CSWperl CSWpmgtk2 CSWosslutils CSWzip CSWgtar
 

@@ -1,5 +1,5 @@
-GARNAME = Convert-UUlib
-GARVERSION = 1.33
+NAME = Convert-UUlib
+VERSION = 1.33
 CATEGORIES = cpan
 AUTHOR = MLEHMANN
 

@@ -1,8 +1,8 @@
-GARNAME = libsigsegv
-GARVERSION = 2.9
+NAME = libsigsegv
+VERSION = 2.9
 CATEGORIES = lib
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 2.6 2.9
+EXTRA_MODULATORS = VERSION
+MODULATIONS_VERSION = 2.6 2.9
 
 DESCRIPTION = A library for catching and handling segmentation faults
 define BLURB
@@ -11,14 +11,14 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tar.gz)
+SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VERSION),$(NAME)-$(VERSION).tar.gz)
 DISTFILES = $(SOURCEFILES)
-NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz, $(SOURCEFILES))
+NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz, $(SOURCEFILES))
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES += CSWlibsigsegv0
 PACKAGES += CSWlibsigsegv2

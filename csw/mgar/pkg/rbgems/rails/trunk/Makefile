@@ -1,5 +1,5 @@
-GARNAME = rails
-GARVERSION = 2.3.8
+NAME = rails
+VERSION = 2.3.8
 CATEGORIES = rbgems
 
 DESCRIPTION = A framework for building web-application

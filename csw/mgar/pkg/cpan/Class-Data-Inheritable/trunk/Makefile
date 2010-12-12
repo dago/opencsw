@@ -1,5 +1,5 @@
-GARNAME = Class-Data-Inheritable
-GARVERSION = 0.08
+NAME = Class-Data-Inheritable
+VERSION = 0.08
 CATEGORIES = cpan
 AUTHOR = TMTM
 

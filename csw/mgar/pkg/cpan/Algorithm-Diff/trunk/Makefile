@@ -1,5 +1,5 @@
-GARNAME = Algorithm-Diff
-GARVERSION = 1.1902
+NAME = Algorithm-Diff
+VERSION = 1.1902
 CATEGORIES = cpan
 AUTHOR = TYEMQ
 

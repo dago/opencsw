@@ -1,5 +1,5 @@
-GARNAME = ogle_gui
-GARVERSION = 0.9.2
+NAME = ogle_gui
+VERSION = 0.9.2
 CATEGORIES = gnome
 
 DESCRIPTION = gtk user interface for Ogle DVD player 
@@ -8,11 +8,11 @@ A gtk graphical user interface for Ogle DVD player
 endef
 
 MASTER_SITES = http://www.dtek.chalmers.se/groups/dvd/dist/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWogle_gui, depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER ?= GNU
 

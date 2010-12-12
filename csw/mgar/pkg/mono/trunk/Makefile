@@ -1,5 +1,5 @@
-GARNAME = mono
-GARVERSION = 1.1.10
+NAME = mono
+VERSION = 1.1.10
 CATEGORIES = lang
 
 DESCRIPTION = Mono Runtime
@@ -11,11 +11,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://go-mono.com/sources/mono-1.1/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 DISTFILES += CSWmono.gspec CSWmono.depend CSWmono.prototype
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

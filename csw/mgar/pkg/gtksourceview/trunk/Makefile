@@ -1,5 +1,5 @@
-GARNAME = gtksourceview
-GARVERSION = 2.9.3
+NAME = gtksourceview
+VERSION = 2.9.3
 CATEGORIES = gnome
 
 DESCRIPTION = A text widget with features typical of a source code editor
@@ -12,8 +12,8 @@ define BLURB
 endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTNAME  = $(NAME)-$(VERSION)
 
 PACKAGES = CSWgtksourceview CSWgtksourceviewdev CSWgtksourceviewdoc
 CATALOGNAME_CSWgtksourceview = gtksourceview
@@ -30,7 +30,7 @@ RUNTIME_DEP_PKGS_CSWgtksourceview += CSWlibxml2 CSWpango CSWlibxext
 RUNTIME_DEP_PKGS_CSWgtksourceviewdev += CSWgtksourceview
 RUNTIME_DEP_PKGS_CSWgtksourceviewdoc += CSWgtksourceview
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://live.gnome.org/GtkSourceView
 

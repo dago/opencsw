@@ -1,5 +1,5 @@
-GARNAME = Smart-Comments
-GARVERSION = 1.0.4
+NAME = Smart-Comments
+VERSION = 1.0.4
 CATEGORIES = cpan
 AUTHOR = CHORNY
 

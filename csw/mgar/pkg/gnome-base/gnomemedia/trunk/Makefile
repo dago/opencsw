@@ -1,5 +1,5 @@
-GARNAME = gnome-media
-GARVERSION = 2.28.5
+NAME = gnome-media
+VERSION = 2.28.5
 CATEGORIES = gnome
 
 DESCRIPTION = Multimedia applications for the GNOME 2 desktop
@@ -10,12 +10,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.acc.umu.se/pub/GNOME/sources/gnome-media/2.28/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PACKAGES = CSWgnomemedia
 CATALOGNAME = gnomemedia
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS += CSWftype2 CSWgconf2 CSWggettextrt CSWglib2 CSWgstplugins
 RUNTIME_DEP_PKGS += CSWgstreamer CSWgtk2 CSWlibatk CSWlibcairo CSWlibglade2

@@ -1,5 +1,5 @@
-GARNAME = spamass-milter
-GARVERSION = 0.3.1
+NAME = spamass-milter
+VERSION = 0.3.1
 CATEGORIES = net
 
 DESCRIPTION = Plugin for the Sendmail Milter library for SpamAssassin
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://mirrors.aixtools.net/sv/spamass-milt/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
 PACKAGES = CSWspamass-milter
@@ -16,7 +16,7 @@ CATALOGNAME = spamass_milter
 RUNTIME_DEP_PKGS = CSWspamassassin
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS = 
 INSTALL_SCRIPTS = custom
@@ -28,9 +28,9 @@ include gar/category.mk
 DOCLIST = AUTHORS Changelog NEWS README TODO
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	  gmake DESTDIR=$(DESTDIR) install )
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@$(foreach DOC,$(DOCLIST),ginstall -m 444 $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+	@$(foreach DOC,$(DOCLIST),ginstall -m 444 $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
 	@$(MAKECOOKIE)

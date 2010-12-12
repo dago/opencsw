@@ -1,5 +1,5 @@
-GARNAME = nrpe
-GARVERSION = 2.12
+NAME = nrpe
+VERSION = 2.12
 CATEGORIES = apps
 
 SPKG_DESC_CSWnrpe = Nagios remote plugin executor
@@ -11,7 +11,7 @@ endef
 
 SF_PROJ = nagios
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # Distfiles for CSWnrpe
 

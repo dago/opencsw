@@ -1,5 +1,5 @@
-GARNAME = docbookdsssl
-GARVERSION = 1.79
+NAME = docbookdsssl
+VERSION = 1.79
 PATCHLEVEL = 4.1
 CATEGORIES = xtra
 
@@ -19,7 +19,7 @@ endef
 
 SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES = docbook-dsssl-$(GARVERSION).tar.gz
+DISTFILES = docbook-dsssl-$(VERSION).tar.gz
 DISTFILES += CSWdocbookdsssl.postinstall CSWdocbookdsssl.preremove
 PATCHFILES = add_makefile.patch fix_perl_path.patch
 
@@ -33,10 +33,10 @@ UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
 # MASTER_SITES, then uncomment the next line. Otherwise it is set by
 # default to the value of MASTER_SITES UPSTREAM_MASTER_SITES =
 
-tar-gz-extract-docbook-dsssl-$(GARVERSION).tar.gz:
-	@echo " ==> Extracting $(DOWNLOADDIR)/docbook-dsssl-$(GARVERSION).tar.gz"
+tar-gz-extract-docbook-dsssl-$(VERSION).tar.gz:
+	@echo " ==> Extracting $(DOWNLOADDIR)/docbook-dsssl-$(VERSION).tar.gz"
 	@mkdir -p $(WORKSRC)
-	@gzip -dc $(DOWNLOADDIR)/docbook-dsssl-$(GARVERSION).tar.gz | gtar $(TAR_ARGS) -xf - -C $(WORKSRC) --strip-components 1
+	@gzip -dc $(DOWNLOADDIR)/docbook-dsssl-$(VERSION).tar.gz | gtar $(TAR_ARGS) -xf - -C $(WORKSRC) --strip-components 1
 	@$(MAKECOOKIE)
 
 #nothing to configure or test

@@ -1,5 +1,5 @@
-GARNAME = git-subtree
-GARVERSION = 0.2
+NAME = git-subtree
+VERSION = 0.2
 PATCHLEVEL = d20ac
 CATEGORIES = devel
 
@@ -27,7 +27,7 @@ BUILD_SCRIPTS =
 INSTALL_SCRIPTS = custom
 TEST_SCRIPTS =
 
-SPKG_VERSION = $(GARVERSION)_$(PATCHLEVEL)
+SPKG_VERSION = $(VERSION)_$(PATCHLEVEL)
 
 include gar/category.mk
 

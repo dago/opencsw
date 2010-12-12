@@ -1,5 +1,5 @@
-GARNAME = Font-FreeType
-GARVERSION = 0.03
+NAME = Font-FreeType
+VERSION = 0.03
 CATEGORIES = cpan
 AUTHOR = GEOFFR
 

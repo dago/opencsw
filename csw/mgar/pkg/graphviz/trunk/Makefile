@@ -1,5 +1,5 @@
-GARNAME = graphviz
-GARVERSION = 2.26.3
+NAME = graphviz
+VERSION = 2.26.3
 CATEGORIES = utils
 
 DESCRIPTION = Graph visualization tools 
@@ -193,13 +193,13 @@ PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/pathplan_data/.*
 
 PKGFILES_CSWgraphviz2 = $(prefix)/graphviz2
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWgraphviz.postinstall
 DISTFILES += CSWgraphvizgd.postinstall CSWgraphvizgd.postuninstall
 DISTFILES += CSWgraphvizdevil.postinstall CSWgraphvizdevil.postuninstall
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-sfdp
@@ -229,7 +229,7 @@ TEST_SCRIPTS = custom
 include gar/category.mk
 
 test-custom:
-	@echo " ==> Testing $(GARNAME) (custom)"
+	@echo " ==> Testing $(NAME) (custom)"
 	@$(MAKECOOKIE)
 
 post-merge:

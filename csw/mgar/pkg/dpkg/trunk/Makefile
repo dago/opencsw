@@ -5,8 +5,8 @@
 # This package might provide the dpkg binary itself, but for the time being, it
 # provides only update-alternatives.
 
-GARNAME = dpkg
-GARVERSION = 1.15.5.3
+NAME = dpkg
+VERSION = 1.15.5.3
 CATEGORIES = lib
 DESCRIPTION = Debian package manager
 PACKAGES = CSWalternatives
@@ -16,8 +16,8 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://wiki.debian.org/Teams/Dpkg
 MASTER_SITES = http://ftp.de.debian.org/debian/pool/main/d/dpkg/
-DISTFILES  = $(GARNAME)_$(GARVERSION).tar.bz2
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)_$(VERSION).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 INSTALL_SCRIPTS = alternatives

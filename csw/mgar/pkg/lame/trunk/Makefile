@@ -1,5 +1,5 @@
-GARNAME = lame
-GARVERSION = 398-2
+NAME = lame
+VERSION = 398-2
 SPKG_VERSION = 3.98.2
 CATEGORIES = apps
 
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWncurses
 
@@ -18,7 +18,7 @@ SPKG_SOURCEURL = http://lame.sourceforge.net/
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=628063
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

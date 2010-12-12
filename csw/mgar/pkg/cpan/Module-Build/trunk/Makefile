@@ -1,5 +1,5 @@
-GARNAME = Module-Build
-GARVERSION = stub
+NAME = Module-Build
+VERSION = stub
 CATEGORIES = cpan
 AUTHOR = EWILHELM
 

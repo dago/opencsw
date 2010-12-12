@@ -1,5 +1,5 @@
-GARNAME = rubygems
-GARVERSION = 1.3.7
+NAME = rubygems
+VERSION = 1.3.7
 CATEGORIES = xtra
 
 DESCRIPTION = Ruby package manager
@@ -12,7 +12,7 @@ endef
 SPKG_SOURCEURL = http://rubyforge.org/projects/rubygems/
 MASTER_SITES   = http://rubyforge.org/frs/download.php/70696/
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 ARCHALL = 1
 BUILD_DEP_PKGS = CSWruby
@@ -22,7 +22,7 @@ LICENSE_CSWrubygems = LICENSE.txt
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = 
@@ -39,8 +39,8 @@ install-custom:
 post-install-modulated: copy-contrib
 
 copy-contrib:
-	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)
-	@gcp -v  $(WORKSRC)/README $(DESTDIR)$(docdir)/$(GARNAME)
-	@gcp -v  $(WORKSRC)/LICENSE.txt $(DESTDIR)$(docdir)/$(GARNAME)
-	@gcp -v  $(WORKSRC)/GPL.txt $(DESTDIR)$(docdir)/$(GARNAME)
+	@mkdir -p $(DESTDIR)$(docdir)/$(NAME)
+	@gcp -v  $(WORKSRC)/README $(DESTDIR)$(docdir)/$(NAME)
+	@gcp -v  $(WORKSRC)/LICENSE.txt $(DESTDIR)$(docdir)/$(NAME)
+	@gcp -v  $(WORKSRC)/GPL.txt $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)

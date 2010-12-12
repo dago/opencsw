@@ -1,5 +1,5 @@
-GARNAME = App-CLI
-GARVERSION = 0.08
+NAME = App-CLI
+VERSION = 0.08
 CATEGORIES = cpan
 AUTHOR = ALEXMV
 
@@ -9,7 +9,7 @@ define BLURB
   classes. It also supports subcommand and per-command options.
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
 PACKAGES = CSWpmappcli

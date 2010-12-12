@@ -1,5 +1,5 @@
-GARNAME = autotrace
-GARVERSION = 0.31.1
+NAME = autotrace
+VERSION = 0.31.1
 CATEGORIES = apps
 
 DESCRIPTION = A program for converting bitmap to vector graphics
@@ -7,7 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://autotrace.sourceforge.net
 

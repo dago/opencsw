@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = mocha
-GARVERSION = 0.9.7
+NAME = mocha
+VERSION = 0.9.7
 CATEGORIES = lib
 DESCRIPTION = a library for mocking and stubbing using a syntax like that of JMock
 define BLURB
@@ -15,8 +15,8 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://mocha.rubyforge.org/
 MASTER_SITES = http://rubyforge.org/frs/download.php/59668/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 ARCHALL = 0
 RUNTIME_DEP_PKGS = CSWruby
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWrake
@@ -32,7 +32,7 @@ install-ruby:
 	# TODO(maciej): Use the provided gem specification for installation.
 	# (cd $(WORKSRC)/lib; \
 	#  rake gem; \
-	#  gem install --install-dir=$(DESTDIR) --local ./pkg/$(GARNAME)-$(GARVERSION).gem)
+	#  gem install --install-dir=$(DESTDIR) --local ./pkg/$(NAME)-$(VERSION).gem)
 	@$(MAKECOOKIE)
 
 include gar/category.mk

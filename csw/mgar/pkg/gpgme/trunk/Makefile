@@ -1,5 +1,5 @@
-GARNAME = gpgme
-GARVERSION = 1.1.8
+NAME = gpgme
+VERSION = 1.1.8
 CATEGORIES = apps
 
 DESCRIPTION = GPGME - GnuPG Made Easy
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/gpgme/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgpgme,)
 
 SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.en.html#lib-GPGME

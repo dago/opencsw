@@ -1,5 +1,5 @@
-GARNAME = DBIx-Password
-GARVERSION = 1.8
+NAME = DBIx-Password
+VERSION = 1.8
 CATEGORIES = cpan
 AUTHOR = KROW
 

@@ -1,5 +1,5 @@
-GARNAME = dnswalk
-GARVERSION = 2.0.2
+NAME = dnswalk
+VERSION = 2.0.2
 CATEGORIES = utils
 
 DESCRIPTION = DNS debugger
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
 PACKAGES = CSWdnswalk
@@ -17,7 +17,7 @@ RUNTIME_DEP_PKGS = CSWperl CSWpmnetdns
 ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 UPSTREAM_USE_SF = 1
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=1103
 
@@ -32,10 +32,10 @@ BINLIST = dnswalk do-dnswalk makereports sendreports
 DOCLIST = CHANGES README TODO dnswalk.errors rfc1912.txt
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 	@( cd $(WORKDIR) ; \
 	   sed 's|^#!/usr/contrib|#!/opt/csw|' dnswalk > dnswalk.sed ; \
@@ -46,6 +46,6 @@ install-custom:
 	   mv makereports.sed makereports ; \
 	   chmod 755 makereports )
 	@$(foreach BIN,$(BINLIST),cp $(WORKDIR)/$(BIN) $(DESTDIR)$(bindir);)
-	@cp $(WORKDIR)/$(GARNAME).1 $(DESTDIR)$(mandir)/man1
-	@$(foreach DOC,$(DOCLIST),cp $(WORKDIR)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
+	@cp $(WORKDIR)/$(NAME).1 $(DESTDIR)$(mandir)/man1
+	@$(foreach DOC,$(DOCLIST),cp $(WORKDIR)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
 	@$(MAKECOOKIE)

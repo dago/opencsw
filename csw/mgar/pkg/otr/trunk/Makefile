@@ -1,5 +1,5 @@
-GARNAME = libotr
-GARVERSION = 3.2.0
+NAME = libotr
+VERSION = 3.2.0
 CATEGORIES = lib
 
 DESCRIPTION = Off-The-Record Messaging plugin for pidgin
@@ -10,7 +10,7 @@ endef
 PACKAGES = CSWotr CSWotrdevel
 
 MASTER_SITES = http://www.cypherpunks.ca/otr/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = heartbeat.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release

@@ -1,5 +1,5 @@
-GARNAME = hypermail
-GARVERSION = 2.2.0
+NAME = hypermail
+VERSION = 2.2.0
 CATEGORIES = utils
 
 DESCRIPTION = mail archive tool
@@ -13,8 +13,8 @@ define BLURB
   archives when changes are detected.
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = $(SF_MIRROR)/$(NAME)/
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWhypermail,depend prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -29,8 +29,8 @@ PATCHFILES += install.diff
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gdbm=$(prefix)
-CONFIGURE_ARGS += --with-cgidir=$(docdir)/$(GARNAME)/cgi-bin
-CONFIGURE_ARGS += --with-htmldir=$(docdir)/$(GARNAME)
+CONFIGURE_ARGS += --with-cgidir=$(docdir)/$(NAME)/cgi-bin
+CONFIGURE_ARGS += --with-htmldir=$(docdir)/$(NAME)
 CONFIGURE_ARGS += --enable-libfnv
 
 # GNU make doesn't like the project makefiles

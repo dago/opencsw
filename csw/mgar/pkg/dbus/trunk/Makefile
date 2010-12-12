@@ -1,5 +1,5 @@
-GARNAME      = dbus
-GARVERSION   = 1.3.1
+NAME      = dbus
+VERSION   = 1.3.1
 CATEGORIES   = lib
 
 DESCRIPTION  = DBus Message Bus System
@@ -10,7 +10,7 @@ D-Bus supplies both a system daemon (for events such as "new hardware device add
 endef
 
 MASTER_SITES  = http://dbus.freedesktop.org/releases/dbus/
-DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES     = $(NAME)-$(VERSION).tar.gz 
 PKGDIST       = $(DISTFILE)
 
 # Generate description fields
@@ -55,7 +55,7 @@ PATCHFILES += dbus-sysdeps-unix.c.diff
 PATCHFILES += dbus-sysdeps.h.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 include gar/category.mk
 

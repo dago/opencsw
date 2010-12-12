@@ -1,4 +1,4 @@
-GARNAME = xfwm4-themes
+NAME = xfwm4-themes
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Window Manager Themes
@@ -6,12 +6,12 @@ define BLURB
    Xfce Window Manager Themes
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # DISTFILES += CSWxfcexfwm4themes.depend CSWxfcexfwm4themes.gspec CSWxfcexfwm4themes.prototype
 DISTFILES += $(call admfiles,CSWxfcexfwm4themes, depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 TEST_SCRIPTS = none
 

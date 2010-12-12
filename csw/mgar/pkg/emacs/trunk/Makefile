@@ -1,5 +1,5 @@
-GARNAME = emacs
-GARVERSION = 21.4
+NAME = emacs
+VERSION = 21.4
 PATCHLEVEL = a
 CATEGORIES = utils
 
@@ -12,13 +12,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION)$(PATCHLEVEL).tar.gz
+DISTFILES  = $(NAME)-$(VERSION)$(PATCHLEVEL).tar.gz
 #DISTFILES += CSWemacs.gspec
 #DISTFILES += CSWemacsrt.gspec CSWemacs.gspec CSWxemacs.gspec
 #DISTFILES += CSWemacsrt.prototype CSWemacs.prototype CSWxemacs.prototype
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)([a-z]).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)([a-z]).tar.gz
 
 # Force make to acknowledge DESTDIR
 #PATCHFILES += destdir.diff

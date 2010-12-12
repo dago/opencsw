@@ -1,5 +1,5 @@
-GARNAME = help2man
-GARVERSION = 1.38.2
+NAME = help2man
+VERSION = 1.38.2
 CATEGORIES = devel
 
 DESCRIPTION = A tool for automatically generating simple manual pages from program output
@@ -10,9 +10,9 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWpmlocalegettext
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)

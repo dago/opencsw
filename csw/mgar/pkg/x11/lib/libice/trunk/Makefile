@@ -1,5 +1,5 @@
-GARNAME = libICE
-GARVERSION = 1.0.6
+NAME = libICE
+VERSION = 1.0.6
 CATEGORIES = x11
 
 DESCRIPTION = X11 Inter-Client Exchange Library
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

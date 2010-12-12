@@ -1,5 +1,5 @@
-GARNAME = ppkg_get
-GARVERSION = 1.0
+NAME = ppkg_get
+VERSION = 1.0
 CATEGORIES = utils
 
 DESCRIPTION = Perl rewrite of origine pkg-get tools

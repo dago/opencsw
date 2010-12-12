@@ -1,5 +1,5 @@
-GARNAME = rcs
-GARVERSION = 5.7
+NAME = rcs
+VERSION = 5.7
 CATEGORIES = apps
 
 DESCRIPTION = GNU Revision Control System
@@ -7,10 +7,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cs.purdue.edu/homes/trinkle/RCS/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.Z
+DISTFILES  = $(NAME)-$(VERSION).tar.Z
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWdiffutils
 

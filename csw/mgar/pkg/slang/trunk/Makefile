@@ -1,9 +1,9 @@
-GARNAME = slang
-GARVERSION = 2.2.2
+NAME = slang
+VERSION = 2.2.2
 CATEGORIES = lib
 
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.4.9 2.2.2
+EXTRA_MODULATORS = VERSION
+MODULATIONS_VERSION = 1.4.9 2.2.2
 
 # The old package didn't contain 64 bit, so don't bother building it for compat
 SKIP_MODULATIONS  = isa-sparcv9-garversion-1.4.9
@@ -13,13 +13,13 @@ DESCRIPTION = Library primarily to provide an alternative to libcurses
 define BLURB
 endef
 
-MASTER_SITES = $(foreach V,$(MODULATIONS_GARVERSION),ftp://space.mit.edu/pub/davis/slang/v$(shell echo $V | perl -ne 'print /(\d+\.\d+)/')/)
-SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION), $(GARNAME)-$(VERSION).tar.gz)
+MASTER_SITES = $(foreach V,$(MODULATIONS_VERSION),ftp://space.mit.edu/pub/davis/slang/v$(shell echo $V | perl -ne 'print /(\d+\.\d+)/')/)
+SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VERSION), $(NAME)-$(VERSION).tar.gz)
 DISTFILES = $(SOURCEFILES)
-NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz,$(SOURCEFILES))
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWiconv CSWpcrert CSWpng CSWzlib CSWoniguruma
 
@@ -35,18 +35,18 @@ NOISAEXEC = 1
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET_GARVERSION-1.4.9 =
-TEST_TARGET_GARVERSION-2.2.2 = check
-TEST_TARGET = $(TEST_TARGET_GARVERSION-$(GARVERSION))
+TEST_TARGET_VERSION-1.4.9 =
+TEST_TARGET_VERSION-2.2.2 = check
+TEST_TARGET = $(TEST_TARGET_VERSION-$(VERSION))
 
-INSTALL_ARGS_GARVERSION-1.4.9 = install-elf install-links
-INSTALL_ARGS = $(INSTALL_ARGS_GARVERSION-$(GARVERSION))
+INSTALL_ARGS_VERSION-1.4.9 = install-elf install-links
+INSTALL_ARGS = $(INSTALL_ARGS_VERSION-$(VERSION))
 
-BUILD_ARGS_GARVERSION-1.4.9 = elf
-BUILD_ARGS = $(BUILD_ARGS_GARVERSION-$(GARVERSION))
+BUILD_ARGS_VERSION-1.4.9 = elf
+BUILD_ARGS = $(BUILD_ARGS_VERSION-$(VERSION))
 
-BUILD_OVERRIDE_VARS_GARVERSION-1.4.9 = ELF_CFLAGS
-BUILD_OVERRIDE_VARS = $(BUILD_OVERRIDE_VARS_GARVERSION-$(GARVERSION))
+BUILD_OVERRIDE_VARS_VERSION-1.4.9 = ELF_CFLAGS
+BUILD_OVERRIDE_VARS = $(BUILD_OVERRIDE_VARS_VERSION-$(VERSION))
 BUILD_OVERRIDE_VAR_ELF_CFLAGS = -K pic $(CFLAGS)
 
 MERGE_SCRIPTS_isa-default-garversion-1.4.9 = copy-only

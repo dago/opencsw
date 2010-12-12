@@ -1,5 +1,5 @@
-GARNAME = libtasn1
-GARVERSION = 2.7
+NAME = libtasn1
+VERSION = 2.7
 CATEGORIES = lib
 
 DESCRIPTION = GNU ASN1 library
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWlibtasn1 CSWlibtasn1devel
 
@@ -25,7 +25,7 @@ RUNTIME_DEP_PKGS_CSWlibtasn1devel = CSWlibtasn1
 SPKG_SOURCEURL = http://www.gnu.org/software/gnutls/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =

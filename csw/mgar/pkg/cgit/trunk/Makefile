@@ -1,5 +1,5 @@
-GARNAME = cgit
-GARVERSION = 0.8.3_opencsw_1
+NAME = cgit
+VERSION = 0.8.3_opencsw_1
 CATEGORIES = devel
 
 DESCRIPTION = Web front-end for Git
@@ -19,13 +19,13 @@ endef
 RUNTIME_DEP_PKGS_CSWcgit = CSWiconv CSWosslrt CSWzlib
 
 #MASTER_SITES = http://hjemli.net/git/cgit/snapshot/
-#DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+#DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 GIT_REPOS  = git://github.com/trygvis/cgit.git
-#GIT_TREEISH_cgit = v$(GARVERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
+#GIT_TREEISH_cgit = v$(VERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
 GIT_TREEISH_cgit.git = solaris
 
 DISTFILES = apache.conf.CSW cgitrc.CSW

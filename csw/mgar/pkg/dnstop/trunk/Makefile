@@ -1,5 +1,5 @@
-GARNAME = dnstop
-GARVERSION = 20090128
+NAME = dnstop
+VERSION = 20090128
 CATEGORIES = net
 
 DESCRIPTION = Displays various tables of DNS traffic
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://dns.measurement-factory.com/tools/dnstop/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += dnstop.pod
 DISTFILES += dnstop.8
 
@@ -16,7 +16,7 @@ LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS = CSWlibpcap
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
@@ -32,17 +32,17 @@ else
 endif
 
 pre-build-modulated:
-	@echo " ==> Pre-build $(GARNAME) (custom)"
+	@echo " ==> Pre-build $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	   gpatch < ../../../../$(FILEDIR)/$(PATCHFILE) )
 	@$(MAKECOOKIE)
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@ginstall -m 755 -d $(DESTDIR)$(bindir)
 	@ginstall -m 755 $(WORKSRC)/dnstop $(DESTDIR)$(bindir)
 	@ginstall -m 755 -d $(DESTDIR)$(mandir)/man8
 	@ginstall -m 444 $(FILEDIR)/dnstop.8 $(DESTDIR)$(mandir)/man8
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@ginstall -m 444 $(WORKSRC)/CHANGES $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+	@ginstall -m 444 $(WORKSRC)/CHANGES $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)

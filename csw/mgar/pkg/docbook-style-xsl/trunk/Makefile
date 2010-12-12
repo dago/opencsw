@@ -1,5 +1,5 @@
-GARNAME = docbookxsl
-GARVERSION = 1.74.3
+NAME = docbookxsl
+VERSION = 1.74.3
 CATEGORIES = xtra
 
 # for our (modified from rhel) copied in Makefile.
@@ -8,8 +8,8 @@ BUILD_DEP_PKGS = CSWgfile CSWbash
 PACKAGES = CSWdocbookxsl CSWdocbookxsldoc
 ARCHALL = 1
 
-CATALOGNAME_CSWdocbookxsl = $(GARNAME)
-CATALOGNAME_CSWdocbookxsldoc = $(GARNAME)doc
+CATALOGNAME_CSWdocbookxsl = $(NAME)
+CATALOGNAME_CSWdocbookxsldoc = $(NAME)doc
 
 RUNTIME_DEP_PKGS_CSWdocbookxsl = CSWsgmlcommon CSWxmlcommon CSWdocbookdtds
 RUNTIME_DEP_PKGS_CSWdocbookxsl += CSWlibxml2
@@ -31,8 +31,8 @@ SPKG_DESC_CSWdocbookxsldoc = Documentation for the Docbook XSL stylesheets
 # docbook-xsl is housed in the docbook master project at SF.
 SF_PROJ = docbook
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = docbook-xsl-$(GARVERSION).tar.bz2
-DISTFILES += docbook-xsl-doc-$(GARVERSION).tar.bz2
+DISTFILES  = docbook-xsl-$(VERSION).tar.bz2
+DISTFILES += docbook-xsl-doc-$(VERSION).tar.bz2
 DISTFILES += CSWdocbookxsl.preremove
 
 #use the dynamic adm script feature so we don't need to edit file at
@@ -53,7 +53,7 @@ INSTALL_ARGS = DESTDIR=$(DESTDIR)
 
 include gar/category.mk
 
-post-extract-modulated: WRONGDIR=docbook-xsl-$(GARVERSION)
+post-extract-modulated: WRONGDIR=docbook-xsl-$(VERSION)
 post-extract-modulated:
 	@( cd $(WORKDIR); \
 		if test -d $(WRONGDIR); then \

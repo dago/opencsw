@@ -1,5 +1,5 @@
-GARNAME = Archive-SelfExtract
-GARVERSION = 1.3
+NAME = Archive-SelfExtract
+VERSION = 1.3
 CATEGORIES = cpan
 AUTHOR = GREGFAST
 

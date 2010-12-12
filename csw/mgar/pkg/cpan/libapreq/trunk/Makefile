@@ -1,5 +1,5 @@
-GARNAME = libapreq
-GARVERSION = 1.34
+NAME = libapreq
+VERSION = 1.34
 CATEGORIES = cpan
 AUTHOR = ISAAC
 

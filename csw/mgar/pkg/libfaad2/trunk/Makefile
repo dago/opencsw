@@ -1,5 +1,5 @@
-GARNAME = faad2
-GARVERSION = 2.7
+NAME = faad2
+VERSION = 2.7
 CATEGORIES = lib
 
 DESCRIPTION = Freeware Advanced Audio (AAC) Decoder including SBR decoding

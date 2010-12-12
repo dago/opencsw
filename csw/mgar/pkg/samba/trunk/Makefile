@@ -1,5 +1,5 @@
-GARNAME = samba
-GARVERSION = 3.5.6
+NAME = samba
+VERSION = 3.5.6
 CATEGORIES = apps
 
 DESCRIPTION = Tools to access a servers filespace and printers via SMB (server)
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://samba.org/samba/ftp/stable/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWsamba CSWsambaclient CSWsambacommon CSWsambadoc CSWsambalib CSWsambalibdev CSWsambaswat CSWsambawb
 
@@ -40,7 +40,7 @@ RUNTIME_DEP_PKGS_CSWsambawb = CSWsamba
 ARCHALL_CSWsambadoc = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/source3/configure
 CONFIGURE_ARGS = $(DIRPATHS)

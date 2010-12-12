@@ -1,5 +1,5 @@
-GARNAME = easytag
-GARVERSION = 2.1.5
+NAME = easytag
+VERSION = 2.1.5
 CATEGORIES = apps
 
 DESCRIPTION = Tag editor for MP3, Ogg Vorbis files and more
@@ -8,7 +8,7 @@ EasyTAG is a utility for viewing and editing tags for MP3, MP2, MP4/AAC, FLAC, O
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWeasytag,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release

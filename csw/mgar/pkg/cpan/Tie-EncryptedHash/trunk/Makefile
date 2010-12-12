@@ -1,5 +1,5 @@
-GARNAME = Tie-EncryptedHash
-GARVERSION = 1.21
+NAME = Tie-EncryptedHash
+VERSION = 1.21
 CATEGORIES = cpan
 AUTHOR = VIPUL
 

@@ -1,5 +1,5 @@
-GARNAME = html2text
-GARVERSION = 0.003
+NAME = html2text
+VERSION = 0.003
 CATEGORIES = cpan
 AUTHOR = AWRIGLEY
 

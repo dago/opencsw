@@ -1,5 +1,5 @@
-GARNAME = mpeg4ip
-GARVERSION = 1.6.1
+NAME = mpeg4ip
+VERSION = 1.6.1
 CATEGORIES = lib
 
 DESCRIPTION = Libraries for MPEG-4/H.261/MPEG-2/H.263 MP3/AAC/AMR
@@ -15,8 +15,8 @@ SF_PROJ = mpeg4ip
 MASTER_SITES = http://download.m0k.org/handbrake/contrib/
 
 
-DISTFILES   = $(GARNAME)-$(GARVERSION).tar.gz
-DISTNAME    = $(GARNAME)
+DISTFILES   = $(NAME)-$(VERSION).tar.gz
+DISTNAME    = $(NAME)
 PATCHFILES  = mpeg4ip-1.6.1-mjj.patch 
 # PATCHFILES += SDL_sunaudio.c.diff
 # PATCHFILES += type_basic.cpp.diff
@@ -28,7 +28,7 @@ PATCHFILES += 0003-Change-type-from-Void-to-void.patch
 PATCHFILES += 0004-Add-one-more-scratch-channel-or-compilation-fails.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 BUILD64 = 1

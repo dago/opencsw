@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = xbattle
-GARVERSION = 5.4.1
+NAME = xbattle
+VERSION = 5.4.1
 CATEGORIES = apps
 
 DESCRIPTION = A multi-player real time strategy game
@@ -8,9 +8,9 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.uni-frankfurt.de/pub/Mirrors2/gentoo.org/distfiles/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = COPYRIGHT
 

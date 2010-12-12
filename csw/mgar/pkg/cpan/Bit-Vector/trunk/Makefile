@@ -1,5 +1,5 @@
-GARNAME = Bit-Vector
-GARVERSION = 7.1
+NAME = Bit-Vector
+VERSION = 7.1
 CATEGORIES = cpan
 AUTHOR = STBEY
 

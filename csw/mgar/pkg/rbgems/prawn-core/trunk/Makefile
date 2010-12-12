@@ -1,5 +1,5 @@
-GARNAME = prawn-core
-GARVERSION = 0.8.4
+NAME = prawn-core
+VERSION = 0.8.4
 CATEGORIES = rbgems
 
 DESCRIPTION = A fast and nimble PDF generator for Ruby

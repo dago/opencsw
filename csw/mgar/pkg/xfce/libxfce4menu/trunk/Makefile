@@ -1,4 +1,4 @@
-GARNAME = libxfce4menu
+NAME = libxfce4menu
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Desktop Menu Library 
@@ -6,10 +6,10 @@ define BLURB
   libxfce4menu is a freedesktop.org compliant menu library written for Xfce. It implements the Desktop Menu Specification version 1.0
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Catalog description
 PACKAGES = CSWlibxfce4menu CSWlibxfce4menudev CSWlibxfce4menudoc

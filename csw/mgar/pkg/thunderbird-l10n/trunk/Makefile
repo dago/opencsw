@@ -1,5 +1,5 @@
-GARNAME = thunderbird-l10n
-GARVERSION = 2.0.0.23
+NAME = thunderbird-l10n
+VERSION = 2.0.0.23
 CATEGORIES = apps
 
 DESCRIPTION = Thunderbird language pack :
@@ -33,12 +33,12 @@ $(foreach LOCALE_NAME, $(LANG), $(eval CATALOGNAME_CSWthunderbird-$(LOCALE_NAME)
 $(foreach LOCALE_NAME, $(LANG), $(eval PKGFILES_CSWthunderbird-$(LOCALE_NAME) = .*langpack-$(LOCALE_NAME).*))
 
 # Defines the content to be downloaded
-MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/$(GARVERSION)/linux-i686/xpi/
+MASTER_SITES = ftp://ftp.mozilla.org/pub/mozilla.org/thunderbird/releases/$(VERSION)/linux-i686/xpi/
 DISTFILES = License
 $(foreach LOCALE_NAME, $(LANG), $(eval DISTFILES += $(LOCALE_NAME).xpi))
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
@@ -63,7 +63,7 @@ post-extract-modulated:
 	$(MAKECOOKIE)
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 
 	for LOCALE_NAME in $(foreach L, $(LANG), $(L)); do \
 		PKG_EXTENSION=`grep "em:id=" "$(WORKROOTDIR)/build-$(MODULATIONS)/$$LOCALE_NAME/install.rdf" | cut -d\" -f 2` ; \

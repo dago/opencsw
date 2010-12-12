@@ -1,5 +1,5 @@
-GARNAME = reportlab
-GARVERSION = 2.4
+NAME = reportlab
+VERSION = 2.4
 CATEGORIES = python
 DISTNAME = ReportLab_2_4
 

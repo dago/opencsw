@@ -1,5 +1,5 @@
-GARNAME = ncmpc
-GARVERSION = 0.15
+NAME = ncmpc
+VERSION = 0.15
 CATEGORIES = apps
 
 GARCOMPILER = GNU
@@ -16,10 +16,10 @@ endef
 
 SF_PROJ = musicpd
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_TARGET =
 

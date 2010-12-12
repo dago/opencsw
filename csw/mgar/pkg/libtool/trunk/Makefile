@@ -1,9 +1,9 @@
-GARNAME = libtool
-GARVERSION = 2.2.10
+NAME = libtool
+VERSION = 2.2.10
 CATEGORIES = devel
 
-EXTRA_MODULATORS = GARVERSION GARCOMPILER
-MODULATIONS_GARVERSION = 1.5.26 2.2.10
+EXTRA_MODULATORS = VERSION GARCOMPILER
+MODULATIONS_VERSION = 1.5.26 2.2.10
 MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS12
 
 # Modulate over compiler only for 2.2.6
@@ -19,7 +19,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tar.gz)
+SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_VERSION),$(NAME)-$(VERSION).tar.gz)
 DISTFILES    = $(SOURCEFILES)
 
 PATCH_LIBTOOL = patch-libtool.diff
@@ -27,7 +27,7 @@ PATCHFILES_POSTINSTALL_isa-i386-garversion-2.2.10-garcompiler-SOS12 = $(PATCH_LI
 PATCHFILES_POSTINSTALL_isa-sparcv8-garversion-2.2.10-garcompiler-SOS12 = $(PATCH_LIBTOOL)
 DISTFILES += $(PATCH_LIBTOOL)
 
-NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz,$(SOURCEFILES))
 
 EXTRA_TAGS = gcc3 gcc4 sos12
 COMPILER_TAGNAME_GCC3 = gcc3
@@ -45,7 +45,7 @@ SPKG_DESC_CSWlibtool   = A generic library support tool
 SPKG_DESC_CSWlibtoolrt = A generic library support tool runtime libraries
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

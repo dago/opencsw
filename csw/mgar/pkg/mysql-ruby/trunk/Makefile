@@ -1,5 +1,5 @@
-GARNAME = mysql-ruby
-GARVERSION = 2.7
+NAME = mysql-ruby
+VERSION = 2.7
 CATEGORIES = lang
 
 DESCRIPTION = Ruby MySQL Extension
@@ -8,11 +8,11 @@ define BLURB
 endef
 
 MASTER_SITES  = http://tmtm.org/downloads/mysql/ruby/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 DISTFILES += $(call admfiles,CSWrbmysql,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 #DEPENDS += lang/ruby server/mysql4
 

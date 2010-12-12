@@ -1,4 +1,4 @@
-GARNAME = xfconf
+NAME = xfconf
 CATEGORIES = xfce
 
 DESCRIPTION = Xfconf is a simple client-server configuration storage and query system
@@ -6,12 +6,12 @@ define BLURB
    Xfconf is a simple client-server configuration storage and query system
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # Don't forget to add this after checking dependencies with panel CSWxfconfdep.preinstall
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Catalog description
 PACKAGES = CSWxfconf CSWxfconfdevel CSWxfconfdoc

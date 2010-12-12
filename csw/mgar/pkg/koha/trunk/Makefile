@@ -1,5 +1,5 @@
-GARNAME = koha
-GARVERSION = 3.00.06
+NAME = koha
+VERSION = 3.00.06
 CATEGORIES = apps
 
 DESCRIPTION = Integrated Library System
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.ptfsinc.com/harley/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 #ARCHALL = 1
 
@@ -17,7 +17,7 @@ LICENSE = LICENSE
 SPKG_SOURCEURL = http://www.koha.org
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 #CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -43,19 +43,19 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 configure-custom:
-	@echo " ==> Configuring $(GARNAME) (custom)"
+	@echo " ==> Configuring $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	INSTALL_MODE=single perl Makefile.PL INSTALLDIRS=vendor DESTDIR=$(DESTDIR) CONFDIR=/etc/opt/csw/koha LOCALSTATEDIR=/var/opt/csw/koha INSTALL_MODE='single' INSTALL_BASE='/opt/csw/koha' DB_TYPE='mysql' DB_HOST='localhost' DB_NAME='koha' DB_USER='kohaadmin' DB_PASS='katikoan' INSTALL_ZEBRA='yes' INSTALL_SRU='yes' INSTALL_PAZPAR2='no' AUTH_INDEX_MODE='grs1' ZEBRA_MARC_FORMAT='marc21' ZEBRA_LANGUAGE='en' ZEBRA_USER='kohauser' ZEBRA_PASS='zebrastripes' ZEBRA_SRU_HOST='localhost' ZEBRA_SRU_BIBLIOS_PORT='9998' ZEBRA_SRU_AUTHORITIES_PORT='9999' KOHA_USER='koha' KOHA_GROUP='koha' MERGE_SERVER_HOST='localhost' MERGE_SERVER_PORT='11001' PAZPAR2_HOST= 'localhost' PAZPAR2_PORT='11002' RUN_DATABASE_TESTS='no' PATH_TO_ZEBRA='' )
 	@$(MAKECOOKIE)
 
 build-custom:
-	@echo " ==> Building $(GARNAME) (custom)"
+	@echo " ==> Building $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	gmake )
 	@$(MAKECOOKIE)
 
 test-custom:
-	@echo " ==> Testing $(GARNAME) (custom)"
+	@echo " ==> Testing $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	gmake test )
 	@$(MAKECOOKIE)
@@ -63,7 +63,7 @@ test-custom:
 #DOCLIST = README.CSW db.127.0.0 db.localhost named.conf named.root rndc.key
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 #	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/init.d
 #	@ginstall -m 755 $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/opt/csw/etc/init.d/cswnamed
 #	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw
@@ -71,8 +71,8 @@ install-custom:
 #	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWbind
 #	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWbind/
 #	@ginstall -m 644 $(FILEDIR)/bind.CSW $(DESTDIR)/etc/opt/csw/pkg/CSWbind/bind
-#	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-#	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
+#	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+#	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
 #	( cd $(WORKSRC) ; \
 #	  gmake DESTDIR=$(DESTDIR) install )
 #	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/named

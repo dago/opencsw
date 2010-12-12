@@ -1,4 +1,4 @@
-GARNAME = kdeaddons
+NAME = kdeaddons
 CATEGORIES = kde
 
 DESCRIPTION = Additional plugins/scripts for KDE (gcc3)

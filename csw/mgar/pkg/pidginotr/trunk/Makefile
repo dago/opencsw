@@ -1,5 +1,5 @@
-GARNAME = pidgin-otr
-GARVERSION = 3.2.0
+NAME = pidgin-otr
+VERSION = 3.2.0
 CATEGORIES = apps
 
 DESCRIPTION = Off-The-Record Messaging plugin for pidgin
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.cypherpunks.ca/otr/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpidginotr,)
 PATCHFILES = otr_priority.patch
 

@@ -1,5 +1,5 @@
-GARNAME = amavisd-new
-GARVERSION = 2.6.4
+NAME = amavisd-new
+VERSION = 2.6.4
 CATEGORIES = server
 
 DESCRIPTION = Interface between MTA and content checkers
@@ -13,13 +13,13 @@ ARCHALL = 1
 LICENSE = LICENSE
 
 MASTER_SITES = http://www.ijs.si/software/amavisd/#download
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWamavisdnew.cswusergroup
 DISTFILES += CSWamavisdnew.postinstall
 DISTFILES += CSWamavisdnew.preinstall
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS += CSWbdb47
 RUNTIME_DEP_PKGS += CSWperl
@@ -69,7 +69,7 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 PCONFDIR = $(DESTDIR)/etc/opt/csw
-PVARDIR = $(DESTDIR)/var/opt/csw/$(GARNAME)
+PVARDIR = $(DESTDIR)/var/opt/csw/$(NAME)
 
 AMAVISBIN = amavisd-agent amavisd-nanny amavisd-release p0f-analyzer.pl
 AMAVISBIN += amavisd-nanny
@@ -86,7 +86,7 @@ AMAVISDOC += amavisd.conf-default
 AMAVISDOC += amavisd.conf-sample
 
 install-custom:
-	echo " ==> Installing $(GARNAME)"
+	echo " ==> Installing $(NAME)"
 	ginstall -d $(DESTDIR)$(prefix)/etc
 	ginstall -d $(DESTDIR)$(prefix)/bin
 	ginstall -d $(DESTDIR)$(prefix)/sbin

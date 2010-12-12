@@ -12,8 +12,8 @@
 
 ###### Package information #######
 
-GARNAME = bash_completion
-GARVERSION = 1.1
+NAME = bash_completion
+VERSION = 1.1
 CATEGORIES = xtra
 
 DESCRIPTION = Programmable completion for bash
@@ -32,9 +32,9 @@ CATALOGNAME_CSWbashcmplt = bash_completion
 MASTER_SITES = http://bash-completion.alioth.debian.org/files/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(shell echo $(GARNAME) | tr '_' '-')-(\d+).tar.gz
+UFILES_REGEX = $(shell echo $(NAME) | tr '_' '-')-(\d+).tar.gz
 
-DISTNAME  = $(shell echo $(GARNAME) | tr '_' '-')-$(GARVERSION)
+DISTNAME  = $(shell echo $(NAME) | tr '_' '-')-$(VERSION)
 
 DISTFILES  = $(DISTNAME).tar.gz
 # we automatically include all 
@@ -68,12 +68,12 @@ merge-opencsw-completion:
 
 merge-additional-docs:
 	@( for FILE in AUTHORS README TODO; do \
-		ginstall -D "$(WORKSRC_FIRSTMOD)/$$FILE" "$(PKGROOT)$(docdir)/$(GARNAME)/$$FILE"; \
+		ginstall -D "$(WORKSRC_FIRSTMOD)/$$FILE" "$(PKGROOT)$(docdir)/$(NAME)/$$FILE"; \
 	done )
 	@$(MAKECOOKIE)	
 
 merge-changelog:
-	ginstall -D "$(WORKDIR)/changelog.CSW" "$(PKGROOT)$(docdir)/$(GARNAME)/changelog.CSW"
+	ginstall -D "$(WORKDIR)/changelog.CSW" "$(PKGROOT)$(docdir)/$(NAME)/changelog.CSW"
 	@$(MAKECOOKIE)
 
 include gar/category.mk

@@ -1,5 +1,5 @@
-GARNAME = libcddb
-GARVERSION = 1.3.2
+NAME = libcddb
+VERSION = 1.3.2
 CATEGORIES = lib
 
 DESCRIPTION = A C library to access data on a CDDB server
@@ -11,10 +11,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWlibcddb CSWlibcddbutil
 

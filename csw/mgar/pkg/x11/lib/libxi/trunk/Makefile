@@ -1,5 +1,5 @@
-GARNAME = libxi
-GARVERSION = 1.3
+NAME = libxi
+VERSION = 1.3
 CATEGORIES = x11
 
 DESCRIPTION = Client library for XInput
@@ -7,11 +7,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libXi-$(GARVERSION)
+DISTNAME = libXi-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS = CSWx11xproto CSWlibx11devel CSWx11xextproto CSWlibxextdevel CSWx11inputproto
 

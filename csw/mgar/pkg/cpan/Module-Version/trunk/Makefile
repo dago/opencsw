@@ -1,5 +1,5 @@
-GARNAME = Module-Version
-GARVERSION = 0.12
+NAME = Module-Version
+VERSION = 0.12
 CATEGORIES = cpan
 AUTHOR = XSAWYERX
 

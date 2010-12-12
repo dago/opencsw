@@ -1,5 +1,5 @@
-GARNAME = SDL_ttf
-GARVERSION = 2.0.9
+NAME = SDL_ttf
+VERSION = 2.0.9
 CATEGORIES = lib
 
 DESCRIPTION = TrueType font rendering library for SDL applications
@@ -8,11 +8,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_ttf/release/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsdlttf,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 #PATCHFILES = SDL_ttf.c.diff
 

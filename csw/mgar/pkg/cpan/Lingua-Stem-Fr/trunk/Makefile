@@ -1,5 +1,5 @@
-GARNAME = Lingua-Stem-Fr
-GARVERSION = 0.02
+NAME = Lingua-Stem-Fr
+VERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = SDP
 

@@ -4,11 +4,11 @@
 #   performance enhancements to GAR or a completely different approach.
 #   Details documented below.
 #
-GARNAME     = php5
-GARVERSION  = 5.3.3
+NAME     = php5
+VERSION  = 5.3.3
 CATEGORIES  = lang
-SF_PROJ     = $(shell echo $(GARNAME) | sed -e 's/[0-9]//g')
-DISTNAME    = $(SF_PROJ)-$(GARVERSION)
+SF_PROJ     = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
+DISTNAME    = $(SF_PROJ)-$(VERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB

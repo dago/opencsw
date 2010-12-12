@@ -3,16 +3,16 @@
 # $Id$
 
 PROJ_NAME = mysql
-GARNAME = $(PROJ_NAME)51
+NAME = $(PROJ_NAME)51
 BASE_VERSION = 5.1
 PATCHLEVEL = 49
-GARVERSION = $(BASE_VERSION).$(PATCHLEVEL)
+VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
-DISTNAME = mysql-$(GARVERSION)
+DISTNAME = mysql-$(VERSION)
 SPKG_SOURCEURL = http://www.mysql.com/
 
 DESCRIPTION = Multithreaded SQL database server
@@ -21,7 +21,7 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-prefix = /opt/csw/$(GARNAME)
+prefix = /opt/csw/$(NAME)
 localstatedir = /var$(prefix)
 sysconfdir = /etc$(prefix)
 
@@ -30,64 +30,64 @@ global_sysconfdir = $(sysconfdir)
 # Where to link the binaries
 global_bindir = /opt/csw/bin
 
-INITSMF = $(global_sysconfdir)/init\.d/csw$(GARNAME)
+INITSMF = $(global_sysconfdir)/init\.d/csw$(NAME)
 
-PACKAGES  = CSW$(GARNAME)
-PACKAGES += CSW$(GARNAME)bench
-PACKAGES += CSW$(GARNAME)client
-PACKAGES += CSW$(GARNAME)devel
-PACKAGES += CSW$(GARNAME)rt
-PACKAGES += CSW$(GARNAME)test
+PACKAGES  = CSW$(NAME)
+PACKAGES += CSW$(NAME)bench
+PACKAGES += CSW$(NAME)client
+PACKAGES += CSW$(NAME)devel
+PACKAGES += CSW$(NAME)rt
+PACKAGES += CSW$(NAME)test
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
 PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
 
-SPKG_DESC_CSW$(GARNAME)       = Multithreaded SQL database
-SPKG_DESC_CSW$(GARNAME)bench  = MySQL $(BASE_VERSION) benchmarking
-SPKG_DESC_CSW$(GARNAME)client = MySQL $(BASE_VERSION) client binaries
-SPKG_DESC_CSW$(GARNAME)devel  = MySQL $(BASE_VERSION) header files
-SPKG_DESC_CSW$(GARNAME)rt     = MySQL $(BASE_VERSION) runtime files
-SPKG_DESC_CSW$(GARNAME)test   = MySQL $(BASE_VERSION) testing files
+SPKG_DESC_CSW$(NAME)       = Multithreaded SQL database
+SPKG_DESC_CSW$(NAME)bench  = MySQL $(BASE_VERSION) benchmarking
+SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries
+SPKG_DESC_CSW$(NAME)devel  = MySQL $(BASE_VERSION) header files
+SPKG_DESC_CSW$(NAME)rt     = MySQL $(BASE_VERSION) runtime files
+SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
 
-CATALOGNAME_CSW$(GARNAME)       = $(GARNAME)
-CATALOGNAME_CSW$(GARNAME)bench  = $(GARNAME)bench
-CATALOGNAME_CSW$(GARNAME)client = $(GARNAME)client
-CATALOGNAME_CSW$(GARNAME)devel  = $(GARNAME)devel
-CATALOGNAME_CSW$(GARNAME)rt     = $(GARNAME)rt
-CATALOGNAME_CSW$(GARNAME)test   = $(GARNAME)test
+CATALOGNAME_CSW$(NAME)       = $(NAME)
+CATALOGNAME_CSW$(NAME)bench  = $(NAME)bench
+CATALOGNAME_CSW$(NAME)client = $(NAME)client
+CATALOGNAME_CSW$(NAME)devel  = $(NAME)devel
+CATALOGNAME_CSW$(NAME)rt     = $(NAME)rt
+CATALOGNAME_CSW$(NAME)test   = $(NAME)test
 
 
-ARCHALL_CSW$(GARNAME)bench = 1
+ARCHALL_CSW$(NAME)bench = 1
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
-CSW$(GARNAME)client_programs  = myisamlog
-CSW$(GARNAME)client_programs += myisampack
-CSW$(GARNAME)client_programs += mysql
-CSW$(GARNAME)client_programs += mysqlaccess
-CSW$(GARNAME)client_programs += mysqladmin
-CSW$(GARNAME)client_programs += mysqlbin
-CSW$(GARNAME)client_programs += mysqlbinlog
-CSW$(GARNAME)client_programs += mysqlcheck
-CSW$(GARNAME)client_programs += mysql_client_test
-CSW$(GARNAME)client_programs += mysqldump
-CSW$(GARNAME)client_programs += mysqlhotcopy
-CSW$(GARNAME)client_programs += mysqlimport
-CSW$(GARNAME)client_programs += mysqlshow
-CSW$(GARNAME)client_programs += mysql_zap
-CSW$(GARNAME)client_programs += perror
-CSW$(GARNAME)client_programs += replace
+CSW$(NAME)client_programs  = myisamlog
+CSW$(NAME)client_programs += myisampack
+CSW$(NAME)client_programs += mysql
+CSW$(NAME)client_programs += mysqlaccess
+CSW$(NAME)client_programs += mysqladmin
+CSW$(NAME)client_programs += mysqlbin
+CSW$(NAME)client_programs += mysqlbinlog
+CSW$(NAME)client_programs += mysqlcheck
+CSW$(NAME)client_programs += mysql_client_test
+CSW$(NAME)client_programs += mysqldump
+CSW$(NAME)client_programs += mysqlhotcopy
+CSW$(NAME)client_programs += mysqlimport
+CSW$(NAME)client_programs += mysqlshow
+CSW$(NAME)client_programs += mysql_zap
+CSW$(NAME)client_programs += perror
+CSW$(NAME)client_programs += replace
 
 # Without this EXTRA_LD_OPTIONS setting, /opt/csw/bin/mysql fails with a shared
 # library not found.  EXTRA_LIB was tried too, but did not work, as the -R path
 # ended up with having two $ISALIST tokens.
 #
 # Without this setting it looks for:
-# /opt/csw/$(GARNAME)/lib/amd64/libmysqlclient.so.15
+# /opt/csw/$(NAME)/lib/amd64/libmysqlclient.so.15
 # The library is at:
-# /opt/csw/$(GARNAME)/lib/amd64/mysql/libmysqlclient.so.15
+# /opt/csw/$(NAME)/lib/amd64/mysql/libmysqlclient.so.15
 EXTRA_LD_OPTIONS  = -R$(libdir)/\$$ISALIST/mysql
 
 COMMON_CFLAGS = -mt -fsimple=1 -ftrap=%none -xbuiltin=%all -xlibmil -xlibmopt
@@ -101,48 +101,48 @@ EXTRA_CXXFLAGS_sparc = -xO4 $(COMMON_CFLAGS)
 EXTRA_CXXFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_CFLAGS)
 
 
-CSW$(GARNAME)devel_programs += mysql_config
+CSW$(NAME)devel_programs += mysql_config
 
 # Enable 64 bits build
 BUILD64 = 1
 
-PKGFILES_CSW$(GARNAME)bench   = $(prefix)/sql-bench.*
-PKGFILES_CSW$(GARNAME)client  = $(bindir)
-PKGFILES_CSW$(GARNAME)client += $(foreach bin_name,$(CSW$(GARNAME)client_programs),$(call baseisadirs,$(bindir),$(bin_name)))
-PKGFILES_CSW$(GARNAME)client += $(foreach bin_name,$(CSW$(GARNAME)client_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSW$(GARNAME)client += $(foreach bin_name,$(CSW$(GARNAME)client_programs),/opt/csw/bin/$(bin_name))
-PKGFILES_CSW$(GARNAME)client += $(foreach bin_name,$(CSW$(GARNAME)client_programs),/opt/csw/sbin/$(bin_name))
-PKGFILES_CSW$(GARNAME)devel  += $(foreach bin_name,$(CSW$(GARNAME)devel_programs),$(call baseisadirs,$(bindir),$(bin_name)))
-PKGFILES_CSW$(GARNAME)devel  += $(foreach bin_name,$(CSW$(GARNAME)devel_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSW$(GARNAME)devel  += $(foreach bin_name,$(CSW$(GARNAME)devel_programs),/opt/csw/bin/$(bin_name))
-PKGFILES_CSW$(GARNAME)devel  += $(foreach bin_name,$(CSW$(GARNAME)devel_programs),/opt/csw/sbin/$(bin_name))
-PKGFILES_CSW$(GARNAME)devel  += $(mandir)/man1/mysql_config\.1
-PKGFILES_CSW$(GARNAME)devel  += $(prefix)/include.*
-PKGFILES_CSW$(GARNAME)devel  += /opt/csw/include/mysql
+PKGFILES_CSW$(NAME)bench   = $(prefix)/sql-bench.*
+PKGFILES_CSW$(NAME)client  = $(bindir)
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(call baseisadirs,$(bindir),$(bin_name)))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(mandir)/man1/$(bin_name)\.1)
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/bin/$(bin_name))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/sbin/$(bin_name))
+PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),$(call baseisadirs,$(bindir),$(bin_name)))
+PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),$(mandir)/man1/$(bin_name)\.1)
+PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),/opt/csw/bin/$(bin_name))
+PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),/opt/csw/sbin/$(bin_name))
+PKGFILES_CSW$(NAME)devel  += $(mandir)/man1/mysql_config\.1
+PKGFILES_CSW$(NAME)devel  += $(prefix)/include.*
+PKGFILES_CSW$(NAME)devel  += /opt/csw/include/mysql
 
-PKGFILES_CSW$(GARNAME)rt      = $(libdir)
-PKGFILES_CSW$(GARNAME)rt     += $(libdir)/.*
-PKGFILES_CSW$(GARNAME)test    = $(prefix)/mysql-test.*
+PKGFILES_CSW$(NAME)rt      = $(libdir)
+PKGFILES_CSW$(NAME)rt     += $(libdir)/.*
+PKGFILES_CSW$(NAME)test    = $(prefix)/mysql-test.*
 
-RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSW$(GARNAME)client
-RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSW$(GARNAME)rt
-RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSWosslrt
-RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSWtcpwrap
-RUNTIME_DEP_PKGS_CSW$(GARNAME)           += CSWzlib
-RUNTIME_DEP_PKGS_CSW$(GARNAME)rt         += CSWosslrt
-RUNTIME_DEP_PKGS_CSW$(GARNAME)rt         += CSWzlib
-RUNTIME_DEP_PKGS_CSW$(GARNAME)bench      += CSWperl
-RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSW$(GARNAME)rt
-RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWosslrt
-RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWncurses
-RUNTIME_DEP_PKGS_CSW$(GARNAME)client     += CSWzlib
-RUNTIME_DEP_PKGS_CSW$(GARNAME)test       += CSWperl
+RUNTIME_DEP_PKGS_CSW$(NAME)           += CSW$(NAME)client
+RUNTIME_DEP_PKGS_CSW$(NAME)           += CSW$(NAME)rt
+RUNTIME_DEP_PKGS_CSW$(NAME)           += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)           += CSWtcpwrap
+RUNTIME_DEP_PKGS_CSW$(NAME)           += CSWzlib
+RUNTIME_DEP_PKGS_CSW$(NAME)rt         += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)rt         += CSWzlib
+RUNTIME_DEP_PKGS_CSW$(NAME)bench      += CSWperl
+RUNTIME_DEP_PKGS_CSW$(NAME)client     += CSW$(NAME)rt
+RUNTIME_DEP_PKGS_CSW$(NAME)client     += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)client     += CSWncurses
+RUNTIME_DEP_PKGS_CSW$(NAME)client     += CSWzlib
+RUNTIME_DEP_PKGS_CSW$(NAME)test       += CSWperl
 
 MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-$(BASE_VERSION)/
-DISTFILES  = mysql-$(GARVERSION).tar.gz
-DISTFILES += csw$(GARNAME) quick_start-csw README.CSW ChangeLog
-DISTFILES += CSW$(GARNAME).preinstall
-DISTFILES += CSW$(GARNAME).postinstall
+DISTFILES  = mysql-$(VERSION).tar.gz
+DISTFILES += csw$(NAME) quick_start-csw README.CSW ChangeLog
+DISTFILES += CSW$(NAME).preinstall
+DISTFILES += CSW$(NAME).postinstall
 DISTFILES += cswusergroup
 
 UFILES_REGEX = mysql-(\d+(?:\.\d+)*).tar.gz
@@ -193,7 +193,7 @@ TEST_SCRIPTS = custom
 TEST_TARGETS = check
 
 
-USERGROUP = /etc/opt/csw/pkg/CSW$(GARNAME)/cswusergroup
+USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
 PROTOTYPE_MODIFIERS = dbdir
 PROTOTYPE_FILES_dbdir = $(localstatedir)
@@ -234,27 +234,27 @@ post-merge:
 	ginstall -m 644 $(FILEDIR)/ChangeLog $(PKGROOT)$(datadir)/mysql/doc
 	ginstall -m 644 $(FILEDIR)/README.CSW $(PKGROOT)$(datadir)/mysql/doc
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/mysql/doc
-	ln -sf ../../../$(GARNAME)/share/mysql/doc/README.CSW \
+	ln -sf ../../../$(NAME)/share/mysql/doc/README.CSW \
 		$(PKGROOT)/opt/csw/share/mysql/doc/README.CSW
 	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/init.d
-	ginstall -m 755 $(FILEDIR)/csw$(GARNAME) $(PKGROOT)$(global_sysconfdir)/init.d
+	ginstall -m 755 $(FILEDIR)/csw$(NAME) $(PKGROOT)$(global_sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
-	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(GARNAME)
+	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
-						$(PKGROOT)$(global_sysconfdir)/pkg/CSW$(GARNAME)
+						$(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	# A symlink for mysql5 include files
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/include
-	ln -s ../$(GARNAME)/include/mysql $(PKGROOT)/opt/csw/include/mysql
+	ln -s ../$(NAME)/include/mysql $(PKGROOT)/opt/csw/include/mysql
 	# Create symlinks to binaries
 	ginstall -m 755 -d $(PKGROOT)$(global_bindir)
 	for f in $(PKGROOT)$(bindir)/*; do \
 		if echo $$f | grep amd64$$; then continue; fi; \
 		if echo $$f | grep sparcv9$$; then continue; fi; \
-		ln -s ../$(GARNAME)/bin/`basename $$f` \
+		ln -s ../$(NAME)/bin/`basename $$f` \
 		      $(PKGROOT)$(global_bindir)/`basename $$f`; \
 	done
-	# /opt/csw/$(GARNAME)/lib/sparc9/mysql -- by GAR, it's logical
-	# /opt/csw/$(GARNAME)/lib/mysql/sparcv9 -- expected by other packages
+	# /opt/csw/$(NAME)/lib/sparc9/mysql -- by GAR, it's logical
+	# /opt/csw/$(NAME)/lib/mysql/sparcv9 -- expected by other packages
 	gln -s ../$(ISA_DEFAULT64)/mysql $(PKGROOT)$(libdir)/mysql/$(ISA_DEFAULT64)
 	# For other applications to link against
 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64

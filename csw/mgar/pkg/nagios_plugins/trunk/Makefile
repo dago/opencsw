@@ -1,5 +1,5 @@
-GARNAME = nagios-plugins
-GARVERSION = 1.4.14
+NAME = nagios-plugins
+VERSION = 1.4.14
 CATEGORIES = apps
 
 DESCRIPTION = plugins for nagios
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/nagiosplug/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWnagiosp.prototype
 
@@ -48,7 +48,7 @@ TEST_TARGET =
 include gar/category.mk
 
 DOCS = BUGS ChangeLog FAQ README REQUIREMENTS SUPPORT COPYING
-DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 ROOT_PLUGINS = check_dhcp check_icmp pst3
 PLUGINDEST = $(DESTDIR)$(libexecdir)
 

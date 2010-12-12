@@ -1,5 +1,5 @@
-GARNAME = Params-Check
-GARVERSION = 0.26
+NAME = Params-Check
+VERSION = 0.26
 CATEGORIES = cpan
 AUTHOR = KANE
 

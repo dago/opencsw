@@ -1,5 +1,5 @@
-GARNAME = figlet
-GARVERSION = 2.2.2
+NAME = figlet
+VERSION = 2.2.2
 RELEASE = 222
 CATEGORIES = apps
 
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.figlet.org/pub/figlet/program/unix/
-DISTFILES  = $(GARNAME)$(RELEASE).tar.gz
+DISTFILES  = $(NAME)$(RELEASE).tar.gz
 MASTER_SITES += ftp://ftp.figlet.org/pub/figlet/fonts/
 # ours.tar.gz is already in the figlet distribution
 DISTFILES += contributed.tar.gz international.tar.gz ms-dos.tar.gz
@@ -22,15 +22,15 @@ SPKG_SOURCEURL = http://www.figlet.org
 
 LICENSE = LICENSE
 
-DISTNAME = $(GARNAME)$(RELEASE)
+DISTNAME = $(NAME)$(RELEASE)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*).tar.gz
 
 # We don't have this modern autoconfig-doodle-crap
 CONFIGURE_SCRIPTS =
 
-APPDIR = $(sharedstatedir)/$(GARNAME)
+APPDIR = $(sharedstatedir)/$(NAME)
 DEFAULTFONTDIR = $(APPDIR)/fonts
 
 BUILD_OVERRIDE_DIRS = CC CFLAGS DEFAULTFONTDIR
@@ -46,7 +46,7 @@ include gar/category.mk
 
 # The install part from the Makefile is completely unrelocatable :-(
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	@ginstall -d $(DESTDIR)$(bindir)
 	@ginstall $(WORKSRC)/figlet $(WORKSRC)/chkfont $(WORKSRC)/figlist $(WORKSRC)/showfigfonts \
 		$(DESTDIR)$(bindir)

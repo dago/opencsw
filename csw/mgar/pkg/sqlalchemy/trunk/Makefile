@@ -5,8 +5,8 @@
 # There are failing unit tests; the issue is submitted upstream:
 # http://www.sqlalchemy.org/trac/ticket/1837
 
-GARNAME = sqlalchemy
-GARVERSION = 0.6.1
+NAME = sqlalchemy
+VERSION = 0.6.1
 CATEGORIES = python
 PACKAGES = CSWpy-sqlalchemy
 CATALOGNAME_CSWpy-sqlalchemy = py_sqlalchemy
@@ -15,9 +15,9 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://www.sqlalchemy.org/
 MASTER_SITES = $(SF_MIRRORS)
-DISTNAME = SQLAlchemy-$(GARVERSION)
+DISTNAME = SQLAlchemy-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 ARCHALL_CSWpy-sqlalchemy = 1
 LICENSE = LICENSE
 include gar/category.mk

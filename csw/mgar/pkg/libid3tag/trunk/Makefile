@@ -1,5 +1,5 @@
-GARNAME = libid3tag
-GARVERSION = 0.15.1
+NAME = libid3tag
+VERSION = 0.15.1
 REV = b
 CATEGORIES = lib
 
@@ -9,13 +9,13 @@ endef
 
 SF_PROJ = mad
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION)$(REV).tar.gz
+DISTFILES  = $(NAME)-$(VERSION)$(REV).tar.gz
 DISTFILES += id3tag.pc-32 id3tag.pc-64
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)$(REV)
+WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)$(REV)
 
 RUNTIME_DEP_PKGS = CSWzlib
 

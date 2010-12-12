@@ -1,5 +1,5 @@
-GARNAME = clearsilver
-GARVERSION = 0.10.5
+NAME = clearsilver
+VERSION = 0.10.5
 CATEGORIES = utils
 
 DESCRIPTION = Language-neutral HTML template system
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.clearsilver.net/downloads/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = perlbuild.diff
 PATCHFILES += 0001-Do-not-use-Wall-on-Sun-Studio.patch
 
@@ -38,7 +38,7 @@ PYCOMPILE = 1
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-python=$(bindir)/python

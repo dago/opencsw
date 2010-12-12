@@ -1,5 +1,5 @@
-GARNAME = Time-Format
-GARVERSION = 1.09
+NAME = Time-Format
+VERSION = 1.09
 CATEGORIES = cpan
 AUTHOR = ROODE
 

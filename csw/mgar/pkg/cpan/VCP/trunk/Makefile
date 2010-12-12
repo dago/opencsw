@@ -1,6 +1,6 @@
-GARNAME = VCP
+NAME = VCP
 DISTVERSION = 0.9-20050110
-GARVERSION = $(subst -,.,$(DISTVERSION))
+VERSION = $(subst -,.,$(DISTVERSION))
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
 
@@ -12,11 +12,11 @@ define BLURB
 endef
 
 DISTFILES = $(call admfiles,CSWpmvcp,depend prototype)
-MODDISTP  = $(GARNAME)-autrijus-snapshot-$(DISTVERSION)
+MODDISTP  = $(NAME)-autrijus-snapshot-$(DISTVERSION)
 MODDIST   = $(MODDISTP).tar.gz
 WORKSRC   = $(WORKDIR)/$(MODDISTP)
 
-UFILES_REGEX ?= $(GARNAME)-autrijus-snapshot-((\d+(?:\.\d+)*)(-\d+)?).tar.gz
+UFILES_REGEX ?= $(NAME)-autrijus-snapshot-((\d+(?:\.\d+)*)(-\d+)?).tar.gz
 
 DEPENDS += cpan/HTML-Tree
 DEPENDS += cpan/IPC-Run3

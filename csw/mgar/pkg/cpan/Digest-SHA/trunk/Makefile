@@ -1,5 +1,5 @@
-GARNAME = Digest-SHA
-GARVERSION = stub
+NAME = Digest-SHA
+VERSION = stub
 CATEGORIES = cpan
 AUTHOR = MSHELOR
 

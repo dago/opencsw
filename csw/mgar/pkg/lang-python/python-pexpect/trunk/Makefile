@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = pexpect
-GARVERSION = 2.3
+NAME = pexpect
+VERSION = 2.3
 PACKAGES = CSWpy-pexpect
 CATALOGNAME_CSWpy-pexpect = py_pexpect
 ARCHALL_CSWpy-pexpect = 1
@@ -13,8 +13,8 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://www.noah.org/wiki/Pexpect
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = LICENSE
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)

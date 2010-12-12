@@ -1,5 +1,5 @@
-GARNAME = xearth
-GARVERSION = 1.1
+NAME = xearth
+VERSION = 1.1
 CATEGORIES = apps
 
 DESCRIPTION = X11 earth backdrop
@@ -14,10 +14,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://groups.csail.mit.edu/cag/pub/tuna/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://hewgill.com/xearth/original/
 

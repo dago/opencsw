@@ -1,7 +1,7 @@
 SHORTNAME = beanutils
-GARVERSION = 1.8.2
+VERSION = 1.8.2
 
-GARNAME = commons-$(SHORTNAME)
+NAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
 DESCRIPTION = Apache Jakarta Commons BeanUtils
@@ -13,7 +13,7 @@ endef
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
 
 # Set archive filename
-DISTFILES = $(GARNAME)-$(GARVERSION)-bin.tar.gz
+DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
 PACKAGES = CSWajcbeanutils CSWajcbeanutilsdoc
@@ -31,7 +31,7 @@ CATALOGNAME_CSWajcbeanutilsdoc = commons_beanutl_doc
 LICENSE = LICENSE.txt
 
 # Defines package content
-# PKGFILES_CSWajcbeanutils   	 = $(prefix)/share/doc/$(GARNAME)/LICENSE.txt
+# PKGFILES_CSWajcbeanutils   	 = $(prefix)/share/doc/$(NAME)/LICENSE.txt
 PKGFILES_CSWajcbeanutils   	+= $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -46,11 +46,11 @@ include gar/category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/commons-beanutils-$(GARVERSION).jar $(DESTDIR)$(datadir)/java
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/commons-beanutils-$(VERSION).jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-1.8.jar ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-1.jar ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
-	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.8.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
+	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)

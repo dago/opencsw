@@ -1,5 +1,5 @@
-GARNAME = dejagnu
-GARVERSION = 1.4.4
+NAME = dejagnu
+VERSION = 1.4.4
 CATEGORIES = apps
 
 DESCRIPTION = GNU auto-configuration tool
@@ -7,9 +7,9 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 #PATCHFILES = 0001-Prefer-CSW-tools.patch
 

@@ -1,5 +1,5 @@
-GARNAME = tofrodos
-GARVERSION = 1.7.8
+NAME = tofrodos
+VERSION = 1.7.8
 CATEGORIES = utils
 
 DESCRIPTION = Text file utility that converts files between MSDOS and Unix format.
@@ -10,12 +10,12 @@ standard with a number of systems and is often found on the system as "todos",
 "fromdos", "dos2unix" and "unix2dos".
 endef
 
-WORKSRC ?= $(WORKDIR)/$(GARNAME)/src
+WORKSRC ?= $(WORKDIR)/$(NAME)/src
 MASTER_SITES = http://tofrodos.sourceforge.net/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

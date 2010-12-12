@@ -1,5 +1,5 @@
-GARNAME    = gnupg
-GARVERSION = 1.4.11
+NAME    = gnupg
+VERSION = 1.4.11
 CATEGORIES = apps
 
 DESCRIPTION = GnuPG is a complete and free replacement for PGP.
@@ -13,7 +13,7 @@ SPKG_DESC   = GnuPG is a complete and free replacement for PGP.
 
 SPKG_SOURCEURL = http://www.gnupg.org/
 MASTER_SITES   = ftp://ftp.gnupg.org/gcrypt/gnupg/
-DISTFILES      = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES      = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release

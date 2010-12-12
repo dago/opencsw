@@ -1,5 +1,5 @@
-GARNAME = xtrans
-GARVERSION = 1.2.5
+NAME = xtrans
+VERSION = 1.2.5
 CATEGORIES = x11
 
 DESCRIPTION = X transport library
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWx11common
 

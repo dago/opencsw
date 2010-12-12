@@ -1,15 +1,15 @@
 # readme for chroot pkg?
 # owner/group for device files? (root:sys)
 
-GARNAME = bind
-GARVERSION = 9.7.2
+NAME = bind
+VERSION = 9.7.2
 CATEGORIES = net
 
 # Enable these for Px-releases
 RELEASE = P3
-DISTVERSION = $(GARVERSION)-$(RELEASE)
-SPKG_VERSION = $(GARVERSION)$(RELEASE)
-DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
+DISTVERSION = $(VERSION)-$(RELEASE)
+SPKG_VERSION = $(VERSION)$(RELEASE)
+DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
@@ -21,12 +21,12 @@ define BLURB
 endef
 
 # Enable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)-$(RELEASE)/
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
 DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(GARVERSION)/
-#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+#DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
@@ -98,7 +98,7 @@ include gar/category.mk
 DOCLIST = README.CSW db.127.0.0 db.localhost named.conf named.root rndc.key
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/CSWbind.cswnamed $(DESTDIR)/etc/opt/csw/init.d/cswnamed
 #	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw
@@ -106,8 +106,8 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWbind
 	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWbind/
 	@ginstall -m 644 $(FILEDIR)/bind.CSW $(DESTDIR)/etc/opt/csw/pkg/CSWbind/bind
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+	@$(foreach DOC,$(DOCLIST),cp $(FILEDIR)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
 	( cd $(WORKSRC) ; \
 	  gmake DESTDIR=$(DESTDIR) install )
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/named

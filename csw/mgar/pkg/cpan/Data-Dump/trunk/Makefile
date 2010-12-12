@@ -1,5 +1,5 @@
-GARNAME = Data-Dump
-GARVERSION = 1.08
+NAME = Data-Dump
+VERSION = 1.08
 CATEGORIES = cpan
 AUTHOR = GAAS
 

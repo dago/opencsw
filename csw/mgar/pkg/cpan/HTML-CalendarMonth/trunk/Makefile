@@ -1,5 +1,5 @@
-GARNAME = HTML-CalendarMonth
-GARVERSION = 1.18
+NAME = HTML-CalendarMonth
+VERSION = 1.18
 CATEGORIES = cpan
 AUTHOR = MSISK
 

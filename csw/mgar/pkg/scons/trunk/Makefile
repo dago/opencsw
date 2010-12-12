@@ -1,5 +1,5 @@
-GARNAME = scons
-GARVERSION = 1.3.1
+NAME = scons
+VERSION = 1.3.1
 CATEGORIES = python
 
 DESCRIPTION = A next-generation build tool
@@ -13,13 +13,13 @@ define BLURB
 endef
 SF_PROJ = scons
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://www.scons.org/
 LICENSE = LICENSE.txt
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS = 
 EXTRA_PAX_ARGS = -s ",\./opt/csw/man,./opt/csw/share/man,"
 ARCHALL = 1
-EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/$(GARNAME)-$(GARVERSION)/SCons/.*\.py[co]
+EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/$(NAME)-$(VERSION)/SCons/.*\.py[co]
 include gar/category.mk

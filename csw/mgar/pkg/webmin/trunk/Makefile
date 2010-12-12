@@ -1,5 +1,5 @@
-GARNAME = webmin
-GARVERSION = 1.510
+NAME = webmin
+VERSION = 1.510
 CATEGORIES = utils
 
 DESCRIPTION = Web-based interface for system administration
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://prdownloads.sourceforge.net/webadmin/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-minimal.tar.gz
+DISTFILES  = $(NAME)-$(VERSION)-minimal.tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE
 

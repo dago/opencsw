@@ -1,5 +1,5 @@
-GARNAME = Text-vFile-asData
-GARVERSION = 0.05
+NAME = Text-vFile-asData
+VERSION = 0.05
 CATEGORIES = cpan
 AUTHOR = RCLAMP
 

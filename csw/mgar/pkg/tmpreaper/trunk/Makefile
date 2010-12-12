@@ -1,5 +1,5 @@
-GARNAME = tmpreaper
-GARVERSION = 1.6.13
+NAME = tmpreaper
+VERSION = 1.6.13
 CATEGORIES = apps
 
 DESCRIPTION = Cleans up files in directories based on their age
@@ -17,8 +17,8 @@ endef
 
 VENDOR_URL   = http://packages.debian.org/sid/tmpreaper
 MASTER_SITES = http://ftp.de.debian.org/debian/pool/main/t/tmpreaper/
-DISTFILES    = $(GARNAME)_$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)_$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)_(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS =
 

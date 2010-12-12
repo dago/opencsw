@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = alternatives
-GARVERSION = 1.0
+NAME = alternatives
+VERSION = 1.0
 CATEGORIES = utils
 
 DESCRIPTION = Alternatives implementation specific to OpenCSW
@@ -14,7 +14,7 @@ DISTFILES += CSWalternatives.r.cswalternatives
 DISTFILES += LICENSE-2.0.txt
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE-2.0.txt
 

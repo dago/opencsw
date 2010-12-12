@@ -1,5 +1,5 @@
-GARNAME = Devel-StackTrace
-GARVERSION = 1.22
+NAME = Devel-StackTrace
+VERSION = 1.22
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 

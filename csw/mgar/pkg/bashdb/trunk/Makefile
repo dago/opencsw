@@ -1,5 +1,5 @@
-GARNAME = bashdb
-GARVERSION = 4.0-0.4
+NAME = bashdb
+VERSION = 4.0-0.4
 # PATCHLEVEL = 75eadce
 CATEGORIES = utils
 
@@ -24,7 +24,7 @@ PATCHFILES += 0004-Looks-like-sig-line-fixes-back-ported-to-bash-4.0.-N.patch
 PATCHFILES += 0006-sig-SunOS.right-is-same-as-sig-41.right.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS = CSWbash
 

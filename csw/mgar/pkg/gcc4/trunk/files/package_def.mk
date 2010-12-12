@@ -93,10 +93,10 @@ case `/usr/bin/uname -p` in
 esac
 
 TOOLS_DIR="$${PKG_INSTALL_ROOT}/opt/csw/gcc4/libexec/gcc"
-TOOLS_DIR="$${TOOLS_DIR}/$${OS_TARGET}/$(GARVERSION)/install-tools"
+TOOLS_DIR="$${TOOLS_DIR}/$${OS_TARGET}/$(VERSION)/install-tools"
 MKHEADERS_CMD="$${PKG_INSTALL_ROOT}/opt/csw/gcc4/bin/mkheaders"
 INCLUDE_DIR="$${PKG_INSTALL_ROOT}/opt/csw/gcc4/lib/gcc"
-INCLUDE_DIR="$${INCLUDE_DIR}/$${OS_TARGET}/$(GARVERSION)/include"
+INCLUDE_DIR="$${INCLUDE_DIR}/$${OS_TARGET}/$(VERSION)/include"
 
 cat << _EOF_
 ******************************************************************************

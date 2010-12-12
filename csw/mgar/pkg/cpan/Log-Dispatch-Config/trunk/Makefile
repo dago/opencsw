@@ -1,5 +1,5 @@
-GARNAME = Log-Dispatch-Config
-GARVERSION = 1.03
+NAME = Log-Dispatch-Config
+VERSION = 1.03
 CATEGORIES = cpan
 AUTHOR = MIYAGAWA
 

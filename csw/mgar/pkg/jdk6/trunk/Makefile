@@ -1,6 +1,6 @@
-GARNAME = jdk6
+NAME = jdk6
 SPKG_VERSION = 1.6.0_22
-GARVERSION = 6u22
+VERSION = 6u22
 CATEGORIES = lang
 
 DESCRIPTION = Java Development Kit 6
@@ -16,8 +16,8 @@ SUFFIXES_i386  = i586 x64
 SUFFIXES = $(SUFFIXES_sparc) $(SUFFIXES_i386)
 
 DISTNAME = jdk$(SPKG_VERSION)
-DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(GARVERSION)-solaris-$S.sh)
-NOEXTRACT  = $(foreach S,$(filter-out $(SUFFIXES_$(GARCH)),$(SUFFIXES)),jdk-$(GARVERSION)-solaris-$S.sh)
+DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(VERSION)-solaris-$S.sh)
+NOEXTRACT  = $(foreach S,$(filter-out $(SUFFIXES_$(GARCH)),$(SUFFIXES)),jdk-$(VERSION)-solaris-$S.sh)
 
 SPKG_SOURCEURL = http://java.sun.com/javase/downloads/index.jsp
 
@@ -97,7 +97,7 @@ CHECKPKG_OVERRIDES_CSWjre6 += soname-not-found
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 
 	@rm -rf $(DESTDIR)$(prefix)/java
 	@ginstall -d $(DESTDIR)$(prefix)/java/jdk

@@ -1,4 +1,4 @@
-GARNAME = gimp
+NAME = gimp
 CATEGORIES = gnome
 
 DESCRIPTION = The GNU Image Manipulation Program.
@@ -14,14 +14,14 @@ endef
 BUILD_V20 = 1
 
 ifeq ($(BUILD_V20),1)
-GARVERSION = 2.0.1
+VERSION = 2.0.1
 MASTER_SITES = ftp://ftp.gimp.org/pub/gimp/v2.0/
 else
-GARVERSION = 1.2.5
-MASTER_SITES = ftp://ftp.gimp.org/pub/gimp/v1.2/v$(GARVERSION)/
+VERSION = 1.2.5
+MASTER_SITES = ftp://ftp.gimp.org/pub/gimp/v1.2/v$(VERSION)/
 endif
 
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-print

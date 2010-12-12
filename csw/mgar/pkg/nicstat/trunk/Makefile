@@ -1,5 +1,5 @@
-GARNAME = nicstat
-GARVERSION = 1.22
+NAME = nicstat
+VERSION = 1.22
 CATEGORIES = net
 
 DESCRIPTION = Network monitoring tool
@@ -8,14 +8,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://blogs.sun.com/roller/resources/timc/nicstat/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://blogs.sun.com/timc/entry/nicstat_the_solaris_and_linux
 
 LICENSE = LICENSE.txt
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -33,18 +33,18 @@ endif
 include gar/category.mk
 
 build-custom:
-	@echo " ==> Build $(GARNAME) (custom)"
+	@echo " ==> Build $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	  sed "s/CFLAGS =/CFLAGS = $(MYARCH) /" Makefile.Solaris > Makefile ; \
 	  gmake )
 	@$(MAKECOOKIE)
 
 install-custom:
-	@echo " ==> Install $(GARNAME) (custom)"
+	@echo " ==> Install $(NAME) (custom)"
 	@ginstall -d -m 755 $(DESTDIR)$(bindir)
 	@cp $(WORKSRC)/nicstat $(DESTDIR)$(bindir)
 	@ginstall -d -m 755 $(DESTDIR)$(mandir)/man1
 	@cp $(WORKSRC)/nicstat.1 $(DESTDIR)$(mandir)/man1
-	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(WORKSRC)/README.txt $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(NAME)
+	@cp $(WORKSRC)/README.txt $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)

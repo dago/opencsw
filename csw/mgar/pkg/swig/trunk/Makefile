@@ -1,5 +1,5 @@
-GARNAME = swig
-GARVERSION = 1.3.40
+NAME = swig
+VERSION = 1.3.40
 CATEGORIES = devel
 
 DESCRIPTION = A scripting interface generator for C/C++ code.
@@ -17,10 +17,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # 1645 is the group_id for the swig project on sourceforge
@@ -63,6 +63,6 @@ include gar/category.mk
 post-install-modulated: install-swig-doc
 
 install-swig-doc:
-	@mkdir -p $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp -R $(WORKSRC)/Doc $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp -R $(WORKSRC)/Examples $(DESTDIR)$(docdir)/$(GARNAME)
+	@mkdir -p $(DESTDIR)$(docdir)/$(NAME)
+	@cp -R $(WORKSRC)/Doc $(DESTDIR)$(docdir)/$(NAME)
+	@cp -R $(WORKSRC)/Examples $(DESTDIR)$(docdir)/$(NAME)

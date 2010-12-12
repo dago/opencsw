@@ -1,5 +1,5 @@
-GARNAME = xerces-c
-GARVERSION = 3.0.1
+NAME = xerces-c
+VERSION = 3.0.1
 CATEGORIES = lib
 
 DESCRIPTION = Xerces XML parser for C++
@@ -13,10 +13,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://apache.abdaal.com/xerces/c/3/sources/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWxerces-c
 CATALOGNAME = xerces_c

@@ -1,5 +1,5 @@
-GARNAME = lzlib
-GARVERSION = 1.0
+NAME = lzlib
+VERSION = 1.0
 CATEGORIES = lib
 
 DESCRIPTION = A lossless data compression library based on the LZMA algorithm
@@ -10,14 +10,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-Remove-Linux-specific-stuff-add-Solaris-specific-stu.patch
 PATCHFILES += 0002-Change-linker-flags-for-shared-libs-to-be-Sun-Studio.patch
 PATCHFILES += 0001-Do-not-do-ldconfig.patch
 PATCHFILES += 0002-Use-ucb-echo-as-it-only-understands-n.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.nongnu.org/lzip/lzlib.html
 

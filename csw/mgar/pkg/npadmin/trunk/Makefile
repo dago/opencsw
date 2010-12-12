@@ -1,5 +1,5 @@
-GARNAME = npadmin
-GARVERSION = 0.14
+NAME = npadmin
+VERSION = 0.14
 CATEGORIES = apps
 
 DESCRIPTION =  Command line SNMP based network adminstration tool for printers
@@ -8,10 +8,10 @@ endef
 
 SF_PROJ = lpr
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://lpr.sourceforge.net/
 

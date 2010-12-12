@@ -1,5 +1,5 @@
-GARNAME = Class-WhiteHole
-GARVERSION = 0.04
+NAME = Class-WhiteHole
+VERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = MSCHWERN
 

@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = facter
-GARVERSION = 1.5.7
+NAME = facter
+VERSION = 1.5.7
 CATEGORIES = apps
 
 DESCRIPTION = a system fact gatherer
@@ -19,13 +19,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://reductivelabs.com/downloads/facter/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWruby
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 ARCHALL=1
 

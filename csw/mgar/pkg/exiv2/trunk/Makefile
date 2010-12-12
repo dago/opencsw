@@ -1,5 +1,5 @@
-GARNAME = exiv2
-GARVERSION = 0.19
+NAME = exiv2
+VERSION = 0.19
 CATEGORIES = lib
 
 DESCRIPTION = Image metadata library and tools
@@ -11,11 +11,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.exiv2.org/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-Remove-unknown-flag-to-Sun-Studio.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)

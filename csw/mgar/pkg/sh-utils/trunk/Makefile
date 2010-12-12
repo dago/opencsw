@@ -1,5 +1,5 @@
-GARNAME = sh-utils
-GARVERSION = 2.0
+NAME = sh-utils
+VERSION = 2.0
 CATEGORIES = utils
 
 DESCRIPTION = sh utilities
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES = $(NAME)-$(VERSION).tar.gz 
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Chinese translation has errors
 PATCHFILES = zh.diff

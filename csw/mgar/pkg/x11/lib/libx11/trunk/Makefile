@@ -1,5 +1,5 @@
-GARNAME = libx11
-GARVERSION = 1.3.2
+NAME = libx11
+VERSION = 1.3.2
 CATEGORIES = x11
 
 DESCRIPTION = X11 client-side library
@@ -10,14 +10,14 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libX11-$(GARVERSION)
+DISTNAME = libX11-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 PATCHFILES = patch-stdint.diff
 # Add workaround for http://bugs.sourcemage.org/show_bug.cgi?id=13476
 PATCHFILES += patch-xlib-sentinel.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS =  CSWx11xextproto CSWxtrans CSWx11inputproto CSWlibpthreadstubs CSWlibxcbdevel
 

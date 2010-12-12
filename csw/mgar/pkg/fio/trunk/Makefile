@@ -1,7 +1,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 
-GARNAME = fio
-GARVERSION = 1.44.2
+NAME = fio
+VERSION = 1.44.2
 CATEGORIES = apps
 
 DESCRIPTION = Flexible I/O Tester
@@ -19,8 +19,8 @@ endef
 
 VENDOR_URL   = http://freshmeat.net/projects/fio
 MASTER_SITES = http://brick.kernel.dk/snaps/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # On Solaris 9 getopt_long isn't part of the OS, thus we pull in CSWlibgnugetopt
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386

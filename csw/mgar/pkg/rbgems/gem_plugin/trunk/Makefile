@@ -1,5 +1,5 @@
-GARNAME = gem_plugin
-GARVERSION = 0.2.3
+NAME = gem_plugin
+VERSION = 0.2.3
 CATEGORIES = rbgems
 
 DESCRIPTION = A plugin system based on rubygems that uses dependencies only

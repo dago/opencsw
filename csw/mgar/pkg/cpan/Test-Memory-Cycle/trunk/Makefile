@@ -1,5 +1,5 @@
-GARNAME = Test-Memory-Cycle
-GARVERSION = 1.04
+NAME = Test-Memory-Cycle
+VERSION = 1.04
 CATEGORIES = cpan
 AUTHOR = PETDANCE
 

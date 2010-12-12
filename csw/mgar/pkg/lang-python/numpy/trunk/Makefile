@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = numpy
-GARVERSION = 1.5.1rc1
+NAME = numpy
+VERSION = 1.5.1rc1
 CATEGORIES = python
 
 DESCRIPTION = Standard numerical array library for python
@@ -16,8 +16,8 @@ endef
 
 SPKG_SOURCEURL = http://numpy.scipy.org/
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWpy-numpy
 CATALOGNAME = py_numpy

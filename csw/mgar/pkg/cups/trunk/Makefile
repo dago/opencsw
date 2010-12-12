@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = cups
-GARVERSION = 1.4.5
+NAME = cups
+VERSION = 1.4.5
 CATEGORIES = net
 
 define BLURB
@@ -40,10 +40,10 @@ CUPS_MIRRORS += ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub
 CUPS_MIRRORS += http://ftp.rz.tu-bs.de/pub/mirror/ftp.easysw.com/ftp/pub
 
 # Complete the mirror paths by adding /cups/x.y.z/ at the end.
-FULL_MIRRORS  = $(foreach S,$(CUPS_MIRRORS),$(S)/$(GARNAME)/$(GARVERSION)/)
+FULL_MIRRORS  = $(foreach S,$(CUPS_MIRRORS),$(S)/$(NAME)/$(VERSION)/)
 MASTER_SITES += $(FULL_MIRRORS)
 
-DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
+DISTFILES  = $(NAME)-$(VERSION)-source.tar.bz2
 DISTFILES += CSWcupsclient.preinstall
 DISTFILES += CSWcupsd.preinstall
 DISTFILES += CSWcupsd.postremove

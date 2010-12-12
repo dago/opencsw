@@ -1,5 +1,5 @@
-GARNAME = scala
-GARVERSION = 2.7.7
+NAME = scala
+VERSION = 2.7.7
 CATEGORIES = java
 
 DESCRIPTION = The Scala programming language
@@ -11,14 +11,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.scala-lang.org/downloads/distrib/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).final.tgz
-DISTNAME = $(GARNAME)-$(GARVERSION).final
+DISTFILES  = $(NAME)-$(VERSION).final.tgz
+DISTNAME = $(NAME)-$(VERSION).final
 
 SPKG_SOURCEURL = http://www.scala-lang.org/
 ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).final.tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).final.tgz
 UPSTREAM_MASTER_SITES = http://www.scala-lang.org/downloads
 
 BUILD_SCRIPTS =
@@ -32,9 +32,9 @@ include gar/category.mk
 
 install-dirs: 
 	@ginstall -d $(DESTDIR)$(datadir)/vim/vimfiles
-	@ginstall -d $(DESTDIR)$(datadir)/$(GARNAME)/config
-	@ginstall -d $(DESTDIR)$(datadir)/$(GARNAME)/bin
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -d $(DESTDIR)$(datadir)/$(NAME)/config
+	@ginstall -d $(DESTDIR)$(datadir)/$(NAME)/bin
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -d $(DESTDIR)$(mandir)
 	@ginstall -d $(DESTDIR)$(bindir)
 	$(MAKECOOKIE)
@@ -66,16 +66,16 @@ install-data:
 		$(WORKSRC)/misc/scala-tool-support/textwrangler
 
 	@mv $(WORKSRC)/man/man1 $(DESTDIR)$(mandir); rm -rf $(WORKSRC)/man
-	@mv $(WORKSRC)/doc/* $(DESTDIR)$(docdir)/$(GARNAME); rm -rf $(WORKSRC)/doc
-	@mv $(WORKSRC)/* $(DESTDIR)$(datadir)/$(GARNAME)
+	@mv $(WORKSRC)/doc/* $(DESTDIR)$(docdir)/$(NAME); rm -rf $(WORKSRC)/doc
+	@mv $(WORKSRC)/* $(DESTDIR)$(datadir)/$(NAME)
 	@$(MAKECOOKIE)
 
 install-config:
 	@cp $(FILEDIR)/sbaz.properties \
-		$(DESTDIR)$(datadir)/$(GARNAME)/config/sbaz.properties.CSW
+		$(DESTDIR)$(datadir)/$(NAME)/config/sbaz.properties.CSW
 	@$(foreach F,available description installed universe, \
-		mv $(DESTDIR)$(datadir)/$(GARNAME)/meta/$(F) \
-			$(DESTDIR)$(datadir)/$(GARNAME)/meta/$(F).CSW; )
+		mv $(DESTDIR)$(datadir)/$(NAME)/meta/$(F) \
+			$(DESTDIR)$(datadir)/$(NAME)/meta/$(F).CSW; )
 	@$(MAKECOOKIE)
 
 install-custom: install-dirs install-bin install-data install-config

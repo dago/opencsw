@@ -1,10 +1,10 @@
 # $Id$
 
-GARVERSION = 1.6
+VERSION = 1.6
 CATEGORIES = x11
 PROTONAME = xcb-proto
-GARNAME = $(PROTONAME)
-DISTNAME = $(PROTONAME)-$(GARVERSION)
+NAME = $(PROTONAME)
+DISTNAME = $(PROTONAME)-$(VERSION)
 
 DESCRIPTION = XCB protocol descriptions (in XML)
 define BLURB
@@ -42,7 +42,7 @@ RUNTIME_DEP_PKGS_CSWpyxcbproto = CSWxcbproto CSWpython
 SPKG_DESC_CSWxcbproto = XCB protocol descriptions (in XML)
 SPKG_DESC_CSWpyxcbproto = $(SPKG_DESC_CSWxcbproto) Python Bindings
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 

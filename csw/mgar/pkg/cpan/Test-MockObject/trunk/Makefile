@@ -1,5 +1,5 @@
-GARNAME = Test-MockObject
-GARVERSION = 1.09
+NAME = Test-MockObject
+VERSION = 1.09
 CATEGORIES = cpan
 AUTHOR = CHROMATIC
 

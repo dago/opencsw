@@ -1,5 +1,5 @@
-GARNAME = silc-toolkit
-GARVERSION = 1.1.8
+NAME = silc-toolkit
+VERSION = 1.1.8
 CATEGORIES = lib
 SPKG_SOURCEURL = http://silcnet.org/software/download/toolkit/
 
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://silcnet.org/download/toolkit/sources/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsilctoolkit,prototype)
 PATCHFILES += function.patch
 

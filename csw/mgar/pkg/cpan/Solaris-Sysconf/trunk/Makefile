@@ -1,5 +1,5 @@
-GARNAME = Solaris-Sysconf
-GARVERSION = 0.01
+NAME = Solaris-Sysconf
+VERSION = 0.01
 CATEGORIES = cpan
 AUTHOR = AGOLOMSH
 

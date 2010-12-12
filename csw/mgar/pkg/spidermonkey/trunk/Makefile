@@ -1,5 +1,5 @@
-GARNAME = spidermonkey
-GARVERSION = 1.7.0
+NAME = spidermonkey
+VERSION = 1.7.0
 CATEGORIES = lib
 
 DESCRIPTION = The Mozilla SpiderMonkey JavaScript interpreter and library
@@ -9,7 +9,7 @@ endef
 
 VENDOR_URL   = http://www.mozilla.org/js/spidermonkey/
 MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/js/
-DISTFILES    = js-$(GARVERSION).tar.gz
+DISTFILES    = js-$(VERSION).tar.gz
 UFILES_REGEX = js-(\d+(?:\.\d+)*).tar.gz
 
 # the sun5.8 x86 config file is missing so

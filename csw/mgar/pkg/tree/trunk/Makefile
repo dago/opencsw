@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = tree
-GARVERSION = 1.5.3
+NAME = tree
+VERSION = 1.5.3
 CATEGORIES = utils
 DESCRIPTION = A recursive directory listing program
 define BLURB
@@ -16,8 +16,8 @@ MASTER_SITES  = ftp://mama.indstate.edu/linux/tree/
 MASTER_SITES += http://www.sfr-fresh.com/linux/misc/
 PATCHFILES += solaris.patch
 PATCHFILES += 0002-Allowing-CFLAGS-from-GAR.patch
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 CONFIGURE_SCRIPTS =
 SKIPTEST = 1
 LICENSE = LICENSE

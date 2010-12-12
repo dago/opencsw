@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = pysvn
-GARVERSION = 1.7.1
+NAME = pysvn
+VERSION = 1.7.1
 CATEGORIES = lib
 DESCRIPTION = Python SVN Extension and WorkBench GUI
 define BLURB
@@ -31,8 +31,8 @@ PATCHFILES += 0006-Use-opt-csw-lib.patch
 PATCHFILES += 0003-bin-bash-instead-of-bin-sh.patch
 PATCHFILES += 0001-fixes-for-tests.patch
 PATCHFILES += 0008-gid-in-two-more-places.patch
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = LICENSE.txt
 RUNTIME_DEP_PKGS  = CSWexpat
 RUNTIME_DEP_PKGS += CSWgcc4corert

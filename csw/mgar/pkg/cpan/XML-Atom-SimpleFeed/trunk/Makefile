@@ -1,5 +1,5 @@
-GARNAME = XML-Atom-SimpleFeed
-GARVERSION = 0.86
+NAME = XML-Atom-SimpleFeed
+VERSION = 0.86
 CATEGORIES = cpan
 AUTHOR = ARISTOTLE
 

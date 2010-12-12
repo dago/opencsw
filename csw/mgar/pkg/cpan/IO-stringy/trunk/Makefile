@@ -1,5 +1,5 @@
-GARNAME = IO-stringy
-GARVERSION = 2.110
+NAME = IO-stringy
+VERSION = 2.110
 CATEGORIES = cpan
 AUTHOR = DSKOLL
 

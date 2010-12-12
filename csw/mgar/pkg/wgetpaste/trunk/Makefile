@@ -1,5 +1,5 @@
-GARNAME = wgetpaste
-GARVERSION = 2.16
+NAME = wgetpaste
+VERSION = 2.16
 CATEGORIES = utils
 
 DESCRIPTION = A command-line utility for text pasting websites.
@@ -9,11 +9,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://wgetpaste.zlin.dk/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += wgetpaste.conf
 DISTFILES += COPYING
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS  = CSWbash
 RUNTIME_DEP_PKGS += CSWcoreutils

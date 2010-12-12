@@ -1,5 +1,5 @@
-GARNAME = trafshow
-GARVERSION = 5.2.1
+NAME = trafshow
+VERSION = 5.2.1
 CATEGORIES = net
 
 DESCRIPTION = Network traffic monitoring utility
@@ -15,10 +15,10 @@ endef
 MASTER_SITES  = ftp://ftp.planix.com/pub/mirror/
 MASTER_SITES += ftp://ftp.eenet.ee/pub/gentoo/distfiles/
 MASTER_SITES += ftp://ftp.mgts.by/pub/FreeBSD/ports/distfiles/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
 RUNTIME_DEP_PKGS = CSWlibpcap CSWslang

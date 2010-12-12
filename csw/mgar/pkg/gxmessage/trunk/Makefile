@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = gxmessage
-GARVERSION = 2.12.4
+NAME = gxmessage
+VERSION = 2.12.4
 CATEGORIES = gnome
 DESCRIPTION = An xmessage clone for GTK based desktops
 define BLURB
@@ -11,8 +11,8 @@ endef
 SPKG_SOURCEURL = http://homepages.ihug.co.nz/~trmusson/programs.html
 MASTER_SITES  = http://homepages.ihug.co.nz/~trmusson/stuff/
 MASTER_SITES += http://ftp.gnu.org/pub/gnu/gxmessage/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWfconfig

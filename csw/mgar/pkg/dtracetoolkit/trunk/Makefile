@@ -1,5 +1,5 @@
-GARNAME = DTraceToolkit
-GARVERSION = 0.99
+NAME = DTraceToolkit
+VERSION = 0.99
 CATEGORIES = utils
 
 DESCRIPTION = A collection of dtrace scripts developed by the DTrace community
@@ -12,12 +12,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.brendangregg.com/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWdtracetoolkit
 LICENSE = License
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -34,7 +34,7 @@ USEFUL_SCRIPTS = dexplorer dtruss dvmstat errinfo execsnoop hotkernel hotuser \
 dtracedir = $(datadir)/dtracetoolkit
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	@ginstall -d $(DESTDIR)$(dtracedir)
 	@rm -rf $(DESTDIR)$(dtracedir)
 	@cp -r $(WORKSRC) $(DESTDIR)$(dtracedir)

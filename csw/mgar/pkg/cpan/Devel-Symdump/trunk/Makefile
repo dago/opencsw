@@ -1,5 +1,5 @@
-GARNAME = Devel-Symdump
-GARVERSION = 2.08
+NAME = Devel-Symdump
+VERSION = 2.08
 CATEGORIES = cpan
 AUTHOR = ANDK
 

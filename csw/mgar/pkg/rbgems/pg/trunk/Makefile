@@ -1,5 +1,5 @@
-GARNAME = pg
-GARVERSION = 0.9.0
+NAME = pg
+VERSION = 0.9.0
 CATEGORIES = rbgems
 
 DESCRIPTION = Access a PostgreSQL database from Ruby

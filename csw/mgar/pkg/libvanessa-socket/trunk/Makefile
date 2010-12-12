@@ -1,5 +1,5 @@
-GARNAME = libvanessa-socket
-GARVERSION = 0.0.9
+NAME = libvanessa-socket
+VERSION = 0.0.9
 CATEGORIES = lib
 
 DESCRIPTION = Library to simplify common socket operations.
@@ -10,9 +10,9 @@ define BLURB
 endef
 
 VENDOR_URL   = http://www.vergenet.net/linux/vanessa/
-MASTER_SITES = $(VENDOR_URL)/download/vanessa_socket/$(GARVERSION)/
-DISTFILES    = vanessa_socket-$(GARVERSION).tar.gz
-DISTNAME     = vanessa_socket-$(GARVERSION)
+MASTER_SITES = $(VENDOR_URL)/download/vanessa_socket/$(VERSION)/
+DISTFILES    = vanessa_socket-$(VERSION).tar.gz
+DISTNAME     = vanessa_socket-$(VERSION)
 UFILES_REGEX = (\d+(?:\.\d+)*)
 UPSTREAM_MASTER_SITES = $(VENDOR_URL)/download/vanessa_socket/
 

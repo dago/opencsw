@@ -1,5 +1,5 @@
-GARNAME = Exception-Class-DBI
-GARVERSION = 0.95
+NAME = Exception-Class-DBI
+VERSION = 0.95
 CATEGORIES = cpan
 AUTHOR = DWHEELER
 

@@ -12,9 +12,9 @@
 
 ###### Package information #######
 
-GARNAME = openssh
-GARVERSION = 5.6p1
-GSSKEX_PATCH_VERSION = $(GARVERSION)
+NAME = openssh
+VERSION = 5.6p1
+GSSKEX_PATCH_VERSION = $(VERSION)
 GSSKEX_PATCH_DATE = 20100902
 CATEGORIES = server
 
@@ -93,9 +93,9 @@ CHECKPKG_OVERRIDES_CSWossh = surplus-dependency|CSWosshclient
 MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sxw.org.uk/computing/patches/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*p\d+).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*p\d+).tar.gz
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWossh.checkinstall
 DISTFILES += CSWosshlpk.checkinstall
 DISTFILES += changelog.CSW

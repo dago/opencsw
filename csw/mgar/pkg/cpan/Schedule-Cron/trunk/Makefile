@@ -1,5 +1,5 @@
-GARNAME = Schedule-Cron
-GARVERSION = 0.97
+NAME = Schedule-Cron
+VERSION = 0.97
 CATEGORIES = cpan
 AUTHOR = ROLAND
 

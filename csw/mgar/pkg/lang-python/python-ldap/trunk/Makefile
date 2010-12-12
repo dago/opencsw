@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = python-ldap
-GARVERSION = 2.3.12
+NAME = python-ldap
+VERSION = 2.3.12
 CATEGORIES = python
 PACKAGES = CSWpy-ldap
 CATALOGNAME = py_ldap
@@ -19,14 +19,14 @@ RUNTIME_DEP_PKGS_CSWpy-ldap += CSWosslrt
 RUNTIME_DEP_PKGS_CSWpy-ldap += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWpy-ldap += CSWlibpython2-6-1-0
 
-MASTER_SITE_DIR = $(shell echo $(GARNAME) | cut -c 1)
-MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITE_DIR = $(shell echo $(NAME) | cut -c 1)
+MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL = http://www.python-ldap.org/
 PATCHFILES += 0000-openldap-path.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

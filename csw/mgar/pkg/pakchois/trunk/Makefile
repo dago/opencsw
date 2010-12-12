@@ -1,5 +1,5 @@
-GARNAME = pakchois
-GARVERSION = 0.4
+NAME = pakchois
+VERSION = 0.4
 CATEGORIES = lib
 
 DESCRIPTION = Just another PKCS \#11 wrapper library
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.manyfish.co.uk/pakchois/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.manyfish.co.uk/pakchois/
 

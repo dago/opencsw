@@ -1,5 +1,5 @@
-GARNAME = Passwd-Unix
-GARVERSION = 0.52
+NAME = Passwd-Unix
+VERSION = 0.52
 CATEGORIES = cpan
 AUTHOR = STRZELEC
 

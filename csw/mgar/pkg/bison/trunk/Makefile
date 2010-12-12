@@ -1,6 +1,6 @@
-GARNAME = bison
-# GARVERSION = 2.4.2.8-cb76
-GARVERSION = 2.4.3
+NAME = bison
+# VERSION = 2.4.2.8-cb76
+VERSION = 2.4.3
 CATEGORIES = devel
 
 DESCRIPTION = GNU Project parser generator (yacc replacement)
@@ -12,7 +12,7 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 # MASTER_SITES += http://alpha.gnu.org/gnu/bison/
 
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 BUILD_DEP_PKGS = CSWgnulinks
 RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWgm4
@@ -20,7 +20,7 @@ RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWgm4
 SPKG_SOURCEURL = http://www.gnu.org/software/bison/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

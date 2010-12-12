@@ -1,5 +1,5 @@
-GARNAME = Module-Versions-Report
-GARVERSION = 1.02
+NAME = Module-Versions-Report
+VERSION = 1.02
 CATEGORIES = cpan
 AUTHOR = SBURKE
 

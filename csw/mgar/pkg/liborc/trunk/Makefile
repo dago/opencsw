@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = liborc
-GARVERSION = 0.4.6
+NAME = liborc
+VERSION = 0.4.6
 CATEGORIES = lib
 
 DESCRIPTION = The Oil Runtime Compiler
@@ -11,11 +11,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://code.entropywave.com/download/orc/
-DISTNAME = orc-$(GARVERSION)
+DISTNAME = orc-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://code.entropywave.com/projects/orc/
 

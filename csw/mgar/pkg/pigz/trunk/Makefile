@@ -1,5 +1,5 @@
-GARNAME = pigz
-GARVERSION = 2.1.6
+NAME = pigz
+VERSION = 2.1.6
 CATEGORIES = utils
 
 DESCRIPTION = A parallel implementation of gzip
@@ -11,12 +11,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.zlib.net/pigz/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += pigz-wrapper
 DISTFILES += unpigz-wrapper
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
@@ -55,6 +55,6 @@ install-custom:
 	cd $(DESTDIR)$(libexecdir) && gln pigz unpigz
 	ginstall -d $(DESTDIR)$(mandir)/man1
 	ginstall $(WORKSRC)/pigz.1 $(DESTDIR)$(mandir)/man1
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	ginstall $(WORKSRC)/pigz.pdf $(DESTDIR)$(docdir)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	ginstall $(WORKSRC)/pigz.pdf $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)

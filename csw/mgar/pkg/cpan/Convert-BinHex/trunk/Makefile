@@ -1,5 +1,5 @@
-GARNAME = Convert-BinHex
-GARVERSION = 1.119
+NAME = Convert-BinHex
+VERSION = 1.119
 CATEGORIES = cpan
 AUTHOR = ERYQ
 

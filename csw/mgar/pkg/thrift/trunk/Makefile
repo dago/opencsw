@@ -11,8 +11,8 @@
 ## For more information about GAR variables, please see:
 ## https://sourceforge.net/apps/trac/gar/wiki/GAR%20Variable%20Reference
 ##
-GARNAME = thrift
-GARVERSION = 0.3.0
+NAME = thrift
+VERSION = 0.3.0
 ##
 ## The category that your software fits in. This is not a descriptive field, but
 ## influences the build process. Depending on the CATEGORIES setting, different
@@ -38,10 +38,10 @@ SPKG_SOURCEURL = http://incubator.apache.org/thrift/
 ##
 ## Whitespace-separated list of URLs to download the source package from.
 ## There are presets: $(SF_MIRRORS), $(GNU_MIRRORS) and $(GOOGLE_MIRROR).
-MASTER_SITES = http://apache.mirrors.esat.net/incubator/thrift/$(GARVERSION)-incubating/
+MASTER_SITES = http://apache.mirrors.esat.net/incubator/thrift/$(VERSION)-incubating/
 ##
 ## SF_PROJ is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
-## Sourceforge project name differs from $(GARNAME). Specifies the Sourceforge
+## Sourceforge project name differs from $(NAME). Specifies the Sourceforge
 ## project name of the software you wish to download.
 ## SF_PROJ =
 ##
@@ -53,10 +53,10 @@ MASTER_SITES = http://apache.mirrors.esat.net/incubator/thrift/$(GARVERSION)-inc
 ## Whitespace-separated list of files which comprise this build. mGAR will look
 ## for the files in the $(FILEDIR) (trunk/files) directory and on the
 ## $(MASTER_SITES).
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 ##
 ## We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 ##
 ## Catalog name is the name to be used with pkg{-get,util} -i <pkgname>.
 ## It is different from the system package name, which by convention is CSWpkgname.
@@ -152,7 +152,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 ## Compilation settings
 ##
 ## The build directory.
-## WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)
+## WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 ##
 ## BUILD_ARGS is passed as an argument to gmake during the build phase. Use this
 ## for example, if you need to override Makefile variables.

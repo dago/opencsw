@@ -1,5 +1,5 @@
-GARNAME = Cache-Memcached
-GARVERSION = 1.18
+NAME = Cache-Memcached
+VERSION = 1.18
 CATEGORIES = cpan
 AUTHOR = BRADFITZ
 

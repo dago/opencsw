@@ -1,5 +1,5 @@
-GARNAME = fbopenssl
-GARVERSION = 0.0.4
+NAME = fbopenssl
+VERSION = 0.0.4
 CATEGORIES = lib
 
 DESCRIPTION = Extensions to OpenSSL including support for GSS-API and SPNEGO
@@ -11,11 +11,11 @@ endef
 
 SF_PROJ = modgssapache
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://sourceforge.net/projects/modgssapache
 
@@ -26,7 +26,7 @@ PACKAGES = CSWlibfbopenssl
 CATALOGNAME = libfbopenssl
 
 BUILD64 = 1
-WORKSRC = $(WORKDIR)/$(GARNAME)
+WORKSRC = $(WORKDIR)/$(NAME)
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS = custom

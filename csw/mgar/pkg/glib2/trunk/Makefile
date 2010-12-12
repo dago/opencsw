@@ -1,5 +1,5 @@
-GARNAME = glib
-GARVERSION = 2.25.10
+NAME = glib
+VERSION = 2.25.10
 CATEGORIES = lib
 
 DESCRIPTION = The GLib library of C routines.
@@ -17,7 +17,7 @@ SPKG_DESC_CSWglib2devel = Low level core compatibility library for GTK+ and GNOM
 
 MASTER_SITES = $(GNOME_MIRROR)
 
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 PATCHFILES  = glib-typedetect.patch
 # PATCHFILES += FIXED_STR.patch
@@ -43,7 +43,7 @@ CONFIGURE_ARGS += --enable-static
 # DTrace compilation fails for 64 bit, disable for now
 CONFIGURE_ARGS += --disable-dtrace
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 NOISAEXEC = 1

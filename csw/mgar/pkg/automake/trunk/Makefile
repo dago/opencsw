@@ -1,9 +1,9 @@
-GARNAME = automake
-GARVERSION = 1.11.1
+NAME = automake
+VERSION = 1.11.1
 CATEGORIES = devel
 
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.1
+EXTRA_MODULATORS = VERSION
+MODULATIONS_VERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.1
 
 DESCRIPTION = A tool for automatically generating Makefiles.
 define BLURB
@@ -19,12 +19,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-SOURCEFILES = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tar.gz)
+SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VERSION),$(NAME)-$(VERSION).tar.gz)
 DISTFILES = $(SOURCEFILES)
 POSTMSG = $(docdir)/automake/CSWautomake.postmsg
 DISTFILES += $(notdir $(POSTMSG))
 NOCHECKSUM = $(notdir $(POSTMSG))
-NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz, $(SOURCEFILES))
+NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz, $(SOURCEFILES))
 
 SPKG_SOURCEURL = http://www.gnu.org/software/automake/
 
@@ -40,7 +40,7 @@ SKIPTEST ?= 1
 
 ARCHALL = 1
 
-$(foreach VERSION,$(MODULATIONS_GARVERSION),$(eval MERGE_SCRIPTS_isa-$(ISA)-garversion-$(VERSION) = copy-all))
+$(foreach VERSION,$(MODULATIONS_VERSION),$(eval MERGE_SCRIPTS_isa-$(ISA)-garversion-$(VERSION) = copy-all))
 
 # These are hardlinks to the versioned versions and will confuse the merging
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.6.3 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
@@ -73,7 +73,7 @@ $(DOWNLOADDIR)/$(notdir $(POSTMSG)):
 	@(exec >$@;								\
 		echo "There are multiple versions of automake on the system installed:"; \
 		echo; \
-	  	for VERSION in $(MODULATIONS_GARVERSION); do \
+	  	for VERSION in $(MODULATIONS_VERSION); do \
 		  echo "  * automake-$$VERSION"; \
 		done; \
 		echo; \

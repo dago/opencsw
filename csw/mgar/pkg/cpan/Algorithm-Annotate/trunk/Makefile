@@ -1,5 +1,5 @@
-GARNAME = Algorithm-Annotate
-GARVERSION = 0.10
+NAME = Algorithm-Annotate
+VERSION = 0.10
 CATEGORIES = cpan
 AUTHOR = CLKAO
 

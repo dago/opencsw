@@ -1,5 +1,5 @@
-GARNAME = alarm-clock
-GARVERSION = 1.4.1
+NAME = alarm-clock
+VERSION = 1.4.1
 CATEGORIES = gnome
 
 DESCRIPTION = A simple interface for reminding about birthdays, appointments and important dates
@@ -10,10 +10,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://alarm-clock.pl/downloads/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWalarmclock
 CATALOGNAME = alarmclock

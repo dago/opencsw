@@ -1,5 +1,5 @@
-GARNAME = XML-AutoWriter
-GARVERSION = 0.39
+NAME = XML-AutoWriter
+VERSION = 0.39
 CATEGORIES = cpan
 AUTHOR = RBS
 

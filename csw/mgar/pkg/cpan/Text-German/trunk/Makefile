@@ -1,5 +1,5 @@
-GARNAME = Text-German
-GARVERSION = 0.06
+NAME = Text-German
+VERSION = 0.06
 CATEGORIES = cpan
 AUTHOR = ULPFR
 

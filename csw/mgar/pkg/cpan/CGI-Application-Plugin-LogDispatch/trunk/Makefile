@@ -1,5 +1,5 @@
-GARNAME = CGI-Application-Plugin-LogDispatch
-GARVERSION = 1.00
+NAME = CGI-Application-Plugin-LogDispatch
+VERSION = 1.00
 CATEGORIES = cpan
 AUTHOR = CEESHEK
 

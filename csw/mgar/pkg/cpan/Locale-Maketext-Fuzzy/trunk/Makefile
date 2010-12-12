@@ -1,5 +1,5 @@
-GARNAME = Locale-Maketext-Fuzzy
-GARVERSION = 0.02
+NAME = Locale-Maketext-Fuzzy
+VERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
 

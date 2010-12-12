@@ -1,5 +1,5 @@
-GARNAME = DBIx-ContextualFetch
-GARVERSION = 1.03
+NAME = DBIx-ContextualFetch
+VERSION = 1.03
 CATEGORIES = cpan
 AUTHOR = TMTM
 

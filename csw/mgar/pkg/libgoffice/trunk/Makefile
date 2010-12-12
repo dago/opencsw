@@ -1,5 +1,5 @@
-GARNAME = libgoffice
-GARVERSION = 0.7.4
+NAME = libgoffice
+VERSION = 0.7.4
 CATEGORIES = gnome
 
 DESCRIPTION = Document centric objects library
@@ -9,8 +9,8 @@ define BLURB
 endef
 
 MASTER_SITES =  $(GNOME_ROOT)/goffice/$(GNOME_SUBV)/
-DISTFILES  = goffice-$(GARVERSION).tar.gz
-DISTNAME  = goffice-$(GARVERSION)
+DISTFILES  = goffice-$(VERSION).tar.gz
+DISTNAME  = goffice-$(VERSION)
 
 RUNTIME_DEP_PKGS += CSWgconf2 CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk
 RUNTIME_DEP_PKGS += CSWlibcairo CSWlibglade2 CSWlibgsf CSWlibxml2 CSWlibxrender

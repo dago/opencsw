@@ -1,5 +1,5 @@
-GARNAME = libassuan
-GARVERSION = 2.0.1
+NAME = libassuan
+VERSION = 2.0.1
 CATEGORIES = lib
 
 DESCRIPTION = IPC library used by some GnuPG related software
@@ -7,7 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libassuan/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # Use this patch unless this is fixed:
 #   https://bugs.g10code.com/gnupg/issue1282

@@ -1,5 +1,5 @@
-GARNAME = krb5
-GARVERSION = 1.8.3
+NAME = krb5
+VERSION = 1.8.3
 CATEGORIES = server
 
 DESCRIPTION = MIT Kerberos 5
@@ -11,11 +11,11 @@ define BLURB
   Kerberos is available in many commercial products as well.
 endef
 
-MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/$(shell echo $(GARVERSION) | awk -F. '{print $$1"."$$2}')/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-signed.tar
+MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/$(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')/
+DISTFILES  = $(NAME)-$(VERSION)-signed.tar
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-signed.tar
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-signed.tar
 
 PATCHFILES  = patch-man2html-perl.patch
 PATCHFILES += 0002-libintl-for-kproplog.patch
@@ -86,5 +86,5 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 post-extract-modulated:
 	@# TODO: Check signature
-	@cd $(WORKDIR) && (gzip -c -d $(GARNAME)-$(GARVERSION).tar.gz | tar xf -)
+	@cd $(WORKDIR) && (gzip -c -d $(NAME)-$(VERSION).tar.gz | tar xf -)
 	@$(MAKECOOKIE)

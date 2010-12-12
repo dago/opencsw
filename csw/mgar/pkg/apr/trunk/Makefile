@@ -1,5 +1,5 @@
-GARNAME = apr
-GARVERSION = 1.4.2
+NAME = apr
+VERSION = 1.4.2
 CATEGORIES = lib
 
 DESCRIPTION = Apache Portable Runtime
@@ -10,14 +10,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://apache.crihan.fr/dist/apr/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = 0001-Force-newly-built-libs-in-testsuite.patch
 
 LICENSE = LICENSE
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 

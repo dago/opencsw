@@ -1,5 +1,5 @@
-GARNAME = Net-Netmask
-GARVERSION = 1.9015
+NAME = Net-Netmask
+VERSION = 1.9015
 CATEGORIES = cpan
 AUTHOR = MUIR
 

@@ -1,5 +1,5 @@
-GARNAME = Module-Starter
-GARVERSION = 1.54
+NAME = Module-Starter
+VERSION = 1.54
 CATEGORIES = cpan
 AUTHOR = PETDANCE
 

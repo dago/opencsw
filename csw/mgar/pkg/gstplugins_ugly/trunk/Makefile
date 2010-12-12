@@ -1,5 +1,5 @@
-GARNAME = gst-plugins-ugly
-GARVERSION = 0.10.13
+NAME = gst-plugins-ugly
+VERSION = 0.10.13
 CATEGORIES = gnome
 
 DESCRIPTION = GStreamer plugins (Ugly)
@@ -11,12 +11,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://gstreamer.freedesktop.org/src/gst-plugins-ugly/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PACKAGES = CSWgstpluginsugly
 CATALOGNAME = gstplugins_ugly
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS += CSWgstreamer CSWgstplugins CSWglib2 CSWggettext CSWggettextrt
 BUILD_DEP_PKGS += CSWlibdvdread CSWlibid3tag CSWlibmad CSWliboil CSWlibxml2

@@ -1,5 +1,5 @@
-GARNAME = libxkbfile
-GARVERSION = 1.0.6
+NAME = libxkbfile
+VERSION = 1.0.6
 CATEGORIES = x11
 
 DESCRIPTION = X11 keyboard file manipulation library
@@ -12,7 +12,7 @@ MASTER_SITES = $(X11_LIB_MASTER_SITE)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWlibxkbfile CSWlibxkbfiledevel
 

@@ -1,5 +1,5 @@
-GARNAME = pca
-GARVERSION = 20100910-01
+NAME = pca
+VERSION = 20100910-01
 CATEGORIES = utils
 
 DESCRIPTION = Patch Check Advanced
@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.par.univie.ac.at/solaris/pca/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(NAME)-$(VERSION)
 DISTFILES += COPYING
 DISTFILES += pca.conf
 
@@ -24,7 +24,7 @@ PATCHFILES += 0002-Add-etc-opt-csw-as-config-location.patch
 #PATCHDIRLEVEL = 0
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d{8}-\d{2})
+UFILES_REGEX = $(NAME)-(\d{8}-\d{2})
 
 WORKSRC = $(WORKDIR)
 
@@ -34,7 +34,7 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 SPKG_SOURCEURL = http://www.par.univie.ac.at/solaris/pca/
-SPKG_VERSION = $(shell echo $(GARVERSION) | sed -e 's/-/./g')
+SPKG_VERSION = $(shell echo $(VERSION) | sed -e 's/-/./g')
 
 SAMPLECONF = /etc/opt/csw/pca.conf
 

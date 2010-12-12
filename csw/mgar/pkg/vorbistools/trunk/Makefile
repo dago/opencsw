@@ -1,5 +1,5 @@
-GARNAME = vorbistools
-GARVERSION = 1.2.0
+NAME = vorbistools
+VERSION = 1.2.0
 CATEGORIES = utils
 
 DESCRIPTION = Vorbis audio tools
@@ -10,7 +10,7 @@ define BLURB
     simple commentor.
 endef
 
-DISTNAME = vorbis-tools-$(GARVERSION)
+DISTNAME = vorbis-tools-$(VERSION)
 MASTER_SITES = http://downloads.xiph.org/releases/vorbis/
 DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += fixme.sh

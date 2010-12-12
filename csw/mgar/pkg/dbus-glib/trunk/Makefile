@@ -1,5 +1,5 @@
-GARNAME      = dbus-glib
-GARVERSION   = 0.86
+NAME      = dbus-glib
+VERSION   = 0.86
 CATEGORIES   = lib
 
 DESCRIPTION  = DBus GLib Bindings
@@ -12,11 +12,11 @@ define BLURB
 endef
 
 MASTER_SITES  = http://dbus.freedesktop.org/releases/dbus-glib/
-DISTFILES     = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES     = $(NAME)-$(VERSION).tar.gz 
 PKGDIST       = $(DISTFILE)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_DESC_CSWdbusglib    = $(DESCRIPTION)
 SPKG_DESC_CSWdbusglibdev = $(DESCRIPTION) development package

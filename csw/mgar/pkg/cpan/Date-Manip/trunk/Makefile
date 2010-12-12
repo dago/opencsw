@@ -1,5 +1,5 @@
-GARNAME = Date-Manip
-GARVERSION = 6.01
+NAME = Date-Manip
+VERSION = 6.01
 CATEGORIES = cpan
 AUTHOR = SBECK
 

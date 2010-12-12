@@ -1,5 +1,5 @@
-GARNAME = mbuffer
-GARVERSION = 20100526
+NAME = mbuffer
+VERSION = 20100526
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
@@ -13,8 +13,8 @@ define BLURB
 endef
 
 MASTER_SITES   = http://www.maier-komor.de/software/mbuffer/
-DISTFILES      = $(GARNAME)-$(GARVERSION).tgz
-UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES      = $(NAME)-$(VERSION).tgz
+UFILES_REGEX   = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://www.maier-komor.de/mbuffer.html
 
 LICENSE = LICENSE
@@ -46,7 +46,7 @@ EXTRA_PAX_ARGS = '-s,ChangeLog$$,changelog,p'
 include gar/category.mk
 
 post-install-modulated: DOCS = ChangeLog README AUTHORS
-post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)

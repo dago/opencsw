@@ -1,5 +1,5 @@
-GARNAME = Archive-Tar
-GARVERSION = stub
+NAME = Archive-Tar
+VERSION = stub
 CATEGORIES = cpan
 AUTHOR = BINGOS
 

@@ -1,5 +1,5 @@
-GARNAME = Cache-Cache
-GARVERSION = 1.06
+NAME = Cache-Cache
+VERSION = 1.06
 CATEGORIES = cpan
 AUTHOR = JSWARTZ
 

@@ -1,5 +1,5 @@
-GARNAME = jpeg
-GARVERSION = 7
+NAME = jpeg
+VERSION = 7
 CATEGORIES = lib
 
 DESCRIPTION = JPEG library and tools by the Independent JPEG Group
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.ijg.org/files/
-DISTFILES  = $(GARNAME)src.v$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)src.v$(VERSION).tar.gz
 
 PACKAGES = CSWjpeg CSWjpegrt CSWjpegdevel
 CATALOGNAME_CSWjpeg = jpeg
@@ -26,7 +26,7 @@ RUNTIME_DEP_PKGS_CSWjpegdevel += CSWjpegrt
 PKGFILES_CSWjpegrt = $(PKGFILES_RT)
 PKGFILES_CSWjpegdevel = $(PKGFILES_DEVEL)
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.ijg.org
 

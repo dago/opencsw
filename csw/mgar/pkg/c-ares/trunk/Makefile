@@ -1,5 +1,5 @@
-GARNAME = c-ares
-GARVERSION = 1.7.0
+NAME = c-ares
+VERSION = 1.7.0
 CATEGORIES = lib
 
 DESCRIPTION = c-ares library to perform DNS requests and name resolves asynchronously
@@ -7,11 +7,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://c-ares.haxx.se/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += ares_build.h
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibcares CSWlibcaresdevel
 

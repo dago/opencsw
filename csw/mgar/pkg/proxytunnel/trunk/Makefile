@@ -1,5 +1,5 @@
-GARNAME = proxytunnel
-GARVERSION = 1.9.0
+NAME = proxytunnel
+VERSION = 1.9.0
 CATEGORIES = utils
 
 DESCRIPTION = Tunnels network connections through a HTTPS proxy
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 PATCHFILES = patch-Makefile.diff
 
 SPKG_SOURCEURL = http://proxytunnel.sourceforge.net/
@@ -19,7 +19,7 @@ SPKG_SOURCEURL = http://proxytunnel.sourceforge.net/
 BUILD_DEP_PKGS = CSWossldevel
 RUNTIME_DEP_PKGS = CSWosslrt
 
-# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 # UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_SCRIPTS = 
@@ -29,7 +29,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)

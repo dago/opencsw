@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = xfig
-GARVERSION = 3.2.5b
+NAME = xfig
+VERSION = 3.2.5b
 CATEGORIES = utils
 
 DESCRIPTION = An interactive drawing tool
@@ -12,13 +12,13 @@ endef
 
 SF_PROJ = mcj
 MASTER_SITES = $(SF_MIRROR)
-DISTNAME = $(GARNAME).$(GARVERSION)
+DISTNAME = $(NAME).$(VERSION)
 DISTFILES  = $(DISTNAME).full.tar.gz
 
 PATCHFILES = 0001-Add-missing-define-for-REG_NOERROR.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).full.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).full.tar.gz
 
 VENOR_URL = http://www.xfig.org/
 

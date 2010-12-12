@@ -1,5 +1,5 @@
-GARNAME = Test-Differences
-GARVERSION = 0.47
+NAME = Test-Differences
+VERSION = 0.47
 CATEGORIES = cpan
 AUTHOR = RBS
 

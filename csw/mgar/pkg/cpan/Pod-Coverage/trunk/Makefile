@@ -1,5 +1,5 @@
-GARNAME = Pod-Coverage
-GARVERSION = 0.20
+NAME = Pod-Coverage
+VERSION = 0.20
 CATEGORIES = cpan
 AUTHOR = RCLAMP
 

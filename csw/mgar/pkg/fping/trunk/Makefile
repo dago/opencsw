@@ -1,5 +1,5 @@
-GARNAME = fping
-GARVERSION = 2.4
+NAME = fping
+VERSION = 2.4
 REV = b2_to
 CATEGORIES = utils
 
@@ -19,12 +19,12 @@ endef
 
 MASTER_SITES = http://fping.sourceforge.net/download/
 MASTER_SITES += http://oss.oetiker.ch/smokeping/pub/
-DISTFILES  = $(GARNAME).tar.gz
+DISTFILES  = $(NAME).tar.gz
 #PATCHFILES = fping-2.4b2_to-sequence-fix.patch
 PATCHFILES += fping-ipv6.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-#UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+#UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
@@ -32,7 +32,7 @@ PATCHFILES += fping-ipv6.patch
 
 SPKG_SOURCEURL = http://fping.sourceforge.net/
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)$(REV)
+WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)$(REV)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -1,5 +1,5 @@
-GARNAME = atk
-GARVERSION = 1.30.0
+NAME = atk
+VERSION = 1.30.0
 CATEGORIES = lib
 
 DESCRIPTION = An accessibility toolkit for GNOME

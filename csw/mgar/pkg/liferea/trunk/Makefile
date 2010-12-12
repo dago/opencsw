@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = liferea
-GARVERSION = 1.6.3
+NAME = liferea
+VERSION = 1.6.3
 CATEGORIES = apps
 
 DESCRIPTION = An aggregator for online news feeds
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib

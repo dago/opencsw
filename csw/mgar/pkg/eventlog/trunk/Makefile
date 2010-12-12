@@ -1,5 +1,5 @@
-GARNAME = eventlog
-GARVERSION = 0.2.9
+NAME = eventlog
+VERSION = 0.2.9
 CATEGORIES = lib
 
 DESCRIPTION = Replacement of the simple syslog() API providing structure to messages.
@@ -18,10 +18,10 @@ PACKAGES = CSWeventlog
 CATALOGNAME = eventlog
 
 MASTER_SITES = http://www.balabit.com/downloads/files/eventlog/0.2/
-DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)_$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

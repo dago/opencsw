@@ -1,5 +1,5 @@
-GARNAME = openoffice
-GARVERSION = 2.2.1
+NAME = openoffice
+VERSION = 2.2.1
 SRCNUM=680
 MILESTONE=m18
 CATEGORIES = apps
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 
-MASTER_SITES = ftp://openoffice.cict.fr/openoffice/stable/$(GARVERSION)/
-DISTFILES  = OOo_$(GARVERSION)_src_core.tar.bz2
-DISTFILES += OOo_$(GARVERSION)_src_system.tar.bz2
-DISTFILES += OOo_$(GARVERSION)_src_binfilter.tar.bz2
-DISTFILES += OOo_$(GARVERSION)_src_l10n.tar.bz2
+MASTER_SITES = ftp://openoffice.cict.fr/openoffice/stable/$(VERSION)/
+DISTFILES  = OOo_$(VERSION)_src_core.tar.bz2
+DISTFILES += OOo_$(VERSION)_src_system.tar.bz2
+DISTFILES += OOo_$(VERSION)_src_binfilter.tar.bz2
+DISTFILES += OOo_$(VERSION)_src_l10n.tar.bz2
 
 # Mozilla prebuild libraries 
 DISTFILES += SOLARISC52Iinc SOLARISC52Ilib SOLARISC52Iruntime SOLARISC52Sinc SOLARISC52Slib SOLARISC52Sruntime

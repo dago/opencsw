@@ -1,5 +1,5 @@
-GARNAME = freeradius
-GARVERSION = 2.1.10
+NAME = freeradius
+VERSION = 2.1.10
 CATEGORIES = server
 
 DESCRIPTION = A free RADIUS server implementation
@@ -8,13 +8,13 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.freeradius.org:/pub/freeradius/
-DISTFILES  = $(GARNAME)-server-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-server-$(VERSION).tar.gz
 DISTFILES += cswfreeradius
 DISTFILES += server.pem
 DISTFILES += ca.pem
-DISTNAME = $(GARNAME)-server-$(GARVERSION)
+DISTNAME = $(NAME)-server-$(VERSION)
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://freeradius.org/
 
@@ -29,7 +29,7 @@ GARCOMPILER = GCC4
 EXTRA_CFLAGS  = -I/opt/csw/include
 
 # Put libraries (including all of the modules) in /opt/csw/lib/freeradius
-libdir     = $(abspath $(libdir_install)/$(GARNAME)/$(MM_LIBDIR))
+libdir     = $(abspath $(libdir_install)/$(NAME)/$(MM_LIBDIR))
 
 # Put the config in the recommended /etc/opt/csw tree
 sysconfdir = /etc$(prefix)
@@ -105,7 +105,7 @@ EXTRA_MERGE_EXCLUDE_FILES += $(raddbdir)/sql/oracle/.*
 ## Individual Package definitions start here
 
 PACKAGES += CSWfreeradius
-CATALOGNAME_CSWfreeradius = $(GARNAME)
+CATALOGNAME_CSWfreeradius = $(NAME)
 SPKG_DESC_CSWfreeradius = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWfreeradius += CSWlibpcap

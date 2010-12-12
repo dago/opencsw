@@ -1,5 +1,5 @@
-GARNAME = taglib
-GARVERSION = 1.6.3
+NAME = taglib
+VERSION = 1.6.3
 CATEGORIES = lib
 
 DESCRIPTION = Library for reading and editing the meta-data of several popular audio formats
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://developer.kde.org/~wheeler/files/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = 0001-Make-sure-m64-is-passed-to-the-linker.patch
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = COPYING.MPL
 

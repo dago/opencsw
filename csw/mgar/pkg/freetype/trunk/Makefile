@@ -1,5 +1,5 @@
-GARNAME = freetype
-GARVERSION = 2.4.2
+NAME = freetype
+VERSION = 2.4.2
 CATEGORIES = lib
 
 DESCRIPTION = A free and portable TrueType font rendering engine
@@ -15,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_USE_SF = 1

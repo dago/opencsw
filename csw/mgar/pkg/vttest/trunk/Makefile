@@ -1,5 +1,5 @@
-GARNAME = vttest
-GARVERSION = 20071216
+NAME = vttest
+VERSION = 20071216
 CATEGORIES = utils
 
 DESCRIPTION = Tool for testing VT100 compatibility of terminals
@@ -11,9 +11,9 @@ as variants of xterm.
 endef
 
 MASTER_SITES = ftp://invisible-island.net/vttest/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
-UFILES_REGEX = $(GARNAME)-(\d+).tgz
+UFILES_REGEX = $(NAME)-(\d+).tgz
 
 TEST_SCRIPTS =
 

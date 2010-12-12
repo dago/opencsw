@@ -1,5 +1,5 @@
-GARNAME = gdmap
-GARVERSION = 0.8.1
+NAME = gdmap
+VERSION = 0.8.1
 CATEGORIES = utils
 
 DESCRIPTION = GdMap is a tool which allows to visualize disk space
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWlibatk CSWlibcairo CSWlibxml2 CSWpango
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)

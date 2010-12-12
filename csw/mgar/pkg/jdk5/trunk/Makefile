@@ -1,6 +1,6 @@
-GARNAME = jdk5
+NAME = jdk5
 SPKG_VERSION = 1.5.0_19
-GARVERSION = $(shell echo $(SPKG_VERSION) | sed -e 's/\./_/g')
+VERSION = $(shell echo $(SPKG_VERSION) | sed -e 's/\./_/g')
 CATEGORIES = lang
 
 DESCRIPTION = Java Development Kit 5.0
@@ -16,8 +16,8 @@ SUFFIXES_i386  = i586 amd64
 SUFFIXES = $(SUFFIXES_sparc) $(SUFFIXES_i386)
 
 DISTNAME = jdk$(SPKG_VERSION)
-DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(GARVERSION)-solaris-$S.sh)
-NOEXTRACT  = $(foreach S,$(filter-out $(SUFFIXES_$(GARCH)),$(SUFFIXES)),jdk-$(GARVERSION)-solaris-$S.sh)
+DISTFILES  = $(foreach S,$(SUFFIXES),jdk-$(VERSION)-solaris-$S.sh)
+NOEXTRACT  = $(foreach S,$(filter-out $(SUFFIXES_$(GARCH)),$(SUFFIXES)),jdk-$(VERSION)-solaris-$S.sh)
 
 PACKAGES = CSWjdk5 CSWjre5
 
@@ -72,7 +72,7 @@ extract-archive-%.sh: shell-extract-%.sh
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 
 	@rm -rf $(DESTDIR)$(prefix)/java
 	@ginstall -d $(DESTDIR)$(prefix)/java/jdk

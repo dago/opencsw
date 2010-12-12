@@ -4,8 +4,8 @@
 
 GSHHS_VERSION = 2.1.0
 
-GARNAME = gmtcoast
-GARVERSION = $(GSHHS_VERSION)
+NAME = gmtcoast
+VERSION = $(GSHHS_VERSION)
 CATEGORIES = apps
 DESCRIPTION = Coastline Definition Files for Generic Mapping Tools
 define BLURB
@@ -36,7 +36,7 @@ WORKSRC = $(WORKDIR)
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	@rm -rf $(DESTDIR)$(datadir)/coast
 	@ginstall -d $(DESTDIR)$(datadir)/coast
 	@cp -r $(WORKSRC)/share/coast/* $(DESTDIR)$(datadir)/coast/

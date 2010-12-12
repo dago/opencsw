@@ -1,5 +1,5 @@
-GARNAME = XML-SemanticDiff
-GARVERSION = 0.95
+NAME = XML-SemanticDiff
+VERSION = 0.95
 CATEGORIES = cpan
 AUTHOR = KHAMPTON
 

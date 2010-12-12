@@ -1,5 +1,5 @@
-GARNAME = supybot
-GARVERSION = 0.83.4.1
+NAME = supybot
+VERSION = 0.83.4.1
 CATEGORIES = python
 
 DESCRIPTION = Robust, user-friendly, and extensible IRC bot
@@ -14,7 +14,7 @@ endef
 
 SPKG_SOURCEURL = http://supybot.com/
 MASTER_SITES = $(SF_MIRRORS)
-DISTNAME = Supybot-$(GARVERSION)
+DISTNAME = Supybot-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
 ARCHALL = 1
@@ -25,7 +25,7 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: DOCS=ChangeLog ACKS docs/*
 post-install-modulated: MANDEST=$(DESTDIR)$(mandir)/man1
 post-install-modulated:

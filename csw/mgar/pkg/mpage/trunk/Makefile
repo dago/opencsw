@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = mpage
-GARVERSION = 2.5.6
+NAME = mpage
+VERSION = 2.5.6
 CATEGORIES = apps
 
 DESCRIPTION = Print several pages on a single sheet of paper.
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.mesa.nl/pub/mpage/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

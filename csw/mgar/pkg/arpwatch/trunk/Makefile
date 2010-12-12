@@ -1,5 +1,5 @@
-GARNAME = arpwatch
-GARVERSION = 2.1a15
+NAME = arpwatch
+VERSION = 2.1a15
 CATEGORIES = server
 
 DESCRIPTION = A network monitoring tool for tracking IP/MAC addresses on a network.
@@ -8,13 +8,13 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.ee.lbl.gov/
-DISTFILES = $(GARNAME).tar.gz
+DISTFILES = $(NAME).tar.gz
 DISTFILES += $(call admfiles,CSWarpwatch,depend prototype)
 # Smf/init stuffs
 DISTFILES += cswarpwatch.xml svc-cswarpwatch cswarpwatch arpwatch.conf
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # This patch add an system header include 
 # in arpwatch.h so u_int32 is defined
@@ -56,6 +56,6 @@ pre-install:
 post-install: 
 	@echo " ==> Running make install-man in $(WORKSRC)"
 	$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(WORKSRC) $(INSTALL_ARGS) install-man
-	@ginstall -D $(WORKSRC)/ethercodes.dat $(DESTDIR)$(sharedstatedir)/$(GARNAME)/ethercodes.dat
+	@ginstall -D $(WORKSRC)/ethercodes.dat $(DESTDIR)$(sharedstatedir)/$(NAME)/ethercodes.dat
 	@$(MAKECOOKIE)
 

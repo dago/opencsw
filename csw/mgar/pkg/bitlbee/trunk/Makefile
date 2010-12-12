@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = bitlbee
-GARVERSION = 1.2.8
+NAME = bitlbee
+VERSION = 1.2.8
 CATEGORIES = apps
 
 DESCRIPTION = An IRC to other chat networks gateway
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://get.bitlbee.org/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # Use these patches until this is fixed:
 #   http://bugs.bitlbee.org/bitlbee/ticket/667
@@ -28,7 +28,7 @@ PATCHFILES += 0006-Remove-definition-on-Solaris-confusing-includes.patch
 PATCHFILES += 0007-Honour-CPPFLAGS.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS = CSWossldevel CSWlibevent-devel CSWggettext CSWglib2devel
 RUNTIME_DEP_PKGS = CSWosslrt CSWlibevent CSWggettextrt CSWglib2

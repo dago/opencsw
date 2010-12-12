@@ -1,5 +1,5 @@
-GARNAME = Perl6-Export-Attrs
-GARVERSION = 0.0.3
+NAME = Perl6-Export-Attrs
+VERSION = 0.0.3
 CATEGORIES = cpan
 AUTHOR = DCONWAY
 

@@ -1,7 +1,7 @@
-GARNAME = ruby
+NAME = ruby
 DISTVERSION = 1.8.7
 PATCHLEVEL = p302
-GARVERSION = $(DISTVERSION)
+VERSION = $(DISTVERSION)
 CATEGORIES = lang
 
 TEST_SCRIPTS =
@@ -78,9 +78,9 @@ MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-p(\d+).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-p(\d+).tar.bz2
 
-DISTFILES  = $(GARNAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
+DISTFILES  = $(NAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
 
 # See: http://rubyforge.org/tracker/index.php?func=detail&aid=17607&group_id=426&atid=1698
 PATCHFILES = rdoc_parse_order_fix.patch
@@ -102,7 +102,7 @@ CONFIGURE_ARGS += --enable-install-doc
 
 INSTALL_ARGS = install
 
-DISTNAME = $(GARNAME)-$(GARVERSION)-$(PATCHLEVEL)
+DISTNAME = $(NAME)-$(VERSION)-$(PATCHLEVEL)
 
 # We want libruby-static.a to ship.  mkmf tests for various things using it.
 MERGE_EXCLUDE_STATICLIBS = 

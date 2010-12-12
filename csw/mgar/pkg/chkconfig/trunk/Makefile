@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = chkconfig
-GARVERSION = 1.3.30c
+NAME = chkconfig
+VERSION = 1.3.30c
 CATEGORIES = utils
 
 DESCRIPTION = RedHat alternatives engine with CSW customizations
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.sfr-fresh.com/unix/privat/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWalternatives.i.cswalternatives
 DISTFILES += CSWalternatives.r.cswalternatives
 PATCHFILES = alloca.patch
@@ -20,12 +20,12 @@ PATCHFILES += 0001-Add-missing-include-to-alloca.h.patch
 PATCHFILES += 0002-Don-t-use-named-struct-initializers.patch
 PATCHFILES += 0003-Fix-manpage-to-use-csw-pathes.patch
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWchkconfig CSWalternatives
 
-SPKG_DESC_CSWchkconfig = Checkconfig engine from Red Hat chkconfig-$(GARVERSION)
-SPKG_DESC_CSWalternatives = Alternatives engine from Red Hat chkconfig-$(GARVERSION)
+SPKG_DESC_CSWchkconfig = Checkconfig engine from Red Hat chkconfig-$(VERSION)
+SPKG_DESC_CSWalternatives = Alternatives engine from Red Hat chkconfig-$(VERSION)
 
 RUNTIME_DEP_PKGS  = CSWggettextrt CSWlibpopt
 

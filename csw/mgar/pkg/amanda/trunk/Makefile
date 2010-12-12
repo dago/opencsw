@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = amanda
-GARVERSION = 3.2.0
+NAME = amanda
+VERSION = 3.2.0
 CATEGORIES = apps
 
 DESCRIPTION = The Advanced Maryland Automatic Network Disk Archiver
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS = CSWperl CSWreadline CSWlibidn CSWglib2 CSWsasl CSWlibcares CSWggettextrt CSWzlib CSWoldaprt
 DEP_PKGS += CSWcurlrt CSWosslrt CSWlibnet

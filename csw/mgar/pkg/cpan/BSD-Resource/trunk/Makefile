@@ -1,5 +1,5 @@
-GARNAME = BSD-Resource
-GARVERSION = 1.28
+NAME = BSD-Resource
+VERSION = 1.28
 CATEGORIES = cpan
 AUTHOR = JHI
 

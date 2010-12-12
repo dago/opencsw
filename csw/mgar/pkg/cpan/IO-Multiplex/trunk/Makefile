@@ -1,5 +1,5 @@
-GARNAME = IO-Multiplex
-GARVERSION = 1.10
+NAME = IO-Multiplex
+VERSION = 1.10
 CATEGORIES = cpan
 AUTHOR = BBB
 

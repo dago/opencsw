@@ -1,5 +1,5 @@
-GARNAME = iftop
-GARVERSION = 0.17
+NAME = iftop
+VERSION = 0.17
 CATEGORIES = net
 
 DESCRIPTION = Display bandwidth usage on an interface by host
@@ -11,10 +11,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.ex-parrot.com/~pdw/iftop/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

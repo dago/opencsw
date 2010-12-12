@@ -1,5 +1,5 @@
-GARNAME = wput
-GARVERSION = 0.6.2
+NAME = wput
+VERSION = 0.6.2
 CATEGORIES = utils
 
 DESCRIPTION = the opposite of wget: a command line ftp client
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 SPKG_SOURCEURL = http://wput.sourceforge.net
 

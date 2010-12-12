@@ -1,5 +1,5 @@
-GARNAME = Crypt-OpenSSL-Bignum
-GARVERSION = 0.04
+NAME = Crypt-OpenSSL-Bignum
+VERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = IROBERTS
 

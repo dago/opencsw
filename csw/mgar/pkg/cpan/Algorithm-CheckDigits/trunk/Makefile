@@ -1,5 +1,5 @@
-GARNAME = Algorithm-CheckDigits
-GARVERSION = 0.53
+NAME = Algorithm-CheckDigits
+VERSION = 0.53
 CATEGORIES = cpan
 AUTHOR = MAMAWE
 

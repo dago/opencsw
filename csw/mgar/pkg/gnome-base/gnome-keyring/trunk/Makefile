@@ -2,17 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = gnome-keyring
+NAME = gnome-keyring
 GNOME_VERSION = 2.28
-GARVERSION = $(GNOME_VERSION).2
+VERSION = $(GNOME_VERSION).2
 CATEGORIES = gnome
 DESCRIPTION = Stores passwords and encryption keys in an encrypted file
 define BLURB
 endef
 SPKG_SOURCEURL = http://live.gnome.org/GnomeKeyring
-MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(GARNAME)/$(GNOME_VERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = http://ftp.gnome.org/pub/GNOME/sources/$(NAME)/$(GNOME_VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME_CSWgnomekeyring = gnomekeyring
 PACKAGES = CSWgnomekeyring
 CONFIGURE_ARGS = $(DIRPATHS)

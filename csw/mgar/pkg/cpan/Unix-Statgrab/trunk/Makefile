@@ -1,5 +1,5 @@
-GARNAME = Unix-Statgrab
-GARVERSION = 0.04
+NAME = Unix-Statgrab
+VERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = VPARSEVAL
 

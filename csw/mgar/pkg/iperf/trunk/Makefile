@@ -6,8 +6,8 @@
 #   - iperf_LDFLAGS: use LDFLAGS instead of CFLAGS
 # * #ifndef INT*_{MIN,MAX} in include/iperf-int.h to avoid redefined warnings
 #
-GARNAME = iperf
-GARVERSION = 2.0.4
+NAME = iperf
+VERSION = 2.0.4
 CATEGORIES = net
 
 DESCRIPTION = Internet Protocol bandwidth measuring tool 
@@ -20,8 +20,8 @@ endef
 
 VENDOR_URL   = http://iperf.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=128336
 UPSTREAM_USE_SF = 1
@@ -62,7 +62,7 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 post-install-modulated: DOCS = ChangeLog AUTHORS
-post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)

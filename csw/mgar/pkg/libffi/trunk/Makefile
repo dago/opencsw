@@ -1,5 +1,5 @@
-GARNAME = libffi
-GARVERSION = 3.0.9
+NAME = libffi
+VERSION = 3.0.9
 CATEGORIES = lib
 
 DESCRIPTION = A portable foreign function interface library
@@ -15,7 +15,7 @@ endef
 
 MASTER_SITES = ftp://sourceware.org/pub/libffi/
 SPKG_SOURCEURL = http://sourceware.org/libffi/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # Not needed unless using SOS compiler
 PATCHFILES += Makefile.in.patch
 # Not really needed for build, but for SOS compiler using libffi
@@ -41,7 +41,7 @@ RUNTIME_DEP_PKGS_CSWlibffidevel += CSWlibffi
 
 CHECKPKG_OVERRIDES_CSWlibffidevel += surplus-dependency|CSWlibffi
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 

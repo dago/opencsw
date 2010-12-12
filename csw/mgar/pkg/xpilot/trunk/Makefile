@@ -1,5 +1,5 @@
-GARNAME = xpilot
-GARVERSION = 4.5.5
+NAME = xpilot
+VERSION = 4.5.5
 CATEGORIES = net
 
 DESCRIPTION = multi-player 2D space game
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PATCHFILES = query.c.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release

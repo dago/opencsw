@@ -1,5 +1,5 @@
-GARNAME = cswpkgloghooks
-GARVERSION = 1.1.1
+NAME = cswpkgloghooks
+VERSION = 1.1.1
 CATEGORIES = utils
 
 VENDOR_URL = http://opencsw.org
@@ -35,10 +35,10 @@ PREHOOKS = preupgrade
 HOOKS = $(PREHOOKS) $(POSTHOOKS)
 
 install-custom:
-	@echo Installing CSW$(GARNAME) files...
-	@( ginstall -m 0755 -d $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/ $(HOOKDIR) $(addprefix $(HOOKDIR)/,$(addsuffix .d,$(HOOKS))); \
-	  ginstall -m 0644 $(FILEDIR)/README $(DESTDIR)/opt/csw/share/doc/$(GARNAME)/; \
-	  ginstall -m 0755 $(FILEDIR)/01-CSW$(GARNAME)-postupgrade $(HOOKDIR)/postupgrade.d/; \
-	  ln $(HOOKDIR)/postupgrade.d/01-CSW$(GARNAME)-postupgrade $(HOOKDIR)/postinstall.d/01-CSW$(GARNAME)-postinstall; \
-	  ln $(HOOKDIR)/postupgrade.d/01-CSW$(GARNAME)-postupgrade $(HOOKDIR)/postremove.d/01-CSW$(GARNAME)-postremove; \
-	  ginstall -m 0755 $(FILEDIR)/01-CSW$(GARNAME)-preupgrade $(HOOKDIR)/preupgrade.d/;)
+	@echo Installing CSW$(NAME) files...
+	@( ginstall -m 0755 -d $(DESTDIR)/opt/csw/share/doc/$(NAME)/ $(HOOKDIR) $(addprefix $(HOOKDIR)/,$(addsuffix .d,$(HOOKS))); \
+	  ginstall -m 0644 $(FILEDIR)/README $(DESTDIR)/opt/csw/share/doc/$(NAME)/; \
+	  ginstall -m 0755 $(FILEDIR)/01-CSW$(NAME)-postupgrade $(HOOKDIR)/postupgrade.d/; \
+	  ln $(HOOKDIR)/postupgrade.d/01-CSW$(NAME)-postupgrade $(HOOKDIR)/postinstall.d/01-CSW$(NAME)-postinstall; \
+	  ln $(HOOKDIR)/postupgrade.d/01-CSW$(NAME)-postupgrade $(HOOKDIR)/postremove.d/01-CSW$(NAME)-postremove; \
+	  ginstall -m 0755 $(FILEDIR)/01-CSW$(NAME)-preupgrade $(HOOKDIR)/preupgrade.d/;)

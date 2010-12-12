@@ -1,5 +1,5 @@
-GARNAME = MailTools
-GARVERSION = 2.06
+NAME = MailTools
+VERSION = 2.06
 CATEGORIES = cpan
 AUTHOR = MARKOV
 

@@ -1,5 +1,5 @@
-GARNAME = prefork
-GARVERSION = 1.04
+NAME = prefork
+VERSION = 1.04
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

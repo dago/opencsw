@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header$
 
-GARNAME = keychain
-GARVERSION = 2.7.0
+NAME = keychain
+VERSION = 2.7.0
 CATEGORIES = utils
 
 DESCRIPTION = Convenient ssh-agent and gpg-agent manager
@@ -19,11 +19,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.funtoo.org/archive/keychain/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PATCHFILES += bash.patch
 PATCHFILES += gsed.patch
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
@@ -46,8 +46,8 @@ install-keychain:
 	ginstall -m 755 $(WORKSRC)/keychain $(DESTDIR)$(bindir_install)
 	ginstall -d $(DESTDIR)$(mandir)/man1
 	ginstall -m 644 $(WORKSRC)/keychain.1 $(DESTDIR)$(mandir)/man1/
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	ginstall $(WORKSRC)/README.rst $(DESTDIR)$(docdir)/$(GARNAME)
-	ginstall $(WORKSRC)/ChangeLog $(DESTDIR)$(docdir)/$(GARNAME)
-	ginstall $(WORKSRC)/keychain.pod $(DESTDIR)$(docdir)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	ginstall $(WORKSRC)/README.rst $(DESTDIR)$(docdir)/$(NAME)
+	ginstall $(WORKSRC)/ChangeLog $(DESTDIR)$(docdir)/$(NAME)
+	ginstall $(WORKSRC)/keychain.pod $(DESTDIR)$(docdir)/$(NAME)
 	@$(MAKECOOKIE)

@@ -1,4 +1,4 @@
-GARNAME = kdeutils
+NAME = kdeutils
 CATEGORIES = kde
 
 DESCRIPTION = Utilities for the KDE (gcc3)

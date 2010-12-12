@@ -1,8 +1,8 @@
-GARNAME = pysqlite
-GARVERSION = 2.5.6
+NAME = pysqlite
+VERSION = 2.5.6
 CATEGORIES = lang
 
-RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
+RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 
 DESCRIPTION = SQLite3 support for Python
 define BLURB
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWpysqlite2
 RUNTIME_DEP_PKGS_CSWpysqlite2 = CSWpython CSWsqlite3rt

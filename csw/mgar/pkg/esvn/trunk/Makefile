@@ -1,6 +1,6 @@
-GARNAME = esvn
-GARVERSION = 0.6.11_1
-DISTVERSION = $(subst _,-,$(GARVERSION))
+NAME = esvn
+VERSION = 0.6.11_1
+DISTVERSION = $(subst _,-,$(VERSION))
 CATEGORIES = utils
 
 DESCRIPTION = A GUI frontend to the Subversion revision system
@@ -9,11 +9,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://esvn.umputun.com/
-DISTFILES = $(GARNAME)-$(DISTVERSION).tar.gz
-WORKSRC = $(WORKDIR)/$(GARNAME)
+DISTFILES = $(NAME)-$(DISTVERSION).tar.gz
+WORKSRC = $(WORKDIR)/$(NAME)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Specs and pre-built prototypes
 #DISTFILES += CSWesvn.gspec

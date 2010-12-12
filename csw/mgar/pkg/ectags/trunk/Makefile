@@ -1,5 +1,5 @@
-GARNAME = ctags
-GARVERSION = 5.8
+NAME = ctags
+VERSION = 5.8
 CATEGORIES = utils
 
 DESCRIPTION = Exuberant Ctags: A multilanguage implementation of Ctags
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 
 # Respect DESTDIR
 PATCHFILES = install.diff

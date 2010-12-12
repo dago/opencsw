@@ -1,5 +1,5 @@
-GARNAME = IO-Pager
-GARVERSION = 0.06
+NAME = IO-Pager
+VERSION = 0.06
 CATEGORIES = cpan
 AUTHOR = JPIERCE
 
@@ -10,10 +10,10 @@ define BLURB
   elsewhere such as IO::Pager::Buffered and IO::Pager::Unbuffered.
 endef
 
-MODDIST   = $(GARNAME)-$(GARVERSION).tgz
+MODDIST   = $(NAME)-$(VERSION).tgz
 DISTFILES = $(call admfiles,CSWpmiopager,depend prototype)
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 # Tests are mostly visual verification
 TEST_SCRIPTS =

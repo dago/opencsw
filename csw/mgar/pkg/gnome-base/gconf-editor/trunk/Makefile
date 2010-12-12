@@ -1,6 +1,6 @@
-GARNAME = gconfeditor
+NAME = gconfeditor
 GNOME_PROJ = gconf-editor
-GARVERSION = 2.30.0
+VERSION = 2.30.0
 CATEGORIES = gnome
 
 DESCRIPTION = GNOME configuration system editor
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GNOME_PROJ)-$(GARVERSION).tar.bz2
-DISTNAME = $(GNOME_PROJ)-$(GARVERSION)
+DISTFILES  = $(GNOME_PROJ)-$(VERSION).tar.bz2
+DISTNAME = $(GNOME_PROJ)-$(VERSION)
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 #SPKG_SOURCEURL = http://projects.gnome.org/gconf/
 

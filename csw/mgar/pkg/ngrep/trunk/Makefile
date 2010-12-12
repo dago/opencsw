@@ -1,5 +1,5 @@
-GARNAME = ngrep
-GARVERSION = 1.45
+NAME = ngrep
+VERSION = 1.45
 CATEGORIES = net
 
 DESCRIPTION = Network grep
@@ -15,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWngrep,depend)
 PATCHFILES = gar-base.diff
 

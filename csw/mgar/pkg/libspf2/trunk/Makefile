@@ -1,5 +1,5 @@
-GARNAME = libspf2
-GARVERSION = 1.2.9
+NAME = libspf2
+VERSION = 1.2.9
 CATEGORIES = lib
 
 DESCRIPTION = Library that implements Sender Policy Framework
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.libspf2.org/spf/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.libspf2.org
 

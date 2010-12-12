@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = libdnet
-GARVERSION = 1.11
+NAME = libdnet
+VERSION = 1.11
 CATEGORIES = lib
 
 DESCRIPTION = A simplified, portable interface to several low-level networking routines
@@ -8,10 +8,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE
 

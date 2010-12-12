@@ -2,8 +2,8 @@
 #
 # ! build state unknown, work in progress, please verify
 #
-GARNAME = ucarp
-GARVERSION = 1.5.2
+NAME = ucarp
+VERSION = 1.5.2
 CATEGORIES = apps
 
 DESCRIPTION = UCARP is a portable implementation of the CARP protocol. 
@@ -16,8 +16,8 @@ endef
 
 VENDOR_URL   = http://www.ucarp.org/project/ucarp
 MASTER_SITES = http://download.pureftpd.org/pub/ucarp/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

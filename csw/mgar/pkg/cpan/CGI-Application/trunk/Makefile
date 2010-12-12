@@ -1,5 +1,5 @@
-GARNAME = CGI-Application
-GARVERSION = 4.06
+NAME = CGI-Application
+VERSION = 4.06
 CATEGORIES = cpan
 AUTHOR = MARKSTOS
 

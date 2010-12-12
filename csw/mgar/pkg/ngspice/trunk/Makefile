@@ -1,5 +1,5 @@
-GARNAME = ngspice
-GARVERSION = 20
+NAME = ngspice
+VERSION = 20
 CATEGORIES = apps
 
 
@@ -8,8 +8,8 @@ define BLURB
   Long description
 endef
 
-MASTER_SITES = http://downloads.sourceforge.net/project/ngspice/ng-spice-rework/$(GARVERSION)/
-DISTFILES  = ng-spice-rework-$(GARVERSION).tar.gz
+MASTER_SITES = http://downloads.sourceforge.net/project/ngspice/ng-spice-rework/$(VERSION)/
+DISTFILES  = ng-spice-rework-$(VERSION).tar.gz
 PATCHFILES = fix-missing-include-in-src-spicelib-parser-inpptree.c.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)

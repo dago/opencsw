@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = file
-GARVERSION = 5.04
+NAME = file
+VERSION = 5.04
 CATEGORIES = utils
 
 define BLURB
@@ -13,8 +13,8 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.astron.com/pub/file/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://www.darwinsys.com/file/
 CONFIGURE_ARGS = $(DIRPATHS)
 # These flags are not understood by Sun Studio

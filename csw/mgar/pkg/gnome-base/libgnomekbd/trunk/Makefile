@@ -1,5 +1,5 @@
-GARNAME = libgnomekbd
-GARVERSION = 2.28.2
+NAME = libgnomekbd
+VERSION = 2.28.2
 CATEGORIES = gnome
 
 DESCRIPTION = Package contains xkb hooks used by the GNOME desktop. 
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.gnome.org/pub/gnome/sources/libgnomekbd/2.28/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PACKAGES = CSWlibgnomekbd CSWlibgnomekbddevel
 CATALOGNAME_CSWlibgnomekbd = libgnomekbd
 CATALOGNAME_CSWlibgnomekbddevel = libgnomekbd_devel
@@ -19,7 +19,7 @@ SPKG_DESC_CSWlibgnomekbddevel = $(DESCRIPTION) development files
 PKGFILES_CSWlibgnomekbddevel = $(PKGFILES_DEVEL)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS += CSWdbusglib
 RUNTIME_DEP_PKGS += CSWfconfig

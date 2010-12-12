@@ -1,5 +1,5 @@
-GARNAME      = apache-tomcat7
-GARVERSION   = 7.0.4
+NAME      = apache-tomcat7
+VERSION   = 7.0.4
 CATEGORIES   = server
 
 DESCRIPTION  =  Apache Jakarta Tomcat 7 Servlet/JSP Container
@@ -8,8 +8,8 @@ Apache Tomcat is the servlet container that is used in the official Reference Im
 endef
 
 MASTER_SITES  = http://mirror.switch.ch/mirror/apache/dist//tomcat/tomcat-7/v7.0.4-beta/bin/
-DISTFILES     = apache-tomcat-$(GARVERSION).tar.gz
-PKGDIST       = apache-tomcat-$(GARVERSION).tar.gz
+DISTFILES     = apache-tomcat-$(VERSION).tar.gz
+PKGDIST       = apache-tomcat-$(VERSION).tar.gz
 DISTFILES    += CSWtomcat7.gspec CSWtomcat7.prototype CSWtomcat7.depend preremove postinstall preinstall checkinstall space i.smfno i.smfyes svc-tomcat7 tomcat7.xml tomcat7 cswtomcat7
 LICENSE       = LICENSE
 
@@ -36,7 +36,7 @@ build-none:
 	@$(MAKECOOKIE)
 
 post-extract:
-	( mv $(WORKDIR)/apache-tomcat-$(GARVERSION) $(WORKDIR)/$(DISTNAME) )
+	( mv $(WORKDIR)/apache-tomcat-$(VERSION) $(WORKDIR)/$(DISTNAME) )
 	( OLDDIR=`pwd` && cd $(WORKDIR)/$(DISTNAME)/conf && for i in `find . -type f` ; do mv $$i $$i.CSW ; done && cd $$OLDDIR )
 	( for i in temp work logs conf ; do  find $(WORKDIR)/$(DISTNAME)/$$i -type d -exec chmod 0750 {} \;  ; find $(WORKDIR)/$(DISTNAME)/$$i -type f -exec chmod 0640 {} \; ; done )
 	@$(MAKECOOKIE)
@@ -49,26 +49,26 @@ install-tomcat:
 	( mkdir -p $(DESTDIR)/etc/rc2.d )
 	( mkdir -p $(DESTDIR)/etc/rc3.d )
 	( mkdir -p $(DESTDIR)/etc/rcS.d )
-	( mkdir -p $(DESTDIR)/opt/csw/etc/$(GARNAME) )
-	( mkdir -p $(DESTDIR)/var/opt/csw/$(GARNAME) )
+	( mkdir -p $(DESTDIR)/opt/csw/etc/$(NAME) )
+	( mkdir -p $(DESTDIR)/var/opt/csw/$(NAME) )
 	( mkdir -p $(DESTDIR)/opt/csw/share )
 	( mkdir -p $(DESTDIR)/etc/opt/csw )
-	( cp -fr $(WORKDIR)/$(DISTNAME) $(DESTDIR)/opt/csw/share/$(GARNAME) )
-	( cp -fr $(FILEDIR)/$(GARNAME) $(DESTDIR)/etc/opt/csw/$(GARNAME) )
-	( cp -fr $(FILEDIR)/csw$(GARNAME) $(DESTDIR)/etc/init.d )
-	( mv     $(DESTDIR)/opt/csw/share/$(GARNAME)/conf $(DESTDIR)/opt/csw/etc/$(GARNAME)/conf )
-	( mv     $(DESTDIR)/opt/csw/share/$(GARNAME)/logs $(DESTDIR)/var/opt/csw/$(GARNAME) )
-	( mv     $(DESTDIR)/opt/csw/share/$(GARNAME)/work $(DESTDIR)/var/opt/csw/$(GARNAME) )
-	( mv     $(DESTDIR)/opt/csw/share/$(GARNAME)/temp $(DESTDIR)/var/opt/csw/$(GARNAME) )
-	( ln -s /opt/csw/etc/$(GARNAME)/conf $(DESTDIR)/opt/csw/share/$(GARNAME)/conf )
-	( ln -s /var/opt/csw/$(GARNAME)/logs $(DESTDIR)/opt/csw/share/$(GARNAME)/logs )
-	( ln -s /var/opt/csw/$(GARNAME)/work $(DESTDIR)/opt/csw/share/$(GARNAME)/work )
-	( ln -s /var/opt/csw/$(GARNAME)/temp $(DESTDIR)/opt/csw/share/$(GARNAME)/temp )
-	( ln -s /etc/init.d/cswtomcat7 $(DESTDIR)/etc/rc0.d/K17$(GARNAME) )
-	( ln -s /etc/init.d/cswtomcat7 $(DESTDIR)/etc/rc1.d/K17$(GARNAME) )
-	( ln -s /etc/init.d/cswtomcat7 $(DESTDIR)/etc/rc2.d/K17$(GARNAME) )
-	( ln -s /etc/init.d/cswtomcat7 $(DESTDIR)/etc/rc3.d/S51$(GARNAME) )
-	( ln -s /etc/init.d/cswtomcat7 $(DESTDIR)/etc/rcS.d/K17$(GARNAME) )
+	( cp -fr $(WORKDIR)/$(DISTNAME) $(DESTDIR)/opt/csw/share/$(NAME) )
+	( cp -fr $(FILEDIR)/$(NAME) $(DESTDIR)/etc/opt/csw/$(NAME) )
+	( cp -fr $(FILEDIR)/csw$(NAME) $(DESTDIR)/etc/init.d )
+	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/conf $(DESTDIR)/opt/csw/etc/$(NAME)/conf )
+	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/logs $(DESTDIR)/var/opt/csw/$(NAME) )
+	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/work $(DESTDIR)/var/opt/csw/$(NAME) )
+	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/temp $(DESTDIR)/var/opt/csw/$(NAME) )
+	( ln -s /opt/csw/etc/$(NAME)/conf $(DESTDIR)/opt/csw/share/$(NAME)/conf )
+	( ln -s /var/opt/csw/$(NAME)/logs $(DESTDIR)/opt/csw/share/$(NAME)/logs )
+	( ln -s /var/opt/csw/$(NAME)/work $(DESTDIR)/opt/csw/share/$(NAME)/work )
+	( ln -s /var/opt/csw/$(NAME)/temp $(DESTDIR)/opt/csw/share/$(NAME)/temp )
+	( ln -s /etc/init.d/cswtomcat7 $(DESTDIR)/etc/rc0.d/K17$(NAME) )
+	( ln -s /etc/init.d/cswtomcat7 $(DESTDIR)/etc/rc1.d/K17$(NAME) )
+	( ln -s /etc/init.d/cswtomcat7 $(DESTDIR)/etc/rc2.d/K17$(NAME) )
+	( ln -s /etc/init.d/cswtomcat7 $(DESTDIR)/etc/rc3.d/S51$(NAME) )
+	( ln -s /etc/init.d/cswtomcat7 $(DESTDIR)/etc/rcS.d/K17$(NAME) )
 	@$(MAKECOOKIE)
 
 

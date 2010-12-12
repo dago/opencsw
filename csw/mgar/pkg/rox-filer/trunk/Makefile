@@ -5,8 +5,8 @@
 # This software uses custom ways of executing. Gentoo portage uses wrappers to
 # set icon directories.
 
-GARNAME = rox-filer
-GARVERSION = 2.10
+NAME = rox-filer
+VERSION = 2.10
 CATEGORIES = apps
 DESCRIPTION = A lightweight X file manager
 define BLURB
@@ -14,8 +14,8 @@ endef
 SPKG_SOURCEURL = http://roscidus.com/desktop/ROX-Filer
 MASTER_SITES = $(SF_MIRRORS)
 SF_PROJ = rox
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 RUNTIME_DEP_PKGS_CSWroxfiler  = CSWbash
 RUNTIME_DEP_PKGS_CSWroxfiler += CSWfconfig
 RUNTIME_DEP_PKGS_CSWroxfiler += CSWftype2

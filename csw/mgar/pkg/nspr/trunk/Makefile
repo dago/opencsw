@@ -6,10 +6,10 @@
 # - http://sources.gentoo.org/viewcvs.py/gentoo-x86/dev-libs/nspr/nspr-4.8.ebuild?view=markup
 # - https://developer.mozilla.org/En/NSPR_build_instructions
 
-GARNAME = nspr
+NAME = nspr
 MAJOR_VERSION = 4
 MIN_VERSION = 8.6
-GARVERSION = $(MAJOR_VERSION).$(MIN_VERSION)
+VERSION = $(MAJOR_VERSION).$(MIN_VERSION)
 CATEGORIES = lib
 
 define BLURB
@@ -18,8 +18,8 @@ define BLURB
   many of Red Hat's, Sun's, and other software offerings.
 endef
 
-MASTER_SITES = https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v$(GARVERSION)/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v$(VERSION)/src/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 PATCHFILES  = nspr-4.6.1-config.patch
 
@@ -46,7 +46,7 @@ RUNTIME_DEP_PKGS_CSWlibnspr4-devel  = CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibnspr4-devel += CSWperl
 ARCHALL_CSWnspr = 1
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PERL = /opt/csw/bin/perl
 

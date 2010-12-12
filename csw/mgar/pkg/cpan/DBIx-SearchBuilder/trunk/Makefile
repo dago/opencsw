@@ -1,5 +1,5 @@
-GARNAME = DBIx-SearchBuilder
-GARVERSION = 1.45
+NAME = DBIx-SearchBuilder
+VERSION = 1.45
 CATEGORIES = cpan
 AUTHOR = JESSE
 

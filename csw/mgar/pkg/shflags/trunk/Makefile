@@ -2,16 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = shflags
-GARVERSION = 1.0.3
+NAME = shflags
+VERSION = 1.0.3
 CATEGORIES = apps
 DESCRIPTION = command-line flags module for Unix shell scripts
 define BLURB
 endef
 SPKG_SOURCEURL = http://code.google.com/p/shflags/
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =

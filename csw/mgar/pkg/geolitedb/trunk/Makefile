@@ -1,5 +1,5 @@
-GARNAME = geolitedb
-GARVERSION = 100302
+NAME = geolitedb
+VERSION = 100302
 CATEGORIES = net
 
 DESCRIPTION = Geolite country database
@@ -21,7 +21,7 @@ WORKSRC = $(WORKDIR)
 SPKG_SOURCEURL = http://www.maxmind.com/app/geolitecountry
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	@ginstall -d $(DESTDIR)/opt/csw/share/GeoIP
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc/geolitedb
 	@cp -r $(WORKSRC)/GeoIP.dat $(DESTDIR)/opt/csw/share/GeoIP/

@@ -1,5 +1,5 @@
-GARNAME = cpio
-GARVERSION = 2.10
+NAME = cpio
+VERSION = 2.10
 CATEGORIES = utils
 
 DESCRIPTION = GNU cpio
@@ -7,7 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # From http://bugs.gentoo.org/275295
 PATCHFILES = non-gnu-compiler.patch
@@ -16,7 +16,7 @@ PATCHDIRLEVEL = 0
 PACKAGES = CSWgcpio
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.gnu.org/software/cpio/
 

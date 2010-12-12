@@ -1,5 +1,5 @@
-GARNAME = Perl-Tidy
-GARVERSION = 20090616
+NAME = Perl-Tidy
+VERSION = 20090616
 CATEGORIES = cpan
 AUTHOR = SHANCOCK
 
@@ -16,7 +16,7 @@ ARCHALL = 1
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)

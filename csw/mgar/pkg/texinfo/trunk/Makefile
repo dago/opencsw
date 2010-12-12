@@ -1,5 +1,5 @@
-GARNAME = texinfo
-GARVERSION = 4.13a
+NAME = texinfo
+VERSION = 4.13a
 CATEGORIES = utils
 
 DESCRIPTION = The GNU Documentation System
@@ -9,20 +9,20 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWtexinfo.postinstall
 DISTFILES += mkdirentries
 
 SPKG_SOURCEURL = http://www.gnu.org/software/texinfo/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWbash CSWgsed CSWncurses CSWiconv CSWggettextrt
 # CSWgzip is needed for zdiff
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWgzip
 
-DISTNAME = $(GARNAME)-4.13
+DISTNAME = $(NAME)-4.13
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

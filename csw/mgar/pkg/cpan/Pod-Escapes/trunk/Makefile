@@ -1,5 +1,5 @@
-GARNAME = Pod-Escapes
-GARVERSION = 1.04
+NAME = Pod-Escapes
+VERSION = 1.04
 CATEGORIES = cpan
 AUTHOR = SBURKE
 

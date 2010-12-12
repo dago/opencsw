@@ -1,5 +1,5 @@
-GARNAME = gphoto2
-GARVERSION = 2.3.1
+NAME = gphoto2
+VERSION = 2.3.1
 CATEGORIES = utils
 
 DESCRIPTION = gphoto2 is a command-line frontend to libgphoto2
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES += $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWgphoto2,prototype depend)
 # 'cc' is a shell script to hack around libtool craziness
 DISTFILES += cc

@@ -1,9 +1,9 @@
-GARNAME = libmm
-GARVERSION = 1.4.2
+NAME = libmm
+VERSION = 1.4.2
 CATEGORIES = lib
 
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.3.1 1.4.2
+EXTRA_MODULATORS = VERSION
+MODULATIONS_VERSION = 1.3.1 1.4.2
 
 # No 64 bit for old version as it wasn't provided in the legacy version also
 SKIP_MODULATIONS = isa-amd64-garversion-1.3.1
@@ -21,15 +21,15 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.ossp.org/pkg/lib/mm/
-SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),mm-$(VERSION).tar.gz)
+SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_VERSION),mm-$(VERSION).tar.gz)
 DISTFILES  = $(SOURCEFILES)
 
-NOEXTRACT = $(filter-out mm-$(GARVERSION).tar.gz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out mm-$(VERSION).tar.gz,$(SOURCEFILES))
 
 PATCHFILES = 0001-libtool-cflags.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
@@ -37,7 +37,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.ossp.org/pkg/lib/mm/
 
-DISTNAME = mm-$(GARVERSION)
+DISTNAME = mm-$(VERSION)
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)

@@ -7,8 +7,8 @@
 #   formats properly (for now see install-preformatted-manpage: below).
 # * DESTDIR and --with-ssh handling could be fixed. See the Debian
 #   patch tracker: http://patch-tracker.debian.org/package/autossh/1.4b-1
-GARNAME = autossh
-GARVERSION = 1.4b
+NAME = autossh
+VERSION = 1.4b
 CATEGORIES = net
 
 DESCRIPTION = Automatically restart SSH sessions and tunnels
@@ -20,7 +20,7 @@ endef
 
 VENDOR_URL   = http://www.harding.motd.ca/autossh/
 MASTER_SITES = http://www.harding.motd.ca/autossh/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES    = $(NAME)-$(VERSION).tgz
 
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom preformatted-manpage
@@ -37,7 +37,7 @@ CHECKPKG_OVERRIDES_CSWautossh += license-missing
 include gar/category.mk
 
 # Makefile install target doesn't honor $(DESTDIR) so we install manually
-install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 install-custom: DOCS=CHANGES README
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir)

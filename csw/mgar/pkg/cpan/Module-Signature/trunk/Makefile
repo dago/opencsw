@@ -1,5 +1,5 @@
-GARNAME = Module-Signature
-GARVERSION = 0.63
+NAME = Module-Signature
+VERSION = 0.63
 CATEGORIES = cpan
 AUTHOR = FLORA
 

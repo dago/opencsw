@@ -1,5 +1,5 @@
-GARNAME = Class-Inspector
-GARVERSION = 1.24
+NAME = Class-Inspector
+VERSION = 1.24
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

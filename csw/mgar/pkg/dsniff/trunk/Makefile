@@ -1,5 +1,5 @@
-GARNAME = dsniff
-GARVERSION = 2.4b1
+NAME = dsniff
+VERSION = 2.4b1
 CATEGORIES = net
 
 DESCRIPTION = a collection of tools for network auditing and penetration testing
@@ -14,14 +14,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.monkey.org/~dugsong/dsniff/beta/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-DISTNAME = $(GARNAME)-2.4
+DISTNAME = $(NAME)-2.4
 
 RUNTIME_DEP_PKGS += CSWbdb3 CSWlibnet CSWlibnids CSWlibpcap CSWosslrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

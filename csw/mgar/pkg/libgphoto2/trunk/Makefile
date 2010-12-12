@@ -1,5 +1,5 @@
-GARNAME = libgphoto2
-GARVERSION = 2.3.1
+NAME = libgphoto2
+VERSION = 2.3.1
 CATEGORIES = lib
 
 DESCRIPTION = library to be used by applications to access digital cameras
@@ -12,7 +12,7 @@ endef
 PATCHFILES = sunstudio.patch
 
 MASTER_SITES += $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWlibgphoto2,depend \
 	prototype.i386.sol10 prototype.i386.sol8 \
 	prototype.sparc.sol10 prototype.sparc.sol8)
@@ -21,7 +21,7 @@ DISTFILES += sunstudio.patch
 DISTFILES += cc
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
@@ -54,7 +54,7 @@ else
 	export LIBUSB_CFLAGS
 endif
 
-PROTOTYPE=CSW$(GARNAME).prototype.$(OS_PLATFORM).sol$(OS_RELEASE)
+PROTOTYPE=CSW$(NAME).prototype.$(OS_PLATFORM).sol$(OS_RELEASE)
 
 #--with-exif-prefix=/opt/csw
 
@@ -71,8 +71,8 @@ include gar/category.mk
 
 post-extract:
 	(cd $(WORKSRC)/..; \
-	rm -f CSW$(GARNAME).prototype; \
-	ln -s $(PROTOTYPE) CSW$(GARNAME).prototype)
+	rm -f CSW$(NAME).prototype; \
+	ln -s $(PROTOTYPE) CSW$(NAME).prototype)
 
 post-configure:
 	(cd $(WORKSRC); \

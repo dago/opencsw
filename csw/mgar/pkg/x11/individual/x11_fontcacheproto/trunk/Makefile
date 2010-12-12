@@ -1,8 +1,8 @@
-GARVERSION = 0.1.3
+VERSION = 0.1.3
 CATEGORIES = x11
 PROTONAME = fontcacheproto
-GARNAME = x11_$(PROTONAME)
-DISTNAME = $(PROTONAME)-$(GARVERSION)
+NAME = x11_$(PROTONAME)
+DISTNAME = $(PROTONAME)-$(VERSION)
 
 DESCRIPTION = X11 Prototype headers for the Fontcache library 
 define BLURB
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_INDIVIDUAL_PROTO_MASTER_SITE)
-DISTFILES = $(PROTONAME)-$(GARVERSION).tar.gz
+DISTFILES = $(PROTONAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(PROTONAME)-(\d+(?:\.\d+)*).tar.gz

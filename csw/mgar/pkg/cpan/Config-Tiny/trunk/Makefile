@@ -1,5 +1,5 @@
-GARNAME = Config-Tiny
-GARVERSION = 2.12
+NAME = Config-Tiny
+VERSION = 2.12
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

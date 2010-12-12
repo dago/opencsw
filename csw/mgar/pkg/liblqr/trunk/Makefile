@@ -1,5 +1,5 @@
-GARNAME = liblqr
-GARVERSION = 0.4.1
+NAME = liblqr
+VERSION = 0.4.1
 CATEGORIES = lib
 
 DESCRIPTION = A seam-carving C/C++ library called Liquid Rescale.
@@ -7,7 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://liblqr.wikidot.com/local--files/en:download-page/
-DISTNAME = $(GARNAME)-1-$(GARVERSION)
+DISTNAME = $(NAME)-1-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
 PACKAGES = CSWliblqr CSWliblqrdevel
@@ -27,7 +27,7 @@ SPKG_SOURCEURL = http://liblqr.wikidot.com/
 
 DOCFILES = AUTHORS BUGS COPYING COPYING.LESSER ChangeLog NEWS README TODO
 
-UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
+UFILES_REGEX = $(NAME)-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
 
 PATCHFILES += inline.diff
 PATCHFILES += examples.diff

@@ -1,5 +1,5 @@
-GARNAME = tiff
-GARVERSION = 3.9.2
+NAME = tiff
+VERSION = 3.9.2
 CATEGORIES = lib
 
 DESCRIPTION = Lib and tools for Tag Image File Format
@@ -7,8 +7,8 @@ define BLURB
 endef
 
 MASTER_SITES =  http://download.osgeo.org/libtiff/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTNAME  = $(NAME)-$(VERSION)
 
 PACKAGES = CSWtiff CSWtiffrt CSWtiffdevel CSWtiffdoc
 CATALOGNAME_CSWtiff = tiff
@@ -81,7 +81,7 @@ CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiff2pdf
 
 LICENSE = COPYRIGHT
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://www.remotesensing.org/libtiff/
 

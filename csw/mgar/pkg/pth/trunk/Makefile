@@ -1,5 +1,5 @@
-GARNAME = pth
-GARVERSION = 2.0.7
+NAME = pth
+VERSION = 2.0.7
 CATEGORIES = lib
 
 DESCRIPTION = GNU Pth - The GNU Portable Threads
@@ -10,13 +10,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpth,)
 
 SPKG_SOURCEURL = http://www.gnu.org/software/pth/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 ## Patch PTH.H to increase FD_SETSIZE for 64bit builds
 PATCHFILES = patch_pth_fdsetsize64.diff

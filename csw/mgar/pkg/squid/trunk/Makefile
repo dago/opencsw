@@ -1,10 +1,10 @@
-GARNAME = squid
-GARVERSION = 2.7
+NAME = squid
+VERSION = 2.7
 CATEGORIES = server
 RELEASE = STABLE9
-DISTVERSION = $(GARVERSION).$(RELEASE)
-DISTNAME = $(GARNAME)-$(DISTVERSION)
-RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9]\).*\.[0-9]*/\1/')
+DISTVERSION = $(VERSION).$(RELEASE)
+DISTNAME = $(NAME)-$(DISTVERSION)
+RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9]\).*\.[0-9]*/\1/')
 
 DESCRIPTION = High performance Web proxy cache
 define BLURB
@@ -17,26 +17,26 @@ PACKAGES = CSWsquid
 CATALOGNAME_CSWsquid = squid
 RUNTIME_DEP_PKGS_CSWsquid = CSWoldaprt CSWosslrt CSWsasl
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
-INITSMF = /etc/opt/csw/init.d/csw$(GARNAME)
-PRESERVECONF = /etc/opt/csw/$(GARNAME)/cachemgr.conf
-PRESERVECONF = /etc/opt/csw/$(GARNAME)/squid.conf
-PRESERVECONF = /etc/opt/csw/$(GARNAME)/mime.conf
+INITSMF = /etc/opt/csw/init.d/csw$(NAME)
+PRESERVECONF = /etc/opt/csw/$(NAME)/cachemgr.conf
+PRESERVECONF = /etc/opt/csw/$(NAME)/squid.conf
+PRESERVECONF = /etc/opt/csw/$(NAME)/mime.conf
 
 MIGRATE_SOURCE_DIR = /opt/csw/etc
-MIGRATE_DEST_DIR = /etc/opt/csw/$(GARNAME)
+MIGRATE_DEST_DIR = /etc/opt/csw/$(NAME)
 MIGRATE_FILES  = cachemgr.conf
 MIGRATE_FILES += mime.conf
 MIGRATE_FILES += squid.conf
 
-MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(GARVERSION)/
+MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(VERSION)/
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += cswsquid
 
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/$(GARNAME)
-CONFIGURE_ARGS += --datadir=$(datadir)/$(GARNAME)
-CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(GARNAME)
+CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/$(NAME)
+CONFIGURE_ARGS += --datadir=$(datadir)/$(NAME)
+CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(NAME)
 CONFIGURE_ARGS += --enable-arp-acl
 CONFIGURE_ARGS += --enable-auth=basic
 CONFIGURE_ARGS += --enable-basic-auth-helpers=LDAP,SMB,YP,PAM,SASL,NCSA
@@ -75,8 +75,8 @@ pre-configure-modulated:
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/logs
-	ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/cache
+	ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/logs
+	ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/cache
 	ginstall -m 755 $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/opt/csw/init.d/cswsquid
 	@$(MAKECOOKIE)
 

@@ -1,7 +1,7 @@
-GARNAME = intltool
+NAME = intltool
 MAJOR_VER = 0.40
 MINOR_VER = 6
-GARVERSION = $(MAJOR_VER).$(MINOR_VER)
+VERSION = $(MAJOR_VER).$(MINOR_VER)
 GNOME_SUBV = $(MAJOR_VER)
 CATEGORIES = utils
 ARCHALL_CSWintltool = 1
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_TARGET = check
 

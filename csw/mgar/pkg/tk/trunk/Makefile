@@ -1,5 +1,5 @@
-GARNAME = tk
-GARVERSION = 8.5.8
+NAME = tk
+VERSION = 8.5.8
 CATEGORIES = lang
 
 DESCRIPTION = GUI toolkit for tcl
@@ -9,7 +9,7 @@ endef
 SF_PROJ = tcl
 MASTER_SITES = $(SF_MIRRORS)
 
-DISTNAME = $(GARNAME)$(GARVERSION)
+DISTNAME = $(NAME)$(VERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
 
 PATCHFILES = Makefile.in.diff
@@ -33,7 +33,7 @@ CHECKPKG_OVERRIDES_CSWtk += soname-not-found|libm.so.2
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*)-src.tar.gz
+UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*)-src.tar.gz
 
 BUILD64 = 1
 NOISAEXEC = 1

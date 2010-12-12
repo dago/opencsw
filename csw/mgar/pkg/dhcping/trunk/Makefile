@@ -1,5 +1,5 @@
-GARNAME = dhcping
-GARVERSION = 1.2
+NAME = dhcping
+VERSION = 1.2
 CATEGORIES = utils
 
 DESCRIPTION = DHCP daemon ping program
@@ -8,12 +8,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.mavetju.org/download/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 LICENSE = LICENSE
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -24,7 +24,7 @@ include gar/category.mk
 DOCLIST = CHANGES CONTACT
 
 post-install-modulated:
-	@echo " ==> Post-Install $(GARNAME) (custom)"
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@$(foreach DOC,$(DOCLIST),cp $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(GARNAME);)
+	@echo " ==> Post-Install $(NAME) (custom)"
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	@$(foreach DOC,$(DOCLIST),cp $(WORKSRC)/$(DOC) $(DESTDIR)$(docdir)/$(NAME);)
 	@$(MAKECOOKIE)

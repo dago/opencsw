@@ -1,5 +1,5 @@
-GARNAME = Sub-Install
-GARVERSION = 0.925
+NAME = Sub-Install
+VERSION = 0.925
 CATEGORIES = cpan
 AUTHOR = RJBS
 

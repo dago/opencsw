@@ -1,5 +1,5 @@
-GARNAME = File-Modified
-GARVERSION = 0.07
+NAME = File-Modified
+VERSION = 0.07
 CATEGORIES = cpan
 AUTHOR = CORION
 

@@ -1,5 +1,5 @@
-GARNAME = Test-NoWarnings
-GARVERSION = 1.01
+NAME = Test-NoWarnings
+VERSION = 1.01
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = rake
-GARVERSION = 0.8.7
+NAME = rake
+VERSION = 0.8.7
 CATEGORIES = devel
 
 DESCRIPTION = Simple ruby build program similar to make
@@ -14,13 +14,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://rubyforge.org/frs/download.php/56872/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 
 LICENSE = MIT-LICENSE
 ARCHALL = 1
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_SCRIPTS     =
 CONFIGURE_SCRIPTS =

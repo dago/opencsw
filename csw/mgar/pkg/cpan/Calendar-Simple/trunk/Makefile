@@ -1,5 +1,5 @@
-GARNAME = Calendar-Simple
-GARVERSION = 1.21
+NAME = Calendar-Simple
+VERSION = 1.21
 CATEGORIES = cpan
 AUTHOR = DAVECROSS
 

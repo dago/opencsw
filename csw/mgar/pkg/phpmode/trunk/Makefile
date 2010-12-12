@@ -1,5 +1,5 @@
-GARNAME = php-mode
-GARVERSION = 1.5.0
+NAME = php-mode
+VERSION = 1.5.0
 CATEGORIES = utils
 
 DESCRIPTION = An Emacs mode for editting PHP code
@@ -8,7 +8,7 @@ PHP mode is a major mode for editing PHP source code in Emacs. As an extension o
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += php-mode.el
 
 BUILD_DEP_PKGS = CSWemacs
@@ -27,7 +27,7 @@ SPKG_DESC_CSWphpmode = An Emacs mode for editting PHP code
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of
 # MASTER_SITES, then uncomment the next line. Otherwise it is set by

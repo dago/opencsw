@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = glew
-GARVERSION = 1.5.6
+NAME = glew
+VERSION = 1.5.6
 CATEGORIES = lib
 
 DESCRIPTION = OpenGL Extension Wrangler Library (GLEW)
@@ -13,11 +13,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 PATCHFILES = 0001-Use-inttypes-also-for-Solaris.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 DEP_PKGS = CSWmesa
 

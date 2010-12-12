@@ -1,5 +1,5 @@
-GARNAME = Time-modules
-GARVERSION = 2006.0814
+NAME = Time-modules
+VERSION = 2006.0814
 CATEGORIES = cpan
 AUTHOR = MUIR
 

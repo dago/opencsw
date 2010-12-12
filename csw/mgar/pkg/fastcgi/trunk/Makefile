@@ -1,5 +1,5 @@
-GARNAME = fastcgi
-GARVERSION = 2.4.0
+NAME = fastcgi
+VERSION = 2.4.0
 CATEGORIES = lib
 
 DESCRIPTION = A FastCGI Library
@@ -9,7 +9,7 @@ define BLURB
   specific APIs.
 endef
 
-DLNAME = fcgi-$(GARVERSION)
+DLNAME = fcgi-$(VERSION)
 
 #note that this project is named fastcgi, but the tarball is filed as fcgi.
 #i'm preserving the name fastcgi (since it shows up in the package listing,
@@ -29,7 +29,7 @@ TEST_TARGET = check
 
 WORKSRC ?= $(WORKDIR)/$(DLNAME)
 
-datadir = $(docdir)/$(GARNAME)
+datadir = $(docdir)/$(NAME)
 
 # Remove the following rules and uncomment the
 # include before building.

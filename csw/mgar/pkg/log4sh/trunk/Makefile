@@ -11,8 +11,8 @@
 ## For more information about GAR variables, please see:
 ## https://sourceforge.net/apps/trac/gar/wiki/GAR%20Variable%20Reference
 ##
-GARNAME = log4sh
-GARVERSION = 1.4.2
+NAME = log4sh
+VERSION = 1.4.2
 ##
 ## The category that your software fits in. This is not a descriptive field, but
 ## influences the build process. Depending on the CATEGORIES setting, different
@@ -46,7 +46,7 @@ SPKG_SOURCEURL = http://sites.google.com/a/forestent.com/projects/log4sh
 MASTER_SITES = $(SF_MIRRORS)
 ##
 ## SF_PROJ is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
-## Sourceforge project name differs from $(GARNAME). Specifies the Sourceforge
+## Sourceforge project name differs from $(NAME). Specifies the Sourceforge
 ## project name of the software you wish to download.
 SF_PROJ = log4sh
 ##
@@ -58,9 +58,9 @@ SF_PROJ = log4sh
 ## Whitespace-separated list of files which comprise this build. mGAR will look
 ## for the files in the $(FILEDIR) (trunk/files) directory and on the
 ## $(MASTER_SITES).
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 ##
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 ##
 ## Catalog name is the name to be used with pkg{-get,util} -i <pkgname>.
 ## It is different from the system package name, which by convention is CSWpkgname.
@@ -153,7 +153,7 @@ UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
 ## Compilation settings
 ##
 ## The build directory.
-## WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)
+## WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)
 ##
 ## BUILD_ARGS is passed as an argument to gmake during the build phase. Use this
 ## for example, if you need to override Makefile variables.

@@ -1,5 +1,5 @@
-GARNAME = Tie-IxHash
-GARVERSION = 1.21
+NAME = Tie-IxHash
+VERSION = 1.21
 CATEGORIES = cpan
 AUTHOR = GSAR
 

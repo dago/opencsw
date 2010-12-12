@@ -1,5 +1,5 @@
-GARNAME = libnids
-GARVERSION = 1.23
+NAME = libnids
+VERSION = 1.23
 CATEGORIES = net
 
 DESCRIPTION = implementation of an e-component of network intrusion detection
@@ -11,9 +11,9 @@ define BLURB
  analyzing modules of NIDS.
 endef
 
-SF_PROJ = $(GARNAME)
+SF_PROJ = $(NAME)
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://libnids.sourceforge.net/
 

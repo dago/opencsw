@@ -1,5 +1,5 @@
-GARNAME = SDL_net
-GARVERSION = 1.2.7
+NAME = SDL_net
+VERSION = 1.2.7
 CATEGORIES = lib
 
 DESCRIPTION = A small cross-platform network library for SDL
@@ -8,11 +8,11 @@ This is a small sample cross-platform networking library, with a sample chat cli
 endef
 
 MASTER_SITES = http://www.libsdl.org/projects/SDL_net/release/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsdlnet, prototype)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
 TEST_SCRIPTS =

@@ -12,8 +12,8 @@
 
 ###### Package information #######
 
-GARNAME = imapproxy
-GARVERSION = 1.2.7
+NAME = imapproxy
+VERSION = 1.2.7
 CATEGORIES = server
 
 DESCRIPTION = A caching IMAP proxy server
@@ -37,15 +37,15 @@ SPKG_CLASSES = none cswpreserveconf cswinitsmf
 MASTER_SITES = http://www.imapproxy.org/downloads/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = up-$(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = up-$(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES  = up-$(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = up-$(NAME)-$(VERSION).tar.gz
 DISTFILES += imapproxy.conf
 DISTFILES += changelog.CSW README.CSW
 # init and smf stuffs
 DISTFILES += cswimapproxy cswimapproxy.xml
 
-DISTNAME = up-$(GARNAME)-$(GARVERSION)
+DISTNAME = up-$(NAME)-$(VERSION)
 
 INITSMF = /etc/init.d/cswimapproxy
 PRESERVECONF = /opt/csw/etc/imapproxy.conf
@@ -71,12 +71,12 @@ include gar/category.mk
 
 post-merge:
 	ginstall -d $(DESTDIR)$(sysconfdir)
-	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(GARNAME)/changelog.CSW
-	ginstall -D $(WORKDIR_FIRSTMOD)/README.CSW $(PKGROOT)$(docdir)/$(GARNAME)/README.CSW
-	ginstall -D $(WORKSRC_FIRSTMOD)/ChangeLog $(PKGROOT)$(docdir)/$(GARNAME)/ChangeLog
-	ginstall -D $(WORKSRC_FIRSTMOD)/README $(PKGROOT)$(docdir)/$(GARNAME)/README
-	ginstall -D $(WORKSRC_FIRSTMOD)/README.known_issues $(PKGROOT)$(docdir)/$(GARNAME)/README.known_issues
-	ginstall -D $(WORKSRC_FIRSTMOD)/README.ssl $(PKGROOT)$(docdir)/$(GARNAME)/README.ssl
+	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW
+	ginstall -D $(WORKDIR_FIRSTMOD)/README.CSW $(PKGROOT)$(docdir)/$(NAME)/README.CSW
+	ginstall -D $(WORKSRC_FIRSTMOD)/ChangeLog $(PKGROOT)$(docdir)/$(NAME)/ChangeLog
+	ginstall -D $(WORKSRC_FIRSTMOD)/README $(PKGROOT)$(docdir)/$(NAME)/README
+	ginstall -D $(WORKSRC_FIRSTMOD)/README.known_issues $(PKGROOT)$(docdir)/$(NAME)/README.known_issues
+	ginstall -D $(WORKSRC_FIRSTMOD)/README.ssl $(PKGROOT)$(docdir)/$(NAME)/README.ssl
 	ginstall -D $(WORKDIR_FIRSTMOD)/imapproxy.conf $(PKGROOT)$(sysconfdir)/imapproxy.conf.CSW
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswimapproxy.xml"
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy" "$(PKGROOT)/etc/init.d/cswimapproxy"

@@ -1,5 +1,5 @@
-GARNAME = cfitsio
-GARVERSION = 3.24
+NAME = cfitsio
+VERSION = 3.24
 CATEGORIES = lib
 
 DESCRIPTION = A library of C and Fortran subroutines for reading and writing data files in FITS
@@ -11,12 +11,12 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/
-DISTFILES  = $(GARNAME)3240.tar.gz
+DISTFILES  = $(NAME)3240.tar.gz
 
-DISTNAME = $(GARNAME)
+DISTNAME = $(NAME)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://heasarc.gsfc.nasa.gov/fitsio/
 

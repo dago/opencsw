@@ -1,5 +1,5 @@
-GARNAME = fortune4all
-GARVERSION = 1023
+NAME = fortune4all
+VERSION = 1023
 CATEGORIES = utils
 
 DESCRIPTION = 
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES = Fortune4All-src-$(GARVERSION).zip
+DISTFILES = Fortune4All-src-$(VERSION).zip
 #DISTFILES += fortune.zip
 DISTFILES += fortune_big.zip
 #DISTFILES += greek-fortunes.zip
@@ -16,7 +16,7 @@ DISTFILES += fortune_big.zip
 PATCHFILES = 0001-Fix-for-Sun-CC.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = license
 

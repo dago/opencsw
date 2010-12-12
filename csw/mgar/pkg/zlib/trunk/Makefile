@@ -1,5 +1,5 @@
-GARNAME = zlib
-GARVERSION = 1.2.5
+NAME = zlib
+VERSION = 1.2.5
 CATEGORIES = lib
 
 DESCRIPTION = Zlib Data Compression Library
@@ -17,7 +17,7 @@ endef
 
 SF_PROJ=libpng
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += license
 
 SPKG_SOURCEURL = http://www.zlib.net

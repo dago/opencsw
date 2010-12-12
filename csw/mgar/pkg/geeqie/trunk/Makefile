@@ -2,16 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = geeqie
-GARVERSION = 1.0
+NAME = geeqie
+VERSION = 1.0
 CATEGORIES = gnome
 DESCRIPTION = A lightweight image viewer, forked from GQview
 define BLURB
 endef
 SPKG_SOURCEURL = http://geeqie.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 EXTRA_LDFLAGS = -lsocket

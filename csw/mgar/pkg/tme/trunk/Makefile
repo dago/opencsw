@@ -1,5 +1,5 @@
-GARNAME = tme
-GARVERSION = 0.6
+NAME = tme
+VERSION = 0.6
 CATEGORIES = apps
 
 DESCRIPTION = The Machine Emulator
@@ -13,10 +13,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://people.csail.mit.edu/fredette/tme/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # -- ROM Images --
 
@@ -33,7 +33,7 @@ DISTFILES += SUNW,501-1561.bin
 
 DISTFILES += $(call admfiles,CSWtme,depend)
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES  = fix-tr.patch
 PATCHFILES += fix-isinff.patch

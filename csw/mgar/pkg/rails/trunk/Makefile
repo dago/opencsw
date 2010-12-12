@@ -1,5 +1,5 @@
-GARNAME = rails
-GARVERSION = 0.14.3
+NAME = rails
+VERSION = 0.14.3
 CATEGORIES = server
 
 DESCRIPTION = Ruby web application framework
@@ -17,7 +17,7 @@ actionwebservice = 0.9.3
 
 MASTER_SITES = http://rubyforge.org/frs/download.php/5176/
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 DISTFILES += activerecord-$(activerecord).tgz
 DISTFILES += actionpack-$(actionpack).tgz
 DISTFILES += actionmailer-$(actionmailer).tgz

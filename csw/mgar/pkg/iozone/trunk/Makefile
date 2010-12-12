@@ -1,6 +1,6 @@
-GARNAME = iozone
-GARVERSION = 3.291
-DISTVERSION = $(shell echo $(GARVERSION) | sed -e 's/\./_/g')
+NAME = iozone
+VERSION = 3.291
+DISTVERSION = $(shell echo $(VERSION) | sed -e 's/\./_/g')
 CATEGORIES = apps
 
 DESCRIPTION = IO benchmarking tool
@@ -14,12 +14,12 @@ endef
 VENDOR_URL    = http://www.iozone.org/
 MASTER_SITES  = http://www.iozone.org/src/current/
 MASTER_SITES += http://www.iozone.org/docs/
-UFILES_REGEX  = $(GARNAME)(\d+(?:\.\d+)*).tar
-DISTFILES     = $(GARNAME)$(DISTVERSION).tar
+UFILES_REGEX  = $(NAME)(\d+(?:\.\d+)*).tar
+DISTFILES     = $(NAME)$(DISTVERSION).tar
 DISTFILES    += vx_ioctl.h
 DISTFILES    += $(call admfiles,CSWiozone)
 
-DISTNAME      = $(GARNAME)$(DISTVERSION)
+DISTNAME      = $(NAME)$(DISTVERSION)
 
 PATCHFILES = patch-vx_ioctl.diff
 
@@ -51,7 +51,7 @@ include gar/category.mk
 
 # The install part from the Makefile is completely unrelocatable :-(
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	@ginstall -d $(DESTDIR)$(bindir)
 	@ginstall -d $(DESTDIR)$(mandir)/man6
 	@$(MAKECOOKIE)

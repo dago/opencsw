@@ -12,8 +12,8 @@
 
 ###### Package information #######
 
-GARNAME = elinks
-GARVERSION = 0.11.7
+NAME = elinks
+VERSION = 0.11.7
 CATEGORIES = net
 
 DESCRIPTION = An advanced text mode web browser
@@ -39,14 +39,14 @@ RUNTIME_DEP_PKGS += CSWzlib
 MASTER_SITES = http://elinks.cz/download/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSWelinks.prototype
 DISTFILES += changelog.CSW
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Debian security path for CVE-2007-2027
 PATCHFILES += elinks-417789.diff
@@ -78,5 +78,5 @@ pre-configure:
 	touch $(WORKSRC)/config.status
 
 post-merge:
-	@ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(GARNAME)/changelog.CSW 
+	@ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW 
 

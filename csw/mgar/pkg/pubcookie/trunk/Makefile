@@ -1,5 +1,5 @@
-GARNAME = pubcookie
-GARVERSION = 3.3.3
+NAME = pubcookie
+VERSION = 3.3.3
 CATEGORIES = server
 
 DESCRIPTION = Open-source software for intra-institutional web authentication
@@ -12,11 +12,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.pubcookie.org/downloads/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWpubcookie)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS = CSWapache2-devel
 

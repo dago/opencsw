@@ -1,4 +1,4 @@
-GARNAME = xfce4-dev-tools
+NAME = xfce4-dev-tools
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Development Tools
@@ -6,11 +6,11 @@ define BLURB
    Xfce Development Tools 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWxfcedevtools, depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 include gar/category.mk
 

@@ -1,5 +1,5 @@
-GARNAME = libgdiplus
-GARVERSION = 2.6
+NAME = libgdiplus
+VERSION = 2.6
 CATEGORIES = lib
 
 DESCRIPTION = Mono library that provide a GDI+ comptible API
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.novell.com/pub/mono/sources/mono/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2 
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2 
 
 #PATCHFILES += Makefile.in.patch
 #PATCHFILES += configure.patch
@@ -32,7 +32,7 @@ RUNTIME_DEP_PKGS_CSWlibgdiplus += CSWpng
 RUNTIME_DEP_PKGS_CSWlibgdiplus += CSWtiff
 RUNTIME_DEP_PKGS_CSWlibgdiplus += CSWgcc4corert
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib

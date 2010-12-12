@@ -1,5 +1,5 @@
-GARNAME = tcsh
-GARVERSION = 6.17.00
+NAME = tcsh
+VERSION = 6.17.00
 CATEGORIES = apps
 
 DESCRIPTION = Enhanced version of the Berkeley C shell (csh)
@@ -11,12 +11,12 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.astron.com/pub/tcsh/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWtcsh.postinstall
 DISTFILES += CSWtcsh.postremove
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = Copyright
 

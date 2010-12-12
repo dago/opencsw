@@ -2,16 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = progressbar
-GARVERSION = 2.2
+NAME = progressbar
+VERSION = 2.2
 CATEGORIES = python
 DESCRIPTION = Text progressbar library for Python
 define BLURB
 endef
 SPKG_SOURCEURL = http://pypi.python.org/pypi/progressbar
 MASTER_SITES = http://pypi.python.org/packages/source/p/progressbar/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = LICENSE
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)

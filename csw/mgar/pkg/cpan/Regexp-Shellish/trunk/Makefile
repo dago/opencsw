@@ -1,5 +1,5 @@
-GARNAME = Regexp-Shellish
-GARVERSION = 0.93
+NAME = Regexp-Shellish
+VERSION = 0.93
 CATEGORIES = cpan
 AUTHOR = RBS
 

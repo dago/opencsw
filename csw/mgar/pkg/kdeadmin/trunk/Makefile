@@ -1,4 +1,4 @@
-GARNAME = kdeadmin
+NAME = kdeadmin
 CATEGORIES = kde
 
 DESCRIPTION = Administration utilities for KDE (gcc3)

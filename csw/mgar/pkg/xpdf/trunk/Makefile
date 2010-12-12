@@ -1,5 +1,5 @@
-GARNAME = xpdf
-GARVERSION = 3.02
+NAME = xpdf
+VERSION = 3.02
 CATEGORIES = utils
 RELEASE = p4
 
@@ -15,10 +15,10 @@ endef
 
 VENDOR_URL = http://www.foolabs.com/xpdf
 MASTER_SITES = ftp://ftp.foolabs.com/pub/xpdf/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWxpdf CSWxpdfutils
 CATALOGNAME_CSWxpdf = xpdf

@@ -1,5 +1,5 @@
-GARNAME = Class-Factory-Util
-GARVERSION = 1.7
+NAME = Class-Factory-Util
+VERSION = 1.7
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 

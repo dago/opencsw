@@ -1,5 +1,5 @@
-GARNAME = DublinCore-Record
-GARVERSION = 0.03
+NAME = DublinCore-Record
+VERSION = 0.03
 CATEGORIES = cpan
 AUTHOR = BRICAS
 

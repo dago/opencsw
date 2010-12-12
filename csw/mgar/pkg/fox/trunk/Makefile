@@ -1,5 +1,5 @@
-GARNAME = fox
-GARVERSION = 1.4.33
+NAME = fox
+VERSION = 1.4.33
 CATEGORIES = lib
 
 DESCRIPTION = Fox Toolkit runtime
@@ -8,12 +8,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.fox-toolkit.org/ftp/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWfoxrt, depend prototype )
 DISTFILES += $(call admfiles,CSWfox, depend prototype )
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LD=CC
 

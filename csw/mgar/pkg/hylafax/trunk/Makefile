@@ -1,5 +1,5 @@
-GARNAME = hylafax
-GARVERSION = 5.2.5
+NAME = hylafax
+VERSION = 5.2.5
 CATEGORIES = server
 
 DESCRIPTION = An enterprise-class system for sending and receiving facsimiles and alpha-numeric pages
@@ -8,7 +8,7 @@ endef
 
 SF_PROJ = hylafax
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWhylafax,prototype depend postinstall preremove postremove)
 DISTFILES += config.site.CSW
 #DISTFILES += cswhylafax.init cswhylafax.xml svc-cswhylafax

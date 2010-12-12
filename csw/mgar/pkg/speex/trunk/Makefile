@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = speex
-GARVERSION = 1.2
+NAME = speex
+VERSION = 1.2
 REV = rc1
 CATEGORIES = lib
 
@@ -12,7 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/speex/
-DISTFILES  = $(GARNAME)-$(GARVERSION)$(REV).tar.gz
+DISTFILES  = $(NAME)-$(VERSION)$(REV).tar.gz
 
 # The important lines are these:
 #
@@ -42,9 +42,9 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 SPKG_SOURCEURL = http://www.speex.org/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)$(REV)
+WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)$(REV)
 
 # 64-bit doesn't build on x86.
 BUILD64 = 1

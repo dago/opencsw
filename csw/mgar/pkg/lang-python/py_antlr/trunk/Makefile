@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = py_antlr
-GARVERSION = 3.1.1
+NAME = py_antlr
+VERSION = 3.1.1
 CATEGORIES = python
 
 DESCRIPTION = Python ANTLR runtime
@@ -12,15 +12,15 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.antlr.org/download/Python/
-DISTFILES  = antlr_python_runtime-$(GARVERSION).tar.gz
+DISTFILES  = antlr_python_runtime-$(VERSION).tar.gz
 
-WORKSRC = $(WORKDIR)/antlr_python_runtime-$(GARVERSION)
+WORKSRC = $(WORKDIR)/antlr_python_runtime-$(VERSION)
 
 PACKAGES = CSWpy-antlr
 CATALOGNAME = py_antlr
 BUILD_DEP_PKGS = CSWpysetuptools
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 ARCHALL = 1
 

@@ -1,5 +1,5 @@
-GARNAME = goocanvas
-GARVERSION = 0.15
+NAME = goocanvas
+VERSION = 0.15
 CATEGORIES = gnome
 
 DESCRIPTION = A cairo-based canvas widget for GTK
@@ -9,8 +9,8 @@ define BLURB
 endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTNAME  = $(NAME)-$(VERSION)
 
 PACKAGES = CSWgoocanvas CSWgoocanvasdevel CSWgoocanvasdoc
 CATALOGNAME_CSWgoocanvas = goocanvas
@@ -26,7 +26,7 @@ RUNTIME_DEP_PKGS_CSWgoocanvas += CSWgtk2 CSWlibatk CSWlibcairo CSWpango
 RUNTIME_DEP_PKGS_CSWgoocanvasdevel += CSWgoocanvas
 RUNTIME_DEP_PKGS_CSWgoocanvasdoc += CSWgoocanvas
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://live.gnome.org/GooCanvas
 

@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = minicom
-GARVERSION = 2.4
+NAME = minicom
+VERSION = 2.4
 CATEGORIES = apps
 
 DESCRIPTION = Serial communication program
@@ -9,10 +9,10 @@ endef
 
 WGET_OPTS = --no-check-certificate
 MASTER_SITES = https://alioth.debian.org/frs/download.php/3195/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://alioth.debian.org/projects/minicom/
 

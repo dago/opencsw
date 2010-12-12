@@ -1,5 +1,5 @@
-GARNAME = websvn
-GARVERSION = 2.2.1
+NAME = websvn
+VERSION = 2.2.1
 CATEGORIES = apps
 
 DESCRIPTION = PHP based web interface of Subversion repositories
@@ -36,7 +36,7 @@ ARCHALL = 1
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 	@rm -rf $(DESTDIR)$(sharedstatedir)/www/websvn
 	@ginstall -d $(DESTDIR)$(sharedstatedir)/www/websvn
 	@cp -rp $(WORKSRC) $(DESTDIR)$(sharedstatedir)/www/websvn/htdocs

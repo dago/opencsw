@@ -1,5 +1,5 @@
-GARNAME = autobench
-GARVERSION = 2.1.2
+NAME = autobench
+VERSION = 2.1.2
 CATEGORIES = apps
 
 DESCRIPTION = Wrapper around httperf which automates the benchmarking process
@@ -16,8 +16,8 @@ endef
 
 VENDOR_URL   = http://www.xenoclast.org/autobench/
 MASTER_SITES = http://www.xenoclast.org/autobench/downloads/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENCE
 
@@ -33,7 +33,7 @@ TEST_SCRIPTS =
 # to pre-populate a user config, so we move it to examples
 BINDIR=$(DESTDIR)$(bindir)
 MANDIR=$(DESTDIR)$(mandir)/man1
-ETCDIR=$(DESTDIR)$(docdir)/$(GARNAME)/examples
+ETCDIR=$(DESTDIR)$(docdir)/$(NAME)/examples
 INSTALL_EXPORTS=BINDIR MANDIR ETCDIR 
 
 EXTRA_PAX_ARGS = '-s,ChangeLog$$,changelog,p'
@@ -47,7 +47,7 @@ pre-install-modulated:
 		$(WORKSRC)/autobench_admin
 	@$(MAKECOOKIE)
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: DOCS=ChangeLog
 post-install-modulated:
 	mkdir -p $(DOCDEST)

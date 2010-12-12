@@ -1,5 +1,5 @@
-GARNAME = ExtUtils-Manifest
-GARVERSION = 1.58
+NAME = ExtUtils-Manifest
+VERSION = 1.58
 CATEGORIES = cpan
 AUTHOR = RKOBES
 

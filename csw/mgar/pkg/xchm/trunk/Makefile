@@ -1,5 +1,5 @@
-GARNAME = xchm
-GARVERSION = 1.17
+NAME = xchm
+VERSION = 1.17
 CATEGORIES = utils
 
 DESCRIPTION = Cross-platform GUI front-end to chmlib (.chm reader)
@@ -10,13 +10,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES  = 0001-Fix-extra-comma-at-end-of-enum.patch
 PATCHFILES += 0002-Remove-W-Wall-for-Sun-Studio.patch
 PATCHFILES += 0003-Use-inttypes.h-instead-of-stdint.h.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWchmlib CSWwxwidgetscommon CSWwxwidgetsgtk2
 BUILD_DEP_PKGS = $(REQUIRED_PGKS) CSWwxwidgetsdevel

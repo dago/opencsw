@@ -6,11 +6,11 @@
 # software causes damage.
 
 # TODO: Run the test suite
-# This assumes that you already have the stage1 compiler installed under ~/opencsw/ghc-bootstrap-$(GARVERSION)
-# Download it from http://www.haskell.org/ghc/dist/$(GARVERSION)/maeder/
+# This assumes that you already have the stage1 compiler installed under ~/opencsw/ghc-bootstrap-$(VERSION)
+# Download it from http://www.haskell.org/ghc/dist/$(VERSION)/maeder/
 
-GARNAME = ghc
-GARVERSION = 6.10.4
+NAME = ghc
+VERSION = 6.10.4
 CATEGORIES = apps
 
 DESCRIPTION = State-of-the-art, compiler and interactive environment for Haskell.
@@ -30,12 +30,12 @@ RUNTIME_DEP_PKGS_CSWghc += CSWlibgmp
 RUNTIME_DEP_PKGS_CSWghc += CSWncurses
 
 # The location of the solaris binaries seems to vary a bit from version to version
-MASTER_SITES = http://www.haskell.org/ghc/dist/$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-src.tar.bz2
+MASTER_SITES = http://www.haskell.org/ghc/dist/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION)-src.tar.bz2
 PATCHFILES  = 0001-mk-build.mk-Adding-correct-runtime-options.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARVERSION)/$(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(VERSION)/$(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 #PKGFILES_CSWghc-prof  = $(prefix)/.*\.p_hi
 #PKGFILES_CSWghc-prof += $(prefix)/.*\.so

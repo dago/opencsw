@@ -1,5 +1,5 @@
-GARNAME = Terminal
-GARVERSION = 0.2.8
+NAME = Terminal
+VERSION = 0.2.8
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Terminal Emulator
@@ -7,7 +7,7 @@ define BLURB
    Xfce Terminal Emulator
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # DISTFILES += CSWxfceterminal.depend CSWxfceterminal.gspec CSWxfceterminal.prototype
 # DISTFILES += CSWxfceterminaldoc.depend CSWxfceterminaldoc.gspec CSWxfceterminaldoc.prototype
 
@@ -17,7 +17,7 @@ DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWxfceterminal, depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 TEST_SCRIPTS = none
 

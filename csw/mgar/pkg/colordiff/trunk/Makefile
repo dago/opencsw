@@ -1,5 +1,5 @@
-GARNAME = colordiff
-GARVERSION = 1.0.9
+NAME = colordiff
+VERSION = 1.0.9
 CATEGORIES = utils
 
 DESCRIPTION = Wrapper for for the diff command producing colored output
@@ -7,14 +7,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://colordiff.sourceforge.net/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = fix-entity-nesting.patch
 PATCHFILES += force-csw-perl.patch
 PATCHFILES += force-csw-less.patch
 PATCHFILES += force-csw-gdiff.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWdiffutils CSWperl CSWless
 

@@ -1,5 +1,5 @@
-GARNAME = libogg
-GARVERSION = 1.2.0
+NAME = libogg
+VERSION = 1.2.0
 CATEGORIES = lib
 
 DESCRIPTION = Ogg bitstream format support library
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/ogg/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 

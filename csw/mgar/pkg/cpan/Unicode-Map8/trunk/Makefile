@@ -1,5 +1,5 @@
-GARNAME = Unicode-Map8
-GARVERSION = 0.12
+NAME = Unicode-Map8
+VERSION = 0.12
 CATEGORIES = cpan
 AUTHOR = GAAS
 

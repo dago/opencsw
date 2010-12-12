@@ -1,7 +1,7 @@
 SHORTNAME = pool
-GARVERSION = 1.5
+VERSION = 1.5
 
-GARNAME = commons-$(SHORTNAME)
+NAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
 DESCRIPTION = Apache Jakarta Commons Pool
@@ -11,10 +11,10 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
-DISTFILES = $(GARNAME)-$(GARVERSION)-bin.tar.gz
+DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
 PACKAGES = CSWajcpool CSWajcpooldoc 
@@ -49,10 +49,10 @@ include gar/category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(GARNAME)-$(GARVERSION).jar $(DESTDIR)$(datadir)/java
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(NAME)-$(VERSION).jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-1.jar ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
-	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
+	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)

@@ -1,5 +1,5 @@
-GARNAME = Barcode-Code128
-GARVERSION = 2.01
+NAME = Barcode-Code128
+VERSION = 2.01
 CATEGORIES = cpan
 AUTHOR = WRW
 

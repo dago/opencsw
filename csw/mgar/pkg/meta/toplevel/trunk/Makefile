@@ -1,5 +1,5 @@
-GARNAME = toplevel
-GARVERSION = 1.0
+NAME = toplevel
+VERSION = 1.0
 CATEGORIES = meta
 
 DESCRIPTION = Blastwave automated build

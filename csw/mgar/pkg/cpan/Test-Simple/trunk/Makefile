@@ -1,5 +1,5 @@
-GARNAME = Test-Simple
-GARVERSION = 0.96
+NAME = Test-Simple
+VERSION = 0.96
 CATEGORIES = cpan
 AUTHOR = MSCHWERN
 

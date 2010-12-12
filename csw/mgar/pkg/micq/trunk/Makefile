@@ -1,5 +1,5 @@
-GARNAME = micq
-GARVERSION = 0.6.1
+NAME = micq
+VERSION = 0.6.1
 CATEGORIES = net
 
 DESCRIPTION = terminal-based ICQ client
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.micq.org/
-#DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+#DISTFILES  = $(NAME)-$(VERSION).tgz
 DISTFILES = $(call admfiles,CSWmicq,prototype depend)
 GARCH=all
 

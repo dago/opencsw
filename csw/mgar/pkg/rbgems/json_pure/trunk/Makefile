@@ -1,5 +1,5 @@
-GARNAME = json_pure
-GARVERSION = 1.4.3
+NAME = json_pure
+VERSION = 1.4.3
 CATEGORIES = rbgems
 
 DESCRIPTION = This is a JSON implementation in pure Ruby

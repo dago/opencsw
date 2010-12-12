@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = libsndfile
-GARVERSION = 1.0.21
+NAME = libsndfile
+VERSION = 1.0.21
 
 CATEGORIES = lib
 
@@ -32,7 +32,7 @@ endef
 
 MASTER_SITES = http://www.mega-nerd.com/libsndfile/files/
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-Add-lrintf-workaround-to-regtest.patch
 PATCHFILES += 0002-Add-workaround-for-missing-libm-function-lrint-and-l.patch
 PATCHFILES += 0003-Workaround-mising-stdint.h-and-Sun-Studio-shortcomin.patch
@@ -47,7 +47,7 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
 SPKG_SOURCEURL = http://www.mega-nerd.com/libsndfile/
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # EXTRA_CFLAGS = -features=extensions
 # EXTRA_CXXFLAGS = -features=extensions
@@ -62,6 +62,6 @@ TEST_TARGET = check
 MERGE_DIRS_isa-extra = $(libdir)
 
 # Relocate docs to standard location
-EXTRA_PAX_ARGS += -s ',^\.$(prefix)/share/doc/libsndfile1-dev,.$(BUILD_PREFIX)/share/doc/$(GARNAME),'
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/share/doc/libsndfile1-dev,.$(BUILD_PREFIX)/share/doc/$(NAME),'
 
 include gar/category.mk

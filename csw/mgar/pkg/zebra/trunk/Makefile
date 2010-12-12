@@ -1,5 +1,5 @@
-GARNAME = zebra
-GARVERSION = 0.95a
+NAME = zebra
+VERSION = 0.95a
 CATEGORIES = server
 
 DESCRIPTION = Manages TCP/IP Based Routing Protocols
@@ -14,11 +14,11 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.zebra.org/pub/zebra/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-Fix-for-Sun-Studio.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw

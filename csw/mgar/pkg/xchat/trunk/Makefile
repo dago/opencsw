@@ -1,5 +1,5 @@
-GARNAME = xchat
-GARVERSION = 2.8.6
+NAME = xchat
+VERSION = 2.8.6
 CATEGORIES = gnome
 
 DESCRIPTION = GTK+ based IRC client, similar to AmIRC (Amiga).
@@ -10,7 +10,7 @@ endef
 
 MASTER_SITES  = http://xchat.org/files/source/2.8/
 MASTER_SITES += http://xchat.org/files/source/2.8/patches/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWxchat CSWxchat-pl CSWxchat-py CSWxchat-tcl
 CATALOGNAME_CSWxchat     = xchat
@@ -37,7 +37,7 @@ PKGFILES_CSWxchat-tcl = $(libdir)/.*/tcl.so
 
 # We define upstream file regex so we can be notifed of new 
 # upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Official XChat patches
 PATCHFILES  = xc286-smallfixes.diff

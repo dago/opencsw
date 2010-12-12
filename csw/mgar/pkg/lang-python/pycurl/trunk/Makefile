@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = pycurl
-GARVERSION = 7.19.0
+NAME = pycurl
+VERSION = 7.19.0
 CATEGORIES = python
 DESCRIPTION = PycURL is a Python interface to libcurl
 PACKAGES = CSWpy-curl
@@ -13,8 +13,8 @@ endef
 SPKG_SOURCEURL = http://pycurl.sourceforge.net/
 MASTER_SITES = http://pycurl.sourceforge.net/download/
 PATCHFILES = remove-static-libs.patch
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS += CSWcurlrt
 RUNTIME_DEP_PKGS += CSWlibidn
 RUNTIME_DEP_PKGS += CSWoldaprt

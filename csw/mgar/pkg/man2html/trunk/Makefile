@@ -1,5 +1,5 @@
-GARNAME = man2html
-GARVERSION = 3.0.1
+NAME = man2html
+VERSION = 3.0.1
 CATEGORIES = utils
 
 DESCRIPTION = A Unix manpage-to-HTML converter
@@ -8,11 +8,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://hydra.nac.uci.edu/indiv/ehood/tar/
-DISTNAME = $(GARNAME)$(GARVERSION)
+DISTNAME = $(NAME)$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://hydra.nac.uci.edu/indiv/ehood/man2html.html
 
@@ -34,15 +34,15 @@ install-custom:
 		-binpath $(DESTDIR)$(bindir) \
 		-manpath $(DESTDIR)$(mandir) \
 		-perlpath $(bindir)/perl
-	ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	cd $(WORKSRC) && ginstall \
 		README CHANGES \
 		doc/man2html.ps doc/man2html.html doc/man2html.txt \
-		$(DESTDIR)$(docdir)/$(GARNAME)
-	ginstall -d $(DESTDIR)$(sharedstatedir)/www/$(GARNAME)/cgi-bin
+		$(DESTDIR)$(docdir)/$(NAME)
+	ginstall -d $(DESTDIR)$(sharedstatedir)/www/$(NAME)/cgi-bin
 	cd $(WORKSRC) && ginstall man.cgi \
-		$(DESTDIR)$(sharedstatedir)/www/$(GARNAME)/cgi-bin
+		$(DESTDIR)$(sharedstatedir)/www/$(NAME)/cgi-bin
 	ginstall -d $(DESTDIR)/opt/csw/apache2/share/cgi-bin
-	gln -s ../../../share/www/$(GARNAME)/cgi-bin/man.cgi \
+	gln -s ../../../share/www/$(NAME)/cgi-bin/man.cgi \
 		$(DESTDIR)/opt/csw/apache2/share/cgi-bin/man.cgi
 	@$(MAKECOOKIE)

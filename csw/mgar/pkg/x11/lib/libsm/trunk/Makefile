@@ -1,5 +1,5 @@
-GARNAME = libsm
-GARVERSION = 1.1.1
+NAME = libsm
+VERSION = 1.1.1
 CATEGORIES = x11
 
 DESCRIPTION = X11 Session Management library
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libSM-$(GARVERSION)
+DISTNAME = libSM-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS_CSWlibsm       = CSWlibice
 RUNTIME_DEP_PKGS_CSWlibsmdevel += CSWlibsm

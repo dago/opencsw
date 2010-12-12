@@ -1,5 +1,5 @@
-GARNAME = p7zip
-GARVERSION = 9.04
+NAME = p7zip
+VERSION = 9.04
 CATEGORIES = utils
 
 DESCRIPTION = File archiver with high compression ratio
@@ -23,11 +23,11 @@ ratio (www.7-zip.org) with lots of features:
 endef
 
 MASTER_SITES = http://garr.dl.sourceforge.net/sourceforge/p7zip/
-DISTFILES  = $(GARNAME)_$(GARVERSION)_src_all.tar.bz2
+DISTFILES  = $(NAME)_$(VERSION)_src_all.tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software 
 # release, atm not used
-# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # since there is no configure script, this is intentionally left empty
 CONFIGURE_SCRIPTS =
@@ -40,7 +40,7 @@ INSTALL_ARGS = DEST_HOME="$(DESTDIR)/$(prefix)"
 INSTALL_ARGS += DEST_MAN="$(DESTDIR)/$(mandir)"
 
 # fix distname
-DISTNAME = $(GARNAME)_$(GARVERSION)
+DISTNAME = $(NAME)_$(VERSION)
 
 # patch files
 PATCHFILES  = patch-CPP-7zip-Archive-Zip-ZipHandler.cpp

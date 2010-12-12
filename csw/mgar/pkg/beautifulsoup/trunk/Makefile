@@ -1,5 +1,5 @@
-GARNAME = beautifulsoup
-GARVERSION = 3.1.0.1
+NAME = beautifulsoup
+VERSION = 3.1.0.1
 CATEGORIES = lib
 
 EXT_NAME = BeautifulSoup
@@ -24,7 +24,7 @@ endef
 
 MASTER_SITES = http://www.crummy.com/software/$(EXT_NAME)/download/
 DISTFILES  = $(EXT_NAME).tar.gz
-WORKSRC = $(WORKDIR)/$(EXT_NAME)-$(GARVERSION)
+WORKSRC = $(WORKDIR)/$(EXT_NAME)-$(VERSION)
 
 SPKG_CLASSES = none cswpycompile
 

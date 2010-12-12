@@ -1,5 +1,5 @@
-GARNAME = bind2nsd
-GARVERSION = 0.7.2
+NAME = bind2nsd
+VERSION = 0.7.2
 CATEGORIES = utils
 
 DESCRIPTION = scripts to translate DNS information in BIND format to NSD format
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://bind2nsd.sourceforge.net/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = setup.py.diff
 PATCHFILES += Config.py.diff
@@ -20,7 +20,7 @@ PATCHFILES += nsd-sync.diff
 PATCHFILES += s64-sync.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

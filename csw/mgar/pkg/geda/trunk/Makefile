@@ -8,8 +8,8 @@
 #             /etc/opt/csw.
 #                                                                    - Trygve
 
-GARNAME = geda
-GARVERSION = 1.6.0
+NAME = geda
+VERSION = 1.6.0
 CATEGORIES = devel
 
 DESCRIPTION = The gEDA suite with gschem, gattrib, gnetlist, gsch2pcb, gsymcheck and libgeda
@@ -17,9 +17,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://geda.seul.org/release/v1.6/1.6.0/
-DISTFILES  = geda-gaf-$(GARVERSION).tar.gz
+DISTFILES  = geda-gaf-$(VERSION).tar.gz
 
-WORKSRC = $(WORKDIR)/geda-gaf-$(GARVERSION)
+WORKSRC = $(WORKDIR)/geda-gaf-$(VERSION)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 # UFILES_REGEX = geda-gaf-(\d+(?:\.\d+)*).tar.gz

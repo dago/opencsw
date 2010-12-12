@@ -2,8 +2,8 @@
 #
 # ! build state unknown, work in progress, please verify
 #
-GARNAME = webfs
-GARVERSION = 1.21
+NAME = webfs
+VERSION = 1.21
 CATEGORIES = apps
 
 DESCRIPTION = Lightweight HTTP server for static content
@@ -13,8 +13,8 @@ endef
 
 VENDOR_URL   = http://linux.bytesex.org/misc/webfs.html
 MASTER_SITES = http://dl.bytesex.org/releases/webfs/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
 

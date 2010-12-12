@@ -1,5 +1,5 @@
-GARNAME = popt
-GARVERSION = 1.15
+NAME = popt
+VERSION = 1.15
 CATEGORIES = lib
 
 DESCRIPTION = Popt is a C library for parsing command line parameters
@@ -14,8 +14,8 @@ functions for parsing arbitrary strings into argv[] arrays using
 shell-like rules. 
 endef
 
-MASTER_SITES = http://rpm5.org/files/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://rpm5.org/files/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # This fixes a minor failing check. See for details
 #   http://www.mail-archive.com/popt-devel@rpm5.org/msg00155.html
@@ -23,7 +23,7 @@ PATCHFILES = 0001-Fix-failing-tests.patch
 
 PACKAGES = CSWlibpopt
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 

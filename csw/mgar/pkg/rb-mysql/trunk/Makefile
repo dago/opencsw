@@ -1,17 +1,17 @@
-GARNAME = rb-mysql
-GARVERSION = 2.8.1
+NAME = rb-mysql
+VERSION = 2.8.1
 CATEGORIES = lang
 
 DESCRIPTION = Mysql Bindings for Fuby
 
 MASTER_SITES = http://rubygems.org/downloads/
-DISTFILES  = mysql-$(GARVERSION).gem
+DISTFILES  = mysql-$(VERSION).gem
 
 BUILD_DEP_PKGS = CSWrubygems
 RUNTIME_DEP_PKGS = CSWrubygems
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 
 CONFIGURE_SCRIPTS = 

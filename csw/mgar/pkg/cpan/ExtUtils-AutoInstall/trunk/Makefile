@@ -1,5 +1,5 @@
-GARNAME = ExtUtils-AutoInstall
-GARVERSION = 0.63
+NAME = ExtUtils-AutoInstall
+VERSION = 0.63
 CATEGORIES = cpan
 AUTHOR = AUTRIJUS
 

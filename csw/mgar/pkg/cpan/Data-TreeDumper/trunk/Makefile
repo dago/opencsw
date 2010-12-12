@@ -1,5 +1,5 @@
-GARNAME = Data-TreeDumper
-GARVERSION = 0.37
+NAME = Data-TreeDumper
+VERSION = 0.37
 CATEGORIES = cpan
 AUTHOR = NKH
 

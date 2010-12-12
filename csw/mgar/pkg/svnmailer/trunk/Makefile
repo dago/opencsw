@@ -1,5 +1,5 @@
-GARNAME = svnmailer
-GARVERSION = 1.1.0
+NAME = svnmailer
+VERSION = 1.1.0
 GARSVNREV  = r1373
 GARRELEASE = dev-$(GARSVNREV)
 CATEGORIES = utils
@@ -10,7 +10,7 @@ define BLURB
   mail, news or XML (to a CIA tracker).
 endef
 
-DISTNAME = $(GARNAME)-$(GARVERSION)-$(GARRELEASE)
+DISTNAME = $(NAME)-$(VERSION)-$(GARRELEASE)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 CONFIGURE_SCRIPTS =
@@ -20,7 +20,7 @@ INSTALL_SCRIPTS = $(WORKSRC)/setup.py
 
 INSTALL_ARGS += --root=$(DESTDIR)
 
-MASTER_SITES = http://storage.perlig.de/$(GARNAME)/
+MASTER_SITES = http://storage.perlig.de/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.bz2
 DISTFILES += $(call admfiles,CSWsvnmailer,depend)
 

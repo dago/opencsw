@@ -1,5 +1,5 @@
-GARNAME = netsnmp
-GARVERSION = 5.4.2.1
+NAME = netsnmp
+VERSION = 5.4.2.1
 CATEGORIES = apps
 
 DESCRIPTION = A suite of applications used to implement SNMP
@@ -12,7 +12,7 @@ endef
 
 SF_PROJ = net-snmp
 MASTER_SITES = $(SF_MIRRORS)
-DISTNAME = $(SF_PROJ)-$(GARVERSION)
+DISTNAME = $(SF_PROJ)-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
 # Patch for perl modules

@@ -1,9 +1,9 @@
-GARNAME = dhcp
-GARVERSION = 4.2.0
+NAME = dhcp
+VERSION = 4.2.0
 RELEASE = P1
-DISTVERSION = $(GARVERSION)-$(RELEASE)
-SPKG_VERSION = $(GARVERSION)$(RELEASE)
-DISTNAME = $(GARNAME)-$(GARVERSION)-$(RELEASE)
+DISTVERSION = $(VERSION)-$(RELEASE)
+SPKG_VERSION = $(VERSION)$(RELEASE)
+DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
 WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
@@ -16,7 +16,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.isc.org/isc/dhcp/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES  = $(DISTNAME).tar.gz
 
 LICENSE = LICENSE
@@ -31,7 +31,7 @@ SPKG_DESC_CSWdhcpdevel = ISC DHCP development package
 CATALOGNAME_CSWdhcpdevel = dhcp_devel
 ARCHALL_CSWdhcpdevel = 1
 
-UFILES_REGEX = ($(GARNAME)-\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = ($(NAME)-\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 TEST_TARGET = check
@@ -58,14 +58,14 @@ CHECKPKG_OVERRIDES_CSWdhcpdevel += archall-devel-package
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@( cd $(WORKSRC) ; \
 	  gmake DESTDIR=$(DESTDIR) install )
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@cp $(FILEDIR)/CSWdhcp.cswdhcpd $(DESTDIR)/etc/opt/csw/init.d/cswdhcpd
 	@chmod 755 $(DESTDIR)/etc/opt/csw/init.d/cswdhcpd
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
-	@cp $(FILEDIR)/CSWdhcp.README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
-	@ginstall -d $(DESTDIR)/var/opt/csw/$(GARNAME)/db
-	@touch $(DESTDIR)/var/opt/csw/$(GARNAME)/db/dhcpd.leases
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
+	@cp $(FILEDIR)/CSWdhcp.README.CSW $(DESTDIR)$(docdir)/$(NAME)/README.CSW
+	@ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/db
+	@touch $(DESTDIR)/var/opt/csw/$(NAME)/db/dhcpd.leases
 	@$(MAKECOOKIE)

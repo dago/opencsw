@@ -1,5 +1,5 @@
-GARNAME = libpthread-stubs
-GARVERSION = 0.3
+NAME = libpthread-stubs
+VERSION = 0.3
 CATEGORIES = x11
 
 DESCRIPTION = pthread stubs not provided by native libc
@@ -8,12 +8,12 @@ This library provides weak aliases for pthread functions not provided in libc or
 endef
 
 MASTER_SITES = $(XCB_MASTER_SITES)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWlibpthreadstubs
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWx11common
 

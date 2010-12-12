@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = django-auth-ldap
-GARVERSION = 1.0.6
+NAME = django-auth-ldap
+VERSION = 1.0.6
 CATEGORIES = python
 PACKAGES = CSWpy-django-auth-ldap
 CATALOGNAME = py_django_auth_ldap
@@ -21,11 +21,11 @@ define BLURB
   options for working with users, groups, and permissions.
 endef
 
-# 1st char of GARNAME is the directory name
-MASTER_SITE_DIR = $(shell echo $(GARNAME) | cut -c 1)
-MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+# 1st char of NAME is the directory name
+MASTER_SITE_DIR = $(shell echo $(NAME) | cut -c 1)
+MASTER_SITES = http://pypi.python.org/packages/source/$(MASTER_SITE_DIR)/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 TEST_SCRIPTS =

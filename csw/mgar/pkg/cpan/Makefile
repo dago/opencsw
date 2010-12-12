@@ -36,8 +36,8 @@ newpkg-%: catalogname = $(shell echo $(call lcase,$*) | tr -d ':-' )
 newpkg-%: dir = $(subst ::,-,$*)
 newpkg-%:
 	@svn mkdir $(dir) $(dir)/tags $(dir)/branches $(dir)/trunk $(dir)/trunk/files
-	@(echo "GARNAME = $(dir)";                                \
-	echo "GARVERSION = 1.0";                                        \
+	@(echo "NAME = $(dir)";                                \
+	echo "VERSION = 1.0";                                        \
 	echo "CATEGORIES = cpan";                                       \
 	echo "AUTHOR = MYSELF";                                         \
 	echo "";                                                        \

@@ -1,5 +1,5 @@
-GARNAME = evolution-webcal
-GARVERSION = 2.28.0
+NAME = evolution-webcal
+VERSION = 2.28.0
 CATEGORIES = gnome
 
 DESCRIPTION = Evolution Web Calendar
@@ -7,8 +7,8 @@ define BLURB
 endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTNAME  = $(NAME)-$(VERSION)
 
 PACKAGES = CSWevolutionwebcal CSWevolutionwebcal-devel CSWevolutionwebcal-doc
 CATALOGNAME_CSWevolutionwebcal = evolution_webcal
@@ -30,7 +30,7 @@ PKGFILES_CSWevolutionwebcal-doc = $(sharedstatedir)/gtk-doc/.*
 
 ARCHALL_CSWevolutionwebcal-doc = 1
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL =http://projects.gnome.org/evolution-webcal
 

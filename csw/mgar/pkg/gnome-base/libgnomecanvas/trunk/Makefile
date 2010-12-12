@@ -1,5 +1,5 @@
-GARNAME = libgnomecanvas
-GARVERSION = 2.26.0
+NAME = libgnomecanvas
+VERSION = 2.26.0
 CATEGORIES = lib
 
 DESCRIPTION = GNOME Canvas Lib
@@ -11,7 +11,7 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES = $(DISTNAME).tar.bz2
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 

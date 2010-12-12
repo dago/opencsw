@@ -1,5 +1,5 @@
-GARNAME = Snowball-Norwegian
-GARVERSION = 1.2
+NAME = Snowball-Norwegian
+VERSION = 1.2
 CATEGORIES = cpan
 AUTHOR = ASKSH
 

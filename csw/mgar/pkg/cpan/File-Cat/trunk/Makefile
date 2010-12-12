@@ -1,5 +1,5 @@
-GARNAME = File-Cat
-GARVERSION = 1.2
+NAME = File-Cat
+VERSION = 1.2
 CATEGORIES = cpan
 AUTHOR = FIMM
 

@@ -1,5 +1,5 @@
-GARNAME = cvsps
-GARVERSION = 2.1
+NAME = cvsps
+VERSION = 2.1
 CATEGORIES = apps
 
 DESCRIPTION = Patchsets for CVS
@@ -8,7 +8,7 @@ CVSps is a program for generating 'patchset' information from a CVS repository. 
 endef
 
 MASTER_SITES = http://www.cobite.com/cvsps/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = 0001-add-basic-autotools-files.patch
 PATCHFILES += 0002-add-modified-autoconf-check_zlib-from-loic-dachary.patch
@@ -36,7 +36,7 @@ CONFIGURE_ARGS = $(DIRPATHS) --with-zlib=/opt/csw
 
 include gar/category.mk
 
-DOCDIR = $(datadir)/doc/$(GARNAME)
+DOCDIR = $(datadir)/doc/$(NAME)
 
 pre-configure-modulated:
 	@echo About to initialize the autotools bits.

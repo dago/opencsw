@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = shunit2
-GARVERSION = 2.1.5
+NAME = shunit2
+VERSION = 2.1.5
 CATEGORIES = lib
 DESCRIPTION = a xUnit unit test framework for Bourne based shell scripts
 define BLURB
@@ -18,8 +18,8 @@ SPKG_SOURCEURL = http://code.google.com/p/shunit2/
 MASTER_SITES = $(GOOGLE_MIRROR)
 PATCHFILES  = 0001-fix-shlib-path-in-docbookPrep.sh.patch
 PATCHFILES += 0002-abspath-instead-of-PWD.patch
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = shunit2

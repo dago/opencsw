@@ -1,5 +1,5 @@
-GARNAME = mod_highlight
-GARVERSION = 0.1.0
+NAME = mod_highlight
+VERSION = 0.1.0
 CATEGORIES = server
 
 DESCRIPTION = Syntax highlighting module for Apache 2.0
@@ -11,14 +11,14 @@ endef
 
 #DEPENDS = server/apache2
 
-MASTER_SITES = http://www.outoforder.cc/downloads/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+MASTER_SITES = http://www.outoforder.cc/downloads/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSWap2modhighlight.gspec
 DISTFILES += CSWap2modhighlight.prototype CSWap2modhighlight.depend
 DISTFILES += CSWap2modhighlight.postinstall CSWap2modhighlight.preremove
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs

@@ -1,5 +1,5 @@
-GARNAME = perlconsole
-GARVERSION = 0.4
+NAME = perlconsole
+VERSION = 0.4
 CATEGORIES = cpan
 AUTHOR = SUKRIA
 
@@ -28,7 +28,7 @@ RUNTIME_DEP_PKGS += CSWpmbkeywords
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	# Make directories writable (otherwise gmake clean bails out)
 	chmod -R u+w $(INSTALLISADIR)

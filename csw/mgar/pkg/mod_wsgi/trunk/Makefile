@@ -1,5 +1,5 @@
-GARNAME = mod_wsgi
-GARVERSION = 3.2
+NAME = mod_wsgi
+VERSION = 3.2
 CATEGORIES = lib
 
 
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://modwsgi.googlecode.com/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += postinstall preremove space
 LICENSE = LICENCE
 

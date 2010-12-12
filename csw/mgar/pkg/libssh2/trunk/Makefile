@@ -1,5 +1,5 @@
-GARNAME = libssh2
-GARVERSION = 1.2.7
+NAME = libssh2
+VERSION = 1.2.7
 CATEGORIES = lib
 
 DESCRIPTION = A Library Implementing the SSH2 Protocol
@@ -12,11 +12,11 @@ endef
 
 MASTER_SITES = http://www.libssh2.org/download/
 SPKG_SOURCEURL = http://www.libssh2.org
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS_CSWlibssh2  = CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWlibssh2devel = CSWlibssh2

@@ -1,5 +1,5 @@
-GARNAME = Object-MultiType
-GARVERSION = 0.05
+NAME = Object-MultiType
+VERSION = 0.05
 CATEGORIES = cpan
 AUTHOR = GMPASSOS
 

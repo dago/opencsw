@@ -1,5 +1,5 @@
-GARNAME = setxkbmap
-GARVERSION = 6.8.0
+NAME = setxkbmap
+VERSION = 6.8.0
 CATEGORIES = lib
 
 DESCRIPTION = Set the keyboard mapping under X
@@ -7,18 +7,18 @@ define BLURB
   Loads a keyboard mapping.
 endef
 
-MASTER_SITES = http://x.europnews.de/pub/X11R$(GARVERSION)/src
-DISTFILES  = X11R$(GARVERSION)-src1.tar.gz
-DISTFILES += X11R$(GARVERSION)-src2.tar.gz
-DISTFILES += X11R$(GARVERSION)-src3.tar.gz
-DISTFILES += X11R$(GARVERSION)-src4.tar.gz
-DISTFILES += X11R$(GARVERSION)-src5.tar.gz
-DISTFILES += X11R$(GARVERSION)-src6.tar.gz
-DISTFILES += X11R$(GARVERSION)-src7.tar.gz
+MASTER_SITES = http://x.europnews.de/pub/X11R$(VERSION)/src
+DISTFILES  = X11R$(VERSION)-src1.tar.gz
+DISTFILES += X11R$(VERSION)-src2.tar.gz
+DISTFILES += X11R$(VERSION)-src3.tar.gz
+DISTFILES += X11R$(VERSION)-src4.tar.gz
+DISTFILES += X11R$(VERSION)-src5.tar.gz
+DISTFILES += X11R$(VERSION)-src6.tar.gz
+DISTFILES += X11R$(VERSION)-src7.tar.gz
 DISTFILES += setxkbmap-xorg.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
-# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 WORKSRC = $(WORKDIR)/xc
 PATCHFILES = setxkbmap-xorg.patch

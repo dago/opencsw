@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = xcb-util
-GARVERSION = 0.3.6
+NAME = xcb-util
+VERSION = 0.3.6
 CATEGORIES = x11
 
 DESCRIPTION = The XCB utility library
@@ -10,14 +10,14 @@ endef
 
 SPKG_SOURCEDIR = http://xcb.freedesktop.org/XcbUtil/
 MASTER_SITES = http://xcb.freedesktop.org/dist/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
 RUNTIME_DEP_PKGS = CSWlibxcb
 BUILD_DEP_PKGS = CSWgnulinks $(RUNTIME_DEP_PKGS)
 PACKAGES = CSWxcbutil
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CATALOGNAME = xcbutil
 

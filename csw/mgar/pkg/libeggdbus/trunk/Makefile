@@ -1,5 +1,5 @@
-GARNAME = eggdbus
-GARVERSION = 0.6
+NAME = eggdbus
+VERSION = 0.6
 CATEGORIES = lib
 
 DESCRIPTION = D-Bus bindings for GObject
@@ -11,9 +11,9 @@ endef
 
 VENDOR_URL = http://cgit.freedesktop.org/~david/eggdbus
 MASTER_SITES = http://cgit.freedesktop.org/~david/eggdbus/snapshot/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibeggdbus CSWlibeggdbusdevel
 CATALOGNAME_CSWlibeggdbus = libeggdbus

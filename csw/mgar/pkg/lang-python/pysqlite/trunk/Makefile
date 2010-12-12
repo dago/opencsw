@@ -1,9 +1,9 @@
-GARNAME = pysqlite
-GARVERSION = 1.1.8a
+NAME = pysqlite
+VERSION = 1.1.8a
 CATEGORIES = lang
 
-PYSQLITE_VERSION := $(shell echo $(GARVERSION) | sed -e 's/[a-z]//g')
-PYSQLITE_RELEASE := $(shell echo $(GARVERSION) | sed -e 's/[^a-z]//g')
+PYSQLITE_VERSION := $(shell echo $(VERSION) | sed -e 's/[a-z]//g')
+PYSQLITE_RELEASE := $(shell echo $(VERSION) | sed -e 's/[^a-z]//g')
 
 DESCRIPTION = SQLite 1.x support for Python
 define BLURB
@@ -12,8 +12,8 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 
-WORKSRC = $(WORKDIR)/$(GARNAME)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+WORKSRC = $(WORKDIR)/$(NAME)
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWpysqlite
 CATALOGNAME_CSWpysqlite = pysqlite

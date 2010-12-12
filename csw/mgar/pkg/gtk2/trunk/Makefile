@@ -1,5 +1,5 @@
-GARNAME = gtk2
-GARVERSION = 2.18.9
+NAME = gtk2
+VERSION = 2.18.9
 CATEGORIES = lib
 
 DESCRIPTION = GTK+, the multiplatform X11 toolkit for GUI development
@@ -19,7 +19,7 @@ endef
 GNOME_PROJ = gtk+
 MASTER_SITES = $(GNOME_MIRROR)
 
-DISTNAME = gtk+-$(GARVERSION)
+DISTNAME = gtk+-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += CSWgtk2.postinstall
 

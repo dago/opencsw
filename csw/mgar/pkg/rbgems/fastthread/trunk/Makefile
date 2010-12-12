@@ -1,5 +1,5 @@
-GARNAME = fastthread
-GARVERSION = 1.0.7
+NAME = fastthread
+VERSION = 1.0.7
 CATEGORIES = rbgems
 
 DESCRIPTION = Optimized replacement for thread.rb primitives

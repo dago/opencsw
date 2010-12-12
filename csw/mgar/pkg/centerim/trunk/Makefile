@@ -1,5 +1,5 @@
-GARNAME = centerim
-GARVERSION = 4.22.7
+NAME = centerim
+VERSION = 4.22.7
 CATEGORIES = utils
 
 DESCRIPTION = Text mode menu- and window-driven IM interface
@@ -10,11 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.centerim.org/download/releases/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 SPKG_SOURCEURL = http://www.centerim.org/
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-openssl=/opt/csw/ssl

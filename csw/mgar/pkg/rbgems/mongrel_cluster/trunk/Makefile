@@ -1,5 +1,5 @@
-GARNAME = mongrel_cluster
-GARVERSION = 1.0.5
+NAME = mongrel_cluster
+VERSION = 1.0.5
 CATEGORIES = rbgems
 
 DESCRIPTION = Mongrel plugin for managing multiple Mongrel processes

@@ -1,9 +1,9 @@
-GARNAME = libevent
-GARVERSION = 1.4.14b
+NAME = libevent
+VERSION = 1.4.14b
 CATEGORIES = lib
 
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 1.1a 1.4.14b
+EXTRA_MODULATORS = VERSION
+MODULATIONS_VERSION = 1.1a 1.4.14b
 
 SKIP_MODULATIONS = isa-sparcv9-garversion-1.1a
 SKIP_MODULATIONS += isa-amd64-garversion-1.1a
@@ -20,14 +20,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.monkey.org/~provos/
-SOURCEFILES = $(foreach V,$(MODULATIONS_GARVERSION),$(GARNAME)-$(DISTVERSION-$V).tar.gz)
+SOURCEFILES = $(foreach V,$(MODULATIONS_VERSION),$(NAME)-$(DISTVERSION-$V).tar.gz)
 DISTFILES += $(SOURCEFILES)
 
 # From http://www.monkey.org/~provos/libevent/LICENSE
 DISTFILES += LICENSE
 LICENSE = LICENSE
 
-NOEXTRACT = $(filter-out $(GARNAME)-$(DISTVERSION-$(GARVERSION)).tar.gz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out $(NAME)-$(DISTVERSION-$(VERSION)).tar.gz,$(SOURCEFILES))
 
 PACKAGES = CSWlibevent CSWlibevent-devel
 
@@ -40,11 +40,11 @@ SPKG_DESC_CSWlibevent = Event notification library
 SPKG_DESC_CSWlibevent-devel = Event notification library header files
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-stable.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-stable.tar.gz
 
 SPKG_SOURCEURL = http://www.monkey.org/~provos/libevent/
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(DISTVERSION-$(GARVERSION))
+WORKSRC = $(WORKDIR)/$(NAME)-$(DISTVERSION-$(VERSION))
 
 BUILD64 = 1
 NOISAEXEC = 1

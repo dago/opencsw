@@ -1,5 +1,5 @@
-GARNAME = krb5
-GARVERSION = 1.8.3
+NAME = krb5
+VERSION = 1.8.3
 CATEGORIES = server
 
 DESCRIPTION = MIT Kerberos 5
@@ -13,11 +13,11 @@ endef
 
 MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/1.8/
 MASTER_SITES += http://web.mit.edu/kerberos/dist/krb5-appl/1.0/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-signed.tar
+DISTFILES  = $(NAME)-$(VERSION)-signed.tar
 # DISTFILES += krb5-appl-1.0.1-signed.tar
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-signed.tar
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-signed.tar
 
 PATCHFILES  = patch-man2html-perl.patch
 PATCHFILES += 0002-libintl-for-kproplog.patch
@@ -124,7 +124,7 @@ LD_OPTIONS :=
 
 post-extract-modulated:
 	@# TODO: Check signature
-	-cd $(WORKDIR) && (gzip -c -d $(GARNAME)-$(GARVERSION).tar.gz | tar xf -)
+	-cd $(WORKDIR) && (gzip -c -d $(NAME)-$(VERSION).tar.gz | tar xf -)
 	#-cd $(WORKDIR) && (gzip -c -d krb5-appl-1.0.1.tar.gz | tar xf -)
 	@$(MAKECOOKIE)
 

@@ -1,5 +1,5 @@
-GARNAME = Config-General
-GARVERSION = 2.44
+NAME = Config-General
+VERSION = 2.44
 CATEGORIES = cpan
 AUTHOR = TLINDEN
 

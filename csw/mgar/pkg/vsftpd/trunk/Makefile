@@ -12,8 +12,8 @@
 
 ###### Package information #######
 
-GARNAME = vsftpd
-GARVERSION = 2.3.2
+NAME = vsftpd
+VERSION = 2.3.2
 CATEGORIES = server
 
 DESCRIPTION = A very secure and fast FTP server.
@@ -36,9 +36,9 @@ RUNTIME_DEP_PKGS += CSWosslrt
 ###### Upstream and opencsw files information #######
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWvsftpd.preinstall
 DISTFILES += changelog.CSW README.CSW
 DISTFILES += vsftpd.conf vsftpd.userlist

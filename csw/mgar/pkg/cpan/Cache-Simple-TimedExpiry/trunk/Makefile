@@ -1,5 +1,5 @@
-GARNAME = Cache-Simple-TimedExpiry
-GARVERSION = 0.27
+NAME = Cache-Simple-TimedExpiry
+VERSION = 0.27
 CATEGORIES = cpan
 AUTHOR = JESSE
 

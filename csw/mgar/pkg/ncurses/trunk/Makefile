@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = ncurses
-GARVERSION = 5.7
+NAME = ncurses
+VERSION = 5.7
 CATEGORIES = lib
 
 define BLURB
@@ -15,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = patch-xcode.diff
 

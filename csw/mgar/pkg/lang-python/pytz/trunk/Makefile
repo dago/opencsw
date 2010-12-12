@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = pytz
-GARVERSION = 2010l
+NAME = pytz
+VERSION = 2010l
 CATEGORIES = python
 
 DESCRIPTION = Pytz brings the Olson timezone database into Python.
@@ -13,14 +13,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://pypi.python.org/packages/source/p/pytz/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-SPKG_SOURCEURL = http://$(GARNAME).sourceforge.net/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+SPKG_SOURCEURL = http://$(NAME).sourceforge.net/
 PACKAGES = CSWpy-tz
 CATALOGNAME = py_tz
 
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 
-UFILES_REGEX = $(GARNAME)-(\d+[a-z]).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+[a-z]).tar.bz2
 
 LICENSE = LICENSE.txt
 ARCHALL = 1

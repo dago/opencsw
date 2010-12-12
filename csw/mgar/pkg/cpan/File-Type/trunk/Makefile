@@ -1,5 +1,5 @@
-GARNAME = File-Type
-GARVERSION = 0.22
+NAME = File-Type
+VERSION = 0.22
 CATEGORIES = cpan
 AUTHOR = PMISON
 

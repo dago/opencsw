@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = cheetah
-GARVERSION = 2.4.0
+NAME = cheetah
+VERSION = 2.4.0
 CATEGORIES = python
 DESCRIPTION = A template engine and code generation tool
 define BLURB
@@ -16,7 +16,7 @@ endef
 SPKG_SOURCEURL = http://www.cheetahtemplate.org/
 MASTER_SITES = http://pypi.python.org/packages/source/C/Cheetah/
 DL_NAME = Cheetah
-DISTNAME = $(DL_NAME)-$(GARVERSION)
+DISTNAME = $(DL_NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 UFILES_REGEX = $(DL_NAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = py_cheetah

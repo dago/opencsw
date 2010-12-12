@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = poppler
-GARVERSION = 0.10.6
+NAME = poppler
+VERSION = 0.10.6
 CATEGORIES = lib
 
 DESCRIPTION = Poppler is a PDF rendering library based on the xpdf-3.0 code base
@@ -10,7 +10,7 @@ endef
 
 SPKG_SOURCEURL = http://poppler.freedesktop.org/
 MASTER_SITES = http://poppler.freedesktop.org/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += old_libs_i386.tar.bz2
 DISTFILES += old_libs_sparc.tar.bz2
 
@@ -55,7 +55,7 @@ ARCHALL_CSWlibpopplerdoc = 1
 #PATCHFILES += missing-includes.patch
 
 # UPSTREAM_MASTER_SITES = 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 

@@ -1,5 +1,5 @@
-GARNAME = pyboto
-GARVERSION = 1.9b
+NAME = pyboto
+VERSION = 1.9b
 CATEGORIES = python
 
 DESCRIPTION = Python interfaces to Amazon Web Services
@@ -15,7 +15,7 @@ CATALOGNAME = py_boto
 VENDOR_URL     = http://code.google.com/p/boto/
 MASTER_SITES   = $(GOOGLE_MIRROR)
 GOOGLE_PROJECT = boto
-DISTNAME       = $(GOOGLE_PROJECT)-$(GARVERSION)
+DISTNAME       = $(GOOGLE_PROJECT)-$(VERSION)
 DISTFILES      = $(DISTNAME).tar.gz
 UFILES_REGEX   = $(GOOGLE_PROJECT)-(\d+(?:\.\d+)*).tar.gz
 

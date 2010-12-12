@@ -1,5 +1,5 @@
-GARNAME = mod_proxy_html
-GARVERSION = 2.5.2
+NAME = mod_proxy_html
+VERSION = 2.5.2
 CATEGORIES = server
 
 DESCRIPTION = Apache 2 output filter to rewrite HTML links
@@ -12,11 +12,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://apache.webthing.com/mod_proxy_html/
-DISTFILES  = $(GARNAME)-$(GARVERSION).c
+DISTFILES  = $(NAME)-$(VERSION).c
 DISTFILES += $(call admfiles,CSWap2modproxyhtml,depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).c
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).c
 
 BUILD_DEP_PKGS = CSWapache2-devel CSWapache2 CSWlibxml2
 

@@ -1,5 +1,5 @@
-GARNAME      = swtlibs
-GARVERSION   = 3.2.2
+NAME      = swtlibs
+VERSION   = 3.2.2
 CATEGORIES   = lib
 
 DESCRIPTION  = Standard Widget Toolkit (SWT) libraries
@@ -10,8 +10,8 @@ SWT can be used independently of the rest of the Eclipse Platform.
 endef
 
 MASTER_SITES  = ftp://sunsite.informatik.rwth-aachen.de/pub/mirror/eclipse/R-3.2.2-200702121330/
-DISTFILES     = swt-$(GARVERSION)-gtk-solaris-sparc.zip
-PKGDIST       = swt-$(GARVERSION)-gtk-solaris-sparc.zip
+DISTFILES     = swt-$(VERSION)-gtk-solaris-sparc.zip
+PKGDIST       = swt-$(VERSION)-gtk-solaris-sparc.zip
 # DISTFILES    += CSWswtlibs.gspec CSWswtlibs.prototype CSWswtlibs.depend
 DISTFILES += $(call admfiles, CSWswtlibs, depend )
 

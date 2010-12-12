@@ -1,8 +1,8 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 # * Submit 001- (DESTDIR) and 002- (man page) patches upstream
 # * clearenvironment is not documented in sudosh.conf(5), others?
-GARNAME = sudosh2
-GARVERSION = 1.0.4
+NAME = sudosh2
+VERSION = 1.0.4
 CATEGORIES = apps
 
 DESCRIPTION = Extensive auditing of user shell usage
@@ -22,7 +22,7 @@ endef
 
 VENDOR_URL    = http://sudosh2.sf.net
 MASTER_SITES  = $(SF_MIRRORS)
-DISTFILES     = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES     = $(NAME)-$(VERSION).tgz
 DISTFILES    += CSWsudosh2.postinstall
 DISTFILES    += CSWsudosh2.postremove
 
@@ -70,7 +70,7 @@ pre-configure-modulated:
 		$(WORKSRC)/configure
 	@$(MAKECOOKIE)
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: DOCS=AUTHORS NEWS README
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(localstatedir)/sudosh

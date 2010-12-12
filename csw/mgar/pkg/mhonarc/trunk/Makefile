@@ -1,5 +1,5 @@
-GARNAME = MHonArc
-GARVERSION = 2.6.14
+NAME = MHonArc
+VERSION = 2.6.14
 CATEGORIES = utils
 GARCH = all
 
@@ -25,7 +25,7 @@ include gar/category.mk
 install-custom:
 	@( cd $(WORKSRC) ; perl install.me -batch \
 		-prefix $(DESTDIR)$(prefix) \
-		-docpath $(DESTDIR)$(docdir)/$(GARNAME) \
+		-docpath $(DESTDIR)$(docdir)/$(NAME) \
 		-manpath $(DESTDIR)$(mandir) )
 	@echo "Fixing $(DESTDIR) references..."
 	@perl -i -plne 's#$(DESTDIR)##g' `find $(DESTDIR)$(prefix) -type f`

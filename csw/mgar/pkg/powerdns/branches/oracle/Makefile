@@ -1,5 +1,5 @@
-GARNAME = pdns
-GARVERSION = 2.9.22
+NAME = pdns
+VERSION = 2.9.22
 CATEGORIES = server
 
 DESCRIPTION = An advanced DNS server with multiple backends
@@ -10,13 +10,13 @@ endef
 
 MASTER_SITES = http://downloads.powerdns.com/releases/
 SPKG_SOURCEURL = http://www.powerdns.com/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 DISTFILES += cswpdns
 PATCHFILES += 0001-stdint.h-patch.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

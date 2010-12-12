@@ -1,5 +1,5 @@
-GARNAME = maven3
-GARVERSION = 3.0
+NAME = maven3
+VERSION = 3.0
 CATEGORIES = java
 
 DESCRIPTION = Java software project management and comprehension tool
@@ -22,7 +22,7 @@ attempts to deal with:
 endef
 
 MASTER_SITES = http://www.powertech.no/apache/dist/maven/binaries/
-DISTNAME = apache-maven-$(GARVERSION)
+DISTNAME = apache-maven-$(VERSION)
 DISTFILES  = $(DISTNAME)-bin.tar.gz
 
 LICENSE = LICENSE.txt

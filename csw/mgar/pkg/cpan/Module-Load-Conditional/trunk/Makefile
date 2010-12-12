@@ -1,5 +1,5 @@
-GARNAME = Module-Load-Conditional
-GARVERSION = 0.38
+NAME = Module-Load-Conditional
+VERSION = 0.38
 CATEGORIES = cpan
 AUTHOR = BINGOS
 

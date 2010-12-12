@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = Python
-GARVERSION = 2.7
+NAME = Python
+VERSION = 2.7
 CATEGORIES = lang
 VER = 2.7
 DVER = 2-7
@@ -17,7 +17,7 @@ CVER = 27
 #   - http://bugs.python.org/issue4902
 #     - Python-2.6.1/Modules/_ctypes/libffi/src/x86/sysv.S
 
-SPKG_SOURCEURL = http://python.org/download/releases/$(GARVERSION)
+SPKG_SOURCEURL = http://python.org/download/releases/$(VERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -30,12 +30,12 @@ define BLURB
   an extension language for applications that need a programmable interface.
 endef
 
-MASTER_SITES = http://python.org/ftp/python/$(GARVERSION)/
+MASTER_SITES = http://python.org/ftp/python/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Patches
 PATCHFILES += faqwiz.diff

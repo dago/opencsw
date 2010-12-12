@@ -1,18 +1,18 @@
-GARNAME = thunderbird
-GARVERSION = 3.0b3
+NAME = thunderbird
+VERSION = 3.0b3
 CATEGORIES = apps
-DISTNAME = $(GARNAME)
+DISTNAME = $(NAME)
 
 DESCRIPTION =  Mozilla Thunderbird Mail Client
 define BLURB
  Thunderbird 2 is the next generation release of the award-winning Thunderbird email client from Mozilla.
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
+DISTFILES  = $(NAME)-$(VERSION)-source.tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
-MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/$(GARVERSION)/source/
+MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/$(VERSION)/source/
 UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/thunderbird/releases/
 
 PACKAGES 					= CSWthunderbird
@@ -66,19 +66,19 @@ TEST_SCRIPTS =
 LICENSE = LICENSE
 
 # Variable for direct access to working dir
-WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
+WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(NAME)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
 post-extract:
-	@mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
+	@mv $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/mozilla $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(NAME)
 	@$(MAKECOOKIE)
 
 pre-configure:
-	@cp $(FILEDIR)/.mozconfig  $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)/.mozconfig
+	@cp $(FILEDIR)/.mozconfig  $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(NAME)/.mozconfig
 
 pre-install:
 	( if [ ! -d $(WORK_INSTALL)/opt/csw/bin ] ; then mkdir -p $(WORK_INSTALL)/opt/csw/bin ; fi )
-	( cd $(WORK_INSTALL)/opt/csw/bin ; rm $(GARNAME) ; ln -s ../mozilla/$(GARNAME)/bin/$(GARNAME) . )
+	( cd $(WORK_INSTALL)/opt/csw/bin ; rm $(NAME) ; ln -s ../mozilla/$(NAME)/bin/$(NAME) . )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/pixmaps )
 	( cp $(WORK_BUILD)/other-licenses/branding/thunderbird/content/icon64.png $(WORK_INSTALL)/opt/csw/share/pixmaps/thunderbird.png )
 	( mkdir -p $(WORK_INSTALL)/opt/csw/share/applications )

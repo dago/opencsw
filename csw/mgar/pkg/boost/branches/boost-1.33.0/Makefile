@@ -1,5 +1,5 @@
-GARNAME = boost
-GARVERSION = 1.33.0
+NAME = boost
+VERSION = 1.33.0
 CATEGORIES = lib
 
 DESCRIPTION = A collection of C++ libraries
@@ -15,9 +15,9 @@ define BLURB
   programming style of the Standard Template Library (STL).
 endef
 
-MASTER_SITES = $(SF_MIRROR)/$(GARNAME)/
-DISTVERSION = $(subst .,_,$(GARVERSION))
-DISTFILES  = $(GARNAME)_$(DISTVERSION).tar.bz2
+MASTER_SITES = $(SF_MIRROR)/$(NAME)/
+DISTVERSION = $(subst .,_,$(VERSION))
+DISTFILES  = $(NAME)_$(DISTVERSION).tar.bz2
 DISTFILES += CSWboost.gspec
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -25,7 +25,7 @@ UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=7586
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-WORKSRC = $(WORKDIR)/$(GARNAME)_$(DISTVERSION)
+WORKSRC = $(WORKDIR)/$(NAME)_$(DISTVERSION)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =

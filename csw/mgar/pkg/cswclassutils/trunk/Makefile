@@ -1,7 +1,7 @@
 # $HeadURL$
 
-GARNAME = cswclassutils
-GARVERSION = 1.42
+NAME = cswclassutils
+VERSION = 1.42
 CATEGORIES = utils
 
 # a few handy functions for defining 'generic' things dynmaically
@@ -65,8 +65,8 @@ SPKG_SOURCEURL = http://www.opencsw.org
 
 FILEDIR = files
 
-CASFILES = $(wildcard $(FILEDIR)/CSW$(GARNAME).[ir].*)
-CASLIST = $(foreach F,$(CASFILES), $(subst $(FILEDIR)/CSW$(GARNAME).,,$(F)))
+CASFILES = $(wildcard $(FILEDIR)/CSW$(NAME).[ir].*)
+CASLIST = $(foreach F,$(CASFILES), $(subst $(FILEDIR)/CSW$(NAME).,,$(F)))
 CSWCLASSES = $(subst .,,$(sort $(suffix $(CASLIST))))
 
 DISTFILES += $(subst $(FILEDIR)/,,$(CASFILES))
@@ -113,15 +113,15 @@ CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location|/opt/csw/etc/init.
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -m 0755 -d $(DESTDIR)/opt/csw/etc/init.d
-	@ginstall -m 0755 -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -m 0755 -d $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -m 0755 -d $(DESTDIR)/usr/sadm/install/scripts
 	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/svc/manifest
 	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/svc/method
 	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/cswclassutils
-	@ginstall -m 0755 $(FILEDIR)/CSW$(GARNAME).csw.smf.sample $(DESTDIR)/opt/csw/etc/init.d/csw.smf.sample
-	@ginstall -m 0444 $(FILEDIR)/CSW$(GARNAME).README.CSW $(DESTDIR)$(docdir)/$(GARNAME)/README.CSW
-	@$(foreach CAS,$(CASLIST),ginstall -m 0555 $(FILEDIR)/CSW$(GARNAME).$(CAS) $(DESTDIR)/usr/sadm/install/scripts/$(CAS);)
+	@ginstall -m 0755 $(FILEDIR)/CSW$(NAME).csw.smf.sample $(DESTDIR)/opt/csw/etc/init.d/csw.smf.sample
+	@ginstall -m 0444 $(FILEDIR)/CSW$(NAME).README.CSW $(DESTDIR)$(docdir)/$(NAME)/README.CSW
+	@$(foreach CAS,$(CASLIST),ginstall -m 0555 $(FILEDIR)/CSW$(NAME).$(CAS) $(DESTDIR)/usr/sadm/install/scripts/$(CAS);)
 	@$(MAKECOOKIE)

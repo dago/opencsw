@@ -1,5 +1,5 @@
-GARNAME = Parse-RecDescent
-GARVERSION = 1.963
+NAME = Parse-RecDescent
+VERSION = 1.963
 CATEGORIES = cpan
 AUTHOR = DCONWAY
 

@@ -1,5 +1,5 @@
-GARNAME = mod_transform
-GARVERSION = 0.6.0
+NAME = mod_transform
+VERSION = 0.6.0
 CATEGORIES = server
 
 DESCRIPTION = XSLT filter for Apache 2.0
@@ -11,14 +11,14 @@ endef
 
 #DEPENDS = lib/libxml lib/libxslt server/apache2
 
-MASTER_SITES = http://www.outoforder.cc/downloads/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://www.outoforder.cc/downloads/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWap2modtransform.gspec
 DISTFILES += CSWap2modtransform.prototype CSWap2modtransform.depend
 DISTFILES += CSWap2modtransform.postinstall CSWap2modtransform.preremove
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Anti-social GCC only behavior
 PATCHFILES += gcc.diff

@@ -6,8 +6,8 @@
 #   http://bugs.opensolaris.org/bugdatabase/view_bug.do;jsessionid=9fb51afbd594902d6b0fe775834d?bug_id=6721185
 # ! csync2 uses scandir, not available on Solaris, but available via gnulib
 #
-GARNAME = csync2
-GARVERSION = 1.34
+NAME = csync2
+VERSION = 1.34
 CATEGORIES = apps
 
 DESCRIPTION = Keeps files across multiple (cluster) hosts in sync
@@ -23,8 +23,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://oss.linbit.com/csync2/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

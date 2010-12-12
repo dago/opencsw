@@ -1,5 +1,5 @@
-GARNAME = Devel-Size
-GARVERSION = 0.71
+NAME = Devel-Size
+VERSION = 0.71
 CATEGORIES = cpan
 AUTHOR = TELS
 

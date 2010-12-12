@@ -1,5 +1,5 @@
-GARNAME = File-Remove
-GARVERSION = 1.42
+NAME = File-Remove
+VERSION = 1.42
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

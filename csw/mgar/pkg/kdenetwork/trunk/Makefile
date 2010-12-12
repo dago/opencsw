@@ -1,4 +1,4 @@
-GARNAME = kdenetwork
+NAME = kdenetwork
 CATEGORIES = kde
 
 DESCRIPTION = Networking apps for KDE (gcc3)

@@ -1,5 +1,5 @@
-GARNAME = cgi_multipart_eof_fix
-GARVERSION = 2.5.0
+NAME = cgi_multipart_eof_fix
+VERSION = 2.5.0
 CATEGORIES = rbgems
 
 DESCRIPTION = Fix an exploitable bug in CGI multipart parsing

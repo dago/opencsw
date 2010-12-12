@@ -3,4 +3,4 @@
 %include        url file://%{PKGLIB}/csw_dyndepend.gspec
 %copyright      
 
-Please see /opt/csw/share/doc/%{GARNAME}/license for license information
+Please see /opt/csw/share/doc/%{NAME}/license for license information

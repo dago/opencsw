@@ -1,4 +1,4 @@
-GARNAME = libxfce4util
+NAME = libxfce4util
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Utilities Library 
@@ -6,10 +6,10 @@ define BLURB
   Xfce Utilities Library 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Catalog description
 PACKAGES = CSWlibxfce4util CSWlibxfce4utildevel CSWlibxfce4utildoc

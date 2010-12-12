@@ -1,5 +1,5 @@
-GARNAME = rdoc-data
-GARVERSION = 2.5.3
+NAME = rdoc-data
+VERSION = 2.5.3
 CATEGORIES = rbgems
 
 DESCRIPTION = Core ri data for use with RDoc

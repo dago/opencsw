@@ -1,5 +1,5 @@
-GARNAME = pxlib
-GARVERSION = 0.6.3
+NAME = pxlib
+VERSION = 0.6.3
 CATEGORIES = lib
 
 DESCRIPTION = Library to read and write Paradox databases
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 SPKG_SOURCEURL = http://pxlib.sourceforge.net
 

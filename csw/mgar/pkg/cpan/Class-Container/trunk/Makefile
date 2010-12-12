@@ -1,5 +1,5 @@
-GARNAME = Class-Container
-GARVERSION = 0.12
+NAME = Class-Container
+VERSION = 0.12
 CATEGORIES = cpan
 AUTHOR = KWILLIAMS
 

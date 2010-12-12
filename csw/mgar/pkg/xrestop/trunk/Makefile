@@ -1,5 +1,5 @@
-GARNAME = xrestop
-GARVERSION = 0.3
+NAME = xrestop
+VERSION = 0.3
 CATEGORIES = utils
 
 DESCRIPTION = 'top' like staticstics for X11 server side resource usage
@@ -13,10 +13,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.freedesktop.org/software/xrestop/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 DISTFILES   += $(call admfiles,CSWxrestop,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 include gar/category.mk

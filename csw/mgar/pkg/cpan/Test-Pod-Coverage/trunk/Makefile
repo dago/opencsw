@@ -1,5 +1,5 @@
-GARNAME = Test-Pod-Coverage
-GARVERSION = 1.08
+NAME = Test-Pod-Coverage
+VERSION = 1.08
 CATEGORIES = cpan
 AUTHOR = PETDANCE
 

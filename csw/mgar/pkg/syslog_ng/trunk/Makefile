@@ -1,5 +1,5 @@
-GARNAME = syslog-ng
-GARVERSION = 3.0.5
+NAME = syslog-ng
+VERSION = 3.0.5
 CATEGORIES = server
 
 DESCRIPTION = A powerful syslogd replacement
@@ -9,13 +9,13 @@ define BLURB
   logs using TCP.
 endef
 
-MASTER_SITES = http://www.balabit.com/downloads/files/$(GARNAME)/open-source-edition/$(GARVERSION)/source/
-DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
-DISTFILES += $(GARNAME).conf.CSW
+MASTER_SITES = http://www.balabit.com/downloads/files/$(NAME)/open-source-edition/$(VERSION)/source/
+DISTFILES  = $(NAME)_$(VERSION).tar.gz
+DISTFILES += $(NAME).conf.CSW
 DISTFILES += cswsyslog_ng
 DISTFILES += CSWsyslogng.preinstall
 DISTFILES += CSWsyslogng.postremove
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWsyslogng
 CATALOGNAME = syslog_ng
 SPKG_SOURCEURL = http://www.balabit.com/network-security/syslog-ng/opensource-logging-system/
@@ -54,8 +54,8 @@ EXTRA_LDFLAGS = -L/opt/csw/lib -lwrap -lsocket
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw
-	ginstall -m 444 $(WORKDIR)/$(GARNAME).conf.CSW \
-		$(DESTDIR)/etc/opt/csw/$(GARNAME).conf.CSW
+	ginstall -m 444 $(WORKDIR)/$(NAME).conf.CSW \
+		$(DESTDIR)/etc/opt/csw/$(NAME).conf.CSW
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 755 $(FILEDIR)/cswsyslog_ng \
 		$(DESTDIR)/etc/opt/csw/init.d/cswsyslog_ng

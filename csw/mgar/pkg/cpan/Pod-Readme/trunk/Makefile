@@ -1,5 +1,5 @@
-GARNAME = Pod-Readme
-GARVERSION = 0.10
+NAME = Pod-Readme
+VERSION = 0.10
 CATEGORIES = cpan
 AUTHOR = BIGPRESH
 

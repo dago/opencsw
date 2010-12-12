@@ -1,5 +1,5 @@
-GARNAME = mercurial
-GARVERSION = 1.7.2
+NAME = mercurial
+VERSION = 1.7.2
 CATEGORIES = python
 
 DESCRIPTION = Fast, lightweight Source Control Management system
@@ -7,12 +7,12 @@ DESCRIPTION = Fast, lightweight Source Control Management system
 #endef
 
 MASTER_SITES = http://selenic.com/mercurial/release/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_DESC_CSWmercurial = Mercurial
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(WORKSRC)/setup.py

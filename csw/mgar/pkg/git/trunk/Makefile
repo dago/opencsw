@@ -1,5 +1,5 @@
-GARNAME = git
-GARVERSION = 1.7.3.2
+NAME = git
+VERSION = 1.7.3.2
 #PATCHLEVEL = rc1
 CATEGORIES = devel
 
@@ -82,7 +82,7 @@ SPKG_DESC_CSWgitdevel = Headers and static libraries for Git
 #NOTE: If you need to proxy git:// connections, set GIT_USE_PROXY in
 #	your .garrc file.  (That leaves this recipe in a more generic form.)
 GIT_REPOS  = git://git.kernel.org/pub/scm/git/git.git
-GIT_TREEISH_git.git = v$(GARVERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
+GIT_TREEISH_git.git = v$(VERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
 
 DISTFILES = CSWgit.postinstall
 
@@ -107,7 +107,7 @@ PKGFILES_CSWgitdevel = $(includedir)/.* $(libdir)/.*
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
@@ -172,7 +172,7 @@ PATH := /opt/csw/gnu:/usr/xpg4/bin:$(PATH)
 # git doesn't track the configure file, it needs to be built when using
 # source right from the repo.
 pre-configure-modulated:
-	@(cd $(WORKSRC); echo $(GARVERSION) > version; \
+	@(cd $(WORKSRC); echo $(VERSION) > version; \
 		$(MAKE) configure )
 	@$(MAKECOOKIE)
 
@@ -181,7 +181,7 @@ post-build-modulated:
 	@echo Builing Emacs Git extension
 	@( cd $(WORKSRC); $(MAKE) -C contrib/emacs )
 
-post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(GARNAME)
+post-install-modulated: GD=$(DESTDIR)/$(datadir)/doc/$(NAME)
 post-install-modulated: CONTHOOKS=$(GD)/contrib/hooks
 post-install-modulated: BD=$(DESTDIR)/$(bashconfdir)/bash_completion.d
 post-install-modulated: ID=$(DESTDIR)/$(includedir)/git

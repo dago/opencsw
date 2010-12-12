@@ -1,5 +1,5 @@
-GARNAME = will_paginate
-GARVERSION = 2.3.14
+NAME = will_paginate
+VERSION = 2.3.14
 CATEGORIES = rbgems
 
 DESCRIPTION = An API for ActiveRecord pagination

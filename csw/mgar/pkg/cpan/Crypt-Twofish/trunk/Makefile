@@ -1,5 +1,5 @@
-GARNAME = Crypt-Twofish
-GARVERSION = 2.12
+NAME = Crypt-Twofish
+VERSION = 2.12
 CATEGORIES = cpan
 AUTHOR = AMS
 

@@ -1,5 +1,5 @@
-GARNAME = libgpg-error
-GARVERSION = 1.10
+NAME = libgpg-error
+VERSION = 1.10
 CATEGORIES = lib
 
 DESCRIPTION = GNU gpg related library
@@ -9,12 +9,12 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libgpg-error/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWgpgerr
 CATALOGNAME = libgpg_error
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 VENDOR_URL = http://www.gnupg.org/download/
 

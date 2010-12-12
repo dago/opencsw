@@ -12,8 +12,8 @@
 
 ###### Package information #######
 
-GARNAME = openssl
-GARVERSION = 1.0.0a
+NAME = openssl
+VERSION = 1.0.0a
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
@@ -76,9 +76,9 @@ CHECKPKG_OVERRIDES_CSWossl1devel += surplus-dependency|CSWossl1rt
 MASTER_SITES = http://www.openssl.org/source/ http://openssl.org/news/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 DISTFILES += CSWossl1rt.checkinstall CSWossl1rt.preinstall CSWossl1rt.postinstall
 DISTFILES += changelog.CSW README.CSW
 

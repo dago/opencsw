@@ -1,8 +1,8 @@
-GARNAME     = php5
-GARVERSION  = 5.2.11
+NAME     = php5
+VERSION  = 5.2.11
 CATEGORIES  = lang
-SF_PROJ     = $(shell echo $(GARNAME) | sed -e 's/[0-9]//g')
-DISTNAME    = $(SF_PROJ)-$(GARVERSION)
+SF_PROJ     = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
+DISTNAME    = $(SF_PROJ)-$(VERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB

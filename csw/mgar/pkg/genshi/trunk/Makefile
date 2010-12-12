@@ -1,5 +1,5 @@
-GARNAME    = Genshi
-GARVERSION = 0.6
+NAME    = Genshi
+VERSION = 0.6
 CATEGORIES = python
 
 DESCRIPTION = Python toolkit for generation of output for the web
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.edgewall.com/pub/genshi/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 UFILES_REGEX = (\d+(?:\.\d+)*).tar.gz
 

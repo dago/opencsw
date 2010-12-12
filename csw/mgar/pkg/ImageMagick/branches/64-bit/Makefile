@@ -1,5 +1,5 @@
-GARNAME = imagemagick
-GARVERSION = 6.5.9
+NAME = imagemagick
+VERSION = 6.5.9
 GARSUBREV = 5
 CATEGORIES = lib
 
@@ -12,9 +12,9 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/
-DISTFILES  = ImageMagick-$(GARVERSION)-$(GARSUBREV).tar.bz2
+DISTFILES  = ImageMagick-$(VERSION)-$(GARSUBREV).tar.bz2
 
-DISTNAME = ImageMagick-$(GARVERSION)-$(GARSUBREV)
+DISTNAME = ImageMagick-$(VERSION)-$(GARSUBREV)
 
 SPKG_SOURCEURL = http://www.imagemagick.org
 
@@ -337,7 +337,7 @@ post-install-isa-sparcv8:
 	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libMagick.so.10.0.4 ] ; then ln -s libMagick.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick.so.10 ; fi )
 	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libWand.so.10.0.4 ] ; then ln -s libWand.so.10.0.4 $(INSTALLISADIR)$(libdir)/libWand.so.10 ; fi )
 	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libMagick++.so.10.0.4 ] ; then ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick++.so.10 ; fi )
-	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
+	@ln -s ImageMagick-$(VERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
 	@( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(CURDIR)/$(FILEDIR)/lib_6.2.9_s.tar.gz |tar xf -)
 	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
 	@mv $(INSTALLISADIR)$(bindir)/compare $(INSTALLISADIR)$(bindir)/compare2
@@ -350,7 +350,7 @@ post-install-isa-i386:
 	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libMagick.so.10.0.4 ] ; then ln -s libMagick.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick.so.10 ; fi )
 	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libWand.so.10.0.4 ] ; then ln -s libWand.so.10.0.4 $(INSTALLISADIR)$(libdir)/libWand.so.10 ; fi )
 	@( if [ ! -r $(INSTALLISADIR)$(libdir)/libMagick++.so.10.0.4 ] ; then ln -s libMagick++.so.10.0.4 $(INSTALLISADIR)$(libdir)/libMagick++.so.10 ; fi )
-	@ln -s ImageMagick-$(GARVERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
+	@ln -s ImageMagick-$(VERSION) $(INSTALLISADIR)$(docdir)/ImageMagick
 	@( cd $(INSTALLISADIR)$(libdir) ; gzip -dc $(CURDIR)/$(FILEDIR)/lib_6.2.9_i.tar.gz |tar xf -)
 	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
 	@mv $(INSTALLISADIR)$(bindir)/compare $(INSTALLISADIR)$(bindir)/compare2

@@ -14,11 +14,11 @@
 # TODO: nss-config
 # TODO: a better nss.pc
 
-GARNAME = nss
+NAME = nss
 MAJOR_VERSION = 3
 MINOR_VERSION = 12
 PATCHLEVEL    = 4
-GARVERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
+VERSION = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCHLEVEL)
 CATEGORIES = lib
 define BLURB
   Network Security Services (NSS) is a set of libraries designed to support
@@ -28,12 +28,12 @@ define BLURB
   other security standards.
 endef
 SPKG_SOURCEURL = http://www.mozilla.org/projects/security/pki/nss/
-# TODO: Generate RTM_NAME from GARVERSION
+# TODO: Generate RTM_NAME from VERSION
 RTM_NAME = NSS_3_12_4_RTM
 MASTER_SITES = https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/$(RTM_NAME)/src/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += mpl-tri-license-txt
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibnss3 CSWlibnss3-devel CSWlibnss3-tools
 
@@ -182,7 +182,7 @@ install-nss:
 	    $(DESTDIR)$(bindir)/`basename $${file}`; \
 	done
 	# Asserting that we have the right version in the .pc file
-	ggrep "Version: $(GARVERSION)" $(FILEDIR)/nss.pc \
+	ggrep "Version: $(VERSION)" $(FILEDIR)/nss.pc \
 		|| ( \
 			echo "Please adjust nss version in $(FILEDIR)/nss.pc" \
 				&& \

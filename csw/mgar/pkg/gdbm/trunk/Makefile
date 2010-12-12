@@ -1,5 +1,5 @@
-GARNAME = gdbm
-GARVERSION = 1.8.3
+NAME = gdbm
+VERSION = 1.8.3
 CATEGORIES = lib
 
 DESCRIPTION = GNU database library for C
@@ -10,9 +10,9 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Makefile install permissions patch
 PATCHFILES = perms.diff

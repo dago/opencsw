@@ -1,5 +1,5 @@
-GARNAME = Locale-Maketext-Simple
-GARVERSION = 0.21
+NAME = Locale-Maketext-Simple
+VERSION = 0.21
 CATEGORIES = cpan
 AUTHOR = JESSE
 

@@ -1,5 +1,5 @@
-GARNAME = grep
-GARVERSION = 2.7
+NAME = grep
+VERSION = 2.7
 CATEGORIES = utils
 
 DESCRIPTION = GNU grep
@@ -18,7 +18,7 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(DISTNAME).tar.xz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.xz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.xz
 
 PACKAGES = CSWggrep
 CATALOGNAME = ggrep

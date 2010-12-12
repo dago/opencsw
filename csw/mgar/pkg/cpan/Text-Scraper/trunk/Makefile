@@ -1,5 +1,5 @@
-GARNAME = Text-Scraper
-GARVERSION = 0.02
+NAME = Text-Scraper
+VERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = MCEWAN
 

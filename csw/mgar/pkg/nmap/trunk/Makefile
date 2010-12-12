@@ -1,5 +1,5 @@
-GARNAME = nmap
-GARVERSION = 5.21
+NAME = nmap
+VERSION = 5.21
 CATEGORIES = net
 
 DESCRIPTION = A network exploration tool and security/port scanner
@@ -15,10 +15,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://nmap.org/dist/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Compile against gtk+-2.0 (2.4.0)
 # PATCHFILES = gtk20.diff

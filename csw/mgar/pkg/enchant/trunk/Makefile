@@ -1,14 +1,14 @@
-GARNAME = enchant
-GARVERSION = 1.6.0
+NAME = enchant
+VERSION = 1.6.0
 CATEGORIES = apps
 
 DESCRIPTION = A wrapper library for various spell checking engines
 define BLURB
 endef
 
-MASTER_SITES =  http://www.abisource.com/downloads/$(GARNAME)/$(GARVERSION)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+MASTER_SITES =  http://www.abisource.com/downloads/$(NAME)/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTNAME  = $(NAME)-$(VERSION)
 SPKG_SOURCEURL = http://www.abisource.com/projects/enchant/
 
 
@@ -52,7 +52,7 @@ BUILD_DEP_PKGS += CSWdbusglibdev
 
 LICENSE = COPYING.LIB
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 
 #CHECKPKG_OVERRIDES_CSWenchant += symbol-not-found|enchant-lsmod

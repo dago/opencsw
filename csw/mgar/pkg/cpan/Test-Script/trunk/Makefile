@@ -1,5 +1,5 @@
-GARNAME = Test-Script
-GARVERSION = 1.03
+NAME = Test-Script
+VERSION = 1.03
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

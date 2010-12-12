@@ -1,5 +1,5 @@
-GARNAME = libytnef
-GARVERSION = 1.5
+NAME = libytnef
+VERSION = 1.5
 CATEGORIES = lib
 
 DESCRIPTION = Brief description
@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ytnef.sourceforge.net/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWlibytnef,)
 
 # We define upstream file regex so we can be notifed of new upstream software release

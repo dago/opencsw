@@ -1,5 +1,5 @@
-GARNAME = Apache-Test
-GARVERSION = 1.30
+NAME = Apache-Test
+VERSION = 1.30
 CATEGORIES = cpan
 AUTHOR = PHRED
 

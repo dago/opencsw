@@ -1,5 +1,5 @@
-GARNAME = ExtUtils-Depends
-GARVERSION = 0.302
+NAME = ExtUtils-Depends
+VERSION = 0.302
 CATEGORIES = cpan
 AUTHOR = TSCH
 

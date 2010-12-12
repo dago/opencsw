@@ -1,9 +1,9 @@
-GARNAME = neon
-GARVERSION = 0.29.5
+NAME = neon
+VERSION = 0.29.5
 CATEGORIES = lib
 
-EXTRA_MODULATORS = GARVERSION FEATURES
-MODULATIONS_GARVERSION = 0.26.4 0.29.5
+EXTRA_MODULATORS = VERSION FEATURES
+MODULATIONS_VERSION = 0.26.4 0.29.5
 MODULATIONS_FEATURES = minimal full
 
 DESCRIPTION = Neon HTTP and WebDAV client library
@@ -14,12 +14,12 @@ define BLURB
   be easily implemented.
 endef
 
-MASTER_SITES = http://www.webdav.org/$(GARNAME)/
-SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION), $(GARNAME)-$(VERSION).tar.gz)
+MASTER_SITES = http://www.webdav.org/$(NAME)/
+SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_VERSION), $(NAME)-$(VERSION).tar.gz)
 DISTFILES  = $(SOURCEFILES)
 DISTFILES += COPYING
 
-NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tar.gz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz,$(SOURCEFILES))
 
 PACKAGES = CSWneon CSWneonfull CSWneon-devel
 
@@ -38,7 +38,7 @@ SPKG_DESC_CSWneonfull   = Neon HTTP and WebDAV client library (full featured)
 SPKG_DESC_CSWneon-devel = Neon HTTP and WebDAV development support
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS_features-minimal = --without-libproxy --without-pakchois --without-gssapi
 CONFIGURE_ARGS_features-full = --with-libproxy --with-packchois

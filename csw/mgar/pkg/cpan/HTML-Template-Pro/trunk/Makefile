@@ -1,5 +1,5 @@
-GARNAME = HTML-Template-Pro
-GARVERSION = 0.95
+NAME = HTML-Template-Pro
+VERSION = 0.95
 CATEGORIES = cpan
 AUTHOR = VIY
 

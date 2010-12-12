@@ -1,5 +1,5 @@
-GARNAME = libgnomeprintui
-GARVERSION = 2.18.4
+NAME = libgnomeprintui
+VERSION = 2.18.4
 CATEGORIES = gnome
 
 DESCRIPTION = TODO
@@ -7,8 +7,8 @@ define BLURB
 endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTNAME  = $(NAME)-$(VERSION)
 
 PACKAGES = CSWlibgnomeprintui CSWlibgnomeprintuidevel CSWlibgnomeprintuidoc
 CATALOGNAME_CSWlibgnomeprintui = libgnomeprintui
@@ -27,7 +27,7 @@ BUILD_DEP_PKGS += CSWlibgnomeprint
 BUILD_DEP_PKGS += CSWlibgnomecanvas
 BUILD_DEP_PKGS += CSWgtk2devel
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://live.gnome.org/libgnomeprintui
 

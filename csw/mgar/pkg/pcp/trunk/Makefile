@@ -1,5 +1,5 @@
-GARNAME = pcp
-GARVERSION = 1.09
+NAME = pcp
+VERSION = 1.09
 CATEGORIES = net
 
 DESCRIPTION = Maps ports to PIDs and vice versa
@@ -22,7 +22,7 @@ CHECKPKG_OVERRIDES = license-missing
 include gar/category.mk
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@ginstall -m 755 -d $(DESTDIR)$(bindir)
 	@ginstall -m 755 $(WORKDIR)/pcp.txt $(DESTDIR)$(bindir)/pcp
 	@$(MAKECOOKIE)

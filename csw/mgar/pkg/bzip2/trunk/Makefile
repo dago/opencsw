@@ -1,5 +1,5 @@
-GARNAME = bzip2
-GARVERSION = 1.0.5
+NAME = bzip2
+VERSION = 1.0.5
 CATEGORIES = utils
 
 DESCRIPTION = bzip2 Compression Utility
@@ -10,15 +10,15 @@ statistical compressors), whilst being around twice as fast at compression and s
 times faster at decompression.
 endef
 
-MASTER_SITES = http://www.bzip.org/$(GARVERSION)/
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://www.bzip.org/$(VERSION)/
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 PATCHFILES   = 0001-CFLAGS-LDFLAGS-for-SOS12-shared-lib.patch
 PATCHFILES  += 0002-test-should-depend-on-bzip2.patch
 PATCHFILES  += 0003-generate-bzip2recover.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES    = CSWbzip2
 CATALOGNAME = bzip2
@@ -67,7 +67,7 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(includedir)
 	@ginstall -d $(DESTDIR)$(libdir)
 	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	@# install the libraries
 	@( for file in $(LIBFILES) ; do \
 	     ginstall -c -m 755 $(WORKSRC)/$$file $(DESTDIR)$(libdir) ; \
@@ -90,6 +90,6 @@ install-custom:
 	   done )
 	@# install the doc files
 	@( for file in $(DOCFILES) ; do \
-	     ginstall -m 644 $(WORKSRC)/$$file $(DESTDIR)$(docdir)/$(GARNAME) ; \
+	     ginstall -m 644 $(WORKSRC)/$$file $(DESTDIR)$(docdir)/$(NAME) ; \
 	   done )
 	@$(MAKECOOKIE)

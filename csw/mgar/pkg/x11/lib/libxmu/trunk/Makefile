@@ -1,5 +1,5 @@
-GARNAME = libxmu
-GARVERSION = 1.0.5
+NAME = libxmu
+VERSION = 1.0.5
 CATEGORIES = x11
 
 DESCRIPTION = A set of miscellaneous utility convenience functions for X libraries to use
@@ -8,11 +8,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libXmu-$(GARVERSION)
+DISTNAME = libXmu-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # BUILD_DEP_PKGS = CSWlibxtdevel CSWlibxextdevel
 

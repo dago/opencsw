@@ -1,5 +1,5 @@
-GARNAME = recode
-GARVERSION = 3.6
+NAME = recode
+VERSION = 3.6
 CATEGORIES = utils
 
 DESCRIPTION = GNU recode character set conversion
@@ -13,12 +13,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES = $(NAME)-$(VERSION).tar.gz 
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # I did some more tests. The faulted tests have something to do
 # with compiler optimization:

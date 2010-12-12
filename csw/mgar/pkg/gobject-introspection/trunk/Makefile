@@ -1,5 +1,5 @@
-GARNAME = gobject-introspection
-GARVERSION = 0.6.7
+NAME = gobject-introspection
+VERSION = 0.6.7
 CATEGORIES = gnome
 
 DESCRIPTION = Package for extending API for GObject based libraries
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWgobjintrospect CSWgobjintrospectdev
 CATALOGNAME_CSWgobjintrospect = gobj_introspect
@@ -77,7 +77,7 @@ PATCHFILES += gobject-introspection-03-ginfo.diff
 PATCHFILES += gobject-introspection-04-big-ending.diff
 PATCHFILES += sunstudio.patch
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://live.gnome.org/GObjectIntrospection
 

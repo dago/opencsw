@@ -1,5 +1,5 @@
-GARNAME = mhash
-GARVERSION = 0.9.9.9
+NAME = mhash
+VERSION = 0.9.9.9
 CATEGORIES = lib
 
 DESCRIPTION = A uniform interface to a large number of hash algorithms
@@ -10,9 +10,9 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 SPKG_SOURCEURL = http://mhash.sourceforge.net/
 

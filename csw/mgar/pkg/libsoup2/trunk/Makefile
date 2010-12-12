@@ -1,5 +1,5 @@
-GARNAME = libsoup
-GARVERSION = 2.26.3
+NAME = libsoup
+VERSION = 2.26.3
 CATEGORIES = lib
   
 
@@ -7,7 +7,7 @@ DESCRIPTION = HTTP client/server library for GNOME
 define BLURB
 endef
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 
 # We define upstream file regex so we can be notifed of new upstream software release

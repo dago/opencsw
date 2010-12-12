@@ -1,5 +1,5 @@
-GARNAME = libidn
-GARVERSION = 1.19
+NAME = libidn
+VERSION = 1.19
 CATEGORIES = lib
 
 DESCRIPTION = GNU IDN Library
@@ -12,11 +12,11 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://www.gnu.org/software/libidn/
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
 

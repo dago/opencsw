@@ -1,5 +1,5 @@
-GARNAME = Calendar-CSA
-GARVERSION = 0.8
+NAME = Calendar-CSA
+VERSION = 0.8
 CATEGORIES = cpan
 AUTHOR = KJALB
 

@@ -1,5 +1,5 @@
-GARNAME = joe
-GARVERSION = 3.7
+NAME = joe
+VERSION = 3.7
 CATEGORIES = utils
 
 DESCRIPTION = Joe's Own Editor
@@ -17,12 +17,12 @@ endef
 
 SF_PROJ = joe-editor
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=23475
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
 
 sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS  = $(DIRPATHS)

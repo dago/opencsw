@@ -1,5 +1,5 @@
-GARNAME = chrpath
-GARVERSION = 0.13
+NAME = chrpath
+VERSION = 0.13
 CATEGORIES = utils
 
 DESCRIPTION = A program to fix/change runpaths
@@ -8,7 +8,7 @@ endef
 
 SPKG_SOURCEURL = http://directory.fsf.org/project/chrpath/
 MASTER_SITES = http://ftp.tux.org/pub/X-Windows/ftp.hungry.com/chrpath/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWchrpath
 CATALOGNAME_CSWchrpath = chrpath
@@ -35,7 +35,7 @@ test-skip:
 	$(DONADA)
 
 post-configure-modulated:
-	@(perl -i -plne 's|docdir = .*|docdir = $(prefix)/share/doc/$(GARNAME)|'\
+	@(perl -i -plne 's|docdir = .*|docdir = $(prefix)/share/doc/$(NAME)|'\
 		$(WORKSRC)/Makefile)
 
 include gar/category.mk

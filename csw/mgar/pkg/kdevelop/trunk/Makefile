@@ -1,4 +1,4 @@
-GARNAME = kdevelop
+NAME = kdevelop
 CATEGORIES = kde
 
 DESCRIPTION = KDE Integrated Development Environment (gcc3)
@@ -16,7 +16,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # include before building.
 all: .DEFAULT
 .DEFAULT:
-	@echo " ==> $(GARNAME) build disabled"
+	@echo " ==> $(NAME) build disabled"
 	@true
 
 #include gar/category.mk

@@ -1,5 +1,5 @@
-GARNAME = String-Approx
-GARVERSION = 3.26
+NAME = String-Approx
+VERSION = 3.26
 CATEGORIES = cpan
 AUTHOR = JHI
 

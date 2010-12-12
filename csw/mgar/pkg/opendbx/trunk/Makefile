@@ -1,5 +1,5 @@
-GARNAME = opendbx
-GARVERSION = 1.4.5
+NAME = opendbx
+VERSION = 1.4.5
 CATEGORIES = lib
 
 DESCRIPTION = A C library for accessing databases with a single API
@@ -15,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.linuxnetworks.de/opendbx/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWopendbx CSWopendbxdevel CSWopendbxmysql CSWopendbxsqlite3 CSWopendbxoracle
 CATALOGNAME_CSWopendbx = opendbx
@@ -31,7 +31,7 @@ SPKG_DESC_CSWopendbxsqlite3 = $(DESCRIPTION), sqlite3 backend package
 SPKG_DESC_CSWopendbxsoracle = $(DESCRIPTION), oracle backend package
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

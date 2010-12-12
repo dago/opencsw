@@ -1,5 +1,5 @@
-GARNAME = doxygen
-GARVERSION = 1.7.2
+NAME = doxygen
+VERSION = 1.7.2
 CATEGORIES = utils
 
 DESCRIPTION = A documentation system for programming languages
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.stack.nl/pub/users/dimitri/
-DISTFILES  = $(GARNAME)-$(GARVERSION).src.tar.gz
+DISTFILES  = $(NAME)-$(VERSION).src.tar.gz
 
 PACKAGES = CSWdoxygen CSWdoxygendoc
 
@@ -24,7 +24,7 @@ LICENSE = LICENSE
 SPKG_SOURCEURL = http://www.stack.nl/~dimitri/doxygen/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).src.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).src.tar.gz
 UPSTREAM_MASTER_SITES = $(SPKG_SOURCEURL)
 
 BUILD_DEP_PKGS = CSWgraphviz

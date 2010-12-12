@@ -1,12 +1,12 @@
-GARNAME = libconfuse
-GARVERSION = 2.7
+NAME = libconfuse
+VERSION = 2.7
 CATEGORIES = lib
 
 # For libConfuse 2.7, the test suite doesn't compile cleanly on Solaris,
 # so we skip it.  This should be re-assessed with each new release
 # from upstream.  Proposed fixes for the test suite to be submitted
 # upstream.
-ifeq ($(GARVERSION),2.7)
+ifeq ($(VERSION),2.7)
 #TEST_TARGET = check
 TEST_SCRIPTS = 
 endif
@@ -25,14 +25,14 @@ endef
 #MASTER_SITES = http://bzero.se/confuse/
 MASTER_SITES = http://savannah.nongnu.org/download/confuse/
 PATCHFILES = 
-DISTFILES  = confuse-$(GARVERSION).tar.gz
+DISTFILES  = confuse-$(VERSION).tar.gz
 DISTFILES += $(PATCHFILES)
-DISTNAME = confuse-$(GARVERSION)
+DISTNAME = confuse-$(VERSION)
 
 EXTRA_DOCS = $(PATCHFILES)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

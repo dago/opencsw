@@ -1,5 +1,5 @@
-GARNAME = ExtUtils-CBuilder
-GARVERSION = 0.2703
+NAME = ExtUtils-CBuilder
+VERSION = 0.2703
 CATEGORIES = cpan
 AUTHOR = DAGOLDEN
 

@@ -1,5 +1,5 @@
-GARNAME = mono-debugger
-GARVERSION = 2.6
+NAME = mono-debugger
+VERSION = 2.6
 CATEGORIES = utils
 
 DESCRIPTION = Mono Runtime
@@ -10,10 +10,10 @@ define BLURB
   based on the ECMA standards for C# and  the Common Language Infrastructure.
 endef
 
-MASTER_SITES = http://ftp.novell.com/pub/mono/sources/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2 
+MASTER_SITES = http://ftp.novell.com/pub/mono/sources/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2 
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

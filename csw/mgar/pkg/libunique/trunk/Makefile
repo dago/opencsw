@@ -1,5 +1,5 @@
-GARNAME = libunique
-GARVERSION = 1.1.6
+NAME = libunique
+VERSION = 1.1.6
 CATEGORIES = gnome
 
 DESCRIPTION = Library for writing single instance application
@@ -14,10 +14,10 @@ define BLURB
 endef
 
 MASTER_SITES =  $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-DISTNAME  = $(GARNAME)-$(GARVERSION)
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTNAME  = $(NAME)-$(VERSION)
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWlibunique CSWlibuniquedevel
 CATALOGNAME_CSWlibunique = libunique

@@ -1,5 +1,5 @@
-GARNAME = Test-Class
-GARVERSION = 0.11
+NAME = Test-Class
+VERSION = 0.11
 CATEGORIES = cpan
 AUTHOR = ADIE
 

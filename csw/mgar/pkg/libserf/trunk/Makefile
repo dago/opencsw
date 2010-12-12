@@ -1,6 +1,6 @@
-GARNAME = libserf
-GARVERSION = 0.7.0
-DISTNAME = serf-$(GARVERSION)
+NAME = libserf
+VERSION = 0.7.0
+DISTNAME = serf-$(VERSION)
 CATEGORIES = lib
 
 DESCRIPTION = HTTP client library built on APR, multiplexes connections.

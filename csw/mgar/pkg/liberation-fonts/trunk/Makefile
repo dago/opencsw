@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = liberation-fonts
-GARVERSION = 1.05.2.20091019
+NAME = liberation-fonts
+VERSION = 1.05.2.20091019
 FONTDIR = /usr/openwin/lib/X11/fonts/TrueType
 CATEGORIES = lib
 DESCRIPTION = replacements for Times New Roman, Arial, and Courier New
@@ -35,7 +35,7 @@ define BLURB
 endef
 SPKG_SOURCEURL = https://www.redhat.com/promo/fonts/
 MASTER_SITES = https://fedorahosted.org/releases/l/i/liberation-fonts/
-DISTFILES  = liberation-fonts-$(GARVERSION).tar.gz
+DISTFILES  = liberation-fonts-$(VERSION).tar.gz
 UFILES_REGEX = liberation-fonts-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = liberation_fonts
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWfontforge

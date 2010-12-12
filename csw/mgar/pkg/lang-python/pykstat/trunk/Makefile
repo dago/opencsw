@@ -2,18 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = pykstat
-GARVERSION = 0.5
+NAME = pykstat
+VERSION = 0.5
 CATEGORIES = python
 DESCRIPTION = a Python interface to the Solaris kstat(3k) and utmpx APIs
 define BLURB
 endef
 SPKG_SOURCEURL = http://www.biostat.wisc.edu/~annis/creations/pykstat.html
 MASTER_SITES = http://www.biostat.wisc.edu/~annis/creations/
-DISTNAME = PyKstat-$(GARVERSION)
+DISTNAME = PyKstat-$(VERSION)
 PATCHFILES = python-2.6-Makefile.patch
 DISTFILES  = $(DISTNAME).tar.gz
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES = CSWpy-kstat
 CATALOGNAME_CSWpy-kstat = py_kstat
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWswig

@@ -1,5 +1,5 @@
-GARNAME = imagemagick
-GARVERSION = 6.6.0
+NAME = imagemagick
+VERSION = 6.6.0
 GARSUBREV = 9
 CATEGORIES = lib
 
@@ -12,9 +12,9 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/
-DISTFILES  = ImageMagick-$(GARVERSION)-$(GARSUBREV).tar.bz2
+DISTFILES  = ImageMagick-$(VERSION)-$(GARSUBREV).tar.bz2
 
-DISTNAME = ImageMagick-$(GARVERSION)-$(GARSUBREV)
+DISTNAME = ImageMagick-$(VERSION)-$(GARSUBREV)
 
 SPKG_SOURCEURL = http://www.imagemagick.org
 

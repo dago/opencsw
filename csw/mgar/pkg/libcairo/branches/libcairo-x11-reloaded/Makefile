@@ -1,5 +1,5 @@
-GARNAME      = libcairo
-GARVERSION   = 1.8.10
+NAME      = libcairo
+VERSION   = 1.8.10
 CATEGORIES   = lib
 
 DESCRIPTION  = The Cairo 2D Graphics Library
@@ -11,11 +11,11 @@ define BLURB
 endef
 
 MASTER_SITES  = http://www.cairographics.org/releases/
-DISTNAME      = cairo-$(GARVERSION)
+DISTNAME      = cairo-$(VERSION)
 DISTFILES     = $(DISTNAME).tar.gz 
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibcairo CSWlibcairodevel CSWlibcairodoc
 # PACKAGES += CSWcxlibcairo CSWcxlibcairodevel

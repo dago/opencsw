@@ -1,5 +1,5 @@
-GARNAME = loudmouth
-GARVERSION = 1.4.3
+NAME = loudmouth
+VERSION = 1.4.3
 CATEGORIES = net
 
 DESCRIPTION = The Loudmouth XMPP API for Jabber
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://www.loudmouth-project.org/
 
@@ -28,7 +28,7 @@ RUNTIME_DEP_PKGS_CSWloudmouthdevel = CSWloudmouth
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = http://groups.google.com/group/loudmouth-dev/web/download-loudmouth
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-glibtest
@@ -39,7 +39,7 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 post-install-modulated: EXTRA_DOCS = NEWS AUTHORS CONTRIBUTORS
-post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	ginstall -d $(DOCDEST)
 	cp $(addprefix $(WORKSRC)/, $(EXTRA_DOCS)) $(DOCDEST)

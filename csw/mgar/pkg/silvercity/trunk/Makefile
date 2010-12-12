@@ -1,5 +1,5 @@
-GARNAME = SilverCity
-GARVERSION = 0.9.7
+NAME = SilverCity
+VERSION = 0.9.7
 CATEGORIES = utils
 
 DESCRIPTION = Lexical analysis package for Python
@@ -8,9 +8,9 @@ define BLURB
 	analysis for over 20 programming and markup langauges.
 endef
 
-SF_PROJ = $(call TOLOWER,$(GARNAME))
+SF_PROJ = $(call TOLOWER,$(NAME))
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PACKAGES = CSWsilvercity
 
 RUNTIME_DEP_PKGS_CSWsilvercity = CSWpython-rt

@@ -1,5 +1,5 @@
-GARNAME = rrdtool
-GARVERSION = 1.4.3
+NAME = rrdtool
+VERSION = 1.4.3
 CATEGORIES = utils
 
 DESCRIPTION = Time-series data logging and graphing.
@@ -9,11 +9,11 @@ define BLURB
   RRDtool is magnitudes faster than MRTG and extremely configurable.
 endef
 
-MASTER_SITES = http://oss.oetiker.ch/$(GARNAME)/pub/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://oss.oetiker.ch/$(NAME)/pub/
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWrrd
 CATALOGNAME = rrdtool
@@ -55,7 +55,7 @@ EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --docdir=$(sharedstatedir)/doc/$(GARNAME)
+CONFIGURE_ARGS += --docdir=$(sharedstatedir)/doc/$(NAME)
 CONFIGURE_ARGS += --disable-lua 
 CONFIGURE_ARGS += --enable-python
 CONFIGURE_ARGS += --enable-ruby
@@ -90,7 +90,7 @@ include gar/category.mk
 # ugly fix to fix doc path
 #post-install-modulated:
 	#echo "  ==> Fixing doc path"
-	#mv $(DESTDIR)$(prefix)/share/doc/rrdtool-$(GARVERSION) $(DESTDIR)$(prefix)/share/doc/rrdtool
+	#mv $(DESTDIR)$(prefix)/share/doc/rrdtool-$(VERSION) $(DESTDIR)$(prefix)/share/doc/rrdtool
 
 pre-build-modulated:
 	echo "  ==> Adding math function round()"

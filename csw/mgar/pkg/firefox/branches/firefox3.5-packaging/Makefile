@@ -1,24 +1,24 @@
-GARNAME = firefox
-GARVERSION = 3.5.1
+NAME = firefox
+VERSION = 3.5.1
 CATEGORIES = apps
-DISTNAME = $(GARNAME)
+DISTNAME = $(NAME)
 
 DESCRIPTION = Firefox Community Edition web browser
 define BLURB
  The award-winning, free Web browser is better than ever. Browse the Web with confidence - Firefox protects you from viruses, spyware and pop-ups. Enjoy improvements to performance, ease of use and privacy. It's easy to import your favorites and settings and get started. Download Firefox now and get the most out of the Web. 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.bz2
+DISTFILES  = $(NAME)-$(VERSION)-source.tar.bz2
 DISTFILES += CSWfirefox.postremove CSWfirefox.postinstall 
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
-MASTER_SITES  = http://ftp.heanet.ie/pub/ftp.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
-MASTER_SITES += http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(GARVERSION)/source/
+MASTER_SITES  = http://ftp.heanet.ie/pub/ftp.mozilla.org/pub/mozilla.org/firefox/releases/$(VERSION)/source/
+MASTER_SITES += http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(VERSION)/source/
 UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/
 
 PACKAGES 		= CSWfirefox
-CATALOGNAME_CSWfirefox 	= $(GARNAME)
+CATALOGNAME_CSWfirefox 	= $(NAME)
 SPKG_DESC_CSWfirefox 	= $(DESCRIPTION)
 
 # Defines dependencies
@@ -102,7 +102,7 @@ TEST_SCRIPTS =
 LICENSE = LICENSE
 
 # Variable for direct access to working dir
-WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(GARNAME)
+WORK_BUILD   = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))/$(NAME)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
 post-extract:

@@ -1,5 +1,5 @@
-GARNAME = constant-lexical
-GARVERSION = 2
+NAME = constant-lexical
+VERSION = 2
 CATEGORIES = cpan
 AUTHOR = SPROUT
 

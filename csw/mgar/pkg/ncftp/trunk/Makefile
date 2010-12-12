@@ -1,5 +1,5 @@
-GARNAME = ncftp
-GARVERSION = 3.2.4
+NAME = ncftp
+VERSION = 3.2.4
 CATEGORIES = net
 
 DESCRIPTION = File Transfer Protocol (FTP) client applications.
@@ -13,7 +13,7 @@ MASTER_SITES = ftp://ftp.ncftp.com/ncftp/
 DISTFILES = $(DISTNAME)-src.tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)-src.tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-src.tar.bz2
 
 RUNTIME_DEP_PKGS = CSWgtar
 

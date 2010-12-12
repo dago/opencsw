@@ -1,7 +1,7 @@
-GARNAME = tcp_wrappers
+NAME = tcp_wrappers
 BASEVERSION = 7.6
 RELEASE = ipv6.4
-GARVERSION = $(BASEVERSION)-$(RELEASE)
+VERSION = $(BASEVERSION)-$(RELEASE)
 CATEGORIES = lib
 
 DESCRIPTION = Socket wrappers for pre-screening tcp connections (ipv6.4 patched)
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.porcupine.org/pub/security/
-DISTNAME = $(GARNAME)_$(GARVERSION)
+DISTNAME = $(NAME)_$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += COPYING
 DISTFILES += README
@@ -28,7 +28,7 @@ CATALOGNAME = tcpwrappers
 SPKG_VERSION = $(BASEVERSION)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)_(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)_(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_MODULATORS = EXTENDED
 MODULATIONS_EXTENDED = on off

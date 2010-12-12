@@ -1,5 +1,5 @@
-GARNAME = opera
-GARVERSION = 9.62
+NAME = opera
+VERSION = 9.62
 CATEGORIES = apps
 
 DESCRIPTION = Full-featured, standards-compliant browser
@@ -13,10 +13,10 @@ PACKAGES = CSWopera
 CATALOGNAME = opera
 
 MASTER_SITES = http://www.opera.com/
-DISTFILES  = $(GARNAME)-$(GARVERSION).gcc3-static-qt3.tar.gz
+DISTFILES  = $(NAME)-$(VERSION).gcc3-static-qt3.tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES += bin-opera.diff
 
@@ -28,7 +28,7 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 install-custom:
-	echo " ==> Installing $(GARNAME)"
+	echo " ==> Installing $(NAME)"
 	ginstall -d $(DESTDIR)$(prefix)/etc
 	cp -r $(WORKSRC)/etc/* $(DESTDIR)$(prefix)/etc
 	ginstall -d $(DESTDIR)$(prefix)/lib

@@ -1,5 +1,5 @@
-GARNAME = etckeeper
-GARVERSION = 0.37
+NAME = etckeeper
+VERSION = 0.37
 CATEGORIES = utils
 
 DESCRIPTION = Versioning for /etc
@@ -33,7 +33,7 @@ PATCHFILES = autoconf.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of
 # MASTER_SITES, then uncomment the next line. Otherwise it is set by
@@ -66,6 +66,6 @@ post-install-modulated:
 		dir=$(DESTDIR)$(sysconfdir)/$$d; \
 		[ -d $$dir ] && rm -rf $$dir; \
 	    done; \
-	  mkdir -p $(DESTDIR)/$(docdir)/$(GARNAME); \
-	  gzip -c -9 $(WORKSRC)/README > $(DESTDIR)/$(docdir)/$(GARNAME)/README.gz  )
+	  mkdir -p $(DESTDIR)/$(docdir)/$(NAME); \
+	  gzip -c -9 $(WORKSRC)/README > $(DESTDIR)/$(docdir)/$(NAME)/README.gz  )
 	@$(MAKECOOKIE)

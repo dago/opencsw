@@ -1,5 +1,5 @@
-GARNAME = colormake
-GARVERSION = 0.2
+NAME = colormake
+VERSION = 0.2
 CATEGORIES = utils
 
 DESCRIPTION = A colorizer for make
@@ -7,11 +7,11 @@ define BLURB
 This is a simple wrapper around "make" to make its output more readable.
 endef
 
-MASTER_SITES = http://bre.klaki.net/programs/$(GARNAME)/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+MASTER_SITES = http://bre.klaki.net/programs/$(NAME)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-Update-Paths-and-Binary-Tool-Names-for-CSW.patch
 
-DISTNAME = $(GARNAME)
+DISTNAME = $(NAME)
 
 ARCHALL = 1
 
@@ -24,7 +24,7 @@ CHECKPKG_OVERRIDES_CSWcolormake += surplus-dependency|CSWless
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of
 # MASTER_SITES, then uncomment the next line. Otherwise it is set by
@@ -38,7 +38,7 @@ INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
-install-custom: CMDD=$(docdir)/$(GARNAME)
+install-custom: CMDD=$(docdir)/$(NAME)
 install-custom:
 	@(cd $(WORKSRC); \
 		ginstall -d -m 0755 $(DESTDIR)$(bindir) $(DESTDIR)$(CMDD); \

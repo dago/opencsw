@@ -1,5 +1,5 @@
-GARNAME = tnef
-GARVERSION = 1.4.7
+NAME = tnef
+VERSION = 1.4.7
 CATEGORIES = utils
 
 DESCRIPTION = Unpacks Microsoft TNEF MIME attachments
@@ -10,14 +10,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.sourceforge.net/tnef/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=57057
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 #GARCOMPILER=GCC4
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -33,12 +33,12 @@ include gar/category.mk
 SPKG_SOURCEURL = http://sourceforge.net/projects/tnef
 
 install-custom:
-	@echo " ==> Installing $(GARNAME) (custom)"
+	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall -d $(DESTDIR)$(docdir)/$(GARNAME)
+	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -d $(DESTDIR)$(mandir)/man1
 	@( cd $(WORKSRC) ; \
-	   cp -r src/$(GARNAME) $(DESTDIR)$(bindir)/$(GARNAME) ; \
-	   cp -r doc/$(GARNAME).1 $(DESTDIR)$(mandir)/man1/$(GARNAME).1 )
+	   cp -r src/$(NAME) $(DESTDIR)$(bindir)/$(NAME) ; \
+	   cp -r doc/$(NAME).1 $(DESTDIR)$(mandir)/man1/$(NAME).1 )
 	@$(MAKECOOKIE)

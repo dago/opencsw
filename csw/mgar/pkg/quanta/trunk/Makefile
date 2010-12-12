@@ -1,4 +1,4 @@
-GARNAME = quanta
+NAME = quanta
 CATEGORIES = kde
 
 DESCRIPTION = The KDE Web Development Tool (gcc3)
@@ -6,7 +6,7 @@ define BLURB
   LONG DESCRIPTION
 endef
 
-PKGDIST    = kdewebdev-$(GARVERSION).tar.bz2
+PKGDIST    = kdewebdev-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWquantagcc,)
 
 # We define upstream file regex so we can be notifed of new upstream software release

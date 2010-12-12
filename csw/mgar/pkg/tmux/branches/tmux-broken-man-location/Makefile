@@ -1,12 +1,12 @@
-GARNAME = tmux
-GARVERSION = 1.2
+NAME = tmux
+VERSION = 1.2
 CATEGORIES = apps
 
 DESCRIPTION = Terminal Multiplexer
 
-SF_PROJ = $(GARNAME)
+SF_PROJ = $(NAME)
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 PATCHFILES  = 0001-old-style-patch-0000-stdint.patch
 PATCHFILES += 0002-Fix-one-more-inttypes.h.patch

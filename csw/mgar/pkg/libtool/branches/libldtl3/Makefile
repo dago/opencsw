@@ -1,5 +1,5 @@
-GARNAME = libtool
-GARVERSION = 1.5.26
+NAME = libtool
+VERSION = 1.5.26
 CATEGORIES = devel
 
 DESCRIPTION = A generic library support tool
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWlibltdl3
 CATALOGNAME = libltdl3
@@ -20,7 +20,7 @@ SPKG_SOURCEURL = http://www.gnu.org/software/libtool/
 SPKG_DESC_CSWlibtoolrt = Runtime library for libtool 1.5.x
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -1,5 +1,5 @@
-GARNAME = libmcal
-GARVERSION = 0.7
+NAME = libmcal
+VERSION = 0.7
 CATEGORIES = lib
 DRIVERNAME = mcaldrivers
 DRIVERVERSION = 0.9
@@ -17,9 +17,9 @@ MASTER_SITES = $(SF_MIRRORS)
 BUILD64 = 1
 NOISAEXEC = 1
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(DRIVERNAME)-$(DRIVERVERSION).tar.gz
-DISTNAME = $(GARNAME)
+DISTNAME = $(NAME)
 PACKAGES = CSWlibmcal
 CATALOGNAME_CSWlibmcal = libmcal
 SPKG_DESC_CSWlibmcal = $(DESCRIPTION)
@@ -28,7 +28,7 @@ SPKG_DESC_CSWlibmcal = $(DESCRIPTION)
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 
 CONFIGURE_ARGS  = $(DIRPATHS)

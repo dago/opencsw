@@ -1,5 +1,5 @@
-GARNAME = gnumeric
-GARVERSION = 1.9.5
+NAME = gnumeric
+VERSION = 1.9.5
 CATEGORIES = gnome
 
 DESCRIPTION = GNOME spreadsheet program
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS += CSWbonobo2 CSWgconf2 CSWggettextrt CSWglib2 CSWgnomekeyring
 RUNTIME_DEP_PKGS += CSWgnomevfs2 CSWgtk2 CSWlibart CSWlibatk CSWlibbonoboui
@@ -17,7 +17,7 @@ RUNTIME_DEP_PKGS += CSWlibgnomeui CSWlibgoffice CSWlibgsf CSWlibpopt CSWlibxml2
 RUNTIME_DEP_PKGS += CSWorbit2 CSWpango CSWperl CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PATCHFILES  = md5.h.diff
 PATCHFILES += numtheory.c.diff 

@@ -1,5 +1,5 @@
-GARNAME = Test-Warn
-GARVERSION = 0.21
+NAME = Test-Warn
+VERSION = 0.21
 CATEGORIES = cpan
 AUTHOR = CHORNY
 
@@ -8,7 +8,7 @@ define BLURB
     Extension to test methods for warnings
 endef
 
-MODDIST = $(GARNAME)-$(GARVERSION).zip
+MODDIST = $(NAME)-$(VERSION).zip
 
 DISTFILES += COPYING
 

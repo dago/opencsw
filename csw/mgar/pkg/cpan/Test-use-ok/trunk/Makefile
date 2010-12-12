@@ -1,5 +1,5 @@
-GARNAME = Test-use-ok
-GARVERSION = 0.02
+NAME = Test-use-ok
+VERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = AUDREYT
 

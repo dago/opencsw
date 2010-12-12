@@ -1,5 +1,5 @@
-GARNAME = Devel-LeakTrace
-GARVERSION = 0.05
+NAME = Devel-LeakTrace
+VERSION = 0.05
 CATEGORIES = cpan
 AUTHOR = RCLAMP
 

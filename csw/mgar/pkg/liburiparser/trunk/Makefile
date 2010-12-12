@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = liburiparser
-GARVERSION = 0.7.5
+NAME = liburiparser
+VERSION = 0.7.5
 CATEGORIES = lib
 
 DESCRIPTION = RFC 3986 Compliant URI Parsing Library
@@ -9,13 +9,13 @@ endef
 
 SF_PROJ = uriparser
 MASTER_SITES = $(SF_MIRROR)
-DISTNAME = $(SF_PROJ)-$(GARVERSION)
+DISTNAME = $(SF_PROJ)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.lzma
 
 PATCHFILES = 0001-Remove-superflous-extension-breaking-install-with-th.patch
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD_DEP_PKGS = CSWlibcpptestdevel
 
@@ -35,7 +35,7 @@ CONFIGURE_SCRIPTS  = $(WORKSRC)/configure
 CONFIGURE_SCRIPTS += $(WORKSRC)/doc/configure
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --docdir=$(docdir)/$(GARNAME)
+CONFIGURE_ARGS += --docdir=$(docdir)/$(NAME)
 
 PKGFILES_CSWliburiparser1 = $(PKGFILES_RT)
 

@@ -1,5 +1,5 @@
-GARNAME = libspectre
-GARVERSION = 0.2.6
+NAME = libspectre
+VERSION = 0.2.6
 CATEGORIES = lib
 
 DESCRIPTION = A small library for rendering Postscript documents
@@ -7,7 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://libspectre.freedesktop.org/releases/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # Use int_types.h instead of stdint.h until this is fixed:
 #   https://bugs.freedesktop.org/show_bug.cgi?id=27734
@@ -16,7 +16,7 @@ PATCHFILES = patch-stdint.diff
 SPKG_SOURCEURL = http://libspectre.freedesktop.org
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS = CSWgs
 

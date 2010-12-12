@@ -1,5 +1,5 @@
-GARNAME = mktemp
-GARVERSION = 1.7
+NAME = mktemp
+VERSION = 1.7
 CATEGORIES = utils
 
 DESCRIPTION = A small program to allow safe temporary file creation from shell scripts
@@ -10,13 +10,13 @@ define BLURB
     /tmp/tfile.XXXXXXXXXX.
 endef
 
-MASTER_SITES = ftp://ftp.mktemp.org/pub/$(GARNAME)/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+MASTER_SITES = ftp://ftp.mktemp.org/pub/$(NAME)/
+DISTFILES = $(NAME)-$(VERSION).tar.gz 
 
 LICENSE = LICENSE
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.mktemp.org/
 

@@ -1,5 +1,5 @@
-GARNAME = Scalar-List-Utils
-GARVERSION = 1.18
+NAME = Scalar-List-Utils
+VERSION = 1.18
 CATEGORIES = cpan
 AUTHOR = GBARR
 

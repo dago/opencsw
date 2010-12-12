@@ -8,8 +8,8 @@
 
 # watch doesn't follow the procps versioning. It has a hardcoded
 # version in watch.c which is emitted when calling watch -v
-GARNAME = watch
-GARVERSION = 0.2.0
+NAME = watch
+VERSION = 0.2.0
 CATEGORIES = utils
 
 DESCRIPTION = Watch a program output change over time
@@ -79,7 +79,7 @@ build-custom:
 	        ALL_LDFLAGS="$(LDFLAGS)" watch
 	@$(MAKECOOKIE)
 
-install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+install-custom: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(mandir)/man1
@@ -88,6 +88,6 @@ install-custom:
 	cp $(WORKSRC)/watch.1 $(DESTDIR)$(mandir)/man1
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	printf "This watch version (%s) was taken from procps %s, %s\n" \
-		$(GARVERSION) $(SF_PROJ_VER) $(subst sourceforge,sf,$(MASTER_SITES)) \
+		$(VERSION) $(SF_PROJ_VER) $(subst sourceforge,sf,$(MASTER_SITES)) \
 		>> $(DOCDEST)/README.CSW
 	@$(MAKECOOKIE)

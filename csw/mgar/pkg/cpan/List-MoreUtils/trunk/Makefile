@@ -1,5 +1,5 @@
-GARNAME = List-MoreUtils
-GARVERSION = 0.22
+NAME = List-MoreUtils
+VERSION = 0.22
 CATEGORIES = cpan
 AUTHOR = VPARSEVAL
 

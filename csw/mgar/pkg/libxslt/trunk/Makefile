@@ -1,5 +1,5 @@
-GARNAME = libxslt
-GARVERSION = 1.1.26
+NAME = libxslt
+VERSION = 1.1.26
 CATEGORIES = lib
 
 DESCRIPTION = XSLT engine for the XML Toolkit
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://xmlsoft.org/libxslt/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES += 0001-Forcefully-disable-version-script-use.patch
 
 PACKAGES = CSWlibxslt CSWlibxsltdevel CSWpy-libxslt
@@ -56,11 +56,11 @@ RUNTIME_DEP_PKGS_CSWpy-libxslt += CSWiconv
 
 
 PKGFILES_CSWlibxsltdevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibxsltdevel += $(docdir)/libxslt-$(GARVERSION)/.*
+PKGFILES_CSWlibxsltdevel += $(docdir)/libxslt-$(VERSION)/.*
 PKGFILES_CSWlibxsltdevel += $(libdir)/xsltConf.sh
 PKGFILES_CSWlibxsltdevel += $(call isadirs,$(libdir),xsltConf.sh)
 PKGFILES_CSWpy-libxslt = $(libdir)/python.*
-PKGFILES_CSWpy-libxslt += $(docdir)/libxslt-python-$(GARVERSION)/.*
+PKGFILES_CSWpy-libxslt += $(docdir)/libxslt-python-$(VERSION)/.*
 
 CHECKPKG_OVERRIDES_CSWlibxsltdevel += surplus-dependency|CSWlibxslt
 

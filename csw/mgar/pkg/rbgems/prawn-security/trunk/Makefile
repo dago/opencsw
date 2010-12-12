@@ -1,5 +1,5 @@
-GARNAME = prawn-security
-GARVERSION = 0.8.4
+NAME = prawn-security
+VERSION = 0.8.4
 CATEGORIES = rbgems
 
 DESCRIPTION = Popular Password Protection & Permissions for Prawn PDFs

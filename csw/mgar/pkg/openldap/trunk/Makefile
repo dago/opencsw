@@ -1,8 +1,8 @@
-GARNAME = openldap
-GARVERSION = 2.4.23
+NAME = openldap
+VERSION = 2.4.23
 CATEGORIES = server
-EXTRA_MODULATORS = GARVERSION
-MODULATIONS_GARVERSION = 2.3.43 2.4.23
+EXTRA_MODULATORS = VERSION
+MODULATIONS_VERSION = 2.3.43 2.4.23
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
 define BLURB
@@ -14,7 +14,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
-SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_GARVERSION),$(GARNAME)-$(VERSION).tgz)
+SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_VERSION),$(NAME)-$(VERSION).tgz)
 DISTFILES  = $(SOURCEFILES)
 DISTFILES += CSWoldap.postinstall
 DISTFILES += README.CSW openldaprc
@@ -36,7 +36,7 @@ DISTFILES += patch-oldap-2.4.16-ntlm.diff
 #   /usr/local/var/ldapi
 # should be replaced by something more sane in the future.
 
-NOEXTRACT = $(filter-out $(GARNAME)-$(GARVERSION).tgz,$(SOURCEFILES))
+NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tgz,$(SOURCEFILES))
 
 LICENSE = COPYRIGHT
 
@@ -63,7 +63,7 @@ RUNTIME_DEP_PKGS_CSWoldaprt = CSWlibnet CSWosslrt CSWsasl
 SPKG_SOURCEURL = http://www.openldap.org
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_DOCS = README.CSW $(PATCHFILES) openldaprc
 
@@ -75,8 +75,8 @@ EXTRA_INC_garversion-2.3.43 = $(prefix)/bdb44/include
 bdbdir = $(prefix)/bdb48
 EXTRA_LIB_garversion-2.4.23 = $(bdbdir)/lib 
 EXTRA_INC_garversion-2.4.23 = $(bdbdir)/include
-EXTRA_LIB = $(EXTRA_LIB_garversion-$(GARVERSION))
-EXTRA_INC = $(EXTRA_INC_garversion-$(GARVERSION))
+EXTRA_LIB = $(EXTRA_LIB_garversion-$(VERSION))
+EXTRA_INC = $(EXTRA_INC_garversion-$(VERSION))
 
 # Not released yet.
 #EXTRA_LDFLAGS = -L$(libdir)/libnet-new
@@ -179,7 +179,7 @@ DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 post-merge:
 	ginstall -D $(WORKDIR)/cswopenldap \
 		$(PKGROOT)/opt/csw/etc/init.d/cswopenldap
-	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(WORKDIR)/$F $(PKGROOT)$(docdir)/$(GARNAME)/$F;)
+	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(WORKDIR)/$F $(PKGROOT)$(docdir)/$(NAME)/$F;)
 	@# Enable BDB backend so OpenLDAP can start
 	perl -pi -e 's/#\s*(modulepath)/$$1/; s/#\s*(moduleload\s*back_bdb.la)/$$1/' $(PKGROOT)$(sysconfdir)/openldap/slapd.conf
 	@$(MAKECOOKIE)

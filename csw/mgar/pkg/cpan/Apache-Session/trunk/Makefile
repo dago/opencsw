@@ -1,5 +1,5 @@
-GARNAME = Apache-Session
-GARVERSION = 1.6
+NAME = Apache-Session
+VERSION = 1.6
 CATEGORIES = cpan
 AUTHOR = JBAKER
 

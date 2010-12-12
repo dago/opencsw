@@ -1,5 +1,5 @@
-GARNAME = Log-Message
-GARVERSION = 0.02
+NAME = Log-Message
+VERSION = 0.02
 CATEGORIES = cpan
 AUTHOR = KANE
 

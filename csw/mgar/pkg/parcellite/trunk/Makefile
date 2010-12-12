@@ -1,5 +1,5 @@
-GARNAME = parcellite
-GARVERSION = 0.9.2
+NAME = parcellite
+VERSION = 0.9.2
 CATEGORIES = utils
 
 DESCRIPTION = Lightweight GTK+ clipboard manager
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES    = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS += CSWlibatk
 RUNTIME_DEP_PKGS += CSWggettextrt

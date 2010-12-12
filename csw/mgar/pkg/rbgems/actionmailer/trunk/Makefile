@@ -1,5 +1,5 @@
-GARNAME = actionmailer
-GARVERSION = 2.3.8
+NAME = actionmailer
+VERSION = 2.3.8
 CATEGORIES = rbgems
 
 DESCRIPTION = Test and deliver emails sent from a single service layer

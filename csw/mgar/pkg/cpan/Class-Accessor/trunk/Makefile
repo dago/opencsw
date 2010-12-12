@@ -1,5 +1,5 @@
-GARNAME = Class-Accessor
-GARVERSION = 0.33
+NAME = Class-Accessor
+VERSION = 0.33
 CATEGORIES = cpan
 AUTHOR = KASEI
 

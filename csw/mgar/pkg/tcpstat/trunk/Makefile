@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = tcpstat
-GARVERSION = 1.5
+NAME = tcpstat
+VERSION = 1.5
 CATEGORIES = utils
 
 DESCRIPTION = Report network interface statistics
@@ -11,10 +11,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.frenchfries.net/paul/tcpstat/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE
 

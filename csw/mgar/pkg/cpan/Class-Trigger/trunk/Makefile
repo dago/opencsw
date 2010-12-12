@@ -1,5 +1,5 @@
-GARNAME = Class-Trigger
-GARVERSION = 0.11
+NAME = Class-Trigger
+VERSION = 0.11
 CATEGORIES = cpan
 AUTHOR = MIYAGAWA
 

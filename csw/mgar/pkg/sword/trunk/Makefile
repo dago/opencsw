@@ -1,5 +1,5 @@
-GARNAME = sword
-GARVERSION = 1.5.9
+NAME = sword
+VERSION = 1.5.9
 CATEGORIES = lib
 
 DESCRIPTION = SWORD Engine (gcc3)
@@ -9,7 +9,7 @@ endef
 
 MASTER_SITES = http://crosswire.org/ftpmirror/pub/sword/source/v1.5
 UPSTREAM_MASTER_SITES = http://crosswire.org/ftpmirror/pub/sword/source/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWsword, depend )
 
 # We define upstream file regex so we can be notifed of new upstream software release

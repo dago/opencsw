@@ -1,5 +1,5 @@
-GARNAME = libstatgrab
-GARVERSION = 0.16
+NAME = libstatgrab
+VERSION = 0.16
 CATEGORIES = lib
 
 DESCRIPTION = A library that provides cross platform access to statistics
@@ -13,10 +13,10 @@ endef
 
 MASTER_SITES = ftp://ftp.uk.i-scream.org/pub/i-scream/libstatsgrab/
 MASTER_SITES += http://dl.ambiweb.de/mirrors/ftp.i-scream.org/libstatgrab/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.i-scream.org/libstatgrab/
 

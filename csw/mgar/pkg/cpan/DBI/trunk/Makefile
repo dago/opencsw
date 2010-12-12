@@ -1,5 +1,5 @@
-GARNAME = DBI
-GARVERSION = 1.609
+NAME = DBI
+VERSION = 1.609
 CATEGORIES = cpan
 AUTHOR = TIMB
 
@@ -13,7 +13,7 @@ endef
 
 DISTFILES = COPYING
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWpmdbi
 CATALOGNAME = pm_dbi

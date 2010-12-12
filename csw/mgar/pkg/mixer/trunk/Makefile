@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = mixer
-GARVERSION = 1.3
+NAME = mixer
+VERSION = 1.3
 CATEGORIES = apps
 DESCRIPTION = A command line utility to set audio volume
 define BLURB
@@ -11,9 +11,9 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://www.softagalleria.net/mixer.php
 MASTER_SITES = http://www.softagalleria.net/download/mixer/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = mixer
 INSTALL_SCRIPTS = mixer

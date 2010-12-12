@@ -1,5 +1,5 @@
-GARNAME = Text-Glob
-GARVERSION = 0.08
+NAME = Text-Glob
+VERSION = 0.08
 CATEGORIES = cpan
 AUTHOR = RCLAMP
 

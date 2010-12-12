@@ -1,5 +1,5 @@
-GARNAME = mkpackage
-GARVERSION = 1.4
+NAME = mkpackage
+VERSION = 1.4
 CATEGORIES = utils
 
 DESCRIPTION = Solaris package build tool.

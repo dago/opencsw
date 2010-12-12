@@ -1,5 +1,5 @@
-GARNAME = User-Identity
-GARVERSION = 0.93
+NAME = User-Identity
+VERSION = 0.93
 CATEGORIES = cpan
 AUTHOR = MARKOV
 

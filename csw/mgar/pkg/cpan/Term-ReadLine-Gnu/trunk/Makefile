@@ -1,5 +1,5 @@
-GARNAME = Term-ReadLine-Gnu
-GARVERSION = 1.19
+NAME = Term-ReadLine-Gnu
+VERSION = 1.19
 CATEGORIES = cpan
 AUTHOR = HAYASHI
 
@@ -20,7 +20,7 @@ PATCHFILES = patch-readline.t
 
 include gar/category.mk
 
-post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(GARNAME)
+post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
 	@ginstall -d $(DOCDEST)
 	@cp $(FILEDIR)/changelog.CSW $(DOCDEST)

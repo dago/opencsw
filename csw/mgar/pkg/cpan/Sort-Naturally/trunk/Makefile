@@ -1,5 +1,5 @@
-GARNAME = Sort-Naturally
-GARVERSION = 1.02
+NAME = Sort-Naturally
+VERSION = 1.02
 CATEGORIES = cpan
 AUTHOR = SBURKE
 

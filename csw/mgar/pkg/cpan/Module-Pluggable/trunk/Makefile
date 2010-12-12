@@ -1,5 +1,5 @@
-GARNAME = Module-Pluggable
-GARVERSION = 3.9
+NAME = Module-Pluggable
+VERSION = 3.9
 CATEGORIES = cpan
 AUTHOR = SIMONW
 

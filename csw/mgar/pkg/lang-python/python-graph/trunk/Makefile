@@ -2,16 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = python-graph
-GARVERSION = 1.7.0
+NAME = python-graph
+VERSION = 1.7.0
 CATEGORIES = python
 DESCRIPTION = A library for working with graphs in Python
 define BLURB
 endef
 SPKG_SOURCEURL = http://pypi.python.org/pypi/python-graph
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 PACKAGES = CSWpy-graph
 CATALOGNAME_CSWpy-graph = py_graph
 BUILD_SCRIPTS =

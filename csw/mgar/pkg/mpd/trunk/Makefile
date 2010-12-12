@@ -1,5 +1,5 @@
-GARNAME = mpd
-GARVERSION = 0.15.8
+NAME = mpd
+VERSION = 0.15.8
 CATEGORIES = server
 
 DESCRIPTION = The Music Player Daemon
@@ -22,13 +22,13 @@ endef
 
 SF_PROJ = musicpd
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += cswmpd.init
 DISTFILES += cswusergroup
 DISTFILES += mpd.conf
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 TEST_TARGET = check
 

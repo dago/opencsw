@@ -1,5 +1,5 @@
-GARNAME = PDF-Reuse-Barcode
-GARVERSION = 0.06
+NAME = PDF-Reuse-Barcode
+VERSION = 0.06
 CATEGORIES = cpan
 AUTHOR = LARSLUND
 

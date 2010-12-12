@@ -1,5 +1,5 @@
-GARNAME = mod_ruby
-GARVERSION = 1.2.4
+NAME = mod_ruby
+VERSION = 1.2.4
 CATEGORIES = server
 
 DESCRIPTION = an Apache/Ruby integration module
@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.modruby.net/archive/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWap2modruby.gspec
 #DISTFILES += CSWap2modruby.depend
 #DISTFILES += CSWap2modruby.prototype
@@ -19,7 +19,7 @@ DISTFILES += CSWap2modruby.gspec
 #DISTFILES += CSWap2modruby.space
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS = ruby
 

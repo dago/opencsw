@@ -1,5 +1,5 @@
-GARNAME = Net-Analysis
-GARVERSION = 0.40
+NAME = Net-Analysis
+VERSION = 0.40
 CATEGORIES = cpan
 AUTHOR = WORRALL
 

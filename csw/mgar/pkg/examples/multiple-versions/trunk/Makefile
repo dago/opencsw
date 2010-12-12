@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = multiple-versions
+NAME = multiple-versions
 BASE_VERSION = 0.1
-GARVERSION = $(BASE_VERSION).0
+VERSION = $(BASE_VERSION).0
 CATEGORIES = apps
 DESCRIPTION = Example layout that supports multiple versions of a program.
 define BLURB
@@ -15,30 +15,30 @@ define BLURB
 endef
 SPKG_SOURCEURL =
 
-version_dependent = /lib/$(GARNAME)/$(BASE_VERSION)
+version_dependent = /lib/$(NAME)/$(BASE_VERSION)
 bindir_install = $(prefix)$(version_dependent)/bin
 bindir = $(prefix)$(version_dependent)/bin
 sbindir_install = $(prefix)$(version_dependent)/sbin
 sbindir = $(prefix)$(version_dependent)/sbin
 libdir_install = $(prefix)$(version_dependent)/lib
 libdir = $(prefix)$(version_dependent)/lib
-localstatedir = /var$(prefix)/$(GARNAME)/$(BASE_VERSION)
-sysconfdir = /etc$(prefix)/$(GARNAME)/$(BASE_VERSION)
-datadir = $(prefix)/share/$(GARNAME)/$(BASE_VERSION)
-docdir = $(prefix)/share/doc/$(GARNAME)-$(BASE_VERSION)
-includedir = $(prefix)/include/$(GARNAME)/$(BASE_VERSION)
+localstatedir = /var$(prefix)/$(NAME)/$(BASE_VERSION)
+sysconfdir = /etc$(prefix)/$(NAME)/$(BASE_VERSION)
+datadir = $(prefix)/share/$(NAME)/$(BASE_VERSION)
+docdir = $(prefix)/share/doc/$(NAME)-$(BASE_VERSION)
+includedir = $(prefix)/include/$(NAME)/$(BASE_VERSION)
 infodir = $(datadir)/info
-libexecdir_install = $(prefix)/libexec/$(GARNAME)/$(BASE_VERSION)
+libexecdir_install = $(prefix)/libexec/$(NAME)/$(BASE_VERSION)
 lispdir = $(datadir)/emacs/site-lisp
 mandir = $(datadir)/man
-sharedstatedir = $(prefix)/share/$(GARNAME)/$(BASE_VERSION)
-sourcedir = $(prefix)/src/$(GARNAME)/$(BASE_VERSION)
+sharedstatedir = $(prefix)/share/$(NAME)/$(BASE_VERSION)
+sourcedir = $(prefix)/src/$(NAME)/$(BASE_VERSION)
 
 MASTER_SITES =
-DISTFILES  = hello-$(GARVERSION).tar.gz
+DISTFILES  = hello-$(VERSION).tar.gz
 CATALOGNAME = multiple_versions
 TEST_SCRIPTS =
-WORKSRC = $(WORKDIR)/hello-$(GARVERSION)
+WORKSRC = $(WORKDIR)/hello-$(VERSION)
 CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64 = 1
 

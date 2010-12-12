@@ -1,5 +1,5 @@
-GARNAME = ksh
-GARVERSION = 93t+
+NAME = ksh
+VERSION = 93t+
 CATEGORIES = devel
 
 DESCRIPTION = The KornShell Command and Programming Language
@@ -14,11 +14,11 @@ endef
 MASTER_SITES = http://www.research.att.com/~gsf/download/tgz/
 DISTFILES += ast-ksh.2010-02-02.tgz
 DISTFILES += INIT.2010-02-02.tgz
-#DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+#DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 WGET_OPTS = --user="I accept www.opensource.org/licenses/cpl" --password="."
 # We define upstream file regex so we can be notifed of new upstream software release
-# UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

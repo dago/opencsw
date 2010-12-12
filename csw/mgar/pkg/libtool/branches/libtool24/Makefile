@@ -1,5 +1,5 @@
-GARNAME = libtool
-GARVERSION = 2.4
+NAME = libtool
+VERSION = 2.4
 CATEGORIES = devel
 
 EXTRA_MODULATORS = GARCOMPILER
@@ -19,7 +19,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.xz
+DISTFILES = $(NAME)-$(VERSION).tar.xz
 DISTFILES += README.CSW
 
 PATCH_LIBTOOL = 0002-Forward-port-GCC-tags-patch.patch
@@ -50,7 +50,7 @@ SPKG_DESC_CSWlibltdl7  = Libtool libltdl.so.7 from libtool 2.x
 SPKG_DESC_CSWlibtoolrt = Runtime libraries for libtool
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

@@ -1,5 +1,5 @@
-GARNAME = File-HomeDir
-GARVERSION = 0.86
+NAME = File-HomeDir
+VERSION = 0.86
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

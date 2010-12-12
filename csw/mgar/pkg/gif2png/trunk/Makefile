@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = gif2png
-GARVERSION = 2.5.4
+NAME = gif2png
+VERSION = 2.5.4
 CATEGORIES = utils
 
 DESCRIPTION = Converts files from GIF to PNG
@@ -11,7 +11,7 @@ MASTER_SITES = http://www.catb.org/~esr/gif2png/
 DISTFILES  = $(DISTNAME).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

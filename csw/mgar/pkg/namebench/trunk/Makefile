@@ -1,5 +1,5 @@
-GARNAME = namebench
-GARVERSION = 1.3.1
+NAME = namebench
+VERSION = 1.3.1
 CATEGORIES = python
 
 DESCRIPTION = DNS benchmark utility
@@ -8,14 +8,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://namebench.googlecode.com/files/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tgz
+DISTFILES  = $(NAME)-$(VERSION)-source.tgz
 
 SPKG_SOURCEURL = http://code.google.com/p/namebench
 
 RUNTIME_DEP_PKGS = CSWpython-tk
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 ARCHALL = 1
 

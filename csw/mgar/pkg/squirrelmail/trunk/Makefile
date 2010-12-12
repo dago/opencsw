@@ -1,5 +1,5 @@
-GARNAME = squirrelmail
-GARVERSION = 1.4.19
+NAME = squirrelmail
+VERSION = 1.4.19
 CATEGORIES = apps
 
 DESCRIPTION = A standards-based webmail package written in PHP.
@@ -17,7 +17,7 @@ LICENSE = doc/COPYING
 ARCHALL = 1
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSWsquirrelmail.postinstall CSWsquirrelmail.preremove
 DISTFILES += httpd-squirrelmail.conf.CSW
 
@@ -29,7 +29,7 @@ RUNTIME_DEP_PKGS_CSWsquirrelmail  = CSWphp5 CSWapache2c
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_SCRIPTS = cswize
 BUILD_SCRIPTS = 
@@ -46,10 +46,10 @@ configure-cswize:
 	@$(MAKECOOKIE)
 
 install-custom:
-	ginstall -d $(DESTDIR)$(RELOCATE_PREFIX)/$(GARNAME)/contrib
-	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(RELOCATE_PREFIX)/$(GARNAME)
+	ginstall -d $(DESTDIR)$(RELOCATE_PREFIX)/$(NAME)/contrib
+	cd $(WORKSRC); /usr/bin/pax -rw -v * $(DESTDIR)$(RELOCATE_PREFIX)/$(NAME)
 	gcp $(DOWNLOADDIR)/httpd-squirrelmail.conf.CSW \
-		$(DESTDIR)$(RELOCATE_PREFIX)/$(GARNAME)/contrib
+		$(DESTDIR)$(RELOCATE_PREFIX)/$(NAME)/contrib
 	@$(MAKECOOKIE)
 	
 include gar/category.mk

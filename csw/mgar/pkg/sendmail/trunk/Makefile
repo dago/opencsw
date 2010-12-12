@@ -1,5 +1,5 @@
-GARNAME = sendmail
-GARVERSION = 8.14.3
+NAME = sendmail
+VERSION = 8.14.3
 CATEGORIES = server
 
 DESCRIPTION = Sendmail MTA
@@ -16,7 +16,7 @@ MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 
 MY_CLASSES = CSWsendmail.i.sol8 CSWsendmail.i.sol9 CSWsendmail.i.sol10
 
-DISTFILES  = $(GARNAME).$(GARVERSION).tar.gz
+DISTFILES  = $(NAME).$(VERSION).tar.gz
 DISTFILES += README.CSW sendmail.schema CSWsendmail.postinstall
 DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
 DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
@@ -25,7 +25,7 @@ DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
 PACKAGES = CSWsendmail 

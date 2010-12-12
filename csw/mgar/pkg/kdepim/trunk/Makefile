@@ -1,4 +1,4 @@
-GARNAME = kdepim
+NAME = kdepim
 CATEGORIES = kde
 
 DESCRIPTION = Personal Information Management apps for KDE (gcc3)

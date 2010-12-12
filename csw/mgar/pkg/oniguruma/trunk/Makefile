@@ -1,5 +1,5 @@
-GARNAME = oniguruma
-GARVERSION = 5.9.2
+NAME = oniguruma
+VERSION = 5.9.2
 CATEGORIES = lib
 
 DESCRIPTION = A regular expression library
@@ -11,11 +11,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.geocities.jp/kosako3/oniguruma/archive/
-DISTNAME = onig-$(GARVERSION)
+DISTNAME = onig-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.geocities.jp/kosako3/oniguruma/
 

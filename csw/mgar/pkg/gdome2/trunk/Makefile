@@ -1,5 +1,5 @@
-GARNAME = gdome2
-GARVERSION = 0.8.1
+NAME = gdome2
+VERSION = 0.8.1
 CATEGORIES = lib
 
 DESCRIPTION = A DOM Level 2 Implementation
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://gdome2.cs.unibo.it/tarball/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = patch-nowall.diff
 PATCHFILES += patch-doc-destdir.diff
 PATCHFILES += patch-use-install.diff
@@ -16,7 +16,7 @@ PATCHFILES += patch-use-install.diff
 RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2 CSWiconv CSWlibxml2 CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://gdome2.cs.unibo.it/
 

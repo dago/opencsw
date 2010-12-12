@@ -1,5 +1,5 @@
-GARNAME = Devel-Cover
-GARVERSION = 0.65
+NAME = Devel-Cover
+VERSION = 0.65
 CATEGORIES = cpan
 AUTHOR = PJCJ
 

@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = fakeroot
-GARVERSION = 1.12.4
+NAME = fakeroot
+VERSION = 1.12.4
 CATEGORIES = apps
 
 DESCRIPTION = A fake root environment by means of LD_PRELOAD and SYSV IPC (or TCP) trickery.
@@ -9,10 +9,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.debian.org/debian/pool/main/f/fakeroot/
-DISTFILES  = $(GARNAME)_$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)_$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

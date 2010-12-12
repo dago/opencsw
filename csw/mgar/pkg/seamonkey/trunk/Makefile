@@ -1,5 +1,5 @@
-GARNAME = seamonkey
-GARVERSION = 1.1.18
+NAME = seamonkey
+VERSION = 1.1.18
 CATEGORIES = apps
 DISTNAME = mozilla
 
@@ -8,19 +8,19 @@ define BLURB
 Web-browser, advanced e-mail and newsgroup client, IRC chat client, and HTML editing made simple -- all your Internet needs in one application. 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).source.tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).source.tar.bz2
 DISTFILES += CSWseamonkey.postremove CSWseamonkey.postinstall 
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
-MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/$(GARVERSION)/
+MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/seamonkey/releases/
 
 # Build firefox only on solaris 10 platforms
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACKAGES       			= CSWseamonkey
-CATALOGNAME_CSWseamonkey 	= $(GARNAME)
+CATALOGNAME_CSWseamonkey 	= $(NAME)
 SPKG_DESC_CSWseamonkey 		= $(DESCRIPTION)
 
 RUNTIME_DEP_PKGS_CSWseamonkey += CSWbonobo2

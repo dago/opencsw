@@ -1,4 +1,4 @@
-GARNAME = xfce4-panel
+NAME = xfce4-panel
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Panel
@@ -6,14 +6,14 @@ define BLURB
    Xfce Panel 
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # DISTFILES += CSWxfcepaneldoc.depend CSWxfcepaneldoc.gspec CSWxfcepaneldoc.prototype
 # DISTFILES += CSWlibxfcepaneldev.depend CSWlibxfcepaneldev.gspec CSWlibxfcepaneldev.prototype
 # DISTFILES += CSWlibxfcepanel.depend CSWlibxfcepanel.gspec CSWlibxfcepanel.prototype
 # DISTFILES += CSWxfcepanel.depend CSWxfcepanel.gspec CSWxfcepanel.prototype
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 DISTFILES += $(call admfiles,CSWxfcepanel, depend)
 

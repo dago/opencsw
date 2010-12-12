@@ -1,5 +1,5 @@
-GARNAME = db
-GARVERSION = 4.3.29
+NAME = db
+VERSION = 4.3.29
 CATEGORIES = lib
 
 DESCRIPTION = BerkeleyDB 4.3 libraries and utilities
@@ -14,17 +14,17 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.oracle.com/berkeley-db/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz 
+DISTFILES = $(NAME)-$(VERSION).tar.gz 
 
 PATCHDIR = $(WORKSRC)/..
 PATCHDIRLEVEL = 0
 PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
-RELEASE = p$(words $(filter patch.$(GARVERSION).%,$(PATCHFILES)))
+RELEASE = p$(words $(filter patch.$(VERSION).%,$(PATCHFILES)))
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-WORKSRC = $(WORKDIR)/$(GARNAME)-$(GARVERSION)/build_unix
+WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)/build_unix
 
 BUILD64 = 1
 NOISAEXEC = 1

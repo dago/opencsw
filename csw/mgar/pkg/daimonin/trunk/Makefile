@@ -1,5 +1,5 @@
-GARNAME = daimonin
-GARVERSION = 
+NAME = daimonin
+VERSION = 
 CATEGORIES = apps
 
 DESCRIPTION = FREE online role playing game (MMORPG)
@@ -8,7 +8,7 @@ daimonin is a free open source Massively Multiplayer On-line Role-playing Game (
 endef
 
 MASTER_SITES = http://heanet.dl.sourceforge.net/sourceforge/daimonin/
-DISTFILES  = $(GARNAME)_client-BETA3-0967.tar.gz
+DISTFILES  = $(NAME)_client-BETA3-0967.tar.gz
 DISTFILES += $(call admfiles,CSWdaimonin,)
 
 GARCOMPILER = GNU

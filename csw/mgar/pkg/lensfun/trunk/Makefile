@@ -1,5 +1,5 @@
-GARNAME = lensfun
-GARVERSION = 0.2.4
+NAME = lensfun
+VERSION = 0.2.4
 CATEGORIES = lib
 
 DESCRIPTION = Library to correct images based on intimate knowledge of lens characteristics
@@ -10,10 +10,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(BERLIOS_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 RUNTIME_DEP_PKGS = CSWzlib CSWpng
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpython CSWdoxygen

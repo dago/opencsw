@@ -1,5 +1,5 @@
-GARNAME = Pod-Tests
-GARVERSION = 1.19
+NAME = Pod-Tests
+VERSION = 1.19
 CATEGORIES = cpan
 AUTHOR = ADAMK
 

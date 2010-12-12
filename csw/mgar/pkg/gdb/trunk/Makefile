@@ -1,5 +1,5 @@
-GARNAME = gdb
-GARVERSION = 6.8
+NAME = gdb
+VERSION = 6.8
 CATEGORIES = devel
 
 DESCRIPTION = The GNU Project Debugger
@@ -7,7 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.gnu.org/gnu/gdb/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # Patches from http://cvs.opensolaris.org/source/xref/sfw/usr/src/cmd/gdb/
 PATCHFILES  = gdb.auxv.patch
@@ -16,7 +16,7 @@ PATCHFILES += gdb.solib-svr4.patch
 SPKG_SOURCEURL = http://www.gnu.org/software/gdb
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

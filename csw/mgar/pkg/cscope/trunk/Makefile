@@ -1,5 +1,5 @@
-GARNAME = cscope
-GARVERSION = 15.7a
+NAME = cscope
+VERSION = 15.7a
 CATEGORIES = utils
 
 DESCRIPTION = A text screen-based source browser
@@ -16,7 +16,7 @@ SF_PROJ = cscope
 DISTFILES = $(DISTNAME).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

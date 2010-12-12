@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = openldap
-GARVERSION = 2.4.23
+NAME = openldap
+VERSION = 2.4.23
 CATEGORIES = server
 
 DESCRIPTION = Brief description
@@ -9,12 +9,12 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tgz
+DISTFILES  = $(NAME)-$(VERSION).tgz
 LICENSE = COPYRIGHT
 PACKAGES = CSWopenldap24
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

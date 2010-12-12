@@ -1,5 +1,5 @@
-GARNAME = rl
-GARVERSION = 0.2.7
+NAME = rl
+VERSION = 0.2.7
 CATEGORIES = apps
 
 DESCRIPTION = A command-line tool that randomizes lines of input.
@@ -8,11 +8,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://ch.tudelft.nl/~arthur/rl/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(call admfiles,CSWrl,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # Not gonna do it

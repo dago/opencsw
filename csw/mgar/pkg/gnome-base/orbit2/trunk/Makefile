@@ -1,5 +1,5 @@
-GARNAME = ORBit2
-GARVERSION = 2.14.18
+NAME = ORBit2
+VERSION = 2.14.18
 CATEGORIES = lib
 
 DESCRIPTION = ORBit 2.x CORBA tools and libs
@@ -9,9 +9,9 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWorbit2
 CATALOGNAME = orbit2

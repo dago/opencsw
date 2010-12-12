@@ -1,5 +1,5 @@
-GARNAME = Solaris-DeviceTree
-GARVERSION = 0.03
+NAME = Solaris-DeviceTree
+VERSION = 0.03
 CATEGORIES = cpan
 AUTHOR = DAGOBERT
 

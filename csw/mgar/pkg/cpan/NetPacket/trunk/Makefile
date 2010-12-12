@@ -1,5 +1,5 @@
-GARNAME = NetPacket
-GARVERSION = 0.41.1
+NAME = NetPacket
+VERSION = 0.41.1
 CATEGORIES = cpan
 AUTHOR = YANICK
 

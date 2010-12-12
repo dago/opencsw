@@ -1,5 +1,5 @@
-GARNAME = Text-WikiFormat
-GARVERSION = 0.79
+NAME = Text-WikiFormat
+VERSION = 0.79
 CATEGORIES = cpan
 AUTHOR = CHROMATIC
 

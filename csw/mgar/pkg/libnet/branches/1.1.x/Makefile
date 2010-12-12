@@ -1,5 +1,5 @@
-GARNAME = libnet
-GARVERSION = 1.1.5
+NAME = libnet
+VERSION = 1.1.5
 CATEGORIES = lib
 
 DESCRIPTION = The libnet packet construction library
@@ -17,14 +17,14 @@ endef
 
 SF_PROJ = libnet-dev
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += libnet.so.1.0.2.i
 DISTFILES += libnet.so.1.0.2.s
 PATCHFILES = 0001-Fix-missing-uint-instead-of-u_int.patch
 
 LICENSE = doc/COPYING
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://github.com/sam-github/libnet
 

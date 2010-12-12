@@ -1,5 +1,5 @@
-GARNAME = namazu
-GARVERSION = 2.0.14
+NAME = namazu
+VERSION = 2.0.14
 CATEGORIES = utils
 
 DESCRIPTION = full-text search engine
@@ -14,7 +14,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += CSWnamazu.gspec CSWnamazu.depend CSWnamazu.prototype
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS += $(DIRPATHS)
 

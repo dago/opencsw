@@ -1,7 +1,7 @@
 # $Id$
 
-GARNAME = cmake
-GARVERSION = 2.8.2
+NAME = cmake
+VERSION = 2.8.2
 CATEGORIES = devel
 
 DESCRIPTION = Cross-platform make
@@ -14,10 +14,10 @@ define BLURB
   generation, code generation, and template instantiation. 
 endef
 
-RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
+RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 SPKG_SOURCEURL = http://cmake.org/
 MASTER_SITES = http://cmake.org/files/v$(RELVER)/
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 LICENSE = Copyright.txt
 
 PACKAGES = CSWcmake
@@ -33,9 +33,9 @@ RUNTIME_DEP_PKGS_CSWcmake += CSWosslrt
 # new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
-datadir = /share/$(GARNAME)-$(GARVERSION)
+datadir = /share/$(NAME)-$(VERSION)
 sharedstatedir = /share
-docdir = /share/doc/$(GARNAME)-$(GARVERSION)
+docdir = /share/doc/$(NAME)-$(VERSION)
 
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
@@ -45,8 +45,8 @@ TEST_TARGET  =
 
 include gar/category.mk
 
-FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Modules
-FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(GARNAME)-$(GARVERSION)/Templates
+FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(NAME)-$(VERSION)/Modules
+FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/$(NAME)-$(VERSION)/Templates
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)$(docdir)
 FIXCONFIG_DIRS += $(DESTDIR)$(prefix)/share/man/man1
 

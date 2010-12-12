@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
-GARNAME = conserver
-GARVERSION = 8.1.7
+NAME = conserver
+VERSION = 8.1.7
 CATEGORIES = apps
 
 DESCRIPTION = Client/Server console server software
@@ -21,10 +21,10 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.conserver.com/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

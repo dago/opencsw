@@ -1,5 +1,5 @@
-GARNAME = lastx
-GARVERSION = 1.1
+NAME = lastx
+VERSION = 1.1
 CATEGORIES = utils
 
 DESCRIPTION = An extension of the last utility shipped with Solaris
@@ -16,7 +16,7 @@ DISTFILES = lastx.c
 DISTFILES += COPYING
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://prefetch.net/code/lastx.c.html
 

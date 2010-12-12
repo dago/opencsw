@@ -1,5 +1,5 @@
-GARNAME = libwww-perl
-GARVERSION = 5.833
+NAME = libwww-perl
+VERSION = 5.833
 CATEGORIES = cpan
 AUTHOR = GAAS
 

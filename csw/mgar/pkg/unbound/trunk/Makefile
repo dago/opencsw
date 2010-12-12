@@ -1,5 +1,5 @@
-GARNAME = unbound
-GARVERSION = 1.4.7
+NAME = unbound
+VERSION = 1.4.7
 CATEGORIES = server
 DESCRIPTION = A validating, recursive, and caching DNS resolver
 define BLUR
@@ -10,7 +10,7 @@ endef
 
 VENDOR_URL = http://www.unbound.net/
 MASTER_SITES = http://unbound.net/downloads/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswunbound
 DISTFILES += cswusergroup
 
@@ -18,7 +18,7 @@ PACKAGING_PLATFORMS +=  solaris9-sparc solaris9-i386
 PACKAGES = CSWunbound CSWlibunbound2 CSWunbound-devel CSWunbound-host
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of MASTER_SITES, then 
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES

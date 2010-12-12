@@ -1,5 +1,5 @@
-GARNAME = Test-Exception
-GARVERSION = 0.29
+NAME = Test-Exception
+VERSION = 0.29
 CATEGORIES = cpan
 AUTHOR = ADIE
 

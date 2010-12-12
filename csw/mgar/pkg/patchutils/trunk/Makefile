@@ -1,5 +1,5 @@
-GARNAME = patchutils
-GARVERSION = 0.3.1
+NAME = patchutils
+VERSION = 0.3.1
 CATEGORIES = utils
 
 DESCRIPTION = Tools for manipulating patch files
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://cyberelk.net/tim/data/patchutils/stable/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # gendiff is needed for the tests
 DISTFILES += gendiff
@@ -16,7 +16,7 @@ DISTFILES += gendiff
 PATCHFILES = patch-use-csw-bash.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD_DEP_PKGS = CSWgnulinks CSWbash CSWdiffutils
 

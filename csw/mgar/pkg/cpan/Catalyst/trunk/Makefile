@@ -1,5 +1,5 @@
-GARNAME = Catalyst
-GARVERSION = 5.61
+NAME = Catalyst
+VERSION = 5.61
 CATEGORIES = cpan
 AUTHOR = SRI
 

@@ -1,5 +1,5 @@
-GARNAME = gmp
-GARVERSION = 4.3.2
+NAME = gmp
+VERSION = 4.3.2
 CATEGORIES = lib
 
 DESCRIPTION = GNU Multiple Precision Arithmetic Library
@@ -18,12 +18,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 SPKG_SOURCEURL = http://gmplib.org/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 GARCOMPILER = GCC4
 BUILD64 = 1

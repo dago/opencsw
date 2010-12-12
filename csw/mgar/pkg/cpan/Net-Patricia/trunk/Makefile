@@ -1,5 +1,5 @@
-GARNAME = Net-Patricia
-GARVERSION = 1.16
+NAME = Net-Patricia
+VERSION = 1.16
 CATEGORIES = cpan
 AUTHOR = PHILIPP
 

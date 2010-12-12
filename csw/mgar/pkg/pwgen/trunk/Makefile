@@ -1,5 +1,5 @@
-GARNAME = pwgen
-GARVERSION = 2.06
+NAME = pwgen
+VERSION = 2.06
 CATEGORIES = apps
 
 DESCRIPTION = pwgen generates passwords which can be easily memorized by a human
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://pwgen.sourceforge.net
 

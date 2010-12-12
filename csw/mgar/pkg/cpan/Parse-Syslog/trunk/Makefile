@@ -1,5 +1,5 @@
-GARNAME = Parse-Syslog
-GARVERSION = 1.10
+NAME = Parse-Syslog
+VERSION = 1.10
 CATEGORIES = cpan
 AUTHOR = DSCHWEI
 

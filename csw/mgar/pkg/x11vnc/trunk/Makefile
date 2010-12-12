@@ -1,5 +1,5 @@
-GARNAME = x11vnc
-GARVERSION = 0.9.12
+NAME = x11vnc
+VERSION = 0.9.12
 CATEGORIES = apps
 
 DESCRIPTION = Allows one to view remotely and interact with real X displays
@@ -8,10 +8,10 @@ endef
 
 SF_PROJ = libvncserver
 MASTER_SITES = $(SF_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.karlrunge.com/x11vnc/
 

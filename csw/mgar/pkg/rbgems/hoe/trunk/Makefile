@@ -1,5 +1,5 @@
-GARNAME = hoe
-GARVERSION = 2.6.1
+NAME = hoe
+VERSION = 2.6.1
 CATEGORIES = rbgems
 
 DESCRIPTION = A rake/rubygems helper for project Rakefiles

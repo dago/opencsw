@@ -1,5 +1,5 @@
-GARNAME = slrn
-GARVERSION = 0.9.8.1
+NAME = slrn
+VERSION = 0.9.8.1
 CATEGORIES = net
 
 DESCRIPTION = command-line news reader
@@ -15,13 +15,13 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWslrn,prototype depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=7768
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)(p\d+)?)
+UFILES_REGEX = $(NAME)-((\d+(?:\.\d+)*)(p\d+)?)
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 

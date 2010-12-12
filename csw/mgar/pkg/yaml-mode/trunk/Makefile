@@ -1,5 +1,5 @@
-GARNAME = yaml-mode
-GARVERSION = 0.0.3
+NAME = yaml-mode
+VERSION = 0.0.3
 CATEGORIES = xtra
 
 PACKAGES = CSWyamlmode
@@ -21,11 +21,11 @@ behavior very similar to that of python-mode.
 endef
 
 MASTER_SITES = http://tweedle-dee.org/svn/emacs.d/site-lisp/
-DISTFILES  = $(GARNAME).el
+DISTFILES  = $(NAME).el
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # If the url used to check for software update is different of
 # MASTER_SITES, then uncomment the next line. Otherwise it is set by

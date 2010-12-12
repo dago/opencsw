@@ -1,5 +1,5 @@
-GARNAME = libfpx
-GARVERSION = 1.3.0
+NAME = libfpx
+VERSION = 1.3.0
 GARSUBREV = 1
 CATEGORIES = lib
 
@@ -8,7 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/delegates/
-DISTFILES  = $(GARNAME)-$(GARVERSION)-$(GARSUBREV).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION)-$(GARSUBREV).tar.bz2
 
 PACKAGES = CSWlibfpx CSWlibfpxdevel
 CATALOGNAME_CSWlibfpx = libfpx
@@ -31,7 +31,7 @@ LICENSE = flashpix.h
 
 DOCFILES = AUTHORS ChangeLog NEWS README
 
-UFILES_REGEX = $(GARNAME)-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
+UFILES_REGEX = $(NAME)-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
 
 # Fix for problem introduced between 12101[7-8]-17 and 12101[7-8]-20
 CXXFLAGS += -D_RWSTD_NO_WSTR=1

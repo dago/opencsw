@@ -1,4 +1,4 @@
-GARNAME = kdebase
+NAME = kdebase
 CATEGORIES = kde
 
 DESCRIPTION = Basic applications for KDE (gcc3)

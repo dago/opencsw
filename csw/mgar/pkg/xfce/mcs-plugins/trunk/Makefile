@@ -1,4 +1,4 @@
-GARNAME = xfce-mcs-plugins
+NAME = xfce-mcs-plugins
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Settings Manager Plugins
@@ -6,14 +6,14 @@ define BLURB
    Xfce Settings Manager Plugins
 endef
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 # DISTFILES += CSWxfcemcsplugins.depend CSWxfcemcsplugins.gspec CSWxfcemcsplugins.prototype
 # DISTFILES += CSWxfcemcspluginsdoc.depend CSWxfcemcspluginsdoc.gspec CSWxfcemcspluginsdoc.prototype
 
 DISTFILES += $(call admfiles,CSWxfcemcsplugins, depend)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # PATCHFILES += configure.in.diff
 # PATCHFILES += configure.diff

@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = googletest
-GARVERSION = 1.4.0
+NAME = googletest
+VERSION = 1.4.0
 CATEGORIES = lib
 DESCRIPTION = a framework for writing C++ tests on a variety of platforms
 define BLURB
@@ -16,8 +16,8 @@ define BLURB
 endef
 SPKG_SOURCEURL = http://code.google.com/p/googletest/
 MASTER_SITES = $(GOOGLE_MIRROR)
-DISTFILES  = gtest-$(GARVERSION).tar.gz
-DISTNAME = gtest-$(GARVERSION)
+DISTFILES  = gtest-$(VERSION).tar.gz
+DISTNAME = gtest-$(VERSION)
 UFILES_REGEX = gtest-(\d+(?:\.\d+)*).tar.gz
 EXTRA_CXXFLAGS = -library=stlport4 -library=no%Cstd
 # EXTRA_LDFLAGS = -lCrun -lm

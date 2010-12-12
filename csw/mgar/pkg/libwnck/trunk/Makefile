@@ -1,5 +1,5 @@
-GARNAME = libwnck
-GARVERSION = 2.18.3
+NAME = libwnck
+VERSION = 2.18.3
 # 2.18.3 = .so.18
 # 2.19.92 = so.22
 # 2.20.3 = .so.22
@@ -12,10 +12,10 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGES = CSWlibwnck CSWlibwnckdevel
 

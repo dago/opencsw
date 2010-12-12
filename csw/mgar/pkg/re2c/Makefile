@@ -1,5 +1,5 @@
-GARNAME = re2c
-GARVERSION = 0.13.5
+NAME = re2c
+VERSION = 0.13.5
 CATEGORIES = utils
 
 DESCRIPTION = Utility for writing fast and flexible scanners.
@@ -15,7 +15,7 @@ endef
 PACKAGES = CSWre2c
 
 MASTER_SITES = $(SF_MIRRORS)
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES = $(DISTNAME).tar.gz
 CATALOGNAME_CSWre2c = re2c

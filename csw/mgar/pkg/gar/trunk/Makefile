@@ -1,5 +1,5 @@
-GARNAME = gar
-GARVERSION = 2.0
+NAME = gar
+VERSION = 2.0
 CATEGORIES = utils
 
 DESCRIPTION = The GAR package build system
@@ -38,7 +38,7 @@ include gar/category.mk
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(call _REVISION)
 
 install-gar:
-	@echo " ==> Installing $(GARNAME)"
+	@echo " ==> Installing $(NAME)"
 
 	rm -f $(DESTDIR)$(bindir)/garit
 	ginstall -d $(DESTDIR)$(bindir)

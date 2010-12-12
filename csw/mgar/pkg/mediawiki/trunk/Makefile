@@ -1,7 +1,7 @@
-GARNAME = mediawiki
-GARVERSION = 1.16.0
+NAME = mediawiki
+VERSION = 1.16.0
 CATEGORIES = apps
-RELVER = $(shell echo $(GARVERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
+RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 DESCRIPTION = A free software wiki package written in PHP
 define BLURB
 	MediaWiki is a free software wiki package written in PHP, 
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://noc.wikimedia.org/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWmediawiki.postinstall CSWmediawiki.preremove 
 DISTFILES += httpd-mediawiki.conf.CSW README.CSW
 
@@ -32,7 +32,7 @@ CHECKPKG_OVERRIDES_CSWmediawiki += missing-dependency|CSWperl
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 ARCHALL_CSWmediawiki = 1
 

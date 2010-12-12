@@ -12,8 +12,8 @@
 #   the LIBTOOL hack (see pre-configure-modulated) or might also
 #   originate in our downrev Kerberos libs.
 #
-GARNAME = dante
-GARVERSION = 1.2.1
+NAME = dante
+VERSION = 1.2.1
 CATEGORIES = net
 
 DESCRIPTION = Dante SOCKS packages
@@ -31,8 +31,8 @@ endef
 VENDOR_URL     = http://www.inet.no/dante/
 MASTER_SITES   = ftp://ftp.inet.no/pub/socks/
 MASTER_SITES  += ftp://ftp.inet.no/pub/socks/old/
-DISTFILES      = $(GARNAME)-$(GARVERSION).tar.gz
-UFILES_REGEX   = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES      = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX   = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 LICENSE = LICENSE
 

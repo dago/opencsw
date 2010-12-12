@@ -1,7 +1,7 @@
 SHORTNAME = validator
-GARVERSION = 1.3.1
+VERSION = 1.3.1
 
-GARNAME = commons-$(SHORTNAME)
+NAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
 DESCRIPTION = Apache Jakarta Commons Validator
@@ -11,10 +11,10 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # Defines two packages, lib and doc
 DISTFILES += $(call admfiles,CSWajcvalidator,)
@@ -28,7 +28,7 @@ SPKG_DESC_CSWajcvalidatordoc = $(DESCRIPTION) documentation package
 # RUNTIME_DEP_PKGS_CSWajcvalidator = No dependency
 
 # Defines package content
-PKGFILES_CSWajcvalidator  = $(prefix)/share/doc/$(GARNAME)/License.txt
+PKGFILES_CSWajcvalidator  = $(prefix)/share/doc/$(NAME)/License.txt
 PKGFILES_CSWajcvalidator += $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -43,13 +43,13 @@ include gar/category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(GARNAME)-$(GARVERSION).jar $(DESTDIR)$(datadir)/java
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(NAME)-$(VERSION).jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-1.3.jar ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-1.jar ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
-	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)/License-documentation.txt
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/docs/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.3.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
+	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License.txt
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License-documentation.txt
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/docs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)

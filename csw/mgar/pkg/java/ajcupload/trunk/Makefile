@@ -1,7 +1,7 @@
 SHORTNAME = fileupload
-GARVERSION = 1.2.1
+VERSION = 1.2.1
 
-GARNAME = commons-$(SHORTNAME)
+NAME = commons-$(SHORTNAME)
 CATEGORIES = java
 
 DESCRIPTION = Apache Jakarta Commons FileUpload
@@ -11,10 +11,10 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
-DISTFILES = $(GARNAME)-$(GARVERSION)-bin.tar.gz
+DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
 DISTFILES += $(call admfiles,CSWajcupload,)
@@ -28,7 +28,7 @@ SPKG_DESC_CSWajcuploaddoc = $(DESCRIPTION) documentation package
 RUNTIME_DEP_PKGS_CSWajcupload = CSWajclogging CSWajcdigester
 
 # Defines package content
-PKGFILES_CSWajcupload  = $(prefix)/share/doc/$(GARNAME)/License.txt
+PKGFILES_CSWajcupload  = $(prefix)/share/doc/$(NAME)/License.txt
 PKGFILES_CSWajcupload += $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -43,13 +43,13 @@ include gar/category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/lib/$(GARNAME)-$(GARVERSION).jar $(DESTDIR)$(datadir)/java
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/lib/$(NAME)-$(VERSION).jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-1.2.jar ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME)-1.jar ; \
-	   ln -s $(GARNAME)-$(GARVERSION).jar $(GARNAME).jar )
-	@ginstall -d $(DESTDIR)$(datadir)/doc/$(GARNAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(GARNAME)/License-documentation.txt
-	@gcp -frp $(WORKSRC)/$(DISTNAME)/site/* $(DESTDIR)$(datadir)/doc/$(GARNAME)
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.2.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
+	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License.txt
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License-documentation.txt
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/site/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)

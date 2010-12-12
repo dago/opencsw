@@ -1,5 +1,5 @@
-GARNAME = Crypt-OpenSSL-Random
-GARVERSION = 0.04
+NAME = Crypt-OpenSSL-Random
+VERSION = 0.04
 CATEGORIES = cpan
 AUTHOR = IROBERTS
 

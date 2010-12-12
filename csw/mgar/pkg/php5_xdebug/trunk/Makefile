@@ -1,5 +1,5 @@
-GARNAME = xdebug
-GARVERSION = 2.0.4
+NAME = xdebug
+VERSION = 2.0.4
 CATEGORIES = lang
 
 DESCRIPTION = Xdebug Extention for PHP
@@ -27,7 +27,7 @@ STRIP_DIRS += $(PHP5ROOT)/bin
 PACKAGES = CSWphp5xdebug
 
 MASTER_SITES = http://www.xdebug.org/files/
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tgz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 DISTFILES = $(DISTNAME).tgz
 

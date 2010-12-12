@@ -1,5 +1,5 @@
-GARNAME = Geography-Countries
-GARVERSION = 2009041301
+NAME = Geography-Countries
+VERSION = 2009041301
 CATEGORIES = cpan
 AUTHOR = ABIGAIL
 

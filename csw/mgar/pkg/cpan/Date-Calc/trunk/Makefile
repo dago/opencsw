@@ -1,5 +1,5 @@
-GARNAME = Date-Calc
-GARVERSION = 6.3
+NAME = Date-Calc
+VERSION = 6.3
 CATEGORIES = cpan
 AUTHOR = STBEY
 

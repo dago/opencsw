@@ -1,6 +1,6 @@
 
 DESTDIR ?= ... should be overridden by GAR ...
-GARVERSION ?= ... should be overridden by GAR ...
+VERSION ?= ... should be overridden by GAR ...
 PATCHLEVEL ?= ... should be overridden by GAR ...
 
 SHELL = /opt/csw/bin/bash
@@ -9,8 +9,8 @@ prefix = $(DESTDIR)/opt/csw
 bindir = $(prefix)/bin
 datadir = $(prefix)/share
 
-instdir = $(datadir)/sgml/docbook/xsl-stylesheets-$(GARVERSION)-$(PATCHLEVEL)
-docdir = $(datadir)/doc/docbookxsl-$(GARVERSION)-$(PATCHLEVEL)
+instdir = $(datadir)/sgml/docbook/xsl-stylesheets-$(VERSION)-$(PATCHLEVEL)
+docdir = $(datadir)/doc/docbookxsl-$(VERSION)-$(PATCHLEVEL)
 
 all: install
 

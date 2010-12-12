@@ -1,5 +1,5 @@
-GARNAME = Sub-Exporter
-GARVERSION = 0.982
+NAME = Sub-Exporter
+VERSION = 0.982
 CATEGORIES = cpan
 AUTHOR = RJBS
 

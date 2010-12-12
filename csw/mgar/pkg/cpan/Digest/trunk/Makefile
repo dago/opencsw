@@ -1,5 +1,5 @@
-GARNAME = Digest
-GARVERSION = stub
+NAME = Digest
+VERSION = stub
 CATEGORIES = cpan
 AUTHOR = GAAS
 

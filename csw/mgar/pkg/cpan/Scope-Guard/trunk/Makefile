@@ -1,5 +1,5 @@
-GARNAME = Scope-Guard
-GARVERSION = 0.03
+NAME = Scope-Guard
+VERSION = 0.03
 CATEGORIES = cpan
 AUTHOR = CHOCOLATE
 

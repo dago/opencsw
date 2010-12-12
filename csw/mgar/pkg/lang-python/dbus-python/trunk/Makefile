@@ -1,5 +1,5 @@
-GARNAME = dbus-python
-GARVERSION = 0.83.0
+NAME = dbus-python
+VERSION = 0.83.0
 CATEGORIES = lib
 
 DESCRIPTION = DBUS Bindings for Python
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://dbus.freedesktop.org/releases/dbus-python/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 SPKG_SOURCEURL = http://www.freedesktop.org/wiki/Software/DBusBindings
 PACKAGES = CSWdbuspython
@@ -28,7 +28,7 @@ RUNTIME_DEP_PKGS += CSWcswclassutils
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PATCHFILES = no-stdint.diff
 

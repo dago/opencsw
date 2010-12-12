@@ -1,5 +1,5 @@
-GARNAME = fltk
-GARVERSION = 1.1.10
+NAME = fltk
+VERSION = 1.1.10
 CATEGORIES = lib
 
 DESCRIPTION = Fast light Tool Kit
@@ -7,12 +7,12 @@ define BLURB
   FLTK (pronounced "fulltick") is a cross-platform C++ GUI toolkit for UNIX®/Linux® (X11), Microsoft® Windows®, and MacOS® X. FLTK provides modern GUI functionality without the bloat and supports 3D graphics via OpenGL® and its built-in GLUT emulation.
 endef
 
-MASTER_SITES = http://ftp.easysw.com/pub/fltk/$(GARVERSION)/
+MASTER_SITES = http://ftp.easysw.com/pub/fltk/$(VERSION)/
 
-DISTFILES  = $(GARNAME)-$(GARVERSION)-source.tar.gz
+DISTFILES  = $(NAME)-$(VERSION)-source.tar.gz
 PATCHFILES = makeinclude.in.diff Makefile.diff
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.fltk.org/
 

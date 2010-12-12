@@ -1,5 +1,5 @@
-GARNAME = ss5
-GARVERSION = 3.6.7-1
+NAME = ss5
+VERSION = 3.6.7-1
 CATEGORIES = lib
 
 DESCRIPTION = A SOCKS server that implements SOCKS v4 and v5 protocol
@@ -13,9 +13,9 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-DISTNAME = $(GARNAME)-$(shell gecho $(GARVERSION) |gsed -e 's/-[0-9]//')
+DISTNAME = $(NAME)-$(shell gecho $(VERSION) |gsed -e 's/-[0-9]//')
 
 PACKAGES = CSWss5
 CATALOGNAME_CSWss5 = ss5
@@ -25,7 +25,7 @@ SPKG_DESC_CSWss5 = $(DESCRIPTION)
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*(-\d)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*(-\d)*).tar.bz2
 
 GARCOMPILER = GNU
 TEST_SCRIPTS = skip

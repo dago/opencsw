@@ -1,6 +1,6 @@
 # $Id$
-GARNAME = nmh
-GARVERSION = 1.3
+NAME = nmh
+VERSION = 1.3
 CATEGORIES = apps
 
 DESCRIPTION = Powerful electronic mail handling system
@@ -12,8 +12,8 @@ define BLURB
  shell in conjunction with nmh.
 endef
 
-MASTER_SITES = http://download.savannah.gnu.org/releases/$(GARNAME)/
-DISTFILES  = nmh-$(GARVERSION).tar.gz
+MASTER_SITES = http://download.savannah.gnu.org/releases/$(NAME)/
+DISTFILES  = nmh-$(VERSION).tar.gz
 SPKG_SOURCEURL = http://www.nongnu.org/nmh/
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 

@@ -1,5 +1,5 @@
-GARNAME = exim
-GARVERSION = 4.72
+NAME = exim
+VERSION = 4.72
 CATEGORIES = server
 
 DESCRIPTION = The Exim Mail Transfer Agent
@@ -15,21 +15,21 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += $(call admfiles,CSWexim,depend prototype postinstall postremove \
 	preinstall preremove request space checkinstall)
 DISTFILES += Makefile.patch exim_install.patch spf2.patch
 DISTFILES += i.smfyes i.smfno
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PATCHFILES = Makefile.patch exim_install.patch spf2.patch
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
 # scripts/exim_install has been patched to use this variable
-EXIM_VERSION = $(GARVERSION)
+EXIM_VERSION = $(VERSION)
 export EXIM_VERSION
 
 # This is needed for the SPF2 workaround:
@@ -71,7 +71,7 @@ DOC_LIST += pcretest.txt spec.txt
 
 post-install:
 	(cd $(DESTDIR)$(prefix)/sbin; \
-	mv exim-$(GARVERSION) exim; \
+	mv exim-$(VERSION) exim; \
 	/usr/ccs/bin/strip $(BINS); \
 	/usr/ccs/bin/mcs -d $(BINS))
 	(cd $(DESTDIR)$(prefix)/etc/exim; \

@@ -1,5 +1,5 @@
-GARNAME = libxau
-GARVERSION = 1.0.4
+NAME = libxau
+VERSION = 1.0.4
 CATEGORIES = x11
 
 DESCRIPTION = X11 authorisation library
@@ -9,7 +9,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(X11_LIB_MASTER_SITE)
-DISTNAME = libXau-$(GARVERSION)
+DISTNAME = libXau-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
 # BUILD_DEP_PKGS = CSWinputproto CSWxkbproto CSWxrenderproto CSWxcbproto
@@ -18,7 +18,7 @@ DISTFILES = $(DISTNAME).tar.bz2
 PACKAGES = CSWlibxau CSWlibxaudevel
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS_CSWlibxau = CSWx11common CSWx11xproto
 RUNTIME_DEP_PKGS_CSWlibxaudevel = CSWlibxau 

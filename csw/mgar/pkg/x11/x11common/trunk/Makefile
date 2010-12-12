@@ -1,5 +1,5 @@
-GARNAME = x11common
-GARVERSION = 1.0
+NAME = x11common
+VERSION = 1.0
 CATEGORIES = x11
 
 DESCRIPTION = X11 common directories

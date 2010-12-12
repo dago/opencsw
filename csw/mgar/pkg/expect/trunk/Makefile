@@ -1,5 +1,5 @@
-GARNAME = expect
-GARVERSION = 5.43
+NAME = expect
+VERSION = 5.43
 CATEGORIES = utils
 
 DESCRIPTION = Tool for automating interactive applications
@@ -19,8 +19,8 @@ endef
 # homepage as expect.tar.gz
 MASTER_SITES = http://expect.nist.gov/
 MASTER_SITES += http://downloads.sourceforge.net/tcl/
-DISTNAME  = $(GARNAME)-$(GARVERSION)
-DISTFILES  = $(GARNAME).tar.gz
+DISTNAME  = $(NAME)-$(VERSION)
+DISTFILES  = $(NAME).tar.gz
 DISTFILES += expect.m4
 DISTFILES += license
 
@@ -51,7 +51,7 @@ RUNTIME_DEP_PKGS_CSWexpect += CSWlibxext
 RUNTIME_DEP_PKGS_CSWexpect += CSWlibxscrnsaver
 RUNTIME_DEP_PKGS_CSWexpect += CSWsunmath
 
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib

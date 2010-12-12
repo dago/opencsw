@@ -1,5 +1,5 @@
-GARNAME = msmtp
-GARVERSION = 1.4.21
+NAME = msmtp
+VERSION = 1.4.21
 CATEGORIES = net
 
 DESCRIPTION = SMTP client
@@ -23,12 +23,12 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 VENDOR_URL = http://msmtp.sourceforge.net/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD_DEP_PKGS = CSWgnutlsdevel CSWlibgsasldevel CSWggettext
 RUNTIME_DEP_PKGS = CSWlibidn CSWgnutls CSWlibgsasl CSWggettextrt

@@ -1,5 +1,5 @@
-GARNAME = sysstat
-GARVERSION = 20100528
+NAME = sysstat
+VERSION = 20100528
 CATEGORIES = utils
 
 DESCRIPTION = Key system statistics at a glance
@@ -16,13 +16,13 @@ define BLURB
   in more complex scenarios.
 endef
 
-MASTER_SITES = http://www.maier-komor.de/$(GARNAME)/
-DISTFILES = $(GARNAME)-$(GARVERSION).tgz
+MASTER_SITES = http://www.maier-komor.de/$(NAME)/
+DISTFILES = $(NAME)-$(VERSION).tgz
 
 RUNTIME_DEP_PKGS = CSWncurses
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 SPKG_SOURCEURL = http://www.maier-komor.de/sysstat.html
 

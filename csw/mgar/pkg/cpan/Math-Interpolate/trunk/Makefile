@@ -1,5 +1,5 @@
-GARNAME = Math-Interpolate
-GARVERSION = 1.05
+NAME = Math-Interpolate
+VERSION = 1.05
 CATEGORIES = cpan
 AUTHOR = BZAJAC
 

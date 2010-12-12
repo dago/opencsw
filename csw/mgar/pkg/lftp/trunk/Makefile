@@ -12,8 +12,8 @@
 
 ###### Package information #######
 
-GARNAME = lftp
-GARVERSION = 4.0.10
+NAME = lftp
+VERSION = 4.0.10
 CATEGORIES = net
 
 DESCRIPTION = A sophisticated command-line ftp/http client
@@ -32,9 +32,9 @@ RUNTIME_DEP_PKGS = CSWexpat CSWggettextrt CSWiconv CSWosslrt CSWreadline CSWlibs
 MASTER_SITES = http://ftp.yars.free.net/pub/source/lftp/
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += changelog.CSW
 
 # do some type conversion before munmap call

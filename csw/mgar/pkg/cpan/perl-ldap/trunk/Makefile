@@ -1,5 +1,5 @@
-GARNAME = perl-ldap
-GARVERSION = 0.39
+NAME = perl-ldap
+VERSION = 0.39
 CATEGORIES = cpan
 AUTHOR = GBARR
 
@@ -19,7 +19,7 @@ ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWpmxmlsax CSWpmauthensasl CSWpmiosocketssl CSWpmuri CSWpmconvertasn1 CSWpmmimebase64
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEPENDS += cpan/Convert-ASN1 cpan/IO-Socket-SSL
 DEPENDS += cpan/Authen-SASL cpan/XML-SAX

@@ -1,5 +1,5 @@
-GARNAME = formtastic
-GARVERSION = 0.9.10
+NAME = formtastic
+VERSION = 0.9.10
 CATEGORIES = rbgems
 
 DESCRIPTION = A Rails form builder plugin

@@ -1,5 +1,5 @@
-GARNAME = Gnome2-Print
-GARVERSION = 0.94
+NAME = Gnome2-Print
+VERSION = 0.94
 CATEGORIES = cpan
 AUTHOR = RMCFARLA
 

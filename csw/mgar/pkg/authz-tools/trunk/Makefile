@@ -1,5 +1,5 @@
-GARNAME = authz-tools
-GARVERSION = 0.6.1
+NAME = authz-tools
+VERSION = 0.6.1
 CATEGORIES = utils
 
 DESCRIPTION = tools to manipulate authz files
@@ -14,12 +14,12 @@ SPKG_SOURCEURL = http://only.mawhrin.net/~mss/thingies/authz/
 
 # Source files
 MASTER_SITES = http://only.mawhrin.net/~mss/thingies/authz/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 #DISTFILES += $(call admfiles,CSWauthztools,depend,prototype)
 DISTFILES += $(call admfiles,CSWauthztools,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =

@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = vixiecron
-GARVERSION = 3.0pl1
+NAME = vixiecron
+VERSION = 3.0pl1
 CATEGORIES = server
 
 DESCRIPTION = Paul Vixie cron
@@ -20,17 +20,17 @@ endef
 #    looks retarded.
 
 MASTER_SITES  = http://ftp.de.debian.org/debian/pool/main/c/cron/
-DISTFILES  = cron_$(GARVERSION).orig.tar.gz
-DISTFILES += cron_$(GARVERSION)-111.diff.gz
+DISTFILES  = cron_$(VERSION).orig.tar.gz
+DISTFILES += cron_$(VERSION)-111.diff.gz
 DISTFILES += CSWvixiecron.preinstall
 DISTFILES += CSWvixiecron.postinstall
 DISTFILES += CSWvixiecron.postremove
-DISTFILES += csw$(GARNAME)
+DISTFILES += csw$(NAME)
 DISTFILES += crontab.CSW
 DISTFILES += run-crons-0.3.2
 
-DISTNAME = cron-$(GARVERSION).orig
-# WORKSRC = $(WORKDIR)/cron-$(GARVERSION).orig
+DISTNAME = cron-$(VERSION).orig
+# WORKSRC = $(WORKDIR)/cron-$(VERSION).orig
 
 LICENSE = README
 
@@ -43,7 +43,7 @@ PROTOTYPE_FILTER  = awk ' \
 INITSMF = /etc/opt/csw/init.d/cswvixiecron
 PRESERVECONF = /etc/crontab
 
-PATCHFILES += cron_$(GARVERSION)-111.diff.gz
+PATCHFILES += cron_$(VERSION)-111.diff.gz
 PATCHFILES += 0001-Use-bash-for-putman.sh.patch
 PATCHFILES += 0002-Makefile-adjustments.patch
 PATCHFILES += 0003-mkdtemp-support.patch
@@ -71,8 +71,8 @@ pre-install-modulated:
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	ginstall $(FILEDIR)/csw$(GARNAME) \
-		$(DESTDIR)/etc/opt/csw/init.d/csw$(GARNAME)
+	ginstall $(FILEDIR)/csw$(NAME) \
+		$(DESTDIR)/etc/opt/csw/init.d/csw$(NAME)
 	ginstall -d $(DESTDIR)/etc
 	ginstall -m 750 $(FILEDIR)/crontab.CSW \
 		$(DESTDIR)/etc/crontab.CSW

@@ -1,5 +1,5 @@
-GARNAME = libbonobo
-GARVERSION = 2.24.2
+NAME = libbonobo
+VERSION = 2.24.2
 CATEGORIES = gnome
 
 DESCRIPTION = GNOME component and compound document system
@@ -8,7 +8,7 @@ endef
 
 VENDOR_URL = http://live.gnome.org/Bonobo
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWlibbonobo CSWlibbonobo2
 CATALOGNAME_CSWlibbonobo = libbonobo
@@ -31,7 +31,7 @@ ARCHALL_CSWlibbonobo2 = 1
 CHECKPKG_OVERRIDES_CSWlibbonobo2 += surplus-dependency|CSWlibbonobo
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 #BUILD64 = 1
 

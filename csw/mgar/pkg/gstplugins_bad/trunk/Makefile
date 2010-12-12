@@ -1,5 +1,5 @@
-GARNAME = gst-plugins-bad
-GARVERSION = 0.10.20
+NAME = gst-plugins-bad
+VERSION = 0.10.20
 CATEGORIES = gnome
 
 DESCRIPTION = GStreamer plugins (Bad)
@@ -11,12 +11,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://gstreamer.freedesktop.org/src/gst-plugins-bad/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PACKAGES = CSWgstpluginsbad
 CATALOGNAME = gstplugins_bad
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS += CSWlibxml2 CSWgtk2 CSWlibx11 CSWlibice CSWlibglade2 CSWlibsm
 DEP_PKGS += CSWgstreamer CSWgstplugins CSWglib2 CSWpango CSWlibatk CSWlibcairo

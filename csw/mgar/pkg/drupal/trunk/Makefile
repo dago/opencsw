@@ -1,5 +1,5 @@
-GARNAME = drupal
-GARVERSION = 6.14
+NAME = drupal
+VERSION = 6.14
 CATEGORIES = apps
 
 DESCRIPTION = An open source content management platform
@@ -13,7 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.drupal.org/files/projects/
-DISTFILES  = $(GARNAME)-$(GARVERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += httpd-drupal.conf.CSW
 DISTFILES += README.CSW
 PATCHFILES = uploaddir.diff
@@ -28,7 +28,7 @@ RELOCATE_PREFIX = /opt/csw/share
 
 # We define upstream file regex so we can be notifed of 
 # new upstream software release
-UFILES_REGEX = $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 ARCHALL_CSWdrupal = 1
 
@@ -40,7 +40,7 @@ TEST_SCRIPTS =
 RUNTIME_DEP_PKGS_CSWdrupal  = CSWapache2 CSWphp5 CSWphp5gd CSWphp5mbstring
 RUNTIME_DEP_PKGS_CSWdrupal += CSWphp5session CSWap2modphp5
 
-DRUPAL_INST_DIR = $(DESTDIR)$(sharedstatedir)/$(GARNAME)/$(GARVERSION)
+DRUPAL_INST_DIR = $(DESTDIR)$(sharedstatedir)/$(NAME)/$(VERSION)
 DRUPAL_DOCFILES  = CHANGELOG.txt COPYRIGHT.txt INSTALL.mysql.txt
 DRUPAL_DOCFILES += INSTALL.pgsql.txt INSTALL.txt LICENSE.txt
 DRUPAL_DOCFILES += MAINTAINERS.txt UPGRADE.txt
@@ -61,7 +61,7 @@ define CSWdrupal_postinstall
 
 PATH=/usr/bin:/usr/sbin
 
-DRUPAL_DIR=$${PKG_INST_ROOT}$${BASEDIR}/$(GARNAME)/$(GARVERSION)
+DRUPAL_DIR=$${PKG_INST_ROOT}$${BASEDIR}/$(NAME)/$(VERSION)
 SETTINGS_DIR=$${DRUPAL_DIR}/sites/default
 CONTRIB_DIR=$${DRUPAL_DIR}/contrib
 AP2CONF=/opt/csw/apache2/etc/httpd.conf
@@ -120,7 +120,7 @@ cat << _EOM_
 *         Before you can use druppal you need to configure it.
 *
 *         For instructions on configuring Please Read
-*         $${PKG_INST_ROOT}$${BASEDIR}/$(GARNAME)/$(GARVERSION)/documentation/README.CSW
+*         $${PKG_INST_ROOT}$${BASEDIR}/$(NAME)/$(VERSION)/documentation/README.CSW
 *
 *********************************************************************
 
