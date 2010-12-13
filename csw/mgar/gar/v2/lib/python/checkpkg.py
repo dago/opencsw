@@ -17,6 +17,7 @@ import database
 import inspective_package
 import models as m
 import common_constants
+import package_stats
 
 
 DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
