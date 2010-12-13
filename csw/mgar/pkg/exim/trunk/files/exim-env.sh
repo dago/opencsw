@@ -1,5 +1,5 @@
 #
-# This file is part of Blastwave's Exim distribution.
+# This file is part of OpenCSW's Exim distribution.
 #
 # Environment variables and the command-line arguments used to run Exim can be
 # modified here.
