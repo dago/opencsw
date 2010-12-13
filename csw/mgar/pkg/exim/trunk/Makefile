@@ -69,7 +69,7 @@ pre-patch-modulated:
 	test -r Local/eximon.conf || cp -p exim_monitor/EDITME Local/eximon.conf; \
 	test -d spf2 || cp -pr /opt/csw/include/spf2 .)
 
-post-patch-modulated:
+pre-build-modulated:
 	(cd $(WORKSRC); make makefile)
 
 DOC_LIST = ChangeLog Exim3.upgrade Exim4.upgrade NewStuff OptionLists.txt
