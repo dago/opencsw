@@ -5,6 +5,7 @@
 # Modified for Debian GNU/Linux by Ian Murdock <imurdock@gnu.ai.mit.edu>.
 # Modified for exim by Tim Cutts <timc@chiark.greenend.org.uk>
 # Modified for Blastwave by Markus Mayer <mmayer@blastwave.org>
+# Modified for OpenCSW by Ben Walton <bwalton@opencsw.org>
 
 # Exit if exim (or another MTA) runs from /etc/inetd.conf
 if [ -f /etc/inetd.conf ] && grep "^ *\([0-9.]\+:\)\?smtp" /etc/inetd.conf >/dev/null; then
