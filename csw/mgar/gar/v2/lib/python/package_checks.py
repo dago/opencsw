@@ -501,7 +501,7 @@ def CheckLicenseFile(pkg_data, error_mgr, logger, messenger):
 
 def CheckObsoleteDeps(pkg_data, error_mgr, logger, messenger):
   """Checks for obsolete dependencies."""
-  deps = set(pkg_data["depends"])
+  deps = frozenset([x for x, y in pkg_data["depends"]])
   obsolete_pkg_deps = deps.intersection(set(OBSOLETE_DEPS))
   if obsolete_pkg_deps:
     for obsolete_pkg in obsolete_pkg_deps:
