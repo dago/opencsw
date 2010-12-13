@@ -72,9 +72,11 @@ pre-patch-modulated:
 	git add Local/; git ci -m 'Setup Local build default files'; \
 	test -d spf2 || cp -pr /opt/csw/include/spf2 .; \
 	git add spf2; git ci -m 'import spf2 header files' )
+	@$(MAKECOOKIE)
 
 pre-build-modulated:
 	(cd $(WORKSRC); make makefile)
+	@$(MAKECOOKIE)
 
 DOC_LIST = ChangeLog Exim3.upgrade Exim4.upgrade NewStuff OptionLists.txt
 DOC_LIST += README README.SIEVE dbm.discuss.txt filter.txt pcrepattern.txt
@@ -105,7 +107,9 @@ post-install-modulated:
 	cp -p $(DOC_LIST) $(DESTDIR)$(prefix)/share/doc/exim)
 	gzip -f $(DESTDIR)$(prefix)/share/doc/exim/ChangeLog
 	gzip -f $(DESTDIR)$(prefix)/share/doc/exim/spec.txt
+	@$(MAKECOOKIE)
 
 post-merge:
 	@( cd $(PKGROOT); mkdir -p ./$(UGPATH); \
 		echo "$(UGENTRY)" > ./$(UGPATH)/cswusergroup" )
+	@$(MAKECOOKIE)
