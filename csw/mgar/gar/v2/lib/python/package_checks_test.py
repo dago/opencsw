@@ -1477,5 +1477,14 @@ class TestCheckDocDirRandomFile(CheckpkgUnitTestHelper, unittest.TestCase):
     })
 
 
+class TestCheckObsoleteDepsCups(CheckpkgUnitTestHelper, unittest.TestCase):
+  "A random file should not trigger the message; only license files."
+  FUNCTION_NAME = 'CheckObsoleteDeps'
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["depends"].append(("CSWlibcups", None))
+    self.error_mgr_mock.ReportError('obsolete-dependency', 'CSWlibcups')
+
+
 if __name__ == '__main__':
   unittest.main()
