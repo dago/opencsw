@@ -1,5 +1,5 @@
 NAME = postgrey
-VERSION = 1.32
+VERSION = 1.33
 CATEGORIES = net
 
 DESCRIPTION = Postfix policy server implementing greylisting
@@ -22,19 +22,26 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-INITSMF = /opt/csw/etc/init.d/cswpostgrey
+INITSMF = /etc/opt/csw/init.d/cswpostgrey
 USERGROUP = /etc/opt/csw/pkg/CSWpostgrey/cswusergroup
 SAMPLECONF  = /etc/opt/csw/postfix/postgrey_whitelist_clients /etc/opt/csw/postfix/postgrey_whitelist_recipients
 SAMPLECONF += /etc/opt/csw/postgrey
 
 PATCHFILES = postgrey.p
 
+CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpmnetserver
+CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpmiomultiplex
+CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpostfix
+CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpmberkeleydb
+
 include gar/category.mk
 
 install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
-	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/init.d
-	@ginstall -m 755 $(FILEDIR)/CSWpostgrey.init $(DESTDIR)/opt/csw/etc/init.d/cswpostgrey
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -m 755 $(FILEDIR)/CSWpostgrey.init $(DESTDIR)/etc/opt/csw/init.d/cswpostgrey
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/postfix
 	@ginstall -m 644 $(WORKSRC)/postgrey_whitelist_clients $(DESTDIR)/etc/opt/csw/postfix
 	@ginstall -m 644 $(WORKSRC)/postgrey_whitelist_recipients $(DESTDIR)/etc/opt/csw/postfix
