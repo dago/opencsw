@@ -55,6 +55,11 @@ OBSOLETE_DEPS = {
       "hint": "CSWpython-rt is deprecated, use CSWpython instead.",
       "url": "http://www.opencsw.org/bugtrack/view.php?id=4031"
     },
+    "CSWlibcups": {
+      "hint": "CSWlibcups is deprecated, please depend on specific "
+              "shared library packages.",
+      "url": "http://wiki.opencsw.org/packaging-shared-libraries",
+    }
 }
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
 EMAIL_RE = re.compile(r"^.*@opencsw.org$")
