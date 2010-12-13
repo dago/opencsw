@@ -176,11 +176,11 @@ class TestSetCheckDependencies(CheckpkgUnitTestHelper, unittest.TestCase):
   def CheckpkgTest(self):
     self.pkg_data_single = self.pkg_data
     self.pkg_data = [self.pkg_data_single]
-    self.pkg_data[0]["depends"].append(["CSWmarsian", "A package from Mars."])
+    self.pkg_data[0]["depends"].append(["CSWmartian", "A package from Mars."])
     installed = ["CSWcommon", "CSWisaexec", "CSWiconv", "CSWlibpopt"]
     self.error_mgr_mock.GetInstalledPackages().AndReturn(installed)
     self.error_mgr_mock.ReportError(
-        'CSWrsync', 'unidentified-dependency', 'CSWmarsian')
+        'CSWrsync', 'unidentified-dependency', 'CSWmartian')
 
 
 class TestSetCheckDependenciesGood(CheckpkgUnitTestHelper, unittest.TestCase):
