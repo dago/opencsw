@@ -19,6 +19,9 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSWexim.postinstall CSWexim.postremove CSWexim.preremove
 DISTFILES += CSWexim.request CSWexim.checkinstall
 
+PATCHFILES += 0003-Set-build-options-in-Local-Makefile.patch
+PATCHFILES += spf2.patch
+
 BUILD_DEP_PKGS = CSWlibspf2
 
 RUNTIME_DEP_PKGS_CSWexim = CSWiconv CSWoldaprt CSWosslrt CSWsasl
@@ -28,7 +31,6 @@ RUNTIME_DEP_PKGS_CSWexim = CSWgzip CSWgzipextras
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PATCHFILES = Makefile.patch exim_install.patch spf2.patch
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
