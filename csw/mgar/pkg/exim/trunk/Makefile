@@ -21,6 +21,8 @@ DISTFILES += $(call admfiles,CSWexim prototype postinstall postremove \
 DISTFILES += Makefile.patch exim_install.patch spf2.patch
 DISTFILES += i.smfyes i.smfno
 
+BUILD_DEP_PKGS = CSWlibspf2
+
 RUNTIME_DEP_PKGS_CSWexim = CSWiconv CSWoldaprt CSWosslrt CSWsasl
 RUNTIME_DEP_PKGS_CSWexim = CSWmysql5rt CSWlibpq CSWlibspf2 CSWggettext
 
