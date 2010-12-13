@@ -223,6 +223,19 @@ class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
     new_data = new_pkgstats.GetAllStats()
     self.assertEqual(md5_sum, new_data["basic_stats"]["md5_sum"])
 
+  def testImportOverrides(self):
+    md5_sum = tree_stats[0]["basic_stats"]["md5_sum"]
+    self.assertEqual(u'1e43fa1c7e637b25d9356ad516ae0403', md5_sum)
+    new_stats = copy.deepcopy(tree_stats[0])
+    new_stats["overrides"].append(
+        {'pkgname': 'CSWtree',
+         'tag_info': None,
+         'tag_name': 'bad-rpath-entry'})
+    self.TestPackageStats.SaveStats(new_stats)
+    o = m.CheckpkgOverride.select().getOne()
+    self.assertEquals("CSWtree", o.pkgname)
+    self.assertEquals("bad-rpath-entry", o.tag_name)
+
   def testImportPkg(self):
     """Registers the package in the database."""
     package_stats.PackageStats.ImportPkg(neon_stats[0])
