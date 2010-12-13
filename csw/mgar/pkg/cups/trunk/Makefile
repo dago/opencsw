@@ -253,14 +253,6 @@ RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupsmime1
 RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupscgi1
 
-# ...and the overrides:
-CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupsppdc1
-CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupsdriver1
-CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcups2
-CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupsmime1
-CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupsimage2
-CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcupscgi1
-
 CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsclient
 CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsd
 
@@ -314,10 +306,6 @@ OPTIM = $(OPTIM_$(GARFLAVOR))
 export OPTIM
 
 LICENSE = LICENSE.txt
-
-CHECKPKG_OVERRIDES_CSWcupsdev += surplus-dependency|CSWlibcups
-CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsclient
-CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsd
 
 # The following overrides are necessary because of a bug in krb5-config, please
 # see bug http://www.opencsw.org/bugtrack/view.php?id=4384
