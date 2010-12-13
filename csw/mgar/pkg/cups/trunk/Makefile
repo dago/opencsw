@@ -100,7 +100,6 @@ RUNTIME_DEP_PKGS_CSWcupsd += CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus
 RUNTIME_DEP_PKGS_CSWcupsd += CSWzlib
 RUNTIME_DEP_PKGS_CSWcupsd += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcups
 
 
 PKGFILES_CSWlibcups  = NONE
