@@ -20,7 +20,6 @@ DISTFILES += CSWexim.postinstall CSWexim.postremove CSWexim.preremove
 DISTFILES += CSWexim.request CSWexim.checkinstall
 
 PATCHFILES += 0003-Set-build-options-in-Local-Makefile.patch
-PATCHFILES += spf2.patch
 
 BUILD_DEP_PKGS = CSWlibspf2
 
