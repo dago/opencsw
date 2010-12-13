@@ -198,6 +198,21 @@ class CheckpkgOverride(sqlobject.SQLObject):
   tag_name = sqlobject.UnicodeCol(notNone=True)
   tag_info = sqlobject.UnicodeCol(default=None)
 
+  def DoesApply(self, tag):
+    """Figures out if this override applies to the given tag."""
+    basket_a = {}
+    basket_b = {}
+    if self.pkgname:
+      basket_a["pkgname"] = self.pkgname
+      basket_b["pkgname"] = tag.pkgname
+    if self.tag_info:
+      basket_a["tag_info"] = self.tag_info
+      basket_b["tag_info"] = tag.tag_info
+    basket_a["tag_name"] = self.tag_name
+    basket_b["tag_name"] = tag.tag_name
+    return basket_a == basket_b
+
+
 class Srv4FileInCatalog(sqlobject.SQLObject):
   """Assignment of a particular srv4 file to a specific catalog.
 
