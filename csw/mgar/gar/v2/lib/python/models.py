@@ -151,10 +151,6 @@ class Srv4FileStats(sqlobject.SQLObject):
             CheckpkgErrorTag.q.os_rel==os_rel,
             CheckpkgErrorTag.q.arch==arch,
             CheckpkgErrorTag.q.catrel==catrel))))
-    sqlobject.sqlhub.processConnection.query(
-        sqlobject.sqlhub.processConnection.sqlrepr(sqlbuilder.Delete(
-          CheckpkgOverride.sqlmeta.table,
-          CheckpkgOverride.q.srv4_file==self)))
 
 
 class CheckpkgErrorTagMixin(object):
