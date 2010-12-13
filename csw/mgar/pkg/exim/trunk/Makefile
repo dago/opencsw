@@ -65,7 +65,7 @@ USERGROUP = $(UGPATH)/cswusergroup
 
 include gar/category.mk
 
-pre-patch:
+pre-patch-modulated:
 	(cd $(WORKSRC); \
 	test -r Local/Makefile || cp -p src/EDITME Local/Makefile; \
 	test -r Local/eximon.conf || cp -p exim_monitor/EDITME Local/eximon.conf; \
@@ -78,7 +78,7 @@ DOC_LIST = ChangeLog Exim3.upgrade Exim4.upgrade NewStuff OptionLists.txt
 DOC_LIST += README README.SIEVE dbm.discuss.txt filter.txt pcrepattern.txt
 DOC_LIST += pcretest.txt spec.txt
 
-post-install:
+post-install-modulated:
 	(cd $(DESTDIR)$(prefix)/sbin; \
 	mv exim-$(VERSION) exim; \
 	/usr/ccs/bin/strip $(BINS); \
