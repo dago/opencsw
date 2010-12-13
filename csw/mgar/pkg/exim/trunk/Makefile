@@ -23,6 +23,7 @@ BUILD_DEP_PKGS = CSWlibspf2
 
 RUNTIME_DEP_PKGS_CSWexim = CSWiconv CSWoldaprt CSWosslrt CSWsasl
 RUNTIME_DEP_PKGS_CSWexim = CSWmysql5rt CSWlibpq CSWlibspf2 CSWggettext
+RUNTIME_DEP_PKGS_CSWexim = CSWgzip CSWgzipextras
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
