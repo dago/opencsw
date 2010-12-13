@@ -68,7 +68,9 @@ pre-patch-modulated:
 	(cd $(WORKSRC); \
 	test -r Local/Makefile || cp -p src/EDITME Local/Makefile; \
 	test -r Local/eximon.conf || cp -p exim_monitor/EDITME Local/eximon.conf; \
-	test -d spf2 || cp -pr /opt/csw/include/spf2 .)
+	git add Local/; git ci -m 'Setup Local build default files'; \
+	test -d spf2 || cp -pr /opt/csw/include/spf2 .; \
+	git add spf2; git ci -m 'import spf2 header files' )
 
 pre-build-modulated:
 	(cd $(WORKSRC); make makefile)
