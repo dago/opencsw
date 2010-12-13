@@ -38,20 +38,6 @@ class Override(object):
     return (u"Override(%s, %s, %s)"
             % (repr(self.pkgname), repr(self.tag_name), repr(self.tag_info)))
 
-  def DoesApply(self, tag):
-    """Figures out if this override applies to the given tag."""
-    basket_a = {}
-    basket_b = {}
-    if self.pkgname:
-      basket_a["pkgname"] = self.pkgname
-      basket_b["pkgname"] = tag.pkgname
-    if self.tag_info:
-      basket_a["tag_info"] = self.tag_info
-      basket_b["tag_info"] = tag.tag_info
-    basket_a["tag_name"] = self.tag_name
-    basket_b["tag_name"] = tag.tag_name
-    return basket_a == basket_b
-
 
 def ApplyOverrides(error_tags, override_list):
   """Filters out all the error tags that overrides apply to.
