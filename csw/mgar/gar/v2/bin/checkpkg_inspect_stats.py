@@ -18,8 +18,10 @@ path_list = [os.path.dirname(__file__),
 sys.path.append(os.path.join(*path_list))
 import checkpkg
 import opencsw
+import configuration
 
 def main():
+  configuration.SetUpSqlobjectConnection()
   usage = "Usage: %prog [ options ] file | md5 [ file | md5 [ ... ] ]"
   parser = optparse.OptionParser(usage)
   parser.add_option("-d", "--debug", dest="debug",
