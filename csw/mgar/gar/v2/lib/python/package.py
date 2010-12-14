@@ -46,6 +46,7 @@ class CswSrv4File(shell.ShellMixin, object):
   """Represents a package in the srv4 format (pkg)."""
 
   def __init__(self, pkg_path, debug=False):
+    super(CswSrv4File, self).__init__()
     self.pkg_path = pkg_path
     self.workdir = None
     self.gunzipped_path = None
