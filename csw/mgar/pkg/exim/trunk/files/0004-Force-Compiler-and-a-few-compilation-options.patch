@@ -1,0 +1,33 @@
+From 81cf6c60a61512eed7f35af6d0b8797074f9d6bb Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 14 Dec 2010 03:39:25 +0100
+Subject: [PATCH] Force Compiler and a few compilation options
+
+We need to force the use of compiler and add a few extra CFLAGS and
+LDFLAGS.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Local/Makefile |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/Local/Makefile b/Local/Makefile
+index 810b984..f7ec083 100644
+--- a/Local/Makefile
++++ b/Local/Makefile
+@@ -1,5 +1,12 @@
+ # $Cambridge: exim/exim-src/src/EDITME,v 1.23 2009/11/20 12:18:19 nm4 Exp $
+ 
++# -I (CSW_WORKSRC).. is needed for the SPF2 hack (to pick up patched SPF2
++# headers locally)
++
++CC=$(CSW_CC)
++CFLAGS=-DHAVE_NS_TYPE -I$(CSW_WORKSRC) -I/opt/csw/include $(CSW_OPT)
++LDFLAGS=-R/opt/csw/mysql5/lib/mysql -R/opt/csw/postgresql/lib
++
+ ##################################################
+ #          The Exim mail transport agent         #
+ ##################################################
+-- 
+1.7.3.2
+
