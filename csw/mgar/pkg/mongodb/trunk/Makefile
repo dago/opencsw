@@ -22,7 +22,7 @@ TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 # GARCOMPILER = GNU
 PATCHFILES += 0001-Disabling-the-libstdc-check.patch
-PATCHFILES += 0002-Looking-for-.so-files-not-.a-files.patch
+PATCHFILES += 0002-library-checking-by-locating-.so-files.patch
 
 BUILD_DEP_PKGS = CSWboostdevel
 

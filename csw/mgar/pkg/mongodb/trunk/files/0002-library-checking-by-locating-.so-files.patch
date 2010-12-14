@@ -1,0 +1,37 @@
+From 53a89a29c07b6a140ddb5cbb80ec3df4c6994273 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 14 Dec 2010 12:26:39 +0100
+Subject: [PATCH] library checking by locating .so files
+
+Doing this by checking for .a files doesn't make sense on Solaris, as it's
+impossible to create static binaries, and there are no static libraries in the
+system.
+---
+ SConstruct |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/SConstruct b/SConstruct
+index e3046ff..154f46f 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -865,6 +865,7 @@ def doConfigure( myenv , needPcre=True , shell=False ):
+ 
+     def myCheckLib( poss , failIfNotFound=False , staticOnly=False):
+ 
++        print("myCheckLib(%s, %s, %s)" % (poss, failIfNotFound, staticOnly))
+         if type( poss ) != types.ListType :
+             poss = [poss]
+ 
+@@ -877,7 +878,8 @@ def doConfigure( myenv , needPcre=True , shell=False ):
+ 
+             for p in poss:
+                 for loc in allPlaces:
+-                    fullPath = loc + "/lib" + p + ".a"
++                    fullPath = loc + "/lib" + p + ".so"
++                    print("Checking for %s" %  fullPath)
+                     if os.path.exists( fullPath ):
+                         myenv['_LIBFLAGS']='${_stripixes(LIBLINKPREFIX, LIBS, LIBLINKSUFFIX, LIBPREFIXES, LIBSUFFIXES, __env__)} $SLIBS'
+                         myenv.Append( SLIBS=" " + fullPath + " " )
+-- 
+1.7.3.2
+
