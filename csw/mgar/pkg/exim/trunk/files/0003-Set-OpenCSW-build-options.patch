@@ -1,4 +1,4 @@
-From daef4dfcacd6da541006c4d54f67e384ba862475 Mon Sep 17 00:00:00 2001
+From 5c1f33d87884e0c66ace1fd36e290cbe28d5c0de Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Tue, 14 Dec 2010 03:31:46 +0100
 Subject: [PATCH] Set OpenCSW build options
@@ -12,7 +12,7 @@ Signed-off-by: Ben Walton <bwalton@opencsw.org>
  1 files changed, 45 insertions(+), 45 deletions(-)
 
 diff --git a/Local/Makefile b/Local/Makefile
-index 9869eb1..810b984 100644
+index 9869eb1..6ba1bf8 100644
 --- a/Local/Makefile
 +++ b/Local/Makefile
 @@ -100,7 +100,7 @@
@@ -122,7 +122,7 @@ index 9869eb1..810b984 100644
  
 -# LOOKUP_INCLUDE=-I /usr/local/ldap/include -I /usr/local/mysql/include -I /usr/local/pgsql/include
 -# LOOKUP_LIBS=-L/usr/local/lib -lldap -llber -lmysqlclient -lpq -lgds -lsqlite3
-+LOOKUP_INCLUDE=-I /opt/csw/mysql/include/mysql -I /opt/csw/postgresql/include
++LOOKUP_INCLUDE=-I /opt/csw/mysql5/include/mysql -I /opt/csw/postgresql/include
 +LOOKUP_LIBS=-L/opt/csw/mysql5/lib/mysql -L/opt/csw/postgresql/lib -lldap -llber -lmysqlclient -lpq
  
  
