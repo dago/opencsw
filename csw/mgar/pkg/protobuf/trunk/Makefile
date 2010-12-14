@@ -16,6 +16,7 @@ define BLURB
 	internal RPC protocols and file formats.
 endef
 SPKG_SOURCEURL = http://code.google.com/p/protobuf/
+DESCRIPTION = Google Protocol buffers
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -33,30 +34,66 @@ TEST_TARGET = check
 PYCOMPILE = 1
 
 PACKAGES  = CSWprotobuf
-PACKAGES += CSWprotobuf-rt
-PACKAGES += CSWprotobuf-devel
-PACKAGES += CSWpy-protobuf
-SPKG_DESC_CSWprotobuf = Google Protocol buffers
-SPKG_DESC_CSWprotobuf-rt = $(SPKG_DESC_CSWprotobuf), shared libraries
-SPKG_DESC_CSWprotobuf-devel = $(SPKG_DESC_CSWprotobuf), header files
-SPKG_DESC_CSWpy-protobuf= $(SPKG_DESC_CSWprotobuf), Python support
-CATALOGNAME_CSWprotobuf-rt = protobuf_rt
-CATALOGNAME_CSWprotobuf-devel = protobuf_devel
-CATALOGNAME_CSWpy-protobuf = py_protobuf
-PKGFILES_CSWprotobuf += $(bindir).*protoc.*
-PKGFILES_CSWprotobuf += $(libdir).*protoc.*
-PKGFILES_CSWprotobuf-devel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWprotobuf-rt = $(libdir).*libprotobuf.*
-PKGFILES_CSWpy-protobuf = $(libdir)/python.*
+SPKG_DESC_CSWprotobuf = $(DESCRIPTION)
 
-ARCHALL_CSWpy-protobuf = 1
-RUNTIME_DEP_PKGS_CSWprotobuf += CSWprotobuf-rt
 RUNTIME_DEP_PKGS_CSWprotobuf += CSWstlport
 RUNTIME_DEP_PKGS_CSWprotobuf += CSWzlib
+RUNTIME_DEP_PKGS_CSWprotobuf += CSWlibprotoc6
+RUNTIME_DEP_PKGS_CSWprotobuf += CSWlibprotobuf6
+
+# Libraries
+PACKAGES += CSWlibprotobuf-lite6
+CATALOGNAME_CSWlibprotobuf-lite6 = libprotobuf_lite6
+SPKG_DESC_CSWlibprotobuf-lite6 = $(DESCRIPTION), libprotobuf-lite.so.6
+RUNTIME_DEP_PKGS_CSWlibprotobuf-lite6 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibprotobuf-lite6 += CSWstlport
+PKGFILES_CSWlibprotobuf-lite6  = .*libprotobuf-lite\.so\..*
+CHECKPKG_OVERRIDES_CSWlibprotobuf-lite6 += bad-rpath-entry
+
+PACKAGES += CSWlibprotobuf6
+CATALOGNAME_CSWlibprotobuf6 = libprotobuf6
+SPKG_DESC_CSWlibprotobuf6 = $(DESCRIPTION), libprotobuf.so.6
+RUNTIME_DEP_PKGS_CSWlibprotobuf6 += CSWstlport
+RUNTIME_DEP_PKGS_CSWlibprotobuf6 += CSWzlib
+PKGFILES_CSWlibprotobuf6  = .*libprotobuf\.so\..*
+CHECKPKG_OVERRIDES_CSWlibprotobuf6 += bad-rpath-entry
+
+PACKAGES += CSWlibprotoc6
+CATALOGNAME_CSWlibprotoc6 = libprotoc6
+SPKG_DESC_CSWlibprotoc6 = $(DESCRIPTION), libprotoc.so.6
+RUNTIME_DEP_PKGS_CSWlibprotoc6 += CSWstlport
+RUNTIME_DEP_PKGS_CSWlibprotoc6 += CSWzlib
+PKGFILES_CSWlibprotoc6  = .*libprotoc\.so\..*
+RUNTIME_DEP_PKGS_CSWlibprotoc6 += CSWlibprotobuf6
+CHECKPKG_OVERRIDES_CSWlibprotoc6 += bad-rpath-entry
+
+# Devel package
+PACKAGES                           += CSWprotobuf-devel
+CATALOGNAME_CSWprotobuf-devel       = protobuf_devel
+SPKG_DESC_CSWprotobuf-devel         = $(DESCRIPTION), header files
 RUNTIME_DEP_PKGS_CSWprotobuf-devel += CSWprotobuf
-RUNTIME_DEP_PKGS_CSWprotobuf-rt += CSWstlport
-RUNTIME_DEP_PKGS_CSWprotobuf-rt += CSWzlib
+RUNTIME_DEP_PKGS_CSWprotobuf-devel += CSWpy-protobuf
+RUNTIME_DEP_PKGS_CSWprotobuf-devel += CSWlibprotobuf-lite6
+RUNTIME_DEP_PKGS_CSWprotobuf-devel += CSWlibprotobuf6
+RUNTIME_DEP_PKGS_CSWprotobuf-devel += CSWlibprotoc6
+PKGFILES_CSWprotobuf-devel          = $(PKGFILES_DEVEL)
+
+# Python support
+PACKAGES += CSWpy-protobuf
+CATALOGNAME_CSWpy-protobuf = py_protobuf
+SPKG_DESC_CSWpy-protobuf= $(DESCRIPTION), Python support
 RUNTIME_DEP_PKGS_CSWpy-protobuf += CSWprotobuf
+RUNTIME_DEP_PKGS_CSWpy-protobuf += CSWpython
+PKGFILES_CSWpy-protobuf = $(libdir)/python.*
+ARCHALL_CSWpy-protobuf = 1
+CHECKPKG_OVERRIDES_CSWpy-protobuf += surplus-dependency|CSWprotobuf
+
+# Empty transitional package
+PACKAGES += CSWprotobuf-rt
+CATALOGNAME_CSWprotobuf-rt = protobuf_rt
+SPKG_DESC_CSWprotobuf-rt = An empty transitional package
+PKGFILES_CSWprotobuf-rt = an-empty-package
+ARCHALL_CSWprotobuf-rt = 1
 
 include gar/category.mk
 

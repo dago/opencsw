@@ -1,5 +1,1 @@
-9dbbdcb35c7f44b3d53405021c388c3d  0001-Patches-from-GAR.patch
-3412715e07bdb891951c8e72cfd937af  0002-std-map-in-two-more-files.patch
-f6c3466d20a54b9d57c4806494816eb8  OutputDirectoryIsFileError-unittest.patch
 65dba2c04923595b6f0a6a44d8106f0a  protobuf-2.3.0.tar.gz
-b069aefd7e63a625ae1663529f251aef  trailing-slash-test-fails-on-solaris-8-x86.patch
