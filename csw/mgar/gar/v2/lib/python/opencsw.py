@@ -569,6 +569,7 @@ class Pkgmap(object):
     self.entries_by_type = IndexDictsBy(self.entries, "type")
     self.entries_by_class = IndexDictsBy(self.entries, "class")
     self.entries_by_path = IndexDictsBy(self.entries, "path")
+    self.entries = sorted(self.entries, key=lambda x: x["path"])
 
   def GetClasses(self):
     """The assumtion is that the set of classes never changes."""
