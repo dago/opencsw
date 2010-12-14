@@ -1,10 +1,10 @@
-From 80af317076aa950fcbd941619fac281e26825310 Mon Sep 17 00:00:00 2001
+From 201fcd8e99e4f99f75c60a5fc7c69bb2d8796c43 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
-Date: Mon, 13 Dec 2010 04:24:32 +0100
-Subject: [PATCH] Set build options in Local/Makefile
+Date: Tue, 14 Dec 2010 03:31:46 +0100
+Subject: [PATCH] Set OpenCSW build options
 
-This file specifies the build options for Exim instead of a traditional
-configure script.
+Modify the template Local/Makefile to set the options for the csw
+environment.
 
 Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
@@ -12,7 +12,7 @@ Signed-off-by: Ben Walton <bwalton@opencsw.org>
  1 files changed, 45 insertions(+), 45 deletions(-)
 
 diff --git a/Local/Makefile b/Local/Makefile
-index 9869eb1..57bf30b 100644
+index 9869eb1..810b984 100644
 --- a/Local/Makefile
 +++ b/Local/Makefile
 @@ -100,7 +100,7 @@
@@ -29,7 +29,7 @@ index 9869eb1..57bf30b 100644
  # file does not exist.
  
 -CONFIGURE_FILE=/usr/exim/configure
-+CONFIGURE_FILE=/etc/opt/csw/exim/exim.conf
++CONFIGURE_FILE=/opt/csw/etc/exim/exim.conf
  
  # It is possible to specify a colon-separated list of files for CONFIGURE_FILE.
  # In this case, Exim will use the first of them that exists when it is run.
@@ -47,7 +47,7 @@ index 9869eb1..57bf30b 100644
  # Almost all installations choose this:
  
 -SPOOL_DIRECTORY=/var/spool/exim
-+SPOOL_DIRECTORY=/var/opt/csw/spool/exim
++SPOOL_DIRECTORY=/opt/csw/var/spool/exim
  
  
  
@@ -161,7 +161,7 @@ index 9869eb1..57bf30b 100644
  # example).
  
 -# ALT_CONFIG_PREFIX=/some/directory/
-+ALT_CONFIG_PREFIX=/etc/opt/csw/exim/
++ALT_CONFIG_PREFIX=/opt/csw/etc/exim/
  # ALT_CONFIG_PREFIX=/some/directory/exim.conf-
  
  
@@ -254,7 +254,7 @@ index 9869eb1..57bf30b 100644
  # to form the final file names. Some installations may want something like this:
  
 -# LOG_FILE_PATH=/var/log/exim_%slog
-+LOG_FILE_PATH=/var/opt/csw/log/exim_%slog
++LOG_FILE_PATH=/opt/csw/var/log/%slog
  
  # which results in files with names /var/log/exim_mainlog, etc. The directory
  # in which the log files are placed must exist; Exim does not try to create
@@ -308,7 +308,7 @@ index 9869eb1..57bf30b 100644
  # location for the system alias file.
  
 -SYSTEM_ALIASES_FILE=/etc/aliases
-+SYSTEM_ALIASES_FILE=/etc/opt/csw/exim/aliases
++SYSTEM_ALIASES_FILE=/opt/csw/etc/exim/aliases
  
  
  #------------------------------------------------------------------------------
