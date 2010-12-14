@@ -42,8 +42,8 @@ export EXIM_VERSION
 PWD = $(shell pwd)
 
 # Local/Makefile has been patched to use these:
-CSW_CC = $(SUN_CC)
-CSW_OPT = $(SUN_CC_OPT)
+CSW_CC = $($(GARCOMPILER)_CC)
+CSW_OPT = $($(GARCOMPILER)_CC_OPT)
 CSW_WORKSRC = $(PWD)/$(WORKSRC)
 export CSW_CC CSW_OPT CSW_WORKSRC
 
