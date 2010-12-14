@@ -20,8 +20,9 @@ BUILD_SCRIPTS = mongo
 INSTALL_SCRIPTS = mongo
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
-GARCOMPILER = GNU
+# GARCOMPILER = GNU
 PATCHFILES += 0001-Disabling-the-libstdc-check.patch
+PATCHFILES += 0002-Looking-for-.so-files-not-.a-files.patch
 
 BUILD_DEP_PKGS = CSWboostdevel
 
@@ -33,7 +34,8 @@ include gar/category.mk
 # scons libboost-dev libpcre++-dev xulrunner-1.9.1-dev
 
 build-mongo:
-	(cd $(WORKSRC); $(BUILD_ENV) scons --extrapathdyn=/opt/csw,/opt/csw/gcc4 --cxx /opt/csw/gcc4/bin/g++ --usev8 all)
+	# (cd $(WORKSRC); $(BUILD_ENV) scons --extrapathdyn=/opt/csw,/opt/csw/gcc4 --cxx /opt/csw/gcc4/bin/g++ --usev8 all)
+	(cd $(WORKSRC); $(BUILD_ENV) scons --libpath=/opt/csw/lib --extrapathdyn=/opt/csw,/opt/SUNWspro/bin --cxx /opt/SUNWspro/bin/CC --release all)
 	@$(MAKECOOKIE)
 
 install-mongo:

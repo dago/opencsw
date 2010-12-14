@@ -1,0 +1,73 @@
+From bcd6e14ea7572a69dddb10baae82036accfc05a5 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 14 Dec 2010 12:05:24 +0100
+Subject: [PATCH] Looking for .so files, not .a files
+
+---
+ SConstruct |   26 ++++++++++++++------------
+ 1 files changed, 14 insertions(+), 12 deletions(-)
+
+diff --git a/SConstruct b/SConstruct
+index 0feedc0..10769c9 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -594,27 +594,27 @@ elif "win32" == os.sys.platform:
+     #    release = True
+ 
+     for pathdir in env['ENV']['PATH'].split(os.pathsep):
+-	if os.path.exists(os.path.join(pathdir, 'cl.exe')):
++        if os.path.exists(os.path.join(pathdir, 'cl.exe')):
+             print( "found visual studio at " + pathdir )
+-	    break
++            break
+     else:
+-	#use current environment
+-	env['ENV'] = dict(os.environ)
++        #use current environment
++        env['ENV'] = dict(os.environ)
+ 
+     def find_boost():
+-        for x in ('', ' (x86)'):	
++        for x in ('', ' (x86)'):
+             boostDir = "C:/Program Files" + x + "/boost/latest"
+             if os.path.exists( boostDir ):
+                 return boostDir
+             for bv in reversed( range(33,50) ):
+-	            for extra in ('', '_0', '_1'):
+-		            boostDir = "C:/Program Files" + x + "/Boost/boost_1_" + str(bv) + extra
+-		            if os.path.exists( boostDir ):
+-		                return boostDir
++                    for extra in ('', '_0', '_1'):
++                            boostDir = "C:/Program Files" + x + "/Boost/boost_1_" + str(bv) + extra
++                            if os.path.exists( boostDir ):
++                                return boostDir
+         if os.path.exists( "C:/boost" ):
+-	        return "C:/boost"
++                return "C:/boost"
+         if os.path.exists( "/boost" ):
+-	        return "/boost"
++                return "/boost"
+         return None
+ 
+     boostDir = find_boost()
+@@ -867,6 +867,7 @@ def doConfigure( myenv , needPcre=True , shell=False ):
+ 
+     def myCheckLib( poss , failIfNotFound=False , staticOnly=False):
+ 
++        print("myCheckLib(%s, %s, %s)" % (poss, failIfNotFound, staticOnly))
+         if type( poss ) != types.ListType :
+             poss = [poss]
+ 
+@@ -879,7 +880,8 @@ def doConfigure( myenv , needPcre=True , shell=False ):
+ 
+             for p in poss:
+                 for loc in allPlaces:
+-                    fullPath = loc + "/lib" + p + ".a"
++                    fullPath = loc + "/lib" + p + ".so"
++                    print("Checking for %s" %  fullPath)
+                     if os.path.exists( fullPath ):
+                         myenv['_LIBFLAGS']='${_stripixes(LIBLINKPREFIX, LIBS, LIBLINKSUFFIX, LIBPREFIXES, LIBSUFFIXES, __env__)} $SLIBS'
+                         myenv.Append( SLIBS=" " + fullPath + " " )
+-- 
+1.7.3.2
+
