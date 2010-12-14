@@ -1,5 +1,5 @@
-NAME = nginx
-VERSION = 0.8.53
+NAME       = nginx
+VERSION    = 0.8.54
 CATEGORIES = server
 
 GARCOMPILER = SOS11
