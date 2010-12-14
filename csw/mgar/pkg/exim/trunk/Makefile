@@ -20,6 +20,7 @@ DISTFILES += CSWexim.postinstall CSWexim.postremove CSWexim.preremove
 DISTFILES += CSWexim.request CSWexim.checkinstall
 
 PATCHFILES += 0003-Set-OpenCSW-build-options.patch
+PATCHFILES += 0004-Force-Compiler-and-a-few-compilation-options.patch
 
 BUILD_DEP_PKGS = CSWlibspf2
 
