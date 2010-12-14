@@ -1,21 +1,29 @@
-Python libraries, mostly related to checkpkg.
+This directory contains Python libraries, mostly related to checkpkg.
+
+==Checkpkg==
 
 Development plan for checkpkg:
-
-- Move the 'data' field of the srv4_file table to a separate table (should
-	speed up checking if stats are already collected)
-- Store run history and display stats from each run
+- Generalize dependency checking by adding NeedFile(file_list, reason) to
+  error_mgr.  It's possible to need one of the listed files only, so files are
+  given as alternatives, but the reason is common.
+- Display stats from each run
 - Shorten the on-screen output, add commands to display override lines
 - Move the set check stats outside of checking functions, remove the special
-	status of dependency checking functions; add a progress bar for it.
+  status of dependency checking functions; add a progress bar for it.
 - Restructure the error reporting, group them by errors.
 
+Also, see ticket list on trac: http://sourceforge.net/apps/trac/gar/report/1
+
+Items done:
+- Move the 'data' field of the srv4_file table to a separate table (should
+  speed up checking if stats are already collected)
+- Store run history
 
 Known problems:
 - libmagic fails sometimes when processing the whole catalog
+- hachoir_parser fails sometimes on i386 packages when examining them on sparc
 
-
-Dependencies:
+Package dependencies:
 
 It's possible to develop checkpkg on a non-Solaris platform, using unit
 tests as means to run various bits of code.  Here's the dependency list
