@@ -135,9 +135,11 @@ class CswSrv4File(shell.ShellMixin, object):
     return self.stat
 
   def GetMtime(self):
-    s = self._Stat()
-    t = time.gmtime(s.st_mtime)
-    self.mtime = datetime.datetime(*t[:6])
+    if not self.mtime:
+      s = self._Stat()
+      t = time.gmtime(s.st_mtime)
+      self.mtime = datetime.datetime(*t[:6])
+    return self.mtime
 
   def GetSize(self):
     s = self._Stat()
