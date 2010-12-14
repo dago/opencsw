@@ -413,6 +413,11 @@ class PkgmapUnitTest(unittest.TestCase):
     pkgmap = opencsw.Pkgmap(PKGMAP_3.splitlines())
     self.assertTrue("build" in pkgmap.entries_by_class)
 
+  def testPkgmapSortedByPaths(self):
+    pkgmap = opencsw.Pkgmap(PKGMAP_2.splitlines())
+    paths = [x["path"] for x in pkgmap.entries]
+    self.assertEquals(paths, sorted(paths))
+
 class IndexByUnitTest(unittest.TestCase):
 
   def testIndexDictsBy_1(self):
