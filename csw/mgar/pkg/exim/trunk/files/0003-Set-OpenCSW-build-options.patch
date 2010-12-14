@@ -1,4 +1,4 @@
-From 201fcd8e99e4f99f75c60a5fc7c69bb2d8796c43 Mon Sep 17 00:00:00 2001
+From daef4dfcacd6da541006c4d54f67e384ba862475 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Tue, 14 Dec 2010 03:31:46 +0100
 Subject: [PATCH] Set OpenCSW build options
