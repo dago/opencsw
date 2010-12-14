@@ -102,8 +102,12 @@ pre-install-modulated:
 		s| /var/run| /var/opt/csw/run|; \
 		s| /etc/ssl| /opt/csw/ssl|; \
 		s| /usr/libexec| /opt/csw/libexec|; \
-		s| /usr/lib/dovecot| /opt/csw/lib/dovecot|;' \
-		$(WORKSRC)/dovecot-example.conf
+		s| /usr/lib/dovecot| /opt/csw/lib/dovecot|; \
+		s| /usr/local| /opt/csw/|;' \
+		$(WORKSRC)/*-example.conf
+# replace bad paths with /opt/csw in doc/wiki/*.txt
+	perl -pi -e 's|/usr/share|/opt/csw/share|' $(WORKSRC)/doc/wiki/*.txt
+	perl -pi -e 's|/usr/local|/opt/csw|' $(WORKSRC)/doc/wiki/*.txt
 	@$(MAKECOOKIE)
 
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
