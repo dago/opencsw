@@ -64,7 +64,7 @@ BINS =  exim exim_dbmbuild exim_dumpdb exim_fixdb exim_lock exim_tidydb
 BINS += eximon.bin
 
 UGPATH=/etc/opt/csw/pkg/CSWexim
-UGENTRY = "exim:exim:CSW Exim User:/var/opt/csw/spool/exim:/bin/false:::NP"
+UGENTRY = exim:exim:CSW Exim User:/var/opt/csw/spool/exim:/bin/false:::NP
 USERGROUP = $(UGPATH)/cswusergroup
 
 include gar/category.mk
@@ -112,6 +112,6 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 post-merge:
-	@( cd $(PKGROOT); mkdir -p ./$(UGPATH); \
-		echo "$(UGENTRY)" > ./$(UGPATH)/cswusergroup" )
+	( cd $(PKGROOT); mkdir -p ./$(UGPATH); \
+		echo "$(UGENTRY)" > ./$(UGPATH)/cswusergroup )
 	@$(MAKECOOKIE)
