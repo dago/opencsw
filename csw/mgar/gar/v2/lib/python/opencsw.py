@@ -76,7 +76,11 @@ def ParsePackageFileName(p):
   if p.endswith(".pkg"):
     p = p[:-4]
   bits = p.split("-")
-  catalogname = bits[0]
+  if len(bits) >= 6:
+    catalogname = "-".join(bits[:len(bits) - 4])
+    bits = [catalogname] + bits[len(bits) - 4:]
+  else:
+    catalogname = bits[0]
   if len(bits) < 2:
     version, version_info, revision_info = None, None, None
     full_version_string = None

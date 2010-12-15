@@ -132,6 +132,13 @@ class ParsePackageFileNameTest(unittest.TestCase):
     self.assertEqual(parsed["osrel"], "unspecified")
     self.assertEqual(parsed["catalogname"], "RICHPse")
 
+  def testParsePackageFileName_OneDashTooMany(self):
+    file_name = ("boost-jam-3.1.18,REV=2010.12.15-"
+                 "SunOS5.9-sparc-UNCOMMITTED.pkg.gz")
+    parsed = opencsw.ParsePackageFileName(file_name)
+    self.assertEqual(parsed["arch"], "sparc")
+    self.assertEqual(parsed["catalogname"], "boost-jam")
+
   def testParsePackageFileName_Nonsense(self):
     """Checks if the function can sustain a non-conformant string."""
     file_name = "What if I wrote a letter to my grandma here?"
