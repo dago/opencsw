@@ -17,7 +17,9 @@ DISTFILES += cswmigrateconf
 UFILES_REGEX = $(DL_NAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS_CSWunixodbc  = CSWiconv
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWreadline
-RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibtoolrt
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbcinst1
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbc1
 sysconfdir = /etc$(prefix)
 localstatedir = /var$(prefix)
 CONFIGURE_ARGS = $(DIRPATHS) --enable-gui=no
@@ -26,6 +28,30 @@ SAMPLECONF = \/etc\/opt\/csw\/odbc(inst|).ini
 MIGRATECONF = \/etc\/opt\/csw\/pkg\/$(NAME)\/cswmigrateconf
 TEST_SCRIPTS =
 LICENSE = COPYING
+
+PACKAGES += CSWunixodbc
+SPKG_DESC_CSWunixodbc = $(DESCRIPTION)
+
+
+PACKAGES += CSWunixodbc-devel
+CATALOGNAME_CSWunixodbc-devel = unixodbc_devel
+SPKG_DESC_CSWunixodbc-devel = $(DESCRIPTION), development files
+PKGFILES_CSWunixodbc-devel = $(PKGFILES_DEVEL)
+
+PACKAGES += CSWlibodbc1
+SPKG_DESC_CSWlibodbc1 = $(DESCRIPTION), libodbc.so.1
+PKGFILES_CSWlibodbc1 = .*libodbc\.so\.1.*
+RUNTIME_DEP_PKGS_CSWlibodbc1 += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWlibodbc1 += CSWiconv
+
+PACKAGES += CSWlibodbccr1
+SPKG_DESC_CSWlibodbccr1 = $(DESCRIPTION), libodbccr.so.1
+PKGFILES_CSWlibodbccr1 = .*libodbccr\.so\.1.*
+
+PACKAGES += CSWlibodbcinst1
+SPKG_DESC_CSWlibodbcinst1 = $(DESCRIPTION), libodbcinst.so.1
+PKGFILES_CSWlibodbcinst1 = .*libodbcinst\.so\.1.*
+RUNTIME_DEP_PKGS_CSWlibodbcinst1 += CSWlibltdl7
 
 include gar/category.mk
 
