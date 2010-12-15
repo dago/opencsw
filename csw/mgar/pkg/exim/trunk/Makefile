@@ -51,7 +51,7 @@ PWD = $(shell pwd)
 
 # Local/Makefile has been patched to use these:
 CSW_CC = $($(GARCOMPILER)_CC)
-CSW_OPT = $($(GARCOMPILER)_CC_OPT)
+CSW_OPT = $(CFLAGS)
 CSW_WORKSRC = $(PWD)/$(WORKSRC)
 export CSW_CC CSW_OPT CSW_WORKSRC
 
