@@ -19,6 +19,9 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSWexim.postinstall CSWexim.postremove CSWexim.preremove
 DISTFILES += CSWexim.request CSWexim.checkinstall
 
+# NOTE TO FUTURE MAINTAINERS:
+# This patch should be thoroughly reviewed for each update so as not to
+# miss any new config options of interest...
 PATCHFILES += 0003-Set-OpenCSW-build-options.patch
 PATCHFILES += 0004-Force-Compiler-and-a-few-compilation-options.patch
 
