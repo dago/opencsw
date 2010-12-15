@@ -95,12 +95,10 @@ post-install-modulated:
 			mv "$$i" "$$i.CSW";	\
 		fi \
 	done)
-	files/create_rc.d.sh $(DESTDIR)
+	(cd $(DESTDIR)/opt/csw; mkdir -p etc/init.d; \
+		cp $(abspath $(FILEDIR)/cswexim) etc/init.d )
 	mkdir -p $(DESTDIR)$(prefix)/var/svc/manifest/network
 	cp -p files/exim.xml  $(DESTDIR)$(prefix)/var/svc/manifest/network
-	mkdir -p $(DESTDIR)$(prefix)/lib/svc/method
-	cp -p $(DESTDIR)/etc/init.d/cswexim \
-		$(DESTDIR)$(prefix)/lib/svc/method/svc-exim
 	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
 	cp -p files/README.CSW  $(DESTDIR)$(prefix)/share/doc/exim/README.CSW
 	cp -p files/exim-env.sh $(DESTDIR)$(prefix)/etc/exim/exim-env.sh.CSW
