@@ -22,7 +22,9 @@ SPKG_SOURCEURL = http://freeradius.org/
 LICENSE = LICENSE
 GARCOMPILER = GCC4
 
-USERGROUP = $(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
+# Disable USERGROUP until we can work out a way to get PRESERVECONF to play
+# nicely with PROTOTYPE_GROUP
+#USERGROUP = $(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
 
 # Stripping libtool breaks the build in versions <=2.1.7
 #STRIP_LIBTOOL = 1
@@ -36,10 +38,12 @@ libdir     = $(abspath $(libdir_install)/$(NAME)/$(MM_LIBDIR))
 
 # Put the config in the recommended /etc/opt/csw tree
 sysconfdir = /etc$(prefix)
-raddbdir   = $(sysconfdir)/raddb
+raddbdir   = $(sysconfdir)/freeradius
 # move all of the var stuff to /var/opt/csw
 localstatedir = /var$(prefix)
 
+# This should match the variable run_dir in radiusd.conf
+radius_run_dir = $(localstatedir)/run/radius
 
 ## Configuration directory
 PRESERVECONF += $(raddbdir)/.*\.conf
@@ -195,6 +199,20 @@ INSTALL_ARGS += R=$(DESTDIR)
 
 INITSMF = /etc/opt/csw/init.d/cswfreeradius
 
+# Fix permissions on the radiusd rundir (disabled for now)
+#PROTOTYPE_MODIFIERS += rundir
+#PROTOTYPE_FILES_rundir = $(radius_run_dir)
+#PROTOTYPE_USER_rundir = radius
+#PROTOTYPE_GROUP_rundir = radius
+#PROTOTYPE_CLASS_rundir = ugfiles
+
+# Fix permissions on the configuration directory
+#PROTOTYPE_MODIFIERS += raddb
+#PROTOTYPE_FILES_raddb = $(raddbdir)
+#PROTOTYPE_FILES_raddb += $(raddbdir)/.*
+#PROTOTYPE_USER_raddb = radius
+#PROTOTYPE_GROUP_raddb = radius
+
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
@@ -208,13 +226,22 @@ post-install-modulated:
 
 	# Copy self-signed sample cert
 	@echo "Installing sample certificate files..."
-	ginstall -m 600 $(FILEDIR)/ca.pem $(DESTDIR)/$(raddbdir)/certs/
-	ginstall -m 600 $(FILEDIR)/server.pem $(DESTDIR)/$(raddbdir)/certs/
+	ginstall -m 640 $(FILEDIR)/ca.pem $(DESTDIR)/$(raddbdir)/certs/
+	ginstall -m 640 $(FILEDIR)/server.pem $(DESTDIR)/$(raddbdir)/certs/
 
-	# Copy cswusergroup
-	@echo "Installing cswusergroup support file..."
-	ginstall -D $(FILEDIR)/cswusergroup \
-	  $(DESTDIR)$(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
+	# Copy cswusergroup - disabled, see comments near USERGROUP line
+	#@echo "Installing cswusergroup support file..."
+	#ginstall -D $(FILEDIR)/cswusergroup \
+	#  $(DESTDIR)$(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
+
+	# Create PID dir
+	@echo "Creating PID file directory"
+	ginstall -D $(DESTDIR)$(radius_run_dir)
+
+	# Relax the permissions on the dictionary file since it contains no 
+	# secrets and radclient needs it
+	@echo "Relaxing permissions on dictionary file"
+	chmod 644 $(DESTDIR)$(raddbdir)/dictionary
 
 	# Set the Make cookie
 	@$(MAKECOOKIE)
