@@ -406,17 +406,17 @@ def main():
     importer.ImportFromFile(infile_fd, show_progress=True)
   elif (command, subcommand) == ('pkg', 'search'):
     logging.debug("Searching for %s", args)
-    if len(args) != 1:
+    if len(args) < 1:
       logging.fatal("Wrong number of arguments: %s", len(args))
       raise SystemExit
-    catalogname = args[0]
-    res = m.Srv4FileStats.select(
-        sqlobject.AND(
-          m.Srv4FileStats.q.catalogname.contains(catalogname),
-          m.Srv4FileStats.q.use_to_generate_catalogs==True)
-        ).orderBy("catalogname")
-    for sqo_srv4 in res:
-      print "%s %s" % (sqo_srv4.basename, sqo_srv4.md5_sum)
+    for catalogname in args:
+      res = m.Srv4FileStats.select(
+          sqlobject.AND(
+            m.Srv4FileStats.q.catalogname.contains(catalogname),
+            m.Srv4FileStats.q.use_to_generate_catalogs==True)
+          ).orderBy("catalogname")
+      for sqo_srv4 in res:
+        print "%s %s" % (sqo_srv4.basename, sqo_srv4.md5_sum)
   elif command == 'sync-cat-from-file':
     if len(args) != 4:
       raise UsageError("Wrong number of arguments, see usage.")
