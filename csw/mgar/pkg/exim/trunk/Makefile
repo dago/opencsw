@@ -70,6 +70,9 @@ UGPATH=/etc/opt/csw/pkg/CSWexim
 UGENTRY = exim:exim:CSW Exim User:/var/opt/csw/spool/exim:/bin/false:::NP
 USERGROUP = $(UGPATH)/cswusergroup
 
+CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzipextras
+CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzip
+
 include gar/category.mk
 
 pre-patch-modulated:
