@@ -266,7 +266,7 @@ def ArchByString(s):
       return common_constants.ARCH_ALL
     else:
       raise ArchitectureError(
-          "Cannot map architecture %s to a constant." % s)
+          "Cannot map architecture %s to a constant." % repr(s))
 
 
 def GetIsalist(str_arch):
