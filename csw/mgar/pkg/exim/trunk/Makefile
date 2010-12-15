@@ -85,7 +85,7 @@ DOC_LIST += pcretest.txt spec.txt
 
 post-install-modulated:
 	(cd $(DESTDIR)$(prefix)/sbin; \
-	mv exim-$(VERSION) exim; \
+	mv exim-$(VERSION)-1 exim; \
 	/usr/ccs/bin/strip $(BINS); \
 	/usr/ccs/bin/mcs -d $(BINS))
 	(cd $(DESTDIR)$(prefix)/etc/exim; \
