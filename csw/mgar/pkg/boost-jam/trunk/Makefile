@@ -31,7 +31,7 @@ include gar/category.mk
 
 build-bjam:
 	( cd $(WORKSRC) && \
-		$(BUILD_ENV) ./build.sh $(TOOLSE))
+		$(BUILD_ENV) ./build.sh $(TOOLSET))
 	@$(MAKECOOKIE)
 
 install-bjam:
