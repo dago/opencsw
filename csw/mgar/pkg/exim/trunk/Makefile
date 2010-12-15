@@ -38,7 +38,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
-INITSMF = /opt/csw/etc/init.d/cswexim
+INITSMF = /etc/opt/csw/init.d/cswexim
 
 # scripts/exim_install has been patched to use this variable
 EXIM_VERSION = $(VERSION)
@@ -101,8 +101,8 @@ post-install-modulated:
 			mv "$$i" "$$i.CSW";	\
 		fi \
 	done)
-	(cd $(DESTDIR)/opt/csw; mkdir -p etc/init.d; \
-		cp $(abspath $(FILEDIR)/cswexim) etc/init.d )
+	(cd $(DESTDIR); mkdir -p etc/opt/csw/init.d; \
+		cp $(abspath $(FILEDIR)/cswexim) etc/opt/csw/init.d )
 	mkdir -p $(DESTDIR)$(prefix)/var/svc/manifest/network
 	cp -p files/exim.xml  $(DESTDIR)$(prefix)/var/svc/manifest/network
 	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
