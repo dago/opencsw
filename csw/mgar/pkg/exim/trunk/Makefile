@@ -35,6 +35,8 @@ RUNTIME_DEP_PKGS_CSWexim += CSWpcrert
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
+# They supply the GPL in a non-standard file.
+LICENSE = LICENCE
 
 LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
