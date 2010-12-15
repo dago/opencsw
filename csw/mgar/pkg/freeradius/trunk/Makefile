@@ -12,6 +12,7 @@ DISTFILES  = $(NAME)-server-$(VERSION).tar.gz
 DISTFILES += cswfreeradius
 DISTFILES += server.pem
 DISTFILES += ca.pem
+DISTFILES += cswusergroup
 DISTNAME = $(NAME)-server-$(VERSION)
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -20,6 +21,8 @@ SPKG_SOURCEURL = http://freeradius.org/
 
 LICENSE = LICENSE
 GARCOMPILER = GCC4
+
+USERGROUP = $(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
 
 # Stripping libtool breaks the build in versions <=2.1.7
 #STRIP_LIBTOOL = 1
@@ -199,13 +202,19 @@ PATH := /opt/csw/gnu:$(PATH)
 post-install-modulated:
 	### Copy init script
 	@echo "Installing init script..."
-	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall $(WORKDIR)/cswfreeradius $(DESTDIR)/etc/opt/csw/init.d/cswfreeradius
+	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	ginstall $(WORKDIR)/cswfreeradius \
+	  $(DESTDIR)/etc/opt/csw/init.d/cswfreeradius
 
 	# Copy self-signed sample cert
 	@echo "Installing sample certificate files..."
-	@ginstall -m 600 $(WORKDIR)/ca.pem $(DESTDIR)/$(raddbdir)/certs/
-	@ginstall -m 600 $(WORKDIR)/server.pem $(DESTDIR)/$(raddbdir)/certs/
+	ginstall -m 600 $(FILEDIR)/ca.pem $(DESTDIR)/$(raddbdir)/certs/
+	ginstall -m 600 $(FILEDIR)/server.pem $(DESTDIR)/$(raddbdir)/certs/
+
+	# Copy cswusergroup
+	@echo "Installing cswusergroup support file..."
+	ginstall -D $(FILEDIR)/cswusergroup \
+	  $(DESTDIR)$(sysconfdir)/pkg/CSW$(NAME)/cswusergroup
 
 	# Set the Make cookie
 	@$(MAKECOOKIE)
