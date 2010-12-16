@@ -126,7 +126,6 @@ PKGFILES_CSWcupsd += $(sysconfdir)/cups/ppd.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/snmp.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/ssl.*
 PKGFILES_CSWcupsd += $(sysconfdir)/init\.d/.*
-PKGFILES_CSWcupsd += $(sysconfdir)/rc.*
 RUNTIME_DEP_PKGS_CSWcupsd += CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupscgi1
@@ -138,6 +137,7 @@ RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus
 RUNTIME_DEP_PKGS_CSWcupsd += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWcupsd += CSWosslrt
 RUNTIME_DEP_PKGS_CSWcupsd += CSWzlib
+EXTRA_MERGE_EXCLUDE_FILES +=  $(sysconfdir)/rc.*
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 SAMPLECONF_CSWcupsd       = $(sysconfdir)/cups/cupsd\.conf\.CSW
