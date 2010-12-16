@@ -4,6 +4,7 @@ import checkpkg
 import os.path
 import re
 import ldd_emul
+import sharedlib_utils
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -254,3 +255,34 @@ def MissingDepsFromReasonGroups(reason_groups, declared_deps_set):
     if not dependency_fulfilled:
       missing_dep_groups.append(pkgnames)
   return missing_dep_groups
+
+def SuggestLibraryPackage(error_mgr, messenger,
+    pkgname, catalogname,
+    description,
+    lib_path, lib_basename, soname):
+  escaped_soname = sharedlib_utils.EscapeRegex(soname)
+  escaped_basename = sharedlib_utils.EscapeRegex(lib_basename)
+  messenger.SuggestGarLine("# The following lines define a new package: "
+                           "%s" % pkgname)
+  messenger.SuggestGarLine("PACKAGES += %s" % pkgname)
+  messenger.SuggestGarLine(
+      "CATALOGNAME_%s = %s"
+      % (pkgname, catalogname))
+  # The exact library file (which can be different from what soname suggests)
+  messenger.SuggestGarLine(
+      r'PKGFILES_%s += '
+      r'$(call baseisadirs,$(libdir),%s)'
+      % (pkgname, escaped_basename))
+  # Name regex based on the soname, plus potential symlinks
+  messenger.SuggestGarLine(
+      r'PKGFILES_%s += '
+      r'$(call baseisadirs,$(libdir),%s(\.\d+)*)'
+      % (pkgname, escaped_soname))
+  messenger.SuggestGarLine(
+      "SPKG_DESC_%s += %s, %s"
+      % (pkgname, description, soname))
+  messenger.SuggestGarLine(
+      "RUNTIME_DEP_PKGS_%s += %s"
+      % (pkgname, pkgname))
+  messenger.SuggestGarLine(
+      "# The end of %s definition" % pkgname)

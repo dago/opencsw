@@ -1083,28 +1083,13 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         lib_path, lib_basename = os.path.split(binary_info["path"])
         tmp = su.MakePackageNameBySoname(soname)
         policy_pkgname_list, policy_catalogname_list = tmp
-        messenger.SuggestGarLine("# The following lines define a new package: "
-                                 "%s" % policy_pkgname_list[0])
-        messenger.SuggestGarLine("PACKAGES += %s" % policy_pkgname_list[0])
-        messenger.SuggestGarLine(
-            "CATALOGNAME_%s = %s"
-            % (policy_pkgname_list[0], policy_catalogname_list[0]))
-        messenger.SuggestGarLine(
-            "PKGFILES_%s += /%s"
-            % (policy_pkgname_list[0], os.path.join(lib_path, lib_basename)))
-        messenger.SuggestGarLine(
-            "PKGFILES_%s += /%s\.[0-9\.]+"
-            % (policy_pkgname_list[0], os.path.join(lib_path, soname)))
         pkginfo = pkg_data["pkginfo"]
         description = " ".join(pkginfo["NAME"].split(" ")[2:])
-        messenger.SuggestGarLine(
-            "SPKG_DESC_%s += %s, %s"
-            % (policy_pkgname_list[0], description, soname))
-        messenger.SuggestGarLine(
-            "RUNTIME_DEP_PKGS_%s += %s"
-            % (pkgname, policy_pkgname_list[0]))
-        messenger.SuggestGarLine(
-            "# The end of %s definition" % policy_pkgname_list[0])
+        depchecks.SuggestLibraryPackage(error_mgr, messenger,
+          policy_pkgname_list[0],
+          policy_catalogname_list[0],
+          description,
+          lib_path, lib_basename, soname)
 
       check_names = False
     else:
@@ -1137,17 +1122,17 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
             % (binary_info["path"],
                soname, pkgname,
                ",".join(policy_pkgname_list)))
+
         suggested_pkgname = policy_pkgname_list[0]
-        messenger.SuggestGarLine(
-            "PACKAGES += %s" % suggested_pkgname)
-        messenger.SuggestGarLine(
-            "CATALOGNAME_%s = %s"
-            % (suggested_pkgname, policy_catalogname_list[0]))
-        messenger.SuggestGarLine(
-            "PKGFILES_%s += /%s" % (suggested_pkgname, binary_info["path"]))
-        lib_basename, lib_filename = os.path.split(binary_info["path"])
-        messenger.SuggestGarLine(
-            "PKGFILES_%s += /%s/%s.*" % (suggested_pkgname, lib_basename, soname))
+        lib_path, lib_basename = os.path.split(binary_info["path"])
+        pkginfo = pkg_data["pkginfo"]
+        description = " ".join(pkginfo["NAME"].split(" ")[2:])
+        depchecks.SuggestLibraryPackage(error_mgr, messenger,
+          suggested_pkgname,
+          policy_catalogname_list[0],
+          description,
+          lib_path, lib_basename, soname)
+
         messenger.OneTimeMessage(
             soname,
             "This shared library (%s) is in a directory indicating that it "

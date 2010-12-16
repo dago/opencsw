@@ -272,3 +272,9 @@ def ArchByString(s):
 def GetIsalist(str_arch):
   arch = ArchByString(str_arch)
   return common_constants.ISALISTS_BY_ARCH[arch]
+
+
+def EscapeRegex(s):
+  """Needs to be improved to escape more characters."""
+  s = s.replace(r'.', r'\.')
+  return s
