@@ -111,17 +111,21 @@ class DatabaseManager(object):
     logging.debug("VerifyContents(%s, %s): %s", sqo_osrel, sqo_arch, system_pkgs)
     if system_pkgs < 10:
       raise DatabaseError(
-          "Your database does not have information about "
-          "system files for %s %s.  "
-          "If you don't have a central database, "
+          "Checkpkg can't find system files for %s %s in the cache database.  "
+          "These are files such as /usr/lib/libc.so.1.  "
+          "Private DB setup: "
           "you can only check packages built for the same Solaris version "
           "you're running on this machine.  "
           "For instance, you can't check a SunOS5.9 package on SunOS5.10. "
-          "OpenCSW maintainers: "
+          "Shared DB setup (e.g. OpenCSW maintainers): "
           "If you have one home directory on multiple hosts, make sure you "
-          "run checkpkg on the host you intended to. "
+          "run checkpkg on the host you intended to.  "
+          "To fix, go to a %s %s host and execute: pkgdb system-files-to-file; "
+          "pkgdb import-system-file install-contents-%s-%s.pickle; "
           "See http://wiki.opencsw.org/checkpkg for more information."
-          % (sqo_osrel.short_name, sqo_arch.name))
+          % (sqo_osrel.short_name, sqo_arch.name,
+             sqo_arch.name, sqo_osrel.short_name,
+             sqo_osrel.short_name, sqo_arch.name))
 
 
 class CheckpkgDatabaseMixin(object):
