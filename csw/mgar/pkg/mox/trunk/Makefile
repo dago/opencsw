@@ -3,9 +3,9 @@
 # $Id$
 
 NAME = mox
-VERSION = 0.5.0
+VERSION = 0.5.3
 CATEGORIES = python
-DESCRIPTION = a mock object framework for Python
+DESCRIPTION = Mock object framework for Python
 ARCHALL = 1
 define BLURB
 endef
