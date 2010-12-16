@@ -354,5 +354,47 @@ class TestLibraries(unittest.TestCase):
        "e.g. '/opt/csw/apache2/bin/foo'")]]
     self.assertEqual(expected, result)
 
+
+class SuggestLibraryPackage(mox.MoxTestBase):
+
+  def testBasic(self):
+    error_mgr_mock = self.mox.CreateMock(
+        checkpkg_lib.IndividualCheckInterface)
+    messenger_mock = self.mox.CreateMock(
+        checkpkg_lib.CheckpkgMessenger)
+    pkgname = "CSWfoo-bar"
+    catalogname = "foo_bar"
+    description = "A foo bar package"
+    # TODO: What if the path is different?
+    lib_path = "opt/csw/lib"
+    lib_basename = "libfoo.so.1.2.3"
+    lib_soname = "libfoo.so.1"
+    messenger_mock.SuggestGarLine(
+        r'# The following lines define a new package: CSWfoo-bar')
+    messenger_mock.SuggestGarLine(
+        r'PACKAGES += CSWfoo-bar')
+    messenger_mock.SuggestGarLine(
+        r'CATALOGNAME_CSWfoo-bar = foo_bar')
+    messenger_mock.SuggestGarLine(
+        r'PKGFILES_CSWfoo-bar += '
+        r'$(call baseisadirs,$(libdir),libfoo\.so\.1\.2\.3)')
+    messenger_mock.SuggestGarLine(
+        r'PKGFILES_CSWfoo-bar += '
+        r'$(call baseisadirs,$(libdir),libfoo\.so\.1(\.\d+)*)')
+    messenger_mock.SuggestGarLine(
+        'SPKG_DESC_CSWfoo-bar += A foo bar package, libfoo.so.1')
+    messenger_mock.SuggestGarLine(
+        r'RUNTIME_DEP_PKGS_CSWfoo-bar += CSWfoo-bar')
+    messenger_mock.SuggestGarLine(
+        r'# The end of CSWfoo-bar definition')
+    self.mox.ReplayAll()
+    dependency_checks.SuggestLibraryPackage(
+        error_mgr_mock,
+        messenger_mock,
+        pkgname, catalogname,
+        description,
+        lib_path, lib_basename, lib_soname)
+
+
 if __name__ == '__main__':
   unittest.main()
