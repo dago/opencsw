@@ -48,6 +48,9 @@ _CATEGORY_CHECKPKG_OVERRIDES = surplus-dependency
 # upstream chose uppercase or not as case must match.
 _CATEGORY_CHECKPKG_OVERRIDES += pkginfo-description-not-starting-with-uppercase
 
+# Copy in META.yml if it exists so checkpkg can check Perl dependencies
+_CATEGORY_FILTER = | ( cat; if test -f "$(WORKDIR_GLOBAL)/META.yml";then echo "i cswpm-meta.yml=META.yml"; fi)
+
 include gar/gar.mk
 
 CONFIGURE_ENV += PERL5LIB=$(PERL5LIB)
@@ -88,6 +91,9 @@ install-%/Build:
 	@echo " ==> Running Build install in $*"
 	( cd $* ; $(INSTALL_ENV) ./Build install $(PERLBUILD_INSTALL_ARGS) )
 	@$(MAKECOOKIE)
+
+pre-package:
+	test -f $(WORKSRC_FIRSTMOD)/META.yml && cp $(WORKSRC_FIRSTMOD)/META.yml $(WORKDIR_GLOBAL)
 
 # Check for a CPAN module version update
 update-check:
