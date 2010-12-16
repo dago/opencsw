@@ -176,6 +176,9 @@ def ByDirectory(pkg_data, error_mgr, logger, messenger,
   1. For each directory
     1.1. Find the parent
     1.2. Add the parent to the list of packages to depend on.
+
+  This check is currently disabled, because of false positives that it
+  generates.
   """
   pkgname = pkg_data["basic_stats"]["pkgname"]
   req_pkgs_reasons = []
