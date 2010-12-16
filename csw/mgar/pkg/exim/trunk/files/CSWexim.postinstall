@@ -9,50 +9,19 @@ is_usr_readonly()
   mount | grep '^/usr ' | grep 'read only' >/dev/null
 }
 
-class=smfno
-test -f $PKG_INSTALL_ROOT/usr/sbin/svccfg -a -f $PKG_INSTALL_ROOT/usr/sbin/svcadm && class=smfyes
-
-enable_exim=1
-test -r $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf && \
-  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
-test -r $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf && \
-  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
-    
-if [ "$autoenable_daemons" = "no" -o "$autoenable_exim" = "no" ]; then
-  enable_exim=0
-fi
-        
-# stop exim, but ONLY if we are doing a "direct"
-# install, rather than a jumpstart install or something.
-case "$PKG_ROOT_DIR" in
-  ""|"/")
-    if [ "$smf" = "yes" ]; then
-      /usr/sbin/svcadm disable -s svc:network/cswexim:default
-      /usr/sbin/svccfg delete svc:network/cswexim:default
-    else
-      test -x $PKG_INSTALL_ROOT/etc/init.d/cswexim && \
-        $PKG_INSTALL_ROOT/etc/init.d/cswexim stop
-    fi
-    ;;
-
-esac
-
 ### Set up config-file related stuff
 
-if [ "$autoenable_daemons" != "no" ]; then
-  echo ""
-  echo "Setting up config-files..."
-  for file in $CONFFILES; do
+echo ""
+echo "Setting up config-files..."
+for file in $CONFFILES; do
     confpath="$CONFDIR/$file"
     if [ -r "$confpath" ]; then
-      echo "Not touching existing $confpath"
+	echo "Not touching existing $confpath"
     else
-      echo "Copying $confpath.CSW to $confpath"
-      cp -p "$confpath.CSW" "$confpath"
+	echo "Copying $confpath.CSW to $confpath"
+	cp -p "$confpath.CSW" "$confpath"
     fi
-  done
-fi
-
+done
 echo ""
 
 is_usr_readonly
@@ -111,28 +80,6 @@ else
     chgrp bin "$NEWALIASES"
     chmod 755 "$NEWALIASES"
   fi
-fi
-
-if [ "$enable_exim" = "1" ]; then
-  case "$PKG_ROOT_DIR" in
-    ""|"/")
-      if [ "$class" = "smfno" ]; then
-        if [ -f $PKG_INSTALL_ROOT/etc/init.d/cswexim ]; then
-          $PKG_INSTALL_ROOT/etc/init.d/cswexim start
-        fi
-      else
-        echo "Registering Exim with SMF..."
-        /usr/sbin/svccfg import $PKG_INSTALL_ROOT/opt/csw/var/svc/manifest/network/exim.xml
-        /usr/sbin/svcadm enable svc:network/cswexim
-      fi
-    ;;
-  esac
-
-  cat <<EOF
-If you do *NOT* want to start eximd during system-boot set
-  autoenable_exim=no
-in /opt/csw/etc/csw.conf or /etc/opt/csw/csw.conf
-EOF
 fi
 
 cat <<EOF
