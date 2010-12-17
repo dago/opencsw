@@ -496,7 +496,7 @@ class InstallContentsImporter(object):
     # SUNWjhrt:j3link
     pkgname_orig = pkgname
     pkgname = pkgname.split(":")[0]
-    pkgname = pkgname.lstrip("*")
-    pkgname = pkgname.lstrip("~")
+    for c in ('*', '~', '!'):
+      pkgname = pkgname.lstrip(c)
     # logging.debug("d['pkgnames']: %s → %s", pkgname_orig, pkgname)
     return pkgname
