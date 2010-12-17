@@ -24,6 +24,8 @@ PKGMAP_LINE_5 = ("/opt/csw/gcc3/lib/gcc/sparc-sun-solaris2.8/3.4.6/include "
                  "? none CSWgcc3g77 CSWgcc3core")
 PKGMAP_LINE_6 = ("/usr/lib/libc.so.1 f none 0755 root bin 867444 58567 "
                  "1250803966 SUNWcsl")
+PKGMAP_LINE_7 = ("/opt/csw/include/mozilla/accessibility/nsAccessNode.h "
+                 "f none 0644 root bin 5557 10685 1068611657 !CSWmozilla")
 
 
 class IndexerUnitTest(unittest.TestCase):
@@ -103,6 +105,12 @@ class IndexerUnitTest(unittest.TestCase):
     	  'minor': None,
     }
     self.assertEqual(expected, spi._ParsePkgmapLine(PKGMAP_LINE_6))
+
+  def test_ParsePkgmapExclamationMark(self):
+    spi = system_pkgmap.Indexer()
+    self.assertEqual(
+        ["!CSWmozilla"],
+        spi._ParsePkgmapLine(PKGMAP_LINE_7)["pkgnames"])
 
   def test_ParsePkgmapLineTypeWrongSyntax(self):
     spi = system_pkgmap.Indexer()
