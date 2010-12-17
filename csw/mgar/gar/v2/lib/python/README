@@ -2,6 +2,17 @@ This directory contains Python libraries, mostly related to checkpkg.
 
 ==Checkpkg==
 
+Checks to implement:
+ - foo_bar != CSWfoo-bar -> error
+ - *dev(el)? -> error, suggest *-devel
+ - *-?rt -> error, suggest specific library packages
+ - empty package without 'transitional' in the name --> error, suggest
+ 	 'transitional'
+ - CSWpmfoo --> error, suggest CSWpm-foo
+ - Dependency on a transitional package --> error
+ 	 ('transitional', 'stub', 'legacy')
+
+
 Development plan for checkpkg:
 - Generalize dependency checking by adding NeedFile(file_list, reason) to
   error_mgr.  It's possible to need one of the listed files only, so files are
