@@ -1,5 +1,5 @@
 NAME = rrdtool
-VERSION = 1.4.3
+VERSION = 1.4.4
 CATEGORIES = utils
 
 DESCRIPTION = Time-series data logging and graphing
@@ -12,41 +12,53 @@ endef
 MASTER_SITES = http://oss.oetiker.ch/$(NAME)/pub/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-PATCHFILES += patch-src-Makefile.in
-PATCHFILES += patch-src-rrd_open.c
-PATCHFILES += patch-bindings-Makefile.in
+# PATCHFILES += patch-src-Makefile.in
+
+# PATCHFILES += patch-bindings-Makefile.in
+
+# Use patch until this is fixed:
+#   http://oss.oetiker.ch/rrdtool-trac/ticket/284
 PATCHFILES += patch-bindings-ruby-extconf.rb
+
+# Make sure to link against libperl.so to make shared libraries self-contained.
 PATCHFILES += patch-bindings-perl-piped-Makefile.PL
 PATCHFILES += patch-bindings-perl-shared-Makefile.PL
-
-PATCHFILES += 0001-Fix-isinf.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-# PACKAGES = CSWrrd CSWrrdrt CSWpmrrd CSWpy-rrdtool CSWrbrrd
-PACKAGES = CSWrrd
+PACKAGES = CSWrrd CSWrrdtool CSWrrdtool-devel CSWlibrrd4 CSWpm-rrdtool CSWpy-rrdtool CSWrb-rrdtool
 
-CATALOGNAME_CSWrrd = rrdtool
-CATALOGNAME_CSWrrdrt = rrdtool_rt
-CATALOGNAME_CSWpmrrd = pm_rrd
+CATALOGNAME_CSWrrd = rrd
+CATALOGNAME_CSWrrdtool = rrdtool
+CATALOGNAME_CSWrrdtool-devel = rrdtool_devel
+CATALOGNAME_CSWlibrrd4 = librrd4
+CATALOGNAME_CSWpm-rrdtool = pm_rrdtool
 CATALOGNAME_CSWpy-rrdtool = py_rrdtool
-CATALOGNAME_CSWrbrrd = rb_rrd
+CATALOGNAME_CSWrb-rrdtool = rb_rrdtool
 
-SPKG_DESC_CSWrrd = $(DESCRIPTION)
-SPKG_DESC_CSWrrdrt = Runtime libraries for RRDtool
-SPKG_DESC_CSWpmrrd = RRDs: Access RRDtool as a shared module (part of RRDtool)
+SPKG_DESC_CSWrrd = Stub package as contents now moved to CSWrrdtool
+SPKG_DESC_CSWrrdtool = $(DESCRIPTION)
+SPKG_DESC_CSWrrdtool-devel = Development Files for RRDTool
+SPKG_DESC_CSWlibrrd4 = Runtime libraries for RRDtool providing librrd_th.so.4
+SPKG_DESC_CSWpm-rrdtool = RRDs: Access RRDtool as a shared module (part of RRDtool)
 SPKG_DESC_CSWpy-rrdtool = Python egg for RRD access (part of RRDtool)
-SPKG_DESC_CSWrbrrd = Ruby binding for RRD access (part of RRDtool)
+SPKG_DESC_CSWrb-rrdtool = Ruby binding for RRD access (part of RRDtool)
 
-RUNTIME_DEP_PKGS_CSWrrd = CSWglib2 CSWpango CSWggettextrt CSWlibxml2 CSWlibcairo
-# RUNTIME_DEP_PKGS_CSWrrd += CSWrrdrt
-RUNTIME_DEP_PKGS_CSWrrdrt += CSWggettextrt CSWglib2 CSWlibcairo CSWpango CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpmrrd = CSWperl CSWrrdrt
-RUNTIME_DEP_PKGS_CSWpy-rrdtool = CSWpython CSWrrdrt
-RUNTIME_DEP_PKGS_CSWrbrrd = CSWruby CSWrrdrt
+RUNTIME_DEP_PKGS_CSWrrd = CSWrrdtool CSWpm-rrdtool CSWpy-rrdtool CSWrb-rrdtool
+RUNTIME_DEP_PKGS_CSWrrdtool = CSWglib2 CSWpango CSWggettextrt CSWlibxml2 CSWlibcairo
+RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibrrd4
+RUNTIME_DEP_PKGS_CSWrrdtool-devel = CSWlibrrd4
+RUNTIME_DEP_PKGS_CSWlibrrd4 += CSWggettextrt CSWglib2 CSWlibcairo CSWpango CSWlibxml2
+RUNTIME_DEP_PKGS_CSWpm-rrdtool += CSWperl
+RUNTIME_DEP_PKGS_CSWpm-rrdtool += CSWlibrrd4
+RUNTIME_DEP_PKGS_CSWpy-rrdtool += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-rrdtool += CSWlibrrd4
+RUNTIME_DEP_PKGS_CSWpy-rrdtool += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWrb-rrdtool += CSWlibruby1
+RUNTIME_DEP_PKGS_CSWrb-rrdtool += CSWlibrrd4
 
-BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWrrdrt)
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibrrd4)
 BUILD_DEP_PKGS += CSWpangodevel CSWlibcairodevel CSWglib2devel
 BUILD_DEP_PKGS += CSWperl
 BUILD_DEP_PKGS += CSWpython-devel
@@ -54,6 +66,8 @@ BUILD_DEP_PKGS += CSWrubydev
 
 EXTRA_INC = $(prefix)/include/cairo
 EXTRA_INC += $(prefix)/include/libxml2
+
+EXTRA_LINKER_FLAGS = -lintl
 
 BUILD64 = 1
 NOISAEXEC = 1
@@ -75,31 +89,34 @@ MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod .*/\.packlist
 EXTRA_PAX_ARGS += -s ',^\.$(docdir)/$(NAME)-$(VERSION),.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME),'
 
-PKGFILES_CSWrrdrt = $(PKGFILES_RT)
-PKGFILES_CSWpmrrd = $(libdir)/perl/.* $(sharedstatedir)/perl/.* .*\.3perl
+ARCHALL_CSWrrd = 1
+
+PKGFILES_CSWrrd = NOFILES
+PKGFILES_CSWrrdtool-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibrrd4 = $(PKGFILES_RT)
+PKGFILES_CSWpm-rrdtool += $(libdir)/perl/.*
+PKGFILES_CSWpm-rrdtool += $(sharedstatedir)/perl/.*
+PKGFILES_CSWpm-rrdtool += .*\.3perl
 PKGFILES_CSWpy-rrdtool = $(libdir)/python/.*
-PKGFILES_CSWrbrrd = $(libdir)/ruby/.*
+PKGFILES_CSWrb-rrdtool = $(libdir)/ruby/.*
 
-CHECKPKG_OVERRIDES_CSWrrd += soname-not-found
+# Make legacy package depend on all new ones
+CHECKPKG_OVERRIDES_CSWrrd += surplus-dependency|CSWpm-rrdtool
+CHECKPKG_OVERRIDES_CSWrrd += surplus-dependency|CSWpy-rrdtool
+CHECKPKG_OVERRIDES_CSWrrd += surplus-dependency|CSWrb-rrdtool
+CHECKPKG_OVERRIDES_CSWrrd += surplus-dependency|CSWrrdtool
 
-CHECKPKG_OVERRIDES_CSWrrd += missing-dependency|CSWperl
+# These is an example which requires Perl
+CHECKPKG_OVERRIDES_CSWrrdtool += missing-dependency|CSWperl
 
-CHECKPKG_OVERRIDES_CSWrbrrd += bad-rpath-entry
-CHECKPKG_OVERRIDES_CSWrbrrd += bad-rpath-entry
-
-# Take these out when the package are split again
-CHECKPKG_OVERRIDES_CSWrrd += binary-architecture-does-not-match-placement|file=opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.8/RRD.so|arch_id=18|arch_name=sparcv8+
-CHECKPKG_OVERRIDES_CSWrrd += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWrrd += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWrrd += bad-rpath-entry|/home/dam/mgar/pkg/rrdtool/branches/x11-reloaded/work/solaris9-sparc/install-isa-sparcv8/opt/csw/lib|opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.8/RRD.so
-CHECKPKG_OVERRIDES_CSWrrd += bad-rpath-entry|/home/dam/mgar/pkg/rrdtool/branches/x11-reloaded/work/solaris9-i386/install-isa-i386/opt/csw/lib|opt/csw/lib/ruby/site_ruby/1.8/i386-solaris2.8/RRD.so
-CHECKPKG_OVERRIDES_CSWrrd += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWrrd += missing-dependency|CSWpython
+# TBD:
+CHECKPKG_OVERRIDES_CSWrb-rrdtool += binary-architecture-does-not-match-placement|file=opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.9/RRD.so|arch_id=18|arch_name=sparcv8+
+CHECKPKG_OVERRIDES_CSWrb-rrdtool += bad-rpath-entry|/home/dam/mgar/pkg/rrdtool/trunk/work/solaris9-sparc/install-isa-sparcv8/opt/csw/lib|opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.9/RRD.so
 
 include gar/category.mk
 
-pre-build-modulated:
-	echo "  ==> Adding math function round()"
-	cp $(FILEDIR)/s_round.c $(WORKSRC)/src
-	cp $(FILEDIR)/s_round.h $(WORKSRC)/src
-	@$(MAKECOOKIE)
+#pre-build-modulated:
+#	echo "  ==> Adding math function round()"
+#	cp $(FILEDIR)/s_round.c $(WORKSRC)/src
+#	cp $(FILEDIR)/s_round.h $(WORKSRC)/src
+#	@$(MAKECOOKIE)
