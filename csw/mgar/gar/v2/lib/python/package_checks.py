@@ -59,13 +59,13 @@ OBSOLETE_DEPS = {
       "hint": "CSWlibcups is deprecated, please depend on specific "
               "shared library packages.",
       "url": "http://wiki.opencsw.org/packaging-shared-libraries",
-    }
+    },
     "CSWcswclassutils": {
       "hint": "CSWcswclassutils is deprecated, please depend on specific "
               "CSWcas-* packages.",
               "url": ("http://lists.opencsw.org/pipermail/maintainers/"
                       "2010-October/012862.html"),
-    }
+    },
 }
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
 EMAIL_RE = re.compile(r"^.*@opencsw.org$")
