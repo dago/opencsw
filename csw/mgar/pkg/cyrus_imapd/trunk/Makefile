@@ -55,7 +55,7 @@ PKGFILES_CSWcyrusimapd += $(libexecdir)/cyrus.*
 PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus/imapd.conf.CSW
 PKGFILES_CSWcyrusimapd += $(sysconfdir)/cyrus/cyrus.conf.CSW
 PKGFILES_CSWcyrusimapd += /etc$(prefix)/init.d/cswcyrus
-PKGFILES_CSWcyrusimapd += /var/$(prefix)/svc/manifest/network/cswcyrus.xml
+PKGFILES_CSWcyrusimapd += /var$(prefix)/svc/manifest/network/cswcyrus\.xml
 PKGFILES_CSWcyrusimapd += $(localstatedir)/cyrus.*
 
 PROTOTYPE_MODIFIERS = cyrusdir
@@ -101,7 +101,11 @@ DISTFILES += cyrus_imapd_utils.changelog.CSW
 DISTFILES += pm_cyrus.changelog.CSW
 
 # We move from /opt/csw/{etc,var} to /{etc,var}/opt/csw
-MIGRATE_FILES_CSWcyrusimapd = cyrus
+MIGRATE_FILES_CSWcyrusimapd = cyrus.conf imapd.conf
+MIGRATE_SOURCE_DIR = $(prefix)/etc/cyrus
+MIGRATE_DEST_DIR = $(sysconfdir)/cyrus
+
+
 
 # compile_et is not provided by krb5lib_dev so we must provide our own version
 # taken from the krb5 source.
@@ -264,6 +268,6 @@ post-merge:
 	# let's remove pod files
 	gfind $(PKGROOT)$(perllib) -name "perllocal.pod" -exec rm '{}' ';'
 	# and CVS directories
-	 gfind $(PKGROOT) -type d -depth -name "CVS" -exec rm -rf '{}' ';'
+	 gfind $(PKGROOT) -depth -type d -name "CVS" -exec rm -rf '{}' ';'
 	
 	@$(MAKECOOKIE)

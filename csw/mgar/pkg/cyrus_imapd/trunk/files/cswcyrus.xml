@@ -45,7 +45,7 @@ Modified for CSWcyrusimapd by Yann Rouillard 07/06
 				restart_on='refresh'
 				type='path'>
 				<service_fmri
-					value='file://localhost/opt/csw/etc/cyrus/cyrus.conf' />
+					value='file://localhost/etc/opt/csw/cyrus/cyrus.conf' />
 			</dependency>
 
 			<dependent
