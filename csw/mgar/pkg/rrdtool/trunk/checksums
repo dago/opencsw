@@ -1,8 +1,1 @@
-04c50cb4ab2c34aebf0413130776bfdd  0001-Fix-isinf.patch
-c6bc2f9c3d88e0488f0332a9d288dc39  patch-bindings-Makefile.in
-0d068a4648f3a52c79c00374fa0ef486  patch-bindings-perl-piped-Makefile.PL
-4fd31144a5e2799db7440d97430d3ab6  patch-bindings-perl-shared-Makefile.PL
-072482090287b462c8c092b2ead132da  patch-bindings-ruby-extconf.rb
-20e58c7facf2687037288c157c32df1a  patch-src-Makefile.in
-47709778545eec2e8c5c3b38f9c94fcd  patch-src-rrd_open.c
-492cf946c72f85987238faa2c311b7bb  rrdtool-1.4.3.tar.gz
+93ad2fc2e9ddcd7d99c611fe30284a54  rrdtool-1.4.4.tar.gz
