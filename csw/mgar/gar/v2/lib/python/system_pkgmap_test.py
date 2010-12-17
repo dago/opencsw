@@ -89,20 +89,20 @@ class IndexerUnitTest(unittest.TestCase):
     """A question mark is not a valid type, but we have to cope with it."""
     spi = system_pkgmap.Indexer()
     expected = {
-    	  'modtime': '1250803966',
-    	  'major': None,
-    	  'pkgnames': ['SUNWcsl'],
-    	  'cksum': '58567',
-    	  'owner': 'root',
-    	  'path': '/usr/lib/libc.so.1',
-    	  'line': '/usr/lib/libc.so.1 f none 0755 root bin 867444 58567 1250803966 SUNWcsl',
-    	  'class': 'none',
-    	  'size': '867444',
-    	  'group': 'bin',
-    	  'target': None,
-    	  'mode': '0755',
-    	  'type': 'f',
-    	  'minor': None,
+        'modtime': '1250803966',
+        'major': None,
+        'pkgnames': ['SUNWcsl'],
+        'cksum': '58567',
+        'owner': 'root',
+        'path': '/usr/lib/libc.so.1',
+        'line': '/usr/lib/libc.so.1 f none 0755 root bin 867444 58567 1250803966 SUNWcsl',
+        'class': 'none',
+        'size': '867444',
+        'group': 'bin',
+        'target': None,
+        'mode': '0755',
+        'type': 'f',
+        'minor': None,
     }
     self.assertEqual(expected, spi._ParsePkgmapLine(PKGMAP_LINE_6))
 
