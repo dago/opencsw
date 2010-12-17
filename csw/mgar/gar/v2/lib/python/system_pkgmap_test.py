@@ -288,6 +288,12 @@ class InstallContentsImporterUnitTest(test_base.SqlObjectTestMixin,
         "SUNWjai",
         importer.SanitizeInstallContentsPkgname("SUNWjai:j5link"))
 
+  def testSanitizeInstallContentsPkgnameInstallError(self):
+    importer = system_pkgmap.InstallContentsImporter()
+    self.assertEquals(
+        "CSWmozilla",
+        importer.SanitizeInstallContentsPkgname("!CSWmozilla"))
+
 
 if __name__ == '__main__':
   logging.basicConfig(level=logging.CRITICAL)
