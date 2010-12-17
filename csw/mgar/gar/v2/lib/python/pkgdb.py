@@ -44,6 +44,7 @@ USAGE = """
        %prog show pkg <pkgname> [ ... ]
        %prog gen-html <md5sum> [ ... ]
        %prog pkg search <catalogname>
+       %prog show basename [options] <filename>
 
 
 Examples:
@@ -294,6 +295,15 @@ def main():
                     help="Turn on debugging messages")
   parser.add_option("-t", "--pkg-review-template", dest="pkg_review_template",
                     help="A Cheetah template used for package review reports.")
+  parser.add_option("-r", "--os-release", dest="osrel",
+                    default="SunOS5.9",
+                    help="E.g. SunOS5.9")
+  parser.add_option("-a", "--arch", dest="arch",
+                    default="sparc",
+                    help="'i386' or 'sparc'")
+  parser.add_option("-c", "--catalog-release", dest="catrel",
+                    default="current",
+                    help="E.g. current, unstable, testing, stable")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -429,6 +439,13 @@ def main():
     ci = CatalogImporter(debug=options.debug)
     catrel, base_dir = args
     ci.SyncFromCatalogTree(catrel, base_dir)
+  elif (command, subcommand) == ('show', 'basename'):
+    db_catalog = checkpkg_lib.Catalog()
+    for arg in args:
+      pkgs_by_path = db_catalog.GetPathsAndPkgnamesByBasename(
+          arg, options.osrel, options.arch, options.catrel)
+      for file_path in pkgs_by_path:
+        print os.path.join(file_path, arg), ", ".join(pkgs_by_path[file_path])
   else:
     raise UsageError("Command unrecognized: %s" % command)
 
