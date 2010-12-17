@@ -21,24 +21,29 @@ DISTVERSION = $(subst .,_,$(VERSION))
 DISTNAME = $(NAME)_$(DISTVERSION)
 DISTFILES  = $(DISTNAME).tar.bz2
 
+# Known problems:
+# https://svn.boost.org/trac/boost/ticket/4757
+# Proposed fix:
+# https://svn.boost.org/trac/boost/changeset/66651
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=7586
 UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 # GARCOMPILER = GNU
-TOOLSET = sunpro
+TOOLSET = sun
 COMPILER_SUFFIX_PKG =
 COMPILER_SUFFIX_CAT =
 
 PACKAGES += CSWboost$(COMPILER_SUFFIX_PKG)
-CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG) += boost
+CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG) += boost$(COMPILER_SUFFIX_CAT)
 SPKG_DESC_CSWboost$(COMPILER_SUFFIX_PKG) = Boost libraries
 # The boost build system is hard to harness.
 CHECKPKG_OVERRIDES_CSWboost$(COMPILER_SUFFIX_PKG) += bad-rpath-entry
 
 PACKAGES += CSWboost$(COMPILER_SUFFIX_PKG)devel
-CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG)devel = boost_devel
+CATALOGNAME_CSWboost$(COMPILER_SUFFIX_PKG)devel = boost$(COMPILER_SUFFIX_CAT)_devel
 SPKG_DESC_CSWboost$(COMPILER_SUFFIX_PKG)devel = Boost libraries, development files
 PKGFILES_CSWboost$(COMPILER_SUFFIX_PKG)devel = $(PKGFILES_DEVEL)
 
@@ -52,9 +57,10 @@ ARCHALL_CSWboostrt = 1
 LICENSE = LICENSE_1_0.txt
 
 BUILD_DEP_PKGS += CSWstar
+BUILD_DEP_PKGS += CSWboost-jam
 
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = bjam
+CONFIGURE_SCRIPTS = boost
+BUILD_SCRIPTS = boost
 INSTALL_SCRIPTS = bjam
 
 BUILD_ARGS += toolset=$(TOOLSET)
@@ -65,6 +71,8 @@ BUILD_ARGS += cxxflags="$(CXXFLAGS)"
 BUILD_ARGS += linkflags="$(LDFLAGS) $(LD_OPTIONS)"
 # Stop on the first error
 BUILD_ARGS += -q
+# Display commands as you run them, I want to know what you are doing there
+BUILD_ARGS += -d+2
 
 TEST_SCRIPTS =
 
@@ -91,25 +99,20 @@ tar-bz-extract-%:
 	/opt/csw/bin/star -bz -x -C $(EXTRACTDIR) -f $(DOWNLOADDIR)/$*
 	@$(MAKECOOKIE)
 
-pre-configure-modulated:
-	( cd $(WORKSRC)/tools/jam/src && \
-	  ./build.sh $(TOOLSET) && \
-	  mkdir -p $(DESTDIR)$(bindir) && \
-	  cp bin.$(JAMDIR)/bjam $(DESTDIR)$(bindir) )
+configure-boost:
+	cd $(WORKSRC) && ./bootstrap.sh
 	@$(MAKECOOKIE)
 
-build-bjam:
+build-boost:
 	cd $(WORKSRC) && \
-		$(DESTDIR)$(bindir)/bjam \
-		  -d+2 \
+		./bjam \
 			$(BJAM_PARALLELMFLAGS) \
 			$(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 install-bjam:
 	cd $(WORKSRC) && \
-		$(DESTDIR)$(bindir)/bjam \
-		  -d+2 \
+		./bjam \
 			$(BJAM_PARALLELMFLAGS) \
 			$(BUILD_ARGS) \
 			install
