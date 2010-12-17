@@ -23,10 +23,10 @@ DISTFILES += cswopenldap openldap.xml
 EXPANDVARS = cswopenldap
 EXPANDVARS += CSWoldap.postinstall
 
-PATCHFILES_isa-sparcv8-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-sparcv9-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-i386-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-amd64-garversion-2.4.23 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv8-version-2.4.23 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv9-version-2.4.23 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-i386-version-2.4.23 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-amd64-version-2.4.23 = patch-oldap-2.4.16-ntlm.diff
 PATCHFILES += patch-libtool-64bit.diff
 DISTFILES += patch-oldap-2.4.16-ntlm.diff
 
@@ -52,7 +52,8 @@ SPKG_DESC_CSWoldapclient = OpenLDAP client executables
 SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
 SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
 
-RUNTIME_DEP_PKGS_CSWoldap  = CSWbdb48 CSWlibnet CSWlibtoolrt 
+RUNTIME_DEP_PKGS_CSWoldap  = CSWbdb48 CSWlibnet
+RUNTIME_DEP_PKGS_CSWoldap += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWoldap += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc
 RUNTIME_DEP_PKGS_CSWoldap += CSWlibicu CSWperl
 RUNTIME_DEP_PKGS_CSWoldap += CSWoldaprt
@@ -68,15 +69,15 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 EXTRA_DOCS = README.CSW $(PATCHFILES) openldaprc
 
 # This is old, stick to BerkeleyDB 4.4
-EXTRA_LIB_garversion-2.3.43 = $(prefix)/bdb44/lib 
-EXTRA_INC_garversion-2.3.43 = $(prefix)/bdb44/include
+EXTRA_LIB_version-2.3.43 = $(prefix)/bdb44/lib 
+EXTRA_INC_version-2.3.43 = $(prefix)/bdb44/include
 
 # This is also used during EXPANDVARS
 bdbdir = $(prefix)/bdb48
-EXTRA_LIB_garversion-2.4.23 = $(bdbdir)/lib 
-EXTRA_INC_garversion-2.4.23 = $(bdbdir)/include
-EXTRA_LIB = $(EXTRA_LIB_garversion-$(VERSION))
-EXTRA_INC = $(EXTRA_INC_garversion-$(VERSION))
+EXTRA_LIB_version-2.4.23 = $(bdbdir)/lib 
+EXTRA_INC_version-2.4.23 = $(bdbdir)/include
+EXTRA_LIB = $(EXTRA_LIB_version-$(VERSION))
+EXTRA_INC = $(EXTRA_INC_version-$(VERSION))
 
 # Not released yet.
 #EXTRA_LDFLAGS = -L$(libdir)/libnet-new
@@ -131,24 +132,24 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 SKIPTEST ?= 1
 TEST_TARGET = check
 
-MERGE_SCRIPTS_isa-default-garversion-2.3.43 = copy-only
-MERGE_DIRS_isa-default-garversion-2.3.43 = $(libdir)
-MERGE_SCRIPTS_isa-default64-garversion-2.3.43 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-2.3.43 = $(libdir)
+MERGE_SCRIPTS_isa-default-version-2.3.43 = copy-only
+MERGE_DIRS_isa-default-version-2.3.43 = $(libdir)
+MERGE_SCRIPTS_isa-default64-version-2.3.43 = copy-relocated-only
+MERGE_DIRS_isa-default64-version-2.3.43 = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-2.4.23 = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-2.4.23 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-2.4.23 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-version-2.4.23 = copy-all
+MERGE_SCRIPTS_isa-default64-version-2.4.23 = copy-relocated-only
+MERGE_DIRS_isa-default64-version-2.4.23 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 # Perl backend is built, although it has been told not to.
 EXTRA_PAX_ARGS = -s,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
 EXTRA_PAX_ARGS = -s,.*/opt/csw/libexec/amd64/openldap/back_perl.*,,
 
 # Make sure we do not use the 2.3 .so-links in any case
-EXTRA_MERGE_EXCLUDE_FILES_isa-i386-garversion-2.3.43 = .*\.so
-EXTRA_MERGE_EXCLUDE_FILES_isa-amd64-garversion-2.3.43 = .*\.so
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-2.3.43 = .*\.so
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9-garversion-2.3.43 = .*\.so
+EXTRA_MERGE_EXCLUDE_FILES_isa-i386-version-2.3.43 = .*\.so
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64-version-2.3.43 = .*\.so
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-2.3.43 = .*\.so
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9-version-2.3.43 = .*\.so
 
 PKGFILES_CSWoldapclient  = $(bindir)/.*
 PKGFILES_CSWoldapclient += $(mandir)/man1/.*
@@ -170,6 +171,27 @@ CHECKPKG_OVERRIDES_CSWoldaprt += deprecated-library
 
 # Split libraries later
 CHECKPKG_OVERRIDES_CSWoldaprt += non-uniform-lib-versions-in-package
+
+# These are all overrides because the new libnet is not in place yet.
+CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapdelete
+CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldappasswd
+CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapmodrdn
+CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapmodify
+CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapwhoami
+CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapexop
+CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapcompare
+CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapsearch
+CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapurl
+CHECKPKG_OVERRIDES_CSWoldapclient += surplus-dependency|CSWlibnet
+CHECKPKG_OVERRIDES_CSWoldaprt += soname-not-found|libnet.so|is|needed|by|opt/csw/lib/libldap_r-2.3.so.0.2.31
+CHECKPKG_OVERRIDES_CSWoldaprt += soname-not-found|libnet.so|is|needed|by|opt/csw/lib/liblber-2.4.so.2.5.6
+CHECKPKG_OVERRIDES_CSWoldaprt += soname-not-found|libnet.so|is|needed|by|opt/csw/lib/libldap-2.3.so.0.2.31
+CHECKPKG_OVERRIDES_CSWoldaprt += soname-not-found|libnet.so|is|needed|by|opt/csw/lib/libldap_r-2.4.so.2.5.6
+CHECKPKG_OVERRIDES_CSWoldaprt += soname-not-found|libnet.so|is|needed|by|opt/csw/lib/libldap-2.4.so.2.5.6
+CHECKPKG_OVERRIDES_CSWoldaprt += surplus-dependency|CSWlibnet
+CHECKPKG_OVERRIDES_CSWoldap += soname-not-found|libnet.so|is|needed|by|opt/csw/libexec/slapd
+CHECKPKG_OVERRIDES_CSWoldap += surplus-dependency|CSWlibnet
+
 
 include gar/category.mk
 
