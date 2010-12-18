@@ -1,5 +1,5 @@
 NAME = cswpkgloghooks
-VERSION = 1.1.1
+VERSION = 2.0
 CATEGORIES = utils
 
 VENDOR_URL = http://opencsw.org
