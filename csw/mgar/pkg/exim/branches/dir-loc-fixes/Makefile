@@ -83,7 +83,7 @@ PROTOTYPE_FILES_eximsuid = $(sbindir)/exim
 PROTOTYPE_USER_eximlogs = exim
 PROTOTYPE_GROUP_eximlogs = exim
 PROTOTYPE_PERMS_eximlogs = 750
-PROTOTYPE_FILES_eximlogs = $(prefix)/var/log/exim
+PROTOTYPE_FILES_eximlogs = /var/opt/csw/log/exim
 
 include gar/category.mk
 
@@ -130,5 +130,5 @@ post-install-modulated:
 post-merge:
 	( cd $(PKGROOT); mkdir -p ./$(UGPATH); \
 		echo "$(UGENTRY)" > ./$(UGPATH)/cswusergroup )
-	( cd $(PKGROOT); mkdir -p opt/csw/var/log/exim )
+	( cd $(PKGROOT); mkdir -p var/opt/csw/log/exim )
 	@$(MAKECOOKIE)
