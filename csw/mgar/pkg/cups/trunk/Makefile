@@ -28,6 +28,8 @@ localstatedir = /var/opt/csw
 # debugging symbols. The debugging options is turned on for this package, in
 # order to be able to debug the binary if it ever shows the problem.
 
+# This build file support setting GARFLAVOR to DBG in order to build binaries
+# with debugging symbols.
 # GARFLAVOR = DBG
 
 # These are the source mirrors published on the CUPS home-page.
