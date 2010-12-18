@@ -109,7 +109,7 @@ post-install-modulated:
 	mv exim-$(VERSION)-1 exim; \
 	/usr/ccs/bin/strip $(BINS); \
 	/usr/ccs/bin/mcs -d $(BINS))
-	(cd $(DESTDIR)$(prefix)/etc/exim; \
+	(cd $(DESTDIR)/etc/opt/csw/exim; \
 	for i in aliases exim.conf; do \
 		if [ -r "$$i" ]; then \
 			echo "$$i -> $$i.CSW"; \
@@ -120,7 +120,7 @@ post-install-modulated:
 		cp $(abspath $(FILEDIR)/cswexim) etc/opt/csw/init.d )
 	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
 	cp -p files/README.CSW  $(DESTDIR)$(prefix)/share/doc/exim/README.CSW
-	cp -p files/exim-env.sh $(DESTDIR)$(prefix)/etc/exim/exim-env.sh.CSW
+	cp -p files/exim-env.sh $(DESTDIR)/etc/opt/csw/exim/exim-env.sh.CSW
 	(cd $(WORKSRC)/doc; \
 	cp -p $(DOC_LIST) $(DESTDIR)$(prefix)/share/doc/exim)
 	gzip -f $(DESTDIR)$(prefix)/share/doc/exim/ChangeLog
