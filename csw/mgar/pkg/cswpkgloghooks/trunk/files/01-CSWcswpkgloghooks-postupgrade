@@ -59,7 +59,6 @@ if ( -d "/var/sadm/pkg/$pkg" ) {
     if ($script =~ /remove$/) {
 	failure();
     } else {
-	print "VER: $ver; SYSVER: $sysver\n";
 	if ($ver eq $sysver) {
 	    success($oldver);
 	} else {
