@@ -144,8 +144,34 @@ SAMPLECONF_CSWcupsd       = $(sysconfdir)/cups/cupsd\.conf\.CSW
 
 PACKAGES += CSWcupsclient
 PACKAGES += CSWcupsdoc
-PACKAGES += CSWcupsdev
 
+# Devel package
+PACKAGES += CSWcups-devel
+SPKG_DESC_CSWcups-devel    = CUPS header files
+CATALOGNAME_CSWcups-devel = cups_devel
+PKGFILES_CSWcups-devel  = $(includedir)/cups/?.*
+PKGFILES_CSWcups-devel += $(mandir)/man1/cups-config.1
+PKGFILES_CSWcups-devel += $(bindir)/cups-config
+PKGFILES_CSWcups-devel += $(datadir)/cups/ppdc.*
+PKGFILES_CSWcups-devel += $(datadir)/cups/drv.*
+PKGFILES_CSWcups-devel += $(libdir)/libcups.so
+PKGFILES_CSWcups-devel += $(libdir)/libcupscgi.so
+PKGFILES_CSWcups-devel += $(libdir)/libcupsdriver.so
+PKGFILES_CSWcups-devel += $(libdir)/libcupsimage.so
+PKGFILES_CSWcups-devel += $(libdir)/libcupsmime.so
+PKGFILES_CSWcups-devel += $(libdir)/libcupsppdc.so
+# The development package needs all the libraries
+RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcupsppdc1
+RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcupsdriver1
+RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcupsmime1
+RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcupsimage2
+RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcupscgi1
+
+# Former devel package
+PACKAGES += CSWcupsdev
+SPKG_DESC_CSWcupsdev = Empty transitional package
+PKGFILES_CSWcupsdev = None
 
 # The problematic cupslinks package
 # PACKAGES += CSWcupslinks
@@ -165,17 +191,6 @@ RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
 PKGFILES_CSWcupsdoc  = $(datadir)/doc
 PKGFILES_CSWcupsdoc += $(datadir)/doc/.*
 PKGFILES_CSWcupsdoc += $(datadir)/cups/examples.*
-PKGFILES_CSWcupsdev  = $(includedir)/cups/?.*
-PKGFILES_CSWcupsdev += $(mandir)/man1/cups-config.1
-PKGFILES_CSWcupsdev += $(bindir)/cups-config
-PKGFILES_CSWcupsdev += $(datadir)/cups/ppdc.*
-PKGFILES_CSWcupsdev += $(datadir)/cups/drv.*
-PKGFILES_CSWcupsdev += $(libdir)/libcups.so
-PKGFILES_CSWcupsdev += $(libdir)/libcupscgi.so
-PKGFILES_CSWcupsdev += $(libdir)/libcupsdriver.so
-PKGFILES_CSWcupsdev += $(libdir)/libcupsimage.so
-PKGFILES_CSWcupsdev += $(libdir)/libcupsmime.so
-PKGFILES_CSWcupsdev += $(libdir)/libcupsppdc.so
 PKGFILES_CSWcupsclient  = $(sbindir)/(accept|reject|cups(addsmb|ctl|(en|dis)able))
 PKGFILES_CSWcupsclient += $(sbindir)/cups(accept|reject)
 PKGFILES_CSWcupsclient += $(sbindir)/(lp(admin|p|c|info|move))
@@ -196,7 +211,6 @@ PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
 
 SPKG_DESC_CSWcupsclient = CUPS client binaries
 SPKG_DESC_CSWcupsdoc    = CUPS documentation
-SPKG_DESC_CSWcupsdev    = CUPS header files
 
 # Packages compliant with the shared library policy.
 PACKAGES += CSWlibcups2
@@ -249,14 +263,6 @@ RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWjpeg
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibcups2
-
-# The development package needs all the libraries
-RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupsppdc1
-RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupsdriver1
-RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupsmime1
-RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupsimage2
-RUNTIME_DEP_PKGS_CSWcupsdev += CSWlibcupscgi1
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 SAMPLECONF_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
