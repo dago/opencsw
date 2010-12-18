@@ -1,5 +1,5 @@
-GARNAME = coreutils
-GARVERSION = 8.4
+NAME = coreutils
+VERSION = 8.4
 CATEGORIES = utils
 
 # seq has issues related to the handling of long double's with -O2.
