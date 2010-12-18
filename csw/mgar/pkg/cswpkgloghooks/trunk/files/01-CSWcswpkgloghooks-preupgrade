@@ -1,11 +1,17 @@
-#!/usr/bin/env bash
+#!/usr/bin/env perl
 
-set -- ${1/-/ }
+use strict;
+use warnings;
 
-PKG=$1
-VER=$2
+my ($pkg, $ver, $sysver, $statefile);
 
-SYSTEMVER=$(pkgparam ${PKG} VERSION)
+$ARGV[0] =~ /(.+)-(.+)/;
+$pkg = $1;
+$ver = $2;
 
-# store previous version so we can log smarter things if upgrade fails.
-echo ${SYSTEMVER} > /var/opt/csw/pkg-hooks/CSWcswpkgloghooks.upgrade.${PKG}
+$sysver = `pkgparam $pkg VERSION`;
+$statefile = "/var/opt/csw/pkg-hooks/CSWpkgloghooks.upgrade.$pkg";
+
+open(STATEFILE, ">$statefile") or die "Couldn't open $statefile.";
+print STATEFILE "$sysver";
+close(STATEFILE)
