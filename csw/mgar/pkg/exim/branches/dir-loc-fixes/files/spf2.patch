@@ -1,0 +1,20 @@
+diff -ru exim-4.63/spf2.orig/spf_server.h exim-4.63/spf2/spf_server.h
+--- exim-4.63/spf2.orig/spf_server.h	2005-04-09 04:58:25.000000000 -0700
++++ exim-4.63/spf2/spf_server.h	2006-09-01 13:09:03.329136000 -0700
+@@ -20,7 +20,6 @@
+ 
+ #include "spf_record.h"
+ #include "spf_dns.h"
+-#include "spf_dns_internal.h"
+ 
+ #ifndef SPF_MAX_DNS_MECH
+ /* It is a bad idea to change this for two reasons.
+@@ -96,8 +95,4 @@
+ 	int \
+ 		SPF_server_get_max_dns_mech(SPF_server_t *spf_server);
+ 
+-SPF_DECL_ACCESS_INT(max_dns_mech);
+-SPF_DECL_ACCESS_INT(max_dns_ptr);
+-SPF_DECL_ACCESS_INT(max_dns_mx);
+-
+ #endif
