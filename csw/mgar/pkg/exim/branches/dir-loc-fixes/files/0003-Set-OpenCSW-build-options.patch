@@ -29,7 +29,7 @@ index 9869eb1..0b60f94 100644
  # file does not exist.
  
 -CONFIGURE_FILE=/usr/exim/configure
-+CONFIGURE_FILE=/etc/op/csw/exim/exim.conf
++CONFIGURE_FILE=/etc/opt/csw/exim/exim.conf
  
  # It is possible to specify a colon-separated list of files for CONFIGURE_FILE.
  # In this case, Exim will use the first of them that exists when it is run.
