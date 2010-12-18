@@ -108,8 +108,6 @@ post-install-modulated:
 	done)
 	(cd $(DESTDIR); mkdir -p etc/opt/csw/init.d; \
 		cp $(abspath $(FILEDIR)/cswexim) etc/opt/csw/init.d )
-	mkdir -p $(DESTDIR)/var/opt/csw/svc/manifest/network
-	cp -p files/exim.xml  $(DESTDIR)/var/opt/csw/svc/manifest/network
 	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
 	cp -p files/README.CSW  $(DESTDIR)$(prefix)/share/doc/exim/README.CSW
 	cp -p files/exim-env.sh $(DESTDIR)$(prefix)/etc/exim/exim-env.sh.CSW

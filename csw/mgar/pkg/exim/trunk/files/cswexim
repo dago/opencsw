@@ -7,9 +7,6 @@
 # Modified for Blastwave by Markus Mayer <mmayer@blastwave.org>
 # Modified for OpenCSW by Ben Walton <bwalton@opencsw.org>
 
-# These are consumed by the i.cswinitsmf class action script
-#MANIFEST /var/opt/csw/svc/manifest/network/exim.xml
-
 # Exit if exim (or another MTA) runs from /etc/inetd.conf
 if [ -f /etc/inetd.conf ] && grep "^ *\([0-9.]\+:\)\?smtp" /etc/inetd.conf >/dev/null; then
     exit 0
