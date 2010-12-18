@@ -18,14 +18,13 @@ print STATEFILE "$sysver";
 close(STATEFILE);
 
 sub logdie {
-    local $arg = shift;
+    my ($arg) = (shift);
     system('logger', '-t', 'cswpkgloghooks', $arg);
     exit 0
 }
 
 sub success {
-    local $old = shift;
-    local $msg = '';
+    my ($old, $msg) = (shift, '');
     if ($script =~ /install$/) {
 	$msg = "installed $pkg $ver";
     } elsif ($script =~ /upgrade$/) {
@@ -38,8 +37,7 @@ sub success {
 }
 
 sub failure {
-    local $old = shift;
-    local $msg = '';
+    my ($old, $msg) = (shift, '');
     if ($script =~ /install$/) {
 	$msg = "Failed to install $pkg $ver";
     } elsif ($script =~ /upgrade$/) {
