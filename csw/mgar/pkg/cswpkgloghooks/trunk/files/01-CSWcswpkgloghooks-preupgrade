@@ -14,4 +14,4 @@ $statefile = "/var/opt/csw/pkg-hooks/CSWpkgloghooks.upgrade.$pkg";
 
 open(STATEFILE, ">$statefile") or die "Couldn't open $statefile.";
 print STATEFILE "$sysver";
-close(STATEFILE)
+close(STATEFILE);
