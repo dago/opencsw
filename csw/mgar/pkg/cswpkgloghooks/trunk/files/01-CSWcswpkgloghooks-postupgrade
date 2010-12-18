@@ -54,6 +54,7 @@ if ( -d "/var/sadm/pkg/$pkg" ) {
 	$oldver = <STATEFILE>;
 	close(STATEFILE);
 	unlink($statefile);
+	chomp($oldver);
     }
 
     if ($script =~ /remove$/) {
