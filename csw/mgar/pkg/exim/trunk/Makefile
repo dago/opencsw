@@ -75,6 +75,10 @@ USERGROUP = $(UGPATH)/cswusergroup
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzipextras
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzip
 
+PROTOTYPE_MODIFIERS = eximsuid
+PROTOTYPE_PERMS_eximsuid = 4755
+PROTOTYPE_FILES_eximsuid = $(sbindir)/exim
+
 include gar/category.mk
 
 pre-patch-modulated:
