@@ -8,12 +8,7 @@ is_usr_readonly()
   mount | grep '^/usr ' | grep 'read only' >/dev/null
 }
 
-# in Solaris 8 it's in /usr/bin; in Solaris 9 in /usr/sbin 
-if [ -r "$PKG_INSTALL_ROOT/usr/bin/newaliases" ]; then
-  NEWALIASES="$PKG_INSTALL_ROOT/usr/bin/newaliases"
-elif [ -r "$PKG_INSTALL_ROOT/usr/sbin/newaliases" ]; then
-  NEWALIASES="$PKG_INSTALL_ROOT/usr/sbin/newaliases"
-fi
+NEWALIASES="$PKG_INSTALL_ROOT/usr/sbin/newaliases"
 
 if [ "$SENDMAIL_ACTION" = "replace" ]; then
   is_usr_readonly
