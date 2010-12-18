@@ -10,15 +10,10 @@ $ARGV[0] =~ /(.+)-(.+)/;
 $pkg = $1;
 $ver = $2;
 
-$sysver = `pkgparam $pkg VERSION`;
 $statefile = "/var/opt/csw/pkg-hooks/CSWpkgloghooks.upgrade.$pkg";
 
-open(STATEFILE, ">$statefile") or die "Couldn't open $statefile.";
-print STATEFILE "$sysver";
-close(STATEFILE);
-
 sub logdie {
-    my ($arg) = (shift);
+    my($arg) = (shift);
     system('logger', '-t', 'cswpkgloghooks', $arg);
     exit 0
 }
@@ -51,7 +46,8 @@ sub failure {
 
 
 if ( -d "/var/sadm/pkg/$pkg" ) {
-    $sysver = system('pkgparam', $pkg, 'VERSION');
+    $sysver = `pkgparam $pkg VERSION 2>/dev/null`;
+    chomp($sysver);
 
     if ( -f "$statefile" ) {
 	open (STATEFILE, "<$statefile") or die "Couldn't open $statefile.";
@@ -61,9 +57,10 @@ if ( -d "/var/sadm/pkg/$pkg" ) {
     }
 
     if ($script =~ /remove$/) {
-	failure;
+	failure();
     } else {
-	if ("$ver" eq "$sysver") {
+	print "VER: $ver; SYSVER: $sysver\n";
+	if ($ver eq $sysver) {
 	    success($oldver);
 	} else {
 	    failure($sysver);
