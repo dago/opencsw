@@ -254,7 +254,7 @@ index 9869eb1..6ba1bf8 100644
  # to form the final file names. Some installations may want something like this:
  
 -# LOG_FILE_PATH=/var/log/exim_%slog
-+LOG_FILE_PATH=/opt/csw/var/log/%slog
++LOG_FILE_PATH=/opt/csw/var/log/exim/%slog
  
  # which results in files with names /var/log/exim_mainlog, etc. The directory
  # in which the log files are placed must exist; Exim does not try to create
