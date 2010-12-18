@@ -75,9 +75,13 @@ USERGROUP = $(UGPATH)/cswusergroup
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzipextras
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzip
 
-PROTOTYPE_MODIFIERS = eximsuid
+PROTOTYPE_MODIFIERS = eximsuid eximlogs
 PROTOTYPE_PERMS_eximsuid = 4755
 PROTOTYPE_FILES_eximsuid = $(sbindir)/exim
+PROTOTYPE_USER_eximlogs = exim
+PROTOTYPE_GROUP_eximlogs = exim
+PROTOTYPE_PERMS_eximlogs = 750
+PROTOTYPE_FILES_eximlogs = $(prefix)/var/log/exim
 
 include gar/category.mk
 
@@ -124,4 +128,5 @@ post-install-modulated:
 post-merge:
 	( cd $(PKGROOT); mkdir -p ./$(UGPATH); \
 		echo "$(UGENTRY)" > ./$(UGPATH)/cswusergroup )
+	( cd $(PKGROOT); mkdir -p opt/csw/var/log/exim )
 	@$(MAKECOOKIE)
