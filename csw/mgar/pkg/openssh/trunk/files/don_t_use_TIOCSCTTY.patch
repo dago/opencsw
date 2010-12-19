@@ -6,10 +6,10 @@ diff --speed-large-files --minimal -Nru sshpty.c.orig openssh-4.7p1/sshpty.c
  	}
  	/* Make it our controlling tty. */
 -#ifdef TIOCSCTTY
-+/* Blastwave package modification: TIOCSCTTY doesn't exist under solaris 10
++/* Opencsw package modification: TIOCSCTTY doesn't exist under solaris 10
 +   although it is defined in /usr/include/sys/termios.h (??), so we make
 +   sure it is not used. */
-+#ifdef 0
++#if 0
  	debug("Setting controlling tty using TIOCSCTTY.");
  	if (ioctl(*ttyfd, TIOCSCTTY, NULL) < 0)
  		error("ioctl(TIOCSCTTY): %.100s", strerror(errno));

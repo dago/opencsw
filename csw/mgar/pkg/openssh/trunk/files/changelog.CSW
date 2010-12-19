@@ -1,15 +1,18 @@
-openssh (5.6p1,REV=2010.09.02) unstable
+openssh (5.6p1,REV=2010.12.19) unstable
 
   * New upstream release.
   * Removed patch applied upstream (derelativise_path_bugfix.patch 
   and dont_derelativise_authorizedkeysfile_option.patch).
   * Moved conf from /opt/csw/etc to /etc/opt/csw.
-  * Moved privilege separation directory from /var/empty to
-  /var/opt/csw/var/empty.
+  * Moved privilege separation directory from /var/empty to /var/opt/csw/empty.
+  * Added 0004-no-lastlog-file.patch patch to workaround a bug with
+  Lastlog information printed at login time (see bug #4494).
+  * Moved pid file location from /var/run to /var/opt/csw/run to avoid a
+  conflict with sun native ssh (Closes: #4398).
   * [Build system] Switched to dynamic prototype.
   * [Build system] Switched to cswclassutils for user/group creation.
 
- -- Yann Rouillard <yann@opencsw.org>  Wed, 02 Sep 2010 23:25:24 +0200
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 19 Dec 2010 23:25:24 +0200
 
 openssh (5.4p1,REV=2010.03.25) unstable
 

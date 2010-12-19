@@ -1,0 +1,27 @@
+From a942b6c3d50bbdb7cf1a3940b247c26b1ba18383 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sun, 19 Dec 2010 18:15:22 +0100
+Subject: [PATCH] Do not use /var/adm/lastlog to retrieve last log information as
+ it has already been updated during the ssh login process, so it always
+ returns the current logging time
+
+---
+ defines.h |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/defines.h b/defines.h
+index fe25170..6709314 100644
+--- a/defines.h
++++ b/defines.h
+@@ -663,6 +663,8 @@ struct winsize {
+ #  endif
+ #endif
+ 
++#undef LASTLOG_FILE
++
+ #if defined(HAVE_SHADOW_H) && !defined(DISABLE_SHADOW)
+ # define USE_SHADOW
+ #endif
+-- 
+1.7.3.2
+
