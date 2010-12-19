@@ -74,6 +74,10 @@ USERGROUP = $(UGPATH)/cswusergroup
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzipextras
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzip
 
+MIGRATE_FILES = exim.conf aliases exim-env.sh
+MIGRATE_SOURCE_DIR = /opt/csw/etc/exim
+MIGRATE_DEST_DIR = /etc/opt/csw/exim
+
 PRESERVECONF  = /etc/opt/csw/exim/exim.conf /etc/opt/csw/exim/aliases
 PRESERVECONF += /etc/opt/csw/exim/exim-env.sh
 
