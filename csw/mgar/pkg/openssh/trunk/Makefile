@@ -118,6 +118,11 @@ PATCHFILES += don_t_use_TIOCSCTTY.patch
 # see https://bugzilla.mindrot.org/show_bug.cgi?id=1457
 PATCHFILES += no_x_forwarding_bug.patch
 
+# Force openssh to not use /var/adm/lastlog but still prints last log information
+# Workaround to fix https://www.opencsw.org/mantis/view.php?id=4494
+# Bug filled upstream: https://bugzilla.mindrot.org/show_bug.cgi?id=87
+PATCHFILES += 0004-no-lastlog-file.patch
+
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
 DOCFILES += README.platform README.privsep README.tun TODO WARNING.RNG    
@@ -143,6 +148,7 @@ CONFIGURE_ARGS += --with-solaris-contracts
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-privsep-path=$(localstatedir)/empty
+CONFIGURE_ARGS += --with-pid-dir=$(localstatedir)/run
 
 TEST_SCRIPTS	=
 
@@ -214,4 +220,5 @@ merge-config-files:
 
 merge-special-directories:
 	ginstall -d $(PKGROOT)$(localstatedir)/empty
+	ginstall -d $(PKGROOT)$(localstatedir)/run
 	ginstall -d $(PKGROOT)$(sysconfdir)/pkg/CSWossh
