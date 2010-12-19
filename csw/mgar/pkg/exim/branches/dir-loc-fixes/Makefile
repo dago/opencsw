@@ -16,8 +16,7 @@ endef
 
 MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += CSWexim.postinstall CSWexim.postremove CSWexim.preremove
-DISTFILES += CSWexim.request
+DISTFILES += CSWexim.postinstall CSWexim.postremove CSWexim.request
 
 # NOTE TO FUTURE MAINTAINERS:
 # This patch should be thoroughly reviewed for each update so as not to
@@ -75,6 +74,9 @@ USERGROUP = $(UGPATH)/cswusergroup
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzipextras
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzip
 
+PRESERVECONF  = /etc/opt/csw/exim/exim.conf /etc/opt/csw/exim/aliases
+PRESERVECONF += /etc/opt/csw/exim/exim-env.sh
+
 PROTOTYPE_MODIFIERS = eximsuid eximlogs
 PROTOTYPE_PERMS_eximsuid = 4755
 PROTOTYPE_FILES_eximsuid = $(sbindir)/exim
@@ -107,18 +109,11 @@ post-install-modulated:
 	mv exim-$(VERSION)-1 exim; \
 	/usr/ccs/bin/strip $(BINS); \
 	/usr/ccs/bin/mcs -d $(BINS))
-	(cd $(DESTDIR)/etc/opt/csw/exim; \
-	for i in aliases exim.conf; do \
-		if [ -r "$$i" ]; then \
-			echo "$$i -> $$i.CSW"; \
-			mv "$$i" "$$i.CSW";	\
-		fi \
-	done)
 	(cd $(DESTDIR); mkdir -p etc/opt/csw/init.d; \
 		cp $(abspath $(FILEDIR)/cswexim) etc/opt/csw/init.d )
 	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
 	cp -p files/README.CSW  $(DESTDIR)$(prefix)/share/doc/exim/README.CSW
-	cp -p files/exim-env.sh $(DESTDIR)/etc/opt/csw/exim/exim-env.sh.CSW
+	cp -p files/exim-env.sh $(DESTDIR)/etc/opt/csw/exim/exim-env.sh
 	(cd $(WORKSRC)/doc; \
 	cp -p $(DOC_LIST) $(DESTDIR)$(prefix)/share/doc/exim)
 	gzip -f $(DESTDIR)$(prefix)/share/doc/exim/ChangeLog

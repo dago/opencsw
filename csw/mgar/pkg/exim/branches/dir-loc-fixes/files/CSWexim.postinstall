@@ -9,21 +9,6 @@ is_usr_readonly()
   mount | grep '^/usr ' | grep 'read only' >/dev/null
 }
 
-### Set up config-file related stuff
-
-echo ""
-echo "Setting up config-files..."
-for file in $CONFFILES; do
-    confpath="$CONFDIR/$file"
-    if [ -r "$confpath" ]; then
-	echo "Not touching existing $confpath"
-    else
-	echo "Copying $confpath.CSW to $confpath"
-	cp -p "$confpath.CSW" "$confpath"
-    fi
-done
-echo ""
-
 is_usr_readonly
 
 if [ $? -eq 0 -a  "$SENDMAIL_ACTION" != "leave" ]; then
