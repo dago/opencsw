@@ -544,7 +544,7 @@ class Pkgmap(object):
         installed_path = fields[3]
         prototype_class = fields[2]
         if self.analyze_permissions:
-          line_to_add += " %s" % fields[4]
+          line_to_add += " %s %s %s" % tuple(fields[4:7])
         mode, user, group = fields[4:7]
       elif line_type in ('e'):
         # Editable files
