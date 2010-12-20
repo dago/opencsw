@@ -46,7 +46,6 @@ class UsageError(Error):
 
 
 def main():
-  configuration.SetUpSqlobjectConnection()
   parser = optparse.OptionParser(USAGE)
   parser.add_option("-d", "--debug",
       dest="debug",
@@ -83,6 +82,7 @@ def main():
   logging.basicConfig(level=logging_level)
   logging.debug("Starting.")
 
+  configuration.SetUpSqlobjectConnection()
   dm = database.DatabaseManager()
   dm.AutoManage()
 
