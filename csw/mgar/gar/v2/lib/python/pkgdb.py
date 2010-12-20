@@ -47,6 +47,7 @@ USAGE = """
        %prog gen-html <md5sum> [ ... ]
        %prog pkg search <catalogname>
        %prog show basename [options] <filename>
+       %prog show files <md5-sum>
 
 
 Examples:
@@ -466,6 +467,19 @@ def main():
     )
     for obj in res:
       print obj.basename, obj.md5_sum
+  elif (command, subcommand) == ('show', 'files'):
+    md5_sum = args[0]
+    join = [
+        sqlbuilder.INNERJOINOn(None,
+          m.Srv4FileStats,
+          m.CswFile.q.srv4_file==m.Srv4FileStats.q.id),
+    ]
+    res = m.CswFile.select(
+        m.Srv4FileStats.q.md5_sum==md5_sum,
+        join=join,
+    )
+    for obj in res:
+      print os.path.join(obj.path, obj.basename)
   elif (command, subcommand) == ('show', 'basename'):
     db_catalog = checkpkg_lib.Catalog()
     for arg in args:
