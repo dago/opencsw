@@ -10,7 +10,7 @@ import time
 import system_pkgmap
 
 CONFIG_DB_SCHEMA = "db_schema_version"
-DB_SCHEMA_VERSION = 6L
+DB_SCHEMA_VERSION = 7L
 TABLES_THAT_NEED_UPDATES = (m.CswFile,)
 TABLES = TABLES_THAT_NEED_UPDATES + (
             m.Architecture,
