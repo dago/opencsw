@@ -103,16 +103,6 @@ CHECKPKG_OVERRIDES_CSWrrd += surplus-dependency|CSWpy-rrdtool
 CHECKPKG_OVERRIDES_CSWrrd += surplus-dependency|CSWrb-rrdtool
 CHECKPKG_OVERRIDES_CSWrrd += surplus-dependency|CSWrrdtool
 
-# These is an example which requires Perl
-CHECKPKG_OVERRIDES_CSWrrdtool += missing-dependency|CSWperl
-
-# TBD:
-CHECKPKG_OVERRIDES_CSWrb-rrdtool += binary-architecture-does-not-match-placement|file=opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.9/RRD.so|arch_id=18|arch_name=sparcv8+
-CHECKPKG_OVERRIDES_CSWrb-rrdtool += bad-rpath-entry|/home/dam/mgar/pkg/rrdtool/trunk/work/solaris9-sparc/install-isa-sparcv8/opt/csw/lib|opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.9/RRD.so
-
-# The docs are bundled in the rrdtool/ directory
-CHECKPKG_OVERRIDES_CSWrrdtool += wrong-docdir|expected=/opt/csw/shared/doc/rrdtool/...|in-package=/opt/csw/share/doc/librrd_th4/license
-
 # These libraries always come in pairs, bundle them also
 CHECKPKG_OVERRIDES_CSWlibrrd4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/librrd_th.so.4.1.4|soname=librrd_th.so.4|pkgname=CSWlibrrd4|expected=CSWlibrrd-th4
 CHECKPKG_OVERRIDES_CSWlibrrd4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/librrd_th.so.4.1.4|soname=librrd_th.so.4|pkgname=CSWlibrrd4|expected=CSWlibrrd-th4
