@@ -236,12 +236,36 @@ class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
     self.assertEquals("CSWtree", o.pkgname)
     self.assertEquals("bad-rpath-entry", o.tag_name)
 
-  def testImportDependencies(self):
+  def testSaveStatsDependencies(self):
     md5_sum = tree_stats[0]["basic_stats"]["md5_sum"]
     self.assertEqual(u'1e43fa1c7e637b25d9356ad516ae0403', md5_sum)
     new_stats = copy.deepcopy(tree_stats[0])
     self.TestPackageStats.SaveStats(new_stats)
     depends = list(m.Srv4DependsOn.select())
+    # Dependencies should not be inserted into the db at that stage
+    self.assertEquals(0, len(depends))
+
+  def testImportPkgDependencies(self):
+    md5_sum = tree_stats[0]["basic_stats"]["md5_sum"]
+    self.assertEqual(u'1e43fa1c7e637b25d9356ad516ae0403', md5_sum)
+    new_stats = copy.deepcopy(tree_stats[0])
+    self.TestPackageStats.ImportPkg(new_stats)
+    depends = list(m.Srv4DependsOn.select())
+    # Dependencies should be inserted into the db at that stage
+    self.assertEquals(1, len(depends))
+    dep = depends[0]
+    self.assertEquals(md5_sum, dep.srv4_file.md5_sum)
+    self.assertEquals(u"CSWcommon", dep.pkginst.pkgname)
+
+  def testImportPkgDependenciesReplace(self):
+    """Make sure deps are not imported twice."""
+    md5_sum = tree_stats[0]["basic_stats"]["md5_sum"]
+    self.assertEqual(u'1e43fa1c7e637b25d9356ad516ae0403', md5_sum)
+    new_stats = copy.deepcopy(tree_stats[0])
+    self.TestPackageStats.ImportPkg(new_stats)
+    self.TestPackageStats.ImportPkg(new_stats, replace=True)
+    depends = list(m.Srv4DependsOn.select())
+    # Dependencies should be inserted into the db at that stage
     self.assertEquals(1, len(depends))
     dep = depends[0]
     self.assertEquals(md5_sum, dep.srv4_file.md5_sum)
