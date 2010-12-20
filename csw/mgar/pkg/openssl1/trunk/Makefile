@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = openssl
-VERSION = 1.0.0a
+VERSION = 1.0.0b
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
@@ -24,23 +24,23 @@ define BLURB
   as a full-strength general-purpose cryptography library.
 endef
 
-PACKAGES = CSWossl1rt CSWossl1devel CSWossl1utils
+PACKAGES = CSWlibssl1-0-0 CSWlibssl1-0-0-devel CSWossl1utils
 
-CATALOGNAME_CSWossl1rt = openssl1_rt
-RUNTIME_DEP_PKGS_CSWossl1rt = CSWcacertificates
-SPKG_DESC_CSWossl1rt = Openssl 1.0 runtime libraries
-PKGFILES_CSWossl1rt = $(libdir).*\.so(\.\d+)*
-PKGFILES_CSWossl1rt += $(sysconfdir)/etc/ssl/private $(prefix)/ssl/private $(prefix)/ssl/certs /etc/$(prefix)/ssl/private
-PKGFILES_CSWossl1rt += $(docdir)/openssl1_rt/.* 
+CATALOGNAME_CSWlibssl1-0-0 = libssl1_0_0
+RUNTIME_DEP_PKGS_CSWlibssl1-0-0 = CSWcacertificates
+SPKG_DESC_CSWlibssl1-0-0 = Openssl 1.0 runtime libraries
+PKGFILES_CSWlibssl1-0-0 = $(libdir).*\.so(\.\d+)*
+PKGFILES_CSWlibssl1-0-0 += $(sysconfdir)/etc/ssl/private $(prefix)/ssl/private $(prefix)/ssl/certs /etc/$(prefix)/ssl/private
+PKGFILES_CSWlibssl1-0-0 += $(docdir)/libssl1_0_0/.* 
 
-CATALOGNAME_CSWossl1devel = openssl1_devel
-RUNTIME_DEP_PKGS_CSWossl1devel = CSWossl1rt
-SPKG_DESC_CSWossl1devel = Openssl 1.0 development support files
-PKGFILES_CSWossl1devel = $(PKGFILES_DEVEL) 
-PKGFILES_CSWossl1devel += $(docdir)/openssl1_devel/.*
+CATALOGNAME_CSWlibssl1-0-0-devel = libssl1_0_0_devel
+RUNTIME_DEP_PKGS_CSWlibssl1-0-0-devel = CSWlibssl1-0-0
+SPKG_DESC_CSWlibssl1-0-0-devel = Openssl 1.0 development support files
+PKGFILES_CSWlibssl1-0-0-devel = $(PKGFILES_DEVEL) 
+PKGFILES_CSWlibssl1-0-0-devel += $(docdir)/libssl1_0_0_devel/.*
 
 CATALOGNAME_CSWossl1utils = openssl1_utils
-RUNTIME_DEP_PKGS_CSWossl1utils = CSWossl1rt
+RUNTIME_DEP_PKGS_CSWossl1utils = CSWlibssl1-0-0
 SPKG_DESC_CSWossl1utils = Openssl 1.0 binaries and related tools
 SPKG_CLASSES_CSWossl1utils = none cswpreserveconf
 PKGFILES_CSWossl1utils = $(bindir)/[^/]* $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.* 
@@ -54,21 +54,21 @@ PRESERVECONF = $(sysconfdir)/ssl/openssl.cnf
 # We use SUN perl, not the opencsw one
 CHECKPKG_OVERRIDES_CSWossl1utils += missing-dependency|CSWperl
 
-CHECKPKG_OVERRIDES_CSWossl1rt += surplus-dependency|CSWcacertificates
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += surplus-dependency|CSWcacertificates
 
 # We ship the .a files in the devel package
-CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
-CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
 ifeq ($(GARCH),sparc)
-CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
-CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
 else
-CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
-CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
-CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
-CHECKPKG_OVERRIDES_CSWossl1devel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
 endif
-CHECKPKG_OVERRIDES_CSWossl1devel += surplus-dependency|CSWossl1rt
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += surplus-dependency|CSWlibssl1-0-0
 
 
 ###### Upstream and opencsw files information #######
@@ -79,7 +79,7 @@ MASTER_SITES = http://www.openssl.org/source/ http://openssl.org/news/
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
-DISTFILES += CSWossl1rt.checkinstall CSWossl1rt.preinstall CSWossl1rt.postinstall
+DISTFILES += CSWlibssl1-0-0.checkinstall CSWlibssl1-0-0.preinstall CSWlibssl1-0-0.postinstall
 DISTFILES += changelog.CSW README.CSW
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
@@ -92,6 +92,8 @@ PATCHFILES = more_configure_targets.patch
 # we prefer to rely on gar system to take of this so we remove this using this
 # patch
 PATCHFILES += dont_use_slash_64_directory.patch
+
+PATCHFILES += fix-test-failure.patch
 
 LICENSE = LICENSE
 
