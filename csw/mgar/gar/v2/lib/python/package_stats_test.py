@@ -375,16 +375,22 @@ class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
                     m.Srv4FileInCatalog.q.srv4file==stats)).getOne()
     # At this point, we know that the record is in the db.
     c.RemoveSrv4(stats, 'SunOS5.9', 'i386', 'unstable')
-    # Retrieved record from the db should now not have the registered flag.
-    # We could also test that the object should not have any files attached to
-    # it.
-    updated_stats = m.Srv4FileInCatalog.select(
+    # Make sure that the Srv4FileInCatalog object is now gone.
+    res = m.Srv4FileInCatalog.select(
         sqlobject.AND(
           m.Srv4FileInCatalog.q.arch==sqo_arch,
           m.Srv4FileInCatalog.q.osrel==sqo_osrel,
           m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-          m.Srv4FileInCatalog.q.srv4file==stats)).getOne()
-    self.assertFalse(updated_stats.registered)
+          m.Srv4FileInCatalog.q.srv4file==stats))
+    self.assertRaises(sqlobject.SQLObjectNotFound, res.getOne)
+    # Retrieved record from the db should now not have the registered flag.
+    updated_stats = m.Srv4FileStats.select(
+        m.Srv4FileStats.q.id==stats.id).getOne()
+    self.assertTrue(updated_stats.registered)
+    # Make sure that files of this package are still in the database.
+    res = m.CswFile.select(
+        m.CswFile.q.srv4_file==updated_stats)
+    self.assertEquals(22, res.count())
 
 
   def testRetrievePathsMatchCatalog(self):
