@@ -307,6 +307,9 @@ def main():
   parser.add_option("-c", "--catalog-release", dest="catrel",
                     default="current",
                     help="E.g. current, unstable, testing, stable")
+  parser.add_option("--replace", dest="replace",
+                    default=False, action="store_true",
+                    help="Replace packages when importing (importpkg)")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -367,7 +370,7 @@ def main():
           "Importing %s, %s",
           stats["basic_stats"]["md5_sum"],
           stats["basic_stats"]["pkg_basename"])
-      package_stats.PackageStats.ImportPkg(stats)
+      package_stats.PackageStats.ImportPkg(stats, options.replace)
   elif command == 'add-to-cat':
     if len(args) <= 3:
       raise UsageError("Not enough arguments, see usage.")
