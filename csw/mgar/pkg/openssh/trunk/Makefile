@@ -52,6 +52,7 @@ PKGFILES_CSWossh += $(libexecdir)/sftp-server
 PKGFILES_CSWossh += $(sysconfdir)/ssh/sshd_config.CSW
 PKGFILES_CSWossh += $(sysconfdir)/ssh/moduli.CSW
 PKGFILES_CSWossh += $(localstatedir)/empty
+PKGFILES_CSWossh += $(localstatedir)/run
 PKGFILES_CSWossh += $(sysconfdir)/init.d/cswopenssh
 PKGFILES_CSWossh += $(localstatedir)/svc/manifest/network/cswopenssh.xml
 PKGFILES_CSWossh += $(prefix)/etc/pkg/CSWossh/cswusergroup
