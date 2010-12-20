@@ -80,7 +80,10 @@ class DatabaseManager(object):
       else:
         raise DatabaseError(
             "Database schema does not match the application. "
-            "Check the csw_config table and database.py.")
+            "Database contains: %s, "
+            "the application expects: %s. "
+            "Make sure your application sources are up to date."
+            % (ldm.GetDatabaseSchemaVersion(), DB_SCHEMA_VERSION))
 
   def _CheckAndMaybeFixFreshness(self, auto_fix):
     ldm = LocalDatabaseManager()
@@ -181,7 +184,12 @@ class CheckpkgDatabaseMixin(object):
       table.clearTable()
 
   def IsDatabaseGoodSchema(self):
-    good_version = self.GetDatabaseSchemaVersion() >= DB_SCHEMA_VERSION
+    good_version = self.GetDatabaseSchemaVersion() == DB_SCHEMA_VERSION
+    if not good_version:
+      logging.fatal("Database schema version: %s, "
+                    "Application expects version: %s",
+                    self.GetDatabaseSchemaVersion(),
+                    DB_SCHEMA_VERSION)
     return good_version
 
   def GetDatabaseSchemaVersion(self):
