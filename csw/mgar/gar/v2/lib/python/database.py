@@ -69,6 +69,9 @@ class DatabaseManager(object):
 
   def _CheckAndMaybeFixSchema(self, auto_fix):
     ldm = LocalDatabaseManager()
+    logging.debug("Database schema version: %s, application expects: %s",
+                  ldm.GetDatabaseSchemaVersion(),
+                  DB_SCHEMA_VERSION)
     if not ldm.IsDatabaseGoodSchema():
       if auto_fix:
         logging.warning("Old database schema detected.")
