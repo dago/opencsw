@@ -12,10 +12,6 @@ endef
 MASTER_SITES = http://oss.oetiker.ch/$(NAME)/pub/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-# PATCHFILES += patch-src-Makefile.in
-
-# PATCHFILES += patch-bindings-Makefile.in
-
 # Use patch until this is fixed:
 #   http://oss.oetiker.ch/rrdtool-trac/ticket/284
 PATCHFILES += patch-bindings-ruby-extconf.rb
@@ -96,6 +92,7 @@ PKGFILES_CSWrrdtool-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibrrd4 = $(PKGFILES_RT)
 PKGFILES_CSWpm-rrdtool += $(libdir)/perl/.*
 PKGFILES_CSWpm-rrdtool += $(sharedstatedir)/perl/.*
+PKGFILES_CSWpm-rrdtool += $(sharedstatedir)/rrdtool/examples/.*
 PKGFILES_CSWpm-rrdtool += .*\.3perl
 PKGFILES_CSWpy-rrdtool = $(libdir)/python/.*
 PKGFILES_CSWrb-rrdtool = $(libdir)/ruby/.*
@@ -113,10 +110,12 @@ CHECKPKG_OVERRIDES_CSWrrdtool += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWrb-rrdtool += binary-architecture-does-not-match-placement|file=opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.9/RRD.so|arch_id=18|arch_name=sparcv8+
 CHECKPKG_OVERRIDES_CSWrb-rrdtool += bad-rpath-entry|/home/dam/mgar/pkg/rrdtool/trunk/work/solaris9-sparc/install-isa-sparcv8/opt/csw/lib|opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.9/RRD.so
 
+# The docs are bundled in the rrdtool/ directory
+CHECKPKG_OVERRIDES_CSWrrdtool += wrong-docdir|expected=/opt/csw/shared/doc/rrdtool/...|in-package=/opt/csw/share/doc/librrd_th4/license
+
+# These libraries always come in pairs, bundle them also
+CHECKPKG_OVERRIDES_CSWlibrrd4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/librrd_th.so.4.1.4|soname=librrd_th.so.4|pkgname=CSWlibrrd4|expected=CSWlibrrd-th4
+CHECKPKG_OVERRIDES_CSWlibrrd4 += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/librrd_th.so.4.1.4|soname=librrd_th.so.4|pkgname=CSWlibrrd4|expected=CSWlibrrd-th4
+
 include gar/category.mk
 
-#pre-build-modulated:
-#	echo "  ==> Adding math function round()"
-#	cp $(FILEDIR)/s_round.c $(WORKSRC)/src
-#	cp $(FILEDIR)/s_round.h $(WORKSRC)/src
-#	@$(MAKECOOKIE)
