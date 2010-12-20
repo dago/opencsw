@@ -1,3 +1,9 @@
+bash (4.1.09,REV=2010.12.18) unstable
+
+  * Added bash patches bash41-008 and bash41-009.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 18 Dec 2010 09:19:42 +0100
+
 bash (4.1.07,REV=2010.11.20) unstable
 
   * Added missing rbash symlink (Closes: #4600)
