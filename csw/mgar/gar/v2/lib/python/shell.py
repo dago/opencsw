@@ -1,6 +1,12 @@
 import logging
 import subprocess
 
+class Error(Exception):
+  "Generic error"
+
+class ShellError(Error):
+  "Problem running a shell command."
+
 class ShellMixin(object):
 
   def ShellCommand(self, args, quiet=False):
