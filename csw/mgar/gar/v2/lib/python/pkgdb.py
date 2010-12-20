@@ -146,6 +146,10 @@ def GetPkg(some_id):
     for row in res:
       print "- %s %s %s" % (row.md5_sum, row.version_string, row.mtime)
     raise
+  except sqlobject.main.SQLObjectNotFound, e:
+    logging.fatal("Could not locate a package identified by %s",
+                  repr(some_id))
+    raise
   logging.debug("Got: %s", srv4)
   return srv4
 
