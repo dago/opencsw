@@ -666,6 +666,7 @@ class CatalogMixin(SqlobjectHelperMixin):
       raise CatalogDatabaseError(
           "Package %s (%s) is not registered for releases."
           % (sqo_srv4.basename, sqo_srv4.md5_sum))
+    # TODO(maciej): Make sure the package's files are present in the database.
     # Checking for presence of a different srv4 with the same pkginst in the
     # same catalog
     pkginst = sqo_srv4.pkginst
@@ -706,10 +707,9 @@ class CatalogMixin(SqlobjectHelperMixin):
           m.Srv4FileInCatalog.q.osrel==sqo_osrel,
           m.Srv4FileInCatalog.q.catrel==sqo_catrel,
           m.Srv4FileInCatalog.q.srv4file==sqo_srv4)).getOne()
-    sqo_srv4_in_cat.registered = False
-    # TODO(maciej): Remove all files belonging to that one
-    for cat_file in sqo_srv4_in_cat.srv4file.files:
-      cat_file.destroySelf()
+    # Files belonging to this package should not be removed from the catalog
+    # as the package might be still present in another catalog.
+    sqo_srv4_in_cat.destroySelf()
 
 
 class Catalog(CatalogMixin):

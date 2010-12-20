@@ -381,13 +381,16 @@ def main():
         logging.warning("Srv4 file %s was not found in the database.",
                         md5_sum)
   elif command == 'del-from-cat':
-    if len(args) <= 4:
+    if len(args) < 4:
       raise UsageError("Not enough arguments, see usage.")
     osrel, arch, catrel= args[:3]
     md5_sums = args[3:]
+    c = checkpkg_lib.Catalog()
     for md5_sum in md5_sums:
       sqo_srv4 = m.Srv4FileStats.select(
           m.Srv4FileStats.q.md5_sum==md5_sum).getOne()
+      logging.debug("Removing %s from %s %s %s",
+                    sqo_srv4, osrel, arch, catrel)
       c.RemoveSrv4(sqo_srv4, osrel, arch, catrel)
   elif command == 'system-files-to-file':
     logging.debug("Args: %s", args)
