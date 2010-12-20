@@ -33,6 +33,10 @@ SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/bash/bashtop.html
 
 SPKG_CLASSES = none build
 
+# /etc/shells is only updated by an action class scripts
+# this file collision is not important
+CHECKPKG_OVERRIDES_CSWbash += file-collision|/etc/shells|CSWbash|CSWksh
+
 ###### Upstream and opencsw files information #######
 
 # We define upstream file regex so we can be notifed of new upstream software release
