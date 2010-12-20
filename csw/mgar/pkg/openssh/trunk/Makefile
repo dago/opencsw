@@ -52,7 +52,6 @@ PKGFILES_CSWossh += $(libexecdir)/sftp-server
 PKGFILES_CSWossh += $(sysconfdir)/ssh/sshd_config.CSW
 PKGFILES_CSWossh += $(sysconfdir)/ssh/moduli.CSW
 PKGFILES_CSWossh += $(localstatedir)/empty
-PKGFILES_CSWossh += $(localstatedir)/run
 PKGFILES_CSWossh += $(sysconfdir)/init.d/cswopenssh
 PKGFILES_CSWossh += $(localstatedir)/svc/manifest/network/cswopenssh.xml
 PKGFILES_CSWossh += $(prefix)/etc/pkg/CSWossh/cswusergroup
@@ -124,6 +123,11 @@ PATCHFILES += no_x_forwarding_bug.patch
 # Bug filled upstream: https://bugzilla.mindrot.org/show_bug.cgi?id=87
 PATCHFILES += 0004-no-lastlog-file.patch
 
+# Rename the pidfile to use cswsshd.pid instead of sshd.pid in order to
+# avoid a clash with sun native ssh pid file
+# see https://www.opencsw.org/mantis/view.php?id=4398
+PATCHFILES += 0005-rename-pidfile.patch
+
 # documentation files to install (not a gar variable)
 DOCFILES = CREDITS ChangeLog ChangeLog.gssapi INSTALL LICENCE OVERVIEW README README.dns 
 DOCFILES += README.platform README.privsep README.tun TODO WARNING.RNG    
@@ -149,7 +153,6 @@ CONFIGURE_ARGS += --with-solaris-contracts
 CONFIGURE_ARGS += --with-pam
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-privsep-path=$(localstatedir)/empty
-CONFIGURE_ARGS += --with-pid-dir=$(localstatedir)/run
 
 TEST_SCRIPTS	=
 
@@ -221,5 +224,4 @@ merge-config-files:
 
 merge-special-directories:
 	ginstall -d $(PKGROOT)$(localstatedir)/empty
-	ginstall -d $(PKGROOT)$(localstatedir)/run
 	ginstall -d $(PKGROOT)$(sysconfdir)/pkg/CSWossh
