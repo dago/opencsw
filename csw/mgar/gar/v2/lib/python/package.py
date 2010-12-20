@@ -458,7 +458,7 @@ class PackageComparator(object):
                                    sorted(pkgmap_b.paths),
                                    fromfile=self.pkg_a.pkg_path,
                                    tofile=self.pkg_b.pkg_path)
-    diff_text = "\n".join(diff_ab)
+    diff_text = "\n".join(x.strip() for x in diff_ab)
     if diff_text:
       less_proc = subprocess.Popen(["less"], stdin=subprocess.PIPE)
       less_stdout, less_stderr = less_proc.communicate(input=diff_text)
