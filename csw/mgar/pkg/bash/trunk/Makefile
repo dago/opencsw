@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = bash
-VERSION = 4.1.7
+VERSION = 4.1.9
 CATEGORIES = devel
 
 DESCRIPTION = A sh-compatible command language interpreter
