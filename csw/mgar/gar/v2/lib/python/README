@@ -11,6 +11,7 @@ Checks to implement:
  - CSWpmfoo --> error, suggest CSWpm-foo
  - Dependency on a transitional package --> error
  	 ('transitional', 'stub', 'legacy')
+ - Dependency on CSWcas-initsmf + rc* files --> error
 
 
 Development plan for checkpkg:
