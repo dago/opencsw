@@ -377,6 +377,12 @@ class PackageStatsMixin(object):
     for override_dict in pkg_stats["overrides"]:
       o = m.CheckpkgOverride(srv4_file=db_pkg_stats,
                              **override_dict)
+    # Save dependencies in the database
+    for dep_pkgname, unused_desc in pkg_stats["depends"]:
+      dep_pkginst = cls.GetOrSetPkginst(dep_pkgname)
+      obj = m.Srv4DependsOn(
+          srv4_file=db_pkg_stats,
+          pkginst=dep_pkginst)
 
     # The ldd -r reporting breaks on bigger packages during yaml saving.
     # It might work when yaml is disabled
