@@ -66,7 +66,7 @@ DISTFILES += README-CSW.txt
 DISTFILES += CSWpostgresql-$(BASE_VERSION_G).postinstall
 
 PACKAGES += CSWpostgresql
-PACKAGES += CSWlibpq
+PACKAGES += CSWlibpq5
 PACKAGES += CSWlibpq-devel
 PACKAGES += CSWpostgresql-$(BASE_VERSION_G)
 PACKAGES += CSWpostgresql-$(BASE_VERSION_G)-dev
@@ -75,31 +75,32 @@ PACKAGES += CSWpostgresql-$(BASE_VERSION_G)-doc
 CATALOGNAME_CSWpostgresql-$(BASE_VERSION_G)      = postgresql_$(BASE_VERSION_G)
 CATALOGNAME_CSWpostgresql-$(BASE_VERSION_G)-doc  = postgresql_$(BASE_VERSION_G)_doc
 CATALOGNAME_CSWpostgresql-$(BASE_VERSION_G)-dev  = postgresql_$(BASE_VERSION_G)_devel
-CATALOGNAME_CSWlibpq                             = libpq
+CATALOGNAME_CSWlibpq5                             = libpq
+CATALOGNAME_CSWlibpq-devel                       = libpq_devel
 CATALOGNAME_CSWpostgresql                        = postgresql
 
-SPKG_DEST_CSWpostgresql                       = An advanced open source database, a metapackage
-SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)     = An advanced open source database, version $(BASE_VERSION).x
+SPKG_DESC_CSWpostgresql                       = An advanced open source database
+SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)     = PostgreSQL, version $(BASE_VERSION).x
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)-doc = PostgreSQL $(BASE_VERSION).x Documentation
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)-dev = PostgreSQL $(BASE_VERSION).x Developer Files
-SPKG_DESC_CSWlibpq                            = PostgreSQL C client library (built from $(BASE_VERSION).x sources)
+SPKG_DESC_CSWlibpq5                            = PostgreSQL C client library (built from $(BASE_VERSION).x sources)
 SPKG_DESC_CSWlibpq-devel                      = PostgreSQL C client headers (built from $(BASE_VERSION).x sources)
 
-RUNTIME_DEP_PKGS_CSWpostgresql                        = CSWpostgresql-$(BASE_VERSION_G)
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibgnugetopt
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibpq
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWosslrt
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWreadline
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibpq                            += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWlibpq                            += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibpq                            += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWlibpq                            += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibpq                            += CSWzlib
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)-dev  = CSWpostgresql-$(BASE_VERSION_G)
+# RUNTIME_DEP_PKGS_CSWpostgresql                        = CSWpostgresql-$(BASE_VERSION_G)
+# RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWkrb5lib
+# RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibgnugetopt
+# RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibpq5
+# RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibxml2
+# RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWlibxslt
+# RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWosslrt
+# RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWreadline
+# RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)     += CSWzlib
+# RUNTIME_DEP_PKGS_CSWlibpq5                            += CSWkrb5lib
+# RUNTIME_DEP_PKGS_CSWlibpq5                            += CSWlibxml2
+# RUNTIME_DEP_PKGS_CSWlibpq5                            += CSWlibxslt
+# RUNTIME_DEP_PKGS_CSWlibpq5                            += CSWosslrt
+# RUNTIME_DEP_PKGS_CSWlibpq5                            += CSWzlib
+# RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G)-dev  = CSWpostgresql-$(BASE_VERSION_G)
 
 CHECKPKG_OVERRIDES_CSWpostgresql += surplus-dependency|CSWpostgresql-90
 CHECKPKG_OVERRIDES_CSWpostgresql-90-dev += surplus-dependency|CSWpostgresql-90
@@ -159,28 +160,17 @@ PKGFILES_CSWpostgresql                        = NOFILES
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-doc  = $(PKGFILES_DOC)
 PKGFILES_CSWpostgresql-$(BASE_VERSION_G)-dev  = $(PKGFILES_DEVEL)
 
-PKGFILES_CSWlibpq  = $(call baseisadirs,$(libdir),libpq\.so(\.\d+)*)
-PKGFILES_CSWlibpq += $(call baseisadirs,$(libpath_install),libpq\.so(\.\d+)*)
-PKGFILES_CSWlibpq += $(libdir)/64
+PKGFILES_CSWlibpq5  = $(call baseisadirs,$(libdir),libpq\.so(\.\d+)+)
+PKGFILES_CSWlibpq5 += $(call baseisadirs,$(libpath_install),libpq\.so(\.\d+)+)
+PKGFILES_CSWlibpq5 += $(libdir)/64
 
-#
+# libpq-devel files
 PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/internal/.*
 PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/libpq-fe.h
 PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/libpq-events.h
 PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/libpq/libpq-fs.h
 PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/pg_config.*.h
 PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/postgres_ext.h
-PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/catalog/pg_type.h /usr/include/postgresql/catalog
-PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/catalog/genbki.h /usr/include/postgresql/catalog
-PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/nodes/nodes.h /usr/include/postgresql/nodes
-# PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/utils/(elog|errcodes|palloc).h /usr/include/postgresql/utils
-# Need to move these.
-PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/utils/(elog|errcodes|palloc).h
-# PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/{c,pg_config,pg_config_manual,pg_config_os,port,pg_trace}.h /usr/include/postgresql/
-PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/(c|pg_config|pg_config_manual|pg_config_os|port|pg_trace}.h
-# PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/postgres{,_fe,_ext}.h /usr/include/postgresql/
-PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/postgres(|_fe|_ext}.h
-# PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/8.4/server/mb/pg_wchar.h /usr/include/postgresql/mb
 PKGFILES_CSWlibpq-devel += $(prefix)/include/postgresql/mb/pg_wchar.h
 PKGFILES_CSWlibpq-devel += $(prefix)/lib/libpq.so
 # PKGFILES_CSWlibpq-devel += $(prefix)/lib/postgresql/8.4/bin/pg_config usr/bin
@@ -263,18 +253,18 @@ post-install-modulated:
 	ginstall -d -m 755 $(DESTDIR)$(prefix)/bin
 	[ -r $(DESTDIR)$(bindir)/pg_config ] && \
 	gmv -v $(DESTDIR)$(bindir)/pg_config $(DESTDIR)$(prefix)/bin || true
-	ginstall -d -m 755 $(DESTDIR)/include/postgresql/utils
-	for f in elog.h errcodes.h palloc.h; do \
-		[ -r $(DESTDIR)$(includedir)/utils/$${f} ] && \
-			gmv -v $(DESTDIR)$(includedir)/utils/$${f} \
-			$(DESTDIR)$(prefix)/include/postgresql/utils/ || true; \
-	done
-	for f in c.h pg_config.h pg_config_manual.h pg_config_os,port.h pg_trace.h ; do \
-		[ -f $(DESTDIR)$(prefix)/include/postgresql/8.4/server/$${f} ] && \
-		gmv -v $(DESTDIR)$(prefix)/include/postgresql/8.4/server/$${f} \
-			$(DESTDIR)/$(prefix)/include/postgresql/ || true; \
-	done
-	@$(MAKECOOKIE)
+	# ginstall -d -m 755 $(DESTDIR)/include/postgresql/utils
+	# for f in elog.h errcodes.h palloc.h; do \
+	# 	[ -r $(DESTDIR)$(includedir)/utils/$${f} ] && \
+	# 		gmv -v $(DESTDIR)$(includedir)/utils/$${f} \
+	# 		$(DESTDIR)$(prefix)/include/postgresql/utils/ || true; \
+	# done
+	# for f in c.h pg_config.h pg_config_manual.h pg_config_os,port.h pg_trace.h ; do \
+	# 	[ -f $(DESTDIR)$(prefix)/include/postgresql/8.4/server/$${f} ] && \
+	# 	gmv -v $(DESTDIR)$(prefix)/include/postgresql/8.4/server/$${f} \
+	# 		$(DESTDIR)/$(prefix)/include/postgresql/ || true; \
+	# done
+	# @$(MAKECOOKIE)
 
 post-merge:
 	ginstall -d $(PKGROOT)/etc$(prefix)/init.d
