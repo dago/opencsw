@@ -377,13 +377,6 @@ class PackageStatsMixin(object):
     for override_dict in pkg_stats["overrides"]:
       o = m.CheckpkgOverride(srv4_file=db_pkg_stats,
                              **override_dict)
-    # Save dependencies in the database
-    for dep_pkgname, unused_desc in pkg_stats["depends"]:
-      dep_pkginst = cls.GetOrSetPkginst(dep_pkgname)
-      obj = m.Srv4DependsOn(
-          srv4_file=db_pkg_stats,
-          pkginst=dep_pkginst)
-
     # The ldd -r reporting breaks on bigger packages during yaml saving.
     # It might work when yaml is disabled
     # self.DumpObject(self.GetLddMinusRlines(), "ldd_dash_r")
@@ -435,6 +428,19 @@ class PackageStatsMixin(object):
           line=line_u,
           pkginst=pkginst,
           srv4_file=stats)
+    # Save dependencies in the database.  First remove any dependency rows
+    # that might be in the database.
+    # TODO(maciej): Unit test it
+    deps_res = m.Srv4DependsOn.select(
+        m.Srv4DependsOn.q.srv4_file==stats)
+    for dep_obj in deps_res:
+      dep_obj.destroySelf()
+    for dep_pkgname, unused_desc in pkg_stats["depends"]:
+      dep_pkginst = cls.GetOrSetPkginst(dep_pkgname)
+      obj = m.Srv4DependsOn(
+          srv4_file=stats,
+          pkginst=dep_pkginst)
+
     # At this point, we've registered the srv4 file.
     # Setting the registered bit to True
     stats.registered = True
