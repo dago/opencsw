@@ -104,6 +104,7 @@ def ComposeDatabaseUri(config):
       'db_host': config.get("database", "host"),
       'db_user': config.get("database", "user"),
       'db_password': config.get("database", "password")}
+  logging.debug("db_name: %(db_name)s, db_user: %(db_user)s" % db_data)
   if db_data["db_type"] == "mysql":
     db_uri_tmpl = "%(db_type)s://%(db_user)s:%(db_password)s@%(db_host)s/%(db_name)s"
   elif db_data["db_type"] == "sqlite":
