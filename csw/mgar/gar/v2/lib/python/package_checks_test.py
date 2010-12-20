@@ -405,7 +405,7 @@ class TestSetCheckSharedLibraryConsistency2_1(CheckpkgUnitTestHelper,
         '/opt/csw/share/doc').AndReturn([u"CSWcommon"])
     self.error_mgr_mock.GetPkgByPath(
         '/opt/csw/lib/sparcv9').AndReturn([u"CSWcommon"])
-    self.error_mgr_mock.ReportError(
+    self.error_mgr_mock.ReportErrorForPkgname(
         'CSWdjvulibrert', 'missing-dependency', u'CSWiconv')
 
 
@@ -707,7 +707,7 @@ class TestSharedLibsInAnInstalledPackageToo(CheckpkgUnitTestHelper,
         'CSWbar',
         'soname-not-found',
         'libfoo.so.1 is needed by opt/csw/bin/bar')
-    self.error_mgr_mock.ReportError('CSWbar', 'surplus-dependency', 'CSWlibfoo')
+    self.error_mgr_mock.ReportErrorForPkgname('CSWbar', 'surplus-dependency', 'CSWlibfoo')
     self.pkg_data = [self.CSWbar_DATA, self.CSWlibfoo_DATA]
 
 
@@ -1041,7 +1041,7 @@ class TestSetCheckDirectoryDependencies(CheckpkgUnitTestHelper,
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libComUnidraw.so').AndReturn({})
     self.error_mgr_mock.GetPkgByPath('/opt/csw').AndReturn([u"CSWcommon"])
     self.error_mgr_mock.GetPkgByPath('/opt/csw/lib').AndReturn([u"CSWcommon"])
-    self.error_mgr_mock.ReportError('CSWivtools', 'missing-dependency', u'CSWcommon')
+    self.error_mgr_mock.ReportErrorForPkgname('CSWivtools', 'missing-dependency', u'CSWcommon')
 
 
 class TestSetCheckDirectoryDependenciesTree(CheckpkgUnitTestHelper,
@@ -1337,14 +1337,14 @@ class TestSetCheckDoubleDepends(CheckpkgUnitTestHelper, unittest.TestCase):
       u'CSWgnomedesktop', u'CSWnautilus', u'CSWlibofx', u'CSWgamin',
       u'CSWpkgutil', u'CSWgcc3core', u'CSWgnomemime2', u'CSWglib'])
 
-    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWneon')
-    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWapache2rt')
-    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWoldaprt')
-    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWggettextrt')
-    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWapache2rt or CSWapr')
-    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWexpat')
-    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWsvn')
-    self.error_mgr_mock.ReportError('CSWjavasvn', 'missing-dependency', u'CSWiconv')
+    self.error_mgr_mock.ReportErrorForPkgname('CSWjavasvn', 'missing-dependency', u'CSWneon')
+    self.error_mgr_mock.ReportErrorForPkgname('CSWjavasvn', 'missing-dependency', u'CSWapache2rt')
+    self.error_mgr_mock.ReportErrorForPkgname('CSWjavasvn', 'missing-dependency', u'CSWoldaprt')
+    self.error_mgr_mock.ReportErrorForPkgname('CSWjavasvn', 'missing-dependency', u'CSWggettextrt')
+    self.error_mgr_mock.ReportErrorForPkgname('CSWjavasvn', 'missing-dependency', u'CSWapache2rt or CSWapr')
+    self.error_mgr_mock.ReportErrorForPkgname('CSWjavasvn', 'missing-dependency', u'CSWexpat')
+    self.error_mgr_mock.ReportErrorForPkgname('CSWjavasvn', 'missing-dependency', u'CSWsvn')
+    self.error_mgr_mock.ReportErrorForPkgname('CSWjavasvn', 'missing-dependency', u'CSWiconv')
     self.messenger.Message(u'Dependency issues of CSWjavasvn:')
     self.messenger.Message(u'CSWapache2rt, reasons:')
     self.messenger.Message(u' - provides /opt/csw/apache2/lib/libaprutil-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')

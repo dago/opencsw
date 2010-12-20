@@ -5,6 +5,9 @@ import os.path
 import re
 import ldd_emul
 import sharedlib_utils
+import common_constants
+import operator
+import logging
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -289,3 +292,80 @@ def SuggestLibraryPackage(error_mgr, messenger,
       % (pkgname, pkgname))
   messenger.SuggestGarLine(
       "# The end of %s definition" % pkgname)
+
+
+def ReportMissingDependencies(error_mgr, pkgname, declared_deps, req_pkgs_reasons):
+  """Processes data structures with dependency data and reports errors.
+
+  Args:
+    error_mgr: SetCheckInterface
+    pkgname: pkgname, a string
+    declared_deps: An iterable with declared dependencies
+    req_pkgs_reasons: Groups of reasons
+
+  data structure:
+    [
+      [
+        ("CSWfoo1", "reason"),
+        ("CSWfoo2", "reason"),
+      ],
+      [
+        ( ... ),
+      ]
+    ]
+  """
+  missing_reasons_by_pkg = {}
+  for reason_group in req_pkgs_reasons:
+    for pkg, reason in reason_group:
+      missing_reasons_by_pkg.setdefault(pkg, [])
+      if len(missing_reasons_by_pkg[pkg]) < 4:
+        missing_reasons_by_pkg[pkg].append(reason)
+      elif len(missing_reasons_by_pkg[pkg]) == 4:
+        missing_reasons_by_pkg[pkg].append("...and more.")
+  missing_dep_groups = MissingDepsFromReasonGroups(
+      req_pkgs_reasons, declared_deps)
+  pkgs_to_remove = set()
+  for regex_str in common_constants.DO_NOT_REPORT_MISSING_RE:
+    regex = re.compile(regex_str)
+    for dep_pkgname in reduce(operator.add, missing_dep_groups, []):
+      if re.match(regex, dep_pkgname):
+        pkgs_to_remove.add(dep_pkgname)
+  if pkgname in reduce(operator.add, missing_dep_groups, []):
+    pkgs_to_remove.add(pkgname)
+  logging.debug("Removing %s from the list of missing pkgs.", pkgs_to_remove)
+  new_missing_dep_groups = set()
+  for missing_deps in missing_dep_groups:
+    new_missing_deps = set()
+    for dep in missing_deps:
+      if dep not in pkgs_to_remove:
+        new_missing_deps.add(dep)
+    if new_missing_deps:
+      new_missing_dep_groups.add(tuple(new_missing_deps))
+  potential_req_pkgs = set(
+      (x for x, y in reduce(operator.add, req_pkgs_reasons, [])))
+  missing_dep_groups = new_missing_dep_groups
+  surplus_deps = declared_deps.difference(potential_req_pkgs)
+  no_report_surplus = set()
+  for sp_regex in common_constants.DO_NOT_REPORT_SURPLUS:
+    for maybe_surplus in surplus_deps:
+      if re.match(sp_regex, maybe_surplus):
+        no_report_surplus.add(maybe_surplus)
+  surplus_deps = surplus_deps.difference(no_report_surplus)
+  for regex_str in common_constants.DO_NOT_REPORT_SURPLUS_FOR:
+    if surplus_deps and re.match(regex_str, pkgname):
+      surplus_deps = set()
+  # Using an index to avoid duplicated reasons.
+  missing_deps_reasons_by_pkg = []
+  missing_deps_idx = set()
+  for missing_deps in missing_dep_groups:
+    error_mgr.ReportErrorForPkgname(
+        pkgname, "missing-dependency", " or ".join(missing_deps))
+    for missing_dep in missing_deps:
+      item = (missing_dep, tuple(missing_reasons_by_pkg[missing_dep]))
+      if item not in missing_deps_idx:
+        missing_deps_reasons_by_pkg.append(item)
+        missing_deps_idx.add(item)
+  for surplus_dep in surplus_deps:
+    error_mgr.ReportErrorForPkgname(pkgname, "surplus-dependency", surplus_dep)
+  return missing_deps_reasons_by_pkg, surplus_deps, missing_dep_groups
+

@@ -57,3 +57,11 @@ DEFAULT_CATALOG_RELEASES = frozenset([
     'stable',
     ])
 
+# At some point, it was used to prevent people from linking against
+# libX11.so.4, but due to issues with 3D acceleration.
+DO_NOT_LINK_AGAINST_THESE_SONAMES = set([])
+
+# Regarding surplus libraries reports
+DO_NOT_REPORT_SURPLUS = [r"^CSWcommon$", r"^CSWcswclassutils$", r"^CSWcas-", r"^CSWisaexec$"]
+DO_NOT_REPORT_SURPLUS_FOR = [r"CSW[a-z\-]+dev(el)?"]
+DO_NOT_REPORT_MISSING_RE = [r"\*?SUNW.*"]
