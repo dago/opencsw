@@ -13,7 +13,7 @@
 PATH=/usr/bin:/opt/csw/bin:/usr/sbin
 
 KEYDIR=/etc/opt/csw/ssh
-PIDFILE=/var/run/sshd.pid
+PIDFILE=/var/run/cswsshd.pid
 case $1 in 
 'start')
         if [ -x /opt/csw/bin/ssh-keygen ]; then
