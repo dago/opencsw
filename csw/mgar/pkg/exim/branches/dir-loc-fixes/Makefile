@@ -17,6 +17,7 @@ endef
 MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSWexim.postinstall CSWexim.postremove CSWexim.request
+DISTFILES += CSWexim.preinstall
 
 # NOTE TO FUTURE MAINTAINERS:
 # This patch should be thoroughly reviewed for each update so as not to
@@ -29,7 +30,7 @@ BUILD_DEP_PKGS = CSWlibspf2
 RUNTIME_DEP_PKGS_CSWexim  = CSWiconv CSWoldaprt CSWosslrt CSWsasl
 RUNTIME_DEP_PKGS_CSWexim += CSWmysql5rt CSWlibpq CSWlibspf2
 RUNTIME_DEP_PKGS_CSWexim += CSWgzip CSWgzipextras
-RUNTIME_DEP_PKGS_CSWexim += CSWpcrert
+RUNTIME_DEP_PKGS_CSWexim += CSWpcrert CSWrsync
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
