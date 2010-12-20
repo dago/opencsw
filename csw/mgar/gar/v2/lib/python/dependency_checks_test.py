@@ -200,7 +200,63 @@ class TestByDirectory(unittest.TestCase):
          u"[u'CSWcommon'] provides directory /opt/csw/share/man is needed by the package CSWtree")]]
     self.assertEquals(expected, result)
 
+
+class TestMissingDepsFromReasonGroups(unittest.TestCase):
+
+  def testOne(self):
+    reason_groups = [
+        [(u"CSWfoo1", ""),
+         (u"CSWfoo2", "")],
+        [(u"CSWbar", "")],
+    ]
+    declared_deps = set([u"CSWfoo2"])
+    expected = [[u"CSWbar"]]
+    result = dependency_checks.MissingDepsFromReasonGroups(
+        reason_groups, declared_deps)
+    self.assertEqual(result, expected)
+
+
+class TestLibraries(unittest.TestCase):
+
+  def setUp(self):
+    self.mocker = mox.Mox()
+    self.logger_stub = stubs.LoggerStub()
+    self.messenger_stub = stubs.MessengerStub()
+    self.error_mgr_mock = self.mocker.CreateMock(
+        checkpkg_lib.SetCheckInterface)
+    self.pkg_data = copy.deepcopy(sudo_stats[0])
+
+  def testLibrariesRpathOrder(self):
+    # pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
+    # pkg_by_path
+    pass
+
+  def testByFilename(self):
+    self.pkg_data = tree_stats[0]
+    self.pkg_data["pkgmap"] = [
+        {'class': 'none',
+         'line': 'not important',
+         'mode': '0755',
+         'path': '/opt/csw/apache2/bin/foo',
+         'type': 'f',
+         'group': 'bin',
+         'user': 'root'}]
+    self.mocker.ReplayAll()
+    result = dependency_checks.ByFilename(
+        self.pkg_data,
+        self.error_mgr_mock,
+        self.logger_stub,
+        self.messenger_stub,
+        None, None)
+    self.mocker.VerifyAll()
+    expected = [[
+      (u'CSWapache2',
+       "found file(s) matching /opt/csw/apache2/, "
+       "e.g. '/opt/csw/apache2/bin/foo'")]]
+    self.assertEqual(expected, result)
+
   def testLibraries_1(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
     path_and_pkg_by_basename = {
          'libc.so.1': {u'/usr/lib': [u'SUNWcsl'],
                        u'/usr/lib/libp/sparcv9': [u'SUNWdplx'],
@@ -297,61 +353,6 @@ class TestByDirectory(unittest.TestCase):
                           self.logger_stub,
                           self.messenger_stub,
                           path_and_pkg_by_basename, pkg_by_path)
-    self.assertEqual(expected, result)
-
-
-class TestMissingDepsFromReasonGroups(unittest.TestCase):
-
-  def testOne(self):
-    reason_groups = [
-        [(u"CSWfoo1", ""),
-         (u"CSWfoo2", "")],
-        [(u"CSWbar", "")],
-    ]
-    declared_deps = set([u"CSWfoo2"])
-    expected = [[u"CSWbar"]]
-    result = dependency_checks.MissingDepsFromReasonGroups(
-        reason_groups, declared_deps)
-    self.assertEqual(result, expected)
-
-
-class TestLibraries(unittest.TestCase):
-
-  def setUp(self):
-    self.mocker = mox.Mox()
-    self.logger_stub = stubs.LoggerStub()
-    self.messenger_stub = stubs.MessengerStub()
-    self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg_lib.SetCheckInterface)
-    self.pkg_data = copy.deepcopy(sudo_stats)
-
-  def testLibrariesRpathOrder(self):
-    # pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
-    # pkg_by_path
-    pass
-
-  def testByFilename(self):
-    self.pkg_data = tree_stats[0]
-    self.pkg_data["pkgmap"] = [
-        {'class': 'none',
-         'line': 'not important',
-         'mode': '0755',
-         'path': '/opt/csw/apache2/bin/foo',
-         'type': 'f',
-         'group': 'bin',
-         'user': 'root'}]
-    self.mocker.ReplayAll()
-    result = dependency_checks.ByFilename(
-        self.pkg_data,
-        self.error_mgr_mock,
-        self.logger_stub,
-        self.messenger_stub,
-        None, None)
-    self.mocker.VerifyAll()
-    expected = [[
-      (u'CSWapache2',
-       "found file(s) matching /opt/csw/apache2/, "
-       "e.g. '/opt/csw/apache2/bin/foo'")]]
     self.assertEqual(expected, result)
 
 
