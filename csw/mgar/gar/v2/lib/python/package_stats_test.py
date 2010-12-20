@@ -236,6 +236,17 @@ class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
     self.assertEquals("CSWtree", o.pkgname)
     self.assertEquals("bad-rpath-entry", o.tag_name)
 
+  def testImportDependencies(self):
+    md5_sum = tree_stats[0]["basic_stats"]["md5_sum"]
+    self.assertEqual(u'1e43fa1c7e637b25d9356ad516ae0403', md5_sum)
+    new_stats = copy.deepcopy(tree_stats[0])
+    self.TestPackageStats.SaveStats(new_stats)
+    depends = list(m.Srv4DependsOn.select())
+    self.assertEquals(1, len(depends))
+    dep = depends[0]
+    self.assertEquals(md5_sum, dep.srv4_file.md5_sum)
+    self.assertEquals(u"CSWcommon", dep.pkginst.pkgname)
+
   def testImportPkg(self):
     """Registers the package in the database."""
     package_stats.PackageStats.ImportPkg(neon_stats[0])

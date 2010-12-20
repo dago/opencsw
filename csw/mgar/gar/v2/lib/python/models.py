@@ -226,3 +226,11 @@ class Srv4FileInCatalog(sqlobject.SQLObject):
   uniqueness_idx = sqlobject.DatabaseIndex(
           'arch', 'osrel', 'catrel', 'srv4file',
           unique=True)
+
+
+class Srv4DependsOn(sqlobject.SQLObject):
+  """Models dependencies."""
+  srv4_file = sqlobject.ForeignKey('Srv4FileStats', notNone=True)
+  pkginst = sqlobject.ForeignKey('Pkginst', notNone=True)
+  dep_uniq_idx = sqlobject.DatabaseIndex(
+      'srv4_file', 'pkginst')

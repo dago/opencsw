@@ -24,6 +24,7 @@ TABLES = TABLES_THAT_NEED_UPDATES + (
             m.Maintainer,
             m.OsRelease,
             m.Pkginst,
+            m.Srv4DependsOn,
             m.Srv4FileInCatalog,
             m.Srv4FileStats,
             m.Srv4FileStatsBlob)
