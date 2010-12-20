@@ -151,6 +151,13 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-amd64-version-2.3.43 = .*\.so
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-2.3.43 = .*\.so
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9-version-2.3.43 = .*\.so
 
+# These are the config templates. As we have preserveconf which takes
+# care of this we exclude them in the package.
+EXTRA_MERGE_EXCLUDE_FILES = .*\.default
+
+PRESERVECONF  = /etc/opt/csw/openldap/ldap.conf
+PRESERVECONF += /etc/opt/csw/openldap/slapd.conf
+
 PKGFILES_CSWoldapclient  = $(bindir)/.*
 PKGFILES_CSWoldapclient += $(mandir)/man1/.*
 
@@ -162,6 +169,7 @@ PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
 PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
 
 INITSMF = /opt/csw/etc/init.d/cswopenldap
+
 CHECKPKG_OVERRIDES_CSWoldap += init-file-wrong-location|/opt/csw/etc/init.d/cswopenldap
 
 # New libnet not released yet
