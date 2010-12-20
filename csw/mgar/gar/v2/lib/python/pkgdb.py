@@ -7,6 +7,7 @@ import ConfigParser
 import optparse
 import models as m
 import sqlobject
+from sqlobject import sqlbuilder
 import cPickle
 import logging
 import code
@@ -38,6 +39,7 @@ USAGE = """
        %prog del-from-cat <osrel> <arch> <cat-release> <md5sum> [ ... ]
        %prog sync-cat-from-file <osrel> <arch> <cat-release> <catalog-file>
        %prog sync-catalogs-from-tree <cat-release> <directory>
+       %prog show cat [options]
 
   Inspecting individual packages:
        %prog show errors <md5sum> [ ... ]
@@ -445,6 +447,25 @@ def main():
     ci = CatalogImporter(debug=options.debug)
     catrel, base_dir = args
     ci.SyncFromCatalogTree(catrel, base_dir)
+  elif (command, subcommand) == ('show', 'cat'):
+    sqo_osrel = m.OsRelease.selectBy(short_name=options.osrel).getOne()
+    sqo_arch = m.Architecture.selectBy(name=options.arch).getOne()
+    sqo_catrel = m.CatalogRelease.selectBy(name=options.catrel).getOne()
+    join = [
+        sqlbuilder.INNERJOINOn(None,
+          m.Srv4FileInCatalog,
+          m.Srv4FileInCatalog.q.srv4file==m.Srv4FileStats.q.id),
+    ]
+    res = m.Srv4FileStats.select(
+        sqlobject.AND(
+          m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+          m.Srv4FileInCatalog.q.arch==sqo_arch,
+          m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+        ),
+        join=join,
+    )
+    for obj in res:
+      print obj.basename, obj.md5_sum
   elif (command, subcommand) == ('show', 'basename'):
     db_catalog = checkpkg_lib.Catalog()
     for arg in args:
