@@ -55,7 +55,7 @@ RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibglade2
 RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWgtk2
 RUNTIME_DEP_PKGS_CSWlibgnomeui2-0 += CSWlibcairo
 
-RUNTIME_DEP_PKGS_CSWlibgnomeui-devel = CSWlibgnomeui
+RUNTIME_DEP_PKGS_CSWlibgnomeui-devel = CSWlibgnomeui2-0
 
 # Legacy package dependencies, remove after deprecation
 RUNTIME_DEP_PKGS_CSWlibgnomeui = CSWlibgnomeui2-0 CSWlibgnomeui-devel CSWlibgnomeui-doc
