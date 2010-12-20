@@ -324,6 +324,9 @@ def main():
 
   md5_sums = args
 
+  dm = database.DatabaseManager()
+  dm.AutoManage()
+
   if (command, subcommand) == ('show', 'errors'):
     for md5_sum in md5_sums:
       srv4 = GetPkg(md5_sum)
