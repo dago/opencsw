@@ -1,0 +1,31 @@
+#!/sbin/sh
+
+PATH=/bin:/usr/bin:"$PATH"
+export PATH
+
+is_usr_readonly()
+{
+  mount | grep '^/usr ' | grep 'read only' >/dev/null
+}
+
+# in Solaris 8 it's in /usr/bin; in Solaris 9 in /usr/sbin 
+if [ -r "$PKG_INSTALL_ROOT/usr/bin/newaliases" ]; then
+  NEWALIASES="$PKG_INSTALL_ROOT/usr/bin/newaliases"
+elif [ -r "$PKG_INSTALL_ROOT/usr/sbin/newaliases" ]; then
+  NEWALIASES="$PKG_INSTALL_ROOT/usr/sbin/newaliases"
+fi
+
+if [ "$SENDMAIL_ACTION" = "replace" ]; then
+  is_usr_readonly
+  if [ $? -eq 0 ]; then
+    echo "Your /usr partition is readonly. Cannot make modifications to it."
+  else
+    rm -f "$PKG_INSTALL_ROOT/usr/lib/sendmail" && echo "$PKG_INSTALL_ROOT/usr/lib/sendmail removed"
+    rm -f "$NEWALIASES" && echo "$NEWALIASES removed"
+    rm -f "$PKG_INSTALL_ROOT/usr/bin/mailq" && echo "$PKG_INSTALL_ROOT/usr/bin/mailq removed"
+    test -r "$PKG_INSTALL_ROOT/usr/lib/sendmail.OFF" && mv -f "$PKG_INSTALL_ROOT/usr/lib/sendmail.OFF" "$PKG_INSTALL_ROOT/usr/lib/sendmail" && echo "Renaming $PKG_INSTALL_ROOT/usr/lib/sendmail.OFF to sendmail"
+    test -r "$NEWALIASES.OFF" && mv -f "$NEWALIASES.OFF" "$NEWALIASES" && echo "Renaming $NEWALIASES.OFF to newaliases"
+    test -r "$PKG_INSTALL_ROOT/usr/bin/mailq.OFF" && mv -f "$PKG_INSTALL_ROOT/usr/bin/mailq.OFF" "$PKG_INSTALL_ROOT/usr/bin/mailq" && echo "Renaming $PKG_INSTALL_ROOT/usr/bin/mailq.OFF to mailq"
+    exit 0
+  fi
+fi

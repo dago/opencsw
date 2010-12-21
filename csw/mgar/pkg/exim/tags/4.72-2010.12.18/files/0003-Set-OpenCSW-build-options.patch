@@ -1,0 +1,317 @@
+From 5c1f33d87884e0c66ace1fd36e290cbe28d5c0de Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 14 Dec 2010 03:31:46 +0100
+Subject: [PATCH] Set OpenCSW build options
+
+Modify the template Local/Makefile to set the options for the csw
+environment.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Local/Makefile |   90 ++++++++++++++++++++++++++++----------------------------
+ 1 files changed, 45 insertions(+), 45 deletions(-)
+
+diff --git a/Local/Makefile b/Local/Makefile
+index 9869eb1..6ba1bf8 100644
+--- a/Local/Makefile
++++ b/Local/Makefile
+@@ -100,7 +100,7 @@
+ # /usr/local/sbin. The installation script will try to create this directory,
+ # and any superior directories, if they do not exist.
+ 
+-BIN_DIRECTORY=/usr/exim/bin
++BIN_DIRECTORY=/opt/csw/sbin
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -116,7 +116,7 @@ BIN_DIRECTORY=/usr/exim/bin
+ # don't exist. It will also install a default runtime configuration if this
+ # file does not exist.
+ 
+-CONFIGURE_FILE=/usr/exim/configure
++CONFIGURE_FILE=/opt/csw/etc/exim/exim.conf
+ 
+ # It is possible to specify a colon-separated list of files for CONFIGURE_FILE.
+ # In this case, Exim will use the first of them that exists when it is run.
+@@ -134,7 +134,7 @@ CONFIGURE_FILE=/usr/exim/configure
+ # owner of a local mailbox.) Specifying these values as root is very strongly
+ # discouraged.
+ 
+-EXIM_USER=
++EXIM_USER=ref:exim
+ 
+ # If you specify EXIM_USER as a name, this is looked up at build time, and the
+ # uid number is built into the binary. However, you can specify that this
+@@ -176,7 +176,7 @@ EXIM_USER=
+ 
+ # Almost all installations choose this:
+ 
+-SPOOL_DIRECTORY=/var/spool/exim
++SPOOL_DIRECTORY=/opt/csw/var/spool/exim
+ 
+ 
+ 
+@@ -214,7 +214,7 @@ ROUTER_REDIRECT=yes
+ 
+ # This one is very special-purpose, so is not included by default.
+ 
+-# ROUTER_IPLOOKUP=yes
++ROUTER_IPLOOKUP=yes
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -235,7 +235,7 @@ TRANSPORT_SMTP=yes
+ # This one is special-purpose, and commonly not required, so it is not
+ # included by default.
+ 
+-# TRANSPORT_LMTP=yes
++TRANSPORT_LMTP=yes
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -244,9 +244,9 @@ TRANSPORT_SMTP=yes
+ # MBX, is included only when requested. If you do not know what this is about,
+ # leave these settings commented out.
+ 
+-# SUPPORT_MAILDIR=yes
+-# SUPPORT_MAILSTORE=yes
+-# SUPPORT_MBX=yes
++SUPPORT_MAILDIR=yes
++SUPPORT_MAILSTORE=yes
++SUPPORT_MBX=yes
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -262,16 +262,16 @@ LOOKUP_DBM=yes
+ LOOKUP_LSEARCH=yes
+ LOOKUP_DNSDB=yes
+ 
+-# LOOKUP_CDB=yes
+-# LOOKUP_DSEARCH=yes
++LOOKUP_CDB=yes
++LOOKUP_DSEARCH=yes
+ # LOOKUP_IBASE=yes
+-# LOOKUP_LDAP=yes
+-# LOOKUP_MYSQL=yes
+-# LOOKUP_NIS=yes
+-# LOOKUP_NISPLUS=yes
++LOOKUP_LDAP=yes
++LOOKUP_MYSQL=yes
++LOOKUP_NIS=yes
++LOOKUP_NISPLUS=yes
+ # LOOKUP_ORACLE=yes
+-# LOOKUP_PASSWD=yes
+-# LOOKUP_PGSQL=yes
++LOOKUP_PASSWD=yes
++LOOKUP_PGSQL=yes
+ # LOOKUP_SQLITE=yes
+ # LOOKUP_WHOSON=yes
+ 
+@@ -292,7 +292,7 @@ LOOKUP_DNSDB=yes
+ # with Solaris 7 onwards. Uncomment whichever of these you are using.
+ 
+ # LDAP_LIB_TYPE=OPENLDAP1
+-# LDAP_LIB_TYPE=OPENLDAP2
++LDAP_LIB_TYPE=OPENLDAP2
+ # LDAP_LIB_TYPE=NETSCAPE
+ # LDAP_LIB_TYPE=SOLARIS
+ 
+@@ -321,8 +321,8 @@ PCRE_LIBS=-lpcre
+ # specified in INCLUDE. The settings below are just examples; -lpq is for
+ # PostgreSQL, -lgds is for Interbase, -lsqlite3 is for SQLite.
+ 
+-# LOOKUP_INCLUDE=-I /usr/local/ldap/include -I /usr/local/mysql/include -I /usr/local/pgsql/include
+-# LOOKUP_LIBS=-L/usr/local/lib -lldap -llber -lmysqlclient -lpq -lgds -lsqlite3
++LOOKUP_INCLUDE=-I /opt/csw/mysql5/include/mysql -I /opt/csw/postgresql/include
++LOOKUP_LIBS=-L/opt/csw/mysql5/lib/mysql -L/opt/csw/postgresql/lib -lldap -llber -lmysqlclient -lpq
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -343,14 +343,14 @@ EXIM_MONITOR=eximon.bin
+ # and the MIME ACL. Please read the documentation to learn more about these
+ # features.
+ 
+-# WITH_CONTENT_SCAN=yes
++WITH_CONTENT_SCAN=yes
+ 
+ # If you want to use the deprecated "demime" condition in the DATA ACL,
+ # uncomment the line below. Doing so will also explicitly turn on the
+ # WITH_CONTENT_SCAN option. If possible, use the MIME ACL instead of
+ # the "demime" condition.
+ 
+-# WITH_OLD_DEMIME=yes
++WITH_OLD_DEMIME=yes
+ 
+ #------------------------------------------------------------------------------
+ # Compiling Exim with experimental features. These are documented in
+@@ -361,9 +361,9 @@ EXIM_MONITOR=eximon.bin
+ # installed on your system (www.libspf2.org). Depending on where it is installed
+ # you may have to edit the CFLAGS and LDFLAGS lines.
+ 
+-# EXPERIMENTAL_SPF=yes
++EXPERIMENTAL_SPF=yes
+ # CFLAGS  += -I/usr/local/include
+-# LDFLAGS += -lspf2
++LDFLAGS += -lspf2
+ 
+ # Uncomment the following lines to add SRS (Sender rewriting scheme) support.
+ # You need to have libsrs_alt installed on your system (srs.mirtol.com).
+@@ -451,7 +451,7 @@ FIXED_NEVER_USERS=root
+ # used. The prefix can be more restrictive than just a directory (the second
+ # example).
+ 
+-# ALT_CONFIG_PREFIX=/some/directory/
++ALT_CONFIG_PREFIX=/opt/csw/etc/exim/
+ # ALT_CONFIG_PREFIX=/some/directory/exim.conf-
+ 
+ 
+@@ -486,11 +486,11 @@ FIXED_NEVER_USERS=root
+ # included in the Exim binary. You will then need to set up the run time
+ # configuration to make use of the mechanism(s) selected.
+ 
+-# AUTH_CRAM_MD5=yes
+-# AUTH_CYRUS_SASL=yes
+-# AUTH_DOVECOT=yes
+-# AUTH_PLAINTEXT=yes
+-# AUTH_SPA=yes
++AUTH_CRAM_MD5=yes
++AUTH_CYRUS_SASL=yes
++AUTH_DOVECOT=yes
++AUTH_PLAINTEXT=yes
++AUTH_SPA=yes
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -498,7 +498,7 @@ FIXED_NEVER_USERS=root
+ # Cyrus SASL library installed before trying to build Exim, and you probably
+ # want to uncomment the following line:
+ 
+-# AUTH_LIBS=-lsasl2
++AUTH_LIBS=-lsasl2
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -527,7 +527,7 @@ HEADERS_CHARSET="ISO-8859-1"
+ # the Sieve filter support. For those OS where iconv() is known to be installed
+ # as standard, the file in OS/Makefile-xxxx contains
+ #
+-# HAVE_ICONV=yes
++HAVE_ICONV=yes
+ #
+ # If you are not using one of those systems, but have installed iconv(), you
+ # need to uncomment that line above. In some cases, you may find that iconv()
+@@ -536,7 +536,7 @@ HEADERS_CHARSET="ISO-8859-1"
+ #
+ # HAVE_ICONV=yes
+ # CFLAGS=-O -I/usr/local/include
+-# EXTRALIBS_EXIM=-L/usr/local/lib -liconv
++EXTRALIBS_EXIM=-L/opt/csw/lib -liconv -lpam -ldl
+ #
+ # but of course there may need to be other things in CFLAGS and EXTRALIBS_EXIM
+ # as well.
+@@ -589,10 +589,10 @@ HEADERS_CHARSET="ISO-8859-1"
+ # leave these settings commented out.
+ 
+ # This setting is required for any TLS support (either OpenSSL or GnuTLS)
+-# SUPPORT_TLS=yes
++SUPPORT_TLS=yes
+ 
+ # Uncomment this setting if you are using OpenSSL
+-# TLS_LIBS=-lssl -lcrypto
++TLS_LIBS=-lssl -lcrypto
+ 
+ # Uncomment these settings if you are using GnuTLS
+ # USE_GNUTLS=yes
+@@ -611,7 +611,7 @@ HEADERS_CHARSET="ISO-8859-1"
+ # with all your other libraries. If they are in a special directory, you may
+ # need something like
+ 
+-# TLS_LIBS=-L/usr/local/openssl/lib -lssl -lcrypto
++TLS_LIBS=-L/opt/csw/lib/ -lssl -lcrypto
+ # or
+ # TLS_LIBS=-L/opt/gnu/lib -lgnutls -ltasn1 -lgcrypt
+ 
+@@ -619,7 +619,7 @@ HEADERS_CHARSET="ISO-8859-1"
+ # auxiliary programs. If the include files are not in a standard place, you can
+ # set TLS_INCLUDE to specify where they are, for example:
+ 
+-# TLS_INCLUDE=-I/usr/local/openssl/include/
++TLS_INCLUDE=-I/opt/csw/include/openssl
+ # or
+ # TLS_INCLUDE=-I/opt/gnu/include
+ 
+@@ -643,7 +643,7 @@ HEADERS_CHARSET="ISO-8859-1"
+ # Once you have done this, "make install" will build the info files and
+ # install them in the directory you have defined.
+ 
+-# INFO_DIRECTORY=/usr/share/info
++INFO_DIRECTORY=/opt/csw/share/info
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -656,7 +656,7 @@ HEADERS_CHARSET="ISO-8859-1"
+ # %s. This will be replaced by one of the strings "main", "panic", or "reject"
+ # to form the final file names. Some installations may want something like this:
+ 
+-# LOG_FILE_PATH=/var/log/exim_%slog
++LOG_FILE_PATH=/opt/csw/var/log/exim/%slog
+ 
+ # which results in files with names /var/log/exim_mainlog, etc. The directory
+ # in which the log files are placed must exist; Exim does not try to create
+@@ -705,7 +705,7 @@ EXICYCLOG_MAX=10
+ # files. Both the name of the command and the suffix that it adds to files
+ # need to be defined here. See also the EXICYCLOG_MAX configuration.
+ 
+-COMPRESS_COMMAND=/usr/bin/gzip
++COMPRESS_COMMAND=/opt/csw/bin/gzip
+ COMPRESS_SUFFIX=gz
+ 
+ 
+@@ -713,7 +713,7 @@ COMPRESS_SUFFIX=gz
+ # If the exigrep utility is fed compressed log files, it tries to uncompress
+ # them using this command.
+ 
+-ZCAT_COMMAND=/usr/bin/zcat
++ZCAT_COMMAND=/opt/csw/bin/zcat
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -732,7 +732,7 @@ ZCAT_COMMAND=/usr/bin/zcat
+ # that the local_scan API is made available by the linker. You may also need
+ # to add -ldl to EXTRALIBS so that dlopen() is available to Exim.
+ 
+-# EXPAND_DLFUNC=yes
++EXPAND_DLFUNC=yes
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -742,7 +742,7 @@ ZCAT_COMMAND=/usr/bin/zcat
+ # support, which is intended for use in conjunction with the SMTP AUTH
+ # facilities, is included only when requested by the following setting:
+ 
+-# SUPPORT_PAM=yes
++SUPPORT_PAM=yes
+ 
+ # You probably need to add -lpam to EXTRALIBS, and in some releases of
+ # GNU/Linux -ldl is also needed.
+@@ -839,7 +839,7 @@ ZCAT_COMMAND=/usr/bin/zcat
+ # (the value doesn't matter), the symbolic link is not created or moved. You
+ # will then have to "turn Exim on" by setting up the link manually.
+ 
+-# NO_SYMLINK=yes
++NO_SYMLINK=yes
+ 
+ 
+ #------------------------------------------------------------------------------
+@@ -851,7 +851,7 @@ ZCAT_COMMAND=/usr/bin/zcat
+ # aliases). The following setting can be changed to specify a different
+ # location for the system alias file.
+ 
+-SYSTEM_ALIASES_FILE=/etc/aliases
++SYSTEM_ALIASES_FILE=/opt/csw/etc/exim/aliases
+ 
+ 
+ #------------------------------------------------------------------------------
+-- 
+1.7.3.2
+

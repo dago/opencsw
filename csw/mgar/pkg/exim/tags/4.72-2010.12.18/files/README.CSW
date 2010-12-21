@@ -1,0 +1,80 @@
+IMPORTANT NOTES:
+
+Service Management Facility (SMF)
+---------------------------------
+
+As of release 4.62, the Exim package supports the new Service
+Management Facility introduced in Solaris 10. The package auto-detects
+whether or not it can use SMF on a given system. If SMF is not
+detected, the traditional init.d script will be installed together with
+the proper runlevel links.
+
+If the system supports SMF, the package will instead install
+/opt/csw/var/svc/manifest/network/exim.xml (the service description) and
+/opt/csw/lib/svc/method/svc-exim (the start/stop script). The FRMI
+(Fault Managed Resource Identifier) for CSWexim is
+svc:/network/cswexim.
+
+Example:
+
+# /usr/sbin/svcadm enable svc:/network/cswexim
+
+Environment File
+----------------
+Also new in package 4.62 is support for an "environment" file, namely
+/opt/csw/etc/exim/exim-env.sh, which can be used to set up environment
+variables or to modify the command-line parameters before exim is
+started. This file is "sourced" by the startup scripts
+(/etc/init.d/CSWexim or /opt/csw/lib/svc/method/svc-exim) which have
+been modified to honor the environment variable $EXIM_PARAMS to contain
+command line parameters for Exim.
+
+This file is persistent across updates, so if you modify it, your
+changes will stick around.
+
+Sender Policy Framework (SPF)
+-----------------------------
+
+Releases 4.43-4.51 of the Exim package support the Sender Policy
+Framework (SPF) based on libspf2-1.0.0. Later releases are using
+libspf2-1.2.x. (There has been an API change between libspf2-1.0.x and
+libspf2-1.2.x.)
+
+Also, please be aware that SPF support is still experimental. See
+http://thread.gmane.org/gmane.mail.exim.exiscan.user/2245 (the archive
+of the Exiscan mailing-list) for information about problems that can
+potentially to occur when using libspf2.
+
+Exiscan
+-------
+
+Starting with release 4.50 the Exim source already includes the
+functionality formerly distributed as exiscan patches.
+
+Links and further reading
+-------------------------
+
+For more information on exiscan please see:
+  /opt/csw/doc/exim/exiscan-acl-spec.txt
+and 
+  /opt/csw/doc/exim/exiscan-acl-examples.txt
+or visit the exiscan homepage at
+  http://duncanthrax.net/exiscan-acl/
+
+Exim can be found at:
+  http://www.exim.org/
+
+Additional examples for using SPF can be found at:
+  http://www.xmn-berlin.de/~marte/exim/exim4_exiscan-acl.html
+  http://slett.net/spam-filtering-for-mx/exim-spf.html
+(at least as of July 25, 2006 these links were working)
+
+Libspf2 lives here:
+  http://www.libspf2.org/
+
+An introduction to the SMF is given here:
+http://www.sun.com/bigadmin/content/selfheal/smf-quickstart.html
+
+-- 
+Markus Mayer
+mmayer@blastwave.org
