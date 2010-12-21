@@ -207,11 +207,24 @@ class ParseVersionStringTest(unittest.TestCase):
 
   def test_Text(self):
     data = "That, sir, is a frab-rication! It's wabbit season!"
-    opencsw.ParseVersionString(data)
+    # Make sure that we don't crash and return a tuple.  No guarantees
+    # for the content.
+    self.assertEquals(tuple, type(opencsw.ParseVersionString(data)))
 
   def test_Empty(self):
     data = ""
     expected = ('', {'major version': ''}, {})
+    self.assertEqual(expected, opencsw.ParseVersionString(data))
+
+  def testSmallRev(self):
+    data = "4.7.25,REV=2009.10.18_rev=p4"
+    expected = (
+        '4.7.25',
+        {'minor version': '7',
+         'patchlevel': '25',
+         'major version': '4'},
+        {'rev': 'p4',
+         'REV': '2009.10.18'})
     self.assertEqual(expected, opencsw.ParseVersionString(data))
 
   def testExtraStringsHashable(self):
