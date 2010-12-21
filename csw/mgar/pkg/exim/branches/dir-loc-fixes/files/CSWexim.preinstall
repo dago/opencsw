@@ -5,19 +5,19 @@ SPOOLOLD=${PIR}/opt/csw/var/spool
 SPOOLNEW=${PIR}/var/opt/csw/spool
 LOGOLD=${PIR}/opt/csw/var/log
 LOGNEW=${PIR}/var/opt/csw/log
-RSYNC=${PIR}/opt/csw/bin/rsync
+COPY="cp -pR"
 
 if [ -x ${RSYNC} ]; then
     if [ -d "${SPOOLOLD}/exim" -a ! -d "${SPOOLNEW}/exim" ]; then
 	echo "Transferring existing spool files to new location..."
-	$RSYNC -a --numeric-uids "${SPOOLOLD}/exim" "${SPOOLNEW}/"
+	$COPY "${SPOOLOLD}/exim" "${SPOOLNEW}/"
     else
 	echo "New spool directory exists already.  Not touching anything."
     fi
 
     if [ -d "${LOGOLD}/exim" -a ! -d "${LOGNEW}/exim" ]; then
 	echo "Transferring existing log files to new location..."
-	$RSYNC -a --numeric-uids "${LOGOLD}/exim" "${LOGNEW}/"
+	$COPY "${LOGOLD}/exim" "${LOGNEW}/"
     else
 	echo "New log directory exists already.  Not touching anything."
     fi
