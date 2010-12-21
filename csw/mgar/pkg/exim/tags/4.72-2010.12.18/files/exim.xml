@@ -1,0 +1,72 @@
+<?xml version='1.0'?>
+ <!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<!--
+
+        William Pool (Puddle) 02/05
+        Service manifest for Exim
+        E-mail: puddle@flipmotion.com
+	Modified for CSWexim by Markus Mayer <mmayer@blastwave.org>, 2006-01-08
+ -->
+
+ <service_bundle type='manifest' name='CSWexim:exim'>
+
+ <service
+         name='network/cswexim'
+         type='service'
+         version='1'>
+         <create_default_instance enabled='false' />
+         <single_instance />
+
+
+         <dependency name='fs'
+                 grouping='require_all'
+                 restart_on='none'
+                 type='service'>
+                 <service_fmri value='svc:/system/filesystem/local' />
+         </dependency>
+
+         <dependency name='net'
+                 grouping='require_all'
+                 restart_on='none'
+                 type='service'>
+                 <service_fmri value='svc:/network/loopback' />
+         </dependency>
+
+         <dependency
+                 name='name-services'
+                 grouping='require_all'
+                 restart_on='none'
+                 type='service'>
+                 <service_fmri value='svc:/milestone/name-services' />
+         </dependency>
+
+         <exec_method
+                 type='method'
+                 name='start'
+                 exec='/opt/csw/lib/svc/method/svc-exim start'
+                 timeout_seconds='-1'>
+         </exec_method>
+
+         <exec_method
+                 type='method'
+                 name='stop'
+                 exec='/opt/csw/lib/svc/method/svc-exim stop'
+                 timeout_seconds='-1'>
+         </exec_method>
+
+         <exec_method
+                 type='method'
+                 name='refresh'
+                 exec='/opt/csw/lib/svc/method/svc-exim refresh'
+                 timeout_seconds='-1'>
+         </exec_method>
+
+         <exec_method
+                 type='method'
+                 name='restart'
+                 exec='/opt/csw/lib/svc/method/svc-exim restart'
+                 timeout_seconds='-1'>
+         </exec_method>
+ </service>
+
+ </service_bundle>
