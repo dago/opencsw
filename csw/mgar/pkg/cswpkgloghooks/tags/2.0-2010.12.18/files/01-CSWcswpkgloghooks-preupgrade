@@ -1,0 +1,17 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+my ($pkg, $ver, $sysver, $statefile);
+
+$ARGV[0] =~ /(.+)-(.+)/;
+$pkg = $1;
+$ver = $2;
+
+$sysver = `pkgparam $pkg VERSION`;
+$statefile = "/var/opt/csw/pkg-hooks/CSWpkgloghooks.upgrade.$pkg";
+
+open(STATEFILE, ">$statefile") or die "Couldn't open $statefile.";
+print STATEFILE "$sysver";
+close(STATEFILE);

@@ -1,0 +1,75 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+my ($script, $pkg, $ver, $oldver, $sysver, $statefile);
+
+$script = $0;
+$ARGV[0] =~ /(.+)-(.+)/;
+$pkg = $1;
+$ver = $2;
+
+$statefile = "/var/opt/csw/pkg-hooks/CSWpkgloghooks.upgrade.$pkg";
+
+sub logdie {
+    my($arg) = (shift);
+    system('logger', '-t', 'cswpkgloghooks', $arg);
+    exit 0
+}
+
+sub success {
+    my ($old, $msg) = (shift, '');
+    if ($script =~ /install$/) {
+	$msg = "installed $pkg $ver";
+    } elsif ($script =~ /upgrade$/) {
+	$msg = "upgraded $pkg to $ver (from: $old)";
+    } elsif ($script =~ /remove$/) {
+	$msg = "removed $pkg $ver";
+    }
+
+    logdie $msg;
+}
+
+sub failure {
+    my ($old, $msg) = (shift, '');
+    if ($script =~ /install$/) {
+	$msg = "Failed to install $pkg $ver";
+    } elsif ($script =~ /upgrade$/) {
+	$msg = "Failed to upgrade $pkg to $ver (current: $old)";
+    } elsif ($script =~ /remove$/) {
+	$msg = "Failed to remove $pkg $ver";
+    }
+
+    logdie $msg;
+}
+
+
+if ( -d "/var/sadm/pkg/$pkg" ) {
+    $sysver = `pkgparam $pkg VERSION 2>/dev/null`;
+    chomp($sysver);
+
+    if ( -f "$statefile" ) {
+	open (STATEFILE, "<$statefile") or die "Couldn't open $statefile.";
+	$oldver = <STATEFILE>;
+	close(STATEFILE);
+	unlink($statefile);
+	chomp($oldver);
+    }
+
+    if ($script =~ /remove$/) {
+	failure();
+    } else {
+	if ($ver eq $sysver) {
+	    success($oldver);
+	} else {
+	    failure($sysver);
+	}
+    }
+} else {
+    if ($script =~ /remove$/) {
+	success();
+    } else {
+	failure();
+    }
+}
