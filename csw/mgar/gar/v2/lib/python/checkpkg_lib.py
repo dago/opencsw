@@ -35,6 +35,26 @@ class CatalogDatabaseError(Error):
   pass
 
 
+REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
+Dependency issues of $pkgname:
+#end if
+#if $missing_deps
+#for $pkg, $reasons in $sorted($missing_deps)
+$pkg is needed by $pkgname, because:
+#for $reason in $reasons
+ - $reason
+#end for
+RUNTIME_DEP_PKGS_$pkgname += $pkg
+#end for
+#end if
+#if $surplus_deps
+If you don't know of any reasons to include these dependencies, you might remove them:
+#for $pkg in $sorted($surplus_deps)
+? $pkg
+#end for
+#end if
+"""
+
 SCREEN_ERROR_REPORT_TMPL = u"""#if $errors
 #if $debug
 ERROR: One or more errors have been found by $name.
@@ -232,7 +252,10 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
     return (exit_code, screen_report, tags_report)
 
 
-NeededFile = collections.namedtuple('NeededFile', 'pkgname full_path reason')
+NeededFile = collections.namedtuple('NeededFile',
+                                    'pkgname full_path reason')
+NeededPackage = collections.namedtuple('NeededPackage',
+                                       'pkgname needed_pkg reason')
 
 
 class CheckInterfaceBase(object):
@@ -253,7 +276,11 @@ class CheckInterfaceBase(object):
       self.lines_dict = lines_dict
     else:
       self.lines_dict = {}
+    # Lists:
+    # [('/opt/csw/lib/libfoo.so.1', '/opt/csw/bin/foo needs libfoo.so.1'), ... ]
     self.needed_files = []
+    # [('CSWfoo', 'Provides an interpreter of foo'), ... ]
+    self.needed_pkgs = []
     self.__errors = []
 
   def GetErrors(self):
@@ -315,6 +342,9 @@ class CheckInterfaceBase(object):
     """
     self.needed_files.append(NeededFile(pkgname, full_path, reason))
 
+  def _NeedPackage(self, pkgname, needed_pkg, reason):
+    self.needed_pkgs.append(NeededPackage(pkgname, needed_pkg, reason))
+
   def ReportErrorForPkgname(self, pkgname, tag_name, tag_info=None, msg=None):
     checkpkg_tag = tag.CheckpkgTag(pkgname, tag_name, tag_info, msg=msg)
     self.AddError(checkpkg_tag)
@@ -340,6 +370,10 @@ class IndividualCheckInterface(CheckInterfaceBase):
     "See base class _NeedFile."
     self._NeedFile(self.pkgname, full_path, reason)
 
+  def NeedPackage(self, needed_pkg, reason):
+    "See base class _NeedPackage."
+    self._NeedPackage(self.pkgname, needed_pkg, reason)
+
 
 class SetCheckInterface(CheckInterfaceBase):
   """To be passed to set checking functions."""
@@ -350,6 +384,10 @@ class SetCheckInterface(CheckInterfaceBase):
   def NeedFile(self, pkgname, full_path, reason):
     "See base class _NeedFile."
     self._NeedFile(pkgname, full_path, reason)
+
+  def NeedPackage(self, pkgname, needed_pkg, reason):
+    "See base class _NeedPackage."
+    self._NeedPackage(pkgname, needed_pkg, reason)
 
   def ReportError(self, pkgname, tag_name, tag_info=None, msg=None):
     logging.debug("self.error_mgr_mock.ReportError(%s, %s, %s, %s)",
@@ -408,8 +446,8 @@ class CheckpkgManager2(CheckpkgManagerBase):
           logging.debug("Registering set check %s", repr(member_name))
           self._RegisterSetCheck(member)
 
-  def _ReportDependencies(self, checkpkg_interface, messenger, pkgname,
-      declared_deps):
+  def _ReportDependencies(self, checkpkg_interface, needed_files, needed_pkgs,
+      messenger, pkgname, declared_deps):
     """Creates error tags based on needed files.
 
     Needed files are extracted from the Interface objects.
@@ -424,27 +462,63 @@ class CheckpkgManager2(CheckpkgManagerBase):
     # If the package under examination already depends on any of
     # packages for a single reason, the dependency is considered
     # satisfied.
-    reasons_by_pkg = {}
-    pkgs_by_reasons = {}
-    for pkgname, full_path, reason in checkpkg_interface.needed_files:
-      needed_pkgs = checkpkg_interface.GetPkgByPath(full_path)
-      for needed_pkgname in needed_pkgs:
-        reasons_by_pkg.setdefault(needed_pkgname, [])
-        reasons_by_pkg[needed_pkgname].append(reason)
-        pkgs_by_reasons.setdefault(reason, [])
-        pkgs_by_reasons[reason].append(needed_pkgname)
+    reasons_by_pkg_by_pkgname = {}
+    pkgs_by_reasons_by_pkgname = {}
+    needed_pkgs = copy.deepcopy(needed_pkgs)
+    # Resolving files into packages and adding to the common data structure.
+    for pkgname, full_path, reason in needed_files:
+      needed_pkgs_tmp = checkpkg_interface.GetPkgByPath(full_path)
+      for needed_pkgname in needed_pkgs_tmp:
+        needed_pkgs.append(NeededPackage(pkgname, needed_pkgname, reason))
+    for pkgname, needed_pkgname, reason in needed_pkgs:
+      reasons_by_pkg_by_pkgname.setdefault(pkgname, {})
+      reasons_by_pkg_by_pkgname[pkgname].setdefault(needed_pkgname, [])
+      reasons_by_pkg_by_pkgname[pkgname][needed_pkgname].append(reason)
+      pkgs_by_reasons_by_pkgname.setdefault(pkgname, {})
+      pkgs_by_reasons_by_pkgname[pkgname].setdefault(reason, [])
+      pkgs_by_reasons_by_pkgname[pkgname][reason].append(needed_pkgname)
     # We'll reuse ReportMissingDependencies from dependency_checks, but
-    # we have to adapt the data structure.
-    req_pkgs_reasons = []
-    for reason in pkgs_by_reasons:
-      reason_group = []
-      for needed_pkg in pkgs_by_reasons[reason]:
-        reason_group.append((needed_pkg, reason))
-      req_pkgs_reasons.append(reason_group)
-    dependency_checks.ReportMissingDependencies(checkpkg_interface, 
-                                                pkgname,
-                                                declared_deps,
-                                                req_pkgs_reasons)
+    # we have to adapt the data structures.
+    req_pkgs_reasons_by_pkgname = {}
+    for pkgname in pkgs_by_reasons_by_pkgname:
+      for reason in pkgs_by_reasons_by_pkgname[pkgname]:
+        reason_group = []
+        for needed_pkg in pkgs_by_reasons_by_pkgname[pkgname][reason]:
+          reason_group.append((needed_pkg, reason))
+        req_pkgs_reasons_by_pkgname.setdefault(pkgname, [])
+        req_pkgs_reasons_by_pkgname[pkgname].append(reason_group)
+    for pkgname in declared_deps_by_pkgname:
+      declared_deps = declared_deps_by_pkgname[pkgname]
+      req_pkgs_reasons_by_pkgname.setdefault(pkgname, [])
+      (missing_deps_reasons_by_pkg,
+       surplus_deps,
+       missing_dep_groups) = dependency_checks.ReportMissingDependencies(
+           checkpkg_interface, pkgname, declared_deps,
+           req_pkgs_reasons_by_pkgname[pkgname])
+      namespace = {
+          "pkgname": pkgname,
+          "missing_deps": missing_deps_reasons_by_pkg,
+          "surplus_deps": surplus_deps,
+          "orphan_sonames": None,
+      }
+      t = Template.Template(REPORT_TMPL, searchList=[namespace])
+      report = unicode(t)
+      if report.strip():
+        for line in report.splitlines():
+          messenger.Message(line)
+      for missing_deps in missing_dep_groups:
+        alternatives = False
+        prefix = ""
+        if len(missing_deps) > 1:
+          alternatives = True
+          prefix = "  "
+        if alternatives:
+          messenger.SuggestGarLine("# One of the following:")
+        for missing_dep in missing_deps:
+          messenger.SuggestGarLine(
+              "%sRUNTIME_DEP_PKGS_%s += %s" % (prefix, pkgname, missing_dep))
+        if alternatives:
+          messenger.SuggestGarLine("# (end of the list of alternative dependencies)")
 
 
   def GetAllTags(self, stats_obj_list):
@@ -459,7 +533,10 @@ class CheckpkgManager2(CheckpkgManagerBase):
     pbar = self.GetProgressBar()
     pbar.maxval = len(pkgs_data) * len(self.individual_checks)
     logging.info("Tasting candies one by one...")
+    needed_files = []
+    needed_pkgs = []
     pbar.start()
+    declared_deps_by_pkgname = {}
     for pkg_data in pkgs_data:
       pkgname = pkg_data["basic_stats"]["pkgname"]
       check_interface = IndividualCheckInterface(
@@ -468,14 +545,23 @@ class CheckpkgManager2(CheckpkgManagerBase):
         logger = logging.getLogger("%s-%s" % (pkgname, function.__name__))
         logger.debug("Calling %s", function.__name__)
         function(pkg_data, check_interface, logger=logger, messenger=messenger)
-        if check_interface.errors:
-          errors[pkgname] = check_interface.errors
         pbar.update(count.next())
+      if check_interface.errors:
+        errors[pkgname] = check_interface.errors
+      # Some sanity checking
+      for needed_file in check_interface.needed_files:
+        assert pkgname == needed_file.pkgname, (
+            "%s reports an error for %s, it shouldn't" % (pkgname,
+              needed_file.pkgname))
+      for needed_pkg in check_interface.needed_pkgs:
+        assert pkgname == needed_pkg.pkgname, (
+            "%s reports an error for %s, it shouldn't" % (pkgname,
+              needed_pkg.pkgname))
+      needed_files.extend(check_interface.needed_files)
+      needed_pkgs.extend(check_interface.needed_pkgs)
       # Ideally, this class wouldn't know anything about these data
       # structures, but I don't see a better place for it at the moment.
-      declared_deps = frozenset(x[0] for x in pkg_data["depends"])
-      self._ReportDependencies(
-          check_interface, messenger, pkgname, declared_deps)
+      declared_deps_by_pkgname[pkgname] = frozenset(x[0] for x in pkg_data["depends"])
     pbar.finish()
     # Set checks
     logging.info("Tasting them all at once...")
@@ -487,6 +573,13 @@ class CheckpkgManager2(CheckpkgManagerBase):
       function(pkgs_data, check_interface, logger=logger, messenger=messenger)
       if check_interface.errors:
         errors = self.SetErrorsToDict(check_interface.errors, errors)
+      needed_files.extend(check_interface.needed_files)
+      needed_pkgs.extend(check_interface.needed_pkgs)
+    check_interface = SetCheckInterface(
+        self.osrel, self.arch, self.catrel, catalog)
+    self._ReportDependencies(check_interface,
+        needed_files, needed_pkgs, messenger, declared_deps_by_pkgname)
+    errors = self.SetErrorsToDict(check_interface.errors, errors)
     messages = messenger.messages + messenger.one_time_messages.values()
     return errors, messages, messenger.gar_lines
 

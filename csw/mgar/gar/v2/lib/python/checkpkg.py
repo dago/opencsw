@@ -42,26 +42,6 @@ SYS_DEFAULT_RUNPATH = [
 
 MD5_RE = re.compile(r"^[0123456789abcdef]{32}$")
 
-REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
-Dependency issues of $pkgname:
-#end if
-#if $missing_deps
-#for $pkg, $reasons in $sorted($missing_deps)
-$pkg, reasons:
-#for $reason in $reasons
- - $reason
-#end for
-RUNTIME_DEP_PKGS_$pkgname += $pkg
-#end for
-#end if
-#if $surplus_deps
-If you don't know of any reasons to include these dependencies, you might remove them:
-#for $pkg in $sorted($surplus_deps)
-? $pkg
-#end for
-#end if
-"""
-
 class Error(Exception):
   pass
 
