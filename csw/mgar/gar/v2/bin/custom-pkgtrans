@@ -4,6 +4,8 @@
 #
 # This file exists in order to avoid implementing pipelines in Python.  It
 # could be integrated into the package stats collection program.
+#
+# It has to use the same interpreter as lib/sh/libcheckpkg.sh, currently bash.
 
 set -u
 set -e
