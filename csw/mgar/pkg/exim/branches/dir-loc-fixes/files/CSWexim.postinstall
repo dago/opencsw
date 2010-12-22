@@ -1,5 +1,6 @@
 #!/sbin/sh
 CONFDIR=$PKG_INSTALL_ROOT/opt/csw/etc/exim
+NEWALIASES="$PKG_INSTALL_ROOT/usr/sbin/newaliases"
 CONFFILES="aliases exim.conf exim-env.sh"
 PATH=/bin:/usr/bin:"$PATH"
 export PATH
@@ -14,22 +15,11 @@ is_usr_readonly
 if [ $? -eq 0 -a  "$SENDMAIL_ACTION" != "leave" ]; then
     echo "Your /usr partition is readonly. Cannot make modifications to it."
 else
-  ### Now handle the sendmail files
-
-  # in Solaris 8 it's in /usr/bin; in Solaris 9 in /usr/sbin 
-    if [ -r "$PKG_INSTALL_ROOT/usr/bin/newaliases" ]; then
-	NEWALIASES="$PKG_INSTALL_ROOT/usr/bin/newaliases"
-    elif [ -r "$PKG_INSTALL_ROOT/usr/sbin/newaliases" ]; then
-	NEWALIASES="$PKG_INSTALL_ROOT/usr/sbin/newaliases"
-    else
-    # use this as default (the remove script will find it in bin and sbin)
-	NEWALIASES="$PKG_INSTALL_ROOT/usr/sbin/newaliases"
-    fi
-
+    ### Now handle the sendmail files
     echo "Checking for newaliases... $NEWALIASES"
 
     if [ "$SENDMAIL_ACTION" = "replace" ]; then
-    # Make backup of sendmail files
+        # Make backup of sendmail files
 	if [ ! -r "$NEWALIASES.OFF" ]  && [ -r "$NEWALIASES" ]; then
 	    echo "Moving $NEWALIASES to newaliases.OFF"
 	    mv "$NEWALIASES" "$NEWALIASES.OFF"
