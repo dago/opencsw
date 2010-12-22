@@ -331,8 +331,7 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
       binary_path, basename = os.path.split(pkgmap_entry["path"])
       if not binary_path.startswith('/'):
         binary_path = "/" + binary_path
-      if basename not in path_and_pkg_by_basename:
-        path_and_pkg_by_basename[basename] = {}
+      path_and_pkg_by_basename.setdefault(basename, {})
       path_and_pkg_by_basename[basename][binary_path] = [pkgname]
   # Resolving sonames for each binary
   for pkg_data in pkgs_data:
@@ -340,39 +339,13 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
     declared_deps = frozenset(x[0] for x in pkg_data["depends"])
     check_args = (pkg_data, error_mgr, logger, messenger,
                   path_and_pkg_by_basename, pkg_by_path)
-    req_pkgs_reasons = depchecks.Libraries(*check_args)
-    req_pkgs_reasons.extend(depchecks.ByFilename(*check_args))
+    depchecks.Libraries(*check_args)
+    depchecks.ByFilename(*check_args)
     # This test needs more work, or potentially, architectural changes.
     # by_directory_reasons = ByDirectory(*check_args)
     # req_pkgs_reasons.extend(by_directory_reasons)
-    (missing_deps_reasons_by_pkg,
-     surplus_deps,
-     missing_dep_groups) = depchecks.ReportMissingDependencies(
-       error_mgr, pkgname, declared_deps, req_pkgs_reasons)
-    namespace = {
-        "pkgname": pkgname,
-        "missing_deps": missing_deps_reasons_by_pkg,
-        "surplus_deps": surplus_deps,
-        "orphan_sonames": None,
-    }
-    t = Template.Template(checkpkg.REPORT_TMPL, searchList=[namespace])
-    report = unicode(t)
-    if report.strip():
-      for line in report.splitlines():
-        messenger.Message(line)
-    for missing_deps in missing_dep_groups:
-      alternatives = False
-      prefix = ""
-      if len(missing_deps) > 1:
-        alternatives = True
-        prefix = "  "
-      if alternatives:
-        messenger.SuggestGarLine("# One of the following:")
-      for missing_dep in missing_deps:
-        messenger.SuggestGarLine(
-            "%sRUNTIME_DEP_PKGS_%s += %s" % (prefix, pkgname, missing_dep))
-      if alternatives:
-        messenger.SuggestGarLine("# (end of the list of alternative dependencies)")
+    # logging.debug("SetCheckLibraries(): required package reasons: %s",
+    #               req_pkgs_reasons)
 
 
 def SetCheckDependencies(pkgs_data, error_mgr, logger, messenger):

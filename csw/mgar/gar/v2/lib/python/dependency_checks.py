@@ -44,21 +44,22 @@ def ProcessSoname(
     soname, path_and_pkg_by_basename, binary_info, isalist, binary_path, logger,
     error_mgr,
     pkgname, messenger):
-  """This is not an ideal name for a function.
+  """This is not an ideal name for this function.
 
   Returns:
     orphan_sonames
   """
+  logging.debug("ProcessSoname(), %s %s"
+                % (binary_info["path"], soname))
   orphan_sonames = []
-  required_deps = []
   resolved = False
   path_list = path_and_pkg_by_basename[soname].keys()
   runpath_tuple = (
       tuple(binary_info["runpath"])
       + tuple(checkpkg.SYS_DEFAULT_RUNPATH))
   runpath_history = []
-  alternative_deps = set()
   first_lib = None
+  already_resolved_paths = set()
   for runpath in runpath_tuple:
     runpath = ldd_emulator.SanitizeRunpath(runpath)
     runpath_list = ldd_emulator.ExpandRunpath(runpath, isalist, binary_path)
@@ -71,10 +72,15 @@ def ProcessSoname(
                                                path_list,
                                                binary_path)
     if resolved_path:
+      if resolved_path in already_resolved_paths:
+        continue
+      already_resolved_paths.add(resolved_path)
       resolved = True
-      req_pkgs = path_and_pkg_by_basename[soname][resolved_path]
-      reason = ("provides %s/%s needed by %s"
-                % (resolved_path, soname, binary_info["path"]))
+      reason = ("%s needs the %s soname"
+                % (binary_info["path"], soname))
+      logger.debug("soname %s found in %s for %s"
+                   % (soname, resolved_path, binary_info["path"]))
+      error_mgr.NeedFile(pkgname, os.path.join(resolved_path, soname), reason)
       # Looking for deprecated libraries.  However, only alerting if the
       # deprecated library is the first one found in the RPATH.  For example,
       # libdb-4.7.so is found in CSWbdb and CSWbdb47, and it's important to
@@ -91,9 +97,6 @@ def ProcessSoname(
                 "deprecated-library",
                 ("%s %s %s/%s"
                  % (binary_info["path"], msg, resolved_path, soname)))
-      for req_pkg in req_pkgs:
-        alternative_deps.add((req_pkg, reason))
-  required_deps.append(list(alternative_deps))
   if not resolved:
     orphan_sonames.append((soname, binary_info["path"]))
     if path_list:
@@ -107,7 +110,7 @@ def ProcessSoname(
           "while the file %s"
           % (soname, binary_info["path"],
              runpath_tuple, runpath_history, path_msg))
-  return orphan_sonames, required_deps
+  return orphan_sonames
 
 
 def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
@@ -132,45 +135,37 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
   isalist = pkg_data["isalist"]
   ldd_emulator = ldd_emul.LddEmulator()
   orphan_sonames = []
-  required_deps = []
   for binary_info in pkg_data["binaries_dump_info"]:
     binary_path, binary_basename = os.path.split(binary_info["path"])
     for soname in binary_info["needed sonames"]:
-      orphan_sonames_tmp, required_deps_tmp = ProcessSoname(
+      orphan_sonames_tmp = ProcessSoname(
           ldd_emulator,
           soname, path_and_pkg_by_basename, binary_info, isalist, binary_path, logger,
           error_mgr,
           pkgname, messenger)
       orphan_sonames.extend(orphan_sonames_tmp)
-      required_deps.extend(required_deps_tmp)
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
     if soname not in ALLOWED_ORPHAN_SONAMES:
       error_mgr.ReportError(
           pkgname, "soname-not-found",
           "%s is needed by %s" % (soname, binary_path))
-  # TODO: Report orphan sonames here
-  return required_deps
+
 
 def ByFilename(pkg_data, error_mgr, logger, messenger,
                path_and_pkg_by_basename, pkg_by_path):
   pkgname = pkg_data["basic_stats"]["pkgname"]
-  reason_group = []
-  req_pkgs_reasons = []
   dep_regexes = [(re.compile(x), x, y)
                  for x, y in DEPENDENCY_FILENAME_REGEXES]
   for regex, regex_str, dep_pkgnames in dep_regexes:
     for pkgmap_entry in pkg_data["pkgmap"]:
       if pkgmap_entry["path"] and regex.match(pkgmap_entry["path"]):
-        msg = ("found file(s) matching %s, e.g. %s"
+        reason = ("found file(s) matching %s, e.g. %s"
                % (regex_str, repr(pkgmap_entry["path"])))
         for dep_pkgname in dep_pkgnames:
-          reason_group.append((dep_pkgname, msg))
+          error_mgr.NeedPackage(pkgname, dep_pkgname, reason)
         break
-    if reason_group:
-      req_pkgs_reasons.append(reason_group)
-      reason_group = []
-  return req_pkgs_reasons
+
 
 def ByDirectory(pkg_data, error_mgr, logger, messenger,
                 path_and_pkg_by_basename, pkg_by_path):
@@ -294,8 +289,39 @@ def SuggestLibraryPackage(error_mgr, messenger,
       "# The end of %s definition" % pkgname)
 
 
+def GetSurplusDeps(pkgname, potential_req_pkgs, declared_deps):
+  logging.debug("GetSurplusDeps(%s, potential_req_pkgs=%s, declared_deps=%s)",
+                pkgname, declared_deps, potential_req_pkgs)
+  # Surplus dependencies
+  # In actual use, there should always be some potential dependencies.
+  # assert potential_req_pkgs, "There should be some potential deps!"
+  surplus_deps = declared_deps.difference(potential_req_pkgs)
+  no_report_surplus = set()
+  for sp_regex in common_constants.DO_NOT_REPORT_SURPLUS:
+    for maybe_surplus in surplus_deps:
+      if re.match(sp_regex, maybe_surplus):
+        logging.debug(
+            "GetSurplusDeps(): Not reporting %s as surplus because it matches %s.",
+            maybe_surplus, sp_regex)
+        no_report_surplus.add(maybe_surplus)
+  surplus_deps = surplus_deps.difference(no_report_surplus)
+  # For some packages (such as dev packages) we don't report surplus deps at
+  # all.
+  if surplus_deps:
+    for regex_str in common_constants.DO_NOT_REPORT_SURPLUS_FOR:
+      if re.match(regex_str, pkgname):
+        logging.debug(
+            "GetSurplusDeps(): Not reporting any surplus because "
+            "it matches %s", regex_str)
+        surplus_deps = frozenset()
+        break
+  return surplus_deps
+
+
 def ReportMissingDependencies(error_mgr, pkgname, declared_deps, req_pkgs_reasons):
   """Processes data structures with dependency data and reports errors.
+
+  Processes data specific to a single package.
 
   Args:
     error_mgr: SetCheckInterface
@@ -344,16 +370,7 @@ def ReportMissingDependencies(error_mgr, pkgname, declared_deps, req_pkgs_reason
   potential_req_pkgs = set(
       (x for x, y in reduce(operator.add, req_pkgs_reasons, [])))
   missing_dep_groups = new_missing_dep_groups
-  surplus_deps = declared_deps.difference(potential_req_pkgs)
-  no_report_surplus = set()
-  for sp_regex in common_constants.DO_NOT_REPORT_SURPLUS:
-    for maybe_surplus in surplus_deps:
-      if re.match(sp_regex, maybe_surplus):
-        no_report_surplus.add(maybe_surplus)
-  surplus_deps = surplus_deps.difference(no_report_surplus)
-  for regex_str in common_constants.DO_NOT_REPORT_SURPLUS_FOR:
-    if surplus_deps and re.match(regex_str, pkgname):
-      surplus_deps = set()
+  surplus_deps = GetSurplusDeps(pkgname, potential_req_pkgs, declared_deps)
   # Using an index to avoid duplicated reasons.
   missing_deps_reasons_by_pkg = []
   missing_deps_idx = set()
