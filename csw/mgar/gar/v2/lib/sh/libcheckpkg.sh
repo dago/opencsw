@@ -1,27 +1,30 @@
-#!/bin/bash
+#!/bin/ksh -p
 # 
 # $Id$
 
-# A srv4 .pkg file is a header + 2 cpio archives.  The header is 1 (but maybe
-# more?) 512 byte block.  The cpio archives use a 512b block size too.  We find
-# the end of the first cpio archive (marked by 'TRAILER!!!' inside the last
-# block) and then determine how many bytes into the file this is, divide by
-# block size to find the number of blocks until the trailer and add another
-# block to get the number of blocks in the file to skip so that we're at the
-# second cpio archive.
-function custom_pkgtrans() {
-    [ -d $2 ] || testfail $2 is not a directory
-    outd=$2/$3
-    skipblks=$(expr $(ggrep -a -b -o -m 1 'TRAILER!!!' $1 | awk -F: '{print $1}') / 512 + 1)
+# pkgtrans leaves a directory in /var/tmp/aaXXXXXXX even after clean quit.
+# Emulating pkgtrans behaviour, for "pkgtrans src destdir pkgname".  Except
+# that the pkgname arg is ignored, and only the first pkg is processed.
 
-    mkdir "${outd}" || exit 1
+custom_pkgtrans(){
+	if [[ ! -d $2 ]] ; then
+		print ERROR: $2 is not a directory >/dev/fd/2
+		return 1
+	fi
+	hdrblks=`(dd if=$1 skip=1 2>/dev/null| cpio -i -t  >/dev/null) 2>&1 |
+		nawk '{print $1; exit;}'`
 
-    (
-        dd if=$1 skip=$skipblks 2>/dev/null | (cd "${outd}" ; cpio -ivdm)
-    ) >/dev/null 2>&1
+	## print initial hdrblks=$hdrblks
 
-    if [ ! -d "${outd}/install" ]; then
-        echo "Failed to extract $1 to ${outd}"
-        exit 1
-    fi
+	hdrblks=$(($hdrblks + 1))
+	mkdir $2/$3 || return 1
+
+	dd if=$1 skip=$hdrblks 2>/dev/null | (cd $2/$3 ; cpio -ivdm)
+	# on fail, SOMETIMES cpio returns 1, but sometimes it returns 0!!
+	if [[ ! -d $2/$3/install ]] ; then
+		print retrying extract with different archive offset...
+		# no, I can't tell in advance why/when the prev fails
+		hdrblks=$(($hdrblks + 1))
+		dd if=$1 skip=$hdrblks 2>/dev/null| (cd $2/$3 ; cpio -ivdm)
+	fi
 }
