@@ -1,5 +1,5 @@
 NAME = proftpd
-VERSION = 1.3.3c
+VERSION = 1.3.3d
 CATEGORIES = server
 
 DESCRIPTION = Advanced, incredibly configurable and secure FTP daemon
