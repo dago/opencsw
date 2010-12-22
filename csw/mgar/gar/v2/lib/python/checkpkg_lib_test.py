@@ -146,7 +146,7 @@ class CheckpkgManager2DatabaseIntegrationTest(
 
 
 class IndividualCheckInterfaceUnitTest(mox.MoxTestBase):
-  
+
   def testNeededFile(self):
     catalog_mock = self.mox.CreateMock(checkpkg_lib.Catalog)
     self.mox.StubOutWithMock(checkpkg_lib, 'Catalog', use_mock_anything=True)
@@ -185,7 +185,7 @@ class IndividualCheckInterfaceUnitTest(mox.MoxTestBase):
 
 
 class SetCheckInterfaceUnitTest(mox.MoxTestBase):
-  
+
   def testNeededFile(self):
     catalog_mock = self.mox.CreateMock(checkpkg_lib.Catalog)
     self.mox.StubOutWithMock(checkpkg_lib, 'Catalog', use_mock_anything=True)

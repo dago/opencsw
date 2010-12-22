@@ -344,8 +344,6 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
     # This test needs more work, or potentially, architectural changes.
     # by_directory_reasons = ByDirectory(*check_args)
     # req_pkgs_reasons.extend(by_directory_reasons)
-    # logging.debug("SetCheckLibraries(): required package reasons: %s",
-    #               req_pkgs_reasons)
 
 
 def SetCheckDependencies(pkgs_data, error_mgr, logger, messenger):

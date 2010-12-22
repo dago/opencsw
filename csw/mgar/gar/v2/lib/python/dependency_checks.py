@@ -385,4 +385,3 @@ def ReportMissingDependencies(error_mgr, pkgname, declared_deps, req_pkgs_reason
   for surplus_dep in surplus_deps:
     error_mgr.ReportErrorForPkgname(pkgname, "surplus-dependency", surplus_dep)
   return missing_deps_reasons_by_pkg, surplus_deps, missing_dep_groups
-
