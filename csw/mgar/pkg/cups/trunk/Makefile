@@ -145,6 +145,29 @@ EXTRA_MERGE_EXCLUDE_FILES +=  $(sysconfdir)/rc.*
 SAMPLECONF_CSWcupsd       = $(sysconfdir)/cups/cupsd\.conf\.CSW
 
 PACKAGES += CSWcupsclient
+SPKG_DESC_CSWcupsclient = CUPS client binaries
+PKGFILES_CSWcupsclient  = $(sbindir)/(accept|reject|cups(addsmb|ctl|(en|dis)able))
+PKGFILES_CSWcupsclient += $(sbindir)/cups(accept|reject)
+PKGFILES_CSWcupsclient += $(sbindir)/(lp(admin|p|c|info|move))
+PKGFILES_CSWcupsclient += $(bindir)/(cancel|cupstest(dsc|ppd))
+PKGFILES_CSWcupsclient += $(bindir)/(lp(|options|passwd|q|r|rm|stat))
+PKGFILES_CSWcupsclient += $(mandir)/man1/(cancel|cupstest(dsc|ppd)|lp).1
+PKGFILES_CSWcupsclient += $(mandir)/man1/(lpoptions|lppasswd|lpq|lpr|lprm).1
+PKGFILES_CSWcupsclient += $(mandir)/man1/lpstat.1
+PKGFILES_CSWcupsclient += $(mandir)/man1/ppd.*\.1
+PKGFILES_CSWcupsclient += $(mandir)/man1m/(cups|)(accept|reject)\.1m
+PKGFILES_CSWcupsclient += $(mandir)/man1m/cups(en|dis)able\.1m
+PKGFILES_CSWcupsclient += $(mandir)/man1m/cups(addsmb|ctl)\.1m
+PKGFILES_CSWcupsclient += $(mandir)/man1m/lp(admin|c|info|move)\.1m
+PKGFILES_CSWcupsclient += $(mandir)/man5/client.conf.5
+PKGFILES_CSWcupsclient += $(mandir)/man5/ppdcfile\.5
+PKGFILES_CSWcupsclient += $(mandir)/man7/(drv|notifier)\.7
+PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWosslrt
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcupsimage2
+
 PACKAGES += CSWcupsdoc
 
 # Devel package
@@ -187,31 +210,11 @@ PKGFILES_CSWcupsdev = None
 
 ARCHALL_CSWcupsdoc   = 1
 
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
 
 
 PKGFILES_CSWcupsdoc  = $(datadir)/doc
 PKGFILES_CSWcupsdoc += $(datadir)/doc/.*
 PKGFILES_CSWcupsdoc += $(datadir)/cups/examples.*
-PKGFILES_CSWcupsclient  = $(sbindir)/(accept|reject|cups(addsmb|ctl|(en|dis)able))
-PKGFILES_CSWcupsclient += $(sbindir)/cups(accept|reject)
-PKGFILES_CSWcupsclient += $(sbindir)/(lp(admin|p|c|info|move))
-PKGFILES_CSWcupsclient += $(bindir)/(cancel|cupstest(dsc|ppd))
-PKGFILES_CSWcupsclient += $(bindir)/(lp(|options|passwd|q|r|rm|stat))
-PKGFILES_CSWcupsclient += $(mandir)/man1/(cancel|cupstest(dsc|ppd)|lp).1
-PKGFILES_CSWcupsclient += $(mandir)/man1/(lpoptions|lppasswd|lpq|lpr|lprm).1
-PKGFILES_CSWcupsclient += $(mandir)/man1/lpstat.1
-PKGFILES_CSWcupsclient += $(mandir)/man1/ppd.*\.1
-PKGFILES_CSWcupsclient += $(mandir)/man1m/(cups|)(accept|reject)\.1m
-PKGFILES_CSWcupsclient += $(mandir)/man1m/cups(en|dis)able\.1m
-PKGFILES_CSWcupsclient += $(mandir)/man1m/cups(addsmb|ctl)\.1m
-PKGFILES_CSWcupsclient += $(mandir)/man1m/lp(admin|c|info|move)\.1m
-PKGFILES_CSWcupsclient += $(mandir)/man5/client.conf.5
-PKGFILES_CSWcupsclient += $(mandir)/man5/ppdcfile\.5
-PKGFILES_CSWcupsclient += $(mandir)/man7/(drv|notifier)\.7
-PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
-
-SPKG_DESC_CSWcupsclient = CUPS client binaries
 SPKG_DESC_CSWcupsdoc    = CUPS documentation
 
 # Packages compliant with the shared library policy.
@@ -245,9 +248,6 @@ CATALOGNAME_CSWlibcupsppdc1 = libcupsppdc1
 PKGFILES_CSWlibcupsppdc1 += $(call baseisadirs,$(libdir),libcupsppdc\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibcupsppdc1 += CUPS libraries, libcupsppdc.so.1
 
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWosslrt
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcupsimage2
 
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibcups2 += CSWzlib
