@@ -113,9 +113,10 @@ class LddEmulator(object):
       # in the path_list.
       for expanded_p in expanded_p_list:
         original_paths_by_expanded_paths[expanded_p] = p
-    logging.debug(
-        "%s: looking for %s in %s",
-        soname, runpath_list, original_paths_by_expanded_paths.keys())
+    # This debugging line is sometimes useful, but generates a lot of output.
+    # logging.debug(
+    #     "%s: looking for %s in %s",
+    #     soname, runpath_list, original_paths_by_expanded_paths.keys())
     for runpath_expanded in runpath_list:
       if runpath_expanded in original_paths_by_expanded_paths:
         # logging.debug("Found %s",

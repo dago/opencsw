@@ -298,8 +298,14 @@ class CheckInterfaceBase(object):
 
   def GetPkgByPath(self, file_path):
     """Proxies calls to self.system_pkgmap."""
-    return self.catalog.GetPkgByPath(
+    response = self.catalog.GetPkgByPath(
         file_path, self.osrel, self.arch, self.catrel)
+    logging_response = response
+    if u"CSWcommon" in logging_response:
+      logging_response = frozenset([u"CSWcommon"])
+    logging.debug("GetPkgByPath(%s).AndReturn(%s)"
+                  % (file_path, logging_response))
+    return response
 
   def GetInstalledPackages(self):
     return self.catalog.GetInstalledPackages(
@@ -395,6 +401,7 @@ class SetCheckInterface(CheckInterfaceBase):
                   repr(tag_name), repr(tag_info), repr(msg))
     self.ReportErrorForPkgname(pkgname, tag_name, tag_info, msg)
 
+
 class CheckpkgMessenger(object):
   """Class responsible for passing messages from checks to the user."""
   def __init__(self):
@@ -447,7 +454,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
           self._RegisterSetCheck(member)
 
   def _ReportDependencies(self, checkpkg_interface, needed_files, needed_pkgs,
-      messenger, pkgname, declared_deps):
+      messenger, declared_deps_by_pkgname):
     """Creates error tags based on needed files.
 
     Needed files are extracted from the Interface objects.
@@ -580,6 +587,8 @@ class CheckpkgManager2(CheckpkgManagerBase):
     self._ReportDependencies(check_interface,
         needed_files, needed_pkgs, messenger, declared_deps_by_pkgname)
     errors = self.SetErrorsToDict(check_interface.errors, errors)
+    # open("/home/maciej/debug.py", "w").write(pprint.pformat(
+    #     (needed_files, needed_pkgs, pkgname, declared_deps_by_pkgname)))
     messages = messenger.messages + messenger.one_time_messages.values()
     return errors, messages, messenger.gar_lines
 
@@ -691,8 +700,6 @@ class CatalogMixin(SqlobjectHelperMixin):
     # Memoization won't buy us much.  Perhaps we can fetch all the files
     # belonging to the same package, so that we quickly prepopulate the cache.
 
-    logging.debug("GetPkgByPath(%s, %s, %s, %s)"
-                  % (full_file_path, osrel, arch, catrel))
     key = (full_file_path, osrel, arch, catrel)
     if key not in self.pkgs_by_path_cache:
       file_path, basename = os.path.split(full_file_path)
