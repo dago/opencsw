@@ -19,6 +19,3 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
-
-foo:
-	@echo $(DISTNAME)
