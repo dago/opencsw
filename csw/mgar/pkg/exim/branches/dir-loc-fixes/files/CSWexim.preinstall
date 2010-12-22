@@ -7,27 +7,16 @@ LOGOLD=${PIR}/opt/csw/var/log
 LOGNEW=${PIR}/var/opt/csw/log
 COPY="cp -pR"
 
-if [ -x ${RSYNC} ]; then
-    if [ -d "${SPOOLOLD}/exim" -a ! -d "${SPOOLNEW}/exim" ]; then
-	echo "Transferring existing spool files to new location..."
-	$COPY "${SPOOLOLD}/exim" "${SPOOLNEW}/"
-    else
-	echo "New spool directory exists already.  Not touching anything."
-    fi
-
-    if [ -d "${LOGOLD}/exim" -a ! -d "${LOGNEW}/exim" ]; then
-	echo "Transferring existing log files to new location..."
-	$COPY "${LOGOLD}/exim" "${LOGNEW}/"
-    else
-	echo "New log directory exists already.  Not touching anything."
-    fi
+if [ -d "${SPOOLOLD}/exim" -a ! -d "${SPOOLNEW}/exim" ]; then
+    echo "Transferring existing spool files to new location..."
+    $COPY "${SPOOLOLD}/exim" "${SPOOLNEW}/"
 else
-    echo ""
-    echo ""
-    echo "********************************************************"
-    echo "No rsync binary available at ${RSYNC}."
-    echo "NOT MOVING your exim spool directory or log files!!!"
-    echo "********************************************************"
-    echo ""
-    echo ""
+    echo "New spool directory exists already.  Not touching anything."
+fi
+
+if [ -d "${LOGOLD}/exim" -a ! -d "${LOGNEW}/exim" ]; then
+    echo "Transferring existing log files to new location..."
+    $COPY "${LOGOLD}/exim" "${LOGNEW}/"
+else
+    echo "New log directory exists already.  Not touching anything."
 fi
