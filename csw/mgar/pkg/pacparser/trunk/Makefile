@@ -1,7 +1,6 @@
 # $Id$
 NAME = pacparser
-VERSION = 1.2.6
-#SPKG_VERSION = $(subst -,.,$(VERSION))
+VERSION = 1.2.7
 CATEGORIES = lib
 
 DESCRIPTION = A library to parse proxy auto-config (PAC) files
@@ -20,16 +19,11 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 PATCHFILES  = 0001-Adjust-Makefile.patch
 
-# Reported upstream as
-#   http://code.google.com/p/pacparser/issues/detail?id=6
-PATCHFILES += 0002-Fix-nullpointer-bug.patch
-
 PATCHFILES += 0003-Only-GNU-grep-knows-q.patch
 PATCHFILES += 0004-Some-more-Makefile-tweaks.patch
 PATCHFILES += 0005-Fix-soname-and-pactester-compilation.patch
 PATCHFILES += 0006-Add-flags-to-make-library-self-sufficient.patch
 PATCHFILES += 0007-Add-config-for-spidermonkey-i386.patch
-PATCHFILES += 0008-Always-set-myIpAddr-to-127.0.0.1-or-tests-on-current.patch
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
