@@ -310,6 +310,7 @@ SPKG_SOURCEURL = http://www.cups.org/
 PRIVATE_CUPS_INC = $(DESTDIR)$(includedir)/cups
 
 # CUPS uses the 'OPTIM' variable to set the optimization flags.
+OPTIM_OPT = -xO0
 OPTIM_DBG = -g -xO0
 OPTIM = $(OPTIM_$(GARFLAVOR))
 export OPTIM
