@@ -7,16 +7,24 @@ LOGOLD=${PIR}/opt/csw/var/log/exim
 LOGNEW=${PIR}/var/opt/csw/log
 COPY="cp -pR"
 
+# assume that if the new spool exists, that this is an upgrade of
+# exim from a version that already had the new filesystem layout...
 if [ -d "${SPOOLOLD}/" -a ! -d "${SPOOLNEW}/exim" ]; then
     echo "Transferring existing spool files to new location..."
-    $COPY "${SPOOLOLD}" "${SPOOLNEW}"
+    if [ ! -d "${SPOOLNEW}" ]; then
+	mkdir -p "${SPOOLNEW}"
+    fi
+    $COPY "${SPOOLOLD}" "${SPOOLNEW}/"
 else
     echo "Looks like the new spool directory is in use already."
     echo "Not touching anything."
 fi
 
-if [ -d "${LOGOLD}" -a ! -f "${LOGNEW}/exim" ]; then
+if [ -d "${LOGOLD}" -a ! -d "${LOGNEW}/exim" ]; then
     echo "Transferring existing log files to new location..."
+    if [ ! -d "${LOGNEW}" ]; then
+	mkdir -p "${LOGNEW}"
+    fi
     $COPY "${LOGOLD}" "${LOGNEW}"
 else
     echo "Looks like the new log directory is in use already."
