@@ -1,22 +1,24 @@
 #!/bin/sh
 
 PIR=${PKG_INSTALL_ROOT:-}
-SPOOLOLD=${PIR}/opt/csw/var/spool
-SPOOLNEW=${PIR}/var/opt/csw/spool
-LOGOLD=${PIR}/opt/csw/var/log
-LOGNEW=${PIR}/var/opt/csw/log
+SPOOLOLD=${PIR}/opt/csw/var/spool/exim
+SPOOLNEW=${PIR}/var/opt/csw/spool/exim
+LOGOLD=${PIR}/opt/csw/var/log/exim
+LOGNEW=${PIR}/var/opt/csw/log/exim
 COPY="cp -pR"
 
-if [ -d "${SPOOLOLD}/exim" -a ! -d "${SPOOLNEW}/exim" ]; then
+if [ -d "${SPOOLOLD}/" -a ! -d "${SPOOLNEW}/db" ]; then
     echo "Transferring existing spool files to new location..."
-    $COPY "${SPOOLOLD}/exim" "${SPOOLNEW}/"
+    $COPY "${SPOOLOLD}/*" "${SPOOLNEW}/"
 else
-    echo "New spool directory exists already.  Not touching anything."
+    echo "Looks like the new spool directory is in use already."
+    echo "Not touching anything."
 fi
 
-if [ -d "${LOGOLD}/exim" -a ! -d "${LOGNEW}/exim" ]; then
+if [ -d "${LOGOLD}" -a ! -f "${LOGNEW}/mainlog" ]; then
     echo "Transferring existing log files to new location..."
-    $COPY "${LOGOLD}/exim" "${LOGNEW}/"
+    $COPY "${LOGOLD}/*" "${LOGNEW}/"
 else
-    echo "New log directory exists already.  Not touching anything."
+    echo "Looks like the new log directory is in use already."
+    echo "Not touching anything."
 fi
