@@ -1004,7 +1004,8 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
           policy_pkgname_list[0],
           policy_catalogname_list[0],
           description,
-          lib_path, lib_basename, soname)
+          lib_path, lib_basename, soname,
+          pkgname)
 
       check_names = False
     else:
@@ -1046,7 +1047,8 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
           suggested_pkgname,
           policy_catalogname_list[0],
           description,
-          lib_path, lib_basename, soname)
+          lib_path, lib_basename, soname,
+          pkgname)
 
         messenger.OneTimeMessage(
             soname,
