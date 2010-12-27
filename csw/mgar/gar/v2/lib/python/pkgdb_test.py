@@ -2,6 +2,7 @@
 
 import unittest
 import pkgdb
+import logging
 
 class CatalogImporterUnitTest(unittest.TestCase):
 
@@ -19,4 +20,5 @@ class FunctionUnitTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
+  logging.basicConfig(level=logging.CRITICAL)
   unittest.main()
