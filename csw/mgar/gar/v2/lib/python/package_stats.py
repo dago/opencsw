@@ -128,23 +128,7 @@ class PackageStatsMixin(object):
 
   def GetBinaryDumpInfo(self):
     dir_pkg = self.GetInspectivePkg()
-    # Binaries. This could be split off to a separate function.
-    # man ld.so.1 for more info on this hack
-    env = copy.copy(os.environ)
-    env["LD_NOAUXFLTR"] = "1"
-    binaries_dump_info = []
-    for binary in dir_pkg.ListBinaries():
-      binary_abs_path = os.path.join(dir_pkg.directory, "root", binary)
-      binary_base_name = os.path.basename(binary)
-      args = [common_constants.DUMP_BIN, "-Lv", binary_abs_path]
-      dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
-      stdout, stderr = dump_proc.communicate()
-      ret = dump_proc.wait()
-      binary_data = ldd_emul.ParseDumpOutput(stdout)
-      binary_data["path"] = binary
-      binary_data["base_name"] = binary_base_name
-      binaries_dump_info.append(binary_data)
-    return binaries_dump_info
+    return dir_pkg.GetBinaryDumpInfo()
 
   def GetBasicStats(self):
     dir_pkg = self.GetInspectivePkg()
