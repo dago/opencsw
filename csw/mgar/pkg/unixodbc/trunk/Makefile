@@ -15,7 +15,7 @@ DISTNAME = $(DL_NAME)-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += cswmigrateconf
 UFILES_REGEX = $(DL_NAME)-(\d+(?:\.\d+)*).tar.gz
-RUNTIME_DEP_PKGS_CSWunixodbc  = CSWiconv
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWiconv
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWreadline
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbcinst1
@@ -31,7 +31,8 @@ LICENSE = COPYING
 
 PACKAGES += CSWunixodbc
 SPKG_DESC_CSWunixodbc = $(DESCRIPTION)
-
+CHECKPKG_OVERRIDES_CSWunixodbc += surplus-dependency|CSWlibodbcinst1
+CHECKPKG_OVERRIDES_CSWunixodbc += surplus-dependency|CSWlibodbc1
 
 PACKAGES += CSWunixodbc-devel
 CATALOGNAME_CSWunixodbc-devel = unixodbc_devel
