@@ -15,6 +15,7 @@ import configuration as c
 import opencsw
 import overrides
 import shell
+import pkgmap
 
 ADMIN_FILE_CONTENT = """
 basedir=default
@@ -270,7 +271,7 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
 
   def GetPkgmap(self, analyze_permissions=False, strip=None):
     fd = open(os.path.join(self.directory, "pkgmap"), "r")
-    return opencsw.Pkgmap(fd, analyze_permissions, strip)
+    return pkgmap.Pkgmap(fd, analyze_permissions, strip)
 
   def SetPkginfoEntry(self, key, value):
     pkginfo = self.GetParsedPkginfo()

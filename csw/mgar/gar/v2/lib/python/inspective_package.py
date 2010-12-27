@@ -5,6 +5,10 @@ import logging
 import hachoir_parser as hp
 import sharedlib_utils
 import magic
+import copy
+import common_constants
+import subprocess
+import ldd_emul
 
 """This file isolates code dependent on hachoir parser.
 
