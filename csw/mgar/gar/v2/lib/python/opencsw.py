@@ -172,8 +172,7 @@ def IndexDictsBy(list_of_dicts, field_key):
   """
   index = {}
   for d in list_of_dicts:
-    if d[field_key] not in index:
-      index[d[field_key]] = []
+    index.setdefault(d[field_key], [])
     index[d[field_key]].append(d)
   return index
 
