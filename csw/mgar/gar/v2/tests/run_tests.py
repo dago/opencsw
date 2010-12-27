@@ -23,7 +23,9 @@ from package_checks_test     import *
 from package_stats_test      import *
 from package_test            import *
 from pkgdb_test              import *
+from pkgmap_test             import *
 from sharedlib_utils_test    import *
+from struct_util_test        import *
 from submit_to_newpkgs_test  import *
 from system_pkgmap_test      import *
 from tag_test                import *

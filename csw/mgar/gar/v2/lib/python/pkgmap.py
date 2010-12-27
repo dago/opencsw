@@ -1,0 +1,95 @@
+#!/usr/bin/env python2.6
+
+import re
+import struct_util
+
+class Pkgmap(object):
+  """Represents the pkgmap of the package.
+
+  The plan:
+
+    entries = [
+      {
+        'path': ...,
+        'class': ...,
+        (more fields?)
+      }, ...
+    ]
+
+  + indexes
+  """
+  ENTRY_TYPES = {
+      "1": "header (?)",
+      "d": "directory",
+      "f": "file",
+      "s": "symlink",
+      "l": "link",
+      "i": "script",
+      "e": "editable file"
+  }
+
+  def __init__(self, input, permissions=False,
+               strip=None):
+    self.paths = set()
+    self.analyze_permissions = permissions
+    self.entries = []
+    self.classes = None
+    for line in input:
+      fields = re.split(r'\s+', line)
+      if strip:
+        strip_re = re.compile(r"^%s" % strip)
+        fields = [re.sub(strip_re, "", x) for x in fields]
+      line_to_add = None
+      installed_path = None
+      prototype_class = None
+      line_type = fields[1]
+      mode = None
+      user = None
+      group = None
+      if len(fields) < 2:
+        continue
+      elif line_type in ('f', 'd'):
+        # Files and directories
+        line_to_add = fields[3]
+        installed_path = fields[3]
+        prototype_class = fields[2]
+        if self.analyze_permissions:
+          line_to_add += " %s %s %s" % tuple(fields[4:7])
+        mode, user, group = fields[4:7]
+      elif line_type in ('e'):
+        # Editable files
+        line_to_add = fields[3]
+        installed_path = fields[3]
+        prototype_class = fields[2]
+      elif line_type in ('s', 'l'):
+        # soft- and hardlinks
+        link_from, link_to = fields[3].split("=")
+        installed_path = link_from
+        line_to_add = "%s --> %s" % (link_from, link_to)
+        prototype_class = fields[2]
+      if line_to_add:
+        self.paths.add(line_to_add)
+      entry = {
+          "line": line.strip(),
+          "type": line_type,
+      }
+      entry["path"] = installed_path
+      entry["class"] = prototype_class
+      entry["mode"] = mode
+      entry["user"] = user
+      entry["group"] = group
+      self.entries.append(entry)
+    self.entries_by_line = struct_util.IndexDictsBy(self.entries, "line")
+    self.entries_by_type = struct_util.IndexDictsBy(self.entries, "type")
+    self.entries_by_class = struct_util.IndexDictsBy(self.entries, "class")
+    self.entries_by_path = struct_util.IndexDictsBy(self.entries, "path")
+    self.entries = sorted(self.entries, key=lambda x: x["path"])
+
+  def GetClasses(self):
+    """The assumtion is that the set of classes never changes."""
+    if not self.classes:
+      self.classes = set()
+      for entry in self.entries:
+        if entry["class"]:  # might be None
+          self.classes.add(entry["class"])
+    return self.classes
