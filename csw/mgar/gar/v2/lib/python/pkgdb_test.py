@@ -12,5 +12,11 @@ class CatalogImporterUnitTest(unittest.TestCase):
         ci.ComposeCatalogFilePath("/home/mirror/opencsw/current", "SunOS5.9", "sparc"))
 
 
+class FunctionUnitTest(unittest.TestCase):
+
+  def testNormalizeIdentifier(self):
+    self.assertEqual("baz", pkgdb.NormalizeId("/foo/bar/baz"))
+
+
 if __name__ == '__main__':
   unittest.main()
