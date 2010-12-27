@@ -20,5 +20,7 @@ class ShellMixin(object):
     else:
       retcode = subprocess.call(args)
     if retcode:
+      logging.critical(stdout)
+      logging.critical(stderr)
       raise Error("Running %s has failed." % repr(args))
     return retcode
