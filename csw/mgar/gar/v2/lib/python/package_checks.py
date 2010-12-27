@@ -1152,9 +1152,25 @@ def CheckDocDir(pkg_data, error_mgr, logger, messenger):
             % (pkg_data["basic_stats"]["catalogname"],
                pkgmap_entry["path"]))
 
+
+def CheckSymlinksBaseDirs(pkg_data, error_mgr, logger, messenger):
+  """If a symlink is in a non-existing directory, installation fails."""
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  for pkgmap_entry in pkg_data["pkgmap"]:
+    if "path" not in pkgmap_entry: continue
+    if not pkgmap_entry["path"]: continue
+    if pkgmap_entry["type"] == "s":
+    	base_dir = os.path.dirname(pkgmap_entry["path"])
+    	error_mgr.NeedFile(
+    	    base_dir,
+          "%s provides a symlink %s which needs a base directory: %s."
+    	    % (pkgname, repr(pkgmap_entry["path"]), repr(base_dir)))
+
+
 def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
     pkg_data, error_mgr, logger, messenger):
   pass
+
 
 def CheckLinkableSoFileMustBeAsymlink(
     pkg_data, error_mgr, logger, messenger):
