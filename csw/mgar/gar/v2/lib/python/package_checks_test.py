@@ -1480,5 +1480,23 @@ class TestCheckObsoleteDepsCups(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError('obsolete-dependency', 'CSWlibcups')
 
 
+class TestCheckSymlinksBaseDirs(CheckpkgUnitTestHelper,
+                                unittest.TestCase):
+  """Test whether appropriate files are provided."""
+  FUNCTION_NAME = 'CheckSymlinksBaseDirs'
+
+  def CheckpkgTest(self):
+    self.pkg_data = tree_stats[0]
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': '1 s none /opt/csw/lib/libneon.so.27=libneon.so.27.2.0',
+         'mode': None,
+         'path': '/opt/csw/lib/libneon.so.27',
+         'type': 's',
+         'user': None})
+    self.error_mgr_mock.NeedFile('/opt/csw/lib', mox.IsA(str))
+
+
 if __name__ == '__main__':
   unittest.main()
