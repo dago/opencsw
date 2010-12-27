@@ -298,6 +298,7 @@ class SuggestLibraryPackage(mox.MoxTestBase):
     lib_path = "opt/csw/lib"
     lib_basename = "libfoo.so.1.2.3"
     lib_soname = "libfoo.so.1"
+    base_pkgname = "CSWfoo"
     messenger_mock.SuggestGarLine(
         r'# The following lines define a new package: CSWfoo-bar')
     messenger_mock.SuggestGarLine(
@@ -313,7 +314,7 @@ class SuggestLibraryPackage(mox.MoxTestBase):
     messenger_mock.SuggestGarLine(
         'SPKG_DESC_CSWfoo-bar += A foo bar package, libfoo.so.1')
     messenger_mock.SuggestGarLine(
-        r'RUNTIME_DEP_PKGS_CSWfoo-bar += CSWfoo-bar')
+        r'RUNTIME_DEP_PKGS_CSWfoo += CSWfoo-bar')
     messenger_mock.SuggestGarLine(
         r'# The end of CSWfoo-bar definition')
     self.mox.ReplayAll()
@@ -322,7 +323,8 @@ class SuggestLibraryPackage(mox.MoxTestBase):
         messenger_mock,
         pkgname, catalogname,
         description,
-        lib_path, lib_basename, lib_soname)
+        lib_path, lib_basename, lib_soname,
+        base_pkgname)
 
 
 class TestReportMissingDependencies(mox.MoxTestBase):

@@ -260,7 +260,8 @@ def MissingDepsFromReasonGroups(reason_groups, declared_deps_set):
 def SuggestLibraryPackage(error_mgr, messenger,
     pkgname, catalogname,
     description,
-    lib_path, lib_basename, soname):
+    lib_path, lib_basename, soname,
+    base_pkgname):
   escaped_soname = sharedlib_utils.EscapeRegex(soname)
   escaped_basename = sharedlib_utils.EscapeRegex(lib_basename)
   messenger.SuggestGarLine("# The following lines define a new package: "
@@ -284,7 +285,7 @@ def SuggestLibraryPackage(error_mgr, messenger,
       % (pkgname, description, soname))
   messenger.SuggestGarLine(
       "RUNTIME_DEP_PKGS_%s += %s"
-      % (pkgname, pkgname))
+      % (base_pkgname, pkgname))
   messenger.SuggestGarLine(
       "# The end of %s definition" % pkgname)
 
