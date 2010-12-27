@@ -52,7 +52,7 @@ ISALISTS_BY_ARCH = {
 
 DEFAULT_CATALOG_RELEASES = frozenset([
     'current',
-    'experimenta',
+    'experimental',
     'unstable',
     'testing',
     'stable',
