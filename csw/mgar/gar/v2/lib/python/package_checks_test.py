@@ -33,26 +33,35 @@ DEFAULT_PKG_DATA = rsync_stats[0]
 class CheckpkgUnitTestHelper(object):
   """Wraps common components of checkpkg tests."""
 
+  __metaclass__ = mox.MoxMetaTestBase
+
   def setUp(self):
+    super(CheckpkgUnitTestHelper, self).setUp()
+    self.mox = mox.Mox()
     self.pkg_stats = DEFAULT_PKG_STATS
     self.pkg_data = copy.deepcopy(DEFAULT_PKG_DATA)
-    self.mox = mox.Mox()
 
   def SetMessenger(self):
     self.messenger = stubs.MessengerStub()
 
+  def SetErrorManagerMock(self):
+    if self.FUNCTION_NAME.startswith("Set"):
+      self.error_mgr_mock = self.mox.CreateMock(
+          checkpkg_lib.SetCheckInterface)
+    else:
+      self.error_mgr_mock = self.mox.CreateMock(
+          checkpkg_lib.IndividualCheckInterface)
+
   def testDefault(self):
     self.logger_mock = stubs.LoggerStub()
-    self.error_mgr_mock = self.mox.CreateMock(
-        checkpkg_lib.IndividualCheckInterface)
     self.SetMessenger()
+    self.SetErrorManagerMock()
     self.CheckpkgTest()
     self.mox.ReplayAll()
     getattr(pc, self.FUNCTION_NAME)(self.pkg_data,
                                     self.error_mgr_mock,
                                     self.logger_mock,
                                     self.messenger)
-    self.mox.VerifyAll()
 
 
 class TestMultipleDepends(CheckpkgUnitTestHelper, unittest.TestCase):
@@ -573,8 +582,7 @@ class TestCheckRpathBadPath(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError(
         'CSWrsync',
         'deprecated-library',
-        u'opt/csw/bin/sparcv8/rsync Deprecated Berkeley DB location '
-        u'/opt/csw/lib/libdb-4.7.so')
+        mox.IsA(unicode))
     self.pkg_data = [self.pkg_data]
 
 
@@ -1074,15 +1082,13 @@ class TestSetCheckDirectoryDependencies(CheckpkgUnitTestHelper,
                                         unittest.TestCase):
   """Test whether appropriate files are provided."""
   FUNCTION_NAME = 'SetCheckLibraries'
-  def testDefault(self):
-    # This test is disabled
-    pass
+
   def CheckpkgTest(self):
     self.pkg_data = ivtools_stats
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libComUnidraw.so').AndReturn({})
     self.error_mgr_mock.GetPkgByPath('/opt/csw').AndReturn([u"CSWcommon"])
     self.error_mgr_mock.GetPkgByPath('/opt/csw/lib').AndReturn([u"CSWcommon"])
-    self.error_mgr_mock.ReportErrorForPkgname('CSWivtools', 'missing-dependency', u'CSWcommon')
+    self.error_mgr_mock.NeedFile("CSWivtools", "/opt/csw/lib/libComUnidraw.so", mox.IsA(str))
 
 
 class TestSetCheckDirectoryDependenciesTree(CheckpkgUnitTestHelper,
@@ -1164,6 +1170,7 @@ class TestSetCheckDirectoryDependenciesTree(CheckpkgUnitTestHelper,
         u'CSWcommon', u'CSWbashcmplt', u'CSWcacertificates', u'CSWgstplugins',
         u'CSWgnomemenus', u'CSWgnomedesktop', u'CSWnautilus', u'CSWlibofx',
         u'CSWgamin', u'CSWpkgutil', u'CSWgcc3core', u'CSWgnomemime2'])
+    self.error_mgr_mock.NeedFile("CSWtree", mox.IsA(str), mox.IsA(str))
 
 
 class TestCheckDiscouragedFileNamePatterns(CheckpkgUnitTestHelper,
@@ -1204,13 +1211,11 @@ class TestCheckDiscouragedFileNamePatternsGit(CheckpkgUnitTestHelper,
 class TestSetCheckDirectoryDepsTwoPackages(CheckpkgUnitTestHelper,
                                            unittest.TestCase):
   """Test whether appropriate files are provided.
-  
+
   This is a stupid test and can be removed if becomes annoying.
   """
   FUNCTION_NAME = 'SetCheckLibraries'
-  def testDefault(self):
-    # This test is disabled
-    pass
+
   def CheckpkgTest(self):
     self.pkg_data = sudo_stats
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
@@ -1236,20 +1241,20 @@ class TestSetCheckDirectoryDepsTwoPackages(CheckpkgUnitTestHelper,
         '/opt/csw/etc', '/opt/csw/sbin', '/opt/csw', '/opt/csw/share/doc']
     for path in paths_to_check:
       self.error_mgr_mock.GetPkgByPath(path).AndReturn(common_path_pkgs)
-    self.error_mgr_mock.ReportError('CSWsudo', 'surplus-dependency', 'CSWalternatives')
-    self.error_mgr_mock.ReportError('CSWsudo', 'surplus-dependency', 'CSWsudo-common')
+    for i in range(5):
+      self.error_mgr_mock.NeedFile("CSWsudo-common", mox.IsA(str), mox.IsA(str))
+    for i in range(6):
+      self.error_mgr_mock.NeedFile("CSWsudo", mox.IsA(str), mox.IsA(str))
 
 
 class TestSetCheckDirectoryDepsMissing(CheckpkgUnitTestHelper,
-                                           unittest.TestCase):
+                                       unittest.TestCase):
   """Test whether appropriate files are provided.
 
   This is a stupid test and can be removed if becomes annoying.
   """
   FUNCTION_NAME = 'SetCheckLibraries'
-  def testDefault(self):
-    # This test is disabled
-    pass
+
   def CheckpkgTest(self):
     self.pkg_data = sudo_stats
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
@@ -1277,13 +1282,13 @@ class TestSetCheckDirectoryDepsMissing(CheckpkgUnitTestHelper,
         '/opt/csw/etc', '/opt/csw/sbin', '/opt/csw', '/opt/csw/share/doc']
     for path in paths_to_check:
       self.error_mgr_mock.GetPkgByPath(path).AndReturn(common_path_pkgs)
+    for i in range(5):
+      self.error_mgr_mock.NeedFile("CSWsudo-common", mox.IsA(str), mox.IsA(str))
+    for i in range(6):
+      self.error_mgr_mock.NeedFile("CSWsudo", mox.IsA(str), mox.IsA(str))
     # This is the critical test here.
-    self.error_mgr_mock.ReportError(
-        'CSWsudo-common', 'base-dir-not-found', '/opt/csw/share/man')
-    self.error_mgr_mock.ReportError(
-        'CSWsudo', 'surplus-dependency', 'CSWalternatives')
-    self.error_mgr_mock.ReportError(
-        'CSWsudo', 'surplus-dependency', 'CSWsudo-common')
+    # self.error_mgr_mock.ReportError(
+    #     'CSWsudo-common', 'base-dir-not-found', '/opt/csw/share/man')
 
 
 class TestSetCheckDoubleDepends(CheckpkgUnitTestHelper, unittest.TestCase):
