@@ -578,7 +578,7 @@ def CheckEmail(pkg_data, error_mgr, logger, messenger):
 def CheckPstamp(pkg_data, error_mgr, logger, messenger):
   pkginfo = pkg_data["pkginfo"]
   if "PSTAMP" in pkginfo:
-    if not re.match(checkpkg.PSTAMP_RE, pkginfo["PSTAMP"]):
+    if not re.match(common_constants.PSTAMP_RE, pkginfo["PSTAMP"]):
       msg=("It should be 'username@hostname-timestamp', "
            "but it's %s." % repr(pkginfo["PSTAMP"]))
       error_mgr.ReportError("pkginfo-pstamp-in-wrong-format", pkginfo["PSTAMP"], msg)

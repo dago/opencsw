@@ -15,6 +15,7 @@ import package_stats
 import sqlite3
 import sqlobject
 import test_base
+import common_constants
 
 from testdata.tree_stats import pkgstats as tree_stats
 from testdata.neon_stats import pkgstats as neon_stats
@@ -57,7 +58,7 @@ class ExtractorsUnitTest(unittest.TestCase):
         'timestamp': '20100313144445',
         'hostname': 'solaris9s-csw'
     }
-    self.assertEqual(expected, re.match(checkpkg.PSTAMP_RE, pstamp).groupdict())
+    self.assertEqual(expected, re.match(common_constants.PSTAMP_RE, pstamp).groupdict())
 
 
 class SliceListUnitTest(unittest.TestCase):
