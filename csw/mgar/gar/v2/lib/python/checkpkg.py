@@ -20,7 +20,6 @@ import common_constants
 import package_stats
 
 
-PSTAMP_RE = r"(?P<username>\w+)@(?P<hostname>[\w\.-]+)-(?P<timestamp>\d+)"
 DESCRIPTION_RE = r"^([\S]+) - (.*)$"
 BAD_CONTENT_REGEXES = (
     # Slightly obfuscating these by using concatenation of strings.
@@ -87,7 +86,7 @@ def ExtractMaintainerName(pkginfo):
 
 
 def ExtractBuildUsername(pkginfo):
-  m = re.match(PSTAMP_RE, pkginfo["PSTAMP"])
+  m = re.match(common_constants.PSTAMP_RE, pkginfo["PSTAMP"])
   return m.group("username") if m else None
 
 

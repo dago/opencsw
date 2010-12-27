@@ -66,3 +66,5 @@ DO_NOT_LINK_AGAINST_THESE_SONAMES = set([])
 DO_NOT_REPORT_SURPLUS = [r"^CSWcommon$", r"^CSWcswclassutils$", r"^CSWcas-", r"^CSWisaexec$"]
 DO_NOT_REPORT_SURPLUS_FOR = [r"CSW[a-z\-]+dev(el)?"]
 DO_NOT_REPORT_MISSING_RE = [r"\*?SUNW.*"]
+
+PSTAMP_RE = r"(?P<username>\w+)@(?P<hostname>[\w\.-]+)-(?P<timestamp>\d+)"
