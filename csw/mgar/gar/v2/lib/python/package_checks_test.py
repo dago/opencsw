@@ -33,8 +33,6 @@ DEFAULT_PKG_DATA = rsync_stats[0]
 class CheckpkgUnitTestHelper(object):
   """Wraps common components of checkpkg tests."""
 
-  __metaclass__ = mox.MoxMetaTestBase
-
   def setUp(self):
     super(CheckpkgUnitTestHelper, self).setUp()
     self.mox = mox.Mox()
@@ -62,6 +60,7 @@ class CheckpkgUnitTestHelper(object):
                                     self.error_mgr_mock,
                                     self.logger_mock,
                                     self.messenger)
+    self.mox.VerifyAll()
 
 
 class TestMultipleDepends(CheckpkgUnitTestHelper, unittest.TestCase):
@@ -1091,13 +1090,14 @@ class TestSetCheckDirectoryDependencies(CheckpkgUnitTestHelper,
     self.error_mgr_mock.NeedFile("CSWivtools", "/opt/csw/lib/libComUnidraw.so", mox.IsA(str))
 
 
-class TestSetCheckDirectoryDependenciesTree(CheckpkgUnitTestHelper,
-                                        unittest.TestCase):
+class TestSetCheckDirectoryDependenciesTree(
+                                            # This test is disabled for the
+                                            # time being.
+                                            # CheckpkgUnitTestHelper,
+                                            unittest.TestCase):
   """Test whether appropriate files are provided."""
   FUNCTION_NAME = 'SetCheckLibraries'
-  def testDefault(self):
-    # This test is disabled
-    pass
+
   def CheckpkgTest(self):
     self.pkg_data = tree_stats
     self.error_mgr_mock.GetPathsAndPkgnamesByBasename('libc.so.1').AndReturn({
