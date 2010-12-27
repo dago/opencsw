@@ -17,6 +17,7 @@ SYSTEM_SYMLINKS = (
 )
 
 DEFAULT_INSTALL_CONTENTS_FILE = "/var/sadm/install/contents"
+DUMP_BIN = "/usr/ccs/bin/dump"
 
 OWN_PKGNAME_PREFIXES = frozenset(["CSW"])
 

@@ -23,7 +23,6 @@ import sharedlib_utils
 
 from sqlobject import sqlbuilder
 
-DUMP_BIN = "/usr/ccs/bin/dump"
 PACKAGE_STATS_VERSION = 9L
 BAD_CONTENT_REGEXES = (
     # Slightly obfuscating these by using the default concatenation of
@@ -137,7 +136,7 @@ class PackageStatsMixin(object):
     for binary in dir_pkg.ListBinaries():
       binary_abs_path = os.path.join(dir_pkg.directory, "root", binary)
       binary_base_name = os.path.basename(binary)
-      args = [DUMP_BIN, "-Lv", binary_abs_path]
+      args = [common_constants.DUMP_BIN, "-Lv", binary_abs_path]
       dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
       stdout, stderr = dump_proc.communicate()
       ret = dump_proc.wait()

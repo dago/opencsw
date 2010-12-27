@@ -20,7 +20,6 @@ import common_constants
 import package_stats
 
 
-DUMP_BIN = "/usr/ccs/bin/dump"
 PSTAMP_RE = r"(?P<username>\w+)@(?P<hostname>[\w\.-]+)-(?P<timestamp>\d+)"
 DESCRIPTION_RE = r"^([\S]+) - (.*)$"
 BAD_CONTENT_REGEXES = (
