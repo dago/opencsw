@@ -24,6 +24,7 @@ import checkpkg_lib
 import common_constants
 import system_pkgmap
 import catalog
+import checkpkg
 from Cheetah.Template import Template
 
 USAGE = """
@@ -142,6 +143,11 @@ def NormalizeId(some_id):
   """Used to normalize identifiers (md5, filename).
 
   Currently, strips paths off given package paths."""
+  if not checkpkg.IsMd5(some_id):
+    logging.warning(
+        "Given Id (%s) is not an md5 sum. Will attempt to retrieve "
+        "it from the datbase, but it might fail.",
+        repr(some_id))
   return os.path.basename(some_id)
 
 
