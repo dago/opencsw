@@ -360,17 +360,6 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
       raise PackageError("%s does not exist or is not a directory"
                          % self.directory)
 
-  def GetAllFilePaths(self):
-    """Returns a list of all paths from the package."""
-    if not self.file_paths:
-      self.CheckPkgpathExists()
-      remove_prefix = "%s/" % self.pkgpath
-      self.file_paths = []
-      for root, dirs, files in os.walk(os.path.join(self.pkgpath, "root")):
-        full_paths = [os.path.join(root, f) for f in files]
-        self.file_paths.extend([f.replace(remove_prefix, "") for f in full_paths])
-    return self.file_paths
-
   def _GetOverridesStream(self, file_path):
     # This might potentially cause a file descriptor leak, but I'm not going to
     # worry about that at this stage.

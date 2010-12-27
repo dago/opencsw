@@ -33,8 +33,6 @@ class InspectivePackage(package.DirectoryFormatPackage):
       self.CheckPkgpathExists()
       self.files_metadata = []
       files_root = os.path.join(self.directory, "root")
-      if not os.path.exists(files_root):
-        return self.files_metadata
       all_files = self.GetAllFilePaths()
       def StripRe(x, strip_re):
         return re.sub(strip_re, "", x)
@@ -104,6 +102,17 @@ class InspectivePackage(package.DirectoryFormatPackage):
           self.binaries.append(file_info["path"])
       self.binaries.sort()
     return self.binaries
+
+  def GetAllFilePaths(self):
+    """Returns a list of all paths from the package."""
+    if not self.file_paths:
+      self.CheckPkgpathExists()
+      remove_prefix = "%s/" % self.pkgpath
+      self.file_paths = []
+      for root, dirs, files in os.walk(os.path.join(self.pkgpath, "root")):
+        full_paths = [os.path.join(root, f) for f in files]
+        self.file_paths.extend([f.replace(remove_prefix, "") for f in full_paths])
+    return self.file_paths
 
 
 class FileMagic(object):
