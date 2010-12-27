@@ -25,7 +25,9 @@ custom_pkgtrans() {
   hdrblks=$(( $hdrblks + 1 ))
   mkdir $2/$3
 
+  local counter=0
   while :; do
+    echo "Attempting ${hdrblks} offset"
     # cpio sometimes returns 1, and we don't want to bail out when it happens.
     dd if="$1" skip="$hdrblks" | (cd $2/$3 ; cpio -ivdm) || true
     if [[ -d "$2/$3/install" ]]; then
@@ -33,8 +35,9 @@ custom_pkgtrans() {
       break
     fi
     hdrblks=$(( $hdrblks + 1 ))
+    counter=$(( $counter + 1 ))
     # To prevent us from going on forever.
-    if [[ "${hdrblks}" -gt 100 ]]; then
+    if [[ "${counter}" -gt 100 ]]; then
       echo "Unpack keeps on being unsuccessful. Bailing out."
       return 1
     fi
