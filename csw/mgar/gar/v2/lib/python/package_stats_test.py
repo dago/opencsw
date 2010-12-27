@@ -13,6 +13,7 @@ import mox
 import inspective_package
 import opencsw
 import datetime
+import pkgmap
 
 from testdata.tree_stats import pkgstats as tree_stats
 from testdata.neon_stats import pkgstats as neon_stats
@@ -37,7 +38,7 @@ class PackageStatsWithDbUnitTest(test_base.SqlObjectTestMixin,
     mock_dirpkg = self.mox.CreateMock(
         inspective_package.InspectivePackage)
     mock_pkgmap = self.mox.CreateMock(
-        opencsw.Pkgmap)
+        pkgmap.Pkgmap)
     mock_srv4.GetInspectivePkg().AndReturn(mock_dirpkg)
     mock_srv4.pkg_path = "/tmp/foo-1.2,REV=1234.12.11-SunOS5.8-sparc-CSW.pkg.gz"
     mock_dirpkg.pkgname = "MOCKpkgname"
