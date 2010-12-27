@@ -82,9 +82,14 @@ class UsageError(Error):
 
 class HtmlGenerator(object):
 
-  def __init__(self, md5_sums, template=None):
-    self.md5_sums = md5_sums
+  def __init__(self, identifiers, template=None):
+    """Initialize the object
+
+    args: identifiers: md5 sums or file names of packages
+    template: Optional HTML template
+    """
     self.template = template
+    self.identifiers = identifiers
 
   def GetErrorTagsResult(self, srv4):
     res = m.CheckpkgErrorTag.select(
@@ -99,8 +104,8 @@ class HtmlGenerator(object):
   def GenerateHtml(self):
     pkgstats = []
     # Add error tags
-    for md5_sum in self.md5_sums:
-      srv4 = GetPkg(md5_sum)
+    for identifier in self.identifiers:
+      srv4 = GetPkg(identifier)
       data = cPickle.loads(str(srv4.data_obj.pickle))
       if "OPENCSW_REPOSITORY" in data["pkginfo"]:
         build_src = data["pkginfo"]["OPENCSW_REPOSITORY"]
@@ -133,7 +138,15 @@ class HtmlGenerator(object):
     return unicode(t)
 
 
+def NormalizeId(some_id):
+  """Used to normalize identifiers (md5, filename).
+
+  Currently, strips paths off given package paths."""
+  return os.path.basename(some_id)
+
+
 def GetPkg(some_id):
+  some_id = NormalizeId(some_id)
   logging.debug("Selecting from db: %s", repr(some_id))
   res = m.Srv4FileStats.select(
       sqlobject.OR(
