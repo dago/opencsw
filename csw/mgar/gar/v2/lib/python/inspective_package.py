@@ -133,6 +133,153 @@ class InspectivePackage(package.DirectoryFormatPackage):
       binaries_dump_info.append(binary_data)
     return binaries_dump_info
 
+  def GetDefinedSymbols(self):
+    """Returns text symbols (i.e. defined functions) for packaged ELF objects
+
+    To do this we parse output lines from nm similar to the following. "T"s are
+    the definitions which we are after.
+
+      0000104000 D _lib_version
+      0000986980 D _libiconv_version
+      0000000000 U abort
+      0000097616 T aliases_lookup
+    """
+    binaries = self.ListBinaries()
+    defined_symbols = {}
+
+    for binary in binaries:
+      binary_abspath = os.path.join(self.directory, "root", binary)
+      # Get parsable, ld.so.1 relevant SHT_DYNSYM symbol information
+      args = ["/usr/ccs/bin/nm", "-p", "-D", binary_abspath]
+      nm_proc = subprocess.Popen(
+          args,
+          stdout=subprocess.PIPE,
+          stderr=subprocess.PIPE)
+      stdout, stderr = nm_proc.communicate()
+      retcode = nm_proc.wait()
+      if retcode:
+        logging.error("%s returned an error: %s", args, stderr)
+        continue
+      nm_out = stdout.splitlines()
+
+      defined_symbols[binary] = []
+      for line in nm_out:
+        sym = self._ParseNmSymLine(line)
+        if not sym:
+          continue
+        if sym['type'] not in ("T", "D", "B"):
+          continue
+        defined_symbols[binary].append(sym['name'])
+
+    return defined_symbols
+
+  def GetLddMinusRlines(self):
+    """Returns ldd -r output."""
+    dir_pkg = self.GetInspectivePkg()
+    binaries = dir_pkg.ListBinaries()
+    ldd_output = {}
+    for binary in binaries:
+      binary_abspath = os.path.join(dir_pkg.directory, "root", binary)
+      # this could be potentially moved into the DirectoryFormatPackage class.
+      # ldd needs the binary to be executable
+      os.chmod(binary_abspath, 0755)
+      args = ["ldd", "-r", binary_abspath]
+      ldd_proc = subprocess.Popen(
+          args,
+          stdout=subprocess.PIPE,
+          stderr=subprocess.PIPE)
+      stdout, stderr = ldd_proc.communicate()
+      retcode = ldd_proc.wait()
+      if retcode:
+        logging.error("%s returned an error: %s", args, stderr)
+      ldd_info = []
+      for line in stdout.splitlines():
+        ldd_info.append(self._ParseLddDashRline(line))
+      ldd_output[binary] = ldd_info
+    return ldd_output
+
+  def _ParseNmSymLine(self, line):
+    re_defined_symbol =  re.compile('[0-9]+ [ABDFNSTU] \S+')
+    m = re_defined_symbol.match(line)
+    if not m:
+      return None
+    fields = line.split()
+    sym = { 'address': fields[0], 'type': fields[1], 'name': fields[2] }
+    return sym
+
+  def _ParseLddDashRline(self, line):
+    found_re = r"^\t(?P<soname>\S+)\s+=>\s+(?P<path_found>\S+)"
+    symbol_not_found_re = (r"^\tsymbol not found:\s(?P<symbol>\S+)\s+"
+                           r"\((?P<path_not_found>\S+)\)")
+    only_so = r"^\t(?P<path_only>\S+)$"
+    version_so = (r'^\t(?P<soname_version_not_found>\S+) '
+                  r'\((?P<lib_name>\S+)\) =>\t \(version not found\)')
+    stv_protected = (r'^\trelocation \S+ symbol: (?P<relocation_symbol>\S+): '
+                     r'file (?P<relocation_path>\S+): '
+                     r'relocation bound to a symbol '
+                     r'with STV_PROTECTED visibility$')
+    sizes_differ = (r'^\trelocation \S+ sizes differ: '
+                    r'(?P<sizes_differ_symbol>\S+)$')
+    sizes_info = (r'^\t\t\(file (?P<sizediff_file1>\S+) size=(?P<size1>0x\w+); '
+                  r'file (?P<sizediff_file2>\S+) size=(?P<size2>0x\w+)\)$')
+    sizes_one_used = (r'^\t\t(?P<sizediffused_file>\S+) size used; '
+                      r'possible insufficient data copied$')
+    common_re = (r"(%s|%s|%s|%s|%s|%s|%s|%s)"
+                 % (found_re, symbol_not_found_re, only_so, version_so,
+                    stv_protected, sizes_differ, sizes_info, sizes_one_used))
+    m = re.match(common_re, line)
+    response = {}
+    if m:
+      d = m.groupdict()
+      if "soname" in d and d["soname"]:
+        # it was found
+        response["state"] = "OK"
+        response["soname"] = d["soname"]
+        response["path"] = d["path_found"]
+        response["symbol"] = None
+      elif "symbol" in d and d["symbol"]:
+        response["state"] = "symbol-not-found"
+        response["soname"] = None
+        response["path"] = d["path_not_found"]
+        response["symbol"] = d["symbol"]
+      elif d["path_only"]:
+        response["state"] = "OK"
+        response["soname"] = None
+        response["path"] = d["path_only"]
+        response["symbol"] = None
+      elif d["soname_version_not_found"]:
+        response["state"] = "version-not-found"
+        response["soname"] = d["soname_version_not_found"]
+        response["path"] = None
+        response["symbol"] = None
+      elif d["relocation_symbol"]:
+        response["state"] = 'relocation-bound-to-a-symbol-with-STV_PROTECTED-visibility'
+        response["soname"] = None
+        response["path"] = d["relocation_path"]
+        response["symbol"] = d["relocation_symbol"]
+      elif d["sizes_differ_symbol"]:
+        response["state"] = 'sizes-differ'
+        response["soname"] = None
+        response["path"] = None
+        response["symbol"] = d["sizes_differ_symbol"]
+      elif d["sizediff_file1"]:
+        response["state"] = 'sizes-diff-info'
+        response["soname"] = None
+        response["path"] = "%s %s" % (d["sizediff_file1"], d["sizediff_file2"])
+        response["symbol"] = None
+      elif d["sizediffused_file"]:
+        response["state"] = 'sizes-diff-one-used'
+        response["soname"] = None
+        response["path"] = "%s" % (d["sizediffused_file"])
+        response["symbol"] = None
+      else:
+        raise StdoutSyntaxError("Could not parse %s with %s"
+                                % (repr(line), common_re))
+    else:
+      raise StdoutSyntaxError("Could not parse %s with %s"
+                              % (repr(line), common_re))
+    return response
+
 
 class FileMagic(object):
   """Libmagic sometimes returns None, which I think is a bug.
