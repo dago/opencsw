@@ -20,9 +20,6 @@ import common_constants
 import package_stats
 
 
-DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
-DO_NOT_REPORT_MISSING = set([])
-DO_NOT_REPORT_MISSING_RE = [r"\*?SUNW.*"]
 DUMP_BIN = "/usr/ccs/bin/dump"
 PSTAMP_RE = r"(?P<username>\w+)@(?P<hostname>[\w\.-]+)-(?P<timestamp>\d+)"
 DESCRIPTION_RE = r"^([\S]+) - (.*)$"
