@@ -58,10 +58,9 @@ MERGE_SCRIPTS_isa-default-garversion-2.9 = copy-all
 MERGE_SCRIPTS_isa-default64-garversion-2.9 = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-2.9 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
-PKGFILES_CSWlibsigsegv0 += $(call baseisadirs,$(libdir),[^/]*\.so\.0\.[0-9\.]+)
-PKGFILES_CSWlibsigsegv2 += $(call baseisadirs,$(libdir),[^/]*\.so\.2\.[0-9\.]+)
+PKGFILES_CSWlibsigsegv0 += $(call baseisadirs,$(libdir),[^/]*\.so\.0(\.[0-9\.]+)?)
+PKGFILES_CSWlibsigsegv2 += $(call baseisadirs,$(libdir),[^/]*\.so\.2(\.[0-9\.]+)?)
 PKGFILES_CSWlibsigsegv = NOFILES
-PKGFILES_CSWlibsigsegv-devel = $(PKGFILES_DEVEL)
-
+# CSWlibsigsegv-devel is catch-all
 
 include gar/category.mk
