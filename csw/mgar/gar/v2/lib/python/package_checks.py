@@ -1153,7 +1153,7 @@ def CheckDocDir(pkg_data, error_mgr, logger, messenger):
                pkgmap_entry["path"]))
 
 
-def CheckSymlinksBaseDirs(pkg_data, error_mgr, logger, messenger):
+def disabledCheckSymlinksBaseDirs(pkg_data, error_mgr, logger, messenger):
   """If a symlink is in a non-existing directory, installation fails."""
   pkgname = pkg_data["basic_stats"]["pkgname"]
   for pkgmap_entry in pkg_data["pkgmap"]:
