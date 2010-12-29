@@ -349,8 +349,12 @@ class CheckInterfaceBase(object):
     if file_path in self.pkgs_by_file:
       for pkg in self.pkgs_by_file[file_path]:
         pkgs.add(pkg)
+    if len(pkgs) < 6:
+      logging_response = pkgs
+    else:
+      logging_response = pprint.pformat(pkgs)
     logging.debug("GetPkgByPath(%s).AndReturn(%s)"
-                  % (file_path, pkgs))
+                  % (file_path, logging_response))
     return pkgs
 
   def GetInstalledPackages(self):
@@ -601,7 +605,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
       ]
     """
     logging.debug("_ReportMissingDependencies(error_mgr, %s, %s, %s)",
-        pkgname, declared_deps, req_pkgs_reasons)
+        pkgname, declared_deps, pprint.pformat(req_pkgs_reasons))
     missing_reasons_by_pkg = {}
     for reason_group in req_pkgs_reasons:
       for pkg, reason in reason_group:
