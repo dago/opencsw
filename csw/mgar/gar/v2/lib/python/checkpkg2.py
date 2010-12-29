@@ -134,7 +134,7 @@ def main():
         options.arch,
         options.catrel,
         debug=options.debug,
-        show_progress=(not options.quiet))
+        show_progress=(os.isatty(1) and not options.quiet))
     # Running the checks, reporting and exiting.
     exit_code, screen_report, tags_report = check_manager.Run()
     screen_report = unicode(screen_report)
