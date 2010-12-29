@@ -48,6 +48,7 @@ USAGE = """
        %prog gen-html <md5sum> [ ... ]
        %prog pkg search <catalogname>
        %prog show basename [options] <filename>
+       %prog show filename [options] <filename>
        %prog show files <md5-sum>
 
 
@@ -513,6 +514,12 @@ def main():
           arg, options.osrel, options.arch, options.catrel)
       for file_path in pkgs_by_path:
         print os.path.join(file_path, arg), ", ".join(pkgs_by_path[file_path])
+  elif (command, subcommand) == ('show', 'filename'):
+    db_catalog = checkpkg_lib.Catalog()
+    for arg in args:
+      pkgs = db_catalog.GetPkgByPath(
+          arg, options.osrel, options.arch, options.catrel)
+      print " ".join(pkgs)
   else:
     raise UsageError("Command unrecognized: %s" % command)
 
