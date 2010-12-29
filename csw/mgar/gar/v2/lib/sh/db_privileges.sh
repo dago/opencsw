@@ -17,8 +17,9 @@ else
   exit 1
 fi
 
-# Example site_configh.sh:
+# Example site_config.sh:
 #
+# DATABASE="..."
 # DEFAULT_HOST="192.168.0.%"
 # DBA_USER=dba_user
 # RELMGR_USER=relmgr_user
@@ -57,7 +58,7 @@ function print_table_grant {
 }
 
 function print_grants {
-  local dbname=$1
+  local dbname="${DATABASE}"
   local admin_user="${DBA_USER}"
   local relmgr_user="${RELMGR_USER}"
   local maintainer_user="${MAINTAINER_USER}"
@@ -65,11 +66,13 @@ function print_grants {
   echo "GRANT ALL PRIVILEGES ON ${dbname}.* TO '${admin_user}'@'localhost';"
   echo "GRANT SELECT ON ${dbname}.* TO '${relmgr_user}'@'${host}';"
   echo "GRANT SELECT ON ${dbname}.* TO '${maintainer_user}'@'${host}';"
+  # Release manager's tables
   for tbl in "${TABLES_REL_MGR[@]}" \
              "${TABLES_REGULAR[@]}"
   do
     print_table_grant "${tbl}" "${dbname}" "${relmgr_user}" "${host}"
   done
+  # Package maintainer's tables
   for tbl in "${TABLES_REGULAR[@]}"
   do
     print_table_grant "${tbl}" "${dbname}" "${maintainer_user}" "${host}"
@@ -88,7 +91,7 @@ function print_grants {
 }
 
 function main {
-  print_grants "$1"
+  print_grants
 }
 
 main "$@"
