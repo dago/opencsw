@@ -26,6 +26,9 @@ Development plan for checkpkg:
 - Sort all list data structures so that it's possible to diff the results of
   pprint.pprint() and see meaningful results.  This will be the new
   implementation for comparepkg.
+- Add fields to the srv4_file_stats table:
+  - source URL (for grouping by software)
+  - Description (to search for the word 'transitional')
 - Don't suggest two packages for the same soname.
 
 Also, see ticket list on trac: http://sourceforge.net/apps/trac/gar/report/1
