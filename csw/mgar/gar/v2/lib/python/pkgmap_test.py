@@ -37,7 +37,8 @@ class PkgmapUnitTest(unittest.TestCase):
             'line':  '1 f cswcpsampleconf /etc/opt/csw/cups/cupsd.conf.CSW 0644 root bin 4053 20987 1264420689',
             'type':  'f',
             'class': 'cswcpsampleconf',
-            'mode':  '0644'
+            'mode':  '0644',
+            'target': None,
         }
     ]
     self.assertEqual(expected, pm.entries)
@@ -60,6 +61,26 @@ class PkgmapUnitTest(unittest.TestCase):
     paths = [x["path"] for x in pm.entries]
     self.assertEquals(paths, sorted(paths))
 
+  def test_ParseLineSymlink(self):
+    pm = pkgmap.Pkgmap(PKGMAP_2.splitlines())
+    line = ("1 s none "
+            "/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5=libpq.so.5.3")
+    # s none /opt/csw/lib/sparcv9/libpq.so.5=..//sparcv9/libpq.so.5
+    # s none /opt/csw/lib/sparcv9/libpq.so.5.3=..//sparcv9/libpq.so.5.3
+    line_to_add = ("/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5 --> "
+                   "libpq.so.5.3")
+    entry = {
+        'group': None,
+        'target': '/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5.3',
+        'user': None,
+        'path': '/opt/csw/lib/postgresql/9.0/lib/sparcv9/libpq.so.5',
+        'line': ('1 s none /opt/csw/lib/postgresql/9.0/lib/sparcv9/'
+                 'libpq.so.5=libpq.so.5.3'),
+        'type': 's',
+        'class': 'none',
+        'mode': None,
+    }
+    self.assertEqual((entry, line_to_add), pm._ParseLine(line))
 
 if __name__ == '__main__':
   unittest.main()

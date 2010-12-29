@@ -22,7 +22,7 @@ import sharedlib_utils
 
 from sqlobject import sqlbuilder
 
-PACKAGE_STATS_VERSION = 9L
+PACKAGE_STATS_VERSION = 10L
 BAD_CONTENT_REGEXES = (
     # Slightly obfuscating these by using the default concatenation of
     # strings.
