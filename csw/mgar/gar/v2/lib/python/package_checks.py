@@ -1160,11 +1160,11 @@ def disabledCheckSymlinksBaseDirs(pkg_data, error_mgr, logger, messenger):
     if "path" not in pkgmap_entry: continue
     if not pkgmap_entry["path"]: continue
     if pkgmap_entry["type"] == "s":
-    	base_dir = os.path.dirname(pkgmap_entry["path"])
-    	error_mgr.NeedFile(
-    	    base_dir,
+      base_dir = os.path.dirname(pkgmap_entry["path"])
+      error_mgr.NeedFile(
+          base_dir,
           "%s provides a symlink %s which needs a base directory: %s."
-    	    % (pkgname, repr(pkgmap_entry["path"]), repr(base_dir)))
+          % (pkgname, repr(pkgmap_entry["path"]), repr(base_dir)))
 
 
 def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
