@@ -32,12 +32,15 @@ CATALOGNAME_CSWlibsigsegv = libsigsegv
 
 SPKG_DESC_CSWlibsigsegv0 = A library for catching and handling segmentation faults, libsigsegv.so.0
 SPKG_DESC_CSWlibsigsegv2 = A library for catching and handling segmentation faults, libsigsegv.so.2
-SPKG_DESC_CSWlibsigsegv = Empty stub as contents has been moved to CSWlibsigsegv0
+SPKG_DESC_CSWlibsigsegv = Empty stub as contents has been moved to CSWlibsigsegv0 and CSWlibsigsegv2
 SPKG_DESC_CSWlibsigsegv-devel = Development files for libsigsegv
 
 # This is a legacy stub dependency only. Remove after last package to CSWlibsigsegv has been updated.
-RUNTIME_DEP_PKGS_CSWlibsigsegv = CSWlibsigsegv0
+# Initially it depended only on CSWlibsigsegv0, but in the meantime updates from the dependent
+# packages came out linking to .so.2, so we must now depend on both.
+RUNTIME_DEP_PKGS_CSWlibsigsegv = CSWlibsigsegv0 CSWlibsigsegv2
 CHECKPKG_OVERRIDES_CSWlibsigsegv += surplus-dependency|CSWlibsigsegv0
+CHECKPKG_OVERRIDES_CSWlibsigsegv += surplus-dependency|CSWlibsigsegv2
 
 ARCHALL_CSWlibsigsegv = 1
 
