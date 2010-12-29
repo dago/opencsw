@@ -1483,7 +1483,7 @@ class TestCheckObsoleteDepsCups(CheckpkgUnitTestHelper, unittest.TestCase):
 class TestCheckSymlinksBaseDirs(CheckpkgUnitTestHelper,
                                 unittest.TestCase):
   """Test whether appropriate files are provided."""
-  FUNCTION_NAME = 'CheckSymlinksBaseDirs'
+  FUNCTION_NAME = 'disabledCheckSymlinksBaseDirs'
 
   def CheckpkgTest(self):
     self.pkg_data = tree_stats[0]

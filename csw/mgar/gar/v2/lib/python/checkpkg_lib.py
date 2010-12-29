@@ -265,13 +265,28 @@ class CheckInterfaceBase(object):
   It wraps access to the catalog database.
   """
 
-  def __init__(self, osrel, arch, catrel, catalog=None, lines_dict=None):
+  def __init__(self, osrel, arch, catrel, catalog, pkg_set_files, lines_dict=None):
+    """
+    Args:
+      osrel: OS release
+      arch: Architecture
+      catrel: Catalog release
+      pkgs_set_files: A dictionary of collections of pairs path / basename
+
+    An example:
+    {
+      "CSWfoo": frozenset([
+        ("/opt/csw/bin", "foo"),
+        ...
+      ]),
+      "CSWbar": ...,
+      ...
+    }
+    """
     self.osrel = osrel
     self.arch = arch
     self.catrel = catrel
     self.catalog = catalog
-    if not self.catalog:
-      self.catalog = Catalog()
     self.common_paths = {}
     if lines_dict:
       self.lines_dict = lines_dict
@@ -283,6 +298,18 @@ class CheckInterfaceBase(object):
     # [('CSWfoo', 'Provides an interpreter of foo'), ... ]
     self.needed_pkgs = []
     self.__errors = []
+    # Making an index of files that is easy to look up
+    self.pkg_set_files = pkg_set_files
+    self.pkgs_by_file = {}
+    self.pkgs_by_basename = {}
+    for pkgname in self.pkg_set_files:
+      for base_path, base_name in self.pkg_set_files[pkgname]:
+        full_path = os.path.join(base_path, base_name)
+        self.pkgs_by_file.setdefault(full_path, set())
+        self.pkgs_by_file[full_path].add(pkgname)
+        self.pkgs_by_basename.setdefault(base_name, {})
+        self.pkgs_by_basename[base_name].setdefault(base_path, set())
+        self.pkgs_by_basename[base_name][base_path].add(pkgname)
 
   def GetErrors(self):
     return self.__errors
@@ -294,19 +321,37 @@ class CheckInterfaceBase(object):
 
   def GetPathsAndPkgnamesByBasename(self, basename):
     """Proxies calls to class member."""
-    return self.catalog.GetPathsAndPkgnamesByBasename(
+    catalog_paths = self.catalog.GetPathsAndPkgnamesByBasename(
         basename, self.osrel, self.arch, self.catrel)
+    paths_and_pkgs = copy.deepcopy(catalog_paths)
+    # Removing references to packages under test
+    for catalog_path in paths_and_pkgs:
+      for pkgname in self.pkg_set_files:
+        if pkgname in paths_and_pkgs[catalog_path]:
+          paths_and_pkgs[catalog_path].remove(pkgname)
+    # Adding files from packages under test
+    if basename in self.pkgs_by_basename:
+      for path in self.pkgs_by_basename[basename]:
+        for pkg in self.pkgs_by_basename[basename][path]:
+          paths = paths_and_pkgs.setdefault(path, [])
+          paths.append(pkg)
+    return paths_and_pkgs
+
 
   def GetPkgByPath(self, file_path):
     """Proxies calls to self.system_pkgmap."""
-    response = self.catalog.GetPkgByPath(
+    pkgs_in_catalog = self.catalog.GetPkgByPath(
         file_path, self.osrel, self.arch, self.catrel)
-    logging_response = response
-    if u"CSWcommon" in logging_response:
-      logging_response = frozenset([u"CSWcommon"])
+    # This response comes from catalog; we need to simulate the state the
+    # catalog would have if the set under test in the catalog.  First, we
+    # remove all packages that are under test.
+    pkgs = set(pkgs_in_catalog.difference(set(self.pkg_set_files)))
+    if file_path in self.pkgs_by_file:
+      for pkg in self.pkgs_by_file[file_path]:
+        pkgs.add(pkg)
     logging.debug("GetPkgByPath(%s).AndReturn(%s)"
-                  % (file_path, logging_response))
-    return response
+                  % (file_path, pkgs))
+    return pkgs
 
   def GetInstalledPackages(self):
     return self.catalog.GetInstalledPackages(
@@ -363,8 +408,9 @@ class IndividualCheckInterface(CheckInterfaceBase):
   Wraps the creation of tag.CheckpkgTag objects.
   """
 
-  def __init__(self, pkgname, osrel, arch, catrel, catalog=None):
-    super(IndividualCheckInterface, self).__init__(osrel, arch, catrel, catalog)
+  def __init__(self, pkgname, osrel, arch, catrel, catalog, pkg_set_files):
+    super(IndividualCheckInterface, self).__init__(
+        osrel, arch, catrel, catalog, pkg_set_files)
     self.pkgname = pkgname
 
   def ReportError(self, tag_name, tag_info=None, msg=None):
@@ -385,8 +431,8 @@ class IndividualCheckInterface(CheckInterfaceBase):
 class SetCheckInterface(CheckInterfaceBase):
   """To be passed to set checking functions."""
 
-  def __init__(self, osrel, arch, catrel, catalog=None):
-    super(SetCheckInterface, self).__init__(osrel, arch, catrel, catalog)
+  def __init__(self, osrel, arch, catrel, catalog, pkg_set_files):
+    super(SetCheckInterface, self).__init__(osrel, arch, catrel, catalog, pkg_set_files)
 
   def NeedFile(self, pkgname, full_path, reason):
     "See base class _NeedFile."
@@ -565,7 +611,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
         elif len(missing_reasons_by_pkg[pkg]) == 4:
           missing_reasons_by_pkg[pkg].append("...and more.")
     missing_dep_groups = self._MissingDepsFromReasonGroups(
-        req_pkgs_reasons, declared_deps)
+        pkgname, req_pkgs_reasons, declared_deps)
     missing_dep_groups = self._RemovePkgsFromMissing(pkgname, missing_dep_groups)
     potential_req_pkgs = set(
         (x for x, y in reduce(operator.add, req_pkgs_reasons, [])))
@@ -585,13 +631,16 @@ class CheckpkgManager2(CheckpkgManagerBase):
       error_mgr.ReportErrorForPkgname(pkgname, "surplus-dependency", surplus_dep)
     return missing_deps_reasons_by_pkg, surplus_deps, missing_dep_groups
 
-  def _MissingDepsFromReasonGroups(self, reason_groups, declared_deps_set):
+  def _MissingDepsFromReasonGroups(self, for_pkgname, reason_groups, declared_deps_set):
+    """Any package from the group satisfies the dependency."""
     missing_dep_groups = []
     for reason_group in reason_groups:
       dependency_fulfilled = False
       pkgnames = [x for x, y in reason_group]
       for pkgname in pkgnames:
-        if pkgname in declared_deps_set:
+        # If one of the packages suggested is the package under examination,
+        # consider the dependency satisifed.
+        if pkgname in declared_deps_set or pkgname == for_pkgname:
           dependency_fulfilled = True
           break
       if not dependency_fulfilled:
@@ -669,10 +718,20 @@ class CheckpkgManager2(CheckpkgManagerBase):
     needed_pkgs = []
     pbar.start()
     declared_deps_by_pkgname = {}
+    # Build a map between packages and files:
+    examined_files_by_pkg = {}
+    for pkg_data in pkgs_data:
+      pkgname = pkg_data["basic_stats"]["pkgname"]
+      examined_files_by_pkg.setdefault(pkgname, set())
+      for entry in pkg_data["pkgmap"]:
+        if "path" in entry and entry["path"]:
+          base_path, base_name = os.path.split(entry["path"])
+          examined_files_by_pkg[pkgname].add((base_path, base_name))
+    # Running individual checks
     for pkg_data in pkgs_data:
       pkgname = pkg_data["basic_stats"]["pkgname"]
       check_interface = IndividualCheckInterface(
-          pkgname, self.osrel, self.arch, self.catrel, catalog)
+          pkgname, self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg)
       for function in self.individual_checks:
         logger = logging.getLogger("%s-%s" % (pkgname, function.__name__))
         logger.debug("Calling %s", function.__name__)
@@ -700,7 +759,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
     for function in self.set_checks:
       logger = logging.getLogger(function.__name__)
       check_interface = SetCheckInterface(
-          self.osrel, self.arch, self.catrel, catalog)
+          self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg)
       logger.debug("Calling %s", function.__name__)
       function(pkgs_data, check_interface, logger=logger, messenger=messenger)
       if check_interface.errors:
@@ -708,7 +767,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
       needed_files.extend(check_interface.needed_files)
       needed_pkgs.extend(check_interface.needed_pkgs)
     check_interface = SetCheckInterface(
-        self.osrel, self.arch, self.catrel, catalog)
+        self.osrel, self.arch, self.catrel, catalog, examined_files_by_pkg)
     self._ReportDependencies(check_interface,
         needed_files, needed_pkgs, messenger, declared_deps_by_pkgname)
     errors = self.SetErrorsToDict(check_interface.errors, errors)
