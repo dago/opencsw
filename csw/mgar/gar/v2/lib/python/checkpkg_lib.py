@@ -554,6 +554,8 @@ class CheckpkgManager2(CheckpkgManagerBase):
         ]
       ]
     """
+    logging.debug("_ReportMissingDependencies(error_mgr, %s, %s, %s)",
+        pkgname, declared_deps, req_pkgs_reasons)
     missing_reasons_by_pkg = {}
     for reason_group in req_pkgs_reasons:
       for pkg, reason in reason_group:
