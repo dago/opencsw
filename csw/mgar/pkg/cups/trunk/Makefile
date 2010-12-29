@@ -222,47 +222,45 @@ PACKAGES += CSWlibcups2
 CATALOGNAME_CSWlibcups2 = libcups2
 PKGFILES_CSWlibcups2 += $(call baseisadirs,$(libdir),libcups\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibcups2 += CUPS libraries, libcups.so.2
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWzlib
 
 PACKAGES += CSWlibcupscgi1
 CATALOGNAME_CSWlibcupscgi1 = libcupscgi1
 PKGFILES_CSWlibcupscgi1 += $(call baseisadirs,$(libdir),libcupscgi\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibcupscgi1 += CUPS libraries, libcupscgi.so.1
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWosslrt
 
 PACKAGES += CSWlibcupsdriver1
 CATALOGNAME_CSWlibcupsdriver1 = libcupsdriver1
 PKGFILES_CSWlibcupsdriver1 += $(call baseisadirs,$(libdir),libcupsdriver\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibcupsdriver1 += CUPS libraries, libcupsdriver.so.1
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibcups2
 
 PACKAGES += CSWlibcupsimage2
 CATALOGNAME_CSWlibcupsimage2 = libcupsimage2
 PKGFILES_CSWlibcupsimage2 += $(call baseisadirs,$(libdir),libcupsimage\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibcupsimage2 += CUPS libraries, libcupsimage.so.2
-
-PACKAGES += CSWlibcupsmime1
-CATALOGNAME_CSWlibcupsmime1 = libcupsmime1
-PKGFILES_CSWlibcupsmime1 += $(call baseisadirs,$(libdir),libcupsmime\.so\.1(\.\d+)*)
-SPKG_DESC_CSWlibcupsmime1 += CUPS libraries, libcupsmime.so.1
-
-PACKAGES += CSWlibcupsppdc1
-CATALOGNAME_CSWlibcupsppdc1 = libcupsppdc1
-PKGFILES_CSWlibcupsppdc1 += $(call baseisadirs,$(libdir),libcupsppdc\.so\.1(\.\d+)*)
-SPKG_DESC_CSWlibcupsppdc1 += CUPS libraries, libcupsppdc.so.1
-
-
-RUNTIME_DEP_PKGS_CSWlibcups2 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibcups2 += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWtiff
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWpng
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWjpeg
+
+PACKAGES += CSWlibcupsmime1
+CATALOGNAME_CSWlibcupsmime1 = libcupsmime1
+PKGFILES_CSWlibcupsmime1 += $(call baseisadirs,$(libdir),libcupsmime\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibcupsmime1 += CUPS libraries, libcupsmime.so.1
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibcups2
+
+PACKAGES += CSWlibcupsppdc1
+CATALOGNAME_CSWlibcupsppdc1 = libcupsppdc1
+PKGFILES_CSWlibcupsppdc1 += $(call baseisadirs,$(libdir),libcupsppdc\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibcupsppdc1 += CUPS libraries, libcupsppdc.so.1
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibcups2
 
@@ -322,6 +320,14 @@ LICENSE = LICENSE.txt
 # see bug http://www.opencsw.org/bugtrack/view.php?id=4384
 CHECKPKG_OVERRIDES_CSWcupsd += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSWlibcups2 += bad-rpath-entry
+
+PROTOTYPE_MODIFIERS = lp_group_etc
+PROTOTYPE_FILES_lp_group_etc = $(sysconfdir).*
+PROTOTYPE_GROUP_lp_group_etc = lp
+
+PROTOTYPE_MODIFIERS = lp_group_var
+PROTOTYPE_FILES_lp_group_var = $(localstatedir).*
+PROTOTYPE_GROUP_lp_group_var = lp
 
 include gar/category.mk
 
