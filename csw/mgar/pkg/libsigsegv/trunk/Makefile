@@ -52,14 +52,14 @@ CONFIGURE_ARGS += --enable-shared --disable-static
 
 TEST_TARGET = check
 
-MERGE_SCRIPTS_isa-default-garversion-2.6 = copy-only
-MERGE_DIRS_isa-default-garversion-2.6 = $(libdir)
-MERGE_SCRIPTS_isa-default64-garversion-2.6 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-2.6 = $(libdir)
+MERGE_SCRIPTS_isa-default-version-2.6 = copy-only
+MERGE_DIRS_isa-default-version-2.6 = $(libdir)
+MERGE_SCRIPTS_isa-default64-version-2.6 = copy-relocated-only
+MERGE_DIRS_isa-default64-version-2.6 = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-2.9 = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-2.9 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-2.9 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-version-2.9 = copy-all
+MERGE_SCRIPTS_isa-default64-version-2.9 = copy-relocated-only
+MERGE_DIRS_isa-default64-version-2.9 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 PKGFILES_CSWlibsigsegv0 += $(call baseisadirs,$(libdir),[^/]*\.so\.0(\.[0-9\.]+)?)
 PKGFILES_CSWlibsigsegv2 += $(call baseisadirs,$(libdir),[^/]*\.so\.2(\.[0-9\.]+)?)
