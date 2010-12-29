@@ -1,5 +1,5 @@
 NAME = help2man
-VERSION = 1.38.2
+VERSION = 1.38.4
 CATEGORIES = devel
 
 DESCRIPTION = A tool for automatically generating simple manual pages from program output
