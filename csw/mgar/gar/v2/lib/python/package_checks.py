@@ -1163,7 +1163,7 @@ def disabledCheckSymlinksBaseDirs(pkg_data, error_mgr, logger, messenger):
       base_dir = os.path.dirname(pkgmap_entry["path"])
       error_mgr.NeedFile(
           base_dir,
-          "%s provides a symlink %s which needs a base directory: %s."
+          "%s contains a symlink %s which needs a base directory: %s."
           % (pkgname, repr(pkgmap_entry["path"]), repr(base_dir)))
 
 
