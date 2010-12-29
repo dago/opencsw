@@ -349,10 +349,7 @@ class CheckInterfaceBase(object):
     if file_path in self.pkgs_by_file:
       for pkg in self.pkgs_by_file[file_path]:
         pkgs.add(pkg)
-    if len(pkgs) < 6:
-      logging_response = pkgs
-    else:
-      logging_response = pprint.pformat(pkgs)
+    logging_response = pprint.pformat(pkgs)
     logging.debug("GetPkgByPath(%s).AndReturn(%s)"
                   % (file_path, logging_response))
     return pkgs
