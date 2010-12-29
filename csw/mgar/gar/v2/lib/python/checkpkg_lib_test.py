@@ -13,6 +13,7 @@ import inspective_package
 import mox
 import test_base
 import cPickle
+from testdata import stubs
 
 from testdata.neon_stats import pkgstats as neon_stats
 
@@ -125,6 +126,177 @@ class CheckpkgManager2UnitTest(mox.MoxTestBase):
         '  RUNTIME_DEP_PKGS_CSWneon += CSWbaz',
         '# (end of the list of alternative dependencies)']
     self.assertEquals(expected_gar_lines, gar_lines)
+
+  def test_ReportDependencies(self):
+    m = checkpkg_lib.CheckpkgManager2(
+            "testname", [], "5.9", "sparc", "unstable")
+    checkpkg_interface_mock = self.mox.CreateMock(
+        checkpkg_lib.IndividualCheckInterface)
+    needed_files = [
+        ("CSWfoo", "/opt/csw/bin/needed_file", "reason1"),
+    ]
+    needed_pkgs = []
+    messenger_stub = stubs.MessengerStub()
+    declared_deps_by_pkgname = {
+        "CSWfoo": frozenset([
+          "CSWbar-1",
+          "CSWbar-2",
+        ]),
+    }
+    checkpkg_interface_mock.GetPkgByPath('/opt/csw/bin/needed_file').AndReturn(
+        ["CSWfoo-one", "CSWfoo-two"]
+    )
+    checkpkg_interface_mock.ReportErrorForPkgname(
+        'CSWfoo', 'missing-dependency', 'CSWfoo-one or CSWfoo-two')
+    checkpkg_interface_mock.ReportErrorForPkgname(
+        'CSWfoo', 'surplus-dependency', 'CSWbar-2')
+    checkpkg_interface_mock.ReportErrorForPkgname(
+        'CSWfoo', 'surplus-dependency', 'CSWbar-1')
+    self.mox.ReplayAll()
+    m._ReportDependencies(checkpkg_interface_mock,
+                          needed_files,
+                          needed_pkgs,
+                          messenger_stub,
+                          declared_deps_by_pkgname)
+
+  def testSurplusDeps(self):
+    m = checkpkg_lib.CheckpkgManager2(
+            "testname", [], "5.9", "sparc", "unstable")
+    potential_req_pkgs = set([u"CSWbar"])
+    declared_deps = set([u"CSWbar", u"CSWsurplus"])
+    expected = set(["CSWsurplus"])
+    self.assertEquals(
+        expected,
+        m._GetSurplusDeps("CSWfoo", potential_req_pkgs, declared_deps))
+
+  def testMissingDepsFromReasonGroups(self):
+    m = checkpkg_lib.CheckpkgManager2(
+            "testname", [], "5.9", "sparc", "unstable")
+    reason_groups = [
+        [(u"CSWfoo1", ""),
+         (u"CSWfoo2", "")],
+        [(u"CSWbar", "")],
+    ]
+    declared_deps = set([u"CSWfoo2"])
+    expected = [[u"CSWbar"]]
+    result = m._MissingDepsFromReasonGroups(
+        reason_groups, declared_deps)
+    self.assertEqual(expected, result)
+
+  def testMissingDepsFromReasonGroupsTwo(self):
+    m = checkpkg_lib.CheckpkgManager2(
+            "testname", [], "5.9", "sparc", "unstable")
+    reason_groups = [
+        [(u"CSWfoo1", "reason 1"),
+         (u"CSWfoo2", "reason 1")],
+        [(u"CSWbar", "reason 2")],
+    ]
+    declared_deps = set([])
+    expected = [[u'CSWfoo1', u'CSWfoo2'], [u'CSWbar']]
+    result = m._MissingDepsFromReasonGroups(
+        reason_groups, declared_deps)
+    self.assertEqual(result, expected)
+
+  def test_RemovePkgsFromMissing(self):
+    m = checkpkg_lib.CheckpkgManager2(
+            "testname", [], "5.9", "sparc", "unstable")
+    missing_dep_groups = [['CSWfoo-one', 'CSWfoo']]
+    expected = set(
+        [
+          frozenset(['CSWfoo', 'CSWfoo-one']),
+        ]
+    )
+    result = m._RemovePkgsFromMissing("CSWbaz", missing_dep_groups)
+    self.assertEqual(expected, result)
+
+  def testReportMissingDependenciesOne(self):
+    m = checkpkg_lib.CheckpkgManager2(
+            "testname", [], "5.9", "sparc", "unstable")
+    error_mgr_mock = self.mox.CreateMock(checkpkg_lib.IndividualCheckInterface)
+    declared_deps = frozenset([u"CSWfoo"])
+    req_pkgs_reasons = [
+        [
+          (u"CSWfoo", "reason 1"),
+          (u"CSWfoo-2", "reason 2"),
+        ],
+        [
+          ("CSWbar", "reason 3"),
+        ],
+    ]
+    error_mgr_mock.ReportErrorForPkgname(
+        'CSWexamined', 'missing-dependency', 'CSWbar')
+    self.mox.ReplayAll()
+    m._ReportMissingDependencies(
+        error_mgr_mock, "CSWexamined", declared_deps, req_pkgs_reasons)
+
+  def testReportMissingDependenciesTwo(self):
+    m = checkpkg_lib.CheckpkgManager2(
+            "testname", [], "5.9", "sparc", "unstable")
+    error_mgr_mock = self.mox.CreateMock(checkpkg_lib.IndividualCheckInterface)
+    declared_deps = frozenset([])
+    req_pkgs_reasons = [
+        [
+          (u"CSWfoo-1", "reason 1"),
+          (u"CSWfoo-2", "reason 1"),
+        ],
+    ]
+    error_mgr_mock.ReportErrorForPkgname(
+        'CSWexamined', 'missing-dependency', u'CSWfoo-1 or CSWfoo-2')
+    self.mox.ReplayAll()
+    m._ReportMissingDependencies(
+        error_mgr_mock, "CSWexamined", declared_deps, req_pkgs_reasons)
+
+  def testReportMissingDependenciesIntegration(self):
+    m = checkpkg_lib.CheckpkgManager2(
+            "testname", [], "5.9", "sparc", "unstable")
+    catalog_mock = self.mox.CreateMock(checkpkg_lib.Catalog)
+    checkpkg_interface = checkpkg_lib.IndividualCheckInterface(
+          "CSWfoo", "AlienOS5.2", "sparkle", "calcified", catalog_mock)
+    declared_deps_by_pkgname = {
+        "CSWfoo": frozenset(),
+    }
+    declared_deps = frozenset([])
+    pkgs_providing_path = ["CSWproviding-%02d" % x for x in range(20)]
+    catalog_mock.GetPkgByPath(
+        '/opt/csw/sbin',
+        'AlienOS5.2',
+        'sparkle',
+        'calcified').AndReturn(pkgs_providing_path)
+    self.mox.ReplayAll()
+    checkpkg_interface.NeedFile("/opt/csw/sbin", "reason 1")
+    needed_files = checkpkg_interface.needed_files
+    needed_pkgs = checkpkg_interface.needed_pkgs
+    messenger_stub = stubs.MessengerStub()
+    m._ReportDependencies(
+        checkpkg_interface,
+        needed_files,
+        needed_pkgs,
+        messenger_stub,
+        declared_deps_by_pkgname)
+    self.assertEqual(1, len(checkpkg_interface.errors))
+    self.assertEqual(
+        " or ".join(sorted(pkgs_providing_path)),
+        checkpkg_interface.errors[0].tag_info)
+
+  def testReportMissingDependenciesSurplus(self):
+    m = checkpkg_lib.CheckpkgManager2(
+            "testname", [], "5.9", "sparc", "unstable")
+    error_mgr_mock = self.mox.CreateMock(checkpkg_lib.IndividualCheckInterface)
+    declared_deps = frozenset([u"CSWfoo", u"CSWbar", u"CSWsurplus"])
+    req_pkgs_reasons = [
+        [
+          (u"CSWfoo", "reason 1"),
+          (u"CSWfoo-2", "reason 2"),
+        ],
+        [
+          ("CSWbar", "reason 3"),
+        ],
+    ]
+    error_mgr_mock.ReportErrorForPkgname(
+        'CSWexamined', 'surplus-dependency', u'CSWsurplus')
+    self.mox.ReplayAll()
+    m._ReportMissingDependencies(
+        error_mgr_mock, "CSWexamined", declared_deps, req_pkgs_reasons)
 
 
 class CheckpkgManager2DatabaseIntegrationTest(

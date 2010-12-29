@@ -244,19 +244,6 @@ def GetPkgByFullPath(error_mgr, logger, paths_to_verify, pkg_by_path):
   # logger.warning("New paths: %s" % pprint.pformat(pkg_by_path))
   return pkg_by_path
 
-def MissingDepsFromReasonGroups(reason_groups, declared_deps_set):
-  missing_dep_groups = []
-  for reason_group in reason_groups:
-    dependency_fulfilled = False
-    pkgnames = [x for x, y in reason_group]
-    for pkgname in pkgnames:
-      if pkgname in declared_deps_set:
-        dependency_fulfilled = True
-        break
-    if not dependency_fulfilled:
-      missing_dep_groups.append(pkgnames)
-  return missing_dep_groups
-
 def SuggestLibraryPackage(error_mgr, messenger,
     pkgname, catalogname,
     description,
@@ -290,99 +277,4 @@ def SuggestLibraryPackage(error_mgr, messenger,
       "# The end of %s definition" % pkgname)
 
 
-def GetSurplusDeps(pkgname, potential_req_pkgs, declared_deps):
-  logging.debug("GetSurplusDeps(%s, potential_req_pkgs=%s, declared_deps=%s)",
-                pkgname, declared_deps, potential_req_pkgs)
-  # Surplus dependencies
-  # In actual use, there should always be some potential dependencies.
-  # assert potential_req_pkgs, "There should be some potential deps!"
-  surplus_deps = declared_deps.difference(potential_req_pkgs)
-  no_report_surplus = set()
-  for sp_regex in common_constants.DO_NOT_REPORT_SURPLUS:
-    for maybe_surplus in surplus_deps:
-      if re.match(sp_regex, maybe_surplus):
-        logging.debug(
-            "GetSurplusDeps(): Not reporting %s as surplus because it matches %s.",
-            maybe_surplus, sp_regex)
-        no_report_surplus.add(maybe_surplus)
-  surplus_deps = surplus_deps.difference(no_report_surplus)
-  # For some packages (such as dev packages) we don't report surplus deps at
-  # all.
-  if surplus_deps:
-    for regex_str in common_constants.DO_NOT_REPORT_SURPLUS_FOR:
-      if re.match(regex_str, pkgname):
-        logging.debug(
-            "GetSurplusDeps(): Not reporting any surplus because "
-            "it matches %s", regex_str)
-        surplus_deps = frozenset()
-        break
-  return surplus_deps
 
-
-def ReportMissingDependencies(error_mgr, pkgname, declared_deps, req_pkgs_reasons):
-  """Processes data structures with dependency data and reports errors.
-
-  Processes data specific to a single package.
-
-  Args:
-    error_mgr: SetCheckInterface
-    pkgname: pkgname, a string
-    declared_deps: An iterable with declared dependencies
-    req_pkgs_reasons: Groups of reasons
-
-  data structure:
-    [
-      [
-        ("CSWfoo1", "reason"),
-        ("CSWfoo2", "reason"),
-      ],
-      [
-        ( ... ),
-      ]
-    ]
-  """
-  missing_reasons_by_pkg = {}
-  for reason_group in req_pkgs_reasons:
-    for pkg, reason in reason_group:
-      missing_reasons_by_pkg.setdefault(pkg, [])
-      if len(missing_reasons_by_pkg[pkg]) < 4:
-        missing_reasons_by_pkg[pkg].append(reason)
-      elif len(missing_reasons_by_pkg[pkg]) == 4:
-        missing_reasons_by_pkg[pkg].append("...and more.")
-  missing_dep_groups = MissingDepsFromReasonGroups(
-      req_pkgs_reasons, declared_deps)
-  pkgs_to_remove = set()
-  for regex_str in common_constants.DO_NOT_REPORT_MISSING_RE:
-    regex = re.compile(regex_str)
-    for dep_pkgname in reduce(operator.add, missing_dep_groups, []):
-      if re.match(regex, dep_pkgname):
-        pkgs_to_remove.add(dep_pkgname)
-  if pkgname in reduce(operator.add, missing_dep_groups, []):
-    pkgs_to_remove.add(pkgname)
-  logging.debug("Removing %s from the list of missing pkgs.", pkgs_to_remove)
-  new_missing_dep_groups = set()
-  for missing_deps in missing_dep_groups:
-    new_missing_deps = set()
-    for dep in missing_deps:
-      if dep not in pkgs_to_remove:
-        new_missing_deps.add(dep)
-    if new_missing_deps:
-      new_missing_dep_groups.add(tuple(new_missing_deps))
-  potential_req_pkgs = set(
-      (x for x, y in reduce(operator.add, req_pkgs_reasons, [])))
-  missing_dep_groups = new_missing_dep_groups
-  surplus_deps = GetSurplusDeps(pkgname, potential_req_pkgs, declared_deps)
-  # Using an index to avoid duplicated reasons.
-  missing_deps_reasons_by_pkg = []
-  missing_deps_idx = set()
-  for missing_deps in missing_dep_groups:
-    error_mgr.ReportErrorForPkgname(
-        pkgname, "missing-dependency", " or ".join(missing_deps))
-    for missing_dep in missing_deps:
-      item = (missing_dep, tuple(missing_reasons_by_pkg[missing_dep]))
-      if item not in missing_deps_idx:
-        missing_deps_reasons_by_pkg.append(item)
-        missing_deps_idx.add(item)
-  for surplus_dep in surplus_deps:
-    error_mgr.ReportErrorForPkgname(pkgname, "surplus-dependency", surplus_dep)
-  return missing_deps_reasons_by_pkg, surplus_deps, missing_dep_groups
