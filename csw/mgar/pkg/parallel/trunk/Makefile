@@ -1,6 +1,6 @@
 # $Id$
 NAME = parallel
-VERSION = 20100424
+VERSION = 20101222
 CATEGORIES = utils
 
 DESCRIPTION = Shell tool for executing jobs in parallel
@@ -17,12 +17,9 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += gpl-3.0.txt
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
-LICENSE = gpl-3.0.txt
 
 VENDOR_URL = http://www.gnu.org/software/parallel/
 
@@ -32,4 +29,13 @@ TEST_TARGET = check
 
 ARCHALL = 1
 
+# Some idioms are used that the system Perl doesn't have
+# (good that they show up during the testsuite run)
+RUNTIME_DEP_PKGS = CSWperl
+CHECKPKG_OVERRIDES_CSWparallel += surplus-dependency|CSWperl
+
 include gar/category.mk
+
+post-extract-modulated:
+	-cd $(WORKSRC)/src && perl -pi -e 's,#!/usr/bin/perl,#!/opt/csw/bin/perl,' niceload parallel sem sql
+	@$(MAKECOOKIE)
