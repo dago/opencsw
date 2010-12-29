@@ -82,5 +82,6 @@ class PkgmapUnitTest(unittest.TestCase):
     }
     self.assertEqual((entry, line_to_add), pm._ParseLine(line))
 
+
 if __name__ == '__main__':
   unittest.main()

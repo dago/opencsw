@@ -275,6 +275,3 @@ def SuggestLibraryPackage(error_mgr, messenger,
       % (base_pkgname, pkgname))
   messenger.SuggestGarLine(
       "# The end of %s definition" % pkgname)
-
-
-
