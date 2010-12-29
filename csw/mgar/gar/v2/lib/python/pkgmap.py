@@ -2,6 +2,7 @@
 
 import re
 import struct_util
+import os
 
 class Pkgmap(object):
   """Represents the pkgmap of the package.
@@ -58,6 +59,7 @@ class Pkgmap(object):
     mode = None
     user = None
     group = None
+    target = None
     if len(fields) < 2:
       return None
     elif line_type in ('f', 'd'):
@@ -78,6 +80,8 @@ class Pkgmap(object):
       link_from, link_to = fields[3].split("=")
       installed_path = link_from
       line_to_add = "%s --> %s" % (link_from, link_to)
+      target = os.path.normpath(
+          os.path.join(os.path.dirname(link_from), link_to))
       prototype_class = fields[2]
     if line_to_add:
       self.paths.add(line_to_add)
@@ -90,7 +94,7 @@ class Pkgmap(object):
     entry["mode"] = mode
     entry["user"] = user
     entry["group"] = group
-    # entry["target"] = group
+    entry["target"] = target
     return entry, line_to_add
 
   def GetClasses(self):
