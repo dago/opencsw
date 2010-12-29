@@ -201,21 +201,6 @@ class TestByDirectory(unittest.TestCase):
     self.assertEquals(expected, result)
 
 
-class TestMissingDepsFromReasonGroups(unittest.TestCase):
-
-  def testOne(self):
-    reason_groups = [
-        [(u"CSWfoo1", ""),
-         (u"CSWfoo2", "")],
-        [(u"CSWbar", "")],
-    ]
-    declared_deps = set([u"CSWfoo2"])
-    expected = [[u"CSWbar"]]
-    result = dependency_checks.MissingDepsFromReasonGroups(
-        reason_groups, declared_deps)
-    self.assertEqual(result, expected)
-
-
 class TestLibraries(mox.MoxTestBase):
 
   def setUp(self):
@@ -325,58 +310,6 @@ class SuggestLibraryPackage(mox.MoxTestBase):
         description,
         lib_path, lib_basename, lib_soname,
         base_pkgname)
-
-
-class TestReportMissingDependencies(mox.MoxTestBase):
-
-  def testReportOneError(self):
-    error_mgr_mock = self.mox.CreateMock(checkpkg_lib.IndividualCheckInterface)
-    declared_deps = frozenset([u"CSWfoo"])
-    req_pkgs_reasons = [
-        [
-          (u"CSWfoo", "reason 1"),
-          (u"CSWfoo-2", "reason 2"),
-        ],
-        [
-          ("CSWbar", "reason 3"),
-        ],
-    ]
-    error_mgr_mock.ReportErrorForPkgname(
-        'CSWexamined', 'missing-dependency', 'CSWbar')
-    self.mox.ReplayAll()
-    dependency_checks.ReportMissingDependencies(
-        error_mgr_mock, "CSWexamined", declared_deps, req_pkgs_reasons)
-
-  def testReportSurplus(self):
-    error_mgr_mock = self.mox.CreateMock(checkpkg_lib.IndividualCheckInterface)
-    declared_deps = frozenset([u"CSWfoo", u"CSWbar", u"CSWsurplus"])
-    req_pkgs_reasons = [
-        [
-          (u"CSWfoo", "reason 1"),
-          (u"CSWfoo-2", "reason 2"),
-        ],
-        [
-          ("CSWbar", "reason 3"),
-        ],
-    ]
-    error_mgr_mock.ReportErrorForPkgname(
-        'CSWexamined', 'surplus-dependency', u'CSWsurplus')
-    self.mox.ReplayAll()
-    dependency_checks.ReportMissingDependencies(
-        error_mgr_mock, "CSWexamined", declared_deps, req_pkgs_reasons)
-
-
-class TestReportMissingDependencies(mox.MoxTestBase):
-
-  def testSurplusDeps(self):
-    potential_req_pkgs = set([u"CSWbar"])
-    declared_deps = set([u"CSWbar", u"CSWsurplus"])
-    expected = set(["CSWsurplus"])
-    self.assertEquals(
-        expected,
-        dependency_checks.GetSurplusDeps("CSWfoo",
-                                         potential_req_pkgs,
-                                         declared_deps))
 
 
 if __name__ == '__main__':
