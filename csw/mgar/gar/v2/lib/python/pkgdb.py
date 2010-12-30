@@ -489,6 +489,7 @@ def main():
           m.Srv4FileInCatalog.q.osrel==sqo_osrel,
           m.Srv4FileInCatalog.q.arch==sqo_arch,
           m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+          m.Srv4FileStats.q.use_to_generate_catalogs==True,
         ),
         join=join,
     )
