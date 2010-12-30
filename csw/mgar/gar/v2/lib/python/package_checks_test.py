@@ -1480,13 +1480,13 @@ class TestCheckObsoleteDepsCups(CheckpkgUnitTestHelper, unittest.TestCase):
     self.error_mgr_mock.ReportError('obsolete-dependency', 'CSWlibcups')
 
 
-class TestCheckSymlinksBaseDirs(CheckpkgUnitTestHelper,
-                                unittest.TestCase):
-  """Test whether appropriate files are provided."""
-  FUNCTION_NAME = 'disabledCheckSymlinksBaseDirs'
+class TestCheckBaseDirs(CheckpkgUnitTestHelper,
+                        unittest.TestCase):
+  """Test whether appropriate base directories are provided."""
+  FUNCTION_NAME = 'CheckBaseDirs'
 
   def CheckpkgTest(self):
-    self.pkg_data = tree_stats[0]
+    self.pkg_data = copy.deepcopy(tree_stats[0])
     self.pkg_data["pkgmap"].append(
         {'class': 'none',
          'group': None,
@@ -1496,6 +1496,23 @@ class TestCheckSymlinksBaseDirs(CheckpkgUnitTestHelper,
          'type': 's',
          'user': None})
     self.error_mgr_mock.NeedFile('/opt/csw/lib', mox.IsA(str))
+
+
+class TestCheckBaseDirsNotNoneClass(CheckpkgUnitTestHelper,
+                                    unittest.TestCase):
+  FUNCTION_NAME = 'CheckBaseDirs'
+
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'cswinitsmf',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/etc/opt/csw/init.d/foo',
+         'type': 'f',
+         'user': None})
+    self.error_mgr_mock.NeedFile('/etc/opt/csw/init.d', mox.IsA(str))
 
 
 if __name__ == '__main__':
