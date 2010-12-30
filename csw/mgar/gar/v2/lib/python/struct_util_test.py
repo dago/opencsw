@@ -1,3 +1,5 @@
+#!/usr/bin/env python2.6
+
 import unittest
 import struct_util
 
