@@ -1153,17 +1153,23 @@ def CheckDocDir(pkg_data, error_mgr, logger, messenger):
                pkgmap_entry["path"]))
 
 
-def CheckSymlinksBaseDirs(pkg_data, error_mgr, logger, messenger):
-  """If a symlink is in a non-existing directory, installation fails."""
+def CheckBaseDirs(pkg_data, error_mgr, logger, messenger):
+  """Symlinks and nonstandard class files need base directories
+
+  This cannot be made a general check, because there would be too many false
+  positives.  However, symlinks and nonstandard class files are so prone to
+  this problem that it makes sense to throw errors if they miss base
+  directories.
+  """
   pkgname = pkg_data["basic_stats"]["pkgname"]
   for pkgmap_entry in pkg_data["pkgmap"]:
     if "path" not in pkgmap_entry: continue
     if not pkgmap_entry["path"]: continue
-    if pkgmap_entry["type"] == "s":
+    if pkgmap_entry["type"] == "s" or pkgmap_entry["class"] != "none":
       base_dir = os.path.dirname(pkgmap_entry["path"])
       error_mgr.NeedFile(
           base_dir,
-          "%s contains a symlink %s which needs a base directory: %s."
+          "%s contains %s which needs a base directory: %s."
           % (pkgname, repr(pkgmap_entry["path"]), repr(base_dir)))
 
 
