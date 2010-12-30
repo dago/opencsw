@@ -642,14 +642,15 @@ class CheckpkgManager2(CheckpkgManagerBase):
     missing_dep_groups = []
     for reason_group in reason_groups:
       dependency_fulfilled = False
-      pkgnames = [x for x, y in reason_group]
-      for pkgname in pkgnames:
+      for pkgname, reason in reason_group:
         # If one of the packages suggested is the package under examination,
         # consider the dependency satisifed.
-        if pkgname in declared_deps_set or pkgname == for_pkgname:
+        if pkgname == for_pkgname or pkgname in declared_deps_set:
+          logging.debug("%s is satisfied by %s", repr(reason), pkgname)
           dependency_fulfilled = True
           break
       if not dependency_fulfilled:
+        pkgnames = [x for x, y in reason_group]
         missing_dep_groups.append(pkgnames)
     return missing_dep_groups
 
