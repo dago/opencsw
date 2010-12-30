@@ -1,7 +1,7 @@
 # $Id$
 
 VERSION = 1.6
-CATEGORIES = x11
+CATEGORIES = lib
 PROTONAME = xcb-proto
 NAME = $(PROTONAME)
 DISTNAME = $(PROTONAME)-$(VERSION)
@@ -27,7 +27,7 @@ define BLURB
   used by Python code generators in individual language bindings.
 endef
 
-MASTER_SITES = $(XCB_MASTER_SITES)
+MASTER_SITES = http://xcb.freedesktop.org/dist/
 DISTFILES    = $(DISTNAME).tar.gz
 
 PACKAGES = CSWxcbproto CSWpyxcbproto
@@ -55,13 +55,11 @@ PYCOMPILE = 1
 PKGFILES_CSWpyxcbproto = .*\.py
 ARCHALL_CSWpyxcbproto = 1
 
-include gar/category.mk
+CHECKPKG_OVERRIDES_CSWpyxcbproto += surplus-dependency|CSWxcbproto
+CHECKPKG_OVERRIDES_CSWxcbproto += surplus-dependency|CSWx11common
+CHECKPKG_OVERRIDES_CSWpyxcbproto += pkgname-does-not-start-with-CSWpy-
 
-# This bit is probably somewhat objectionable, but it gets the job done.
-post-merge:
-	ginstall -m 755 -d $(PKGROOT)/opt/csw/lib
-	if [ -d $(PKGROOT)$(prefix)/lib/python ]; then \
-		gmv -v $(PKGROOT)$(prefix)/lib/python $(PKGROOT)/opt/csw/lib; \
-	fi
-	grm -fv $(PKGROOT)/opt/csw/lib/python/site-packages/xcbgen/*.py[co]
-	@$(MAKECOOKIE)
+TEST_TARGET = check
+EXTRA_MERGE_EXCLUDE_FILES = .*.py[co]
+
+include gar/category.mk
