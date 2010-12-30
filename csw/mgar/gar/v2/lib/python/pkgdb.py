@@ -237,8 +237,15 @@ class CatalogImporter(object):
           m.Srv4FileInCatalog.q.catrel==sqo_catrel))
     db_srv4s_in_cat_by_md5 = {}
     for srv4_in_cat in res:
-      if srv4_in_cat.srv4file.use_to_generate_catalogs:
-        db_srv4s_in_cat_by_md5[srv4_in_cat.srv4file.md5_sum] = srv4_in_cat
+      try:
+        srv4 = srv4_in_cat.srv4file
+        if srv4.use_to_generate_catalogs:
+          db_srv4s_in_cat_by_md5[srv4.md5_sum] = srv4_in_cat
+      except sqlobject.main.SQLObjectNotFound, e:
+        logging.warning("Could not retrieve a srv4 file from the db: %s", e)
+        # Since the srv4_in_cat object has lost its reference, there's no use
+        # keeping it around.
+        srv4_in_cat.destroySelf()
     disk_md5s = set(cat_entry_by_md5)
     db_md5s = set(db_srv4s_in_cat_by_md5)
     #   - match the md5 sum lists between db and disk
