@@ -1173,6 +1173,18 @@ def CheckBaseDirs(pkg_data, error_mgr, logger, messenger):
           % (pkgname, repr(pkgmap_entry["path"]), repr(base_dir)))
 
 
+def CheckDanglingSymlinks(pkg_data, error_mgr, logger, messenger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  for pkgmap_entry in pkg_data["pkgmap"]:
+    if "path" not in pkgmap_entry: continue
+    if not pkgmap_entry["path"]: continue
+    if pkgmap_entry["type"] == "s":
+      error_mgr.NeedFile(
+          pkgmap_entry["target"],
+          "%s contains a symlink (%s) which needs the target file: %s."
+          % (pkgname, repr(pkgmap_entry["path"]), repr(pkgmap_entry["target"])))
+
+
 def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
     pkg_data, error_mgr, logger, messenger):
   pass
