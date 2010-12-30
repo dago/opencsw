@@ -80,8 +80,7 @@ class Pkgmap(object):
       link_from, link_to = fields[3].split("=")
       installed_path = link_from
       line_to_add = "%s --> %s" % (link_from, link_to)
-      target = os.path.normpath(
-          os.path.join(os.path.dirname(link_from), link_to))
+      target = struct_util.ResolveSymlink(link_from, link_to)
       prototype_class = fields[2]
     if line_to_add:
       self.paths.add(line_to_add)
