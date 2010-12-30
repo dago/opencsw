@@ -202,7 +202,12 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
       # Python strings are already implementing the flyweight pattern. What's
       # left is lists and dictionaries.
       i = counter.next()
-      raw_pkg_data = cPickle.loads(stats_obj.data_obj.pickle)
+      if stats_obj.data_obj:
+        raw_pkg_data = cPickle.loads(stats_obj.data_obj.pickle)
+      else:
+        raise CatalogDatabaseError(
+            "%s (%s) is missing the data object."
+            % (stats_obj.basename, stats_obj.md5_sum))
       pkg_data = raw_pkg_data
       pkgs_data.append(pkg_data)
       pbar.update(i)

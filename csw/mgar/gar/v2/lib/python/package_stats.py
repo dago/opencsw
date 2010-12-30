@@ -39,6 +39,10 @@ class PackageError(Error):
   pass
 
 
+class DatabaseError(Error):
+  pass
+
+
 class StdoutSyntaxError(Error):
   pass
 
@@ -386,7 +390,11 @@ class PackageStatsMixin(object):
     if not self.all_stats:
       md5_sum = self.GetMd5sum()
       res = m.Srv4FileStats.select(m.Srv4FileStats.q.md5_sum==md5_sum)
-      self.all_stats = cPickle.loads(str(res.getOne().data_obj.pickle))
+      srv4 = res.getOne()
+      if not srv4.data_obj:
+        raise DatabaseError("Could not find the data object for %s (%s)"
+                            % (srv4.basename, md5_sum))
+      self.all_stats = cPickle.loads(str(srv4.data_obj.pickle))
     return self.all_stats
 
 
