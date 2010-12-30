@@ -100,6 +100,10 @@ class PackageStatsMixin(object):
     if not pkg_stats:
       return False
     if pkg_stats.stats_version != PACKAGE_STATS_VERSION:
+      pkg_stats.DeleteAllDependentObjects()
+      pkg_stats.destroySelf()
+    elif pkg_stats.data_obj is None:
+      pkg_stats.DeleteAllDependentObjects()
       pkg_stats.destroySelf()
     else:
       return True
