@@ -1,6 +1,8 @@
 """A module for generic data structure processing functions.
 """
 
+import os
+
 def IndexDictsBy(list_of_dicts, field_key):
   """Creates an index of list of dictionaries by a field name.
 
@@ -11,3 +13,9 @@ def IndexDictsBy(list_of_dicts, field_key):
     index.setdefault(d[field_key], [])
     index[d[field_key]].append(d)
   return index
+
+
+def ResolveSymlink(link_from, link_to):
+  target = os.path.normpath(
+      os.path.join(os.path.dirname(link_from), link_to))
+  return target

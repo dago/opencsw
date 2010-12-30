@@ -34,5 +34,18 @@ class IndexByUnitTest(unittest.TestCase):
     self.assertEquals(expected, struct_util.IndexDictsBy(list_of_dicts, "a"))
 
 
+class IndexByUnitTest(unittest.TestCase):
+
+  def testRelative(self):
+    self.assertEquals(
+        "/opt/csw/libexec/foo-exec",
+        struct_util.ResolveSymlink("/opt/csw/bin/foo", "../libexec/foo-exec"))
+
+  def testAsolute(self):
+    self.assertEquals(
+        "/libexec/foo-exec",
+        struct_util.ResolveSymlink("/opt/csw/bin/foo", "/libexec/foo-exec"))
+
+
 if __name__ == '__main__':
 	unittest.main()
