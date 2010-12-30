@@ -1,0 +1,32 @@
+#!/bin/env perl -lw
+#
+# $Id$
+#
+# Copyright 2006 Cory Omand <comand@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# proto2manifest - Turn a package prototype into a manifest file.
+#
+
+use strict;
+
+my $root = $ARGV[0] || "";
+
+my %files;
+while (<>) {
+    next if /^i/;
+    my @F = split;
+    $F[2] =~ s/^.+=(.+)/$1/;
+    $F[2] = "$root/$F[2]" unless $F[2] =~ m#\$basedir#;
+    $F[2] =~ s#\$basedir#$root#;
+    $F[2] =~ s#//#/#g;
+    $files{$F[2]}++;
+}
+
+print foreach (sort keys %files);
+

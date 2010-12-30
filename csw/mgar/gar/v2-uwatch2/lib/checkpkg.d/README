@@ -1,0 +1,13 @@
+$Id$
+
+This directory contains modular checks.  Each check is an executable file,
+written in any language, accepting specific command line options and returning
+the result by writing to a text file.
+
+To see the required flags, issue:
+
+./checkpkg-you-can-write-your-own.py -h
+
+Each test's file name must begin with "checkpkg-".
+
+See http://wiki.opencsw.org/checkpkg for more information.
