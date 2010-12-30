@@ -1515,5 +1515,23 @@ class TestCheckBaseDirsNotNoneClass(CheckpkgUnitTestHelper,
     self.error_mgr_mock.NeedFile('/etc/opt/csw/init.d', mox.IsA(str))
 
 
+class TestCheckDanglingSymlinks(CheckpkgUnitTestHelper,
+                                unittest.TestCase):
+  FUNCTION_NAME = 'CheckDanglingSymlinks'
+
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/opt/csw/lib/postgresql/9.0/lib/libpq.so.5',
+         'type': 's',
+         'user': None,
+         'target': '/opt/csw/lib/libpq.so.5'})
+    self.error_mgr_mock.NeedFile('/opt/csw/lib/libpq.so.5', mox.IsA(str))
+
+
 if __name__ == '__main__':
   unittest.main()
