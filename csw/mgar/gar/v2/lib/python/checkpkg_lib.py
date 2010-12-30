@@ -612,10 +612,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
     for reason_group in req_pkgs_reasons:
       for pkg, reason in reason_group:
         missing_reasons_by_pkg.setdefault(pkg, [])
-        if len(missing_reasons_by_pkg[pkg]) < 4:
-          missing_reasons_by_pkg[pkg].append(reason)
-        elif len(missing_reasons_by_pkg[pkg]) == 4:
-          missing_reasons_by_pkg[pkg].append("...and more.")
+        missing_reasons_by_pkg[pkg].append(reason)
     missing_dep_groups = self._MissingDepsFromReasonGroups(
         pkgname, req_pkgs_reasons, declared_deps)
     missing_dep_groups = self._RemovePkgsFromMissing(pkgname, missing_dep_groups)
