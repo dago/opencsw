@@ -267,6 +267,16 @@ class PackageStatsMixin(object):
     if "revision_info" in parsed_basename:
       if "REV" in parsed_basename["revision_info"]:
         rev = parsed_basename["revision_info"]["REV"]
+    # If the object already exists in the database, delete it.
+    md5_sum = pkg_stats["basic_stats"]["md5_sum"]
+    try:
+      db_pkg_stats = m.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+      logging.debug("Destroying %s before saving it again", db_pkg_stats)
+      db_pkg_stats.DeleteAllDependentObjects()
+      db_pkg_stats.destroySelf()
+    except sqlobject.main.SQLObjectNotFound, e:
+      logging.debug("Package %s not present in the db, proceeding with insert.")
+      pass
     # Creating the object in the database.
     data_obj = m.Srv4FileStatsBlob(
         pickle=cPickle.dumps(pkg_stats))
