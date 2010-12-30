@@ -100,11 +100,9 @@ class PackageStatsMixin(object):
     if not pkg_stats:
       return False
     if pkg_stats.stats_version != PACKAGE_STATS_VERSION:
-      pkg_stats.DeleteAllDependentObjects()
-      pkg_stats.destroySelf()
+      return False
     elif pkg_stats.data_obj is None:
-      pkg_stats.DeleteAllDependentObjects()
-      pkg_stats.destroySelf()
+      return False
     else:
       return True
     return False
@@ -269,35 +267,59 @@ class PackageStatsMixin(object):
         rev = parsed_basename["revision_info"]["REV"]
     # If the object already exists in the database, delete it.
     md5_sum = pkg_stats["basic_stats"]["md5_sum"]
+    db_pkg_stats = None
     try:
       db_pkg_stats = m.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
-      logging.debug("Destroying %s before saving it again", db_pkg_stats)
+      logging.debug("Cleaning %s before saving it again", db_pkg_stats)
       db_pkg_stats.DeleteAllDependentObjects()
-      db_pkg_stats.destroySelf()
     except sqlobject.main.SQLObjectNotFound, e:
       logging.debug("Package %s not present in the db, proceeding with insert.")
       pass
     # Creating the object in the database.
     data_obj = m.Srv4FileStatsBlob(
         pickle=cPickle.dumps(pkg_stats))
-    db_pkg_stats = m.Srv4FileStats(
-        arch=arch,
-        basename=pkg_stats["basic_stats"]["pkg_basename"],
-        catalogname=pkg_stats["basic_stats"]["catalogname"],
-        data_obj=data_obj,
-        use_to_generate_catalogs=True,
-        filename_arch=filename_arch,
-        latest=True,
-        maintainer=maintainer,
-        md5_sum=pkg_stats["basic_stats"]["md5_sum"],
-        size=pkg_stats["basic_stats"]["size"],
-        mtime=pkg_stats["mtime"],
-        os_rel=os_rel,
-        pkginst=pkginst,
-        registered=register,
-        rev=rev,
-        stats_version=PACKAGE_STATS_VERSION,
-        version_string=parsed_basename["full_version_string"])
+    if db_pkg_stats:
+      # If the database row exists already, update it.
+      #
+      # Assigning properties one by one isn't pretty, but I don't have
+      # a better way of doing it.  Ideally, both creation and update would be
+      # driven by the same data structure.
+      db_pkg_stats.arch = arch
+      db_pkg_stats.basename = pkg_stats["basic_stats"]["pkg_basename"]
+      db_pkg_stats.catalogname = pkg_stats["basic_stats"]["catalogname"]
+      db_pkg_stats.data_obj = data_obj
+      db_pkg_stats.use_to_generate_catalogs = True
+      db_pkg_stats.filename_arch = filename_arch
+      db_pkg_stats.latest = True
+      db_pkg_stats.maintainer = maintainer
+      db_pkg_stats.md5_sum = pkg_stats["basic_stats"]["md5_sum"]
+      db_pkg_stats.size = pkg_stats["basic_stats"]["size"]
+      db_pkg_stats.mtime = pkg_stats["mtime"]
+      db_pkg_stats.os_rel = os_rel
+      db_pkg_stats.pkginst = pkginst
+      db_pkg_stats.registered = register
+      db_pkg_stats.rev = rev
+      db_pkg_stats.stats_version = PACKAGE_STATS_VERSION
+      db_pkg_stats.version_string = parsed_basename["full_version_string"]
+    else:
+      db_pkg_stats = m.Srv4FileStats(
+          arch=arch,
+          basename=pkg_stats["basic_stats"]["pkg_basename"],
+          catalogname=pkg_stats["basic_stats"]["catalogname"],
+          data_obj=data_obj,
+          use_to_generate_catalogs=True,
+          filename_arch=filename_arch,
+          latest=True,
+          maintainer=maintainer,
+          md5_sum=pkg_stats["basic_stats"]["md5_sum"],
+          size=pkg_stats["basic_stats"]["size"],
+          mtime=pkg_stats["mtime"],
+          os_rel=os_rel,
+          pkginst=pkginst,
+          registered=register,
+          rev=rev,
+          stats_version=PACKAGE_STATS_VERSION,
+          version_string=parsed_basename["full_version_string"])
     # Inserting overrides as rows into the database
     for override_dict in pkg_stats["overrides"]:
       o = m.CheckpkgOverride(srv4_file=db_pkg_stats,
