@@ -2,10 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
+# 5.0.90 doesn't build:
+# http://bugs.mysql.com/bug.php?id=50409
+# Let's wait for 5.0.91.
+
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)5
 BASE_VERSION = 5.0
-PATCHLEVEL = 90
+PATCHLEVEL = 87
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
@@ -148,16 +152,21 @@ EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-assembler
+# Why not have a docs package?
+# CONFIGURE_ARGS += --without-docs
 CONFIGURE_ARGS += --enable-local-infile
-CONFIGURE_ARGS += --enable-thread-safe-client
+CONFIGURE_ARGS += --with-charset=utf8
 CONFIGURE_ARGS += --with-extra-charsets=all
 CONFIGURE_ARGS += --with-low-memory
-CONFIGURE_ARGS += --with-plugins=max-no-ndb
 CONFIGURE_ARGS += --with-pthread
 CONFIGURE_ARGS += --with-readline
-CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
-CONFIGURE_ARGS += --without-docs
+CONFIGURE_ARGS += --with-ssl=/opt/csw
+CONFIGURE_ARGS += --with-plugins=max-no-ndb
+CONFIGURE_ARGS += --with-comment
+CONFIGURE_ARGS += --with-mysqld-libs=-lmtmalloc
+CONFIGURE_ARGS += --with-big-tables
+CONFIGURE_ARGS += --enable-thread-safe-client
 CONFIGURE_ARGS_DBG = --with-debug
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
@@ -174,12 +183,20 @@ PROTOTYPE_GROUP_dbdir = mysql
 PROTOTYPE_PERMS_dbdir = 0700
 PROTOTYPE_CLASS_dbdir = ugfiles
 
-# Until the dependency guessed gets better at guessing
-CHECKPKG_OVERRIDES_CSWmysql5devel += missing-dependency|CSWmysql5
+CHECKPKG_OVERRIDES_CSWmysql5test += surplus-dependency|CSWmysql5
+CHECKPKG_OVERRIDES_CSWmysql5devel += surplus-dependency|CSWmysql5rt
+CHECKPKG_OVERRIDES_CSWmysql5 += surplus-dependency|CSWmysql5client
+CHECKPKG_OVERRIDES_CSWmysql5bench += surplus-dependency|CSWmysql5
 
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
+
+test-custom:
+	alias sh=/usr/bin/bash;                           \
+		cd $(WORKSRC)/mysql-test;                       \
+		perl mysql-test-run.pl --mem --big-test --force \
+		--skip-test=archive-big --skip-test=/gis/
 
 pre-configure-modulated:
 	# To work around the following libtool version mismatch problem:

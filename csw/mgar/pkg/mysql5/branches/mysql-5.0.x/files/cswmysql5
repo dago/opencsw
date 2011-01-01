@@ -16,11 +16,12 @@
 #
 
 RETVAL=0
-MYSQLHOME=/opt/csw/mysql5
-MYSQL_VAR=/var/opt/csw/mysql5
+MYSQL_HOME="/opt/csw/mysql5"
+MYSQL_VAR="/var/opt/csw/mysql5"
+sysconfdir="/etc/opt/csw/mysql5"
 MYSQLD_DATADIR=$MYSQL_VAR
 MYSQLD_PID_FILE=$MYSQL_VAR/mysql.pid
-CONFFILE=$MYSQL_VAR/my.cnf
+CONFFILE=${sysconfdir}/my.cnf
 
 #
 # Source configuration
@@ -28,7 +29,7 @@ CONFFILE=$MYSQL_VAR/my.cnf
 [ -r /etc/opt/csw/mysql5rc ] && . /etc/opt/csw/mysql5rc
 
 # To get started quickly, copy a sample configuration file from
-#   $MYSQLHOME/share/mysql
+#   $MYSQL_HOME/share/mysql
 # For example,
 #  cp /opt/csw/mysql5/share/mysql/my-medium.cnf /opt/csw/mysql5/var/my.cnf
 #
@@ -73,15 +74,15 @@ start_it() {
 # 2006-03-11
 # This script no longer creates the default database. You may create the
 # default database manually or use /opt/csw/mysql5/share/mysql/quick_start-csw
-#    if [ ! -d "$MYSQLHOME/var/mysql" ] ; then
+#    if [ ! -d "$MYSQL_HOME/var/mysql" ] ; then
 #        echo MySQL core database has not been created.
 #         echo Creating it now...
-#       $MYSQLHOME/bin/mysql_install_db
-#       chown -R mysql:mysql $MYSQLHOME/var
+#       $MYSQL_HOME/bin/mysql_install_db
+#       chown -R mysql:mysql $MYSQL_HOME/var
 #    fi
 
 # 2006-04-16  --defaults-file is changed to --defaults-extra-file
-    $MYSQLHOME/bin/mysqld_safe \
+    $MYSQL_HOME/bin/mysqld_safe \
         `[ -n "$CONFFILE" ] && echo "--defaults-extra-file=$CONFFILE"` \
         --pid-file=$MYSQLD_PID_FILE \
         `[ -n "$MYSQLD_PROG" ] && echo "--mysqld=$MYSQLD_PROG"` \
