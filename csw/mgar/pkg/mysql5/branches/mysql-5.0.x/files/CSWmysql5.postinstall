@@ -8,20 +8,22 @@
 # This script creates a default database with the small-memory footprint.
 # Input may be provided for DATADIR and DEFAULTS_FILE
 #
-BASEDIR=/opt/csw/mysql5
-MYSQL_VAR=/var/opt/csw/mysql5
-DEFAULTS_FILE=$BASEDIR/my.cnf
-SAVE_DEFAULTS_FILE=$MYSQL_VAR/my.cnf
-MYSQLD_USER=mysql
+MYSQL_HOME="/opt/csw/mysql5"
+MYSQL_VAR="/var/opt/csw/mysql5"
+sysconfdir="/etc/opt/csw/mysql5"
+# https://www.opencsw.org/mantis/view.php?id=4646
+WRONG_LOCATION_DEFAULTS_FILES="${MYSQL_VAR}/my.cnf"
+DEFAULTS_FILE="${sysconfdir}/my.cnf"
+MYSQLD_USER="mysql"
 # Provide the default data directory
-MYSQLD_DATADIR=$MYSQL_VAR
+MYSQLD_DATADIR="${MYSQL_VAR}"
 
 # http://bugs.mysql.com/bug.php?id=31164
 # ERROR: 1004  Can't create file '/var/tmp//installRJaiQ3/#sql6fee_1_0.frm' (errno: 13)
 unset TMPDIR
 
 if [ ! -f "$DEFAULTS_FILE" ]; then
-    IN_DEFAULTS_FILE=$BASEDIR/share/mysql/my-small.cnf
+    IN_DEFAULTS_FILE=$MYSQL_HOME/share/mysql/my-small.cnf
     echo "Using $IN_DEFAULTS_FILE to create the options file."
 else
     IN_DEFAULTS_FILE=$DEFAULTS_FILE
@@ -53,10 +55,10 @@ fi
 echo "Creating MySQL core database in $MYSQLD_DATADIR"
 echo
 echo "###  The following messages are from mysql_install_db."
-$BASEDIR/bin/mysql_install_db \
+$MYSQL_HOME/bin/mysql_install_db \
     --defaults-extra-file="$DEFAULTS_FILE" \
     --user="$MYSQLD_USER" \
-    --basedir="$BASEDIR" \
+    --basedir="$MYSQL_HOME" \
     --datadir="$MYSQLD_DATADIR"
 
 # Fix permissions on the data directory, since mysql_install_db was run as
