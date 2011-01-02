@@ -173,7 +173,13 @@ case $1 in
 
     restart)
     stop_it
-    while pgrep mysqld > /dev/null
+    if [ -x /bin/zonename ]
+    then
+      pgrep_opts="-z `/bin/zonename`"
+    else
+      pgrep_opts=""
+    fi
+    while pgrep ${pgrep_opts} mysqld > /dev/null
       do
       sleep 1
     done
