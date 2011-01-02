@@ -8,22 +8,31 @@
 # This script creates a default database with the small-memory footprint.
 # Input may be provided for DATADIR and DEFAULTS_FILE
 #
+# http://dev.mysql.com/doc/refman/5.0/en/option-files.html
+#
 prefix="/opt/csw/mysql5"
-MYSQL_HOME="${prefix}"
-MYSQL_VAR="/var${prefix}"
+BASEDIR="${prefix}"
+MYSQL_HOME="/var${prefix}"
 sysconfdir="/etc${prefix}"
 # https://www.opencsw.org/mantis/view.php?id=4646
 DEFAULTS_FILE="${sysconfdir}/my.cnf"
 MYSQLD_USER="mysql"
 # Provide the default data directory
-MYSQLD_DATADIR="${MYSQL_VAR}"
+MYSQLD_DATADIR="${MYSQL_HOME}"
+DEPRECATED_DEFAULTS_FILE="${BASEDIR}/my.cnf"
 
 # http://bugs.mysql.com/bug.php?id=31164
 # ERROR: 1004  Can't create file '/var/tmp//installRJaiQ3/#sql6fee_1_0.frm' (errno: 13)
 unset TMPDIR
 
+if [ -r "${DEPRECATED_DEFAULTS_FILE}" ]; then
+  echo "*** WARNING ***"
+  echo "File '${DEPRECATED_DEFAULTS_FILE}' found. This location is deprecated."
+  echo "This file takes no effect."
+fi
+
 if [ ! -f "$DEFAULTS_FILE" ]; then
-    IN_DEFAULTS_FILE=$MYSQL_HOME/share/mysql/my-small.cnf
+    IN_DEFAULTS_FILE=$BASEDIR/share/mysql/my-small.cnf
     echo "Using $IN_DEFAULTS_FILE to create the options file."
 else
     IN_DEFAULTS_FILE=$DEFAULTS_FILE
@@ -55,10 +64,10 @@ fi
 echo "Creating MySQL core database in $MYSQLD_DATADIR"
 echo
 echo "###  The following messages are from mysql_install_db."
-$MYSQL_HOME/bin/mysql_install_db \
+$BASEDIR/bin/mysql_install_db \
     --defaults-extra-file="$DEFAULTS_FILE" \
     --user="$MYSQLD_USER" \
-    --basedir="$MYSQL_HOME" \
+    --basedir="$BASEDIR" \
     --datadir="$MYSQLD_DATADIR"
 
 # Fix permissions on the data directory, since mysql_install_db was run as
