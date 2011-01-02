@@ -27,8 +27,8 @@ endef
 
 # Change prefix to /opt/csw/$(NAME)
 prefix = /opt/csw/$(NAME)
-localstatedir = /var/opt/csw/$(NAME)
-sysconfdir = /etc/opt/csw/$(NAME)
+localstatedir = /var$(prefix)
+sysconfdir = /etc$(prefix)
 
 # Where to put the init script
 global_sysconfdir = /etc/opt/csw
@@ -243,4 +243,5 @@ post-merge:
 	# http://www.opencsw.org/bugtrack/view.php?id=4149
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/lib
 	gln -s ../mysql5/lib/mysql $(PKGROOT)/opt/csw/lib/mysql 
+	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)
 	@$(MAKECOOKIE)

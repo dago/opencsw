@@ -8,11 +8,11 @@
 # This script creates a default database with the small-memory footprint.
 # Input may be provided for DATADIR and DEFAULTS_FILE
 #
-MYSQL_HOME="/opt/csw/mysql5"
-MYSQL_VAR="/var/opt/csw/mysql5"
-sysconfdir="/etc/opt/csw/mysql5"
+prefix="/opt/csw/mysql5"
+MYSQL_HOME="${prefix}"
+MYSQL_VAR="/var${prefix}"
+sysconfdir="/etc${prefix}"
 # https://www.opencsw.org/mantis/view.php?id=4646
-WRONG_LOCATION_DEFAULTS_FILES="${MYSQL_VAR}/my.cnf"
 DEFAULTS_FILE="${sysconfdir}/my.cnf"
 MYSQLD_USER="mysql"
 # Provide the default data directory
