@@ -49,7 +49,7 @@ ARCHALL_CSWmuninnode = 1
 ARCHALL_CSWmunincommon = 1
 
 RUNTIME_DEP_PKGS_CSWmuninmaster = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpmlog4perl CSWmunincommon
-RUNTIME_DEP_PKGS_CSWmuninmaster += CSWrrd CSWapache2
+RUNTIME_DEP_PKGS_CSWmuninmaster += CSWrrdtool CSWpm-rrdtool CSWapache2 
 RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils
 
 RUNTIME_DEP_PKGS_CSWmuninnode = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunincommon
@@ -79,10 +79,8 @@ build-custom:
 	@$(MAKECOOKIE)
 
 install-custom:
-	@cat $(WORKSRC)/Makefile.config | sed -e "s;$$(DESTDIR);$(DESTDIR);g" > $(WORKSRC)/Makefile.config.tmp
-	@mv $(WORKSRC)/Makefile.config.tmp $(WORKSRC)/Makefile.config
-	@( cd $(WORKSRC); gmake -f Makefile ; gmake -f Makefile install)
-	#mv $(DESTDIR)/opt/csw/lib/plugins $(DESTDIR)/opt/csw/lib/munin_plugins
+	@cat $(WORKSRC)/Makefile | sed -e "s;DESTDIR =;& $(DESTDIR);g" > $(WORKSRC)/Makefile.tmp
+	@( cd $(WORKSRC); gmake -f Makefile ; cp Makefile.tmp Makefile ; gmake -f Makefile install)
 	@mv $(DESTDIR)/etc/opt/csw/munin/munin-node.conf $(DESTDIR)/etc/opt/csw/munin/munin-node.conf.CSW
 	@mv $(DESTDIR)/etc/opt/csw/munin/munin.conf $(DESTDIR)/etc/opt/csw/munin/munin.conf.CSW
 	@mv $(DESTDIR)/var/opt/csw/munin/www/.htaccess $(DESTDIR)/var/opt/csw/munin/www/.htaccess.CSW
