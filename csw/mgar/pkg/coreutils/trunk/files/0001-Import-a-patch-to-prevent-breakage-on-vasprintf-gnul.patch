@@ -1,0 +1,47 @@
+From ac3821f923d5c54b575110d984701c06d22149d0 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 2 Jan 2011 19:33:50 +0100
+Subject: [PATCH] Import a patch to prevent breakage on vasprintf gnulib test
+
+Solaris has a known breakage of some *printf function handling.
+This patch makes the test a skip instead of a fail so that it's
+a noted failure, but not a deal breaker for the build.
+
+It was gleaned from the larger commit that was added to upstream
+gnulib here:
+http://www.mail-archive.com/bug-gnulib@gnu.org/msg20851.html
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ gnulib-tests/test-vasprintf-posix.c |   15 +++++++++++++++
+ 1 files changed, 15 insertions(+), 0 deletions(-)
+
+diff --git a/gnulib-tests/test-vasprintf-posix.c b/gnulib-tests/test-vasprintf-posix.c
+index ec908e3..17be838 100644
+--- a/gnulib-tests/test-vasprintf-posix.c
++++ b/gnulib-tests/test-vasprintf-posix.c
+@@ -3550,6 +3550,21 @@ test_function (int (*my_asprintf) (char **, const char *, ...))
+   }
+ 
+   {
++    char *result;
++    int retval =
++      my_asprintf (&result, "%.511f %d", 1.0, 99);
++    size_t i;
++    ASSERT (result != NULL);
++    ASSERT (result[0] == '1');
++    ASSERT (result[1] == '.');
++    for (i = 0; i < 511; i++)
++      ASSERT (result[2 + i] == '0');
++    ASSERT (strcmp (result + 2 + 511, " 99") == 0);
++    ASSERT (retval == strlen (result));
++    free (result);
++  }
++
++  {
+     char input[5000];
+     char *result;
+     int retval;
+-- 
+1.7.3.2
+

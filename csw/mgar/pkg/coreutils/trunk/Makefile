@@ -28,6 +28,7 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
+PATCHFILES += 0001-Import-a-patch-to-prevent-breakage-on-vasprintf-gnul.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
