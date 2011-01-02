@@ -28,6 +28,8 @@ CONFFILE=${sysconfdir}/my.cnf
 [ -r /opt/csw/mysql5/etc/mysql5rc ] && . /opt/csw/mysql5/etc/mysql5rc
 [ -r /etc/opt/csw/mysql5rc ] && . /etc/opt/csw/mysql5rc
 
+export MYSQL_HOME
+
 # To get started quickly, copy a sample configuration file from
 #   $BASEDIR/share/mysql
 # For example,
