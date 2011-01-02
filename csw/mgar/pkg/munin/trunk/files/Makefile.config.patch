@@ -1,22 +1,17 @@
-From 0298d86c798e9ad08f763a05932b3bdc1d5db118 Mon Sep 17 00:00:00 2001
+From 9cdc800db0243d4b6ab1464fbf5e989252e655e4 Mon Sep 17 00:00:00 2001
 From: Juergen Arndt <ja@opencsw.org>
-Date: Sun, 11 Jul 2010 18:03:49 +0200
-Subject: [PATCH] set paths to match OpenCSW
+Date: Sun, 2 Jan 2011 20:43:45 +0100
+Subject: [PATCH] changed pathes for OpenCSW
 
 ---
- Makefile.config |   42 ++++++++++++++++++++++--------------------
- 1 files changed, 22 insertions(+), 20 deletions(-)
+ Makefile.config |   40 ++++++++++++++++++++--------------------
+ 1 files changed, 20 insertions(+), 20 deletions(-)
 
 diff --git a/Makefile.config b/Makefile.config
-index 84f155b..cacaf20 100644
+index 84f155b..2eb37ea 100644
 --- a/Makefile.config
 +++ b/Makefile.config
-@@ -14,13 +14,15 @@
- # and LOGDIR as subdirectories.  Today, DBDIR contains configured
- # domains, as well as PLUGSTATE, and we risk collisions.
- 
-+DESTDIR=$(DESTDIR)
-+
+@@ -17,10 +17,10 @@
  #
  # the base of the Munin installation.
  # 
@@ -29,7 +24,7 @@ index 84f155b..cacaf20 100644
  
  # Server only - where to put munin-cron
  BINDIR     = $(PREFIX)/bin
-@@ -29,47 +31,47 @@ BINDIR     = $(PREFIX)/bin
+@@ -29,47 +29,47 @@ BINDIR     = $(PREFIX)/bin
  SBINDIR    = $(PREFIX)/sbin
  
  # Where to put text and html documentation
@@ -88,7 +83,7 @@ index 84f155b..cacaf20 100644
  
  # The ruby interpreter to use (used by some plugins)
  RUBY       := /usr/bin/env ruby
-@@ -95,11 +97,11 @@ JAVALIBDIR:= $(LIBDIR)
+@@ -95,11 +95,11 @@ JAVALIBDIR:= $(LIBDIR)
  GOODSH     := $(shell PATH=`getconf PATH` sh -c 'type sh | sed "s/.* //"')
  
  # Path of bash for bash specific plugins
@@ -102,7 +97,7 @@ index 84f155b..cacaf20 100644
  
  # Client only - Install plugins for this architecture
  OSTYPE     := $(shell uname | tr '[A-Z]' '[a-z]')
-@@ -111,7 +113,7 @@ HOSTNAME   := $(shell hostname)
+@@ -111,7 +111,7 @@ HOSTNAME   := $(shell hostname)
  # What is the safest way to create a tempfile.
  # Default is to figure it out by testing various methods.
  # Replace this with a known platform-specific method
@@ -111,7 +106,7 @@ index 84f155b..cacaf20 100644
  
  # Munin version number.
  VERSION    := $(shell ./getversion)
-@@ -126,9 +128,9 @@ PLUGINUSER := nobody
+@@ -126,9 +126,9 @@ PLUGINUSER := nobody
  # Which command to use to check if the USER and GROUP to run Munin as, exists.
  # These will work on most modern OSes:
  #
@@ -124,12 +119,12 @@ index 84f155b..cacaf20 100644
  
  # For OSX, comment out the previous two lines and comment in these
  #
-@@ -159,4 +161,4 @@ JAR        := jar
+@@ -159,4 +159,4 @@ JAR        := jar
  JCVALID    := $(shell $(JC) -version >/dev/null 2>/dev/null && echo "yes")
  
  # Check whether setruid functionality can be used
 -HASSETR    := $(shell perl -e 'use Config; my @vars=("d_setruid", "d_setreuid", "d_setresuid"); foreach my $$var (@vars) { if ($$Config{$$var} eq "define") { print "1\n"; exit 0; } } print "0\n"; exit 0;' )
 +HASSETR    := $(shell /opt/csw/bin/perl -e 'use Config; my @vars=("d_setruid", "d_setreuid", "d_setresuid"); foreach my $$var (@vars) { if ($$Config{$$var} eq "define") { print "1\n"; exit 0; } } print "0\n"; exit 0;' )
 -- 
-1.7.1
+1.7.3.2
 
