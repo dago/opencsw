@@ -17,6 +17,8 @@ ARCHALL_CSWpmpkgconst = 1
 
 LICENSE = README
 
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3\/.* .*\/man\/man1\/.*
+
 include gar/category.mk
 
 post-extract:
