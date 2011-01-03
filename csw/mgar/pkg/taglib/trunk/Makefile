@@ -20,19 +20,24 @@ LICENSE = COPYING.MPL
 
 VENDOR_URL = http://developer.kde.org/~wheeler/taglib.html
 
-PACKAGES = CSWtaglib CSWtaglibdevel
+PACKAGES += CSWtaglib-devel
+CATALOGNAME_CSWtaglib-devel = taglib_devel
+SPKG_DESC_CSWtaglib-devel = Developer files for taglib (composed of libtag1 and libtag_c0)
+RUNTIME_DEP_PKGS_CSWtaglib-devel = CSWlibtag1 CSWlibtag-c0
+PKGFILES_CSWtaglib-devel = $(PKGFILES_DEVEL)
 
-CATALOGNAME_CSWtaglib = taglib
-CATALOGNAME_CSWtaglibdevel = taglib_devel
+PACKAGES += CSWlibtag1
+CATALOGNAME_CSWlibtag1 = libtag1
+SPKG_DESC_CSWlibtag1 += Library for reading and editing the meta-data of several popular audio formats, libtag.so.1
+RUNTIME_DEP_PKGS_CSWlibtag1 += CSWzlib
+PKGFILES_CSWlibtag1 += $(call baseisadirs,$(libdir),libtag\.so\.1(\.\d+)*)
 
-SPKG_DESC_CSWtaglib = $(DESCRIPTION)
-SPKG_DESC_CSWtaglibdevel = Developer files for taglib
-
-RUNTIME_DEP_PKGS_CSWtaglib = CSWzlib
-RUNTIME_DEP_PKGS_CSWtaglibdevel = CSWtaglib
-CHECKPKG_OVERRIDES_CSWtaglibdevel += surplus-dependency|CSWtaglib
-
-PKGFILES_CSWtaglibdevel = $(PKGFILES_DEVEL)
+PACKAGES += CSWlibtag-c0
+CATALOGNAME_CSWlibtag-c0 = libtag_c0
+SPKG_DESC_CSWlibtag-c0 += Library for reading and editing the meta-data of several popular audio formats, libtag_c.so.0
+PKGFILES_CSWlibtag-c0 += $(call baseisadirs,$(libdir),libtag_c\.so\.0(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibtag-c0 += CSWlibtag1
+RUNTIME_DEP_PKGS_CSWlibtag-c0 += CSWzlib
 
 EXTRA_LD_FLAGS += -lCstd -lCrun -lc -lm
 
@@ -42,5 +47,11 @@ CONFIGURE_ARGS = $(DIRPATHS)
 TEST_TARGET = check
 
 CHECKPKG_OVERRIDES_CSWtaglib += non-uniform-lib-versions-in-package|sonames=['libtag.so.1',|'libtag_c.so.0']
+
+# There are collisions with the existing taglib_gcc at the moment. These will go away
+# as soon as the updated taglib_gcc has been released.
+CHECKPKG_OVERRIDES_CSWlibtag-c0 += file-collision
+CHECKPKG_OVERRIDES_CSWlibtag1 += file-collision
+CHECKPKG_OVERRIDES_CSWtaglib-devel += file-collision
 
 include gar/category.mk
