@@ -26,25 +26,32 @@ fi
 # Or, preserve ones that have been changed
 # First, go through list of templates that THIS package provides
 
-cd  $PKG_INSTALL_ROOT/opt/csw/etc/templates/$PKG || exit 0
-# I dont see how we would be called if that dir does not exist, but be 
-# paranoid.
 
+echo 'class <cswcptemplates> removal running'
 
 remove_cpfiles()
 {
-	cd  $PKG_INSTALL_ROOT/opt/csw/etc/templates/$PKG
-	if [ $? -ne 0 ] ; then #paranoia good.
+	#paranoia good.
+	if [ ! -d $PKG_INSTALL_ROOT/opt/csw/etc/templates/$PKG ] ; then
 		echo ERROR: $PKG_INSTALL_ROOT/opt/csw/etc/templates/$PKG does not exist
 		return
 	fi
+	cd  $PKG_INSTALL_ROOT/opt/csw/etc/templates/$PKG
 	
-	for template in `find . -type f ` ; do 
+	for template in `find . -type f ` ; do
+		template=`echo $template|sed 's:^./::'`
 		case $template in 
-		*/*)
+		var/opt/csw/*)
 			confdest=$PKG_INSTALL_ROOT/$template
 		;;
-		*)
+		etc/opt/csw/*)
+			confdest=$PKG_INSTALL_ROOT/$template
+		;;
+		*/*)
+			echo ERROR: unrecognized/invalid path $template
+			exit 1
+		;;
+		*)  #should be just "filename" now
 			confdest=$PKG_INSTALL_ROOT/etc/opt/csw/$template
 		;;
 		esac
@@ -84,3 +91,4 @@ while read dest ; do
 	# whatever file the OS itself, passes into us on stdin
 	rm -f $dest
 done
+echo '<end of cswcptemplates>'

@@ -25,15 +25,39 @@
 # May be used/copied freely
 #
 
+TEMPLATEDIR=/opt/csw/etc/templates
+
 # extra checks and warnings to help people run this manually
 if [ "$PKG" = "" ] ; then
 	echo ERROR: PKG env variable must be set
 	exit 1
 fi
 
+echo 'class <cswcptemplates> running'
+
 # Note: for "normal" installs, we get passed one line per file in our "class"
 # However, for sparse-zone installs, the files have already been 'installed',
 # so we will get called, but have no files passed on stdin
+
+if [ ! -d $PKG_INSTALL_ROOT$TEMPLATEDIR/$PKG ] ; then
+	if [ ! -d $PKG_INSTALL_ROOT$TEMPLATEDIR ] ; then
+		echo ERROR: $PKG_INSTALL_ROOT$TEMPLATEDIR does not exist
+		echo Possibly corrupt install of CSWcas-cswcptemplates
+		exit 1
+	fi
+	# we can add dirs for the package calling us.
+	# But cswcptemplates never calls this script itself, so would be
+	# dubious to call that ourselves
+	if [ "$PKG_INSTALL_ROOT" = "" ] ; then
+		installf $PKG $TEMPLATEDIR/$PKG d 0755 root bin
+	else
+		installf -R $PKG_INSTALL_ROOT $PKG $TEMPLATEDIR/$PKG d 0755 root bin
+	fi
+	mkdir $PKG_INSTALL_ROOT$TEMPLATEDIR/$PKG
+	chown root:bin $PKG_INSTALL_ROOT$TEMPLATEDIR/$PKG
+	chmod 0755 $PKG_INSTALL_ROOT$TEMPLATEDIR/$PKG
+fi
+
 while read src dest ; do
 	cp $src $dest
 	if [ $? -ne 0 ] ; then
@@ -50,17 +74,25 @@ while read src dest ; do
 done
 
 
-cd  $PKG_INSTALL_ROOT/opt/csw/etc/templates/$PKG || exit 0
+cd  $PKG_INSTALL_ROOT$TEMPLATEDIR/$PKG || exit 0
 # I dont see how we would be called if that dir does not exist, but be 
 # paranoid.
 
 
 for template in `find . -type f ` ; do 
+template=`echo $template|sed 's:^./::'`
 case $template in 
-	*/*)
+	var/opt/csw/*)
 		confdest=$PKG_INSTALL_ROOT/$template
 	;;
-	*)
+	etc/opt/csw/*)
+		confdest=$PKG_INSTALL_ROOT/$template
+	;;
+	*/*)
+		echo ERROR: unrecognized/invalid path $template
+		exit 1
+	;;
+	*)  #should be just "filename" now
 		confdest=$PKG_INSTALL_ROOT/etc/opt/csw/$template
 	;;
 esac
@@ -80,7 +112,7 @@ esac
 	elif [ -f $confdest ] ; then
 		echo $confdest already exists. Not overwriting
 	else
-		echo Copying $template to $confdest
+		echo Copying $TEMPLATEDIR/$template to $confdest
                 cp $template $confdest
 
 		echo Forcing proper permissions on $confdest
