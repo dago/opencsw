@@ -1,0 +1,106 @@
+#!/bin/sh
+
+# Originally modelled after my cswpreserveconf, but taken one step
+# further.
+# Instead of taking the initial templates from 
+#  $(SOMEDIR) and copying right back into $(SOMEDIR)
+# it presumes that the source is
+#   /opt/csw/etc/templates/CSWpkgname/{.....}
+# and the default destination for a file is
+#   /etc/opt/csw/filename
+#
+# If destination should be somewhere else, then make subdirs as follows:
+#
+#   /opt/csw/etc/templates/CSWpkgname/var/some/file
+# gets copied to
+#  /var/some/file
+#
+# There are two surprising oddities:
+#  1. the old ".csw" postfix is gone. name the file EXACTLY how it should be
+#  2. The actual copying to final destination is done by virtue of
+#      just scaning the entire templates/CSWpkgname directory.
+#      This is so that the script will work right, for sparse zones.
+#
+# Author: Philip Brown 2011
+# May be used/copied freely
+#
+
+# extra checks and warnings to help people run this manually
+if [ "$PKG" = "" ] ; then
+	echo ERROR: PKG env variable must be set
+	exit 1
+fi
+
+# Note: for "normal" installs, we get passed one line per file in our "class"
+# However, for sparse-zone installs, the files have already been 'installed',
+# so we will get called, but have no files passed on stdin
+while read src dest ; do
+	cp $src $dest
+	if [ $? -ne 0 ] ; then
+		# It's technically "okay" if the copy fails in some situations.
+		# For example, if we have shared root and the file is already
+		# there. Except I dont think we would be run in that case
+		# anyway. erm..
+		if [ ! -f $src ] ; then
+			echo ERROR: src $src does not exist
+			exit 1
+		fi
+	fi
+	# reminder: $dest will already have $PKG_INSTALL_ROOT prepended for us
+done
+
+
+cd  $PKG_INSTALL_ROOT/opt/csw/etc/templates/$PKG || exit 0
+# I dont see how we would be called if that dir does not exist, but be 
+# paranoid.
+
+
+for template in `find . -type f ` ; do 
+case $template in 
+	*/*)
+		confdest=$PKG_INSTALL_ROOT/$template
+	;;
+	*)
+		confdest=$PKG_INSTALL_ROOT/etc/opt/csw/$template
+	;;
+esac
+	# Now we copy all templates to the "real" location,
+	# IF there is not already a file there, or a previously saved copy
+
+
+	preservedir=$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG
+	confbasename=`basename $confdest`
+	preservedconf=$preservedir/$confbasename
+
+	##overridedir=`sed -n  's/.*CSWDESTDIR=\([^ ]*\).*/\1/p' $src`
+
+	if [ -f $preservedconf ] ; then
+		echo Restoring $preservedconf
+		cp -p $preservedconf $confdest
+	elif [ -f $confdest ] ; then
+		echo $confdest already exists. Not overwriting
+	else
+		echo Copying $template to $confdest
+                cp $template $confdest
+
+		echo Forcing proper permissions on $confdest
+		[ -x $PKG_INSTALL_ROOT/usr/bin/pkgadm ] && $PKG_INSTALL_ROOT/usr/bin/pkgadm sync > /dev/null 2>&1
+		if [ "$PKG_INSTALL_ROOT" ]; then
+			file=`echo $template | sed -e "s,$PKG_INSTALL_ROOT,,"`
+		else
+			file=$template
+		fi
+		contents=`grep "^${file} " $PKG_INSTALL_ROOT/var/sadm/install/contents`
+		if [ "$contents" ]; then
+			mode=`echo $contents | awk '{print $4}'`
+			user=`echo $contents | awk '{print $5}'`
+			group=`echo $contents | awk '{print $6}'`
+			chmod $mode $confdest
+			chown $user:$group $confdest
+		fi
+	fi
+done
+
+
+echo '<end of cswcptemplates>'
+
