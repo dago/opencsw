@@ -1,0 +1,61 @@
+From f67f1b7d0d17e85dd09a1112a2988efc54215910 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20P=C3=ADsa=C5=99?= <ppisar@redhat.com>
+Date: Fri, 17 Dec 2010 14:29:23 +0100
+Subject: [PATCH] Do not cast long int to long via pointer
+
+This breaks things on big endian machine where long int is bigger than int.
+---
+ pcregrep.c |   16 ++++++++++------
+ 1 files changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/pcregrep.c b/pcregrep.c
+index 204a480..1598411 100644
+--- a/pcregrep.c
++++ b/pcregrep.c
+@@ -186,8 +186,8 @@ static BOOL utf8 = FALSE;
+ 
+ /* Structure for options and list of them */
+ 
+-enum { OP_NODATA, OP_STRING, OP_OP_STRING, OP_NUMBER, OP_OP_NUMBER,
+-       OP_PATLIST };
++enum { OP_NODATA, OP_STRING, OP_OP_STRING, OP_NUMBER, OP_LONGNUMBER,
++     OP_OP_NUMBER, OP_PATLIST };
+ 
+ typedef struct option_item {
+   int type;
+@@ -239,8 +239,8 @@ static option_item optionlist[] = {
+   { OP_NODATA,    N_LBUFFER, NULL,             "line-buffered", "use line buffering" },
+   { OP_NODATA,    N_LOFFSETS, NULL,            "line-offsets",  "output line numbers and offsets, not text" },
+   { OP_STRING,    N_LOCALE, &locale,           "locale=locale", "use the named locale" },
+-  { OP_NUMBER,    N_M_LIMIT,&match_limit,      "match-limit=number", "set PCRE match limit option" },
+-  { OP_NUMBER,    N_M_LIMIT_REC,&match_limit_recursion, "recursion-limit=number", "set PCRE match recursion limit option" },
++  { OP_LONGNUMBER,    N_M_LIMIT,&match_limit,      "match-limit=number", "set PCRE match limit option" },
++  { OP_LONGNUMBER,    N_M_LIMIT_REC,&match_limit_recursion, "recursion-limit=number", "set PCRE match recursion limit option" },
+   { OP_NODATA,    'M',      NULL,              "multiline",     "run in multiline mode" },
+   { OP_STRING,    'N',      &newline,          "newline=type",  "set newline type (CR, LF, CRLF, ANYCRLF or ANY)" },
+   { OP_NODATA,    'n',      NULL,              "line-number",   "print line number with output lines" },
+@@ -2278,7 +2278,8 @@ for (i = 1; i < argc; i++)
+ 
+   /* Otherwise, deal with single string or numeric data values. */
+ 
+-  else if (op->type != OP_NUMBER && op->type != OP_OP_NUMBER)
++  else if (op->type != OP_NUMBER && op->type != OP_LONGNUMBER &&
++          op->type != OP_OP_NUMBER)
+     {
+     *((char **)op->dataptr) = option_data;
+     }
+@@ -2308,7 +2309,10 @@ for (i = 1; i < argc; i++)
+           option_data, op->one_char);
+       pcregrep_exit(usage(2));
+       }
+-    *((int *)op->dataptr) = n;
++    if (op->type == OP_LONGNUMBER)
++        *((unsigned long int *)op->dataptr) = n;
++    else
++        *((int *)op->dataptr) = n;
+     }
+   }
+ 
+-- 
+1.7.3.3
+
