@@ -1,0 +1,169 @@
+Shared /opt/csw 
+===============
+
+When creating packages that require configuration files, or startup
+information, etc. it is important to be aware that some sites may deploy their
+systems with a shared /opt/csw across multiple machines.
+
+There are a few different variants of this. Among them are:
+
+* NFS-shared /opt/csw, shared read-only across multiple machines
+* /opt/csw duplicated via rsync or other means
+* A filesystem shared across multiple zones
+* A filesystem shared across multiple "Boot Environments" on the same machine
+  (a la "beadm")
+
+
+There are multiple reasons why a site may choose to go this route. One may be
+that it is a heterogenous environment, and a central NFS server is simply
+their standard way of sharing things out. One central file server, means one
+and only central place to do backups, etc.
+
+Another reason may be: when you have a high number of zones on a box, having
+every single pkgadd go through each zone and do the strange
+child-zone-specific pkgadd/pkgrm, is too aggravating to deal with. So they may
+choose to have /opt/csw be a NON-"inherit-pkg-dir" mount from the global zone.
+Or, they may choose to not add packages in the global zone at all! but allow
+one zone to be the csw package master, and then share /opt/csw from that zone,
+to other zones.
+
+The good news for maintainers is, we dont need to know the specifics of each
+site configuration. We can service any and all of the above cases quite
+nicely, by following some basic principles.
+
+Yes, this unfortunately may mean more work for the maintainer! But this is
+a major reason for people to value OpenCSW packages, over just a  blind
+"compile and install" approach. 
+
+Categories of packaging challege
+--------------------------------
+
+All software to be packaged will most likely fall into one, or sometimes two, of the following categories:
+
+* Standalone tools - No config needed!
+* Machine-individual configuration/data always required
+* Configuration "required", but almost always the same on ANYONE's site
+* Daemons
+* Programs that already are, or can be made to be, dual config (one global in /opt/csw/etc, and one in /etc/opt/csw)
+* Optional configuration
+
+Lets address each of these one by one
+
+Standalone tools
+~~~~~~~~~~~~~~~~
+
+Congratulations you lucky person! You're done here!
+
+Machine-individual configuration always required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Okay, some things (such as databases) always need a local configuration to
+work. If you are nice, you may have provided some kind of postinstall script
+to automate this as much as possible. However, NFS-shared type sites, dont
+automatically get the postinstall run on each machine!  At minimum, you need
+to provide documentation (under our normal location of
+/opt/csw/share/progname/) of what is required to get the software properly
+working on each individual machine.   Ideally, you would create some kind of
+auto-install script, that can be called EITHER by postinstall, OR by hand, on
+an individual machine that has nothing but /opt/csw mounted.
+
+
+Configuration "required", but almost always the same
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're really really REALLY sure that no sane person will ever edit the
+config file, it might be okay to put it directly in /opt/csw/etc and be done
+with it. However, the "right" way to handle this would be to put your expected
+config as a template, /opt/csw/etc/yourprog.conf.CSW, and then use one of our
+"cswclassutils" to automatically install and remove it to the normal place, IF
+the site admin has not chosen to make local tweaks.  That's it! You're done
+here.
+
+Daemons
+~~~~~~~
+
+A lot to talk about here. As far as configs go, you could start by treating
+them  as the "machine local config always required" case, but there are
+additional considerations. You really need to read the full Daemon
+configuration page.
+
+Programs that already are, or can be made to be, dual config 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Happily, some enterprise-level software is already capable of having both
+a "global" and a "local" set of configs. In this case, your task is easy.
+Create the default global ones (ideally by following the steps in the "always
+the same" item, above), and then provide sample local config files as
+appropriate. Possibly, your template global config
+file(/opt/csw/etc/prog.conf.CSW) will serve fine for this as well. If so, make
+sure to comment that fact in your template one.  There are some programs that
+do not act this way "out of the box", but can be made to act this way, with
+appropriate tweaks. For example, some programs allow for an optional
+"include" syntax, that will pull in an extra config file if present, but not
+complain too much if it is not there. In these cases, take advantage of this
+syntax in the global file, and ship it as a dual config style package.
+
+
+Optional configuration
+~~~~~~~~~~~~~~~~~~~~~~
+
+Some programs can "allow for" a local configuration, but can still run with
+a reasonable set of defaults. If your program is in this category (or at least
+can be MADE to fit in this category), then *just make sure that "it runs", if
+nothing outside of /opt/csw gets distributed.* Put information in our usual
+location of /opt/csw/share/progname/ of how to add in local tweaks. Provide
+sample configs, or a setup script if appropriate.
+
+Summary of acceptable directory use
+-----------------------------------
+
+It's possible to share the /opt/csw directory among multiple Solaris zones, or
+among multiple systems, using NFS. Such setup required paying attention to
+some details. In the case of sharing /opt/csw among sparse non-global Solaris
+zones, the /opt/csw directory is going to be read-only. Some programs are
+going to need separate configuration files, or a separate state keeping
+directory. To have this setup working, one needs:
+
+[options="header"]
+|===============================================================================
+|    | directory        | writable  | Allowable use
+| 1. | /opt/csw         | No        | Non-changable files, with exceptions below
+| 2. | /opt/csw**/var** | No        | *Never use this*
+| 3. | /opt/csw**/etc** | (special) |
+Use for template files(packaged), and global configs (postinstall/classutil)
+generated from template files
+
+| 4. | **/var**/opt/csw | *Yes*     |
+Allowable for *run-time-only* data. Do not deliver files in package here
+
+| 5. | **/etc**/opt/csw | *Yes*     |
+Optional site-admin, or template-copied, configs only. No "packaged" files
+
+|===============================================================================
+
+Note that for #3, if you have a postinstall or class action script generating
+content in /opt/csw/etc, it must fail gracefully if /opt/csw is read-only.
+
+A very few, ancient packages are still using the /opt/csw/var and
+/opt/csw/etc directories and may not work correctly. There's ongoing work
+to update them to use the correct directories.
+
+GAR tweaks to set autoconf progs to use local /etc
+--------------------------------------------------
+
+For the case of "Machine-individual configuration always required", in GAR,
+only the two following variables need to be set, usually:
+
+.GAR configuration sample
+--------------------------------------------------------------------------------
+localstatedir = /var$(prefix)
+sysconfdir = /etc$(prefix)
+--------------------------------------------------------------------------------
+
+There are actually standard GNU autoconf (configure) settings, which will be passed on.
+
+See also
+--------
+
+* Configuration directory migration
+* http://www.opencsw.org/userguide/sharingcsw[Sharing /opt/csw] at opencsw.org
