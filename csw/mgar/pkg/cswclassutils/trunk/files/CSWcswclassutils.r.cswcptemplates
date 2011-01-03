@@ -1,0 +1,86 @@
+#!/bin/sh
+#
+# See i.cswcptemplates for more detailed comments.
+#
+# Author: Philip Brown 2010
+# May be used/copied freely
+#
+
+
+# extra checks and warnings to help people run this manually
+if [ "$PKG" = "" ] ; then
+	echo ERROR: PKG env variable must be set
+	exit 1
+fi
+
+# Note: for "normal" installs, we get passed one line per file in our "class"
+# However, for sparse-zone installs, the files have already been 'installed',
+# so we will get called, but have no files passed on stdin
+# erm.. I think. True of INSTALL, but havent explicitly tested for pkgrm
+
+# Either way, we actually do work based on
+#  "All files under /opt/csw/etc/templates/$PKG"
+
+
+#we remove all templated files that are unchanged. 
+# Or, preserve ones that have been changed
+# First, go through list of templates that THIS package provides
+
+cd  $PKG_INSTALL_ROOT/opt/csw/etc/templates/$PKG || exit 0
+# I dont see how we would be called if that dir does not exist, but be 
+# paranoid.
+
+
+remove_cpfiles()
+{
+	cd  $PKG_INSTALL_ROOT/opt/csw/etc/templates/$PKG
+	if [ $? -ne 0 ] ; then #paranoia good.
+		echo ERROR: $PKG_INSTALL_ROOT/opt/csw/etc/templates/$PKG does not exist
+		return
+	fi
+	
+	for template in `find . -type f ` ; do 
+		case $template in 
+		*/*)
+			confdest=$PKG_INSTALL_ROOT/$template
+		;;
+		*)
+			confdest=$PKG_INSTALL_ROOT/etc/opt/csw/$template
+		;;
+		esac
+
+
+		preservedir=$PKG_INSTALL_ROOT/etc/opt/csw/preserve/$PKG
+		confbasename=`basename $confdest`
+		preservedconf=$preservedir/$confbasename
+
+		if [ -f $confdest ] ; then
+			if cmp $confdest $template >/dev/null ; then
+				echo $confdest is identical to sample config file $template
+				echo Removing $confdest
+				rm -f $confdest
+			else
+				echo "preserving $confdest to $preservedconf"
+				mkdir -p $preservedir 2>/dev/null
+				# note: for safety, do this way, not "mv"
+				cp -p $confdest $preservedconf && rm $confdest
+			fi
+		fi
+
+	done
+}
+
+
+#remove files cp'd from templates
+remove_cpfiles
+
+
+# Lastly, remove pkg templates as per SVR4 pkg spec requirements
+while read dest ; do
+	# reminder: $dest will already have $PKG_INSTALL_ROOT prepended for us
+
+
+	# Any way it shakes out, we always remove the "sample conf", or
+	# whatever file the OS itself, passes into us on stdin
+	rm -f $dest
+done
