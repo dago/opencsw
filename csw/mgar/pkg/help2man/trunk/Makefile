@@ -14,18 +14,15 @@ DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS = CSWpmlocalegettext
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+DEP_PKGS = CSWpmlocalegettext
 
 CONFIGURE_ARGS = $(DIRPATHS)
-# We need to disable NLS as we don't have preloadable_libintl.so
-# (only installed on glibc systems)
-CONFIGURE_ARGS += --disable-nls
 
 TEST_SCRIPTS =
-
-ARCHALL = 1
 
 CHECKPKG_OVERRIDES_CSWhelp2man += surplus-dependency|CSWpmlocalegettext
 
 include gar/category.mk
+
+post-install-modulated:
+	-perl -pi -e 's,/usr/lib,$(libdir),' $(DESTDIR)$(infodir)/help2man.info
