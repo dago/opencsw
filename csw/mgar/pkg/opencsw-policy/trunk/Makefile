@@ -41,4 +41,6 @@ install-policy:
 	@$(MAKECOOKIE)
 
 post-merge:
-	cp $(PKGROOT)/opt/csw/share/doc/opencsw_policy/index.html $(HOME)/public_html/policy || true
+	if [ -d $(HOME)/public_html/policy ]; then \
+	  cp $(PKGROOT)/opt/csw/share/doc/opencsw_policy/index.html $(HOME)/public_html/policy; \
+	fi
