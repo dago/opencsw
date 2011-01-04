@@ -20,6 +20,15 @@ LICENSE = COPYING.MPL
 
 VENDOR_URL = http://developer.kde.org/~wheeler/taglib.html
 
+PACKAGES += CSWtaglib
+CATALOGNAME_CSWtaglib = taglib
+SPKG_DESC_CSWtaglib = Library for reading and editing the meta-data of several popular audio formats
+RUNTIME_DEP_PKGS_CSWtaglib = CSWlibtag1 CSWlibtag-c0
+CHECKPKG_OVERRIDES_CSWtaglib += surplus-dependency|CSWlibtag-c0
+CHECKPKG_OVERRIDES_CSWtaglib += surplus-dependency|CSWlibtag1
+ARCHALL_CSWtaglib = 1
+PKGFILES_CSWtaglib = NOFILES
+
 PACKAGES += CSWtaglib-devel
 CATALOGNAME_CSWtaglib-devel = taglib_devel
 SPKG_DESC_CSWtaglib-devel = Developer files for taglib (composed of libtag1 and libtag_c0)
@@ -45,8 +54,6 @@ BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
-
-CHECKPKG_OVERRIDES_CSWtaglib += non-uniform-lib-versions-in-package|sonames=['libtag.so.1',|'libtag_c.so.0']
 
 # There are collisions with the existing taglib_gcc at the moment. These will go away
 # as soon as the updated taglib_gcc has been released.
