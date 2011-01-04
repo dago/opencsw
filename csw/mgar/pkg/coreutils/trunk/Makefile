@@ -50,7 +50,7 @@ EXTRA_LDFLAGS = -lgen
 
 PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/bin/gsu" { $$$$4 = "4555" }; { print }'
 
-ifneq ($(VERSION), 8.6)
+ifneq ($(VERSION), 8.8)
 TEST_TARGET = check
 else
 TEST_SCRIPTS =
