@@ -1,6 +1,6 @@
 # $Id$
 NAME = x3270
-VERSION = $(BASEREL).10ga5
+VERSION = $(BASEREL).11ga6
 CATEGORIES = apps
 
 DESCRIPTION = An IBM 3270 terminal emulator
@@ -11,14 +11,11 @@ MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = suite3270-$(VERSION)-src.tgz
 DISTFILES += COPYING
 
-CONVERSIONS  = ibm-1027_P100-1995.cnv
-CONVERSIONS += ibm-1385_P100-1997.cnv
-CONVERSIONS += ibm-1388_P103-2001.cnv
-CONVERSIONS += ibm-300_P110-1997.cnv
-CONVERSIONS += ibm-837_P100-2000.cnv
-DISTFILES += $(CONVERSIONS)
-
 PATCHFILES = 0001-Add-Error-function.patch
+PATCHFILES += 0002-Propagate-CFLAGS-to-building-of-version.o.patch
+
+# PATCHFILES += x3270-3.3.6_DBCS.patch
+# PATCHFILES += c3270-3.3_ncurses.patch
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-src.tar.gz
@@ -57,7 +54,7 @@ INSTALL_OVERRIDE_VAR_BINDIR = $(bindir)
 
 # EXTRA_PAX_ARGS = -s ",\./usr/openwin/bin/,.$(bindir)/,p"
 
-MIGRATE_FILES = $(addprefix x3270/,ibm_hosts $(CONVERSIONS))
+MIGRATE_FILES = x3270/ibm_hosts
 PRESERVECONF = $(addprefix $(sysconfdir)/,$(MIGRATE_FILES))
 
 #MANPAGES  = s3270-$(BASEREL)/s3270
@@ -83,5 +80,5 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(mandir)/man5
 	ginstall $(WORKSRC)/x3270-$(BASEREL)/ibm_hosts.man $(DESTDIR)$(mandir)/man5/ibm_hosts.5
 	$(foreach S,$(SUBSYSTEMS),ginstall -d $(DESTDIR)$(docdir)/x3270/$S; cp -rp $(WORKSRC)/$S-$(BASEREL)/README $(WORKSRC)/$S-$(BASEREL)/html $(DESTDIR)$(docdir)/x3270/$S;)
-	$(foreach C,$(CONVERSIONS),ginstall $(WORKDIR)/$C $(DESTDIR)$(sysconfdir)/x3270/$C;)
+	#$(foreach C,$(CONVERSIONS),ginstall $(WORKDIR)/$C $(DESTDIR)$(sysconfdir)/x3270/$C;)
 	@$(MAKECOOKIE)
