@@ -33,13 +33,14 @@ CHECKPKG_OVERRIDES_CSWlibicu46 += shared-lib-pkgname-mismatch
 PACKAGES += CSWlibicu-devel
 CATALOGNAME_CSWlibicu-devel = libicu_devel
 SPKG_DESC_CSWlibicu-devel = Development Files for libicu
-PKGFILES_CSWlibicu-devel = $(PKGFILES_DEVEL)
+# This package is PKGFILES catchall
 RUNTIME_DEP_PKGS_CSWlibicu-devel = CSWlibicu CSWlibicu46
 
 PACKAGES += CSWlibicu
 CATALOGNAME_CSWlibicu = libicu
 SPKG_DESC_CSWlibicu = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWlibicu = CSWlibicu46
+PKGFILES_CSWlibicu = NOFILES
+ARCHALL_CSWlibicu = 1
 # There are still legacy packages depending on CSWlibicu and expecting .so.42 in it.
 # Also depend on legacy soname-package until all these have been resolved.
 RUNTIME_DEP_PKGS_CSWlibicu += CSWlibicu42
