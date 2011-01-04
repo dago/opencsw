@@ -35,13 +35,9 @@ CHECKPKG_OVERRIDES_CSWlibicu42 += shared-lib-pkgname-mismatch|file=opt/csw/lib/l
 CHECKPKG_OVERRIDES_CSWlibicu42 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libicutu.so.42.1|soname=libicutu.so.42|pkgname=CSWlibicu42|expected=CSWlibicutu42
 CHECKPKG_OVERRIDES_CSWlibicu42 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libicuuc.so.42.1|soname=libicuuc.so.42|pkgname=CSWlibicu42|expected=CSWlibicuuc42
 
-PACKAGES += CSWlibicu
-CATALOGNAME_CSWlibicu = libicu
-SPKG_DESC_CSWlibicu = Stub as contents moved to library-specific legacy CSWlibicu42
-RUNTIME_DEP_PKGS_CSWlibicu = CSWlibicu42
-CHECKPKG_OVERRIDES_CSWlibicu += surplus-dependency|CSWlibicu42
-PKGFILES_CSWlibicu = NOFILES
-ARCHALL_CSWlibicu = 1
+# The collisions will be there until CSWlibicu has also been updated.
+# This will happen at the same time as the CSWlibicu42 release.
+CHECKPKG_OVERRIDES_CSWlibicu42 += file-collision
 
 LICENSE = license.html
 
