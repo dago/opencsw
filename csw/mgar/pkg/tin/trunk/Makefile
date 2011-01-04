@@ -1,5 +1,5 @@
 NAME = tin
-VERSION = 1.9.5
+VERSION = 1.9.6
 CATEGORIES = net
 
 DESCRIPTION = Terminal-based news reader
@@ -16,7 +16,10 @@ PATCHFILES = configure.patch
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-DEP_PKGS = CSWpcrert CSWggettextrt CSWperl CSWlibidn CSWlibicu CSWiconv
+RUNTIME_DEP_PKGS = CSWpcrert CSWggettextrt CSWperl CSWlibidn CSWlibicu46 CSWiconv
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpcre CSWlibicu-devel
+
+VENDOR_URL = http://www.tin.org/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-coffee
@@ -31,6 +34,15 @@ BUILD_ARGS = build
 
 # tin doesn't have a test target
 TEST_TARGET =
+
+# These are provided by CSWmutt-base
+EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man5/mmdf\.5
+EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man5/mbox\.5
+
+# These will be necessary until CSWlibicu46 has been officially released
+CHECKPKG_OVERRIDES_CSWtin += unidentified-dependency|CSWlibicu46
+CHECKPKG_OVERRIDES_CSWtin += soname-not-found|libicuuc.so.46|is|needed|by|opt/csw/bin/tin
+CHECKPKG_OVERRIDES_CSWtin += surplus-dependency|CSWlibicu46
 
 include gar/category.mk
 
