@@ -1,5 +1,5 @@
 NAME = di
-VERSION = 4.26
+VERSION = 4.27
 CATEGORIES = utils
 
 DESCRIPTION = Disk information utility
@@ -19,6 +19,10 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 DEP_PKGS = CSWggettextrt
 
 LICENSE = LICENSE
+
+PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
+# Make extra packages for Solaris 10 as di is zone-aware
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 CONFIGURE_SCRIPTS = 
 
