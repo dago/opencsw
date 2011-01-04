@@ -98,6 +98,7 @@ $(foreach C,$(CSWCLASSES),$(call surplus_dep,$(C)))
 
 # Add non-auto changes to checkpkg overrides, pkg files, etc.
 
+PKGFILES_CSWcas-cptemplates += /opt/csw/etc/templates
 PKGFILES_CSWcas-initsmf += /opt/csw/etc/init.d/.*
 PKGFILES_CSWcas-initsmf += /var/opt/csw/svc/.*
 
@@ -116,6 +117,7 @@ install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -m 0755 -d $(DESTDIR)/opt/csw/etc/init.d
+	@ginstall -m 0755 -d $(DESTDIR)/opt/csw/etc/templates
 	@ginstall -m 0755 -d $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -m 0755 -d $(DESTDIR)/usr/sadm/install/scripts
 	@ginstall -m 0755 -d $(DESTDIR)/var/opt/csw/svc/manifest
