@@ -16,11 +16,12 @@
 #
 
 RETVAL=0
-BASEDIR="/opt/csw/mysql5"
-MYSQL_HOME="/var${BASEDIR}"
-sysconfdir="/etc${BASEDIR}"
-MYSQLD_DATADIR=$MYSQL_HOME
-MYSQLD_PID_FILE=$MYSQL_HOME/mysql.pid
+prefix="/opt/csw/mysql5"
+BASEDIR="${prefix}"
+MYSQL_VAR="/var${prefix}"
+sysconfdir="/etc${prefix}"
+MYSQLD_DATADIR=$MYSQL_VAR
+MYSQLD_PID_FILE=$MYSQL_VAR/mysql.pid
 CONFFILE=${sysconfdir}/my.cnf
 
 #
@@ -28,6 +29,11 @@ CONFFILE=${sysconfdir}/my.cnf
 [ -r /opt/csw/mysql5/etc/mysql5rc ] && . /opt/csw/mysql5/etc/mysql5rc
 [ -r /etc/opt/csw/mysql5rc ] && . /etc/opt/csw/mysql5rc
 
+if [ -r "${sysconfdir}/my.cnf" ]; then
+  MYSQL_HOME="${MYSQL_VAR}"
+elif [ -r "${BASEDIR}/my.cnf" ]; then
+  MYSQL_HOME="${BASEDIR}"
+fi
 export MYSQL_HOME
 
 # To get started quickly, copy a sample configuration file from
@@ -149,7 +155,7 @@ stop_it() {
 
     printf "%-60s" "Shutting down mysqld: "
     if test -f "$MYSQLD_PID_FILE" ; then
-        pkill mysqld_safe >/dev/null 2>&1
+        pkill `pgrep_opts` mysqld_safe >/dev/null 2>&1
         kill `cat $MYSQLD_PID_FILE` >/dev/null 2>&1
         RETVAL=$?
     else
@@ -164,6 +170,13 @@ stop_it() {
     return 0
 }
 
+pgrep_opts() {
+  if [ -x /bin/zonename ]
+  then
+    echo "-z `/bin/zonename`"
+  fi
+}
+
 case $1 in
     start)
     start_it
@@ -175,13 +188,7 @@ case $1 in
 
     restart)
     stop_it
-    if [ -x /bin/zonename ]
-    then
-      pgrep_opts="-z `/bin/zonename`"
-    else
-      pgrep_opts=""
-    fi
-    while pgrep ${pgrep_opts} mysqld > /dev/null
+    while pgrep `pgrep_opts` mysqld > /dev/null
       do
       sleep 1
     done
