@@ -1,45 +1,57 @@
 # $Id$
 NAME = libicu
-VERSION = 4.4.1
+VERSION = 4.6
 CATEGORIES = lib
 
 DESCRIPTION = International Components for Unicode
 define BLURB
 endef
 
-EXTRA_MODULATORS = VERSION
-MODULATIONS_VERSION = 4.2.1 4.4.1
-
-SKIP_MODULATIONS  = isa-sparcv9-garversion-4.2.1
-SKIP_MODULATIONS += isa-amd64-garversion-4.2.1
-
 # filename = icu4c-$(shell echo $(1) | tr '.' '_')-src.tgz
-_V-4.2.1 = 4_2_1
-_V-4.4.1 = 4_4_1
+_V-4.6 = 4_6
 filename = icu4c-$(_V-$(1))-src.tgz
 
-MASTER_SITES = $(addsuffix /,$(addprefix http://download.icu-project.org/files/icu4c/,$(MODULATIONS_VERSION)))
-SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VERSION), $(call filename,$(VERSION)))
-DISTFILES  = $(SOURCEFILES)
+MASTER_SITES = http://download.icu-project.org/files/icu4c/$(VERSION)/
+SOURCEFILES = $(call filename,$(VERSION))
+DISTFILES = $(SOURCEFILES)
 
 # icu-config is broken with ECHO_N/ECHO_C detection:
 #   http://bugs.icu-project.org/trac/ticket/7768
-PATCHFILES = 0001-Add-workaround-for-echo-n.patch
-
-NOEXTRACT = $(filter-out $(call filename,$(VERSION)),$(SOURCEFILES))
+#PATCHFILES = 0001-Add-workaround-for-echo-n.patch
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:_\d+)*)-src.tgz
 
-PACKAGES = CSWlibicu CSWlibicudevel
+PACKAGES += CSWlibicu46
+CATALOGNAME_CSWlibicu46 = libicu46
+SPKG_DESC_CSWlibicu46 = International Components for Unicode, libicu*.so.46
+PKGFILES_CSWlibicu46 = $(call baseisadirs,$(libdir),libicu.*\.so\.46(\.\d+)*)
+# These are ok. As they are all used and bundled together they are also
+# released together in one soname-specific package.
+CHECKPKG_OVERRIDES_CSWlibicu46 += shared-lib-pkgname-mismatch
 
-CATALOGNAME_CSWlibicu      = libicu
-CATALOGNAME_CSWlibicudevel = libicu_devel
+PACKAGES += CSWlibicu-devel
+CATALOGNAME_CSWlibicu-devel = libicu_devel
+SPKG_DESC_CSWlibicu-devel = Development Files for libicu
+PKGFILES_CSWlibicu-devel = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibicu-devel = CSWlibicu CSWlibicu46
 
-SPKG_DESC_CSWlibicu      = International Components for Unicode
-SPKG_DESC_CSWlibicudevel = Development Files for libicu
+PACKAGES += CSWlibicu
+CATALOGNAME_CSWlibicu = libicu
+SPKG_DESC_CSWlibicu = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWlibicu = CSWlibicu46
+# There are still legacy packages depending on CSWlibicu and expecting .so.42 in it.
+# Also depend on legacy soname-package until all these have been resolved.
+RUNTIME_DEP_PKGS_CSWlibicu += CSWlibicu42
+CHECKPKG_OVERRIDES_CSWlibicu += surplus-dependency|CSWlibicu42
+# This package is generated in a branch and cannot be found in this build.
+CHECKPKG_OVERRIDES_CSWlibicu += unidentified-dependency|CSWlibicu42
 
-RUNTIME_DEP_PKGS_CSWlibicudevel += CSWlibicu
+# The collisions will be there until CSWlibicu has also been updated.
+# This will happen at the same time as the CSWlibicu42 release.
+CHECKPKG_OVERRIDES_CSWlibicu46 += file-collision
+CHECKPKG_OVERRIDES_CSWlibicu-devel += file-collision
+CHECKPKG_OVERRIDES_CSWlibicu += file-collision
 
 LICENSE = license.html
 
@@ -62,21 +74,6 @@ NOISAEXEC = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-MERGE_SCRIPTS_isa-default-garversion-4.2.1 = copy-only
-MERGE_DIRS_isa-default-garversion-4.2.1 = $(libdir)
-
-MERGE_SCRIPTS_isa-default-garversion-4.4.1 = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-4.4.1 = copy-relocated-only copy-config-only
-MERGE_DIRS_isa-default64-garversion-4.4.1 = $(libdir)
-
 PKGFILES_CSWlibicu = $(PKGFILES_RT)
-
-CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicui18n.so.44.1
-CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicule.so.44.1
-CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libiculx.so.44.1
-CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicuuc.so.44.1
-CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicutu.so.44.1
-CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicuio.so.44.1
-CHECKPKG_OVERRIDES_CSWlibicu += soname-not-found|libm.so.2|is|needed|by|opt/csw/lib/amd64/libicutest.so.44.1
 
 include gar/category.mk
