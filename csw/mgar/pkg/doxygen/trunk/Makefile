@@ -1,5 +1,5 @@
 NAME = doxygen
-VERSION = 1.7.2
+VERSION = 1.7.3
 CATEGORIES = utils
 
 DESCRIPTION = A documentation system for programming languages
@@ -29,6 +29,8 @@ UPSTREAM_MASTER_SITES = $(SPKG_SOURCEURL)
 
 BUILD_DEP_PKGS = CSWgraphviz
 
+EXTRA_CXXFLAGS = -features=tmplrefstatic
+
 CONFIGURE_ARGS = --prefix $(prefix)
 CONFIGURE_ARGS += --release
 CONFIGURE_ARGS += --docdir $(docdir)/doxygen
@@ -47,9 +49,6 @@ PKGFILES_CSWdoxygendoc = $(PKGFILES_DOC)
 # There are some Python examples in there, but pulling in Python unconditionally
 # for these tiny examples seems overkill.
 CHECKPKG_OVERRIDES_CSWdoxygendoc = missing-dependency|CSWpython
-
-# I can't get -norunpath to CXX, override for now
-CHECKPKG_OVERRIDES_CSWdoxygen += bad-rpath-entry
 
 # Use CSW Perl instead of #!/usr/local/bin/perl in
 #   /opt/csw/share/doc/doxygen/examples/Makefile
