@@ -1,5 +1,5 @@
 NAME = msmtp
-VERSION = 1.4.21
+VERSION = 1.4.22
 CATEGORIES = net
 
 DESCRIPTION = SMTP client
@@ -31,7 +31,7 @@ VENDOR_URL = http://msmtp.sourceforge.net/
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD_DEP_PKGS = CSWgnutlsdevel CSWlibgsasldevel CSWggettext
-RUNTIME_DEP_PKGS = CSWlibidn CSWgnutls CSWlibgsasl CSWggettextrt
+RUNTIME_DEP_PKGS = CSWlibidn CSWgnutls CSWlibgsasl7 CSWggettextrt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
