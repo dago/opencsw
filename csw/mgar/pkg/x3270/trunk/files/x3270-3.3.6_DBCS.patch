@@ -1,0 +1,156 @@
+--- c3270-3.3/configure-orig	Sat Aug  4 21:01:30 2007
++++ c3270-3.3/configure	Sat Aug  4 22:12:23 2007
+@@ -5524,14 +5524,14 @@
+ 		then	LDFLAGS="$orig_LDFLAGS -L$dir/lib"
+ 		fi
+ 
+-as_ac_Lib=`echo "ac_cv_lib_icui18n_ucnv_open${icu_suffix}" | $as_tr_sh`
+-echo "$as_me:$LINENO: checking for ucnv_open${icu_suffix} in -licui18n" >&5
+-echo $ECHO_N "checking for ucnv_open${icu_suffix} in -licui18n... $ECHO_C" >&6
++as_ac_Lib=`echo "ac_cv_lib_icuuc_ucnv_open${icu_suffix}" | $as_tr_sh`
++echo "$as_me:$LINENO: checking for ucnv_open${icu_suffix} in -licuuc" >&5
++echo $ECHO_N "checking for ucnv_open${icu_suffix} in -licuuc... $ECHO_C" >&6
+ if eval "test \"\${$as_ac_Lib+set}\" = set"; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-licui18n  $LIBS"
++LIBS="-licuuc  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -5594,7 +5594,7 @@
+ #define HAVE_LIBICUI18N 1
+ _ACEOF
+ 
+-  LIBS="-licui18n $LIBS"
++  LIBS="-licuuc $LIBS"
+ 
+ else
+   lib_fail=1
+@@ -5603,7 +5603,7 @@
+ 		if test "$lib_fail" -eq 0
+ 		then	break
+ 		fi
+-		unset `echo ac_cv_lib_icui18n_ucnv_open${icu_suffix} | $as_tr_sh`
++		unset `echo ac_cv_lib_icuuc_ucnv_open${icu_suffix} | $as_tr_sh`
+ 		LDFLAGS="$orig_LDFLAGS"
+ 		any=1
+ 	done
+--- pr3287-3.3/configure-orig	Sat Jun 23 13:05:46 2007
++++ pr3287-3.3/configure	Sat Aug  4 22:12:27 2007
+@@ -3675,14 +3675,14 @@
+ 		then	LDFLAGS="$orig_LDFLAGS -L$dir/lib"
+ 		fi
+ 
+-as_ac_Lib=`echo "ac_cv_lib_icui18n_ucnv_open${icu_suffix}" | $as_tr_sh`
+-echo "$as_me:$LINENO: checking for ucnv_open${icu_suffix} in -licui18n" >&5
+-echo $ECHO_N "checking for ucnv_open${icu_suffix} in -licui18n... $ECHO_C" >&6
++as_ac_Lib=`echo "ac_cv_lib_icuuc_ucnv_open${icu_suffix}" | $as_tr_sh`
++echo "$as_me:$LINENO: checking for ucnv_open${icu_suffix} in -licuuc" >&5
++echo $ECHO_N "checking for ucnv_open${icu_suffix} in -licuuc... $ECHO_C" >&6
+ if eval "test \"\${$as_ac_Lib+set}\" = set"; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-licui18n  $LIBS"
++LIBS="-licuuc  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -3745,7 +3745,7 @@
+ #define HAVE_LIBICUI18N 1
+ _ACEOF
+ 
+-  LIBS="-licui18n $LIBS"
++  LIBS="-licuuc $LIBS"
+ 
+ else
+   lib_fail=1
+@@ -3754,7 +3754,7 @@
+ 		if test "$lib_fail" -eq 0
+ 		then	break
+ 		fi
+-		unset `echo ac_cv_lib_icui18n_ucnv_open${icu_suffix} | $as_tr_sh`
++		unset `echo ac_cv_lib_icuuc_ucnv_open${icu_suffix} | $as_tr_sh`
+ 		LDFLAGS="$orig_LDFLAGS"
+ 		any=1
+ 	done
+--- s3270-3.3/configure-orig	Mon Jun 18 08:29:58 2007
++++ s3270-3.3/configure	Sat Aug  4 22:12:31 2007
+@@ -4793,14 +4793,14 @@
+ 		then	LDFLAGS="$orig_LDFLAGS -L$dir/lib"
+ 		fi
+ 
+-as_ac_Lib=`echo "ac_cv_lib_icui18n_ucnv_open${icu_suffix}" | $as_tr_sh`
+-echo "$as_me:$LINENO: checking for ucnv_open${icu_suffix} in -licui18n" >&5
+-echo $ECHO_N "checking for ucnv_open${icu_suffix} in -licui18n... $ECHO_C" >&6
++as_ac_Lib=`echo "ac_cv_lib_icuuc_ucnv_open${icu_suffix}" | $as_tr_sh`
++echo "$as_me:$LINENO: checking for ucnv_open${icu_suffix} in -licuuc" >&5
++echo $ECHO_N "checking for ucnv_open${icu_suffix} in -licuuc... $ECHO_C" >&6
+ if eval "test \"\${$as_ac_Lib+set}\" = set"; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-licui18n  $LIBS"
++LIBS="-licuuc  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -4863,7 +4863,7 @@
+ #define HAVE_LIBICUI18N 1
+ _ACEOF
+ 
+-  LIBS="-licui18n $LIBS"
++  LIBS="-licuuc $LIBS"
+ 
+ else
+   lib_fail=1
+@@ -4872,7 +4872,7 @@
+ 		if test "$lib_fail" -eq 0
+ 		then	break
+ 		fi
+-		unset `echo ac_cv_lib_icui18n_ucnv_open${icu_suffix} | $as_tr_sh`
++		unset `echo ac_cv_lib_icuuc_ucnv_open${icu_suffix} | $as_tr_sh`
+ 		LDFLAGS="$orig_LDFLAGS"
+ 		any=1
+ 	done
+--- tcl3270-3.3/configure-orig	Mon Jun 18 08:21:23 2007
++++ tcl3270-3.3/configure	Sat Aug  4 22:12:37 2007
+@@ -5327,14 +5327,14 @@
+ 		then	LDFLAGS="$orig_LDFLAGS -L$dir/lib"
+ 		fi
+ 
+-as_ac_Lib=`echo "ac_cv_lib_icui18n_ucnv_open${icu_suffix}" | $as_tr_sh`
+-echo "$as_me:$LINENO: checking for ucnv_open${icu_suffix} in -licui18n" >&5
+-echo $ECHO_N "checking for ucnv_open${icu_suffix} in -licui18n... $ECHO_C" >&6
++as_ac_Lib=`echo "ac_cv_lib_icuuc_ucnv_open${icu_suffix}" | $as_tr_sh`
++echo "$as_me:$LINENO: checking for ucnv_open${icu_suffix} in -licuuc" >&5
++echo $ECHO_N "checking for ucnv_open${icu_suffix} in -licuuc... $ECHO_C" >&6
+ if eval "test \"\${$as_ac_Lib+set}\" = set"; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-licui18n  $LIBS"
++LIBS="-licuuc  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -5397,7 +5397,7 @@
+ #define HAVE_LIBICUI18N 1
+ _ACEOF
+ 
+-  LIBS="-licui18n $LIBS"
++  LIBS="-licuuc $LIBS"
+ 
+ else
+   lib_fail=1
+@@ -5406,7 +5406,7 @@
+ 		if test "$lib_fail" -eq 0
+ 		then	break
+ 		fi
+-		unset `echo ac_cv_lib_icui18n_ucnv_open${icu_suffix} | $as_tr_sh`
++		unset `echo ac_cv_lib_icuuc_ucnv_open${icu_suffix} | $as_tr_sh`
+ 		LDFLAGS="$orig_LDFLAGS"
+ 		any=1
+ 	done

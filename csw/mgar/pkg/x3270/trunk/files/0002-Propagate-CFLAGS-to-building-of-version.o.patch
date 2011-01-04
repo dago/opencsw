@@ -1,0 +1,99 @@
+From 1abf9972f9939fa438dffe2007552fe80dddd086 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 4 Jan 2011 16:12:52 +0100
+Subject: [PATCH 2/2] Propagate CFLAGS to building of version.o
+
+---
+ c3270-3.3/mkversion.sh   |    2 +-
+ pr3287-3.3/mkversion.sh  |    2 +-
+ s3270-3.3/mkversion.sh   |    2 +-
+ tcl3270-3.3/mkversion.sh |    2 +-
+ wc3270-3.3/mkversion.sh  |    2 +-
+ wpr3287-3.3/mkversion.sh |    2 +-
+ ws3270-3.3/mkversion.sh  |    2 +-
+ x3270-3.3/mkversion.sh   |    2 +-
+ 8 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/c3270-3.3/mkversion.sh b/c3270-3.3/mkversion.sh
+index e9093e0..bc3c0c9 100755
+--- a/c3270-3.3/mkversion.sh
++++ b/c3270-3.3/mkversion.sh
+@@ -59,4 +59,4 @@ const char *build_rpq_timestamp = "$rpq_timestamp";
+ const char *build_rpq_version = "$version";
+ EOF
+ 
+-${1-cc} -c version.c
++${1-cc} ${CFLAGS} -c version.c
+diff --git a/pr3287-3.3/mkversion.sh b/pr3287-3.3/mkversion.sh
+index bcbd6bd..f5045bd 100755
+--- a/pr3287-3.3/mkversion.sh
++++ b/pr3287-3.3/mkversion.sh
+@@ -47,4 +47,4 @@ const char *app_defaults_version = "$adversion";
+ static const char sccsid[] = "@(#)${2-x3270} v$version $sccsdate $user";
+ EOF
+ 
+-${1-cc} -c version.c
++${1-cc} ${CFLAGS} -c version.c
+diff --git a/s3270-3.3/mkversion.sh b/s3270-3.3/mkversion.sh
+index e9093e0..bc3c0c9 100755
+--- a/s3270-3.3/mkversion.sh
++++ b/s3270-3.3/mkversion.sh
+@@ -59,4 +59,4 @@ const char *build_rpq_timestamp = "$rpq_timestamp";
+ const char *build_rpq_version = "$version";
+ EOF
+ 
+-${1-cc} -c version.c
++${1-cc} ${CFLAGS} -c version.c
+diff --git a/tcl3270-3.3/mkversion.sh b/tcl3270-3.3/mkversion.sh
+index e9093e0..bc3c0c9 100755
+--- a/tcl3270-3.3/mkversion.sh
++++ b/tcl3270-3.3/mkversion.sh
+@@ -59,4 +59,4 @@ const char *build_rpq_timestamp = "$rpq_timestamp";
+ const char *build_rpq_version = "$version";
+ EOF
+ 
+-${1-cc} -c version.c
++${1-cc} ${CFLAGS} -c version.c
+diff --git a/wc3270-3.3/mkversion.sh b/wc3270-3.3/mkversion.sh
+index e9093e0..bc3c0c9 100755
+--- a/wc3270-3.3/mkversion.sh
++++ b/wc3270-3.3/mkversion.sh
+@@ -59,4 +59,4 @@ const char *build_rpq_timestamp = "$rpq_timestamp";
+ const char *build_rpq_version = "$version";
+ EOF
+ 
+-${1-cc} -c version.c
++${1-cc} ${CFLAGS} -c version.c
+diff --git a/wpr3287-3.3/mkversion.sh b/wpr3287-3.3/mkversion.sh
+index bcbd6bd..f5045bd 100755
+--- a/wpr3287-3.3/mkversion.sh
++++ b/wpr3287-3.3/mkversion.sh
+@@ -47,4 +47,4 @@ const char *app_defaults_version = "$adversion";
+ static const char sccsid[] = "@(#)${2-x3270} v$version $sccsdate $user";
+ EOF
+ 
+-${1-cc} -c version.c
++${1-cc} ${CFLAGS} -c version.c
+diff --git a/ws3270-3.3/mkversion.sh b/ws3270-3.3/mkversion.sh
+index e9093e0..bc3c0c9 100755
+--- a/ws3270-3.3/mkversion.sh
++++ b/ws3270-3.3/mkversion.sh
+@@ -59,4 +59,4 @@ const char *build_rpq_timestamp = "$rpq_timestamp";
+ const char *build_rpq_version = "$version";
+ EOF
+ 
+-${1-cc} -c version.c
++${1-cc} ${CFLAGS} -c version.c
+diff --git a/x3270-3.3/mkversion.sh b/x3270-3.3/mkversion.sh
+index 31a9b41..e5eae74 100755
+--- a/x3270-3.3/mkversion.sh
++++ b/x3270-3.3/mkversion.sh
+@@ -60,4 +60,4 @@ const char *build_rpq_timestamp = "$rpq_timestamp";
+ const char *build_rpq_version = "$version";
+ EOF
+ 
+-${1-cc} -c version.c
++${1-cc} ${CFLAGS} -c version.c
+-- 
+1.7.3.2
+
