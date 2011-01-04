@@ -74,6 +74,4 @@ NOISAEXEC = 1
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-PKGFILES_CSWlibicu = $(PKGFILES_RT)
-
 include gar/category.mk
