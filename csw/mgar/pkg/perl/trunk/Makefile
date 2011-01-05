@@ -28,7 +28,13 @@ SPKG_DESC_CSWperldoc = Perl documentation
 
 LICENSE = Copying
 
+PATCHFILES += 0001-change-inc-based-on-rhel5-patch.patch
+
 CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWperldoc += file-collision
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.10.1|soname=libperl.so.5.10.1|pkgname=CSWperl|expected=CSWlibperl5-10-1
+CHECKPKG_OVERRIDES_CSWperl += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/perl/5.10.1/auto/GDBM_File/GDBM_File.so
+CHECKPKG_OVERRIDES_CSWperl += surplus-dependency|CSWgdbm
 
 # Core module updates
 #MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
