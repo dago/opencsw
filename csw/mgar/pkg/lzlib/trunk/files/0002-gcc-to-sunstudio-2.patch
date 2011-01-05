@@ -1,0 +1,25 @@
+From 68db975872497081807f900e60d1bbb159b82f51 Mon Sep 17 00:00:00 2001
+From: THURNER rupert <rupert@opencsw.org>
+Date: Wed, 5 Jan 2011 12:26:50 -0600
+Subject: [PATCH] gcc-to-sunstudio-2
+
+---
+ bbexample.cc |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/bbexample.cc b/bbexample.cc
+index df91300..1b65bf7 100644
+--- a/bbexample.cc
++++ b/bbexample.cc
+@@ -17,7 +17,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <unistd.h>
+ 
+ #include "lzlib.h"
+-- 
+1.7.3.2
+
