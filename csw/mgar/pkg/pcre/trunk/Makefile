@@ -28,7 +28,7 @@ VENDOR_URL = http://www.pcre.org
 BUILD_DEP_PKGS = CSWgnulinks
 
 PACKAGES = CSWpcre
-CATALOGNAME_CSWpcrert = pcre_rt
+CATALOGNAME_CSWpcre = pcre
 SPKG_DESC_CSWpcre = Perl-compatible regular expression tools
 RUNTIME_DEP_PKGS_CSWpcre += CSWreadline
 RUNTIME_DEP_PKGS_CSWpcre += CSWlibpcre0
@@ -37,7 +37,7 @@ RUNTIME_DEP_PKGS_CSWpcre += CSWzlib
 RUNTIME_DEP_PKGS_CSWpcre += CSWlibpcreposix0
 
 PACKAGES += CSWpcrert
-CATALOGNAME_CSWpcrert = pcrert
+CATALOGNAME_CSWpcrert = pcre_rt
 SPKG_DESC_CSWpcrert = Legacy stub as contents was moved to libpcre0, libpcrecpp0 and libpcreposix0
 PKGFILES_CSWpcrert = NOFILES
 RUNTIME_DEP_PKGS_CSWpcrert = CSWlibpcre0 CSWlibpcrecpp0 CSWlibpcreposix0
