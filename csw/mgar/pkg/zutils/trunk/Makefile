@@ -44,6 +44,18 @@ INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
 
 EXTRA_PAX_ARGS = -s ",/z,/Z,p"
 
+# These are false positives as lower case 'z' is in CSWgzipextras.
+CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zcmp|CSWgzipextras|CSWzutils
+CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/share/man/man1/Zcat.1|CSWgzipextras|CSWzutils
+CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zcat|CSWgzipextras|CSWzutils
+CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/share/man/man1/Zcmp.1|CSWgzipextras|CSWzutils
+CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zgrep|CSWgzipextras|CSWzutils
+CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zegrep|CSWgzipextras|CSWzutils
+CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zdiff|CSWgzipextras|CSWzutils
+CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/share/man/man1/Zdiff.1|CSWgzipextras|CSWzutils
+CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zfgrep|CSWgzipextras|CSWzutils
+CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/share/man/man1/Zgrep.1|CSWgzipextras|CSWzutils
+
 include gar/category.mk
 
 post-extract-modulated:
