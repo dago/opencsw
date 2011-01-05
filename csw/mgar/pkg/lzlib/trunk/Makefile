@@ -12,6 +12,7 @@ endef
 MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-gcc-to-sunstudio.patch
+PATCHFILES = 0002-gcc-to-sunstudio-2.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
