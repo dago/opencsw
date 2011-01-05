@@ -14,6 +14,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
+VENDOR_URL = http://www.pdflib.com/products/
 LICENSE = doc/PDFlib-terms-and-conditions.pdf
 
 PACKAGES += CSWlibpdf6
