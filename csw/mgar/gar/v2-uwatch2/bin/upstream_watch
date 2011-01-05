@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 #
-# The contents of this file are subject to the COMMON DEVELOPMENT AND 
-# DISTRIBUTION LICENSE (CDDL) (the "License"); you may not use this 
-# file except in compliance with the License. 
+# The contents of this file are subject to the COMMON DEVELOPMENT AND
+# DISTRIBUTION LICENSE (CDDL) (the "License"); you may not use this
+# file except in compliance with the License.
 #
 # Software distributed under the License is distributed on an "AS IS" basis,
 # WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
@@ -49,7 +49,7 @@ from optparse import OptionParser
 #
 #
 class NoUpstreamProtocolException(Exception):
-    """Exception raised when no protocol is specified in the upstream url 
+    """Exception raised when no protocol is specified in the upstream url
     """
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ class NoUpstreamProtocolException(Exception):
 #
 #
 class UpstreamUrlRetrievalFailedException(Exception):
-    """Exception raised when an unsuported protocol is specified in the upstream url 
+    """Exception raised when an unsuported protocol is specified in the upstream url
     """
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ class NoUpstreamVersionFoundException(Exception):
 #
 #
 class UpstreamProtocolNotSupportedException(Exception):
-    """Exception raised when an unsuported protocol is specified in the upstream url 
+    """Exception raised when an unsuported protocol is specified in the upstream url
     """
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -127,10 +127,10 @@ class CommandLineParser(object):
         self.parser = OptionParser()
 
         # Add options to parser
-        self.parser.add_option("-V", "--verbose", help="Activate verbose mode", action="store_true", dest="verbose") 
-        self.parser.add_option("-c", "--current-version", help="Current package version", action="store", dest="current_version") 
-        self.parser.add_option("-r", "--regexp", help="Version matching regular expression", action="store", dest="regexp") 
-        self.parser.add_option("-u", "--upstream-url", help="Upstream version page url", action="store", dest="upstream_url") 
+        self.parser.add_option("-V", "--verbose", help="Activate verbose mode", action="store_true", dest="verbose")
+        self.parser.add_option("-c", "--current-version", help="Current package version", action="store", dest="current_version")
+        self.parser.add_option("-r", "--regexp", help="Version matching regular expression", action="store", dest="regexp")
+        self.parser.add_option("-u", "--upstream-url", help="Upstream version page url", action="store", dest="upstream_url")
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -142,14 +142,14 @@ class CommandLineParser(object):
 #
 #
 class ConfigurationParser(object):
-    """This handles parameters retrieved either from command line or configuration file. 
+    """This handles parameters retrieved either from command line or configuration file.
     """
 
     # -----------------------------------------------------------------------------------------------------------------
 
     def initialize(self, args):
         """Initialize configuration object. If configurations contains files reference, values from the files are
-        read and copied into this object. Next attempts to retrieve files stored information will read values from 
+        read and copied into this object. Next attempts to retrieve files stored information will read values from
         this object.
         """
 
@@ -175,7 +175,7 @@ class ConfigurationParser(object):
     # -----------------------------------------------------------------------------------------------------------------
 
     def __init__(self):
-        
+
         # Initialize all variables to None. Even if useless, the purpose of this to keep up to date the list
         self._verbose = None
         self._current_version = None
@@ -232,42 +232,15 @@ class AbstractCommand(object):
 # ---------------------------------------------------------------------------------------------------------------------
 #
 #
-class CheckUpstreamCommand(AbstractCommand):
-    """CheckUpstream command. This command retrieve the upstream web page and search for a new version. Version check is 
-    done by matching the regexp from the makefile on the page. Results are sorted to get the highest available and 
-    compared to current version
+class UpstreamWatchCommand(AbstractCommand):
+    """UpstreamWatch command. This command is the base class used for all upstream watch commands. It provides argument checking
+    url content retrieving, version comparison, etc.
     """
 
     # -----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, name):
-        super(CheckUpstreamCommand, self).__init__(name)    
-
-    # -----------------------------------------------------------------------------------------------------------------
-
-    def checkArgument(self):
-
-        # Variable used to flag that we have a missing argument
-        argsValid = True
-
-        # Current version is mandatory
-        if self.configParser.getCurrentVersion() == None:
-            print "Error : Current version is not defined. Please use --current-version flag, or --help to display help"
-            argsValid = False
-
-        # Regexp is mandatory
-        if self.configParser.getRegexp() == None:
-            print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
-            argsValid = False
-
-        # UpstreamURL is mandatory
-        if self.configParser.getUpstreamURL() == None:
-            print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
-            argsValid = False
-        
-        # If arguments are not valid raise an exception
-        if argsValid == False:
-            raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
+        super(UpstreamWatchCommand, self).__init__(name)
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -285,7 +258,7 @@ class CheckUpstreamCommand(AbstractCommand):
             elif hasattr(e, 'code'):
                 print 'The server couldn\'t fulfill the request during retrieval of : ' + url
                 print 'Error code: ', e.code
-       
+
             # Check for response code value. We should get a 200
             raise UpstreamUrlRetrievalFailedException(url)
 
@@ -296,19 +269,19 @@ class CheckUpstreamCommand(AbstractCommand):
 
     # -----------------------------------------------------------------------------------------------------------------
 
-    def GetNewestVersion(self, version1, version2):
+    def CompareVersionAndGetNewest(self, version1, version2):
 
         # we consider the version to be composed of several elements separated by '.' ',' '-' or '_'
         # an elements can be a string or a number
         # at each step we extract the next elements of the two version strings and compare them
 
         # Retrieve the tokens from both version. Use . - , and _ as splitters
-	splittingRegExp = "(?:[\.,_-]?)"
+    	splittingRegExp = "(?:[\.,_-])"
         tokens1 = re.split(splittingRegExp, version1)
         tokens2 = re.split(splittingRegExp, version2)
 
         if self.configParser.getVerbose():
-            print "Comparing " + version1 + " and " + version2 
+            print "Comparing " + version1 + " and " + version2
 
         # Iterates the toeksn of version 1, pop tokens one by one and compare to the token at same
         # in version 2
@@ -331,8 +304,8 @@ class CheckUpstreamCommand(AbstractCommand):
                 elem1 = str(elem1)
                 elem2 = str(elem2)
                 # print "Doing string comparison"
-                
-            # print "Comparing %(elem1)s and %(elem2)s" % { 'elem1' : elem1 , 'elem2' : elem2 }               
+
+            # print "Comparing %(elem1)s and %(elem2)s" % { 'elem1' : elem1 , 'elem2' : elem2 }
 
             # if elements are the same continue the loop
             if elem1 == elem2:
@@ -345,28 +318,68 @@ class CheckUpstreamCommand(AbstractCommand):
             else:
                 # print "%(elem1)s < %(elem2)s" % { 'elem1' : elem1 , 'elem2' : elem2 }
                 return version2
-    
+
         return version1
+
+# ---------------------------------------------------------------------------------------------------------------------
+#
+#
+class CheckUpstreamCommand(UpstreamWatchCommand):
+    """CheckUpstream command. This command retrieve the upstream web page and search for a new version. Version check is
+    done by matching the regexp from the makefile on the page. Results are sorted to get the highest available and
+    compared to current version
+    """
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, name):
+        super(CheckUpstreamCommand, self).__init__(name)
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def checkArgument(self):
+
+        # Variable used to flag that we have a missing argument
+        argsValid = True
+
+        # Current version is mandatory
+        if self.configParser.getCurrentVersion() == None:
+            print "Error : Current version is not defined. Please use --current-version flag, or --help to display help"
+            argsValid = False
+
+        # Regexp is mandatory
+        if self.configParser.getRegexp() == None:
+            print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
+            argsValid = False
+
+        # UpstreamURL is mandatory
+        if self.configParser.getUpstreamURL() == None:
+            print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
+            argsValid = False
+
+        # If arguments are not valid raise an exception
+        if argsValid == False:
+            raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
 
     # -----------------------------------------------------------------------------------------------------------------
 
     def execute(self, opts, args):
-    
+
         try:
 
             # Initialize configuration
             self.configParser.initialize(opts)
-        
+
             # Need a way to check that all options needed are available
             self.checkArgument()
-       
+
             # Call the method in charge of retrieving upstream content
             content = self.UrlContentRetrieve(self.configParser.getUpstreamURL())
 
             # Search the strings matching the regexp passed through command line arguments
             p = re.compile(self.configParser.getRegexp())
             matches = p.findall(content)
-           
+
             # Check if we have found some results
             if len(matches) == 0:
                 raise NoUpstreamVersionFoundException(self.configParser.getUpstreamURL(), self.configParser.getRegexp())
@@ -375,12 +388,12 @@ class CheckUpstreamCommand(AbstractCommand):
             else:
                 newestVersion = self.configParser.getCurrentVersion()
                 while len(matches) > 0:
-                    newestVersion = self.GetNewestVersion(newestVersion, matches.pop(0))
+                    newestVersion = self.CompareVersionAndGetNewest(newestVersion, matches.pop(0))
 
             # At the end of the processing loop, test if we have a newer version avail, if yes output it
             if newestVersion <>  self.configParser.getCurrentVersion():
                 print newestVersion
-    
+
             # Exit after processing, eveythin gis ok, return true to the command processor
             return True
 
@@ -388,7 +401,7 @@ class CheckUpstreamCommand(AbstractCommand):
 
             # Display a cool error message :)
             print instance.parameter
-                
+
             # Exits through exception handling, thus return false to the command processor
             return False
 
@@ -396,7 +409,103 @@ class CheckUpstreamCommand(AbstractCommand):
 
             # Display a cool error message :)
             print "Protocol " + instance.parameter + " is not supportd by upstream_watch"
-                
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+        except UpstreamUrlRetrievalFailedException, (instance):
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+        except NoUpstreamVersionFoundException, (instance):
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+#
+#
+class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
+    """GetUpstreamLatestVersion command. This command retrieve the upstream web page and search for the latest version.
+    Version check is done by matching the regexp from the makefile on the page. Results are sorted to get the newest version
+    """
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, name):
+        super(GetUpstreamLatestVersionCommand, self).__init__(name)
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def checkArgument(self):
+
+        # Variable used to flag that we have a missing argument
+        argsValid = True
+
+        # Regexp is mandatory
+        if self.configParser.getRegexp() == None:
+            print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
+            argsValid = False
+
+        # UpstreamURL is mandatory
+        if self.configParser.getUpstreamURL() == None:
+            print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
+            argsValid = False
+
+        # If arguments are not valid raise an exception
+        if argsValid == False:
+            raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def execute(self, opts, args):
+
+        try:
+
+            # Initialize configuration
+            self.configParser.initialize(opts)
+
+            # Need a way to check that all options needed are available
+            self.checkArgument()
+
+            # Call the method in charge of retrieving upstream content
+            content = self.UrlContentRetrieve(self.configParser.getUpstreamURL())
+
+            # Search the strings matching the regexp passed through command line arguments
+            p = re.compile(self.configParser.getRegexp())
+            matches = p.findall(content)
+
+            # Check if we have found some results
+            if len(matches) == 0:
+                raise NoUpstreamVersionFoundException(self.configParser.getUpstreamURL(), self.configParser.getRegexp())
+                print "No match found, we should trigger some error since even current version has not been found"
+                return False
+            else:
+                newestVersion = matches.pop(0)
+                while len(matches) > 0:
+                    newestVersion = self.CompareVersionAndGetNewest(newestVersion, matches.pop(0))
+
+            # At the end of the processing loop, we print the version
+            print newestVersion
+
+            # Exit after processing, eveythin gis ok, return true to the command processor
+            return True
+
+        except MissingArgumentException, (instance):
+
+            # Display a cool error message :)
+            print instance.parameter
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+        except UpstreamProtocolNotSupportedException, (instance):
+
+            # Display a cool error message :)
+            print "Protocol " + instance.parameter + " is not supportd by upstream_watch"
+
             # Exits through exception handling, thus return false to the command processor
             return False
 
@@ -421,7 +530,7 @@ class CommandProcessor(object):
     # -----------------------------------------------------------------------------------------------------------------
 
     def __init__(self):
-        """Initialize the objects in charge of concrete command processing. Each object instance are stored in a 
+        """Initialize the objects in charge of concrete command processing. Each object instance are stored in a
         map using a key which is the action verb used on the command line.
         """
 
@@ -430,6 +539,9 @@ class CommandProcessor(object):
 
         # Creates all the concrete commands
         cmd = CheckUpstreamCommand("check-upstream")
+        self.commandArray[cmd.getName()] = cmd
+
+        cmd = GetUpstreamLatestVersionCommand("get-upstream-latest-version")
         self.commandArray[cmd.getName()] = cmd
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -443,7 +555,7 @@ class CommandProcessor(object):
         if len(arguments) == 0:
             print "Error : no action supplied"
             return 1
-    
+
         # The first element in the arguments array is the action verb. Retrieve the command
         # using action verb as key
         if self.commandArray.has_key(arguments[0]):
@@ -451,11 +563,11 @@ class CommandProcessor(object):
         else:
             print "Error : %(action)s action is not supported" % { 'action' : arguments[0] }
             return 2
-          
+
 # ---------------------------------------------------------------------------------------------------------------------
 #
 # Fonction principale
-#    
+#
 def main():
     """Program main loop. Process args and call concrete command action.
     """
@@ -463,13 +575,13 @@ def main():
     # Create the command processor object
     commandProcessor = CommandProcessor()
 
-    # Parse command line arguments 
+    # Parse command line arguments
     cliParser  = CommandLineParser()
 
     # Call the command line parser
     (opts, args) = cliParser.parse()
- 
-    # Call the execute method on the command processor. This method is in charge to find the concrete command  
+
+    # Call the execute method on the command processor. This method is in charge to find the concrete command
     return commandProcessor.execute(opts, args)
 
 # On sort en rendant le code de retour de main
