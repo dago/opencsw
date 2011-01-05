@@ -1,0 +1,135 @@
+From b1bae1c247333427284ee2e4a318a2769d6f3022 Mon Sep 17 00:00:00 2001
+From: THURNER rupert <rupert@opencsw.org>
+Date: Wed, 5 Jan 2011 12:14:58 -0600
+Subject: [PATCH] gcc-to-sunstudio
+
+change buildflags and include types.
+---
+ Makefile.in        |    4 ++--
+ configure          |    2 +-
+ decoder.cc         |    2 +-
+ encoder.cc         |    2 +-
+ lzcheck.cc         |    2 +-
+ lzlib.cc           |    2 +-
+ main.cc            |    3 ++-
+ testsuite/check.sh |    3 +++
+ 8 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 94e0114..65aee48 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -23,7 +23,7 @@ lib$(libname).a: $(lib_objs)
+ 	$(AR) -rcs $@ $^
+ 
+ lib$(libname).so.$(pkgversion) : $(sh_lib_objs)
+-	$(CXX) -shared -Wl,--soname=lib$(libname).so.$(soversion) -o $@ $^
++	$(CXX) $(LDFLAGS) -G -h lib$(libname).so.$(soversion) -o lib$(libname).so.$(pkgversion) $(sh_lib_objs)
+ 
+ $(progname) : $(objs) lib$(libname).a
+ 	$(CXX) $(LDFLAGS) -o $@ $^
+@@ -96,7 +96,7 @@ install : all install-info
+ 	$(INSTALL_DATA) ./lib$(libname).a "$(DESTDIR)$(libdir)/lib$(libname).a"
+ 	if [ -n "$(progname_shared)" ] ; then \
+ 	  $(INSTALL_PROGRAM) ./lib$(libname).so.$(pkgversion) "$(DESTDIR)$(libdir)/lib$(libname).so.$(pkgversion)" ; \
+-	  if [ -e "$(DESTDIR)$(libdir)/lib$(libname).so.$(soversion)" ] ; then \
++	  if [ -f "$(DESTDIR)$(libdir)/lib$(libname).so.$(soversion)" ] ; then \
+ 	    run_ldconfig=no ; rm -f "$(DESTDIR)$(libdir)/lib$(libname).so.$(soversion)" ; \
+ 	  else run_ldconfig=yes ; \
+ 	  fi ; \
+diff --git a/configure b/configure
+index ca758e4..fffae27 100755
+--- a/configure
++++ b/configure
+@@ -32,7 +32,7 @@ mandir='$(datadir)/man'
+ sysconfdir='$(prefix)/etc'
+ CXX=
+ CPPFLAGS=
+-CXXFLAGS='-Wall -W -O2'
++CXXFLAGS=
+ LDFLAGS=
+ 
+ # Loop over all args
+diff --git a/decoder.cc b/decoder.cc
+index 0d8d4d5..4622a4e 100644
+--- a/decoder.cc
++++ b/decoder.cc
+@@ -31,7 +31,7 @@
+ #include <cerrno>
+ #include <cstdlib>
+ #include <cstring>
+-#include <stdint.h>
++#include <inttypes.h>
+ 
+ #include "lzlib.h"
+ #include "lzip.h"
+diff --git a/encoder.cc b/encoder.cc
+index a0001c1..193ece9 100644
+--- a/encoder.cc
++++ b/encoder.cc
+@@ -31,7 +31,7 @@
+ #include <cerrno>
+ #include <cstdlib>
+ #include <cstring>
+-#include <stdint.h>
++#include <inttypes.h>
+ 
+ #include "lzlib.h"
+ #include "lzip.h"
+diff --git a/lzcheck.cc b/lzcheck.cc
+index ce53a41..3ccf1d7 100644
+--- a/lzcheck.cc
++++ b/lzcheck.cc
+@@ -18,7 +18,7 @@
+ #include <cstdio>
+ #include <cstdlib>
+ #include <cstring>
+-#include <stdint.h>
++#include <inttypes.h>
+ #include <unistd.h>
+ 
+ #include "lzlib.h"
+diff --git a/lzlib.cc b/lzlib.cc
+index 4a4b77b..5172a15 100644
+--- a/lzlib.cc
++++ b/lzlib.cc
+@@ -27,7 +27,7 @@
+ 
+ #include <algorithm>
+ #include <cstring>
+-#include <stdint.h>
++#include <inttypes.h>
+ 
+ #include "lzlib.h"
+ #include "lzip.h"
+diff --git a/main.cc b/main.cc
+index afcabfe..1665c61 100644
+--- a/main.cc
++++ b/main.cc
+@@ -33,7 +33,8 @@
+ #include <string>
+ #include <vector>
+ #include <fcntl.h>
+-#include <stdint.h>
++#include <inttypes.h>
++#include <signal.h>
+ #include <unistd.h>
+ #include <utime.h>
+ #include <sys/stat.h>
+diff --git a/testsuite/check.sh b/testsuite/check.sh
+index be6204b..f7dc03a 100755
+--- a/testsuite/check.sh
++++ b/testsuite/check.sh
+@@ -5,6 +5,9 @@
+ # This script is free software: you have unlimited permission
+ # to copy, distribute and modify it.
+ 
++PATH=/usr/ucb:$PATH
++export PATH
++
+ LC_ALL=C
+ export LC_ALL
+ objdir=`pwd`
+-- 
+1.7.3.2
+
