@@ -19,42 +19,94 @@ VENDOR_URL = http://www.gnuplot.info/
 
 LICENSE = Copyright
 
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWwxwidgetscommon
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibatk
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWpango
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWggettextrt
+PACKAGES += CSWgnuplot
+CATALOGNAME_CSWgnuplot = gnuplot
+SPKG_DESC_CSWgnuplot = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWpng
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWemacscommon
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWfconfig
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibcairo
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWiconv
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWwxwidgetsgtk2
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWreadline
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWgtk2
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWgd
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWxpm
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWncurses
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWlua
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWsunmath
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWftype2
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWglib2
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWzlib
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWjpeg
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWgnuplot)
+PACKAGES += CSWgnuplot-wx
+CATALOGNAME_CSWgnuplot-wx = gnuplot_wx
+SPKG_DESC_CSWgnuplot-wx = $(DESCRIPTION) (with WX-Widgets and Pango)
+RUNTIME_DEP_PKGS_CSWgnuplot-wx = CSWgnuplot
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWwxwidgetscommon
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibatk
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWpango
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWpng
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWfconfig
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWiconv
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWwxwidgetsgtk2
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWreadline
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWgtk2
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWgd
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWxpm
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWncurses
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlua
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWsunmath
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWftype2
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWglib2
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWzlib
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWjpeg
+
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWgnuplot-wx)
+
+EXTRA_MODULATORS = WXWIDGETS
+MODULATIONS_WXWIDGETS = yes no
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+CONFIGURE_ARGS_wxwidgets-no += --without-cairo
+CONFIGURE_ARGS_wxwidgets-no += --disable-wxwidgets
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_wxwidgets-$(WXWIDGETS))
 
 # Preset value until this is fixed:
 #   https://sourceforge.net/tracker/?func=detail&aid=3129839&group_id=2055&atid=102055
 CONFIGURE_ARGS += ac_cv_type__Bool=no
-
-#CONFIGURE_ARGS += --with-texdir=
 
 # Make sure we don't run the interactive displays from demo/
 EXTRA_TEST_EXPORTS = DISPLAY
 DISPLAY =
 
 TEST_TARGET = check
+
+MERGE_SCRIPTS_isa-default-wxwidgets-yes = copy-all
+MERGE_SCRIPTS_isa-default-wxwidgets-no = copy-all
+
+# These are exactly the differing files between the install-directories
+ALTERNATIVE_FILES += /opt/csw/bin/gnuplot
+ALTERNATIVE_FILES += /opt/csw/libexec/gnuplot/4.4/gnuplot_x11
+ALTERNATIVE_FILES += /opt/csw/share/emacs/site-lisp/gnuplot-gui.elc
+ALTERNATIVE_FILES += /opt/csw/share/emacs/site-lisp/gnuplot.elc
+ALTERNATIVE_FILES += /opt/csw/share/gnuplot/4.4/gnuplot.gih
+
+WXSUFFIX-yes = wx
+WXSUFFIX-no = nowx
+
+EXTRA_PAX_ARGS = $(foreach A,$(ALTERNATIVE_FILES),-s ",^\.\($A\),\1-$(WXSUFFIX-$(WXWIDGETS)),p")
+
+ALTERNATIVES_CSWgnuplot = basic
+ALTERNATIVES_CSWgnuplot-wx = wxwidgets
+ALTERNATIVE_basic = $(firstword $(ALTERNATIVE_FILES)) gnuplot $(firstword $(ALTERNATIVE_FILES))-$(WXSUFFIX-no) 100
+ALTERNATIVE_basic += $(foreach A,$(wordlist 2,$(words $(ALTERNATIVE_FILES)),$(ALTERNATIVE_FILES)),$A $(notdir $A) $A-$(WXSUFFIX-no))
+ALTERNATIVE_wxwidgets = $(firstword $(ALTERNATIVE_FILES)) gnuplot $(firstword $(ALTERNATIVE_FILES))-$(WXSUFFIX-yes) 200
+ALTERNATIVE_wxwidgets += $(foreach A,$(wordlist 2,$(words $(ALTERNATIVE_FILES)),$(ALTERNATIVE_FILES)),$A $(notdir $A) $A-$(WXSUFFIX-yes))
+
+PKGFILES_CSWgnuplot-wx = $(addsuffix -$(WXSUFFIX-yes),$(ALTERNATIVE_FILES))
+
+# "Alternatives" are not properly checked yet
+CHECKPKG_OVERRIDES_CSWgnuplot += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWgnuplot-wx += surplus-dependency|CSWalternatives
 
 include gar/category.mk
