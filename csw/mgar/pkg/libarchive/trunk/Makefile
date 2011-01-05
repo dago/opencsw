@@ -31,16 +31,17 @@ CATALOGNAME_CSWlibarchive-devel = libarchive_devel
 SPKG_DESC_CSWlibarchive-devel = Development files for libarchive
 RUNTIME_DEP_PKGS_CSWlibarchive-devel = CSWlibarchive2
 PKGFILES_CSWlibarchive-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibarchive-devel += $(mandir)/man5/.*
 
-PACKAGES += CSWlibarchive
-CATALOGNAME_CSWlibarchive = libarchive
-SPKG_DESC_CSWlibarchive = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWlibarchive += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibarchive += CSWxz
-RUNTIME_DEP_PKGS_CSWlibarchive += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibarchive += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibarchive += CSWbzip2
-RUNTIME_DEP_PKGS_CSWlibarchive += CSWosslrt
+PACKAGES += CSWlibarchive-utils
+CATALOGNAME_CSWlibarchive-utils = libarchive_utils
+SPKG_DESC_CSWlibarchive-utils = Tools for reading and writing various archive formats
+RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWxz
+RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWbzip2
+RUNTIME_DEP_PKGS_CSWlibarchive-utils += CSWosslrt
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWlibarchive42)
 BUILD_DEP_PKGS += CSWlibxml2devel CSWossldevel 
