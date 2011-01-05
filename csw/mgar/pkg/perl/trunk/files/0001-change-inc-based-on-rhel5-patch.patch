@@ -1,0 +1,60 @@
+From 621b2f69f661118c3f35bed411259d08cc984a20 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Wed, 5 Jan 2011 17:57:25 +0100
+Subject: [PATCH] change-inc-based-on-rhel5-patch
+
+---
+ perl.c |   23 ++++++++++++-----------
+ 1 files changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/perl.c b/perl.c
+index 94f2b13..a29dcc3 100644
+--- a/perl.c
++++ b/perl.c
+@@ -4879,9 +4879,6 @@ S_init_perllib(pTHX)
+     incpush(APPLLIB_EXP, TRUE, TRUE, TRUE, TRUE);
+ #endif
+ 
+-#ifdef ARCHLIB_EXP
+-    incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE, TRUE);
+-#endif
+ #ifdef MACOS_TRADITIONAL
+     {
+ 	Stat_t tmpstatbuf;
+@@ -4903,14 +4900,6 @@ S_init_perllib(pTHX)
+     if (!PL_tainting)
+ 	incpush(":", FALSE, FALSE, TRUE, FALSE);
+ #else
+-#ifndef PRIVLIB_EXP
+-#  define PRIVLIB_EXP "/usr/local/lib/perl5:/usr/local/lib/perl"
+-#endif
+-#if defined(WIN32)
+-    incpush(PRIVLIB_EXP, TRUE, FALSE, TRUE, TRUE);
+-#else
+-    incpush(PRIVLIB_EXP, FALSE, FALSE, TRUE, TRUE);
+-#endif
+ 
+ #ifdef SITEARCH_EXP
+     /* sitearch is always relative to sitelib on Windows for
+@@ -4958,6 +4947,18 @@ S_init_perllib(pTHX)
+     incpush(PERL_OTHERLIBDIRS, TRUE, TRUE, TRUE, TRUE);
+ #endif
+ 
++#ifdef ARCHLIB_EXP
++    incpush(ARCHLIB_EXP, FALSE, FALSE, TRUE, TRUE);
++#endif
++#ifndef PRIVLIB_EXP
++#  define PRIVLIB_EXP "/usr/local/lib/perl5:/usr/local/lib/perl"
++#endif
++#if defined(WIN32)
++    incpush(PRIVLIB_EXP, TRUE, FALSE, TRUE, TRUE);
++#else
++    incpush(PRIVLIB_EXP, FALSE, FALSE, TRUE, TRUE);
++#endif
++
+     if (!PL_tainting)
+ 	incpush(".", FALSE, FALSE, TRUE, FALSE);
+ #endif /* MACOS_TRADITIONAL */
+-- 
+1.7.3.2
+
