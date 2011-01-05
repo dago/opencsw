@@ -16,18 +16,29 @@ PATCHFILES = configure.patch
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS = CSWpcrert CSWggettextrt CSWperl CSWlibidn CSWlibicu46 CSWiconv
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpcre CSWlibicu-devel
+RUNTIME_DEP_PKGS_CSWtin += CSWpcrert
+RUNTIME_DEP_PKGS_CSWtin += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWtin += CSWperl
+RUNTIME_DEP_PKGS_CSWtin += CSWlibidn
+RUNTIME_DEP_PKGS_CSWtin += CSWlibicu46
+RUNTIME_DEP_PKGS_CSWtin += CSWiconv
+RUNTIME_DEP_PKGS_CSWtin += CSWncurses
+RUNTIME_DEP_PKGS_CSWtin += CSWlibgsasl7
+
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpcre
 
 VENDOR_URL = http://www.tin.org/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-coffee
-CONFIGURE_ARGS += --enable-ipv6 --enable-curses
+CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS += --with-screen=ncursesw --with-curses-dir=$(prefix)
 CONFIGURE_ARGS += --with-pcre=$(prefix)
 CONFIGURE_ARGS += --x-includes=/usr/openwin/include
 CONFIGURE_ARGS += --x-libraries=/usr/openwin/lib 
 CONFIGURE_ARGS += --with-x --with-Xaw3d
+CONFIGURE_ARGS += --with-libdir=$(libdir)/news
+CONFIGURE_ARGS += --with-spooldir=/var/opt/csw/spool/news
 
 # tin requires to run 'make build'
 BUILD_ARGS = build
