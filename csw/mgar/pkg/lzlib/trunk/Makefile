@@ -11,10 +11,7 @@ endef
 
 MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-PATCHFILES = 0001-Remove-Linux-specific-stuff-add-Solaris-specific-stu.patch
-PATCHFILES += 0002-Change-linker-flags-for-shared-libs-to-be-Sun-Studio.patch
-PATCHFILES += 0001-Do-not-do-ldconfig.patch
-PATCHFILES += 0002-Use-ucb-echo-as-it-only-understands-n.patch
+PATCHFILES = 0001-gcc-to-sunstudio.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
