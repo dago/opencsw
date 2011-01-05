@@ -34,7 +34,6 @@ RUNTIME_DEP_PKGS_CSWpcre += CSWreadline
 RUNTIME_DEP_PKGS_CSWpcre += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSWpcre += CSWbzip2
 RUNTIME_DEP_PKGS_CSWpcre += CSWzlib
-RUNTIME_DEP_PKGS_CSWpcre += CSWncurses
 RUNTIME_DEP_PKGS_CSWpcre += CSWlibpcreposix0
 
 PACKAGES += CSWpcrert
@@ -60,20 +59,17 @@ PACKAGES += CSWlibpcre0
 CATALOGNAME_CSWlibpcre0 = libpcre0
 SPKG_DESC_CSWlibpcre0 = Perl-compatible regular expression tools, libpcre.so.0
 PKGFILES_CSWlibpcre0 = $(call baseisadirs,$(libdir),libpcre\.so\.0(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibpcre0 += CSWncurses
 
 PACKAGES += CSWlibpcrecpp0
 CATALOGNAME_CSWlibpcrecpp0 = libpcrecpp0
 SPKG_DESC_CSWlibpcrecpp0 += Perl-compatible regular expression tools, libpcrecpp.so.0
 PKGFILES_CSWlibpcrecpp0 += $(call baseisadirs,$(libdir),libpcrecpp\.so\.0(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibpcrecpp0 += CSWncurses
 RUNTIME_DEP_PKGS_CSWlibpcrecpp0 += CSWlibpcre0
 
 PACKAGES += CSWlibpcreposix0
 CATALOGNAME_CSWlibpcreposix0 = libpcreposix0
 SPKG_DESC_CSWlibpcreposix0 += Perl-compatible regular expression tools, libpcreposix.so.0
 PKGFILES_CSWlibpcreposix0 += $(call baseisadirs,$(libdir),libpcreposix\.so\.0(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibpcreposix0 += CSWncurses
 RUNTIME_DEP_PKGS_CSWlibpcreposix0 += CSWlibpcre0
 
 BUILD64 = 1
@@ -84,8 +80,6 @@ CONFIGURE_ARGS += --enable-unicode-properties
 CONFIGURE_ARGS += --enable-pcregrep-libz
 CONFIGURE_ARGS += --enable-pcregrep-libbz2
 CONFIGURE_ARGS += --enable-pcretest-libreadline
-
-EXTRA_LINKER_FLAGS = -lncurses
 
 TEST_TARGET = check
 
