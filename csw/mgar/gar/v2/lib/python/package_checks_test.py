@@ -1444,8 +1444,9 @@ class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
         'soname=libneon.so.27 filename=foo.so.1')
 
 
-class TestCheckDocDirLicense(CheckpkgUnitTestHelper, unittest.TestCase):
-  FUNCTION_NAME = 'CheckDocDir'
+class TestCheckLicenseFilePlacementLicense(CheckpkgUnitTestHelper,
+                                           unittest.TestCase):
+  FUNCTION_NAME = 'CheckLicenseFilePlacement'
   def CheckpkgTest(self):
     self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["pkgmap"].append({
@@ -1459,9 +1460,23 @@ class TestCheckDocDirLicense(CheckpkgUnitTestHelper, unittest.TestCase):
         'in-package=/opt/csw/share/doc/alien/license')
 
 
-class TestCheckDocDirRandomFile(CheckpkgUnitTestHelper, unittest.TestCase):
+class TestCheckLicenseFilePlacementLicenseDifferentSuffix(
+    CheckpkgUnitTestHelper, unittest.TestCase):
+  """A differently suffixed file should not trigger an error."""
+  FUNCTION_NAME = 'CheckLicenseFilePlacement'
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["pkgmap"].append({
+      "class": "none", "type": "f", "line": "",
+      "user": "root", "group": "bin", "mode": '0755',
+      "path": "/opt/csw/share/doc/alien/license.html",
+    })
+
+
+class TestCheckLicenseFilePlacementRandomFile(
+    CheckpkgUnitTestHelper, unittest.TestCase):
   "A random file should not trigger the message; only license files."
-  FUNCTION_NAME = 'CheckDocDir'
+  FUNCTION_NAME = 'CheckLicenseFilePlacement'
   def CheckpkgTest(self):
     self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["pkgmap"].append({
