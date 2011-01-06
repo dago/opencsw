@@ -1,16 +1,6 @@
 NAME = libevent
-VERSION = 2.0.7
+VERSION = 2.0.10
 CATEGORIES = lib
-
-EXTRA_MODULATORS = VERSION
-#MODULATIONS_VERSION = 1.1a 1.4.14b 2.0.7
-MODULATIONS_VERSION = 2.0.7
-
-SKIP_MODULATIONS = isa-sparcv9-garversion-1.1a
-SKIP_MODULATIONS += isa-amd64-garversion-1.1a
-
-DISTVERSION-1.1a = 1.1a
-DISTVERSION-2.0.7 = 2.0.7-rc
 
 DESCRIPTION = Event notification library
 define BLURB
@@ -21,33 +11,31 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.monkey.org/~provos/
-SOURCEFILES = $(foreach V,$(MODULATIONS_VERSION),$(NAME)-$(DISTVERSION-$V).tar.gz)
-DISTFILES += $(SOURCEFILES)
-
-DISTNAME = $(NAME)-$(DISTVERSION-$(VERSION))
+DISTNAME = $(NAME)-$(VERSION)-stable
+DISTFILES += $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-alpha.tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-stable.tar.gz
 
-# PATCHFILES += 0001-Detect-broken-unsetenv-at-unit-test-runtime.patch
-# PATCHFILES += 0001-Fix-getaddrinfo-with-protocol-unset-on-Solaris-9.patch
+PACKAGES += CSWlibevent2-0-5
+CATALOGNAME_CSWlibevent2-0-5 = libevent2_0_5
+SPKG_DESC_CSWlibevent2-0-5 = Event notification library 2.0, libevent*-2.0.so.5
+RUNTIME_DEP_PKGS_CSWlibevent2-0-5 += CSWosslrt
 
-NOEXTRACT = $(filter-out $(NAME)-$(DISTVERSION-$(VERSION)).tar.gz,$(SOURCEFILES))
 
+PACKAGES += CSWlibevent-devel
+CATALOGNAME_CSWlibevent-devel = libevent_devel
+SPKG_DESC_CSWlibevent-devel = Development files for libevent 2.0
+RUNTIME_DEP_PKGS_CSWlibevent-devel += CSWlibevent2-0-5
+RUNTIME_DEP_PKGS_CSWlibevent-devel += CSWpython
+
+VENDOR_URL = http://www.monkey.org/~provos/libevent/
 LICENSE = LICENSE
 
-PACKAGES = CSWlibevent CSWlibevent-devel
-
-RUNTIME_DEP_PKGS_CSWlibevent += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibevent-devel = CSWlibevent
-
-CATALOGNAME_CSWlibevent = libevent
-CATALOGNAME_CSWlibevent-devel = libevent_devel
-
-SPKG_DESC_CSWlibevent = Event notification library
-SPKG_DESC_CSWlibevent-devel = Event notification library header files
-
-SPKG_SOURCEURL = http://www.monkey.org/~provos/libevent/
+# We don't need it and if defined the test breaks
+NOISALIST = 1
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 BUILD64 = 1
 NOISAEXEC = 1
@@ -55,25 +43,16 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 
 TEST_TARGET = verify
 
-MERGE_SCRIPTS_isa-default-garversion-1.1a = copy-only
-MERGE_DIRS_isa-default-garversion-1.1a = $(libdir)
-MERGE_SCRIPTS_isa-extra-garversion-1.1a = copy-relocated-only
-MERGE_DIRS_isa-extra-garversion-1.1a = $(libdir)
+PKGFILES_CSWlibevent2-0-5 = $(PKGFILES_RT)
 
-MERGE_SCRIPTS_isa-default-garversion-2.0.7 = copy-all
-MERGE_SCRIPTS_isa-extra-garversion-2.0.7 = copy-relocated-only
-MERGE_DIRS_isa-extra-garversion-2.0.7 = $(libdir)
+# These will go away after package release as the files have been moved from CSWlibevent to *-devel
+CHECKPKG_OVERRIDES_CSWlibevent-devel += file-collision
 
-PKGFILES_CSWlibevent-devel = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibevent-devel += $(bindir)/.*
-
-CHECKPKG_OVERRIDES_CSWlibevent-devel += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWlibevent-devel += surplus-dependency|CSWlibevent
+# The package name guessing has a bug, overwrite for now.
+CHECKPKG_OVERRIDES_CSWlibevent2-0-5 += shared-lib-pkgname-mismatch
 
 include gar/category.mk
 
 post-extract-modulated:
 	-test -f $(WORKSRC)/test/test.sh && perl -pi -e 's,#!/bin/sh,#!/bin/bash,' $(WORKSRC)/test/test.sh
 	@$(MAKECOOKIE)
-
-
