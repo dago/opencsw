@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = nasm
-VERSION = 2.08.01
+VERSION = 2.09.04
 CATEGORIES = utils
 
 DESCRIPTION = The Netwide Assembler
