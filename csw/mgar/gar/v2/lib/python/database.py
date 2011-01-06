@@ -82,12 +82,17 @@ class DatabaseManager(object):
         ldm.InitialDataImport()
         ldm.SetDatabaseSchemaVersion()
       else:
-        raise DatabaseError(
+        msg = (
             "Database schema does not match the application. "
             "Database contains: %s, "
             "the application expects: %s. "
-            "Make sure your application sources are up to date."
             % (ldm.GetDatabaseSchemaVersion(), DB_SCHEMA_VERSION))
+        if DB_SCHEMA_VERSION < ldm.GetDatabaseSchemaVersion():
+          msg += "Make sure your application sources are up to date."
+        elif DB_SCHEMA_VERSION > ldm.GetDatabaseSchemaVersion():
+          msg += ("Make sure your database is up to date.  "
+                  "Re-create it if necessary.")
+        raise DatabaseError(msg)
 
   def _CheckAndMaybeFixFreshness(self, auto_fix):
     ldm = LocalDatabaseManager()
