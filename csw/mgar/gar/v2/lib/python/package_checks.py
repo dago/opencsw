@@ -968,6 +968,9 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
           soname = os.path.split(binary_info["path"])[1]
         linkable_shared_libs.append((soname, binary_info))
   check_names = True
+  logging.debug("CheckSharedLibraryNamingPolicy(): "
+                "linkable shared libs of %s: %s"
+                % (pkgname, linkable_shared_libs))
   if len(linkable_shared_libs) > 1:
     sonames = sorted(set([x[0] for x in linkable_shared_libs]))
     tmp = su.MakePackageNameBySonameCollection(sonames)
