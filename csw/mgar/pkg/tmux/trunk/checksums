@@ -1,5 +1,1 @@
-58b41f4648140297ed218db06a023450  0001-old-style-patch-0000-stdint.patch
-6d6be91f763e1b4c15ec8145efbda66e  0002-Fix-one-more-inttypes.h.patch
-2a87ff8258d61d719a3b046a6d68d2d2  0003-Add-fix-for-missing-MAXHOSTNAMELEN.patch
-8ad333c4590c5ed45f1b4d0218ede7a7  COPYING
-96e60cb206de2db0610b9fb6a64c2251  tmux-1.3.tar.gz
+0bfc7dd9a5bab192406167589c716a21  tmux-1.4.tar.gz
