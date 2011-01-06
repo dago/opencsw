@@ -33,8 +33,6 @@ DEFAULT_PKG_DATA = rsync_stats[0]
 class CheckpkgUnitTestHelper(object):
   """Wraps common components of checkpkg tests."""
 
-  __metaclass__ = mox.MoxMetaTestBase
-
   def setUp(self):
     super(CheckpkgUnitTestHelper, self).setUp()
     self.mox = mox.Mox()
@@ -62,6 +60,7 @@ class CheckpkgUnitTestHelper(object):
                                     self.error_mgr_mock,
                                     self.logger_mock,
                                     self.messenger)
+    self.mox.VerifyAll()
 
 
 class TestMultipleDepends(CheckpkgUnitTestHelper, unittest.TestCase):
