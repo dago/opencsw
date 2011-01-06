@@ -1,5 +1,5 @@
 NAME = IO-Compress
-VERSION = 2.020
+VERSION = 2.032
 CATEGORIES = cpan
 AUTHOR = PMQS
 
@@ -21,17 +21,21 @@ define BLURB
 
 endef
 
+DISTFILES += COPYING
+
 RUNTIME_DEP_PKGS  = CSWpmcompressrawzlib
 RUNTIME_DEP_PKGS += CSWpmcompressrawbz2
 
 # Uncomment if all packages who depend on these have switched to depend on this package
 #INCOMPATIBLE_PKGS  = CSWpmcompresszlib
-#INCOMPATIBLE_PKGS += CSWpmiocompressbase
-#INCOMPATIBLE_PKGS += CSWpmiocompresszlib
+INCOMPATIBLE_PKGS += CSWpmiocompressbase
+INCOMPATIBLE_PKGS += CSWpmiocompresszlib
 
 PACKAGES = CSWpmiocompress
 CATALOGNAME = pm_iocompress
 
 ARCHALL = 1
+
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
 include gar/category.mk
