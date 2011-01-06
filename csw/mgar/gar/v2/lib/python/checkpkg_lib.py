@@ -342,7 +342,6 @@ class CheckInterfaceBase(object):
           paths.append(pkg)
     return paths_and_pkgs
 
-
   def GetPkgByPath(self, file_path):
     """Proxies calls to self.system_pkgmap."""
     pkgs_in_catalog = self.catalog.GetPkgByPath(
