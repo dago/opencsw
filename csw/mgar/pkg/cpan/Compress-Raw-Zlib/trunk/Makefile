@@ -1,5 +1,5 @@
 NAME = Compress-Raw-Zlib
-VERSION = 2.030
+VERSION = 2.032
 CATEGORIES = cpan
 AUTHOR = PMQS
 
