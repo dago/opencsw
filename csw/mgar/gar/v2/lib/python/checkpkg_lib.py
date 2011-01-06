@@ -155,10 +155,6 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
      return super(CheckpkgManagerBase, self).GetSqlobjectTriad(
          self.osrel, self.arch, self.catrel)
 
-  def GetPackageStatsList(self):
-    raise RuntimeError("Please don't use this function as it violates "
-                       "the Law of Demeter.")
-
   def FormatReports(self, errors, messages, gar_lines):
     namespace = {
         "name": self.name,
