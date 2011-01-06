@@ -32,12 +32,12 @@ TABLES_ADMIN=(
   csw_config
   data_source
   host
-  maintainer
   os_release
 )
 TABLES_REL_MGR=(
   srv4_file_in_catalog
   csw_file
+  maintainer
 )
 TABLES_REGULAR=(
   pkginst
