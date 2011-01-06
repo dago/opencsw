@@ -1,5 +1,5 @@
 NAME = Compress-Raw-Bzip2
-VERSION = 2.031
+VERSION = 2.032
 CATEGORIES = cpan
 AUTHOR = PMQS
 
