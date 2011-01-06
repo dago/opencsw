@@ -17,7 +17,7 @@ VENDOR_URL = http://www.torproject.org
 LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS_CSWtor += CSWosslrt
-RUNTIME_DEP_PKGS_CSWtor += CSWlibevent
+RUNTIME_DEP_PKGS_CSWtor += CSWlibevent2-0-5
 RUNTIME_DEP_PKGS_CSWtor += CSWzlib
 
 sysconfdir = /etc/opt/csw
@@ -30,5 +30,12 @@ PRESERVECONF += $(sysconfdir)/tor/torrc
 
 MIGRATE_FILES += tor/tor-tsocks.conf
 MIGRATE_FILES += tor/torrc
+
+# New libevent has not been released
+CHECKPKG_OVERRIDES_CSWtor += soname-not-found|libevent-2.0.so.5|is|needed|by|opt/csw/bin/tor
+CHECKPKG_OVERRIDES_CSWtor += soname-not-found|libevent-2.0.so.5|is|needed|by|opt/csw/bin/tor-resolve
+CHECKPKG_OVERRIDES_CSWtor += soname-not-found|libevent-2.0.so.5|is|needed|by|opt/csw/bin/tor-gencert
+CHECKPKG_OVERRIDES_CSWtor += unidentified-dependency|CSWlibevent2-0-5
+CHECKPKG_OVERRIDES_CSWtor += surplus-dependency|CSWlibevent2-0-5
 
 include gar/category.mk
