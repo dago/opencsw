@@ -962,6 +962,8 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
     if binary_info["path"] in shared_libs:
       if su.IsLibraryLinkable(binary_info["path"]):
         # It is a shared library and other projects might link to it.
+        # Some libraries don't declare a soname; compile time linker defaults
+        # to their file name.
         if "soname" in binary_info and binary_info["soname"]:
           soname = binary_info["soname"]
         else:
@@ -1011,7 +1013,7 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
           pkgname)
 
       check_names = False
-    else:
+    else: # len(linkable_shared_libs) > 1
       if pkgname not in multilib_pkgnames:
         error_mgr.ReportError(
             "shared-lib-pkgname-mismatch",
