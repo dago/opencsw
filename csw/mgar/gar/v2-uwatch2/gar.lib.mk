@@ -180,116 +180,93 @@ checksum-%: $(CHECKSUM_FILE)
 
 #################### CHECKNEW RULES ####################
 
-UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
-UW_ARGS = $(addprefix -u ,$(UPSTREAM_MASTER_SITES))
-SF_ARGS = $(addprefix -s ,$(UPSTREAM_USE_SF))
 
-define files2check
-$(if $(UFILES_REGEX),$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(SF_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))))
+################### UWATCH VARIABLES ###################
+UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
+UW_ARGS = $(addsuffix ',$(addprefix --upstream-url=',$(UPSTREAM_MASTER_SITES)))
+REGEXP_ARGS = $(addsuffix ',$(addprefix --regexp=',$(UFILES_REGEX)))
+VERSION_ARGS = $(addsuffix ',$(addprefix --current-version=',$(VERSION)))
+define versionlist
+	$(if $(UFILES_REGEX),$(shell htp_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-version-list $(UW_ARGS) $(REGEXP_ARGS)))
 endef
 
-check-upstream-and-mail: FILES2CHECK = $(call files2check)
-check-upstream-and-mail:
-	@if [ -n '$(FILES2CHECK)' ]; then \
-		NEW_FILES=""; \
-		PACKAGE_UP_TO_DATE=0; \
-		for FILE in $(FILES2CHECK) ""; do \
-			[ -n "$$FILE" ] || continue; \
-			if test -f $(COOKIEDIR)/checknew-$$FILE ; then \
-				PACKAGE_UP_TO_DATE=1; \
-			else \
-				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
-					PACKAGE_UP_TO_DATE=1; \
-					echo "$(NAME) : Package is up-to-date. Current version is $$FILE" ; \
-				else \
-					NEW_FILES="$$FILE $$NEW_FILES"; \
-				fi; \
-			fi; \
-			$(MAKE) checknew-$$FILE >/dev/null; \
-		done; \
-		if test -z "$$NEW_FILES" ; then \
-			if [ ! -n '$(UFILES_REGEX)' ]; then \
-				echo "$(NAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
-#				{ echo ""; \
-#				  echo "Hello dear $(NAME) maintainer,"; \
-#				  echo ""; \
-#				  echo "The upstream notification job has detected that $(NAME) is not configured for automatic upstream file update detection."; \
-#				  echo ""; \
-#				  echo "Please consider updating your package. Documentation is available from this link : http://www.opencsw.org" ; \
-#				  echo ""; \
-#				  echo "Questions, problem report or help should be sent to mailto:maintainers@lists.opencsw.org"; \
-#				  echo ""; \
-#				  echo "--"; \
-#				  echo "Kindest regards"; \
-#				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(NAME) upstream update notification' $(NAME); \
-			else \
-				if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
-					echo "$(NAME) : Warning no files to check ! $(FILES2CHECK)" ; \
-					echo "$(NAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
-					echo "$(NAME) :     DISTNAME is $(DISTNAME)" ; \
-					echo "$(NAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
-					echo "$(NAME) : Please check configuration" ; \
-				fi; \
-			fi; \
-		else \
-			echo "$(NAME) : new upstream files available: $$NEW_FILES"; \
-			{	echo ""; \
-				echo "Hello dear $(NAME) maintainer,"; \
-				echo ""; \
-				echo "The upstream notification job has detected the availability of new files for $(NAME)."; \
-				echo ""; \
-				echo "The following upstream file(s):"; \
-				echo "    $$NEW_FILES"; \
-				echo ""; \
-				echo "is/are available at the following url(s):"; \
-				echo "    $(UPSTREAM_MASTER_SITES)"; \
-				echo ""; \
-				echo "Please consider updating your package." ; \
-			        echo ""; \
-    			        echo "Questions, problem report or help should be sent to mailto:maintainers@lists.opencsw.org"; \
-				echo ""; \
-				echo "--"; \
-				echo "Kindest regards"; \
-				echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(NAME) upstream update notification' $(NAME); \
-		fi; \
+########################################################
+# Retrieve the list of upstream versions
+#
+get-upstream-version-list:VERSIONLIST = $(call versionlist)
+get-upstream-version-list:
+	@if [ ! -n '$(UFILES_REGEX)' ]; then \
+		echo "$(NAME) : Error UFILES_REGEX is not set" ; \
+		false; \
+	fi; \
+	if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+		echo "$(NAME) : Error UPSTREAM_MASTER_SITES is not set" ; \
+		false; \
+	fi; \
+	if [ ! -n '$(VERSION)' ]; then \
+		echo "$(NAME) : Error VERSION is not set" ; \
+		false; \
+	fi; \
+	if [ -n "$(VERSIONLIST)" ] ; then \
+		for VERSION in $(VERSIONLIST) ""; do \
+			echo $$VERSION ; \
+		done ; \
+	else \
+		echo "No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
+	fi ;
+
+########################################################
+# Retrieve the newest upstream version
+#
+get-upstream-latest-version:
+	@if [ ! -n '$(UFILES_REGEX)' ]; then \
+		echo "$(NAME) : Error UFILES_REGEX is not set" ; \
+		false; \
+	fi; \
+	if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+		echo "$(NAME) : Error UPSTREAM_MASTER_SITES is not set" ; \
+		false; \
+	fi; \
+	if [ ! -n '$(VERSION)' ]; then \
+		echo "$(NAME) : Error VERSION is not set" ; \
+		false; \
+	fi; \
+	LATESTVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS)); \
+	if [ -n "$$LATESTVERSION" ] ; then \
+		echo $$LATESTVERSION ; \
+	else \
+		echo "No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
+	fi ;
+
+########################################################
+# Compare local and upstream versions
+#
+check-upstream:
+	@if [ ! -n '$(UFILES_REGEX)' ]; then \
+		echo "$(NAME) : Error UFILES_REGEX is not set" ; \
+		false; \
+	fi; \
+	if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+		echo "$(NAME) : Error UPSTREAM_MASTER_SITES is not set" ; \
+		false; \
+	fi; \
+	if [ ! -n '$(VERSION)' ]; then \
+		echo "$(NAME) : Error VERSION is not set" ; \
+		false; \
+	fi; \
+	LATESTVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch check-upstream $(UW_ARGS) $(REGEXP_ARGS) $(VERSION_ARGS)); \
+	if [ -n "$$LATESTVERSION" ] ; then \
+		if test ! -f $(COOKIEDIR)/checknew-$$LATESTVERSION ; then \
+			echo "$(NAME) : a new version of upstream files is available : $$LATESTVERSION"; \
+			$(MAKE) checknew-$$LATESTVERSION > /dev/null ; \
+		fi ; \
+	else \
+		if test ! -f $(COOKIEDIR)/checknew-$(VERSION) ; then \
+			echo "$(NAME) : Package is up-to-date. Current version is $(VERSION)" ; \
+			$(MAKE) checknew-$(VERSION) > /dev/null ; \
+		fi ; \
 	fi
 
-check-upstream: FILES2CHECK = $(call files2check)
-check-upstream: 
-	@if [ -n '$(FILES2CHECK)' ]; then \
-		NEW_FILES=""; \
-		PACKAGE_UP_TO_DATE=0; \
-		for FILE in $(FILES2CHECK) ""; do \
-			[ -n "$$FILE" ] || continue; \
-			if test -f $(COOKIEDIR)/checknew-$$FILE ; then \
-				PACKAGE_UP_TO_DATE=1; \
-			else \
-				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
-					PACKAGE_UP_TO_DATE=1; \
-					echo "$(NAME) : Package is up-to-date. Current version is $$FILE" ; \
-				else \
-					NEW_FILES="$$FILE $$NEW_FILES"; \
-				fi; \
-			fi; \
-			$(MAKE) checknew-$$FILE >/dev/null; \
-		done; \
-		if test -z "$$NEW_FILES" ; then \
-			if [ ! -n '$(UFILES_REGEX)' ]; then \
-				echo "$(NAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
-			else \
-				if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
-					echo "$(NAME) : Warning no files to check ! $(FILES2CHECK)" ; \
-					echo "$(NAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
-					echo "$(NAME) :     DISTNAME is $(DISTNAME)" ; \
-					echo "$(NAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
-					echo "$(NAME) : Please check configuration" ; \
-				fi; \
-			fi; \
-		else \
-			echo "$(NAME) : new upstream files available: $$NEW_FILES"; \
-		fi; \
-	fi
-	
 checknew-%:
 	@$(MAKECOOKIE)
 
