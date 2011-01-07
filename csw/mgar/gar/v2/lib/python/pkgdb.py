@@ -459,14 +459,26 @@ def main():
     importer.ImportFromFile(infile_fd, show_progress=True)
   elif (command, subcommand) == ('pkg', 'search'):
     logging.debug("Searching for %s", args)
+    sqo_osrel = m.OsRelease.selectBy(short_name=options.osrel).getOne()
+    sqo_arch = m.Architecture.selectBy(name=options.arch).getOne()
+    sqo_catrel = m.CatalogRelease.selectBy(name=options.catrel).getOne()
     if len(args) < 1:
       logging.fatal("Wrong number of arguments: %s", len(args))
       raise SystemExit
     for catalogname in args:
+      join = [
+          sqlbuilder.INNERJOINOn(None,
+            m.Srv4FileInCatalog,
+            m.Srv4FileInCatalog.q.srv4file==m.Srv4FileStats.q.id),
+      ]
       res = m.Srv4FileStats.select(
           sqlobject.AND(
+            m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+            m.Srv4FileInCatalog.q.arch==sqo_arch,
+            m.Srv4FileInCatalog.q.catrel==sqo_catrel,
             m.Srv4FileStats.q.catalogname.contains(catalogname),
-            m.Srv4FileStats.q.use_to_generate_catalogs==True)
+            m.Srv4FileStats.q.use_to_generate_catalogs==True),
+            join=join,
           ).orderBy("catalogname")
       for sqo_srv4 in res:
         print "%s %s" % (sqo_srv4.basename, sqo_srv4.md5_sum)
