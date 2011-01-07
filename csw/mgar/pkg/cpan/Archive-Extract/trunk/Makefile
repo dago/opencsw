@@ -1,7 +1,7 @@
 NAME = Archive-Extract
-VERSION = 0.16
+VERSION = 0.46
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = A generic archive extracting mechanism
 define BLURB
@@ -12,12 +12,15 @@ define BLURB
   on your system.
 endef
 
-DISTFILES += $(call admfiles,CSWpmarchiveextract,depend prototype)
+DISTFILES += COPYING
 
-DEPENDS += cpan/IPC-Cmd
-DEPENDS += cpan/Params-Check
-DEPENDS += cpan/Module-Load-Conditional
-DEPENDS += cpan/Locale-Maketext-Simple
+PACKAGES = CSWpmarchiveextract
+CATALOGNAME = pm_archiveextract
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpmipccmd CSWpmlclemktxtsimple CSWpmmodloadcond CSWpmprmscheck
+
+EXTRA_MERGE_EXCLUDE_FILES = \/opt\/csw\/share\/man.*
 
 include gar/category.mk
 
