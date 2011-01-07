@@ -9,7 +9,7 @@ define BLURB
   High-Quality "Portable Document Format (aka. PDF)" Files.
 endef
 
-RUNTIME_DEP_PKGS = CSWiocompress
+RUNTIME_DEP_PKGS = CSWpmiocompress
 
 PACKAGES    = CSWpmpdfapi2
 CATALOGNAME = pm_pdfapi2
