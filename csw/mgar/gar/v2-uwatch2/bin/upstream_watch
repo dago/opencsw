@@ -35,25 +35,50 @@
 import sys
 import string
 import re
-
-# import httplib
+import os
+import shutil
+import subprocess
+import pysvn
 
 from urllib2 import Request, urlopen, URLError
 from optparse import OptionParser
 
-# import subprocess
-# import os
-# import shutil
+# ---------------------------------------------------------------------------------------------------------------------
+#
+#
+class InvalidSourceDirectoryContentException(Exception):
+    """Exception raised when a method is called on the Abstract command class
+    """
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, message):
+        self.message = message
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
 #
-class NoUpstreamProtocolException(Exception):
-    """Exception raised when no protocol is specified in the upstream url
+class AbstractCommandMethodCallException(Exception):
+    """Exception raised when a method is called on the Abstract command class
     """
 
     # -----------------------------------------------------------------------------------------------------------------
-    # Just an empty class...
+
+    def __init__(self, message):
+        self.message = message
+
+# ---------------------------------------------------------------------------------------------------------------------
+#
+#
+class SvnClientException(Exception):
+    """Exception raised when an error occur while using svnClient
+    """
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, message):
+        self.message = message
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -79,22 +104,6 @@ class NoUpstreamVersionFoundException(Exception):
     def __init__(self, url, regexp):
         self.url     = url
         self.regexp  = regexp
-
-
-# ---------------------------------------------------------------------------------------------------------------------
-#
-#
-class UpstreamProtocolNotSupportedException(Exception):
-    """Exception raised when an unsuported protocol is specified in the upstream url
-    """
-
-    # -----------------------------------------------------------------------------------------------------------------
-
-    def __init__(self, value):
-        self.parameter = value
-
-    def __str__(self):
-        return repr(self.parameter)
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -129,7 +138,10 @@ class CommandLineParser(object):
         # Add options to parser
         self.parser.add_option("-V", "--verbose", help="Activate verbose mode", action="store_true", dest="verbose")
         self.parser.add_option("-c", "--current-version", help="Current package version", action="store", dest="current_version")
+        self.parser.add_option("-d", "--target-location", help="Target location. This is the directory in which the branch will be created (parent of the branch directory). Default value is ../branches", action="store", dest="target_location")
         self.parser.add_option("-r", "--regexp", help="Version matching regular expression", action="store", dest="regexp")
+        self.parser.add_option("-s", "--source-directory", help="Source directory (place from where the build is copied). Default value is current directory", action="store", dest="source_directory")
+        self.parser.add_option("-t", "--target-version", help="Package target version", action="store", dest="target_version")
         self.parser.add_option("-u", "--upstream-url", help="Upstream version page url", action="store", dest="upstream_url")
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -171,6 +183,17 @@ class ConfigurationParser(object):
         if args.upstream_url != None:
             self._upstream_url = args.upstream_url
 
+        # This member variable defines the target version of the package during upgrade
+        if args.target_version != None:
+            self._target_version = args.target_version
+
+        # This member variable defines the target directory of the package during upgrade. This is the location of the new branch
+        if args.target_location != None:
+            self._target_location = args.target_location
+
+        # This member variable defines the source directory of the package during upgrade. This is the location of the trunk (most of the time)
+        if args.source_directory != None:
+            self._source_directory = args.source_directory
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -181,18 +204,19 @@ class ConfigurationParser(object):
         self._current_version = None
         self._regexp = None
         self._upstream_url = None
+        self._target_version = None
+        self._source_directory = "."
+        self._target_location = "../branches"
 
     # -----------------------------------------------------------------------------------------------------------------
 
     def getCurrentVersion(self):
         return self._current_version
 
-
     # -----------------------------------------------------------------------------------------------------------------
 
     def getRegexp(self):
         return self._regexp
-
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -203,6 +227,21 @@ class ConfigurationParser(object):
 
     def getVerbose(self):
         return self._verbose
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getSourceDirectory(self):
+        return self._source_directory
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getTargetLocation(self):
+        return self._target_location
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getTargetVersion(self):
+        return self._target_version
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -226,8 +265,8 @@ class AbstractCommand(object):
     # -----------------------------------------------------------------------------------------------------------------
 
     def execute(self, opts, arguments):
-        print "TODO Generate and error instead of this message\n"
-        print self.name, "\n"
+        print "Internal error : Abstract command method called\n"
+        raise AbstractCommandMethodCallException("execute")
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -405,14 +444,6 @@ class CheckUpstreamCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except UpstreamProtocolNotSupportedException, (instance):
-
-            # Display a cool error message :)
-            print "Protocol " + instance.parameter + " is not supportd by upstream_watch"
-
-            # Exits through exception handling, thus return false to the command processor
-            return False
-
         except UpstreamUrlRetrievalFailedException, (instance):
 
             # Exits through exception handling, thus return false to the command processor
@@ -501,14 +532,6 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except UpstreamProtocolNotSupportedException, (instance):
-
-            # Display a cool error message :)
-            print "Protocol " + instance.parameter + " is not supportd by upstream_watch"
-
-            # Exits through exception handling, thus return false to the command processor
-            return False
-
         except UpstreamUrlRetrievalFailedException, (instance):
 
             # Exits through exception handling, thus return false to the command processor
@@ -519,6 +542,261 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
+
+# ---------------------------------------------------------------------------------------------------------------------
+#
+#
+class UpgradeToVersionCommand(UpstreamWatchCommand):
+    """UpgradeToVersion command. This command upgrade the build description from a version to another.
+    Current files in trunk are copied to a new branch. Branch is named accord to the following pattern :
+    PKG/branches/upgrade_from_CURRENTVERSION_to_DESTVERSION. After copy, version in the Makefile is modified.
+    An optional argument can be passed to commit after branch creation.
+    
+    """
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, name):
+        super(UpgradeToVersionCommand, self).__init__(name)
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def checkArgument(self):
+
+        # Variable used to flag that we have a missing argument
+        argsValid = True
+
+        # FromVersion is mandatory
+        if self.configParser.getCurrentVersion() == None:
+            print "Error : Current version is not defined. Please use --current-version flag, or --help to display help"
+            argsValid = False
+
+        # ToVersion is mandatory
+        if self.configParser.getTargetVersion() == None:
+            print "Error : Target version is not defined. Please use --target-version flag, or --help to display help"
+            argsValid = False
+
+        # ToVersion is mandatory
+        if self.configParser.getTargetLocation() == None:
+            print "Error : Target directory is not defined. Please use --target-location flag, or --help to display help"
+            argsValid = False
+
+        # If arguments are not valid raise an exception
+        if argsValid == False:
+            raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def checkWorkingDirectory(self):
+        """ This method checks that the command is executed from a valid working directory. A valid working directory
+            is a directory in which we find a package buildDescription that means a Makefile and a gar directory or symlink
+        """
+
+        # Check that the Makefile exist
+        if os.path.isfile(self.configParser.getSourceDirectory() + "/Makefile") == False:
+            # No it does not exist, thus generate an error message
+            msg = "Error : there is no Makefile under %(src)s" % { "src" : os.path.abspath(self.configParser.getSourceDirectory()) }
+    
+            # Then raise an exception
+            raise InvalidSourceDirectoryContentException(msg)
+
+        # Check that the gar directory exists (can be a directory or symlink)
+        if os.path.isdir(self.configParser.getSourceDirectory() + "/gar") == False:
+            # No it does not exist, thus generate an error message
+            msg = "Error : there is no gar directory under %(src)s" % { "src" : os.path.abspath(self.configParser.getSourceDirectory()) }
+    
+            # Then raise an exception
+            raise InvalidSourceDirectoryContentException(msg)
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getGarRelativeTargetDirectory(self):
+        """ This method return None if gar directory is an actual directory, or a relative path if gar is a symlink to 
+            a real directory. In case of a symlink pointing to another symlink, we do not try to get the absolute path
+            having one level of indirection is enough. 
+            The target directory is a relative path. This path is adjusted to be consistent from the target directory. It
+            has to be modified since it is basically a relative path from the source directory.            
+        """
+
+        # Get the newgar information
+        garDir = self.configParser.getSourceDirectory() + "/gar"
+        if os.path.islink(garDir):
+            garTarget = os.path.relpath(os.path.abspath(os.readlink(garDir)), os.path.abspath(targetDir))
+        else:
+            garTarget = None
+    
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getGarRelativeTargetDirectory(self):
+        """ This method return None if gar directory is an actual directory, or a relative path if gar is a symlink to 
+            a real directory. In case of a symlink pointing to another symlink, we do not try to get the absolute path
+            having one level of indirection is enough. 
+            The target directory is a relative path. This path is adjusted to be consistent from the target directory. It
+            has to be modified since it is basically a relative path from the source directory.            
+        """
+
+        # Get the newgar information
+        garDir = self.configParser.getSourceDirectory() + "/gar"
+        if os.path.islink(garDir):
+            garTarget = os.path.relpath(os.path.abspath(os.readlink(garDir)), os.path.abspath(self.getTargetDirectory()))
+        else:
+            garTarget = None
+
+        return garTarget
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getTargetDirectory(self):
+        """ This method return the target directory which is a computed value based on target location, current version
+            and target version
+        """
+
+        return self.configParser.getTargetLocation() + "/upgrade_from_" + self.configParser.getCurrentVersion() + "_to_" + self.configParser.getTargetVersion()
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def copySvnSourceToTarget(self, garRelativeTarget):
+        """ This method copy sources from the working copy to the target in the same working copy. If garRelativeTarget is not 
+            None, it means gar directory is a symlink. Then once copy is done it is deleted in the target directory and
+            recreated to point to the new relative directory
+        """
+
+        try:
+            # Create a new svn client
+            svnClient = pysvn.Client()
+
+            # Do the actual copy in the svn working copy
+            svnClient.copy(os.path.abspath(self.configParser.getSourceDirectory()), self.getTargetDirectory())
+
+            # Backup the current directory
+            curDir = os.getcwd()
+
+            # Change to target directory
+            os.chdir(self.getTargetDirectory())
+
+            # Test if gar relative path is defined
+            if garRelativeTarget:
+                # Test if gar directory is a symlink and 
+                if os.path.islink("./gar"):
+                    os.remove("./gar")
+                    os.symlink(garRelativeTarget, "./gar")
+                # No ... :( This a "should not happen error" since it was a symlink before the copy. Exit
+                else:
+                    print "Internal error : gar is not a symlink but garRelativeTarget is defined"
+                    return False
+            # No else but ... If gar relative path is not defined, we have copied a real directory. Nothing to do in this case
+
+            # Restore the working directory
+            os.chdir(curDir)
+
+        # SVN client exception handling    
+        except pysvn.ClientError , e:
+            # Generate a cool error message
+            msg = "SVN Client error : " + e.args[0] + "\n" + "Error occured when executing command svnClient.copy(%(src)s, %(dest)s)" \
+                  % { 'src' : os.path.abspath(self.configParser.getSourceDirectory()), 'dest' : self.getTargetDirectory() }
+
+            # Then raise the exception
+            raise SvnClientException(msg)
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def modifyVersion(self):
+        """ This method modifies the version in the Makefile. It replaces current version by new version. 
+            Version has to be defined on a single line strting by VERSION, having some spaces or tabs then 
+            and egal sign = then some tabs or spaces and the version vaue to finish the line
+        """
+
+        # Backup the current directory
+        curDir = os.getcwd()
+
+        # Change to target directory
+        os.chdir(self.getTargetDirectory())
+
+        # Array storing the Makefile lines
+        lines = []
+
+        # Iterate each line in  the file                
+        for line in open("./Makefile", 'r'):
+            # Match the file line by line               
+            m = re.match(r"\s*VERSION\s*=\s*(?P<version>.*)", line)
+
+            # Test if this is a match
+            if m == None:
+                # No, thus output the current line without modifications
+                lines.append(line)
+            else:   
+                # Yes it is a match, thus output the modified line
+                lines.append("VERSION = " + self.configParser.getTargetVersion() + "\n")
+
+        # Open the new Makefile for output
+        f = open("./Makefile", 'w')
+
+        # Iterates the array of lines and write each one to the Makefile 
+        for element in lines:
+            f.write(element)
+
+        # Close the Makefile
+        f.close()
+
+        # Restore the working directory
+        os.chdir(curDir)
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def execute(self, opts, args):
+
+        try:
+
+            # Initialize configuration
+            self.configParser.initialize(opts)
+
+            # Need a way to check that all options needed are available
+            self.checkArgument()
+
+            # Check that the command is launched from a valid directory
+            self.checkWorkingDirectory()
+
+            # Generates the target directory
+            self.getTargetDirectory()
+
+            # Get the new gar information
+            garRelativeTarget = self.getGarRelativeTargetDirectory()
+
+            # Copy target directory to destination
+            self.copySvnSourceToTarget(garRelativeTarget)
+
+            # Modify the version inside the Makefile
+            self.modifyVersion()
+
+            # Exit after processing, eveythin gis ok, return true to the command processor
+            return True
+
+        # Handles exception that occurs when arguments are incorrect
+        except MissingArgumentException, instance:
+
+            # Display a cool error message :)
+            print instance.parameter
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+        # Handles SVN client exception
+        except SvnClientException , e:
+            
+            # Display a cool error message :)
+            print e.message
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+        # Handles exceptions which might occur while checking source directory content
+        except InvalidSourceDirectoryContentException , e:
+            
+            # Display a cool error message :)
+            print e.message
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -544,11 +822,13 @@ class CommandProcessor(object):
         cmd = GetUpstreamLatestVersionCommand("get-upstream-latest-version")
         self.commandArray[cmd.getName()] = cmd
 
+        cmd = UpgradeToVersionCommand("upgrade-to-version")
+        self.commandArray[cmd.getName()] = cmd
+
     # -----------------------------------------------------------------------------------------------------------------
 
     def execute(self, opts, arguments):
-        """Cette methode teste les differents arguments et appelle la methode execute sur l'objet en charge du traitement
-        L'ordre de declaration des tests est important. En effet certains flags declanchent des actions, d'autres des options.
+        """This method checks that an action is supplied and call the action handler
         """
 
         # Check that an action verb is supplied. If none an error is returned
@@ -584,7 +864,7 @@ def main():
     # Call the execute method on the command processor. This method is in charge to find the concrete command
     return commandProcessor.execute(opts, args)
 
-# On sort en rendant le code de retour de main
+# Exit with main return code
 if __name__ == '__main__':
     sys.exit(main())
 
