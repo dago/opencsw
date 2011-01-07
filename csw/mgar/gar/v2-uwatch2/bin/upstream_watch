@@ -1,4 +1,4 @@
-#!/opt/csw/bin/python
+#!/usr/bin/env python
 
 #
 # The contents of this file are subject to the COMMON DEVELOPMENT AND
@@ -542,6 +542,90 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
+# ---------------------------------------------------------------------------------------------------------------------
+#
+#
+class GetUpstreamVersionListCommand(UpstreamWatchCommand):
+    """GetUpstreamVersionList command. This command retrieve the upstream web page and search for all the versions.
+    Version check is done by matching the regexp from the makefile on the page. 
+    """
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, name):
+        super(GetUpstreamVersionListCommand, self).__init__(name)
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def checkArgument(self):
+
+        # Variable used to flag that we have a missing argument
+        argsValid = True
+
+        # Regexp is mandatory
+        if self.configParser.getRegexp() == None:
+            print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
+            argsValid = False
+
+        # UpstreamURL is mandatory
+        if self.configParser.getUpstreamURL() == None:
+            print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
+            argsValid = False
+
+        # If arguments are not valid raise an exception
+        if argsValid == False:
+            raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def execute(self, opts, args):
+
+        try:
+
+            # Initialize configuration
+            self.configParser.initialize(opts)
+
+            # Need a way to check that all options needed are available
+            self.checkArgument()
+
+            # Call the method in charge of retrieving upstream content
+            content = self.UrlContentRetrieve(self.configParser.getUpstreamURL())
+
+            # Search the strings matching the regexp passed through command line arguments
+            p = re.compile(self.configParser.getRegexp())
+            matches = p.findall(content)
+
+            # Check if we have found some results
+            if len(matches) == 0:
+                raise NoUpstreamVersionFoundException(self.configParser.getUpstreamURL(), self.configParser.getRegexp())
+                print "No match found, we should trigger some error since even current version has not been found"
+                return False
+            else:
+                # Print every version in the list
+                for version in matches:
+                    print version
+
+            # Exit after processing, eveythin gis ok, return true to the command processor
+            return True
+
+        except MissingArgumentException, (instance):
+
+            # Display a cool error message :)
+            print instance.parameter
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+        except UpstreamUrlRetrievalFailedException, (instance):
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+        except NoUpstreamVersionFoundException, (instance):
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -820,6 +904,9 @@ class CommandProcessor(object):
         self.commandArray[cmd.getName()] = cmd
 
         cmd = GetUpstreamLatestVersionCommand("get-upstream-latest-version")
+        self.commandArray[cmd.getName()] = cmd
+
+        cmd = GetUpstreamVersionListCommand("get-upstream-version-list")
         self.commandArray[cmd.getName()] = cmd
 
         cmd = UpgradeToVersionCommand("upgrade-to-version")
