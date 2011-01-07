@@ -1,7 +1,7 @@
 NAME = Object-Accessor
-VERSION = 0.34
+VERSION = 0.36
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = An interface to create per object accessors
 define BLURB
@@ -17,6 +17,8 @@ ARCHALL_CSWpmobjaccessor = 1
 RUNTIME_DEP_PKGS_CSWpmobjaccessor += CSWpmprmscheck
 
 LICENSE = README
+
+EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3\/.* .*\/man\/man1\/.*
 
 include gar/category.mk
 
