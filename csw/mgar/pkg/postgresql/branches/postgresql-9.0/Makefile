@@ -252,11 +252,11 @@ PKGFILES_CSWlibpq-dev += $(prefix)/share/locale/*/LC_MESSAGES/pg_config.*\.mo
 RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibpq5
 RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibecpg6
 RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibecpg-compat3
+RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibpgtypes3
 
 PACKAGES += CSWpostgresql-$(BASE_VERSION_G)
 CATALOGNAME_CSWpostgresql-$(BASE_VERSION_G) = postgresql_$(BASE_VERSION_G)
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G) = PostgreSQL, version $(BASE_VERSION).x
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibpgtypes3
 
 include gar/category.mk
 
