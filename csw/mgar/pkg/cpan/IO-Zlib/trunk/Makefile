@@ -10,11 +10,15 @@ define BLURB
   IO::Handle interface.
 endef
 
-RUNTIME_DEP_PKGS = CSWpmcompresszlib
+DISTFILES += COPYING
+
+RUNTIME_DEP_PKGS = CSWpmiocompress
 
 PACKAGES = CSWpmiozlib
 CATALOGNAME = pm_iozlib
 
 ARCHALL = 1
+
+EXTRA_MERGE_EXCLUDE_FILES = \/opt\/csw\/share\/man.*
 
 include gar/category.mk
