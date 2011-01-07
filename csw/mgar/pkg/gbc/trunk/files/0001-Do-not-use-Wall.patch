@@ -1,0 +1,94 @@
+From 64e569e3ca2c4d4604a3dca5046364862e7bcf91 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 7 Jan 2011 15:41:01 +0100
+Subject: [PATCH] Do not use -Wall
+
+---
+ bc/Makefile.am  |    2 +-
+ bc/Makefile.in  |    2 +-
+ dc/Makefile.am  |    2 +-
+ dc/Makefile.in  |    2 +-
+ lib/Makefile.am |    2 +-
+ lib/Makefile.in |    2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/bc/Makefile.am b/bc/Makefile.am
+index 9187339..735bb39 100644
+--- a/bc/Makefile.am
++++ b/bc/Makefile.am
+@@ -18,7 +18,7 @@ LDADD = $(LIBBC) $(LIBL) @READLINELIB@
+ 
+ YFLAGS = -d
+ 
+-CFLAGS = @CFLAGS@ -Wall -funsigned-char
++# CFLAGS = @CFLAGS@ -Wall -funsigned-char
+ 
+ $(PROGRAMS): $(LIBBC)
+ 
+diff --git a/bc/Makefile.in b/bc/Makefile.in
+index 18ebce0..2aae747 100644
+--- a/bc/Makefile.in
++++ b/bc/Makefile.in
+@@ -85,7 +85,7 @@ LDADD = $(LIBBC) $(LIBL) @READLINELIB@
+ 
+ YFLAGS = -d
+ 
+-CFLAGS = @CFLAGS@ -Wall -funsigned-char
++# CFLAGS = @CFLAGS@ -Wall -funsigned-char
+ 
+ fbcOBJ = main.o bc.o scan.o execute.o global.o load.o storage.o util.o
+ 
+diff --git a/dc/Makefile.am b/dc/Makefile.am
+index 99164ba..558e4da 100644
+--- a/dc/Makefile.am
++++ b/dc/Makefile.am
+@@ -9,6 +9,6 @@ LDADD = ../lib/libbc.a
+ 
+ MAINTAINERCLEANFILES = Makefile.in
+ 
+-CFLAGS = @CFLAGS@ -Wall -funsigned-char
++# CFLAGS = @CFLAGS@ -Wall -funsigned-char
+ 
+ $(PROGRAMS): $(LDADD)
+diff --git a/dc/Makefile.in b/dc/Makefile.in
+index 0772dd6..3733a2e 100644
+--- a/dc/Makefile.in
++++ b/dc/Makefile.in
+@@ -76,7 +76,7 @@ LDADD = ../lib/libbc.a
+ 
+ MAINTAINERCLEANFILES = Makefile.in
+ 
+-CFLAGS = @CFLAGS@ -Wall -funsigned-char
++# CFLAGS = @CFLAGS@ -Wall -funsigned-char
+ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+ CONFIG_HEADER = ../config.h
+ CONFIG_CLEAN_FILES = 
+diff --git a/lib/Makefile.am b/lib/Makefile.am
+index 6f74b4d..41ea3fd 100644
+--- a/lib/Makefile.am
++++ b/lib/Makefile.am
+@@ -7,7 +7,7 @@ libbc_a_SOURCES = getopt.c getopt1.c vfprintf.c number.c
+ 
+ DEFS = @DEFS@ $(DEFSADD)
+ 
+-CFLAGS = @CFLAGS@ -Wall -funsigned-char
++# CFLAGS = @CFLAGS@ -Wall -funsigned-char
+ 
+ MAINTAINERCLEANFILES = Makefile.in number.c
+ 
+diff --git a/lib/Makefile.in b/lib/Makefile.in
+index 5ffa593..71d5d59 100644
+--- a/lib/Makefile.in
++++ b/lib/Makefile.in
+@@ -74,7 +74,7 @@ libbc_a_SOURCES = getopt.c getopt1.c vfprintf.c number.c
+ 
+ DEFS = @DEFS@ $(DEFSADD)
+ 
+-CFLAGS = @CFLAGS@ -Wall -funsigned-char
++# CFLAGS = @CFLAGS@ -Wall -funsigned-char
+ 
+ MAINTAINERCLEANFILES = Makefile.in number.c
+ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+-- 
+1.7.3.2
+
