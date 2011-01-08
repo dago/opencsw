@@ -1,9 +1,9 @@
 NAME = Module-Versions-Report
-VERSION = 1.02
+VERSION = 1.06
 CATEGORIES = cpan
-AUTHOR = SBURKE
+AUTHOR = JESSE
 
-DESCRIPTION = report versions of all modules in memory
+DESCRIPTION = Report versions of all modules in memory
 define BLURB
   I often get email from someone reporting a bug in a module I've written. I
   email back, asking what version of the module it is, what version of Perl on
@@ -24,6 +24,10 @@ define BLURB
   least).
 endef
 
-DISTFILES += CSWpmmodversrpt.gspec
+DISTFILES += COPYING
+
+PACKAGES = CSWpmmodversrpt
+CATALOGNAME = pm_modversrpt
+ARCHALL = 1
 
 include gar/category.mk
