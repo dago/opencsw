@@ -191,6 +191,17 @@ define versionlist
 endef
 
 ########################################################
+# Retrieve the current version
+#
+get-current-version:
+	@if [ ! -n '$(VERSION)' ]; then \
+		echo "$(NAME) : VERSION is not defined" ; \
+		false; \
+	else \
+		echo "$(NAME) : Current version is $(VERSION)" ; \
+	fi ;
+
+########################################################
 # Retrieve the list of upstream versions
 #
 get-upstream-version-list:VERSIONLIST = $(call versionlist)
