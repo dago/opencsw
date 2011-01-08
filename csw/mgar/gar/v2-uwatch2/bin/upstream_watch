@@ -578,6 +578,19 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
 
     # -----------------------------------------------------------------------------------------------------------------
 
+    def compareAndSortVersion(self, a, b):
+        """This function is a wrapper to the comparison function. CompareVersionAndGetNewest returns the string containing
+        the newest version of the two arguments. Since sort method used on list need to have an integer return value, this
+        wrapper do the call to CompareVersionAndGetNewest and returns an int
+        """
+    
+        if self.CompareVersionAndGetNewest(a,b) == a:
+            return 1
+        else:
+            return -1
+
+    # -----------------------------------------------------------------------------------------------------------------
+
     def execute(self, opts, args):
 
         try:
@@ -601,8 +614,15 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
                 print "No match found, we should trigger some error since even current version has not been found"
                 return False
             else:
-                # Print every version in the list
+                # Remove duplicated entries
+                myList = []
                 for version in matches:
+                    myList.append(version)
+                l = list(set(myList))
+                l.sort(self.compareAndSortVersion)
+
+                # Print every version in the list
+                for version in l:
                     print version
 
             # Exit after processing, eveythin gis ok, return true to the command processor
