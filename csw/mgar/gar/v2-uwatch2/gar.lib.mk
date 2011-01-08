@@ -233,75 +233,87 @@ get-current-version:
 #
 get-upstream-version-list:VERSIONLIST = $(call versionlist)
 get-upstream-version-list:
-	@if [ ! -n '$(UFILES_REGEX)' ]; then \
-		echo "$(NAME) - Error UFILES_REGEX is not set" ; \
-		false; \
-	fi; \
-	if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
-		echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
-		false; \
-	fi; \
-	if [ ! -n '$(VERSION)' ]; then \
-		echo "$(NAME) - Error VERSION is not set" ; \
-		false; \
-	fi; \
-	if [ -n "$(VERSIONLIST)" ] ; then \
-		for VERSION in $(VERSIONLIST) ""; do \
-			echo $$VERSION ; \
-		done ; \
+	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
-		echo "No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - Error UFILES_REGEX is not set" ; \
+			false; \
+		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
+			false; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - Error VERSION is not set" ; \
+			false; \
+		fi; \
+		if [ -n "$(VERSIONLIST)" ] ; then \
+			for VERSION in $(VERSIONLIST) ""; do \
+				echo $$VERSION ; \
+			done ; \
+		else \
+			echo "No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
+		fi ; \
 	fi ;
 
 ########################################################
 # Retrieve the newest upstream version
 #
 get-upstream-latest-version:
-	@if [ ! -n '$(UFILES_REGEX)' ]; then \
-		echo "$(NAME) - Error UFILES_REGEX is not set" ; \
-		false; \
-	fi; \
-	if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
-		echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
-		false; \
-	fi; \
-	if [ ! -n '$(VERSION)' ]; then \
-		echo "$(NAME) - Error VERSION is not set" ; \
-		false; \
-	fi; \
-	LATESTVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS)); \
-	if [ -n "$$LATESTVERSION" ] ; then \
-		echo $$LATESTVERSION ; \
+	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
-		echo "No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - Error UFILES_REGEX is not set" ; \
+			false; \
+		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
+			false; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - Error VERSION is not set" ; \
+			false; \
+		fi; \
+		LATESTVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS)); \
+		if [ -n "$$LATESTVERSION" ] ; then \
+			echo $$LATESTVERSION ; \
+		else \
+			echo "No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
+		fi ; \
 	fi ;
 
 ########################################################
 # Compare local and upstream versions
 #
 check-upstream:
-	@if [ ! -n '$(UFILES_REGEX)' ]; then \
-		echo "$(NAME) - Error UFILES_REGEX is not set" ; \
-		false; \
-	fi; \
-	if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
-		echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
-		false; \
-	fi; \
-	if [ ! -n '$(VERSION)' ]; then \
-		echo "$(NAME) - Error VERSION is not set" ; \
-		false; \
-	fi; \
-	LATESTVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch check-upstream $(UW_ARGS) $(REGEXP_ARGS) $(VERSION_ARGS)); \
-	if [ -n "$$LATESTVERSION" ] ; then \
-		if test ! -f $(COOKIEDIR)/checknew-$$LATESTVERSION ; then \
-			echo "$(NAME) : a new version of upstream files is available : $$LATESTVERSION"; \
-			$(MAKE) checknew-$$LATESTVERSION > /dev/null ; \
-		fi ; \
+	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
-		if test ! -f $(COOKIEDIR)/checknew-$(VERSION) ; then \
-			echo "$(NAME) : Package is up-to-date. Current version is $(VERSION)" ; \
-			$(MAKE) checknew-$(VERSION) > /dev/null ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - Error UFILES_REGEX is not set" ; \
+			false; \
+		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
+			false; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - Error VERSION is not set" ; \
+			false; \
+		fi; \
+		LATESTVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch check-upstream $(UW_ARGS) $(REGEXP_ARGS) $(VERSION_ARGS)); \
+		if [ -n "$$LATESTVERSION" ] ; then \
+			if test ! -f $(COOKIEDIR)/checknew-$$LATESTVERSION ; then \
+				echo "$(NAME) : a new version of upstream files is available : $$LATESTVERSION"; \
+				$(MAKE) checknew-$$LATESTVERSION > /dev/null ; \
+			fi ; \
+		else \
+			if test ! -f $(COOKIEDIR)/checknew-$(VERSION) ; then \
+				echo "$(NAME) : Package is up-to-date. Current version is $(VERSION)" ; \
+				$(MAKE) checknew-$(VERSION) > /dev/null ; \
+			fi ; \
 		fi ; \
 	fi
 
