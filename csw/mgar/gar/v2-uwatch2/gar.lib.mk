@@ -183,6 +183,8 @@ checksum-%: $(CHECKSUM_FILE)
 
 ################### UWATCH VARIABLES ###################
 UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
+ENABLE_UPSTREAM_WATCH ?= 1
+
 UW_ARGS = $(addsuffix ',$(addprefix --upstream-url=',$(UPSTREAM_MASTER_SITES)))
 REGEXP_ARGS = $(addsuffix ',$(addprefix --regexp=',$(UFILES_REGEX)))
 VERSION_ARGS = $(addsuffix ',$(addprefix --current-version=',$(VERSION)))
@@ -191,14 +193,39 @@ define versionlist
 endef
 
 ########################################################
+# Display uwatch informations
+#
+get-uwatch-configuration:
+	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
+	else \
+		echo "$(NAME) - Upstream Watch is enabled is enabled" ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - UFILES_REGEX is not set" ; \
+		else \
+			echo "$(NAME) - UFILES_REGEX is : $(UFILES_REGEX)" ; \
+		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - UPSTREAM_MASTER_SITES is not set" ; \
+		else \
+			echo "$(NAME) - UPSTREAM_MASTER_SITES is : $(UPSTREAM_MASTER_SITES)" ; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - VERSION is not set" ; \
+		else \
+			echo "$(NAME) - Current version is : $(VERSION)" ; \
+		fi ; \
+	fi ; 
+
+########################################################
 # Retrieve the current version
 #
 get-current-version:
 	@if [ ! -n '$(VERSION)' ]; then \
-		echo "$(NAME) : VERSION is not defined" ; \
+		echo "$(NAME) - VERSION is not defined" ; \
 		false; \
 	else \
-		echo "$(NAME) : Current version is $(VERSION)" ; \
+		echo "$(NAME) - Current version is $(VERSION)" ; \
 	fi ;
 
 ########################################################
@@ -207,15 +234,15 @@ get-current-version:
 get-upstream-version-list:VERSIONLIST = $(call versionlist)
 get-upstream-version-list:
 	@if [ ! -n '$(UFILES_REGEX)' ]; then \
-		echo "$(NAME) : Error UFILES_REGEX is not set" ; \
+		echo "$(NAME) - Error UFILES_REGEX is not set" ; \
 		false; \
 	fi; \
 	if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
-		echo "$(NAME) : Error UPSTREAM_MASTER_SITES is not set" ; \
+		echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
 		false; \
 	fi; \
 	if [ ! -n '$(VERSION)' ]; then \
-		echo "$(NAME) : Error VERSION is not set" ; \
+		echo "$(NAME) - Error VERSION is not set" ; \
 		false; \
 	fi; \
 	if [ -n "$(VERSIONLIST)" ] ; then \
@@ -231,15 +258,15 @@ get-upstream-version-list:
 #
 get-upstream-latest-version:
 	@if [ ! -n '$(UFILES_REGEX)' ]; then \
-		echo "$(NAME) : Error UFILES_REGEX is not set" ; \
+		echo "$(NAME) - Error UFILES_REGEX is not set" ; \
 		false; \
 	fi; \
 	if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
-		echo "$(NAME) : Error UPSTREAM_MASTER_SITES is not set" ; \
+		echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
 		false; \
 	fi; \
 	if [ ! -n '$(VERSION)' ]; then \
-		echo "$(NAME) : Error VERSION is not set" ; \
+		echo "$(NAME) - Error VERSION is not set" ; \
 		false; \
 	fi; \
 	LATESTVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS)); \
@@ -254,15 +281,15 @@ get-upstream-latest-version:
 #
 check-upstream:
 	@if [ ! -n '$(UFILES_REGEX)' ]; then \
-		echo "$(NAME) : Error UFILES_REGEX is not set" ; \
+		echo "$(NAME) - Error UFILES_REGEX is not set" ; \
 		false; \
 	fi; \
 	if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
-		echo "$(NAME) : Error UPSTREAM_MASTER_SITES is not set" ; \
+		echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
 		false; \
 	fi; \
 	if [ ! -n '$(VERSION)' ]; then \
-		echo "$(NAME) : Error VERSION is not set" ; \
+		echo "$(NAME) - Error VERSION is not set" ; \
 		false; \
 	fi; \
 	LATESTVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch check-upstream $(UW_ARGS) $(REGEXP_ARGS) $(VERSION_ARGS)); \
