@@ -1,5 +1,5 @@
 NAME = HTML-Template-Pro
-VERSION = 0.95
+VERSION = 0.9504
 CATEGORIES = cpan
 AUTHOR = VIY
 
@@ -13,6 +13,6 @@ DISTFILES += COPYING
 PACKAGES = CSWpmhtmltemplatepro
 CATALOGNAME = pm_htmltemplatepro
 
-RUNTIME_DEP_PKGS_CSWpmhtmltemplatepro += CSWpcrert CSWpmjson
+RUNTIME_DEP_PKGS_CSWpmhtmltemplatepro += CSWpmjson CSWlibpcre0
 
 include gar/category.mk
