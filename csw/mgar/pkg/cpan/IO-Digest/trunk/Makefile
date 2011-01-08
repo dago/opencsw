@@ -10,11 +10,13 @@ define BLURB
   the digests after written a file.
 endef
 
-RUNTIME_DEP_PKGS = pm_perlioviadyn
+DISTFILES += COPYING
 
-PACKAGES = CSWpmiodigest
 CATALOGNAME = pm_iodigest
+PACKAGES = CSWpmiodigest
 
 ARCHALL = 1
+
+EXTRA_MERGE_EXCLUDE_FILES = \/opt\/csw\/share\/man.*
 
 include gar/category.mk
