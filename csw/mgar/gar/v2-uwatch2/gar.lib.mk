@@ -249,6 +249,7 @@ get-upstream-version-list:
 ########################################################
 # Retrieve the newest upstream version
 #
+LATESTVERSION:=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS))
 get-upstream-latest-version:
 	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
@@ -265,9 +266,9 @@ get-upstream-latest-version:
 			echo "$(NAME) - Error VERSION is not set" ; \
 			false; \
 		fi; \
-		LATESTVERSION:=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS)); \
-		if [ -n "$$LATESTVERSION" ] ; then \
-			echo $$LATESTVERSION ; \
+		LATEST=$(LATESTVERSION) ; \
+		if [ -n "$$LATEST" ] ; then \
+			echo $$LATEST ; \
 		else \
 			echo "No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
 		fi ; \
@@ -345,12 +346,12 @@ upgrade-to-latest-upstream:
 
 ########################################################
 #
-get-current-version:
+get-gar-version:
 	@if [ ! -n '$(VERSION)' ]; then \
 		echo "$(NAME) - VERSION is not defined" ; \
 		false; \
 	else \
-		echo "$(NAME) - Current version is $(VERSION)" ; \
+		echo "$(NAME) - GAR version is $(VERSION)" ; \
 	fi ;
 
 upgrade-to-latest-upstream-%:
