@@ -195,6 +195,7 @@ AP2_MODFILES ?= opt/csw/apache2/libexec/*so $(EXTRA_AP2_MODFILES)
 
 # - set class for all config files
 _CSWCLASS_FILTER = | perl -ane '\
+		$(foreach FILE,$(CPTEMPLATES),$$F[1] = "cswcptemplates" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(PRESERVECONF:%\.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
