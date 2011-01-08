@@ -189,7 +189,7 @@ UW_ARGS = $(addsuffix ',$(addprefix --upstream-url=',$(UPSTREAM_MASTER_SITES)))
 REGEXP_ARGS = $(addsuffix ',$(addprefix --regexp=',$(UFILES_REGEX)))
 VERSION_ARGS = $(addsuffix ',$(addprefix --current-version=',$(VERSION)))
 define versionlist
-	$(if $(UFILES_REGEX),$(shell htp_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-version-list $(UW_ARGS) $(REGEXP_ARGS)))
+	$(if $(UFILES_REGEX),$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-version-list $(UW_ARGS) $(REGEXP_ARGS)))
 endef
 
 ########################################################
@@ -216,17 +216,6 @@ get-uwatch-configuration:
 			echo "$(NAME) - Current version is : $(VERSION)" ; \
 		fi ; \
 	fi ; 
-
-########################################################
-# Retrieve the current version
-#
-get-current-version:
-	@if [ ! -n '$(VERSION)' ]; then \
-		echo "$(NAME) - VERSION is not defined" ; \
-		false; \
-	else \
-		echo "$(NAME) - Current version is $(VERSION)" ; \
-	fi ;
 
 ########################################################
 # Retrieve the list of upstream versions
@@ -276,7 +265,7 @@ get-upstream-latest-version:
 			echo "$(NAME) - Error VERSION is not set" ; \
 			false; \
 		fi; \
-		LATESTVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS)); \
+		LATESTVERSION:=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS)); \
 		if [ -n "$$LATESTVERSION" ] ; then \
 			echo $$LATESTVERSION ; \
 		else \
@@ -287,6 +276,7 @@ get-upstream-latest-version:
 ########################################################
 # Compare local and upstream versions
 #
+CHECKUPSTREAMVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch check-upstream $(UW_ARGS) $(REGEXP_ARGS) $(VERSION_ARGS) )
 check-upstream:
 	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
@@ -303,21 +293,67 @@ check-upstream:
 			echo "$(NAME) - Error VERSION is not set" ; \
 			false; \
 		fi; \
-		LATESTVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch check-upstream $(UW_ARGS) $(REGEXP_ARGS) $(VERSION_ARGS)); \
-		if [ -n "$$LATESTVERSION" ] ; then \
-			if test ! -f $(COOKIEDIR)/checknew-$$LATESTVERSION ; then \
-				echo "$(NAME) : a new version of upstream files is available : $$LATESTVERSION"; \
-				$(MAKE) checknew-$$LATESTVERSION > /dev/null ; \
-			fi ; \
+		LATEST=$(CHECKUPSTREAMVERSION) ; \
+		if [ -n "$$LATEST" ] ; then \
+			echo "$(NAME) : a new version of upstream files is available : $$LATEST"; \
 		else \
-			if test ! -f $(COOKIEDIR)/checknew-$(VERSION) ; then \
-				echo "$(NAME) : Package is up-to-date. Current version is $(VERSION)" ; \
-				$(MAKE) checknew-$(VERSION) > /dev/null ; \
-			fi ; \
+			echo "$(NAME) : Package is up-to-date. Current version is $(VERSION)" ; \
 		fi ; \
 	fi
 
-checknew-%:
+
+########################################################
+# Create upgrade branch from current to latest upstream
+#
+upgrade-to-latest-upstream:
+	if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
+	else \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - Error UFILES_REGEX is not set" ; \
+			false; \
+		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
+			false; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - Error VERSION is not set" ; \
+			false; \
+		fi; \
+		LATEST=$(CHECKUPSTREAMVERSION) ; \
+		if [ ! -f "$(COOKIEDIR)/upgrade-to-latest-upstream-$$LATEST" ] ; then \
+			if [ ! -d "../branches/upgrade_from_$(VERSION)_to_$$LATEST" ] ; then \
+				echo "Not a dir : ../branches/upgrade_from_$(VERSION)_to_$$LATEST" ; \
+				if [ -n "$$LATEST" ] ; then \
+					echo "$(NAME) : a new version of upstream files is available. Creating upgrade branch from version $(VERSION) to $$LATEST"; \
+					VERSIONUPGRADE="$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch upgrade-to-version --current-version=$(VERSION) --target-version=$(CHECKUPSTREAMVERSION))" ; \
+					if [ -n "$$VERSIONUPGRADE" ] ; then \
+						echo $$VERSIONUPGRADE ; \
+					fi ; \
+				else \
+					echo "$(NAME) : Package is up-to-date. Upstream site has no version newer than $(VERSION)" ; \
+				fi ; \
+			else \
+				echo "Upgrade branch from version $(VERSION) to version $$LATEST already exist" ; \
+			fi ; \
+			$(MAKE) upgrade-to-latest-upstream-$$LATEST >/dev/null; \
+		else \
+			echo "Upgrade branch to version $$LATEST already created by upstream_watch" ; \
+		fi ; \
+	fi
+
+########################################################
+#
+get-current-version:
+	@if [ ! -n '$(VERSION)' ]; then \
+		echo "$(NAME) - VERSION is not defined" ; \
+		false; \
+	else \
+		echo "$(NAME) - Current version is $(VERSION)" ; \
+	fi ;
+
+upgrade-to-latest-upstream-%:
 	@$(MAKECOOKIE)
 
 
