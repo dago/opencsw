@@ -618,6 +618,7 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
                 myList = []
                 for version in matches:
                     myList.append(version)
+
                 l = list(set(myList))
                 l.sort(self.compareAndSortVersion)
 
