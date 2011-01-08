@@ -59,8 +59,8 @@ def main():
       help="Display less messages")
   parser.add_option("--catalog-release",
       dest="catrel",
-      default="unstable",
-      help="A catalog release: experimental, unstable, testing, stable.")
+      default="current",
+      help="A catalog release: current, unstable, testing, stable.")
   parser.add_option("-r", "--os-releases",
       dest="osrel_commas",
       help=("Comma separated list of ['SunOS5.9', 'SunOS5.10'], "
