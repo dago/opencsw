@@ -220,7 +220,7 @@ get-uwatch-configuration:
 ########################################################
 # Retrieve the list of upstream versions
 #
-get-upstream-version-list:VERSIONLIST = $(call versionlist)
+get-upstream-version-list: VERSIONLIST = $(call versionlist)
 get-upstream-version-list:
 	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
@@ -239,7 +239,9 @@ get-upstream-version-list:
 		fi; \
 		if [ -n "$(VERSIONLIST)" ] ; then \
 			for VERSION in $(VERSIONLIST) ""; do \
-				echo $$VERSION ; \
+				if [ ! "$$VERSION" -eq "" ] ; then \
+					echo "$$VERSION" ; \
+				fi ; \
 			done ; \
 		else \
 			echo "No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
@@ -307,7 +309,8 @@ check-upstream:
 # Create upgrade branch from current to latest upstream
 #
 upgrade-to-latest-upstream:
-	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+	@echo "In upgrade-to-latest-upstream" ; \
+	if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
