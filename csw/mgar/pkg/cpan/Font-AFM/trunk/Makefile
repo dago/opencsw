@@ -1,15 +1,19 @@
 NAME = Font-AFM
-VERSION = 1.19
+VERSION = 1.20
 CATEGORIES = cpan
 AUTHOR = GAAS
 
-DESCRIPTION = interface to Adobe Font Metrics files
+DESCRIPTION = Interface to Adobe Font Metrics files
 define BLURB
   This module implements the Font::AFM class. Objects of this class are
   initialised from an AFM-file and allows you to obtain information about the
   font and the metrics of the various glyphs in the font.
 endef
 
-DISTFILES = $(call admfiles,CSWpmfontafm,depend prototype)
+DISTFILES += COPYING
+
+PACKAGES = CSWpmfontafm
+CATALOGNAME = pm_fontafm
+ARCHALL = 1
 
 include gar/category.mk
