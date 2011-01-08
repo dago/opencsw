@@ -1,5 +1,5 @@
 NAME = WWW-Mechanize
-VERSION = 1.22
+VERSION = 1.66
 CATEGORIES = cpan
 AUTHOR = PETDANCE
 
@@ -13,16 +13,17 @@ define BLURB
   of the URLs you've visited, which can be queried and revisited.
 endef
 
-DISTFILES += $(call admfiles,CSWpmwwwmechanize,depend)
+DISTFILES += COPYING
 
-DEPENDS   += cpan/libwww-perl
-DEPENDS   += cpan/HTML-Parser
+PACKAGES = CSWpmwwwmechanize
+CATALOGNAME = pm_wwwmechanize
+ARCHALL = 1
 
-BUILDDEPS += cpan/Test-LongString
-BUILDDEPS += cpan/Test-Warn
-BUILDDEPS += cpan/Test-Pod
-BUILDDEPS += cpan/Test-Memory-Cycle
+RUNTIME_DEP_PKGS += CSWpmhtmlparser
+RUNTIME_DEP_PKGS += CSWpmhttpsvrsimp
+RUNTIME_DEP_PKGS += CSWpmlibwww
+RUNTIME_DEP_PKGS += CSWpmuri
 
-CONFIGURE_ARGS = -n
+CONFIGURE_ARGS = -nolive -nolocal
 
 include gar/category.mk
