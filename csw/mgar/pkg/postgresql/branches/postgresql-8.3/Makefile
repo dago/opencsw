@@ -16,15 +16,13 @@
 # example of it.   (gmake repackage may produce the right output)
 
 NAME = postgresql
-BASE_VERSION = 9.0
+BASE_VERSION = 8.3
 # How to make one automatically?
-VERSION_NODOT = 9_0
-BASE_VERSION_G = 90
-PATCHLEVEL = 0
+VERSION_NODOT = 8_3
+BASE_VERSION_G = 83
+PATCHLEVEL = 13
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
-
-SHELL = /opt/csw/bin/bash
 
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
@@ -76,14 +74,14 @@ CATALOGNAME_CSWpostgresql                        = postgresql
 SPKG_DESC_CSWpostgresql                       = An advanced open source database
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)-doc = PostgreSQL $(BASE_VERSION).x Documentation
 
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWlibgnugetopt
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWzlib
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWreadline
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxslt
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibgnugetopt
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWzlib
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWreadline
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibpq5
 
 ARCHALL_CSWpostgresql                       = 1
 ARCHALL_CSWpostgresql-$(BASE_VERSION_G)-doc = 1
@@ -202,7 +200,6 @@ CHECKPKG_OVERRIDES_CSWpostgresql-$(BASE_VERSION_G) += surplus-dependency|CSWalte
 
 PACKAGES += CSWlibpq5
 CATALOGNAME_CSWlibpq5 = libpq5
-PKGFILES_CSWlibpq5 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.5\.3)
 PKGFILES_CSWlibpq5 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibpq5 += PostgreSQL C client library (built from $(BASE_VERSION).x sources), libpq.so.5
 RUNTIME_DEP_PKGS_CSWlibpq5 += CSWosslrt
@@ -210,7 +207,6 @@ RUNTIME_DEP_PKGS_CSWlibpq5 += CSWkrb5lib
 
 PACKAGES += CSWlibecpg6
 CATALOGNAME_CSWlibecpg6 = libecpg6
-PKGFILES_CSWlibecpg6 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.6\.0)
 PKGFILES_CSWlibecpg6 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.6(\.\d+)*)
 SPKG_DESC_CSWlibecpg6 += Embedded PostgreSQL for C library (built from $(BASE_VERSION).x sources), libecpg.so.6
 RUNTIME_DEP_PKGS_CSWlibecpg6 += CSWlibpgtypes3
@@ -218,7 +214,6 @@ RUNTIME_DEP_PKGS_CSWlibecpg6 += CSWlibpq5
 
 PACKAGES += CSWlibecpg-compat3
 CATALOGNAME_CSWlibecpg-compat3 = libecpg_compat3
-PKGFILES_CSWlibecpg-compat3 += $(call baseisadirs,$(prefix)/lib,libecpg_compat\.so\.3\.2)
 PKGFILES_CSWlibecpg-compat3 += $(call baseisadirs,$(prefix)/lib,libecpg_compat\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibecpg-compat3 += Older version of run-time library for ECPG programs (built from $(BASE_VERSION).x sources), libecpg_compat.so.3
 RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibecpg6
@@ -258,36 +253,34 @@ PACKAGES += CSWpostgresql-$(BASE_VERSION_G)
 CATALOGNAME_CSWpostgresql-$(BASE_VERSION_G) = postgresql_$(BASE_VERSION_G)
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G) = PostgreSQL, version $(BASE_VERSION).x
 
+# Private shared libraries have sonames, which triggers this error.
+CHECKPKG_OVERRIDES_CSWpostgresql-$(BASE_VERSION_G) += soname-not-part-of-filename
+
 # Legacy libraries
 PACKAGES += CSWlibpq3
 CATALOGNAME_CSWlibpq3 = libpq3
-PKGFILES_CSWlibpq3 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.3\.2)
 PKGFILES_CSWlibpq3 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibpq3 += PostgreSQL C client library, libpq.so.3
 RUNTIME_DEP_PKGS_CSWlibpq3 += CSWosslrt
 
 PACKAGES += CSWlibpq4
 CATALOGNAME_CSWlibpq4 = libpq4
-PKGFILES_CSWlibpq4 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.4\.1)
 PKGFILES_CSWlibpq4 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibpq4 += PostgreSQL C client library, libpq.so.4
 RUNTIME_DEP_PKGS_CSWlibpq4 += CSWosslrt
 
 PACKAGES += CSWlibpgtypes1
 CATALOGNAME_CSWlibpgtypes1 = libpgtypes1
-PKGFILES_CSWlibpgtypes1 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.1\.2)
 PKGFILES_CSWlibpgtypes1 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibpgtypes1 += Used by programs built with ecpg (Embedded PostgreSQL for C), libpgtypes.so.1
 
 PACKAGES += CSWlibpgtypes2
 CATALOGNAME_CSWlibpgtypes2 = libpgtypes2
-PKGFILES_CSWlibpgtypes2 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.2\.2)
 PKGFILES_CSWlibpgtypes2 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibpgtypes2 += Used by programs built with ecpg (Embedded PostgreSQL for C), libpgtypes.so.2
 
 PACKAGES += CSWlibecpg4
 CATALOGNAME_CSWlibecpg4 = libecpg4
-PKGFILES_CSWlibecpg4 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.4\.2)
 PKGFILES_CSWlibecpg4 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibecpg4 += Embedded PostgreSQL for C library, libecpg.so.4
 RUNTIME_DEP_PKGS_CSWlibecpg4 += CSWlibpgtypes1
@@ -296,7 +289,6 @@ RUNTIME_DEP_PKGS_CSWlibecpg4 += CSWlibpq3
 
 PACKAGES += CSWlibecpg5
 CATALOGNAME_CSWlibecpg5 = libecpg5
-PKGFILES_CSWlibecpg5 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.5\.2)
 PKGFILES_CSWlibecpg5 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibecpg5 += Embedded PostgreSQL for C library, libecpg.so.5
 RUNTIME_DEP_PKGS_CSWlibecpg5 += CSWlibpgtypes2
@@ -304,7 +296,6 @@ RUNTIME_DEP_PKGS_CSWlibecpg5 += CSWlibpq5
 
 PACKAGES += CSWlibecpg-compat2
 CATALOGNAME_CSWlibecpg-compat2 = libecpg_compat2
-PKGFILES_CSWlibecpg-compat2 += $(call baseisadirs,$(prefix)/lib,libecpg_compat\.so\.2\.2)
 PKGFILES_CSWlibecpg-compat2 += $(call baseisadirs,$(prefix)/lib,libecpg_compat\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibecpg-compat2 += Older version of run-time library for ECPG programs, libecpg_compat.so.2
 RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibpgtypes2
