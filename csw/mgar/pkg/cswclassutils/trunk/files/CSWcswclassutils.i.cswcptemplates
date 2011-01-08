@@ -106,11 +106,11 @@ esac
 
 	##overridedir=`sed -n  's/.*CSWDESTDIR=\([^ ]*\).*/\1/p' $src`
 
-	if [ -f $preservedconf ] ; then
-		echo Restoring $preservedconf
-		cp -p $preservedconf $confdest
-	elif [ -f $confdest ] ; then
+	if [ -f $confdest ] ; then
 		echo $confdest already exists. Not overwriting
+	elif [ -f $preservedconf ] ; then
+		echo Restoring $preservedconf
+		cp -p $preservedconf $confdest && rm $preservedconf
 	else
 		echo Copying $TEMPLATEDIR/$template to $confdest
                 cp $template $confdest
