@@ -306,7 +306,7 @@ check-upstream:
 # Create upgrade branch from current to latest upstream
 #
 upgrade-to-latest-upstream:
-	if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
