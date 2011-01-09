@@ -224,14 +224,12 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
     for pkg in self.sqo_pkgs_list:
       db_stat_objs_by_pkgname[pkg.pkginst.pkgname] = pkg
     logging.debug("Deleting old errors from the database.")
+    sqo_os_rel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad()
     for pkgname, db_obj in db_stat_objs_by_pkgname.iteritems():
-      sqo_os_rel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad()
-      db_obj.RemoveCheckpkgResults(
-          sqo_os_rel, sqo_arch, sqo_catrel)
+      db_obj.RemoveCheckpkgResults(sqo_os_rel, sqo_arch, sqo_catrel)
     errors, messages, gar_lines = self.GetAllTags(self.sqo_pkgs_list)
-    no_errors = len(errors) + 1
     pbar = self.GetProgressBar()
-    pbar.maxval = no_errors
+    pbar.maxval = len(errors) + 1
     count = itertools.count(1)
     logging.info("Stuffing the candies under the pillow...")
     pbar.start()
