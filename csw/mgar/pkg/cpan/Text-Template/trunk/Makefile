@@ -1,9 +1,9 @@
 NAME = Text-Template
-VERSION = 1.44
+VERSION = 1.45
 CATEGORIES = cpan
 AUTHOR = MJD
 
-DESCRIPTION = expand template text with embedded Perl
+DESCRIPTION = Expand template text with embedded Perl
 define BLURB
   This is a library for generating form letters, building HTML pages, or
   filling in templates generally. A `template' is a piece of text that has
@@ -12,6 +12,8 @@ define BLURB
   values.
 endef
 
-DISTFILES += CSWpmtexttemplate.gspec
+PACKAGES = CSWpmtexttemplate
+CATALOGNAME = pm_texttemplate
+ARCHALL = 1
 
 include gar/category.mk
