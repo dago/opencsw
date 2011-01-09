@@ -1406,7 +1406,7 @@ class TestCheckSharedLibraryNamingPolicy(CheckpkgUnitTestHelper, unittest.TestCa
     self.pkg_data = neon_stats[0]
     self.error_mgr_mock.ReportError(
         'non-uniform-lib-versions-in-package',
-        "sonames=['libneon.so.26', 'libneon.so.27']")
+        "sonames=libneon.so.26,libneon.so.27")
 
 
 class TestCheckSharedLibraryNamingPolicyBerkeley(CheckpkgUnitTestHelper, unittest.TestCase):
