@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = flex
 VERSION = 2.5.35
 CATEGORIES = devel
@@ -21,12 +23,14 @@ DISTFILES  = $(DISTNAME).tar.bz2
 PACKAGES = CSWflex-new
 CATALOGNAME = flex_new
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS = CSWggettextrt
 
 NOISALIST = 1
 CONFIGURE_ARGS = --prefix=$(libexecdir)/$(NAME)-$(VERSION)
 
 TEST_TARGET = check
+
+EXTRA_MERGE_EXCLUDE_FILES = $(prefix)/.*\.a
 
 include gar/category.mk
 
