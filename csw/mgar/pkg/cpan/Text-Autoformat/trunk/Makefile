@@ -1,9 +1,9 @@
 NAME = Text-Autoformat
-VERSION = 1.13
+VERSION = 1.669002
 CATEGORIES = cpan
 AUTHOR = DCONWAY
 
-DESCRIPTION = automatic text wrapping and reformatting
+DESCRIPTION = Automatic text wrapping and reformatting
 define BLURB
   The fundamental task of the autoformat subroutine is to identify and
   rearrange independent paragraphs in a text. Paragraphs typically consist of
@@ -14,8 +14,12 @@ define BLURB
   numbering, or quoting (see the following sections).
 endef
 
-DISTFILES += CSWpmtxtautofmt.gspec CSWpmtxtautofmt.depend
+DISTFILES += COPYING
 
-DEPENDS += cpan/Text-Reform
+PACKAGES = CSWpmtxtautofmt
+CATALOGNAME = pm_txtautofmt
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpmtxtreform
 
 include gar/category.mk
