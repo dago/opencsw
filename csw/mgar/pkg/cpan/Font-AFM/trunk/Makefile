@@ -16,4 +16,6 @@ PACKAGES = CSWpmfontafm
 CATALOGNAME = pm_fontafm
 ARCHALL = 1
 
+PATCHFILES += 0001-add-csw-font-paths.patch
+
 include gar/category.mk
