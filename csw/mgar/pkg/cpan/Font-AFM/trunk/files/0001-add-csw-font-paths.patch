@@ -1,0 +1,34 @@
+From e266ae3c231f3387b850c95113fe3c431fe75eec Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Sun, 9 Jan 2011 09:48:51 +0100
+Subject: [PATCH] add-csw-font-paths
+
+---
+ AFM.pm |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/AFM.pm b/AFM.pm
+index 9cb223d..7a8d496 100644
+--- a/AFM.pm
++++ b/AFM.pm
+@@ -160,7 +160,7 @@ The AFM specification can be found at:
+ Contains the path to search for AFM-files.  Format is as for the PATH
+ environment variable. The default path built into this library is:
+ 
+- /usr/lib/afm:/usr/local/lib/afm:/usr/openwin/lib/fonts/afm/:.
++ /opt/csw/share/ghostscript/fonts:/opt/csw/share/libwmf/fonts:/usr/local/lib/afm:/usr/openwin/lib/fonts/afm/:.
+ 
+ =back
+ 
+@@ -192,7 +192,7 @@ $VERSION = "1.20";
+ # The metrics_path is used to locate metrics files
+ #
+ my $metrics_path = $ENV{METRICS} ||
+-    "/usr/lib/afm:/usr/local/lib/afm:/usr/openwin/lib/fonts/afm/:.";
++    "/opt/csw/share/ghostscript/fonts:/opt/csw/share/libwmf/fonts:/usr/local/lib/afm:/usr/openwin/lib/fonts/afm/:.";
+ my @metrics_path = split(/:/, $metrics_path);
+ foreach (@metrics_path) { s,/$,, }    # reove trailing slashes
+ 
+-- 
+1.7.3.2
+
