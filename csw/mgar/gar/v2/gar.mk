@@ -444,7 +444,7 @@ extract-p:
 _var_definitions = $(foreach VAR,$(shell perl -ne 'print "$$1 " if( /@([^@]+)@/ )' <$1),$(VAR)=$($(VAR)))
 
 expandvars-%:
-	$(call _var_definitions,$(WORKDIR)/$*) perl -i-unexpanded -npe 's/@([^@]+)@/$$ENV{$$1}/e' $(WORKDIR)/$*
+	$(call _var_definitions,$(WORKDIR)/$*) perl -i-unexpanded -npe 's/@([^@]+)@/$$ENV{$$1}/eg' $(WORKDIR)/$*
 	@$(MAKECOOKIE)
 
 
