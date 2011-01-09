@@ -16,4 +16,6 @@ CATALOGNAME = pm_pdfapi2
 
 ARCHALL = 1
 
+PATCHFILES = 0001-Add-opt-csw-share-perl-csw-PDF-API2-fonts-to-font-pa.patch
+
 include gar/category.mk
