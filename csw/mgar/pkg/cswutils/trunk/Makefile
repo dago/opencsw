@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = cswutils
-VERSION = 1.15
+VERSION = 1.16
 CATEGORIES = utils
 
 DESCRIPTION = Utilities for CSW maintainers
@@ -15,11 +15,35 @@ SVNROOT_gar = https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2/lib/py
 SVN_REV_gar = HEAD
 
 MASTER_SITES =
-SVN_FILES = compare_pkgs.py
 
 # these are pulled from gar/lib/python
-PYFILES = opencsw.py checkpkg.py submit_to_newpkgs.py package_checks.py
-PYFILES += dependency_checks.py overrides.py configuration.py tag.py
+PYFILES += catalog.py
+PYFILES += checkpkg.py
+PYFILES += checkpkg2.py
+PYFILES += checkpkg_lib.py
+PYFILES += common_constants.py
+PYFILES += compare_pkgs.py
+PYFILES += configuration.py
+PYFILES += database.py
+PYFILES += dependency_checks.py
+PYFILES += inspective_package.py
+PYFILES += ldd_emul.py
+PYFILES += models.py
+PYFILES += mute_progressbar.py
+PYFILES += opencsw.py
+PYFILES += overrides.py
+PYFILES += package.py
+PYFILES += package_checks.py
+PYFILES += package_stats.py
+PYFILES += pkgdb.py
+PYFILES += pkgmap.py
+PYFILES += pylintrc
+PYFILES += sharedlib_utils.py
+PYFILES += shell.py
+PYFILES += struct_util.py
+PYFILES += submit_to_newpkgs.py
+PYFILES += system_pkgmap.py
+PYFILES += tag.py
 
 DISTFILES = COPYING
 DISTFILES += checkpkg checkpkg.8
@@ -27,7 +51,6 @@ DISTFILES += cpan2pkg
 DISTFILES += createpkg createpkg.8
 DISTFILES += stagepkg stagepkg.8
 DISTFILES += stagepkg stagepkg.8
-DISTFILES += $(foreach F,$(SVN_FILES),$(F)-r$(SVN_REV))
 DISTFILES += $(PYFILES)
 
 RUNTIME_DEP_PKGS += CSWcoreutils
@@ -36,8 +59,9 @@ RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWpmhtmltree
 RUNTIME_DEP_PKGS += CSWpmlibwww
 RUNTIME_DEP_PKGS += CSWpmyaml
-RUNTIME_DEP_PKGS += CSWpy-libmagic
 RUNTIME_DEP_PKGS += CSWpy-hachoir-parser
+RUNTIME_DEP_PKGS += CSWpy-libmagic
+RUNTIME_DEP_PKGS += CSWpy-progressbar
 RUNTIME_DEP_PKGS += CSWpython
 
 WORKSRC = $(WORKDIR)
@@ -56,12 +80,6 @@ CHECKPKG_OVERRIDES_CSWcswutils += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWcswutils += catalogname-does-not-start-with-py_
 
 include gar/category.mk
-
-# This target doesn't work when defined as $(DOWNLOADDIR)/%-r$(SVN_REV)
-$(foreach F,$(SVN_FILES),$(DOWNLOADDIR)/$(F)-r$(SVN_REV)):
-	svn export -r $(SVN_REV) $(SVNROOT)$(subst -r$(SVN_REV),,$(notdir $@))
-	mv $(subst -r$(SVN_REV),,$(notdir $@)) $@
-	@$(MAKECOOKIE)
 
 $(foreach PY,$(PYFILES),$(DOWNLOADDIR)/$(PY)):
 	@echo "Grabbing $@"
@@ -84,10 +102,6 @@ install-custom:
 	@for f in $(PYFILES); do \
 		ginstall -m 755 $(WORKSRC)/$${f} \
 			$(DESTDIR)/$(libdir)/python/csw/; \
-	done
-	@for f in $(SVN_FILES); do \
-		ginstall -m 755 $(WORKSRC)/$${f}-r$(SVN_REV) \
-		$(DESTDIR)$(libdir)/python/csw/$${f}; \
 	done
 	@ln -s ../lib/python/csw/compare_pkgs.py $(DESTDIR)$(bindir)/comparepkg
 	@ln -s ../lib/python/csw/submit_to_newpkgs.py $(DESTDIR)$(bindir)/submitpkg
