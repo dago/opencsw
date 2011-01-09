@@ -136,14 +136,17 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
     self.debug = debug
     self.name = name
     self.sqo_pkgs_list = sqo_pkgs_list
-    self.errors = []
-    self.individual_checks = []
-    self.set_checks = []
-    self.packages = []
     self.osrel = osrel
     self.arch = arch
     self.catrel = catrel
     self.show_progress = show_progress
+    self._ResetState()
+
+  def _ResetState(self):
+    self.errors = []
+    self.individual_checks = []
+    self.set_checks = []
+    self.packages = []
 
   def GetProgressBar(self):
     if self.show_progress and not self.debug:
@@ -215,7 +218,7 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
 
     Returns a tuple of an exit code and a report.
     """
-    # packages_data = self.GetPackageStatsList()
+    self._ResetState()
     assert self.sqo_pkgs_list, "The list of packages must not be empty."
     db_stat_objs_by_pkgname = {}
     for pkg in self.sqo_pkgs_list:
