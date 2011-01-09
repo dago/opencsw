@@ -984,7 +984,7 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
       error_mgr.ReportError(
           "non-uniform-lib-versions-in-package",
           "sonames=%s"
-          % (sonames))
+          % (",".join(sonames)))
       messenger.Message(
           "Package %s contains shared libraries, and their soname "
           "versions are not in sync: %s.  This means that "
