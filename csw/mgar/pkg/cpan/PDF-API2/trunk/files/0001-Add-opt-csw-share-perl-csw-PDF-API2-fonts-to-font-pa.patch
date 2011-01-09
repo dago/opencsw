@@ -1,0 +1,25 @@
+From f7362bd9fa0ee68fbee2d364edec85be7ec0f6ba Mon Sep 17 00:00:00 2001
+From: William Bonnet <wbonnet@opencsw.org>
+Date: Sun, 9 Jan 2011 20:03:59 +0100
+Subject: [PATCH] Add /opt/csw/share/perl/csw/PDF/API2/fonts to font path
+
+---
+ lib/PDF/API2.pm |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lib/PDF/API2.pm b/lib/PDF/API2.pm
+index 2ff6f90..b937039 100644
+--- a/lib/PDF/API2.pm
++++ b/lib/PDF/API2.pm
+@@ -40,7 +40,7 @@ BEGIN {
+     ($VERSION) = sprintf '%i.%03i', split(/\./,('$Revision: 2.15 $' =~ /Revision: (\S+)\s/)[0]);  # $Date: 2008/01/18 00:11:38 $
+ 
+     @FontDirs = ( (map { "$_/PDF/API2/fonts" } @INC), 
+-        qw[ /usr/share/fonts /usr/local/share/fonts c:/windows/fonts c:/winnt/fonts ] );
++        qw[ /opt/csw/share/perl/csw/PDF/API2/fonts /usr/share/fonts /usr/local/share/fonts c:/windows/fonts c:/winnt/fonts ] );
+ 
+     $seq="AA";
+ 
+-- 
+1.7.3.2
+
