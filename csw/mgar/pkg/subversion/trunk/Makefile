@@ -267,11 +267,6 @@ post-configure-modulated:
 	else \
 	    perl -i -pe 's,-xarch=386,-march=i386,' $(WORKSRC)/*.gcc; \
 	fi )
-	@echo "~~~ patching contributions with csw paths ~~~"
-	gsed -i -e 's,/usr/bin/perl,/opt/csw/bin/perl,' $(WORKSRC)/contrib/*/*.pl
-	gsed -i -e 's,/usr/bin/svnlook,/opt/csw/bin/svnlook,' $(WORKSRC)/contrib/*/*
-	gsed -i -e 's,/usr/bin/perl,/opt/csw/bin/perl,' $(WORKSRC)/contrib/*/*.cgi
-	gsed -i -e 's,/usr/bin/,/opt/csw/bin/,' $(WORKSRC)/contrib/*/svnmirror.sh
 	@$(MAKECOOKIE)
 
 copy-apache-templates:
@@ -293,6 +288,12 @@ create-ra_dav-symlinks:
 	@$(MAKECOOKIE)
 
 install-extras:
+	@echo "~~~ patching contributions with csw paths ~~~"
+	gsed -i -e 's,/usr/bin/perl,/opt/csw/bin/perl,' $(WORKSRC)/contrib/*/*.pl
+	gsed -i -e 's,/usr/bin/svnlook,/opt/csw/bin/svnlook,' $(WORKSRC)/contrib/*/*
+	gsed -i -e 's,/usr/bin/perl,/opt/csw/bin/perl,' $(WORKSRC)/contrib/*/*.cgi
+	gsed -i -e 's,/usr/bin/,/opt/csw/bin/,' $(WORKSRC)/contrib/*/svnmirror.sh
+	@echo "~~~ install tools and contrib ~~~"
 	ginstall -d $(DESTDIR)$(docdir)/subversion/tools
 	ginstall -d $(DESTDIR)$(docdir)/subversion/contrib
 	gcp -R $(WORKSRC)/tools/* $(DESTDIR)$(docdir)/subversion/tools/
