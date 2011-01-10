@@ -17,6 +17,4 @@ PACKAGES = CSWpmiodigest
 
 ARCHALL = 1
 
-EXTRA_MERGE_EXCLUDE_FILES = \/opt\/csw\/share\/man.*
-
 include gar/category.mk
