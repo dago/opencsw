@@ -195,7 +195,7 @@ case $f in
 	# check for badly set RUNPATHs. sigh.
 	# Note that need to escape one /, so that it does not
 	#trigger check if checking its own package
-        badpaths="[/]export/medusa [/]opt/build [/]export/home [/]usr/share [/]usr/local"
+        badpaths="[/]export/home [/]usr/share [/]usr/local"
 	unset badstrings
 	for badpath in $badpaths ; do
 		GREP=/bin/grep gzgrep "$badpath" $f
