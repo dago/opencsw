@@ -24,8 +24,6 @@ PATCHLEVEL = 0
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 
-SHELL = /opt/csw/bin/bash
-
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
@@ -68,22 +66,21 @@ DISTFILES += README-CSW.txt
 DISTFILES += CSWpostgresql-$(BASE_VERSION_G).postinstall
 
 PACKAGES += CSWpostgresql
+CATALOGNAME_CSWpostgresql = postgresql
+SPKG_DESC_CSWpostgresql = An advanced open source database
+
 PACKAGES += CSWpostgresql-$(BASE_VERSION_G)-doc
-
 CATALOGNAME_CSWpostgresql-$(BASE_VERSION_G)-doc  = postgresql_$(BASE_VERSION_G)_doc
-CATALOGNAME_CSWpostgresql                        = postgresql
-
-SPKG_DESC_CSWpostgresql                       = An advanced open source database
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)-doc = PostgreSQL $(BASE_VERSION).x Documentation
 
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWlibgnugetopt
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWzlib
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWreadline
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWpostgresql-90 += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxslt
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibgnugetopt
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWzlib
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWreadline
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibpq5
 
 ARCHALL_CSWpostgresql                       = 1
 ARCHALL_CSWpostgresql-$(BASE_VERSION_G)-doc = 1
@@ -186,9 +183,10 @@ EXPANDVARS += cswpostgres.tmpl
 # This is one of the rare cases where a protoype filter is needed.
 # Do not copy this for other Makefiles unless you understand exactly what it does!!
 # (explanation: It adds -isaexec to the isaexec-name of the binaries to be isaexec'ed)
-PROTOTYPE_FILTER = perl -npe 's,=/opt/csw/bin/isaexec,-isaexec=/opt/csw/bin/isaexec,'
+PROTOTYPE_FILTER = perl -npe 's,=$(bindir)/isaexec,-isaexec=/opt/csw/bin/isaexec,'
 
-# ISAEXEC_FILES = $(addsuffix -isaexec,$(foreach B,$(BIN_NAMES),$(bindir_install)/$B))
+ISAEXEC_FILES = $(addsuffix -isaexec,$(foreach B,$(BIN_NAMES),$(bindir_install)/$B))
+
 ALTERNATIVES_CSWpostgresql-$(BASE_VERSION_G) = $(NAME)$(BASE_VERSION_G)-32 $(NAME)$(BASE_VERSION_G)-64 $(NAME)$(BASE_VERSION_G)-auto
 ALTERNATIVE_$(NAME)$(BASE_VERSION_G)-32 = $(bindir_install)/$(firstword $(BIN_NAMES)) $(firstword $(BIN_NAMES)) $(bindir_install)/$(ISA_DEFAULT)/$(firstword $(BIN_NAMES)) 100
 ALTERNATIVE_$(NAME)$(BASE_VERSION_G)-32 += $(foreach B,$(wordlist 2,$(words $(BIN_NAMES)),$(BIN_NAMES)),$(bindir_install)/$B $B $(bindir_install)/$(ISA_DEFAULT)/$B)
@@ -202,7 +200,6 @@ CHECKPKG_OVERRIDES_CSWpostgresql-$(BASE_VERSION_G) += surplus-dependency|CSWalte
 
 PACKAGES += CSWlibpq5
 CATALOGNAME_CSWlibpq5 = libpq5
-PKGFILES_CSWlibpq5 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.5\.3)
 PKGFILES_CSWlibpq5 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibpq5 += PostgreSQL C client library (built from $(BASE_VERSION).x sources), libpq.so.5
 RUNTIME_DEP_PKGS_CSWlibpq5 += CSWosslrt
@@ -210,7 +207,6 @@ RUNTIME_DEP_PKGS_CSWlibpq5 += CSWkrb5lib
 
 PACKAGES += CSWlibecpg6
 CATALOGNAME_CSWlibecpg6 = libecpg6
-PKGFILES_CSWlibecpg6 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.6\.0)
 PKGFILES_CSWlibecpg6 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.6(\.\d+)*)
 SPKG_DESC_CSWlibecpg6 += Embedded PostgreSQL for C library (built from $(BASE_VERSION).x sources), libecpg.so.6
 RUNTIME_DEP_PKGS_CSWlibecpg6 += CSWlibpgtypes3
@@ -218,7 +214,6 @@ RUNTIME_DEP_PKGS_CSWlibecpg6 += CSWlibpq5
 
 PACKAGES += CSWlibecpg-compat3
 CATALOGNAME_CSWlibecpg-compat3 = libecpg_compat3
-PKGFILES_CSWlibecpg-compat3 += $(call baseisadirs,$(prefix)/lib,libecpg_compat\.so\.3\.2)
 PKGFILES_CSWlibecpg-compat3 += $(call baseisadirs,$(prefix)/lib,libecpg_compat\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibecpg-compat3 += Older version of run-time library for ECPG programs (built from $(BASE_VERSION).x sources), libecpg_compat.so.3
 RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibecpg6
@@ -261,33 +256,28 @@ SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G) = PostgreSQL, version $(BASE_VERSION).
 # Legacy libraries
 PACKAGES += CSWlibpq3
 CATALOGNAME_CSWlibpq3 = libpq3
-PKGFILES_CSWlibpq3 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.3\.2)
 PKGFILES_CSWlibpq3 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibpq3 += PostgreSQL C client library, libpq.so.3
 RUNTIME_DEP_PKGS_CSWlibpq3 += CSWosslrt
 
 PACKAGES += CSWlibpq4
 CATALOGNAME_CSWlibpq4 = libpq4
-PKGFILES_CSWlibpq4 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.4\.1)
 PKGFILES_CSWlibpq4 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibpq4 += PostgreSQL C client library, libpq.so.4
 RUNTIME_DEP_PKGS_CSWlibpq4 += CSWosslrt
 
 PACKAGES += CSWlibpgtypes1
 CATALOGNAME_CSWlibpgtypes1 = libpgtypes1
-PKGFILES_CSWlibpgtypes1 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.1\.2)
 PKGFILES_CSWlibpgtypes1 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibpgtypes1 += Used by programs built with ecpg (Embedded PostgreSQL for C), libpgtypes.so.1
 
 PACKAGES += CSWlibpgtypes2
 CATALOGNAME_CSWlibpgtypes2 = libpgtypes2
-PKGFILES_CSWlibpgtypes2 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.2\.2)
 PKGFILES_CSWlibpgtypes2 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibpgtypes2 += Used by programs built with ecpg (Embedded PostgreSQL for C), libpgtypes.so.2
 
 PACKAGES += CSWlibecpg4
 CATALOGNAME_CSWlibecpg4 = libecpg4
-PKGFILES_CSWlibecpg4 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.4\.2)
 PKGFILES_CSWlibecpg4 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibecpg4 += Embedded PostgreSQL for C library, libecpg.so.4
 RUNTIME_DEP_PKGS_CSWlibecpg4 += CSWlibpgtypes1
@@ -296,7 +286,6 @@ RUNTIME_DEP_PKGS_CSWlibecpg4 += CSWlibpq3
 
 PACKAGES += CSWlibecpg5
 CATALOGNAME_CSWlibecpg5 = libecpg5
-PKGFILES_CSWlibecpg5 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.5\.2)
 PKGFILES_CSWlibecpg5 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibecpg5 += Embedded PostgreSQL for C library, libecpg.so.5
 RUNTIME_DEP_PKGS_CSWlibecpg5 += CSWlibpgtypes2
@@ -304,7 +293,6 @@ RUNTIME_DEP_PKGS_CSWlibecpg5 += CSWlibpq5
 
 PACKAGES += CSWlibecpg-compat2
 CATALOGNAME_CSWlibecpg-compat2 = libecpg_compat2
-PKGFILES_CSWlibecpg-compat2 += $(call baseisadirs,$(prefix)/lib,libecpg_compat\.so\.2\.2)
 PKGFILES_CSWlibecpg-compat2 += $(call baseisadirs,$(prefix)/lib,libecpg_compat\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibecpg-compat2 += Older version of run-time library for ECPG programs, libecpg_compat.so.2
 RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibpgtypes2
@@ -340,27 +328,27 @@ post-install-modulated:
 	ginstall -d -m 755 $(DESTDIR)$(prefix)/bin
 	[ -r $(DESTDIR)$(bindir)/pg_config ] && \
 	gmv -v $(DESTDIR)$(bindir)/pg_config $(DESTDIR)$(prefix)/bin || true
-	@$(MAKECOOKIE)
-
-post-merge:
-	ginstall -d $(PKGROOT)/etc$(prefix)/init.d
+	ginstall -d $(DESTDIR)/etc$(prefix)/init.d
 	ginstall \
 		$(WORKDIR)/cswpostgres.tmpl \
-		$(PKGROOT)/etc$(prefix)/init.d/$(initscript_base_name)
-	ginstall -d $(PKGROOT)/etc$(prefix)/pkg/$(NAME)
+		$(DESTDIR)/etc$(prefix)/init.d/$(initscript_base_name)
+	ginstall -d $(DESTDIR)/etc$(prefix)/pkg/$(NAME)
 	gsed -e 's+@PGDATA@+$(PGDATA)+g' \
 		< $(FILEDIR)/cswusergroup.tmpl \
 		> $(WORKDIR)/cswusergroup
 	ginstall $(WORKDIR)/cswusergroup \
-		$(PKGROOT)/etc$(prefix)/pkg/$(NAME)/cswusergroup_$(VERSION_NODOT)
-	ginstall -d $(PKGROOT)$(sysconfdir)
+		$(DESTDIR)/etc$(prefix)/pkg/$(NAME)/cswusergroup_$(VERSION_NODOT)
+	ginstall -d $(DESTDIR)$(sysconfdir)
 	gsed -e 's+@PGDATA@+$(PGDATA)+g' \
 		< $(FILEDIR)/postgresql.conf.tmpl \
 		> $(WORKDIR)/postgresql.conf
 	ginstall $(WORKDIR)/postgresql.conf \
-		$(PKGROOT)$(sysconfdir)
-	ginstall -d $(PKGROOT)$(docdir)
-	# ginstall $(WORKDIR)/README-CSW.txt $(PKGROOT)$(docdir)
+		$(DESTDIR)$(sysconfdir)
+	ginstall -d $(DESTDIR)$(docdir)
+	# ginstall $(WORKDIR)/README-CSW.txt $(DESTDIR)$(docdir)
+	@$(MAKECOOKIE)
+
+post-merge:
 	ginstall -m 755 -d $(PKGROOT)$(prefix)/bin
 	# for b in $(BIN_NAMES); do \
 	#   gln -s ..$(version_dependent)/bin/$${b} $(PKGROOT)$(prefix)/bin/$${b}; \
@@ -393,4 +381,7 @@ post-merge:
 			../../lib/$(ISA_DEFAULT64)/`basename $${f}` \
 			$(PKGROOT)$(prefix)/postgresql/lib/$(ISA_DEFAULT64); \
 	done
+
+	# Checks whether the pkgroot contents is OK.
+	$(FILEDIR)/check_pkgroot.sh "$(PKGROOT)"
 	@$(MAKECOOKIE)
