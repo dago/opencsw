@@ -16,11 +16,9 @@ ARCHALL = 1
 
 SKIPTEST = 1
 
-RUNTIME_DEP_PKGS += CSWpmtestlongstring
+RUNTIME_DEP_PKGS += CSWpmtestlongstr
 RUNTIME_DEP_PKGS += CSWpmwwwmechanize
 RUNTIME_DEP_PKGS += CSWpmhtmltree
 RUNTIME_DEP_PKGS += CSWpmcarpassertmore
-
-CHECKPKG_OVERRIDES_CSWpmtestwwwmech += unidentified-dependency
 
 include gar/category.mk
