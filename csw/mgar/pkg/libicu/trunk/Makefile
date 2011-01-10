@@ -34,7 +34,7 @@ PACKAGES += CSWlibicu-devel
 CATALOGNAME_CSWlibicu-devel = libicu_devel
 SPKG_DESC_CSWlibicu-devel = Development Files for libicu
 # This package is PKGFILES catchall
-RUNTIME_DEP_PKGS_CSWlibicu-devel = CSWlibicu CSWlibicu46
+RUNTIME_DEP_PKGS_CSWlibicu-devel = CSWlibicu46
 
 PACKAGES += CSWlibicu
 CATALOGNAME_CSWlibicu = libicu
