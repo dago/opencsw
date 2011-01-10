@@ -2,7 +2,7 @@ NAME = asciidoc
 VERSION = 8.6.1
 CATEGORIES = utils
 
-DESCRIPTION = An Documentation Generator
+DESCRIPTION = A Documentation Generator
 define BLURB
 	AsciiDoc is a text document format for writing short documents,
 	articles, books and UNIX man pages. AsciiDoc files can be translated to
