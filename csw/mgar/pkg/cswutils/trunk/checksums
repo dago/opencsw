@@ -1,7 +1,7 @@
 4b5ef28c5a8fb45f60d57d5a12bc31b5  catalog.py
-03eab3c2fda6212d2468ae2f6bc34bf8  checkpkg.py
+e2150c4ad6bbb5545a3ddc23eccea8d9  checkpkg.py
 03c7384869e75284b0df6803df62b68f  checkpkg2.py
-7f38545df383993488d959bf05842e87  checkpkg_lib.py
+7181db66ceb6929dd540ada837f1b4cf  checkpkg_lib.py
 b7ed7604e92d375b421f69a17fbf27cd  common_constants.py
 70200cc5eb2c87a1b1aaf6efa6ffd2bc  compare_pkgs.py
 f4789eb3717cd52ea84eb5ce53040643  configuration.py
@@ -14,7 +14,7 @@ ae8f0f606838bbc14670e145bcc7442d  ldd_emul.py
 283779d73a88aca3d3fa203b38d4c0d8  opencsw.py
 614dca976de7a563a587e6fd5b585629  overrides.py
 fa476d0cec5adbac1091192a6aefe8b3  package.py
-4744c45a736d2d19eb4c4da6b945fce3  package_checks.py
+e3737793a23b1955b1f369c9a030c117  package_checks.py
 f9bde429846be3d98f9e4af11a36672e  package_stats.py
 ad38d99678db4d758e3e7a9265adcfdf  pkgdb.py
 fa5c633db8dbd1da61d12e4a858720c4  pkgmap.py
