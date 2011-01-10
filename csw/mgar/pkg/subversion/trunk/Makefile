@@ -289,7 +289,7 @@ create-ra_dav-symlinks:
 
 install-extras:
 	@echo "~~~ patching contributions with csw paths ~~~"
-	gfind $(WORKSRC)/contrib -type f -print0 | gxargs -0 gsed -i -e 's,/usr/bin/svn,/opt/csw/bin/svn,' {}
+	gfind $(WORKSRC)/contrib -type f -print0 | gxargs -0 gsed -i -e 's,/usr/bin/svn,/opt/csw/bin/svn,' 
 	gsed -i -e 's,/usr/bin/perl,/opt/csw/bin/perl,' $(WORKSRC)/contrib/*/*.pl
 	gsed -i -e 's,/usr/bin/perl,/opt/csw/bin/perl,' $(WORKSRC)/contrib/*/*.cgi
 	gsed -i -e 's,/usr/bin/,/opt/csw/bin/,' $(WORKSRC)/contrib/*/svnmirror.sh
