@@ -286,7 +286,7 @@ create-ra_dav-symlinks:
 		ln -s libsvn_ra_neon-1.so.0.0.0 libsvn_ra_dav-1.so; )
 	@$(MAKECOOKIE)
 
-instal-extras:
+install-extras:
 	@echo "~~~ patching contributions with csw paths ~~~"
 	gfind $(WORKSRC)/contrib -type f -print0 | gxargs -0 gsed -i -e 's,/usr/bin/svn,/opt/csw/bin/svn,' 
 	gsed -i -e 's,/usr/bin/perl,/opt/csw/bin/perl,' $(WORKSRC)/contrib/*/*.pl
