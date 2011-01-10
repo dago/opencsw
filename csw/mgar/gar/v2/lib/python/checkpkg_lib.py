@@ -141,11 +141,11 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
     self.catrel = catrel
     self.show_progress = show_progress
     self._ResetState()
+    self.individual_checks = []
+    self.set_checks = []
 
   def _ResetState(self):
     self.errors = []
-    self.individual_checks = []
-    self.set_checks = []
     self.packages = []
 
   def GetProgressBar(self):
