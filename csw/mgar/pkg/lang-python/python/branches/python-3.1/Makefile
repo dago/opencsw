@@ -50,10 +50,6 @@ PATCHFILES += multiprocess.diff
 # Test for sunaudiodev fails.
 SKIPTEST = 1
 
-# EXTRA_INC += $(prefix)/X11/include
-# EXTRA_LIB += $(prefix)/X11/lib
-# EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-# EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
@@ -70,7 +66,7 @@ CONFIGURE_ARGS += --with-system-ffi
 
 # This doesn't work here, as _PYCOMPILE_FILES is not the directory Python uses.
 # PYCOMPILE = 1
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 # use prototype filters to set the class 
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
@@ -149,6 +145,8 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER)-test += surplus-dependency|CSWpython$(CVER)
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += surplus-dependency|CSWpython$(CVER)
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += missing-dependency|CSWpython
 
 LICENSE = LICENSE
 
@@ -164,5 +162,19 @@ CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += surplus-dependency|CSWpython$(CVER)
+
+# Checkpkg does not understand relocatable packages.
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/$(PVER)/lib-dynload/gdbm.so
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/$(PVER)/lib-dynload/_gdbm.so
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += surplus-dependency|CSWgdbm
+
+
+# To avoid file collisions with CSWpython:
+EXTRA_PAX_ARGS += -s ',^\.$(bindir)/idle,$(bindir)/idle-$(VER),'
+EXTRA_PAX_ARGS += -s ',^\.$(bindir)/smtpd.py,$(bindir)/smtpd.py-$(VER),'
+EXTRA_PAX_ARGS += -s ',^\.$(bindir)/pydoc,$(bindir)/pydoc-$(VER),'
+EXTRA_PAX_ARGS += -s ',^\.$(bindir)/2to3,$(bindir)/2to3-$(VER),'
+EXTRA_PAX_ARGS += -s ',^\.$(bindir)/python-config,$(bindir)/python-config-$(VER),'
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python
 
 include gar/category.mk
