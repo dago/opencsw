@@ -1,0 +1,25 @@
+From 67b3cdff50020f2f9b49af0252cf660b4550bea7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 11 Jan 2011 15:54:23 +0100
+Subject: [PATCH] Fix testcase
+
+---
+ tests/callback_test.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/tests/callback_test.c b/tests/callback_test.c
+index 124a0d5..fa9c673 100644
+--- a/tests/callback_test.c
++++ b/tests/callback_test.c
+@@ -137,7 +137,7 @@ callback_test (int converter, double src_ratio)
+ 
+ 	src_state = src_delete (src_state) ;
+ 
+-	if (fabs (read_total - src_ratio * ARRAY_LEN (test_callback_data.data)) > src_ratio)
++	if (fabs (read_total - floor(0.5 + src_ratio * ARRAY_LEN (test_callback_data.data))) > ceil(src_ratio))
+ 	{	printf ("\n\nLine %d : input / output length mismatch.\n\n", __LINE__) ;
+ 		printf ("    input len  : %d\n", ARRAY_LEN (test_callback_data.data)) ;
+ 		printf ("    output len : %ld (should be %g +/- %g)\n\n", read_total,
+-- 
+1.7.3.2
+
