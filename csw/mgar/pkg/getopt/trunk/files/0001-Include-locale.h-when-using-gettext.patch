@@ -1,0 +1,27 @@
+From 93ded6e9eb0d0e84ea9ae9cda8c70af71a48d688 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 11 Jan 2011 13:18:09 +0100
+Subject: [PATCH] Include locale.h when using gettext
+
+---
+ getopt.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/getopt.c b/getopt.c
+index 10396a0..43e49dd 100644
+--- a/getopt.c
++++ b/getopt.c
+@@ -44,6 +44,10 @@
+ #include <string.h>
+ #include <unistd.h>
+ #include <ctype.h>
++#if WITHOUT_GETTEXT
++#else
++#include <locale.h>
++#endif
+ 
+ #if LIBCGETOPT
+ #include <getopt.h>
+-- 
+1.7.3.2
+
