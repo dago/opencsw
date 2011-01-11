@@ -5,7 +5,7 @@ CATEGORIES = xtra
 VENDOR_URL = http://opencsw.org
 
 GLINKPKGS =  CSWggettext CSWggettextrt CSWbinutils
-GLINKPKGS += CSWggetopt CSWfindutils CSWgwhois
+GLINKPKGS += CSWggetopt CSWgwhois
 BUILD_DEP_PKGS = $(GLINKPKGS) CSWpkgutil CSWbash
 
 DESCRIPTION = Creates native symlinks for GNU tools in /opt/csw/gnu
@@ -25,6 +25,9 @@ TEST_SCRIPTS =
 ARCHALL = 1
 
 SHELL = /opt/csw/bin/bash
+
+# We point to these packages, but do not depend on them on purpose.
+CHECKPKG_OVERRIDES_CSWgnulinks += $(foreach P,$(GLINKPKGS),missing-dependency|$P)
 
 include gar/category.mk
 
