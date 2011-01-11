@@ -84,7 +84,6 @@ INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
 PKGFILES_CSWidle$(CVER)  = $(libdir)/.*/idlelib/.*
 PKGFILES_CSWidle$(CVER) += $(bindir)/idle
 PKGFILES_CSWpython$(CVER)-devel  = $(includedir)/.*
-PKGFILES_CSWpython$(CVER)-devel += $(libdir)/.*/config/.*
 PKGFILES_CSWpython$(CVER)-devel += $(bindir)/.*config.*
 PKGFILES_CSWpython-devel += $(libdir)/libpython$(VER).so
 # No idea why would this be in CSWpython, and no good idea for a better package
