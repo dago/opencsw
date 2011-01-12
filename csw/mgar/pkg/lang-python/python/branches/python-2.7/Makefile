@@ -74,32 +74,53 @@ PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }
 
 PACKAGES  = CSWidle$(CVER)
 PACKAGES += CSWpython$(CVER)
-PACKAGES += CSWpython$(CVER)-devel
 PACKAGES += CSWpython$(CVER)-test
 PACKAGES += CSWpython$(CVER)-tk
+
+
 PACKAGES += CSWlibpython$(DVER)-1-0
+CATALOGNAME_CSWlibpython$(DVER)-1-0  = libpython$(UVER)_1_0
+PKGFILES_CSWlibpython2-7-1-0 += $(call baseisadirs,$(libdir),libpython2\.7\.so\.1\.0(\.\d+)*)
+PKGFILES_CSWlibpython$(DVER)-1-0 += $(libdir)/$(PVER)\.so\.([0-9\.]+)
+SPKG_DESC_CSWlibpython$(DVER)-1-0  = Python shared library ($(VER))
 
 INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
 
-PKGFILES_CSWidle$(CVER)  = $(libdir)/.*/idlelib/.*
-PKGFILES_CSWidle$(CVER) += $(bindir)/idle
-PKGFILES_CSWpython$(CVER)-devel  = $(includedir)/.*
-PKGFILES_CSWpython$(CVER)-devel += $(bindir)/.*config.*
-PKGFILES_CSWpython-devel += $(libdir)/libpython$(VER).so
+# Devel package
+PACKAGES += CSWpython$(CVER)-dev
+CATALOGNAME_CSWpython$(CVER)-dev = python_$(CVER)_devel
+SPKG_DESC_CSWpython$(CVER)-dev = Development Files for Python
+PKGFILES_CSWpython$(CVER)-dev += $(includedir)/$(PVER)/(?!pyconfig\.h).*
+# /opt/csw/include/python2.7/pyconfig.h
+PKGFILES_CSWpython$(CVER)-dev += $(bindir)/.*config.*
+PKGFILES_CSWpython$(CVER)-dev += $(libdir)/pkgconfig.*
+PKGFILES_CSWpython$(CVER)-dev += $(libdir)/libpython$(VER).so
 # No idea why would this be in CSWpython, and no good idea for a better package
 # to put it.
-PKGFILES_CSWpython$(CVER)-devel += $(bindir)/smtpd.py
+PKGFILES_CSWpython$(CVER)-dev += $(bindir)/smtpd.py-$(VER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWlibpython$(DVER)-1-0
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += surplus-dependency|CSWpython$(CVER)
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += catalogname-does-not-start-with-py_
+
+# CHECKPKG_OVERRIDES_CSWpython27 +=
+# dependency-listed-more-than-once|CSWlibpython2-7-1-0
+# CHECKPKG_OVERRIDES_CSWpython27 += surplus-dependency|CSWlibffi
+
+PKGFILES_CSWidle$(CVER) += $(libdir)/.*/idlelib/.*
+PKGFILES_CSWidle$(CVER) += $(bindir)/idle
 PKGFILES_CSWpython$(CVER)-tk  = $(libdir)/.*/lib-tk/.*
 PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
-PKGFILES_CSWpython$(CVER)-test  = $(libdir)/python/test/.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/bsddb/test.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/ctypes/test.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/email/test.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/distutils/tests.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/json/tests.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/lib2to3/tests.*
-PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/sqlite3/test.*
-PKGFILES_CSWlibpython$(DVER)-1-0 += $(libdir)/libpython$(VER)\.so\.([0-9\.]+)
+PKGFILES_CSWpython$(CVER)-test  = $(libdir)/$(PVER)/test/.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/bsddb/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/ctypes/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/email/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/distutils/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/json/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/lib2to3/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/sqlite3/test.*
 
 ARCHALL_CSWpython$(CVER)-test = 1
 ARCHALL_CSWidle$(CVER)        = 1
@@ -109,7 +130,8 @@ RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)-tk
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbzip2
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWgdbm
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWggettextrt 
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi
+# Was once needed, may need revisiting.
+# RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWncurses
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWosslrt
@@ -120,7 +142,7 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtcl
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtk 
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-devel += CSWpython$(CVER)
+
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-test  += CSWpython$(CVER)
 
 # This could be handled by automatic dependency detection
@@ -128,25 +150,19 @@ CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
 
 CATALOGNAME_CSWidle$(CVER)         = idle_$(CVER)
 CATALOGNAME_CSWpython$(CVER)       = python_$(CVER)
-CATALOGNAME_CSWpython$(CVER)-devel = python_$(CVER)_devel
 CATALOGNAME_CSWpython$(CVER)-tk    = python_$(CVER)_tk
 CATALOGNAME_CSWpython$(CVER)-test  = python_$(CVER)_test
-CATALOGNAME_CSWlibpython$(DVER)-1-0  = libpython$(UVER)_1_0
 
 SPKG_DESC_CSWidle$(CVER)         = Python IDE
 SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
-SPKG_DESC_CSWpython$(CVER)-devel = Development Files for Python
 SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
 SPKG_DESC_CSWpython$(CVER)-test  = Python Test modules
-SPKG_DESC_CSWlibpython$(DVER)-1-0  = Python shared library ($(VER))
 
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-test += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-test += surplus-dependency|CSWpython$(CVER)
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += surplus-dependency|CSWpython$(CVER)
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk += missing-dependency|CSWpython
 
 LICENSE = LICENSE
@@ -156,8 +172,6 @@ CHECKPKG_OVERRIDES_CSWidle$(CVER)         += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWidle$(CVER)         += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
