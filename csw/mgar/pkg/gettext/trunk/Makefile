@@ -66,10 +66,15 @@ BUILD64 = 1
 NOISAEXEC = 1
 STRIP_LIBTOOL = 1
 
-RUNTIME_DEP_PKGS_CSWggettextrt = CSWiconv CSWlibxml2 CSWncurses
-RUNTIME_DEP_PKGS_CSWggettext = CSWggettextrt CSWiconv CSWexpat CSWncurses
-RUNTIME_DEP_PKGS_CSWggettext += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWggettextrt = CSWlibgettextlib0-14-1
+RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl2 CSWlibintl3 CSWlibintl8
+RUNTIME_DEP_PKGS_CSWggettext = CSWiconv CSWexpat CSWncurses CSWlibxml2
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextpo0 CSWlibgettextsrc0-18-1
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-18-1 CSWlibintl8
 RUNTIME_DEP_PKGS_CSWggettextdoc = CSWggettext
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibxml2 CSWncurses CSWiconv
+RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibintl8 += CSWiconv
 
 #NOTE: gettext tests are sensitive to bash environment variables, make sure
 #      custom paths are prefixed by $PATH, may be better to set aside
@@ -107,11 +112,6 @@ PKGFILES_CSWlibintl8 += $(call baseisadirs,$(libdir),libintl\.so\.8\.1\.1)
 PKGFILES_CSWlibintl8 += $(call baseisadirs,$(libdir),libintl\.so\.8(\.\d+)*)
 
 #so use this for now
-PKGFILES_CSWggettextrt  = .*/libintl\.so.* .*/libasprintf\.so.* .*/libgettextpo\.so.*
-PKGFILES_CSWggettextrt += .*/libgettext.*\.so.*
-PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext /opt/csw/bin/gngettext /opt/csw/bin/genvsubst
-PKGFILES_CSWggettextrt += /opt/csw/bin/ggettext.sh /opt/csw/share/java/libintl.jar
-PKGFILES_CSWggettextrt += /opt/csw/share/locale/.*
 PKGFILES_CSWggettextdoc  = $(PKGFILES_DOC)
 
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
@@ -120,9 +120,8 @@ CHECKPKG_OVERRIDES_CSWggettextel += surplus-dependency|CSWggettext
 # This lib is legacy from the old versions and can't be updated (easily)
 CHECKPKG_OVERRIDES_CSWggettext += bad-rpath-entry|/export/home/phil/build/gettext-0.14.1/gettext-tools/intl/.libs|opt/csw/lib/sparcv9/libgettextlib-0.14.1.so 
 # A few more legacy libs that we can't update.
-CHECKPKG_OVERRIDES_CSWggettextrt += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextlib-0.17.so
-CHECKPKG_OVERRIDES_CSWggettextrt += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextsrc-0.17.so
-CHECKPKG_OVERRIDES_CSWggettextrt += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextpo.so.0.4.0
+CHECKPKG_OVERRIDES_CSWlibgettextsrc0-17 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextsrc-0.17.so
+CHECKPKG_OVERRIDES_CSWlibgettextpo0 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextpo.so.0.4.0
 # just until checkpkg doesn't squawk about this.
 CHECKPKG_OVERRIDES_CSWggettext += missing-dependency|CSWemacscommon
 
