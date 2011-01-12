@@ -526,11 +526,10 @@ SOS12U1_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_
     GCC3_CC_VERSION = $(shell $(GCC3_CC) -v 2>&1| ggrep version)
    GCC3_CXX_VERSION = $(shell $(GCC3_CXX) -v 2>&1| ggrep version)
    GCC3_F77_VERSION = $(shell $(GCC3_F77) -v 2>&1| ggrep version)
-    GCC4_FC_VERSION = $(shell $(GCC4_FC) -v 2>&1| ggrep version)
     GCC4_CC_VERSION = $(shell $(GCC4_CC) -v 2>&1| ggrep version)
    GCC4_CXX_VERSION = $(shell $(GCC4_CXX) -v 2>&1| ggrep version)
    GCC4_F77_VERSION = $(shell $(GCC4_F77) -v 2>&1| ggrep version)
-    GCC4_FC_VERSION = $(shell $(GCC4_F77) -v 2>&1| ggrep version)
+    GCC4_FC_VERSION = $(shell $(GCC4_FC) -v 2>&1| ggrep version)
 
    SOS11_CC_VERSION = $(shell $(SOS11_CC) -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
   SOS11_CXX_VERSION = $(shell $(SOS11_CXX) -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
