@@ -27,6 +27,8 @@ import dependency_checks as depchecks
 import configuration as c
 import sharedlib_utils as su
 from Cheetah import Template
+import common_constants
+import logging
 
 PATHS_ALLOWED_ONLY_IN = {
     # Leading slash must be removed.
@@ -53,27 +55,28 @@ OBSOLETE_DEPS = {
       "hint": "CSWpython-rt is deprecated, use CSWpython instead.",
       "url": "http://www.opencsw.org/bugtrack/view.php?id=4031"
     },
+    "CSWlibcups": {
+      "hint": "CSWlibcups is deprecated, please depend on specific "
+              "shared library packages.",
+      "url": "http://wiki.opencsw.org/packaging-shared-libraries",
+    },
+    "CSWcswclassutils": {
+      "hint": "CSWcswclassutils is deprecated, please depend on specific "
+              "CSWcas-* packages.",
+              "url": ("http://lists.opencsw.org/pipermail/maintainers/"
+                      "2010-October/012862.html"),
+    },
 }
 ARCH_RE = re.compile(r"(sparcv(8|9)|i386|amd64)")
 EMAIL_RE = re.compile(r"^.*@opencsw.org$")
 MAX_CATALOGNAME_LENGTH = 29
 MAX_PKGNAME_LENGTH = 32
-ARCH_LIST = opencsw.ARCHITECTURES
+ARCH_LIST = common_constants.ARCHITECTURES
 VERSION_RE = r".*,REV=(20[01][0-9]\.[0-9][0-9]\.[0-9][0-9]).*"
 # Pkgnames matching these regexes must not be ARCHALL = 1
 ARCH_SPECIFIC_PKGNAMES_RE_LIST = [
     re.compile(r".*dev(el)?$"),
 ]
-
-# At some point, it was used to prevent people from linking against
-# libX11.so.4, but due to issues with 3D acceleration.
-DO_NOT_LINK_AGAINST_THESE_SONAMES = set([])
-
-# Regarding surplus libraries reports
-DO_NOT_REPORT_SURPLUS = set([u"CSWcommon", u"CSWcswclassutils", u"CSWisaexec"])
-DO_NOT_REPORT_SURPLUS_FOR = [r"CSW[a-z\-]+dev(el)?"]
-DO_NOT_REPORT_MISSING = set([])
-DO_NOT_REPORT_MISSING_RE = [r"\*?SUNW.*"]
 
 DISCOURAGED_FILE_PATTERNS = (
     (r"\.py[co]$", ("Python compiled files are supposed to be compiled using"
@@ -122,32 +125,32 @@ HACHOIR_MACHINES = {
          "allowed": (), "disallowed": (),
          "type": "unknown"},
      2: {"name": "sparcv8",
-         "type": opencsw.ARCH_SPARC,
+         "type": common_constants.ARCH_SPARC,
          "allowed": BASE_BINARY_PATHS + su.SPARCV8_PATHS,
          "disallowed": su.SPARCV9_PATHS + su.INTEL_386_PATHS + su.AMD64_PATHS,
         },
      3: {"name": "i386",
-         "type": opencsw.ARCH_i386,
+         "type": common_constants.ARCH_i386,
          "allowed": BASE_BINARY_PATHS + su.INTEL_386_PATHS,
          "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS,
         },
      6: {"name": "i486",
-         "type": opencsw.ARCH_i386,
+         "type": common_constants.ARCH_i386,
          "allowed": su.INTEL_386_PATHS,
          "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS,
          },
     18: {"name": "sparcv8+",
-         "type": opencsw.ARCH_SPARC,
+         "type": common_constants.ARCH_SPARC,
          "allowed": su.SPARCV8PLUS_PATHS,
          "disallowed": su.SPARCV8_PATHS + su.SPARCV9_PATHS + su.AMD64_PATHS + su.INTEL_386_PATHS,
         },
     43: {"name": "sparcv9",
-         "type": opencsw.ARCH_SPARC,
+         "type": common_constants.ARCH_SPARC,
          "allowed": su.SPARCV9_PATHS,
          "disallowed": su.INTEL_386_PATHS + su.AMD64_PATHS,
         },
     62: {"name": "amd64",
-         "type": opencsw.ARCH_i386,
+         "type": common_constants.ARCH_i386,
          "allowed": su.AMD64_PATHS,
          "disallowed": su.SPARCV8_PATHS + su.SPARCV8PLUS_PATHS + su.SPARCV9_PATHS,
         },
@@ -256,6 +259,12 @@ def CheckSmfIntegration(pkg_data, error_mgr, logger, messenger):
       error_mgr.ReportError(
           "init-file-missing-cswinitsmf-class",
           "%s class=%s" % (entry["path"], entry["class"]))
+      messenger.Message(
+          "The init file %s in the package has the %s class, while it "
+          "should have the cswinitsmf class, which takes advantage of "
+          "the SMF integration automation from cswclassutils."
+          % (entry["path"], entry["class"]))
+      messenger.SuggestGarLine("INITSMF = %s" % entry["path"])
 
     # This is not an error, in fact, putting files into
     # /opt/csw/etc/init.d breaks packages.
@@ -322,95 +331,19 @@ def SetCheckLibraries(pkgs_data, error_mgr, logger, messenger):
       binary_path, basename = os.path.split(pkgmap_entry["path"])
       if not binary_path.startswith('/'):
         binary_path = "/" + binary_path
-      if basename not in path_and_pkg_by_basename:
-        path_and_pkg_by_basename[basename] = {}
+      path_and_pkg_by_basename.setdefault(basename, {})
       path_and_pkg_by_basename[basename][binary_path] = [pkgname]
   # Resolving sonames for each binary
   for pkg_data in pkgs_data:
     pkgname = pkg_data["basic_stats"]["pkgname"]
+    declared_deps = frozenset(x[0] for x in pkg_data["depends"])
     check_args = (pkg_data, error_mgr, logger, messenger,
                   path_and_pkg_by_basename, pkg_by_path)
-    req_pkgs_reasons = depchecks.Libraries(*check_args)
-    req_pkgs_reasons.extend(depchecks.ByFilename(*check_args))
+    depchecks.Libraries(*check_args)
+    depchecks.ByFilename(*check_args)
     # This test needs more work, or potentially, architectural changes.
-    # by_directory_reasons = depchecks.ByDirectory(*check_args)
+    # by_directory_reasons = ByDirectory(*check_args)
     # req_pkgs_reasons.extend(by_directory_reasons)
-    missing_reasons_by_pkg = {}
-    for reason_group in req_pkgs_reasons:
-      for pkg, reason in reason_group:
-        if pkg not in missing_reasons_by_pkg:
-          missing_reasons_by_pkg[pkg] = []
-        if len(missing_reasons_by_pkg[pkg]) < 4:
-          missing_reasons_by_pkg[pkg].append(reason)
-        elif len(missing_reasons_by_pkg[pkg]) == 4:
-          missing_reasons_by_pkg[pkg].append("...and more.")
-    declared_deps = pkg_data["depends"]
-    declared_deps_set = set([x[0] for x in declared_deps])
-    missing_dep_groups = depchecks.MissingDepsFromReasonGroups(
-        req_pkgs_reasons, declared_deps_set)
-    pkgs_to_remove = set()
-    for regex_str in DO_NOT_REPORT_MISSING_RE:
-      regex = re.compile(regex_str)
-      for dep_pkgname in reduce(operator.add, missing_dep_groups, []):
-        if re.match(regex, dep_pkgname):
-          pkgs_to_remove.add(dep_pkgname)
-    if pkgname in reduce(operator.add, missing_dep_groups, []):
-      pkgs_to_remove.add(pkgname)
-    logger.debug("Removing %s from the list of missing pkgs.", pkgs_to_remove)
-    new_missing_dep_groups = set()
-    for missing_deps in missing_dep_groups:
-      new_missing_deps = set()
-      for dep in missing_deps:
-        if dep not in pkgs_to_remove:
-          new_missing_deps.add(dep)
-      if new_missing_deps:
-        new_missing_dep_groups.add(tuple(new_missing_deps))
-    potential_req_pkgs = set(
-        (x for x, y in reduce(operator.add, req_pkgs_reasons, [])))
-    missing_dep_groups = new_missing_dep_groups
-    surplus_deps = declared_deps_set.difference(potential_req_pkgs)
-    surplus_deps = surplus_deps.difference(DO_NOT_REPORT_SURPLUS)
-    for regex_str in DO_NOT_REPORT_SURPLUS_FOR:
-      if surplus_deps and re.match(regex_str, pkgname):
-        surplus_deps = set()
-    # Using an index to avoid duplicated reasons.
-    missing_deps_reasons_by_pkg = []
-    missing_deps_idx = set()
-    for missing_deps in missing_dep_groups:
-      error_mgr.ReportError(pkgname,
-                            "missing-dependency",
-                            " or ".join(missing_deps))
-      for missing_dep in missing_deps:
-        item = (missing_dep, tuple(missing_reasons_by_pkg[missing_dep]))
-        if item not in missing_deps_idx:
-          missing_deps_reasons_by_pkg.append(item)
-          missing_deps_idx.add(item)
-    for surplus_dep in surplus_deps:
-      error_mgr.ReportError(pkgname, "surplus-dependency", surplus_dep)
-    namespace = {
-        "pkgname": pkgname,
-        "missing_deps": missing_deps_reasons_by_pkg,
-        "surplus_deps": surplus_deps,
-        "orphan_sonames": None,
-    }
-    t = Template.Template(checkpkg.REPORT_TMPL, searchList=[namespace])
-    report = unicode(t)
-    if report.strip():
-      for line in report.splitlines():
-        messenger.Message(line)
-    for missing_deps in missing_dep_groups:
-      alternatives = False
-      prefix = ""
-      if len(missing_deps) > 1:
-        alternatives = True
-        prefix = "  "
-      if alternatives:
-        messenger.SuggestGarLine("# One of the following:")
-      for missing_dep in missing_deps:
-        messenger.SuggestGarLine(
-            "%sRUNTIME_DEP_PKGS_%s += %s" % (prefix, pkgname, missing_dep))
-      if alternatives:
-        messenger.SuggestGarLine("# (end of the list of alternative dependencies)")
 
 
 def SetCheckDependencies(pkgs_data, error_mgr, logger, messenger):
@@ -483,7 +416,7 @@ def CheckLicenseFile(pkg_data, error_mgr, logger, messenger):
 
 def CheckObsoleteDeps(pkg_data, error_mgr, logger, messenger):
   """Checks for obsolete dependencies."""
-  deps = set(pkg_data["depends"])
+  deps = frozenset([x for x, y in pkg_data["depends"]])
   obsolete_pkg_deps = deps.intersection(set(OBSOLETE_DEPS))
   if obsolete_pkg_deps:
     for obsolete_pkg in obsolete_pkg_deps:
@@ -645,7 +578,7 @@ def CheckEmail(pkg_data, error_mgr, logger, messenger):
 def CheckPstamp(pkg_data, error_mgr, logger, messenger):
   pkginfo = pkg_data["pkginfo"]
   if "PSTAMP" in pkginfo:
-    if not re.match(checkpkg.PSTAMP_RE, pkginfo["PSTAMP"]):
+    if not re.match(common_constants.PSTAMP_RE, pkginfo["PSTAMP"]):
       msg=("It should be 'username@hostname-timestamp', "
            "but it's %s." % repr(pkginfo["PSTAMP"]))
       error_mgr.ReportError("pkginfo-pstamp-in-wrong-format", pkginfo["PSTAMP"], msg)
@@ -753,7 +686,7 @@ def CheckLinkingAgainstSunX11(pkg_data, error_mgr, logger, messenger):
     for soname in binary_info["needed sonames"]:
       if (binary_info["path"] in shared_libs
           and
-          soname in DO_NOT_LINK_AGAINST_THESE_SONAMES):
+          soname in common_constants.DO_NOT_LINK_AGAINST_THESE_SONAMES):
         error_mgr.ReportError("linked-against-discouraged-library",
                               "%s %s" % (binary_info["base_name"], soname))
 
@@ -879,7 +812,7 @@ def DisabledCheckForMissingSymbolsDumb(pkg_data, error_mgr, logger, messenger):
             % (ldd_elem["symbol"], ldd_elem["path"]))
 
 
-def SetCheckFileConflicts(pkgs_data, error_mgr, logger, messenger):
+def SetCheckFileCollisions(pkgs_data, error_mgr, logger, messenger):
   """Throw an error if two packages contain the same file.
 
   Directories don't count.  The strategy is to create an in-memory index of
@@ -888,14 +821,34 @@ def SetCheckFileConflicts(pkgs_data, error_mgr, logger, messenger):
   pkgs_by_path = {}
   # File types are described at:
   # http://docs.sun.com/app/docs/doc/816-5174/pkgmap-4?l=en&n=1&a=view
-  file_types = set(["f", "l", "s", "p", "e"])
+  skip_file_types = set(["d"])
+  pkgnames = set(x["basic_stats"]["pkgname"] for x in pkgs_data)
   for pkg_data in pkgs_data:
     pkgname = pkg_data["basic_stats"]["pkgname"]
     for pkgmap_entry in pkg_data["pkgmap"]:
-      if pkgmap_entry["type"] in file_types:
+      if pkgmap_entry["path"] and pkgmap_entry["type"] not in skip_file_types:
         if pkgmap_entry["path"] not in pkgs_by_path:
           pkgs_by_path[pkgmap_entry["path"]] = set()
         pkgs_by_path[pkgmap_entry["path"]].add(pkgname)
+        pkgs_in_db = error_mgr.GetPkgByPath(pkgmap_entry["path"])
+
+        # We need to simulate package removal before next install.  We want to
+        # throw an error if two new packages have a conflict; however, we
+        # don't want to throw an error in the following scenario:
+        #
+        # db:
+        # CSWfoo with /opt/csw/bin/foo
+        #
+        # new:
+        # CSWfoo - empty
+        # CSWfoo-utils with /opt/csw/bin/foo
+        #
+        # Here, CSWfoo-utils conflicts with CSWfoo from the database; but we
+        # don't need to check against CSWfoo in the database, but with with
+        # one in the package set under examination instead.
+        pkgs_in_db = pkgs_in_db.difference(pkgnames)
+
+        pkgs_by_path[pkgmap_entry["path"]].update(pkgs_in_db)
   # Traversing the data structure
   for file_path in pkgs_by_path:
     if len(pkgs_by_path[file_path]) > 1:
@@ -903,7 +856,7 @@ def SetCheckFileConflicts(pkgs_data, error_mgr, logger, messenger):
       for pkgname in pkgnames:
         error_mgr.ReportError(
             pkgname,
-            'file-conflict',
+            'file-collision',
             '%s %s' % (file_path, " ".join(pkgnames)))
 
 
@@ -1009,12 +962,17 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
     if binary_info["path"] in shared_libs:
       if su.IsLibraryLinkable(binary_info["path"]):
         # It is a shared library and other projects might link to it.
+        # Some libraries don't declare a soname; compile time linker defaults
+        # to their file name.
         if "soname" in binary_info and binary_info["soname"]:
           soname = binary_info["soname"]
         else:
           soname = os.path.split(binary_info["path"])[1]
         linkable_shared_libs.append((soname, binary_info))
   check_names = True
+  logging.debug("CheckSharedLibraryNamingPolicy(): "
+                "linkable shared libs of %s: %s"
+                % (pkgname, linkable_shared_libs))
   if len(linkable_shared_libs) > 1:
     sonames = sorted(set([x[0] for x in linkable_shared_libs]))
     tmp = su.MakePackageNameBySonameCollection(sonames)
@@ -1026,7 +984,7 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
       error_mgr.ReportError(
           "non-uniform-lib-versions-in-package",
           "sonames=%s"
-          % (sonames))
+          % (",".join(sonames)))
       messenger.Message(
           "Package %s contains shared libraries, and their soname "
           "versions are not in sync: %s.  This means that "
@@ -1045,38 +1003,24 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
         lib_path, lib_basename = os.path.split(binary_info["path"])
         tmp = su.MakePackageNameBySoname(soname)
         policy_pkgname_list, policy_catalogname_list = tmp
-        messenger.SuggestGarLine("# The following lines define a new package: "
-                                 "%s" % policy_pkgname_list[0])
-        messenger.SuggestGarLine("PACKAGES += %s" % policy_pkgname_list[0])
-        messenger.SuggestGarLine(
-            "CATALOGNAME_%s = %s"
-            % (policy_pkgname_list[0], policy_catalogname_list[0]))
-        messenger.SuggestGarLine(
-            "PKGFILES_%s += /%s"
-            % (policy_pkgname_list[0], os.path.join(lib_path, lib_basename)))
-        messenger.SuggestGarLine(
-            "PKGFILES_%s += /%s\.[0-9\.]+"
-            % (policy_pkgname_list[0], os.path.join(lib_path, soname)))
         pkginfo = pkg_data["pkginfo"]
         description = " ".join(pkginfo["NAME"].split(" ")[2:])
-        messenger.SuggestGarLine(
-            "SPKG_DESC_%s += %s, %s"
-            % (policy_pkgname_list[0], description, soname))
-        messenger.SuggestGarLine(
-            "RUNTIME_DEP_PKGS_%s += %s"
-            % (pkgname, policy_pkgname_list[0]))
-        messenger.SuggestGarLine(
-            "# The end of %s definition" % policy_pkgname_list[0])
+        depchecks.SuggestLibraryPackage(error_mgr, messenger,
+          policy_pkgname_list[0],
+          policy_catalogname_list[0],
+          description,
+          lib_path, lib_basename, soname,
+          pkgname)
 
       check_names = False
-    else:
+    else: # len(linkable_shared_libs) > 1
       if pkgname not in multilib_pkgnames:
         error_mgr.ReportError(
             "shared-lib-pkgname-mismatch",
             "sonames=%s "
             "pkgname=%s "
             "expected=%s "
-            % (sonames, pkgname, multilib_pkgnames))
+            % (",".join(sonames), pkgname, ",".join(multilib_pkgnames)))
         messenger.Message(
             "The collection of sonames (%s) "
             "is expected to be in package "
@@ -1096,18 +1040,21 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
             "soname=%s "
             "pkgname=%s "
             "expected=%s"
-            % (binary_info["path"], soname, pkgname, policy_pkgname_list))
+            % (binary_info["path"],
+               soname, pkgname,
+               ",".join(policy_pkgname_list)))
+
         suggested_pkgname = policy_pkgname_list[0]
-        messenger.SuggestGarLine(
-            "PACKAGES += %s" % suggested_pkgname)
-        messenger.SuggestGarLine(
-            "CATALOGNAME_%s = %s"
-            % (suggested_pkgname, policy_catalogname_list[0]))
-        messenger.SuggestGarLine(
-            "PKGFILES_%s += /%s" % (suggested_pkgname, binary_info["path"]))
-        lib_basename, lib_filename = os.path.split(binary_info["path"])
-        messenger.SuggestGarLine(
-            "PKGFILES_%s += /%s/%s.*" % (suggested_pkgname, lib_basename, soname))
+        lib_path, lib_basename = os.path.split(binary_info["path"])
+        pkginfo = pkg_data["pkginfo"]
+        description = " ".join(pkginfo["NAME"].split(" ")[2:])
+        depchecks.SuggestLibraryPackage(error_mgr, messenger,
+          suggested_pkgname,
+          policy_catalogname_list[0],
+          description,
+          lib_path, lib_basename, soname,
+          pkgname)
+
         messenger.OneTimeMessage(
             soname,
             "This shared library (%s) is in a directory indicating that it "
@@ -1194,9 +1141,9 @@ def CheckSharedLibraryNameMustBeAsubstringOfSoname(
             % (binary_info["soname"], binary_info["base_name"]))
 
 
-def CheckDocDir(pkg_data, error_mgr, logger, messenger):
+def CheckLicenseFilePlacement(pkg_data, error_mgr, logger, messenger):
   pkgname = pkg_data["basic_stats"]["pkgname"]
-  docpath_re = re.compile(r"/opt/csw/share/doc/(?P<docname>[^/]+)/license")
+  docpath_re = re.compile(r"/opt/csw/share/doc/(?P<docname>[^/]+)/license$")
   for pkgmap_entry in pkg_data["pkgmap"]:
     if "path" not in pkgmap_entry: continue
     if not pkgmap_entry["path"]: continue
@@ -1210,9 +1157,43 @@ def CheckDocDir(pkg_data, error_mgr, logger, messenger):
             % (pkg_data["basic_stats"]["catalogname"],
                pkgmap_entry["path"]))
 
+
+def CheckBaseDirs(pkg_data, error_mgr, logger, messenger):
+  """Symlinks and nonstandard class files need base directories
+
+  This cannot be made a general check, because there would be too many false
+  positives.  However, symlinks and nonstandard class files are so prone to
+  this problem that it makes sense to throw errors if they miss base
+  directories.
+  """
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  for pkgmap_entry in pkg_data["pkgmap"]:
+    if "path" not in pkgmap_entry: continue
+    if not pkgmap_entry["path"]: continue
+    if pkgmap_entry["type"] == "s" or pkgmap_entry["class"] != "none":
+      base_dir = os.path.dirname(pkgmap_entry["path"])
+      error_mgr.NeedFile(
+          base_dir,
+          "%s contains %s which needs a base directory: %s."
+          % (pkgname, repr(pkgmap_entry["path"]), repr(base_dir)))
+
+
+def CheckDanglingSymlinks(pkg_data, error_mgr, logger, messenger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  for pkgmap_entry in pkg_data["pkgmap"]:
+    if "path" not in pkgmap_entry: continue
+    if not pkgmap_entry["path"]: continue
+    if pkgmap_entry["type"] == "s":
+      error_mgr.NeedFile(
+          pkgmap_entry["target"],
+          "%s contains a symlink (%s) which needs the target file: %s."
+          % (pkgname, repr(pkgmap_entry["path"]), repr(pkgmap_entry["target"])))
+
+
 def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
     pkg_data, error_mgr, logger, messenger):
   pass
+
 
 def CheckLinkableSoFileMustBeAsymlink(
     pkg_data, error_mgr, logger, messenger):

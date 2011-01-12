@@ -1,6 +1,6 @@
-#!/opt/csw/bin/python2.6
+#!/usr/bin/env python2.6
 
-import checkpkg
+import checkpkg_lib
 import copy
 import mox
 import unittest
@@ -18,11 +18,11 @@ class TestGetPkgByFullPath(unittest.TestCase):
     path_list = ["/foo", "/foo/bar"]
     pkg_by_path = {"/foo": ["CSWfoo"]}
     expected = {'/foo': ['CSWfoo'], '/foo/bar': ['CSWbar']}
-    self.mocker = mox.Mox()
-    self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg.SetCheckInterface)
+    self.mox = mox.Mox()
+    self.error_mgr_mock = self.mox.CreateMock(
+        checkpkg_lib.SetCheckInterface)
     self.error_mgr_mock.GetPkgByPath('/foo/bar').AndReturn(["CSWbar"])
-    self.mocker.ReplayAll()
+    self.mox.ReplayAll()
     logger_stub = stubs.LoggerStub()
     self.assertEqual(
         expected,
@@ -30,7 +30,7 @@ class TestGetPkgByFullPath(unittest.TestCase):
                                    logger_stub,
                                    path_list,
                                    pkg_by_path))
-    self.mocker.VerifyAll()
+    self.mox.VerifyAll()
 
   def testDodgyCall(self):
     paths_to_verify = set(
@@ -40,12 +40,12 @@ class TestGetPkgByFullPath(unittest.TestCase):
       '/opt/csw/lib/libfoo.so.1'])
     pkg_by_path = {'/opt/csw/bin/bar': ['CSWbar'],
                    '/opt/csw/lib/libfoo.so.1': ['CSWbar']}
-    self.mocker = mox.Mox()
-    self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg.SetCheckInterface)
+    self.mox = mox.Mox()
+    self.error_mgr_mock = self.mox.CreateMock(
+        checkpkg_lib.SetCheckInterface)
     self.error_mgr_mock.GetPkgByPath('/opt/csw/lib').AndReturn(["CSWcommon"])
     self.error_mgr_mock.GetPkgByPath('/opt/csw/bin').AndReturn(["CSWcommon"])
-    self.mocker.ReplayAll()
+    self.mox.ReplayAll()
     logger_stub = stubs.LoggerStub()
     expected = {
         '/opt/csw/bin': [u'CSWcommon'],
@@ -58,17 +58,17 @@ class TestGetPkgByFullPath(unittest.TestCase):
                                    logger_stub,
                                    paths_to_verify,
                                    pkg_by_path))
-    self.mocker.VerifyAll()
+    self.mox.VerifyAll()
 
 
 class TestByDirectory(unittest.TestCase):
 
   def setUp(self):
-    self.mocker = mox.Mox()
+    self.mox = mox.Mox()
     self.logger_stub = stubs.LoggerStub()
     self.messenger_stub = stubs.MessengerStub()
-    self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg.SetCheckInterface)
+    self.error_mgr_mock = self.mox.CreateMock(
+        checkpkg_lib.SetCheckInterface)
     self.pkg_data = copy.deepcopy(tree_stats[0])
 
   def testByDirectory_1(self):
@@ -200,7 +200,45 @@ class TestByDirectory(unittest.TestCase):
          u"[u'CSWcommon'] provides directory /opt/csw/share/man is needed by the package CSWtree")]]
     self.assertEquals(expected, result)
 
+
+class TestLibraries(mox.MoxTestBase):
+
+  def setUp(self):
+    super(TestLibraries, self).setUp()
+    self.logger_stub = stubs.LoggerStub()
+    self.messenger_stub = stubs.MessengerStub()
+    self.error_mgr_mock = self.mox.CreateMock(
+        checkpkg_lib.SetCheckInterface)
+    self.pkg_data = copy.deepcopy(sudo_stats[0])
+
+  def testLibrariesRpathOrder(self):
+    # pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
+    # pkg_by_path
+    pass
+
+  def testByFilename(self):
+    self.pkg_data = tree_stats[0]
+    self.pkg_data["pkgmap"] = [
+        {'class': 'none',
+         'line': 'not important',
+         'mode': '0755',
+         'path': '/opt/csw/apache2/bin/foo',
+         'type': 'f',
+         'group': 'bin',
+         'user': 'root'}]
+    self.error_mgr_mock.NeedPackage(u'CSWtree', u'CSWapache2',
+        "found file(s) matching /opt/csw/apache2/, e.g. '/opt/csw/apache2/bin/foo'")
+    self.mox.ReplayAll()
+    result = dependency_checks.ByFilename(
+        self.pkg_data,
+        self.error_mgr_mock,
+        self.logger_stub,
+        self.messenger_stub,
+        None, None)
+    self.mox.VerifyAll()
+
   def testLibraries_1(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
     path_and_pkg_by_basename = {
          'libc.so.1': {u'/usr/lib': [u'SUNWcsl'],
                        u'/usr/lib/libp/sparcv9': [u'SUNWdplx'],
@@ -220,139 +258,59 @@ class TestByDirectory(unittest.TestCase):
        '/opt/csw/share/man': [u'CSWcommon', u'CSWgnuplot'],
        '/opt/csw/share/man/man1': ['CSWtree'],
        '/opt/csw/share/man/man1/tree.1': ['CSWtree']}
+    self.error_mgr_mock.NeedFile('CSWtree', u'/usr/lib/libc.so.1',
+        'opt/csw/bin/tree needs the libc.so.1 soname')
+    self.mox.ReplayAll()
     result = dependency_checks.Libraries(self.pkg_data,
                           self.error_mgr_mock,
                           self.logger_stub,
                           self.messenger_stub,
                           path_and_pkg_by_basename, pkg_by_path)
-    # It needs to be a list.
-    expected = [[
-      (u'SUNWcsl', u'provides /usr/lib/libc.so.1 needed by opt/csw/bin/tree')]]
-    self.assertEqual(expected, result)
-
-  def testLibraries_Javasvn(self):
-    self.pkg_data = copy.deepcopy(javasvn_stats[0])
-    path_and_pkg_by_basename = {
-        'libCrun.so.1': {u'/usr/lib': [u'SUNWlibC'], u'/usr/lib/sparcv9': [u'SUNWlibCx']},
-        'libCstd.so.1': {u'/usr/lib': [u'SUNWlibC'], u'/usr/lib/sparcv9': [u'SUNWlibCx']},
-        'libapr-1.so.0': {u'/opt/csw/apache2/lib': [u'CSWapache2rt'], u'/opt/csw/lib': [u'CSWapr'], u'/opt/csw/lib/sparcv9': [u'CSWapr']},
-        'libaprutil-1.so.0': {u'/opt/csw/apache2/lib': [u'CSWapache2rt']},
-        'libc.so.1': {u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/libp/sparcv9': [u'SUNWdplx'], u'/usr/lib/sparcv9': [u'SUNWcslx']},
-        'libdl.so.1': {u'/etc/lib': [u'SUNWcsr'], u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']},
-        'libexpat.so.1': {u'/opt/csw/lib': [u'CSWexpat'], u'/opt/csw/lib/sparcv9': [u'CSWexpat']},
-        'libiconv.so.2': {u'/opt/csw/lib': [u'CSWiconv'], u'/opt/csw/lib/sparcv9': [u'CSWiconv']},
-        'libintl.so.8': {u'/opt/csw/lib': [u'CSWggettextrt'], u'/opt/csw/lib/sparcv9': [u'CSWggettextrt']},
-        'liblber-2.4.so.2': {u'/opt/csw/lib': [u'CSWoldaprt'], u'/opt/csw/lib/sparcv9': [u'CSWoldaprt']},
-        'libldap-2.4.so.2': {u'/opt/csw/lib': [u'CSWoldaprt'], u'/opt/csw/lib/sparcv9': [u'CSWoldaprt']},
-        'libneon.so.27': {u'/opt/csw/lib': [u'CSWneon'], u'/opt/csw/lib/sparcv9': [u'CSWneon']},
-        'libnsl.so.1': {u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']},
-        'libpthread.so.1': {u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']},
-        'librt.so.1': {u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']},
-        'libsendfile.so.1': {u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']},
-        'libsocket.so.1': {u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']},
-        'libsvn_client-1.so.0': {u'/opt/csw/lib/svn': [u'CSWsvn']},
-        'libsvn_delta-1.so.0': {u'/opt/csw/lib/svn': [u'CSWsvn']},
-        'libsvn_diff-1.so.0': {u'/opt/csw/lib/svn': [u'CSWsvn']},
-        'libsvn_fs-1.so.0': {u'/opt/csw/lib/svn': [u'CSWsvn']},
-        'libsvn_ra-1.so.0': {u'/opt/csw/lib/svn': [u'CSWsvn']},
-        'libsvn_repos-1.so.0': {u'/opt/csw/lib/svn': [u'CSWsvn']},
-        'libsvn_subr-1.so.0': {u'/opt/csw/lib/svn': [u'CSWsvn']},
-        'libsvn_wc-1.so.0': {u'/opt/csw/lib/svn': [u'CSWsvn']},
-        'libuuid.so.1': {u'/usr/lib': [u'SUNWcsl'], u'/usr/lib/sparcv9': [u'SUNWcslx']},
-    }
-
-    expected = [
-     [(u'CSWggettextrt', u'provides /opt/csw/lib/libintl.so.8 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWsvn', u'provides /opt/csw/lib/svn/libsvn_repos-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWsvn', u'provides /opt/csw/lib/svn/libsvn_client-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWsvn', u'provides /opt/csw/lib/svn/libsvn_wc-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWsvn', u'provides /opt/csw/lib/svn/libsvn_ra-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWsvn', u'provides /opt/csw/lib/svn/libsvn_delta-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWsvn', u'provides /opt/csw/lib/svn/libsvn_diff-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWsvn', u'provides /opt/csw/lib/svn/libsvn_subr-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWsvn', u'provides /opt/csw/lib/svn/libsvn_fs-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWapache2rt', u'provides /opt/csw/apache2/lib/libaprutil-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWoldaprt', u'provides /opt/csw/lib/libldap-2.4.so.2 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWoldaprt', u'provides /opt/csw/lib/liblber-2.4.so.2 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWexpat', u'provides /opt/csw/lib/libexpat.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWiconv', u'provides /opt/csw/lib/libiconv.so.2 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWapr', u'provides /opt/csw/lib/libapr-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0'),
-      (u'CSWapache2rt', u'provides /opt/csw/apache2/lib/libapr-1.so.0 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'SUNWcsl', u'provides /usr/lib/libuuid.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'SUNWcsl', u'provides /usr/lib/libsendfile.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'SUNWcsl', u'provides /usr/lib/librt.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'SUNWcsl', u'provides /usr/lib/libnsl.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'SUNWcsl', u'provides /usr/lib/libpthread.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'SUNWcsl', u'provides /usr/lib/libdl.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'CSWneon', u'provides /opt/csw/lib/libneon.so.27 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'SUNWcsl', u'provides /usr/lib/libsocket.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'SUNWcsl', u'provides /usr/lib/libc.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'SUNWlibC', u'provides /usr/lib/libCstd.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')],
-     [(u'SUNWlibC', u'provides /usr/lib/libCrun.so.1 needed by opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0')]]
-
-    # pkg_by_path is not important for dependency_checks.Libraries.
-    pkg_by_path = {}
-    result = dependency_checks.Libraries(self.pkg_data,
-                          self.error_mgr_mock,
-                          self.logger_stub,
-                          self.messenger_stub,
-                          path_and_pkg_by_basename, pkg_by_path)
-    self.assertEqual(expected, result)
+    self.mox.VerifyAll()
 
 
-class TestMissingDepsFromReasonGroups(unittest.TestCase):
+class SuggestLibraryPackage(mox.MoxTestBase):
 
-  def testOne(self):
-    reason_groups = [
-        [(u"CSWfoo1", ""),
-         (u"CSWfoo2", "")],
-        [(u"CSWbar", "")],
-    ]
-    declared_deps = set([u"CSWfoo2"])
-    expected = [[u"CSWbar"]]
-    result = dependency_checks.MissingDepsFromReasonGroups(
-        reason_groups, declared_deps)
-    self.assertEqual(result, expected)
+  def testBasic(self):
+    error_mgr_mock = self.mox.CreateMock(
+        checkpkg_lib.IndividualCheckInterface)
+    messenger_mock = self.mox.CreateMock(
+        checkpkg_lib.CheckpkgMessenger)
+    pkgname = "CSWfoo-bar"
+    catalogname = "foo_bar"
+    description = "A foo bar package"
+    # TODO: What if the path is different?
+    lib_path = "opt/csw/lib"
+    lib_basename = "libfoo.so.1.2.3"
+    lib_soname = "libfoo.so.1"
+    base_pkgname = "CSWfoo"
+    messenger_mock.SuggestGarLine(
+        r'# The following lines define a new package: CSWfoo-bar')
+    messenger_mock.SuggestGarLine(
+        r'PACKAGES += CSWfoo-bar')
+    messenger_mock.SuggestGarLine(
+        r'CATALOGNAME_CSWfoo-bar = foo_bar')
+    messenger_mock.SuggestGarLine(
+        r'PKGFILES_CSWfoo-bar += '
+        r'$(call baseisadirs,$(libdir),libfoo\.so\.1\.2\.3)')
+    messenger_mock.SuggestGarLine(
+        r'PKGFILES_CSWfoo-bar += '
+        r'$(call baseisadirs,$(libdir),libfoo\.so\.1(\.\d+)*)')
+    messenger_mock.SuggestGarLine(
+        'SPKG_DESC_CSWfoo-bar += A foo bar package, libfoo.so.1')
+    messenger_mock.SuggestGarLine(
+        r'RUNTIME_DEP_PKGS_CSWfoo += CSWfoo-bar')
+    messenger_mock.SuggestGarLine(
+        r'# The end of CSWfoo-bar definition')
+    self.mox.ReplayAll()
+    dependency_checks.SuggestLibraryPackage(
+        error_mgr_mock,
+        messenger_mock,
+        pkgname, catalogname,
+        description,
+        lib_path, lib_basename, lib_soname,
+        base_pkgname)
 
-
-class TestLibraries(unittest.TestCase):
-
-  def setUp(self):
-    self.mocker = mox.Mox()
-    self.logger_stub = stubs.LoggerStub()
-    self.messenger_stub = stubs.MessengerStub()
-    self.error_mgr_mock = self.mocker.CreateMock(
-        checkpkg.SetCheckInterface)
-    self.pkg_data = copy.deepcopy(sudo_stats)
-
-  def testLibrariesRpathOrder(self):
-    # pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
-    # pkg_by_path
-    pass
-
-  def testByFilename(self):
-    self.pkg_data = tree_stats[0]
-    self.pkg_data["pkgmap"] = [
-        {'class': 'none',
-         'line': 'not important',
-         'mode': '0755',
-         'path': '/opt/csw/apache2/bin/foo',
-         'type': 'f',
-         'group': 'bin',
-         'user': 'root'}]
-    self.mocker.ReplayAll()
-    result = dependency_checks.ByFilename(
-        self.pkg_data,
-        self.error_mgr_mock,
-        self.logger_stub,
-        self.messenger_stub,
-        None, None)
-    self.mocker.VerifyAll()
-    expected = [[
-      (u'CSWapache2',
-       "found file(s) matching /opt/csw/apache2/, "
-       "e.g. '/opt/csw/apache2/bin/foo'")]]
-    self.assertEqual(expected, result)
 
 if __name__ == '__main__':
   unittest.main()

@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GARNAME = loose-files
-GARVERSION = 1.0
+NAME = loose-files
+VERSION = 1.0
 CATEGORIES = utils
 DESCRIPTION = An example of a package created from loose files.
 define BLURB

@@ -3,6 +3,11 @@
 import checkpkg
 import os.path
 import re
+import ldd_emul
+import sharedlib_utils
+import common_constants
+import operator
+import logging
 
 # This shared library is present on Solaris 10 on amd64, but it's missing on
 # Solaris 8 on i386.  It's okay if it's missing.
@@ -39,21 +44,22 @@ def ProcessSoname(
     soname, path_and_pkg_by_basename, binary_info, isalist, binary_path, logger,
     error_mgr,
     pkgname, messenger):
-  """This is not an ideal name for a function.
+  """This is not an ideal name for this function.
 
   Returns:
     orphan_sonames
   """
+  logging.debug("ProcessSoname(), %s %s"
+                % (binary_info["path"], soname))
   orphan_sonames = []
-  required_deps = []
   resolved = False
   path_list = path_and_pkg_by_basename[soname].keys()
   runpath_tuple = (
       tuple(binary_info["runpath"])
       + tuple(checkpkg.SYS_DEFAULT_RUNPATH))
   runpath_history = []
-  alternative_deps = set()
   first_lib = None
+  already_resolved_paths = set()
   for runpath in runpath_tuple:
     runpath = ldd_emulator.SanitizeRunpath(runpath)
     runpath_list = ldd_emulator.ExpandRunpath(runpath, isalist, binary_path)
@@ -66,10 +72,15 @@ def ProcessSoname(
                                                path_list,
                                                binary_path)
     if resolved_path:
+      if resolved_path in already_resolved_paths:
+        continue
+      already_resolved_paths.add(resolved_path)
       resolved = True
-      req_pkgs = path_and_pkg_by_basename[soname][resolved_path]
-      reason = ("provides %s/%s needed by %s"
-                % (resolved_path, soname, binary_info["path"]))
+      reason = ("%s needs the %s soname"
+                % (binary_info["path"], soname))
+      logger.debug("soname %s found in %s for %s"
+                   % (soname, resolved_path, binary_info["path"]))
+      error_mgr.NeedFile(pkgname, os.path.join(resolved_path, soname), reason)
       # Looking for deprecated libraries.  However, only alerting if the
       # deprecated library is the first one found in the RPATH.  For example,
       # libdb-4.7.so is found in CSWbdb and CSWbdb47, and it's important to
@@ -86,9 +97,6 @@ def ProcessSoname(
                 "deprecated-library",
                 ("%s %s %s/%s"
                  % (binary_info["path"], msg, resolved_path, soname)))
-      for req_pkg in req_pkgs:
-        alternative_deps.add((req_pkg, reason))
-  required_deps.append(list(alternative_deps))
   if not resolved:
     orphan_sonames.append((soname, binary_info["path"]))
     if path_list:
@@ -102,7 +110,7 @@ def ProcessSoname(
           "while the file %s"
           % (soname, binary_info["path"],
              runpath_tuple, runpath_history, path_msg))
-  return orphan_sonames, required_deps
+  return orphan_sonames
 
 
 def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
@@ -125,47 +133,39 @@ def Libraries(pkg_data, error_mgr, logger, messenger, path_and_pkg_by_basename,
   pkgname = pkg_data["basic_stats"]["pkgname"]
   logger.debug("Libraries(): pkgname = %s", repr(pkgname))
   isalist = pkg_data["isalist"]
-  ldd_emulator = checkpkg.LddEmulator()
+  ldd_emulator = ldd_emul.LddEmulator()
   orphan_sonames = []
-  required_deps = []
   for binary_info in pkg_data["binaries_dump_info"]:
     binary_path, binary_basename = os.path.split(binary_info["path"])
     for soname in binary_info["needed sonames"]:
-      orphan_sonames_tmp, required_deps_tmp = ProcessSoname(
+      orphan_sonames_tmp = ProcessSoname(
           ldd_emulator,
           soname, path_and_pkg_by_basename, binary_info, isalist, binary_path, logger,
           error_mgr,
           pkgname, messenger)
       orphan_sonames.extend(orphan_sonames_tmp)
-      required_deps.extend(required_deps_tmp)
   orphan_sonames = set(orphan_sonames)
   for soname, binary_path in orphan_sonames:
     if soname not in ALLOWED_ORPHAN_SONAMES:
       error_mgr.ReportError(
           pkgname, "soname-not-found",
           "%s is needed by %s" % (soname, binary_path))
-  # TODO: Report orphan sonames here
-  return required_deps
+
 
 def ByFilename(pkg_data, error_mgr, logger, messenger,
                path_and_pkg_by_basename, pkg_by_path):
   pkgname = pkg_data["basic_stats"]["pkgname"]
-  reason_group = []
-  req_pkgs_reasons = []
   dep_regexes = [(re.compile(x), x, y)
                  for x, y in DEPENDENCY_FILENAME_REGEXES]
   for regex, regex_str, dep_pkgnames in dep_regexes:
     for pkgmap_entry in pkg_data["pkgmap"]:
       if pkgmap_entry["path"] and regex.match(pkgmap_entry["path"]):
-        msg = ("found file(s) matching %s, e.g. %s"
+        reason = ("found file(s) matching %s, e.g. %s"
                % (regex_str, repr(pkgmap_entry["path"])))
         for dep_pkgname in dep_pkgnames:
-          reason_group.append((dep_pkgname, msg))
+          error_mgr.NeedPackage(pkgname, dep_pkgname, reason)
         break
-    if reason_group:
-      req_pkgs_reasons.append(reason_group)
-      reason_group = []
-  return req_pkgs_reasons
+
 
 def ByDirectory(pkg_data, error_mgr, logger, messenger,
                 path_and_pkg_by_basename, pkg_by_path):
@@ -174,6 +174,9 @@ def ByDirectory(pkg_data, error_mgr, logger, messenger,
   1. For each directory
     1.1. Find the parent
     1.2. Add the parent to the list of packages to depend on.
+
+  This check is currently disabled, because of false positives that it
+  generates.
   """
   pkgname = pkg_data["basic_stats"]["pkgname"]
   req_pkgs_reasons = []
@@ -241,15 +244,34 @@ def GetPkgByFullPath(error_mgr, logger, paths_to_verify, pkg_by_path):
   # logger.warning("New paths: %s" % pprint.pformat(pkg_by_path))
   return pkg_by_path
 
-def MissingDepsFromReasonGroups(reason_groups, declared_deps_set):
-  missing_dep_groups = []
-  for reason_group in reason_groups:
-    dependency_fulfilled = False
-    pkgnames = [x for x, y in reason_group]
-    for pkgname in pkgnames:
-      if pkgname in declared_deps_set:
-        dependency_fulfilled = True
-        break
-    if not dependency_fulfilled:
-      missing_dep_groups.append(pkgnames)
-  return missing_dep_groups
+def SuggestLibraryPackage(error_mgr, messenger,
+    pkgname, catalogname,
+    description,
+    lib_path, lib_basename, soname,
+    base_pkgname):
+  escaped_soname = sharedlib_utils.EscapeRegex(soname)
+  escaped_basename = sharedlib_utils.EscapeRegex(lib_basename)
+  messenger.SuggestGarLine("# The following lines define a new package: "
+                           "%s" % pkgname)
+  messenger.SuggestGarLine("PACKAGES += %s" % pkgname)
+  messenger.SuggestGarLine(
+      "CATALOGNAME_%s = %s"
+      % (pkgname, catalogname))
+  # The exact library file (which can be different from what soname suggests)
+  messenger.SuggestGarLine(
+      r'PKGFILES_%s += '
+      r'$(call baseisadirs,$(libdir),%s)'
+      % (pkgname, escaped_basename))
+  # Name regex based on the soname, plus potential symlinks
+  messenger.SuggestGarLine(
+      r'PKGFILES_%s += '
+      r'$(call baseisadirs,$(libdir),%s(\.\d+)*)'
+      % (pkgname, escaped_soname))
+  messenger.SuggestGarLine(
+      "SPKG_DESC_%s += %s, %s"
+      % (pkgname, description, soname))
+  messenger.SuggestGarLine(
+      "RUNTIME_DEP_PKGS_%s += %s"
+      % (base_pkgname, pkgname))
+  messenger.SuggestGarLine(
+      "# The end of %s definition" % pkgname)

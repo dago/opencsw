@@ -22,8 +22,8 @@ endif
 PKGINFO ?= /usr/bin/pkginfo
 
 # You can use either PACKAGES with dynamic gspec-files or explicitly add gspec-files to DISTFILES.
-# Do "PACKAGES = CSWmypkg" when you build a package whose GARNAME is not the package name.
-# If no explicit gspec-files have been defined the default name for the package is CSW$(GARNAME).
+# Do "PACKAGES = CSWmypkg" when you build a package whose NAME is not the package name.
+# If no explicit gspec-files have been defined the default name for the package is CSW$(NAME).
 # The whole processing is done from _PKG_SPECS, which includes all packages to be build.
 
 # SRCPACKAGE_BASE is the name of the package containing the sourcefiles for all packages
@@ -31,8 +31,8 @@ PKGINFO ?= /usr/bin/pkginfo
 # SRCPACKAGE is the name of the package containing the sources
 
 ifeq ($(origin PACKAGES), undefined)
-PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(GARNAME))
-CATALOGNAME    ?= $(if $(filter %.gspec,$(DISTFILES)),,$(GARNAME))
+PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(NAME))
+CATALOGNAME    ?= $(if $(filter %.gspec,$(DISTFILES)),,$(NAME))
 SRCPACKAGE_BASE = $(firstword $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
 SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE))
@@ -52,6 +52,7 @@ GARSYSTEMVERSION ?= $(shell $(SVN) propget svn:externals $(CURDIR) | perl -ane '
 GARPKG_v1 = CSWgar-v1
 GARPKG_v2 = CSWgar-v2
 RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
+CATALOG_RELEASE ?= current
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
@@ -78,7 +79,7 @@ $(foreach P,$(SPKG_SPECS),$(if $(REQUIRED_PKGS_$P),$(error The deprecated variab
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
-BUNDLE ?= $(GARNAME)
+BUNDLE ?= $(NAME)
 
 # pkgname - Get the name of a package from a gspec-name or package-name
 #
@@ -150,7 +151,7 @@ endif
 
 
 SPKG_DESC      ?= $(DESCRIPTION)
-SPKG_VERSION   ?= $(GARVERSION)
+SPKG_VERSION   ?= $(VERSION)
 SPKG_CATEGORY  ?= application
 SPKG_SOURCEURL ?= $(firstword $(VENDOR_URL) \
 			$(if $(filter $(GNU_MIRROR),$(MASTER_SITES)),http://www.gnu.org/software/$(GNU_PROJ)) \
@@ -194,6 +195,7 @@ AP2_MODFILES ?= opt/csw/apache2/libexec/*so $(EXTRA_AP2_MODFILES)
 
 # - set class for all config files
 _CSWCLASS_FILTER = | perl -ane '\
+		$(foreach FILE,$(CPTEMPLATES),$$F[1] = "cswcptemplates" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(PRESERVECONF:%\.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
@@ -248,7 +250,7 @@ endif
 # Where we find our mkpackage global templates
 PKGLIB = $(GARDIR)/pkglib
 
-PKG_EXPORTS  = GARNAME GARVERSION DESCRIPTION CATEGORIES GARCH GARDIR GARBIN
+PKG_EXPORTS  = NAME VERSION DESCRIPTION CATEGORIES GARCH GARDIR GARBIN
 PKG_EXPORTS += CURDIR WORKDIR WORKDIR_FIRSTMOD WORKSRC WORKSRC_FIRSTMOD PKGROOT
 PKG_EXPORTS += SPKG_REVSTAMP SPKG_PKGNAME SPKG_DESC SPKG_VERSION SPKG_CATEGORY
 PKG_EXPORTS += SPKG_VENDOR SPKG_EMAIL SPKG_PSTAMP SPKG_BASEDIR SPKG_CLASSES
@@ -431,9 +433,9 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	               ) \
 	              <$(PROTOTYPE); \
 	   if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi \
-	  ) $(call checkpkg_override_filter,$*) $(_CSWCLASS_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  ) $(call checkpkg_override_filter,$*) $(_CSWCLASS_FILTER) $(_CATEGORY_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	else \
-	  cat $(PROTOTYPE) $(call checkpkg_override_filter,$*) $(_CSWCLASS_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  cat $(PROTOTYPE) $(call checkpkg_override_filter,$*) $(_CSWCLASS_FILTER) $(_CATEGORY_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	fi
 	$(if $(ALLOW_RELOCATE),$(call dontrelocate,opt,$(PROTOTYPE)))
 
@@ -463,7 +465,7 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(_CATEGORY_RUNTIME_DEP_PKGS)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),CSWalternatives)
-$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(_CSWCLASSES),print "$C\n" if( $$F[1] eq "$C");)')),CSWcswclassutils)
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(foreach P,$(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(filter-out ugfiles,$(_CSWCLASSES)),print "$C " if( $$F[1] eq "$C");)')),CSWcas-$(subst csw,,$(P)))
 
 $(WORKDIR)/%.depend: _DEP_PKGS=$(or $(RUNTIME_DEP_PKGS_ONLY_$*),$(RUNTIME_DEP_PKGS_ONLY),$(sort $(_EXTRA_GAR_PKGS)) $(or $(RUNTIME_DEP_PKGS_$*),$(RUNTIME_DEP_PKGS),$(DEP_PKGS_$*),$(DEP_PKGS)))
 $(WORKDIR)/%.depend: $(WORKDIR)
@@ -484,7 +486,7 @@ $(WORKDIR)/%.depend:
 # Dynamic gspec-files are constructed as follows:
 # - Packages using dynamic gspec-files must be listed in PACKAGES
 # - There is a default of PACKAGES containing one packages named CSW
-#   followed by the GARNAME. It can be changed by setting PACKAGES explicitly.
+#   followed by the NAME. It can be changed by setting PACKAGES explicitly.
 # - The name of the generated package is always the same as listed in PACKAGES
 # - The catalog name defaults to the suffix following CSW of the package name,
 #   but can be customized by setting CATALOGNAME_<pkg> = <catalogname-of-pkg>
@@ -708,7 +710,6 @@ reset-merge-etcservices:
 
 merge-checkpkgoverrides-%:
 	@echo "[ Generating checkpkg override for package $* ]"
-	$(_DBG)ginstall -d $(PKGROOT)/opt/csw/share/checkpkg/overrides
 	$(_DBG)($(foreach O,$(or $(CHECKPKG_OVERRIDES_$*),$(CHECKPKG_OVERRIDES)) $(_CATEGORY_CHECKPKG_OVERRIDES),echo "$O";)) | \
 		perl -F'\|' -ane 'unshift @F,"$*"; $$F[0].=":"; print join(" ",@F );' \
 		> $(WORKDIR_GLOBAL)/checkpkg_override.$*
@@ -843,7 +844,11 @@ package-p:
 # pkgcheck - check if the package is compliant
 #
 pkgcheck: $(foreach SPEC,$(_PKG_SPECS),package-$(SPEC))
-	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg $(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage --tmpdir $(SPKG_TMPDIR) -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
+	$(_DBG)( LC_ALL=C $(GARBIN)/checkpkg \
+		--architecture "$(GARCH)" \
+		--os-releases "$(SPKG_OSNAME)" \
+		--catalog-release "$(CATALOG_RELEASE)" \
+		$(foreach SPEC,$(_PKG_SPECS),$(SPKG_EXPORT)/`$(call _PKG_ENV,$(SPEC)) mkpackage --tmpdir $(SPKG_TMPDIR) -qs $(WORKDIR)/$(SPEC).gspec -D pkgfile`.gz ) || exit 2;)
 	@$(MAKECOOKIE)
 
 pkgcheck-p:
@@ -930,13 +935,13 @@ submitpkg-%: _PKGURL=$(shell svn info .. | $(GAWK) '$$1 == "URL:" { print $$2 }'
 submitpkg-%:
 	@$(if $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),\
 		$(error You have local files not in the repository. Please commit everything before submitting a package))
-	$(SVN) -m "$(GARNAME): Tag as release $(SPKG_VERSION),$(SPKG_REVSTAMP)$(if $(filter default,$*),, for project '$*')" cp $(_PKGURL)/trunk $(_PKGURL)/tags/$(if $(filter default,$*),,$*_)$(GARNAME)-$(SPKG_VERSION),$(SPKG_REVSTAMP)
+	$(SVN) -m "$(NAME): Tag as release $(SPKG_VERSION),$(SPKG_REVSTAMP)$(if $(filter default,$*),, for project '$*')" cp $(_PKGURL)/trunk $(_PKGURL)/tags/$(if $(filter default,$*),,$*_)$(NAME)-$(SPKG_VERSION),$(SPKG_REVSTAMP)
 
 # dependb - update the dependency database
 #
 dependb:
 	@dependb --db $(SPKG_DEPEND_DB) \
-             --parent $(CATEGORIES)/$(GARNAME) \
+             --parent $(CATEGORIES)/$(NAME) \
              --add $(DEPENDS)
 
 # pkgenv - dump the packaging environment

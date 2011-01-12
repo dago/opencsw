@@ -10,9 +10,9 @@ class ExampleEndToEndTest(unittest.TestCase):
   """An example end-to-end test of GAR."""
 
   def testPkginfoName(self):
-    """Checks that the GARNAME makes it to the NAME in pkginfo."""
+    """Checks that the NAME makes it to the NAME in pkginfo."""
     mybuild = gartest.DynamicGarBuild()
-    mybuild.SetGarVariable("GARNAME", "foo")
+    mybuild.SetGarVariable("NAME", "foo")
     mybuild.AddInstallFile("/opt/csw/share/foo", "bar!\n")
     mybuild.WriteGarFiles()
     self.assertEquals(0, mybuild.Build())

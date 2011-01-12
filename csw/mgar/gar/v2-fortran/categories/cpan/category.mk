@@ -3,7 +3,7 @@
 MASTER_SITES ?= $(CPAN_MIRRORS)
 
 # This is common to most modules - override in module makefile if different
-MODDIST   ?= $(GARNAME)-$(GARVERSION).tar.gz
+MODDIST   ?= $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(MODDIST)
 CHECKPATH ?= $(firstword $(CPAN_MIRRORS))
 
@@ -28,13 +28,13 @@ SPKG_SOURCEURL  = http://search.cpan.org
 SPKG_SOURCEURL := $(SPKG_SOURCEURL)/~$(call TOLOWER,$(AUTHOR))
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX ?= $(GARNAME)-(\d+(?:\.\d+)*).tar.gz
+UFILES_REGEX ?= $(NAME)-(\d+(?:\.\d+)*).tar.gz
 USTREAM_MASTER_SITE ?= $(SPKG_SOURCEURL)
 
-$(foreach P,$(PACKAGES),$(eval _CATEGORY_SPKG_DESC_$P = $$(GARNAME): $$(or $$(SPKG_DESC_$P),$$(SPKG_DESC))))
-_CATEGORY_PKGINFO = echo "PERL_MODULE_NAME=$(GARNAME)";
+$(foreach P,$(PACKAGES),$(eval _CATEGORY_SPKG_DESC_$P = $$(NAME): $$(or $$(SPKG_DESC_$P),$$(SPKG_DESC))))
+_CATEGORY_PKGINFO = echo "PERL_MODULE_NAME=$(NAME)";
 
-SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(GARNAME)
+SPKG_SOURCEURL := $(SPKG_SOURCEURL)/$(NAME)
 
 _MERGE_EXCLUDE_CATEGORY = .*/perllocal\.pod .*/\.packlist
 _CATEGORY_GSPEC_INCLUDE ?= csw_cpan_dyngspec.gspec
@@ -47,6 +47,9 @@ _CATEGORY_CHECKPKG_OVERRIDES = surplus-dependency
 # The string starts with the module name - the maintainer has no influence if
 # upstream chose uppercase or not as case must match.
 _CATEGORY_CHECKPKG_OVERRIDES += pkginfo-description-not-starting-with-uppercase
+
+# Copy in META.yml if it exists so checkpkg can check Perl dependencies
+_CATEGORY_FILTER = | ( cat; if test -f "$(WORKDIR_GLOBAL)/META.yml";then echo "i cswpm-meta.yml=META.yml"; fi)
 
 include gar/gar.mk
 
@@ -89,25 +92,28 @@ install-%/Build:
 	( cd $* ; $(INSTALL_ENV) ./Build install $(PERLBUILD_INSTALL_ARGS) )
 	@$(MAKECOOKIE)
 
+pre-package:
+	test -f $(WORKSRC_FIRSTMOD)/META.yml && cp $(WORKSRC_FIRSTMOD)/META.yml $(WORKDIR_GLOBAL)
+
 # Check for a CPAN module version update
 update-check:
-	@echo " ==> Update Check: $(GARNAME) $(GARVERSION)"
+	@echo " ==> Update Check: $(NAME) $(VERSION)"
 	@if test "x$(MANUAL_UPDATE)" != "x0" ; then \
 	    cpan_check $(CHECKPATH)$(MODDIST) \
 	               $(CURDIR)/../update_results.txt ; \
 	else \
-	    echo " ==> AUTO UPDATE CHECK FOR $(GARNAME) IS DISABLED" ; \
+	    echo " ==> AUTO UPDATE CHECK FOR $(NAME) IS DISABLED" ; \
 	fi
 	
 # Print HTML info for modules
 module-info:
-	@echo " ==> Generating module info for $(GARNAME) $(GARVERSION)"
+	@echo " ==> Generating module info for $(NAME) $(VERSION)"
 	@printf "<a href=\"http://search.cpan.org/" \
 		>> ../module_info.html
 	@printf "~$(shell echo $(AUTHOR) | tr '[A-Z]' '[a-z]')/" \
 		>> ../module_info.html
-	@printf "$(GARNAME)-$(GARVERSION)" \
+	@printf "$(NAME)-$(VERSION)" \
 		>> ../module_info.html
-	@printf "\">$(GARNAME)-$(GARVERSION)</a><br/>\n" \
+	@printf "\">$(NAME)-$(VERSION)</a><br/>\n" \
 		>> ../module_info.html
 
