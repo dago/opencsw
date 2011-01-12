@@ -88,7 +88,7 @@ INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
 
 # Devel package
 PACKAGES += CSWpython$(CVER)-dev
-CATALOGNAME_CSWpython$(CVER)-dev = python_$(CVER)_devel
+CATALOGNAME_CSWpython$(CVER)-dev = python_$(CVER)_dev
 SPKG_DESC_CSWpython$(CVER)-dev = Development Files for Python
 PKGFILES_CSWpython$(CVER)-dev += $(includedir)/$(PVER)/(?!pyconfig\.h).*
 # /opt/csw/include/python2.7/pyconfig.h
