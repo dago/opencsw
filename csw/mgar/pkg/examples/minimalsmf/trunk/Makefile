@@ -20,6 +20,8 @@ ARCHALL = 1
 MASTER_SITES =
 DISTFILES  = sleeping-beauty
 DISTFILES += csw$(NAME)
+DISTFILES += COPYING
+SPKG_SOURCEURL = http://www.opencsw.org
 
 INITSMF = /etc/opt/csw/init.d/cswminimalsmf
 
