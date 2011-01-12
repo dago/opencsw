@@ -22,12 +22,8 @@ import shutil
 import urllib2
 from Cheetah import Template
 import sharedlib_utils as su
+import common_constants
 
-ARCH_SPARC = "sparc"
-ARCH_i386 = "i386"
-ARCH_ALL = "all"
-ARCHITECTURES = [ARCH_SPARC, ARCH_i386, ARCH_ALL]
-OS_RELS = [u"SunOS5.9", u"SunOS5.10"]
 MAJOR_VERSION = "major version"
 MINOR_VERSION = "minor version"
 PATCHLEVEL = "patchlevel"
@@ -80,7 +76,11 @@ def ParsePackageFileName(p):
   if p.endswith(".pkg"):
     p = p[:-4]
   bits = p.split("-")
-  catalogname = bits[0]
+  if len(bits) >= 6:
+    catalogname = "-".join(bits[:len(bits) - 4])
+    bits = [catalogname] + bits[len(bits) - 4:]
+  else:
+    catalogname = bits[0]
   if len(bits) < 2:
     version, version_info, revision_info = None, None, None
     full_version_string = None
@@ -163,19 +163,6 @@ def ParseVersionString(s):
   if "extra_strings" in revision_info:
     revision_info["extra_strings"] = tuple(revision_info["extra_strings"])
   return version_str, version_info, revision_info
-
-
-def IndexDictsBy(list_of_dicts, field_key):
-  """Creates an index of list of dictionaries by a field name.
-
-  Returns a dictionary of lists.
-  """
-  index = {}
-  for d in list_of_dicts:
-    if d[field_key] not in index:
-      index[d[field_key]] = []
-    index[d[field_key]].append(d)
-  return index
 
 
 class CatalogBasedOpencswPackage(object):
@@ -297,7 +284,10 @@ class StagingDir(object):
   def __repr__(self):
     return u"StagingDir(%s)" % repr(self.dir_path)
 
-  def GetLatest(self, software, architectures=ARCHITECTURES, os_rels=OS_RELS):
+  def GetLatest(self,
+                software,
+                architectures=common_constants.ARCHITECTURES,
+                os_rels=common_constants.OS_RELS):
     files = os.listdir(self.dir_path)
     package_files = []
     for os_rel in os_rels:
@@ -316,8 +306,9 @@ class StagingDir(object):
         if relevant_pkgs:
           package_files.append(relevant_pkgs[-1])
     if not package_files:
-      raise PackageError("Could not find %s in %s"
-                         % (repr(software), repr(self.dir_path)))
+      logging.warning(
+          "Could not find any %s-* packages in %s",
+          repr(software), repr(self.dir_path))
     logging.debug("The latest packages %s in %s are %s",
                   repr(software),
                   repr(self.dir_path),
@@ -488,94 +479,3 @@ def PkginfoToSrv4Name(pkginfo_dict):
   fn_data["arch"] = pkginfo_dict["ARCH"]
   fn_data["tag"] = "SUNW"
   return SRV4_FN_TMPL % fn_data
-
-
-class Pkgmap(object):
-  """Represents the pkgmap of the package.
-
-  The plan:
-
-    entries = [
-      {
-        'path': ...,
-        'class': ...,
-        (more fields?)
-      }, ...
-    ]
-
-  + indexes
-  """
-  ENTRY_TYPES = {
-      "1": "header (?)",
-      "d": "directory",
-      "f": "file",
-      "s": "symlink",
-      "l": "link",
-      "i": "script",
-      "e": "editable file"
-  }
-
-  def __init__(self, input, permissions=False,
-               strip=None):
-    self.paths = set()
-    self.analyze_permissions = permissions
-    self.entries = []
-    self.classes = None
-    for line in input:
-      fields = re.split(r'\s+', line)
-      if strip:
-        strip_re = re.compile(r"^%s" % strip)
-        fields = [re.sub(strip_re, "", x) for x in fields]
-      line_to_add = None
-      installed_path = None
-      prototype_class = None
-      line_type = fields[1]
-      mode = None
-      user = None
-      group = None
-      if len(fields) < 2:
-        continue
-      elif line_type in ('f', 'd'):
-        # Files and directories
-        line_to_add = fields[3]
-        installed_path = fields[3]
-        prototype_class = fields[2]
-        if self.analyze_permissions:
-          line_to_add += " %s" % fields[4]
-        mode, user, group = fields[4:7]
-      elif line_type in ('e'):
-        # Editable files
-        line_to_add = fields[3]
-        installed_path = fields[3]
-        prototype_class = fields[2]
-      elif line_type in ('s', 'l'):
-        # soft- and hardlinks
-        link_from, link_to = fields[3].split("=")
-        installed_path = link_from
-        line_to_add = "%s --> %s" % (link_from, link_to)
-        prototype_class = fields[2]
-      if line_to_add:
-        self.paths.add(line_to_add)
-      entry = {
-          "line": line.strip(),
-          "type": line_type,
-      }
-      entry["path"] = installed_path
-      entry["class"] = prototype_class
-      entry["mode"] = mode
-      entry["user"] = user
-      entry["group"] = group
-      self.entries.append(entry)
-    self.entries_by_line = IndexDictsBy(self.entries, "line")
-    self.entries_by_type = IndexDictsBy(self.entries, "type")
-    self.entries_by_class = IndexDictsBy(self.entries, "class")
-    self.entries_by_path = IndexDictsBy(self.entries, "path")
-
-  def GetClasses(self):
-    """The assumtion is that the set of classes never changes."""
-    if not self.classes:
-      self.classes = set()
-      for entry in self.entries:
-        if entry["class"]:  # might be None
-          self.classes.add(entry["class"])
-    return self.classes

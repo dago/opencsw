@@ -47,28 +47,6 @@ PKG_CAS_PASSRELATIVE= none
 #FASPACD= none
 """
 
-PKGMAP_1 = """1 f cswcpsampleconf /etc/opt/csw/cups/cupsd.conf.CSW 0644 root bin 4053 20987 1264420689
-"""
-
-PKGMAP_2 = """: 1 18128
-1 d none /etc/opt/csw/cups 0755 root bin
-1 f cswcpsampleconf /etc/opt/csw/cups/cupsd.conf.CSW 0644 root bin 4053 20987 1264420689
-1 f none /etc/opt/csw/cups/cupsd.conf.default 0640 root bin 4053 20987 1264420689
-1 d none /etc/opt/csw/cups/interfaces 0755 root bin
-1 d none /etc/opt/csw/cups/ppd 0755 root bin
-1 f cswinitsmf /etc/opt/csw/init.d/cswcups 0555 root bin 4547 14118 1264420798
-1 i depend 122 11155 1264524848
-1 i pkginfo 489 41685 1264524852
-1 i postremove 151 12419 1256302505
-1 i preinstall 1488 45678 125630250
-"""
-
-PKGMAP_3 = """1 d none /opt/csw/apache2/ap2mod 0755 root bin
-1 e build /opt/csw/apache2/ap2mod/suexec ? ? ? 1472 50478 1289099700
-1 d none /opt/csw/apache2/libexec 0755 root bin
-1 f none /opt/csw/apache2/libexec/mod_suexec.so 0755 root bin 6852 52597 1289092061
-"""
-
 SUBMITPKG_DATA_1 = {
     'NEW_PACKAGE': 'new package',
     'to': u'Release Manager <somebody@example.com>',
@@ -131,6 +109,13 @@ class ParsePackageFileNameTest(unittest.TestCase):
     self.assertEqual(parsed["arch"], "unknown")
     self.assertEqual(parsed["osrel"], "unspecified")
     self.assertEqual(parsed["catalogname"], "RICHPse")
+
+  def testParsePackageFileName_OneDashTooMany(self):
+    file_name = ("boost-jam-3.1.18,REV=2010.12.15-"
+                 "SunOS5.9-sparc-UNCOMMITTED.pkg.gz")
+    parsed = opencsw.ParsePackageFileName(file_name)
+    self.assertEqual(parsed["arch"], "sparc")
+    self.assertEqual(parsed["catalogname"], "boost-jam")
 
   def testParsePackageFileName_Nonsense(self):
     """Checks if the function can sustain a non-conformant string."""
@@ -200,11 +185,24 @@ class ParseVersionStringTest(unittest.TestCase):
 
   def test_Text(self):
     data = "That, sir, is a frab-rication! It's wabbit season!"
-    opencsw.ParseVersionString(data)
+    # Make sure that we don't crash and return a tuple.  No guarantees
+    # for the content.
+    self.assertEquals(tuple, type(opencsw.ParseVersionString(data)))
 
   def test_Empty(self):
     data = ""
     expected = ('', {'major version': ''}, {})
+    self.assertEqual(expected, opencsw.ParseVersionString(data))
+
+  def testSmallRev(self):
+    data = "4.7.25,REV=2009.10.18_rev=p4"
+    expected = (
+        '4.7.25',
+        {'minor version': '7',
+         'patchlevel': '25',
+         'major version': '4'},
+        {'rev': 'p4',
+         'REV': '2009.10.18'})
     self.assertEqual(expected, opencsw.ParseVersionString(data))
 
   def testExtraStringsHashable(self):
@@ -381,67 +379,6 @@ class PackageGroupNameTest(unittest.TestCase):
           "data: %s, expected: %s, got: %s" % (catalogname_list,
                                                repr(expected_name),
                                                repr(result)))
-
-
-class PkgmapUnitTest(unittest.TestCase):
-
-  def test_1(self):
-    pkgmap = opencsw.Pkgmap(PKGMAP_1.splitlines())
-    expected = [
-        {
-            'group': 'bin',
-            'user':  'root',
-            'path':  '/etc/opt/csw/cups/cupsd.conf.CSW',
-            'line':  '1 f cswcpsampleconf /etc/opt/csw/cups/cupsd.conf.CSW 0644 root bin 4053 20987 1264420689',
-            'type':  'f',
-            'class': 'cswcpsampleconf',
-            'mode':  '0644'
-        }
-    ]
-    self.assertEqual(expected, pkgmap.entries)
-
-  def test_2(self):
-    pkgmap = opencsw.Pkgmap(PKGMAP_2.splitlines())
-    line = ": 1 18128"
-    self.assertTrue(line in pkgmap.entries_by_line)
-
-  def test_3(self):
-    pkgmap = opencsw.Pkgmap(PKGMAP_2.splitlines())
-    self.assertTrue("cswcpsampleconf" in pkgmap.entries_by_class)
-
-  def test_4(self):
-    pkgmap = opencsw.Pkgmap(PKGMAP_3.splitlines())
-    self.assertTrue("build" in pkgmap.entries_by_class)
-
-class IndexByUnitTest(unittest.TestCase):
-
-  def testIndexDictsBy_1(self):
-    list_of_dicts = [
-        {"a": 1},
-        {"a": 2},
-        {"a": 3},
-    ]
-    expected = {
-        1: [{'a': 1}],
-        2: [{'a': 2}],
-        3: [{'a': 3}],
-    }
-    self.assertEquals(expected, opencsw.IndexDictsBy(list_of_dicts, "a"))
-
-  def testIndexDictsBy_2(self):
-    list_of_dicts = [
-        {"a": 1, "b": 1},
-        {"a": 1, "b": 2},
-        {"a": 1, "b": 3},
-    ]
-    expected = {
-        1: [
-          {'a': 1, 'b': 1},
-          {'a': 1, 'b': 2},
-          {'a': 1, 'b': 3},
-        ]
-    }
-    self.assertEquals(expected, opencsw.IndexDictsBy(list_of_dicts, "a"))
 
 
 class SubmitpkgTemplateUnitTest(unittest.TestCase):

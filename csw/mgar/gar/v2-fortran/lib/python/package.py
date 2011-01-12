@@ -14,6 +14,8 @@ import time
 import configuration as c
 import opencsw
 import overrides
+import shell
+import pkgmap
 
 ADMIN_FILE_CONTENT = """
 basedir=default
@@ -41,27 +43,11 @@ class PackageError(Error):
   pass
 
 
-class ShellMixin(object):
-
-  def ShellCommand(self, args, quiet=False):
-    logging.debug("Calling: %s", repr(args))
-    if quiet:
-      process = subprocess.Popen(args,
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
-      stdout, stderr = process.communicate()
-      retcode = process.wait()
-    else:
-      retcode = subprocess.call(args)
-    if retcode:
-      raise Error("Running %s has failed." % repr(args))
-    return retcode
-
-
-class CswSrv4File(ShellMixin, object):
+class CswSrv4File(shell.ShellMixin, object):
   """Represents a package in the srv4 format (pkg)."""
 
   def __init__(self, pkg_path, debug=False):
+    super(CswSrv4File, self).__init__()
     self.pkg_path = pkg_path
     self.workdir = None
     self.gunzipped_path = None
@@ -71,6 +57,7 @@ class CswSrv4File(ShellMixin, object):
     self.pkgname = None
     self.md5sum = None
     self.mtime = None
+    self.stat = None
 
   def __repr__(self):
     return u"CswSrv4File(%s)" % repr(self.pkg_path)
@@ -143,13 +130,21 @@ class CswSrv4File(ShellMixin, object):
       logging.debug("GetPkgname(): %s", repr(self.pkgname))
     return self.pkgname
 
+  def _Stat(self):
+    if not self.stat:
+      self.stat = os.stat(self.pkg_path)
+    return self.stat
+
   def GetMtime(self):
     if not self.mtime:
-      # This fails if the file is not there.
-      s = os.stat(self.pkg_path)
+      s = self._Stat()
       t = time.gmtime(s.st_mtime)
       self.mtime = datetime.datetime(*t[:6])
     return self.mtime
+
+  def GetSize(self):
+    s = self._Stat()
+    return s.st_size
 
   def TransformToDir(self):
     """Transforms the file to the directory format.
@@ -202,17 +197,12 @@ class CswSrv4File(ShellMixin, object):
 
   def GetPkgchkOutput(self):
     """Returns: (exit code, stdout, stderr)."""
-    args = ["pkgchk", "-d", self.GetGunzippedPath(), "all"]
+    args = ["/usr/sbin/pkgchk", "-d", self.GetGunzippedPath(), "all"]
     pkgchk_proc = subprocess.Popen(
         args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = pkgchk_proc.communicate()
     ret = pkgchk_proc.wait()
     return ret, stdout, stderr
-
-  def GetFileMtime(self):
-    if not self.mtime:
-      self.mtime = os.stat(self.pkg_path).st_mtime
-    return self.mtime
 
   def __del__(self):
     if self.workdir:
@@ -225,7 +215,7 @@ class CswSrv4File(ShellMixin, object):
     return DirectoryFormatPackage
 
 
-class DirectoryFormatPackage(ShellMixin, object):
+class DirectoryFormatPackage(shell.ShellMixin, object):
   """Represents a package in the directory format.
 
   Allows some read-write operations.
@@ -281,7 +271,7 @@ class DirectoryFormatPackage(ShellMixin, object):
 
   def GetPkgmap(self, analyze_permissions=False, strip=None):
     fd = open(os.path.join(self.directory, "pkgmap"), "r")
-    return opencsw.Pkgmap(fd, analyze_permissions, strip)
+    return pkgmap.Pkgmap(fd, analyze_permissions, strip)
 
   def SetPkginfoEntry(self, key, value):
     pkginfo = self.GetParsedPkginfo()
@@ -371,17 +361,6 @@ class DirectoryFormatPackage(ShellMixin, object):
       raise PackageError("%s does not exist or is not a directory"
                          % self.directory)
 
-  def GetAllFilePaths(self):
-    """Returns a list of all paths from the package."""
-    if not self.file_paths:
-      self.CheckPkgpathExists()
-      remove_prefix = "%s/" % self.pkgpath
-      self.file_paths = []
-      for root, dirs, files in os.walk(os.path.join(self.pkgpath, "root")):
-        full_paths = [os.path.join(root, f) for f in files]
-        self.file_paths.extend([f.replace(remove_prefix, "") for f in full_paths])
-    return self.file_paths
-
   def _GetOverridesStream(self, file_path):
     # This might potentially cause a file descriptor leak, but I'm not going to
     # worry about that at this stage.
@@ -469,7 +448,7 @@ class PackageComparator(object):
                                    sorted(pkgmap_b.paths),
                                    fromfile=self.pkg_a.pkg_path,
                                    tofile=self.pkg_b.pkg_path)
-    diff_text = "\n".join(diff_ab)
+    diff_text = "\n".join(x.strip() for x in diff_ab)
     if diff_text:
       less_proc = subprocess.Popen(["less"], stdin=subprocess.PIPE)
       less_stdout, less_stderr = less_proc.communicate(input=diff_text)
@@ -478,7 +457,7 @@ class PackageComparator(object):
       print "No differences found."
 
 
-class PackageSurgeon(ShellMixin):
+class PackageSurgeon(shell.ShellMixin):
   """Takes an OpenCSW gzipped package and performs surgery on it.
 
   Sows it up, adjusts checksums, and puts it back together.
