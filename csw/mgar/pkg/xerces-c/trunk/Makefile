@@ -1,5 +1,5 @@
 NAME = xerces-c
-VERSION = 3.0.1
+VERSION = 3.1.1
 CATEGORIES = lib
 
 DESCRIPTION = Xerces XML parser for C++
@@ -13,18 +13,58 @@ define BLURB
 endef
 
 MASTER_SITES = http://apache.abdaal.com/xerces/c/3/sources/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += $(NAME)-$(VERSION).tar.gz
+
+PATCHFILES += 0001-Do-not-strip-norunpath.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWxerces-c
-CATALOGNAME = xerces_c
+PACKAGES += CSWlibxerces-c3-1
+CATALOGNAME_CSWlibxerces-c3-1 = libxerces_c3_1
+SPKG_DESC_CSWlibxerces-c3-1 = Xerces XML parser for C++ providing libxerces-c-3.1.so
+PKGFILES_CSWlibxerces-c3-1 = $(call baseisadirs,$(libdir),libxerces-c-3\.1\.so)
+RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWcurlrt
+RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibidn
+RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibcares
+RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWoldaprt
 
-SPKG_SOURCEURL = http://xerces.apache.org/xerces-c/
+PACKAGES += CSWlibxerces-c-devel
+CATALOGNAME_CSWlibxerces-c-devel = libxerces_c_devel
+SPKG_DESC_CSWlibxerces-c-devel = Development files for Xerces
+RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWlibxerces-c3-1
+RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWcurlrt
+RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWlibidn
+RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWlibcares
+RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWoldaprt
+
+PACKAGES += CSWxerces-c
+CATALOGNAME_CSWxerces-c = xerces_c
+SPKG_DESC_CSWxerces-c = Utility programs from the Xerces XML parser
+PKGFILES_CSWxerces-c = $(bindir)/.*
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibxerces-c3-1
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWcurlrt
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibidn
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWzlib
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibcares
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWosslrt
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWoldaprt
+
+VENDOR_URL = http://xerces.apache.org/xerces-c/
+LICENSE = LICENSE
 
 BUILD64 = 1
+
+icu_config = $(bindir)/icu-config
+EXTRA_CONFIGURE_EXPORTS = icu_config
+
 CONFIGURE_ARGS = $(DIRPATHS)
+# CONFIGURE_ARGS += --with-icu=$(prefix)
+# CONFIGURE_ARGS += --with-curl=$(prefix)
 
 TEST_TARGET = check
 
