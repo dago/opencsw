@@ -1448,7 +1448,7 @@ class TestCheckLicenseFilePlacementLicense(CheckpkgUnitTestHelper,
                                            unittest.TestCase):
   FUNCTION_NAME = 'CheckLicenseFilePlacement'
   def CheckpkgTest(self):
-    self.pkg_data = neon_stats[0]
+    self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["pkgmap"].append({
       "class": "none", "type": "f", "line": "",
       "user": "root", "group": "bin", "mode": '0755',
@@ -1478,7 +1478,7 @@ class TestCheckLicenseFilePlacementRandomFile(
   "A random file should not trigger the message; only license files."
   FUNCTION_NAME = 'CheckLicenseFilePlacement'
   def CheckpkgTest(self):
-    self.pkg_data = neon_stats[0]
+    self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["pkgmap"].append({
       "class": "none", "type": "f", "line": "",
       "user": "root", "group": "bin", "mode": '0755',
