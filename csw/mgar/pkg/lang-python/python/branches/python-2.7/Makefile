@@ -121,6 +121,7 @@ PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/distutils/tests.*
 PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/json/tests.*
 PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/lib2to3/tests.*
 PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/sqlite3/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/$(PVER)/unittest/test.*
 
 ARCHALL_CSWpython$(CVER)-test = 1
 ARCHALL_CSWidle$(CVER)        = 1
