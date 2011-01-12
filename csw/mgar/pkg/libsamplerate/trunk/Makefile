@@ -18,7 +18,10 @@ endef
 MASTER_SITES = http://www.mega-nerd.com/SRC/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
+# Both changes have been reported upstream to Erik de Castro Lopo and
+# he gave his placet that they are correct. They affect the testsuite only.
 PATCHFILES += 0001-Fix-testcase.patch
+PATCHFILES += 0002-Raise-failure-levels-slightly-for-Solaris-Sparc-and-.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -45,8 +48,5 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-static
-
-# Some broken tests, skip for now
-SKIPTEST ?= 1
 
 include gar/category.mk
