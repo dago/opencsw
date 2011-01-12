@@ -240,11 +240,11 @@ get-upstream-version-list:
 		if [ -n "$(VERSIONLIST)" ] ; then \
 			for VERSION in $(VERSIONLIST) ""; do \
 				if [ ! "$$VERSION" -eq "" ] ; then \
-					echo "$$VERSION" ; \
+					echo "$(NAME) - $$VERSION" ; \
 				fi ; \
 			done ; \
 		else \
-			echo "No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
+			echo "$(NAME) - No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
 		fi ; \
 	fi ;
 
@@ -270,9 +270,9 @@ get-upstream-latest-version:
 		fi; \
 		LATEST=$(LATESTVERSION) ; \
 		if [ -n "$$LATEST" ] ; then \
-			echo $$LATEST ; \
+			echo "$(NAME) - Latest upstream version is $$LATEST" ; \
 		else \
-			echo "No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
+			echo "$(NAME) - No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
 		fi ; \
 	fi ;
 
@@ -298,7 +298,7 @@ check-upstream:
 		fi; \
 		LATEST=$(CHECKUPSTREAMVERSION) ; \
 		if [ -n "$$LATEST" ] ; then \
-			echo "$(NAME) : a new version of upstream files is available : $$LATEST"; \
+			echo "$(NAME) : A new version of upstream files is available. Package can be upgraded from version $(VERSION) to $$LATEST"; \
 		else \
 			echo "$(NAME) : Package is up-to-date. Current version is $(VERSION)" ; \
 		fi ; \
@@ -328,22 +328,21 @@ upgrade-to-latest-upstream:
 		LATEST=$(CHECKUPSTREAMVERSION) ; \
 		if [ ! -f "$(COOKIEDIR)/upgrade-to-latest-upstream-$$LATEST" ] ; then \
 			if [ ! -d "../branches/upgrade_from_$(VERSION)_to_$$LATEST" ] ; then \
-				echo "Not a dir : ../branches/upgrade_from_$(VERSION)_to_$$LATEST" ; \
 				if [ -n "$$LATEST" ] ; then \
 					echo "$(NAME) : a new version of upstream files is available. Creating upgrade branch from version $(VERSION) to $$LATEST"; \
 					VERSIONUPGRADE="$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch upgrade-to-version --current-version=$(VERSION) --target-version=$(CHECKUPSTREAMVERSION))" ; \
 					if [ -n "$$VERSIONUPGRADE" ] ; then \
-						echo $$VERSIONUPGRADE ; \
+						echo "$(NAME) - $$VERSIONUPGRADE" ; \
 					fi ; \
 				else \
 					echo "$(NAME) : Package is up-to-date. Upstream site has no version newer than $(VERSION)" ; \
 				fi ; \
 			else \
-				echo "Upgrade branch from version $(VERSION) to version $$LATEST already exist" ; \
+				echo "$(NAME) - Upgrade branch from version $(VERSION) to version $$LATEST already exist" ; \
 			fi ; \
 			$(MAKE) upgrade-to-latest-upstream-$$LATEST >/dev/null; \
 		else \
-			echo "Upgrade branch to version $$LATEST already created by upstream_watch" ; \
+			echo "$(NAME) - Upgrade branch to version $$LATEST already created by upstream_watch" ; \
 		fi ; \
 	fi
 
