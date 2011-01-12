@@ -41,6 +41,9 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 BUILD64 = 1
 EXTRA_BUILD_ISAS = sparcv8plus+vis pentium_pro
 
+# Disable intrinsics until this has been resolved:
+#   https://sourceforge.net/tracker/?func=detail&aid=3150289&group_id=290&atid=100290
+# CONFIGURE_ARGS_isa-i386 = --without-nasm
 CONFIGURE_ARGS_isa-i386 = ac_cv_header_xmmintrin_h=no
 CONFIGURE_ARGS_isa-pentium_pro = ac_cv_header_xmmintrin_h=no
 
