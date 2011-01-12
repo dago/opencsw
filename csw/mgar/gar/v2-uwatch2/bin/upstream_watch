@@ -144,6 +144,19 @@ class CommandLineParser(object):
         self.parser.add_option("-t", "--target-version", help="Package target version", action="store", dest="target_version")
         self.parser.add_option("-u", "--upstream-url", help="Upstream version page url", action="store", dest="upstream_url")
 
+        # Option used for storing version information in the database
+        self.parser.add_option("-g", "--gar-version", help="Gar version of the package", action="store", dest="gar_version")
+        self.parser.add_option("-w", "--upstream-version", help="Upstream version of the package", action="store", dest="upstream_version")
+        self.parser.add_option("-a", "--gar-path", help="Relative path in svn repository", action="store", dest="gar_path")
+        self.parser.add_option("-n", "--catalog-name", help="Catalog name", action="store", dest="catalog_name")
+        self.parser.add_option("-p", "--package-name", help="Package name", action="store", dest="package_name")
+        self.parser.add_option("-e", "--execution-date", help="Check date to be stored in the database", action="store", dest="execution_date")
+
+        self.parser.add_option("-S", "--database-schema", help="Defines the database to use in the connection string", action="store", dest="database_schema")
+        self.parser.add_option("-H", "--database-host", help="Defines the database host to use in the connection string", action="store", dest="database_host")
+        self.parser.add_option("-U", "--database-user", help="Defines the database user to use in the connection string", action="store", dest="database_user")
+        self.parser.add_option("-P", "--database-password", help="Defines the database password to use in the connection string", action="store", dest="database_password")
+
     # -----------------------------------------------------------------------------------------------------------------
 
     def parse(self):
@@ -195,6 +208,46 @@ class ConfigurationParser(object):
         if args.source_directory != None:
             self._source_directory = args.source_directory
 
+        # This member variable defines the version of the package stored in the gar build description
+        if args.gar_version != None:
+            self._gar_version = args.gar_version
+
+        # This member variable defines the upstream version of package
+        if args.upstream_version != None:
+            self._upstream_version = args.upstream_version
+
+        # This member variable defines the relative path in the svn repository
+        if args.gar_path != None:
+            self._gar_path = args.gar_path
+
+        # This member variable defines the catalog name of the package
+        if args.catalog_name != None:
+            self._catalog_name = args.catalog_name
+
+        # This member variable defines the package name
+        if args.package_name != None:
+            self._package_name = args.package_name
+
+        # This member variable defines the date of the execution (it is useful to be able to define a date to construct history of versions)
+        if args.execution_date != None:
+            self._execution_date = args.execution_date
+
+        # This member variable defines the database to use in the connection string
+        if args.database_schema != None:
+            self._database_schema = args.database_schema
+
+        # This member variable defines the database host to use in the connection string
+        if args.database_host != None:
+            self._database_host = args.database_host
+	
+        # This member variable defines the database user to use in the connection string
+        if args.database_user != None:
+            self._database_user = args.database_user
+
+        # This member variable defines the database password to use in the connection string
+        if args.database_password != None:
+            self._database_password = args.database_password
+
     # -----------------------------------------------------------------------------------------------------------------
 
     def __init__(self):
@@ -207,6 +260,16 @@ class ConfigurationParser(object):
         self._target_version = None
         self._source_directory = "."
         self._target_location = "../branches"
+        self._gar_version = None
+        self._upstream_version = None
+        self._gar_path = None
+        self._catalog_name = None
+        self._package_name = None
+        self._execution_date = None
+        self._database_schema = None
+        self._database_host = None
+        self._database_user = None
+        self._database_password = None
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -242,6 +305,56 @@ class ConfigurationParser(object):
 
     def getTargetVersion(self):
         return self._target_version
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getGarVersion(self):
+        return self._gar_version
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getUpstreamVersion(self):
+        return self._upstream_version
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getGarPath(self):
+        return self._gar_path
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getCatalogName(self):
+        return self._catalog_name
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getPackageName(self):
+        return self._package_name
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getExecutionDate(self):
+        return self._execution_date
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getDatabaseSchema(self):
+        return self._database_schema
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getDatabaseHost(self):
+        return self._database_host
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getDatabaseUser(self):
+        return self._database_user
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getDatabasePassword(self):
+        return self._database_password
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -906,6 +1019,122 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
 # ---------------------------------------------------------------------------------------------------------------------
 #
 #
+class ReportPackageVersionCommand(UpstreamWatchCommand):
+    """ReportPackageVersion command. This command report and store in the database the values of version and date passed 
+    by arguments to upstream watch. Unique key is the composed by garpath and catalog name. It means the same package can
+    lie into different path in the svn repository.
+    """
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, name):
+        super(ReportPackageVersionCommand, self).__init__(name)
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def checkArgument(self):
+
+        # Variable used to flag that we have a missing argument
+        argsValid = True
+
+        # Gar path is mandatory
+        if self.configParser.getGarPath() == None:
+            print "Error : Gar path is not defined. Please use --gar-path flag, or --help to display help"
+            argsValid = False
+
+        # Catalog name is mandatory
+        if self.configParser.getCatalogName() == None:
+            print "Error : Catalog name is not defined. Please use --catalog-name flag, or --help to display help"
+            argsValid = False
+
+        # Package name is mandatory
+        if self.configParser.getPackageName() == None:
+            print "Error : Package name is not defined. Please use --package-name flag, or --help to display help"
+            argsValid = False
+
+        # Execution date is mandatory
+        if self.configParser.getExecutionDate() == None:
+            print "Error : Execution date is not defined. Please use --execution-date flag, or --help to display help"
+            argsValid = False
+
+        # At least one version must be filled
+        versionValid = False
+        if self.configParser.getGarVersion() == None:
+            versionValid = False
+        else:
+            versionValid = True
+
+        if self.configParser.getUpstreamVersion() == None:
+            versionValid = False
+        else:
+            versionValid = True
+
+        if versionValid == False:
+            print "Error : Either Gar version or upstream version must be defined. Please use either --gar-version flag or --upstream-version or both flag to report the two version at the same time, or --help to display help"
+            argsValid = False
+
+        # Database schema is mandatory
+        if self.configParser.getDatabaseSchema() == None:
+            print "Error : Database schema is not defined. Please define the value in the ~/.uwatchrc file, use --database-schema flag, or --help to display help"
+            argsValid = False
+
+        # Database host is mandatory
+        if self.configParser.getDatabaseHost() == None:
+            print "Error : Database host is not defined. Please define the value in the ~/.uwatchrc file, use --database-host flag, or --help to display help"
+            argsValid = False
+
+        # Database user is mandatory
+        if self.configParser.getDatabaseUser() == None:
+            print "Error : Database user is not defined. Please define the value in the ~/.uwatchrc file, use --database-user flag, or --help to display help"
+            argsValid = False
+
+        # Database password is mandatory
+        if self.configParser.getDatabasePassword() == None:
+            print "Error : Database password is not defined. Please define the value in the ~/.uwatchrc file, use --database-password flag, or --help to display help"
+            argsValid = False
+    
+        # If arguments are not valid raise an exception
+        if argsValid == False:
+            raise MissingArgumentException("Some mandatory arguments are missing. Unable to continue.")
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def execute(self, opts, args):
+
+        try:
+
+            # Initialize configuration
+            self.configParser.initialize(opts)
+
+            # Need a way to check that all options needed are available
+            self.checkArgument()
+
+            # Exit after processing, eveythin gis ok, return true to the command processor
+            return True
+
+        except MissingArgumentException, (instance):
+
+            # Display a cool error message :)
+            print instance.parameter
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+        except UpstreamUrlRetrievalFailedException, (instance):
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+        except NoUpstreamVersionFoundException, (instance):
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+#
+#
 class CommandProcessor(object):
     """This class receive commands from the main loop and forward call to concrete command.
     """
@@ -933,6 +1162,9 @@ class CommandProcessor(object):
         cmd = UpgradeToVersionCommand("upgrade-to-version")
         self.commandArray[cmd.getName()] = cmd
 
+        cmd = ReportPackageVersionCommand("report-package-version")
+        self.commandArray[cmd.getName()] = cmd
+
     # -----------------------------------------------------------------------------------------------------------------
 
     def execute(self, opts, arguments):
@@ -951,6 +1183,7 @@ class CommandProcessor(object):
         else:
             print "Error : %(action)s action is not supported" % { 'action' : arguments[0] }
             return 2
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
