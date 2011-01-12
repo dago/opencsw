@@ -183,20 +183,20 @@ checksum-%: $(CHECKSUM_FILE)
 
 ################### UWATCH VARIABLES ###################
 UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
-ENABLE_UPSTREAM_WATCH ?= 1
+ENABLE_uwatch ?= 1
 
 UW_ARGS = $(addsuffix ',$(addprefix --upstream-url=',$(UPSTREAM_MASTER_SITES)))
 REGEXP_ARGS = $(addsuffix ',$(addprefix --regexp=',$(UFILES_REGEX)))
 VERSION_ARGS = $(addsuffix ',$(addprefix --current-version=',$(VERSION)))
 define versionlist
-	$(if $(UFILES_REGEX),$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-version-list $(UW_ARGS) $(REGEXP_ARGS)))
+	$(if $(UFILES_REGEX),$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-version-list $(UW_ARGS) $(REGEXP_ARGS)))
 endef
 
 ########################################################
 # Display uwatch informations
 #
 get-uwatch-configuration:
-	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+	@if [ '$(ENABLE_uwatch)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		echo "$(NAME) - Upstream Watch is enabled is enabled" ; \
@@ -222,7 +222,7 @@ get-uwatch-configuration:
 #
 get-upstream-version-list: VERSIONLIST = $(call versionlist)
 get-upstream-version-list:
-	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+	@if [ '$(ENABLE_uwatch)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
@@ -251,9 +251,9 @@ get-upstream-version-list:
 ########################################################
 # Retrieve the newest upstream version
 #
-LATESTVERSION:=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS))
+LATESTVERSION:=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS))
 get-upstream-latest-version:
-	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+	@if [ '$(ENABLE_uwatch)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
@@ -279,9 +279,9 @@ get-upstream-latest-version:
 ########################################################
 # Compare local and upstream versions
 #
-CHECKUPSTREAMVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch check-upstream $(UW_ARGS) $(REGEXP_ARGS) $(VERSION_ARGS) )
+CHECKUPSTREAMVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream $(UW_ARGS) $(REGEXP_ARGS) $(VERSION_ARGS) )
 check-upstream:
-	@if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+	@if [ '$(ENABLE_uwatch)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
@@ -310,7 +310,7 @@ check-upstream:
 #
 upgrade-to-latest-upstream:
 	@echo "In upgrade-to-latest-upstream" ; \
-	if [ '$(ENABLE_UPSTREAM_WATCH)' -ne '1' ] ; then \
+	if [ '$(ENABLE_uwatch)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
@@ -330,7 +330,7 @@ upgrade-to-latest-upstream:
 			if [ ! -d "../branches/upgrade_from_$(VERSION)_to_$$LATEST" ] ; then \
 				if [ -n "$$LATEST" ] ; then \
 					echo "$(NAME) : a new version of upstream files is available. Creating upgrade branch from version $(VERSION) to $$LATEST"; \
-					VERSIONUPGRADE="$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch upgrade-to-version --current-version=$(VERSION) --target-version=$(CHECKUPSTREAMVERSION))" ; \
+					VERSIONUPGRADE="$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch upgrade-to-version --current-version=$(VERSION) --target-version=$(CHECKUPSTREAMVERSION))" ; \
 					if [ -n "$$VERSIONUPGRADE" ] ; then \
 						echo "$(NAME) - $$VERSIONUPGRADE" ; \
 					fi ; \
