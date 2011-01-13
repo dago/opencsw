@@ -39,6 +39,7 @@ import os
 import shutil
 import subprocess
 import pysvn
+import MySQLdb
 
 from urllib2 import Request, urlopen, URLError
 from optparse import OptionParser
@@ -73,6 +74,18 @@ class AbstractCommandMethodCallException(Exception):
 #
 class SvnClientException(Exception):
     """Exception raised when an error occur while using svnClient
+    """
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, message):
+        self.message = message
+
+# ---------------------------------------------------------------------------------------------------------------------
+#
+#
+class DatabaseConnectionException(Exception):
+    """Exception raised when an error occur while connecting to the database
     """
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -1029,6 +1042,170 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
 
     def __init__(self, name):
         super(ReportPackageVersionCommand, self).__init__(name)
+        self.conn = None
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def openDatabaseConnection(self):
+        """This method open a connection to the mysql database using value from the configuration parser. The result of 
+        connect method is stored into a connection object
+        """
+
+        # Open the database connection
+        try:
+            self.conn = MySQLdb.connect(host   = self.configParser.getDatabaseHost(),
+                                       passwd = self.configParser.getDatabasePassword(),
+                                       db     = self.configParser.getDatabaseSchema(),
+                                       user   = self.configParser.getDatabaseUser() )
+
+        except MySQLdb.Error, e:
+            msg = "Error %d: %s" % (e.args[0], e.args[1])
+            raise DatabaseConnectionException(msg)
+
+        # Check that the object we got in return if defiend
+        if self.conn == None:
+            # No, raise a DatabaseConnectionException
+            msg = "Unable to connect to database using host = %(host)s, db = %(db)s, user = %(user)s, passwd = %(passwd)% " % { "host" : self.configParser.getDatabaseHost(), "passwd" : self.configParser.getDatabasePassword(), "db" : self.configParser.getDatabaseSchema(), "user" : self.configParser.getDatabaseUser() }
+            raise DatabaseConnectionException(msg)
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def closeDatabaseConnection(self):
+        """This method close the connection opened by openDatabaseConnection. 
+        """
+
+        # Check that the connection object is valid
+        if self.conn :
+            # Yes, commit pending transactions
+            self.conn.commit()
+
+            # Close the connection
+            self.conn.close()
+        else:
+            # No,  raise a DatabaseConnectionException
+            msg = "Unable to disconnect from the database. Connection objet is not defined"
+            raise DatabaseConnectionException(msg)
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def updateVersionInDatabase(self):
+        """This method updates the version in the database. First it checks for the package to update using a unique 
+        key composed of gar svn path and catalog name. If not found the package is created, otherwise it is updated.
+        In both case, if data are writtent to the database, entries in history table are created.
+        """
+
+        try:
+            # Check that the connection is defined
+            if self.conn == None:
+                # No,  raise a DatabaseConnectionException
+                msg = "Unable to query the database. Connection objet is not defined"
+                raise DatabaseConnectionException(msg)
+
+            # Get a cursor object        
+            cursor = self.conn.cursor(MySQLdb.cursors.DictCursor)
+
+            # First retrieve the id_pkg and deletion flag from the database
+            cursor.execute("select ID_PKG , PKG_IS_DELETED from UWATCH_PKG_VERSION where PKG_GAR_PATH = %s and PKG_CATALOGNAME = %s", \
+                            (self.configParser.getGarPath(), self.configParser.getCatalogName() ) )
+
+            # If rowcount = 0 then the package does not exist. It has to be inserted in the database
+            if cursor.rowcount == 0:
+                print "pas de ligne"
+
+                # Insert the package in the package version table
+
+                cursor.execute("insert into UWATCH_PKG_VERSION (PKG_GAR_PATH, PKG_CATALOGNAME, PKG_NAME, PKG_GAR_VERSION, PKG_LAST_GAR_CHECK_DATE) \
+                                values ( %s , %s , %s , %s , %s )" , (self.configParser.getGarPath(), self.configParser.getCatalogName(), \
+                                self.configParser.getPackageName(), self.configParser.getGarVersion(), self.configParser.getExecutionDate() ) )
+
+
+#   ID_PKG                         int                            not null AUTO_INCREMENT,
+#   PKG_GAR_PATH                   varchar(255)                   not null ,
+#   PKG_NAME                       varchar(64)                    not null ,
+#   PKG_CATALOGNAME                varchar(64)                    not null ,
+#   PKG_CURRENT_VERSION            varchar(255)                   null ,
+#   PKG_CURRENT_REVISION           varchar(255)                   null ,
+#   PKG_GAR_VERSION                varchar(255)                   not null ,
+#   PKG_UPSTREAM_VERSION           varchar(255)                   null ,
+#   PKG_LAST_GAR_CHECK_DATE        timestamp                      not null ,
+#   PKG_LAST_UPSTREAM_CHECK_DATE   timestamp                      null ,
+#   PKG_LAST_CURRENT_CHECK_DATE    timestamp                      null ,
+#   PKG_IS_DELETED                 boolean                        not null default false,
+
+
+               
+
+                # Insert history line for gar version
+                # Test if current version is passed
+                    # Yes, compare current current version from commandline and database
+                        # Values are different. We have to update the database
+                        # Update the current version and revision date                    
+                        # Insert a line in the version history
+                    # No, nothing to do
+                    # In all cases update the last check date
+
+                # Test if upstream version is passed
+                    # Yes, compare current upstream version from commandline and database
+                        # Values are different. We have to update the database
+                        # Update the gar version
+                        # Insert a line in the version history
+                    # No, nothing to do
+                    # In all cases update the last check date
+
+            else:
+                print "Number of rows detected : %d" % cursor.rowcount
+                # Test if the deleted flag is set
+                    # Yes thus package has to be undeleted
+
+                    # No, flag is not set, package is updated in standard way
+
+                        # Test if gar version is passed
+                            # Yes, compare current gar version from commandline and database
+                                # Values are different. We have to update the database
+                                # Update the gar version
+                                # Insert a line in the version history
+                            # No, nothing to do
+                            # In all cases update the last check date
+
+                        # Test if current version is passed
+                            # Yes, compare current current version from commandline and database
+                                # Values are different. We have to update the database
+                                # Update the current version and revision date                    
+                                # Insert a line in the version history
+                            # No, nothing to do
+                            # In all cases update the last check date
+
+                        # Test if upstream version is passed
+                            # Yes, compare current upstream version from commandline and database
+                                # Values are different. We have to update the database
+                                # Update the gar version
+                                # Insert a line in the version history
+                            # No, nothing to do
+                            # In all cases update the last check date
+
+#   ID_PKG                         int                            not null AUTO_INCREMENT,
+#   PKG_GARPATH                    varchar(255)                   not null ,
+#   PKG_NAME                       varchar(64)                    not null ,
+#   PKG_CATALOGNAME                varchar(64)                    not null ,
+#   PKG_CURRENT_VERSION            varchar(255)                   not null ,
+#   PKG_CURRENT_REVISION           varchar(255)                   not null ,
+#   PKG_GAR_VERSION                varchar(255)                   not null ,
+#   PKG_UPSTREAM_VERSION           varchar(255)                   not null ,
+#   PKG_LAST_GAR_CHECK_DATE        timestamp                      not null ,
+#   PKG_LAST_UPSTREAM_CHECK_DATE   timestamp                      not null ,
+#   PKG_LAST_CURRENT_CHECK_DATE    timestamp                      not null ,
+#   PKG_IS_DELETED                 boolean                        not null default false,
+
+
+            print "Number of rows inserted: %d" % cursor.rowcount
+
+            # Close the cursor on the database
+            cursor.close()
+
+        except MySQLdb.Error, e:
+            msg = "Error %d: %s" % (e.args[0], e.args[1])
+            raise DatabaseConnectionException(msg)
+
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -1057,20 +1234,10 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             print "Error : Execution date is not defined. Please use --execution-date flag, or --help to display help"
             argsValid = False
 
-        # At least one version must be filled
-        versionValid = False
+        # Gar version is mandatory, other version are optional. Gar the version is the only mandatory in the database
+        # It has to be passed in argument in case the package does not exist yet
         if self.configParser.getGarVersion() == None:
-            versionValid = False
-        else:
-            versionValid = True
-
-        if self.configParser.getUpstreamVersion() == None:
-            versionValid = False
-        else:
-            versionValid = True
-
-        if versionValid == False:
-            print "Error : Either Gar version or upstream version must be defined. Please use either --gar-version flag or --upstream-version or both flag to report the two version at the same time, or --help to display help"
+            print "Error : Gar version is not defined. Please use --gar-version flag, or --help to display help"
             argsValid = False
 
         # Database schema is mandatory
@@ -1109,6 +1276,15 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             # Need a way to check that all options needed are available
             self.checkArgument()
 
+            # Connection to the database
+            self.openDatabaseConnection()
+
+            # Connection to the database
+            self.updateVersionInDatabase()
+
+            # Connection to the database
+            self.closeDatabaseConnection()
+
             # Exit after processing, eveythin gis ok, return true to the command processor
             return True
 
@@ -1120,12 +1296,10 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
-        except UpstreamUrlRetrievalFailedException, (instance):
+        except DatabaseConnectionException, (instance):
 
-            # Exits through exception handling, thus return false to the command processor
-            return False
-
-        except NoUpstreamVersionFoundException, (instance):
+            # Display a cool error message :)
+            print instance.message
 
             # Exits through exception handling, thus return false to the command processor
             return False
