@@ -183,7 +183,7 @@ checksum-%: $(CHECKSUM_FILE)
 
 ################### UWATCH VARIABLES ###################
 UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
-ENABLE_uwatch ?= 1
+ENABLE_UWATCH ?= 1
 
 UW_ARGS = $(addsuffix ',$(addprefix --upstream-url=',$(UPSTREAM_MASTER_SITES)))
 REGEXP_ARGS = $(addsuffix ',$(addprefix --regexp=',$(UFILES_REGEX)))
@@ -196,7 +196,7 @@ endef
 # Display uwatch informations
 #
 get-uwatch-configuration:
-	@if [ '$(ENABLE_uwatch)' -ne '1' ] ; then \
+	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		echo "$(NAME) - Upstream Watch is enabled is enabled" ; \
@@ -222,7 +222,7 @@ get-uwatch-configuration:
 #
 get-upstream-version-list: VERSIONLIST = $(call versionlist)
 get-upstream-version-list:
-	@if [ '$(ENABLE_uwatch)' -ne '1' ] ; then \
+	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
@@ -253,7 +253,7 @@ get-upstream-version-list:
 #
 LATESTVERSION:=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS))
 get-upstream-latest-version:
-	@if [ '$(ENABLE_uwatch)' -ne '1' ] ; then \
+	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
@@ -281,7 +281,7 @@ get-upstream-latest-version:
 #
 CHECKUPSTREAMVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream $(UW_ARGS) $(REGEXP_ARGS) $(VERSION_ARGS) )
 check-upstream:
-	@if [ '$(ENABLE_uwatch)' -ne '1' ] ; then \
+	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
@@ -310,7 +310,7 @@ check-upstream:
 #
 upgrade-to-latest-upstream:
 	@echo "In upgrade-to-latest-upstream" ; \
-	if [ '$(ENABLE_uwatch)' -ne '1' ] ; then \
+	if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		if [ ! -n '$(UFILES_REGEX)' ]; then \
