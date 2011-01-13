@@ -36,11 +36,6 @@ TEST_SCRIPTS =
 #WORKSRC = $(WORKDIR)/GMT$(VERSION)
 DISTNAME = GMT$(GMT_VERSION)
 
-## GMT has some "interesting" linker commands for creating shared objects in 
-## src/Makefile that require LD_LIBRARY_PATH to be set during the build phase
-LD_LIBRARY_PATH = /opt/csw/lib/$(MM_LIBDIR)
-BUILD_ENV += LD_LIBRARY_PATH="$(LD_LIBRARY_PATH)"
-
 ## Arguments passed to the ./configure script. Configure ignores the various
 ## environment variables so we have to pass CFLAGS and friends
 CONFIGURE_ARGS += NETCDF_LIB=$(libdir)
@@ -49,7 +44,7 @@ CONFIGURE_ARGS += LDFLAGS="$(LDFLAGS)"
 CONFIGURE_ARGS += CXXFLAGS="$(CXXFLAGS)"
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-mex
-CONFIGURE_ARGS += --enable-shared
+#CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-netcdf=/opt/csw
 
 
