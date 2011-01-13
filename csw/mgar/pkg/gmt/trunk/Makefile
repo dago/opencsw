@@ -24,8 +24,10 @@ DISTFILES += GMT$(GMT_VERSION)_suppl.tar.bz2
 UFILES_REGEX = GMT(\d+(?:\.\d+)*)_(.*).tar.gz
 
 
-RUNTIME_DEP_PKGS = CSWnetcdf 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnetcdf-devel
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnetcdf-devel CSWnetcdf
+
+RUNTIME_DEP_PKGS_CSWgmt += CSWlibnetcdf6
+RUNTIME_DEP_PKGS_CSWgmt += CSWsunmath
 
 ## GMT Includes no unit tests
 TEST_SCRIPTS =
