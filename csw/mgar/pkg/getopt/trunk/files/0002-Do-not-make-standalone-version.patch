@@ -1,0 +1,25 @@
+From ba945f1f552d5ef7f1a0305fb78eb6116c8c3aec Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 11 Jan 2011 13:38:58 +0100
+Subject: [PATCH] Do not make standalone version
+
+---
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index f930a28..1dbeae8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -33,7 +33,7 @@ MSGFMT=msgfmt
+ LANGUAGES = cs de es fr it ja nl pt_BR
+ MOFILES:=$(patsubst %,po/%.mo,$(LANGUAGES))
+ 
+-CPPFLAGS=-DLIBCGETOPT=$(LIBCGETOPT) -DWITH_GETTEXT=$(WITH_GETTEXT) -DLOCALEDIR=\"$(localedir)\" -DNOT_UTIL_LINUX
++CPPFLAGS=-DLIBCGETOPT=$(LIBCGETOPT) -DWITH_GETTEXT=$(WITH_GETTEXT) -DLOCALEDIR=\"$(localedir)\"
+ ifeq ($(LIBCGETOPT),0)
+ CPPFLAGS+=-I./gnu 
+ endif
+-- 
+1.7.3.2
+

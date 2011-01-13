@@ -14,7 +14,9 @@ endef
 MASTER_SITES = http://software.frodo.looijaard.name/getopt/files/
 DISTFILES  = $(DISTNAME).tar.gz
 
-PATCHFILES = 0001-Include-locale.h-when-using-gettext.patch
+PATCHFILES += 0001-Include-locale.h-when-using-gettext.patch
+PATCHFILES += 0002-Do-not-make-standalone-version.patch
+PATCHFILES += 0003-Makefile-settings.patch
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -27,11 +29,12 @@ VENDOR_URL = http://software.frodo.looijaard.name/getopt/
 # No scipt there...
 CONFIGURE_SCRIPTS =
 
-BUILD_OVERRIDE_VARS = prefix CC CFLAGS LIBCGETOPT
+BUILD_OVERRIDE_VARS = prefix CC CFLAGS LIBCGETOPT PACKAGE
 BUILD_OVERRIDE_VAR_prefix = $(prefix)
 BUILD_OVERRIDE_VAR_CC = $(CC)
 BUILD_OVERRIDE_VAR_CFLAGS = $(CFLAGS)
 BUILD_OVERRIDE_VAR_LIBCGETOPT = 0
+BUILD_OVERRIDE_VAR_PACKAGE = ggetopt
 
 TEST_TARGET =
 
