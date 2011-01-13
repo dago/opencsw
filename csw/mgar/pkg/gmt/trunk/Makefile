@@ -26,8 +26,18 @@ UFILES_REGEX = GMT(\d+(?:\.\d+)*)_(.*).tar.gz
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnetcdf-devel CSWnetcdf
 
+PACKAGES += CSWgmt
+CATALOGNAME_CSWgmt = gmt
+SPKG_DESC_CSWgmt = Generic Mapping Tools
 RUNTIME_DEP_PKGS_CSWgmt += CSWlibnetcdf6
 RUNTIME_DEP_PKGS_CSWgmt += CSWsunmath
+
+PACKAGES += CSWgmt-doc
+CATALOGNAME_CSWgmt-doc = gmt_doc
+SPKG_DESC_CSWgmt-doc = Documentation for GMT
+PKGFILES_CSWgmt-doc += /opt/csw/share/doc/gmt
+PKGFILES_CSWgmt-doc += /opt/csw/share/doc/gmt/.*
+
 
 ## GMT Includes no unit tests
 TEST_SCRIPTS =
