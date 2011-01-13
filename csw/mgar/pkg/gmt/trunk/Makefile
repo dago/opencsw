@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GMT_VERSION = 4.5.3
+GMT_VERSION = 4.5.5
 
 NAME = gmt
 VERSION = $(GMT_VERSION)
