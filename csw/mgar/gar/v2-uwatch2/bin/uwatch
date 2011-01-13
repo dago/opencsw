@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# TODO : check arguments for valid date
+# TODO : check arguments for emtpy strings
+
 #
 # The contents of this file are subject to the COMMON DEVELOPMENT AND
 # DISTRIBUTION LICENSE (CDDL) (the "License"); you may not use this
@@ -40,6 +43,7 @@ import shutil
 import subprocess
 import pysvn
 import MySQLdb
+import datetime
 
 from urllib2 import Request, urlopen, URLError
 from optparse import OptionParser
@@ -134,6 +138,23 @@ class MissingArgumentException(Exception):
     def __str__(self):
         return repr(self.parameter)
 
+# ---------------------------------------------------------------------------------------------------------------------
+#
+#
+class InvalidArgumentException(Exception):
+    """Exception raised when a command line argument is invalid. For instance an invalid version or date
+    """
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, value):
+        self.parameter = value
+
+    def __str__(self):
+        return repr(self.parameter)
+
+
+# ---------------------------------------------------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -198,8 +219,33 @@ class ConfigurationParser(object):
             self._verbose = False
 
         # This member variable defines the value of the version of the package
+        # Current revision is not passed as a separated argument. It is part of the opencsw version number. 
+        # Package version are defined as follow : version[,REV=revision]*
         if args.current_version != None:
-            self._current_version = args.current_version
+    
+            # Parse the version string
+            ver = re.split(r"(?P<version>.*),REV=(?P<revision>.*)", args.current_version)
+
+            # Test if this is a match
+            if ver == None:
+                # No, thus raise an exception
+                msg = "Unable to parse %(version)s as a valid package version" % { 'version' : args.current_version }
+                raise InvalidArgumentException(msg)
+            else:      
+                # If the length of array is one, the no revision is provided
+                if len(ver) == 1:
+                    self._current_version = ver[0]
+                    self._current_revision = ""
+                else:
+                    self._current_version = ver[1]
+                    self._current_revision = ver[2]
+
+                    # Attempt to split again the string. If len is greater than 1
+                    # Then there are at least two rev string => raise exception
+                    ver = re.split(r"(?P<version>.*),REV=(?P<revision>.*)", self._current_version)
+                    if len(ver) > 1:
+                        msg = "Unable to parse %(version)s as a valid package version. There are more than one revision string" % { 'version' : args.current_version }
+                        raise InvalidArgumentException(msg)
 
         # This member variable defines the value of the regexp used to match the upstream web page
         if args.regexp != None:
@@ -268,6 +314,7 @@ class ConfigurationParser(object):
         # Initialize all variables to None. Even if useless, the purpose of this to keep up to date the list
         self._verbose = None
         self._current_version = None
+        self._current_revision = ""
         self._regexp = None
         self._upstream_url = None
         self._target_version = None
@@ -288,6 +335,11 @@ class ConfigurationParser(object):
 
     def getCurrentVersion(self):
         return self._current_version
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getCurrentRevision(self):
+        return self._current_revision
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -1095,6 +1147,9 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         """
 
         try:
+            # Flag used to keep track of the fact we have created a new package. Used in some case to choose behavior
+            isNewlyCreatedPackage = False
+            
             # Check that the connection is defined
             if self.conn == None:
                 # No,  raise a DatabaseConnectionException
@@ -1105,99 +1160,104 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             cursor = self.conn.cursor(MySQLdb.cursors.DictCursor)
 
             # First retrieve the id_pkg and deletion flag from the database
-            cursor.execute("select ID_PKG , PKG_IS_DELETED from UWATCH_PKG_VERSION where PKG_GAR_PATH = %s and PKG_CATALOGNAME = %s", \
+            cursor.execute("select * from UWATCH_PKG_VERSION where PKG_GAR_PATH = %s and PKG_CATALOGNAME = %s", \
                             (self.configParser.getGarPath(), self.configParser.getCatalogName() ) )
 
             # If rowcount = 0 then the package does not exist. It has to be inserted in the database
             if cursor.rowcount == 0:
-                print "pas de ligne"
-
                 # Insert the package in the package version table
-
                 cursor.execute("insert into UWATCH_PKG_VERSION (PKG_GAR_PATH, PKG_CATALOGNAME, PKG_NAME, PKG_GAR_VERSION, PKG_LAST_GAR_CHECK_DATE) \
                                 values ( %s , %s , %s , %s , %s )" , (self.configParser.getGarPath(), self.configParser.getCatalogName(), \
                                 self.configParser.getPackageName(), self.configParser.getGarVersion(), self.configParser.getExecutionDate() ) )
 
+                # Flag that we have created a package
+                isNewlyCreatedPackage = True
 
-#   ID_PKG                         int                            not null AUTO_INCREMENT,
-#   PKG_GAR_PATH                   varchar(255)                   not null ,
-#   PKG_NAME                       varchar(64)                    not null ,
-#   PKG_CATALOGNAME                varchar(64)                    not null ,
-#   PKG_CURRENT_VERSION            varchar(255)                   null ,
-#   PKG_CURRENT_REVISION           varchar(255)                   null ,
-#   PKG_GAR_VERSION                varchar(255)                   not null ,
-#   PKG_UPSTREAM_VERSION           varchar(255)                   null ,
-#   PKG_LAST_GAR_CHECK_DATE        timestamp                      not null ,
-#   PKG_LAST_UPSTREAM_CHECK_DATE   timestamp                      null ,
-#   PKG_LAST_CURRENT_CHECK_DATE    timestamp                      null ,
-#   PKG_IS_DELETED                 boolean                        not null default false,
+                # Output some more information if verbose mode is activated
+                if self.configParser.getVerbose() == True:
+                    print "Package %(pkg)s added to the database" % { 'pkg' : self.configParser.getCatalogName() }
 
+                # Now the package is inserted. Retrieve the newly inserted package and update other versions
+                cursor.execute("select * from UWATCH_PKG_VERSION where PKG_GAR_PATH = %s and PKG_CATALOGNAME = %s", \
+                                (self.configParser.getGarPath(), self.configParser.getCatalogName() ) )
 
-               
+            # Retrieve package information
+            pkg = cursor.fetchone()
 
-                # Insert history line for gar version
-                # Test if current version is passed
-                    # Yes, compare current current version from commandline and database
-                        # Values are different. We have to update the database
-                        # Update the current version and revision date                    
-                        # Insert a line in the version history
-                    # No, nothing to do
-                    # In all cases update the last check date
+            # Test if the deleted flag is set
+            if pkg["PKG_IS_DELETED"] == 1:                
+                # Yes thus package has to be undeleted
+                cursor.execute("update UWATCH_PKG_VERSION set PKG_IS_DELETED = 0 where ID_PKG='%s'" , ( pkg["ID_PKG"] ) )
 
-                # Test if upstream version is passed
-                    # Yes, compare current upstream version from commandline and database
-                        # Values are different. We have to update the database
-                        # Update the gar version
-                        # Insert a line in the version history
-                    # No, nothing to do
-                    # In all cases update the last check date
+                # Output some more information if verbose mode is activated
+                if self.configParser.getVerbose() == True:
+                    print "Package %(pkg)s has been undeleted" % { 'pkg' : self.configParser.getCatalogName() }
 
-            else:
-                print "Number of rows detected : %d" % cursor.rowcount
-                # Test if the deleted flag is set
-                    # Yes thus package has to be undeleted
+            # Test if current version is passed
+            if self.configParser.getCurrentVersion():
+                # In all cases (update or not) we update the last version check according to the argument
+                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_CURRENT_CHECK_DATE = %s  where ID_PKG= %s" , ( self.configParser.getExecutionDate(), pkg["ID_PKG"] ) )
+    
+                # Yes, compare current version from commandline and database
+                if self.configParser.getCurrentVersion() != pkg["PKG_CURRENT_VERSION"]:                
+                    # Yes thus package has to be updated. In the case of a version change revision is set to empty string.
+                    # This has to be done since if a revision exist and new version of package has no revision. The current value will be false
+                    # If revision is provided it will be updated at next step while checking for revision
+                    cursor.execute("update UWATCH_PKG_VERSION set PKG_CURRENT_VERSION = %s , PKG_CURRENT_REVISION = '' where ID_PKG= %s" , \
+                                    ( self.configParser.getCurrentVersion(), pkg["ID_PKG"] ) )
+                    cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
+                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "current", self.configParser.getCurrentVersion() , self.configParser.getExecutionDate() ) )
 
-                    # No, flag is not set, package is updated in standard way
+                    # Output some more information if verbose mode is activated
+                    if self.configParser.getVerbose() == True:
+                        print "Upgrading %(pkg)s current version from %(current)s to %(next)s" % { 'pkg' : self.configParser.getCatalogName(), \
+                                'next' : self.configParser.getCurrentVersion() , 'current' : pkg["PKG_CURRENT_VERSION"] }
+                
+                    # Yes, compare current revision from commandline and database
+                if self.configParser.getCurrentRevision() != pkg["PKG_CURRENT_REVISION"]:                
+                    # Yes thus package has to be updated
+                    cursor.execute("update UWATCH_PKG_VERSION set PKG_CURRENT_REVISION = %s  where ID_PKG= %s" , ( self.configParser.getCurrentRevision(), pkg["ID_PKG"] ) )
+                    cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
+                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "revision", self.configParser.getCurrentRevision() , self.configParser.getExecutionDate() ) )
 
-                        # Test if gar version is passed
-                            # Yes, compare current gar version from commandline and database
-                                # Values are different. We have to update the database
-                                # Update the gar version
-                                # Insert a line in the version history
-                            # No, nothing to do
-                            # In all cases update the last check date
+                    # Output some more information if verbose mode is activated
+                    if self.configParser.getVerbose() == True:
+                        print "Upgrading %(pkg)s current revision from %(current)s to %(next)s" % { 'pkg' : self.configParser.getCatalogName(), \
+                                'next' : self.configParser.getCurrentRevision() , 'current' : pkg["PKG_CURRENT_REVISION"] }
+                
+            # Test if upstream version is passed
+            if self.configParser.getUpstreamVersion():
+                # In all cases (update or not) we update the last version check according to the argument
+                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_DATE = %s  where ID_PKG= %s" , ( self.configParser.getExecutionDate(), pkg["ID_PKG"] ) )
 
-                        # Test if current version is passed
-                            # Yes, compare current current version from commandline and database
-                                # Values are different. We have to update the database
-                                # Update the current version and revision date                    
-                                # Insert a line in the version history
-                            # No, nothing to do
-                            # In all cases update the last check date
+                # Yes, compare current upstream version from commandline and database
+                if self.configParser.getUpstreamVersion() != pkg["PKG_UPSTREAM_VERSION"]:                
+                    # Yes thus package has to be updated
+                    cursor.execute("update UWATCH_PKG_VERSION set PKG_UPSTREAM_VERSION = %s  where ID_PKG= %s" , ( self.configParser.getUpstreamVersion(), pkg["ID_PKG"] ) )
+                    cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
+                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "upstream", self.configParser.getUpstreamVersion() , self.configParser.getExecutionDate() ) )
 
-                        # Test if upstream version is passed
-                            # Yes, compare current upstream version from commandline and database
-                                # Values are different. We have to update the database
-                                # Update the gar version
-                                # Insert a line in the version history
-                            # No, nothing to do
-                            # In all cases update the last check date
+                    # Output some more information if verbose mode is activated
+                    if self.configParser.getVerbose() == True:
+                        print "Upgrading %(pkg)s upstream version from %(current)s to %(next)s" % { 'pkg' : self.configParser.getCatalogName(), \
+                                'next' : self.configParser.getUpstreamVersion() , 'current' : pkg["PKG_UPSTREAM_VERSION"] }
+                
+            # Test if gar version is passed (it is mandatory to have a value in database)
+            if self.configParser.getGarVersion():
+                # In all cases (update or not) we update the last version check according to the argument
+                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_GAR_CHECK_DATE = %s  where ID_PKG= %s" , ( self.configParser.getExecutionDate(), pkg["ID_PKG"] ) )
 
-#   ID_PKG                         int                            not null AUTO_INCREMENT,
-#   PKG_GARPATH                    varchar(255)                   not null ,
-#   PKG_NAME                       varchar(64)                    not null ,
-#   PKG_CATALOGNAME                varchar(64)                    not null ,
-#   PKG_CURRENT_VERSION            varchar(255)                   not null ,
-#   PKG_CURRENT_REVISION           varchar(255)                   not null ,
-#   PKG_GAR_VERSION                varchar(255)                   not null ,
-#   PKG_UPSTREAM_VERSION           varchar(255)                   not null ,
-#   PKG_LAST_GAR_CHECK_DATE        timestamp                      not null ,
-#   PKG_LAST_UPSTREAM_CHECK_DATE   timestamp                      not null ,
-#   PKG_LAST_CURRENT_CHECK_DATE    timestamp                      not null ,
-#   PKG_IS_DELETED                 boolean                        not null default false,
+                # Yes, compare current gar version from commandline and database
+                if self.configParser.getGarVersion() != pkg["PKG_GAR_VERSION"]:                
+                    # Yes thus package has to be updated
+                    cursor.execute("update UWATCH_PKG_VERSION set PKG_GAR_VERSION = %s  where ID_PKG= %s" , ( self.configParser.getGarVersion(), pkg["ID_PKG"] ) )
+                    cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
+                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "gar", self.configParser.getGarVersion() , self.configParser.getExecutionDate() ) )
 
-
-            print "Number of rows inserted: %d" % cursor.rowcount
+                    # Output some more information if verbose mode is activated
+                    if self.configParser.getVerbose() == True:
+                        print "Upgrading %(pkg)s gar version from %(current)s to %(next)s" % { 'pkg' : self.configParser.getCatalogName(), \
+                                'next' : self.configParser.getGarVersion() , 'current' : pkg["PKG_GAR_VERSION"] }
 
             # Close the cursor on the database
             cursor.close()
@@ -1233,6 +1293,8 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         if self.configParser.getExecutionDate() == None:
             print "Error : Execution date is not defined. Please use --execution-date flag, or --help to display help"
             argsValid = False
+#        else:
+#            dt = datetime.strptime(self.configParser.getExecutionDate(), "%d/%m/%y")
 
         # Gar version is mandatory, other version are optional. Gar the version is the only mandatory in the database
         # It has to be passed in argument in case the package does not exist yet
@@ -1296,6 +1358,14 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             # Exits through exception handling, thus return false to the command processor
             return False
 
+        except InvalidArgumentException, (instance):
+
+            # Display a cool error message :)
+            print instance.parameter
+
+            # Exits through exception handling, thus return false to the command processor
+            return False
+
         except DatabaseConnectionException, (instance):
 
             # Display a cool error message :)
@@ -1303,8 +1373,6 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
 
             # Exits through exception handling, thus return false to the command processor
             return False
-
-
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
