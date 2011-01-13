@@ -1,0 +1,35 @@
+From 8ffe7e11c63794acc19bc64a724de5ed03a12b86 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 13 Jan 2011 20:43:13 +0100
+Subject: [PATCH] Makefile settings
+
+---
+ Makefile |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 1dbeae8..1bc401c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -14,7 +14,8 @@ localedir=$(sharedir)/locale
+ LIBCGETOPT=1
+ 
+ # Define this to 1 if you do not have the gettext routines
+-WITHOUT_GETTEXT=0
++#WITHOUT_GETTEXT=0
++WITH_GETTEXT=1
+ 
+ # For creating the archive
+ PACKAGE=getopt
+@@ -33,7 +34,7 @@ MSGFMT=msgfmt
+ LANGUAGES = cs de es fr it ja nl pt_BR
+ MOFILES:=$(patsubst %,po/%.mo,$(LANGUAGES))
+ 
+-CPPFLAGS=-DLIBCGETOPT=$(LIBCGETOPT) -DWITH_GETTEXT=$(WITH_GETTEXT) -DLOCALEDIR=\"$(localedir)\"
++CPPFLAGS=-DLIBCGETOPT=$(LIBCGETOPT) -DLOCALEDIR=\"$(localedir)\" -DNOT_UTIL_LINUX=1
+ ifeq ($(LIBCGETOPT),0)
+ CPPFLAGS+=-I./gnu 
+ endif
+-- 
+1.7.3.2
+
