@@ -176,7 +176,7 @@ checksum-%: $(CHECKSUM_FILE)
 	else \
 		echo '(!!!) $* not in $(CHECKSUM_FILE) file!' 1>&2; \
 		false; \
-	figet-upstream-version-list
+	fi
 
 #################### CHECKNEW RULES ####################
 
