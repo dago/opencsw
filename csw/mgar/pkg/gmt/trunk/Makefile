@@ -23,8 +23,6 @@ DISTFILES += GMT$(GMT_VERSION)_src.tar.bz2
 DISTFILES += GMT$(GMT_VERSION)_suppl.tar.bz2
 UFILES_REGEX = GMT(\d+(?:\.\d+)*)_(.*).tar.gz
 
-PATCHFILES += 0001-Add-LDFLAGS-to-shared-object-linking-commands.patch
-
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnetcdf-devel CSWnetcdf
 
 PACKAGES += CSWgmt
