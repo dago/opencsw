@@ -1,5 +1,5 @@
 NAME = balance
-VERSION = 3.52
+VERSION = 3.54
 CATEGORIES = net
 
 DESCRIPTION = A TCP proxy and load balancer
@@ -11,7 +11,7 @@ endef
 
 MASTER_SITES = http://www.inlab.de/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-PATCHFILES = 0001-Adjust-Makefile-for-Solaris.patch
+PATCHFILES = 0001-Use-Solaris-and-CSW-layout.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
