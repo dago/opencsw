@@ -2,28 +2,42 @@ NAME = pari
 VERSION = 2.3.5
 CATEGORIES = lib
 
-DESCRIPTION = efficient computations in number theory
+DESCRIPTION = Efficient computations in number theory
 define BLURB
-  LONG DESCRIPTION
+  PARI/GP is a widely used computer algebra system designed for fast computations
+  in number theory (factorizations, algebraic number theory, elliptic curves...),
+  but also contains a large number of other useful functions to compute with mathematical
+  entities such as matrices, polynomials, power series, algebraic numbers, etc., and
+  a lot of transcendental functions.
 endef
 
 MASTER_SITES = http://pari.math.u-bordeaux.fr/pub/pari/unix/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWparigp,)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
+PACKAGES = CSWparigp
+CATALOGNAME = parigp
+
+VENDOR_URL = http://pari.math.u-bordeaux.fr
+
+BUILD64 = 1
+
 CONFIGURE_SCRIPTS = custom
-CONFIGURE_ARGS    = --prefix=$(prefix)
-# CONFIGURE_ARGS   += --miscdir=$(docdir)/pari
+CONFIGURE_ARGS  = --prefix=$(prefix)
+CONFIGURE_ARGS += --bindir=$(bindir)
+CONFIGURE_ARGS += --includedir=$(includedir)
+CONFIGURE_ARGS += --libdir=$(libdir)
+CONFIGURE_ARGS += --mandir=$(mandir)
+
 BUILD_ARGS        = gp
 
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
 
 include gar/category.mk
 
 configure-custom:
 	@echo " ==> Running Configure"
-	@( cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) )
+	( cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
