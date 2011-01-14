@@ -74,4 +74,8 @@ post-merge:
 			base=$$(basename $$f); \
 			gln -s $$f ./$${base/g/}; \
 		done )
+	@(cd $(PKGROOT)$(datadir)/info; \
+		perl -pi -e 's#/usr/local/bin/printf#/opt/csw/bin/gprintf#g;' \
+			 -e 's#/usr/local/bin/listusers#/my/bin/showusers#;' \
+			coreutils.info)
 	@$(MAKECOOKIE)
