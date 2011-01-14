@@ -37,6 +37,7 @@ CATALOGNAME_CSWgmt-doc = gmt_doc
 SPKG_DESC_CSWgmt-doc = Documentation for GMT
 PKGFILES_CSWgmt-doc += /opt/csw/share/doc/gmt
 PKGFILES_CSWgmt-doc += /opt/csw/share/doc/gmt/.*
+ARCHALL_CSWgmt-doc = 1
 
 
 ## GMT Includes no unit tests
