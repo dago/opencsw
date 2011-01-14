@@ -52,6 +52,7 @@ CONFIGURE_ARGS += NETCDF_LIB=$(libdir)
 CONFIGURE_ARGS += CFLAGS="$(CFLAGS)"
 CONFIGURE_ARGS += LDFLAGS="$(LDFLAGS)"
 CONFIGURE_ARGS += CXXFLAGS="$(CXXFLAGS)"
+CONFIGURE_ARGS += LIBS="-L/opt/csw/lib/$(MM_LIBDIR) -lsunmath -lm" # Hopefully fixes .so creation
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-mex
 CONFIGURE_ARGS += --enable-shared
