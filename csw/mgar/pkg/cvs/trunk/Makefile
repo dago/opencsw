@@ -1,5 +1,5 @@
 NAME = cvs
-VERSION = 1.11.23
+VERSION = 1.12.13
 CATEGORIES = utils
 
 DESCRIPTION = Concurrent Versioning System
@@ -15,24 +15,44 @@ define BLURB
   various operations and works well over a wide area network.
 endef
 
-MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/stable/$(VERSION)/
-UPSTREAM_MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/stable/
+MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/feature/$(VERSION)/
+UPSTREAM_MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/feature/
+
 DISTFILES = $(DISTNAME).tar.bz2
-DISTFILES += $(call admfiles,CSWcvs,)
+
+PACKAGES += CSWcvs
+CATALOGNAME_CSWcvs = cvs
+SPKG_DESC_CSWcvs = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWcvs += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWcvs += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWcvs += CSWosslrt
+RUNTIME_DEP_PKGS_CSWcvs += CSWzlib
+
+PACKAGES += CSWcvs-feature
+CATALONGAME_CSWcvs-feature = cvs_feature
+SPKG_DESC_CSWcvs-feature = Legacy package as CSWcvs now contains the feature CVS
+PKGFILES_CSWcvs-feature = $(prefix)/cvs-feature
+ARCHALL_CSWcvs-feature = 1
+RUNTIME_DEP_PKGS_CSWcvs-feature = CSWcvs
+CHECKPKG_OVERRIDES_CSWcvs-feature += surplus-dependency|CSWcvs
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-external-zlib=$(prefix)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
 
 TEST_TARGET = check
 
-# Test suite won't run as root!
-TEST_SCRIPTS =
+# The testsuite runs for more than one hour!
+# SKIPTEST ?= 1
 
 include gar/category.mk
 
-post-install:
-	@rm -f $(DESTDIR)$(infodir)/dir
+# Only GNU 'id' understands option '-u'
+PATH := /opt/csw/gnu:$(PATH)
+
+post-install-modulated:
 	@gln -sf ../share/cvs/contrib/rcs2log $(DESTDIR)$(bindir)/rcslog
+	@gln -s . $(DESTDIR)$(prefix)/cvs-feature
 	@$(MAKECOOKIE)
