@@ -17,12 +17,12 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
+# TODO: The galdata is missing in the package, where does it come from?
+
 PACKAGES = CSWparigp
 CATALOGNAME = parigp
 
 VENDOR_URL = http://pari.math.u-bordeaux.fr
-
-BUILD64 = 1
 
 CONFIGURE_SCRIPTS = custom
 CONFIGURE_ARGS  = --prefix=$(prefix)
@@ -33,7 +33,8 @@ CONFIGURE_ARGS += --mandir=$(mandir)
 
 BUILD_ARGS        = gp
 
-# TEST_SCRIPTS =
+# There are lots of tests, TBD: pick one
+TEST_SCRIPTS =
 
 include gar/category.mk
 
