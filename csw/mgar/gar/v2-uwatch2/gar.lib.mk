@@ -176,7 +176,7 @@ checksum-%: $(CHECKSUM_FILE)
 	else \
 		echo '(!!!) $* not in $(CHECKSUM_FILE) file!' 1>&2; \
 		false; \
-	fi
+	figet-upstream-version-list
 
 #################### CHECKNEW RULES ####################
 
@@ -185,12 +185,6 @@ checksum-%: $(CHECKSUM_FILE)
 UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
 ENABLE_UWATCH ?= 1
 
-UW_ARGS = $(addsuffix ',$(addprefix --upstream-url=',$(UPSTREAM_MASTER_SITES)))
-REGEXP_ARGS = $(addsuffix ',$(addprefix --regexp=',$(UFILES_REGEX)))
-VERSION_ARGS = $(addsuffix ',$(addprefix --current-version=',$(VERSION)))
-define versionlist
-	$(if $(UFILES_REGEX),$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-version-list $(UW_ARGS) $(REGEXP_ARGS)))
-endef
 
 ########################################################
 # Display uwatch informations
@@ -215,12 +209,27 @@ get-uwatch-configuration:
 		else \
 			echo "$(NAME) - Current version is : $(VERSION)" ; \
 		fi ; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - VERSION is not set" ; \
+		else \
+			echo "$(NAME) - Current version is : $(VERSION)" ; \
+		fi ; \
+		if [ ! -n '$(http_proxy)' ]; then \
+			echo "$(NAME) - http_proxy is not set" ; \
+		else \
+			echo "$(NAME) - http_proxy is : $(http_proxy)" ; \
+		fi ; \
+		if [ ! -n '$(ftp_proxy)' ]; then \
+			echo "$(NAME) - ftp_proxy is not set" ; \
+		else \
+			echo "$(NAME) - ftp_proxy is : $(ftp_proxy)" ; \
+		fi ; \
 	fi ; 
 
 ########################################################
 # Retrieve the list of upstream versions
 #
-get-upstream-version-list: VERSIONLIST = $(call versionlist)
+
 get-upstream-version-list:
 	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
@@ -237,8 +246,14 @@ get-upstream-version-list:
 			echo "$(NAME) - Error VERSION is not set" ; \
 			false; \
 		fi; \
-		if [ -n "$(VERSIONLIST)" ] ; then \
-			for VERSION in $(VERSIONLIST) ""; do \
+		VERSIONLIST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-version-list --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
+		if [ "#?" -ne "0" ] ; then \
+			echo "Error occured while executing uwatch get-upstream-version-list. Please check configuration with target get-uwatch-configuration" ; \
+			echo "Output : $$VERSIONLIST" ; \
+			false ; \
+		fi; \
+		if [ -n "$$VERSIONLIST" ] ; then \
+			for VERSION in $$VERSIONLIST ; do \
 				if [ ! "$$VERSION" -eq "" ] ; then \
 					echo "$(NAME) - $$VERSION" ; \
 				fi ; \
@@ -251,7 +266,6 @@ get-upstream-version-list:
 ########################################################
 # Retrieve the newest upstream version
 #
-LATESTVERSION:=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version $(UW_ARGS) $(REGEXP_ARGS))
 get-upstream-latest-version:
 	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
@@ -268,7 +282,12 @@ get-upstream-latest-version:
 			echo "$(NAME) - Error VERSION is not set" ; \
 			false; \
 		fi; \
-		LATEST=$(LATESTVERSION) ; \
+		LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
+		if [ "#?" -ne "0" ] ; then \
+			echo "Error occured while executing uwatch get-upstream-latest-version. Please check configuration with target get-uwatch-configuration" ; \
+			echo "Output : $$LATEST" ; \
+			false ; \
+		fi; \
 		if [ -n "$$LATEST" ] ; then \
 			echo "$(NAME) - Latest upstream version is $$LATEST" ; \
 		else \
@@ -279,7 +298,6 @@ get-upstream-latest-version:
 ########################################################
 # Compare local and upstream versions
 #
-CHECKUPSTREAMVERSION=$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream $(UW_ARGS) $(REGEXP_ARGS) $(VERSION_ARGS) )
 check-upstream:
 	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
@@ -296,7 +314,12 @@ check-upstream:
 			echo "$(NAME) - Error VERSION is not set" ; \
 			false; \
 		fi; \
-		LATEST=$(CHECKUPSTREAMVERSION) ; \
+		LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --current-version="$(VERSION)"` ; \
+		if [ "#?" -ne "0" ] ; then \
+			echo "Error occured while executing uwatch check-upstream. Please check configuration with target get-uwatch-configuration" ; \
+			echo "Output : $$LATEST" ; \
+			false ; \
+		fi; \
 		if [ -n "$$LATEST" ] ; then \
 			echo "$(NAME) : A new version of upstream files is available. Package can be upgraded from version $(VERSION) to $$LATEST"; \
 		else \
@@ -309,7 +332,7 @@ check-upstream:
 # Create upgrade branch from current to latest upstream
 #
 upgrade-to-latest-upstream:
-	@echo "In upgrade-to-latest-upstream" ; \
+	echo "In upgrade-to-latest-upstream" ; \
 	if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
@@ -325,12 +348,22 @@ upgrade-to-latest-upstream:
 			echo "$(NAME) - Error VERSION is not set" ; \
 			false; \
 		fi; \
-		LATEST=$(CHECKUPSTREAMVERSION) ; \
+		LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --current-version="$(VERSION)"` ; \
+		if [ "#?" -ne "0" ] ; then \
+			echo "Error occured while executing uwatch check-upstream. Please check configuration with target get-uwatch-configuration" ; \
+			echo "Output : $$LATEST" ; \
+			false ; \
+		fi; \
 		if [ ! -f "$(COOKIEDIR)/upgrade-to-latest-upstream-$$LATEST" ] ; then \
 			if [ ! -d "../branches/upgrade_from_$(VERSION)_to_$$LATEST" ] ; then \
 				if [ -n "$$LATEST" ] ; then \
 					echo "$(NAME) : a new version of upstream files is available. Creating upgrade branch from version $(VERSION) to $$LATEST"; \
-					VERSIONUPGRADE="$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch upgrade-to-version --current-version=$(VERSION) --target-version=$(CHECKUPSTREAMVERSION))" ; \
+					VERSIONUPGRADE=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch upgrade-to-version --current-version="$(VERSION)" --target-version="$$LATEST"` ; \
+					if [ "#?" -ne "0" ] ; then \
+						echo "Error occured while executing uwatch check-upstream. Please check configuration with target get-uwatch-configuration" ; \
+						echo "Output : $$LATEST" ; \
+						false ; \
+					fi; \
 					if [ -n "$$VERSIONUPGRADE" ] ; then \
 						echo "$(NAME) - $$VERSIONUPGRADE" ; \
 					fi ; \
@@ -345,6 +378,7 @@ upgrade-to-latest-upstream:
 			echo "$(NAME) - Upgrade branch to version $$LATEST already created by upstream_watch" ; \
 		fi ; \
 	fi
+
 
 ########################################################
 #
