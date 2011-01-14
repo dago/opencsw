@@ -1,0 +1,266 @@
+Index: mpn/generic/addsub_n.c
+===================================================================
+RCS file: /home/cvsfiles/gmp42/mpn/generic/addsub_n.c,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -p -2 -r1.1 -r1.2
+*** mpn/generic/addsub_n.c	14 Mar 2006 15:57:54 -0000	1.1
+--- mpn/generic/addsub_n.c	15 May 2006 22:38:42 -0000	1.2
+***************
+*** 1,5 ****
+  /* mpn_addsub_n -- Add and Subtract two limb vectors of equal, non-zero length.
+  
+! Copyright 1999, 2000, 2001 Free Software Foundation, Inc.
+  
+  This file is part of the GNU MP Library.
+--- 1,5 ----
+  /* mpn_addsub_n -- Add and Subtract two limb vectors of equal, non-zero length.
+  
+! Copyright 1999, 2000, 2001, 2006 Free Software Foundation, Inc.
+  
+  This file is part of the GNU MP Library.
+*************** mpn_addsub_n (mp_ptr r1p, mp_ptr r2p, mp
+*** 59,63 ****
+  	{
+  	  this_n = MIN (n - off, PART_SIZE);
+! #if HAVE_NATIVE_mpn_add_nc || !HAVE_NATIVE_mpn_add_n
+  	  acyo = mpn_add_nc (r1p + off, s1p + off, s2p + off, this_n, acyo);
+  #else
+--- 59,63 ----
+  	{
+  	  this_n = MIN (n - off, PART_SIZE);
+! #if HAVE_NATIVE_mpn_add_nc
+  	  acyo = mpn_add_nc (r1p + off, s1p + off, s2p + off, this_n, acyo);
+  #else
+*************** mpn_addsub_n (mp_ptr r1p, mp_ptr r2p, mp
+*** 65,69 ****
+  	  acyo = acyn + mpn_add_1 (r1p + off, r1p + off, this_n, acyo);
+  #endif
+! #if HAVE_NATIVE_mpn_sub_nc || !HAVE_NATIVE_mpn_sub_n
+  	  scyo = mpn_sub_nc (r2p + off, s1p + off, s2p + off, this_n, scyo);
+  #else
+--- 65,69 ----
+  	  acyo = acyn + mpn_add_1 (r1p + off, r1p + off, this_n, acyo);
+  #endif
+! #if HAVE_NATIVE_mpn_sub_nc
+  	  scyo = mpn_sub_nc (r2p + off, s1p + off, s2p + off, this_n, scyo);
+  #else
+*************** mpn_addsub_n (mp_ptr r1p, mp_ptr r2p, mp
+*** 82,86 ****
+  	{
+  	  this_n = MIN (n - off, PART_SIZE);
+! #if HAVE_NATIVE_mpn_sub_nc || !HAVE_NATIVE_mpn_sub_n
+  	  scyo = mpn_sub_nc (r2p + off, s1p + off, s2p + off, this_n, scyo);
+  #else
+--- 82,86 ----
+  	{
+  	  this_n = MIN (n - off, PART_SIZE);
+! #if HAVE_NATIVE_mpn_sub_nc
+  	  scyo = mpn_sub_nc (r2p + off, s1p + off, s2p + off, this_n, scyo);
+  #else
+*************** mpn_addsub_n (mp_ptr r1p, mp_ptr r2p, mp
+*** 88,92 ****
+  	  scyo = scyn + mpn_sub_1 (r2p + off, r2p + off, this_n, scyo);
+  #endif
+! #if HAVE_NATIVE_mpn_add_nc || !HAVE_NATIVE_mpn_add_n
+  	  acyo = mpn_add_nc (r1p + off, s1p + off, s2p + off, this_n, acyo);
+  #else
+--- 88,92 ----
+  	  scyo = scyn + mpn_sub_1 (r2p + off, r2p + off, this_n, scyo);
+  #endif
+! #if HAVE_NATIVE_mpn_add_nc
+  	  acyo = mpn_add_nc (r1p + off, s1p + off, s2p + off, this_n, acyo);
+  #else
+*************** mpn_addsub_n (mp_ptr r1p, mp_ptr r2p, mp
+*** 98,102 ****
+    else
+      {
+!       /* r1 and r2 are identical to s1 and s2 (r1==s1 and r2=s2 or vice versa)
+  	 Need temporary storage.  */
+        mp_limb_t tp[PART_SIZE];
+--- 98,102 ----
+    else
+      {
+!       /* r1 and r2 are identical to s1 and s2 (r1==s1 and r2==s2 or vice versa)
+  	 Need temporary storage.  */
+        mp_limb_t tp[PART_SIZE];
+*************** mpn_addsub_n (mp_ptr r1p, mp_ptr r2p, mp
+*** 106,110 ****
+  	{
+  	  this_n = MIN (n - off, PART_SIZE);
+! #if HAVE_NATIVE_mpn_add_nc || !HAVE_NATIVE_mpn_add_n
+  	  acyo = mpn_add_nc (tp, s1p + off, s2p + off, this_n, acyo);
+  #else
+--- 106,110 ----
+  	{
+  	  this_n = MIN (n - off, PART_SIZE);
+! #if HAVE_NATIVE_mpn_add_nc
+  	  acyo = mpn_add_nc (tp, s1p + off, s2p + off, this_n, acyo);
+  #else
+*************** mpn_addsub_n (mp_ptr r1p, mp_ptr r2p, mp
+*** 112,116 ****
+  	  acyo = acyn + mpn_add_1 (tp, tp, this_n, acyo);
+  #endif
+! #if HAVE_NATIVE_mpn_sub_nc || !HAVE_NATIVE_mpn_sub_n
+  	  scyo = mpn_sub_nc (r2p + off, s1p + off, s2p + off, this_n, scyo);
+  #else
+--- 112,116 ----
+  	  acyo = acyn + mpn_add_1 (tp, tp, this_n, acyo);
+  #endif
+! #if HAVE_NATIVE_mpn_sub_nc
+  	  scyo = mpn_sub_nc (r2p + off, s1p + off, s2p + off, this_n, scyo);
+  #else
+Index: configure
+===================================================================
+RCS file: /home/cvsfiles/gmp42/configure,v
+retrieving revision 1.13
+retrieving revision 1.14
+diff -p -2 -r1.13 -r1.14
+*** configure	12 May 2006 16:00:27 -0000	1.13
+--- configure	17 May 2006 10:27:28 -0000	1.14
+*************** echo "include_mpn(\`sparc32/sparc-defs.m
+*** 3555,3560 ****
+      esac
+  
+!     # If the user asked for a fat build, override the path set above
+      if test $enable_fat = yes; then
+        extra_functions="$extra_functions fat fat_entry"
+        path="x86/fat x86"
+--- 3555,3562 ----
+      esac
+  
+!     # If the user asked for a fat build, override the path and flags set above
+      if test $enable_fat = yes; then
++       gcc_cflags_cpu=""
++       gcc_cflags_arch=""
+        extra_functions="$extra_functions fat fat_entry"
+        path="x86/fat x86"
+Index: configure
+===================================================================
+RCS file: /home/cvsfiles/gmp42/configure,v
+retrieving revision 1.11
+retrieving revision 1.13
+diff -p -2 -r1.11 -r1.13
+*** configure	4 May 2006 16:25:33 -0000	1.11
+--- configure	12 May 2006 16:00:27 -0000	1.13
+*************** _ACEOF
+*** 2963,2969 ****
+      cc_cflags="-O2"
+      gcc_cflags="-O2 -mpowerpc"
+!     gcc_cflags_optlist="precomp subtype cpu"
+      gcc_cflags_precomp="-no-cpp-precomp"
+      gcc_cflags_subtype="-force_cpusubtype_ALL"	# for vmx on darwin
+  
+      # grab this object, though it's not a true cycle counter routine
+--- 2963,2971 ----
+      cc_cflags="-O2"
+      gcc_cflags="-O2 -mpowerpc"
+!     gcc_cflags_optlist="precomp subtype asm cpu"
+      gcc_cflags_precomp="-no-cpp-precomp"
+      gcc_cflags_subtype="-force_cpusubtype_ALL"	# for vmx on darwin
++     gcc_cflags_asm=""
++     gcc_cflags_cpu=""
+  
+      # grab this object, though it's not a true cycle counter routine
+*************** _ACEOF
+*** 2976,2980 ****
+        powerpc7400)
+          path="powerpc32/vmx powerpc32/750 powerpc32" ;;
+!       powerpc745?)
+          path="powerpc32/vmx powerpc32 powerpc32" ;;
+        *)
+--- 2978,2982 ----
+        powerpc7400)
+          path="powerpc32/vmx powerpc32/750 powerpc32" ;;
+!       powerpc74[45]?)
+          path="powerpc32/vmx powerpc32 powerpc32" ;;
+        *)
+*************** _ACEOF
+*** 3010,3015 ****
+        powerpc740)   gcc_cflags_cpu="-mcpu=740" ;;
+        powerpc7400 | powerpc7410)
+  		    gcc_cflags_cpu="-mcpu=7400 -mcpu=750" ;;
+!       powerpc745?)  gcc_cflags_cpu="-mcpu=7450" ;;
+        powerpc750)   gcc_cflags_cpu="-mcpu=750" ;;
+        powerpc801)   gcc_cflags_cpu="-mcpu=801" ;;
+--- 3012,3020 ----
+        powerpc740)   gcc_cflags_cpu="-mcpu=740" ;;
+        powerpc7400 | powerpc7410)
++ 		    gcc_cflags_asm="-Wa,-maltivec"
+  		    gcc_cflags_cpu="-mcpu=7400 -mcpu=750" ;;
+!       powerpc74[45]?)
+! 		    gcc_cflags_asm="-Wa,-maltivec"
+! 		    gcc_cflags_cpu="-mcpu=7450" ;;
+        powerpc750)   gcc_cflags_cpu="-mcpu=750" ;;
+        powerpc801)   gcc_cflags_cpu="-mcpu=801" ;;
+Index: mpn/powerpc32/aix.m4
+===================================================================
+RCS file: /home/cvsfiles/gmp42/mpn/powerpc32/aix.m4,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -p -2 -r1.3 -r1.4
+*** mpn/powerpc32/aix.m4	19 Apr 2006 08:40:28 -0000	1.3
+--- mpn/powerpc32/aix.m4	8 May 2006 09:47:12 -0000	1.4
+*************** m4_assert_numargs(2)
+*** 52,56 ****
+  `	.toc
+  tc$2:
+! 	.tc	$2[TC], $2[RW]')'
+  `	lwz	$1, tc$2(2)')
+  
+--- 52,56 ----
+  `	.toc
+  tc$2:
+! 	.tc	$2[TC], $2')'
+  `	lwz	$1, tc$2(2)')
+  
+Index: mpn/ia64/popcount.asm
+===================================================================
+RCS file: /home/cvsfiles/gmp42/mpn/ia64/popcount.asm,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -p -2 -r1.2 -r1.3
+*** mpn/ia64/popcount.asm	20 Mar 2006 14:00:18 -0000	1.2
+--- mpn/ia64/popcount.asm	19 May 2006 22:24:32 -0000	1.3
+*************** dnl  to write mpn_hamdist with the same 
+*** 26,29 ****
+--- 26,33 ----
+  include(`../config.m4')
+  
++ define(ABI32,
++ m4_assert_onearg()
++ `ifdef(`HAVE_ABI_32',`$1')')
++ 
+  C INPUT PARAMETERS
+  C sp = r32
+*************** PROLOGUE(mpn_popcount)
+*** 34,39 ****
+  	.prologue
+  	.save	ar.lc, r2
+! 		mov	r2 = ar.lc
+  	.body
+  		and	r22 = 3, r33
+  		shr.u	r23 = r33, 2	;;
+--- 38,47 ----
+  	.prologue
+  	.save	ar.lc, r2
+! ABI32(`		addp4	r32 = 0, r32')	C M  src extend
+! 		mov	r2 = ar.lc	C I0	
+! ABI32(`		zxt4	r33 = r33')	C I1  size extend
+! 		;;
+  	.body
++ 
+  		and	r22 = 3, r33
+  		shr.u	r23 = r33, 2	;;
+*** mpz/set_d.c	14 Mar 2006 15:57:54 -0000	1.1
+--- mpz/set_d.c	31 May 2006 14:50:05 -0000	1.2
+*************** mpz_set_d (mpz_ptr r, double d)
+*** 57,60 ****
+--- 58,64 ----
+      _mpz_realloc (r, rn);
+  
++   if (rn <= 0)
++     rn = 0;
++ 
+    rp = PTR (r);
+  
