@@ -5,7 +5,7 @@
 NAME = flup
 VERSION = 1.0.2
 CATEGORIES = python
-DESCRIPTION = Random assortment of WSGI servers
+DESCRIPTION = Web Server Gateway Interface (WSGI) implementation for Python
 define BLURB
 endef
 SPKG_SOURCEURL = http://www.saddi.com/software/flup/
