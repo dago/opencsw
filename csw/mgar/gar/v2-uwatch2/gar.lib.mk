@@ -427,7 +427,7 @@ report-package-version:
 		fi; \
 		EXECUTIONDATE=`date +"%Y-%m-%d %H:%M:%S"` ; \
 		$(PACKAGELIST) | while read GARPATH CATALOGNAME PKGNAME ; do \
-			REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch report-package-version --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version=$$LATEST"` ; \
+			REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch report-package-version --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version=$$LATEST --database-host=hastur --database-user=root --database-password=root --database-schema=spmtcsw"` ; \
 			if [ "$$?" -ne "0" ] ; then \
 				echo "Error occured while executing uwatch. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 				echo "$$REPORTVERSION" ; \
