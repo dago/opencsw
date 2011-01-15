@@ -7,3 +7,12 @@ dovecot (1.1.11,REV=2009.03.28)
     /opt/csw/var/run/dovecot to /var/opt/csw/run/dovecot.
 
  -- Sebastian Kayser <skayser@opencsw.org>  Sat, 28 Mar 2009 18:18:35 +0100
+
+dovecot (1.2.16,REV=2011.01.15)
+
+  * Package updated to 1.2.16
+  * Configuration migrated to /etc/opt/csw/dovecot.conf
+  * CSWdovecot_sieve package depreciated since the sieve files had already
+    been included in the CSWdovecot package
+
+ -- Jake Goerzen <jgoerzen@opencsw.org>  Sat, 15 Jan 2011 17:35:54 +0100

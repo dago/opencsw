@@ -1,7 +1,13 @@
+Configuration file migration
+----------------------------
+
+The default configuration path has been migrated to /etc/opt/csw/dovecot.conf.  During package installation the cswmigrateconf script (part of the class action utilities) migrates the dovecot.conf file to the new location.
+
+
 Configuration file
 ------------------
 
-The default configuration path is /opt/csw/etc/dovecot.conf. CSWdovecot
+The default configuration path is /etc/opt/csw/dovecot.conf CSWdovecot
 brings with it a sample configuration (suffixed with .CSW) that will be
 installed when dovecot.conf doesn't exist yet. This sample configuration
 provides IMAP/POP3 and IMAPS/POP3S services to system users and uses a
@@ -44,8 +50,12 @@ versions, see
 Sieve plugin
 ------------
 
-Sieve support (via the cmusieve plugin) is contained in the CSWdovecot_sieve
-package. If required install this package and add
+UPDATE!!  CSWdovecot_sieve package is depreciated.
+
+Sieve support (via the cmusieve plugin) is now contained in the CSWdovecot
+package.
+
+To use sieve add 
 
   mail_plugins = cmusieve
 
