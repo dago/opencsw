@@ -1,5 +1,5 @@
 # TODO
-# - Migrate config from /opt/csw/etc/dovecot to /etc
+# - Migrate config from /opt/csw/etc/dovecot to /etc - DONE!
 # - example.conf patch needs tweaking (rejected)
 # - SSL certs to /etc/opt/csw/ssl?
 # - USERGROUP doesn't work yet, wrong usage?
@@ -90,6 +90,7 @@ STRIP_DIRS  = $(DESTDIR)$(libexecdir)/dovecot
 INITSMF    = $(sysconfdir)/init.d/cswdovecot
 USERGROUP  = dovecot:dovecot:Dovecot IMAP Server:/var/opt/csw/run/dovecot/login:/bin/false
 SAMPLECONF = .*/dovecot.pem $(sysconfdir)/dovecot.conf
+MIGRATE_FILES = dovecot.conf
 
 include gar/category.mk
 
