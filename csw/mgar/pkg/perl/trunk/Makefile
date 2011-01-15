@@ -31,39 +31,14 @@ LICENSE = Copying
 PATCHFILES += 0001-change-inc-based-on-rhel5-patch.patch
 
 CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWperldoc += file-collision
-CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.10.1|soname=libperl.so.5.10.1|pkgname=CSWperl|expected=CSWlibperl5-10-1
-CHECKPKG_OVERRIDES_CSWperl += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/perl/5.10.1/auto/GDBM_File/GDBM_File.so
 CHECKPKG_OVERRIDES_CSWperl += surplus-dependency|CSWgdbm
+CHECKPKG_OVERRIDES_CSWperl += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/perl/5.10.1/auto/GDBM_File/GDBM_File.so
 
 # Core module updates
+# Not used at the moment, leave one as example
 #MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
 #CORE_UPDATES  += PathTools-3.30
 #CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
-
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/L/LD/LDS/
-#CORE_UPDATES  += CGI.pm-3.44
-#CORE_OBSOLETE += CGI*
-
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
-#CORE_UPDATES  += Test-Simple-0.92
-#CORE_OBSOLETE += Test/Builder* Test/More.pm Test/Simple.pm Test/Tutorial.pm
-
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/T/TJ/TJENNESS/
-#CORE_UPDATES  += File-Temp-0.22
-#CORE_OBSOLETE += File/Temp.pm
-
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/G/GB/GBARR/
-#CORE_UPDATES  += IO-1.25
-#CORE_OBSOLETE += IO/Socket* IO/IO* IO/Socket.pm IO/Select.pm IO/Seekable.pm IO/Poll.pm IO/Pipe.pm IO/Handle.pm IO/File.pm IO/Dir.pm IO.pm
-
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/A/AM/AMS/
-#CORE_UPDATES  += Storable-2.20
-#CORE_OBSOLETE += Storable/* Storable.pm
-
-#MASTER_SITES  += $(CPAN_FIRST_MIRROR)/M/MS/MSCHWERN/
-#CORE_UPDATES  += ExtUtils-MakeMaker-6.54
-#CORE_OBSOLETE += ExtUtils/*
 
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
@@ -149,8 +124,7 @@ MERGE_EXCLUDE_STATICLIBS =
 
 # Splitting of a separate libperl.so requires more work and careful planning.
 # Override for now.
-CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
-CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.10.1|soname=libperl.so.5.10.1|pkgname=CSWperl|expected=['CSWlibperl5-10-1']
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.10.1|soname=libperl.so.5.10.1|pkgname=CSWperl|expected=CSWlibperl5-10-1
 CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
 
 include gar/category.mk
