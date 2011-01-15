@@ -1193,6 +1193,11 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                 if self.configParser.getVerbose() == True:
                     print "Package %(pkg)s has been undeleted" % { 'pkg' : self.configParser.getCatalogName() }
 
+            # Test if the package has just been created. If yes the history line for gar version has to be inserted
+            if isNewlyCreatedPackage:
+                cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
+                                values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "gar", self.configParser.getGarVersion() , self.configParser.getExecutionDate() ) )
+
             # Test if current version is passed
             if self.configParser.getCurrentVersion():
                 # In all cases (update or not) we update the last version check according to the argument
@@ -1293,8 +1298,6 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         if self.configParser.getExecutionDate() == None:
             print "Error : Execution date is not defined. Please use --execution-date flag, or --help to display help"
             argsValid = False
-#        else:
-#            dt = datetime.strptime(self.configParser.getExecutionDate(), "%d/%m/%y")
 
         # Gar version is mandatory, other version are optional. Gar the version is the only mandatory in the database
         # It has to be passed in argument in case the package does not exist yet
@@ -1421,7 +1424,11 @@ class CommandProcessor(object):
         # The first element in the arguments array is the action verb. Retrieve the command
         # using action verb as key
         if self.commandArray.has_key(arguments[0]):
-            return self.commandArray[arguments[0]].execute(opts, arguments)
+            res =  self.commandArray[arguments[0]].execute(opts, arguments)
+            if res:
+                return 0
+            else:
+                return 1
         else:
             print "Error : %(action)s action is not supported" % { 'action' : arguments[0] }
             return 2
@@ -1449,5 +1456,6 @@ def main():
 
 # Exit with main return code
 if __name__ == '__main__':
-    sys.exit(main())
+    res = main()
+    sys.exit(res)
 
