@@ -398,8 +398,9 @@ upgrade-to-latest-upstream:
 ########################################################
 # Create upgrade branch from current to latest upstream
 #
+report-package-version:PACKAGELIST=$(foreach SPEC,$(SPKG_SPECS),echo "$(call _pkglist_one,$(SPEC))")
 report-package-version:
-	if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
+	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
 		UWATCHCONFCHECK="Ok" ; \
@@ -425,17 +426,20 @@ report-package-version:
 			exit 1 ; \
 		fi; \
 		EXECUTIONDATE=`date +"%Y-%m-%d %H:%M:%S"` ; \
-		REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch report-package-version --catalog-name=firefox --package-name=CSWthunderbird --execution-date="$$EXECUTIONDATE" --gar-path=pkg/thunderbird/trunk --gar-version=$(VERSION) --upstream-version=$$LATEST --database-host=hastur --database-user=root --database-password=root --database-schema=spmtcsw"` ; \
-		if [ "$$?" -ne "0" ] ; then \
-			echo "Error occured while executing uwatch. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
-			echo "$$REPORTVERSION" ; \
-			exit 1 ; \
-		fi; \
+		$(PACKAGELIST) | while read GARPATH CATALOGNAME PKGNAME ; do \
+			REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch report-package-version --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version=$$LATEST"` ; \
+			if [ "$$?" -ne "0" ] ; then \
+				echo "Error occured while executing uwatch. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+				echo "$$REPORTVERSION" ; \
+				exit 1 ; \
+			fi; \
+		done ; \
 		if [ -n "$$REPORTVERSION" ] ; then \
 			echo "$(NAME) - $$REPORTVERSION" ; \
 		fi ; \
 	fi
 
+#			
 
 ########################################################
 #
