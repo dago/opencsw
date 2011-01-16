@@ -44,6 +44,7 @@ import subprocess
 import pysvn
 import MySQLdb
 import datetime
+import ConfigParser
 
 from urllib2 import Request, urlopen, URLError
 from optparse import OptionParser
@@ -167,40 +168,40 @@ class CommandLineParser(object):
 
     def __init__(self):
         # Create the parser object
-        self.parser = OptionParser()
+        self.optionParser = OptionParser()
 
         # Add options to parser
-        self.parser.add_option("-V", "--verbose", help="Activate verbose mode", action="store_true", dest="verbose")
-        self.parser.add_option("-c", "--current-version", help="Current package version", action="store", dest="current_version")
-        self.parser.add_option("-d", "--target-location", help="Target location. This is the directory in which the branch will be created (parent of the branch directory). Default value is ../branches", action="store", dest="target_location")
-        self.parser.add_option("-r", "--regexp", help="Version matching regular expression", action="store", dest="regexp")
-        self.parser.add_option("-s", "--source-directory", help="Source directory (place from where the build is copied). Default value is current directory", action="store", dest="source_directory")
-        self.parser.add_option("-t", "--target-version", help="Package target version", action="store", dest="target_version")
-        self.parser.add_option("-u", "--upstream-url", help="Upstream version page url", action="store", dest="upstream_url")
+        self.optionParser.add_option("-V", "--verbose", help="Activate verbose mode", action="store_true", dest="verbose")
+        self.optionParser.add_option("-c", "--current-version", help="Current package version", action="store", dest="current_version")
+        self.optionParser.add_option("-d", "--target-location", help="Target location. This is the directory in which the branch will be created (parent of the branch directory). Default value is ../branches", action="store", dest="target_location")
+        self.optionParser.add_option("-r", "--regexp", help="Version matching regular expression", action="store", dest="regexp")
+        self.optionParser.add_option("-s", "--source-directory", help="Source directory (place from where the build is copied). Default value is current directory", action="store", dest="source_directory")
+        self.optionParser.add_option("-t", "--target-version", help="Package target version", action="store", dest="target_version")
+        self.optionParser.add_option("-u", "--upstream-url", help="Upstream version page url", action="store", dest="upstream_url")
 
         # Option used for storing version information in the database
-        self.parser.add_option("-g", "--gar-version", help="Gar version of the package", action="store", dest="gar_version")
-        self.parser.add_option("-w", "--upstream-version", help="Upstream version of the package", action="store", dest="upstream_version")
-        self.parser.add_option("-a", "--gar-path", help="Relative path in svn repository", action="store", dest="gar_path")
-        self.parser.add_option("-n", "--catalog-name", help="Catalog name", action="store", dest="catalog_name")
-        self.parser.add_option("-p", "--package-name", help="Package name", action="store", dest="package_name")
-        self.parser.add_option("-e", "--execution-date", help="Check date to be stored in the database", action="store", dest="execution_date")
+        self.optionParser.add_option("-g", "--gar-version", help="Gar version of the package", action="store", dest="gar_version")
+        self.optionParser.add_option("-w", "--upstream-version", help="Upstream version of the package", action="store", dest="upstream_version")
+        self.optionParser.add_option("-a", "--gar-path", help="Relative path in svn repository", action="store", dest="gar_path")
+        self.optionParser.add_option("-n", "--catalog-name", help="Catalog name", action="store", dest="catalog_name")
+        self.optionParser.add_option("-p", "--package-name", help="Package name", action="store", dest="package_name")
+        self.optionParser.add_option("-e", "--execution-date", help="Check date to be stored in the database", action="store", dest="execution_date")
 
-        self.parser.add_option("-S", "--database-schema", help="Defines the database to use in the connection string", action="store", dest="database_schema")
-        self.parser.add_option("-H", "--database-host", help="Defines the database host to use in the connection string", action="store", dest="database_host")
-        self.parser.add_option("-U", "--database-user", help="Defines the database user to use in the connection string", action="store", dest="database_user")
-        self.parser.add_option("-P", "--database-password", help="Defines the database password to use in the connection string", action="store", dest="database_password")
+        self.optionParser.add_option("-S", "--database-schema", help="Defines the database to use in the connection string", action="store", dest="database_schema")
+        self.optionParser.add_option("-H", "--database-host", help="Defines the database host to use in the connection string", action="store", dest="database_host")
+        self.optionParser.add_option("-U", "--database-user", help="Defines the database user to use in the connection string", action="store", dest="database_user")
+        self.optionParser.add_option("-P", "--database-password", help="Defines the database password to use in the connection string", action="store", dest="database_password")
 
     # -----------------------------------------------------------------------------------------------------------------
 
     def parse(self):
-        (self.options, self.args) = self.parser.parse_args()
+        (self.options, self.args) = self.optionParser.parse_args()
         return self.options, self.args
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
 #
-class ConfigurationParser(object):
+class UwatchConfiguration(object):
     """This handles parameters retrieved either from command line or configuration file.
     """
 
@@ -211,6 +212,41 @@ class ConfigurationParser(object):
         read and copied into this object. Next attempts to retrieve files stored information will read values from
         this object.
         """
+
+        # Default is no file parser
+        fileParser = None
+
+        # Test if the .uwatchrc file exists
+        if os.path.isfile( os.path.expanduser("~/.uwatchrc") ):
+            # Yes thus load values from the configuration file before processing args parameter
+            # This allow to override from the command line some values stored in the config file
+            fileParser = ConfigParser.ConfigParser()
+            fileParser.read( [os.path.expanduser("~/.uwatchrc") ] )
+
+            # Read the database schema from the config file            
+            try:
+                self._database_schema = fileParser.get("main", "database-schema")
+            except Config.NoOptionError:
+                self._database_schema = None
+
+            # Read the database hostname from the config file            
+            try:
+                self._database_host = fileParser.get("main", "database-host")
+            except Config.NoOptionError:
+                self._database_host = None
+
+            # Read the database user from the config file            
+            try:
+                self._database_user = fileParser.get("main", "database-user")
+            except Config.NoOptionError:
+                self._database_user = None
+
+            # Read the database password from the config file            
+            try:
+                self._database_password = fileParser.get("main", "database-password")
+            except Config.NoOptionError:
+                self._database_password = None
+
 
         # This member variable is a flag which defines the status of the verbose mode (True : activated)
         if args.verbose != None:
@@ -432,7 +468,7 @@ class AbstractCommand(object):
     # -----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, name):
-        self.configParser = ConfigurationParser()
+        self.config = UwatchConfiguration()
         self.name = name
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -497,7 +533,7 @@ class UpstreamWatchCommand(AbstractCommand):
         tokens1 = re.split(splittingRegExp, version1)
         tokens2 = re.split(splittingRegExp, version2)
 
-        if self.configParser.getVerbose():
+        if self.config.getVerbose():
             print "Comparing " + version1 + " and " + version2
 
         # Iterates the toeksn of version 1, pop tokens one by one and compare to the token at same
@@ -560,17 +596,17 @@ class CheckUpstreamCommand(UpstreamWatchCommand):
         argsValid = True
 
         # Current version is mandatory
-        if self.configParser.getCurrentVersion() == None:
+        if self.config.getCurrentVersion() == None:
             print "Error : Current version is not defined. Please use --current-version flag, or --help to display help"
             argsValid = False
 
         # Regexp is mandatory
-        if self.configParser.getRegexp() == None:
+        if self.config.getRegexp() == None:
             print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
             argsValid = False
 
         # UpstreamURL is mandatory
-        if self.configParser.getUpstreamURL() == None:
+        if self.config.getUpstreamURL() == None:
             print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
             argsValid = False
 
@@ -585,30 +621,30 @@ class CheckUpstreamCommand(UpstreamWatchCommand):
         try:
 
             # Initialize configuration
-            self.configParser.initialize(opts)
+            self.config.initialize(opts)
 
             # Need a way to check that all options needed are available
             self.checkArgument()
 
             # Call the method in charge of retrieving upstream content
-            content = self.UrlContentRetrieve(self.configParser.getUpstreamURL())
+            content = self.UrlContentRetrieve(self.config.getUpstreamURL())
 
             # Search the strings matching the regexp passed through command line arguments
-            p = re.compile(self.configParser.getRegexp())
+            p = re.compile(self.config.getRegexp())
             matches = p.findall(content)
 
             # Check if we have found some results
             if len(matches) == 0:
-                raise NoUpstreamVersionFoundException(self.configParser.getUpstreamURL(), self.configParser.getRegexp())
+                raise NoUpstreamVersionFoundException(self.config.getUpstreamURL(), self.config.getRegexp())
                 print "No match found, we should trigger some error since even current version has not been found"
                 return False
             else:
-                newestVersion = self.configParser.getCurrentVersion()
+                newestVersion = self.config.getCurrentVersion()
                 while len(matches) > 0:
                     newestVersion = self.CompareVersionAndGetNewest(newestVersion, matches.pop(0))
 
             # At the end of the processing loop, test if we have a newer version avail, if yes output it
-            if newestVersion <>  self.configParser.getCurrentVersion():
+            if newestVersion <>  self.config.getCurrentVersion():
                 print newestVersion
 
             # Exit after processing, eveythin gis ok, return true to the command processor
@@ -654,12 +690,12 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
         argsValid = True
 
         # Regexp is mandatory
-        if self.configParser.getRegexp() == None:
+        if self.config.getRegexp() == None:
             print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
             argsValid = False
 
         # UpstreamURL is mandatory
-        if self.configParser.getUpstreamURL() == None:
+        if self.config.getUpstreamURL() == None:
             print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
             argsValid = False
 
@@ -674,21 +710,21 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
         try:
 
             # Initialize configuration
-            self.configParser.initialize(opts)
+            self.config.initialize(opts)
 
             # Need a way to check that all options needed are available
             self.checkArgument()
 
             # Call the method in charge of retrieving upstream content
-            content = self.UrlContentRetrieve(self.configParser.getUpstreamURL())
+            content = self.UrlContentRetrieve(self.config.getUpstreamURL())
 
             # Search the strings matching the regexp passed through command line arguments
-            p = re.compile(self.configParser.getRegexp())
+            p = re.compile(self.config.getRegexp())
             matches = p.findall(content)
 
             # Check if we have found some results
             if len(matches) == 0:
-                raise NoUpstreamVersionFoundException(self.configParser.getUpstreamURL(), self.configParser.getRegexp())
+                raise NoUpstreamVersionFoundException(self.config.getUpstreamURL(), self.config.getRegexp())
                 print "No match found, we should trigger some error since even current version has not been found"
                 return False
             else:
@@ -741,12 +777,12 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
         argsValid = True
 
         # Regexp is mandatory
-        if self.configParser.getRegexp() == None:
+        if self.config.getRegexp() == None:
             print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
             argsValid = False
 
         # UpstreamURL is mandatory
-        if self.configParser.getUpstreamURL() == None:
+        if self.config.getUpstreamURL() == None:
             print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
             argsValid = False
 
@@ -774,21 +810,21 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
         try:
 
             # Initialize configuration
-            self.configParser.initialize(opts)
+            self.config.initialize(opts)
 
             # Need a way to check that all options needed are available
             self.checkArgument()
 
             # Call the method in charge of retrieving upstream content
-            content = self.UrlContentRetrieve(self.configParser.getUpstreamURL())
+            content = self.UrlContentRetrieve(self.config.getUpstreamURL())
 
             # Search the strings matching the regexp passed through command line arguments
-            p = re.compile(self.configParser.getRegexp())
+            p = re.compile(self.config.getRegexp())
             matches = p.findall(content)
 
             # Check if we have found some results
             if len(matches) == 0:
-                raise NoUpstreamVersionFoundException(self.configParser.getUpstreamURL(), self.configParser.getRegexp())
+                raise NoUpstreamVersionFoundException(self.config.getUpstreamURL(), self.config.getRegexp())
                 print "No match found, we should trigger some error since even current version has not been found"
                 return False
             else:
@@ -850,17 +886,17 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         argsValid = True
 
         # FromVersion is mandatory
-        if self.configParser.getCurrentVersion() == None:
+        if self.config.getCurrentVersion() == None:
             print "Error : Current version is not defined. Please use --current-version flag, or --help to display help"
             argsValid = False
 
         # ToVersion is mandatory
-        if self.configParser.getTargetVersion() == None:
+        if self.config.getTargetVersion() == None:
             print "Error : Target version is not defined. Please use --target-version flag, or --help to display help"
             argsValid = False
 
         # ToVersion is mandatory
-        if self.configParser.getTargetLocation() == None:
+        if self.config.getTargetLocation() == None:
             print "Error : Target directory is not defined. Please use --target-location flag, or --help to display help"
             argsValid = False
 
@@ -876,17 +912,17 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         """
 
         # Check that the Makefile exist
-        if os.path.isfile(self.configParser.getSourceDirectory() + "/Makefile") == False:
+        if os.path.isfile(self.config.getSourceDirectory() + "/Makefile") == False:
             # No it does not exist, thus generate an error message
-            msg = "Error : there is no Makefile under %(src)s" % { "src" : os.path.abspath(self.configParser.getSourceDirectory()) }
+            msg = "Error : there is no Makefile under %(src)s" % { "src" : os.path.abspath(self.config.getSourceDirectory()) }
     
             # Then raise an exception
             raise InvalidSourceDirectoryContentException(msg)
 
         # Check that the gar directory exists (can be a directory or symlink)
-        if os.path.isdir(self.configParser.getSourceDirectory() + "/gar") == False:
+        if os.path.isdir(self.config.getSourceDirectory() + "/gar") == False:
             # No it does not exist, thus generate an error message
-            msg = "Error : there is no gar directory under %(src)s" % { "src" : os.path.abspath(self.configParser.getSourceDirectory()) }
+            msg = "Error : there is no gar directory under %(src)s" % { "src" : os.path.abspath(self.config.getSourceDirectory()) }
     
             # Then raise an exception
             raise InvalidSourceDirectoryContentException(msg)
@@ -902,7 +938,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         """
 
         # Get the newgar information
-        garDir = self.configParser.getSourceDirectory() + "/gar"
+        garDir = self.config.getSourceDirectory() + "/gar"
         if os.path.islink(garDir):
             garTarget = os.path.relpath(os.path.abspath(os.readlink(garDir)), os.path.abspath(targetDir))
         else:
@@ -919,7 +955,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         """
 
         # Get the newgar information
-        garDir = self.configParser.getSourceDirectory() + "/gar"
+        garDir = self.config.getSourceDirectory() + "/gar"
         if os.path.islink(garDir):
             garTarget = os.path.relpath(os.path.abspath(os.readlink(garDir)), os.path.abspath(self.getTargetDirectory()))
         else:
@@ -934,7 +970,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
             and target version
         """
 
-        return self.configParser.getTargetLocation() + "/upgrade_from_" + self.configParser.getCurrentVersion() + "_to_" + self.configParser.getTargetVersion()
+        return self.config.getTargetLocation() + "/upgrade_from_" + self.config.getCurrentVersion() + "_to_" + self.config.getTargetVersion()
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -949,7 +985,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
             svnClient = pysvn.Client()
 
             # Do the actual copy in the svn working copy
-            svnClient.copy(os.path.abspath(self.configParser.getSourceDirectory()), self.getTargetDirectory())
+            svnClient.copy(os.path.abspath(self.config.getSourceDirectory()), self.getTargetDirectory())
 
             # Backup the current directory
             curDir = os.getcwd()
@@ -976,7 +1012,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         except pysvn.ClientError , e:
             # Generate a cool error message
             msg = "SVN Client error : " + e.args[0] + "\n" + "Error occured when executing command svnClient.copy(%(src)s, %(dest)s)" \
-                  % { 'src' : os.path.abspath(self.configParser.getSourceDirectory()), 'dest' : self.getTargetDirectory() }
+                  % { 'src' : os.path.abspath(self.config.getSourceDirectory()), 'dest' : self.getTargetDirectory() }
 
             # Then raise the exception
             raise SvnClientException(msg)
@@ -1009,7 +1045,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
                 lines.append(line)
             else:   
                 # Yes it is a match, thus output the modified line
-                lines.append("VERSION = " + self.configParser.getTargetVersion() + "\n")
+                lines.append("VERSION = " + self.config.getTargetVersion() + "\n")
 
         # Open the new Makefile for output
         f = open("./Makefile", 'w')
@@ -1031,7 +1067,7 @@ class UpgradeToVersionCommand(UpstreamWatchCommand):
         try:
 
             # Initialize configuration
-            self.configParser.initialize(opts)
+            self.config.initialize(opts)
 
             # Need a way to check that all options needed are available
             self.checkArgument()
@@ -1105,10 +1141,10 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
 
         # Open the database connection
         try:
-            self.conn = MySQLdb.connect(host   = self.configParser.getDatabaseHost(),
-                                       passwd = self.configParser.getDatabasePassword(),
-                                       db     = self.configParser.getDatabaseSchema(),
-                                       user   = self.configParser.getDatabaseUser() )
+            self.conn = MySQLdb.connect(host   = self.config.getDatabaseHost(),
+                                       passwd = self.config.getDatabasePassword(),
+                                       db     = self.config.getDatabaseSchema(),
+                                       user   = self.config.getDatabaseUser() )
 
         except MySQLdb.Error, e:
             msg = "Error %d: %s" % (e.args[0], e.args[1])
@@ -1117,7 +1153,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         # Check that the object we got in return if defiend
         if self.conn == None:
             # No, raise a DatabaseConnectionException
-            msg = "Unable to connect to database using host = %(host)s, db = %(db)s, user = %(user)s, passwd = %(passwd)% " % { "host" : self.configParser.getDatabaseHost(), "passwd" : self.configParser.getDatabasePassword(), "db" : self.configParser.getDatabaseSchema(), "user" : self.configParser.getDatabaseUser() }
+            msg = "Unable to connect to database using host = %(host)s, db = %(db)s, user = %(user)s, passwd = %(passwd)% " % { "host" : self.config.getDatabaseHost(), "passwd" : self.config.getDatabasePassword(), "db" : self.config.getDatabaseSchema(), "user" : self.config.getDatabaseUser() }
             raise DatabaseConnectionException(msg)
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -1161,25 +1197,25 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
 
             # First retrieve the id_pkg and deletion flag from the database
             cursor.execute("select * from UWATCH_PKG_VERSION where PKG_GAR_PATH = %s and PKG_CATALOGNAME = %s", \
-                            (self.configParser.getGarPath(), self.configParser.getCatalogName() ) )
+                            (self.config.getGarPath(), self.config.getCatalogName() ) )
 
             # If rowcount = 0 then the package does not exist. It has to be inserted in the database
             if cursor.rowcount == 0:
                 # Insert the package in the package version table
                 cursor.execute("insert into UWATCH_PKG_VERSION (PKG_GAR_PATH, PKG_CATALOGNAME, PKG_NAME, PKG_GAR_VERSION, PKG_LAST_GAR_CHECK_DATE) \
-                                values ( %s , %s , %s , %s , %s )" , (self.configParser.getGarPath(), self.configParser.getCatalogName(), \
-                                self.configParser.getPackageName(), self.configParser.getGarVersion(), self.configParser.getExecutionDate() ) )
+                                values ( %s , %s , %s , %s , %s )" , (self.config.getGarPath(), self.config.getCatalogName(), \
+                                self.config.getPackageName(), self.config.getGarVersion(), self.config.getExecutionDate() ) )
 
                 # Flag that we have created a package
                 isNewlyCreatedPackage = True
 
                 # Output some more information if verbose mode is activated
-                if self.configParser.getVerbose() == True:
-                    print "Package %(pkg)s added to the database" % { 'pkg' : self.configParser.getCatalogName() }
+                if self.config.getVerbose() == True:
+                    print "Package %(pkg)s added to the database" % { 'pkg' : self.config.getCatalogName() }
 
                 # Now the package is inserted. Retrieve the newly inserted package and update other versions
                 cursor.execute("select * from UWATCH_PKG_VERSION where PKG_GAR_PATH = %s and PKG_CATALOGNAME = %s", \
-                                (self.configParser.getGarPath(), self.configParser.getCatalogName() ) )
+                                (self.config.getGarPath(), self.config.getCatalogName() ) )
 
             # Retrieve package information
             pkg = cursor.fetchone()
@@ -1190,79 +1226,79 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                 cursor.execute("update UWATCH_PKG_VERSION set PKG_IS_DELETED = 0 where ID_PKG='%s'" , ( pkg["ID_PKG"] ) )
 
                 # Output some more information if verbose mode is activated
-                if self.configParser.getVerbose() == True:
-                    print "Package %(pkg)s has been undeleted" % { 'pkg' : self.configParser.getCatalogName() }
+                if self.config.getVerbose() == True:
+                    print "Package %(pkg)s has been undeleted" % { 'pkg' : self.config.getCatalogName() }
 
             # Test if the package has just been created. If yes the history line for gar version has to be inserted
             if isNewlyCreatedPackage:
                 cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
-                                values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "gar", self.configParser.getGarVersion() , self.configParser.getExecutionDate() ) )
+                                values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "gar", self.config.getGarVersion() , self.config.getExecutionDate() ) )
 
             # Test if current version is passed
-            if self.configParser.getCurrentVersion():
+            if self.config.getCurrentVersion():
                 # In all cases (update or not) we update the last version check according to the argument
-                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_CURRENT_CHECK_DATE = %s  where ID_PKG= %s" , ( self.configParser.getExecutionDate(), pkg["ID_PKG"] ) )
+                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_CURRENT_CHECK_DATE = %s  where ID_PKG= %s" , ( self.config.getExecutionDate(), pkg["ID_PKG"] ) )
     
                 # Yes, compare current version from commandline and database
-                if self.configParser.getCurrentVersion() != pkg["PKG_CURRENT_VERSION"]:                
+                if self.config.getCurrentVersion() != pkg["PKG_CURRENT_VERSION"]:                
                     # Yes thus package has to be updated. In the case of a version change revision is set to empty string.
                     # This has to be done since if a revision exist and new version of package has no revision. The current value will be false
                     # If revision is provided it will be updated at next step while checking for revision
                     cursor.execute("update UWATCH_PKG_VERSION set PKG_CURRENT_VERSION = %s , PKG_CURRENT_REVISION = '' where ID_PKG= %s" , \
-                                    ( self.configParser.getCurrentVersion(), pkg["ID_PKG"] ) )
+                                    ( self.config.getCurrentVersion(), pkg["ID_PKG"] ) )
                     cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
-                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "current", self.configParser.getCurrentVersion() , self.configParser.getExecutionDate() ) )
+                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "current", self.config.getCurrentVersion() , self.config.getExecutionDate() ) )
 
                     # Output some more information if verbose mode is activated
-                    if self.configParser.getVerbose() == True:
-                        print "Upgrading %(pkg)s current version from %(current)s to %(next)s" % { 'pkg' : self.configParser.getCatalogName(), \
-                                'next' : self.configParser.getCurrentVersion() , 'current' : pkg["PKG_CURRENT_VERSION"] }
+                    if self.config.getVerbose() == True:
+                        print "Upgrading %(pkg)s current version from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
+                                'next' : self.config.getCurrentVersion() , 'current' : pkg["PKG_CURRENT_VERSION"] }
                 
                     # Yes, compare current revision from commandline and database
-                if self.configParser.getCurrentRevision() != pkg["PKG_CURRENT_REVISION"]:                
+                if self.config.getCurrentRevision() != pkg["PKG_CURRENT_REVISION"]:                
                     # Yes thus package has to be updated
-                    cursor.execute("update UWATCH_PKG_VERSION set PKG_CURRENT_REVISION = %s  where ID_PKG= %s" , ( self.configParser.getCurrentRevision(), pkg["ID_PKG"] ) )
+                    cursor.execute("update UWATCH_PKG_VERSION set PKG_CURRENT_REVISION = %s  where ID_PKG= %s" , ( self.config.getCurrentRevision(), pkg["ID_PKG"] ) )
                     cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
-                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "revision", self.configParser.getCurrentRevision() , self.configParser.getExecutionDate() ) )
+                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "revision", self.config.getCurrentRevision() , self.config.getExecutionDate() ) )
 
                     # Output some more information if verbose mode is activated
-                    if self.configParser.getVerbose() == True:
-                        print "Upgrading %(pkg)s current revision from %(current)s to %(next)s" % { 'pkg' : self.configParser.getCatalogName(), \
-                                'next' : self.configParser.getCurrentRevision() , 'current' : pkg["PKG_CURRENT_REVISION"] }
+                    if self.config.getVerbose() == True:
+                        print "Upgrading %(pkg)s current revision from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
+                                'next' : self.config.getCurrentRevision() , 'current' : pkg["PKG_CURRENT_REVISION"] }
                 
             # Test if upstream version is passed
-            if self.configParser.getUpstreamVersion():
+            if self.config.getUpstreamVersion():
                 # In all cases (update or not) we update the last version check according to the argument
-                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_DATE = %s  where ID_PKG= %s" , ( self.configParser.getExecutionDate(), pkg["ID_PKG"] ) )
+                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_DATE = %s  where ID_PKG= %s" , ( self.config.getExecutionDate(), pkg["ID_PKG"] ) )
 
                 # Yes, compare current upstream version from commandline and database
-                if self.configParser.getUpstreamVersion() != pkg["PKG_UPSTREAM_VERSION"]:                
+                if self.config.getUpstreamVersion() != pkg["PKG_UPSTREAM_VERSION"]:                
                     # Yes thus package has to be updated
-                    cursor.execute("update UWATCH_PKG_VERSION set PKG_UPSTREAM_VERSION = %s  where ID_PKG= %s" , ( self.configParser.getUpstreamVersion(), pkg["ID_PKG"] ) )
+                    cursor.execute("update UWATCH_PKG_VERSION set PKG_UPSTREAM_VERSION = %s  where ID_PKG= %s" , ( self.config.getUpstreamVersion(), pkg["ID_PKG"] ) )
                     cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
-                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "upstream", self.configParser.getUpstreamVersion() , self.configParser.getExecutionDate() ) )
+                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "upstream", self.config.getUpstreamVersion() , self.config.getExecutionDate() ) )
 
                     # Output some more information if verbose mode is activated
-                    if self.configParser.getVerbose() == True:
-                        print "Upgrading %(pkg)s upstream version from %(current)s to %(next)s" % { 'pkg' : self.configParser.getCatalogName(), \
-                                'next' : self.configParser.getUpstreamVersion() , 'current' : pkg["PKG_UPSTREAM_VERSION"] }
+                    if self.config.getVerbose() == True:
+                        print "Upgrading %(pkg)s upstream version from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
+                                'next' : self.config.getUpstreamVersion() , 'current' : pkg["PKG_UPSTREAM_VERSION"] }
                 
             # Test if gar version is passed (it is mandatory to have a value in database)
-            if self.configParser.getGarVersion():
+            if self.config.getGarVersion():
                 # In all cases (update or not) we update the last version check according to the argument
-                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_GAR_CHECK_DATE = %s  where ID_PKG= %s" , ( self.configParser.getExecutionDate(), pkg["ID_PKG"] ) )
+                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_GAR_CHECK_DATE = %s  where ID_PKG= %s" , ( self.config.getExecutionDate(), pkg["ID_PKG"] ) )
 
                 # Yes, compare current gar version from commandline and database
-                if self.configParser.getGarVersion() != pkg["PKG_GAR_VERSION"]:                
+                if self.config.getGarVersion() != pkg["PKG_GAR_VERSION"]:                
                     # Yes thus package has to be updated
-                    cursor.execute("update UWATCH_PKG_VERSION set PKG_GAR_VERSION = %s  where ID_PKG= %s" , ( self.configParser.getGarVersion(), pkg["ID_PKG"] ) )
+                    cursor.execute("update UWATCH_PKG_VERSION set PKG_GAR_VERSION = %s  where ID_PKG= %s" , ( self.config.getGarVersion(), pkg["ID_PKG"] ) )
                     cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
-                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "gar", self.configParser.getGarVersion() , self.configParser.getExecutionDate() ) )
+                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "gar", self.config.getGarVersion() , self.config.getExecutionDate() ) )
 
                     # Output some more information if verbose mode is activated
-                    if self.configParser.getVerbose() == True:
-                        print "Upgrading %(pkg)s gar version from %(current)s to %(next)s" % { 'pkg' : self.configParser.getCatalogName(), \
-                                'next' : self.configParser.getGarVersion() , 'current' : pkg["PKG_GAR_VERSION"] }
+                    if self.config.getVerbose() == True:
+                        print "Upgrading %(pkg)s gar version from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
+                                'next' : self.config.getGarVersion() , 'current' : pkg["PKG_GAR_VERSION"] }
 
             # Close the cursor on the database
             cursor.close()
@@ -1280,48 +1316,48 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         argsValid = True
 
         # Gar path is mandatory
-        if self.configParser.getGarPath() == None:
+        if self.config.getGarPath() == None:
             print "Error : Gar path is not defined. Please use --gar-path flag, or --help to display help"
             argsValid = False
 
         # Catalog name is mandatory
-        if self.configParser.getCatalogName() == None:
+        if self.config.getCatalogName() == None:
             print "Error : Catalog name is not defined. Please use --catalog-name flag, or --help to display help"
             argsValid = False
 
         # Package name is mandatory
-        if self.configParser.getPackageName() == None:
+        if self.config.getPackageName() == None:
             print "Error : Package name is not defined. Please use --package-name flag, or --help to display help"
             argsValid = False
 
         # Execution date is mandatory
-        if self.configParser.getExecutionDate() == None:
+        if self.config.getExecutionDate() == None:
             print "Error : Execution date is not defined. Please use --execution-date flag, or --help to display help"
             argsValid = False
 
         # Gar version is mandatory, other version are optional. Gar the version is the only mandatory in the database
         # It has to be passed in argument in case the package does not exist yet
-        if self.configParser.getGarVersion() == None:
+        if self.config.getGarVersion() == None:
             print "Error : Gar version is not defined. Please use --gar-version flag, or --help to display help"
             argsValid = False
 
         # Database schema is mandatory
-        if self.configParser.getDatabaseSchema() == None:
+        if self.config.getDatabaseSchema() == None:
             print "Error : Database schema is not defined. Please define the value in the ~/.uwatchrc file, use --database-schema flag, or --help to display help"
             argsValid = False
 
         # Database host is mandatory
-        if self.configParser.getDatabaseHost() == None:
+        if self.config.getDatabaseHost() == None:
             print "Error : Database host is not defined. Please define the value in the ~/.uwatchrc file, use --database-host flag, or --help to display help"
             argsValid = False
 
         # Database user is mandatory
-        if self.configParser.getDatabaseUser() == None:
+        if self.config.getDatabaseUser() == None:
             print "Error : Database user is not defined. Please define the value in the ~/.uwatchrc file, use --database-user flag, or --help to display help"
             argsValid = False
 
         # Database password is mandatory
-        if self.configParser.getDatabasePassword() == None:
+        if self.config.getDatabasePassword() == None:
             print "Error : Database password is not defined. Please define the value in the ~/.uwatchrc file, use --database-password flag, or --help to display help"
             argsValid = False
     
@@ -1336,7 +1372,7 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         try:
 
             # Initialize configuration
-            self.configParser.initialize(opts)
+            self.config.initialize(opts)
 
             # Need a way to check that all options needed are available
             self.checkArgument()
@@ -1407,7 +1443,7 @@ class CommandProcessor(object):
         cmd = UpgradeToVersionCommand("upgrade-to-version")
         self.commandArray[cmd.getName()] = cmd
 
-        cmd = ReportPackageVersionCommand("report-package-version")
+        cmd = ReportPackageVersionCommand("update-package-version-database")
         self.commandArray[cmd.getName()] = cmd
 
     # -----------------------------------------------------------------------------------------------------------------

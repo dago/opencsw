@@ -207,12 +207,7 @@ get-uwatch-configuration:
 		if [ ! -n '$(VERSION)' ]; then \
 			echo "$(NAME) - VERSION is not set" ; \
 		else \
-			echo "$(NAME) - Current version is : $(VERSION)" ; \
-		fi ; \
-		if [ ! -n '$(VERSION)' ]; then \
-			echo "$(NAME) - VERSION is not set" ; \
-		else \
-			echo "$(NAME) - Current version is : $(VERSION)" ; \
+			echo "$(NAME) - GAR version is : $(VERSION)" ; \
 		fi ; \
 		if [ ! -n '$(http_proxy)' ]; then \
 			echo "$(NAME) - http_proxy is not set" ; \
@@ -252,7 +247,7 @@ get-upstream-version-list:
 		fi ; \
 		VERSIONLIST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-version-list --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
 		if [ "$$?" -ne "0" ] ; then \
-			echo "Error occured while executing uwatch. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+			echo "Error occured while executing uwatch get-upstream-version-list. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 			echo "Output : $$VERSIONLIST" ; \
 			exit 1 ; \
 		fi; \
@@ -292,7 +287,7 @@ get-upstream-latest-version:
 		fi ; \
 		LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
 		if [ "$$?" -ne "0" ] ; then \
-			echo "Error occured while executing uwatch. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+			echo "Error occured while executing uwatch get-upstream-latest-version. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 			echo "$$LATEST" ; \
 			exit 1 ; \
 		fi; \
@@ -328,7 +323,7 @@ check-upstream:
 		fi ; \
 		LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --current-version="$(VERSION)"` ; \
 		if [ "$$?" -ne "0" ] ; then \
-			echo "Error occured while executing uwatch. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+			echo "Error occured while executing uwatch check-upstream. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 			echo "$$LATEST" ; \
 			exit 1 ; \
 		fi; \
@@ -365,7 +360,7 @@ upgrade-to-latest-upstream:
 		fi ; \
 		LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --current-version="$(VERSION)"` ; \
 		if [ "$$?" -ne "0" ] ; then \
-			echo "Error occured while executing uwatch. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+			echo "Error occured while executing uwatch check-upstream. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 			echo "$$LATEST" ; \
 			exit 1 ; \
 		fi; \
@@ -375,7 +370,7 @@ upgrade-to-latest-upstream:
 					echo "$(NAME) : a new version of upstream files is available. Creating upgrade branch from version $(VERSION) to $$LATEST"; \
 					VERSIONUPGRADE=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch upgrade-to-version --current-version="$(VERSION)" --target-version="$$LATEST"` ; \
 					if [ "$$?" -ne "0" ] ; then \
-						echo "Error occured while executing uwatch. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+						echo "Error occured while executing uwatch upgrade-to-version. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 						echo "$$VERSIONUPGRADE" ; \
 						exit 1 ; \
 					fi; \
@@ -398,8 +393,8 @@ upgrade-to-latest-upstream:
 ########################################################
 # Create upgrade branch from current to latest upstream
 #
-report-package-version:PACKAGELIST=$(foreach SPEC,$(SPKG_SPECS),echo "$(call _pkglist_one,$(SPEC))")
-report-package-version:
+update-package-version-database:PACKAGELIST=$(foreach SPEC,$(SPKG_SPECS),$(call _pkglist_one,$(SPEC))\n)
+update-package-version-database:
 	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
 		echo "$(NAME) - Upstream Watch is disabled" ; \
 	else \
@@ -421,15 +416,18 @@ report-package-version:
 		fi ; \
 		LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
 		if [ "$$?" -ne "0" ] ; then \
-			echo "Error occured while executing uwatch. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+			echo "Error occured while executing uwatch get-upstream-latest-version. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 			echo "$$LATEST" ; \
 			exit 1 ; \
 		fi; \
 		EXECUTIONDATE=`date +"%Y-%m-%d %H:%M:%S"` ; \
-		$(PACKAGELIST) | while read GARPATH CATALOGNAME PKGNAME ; do \
-			REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch report-package-version --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version=$$LATEST --database-host=hastur --database-user=root --database-password=root --database-schema=spmtcsw"` ; \
+		printf "$(PACKAGELIST)" | while read line ; do \
+			GARPATH=`echo $$line | awk '{ print $$1 }'` ; \
+			CATALOGNAME=`echo $$line | awk '{ print $$2 }'` ; \
+			PKGNAME=`echo $$line | awk '{ print $$3 }'` ; \
+			REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version=$$LATEST"` ; \
 			if [ "$$?" -ne "0" ] ; then \
-				echo "Error occured while executing uwatch. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+				echo "Error occured while executing uwatch update-package-version-database. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
 				echo "$$REPORTVERSION" ; \
 				exit 1 ; \
 			fi; \
@@ -439,7 +437,7 @@ report-package-version:
 		fi ; \
 	fi
 
-#			
+#	
 
 ########################################################
 #
