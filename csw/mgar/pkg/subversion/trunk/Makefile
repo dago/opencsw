@@ -55,6 +55,8 @@ RUNTIME_DEP_PKGS_CSWsvn      += CSWsqlite3rt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWzlib
 RUNTIME_DEP_PKGS_CSWsvn      += CSWapr
 RUNTIME_DEP_PKGS_CSWsvn      += CSWapr-util
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibserf0-0
+
 
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
 CATALOGNAME_CSWsvn-devel   = subversion_devel
@@ -137,6 +139,8 @@ RUNTIME_DEP_PKGS_CSWrbsvn += CSWexpat
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWapr-util
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWapr
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby1
+
 
 SPKG_DESC_CSWpythonsvn           = Subversion Python Language Binding
 CATALOGNAME_CSWpythonsvn         = pythonsvn
