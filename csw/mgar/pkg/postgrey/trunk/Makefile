@@ -11,7 +11,7 @@ MASTER_SITES = http://postgrey.schweikert.ch/pub/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS  = CSWperl CSWpmiomultiplex CSWpmnetserver
-RUNTIME_DEP_PKGS += CSWbdb48 CSWpostfix CSWpmberkeleydb
+RUNTIME_DEP_PKGS += CSWpostfix CSWpmberkeleydb
 
 ARCHALL = 1
 
@@ -32,8 +32,6 @@ PATCHFILES = postgrey.p
 CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpmnetserver
 CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpmiomultiplex
-CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpostfix
-CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWbdb48
 CHECKPKG_OVERRIDES_CSWpostgrey += surplus-dependency|CSWpmberkeleydb
 
 include gar/category.mk
