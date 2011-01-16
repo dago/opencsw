@@ -48,14 +48,13 @@ RUNTIME_DEP_PKGS_CSWsvn      += CSWexpat
 RUNTIME_DEP_PKGS_CSWsvn      += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWiconv
 RUNTIME_DEP_PKGS_CSWsvn      += CSWneon
+RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf0-0
 RUNTIME_DEP_PKGS_CSWsvn      += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWsasl
-RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf
 RUNTIME_DEP_PKGS_CSWsvn      += CSWsqlite3rt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWzlib
 RUNTIME_DEP_PKGS_CSWsvn      += CSWapr
 RUNTIME_DEP_PKGS_CSWsvn      += CSWapr-util
-RUNTIME_DEP_PKGS_CSWsvn += CSWlibserf0-0
 
 
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
