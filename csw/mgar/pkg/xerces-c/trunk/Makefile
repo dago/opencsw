@@ -30,6 +30,7 @@ RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibcares
 RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicu46
 
 PACKAGES += CSWlibxerces-c-devel
 CATALOGNAME_CSWlibxerces-c-devel = libxerces_c_devel
@@ -53,6 +54,7 @@ RUNTIME_DEP_PKGS_CSWxerces-c += CSWzlib
 RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibcares
 RUNTIME_DEP_PKGS_CSWxerces-c += CSWosslrt
 RUNTIME_DEP_PKGS_CSWxerces-c += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWxerces-c += CSWlibicu46
 
 VENDOR_URL = http://xerces.apache.org/xerces-c/
 LICENSE = LICENSE
