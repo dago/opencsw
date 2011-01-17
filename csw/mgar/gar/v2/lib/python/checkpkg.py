@@ -59,22 +59,6 @@ class SetupError(Error):
   pass
 
 
-def GetOptions():
-  parser = optparse.OptionParser()
-  parser.add_option("-d", "--debug", dest="debug",
-                    default=False, action="store_true",
-                    help="Turn on debugging messages")
-  parser.add_option("-p", "--profile", dest="profile",
-                    default=False, action="store_true",
-                    help=("Turn on profiling"))
-  parser.add_option("-q", "--quiet", dest="quiet",
-                    default=False, action="store_true",
-                    help=("Print less messages"))
-  (options, args) = parser.parse_args()
-  # Using set() to make the arguments unique.
-  return options, set(args)
-
-
 def ExtractDescription(pkginfo):
   desc_re = re.compile(DESCRIPTION_RE)
   m = re.match(desc_re, pkginfo["NAME"])
