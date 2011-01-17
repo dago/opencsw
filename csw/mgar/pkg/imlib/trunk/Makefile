@@ -6,32 +6,40 @@ DESCRIPTION = An advanced replacement library for libraries like libXpm
 define BLURB
 endef
 
-MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-
-# EXTRA_LINKER_FLAGS = -L$(libdir) -l/usr/openwin/lib/libXext.so
-
 STRIP_LIBTOOL = 1
 
-BUILD64 = 1
+# Make glib and gtk 64 bit first
+# BUILD64 = 1
+NOISAEXEC = 1
+sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --x-include=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
+PRESERVECONF += $(sysconfdir)/im_palette-small.pal
+PRESERVECONF += $(sysconfdir)/im_palette-tiny.pal
+PRESERVECONF += $(sysconfdir)/im_palette.pal
+PRESERVECONF += $(sysconfdir)/imrc
 
-RUNTIME_DEP_PKGS_CSWimlib  = CSWgiflib CSWjpeg CSWpng CSWtiff CSWzlib
-RUNTIME_DEP_PKGS_CSWimlib += CSWlibice CSWlibsm CSWlibxext
+RUNTIME_DEP_PKGS_CSWimlib += CSWjpeg
+RUNTIME_DEP_PKGS_CSWimlib += CSWpng
+RUNTIME_DEP_PKGS_CSWimlib += CSWtiff
+RUNTIME_DEP_PKGS_CSWimlib += CSWzlib
+RUNTIME_DEP_PKGS_CSWimlib += CSWglib
+RUNTIME_DEP_PKGS_CSWimlib += CSWgiflibrt
+RUNTIME_DEP_PKGS_CSWimlib += CSWgtk
 
 # Building the test cases misses -lX11, disable for now
 SKIPTEST ?= 1
 
 TEST_TARGET = check
+
+# No package refactoring for now
+CHECKPKG_OVERRIDES_CSWimlib += shared-lib-package-contains-so-symlink
+CHECKPKG_OVERRIDES_CSWimlib += non-uniform-lib-versions-in-package
 
 include gar/category.mk
