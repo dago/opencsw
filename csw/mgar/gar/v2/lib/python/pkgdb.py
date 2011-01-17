@@ -84,6 +84,10 @@ class UsageError(Error):
   "Error in command line options."
 
 
+class OpencswTreeError(Error):
+  "A problem with the OpenCSW directory tree."
+
+
 class HtmlGenerator(object):
 
   def __init__(self, identifiers, template=None):
@@ -574,6 +578,8 @@ def main():
         logging.debug("Existing files: %s", len(existing_files))
         for pkg in pkgs:
           src_path = os.path.join(allpkgs_dir, pkg.basename)
+          if not os.path.exists(src_path):
+            raise OpencswTreeError("File %s does not exist" % repr(src_path))
           # Try to find if the package was already available in previous
           # os releases
           already_existing_in_osrel = None
