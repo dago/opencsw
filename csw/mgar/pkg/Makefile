@@ -68,6 +68,7 @@ pkglist:
 
 newpkg-%:
 	@svn mkdir $* $*/tags $*/branches $*/trunk $*/trunk/files
+	@svn cp template/Makefile $*/Makefile
 	@(echo '# $$Id$$';   								\
 	echo "NAME = $*";                                     								\
 	echo "VERSION = 1.0";                                        								\
