@@ -322,7 +322,6 @@ class CatalogImporter(object):
 
 
 def main():
-  configuration.SetUpSqlobjectConnection()
 
   parser = optparse.OptionParser(USAGE)
   parser.add_option("-d", "--debug", dest="debug",
@@ -348,10 +347,14 @@ def main():
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
+    logging.debug("Debugging on")
   else:
     logging.basicConfig(level=logging.INFO)
   if not args:
     raise UsageError("Please specify a command.  Se --help.")
+  # SetUpSqlobjectConnection needs to be called after
+  # logging.basicConfig
+  configuration.SetUpSqlobjectConnection()
   command = args[0]
   args = args[1:]
   if command == 'show':
