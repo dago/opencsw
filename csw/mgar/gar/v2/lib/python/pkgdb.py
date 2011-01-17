@@ -341,6 +341,9 @@ def main():
   parser.add_option("--replace", dest="replace",
                     default=False, action="store_true",
                     help="Replace packages when importing (importpkg)")
+  parser.add_option("--profile", dest="profile",
+                    default=False, action="store_true",
+                    help="Turn on profiling")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -545,4 +548,12 @@ def main():
 
 
 if __name__ == '__main__':
-  main()
+  if "--profile" in sys.argv:
+    import cProfile
+    t_str = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M")
+    home = os.environ["HOME"]
+    cprof_file_name = os.path.join(
+        home, ".checkpkg", "run-modules-%s.cprof" % t_str)
+    cProfile.run("main()", sort=1, filename=cprof_file_name)
+  else:
+    main()
