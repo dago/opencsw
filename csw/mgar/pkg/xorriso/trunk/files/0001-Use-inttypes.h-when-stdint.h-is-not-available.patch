@@ -1,0 +1,432 @@
+From bf1002bef5a86d24be45212a80f62df6826a9b96 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 17 Jan 2011 13:45:10 +0100
+Subject: [PATCH 1/2] Use inttypes.h when stdint.h is not available
+
+---
+ libisoburn/isoburn.h          |    6 ++++++
+ libisofs/buffer.h             |    6 ++++++
+ libisofs/ecma119.h            |    6 ++++++
+ libisofs/filesrc.h            |    6 ++++++
+ libisofs/libisofs.h           |    6 ++++++
+ libisofs/make_isohybrid_mbr.c |    6 ++++++
+ libisofs/md5.c                |    6 ++++++
+ libisofs/node.h               |    6 ++++++
+ libisofs/util.h               |    6 ++++++
+ libjte/checksum.c             |    6 ++++++
+ libjte/endian.c               |    6 ++++++
+ libjte/jte.c                  |    6 ++++++
+ libjte/libjte.c               |    7 +++++++
+ libjte/md5.c                  |    6 ++++++
+ libjte/rsync.c                |    6 ++++++
+ libjte/sha1.c                 |    8 ++++++--
+ libjte/sha256.h               |    6 ++++++
+ libjte/sha512.h               |    6 ++++++
+ xorriso/base_obj.c            |    6 ++++++
+ xorriso/lib_mgt.c             |    6 ++++++
+ xorriso/write_run.c           |    6 ++++++
+ xorriso/xorriso_private.h     |    7 ++++++-
+ 22 files changed, 133 insertions(+), 3 deletions(-)
+
+diff --git a/libisoburn/isoburn.h b/libisoburn/isoburn.h
+index 572a384..a1b5584 100644
+--- a/libisoburn/isoburn.h
++++ b/libisoburn/isoburn.h
+@@ -12,7 +12,13 @@
+ 
+ 
+ /* for uint8_t */
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ /* For emulated TOC of overwriteable media.
+    Provides minimal info for faking a struct burn_toc_entry.
+diff --git a/libisofs/buffer.h b/libisofs/buffer.h
+index b5afa39..3a27ab5 100644
+--- a/libisofs/buffer.h
++++ b/libisofs/buffer.h
+@@ -11,7 +11,13 @@
+ #define LIBISO_BUFFER_H_
+ 
+ #include <stdlib.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ #define BLOCK_SIZE          2048
+ 
+diff --git a/libisofs/ecma119.h b/libisofs/ecma119.h
+index 76ffa05..0c2ceef 100644
+--- a/libisofs/ecma119.h
++++ b/libisofs/ecma119.h
+@@ -15,7 +15,13 @@
+ #include "util.h"
+ #include "buffer.h"
+ 
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include <pthread.h>
+ 
+ #define BLOCK_SIZE      2048
+diff --git a/libisofs/filesrc.h b/libisofs/filesrc.h
+index 49311cc..fdc27a9 100644
+--- a/libisofs/filesrc.h
++++ b/libisofs/filesrc.h
+@@ -13,7 +13,13 @@
+ #include "stream.h"
+ #include "ecma119.h"
+ 
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ struct Iso_File_Src
+ {
+diff --git a/libisofs/libisofs.h b/libisofs/libisofs.h
+index d07dc7c..2ca5cb1 100644
+--- a/libisofs/libisofs.h
++++ b/libisofs/libisofs.h
+@@ -28,7 +28,13 @@
+ #define LIBISO_LIBISOFS_H_
+ 
+ #include <sys/stat.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include <stdlib.h>
+ 
+ struct burn_source;
+diff --git a/libisofs/make_isohybrid_mbr.c b/libisofs/make_isohybrid_mbr.c
+index ac87cbd..be66c0c 100644
+--- a/libisofs/make_isohybrid_mbr.c
++++ b/libisofs/make_isohybrid_mbr.c
+@@ -4,7 +4,13 @@
+ #endif
+ 
+ #include <ctype.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include <sys/types.h>
+ #include <stdlib.h>
+ #include <stdio.h>
+diff --git a/libisofs/md5.c b/libisofs/md5.c
+index 4db8c42..eb8e678 100644
+--- a/libisofs/md5.c
++++ b/libisofs/md5.c
+@@ -12,7 +12,13 @@
+ #include "../config.h"
+ #endif
+ 
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include <stdlib.h>
+ #include <string.h>
+ #include <stdio.h>
+diff --git a/libisofs/node.h b/libisofs/node.h
+index c5317cd..c7631a6 100644
+--- a/libisofs/node.h
++++ b/libisofs/node.h
+@@ -20,7 +20,13 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ /**
+  * The extended information is a way to attach additional information to each
+diff --git a/libisofs/util.h b/libisofs/util.h
+index e8f3c45..db72a81 100644
+--- a/libisofs/util.h
++++ b/libisofs/util.h
+@@ -11,7 +11,13 @@
+ #ifndef LIBISO_UTIL_H_
+ #define LIBISO_UTIL_H_
+ 
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include <time.h>
+ 
+ #ifndef MAX
+diff --git a/libjte/checksum.c b/libjte/checksum.c
+index dfaeb81..72831a2 100644
+--- a/libjte/checksum.c
++++ b/libjte/checksum.c
+@@ -17,7 +17,13 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <errno.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include "md5.h"
+ #include "sha1.h"
+ #include "sha256.h"
+diff --git a/libjte/endian.c b/libjte/endian.c
+index ae06f54..9ddb170 100644
+--- a/libjte/endian.c
++++ b/libjte/endian.c
+@@ -12,7 +12,13 @@
+ #include "../config.h"
+ #endif
+ 
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include "endianconv.h"
+ 
+ /* Write a 64-bit quantity out into memory in BIG ENDIAN order */
+diff --git a/libjte/jte.c b/libjte/jte.c
+index d39d84c..c95c7c2 100644
+--- a/libjte/jte.c
++++ b/libjte/jte.c
+@@ -22,7 +22,13 @@
+ #include "../config.h"
+ #endif
+ 
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include <string.h>
+ #include <stdlib.h>
+ 
+diff --git a/libjte/libjte.c b/libjte/libjte.c
+index f7c6636..23bc0df 100644
+--- a/libjte/libjte.c
++++ b/libjte/libjte.c
+@@ -19,7 +19,14 @@
+ #include <unistd.h>
+ #include <string.h>
+ #include <stdlib.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
++#include <stdlib.h>
+ #include <errno.h>
+ 
+ 
+diff --git a/libjte/md5.c b/libjte/md5.c
+index 221456b..5d42de8 100644
+--- a/libjte/md5.c
++++ b/libjte/md5.c
+@@ -51,7 +51,13 @@
+ #include <stdio.h>
+ #include <errno.h>
+ #include <stdlib.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ #include "md5.h"
+ 
+diff --git a/libjte/rsync.c b/libjte/rsync.c
+index cdb3426..ab2d8d4 100644
+--- a/libjte/rsync.c
++++ b/libjte/rsync.c
+@@ -15,7 +15,13 @@
+ #endif
+ 
+ #include <ctype.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include <string.h>
+ 
+ #include "rsync.h"
+diff --git a/libjte/sha1.c b/libjte/sha1.c
+index b0260a0..360e727 100644
+--- a/libjte/sha1.c
++++ b/libjte/sha1.c
+@@ -37,8 +37,12 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#ifdef HAVE_STDINT_H 
+-# include <stdint.h>
++#ifdef HAVA_STDINT_H
++#include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ #endif
+ #include "sha1.h"
+ 
+diff --git a/libjte/sha256.h b/libjte/sha256.h
+index 83d9447..34e8670 100644
+--- a/libjte/sha256.h
++++ b/libjte/sha256.h
+@@ -26,7 +26,13 @@
+ #define _SHA256_H 1
+ 
+ #include <limits.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include <stdio.h>
+ 
+ 
+diff --git a/libjte/sha512.h b/libjte/sha512.h
+index df3f143..dbb9e35 100644
+--- a/libjte/sha512.h
++++ b/libjte/sha512.h
+@@ -26,7 +26,13 @@
+ #define _SHA512_H 1
+ 
+ #include <limits.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include <stdio.h>
+ 
+ 
+diff --git a/xorriso/base_obj.c b/xorriso/base_obj.c
+index f08c0b8..33d6dc2 100644
+--- a/xorriso/base_obj.c
++++ b/xorriso/base_obj.c
+@@ -25,7 +25,13 @@
+ #include <sys/time.h>
+ #include <time.h>
+ #include <errno.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ #ifdef Xorriso_standalonE
+ 
+diff --git a/xorriso/lib_mgt.c b/xorriso/lib_mgt.c
+index 4a98813..e8105b7 100644
+--- a/xorriso/lib_mgt.c
++++ b/xorriso/lib_mgt.c
+@@ -23,7 +23,13 @@
+ #include <sys/time.h>
+ #include <time.h>
+ #include <errno.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ /* for -charset */
+ #include <iconv.h>
+diff --git a/xorriso/write_run.c b/xorriso/write_run.c
+index 3f3aa42..5217d40 100644
+--- a/xorriso/write_run.c
++++ b/xorriso/write_run.c
+@@ -25,7 +25,13 @@
+ #include <errno.h>
+ 
+ #include <fcntl.h>
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ #ifdef Xorriso_standalonE
+ 
+diff --git a/xorriso/xorriso_private.h b/xorriso/xorriso_private.h
+index 217cd03..9b972a4 100644
+--- a/xorriso/xorriso_private.h
++++ b/xorriso/xorriso_private.h
+@@ -20,8 +20,13 @@
+ 
+ 
+ /* for uint32_t */
++#ifdef HAVA_STDINT_H
+ #include <stdint.h>
+-
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ /** The source code release timestamp */
+ #include "xorriso_timestamp.h"
+-- 
+1.7.3.2
+
