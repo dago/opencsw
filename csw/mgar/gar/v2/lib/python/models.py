@@ -24,19 +24,38 @@ class CatalogRelease(sqlobject.SQLObject):
   name = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
   type = sqlobject.ForeignKey('CatalogReleaseType', notNone=True)
 
+  def __unicode__(self):
+    return u"Catalog release: %s" % self.name
+
 class OsRelease(sqlobject.SQLObject):
   "Short name: SunOS5.9, long name: Solaris 9"
   short_name = sqlobject.UnicodeCol(length=40, unique=True, notNone=True)
   full_name = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
 
+  def __unicode__(self):
+    return u"OS release: %s" % self.full_name
+
 class Architecture(sqlobject.SQLObject):
   "One of: 'sparc', 'x86'."
   name = sqlobject.UnicodeCol(length=40, unique=True, notNone=True)
+
+  def __unicode__(self):
+    return u"Architecture: %s" % self.name
 
 class Maintainer(sqlobject.SQLObject):
   """The maintainer of the package, identified by the e-mail address."""
   email = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
   full_name = sqlobject.UnicodeCol(length=255, default=None)
+
+  def ObfuscatedEmail(self):
+    username, domain = self.email.split("@")
+    username = username[:-3] + "..."
+    return "@".join((username, domain))
+
+  def __unicode__(self):
+    return u"%s <%s>" % (
+        self.full_name or "Maintainer full name unknown",
+        self.ObfuscatedEmail())
 
 class Host(sqlobject.SQLObject):
   "Hostname, as returned by socket.getfqdn()"
@@ -176,6 +195,11 @@ class Srv4FileStats(sqlobject.SQLObject):
           CheckpkgOverride.sqlmeta.table,
           CheckpkgOverride.q.srv4_file==self)))
 
+  def __unicode__(self):
+    return (
+        u"Package: %s-%s, %s"
+        % (self.catalogname, self.version_string, self.arch.name))
+
 
 class CheckpkgErrorTagMixin(object):
 
@@ -213,6 +237,9 @@ class CheckpkgErrorTag(CheckpkgErrorTagMixin, sqlobject.SQLObject):
   os_rel = sqlobject.ForeignKey('OsRelease', notNone=True)
   arch = sqlobject.ForeignKey('Architecture', notNone=True)
   catrel = sqlobject.ForeignKey('CatalogRelease', notNone=True)
+
+  def __unicode__(self):
+    return u"Error: %s %s %s" % (self.pkgname, self.tag_name, self.tag_info)
 
 
 class CheckpkgOverride(sqlobject.SQLObject):
@@ -256,6 +283,14 @@ class Srv4FileInCatalog(sqlobject.SQLObject):
   uniqueness_idx = sqlobject.DatabaseIndex(
           'arch', 'osrel', 'catrel', 'srv4file',
           unique=True)
+
+  def __unicode__(self):
+    return (
+        u"%s is in catalog %s %s %s"
+        % (self.srv4file,
+           self.arch.name,
+           self.osrel.full_name,
+           self.catrel.name))
 
 
 class Srv4DependsOn(sqlobject.SQLObject):
