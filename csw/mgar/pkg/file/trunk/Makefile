@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.04
+VERSION = 5.05
 CATEGORIES = utils
 
 define BLURB
@@ -20,24 +20,47 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # These flags are not understood by Sun Studio
 CONFIGURE_ARGS += --disable-warnings
 TEST_TARGET = check
-PATCHFILES += 0001-libtool-dir-used-for-linking.patch
-PATCHFILES += 0002-CSW-runpath.patch
+
+NOISAEXEC = 1
+
 PACKAGES += CSWgfile
-PACKAGES += CSWlibmagic
-PACKAGES += CSWpy-libmagic
+# PKGFILES_CSWgfile += $(call baseisadirs,(bindir),gfile)
 PKGFILES_CSWgfile += $(bindir)/gfile
+PKGFILES_CSWgfile += $(bindir)/$(ISA_DEFAULT64)/gfile
 PKGFILES_CSWgfile += $(mandir)/man1/gfile\.1
 PKGFILES_CSWgfile += $(prefix)/gnu/file
-PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 SPKG_DESC_CSWgfile = A file type guesser
-SPKG_DESC_CSWlibmagic = The library behind file(1)
+RUNTIME_DEP_PKGS_CSWgfile += CSWzlib
+RUNTIME_DEP_PKGS_CSWgfile += CSWlibmagic1
+EXTRA_MERGE_EXCLUDE_FILES = .*\.py[oc]
+
+PACKAGES += CSWpy-libmagic
+PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 SPKG_DESC_CSWpy-libmagic = Python extension for libmagic
 CATALOGNAME_CSWpy-libmagic = py_libmagic
-RUNTIME_DEP_PKGS_CSWgfile += CSWlibmagic
-RUNTIME_DEP_PKGS_CSWgfile += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibmagic += CSWzlib
-RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
+RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic1
+ARCHALL_CSWpy-libmagic = 1
+CHECKPKG_OVERRIDES_CSWpy-libmagic += surplus-dependency|CSWlibmagic1
+
+PACKAGES += CSWlibmagic
+ARCHALL_CSWlibmagic = 1
+SPKG_DESC_CSWlibmagic = Database for libmagic
+CHECKPKG_OVERRIDES_CSWlibmagic += surplus-dependency|CSWlibmagic1
+
+PACKAGES += CSWlibmagic1
+CATALOGNAME_CSWlibmagic1 = libmagic1
+PKGFILES_CSWlibmagic1 += $(call baseisadirs,$(libdir),libmagic\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibmagic1 += The library behind file(1), libmagic.so.1
+RUNTIME_DEP_PKGS_CSWlibmagic += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWzlib
+
+PACKAGES += CSWlibmagic-dev
+SPKG_DESC_CSWlibmagic-dev = Development files for libmagic
+CATALOGNAME_CSWlibmagic-dev = libmagic_dev
+PKGFILES_CSWlibmagic-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibmagic-dev += /opt/csw/lib/libmagic.so
+RUNTIME_DEP_PKGS_CSWlibmagic-dev += CSWlibmagic1
 
 # The "file" util is used during stripbin. As the newly build binary
 # requires libmagic which is not installed yet we must not use the
@@ -47,6 +70,8 @@ IGNORE_DESTDIR = 1
 # Doesn't hurt to have this on.
 DISTUTILS_DEBUG = 1
 export DISTUTILS_DEBUG
+
+BUILD64 = 1
 
 include gar/category.mk
 
