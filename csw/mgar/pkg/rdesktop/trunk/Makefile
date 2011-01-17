@@ -32,6 +32,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWiconv
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWosslrt
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibao
+RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibsamplerate0
 
 # No test/check target provided by rdesktop
 TEST_SCRIPTS =
