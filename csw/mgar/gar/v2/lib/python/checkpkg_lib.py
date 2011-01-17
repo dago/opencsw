@@ -202,7 +202,7 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
       # left is lists and dictionaries.
       i = counter.next()
       if stats_obj.data_obj:
-        raw_pkg_data = cPickle.loads(stats_obj.data_obj.pickle)
+        raw_pkg_data = stats_obj.GetStatsStruct()
       else:
         raise CatalogDatabaseError(
             "%s (%s) is missing the data object."

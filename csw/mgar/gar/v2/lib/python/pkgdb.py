@@ -110,7 +110,7 @@ class HtmlGenerator(object):
     # Add error tags
     for identifier in self.identifiers:
       srv4 = GetPkg(identifier)
-      data = cPickle.loads(str(srv4.data_obj.pickle))
+      data = srv4.GetStatsStruct()
       if "OPENCSW_REPOSITORY" in data["pkginfo"]:
         build_src = data["pkginfo"]["OPENCSW_REPOSITORY"]
         build_src_url_svn = re.sub(r'([^@]*).*', r'\1/Makefile', build_src)

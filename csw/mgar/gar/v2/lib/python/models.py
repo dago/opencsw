@@ -200,6 +200,9 @@ class Srv4FileStats(sqlobject.SQLObject):
         u"Package: %s-%s, %s"
         % (self.catalogname, self.version_string, self.arch.name))
 
+  def GetStatsStruct(self):
+    return cPickle.loads(str(self.data_obj.pickle))
+
 
 class CheckpkgErrorTagMixin(object):
 
