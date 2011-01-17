@@ -40,7 +40,8 @@ USAGE = """
        %prog add-to-cat <osrel> <arch> <cat-release> <md5sum> [ ... ]
        %prog del-from-cat <osrel> <arch> <cat-release> <md5sum> [ ... ]
        %prog sync-cat-from-file <osrel> <arch> <cat-release> <catalog-file>
-       %prog sync-catalogs-from-tree <cat-release> <directory>
+       %prog sync-catalogs-from-tree <cat-release> <opencsw-dir>
+       %prog gen-cat <allpkgs> <opencsw-dir>
        %prog show cat [options]
 
   Inspecting individual packages:
@@ -321,8 +322,32 @@ class CatalogImporter(object):
     return os.path.join(base_dir, arch, short_osrel, "catalog")
 
 
-def main():
+def GetSqoTriad(osrel, arch, catrel):
+  sqo_osrel = m.OsRelease.selectBy(short_name=osrel).getOne()
+  sqo_arch = m.Architecture.selectBy(name=arch).getOne()
+  sqo_catrel = m.CatalogRelease.selectBy(name=catrel).getOne()
+  return sqo_osrel, sqo_arch, sqo_catrel
 
+
+def GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel):
+    join = [
+        sqlbuilder.INNERJOINOn(None,
+          m.Srv4FileInCatalog,
+          m.Srv4FileInCatalog.q.srv4file==m.Srv4FileStats.q.id),
+    ]
+    res = m.Srv4FileStats.select(
+        sqlobject.AND(
+          m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+          m.Srv4FileInCatalog.q.arch==sqo_arch,
+          m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+          m.Srv4FileStats.q.use_to_generate_catalogs==True,
+        ),
+        join=join,
+    )
+    return res
+
+
+def main():
   parser = optparse.OptionParser(USAGE)
   parser.add_option("-d", "--debug", dest="debug",
                     default=False, action="store_true",
@@ -502,25 +527,76 @@ def main():
     catrel, base_dir = args
     ci.SyncFromCatalogTree(catrel, base_dir)
   elif (command, subcommand) == ('show', 'cat'):
-    sqo_osrel = m.OsRelease.selectBy(short_name=options.osrel).getOne()
-    sqo_arch = m.Architecture.selectBy(name=options.arch).getOne()
-    sqo_catrel = m.CatalogRelease.selectBy(name=options.catrel).getOne()
-    join = [
-        sqlbuilder.INNERJOINOn(None,
-          m.Srv4FileInCatalog,
-          m.Srv4FileInCatalog.q.srv4file==m.Srv4FileStats.q.id),
-    ]
-    res = m.Srv4FileStats.select(
-        sqlobject.AND(
-          m.Srv4FileInCatalog.q.osrel==sqo_osrel,
-          m.Srv4FileInCatalog.q.arch==sqo_arch,
-          m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-          m.Srv4FileStats.q.use_to_generate_catalogs==True,
-        ),
-        join=join,
-    )
+    sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
+        options.osrel, options.arch, options.catrel)
+    res = GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
     for obj in res:
       print obj.basename, obj.md5_sum
+  elif command == 'gen-cat':
+    catrel = 'unstable'
+    if len(args) != 2:
+      raise UsageError("Wrong number of arguments, see usage.")
+    allpkgs_dir, target_dir = args
+    archs = (
+        common_constants.ARCH_i386,
+        common_constants.ARCH_SPARC,
+    )
+    prev_osrels = []
+
+    # A form of currying.  Takes advantage of the fact that outer scope
+    # variables are available inside the function.
+    def GetTargetPath(osrel_short):
+      return os.path.join(target_dir, catrel, arch, osrel_short)
+
+    def ShortenOsrel(osrel):
+      return osrel.replace("SunOS", "")
+
+    # TODO: Move this definition to a better place
+    for osrel in ("SunOS5.%s" % x for x in (8, 9, 10)):
+      for arch in archs:
+        sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
+            osrel, arch, options.catrel)
+        pkgs = list(GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
+        logging.debug("The catalog contains %s packages" % len(pkgs))
+        # For now, only making hardlinks to packages from allpkgs
+        osrel_short = ShortenOsrel(osrel)
+        tgt_path = GetTargetPath(osrel_short)
+        configuration.MkdirP(tgt_path)
+        existing_files = os.listdir(tgt_path)
+        for existing_file in existing_files:
+          existing_path = os.path.join(tgt_path, existing_file)
+          if '.pkg' in existing_file:
+            logging.debug("Unlinking %s", repr(existing_path))
+            os.unlink(existing_path)
+          else:
+            logging.debug("Not unlinking %s", existing_path)
+        logging.debug("Existing files: %s", len(existing_files))
+        for pkg in pkgs:
+          src_path = os.path.join(allpkgs_dir, pkg.basename)
+          # Try to find if the package was already available in previous
+          # os releases
+          already_existing_in_osrel = None
+          for prev_osrel in prev_osrels:
+            prev_path = os.path.join(
+                GetTargetPath(ShortenOsrel(prev_osrel)), pkg.basename)
+            if os.path.exists(prev_path):
+              logging.debug("%s already exists in %s",
+                  pkg.basename, prev_path)
+              already_existing_in_osrel = prev_osrel
+              break
+          if already_existing_in_osrel:
+            # Symlink
+            logging.debug(
+                "ln -s ../%s/%s %s",
+                already_existing_in_osrel, pkg.basename, pkg.basename)
+            os.symlink(
+                os.path.join("..", already_existing_in_osrel, pkg.basename),
+                os.path.join(tgt_path, pkg.basename))
+          else:
+            # Hardlink
+            logging.debug("cp -l %s %s/%s", src_path, tgt_path, pkg.basename)
+            os.link(src_path, os.path.join(tgt_path, pkg.basename))
+      prev_osrels.append(osrel_short)
   elif (command, subcommand) == ('show', 'files'):
     md5_sum = args[0]
     join = [
