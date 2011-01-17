@@ -4,27 +4,28 @@
 # $Id$
 
 import ConfigParser
-import optparse
-import models as m
-import sqlobject
-from sqlobject import sqlbuilder
 import cPickle
-import logging
+import catalog
+import checkpkg_lib
 import code
+import common_constants
+import configuration
+import database
+import datetime
+import logging
+import models as m
+import optparse
 import os
 import os.path
-import re
-import socket
-import sys
 import package_checks
 import package_stats
-import database
-import configuration
-import checkpkg_lib
-import common_constants
+import re
+import socket
+import sqlobject
+import struct_util
+import sys
 import system_pkgmap
-import catalog
-import checkpkg
+from sqlobject import sqlbuilder
 from Cheetah.Template import Template
 
 USAGE = """
@@ -144,7 +145,7 @@ def NormalizeId(some_id):
   """Used to normalize identifiers (md5, filename).
 
   Currently, strips paths off given package paths."""
-  if not checkpkg.IsMd5(some_id):
+  if not struct_util.IsMd5(some_id):
     logging.warning(
         "Given Id (%s) is not an md5 sum. Will attempt to retrieve "
         "it from the datbase, but it might fail.",

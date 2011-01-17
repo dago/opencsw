@@ -18,6 +18,7 @@ import inspective_package
 import models as m
 import common_constants
 import package_stats
+import struct_util
 
 
 DESCRIPTION_RE = r"^([\S]+) - (.*)$"
@@ -37,8 +38,6 @@ SYS_DEFAULT_RUNPATH = [
     "/lib/$ISALIST",
     "/lib",
 ]
-
-MD5_RE = re.compile(r"^[0123456789abcdef]{32}$")
 
 class Error(Exception):
   pass
@@ -93,15 +92,11 @@ def ExtractBuildUsername(pkginfo):
   return m.group("username") if m else None
 
 
-def IsMd5(s):
-  # For optimization, move the compilation elsewhere.
-  return MD5_RE.match(s)
-
 def GetPackageStatsByFilenamesOrMd5s(args, debug=False):
   filenames = []
   md5s = []
   for arg in args:
-    if IsMd5(arg):
+    if struct_util.IsMd5(arg):
       md5s.append(arg)
     else:
       filenames.append(arg)

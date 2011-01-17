@@ -14,6 +14,7 @@ import datetime
 import database
 
 import package_stats
+import struct_util
 import checkpkg
 import checkpkg_lib
 import overrides
@@ -102,7 +103,7 @@ def main():
   # We need to separate files and md5 sums.
   md5_sums, file_list = [], []
   for arg in args:
-    if checkpkg.MD5_RE.match(arg):
+    if struct_util.IsMd5(arg):
       md5_sums.append(arg)
     else:
       file_list.append(arg)
