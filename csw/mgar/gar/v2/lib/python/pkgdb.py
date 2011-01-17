@@ -290,7 +290,8 @@ class CatalogImporter(object):
           logging.warning(
               "Package %s was not registered for releases. Registering it.",
               sqo_srv4.basename)
-          sqo_srv4.registered = True
+          stats = sqo_srv4.GetStatsStruct()
+          package_stats.PackageStats.ImportPkg(stats, True)
         db_catalog.AddSrv4ToCatalog(
             sqo_srv4, osrel, arch, catrel)
 
