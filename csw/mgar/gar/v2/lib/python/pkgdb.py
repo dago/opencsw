@@ -343,7 +343,7 @@ def GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel):
           m.Srv4FileStats.q.use_to_generate_catalogs==True,
         ),
         join=join,
-    )
+    ).orderBy('catalogname')
     return res
 
 
