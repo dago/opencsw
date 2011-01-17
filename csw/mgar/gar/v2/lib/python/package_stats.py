@@ -430,7 +430,7 @@ class PackageStatsMixin(object):
       if not srv4.data_obj:
         raise DatabaseError("Could not find the data object for %s (%s)"
                             % (srv4.basename, md5_sum))
-      self.all_stats = cPickle.loads(str(srv4.data_obj.pickle))
+      self.all_stats = srv4.GetStatsStruct()
     return self.all_stats
 
 
