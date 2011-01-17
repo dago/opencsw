@@ -163,7 +163,7 @@ def main():
       if unapplied_overrides:
         print textwrap.fill(UNAPPLIED_OVERRIDES, 80)
         for override in unapplied_overrides:
-          print "* Unused %s" % override
+          print u"* Unused %s" % override
   exit_code = bool(tags_for_all_osrels)
   sys.exit(exit_code)
 

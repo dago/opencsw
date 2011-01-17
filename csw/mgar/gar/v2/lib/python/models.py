@@ -222,6 +222,12 @@ class CheckpkgOverride(sqlobject.SQLObject):
   tag_name = sqlobject.UnicodeCol(notNone=True)
   tag_info = sqlobject.UnicodeCol(default=None)
 
+  def __unicode__(self):
+    return (u"Override: %s: %s %s" %
+            (self.pkgname,
+             self.tag_name,
+             self.tag_info or ""))
+
   def DoesApply(self, tag):
     """Figures out if this override applies to the given tag."""
     basket_a = {}
