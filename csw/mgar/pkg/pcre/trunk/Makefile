@@ -1,5 +1,5 @@
 NAME = pcre
-VERSION = 8.11
+VERSION = 8.12
 CATEGORIES = lib
 
 DESCRIPTION = Perl-compatible regular expression tools
@@ -13,12 +13,6 @@ endef
 MASTER_SITES = ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PATCHFILES = 0001-Allow-norunpath-for-libtool.patch
-
-# pcregrep testsuite crashes as reported here:
-#   http://bugs.exim.org/show_bug.cgi?id=1054
-# Use fix for 64 bit PPC which solves the problem as reported in this bug report:
-#   http://bugs.exim.org/show_bug.cgi?id=1048
-PATCHFILES += bug-attachment-433.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
