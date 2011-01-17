@@ -59,36 +59,47 @@ def MkdirP(p):
     else: raise
 
 
+def HomeExists():
+  if "HOME" not in os.environ:
+    return False
+  return True
+
+
 def GetConfig():
   config = ConfigParser.SafeConfigParser()
   file_was_found = False
   for file_name_tmpl, default_file in CONFIGURATION_FILE_LOCATIONS:
-    filename = file_name_tmpl % os.environ
-    if os.path.exists(filename):
-      if not default_file:
-        file_was_found = True
-      config.read(file_name_tmpl % os.environ)
+    filename = None
+    try:
+      filename = file_name_tmpl % os.environ
+      if os.path.exists(filename):
+        if not default_file:
+          file_was_found = True
+        config.read(file_name_tmpl % os.environ)
+    except KeyError, e:
+      logging.warn(e)
   if not file_was_found:
-    db_file = "%(HOME)s/.checkpkg/checkpkg.db" % os.environ
-    checkpkg_dir = CHECKPKG_DIR % os.environ
-    MkdirP(checkpkg_dir)
-    config_file = AUTO_CONFIG_FILE_TMPL % os.environ
-    logging.warning(
-        "No configuration file found.  Will attempt to create "
-        "an sane default configuration in %s."
-        % repr(config_file))
-    if not config.has_section("database"):
-      config.add_section("database")
-    config.set("database", "type", "sqlite")
-    config.set("database", "name", db_file)
-    config.set("database", "host", "")
-    config.set("database", "user", "")
-    config.set("database", "password", "")
-    config.set("database", "auto_manage", "yes")
-    fd = open(config_file, "w")
-    config.write(fd)
-    fd.close()
-    logging.debug("Configuration has been written.")
+    if HomeExists():
+      db_file = os.path.join(CHECKPKG_DIR % os.environ, "checkpkg.db")
+      checkpkg_dir = CHECKPKG_DIR % os.environ
+      MkdirP(checkpkg_dir)
+      config_file = AUTO_CONFIG_FILE_TMPL % os.environ
+      logging.warning(
+          "No configuration file found.  Will attempt to create "
+          "an sane default configuration in %s."
+          % repr(config_file))
+      if not config.has_section("database"):
+        config.add_section("database")
+      config.set("database", "type", "sqlite")
+      config.set("database", "name", db_file)
+      config.set("database", "host", "")
+      config.set("database", "user", "")
+      config.set("database", "password", "")
+      config.set("database", "auto_manage", "yes")
+      fd = open(config_file, "w")
+      config.write(fd)
+      fd.close()
+      logging.debug("Configuration has been written.")
   if not config.has_section("database"):
     logging.fatal("Section 'database' not found in the config file. "
         "Please refer to the documentation: "
