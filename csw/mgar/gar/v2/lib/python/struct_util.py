@@ -2,6 +2,9 @@
 """
 
 import os
+import re
+
+MD5_RE = re.compile(r"^[0123456789abcdef]{32}$")
 
 def IndexDictsBy(list_of_dicts, field_key):
   """Creates an index of list of dictionaries by a field name.
@@ -19,3 +22,8 @@ def ResolveSymlink(link_from, link_to):
   target = os.path.normpath(
       os.path.join(os.path.dirname(link_from), link_to))
   return target
+
+
+def IsMd5(s):
+  # For optimization, moving the compilation to the top level.
+  return MD5_RE.match(s)
