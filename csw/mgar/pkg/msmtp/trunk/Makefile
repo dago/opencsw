@@ -1,5 +1,5 @@
 NAME = msmtp
-VERSION = 1.4.22
+VERSION = 1.4.23
 CATEGORIES = net
 
 DESCRIPTION = SMTP client
@@ -30,8 +30,14 @@ VENDOR_URL = http://msmtp.sourceforge.net/
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-BUILD_DEP_PKGS = CSWgnutlsdevel CSWlibgsasldevel CSWggettext
-RUNTIME_DEP_PKGS = CSWlibidn CSWgnutls CSWlibgsasl7 CSWggettextrt
+BUILD_DEP_PKGS += CSWgnutlsdevel
+BUILD_DEP_PKGS += CSWlibgsasldevel
+BUILD_DEP_PKGS += CSWggettext
+
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibidn
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWgnutls
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgsasl7
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWggettextrt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
