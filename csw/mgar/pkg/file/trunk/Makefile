@@ -24,7 +24,6 @@ TEST_TARGET = check
 NOISAEXEC = 1
 
 PACKAGES += CSWgfile
-# PKGFILES_CSWgfile += $(call baseisadirs,(bindir),gfile)
 PKGFILES_CSWgfile += $(bindir)/gfile
 PKGFILES_CSWgfile += $(bindir)/$(ISA_DEFAULT64)/gfile
 PKGFILES_CSWgfile += $(mandir)/man1/gfile\.1
@@ -38,22 +37,30 @@ PACKAGES += CSWpy-libmagic
 PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 SPKG_DESC_CSWpy-libmagic = Python extension for libmagic
 CATALOGNAME_CSWpy-libmagic = py_libmagic
+ARCHALL_CSWpy-libmagic = 1
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic1
-ARCHALL_CSWpy-libmagic = 1
 CHECKPKG_OVERRIDES_CSWpy-libmagic += surplus-dependency|CSWlibmagic1
 
 PACKAGES += CSWlibmagic
 ARCHALL_CSWlibmagic = 1
-SPKG_DESC_CSWlibmagic = Database for libmagic
+SPKG_DESC_CSWlibmagic = Empty transitional package
+RUNTIME_DEP_PKGS_CSWlibmagic += CSWlibmagic1
 CHECKPKG_OVERRIDES_CSWlibmagic += surplus-dependency|CSWlibmagic1
+PKGFILES_CSWlibmagic = NONE
+
+PACKAGES += CSWlibmagic-common
+CATALOGNAME_CSWlibmagic-common = libmagic_common
+SPKG_DESC_CSWlibmagic-common = Database for libmagic
+ARCHALL_CSWlibmagic-common = 1
 
 PACKAGES += CSWlibmagic1
 CATALOGNAME_CSWlibmagic1 = libmagic1
 PKGFILES_CSWlibmagic1 += $(call baseisadirs,$(libdir),libmagic\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibmagic1 += The library behind file(1), libmagic.so.1
-RUNTIME_DEP_PKGS_CSWlibmagic += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWlibmagic-common
+CHECKPKG_OVERRIDES_CSWlibmagic1 += surplus-dependency|CSWlibmagic-common
 
 PACKAGES += CSWlibmagic-dev
 SPKG_DESC_CSWlibmagic-dev = Development files for libmagic
