@@ -12,24 +12,30 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-SPKG_SOURCEURL = http://www.loudmouth-project.org/
-
-PACKAGES = CSWloudmouth CSWloudmouthdevel
-PKGFILES_CSWloudmouth = $(PKGFILES_RT)
-
+PACKAGES += CSWloudmouth
 CATALOGNAME_CSWloudmouth = loudmouth
-CATALOGNAME_CSWloudmouthdevel = loudmouth_devel
+SPKG_DESC_CSWloudmouth = $(DESCRIPTION)
+PKGFILES_CSWloudmouth = $(PKGFILES_RT)
+RUNTIME_DEP_PKGS_CSWloudmouth += CSWgcrypt
+RUNTIME_DEP_PKGS_CSWloudmouth += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWloudmouth += CSWglib2
+RUNTIME_DEP_PKGS_CSWloudmouth += CSWgnutls
+RUNTIME_DEP_PKGS_CSWloudmouth += CSWgpgerr
+RUNTIME_DEP_PKGS_CSWloudmouth += CSWlibidn
+RUNTIME_DEP_PKGS_CSWloudmouth += CSWlibtasn1
 
-RUNTIME_DEP_PKGS_CSWloudmouth = CSWgcrypt CSWggettextrt CSWglib2 CSWgnutls
-RUNTIME_DEP_PKGS_CSWloudmouth += CSWgpgerr CSWlibidn CSWlibtasn1
-
-RUNTIME_DEP_PKGS_CSWloudmouthdevel = CSWloudmouth
-
+PACKAGES += CSWloudmouth-dev
+CATALOGNAME_CSWloudmouth-dev = loudmouth_dev
+SPKG_DESC_CSWloudmouth-dev = Development Files for Loudmouth XMPP
+RUNTIME_DEP_PKGS_CSWloudmouth-dev = CSWloudmouth-dev
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = http://groups.google.com/group/loudmouth-dev/web/download-loudmouth
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
+VENDOR_URL = http://groups.google.com/group/loudmouth-dev
+
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-glibtest
 
