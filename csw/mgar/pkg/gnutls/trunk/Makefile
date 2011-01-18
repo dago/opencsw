@@ -31,6 +31,8 @@ RUNTIME_DEP_PKGS_CSWgnutls += CSWggettextrt
 # This is a dependency for legacy packages expecting to find libgnutls*.so.13 in CSWgnutls.
 # CSWlibgnutls13 is built from a branch
 RUNTIME_DEP_PKGS_CSWgnutls += CSWlibgnutls13
+CHECKPKG_OVERRIDES_CSWgnutls += unidentified-dependency|CSWlibgnutls13
+CHECKPKG_OVERRIDES_CSWgnutls += surplus-dependency|CSWlibgnutls13
 
 PACKAGES += CSWlibgnutls26
 CATALOGNAME_CSWlibgnutls = libgnutls26
@@ -54,9 +56,8 @@ SPKG_DESC_CSWgnutlsdevel = Legacy development package for GNU TLS now provided b
 PKGFILES_CSWgnutlsdevel = NOFILES
 RUNTIME_DEP_PKGS_CSWgnutlsdevel = CSWlibgnutls-dev
 
-BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWgnutls)
+BUILD_DEP_PKGS += CSWreadline
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibgnutls26)
-BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibgnutls-dev)
 BUILD_DEP_PKGS += CSWlibtasn1devel 
 
 # We don't need it and if defined the test breaks
