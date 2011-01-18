@@ -1088,10 +1088,12 @@ def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messe
           error_mgr.ReportError(
               "shared-lib-package-contains-so-symlink",
               "file=%s" % entry["path"])
-          messenger.SuggestGarLine("# (If %s-devel doesn't exist yet)" % pkgname)
-          messenger.SuggestGarLine("PACKAGES += %s-devel" % pkgname)
+          messenger.SuggestGarLine("# (If %s-dev doesn't exist yet)" % pkgname)
+          messenger.SuggestGarLine("PACKAGES += %s-dev" % pkgname)
           messenger.SuggestGarLine(
-              "PKGFILES_%s-devel += %s" % (pkgname, entry["path"]))
+              "PKGFILES_%s-dev += %s" % (pkgname, entry["path"]))
+          messenger.SuggestGarLine(
+              "CATALOGNAME_%s-dev = %s_dev" % (pkgname, pkgname.replace("-", "_")))
           messenger.Message(
               "The package contains shared libraries together with the "
               "symlink of the form libfoo.so -> libfoo.so.1.  "
