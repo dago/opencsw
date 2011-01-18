@@ -46,6 +46,11 @@ TEST_SCRIPTS =
 #WORKSRC = $(WORKDIR)/GMT$(VERSION)
 DISTNAME = GMT$(GMT_VERSION)
 
+## Banish the unversioned shared objects to their own tree
+libdir_32 = /opt/csw/lib/gmt
+libdir_64 = /opt/csw/lib/gmt/$(ISA_DEFAULT64)
+EXTRA_LDFLAGS += -R /opt/csw/lib/gmt/$(MM_LIBDIR)
+
 ## Arguments passed to the ./configure script. Configure ignores the various
 ## environment variables so we have to pass CFLAGS and friends
 CONFIGURE_ARGS += NETCDF_LIB=$(libdir)
@@ -70,3 +75,9 @@ INSTALL_ARGS = install-all
 
 LICENSE = LICENSE.TXT
 include gar/category.mk
+
+post-merge:
+	@echo Creating architecture symlinks
+	ln -s $(ISA_DEFAULT) $(DESTDIR)/opt/csw/lib/gmt/32
+	ln -s $(ISA_DEFAULT64) $(DESTDIR)/opt/csw/lib/gmt/64
+	@$(MAKECOOKIE)
