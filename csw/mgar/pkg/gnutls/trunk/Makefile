@@ -1,5 +1,5 @@
 NAME = gnutls
-VERSION = 2.8.6
+VERSION = 2.10.4
 CATEGORIES = lib
 
 DESCRIPTION = GNU Transport Layer Security libraries and tools
@@ -9,24 +9,55 @@ define BLURB
   library implements the proposed standards by the IETF's TLS working group.
 endef
 
-PACKAGES = CSWgnutls CSWgnutlsdevel
-CATALOGNAME_CSWgnutls = gnutls
-CATALOGNAME_CSWgnutlsdevel = gnutls_devel
-SPKG_DESC_CSWgnutls = GNU Transport Layer Security libraries and tools
-SPKG_DESC_CSWgnutlsdevel = GNU Transport Layer Security development headers and tools
-
 MASTER_SITES = $(GNU_MIRROR)
 MASTER_SITES += http://alpha.gnu.org/gnu/gnutls/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += libgnutls-openssl.so.13.i
-DISTFILES += libgnutls-openssl.so.13.s
-DISTFILES += libgnutls.so.13.i
-DISTFILES += libgnutls.so.13.s
+PATCHFILES += 0001-Do-not-strip-norunpath.patch
 
-SPKG_SOURCEURL = http://www.gnu.org/software/gnutls/
-
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+
+VENDOR_URL = http://www.gnu.org/software/gnutls/
+
+PACKAGES += CSWgnutls
+CATALOGNAME_gnutls = gnutls
+SPKG_DESC_CSWgnutls = GNU Transport Layer Security Utility Programs
+RUNTIME_DEP_PKGS_CSWgnutls += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWgnutls += CSWgpgerr
+RUNTIME_DEP_PKGS_CSWgnutls += CSWreadline
+RUNTIME_DEP_PKGS_CSWgnutls += CSWzlib
+RUNTIME_DEP_PKGS_CSWgnutls += CSWlibtasn1-3
+RUNTIME_DEP_PKGS_CSWgnutls += CSWgcrypt
+RUNTIME_DEP_PKGS_CSWgnutls += CSWggettextrt
+# This is a dependency for legacy packages expecting to find libgnutls*.so.13 in CSWgnutls.
+# CSWlibgnutls13 is built from a branch
+RUNTIME_DEP_PKGS_CSWgnutls += CSWlibgnutls13
+
+PACKAGES += CSWlibgnutls26
+CATALOGNAME_CSWlibgnutls = libgnutls26
+SPKG_DESC_CSWlibgnutls26 = GNU Transport Layer Security libraries and tools providing libgnutls*.so.26
+PKGFILES_CSWlibgnutls26 = $(call baseisadirs,$(libdir),libgnutls.*\.so\.26(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWgcrypt
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWgpgerr
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWlibtasn1-3
+RUNTIME_DEP_PKGS_CSWlibgnutls26 += CSWzlib
+
+PACKAGES += CSWlibgnutls-dev
+CATALOGNAME_CSWlibgnutls-dev = libgnutls_dev
+SPKG_DESC_CSWlibgnutls-dev = Development Files for GNU TLS
+PKGFILES_CSWlibgnutls-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibgnutls-dev += CSWlibgnutls26
+
+PACKAGES += CSWgnutlsdevel
+CATALOGNAME_CSWgnutlsdevel = gnutls_devel
+SPKG_DESC_CSWgnutlsdevel = Legacy development package for GNU TLS now provided by CSWlibgnutls-dev
+PKGFILES_CSWgnutlsdevel = NOFILES
+RUNTIME_DEP_PKGS_CSWgnutlsdevel = CSWlibgnutls-dev
+
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWgnutls)
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibgnutls26)
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibgnutls-dev)
+BUILD_DEP_PKGS += CSWlibtasn1devel 
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
@@ -37,24 +68,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
-RUNTIME_DEP_PKGS_CSWgnutls  = CSWgcrypt CSWggettextrt
-RUNTIME_DEP_PKGS_CSWgnutls += CSWgpgerr CSWlibtasn1 CSWreadline CSWzlib CSWiconv
-RUNTIME_DEP_PKGS_CSWgnutlsdevel = CSWgnutls
-
-PKGFILES_CSWgnutlsdevel = $(PKGFILES_DEVEL)
+# We put all libs in one package as they are .so.26 and are all bumped together
+CHECKPKG_OVERRIDES_CSWlibgnutls26 += shared-lib-pkgname-mismatch
 
 include gar/category.mk
-
-# This is needed as tests/rfc2253-escape-test calls 'grep' instead of $GREP
-# and uses option '-q'
-PATH := /opt/csw/gnu:$(PATH)
-
-post-install-isa-sparcv8:
-	@cp $(FILEDIR)/libgnutls.so.13.s $(INSTALLISADIR)/opt/csw/lib/libgnutls.so.13
-	@cp $(FILEDIR)/libgnutls-openssl.so.13.s $(INSTALLISADIR)/opt/csw/lib/libgnutls-openssl.so.13
-	$(DONADA)
-
-post-install-isa-i386:
-	@cp $(FILEDIR)/libgnutls.so.13.i $(INSTALLISADIR)/opt/csw/lib/libgnutls.so.13
-	@cp $(FILEDIR)/libgnutls-openssl.so.13.i $(INSTALLISADIR)/opt/csw/lib/libgnutls-openssl.so.13
-	$(DONADA)
