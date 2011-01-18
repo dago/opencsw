@@ -54,6 +54,7 @@ PACKAGES += CSWgnutlsdevel
 CATALOGNAME_CSWgnutlsdevel = gnutls_devel
 SPKG_DESC_CSWgnutlsdevel = Legacy development package for GNU TLS now provided by CSWlibgnutls-dev
 PKGFILES_CSWgnutlsdevel = NOFILES
+ARCHALL_CSWgnutlsdevel = 1
 RUNTIME_DEP_PKGS_CSWgnutlsdevel = CSWlibgnutls-dev
 
 BUILD_DEP_PKGS += CSWreadline
