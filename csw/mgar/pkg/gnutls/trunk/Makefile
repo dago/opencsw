@@ -56,6 +56,8 @@ SPKG_DESC_CSWgnutlsdevel = Legacy development package for GNU TLS now provided b
 PKGFILES_CSWgnutlsdevel = NOFILES
 ARCHALL_CSWgnutlsdevel = 1
 RUNTIME_DEP_PKGS_CSWgnutlsdevel = CSWlibgnutls-dev
+# This is empty, shut up!
+CHECKPKG_OVERRIDES_CSWgnutlsdevel += archall-devel-package
 
 BUILD_DEP_PKGS += CSWreadline
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibgnutls26)
