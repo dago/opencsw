@@ -9,6 +9,12 @@ endef
 
 PACKAGES += CSWggettext CSWggettextdoc
 
+PACKAGES += CSWlibasprintf0
+CATALOGNAME_CSWlibasprintf0 = libasprintf0
+PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0\.0\.0)
+PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibasprintf0 += GNU locale utilities, libasprintf.so.0
+
 CATALOGNAME_CSWggettext = ggettext
 CATALOGNAME_CSWggettext = ggettextdoc
 SPKG_DESC_CSWggettext = GNU locale utilities
