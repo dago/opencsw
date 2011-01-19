@@ -1,5 +1,5 @@
 NAME = krb5
-VERSION = 1.8.3
+VERSION = 1.9
 CATEGORIES = server
 
 DESCRIPTION = MIT Kerberos 5
@@ -11,7 +11,7 @@ define BLURB
   Kerberos is available in many commercial products as well.
 endef
 
-MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/1.8/
+MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/$(shell echo $(GARVERSION) | awk -F. '{print $$1"."$$2}')/
 MASTER_SITES += http://web.mit.edu/kerberos/dist/krb5-appl/1.0/
 DISTFILES  = $(NAME)-$(VERSION)-signed.tar
 # DISTFILES += krb5-appl-1.0.1-signed.tar
@@ -24,6 +24,9 @@ PATCHFILES += 0002-libintl-for-kproplog.patch
 #PATCHFILES += 0003-local-libraries-first-when-linking.patch
 PATCHFILES += 0004-libkdb_ldap-isblank-define.patch
 PATCHFILES += 0005-Add-strings.h-to-setenv.c-for-strlen-and-other-stuff.patch
+# Add fix for failing test until this is fixed:
+#   http://krbdev.mit.edu/rt/Ticket/Display.html?id=6847
+PATCHFILES += 0006-Fix-check-for-camellia.patch
 
 BUILD_DEP_PKGS = CSWtcl
 
@@ -57,6 +60,8 @@ LICENSE = doc/copyright.texinfo
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
+sysconfdir = /etc/opt/csw
+localstatedir = /var/opt/csw
 CONFIGURE_ARGS  = $(DIRPATHS)
 ifeq ($(ISA),i386)
 CONFIGURE_ARGS += --with-tcl=$(prefix)
