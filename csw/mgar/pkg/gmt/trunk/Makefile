@@ -46,18 +46,33 @@ TEST_SCRIPTS =
 #WORKSRC = $(WORKDIR)/GMT$(VERSION)
 DISTNAME = GMT$(GMT_VERSION)
 
+## Tell the build process where to find NETCDF for 32 and 64-bit builds
+NETCDF_LIBDIR=/opt/csw/lib/$(MM_LIBDIR)
+## Tell the build process where to find libsunmath and libm
+SUNMATH_LIBDIR=/opt/csw/lib/$(MM_LIBDIR)
+
 ## Banish the unversioned shared objects to their own tree
-libdir_32 = /opt/csw/lib/gmt
-libdir_64 = /opt/csw/lib/gmt/$(ISA_DEFAULT64)
-EXTRA_LDFLAGS += -R /opt/csw/lib/gmt/$(MM_LIBDIR)
+# The merge step moves things into the proper ISA-specific directory
+libdir     = $(exec_prefix)/lib/gmt
+EXTRA_LDFLAGS += -R $(libdir)/$(MM_LIBDIR)
+
+## $(GMT_LIBS) gets passed to ./configure as LIBS
+## src/Makefile doesn't use LDFLAGS so we hijack $(LIBS) to fix the RUNPATH
+## We could also use LD_OPTS, but that would require reverse-engineering the
+## output of ./configure for yet another variable
+GMT_LIBS += -R$(libdir)/$(MM_LIBDIR)
+## GMT wants to use libsunmath and libm, but the ./configure script isn't
+## able to figure out where those libs actually live
+## The -L must come before the -l statements
+GMT_LIBS += -L$(SUNMATH_LIBDIR) -lsunmath -lm
 
 ## Arguments passed to the ./configure script. Configure ignores the various
 ## environment variables so we have to pass CFLAGS and friends
-CONFIGURE_ARGS += NETCDF_LIB=$(libdir)
+CONFIGURE_ARGS += NETCDF_LIB=$(NETCDF_LIBDIR)
 CONFIGURE_ARGS += CFLAGS="$(CFLAGS)"
 CONFIGURE_ARGS += LDFLAGS="$(LDFLAGS)"
 CONFIGURE_ARGS += CXXFLAGS="$(CXXFLAGS)"
-CONFIGURE_ARGS += LIBS="-L/opt/csw/lib/$(MM_LIBDIR) -lsunmath -lm" # Hopefully fixes .so creation
+CONFIGURE_ARGS += LIBS="$(GMT_LIBS)"
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --disable-mex
 CONFIGURE_ARGS += --enable-shared
@@ -69,15 +84,16 @@ BUILD64 = 1
 
 GARCOMPILER = GCC4
 
-#DEBUG_PACKAGING = 1
-
 INSTALL_ARGS = install-all
 
 LICENSE = LICENSE.TXT
 include gar/category.mk
 
-post-merge:
+post-install-modulated:
 	@echo Creating architecture symlinks
 	ln -s $(ISA_DEFAULT) $(DESTDIR)/opt/csw/lib/gmt/32
 	ln -s $(ISA_DEFAULT64) $(DESTDIR)/opt/csw/lib/gmt/64
 	@$(MAKECOOKIE)
+
+## This package has a number of unversioned private libraries
+CHECKPKG_OVERRIDES_CSWgmt += shared-lib-pkgname-mismatch|sonames=libgmt.so,libgmt_mgg.so,libgmtps.so,libmgd77.so,libpsl.so,libx2sys.so|pkgname=CSWgmt|expected=CSWlibs|
