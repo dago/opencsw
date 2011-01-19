@@ -1,0 +1,25 @@
+From 1c59e0d1f0c1092daea7551722ef65aa6237cb23 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 19 Jan 2011 13:12:22 +0100
+Subject: [PATCH] Fix check for camellia
+
+---
+ src/lib/crypto/builtin/camellia/Makefile.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/lib/crypto/builtin/camellia/Makefile.in b/src/lib/crypto/builtin/camellia/Makefile.in
+index e6c86bc..b7dcd88 100644
+--- a/src/lib/crypto/builtin/camellia/Makefile.in
++++ b/src/lib/crypto/builtin/camellia/Makefile.in
+@@ -34,7 +34,7 @@ includes:: depend
+ depend:: $(SRCS)
+ 
+ camellia-gen: camellia-gen.o $(GEN_OBJS)
+-	$(CC_LINK) -I../../../../include $(LOCALINCLUDES) -o camellia-gen camellia-gen.o $(GEN_OBJS)
++	$(CC_LINK) -I../../../../include $(LOCALINCLUDES) -lkrb5support -o camellia-gen camellia-gen.o $(GEN_OBJS)
+ 
+ run-camellia-gen: camellia-gen
+ 	./camellia-gen > kresults.out
+-- 
+1.7.3.2
+
