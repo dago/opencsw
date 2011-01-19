@@ -26,8 +26,11 @@ PACKAGE_STATS_VERSION = 10L
 BAD_CONTENT_REGEXES = (
     # Slightly obfuscating these by using the default concatenation of
     # strings.
+    r'/export' r'/home',
     r'/export' r'/medusa',
     r'/opt' r'/build',
+    r'/usr' r'/local',
+    r'/usr' r'/share',
 )
 
 

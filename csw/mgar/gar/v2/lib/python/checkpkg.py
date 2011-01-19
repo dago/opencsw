@@ -22,14 +22,6 @@ import struct_util
 
 
 DESCRIPTION_RE = r"^([\S]+) - (.*)$"
-BAD_CONTENT_REGEXES = (
-    # Slightly obfuscating these by using concatenation of strings.
-    r'/export' r'/home',
-    r'/export' r'/medusa',
-    r'/opt' r'/build',
-    r'/usr' r'/local',
-    r'/usr' r'/share',
-)
 
 INSTALL_CONTENTS_AVG_LINE_LENGTH = 102.09710677919261
 SYS_DEFAULT_RUNPATH = [
