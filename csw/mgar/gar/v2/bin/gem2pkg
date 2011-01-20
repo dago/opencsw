@@ -30,6 +30,7 @@ EOF
     spec.dependencies.each do |d|
       puts "RUNTIME_DEP_PKGS += CSWgem-#{d.name}"
     end
+    puts
   end
 
   puts "ARCHALL = 1\n" if spec.extensions.size.eql?(0)
