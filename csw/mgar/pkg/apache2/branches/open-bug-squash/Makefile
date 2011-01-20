@@ -108,7 +108,7 @@ INITSMF = /etc/opt/csw/init.d/cswapache2
 POSTMSG = /opt/csw/share/doc/apache2/README.CSW
 
 AP2_MODS = 1
-AP2_MODFILES = /opt/csw/apache2/libexec/.*suexec.*\.so
+AP2_MODFILES = *suexec*\.so
 
 ALTERNATIVES_CSWapache2 = prefork
 ALTERNATIVES_CSWap2worker = worker
