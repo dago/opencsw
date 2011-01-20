@@ -1,9 +1,9 @@
 NAME = HTML-Tree
-VERSION = 3.23
+VERSION = 4.1
 CATEGORIES = cpan
 AUTHOR = PETEK
 
-DESCRIPTION = modules for making parse trees from HTML source.
+DESCRIPTION = Modules for making parse trees from HTML source
 define BLURB
   HTML-Tree is a suite of Perl modules for making parse trees out of HTML
   source.  It consists of mainly two modules, whose documentation you should
@@ -15,7 +15,8 @@ DISTFILES = COPYING
 PACKAGES = CSWpmhtmltree
 CATALOGNAME = pm_htmltree
 
-DEP_PKGS = CSWpmhtmlparser CSWpmhtmltagset
+RUNTIME_DEP_PKGS_CSWpmhtmltree += CSWpmhtmlparser
+RUNTIME_DEP_PKGS_CSWpmhtmltree += CSWpmhtmltagset
 
 ARCHALL = 1
 
