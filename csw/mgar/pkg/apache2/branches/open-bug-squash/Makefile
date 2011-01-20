@@ -44,6 +44,8 @@ DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
 
+PATCHFILES += 0001-Apply-a-large-hammer-to-buildconf-to-fix-libtool-set.patch
+
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
