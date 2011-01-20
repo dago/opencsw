@@ -33,7 +33,7 @@ EOF
     puts
   end
 
-  puts "ARCHALL = 1\n" if spec.extensions.size.eql?(0)
+  puts "ARCHALL = 1\n\n" if spec.extensions.size.eql?(0)
 
   puts "include gar/category.mk"
 rescue Exception => e
