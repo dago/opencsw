@@ -1,0 +1,44 @@
+#!/sbin/sh
+#
+# Copyright 2004 Sun Microsystems, Inc.  All rights reserved.
+# Use is subject to license terms.
+#
+# ident    "@(#)http-apache2    1.2    04/11/11 SMI"
+#
+
+#RC_KNUM 16
+#RC_SNUM 80
+#RC_KLEV 0,1,2,S
+#RC_SLEV 3
+#FMRI network
+
+APACHE_HOME=/opt/csw/apache2
+CONF_FILE=$APACHE_HOME/etc/httpd.conf
+APACHECTL=$APACHE_HOME/sbin/apachectl
+
+[ ! -f "$CONF_FILE" ] && exit 0
+[ ! -x "$APACHECTL" ] && exit 0
+
+case "$1" in
+start)
+    cmd=$1
+    if [ -f "$APACHE_HOME/etc/server.crt" ]; then
+        cmd="$cmd -DSSL"
+    fi
+    ;;
+restart)
+    cmd="restart"
+    ;;
+graceful)
+    cmd="graceful"
+    ;;
+stop)
+    cmd="stop"
+    ;;
+*)
+    echo "Usage: $0 {start|stop|restart|graceful}"
+    exit 1
+    ;;
+esac
+
+exec $APACHECTL -k $cmd 2>&1
