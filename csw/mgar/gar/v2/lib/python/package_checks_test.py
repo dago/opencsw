@@ -1415,14 +1415,48 @@ class TestCheckSharedLibraryNamingPolicyBerkeley(CheckpkgUnitTestHelper, unittes
     self.pkg_data = bdb48_stats[0]
 
 
-class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckpkgUnitTestHelper, unittest.TestCase):
+class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckpkgUnitTestHelper,
+                                                    unittest.TestCase):
   FUNCTION_NAME = 'CheckSharedLibraryPkgDoesNotHaveTheSoFile'
+
   def CheckpkgTest(self):
     self.pkg_data = neon_stats[0]
     self.error_mgr_mock.ReportError(
-        'shared-lib-package-contains-so-symlink', 'file=/opt/csw/lib/libneon.so')
+        'shared-lib-package-contains-so-symlink',
+        'file=/opt/csw/lib/libneon.so')
     self.error_mgr_mock.ReportError(
-        'shared-lib-package-contains-so-symlink', 'file=/opt/csw/lib/sparcv9/libneon.so')
+        'shared-lib-package-contains-so-symlink',
+        'file=/opt/csw/lib/sparcv9/libneon.so')
+
+
+class TestCheckSharedLibraryPkgDoesNotHaveTheSoFileSuggestion(
+    CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryPkgDoesNotHaveTheSoFile'
+
+  def SetMessenger(self):
+    """Overriding this method to use mock instead of a stub."""
+    self.messenger = self.mox.CreateMock(stubs.MessengerStub)
+
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+    self.error_mgr_mock.ReportError(
+        'shared-lib-package-contains-so-symlink',
+        'file=/opt/csw/lib/libneon.so')
+    self.error_mgr_mock.ReportError(
+        'shared-lib-package-contains-so-symlink',
+        'file=/opt/csw/lib/sparcv9/libneon.so')
+    self.messenger.SuggestGarLine("# (If CSWneon-dev doesn't exist yet)")
+    self.messenger.SuggestGarLine('PACKAGES += CSWneon-dev')
+    self.messenger.SuggestGarLine(
+        'PKGFILES_CSWneon-dev += /opt/csw/lib/libneon.so')
+    self.messenger.SuggestGarLine('CATALOGNAME_CSWneon-dev = neon_dev')
+    self.messenger.Message(mox.IsA(str))
+    self.messenger.SuggestGarLine("# (If CSWneon-dev doesn't exist yet)")
+    self.messenger.SuggestGarLine('PACKAGES += CSWneon-dev')
+    self.messenger.SuggestGarLine(
+        'PKGFILES_CSWneon-dev += /opt/csw/lib/sparcv9/libneon.so')
+    self.messenger.SuggestGarLine('CATALOGNAME_CSWneon-dev = neon_dev')
+    self.messenger.Message(mox.IsA(str))
 
 
 class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
