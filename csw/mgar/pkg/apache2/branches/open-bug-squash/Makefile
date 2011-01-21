@@ -38,7 +38,7 @@ DISTFILES += config.layout
 DISTFILES += CSWapache2.killproc cswapache2
 
 DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
-DISTFILES += CSWap2workser.postinstall
+DISTFILES += CSWap2worker.postinstall
 
 # Configuration templates
 DISTFILES += update20to22
