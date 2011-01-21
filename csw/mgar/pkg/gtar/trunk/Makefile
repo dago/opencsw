@@ -17,24 +17,32 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
+# These two patches are from
+#   http://cvs.opensolaris.org/source/xref/sfw/usr/src/cmd/gtar/Patches/
+PATCHFILES += verify.diff
+PATCHFILES += xgetcwd.diff
+
 PACKAGES = CSWgtar
+CATALOGNAME_CSWgtar = gtar
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_SOURCEURL = http://www.gnu.org/software/tar/
+VENDOR_URL = http://www.gnu.org/software/tar/
 
 BUILD_DEP_PKGS = CSWgcpio
-RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWgcpio
+RUNTIME_DEP_PKGS_CSWgtar += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWgtar += CSWiconv
+RUNTIME_DEP_PKGS_CSWgtar += CSWgcpio
 
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
 CONFIGURE_ARGS += --with-rmt=/opt/csw/libexec/grmt
-TEST_SCRIPTS =
+TEST_TARGET = check
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
-CHECKPKG_OVERRIDES_CSWgtar += surplus-dependency|CSWgcpio
+CHECKPKG_OVERRIDES_CSWgtar += file-with-bad-content|/usr/local|root/opt/csw/share/info/tar.info-1
 
 include gar/category.mk
 
