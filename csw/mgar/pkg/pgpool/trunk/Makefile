@@ -33,7 +33,7 @@ PKGFILES_CSWlibpcp0 = $(call baseisadirs,$(libdir),libpcp\.so\.0(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibpcp0 += CSWlibgnugetopt
 
 PACKAGES += CSWpgpool-dev
-CATALOGNAME_CSWpgpool-dev = CSWpgpool_dev
+CATALOGNAME_CSWpgpool-dev = pgpool_dev
 SPKG_DESC_CSWpgpool-dev = Development Files for pgpool
 PKGFILES_CSWpgpool-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWpgpool-dev += CSWpgpool
