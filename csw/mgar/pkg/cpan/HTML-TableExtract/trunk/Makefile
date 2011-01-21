@@ -3,7 +3,7 @@ VERSION = 2.10
 CATEGORIES = cpan
 AUTHOR = MSISK
 
-DESCRIPTION = Perl module for extracting the content contained in tables within an HTML document.
+DESCRIPTION = module for extracting the contents of tables within an HTML document.
 define BLURB
   HTML::TableExtract is a subclass of HTML::Parser that serves to extract the 
   information from tables of interest contained within an HTML document. The 
@@ -16,6 +16,8 @@ PACKAGES = CSWpmhtmltableextract
 CATALOGNAME = pm_htmltableextract
 
 DEPENDS += cpan/HTML-Parser cpan/HTML-Tagset cpan/HTML-Element-Extended cpan/HTML-Tree cpan/Test-Exception cpan/Sub-Uplevel
+
+ARCHALL = 1
 
 LICENSE = files/COPYING
 
