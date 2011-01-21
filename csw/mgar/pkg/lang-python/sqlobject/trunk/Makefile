@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = SQLObject
-VERSION = 0.12.4
+VERSION = 0.15.0
 CATEGORIES = python
 DESCRIPTION = Object Relational Manager for Python
 define BLURB
@@ -17,8 +17,5 @@ PACKAGES = CSWpy-sqlobject
 RUNTIME_DEP_PKGS_CSWpy-sqlobject = CSWpy-formencode
 ARCHALL_CSWpy-sqlobject = 1
 CATALOGNAME_CSWpy-sqlobject = py_sqlobject
-# To build the dependent package before the dependency is installed on the
-# buildfarm.
-CHECKPKG_OVERRIDES_CSWpy-sqlobject += unidentified-dependency|CSWpy-formencode
 CHECKPKG_OVERRIDES_CSWpy-sqlobject += surplus-dependency|CSWpy-formencode
 include gar/category.mk
