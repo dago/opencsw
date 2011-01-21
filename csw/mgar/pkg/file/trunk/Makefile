@@ -53,8 +53,9 @@ PACKAGES += CSWlibmagic-data
 CATALOGNAME_CSWlibmagic-data = libmagic_data
 SPKG_DESC_CSWlibmagic-data = Database for libmagic
 ARCHALL_CSWlibmagic-data = 1
-# PKGFILES_CSWlibmagic-data += $(datadir).*magic\.mgc
-# PKGFILES_CSWlibmagic-data += $(mandir)/man4/magic\.4
+# The magic file contains /usr/local as one of the magic constants to detect
+# file types.
+CHECKPKG_OVERRIDES_CSWlibmagic-data += file-with-bad-content
 
 PACKAGES += CSWlibmagic1
 CATALOGNAME_CSWlibmagic1 = libmagic1
