@@ -49,18 +49,20 @@ RUNTIME_DEP_PKGS_CSWlibmagic += CSWlibmagic1
 CHECKPKG_OVERRIDES_CSWlibmagic += surplus-dependency|CSWlibmagic1
 PKGFILES_CSWlibmagic = NONE
 
-PACKAGES += CSWlibmagic-common
-CATALOGNAME_CSWlibmagic-common = libmagic_common
-SPKG_DESC_CSWlibmagic-common = Database for libmagic
-ARCHALL_CSWlibmagic-common = 1
+PACKAGES += CSWlibmagic-data
+CATALOGNAME_CSWlibmagic-data = libmagic_data
+SPKG_DESC_CSWlibmagic-data = Database for libmagic
+ARCHALL_CSWlibmagic-data = 1
+# PKGFILES_CSWlibmagic-data += $(datadir).*magic\.mgc
+# PKGFILES_CSWlibmagic-data += $(mandir)/man4/magic\.4
 
 PACKAGES += CSWlibmagic1
 CATALOGNAME_CSWlibmagic1 = libmagic1
 PKGFILES_CSWlibmagic1 += $(call baseisadirs,$(libdir),libmagic\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibmagic1 += The library behind file(1), libmagic.so.1
 RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWlibmagic-common
-CHECKPKG_OVERRIDES_CSWlibmagic1 += surplus-dependency|CSWlibmagic-common
+RUNTIME_DEP_PKGS_CSWlibmagic1 += CSWlibmagic-data
+CHECKPKG_OVERRIDES_CSWlibmagic1 += surplus-dependency|CSWlibmagic-data
 
 PACKAGES += CSWlibmagic-dev
 SPKG_DESC_CSWlibmagic-dev = Development files for libmagic
