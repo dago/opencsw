@@ -971,9 +971,9 @@ class CatalogMixin(SqlobjectHelperMixin):
             m.Srv4FileInCatalog.q.arch==sqo_arch,
             m.Srv4FileInCatalog.q.catrel==sqo_catrel,
             m.Srv4FileInCatalog.q.srv4file==sqo_srv4))
-    if len(list(res)):
-      logging.debug("%s is already part of %s %s %s",
-                    sqo_srv4, osrel, arch, catrel)
+    if res.count():
+      logging.warning("%s is already part of %s %s %s",
+                      sqo_srv4, osrel, arch, catrel)
       # Our srv4 is already part of that catalog.
       return
     obj = m.Srv4FileInCatalog(
