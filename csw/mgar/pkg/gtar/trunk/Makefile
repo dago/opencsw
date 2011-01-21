@@ -38,6 +38,8 @@ RUNTIME_DEP_PKGS_CSWgtar += CSWgcpio
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
 CONFIGURE_ARGS += --with-rmt=/opt/csw/libexec/grmt
+# As suggested in http://lists.gnu.org/archive/html/bug-tar/2010-11/msg00073.html
+CONFIGURE_ARGS += gl_cv_func_futimesat_works=yes
 TEST_TARGET = check
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
