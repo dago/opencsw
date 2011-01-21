@@ -1093,7 +1093,8 @@ def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messe
           messenger.SuggestGarLine(
               "PKGFILES_%s-dev += %s" % (pkgname, entry["path"]))
           messenger.SuggestGarLine(
-              "CATALOGNAME_%s-dev = %s_dev" % (pkgname, pkgname.replace("-", "_")))
+              "CATALOGNAME_%s-dev = %s_dev"
+              % (pkgname, pkg_data["basic_stats"]["catalogname"]))
           messenger.Message(
               "The package contains shared libraries together with the "
               "symlink of the form libfoo.so -> libfoo.so.1.  "
