@@ -360,6 +360,24 @@ class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
     self.dbc.InitialDataImport()
     neon_stats2 = copy.deepcopy(neon_stats[0])
     neon_stats2["basic_stats"]["md5_sum"] = "another pkg"
+    neon_stats2["basic_stats"]["catalogname"] = "another_pkg"
+    # md5_sum is different
+    # pkgname stays the same on purpose
+    sqo_pkg1 = self.TestPackageStats.ImportPkg(neon_stats[0])
+    sqo_pkg2 = self.TestPackageStats.ImportPkg(neon_stats2)
+    c = self.TestCatalog()
+    args = ('SunOS5.9', 'i386', 'unstable')
+    c.AddSrv4ToCatalog(sqo_pkg1, *args)
+    self.assertRaises(
+            checkpkg_lib.CatalogDatabaseError,
+            c.AddSrv4ToCatalog,
+            sqo_pkg2, *args)
+
+  def testDuplicateCatalognameThrowsError(self):
+    self.dbc.InitialDataImport()
+    neon_stats2 = copy.deepcopy(neon_stats[0])
+    neon_stats2["basic_stats"]["md5_sum"] = "another pkg"
+    neon_stats2["basic_stats"]["pkgname"] = "CSWanother-pkg"
     # md5_sum is different
     # pkgname stays the same on purpose
     sqo_pkg1 = self.TestPackageStats.ImportPkg(neon_stats[0])
