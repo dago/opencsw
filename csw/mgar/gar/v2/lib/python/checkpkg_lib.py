@@ -1008,15 +1008,18 @@ class CatalogMixin(SqlobjectHelperMixin):
   def RemoveSrv4(self, sqo_srv4, osrel, arch, catrel):
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
-    sqo_srv4_in_cat = m.Srv4FileInCatalog.select(
-        sqlobject.AND(
-          m.Srv4FileInCatalog.q.arch==sqo_arch,
-          m.Srv4FileInCatalog.q.osrel==sqo_osrel,
-          m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-          m.Srv4FileInCatalog.q.srv4file==sqo_srv4)).getOne()
-    # Files belonging to this package should not be removed from the catalog
-    # as the package might be still present in another catalog.
-    sqo_srv4_in_cat.destroySelf()
+    try:
+      sqo_srv4_in_cat = m.Srv4FileInCatalog.select(
+          sqlobject.AND(
+            m.Srv4FileInCatalog.q.arch==sqo_arch,
+            m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+            m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+            m.Srv4FileInCatalog.q.srv4file==sqo_srv4)).getOne()
+      # Files belonging to this package should not be removed from the catalog
+      # as the package might be still present in another catalog.
+      sqo_srv4_in_cat.destroySelf()
+    except sqlobject.dberrors.SQLObjectNotFound, e:
+      logging.warning(e)
 
 
 class Catalog(CatalogMixin):
