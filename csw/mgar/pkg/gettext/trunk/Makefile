@@ -20,6 +20,12 @@ CATALOGNAME_CSWggettext = ggettextdoc
 SPKG_DESC_CSWggettext = GNU locale utilities
 SPKG_DESC_CSWggettextdoc = GNU locale utility documentation
 
+PACKAGES += CSWlibgettextlib0-14-1
+CATALOGNAME_CSWlibgettextlib0-14-1 = libgettextlib0_14_1
+PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so)
+PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so(\.\d+)*)
+SPKG_DESC_CSWlibgettextlib0-14-1 += GNU locale utilities, libgettextlib-0.14.1.so
+
 ARCHALL_CSWggettextdoc = 1
 
 COMPILE_ELISP = 1
