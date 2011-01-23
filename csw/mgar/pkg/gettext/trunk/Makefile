@@ -26,6 +26,20 @@ PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\
 PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so(\.\d+)*)
 SPKG_DESC_CSWlibgettextlib0-14-1 += GNU locale utilities, libgettextlib-0.14.1.so
 
+PACKAGES += CSWlibgettextlib0-17
+CATALOGNAME_CSWlibgettextlib0-17 = libgettextlib0_17
+PKGFILES_CSWlibgettextlib0-17 += $(call baseisadirs,$(libdir),libgettextlib-0\.17\.so)
+PKGFILES_CSWlibgettextlib0-17 += $(call baseisadirs,$(libdir),libgettextlib-0\.17\.so(\.\d+)*)
+SPKG_DESC_CSWlibgettextlib0-17 += GNU locale utilities, libgettextlib-0.17.so
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-17
+
+PACKAGES += CSWlibgettextlib0-18-1
+CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
+PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so)
+PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so(\.\d+)*)
+SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.so
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-18-1
+
 ARCHALL_CSWggettextdoc = 1
 
 COMPILE_ELISP = 1
