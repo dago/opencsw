@@ -135,6 +135,8 @@ class Srv4CatalogAssignment(object):
       # We should return an error message instead.
       raise web.notfound()
     try:
+      if arch_name == 'all':
+        raise checkpkg_lib.CatalogDatabaseError("Cannot add to 'all' catalog.")
       srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       if not srv4.registered:
         # Package needs to be registered for releases
@@ -144,35 +146,28 @@ class Srv4CatalogAssignment(object):
         package_stats.PackageStats.ImportPkg(stats, True)
         srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       c = checkpkg_lib.Catalog()
-      if arch_name == 'all':
-        # The arch='all' packages need special handling; they need to be added
-        # to both sparc and i386 catalogs.
-        archs = ('sparc', 'i386')
-      else:
-        archs = (arch_name,)
-      for arch_name in archs:
-        # See if there already is a package with that catalogname.
-        sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
-            osrel_name, arch_name, catrel_name)
-        res = c.GetConflictingSrv4ByCatalognameResult(
-            srv4, srv4.catalogname,
-            sqo_osrel, sqo_arch, sqo_catrel)
-        if res.count() == 1:
-          # Removing old version of the package from the catalog
-          for pkg_in_catalog in res:
-            srv4_to_remove = pkg_in_catalog.srv4file
-            c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
-        c.AddSrv4ToCatalog(srv4, osrel_name, arch_name, catrel_name)
-        web.header(
-            'Content-type',
-            'application/x-vnd.opencsw.pkg;type=catalog-update')
-        response = json.dumps({
-          "message": "Added to catalog %s %s %s\n%s"
-                     % (catrel_name, arch_name, osrel_name, srv4.basename),
-          "code_version": code_version,
-        })
-        web.header('Content-Length', len(response))
-        return response
+      # See if there already is a package with that catalogname.
+      sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+          osrel_name, arch_name, catrel_name)
+      res = c.GetConflictingSrv4ByCatalognameResult(
+          srv4, srv4.catalogname,
+          sqo_osrel, sqo_arch, sqo_catrel)
+      if res.count() == 1:
+        # Removing old version of the package from the catalog
+        for pkg_in_catalog in res:
+          srv4_to_remove = pkg_in_catalog.srv4file
+          c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
+      c.AddSrv4ToCatalog(srv4, osrel_name, arch_name, catrel_name)
+      web.header(
+          'Content-type',
+          'application/x-vnd.opencsw.pkg;type=catalog-update')
+      response = json.dumps({
+        "message": "Added to catalog %s %s %s\n%s"
+                   % (catrel_name, arch_name, osrel_name, srv4.basename),
+        "code_version": code_version,
+      })
+      web.header('Content-Length', len(response))
+      return response
     except (
         checkpkg_lib.CatalogDatabaseError,
         sqlobject.dberrors.OperationalError), e:

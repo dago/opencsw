@@ -14,6 +14,7 @@ import hashlib
 import os.path
 import opencsw
 import json
+import common_constants
 
 
 BASE_URL = "http://buildfarm.opencsw.org/releases/"
@@ -58,17 +59,28 @@ class Srv4Uploader(object):
       self._PostFile(filename)
     file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
     logging.debug("file_metadata %s", repr(file_metadata))
-    self._InsertIntoCatalog(filename, file_metadata)
+    osrel = file_metadata['osrel']
+    arch = file_metadata['arch']
+    # Implementing backward compatibility.  A package for SunOS5.x is also
+    # inserted into SunOS5.(x+n) for n=(0, 1, ...)
+    for idx, known_osrel in enumerate(common_constants.OS_RELS):
+      if osrel == known_osrel:
+        osrels = common_constants.OS_RELS[idx:]
+    if arch == 'all':
+      archs = ('sparc', 'i386')
+    else:
+      archs = (arch,)
+    for arch in archs:
+      for osrel in osrels:
+        self._InsertIntoCatalog(filename, arch, osrel, file_metadata)
 
-  def _InsertIntoCatalog(self, filename, file_metadata):
-    logging.info("_InsertIntoCatalog(%s)", repr(filename))
+  def _InsertIntoCatalog(self, filename, arch, osrel, file_metadata):
+    logging.info("_InsertIntoCatalog(%s, %s, %s)", repr(arch), repr(osrel), repr(filename))
     md5_sum = self._GetFileMd5sum(filename)
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
     logging.debug("parsed_basename: %s", parsed_basename)
 
-    arch = file_metadata['arch']
-    osrel = file_metadata['osrel']
     url = (
         "%scatalogs/unstable/%s/%s/%s/"
         % (BASE_URL, arch, osrel, md5_sum))
