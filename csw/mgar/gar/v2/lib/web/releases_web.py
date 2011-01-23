@@ -161,11 +161,11 @@ class Srv4CatalogAssignment(object):
       web.header(
           'Content-type',
           'application/x-vnd.opencsw.pkg;type=catalog-update')
-      response = json.dumps({
-        "message": "Added to catalog %s %s %s\n%s"
-                   % (catrel_name, arch_name, osrel_name, srv4.basename),
-        "code_version": code_version,
-      })
+      response = json.dumps([
+        u"Added to catalog %s %s %s" % (catrel_name, arch_name, osrel_name),
+        u"%s" % srv4.basename,
+        u"code_version" + str(code_version),
+      ])
       web.header('Content-Length', len(response))
       return response
     except (
