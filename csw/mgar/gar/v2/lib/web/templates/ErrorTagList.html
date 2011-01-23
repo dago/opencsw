@@ -1,0 +1,18 @@
+$def with (tags)
+<html>
+  <head>
+    <title>
+      OpenCSW Maintainers
+    </title>
+  </head>
+  <body>
+    <ul>
+$for tag_name in tags:
+  <li>
+  <a href="$tag_name/">
+    $tag_name
+  </a>
+  </li>
+</ul>
+</body>
+</html>
