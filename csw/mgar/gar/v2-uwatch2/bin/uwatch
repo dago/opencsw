@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/opt/csw/bin/python
 
 # TODO : check arguments for valid date
 # TODO : check arguments for emtpy strings
@@ -1228,11 +1228,6 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                 # Output some more information if verbose mode is activated
                 if self.config.getVerbose() == True:
                     print "Package %(pkg)s has been undeleted" % { 'pkg' : self.config.getCatalogName() }
-
-            # Test if the package has just been created. If yes the history line for gar version has to be inserted
-            if isNewlyCreatedPackage:
-                cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
-                                values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "gar", self.config.getGarVersion() , self.config.getExecutionDate() ) )
 
             # Test if current version is passed
             if self.config.getCurrentVersion():
