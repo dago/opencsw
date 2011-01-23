@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = pius
-VERSION = 2.0.7
+VERSION = 2.0.8
 CATEGORIES = apps
 DESCRIPTION = A tool for signing and email all UIDs on a set of PGP keys.
 define BLURB
@@ -14,7 +14,8 @@ SF_PROJ = pgpius
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 # What about CSWgnupg2?	
-RUNTIME_DEP_PKGS = CSWpython CSWgnupg
+RUNTIME_DEP_PKGS += CSWpython
+RUNTIME_DEP_PKGS += CSWgnupg
 ARCHALL = 1
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 CONFIGURE_SCRIPTS =
