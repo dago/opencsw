@@ -88,10 +88,16 @@ class Srv4Uploader(object):
     c = pycurl.Curl()
     d = StringIO()
     h = StringIO()
+    # Bogus data to upload
+    s = StringIO()
     c.setopt(pycurl.URL, str(url))
     c.setopt(pycurl.PUT, 1)
+    c.setopt(pycurl.UPLOAD, 1)
+    c.setopt(pycurl.INFILESIZE_LARGE, s.len)
+    c.setopt(pycurl.READFUNCTION, s.read)
     c.setopt(pycurl.WRITEFUNCTION, d.write)
     c.setopt(pycurl.HEADERFUNCTION, h.write)
+    c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
     if self.debug:
       c.setopt(c.VERBOSE, 1)
     c.perform()
@@ -164,6 +170,7 @@ class Srv4Uploader(object):
     c.setopt(pycurl.HTTPPOST, post_data)
     c.setopt(pycurl.WRITEFUNCTION, d.write)
     c.setopt(pycurl.HEADERFUNCTION, h.write)
+    c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
     if self.debug:
       c.setopt(c.VERBOSE, 1)
     c.perform()
