@@ -56,3 +56,11 @@ sudo aptitude install \
   python-progressbar \
   python-sqlobject \
   python-yaml
+
+===Checkpkg database===
+
+Additional database indexes:
+
+CREATE INDEX srv4_mtime_idx ON srv4_file_stats(mtime);
+CREATE INDEX srv4_md5_idx ON srv4_file_stats(md5_sum);
+CREATE INDEX catalog_idx ON srv4_file_in_catalog (arch_id, osrel_id, catrel_id);
