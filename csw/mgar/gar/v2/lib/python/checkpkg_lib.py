@@ -961,7 +961,18 @@ class CatalogMixin(SqlobjectHelperMixin):
                   m.Srv4FileInCatalog.q.arch==sqo_arch,
                   m.Srv4FileInCatalog.q.catrel==sqo_catrel,
                   m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
-    if len(list(res)):
+    if res.count():
+      raise CatalogDatabaseError(
+          "There already is a package with that catalogname: %s" % pkginst)
+    res = m.Srv4FileStats.select(
+            m.Srv4FileStats.q.catalogname==sqo_srv4.catalogname
+            ).throughTo.in_catalogs.filter(
+                sqlobject.AND(
+                  m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+                  m.Srv4FileInCatalog.q.arch==sqo_arch,
+                  m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+                  m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
+    if res.count():
       raise CatalogDatabaseError(
           "There already is a package with that pkgname: %s" % pkginst)
     # Checking for presence of the same srv4 already in the catalog.
