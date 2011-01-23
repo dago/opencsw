@@ -4,6 +4,7 @@
 
 import logging
 import sqlobject
+import os.path
 from sqlobject import sqlbuilder
 import cPickle
 
@@ -96,6 +97,9 @@ class CswFile(sqlobject.SQLObject):
   pkginst = sqlobject.ForeignKey('Pkginst', notNone=True)
   srv4_file = sqlobject.ForeignKey('Srv4FileStats')
   basename_idx = sqlobject.DatabaseIndex('basename')
+
+  def __unicode__(self):
+    return u"File: %s" % os.path.join(self.path, self.basename)
 
 class Srv4FileStatsBlob(sqlobject.SQLObject):
   """Holds pickled data structures.
