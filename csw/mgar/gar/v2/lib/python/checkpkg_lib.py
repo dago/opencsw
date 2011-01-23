@@ -952,6 +952,9 @@ class CatalogMixin(SqlobjectHelperMixin):
     """Registers a srv4 file in a catalog."""
     logging.debug("AddSrv4ToCatalog(%s, %s, %s, %s)",
         sqo_srv4, osrel, arch, catrel)
+    # There are only i386 and sparc catalogs.
+    if arch != 'i386' and arch != 'sparc':
+      raise CatalogDatabaseError("Wrong architecture: %s" % arch)
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
     if not self.Srv4MatchesCatalog(sqo_srv4, sqo_arch):
