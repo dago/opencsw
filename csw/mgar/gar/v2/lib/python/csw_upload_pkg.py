@@ -18,7 +18,9 @@ import common_constants
 
 
 BASE_URL = "http://buildfarm.opencsw.org/releases/"
+USAGE = """%prog [ options ] <pkg1> [ <pkg2> [ ... ] ]
 
+Uploads a set of packages to the unstable catalog in opencsw-future."""
 
 class Error(Exception):
   pass
@@ -187,7 +189,7 @@ class Srv4Uploader(object):
 
 
 if __name__ == '__main__':
-  parser = optparse.OptionParser()
+  parser = optparse.OptionParser(USAGE)
   parser.add_option("-d", "--debug",
       dest="debug",
       default=False, action="store_true")
