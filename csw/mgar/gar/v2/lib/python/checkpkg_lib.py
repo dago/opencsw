@@ -935,6 +935,19 @@ class CatalogMixin(SqlobjectHelperMixin):
             sqo_srv4, repr(pkg_arch), repr(filename_arch))
     return ans
 
+  def GetConflictingSrv4ByCatalognameResult(self,
+      sqo_srv4, catalogname,
+      sqo_osrel, sqo_arch, sqo_catrel):
+    res = m.Srv4FileStats.select(
+            m.Srv4FileStats.q.catalogname==catalogname
+            ).throughTo.in_catalogs.filter(
+                sqlobject.AND(
+                  m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+                  m.Srv4FileInCatalog.q.arch==sqo_arch,
+                  m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+                  m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
+    return res
+
   def AddSrv4ToCatalog(self, sqo_srv4, osrel, arch, catrel):
     """Registers a srv4 file in a catalog."""
     logging.debug("AddSrv4ToCatalog(%s, %s, %s, %s)",
@@ -963,18 +976,14 @@ class CatalogMixin(SqlobjectHelperMixin):
                   m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
     if res.count():
       raise CatalogDatabaseError(
-          "There already is a package with that catalogname: %s" % pkginst)
-    res = m.Srv4FileStats.select(
-            m.Srv4FileStats.q.catalogname==sqo_srv4.catalogname
-            ).throughTo.in_catalogs.filter(
-                sqlobject.AND(
-                  m.Srv4FileInCatalog.q.osrel==sqo_osrel,
-                  m.Srv4FileInCatalog.q.arch==sqo_arch,
-                  m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-                  m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
+          "There already is a package with that pkgname: %s" % pkginst.pkgname)
+    res = self.GetConflictingSrv4ByCatalognameResult(
+        sqo_srv4, sqo_srv4.catalogname,
+        sqo_osrel, sqo_arch, sqo_catrel)
     if res.count():
       raise CatalogDatabaseError(
-          "There already is a package with that pkgname: %s" % pkginst)
+          "There already is a package with that catalogname: %s"
+          % sqo_srv4.catalogname)
     # Checking for presence of the same srv4 already in the catalog.
     res = m.Srv4FileInCatalog.select(
         sqlobject.AND(
