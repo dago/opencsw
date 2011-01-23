@@ -1,0 +1,24 @@
+$def with (srv4, files)
+<html>
+  <head>
+    <title>
+      files of
+      $srv4.basename
+    </title>
+  </head>
+  <body>
+
+<h2>
+  files of $srv4.catalogname $srv4.version_string
+</h2>
+
+<ul>
+$for file in files:
+  <li>
+  $file
+  </li>
+
+</ul>
+
+</body>
+</html>
