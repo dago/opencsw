@@ -56,8 +56,7 @@ class PackageStatsWithDbUnitTest(test_base.SqlObjectTestMixin,
       })
     mock_dirpkg.GetPkgmap().AndReturn(mock_pkgmap)
     mock_pkgmap.entries = []
-    mock_dirpkg.GetFilesContaining(
-        ('/export/medusa', '/opt/build')).AndReturn([])
+    mock_dirpkg.GetFilesContaining(mox.IsA(tuple)).AndReturn([])
     mock_dirpkg.GetFilesMetadata().AndReturn([])
     mock_srv4.GetMtime().AndReturn(datetime.datetime(2010, 12, 8, 7, 52, 54))
     pkgstats = package_stats.PackageStats(mock_srv4)
