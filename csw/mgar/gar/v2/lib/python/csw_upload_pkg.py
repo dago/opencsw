@@ -146,7 +146,8 @@ class Srv4Uploader(object):
     c = pycurl.Curl()
     d = StringIO()
     h = StringIO()
-    c.setopt(pycurl.URL, BASE_URL + "srv4/")
+    url = BASE_URL + "srv4/"
+    c.setopt(pycurl.URL, url)
     c.setopt(pycurl.POST, 1)
     post_data = [
         ('srv4_file', (pycurl.FORM_FILE, filename)),
