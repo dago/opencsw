@@ -102,12 +102,18 @@ class Srv4Uploader(object):
         http_code,
         c.getinfo(pycurl.EFFECTIVE_URL))
     c.close()
-    if self.debug:
-      logging.debug("*** Headers")
-      logging.debug(h.getvalue())
-      logging.debug("*** Data")
-      logging.debug(d.getvalue())
-    logging.info("Response: %s", d.getvalue())
+    # if self.debug:
+    #   logging.debug("*** Headers")
+    #   logging.debug(h.getvalue())
+    #   logging.debug("*** Data")
+    if http_code >= 400 and http_code <= 499:
+      if not self.debug:
+        # In debug mode, all headers are printed to screen, and we aren't
+        # interested in the response body.
+        logging.fatal("Response: %s %s", http_code, d.getvalue())
+      raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
+    else:
+      logging.info("Response: %s %s", http_code, d.getvalue())
     return http_code
 
   def _GetSrv4FileMetadata(self, md5_sum):
@@ -170,7 +176,7 @@ class Srv4Uploader(object):
       logging.debug(d.getvalue())
     logging.debug("File POST http code: %s", http_code)
     if http_code >= 400 and http_code <= 499:
-      raise RestCommunicationError("HTTP code: %s" % http_code)
+      raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
 
 
 if __name__ == '__main__':
