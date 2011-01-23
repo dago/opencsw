@@ -539,6 +539,8 @@ def main():
       print obj.basename, obj.md5_sum
   elif command == 'gen-cat':
     catrel = 'unstable'
+    if options.catrel != catrel:
+      logging.warn("Generating the %s catalog.", catrel)
     if len(args) != 2:
       raise UsageError("Wrong number of arguments, see usage.")
     allpkgs_dir, target_dir = args
@@ -560,7 +562,7 @@ def main():
     for osrel in ("SunOS5.%s" % x for x in (8, 9, 10)):
       for arch in archs:
         sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
-            osrel, arch, options.catrel)
+            osrel, arch, catrel)
         pkgs = list(GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
         logging.debug("The catalog contains %s packages" % len(pkgs))
         # For now, only making hardlinks to packages from allpkgs
