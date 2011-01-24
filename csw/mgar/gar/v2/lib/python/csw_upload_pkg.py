@@ -15,6 +15,7 @@ import os.path
 import opencsw
 import json
 import common_constants
+import socket
 
 
 BASE_URL = "http://buildfarm.opencsw.org/releases/"
@@ -258,11 +259,14 @@ if __name__ == '__main__':
       dest="remove",
       default=False, action="store_true")
   options, args = parser.parse_args()
-  print "args:", args
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
   else:
     logging.basicConfig(level=logging.INFO)
+  logging.debug("args: %s", args)
+  hostname = socket.gethostname()
+  if not hostname.startswith('login'):
+    logging.warning("This script is meant to be run on the login host.")
   uploader = Srv4Uploader(args, debug=options.debug)
   if options.remove:
     uploader.Remove()
