@@ -1018,7 +1018,7 @@ class CatalogMixin(SqlobjectHelperMixin):
       # Files belonging to this package should not be removed from the catalog
       # as the package might be still present in another catalog.
       sqo_srv4_in_cat.destroySelf()
-    except sqlobject.dberrors.SQLObjectNotFound, e:
+    except sqlobject.main.SQLObjectNotFound, e:
       logging.warning(e)
 
 
