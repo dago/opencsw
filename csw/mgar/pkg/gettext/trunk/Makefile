@@ -52,22 +52,6 @@ SPKG_DESC_CSWlibintl8 += GNU locale utilities, libintl.so.8
 SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.so
 
 
-PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0\.0\.0)
-PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0(\.\d+)*)
-
-
-
-
-
-
-PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so)
-PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so(\.\d+)*)
-SPKG_DESC_CSWlibgettextlib0-14-1 += GNU locale utilities, libgettextlib-0.14.1.so
-
-
-
-PKGFILES_CSWlibgettextlib0-17 += $(call baseisadirs,$(libdir),libgettextlib-0\.17\.so)
-PKGFILES_CSWlibgettextlib0-17 += $(call baseisadirs,$(libdir),libgettextlib-0\.17\.so(\.\d+)*)
 
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWncurses
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWiconv
@@ -105,7 +89,6 @@ RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextsrc0-18-1
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextlib0-18-1
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextpo0
 
-
 PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so)
 PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so(\.\d+)*)
 PKGFILES_CSWlibgettextpo0 += $(call baseisadirs,$(libdir),libgettextpo\.so\.0\.4\.0)
@@ -124,6 +107,13 @@ PKGFILES_CSWlibintl8 += $(call baseisadirs,$(libdir),libintl\.so\.8\.1\.1)
 PKGFILES_CSWlibintl8 += $(call baseisadirs,$(libdir),libintl\.so\.8(\.\d+)*)
 PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so)
 PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so(\.\d+)*)
+PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0\.0\.0)
+PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0(\.\d+)*)
+PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so)
+PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so(\.\d+)*)
+SPKG_DESC_CSWlibgettextlib0-14-1 += GNU locale utilities, libgettextlib-0.14.1.so
+PKGFILES_CSWlibgettextlib0-17 += $(call baseisadirs,$(libdir),libgettextlib-0\.17\.so)
+PKGFILES_CSWlibgettextlib0-17 += $(call baseisadirs,$(libdir),libgettextlib-0\.17\.so(\.\d+)*)
 PKGFILES_CSWggettext-dev += /opt/csw/lib/libasprintf.so
 PKGFILES_CSWggettext-dev += /opt/csw/lib/libgettextlib.so
 PKGFILES_CSWggettext-dev += /opt/csw/lib/libgettextpo.so
