@@ -51,6 +51,48 @@ class Srv4Uploader(object):
             % parsed_basename["vendortag"])
       self._UploadFile(filename)
 
+  def Remove(self):
+    for filename in self.filenames:
+      self._RemoveFile(filename)
+
+  def _RemoveFile(self, filename):
+    md5_sum = self._GetFileMd5sum(filename)
+    file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
+    osrel = file_metadata['osrel']
+    arch = file_metadata['arch']
+    self._IterateOverCatalogs(
+        filename, file_metadata,
+        arch, osrel, self._RemoveFromCatalog)
+
+  def _RemoveFromCatalog(self, filename, arch, osrel, file_metadata):
+    md5_sum = self._GetFileMd5sum(filename)
+    basename = os.path.basename(filename)
+    parsed_basename = opencsw.ParsePackageFileName(basename)
+    url = (
+        "%scatalogs/unstable/%s/%s/%s/"
+        % (BASE_URL, arch, osrel, md5_sum))
+    logging.debug("DELETE @ URL: %s %s", type(url), url)
+    c = pycurl.Curl()
+    d = StringIO()
+    h = StringIO()
+    c.setopt(pycurl.URL, str(url))
+    c.setopt(pycurl.CUSTOMREQUEST, "DELETE")
+    c.setopt(pycurl.WRITEFUNCTION, d.write)
+    c.setopt(pycurl.HEADERFUNCTION, h.write)
+    c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
+    if self.debug:
+      c.setopt(c.VERBOSE, 1)
+    c.perform()
+    http_code = c.getinfo(pycurl.HTTP_CODE)
+    logging.debug(
+        "DELETE curl getinfo: %s %s %s",
+        type(http_code),
+        http_code,
+        c.getinfo(pycurl.EFFECTIVE_URL))
+    c.close()
+    if http_code >= 400 and http_code <= 499:
+      raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
+
   def _GetFileMd5sum(self, filename):
     if filename not in self.md5_by_filename:
       logging.debug("_GetFileMd5sum(%s): Reading the file", filename)
@@ -60,6 +102,20 @@ class Srv4Uploader(object):
         md5_sum = hash.hexdigest()
         self.md5_by_filename[filename] = md5_sum
     return self.md5_by_filename[filename]
+
+  def _IterateOverCatalogs(self, filename, file_metadata, arch, osrel, callback):
+    # Implementing backward compatibility.  A package for SunOS5.x is also
+    # inserted into SunOS5.(x+n) for n=(0, 1, ...)
+    for idx, known_osrel in enumerate(common_constants.OS_RELS):
+      if osrel == known_osrel:
+        osrels = common_constants.OS_RELS[idx:]
+    if arch == 'all':
+      archs = ('sparc', 'i386')
+    else:
+      archs = (arch,)
+    for arch in archs:
+      for osrel in osrels:
+        callback(filename, arch, osrel, file_metadata)
 
   def _UploadFile(self, filename):
     md5_sum = self._GetFileMd5sum(filename)
@@ -73,18 +129,9 @@ class Srv4Uploader(object):
     logging.debug("file_metadata %s", repr(file_metadata))
     osrel = file_metadata['osrel']
     arch = file_metadata['arch']
-    # Implementing backward compatibility.  A package for SunOS5.x is also
-    # inserted into SunOS5.(x+n) for n=(0, 1, ...)
-    for idx, known_osrel in enumerate(common_constants.OS_RELS):
-      if osrel == known_osrel:
-        osrels = common_constants.OS_RELS[idx:]
-    if arch == 'all':
-      archs = ('sparc', 'i386')
-    else:
-      archs = (arch,)
-    for arch in archs:
-      for osrel in osrels:
-        self._InsertIntoCatalog(filename, arch, osrel, file_metadata)
+    self._IterateOverCatalogs(
+        filename, file_metadata,
+        arch, osrel, self._InsertIntoCatalog)
 
   def _InsertIntoCatalog(self, filename, arch, osrel, file_metadata):
     logging.info(
@@ -204,6 +251,9 @@ if __name__ == '__main__':
   parser.add_option("-d", "--debug",
       dest="debug",
       default=False, action="store_true")
+  parser.add_option("--remove",
+      dest="remove",
+      default=False, action="store_true")
   options, args = parser.parse_args()
   print "args:", args
   if options.debug:
@@ -211,4 +261,7 @@ if __name__ == '__main__':
   else:
     logging.basicConfig(level=logging.INFO)
   uploader = Srv4Uploader(args, debug=options.debug)
-  uploader.Upload()
+  if options.remove:
+    uploader.Remove()
+  else:
+    uploader.Upload()
