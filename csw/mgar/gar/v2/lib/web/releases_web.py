@@ -10,10 +10,12 @@ from lib.python import configuration
 from lib.python import pkgdb
 from lib.python import checkpkg_lib
 from lib.python import package_stats
+from lib.python import opencsw
 import datetime
 import os
 import os.path
 import hashlib
+import logging
 
 urls = (
   r'/', 'Index',
@@ -112,6 +114,7 @@ class Srv4CatalogAssignment(object):
     sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
     srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+    logging.warning("Srv4CatalogAssignment::GET srv4: %s", srv4.basename)
     srv4_in_c = models.Srv4FileInCatalog.selectBy(
         osrel=sqo_osrel,
         arch=sqo_arch,
@@ -221,4 +224,5 @@ app = web.application(urls, globals(), autoreload=False)
 main = app.wsgifunc()
 
 if __name__ == "__main__":
+  logging.basicConfig(level=logging.INFO)
   app.run()
