@@ -34,6 +34,10 @@ class PackageCheckError(Error):
   """A problem with the package."""
 
 
+class DataError(Error):
+  """Unexpected data found."""
+
+
 class Srv4Uploader(object):
 
   def __init__(self, filenames, debug=False):
@@ -127,6 +131,8 @@ class Srv4Uploader(object):
       self._PostFile(filename)
     file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
     logging.debug("file_metadata %s", repr(file_metadata))
+    if not file_metadata:
+      raise DataError("file_metadata is empty: %s" % repr(file_metadata))
     osrel = file_metadata['osrel']
     arch = file_metadata['arch']
     self._IterateOverCatalogs(
@@ -210,6 +216,8 @@ class Srv4Uploader(object):
     metadata = None
     if successful:
       metadata = json.loads(d.getvalue())
+    else:
+      logging.info("Data for %s not found" % repr(md5_sum))
     return successful, metadata
 
   def _PostFile(self, filename):
