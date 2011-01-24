@@ -770,7 +770,7 @@ validateplatform:
 	$(if $(strip $(foreach P,$(PACKAGING_PLATFORMS),$(PACKAGING_HOST_$P))),\
 	  $(if $(filter $(THISHOST),$(foreach P,$(PACKAGING_PLATFORMS),$(PACKAGING_HOST_$P))),\
 	    @$(MAKECOOKIE),\
-		$(warning *** You are building this package on a non-requested platform host '$(THISHOST)'. The follow platforms were requested:)\
+		$(warning *** You are building this package on a non-requested platform host '$(THISHOST)'. The following platforms were requested:)\
 		$(foreach P,$(PACKAGING_PLATFORMS),\
 			$(warning *** - $P $(if $(PACKAGING_HOST_$P),to be build on host '$(PACKAGING_HOST_$P)',with no suitable host available))\
 		)\
