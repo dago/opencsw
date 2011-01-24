@@ -207,11 +207,6 @@ class Srv4Uploader(object):
         http_code,
         c.getinfo(pycurl.EFFECTIVE_URL))
     c.close()
-    if self.debug:
-      logging.debug("*** Headers")
-      logging.debug(h.getvalue())
-      logging.debug("*** Data")
-      logging.debug(d.getvalue())
     successful = http_code >= 200 and http_code <= 299
     metadata = None
     if successful:
