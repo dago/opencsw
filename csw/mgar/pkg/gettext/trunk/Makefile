@@ -7,38 +7,133 @@ define BLURB
 	GNU gettext utilities are a set of tools that provides a framework to help other GNU packages produce multi-lingual messages
 endef
 
-PACKAGES += CSWggettext CSWggettextdoc
-
+PACKAGES += CSWggettext
+PACKAGES += CSWggettextdoc
 PACKAGES += CSWlibasprintf0
-CATALOGNAME_CSWlibasprintf0 = libasprintf0
-PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0\.0\.0)
-PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0(\.\d+)*)
-SPKG_DESC_CSWlibasprintf0 += GNU locale utilities, libasprintf.so.0
+PACKAGES += CSWlibgettextlib0-14-1
+PACKAGES += CSWlibgettextlib0-17
+PACKAGES += CSWlibgettextlib0-18-1
+PACKAGES += CSWlibgettextpo0
+PACKAGES += CSWlibgettextsrc0-17
+PACKAGES += CSWlibgettextsrc0-18-1
+PACKAGES += CSWlibintl2
+PACKAGES += CSWlibintl3
+PACKAGES += CSWlibintl8
+PACKAGES += CSWlibgettextlib0-18-1
+PACKAGES += CSWggettext-dev
 
+CATALOGNAME_CSWlibasprintf0 = libasprintf0
 CATALOGNAME_CSWggettext = ggettext
 CATALOGNAME_CSWggettext = ggettextdoc
+CATALOGNAME_CSWlibgettextlib0-14-1 = libgettextlib0_14_1
+CATALOGNAME_CSWlibgettextlib0-17 = libgettextlib0_17
+CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
+CATALOGNAME_CSWlibgettextpo0 = libgettextpo0
+CATALOGNAME_CSWlibgettextsrc0-17 = libgettextsrc0_17
+CATALOGNAME_CSWlibgettextsrc0-18-1 = libgettextsrc0_18_1
+CATALOGNAME_CSWlibintl2 = libintl2
+CATALOGNAME_CSWlibintl3 = libintl3
+CATALOGNAME_CSWlibintl8 = libintl8
+CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
+CATALOGNAME_CSWggettext-dev = CSWggettext_dev
+
 SPKG_DESC_CSWggettext = GNU locale utilities
 SPKG_DESC_CSWggettextdoc = GNU locale utility documentation
+SPKG_DESC_CSWlibasprintf0 += GNU locale utilities, libasprintf.so.0
+SPKG_DESC_CSWggettext-dev = GNU locale utilities, development files
+SPKG_DESC_CSWlibgettextlib0-17 += GNU locale utilities, libgettextlib-0.17.so
+SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.so
+SPKG_DESC_CSWlibgettextpo0 += GNU locale utilities, libgettextpo.so.0
+SPKG_DESC_CSWlibgettextsrc0-17 += GNU locale utilities, libgettextsrc-0.17.so
+SPKG_DESC_CSWlibgettextsrc0-18-1 += GNU locale utilities, libgettextsrc-0.18.1.so
+SPKG_DESC_CSWlibintl2 += GNU locale utilities, libintl.so.2
+SPKG_DESC_CSWlibintl3 += GNU locale utilities, libintl.so.3
+SPKG_DESC_CSWlibintl8 += GNU locale utilities, libintl.so.8
+SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.so
 
-PACKAGES += CSWlibgettextlib0-14-1
-CATALOGNAME_CSWlibgettextlib0-14-1 = libgettextlib0_14_1
+
+PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0\.0\.0)
+PKGFILES_CSWlibasprintf0 += $(call baseisadirs,$(libdir),libasprintf\.so\.0(\.\d+)*)
+
+
+
+
+
+
 PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so)
 PKGFILES_CSWlibgettextlib0-14-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.14\.1\.so(\.\d+)*)
 SPKG_DESC_CSWlibgettextlib0-14-1 += GNU locale utilities, libgettextlib-0.14.1.so
 
-PACKAGES += CSWlibgettextlib0-17
-CATALOGNAME_CSWlibgettextlib0-17 = libgettextlib0_17
+
+
 PKGFILES_CSWlibgettextlib0-17 += $(call baseisadirs,$(libdir),libgettextlib-0\.17\.so)
 PKGFILES_CSWlibgettextlib0-17 += $(call baseisadirs,$(libdir),libgettextlib-0\.17\.so(\.\d+)*)
-SPKG_DESC_CSWlibgettextlib0-17 += GNU locale utilities, libgettextlib-0.17.so
-RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-17
 
-PACKAGES += CSWlibgettextlib0-18-1
-CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-14-1 += CSWlibintl3
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-14-1 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWiconv
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-18-1
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-17
+RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-17 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-17 += CSWlibgettextlib0-17
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-17 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibgettextlib0-18-1
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextsrc0-18-1
+RUNTIME_DEP_PKGS_CSWlibintl2 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibintl3 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibintl8 += CSWiconv
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-18-1
+RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibasprintf0
+RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextsrc0-18-1
+RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextlib0-18-1
+RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextpo0
+
+
 PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so)
 PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so(\.\d+)*)
-SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.so
-RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextlib0-18-1
+PKGFILES_CSWlibgettextpo0 += $(call baseisadirs,$(libdir),libgettextpo\.so\.0\.4\.0)
+PKGFILES_CSWlibgettextpo0 += $(call baseisadirs,$(libdir),libgettextpo\.so\.0(\.\d+)*)
+PKGFILES_CSWlibgettextpo0 += $(call baseisadirs,$(libdir),libgettextpo\.so\.0\.5\.1)
+PKGFILES_CSWlibgettextsrc0-17 += $(call baseisadirs,$(libdir),libgettextsrc-0\.17\.so)
+PKGFILES_CSWlibgettextsrc0-17 += $(call baseisadirs,$(libdir),libgettextsrc-0\.17\.so(\.\d+)*)
+PKGFILES_CSWlibgettextsrc0-18-1 += $(call baseisadirs,$(libdir),libgettextsrc-0\.18\.1\.so)
+PKGFILES_CSWlibgettextsrc0-18-1 += $(call baseisadirs,$(libdir),libgettextsrc-0\.18\.1\.so(\.\d+)*)
+PKGFILES_CSWlibintl2 += $(call baseisadirs,$(libdir),libintl\.so\.2)
+PKGFILES_CSWlibintl2 += $(call baseisadirs,$(libdir),libintl\.so\.2(\.\d+)*)
+PKGFILES_CSWlibintl3 += $(call baseisadirs,$(libdir),libintl\.so\.3)
+PKGFILES_CSWlibintl3 += $(call baseisadirs,$(libdir),libintl\.so\.3(\.\d+)*)
+PKGFILES_CSWlibintl8 += $(call baseisadirs,$(libdir),libintl\.so\.8\.0\.2)
+PKGFILES_CSWlibintl8 += $(call baseisadirs,$(libdir),libintl\.so\.8\.1\.1)
+PKGFILES_CSWlibintl8 += $(call baseisadirs,$(libdir),libintl\.so\.8(\.\d+)*)
+PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so)
+PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so(\.\d+)*)
+PKGFILES_CSWggettext-dev += /opt/csw/lib/libasprintf.so
+PKGFILES_CSWggettext-dev += /opt/csw/lib/libgettextlib.so
+PKGFILES_CSWggettext-dev += /opt/csw/lib/libgettextpo.so
+PKGFILES_CSWggettext-dev += /opt/csw/lib/libgettextsrc.so
+PKGFILES_CSWggettext-dev += /opt/csw/lib/libintl.so
+PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libasprintf.so
+PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libgettextlib.so
+PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libgettextpo.so
+PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libgettextsrc.so
+PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libintl.so
 
 ARCHALL_CSWggettextdoc = 1
 
