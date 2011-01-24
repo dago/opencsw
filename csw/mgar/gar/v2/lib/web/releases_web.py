@@ -40,6 +40,7 @@ class Index(object):
 
 class Srv4List(object):
   def POST(self):
+    messages = []
     configuration.SetUpSqlobjectConnection()
     x = web.input(srv4_file={})
     # x['srv4_file'].filename
@@ -56,18 +57,21 @@ class Srv4List(object):
     basename = x['basename']
     save_attempt = False
     if declared_md5_sum == data_md5_sum:
-      srv4 = models.Srv4FileStats.selectBy(md5_sum=data_md5_sum).getOne()
-      if srv4.use_to_generate_catalogs:
-        SaveToAllpkgs(basename, x['srv4_file'].value)
-        save_attempt = True
+      save_attempt = True
+      try:
+        srv4 = models.Srv4FileStats.selectBy(md5_sum=data_md5_sum).getOne()
+        if srv4.use_to_generate_catalogs:
+          SaveToAllpkgs(basename, x['srv4_file'].value)
+      except sqlobject.main.SQLObjectNotFound, e:
+        messages.append("File %s not found in the db." % data_md5_sum)
     else:
       save_attempt = False
-    response_data = {
+    messages.append({
         "received_md5": data_md5_sum,
         "declared_md5": declared_md5_sum,
         "save_attempt": save_attempt,
-    }
-    return json.dumps(response_data)
+    })
+    return json.dumps(messages)
 
 
 class Srv4Detail(object):
@@ -185,6 +189,18 @@ class Srv4CatalogAssignment(object):
       })
       web.header('Content-Length', len(response))
       return response
+
+  def DELETE(self, catrel_name, arch_name, osrel_name, md5_sum):
+    configuration.SetUpSqlobjectConnection()
+    try:
+      srv4_to_remove = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+      c = checkpkg_lib.Catalog()
+      c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
+    except (
+        sqlobject.main.SQLObjectNotFound,
+        sqlobject.dberrors.OperationalError), e:
+      # Some better error reporting would be good here.
+      raise web.internalerror()
 
 
 def SaveToAllpkgs(basename, data):
