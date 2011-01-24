@@ -30,6 +30,10 @@ class RestCommunicationError(Error):
   pass
 
 
+class PackageCheckError(Error):
+  """A problem with the package."""
+
+
 class Srv4Uploader(object):
 
   def __init__(self, filenames, debug=False):
@@ -39,6 +43,12 @@ class Srv4Uploader(object):
 
   def Upload(self):
     for filename in self.filenames:
+      parsed_basename = opencsw.ParsePackageFileName(
+          os.path.basename(filename))
+      if parsed_basename["vendortag"] != "CSW":
+        raise PackageCheckError(
+            "Package vendor tag is %s instead of CSW."
+            % parsed_basename["vendortag"])
       self._UploadFile(filename)
 
   def _GetFileMd5sum(self, filename):
@@ -77,12 +87,13 @@ class Srv4Uploader(object):
         self._InsertIntoCatalog(filename, arch, osrel, file_metadata)
 
   def _InsertIntoCatalog(self, filename, arch, osrel, file_metadata):
-    logging.info("_InsertIntoCatalog(%s, %s, %s)", repr(arch), repr(osrel), repr(filename))
+    logging.info(
+        "_InsertIntoCatalog(%s, %s, %s)",
+        repr(arch), repr(osrel), repr(filename))
     md5_sum = self._GetFileMd5sum(filename)
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
     logging.debug("parsed_basename: %s", parsed_basename)
-
     url = (
         "%scatalogs/unstable/%s/%s/%s/"
         % (BASE_URL, arch, osrel, md5_sum))

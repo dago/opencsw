@@ -138,6 +138,11 @@ class Srv4CatalogAssignment(object):
       if arch_name == 'all':
         raise checkpkg_lib.CatalogDatabaseError("Cannot add to 'all' catalog.")
       srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+      parsed_basename = opencsw.ParsePackageFileName(srv4.basename)
+      if parsed_basename["vendortag"] != "CSW":
+        raise checkpkg_lib.CatalogDatabaseError(
+            "Package vendor tag is %s instead of CSW."
+            % parsed_basename["vendortag"])
       if not srv4.registered:
         # Package needs to be registered for releases
         stats = srv4.GetStatsStruct()
