@@ -7,7 +7,7 @@ AP2_BINDIR=$AP2_PREFIX/sbin
 AP2_LIBEXEC=$AP2_PREFIX/libexec
 AP2_CONFDIR=$AP2_PREFIX/etc
 AP2_EXTRADIR=$AP2_CONFDIR/extra
-
+AP2_RUNDIR=$AP2_PREFIX/var/run
 
 
 UPGRADE_CONFIGS="\
@@ -91,6 +91,11 @@ bilbo@example.net
 
 
 EOF
+fi
+
+if [ ! -d "$AP2_RUNDIR" ]; then
+    echo "Creating var/run..."
+    mkdir -p "$AP2_RUNDIR"
 fi
 
 exit 0
