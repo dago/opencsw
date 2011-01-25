@@ -12,7 +12,7 @@ DISTFILES  = $(NAME)-$(VERSION)-source.tar.bz2
 DISTFILES += CSWfirefox.postremove CSWfirefox.postinstall autoconf.mk.diff firefox.diff firefox.dist.bin.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*)
+UFILES_REGEX = \"(\d+(?:\.\d+)*)/
 MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/$(VERSION)/source/
 UPSTREAM_MASTER_SITES = http://releases.mozilla.org/pub/mozilla.org/firefox/releases/
 
