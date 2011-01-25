@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = ddrescue
-VERSION = 1.13
+VERSION = 1.14
 CATEGORIES = utils
 
 DESCRIPTION = A data recovery tool
@@ -11,6 +11,8 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.lz
+
+PATCHFILES += 0001-Use-inttypes.h-instead-of-stdint.h.patch
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.lz
