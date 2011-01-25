@@ -21,7 +21,20 @@ import socket
 BASE_URL = "http://buildfarm.opencsw.org/releases/"
 USAGE = """%prog [ options ] <pkg1> [ <pkg2> [ ... ] ]
 
-Uploads a set of packages to the unstable catalog in opencsw-future."""
+Uploads a set of packages to the unstable catalog in opencsw-future.
+
+- When an ARCH=all package is sent, it's added to both sparc and i386 catalogs
+- When a SunOS5.x package is sent, it's added to catalogs SunOS5.x,
+	SunOS5.(x+1), up to SunOS5.11.
+- If a package update is sent, the tool uses catalogname to identify the
+	package it's supposed to replace
+
+The --remove option affects the same catalogs as the regular use, except that
+it removes assignments of a given package to catalogs, instead of adding them.
+
+For more information, see:
+http://wiki.opencsw.org/automated-release-process#toc0
+"""
 
 class Error(Exception):
   pass
@@ -257,7 +270,8 @@ if __name__ == '__main__':
       default=False, action="store_true")
   parser.add_option("--remove",
       dest="remove",
-      default=False, action="store_true")
+      default=False, action="store_true",
+      help="Remove packages from catalogs instead of adding them")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
