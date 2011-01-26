@@ -304,6 +304,8 @@ class LocalDatabaseManager(CheckpkgDatabaseMixin):
     # Using the same stuff pkgdb is using.
     logging.warning(
         "Refreshing the database.  It may take a long time, please be patient.")
+    logging.warning("If you need a way to make it faster, please see:")
+    logging.warning("http://wiki.opencsw.org/checkpkg#toc5")
     infile_contents = common_constants.DEFAULT_INSTALL_CONTENTS_FILE
     infile_pkginfo = None
     logging.debug("Indexing.")
