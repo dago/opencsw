@@ -22,12 +22,15 @@ urls = (
   r'/maintainers/(\d+)/', 'MaintainerDetail',
   r'/maintainers/(\d+)/checkpkg/', 'MaintainerCheckpkgReport',
   r'/error-tags/', 'ErrorTagList',
-  r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/pkgname-by-filename', 'PkgnameByFilename',
+  r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/pkgname-by-filename',
+      'PkgnameByFilename',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
 )
 
 # render = web.template.render('templates/')
-render = web.template.render('/home/maciej/src/pkgdb_web/templates/')
+# render = web.template.render('/home/maciej/src/pkgdb_web/templates/')
+render = web.template.render('/home/maciej/src/opencsw-git/gar/v2/'
+                             'lib/web/templates/')
 
 def ConnectToDatabase():
   configuration.SetUpSqlobjectConnection()
