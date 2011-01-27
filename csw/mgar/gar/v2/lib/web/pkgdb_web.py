@@ -23,6 +23,7 @@ urls = (
   r'/maintainers/(\d+)/checkpkg/', 'MaintainerCheckpkgReport',
   r'/error-tags/', 'ErrorTagList',
   r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/pkgname-by-filename', 'PkgnameByFilename',
+  r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
 )
 
 # render = web.template.render('templates/')
@@ -169,6 +170,19 @@ class PkgnameByFilename(object):
       web.header('Content-Disposition',
                  'attachment; filename=%s' % send_filename)
       return json.dumps(sorted(pkgs))
+    except sqlobject.main.SQLObjectNotFound, e:
+      raise web.notfound()
+
+
+class RestSrv4Detail(object):
+
+  def GET(self, md5_sum):
+    ConnectToDatabase()
+    try:
+      pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+      mimetype, data_structure = pkg.GetRestRepr()
+      web.header('Content-type', mimetype)
+      return json.dumps(data_structure)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 

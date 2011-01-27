@@ -207,6 +207,26 @@ class Srv4FileStats(sqlobject.SQLObject):
   def GetStatsStruct(self):
     return cPickle.loads(str(self.data_obj.pickle))
 
+  def GetRestRepr(self):
+    mimetype = "application/x-vnd.opencsw.pkg;type=srv4-detail"
+    data = {
+        'catalogname': self.catalogname,
+        'basename': self.basename,
+        'md5_sum': self.md5_sum,
+        'size': self.size,
+        'maintainer_email': self.maintainer.email,
+        'maintainer_full_name': self.maintainer.full_name,
+        'version_string': self.version_string,
+        'arch': self.arch.name,
+        'pkgname': self.pkginst.pkgname,
+        'mtime': unicode(self.mtime),
+        'osrel': self.os_rel.short_name,
+        'rev': self.rev,
+        'filename_arch': self.filename_arch.name,
+        # 'in_catalogs': unicode([unicode(x) for x in self.in_catalogs]),
+    }
+    return mimetype, data
+
 
 class CheckpkgErrorTagMixin(object):
 
