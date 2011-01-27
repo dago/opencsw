@@ -1,0 +1,36 @@
+From d3a8051ba24f6274a0485bd7530190106a8e8b4f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 27 Jan 2011 20:57:27 +0100
+Subject: [PATCH] Need minor tweaks for Solaris
+
+---
+ src/tailor.h |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/src/tailor.h b/src/tailor.h
+index 1421bee..846adcc 100644
+--- a/src/tailor.h
++++ b/src/tailor.h
+@@ -443,6 +443,8 @@
+ #  endif /* !OS2 */
+ # endif	/* !MSDOS && !DJG && !WIN32 */
+ 
++#define __P_(gc_proto) gc_proto
++
+ /*
+ *  Compiler specific macro for prototyping.
+ */
+@@ -578,6 +580,10 @@
+ # endif	/* GCAL_EMAIL */
+ 
+ 
++#ifdef __sun
++/* Needed for close(2) */
++#include <unistd.h>
++#endif
+ 
+ # if USE_RC || defined(GCAL_EMAIL)
+ /* The proper function for a temporary file name according to used target system. */
+-- 
+1.7.3.2
+
