@@ -17,15 +17,34 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # Makefile install permissions patch
 PATCHFILES = perms.diff
 
+PACKAGES = CSWgdbm
+CATALOGNAME_CSWgdbm = gdbm
+SPKG_DESC_CSWgdbm = Legacy package as contents moved to CSWlibgdbm3
+PKGFILES_CSWgdbm = NOFILES
+ARCHALL_CSWgdbm = 1
+
+PACKAGES += CSWlibgdbm3
+CATALOGNAME_CSWlibgdbm3 = libgdbm3
+SPKG_DESC_CSWlibgdbm3 = GDBM share library, libgdbm.so.3
+PKGFILES_CSWlibgdbm3 = $(call baseisadirs,$(libdir),libgdbm\.so\.3(\.\d+)*)
+
+PACKAGES += CSWlibgdbm-dev
+CATALOGNAME_CSWlibgdbm-dev = libgdbm_dev
+SPKG_DESC_CSWlibgdbm-dev = Development Files for libgdbm
+# This is catchall
+RUNTIME_DEP_PKGS_CSWlibgdbm-dev = CSWlibgdbm3
+
+BUILD64 = 1
+CONFIGURE_ARGS = $(DIRPATHS)
+
 # gdbm package has no test suite
 TEST_SCRIPTS =
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
 INSTALL_ROOT = $(DESTDIR)
-export INSTALL_ROOT
-EXTRA_COMMON_EXPORTS = INSTALL_ROOT
-
-BUILD64 = 1
+EXTRA_INSTALL_EXPORTS = INSTALL_ROOT
 
 include gar/category.mk
+
+post-install-modulated:
+	# These are only informational
+	perl -pi -e 's,/usr/local,$(prefix),' $(DESTDIR)$(infodir)/gdbm.info
