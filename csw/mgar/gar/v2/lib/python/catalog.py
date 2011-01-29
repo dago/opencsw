@@ -96,12 +96,12 @@ class OpencswCatalog(object):
             r"(?P<deps>\S+)"
             r"\s+"
             # none
-            r"(?P<none_thing_1>\S+)"
+            r"(?P<category>\S+)"
             # An optional empty field.
             r"("
               r"\s+"
               # none\n'
-              r"(?P<none_thing_2>\S+)"
+              r"(?P<i_deps>\S+)"
             r")?"
             r"$"
         ),
@@ -109,6 +109,14 @@ class OpencswCatalog(object):
     cline_re_list = [re.compile(x) for x in cline_re_str_list]
     matched = False
     d = None
+    def SplitPkgList(pkglist):
+      if not pkglist:
+        pkglist = ()
+      elif pkglist == "none":
+        pkglist = ()
+      else:
+        pkglist = tuple(pkglist.split("|"))
+      return pkglist
     for cline_re in cline_re_list:
       m = cline_re.match(line)
       if m:
@@ -116,6 +124,8 @@ class OpencswCatalog(object):
         matched = True
         if not d:
           raise CatalogLineParseError("Parsed %s data is empty" % repr(line))
+        d["deps"] = SplitPkgList(d["deps"])
+        d["i_deps"] = SplitPkgList(d["i_deps"])
     if not matched:
       raise CatalogLineParseError("No regexes matched %s" % repr(line))
     return d
