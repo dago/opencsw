@@ -101,6 +101,19 @@ class DatabaseConnectionException(Exception):
 # ---------------------------------------------------------------------------------------------------------------------
 #
 #
+class DuplicatePackageException(Exception):
+    """Exception raised when an error occur while connecting to the database
+    """
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, message):
+        self.message = message
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+#
+#
 class UpstreamUrlRetrievalFailedException(Exception):
     """Exception raised when an unsuported protocol is specified in the upstream url
     """
@@ -179,6 +192,11 @@ class CommandLineParser(object):
         self.optionParser.add_option("-t", "--target-version", help="Package target version", action="store", dest="target_version")
         self.optionParser.add_option("-u", "--upstream-url", help="Upstream version page url", action="store", dest="upstream_url")
 
+        # Option used for reporting uwatch result
+        self.optionParser.add_option("-E", "--uwatch-error", help="Flag used to report a uwatch error", action="store_true", dest="uwatch_error")
+        self.optionParser.add_option("-D", "--uwatch-deactivated", help="Flag used to report a uwatch error", action="store_true", dest="uwatch_deactivated")
+        self.optionParser.add_option("-R", "--uwatch-pkg-root", help="Defines the uwatch package root working directory", action="store", dest="uwatch_pkg_root")
+
         # Option used for storing version information in the database
         self.optionParser.add_option("-g", "--gar-version", help="Gar version of the package", action="store", dest="gar_version")
         self.optionParser.add_option("-w", "--upstream-version", help="Upstream version of the package", action="store", dest="upstream_version")
@@ -247,6 +265,11 @@ class UwatchConfiguration(object):
             except Config.NoOptionError:
                 self._database_password = None
 
+            # Read the package root working dir from the config file            
+            try:
+                self._uwatch_pkg_root = fileParser.get("main", "uwatch-pkg-root")
+            except Config.NoOptionError:
+                self._uwatch_pkg_root = None
 
         # This member variable is a flag which defines the status of the verbose mode (True : activated)
         if args.verbose != None:
@@ -343,12 +366,31 @@ class UwatchConfiguration(object):
         if args.database_password != None:
             self._database_password = args.database_password
 
+        # This member variable defines the uwatch activation status
+        if args.uwatch_deactivated != None:
+            self._uwatch_deactivated = True
+        else:
+            self._uwatch_deactivated = False
+
+        # This member variable defines the uwatch last report result
+        if args.uwatch_error != None:
+            self._uwatch_error = True
+        else:
+            self._uwatch_error = False
+
+        # This member variable defines the uwatch last report result
+        if args.uwatch_pkg_root != None:
+            self._uwatch_pkg_root = args.uwatch_pkg_root
+
     # -----------------------------------------------------------------------------------------------------------------
 
     def __init__(self):
 
         # Initialize all variables to None. Even if useless, the purpose of this to keep up to date the list
         self._verbose = None
+        self._uwatch_deactivated = False
+        self._uwatch_error = False
+        self._uwatch_pkg_root = None
         self._current_version = None
         self._current_revision = ""
         self._regexp = None
@@ -420,7 +462,10 @@ class UwatchConfiguration(object):
     # -----------------------------------------------------------------------------------------------------------------
 
     def getGarPath(self):
-        return self._gar_path
+        if self.getUwatchPkgRoot():
+            return self._gar_path.replace(self.getUwatchPkgRoot(), "")
+        else:
+            return self._gar_path
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -456,6 +501,21 @@ class UwatchConfiguration(object):
 
     def getDatabasePassword(self):
         return self._database_password
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getUwatchError(self):
+        return self._uwatch_error
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getUwatchDeactivated(self):
+        return self._uwatch_deactivated
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getUwatchPkgRoot(self):
+        return self._uwatch_pkg_root
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -528,13 +588,18 @@ class UpstreamWatchCommand(AbstractCommand):
         # an elements can be a string or a number
         # at each step we extract the next elements of the two version strings and compare them
 
+        if isinstance(version1, str) == False:
+            print "Version is not a string. Please check environnement variable UFILES_REGEX"
+            print version1
+
+        if isinstance(version2, str) == False:
+            print "Version is not a string. Please check environnement variable UFILES_REGEX"
+            print version2
+
         # Retrieve the tokens from both version. Use . - , and _ as splitters
     	splittingRegExp = "(?:[\.,_-])"
         tokens1 = re.split(splittingRegExp, version1)
         tokens2 = re.split(splittingRegExp, version2)
-
-        if self.config.getVerbose():
-            print "Comparing " + version1 + " and " + version2
 
         # Iterates the toeksn of version 1, pop tokens one by one and compare to the token at same
         # in version 2
@@ -818,6 +883,9 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
             # Call the method in charge of retrieving upstream content
             content = self.UrlContentRetrieve(self.config.getUpstreamURL())
 
+            listURL = self.config.getUpstreamURL().split(' ')
+            print "Il y a %(num)d url dans la liste" % { 'num' : len(listURL) }
+
             # Search the strings matching the regexp passed through command line arguments
             p = re.compile(self.config.getRegexp())
             matches = p.findall(content)
@@ -825,8 +893,6 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
             # Check if we have found some results
             if len(matches) == 0:
                 raise NoUpstreamVersionFoundException(self.config.getUpstreamURL(), self.config.getRegexp())
-                print "No match found, we should trigger some error since even current version has not been found"
-                return False
             else:
                 # Remove duplicated entries
                 myList = []
@@ -1196,11 +1262,16 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
             cursor = self.conn.cursor(MySQLdb.cursors.DictCursor)
 
             # First retrieve the id_pkg and deletion flag from the database
-            cursor.execute("select * from UWATCH_PKG_VERSION where PKG_GAR_PATH = %s and PKG_CATALOGNAME = %s", \
-                            (self.config.getGarPath(), self.config.getCatalogName() ) )
+            cursor.execute("select * from UWATCH_PKG_VERSION where PKG_CATALOGNAME = %s", (self.config.getCatalogName() ) )
+
+            # if more than one row is found, then report an error
+            if cursor.rowcount > 1:
+                msg = self.config.getCatalogName()
+                raise DuplicatePackageException(msg)
 
             # If rowcount = 0 then the package does not exist. It has to be inserted in the database
             if cursor.rowcount == 0:
+
                 # Insert the package in the package version table
                 cursor.execute("insert into UWATCH_PKG_VERSION (PKG_GAR_PATH, PKG_CATALOGNAME, PKG_NAME, PKG_GAR_VERSION, PKG_LAST_GAR_CHECK_DATE) \
                                 values ( %s , %s , %s , %s , %s )" , (self.config.getGarPath(), self.config.getCatalogName(), \
@@ -1229,55 +1300,53 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                 if self.config.getVerbose() == True:
                     print "Package %(pkg)s has been undeleted" % { 'pkg' : self.config.getCatalogName() }
 
-            # Test if current version is passed
-            if self.config.getCurrentVersion():
-                # In all cases (update or not) we update the last version check according to the argument
-                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_CURRENT_CHECK_DATE = %s  where ID_PKG= %s" , ( self.config.getExecutionDate(), pkg["ID_PKG"] ) )
+            # Test if the package has just been created. If yes the history line for gar version has to be inserted 	 
+            if isNewlyCreatedPackage: 	 
+                cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "gar", self.config.getGarVersion() , self.config.getExecutionDate() ) )
+                
+            # In all cases (update or not) we update the last version check according to the argument
+            cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_DATE = %s , PKG_GAR_PATH = %s where ID_PKG= %s" , ( self.config.getExecutionDate(), self.config.getGarPath() , pkg["ID_PKG"] ) )
+
+            # Test if uwatch deactivated flag is set
+            if self.config.getUwatchDeactivated() == True:
+                # Yes thus package has to be deactivated
+                cursor.execute("update UWATCH_PKG_VERSION set PKG_UWATCH_ACTIVATED='0' where ID_PKG= %s" , ( pkg["ID_PKG"] ) )
+                if self.config.getVerbose() == True:
+                    print "%(pkg) uWatch is deactivated, updating database"  % { 'pkg' : self.config.getCatalogName() }
+            else:
+                cursor.execute("update UWATCH_PKG_VERSION set PKG_UWATCH_ACTIVATED='1' where ID_PKG= %s" , ( pkg["ID_PKG"] ) )
+                # Change execution status only if activated
+                if self.config.getUwatchError() == True:
+                    # Yes thus package has to be updated
+                    cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_STATUS='0' where ID_PKG= %s" , ( pkg["ID_PKG"] ) )
+                    if self.config.getVerbose() == True:
+                        print "%(pkg)s uWatch reported an error, updating database"  % { 'pkg' : self.config.getCatalogName() }
+                else:
+                    cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_STATUS='1' where ID_PKG= %s" , ( pkg["ID_PKG"] ) )
+                    if self.config.getVerbose() == True:
+                        print "%(pkg)s uWatch successfully ran, updating database"  % { 'pkg' : self.config.getCatalogName() }
+
+                # Test if upstream version is passed
+                if self.config.getUpstreamVersion():
+                    # In all cases (update or not) we update the last version check according to the argument
+                    cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_DATE = %s , PKG_GAR_PATH = %s where ID_PKG= %s" , ( self.config.getExecutionDate(), self.config.getGarPath() , pkg["ID_PKG"] ) )
+
+                    # Yes, compare current upstream version from commandline and database
+                    if self.config.getUpstreamVersion() != pkg["PKG_UPSTREAM_VERSION"]:                
+                        # Yes thus package has to be updated
+                        cursor.execute("update UWATCH_PKG_VERSION set PKG_UPSTREAM_VERSION = %s  where ID_PKG= %s" , ( self.config.getUpstreamVersion(), pkg["ID_PKG"] ) )
+                        cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
+                                        values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "upstream", self.config.getUpstreamVersion() , self.config.getExecutionDate() ) )
+
+                        # Output some more information if verbose mode is activated
+                        if self.config.getVerbose() == True:
+                            print "Upgrading %(pkg)s upstream version from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
+                                    'next' : self.config.getUpstreamVersion() , 'current' : pkg["PKG_UPSTREAM_VERSION"] }
+                    else:
+                        # Output some more information if verbose mode is activated
+                        if self.config.getVerbose() == True:
+                            print "%(pkg) GAR version is up to date (%(current)s)" % { 'pkg' : self.config.getCatalogName(), 'current' : self.config.getUpstreamVersion() }         
     
-                # Yes, compare current version from commandline and database
-                if self.config.getCurrentVersion() != pkg["PKG_CURRENT_VERSION"]:                
-                    # Yes thus package has to be updated. In the case of a version change revision is set to empty string.
-                    # This has to be done since if a revision exist and new version of package has no revision. The current value will be false
-                    # If revision is provided it will be updated at next step while checking for revision
-                    cursor.execute("update UWATCH_PKG_VERSION set PKG_CURRENT_VERSION = %s , PKG_CURRENT_REVISION = '' where ID_PKG= %s" , \
-                                    ( self.config.getCurrentVersion(), pkg["ID_PKG"] ) )
-                    cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
-                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "current", self.config.getCurrentVersion() , self.config.getExecutionDate() ) )
-
-                    # Output some more information if verbose mode is activated
-                    if self.config.getVerbose() == True:
-                        print "Upgrading %(pkg)s current version from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
-                                'next' : self.config.getCurrentVersion() , 'current' : pkg["PKG_CURRENT_VERSION"] }
-                
-                    # Yes, compare current revision from commandline and database
-                if self.config.getCurrentRevision() != pkg["PKG_CURRENT_REVISION"]:                
-                    # Yes thus package has to be updated
-                    cursor.execute("update UWATCH_PKG_VERSION set PKG_CURRENT_REVISION = %s  where ID_PKG= %s" , ( self.config.getCurrentRevision(), pkg["ID_PKG"] ) )
-                    cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
-                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "revision", self.config.getCurrentRevision() , self.config.getExecutionDate() ) )
-
-                    # Output some more information if verbose mode is activated
-                    if self.config.getVerbose() == True:
-                        print "Upgrading %(pkg)s current revision from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
-                                'next' : self.config.getCurrentRevision() , 'current' : pkg["PKG_CURRENT_REVISION"] }
-                
-            # Test if upstream version is passed
-            if self.config.getUpstreamVersion():
-                # In all cases (update or not) we update the last version check according to the argument
-                cursor.execute("update UWATCH_PKG_VERSION set PKG_LAST_UPSTREAM_CHECK_DATE = %s  where ID_PKG= %s" , ( self.config.getExecutionDate(), pkg["ID_PKG"] ) )
-
-                # Yes, compare current upstream version from commandline and database
-                if self.config.getUpstreamVersion() != pkg["PKG_UPSTREAM_VERSION"]:                
-                    # Yes thus package has to be updated
-                    cursor.execute("update UWATCH_PKG_VERSION set PKG_UPSTREAM_VERSION = %s  where ID_PKG= %s" , ( self.config.getUpstreamVersion(), pkg["ID_PKG"] ) )
-                    cursor.execute("insert into UWATCH_VERSION_HISTORY ( ID_PKG , HIST_VERSION_TYPE , HIST_VERSION_VALUE , HIST_VERSION_DATE ) \
-                                    values ( %s, %s, %s, %s)" , ( pkg["ID_PKG"], "upstream", self.config.getUpstreamVersion() , self.config.getExecutionDate() ) )
-
-                    # Output some more information if verbose mode is activated
-                    if self.config.getVerbose() == True:
-                        print "Upgrading %(pkg)s upstream version from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
-                                'next' : self.config.getUpstreamVersion() , 'current' : pkg["PKG_UPSTREAM_VERSION"] }
-                
             # Test if gar version is passed (it is mandatory to have a value in database)
             if self.config.getGarVersion():
                 # In all cases (update or not) we update the last version check according to the argument
