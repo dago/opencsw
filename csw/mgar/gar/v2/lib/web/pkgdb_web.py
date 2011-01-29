@@ -22,6 +22,7 @@ urls = (
   r'/maintainers/(\d+)/', 'MaintainerDetail',
   r'/maintainers/(\d+)/checkpkg/', 'MaintainerCheckpkgReport',
   r'/error-tags/', 'ErrorTagList',
+  r'/catalognames/([^/]+)/', 'Catalogname',
   r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
@@ -73,6 +74,18 @@ class Srv4Detail(object):
           tags_and_catalogs.append((osrel, arch, catrel, tags))
       return render.Srv4Detail(pkg, overrides, tags_by_cat, all_tags,
           tags_and_catalogs)
+    except sqlobject.main.SQLObjectNotFound, e:
+      raise web.notfound()
+
+
+class Catalogname(object):
+  def GET(self, catalogname):
+    ConnectToDatabase()
+    try:
+      pkgs = models.Srv4FileStats.selectBy(
+          catalogname=catalogname,
+          registered=True).orderBy('mtime')
+      return render.Catalogname(catalogname, pkgs)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
