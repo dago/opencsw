@@ -2,7 +2,7 @@
 # svn co -r 9999 https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 gar
 
 NAME = pkgutil
-VERSION = 2.2
+VERSION = 2.3b1
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -37,14 +37,7 @@ CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWcswpkgloghooks
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWgnupg
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpkgutil
-CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|etc/opt/csw
-CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw
-CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/bin
-CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/etc
-CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share
-CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share/doc
-CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|opt/csw/share/man
-CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path|var/opt/csw
+CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path
 
 PACKAGES = CSWpkgutil CSWpkgutilplus
 
@@ -103,7 +96,8 @@ install-custom:
 	@pod2man --section=1 $(WORKSRC)/bldcat > $(DESTDIR)$(mandir)/man1/bldcat.1
 	@pod2man --section=1 $(WORKSRC)/chkcat > $(DESTDIR)$(mandir)/man1/chkcat.1
 	@chmod 444 $(DESTDIR)$(mandir)/man1/*
+	@ginstall -m 755 -d $(DESTDIR)/opt/csw/var/$(NAME)
+	@ginstall -m 644 $(WORKSRC)/admin $(DESTDIR)/opt/csw/var/$(NAME)/admin.CSW
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(NAME)/packages
 	@ginstall -m 755 -d $(DESTDIR)/var/opt/csw/$(NAME)/pkgask
-	@ginstall -m 644 $(WORKSRC)/admin $(DESTDIR)/var/opt/csw/$(NAME)/admin.CSW
 	@$(MAKECOOKIE)
