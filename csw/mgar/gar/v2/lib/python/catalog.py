@@ -174,8 +174,14 @@ class CatalogComparator(object):
 
   def GetCatalogDiff(self, cat_a, cat_b):
     """Returns a difference between two catalogs."""
-    bc_a = cat_a.GetDataByCatalogname()
-    bc_b = cat_b.GetDataByCatalogname()
+    if type(cat_a) == dict:
+      bc_a = cat_a
+    else:
+      bc_a = cat_a.GetDataByCatalogname()
+    if type(cat_b) == dict:
+      bc_b = cat_b
+    else:
+      bc_b = cat_b.GetDataByCatalogname()
     cn_a = set(bc_a)
     cn_b = set(bc_b)
     new_catalognames = cn_b.difference(cn_a)

@@ -25,6 +25,19 @@ CATALOG_LINE_3 = (
         '145351cf6186fdcadcd169b66387f72f 214091 '
         'CSWcommon|CSWlibevent none none\n')
 
+PKG_STRUCT_1 = {
+    'category': 'none',
+    'i_deps': (),
+    'pkgname': 'CSWsyslogng',
+    'md5sum': 'cfe40c06e994f6e8d3b191396d0365cb',
+    'version': '3.0.4,REV=2009.08.30',
+    'deps': ('CSWgcc4corert', 'CSWeventlog', 'CSWosslrt', 'CSWzlib',
+      'CSWpcrert', 'CSWggettextrt', 'CSWglib2', 'CSWtcpwrap',
+      'CSWcswclassutils', 'CSWcommon'),
+    'file_basename': 'syslog_ng-3.0.4,REV=2009.08.30-SunOS5.8-i386-CSW.pkg.gz',
+    'size': '137550',
+    'catalogname': 'syslog_ng'}
+
 
 
 class OpencswCatalogUnitTest(unittest.TestCase):
@@ -44,20 +57,9 @@ class OpencswCatalogUnitTest(unittest.TestCase):
     self.assertEquals(expected, parsed)
 
   def testGetDataByCatalogname(self):
-    expected = {'syslog_ng': {
-      'category': 'none',
-      'i_deps': (),
-      'pkgname': 'CSWsyslogng',
-      'md5sum': 'cfe40c06e994f6e8d3b191396d0365cb',
-      'version': '3.0.4,REV=2009.08.30',
-      'deps': ('CSWgcc4corert', 'CSWeventlog', 'CSWosslrt', 'CSWzlib',
-        'CSWpcrert', 'CSWggettextrt', 'CSWglib2', 'CSWtcpwrap',
-        'CSWcswclassutils', 'CSWcommon'),
-      'file_basename': 'syslog_ng-3.0.4,REV=2009.08.30-SunOS5.8-i386-CSW.pkg.gz',
-      'size': '137550',
-      'catalogname': 'syslog_ng'}}
     fd = StringIO(CATALOG_LINE_1)
     oc = catalog.OpencswCatalog(fd)
+    expected = {"syslog_ng": PKG_STRUCT_1}
     self.assertEqual(expected, oc.GetDataByCatalogname())
 
 
