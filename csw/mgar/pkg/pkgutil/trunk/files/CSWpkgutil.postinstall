@@ -2,7 +2,8 @@
 
 ETC1=$PKG_INSTALL_ROOT/opt/csw/etc
 ETC2=$PKG_INSTALL_ROOT/etc/opt/csw
-VAR=$PKG_INSTALL_ROOT/var/opt/csw/pkgutil
+VAR1=$PKG_INSTALL_ROOT/opt/csw/var/pkgutil
+VAR2=$PKG_INSTALL_ROOT/var/opt/csw/pkgutil
 
 echo
 
@@ -20,9 +21,9 @@ else
   echo "/etc/opt/csw/pkgutil.conf already exists, will not copy pkgutil.conf.CSW to it."
 fi
 
-if [ ! -f "$VAR/admin" ]; then
+if [ ! -f "$VAR2/admin" ]; then
   echo "Copying sample admin to /var/opt/csw/pkgutil."
-  cp -p $VAR/admin.CSW $VAR/admin
+  cp -p $VAR1/admin.CSW $VAR2/admin
 else
   echo "/var/opt/csw/pkutil/admin already exists, will not copy admin.CSW to it."
 fi
