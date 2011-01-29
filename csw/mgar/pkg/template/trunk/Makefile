@@ -38,7 +38,8 @@ endef
 SPKG_SOURCEURL =
 ##
 ## Whitespace-separated list of URLs to download the source package from.
-## There are presets: $(SF_MIRRORS), $(GNU_MIRRORS) and $(GOOGLE_MIRROR).
+## There are presets: $(SF_MIRRORS), $(GNU_MIRRORS) and $(GOOGLE_MIRROR),
+## $(PYPI_MIRROR)
 MASTER_SITES =
 ##
 ## SF_PROJ is required if you set $(MASTER_SITES) to $(SF_MIRRORS) and the
