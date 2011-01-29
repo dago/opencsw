@@ -195,7 +195,7 @@ class CatalogImporter(object):
     # - read in the catalog file, and build a md5-filename correspondence
     # data structure.
     logging.debug("Reading the catalog file from disk.")
-    src_catalog = catalog.OpencswCatalog(catalog_file)
+    src_catalog = catalog.OpencswCatalog(open(catalog_file, "rb"))
     catalog_data = src_catalog.GetCatalogData()
     cat_entry_by_md5 = {}
     cat_entry_by_basename = {}

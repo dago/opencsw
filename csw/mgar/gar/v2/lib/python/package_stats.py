@@ -440,7 +440,7 @@ class PackageStatsMixin(object):
 def StatsListFromCatalog(file_name_list, catalog_file_name=None, debug=False):
   packages = [inspective_package.InspectiveCswSrv4File(x, debug) for x in file_name_list]
   if catalog_file_name:
-    catalog_obj = catalog.OpencswCatalog(catalog_file_name)
+    catalog_obj = catalog.OpencswCatalog(open(catalog_file_name, "rb"))
     md5s_by_basename = catalog_obj.GetDataByBasename()
     for pkg in packages:
       basename = os.path.basename(pkg.pkg_path)
