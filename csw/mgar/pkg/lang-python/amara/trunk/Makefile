@@ -8,7 +8,7 @@ CATEGORIES = python
 DESCRIPTION = Library for XML processing in Python
 define BLURB
 endef
-SPKG_SOURCEURL = http://wiki.xml3k.org/Amara2
+SPKG_SOURCEURL = http://pypi.python.org/pypi/Amara
 MASTER_SITES = $(PYPI_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
