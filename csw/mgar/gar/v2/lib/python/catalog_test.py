@@ -14,11 +14,11 @@ class OpencswCatalogUnitTest(unittest.TestCase):
     oc = catalog.OpencswCatalog(None)
     parsed = oc._ParseCatalogLine(line)
     expected = {'catalogname': 'tmux',
-                'deps': 'CSWcommon|CSWlibevent',
+                'deps': ('CSWcommon', 'CSWlibevent'),
                 'file_basename': 'tmux-1.2,REV=2010.05.17-SunOS5.9-sparc-CSW.pkg.gz',
                 'md5sum': '145351cf6186fdcadcd169b66387f72f',
-                'none_thing_1': 'none',
-                'none_thing_2': 'none',
+                'category': 'none',
+                'i_deps': (),
                 'pkgname': 'CSWtmux',
                 'size': '214091',
                 'version': '1.2,REV=2010.05.17'}
