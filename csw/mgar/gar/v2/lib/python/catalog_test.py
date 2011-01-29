@@ -12,7 +12,6 @@ CATALOG_LINE_1 = (
     "cfe40c06e994f6e8d3b191396d0365cb 137550 "
     "CSWgcc4corert|CSWeventlog|CSWosslrt|CSWzlib|CSWpcrert|CSWggettextrt|"
     "CSWglib2|CSWtcpwrap|CSWcswclassutils|CSWcommon none")
-
 CATALOG_LINE_2 = (
     "syslog_ng 3.0.4,REV=2009.10.12 "
     "CSWsyslogng "
@@ -20,17 +19,19 @@ CATALOG_LINE_2 = (
     "a1e9747ac3aa04c0497d2a3a23885995 137367 "
     "CSWcswclassutils|CSWgcc4corert|CSWeventlog|CSWosslrt|CSWzlib|CSWpcrert|"
     "CSWggettextrt|CSWglib2|CSWtcpwrap|CSWcswclassutils|CSWcommon none")
-
-class OpencswCatalogUnitTest(unittest.TestCase):
-
-  def test_ParseCatalogLine_1(self):
-    line = (
+CATALOG_LINE_3 = (
         'tmux 1.2,REV=2010.05.17 CSWtmux '
         'tmux-1.2,REV=2010.05.17-SunOS5.9-sparc-CSW.pkg.gz '
         '145351cf6186fdcadcd169b66387f72f 214091 '
         'CSWcommon|CSWlibevent none none\n')
+
+
+
+class OpencswCatalogUnitTest(unittest.TestCase):
+
+  def test_ParseCatalogLine_1(self):
     oc = catalog.OpencswCatalog(None)
-    parsed = oc._ParseCatalogLine(line)
+    parsed = oc._ParseCatalogLine(CATALOG_LINE_3)
     expected = {'catalogname': 'tmux',
                 'deps': ('CSWcommon', 'CSWlibevent'),
                 'file_basename': 'tmux-1.2,REV=2010.05.17-SunOS5.9-sparc-CSW.pkg.gz',
@@ -58,6 +59,38 @@ class OpencswCatalogUnitTest(unittest.TestCase):
     fd = StringIO(CATALOG_LINE_1)
     oc = catalog.OpencswCatalog(fd)
     self.assertEqual(expected, oc.GetDataByCatalogname())
+
+
+class CatalogComparatorUnitTest(unittest.TestCase):
+
+  def testUpdateOnly(self):
+    oc1 = catalog.OpencswCatalog(StringIO(CATALOG_LINE_1))
+    oc2 = catalog.OpencswCatalog(StringIO(CATALOG_LINE_2))
+    c = catalog.CatalogComparator()
+    new_pkgs, removed_pkgs, updated_pkgs = c.GetCatalogDiff(oc1, oc2)
+    self.assertFalse(new_pkgs)
+    self.assertFalse(removed_pkgs)
+    self.assertTrue("from" in updated_pkgs[0])
+
+  def testAddition(self):
+    oc1 = catalog.OpencswCatalog(StringIO(CATALOG_LINE_1))
+    oc2 = catalog.OpencswCatalog(
+        StringIO(CATALOG_LINE_1 + "\n" + CATALOG_LINE_3))
+    c = catalog.CatalogComparator()
+    new_pkgs, removed_pkgs, updated_pkgs = c.GetCatalogDiff(oc1, oc2)
+    self.assertFalse(removed_pkgs)
+    self.assertFalse(updated_pkgs)
+    self.assertEqual(1, len(new_pkgs))
+
+  def testRemoval(self):
+    oc1 = catalog.OpencswCatalog(
+        StringIO(CATALOG_LINE_1 + "\n" + CATALOG_LINE_3))
+    oc2 = catalog.OpencswCatalog(StringIO(CATALOG_LINE_1))
+    c = catalog.CatalogComparator()
+    new_pkgs, removed_pkgs, updated_pkgs = c.GetCatalogDiff(oc1, oc2)
+    self.assertFalse(new_pkgs)
+    self.assertFalse(updated_pkgs)
+    self.assertEqual(1, len(removed_pkgs))
 
 
 if __name__ == '__main__':
