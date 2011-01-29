@@ -168,3 +168,25 @@ class OpencswCatalog(object):
           logging.warning("Catalog name %s is duplicated!", d["catalogname"])
         self.by_catalogname[d["catalogname"]] = d
     return self.by_catalogname
+
+
+class CatalogComparator(object):
+
+  def GetCatalogDiff(self, cat_a, cat_b):
+    """Returns a difference between two catalogs."""
+    bc_a = cat_a.GetDataByCatalogname()
+    bc_b = cat_b.GetDataByCatalogname()
+    cn_a = set(bc_a)
+    cn_b = set(bc_b)
+    new_catalognames = cn_b.difference(cn_a)
+    removed_catalognames = cn_a.difference(cn_b)
+    same_catalognames = cn_b.intersection(cn_a)
+    # Looking for updated catalognames
+    updated_catalognames = set()
+    for catalogname in same_catalognames:
+      if bc_a[catalogname]["version"] != bc_b[catalogname]["version"]:
+        updated_catalognames.add(catalogname)
+    new_pkgs = [bc_b[x] for x in new_catalognames]
+    removed_pkgs = [bc_a[x] for x in removed_catalognames]
+    updated_pkgs = [{"from": bc_a[x], "to": bc_b[x]} for x in updated_catalognames]
+    return new_pkgs, removed_pkgs, updated_pkgs
