@@ -184,31 +184,33 @@ class CommandLineParser(object):
         self.optionParser = OptionParser()
 
         # Add options to parser
-        self.optionParser.add_option("-V", "--verbose", help="Activate verbose mode", action="store_true", dest="verbose")
-        self.optionParser.add_option("-c", "--current-version", help="Current package version", action="store", dest="current_version")
-        self.optionParser.add_option("-d", "--target-location", help="Target location. This is the directory in which the branch will be created (parent of the branch directory). Default value is ../branches", action="store", dest="target_location")
-        self.optionParser.add_option("-r", "--regexp", help="Version matching regular expression", action="store", dest="regexp")
-        self.optionParser.add_option("-s", "--source-directory", help="Source directory (place from where the build is copied). Default value is current directory", action="store", dest="source_directory")
-        self.optionParser.add_option("-t", "--target-version", help="Package target version", action="store", dest="target_version")
-        self.optionParser.add_option("-u", "--upstream-url", help="Upstream version page url", action="store", dest="upstream_url")
+        self.optionParser.add_option("-V", "--verbose",     help="Activate verbose mode", action="store_true", dest="verbose")
+        self.optionParser.add_option("--current-version",    help="Current package version", action="store", dest="current_version")
+        self.optionParser.add_option("--target-location",    help="Target location. This is the directory in which the branch will be created (parent of the branch directory). Default value is ../branches", action="store", dest="target_location")
+        self.optionParser.add_option("--regexp",            help="Version matching regular expression", action="store", dest="regexp")
+        self.optionParser.add_option("--source-directory",  help="Source directory (place from where the build is copied). Default value is current directory", action="store", dest="source_directory")
+        self.optionParser.add_option("--target-version",    help="Package target version", action="store", dest="target_version")
+        self.optionParser.add_option("--upstream-url",      help="Upstream version page url", action="store", dest="upstream_url")
 
         # Option used for reporting uwatch result
-        self.optionParser.add_option("-E", "--uwatch-error", help="Flag used to report a uwatch error", action="store_true", dest="uwatch_error")
-        self.optionParser.add_option("-D", "--uwatch-deactivated", help="Flag used to report a uwatch error", action="store_true", dest="uwatch_deactivated")
-        self.optionParser.add_option("-R", "--uwatch-pkg-root", help="Defines the uwatch package root working directory", action="store", dest="uwatch_pkg_root")
+        self.optionParser.add_option("--uwatch-error",      help="Flag used to report a uwatch error", action="store_true", dest="uwatch_error")
+        self.optionParser.add_option("--uwatch-output",     help="Flag used to report the uwatch output", action="store", dest="uwatch_output")
+        self.optionParser.add_option("--uwatch-deactivated",help="Flag used to report a uwatch error", action="store_true", dest="uwatch_deactivated")
+        self.optionParser.add_option("--uwatch-pkg-root",   help="Defines the uwatch package root working directory", action="store", dest="uwatch_pkg_root")
 
         # Option used for storing version information in the database
-        self.optionParser.add_option("-g", "--gar-version", help="Gar version of the package", action="store", dest="gar_version")
-        self.optionParser.add_option("-w", "--upstream-version", help="Upstream version of the package", action="store", dest="upstream_version")
-        self.optionParser.add_option("-a", "--gar-path", help="Relative path in svn repository", action="store", dest="gar_path")
-        self.optionParser.add_option("-n", "--catalog-name", help="Catalog name", action="store", dest="catalog_name")
-        self.optionParser.add_option("-p", "--package-name", help="Package name", action="store", dest="package_name")
-        self.optionParser.add_option("-e", "--execution-date", help="Check date to be stored in the database", action="store", dest="execution_date")
+        self.optionParser.add_option("--gar-distfiles",     help="Gar version of the package", action="store", dest="gar_distfiles")
+        self.optionParser.add_option("--gar-version",       help="Gar version of the package", action="store", dest="gar_version")
+        self.optionParser.add_option("--upstream-version",  help="Upstream version of the package", action="store", dest="upstream_version")
+        self.optionParser.add_option("--gar-path",          help="Relative path in svn repository", action="store", dest="gar_path")
+        self.optionParser.add_option("--catalog-name",      help="Catalog name", action="store", dest="catalog_name")
+        self.optionParser.add_option("--package-name",      help="Package name", action="store", dest="package_name")
+        self.optionParser.add_option("--execution-date",    help="Check date to be stored in the database", action="store", dest="execution_date")
 
-        self.optionParser.add_option("-S", "--database-schema", help="Defines the database to use in the connection string", action="store", dest="database_schema")
-        self.optionParser.add_option("-H", "--database-host", help="Defines the database host to use in the connection string", action="store", dest="database_host")
-        self.optionParser.add_option("-U", "--database-user", help="Defines the database user to use in the connection string", action="store", dest="database_user")
-        self.optionParser.add_option("-P", "--database-password", help="Defines the database password to use in the connection string", action="store", dest="database_password")
+        self.optionParser.add_option("--database-schema",   help="Defines the database to use in the connection string", action="store", dest="database_schema")
+        self.optionParser.add_option("--database-host",     help="Defines the database host to use in the connection string", action="store", dest="database_host")
+        self.optionParser.add_option("--database-user",     help="Defines the database user to use in the connection string", action="store", dest="database_user")
+        self.optionParser.add_option("--database-password", help="Defines the database password to use in the connection string", action="store", dest="database_password")
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -382,6 +384,14 @@ class UwatchConfiguration(object):
         if args.uwatch_pkg_root != None:
             self._uwatch_pkg_root = args.uwatch_pkg_root
 
+        # This member variable defines the uwatch last report output
+        if args.uwatch_output != None:
+            self._uwatch_output = args.uwatch_output
+
+        # This member variable defines the gar distfiles
+        if args.gar_distfiles != None:
+            self._gar_distfiles = args.gar_distfiles
+
     # -----------------------------------------------------------------------------------------------------------------
 
     def __init__(self):
@@ -408,6 +418,8 @@ class UwatchConfiguration(object):
         self._database_host = None
         self._database_user = None
         self._database_password = None
+        self._gar_distfiles = None
+        self._uwatch_output = None
 
     # -----------------------------------------------------------------------------------------------------------------
 
@@ -516,6 +528,17 @@ class UwatchConfiguration(object):
 
     def getUwatchPkgRoot(self):
         return self._uwatch_pkg_root
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getGarDistfiles(self):
+        return self._gar_distfiles
+
+    # -----------------------------------------------------------------------------------------------------------------
+
+    def getUwatchOutput(self):
+        return self._uwatch_output
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -1364,6 +1387,11 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
                         print "Upgrading %(pkg)s gar version from %(current)s to %(next)s" % { 'pkg' : self.config.getCatalogName(), \
                                 'next' : self.config.getGarVersion() , 'current' : pkg["PKG_GAR_VERSION"] }
 
+            # Before closing the connection, there is a last thing to do... storing uwatch configuration into the database
+
+            # Yes, compare current gar version from commandline and database
+            cursor.execute("update UWATCH_PKG_VERSION set PKG_GAR_DISTFILES = %s, PKG_UFILES_REGEXP = %s, PKG_UPSTREAM_MASTER_SITES = %s, PKG_UWATCH_LAST_OUTPUT = %s where ID_PKG= %s" , ( self.config.getGarDistfiles(), self.config.getRegexp(), self.config.getUpstreamURL(), self.config.getUwatchOutput(), pkg["ID_PKG"] ) )
+
             # Close the cursor on the database
             cursor.close()
 
@@ -1382,6 +1410,16 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         # Gar path is mandatory
         if self.config.getGarPath() == None:
             print "Error : Gar path is not defined. Please use --gar-path flag, or --help to display help"
+            argsValid = False
+
+        # Gar distfiles is mandatory
+        if self.config.getGarDistfiles() == None:
+            print "Error : Gar distfiles is not defined. Please use --gar-distfiles flag, or --help to display help"
+            argsValid = False
+
+        # Gar distfiles is mandatory
+        if self.config.getUwatchOutput() == None:
+            print "Error : uWatch output is not defined. Please use --uwatch-output flag, or --help to display help"
             argsValid = False
 
         # Catalog name is mandatory
@@ -1423,6 +1461,16 @@ class ReportPackageVersionCommand(UpstreamWatchCommand):
         # Database password is mandatory
         if self.config.getDatabasePassword() == None:
             print "Error : Database password is not defined. Please define the value in the ~/.uwatchrc file, use --database-password flag, or --help to display help"
+            argsValid = False
+
+        # Regexp is mandatory
+        if self.config.getRegexp() == None:
+            print "Error : Regexp is not defined. Please use --regexp flag, or --help to display help"
+            argsValid = False
+
+        # UpstreamURL is mandatory
+        if self.config.getUpstreamURL() == None:
+            print "Error : Upstream version page URL is not defined. Please use --upstream-url flag, or --help to display help"
             argsValid = False
     
         # If arguments are not valid raise an exception
