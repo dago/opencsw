@@ -3,6 +3,7 @@
 
 NAME = pkgutil
 VERSION = 2.3b1
+GARVERSION = $(VERSION)
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
