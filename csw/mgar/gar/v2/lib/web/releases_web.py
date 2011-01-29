@@ -89,6 +89,13 @@ class Srv4Detail(object):
     basename_in_allpkgs = os.path.join(ALLPKGS_DIR, srv4.basename)
     if not os.path.exists(basename_in_allpkgs):
       raise web.notfound()
+    # Verify the hash; the file might already exist with the same filename,
+    # but different content.
+    hash = hashlib.md5()
+    with open(basename_in_allpkgs) as fd:
+      hash.update(fd.read())
+    if not md5_sum == hash.hexdigest():
+      raise web.notfound()
     web.header(
         'Content-type',
         'application/x-vnd.opencsw.pkg;type=srv4-details')
@@ -211,6 +218,11 @@ def SaveToAllpkgs(basename, data):
   target_path = os.path.join(ALLPKGS_DIR, basename)
   fd = None
   try:
+    try:
+      os.unlink(target_path)
+    except OSError, e:
+      # It's okay if we can't unlink the file
+      pass
     fd = os.open(target_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0644)
     os.write(fd, data)
   except IOError, e:
