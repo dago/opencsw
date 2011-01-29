@@ -65,8 +65,8 @@ class OpencswCatalogBuilder(object):
 class OpencswCatalog(object):
   """Represents a catalog file."""
 
-  def __init__(self, file_name):
-    self.file_name = file_name
+  def __init__(self, fd):
+    self.fd = fd
     self.by_basename = None
     self.catalog_data = None
 
@@ -133,8 +133,7 @@ class OpencswCatalog(object):
 
   def GetCatalogData(self):
     if not self.catalog_data:
-      fd = open(self.file_name, "r")
-      self.catalog_data = self._GetCatalogData(fd)
+      self.catalog_data = self._GetCatalogData(self.fd)
     return self.catalog_data
 
   def GetDataByBasename(self):
