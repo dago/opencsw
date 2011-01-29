@@ -68,6 +68,7 @@ class OpencswCatalog(object):
   def __init__(self, fd):
     self.fd = fd
     self.by_basename = None
+    self.by_catalogname = None
     self.catalog_data = None
 
   def _ParseCatalogLine(self, line):
@@ -155,3 +156,15 @@ class OpencswCatalog(object):
           logging.error("%s is missing the file_basename field", d)
         self.by_basename[d["file_basename"]] = d
     return self.by_basename
+
+  def GetDataByCatalogname(self):
+    if not self.by_catalogname:
+      self.by_catalogname = {}
+      cd = self.GetCatalogData()
+      for d in cd:
+        if "catalogname" not in d:
+          logging.error("%s is missing the catalogname field", d)
+        if d["catalogname"] in self.by_catalogname:
+          logging.warning("Catalog name %s is duplicated!", d["catalogname"])
+        self.by_catalogname[d["catalogname"]] = d
+    return self.by_catalogname
