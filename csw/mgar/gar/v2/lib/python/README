@@ -15,6 +15,11 @@ Checks to implement:
 
 
 Development plan for checkpkg:
+- Notify maintainers when their package is available from mirrors
+- Allow maintainers to opt-out from these notifications
+- Add support for the 'overridden' field in the database
+- When adding a package to a catalog, store the time and date of the
+	addition
 - Display stats from each run
 - Shorten the on-screen output, add commands to display override lines
 - Move the set check stats outside of checking functions, remove the special
@@ -60,6 +65,8 @@ sudo aptitude install \
 ===Checkpkg database===
 
 Additional database indexes:
+
+# TODO(maciej): Add them to the models.py
 
 CREATE INDEX srv4_mtime_idx ON srv4_file_stats(mtime);
 CREATE INDEX srv4_md5_idx ON srv4_file_stats(md5_sum);
