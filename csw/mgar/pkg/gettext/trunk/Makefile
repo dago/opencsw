@@ -199,3 +199,7 @@ post-install-isa-amd64:
 	@rm $(INSTALLISADIR)/opt/csw/share/gettext/libintl.jar
 	@( for f in $(FILEDIR)/*.amd64; do gcp $$f $(INSTALLISADIR)/opt/csw/lib/$$(gbasename $$f .amd64); done )
 	$(MAKECOOKIE)
+
+post-merge:
+	@(cd $(PKGROOT)$(docdir); \
+		find . -type f -print0 | xargs -0 perl -pi -e "s#/usr/share#/opt/csw/share#g" )
