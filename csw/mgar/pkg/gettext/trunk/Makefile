@@ -137,6 +137,7 @@ PKGFILES_CSWggettext-dev += /opt/csw/lib/.*libgettextsrc.so
 PKGFILES_CSWggettext-dev += /opt/csw/lib/.*libintl.so
 PKGFILES_CSWggettext-data += /opt/csw/share/locale/.*mo
 PKGFILES_CSWggettextrt += /opt/csw/share/.*ggettextrt.*
+PKGFILES_CSWggettextdoc = $(PKGFILES_DOC)
 
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWggettext-data
@@ -183,8 +184,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 BUILD64 = 1
 NOISAEXEC = 1
 STRIP_LIBTOOL = 1
-
-PKGFILES_CSWggettextdoc = $(PKGFILES_DOC)
 
 #NOTE: gettext tests are sensitive to bash environment variables, make sure
 #      custom paths are prefixed by $PATH, may be better to set aside
