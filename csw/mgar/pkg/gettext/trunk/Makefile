@@ -231,8 +231,13 @@ post-install-isa-amd64:
 	$(MAKECOOKIE)
 
 post-merge:
-	@(cd $(PKGROOT)$(docdir); \
-		find . -type f -print0 | \
+	@(cd $(PKGROOT); \
+		find .$(docdir) .$(datadir)/aclocal -type f -print0 | \
 		xargs -0 perl -pi \
 			-e "s#/usr/share#/opt/csw/share#g;" \
-			-e "s#/usr/local#/opt/csw#g;")
+			-e "s#/usr/local#/opt/csw#g;"; \
+		perl -pi \
+			-e "s#/usr/share#/opt/csw/share#g;" \
+			-e "s#/usr/local#/opt/csw#g;" \
+				.$(bindir)/ggettextize \
+				.$(infodir)/gettext.info; )
