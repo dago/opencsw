@@ -139,7 +139,6 @@ PKGFILES_CSWggettext-data += /opt/csw/share/locale/.*mo
 PKGFILES_CSWggettextrt += /opt/csw/share/.*ggettextrt.*
 
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWggettext
 CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl8
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibgettextpo0
@@ -184,8 +183,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 BUILD64 = 1
 NOISAEXEC = 1
 STRIP_LIBTOOL = 1
-
-RUNTIME_DEP_PKGS_CSWggettextdoc = CSWggettext
 
 PKGFILES_CSWggettextdoc = $(PKGFILES_DOC)
 
