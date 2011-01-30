@@ -127,6 +127,9 @@ PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libgettextsrc.so
 PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libintl.so
 PKGFILES_CSWggettext-data += /opt/csw/share/locale/.*mo
 
+CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWggettext
+
 ARCHALL_CSWggettextdoc = 1
 
 COMPILE_ELISP = 1
