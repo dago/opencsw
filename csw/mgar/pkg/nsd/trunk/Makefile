@@ -1,5 +1,5 @@
 NAME = nsd
-VERSION = 3.2.6
+VERSION = 3.2.7
 CATEGORIES = server
 
 DESCRIPTION = An authoritative only non-recursive name server
