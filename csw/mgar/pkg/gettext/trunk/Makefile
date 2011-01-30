@@ -139,6 +139,8 @@ CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl2
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl3
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibasprintf0
+CHECKPKG_OVERRIDES_CSWlibgettextpo0 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextpo.so.0.4.0
+CHECKPKG_OVERRIDES_CSWlibgettextlib0-17 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextlib-0.17.so
 
 ARCHALL_CSWggettextrt = 1
 ARCHALL_CSWggettext-data = 1
