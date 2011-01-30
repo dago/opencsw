@@ -22,6 +22,7 @@ PACKAGES += CSWlibintl8
 PACKAGES += CSWlibgettextlib0-18-1
 PACKAGES += CSWggettext-dev
 PACKAGES += CSWggettext-data
+PACKAGES += CSWggettextrt
 
 CATALOGNAME_CSWlibasprintf0 = libasprintf0
 CATALOGNAME_CSWggettext = ggettext
@@ -38,6 +39,7 @@ CATALOGNAME_CSWlibintl8 = libintl8
 CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
 CATALOGNAME_CSWggettext-dev = ggettext_dev
 CATALOGNAME_CSWggettext-data = ggettext_data
+CATALOGNAME_CSWggettextrt = ggettextrt
 
 SPKG_DESC_CSWggettext = GNU locale utilities
 SPKG_DESC_CSWggettextdoc = GNU locale utility documentation
@@ -53,6 +55,7 @@ SPKG_DESC_CSWlibintl3 += GNU locale utilities, libintl.so.3
 SPKG_DESC_CSWlibintl8 += GNU locale utilities, libintl.so.8
 SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.so
 SPKG_DESC_CSWggettext-data += GNU locale utilities, translation files
+SPKG_DESC_CSWggettextrt += GNU locale utilities, transitional dependency package
 
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWncurses
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWiconv
@@ -95,6 +98,12 @@ RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibasprintf0
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextsrc0-18-1
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextlib0-18-1
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextpo0
+RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibasprintf0
+RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibgettextpo0
+RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl2
+RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl3
+RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWggettextrt += CSWggettext-data
 
 PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so)
 PKGFILES_CSWlibgettextlib0-18-1 += $(call baseisadirs,$(libdir),libgettextlib-0\.18\.1\.so(\.\d+)*)
@@ -127,6 +136,7 @@ PKGFILES_CSWggettext-dev += /opt/csw/lib/.*libgettextpo.so
 PKGFILES_CSWggettext-dev += /opt/csw/lib/.*libgettextsrc.so
 PKGFILES_CSWggettext-dev += /opt/csw/lib/.*libintl.so
 PKGFILES_CSWggettext-data += /opt/csw/share/locale/.*mo
+PKGFILES_CSWggettextrt += /opt/csw/share/.*ggettextrt.*
 
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWggettext
