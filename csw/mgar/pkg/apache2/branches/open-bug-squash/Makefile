@@ -39,6 +39,7 @@ DISTFILES += CSWapache2.killproc cswapache2
 
 DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
 DISTFILES += CSWap2worker.postinstall CSWap2worker.postremove
+DISTFILES += CSWap2worker.preinstall
 
 # Configuration templates
 DISTFILES += update20to22
@@ -85,7 +86,7 @@ RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-devel  = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2
-RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWapr CSWexpat
+RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWapr CSWexpat CSWap2prefork
 RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWbdb48 CSWapr-util CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
@@ -93,6 +94,7 @@ CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWap2prefork
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 
 # We need this to get bdb48/lib into the runpath

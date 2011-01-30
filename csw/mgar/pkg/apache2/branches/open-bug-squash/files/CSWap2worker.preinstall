@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# The old apache2 packages could potentially leave a dangling
+# sbin/httpd file.  As this would prevent successful delivery of the
+# new packages (alternatives won't instantiate sbin/httpd as a symlink
+# since it exists already), we need to kill sbin/httpd if it exists
+# when CSWapache2 is installed.
+
+HTTPD=$PKG_INSTALL_ROOT/opt/csw/apache2/sbin/httpd
+
+if [ -f "$HTTPD" -a ! -L "$HTTPD" ]; then
+   rm -f "$HTTPD"
+fi
+
+exit 0
