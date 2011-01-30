@@ -140,6 +140,8 @@ CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl2
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl3
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibasprintf0
 
+ARCHALL_CSWggettextrt = 1
+ARCHALL_CSWggettext-data = 1
 ARCHALL_CSWggettextdoc = 1
 
 COMPILE_ELISP = 1
