@@ -216,4 +216,7 @@ post-install-isa-amd64:
 
 post-merge:
 	@(cd $(PKGROOT)$(docdir); \
-		find . -type f -print0 | xargs -0 perl -pi -e "s#/usr/share#/opt/csw/share#g" )
+		find . -type f -print0 | \
+		xargs -0 perl -pi \
+			-e "s#/usr/share#/opt/csw/share#g;" \
+			-e "s#/usr/local#/opt/csw#g;")
