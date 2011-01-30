@@ -35,7 +35,7 @@ CATALOGNAME_CSWlibintl2 = libintl2
 CATALOGNAME_CSWlibintl3 = libintl3
 CATALOGNAME_CSWlibintl8 = libintl8
 CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
-CATALOGNAME_CSWggettext-dev = CSWggettext_dev
+CATALOGNAME_CSWggettext-dev = ggettext_dev
 
 SPKG_DESC_CSWggettext = GNU locale utilities
 SPKG_DESC_CSWggettextdoc = GNU locale utility documentation
