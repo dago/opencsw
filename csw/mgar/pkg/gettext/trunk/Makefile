@@ -137,6 +137,12 @@ PKGFILES_CSWggettextrt += /opt/csw/share/.*ggettextrt.*
 
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWggettext
+CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibgettextpo0
+CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWggettext-data
+CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl2
+CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl3
+CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibasprintf0
 
 ARCHALL_CSWggettextdoc = 1
 
