@@ -1,5 +1,5 @@
 NAME = ldns
-VERSION = 1.6.7
+VERSION = 1.6.8
 CATEGORIES = lib
 
 DESCRIPTION = A library for programs conforming to DNS RFCs and drafts
