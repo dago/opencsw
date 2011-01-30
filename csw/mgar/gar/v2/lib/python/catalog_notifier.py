@@ -45,7 +45,10 @@ Removed packages:
 
 Version change (probably upgrade):
 #for basename in $pkg_data["upgraded_pkg"]
-* $basename
+#for from_basename in $pkg_data["upgraded_pkg"][basename]["from_pkg"]
+- $pkg_data["upgraded_pkg"][basename]["from_pkg"][from_basename]["file_basename"]
+#end for
++ $pkg_data["upgraded_pkg"][basename]["to_pkg"]["file_basename"]
   In catalogs:
 #for catalog in $sorted($pkg_data["upgraded_pkg"][basename]["catalogs"])
   - $catalog[0] $catalog[1] $catalog[2]
@@ -56,7 +59,9 @@ Version change (probably upgrade):
 
 You no longer maintain packages:
 #for basename in $pkg_data["lost_pkg"]
-* $basename
+#for from_basename in $pkg_data["lost_pkg"][basename]["from_pkg"]
+- $pkg_data["lost_pkg"][basename]["from_pkg"][from_basename]["file_basename"]
+#end for
   In catalogs:
 #for catalog in $sorted($pkg_data["lost_pkg"][basename]["catalogs"])
   - $catalog[0] $catalog[1] $catalog[2]

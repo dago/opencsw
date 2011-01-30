@@ -180,6 +180,9 @@ class NotificationFormatterTest(mox.MoxTestBase):
         "catalogs": [("fossil", "amd65", "SolarOS5.12")],
         }}},
       result["jack@example.com"])
+    # print f._RenderForMaintainer(
+    #     result["jack@example.com"], "jack@example.com",
+    #     "http://mirror.example.com")
 
 
 if __name__ == '__main__':
