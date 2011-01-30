@@ -21,6 +21,7 @@ PACKAGES += CSWlibintl3
 PACKAGES += CSWlibintl8
 PACKAGES += CSWlibgettextlib0-18-1
 PACKAGES += CSWggettext-dev
+PACKAGES += CSWggettext-data
 
 CATALOGNAME_CSWlibasprintf0 = libasprintf0
 CATALOGNAME_CSWggettext = ggettext
@@ -36,6 +37,7 @@ CATALOGNAME_CSWlibintl3 = libintl3
 CATALOGNAME_CSWlibintl8 = libintl8
 CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
 CATALOGNAME_CSWggettext-dev = ggettext_dev
+CATALOGNAME_CSWggettext-data = ggettext_data
 
 SPKG_DESC_CSWggettext = GNU locale utilities
 SPKG_DESC_CSWggettextdoc = GNU locale utility documentation
@@ -50,8 +52,7 @@ SPKG_DESC_CSWlibintl2 += GNU locale utilities, libintl.so.2
 SPKG_DESC_CSWlibintl3 += GNU locale utilities, libintl.so.3
 SPKG_DESC_CSWlibintl8 += GNU locale utilities, libintl.so.8
 SPKG_DESC_CSWlibgettextlib0-18-1 += GNU locale utilities, libgettextlib-0.18.1.so
-
-
+SPKG_DESC_CSWggettext-data += GNU locale utilities, translation files
 
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWncurses
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWiconv
@@ -124,6 +125,7 @@ PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libgettextlib.so
 PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libgettextpo.so
 PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libgettextsrc.so
 PKGFILES_CSWggettext-dev += /opt/csw/lib/sparcv9/libintl.so
+PKGFILES_CSWggettext-data += /opt/csw/share/locale/.*mo
 
 ARCHALL_CSWggettextdoc = 1
 
