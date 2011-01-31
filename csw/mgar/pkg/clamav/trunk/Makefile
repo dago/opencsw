@@ -1,5 +1,6 @@
 NAME = clamav
-VERSION = 0.96.5
+#VERSION = 0.96.5
+VERSION = 0.97rc
 #DISTNAME = $(NAME)-devel-latest
 CATEGORIES = apps
 
@@ -13,8 +14,9 @@ define BLURB
 endef
 
 SF_PROJ = clamav
-MASTER_SITES = $(SF_MIRRORS)
+#MASTER_SITES = $(SF_MIRRORS)
 #MASTER_SITES = http://www.clamav.net/snapshot/
+MASTER_SITES = http://www.clamav.net/internal/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 #DISTFILES  = $(NAME)-devel-latest.tar.gz
 
@@ -36,6 +38,7 @@ RUNTIME_DEP_PKGS_CSWlibclam6 = CSWzlib CSWbzip2 CSWiconv
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibltdl7
 INCOMPATIBLE_PKGS_CSWlibclam6 = CSWlibclamav
 
+RUNTIME_DEP_PKGS_CSWlibclam6-devel = CSWlibclam6
 INCOMPATIBLE_PKGS_CSWlibclam6-devel = CSWlibclamav-devel
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -94,9 +97,27 @@ SPKG_SOURCEURL = http://www.clamav.net
 
 TEST_TARGET = check
 
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.7|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=['CSWlibclamav6']
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.7|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=['CSWlibclamunrar6']
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.7|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=['CSWlibclamunrar-iface6']
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/sbin/clamd
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/sbin/clamav-milter
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/README
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/INSTALL.clamav-milter.CSW
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/ChangeLog
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node54.html
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node56.html
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node24.html
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node15.html
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/sigtool
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/clamconf
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/clamscan
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/clamdtop
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/clamdscan
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/clambc
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/bin/freshclam
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/etc/opt/csw/clamd.conf.CSW
+CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/etc/opt/csw/clamav-milter.conf.CSW
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.8|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.8|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.8|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
 
 include gar/category.mk
 
@@ -126,4 +147,5 @@ post-install-modulated:
 	@ginstall -d $(DOCDEST)/html
 	@ginstall -m 644 $(WORKSRC)/docs/html/* $(DOCDEST)/html
 	@chmod 600 $(DESTDIR)$(sysconfdir)/freshclam.conf
+	rm -f $(DESTDIR)/var/opt/csw/$(NAME)/db/*
 	@$(MAKECOOKIE)
