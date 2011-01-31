@@ -536,7 +536,7 @@ def main():
         options.osrel, options.arch, options.catrel)
     res = GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
     for obj in res:
-      print obj.basename, obj.md5_sum
+      print obj.catalogname, obj.basename, obj.md5_sum
   elif command == 'gen-cat':
     catrel = 'unstable'
     if options.catrel != catrel:
