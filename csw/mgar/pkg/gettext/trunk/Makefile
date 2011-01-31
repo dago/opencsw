@@ -172,6 +172,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES += 0001-Use-the-auto-detected-SHELL-to-run-convert-archive.patch
 PATCHFILES += 0002-Update-ltmain.sh-to-prevent-libtool-stripping-runpat.patch
+PATCHFILES += 0003-Patch-around-thread-handling-differences-between-9-a.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
