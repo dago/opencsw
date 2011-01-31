@@ -53,8 +53,13 @@ function print_table_grant {
   local dbname=$2
   local user=$3
   local host=$4
-  echo -n "GRANT SELECT, INSERT, UPDATE, DELETE"
-  echo " ON ${dbname}.${tbl} TO '${user}'@'${host}';"
+  local operations=${5:-}
+  if [[ -z "${operations}" ]]
+  then
+    operations="SELECT, INSERT, UPDATE, DELETE"
+  fi
+  echo -n "GRANT ${operations}"
+  echo " ON ${dbname}.${table} TO '${user}'@'${host}';"
 }
 
 function print_grants {
@@ -77,6 +82,7 @@ function print_grants {
   do
     print_table_grant "${tbl}" "${dbname}" "${maintainer_user}" "${host}"
   done
+  print_table_grant maintainer "${dbname}" "${maintainer_user}" "${host}" "SELECT, INSERT"
   echo "CREATE USER '${admin_user}'@'localhost' IDENTIFIED BY '<fill-me-in>';"
   echo "CREATE USER '${admin_user}'@'${host}' IDENTIFIED BY '<fill-me-in>';"
   echo "CREATE USER '${relmgr_user}'@'${host}' IDENTIFIED BY '<fill-me-in>';"
