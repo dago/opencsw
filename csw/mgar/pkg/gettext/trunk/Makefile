@@ -142,6 +142,7 @@ PKGFILES_CSWggettextdoc = $(PKGFILES_DOC)
 CHECKPKG_OVERRIDES_CSWggettextdoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWggettext += discouraged-path-in-pkgmap|/opt/csw/share/gettext/archive.git.tar.gz
+CHECKPKG_OVERRIDES_CSWggettext += missing-dependency|CSWemacscommon
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibintl8
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWlibgettextpo0
 CHECKPKG_OVERRIDES_CSWggettextrt += surplus-dependency|CSWggettext-data
