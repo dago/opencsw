@@ -142,6 +142,7 @@ CHECKPKG_OVERRIDES_CSWgitcompletion += surplus-dependency|CSWbash
 CHECKPKG_OVERRIDES_CSWgitcompletion += surplus-dependency|CSWbashcmplt
 CHECKPKG_OVERRIDES_CSWgitcompletion += surplus-dependency|CSWgit
 CHECKPKG_OVERRIDES_CSWgitdoc += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgitdoc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgitdevel += discouraged-path-in-pkgmap|/opt/csw/lib/git/libgit.a
 CHECKPKG_OVERRIDES_CSWgitdevel += discouraged-path-in-pkgmap|/opt/csw/lib/git/libxdiff.a
 CHECKPKG_OVERRIDES_CSWgitdevel += surplus-dependency|CSWgit
