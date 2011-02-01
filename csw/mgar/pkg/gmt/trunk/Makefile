@@ -88,6 +88,9 @@ GARCOMPILER = GCC4
 INSTALL_ARGS = install-all
 
 LICENSE = LICENSE.TXT
+
+CHECKPKG_OVERRIDES_CSWgmt-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/gmt/html/GMT_Docs/node257.html
+
 include gar/category.mk
 
 post-install-modulated:
@@ -95,6 +98,3 @@ post-install-modulated:
 	ln -s $(ISA_DEFAULT) $(DESTDIR)/opt/csw/lib/gmt/32
 	ln -s $(ISA_DEFAULT64) $(DESTDIR)/opt/csw/lib/gmt/64
 	@$(MAKECOOKIE)
-
-#CHECKPKG_OVERRIDES_CSWgmt += shared-lib-pkgname-mismatch|sonames=libgmt.so,libgmt_mgg.so,libgmtps.so,libmgd77.so,libpsl.so,libx2sys.so|pkgname=CSWgmt|expected=CSWlibs|
-CHECKPKG_OVERRIDES_CSWgmt-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/gmt/html/GMT_Docs/node257.html
