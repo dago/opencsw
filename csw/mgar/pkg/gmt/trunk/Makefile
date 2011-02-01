@@ -57,6 +57,9 @@ SUNMATH_LIBDIR=/opt/csw/lib/$(MM_LIBDIR)
 libdir_install = $(exec_prefix)/lib/gmt
 EXTRA_LDFLAGS += -R $(libdir)/$(MM_LIBDIR)
 
+## GMT spews a number of directories into share
+datadir = /opt/csw/share/gmt
+
 ## $(GMT_LIBS) gets passed to ./configure as LIBS
 ## src/Makefile doesn't use LDFLAGS so we hijack $(LIBS) to fix the RUNPATH
 ## We could also use LD_OPTS, but that would require reverse-engineering the

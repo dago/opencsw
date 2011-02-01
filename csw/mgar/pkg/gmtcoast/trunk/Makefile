@@ -28,6 +28,9 @@ BUILD_SCRIPTS =
 INSTALL_SCRIPTS = custom
 TEST_SCRIPTS =
 
+# This should match value in gmt/trunk/Makefile
+datadir = /opt/csw/share/gmt
+
 ## The tarballs just dump into the current directory
 WORKSRC = $(WORKDIR)
 
