@@ -19,7 +19,7 @@ PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 
 PACKAGES = CSWlibldns1 CSWlibldnsdevel
 CATALOGNAME_CSWlibldns1 = libldns1
-CATALOGNAME_CSWldnsdevel = libldns_devel
+CATALOGNAME_CSWlibldnsdevel = libldns_devel
 
 SPKG_DESC_CSWlibldns1 = $(DESCRIPTION)
 SPKG_DESC_CSWlibldnsdevel = $(DESCRIPTION) development package
