@@ -53,7 +53,8 @@ SUNMATH_LIBDIR=/opt/csw/lib/$(MM_LIBDIR)
 
 ## Banish the unversioned shared objects to their own tree
 # The merge step moves things into the proper ISA-specific directory
-libdir     = $(exec_prefix)/lib/gmt
+#libdir     = $(exec_prefix)/lib/gmt
+libdir_install = $(exec_prefix)/lib/gmt
 EXTRA_LDFLAGS += -R $(libdir)/$(MM_LIBDIR)
 
 ## $(GMT_LIBS) gets passed to ./configure as LIBS
@@ -95,5 +96,5 @@ post-install-modulated:
 	ln -s $(ISA_DEFAULT64) $(DESTDIR)/opt/csw/lib/gmt/64
 	@$(MAKECOOKIE)
 
-## This package has a number of unversioned private libraries
-CHECKPKG_OVERRIDES_CSWgmt += shared-lib-pkgname-mismatch|sonames=libgmt.so,libgmt_mgg.so,libgmtps.so,libmgd77.so,libpsl.so,libx2sys.so|pkgname=CSWgmt|expected=CSWlibs|
+#CHECKPKG_OVERRIDES_CSWgmt += shared-lib-pkgname-mismatch|sonames=libgmt.so,libgmt_mgg.so,libgmtps.so,libmgd77.so,libpsl.so,libx2sys.so|pkgname=CSWgmt|expected=CSWlibs|
+CHECKPKG_OVERRIDES_CSWgmt-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/gmt/html/GMT_Docs/node257.html
