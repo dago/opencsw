@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = clusterssh
 VERSION = 3.28
 CATEGORIES = net
@@ -13,14 +15,20 @@ SF_PROJ = $(NAME)
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
+PATCHFILES += 0001-Search-opt-csw-bin-instead-of-usr-local.patch
+
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=89139
 UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS  = CSWperl
+RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWpmtk
 RUNTIME_DEP_PKGS += CSWpmx11protocol
 # RUNTIME_DEP_PKGS += CSWossh
+
+CHECKPKG_OVERRIDES_CSWclusterssh += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWclusterssh += surplus-dependency|CSWpmtk
+CHECKPKG_OVERRIDES_CSWclusterssh += surplus-dependency|CSWpmx11protocol
 
 ARCHALL = 1
 
