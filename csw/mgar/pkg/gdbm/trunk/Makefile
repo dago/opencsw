@@ -21,6 +21,7 @@ PACKAGES = CSWgdbm
 CATALOGNAME_CSWgdbm = gdbm
 SPKG_DESC_CSWgdbm = Legacy package as contents moved to CSWlibgdbm3
 PKGFILES_CSWgdbm = NOFILES
+RUNTIME_DEP_PKGS_CSWgdbm = CSWlibgdbm3
 ARCHALL_CSWgdbm = 1
 
 PACKAGES += CSWlibgdbm3
