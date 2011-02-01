@@ -1,0 +1,31 @@
+From 1faa1bf6871dba55a4cbd23f38dec1d190d3edea Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 1 Feb 2011 01:09:40 +0100
+Subject: [PATCH] Search /opt/csw/bin instead of /usr/local
+
+When looking for binaries, search the /opt/csw/bin directory, and not
+/usr/local.
+---
+ src/cssh.pl |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/src/cssh.pl b/src/cssh.pl
+index f714906..98ace0f 100755
+--- a/src/cssh.pl
++++ b/src/cssh.pl
+@@ -317,10 +317,8 @@ sub find_binary($) {
+             /sbin
+             /usr/sbin
+             /usr/bin
+-            /usr/local/bin
+-            /usr/local/sbin
+-            /opt/local/bin
+-            /opt/local/sbin
++            /opt/csw/bin
++            /opt/csw/sbin
+             !
+             )
+         {
+-- 
+1.7.3.2
+
