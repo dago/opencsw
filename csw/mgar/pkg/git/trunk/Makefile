@@ -157,6 +157,7 @@ CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWpmtermreadkey
 CHECKPKG_OVERRIDES_CSWgit += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/git-config.1
 CHECKPKG_OVERRIDES_CSWgit += file-with-bad-content|/usr/share|root/opt/csw/libexec/git-core/git-send-email
 CHECKPKG_OVERRIDES_CSWgit += file-with-bad-content|/usr/share|root/opt/csw/share/gitweb/gitweb.cgi
+CHECKPKG_OVERRIDES_CSWgit += file-with-bad-content|/usr/local|root/opt/csw/libexec/git-core/git-instaweb
 CHECKPKG_OVERRIDES_CSWgitgui += surplus-dependency|CSWtk
 CHECKPKG_OVERRIDES_CSWgitgui += surplus-dependency|CSWgit
 CHECKPKG_OVERRIDES_CSWgitemacs += surplus-dependency|CSWgit
