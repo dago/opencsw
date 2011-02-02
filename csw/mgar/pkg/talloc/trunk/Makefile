@@ -16,7 +16,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES += CSWlibtalloc2
 CATALOGNAME_CSWlibtalloc2 = libtalloc2
 SPKG_DESC_CSWlibtalloc2 = A hierarchical, reference counted memory pool system, libtalloc.so.2
-PKGFILES_CSWlibtalloc2 = $(call baseisadirs,$(libdir),libtalloc\.so\.2(\.\d+)*)
+PKGFILES_CSWlibtalloc2 += $(call baseisadirs,$(libdir),libtalloc\.so\.2(\.\d+)*)
 
 PACKAGES += CSWlibtalloc-dev
 CATALOGNAME_CSWlibtalloc-dev = libtalloc_dev
@@ -25,14 +25,20 @@ RUNTIME_DEP_PKGS_CSWlibtalloc-dev += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibtalloc-dev += CSWpy-talloc
 # PKGFILES is catchall
 
+PACKAGES += CSWlibpytalloc-util2
+CATALOGNAME_CSWlibpytalloc-util2 = libpytalloc_util2
+SPKG_DESC_CSWlibpytalloc-util2 = Python talloc library, libpytalloc-util.so.2
+RUNTIME_DEP_PKGS_CSWlibpytalloc-util2 += CSWlibtalloc2
+RUNTIME_DEP_PKGS_CSWlibpytalloc-util2 += CSWlibpython2-6-1-0
+PKGFILES_CSWlibpytalloc-util2 = $(call baseisadirs,$(libdir),libpytalloc-util\.so\.2(\.\d+)*)
+
 PACKAGES += CSWpy-talloc
 CATALOGNAME_CSWpy-talloc = py_talloc
 SPKG_DESC_CSWpy-talloc = Python Bindings for libtalloc
-PKGFILES_CSWpy-talloc += $(call baseisadirs,$(libdir),libpytalloc-util\.so\.2(\.\d+)*)
 PKGFILES_CSWpy-talloc += $(libdir)/python/.*
 RUNTIME_DEP_PKGS_CSWpy-talloc += CSWlibtalloc2
+RUNTIME_DEP_PKGS_CSWpy-talloc += CSWlibpytalloc-util2
 RUNTIME_DEP_PKGS_CSWpy-talloc += CSWlibpython2-6-1-0
-CHECKPKG_OVERRIDES_CSWpy-talloc += shared-lib-pkgname-mismatch|file=opt/csw/lib/libpytalloc-util.so.2.0.5|soname=libpytalloc-util.so.2|pkgname=CSWpy-talloc|expected=CSWlibpytalloc-util2
 
 PACKAGES += CSWpy-talloc-dev
 CATALOGNAME_CSWpy-talloc-dev = py_talloc_dev
@@ -40,8 +46,9 @@ SPKG_DESC_CSWpy-talloc-dev = Development Files for libtalloc Python Bindings
 PKGFILES_CSWpy-talloc-dev += $(includedir)/pytalloc\.h
 PKGFILES_CSWpy-talloc-dev += $(call baseisadirs,$(libdir),libpytalloc-util\.so)
 PKGFILES_CSWpy-talloc-dev += $(call baseisadirs,$(libdir),pkgconfig/pytalloc-util\.pc)
-RUNTIME_DEP_PKGS_CSWpy-talloc-dev = CSWpython-devel
-RUNTIME_DEP_PKGS_CSWpy-talloc-dev = CSWpy-talloc
+RUNTIME_DEP_PKGS_CSWpy-talloc-dev += CSWpython-devel
+RUNTIME_DEP_PKGS_CSWpy-talloc-dev += CSWpy-talloc
+RUNTIME_DEP_PKGS_CSWpy-talloc-dev += CSWlibpytalloc-util2
 
 VENDOR_URL = http://talloc.samba.org/talloc/doc/html/index.html
 
