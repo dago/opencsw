@@ -1,5 +1,5 @@
 NAME = drill
-VERSION = 1.6.7
+VERSION = 1.6.8
 CATEGORIES = utils
 
 DESCRIPTION = A dig style dnssec aware dns debugging tool
@@ -27,6 +27,8 @@ LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS = CSWlibldns1
 RUNTIME_DEP_PKGS += CSWosslrt
+
+INCOMPATIBLE_PKGS_CSWdrill = CSWdrill
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw
