@@ -257,7 +257,8 @@ def main():
   for email in notifications:
     if options.send_notifications:
       logging.debug("email: %s", repr(email))
-      if email not in whitelist: continue
+      if whitelist and email not in whitelist:
+        continue
       logging.debug("Sending.")
       msg = MIMEText(notifications[email])
       msg["Subject"] = "OpenCSW catalog update report"
