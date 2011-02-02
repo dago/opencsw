@@ -10,6 +10,8 @@ endef
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(DISTNAME).tar.gz
 
+# Use patch until this is fixed:
+#   https://sourceforge.net/tracker/?func=detail&aid=3170673&group_id=116896&atid=676344
 PATCHFILES += 0001-Add-includes-for-va_list-on-Solaris.patch
 
 # File name regex to get notifications about upstream software releases
