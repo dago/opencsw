@@ -17,4 +17,6 @@ PACKAGES = CSWpy-atomixlib
 CATALOGNAME_CSWpy-atomixlib = py_atomixlib
 DEP_PKGS = CSWpy-amara
 CONFIGURE_ARGS = $(DIRPATHS)
+ARCHALL_CSWpy-atomixlib = 1
+CHECKPKG_OVERRIDES_CSWpy-atomixlib += surplus-dependency|CSWpy-amara
 include gar/category.mk
