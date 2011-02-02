@@ -1,0 +1,132 @@
+From 226b1019fd220a305bc3e9f364685c3fb2ff584e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 2 Feb 2011 15:43:26 +0100
+Subject: [PATCH 2/2] Use inttypes if stdint is not available
+
+---
+ src/DownloadResult.h     |    8 +++++++-
+ src/ProgressAwareEntry.h |    9 ++++++++-
+ src/Segment.h            |    9 ++++++++-
+ src/TimeA2.h             |    8 +++++++-
+ src/TransferStat.h       |    8 +++++++-
+ src/common.h             |    8 +++++++-
+ 6 files changed, 44 insertions(+), 6 deletions(-)
+
+diff --git a/src/DownloadResult.h b/src/DownloadResult.h
+index f224750..e62f925 100644
+--- a/src/DownloadResult.h
++++ b/src/DownloadResult.h
+@@ -37,7 +37,13 @@
+ 
+ #include "common.h"
+ 
+-#include <stdint.h>
++#ifdef HAVE_STDINT_H
++#       include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#       include <inttypes.h>
++# endif
++#endif
+ 
+ #include <string>
+ #include <vector>
+diff --git a/src/ProgressAwareEntry.h b/src/ProgressAwareEntry.h
+index 48f0ad0..d658ef1 100644
+--- a/src/ProgressAwareEntry.h
++++ b/src/ProgressAwareEntry.h
+@@ -37,7 +37,14 @@
+ 
+ #include "common.h"
+ 
+-#include <stdint.h>
++#ifdef HAVE_STDINT_H
++#       include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#       include <inttypes.h>
++# endif
++#endif
++
+ #include <unistd.h>
+ 
+ #include "SharedHandle.h"
+diff --git a/src/Segment.h b/src/Segment.h
+index b8f38c9..efc181d 100644
+--- a/src/Segment.h
++++ b/src/Segment.h
+@@ -37,7 +37,14 @@
+ 
+ #include "common.h"
+ 
+-#include <stdint.h>
++#ifdef HAVE_STDINT_H
++#       include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#       include <inttypes.h>
++# endif
++#endif
++
+ #include <string>
+ 
+ #include "SharedHandle.h"
+diff --git a/src/TimeA2.h b/src/TimeA2.h
+index 97302a5..dd2a1fc 100644
+--- a/src/TimeA2.h
++++ b/src/TimeA2.h
+@@ -37,7 +37,13 @@
+ 
+ #include "common.h"
+ 
+-#include <stdint.h>
++#ifdef HAVE_STDINT_H
++#       include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#       include <inttypes.h>
++# endif
++#endif
+ 
+ #include <string>
+ 
+diff --git a/src/TransferStat.h b/src/TransferStat.h
+index b8ffef4..480fccf 100644
+--- a/src/TransferStat.h
++++ b/src/TransferStat.h
+@@ -36,7 +36,13 @@
+ #define D_TRANSFER_STAT_H
+ 
+ #include "common.h"
+-#include <stdint.h>
++#ifdef HAVE_STDINT_H
++#       include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#       include <inttypes.h>
++# endif
++#endif
+ 
+ namespace aria2 {
+ 
+diff --git a/src/common.h b/src/common.h
+index dee2bff..c2b9717 100644
+--- a/src/common.h
++++ b/src/common.h
+@@ -77,6 +77,12 @@ typedef _off_t off_t;
+ // use C99 limit macros
+ #define __STDC_LIMIT_MACROS
+ // included here for compatibility issues with old compiler/libraries.
+-#include <stdint.h>
++#ifdef HAVE_STDINT_H
++#	include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#	include <inttypes.h>
++# endif
++#endif
+ 
+ #endif // D_COMMON_H
+-- 
+1.7.3.2
+
