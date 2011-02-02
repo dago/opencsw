@@ -1,8 +1,8 @@
-NAME = drill
+NAME = ldns_drill
 VERSION = 1.6.8
 CATEGORIES = utils
 
-DESCRIPTION = A dig style dnssec aware dns debugging tool
+DESCRIPTION = A dig style dnssec aware dns debugging tool (ldns)
 define BLURB
   Drill is a tool a la dig from BIND. It was designed with DNSSEC in
   mind and should be a useful debugging/query tool for DNSSEC.
@@ -10,6 +10,8 @@ endef
 
 MASTER_SITES = http://www.nlnetlabs.nl/projects/ldns/
 DISTFILES  = ldns-$(VERSION).tar.gz
+
+PACKAGES = CSWldnsdrill
 
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 
