@@ -1,0 +1,27 @@
+From 3df26d1b1acabc7378025bcec65661a7989fa38e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 2 Feb 2011 16:01:41 +0100
+Subject: [PATCH] Add includes for va_list on Solaris
+
+---
+ libtardy/main.h |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/libtardy/main.h b/libtardy/main.h
+index 9a79536..f29aac1 100644
+--- a/libtardy/main.h
++++ b/libtardy/main.h
+@@ -42,4 +42,10 @@
+ // #define DEBUG
+ //
+ 
++// Make sure Sun Studio knows about va_list
++#ifdef __SUNPRO_CC
++#include <stddef.h>
++#include <stdarg.h>
++#endif 
++
+ #endif // MAIN_H
+-- 
+1.7.3.2
+
