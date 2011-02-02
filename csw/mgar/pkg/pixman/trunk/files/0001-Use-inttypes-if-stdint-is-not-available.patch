@@ -1,0 +1,32 @@
+From 51a0082ec56c17697871d3f08910a435fefefbe2 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 2 Feb 2011 16:17:35 +0100
+Subject: [PATCH] Use inttypes if stdint is not available
+
+---
+ test/lowlevel-blt-bench.c |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
+
+diff --git a/test/lowlevel-blt-bench.c b/test/lowlevel-blt-bench.c
+index f7ebb1f..c3e402f 100644
+--- a/test/lowlevel-blt-bench.c
++++ b/test/lowlevel-blt-bench.c
+@@ -22,7 +22,14 @@
+  * DEALINGS IN THE SOFTWARE.
+  */
+ 
+-#include <stdint.h>
++#ifdef HAVE_STDINT_H
++#       include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#       include <inttypes.h>
++# endif
++#endif
++
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+-- 
+1.7.3.2
+
