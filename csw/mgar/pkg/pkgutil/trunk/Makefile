@@ -52,7 +52,7 @@ RUNTIME_DEP_PKGS_CSWpkgutilplus  = CSWcommon CSWperl CSWgnupg CSWpkgutil CSWcswp
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
 PKGFILES_CSWpkgutilplus += .*chkcat.*
 PKGFILES_CSWpkgutilplus += .*pkgutilplus.*
-PKGFILES_CSWpkgutilplus += .*build_sun_catalog
+PKGFILES_CSWpkgutilplus += .*build_sun_catalog.*
 PKGFILES_CSWpkgutilplus += .*opencsw.py
 PKGFILES_CSWpkgutilplus += .*cswcatalog
 
