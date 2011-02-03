@@ -14,12 +14,15 @@ endef
 MASTER_SITES = http://invisible-island.net/datafiles/release/
 DISTFILES = $(NAME).tar.gz
 
+RUNTIME_DEP_PKGS += CSWncurses
+
 CHECKPKG_OVERRIDES_CSWdialog += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWdialog += missing-dependency|CSWpython
 
 SKIPTEST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-ncurses
 
 include gar/category.mk
 
