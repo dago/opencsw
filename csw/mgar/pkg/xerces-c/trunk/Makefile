@@ -32,16 +32,16 @@ RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWlibxerces-c3-1 += CSWlibicu46
 
-PACKAGES += CSWlibxerces-c-devel
-CATALOGNAME_CSWlibxerces-c-devel = libxerces_c_devel
-SPKG_DESC_CSWlibxerces-c-devel = Development files for Xerces
-RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWlibxerces-c3-1
-RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWcurlrt
-RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWlibidn
-RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWlibcares
-RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibxerces-c-devel += CSWoldaprt
+PACKAGES += CSWlibxerces-c-dev
+CATALOGNAME_CSWlibxerces-c-dev = libxerces_c_dev
+SPKG_DESC_CSWlibxerces-c-dev = Development files for Xerces
+RUNTIME_DEP_PKGS_CSWlibxerces-c-dev += CSWlibxerces-c3-1
+RUNTIME_DEP_PKGS_CSWlibxerces-c-dev += CSWcurlrt
+RUNTIME_DEP_PKGS_CSWlibxerces-c-dev += CSWlibidn
+RUNTIME_DEP_PKGS_CSWlibxerces-c-dev += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibxerces-c-dev += CSWlibcares
+RUNTIME_DEP_PKGS_CSWlibxerces-c-dev += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibxerces-c-dev += CSWoldaprt
 
 PACKAGES += CSWxerces-c
 CATALOGNAME_CSWxerces-c = xerces_c
