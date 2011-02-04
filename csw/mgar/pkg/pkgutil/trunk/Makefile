@@ -35,6 +35,8 @@ DISTFILES += cswcatalog
 
 PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
 
+CHECKPKG_OVERRIDES_CSWpkgutilplus += unidentified-dependency|CSWpmstringapprox
+CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpmstringapprox
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWcswpkgloghooks
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWgnupg
