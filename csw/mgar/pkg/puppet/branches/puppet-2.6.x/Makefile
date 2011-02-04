@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.6.1
+VERSION = 2.6.4
 CATEGORIES = apps
 
 define BLURB
@@ -36,7 +36,7 @@ GARFLAVOR = DBG
 # Disabling SMF support for puppetd.  There are problems with it.  It's a
 # better choice to run it from cron.
 # INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
-INITSMF += /etc$(prefix)/init\.d/cswpuppetmasterd
+INITSMF += $(sysconfdir)/init\.d/cswpuppetmasterd
 USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 
 # Creating a separate package CSWpuppetmaster so that the cswpuppetmaster
@@ -52,7 +52,7 @@ RUNTIME_DEP_PKGS                 += CSWruby
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWpuppet
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWruby
 
-PKGFILES_CSWpuppetmaster  = $(prefix)/etc/init\.d/cswpuppetmasterd
+PKGFILES_CSWpuppetmaster  = $(sysconfdir)/init\.d/cswpuppetmasterd
 PKGFILES_CSWpuppetmaster += $(sbindir)/puppetmasterd
 PKGFILES_CSWpuppetmaster += $(mandir)/man8/puppetmasterd.8
 PKGFILES_CSWpuppetmaster += $(libdir)/.*/puppet/application/puppetmasterd.rb
@@ -84,13 +84,12 @@ install-puppet:
 	ginstall -m 755 -d $(DESTDIR)
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/puppet
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)/puppet/run
-	ginstall -m 755 -d $(DESTDIR)/etc$(prefix)/init.d
-	# $(sysconfdir)/pkg/<pkgname>/crontabs
 	ginstall -m 755 -d $(DESTDIR)$(CRONDIR)
 	ginstall -m 644 \
 		$(FILEDIR)/CSWpuppet.cron.root \
 		$(DESTDIR)$(CRONDIR)/root
-	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)/etc$(prefix)/init.d
+	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)/etc$(prefix)/init.d
 	(cd $(WORKSRC) && \
 	gsed -e "s|/var/puppet|/var/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
