@@ -22,6 +22,8 @@ PACKAGES += CSWlibyaz4
 CATALOGNAME_CSWlibyaz4 = libyaz4
 SPKG_DESC_CSWlibyaz4 = Toolkit for Z39.50/SRW/SRU clients and servers, libyaz.so.4
 PKGFILES_CSWlibyaz4 = $(call baseisadirs,$(libdir),libyaz.*\.so\.4(\.\d+)*)
+# These are always bumped together
+CHECKPKG_OVERRIDES_CSWlibyaz4 += shared-lib-pkgname-mismatch
 RUNTIME_DEP_PKGS_CSWlibyaz4 += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibyaz4 += CSWlibxml2
 RUNTIME_DEP_PKGS_CSWlibyaz4 += CSWgcrypt
@@ -40,6 +42,11 @@ PKGFILES_CSWlibyaz-devel += $(sharedstatedir)/yaz/.*
 PKGFILES_CSWlibyaz-devel += $(docdir)/yaz/.*
 PKGFILES_CSWlibyaz-devel += $(mandir)/man7/.*
 RUNTIME_DEP_PKGS_CSWlibyaz-devel += CSWlibyaz4
+# These are default locations for docbook files, they can be specified with a --with-* option
+CHECKPKG_OVERRIDES_CSWlibyaz-devel += file-with-bad-content|/usr/local|root/opt/csw/share/aclocal/yaz.m4
+CHECKPKG_OVERRIDES_CSWlibyaz-devel += file-with-bad-content|/usr/share|root/opt/csw/share/aclocal/yaz.m4
+# These are the default on configuration
+CHECKPKG_OVERRIDES_CSWlibyaz-devel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/yaz/installation.unix.html
 
 # %{_bindir}/yaz-config
 # %{_bindir}/yaz-asncomp
@@ -76,19 +83,16 @@ NOISAEXEC = 1
 MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 MERGE_DIRS_isa-extra = $(libdir)
 
-# This is a bug in checkpkg
-CHECKPKG_OVERRIDES_CSWlibyaz4 += shared-lib-pkgname-mismatch
-CHECKPKG_OVERRIDES_CSWlibyaz-devel += wrong-docdir|expected=/opt/csw/shared/doc/libyaz_devel/...|in-package=/opt/csw/share/doc/yaz/license.html
-
-# These can go away after CSWlibicu46 has been officially released
-CHECKPKG_OVERRIDES_CSWlibyaz4 += soname-not-found
-CHECKPKG_OVERRIDES_CSWlibyaz4 += unidentified-dependency|CSWlibicu46
-CHECKPKG_OVERRIDES_CSWlibyaz4 += surplus-dependency|CSWlibicu46
-CHECKPKG_OVERRIDES_CSWyaz-icu += soname-not-found
-CHECKPKG_OVERRIDES_CSWyaz-icu += unidentified-dependency|CSWlibicu46
-CHECKPKG_OVERRIDES_CSWyaz-icu += surplus-dependency|CSWlibicu46
-CHECKPKG_OVERRIDES_CSWyaz += soname-not-found
-CHECKPKG_OVERRIDES_CSWyaz += unidentified-dependency|CSWlibicu46
-CHECKPKG_OVERRIDES_CSWyaz += surplus-dependency|CSWlibicu46
-
 include gar/category.mk
+
+post-extract-modulated:
+	-perl -pi -e 's,/usr/local/share,$(sharedstatedir),;' \
+		$(WORKSRC)/client/client.c \
+		$(WORKSRC)/doc/yaz.7
+	-perl -pi -e 's,/usr/share,$(sharedstatedir),;' \
+		$(WORKSRC)/doc/yaz-asncomp-man.xml
+	-perl -pi -e 's,/usr/share/yaz/etc,$(sysconfdir),;' \
+		$(WORKSRC)/doc/tools.xml
+	-perl -pi -e 's,/usr/local,$(prefix),;' \
+		$(WORKSRC)/doc/yaz-config.1
+	@$(MAKECOOKIE)
