@@ -1,5 +1,5 @@
 NAME = memcached
-VERSION = 1.4.4
+VERSION = 1.4.5
 CATEGORIES = net
 
 DESCRIPTION = Distributed memory object caching system
@@ -12,23 +12,45 @@ endef
 MASTER_SITES = http://memcached.googlecode.com/files/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
+# Use patches until this is applied:
+#   https://github.com/memcached/memcached/pull/3
+PATCHFILES += 0001-Fix-alignment-check-as-84148994-0x05040302.patch
+PATCHFILES += 0002-Take-endianness-into-account-on-alignment-check.patch
+
+PATCHFILES += 0001-Make-sure-to-wait-for-data.patch
+
+# If we enable GIT patching this makes a .git repo in $WORKSRC.
+# Unfortunatly this triggers maintainer mode for t/whitespace.t which
+# then fails because the developer GIT repo contains more things than the
+# distributed release tarball.
+NOGITPATCH = 1
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_SOURCEURL = http://www.danga.com/memcached/
+VENDOR_URL = http://memcached.org/
 
 BUILD_DEP_PKGS = CSWlibevent-devel
-RUNTIME_DEP_PKGS = CSWlibevent
+RUNTIME_DEP_PKGS = CSWlibevent2-0-5
 
-# Solaris 8 Sparc does work, but Solaris 8 x86 has many failed tests due to
-# errors in Solaris 8 itself. For consistency we build from Solaris 9 on for
-# both ISAs.
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+# Make special version for Solaris 10 with enabled DTrace
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
+# SASL is not 64 bit yet!
+#CONFIGURE_ARGS += --enable-sasl
+#CONFIGURE_ARGS += --enable-sasl-pwdb
 
-SKIPTEST ?= 1
+CONFIGURE_ARGS-sol5.10 += --enable-dtrace
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-sol$(GAROSREL))
+
+# From Trond Norbye:
+# The 101 test is a "bogus" test (it is there to prove that a deadlock is in the
+# client and not in the memcached server) and it will suck up all resources on the box...
+#SKIP_TEST_101 = 1
+#EXTRA_TEST_EXPORTS = SKIP_TEST_101
 
 include gar/category.mk
 
