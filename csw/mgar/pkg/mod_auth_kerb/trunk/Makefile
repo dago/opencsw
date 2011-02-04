@@ -15,6 +15,8 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWap2modauthkerb.postinstall
 DISTFILES += CSWap2modauthkerb.preremove
 
+# Apply patch until this is fixed:
+#   https://sourceforge.net/tracker/?func=detail&atid=464524&aid=3172644&group_id=51775
 PATCHFILES += 0001-Fix-install-destination.patch
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
