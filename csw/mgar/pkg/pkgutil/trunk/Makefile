@@ -2,7 +2,7 @@
 # svn co -r 9999 https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 gar
 
 NAME = pkgutil
-VERSION = 2.3b1
+VERSION = 2.3b2
 GARVERSION = $(VERSION)
 CATEGORIES = utils
 
@@ -17,7 +17,8 @@ endef
 # Disable inclusion of CSWcommon by default.
 COMMON_PKG_DEPENDS = 
 
-MASTER_SITES = $(SF_MIRRORS)
+#MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES = http://sourceforge.net/projects/pkgutil/files/pkgutil/2.3/
 DISTFILES  = $(NAME)-$(VERSION).zip
 
 DISTFILES += $(call admfiles,CSWpkgutil,prototype preremove postinstall)
@@ -46,7 +47,8 @@ SPKG_DESC_CSWpkgutil = $(DESCRIPTION)
 SPKG_DESC_CSWpkgutilplus = Extends pkgutil functionality
 
 # Explicitly depend on CSWcommon here since it's not the default
-RUNTIME_DEP_PKGS_CSWpkgutilplus  = CSWcommon CSWperl CSWgnupg CSWpkgutil CSWcswpkgloghooks CSWpython
+RUNTIME_DEP_PKGS_CSWpkgutilplus  = CSWcommon CSWperl CSWgnupg CSWpkgutil
+RUNTIME_DEP_PKGS_CSWpkgutilplus += CSWcswpkgloghooks CSWpython CSWpmstringapprox
 #RUNTIME_DEP_PKGS_CSWpkgutilplus += CSWpmwwwcurl
 
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
