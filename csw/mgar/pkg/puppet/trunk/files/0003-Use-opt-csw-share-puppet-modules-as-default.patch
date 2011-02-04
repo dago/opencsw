@@ -1,0 +1,25 @@
+From b7667135e124a195d33790fcddcc9f2c9d42f638 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 4 Feb 2011 16:32:56 +0100
+Subject: [PATCH] Use /opt/csw/share/puppet/modules as default
+
+---
+ lib/puppet/defaults.rb |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lib/puppet/defaults.rb b/lib/puppet/defaults.rb
+index 4521a59..9912c7b 100644
+--- a/lib/puppet/defaults.rb
++++ b/lib/puppet/defaults.rb
+@@ -421,7 +421,7 @@ module Puppet
+       authorization system for `puppet master`."
+     ],
+     :ca => [true, "Wether the master should function as a certificate authority."],
+-    :modulepath => {:default => "$confdir/modules:/usr/share/puppet/modules",
++    :modulepath => {:default => "$confdir/modules:/opt/csw/share/puppet/modules",
+       :desc => "The search path for modules as a colon-separated list of
+       directories.", :type => :setting }, # We don't want this to be considered a file, since it's multiple files.
+     :ssl_client_header => ["HTTP_X_CLIENT_DN", "The header containing an authenticated
+-- 
+1.7.3.2
+

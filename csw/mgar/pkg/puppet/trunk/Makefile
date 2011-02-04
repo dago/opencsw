@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 0.25.4
+VERSION = 2.6.4
 CATEGORIES = apps
 
 define BLURB
@@ -40,6 +40,7 @@ SPKG_DESC_CSWpuppetmaster = System configuration management tool, server
 RUNTIME_DEP_PKGS                  = CSWfacter
 RUNTIME_DEP_PKGS                 += CSWruby
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWpuppet
+RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWruby
 
 PKGFILES_CSWpuppetmaster  = $(sysconfdir)/init\.d/cswpuppetmasterd
 PKGFILES_CSWpuppetmaster += $(sbindir)/puppetmasterd
@@ -58,6 +59,13 @@ INSTALL_SCRIPTS   = puppet
 
 PATCHFILES  = 0001-pkgutil-support.patch
 PATCHFILES += 0002-Using-the-single-option-of-pkgutil.patch
+PATCHFILES += 0003-Use-opt-csw-share-puppet-modules-as-default.patch
+
+CHECKPKG_OVERRIDES_CSWpuppet += surplus-dependency|CSWfacter
+CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWruby
+# Puppet has hardcoded paths to look at for many OSes, many of which involve
+# /usr/share and /usr/local.
+CHECKPKG_OVERRIDES_CSWpuppet += file-with-bad-content
 
 include gar/category.mk
 
@@ -84,4 +92,7 @@ install-puppet:
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/puppet
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/puppet/cswusergroup
+	( [ -d $(DESTDIR)/var/lib ] && echo "$(DESTDIR)/var/lib" must not exist && false ) || true
+	mkdir -p $(DESTDIR)$(localstatedir)/lib
+	rm $(DESTDIR)$(libdir)/ruby/site_ruby/1.8/puppet/provider/package/yumhelper.py
 	@$(MAKECOOKIE)
