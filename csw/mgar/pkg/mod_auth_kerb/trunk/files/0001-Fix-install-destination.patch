@@ -1,0 +1,37 @@
+From f60dd9c4b6212a72c125f40f4112795ee22c2fe9 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 4 Feb 2011 12:25:23 +0100
+Subject: [PATCH] Fix install destination
+
+---
+ Makefile.in |    2 +-
+ apxs.sh     |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 36f6046..6c1cb62 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -16,7 +16,7 @@ src/mod_auth_kerb.so: src/mod_auth_kerb.c $(SPNEGO_SRCS)
+ 	./apxs.sh "${CPPFLAGS}" "${LDFLAGS}" "${SPNEGO_SRCS}" "${APXS}" "-c" "src/mod_auth_kerb.c"
+ 
+ install:
+-	./apxs.sh "${CPPFLAGS}" "${LDFLAGS}" "${SPNEGO_SRCS}" "${APXS}" "-c -i" "src/mod_auth_kerb.c"
++	./apxs.sh "${CPPFLAGS}" "${LDFLAGS}" "" "${APXS}" "-i -S LIBEXECDIR=$(AP2_LIBEXEC)" "src/mod_auth_kerb.la"
+ 
+ clean:
+ 	for i in . src spnegokrb5; do \
+diff --git a/apxs.sh b/apxs.sh
+index cdb3e65..dfe893a 100755
+--- a/apxs.sh
++++ b/apxs.sh
+@@ -1,5 +1,5 @@
+ #!/bin/sh
+ cppflags=`[ -n "$1" ] && echo $1 | sed -e 's/\([^ ]*\)/-Wc,\1/g'`
+ ldflags=`[ -n "$2"  ] && echo $2 | sed -e 's/\([^ ]*\)/-Wl,\1/g'`
+-ret=eval "$4" $5 $cppflags $ldflags src/mod_auth_kerb.c $3
++ret=eval "$4" $5 $cppflags $ldflags $6 $3
+ exit $ret
+-- 
+1.7.3.2
+
