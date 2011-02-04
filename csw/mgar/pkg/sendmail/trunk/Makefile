@@ -1,10 +1,10 @@
 NAME = sendmail
-VERSION = 8.14.3
+VERSION = 8.14.4
 CATEGORIES = server
 
 DESCRIPTION = Sendmail MTA
 define BLURB
-  XXX anacronism ;-) need text here
+  Sendmail MTA
 endef
 
 INSTALLISADIR = $(WORKROOTDIR)/install-$(GAROSREL)-$(MODULATION)
@@ -14,7 +14,7 @@ COOKIEDIR = $(COOKIEROOTDIR)/$(GAROSREL)-$(MODULATION)
 
 MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 
-MY_CLASSES = CSWsendmail.i.sol8 CSWsendmail.i.sol9 CSWsendmail.i.sol10
+MY_CLASSES = CSWsendmail.i.sol9 CSWsendmail.i.sol10
 
 DISTFILES  = $(NAME).$(VERSION).tar.gz
 DISTFILES += README.CSW sendmail.schema CSWsendmail.postinstall
@@ -29,25 +29,22 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # we require
 PACKAGES = CSWsendmail 
-SPKG_SOURCEURL = http://www.sendmail.org/
+SPKG_SOURCEURL = http://www.sendmail.org
 SPKG_DESC_CSWsendmail = $(DESCRIPTION)
 CATALOGNAME_CSWsendmail = sendmail
 
-RUNTIME_DEP_PKGS_CSWsendmail  = CSWbdb CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap 
+RUNTIME_DEP_PKGS_CSWsendmail  = CSWbdb48 CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap 
 RUNTIME_DEP_PKGS_CSWsendmail += CSWcswclassutils 
 
 PROTOTYPE_FILTER = awk \
-				   '$$$$2 ~/i.sol8/ { next } \
-				    $$$$2 ~/i.sol9/ { next } \
-				    $$$$2 ~/i.sol10/ { next } \
-					$$$$3 ~/\/init\.d\/cswsendmail$$$$/ {$$$$2 = "cswinitsmf"} \
-					$$$$3 ~/sol8\./ { $$$$2 = "sol8" } \
-					$$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
-					$$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
-					{ print } \
-				    END { { print "i i.sol8=CSWsendmail.i.sol8" } \
-					{ print "i i.sol9=CSWsendmail.i.sol9" } \
-					{ print "i i.sol10=CSWsendmail.i.sol10" } } '
+	'$$$$2 ~/i.sol9/ { next } \
+	$$$$2 ~/i.sol10/ { next } \
+	$$$$3 ~/\/init\.d\/cswsendmail$$$$/ {$$$$2 = "cswinitsmf"} \
+	$$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
+	$$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
+	{ print } \
+	END { { print "i i.sol9=CSWsendmail.i.sol9" } \
+	{ print "i i.sol10=CSWsendmail.i.sol10" } }'
 
 ENABLE_CHECK = 0
 
@@ -61,7 +58,8 @@ INSTALL_SCRIPTS     = custom
 EXTRA_MERGE_SCRIPTS = OS
 
 include gar/category.mk
-ADMSCRIPTS = preremove preinstall space depend i.sol8 i.sol9 i.sol10
+
+ADMSCRIPTS = preremove preinstall space depend i.sol9 i.sol10
 
 SOLVER    = sol$(shell uname -r |sed 's/5\.//')
 PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
