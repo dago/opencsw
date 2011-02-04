@@ -1,0 +1,29 @@
+From 393936cffd43bd2070c902f55b88dbde9e4c56f4 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 4 Feb 2011 16:58:41 +0100
+Subject: [PATCH] Make sure to wait for data
+
+---
+ t/binary.t |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/t/binary.t b/t/binary.t
+index 1108b8e..de7555e 100755
+--- a/t/binary.t
++++ b/t/binary.t
+@@ -535,7 +535,11 @@ sub _handle_single_response {
+     my $self = shift;
+     my $myopaque = shift;
+ 
+-    $self->{socket}->recv(my $response, ::MIN_RECV_BYTES);
++    my $response;
++    do {
++      $self->{socket}->recv(my $lresponse, ::MIN_RECV_BYTES);
++      $response .= $lresponse;
++    } while( length($response) < ::MIN_RECV_BYTES );
+     Test::More::is(length($response), ::MIN_RECV_BYTES, "Expected read length");
+ 
+     my ($magic, $cmd, $keylen, $extralen, $datatype, $status, $remaining,
+-- 
+1.7.3.2
+
