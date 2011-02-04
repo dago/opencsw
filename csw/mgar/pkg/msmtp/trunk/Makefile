@@ -39,20 +39,25 @@ RUNTIME_DEP_PKGS_CSWmsmtp += CSWgnutls
 RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgsasl7
 RUNTIME_DEP_PKGS_CSWmsmtp += CSWggettextrt
 
+sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
 include gar/category.mk
 
-post-install:
-	@rm -f $(DESTDIR)$(infodir)/dir
-	@ginstall -d $(DESTDIR)$(docdir)
-	@ginstall $(WORKSRC)/doc/Mutt+msmtp.txt	\
-		$(WORKSRC)/doc/msmtp.html 		\
-		$(WORKSRC)/doc/msmtp.pdf		\
-		$(DESTDIR)$(docdir)
-	@ginstall -d $(DESTDIR)$(sysconfdir)
-	@ginstall $(WORKSRC)/doc/msmtprc-system.example \
+post-install-modulated: DOCDIR=$(docdir)/msmtp
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(DOCDIR)
+	ginstall $(WORKSRC)/doc/Mutt+msmtp.txt $(DESTDIR)$(DOCDIR)
+	# ginstall $(WORKSRC)/doc/msmtp.html $(DESTDIR)$(DOCDIR)
+	# ginstall $(WORKSRC)/doc/msmtp.pdf $(DESTDIR)$(DOCDIR)
+	ginstall -d $(DESTDIR)$(sysconfdir)
+	ginstall $(WORKSRC)/doc/msmtprc-system.example \
 		$(WORKSRC)/doc/msmtprc-user.example	\
 		$(DESTDIR)$(sysconfdir)
+	perl -pi -e 's,/usr/local/etc,$(sysconfdir),;' \
+		-e 's,/usr/local/bin,$(bindir),;' \
+		$(DESTDIR)$(infodir)/msmtp.info \
+		$(DESTDIR)$(DOCDIR)/Mutt+msmtp.txt
+	@$(MAKECOOKIE)
