@@ -32,12 +32,12 @@ PKGINFO ?= /usr/bin/pkginfo
 
 ifeq ($(origin PACKAGES), undefined)
 PACKAGES        = $(if $(filter %.gspec,$(DISTFILES)),,CSW$(NAME))
-CATALOGNAME    ?= $(if $(filter %.gspec,$(DISTFILES)),,$(NAME))
+CATALOGNAME    ?= $(if $(filter %.gspec,$(DISTFILES)),,$(subst -,_,$(NAME)))
 SRCPACKAGE_BASE = $(firstword $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
 SPKG_SPECS     ?= $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE))
 else
-CATALOGNAME    ?= $(if $(filter-out $(firstword $(PACKAGES)),$(PACKAGES)),,$(patsubst CSW%,%,$(PACKAGES)))
+CATALOGNAME    ?= $(if $(filter-out $(firstword $(PACKAGES)),$(PACKAGES)),,$(subst -,_,$(patsubst CSW%,%,$(PACKAGES))))
 SRCPACKAGE_BASE = $(firstword $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
 SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE)))
@@ -112,7 +112,7 @@ $(strip
     $(if $(CATALOGNAME),
       $(CATALOGNAME),
       $(if $(filter $(1),$(PACKAGES)),
-        $(patsubst CSW%,%,$(1)),
+        $(subst -,_,$(patsubst CSW%,%,$(1))),
         $(if $(realpath files/$(1).gspec),
           $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec),
           $(error The catalog name for the package '$1' could not be determined, because it was neither in PACKAGES nor was there a gspec-file)
@@ -297,7 +297,7 @@ PKGFILES_DEVEL += $(call baseisadirs,$(libdir),pkgconfig(/.*)?)
 PKGFILES_DEVEL += $(includedir)/.*
 PKGFILES_DEVEL += $(sharedstatedir)/aclocal/.*
 PKGFILES_DEVEL += $(mandir)/man1/.*-config\.1.*
-PKGFILES_DEVEL += $(mandir)/man3/.*
+PKGFILES_DEVEL += $(mandir)/man3/.*\.3
 
 # PKGFILES_DOC selects files beloging to a documentation package
 PKGFILES_DOC  = $(docdir)/.*
@@ -719,6 +719,7 @@ merge-checkpkgoverrides: $(foreach S,$(SPKG_SPECS),$(if $(or $(CHECKPKG_OVERRIDE
 
 reset-merge-checkpkgoverrides:
 	@rm -f $(COOKIEDIR)/merge-checkpkgoverrides $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-checkpkgoverrides-$(SPEC))
+	@rm -f $(foreach S,$(SPKG_SPECS),$(WORKDIR_GLOBAL)/checkpkg_override.$S)
 
 merge-alternatives-%:
 	@echo "[ Generating alternatives for package $* ]"
