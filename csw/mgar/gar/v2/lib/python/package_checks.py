@@ -156,6 +156,14 @@ HACHOIR_MACHINES = {
         },
 }
 
+
+ALLOWED_STARTING_PATHS = frozenset([
+  "/opt/csw",
+  "/etc/opt/csw",
+  "/var/opt/csw",
+])
+
+
 def RemovePackagesUnderInstallation(paths_and_pkgs_by_soname,
                                     pkgs_to_be_installed):
   """Emulates uninstallation of packages prior to installation
@@ -1191,6 +1199,28 @@ def CheckDanglingSymlinks(pkg_data, error_mgr, logger, messenger):
           pkgmap_entry["target"],
           "%s contains a symlink (%s) which needs the target file: %s."
           % (pkgname, repr(pkgmap_entry["path"]), repr(pkgmap_entry["target"])))
+
+
+def CheckPrefixDirs(pkg_data, error_mgr, logger, messenger):
+  """Files are allowed to be in /opt/csw, /etc/opt/csw and /var/opt/csw."""
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  paths_with_slashes = [(x, x + "/") for x in ALLOWED_STARTING_PATHS]
+  for pkgmap_entry in pkg_data["pkgmap"]:
+    if "path" not in pkgmap_entry: continue
+    if not pkgmap_entry["path"]: continue
+    allowed_found = False
+    for p, pslash in paths_with_slashes:
+      # We need to handle /opt/csw as an allowed path
+      if pkgmap_entry["path"] == p:
+        allowed_found = True
+        break
+      if pkgmap_entry["path"].startswith(pslash):
+        allowed_found = True
+        break
+    if not allowed_found:
+      error_mgr.ReportError(
+          "bad-location-of-file",
+          "file=%s" % pkgmap_entry["path"])
 
 
 def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
