@@ -1585,5 +1585,75 @@ class TestCheckDanglingSymlinks(CheckpkgUnitTestHelper,
     self.error_mgr_mock.NeedFile('/opt/csw/lib/libpq.so.5', mox.IsA(str))
 
 
+class TestCheckPrefixDirs(CheckpkgUnitTestHelper,
+                          unittest.TestCase):
+  FUNCTION_NAME = 'CheckPrefixDirs'
+
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/opt/csw/bin/foo',
+         'type': 'f',
+         'user': None,
+         'target': None})
+
+  def CheckpkgTest2(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/opt/cswbin/foo',
+         'type': 'f',
+         'user': None,
+         'target': None})
+    self.error_mgr_mock.ReportError(
+        'bad-location-of-file',
+        'file=/opt/cswbin/foo')
+
+  def CheckpkgTest3(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/var/opt/csw/foo',
+         'type': 'f',
+         'user': None,
+         'target': None})
+
+  def CheckpkgTest4(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/var/foo',
+         'type': 'f',
+         'user': None,
+         'target': None})
+    self.error_mgr_mock.ReportError(
+        'bad-location-of-file',
+        'file=/var/foo')
+
+	# These three utility functions allow to run 3 tests in a single
+	# class.
+  def testTwo(self):
+    self.RunCheckpkgTest(self.CheckpkgTest2)
+
+  def testThree(self):
+    self.RunCheckpkgTest(self.CheckpkgTest3)
+
+  def testFour(self):
+    self.RunCheckpkgTest(self.CheckpkgTest4)
+
+
 if __name__ == '__main__':
   unittest.main()
