@@ -23,6 +23,7 @@ urls = (
   r'/maintainers/(\d+)/checkpkg/', 'MaintainerCheckpkgReport',
   r'/error-tags/', 'ErrorTagList',
   r'/catalognames/([^/]+)/', 'Catalogname',
+  r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/', 'Catalogs',
   r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
@@ -168,6 +169,19 @@ class ErrorTagList(object):
     # tag_names = models.CheckpkgErrorTag.select().distinct()
     tag_names = ['foo']
     return render.ErrorTagList(tag_names)
+
+
+class Catalogs(object):
+  def GET(self, catrel_name, arch_name, osrel_name):
+    ConnectToDatabase()
+    sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+        osrel_name, arch_name, catrel_name)
+    pkgs = list(models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
+    if not len(pkgs):
+      raise web.notfound()
+    web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=srv4-list')
+    pkgs_data = [x.GetRestRepr()[1] for x in pkgs]
+    return json.dumps(pkgs_data)
 
 
 class PkgnameByFilename(object):
