@@ -334,24 +334,6 @@ def GetSqoTriad(osrel, arch, catrel):
   return sqo_osrel, sqo_arch, sqo_catrel
 
 
-def GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel):
-    join = [
-        sqlbuilder.INNERJOINOn(None,
-          m.Srv4FileInCatalog,
-          m.Srv4FileInCatalog.q.srv4file==m.Srv4FileStats.q.id),
-    ]
-    res = m.Srv4FileStats.select(
-        sqlobject.AND(
-          m.Srv4FileInCatalog.q.osrel==sqo_osrel,
-          m.Srv4FileInCatalog.q.arch==sqo_arch,
-          m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-          m.Srv4FileStats.q.use_to_generate_catalogs==True,
-        ),
-        join=join,
-    ).orderBy('catalogname')
-    return res
-
-
 def main():
   parser = optparse.OptionParser(USAGE)
   parser.add_option("-d", "--debug", dest="debug",
@@ -534,7 +516,7 @@ def main():
   elif (command, subcommand) == ('show', 'cat'):
     sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
         options.osrel, options.arch, options.catrel)
-    res = GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
+    res = m.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
     for obj in res:
       print obj.catalogname, obj.basename, obj.md5_sum
   elif command == 'gen-cat':
@@ -563,7 +545,7 @@ def main():
       for arch in archs:
         sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
             osrel, arch, catrel)
-        pkgs = list(GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
+        pkgs = list(m.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
         logging.debug("The catalog contains %s packages" % len(pkgs))
         # For now, only making hardlinks to packages from allpkgs
         osrel_short = ShortenOsrel(osrel)
