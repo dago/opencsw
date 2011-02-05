@@ -646,8 +646,8 @@ class TestDeprecatedLibraries_BadRpath(CheckpkgUnitTestHelper, unittest.TestCase
     self.error_mgr_mock.ReportError(
         'CSWrsync',
         'deprecated-library',
-        u'opt/csw/bin/sparcv8/rsync Deprecated Berkeley DB location '
-        u'/opt/csw/lib/libdb-4.7.so')
+        u'file=opt/csw/bin/sparcv8/rsync '
+        u'lib=/opt/csw/lib/libdb-4.7.so')
     self.pkg_data = [self.pkg_data]
     for i in range(1):
       self.error_mgr_mock.NeedFile(
