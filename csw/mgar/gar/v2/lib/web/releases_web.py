@@ -142,7 +142,6 @@ class Srv4CatalogAssignment(object):
     is to add the 'Content-Length' header.  However, it sometimes still gets
     stuck and I don't know why.
     """
-    code_version = "0x02"
     configuration.SetUpSqlobjectConnection()
     if catrel_name != 'unstable':
       # Updates via web are allowed only for the unstable catalog.
@@ -183,7 +182,6 @@ class Srv4CatalogAssignment(object):
       response = json.dumps([
         u"Added to catalog %s %s %s" % (catrel_name, arch_name, osrel_name),
         u"%s" % srv4.basename,
-        u"code_version" + str(code_version),
       ])
       web.header('Content-Length', len(response))
       return response
@@ -195,7 +193,6 @@ class Srv4CatalogAssignment(object):
           'application/x-vnd.opencsw.pkg;type=error-message')
       response = json.dumps({
         "error_message": unicode(e),
-        "code_version": code_version,
       })
       web.header('Content-Length', len(response))
       return response
