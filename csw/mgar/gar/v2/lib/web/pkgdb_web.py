@@ -37,9 +37,11 @@ render = web.template.render('/home/maciej/src/opencsw-git/gar/v2/'
 def ConnectToDatabase():
   configuration.SetUpSqlobjectConnection()
 
+
 class index(object):
   def GET(self):
     return render.index()
+
 
 class Srv4List(object):
   def GET(self):
@@ -53,6 +55,7 @@ class Srv4List(object):
       return "%.1fh" % (timedelta.seconds / 60.0 / 60.0 - timezone_diff)
     pkgs_ago = [(x, Ago(now - x.mtime)) for x in pkgs]
     return render.Srv4List(pkgs_ago)
+
 
 class Srv4Detail(object):
   def GET(self, md5_sum):
@@ -117,6 +120,7 @@ class CatalogList(object):
           catalogs.append(key)
     return render.CatalogList(catalogs)
 
+
 class CatalogDetail(object):
   def GET(self, catrel_name, arch_name, osrel_name):
     ConnectToDatabase()
@@ -126,12 +130,14 @@ class CatalogDetail(object):
     pkgs = models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
     return render.CatalogDetail(cat_name, pkgs)
 
+
 class MaintainerList(object):
   def GET(self):
     ConnectToDatabase()
     maintainers = models.Maintainer.select().orderBy('email')
     names = [tuple(x.email.split("@") + [x]) for x in maintainers]
     return render.MaintainerList(names)
+
 
 class MaintainerDetail(object):
   def GET(self, id):
@@ -144,6 +150,7 @@ class MaintainerDetail(object):
         ),
     ).orderBy('basename')
     return render.MaintainerDetail(maintainer, pkgs)
+
 
 class MaintainerCheckpkgReport(object):
   def GET(self, id):
@@ -161,6 +168,7 @@ class MaintainerCheckpkgReport(object):
       tags = list(models.CheckpkgErrorTag.selectBy(srv4_file=pkg))
       tags_by_md5.setdefault(pkg.md5_sum, tags)
     return render.MaintainerCheckpkgReport(maintainer, pkgs, tags_by_md5)
+
 
 class ErrorTagList(object):
   def GET(self):
