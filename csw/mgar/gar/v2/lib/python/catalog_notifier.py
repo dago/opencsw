@@ -16,6 +16,7 @@ import json
 import os.path
 import smtplib
 from email.mime.text import MIMEText
+import rest
 
 REPORT_TMPL = u"""Catalog update report for $email
 Catalog URL: $url
@@ -80,21 +81,6 @@ You took over packages:
 #end for
 #end if
 """
-
-class RestClient(object):
-
-  def GetPkgByMd5(self, md5_sum):
-    url = "http://buildfarm.opencsw.org/pkgdb/rest/srv4/%s/" % md5_sum
-    logging.debug("GetPkgByMd5(): calling %s", url)
-    data = urllib2.urlopen(url).read()
-    return json.loads(data)
-
-  def GetMaintainerByMd5(self, md5_sum):
-    pkg = self.GetPkgByMd5(md5_sum)
-    return {
-        "maintainer_email": pkg["maintainer_email"],
-    }
-
 
 class NotificationFormatter(object):
 
@@ -247,7 +233,7 @@ def main():
     else:
       logging.debug("%s not found in previous_catalogs_by_triad", key)
   formatter = NotificationFormatter()
-  rest_client = RestClient()
+  rest_client = rest.RestClient()
   notifications = formatter.FormatNotifications(
       cat_tree_url, catalogs, rest_client)
   whitelist = frozenset()
