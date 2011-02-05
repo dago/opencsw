@@ -326,3 +326,21 @@ class Srv4DependsOn(sqlobject.SQLObject):
   pkginst = sqlobject.ForeignKey('Pkginst', notNone=True)
   dep_uniq_idx = sqlobject.DatabaseIndex(
       'srv4_file', 'pkginst')
+
+
+def GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel):
+  join = [
+      sqlbuilder.INNERJOINOn(None,
+        Srv4FileInCatalog,
+        Srv4FileInCatalog.q.srv4file==Srv4FileStats.q.id),
+  ]
+  res = Srv4FileStats.select(
+      sqlobject.AND(
+        Srv4FileInCatalog.q.osrel==sqo_osrel,
+        Srv4FileInCatalog.q.arch==sqo_arch,
+        Srv4FileInCatalog.q.catrel==sqo_catrel,
+        Srv4FileStats.q.use_to_generate_catalogs==True,
+      ),
+      join=join,
+  ).orderBy('catalogname')
+  return res

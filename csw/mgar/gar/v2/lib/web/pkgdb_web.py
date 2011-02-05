@@ -122,7 +122,7 @@ class CatalogDetail(object):
     cat_name = " ".join((catrel_name, arch_name, osrel_name))
     sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
         osrel_name, arch_name, catrel_name)
-    pkgs = pkgdb.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
+    pkgs = models.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
     return render.CatalogDetail(cat_name, pkgs)
 
 class MaintainerList(object):
