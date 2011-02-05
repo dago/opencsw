@@ -4,14 +4,15 @@ This directory contains Python libraries, mostly related to checkpkg.
 
 Checks to implement:
  - foo_bar != CSWfoo-bar -> error
- - *dev(el)? -> error, suggest *-devel
+ - *dev(el)? -> error, suggest *-dev
  - *-?rt -> error, suggest specific library packages
  - empty package without 'transitional' in the name --> error, suggest
- 	 'transitional'
+   'transitional'
  - CSWpmfoo --> error, suggest CSWpm-foo
  - Dependency on a transitional package --> error
- 	 ('transitional', 'stub', 'legacy')
+   ('transitional', 'stub', 'legacy')
  - Dependency on CSWcas-initsmf + rc* files --> error
+ - A package must not be incompatible with itself
 
 
 Development plan for checkpkg:
@@ -19,7 +20,7 @@ Development plan for checkpkg:
 - Allow maintainers to opt-out from these notifications
 - Add support for the 'overridden' field in the database
 - When adding a package to a catalog, store the time and date of the
-	addition
+  addition
 - Display stats from each run
 - Shorten the on-screen output, add commands to display override lines
 - Move the set check stats outside of checking functions, remove the special
