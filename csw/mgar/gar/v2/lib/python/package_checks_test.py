@@ -51,10 +51,13 @@ class CheckpkgUnitTestHelper(object):
           checkpkg_lib.IndividualCheckInterface)
 
   def testDefault(self):
+    self.RunCheckpkgTest(self.CheckpkgTest)
+
+  def RunCheckpkgTest(self, callback):
     self.logger_mock = stubs.LoggerStub()
     self.SetMessenger()
     self.SetErrorManagerMock()
-    self.CheckpkgTest()
+    callback()
     self.mox.ReplayAll()
     getattr(pc, self.FUNCTION_NAME)(self.pkg_data,
                                     self.error_mgr_mock,
