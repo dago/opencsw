@@ -203,7 +203,7 @@ class PkgnameByFilename(object):
     db_catalog = checkpkg_lib.Catalog()
     try:
       pkgs = db_catalog.GetPkgByPath(filename, osrel, arch, catrel)
-      web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkg-list')
+      web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkgname-list')
       web.header('X-Rest-Info', 'I could tell you about the format, but I won\'t')
       web.header('Content-Disposition',
                  'attachment; filename=%s' % send_filename)
