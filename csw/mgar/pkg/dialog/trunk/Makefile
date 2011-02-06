@@ -28,6 +28,8 @@ RUNTIME_DEP_PKGS_CSWdialog += CSWncurses
 CHECKPKG_OVERRIDES_CSWdialog += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWdialog += missing-dependency|CSWpython
 
+PKGFILES_CSWdialog-minimal = $(bindir).*minimal $(mandir).*minimal
+
 SKIPTEST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
