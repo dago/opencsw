@@ -9,7 +9,8 @@ define BLURB
   much more quickly.
 endef
 
-DISTFILES += CSWpmspeedycgi.gspec
+PACKAGES = CSWpmspeedycgi
+CATALOGNAME = pm_speedycgi
 
 # Don't build the apache/apache2 modules
 PATCHFILES += build.diff
