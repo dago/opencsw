@@ -41,6 +41,7 @@ post-install-modulated:
 	@echo " ==> Post-install for $(NAME) (custom)"
 
 	@mv $(DESTDIR)$(bindir)/dialog $(DESTDIR)$(bindir)/dialog.$(CURSES)
+	@mv $(DESTDIR)$(mandir)/man1/dialog.1 $(DESTDIR)$(mandir)/man1/dialog.1.$(CURSES)
 	@$(MAKECOOKIE)
 
 post-merge:
