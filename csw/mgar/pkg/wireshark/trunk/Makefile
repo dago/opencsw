@@ -1,5 +1,5 @@
 NAME = wireshark
-VERSION = 1.4.0
+VERSION = 1.4.3
 CATEGORIES = apps
 
 DESCRIPTION = Wireshark (was Ethereal) is a free network protocol analyzer
