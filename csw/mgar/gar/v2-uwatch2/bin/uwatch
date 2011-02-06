@@ -1,3 +1,4 @@
+#!/usr/bin/env python2.6
 #!/opt/csw/bin/python
 
 # TODO : check arguments for valid date
@@ -184,7 +185,7 @@ class CommandLineParser(object):
         self.optionParser = OptionParser()
 
         # Add options to parser
-        self.optionParser.add_option("-V", "--verbose",     help="Activate verbose mode", action="store_true", dest="verbose")
+        self.optionParser.add_option("--verbose",     help="Activate verbose mode", action="store_true", dest="verbose")
         self.optionParser.add_option("--current-version",    help="Current package version", action="store", dest="current_version")
         self.optionParser.add_option("--target-location",    help="Target location. This is the directory in which the branch will be created (parent of the branch directory). Default value is ../branches", action="store", dest="target_location")
         self.optionParser.add_option("--regexp",            help="Version matching regular expression", action="store", dest="regexp")
@@ -434,6 +435,17 @@ class UwatchConfiguration(object):
     # -----------------------------------------------------------------------------------------------------------------
 
     def getRegexp(self):
+        # In case the regexp is not define, we try to guess it using the distfile
+        if (self._regexp == None) & (self._gar_distfiles != None):
+            # Instanciate a regexp generator
+            urg = UwatchRegexGenerator()
+
+            # Retrieve the regexp list
+            auto_regex_list = urg.GenerateRegex(self._catalog_name, self._gar_distfiles)
+
+            # Use the first item as current regexp
+            self._regexp = auto_regex_list[0]
+
         return self._regexp
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -724,8 +736,6 @@ class CheckUpstreamCommand(UpstreamWatchCommand):
             # Check if we have found some results
             if len(matches) == 0:
                 raise NoUpstreamVersionFoundException(self.config.getUpstreamURL(), self.config.getRegexp())
-                print "No match found, we should trigger some error since even current version has not been found"
-                return False
             else:
                 newestVersion = self.config.getCurrentVersion()
                 while len(matches) > 0:
@@ -802,7 +812,7 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
 
             # Need a way to check that all options needed are available
             self.checkArgument()
-
+    
             # Call the method in charge of retrieving upstream content
             content = self.UrlContentRetrieve(self.config.getUpstreamURL())
 
@@ -813,10 +823,8 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
             # Check if we have found some results
             if len(matches) == 0:
                 raise NoUpstreamVersionFoundException(self.config.getUpstreamURL(), self.config.getRegexp())
-                print "No match found, we should trigger some error since even current version has not been found"
-                return False
             else:
-                newestVersion = matches.pop(0)
+                newestVersion = matches.pop(0)                
                 while len(matches) > 0:
                     newestVersion = self.CompareVersionAndGetNewest(newestVersion, matches.pop(0))
 
@@ -1580,6 +1588,66 @@ class CommandProcessor(object):
         else:
             print "Error : %(action)s action is not supported" % { 'action' : arguments[0] }
             return 2
+
+
+class UwatchRegexGenerator(object):
+  
+  WS_RE = re.compile(r'\s+')
+  DIGIT_RE = re.compile(r'\d+')
+  DIGIT_REMOVAL_RE = re.compile(r'\d+(?:\.\d+)*[a-z]?')
+  DIGIT_MATCH_MAKE_RE_1 = r'(\d+(?:\.\d+)*[a-z]?)'
+  DIGIT_MATCH_MAKE_RE_2 = r'(\d+(?:\.\d+)*)'
+  ARCHIVE_RE = re.compile(r"\.(?:tar(?:\.(?:gz|bz2))|tgz)?$")
+
+  def _ChooseDistfile(self, file_list):
+    # First heuristic: files with numbers are distfiles
+    for f in file_list:
+      if self.ARCHIVE_RE.search(f):
+        return f
+    for f in file_list:
+      if self.DIGIT_RE.search(f):
+        return f
+
+  def _SeparateSoftwareName(self, catalogname, filename):
+    """Separate the software name from the rest of the file name.
+
+    Software name sometimes contains digits, which we don't want to
+    include in the regexes.
+    """
+    # The first approach is to split by '-'
+    assert filename
+    parts = filename.split('-')
+    if self._CanBeSoftwarename(parts[0], catalogname):
+      return parts[0], '-' + '-'.join(parts[1:])
+    return '', filename
+  
+  def _SeparateArchiveName(self, filename):
+    if self.ARCHIVE_RE.search(filename):
+      first_part = self.ARCHIVE_RE.split(filename)[0]
+      archive_part = ''.join(self.ARCHIVE_RE.findall(filename))
+      return first_part, archive_part
+    return filename, ''
+
+  def _CanBeSoftwarename(self, s, catalogname):
+    if s == catalogname:
+      return True
+    # This is stupid.  But let's wait for a real world counterexample.
+    return True
+
+  def GenerateRegex(self, catalogname, distnames):
+    dist_list = self.WS_RE.split(distnames)
+    dist_file = self._ChooseDistfile(dist_list)
+    if not dist_file:
+      return []
+    softwarename, rest_of_filename = self._SeparateSoftwareName(
+        catalogname, dist_file)
+    rest_of_filename, archive_part = self._SeparateArchiveName(rest_of_filename)
+    no_numbers = self.DIGIT_REMOVAL_RE.split(rest_of_filename)
+    regex_list = []
+    regex_list.append(softwarename + self.DIGIT_MATCH_MAKE_RE_1.join(no_numbers) + archive_part)
+    regex_list.append(softwarename + self.DIGIT_MATCH_MAKE_RE_2.join(no_numbers) + archive_part)
+    return regex_list
+
 
 
 # ---------------------------------------------------------------------------------------------------------------------
