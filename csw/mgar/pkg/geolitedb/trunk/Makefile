@@ -1,5 +1,5 @@
 NAME = geolitedb
-VERSION = 100302
+VERSION = 110201
 CATEGORIES = net
 
 DESCRIPTION = Geolite country database
