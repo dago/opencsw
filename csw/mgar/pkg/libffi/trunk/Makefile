@@ -87,4 +87,11 @@ post-install-modulated:
 	rm $(DESTDIR)$(libdir)/libffi.so
 	ginstall -m 755 -d $(DESTDIR)$(libdir)/ffi
 	ln -s ../libffi.so.5.0.10 $(DESTDIR)$(libdir)/ffi/libffi.so
+	ginstall -d -m 755 $(DESTDIR)$(includedir)
+	# By default, libffi installer puts include files into a subdirectory under
+	# /opt/csw/lib, which makes the header files hard to find.  We're moving
+	# them to /opt/csw/include.
+	gmv -v $(DESTDIR)$(libdir)/$(NAME)-$(VERSION)/include/* $(DESTDIR)$(includedir)
+	rmdir $(DESTDIR)$(libdir)/$(NAME)-$(VERSION)/include
+	rmdir $(DESTDIR)$(libdir)/$(NAME)-$(VERSION)
 	@$(MAKECOOKIE)
