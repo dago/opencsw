@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = libffi
 VERSION = 3.0.9
 CATEGORIES = lib
@@ -26,20 +28,33 @@ PATCHFILES += ffi_target.h.patch
 # originally for icc, but at least get the stuff to compile
 PATCHFILES += ffi64.c.patch
 
-PACKAGES = CSWlibffi CSWlibffidevel
+PACKAGES += CSWlibffi
 CATALOGNAME_CSWlibffi = libffi
-CATALOGNAME_CSWlibffidevel = libffi_devel
-SPKG_DESC_CSWlibffi = $(DESCRIPTION)
-SPKG_DESC_CSWlibffidevel = $(DESCRIPTION) - developer package
+SPKG_DESC_CSWlibffi = Empty transitional package
+ARCHALL_CSWlibffi = 1
+# Backward compatibility ensured via a dependency
+RUNTIME_DEP_PKGS_CSWlibffi += CSWlibffi5
+CHECKPKG_OVERRIDES_CSWlibffi += surplus-dependency|CSWlibffi5
 
-PKGFILES_CSWlibffidevel += $(PKGFILES_DEVEL)
-PKGFILES_CSWlibffidevel += $(libdir)/.*/include/.*
+PACKAGES += CSWlibffi-dev
+CATALOGNAME_CSWlibffi-dev = libffi_dev
+SPKG_DESC_CSWlibffi-dev = $(DESCRIPTION) - developer package
+RUNTIME_DEP_PKGS_CSWlibffi-dev += CSWlibffi5
+PKGFILES_CSWlibffi-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibffi-dev += $(libdir)/(.*/)?ffi/libffi\.so
+PKGFILES_CSWlibffi-dev += $(libdir)/.*/include/.*
+PKGFILES_CSWlibffi-dev += $(datadir)/.*
+
+# An empty stub to let checkpkg know about the rename
+PACKAGES += CSWlibffidevel
+SPKG_DESC_CSWlibffidevel = A stub package, do not release
+PKGFILES_CSWlibffidevel = NOFILES
+
+PACKAGES += CSWlibffi5
+SPKG_DESC_CSWlibffi5 = $(DESCRIPTION) - libffi.so.5
+PKGFILES_CSWlibffi5 += .*/libffi\.so\.5.*
 
 LICENSE = LICENSE
-
-RUNTIME_DEP_PKGS_CSWlibffidevel += CSWlibffi
-
-CHECKPKG_OVERRIDES_CSWlibffidevel += surplus-dependency|CSWlibffi
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -67,3 +82,9 @@ pre-configure-isa-sparcv9:
 		aclocal; \
 		automake)
 	$(MAKECOOKIE)
+
+post-install-modulated:
+	rm $(DESTDIR)$(libdir)/libffi.so
+	ginstall -m 755 -d $(DESTDIR)$(libdir)/ffi
+	ln -s ../libffi.so.5.0.10 $(DESTDIR)$(libdir)/ffi/libffi.so
+	@$(MAKECOOKIE)
