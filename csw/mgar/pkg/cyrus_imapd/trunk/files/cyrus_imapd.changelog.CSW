@@ -1,8 +1,22 @@
+cyrus_imapd (2.4.6,rev=2011.02.07) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@opencsw.org>  Mon, 07 Feb 2011 21:39:09 +0100
+
+cyrus_imapd (2.4.5,REV=2010.12.18) unstable
+
+  * New upstream version.
+  * Removed fetchnews man and doc page as nntp support is not enabled.
+  * Removed cyrus-imapd-acceptinvalidfrom.patch patch applied upstream.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sun, 18 Dec 2010 17:28:34 +0100
+
 cyrus_imapd (2.3.16,REV=2010.11.21) unstable
 
   * Added missing zlib dependancy.
   * Moved configuration from /opt/csw/etc/cyrus to /etc/opt/csw/cyrus/.
-  * Moved default cyrus directiry from /opt/csw/var/cyrus to /var/opt/csw/cyrus.
+  * Moved default cyrus directory from /opt/csw/var/cyrus to /var/opt/csw/cyrus.
   * [gar] switched do dynamic prototype.
 
  -- Yann Rouillard <yann@opencsw.org>  Sun, 21 Nov 2010 15:25:09 +0100
