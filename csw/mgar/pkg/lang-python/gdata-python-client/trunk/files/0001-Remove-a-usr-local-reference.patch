@@ -1,0 +1,22 @@
+From b78ce6ff1763f4a887f6f579950f0109d50fcbb3 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 7 Feb 2011 16:26:38 +0100
+Subject: [PATCH] Remove a /usr/local reference
+
+---
+ src/gdata/Crypto/Util/RFC1751.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/gdata/Crypto/Util/RFC1751.py b/src/gdata/Crypto/Util/RFC1751.py
+index 0a47952..3d487da 100755
+--- a/src/gdata/Crypto/Util/RFC1751.py
++++ b/src/gdata/Crypto/Util/RFC1751.py
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/python
++#!/opt/csw/bin/python
+ # rfc1751.py : Converts between 128-bit strings and a human-readable
+ # sequence of words, as defined in RFC1751: "A Convention for
+ # Human-Readable 128-bit Keys", by Daniel L. McDonald.
+-- 
+1.7.3.2
+
