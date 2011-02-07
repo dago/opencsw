@@ -1,18 +1,7 @@
-From 46de9238dc1925a468812b315e9095600279c33f Mon Sep 17 00:00:00 2001
-From: Dagobert Michelsen <dam@opencsw.org>
-Date: Wed, 24 Feb 2010 15:17:57 +0100
-Subject: [PATCH] Force linkage to libperl.so
-
----
- perl/imap/Makefile.PL              |    2 +-
- perl/sieve/managesieve/Makefile.PL |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/perl/imap/Makefile.PL b/perl/imap/Makefile.PL
-index 27ae4ca..ea8080f 100644
---- a/perl/imap/Makefile.PL
-+++ b/perl/imap/Makefile.PL
-@@ -65,7 +65,7 @@ WriteMakefile(
+diff -ur cyrus-imapd-2.4.4/perl/imap/Makefile.PL cyrus-imapd-2.4.4.new/perl/imap/Makefile.PL
+--- cyrus-imapd-2.4.4/perl/imap/Makefile.PL	2010-11-11 23:15:33.000000000 +0100
++++ cyrus-imapd-2.4.4.new/perl/imap/Makefile.PL	2010-11-21 22:36:28.368907061 +0100
+@@ -65,7 +65,7 @@
      'clean'	=> {'FILES' => 'libcyrperl.a cyradm'},
      'OBJECT'    => 'IMAP.o',
      'MYEXTLIB'  => '../../lib/libcyrus.a ../../lib/libcyrus_min.a',
@@ -21,11 +10,10 @@ index 27ae4ca..ea8080f 100644
      'DEFINE'	=> '-DPERL_POLLUTE',    # e.g., '-DHAVE_SOMETHING' 
      'INC'	=> "-I../../lib -I../.. -I../../com_err/et $SASL_INC $OPENSSL_INC", 
      'EXE_FILES' => [cyradm],
-diff --git a/perl/sieve/managesieve/Makefile.PL b/perl/sieve/managesieve/Makefile.PL
-index b577f4c..a32ffb8 100644
---- a/perl/sieve/managesieve/Makefile.PL
-+++ b/perl/sieve/managesieve/Makefile.PL
-@@ -62,7 +62,7 @@ WriteMakefile(
+diff -ur cyrus-imapd-2.4.4/perl/sieve/managesieve/Makefile.PL cyrus-imapd-2.4.4.new/perl/sieve/managesieve/Makefile.PL
+--- cyrus-imapd-2.4.4/perl/sieve/managesieve/Makefile.PL	2010-11-11 23:15:33.000000000 +0100
++++ cyrus-imapd-2.4.4.new/perl/sieve/managesieve/Makefile.PL	2010-11-21 22:36:09.746290674 +0100
+@@ -62,7 +62,7 @@
      'ABSTRACT'  => 'Cyurs Sieve management interface',
      'VERSION_FROM' => 'managesieve.pm', # finds $VERSION
      'MYEXTLIB'  => '../lib/isieve.o ../lib/lex.o ../lib/mystring.o ../lib/request.o ../../../lib/libcyrus.a ../../../lib/libcyrus_min.a',
@@ -34,6 +22,3 @@ index b577f4c..a32ffb8 100644
      'DEFINE'	=> '-DPERL_POLLUTE',     # e.g., '-DHAVE_SOMETHING' 
      'INC'	=> "-I../lib/ -I../../../lib/ $SASL_INC $OPENSSL_INC",
  );
--- 
-1.6.5.1
-
