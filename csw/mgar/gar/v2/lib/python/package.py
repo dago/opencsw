@@ -48,6 +48,7 @@ class CswSrv4File(shell.ShellMixin, object):
 
   def __init__(self, pkg_path, debug=False):
     super(CswSrv4File, self).__init__()
+    logging.debug("CswSrv4File(%s, debug=%s)", repr(pkg_path), debug)
     self.pkg_path = pkg_path
     self.workdir = None
     self.gunzipped_path = None
@@ -81,6 +82,7 @@ class CswSrv4File(shell.ShellMixin, object):
         # Causing the class to stat the .gz file.  This call throws away the
         # result, but the result will be cached as a object member.
         self.GetMtime()
+        self.GetMd5sum()
         base_name_gz = os.path.split(self.pkg_path)[1]
         shutil.copy(self.pkg_path, self.GetWorkDir())
         self.pkg_path = os.path.join(self.GetWorkDir(), base_name_gz)

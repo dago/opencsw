@@ -185,7 +185,8 @@ class CatalogImporter(object):
   def __init__(self, debug=False):
     self.debug = debug
 
-  def SyncFromCatalogFile(self, osrel, arch, catrel, catalog_file):
+  def SyncFromCatalogFile(self, osrel, arch, catrel, catalog_file,
+      force_unpack=False):
     """Syncs a given catalog from a catalog file.
 
     Imports srv4 files if necessary.
@@ -223,7 +224,8 @@ class CatalogImporter(object):
       collector = package_stats.StatsCollector(
           logger=logging,
           debug=self.debug)
-      new_statdicts = collector.CollectStatsFromFiles(file_list, None)
+      new_statdicts = collector.CollectStatsFromFiles(
+          file_list, None, force_unpack=force_unpack)
     new_statdicts_by_md5 = {}
     if new_statdicts:
       logging.info("Marking imported packages as registered.")
@@ -299,9 +301,9 @@ class CatalogImporter(object):
         db_catalog.AddSrv4ToCatalog(
             sqo_srv4, osrel, arch, catrel)
 
-  def SyncFromCatalogTree(self, catrel, base_dir):
-    logging.debug("SyncFromCatalogTree(%s, %s)",
-                  repr(catrel), repr(base_dir))
+  def SyncFromCatalogTree(self, catrel, base_dir, force_unpack=False):
+    logging.debug("SyncFromCatalogTree(%s, %s, force_unpack=%s)",
+                  repr(catrel), repr(base_dir), force_unpack)
     if not os.path.isdir(base_dir):
       raise UsageError("%s is not a diractory" % repr(base_dir))
     if catrel not in common_constants.DEFAULT_CATALOG_RELEASES:
@@ -320,7 +322,8 @@ class CatalogImporter(object):
           logging.warning("Could not find %s, skipping.", repr(catalog_file))
           continue
         logging.info("      %s", catalog_file)
-        self.SyncFromCatalogFile(osrel, arch, catrel, catalog_file)
+        self.SyncFromCatalogFile(osrel, arch, catrel, catalog_file,
+            force_unpack=force_unpack)
 
   def ComposeCatalogFilePath(self, base_dir, osrel, arch):
     short_osrel = osrel.replace("SunOS", "")
@@ -356,6 +359,9 @@ def main():
   parser.add_option("--profile", dest="profile",
                     default=False, action="store_true",
                     help="Turn on profiling")
+  parser.add_option("--force-unpack", dest="force_unpack",
+                    default=False, action="store_true",
+                    help="Force unpacking of packages")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -414,7 +420,8 @@ def main():
         logger=logging,
         debug=options.debug)
     file_list = args
-    stats_list = collector.CollectStatsFromFiles(file_list, None)
+    stats_list = collector.CollectStatsFromFiles(file_list, None,
+        force_unpack=options.force_unpack)
     for stats in stats_list:
       logging.debug(
           "Importing %s, %s",
@@ -512,7 +519,7 @@ def main():
       raise UsageError("Wrong number of arguments, see usage.")
     ci = CatalogImporter(debug=options.debug)
     catrel, base_dir = args
-    ci.SyncFromCatalogTree(catrel, base_dir)
+    ci.SyncFromCatalogTree(catrel, base_dir, options.force_unpack)
   elif (command, subcommand) == ('show', 'cat'):
     sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
         options.osrel, options.arch, options.catrel)

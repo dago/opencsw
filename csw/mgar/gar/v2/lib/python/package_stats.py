@@ -462,7 +462,7 @@ class StatsCollector(object):
       self.logger = logging
     self.debug = debug
 
-  def CollectStatsFromFiles(self, file_list, catalog_file):
+  def CollectStatsFromFiles(self, file_list, catalog_file, force_unpack=False):
     args_display = file_list
     if len(args_display) > 5:
       args_display = args_display[:5] + ["...more..."]
@@ -488,7 +488,7 @@ class StatsCollector(object):
       # removes the temporary directory from the disk.  This allows to process
       # the whole catalog.
       stats = stats_list.pop()
-      stats.CollectStats()
+      stats.CollectStats(force=force_unpack)
       data_list.append(stats.GetAllStats())
       pbar.update(counter.next())
     pbar.finish()
