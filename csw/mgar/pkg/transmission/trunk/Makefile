@@ -24,7 +24,6 @@ RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWdbusglib
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWfconfig
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWftype2
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWglib2
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWgtk2
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibatk
 RUNTIME_DEP_PKGS_CSWtransmissiongtk2 += CSWlibcairo
