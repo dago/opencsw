@@ -30,6 +30,11 @@ CHECKPKG_OVERRIDES_CSWdialog += missing-dependency|CSWpython
 
 PKGFILES_CSWdialog-minimal = $(bindir).*minimal $(mandir).*minimal
 
+ALTERNATIVES_CSWdialog = ncurses
+ALTERNATIVES_CSWdialog-minimal = minimal
+ALTERNATIVE_ncurses = $(bindir)/dialog dialog $(bindir)/dialog.ncurses 50 $(mandir)/man1/dialog.1 dialog.man $(mandir)/man1/dialog.1.ncurses
+ALTERNATIVE_minimal = $(bindir)/dialog dialog $(bindir)/dialog.minimal 25 $(mandir)/man1/dialog.1 dialog.man $(mandir)/man1/dialog.1.minimal
+
 SKIPTEST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
