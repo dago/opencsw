@@ -20,15 +20,35 @@ import rest
 
 REPORT_TMPL = u"""Catalog update report for $email
 Catalog URL: $url
+#import re
+#def CatalogList($catalogs)
+#set $by_catrel = {}
+#set $unused = [by_catrel.setdefault(x[0], []).append(x[1:]) for x in $catalogs]
+#for catrel in $by_catrel:
+  - $catrel: #
+#set $by_arch = {}
+#set $unused = [by_arch.setdefault(x[0], []).append(x[1:]) for x in $by_catrel[$catrel]]
+#set $first = True
+#for arch in $by_arch:
+#if not $first
+, #
+#else
+#set $first = False
+#end if
+$arch (#
+#echo ", ".join([re.sub(r'^.*OS', '', x[0]) for x in $by_arch[$arch]]) + ")"
+#end for
+
+#end for
+#end def
 #if "new_pkgs" in $pkg_data
 
 New packages:
 #for basename in $pkg_data["new_pkgs"]
 * $basename
   In catalogs:
-#for catalog in $sorted($pkg_data["new_pkgs"][basename]["catalogs"])
-  - $catalog[0] $catalog[1] $catalog[2]
-#end for
+#set $catalogs = $sorted($pkg_data["new_pkgs"][basename]["catalogs"])
+$CatalogList($catalogs)
 #end for
 #end if
 #if "removed_pkgs" in $pkg_data
@@ -37,9 +57,8 @@ Removed packages:
 #for basename in $pkg_data["removed_pkgs"]
 * $basename
   From catalogs:
-#for catalog in $sorted($pkg_data["removed_pkgs"][basename]["catalogs"])
-  - $catalog[0] $catalog[1] $catalog[2]
-#end for
+#set $catalogs = $sorted($pkg_data["removed_pkgs"][basename]["catalogs"])
+$CatalogList($catalogs)
 #end for
 #end if
 #if "upgraded_pkg" in $pkg_data
@@ -51,9 +70,8 @@ Version change (probably upgrade):
 #end for
 + $pkg_data["upgraded_pkg"][basename]["to_pkg"]["file_basename"]
   In catalogs:
-#for catalog in $sorted($pkg_data["upgraded_pkg"][basename]["catalogs"])
-  - $catalog[0] $catalog[1] $catalog[2]
-#end for
+#set $catalogs = $sorted($pkg_data["upgraded_pkg"][basename]["catalogs"])
+$CatalogList($catalogs)
 #end for
 #end if
 #if "lost_pkg" in $pkg_data
@@ -64,9 +82,8 @@ You no longer maintain packages:
 - $pkg_data["lost_pkg"][basename]["from_pkg"][from_basename]["file_basename"]
 #end for
   In catalogs:
-#for catalog in $sorted($pkg_data["lost_pkg"][basename]["catalogs"])
-  - $catalog[0] $catalog[1] $catalog[2]
-#end for
+#set $catalogs = $sorted($pkg_data["lost_pkg"][basename]["catalogs"])
+$CatalogList($catalogs)
 #end for
 #end if
 #if "got_pkg" in $pkg_data
@@ -75,9 +92,8 @@ You took over packages:
 #for basename in $pkg_data["got_pkg"]
 * $basename
   In catalogs:
-#for catalog in $sorted($pkg_data["got_pkg"][basename]["catalogs"])
-  - $catalog[0] $catalog[1] $catalog[2]
-#end for
+#set $catalogs = $sorted($pkg_data["got_pkg"][basename]["catalogs"])
+$CatalogList($catalogs)
 #end for
 #end if
 """

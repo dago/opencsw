@@ -7,6 +7,7 @@ import catalog
 import catalog_test
 import copy
 import pprint
+import rest
 
 
 class NotificationFormatterTest(mox.MoxTestBase):
@@ -14,7 +15,7 @@ class NotificationFormatterTest(mox.MoxTestBase):
   def disabled_testOne(self):
     """This tested too much."""
     f = catalog_notifier.NotificationFormatter()
-    rest_client_mock = self.mox.CreateMock(catalog_notifier.RestClient)
+    rest_client_mock = self.mox.CreateMock(rest.RestClient)
     url = "http://www.example.com/opencsw/"
     cat_a = self.mox.CreateMock(catalog.OpencswCatalog)
     cat_b = self.mox.CreateMock(catalog.OpencswCatalog)
@@ -33,15 +34,39 @@ class NotificationFormatterTest(mox.MoxTestBase):
 
   def test_GetPkgsByMaintainerNew(self):
     f = catalog_notifier.NotificationFormatter()
-    rest_client_mock = self.mox.CreateMock(catalog_notifier.RestClient)
+    rest_client_mock = self.mox.CreateMock(rest.RestClient)
     cat_a = self.mox.CreateMock(catalog.OpencswCatalog)
     cat_b = self.mox.CreateMock(catalog.OpencswCatalog)
     catalogs = [
         ("fossil", "amd65", "SolarOS5.12", cat_a, cat_b),
+        ("fossil", "amd65", "SolarOS5.13", cat_a, cat_b),
+        ("fossil", "amd67", "SolarOS5.12", cat_a, cat_b),
+        ("rock",   "amd65", "SolarOS5.12", cat_a, cat_b),
     ]
     rest_client_mock.GetMaintainerByMd5('cfe40c06e994f6e8d3b191396d0365cb').AndReturn(
         {"maintainer_email": "joe@example.com"}
     )
+    rest_client_mock.GetMaintainerByMd5('cfe40c06e994f6e8d3b191396d0365cb').AndReturn(
+        {"maintainer_email": "joe@example.com"}
+    )
+    rest_client_mock.GetMaintainerByMd5('cfe40c06e994f6e8d3b191396d0365cb').AndReturn(
+        {"maintainer_email": "joe@example.com"}
+    )
+    rest_client_mock.GetMaintainerByMd5('cfe40c06e994f6e8d3b191396d0365cb').AndReturn(
+        {"maintainer_email": "joe@example.com"}
+    )
+    cat_a.GetDataByCatalogname().AndReturn({})
+    cat_b.GetDataByCatalogname().AndReturn({
+      "syslog_ng": catalog_test.PKG_STRUCT_1,
+    })
+    cat_a.GetDataByCatalogname().AndReturn({})
+    cat_b.GetDataByCatalogname().AndReturn({
+      "syslog_ng": catalog_test.PKG_STRUCT_1,
+    })
+    cat_a.GetDataByCatalogname().AndReturn({})
+    cat_b.GetDataByCatalogname().AndReturn({
+      "syslog_ng": catalog_test.PKG_STRUCT_1,
+    })
     cat_a.GetDataByCatalogname().AndReturn({})
     cat_b.GetDataByCatalogname().AndReturn({
       "syslog_ng": catalog_test.PKG_STRUCT_1,
@@ -53,20 +78,23 @@ class NotificationFormatterTest(mox.MoxTestBase):
           "pkg": catalog_test.PKG_STRUCT_1,
           "catalogs": [
             ("fossil", "amd65", "SolarOS5.12"),
+            ("fossil", "amd65", "SolarOS5.13"),
+            ("fossil", "amd67", "SolarOS5.12"),
+            ("rock",   "amd65", "SolarOS5.12"),
           ],
         },
       }}
     }
-    self.assertEqual(
-        expected,
-        f._GetPkgsByMaintainer(catalogs, rest_client_mock))
-    expected_text = u"""aa"""
+    result = f._GetPkgsByMaintainer(catalogs, rest_client_mock)
+    self.assertEqual(expected, result)
     # Uncomment to see rendered template
-    # print f._RenderForMaintainer(expected["joe@example.com"])
+    # print f._RenderForMaintainer(
+    #     result["joe@example.com"], "joe@example.com",
+    #     "http://mirror.example.com")
 
   def test_GetPkgsByMaintainerRemoved(self):
     f = catalog_notifier.NotificationFormatter()
-    rest_client_mock = self.mox.CreateMock(catalog_notifier.RestClient)
+    rest_client_mock = self.mox.CreateMock(rest.RestClient)
     cat_a = self.mox.CreateMock(catalog.OpencswCatalog)
     cat_b = self.mox.CreateMock(catalog.OpencswCatalog)
     catalogs = [
@@ -95,11 +123,14 @@ class NotificationFormatterTest(mox.MoxTestBase):
         f._GetPkgsByMaintainer(catalogs, rest_client_mock))
     expected_text = u"""aa"""
     # Uncomment to see rendered template
-    # print f._RenderForMaintainer(expected["joe@example.com"])
+    # print f._RenderForMaintainer(
+    #     expected["joe@example.com"],
+    #     "joe@example.com",
+    #     "http://mirror.example.com")
 
   def test_GetPkgsByMaintainerTakeover(self):
     f = catalog_notifier.NotificationFormatter()
-    rest_client_mock = self.mox.CreateMock(catalog_notifier.RestClient)
+    rest_client_mock = self.mox.CreateMock(rest.RestClient)
     cat_a = self.mox.CreateMock(catalog.OpencswCatalog)
     cat_b = self.mox.CreateMock(catalog.OpencswCatalog)
     catalogs = [
@@ -147,7 +178,7 @@ class NotificationFormatterTest(mox.MoxTestBase):
 
   def test_GetPkgsByMaintainerUpgrade(self):
     f = catalog_notifier.NotificationFormatter()
-    rest_client_mock = self.mox.CreateMock(catalog_notifier.RestClient)
+    rest_client_mock = self.mox.CreateMock(rest.RestClient)
     cat_a = self.mox.CreateMock(catalog.OpencswCatalog)
     cat_b = self.mox.CreateMock(catalog.OpencswCatalog)
     catalogs = [
