@@ -27,6 +27,8 @@ RUNTIME_DEP_PKGS_CSWdialog += CSWncurses
 
 CHECKPKG_OVERRIDES_CSWdialog += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWdialog += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWdialog += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWdialog-minimal += surplus-dependency|CSWalternatives
 
 PKGFILES_CSWdialog-minimal = $(bindir).*minimal $(mandir).*minimal
 
