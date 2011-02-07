@@ -41,13 +41,14 @@ RUNTIME_DEP_PKGS_CSWntop += CSWosslrt
 RUNTIME_DEP_PKGS_CSWntop += CSWrrd
 RUNTIME_DEP_PKGS_CSWntop += CSWgeoip
 RUNTIME_DEP_PKGS_CSWntop += CSWpython
-RUNTIME_DEP_PKGS_CSWntop += CSWgdbm
+RUNTIME_DEP_PKGS_CSWntop += CSWlibgdbm3
 RUNTIME_DEP_PKGS_CSWntop += CSWzlib
 RUNTIME_DEP_PKGS_CSWntop += CSWiconv
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWntop)
 BUILD_DEP_PKGS += CSWlibtool CSWautoconf CSWautomake
 BUILD_DEP_PKGS += CSWlibpcapdevel CSWossldevel
+BUILD_DEP_PKGS += CSWlibgdbm-dev
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/autogen.sh
 
