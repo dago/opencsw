@@ -23,13 +23,11 @@ CATALOGNAME_CSWpy-gdata = py_gdata
 SPKG_DESC_CSWpy-gdata = $(DESCRIPTION)
 INCOMPATIBLE_PKGS_CSWpy-gdata = CSWpygdata
 ARCHALL_CSWpy-gdata = 1
-CHECKPKG_OVERRIDES_CSWpy-gdata += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/gdata/Crypto/Util/RFC1751.py
 
 PACKAGES += CSWpygdata
 PKGFILES_CSWpygdata = NOFILES
 SPKG_DESC_CSWpygdata = Do not release this package
 ARCHALL_CSWpygdata = 1
-CHECKPKG_OVERRIDES_CSWpygdata += action-class-only-in-pkginfo
 CHECKPKG_OVERRIDES_CSWpygdata += surplus-dependency|CSWpython
 
 include gar/category.mk
