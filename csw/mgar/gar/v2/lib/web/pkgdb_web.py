@@ -107,7 +107,9 @@ class CatalognameList(object):
         sqlbuilder.Select(
           [models.Srv4FileStats.q.catalogname],
           distinct=True,
-          where=(models.Srv4FileStats.q.use_to_generate_catalogs==True),
+          where=sqlobject.AND(
+            models.Srv4FileStats.q.use_to_generate_catalogs==True,
+            models.Srv4FileStats.q.registered==True),
           orderBy=models.Srv4FileStats.q.catalogname)))
       return render.CatalognameList(rows)
     except sqlobject.main.SQLObjectNotFound, e:
