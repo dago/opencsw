@@ -195,8 +195,19 @@ class MaintainerCheckpkgReport(object):
 class ErrorTagDetail(object):
   def GET(self, tag_name):
     ConnectToDatabase()
-    # TODO: Select only tags of registered packages
-    tags = models.CheckpkgErrorTag.selectBy(tag_name=tag_name)
+    join = [
+        sqlbuilder.INNERJOINOn(None,
+          models.Srv4FileStats,
+          models.CheckpkgErrorTag.q.srv4_file==models.Srv4FileStats.q.id),
+    ]
+    tags = models.CheckpkgErrorTag.select(
+        sqlobject.AND(
+          models.CheckpkgErrorTag.q.tag_name==tag_name,
+          models.Srv4FileStats.q.registered==True,
+          models.Srv4FileStats.q.use_to_generate_catalogs==True,
+          ),
+        join=join,
+    ).orderBy(('basename', 'tag_info'))
     return render.ErrorTagDetail(tag_name, tags)
 
 class ErrorTagList(object):
