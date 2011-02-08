@@ -2,16 +2,14 @@ $def with (tags)
 <html>
   <head>
     <title>
-      OpenCSW Maintainers
+      Checkpkg error tags
     </title>
   </head>
   <body>
     <ul>
-$for tag_name in tags:
+$for tag in tags:
   <li>
-  <a href="$tag_name/">
-    $tag_name
-  </a>
+  <a href="$tag[0]/">$tag[0]</a>
   </li>
 </ul>
 </body>
