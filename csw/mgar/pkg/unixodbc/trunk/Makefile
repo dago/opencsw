@@ -31,13 +31,14 @@ LICENSE = COPYING
 
 PACKAGES += CSWunixodbc
 SPKG_DESC_CSWunixodbc = $(DESCRIPTION)
-CHECKPKG_OVERRIDES_CSWunixodbc += surplus-dependency|CSWlibodbcinst1
-CHECKPKG_OVERRIDES_CSWunixodbc += surplus-dependency|CSWlibodbc1
 
-PACKAGES += CSWunixodbc-devel
-CATALOGNAME_CSWunixodbc-devel = unixodbc_devel
-SPKG_DESC_CSWunixodbc-devel = $(DESCRIPTION), development files
-PKGFILES_CSWunixodbc-devel = $(PKGFILES_DEVEL)
+PACKAGES += CSWunixodbc-dev
+CATALOGNAME_CSWunixodbc-dev = unixodbc_dev
+SPKG_DESC_CSWunixodbc-dev = $(DESCRIPTION), development files
+PKGFILES_CSWunixodbc-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbc1
+RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbccr1
+RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbcinst1
 
 PACKAGES += CSWlibodbc1
 SPKG_DESC_CSWlibodbc1 = $(DESCRIPTION), libodbc.so.1
