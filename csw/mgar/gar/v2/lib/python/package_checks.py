@@ -438,7 +438,7 @@ def CheckObsoleteDeps(pkg_data, error_mgr, logger, messenger):
         msg += "URL: %s" % OBSOLETE_DEPS[obsolete_pkg]["url"]
       if not msg:
         msg = None
-      logger.info(msg)
+      messenger.Message(msg)
 
 
 def CheckArchitectureVsContents(pkg_data, error_mgr, logger, messenger):
