@@ -10,6 +10,7 @@ from lib.python import configuration
 from lib.python import pkgdb
 from lib.python import checkpkg_lib
 import datetime
+from sqlobject import sqlbuilder
 
 urls = (
   r'/', 'index',
@@ -22,7 +23,10 @@ urls = (
   r'/maintainers/(\d+)/', 'MaintainerDetail',
   r'/maintainers/(\d+)/checkpkg/', 'MaintainerCheckpkgReport',
   r'/error-tags/', 'ErrorTagList',
+  r'/error-tags/([^/]+)/', 'ErrorTagDetail',
+  r'/catalognames/', 'CatalognameList',
   r'/catalognames/([^/]+)/', 'Catalogname',
+  r'/error-tags/', 'ErrorTagList',
   r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/', 'Catalogs',
   r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
@@ -90,6 +94,22 @@ class Catalogname(object):
           catalogname=catalogname,
           registered=True).orderBy('mtime')
       return render.Catalogname(catalogname, pkgs)
+    except sqlobject.main.SQLObjectNotFound, e:
+      raise web.notfound()
+
+
+class CatalognameList(object):
+  def GET(self):
+    ConnectToDatabase()
+    try:
+      connection = models.Srv4FileStats._connection
+      rows = connection.queryAll(connection.sqlrepr(
+        sqlbuilder.Select(
+          [models.Srv4FileStats.q.catalogname],
+          distinct=True,
+          where=(models.Srv4FileStats.q.use_to_generate_catalogs==True),
+          orderBy=models.Srv4FileStats.q.catalogname)))
+      return render.CatalognameList(rows)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
@@ -170,13 +190,23 @@ class MaintainerCheckpkgReport(object):
     return render.MaintainerCheckpkgReport(maintainer, pkgs, tags_by_md5)
 
 
+class ErrorTagDetail(object):
+  def GET(self, tag_name):
+    ConnectToDatabase()
+    # TODO: Select only tags of registered packages
+    tags = models.CheckpkgErrorTag.selectBy(tag_name=tag_name)
+    return render.ErrorTagDetail(tag_name, tags)
+
 class ErrorTagList(object):
   def GET(self):
     ConnectToDatabase()
-    # Find all tag names
-    # tag_names = models.CheckpkgErrorTag.select().distinct()
-    tag_names = ['foo']
-    return render.ErrorTagList(tag_names)
+    connection = models.CheckpkgErrorTag._connection
+    rows = connection.queryAll(connection.sqlrepr(
+      sqlbuilder.Select(
+        [models.CheckpkgErrorTag.q.tag_name],
+        distinct=True,
+        orderBy=models.CheckpkgErrorTag.q.tag_name)))
+    return render.ErrorTagList(rows)
 
 
 class Catalogs(object):
