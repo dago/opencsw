@@ -252,6 +252,16 @@ class MakePackageNameBySonameCollectionUnitTest(unittest.TestCase):
     )
     self.assertEqual(expected, su.MakePackageNameBySonameCollection(sonames))
 
+  def testMakePackageNameBySonameCollectionMultipleSoGlib2(self):
+    sonames = [
+      "libgio-2.0.so.0",
+      "libglib-2.0.so.0",
+      "libgmodule-2.0.so.0",
+      "libgobject-2.0.so.0",
+      "libgthread-2.0.so.0",
+    ]
+    self.assertEqual(None, su.MakePackageNameBySonameCollection(sonames))
+
 
 class CommomSubstringTest(unittest.TestCase):
 
