@@ -171,6 +171,13 @@ def GetCommonVersion(sonames):
     return (True, versions_set.pop())
 
 
+def ValidateCollectionName(l):
+  letters = "".join(re.findall(r"[a-zA-Z]", l))
+  if len(letters) <= 1:
+    return False
+  return True
+
+
 def MakePackageNameBySonameCollection(sonames):
   """Finds a name for a collection of sonames.
 
@@ -194,6 +201,8 @@ def MakePackageNameBySonameCollection(sonames):
     candidate = re.sub("\.so.*$", "", candidate)
     common_substring_candidates.append(candidate)
   lcs = CollectionLongestCommonSubstring(copy.copy(common_substring_candidates))
+  if not ValidateCollectionName(lcs):
+    return None
   pkgnames = [
       "CSW" + SonameToStringWithChar("lib%s%s" % (lcs, common_version), "-"),
   ]
