@@ -1,8 +1,0 @@
-#!/sbin/sh
-
-CONFDIR=$BASEDIR/opt/csw/etc/ntop
-
-if [ -d "$CONFDIR" ]; then
-  echo ""
-  echo "You might want to manually remove files in $CONFDIR."
-fi

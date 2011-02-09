@@ -1,5 +1,5 @@
 #
-# Configuration sample file for csw ntop v3.0
+# Configuration sample file for csw ntop v4.0.3
 # v1.0
 #
 # It is strongly recommended that you read ntop documentation 
@@ -165,6 +165,7 @@
 
 #--skip-version-check
 # By default, ntop accesses a remote file to periodically check if the most current version is running. This option disables that check.
+# NOTE [CSWmaintainer]: --skip-version-check appears to be ignored by ntop version 4.0.3
 --skip-version-check
 
 --w3c

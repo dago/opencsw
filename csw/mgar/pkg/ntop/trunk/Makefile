@@ -17,6 +17,7 @@ DISTFILES  = $(NAME)-$(VERSION).tgz
 
 DISTFILES  += cswntop
 EXPANDVARS += cswntop
+DISTFILES += CSWntop.postinstall CSWntop.postremove CSWntop.request
 DISTFILES  += ntop.conf.CSW
 EXPANDVARS += ntop.conf.CSW
 
@@ -26,9 +27,8 @@ PATCHFILES  = 0001-Fix-misplaced-endif.patch
 PATCHFILES += 0002-Do-not-redeclare-__builtin_alloca.patch
 PATCHFILES += 0003-Check-for-uint_-in-addition-to-u_int_.patch
 PATCHFILES += 0004-Strip-default-Solaris-library-pathes-as-we-set-our-o.patch
-
-# PATCHFILES = configure.in.diff
-# PATCHFILES += configureextra_opencsw.diff
+PATCHFILES += 0005-Change-default-PID-file-location-to-var-opt-csw-ntop.patch
+PATCHFILES += 0006-Temporary-Fix-for-Broken-sourceforge-CVS-access.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=17233

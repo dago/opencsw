@@ -1,0 +1,28 @@
+From a1b397956f69cd33847b8cfa38eb08b46d287bc0 Mon Sep 17 00:00:00 2001
+From: Jon Craig <jcraig@opencsw.org>
+Date: Tue, 8 Feb 2011 22:56:40 +0100
+Subject: [PATCH 7/7] Temporary Fix for Broken sourceforge CVS access
+
+---
+ Makefile.am |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 46b102c..1ca4aa6 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -423,8 +423,9 @@ dnetter:
+         done
+ 	@echo ""
+ 	@echo "...Downloading new file..."
+-	@wget -O $(ETTER_PASSIVE_FILE) \
+-		$(ETTER_PASSIVE_DOWNLOAD_FROM)/$(ETTER_PASSIVE_FILE)?$(ETTER_PASSIVE_DOWNLOAD_PARMS)
++#	@wget -O $(ETTER_PASSIVE_FILE) \
++#		$(ETTER_PASSIVE_DOWNLOAD_FROM)/$(ETTER_PASSIVE_FILE)?$(ETTER_PASSIVE_DOWNLOAD_PARMS)
++	@cp ../../../../files/etter.finger.os .
+ 	@echo ""
+ 	@echo "gziping downloaded file..."
+ 	@gzip $(ETTER_PASSIVE_FILE)
+-- 
+1.7.3.2
+
