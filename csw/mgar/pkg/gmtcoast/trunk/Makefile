@@ -37,17 +37,17 @@ WORKSRC = $(WORKDIR)
 PACKAGES += CSWgmtcoast-low
 CATALOGNAME_CSWgmtcoast-low = gmtcoast_low
 SPKG_DESC_CSWgmtcoast-low = Low resolution coastlines for the Generic Mapping Tools (GMT)
-#PKGFILES_CSWgmtcoast-low += /opt/csw/share/coast/.*_[cli]\.cdf
+#PKGFILES_CSWgmtcoast-low += $(datadir)/coast/.*_[cli]\.cdf
 
 PACKAGES += CSWgmtcoast-high
 CATALOGNAME_CSWgmtcoast-high = gmtcoast_high
 SPKG_DESC_CSWgmtcoast-high = High resolution coastlines for the Generic Mapping Tools (GMT)
-PKGFILES_CSWgmtcoast-high += /opt/csw/share/coast/.*_h\.cdf
+PKGFILES_CSWgmtcoast-high += $(datadir)/coast/.*_h\.cdf
 
 PACKAGES += CSWgmtcoast-full
 CATALOGNAME_CSWgmtcoast-full = gmtcoast_full
 SPKG_DESC_CSWgmtcoast-full = Full resolution coastlines for the Generic Mapping Tools (GMT)
-PKGFILES_CSWgmtcoast-full += /opt/csw/share/coast/.*_f\.cdf
+PKGFILES_CSWgmtcoast-full += $(datadir)/coast/(.*)_f\.cdf
 
 include gar/category.mk
 
