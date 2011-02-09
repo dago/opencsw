@@ -55,10 +55,10 @@ CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWosslrt
 # we use sun perl not csw one
 CHECKPKG_OVERRIDES_CSWosslutils += missing-dependency|CSWperl
 
-CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWcacertificates
+#CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWcacertificates
 
 # this package doesn't yet obey the new shared libraries standard
-CHECKPKG_OVERRIDES_CSWosslrt += non-uniform-lib-versions-in-package|sonames=['libcrypto.so.0.9.7',|'libcrypto.so.0.9.8',|'libssl.so.0.9.7',|'libssl.so.0.9.8']
+CHECKPKG_OVERRIDES_CSWosslrt += non-uniform-lib-versions-in-package|sonames=libcrypto.so.0.9.7,libcrypto.so.0.9.8,libssl.so.0.9.7,libssl.so.0.9.8
 
 # we will not recompile old 0.9.7 version for now
 ifeq ($(shell /usr/bin/uname -p),sparc) 
@@ -80,6 +80,20 @@ CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
 endif
+
+# the /usr/local reference in the documents file are relevant
+CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/FAQ
+CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/INSTALL
+CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/CHANGES
+CHECKPKG_OVERRIDES_CSWossl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/INSTALL
+CHECKPKG_OVERRIDES_CSWossl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/CHANGES
+CHECKPKG_OVERRIDES_CSWossl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/FAQ
+CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/FAQ
+CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/INSTALL
+CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/CHANGES
+CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/CHANGES
+CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/INSTALL
+CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/FAQ
 
 
 ###### Upstream and opencsw files information #######
@@ -202,10 +216,14 @@ install-certs:
 	[ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] && \
 		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW
 
+fix-paths:
+	gsed -i -e 's,/usr/local/ssl/lib,/opt/csw/etc/ssl,' $(PKGROOT)$(mandir)/man1/ca.1
+	@$(MAKECOOKIE)
+
 install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
 install-oldlibs-%:
 	@echo " ==> Installing old libraries $* from archive oldlibs.$*-$(GARCH).tar.gz"
 	cd $(PKGROOT) && gunzip -c $(CURDIR)/$(FILEDIR)/oldlibs.$*-$(GARCH).tar.gz | tar xvf -
 	@$(MAKECOOKIE)
 
-pre-package: install-certs install-oldlibs install-changelog install-doc
+pre-package: install-certs install-oldlibs install-changelog install-doc fix-paths
