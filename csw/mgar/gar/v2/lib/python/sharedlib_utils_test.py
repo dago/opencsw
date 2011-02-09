@@ -263,6 +263,18 @@ class MakePackageNameBySonameCollectionUnitTest(unittest.TestCase):
     self.assertEqual(None, su.MakePackageNameBySonameCollection(sonames))
 
 
+class ValidateCollectionNameTest(unittest.TestCase):
+
+  def testLetters(self):
+    self.assertEqual(True, su.ValidateCollectionName("foo"))
+
+  def testOneLetter(self):
+    self.assertEqual(False, su.ValidateCollectionName("f"))
+
+  def testNoLetters(self):
+    self.assertEqual(False, su.ValidateCollectionName("-2.0"))
+
+
 class CommomSubstringTest(unittest.TestCase):
 
   def testLongestCommonSubstring_1(self):
