@@ -1,21 +1,27 @@
 #!/sbin/sh
 
-CONFDIR=$BASEDIR/opt/csw/etc/ntop
+CONFDIR=$BASEDIR/etc/opt/etc/ntop
 DATADIR=$BASEDIR/var/opt/csw/ntop
 
-PATH=/bin:/usr/bin:"$PATH"
+PATH=/bin:/usr/bin:/usr/sbin:"$PATH"
 export PATH
 
 if [ ! -f "$CONFDIR/ntop.conf" ]; then
   cp -p $CONFDIR/ntop.conf.CSW $CONFDIR/ntop.conf
 fi
 
+if [ ! -d "$DATADIR" ]; then
+ mkdir -p $DATADIR
+fi
+
+if [ ! -d "$DATADIR/rrd ]; then
+ mkdir -p $DATADIR/rrd
+ chown nobody:nobody $DATADIR/rrd
+ chmod 0711 $DATADIR/rrd
+fi
+
 if [ ! -f "$DATADIR/ntop_pw.db" ]; then
-  if [ ! -d "$DATADIR" ]; then
-   mkdir -p $DATADIR
-   chown nobody:nobody $DATADIR
-   chmod 0711 $DATADIR
-  fi
   $BASEDIR/opt/csw/bin/ntop -P $DATADIR -u nobody --set-admin-password=$ADMIN_PW
 fi
+
 echo "\nURL to access ntop is http://hostname:3000"

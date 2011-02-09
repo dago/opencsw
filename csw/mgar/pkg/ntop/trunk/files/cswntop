@@ -1,10 +1,15 @@
 #!/sbin/sh
 #
-# ntop startup script for ntop v3.0
+# ntop startup script for ntop v4.0.3
 # v1.0
 #
-BINDIR=@bindir@
-CONF=@sysconfdir@/ntop/ntop.conf
+BINDIR=/opt/csw/bin
+CONF=/etc/opt/csw/ntop/ntop.conf
+
+##
+# CSWCLASS Configurations
+#AUTOENABLE no
+##
 
  if [ ! -f "$CONF" ]; then
   echo "Configuration file not found."
@@ -12,8 +17,8 @@ CONF=@sysconfdir@/ntop/ntop.conf
  else
   DATADIR=`/usr/bin/egrep "^\--db-file-path|^-P" "$CONF" | /usr/bin/cut -f2 -d" "`
   if [ -z "$DATADIR" ]; then
-   DATADIR=@localstatedir@/ntop
-   EXTRA="-P ${DATADIR}"
+   DATADIR=/var/opt/csw/ntop
+   GENEXTRA="-P ${DATADIR}"
   fi
  fi
  PIDFILE=${DATADIR}/ntop.pid
@@ -33,7 +38,7 @@ case $1 in
         fi
 	if [ -z "$NTOPUSER" ]; then 
 	 NTOPUSER=nobody
-	 EXTRA="${EXTRA} -u ${NTOPUSER}"
+	 UNIXEXTRA="${UNIXEXTRA} -u ${NTOPUSER}"
 	fi
 	if [ ! -d "$DATADIR" ];then
   	 /usr/bin/mkdir -p ${DATADIR}
@@ -46,13 +51,13 @@ case $1 in
 	fi
 	HTTP=`/usr/bin/egrep "^\--http-server|^-w" "$CONF" | /usr/bin/cut -f2 -d" "`
 	if [ -z "$HTTP" ];then
-	 EXTRA=" ${EXTRA} -w 3000"
+	 GENEXTRA=" ${GENEXTRA} -w 3000"
 	fi
-	HTTPS=`/usr/bin/egrep "^\--http-servers|^-W" "$CONF" | /usr/bin/cut -f2 -d" "`
+	HTTPS=`/usr/bin/egrep "^\--http-server|^-W" "$CONF" | /usr/bin/cut -f2 -d" "`
 	if [ -z "$HTTPS" ];then
-	 EXTRA=" ${EXTRA} -W 0"
+	 GENEXTRA=" ${GENEXTRA} -W 0"
 	fi
-	INTERFACES=`/usr/bin/egrep "^\--interfaces|^-i" "$CONF" | /usr/bin/cut -f2 -d" "`
+	INTERFACES=`/usr/bin/egrep "^\--interface|^-i" "$CONF" | /usr/bin/cut -f2 -d" "`
 	if [ -z "$INTERFACES" ];then
 	 for i in `/sbin/ifconfig -a |/usr/bin/grep "^[a-z0-9]*:"`
           do
@@ -80,18 +85,18 @@ case $1 in
          done
         fi
 	if [ ${interfaces} -gt 1 ]; then
-	 EXTRA=" ${EXTRA} -i ${INTERFACES}"
+	 UNIXEXTRA=" ${UNIXEXTRA} -i ${INTERFACES}"
 	fi
 	LOG=`/usr/bin/egrep "^\--use-syslog|^-L" "$CONF" | /usr/bin/cut -f2 -d" "`
 	if [ -z "$LOG" ];then
-	 EXTRA=" ${EXTRA} --use-syslog=local3"
+	 UNIXEXTRA=" ${UNIXEXTRA} --use-syslog=local3"
 	fi
 
         /usr/bin/echo "Start ntop network traffic usage monitor..."
-	if [ -z "$EXTRA" ];then 
+	if [ -z "${GENEXTRA}${UNIXEXTRA}" ];then 
          $BINDIR/ntop @${CONF}
 	else
-	 $BINDIR/ntop ${EXTRA} @${CONF}
+	 $BINDIR/ntop ${GENEXTRA} @${CONF} ${UNIXEXTRA}
 	fi
 	 
         ;;
@@ -99,8 +104,14 @@ case $1 in
 
         echo "Stop ntop network traffic usage monitor..."
         if [ -f "$PIDFILE" ]; then
-                /usr/bin/kill -TERM `/usr/bin/cat $PIDFILE`
+		NTOPPID=`/usr/bin/cat $PIDFILE`
+                /usr/bin/kill -TERM $NTOPPID
+		echo "waiting on process $NTOPPID to exit..."
+		wait $NTOPPID
+	else
+		echo "$PIDFILE: seems to be missing, cannot kill ntop process."
         fi
+	
         ;;
 
 *)
