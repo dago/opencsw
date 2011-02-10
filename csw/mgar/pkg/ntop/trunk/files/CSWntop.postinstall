@@ -1,7 +1,7 @@
 #!/sbin/sh
 
-CONFDIR=$BASEDIR/etc/opt/csw/ntop
-DATADIR=$BASEDIR/var/opt/csw/ntop
+CONFDIR="${BASEDIR}etc/opt/csw/ntop"
+DATADIR="${BASEDIR}var/opt/csw/ntop"
 
 PATH=/bin:/usr/bin:/usr/sbin:"$PATH"
 export PATH
@@ -16,12 +16,9 @@ if [ ! -d "$DATADIR" ]; then
   mkdir -p $DATADIR
 fi
 
-if [ ! -d "$DATADIR/rrd" ]; then
-  echo "Making $DATADIR/rrd"
-  mkdir -p $DATADIR/rrd
-  chown nobody:nobody $DATADIR/rrd
-  chmod 0711 $DATADIR/rrd
-fi
+# Make sure directory permissions allow user nobody
+chown nobody:nobody $DATADIR
+chmod 0711 $DATADIR
 
 if [ ! -f "$DATADIR/ntop_pw.db" ]; then
   echo "Setting admin password"

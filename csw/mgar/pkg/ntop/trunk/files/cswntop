@@ -61,10 +61,12 @@ case $1 in
 	if [ -z "$INTERFACES" ];then
 	 for i in `/sbin/ifconfig -a |/usr/bin/grep "^[a-z0-9]*:"`
           do
-           /usr/bin/echo $i | /usr/bin/grep "^[a-z0-9]*:" >/dev/null 2>&1       
+           # Only accept base interfaces (skip addtnl IPs)
+           /usr/bin/echo $i | /usr/bin/grep "^[a-z0-9]*:$" >/dev/null 2>&1       
            if [ $? -eq 1 ]; then
             continue
            fi
+           # Skip the localhost
            m=`/usr/bin/echo ${i} | /usr/bin/sed 's/:[0-9]*:*//'`
            if [ "$m" = "lo0" ]; then
             continue
@@ -72,20 +74,18 @@ case $1 in
            net_device_list="${net_device_list} ${m}"
           done
          net_device_list=`/usr/bin/echo $net_device_list | /usr/bin/sort -u`
-         interfaces=0;
-         set -- $net_device_list
-         for i
-         do
-          if [ ${interfaces} -gt 0 ]; then
-           INTERFACES="${i},${INTERFACES}"
-          else
-           INTERFACES="${i}"
+	 if [ ${net_device_list} ]; then
+           set -- $net_device_list
+	   INTERFACES="$1"
+	   shift;
+           for i
+           do
+            INTERFACES="$INTERFACES,${i}"
+           done
           fi
-          interfaces=`/usr/bin/expr ${interfaces} + 1`
-         done
-        fi
-	if [ ${interfaces} -gt 1 ]; then
-	 UNIXEXTRA=" ${UNIXEXTRA} -i ${INTERFACES}"
+	  if [ ${INTERFACES} ]; then
+	   UNIXEXTRA=" ${UNIXEXTRA} -i ${INTERFACES}"
+	  fi
 	fi
 	LOG=`/usr/bin/egrep "^\--use-syslog|^-L" "$CONF" | /usr/bin/cut -f2 -d" "`
 	if [ -z "$LOG" ];then
