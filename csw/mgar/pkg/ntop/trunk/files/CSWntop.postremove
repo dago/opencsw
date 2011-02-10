@@ -3,7 +3,7 @@
 CONFDIR=$BASEDIR/etc/opt/csw/ntop
 DATADIR=$BASEDIR/var/opt/csw/ntop
 
-if [ -d "$CONFDIR"  || -d "$DATADIR" ]; then
+if [ -d "$CONFDIR" -o -d "$DATADIR" ]; then
   echo ""
   echo "You might want to manually remove files in:"
   if [ -d "$CONFDIR" ]; then
