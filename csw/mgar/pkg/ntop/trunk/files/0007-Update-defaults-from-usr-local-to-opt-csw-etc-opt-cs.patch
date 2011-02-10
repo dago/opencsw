@@ -1,0 +1,43 @@
+From 22dd84d99aea4bfb4868e4e08df255d615a4733e Mon Sep 17 00:00:00 2001
+From: Jon Craig <jcraig@opencsw.org>
+Date: Thu, 10 Feb 2011 06:24:08 +0100
+Subject: [PATCH] Update defaults from /usr/local to /opt/csw - /etc/opt/csw
+
+---
+ globals-defines.h |    6 +++---
+ report.c          |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/globals-defines.h b/globals-defines.h
+index a412617..7096add 100644
+--- a/globals-defines.h
++++ b/globals-defines.h
+@@ -2767,9 +2767,9 @@ struct ip6_hdr
+ 
+ /* *************************** */
+ 
+-#define DEFAULT_NTOP_PLUGINS_INSTALL    "/usr/local/lib/ntop/plugins"
+-#define DEFAULT_NTOP_HTML_INSTALL       "/usr/local/share/ntop"
+-#define DEFAULT_NTOP_CFG_CONFIGFILE_DIR "/usr/local/etc/ntop"
++#define DEFAULT_NTOP_PLUGINS_INSTALL    "/opt/csw/lib/ntop/plugins"
++#define DEFAULT_NTOP_HTML_INSTALL       "/opt/csw/share/ntop"
++#define DEFAULT_NTOP_CFG_CONFIGFILE_DIR "/etc/opt/csw/ntop"
+ 
+ #define DOMAIN_VIEW          0
+ #define NETWORK_VIEW         1
+diff --git a/report.c b/report.c
+index 0e62c8d..cbe6b7b 100644
+--- a/report.c
++++ b/report.c
+@@ -2353,7 +2353,7 @@ void makeDot() {
+   if(fetchPrefsValue("dot.path", buf, sizeof(buf)) != -1) {
+     snprintf(dotPath, sizeof(dotPath), "%s", buf);
+   } else {
+-    snprintf(dotPath, sizeof(dotPath), "/usr/local/bin/dot");
++    snprintf(dotPath, sizeof(dotPath), "/opt/csw/bin/dot");
+     storePrefsValue("dot.path", dotPath); /* Set the default */
+   }
+ 
+-- 
+1.7.3.2
+
