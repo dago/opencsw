@@ -387,7 +387,10 @@ def main():
   md5_sums = args
 
   dm = database.DatabaseManager()
-  dm.AutoManage()
+  # Automanage is not what we want to do, if the intention is to initialize
+  # the database.
+  if command != 'initdb':
+    dm.AutoManage()
 
   if (command, subcommand) == ('show', 'errors'):
     for md5_sum in md5_sums:
