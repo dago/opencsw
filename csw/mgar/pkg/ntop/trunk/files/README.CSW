@@ -1,0 +1,24 @@
+* The etter.finger.os is a static version
+During the build process for this release of the package the 
+sourceforge website was hacked and a number of services were
+shutdown during the rebuilding/securing of the website. CVS
+was one of these services and that impacted the ability to
+build ntop.  As part of the build process the file
+etter.finger.os is downloaded from the etters project
+CVS system and without http acces to the repository the
+build would not proceed.  I extracted the last version
+of this file and short circuited the build to use this
+frozen version of the file.  The package was last updated
+in 2004, so this shouldn't be a problem.  The next time
+ntop is refreshed I will revisit this to see if it can
+be handled better, or at least the way the package
+author intends it to be handled.
+
+* Files with bad content
+A number of shared libraries and documentation files have
+references to /usr/local.  In the case of the shared
+libaries these references were a static reference to
+pre-processor, compiler and linker flags.  As such they
+may be ignored.  The documentation has a number of
+references but I have chosen to leave these references
+as the author choose to have them. 
