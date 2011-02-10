@@ -1,3 +1,6 @@
+# Reminder: to build dialog_minimal, use
+#   gmake package-CSWdialog-minimal
+
 NAME = dialog
 VERSION = 1.1r20110118
 VERSION2 = 1.1
