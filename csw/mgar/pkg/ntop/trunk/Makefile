@@ -46,8 +46,10 @@ RUNTIME_DEP_PKGS_CSWntop += CSWpython
 RUNTIME_DEP_PKGS_CSWntop += CSWlibgdbm3
 RUNTIME_DEP_PKGS_CSWntop += CSWzlib
 RUNTIME_DEP_PKGS_CSWntop += CSWiconv
-RUNTIME_DEP_PKGS_CSWntop += CSWgraphviz
 
+## Following package enables optional functionality
+#RUNTIME_DEP_PKGS_CSWntop += CSWgraphviz
+#CHECKPKG_OVERRIDES_CSWntop += surplus-dependency|CSWgraphviz
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWntop)
 BUILD_DEP_PKGS += CSWlibtool CSWautoconf CSWautomake
@@ -93,6 +95,7 @@ CHECKPKG_OVERRIDES_CSWntop += soname-not-part-of-filename|soname=libsflowPlugin-
 CHECKPKG_OVERRIDES_CSWntop += shared-lib-pkgname-mismatch
 
 # Bad content files - Documentation
+CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/share/ntop/html/faq.html
 CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/share|root/opt/csw/share/ntop/html/faq.html
 CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/share/ntop/html/ntop.html
 CHECKPKG_OVERRIDES_CSWntop += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/ntop.8

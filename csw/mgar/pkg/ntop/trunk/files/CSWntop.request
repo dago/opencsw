@@ -1,6 +1,7 @@
 #!/sbin/sh
 # 
-DATADIR=$BASEDIR/var/opt/csw/ntop
+CONFDIR="${BASEDIR}etc/opt/csw/ntop"
+DATADIR="${BASEDIR}var/opt/csw/ntop"
 
 if [ ! -f  $DATADIR/ntop_pw.db ]; then
  stty -echo
