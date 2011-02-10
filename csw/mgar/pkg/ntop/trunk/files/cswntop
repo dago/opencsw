@@ -74,7 +74,7 @@ case $1 in
            net_device_list="${net_device_list} ${m}"
           done
          net_device_list=`/usr/bin/echo $net_device_list | /usr/bin/sort -u`
-	 if [ ${net_device_list} ]; then
+	 if [ "${net_device_list}" ]; then
            set -- $net_device_list
 	   INTERFACES="$1"
 	   shift;
@@ -83,7 +83,7 @@ case $1 in
             INTERFACES="$INTERFACES,${i}"
            done
           fi
-	  if [ ${INTERFACES} ]; then
+	  if [ "${INTERFACES}" ]; then
 	   UNIXEXTRA=" ${UNIXEXTRA} -i ${INTERFACES}"
 	  fi
 	fi
