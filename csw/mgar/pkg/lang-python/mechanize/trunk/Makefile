@@ -11,5 +11,10 @@ endef
 SPKG_SOURCEURL = http://wwwsearch.sourceforge.net/mechanize/
 MASTER_SITES = http://wwwsearch.sourceforge.net/$(NAME)/src/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+LICENSE = PKG-INFO
+PACKAGES = CSWpy-mechanize
+ARCHALL_CSWpy-mechanize = 1
+# mechanize does have tests, but they require files that we don't have in the
+# package repository.
+SKIPTEST = 1
 include gar/category.mk
