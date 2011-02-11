@@ -25,6 +25,8 @@ MERGE_SCRIPTS_isa-default-curses-minimal = copy-all
 PACKAGES = CSWdialog CSWdialog-minimal
 SPKG_DESC_CSWdialog = A script-interpreter which provides a set of curses widgets
 SPKG_DESC_CSWdialog-minimal = A script-interpreter which provides a set of curses widgets (traditional curses version)
+CATALOGNAME_CSWdialog = dialog
+CATALOGNAME_CSWdialog-minimal = dialog_minimal
 
 RUNTIME_DEP_PKGS_CSWdialog += CSWncurses
 
