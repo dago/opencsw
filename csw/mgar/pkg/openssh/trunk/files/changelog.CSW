@@ -1,3 +1,9 @@
+openssh (5.8p1,REV=2011.02.12) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 12 Feb 2011 17:53:23 +0100
+
 openssh (5.6p1,REV=2010.12.19) unstable
 
   * New upstream release.
