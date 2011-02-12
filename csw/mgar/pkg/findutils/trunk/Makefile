@@ -17,7 +17,7 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWfindutils.postinstall
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
+RUNTIME_DEP_PKGS = CSWggettextrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -35,7 +35,6 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw
 # because that's what -fast does if it's last in the list.
 OPT_FLAGS_SOS = -fast -xnolibmopt
 
-CHECKPKG_OVERRIDES_CSWfindutils += surplus-dependency|CSWiconv
 
 # Test target requires GNU diff
 TEST_TARGET = check
