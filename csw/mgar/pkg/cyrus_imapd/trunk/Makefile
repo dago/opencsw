@@ -84,6 +84,21 @@ CHECKPKG_OVERRIDES_CSWcyrusimapdutils += surplus-dependency|CSWpmcyrus
 # Don't how to properly solve this now
 CHECKPKG_OVERRIDES_CSWcyrusimapd += file-collision|/opt/csw/share/man/man8/imapd.8|CSWcourierimap|CSWcyrusimapd
 
+# it's just the path to the dtd file
+CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswcyrus.xml
+
+# Just a reference to gdb path given in a example
+CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cyrus_imapd/man/imapd.conf.5.html
+CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/imapd.conf.5
+
+# just examples
+CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cyrus_imapd/install-configure.html
+CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cyrus_imapd/install-compile.html
+CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cyrus_imapd/install-testing.html
+CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cyrus_imapd/text/install-configure
+CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cyrus_imapd/text/install-testing
+CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cyrus_imapd/text/install-compile
+
 
 ###### Upstream and opencsw files information #######
 
@@ -213,7 +228,7 @@ pre-merge:
 	mkdir -p $(PKGROOT)/$(prefix)/share/doc/cyrus_imapd
 	@$(MAKECOOKIE)
 
-post-merge: fix2build install-tools cyrus-rename install-docs libexec-in-sbin install-cyrus-directory install-additional-files 
+post-merge: install-tools cyrus-rename install-docs libexec-in-sbin install-cyrus-directory install-additional-files fix2build
 
 
 # Let's install the files 
@@ -258,16 +273,18 @@ fix2build:
 	chmod -R u+w "$(PKGROOT)/"
 
 	# let's remove pod files
-	gfind $(PKGROOT) -name "perllocal.pod" -exec rm '{}' ';'
+	gfind $(PKGROOT) -name "perllocal.pod" -delete
 	# and CVS directories
 	gfind $(PKGROOT) -depth -type d -name "CVS" -exec rm -rf '{}' ';'
+	# and orig files
+	gfind $(PKGROOT) -name "*.orig" -delete 
 
 	# We remove fetchnews man and doc page as we did not build nntp support
 	# and as it clashes with leafnode
 	rm -f $(PKGROOT)$(mandir)/man8/fetchnews.8
 	rm -f $(PKGROOT)$(docdir)/cyrus_imapd/man/fetchnews.8.html
-	
-	@$(MAKECOOKIE)
+
+	gfind /home/yann/mgar/cyrus_imapd/trunk -name "*.orig" -delete 
 
 
 # we rename some tools with too generic names
@@ -286,7 +303,10 @@ install-docs:
 		ginstall -D $(WORKDIR_FIRSTMOD)/$$PKG.changelog.CSW $(PKGROOT)/$(docdir)/$$PKG/changelog.CSW; \
 		ginstall -D $(WORKDIR_FIRSTMOD)/README.CSW $(PKGROOT)/$(docdir)/$$PKG/README.CSW; \
 	  done )
+	# Fix path
+	gsed -i -e 's,/usr/local/cyrus/bin,$(sbindir),' $(PKGROOT)$(docdir)/cyrus_imapd/internal/replication_examples.html
 	@$(MAKECOOKIE)
+
 
 # we install binary under tools as part of the package
 install-tools:
@@ -296,9 +316,10 @@ install-tools:
 		rm -f $(PKGROOT)$(sbindir)/$$F; \
 	done
 	
-	# we want perl scripts to use opencsw perl
+	# we want perl scripts to use opencsw perl and paths
 	perl -pi -e 's/exec\s+perl/exec \/opt\/csw\/bin\/perl/g' $(PKGROOT)$(sbindir)/* $(PKGROOT)$(bindir)/*
 	( for FILE in translatesieve undohash arbitronsort; do \
-	    perl -pi -e 's/^#!\/usr\/(local\/)?bin\/perl/#!\/usr\/bin\/perl/' $(PKGROOT)$(sbindir)/$$FILE; \
+	    perl -pi -e 's/^#!\/usr\/(local\/)?bin\/perl/#!\/opt\/csw\/bin\/perl/' $(PKGROOT)$(sbindir)/$$FILE; \
 	    done )
+	gsed -i -e 's,/usr/local/etc/,/etc/opt/csw/,' $(PKGROOT)$(libdir)/perl/csw/Cyrus/IMAP/Shell.pm
 	@$(MAKECOOKIE)
