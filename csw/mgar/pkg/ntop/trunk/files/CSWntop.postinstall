@@ -1,30 +1,30 @@
 #!/sbin/sh
 
-CONFDIR="${BASEDIR}etc/opt/csw/ntop"
-DATADIR="${BASEDIR}var/opt/csw/ntop"
+CONFDIR="${BASEDIR}/etc/opt/csw/ntop"
+DATADIR="${BASEDIR}/var/opt/csw/ntop"
 
 PATH=/bin:/usr/bin:/usr/sbin:"$PATH"
 export PATH
 
-if [ ! -f "$CONFDIR/ntop.conf" ]; then
+if [ ! -f "${CONFDIR}/ntop.conf" ]; then
   echo "Installing CSWntop default config"
-  cp -p $CONFDIR/ntop.conf.CSW $CONFDIR/ntop.conf
+  cp -p ${CONFDIR}/ntop.conf.CSW ${CONFDIR}/ntop.conf
 fi
 
-if [ ! -d "$DATADIR" ]; then
-  echo "Making DATADIR $DATADIR"
-  mkdir -p $DATADIR
+if [ ! -d "${DATADIR}" ]; then
+  echo "Making DATADIR ${DATADIR}"
+  mkdir -p ${DATADIR}
 fi
 
 # Make sure directory permissions allow user nobody
-chown nobody:nobody $DATADIR
-chmod 0711 $DATADIR
+chown nobody:nobody ${DATADIR}
+chmod 0711 ${DATADIR}
 
-if [ ! -f "$DATADIR/ntop_pw.db" ]; then
+if [ ! -f "${DATADIR}/ntop_pw.db" ]; then
   echo "Setting admin password"
-  $BASEDIR/opt/csw/bin/ntop -P $DATADIR -u nobody --set-admin-password=$ADMIN_PW
+  ${BASEDIR}/opt/csw/bin/ntop -P ${DATADIR} -u nobody --set-admin-password=$ADMIN_PW
 else
-  echo "Keeping the existing $DATADIR/ntop_pw.db password."
+  echo "Keeping the existing ${DATADIR}/ntop_pw.db password."
 fi
 
 echo "\nURL to access ntop is http://hostname:3000"
