@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 1.7.4
+VERSION = 1.7.4.1
 #PATCHLEVEL = rc1
 CATEGORIES = devel
 
