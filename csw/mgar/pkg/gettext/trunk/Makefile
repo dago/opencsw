@@ -26,7 +26,7 @@ PACKAGES += CSWggettextrt
 
 CATALOGNAME_CSWlibasprintf0 = libasprintf0
 CATALOGNAME_CSWggettext = ggettext
-CATALOGNAME_CSWggettext = ggettextdoc
+CATALOGNAME_CSWggettextdoc = ggettextdoc
 CATALOGNAME_CSWlibgettextlib0-14-1 = libgettextlib0_14_1
 CATALOGNAME_CSWlibgettextlib0-17 = libgettextlib0_17
 CATALOGNAME_CSWlibgettextlib0-18-1 = libgettextlib0_18_1
