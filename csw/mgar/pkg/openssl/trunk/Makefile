@@ -95,6 +95,13 @@ CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw
 CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/INSTALL
 CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/FAQ
 
+# Sorry, I will not rebuild the old libraries
+CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/libssl.so.0.9.7
+CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/libcrypto.so.0.9.7
+CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libssl.so.0.9.7
+CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libcrypto.so.0.9.7
+
+
 
 ###### Upstream and opencsw files information #######
 
