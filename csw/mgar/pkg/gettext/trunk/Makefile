@@ -75,6 +75,7 @@ RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibgettextpo0
 RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl2
 RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl3
 RUNTIME_DEP_PKGS_CSWggettextrt += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWggettextrt += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWlibasprintf0 += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-14-1 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-14-1 += CSWlibintl3
