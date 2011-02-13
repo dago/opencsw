@@ -1,5 +1,5 @@
 NAME = Test-Manifest
-VERSION = 1.17
+VERSION = 1.23
 CATEGORIES = cpan
 AUTHOR = BDFOY
 
@@ -11,6 +11,11 @@ define BLURB
   the desired order.
 endef
 
-DISTFILES += CSWpmtstmanif.gspec
+CATALOGNAME = pm_tstmanif
+PACKAGES        = CSWpmtstmanif
+
+ARCHALL_CSWpmtstmanif = 1
+
+LICENSE = LICENSE
 
 include gar/category.mk
