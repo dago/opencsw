@@ -1,5 +1,5 @@
 NAME = RPC-XML
-VERSION = 0.69
+VERSION = 0.74
 CATEGORIES = cpan
 AUTHOR = RJRAY
 
@@ -13,7 +13,8 @@ define BLURB
 	from CPAN.
 endef
 
-RUNTIME_DEP_PKGS_CSWpmrpcxml = CSWpmlibwww CSWpmxmllibxml
+RUNTIME_DEP_PKGS_CSWpmrpcxml = CSWpmlibwww CSWpmxmllibxml CSWpmcompresszlib
+BUILD_DEP_PKGS_CSWpmrpcxml = CSWpmlibwww CSWpmxmllibxml CSWpmcompresszlib
 
 PACKAGES = CSWpmrpcxml
 CATALOGNAME = pm_rpcxml
