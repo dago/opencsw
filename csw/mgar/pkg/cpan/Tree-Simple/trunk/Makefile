@@ -1,5 +1,5 @@
 NAME = Tree-Simple
-VERSION = 1.16
+VERSION = 1.18
 CATEGORIES = cpan
 AUTHOR = STEVAN
 
@@ -12,8 +12,13 @@ define BLURB
   also has siblings, as they are just the children of their immediate parent.
 endef
 
-DISTFILES += CSWpmtreesimple.gspec
+RUNTIME_DEP_PKGS_CSWpmtreesimple = CSWpmtstexception
+BUILD_DEP_PKGS_CSWpmtreesimple = CSWpmtstexception
 
-BUILDDEPS += cpan/Test-Exception
+PACKAGES = CSWpmtreesimple
+CATALOGNAME = pm_treesimple
+ARCHALL = 1
+
+LICENSE = README
 
 include gar/category.mk
