@@ -10,7 +10,7 @@ define BLURB
   sophisticated text formatting, try the Text::Format module.
 endef
 
-DISTFILES = COPYING
+LICENSE = README
 
 PACKAGES = CSWpmtextwrapper CSWpmtextwrap
 
