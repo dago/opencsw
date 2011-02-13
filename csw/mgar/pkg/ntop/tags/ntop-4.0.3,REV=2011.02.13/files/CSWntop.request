@@ -1,0 +1,30 @@
+#!/sbin/sh
+# 
+CONFDIR="${BASEDIR}/etc/opt/csw/ntop"
+DATADIR="${BASEDIR}/var/opt/csw/ntop"
+
+if [ ! -f  ${DATADIR}/ntop_pw.db ]; then
+ stty -echo
+ trap "stty echo ; echo 'Interrupted' ; exit 1" 1 2 3 15
+ while [ true ]; do
+  echo "\nPlease enter the password for the admin user: \c"
+  read admin_pw
+  if [ `expr "$admin_pw" : '.*'` -ge 5 ];then
+   echo "\nPlease enter the password again: \c"
+   read admin_pw1
+   if [ "$admin_pw" != "$admin_pw1" ];then
+    echo "\nPasswords don't match. Please try again."
+   else
+    break
+   fi
+  else
+   echo "\nPassword too short (5 characters or more). Please try again."
+  fi
+ done
+ echo "\n"
+ stty echo
+fi
+cat > $1 << !
+ADMIN_PW=$admin_pw
+!
+exit 0

@@ -1,0 +1,121 @@
+#!/sbin/sh
+#
+# ntop startup script for ntop v4.0.3
+# v1.0
+#
+BINDIR=/opt/csw/bin
+CONF=/etc/opt/csw/ntop/ntop.conf
+
+##
+# CSWCLASS Configurations
+#AUTOENABLE no
+##
+
+ if [ ! -f "$CONF" ]; then
+  echo "Configuration file not found."
+  exit 1
+ else
+  DATADIR=`/usr/bin/egrep "^\--db-file-path|^-P" "$CONF" | /usr/bin/cut -f2 -d" "`
+  if [ -z "$DATADIR" ]; then
+   DATADIR=/var/opt/csw/ntop
+   GENEXTRA="-P ${DATADIR}"
+  fi
+ fi
+ PIDFILE=${DATADIR}/ntop.pid
+
+case $1 in
+'start')
+	DAEMON_MODE=`/usr/bin/egrep "^\--daemon|^-d" "$CONF"`
+	if [ -z "$DAEMON_MODE" ];then 
+	 echo "No configured as a daemon."
+	 exit 1
+	fi
+	NTOPUSER=`/usr/bin/egrep "^\--user|^-u" "$CONF" | /usr/bin/cut -f2 -d" "`
+	NTOPGROUP=`/usr/bin/egrep "^${NTOPUSER}:" /etc/passwd | /usr/bin/cut -f4 -d":" `
+	if [ -z "$NTOPGROUP" ]; then
+	 echo "Invalid ntop user ${NTOPUSER}"
+	 exit 1
+        fi
+	if [ -z "$NTOPUSER" ]; then 
+	 NTOPUSER=nobody
+	 UNIXEXTRA="${UNIXEXTRA} -u ${NTOPUSER}"
+	fi
+	if [ ! -d "$DATADIR" ];then
+  	 /usr/bin/mkdir -p ${DATADIR}
+	 /usr/bin/chown ${NTOPUSER}:${NTOPGROUP} ${DATADIR}
+	 /usr/bin/chmod 0711 ${DATADIR}
+        fi
+	if [ ! -f "$DATADIR/ntop_pw.db" ];then
+	 echo "No password database !"
+	 exit 1;
+	fi
+	HTTP=`/usr/bin/egrep "^\--http-server|^-w" "$CONF" | /usr/bin/cut -f2 -d" "`
+	if [ -z "$HTTP" ];then
+	 GENEXTRA=" ${GENEXTRA} -w 3000"
+	fi
+	HTTPS=`/usr/bin/egrep "^\--http-server|^-W" "$CONF" | /usr/bin/cut -f2 -d" "`
+	if [ -z "$HTTPS" ];then
+	 GENEXTRA=" ${GENEXTRA} -W 0"
+	fi
+	INTERFACES=`/usr/bin/egrep "^\--interface|^-i" "$CONF" | /usr/bin/cut -f2 -d" "`
+	if [ -z "$INTERFACES" ];then
+	 for i in `/sbin/ifconfig -a |/usr/bin/grep "^[a-z0-9]*:"`
+          do
+           # Only accept base interfaces (skip addtnl IPs)
+           /usr/bin/echo $i | /usr/bin/grep "^[a-z0-9]*:$" >/dev/null 2>&1       
+           if [ $? -eq 1 ]; then
+            continue
+           fi
+           # Skip the localhost
+           m=`/usr/bin/echo ${i} | /usr/bin/sed 's/:[0-9]*:*//'`
+           if [ "$m" = "lo0" ]; then
+            continue
+           fi
+           net_device_list="${net_device_list} ${m}"
+          done
+         net_device_list=`/usr/bin/echo $net_device_list | /usr/bin/sort -u`
+	 if [ "${net_device_list}" ]; then
+           set -- $net_device_list
+	   INTERFACES="$1"
+	   shift;
+           for i
+           do
+            INTERFACES="$INTERFACES,${i}"
+           done
+          fi
+	  if [ "${INTERFACES}" ]; then
+	   UNIXEXTRA=" ${UNIXEXTRA} -i ${INTERFACES}"
+	  fi
+	fi
+	LOG=`/usr/bin/egrep "^\--use-syslog|^-L" "$CONF" | /usr/bin/cut -f2 -d" "`
+	if [ -z "$LOG" ];then
+	 UNIXEXTRA=" ${UNIXEXTRA} --use-syslog=local3"
+	fi
+
+        /usr/bin/echo "Start ntop network traffic usage monitor..."
+	if [ -z "${GENEXTRA}${UNIXEXTRA}" ];then 
+         $BINDIR/ntop @${CONF}
+	else
+	 $BINDIR/ntop ${GENEXTRA} @${CONF} ${UNIXEXTRA}
+	fi
+	 
+        ;;
+'stop')
+
+        echo "Stop ntop network traffic usage monitor..."
+        if [ -f "$PIDFILE" ]; then
+		NTOPPID=`/usr/bin/cat $PIDFILE`
+                /usr/bin/kill -TERM $NTOPPID
+		echo "waiting on process $NTOPPID to exit..."
+		wait $NTOPPID
+	else
+		echo "$PIDFILE: seems to be missing, cannot kill ntop process."
+        fi
+	
+        ;;
+
+*)
+        echo "Usage: $0 { start | stop }"
+        exit 1
+        ;;
+esac
