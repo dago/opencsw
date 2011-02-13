@@ -149,9 +149,16 @@ ifndef SPKG_EMAIL
   SPKG_EMAIL = Unknown
 endif
 
+define ALLVERSIONFLAGS
+$(if $(VERSION_FLAG_PATCH),p)
+endef
+
+ifneq ($(call ALLVERSIONFLAGS),)
+SPKG_VERSION_FLAGS ?= ,$(call ALLVERSIONFLAGS)
+endif
 
 SPKG_DESC      ?= $(DESCRIPTION)
-SPKG_VERSION   ?= $(VERSION)
+SPKG_VERSION   ?= $(VERSION)$(SPKG_VERSION_FLAGS)
 SPKG_CATEGORY  ?= application
 SPKG_SOURCEURL ?= $(firstword $(VENDOR_URL) \
 			$(if $(filter $(GNU_MIRROR),$(MASTER_SITES)),http://www.gnu.org/software/$(GNU_PROJ)) \
