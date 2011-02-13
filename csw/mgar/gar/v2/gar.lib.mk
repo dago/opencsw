@@ -180,117 +180,347 @@ checksum-%: $(CHECKSUM_FILE)
 
 #################### CHECKNEW RULES ####################
 
+
+################### UWATCH VARIABLES ###################
 UPSTREAM_MASTER_SITES ?= $(MASTER_SITES)
-UW_ARGS = $(addprefix -u ,$(UPSTREAM_MASTER_SITES))
-SF_ARGS = $(addprefix -s ,$(UPSTREAM_USE_SF))
+ENABLE_UWATCH ?= 1
 
-define files2check
-$(if $(UFILES_REGEX),$(shell http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/upstream_watch $(UW_ARGS) $(SF_ARGS) $(addsuffix ',$(addprefix ',$(UFILES_REGEX)))))
-endef
 
-check-upstream-and-mail: FILES2CHECK = $(call files2check)
-check-upstream-and-mail:
-	@if [ -n '$(FILES2CHECK)' ]; then \
-		NEW_FILES=""; \
-		PACKAGE_UP_TO_DATE=0; \
-		for FILE in $(FILES2CHECK) ""; do \
-			[ -n "$$FILE" ] || continue; \
-			if test -f $(COOKIEDIR)/checknew-$$FILE ; then \
-				PACKAGE_UP_TO_DATE=1; \
-			else \
-				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
-					PACKAGE_UP_TO_DATE=1; \
-					echo "$(NAME) : Package is up-to-date. Current version is $$FILE" ; \
-				else \
-					NEW_FILES="$$FILE $$NEW_FILES"; \
-				fi; \
-			fi; \
-			$(MAKE) checknew-$$FILE >/dev/null; \
-		done; \
-		if test -z "$$NEW_FILES" ; then \
-			if [ ! -n '$(UFILES_REGEX)' ]; then \
-				echo "$(NAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
-#				{ echo ""; \
-#				  echo "Hello dear $(NAME) maintainer,"; \
-#				  echo ""; \
-#				  echo "The upstream notification job has detected that $(NAME) is not configured for automatic upstream file update detection."; \
-#				  echo ""; \
-#				  echo "Please consider updating your package. Documentation is available from this link : http://www.opencsw.org" ; \
-#				  echo ""; \
-#				  echo "Questions, problem report or help should be sent to mailto:maintainers@lists.opencsw.org"; \
-#				  echo ""; \
-#				  echo "--"; \
-#				  echo "Kindest regards"; \
-#				  echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(NAME) upstream update notification' $(NAME); \
-			else \
-				if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
-					echo "$(NAME) : Warning no files to check ! $(FILES2CHECK)" ; \
-					echo "$(NAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
-					echo "$(NAME) :     DISTNAME is $(DISTNAME)" ; \
-					echo "$(NAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
-					echo "$(NAME) : Please check configuration" ; \
-				fi; \
-			fi; \
+########################################################
+# Display uwatch informations
+#
+get-uwatch-configuration:
+	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
+	else \
+		echo "$(NAME) - Upstream Watch is enabled" ; \
+		if [ ! -n '$(CATALOGNAME)' ]; then \
+			echo "$(NAME) - CATALOGNAME is not set" ; \
 		else \
-			echo "$(NAME) : new upstream files available: $$NEW_FILES"; \
-			{	echo ""; \
-				echo "Hello dear $(NAME) maintainer,"; \
-				echo ""; \
-				echo "The upstream notification job has detected the availability of new files for $(NAME)."; \
-				echo ""; \
-				echo "The following upstream file(s):"; \
-				echo "    $$NEW_FILES"; \
-				echo ""; \
-				echo "is/are available at the following url(s):"; \
-				echo "    $(UPSTREAM_MASTER_SITES)"; \
-				echo ""; \
-				echo "Please consider updating your package." ; \
-			        echo ""; \
-    			        echo "Questions, problem report or help should be sent to mailto:maintainers@lists.opencsw.org"; \
-				echo ""; \
-				echo "--"; \
-				echo "Kindest regards"; \
-				echo "upstream notification job"; } | $(GARBIN)/mail2maintainer -s '[svn] $(NAME) upstream update notification' $(NAME); \
+			echo "$(NAME) - CATALOGNAME is : $(CATALOGNAME)" ; \
+		fi ; \
+		if [ ! -n '$(DISTFILES)' ]; then \
+			echo "$(NAME) - DISTFILES is not set" ; \
+		else \
+			echo "$(NAME) - DISTFILES are : $(DISTFILES)" ; \
+		fi ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - UFILES_REGEX is not set" ; \
+		else \
+			echo "$(NAME) - UFILES_REGEX is : $(UFILES_REGEX)" ; \
 		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - UPSTREAM_MASTER_SITES is not set" ; \
+		else \
+			echo "$(NAME) - UPSTREAM_MASTER_SITES is : $(UPSTREAM_MASTER_SITES)" ; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - VERSION is not set" ; \
+		else \
+			echo "$(NAME) - GAR version is : $(VERSION)" ; \
+		fi ; \
+		if [ ! -n '$(http_proxy)' ]; then \
+			echo "$(NAME) - http_proxy is not set" ; \
+		else \
+			echo "$(NAME) - http_proxy is : $(http_proxy)" ; \
+		fi ; \
+		if [ ! -n '$(ftp_proxy)' ]; then \
+			echo "$(NAME) - ftp_proxy is not set" ; \
+		else \
+			echo "$(NAME) - ftp_proxy is : $(ftp_proxy)" ; \
+		fi ; \
+	fi ; 
+
+########################################################
+# Retrieve the list of upstream versions
+#
+
+get-upstream-version-list:
+	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
+	else \
+		UWATCHCONFCHECK="Ok" ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - UFILES_REGEX is not set - trying to guess it" ; \
+		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
+			UWATCHCONFCHECK="Error" ; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - Error VERSION is not set" ; \
+			UWATCHCONFCHECK="Error" ; \
+		fi; \
+		if [ "$$UWATCHCONFCHECK" -ne "Ok" ] ; then \
+			exit 1 ; \
+		fi ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			VERSIONLIST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-version-list --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)"` ; \
+		else \
+			VERSIONLIST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-version-list --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
+		fi ; \
+		if [ "$$?" -ne "0" ] ; then \
+			echo "Error occured while executing uwatch get-upstream-version-list. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+			echo "Output : $$VERSIONLIST" ; \
+			exit 1 ; \
+		fi; \
+		if [ -n "$$VERSIONLIST" ] ; then \
+			for VERSION in $$VERSIONLIST ; do \
+				if [ ! "$$VERSION" -eq "" ] ; then \
+					echo "$(NAME) - $$VERSION" ; \
+				fi ; \
+			done ; \
+		else \
+			echo "$(NAME) - No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
+		fi ; \
+	fi ;
+
+########################################################
+# Retrieve the newest upstream version
+#
+get-upstream-latest-version:
+	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
+	else \
+		UWATCHCONFCHECK="Ok" ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - UFILES_REGEX is not set - trying to guess it" ; \
+		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
+			UWATCHCONFCHECK="Error" ; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - Error VERSION is not set" ; \
+			UWATCHCONFCHECK="Error" ; \
+		fi; \
+		if [ "$$UWATCHCONFCHECK" -ne "Ok" ] ; then \
+			exit 1 ; \
+		fi ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)"` ; \
+		else \
+			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
+		fi ; \
+		if [ "$$?" -ne "0" ] ; then \
+			echo "Error occured while executing uwatch get-upstream-latest-version. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+			echo "$$LATEST" ; \
+			exit 1 ; \
+		fi; \
+		if [ -n "$$LATEST" ] ; then \
+			echo "$(NAME) - Latest upstream version is $$LATEST" ; \
+		else \
+			echo "$(NAME) - No version found. Please check UPSTREAM_MASTER_SITES and UFILES_REGEX variables in the Makefile" ; \
+		fi ; \
+	fi ;
+
+########################################################
+# Compare local and upstream versions
+#
+check-upstream:
+	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
+	else \
+		UWATCHCONFCHECK="Ok" ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - UFILES_REGEX is not set - trying to guess it" ; \
+		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
+			UWATCHCONFCHECK="Error" ; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - Error VERSION is not set" ; \
+			UWATCHCONFCHECK="Error" ; \
+		fi; \
+		if [ "$$UWATCHCONFCHECK" -ne "Ok" ] ; then \
+			exit 1 ; \
+		fi ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)" --current-version="$(VERSION)"` ; \
+		else \
+			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --current-version="$(VERSION)"` ; \
+		fi ; \
+		if [ "$$?" -ne "0" ] ; then \
+			echo "Error occured while executing uwatch check-upstream. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+			echo "$$LATEST" ; \
+			exit 1 ; \
+		fi; \
+		if [ -n "$$LATEST" ] ; then \
+			echo "$(NAME) : A new version of upstream files is available. Package can be upgraded from version $(VERSION) to $$LATEST"; \
+		else \
+			echo "$(NAME) : Package is up-to-date. Current version is $(VERSION)" ; \
+		fi ; \
 	fi
 
-check-upstream: FILES2CHECK = $(call files2check)
-check-upstream: 
-	@if [ -n '$(FILES2CHECK)' ]; then \
-		NEW_FILES=""; \
-		PACKAGE_UP_TO_DATE=0; \
-		for FILE in $(FILES2CHECK) ""; do \
-			[ -n "$$FILE" ] || continue; \
-			if test -f $(COOKIEDIR)/checknew-$$FILE ; then \
-				PACKAGE_UP_TO_DATE=1; \
-			else \
-				if echo $(DISTFILES) | grep -w $$FILE >/dev/null; then \
-					PACKAGE_UP_TO_DATE=1; \
-					echo "$(NAME) : Package is up-to-date. Current version is $$FILE" ; \
-				else \
-					NEW_FILES="$$FILE $$NEW_FILES"; \
-				fi; \
-			fi; \
-			$(MAKE) checknew-$$FILE >/dev/null; \
-		done; \
-		if test -z "$$NEW_FILES" ; then \
-			if [ ! -n '$(UFILES_REGEX)' ]; then \
-				echo "$(NAME) : Warning UFILES_REGEX is not set : $(UFILES_REGEX)" ; \
-			else \
-				if [ "$$PACKAGE_UP_TO_DATE" -eq "0" ]; then \
-					echo "$(NAME) : Warning no files to check ! $(FILES2CHECK)" ; \
-					echo "$(NAME) :     UPSTREAM_MASTER_SITES is $(UPSTREAM_MASTER_SITES)" ; \
-					echo "$(NAME) :     DISTNAME is $(DISTNAME)" ; \
-					echo "$(NAME) :     UFILES_REGEX is : $(UFILES_REGEX)" ; \
-					echo "$(NAME) : Please check configuration" ; \
-				fi; \
-			fi; \
-		else \
-			echo "$(NAME) : new upstream files available: $$NEW_FILES"; \
+
+########################################################
+# Create upgrade branch from current to latest upstream
+#
+upgrade-to-latest-upstream:
+	@if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
+	else \
+		UWATCHCONFCHECK="Ok" ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - UFILES_REGEX is not set - trying to guess it" ; \
 		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
+			UWATCHCONFCHECK="Error" ; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - Error VERSION is not set" ; \
+			UWATCHCONFCHECK="Error" ; \
+		fi; \
+		if [ "$$UWATCHCONFCHECK" -ne "Ok" ] ; then \
+			exit 1 ; \
+		fi ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)" --current-version="$(VERSION)"` ; \
+		else \
+			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch check-upstream --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --current-version="$(VERSION)"` ; \
+		fi ; \
+		if [ "$$?" -ne "0" ] ; then \
+			echo "Error occured while executing uwatch check-upstream. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+			echo "$$LATEST" ; \
+			exit 1 ; \
+		fi; \
+		if [ ! -f "$(COOKIEDIR)/upgrade-to-latest-upstream-$$LATEST" ] ; then \
+			if [ ! -d "../branches/upgrade_from_$(VERSION)_to_$$LATEST" ] ; then \
+				if [ -n "$$LATEST" ] ; then \
+					echo "$(NAME) : a new version of upstream files is available. Creating upgrade branch from version $(VERSION) to $$LATEST"; \
+					VERSIONUPGRADE=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch upgrade-to-version --current-version="$(VERSION)" --target-version="$$LATEST"` ; \
+					if [ "$$?" -ne "0" ] ; then \
+						echo "Error occured while executing uwatch upgrade-to-version. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+						echo "$$VERSIONUPGRADE" ; \
+						exit 1 ; \
+					fi; \
+					if [ -n "$$VERSIONUPGRADE" ] ; then \
+						echo "$(NAME) - $$VERSIONUPGRADE" ; \
+					fi ; \
+				else \
+					echo "$(NAME) : Package is up-to-date. Upstream site has no version newer than $(VERSION)" ; \
+				fi ; \
+			else \
+				echo "$(NAME) - Upgrade branch from version $(VERSION) to version $$LATEST already exist" ; \
+			fi ; \
+			$(MAKE) upgrade-to-latest-upstream-$$LATEST >/dev/null; \
+		else \
+			echo "$(NAME) - Upgrade branch to version $$LATEST already created by upstream_watch" ; \
+		fi ; \
 	fi
-	
-checknew-%:
+
+
+########################################################
+# Create upgrade branch from current to latest upstream
+#
+update-package-version-database:PACKAGELIST=$(foreach SPEC,$(SPKG_SPECS),$(call _pkglist_one,$(SPEC))\n)
+update-package-version-database:
+	@EXECUTIONDATE=`date +"%Y-%m-%d %H:%M:%S"` ; \
+	if [ '$(ENABLE_UWATCH)' -ne '1' ] ; then \
+		echo "$(NAME) - Upstream Watch is disabled" ; \
+		printf "$(PACKAGELIST)" | while read line ; do \
+			GARPATH=`echo $$line | awk '{ print $$1 }'` ; \
+			CATALOGNAME=`echo $$line | awk '{ print $$2 }'` ; \
+			PKGNAME=`echo $$line | awk '{ print $$3 }'` ; \
+			REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="Upstream Watch is disabled" --uwatch-deactivated` ; \
+			if [ "$$?" -ne "0" ] ; then \
+				echo "Error occured while executing uwatch update-package-version-database --uwatch-deactivated. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+				echo "$$REPORTVERSION" ; \
+				exit 1 ; \
+			fi; \
+		done ; \
+		if [ -n "$$REPORTVERSION" ] ; then \
+			echo "$(NAME) - $$REPORTVERSION" ; \
+		fi ; \
+	else \
+		UWATCHCONFCHECK="Ok" ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			echo "$(NAME) - UFILES_REGEX is not set - trying to guess it" ; \
+		fi; \
+		if [ ! -n '$(UPSTREAM_MASTER_SITES)' ]; then \
+			echo "$(NAME) - Error UPSTREAM_MASTER_SITES is not set" ; \
+			UWATCHCONFCHECK="Error" ; \
+		fi; \
+		if [ ! -n '$(VERSION)' ]; then \
+			echo "$(NAME) - Error VERSION is not set" ; \
+			UWATCHCONFCHECK="Error" ; \
+		fi; \
+		if [ "$$UWATCHCONFCHECK" -ne "Ok" ] ; then \
+			printf "$(PACKAGELIST)" | while read line ; do \
+				GARPATH=`echo $$line | awk '{ print $$1 }'` ; \
+				CATALOGNAME=`echo $$line | awk '{ print $$2 }'` ; \
+				PKGNAME=`echo $$line | awk '{ print $$3 }'` ; \
+				REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --uwatch-error  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="Upstream Watch configuration error" ` ; \
+				if [ "$$?" -ne "0" ] ; then \
+					echo "Error occured while executing uwatch update-package-version-database --uwatch-error. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+					echo "$$REPORTVERSION" ; \
+					exit 1 ; \
+				fi; \
+			done ; \
+			exit 1 ; \
+		fi ; \
+		if [ ! -n '$(UFILES_REGEX)' ]; then \
+			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --gar-distfiles="$(DISTFILES)" --catalog-name="$(CATALOGNAME)"` ; \
+		else \
+			LATEST=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch get-upstream-latest-version --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)"` ; \
+		fi ; \
+		if [ "$$?" -ne "0" ] ; then \
+			echo "Error occured while executing uwatch get-upstream-latest-version. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+			echo "$$LATEST" ; \
+			printf "$(PACKAGELIST)" | while read line ; do \
+				GARPATH=`echo $$line | awk '{ print $$1 }'` ; \
+				CATALOGNAME=`echo $$line | awk '{ print $$2 }'` ; \
+				PKGNAME=`echo $$line | awk '{ print $$3 }'` ; \
+				REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --uwatch-error  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="$$LATEST" ` ; \
+				if [ "$$?" -ne "0" ] ; then \
+					echo "Error occured while executing uwatch update-package-version-database --uwatch-error. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+					echo "$$REPORTVERSION" ; \
+					exit 1 ; \
+				fi; \
+			done ; \
+			exit 1 ; \
+		fi; \
+		printf "$(PACKAGELIST)" | while read line ; do \
+			GARPATH=`echo $$line | awk '{ print $$1 }'` ; \
+			CATALOGNAME=`echo $$line | awk '{ print $$2 }'` ; \
+			PKGNAME=`echo $$line | awk '{ print $$3 }'` ; \
+			if [ ! -n '$(UFILES_REGEX)' ]; then \
+				REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version="$$LATEST"  --upstream-url="$(UPSTREAM_MASTER_SITES)"  --gar-distfiles="$(DISTFILES)" --uwatch-output="Successful" ` ; \
+			else \
+				REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version=$(VERSION) --upstream-version="$$LATEST"  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="Successful" ` ; \
+			fi ; \
+			if [ "$$?" -ne "0" ] ; then \
+				echo "Error occured while executing uwatch update-package-version-database. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+				echo "$$REPORTVERSION" ; \
+				REPORTVERSION=`http_proxy=$(http_proxy) ftp_proxy=$(ftp_proxy) $(GARBIN)/uwatch update-package-version-database --catalog-name="$$CATALOGNAME" --package-name="$$PKGNAME" --execution-date="$$EXECUTIONDATE" --gar-path="$$GARPATH" --gar-version="$(VERSION)" --uwatch-error  --upstream-url="$(UPSTREAM_MASTER_SITES)" --regexp="$(UFILES_REGEX)" --gar-distfiles="$(DISTFILES)" --uwatch-output="$$REPORTVERSION" ` ; \
+				if [ "$$?" -ne "0" ] ; then \
+					echo "Error occured while executing uwatch update-package-version-database --uwatch-error. Please check configuration with target get-uwatch-configuration. Here is the output of uwatch command :" ; \
+					echo "$$REPORTVERSION" ; \
+					exit 1 ; \
+				fi; \
+				exit 1 ; \
+			fi; \
+		done ; \
+		if [ -n "$$REPORTVERSION" ] ; then \
+			echo "$(NAME) - $$REPORTVERSION" ; \
+		fi ; \
+	fi
+
+#	
+
+########################################################
+#
+get-gar-version:
+	@if [ ! -n '$(VERSION)' ]; then \
+		echo "$(NAME) - VERSION is not defined" ; \
+		exit 1 ; \
+	else \
+		echo "$(NAME) - GAR version is $(VERSION)" ; \
+	fi ;
+
+upgrade-to-latest-upstream-%:
 	@$(MAKECOOKIE)
 
 
