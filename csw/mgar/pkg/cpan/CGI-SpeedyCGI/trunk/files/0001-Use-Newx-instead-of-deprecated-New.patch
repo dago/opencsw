@@ -1,0 +1,25 @@
+From ff3820573d05c622a7b3b31864ba4ae6e90ca0d2 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 13 Feb 2011 23:00:54 +0100
+Subject: [PATCH] Use Newx() instead of deprecated New()
+
+---
+ src/speedy_backend_main.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/speedy_backend_main.h b/src/speedy_backend_main.h
+index f139f29..6b9af44 100644
+--- a/src/speedy_backend_main.h
++++ b/src/speedy_backend_main.h
+@@ -38,7 +38,7 @@ void * efence_realloc (void *ptr, size_t size);
+ 
+ #else
+ 
+-#define speedy_new(s,n,t)	New(123,s,n,t)
++#define speedy_new(s,n,t)	Newx(s,n,t)
+ #define speedy_renew		Renew
+ #define speedy_free		Safefree
+ 
+-- 
+1.7.3.2
+
