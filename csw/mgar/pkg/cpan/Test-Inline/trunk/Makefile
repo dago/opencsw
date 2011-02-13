@@ -1,7 +1,7 @@
 NAME = Test-Inline
-VERSION = 0.16
+VERSION = 2.212
 CATEGORIES = cpan
-AUTHOR = MSCHWERN
+AUTHOR = ADAMK
 
 DESCRIPTION = inlining your tests next to the code being tested.
 define BLURB
@@ -9,6 +9,11 @@ define BLURB
   a nice supplement to the traditional .t files. It's like XUnit, Perl-style.
 endef
 
-DISTFILES += CSWpmtestinline.gspec
+CATALOGNAME = pm_testinline
+PACKAGES        = CSWpmtestinline
+
+ARCHALL_CSWpmtestinline = 1
+
+LICENSE = LICENSE
 
 include gar/category.mk
