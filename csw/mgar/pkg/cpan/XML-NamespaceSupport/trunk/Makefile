@@ -1,5 +1,5 @@
 NAME = XML-NamespaceSupport
-VERSION = 1.10
+VERSION = 1.11
 CATEGORIES = cpan
 AUTHOR = PERIGRIN
 
