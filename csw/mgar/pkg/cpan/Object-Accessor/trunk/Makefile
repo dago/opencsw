@@ -1,5 +1,5 @@
 NAME = Object-Accessor
-VERSION = 0.36
+VERSION = 0.38
 CATEGORIES = cpan
 AUTHOR = BINGOS
 
