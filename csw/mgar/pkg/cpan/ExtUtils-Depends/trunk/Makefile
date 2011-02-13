@@ -1,7 +1,7 @@
 NAME = ExtUtils-Depends
-VERSION = 0.302
+VERSION = 0.304
 CATEGORIES = cpan
-AUTHOR = TSCH
+AUTHOR = FLORA
 
 DESCRIPTION = easily build XS extensions that depend on XS extensions
 define BLURB
