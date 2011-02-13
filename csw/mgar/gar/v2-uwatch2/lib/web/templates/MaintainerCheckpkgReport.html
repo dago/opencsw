@@ -1,0 +1,28 @@
+$def with (maintainer, pkgs, tags_by_md5)
+<html>
+  <head>
+    <title>
+      $maintainer
+    </title>
+  </head>
+  <body>
+    <h2>$maintainer</h2>
+    <h2>Packages</h2>
+    <ul>
+$for pkg in pkgs: 
+  <li>
+  <a href="../../../srv4/$pkg.md5_sum/">
+  $pkg
+  </a>
+
+  $if tags_by_md5[pkg.md5_sum]:
+    <ul>
+    $for tag in tags_by_md5[pkg.md5_sum]:
+      <li>
+      $tag
+      </li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>

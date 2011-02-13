@@ -480,6 +480,16 @@ SOS12U1_CC_HOME ?= /opt/studio/sunstudio12.1
    SOS11_CXX ?= $(SOS11_CC_HOME)/bin/CC
    SOS12_CXX ?= $(SOS12_CC_HOME)/bin/CC
  SOS12U1_CXX ?= $(SOS12U1_CC_HOME)/bin/CC
+    GCC3_F77 ?= $(GCC3_CC_HOME)/bin/g77
+    GCC4_F77 ?= $(GCC4_CC_HOME)/bin/gfortran
+   SOS11_F77 ?= $(SOS11_CC_HOME)/bin/f77
+   SOS12_F77 ?= $(SOS12_CC_HOME)/bin/f77
+ SOS12U1_F77 ?= $(SOS12U1_CC_HOME)/bin/f77
+     GCC3_FC ?= $(GCC3_CC_HOME)/bin/g77
+     GCC4_FC ?= $(GCC4_CC_HOME)/bin/gfortran
+    SOS11_FC ?= $(SOS11_CC_HOME)/bin/f95
+    SOS12_FC ?= $(SOS12_CC_HOME)/bin/f95
+  SOS12U1_FC ?= $(SOS12U1_CC_HOME)/bin/f95
 
     GCC3_CC_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
     GCC4_CC_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
@@ -501,22 +511,43 @@ SOS12U1_CXX_FLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_
    SOS11_LD_FLAGS ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS) -norunpath -xnorunpath
    SOS12_LD_FLAGS ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS) -norunpath
  SOS12U1_LD_FLAGS ?= $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U1_LD_FLAGS) $(EXTRA_SOS_LD_FLAGS) $(EXTRA_LD_FLAGS) -norunpath
+      GCC3_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_FFLAGS) $(EXTRA_GCC_FFLAGS) $(EXTRA_FFLAGS)
+      GCC4_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_FFLAGS) $(EXTRA_GCC_FFLAGS) $(EXTRA_FFLAGS)
+     SOS11_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_FFLAGS) $(EXTRA_SOS_FFLAGS) $(EXTRA_FFLAGS) -norunpath
+     SOS12_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_FFLAGS) $(EXTRA_SOS_FFLAGS) $(EXTRA_FFLAGS) -norunpath
+   SOS12U1_FFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U1_FFLAGS) $(EXTRA_SOS_FFLAGS) $(EXTRA_FFLAGS) -norunpath
+      GCC3_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC3_FCFLAGS) $(EXTRA_GCC_FCFLAGS) $(EXTRA_FCFLAGS)
+      GCC4_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_GCC4_FCFLAGS) $(EXTRA_GCC_FCFLAGS) $(EXTRA_FCFLAGS)
+     SOS11_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS11_FCFLAGS) $(EXTRA_SOS_FCFLAGS) $(EXTRA_FCFLAGS) -norunpath
+     SOS12_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12_FCFLAGS) $(EXTRA_SOS_FCFLAGS) $(EXTRA_FCFLAGS) -norunpath
+   SOS12U1_FCFLAGS ?= $(FLAVOR_FLAGS) $(ARCHFLAGS_$(GARCOMPILER)_$(ISA)) $(EXTRA_SOS12U1_FCFLAGS) $(EXTRA_SOS_FCFLAGS) $(EXTRA_FCFLAGS) -norunpath
 
 # Compiler version
     GCC3_CC_VERSION = $(shell $(GCC3_CC) -v 2>&1| ggrep version)
    GCC3_CXX_VERSION = $(shell $(GCC3_CXX) -v 2>&1| ggrep version)
+   GCC3_F77_VERSION = $(shell $(GCC3_F77) -v 2>&1| ggrep version)
     GCC4_CC_VERSION = $(shell $(GCC4_CC) -v 2>&1| ggrep version)
    GCC4_CXX_VERSION = $(shell $(GCC4_CXX) -v 2>&1| ggrep version)
+   GCC4_F77_VERSION = $(shell $(GCC4_F77) -v 2>&1| ggrep version)
+    GCC4_FC_VERSION = $(shell $(GCC4_FC) -v 2>&1| ggrep version)
 
    SOS11_CC_VERSION = $(shell $(SOS11_CC) -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
   SOS11_CXX_VERSION = $(shell $(SOS11_CXX) -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
+  SOS11_F77_VERSION = $(shell $(SOS11_F77) -V 2>&1| ggrep f90: | gsed -e 's/f90: //')
+   SOS11_FC_VERSION = $(shell $(SOS11_FC) -V 2>&1| ggrep f90: | gsed -e 's/f90: //')
    SOS12_CC_VERSION = $(shell $(SOS12_CC) -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
+  SOS12_F77_VERSION = $(shell $(SOS12_F77) -V 2>&1| ggrep -e 'f9[05]': | gsed -e 's/f9[05]: //')
+   SOS12_FC_VERSION = $(shell $(SOS12_FC) -V 2>&1| ggrep -e 'f9[05]:' | gsed -e 's/f9[05]: //')
   SOS12_CXX_VERSION = $(shell $(SOS12_CXX) -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
  SOS12U1_CC_VERSION = $(shell $(SOS12U1_CC) -V 2>&1| ggrep cc: | gsed -e 's/cc: //')
 SOS12U1_CXX_VERSION = $(shell $(SOS12U1_CXX) -V 2>&1| ggrep CC: | gsed -e 's/CC: //')
+SOS12U1_F77_VERSION = $(shell $(SOS12U1_F77) -V 2>&1| ggrep -e 'f9[05]': | gsed -e 's/f9[05]: //')
+ SOS12U1_FC_VERSION = $(shell $(SOS12U1_FC) -V 2>&1| ggrep -e 'f9[05]:' | gsed -e 's/f9[05]: //')
 
  CC_VERSION = $($(GARCOMPILER)_CC_VERSION)
 CXX_VERSION = $($(GARCOMPILER)_CXX_VERSION)
+F77_VERSION = $($(GARCOMPILER)_F77_VERSION)
+ FC_VERSION = $($(GARCOMPILER)_FC_VERSION)
 
 #
 # Construct compiler options
@@ -563,12 +594,17 @@ LINKER_FLAGS ?= $(foreach ELIB,$(EXTRA_LIB) $(filter-out $(libpath_install),$(li
 CC_HOME  = $($(GARCOMPILER)_CC_HOME)
 CC       = $($(GARCOMPILER)_CC)
 CXX      = $($(GARCOMPILER)_CXX)
+F77      = $($(GARCOMPILER)_F77)
+FC       = $($(GARCOMPILER)_FC)
+
 CFLAGS   ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(_CATEGORY_CFLAGS) $(EXTRA_CFLAGS))
 CXXFLAGS ?= $(strip $($(GARCOMPILER)_CXX_FLAGS) $(_CATEGORY_CXXFLAGS) $(EXTRA_CXXFLAGS))
 CPPFLAGS ?= $(strip $($(GARCOMPILER)_CPP_FLAGS) $(_CATEGORY_CPPFLAGS) $(EXTRA_CPPFLAGS) $(INCLUDE_FLAGS))
 LDFLAGS  ?= $(strip $($(GARCOMPILER)_LD_FLAGS) $(_CATEGORY_LDFLAGS) $(EXTRA_LDFLAGS) $(LINKER_FLAGS))
 ASFLAGS  ?= $(strip $($(GARCOMPILER)_AS_FLAGS) $(_CATEGORY_ASFLAGS) $(EXTRA_ASFLAGS))
 OPTFLAGS ?= $(strip $($(GARCOMPILER)_CC_FLAGS) $(_CATEGORY_OPTFLAGS) $(EXTRA_OPTFLAGS))
+FFLAGS   ?= $(strip $($(GARCOMPILER)_FFLAGS) $(_CATEGORY_FFLAGS) $(EXTRA_FFLAGS))
+FCFLAGS  ?= $(strip $($(GARCOMPILER)_FCFLAGS) $(_CATEGORY_FCFLAGS) $(EXTRA_FCFLAGS))
 
 GCC3_LD_OPTIONS = -R$(GCC3_CC_HOME)/lib $(EXTRA_GCC3_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
 GCC4_LD_OPTIONS = -R$(abspath $(GCC4_CC_HOME)/lib/$(MM_LIBDIR)) $(EXTRA_GCC4_LD_OPTIONS) $(EXTRA_GCC_LD_OPTIONS)
@@ -652,6 +688,7 @@ endif
 
 ifeq ($(origin COMPILER_EXPORTS), undefined)
 COMPILER_EXPORTS  = CPPFLAGS CFLAGS CXXFLAGS LDFLAGS
+COMPILER_EXPORTS += FFLAGS FCFLAGS
 COMPILER_EXPORTS += ASFLAGS OPTFLAGS CC CXX
 COMPILER_EXPORTS += CC_HOME CC_VERSION CXX_VERSION
 endif
@@ -705,6 +742,8 @@ ccenv:
 	@echo
 	@echo "    C Compiler: $(CC)"
 	@echo "  C++ Compiler: $(CXX)"
+	@echo "  F77 Compiler: $(F77)"
+	@echo "   FC Compiler: $(FC)"
 	@echo
 	@echo "Compiler ISA generation matrix:"
 	@echo
@@ -753,6 +792,8 @@ _modenv-modulated:
 	echo "         CFLAGS = $(CFLAGS)";				\
 	echo "       CXXFLAGS = $(CXXFLAGS)";				\
 	echo "       CPPFLAGS = $(CPPFLAGS)";				\
+	echo "         FFLAGS = $(FFLAGS)";				\
+	echo "        FCFLAGS = $(FCFLAGS)";				\
 	echo "        LDFLAGS = $(LDFLAGS)";				\
 	echo "     LD_OPTIONS = $(LD_OPTIONS)";				\
 	echo "        ASFLAGS = $(ASFLAGS)";				\

@@ -116,6 +116,7 @@ class ParsePackageFileNameTest(unittest.TestCase):
     parsed = opencsw.ParsePackageFileName(file_name)
     self.assertEqual(parsed["arch"], "sparc")
     self.assertEqual(parsed["catalogname"], "boost-jam")
+    self.assertEqual(parsed["vendortag"], "UNCOMMITTED")
 
   def testParsePackageFileName_Nonsense(self):
     """Checks if the function can sustain a non-conformant string."""

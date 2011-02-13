@@ -65,9 +65,10 @@ class OpencswCatalogBuilder(object):
 class OpencswCatalog(object):
   """Represents a catalog file."""
 
-  def __init__(self, file_name):
-    self.file_name = file_name
+  def __init__(self, fd):
+    self.fd = fd
     self.by_basename = None
+    self.by_catalogname = None
     self.catalog_data = None
 
   def _ParseCatalogLine(self, line):
@@ -96,12 +97,12 @@ class OpencswCatalog(object):
             r"(?P<deps>\S+)"
             r"\s+"
             # none
-            r"(?P<none_thing_1>\S+)"
+            r"(?P<category>\S+)"
             # An optional empty field.
             r"("
               r"\s+"
               # none\n'
-              r"(?P<none_thing_2>\S+)"
+              r"(?P<i_deps>\S+)"
             r")?"
             r"$"
         ),
@@ -109,6 +110,14 @@ class OpencswCatalog(object):
     cline_re_list = [re.compile(x) for x in cline_re_str_list]
     matched = False
     d = None
+    def SplitPkgList(pkglist):
+      if not pkglist:
+        pkglist = ()
+      elif pkglist == "none":
+        pkglist = ()
+      else:
+        pkglist = tuple(pkglist.split("|"))
+      return pkglist
     for cline_re in cline_re_list:
       m = cline_re.match(line)
       if m:
@@ -116,6 +125,8 @@ class OpencswCatalog(object):
         matched = True
         if not d:
           raise CatalogLineParseError("Parsed %s data is empty" % repr(line))
+        d["deps"] = SplitPkgList(d["deps"])
+        d["i_deps"] = SplitPkgList(d["i_deps"])
     if not matched:
       raise CatalogLineParseError("No regexes matched %s" % repr(line))
     return d
@@ -133,8 +144,7 @@ class OpencswCatalog(object):
 
   def GetCatalogData(self):
     if not self.catalog_data:
-      fd = open(self.file_name, "r")
-      self.catalog_data = self._GetCatalogData(fd)
+      self.catalog_data = self._GetCatalogData(self.fd)
     return self.catalog_data
 
   def GetDataByBasename(self):
@@ -146,3 +156,43 @@ class OpencswCatalog(object):
           logging.error("%s is missing the file_basename field", d)
         self.by_basename[d["file_basename"]] = d
     return self.by_basename
+
+  def GetDataByCatalogname(self):
+    if not self.by_catalogname:
+      self.by_catalogname = {}
+      cd = self.GetCatalogData()
+      for d in cd:
+        if "catalogname" not in d:
+          logging.error("%s is missing the catalogname field", d)
+        if d["catalogname"] in self.by_catalogname:
+          logging.warning("Catalog name %s is duplicated!", d["catalogname"])
+        self.by_catalogname[d["catalogname"]] = d
+    return self.by_catalogname
+
+
+class CatalogComparator(object):
+
+  def GetCatalogDiff(self, cat_a, cat_b):
+    """Returns a difference between two catalogs."""
+    if type(cat_a) == dict:
+      bc_a = cat_a
+    else:
+      bc_a = cat_a.GetDataByCatalogname()
+    if type(cat_b) == dict:
+      bc_b = cat_b
+    else:
+      bc_b = cat_b.GetDataByCatalogname()
+    cn_a = set(bc_a)
+    cn_b = set(bc_b)
+    new_catalognames = cn_b.difference(cn_a)
+    removed_catalognames = cn_a.difference(cn_b)
+    same_catalognames = cn_b.intersection(cn_a)
+    # Looking for updated catalognames
+    updated_catalognames = set()
+    for catalogname in same_catalognames:
+      if bc_a[catalogname]["version"] != bc_b[catalogname]["version"]:
+        updated_catalognames.add(catalogname)
+    new_pkgs = [bc_b[x] for x in new_catalognames]
+    removed_pkgs = [bc_a[x] for x in removed_catalognames]
+    updated_pkgs = [{"from": bc_a[x], "to": bc_b[x]} for x in updated_catalognames]
+    return new_pkgs, removed_pkgs, updated_pkgs

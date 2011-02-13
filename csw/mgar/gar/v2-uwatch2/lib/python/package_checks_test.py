@@ -51,10 +51,13 @@ class CheckpkgUnitTestHelper(object):
           checkpkg_lib.IndividualCheckInterface)
 
   def testDefault(self):
+    self.RunCheckpkgTest(self.CheckpkgTest)
+
+  def RunCheckpkgTest(self, callback):
     self.logger_mock = stubs.LoggerStub()
     self.SetMessenger()
     self.SetErrorManagerMock()
-    self.CheckpkgTest()
+    callback()
     self.mox.ReplayAll()
     getattr(pc, self.FUNCTION_NAME)(self.pkg_data,
                                     self.error_mgr_mock,
@@ -646,8 +649,8 @@ class TestDeprecatedLibraries_BadRpath(CheckpkgUnitTestHelper, unittest.TestCase
     self.error_mgr_mock.ReportError(
         'CSWrsync',
         'deprecated-library',
-        u'opt/csw/bin/sparcv8/rsync Deprecated Berkeley DB location '
-        u'/opt/csw/lib/libdb-4.7.so')
+        u'file=opt/csw/bin/sparcv8/rsync '
+        u'lib=/opt/csw/lib/libdb-4.7.so')
     self.pkg_data = [self.pkg_data]
     for i in range(1):
       self.error_mgr_mock.NeedFile(
@@ -1406,7 +1409,7 @@ class TestCheckSharedLibraryNamingPolicy(CheckpkgUnitTestHelper, unittest.TestCa
     self.pkg_data = neon_stats[0]
     self.error_mgr_mock.ReportError(
         'non-uniform-lib-versions-in-package',
-        "sonames=['libneon.so.26', 'libneon.so.27']")
+        "sonames=libneon.so.26,libneon.so.27")
 
 
 class TestCheckSharedLibraryNamingPolicyBerkeley(CheckpkgUnitTestHelper, unittest.TestCase):
@@ -1415,14 +1418,48 @@ class TestCheckSharedLibraryNamingPolicyBerkeley(CheckpkgUnitTestHelper, unittes
     self.pkg_data = bdb48_stats[0]
 
 
-class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckpkgUnitTestHelper, unittest.TestCase):
+class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckpkgUnitTestHelper,
+                                                    unittest.TestCase):
   FUNCTION_NAME = 'CheckSharedLibraryPkgDoesNotHaveTheSoFile'
+
   def CheckpkgTest(self):
     self.pkg_data = neon_stats[0]
     self.error_mgr_mock.ReportError(
-        'shared-lib-package-contains-so-symlink', 'file=/opt/csw/lib/libneon.so')
+        'shared-lib-package-contains-so-symlink',
+        'file=/opt/csw/lib/libneon.so')
     self.error_mgr_mock.ReportError(
-        'shared-lib-package-contains-so-symlink', 'file=/opt/csw/lib/sparcv9/libneon.so')
+        'shared-lib-package-contains-so-symlink',
+        'file=/opt/csw/lib/sparcv9/libneon.so')
+
+
+class TestCheckSharedLibraryPkgDoesNotHaveTheSoFileSuggestion(
+    CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibraryPkgDoesNotHaveTheSoFile'
+
+  def SetMessenger(self):
+    """Overriding this method to use mock instead of a stub."""
+    self.messenger = self.mox.CreateMock(stubs.MessengerStub)
+
+  def CheckpkgTest(self):
+    self.pkg_data = neon_stats[0]
+    self.error_mgr_mock.ReportError(
+        'shared-lib-package-contains-so-symlink',
+        'file=/opt/csw/lib/libneon.so')
+    self.error_mgr_mock.ReportError(
+        'shared-lib-package-contains-so-symlink',
+        'file=/opt/csw/lib/sparcv9/libneon.so')
+    self.messenger.SuggestGarLine("# (If CSWneon-dev doesn't exist yet)")
+    self.messenger.SuggestGarLine('PACKAGES += CSWneon-dev')
+    self.messenger.SuggestGarLine(
+        'PKGFILES_CSWneon-dev += /opt/csw/lib/libneon.so')
+    self.messenger.SuggestGarLine('CATALOGNAME_CSWneon-dev = neon_dev')
+    self.messenger.Message(mox.IsA(str))
+    self.messenger.SuggestGarLine("# (If CSWneon-dev doesn't exist yet)")
+    self.messenger.SuggestGarLine('PACKAGES += CSWneon-dev')
+    self.messenger.SuggestGarLine(
+        'PKGFILES_CSWneon-dev += /opt/csw/lib/sparcv9/libneon.so')
+    self.messenger.SuggestGarLine('CATALOGNAME_CSWneon-dev = neon_dev')
+    self.messenger.Message(mox.IsA(str))
 
 
 class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
@@ -1444,8 +1481,9 @@ class TestCheckSharedLibraryNameMustBeAsubstringOfSonameGood(
         'soname=libneon.so.27 filename=foo.so.1')
 
 
-class TestCheckDocDirLicense(CheckpkgUnitTestHelper, unittest.TestCase):
-  FUNCTION_NAME = 'CheckDocDir'
+class TestCheckLicenseFilePlacementLicense(CheckpkgUnitTestHelper,
+                                           unittest.TestCase):
+  FUNCTION_NAME = 'CheckLicenseFilePlacement'
   def CheckpkgTest(self):
     self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["pkgmap"].append({
@@ -1459,9 +1497,23 @@ class TestCheckDocDirLicense(CheckpkgUnitTestHelper, unittest.TestCase):
         'in-package=/opt/csw/share/doc/alien/license')
 
 
-class TestCheckDocDirRandomFile(CheckpkgUnitTestHelper, unittest.TestCase):
+class TestCheckLicenseFilePlacementLicenseDifferentSuffix(
+    CheckpkgUnitTestHelper, unittest.TestCase):
+  """A differently suffixed file should not trigger an error."""
+  FUNCTION_NAME = 'CheckLicenseFilePlacement'
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["pkgmap"].append({
+      "class": "none", "type": "f", "line": "",
+      "user": "root", "group": "bin", "mode": '0755',
+      "path": "/opt/csw/share/doc/alien/license.html",
+    })
+
+
+class TestCheckLicenseFilePlacementRandomFile(
+    CheckpkgUnitTestHelper, unittest.TestCase):
   "A random file should not trigger the message; only license files."
-  FUNCTION_NAME = 'CheckDocDir'
+  FUNCTION_NAME = 'CheckLicenseFilePlacement'
   def CheckpkgTest(self):
     self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["pkgmap"].append({
@@ -1531,6 +1583,76 @@ class TestCheckDanglingSymlinks(CheckpkgUnitTestHelper,
          'user': None,
          'target': '/opt/csw/lib/libpq.so.5'})
     self.error_mgr_mock.NeedFile('/opt/csw/lib/libpq.so.5', mox.IsA(str))
+
+
+class TestCheckPrefixDirs(CheckpkgUnitTestHelper,
+                          unittest.TestCase):
+  FUNCTION_NAME = 'CheckPrefixDirs'
+
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/opt/csw/bin/foo',
+         'type': 'f',
+         'user': None,
+         'target': None})
+
+  def CheckpkgTest2(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/opt/cswbin/foo',
+         'type': 'f',
+         'user': None,
+         'target': None})
+    self.error_mgr_mock.ReportError(
+        'bad-location-of-file',
+        'file=/opt/cswbin/foo')
+
+  def CheckpkgTest3(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/var/opt/csw/foo',
+         'type': 'f',
+         'user': None,
+         'target': None})
+
+  def CheckpkgTest4(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/var/foo',
+         'type': 'f',
+         'user': None,
+         'target': None})
+    self.error_mgr_mock.ReportError(
+        'bad-location-of-file',
+        'file=/var/foo')
+
+	# These three utility functions allow to run 3 tests in a single
+	# class.
+  def testTwo(self):
+    self.RunCheckpkgTest(self.CheckpkgTest2)
+
+  def testThree(self):
+    self.RunCheckpkgTest(self.CheckpkgTest3)
+
+  def testFour(self):
+    self.RunCheckpkgTest(self.CheckpkgTest4)
 
 
 if __name__ == '__main__':

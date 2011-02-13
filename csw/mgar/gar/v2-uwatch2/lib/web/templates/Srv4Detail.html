@@ -1,0 +1,83 @@
+$def with (pkg, overrides, tags_by_cat, tags, tags_and_catalogs)
+<html>
+  <head>
+    <title>
+      $pkg.basename
+    </title>
+  </head>
+  <body>
+
+<h3>Basic information</h3>
+
+    <ul>
+      <li><tt>$pkg.md5_sum</tt></li>
+      <li>$pkg.basename</li>
+      <li>$pkg.pkginst.pkgname</li>
+      <li><a href="../../catalognames/$pkg.catalogname/">$pkg.catalogname</a></li>
+      <li>$pkg.version_string</li>
+      <li>Filename $pkg.filename_arch</li>
+      <li>Pkginfo $pkg.arch</li>
+      <li><a href="../../maintainers/$pkg.maintainer.id/">$pkg.maintainer</a></li>
+
+$if pkg.in_catalogs:
+  <li>The package is in catalogs:
+  <ul>
+  $for fic in pkg.in_catalogs:
+    <li>
+    <a href="../../catalogs/$fic.catrel.name-$fic.arch.name-$fic.osrel.short_name/">
+    $fic
+    </a>
+    </li>
+
+
+  </ul>
+  </li>
+
+<li>Size: $pkg.size bytes</li>
+<li>Registered: $pkg.registered</li>
+
+$if pkg.registered:
+  <li><a href="files/">Files of $pkg.basename</a></li>
+
+<li>Use to generate catalogs: $pkg.use_to_generate_catalogs</li>
+
+</ul>
+
+$if overrides:
+  <h3>Overrides</h3>
+  <ul>
+  $for override in overrides:
+    <li>
+    $override
+    </li>
+  </ul>
+$else:
+  <p>No overrides.</p>
+
+<h3>Error tags</h3>
+
+<ul>
+$for osrel, arch, catrel, tags_in_cat in tags_and_catalogs:
+  $if tags_in_cat:
+    <li>
+    $catrel.name
+    $arch.name
+    $osrel.short_name
+    <ul>
+    $for tag in tags_in_cat:
+      <li>$tag</li>
+    </ul>
+    </li>
+</ul>
+<ul>
+$for tag in tags:
+  <li>
+  $tag
+  ($tag.catrel.name
+  $tag.arch.name
+  $tag.os_rel.short_name)
+  </li>
+</ul>
+
+</body>
+</html>

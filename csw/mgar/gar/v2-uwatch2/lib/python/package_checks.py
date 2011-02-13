@@ -156,6 +156,14 @@ HACHOIR_MACHINES = {
         },
 }
 
+
+ALLOWED_STARTING_PATHS = frozenset([
+  "/opt/csw",
+  "/etc/opt/csw",
+  "/var/opt/csw",
+])
+
+
 def RemovePackagesUnderInstallation(paths_and_pkgs_by_soname,
                                     pkgs_to_be_installed):
   """Emulates uninstallation of packages prior to installation
@@ -430,7 +438,7 @@ def CheckObsoleteDeps(pkg_data, error_mgr, logger, messenger):
         msg += "URL: %s" % OBSOLETE_DEPS[obsolete_pkg]["url"]
       if not msg:
         msg = None
-      logger.info(msg)
+      messenger.Message(msg)
 
 
 def CheckArchitectureVsContents(pkg_data, error_mgr, logger, messenger):
@@ -962,12 +970,17 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
     if binary_info["path"] in shared_libs:
       if su.IsLibraryLinkable(binary_info["path"]):
         # It is a shared library and other projects might link to it.
+        # Some libraries don't declare a soname; compile time linker defaults
+        # to their file name.
         if "soname" in binary_info and binary_info["soname"]:
           soname = binary_info["soname"]
         else:
           soname = os.path.split(binary_info["path"])[1]
         linkable_shared_libs.append((soname, binary_info))
   check_names = True
+  logging.debug("CheckSharedLibraryNamingPolicy(): "
+                "linkable shared libs of %s: %s"
+                % (pkgname, linkable_shared_libs))
   if len(linkable_shared_libs) > 1:
     sonames = sorted(set([x[0] for x in linkable_shared_libs]))
     tmp = su.MakePackageNameBySonameCollection(sonames)
@@ -979,7 +992,7 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
       error_mgr.ReportError(
           "non-uniform-lib-versions-in-package",
           "sonames=%s"
-          % (sonames))
+          % (",".join(sonames)))
       messenger.Message(
           "Package %s contains shared libraries, and their soname "
           "versions are not in sync: %s.  This means that "
@@ -1008,7 +1021,7 @@ def CheckSharedLibraryNamingPolicy(pkg_data, error_mgr, logger, messenger):
           pkgname)
 
       check_names = False
-    else:
+    else: # len(linkable_shared_libs) > 1
       if pkgname not in multilib_pkgnames:
         error_mgr.ReportError(
             "shared-lib-pkgname-mismatch",
@@ -1083,10 +1096,13 @@ def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messe
           error_mgr.ReportError(
               "shared-lib-package-contains-so-symlink",
               "file=%s" % entry["path"])
-          messenger.SuggestGarLine("# (If %s-devel doesn't exist yet)" % pkgname)
-          messenger.SuggestGarLine("PACKAGES += %s-devel" % pkgname)
+          messenger.SuggestGarLine("# (If %s-dev doesn't exist yet)" % pkgname)
+          messenger.SuggestGarLine("PACKAGES += %s-dev" % pkgname)
           messenger.SuggestGarLine(
-              "PKGFILES_%s-devel += %s" % (pkgname, entry["path"]))
+              "PKGFILES_%s-dev += %s" % (pkgname, entry["path"]))
+          messenger.SuggestGarLine(
+              "CATALOGNAME_%s-dev = %s_dev"
+              % (pkgname, pkg_data["basic_stats"]["catalogname"]))
           messenger.Message(
               "The package contains shared libraries together with the "
               "symlink of the form libfoo.so -> libfoo.so.1.  "
@@ -1136,9 +1152,9 @@ def CheckSharedLibraryNameMustBeAsubstringOfSoname(
             % (binary_info["soname"], binary_info["base_name"]))
 
 
-def CheckDocDir(pkg_data, error_mgr, logger, messenger):
+def CheckLicenseFilePlacement(pkg_data, error_mgr, logger, messenger):
   pkgname = pkg_data["basic_stats"]["pkgname"]
-  docpath_re = re.compile(r"/opt/csw/share/doc/(?P<docname>[^/]+)/license")
+  docpath_re = re.compile(r"/opt/csw/share/doc/(?P<docname>[^/]+)/license$")
   for pkgmap_entry in pkg_data["pkgmap"]:
     if "path" not in pkgmap_entry: continue
     if not pkgmap_entry["path"]: continue
@@ -1183,6 +1199,28 @@ def CheckDanglingSymlinks(pkg_data, error_mgr, logger, messenger):
           pkgmap_entry["target"],
           "%s contains a symlink (%s) which needs the target file: %s."
           % (pkgname, repr(pkgmap_entry["path"]), repr(pkgmap_entry["target"])))
+
+
+def CheckPrefixDirs(pkg_data, error_mgr, logger, messenger):
+  """Files are allowed to be in /opt/csw, /etc/opt/csw and /var/opt/csw."""
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  paths_with_slashes = [(x, x + "/") for x in ALLOWED_STARTING_PATHS]
+  for pkgmap_entry in pkg_data["pkgmap"]:
+    if "path" not in pkgmap_entry: continue
+    if not pkgmap_entry["path"]: continue
+    allowed_found = False
+    for p, pslash in paths_with_slashes:
+      # We need to handle /opt/csw as an allowed path
+      if pkgmap_entry["path"] == p:
+        allowed_found = True
+        break
+      if pkgmap_entry["path"].startswith(pslash):
+        allowed_found = True
+        break
+    if not allowed_found:
+      error_mgr.ReportError(
+          "bad-location-of-file",
+          "file=%s" % pkgmap_entry["path"])
 
 
 def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(

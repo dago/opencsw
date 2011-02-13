@@ -1,18 +1,19 @@
 #!/usr/bin/env python2.6
 
-import copy
-import unittest
 import checkpkg_lib
-import tag
-import package_stats
-import database
-import sqlobject
-import models
-import package_stats
-import inspective_package
-import mox
-import test_base
+import copy
 import cPickle
+import database
+import inspective_package
+import models
+import mox
+import package_stats
+import package_stats
+import pprint
+import sqlobject
+import tag
+import test_base
+import unittest
 from testdata import stubs
 
 from testdata.neon_stats import pkgstats as neon_stats
@@ -349,6 +350,21 @@ class CheckpkgManager2DatabaseIntegrationTest(
     cm.Run()
     # Verifying that there are some reported error tags.
     self.assertTrue(list(models.CheckpkgErrorTag.select()))
+
+  def testReRunCheckpkg(self):
+    """Error tags should not accumulate."""
+    self.dbc.InitialDataImport()
+    sqo_pkg = package_stats.PackageStats.SaveStats(neon_stats[0], True)
+    cm = checkpkg_lib.CheckpkgManager2(
+        "testname", [sqo_pkg], "SunOS5.9", "sparc", "unstable",
+        show_progress=False)
+    before_count = models.CheckpkgErrorTag.selectBy(srv4_file=sqo_pkg).count()
+    cm.Run()
+    first_run_count = models.CheckpkgErrorTag.selectBy(srv4_file=sqo_pkg).count()
+    cm.Run()
+    second_run_count = models.CheckpkgErrorTag.selectBy(srv4_file=sqo_pkg).count()
+    self.assertEquals(0, before_count)
+    self.assertEquals(first_run_count, second_run_count)
 
 
 class IndividualCheckInterfaceUnitTest(mox.MoxTestBase):

@@ -82,12 +82,17 @@ class DatabaseManager(object):
         ldm.InitialDataImport()
         ldm.SetDatabaseSchemaVersion()
       else:
-        raise DatabaseError(
+        msg = (
             "Database schema does not match the application. "
             "Database contains: %s, "
             "the application expects: %s. "
-            "Make sure your application sources are up to date."
             % (ldm.GetDatabaseSchemaVersion(), DB_SCHEMA_VERSION))
+        if DB_SCHEMA_VERSION < ldm.GetDatabaseSchemaVersion():
+          msg += "Make sure your application sources are up to date."
+        elif DB_SCHEMA_VERSION > ldm.GetDatabaseSchemaVersion():
+          msg += ("Make sure your database is up to date.  "
+                  "Re-create it if necessary.")
+        raise DatabaseError(msg)
 
   def _CheckAndMaybeFixFreshness(self, auto_fix):
     ldm = LocalDatabaseManager()
@@ -260,14 +265,27 @@ class LocalDatabaseManager(CheckpkgDatabaseMixin):
 
   def GetFileMtime(self):
     if not self.file_mtime:
-      stat_data = os.stat(SYSTEM_PKGMAP)
-      self.file_mtime = stat_data.st_mtime
+      try:
+        stat_data = os.stat(SYSTEM_PKGMAP)
+        self.file_mtime = stat_data.st_mtime
+      except OSError, e:
+        logging.warning("Could not open %s: %s", SYSTEM_PKGMAP, e)
     return self.file_mtime
 
   def IsDatabaseUpToDate(self):
     f_mtime_epoch = self.GetFileMtime()
     d_mtime_epoch = self.GetDatabaseMtime()
-    f_mtime = time.gmtime(int(f_mtime_epoch))
+
+    # On some systems where pkgdb runs, f_mtime_epoch can be None.  To
+    # allow to run pkgdb, the absence of the SYSTEM_PKGMAP file must be
+    # tolerated.  The GetDatabaseMtime function returns None if the file
+    # is absent.  If f_mtime_epoch cannot be translated into a number,
+    # it's set to zero.
+    f_mtime = 0
+    try:
+      f_mtime = time.gmtime(int(f_mtime_epoch))
+    except TypeError, e:
+      logging.warning("Could not get file mtime: %s", e)
     d_mtime = time.gmtime(int(d_mtime_epoch))
     logging.debug("IsDatabaseUpToDate: f_mtime %s, d_time: %s", f_mtime, d_mtime)
     # Rounding up to integer seconds.  There is a race condition: 
@@ -286,6 +304,8 @@ class LocalDatabaseManager(CheckpkgDatabaseMixin):
     # Using the same stuff pkgdb is using.
     logging.warning(
         "Refreshing the database.  It may take a long time, please be patient.")
+    logging.warning("If you need a way to make it faster, please see:")
+    logging.warning("http://wiki.opencsw.org/checkpkg#toc5")
     infile_contents = common_constants.DEFAULT_INSTALL_CONTENTS_FILE
     infile_pkginfo = None
     logging.debug("Indexing.")

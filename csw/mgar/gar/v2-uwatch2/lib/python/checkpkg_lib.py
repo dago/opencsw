@@ -136,14 +136,17 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
     self.debug = debug
     self.name = name
     self.sqo_pkgs_list = sqo_pkgs_list
-    self.errors = []
-    self.individual_checks = []
-    self.set_checks = []
-    self.packages = []
     self.osrel = osrel
     self.arch = arch
     self.catrel = catrel
     self.show_progress = show_progress
+    self._ResetState()
+    self.individual_checks = []
+    self.set_checks = []
+
+  def _ResetState(self):
+    self.errors = []
+    self.packages = []
 
   def GetProgressBar(self):
     if self.show_progress and not self.debug:
@@ -154,10 +157,6 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
   def GetSqlobjectTriad(self):
      return super(CheckpkgManagerBase, self).GetSqlobjectTriad(
          self.osrel, self.arch, self.catrel)
-
-  def GetPackageStatsList(self):
-    raise RuntimeError("Please don't use this function as it violates "
-                       "the Law of Demeter.")
 
   def FormatReports(self, errors, messages, gar_lines):
     namespace = {
@@ -203,7 +202,7 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
       # left is lists and dictionaries.
       i = counter.next()
       if stats_obj.data_obj:
-        raw_pkg_data = cPickle.loads(stats_obj.data_obj.pickle)
+        raw_pkg_data = stats_obj.GetStatsStruct()
       else:
         raise CatalogDatabaseError(
             "%s (%s) is missing the data object."
@@ -219,20 +218,18 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
 
     Returns a tuple of an exit code and a report.
     """
-    # packages_data = self.GetPackageStatsList()
+    self._ResetState()
     assert self.sqo_pkgs_list, "The list of packages must not be empty."
     db_stat_objs_by_pkgname = {}
     for pkg in self.sqo_pkgs_list:
       db_stat_objs_by_pkgname[pkg.pkginst.pkgname] = pkg
     logging.debug("Deleting old errors from the database.")
+    sqo_os_rel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad()
     for pkgname, db_obj in db_stat_objs_by_pkgname.iteritems():
-      sqo_os_rel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad()
-      db_obj.RemoveCheckpkgResults(
-          sqo_os_rel, sqo_arch, sqo_catrel)
+      db_obj.RemoveCheckpkgResults(sqo_os_rel, sqo_arch, sqo_catrel)
     errors, messages, gar_lines = self.GetAllTags(self.sqo_pkgs_list)
-    no_errors = len(errors) + 1
     pbar = self.GetProgressBar()
-    pbar.maxval = no_errors
+    pbar.maxval = len(errors) + 1
     count = itertools.count(1)
     logging.info("Stuffing the candies under the pillow...")
     pbar.start()
@@ -341,7 +338,6 @@ class CheckInterfaceBase(object):
           paths = paths_and_pkgs.setdefault(path, [])
           paths.append(pkg)
     return paths_and_pkgs
-
 
   def GetPkgByPath(self, file_path):
     """Proxies calls to self.system_pkgmap."""
@@ -939,10 +935,26 @@ class CatalogMixin(SqlobjectHelperMixin):
             sqo_srv4, repr(pkg_arch), repr(filename_arch))
     return ans
 
+  def GetConflictingSrv4ByCatalognameResult(self,
+      sqo_srv4, catalogname,
+      sqo_osrel, sqo_arch, sqo_catrel):
+    res = m.Srv4FileStats.select(
+            m.Srv4FileStats.q.catalogname==catalogname
+            ).throughTo.in_catalogs.filter(
+                sqlobject.AND(
+                  m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+                  m.Srv4FileInCatalog.q.arch==sqo_arch,
+                  m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+                  m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
+    return res
+
   def AddSrv4ToCatalog(self, sqo_srv4, osrel, arch, catrel):
     """Registers a srv4 file in a catalog."""
     logging.debug("AddSrv4ToCatalog(%s, %s, %s, %s)",
         sqo_srv4, osrel, arch, catrel)
+    # There are only i386 and sparc catalogs.
+    if arch != 'i386' and arch != 'sparc':
+      raise CatalogDatabaseError("Wrong architecture: %s" % arch)
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
     if not self.Srv4MatchesCatalog(sqo_srv4, sqo_arch):
@@ -965,9 +977,16 @@ class CatalogMixin(SqlobjectHelperMixin):
                   m.Srv4FileInCatalog.q.arch==sqo_arch,
                   m.Srv4FileInCatalog.q.catrel==sqo_catrel,
                   m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
-    if len(list(res)):
+    if res.count():
       raise CatalogDatabaseError(
-          "There already is a package with that pkgname: %s" % pkginst)
+          "There already is a package with that pkgname: %s" % pkginst.pkgname)
+    res = self.GetConflictingSrv4ByCatalognameResult(
+        sqo_srv4, sqo_srv4.catalogname,
+        sqo_osrel, sqo_arch, sqo_catrel)
+    if res.count():
+      raise CatalogDatabaseError(
+          "There already is a package with that catalogname: %s"
+          % sqo_srv4.catalogname)
     # Checking for presence of the same srv4 already in the catalog.
     res = m.Srv4FileInCatalog.select(
         sqlobject.AND(
@@ -975,9 +994,9 @@ class CatalogMixin(SqlobjectHelperMixin):
             m.Srv4FileInCatalog.q.arch==sqo_arch,
             m.Srv4FileInCatalog.q.catrel==sqo_catrel,
             m.Srv4FileInCatalog.q.srv4file==sqo_srv4))
-    if len(list(res)):
-      logging.debug("%s is already part of %s %s %s",
-                    sqo_srv4, osrel, arch, catrel)
+    if res.count():
+      logging.warning("%s is already part of %s %s %s",
+                      sqo_srv4, osrel, arch, catrel)
       # Our srv4 is already part of that catalog.
       return
     obj = m.Srv4FileInCatalog(
@@ -989,15 +1008,18 @@ class CatalogMixin(SqlobjectHelperMixin):
   def RemoveSrv4(self, sqo_srv4, osrel, arch, catrel):
     sqo_osrel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad(
         osrel, arch, catrel)
-    sqo_srv4_in_cat = m.Srv4FileInCatalog.select(
-        sqlobject.AND(
-          m.Srv4FileInCatalog.q.arch==sqo_arch,
-          m.Srv4FileInCatalog.q.osrel==sqo_osrel,
-          m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-          m.Srv4FileInCatalog.q.srv4file==sqo_srv4)).getOne()
-    # Files belonging to this package should not be removed from the catalog
-    # as the package might be still present in another catalog.
-    sqo_srv4_in_cat.destroySelf()
+    try:
+      sqo_srv4_in_cat = m.Srv4FileInCatalog.select(
+          sqlobject.AND(
+            m.Srv4FileInCatalog.q.arch==sqo_arch,
+            m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+            m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+            m.Srv4FileInCatalog.q.srv4file==sqo_srv4)).getOne()
+      # Files belonging to this package should not be removed from the catalog
+      # as the package might be still present in another catalog.
+      sqo_srv4_in_cat.destroySelf()
+    except sqlobject.main.SQLObjectNotFound, e:
+      logging.warning(e)
 
 
 class Catalog(CatalogMixin):
