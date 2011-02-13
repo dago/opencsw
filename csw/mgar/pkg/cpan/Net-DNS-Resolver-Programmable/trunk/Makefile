@@ -7,9 +7,11 @@ DESCRIPTION = Programmable DNS resolver class for offline emulation of DNS
 define BLURB
 endef
 
-PACKAGES = CSWpmnetdnsresp
-CATALOGNAME = pm_netdnsresp
+PACKAGES = CSWpmnetdnsreslvprg
+CATALOGNAME = pm_netdnsreslvprg
 
 ARCHALL = 1
+
+LICENSE = LICENSE
 
 include gar/category.mk
