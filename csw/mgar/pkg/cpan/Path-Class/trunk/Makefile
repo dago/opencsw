@@ -22,5 +22,10 @@ ARCHALL_CSWpmpathclass = 1
 
 LICENSE = README
 
+CHECKPKG_OVERRIDES_CSWpmpathclass += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/Path::Class::File.3perl
+CHECKPKG_OVERRIDES_CSWpmpathclass += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/Path::Class::Dir.3perl
+CHECKPKG_OVERRIDES_CSWpmpathclass += file-with-bad-content|/usr/local|root/opt/csw/share/perl/csw/Path/Class/File.pm
+CHECKPKG_OVERRIDES_CSWpmpathclass += file-with-bad-content|/usr/local|root/opt/csw/share/perl/csw/Path/Class/Dir.pm
+
 include gar/category.mk
 
