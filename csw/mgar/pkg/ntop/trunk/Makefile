@@ -20,7 +20,7 @@ EXPANDVARS += cswntop
 DISTFILES  += ntop.conf.CSW
 EXPANDVARS += ntop.conf.CSW
 DISTFILES  += CSWntop.postinstall CSWntop.postremove CSWntop.request
-DISTFILES  += README.CSW
+DISTFILES  += cswreleasemgr
 
 INITSMF = /etc/opt/csw/init.d/cswntop
 
