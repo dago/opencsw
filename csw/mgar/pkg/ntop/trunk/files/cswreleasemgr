@@ -8,6 +8,18 @@ reminder to the maintainer and as potential notes for
 future maintainers and/or end users.
 ===
 
+* Files with bad content
+
+A number of shared libraries and documentation files have
+references to /usr/local.  In the case of the shared
+libaries these references were a static reference to
+pre-processor, compiler and linker flags.  As such they
+may be ignored.  The documentation has a number of
+references as well but they are appropriate for the
+tone of the document.  I have chosen to leave these 
+references as the author choose to have them. 
+===
+
 * Default configuration
 
 This package automatically starts ntop via SMF/init during
@@ -38,18 +50,6 @@ The package was last updated in 2004, so this shouldn't be
 a problem.  The next time ntop is refreshed I will revisit 
 this to see if it can be handled better, or at least the 
 way the package author intends it to be handled.
-===
-
-* Files with bad content
-
-A number of shared libraries and documentation files have
-references to /usr/local.  In the case of the shared
-libaries these references were a static reference to
-pre-processor, compiler and linker flags.  As such they
-may be ignored.  The documentation has a number of
-references as well but they are appropriate for the
-tone of the document.  I have chosen to leave these 
-references as the author choose to have them. 
 ===
 
 * Use of graphviz
