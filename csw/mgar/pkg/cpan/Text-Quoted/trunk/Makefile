@@ -1,7 +1,7 @@
 NAME = Text-Quoted
-VERSION = 1.10
+VERSION = 2.06
 CATEGORIES = cpan
-AUTHOR = JESSE
+AUTHOR = RUZ
 
 DESCRIPTION = extract the structure of a quoted mail message
 define BLURB
@@ -10,8 +10,15 @@ define BLURB
   structure.
 endef
 
-DISTFILES += CSWpmtxtquoted.gspec CSWpmtxtquoted.depend
+RUNTIME_DEP_PKGS = CSWpmtxtautofmt
+BUILD_DEP_PKGS = CSWpmtxtautofmt
 
-DEPENDS += cpan/Text-Autoformat
+CATALOGNAME = pm_txtquoted
+PACKAGES    = CSWpmtxtquoted
+
+ARCHALL_CSWpmtxtquoted = 1
+
+LICENSE = README
 
 include gar/category.mk
+
