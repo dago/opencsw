@@ -1,5 +1,5 @@
 NAME = Test-Script
-VERSION = 1.03
+VERSION = 1.07
 CATEGORIES = cpan
 AUTHOR = ADAMK
 
