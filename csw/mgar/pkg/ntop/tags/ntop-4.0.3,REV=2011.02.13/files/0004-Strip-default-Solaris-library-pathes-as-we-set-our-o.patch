@@ -1,0 +1,52 @@
+From ef3ce9708fb1625f97fd8eff7665052602bb6429 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 11 Nov 2010 12:35:04 +0100
+Subject: [PATCH 4/4] Strip default Solaris library pathes as we set our own
+
+---
+ configureextra/SOLARIS10 |    6 +++---
+ configureextra/SOLARIS9  |    4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/configureextra/SOLARIS10 b/configureextra/SOLARIS10
+index 5e12960..6f1a6ea 100644
+--- a/configureextra/SOLARIS10
++++ b/configureextra/SOLARIS10
+@@ -5,9 +5,9 @@
+ #
+ 
+ echo "        Setting Solaris 10 specific flag values"
+-LDFLAGS="-L/opt/sfw/lib -L/usr/local/lib -R/opt/sfw/lib -R/usr/local/lib ${LDFLAGS}"
++#LDFLAGS="-L/opt/sfw/lib -L/usr/local/lib -R/opt/sfw/lib -R/usr/local/lib ${LDFLAGS}"
+ LIBS="-lnsl -lsocket ${LIBS}"
+-CPPFLAGS="${CPPFLAGS} -I/usr/local/include -I/opt/sfw/include"
++#CPPFLAGS="${CPPFLAGS} -I/usr/local/include -I/opt/sfw/include"
+ 
+ . configureextra/functions
+ 
+@@ -28,4 +28,4 @@ echo "- cd /usr/local/lib"
+ echo "- ln -s libpcap.so.0.X.Y libpcap.so"
+ echo "- rm libpcap.a"
+ echo ""
+-echo "*************************************************"
+\ No newline at end of file
++echo "*************************************************"
+diff --git a/configureextra/SOLARIS9 b/configureextra/SOLARIS9
+index f968ea1..4323773 100755
+--- a/configureextra/SOLARIS9
++++ b/configureextra/SOLARIS9
+@@ -1,9 +1,9 @@
+ #!/bin/sh
+ 
+ echo "        Setting Solaris 9 specific flag values"
+-LDFLAGS="-L/opt/sfw/lib -L/usr/local/lib -R/opt/sfw/lib -R/usr/local/lib ${LDFLAGS}"
++# LDFLAGS="-L/opt/sfw/lib -L/usr/local/lib -R/opt/sfw/lib -R/usr/local/lib ${LDFLAGS}"
+ LIBS="-lnsl -lsocket ${LIBS}"
+-CPPFLAGS="${CPPFLAGS} -I/usr/local/include -I/opt/sfw/include"
++# CPPFLAGS="${CPPFLAGS} -I/usr/local/include -I/opt/sfw/include"
+ 
+ . configureextra/functions
+ 
+-- 
+1.7.3
+

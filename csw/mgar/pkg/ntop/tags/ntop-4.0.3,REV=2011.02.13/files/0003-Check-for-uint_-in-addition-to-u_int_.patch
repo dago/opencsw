@@ -1,0 +1,95 @@
+From a4b0c017045180b7fb5ddcd9a1b7433f2a7b55ea Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 11 Nov 2010 12:34:45 +0100
+Subject: [PATCH 3/4] Check for uint_* in addition to u_int_*
+
+---
+ configure.in          |    6 ++++++
+ globals-structtypes.h |   20 ++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 0 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 652e409..5c6fa98 100644
+--- a/configure.in
++++ b/configure.in
+@@ -207,7 +207,10 @@ AH_TEMPLATE([HAVE_INT16_T],   [Define for int16 typedef])
+ AH_TEMPLATE([HAVE_INT32_T],   [Define for int32 typedef])
+ AH_TEMPLATE([HAVE_INT64_T],   [Define for int64 typedef])
+ AH_TEMPLATE([HAVE_INT8_T],    [Define for int8 typedef])
++AH_TEMPLATE([HAVE_UINT16_T],  [Define for unsigned int 16 typedef])
++AH_TEMPLATE([HAVE_UINT32_T],  [Define for unsigned int 32 typedef])
+ AH_TEMPLATE([HAVE_UINT64_T],  [Define for unsigned int 64 typedef])
++AH_TEMPLATE([HAVE_UINT8_T],   [Define for unsigned int 8 typedef])
+ AH_TEMPLATE([HAVE_U_INT16_T], [Define for unsigned int 16 typedef])
+ AH_TEMPLATE([HAVE_U_INT32_T], [Define for unsigned int 32 typedef])
+ AH_TEMPLATE([HAVE_U_INT64_T], [Define for unsigned int 64 typedef])
+@@ -1122,8 +1125,11 @@ AC_STRUCT_TIMEZONE
+ AC_CHECK_TYPEDEF(u_int64_t, sys/types.h)
+ AC_CHECK_TYPEDEF(uint64_t, sys/types.h)
+ AC_CHECK_TYPEDEF(u_int32_t, sys/types.h)
++AC_CHECK_TYPEDEF(uint32_t, sys/types.h)
+ AC_CHECK_TYPEDEF(u_int16_t, sys/types.h)
++AC_CHECK_TYPEDEF(uint16_t, sys/types.h)
+ AC_CHECK_TYPEDEF(u_int8_t, sys/types.h)
++AC_CHECK_TYPEDEF(uint8_t, sys/types.h)
+ AC_CHECK_TYPEDEF(int64_t, sys/types.h)
+ AC_CHECK_TYPEDEF(int32_t, sys/types.h)
+ AC_CHECK_TYPEDEF(int16_t, sys/types.h)
+diff --git a/globals-structtypes.h b/globals-structtypes.h
+index 2de7c6f..61a1632 100644
+--- a/globals-structtypes.h
++++ b/globals-structtypes.h
+@@ -71,22 +71,38 @@ typedef u_int   u_int32_t;
+ #if defined(HAVE_u_int64_T)
+ #define u_int64_t u_int64_t
+ #else
++#if defined(HAVE_UINT64_T)
++#define u_int64_t uint64_t
++#else
+ #error "Sorry, I'm unable to define u_int64_t on your platform"
+ #endif
+ #endif
+ #endif
++#endif
+ 
+ #if !defined(HAVE_U_INT32_T)
++#if defined(HAVE_UINT32_T)
++#define u_int32_t uint32_t
++#else
+ typedef unsigned int u_int32_t;
+ #endif
++#endif
+ 
+ #if !defined(HAVE_U_INT16_T)
++#if defined(HAVE_UINT16_T)
++#define u_int16_t uint16_t
++#else
+ typedef unsigned short u_int16_t;
+ #endif
++#endif
+ 
+ #if !defined(HAVE_U_INT8_T)
++#if defined(HAVE_UINT8_T)
++#define u_int8_t uint8_t
++#else
+ typedef unsigned char u_int8_t;
+ #endif
++#endif
+ 
+ #if !defined(HAVE_INT32_T)
+ typedef int int32_t;
+@@ -312,7 +328,11 @@ typedef struct protocolsList {
+ #define pthread_rwlock_wrlock    pthread_mutex_lock
+ #define pthread_rwlock_unlock    pthread_mutex_unlock
+ #define pthread_rwlock_destroy   pthread_mutex_destroy
++#ifdef SOLARIS
++#define pthread_rwlock_trywrlock pthread_mutex_trylock
++#else /* SOLARIS */
+ #define pthread_rwlock_trywrlock pthread_mutex_trywrlock
++#endif /* SOLARIS */
+ #endif
+ #endif
+ 
+-- 
+1.7.3
+

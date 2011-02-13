@@ -1,0 +1,87 @@
+Package: ntop
+Release: 4.0.3
+=================================================================
+
+The following are a collection of statments to detail 
+the particulars of this release.  These serve as a 
+reminder to the maintainer and as potential notes for
+future maintainers and/or end users.
+===
+
+* Files with bad content
+
+A number of shared libraries and documentation files have
+references to /usr/local.  In the case of the shared
+libaries these references were a static reference to
+pre-processor, compiler and linker flags.  As such they
+may be ignored.  The documentation has a number of
+references as well but they are appropriate for the
+tone of the document.  I have chosen to leave these 
+references as the author choose to have them. 
+===
+
+* Default configuration
+
+This package automatically starts ntop via SMF/init during
+the install.  As this package is intended to run as a service
+a few settings are forced.  The interfaces default to all
+interfaces on the box unless specified in the configuration
+file /etc/opt/csw/ntop/ntop.conf.  Likewise, logging is
+sent to syslog-local3 unless changed.  Settings in this
+configuration file override any changes made through the
+GUI.  You can of course disable the SMF/init settings
+and control ntop startup/shutdown manually.
+===
+
+* The etter.finger.os is a static version
+
+This file provides the information ntop uses to passively
+identify host operating sytsems.  During the build process 
+for this release of the package the sourceforge website was 
+hacked and a number of services were shutdown during the 
+rebuilding/securing of the website. CVS was one of these 
+services and that impacted the ability to build ntop.  As 
+part of the build process the file etter.finger.os is 
+downloaded from the etters project CVS system and without 
+http acces to the repository the build would not proceed.  
+I extracted the last version of this file and short 
+circuited the build to use this frozen version of the file.  
+The package was last updated in 2004, so this shouldn't be 
+a problem.  The next time ntop is refreshed I will revisit 
+this to see if it can be handled better, or at least the 
+way the package author intends it to be handled.
+===
+
+* Use of graphviz
+
+Addtional web display functionality is enabled when
+this package is installed.  I did not make it a 
+dependency because of the number of additional packages
+that would be installed.  I'll leave this choice to the
+end user.
+===
+
+* Use of Mako
+
+Additional functionality could be enabled if the mako 
+package were installed.  This package is not currently
+available from OpenCSW but may be integrated in the 
+future if this package becomes available.
+===
+
+* Use of MySQL
+
+I have choosen to not add support for MySQL at this time.
+I have not used ntop with MySQL and so my experience
+with this type of configuration is non-existent.  If 
+this feature is important to end users they may request
+it and I will consider extending support.
+===
+
+* Use of FC
+
+This feature follows along with the MySQL statement and
+is not enabled for this release.  Please request if you 
+need this functionality and I will consider extending 
+support.
+===

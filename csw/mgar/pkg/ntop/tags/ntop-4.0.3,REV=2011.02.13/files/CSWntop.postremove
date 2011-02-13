@@ -1,0 +1,15 @@
+#!/sbin/sh
+
+CONFDIR="${BASEDIR}/etc/opt/csw/ntop"
+DATADIR="${BASEDIR}/var/opt/csw/ntop"
+
+if [ -d "${CONFDIR}" -o -d "${DATADIR}" ]; then
+  echo ""
+  echo "You might want to manually remove files in:"
+  if [ -d "${CONFDIR}" ]; then
+    echo "   ${CONFDIR}"
+  fi
+  if [ -d "${DATADIR}" ]; then
+    echo "   ${DATADIR}"
+  fi
+fi
