@@ -723,37 +723,51 @@ BASEWORKSRC = $(shell basename $(WORKSRC))
 xz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@xz -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
-	@( cd $(WORKSRC); git add -A; \
-		git commit -am "old xz-style patch: $*"; )
+	@( if [ -z "$(NOGITPATCH)" ]; then \
+		cd $(WORKSRC); git add -A; \
+		git commit -am "old xz-style patch: $*"; \
+	   fi )
 	@$(MAKECOOKIE)
 
 # apply bzipped patches
 bz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@bzip2 -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
-	@( cd $(WORKSRC); git add -A; \
-		git commit -am "old bz-style patch: $*"; )
+	@( if [ -z "$(NOGITPATCH)" ]; then \
+		cd $(WORKSRC); git add -A; \
+		git commit -am "old bz-style patch: $*"; \
+	   fi )
 	@$(MAKECOOKIE)
 
 # apply gzipped patches
 gz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@gzip -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
-	@( cd $(WORKSRC); git add -A; \
-		git commit -am "old gz-style patch: $*"; )
+	@( if [ -z "$(NOGITPATCH)" ]; then \
+		cd $(WORKSRC); git add -A; \
+		git commit -am "old gz-style patch: $*"; \
+	   fi )
 	@$(MAKECOOKIE)
 
 # apply normal patches (git format-patch output or old-style diff -r)
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@( if ggrep -q 'diff --git' $(abspath $(DOWNLOADDIR)/$*); then \
-		cd $(WORKSRC); git am --ignore-space-change --ignore-whitespace $(abspath $(DOWNLOADDIR)/$*); \
-	   else \
+		if [ -z "$(NOGITPATCH)" ]; then \
+			cd $(WORKSRC);\
+			git am --ignore-space-change --ignore-whitespace $(abspath $(DOWNLOADDIR)/$*); \
+		else \
+			$(GARPATCH) < $(DOWNLOADDIR)/$*; \
+		fi; \
+	  else \
 		echo Adding old-style patch...; \
 		$(GARPATCH) < $(DOWNLOADDIR)/$*; \
-		cd $(WORKSRC); git add -A; \
-		git commit -am "old style patch: $*"; \
-	   fi )
+		if [ -z "$(NOGITPATCH)" ]; then \
+			cd $(WORKSRC); \
+			git add -A; \
+			git commit -am "old style patch: $*"; \
+		fi; \
+	  fi )
 	@$(MAKECOOKIE)
 
 ### PATCH FILE TYPE MAPPINGS ###

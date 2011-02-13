@@ -14,6 +14,7 @@ import datetime
 import database
 
 import package_stats
+import struct_util
 import checkpkg
 import checkpkg_lib
 import overrides
@@ -59,8 +60,8 @@ def main():
       help="Display less messages")
   parser.add_option("--catalog-release",
       dest="catrel",
-      default="unstable",
-      help="A catalog release: experimental, unstable, testing, stable.")
+      default="current",
+      help="A catalog release: current, unstable, testing, stable.")
   parser.add_option("-r", "--os-releases",
       dest="osrel_commas",
       help=("Comma separated list of ['SunOS5.9', 'SunOS5.10'], "
@@ -102,7 +103,7 @@ def main():
   # We need to separate files and md5 sums.
   md5_sums, file_list = [], []
   for arg in args:
-    if checkpkg.MD5_RE.match(arg):
+    if struct_util.IsMd5(arg):
       md5_sums.append(arg)
     else:
       file_list.append(arg)
@@ -162,7 +163,7 @@ def main():
       if unapplied_overrides:
         print textwrap.fill(UNAPPLIED_OVERRIDES, 80)
         for override in unapplied_overrides:
-          print "* Unused %s" % override
+          print u"* Unused %s" % override
   exit_code = bool(tags_for_all_osrels)
   sys.exit(exit_code)
 

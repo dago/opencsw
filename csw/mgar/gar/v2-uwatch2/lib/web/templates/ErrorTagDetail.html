@@ -1,0 +1,19 @@
+$def with (tag_name, tags)
+<html>
+  <head>
+    <title>
+      $tag_name
+    </title>
+  </head>
+  <body>
+    <h3>$tag_name</h3>
+    <ul>
+$for tag in tags:
+  $if tag.srv4_file.registered:
+    <li>
+    <a href="../../srv4/$tag.srv4_file.md5_sum/">$tag.srv4_file.basename</a>:
+    $tag.tag_info
+    </li>
+</ul>
+</body>
+</html>

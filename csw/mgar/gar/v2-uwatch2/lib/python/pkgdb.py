@@ -4,27 +4,28 @@
 # $Id$
 
 import ConfigParser
-import optparse
-import models as m
-import sqlobject
-from sqlobject import sqlbuilder
 import cPickle
-import logging
+import catalog
+import checkpkg_lib
 import code
+import common_constants
+import configuration
+import database
+import datetime
+import logging
+import models as m
+import optparse
 import os
 import os.path
-import re
-import socket
-import sys
 import package_checks
 import package_stats
-import database
-import configuration
-import checkpkg_lib
-import common_constants
+import re
+import socket
+import sqlobject
+import struct_util
+import sys
 import system_pkgmap
-import catalog
-import checkpkg
+from sqlobject import sqlbuilder
 from Cheetah.Template import Template
 
 USAGE = """
@@ -39,7 +40,8 @@ USAGE = """
        %prog add-to-cat <osrel> <arch> <cat-release> <md5sum> [ ... ]
        %prog del-from-cat <osrel> <arch> <cat-release> <md5sum> [ ... ]
        %prog sync-cat-from-file <osrel> <arch> <cat-release> <catalog-file>
-       %prog sync-catalogs-from-tree <cat-release> <directory>
+       %prog sync-catalogs-from-tree <cat-release> <opencsw-dir>
+       %prog gen-cat <allpkgs> <opencsw-dir>
        %prog show cat [options]
 
   Inspecting individual packages:
@@ -82,6 +84,10 @@ class UsageError(Error):
   "Error in command line options."
 
 
+class OpencswTreeError(Error):
+  "A problem with the OpenCSW directory tree."
+
+
 class HtmlGenerator(object):
 
   def __init__(self, identifiers, template=None):
@@ -108,7 +114,7 @@ class HtmlGenerator(object):
     # Add error tags
     for identifier in self.identifiers:
       srv4 = GetPkg(identifier)
-      data = cPickle.loads(str(srv4.data_obj.pickle))
+      data = srv4.GetStatsStruct()
       if "OPENCSW_REPOSITORY" in data["pkginfo"]:
         build_src = data["pkginfo"]["OPENCSW_REPOSITORY"]
         build_src_url_svn = re.sub(r'([^@]*).*', r'\1/Makefile', build_src)
@@ -144,7 +150,7 @@ def NormalizeId(some_id):
   """Used to normalize identifiers (md5, filename).
 
   Currently, strips paths off given package paths."""
-  if not checkpkg.IsMd5(some_id):
+  if not struct_util.IsMd5(some_id):
     logging.warning(
         "Given Id (%s) is not an md5 sum. Will attempt to retrieve "
         "it from the datbase, but it might fail.",
@@ -179,7 +185,8 @@ class CatalogImporter(object):
   def __init__(self, debug=False):
     self.debug = debug
 
-  def SyncFromCatalogFile(self, osrel, arch, catrel, catalog_file):
+  def SyncFromCatalogFile(self, osrel, arch, catrel, catalog_file,
+      force_unpack=False):
     """Syncs a given catalog from a catalog file.
 
     Imports srv4 files if necessary.
@@ -189,7 +196,7 @@ class CatalogImporter(object):
     # - read in the catalog file, and build a md5-filename correspondence
     # data structure.
     logging.debug("Reading the catalog file from disk.")
-    src_catalog = catalog.OpencswCatalog(catalog_file)
+    src_catalog = catalog.OpencswCatalog(open(catalog_file, "rb"))
     catalog_data = src_catalog.GetCatalogData()
     cat_entry_by_md5 = {}
     cat_entry_by_basename = {}
@@ -217,7 +224,8 @@ class CatalogImporter(object):
       collector = package_stats.StatsCollector(
           logger=logging,
           debug=self.debug)
-      new_statdicts = collector.CollectStatsFromFiles(file_list, None)
+      new_statdicts = collector.CollectStatsFromFiles(
+          file_list, None, force_unpack=force_unpack)
     new_statdicts_by_md5 = {}
     if new_statdicts:
       logging.info("Marking imported packages as registered.")
@@ -288,13 +296,14 @@ class CatalogImporter(object):
           logging.warning(
               "Package %s was not registered for releases. Registering it.",
               sqo_srv4.basename)
-          sqo_srv4.registered = True
+          stats = sqo_srv4.GetStatsStruct()
+          package_stats.PackageStats.ImportPkg(stats, True)
         db_catalog.AddSrv4ToCatalog(
             sqo_srv4, osrel, arch, catrel)
 
-  def SyncFromCatalogTree(self, catrel, base_dir):
-    logging.debug("SyncFromCatalogTree(%s, %s)",
-                  repr(catrel), repr(base_dir))
+  def SyncFromCatalogTree(self, catrel, base_dir, force_unpack=False):
+    logging.debug("SyncFromCatalogTree(%s, %s, force_unpack=%s)",
+                  repr(catrel), repr(base_dir), force_unpack)
     if not os.path.isdir(base_dir):
       raise UsageError("%s is not a diractory" % repr(base_dir))
     if catrel not in common_constants.DEFAULT_CATALOG_RELEASES:
@@ -313,16 +322,22 @@ class CatalogImporter(object):
           logging.warning("Could not find %s, skipping.", repr(catalog_file))
           continue
         logging.info("      %s", catalog_file)
-        self.SyncFromCatalogFile(osrel, arch, catrel, catalog_file)
+        self.SyncFromCatalogFile(osrel, arch, catrel, catalog_file,
+            force_unpack=force_unpack)
 
   def ComposeCatalogFilePath(self, base_dir, osrel, arch):
     short_osrel = osrel.replace("SunOS", "")
     return os.path.join(base_dir, arch, short_osrel, "catalog")
 
 
-def main():
-  configuration.SetUpSqlobjectConnection()
+def GetSqoTriad(osrel, arch, catrel):
+  sqo_osrel = m.OsRelease.selectBy(short_name=osrel).getOne()
+  sqo_arch = m.Architecture.selectBy(name=arch).getOne()
+  sqo_catrel = m.CatalogRelease.selectBy(name=catrel).getOne()
+  return sqo_osrel, sqo_arch, sqo_catrel
 
+
+def main():
   parser = optparse.OptionParser(USAGE)
   parser.add_option("-d", "--debug", dest="debug",
                     default=False, action="store_true",
@@ -341,13 +356,23 @@ def main():
   parser.add_option("--replace", dest="replace",
                     default=False, action="store_true",
                     help="Replace packages when importing (importpkg)")
+  parser.add_option("--profile", dest="profile",
+                    default=False, action="store_true",
+                    help="Turn on profiling")
+  parser.add_option("--force-unpack", dest="force_unpack",
+                    default=False, action="store_true",
+                    help="Force unpacking of packages")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
+    logging.debug("Debugging on")
   else:
     logging.basicConfig(level=logging.INFO)
   if not args:
     raise UsageError("Please specify a command.  Se --help.")
+  # SetUpSqlobjectConnection needs to be called after
+  # logging.basicConfig
+  configuration.SetUpSqlobjectConnection()
   command = args[0]
   args = args[1:]
   if command == 'show':
@@ -362,7 +387,10 @@ def main():
   md5_sums = args
 
   dm = database.DatabaseManager()
-  dm.AutoManage()
+  # Automanage is not what we want to do, if the intention is to initialize
+  # the database.
+  if command != 'initdb':
+    dm.AutoManage()
 
   if (command, subcommand) == ('show', 'errors'):
     for md5_sum in md5_sums:
@@ -395,7 +423,8 @@ def main():
         logger=logging,
         debug=options.debug)
     file_list = args
-    stats_list = collector.CollectStatsFromFiles(file_list, None)
+    stats_list = collector.CollectStatsFromFiles(file_list, None,
+        force_unpack=options.force_unpack)
     for stats in stats_list:
       logging.debug(
           "Importing %s, %s",
@@ -459,14 +488,26 @@ def main():
     importer.ImportFromFile(infile_fd, show_progress=True)
   elif (command, subcommand) == ('pkg', 'search'):
     logging.debug("Searching for %s", args)
+    sqo_osrel = m.OsRelease.selectBy(short_name=options.osrel).getOne()
+    sqo_arch = m.Architecture.selectBy(name=options.arch).getOne()
+    sqo_catrel = m.CatalogRelease.selectBy(name=options.catrel).getOne()
     if len(args) < 1:
       logging.fatal("Wrong number of arguments: %s", len(args))
       raise SystemExit
     for catalogname in args:
+      join = [
+          sqlbuilder.INNERJOINOn(None,
+            m.Srv4FileInCatalog,
+            m.Srv4FileInCatalog.q.srv4file==m.Srv4FileStats.q.id),
+      ]
       res = m.Srv4FileStats.select(
           sqlobject.AND(
+            m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+            m.Srv4FileInCatalog.q.arch==sqo_arch,
+            m.Srv4FileInCatalog.q.catrel==sqo_catrel,
             m.Srv4FileStats.q.catalogname.contains(catalogname),
-            m.Srv4FileStats.q.use_to_generate_catalogs==True)
+            m.Srv4FileStats.q.use_to_generate_catalogs==True),
+            join=join,
           ).orderBy("catalogname")
       for sqo_srv4 in res:
         print "%s %s" % (sqo_srv4.basename, sqo_srv4.md5_sum)
@@ -481,27 +522,82 @@ def main():
       raise UsageError("Wrong number of arguments, see usage.")
     ci = CatalogImporter(debug=options.debug)
     catrel, base_dir = args
-    ci.SyncFromCatalogTree(catrel, base_dir)
+    ci.SyncFromCatalogTree(catrel, base_dir, options.force_unpack)
   elif (command, subcommand) == ('show', 'cat'):
-    sqo_osrel = m.OsRelease.selectBy(short_name=options.osrel).getOne()
-    sqo_arch = m.Architecture.selectBy(name=options.arch).getOne()
-    sqo_catrel = m.CatalogRelease.selectBy(name=options.catrel).getOne()
-    join = [
-        sqlbuilder.INNERJOINOn(None,
-          m.Srv4FileInCatalog,
-          m.Srv4FileInCatalog.q.srv4file==m.Srv4FileStats.q.id),
-    ]
-    res = m.Srv4FileStats.select(
-        sqlobject.AND(
-          m.Srv4FileInCatalog.q.osrel==sqo_osrel,
-          m.Srv4FileInCatalog.q.arch==sqo_arch,
-          m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-          m.Srv4FileStats.q.use_to_generate_catalogs==True,
-        ),
-        join=join,
-    )
+    sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
+        options.osrel, options.arch, options.catrel)
+    res = m.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel)
     for obj in res:
-      print obj.basename, obj.md5_sum
+      print obj.catalogname, obj.basename, obj.md5_sum
+  elif command == 'gen-cat':
+    catrel = 'unstable'
+    if options.catrel != catrel:
+      logging.warn("Generating the %s catalog.", catrel)
+    if len(args) != 2:
+      raise UsageError("Wrong number of arguments, see usage.")
+    allpkgs_dir, target_dir = args
+    archs = (
+        common_constants.ARCH_i386,
+        common_constants.ARCH_SPARC,
+    )
+    prev_osrels = []
+
+    # A form of currying.  Takes advantage of the fact that outer scope
+    # variables are available inside the function.
+    def GetTargetPath(osrel_short):
+      return os.path.join(target_dir, catrel, arch, osrel_short)
+
+    def ShortenOsrel(osrel):
+      return osrel.replace("SunOS", "")
+
+    # TODO: Move this definition to a better place
+    for osrel in ("SunOS5.%s" % x for x in (8, 9, 10)):
+      for arch in archs:
+        sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
+            osrel, arch, catrel)
+        pkgs = list(m.GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel))
+        logging.debug("The catalog contains %s packages" % len(pkgs))
+        # For now, only making hardlinks to packages from allpkgs
+        osrel_short = ShortenOsrel(osrel)
+        tgt_path = GetTargetPath(osrel_short)
+        configuration.MkdirP(tgt_path)
+        existing_files = os.listdir(tgt_path)
+        for existing_file in existing_files:
+          existing_path = os.path.join(tgt_path, existing_file)
+          if '.pkg' in existing_file:
+            logging.debug("Unlinking %s", repr(existing_path))
+            os.unlink(existing_path)
+          else:
+            logging.debug("Not unlinking %s", existing_path)
+        logging.debug("Existing files: %s", len(existing_files))
+        for pkg in pkgs:
+          src_path = os.path.join(allpkgs_dir, pkg.basename)
+          if not os.path.exists(src_path):
+            raise OpencswTreeError("File %s does not exist" % repr(src_path))
+          # Try to find if the package was already available in previous
+          # os releases
+          already_existing_in_osrel = None
+          for prev_osrel in prev_osrels:
+            prev_path = os.path.join(
+                GetTargetPath(ShortenOsrel(prev_osrel)), pkg.basename)
+            if os.path.exists(prev_path):
+              logging.debug("%s already exists in %s",
+                  pkg.basename, prev_path)
+              already_existing_in_osrel = prev_osrel
+              break
+          if already_existing_in_osrel:
+            # Symlink
+            logging.debug(
+                "ln -s ../%s/%s %s",
+                already_existing_in_osrel, pkg.basename, pkg.basename)
+            os.symlink(
+                os.path.join("..", already_existing_in_osrel, pkg.basename),
+                os.path.join(tgt_path, pkg.basename))
+          else:
+            # Hardlink
+            logging.debug("cp -l %s %s/%s", src_path, tgt_path, pkg.basename)
+            os.link(src_path, os.path.join(tgt_path, pkg.basename))
+      prev_osrels.append(osrel_short)
   elif (command, subcommand) == ('show', 'files'):
     md5_sum = args[0]
     join = [
@@ -533,4 +629,12 @@ def main():
 
 
 if __name__ == '__main__':
-  main()
+  if "--profile" in sys.argv:
+    import cProfile
+    t_str = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M")
+    home = os.environ["HOME"]
+    cprof_file_name = os.path.join(
+        home, ".checkpkg", "run-modules-%s.cprof" % t_str)
+    cProfile.run("main()", sort=1, filename=cprof_file_name)
+  else:
+    main()

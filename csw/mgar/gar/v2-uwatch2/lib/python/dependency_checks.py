@@ -95,8 +95,11 @@ def ProcessSoname(
             error_mgr.ReportError(
                 pkgname,
                 "deprecated-library",
-                ("%s %s %s/%s"
-                 % (binary_info["path"], msg, resolved_path, soname)))
+                ("file=%s lib=%s/%s"
+                 % (binary_info["path"], resolved_path, soname)))
+            messenger.Message(
+                "Binary %s links to a deprecated library %s/%s. %s"
+                % (binary_info["path"], resolved_path, soname, msg))
   if not resolved:
     orphan_sonames.append((soname, binary_info["path"]))
     if path_list:

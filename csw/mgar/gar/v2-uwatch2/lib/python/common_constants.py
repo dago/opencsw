@@ -3,17 +3,17 @@ ARCH_i386 = "i386"
 ARCH_ALL = "all"
 PHYSICAL_ARCHITECTURES = [ARCH_SPARC, ARCH_i386]
 ARCHITECTURES = PHYSICAL_ARCHITECTURES + [ARCH_ALL]
-OS_RELS = [
+OS_RELS = (
     u"SunOS5.8",
     u"SunOS5.9",
     u"SunOS5.10",
     u"SunOS5.11",
-]
+)
 
 SYSTEM_SYMLINKS = (
-    ("/opt/csw/bdb4",     ["/opt/csw/bdb42"]),
-    ("/64",               ["/amd64", "/sparcv9"]),
-    ("/opt/csw/lib/i386", ["/opt/csw/lib"]),
+    ("/opt/csw/bdb4",     ("/opt/csw/bdb42",)),
+    ("/64",               ("/amd64", "/sparcv9")),
+    ("/opt/csw/lib/i386", ("/opt/csw/lib",)),
 )
 
 DEFAULT_INSTALL_CONTENTS_FILE = "/var/sadm/install/contents"

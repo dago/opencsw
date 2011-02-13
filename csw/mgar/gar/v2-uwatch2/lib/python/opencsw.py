@@ -306,8 +306,9 @@ class StagingDir(object):
         if relevant_pkgs:
           package_files.append(relevant_pkgs[-1])
     if not package_files:
-      raise PackageError("Could not find %s in %s"
-                         % (repr(software), repr(self.dir_path)))
+      logging.warning(
+          "Could not find any %s-* packages in %s",
+          repr(software), repr(self.dir_path))
     logging.debug("The latest packages %s in %s are %s",
                   repr(software),
                   repr(self.dir_path),

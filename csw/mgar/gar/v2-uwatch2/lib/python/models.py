@@ -4,6 +4,7 @@
 
 import logging
 import sqlobject
+import os.path
 from sqlobject import sqlbuilder
 import cPickle
 
@@ -24,19 +25,38 @@ class CatalogRelease(sqlobject.SQLObject):
   name = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
   type = sqlobject.ForeignKey('CatalogReleaseType', notNone=True)
 
+  def __unicode__(self):
+    return u"Catalog release: %s" % self.name
+
 class OsRelease(sqlobject.SQLObject):
   "Short name: SunOS5.9, long name: Solaris 9"
   short_name = sqlobject.UnicodeCol(length=40, unique=True, notNone=True)
   full_name = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
 
+  def __unicode__(self):
+    return u"OS release: %s" % self.full_name
+
 class Architecture(sqlobject.SQLObject):
   "One of: 'sparc', 'x86'."
   name = sqlobject.UnicodeCol(length=40, unique=True, notNone=True)
+
+  def __unicode__(self):
+    return u"Architecture: %s" % self.name
 
 class Maintainer(sqlobject.SQLObject):
   """The maintainer of the package, identified by the e-mail address."""
   email = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
   full_name = sqlobject.UnicodeCol(length=255, default=None)
+
+  def ObfuscatedEmail(self):
+    username, domain = self.email.split("@")
+    username = username[:-3] + "..."
+    return "@".join((username, domain))
+
+  def __unicode__(self):
+    return u"%s <%s>" % (
+        self.full_name or "Maintainer full name unknown",
+        self.ObfuscatedEmail())
 
 class Host(sqlobject.SQLObject):
   "Hostname, as returned by socket.getfqdn()"
@@ -77,6 +97,9 @@ class CswFile(sqlobject.SQLObject):
   pkginst = sqlobject.ForeignKey('Pkginst', notNone=True)
   srv4_file = sqlobject.ForeignKey('Srv4FileStats')
   basename_idx = sqlobject.DatabaseIndex('basename')
+
+  def __unicode__(self):
+    return u"File: %s" % os.path.join(self.path, self.basename)
 
 class Srv4FileStatsBlob(sqlobject.SQLObject):
   """Holds pickled data structures.
@@ -176,6 +199,34 @@ class Srv4FileStats(sqlobject.SQLObject):
           CheckpkgOverride.sqlmeta.table,
           CheckpkgOverride.q.srv4_file==self)))
 
+  def __unicode__(self):
+    return (
+        u"Package: %s-%s, %s"
+        % (self.catalogname, self.version_string, self.arch.name))
+
+  def GetStatsStruct(self):
+    return cPickle.loads(str(self.data_obj.pickle))
+
+  def GetRestRepr(self):
+    mimetype = "application/x-vnd.opencsw.pkg;type=srv4-detail"
+    data = {
+        'catalogname': self.catalogname,
+        'basename': self.basename,
+        'md5_sum': self.md5_sum,
+        'size': self.size,
+        'maintainer_email': self.maintainer.email,
+        'maintainer_full_name': self.maintainer.full_name,
+        'version_string': self.version_string,
+        'arch': self.arch.name,
+        'pkgname': self.pkginst.pkgname,
+        'mtime': unicode(self.mtime),
+        'osrel': self.os_rel.short_name,
+        'rev': self.rev,
+        'filename_arch': self.filename_arch.name,
+        # 'in_catalogs': unicode([unicode(x) for x in self.in_catalogs]),
+    }
+    return mimetype, data
+
 
 class CheckpkgErrorTagMixin(object):
 
@@ -214,6 +265,9 @@ class CheckpkgErrorTag(CheckpkgErrorTagMixin, sqlobject.SQLObject):
   arch = sqlobject.ForeignKey('Architecture', notNone=True)
   catrel = sqlobject.ForeignKey('CatalogRelease', notNone=True)
 
+  def __unicode__(self):
+    return u"Error: %s %s %s" % (self.pkgname, self.tag_name, self.tag_info)
+
 
 class CheckpkgOverride(sqlobject.SQLObject):
   # Overrides don't need to contain catalog parameters.
@@ -221,6 +275,12 @@ class CheckpkgOverride(sqlobject.SQLObject):
   pkgname = sqlobject.UnicodeCol(default=None)
   tag_name = sqlobject.UnicodeCol(notNone=True)
   tag_info = sqlobject.UnicodeCol(default=None)
+
+  def __unicode__(self):
+    return (u"Override: %s: %s %s" %
+            (self.pkgname,
+             self.tag_name,
+             self.tag_info or ""))
 
   def DoesApply(self, tag):
     """Figures out if this override applies to the given tag."""
@@ -251,6 +311,14 @@ class Srv4FileInCatalog(sqlobject.SQLObject):
           'arch', 'osrel', 'catrel', 'srv4file',
           unique=True)
 
+  def __unicode__(self):
+    return (
+        u"%s is in catalog %s %s %s"
+        % (self.srv4file,
+           self.arch.name,
+           self.osrel.full_name,
+           self.catrel.name))
+
 
 class Srv4DependsOn(sqlobject.SQLObject):
   """Models dependencies."""
@@ -258,3 +326,21 @@ class Srv4DependsOn(sqlobject.SQLObject):
   pkginst = sqlobject.ForeignKey('Pkginst', notNone=True)
   dep_uniq_idx = sqlobject.DatabaseIndex(
       'srv4_file', 'pkginst')
+
+
+def GetCatPackagesResult(sqo_osrel, sqo_arch, sqo_catrel):
+  join = [
+      sqlbuilder.INNERJOINOn(None,
+        Srv4FileInCatalog,
+        Srv4FileInCatalog.q.srv4file==Srv4FileStats.q.id),
+  ]
+  res = Srv4FileStats.select(
+      sqlobject.AND(
+        Srv4FileInCatalog.q.osrel==sqo_osrel,
+        Srv4FileInCatalog.q.arch==sqo_arch,
+        Srv4FileInCatalog.q.catrel==sqo_catrel,
+        Srv4FileStats.q.use_to_generate_catalogs==True,
+      ),
+      join=join,
+  ).orderBy('catalogname')
+  return res

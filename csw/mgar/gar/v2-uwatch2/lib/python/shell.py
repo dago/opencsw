@@ -11,6 +11,7 @@ class ShellMixin(object):
 
   def ShellCommand(self, args, quiet=False):
     logging.debug("Calling: %s", repr(args))
+    stdout, stderr = None, None
     if quiet:
       process = subprocess.Popen(args,
                                  stdout=subprocess.PIPE,

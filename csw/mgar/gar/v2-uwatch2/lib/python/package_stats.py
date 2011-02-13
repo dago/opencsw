@@ -26,8 +26,11 @@ PACKAGE_STATS_VERSION = 10L
 BAD_CONTENT_REGEXES = (
     # Slightly obfuscating these by using the default concatenation of
     # strings.
+    r'/export' r'/home',
     r'/export' r'/medusa',
     r'/opt' r'/build',
+    r'/usr' r'/local',
+    r'/usr' r'/share',
 )
 
 
@@ -430,14 +433,14 @@ class PackageStatsMixin(object):
       if not srv4.data_obj:
         raise DatabaseError("Could not find the data object for %s (%s)"
                             % (srv4.basename, md5_sum))
-      self.all_stats = cPickle.loads(str(srv4.data_obj.pickle))
+      self.all_stats = srv4.GetStatsStruct()
     return self.all_stats
 
 
 def StatsListFromCatalog(file_name_list, catalog_file_name=None, debug=False):
   packages = [inspective_package.InspectiveCswSrv4File(x, debug) for x in file_name_list]
   if catalog_file_name:
-    catalog_obj = catalog.OpencswCatalog(catalog_file_name)
+    catalog_obj = catalog.OpencswCatalog(open(catalog_file_name, "rb"))
     md5s_by_basename = catalog_obj.GetDataByBasename()
     for pkg in packages:
       basename = os.path.basename(pkg.pkg_path)
@@ -459,7 +462,7 @@ class StatsCollector(object):
       self.logger = logging
     self.debug = debug
 
-  def CollectStatsFromFiles(self, file_list, catalog_file):
+  def CollectStatsFromFiles(self, file_list, catalog_file, force_unpack=False):
     args_display = file_list
     if len(args_display) > 5:
       args_display = args_display[:5] + ["...more..."]
@@ -485,7 +488,7 @@ class StatsCollector(object):
       # removes the temporary directory from the disk.  This allows to process
       # the whole catalog.
       stats = stats_list.pop()
-      stats.CollectStats()
+      stats.CollectStats(force=force_unpack)
       data_list.append(stats.GetAllStats())
       pbar.update(counter.next())
     pbar.finish()
