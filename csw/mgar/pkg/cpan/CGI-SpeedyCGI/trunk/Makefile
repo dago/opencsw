@@ -9,6 +9,8 @@ define BLURB
   much more quickly.
 endef
 
+PATCHFILES = 0001-Use-Newx-instead-of-deprecated-New.patch
+
 PACKAGES = CSWpmspeedycgi
 CATALOGNAME = pm_speedycgi
 
