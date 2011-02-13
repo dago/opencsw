@@ -1,5 +1,4 @@
-#!/usr/bin/env python2.6
-#!/opt/csw/bin/python
+#!/opt/csw/bin/python2.6
 
 # TODO : check arguments for valid date
 # TODO : check arguments for emtpy strings
