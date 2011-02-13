@@ -914,7 +914,6 @@ class GetUpstreamVersionListCommand(UpstreamWatchCommand):
             content = self.UrlContentRetrieve(self.config.getUpstreamURL())
 
             listURL = self.config.getUpstreamURL().split(' ')
-            print "Il y a %(num)d url dans la liste" % { 'num' : len(listURL) }
 
             # Search the strings matching the regexp passed through command line arguments
             p = re.compile(self.config.getRegexp())
