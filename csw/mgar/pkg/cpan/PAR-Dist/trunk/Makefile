@@ -1,7 +1,7 @@
 NAME = PAR-Dist
-VERSION = 0.07
+VERSION = 0.47
 CATEGORIES = cpan
-AUTHOR = AUTRIJUS
+AUTHOR = SMUELLER
 
 DESCRIPTION = create and manipulate PAR distributions
 define BLURB
@@ -13,6 +13,13 @@ define BLURB
   SIGNATURE file.
 endef
 
-DISTFILES += CSWpmpardist.gspec
+
+CATALOGNAME = pm_pardist
+PACKAGES        = CSWpmpardist
+
+ARCHALL_CSWpmpardist = 1
+
+LICENSE = README
+
 
 include gar/category.mk
