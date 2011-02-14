@@ -173,7 +173,11 @@ class OpencswCatalog(object):
 class CatalogComparator(object):
 
   def GetCatalogDiff(self, cat_a, cat_b):
-    """Returns a difference between two catalogs."""
+    """Returns a difference between two catalogs.
+
+    Catalogs need to be represented either as a OpencswCatalog() object, or as
+    a dictionary, as returned by OpencswCatalog.GetDataByCatalogname().
+    """
     if type(cat_a) == dict:
       bc_a = cat_a
     else:

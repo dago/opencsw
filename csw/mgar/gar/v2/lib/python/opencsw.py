@@ -165,6 +165,40 @@ def ParseVersionString(s):
   return version_str, version_info, revision_info
 
 
+def ParseRevisionInfo(revinfo):
+  if "REV" in revinfo:
+    rev = revinfo["REV"]
+    m = re.match(r"(\d+)\.(\d+)\.(\d+)", rev)
+    if m:
+      return tuple([int(x) for x in m.groups()])
+    else:
+      return ()
+  else:
+    return ()
+
+
+def CompareVersions(v1, v2):
+  """Compares two package versions represented as strings.
+
+  This function should eventually converge with what pkgutil is doing.
+  """
+  # ('1.8.1', {'minor version': '8', 'patchlevel': '1', 'major version': '1'},
+  # {'REV': '2010.07.13'})
+  logging.debug("CompareVersions(%s, %s)", repr(v1), repr(v2))
+  bv1, sv1, ri1 = ParseVersionString(v1)
+  bv2, sv2, ri2 = ParseVersionString(v2)
+  vn1 = tuple([int(x) for x in re.findall(r"\d+", bv1)])
+  vn2 = tuple([int(x) for x in re.findall(r"\d+", bv2)])
+  pr1, pr2 = (), ()
+  if "REV" in ri1:
+    pr1 = ParseRevisionInfo(ri1)
+  if "REV" in ri2:
+    pr2 = ParseRevisionInfo(ri2)
+  key1 = pr1 + vn1
+  key2 = pr2 + vn2
+  return cmp(key1, key2)
+
+
 class CatalogBasedOpencswPackage(object):
 
   catalog_downloaded = False

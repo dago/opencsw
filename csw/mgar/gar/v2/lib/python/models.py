@@ -210,19 +210,23 @@ class Srv4FileStats(sqlobject.SQLObject):
   def GetRestRepr(self):
     mimetype = "application/x-vnd.opencsw.pkg;type=srv4-detail"
     data = {
-        'catalogname': self.catalogname,
+        'arch': self.arch.name,
         'basename': self.basename,
-        'md5_sum': self.md5_sum,
-        'size': self.size,
+        # For compatibility with the catalog parser from catalog.py
+        'file_basename': self.basename,
+        'catalogname': self.catalogname,
+        'filename_arch': self.filename_arch.name,
         'maintainer_email': self.maintainer.email,
         'maintainer_full_name': self.maintainer.full_name,
-        'version_string': self.version_string,
-        'arch': self.arch.name,
-        'pkgname': self.pkginst.pkgname,
+        'md5_sum': self.md5_sum,
         'mtime': unicode(self.mtime),
         'osrel': self.os_rel.short_name,
+        'pkgname': self.pkginst.pkgname,
         'rev': self.rev,
-        'filename_arch': self.filename_arch.name,
+        'size': self.size,
+        'version_string': self.version_string,
+        # For compatibility with the catalog parser from catalog.py
+        'version': self.version_string,
         # 'in_catalogs': unicode([unicode(x) for x in self.in_catalogs]),
     }
     return mimetype, data
