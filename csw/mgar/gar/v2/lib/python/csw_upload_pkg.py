@@ -16,21 +16,27 @@ import opencsw
 import json
 import common_constants
 import socket
+import rest
 
 
 BASE_URL = "http://buildfarm.opencsw.org/releases/"
+DEFAULT_CATREL = "unstable"
 USAGE = """%prog [ options ] <pkg1> [ <pkg2> [ ... ] ]
 
 Uploads a set of packages to the unstable catalog in opencsw-future.
 
 - When an ARCH=all package is sent, it's added to both sparc and i386 catalogs
 - When a SunOS5.x package is sent, it's added to catalogs SunOS5.x,
-	SunOS5.(x+1), up to SunOS5.11.
+  SunOS5.(x+1), up to SunOS5.11, but only if there are no packages specific to
+  5.10 (and/or 5.11).
 - If a package update is sent, the tool uses catalogname to identify the
-	package it's supposed to replace
+  package it's supposed to replace
 
 The --remove option affects the same catalogs as the regular use, except that
 it removes assignments of a given package to catalogs, instead of adding them.
+
+The --os-release flag makes %prog only insert the package to catalog with the
+given OS release.
 
 For more information, see:
 http://wiki.opencsw.org/automated-release-process#toc0
@@ -54,10 +60,12 @@ class DataError(Error):
 
 class Srv4Uploader(object):
 
-  def __init__(self, filenames, debug=False):
+  def __init__(self, filenames, os_release=None, debug=False):
     self.filenames = filenames
     self.md5_by_filename = {}
     self.debug = debug
+    self._rest_client = rest.RestClient()
+    self.os_release = os_release
 
   def Upload(self):
     for filename in self.filenames:
@@ -78,14 +86,16 @@ class Srv4Uploader(object):
     file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
     osrel = file_metadata['osrel']
     arch = file_metadata['arch']
-    self._IterateOverCatalogs(
-        filename, file_metadata,
-        arch, osrel, self._RemoveFromCatalog)
+    catalogs = self._MatchSrv4ToCatalogs(
+        filename, DEFAULT_CATREL, arch, osrel, md5_sum)
+    for unused_catrel, cat_arch, cat_osrel in catalogs:
+      self._RemoveFromCatalog(filename, file_metadata, cat_arch, cat_osrel)
 
   def _RemoveFromCatalog(self, filename, arch, osrel, file_metadata):
     md5_sum = self._GetFileMd5sum(filename)
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
+    # TODO: Move this bit to a separate class (RestClient)
     url = (
         "%scatalogs/unstable/%s/%s/%s/"
         % (BASE_URL, arch, osrel, md5_sum))
@@ -121,19 +131,47 @@ class Srv4Uploader(object):
         self.md5_by_filename[filename] = md5_sum
     return self.md5_by_filename[filename]
 
-  def _IterateOverCatalogs(self, filename, file_metadata, arch, osrel, callback):
-    # Implementing backward compatibility.  A package for SunOS5.x is also
-    # inserted into SunOS5.(x+n) for n=(0, 1, ...)
+  def _MatchSrv4ToCatalogs(self, filename,
+                           catrel, srv4_arch, srv4_osrel,
+                           md5_sum):
+    """Compile a list of catalogs affected by the given file.
+
+    If it's a 5.9 package, it can be matched to 5.9, 5.10 and 5.11.  However,
+    if there already are specific 5.10 and/or 5.11 versions of the package,
+    don't overwrite them.
+    """
+    basename = os.path.basename(filename)
+    parsed_basename = opencsw.ParsePackageFileName(basename)
+    osrels = None
     for idx, known_osrel in enumerate(common_constants.OS_RELS):
-      if osrel == known_osrel:
+      if srv4_osrel == known_osrel:
         osrels = common_constants.OS_RELS[idx:]
-    if arch == 'all':
+    assert osrels, "OS releases not found"
+    if srv4_arch == 'all':
       archs = ('sparc', 'i386')
     else:
-      archs = (arch,)
+      archs = (srv4_arch,)
+    catalogname = parsed_basename["catalogname"]
+    catalogs = []
     for arch in archs:
       for osrel in osrels:
-        callback(filename, arch, osrel, file_metadata)
+        srv4_in_catalog = self._rest_client.Srv4ByCatalogAndCatalogname(
+            catrel, arch, osrel, catalogname)
+        if not srv4_in_catalog:
+          continue
+        if srv4_in_catalog["osrel"] == srv4_osrel:
+          # The same architecture as our package, meaning that we can insert
+          # the same architecture into the catalog.
+          if (not self.os_release
+              or (self.os_release and osrel == self.os_release)):
+            catalogs.append((catrel, arch, osrel))
+        else:
+          if self.os_release and osrel == self.os_release:
+            catalogs.append((catrel, arch, osrel))
+          logging.debug(
+              "Catalog %s %s %s has another version of %s.",
+              catrel, arch, osrel, catalogname)
+    return tuple(catalogs)
 
   def _UploadFile(self, filename):
     md5_sum = self._GetFileMd5sum(filename)
@@ -149,9 +187,10 @@ class Srv4Uploader(object):
       raise DataError("file_metadata is empty: %s" % repr(file_metadata))
     osrel = file_metadata['osrel']
     arch = file_metadata['arch']
-    self._IterateOverCatalogs(
-        filename, file_metadata,
-        arch, osrel, self._InsertIntoCatalog)
+    catalogs = self._MatchSrv4ToCatalogs(
+        filename, DEFAULT_CATREL, arch, osrel, md5_sum)
+    for unused_catrel, cat_arch, cat_osrel in catalogs:
+      self._InsertIntoCatalog(filename, file_metadata, cat_arch, cat_osrel)
 
   def _InsertIntoCatalog(self, filename, arch, osrel, file_metadata):
     logging.info(
@@ -272,6 +311,9 @@ if __name__ == '__main__':
       dest="remove",
       default=False, action="store_true",
       help="Remove packages from catalogs instead of adding them")
+  parser.add_option("--os-release",
+      dest="os_release",
+      help="If specified, only uploads to the specified OS release.")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -281,7 +323,12 @@ if __name__ == '__main__':
   hostname = socket.gethostname()
   if not hostname.startswith('login'):
     logging.warning("This script is meant to be run on the login host.")
-  uploader = Srv4Uploader(args, debug=options.debug)
+  os_release = options.os_release
+  if os_release:
+    os_release = struct_util.OsReleaseToLong(os_release)
+  uploader = Srv4Uploader(args,
+                          os_release=os_release,
+                          debug=options.debug)
   if options.remove:
     uploader.Remove()
   else:

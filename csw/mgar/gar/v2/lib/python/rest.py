@@ -31,3 +31,16 @@ class RestClient(object):
     logging.debug("GetCatalog(): GET %s", url)
     data = urllib2.urlopen(url).read()
     return json.loads(data)
+
+  def Srv4ByCatalogAndCatalogname(self, catrel, arch, osrel, catalogname):
+    """Returns a srv4 data structure or None if not found."""
+    url = BASE_URL + (
+        "/catalogs/%s/%s/%s/%s/"
+        % (catrel, arch, osrel, catalogname))
+    logging.debug("Srv4ByCatalogAndCatalogname(): GET %s", url)
+    try:
+      data = urllib2.urlopen(url).read()
+      return json.loads(data)
+    except urllib2.HTTPError, e:
+      logging.warning(e)
+      return None
