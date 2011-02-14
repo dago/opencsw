@@ -27,11 +27,11 @@ GIT_TREEISH = $(if $(GIT_TREEISH_$(1)),$(GIT_TREEISH_$(1)),HEAD)
 
 #################### FETCH RULES ####################
 
-URLS := $(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(ALLFILES_PATCHFILES)))
+# if the caller has defined _postinstall, etc targets for a package,
+# add these 'dynamic script' targets to our fetch list
+DYNURLS := $(foreach DYN,$(DYNSCRIPTS),dynscr://$(DYN))
 
-# if the caller has defined _postinstall, etc targets for a package, add
-# these 'dynamic script' targets to our fetch list
-URLS += $(foreach DYN,$(DYNSCRIPTS),dynscr://$(DYN))
+URLS := $(foreach SITE,$(FILE_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(DISTFILES))) $(foreach SITE,$(FILE_SITES) $(PATCH_SITES) $(MASTER_SITES),$(addprefix $(SITE),$(ALLFILES_PATCHFILES))) $(DYNURLS)
 
 define gitsubst
 $(subst git-git,git,$(if $(findstring $(1)://,$(2)),$(patsubst $(1)%,git-$(1)%,$(call URLSTRIP,$(2)))))
