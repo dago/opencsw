@@ -184,6 +184,12 @@ class Srv4Uploader(object):
     file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
     logging.debug("file_metadata %s", repr(file_metadata))
     if not file_metadata:
+      logging.error(
+          "File metadata was not found in the database.  "
+          "This happens when the package you're trying to upload was never "
+          "unpacked and imported into the database.  "
+          "To fix the problem, run checkpkg against your package and try "
+          "importing again.")
       raise DataError("file_metadata is empty: %s" % repr(file_metadata))
     osrel = file_metadata['osrel']
     arch = file_metadata['arch']
