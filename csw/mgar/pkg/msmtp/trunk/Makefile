@@ -25,6 +25,10 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
+PACKAGES += CSWmsmtp
+CATALOGNAME_CSWmsmtp = msmtp
+SPKG_DESC_CSWmsmtp = $(DESCRIPTION)
+
 VENDOR_URL = http://msmtp.sourceforge.net/
 
 # We define upstream file regex so we can be notifed of new upstream software release
@@ -42,20 +46,27 @@ RUNTIME_DEP_PKGS_CSWmsmtp += CSWggettextrt
 sysconfdir = /etc/opt/csw
 CONFIGURE_ARGS = $(DIRPATHS)
 
+PRESERVECONF = $(sysconfdir)/msmtprc
+
 TEST_TARGET = check
 
 include gar/category.mk
 
+# The path in CA_CERTIFICATES is taken from CSWcacertificates
 post-install-modulated: DOCDIR=$(docdir)/msmtp
+post-install-modulated: CA_CERTIFICATES=/opt/csw/etc/ca-certificates.conf
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(DOCDIR)
 	ginstall $(WORKSRC)/doc/Mutt+msmtp.txt $(DESTDIR)$(DOCDIR)
 	# ginstall $(WORKSRC)/doc/msmtp.html $(DESTDIR)$(DOCDIR)
 	# ginstall $(WORKSRC)/doc/msmtp.pdf $(DESTDIR)$(DOCDIR)
 	ginstall -d $(DESTDIR)$(sysconfdir)
-	ginstall $(WORKSRC)/doc/msmtprc-system.example \
-		$(WORKSRC)/doc/msmtprc-user.example	\
-		$(DESTDIR)$(sysconfdir)
+	cat $(WORKSRC)/doc/msmtprc-system.example | \
+		perl -np -e 's/^/#/ if( /^[^#]+/ );' \
+			-e 's,(tls_trust_file\s+).*,\1$(CA_CERTIFICATES),;' \
+			> $(DESTDIR)/etc/opt/csw/msmtprc
+	ginstall $(WORKSRC)/doc/msmtprc-user.example	\
+		$(DESTDIR)$(DOCDIR)/msmtprc-user.example
 	perl -pi -e 's,/usr/local/etc,$(sysconfdir),;' \
 		-e 's,/usr/local/bin,$(bindir),;' \
 		$(DESTDIR)$(infodir)/msmtp.info \
