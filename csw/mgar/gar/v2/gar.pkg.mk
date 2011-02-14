@@ -651,6 +651,16 @@ merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 reset-merge-license:
 	@rm -f $(COOKIEDIR)/merge-license $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-license-$(SPEC))
 
+merge-README.CSW: $(WORKDIR)
+	$(_DBG)if test -f $(WORKDIR)/README.CSW; then \
+		$(foreach P,$(_PKG_SPECS),cp $(WORKDIR)/README.CSW $(PKGROOT)$(docdir)/$(call catalogname,$P)/README.CSW;) \
+	fi
+	@$(MAKECOOKIE)
+
+.PHONY: reset-merge-README.CSW
+reset-merge-README.CSW:
+	$(_DBG)rm -f $(COOKIEDIR)/merge-README.CSW $(foreach SPEC,$(_PKG_SPECS),$(PKGROOT)$(docdir)/$(call catalogname,$(SPEC))/README.CSW)
+
 merge-classutils: merge-migrateconf merge-usergroup merge-inetdconf merge-etcservices
 
 reset-merge-classutils: reset-merge-migrateconf reset-merge-usergroup reset-merge-inetdconf reset-merge-etcservices
