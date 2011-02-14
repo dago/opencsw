@@ -1,5 +1,4 @@
-"""A module for generic data structure processing functions.
-"""
+"""A module for generic data structure processing functions."""
 
 import os
 import re
