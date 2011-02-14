@@ -6,6 +6,15 @@ import json
 
 BASE_URL = "http://buildfarm.opencsw.org/pkgdb/rest"
 
+
+class Error(Exception):
+  """Generic error."""
+
+
+class ArgumentError(Error):
+  """Wrong arguments passed."""
+
+
 class RestClient(object):
 
   def GetPkgByMd5(self, md5_sum):
@@ -27,10 +36,16 @@ class RestClient(object):
     }
 
   def GetCatalog(self, catrel, arch, osrel):
+    if not catrel:
+      raise ArgumentError("Missing catalog release.")
     url = BASE_URL + "/catalogs/%s/%s/%s/" % (catrel, arch, osrel)
     logging.debug("GetCatalog(): GET %s", url)
-    data = urllib2.urlopen(url).read()
-    return json.loads(data)
+    try:
+      data = urllib2.urlopen(url).read()
+      return json.loads(data)
+    except urllib2.HTTPError, e:
+      logging.warning(e)
+      return None
 
   def Srv4ByCatalogAndCatalogname(self, catrel, arch, osrel, catalogname):
     """Returns a srv4 data structure or None if not found."""

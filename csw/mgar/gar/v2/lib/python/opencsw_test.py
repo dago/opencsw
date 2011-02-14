@@ -225,6 +225,44 @@ class ParseVersionStringTest(unittest.TestCase):
     self.assertEqual(expected, opencsw.ParseVersionString(data))
 
 
+class CompareVersionsTest(unittest.TestCase):
+
+  V1 = "1.8.1,REV=2010.07.13"
+  V2 = "1.8.2,REV=2011.01.17"
+
+  def testLessThan(self):
+    self.assertEqual(-1, opencsw.CompareVersions(self.V1, self.V2))
+
+  def testGreaterThan(self):
+    self.assertEqual(1, opencsw.CompareVersions(self.V2, self.V1))
+
+  def testEquals(self):
+    self.assertEqual(0, opencsw.CompareVersions(self.V1, self.V1))
+
+  def testRevNoRev(self):
+    self.assertEqual(-1, opencsw.CompareVersions("1.8.1", self.V1))
+
+  def testRevNoRevIgnoreVersion(self):
+    self.assertEqual(-1, opencsw.CompareVersions("1.8.2", self.V1))
+
+  def testNoRev(self):
+    self.assertEqual(-1, opencsw.CompareVersions("1.8.1", "1.8.2"))
+
+  def testNoRevLetter(self):
+    self.assertEqual(-1, opencsw.CompareVersions("1.8.1", "1.8.1b"))
+
+  def testNoEqual(self):
+    self.assertEqual(0, opencsw.CompareVersions("1.8.1", "1.8.1"))
+
+  def testParseRevisionInfo(self):
+    r1 = {"REV": "2010.07.13"}
+    self.assertEqual((2010, 07, 13), opencsw.ParseRevisionInfo(r1))
+
+  def testParseRevisionInfoEmpty(self):
+    r1 = {}
+    self.assertEqual((), opencsw.ParseRevisionInfo(r1))
+
+
 class UpgradeTypeTest(unittest.TestCase):
 
   def testUpgradeType_1(self):
