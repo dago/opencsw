@@ -12,12 +12,16 @@ endef
 
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += README.CSW
 
 # Apply patch from
 #   https://sourceforge.net/tracker/?func=detail&aid=2812158&group_id=24366&atid=381349
 # as referenced from
 #   http://csiuo.com/drupal/content/rdesktop-160-and-windows-server-2008-sp2
 PATCHFILES += fix-2022945.patch
+
+# The above is a functionality patch
+VERSION_FLAG_PATCH = 1
 
 PACKAGES = CSWrdesktop
 CATALOGNAME_CSWrdesktop = rdesktop
@@ -36,5 +40,8 @@ RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibsamplerate0
 
 # No test/check target provided by rdesktop
 TEST_SCRIPTS =
+
+# The path is just an example and nobody will probably look into it
+CHECKPKG_OVERRIDES_CSWrdesktop += file-with-bad-content|/usr/local|root/opt/csw/share/rdesktop/keymaps/is
 
 include gar/category.mk
