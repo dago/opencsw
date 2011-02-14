@@ -5,6 +5,9 @@ import os
 import re
 
 MD5_RE = re.compile(r"^[0123456789abcdef]{32}$")
+PKGNAME_TICKER_RE = re.compile(r'^CSW')
+PKGNAME_CHARS_RE = re.compile(r'[A-Za-z0-9\+]+')
+
 
 def IndexDictsBy(list_of_dicts, field_key):
   """Creates an index of list of dictionaries by a field name.
@@ -34,3 +37,9 @@ def ResolveSymlink(link_from, link_to):
 def IsMd5(s):
   # For optimization, moving the compilation to the top level.
   return MD5_RE.match(s)
+
+
+def MakeCatalognameByPkgname(pkgname):
+  catalogname = re.sub(PKGNAME_TICKER_RE, '', pkgname)
+  catalogname = "_".join(re.findall(PKGNAME_CHARS_RE, catalogname))
+  return catalogname
