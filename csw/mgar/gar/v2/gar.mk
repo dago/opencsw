@@ -38,7 +38,7 @@ export PARALLELMFLAGS
 
 DISTNAME ?= $(NAME)-$(VERSION)
 
-DYNSCRIPTS = $(foreach PKG,$(SPKG_SPECS),$(foreach SCR,$(ADMSCRIPTS),$(if $(value $(PKG)_$(SCR)), $(PKG).$(SCR))))
+DYNSCRIPTS := $(foreach PKG,$(SPKG_SPECS),$(foreach SCR,$(ADMSCRIPTS),$(if $(value $(PKG)_$(SCR)), $(PKG).$(SCR))))
 _LOCALFILES = $(notdir $(wildcard files/*))
 _NOCHECKSUM += $(DYNSCRIPTS) $(_LOCALFILES) $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R))) $(_EXTRA_GAR_NOCHECKSUM)
 
