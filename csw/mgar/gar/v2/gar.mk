@@ -803,13 +803,17 @@ endef
 
 
 # The basic merge merges the compiles for all ISAs on the current architecture
-merge: checksum pre-merge merge-do merge-license merge-classutils merge-checkpkgoverrides merge-alternatives $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) $(if $(AP2_MODS),post-merge-ap2mod) post-merge
-	@$(DONADA)
+merge: checksum pre-merge merge-do merge-license merge-classutils merge-checkpkgoverrides merge-alternatives $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) merge-README.CSW $(if $(AP2_MODS),post-merge-ap2mod) post-merge
+	banner merge
+	@$(MAKECOOKIE)
 
+.PHONY: merge-do
 merge-do: $(if $(PARALLELMODULATIONS),merge-parallel,merge-sequential)
 
+.PHONY: merge-sequential
 merge-sequential: $(addprefix merge-,$(MODULATIONS))
 
+.PHONY: merge-parallel
 merge-parallel: _PIDFILE=$(WORKROOTDIR)/build-global/multitail.pid
 merge-parallel: merge-watch
 	$(_DBG_MERGE)trap "kill -9 `cat $(_PIDFILE) $(foreach M,$(MODULATIONS),$(WORKROOTDIR)/build-$M/build.pid) 2>/dev/null`;stty sane" INT;\
@@ -824,6 +828,7 @@ merge-parallel: merge-watch
 		exit "Return code: `cat $(WORKROOTDIR)/build-$M/build.ret`"; \
 	fi;)
 
+.PHONY: merge-watch
 merge-watch: _USEMULTITAIL=$(shell test -x $(MULTITAIL) && test -x $(TTY) && $(TTY) >/dev/null 2>&1; if [ $$? -eq 0 ]; then echo yes; fi)
 merge-watch: $(addprefix $(WORKROOTDIR)/build-,global $(MODULATIONS))
 	$(_DBG_MERGE)$(if $(_USEMULTITAIL),\
@@ -882,7 +887,7 @@ merge-copy-config-only:
 .PHONY: remerge reset-merge reset-merge-modulated
 remerge: reset-merge merge
 
-reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-ap2mod reset-merge-src
+reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-README.CSW reset-merge-ap2mod reset-merge-src
 	@rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
 	@rm -rf $(PKGROOT)
 
