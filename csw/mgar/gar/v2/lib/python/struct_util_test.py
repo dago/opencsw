@@ -46,6 +46,7 @@ class ResolveSymlinkUnitTest(unittest.TestCase):
         "/libexec/foo-exec",
         struct_util.ResolveSymlink("/opt/csw/bin/foo", "/libexec/foo-exec"))
 
+
 class OsReleaseToLongTest(unittest.TestCase):
 
   def testLong(self):
@@ -53,6 +54,26 @@ class OsReleaseToLongTest(unittest.TestCase):
 
   def testShort(self):
     self.assertEqual("SunOS5.9", struct_util.OsReleaseToLong("5.9"))
+
+
+class MakeCatalognameByPkgnameTest(unittest.TestCase):
+
+  def testSimple(self):
+    self.assertEqual("foo", struct_util.MakeCatalognameByPkgname("CSWfoo"))
+
+  def testWithDash(self):
+    self.assertEqual("foo_bar", struct_util.MakeCatalognameByPkgname("CSWfoo-bar"))
+
+  def testCollapseSeparators(self):
+    self.assertEqual("foo_bar", struct_util.MakeCatalognameByPkgname("CSWfoo--bar"))
+
+  def testWithDigits(self):
+    # This shouldn't be a typical case.
+    self.assertEqual("libfoo1_1", struct_util.MakeCatalognameByPkgname("CSWlibfoo1-1"))
+
+  def testPluses(self):
+    # Pluses?  Plusen?  Plusi?
+    self.assertEqual("libnetcdf_c++5", struct_util.MakeCatalognameByPkgname("CSWlibnetcdf-c++5"))
 
 
 if __name__ == '__main__':
