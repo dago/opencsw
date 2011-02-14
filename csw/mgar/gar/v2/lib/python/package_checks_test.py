@@ -1655,5 +1655,28 @@ class TestCheckPrefixDirs(CheckpkgUnitTestHelper,
     self.RunCheckpkgTest(self.CheckpkgTest4)
 
 
+class TestCheckPrefixDirs(CheckpkgUnitTestHelper,
+                          unittest.TestCase):
+  FUNCTION_NAME = ('CheckSonameMustNotBeEqualToFileName'
+                   'IfFilenameEndsWithSo')
+
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["binaries_dump_info"][0]["soname"] = "libfoo.so"
+    self.pkg_data["binaries_dump_info"][0]["base_name"] = "libfoo.so"
+    self.pkg_data["binaries_dump_info"][0]["path"] = "opt/csw/lib/libfoo.so"
+    self.error_mgr_mock.ReportError(
+        'soname-equals-filename',
+        'file=/opt/csw/lib/libfoo.so')
+
+  def CheckpkgTest2(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["binaries_dump_info"][0]["soname"] = "libfoo.so.1"
+    self.pkg_data["binaries_dump_info"][0]["base_name"] = "libfoo.so.1"
+
+  def testTwo(self):
+    self.RunCheckpkgTest(self.CheckpkgTest2)
+
+
 if __name__ == '__main__':
   unittest.main()
