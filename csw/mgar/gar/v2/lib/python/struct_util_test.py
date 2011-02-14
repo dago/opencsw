@@ -34,7 +34,7 @@ class IndexByUnitTest(unittest.TestCase):
     self.assertEquals(expected, struct_util.IndexDictsBy(list_of_dicts, "a"))
 
 
-class IndexByUnitTest(unittest.TestCase):
+class ResolveSymlinkUnitTest(unittest.TestCase):
 
   def testRelative(self):
     self.assertEquals(
