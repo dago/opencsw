@@ -507,8 +507,8 @@ def main():
             m.Srv4FileInCatalog.q.catrel==sqo_catrel,
             m.Srv4FileStats.q.catalogname.contains(catalogname),
             m.Srv4FileStats.q.use_to_generate_catalogs==True),
-            join=join,
-          ).orderBy("catalogname")
+          join=join,
+      ).orderBy("catalogname")
       for sqo_srv4 in res:
         print "%s %s" % (sqo_srv4.basename, sqo_srv4.md5_sum)
   elif command == 'sync-cat-from-file':

@@ -46,6 +46,14 @@ class IndexByUnitTest(unittest.TestCase):
         "/libexec/foo-exec",
         struct_util.ResolveSymlink("/opt/csw/bin/foo", "/libexec/foo-exec"))
 
+class OsReleaseToLongTest(unittest.TestCase):
+
+  def testLong(self):
+    self.assertEqual("SunOS5.9", struct_util.OsReleaseToLong("SunOS5.9"))
+
+  def testShort(self):
+    self.assertEqual("SunOS5.9", struct_util.OsReleaseToLong("5.9"))
+
 
 if __name__ == '__main__':
 	unittest.main()

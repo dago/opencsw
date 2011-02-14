@@ -30,6 +30,8 @@ urls = (
   r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/', 'Catalogs',
   r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
+  # Query by catalog release, arch, OS release and catalogname
+  r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
 )
 
@@ -265,6 +267,38 @@ class RestSrv4Detail(object):
       web.header('Content-type', mimetype)
       return json.dumps(data_structure)
     except sqlobject.main.SQLObjectNotFound, e:
+      raise web.notfound()
+
+
+class Srv4ByCatAndCatalogname(object):
+
+  def GET(self, catrel_name, arch_name, osrel_name, catalogname):
+    """Get a srv4 reference by catalog ane catalogname."""
+    configuration.SetUpSqlobjectConnection()
+    sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+        osrel_name, arch_name, catrel_name)
+    join = [
+        sqlbuilder.INNERJOINOn(None,
+          models.Srv4FileInCatalog,
+          models.Srv4FileInCatalog.q.srv4file==models.Srv4FileStats.q.id),
+    ]
+    res = models.Srv4FileStats.select(
+        sqlobject.AND(
+          models.Srv4FileInCatalog.q.osrel==sqo_osrel,
+          models.Srv4FileInCatalog.q.arch==sqo_arch,
+          models.Srv4FileInCatalog.q.catrel==sqo_catrel,
+          models.Srv4FileStats.q.catalogname==catalogname,
+          models.Srv4FileStats.q.use_to_generate_catalogs==True),
+        join=join,
+    )
+    try:
+      srv4 = res.getOne()
+      mimetype, data = srv4.GetRestRepr()
+      web.header('Content-type', mimetype)
+      return json.dumps(data)
+    except (
+        sqlobject.main.SQLObjectNotFound,
+        sqlobject.dberrors.OperationalError), e:
       raise web.notfound()
 
 

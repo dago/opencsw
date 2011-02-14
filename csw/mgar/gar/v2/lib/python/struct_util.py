@@ -18,6 +18,13 @@ def IndexDictsBy(list_of_dicts, field_key):
   return index
 
 
+def OsReleaseToLong(osrel):
+  if osrel.startswith("SunOS"):
+    return osrel
+  else:
+    return "SunOS%s" % osrel
+
+
 def ResolveSymlink(link_from, link_to):
   target = os.path.normpath(
       os.path.join(os.path.dirname(link_from), link_to))
