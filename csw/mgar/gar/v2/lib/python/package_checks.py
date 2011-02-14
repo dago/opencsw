@@ -1225,7 +1225,24 @@ def CheckPrefixDirs(pkg_data, error_mgr, logger, messenger):
 
 def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
     pkg_data, error_mgr, logger, messenger):
-  pass
+  for binary_info in pkg_data["binaries_dump_info"]:
+    soname = binary_info["soname"]
+    base_name = binary_info["base_name"]
+    if (base_name.endswith(".so")
+        and soname == base_name):
+      msg = ("File /%s is a shared library.  Its SONAME is equal to its "
+             "filename, and the filename ends with .so. "
+             "This is a serious problem. "
+             "If such shared library is released and any programs link "
+             "to it, it is very hard to do any subsequent updates to "
+             "that shared library.  This problem has occurred with relation "
+             "to libnet. "
+             "For information how to update such library, please see: "
+             "http://wiki.opencsw.org/project-libnet")
+      messenger.Message(msg)
+      error_mgr.ReportError(
+          "soname-equals-filename",
+          "file=/%s" % binary_info["path"])
 
 
 def CheckLinkableSoFileMustBeAsymlink(
