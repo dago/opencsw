@@ -89,7 +89,7 @@ class Srv4Uploader(object):
     catalogs = self._MatchSrv4ToCatalogs(
         filename, DEFAULT_CATREL, arch, osrel, md5_sum)
     for unused_catrel, cat_arch, cat_osrel in catalogs:
-      self._RemoveFromCatalog(filename, file_metadata, cat_arch, cat_osrel)
+      self._RemoveFromCatalog(filename, cat_arch, cat_osrel, file_metadata)
 
   def _RemoveFromCatalog(self, filename, arch, osrel, file_metadata):
     md5_sum = self._GetFileMd5sum(filename)
@@ -195,7 +195,7 @@ class Srv4Uploader(object):
     catalogs = self._MatchSrv4ToCatalogs(
         filename, DEFAULT_CATREL, arch, osrel, md5_sum)
     for unused_catrel, cat_arch, cat_osrel in catalogs:
-      self._InsertIntoCatalog(filename, file_metadata, cat_arch, cat_osrel)
+      self._InsertIntoCatalog(filename, cat_arch, cat_osrel, file_metadata)
 
   def _InsertIntoCatalog(self, filename, arch, osrel, file_metadata):
     logging.info(
