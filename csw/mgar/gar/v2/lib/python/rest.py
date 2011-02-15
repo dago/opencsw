@@ -24,7 +24,7 @@ class RestClient(object):
       data = urllib2.urlopen(url).read()
       return json.loads(data)
     except urllib2.HTTPError, e:
-      logging.warning(e)
+      logging.warning("%s -- %s", url, e)
       return {
           "maintainer_email": "Unknown",
       }
@@ -44,7 +44,7 @@ class RestClient(object):
       data = urllib2.urlopen(url).read()
       return json.loads(data)
     except urllib2.HTTPError, e:
-      logging.warning(e)
+      logging.warning("%s -- %s", url, e)
       return None
 
   def Srv4ByCatalogAndCatalogname(self, catrel, arch, osrel, catalogname):
@@ -57,5 +57,5 @@ class RestClient(object):
       data = urllib2.urlopen(url).read()
       return json.loads(data)
     except urllib2.HTTPError, e:
-      logging.warning(e)
+      logging.warning("%s -- %s", url, e)
       return None
