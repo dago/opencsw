@@ -5,7 +5,7 @@
 #   Details documented below.
 #
 NAME     = php5
-VERSION  = 5.3.3
+VERSION  = 5.3.5
 CATEGORIES  = lang
 SF_PROJ     = $(shell echo $(NAME) | sed -e 's/[0-9]//g')
 DISTNAME    = $(SF_PROJ)-$(VERSION)
