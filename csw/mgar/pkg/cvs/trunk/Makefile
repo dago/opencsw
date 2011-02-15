@@ -55,6 +55,16 @@ TEST_TARGET = check
 # The testsuite runs for more than one hour!
 # SKIPTEST ?= 1
 
+# This is for GNATS. We don't have GNATS at OpenCSW
+CHECKPKG_OVERRIDES_CSWcvs += file-with-bad-content|/usr/local|root/opt/csw/bin/cvsbug
+
+# This is to find sccs and does no harm
+CHECKPKG_OVERRIDES_CSWcvs += file-with-bad-content|/usr/local|root/opt/csw/share/cvs/contrib/sccs2rcs
+
+# Here the pathes are for user-specific examples
+CHECKPKG_OVERRIDES_CSWcvs += file-with-bad-content|/usr/local|root/opt/csw/share/info/cvs.info-1
+CHECKPKG_OVERRIDES_CSWcvs += file-with-bad-content|/usr/local|root/opt/csw/share/info/cvs.info-2
+
 include gar/category.mk
 
 # Only GNU 'id' understands option '-u'
