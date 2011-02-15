@@ -24,6 +24,7 @@ from testdata.sudo_stats import pkgstats as sudo_stats
 from testdata.javasvn_stats import pkgstats as javasvn_stats
 from testdata.neon_stats import pkgstats as neon_stats
 from testdata.bdb48_stats import pkgstat_objs as bdb48_stats
+from testdata.mercurial_stats import pkgstat_objs as mercurial_stats
 from testdata import stubs
 
 DEFAULT_PKG_STATS = None
@@ -1643,8 +1644,8 @@ class TestCheckPrefixDirs(CheckpkgUnitTestHelper,
         'bad-location-of-file',
         'file=/var/foo')
 
-	# These three utility functions allow to run 3 tests in a single
-	# class.
+  # These three utility functions allow to run 3 tests in a single
+  # class.
   def testTwo(self):
     self.RunCheckpkgTest(self.CheckpkgTest2)
 
@@ -1655,16 +1656,24 @@ class TestCheckPrefixDirs(CheckpkgUnitTestHelper,
     self.RunCheckpkgTest(self.CheckpkgTest4)
 
 
-class TestCheckPrefixDirs(CheckpkgUnitTestHelper,
-                          unittest.TestCase):
+class TestCheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
+    CheckpkgUnitTestHelper, unittest.TestCase):
   FUNCTION_NAME = ('CheckSonameMustNotBeEqualToFileName'
                    'IfFilenameEndsWithSo')
+  FOO_METADATA = {
+      'endian': 'Little endian',
+      'machine_id': 3,
+      'mime_type': 'application/x-sharedlib; charset=binary',
+      'mime_type_by_hachoir': u'application/x-executable',
+      'path': 'opt/csw/lib/libfoo.so',
+  }
 
   def CheckpkgTest(self):
     self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["binaries_dump_info"][0]["soname"] = "libfoo.so"
     self.pkg_data["binaries_dump_info"][0]["base_name"] = "libfoo.so"
     self.pkg_data["binaries_dump_info"][0]["path"] = "opt/csw/lib/libfoo.so"
+    self.pkg_data["files_metadata"].append(self.FOO_METADATA)
     self.error_mgr_mock.ReportError(
         'soname-equals-filename',
         'file=/opt/csw/lib/libfoo.so')
@@ -1673,9 +1682,16 @@ class TestCheckPrefixDirs(CheckpkgUnitTestHelper,
     self.pkg_data = copy.deepcopy(neon_stats[0])
     self.pkg_data["binaries_dump_info"][0]["soname"] = "libfoo.so.1"
     self.pkg_data["binaries_dump_info"][0]["base_name"] = "libfoo.so.1"
+    self.pkg_data["files_metadata"].append(self.FOO_METADATA)
 
   def testTwo(self):
     self.RunCheckpkgTest(self.CheckpkgTest2)
+
+  def testThree(self):
+    self.RunCheckpkgTest(self.CheckpkgTest3)
+
+  def CheckpkgTest3(self):
+    self.pkg_data = mercurial_stats[0]
 
 
 if __name__ == '__main__':

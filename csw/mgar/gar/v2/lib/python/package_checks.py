@@ -1225,9 +1225,17 @@ def CheckPrefixDirs(pkg_data, error_mgr, logger, messenger):
 
 def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
     pkg_data, error_mgr, logger, messenger):
+  shared_libs = set(su.GetSharedLibs(pkg_data))
   for binary_info in pkg_data["binaries_dump_info"]:
-    soname = binary_info["soname"]
+    if binary_info["path"] not in shared_libs:
+      continue
+    if not su.IsLibraryLinkable(binary_info["path"]):
+      continue
     base_name = binary_info["base_name"]
+    if "soname" in binary_info:
+      soname = binary_info["soname"]
+    else:
+      soname = base_name
     if (base_name.endswith(".so")
         and soname == base_name):
       msg = ("File /%s is a shared library.  Its SONAME is equal to its "
