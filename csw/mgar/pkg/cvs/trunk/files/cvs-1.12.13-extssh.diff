@@ -1,0 +1,181 @@
+diff -r -c3 cvs-1.12.13/src/client.c cvs-1.12.13+extssh/src/client.c
+*** cvs-1.12.13/src/client.c	Sun Oct  2 17:17:20 2005
+--- cvs-1.12.13+extssh/src/client.c	Tue Jan 22 16:45:57 2008
+***************
+*** 3904,3910 ****
+  	    error (1, 0, "try :server: instead");
+  #else /* ! NO_EXT_METHOD */
+  	    start_rsh_server (root, to_server_p,
+!                               from_server_p);
+  #endif /* NO_EXT_METHOD */
+  	    break;
+  
+--- 3904,3920 ----
+  	    error (1, 0, "try :server: instead");
+  #else /* ! NO_EXT_METHOD */
+  	    start_rsh_server (root, to_server_p,
+!                               from_server_p, RSH_DFLT);
+! #endif /* NO_EXT_METHOD */
+! 	    break;
+! 
+! 	case extssh_method:
+! #ifdef NO_EXT_METHOD
+! 	    error (0, 0, ":extssh: method not supported by this port of CVS");
+! 	    error (1, 0, "try :server: instead");
+! #else /* ! NO_EXT_METHOD */
+! 	    start_rsh_server (root, to_server_p,
+!                               from_server_p, "ssh");
+  #endif /* NO_EXT_METHOD */
+  	    break;
+  
+diff -r -c3 cvs-1.12.13/src/root.c cvs-1.12.13+extssh/src/root.c
+*** cvs-1.12.13/src/root.c	Sun Sep 25 02:38:29 2005
+--- cvs-1.12.13+extssh/src/root.c	Tue Jan 22 16:37:32 2008
+***************
+*** 19,29 ****
+  #include "getline.h"
+  
+  /* Printable names for things in the current_parsed_root->method enum variable.
+!    Watch out if the enum is changed in cvs.h! */
+  
+  const char method_names[][16] = {
+      "undefined", "local", "server (rsh)", "pserver",
+!     "kserver", "gserver", "ext", "fork"
+  };
+  
+  #ifndef DEBUG
+--- 19,29 ----
+  #include "getline.h"
+  
+  /* Printable names for things in the current_parsed_root->method enum variable.
+!    Watch out if the enum is changed in root.h! */
+  
+  const char method_names[][16] = {
+      "undefined", "local", "server (rsh)", "pserver",
+!     "kserver", "gserver", "ext", "extssh", "fork"
+  };
+  
+  #ifndef DEBUG
+***************
+*** 549,554 ****
+--- 549,556 ----
+  	    newroot->method = server_method;
+  	else if (!strcasecmp (method, "ext"))
+  	    newroot->method = ext_method;
++ 	else if (!strcasecmp (method, "extssh"))
++ 	    newroot->method = extssh_method;
+  	else if (!strcasecmp (method, "fork"))
+  	    newroot->method = fork_method;
+  	else
+***************
+*** 827,832 ****
+--- 829,835 ----
+  	break;
+      case server_method:
+      case ext_method:
++     case extssh_method:
+  	no_port = 1;
+  	/* no_password already set */
+  	check_hostname = 1;
+diff -r -c3 cvs-1.12.13/src/root.h cvs-1.12.13+extssh/src/root.h
+*** cvs-1.12.13/src/root.h	Sun Sep 25 02:38:29 2005
+--- cvs-1.12.13+extssh/src/root.h	Tue Jan 22 16:35:13 2008
+***************
+*** 22,27 ****
+--- 22,28 ----
+      kserver_method,
+      gserver_method,
+      ext_method,
++     extssh_method,
+      fork_method
+  } CVSmethod;
+  extern const char method_names[][16];	/* change this in root.c if you change
+diff -r -c3 cvs-1.12.13/src/rsh-client.c cvs-1.12.13+extssh/src/rsh-client.c
+*** cvs-1.12.13/src/rsh-client.c	Sun Oct  2 17:17:21 2005
+--- cvs-1.12.13+extssh/src/rsh-client.c	Tue Jan 22 16:47:43 2008
+***************
+*** 40,46 ****
+     up and running, and that's most important. */
+  void
+  start_rsh_server (cvsroot_t *root, struct buffer **to_server_p,
+!                   struct buffer **from_server_p)
+  {
+      int pipes[2];
+      int child_pid;
+--- 40,46 ----
+     up and running, and that's most important. */
+  void
+  start_rsh_server (cvsroot_t *root, struct buffer **to_server_p,
+!                   struct buffer **from_server_p, const char *rsh_default)
+  {
+      int pipes[2];
+      int child_pid;
+***************
+*** 78,84 ****
+  	   example in CVS_RSH or other such mechanisms to be devised,
+  	   if that is what they want (the manual already tells them
+  	   that).  */
+! 	cvs_rsh = RSH_DFLT;
+      if (!cvs_server)
+  	cvs_server = "cvs";
+  
+--- 78,84 ----
+  	   example in CVS_RSH or other such mechanisms to be devised,
+  	   if that is what they want (the manual already tells them
+  	   that).  */
+! 	cvs_rsh = rsh_default;
+      if (!cvs_server)
+  	cvs_server = "cvs";
+  
+***************
+*** 126,132 ****
+  
+  void
+  start_rsh_server (cvsroot_t *root, struct buffer **to_server_p,
+!                   struct buffer **from_server_p)
+  {
+      /* If you're working through firewalls, you can set the
+         CVS_RSH environment variable to a script which uses rsh to
+--- 126,132 ----
+  
+  void
+  start_rsh_server (cvsroot_t *root, struct buffer **to_server_p,
+!                   struct buffer **from_server_p, const char *rsh_default)
+  {
+      /* If you're working through firewalls, you can set the
+         CVS_RSH environment variable to a script which uses rsh to
+***************
+*** 140,146 ****
+      int child_pid;
+  
+      if (!cvs_rsh)
+! 	cvs_rsh = RSH_DFLT;
+      if (!cvs_server)
+  	cvs_server = "cvs";
+  
+--- 140,146 ----
+      int child_pid;
+  
+      if (!cvs_rsh)
+! 	cvs_rsh = rsh_default;
+      if (!cvs_server)
+  	cvs_server = "cvs";
+  
+diff -r -c3 cvs-1.12.13/src/rsh-client.h cvs-1.12.13+extssh/src/rsh-client.h
+*** cvs-1.12.13/src/rsh-client.h	Wed Jul 23 22:42:26 2003
+--- cvs-1.12.13+extssh/src/rsh-client.h	Tue Jan 22 16:43:22 2008
+***************
+*** 14,19 ****
+  #ifndef RSH_CLIENT_H__
+  #define RSH_CLIENT_H__
+  
+! void start_rsh_server (cvsroot_t *, struct buffer **, struct buffer **);
+  
+  #endif
+--- 14,19 ----
+  #ifndef RSH_CLIENT_H__
+  #define RSH_CLIENT_H__
+  
+! void start_rsh_server (cvsroot_t *, struct buffer **, struct buffer **, const char *);
+  
+  #endif
