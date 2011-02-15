@@ -18,7 +18,15 @@ endef
 MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/feature/$(VERSION)/
 UPSTREAM_MASTER_SITES = http://ftp.gnu.org/non-gnu/cvs/source/feature/
 
-DISTFILES = $(DISTNAME).tar.bz2
+DISTFILES += $(DISTNAME).tar.bz2
+DISTFILES += README.CSW
+
+# Allow extssh as connection method by patch taken from
+#   http://lists.gnu.org/archive/html/bug-cvs/2008-01/msg00007.html
+PATCHFILES += cvs-1.12.13-extssh.diff
+
+# The above is a functionality patch
+VERSION_FLAG_PATCH = 1
 
 PACKAGES += CSWcvs
 CATALOGNAME_CSWcvs = cvs

@@ -1,0 +1,11 @@
+README.CSW for cvs
+------------------
+
+The following functionality patches have been applied:
+
+* Eclipse, cvs, and extssh: cvs-1.12.13-extssh.diff
+
+  The patch was taken from
+    http://lists.gnu.org/archive/html/bug-cvs/2008-01/msg00007.html
+
+
