@@ -202,7 +202,6 @@ AP2_MODFILES ?= opt/csw/apache2/libexec/*so $(EXTRA_AP2_MODFILES)
 
 # - set class for all config files
 _CSWCLASS_FILTER = | perl -ane '\
-		$(foreach FILE,$(CPTEMPLATES),$$F[1] = "cswcptemplates" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(MIGRATECONF),$$F[1] = "cswmigrateconf" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(SAMPLECONF:%\.CSW=%),$$F[1] = "cswcpsampleconf" if ( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
 		$(foreach FILE,$(PRESERVECONF:%\.CSW=%),$$F[1] = "cswpreserveconf" if( $$F[2] =~ m(^$(FILE)\.CSW$$) );)\
@@ -214,6 +213,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(AP2_MODS),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/apache2/ap2mod/.*));) \
+		$$F[1] = "cswcptemplates" if( $$F[2] =~ m(^/opt/csw/etc/templates/.+$$) and $$F[0] eq "f" ); \
 		print join(" ",@F),"\n";'
 
 # If you add another filter above, also add the class to this list. It is used
@@ -225,7 +225,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 #	you need to ensure any binaries and config files are already on disk
 #	and able to be consumed by a service that might be started.
 
-_CSWCLASSES  = cswmigrateconf cswcpsampleconf cswpreserveconf
+_CSWCLASSES  = cswmigrateconf cswcpsampleconf cswpreserveconf cswcptemplates
 _CSWCLASSES += cswetcservices
 _CSWCLASSES += cswusergroup ugfiles
 _CSWCLASSES += cswcrontab
