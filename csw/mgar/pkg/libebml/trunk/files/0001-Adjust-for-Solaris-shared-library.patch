@@ -1,0 +1,25 @@
+From af6f42624cedec3056e50aa7a8841e216023d267 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 15 Feb 2011 14:14:28 +0100
+Subject: [PATCH] Adjust for Solaris shared library
+
+---
+ make/linux/Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/make/linux/Makefile b/make/linux/Makefile
+index 8f86b59..989bd13 100644
+--- a/make/linux/Makefile
++++ b/make/linux/Makefile
+@@ -91,7 +91,7 @@ $(LIBRARY): $(objects)
+ 	$(RANLIB) $@
+ 
+ $(LIBRARY_SO): $(objects_so)
+-	$(CXX) -shared -Wl,-soname,$(LIBRARY_SO_VER) -o $(LIBRARY_SO_VER) $(objects_so)
++	$(CXX) -G $(LDFLAGS) -h $(LIBRARY_SO_VER) -o $(LIBRARY_SO_VER) $(objects_so)
+ 	rm -f $(LIBRARY_SO)
+ 	ln -s $(LIBRARY_SO_VER) $(LIBRARY_SO)
+ 
+-- 
+1.7.3.2
+
