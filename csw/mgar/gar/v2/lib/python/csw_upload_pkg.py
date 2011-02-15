@@ -155,11 +155,10 @@ class Srv4Uploader(object):
     catalogs = []
     for arch in archs:
       for osrel in osrels:
+        logging.debug("%s %s %s", catrel, arch, osrel)
         srv4_in_catalog = self._rest_client.Srv4ByCatalogAndCatalogname(
             catrel, arch, osrel, catalogname)
-        if not srv4_in_catalog:
-          continue
-        if srv4_in_catalog["osrel"] == srv4_osrel:
+        if not srv4_in_catalog or srv4_in_catalog["osrel"] == srv4_osrel:
           # The same architecture as our package, meaning that we can insert
           # the same architecture into the catalog.
           if (not self.os_release
