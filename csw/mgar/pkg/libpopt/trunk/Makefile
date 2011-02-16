@@ -1,5 +1,5 @@
 NAME = popt
-VERSION = 1.15
+VERSION = 1.16
 CATEGORIES = lib
 
 DESCRIPTION = Popt is a C library for parsing command line parameters
@@ -17,11 +17,32 @@ endef
 MASTER_SITES = http://rpm5.org/files/$(NAME)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
+# This patch has been sent upstream:
+#   http://www.mail-archive.com/popt-devel@rpm5.org/
+PATCHFILES += 0001-Use-inttypes.h-if-stdint.h-is-not-available.patch
+
 # This fixes a minor failing check. See for details
 #   http://www.mail-archive.com/popt-devel@rpm5.org/msg00155.html
-PATCHFILES = 0001-Fix-failing-tests.patch
+PATCHFILES += 0002-Fix-failing-tests.patch
 
-PACKAGES = CSWlibpopt
+PACKAGES += CSWlibpopt
+CATALOGNAME_CSWlibpopt = libpopt
+SPKG_DESC_CSWlibpopt = Transitional package as contents moved to CSWlibpopt0
+PKGFILES_CSWlibpopt = NOFILES
+ARCHALL_CSWlibpopt = 1
+RUNTIME_DEP_PKGS_CSWlibpopt = CSWlibpopt0
+CHECKPKG_OVERRIDES_CSWlibpopt += surplus-dependency|CSWlibpopt0
+
+PACKAGES += CSWlibpopt0
+CATALOGNAME_CSWlibpopt0 = libpopt0
+SPKG_DESC_CSWlibpopt0 = Library for parsing command line parameters providing libpopt.so.0
+# PKGFILES_CSWlibpopt0 = $(call baseisadirs,$(libdir),libpopt\.so\.0(\.\d+)*)
+
+PACKAGES += CSWlibpopt-dev
+CATALOGNAME_CSWlibpopt-dev = libpopt_dev
+SPKG_DESC_CSWlibpopt-dev = Development files for libpopt.so
+RUNTIME_DEP_PKGS_CSWlibpopt-dev = CSWlibpopt0
+PKGFILES_CSWlibpopt-dev = $(PKGFILES_DEVEL)
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
