@@ -1,0 +1,49 @@
+From bcae71d2d7d6d59a315f36afecacf0acf2c71354 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 16 Feb 2011 18:25:39 +0100
+Subject: [PATCH 1/2] Use inttypes.h if stdint.h is not available
+
+---
+ lookup3.c |    6 ++++++
+ poptint.h |    6 ++++++
+ 2 files changed, 12 insertions(+), 0 deletions(-)
+
+diff --git a/lookup3.c b/lookup3.c
+index 0584c39..d3a1389 100644
+--- a/lookup3.c
++++ b/lookup3.c
+@@ -34,7 +34,13 @@
+ */
+ /* -------------------------------------------------------------------- */
+ 
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#else 
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ #if defined(_JLU3_SELFTEST)
+ # define _JLU3_jlu32w		1
+diff --git a/poptint.h b/poptint.h
+index 80cbaca..f4b2716 100644
+--- a/poptint.h
++++ b/poptint.h
+@@ -9,7 +9,13 @@
+ #ifndef H_POPTINT
+ #define H_POPTINT
+ 
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ 
+ /**
+  * Wrapper to free(3), hides const compilation noise, permit NULL, return NULL.
+-- 
+1.7.3.2
+
