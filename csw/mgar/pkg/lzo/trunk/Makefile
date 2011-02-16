@@ -20,10 +20,10 @@ CHECKPKG_OVERRIDES_CSWlzo += surplus-dependency|CSWliblzo2-2
 PKGFILES_CSWlzo = NOFILES
 ARCHALL_CSWlzo = 1
 
-PACKAGES += CSWlzo-dev
-CATALOGNAME_CSWlzo-dev = lzo_dev
-SPKG_DESC_CSWlzo-dev = Development files for liblzo2.so.2
-RUNTIME_DEP_PKGS_CSWlzo-dev = CSWliblzo2-2
+PACKAGES += CSWliblzo-dev
+CATALOGNAME_CSWliblzo-dev = liblzo_dev
+SPKG_DESC_CSWliblzo-dev = Development files for liblzo2.so.2
+RUNTIME_DEP_PKGS_CSWliblzo-dev = CSWliblzo2-2
 # PKGFILES is catchall
 
 PACKAGES += CSWliblzo2-2
