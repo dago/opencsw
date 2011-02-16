@@ -224,6 +224,18 @@ class ParseVersionStringTest(unittest.TestCase):
     hash(result[2]['extra_strings'])
     self.assertEqual(expected, opencsw.ParseVersionString(data))
 
+  def testThePflag(self):
+    data = "1.6.0,p,REV=2011.02.14"
+    expected = (
+        '1.6.0',
+        {
+            'minor version': '6',
+            'patchlevel': '0',
+            'major version': '1'},
+        {'extra_strings': ('p',),
+         'REV': '2011.02.14'})
+    self.assertEqual(expected, opencsw.ParseVersionString(data))
+
 
 class CompareVersionsTest(unittest.TestCase):
 
