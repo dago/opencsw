@@ -83,6 +83,28 @@ class Srv4UploaderUnitTest(mox.MoxTestBase):
     )
     self.assertEquals(expected, result)
 
+  def test_MatchSrv4ToCatalogsNewerPackage(self):
+    # A scenario in which a 5.9 package exists in the catalog, and we're
+    # uploading a 5.10 package.
+    rest_client_mock = self.mox.CreateMock(rest.RestClient)
+    self.mox.StubOutWithMock(rest, "RestClient")
+    rest.RestClient().AndReturn(rest_client_mock)
+    rest_client_mock.Srv4ByCatalogAndCatalogname(
+        'unstable', 'sparc', u'SunOS5.10', 'gdb').AndReturn(GDB_STRUCT_9)
+    rest_client_mock.Srv4ByCatalogAndCatalogname(
+        'unstable', 'sparc', u'SunOS5.11', 'gdb').AndReturn(GDB_STRUCT_9)
+    self.mox.ReplayAll()
+    su = csw_upload_pkg.Srv4Uploader(None)
+    result = su._MatchSrv4ToCatalogs(
+        "gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz",
+        "unstable", "sparc", "SunOS5.10",
+        "deadbeef61b53638d7813407fab4765b")
+    expected = (
+        ("unstable", "sparc", "SunOS5.10"),
+        ("unstable", "sparc", "SunOS5.11"),
+    )
+    self.assertEquals(expected, result)
+
   def test_MatchSrv4ToCatalogsSameSpecificOsrel(self):
     rest_client_mock = self.mox.CreateMock(rest.RestClient)
     self.mox.StubOutWithMock(rest, "RestClient")

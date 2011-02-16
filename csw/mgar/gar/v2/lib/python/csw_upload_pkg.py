@@ -154,9 +154,11 @@ class Srv4Uploader(object):
       archs = (srv4_arch,)
     catalogname = parsed_basename["catalogname"]
     catalogs = []
+    first_cat_osrel_seen = None
     for arch in archs:
       for osrel in osrels:
         logging.debug("%s %s %s", catrel, arch, osrel)
+        cat_key = (catrel, arch, osrel)
         srv4_in_catalog = self._rest_client.Srv4ByCatalogAndCatalogname(
             catrel, arch, osrel, catalogname)
         if srv4_in_catalog:
@@ -166,23 +168,27 @@ class Srv4Uploader(object):
           logging.debug(
               "Catalog %a %s does not contain any version of the % package.",
               arch, osrel, catalogname)
-        if not srv4_in_catalog or srv4_in_catalog["osrel"] == srv4_osrel:
+        if srv4_in_catalog and not first_cat_osrel_seen:
+          first_cat_osrel_seen = srv4_in_catalog["osrel"]
+        if (not srv4_in_catalog
+            or srv4_in_catalog["osrel"] == srv4_osrel
+            or srv4_in_catalog["osrel"] == first_cat_osrel_seen):
           # The same architecture as our package, meaning that we can insert
           # the same architecture into the catalog.
           if (not self.os_release
               or (self.os_release and osrel == self.os_release)):
-            catalogs.append((catrel, arch, osrel))
+            catalogs.append(cat_key)
         else:
-          logging.debug(
-              "Catalog %s %s %s has another version of %s.",
-              catrel, arch, osrel, catalogname)
           if self.os_release and osrel == self.os_release:
             logging.debug("OS release specified and matches %s.", osrel)
-            catalogs.append((catrel, arch, osrel))
+            catalogs.append(cat_key)
           else:
             logging.info(
                 "Not inserting %s package into %s containing a %s package",
                 srv4_osrel, osrel, srv4_in_catalog["osrel"])
+          logging.debug(
+              "Catalog %s %s %s has another version of %s.",
+              catrel, arch, osrel, catalogname)
     return tuple(catalogs)
 
   def _UploadFile(self, filename):
