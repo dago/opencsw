@@ -50,7 +50,7 @@ class RestClient(object):
   def Srv4ByCatalogAndCatalogname(self, catrel, arch, osrel, catalogname):
     """Returns a srv4 data structure or None if not found."""
     url = BASE_URL + (
-        "/catalogs/%s/%s/%s/%s/"
+        "/catalogs/%s/%s/%s/catalognames/%s/"
         % (catrel, arch, osrel, catalogname))
     logging.debug("Srv4ByCatalogAndCatalogname(): GET %s", url)
     try:
