@@ -293,7 +293,7 @@ class CatalogImporter(object):
         # If a package was previously examined, but not registered, we need to
         # register it now, to allow inclusion in a catalog.
         if not sqo_srv4.registered:
-          logging.warning(
+          logging.debug(
               "Package %s was not registered for releases. Registering it.",
               sqo_srv4.basename)
           stats = sqo_srv4.GetStatsStruct()
