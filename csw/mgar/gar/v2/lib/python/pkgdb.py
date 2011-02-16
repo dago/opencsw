@@ -298,8 +298,14 @@ class CatalogImporter(object):
               sqo_srv4.basename)
           stats = sqo_srv4.GetStatsStruct()
           package_stats.PackageStats.ImportPkg(stats, True)
-        db_catalog.AddSrv4ToCatalog(
-            sqo_srv4, osrel, arch, catrel)
+        try:
+          db_catalog.AddSrv4ToCatalog(
+              sqo_srv4, osrel, arch, catrel)
+        except checkpkg_lib.CatalogDatabaseError, e:
+          logging.warning(
+              "Could not insert %s (%s) into the database. %s",
+              sqo_srv4.basename, sqo_srv4.md5_sum, e)
+
 
   def SyncFromCatalogTree(self, catrel, base_dir, force_unpack=False):
     logging.debug("SyncFromCatalogTree(%s, %s, force_unpack=%s)",
