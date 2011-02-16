@@ -17,6 +17,7 @@ import json
 import common_constants
 import socket
 import rest
+import struct_util
 
 
 BASE_URL = "http://buildfarm.opencsw.org/releases/"
