@@ -19,7 +19,7 @@ while read src dest; do
 
   svcfile=/etc/services
 
-  /usr/xpg4/bin/grep -v "^#" $dest | while read svc; do
+  /usr/bin/grep -v "^#" $dest | while read svc; do
       set -- $svc
       svcname=$1
       port_proto=$2
