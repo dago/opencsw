@@ -159,6 +159,13 @@ class Srv4Uploader(object):
         logging.debug("%s %s %s", catrel, arch, osrel)
         srv4_in_catalog = self._rest_client.Srv4ByCatalogAndCatalogname(
             catrel, arch, osrel, catalogname)
+        if srv4_in_catalog:
+          logging.debug("Catalog %s %s contains version %s of the %s package",
+                        arch, osrel, srv4_in_catalog["osrel"], catalogname)
+        else:
+          logging.debug(
+              "Catalog %a %s does not contain any version of the % package.",
+              arch, osrel, catalogname)
         if not srv4_in_catalog or srv4_in_catalog["osrel"] == srv4_osrel:
           # The same architecture as our package, meaning that we can insert
           # the same architecture into the catalog.
@@ -166,11 +173,16 @@ class Srv4Uploader(object):
               or (self.os_release and osrel == self.os_release)):
             catalogs.append((catrel, arch, osrel))
         else:
-          if self.os_release and osrel == self.os_release:
-            catalogs.append((catrel, arch, osrel))
           logging.debug(
               "Catalog %s %s %s has another version of %s.",
               catrel, arch, osrel, catalogname)
+          if self.os_release and osrel == self.os_release:
+            logging.debug("OS release specified and matches %s.", osrel)
+            catalogs.append((catrel, arch, osrel))
+          else:
+            logging.info(
+                "Not inserting %s package into %s containing a %s package",
+                srv4_osrel, osrel, srv4_in_catalog["osrel"])
     return tuple(catalogs)
 
   def _UploadFile(self, filename):
