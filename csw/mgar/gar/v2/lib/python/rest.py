@@ -53,9 +53,7 @@ class RestClient(object):
         "/catalogs/%s/%s/%s/catalognames/%s/"
         % (catrel, arch, osrel, catalogname))
     logging.debug("Srv4ByCatalogAndCatalogname(): GET %s", url)
-    try:
-      data = urllib2.urlopen(url).read()
-      return json.loads(data)
-    except urllib2.HTTPError, e:
-      logging.warning("%s -- %s", url, e)
-      return None
+    # The server is no longer returning 404 when the package is absent.  If
+    # a HTTP error code is returned, we're letting the application fail.
+    data = urllib2.urlopen(url).read()
+    return json.loads(data)

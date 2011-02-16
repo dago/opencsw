@@ -296,10 +296,10 @@ class Srv4ByCatAndCatalogname(object):
       mimetype, data = srv4.GetRestRepr()
       web.header('Content-type', mimetype)
       return json.dumps(data)
-    except (
-        sqlobject.main.SQLObjectNotFound,
-        sqlobject.dberrors.OperationalError), e:
-      raise web.notfound()
+    except sqlobject.main.SQLObjectNotFound:
+      return json.dumps(None)
+    except sqlobject.dberrors.OperationalError, e:
+      raise web.internalerror(e)
 
 
 web.webapi.internalerror = web.debugerror
