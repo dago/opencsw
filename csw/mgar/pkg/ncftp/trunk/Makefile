@@ -1,5 +1,5 @@
 NAME = ncftp
-VERSION = 3.2.4
+VERSION = 3.2.5
 CATEGORIES = net
 
 DESCRIPTION = File Transfer Protocol (FTP) client applications.
@@ -28,5 +28,8 @@ TEST_SCRIPTS =
 
 # gtar *is* needed
 CHECKPKG_OVERRIDES_CSWncftp += surplus-dependency|CSWgtar
+
+# The occurrence of /usr/local is an example location of a tarfile and therefore ok
+CHECKPKG_OVERRIDES_CSWncftp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ncftpput.1
 
 include gar/category.mk
