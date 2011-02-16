@@ -1,5 +1,5 @@
 NAME = xz
-VERSION = 4.999.9beta
+VERSION = 5.0.1
 CATEGORIES = utils
 
 DESCRIPTION = XZ Utils is free data compression software with high compression ratio
@@ -11,22 +11,37 @@ define BLURB
 endef
 
 MASTER_SITES = http://tukaani.org/xz/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 PATCHFILES = 0001-Do-not-force-inclusion-of-stdint.h.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWxz CSWlzma
-
+PACKAGES += CSWxz
 CATALOGNAME_CSWxz = xz
-CATALOGNAME_CSWlzma = lzma
-
 SPKG_DESC_CSWxz = $(DESCRIPTION)
-SPKG_DESC_CSWlzma = Stub to the successor xz
+RUNTIME_DEP_PKGS_CSWxz += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWxz += CSWliblzma5
 
-RUNTIME_DEP_PKGS_CSWxz = CSWggettextrt CSWgcc4corert
+PACKAGES += CSWlzma
+CATALOGNAME_CSWlzma = lzma
+SPKG_DESC_CSWlzma = Stub to the successor xz
 RUNTIME_DEP_PKGS_CSWlzma = CSWxz
+CHECKPKG_OVERRIDES_CSWlzma += surplus-dependency|CSWxz
+PKGFILES_CSWlzma = NOFILES
+ARCHALL_CSWlzma = 1
+
+PACKAGES += CSWliblzma5
+CATALOGNAME_CSWliblzma5 = liblzma5
+SPKG_DESC_CSWliblzma5 = LZMA Compression Library providing liblzma.so.5
+PKGFILES_CSWliblzma5 = $(call baseisadirs,$(libdir),liblzma\.so\.5(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWliblzma5 += CSWgcc4corert
+
+PACKAGES += CSWliblzma-dev
+CATALOGNAME_CSWliblzma-dev = liblzma_dev
+SPKG_DESC_CSWliblzma-dev = Development Files for liblzma
+PKGFILES_CSWliblzma-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWliblzma-dev += CSWliblzma5
 
 GARCOMPILER = GNU
 
@@ -47,8 +62,5 @@ MERGE_DIRS_isa-extra = $(libdir)
 
 # not able to figure out which target runs the tests in "tests"
 TEST_TARGET = check
-
-ARCHALL_CSWlzma = 1
-PKGFILES_CSWlzma = NOMATCH
 
 include gar/category.mk
