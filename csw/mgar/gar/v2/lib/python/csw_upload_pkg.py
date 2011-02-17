@@ -93,6 +93,11 @@ class Srv4Uploader(object):
       self._RemoveFromCatalog(filename, cat_arch, cat_osrel, file_metadata)
 
   def _RemoveFromCatalog(self, filename, arch, osrel, file_metadata):
+    logging.info("Removing %s (%s %s) from catalog %s %s",
+                 file_metadata["catalogname"],
+                 file_metadata["arch"],
+                 file_metadata["osrel"],
+                 arch, osrel)
     md5_sum = self._GetFileMd5sum(filename)
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
@@ -184,7 +189,8 @@ class Srv4Uploader(object):
             catalogs.append(cat_key)
           else:
             logging.info(
-                "Not inserting %s package into %s containing a %s package",
+                "Not inserting %s %s package into %s containing a %s package",
+                catalogname,
                 srv4_osrel, osrel, srv4_in_catalog["osrel"])
           logging.debug(
               "Catalog %s %s %s has another version of %s.",
@@ -217,9 +223,14 @@ class Srv4Uploader(object):
       self._InsertIntoCatalog(filename, cat_arch, cat_osrel, file_metadata)
 
   def _InsertIntoCatalog(self, filename, arch, osrel, file_metadata):
-    logging.info(
+    logging.debug(
         "_InsertIntoCatalog(%s, %s, %s)",
         repr(arch), repr(osrel), repr(filename))
+    logging.info("Inserting %s (%s %s) into catalog %s %s",
+                 file_metadata["catalogname"],
+                 file_metadata["arch"],
+                 file_metadata["osrel"],
+                 arch, osrel)
     md5_sum = self._GetFileMd5sum(filename)
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
@@ -262,7 +273,7 @@ class Srv4Uploader(object):
         logging.fatal("Response: %s %s", http_code, d.getvalue())
       raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
     else:
-      logging.info("Response: %s %s", http_code, d.getvalue())
+      logging.debug("Response: %s %s", http_code, d.getvalue())
     return http_code
 
   def _GetSrv4FileMetadata(self, md5_sum):
@@ -293,7 +304,7 @@ class Srv4Uploader(object):
     return successful, metadata
 
   def _PostFile(self, filename):
-    logging.info("_PostFile(%s)", repr(filename))
+    logging.info("Uploading %s", repr(filename))
     md5_sum = self._GetFileMd5sum(filename)
     c = pycurl.Curl()
     d = StringIO()
