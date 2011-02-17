@@ -26,6 +26,7 @@ import textwrap
 import dependency_checks as depchecks
 import configuration as c
 import sharedlib_utils as su
+import struct_util
 from Cheetah import Template
 import common_constants
 import logging
@@ -1221,6 +1222,22 @@ def CheckPrefixDirs(pkg_data, error_mgr, logger, messenger):
       error_mgr.ReportError(
           "bad-location-of-file",
           "file=%s" % pkgmap_entry["path"])
+
+
+def CheckCatalognameMatchesPkgname(pkg_data, error_mgr, logger, messenger):
+  pkgname = pkg_data["basic_stats"]["pkgname"]
+  catalogname = pkg_data["basic_stats"]["catalogname"]
+  std_catalogname = struct_util.MakeCatalognameByPkgname(pkgname)
+  if catalogname != std_catalogname:
+    msg = (
+        "The catalogname should match the pkgname. "
+        "For more information, see "
+        "http://www.opencsw.org/extend-it/contribute-packages/"
+        "build-standards/package-creation/")
+    error_mgr.ReportError(
+        'catalogname-does-not-match-pkgname',
+        'pkgname=%s catalogname=%s expected-catalogname=%s'
+        % (pkgname, catalogname, std_catalogname))
 
 
 def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(

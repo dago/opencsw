@@ -1694,5 +1694,26 @@ class TestCheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
     self.pkg_data = mercurial_stats[0]
 
 
+class TestCheckCatalognameMatchesPkgname(CheckpkgUnitTestHelper,
+                                         unittest.TestCase):
+  FUNCTION_NAME = 'CheckCatalognameMatchesPkgname'
+
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    basic_stats = self.pkg_data["basic_stats"]
+    basic_stats["catalogname"] = "foo_bar"
+    basic_stats["pkgname"] = "CSWfoo-bar-baz"
+    self.error_mgr_mock.ReportError(
+        'catalogname-does-not-match-pkgname',
+        'pkgname=CSWfoo-bar-baz catalogname=foo_bar '
+        'expected-catalogname=foo_bar_baz')
+
+  def CheckpkgTest2(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+
+  def testTwo(self):
+    self.RunCheckpkgTest(self.CheckpkgTest2)
+
+
 if __name__ == '__main__':
   unittest.main()
