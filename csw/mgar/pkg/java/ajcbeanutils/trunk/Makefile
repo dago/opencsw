@@ -1,5 +1,5 @@
 SHORTNAME = beanutils
-VERSION = 1.8.2
+VERSION = 1.8.3
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
@@ -37,10 +37,10 @@ PKGFILES_CSWajcbeanutils   	+= $(prefix)/share/java/.*
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
 
+INSTALL_SCRIPTS = custom
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
