@@ -171,7 +171,7 @@ class Srv4Uploader(object):
                         arch, osrel, srv4_in_catalog["osrel"], catalogname)
         else:
           logging.debug(
-              "Catalog %a %s does not contain any version of the % package.",
+              "Catalog %s %s does not contain any version of the %s package.",
               arch, osrel, catalogname)
         if srv4_in_catalog and not first_cat_osrel_seen:
           first_cat_osrel_seen = srv4_in_catalog["osrel"]
