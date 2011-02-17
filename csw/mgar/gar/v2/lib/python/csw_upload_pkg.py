@@ -168,6 +168,9 @@ class Srv4Uploader(object):
     else:
       archs = (srv4_arch,)
     catalogname = parsed_basename["catalogname"]
+    # This part of code quickly became complicated and should probably be
+    # rewritten.  However, it is unit tested, so all the known cases are
+    # handled as intended.
     catalogs = []
     first_cat_osrel_seen = None
     for arch in archs:
