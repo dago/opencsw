@@ -145,6 +145,16 @@ class Srv4Uploader(object):
     If it's a 5.9 package, it can be matched to 5.9, 5.10 and 5.11.  However,
     if there already are specific 5.10 and/or 5.11 versions of the package,
     don't overwrite them.
+
+    Args:
+      filename: string, base file name of the srv4 stream file
+      catrel: string denoting catalog release, usually 'unstable'
+      srv4_arch: string, denoting srv4 file architecture (sparc, i386 or all)
+      srv4_osrel: string, OS release of the package, e.g. 'SunOS5.9'
+      md5_sum: string, md5 sum of the srv4 file
+
+    Returns:
+      A tuple of tuples, where each tuple is: (catrel, arch, osrel)
     """
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
