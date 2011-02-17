@@ -3,7 +3,6 @@ This directory contains Python libraries, mostly related to checkpkg.
 ==Checkpkg==
 
 Checks to implement:
- - foo_bar != CSWfoo-bar -> error
  - *dev(el)? -> error, suggest *-dev
  - *-?rt -> error, suggest specific library packages
  - empty package without 'transitional' in the name --> error, suggest
@@ -14,6 +13,9 @@ Checks to implement:
  - Dependency on CSWcas-initsmf + rc* files --> error
  - A package must not be incompatible with itself
 
+Checks implemented:
+ - foo_bar != CSWfoo-bar -> error
+ - outside /opt/csw, /etc/opt/csw, /var/opt/csw -> error
 
 Development plan for checkpkg:
 - Notify maintainers when their package is available from mirrors
