@@ -1,5 +1,5 @@
 NAME = seamonkey
-VERSION = 1.1.18
+VERSION = 1.1.19
 CATEGORIES = apps
 DISTNAME = mozilla
 
@@ -10,6 +10,7 @@ endef
 
 DISTFILES  = $(NAME)-$(VERSION).source.tar.bz2
 DISTFILES += CSWseamonkey.postremove CSWseamonkey.postinstall 
+DISTFILES += .mozconfig
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = (\d+(?:\.\d+)*)
@@ -63,23 +64,24 @@ PATCHFILES += ldappr-int.h.diff
 # PATCHFILES += configure.diff
 
 # pkg-config options
-EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
+# EXTRA_PKG_CONFIG_PATH += /opt/csw/X11/lib/pkgconfig
 
 PERL=/opt/csw/bin/perl
-CXXFLAGS +=-xlibmil -xlibmopt -features=tmplife -norunpath
-CFLAGS   +=-xlibmil -D__solaris__ 
-CFLAGS   += -DG_HAVE_ISO_VARARGS
-CXXFLAGS += -DG_HAVE_ISO_VARARGS
-CPPFLAGS  = -I/opt/csw/include -I/opt/csw/X11/include -I/opt/csw/include/cairo
-XCFLAGS   = -I/opt/csw/include -I/opt/csw/X11/include -I/opt/csw/include/cairo
+EXTRA_CFLAGS   += -xlibmil -D__solaris__ 
+EXTRA_CXXFLAGS += -xlibmil -xlibmopt -features=tmplife -norunpath
+EXTRA_CFLAGS   += -DG_HAVE_ISO_VARARGS
+EXTRA_CXXFLAGS += -DG_HAVE_ISO_VARARGS
+EXTRA_CPPFLAGS  = -I/opt/csw/include/cairo
+EXTRA_XCFLAGS   = -I/opt/csw/include/cairo
 
 EXTRA_CONFIGURE_EXPORTS = XCFLAGS
 
-LDFLAGS+=-L/usr/lib/lwp -L/opt/csw/mozilla/seamonkey/lib -R/opt/csw/mozilla/seamonkey/lib -L/opt/csw/lib -R/opt/csw/lib -L/opt/csw/X11/lib -R/opt/csw/X11/lib  -lsqlite3
+EXTRA_LDFLAGS = -L/usr/lib/lwp -L/opt/csw/mozilla/seamonkey/lib -R/opt/csw/mozilla/seamonkey/lib -lsqlite3
 
-export PERL CFLAGS CXXFLAGS LDFLAGS
+export PERL CFLAGS CXXFLAGS
 
-CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/seamonkey --disable-crashreporter
+CONFIGURE_ARGS = --prefix=/opt/csw/mozilla/seamonkey
+CONFIGURE_ARGS += --disable-crashreporter
 
 TEST_SCRIPTS = 
 
@@ -90,7 +92,7 @@ WORK_BUILD   = $(WORKSRC)
 WORK_INSTALL = $(WORKROOTDIR)/install-$(firstword $(MODULATIONS))
 
 pre-configure-modulated::
-	@cp $(FILEDIR)/.mozconfig  $(WORK_BUILD)/.mozconfig
+	@cp $(WORKDIR)/.mozconfig  $(WORKSRC)/.mozconfig
 
 pre-install-modulated::
 	( if [ ! -d $(WORK_INSTALL)/opt/csw/bin ] ; then mkdir -p $(WORK_INSTALL)/opt/csw/bin ; fi )
@@ -98,8 +100,8 @@ pre-install-modulated::
 
 post-install-modulated::
 	( gfind $(WORK_INSTALL)/opt/csw -exec bash -c "file {} | ggrep ELF | ggrep -e 'executable' -e 'dynamic lib' | ggrep 'not stripped' && strip {}"  \; )
-	( gfind $(WORK_INSTALL)/opt/csw -name chromelist.txt -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORK_BUILD)/\_\_g {}.temp > {} && rm {}.temp"  \; )
-	( gfind $(WORK_INSTALL)/opt/csw/mozilla/seamonkey -name "*.js" -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORK_BUILD)/\_\_g {}.temp > {} && rm {}.temp"  \; )
+	( gfind $(WORK_INSTALL)/opt/csw -name chromelist.txt -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORKSRC)/\_\_g {}.temp > {} && rm {}.temp"  \; )
+	( gfind $(WORK_INSTALL)/opt/csw/mozilla/seamonkey -name "*.js" -exec bash -c " mv {} {}.temp && gsed -e  s\_`pwd`/$(WORKSRC)/\_\_g {}.temp > {} && rm {}.temp"  \; )
 	( gfind $(WORK_INSTALL)/opt/csw/mozilla/seamonkey -name "*.jar" -exec bash -c "`pwd`/removeBuildPathFromJar.sh {} `pwd` $(WORKDIR) $(DISTNAME)" \; )
 
 include gar/category.mk
