@@ -76,7 +76,7 @@ EXTRA_XCFLAGS   = -I/opt/csw/include/cairo
 
 EXTRA_CONFIGURE_EXPORTS = XCFLAGS
 
-EXTRA_LDFLAGS = -L/usr/lib/lwp -L/opt/csw/mozilla/seamonkey/lib -R/opt/csw/mozilla/seamonkey/lib -lsqlite3
+EXTRA_LINKER_FLAGS = -L/usr/lib/lwp -L/opt/csw/mozilla/seamonkey/lib -R/opt/csw/mozilla/seamonkey/lib -lsqlite3
 
 export PERL CFLAGS CXXFLAGS
 
