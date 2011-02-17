@@ -15,20 +15,19 @@ MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
 # Set archive filename
 DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
-# Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajcchain,)
-DISTFILES += $(call admfiles,CSWajcchaindoc,)
+PACKAGES = CSWajcchain CSWajcchaindoc
+ARCHALL = 1
+
+CATALOGNAME_CSWajcchain    = commons_chain
+CATALOGNAME_CSWajcchaindoc = commons_chain_doc
 
 # Defines package description
 SPKG_DESC_CSWajcchain    = $(DESCRIPTION)
 SPKG_DESC_CSWajcchaindoc = $(DESCRIPTION) documentation package
 
-# Defines dependencies
-# RUNTIME_DEP_PKGS_CSWajcchain  = 
-
 # Defines package content
-PKGFILES_CSWajcchain   	 = $(prefix)/share/doc/$(NAME)/LICENSE.txt
 PKGFILES_CSWajcchain   	+= $(prefix)/share/java/.*
+LICENSE = LICENSE.txt
 
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
@@ -47,7 +46,5 @@ install-custom:
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/LICENSE-documentation.txt
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
