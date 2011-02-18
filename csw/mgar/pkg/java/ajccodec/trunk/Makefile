@@ -1,5 +1,5 @@
 SHORTNAME = codec
-VERSION = 1.3
+VERSION = 1.4
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
@@ -11,23 +11,25 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Set archive filename
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
-# Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajccodec,)
-DISTFILES += $(call admfiles,CSWajccodecdoc,)
+PACKAGES = CSWajccodec CSWajccodecdoc
+ARCHALL  = 1
+CATALOGNAME_CSWajccodec = commons_codec
+CATALOGNAME_CSWajccodecdoc = commons_codec_doc
+
+LICENSE = LICENSE.txt
 
 # Defines package description
 SPKG_DESC_CSWajccodec    = $(DESCRIPTION)
 SPKG_DESC_CSWajccodecdoc = $(DESCRIPTION) documentation package
 
-# Defines dependencies
+CHECKPKG_OVERRIDES_CSWajccodec += catalogname-does-not-match-pkgname|pkgname=CSWajccodec|catalogname=commons_codec|expected-catalogname=ajccodec
+CHECKPKG_OVERRIDES_CSWajccodecdoc += catalogname-does-not-match-pkgname|pkgname=CSWajccodecdoc|catalogname=commons_codec_doc|expected-catalogname=ajccodecdoc
 
 # Defines package content
-PKGFILES_CSWajccodec   	 = $(prefix)/share/doc/$(NAME)/LICENSE.txt
 PKGFILES_CSWajccodec   	+= $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -38,19 +40,14 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-SRC_FIRSTMOD = $(WORKROOTDIR)/build-$(firstword $(MODULATIONS))
-export SRC_FIRSTMOD
-
 include gar/category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
-	@gcp -fp $(WORKSRC)/commons-codec-$(VERSION).jar $(DESTDIR)$(datadir)/java
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(NAME)-$(VERSION).jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/LICENSE $(DESTDIR)$(datadir)/doc/$(NAME)/LICENSE.txt
-	@gcp -fp $(WORKSRC)/LICENSE $(DESTDIR)$(datadir)/doc/$(NAME)/LICENSE-documentation.txt
-	@gcp -frp $(WORKSRC)/docs/api/* $(DESTDIR)$(datadir)/doc/$(NAME)
+	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
