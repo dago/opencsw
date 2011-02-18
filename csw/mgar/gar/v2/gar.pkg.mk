@@ -390,6 +390,10 @@ define checkpkg_override_filter
   | ( cat; if test -f "$(WORKDIR_GLOBAL)/checkpkg_override.$(1)";then echo "i checkpkg_override=checkpkg_override.$(1)"; fi)
 endef
 
+define cswreleasenotes_filter
+  | ( cat; if test -f "$(WORKDIR_GLOBAL)/cswreleasenotes.$(1)";then echo "i cswreleasenotes=cswreleasenotes.$(1)"; fi)
+endef
+
 # This file contains all installed pathes. This can be used as a starting point
 # for distributing files to individual packages.
 PROTOTYPE = $(WORKDIR)/prototype
