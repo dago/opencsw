@@ -64,11 +64,17 @@ RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWftype2
 
 PACKAGES += CSWlibwmfdevel
 CATALOGNAME_CSWlibwmfdevel = libwmf_devel
+# This is a legacy name
+CHECKPKG_OVERRIDES_CSWlibwmfdevel += catalogname-does-not-match-pkgname|pkgname=CSWlibwmfdevel|catalogname=libwmf_devel|expected-catalogname=libwmfdevel
 SPKG_DESC_CSWlibwmfdevel = Transitional package as contents moved to CSWlibwmf-dev
 PKGFILES_CSWlibwmfdevel = NOFILES
 ARCHALL_CSWlibwmfdevel = 1
+# Come on, it has no files
+CHECKPKG_OVERRIDES_CSWlibwmfdevel += archall-devel-package
 RUNTIME_DEP_PKGs_CSWlibwmfdevel = CSWlibwmf-dev
 
+PACKAGES += CSWlibwmf-dev
+CATALOGNAME_CSWlibwmf-dev = libwmf_dev
 SPKG_DESC_CSWlibwmf-dev += Library and tools for manipulating Windows metafiles - developer package
 PKGFILES_CSWlibwmf-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibwmf-dev += CSWlibwmflite0-2-7
@@ -76,18 +82,24 @@ RUNTIME_DEP_PKGS_CSWlibwmf-dev += CSWlibwmf0-2-7
 
 PACKAGES += CSWlibwmfdoc
 CATALOGNAME_CSWlibwmfdoc = libwmf_doc
+# This is a legacy name
+CHECKPKG_OVERRIDES_CSWlibwmfdoc += catalogname-does-not-match-pkgname|pkgname=CSWlibwmfdoc|catalogname=libwmf_doc|expected-catalogname=libwmfdoc
 SPKG_DESC_CSWlibwmfdoc += Library and tools for manipulating Windows metafiles - documentation
 PKGFILES_CSWlibwmfdoc = $(sharedstatedir)/doc/.*
 ARCHALL_CSWlibwmfdoc = 1
 
 PACKAGES += CSWwmffonts
 CATALOGNAME_CSWwmffonts = wmf_fonts
+# This is a legacy name
+CHECKPKG_OVERRIDES_CSWwmffonts += catalogname-does-not-match-pkgname|pkgname=CSWwmffonts|catalogname=wmf_fonts|expected-catalogname=wmffonts
 SPKG_DESC_CSWwmffonts += Library and tools for manipulating Windows metafiles - fonts
 PKGFILES_CSWwmffonts = $(sharedstatedir)/libwmf/fonts/.*
 ARCHALL_CSWwmffonts = 1
 
 PACKAGES += CSWlibwmfgtk
 CATALOGNAME_CSWlibwmfgtk = libwmf_gtk
+# This is a legacy package name
+CHECKPKG_OVERRIDES_CSWlibwmfgtk += catalogname-does-not-match-pkgname|pkgname=CSWlibwmfgtk|catalogname=libwmf_gtk|expected-catalogname=libwmfgtk
 SPKG_DESC_CSWlibwmfgtk += Library and tools for manipulating Windows metafiles - GTK loader
 PKGFILES_CSWlibwmfgtk = $(libdir).*/io-wmf.so
 RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWggettextrt
@@ -120,6 +132,11 @@ MERGE_DIRS_isa-extra = $(libdir)
 
 # default fontpath for unix systems = /usr/share/fonts/truetype
 # Are our fonts picked up correctly?
-CHECKPKG_OVERRIDES_CSWlibwmfdevel += file-with-bad-content|/usr/share|root/opt/csw/include/libwmf/gd/gd.h
+CHECKPKG_OVERRIDES_CSWlibwmf-dev += file-with-bad-content|/usr/share|root/opt/csw/include/libwmf/gd/gd.h
+CHECKPKG_OVERRIDES_CSWlibwmf0-2-7 += file-with-bad-content|/usr/share|root/opt/csw/lib/libwmf-0.2.so.7.1.0
+CHECKPKG_OVERRIDES_CSWlibwmf0-2-7 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libwmf-0.2.so.7.1.0
+
+# These are just docs
+CHECKPKG_OVERRIDES_CSWlibwmfdoc += file-with-bad-content
 
 include gar/category.mk
