@@ -12,76 +12,93 @@ endef
 
 SF_PROJ = wvware
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = libwmf-$(VERSION).tar.gz
 DISTNAME = libwmf-$(VERSION)
-
-SPKG_SOURCEURL = http://wvware.sourceforge.net
-
-PACKAGES = CSWwmf CSWlibwmf CSWlibwmfdevel CSWlibwmfdoc CSWwmffonts CSWlibwmfgtk
-CATALOGNAME_CSWwmf = wmf
-CATALOGNAME_CSWlibwmf = libwmf
-CATALOGNAME_CSWlibwmfdevel = libwmf_devel
-CATALOGNAME_CSWlibwmfdoc = libwmf_doc
-CATALOGNAME_CSWlibwmfgtk = libwmf_gtk
-CATALOGNAME_CSWwmffonts = wmf_fonts
-
-SPKG_DESC_CSWwmf += Library and tools for manipulating Windows metafiles
-SPKG_DESC_CSWlibwmf += Library and tools for manipulating Windows metafiles - runtime package
-SPKG_DESC_CSWlibwmfdevel += Library and tools for manipulating Windows metafiles - developer package
-SPKG_DESC_CSWlibwmfdoc += Library and tools for manipulating Windows metafiles - documentation
-SPKG_DESC_CSWlibwmfgtk += Library and tools for manipulating Windows metafiles - GTK loader
-SPKG_DESC_CSWwmffonts += Library and tools for manipulating Windows metafiles - fonts
-
-RUNTIME_DEP_PKGS_CSWwmf += CSWftype2 
-RUNTIME_DEP_PKGS_CSWwmf += CSWjpeg CSWlibx11 CSWpng CSWzlib
-RUNTIME_DEP_PKGS_CSWwmf += CSWwmffonts CSWlibwmf
-RUNTIME_DEP_PKGS_CSWwmf += CSWiconv
-RUNTIME_DEP_PKGS_CSWwmf += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibwmf += CSWwmffonts
-RUNTIME_DEP_PKGS_CSWlibwmf += CSWftype2
-RUNTIME_DEP_PKGS_CSWlibwmf += CSWjpeg
-RUNTIME_DEP_PKGS_CSWlibwmf += CSWlibx11
-RUNTIME_DEP_PKGS_CSWlibwmf += CSWpng
-RUNTIME_DEP_PKGS_CSWlibwmf += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibwmf += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibwmf += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibwmfdevel += CSWlibwmf
-RUNTIME_DEP_PKGS_CSWlibwmfdoc += 
-RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWlibwmf
-RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWglib2
-RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWgtk2
-RUNTIME_DEP_PKGS_CSWwmffonts += 
-
-BUILD_DEP_PKGS += CSWgtk2devel
-
-PKGFILES_CSWlibwmf = $(PKGFILES_RT)
-PKGFILES_CSWlibwmfdevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibwmfdoc = $(sharedstatedir)/doc/.*
-PKGFILES_CSWlibwmfgtk = $(libdir).*/io-wmf.so
-PKGFILES_CSWwmffonts = $(sharedstatedir)/libwmf/fonts/.*
-
-ARCHALL_CSWlibwmfdoc = 1
-ARCHALL_CSWwmffonts = 1
-
-CHECKPKG_OVERRIDES_CSWlibwmf += symbol-not-found|libwmf-0.2.so.7.1.0
-CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|io-wmf.so
-CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|wmf2gd
-CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|wmf2x
-CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|wmf2fig
-CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|wmf2svg
-CHECKPKG_OVERRIDES_CSWwmf += symbol-not-found|wmf2eps
-
-BUILD64 = 1
-
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+DISTFILES  = $(DISTNAME).tar.gz
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10501
-UPSTREAM_USE_SF = 1
 UFILES_REGEX = (\d+(?:\.\d+)*)
+
+VENDOR_URL = http://wvware.sourceforge.net
+
+PACKAGES += CSWwmf
+CATALOGNAME_CSWwmf = wmf
+SPKG_DESC_CSWwmf += Library and tools for manipulating Windows metafiles
+RUNTIME_DEP_PKGS_CSWwmf += CSWftype2 
+RUNTIME_DEP_PKGS_CSWwmf += CSWjpeg
+RUNTIME_DEP_PKGS_CSWwmf += CSWpng
+RUNTIME_DEP_PKGS_CSWwmf += CSWzlib
+RUNTIME_DEP_PKGS_CSWwmf += CSWwmffonts
+RUNTIME_DEP_PKGS_CSWwmf += CSWiconv
+RUNTIME_DEP_PKGS_CSWwmf += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWwmf += CSWlibwmf0-2-7
+RUNTIME_DEP_PKGS_CSWwmf += CSWlibwmflite0-2-7
+CHECKPKG_OVERRIDES_CSWwmf += surplus-dependency|CSWwmffonts
+
+PACKAGES += CSWlibwmf
+CATALOGNAME_CSWlibwmf = libwmf
+SPKG_DESC_CSWlibwmf = Transitional package as contents moved to 
+PKGFILES_CSWlibwmf = NOFILES
+ARCHALL_CSWlibwmf = 1
+RUNTIME_DEP_PKGS_CSWlibwmf += CSWlibwmf0-2-7
+CHECKPKG_OVERRIDES_CSWlibwmf += surplus-dependency|CSWlibwmf0-2-7
+RUNTIME_DEP_PKGS_CSWlibwmf += CSWlibwmflite0-2-7
+CHECKPKG_OVERRIDES_CSWlibwmf += surplus-dependency|CSWlibwmflite0-2-7
+
+PACKAGES += CSWlibwmflite0-2-7
+CATALOGNAME_CSWlibwmflite0-2-7 = libwmflite0_2_7
+PKGFILES_CSWlibwmflite0-2-7 += $(call baseisadirs,$(libdir),libwmflite-0\.2\.so\.7(\.\d+)*)
+SPKG_DESC_CSWlibwmflite0-2-7 += Library and tools for manipulating Windows metafiles - runtime package, libwmflite-0.2.so.7
+
+PACKAGES += CSWlibwmf0-2-7
+CATALOGNAME_CSWlibwmf0-2-7 = libwmf0_2_7
+PKGFILES_CSWlibwmf0-2-7 += $(call baseisadirs,$(libdir),libwmf-0\.2\.so\.7(\.\d+)*)
+SPKG_DESC_CSWlibwmf0-2-7 += Library and tools for manipulating Windows metafiles - runtime package, libwmf-0.2.so.7
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWjpeg
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibwmflite0-2-7
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWpng
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWftype2
+
+PACKAGES += CSWlibwmfdevel
+CATALOGNAME_CSWlibwmfdevel = libwmf_devel
+SPKG_DESC_CSWlibwmfdevel = Transitional package as contents moved to CSWlibwmf-dev
+PKGFILES_CSWlibwmfdevel = NOFILES
+ARCHALL_CSWlibwmfdevel = 1
+RUNTIME_DEP_PKGs_CSWlibwmfdevel = CSWlibwmf-dev
+
+SPKG_DESC_CSWlibwmf-dev += Library and tools for manipulating Windows metafiles - developer package
+PKGFILES_CSWlibwmf-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibwmf-dev += CSWlibwmflite0-2-7
+RUNTIME_DEP_PKGS_CSWlibwmf-dev += CSWlibwmf0-2-7
+
+PACKAGES += CSWlibwmfdoc
+CATALOGNAME_CSWlibwmfdoc = libwmf_doc
+SPKG_DESC_CSWlibwmfdoc += Library and tools for manipulating Windows metafiles - documentation
+PKGFILES_CSWlibwmfdoc = $(sharedstatedir)/doc/.*
+ARCHALL_CSWlibwmfdoc = 1
+
+PACKAGES += CSWwmffonts
+CATALOGNAME_CSWwmffonts = wmf_fonts
+SPKG_DESC_CSWwmffonts += Library and tools for manipulating Windows metafiles - fonts
+PKGFILES_CSWwmffonts = $(sharedstatedir)/libwmf/fonts/.*
+ARCHALL_CSWwmffonts = 1
+
+PACKAGES += CSWlibwmfgtk
+CATALOGNAME_CSWlibwmfgtk = libwmf_gtk
+SPKG_DESC_CSWlibwmfgtk += Library and tools for manipulating Windows metafiles - GTK loader
+PKGFILES_CSWlibwmfgtk = $(libdir).*/io-wmf.so
+RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWlibwmf0-2-7
+RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWlibwmflite0-2-7
+BUILD_DEP_PKGS += CSWgtk2devel
+
+BUILD64 = 1
+NOISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-x
@@ -96,13 +113,13 @@ CONFIGURE_ARGS += --with-sysfontmap=$(datadir)/fonts/fontmap
 #CONFIGURE_ARGS += --with-xtrafontmap=
 CONFIGURE_ARGS += --with-gsfontmap=$(datadir)/ghostscript/Resource/Init/Fontmap.GS
 CONFIGURE_ARGS += --with-gsfontdir=$(datadir)/ghostscript/fonts
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 TEST_TARGET = check
 
-STRIP_LIBTOOL = 1
+MERGE_DIRS_isa-extra = $(libdir)
+
+# default fontpath for unix systems = /usr/share/fonts/truetype
+# Are our fonts picked up correctly?
+CHECKPKG_OVERRIDES_CSWlibwmfdevel += file-with-bad-content|/usr/share|root/opt/csw/include/libwmf/gd/gd.h
 
 include gar/category.mk
-
-PATH := /opt/csw/gnu:$(PATH)
