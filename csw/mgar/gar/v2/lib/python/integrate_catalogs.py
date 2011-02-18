@@ -33,28 +33,56 @@ PKGDB=bin/pkgdb
 
 #for catalogname in $sorted($diffs_by_catalogname):
 #if "new_pkgs" in $diffs_by_catalogname[$catalogname]:
+function new_pkg_$catalogname {
 #for arch, osrel, new_pkg in $diffs_by_catalogname[$catalogname]["new_pkgs"]:
-# adding $new_pkg["basename"]
-\${PKGDB} add-to-cat $osrel $arch $catrel_to $new_pkg["md5_sum"]
+  # adding $new_pkg["basename"]
+  \${PKGDB} add-to-cat $osrel $arch $catrel_to $new_pkg["md5_sum"]
 #end for
+}
 #end if
 #if "removed_pkgs" in $diffs_by_catalogname[$catalogname]:
+function remove_pkg_$catalogname {
 #for arch, osrel, rem_pkg in $diffs_by_catalogname[$catalogname]["removed_pkgs"]:
-# removing $rem_pkg["basename"]
-\${PKGDB} del-from-cat $osrel $arch $catrel_to $rem_pkg["md5_sum"]
+  # removing $rem_pkg["basename"]
+  \${PKGDB} del-from-cat $osrel $arch $catrel_to $rem_pkg["md5_sum"]
 #end for
+}
 #end if
 #if "updated_pkgs" in $diffs_by_catalogname[$catalogname]:
+function #
+#if $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["direction"] == "downgrade":
+downgrade_#
+#else
+upgrade_#
+#end if
+$catalogname {
 #for arch, osrel, up_pkg_pair in $diffs_by_catalogname[$catalogname]["updated_pkgs"]:
 #if $up_pkg_pair["direction"] == "downgrade":
-# WARNING: DOWNGRADE
+  # WARNING: DOWNGRADE
 #end if
-# $catalogname $up_pkg_pair["direction"] from $up_pkg_pair["from"]["version"] to $up_pkg_pair["to"]["version"]
-\${PKGDB} del-from-cat $osrel $arch $catrel_to $up_pkg_pair["from"]["md5_sum"]
-\${PKGDB} add-to-cat $osrel $arch $catrel_to $up_pkg_pair["to"]["md5_sum"]
+  # $catalogname $up_pkg_pair["direction"] from $up_pkg_pair["from"]["version"] to $up_pkg_pair["to"]["version"]
+  \${PKGDB} del-from-cat $osrel $arch $catrel_to $up_pkg_pair["from"]["md5_sum"]
+  \${PKGDB} add-to-cat $osrel $arch $catrel_to $up_pkg_pair["to"]["md5_sum"]
 #end for
+}
 #end if
 
+#end for
+#for catalogname in $sorted($diffs_by_catalogname):
+#if "new_pkgs" in $diffs_by_catalogname[$catalogname]:
+new_pkg_$catalogname
+#end if
+#if "removed_pkgs" in $diffs_by_catalogname[$catalogname]:
+remove_pkg_$catalogname
+#end if
+#if "updated_pkgs" in $diffs_by_catalogname[$catalogname]:
+#if $diffs_by_catalogname[$catalogname]["updated_pkgs"][0][2]["direction"] == "downgrade":
+downgrade_#
+#else
+upgrade_#
+#end if
+$catalogname
+#end if
 #end for
 """
 
