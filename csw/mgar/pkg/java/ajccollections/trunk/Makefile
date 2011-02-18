@@ -16,8 +16,18 @@ MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
 DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajccollect,)
-DISTFILES += $(call admfiles,CSWajccollectdoc,)
+PACKAGES = CSWajccollect CSWajccollectdoc
+
+# Package architecture is ALL (pure java)
+ARCHALL = 1
+
+CATALOGNAME_CSWajccollect = commons_collect
+CATALOGNAME_CSWajccollectdoc = commons_collect_doc
+
+LICENSE = LICENSE.txt
+
+CHECKPKG_OVERRIDES_CSWajccollect += catalogname-does-not-match-pkgname|pkgname=CSWajccollect|catalogname=commons_collect|expected-catalogname=ajccollect
+CHECKPKG_OVERRIDES_CSWajccollectdoc += catalogname-does-not-match-pkgname|pkgname=CSWajccollectdoc|catalogname=commons_collect_doc|expected-catalogname=ajccollectdoc
 
 # Defines package description
 SPKG_DESC_CSWajccollect    = $(DESCRIPTION) 
@@ -27,7 +37,6 @@ SPKG_DESC_CSWajccollectdoc = $(DESCRIPTION) documentation package
 RUNTIME_DEP_PKGS_CSWajccollect  = CSWajcdigester
 
 # Defines package content
-PKGFILES_CSWajccollect     	 = $(prefix)/share/doc/$(NAME)/LICENSE.txt
 PKGFILES_CSWajccollect   	+= $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -42,13 +51,11 @@ include gar/category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/commons-collections-3.2.1.jar $(DESTDIR)$(datadir)/java
+	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(NAME)-$(VERSION).jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-3.2.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-3.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/LICENSE-documentation.txt
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
