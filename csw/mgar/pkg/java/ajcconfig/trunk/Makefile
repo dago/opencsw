@@ -11,25 +11,33 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # Set archive filename
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajcconfig,)
-DISTFILES += $(call admfiles,CSWajcconfigdoc,)
+PACKAGES = CSWajcconfig CSWajcconfigdoc
+
+# Package architecture is ALL (pure java)
+ARCHALL = 1
+
+CATALOGNAME_CSWajcconfig = commons_config
+CATALOGNAME_CSWajcconfigdoc = commons_config_doc
+
+LICENSE = LICENSE.txt
 
 # Defines package description
 SPKG_DESC_CSWajcconfig    = $(DESCRIPTION)
 SPKG_DESC_CSWajcconfigdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-RUNTIME_DEP_PKGS_CSWajcconfig  = CSWajclogging CSWajclang CSWajcdigester CSWajccollect CSWajcbeanutils 	
+RUNTIME_DEP_PKGS_CSWajcconfig  = CSWajclogging CSWajclang CSWajcdigester CSWajccollect 
 
 # Defines package content
-PKGFILES_CSWajcconfig 	 = $(prefix)/share/doc/$(NAME)/License.txt
 PKGFILES_CSWajcconfig  	+= $(prefix)/share/java/.*
+
+CHECKPKG_OVERRIDES_CSWajcconfig += catalogname-does-not-match-pkgname|pkgname=CSWajcconfig|catalogname=commons_config|expected-catalogname=ajcconfig
+CHECKPKG_OVERRIDES_CSWajcconfigdoc += catalogname-does-not-match-pkgname|pkgname=CSWajcconfigdoc|catalogname=commons_config_doc|expected-catalogname=ajcconfigdoc
 
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
@@ -48,7 +56,5 @@ install-custom:
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License-documentation.txt
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/docs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
