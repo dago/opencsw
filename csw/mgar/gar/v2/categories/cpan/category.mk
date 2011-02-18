@@ -92,7 +92,7 @@ install-%/Build:
 	@$(MAKECOOKIE)
 
 pre-package:
-	test -f $(WORKSRC_FIRSTMOD)/META.yml && cp $(WORKSRC_FIRSTMOD)/META.yml $(WORKDIR_GLOBAL)
+	-rm -f $(WORKDIR_GLOBAL)/META.yml && test -f $(WORKSRC_FIRSTMOD)/META.yml && cp $(WORKSRC_FIRSTMOD)/META.yml $(WORKDIR_GLOBAL)
 
 # Check for a CPAN module version update
 update-check:
