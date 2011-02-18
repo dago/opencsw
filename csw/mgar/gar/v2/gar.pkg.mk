@@ -444,9 +444,9 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	               ) \
 	              <$(PROTOTYPE); \
 	   if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi \
-	  ) $(call checkpkg_override_filter,$*) $(_CSWCLASS_FILTER) $(_CATEGORY_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  ) $(call checkpkg_override_filter,$*) $(call cswreleasenotes_filter,$*) $(_CSWCLASS_FILTER) $(_CATEGORY_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	else \
-	  cat $(PROTOTYPE) $(call checkpkg_override_filter,$*) $(_CSWCLASS_FILTER) $(_CATEGORY_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  cat $(PROTOTYPE) $(call checkpkg_override_filter,$*) $(call cswreleasenotes_filter,$*) $(_CSWCLASS_FILTER) $(_CATEGORY_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	fi
 	$(if $(ALLOW_RELOCATE),$(call dontrelocate,opt,$(PROTOTYPE)))
 
