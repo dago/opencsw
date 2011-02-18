@@ -11,16 +11,26 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-# Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajcdiscovery,)
-DISTFILES += $(call admfiles,CSWajcdiscoverydoc,)
 
-# Defines package description
+# Define two packages, lib and doc
+PACKAGES = CSWajcdiscovery CSWajcdiscoverydoc
+
+# Package architecture is ALL (pure java)
+ARCHALL = 1
+
+CATALOGNAME_CSWajcdiscovery = commons_discovery
+CATALOGNAME_CSWajcdiscoverydoc = commons_disco_doc
+
+LICENSE = LICENSE.txt
+
+CHECKPKG_OVERRIDES_CSWajcdiscovery += catalogname-does-not-match-pkgname|pkgname=CSWajcdiscovery|catalogname=commons_discovery|expected-catalogname=ajcdiscovery
+CHECKPKG_OVERRIDES_CSWajcdiscoverydoc += catalogname-does-not-match-pkgname|pkgname=CSWajcdiscoverydoc|catalogname=commons_disco_doc|expected-catalogname=ajcdiscoverydoc
+
+# package description
 SPKG_DESC_CSWajcdiscovery    = $(DESCRIPTION)
 SPKG_DESC_CSWajcdiscoverydoc = $(DESCRIPTION) documentation package
 
@@ -28,7 +38,6 @@ SPKG_DESC_CSWajcdiscoverydoc = $(DESCRIPTION) documentation package
 RUNTIME_DEP_PKGS_CSWajcdiscovery = CSWajclogging
 
 # Defines package content
-PKGFILES_CSWajcdiscovery  = $(prefix)/share/doc/$(NAME)/License.txt
 PKGFILES_CSWajcdiscovery += $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -48,7 +57,5 @@ install-custom:
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-0.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License-documentation.txt
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/docs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
