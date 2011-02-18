@@ -1,5 +1,5 @@
 SHORTNAME = digester
-VERSION = 2.0
+VERSION = 2.1
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
@@ -11,14 +11,20 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
 DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajcdigester,)
-DISTFILES += $(call admfiles,CSWajcdigesterdoc,)
+PACKAGES = CSWajcdigester CSWajcdigesterdoc
+
+# Package architecture is ALL (pure java)
+ARCHALL = 1
+
+CATALOGNAME_CSWajcdigester = commons_digester
+CATALOGNAME_CSWajcdigesterdoc = commons_digester_doc
+
+LICENSE = LICENSE.txt
 
 # Defines package description
 SPKG_DESC_CSWajcdigester    = $(DESCRIPTION)
@@ -26,6 +32,9 @@ SPKG_DESC_CSWajcdigesterdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
 RUNTIME_DEP_PKGS_CSWajcdigester = CSWajclogging CSWajcbeanutils 	
+
+CHECKPKG_OVERRIDES_CSWajcdigesterdoc += catalogname-does-not-match-pkgname|pkgname=CSWajcdigesterdoc|catalogname=commons_digester_doc|expected-catalogname=ajcdigesterdoc
+CHECKPKG_OVERRIDES_CSWajcdigester += catalogname-does-not-match-pkgname|pkgname=CSWajcdigester|catalogname=commons_digester|expected-catalogname=ajcdigester
 
 # Defines package content
 PKGFILES_CSWajcdigester  = $(prefix)/share/doc/$(NAME)/License.txt
@@ -48,7 +57,5 @@ install-custom:
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-2.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License-documentation.txt
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
