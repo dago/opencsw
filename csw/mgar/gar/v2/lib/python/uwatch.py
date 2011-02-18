@@ -586,11 +586,6 @@ class UpstreamWatchCommand(AbstractCommand):
 
     # -----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, name):
-        super(UpstreamWatchCommand, self).__init__(name)
-
-    # -----------------------------------------------------------------------------------------------------------------
-
     def UrlContentRetrieve(self, url):
 
         try:
