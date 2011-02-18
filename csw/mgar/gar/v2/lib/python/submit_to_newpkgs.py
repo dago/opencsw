@@ -82,7 +82,7 @@ def RemoveOldFiles(basename_list, host, directory):
   logging.debug("Running: %s" % args)
   ret = subprocess.call(args)
   if ret:
-    msg = ("Removing % failed." % basename_str)
+    msg = ("Removing %s failed." % basename_str)
     raise PackageSubmissionError(msg)
 
 
