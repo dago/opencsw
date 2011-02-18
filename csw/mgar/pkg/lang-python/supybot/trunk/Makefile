@@ -12,10 +12,10 @@ define BLURB
   plugins providing around 400 actual commands. 
 endef
 
-SPKG_SOURCEURL = http://supybot.com/
+VENDOR_URL   = http://supybot.com/
 MASTER_SITES = $(SF_MIRRORS)
-DISTNAME = Supybot-$(VERSION)
-DISTFILES = $(DISTNAME).tar.gz
+DISTFILES    = $(DISTNAME).tar.gz
+DISTNAME     = Supybot-$(VERSION)
 
 ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWpysqlite CSWtwisted
@@ -30,7 +30,13 @@ post-install-modulated: DOCS=ChangeLog ACKS docs/*
 post-install-modulated: MANDEST=$(DESTDIR)$(mandir)/man1
 post-install-modulated:
 	ginstall -d $(DOCDEST)
-	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	-cp $(addprefix $(WORKSRC)/, $(DOCS)) $(DOCDEST)	
 	ginstall -d $(MANDEST) && cp $(WORKSRC)/docs/man/* $(MANDEST)
+	@$(MAKECOOKIE)
+
+# Install changelog.CSW
+post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
+install-changelog-%:
+	ginstall -D $(FILEDIR)/changelog.CSW \
+		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
 	@$(MAKECOOKIE)
