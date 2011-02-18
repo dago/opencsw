@@ -1,4 +1,4 @@
-NAME      = apache-tomcat6
+NAME      = tomcat6
 VERSION   = 6.0.29
 CATEGORIES   = server
 
@@ -7,23 +7,50 @@ define BLURB
 Apache Tomcat is the servlet container that is used in the official Reference Implementation for the Java Servlet and JavaServer Pages technologies. The Java Servlet and JavaServer Pages specifications are developed by Sun under the Java Community Process.
 endef
 
-UPSTREAM_MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-6/
-MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-6/v$(VERSION)/bin/
+MASTER_SITES  = http://tomcat.apache.org/
+UPSTREAM_MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-6/v$(VERSION)/bin/
 DISTFILES     = apache-tomcat-$(VERSION).tar.gz
 PKGDIST       = apache-tomcat-$(VERSION).tar.gz
-DISTFILES    += CSWtomcat6.gspec CSWtomcat6.prototype CSWtomcat6.depend preremove postinstall preinstall checkinstall space i.smfno i.smfyes svc-tomcat6 tomcat6.xml tomcat6 cswtomcat6
-LICENSE       = LICENSE
+DISTFILES    += cswusergroup
+DISTFILES    += cswtomcat6
+DISTFILES    += LICENSE
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = v(\d+(?:\.\d+)*)
 
-#ARCHALL_CSWapache-tomcat6       = 1
+PACKAGES = CSWtomcat6
+CATALOGNAME = tomcat6
+LICENSE = LICENSE
+ARCHALL = 1
 
 CONFIGURE_SCRIPTS = none
 BUILD_SCRIPTS     = none
 TEST_SCRIPTS	  = none
 INSTALL_SCRIPTS   = tomcat
 prefix            = /
+
+INITSMF = /etc/opt/csw/init.d/csw$(NAME)
+USERGROUP = /etc/opt/csw/pkg/$(NAME)/cswusergroup
+PRESERVECONF = /etc/opt/csw/$(NAME)/conf/.*
+
+PROTOTYPE_MODIFIERS     = varuser etcperm
+PROTOTYPE_FILES_varuser = /var/opt/csw/$(NAME)/.*
+PROTOTYPE_USER_varuser  = tomcat
+PROTOTYPE_GROUP_varuser = tomcat
+PROTOTYPE_FILES_etcperm = /etc/opt/csw/$(NAME)/conf/.*\.CSW
+PROTOTYPE_PERMS_etcperm = 0640
+PROTOTYPE_USER_etcperm  = tomcat
+PROTOTYPE_GROUP_etcperm = tomcat
+
+MIGRATE_SOURCE_DIR = /opt/csw/etc/$(NAME)/conf
+MIGRATE_DEST_DIR = /etc/opt/csw/$(NAME)/conf
+MIGRATE_FILES  = catalina.policy
+MIGRATE_FILES += catalina.properties
+MIGRATE_FILES += context.xml
+MIGRATE_FILES += logging.properties
+MIGRATE_FILES += server.xml
+MIGRATE_FILES += tomcat-users.xml
+MIGRATE_FILES += web.xml
 
 include gar/category.mk
 
@@ -38,39 +65,26 @@ build-none:
 
 post-extract:
 	( mv $(WORKDIR)/apache-tomcat-$(VERSION) $(WORKDIR)/$(DISTNAME) )
-	( OLDDIR=`pwd` && cd $(WORKDIR)/$(DISTNAME)/conf && for i in `find . -type f` ; do mv $$i $$i.CSW ; done && cd $$OLDDIR )
 	( for i in temp work logs conf ; do  find $(WORKDIR)/$(DISTNAME)/$$i -type d -exec chmod 0750 {} \;  ; find $(WORKDIR)/$(DISTNAME)/$$i -type f -exec chmod 0640 {} \; ; done )
 	@$(MAKECOOKIE)
 
 install-tomcat:
-	( mkdir -p $(DESTDIR)/etc/init.d )
-	( mkdir -p $(DESTDIR)/etc/opt/csw )
-	( mkdir -p $(DESTDIR)/etc/rc0.d )
-	( mkdir -p $(DESTDIR)/etc/rc1.d )
-	( mkdir -p $(DESTDIR)/etc/rc2.d )
-	( mkdir -p $(DESTDIR)/etc/rc3.d )
-	( mkdir -p $(DESTDIR)/etc/rcS.d )
+	( mkdir -p $(DESTDIR)/etc/opt/csw/init.d )
+	( mkdir -p $(DESTDIR)/etc/opt/csw/pkg/$(NAME) )
+	( mkdir -p $(DESTDIR)/etc/opt/csw/$(NAME) )
 	( mkdir -p $(DESTDIR)/opt/csw/etc/$(NAME) )
 	( mkdir -p $(DESTDIR)/var/opt/csw/$(NAME) )
 	( mkdir -p $(DESTDIR)/opt/csw/share )
-	( mkdir -p $(DESTDIR)/etc/opt/csw )
-	( cp -fr $(WORKDIR)/$(DISTNAME) $(DESTDIR)/opt/csw/share/$(NAME) )
-	( cp -fr $(FILEDIR)/$(NAME) $(DESTDIR)/etc/opt/csw/$(NAME) )
-	( cp -fr $(FILEDIR)/csw$(NAME) $(DESTDIR)/etc/init.d )
-	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/conf $(DESTDIR)/opt/csw/etc/$(NAME)/conf )
+	( cp -fr $(WORKDIR)/apache-tomcat-$(VERSION) $(DESTDIR)/opt/csw/share/$(NAME) )
+	( cp -fr $(FILEDIR)/csw$(NAME) $(DESTDIR)/etc/opt/csw/init.d )
+	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/conf $(DESTDIR)/etc/opt/csw/$(NAME)/conf )
 	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/logs $(DESTDIR)/var/opt/csw/$(NAME) )
 	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/work $(DESTDIR)/var/opt/csw/$(NAME) )
 	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/temp $(DESTDIR)/var/opt/csw/$(NAME) )
-	( ln -s /opt/csw/etc/$(NAME)/conf $(DESTDIR)/opt/csw/share/$(NAME)/conf )
+	( ln -s /etc/opt/csw/$(NAME)/conf $(DESTDIR)/opt/csw/share/$(NAME)/conf )
 	( ln -s /var/opt/csw/$(NAME)/logs $(DESTDIR)/opt/csw/share/$(NAME)/logs )
 	( ln -s /var/opt/csw/$(NAME)/work $(DESTDIR)/opt/csw/share/$(NAME)/work )
 	( ln -s /var/opt/csw/$(NAME)/temp $(DESTDIR)/opt/csw/share/$(NAME)/temp )
-	( ln -s /etc/init.d/cswtomcat6 $(DESTDIR)/etc/rc0.d/K17$(NAME) )
-	( ln -s /etc/init.d/cswtomcat6 $(DESTDIR)/etc/rc1.d/K17$(NAME) )
-	( ln -s /etc/init.d/cswtomcat6 $(DESTDIR)/etc/rc2.d/K17$(NAME) )
-	( ln -s /etc/init.d/cswtomcat6 $(DESTDIR)/etc/rc3.d/S51$(NAME) )
-	( ln -s /etc/init.d/cswtomcat6 $(DESTDIR)/etc/rcS.d/K17$(NAME) )
+	( ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/$(NAME) )
 	@$(MAKECOOKIE)
-
-
 
