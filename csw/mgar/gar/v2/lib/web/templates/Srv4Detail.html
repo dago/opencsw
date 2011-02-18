@@ -28,10 +28,11 @@ $if pkg.in_catalogs:
     $fic
     </a>
     </li>
-
-
   </ul>
   </li>
+$else:
+  <li>The package is not part of any catalogs</li>
+
 
 <li>Size: $pkg.size bytes</li>
 <li>Registered: $pkg.registered</li>
