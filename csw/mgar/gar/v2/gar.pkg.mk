@@ -391,7 +391,7 @@ define checkpkg_override_filter
 endef
 
 define cswreleasenotes_filter
-  | ( cat; if test -f "$(WORKDIR_GLOBAL)/cswreleasenotes.$(1)";then echo "i cswreleasenotes=cswreleasenotes.$(1)"; fi)
+  | ( cat; if test -f "$(WORKDIR_GLOBAL)/$(1).cswreleasenotes";then echo "i cswreleasenotes=$(1).cswreleasenotes"; fi)
 endef
 
 # This file contains all installed pathes. This can be used as a starting point
