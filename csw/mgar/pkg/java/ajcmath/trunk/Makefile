@@ -1,5 +1,5 @@
 SHORTNAME = math
-VERSION = 1.2
+VERSION = 2.1
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
@@ -11,14 +11,23 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajcmath,)
-DISTFILES += $(call admfiles,CSWajcmathdoc,)
+PACKAGES = CSWajcmath CSWajcmathdoc
+
+# Package architecture is ALL (pure java)
+ARCHALL = 1
+
+CATALOGNAME_CSWajcmath = commons_math
+CATALOGNAME_CSWajcmathdoc = commons_math_doc
+
+LICENSE = LICENSE.txt
+
+CHECKPKG_OVERRIDES_CSWajcmath += catalogname-does-not-match-pkgname|pkgname=CSWajcmath|catalogname=commons_math|expected-catalogname=ajcmath
+CHECKPKG_OVERRIDES_CSWajcmathdoc += catalogname-does-not-match-pkgname|pkgname=CSWajcmathdoc|catalogname=commons_math_doc|expected-catalogname=ajcmathdoc
 
 # Defines package description
 SPKG_DESC_CSWajcmath    = $(DESCRIPTION)
@@ -28,7 +37,6 @@ SPKG_DESC_CSWajcmathdoc = $(DESCRIPTION) documentation package
 RUNTIME_DEP_PKGS_CSWajcmath = CSWajcdiscovery
 
 # Defines package content
-PKGFILES_CSWajcmath  = $(prefix)/share/doc/$(NAME)/License.txt
 PKGFILES_CSWajcmath += $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -45,10 +53,8 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
 	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(NAME)-$(VERSION).jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
-	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-2.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License-documentation.txt
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/docs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
