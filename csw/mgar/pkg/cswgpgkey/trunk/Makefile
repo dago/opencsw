@@ -28,7 +28,7 @@ PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/opt\/csw\/pki/ { $$$$4 = 0700 }; { print
 
 include gar/category.mk
 
-install-custom: PKIDIR=$(DESTDIR)/etc/opt/csw/pki/csw-gpg
+install-custom: PKIDIR=$(DESTDIR)/etc/opt/csw/pki/
 install-custom: DOC=$(DESTDIR)/$(docdir)/$(NAME)/
 install-custom: BIN=$(DESTDIR)/$(bindir)/
 install-custom: VAR=$(DESTDIR)/var/opt/csw/pki

@@ -29,7 +29,7 @@ Options:
 EOF
 }
 
-PKIDIR=/etc/opt/csw/pki/csw-gpg
+PKIDIR=/etc/opt/csw/pki/
 
 import=
 force=${pki_auto:-no}
