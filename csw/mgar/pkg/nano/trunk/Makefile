@@ -1,5 +1,5 @@
 NAME = nano
-VERSION = 2.2.5
+VERSION = 2.2.6
 CATEGORIES = utils
 
 DESCRIPTION = Enhanced clone of the Pico text editor
