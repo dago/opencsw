@@ -73,10 +73,17 @@
 # Use the configuration file to supered their value
 #
 
-SPECIFIC_CONFIG_FILE=/etc/opt/csw/tomcat6
+SPECIFIC_CONFIG_FILE=/etc/opt/csw/tomcat6/conf
 GLOBAL_CONFIG_FILE=/opt/csw/etc/tomcat6/conf/tomcat6
 
-JAVA_HOME=/usr/java
+# If available, use the OpenCSW Java package
+if [ -L /opt/csw/java/jre/jre6 ]
+then
+	JAVA_HOME=/opt/csw/java/jre/jre6
+else
+	JAVA_HOME=/usr/java
+fi
+
 TOMCAT_USER=tomcat
 
 ##################################################################
