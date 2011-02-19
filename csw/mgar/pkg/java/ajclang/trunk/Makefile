@@ -1,5 +1,5 @@
 SHORTNAME = lang
-VERSION = 2.4
+VERSION = 2.6
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
@@ -11,14 +11,20 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
 DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajclang,)
-DISTFILES += $(call admfiles,CSWajclangdoc,)
+PACKAGES = CSWajclang CSWajclangdoc
+
+# Package architecture is ALL (pure java)
+ARCHALL = 1
+
+CATALOGNAME_CSWajclang = commons_lang
+CATALOGNAME_CSWajclangdoc = commons_lang_doc
+
+LICENSE = LICENSE.txt
 
 # Defines package description
 SPKG_DESC_CSWajclang    = $(DESCRIPTION)
@@ -27,8 +33,10 @@ SPKG_DESC_CSWajclangdoc = $(DESCRIPTION) documentation package
 # Defines dependencies
 RUNTIME_DEP_PKGS_CSWajclang = CSWajcconfig
 
+CHECKPKG_OVERRIDES_CSWajclang += catalogname-does-not-match-pkgname|pkgname=CSWajclang|catalogname=commons_lang|expected-catalogname=ajclang
+CHECKPKG_OVERRIDES_CSWajclangdoc += catalogname-does-not-match-pkgname|pkgname=CSWajclangdoc|catalogname=commons_lang_doc|expected-catalogname=ajclangdoc
+
 # Defines package content
-PKGFILES_CSWajclang  = $(prefix)/share/doc/$(NAME)/License.txt
 PKGFILES_CSWajclang += $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -48,7 +56,5 @@ install-custom:
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-2.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License-documentation.txt
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
