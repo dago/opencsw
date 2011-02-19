@@ -1,5 +1,5 @@
 SHORTNAME = pool
-VERSION = 1.5
+VERSION = 1.5.5
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
@@ -11,7 +11,6 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
 DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
@@ -19,23 +18,26 @@ DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 # Defines two packages, lib and doc
 PACKAGES = CSWajcpool CSWajcpooldoc 
 
-ARCHALL_CSWajcpool    = 1
-ARCHALL_CSWajcpooldoc = 1
+# Package architecture is ALL (pure java)
+ARCHALL = 1
+
+CATALOGNAME_CSWajcpool = commons_pool
+CATALOGNAME_CSWajcpooldoc = commons_pool_doc
+
+LICENSE = LICENSE.txt
+
+CHECKPKG_OVERRIDES_CSWajcpooldoc += catalogname-does-not-match-pkgname|pkgname=CSWajcpooldoc|catalogname=commons_pool_doc|expected-catalogname=ajcpooldoc
+CHECKPKG_OVERRIDES_CSWajcpool += catalogname-does-not-match-pkgname|pkgname=CSWajcpool|catalogname=commons_pool|expected-catalogname=ajcpool
 
 # Defines package description
 SPKG_DESC_CSWajcpool    = $(DESCRIPTION)
 SPKG_DESC_CSWajcpooldoc = $(DESCRIPTION) documentation package
-
-CATALOGNAME_CSWajcpool = commons_pool
-CATALOGNAME_CSWajcpooldoc = commons_pool_doc
 
 # Defines dependencies
 RUNTIME_DEP_PKGS_CSWajcpool = CSWajclogging CSWajcdigester
 
 # Defines package content
 PKGFILES_CSWajcpool = $(prefix)/share/java/.*
-
-LICENSE = LICENSE.txt
 
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
@@ -51,6 +53,7 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
 	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(NAME)-$(VERSION).jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.5.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
