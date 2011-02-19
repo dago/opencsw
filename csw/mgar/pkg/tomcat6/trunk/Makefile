@@ -53,6 +53,16 @@ MIGRATE_FILES += server.xml
 MIGRATE_FILES += tomcat-users.xml
 MIGRATE_FILES += web.xml
 
+# Reviewed and fine to override
+CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/RUNNING.txt
+CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/webapps/docs/virtual-hosting-howto.html
+CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/webapps/docs/manager-howto.html
+CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/webapps/docs/RUNNING.txt
+CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/webapps/docs/ssl-howto.html
+CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/local|root/opt/csw/share/tomcat6/webapps/docs/appdev/processes.html
+CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/share|root/opt/csw/share/tomcat6/webapps/docs/building.html
+CHECKPKG_OVERRIDES_CSWtomcat6 += file-with-bad-content|/usr/share|root/opt/csw/share/tomcat6/webapps/docs/BUILDING.txt
+
 include gar/category.mk
 
 configure-none:
