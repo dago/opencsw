@@ -147,9 +147,11 @@ Some reasons follow:
        the svn tree, rather than "the whole tree"
 
 Drawbacks:
-  The self-contained nature, also means that improvements and enhancements
+  1. The self-contained nature, also means that improvements and enhancements
   in the original template file, do not get automatically distributed out to
   older versions.
   On the other hand, the older version is still guaranteed to "work", so
   its not really that important. 
  
+  2. Fewer fully automated hooks for "fancy stuff". Requires manual tweaking
+  of the prototype file
