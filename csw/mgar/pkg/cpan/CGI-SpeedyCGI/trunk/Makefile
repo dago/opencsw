@@ -9,12 +9,15 @@ define BLURB
   much more quickly.
 endef
 
-PATCHFILES = 0001-Use-Newx-instead-of-deprecated-New.patch
+PATCHFILES  = 0001-Use-Newx-instead-of-deprecated-New.patch
+PATCHFILES += 0003-mem-leak.patch
 
-PACKAGES = CSWpmspeedycgi
-CATALOGNAME = pm_speedycgi
+PACKAGES = CSWpmspeedycgiperl
+CATALOGNAME = pm_speedycgiperl
 
 # Don't build the apache/apache2 modules
 PATCHFILES += build.diff
+
+CHECKPKG_OVERRIDES_CSWpmspeedycgiperl += catalogname-does-not-match-pkgname|pkgname=CSWpmspeedycgiperl|catalogname=pm_speedycgiperl|expected-catalogname=pmspeedycgiperl
 
 include gar/category.mk

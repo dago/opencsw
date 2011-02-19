@@ -1,0 +1,24 @@
+From a475d176db18c814ba56159a0c7a9ec9eed106ba Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Sat, 19 Feb 2011 18:13:46 +0100
+Subject: [PATCH] mem-leak
+
+---
+ src/speedy_backend_main.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/src/speedy_backend_main.c b/src/speedy_backend_main.c
+index 92e06c6..255ceab 100644
+--- a/src/speedy_backend_main.c
++++ b/src/speedy_backend_main.c
+@@ -175,6 +175,7 @@ int main(int argc, char **argv, char **_junk) {
+     if (!(my_perl = perl_alloc()))
+         DIE_QUIET("Cannot allocate perl");
+     perl_construct(my_perl);
++    PL_use_safe_putenv = 0;
+ 
+ #ifdef SPEEDY_DEBUG
+     dont_fork = getenv("SPEEDY_NOPARENT") != NULL;
+-- 
+1.7.3.2
+
