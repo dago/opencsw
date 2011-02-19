@@ -22,11 +22,11 @@ PACKAGES = CSWajcvalidator CSWajcvalidatordoc
 ARCHALL = 1
 
 CATALOGNAME_CSWajcvalidator = commons_validator
-CATALOGNAME_CSWajcvalidatordoc = commons_valid_doc
+CATALOGNAME_CSWajcvalidatordoc = commons_validat_doc
 
 LICENSE = LICENSE.txt
 
-CHECKPKG_OVERRIDES_CSWajcvalidatordoc += catalogname-does-not-match-pkgname|pkgname=CSWajcvalidatordoc|catalogname=commons_valid_doc|expected-catalogname=ajcvalidatordoc
+CHECKPKG_OVERRIDES_CSWajcvalidatordoc += catalogname-does-not-match-pkgname|pkgname=CSWajcvalidatordoc|catalogname=commons_validat_doc|expected-catalogname=ajcvalidatordoc
 CHECKPKG_OVERRIDES_CSWajcvalidator += catalogname-does-not-match-pkgname|pkgname=CSWajcvalidator|catalogname=commons_validator|expected-catalogname=ajcvalidator
 
 # Defines package description
