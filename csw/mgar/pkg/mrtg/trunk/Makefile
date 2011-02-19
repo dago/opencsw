@@ -1,5 +1,5 @@
 NAME = mrtg
-VERSION = 2.16.3
+VERSION = 2.17.1
 CATEGORIES = utils
 
 DESCRIPTION = Multi Router Traffic Grapher (network monitor)
@@ -20,7 +20,7 @@ CATALOGNAME = mrtg
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGING_PLATFORMS =  solaris8-sparc solaris8-i386
+PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-gd=/opt/csw
@@ -32,7 +32,22 @@ RUNTIME_DEP_PKGS += CSWgd
 RUNTIME_DEP_PKGS += CSWpng
 RUNTIME_DEP_PKGS += CSWzlib
 
-#GARCOMPILER = SUN
+# Reviewed checkpkg overrides
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/lib/mrtg2/Net_SNMP_util.pm
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/mrtg-rrd.1
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/mrtg-unix-guide.1
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/mrtg-reference.1
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/share/doc/mrtg2/mrtg-rrd.txt
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/share/doc/mrtg2/CHANGES
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/share/doc/mrtg2/mrtg-unix-guide.txt
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/share/doc/mrtg2/mrtg-reference.txt
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/share/doc/mrtg2/mrtg-rrd.pod
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/share/doc/mrtg2/mrtg-reference.pod
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/share/doc/mrtg2/mrtg-unix-guide.pod
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/mrtg-squid.1
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/share|root/opt/csw/share/doc/mrtg2/mrtg-squid.pod
+CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/share|root/opt/csw/share/doc/mrtg2/mrtg-squid.txt
+
 TEST_TARGET =
 
 include gar/category.mk
