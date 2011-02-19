@@ -1,29 +1,60 @@
 This is a README for the "createpkg" style templates in the
-OpenCSW subversion tree. It gets copied to a brand new directory, when it
-is created with "make createpkg-softwarenamehere"
+OpenCSW subversion tree. 
+The purpose of the templates, is to offer a build system in our
+subversion tree, that is more simply based on plain Makefiles, than 
+gar. (which effectively has its own language!)
+
+At the same time, this style aims to be compliant with the high level
+standard build API. 
+We used to have a generically written one, but at the moment I only see,
+http://sourceforge.net/apps/trac/gar/wiki/GAR%20Build%20Targets%20Reference
+
 
 CONTENTS:
   Initial Setup
-  Make Targets
-  Make Timestamps
+    Customise the template files
+  Make Targets  
+  Make Timestamps (Some information on how to reset the build milestones)
+  Benefits and Drawbacks
 
 Initial Setup
 --------------------
 
-The first thing you should do, after creating your new directory with
+First, get an initial checkout of the subversion tree. it is fine
+to have a partial checkout, such as
+
+
+svn co -N https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg
+cd pkg
+svn co https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/TEMPLATES
+
+You can then automatically create a new directory tree for new software, with
+
   "make  createpkg-softwarenamehere"
-is to cd into the directory and do
 
-  svn status
+this will create [pkg]/softwarenamehere/trunk, copy in some templated
+useful files, and set it up to be ready for svn checkin.
 
-With this, you will notice that no files in the directory are actually checked
-into subversion yet.  You should edit (or remove) the files as you deem 
-apropriate. In particular, copy the speciifc Makefile.xxx to Makefile, and
+Dont worry, this does not actually attempt to create anything in the public 
+tree. it will only do that, if you did an svn commit
+
+[ if you want to do things manually, or you only have this EMPLATES directory,
+  see ./copy_templates or ./generate_branch ]
+
+Customise the template files
+-----------------------------
+
+cd into [yoursoftware/trunk] 
+You should edit (or remove) the files present as you deem 
+apropriate. In particular, copy the specific Makefile.xxx to Makefile, and
 remove the others if you wish. Then,  
 
   svn add   filename(s)
 
 the ones you want to keep in the repository.
+The makefiles are current a work in progress. The most fully developed
+at the moment is "Makefile.lib32"
+
 
 If you are doing a general-case binary build package, then you will next need
 to do the following:
@@ -31,11 +62,15 @@ to do the following:
 1. Set up your environment variables as appropriate, and/or
   set the appropriate variables in Makefile
 
-2. (if 'gmake extract' does not work),
-   mkdir build, then extract the source tree of whatever you are building,
-   under the build dir.
+(2) Make extra sure the URLs, etc in the Makefile are set to
+   properly download the appropriate source file. if you alread have a copy,
+   make sure it is in the local src cache (by default, /home/src)
 
-4. gmake
+
+3. gmake
+   This should automatically do a "gmake fetch",
+   "gmake extract" (which creates a build subdir), and then
+   a general make for the softwar.
 
 You also have a choice of some optional subtargets, such as
   make  {configure,build,package,clean,reallyclean}. See "Make Targets"
@@ -60,10 +95,8 @@ one for you in build/*/cswstage/prototype.
 
 Make Targets
 --------------------
-The makefiles are current a work in progress. The most fully developed
-at the moment is "Makefile.lib". 
 
-Currently supported makefile targets are:
+Currently supported makefile targets by the full-length makefiles, are:
 
  * extract
  * sparc-32 sparc64 i386-32 i386-64
@@ -96,3 +129,27 @@ when successfully completed.
 If you wish to force a rebuild of a target, remove the corresponding
 ".done" file, and do the make again.
 
+Benefits and Drawbacks
+--------------------
+Why does this method even exist, separate from the gar build method?
+Some reasons follow:
+ 1. It's pure Makefile. All maintainers should already be familiar
+    with tweaking Makefiles, so it is much, much easier for
+    a maintainer to fully understand (and modify, if needed).
+    In contrast, there are very few people who understand gar in its
+    entirety
+ 2. It's a single Makefile, which makes it easier to figure out
+     "what is going on?"
+ 3. It's selfcontained. Everything is in the one directory. That means
+    you can just copy over the one bit, and you know you have a working
+    build tree, no matter what someone else does elsewhere in our svn tree.
+ 3.1 This also means, you can safely do a small, relative checkout of
+       the svn tree, rather than "the whole tree"
+
+Drawbacks:
+  The self-contained nature, also means that improvements and enhancements
+  in the original template file, do not get automatically distributed out to
+  older versions.
+  On the other hand, the older version is still guaranteed to "work", so
+  its not really that important. 
+ 
