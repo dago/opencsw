@@ -1,5 +1,5 @@
 NAME      = tomcat6
-VERSION   = 6.0.29
+VERSION   = 6.0.32
 CATEGORIES   = server
 
 DESCRIPTION  =  Apache Jakarta Tomcat 6 Servlet/JSP Container
@@ -7,7 +7,8 @@ define BLURB
 Apache Tomcat is the servlet container that is used in the official Reference Implementation for the Java Servlet and JavaServer Pages technologies. The Java Servlet and JavaServer Pages specifications are developed by Sun under the Java Community Process.
 endef
 
-MASTER_SITES  = http://tomcat.apache.org/
+VENDOR_URL = http://tomcat.apache.org/
+MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-6/v$(VERSION)/bin/
 UPSTREAM_MASTER_SITES  =  http://mir2.ovh.net/ftp.apache.org/dist/jakarta/tomcat-6/v$(VERSION)/bin/
 DISTFILES     = apache-tomcat-$(VERSION).tar.gz
 PKGDIST       = apache-tomcat-$(VERSION).tar.gz
