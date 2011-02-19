@@ -1,0 +1,86 @@
+#!/bin/ksh -p
+
+# In contract to copy_template, this script is meant to be
+# called in a pre-existing subtree. 
+#  (eg: inside a mgar/pkg/softname directory)
+# It is designed for creating a branch, rather than setting up "trunk"
+# Note that unlike copy_template, it does NOT do any kind of svn
+# by default
+# (unless you use the -s flag)
+
+function usage {
+	print Usage: $0 [-s] new-directory
+	print This script creates a new directory, svn branch style.
+	print It presumes you are already in a directory with the name
+	print of the software you wish to packge.
+	print It will not do any svn ops by default unless you use -s
+
+	exit 1
+}
+
+if [[ $? = "-s" ]] ; then
+	SVN=svn; shift
+fi
+
+case $1 in
+	""|-*)
+		usage
+	;;
+esac
+
+
+#note that if you want to use 'real' subversion, this must be
+# exactly "svn", because of checks lower down
+SVN=${SVN:-echo FAKEsvn}
+
+if [ "$SVN" = "svn" ] ; then
+MKDIR="$SVN mkdir --parents"
+else
+echo Note: SVN is not 'svn'. So skipping it.
+MKDIR=mkdir
+fi
+
+
+template_dir=`dirname $0`
+DESTDIR=$1
+if [[ -d $DESTDIR ]] ; then
+	print ERROR $DESTDIR exists
+	exit 1
+fi
+
+currdir=`basename $PWD`
+
+$MKDIR $DESTDIR
+
+$SVN propset svn:ignore -F /dev/fd/0 $DESTDIR <<EOF
+cookies
+download
+work
+cswstage
+build
+EOF
+
+
+cp $template_dir/Makefile* $DESTDIR
+cp $template_dir/README* $DESTDIR
+cp $template_dir/prototype* $DESTDIR
+$template_dir/generate_pkginfo $currdir >$DESTDIR/pkginfo
+
+# This is done by generate_pkginfo now
+# Not very inteligently, but it is done anyway.
+#print "OPENCSW_REPOSITORY=$MY_SVN_DIR/$DESTDIR" >>$DESTDIR/pkginfo
+
+print ""
+print Created directory $1 locally, and in subversion
+print Things you still need to do:
+print ""
+print "  * Edit the pkginfo file fully"
+print "  * Create an appropriate copyright file"
+print "  * Choose ONE of the Makefiles, and remove the other"
+print "  * Edit the Makefile to have any required extra flags, etc"
+print "  * Fill in the rest of the prototype file"
+
+print ""
+print " (and dont forget to check everything in when you are done!)"
+
+

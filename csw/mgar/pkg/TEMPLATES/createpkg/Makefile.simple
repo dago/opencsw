@@ -1,7 +1,17 @@
 #This Makefile originally generated from a template under 
 # pkg/TEMPLATES/createpkg
 # You will most likely have to use GNU make to use it.
+# The "Makefile.simple" variant, is for software that is
+# absolutely trivial. For things that dont need compiling, or even
+# downloading, but just live in the svn tree itself.
+# To Use:
+# 1. Mention what files you want to include, in the FILES var below.
+# 2. Create a prototype file by hand, and a copyright file
+# 3. Edit pkginfo file appropriately 
+# 4. Create depend file, or remove it from STDFILES below
+# 5. type gmake
 
+# You should then have a package in the current directory
 
 #Uncomment one of these definitions. The -b invokation,
 # is suitable for use with small packages, where you want to have a few files
@@ -11,12 +21,13 @@
 CREATEPKG=createpkg -r `pwd`/build/*/cswstage
 
 
-BUILDDIR=build/*
 
 
+FILES=your-files-here
 
+###  Dont normally check stuff below here.
 STDFILES=pkginfo copyright prototype
-FILES=
+BUILDDIR=build/*
 
 all:	build package
 
@@ -27,7 +38,7 @@ build:	build/.config.done
 	stagepkg  )
 
 
-# dummy target for configure
+# This is what does the actual "work" for "build configure"
 build/.config.done:
 	@echo Configuring with:
 	@echo CC=$(CC) $(CFLAGS)
@@ -41,12 +52,11 @@ build/.config.done:
 	touch build/.config.done
 
 
-# I tried depending this on   $(BUILDDIR)/config.log  but that didnt stick
+# Friendly name, to trigger the "real" target, above
 configure:	build/.config.done
 
 package:	$(STDFILE) $(FILES) build
 	$(CREATEPKG)
-
 
 
 pkgclean:
