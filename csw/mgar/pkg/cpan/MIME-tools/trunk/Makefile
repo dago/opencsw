@@ -1,5 +1,5 @@
 NAME = MIME-tools
-VERSION = 5.427
+VERSION = 5.428
 CATEGORIES = cpan
 AUTHOR = ERYQ
 
@@ -15,5 +15,7 @@ CATALOGNAME = pm_mimetools
 ARCHALL = 1
 
 COPYING = LICENSE
+
+CHECKPKG_OVERRIDES_CSWpmmimetools += catalogname-does-not-match-pkgname|pkgname=CSWpmmimetools|catalogname=pm_mimetools|expected-catalogname=pmmimetools
 
 include gar/category.mk
