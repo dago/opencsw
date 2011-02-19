@@ -11,14 +11,23 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
 # Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajcvalidator,)
-DISTFILES += $(call admfiles,CSWajcvalidatordoc,)
+PACKAGES = CSWajcvalidator CSWajcvalidatordoc
+
+# Package architecture is ALL (pure java)
+ARCHALL = 1
+
+CATALOGNAME_CSWajcvalidator = commons_validator
+CATALOGNAME_CSWajcvalidatordoc = commons_valid_doc
+
+LICENSE = LICENSE.txt
+
+CHECKPKG_OVERRIDES_CSWajcvalidatordoc += catalogname-does-not-match-pkgname|pkgname=CSWajcvalidatordoc|catalogname=commons_valid_doc|expected-catalogname=ajcvalidatordoc
+CHECKPKG_OVERRIDES_CSWajcvalidator += catalogname-does-not-match-pkgname|pkgname=CSWajcvalidator|catalogname=commons_validator|expected-catalogname=ajcvalidator
 
 # Defines package description
 SPKG_DESC_CSWajcvalidator    = $(DESCRIPTION)
@@ -28,7 +37,6 @@ SPKG_DESC_CSWajcvalidatordoc = $(DESCRIPTION) documentation package
 # RUNTIME_DEP_PKGS_CSWajcvalidator = No dependency
 
 # Defines package content
-PKGFILES_CSWajcvalidator  = $(prefix)/share/doc/$(NAME)/License.txt
 PKGFILES_CSWajcvalidator += $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -49,7 +57,5 @@ install-custom:
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License-documentation.txt
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/docs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
