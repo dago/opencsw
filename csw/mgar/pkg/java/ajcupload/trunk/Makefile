@@ -1,5 +1,5 @@
 SHORTNAME = fileupload
-VERSION = 1.2.1
+VERSION = 1.2.2
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
@@ -11,25 +11,33 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
 DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajcupload,)
-DISTFILES += $(call admfiles,CSWajcuploaddoc,)
+PACKAGES = CSWajcpeupload CSWajcuploaddoc
+
+# Package architecture is ALL (pure java)
+ARCHALL = 1
+
+CATALOGNAME_CSWajcpeupload = commons_upload
+CATALOGNAME_CSWajcuploaddoc = commons_upload_doc
+
+LICENSE = LICENSE.txt
+
+CHECKPKG_OVERRIDES_CSWajcpeupload += catalogname-does-not-match-pkgname|pkgname=CSWajcpeupload|catalogname=commons_upload|expected-catalogname=ajcpeupload
+CHECKPKG_OVERRIDES_CSWajcuploaddoc += catalogname-does-not-match-pkgname|pkgname=CSWajcuploaddoc|catalogname=commons_upload_doc|expected-catalogname=ajcuploaddoc
 
 # Defines package description
-SPKG_DESC_CSWajcupload    = $(DESCRIPTION)
+SPKG_DESC_CSWajcpeupload    = $(DESCRIPTION)
 SPKG_DESC_CSWajcuploaddoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-RUNTIME_DEP_PKGS_CSWajcupload = CSWajclogging CSWajcdigester
+RUNTIME_DEP_PKGS_CSWajcpeupload = CSWajclogging CSWajcdigester
 
 # Defines package content
-PKGFILES_CSWajcupload  = $(prefix)/share/doc/$(NAME)/License.txt
-PKGFILES_CSWajcupload += $(prefix)/share/java/.*
+PKGFILES_CSWajcpeupload += $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
 WORKSRC = $(WORKDIR)
@@ -49,7 +57,5 @@ install-custom:
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-1.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License-documentation.txt
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/site/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
