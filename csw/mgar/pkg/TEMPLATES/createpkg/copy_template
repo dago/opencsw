@@ -28,13 +28,6 @@ DESTDIR=$1/trunk
 
 
 
-MY_SVN_DIR=`svn info| awk '$1=="URL:"{print $2}'`
-if [[ "$MY_SVN_DIR" == "" ]] ; then
-	print ERROR: expected to be within subversion tree somewhere
-	print cannot continue
-	exit 1
-fi
-
 $SVN mkdir --parents $DESTDIR
 
 svn propset svn:ignore -F /dev/fd/0 $DESTDIR <<EOF
@@ -51,7 +44,6 @@ cp -i $template_dir/top.Makefile $DESTDIR/../Makefile
 cp $template_dir/README* $DESTDIR
 cp $template_dir/prototype* $DESTDIR
 $template_dir/generate_pkginfo $1 >$DESTDIR/pkginfo
-print "OPENCSW_REPOSITORY=$MY_SVN_DIR/$DESTDIR" >>$DESTDIR/pkginfo
 
 print ""
 print Created directory $1 locally, and in subversion

@@ -6,7 +6,7 @@ FULLNAME=`getent passwd $USER|nawk -F: '{print $5}'`
 
 print PKG=CSW$1
 print NAME=$1 - description goes here
-print VERSION=1.0,REV=YYYY.M.DD
+print VERSION=1.0,REV=YYYY.MM.DD
 print CATEGORY=application
 print VENDOR=http://www.SOURCE-URL/ packaged for CSW by $FULLNAME
 print HOTLINE=http://www.opencsw.org/bugtrack/
