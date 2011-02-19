@@ -1,5 +1,5 @@
 SHORTNAME = net
-VERSION = 2.0
+VERSION = 2.2
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
@@ -11,24 +11,32 @@ endef
 
 # Use jakarta sources
 MASTER_SITES = http://apache.cict.fr/commons/$(SHORTNAME)/binaries/
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)(-bin*).tar.gz
 
 # Set archive filename
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(NAME)-$(VERSION)-bin.tar.gz
 
 # Defines two packages, lib and doc
-DISTFILES += $(call admfiles,CSWajcnet,)
-DISTFILES += $(call admfiles,CSWajcnetdoc,)
+PACKAGES = CSWajcnet CSWajcnetdoc
+
+# Package architecture is ALL (pure java)
+ARCHALL = 1
+
+CATALOGNAME_CSWajcnet = commons_net
+CATALOGNAME_CSWajcnetdoc = commons_net_doc
+
+LICENSE = LICENSE.txt
+
+CHECKPKG_OVERRIDES_CSWajcnetdoc += catalogname-does-not-match-pkgname|pkgname=CSWajcnetdoc|catalogname=commons_net_doc|expected-catalogname=ajcnetdoc
+CHECKPKG_OVERRIDES_CSWajcnet += catalogname-does-not-match-pkgname|pkgname=CSWajcnet|catalogname=commons_net|expected-catalogname=ajcnet
 
 # Defines package description
 SPKG_DESC_CSWajcnet    = $(DESCRIPTION)
 SPKG_DESC_CSWajcnetdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-RUNTIME_DEP_PKGS_CSWajcnet = CSWajclogging CSWajccollect CSWajcbeanutils 	
+RUNTIME_DEP_PKGS_CSWajcnet = CSWajclogging CSWajccollect CSWajcbeanutils
 
 # Defines package content
-PKGFILES_CSWajcnet  = $(prefix)/share/doc/$(NAME)/License.txt
 PKGFILES_CSWajcnet += $(prefix)/share/java/.*
 
 # Defines custom steps since java libs do not use autotools
@@ -48,7 +56,5 @@ install-custom:
 	   ln -s $(NAME)-$(VERSION).jar $(NAME)-2.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License.txt
-	@gcp -fp $(WORKSRC)/$(DISTNAME)/LICENSE.txt $(DESTDIR)$(datadir)/doc/$(NAME)/License-documentation.txt
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(NAME)
 	@$(MAKECOOKIE)
