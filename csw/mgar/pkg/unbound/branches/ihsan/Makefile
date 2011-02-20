@@ -43,6 +43,8 @@ SKIPTEST = 1
 
 LICENSE = LICENSE
 
+BUILD64 = 1
+
 EXTRA_BUILD_ISAS_i386   = pentium_pro
 EXTRA_BUILD_ISAS_sparc  = sparcv8plus+vis
 
@@ -75,6 +77,18 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-checkcon
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-control
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-control-setup
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8plus+vis += $(prefix)/sbin/unbound-host
+
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9  = $(prefix)/sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 += $(prefix)/sbin/unbound-checkconf
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 += $(prefix)/sbin/unbound-control
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 += $(prefix)/sbin/unbound-control-setup
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 += $(prefix)/sbin/unbound-host
+
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64  = $(prefix)/sbin/unbound-anchor
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 += $(prefix)/sbin/unbound-checkconf
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 += $(prefix)/sbin/unbound-control
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 += $(prefix)/sbin/unbound-control-setup
+EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 += $(prefix)/sbin/unbound-host
 
 SPKG_CLASSES_CSWunbound = none cswusergroup cswcpsampleconf cswinitsmf
 INITSMF                 = /etc/opt/csw/init.d/cswunbound
