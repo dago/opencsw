@@ -31,7 +31,7 @@ SPKG_DESC_CSWajcconfig    = $(DESCRIPTION)
 SPKG_DESC_CSWajcconfigdoc = $(DESCRIPTION) documentation package
 
 # Defines dependencies
-RUNTIME_DEP_PKGS_CSWajcconfig  = CSWajclogging CSWajclang CSWajcdigester CSWajccollect 
+RUNTIME_DEP_PKGS_CSWajcconfig  = CSWajclogging CSWajcdigester CSWajccollect 
 
 # Defines package content
 PKGFILES_CSWajcconfig  	+= $(prefix)/share/java/.*
