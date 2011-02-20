@@ -17,22 +17,46 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWgd
 CATALOGNAME_CSWgd = gd
-SPKG_DESC_CSWgd = $(DESCRIPTION)
+SPKG_DESC_CSWgd = Utilities facilitating libgd for dynamic image creation
+# PKGFILES is catchall
+RUNTIME_DEP_pkgs_CSWgd = CSWlibgd2
+RUNTIME_DEP_PKGS_CSWgd += CSWiconv
+RUNTIME_DEP_PKGS_CSWgd += CSWpng
+RUNTIME_DEP_PKGS_CSWgd += CSWjpeg
+RUNTIME_DEP_PKGS_CSWgd += CSWzlib
+RUNTIME_DEP_PKGS_CSWgd += CSWftype2
+RUNTIME_DEP_PKGS_CSWgd += CSWlibgd2
+RUNTIME_DEP_PKGS_CSWgd += CSWxpm
+RUNTIME_DEP_PKGS_CSWgd += CSWfconfig
 
-#PATCHFILES = Makefile.diff
+PACKAGES += CSWlibgd2
+CATALOGNAME_CSWlibgd2 = libgd2
+SPKG_DESC_CSWlibgd2 = A library used for dynamic image creation providing libgd.so.2
+PKGFILES_CSWlibgd2 = $(call baseisadirs,$(libdir),libgd\.so\.2(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibgd2 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibgd2 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibgd2 += CSWiconv 
+RUNTIME_DEP_PKGS_CSWlibgd2 += CSWjpeg
+RUNTIME_DEP_PKGS_CSWlibgd2 += CSWpng
+RUNTIME_DEP_PKGS_CSWlibgd2 += CSWxpm
+RUNTIME_DEP_PKGS_CSWlibgd2 += CSWzlib
 
-RUNTIME_DEP_PKGS_CSWgd  = CSWexpat CSWfconfig CSWftype2 CSWiconv 
-RUNTIME_DEP_PKGS_CSWgd += CSWjpeg CSWpng CSWxpm CSWzlib CSWlibx11
-RUNTIME_DEP_PKGS_CSWgd += CSWlibxpm
+PACKAGES += CSWlibgd-dev
+CATALOGNAME_CSWlibgd-dev = libgd_dev
+SPKG_DESC_CSWlibgd-dev = Development files for libgd.so
+PKGFILES_CSWlibgd-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibgd-dev = CSWlibgd2
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-BUILD64 = 1
-STRIP_LIBTOOL = 1
+CSW_DEFAULT_FONTPATH = $(sharedstatedir)/fonts/truetype
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+# This is evaluated twice, quote properly
+EXTRA_CPPFLAGS = -DDEFAULT_FONTPATH=\\\"$(CSW_DEFAULT_FONTPATH)\\\"
+
+BUILD64 = 1
+NOISAEXEC = 1
+STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv-prefix=$(prefix)
@@ -43,18 +67,30 @@ CONFIGURE_ARGS += --with-jpeg=$(prefix)
 CONFIGURE_ARGS += --with-xpm=$(prefix)
 CONFIGURE_ARGS += --disable-fast-install
 
-## There are no tests for this
-TEST_SCRIPTS = skip
+# GD does not have a testsuite
+TEST_SCRIPTS =
+
+MERGE_DIRS_isa-extra = $(libdir)
+
+# This is ok as there are a number of search pathes for fonts in there.
+# We made sure that the $CSW_DEFAULT_FONTPATH is the first one in the list.
+CHECKPKG_OVERRIDES_CSWlibgd-dev += file-with-bad-content|/usr/share|root/opt/csw/include/gd.h
 
 include gar/category.mk
 
-test-skip:
-	$(DONADA)
+# Make sure GDFONTPATH is set correctly
+post-extract-modulated:
+	perl -pi -e 's,/usr/share/fonts/truetype,$(CSW_DEFAULT_FONTPATH),' \
+		$(WORKSRC)/gdtestft.c \
+		$(WORKSRC)/annotate.c
+	perl -pi -e 's,(DEFAULT_FONTPATH\s+"),\1$(CSW_DEFAULT_FONTPATH):,' \
+		$(WORKSRC)/gd.h
+	@$(MAKECOOKIE)
 
+# The shipped libtool doesn't know about Sun Studio C++ compiler 'CC'
 pre-configure-modulated:
 	grm -f $(WORKSRC)/config/ltmain.sh
 	gcp /opt/csw/share/libtool/config/ltmain.sh $(WORKSRC)/config/ltmain.sh
-	cd $(WORKSRC); aclocal
-	cd $(WORKSRC); automake
+	cd $(WORKSRC) && aclocal && automake
 	@$(MAKECOOKIE)
 
