@@ -1,0 +1,346 @@
+From ba0fa7ea91d41b0cf9f748c8bd255ff8285ffc60 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 20 Feb 2011 15:02:42 +0100
+Subject: [PATCH] Add missing includes
+
+---
+ src/AdaptiveURISelector.cc          |    4 ++--
+ src/ConsoleStatCalc.cc              |    1 +
+ src/DefaultBtProgressInfoFile.cc    |    1 +
+ src/DiskWriterFactory.h             |    1 +
+ src/DownloadEngineFactory.cc        |    1 +
+ src/EventPoll.h                     |    2 +-
+ src/Option.cc                       |    1 +
+ src/OptionHandlerImpl.cc            |    1 +
+ src/OptionParser.cc                 |    5 +++++
+ src/ParameterizedStringParser.h     |    2 ++
+ src/PieceSelector.h                 |    1 +
+ src/PieceStatMan.cc                 |    1 +
+ src/ProtocolDetector.cc             |    1 +
+ src/SelectEventPoll.cc              |    1 +
+ src/SimpleRandomizer.cc             |    1 +
+ src/SingleFileAllocationIterator.cc |    1 +
+ src/UnknownLengthPieceStorage.cc    |    5 +++++
+ src/array_fun.h                     |    4 ++--
+ src/bitfield.h                      |    1 +
+ src/fmt.cc                          |    6 ++++++
+ src/util.h                          |    1 +
+ 21 files changed, 37 insertions(+), 5 deletions(-)
+
+diff --git a/src/AdaptiveURISelector.cc b/src/AdaptiveURISelector.cc
+index efe28b8..3e00f1c 100644
+--- a/src/AdaptiveURISelector.cc
++++ b/src/AdaptiveURISelector.cc
+@@ -36,7 +36,7 @@
+ #include "AdaptiveURISelector.h"
+ 
+ #include <cstdlib>
+-#include <cmath>
++#include <math.h>
+ #include <algorithm>
+ 
+ #include "DownloadCommand.h"
+@@ -330,7 +330,7 @@ std::string AdaptiveURISelector::getFirstToTestUri
+     counter = ss->getCounter();
+     if(counter > 8)
+       continue;
+-    power = (int)pow(2.0, (float)counter);
++    power = (int)pow(2.0f, (float)counter);
+     /* We test the mirror another time if it has not been
+      * tested since 2^counter days */
+     if(ss->getLastUpdated().difference() > power*24*60*60) {
+diff --git a/src/ConsoleStatCalc.cc b/src/ConsoleStatCalc.cc
+index adbaaab..c931955 100644
+--- a/src/ConsoleStatCalc.cc
++++ b/src/ConsoleStatCalc.cc
+@@ -47,6 +47,7 @@
+ #include <iostream>
+ #include <algorithm>
+ #include <cstring>
++#include <strings.h>
+ #include <sstream>
+ #include <iterator>
+ 
+diff --git a/src/DefaultBtProgressInfoFile.cc b/src/DefaultBtProgressInfoFile.cc
+index 5677ff2..a4d3fa5 100644
+--- a/src/DefaultBtProgressInfoFile.cc
++++ b/src/DefaultBtProgressInfoFile.cc
+@@ -35,6 +35,7 @@
+ #include "DefaultBtProgressInfoFile.h"
+ 
+ #include <cstring>
++#include <string.h>
+ #include <fstream>
+ 
+ #include "PieceStorage.h"
+diff --git a/src/DiskWriterFactory.h b/src/DiskWriterFactory.h
+index 8e154ec..9a83b52 100644
+--- a/src/DiskWriterFactory.h
++++ b/src/DiskWriterFactory.h
+@@ -37,6 +37,7 @@
+ 
+ #include "common.h"
+ #include "SharedHandle.h"
++#include <string>
+ 
+ namespace aria2 {
+ 
+diff --git a/src/DownloadEngineFactory.cc b/src/DownloadEngineFactory.cc
+index 5b793ca..4c2b72c 100644
+--- a/src/DownloadEngineFactory.cc
++++ b/src/DownloadEngineFactory.cc
+@@ -35,6 +35,7 @@
+ #include "DownloadEngineFactory.h"
+ 
+ #include <algorithm>
++#include <stdlib.h>
+ 
+ #include "Option.h"
+ #include "RequestGroup.h"
+diff --git a/src/EventPoll.h b/src/EventPoll.h
+index 7217ef2..80d9309 100644
+--- a/src/EventPoll.h
++++ b/src/EventPoll.h
+@@ -53,7 +53,7 @@ public:
+     EVENT_READ = 1,
+     EVENT_WRITE = 1 << 1,
+     EVENT_ERROR = 1 << 2,
+-    EVENT_HUP = 1 << 3,
++    EVENT_HUP = 1 << 3
+   };
+ 
+   virtual ~EventPoll() {}
+diff --git a/src/Option.cc b/src/Option.cc
+index 579d7e7..0470e50 100644
+--- a/src/Option.cc
++++ b/src/Option.cc
+@@ -37,6 +37,7 @@
+ #include "A2STR.h"
+ #include <cstdlib>
+ #include <cstring>
++#include <stdlib.h>
+ 
+ namespace aria2 {
+ 
+diff --git a/src/OptionHandlerImpl.cc b/src/OptionHandlerImpl.cc
+index bef438b..211db72 100644
+--- a/src/OptionHandlerImpl.cc
++++ b/src/OptionHandlerImpl.cc
+@@ -42,6 +42,7 @@
+ #include <sstream>
+ #include <iterator>
+ #include <vector>
++#include <stdlib.h>
+ 
+ #include "util.h"
+ #include "DlAbortEx.h"
+diff --git a/src/OptionParser.cc b/src/OptionParser.cc
+index 15e49fa..0ef87e3 100644
+--- a/src/OptionParser.cc
++++ b/src/OptionParser.cc
+@@ -35,11 +35,16 @@
+ #include "OptionParser.h"
+ 
+ #include <unistd.h>
++#define __GNU_LIBRARY__
++#undef __STDC__
++#define __STDC__ 1
+ #include <getopt.h>
+ 
+ #include <cstring>
++#include <strings.h>
+ #include <istream>
+ #include <utility>
++#include <stdlib.h>
+ 
+ #include "util.h"
+ #include "OptionHandlerImpl.h"
+diff --git a/src/ParameterizedStringParser.h b/src/ParameterizedStringParser.h
+index 91a23db..4ff115c 100644
+--- a/src/ParameterizedStringParser.h
++++ b/src/ParameterizedStringParser.h
+@@ -35,6 +35,8 @@
+ #ifndef D_PARAMETERIZED_STRING_PARSER_H
+ #define D_PARAMETERIZED_STRING_PARSER_H
+ 
++#include <string>
++
+ #include "common.h"
+ #include "PStringDatum.h"
+ 
+diff --git a/src/PieceSelector.h b/src/PieceSelector.h
+index 659a386..7904b1f 100644
+--- a/src/PieceSelector.h
++++ b/src/PieceSelector.h
+@@ -38,6 +38,7 @@
+ #include "common.h"
+ 
+ #include <cstdlib>
++#include <limits.h>
+ 
+ namespace aria2 {
+ 
+diff --git a/src/PieceStatMan.cc b/src/PieceStatMan.cc
+index a196702..edbcc50 100644
+--- a/src/PieceStatMan.cc
++++ b/src/PieceStatMan.cc
+@@ -38,6 +38,7 @@
+ 
+ #include "SimpleRandomizer.h"
+ #include "bitfield.h"
++#include <limits.h>
+ 
+ namespace aria2 {
+ 
+diff --git a/src/ProtocolDetector.cc b/src/ProtocolDetector.cc
+index 1daa199..0f744e4 100644
+--- a/src/ProtocolDetector.cc
++++ b/src/ProtocolDetector.cc
+@@ -35,6 +35,7 @@
+ #include "ProtocolDetector.h"
+ 
+ #include <cstring>
++#include <strings.h>
+ #include <fstream>
+ #include <iomanip>
+ 
+diff --git a/src/SelectEventPoll.cc b/src/SelectEventPoll.cc
+index b541631..b45a10c 100644
+--- a/src/SelectEventPoll.cc
++++ b/src/SelectEventPoll.cc
+@@ -38,6 +38,7 @@
+ # include <cassert>
+ #endif // __MINGW32__
+ #include <cstring>
++#include <strings.h>
+ #include <algorithm>
+ #include <numeric>
+ 
+diff --git a/src/SimpleRandomizer.cc b/src/SimpleRandomizer.cc
+index 27d3e0c..d4eb35b 100644
+--- a/src/SimpleRandomizer.cc
++++ b/src/SimpleRandomizer.cc
+@@ -35,6 +35,7 @@
+ #include "SimpleRandomizer.h"
+ #include "a2time.h"
+ #include <cstdlib>
++#include <stdlib.h>
+ #include <sys/types.h>
+ #include <unistd.h>
+ 
+diff --git a/src/SingleFileAllocationIterator.cc b/src/SingleFileAllocationIterator.cc
+index 420ff69..d1cd990 100644
+--- a/src/SingleFileAllocationIterator.cc
++++ b/src/SingleFileAllocationIterator.cc
+@@ -35,6 +35,7 @@
+ #include "SingleFileAllocationIterator.h"
+ 
+ #include <cstring>
++#include <string.h>
+ #include <cstdlib>
+ 
+ #include "BinaryStream.h"
+diff --git a/src/UnknownLengthPieceStorage.cc b/src/UnknownLengthPieceStorage.cc
+index abb4035..c661a73 100644
+--- a/src/UnknownLengthPieceStorage.cc
++++ b/src/UnknownLengthPieceStorage.cc
+@@ -35,6 +35,7 @@
+ #include "UnknownLengthPieceStorage.h"
+ 
+ #include <cstdlib>
++#include <stdlib.h>
+ 
+ #include "DefaultDiskWriter.h"
+ #include "DirectDiskAdaptor.h"
+@@ -76,6 +77,7 @@ void UnknownLengthPieceStorage::initStorage()
+ bool UnknownLengthPieceStorage::hasMissingPiece(const SharedHandle<Peer>& peer)
+ {
+   abort();
++  return false;
+ }
+ 
+ void UnknownLengthPieceStorage::getMissingPiece
+@@ -115,18 +117,21 @@ void UnknownLengthPieceStorage::getMissingFastPiece
+ SharedHandle<Piece> UnknownLengthPieceStorage::getMissingPiece(const SharedHandle<Peer>& peer)
+ {
+   abort();
++  return SharedHandle<Piece>();
+ }
+ 
+ SharedHandle<Piece> UnknownLengthPieceStorage::getMissingPiece
+ (const SharedHandle<Peer>& peer, const std::vector<size_t>& excludedIndexes)
+ {
+   abort();
++  return SharedHandle<Piece>();
+ }
+ #endif // ENABLE_BITTORRENT
+ 
+ bool UnknownLengthPieceStorage::hasMissingUnusedPiece()
+ {
+   abort();
++  return false;
+ }
+ 
+ SharedHandle<Piece> UnknownLengthPieceStorage::getSparseMissingUnusedPiece
+diff --git a/src/array_fun.h b/src/array_fun.h
+index 897a7a8..2c8d00a 100644
+--- a/src/array_fun.h
++++ b/src/array_fun.h
+@@ -39,11 +39,11 @@
+ #include <functional>
+ 
+ namespace aria2 {
+-
++/*
+ // calculate length of array
+ template<typename T, size_t N>
+ char (&char_array_ref_fun(T (&)[N]))[N];
+-
++*/
+ // For 0 length array
+ template<typename T>
+ char (&char_array_ref_fun(T (&)[0u]))[0u];
+diff --git a/src/bitfield.h b/src/bitfield.h
+index 39313a1..c54e615 100644
+--- a/src/bitfield.h
++++ b/src/bitfield.h
+@@ -40,6 +40,7 @@
+ #include <cassert>
+ #include <cstdlib>
+ #include <cstring>
++#include <string.h>
+ 
+ #include "util.h"
+ 
+diff --git a/src/fmt.cc b/src/fmt.cc
+index a4e9733..6432bb5 100644
+--- a/src/fmt.cc
++++ b/src/fmt.cc
+@@ -34,6 +34,12 @@
+ /* copyright --> */
+ #include "fmt.h"
+ 
++// Make sure Sun Studio knows about va_list
++#ifdef __SUNPRO_CC
++#include <stddef.h>
++#include <stdarg.h>
++#endif 
++
+ #include <cstring>
+ #include <cstdio>
+ #include <cstdlib>
+diff --git a/src/util.h b/src/util.h
+index 939dc2b..af46291 100644
+--- a/src/util.h
++++ b/src/util.h
+@@ -40,6 +40,7 @@
+ #include <sys/time.h>
+ 
+ #include <cstdio>
++#include <stdio.h>
+ #include <string>
+ #include <utility>
+ #include <iosfwd>
+-- 
+1.7.3.2
+
