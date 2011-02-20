@@ -1,0 +1,11 @@
+--- ruby-1.8.7-p72/lib/rdoc/rdoc.rb.orig	2009-01-30 03:16:02.823906957 +0100
++++ ruby-1.8.7-p72/lib/rdoc/rdoc.rb	2009-01-30 03:16:09.628913124 +0100
+@@ -200,7 +200,7 @@
+     # we may well contain subdirectories which must
+     # be tested for .document files
+     def list_files_in_directory(dir, options)
+-      normalized_file_list(options, Dir.glob(File.join(dir, "*")), false, options.exclude)
++      normalized_file_list(options, Dir.glob(File.join(dir, "*")).sort, false, options.exclude)
+     end
+ 
+ 

@@ -1,0 +1,11 @@
+It is possible to switch rbconfig.rb files in order to use alternate
+compilation options or even compilers.  CSWruby ships with settings
+for Sun Studio 11 (what ruby was built with) and GCC4.  Our
+distribution of ruby sees rbconfig.rb be a symlink to
+rbconfig.rb.SOS11 by default.  To switch your settings, use the
+cswrbconfig tool provided.  Running it with no arguments will provide
+more details and list available configurations.
+
+Please file a bug on CSWruby if you have problems using this tool.
+
+Ben Walton <bwalton@opencsw.org>
