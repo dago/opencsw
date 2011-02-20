@@ -1,0 +1,53 @@
+From 679e45b2d321b4ef82435dd378c4a1f22069ced7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 2 Feb 2011 16:27:53 +0100
+Subject: [PATCH] Skip -Wall for Sun Studio
+
+---
+ m4/libcares.m4  |    2 +-
+ src/Makefile.am |    2 +-
+ src/Makefile.in |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/m4/libcares.m4 b/m4/libcares.m4
+index 4273917..d737d4d 100644
+--- a/m4/libcares.m4
++++ b/m4/libcares.m4
+@@ -16,7 +16,7 @@ LIBS_save=$LIBS
+ CPPFLAGS_save=$CPPFLAGS
+ 
+ LIBS="-L$libcares_prefix_lib $LIBS"
+-CPPFLAGS="-I$libcares_prefix_include -Wall $CPPFLAGS"
++CPPFLAGS="-I$libcares_prefix_include $CPPFLAGS"
+ 
+ AC_CHECK_LIB([cares], [ares_init], [have_libcares=yes])
+ 
+diff --git a/src/Makefile.am b/src/Makefile.am
+index b295483..22f4715 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -559,7 +559,7 @@ aria2c_LDADD = libaria2c.a @LIBINTL@ @ALLOCA@ @LIBGNUTLS_LIBS@\
+ 	@LIBCARES_LIBS@ @LIBEXPAT_LIBS@ @LIBZ_LIBS@\
+ 	@SQLITE3_LIBS@ #-lprofiler
+ #aria2c_LDFLAGS = -pg
+-AM_CPPFLAGS =  -Wall\
++AM_CPPFLAGS =  \
+ 	-I$(top_srcdir)/lib -I$(top_srcdir)/intl\
+ 	@LIBGNUTLS_CFLAGS@ @LIBGCRYPT_CFLAGS@ @OPENSSL_CFLAGS@ @XML_CPPFLAGS@\
+ 	@LIBCARES_CPPFLAGS@ @LIBEXPAT_CPPFLAGS@\
+diff --git a/src/Makefile.in b/src/Makefile.in
+index c7b0b97..7284e34 100644
+--- a/src/Makefile.in
++++ b/src/Makefile.in
+@@ -1322,7 +1322,7 @@ aria2c_LDADD = libaria2c.a @LIBINTL@ @ALLOCA@ @LIBGNUTLS_LIBS@\
+ 	@SQLITE3_LIBS@ #-lprofiler
+ 
+ #aria2c_LDFLAGS = -pg
+-AM_CPPFLAGS = -Wall\
++AM_CPPFLAGS = \
+ 	-I$(top_srcdir)/lib -I$(top_srcdir)/intl\
+ 	@LIBGNUTLS_CFLAGS@ @LIBGCRYPT_CFLAGS@ @OPENSSL_CFLAGS@ @XML_CPPFLAGS@\
+ 	@LIBCARES_CPPFLAGS@ @LIBEXPAT_CPPFLAGS@\
+-- 
+1.7.3.2
+

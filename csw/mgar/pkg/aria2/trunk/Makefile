@@ -12,9 +12,14 @@ DISTFILES  = $(DISTNAME).tar.xz
 
 PATCHFILES += 0001-Remove-tailing-commas-in-enum.patch
 PATCHFILES += 0002-Use-inttypes-if-stdint-is-not-available.patch
+PATCHFILES += 0003-Skip-Wall-for-Sun-Studio.patch
+PATCHFILES += 0004-Include-string.h-if-available.patch
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.xz
+
+EXTRA_CXXFLAGS += -library=stlport4
+EXTRA_CXXFLAGS += -features=zla
 
 CONFIGURE_ARGS = $(DIRPATHS)
 

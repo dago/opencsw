@@ -1,16 +1,21 @@
-From 226b1019fd220a305bc3e9f364685c3fb2ff584e Mon Sep 17 00:00:00 2001
+From 7aed90f76dc6fdebe217a61e3e7c6402cf4e0aae Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Wed, 2 Feb 2011 15:43:26 +0100
-Subject: [PATCH 2/2] Use inttypes if stdint is not available
+Date: Wed, 2 Feb 2011 16:51:41 +0100
+Subject: [PATCH] Use inttypes if stdint is not available
 
 ---
- src/DownloadResult.h     |    8 +++++++-
- src/ProgressAwareEntry.h |    9 ++++++++-
- src/Segment.h            |    9 ++++++++-
- src/TimeA2.h             |    8 +++++++-
- src/TransferStat.h       |    8 +++++++-
- src/common.h             |    8 +++++++-
- 6 files changed, 44 insertions(+), 6 deletions(-)
+ src/DownloadResult.h         |    8 +++++++-
+ src/FtpNegotiationCommand.cc |   13 ++++++++++++-
+ src/HttpResponse.h           |    8 +++++++-
+ src/Piece.h                  |    9 ++++++++-
+ src/ProgressAwareEntry.h     |    9 ++++++++-
+ src/Segment.h                |    9 ++++++++-
+ src/SocketCore.cc            |    4 ++++
+ src/TimeA2.h                 |    8 +++++++-
+ src/TransferStat.h           |    8 +++++++-
+ src/common.h                 |    8 +++++++-
+ src/util.cc                  |    9 ++++++++-
+ 11 files changed, 83 insertions(+), 10 deletions(-)
 
 diff --git a/src/DownloadResult.h b/src/DownloadResult.h
 index f224750..e62f925 100644
@@ -31,6 +36,69 @@ index f224750..e62f925 100644
  
  #include <string>
  #include <vector>
+diff --git a/src/FtpNegotiationCommand.cc b/src/FtpNegotiationCommand.cc
+index 7ad0934..514b19b 100644
+--- a/src/FtpNegotiationCommand.cc
++++ b/src/FtpNegotiationCommand.cc
+@@ -34,7 +34,18 @@
+ /* copyright --> */
+ #include "FtpNegotiationCommand.h"
+ 
+-#include <stdint.h>
++#ifdef HAVE_STDINT_H
++#       include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#       include <inttypes.h>
++# endif
++#endif
++
++#ifdef HAVE_STDLIB_H
++#	include <stdlib.h>
++#endif
++
+ #include <cassert>
+ #include <utility>
+ #include <map>
+diff --git a/src/HttpResponse.h b/src/HttpResponse.h
+index f818e7c..30e9b7b 100644
+--- a/src/HttpResponse.h
++++ b/src/HttpResponse.h
+@@ -37,7 +37,13 @@
+ 
+ #include "common.h"
+ 
+-#include <stdint.h>
++#ifdef HAVE_STDINT_H
++#       include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#       include <inttypes.h>
++# endif
++#endif
+ 
+ #include "SharedHandle.h"
+ #include "TimeA2.h"
+diff --git a/src/Piece.h b/src/Piece.h
+index c9abbd3..4137101 100644
+--- a/src/Piece.h
++++ b/src/Piece.h
+@@ -37,7 +37,14 @@
+ 
+ #include "common.h"
+ 
+-#include <stdint.h>
++#ifdef HAVE_STDINT_H
++#       include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#       include <inttypes.h>
++# endif
++#endif
++
+ #include <vector>
+ #include <string>
+ 
 diff --git a/src/ProgressAwareEntry.h b/src/ProgressAwareEntry.h
 index 48f0ad0..d658ef1 100644
 --- a/src/ProgressAwareEntry.h
@@ -71,6 +139,21 @@ index b8f38c9..efc181d 100644
  #include <string>
  
  #include "SharedHandle.h"
+diff --git a/src/SocketCore.cc b/src/SocketCore.cc
+index aba9db2..5ec281f 100644
+--- a/src/SocketCore.cc
++++ b/src/SocketCore.cc
+@@ -42,6 +42,10 @@
+ #include <cerrno>
+ #include <cstring>
+ 
++#ifdef HAVE_STRING_H
++# include <string.h>
++#endif // HAVE_STRING_H
++
+ #ifdef HAVE_LIBGNUTLS
+ # include <gnutls/x509.h>
+ #endif // HAVE_LIBGNUTLS
 diff --git a/src/TimeA2.h b/src/TimeA2.h
 index 97302a5..dd2a1fc 100644
 --- a/src/TimeA2.h
@@ -127,6 +210,26 @@ index dee2bff..c2b9717 100644
 +#endif
  
  #endif // D_COMMON_H
+diff --git a/src/util.cc b/src/util.cc
+index 6bf66e6..9324f03 100644
+--- a/src/util.cc
++++ b/src/util.cc
+@@ -36,7 +36,14 @@
+ 
+ #include <signal.h>
+ #include <limits.h>
+-#include <stdint.h>
++
++#ifdef HAVE_STDINT_H
++#       include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#       include <inttypes.h>
++# endif
++#endif
+ 
+ #include <cerrno>
+ #include <cassert>
 -- 
 1.7.3.2
 
