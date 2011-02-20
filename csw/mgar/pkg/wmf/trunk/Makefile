@@ -131,6 +131,7 @@ CONFIGURE_ARGS += --with-gsfontdir=$(datadir)/ghostscript/fonts
 
 TEST_TARGET = check
 
+MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
 MERGE_DIRS_isa-extra = $(libdir)
 
 # These are just docs
