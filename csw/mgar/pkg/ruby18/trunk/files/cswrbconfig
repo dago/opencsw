@@ -1,0 +1,54 @@
+#!/opt/csw/bin/ruby -w
+
+ARCH = %x{uname -p}.chomp
+CONFD = "/opt/csw/lib/ruby/1.8/#{ARCH}-solaris2.8"
+RBC = File.join(CONFD, "rbconfig.rb")
+CUR_RBC = File.readlink(RBC).gsub(/.*\./, '')
+
+CONF_OPTS = Dir.glob("#{CONFD}/rbconfig.rb.*").map! { |c| c.gsub(/.*\./, '') }
+
+def usage(errstr)
+  puts "ERROR: #{errstr}"
+  puts <<-"EOF"
+
+Usage: #{File.basename($0)} <new rbconfig option>
+
+This tool allows you to switch rbconfig.rb between options available
+on your system.  The benefit of this is that you can build native gems
+using options other than those used to build Ruby itself (Sun Studio
+11 -> sos11), including alternate compilers.
+
+rbconfig.rb is found in #{CONFD}.
+
+Existing options are determined by the presence of rbconfig.rb.FOO
+files in #{CONFD}.
+
+The current value is: #{CUR_RBC}
+
+The options present on your system are:
+    EOF
+
+  puts CONF_OPTS.join("\n")
+  exit(1)
+end
+
+if ARGV.size.eql?(0)
+  usage("No argument specified.")
+else
+  usage("Something is wrong with your rbconfig.rb symlink setup.") unless File.symlink?(RBC) and File.exists?(RBC)
+
+  usage("No action required.") if CUR_RBC.eql?(ARGV[0])
+
+  usage("Invalid rbconfig option.") unless CONF_OPTS.include?(ARGV[0])
+
+  opt_rbc = RBC + '.' + ARGV[0]
+
+  usage("Selection option is valid but there's something wrong with the file it refers to (#{opt_rbc}).") unless File.exists?(opt_rbc) and File.file?(opt_rbc)
+
+  begin
+    File.unlink(RBC)
+    File.symlink(opt_rbc, RBC)
+  rescue
+    usage("Error while switching rbconfig.rb symlink.  Please inspect the situation in #{CONFD}.")
+  end
+end
