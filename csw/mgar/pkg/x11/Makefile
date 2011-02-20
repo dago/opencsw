@@ -41,7 +41,8 @@ newpkg-%:
 	echo "DISTFILES  = $$(NAME)-$$(VERSION).tar.gz";          \
 	echo "";                                                        								\
 	echo "# We define upstream file regex so we can be notifed of new upstream software release";  	\
-	echo "UFILES_REGEX = $$(NAME)-(\d+(?:\.\d+)*).tar.gz";										\
+	echo "#       does not work for your package";	\
+	echo "# UFILES_REGEX = $$(NAME)-(\d+(?:\.\d+)*).tar.gz";	
 	echo "";                                                        								\
 	echo "# If the url used to check for software update is different of MASTER_SITES, then ";   	\
 	echo "# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES"; 	\
