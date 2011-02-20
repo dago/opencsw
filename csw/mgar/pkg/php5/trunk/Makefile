@@ -115,7 +115,6 @@ CHECKPKG_OVERRIDES_CSWphp5 += file-collision|/opt/csw/apache2/etc/extra/httpd-ph
 CHECKPKG_OVERRIDES_CSWphp5devel += action-class-only-in-pkginfo|none
 CHECKPKG_OVERRIDES_CSWphp5devel += catalogname-does-not-match-pkgname|pkgname=CSWphp5devel|catalogname=php5_devel|expected-catalogname=php5devel
 CHECKPKG_OVERRIDES_CSWphp5devel += license-missing|/opt/csw/share/doc/php5_devel/license
-CHECKPKG_OVERRIDES_CSWphp5devel += surplus-dependency|CSWphp5
 
 
 
