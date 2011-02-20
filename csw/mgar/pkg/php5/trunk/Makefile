@@ -1,9 +1,3 @@
-# TODO (release-critical prefixed with !, non release-critical with *)
-#
-# ! Re-enable the integrated PHP extension builds. This either requires
-#   performance enhancements to GAR or a completely different approach.
-#   Details documented below.
-#
 NAME     = php5
 VERSION  = 5.3.5
 CATEGORIES  = lang
@@ -38,10 +32,9 @@ CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 CATALOGNAME_CSWphp5devel   = php5_devel
 SPKG_DESC_CSWphp5devel     = Development files for php5
-RUNTIME_DEP_PKGS_CSWphp5      = CSWexpat CSWggettextrt CSWiconv CSWpng CSWsqlite
-RUNTIME_DEP_PKGS_CSWphp5     += CSWlibxml2 CSWzlib CSWmysql5rt CSWxpm CSWt1lib
-RUNTIME_DEP_PKGS_CSWphp5     += CSWftype2 CSWgd CSWjpeg CSWlibmm
-RUNTIME_DEP_PKGS_CSWphp5devel = CSWphp5
+RUNTIME_DEP_PKGS_CSWphp5      = CSWiconv 
+RUNTIME_DEP_PKGS_CSWphp5     += CSWlibxml2 CSWzlib
+RUNTIME_DEP_PKGS_CSWphp5     += CSWlibmm CSWapache2
 
 PKGFILES_CSWphp5devel  = $(bindir)/php-config
 PKGFILES_CSWphp5devel += $(bindir)/phpize
@@ -98,6 +91,33 @@ CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
 #ENABLE_CHECK = 0
+
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/apache/libexec/libphp5.so
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/apache2/libexec/libphp5.so
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php-cgi
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php.ini.CSW
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/phpize.m4
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/libtool.m4
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/shtool
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/acinclude.m4
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/PEAR/Config.php
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/man/man1/php-config.1
+CHECKPKG_OVERRIDES_CSWphp5 += license-missing|/opt/csw/share/doc/php5/license
+CHECKPKG_OVERRIDES_CSWphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/apache/libexec/libphp5.so
+CHECKPKG_OVERRIDES_CSWphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/apache2/libexec/libphp5.so
+CHECKPKG_OVERRIDES_CSWphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/php5/bin/php
+CHECKPKG_OVERRIDES_CSWphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/php5/bin/php-cgi
+
+CHECKPKG_OVERRIDES_CSWphp5 += file-collision|/opt/csw/apache2/libexec/libphp5.so|CSWap2modphp5|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5 += file-collision|/opt/csw/apache/libexec/libphp5.so|CSWmodphp5|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5 += file-collision|/opt/csw/apache2/etc/extra/httpd-php5.conf.CSW|CSWap2modphp5|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5devel += action-class-only-in-pkginfo|none
+CHECKPKG_OVERRIDES_CSWphp5devel += catalogname-does-not-match-pkgname|pkgname=CSWphp5devel|catalogname=php5_devel|expected-catalogname=php5devel
+CHECKPKG_OVERRIDES_CSWphp5devel += license-missing|/opt/csw/share/doc/php5_devel/license
+CHECKPKG_OVERRIDES_CSWphp5devel += surplus-dependency|CSWphp5
+
+
 
 include files/scripts.mk
 include gar/category.mk
