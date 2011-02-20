@@ -1,0 +1,58 @@
+MySQL 5 OpenCSW package
+=======================
+
+* http://www.opencsw.org/packages/mysql5
+
+The package has been reworked from the ground up, using GAR.  Up until this
+moment, the mysql5 package was in the version from before the fork.  The new
+packages are created so that they are as close to the original ones as
+possible, but some changes are inevitable, and some other changes were
+considered necessary.
+
+* Read only /opt/csw support
+  - data in /var/opt/csw
+  - configuration in /etc/opt/csw
+* The prefix is still /opt/csw/mysql5, but all the binaries are now linked from
+  /opt/csw, so that the standard PATH setting allows to use them
+* The startup script is now in /etc/opt/csw/init.d
+* SMF support is handled by cswclassutils
+
+
+Here are the old notes from the previous maintainer, Alex Moore:
+
+--------------8<----------------8<--------------------8<------------------------
+
+If you are not using the default location for --datadir, package installation
+  will NOT start CSWmysql5.  More code is needed for that.  I welcome patches.
+
+If you are not using the default location for --datadir, you will find
+  that CSWmysql5 works much better when you create /etc/my.cnf with at
+  least the entries that follow.  You may also want some entries in this
+  global options file for client programs that you use.
+  For example: --datadir is /db/mysql5/var
+  Create /etc/my.cnf with the following entries:
+    # Global MySQL options file.
+    [mysqld]
+    datadir         = /db/mysql5/var
+    basedir         = /opt/csw/mysql5
+
+I also changed the option for --defaults-file to --defaults-extra-file
+  in the startup script.
+  This allows your options file to be read after the global options file
+  /etc/my.cnf.
+
+Note that if you are using the default location for --datadir, you do not
+  really need /etc/opt/csw/mysql5rc.  In this case, you should put any options
+  in the appropriate group in my.cnf.  See the MySQL documentation for
+  details.
+
+If you are not using the default location for --datadir, you only need
+  /etc/opt/csw/mysql5rc for the startup script options for
+  --defaults-extra-file and possibly --pid-file.  All other options may be
+  put in the appropriate group in my.cnf
+
+Click 'Views and info' on the package page at
+  http://www.opencsw.org/packages.php/mysql5
+for the latest information.
+
+Alex Moore

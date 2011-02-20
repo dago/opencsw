@@ -1,0 +1,81 @@
+From 194dbf9ff230f747bb093970831fbdf4cb0f0674 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Wed, 16 Sep 2009 01:38:35 +0100
+Subject: [PATCH 4/4] basedir and datadir in the cnf files
+
+---
+ support-files/my-huge.cnf.sh            |    2 ++
+ support-files/my-innodb-heavy-4G.cnf.sh |    2 ++
+ support-files/my-large.cnf.sh           |    2 ++
+ support-files/my-medium.cnf.sh          |    2 ++
+ support-files/my-small.cnf.sh           |    2 ++
+ 5 files changed, 10 insertions(+), 0 deletions(-)
+
+diff --git a/support-files/my-huge.cnf.sh b/support-files/my-huge.cnf.sh
+index e4747ac..907b41d 100644
+--- a/support-files/my-huge.cnf.sh
++++ b/support-files/my-huge.cnf.sh
+@@ -23,6 +23,8 @@ socket		= @MYSQL_UNIX_ADDR@
+ 
+ # The MySQL server
+ [mysqld]
++basedir         = /opt/csw/mysql5
++datadir         = /var/opt/csw/mysql5
+ port		= @MYSQL_TCP_PORT@
+ socket		= @MYSQL_UNIX_ADDR@
+ skip-locking
+diff --git a/support-files/my-innodb-heavy-4G.cnf.sh b/support-files/my-innodb-heavy-4G.cnf.sh
+index cda11d6..a9d5514 100644
+--- a/support-files/my-innodb-heavy-4G.cnf.sh
++++ b/support-files/my-innodb-heavy-4G.cnf.sh
+@@ -39,6 +39,8 @@ socket		= @MYSQL_UNIX_ADDR@
+ # The MySQL server
+ #
+ [mysqld]
++basedir         = /opt/csw/mysql5
++datadir         = /var/opt/csw/mysql5
+ 
+ # generic configuration options
+ port		= @MYSQL_TCP_PORT@
+diff --git a/support-files/my-large.cnf.sh b/support-files/my-large.cnf.sh
+index 981b137..8b890fb 100644
+--- a/support-files/my-large.cnf.sh
++++ b/support-files/my-large.cnf.sh
+@@ -23,6 +23,8 @@ socket		= @MYSQL_UNIX_ADDR@
+ 
+ # The MySQL server
+ [mysqld]
++basedir         = /opt/csw/mysql5
++datadir         = /var/opt/csw/mysql5
+ port		= @MYSQL_TCP_PORT@
+ socket		= @MYSQL_UNIX_ADDR@
+ skip-locking
+diff --git a/support-files/my-medium.cnf.sh b/support-files/my-medium.cnf.sh
+index c3135ea..ef841db 100644
+--- a/support-files/my-medium.cnf.sh
++++ b/support-files/my-medium.cnf.sh
+@@ -24,6 +24,8 @@ socket		= @MYSQL_UNIX_ADDR@
+ 
+ # The MySQL server
+ [mysqld]
++basedir         = /opt/csw/mysql5
++datadir         = /var/opt/csw/mysql5
+ port		= @MYSQL_TCP_PORT@
+ socket		= @MYSQL_UNIX_ADDR@
+ skip-locking
+diff --git a/support-files/my-small.cnf.sh b/support-files/my-small.cnf.sh
+index 24c0840..89299dd 100644
+--- a/support-files/my-small.cnf.sh
++++ b/support-files/my-small.cnf.sh
+@@ -24,6 +24,8 @@ socket		= @MYSQL_UNIX_ADDR@
+ 
+ # The MySQL server
+ [mysqld]
++basedir         = /opt/csw/mysql5
++datadir         = /var/opt/csw/mysql5
+ port		= @MYSQL_TCP_PORT@
+ socket		= @MYSQL_UNIX_ADDR@
+ skip-locking
+-- 
+1.6.3.2
+
