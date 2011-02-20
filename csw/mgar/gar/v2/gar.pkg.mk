@@ -40,7 +40,8 @@ else
 CATALOGNAME    ?= $(if $(filter-out $(firstword $(PACKAGES)),$(PACKAGES)),,$(subst -,_,$(patsubst CSW%,%,$(PACKAGES))))
 SRCPACKAGE_BASE = $(firstword $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
-SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE)))
+OBSOLETED_PKGS ?= $(sort $(foreach P,$(PACKAGES),$(OBSOLETES_$P)))
+SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(OBSOLETED_PKGS) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE)))
 endif
 
 # Automatic definitions for source package
@@ -53,6 +54,21 @@ GARPKG_v1 = CSWgar-v1
 GARPKG_v2 = CSWgar-v2
 RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
 CATALOG_RELEASE ?= current
+
+define obsoleted_pkg
+CATALOGNAME_$(1) = $(call catalogname,$(1))
+SPKG_DESC_$(1) = Transitional package as contents moved to $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),$P))
+RUNTIME_DEP_PKGS_$(1) = $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),$P))
+PKGFILES_$(1) = NOFILES
+ARCHALL_$(1) = 1
+$(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),
+  CHECKPKG_OVERRIDES_$(1) += surplus-dependency|$P
+))
+endef
+
+$(warning O: $(OBSOLETED_PKGS))
+
+$(foreach P,$(OBSOLETED_PKGS),$(eval $(call obsoleted_pkg,$P)))
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
@@ -111,7 +127,7 @@ $(strip
     $(CATALOGNAME_$(1)),
     $(if $(CATALOGNAME),
       $(CATALOGNAME),
-      $(if $(filter $(1),$(PACKAGES)),
+      $(if $(filter $(1),$(PACKAGES) $(OBSOLETED_PKGS)),
         $(subst -,_,$(patsubst CSW%,%,$(1))),
         $(if $(realpath files/$(1).gspec),
           $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "bitname")' files/$(1).gspec),
@@ -394,6 +410,10 @@ define cswreleasenotes_filter
   | ( cat; if test -f "$(WORKDIR_GLOBAL)/$(1).cswreleasenotes";then echo "i cswreleasenotes=$(1).cswreleasenotes"; fi)
 endef
 
+define obsoleted_filter
+  | ( cat; if test -f "$(WORKDIR_GLOBAL)/$(1).obsoleted-by";then echo "i obsoleted-by=$(1).obsoleted-by"; fi)
+endef
+
 # This file contains all installed pathes. This can be used as a starting point
 # for distributing files to individual packages.
 PROTOTYPE = $(WORKDIR)/prototype
@@ -444,9 +464,9 @@ $(WORKDIR)/%.prototype: | $(PROTOTYPE)
 	               ) \
 	              <$(PROTOTYPE); \
 	   if [ -n "$(EXTRA_PKGFILES_$*)" ]; then echo "$(EXTRA_PKGFILES_$*)"; fi \
-	  ) $(call checkpkg_override_filter,$*) $(call cswreleasenotes_filter,$*) $(_CSWCLASS_FILTER) $(_CATEGORY_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  ) $(call checkpkg_override_filter,$*) $(call cswreleasenotes_filter,$*) $(call obsoleted_filter,$*) $(_CSWCLASS_FILTER) $(_CATEGORY_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	else \
-	  cat $(PROTOTYPE) $(call checkpkg_override_filter,$*) $(call cswreleasenotes_filter,$*) $(_CSWCLASS_FILTER) $(_CATEGORY_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
+	  cat $(PROTOTYPE) $(call checkpkg_override_filter,$*) $(call cswreleasenotes_filter,$*) $(call obsoleted_filter,$*) $(_CSWCLASS_FILTER) $(_CATEGORY_FILTER) $(_PROTOTYPE_MODIFIERS) $(_PROTOTYPE_FILTER_$*) >$@; \
 	fi
 	$(if $(ALLOW_RELOCATE),$(call dontrelocate,opt,$(PROTOTYPE)))
 
@@ -664,6 +684,19 @@ merge-README.CSW: $(WORKDIR)
 .PHONY: reset-merge-README.CSW
 reset-merge-README.CSW:
 	$(_DBG)rm -f $(COOKIEDIR)/merge-README.CSW $(foreach SPEC,$(_PKG_SPECS),$(PKGROOT)$(docdir)/$(call catalogname,$(SPEC))/README.CSW)
+
+merge-obsoleted-by: $(WORKDIR_GLOBAL)
+	$(_DBG)$(foreach P,$(OBSOLETED_PKGS),$(foreach Q,$(PACKAGES),$(if $(filter $P,$(OBSOLETES_$Q)), \
+		$(if $(SPKG_DESC_$Q), \
+			echo "$Q $(call catalogname,$Q) - $(SPKG_DESC_$Q)" >> $(WORKDIR_GLOBAL)/$P.obsoleted-by;, \
+			echo "$(shell (/usr/bin/pkginfo $Q || echo "$Q - ") | $(GAWK) '{ $$1 = "P"; print } ')" $(WORKDIR_GLOBAL)/$P.obsoleted-by; \
+		) \
+	)))
+	@$(MAKECOOKIE)
+
+.PHONY: reset-merge-obsoleted-by
+reset-merge-obsoleted-by:
+	$(_DBG)rm -f $(COOKIEDIR)/merge-obsoleted-by $(WORKDIR_GLOBAL)/obsoleted-by.*
 
 merge-classutils: merge-migrateconf merge-usergroup merge-inetdconf merge-etcservices
 
