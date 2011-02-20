@@ -109,6 +109,9 @@ RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWlibwmf0-2-7
 RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWlibwmflite0-2-7
 BUILD_DEP_PKGS += CSWgtk2devel
 
+# This *must* be the same as in the GD package
+CSW_DEFAULT_FONTPATH = $(sharedstatedir)/fonts/truetype
+
 BUILD64 = 1
 NOISAEXEC = 1
 
@@ -130,13 +133,15 @@ TEST_TARGET = check
 
 MERGE_DIRS_isa-extra = $(libdir)
 
-# default fontpath for unix systems = /usr/share/fonts/truetype
-# Are our fonts picked up correctly?
-CHECKPKG_OVERRIDES_CSWlibwmf-dev += file-with-bad-content|/usr/share|root/opt/csw/include/libwmf/gd/gd.h
-CHECKPKG_OVERRIDES_CSWlibwmf0-2-7 += file-with-bad-content|/usr/share|root/opt/csw/lib/libwmf-0.2.so.7.1.0
-CHECKPKG_OVERRIDES_CSWlibwmf0-2-7 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libwmf-0.2.so.7.1.0
-
 # These are just docs
 CHECKPKG_OVERRIDES_CSWlibwmfdoc += file-with-bad-content
 
 include gar/category.mk
+
+# Make sure GDFONTPATH is set correctly
+post-extract-modulated:
+	perl -pi -e 's,/usr/share/fonts/truetype,$(CSW_DEFAULT_FONTPATH),' \
+		$(WORKSRC)/src/extra/gd/gd.h \
+		$(WORKSRC)/src/extra/gd/gdft.c
+	@$(MAKECOOKIE)
+
