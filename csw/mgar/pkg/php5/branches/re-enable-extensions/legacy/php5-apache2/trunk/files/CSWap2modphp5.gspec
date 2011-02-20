@@ -1,0 +1,5 @@
+%var            bitname ap2_modphp5
+%var            pkgname CSWap2modphp5
+%include        url file://%{PKGLIB}/csw_dyndepend.gspec
+%var            desc PHP 5 - Apache 2.2.x Module
+%copyright      url file://%{WORKSRC}/LICENSE
