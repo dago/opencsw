@@ -1,0 +1,8 @@
+c37758ca9bed5b5f9a15fd636acd7149  download/CSWmodphp5.gspec
+b226254db72796595d88577d2c769dc9  download/CSWmodphp5.depend
+74c60f89b137d7e30882c28aac392133  download/CSWmodphp5.prototype
+2e5dbed2c9dd5e24c331753984946822  download/CSWmodphp5.preremove
+5f0046fe1b3f8e2228fdb165bdbbe73a  download/CSWmodphp5.postinstall
+0dd379f20ceb32fc77bb3a9bf045097f  download/CSWmodphp5.space
+7380ffecebd95c6edb317ef861229ebd  download/php-5.2.6.tar.bz2
+a03ecfbc83c95890b9167f7324e5d7a8  download/config.diff

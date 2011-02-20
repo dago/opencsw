@@ -1,0 +1,20 @@
+--- php-5.2.6/ext/iconv/iconv.c.orig	2009-03-02 13:49:44.329860879 -0600
++++ php-5.2.6/ext/iconv/iconv.c	2009-03-02 13:51:43.162160187 -0600
+@@ -38,14 +38,17 @@
+ #include <errno.h>
+ 
+ #include "php_iconv.h"
++#include <iconv.h>
+ 
+ #ifdef HAVE_ICONV
+ 
++/*
+ #ifdef PHP_ICONV_H_PATH
+ #include PHP_ICONV_H_PATH
+ #else
+ #include <iconv.h>
+ #endif
++*/
+ 
+ #ifdef HAVE_GLIBC_ICONV
+ #include <gnu/libc-version.h>
