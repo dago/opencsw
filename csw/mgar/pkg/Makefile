@@ -82,8 +82,10 @@ newpkg-%:
 	echo "MASTER_SITES = ";                                         								\
 	echo "DISTFILES  = $$(DISTNAME).tar.gz";          								\
 	echo "";                                                        								\
-	echo "# File name regex to get notifications about upstream software releases";  	\
-	echo "UFILES_REGEX = $$(NAME)-(\d+(?:\.\d+)*).tar.gz";										\
+	echo "# File name regex to get notifications about upstream software releases"; \
+	echo "# NOTE: Use this only if the automatic regex creation"; \
+	echo "#       does not work for your package";	\
+	echo "# UFILES_REGEX = $$(NAME)-(\d+(?:\.\d+)*).tar.gz";										\
 	echo "";                                                        								\
 	echo "# If the url used to check for software update is different of MASTER_SITES, then ";   	\
 	echo "# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES"; 	\
