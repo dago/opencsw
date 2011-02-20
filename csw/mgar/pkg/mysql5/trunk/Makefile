@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-NAME = mysql51
-BASE_VERSION = 5.1
-PATCHLEVEL = 40
+NAME = mysql55
+BASE_VERSION = 5.5
+PATCHLEVEL = 9
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
