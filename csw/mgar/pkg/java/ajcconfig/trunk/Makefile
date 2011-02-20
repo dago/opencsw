@@ -26,6 +26,8 @@ CATALOGNAME_CSWajcconfigdoc = commons_config_doc
 
 LICENSE = LICENSE.txt
 
+CHECKPKG_OVERRIDES_CSWajcconfigdoc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/commons-configuration/xref-test/org/apache/commons/configuration/InterpolationTestHelper.html
+
 # Defines package description
 SPKG_DESC_CSWajcconfig    = $(DESCRIPTION)
 SPKG_DESC_CSWajcconfigdoc = $(DESCRIPTION) documentation package
