@@ -66,8 +66,6 @@ $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),
 ))
 endef
 
-$(warning O: $(OBSOLETED_PKGS))
-
 $(foreach P,$(OBSOLETED_PKGS),$(eval $(call obsoleted_pkg,$P)))
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
