@@ -63,6 +63,7 @@ PKGFILES_$(1) = NOFILES
 ARCHALL_$(1) = 1
 $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),
   CHECKPKG_OVERRIDES_$(1) += surplus-dependency|$P
+
 ))
 endef
 
