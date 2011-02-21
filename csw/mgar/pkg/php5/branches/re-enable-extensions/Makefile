@@ -67,7 +67,7 @@ PATCHFILES += configure.diff
 # 3) ... TBD, probably more
 #
 EXTENSION_MAKEFILES := $(wildcard extensions/*/Makefile)
-#include $(EXTENSION_MAKEFILES)
+include $(EXTENSION_MAKEFILES)
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 
