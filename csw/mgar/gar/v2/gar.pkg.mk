@@ -66,6 +66,7 @@ $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),
 
 ))
 endef
+# ^^ "THE NEWLINE IS IMPORTANT, DO NOT DELETE!", Dago M.
 
 $(foreach P,$(OBSOLETED_PKGS),$(eval $(call obsoleted_pkg,$P)))
 
