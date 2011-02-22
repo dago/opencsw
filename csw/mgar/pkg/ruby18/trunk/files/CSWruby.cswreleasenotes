@@ -1,0 +1,3 @@
+* /usr/local overrides in checkpkg:
+  - fileutils.rb: all comments
+  
