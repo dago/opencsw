@@ -81,6 +81,7 @@ MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-p(\d+).tar.bz2
 
 DISTFILES  = $(NAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
+DISTFILES += CSWruby.cswreleasenotes
 
 # See: http://rubyforge.org/tracker/index.php?func=detail&aid=17607&group_id=426&atid=1698
 PATCHFILES = rdoc_parse_order_fix.patch
@@ -123,6 +124,9 @@ endif
 CHECKPKG_OVERRIDES_CSWrubydev += surplus-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWpython
+
+# usr/local overrides
+CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/fileutils.rb
 
 include gar/category.mk
 
