@@ -96,14 +96,18 @@ install-puppet:
 	gsed -e "s|/var/puppet|/var/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
 	gsed -e "s|/etc/puppet|/etc/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
 	gsed -e "s|/var/run/puppet|/var/opt/csw/puppet/run|g" -i ./lib/puppet/defaults.rb)
-	cd $(WORKSRC) && DESTDIR=$(DESTDIR) ruby install.rb
+	cd $(WORKSRC) && $(INSTALL_ENV) ruby install.rb \
+		--configdir=$(sysconfdir) \
+		--bindir=$(bindir) \
+		--sbindir=$(sbindir) \
+		--full
 	cd $(DESTDIR)$(mandir)/man8 && gunzip *
 	(cd $(WORKSRC)/examples/etc/puppet && \
 	for f in *; do \
 	    if [ -f $$f ] ; then \
 	        cp $$f $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
 	        chmod 644 $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
-	    fi \
+	    fi; \
 	done)
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/puppet
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
