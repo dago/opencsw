@@ -127,6 +127,8 @@ CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWpython
 
 # usr/local overrides
 CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/fileutils.rb
+CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ruby.1
+CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/bin/ri
 
 include gar/category.mk
 
