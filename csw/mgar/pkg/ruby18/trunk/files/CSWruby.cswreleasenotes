@@ -1,3 +1,4 @@
 * /usr/local overrides in checkpkg:
   - fileutils.rb: all comments
-  
+  - ruby.1: examples of option use  
+  - ri: rdoc text, noted as sample location
