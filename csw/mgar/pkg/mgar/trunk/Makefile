@@ -1,6 +1,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 # ! Check man pages for formatting/spelling bugs. Edit getting started to
 #   include some common tasks (see mgar wiki page).
+# ! Add a license
 # * Add bash auto-completion configuration
 NAME = mgar
 VERSION = 0.90
@@ -19,10 +20,12 @@ ARCHALL = 1
 
 RUNTIME_DEP_PKGS  = CSWnamazu
 RUNTIME_DEP_PKGS += CSWggrep
-RUNTIME_DEP_PKGS += CSWgfind
+RUNTIME_DEP_PKGS += CSWfindutils
 RUNTIME_DEP_PKGS += CSWgmake
 RUNTIME_DEP_PKGS += CSWsvn
 RUNTIME_DEP_PKGS += CSWgardevel # Meta pkg. Pulls in deps required by GAR.
+
+CHECKPKG_OVERRIDES_CSWmgar += surplus-dependency
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
