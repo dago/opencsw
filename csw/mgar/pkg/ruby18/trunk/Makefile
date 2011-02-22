@@ -82,6 +82,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-p(\d+).tar.bz2
 
 DISTFILES  = $(NAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
 DISTFILES += CSWruby.cswreleasenotes
+DISTFILES += CSWrubydoc.cswreleasenotes
 
 # See: http://rubyforge.org/tracker/index.php?func=detail&aid=17607&group_id=426&atid=1698
 PATCHFILES = rdoc_parse_order_fix.patch
@@ -129,6 +130,7 @@ CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/fileutils.rb
 CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ruby.1
 CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/bin/ri
+CHECKPKG_OVERRIDES_CSWrubydoc += file-with-bad-content|/usr/local
 
 include gar/category.mk
 
