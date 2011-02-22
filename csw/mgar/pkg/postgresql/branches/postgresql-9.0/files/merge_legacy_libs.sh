@@ -1,5 +1,9 @@
 #!/opt/csw/bin/bash
 # $Id$
+#
+# Designed to take care of deploying binary blobs from the files directory
+# onto the filesystem.  Each file has the file name, architecture and soname
+# encoded into the filename.
 
 set -u
 set -e
