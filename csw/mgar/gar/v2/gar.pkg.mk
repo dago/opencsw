@@ -57,7 +57,8 @@ CATALOG_RELEASE ?= current
 
 define obsoleted_pkg
 CATALOGNAME_$(1) = $(call catalogname,$(1))
-SPKG_DESC_$(1) = Transitional package as contents moved to $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),$P))
+# The length of the description has been limited to 100 characters, the string is cut only on word boundaries
+SPKG_DESC_$(1) ?= $(shell echo Transitional package as contents moved to $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),$P)) | perl -npe 's/^(.{0,96})\s.+/$$1 .../')
 RUNTIME_DEP_PKGS_$(1) = $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),$P))
 PKGFILES_$(1) = NOFILES
 ARCHALL_$(1) = 1
@@ -411,7 +412,7 @@ define cswreleasenotes_filter
 endef
 
 define obsoleted_filter
-  | ( cat; if test -f "$(WORKDIR_GLOBAL)/$(1).obsoleted-by";then echo "i obsoleted-by=$(1).obsoleted-by"; fi)
+  | ( cat; if test -f "$(WORKDIR_GLOBAL)/$(1).obsolete";then echo "i obsolete=$(1).obsolete"; fi)
 endef
 
 # This file contains all installed pathes. This can be used as a starting point
@@ -685,18 +686,18 @@ merge-README.CSW: $(WORKDIR)
 reset-merge-README.CSW:
 	$(_DBG)rm -f $(COOKIEDIR)/merge-README.CSW $(foreach SPEC,$(_PKG_SPECS),$(PKGROOT)$(docdir)/$(call catalogname,$(SPEC))/README.CSW)
 
-merge-obsoleted-by: $(WORKDIR_GLOBAL)
+merge-obsolete: $(WORKDIR_GLOBAL)
 	$(_DBG)$(foreach P,$(OBSOLETED_PKGS),$(foreach Q,$(PACKAGES),$(if $(filter $P,$(OBSOLETES_$Q)), \
 		$(if $(SPKG_DESC_$Q), \
-			echo "$Q $(call catalogname,$Q) - $(SPKG_DESC_$Q)" >> $(WORKDIR_GLOBAL)/$P.obsoleted-by;, \
-			echo "$(shell (/usr/bin/pkginfo $Q || echo "$Q - ") | $(GAWK) '{ $$1 = "P"; print } ')" $(WORKDIR_GLOBAL)/$P.obsoleted-by; \
+			echo "$Q $(call catalogname,$Q) - $(SPKG_DESC_$Q)" >> $(WORKDIR_GLOBAL)/$P.obsolete;, \
+			echo "$(shell (/usr/bin/pkginfo $Q || echo "$Q - ") | $(GAWK) '{ $$1 = "P"; print } ')" $(WORKDIR_GLOBAL)/$P.obsolete; \
 		) \
 	)))
 	@$(MAKECOOKIE)
 
-.PHONY: reset-merge-obsoleted-by
-reset-merge-obsoleted-by:
-	$(_DBG)rm -f $(COOKIEDIR)/merge-obsoleted-by $(WORKDIR_GLOBAL)/obsoleted-by.*
+.PHONY: reset-merge-obsolete
+reset-merge-obsolete:
+	$(_DBG)rm -f $(COOKIEDIR)/merge-obsolete $(WORKDIR_GLOBAL)/.*.obsolete
 
 merge-classutils: merge-migrateconf merge-usergroup merge-inetdconf merge-etcservices
 
