@@ -1,19 +1,19 @@
 NAME = Devel-StackTrace
-VERSION = 1.22
+VERSION = 1.27
 CATEGORIES = cpan
 AUTHOR = DROLSKY
 
-DESCRIPTION = Stack trace and stack trace frame objects
+DESCRIPTION = An object representing a stack trace
 define BLURB
-  The Devel::StackTrace module contains two classes, Devel::StackTrace and
-  Devel::StackTraceFrame. The goal of this object is to encapsulate the
-  information that can found through using the caller() function, as well as
-  providing a simple interface to this data.
 endef
 
-PACKAGES = CSWpmdevstacktrace
-CATALOGNAME = pm_devstacktrace
+LICENSE = LICENSE
 
-ARCHALL = 1
+PACKAGES += CSWpm-devel-stacktrace
+CATALOGNAME_CSWpm-devel-stacktrace = pm_devel_stacktrace
+SPKG_DESC_CSWpm-devel-stacktrace = $(DESCRIPTION)
+ARCHALL_CSWpm-devel-stacktrace = 1
+OBSOLETES_CSWpm-devel-stacktrace = CSWpmdevstacktrace
+CATALOGNAME_CSWpmdevstacktrace = pm_devstacktrace
 
 include gar/category.mk
