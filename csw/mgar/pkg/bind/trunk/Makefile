@@ -2,15 +2,15 @@
 # owner/group for device files? (root:sys)
 
 NAME = bind
-VERSION = 9.7.2
+VERSION = 9.7.3
 CATEGORIES = net
 
 # Enable these for Px-releases
-RELEASE = P3
-DISTVERSION = $(VERSION)-$(RELEASE)
-SPKG_VERSION = $(VERSION)$(RELEASE)
-DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+#RELEASE = P3
+#DISTVERSION = $(VERSION)-$(RELEASE)
+#SPKG_VERSION = $(VERSION)$(RELEASE)
+#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
@@ -21,12 +21,12 @@ define BLURB
 endef
 
 # Enable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
-DISTFILES  = $(DISTNAME).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+#DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
-#DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
@@ -36,7 +36,6 @@ CATALOGNAME_CSWbinddevel = bind_devel
 CATALOGNAME_CSWbindutils = bind_utils
 CATALOGNAME_CSWbindchroot = bind_chroot
 
-ARCHALL_CSWbinddevel = 1
 ARCHALL_CSWbindchroot = 1
 
 LICENSE = COPYRIGHT
@@ -48,7 +47,7 @@ SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
 SPKG_DESC_CSWbindchroot = ISC BIND DNS chroot package
 
 RUNTIME_DEP_PKGS_CSWbind = CSWlibbind CSWbindutils CSWiconv CSWlibxml2 CSWosslrt CSWzlib
-RUNTIME_DEP_PKGS_CSWbinddevel = CSWbind
+RUNTIME_DEP_PKGS_CSWbinddevel = CSWbind CSWlibbind
 RUNTIME_DEP_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWbindchroot = CSWbind
@@ -89,9 +88,10 @@ USERGROUP = /etc/opt/csw/pkg/CSWbind/cswusergroup
 SPKG_SOURCEURL = http://www.isc.org/software/bind
 
 CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
-CHECKPKG_OVERRIDES_CSWbindchroot += surplus-dependency|CSWbind
-CHECKPKG_OVERRIDES_CSWbinddevel += archall-devel-package
-CHECKPKG_OVERRIDES_CSWlibbind += non-uniform-lib-versions-in-package|sonames=['libbind9.so.60',|'libdns.so.69',|'libisc.so.62',|'libisccc.so.60',|'libisccfg.so.62',|'liblwres.so.60']
+CHECKPKG_OVERRIDES_CSWlibbind += non-uniform-lib-versions-in-package|sonames=libbind9.so.60,libdns.so.69,libisc.so.62,libisccc.so.60,libisccfg.so.62,liblwres.so.60
+CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
+CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CSWbindutils|catalogname=bind_utils|expected-catalogname=bindutils
+CHECKPKG_OVERRIDES_CSWbinddevel += catalogname-does-not-match-pkgname|pkgname=CSWbinddevel|catalogname=bind_devel|expected-catalogname=binddevel
 
 include gar/category.mk
 
