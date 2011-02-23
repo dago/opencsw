@@ -7,7 +7,7 @@ CATEGORIES = lang
 TEST_SCRIPTS =
 TEST_ARGS = test-all
 
-BUILD_DEP_PKGS =  CSWbdb48devel CSWgdbm CSWcoreutils CSWiconv CSWncurses
+BUILD_DEP_PKGS =  CSWbdb48devel CSWlibgdbm3 CSWcoreutils CSWiconv CSWncurses
 BUILD_DEP_PKGS += CSWreadline CSWzlib CSWossldevel
 
 PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymode-el
