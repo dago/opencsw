@@ -18,6 +18,10 @@ RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-http-body
 RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmmimetypes
 RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmlibwww
 
+# These have not been released
+CHECKPKG_OVERRIDES_CSWpm-dancer += unidentified-dependency|CSWpm-http-server-simple-psgi
+CHECKPKG_OVERRIDES_CSWpm-dancer += unidentified-dependency|CSWpm-http-body
+
 include gar/category.mk
 
 post-install-modulated:
