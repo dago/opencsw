@@ -28,4 +28,13 @@ RUNTIME_DEP_PKGS_CSWpm-plack += CSWpmlibwww
 
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWpm-plack)
 
+# These have not been released
+CHECKPKG_OVERRIDES_CSWpm-plack += unidentified-dependency|CSWpm-try-tiny
+CHECKPKG_OVERRIDES_CSWpm-plack += unidentified-dependency|CSWpm-hash-multivalue
+CHECKPKG_OVERRIDES_CSWpm-plack += unidentified-dependency|CSWpm-http-body
+CHECKPKG_OVERRIDES_CSWpm-plack += unidentified-dependency|CSWpm-test-tcp
+CHECKPKG_OVERRIDES_CSWpm-plack += unidentified-dependency|CSWpm-file-sharedir
+CHECKPKG_OVERRIDES_CSWpm-plack += unidentified-dependency|CSWpm-filesys-notify-simple
+CHECKPKG_OVERRIDES_CSWpm-plack += unidentified-dependency|CSWpm-devel-stacktrace-ashtml
+
 include gar/category.mk
