@@ -12,11 +12,11 @@ LICENSE = LICENSE
 PACKAGES += CSWpm-dancer
 CATALOGNAME_CSWpm-dancer = pm_dancer
 ARCHALL_CSWpm-dancer = 1
-RUNTIME_DEP_PKGS_CSWpm-dancer = CSWpm-http-server-simple-psgi
-RUNTIME_DEP_PKGS_CSWpm-dancer = CSWpmuri
-RUNTIME_DEP_PKGS_CSWpm-dancer = CSWpm-http-body
-RUNTIME_DEP_PKGS_CSWpm-dancer = CSWpmmimetypes
-RUNTIME_DEP_PKGS_CSWpm-dancer = CSWpmlibwww
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-http-server-simple-psgi
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmuri
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-http-body
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmmimetypes
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmlibwww
 
 include gar/category.mk
 
