@@ -1,8 +1,8 @@
 608826974d5644ee7967a713fa72cf36  COPYING
 f50762cfa92b54f474df96541cc5679d  changes.txt
 ec5ca49feba2eab047a5da16143fe6cb  documentation.txt
-0aa05a54758f39b6f910a616e8139a30  policyd-weight-devel
+b3f58ab104751f4dee9d2cce4d1846f7  policyd-weight
 792ae8f214bcb109e40dfeaba79e6e90  policyd-weight.8
 98a66135c59c484290d06654dac93584  policyd-weight.conf.5
-b0ce437f3640023831554fc989d87477  policyd-weight.conf.sample
+4b747b23021668dfdb3ba39bfe30837d  policyd-weight.conf.sample
 53afc640bd8b88efb59519db358d6163  todo.txt
