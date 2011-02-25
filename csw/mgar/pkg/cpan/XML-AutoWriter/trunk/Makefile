@@ -10,6 +10,11 @@ define BLURB
   functions named after the elements mentioned in the DTD.
 endef
 
-DISTFILES = $(call admfiles,CSWpmxmlautowriter,depend prototype)
+CATALOGNAME     = pm_xml_autowriter
+PACKAGES	= CSWpm-xml-autowriter
+
+ARCHALL_CSWpm-xml-autowriter = 1
+
+LICENSE = README
 
 include gar/category.mk
