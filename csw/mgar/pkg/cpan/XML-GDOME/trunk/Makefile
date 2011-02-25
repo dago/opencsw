@@ -9,9 +9,13 @@ define BLURB
   accessing XML documents.
 endef
 
-DISTFILES += CSWpmxmlgdome.gspec CSWpmxmlgdome.depend
+CATALOGNAME     = pm_xml_gdome
+PACKAGES	= CSWpm-xml-gdome
 
-DEPENDS += lib/gdome2
-DEPENDS += cpan/XML-SAX cpan/XML-LibXML-Common
+ARCHALL_CSWpm-xml-gdome = 1
+
+LICENSE = README
+
+RUNTIME_PKG_DEPS = CSWgdome2 CSWpmxmlsax CSWpmxmllibxmlcommon
 
 include gar/category.mk
