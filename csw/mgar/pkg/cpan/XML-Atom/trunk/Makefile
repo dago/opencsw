@@ -16,7 +16,7 @@ ARCHALL_CSWpm-xml-atom = 1
 
 LICENSE = README
 
-RUNTIME_DEP_PKGS  = CSWpm-xml-libxml CSWpm-libwww-perl CSWpm-html-parser
-RUNTIME_DEP_PKGS += CSWpm-digest-sha1 CSWpm-timedate CSWpm-xml-libxslt CSWpm-uri
+RUNTIME_DEP_PKGS  = CSWpmxmllibxml CSWpmlibwww CSWpmhtmlparser
+RUNTIME_DEP_PKGS += CSWpmdigestsha1 CSWpmtimedate CSWpmxmllibxslt CSWpmuri
 
 include gar/category.mk
