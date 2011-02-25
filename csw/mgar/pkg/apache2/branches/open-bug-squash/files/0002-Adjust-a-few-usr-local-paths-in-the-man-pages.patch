@@ -1,0 +1,54 @@
+From c1d63dce36cee499600cc4bf4a4856ec35c7a942 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 22 Feb 2011 10:12:00 +0100
+Subject: [PATCH] Adjust a few /usr/local paths in the man pages.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ docs/man/htdbm.1    |    2 +-
+ docs/man/htpasswd.1 |    2 +-
+ docs/man/httpd.8    |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/docs/man/htdbm.1 b/docs/man/htdbm.1
+index d37be2c..80334f0 100644
+--- a/docs/man/htdbm.1
++++ b/docs/man/htdbm.1
+@@ -123,7 +123,7 @@ htdbm returns a zero status ("true") if the username and password have been succ
+  
+ .nf
+ 
+-      htdbm /usr/local/etc/apache/\&.htdbm-users jsmith
++      htdbm /opt/csw/apache2/etc/\&.htdbm-users jsmith
+     
+ .fi
+  
+diff --git a/docs/man/htpasswd.1 b/docs/man/htpasswd.1
+index 40858a0..1d669a1 100644
+--- a/docs/man/htpasswd.1
++++ b/docs/man/htpasswd.1
+@@ -100,7 +100,7 @@ htpasswd returns a zero status ("true") if the username and password have been s
+  
+ .nf
+ 
+-      htpasswd /usr/local/etc/apache/\&.htpasswd-users jsmith
++      htpasswd /opt/csw/apache2/etc/\&.htpasswd-users jsmith
+     
+ .fi
+  
+diff --git a/docs/man/httpd.8 b/docs/man/httpd.8
+index 5b9e168..d806ebe 100644
+--- a/docs/man/httpd.8
++++ b/docs/man/httpd.8
+@@ -50,7 +50,7 @@ In general, httpd should not be invoked directly, but rather should be invoked v
+  
+ .TP
+ -d \fIserverroot\fR
+-Set the initial value for the ServerRoot directive to \fIserverroot\fR\&. This can be overridden by the ServerRoot directive in the configuration file\&. The default is /usr/local/apache2\&.  
++Set the initial value for the ServerRoot directive to \fIserverroot\fR\&. This can be overridden by the ServerRoot directive in the configuration file\&. The default is /opt/csw/apache2\&.  
+ .TP
+ -f \fIconfig\fR
+ Uses the directives in the file \fIconfig\fR on startup\&. If \fIconfig\fR does not begin with a /, then it is taken to be a path relative to the ServerRoot\&. The default is conf/httpd\&.conf\&.  
+-- 
+1.7.3.2
+
