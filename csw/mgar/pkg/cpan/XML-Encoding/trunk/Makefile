@@ -1,7 +1,7 @@
 NAME = XML-Encoding
-VERSION = 1.01
+VERSION = 2.08
 CATEGORIES = cpan
-AUTHOR = COOPERCL
+AUTHOR = SHAY
 
 DESCRIPTION = module for parsing XML encoding maps.
 define BLURB
@@ -13,8 +13,13 @@ define BLURB
   callback functions push_prefix, pop_prefix, and range_set.
 endef
 
-DISTFILES += CSWpmxmlencoding.gspec CSWpmxmlencoding.depend
+CATALOGNAME     = pm_xml_encoding
+PACKAGES	= CSWpm-xml-encoding
 
-DEPENDS += cpan/XML-Parser
+ARCHALL_CSWpm-xml-encoding = 1
+
+LICENSE = README
+
+RUNTIM_DEP_PKGS = CSWpmxmlparser
 
 include gar/category.mk
