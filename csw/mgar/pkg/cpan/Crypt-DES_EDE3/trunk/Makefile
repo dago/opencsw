@@ -13,8 +13,14 @@ define BLURB
   the encryption/decryption steps.
 endef
 
-DISTFILES += CSWpmcryptdesede3.gspec CSWpmcryptdesede3.depend
 
-DEPENDS += cpan/Crypt-DES
+CATALOGNAME     = pm_crypt_des_ede3
+PACKAGES	= CSWpm-crypt-des-ede3
+
+ARCHALL_CSWpm-crypt-des-ede3 = 1
+
+LICENSE = README
+
+RUNTIME_PKG_DEPS = CSWpmcryptdes
 
 include gar/category.mk
