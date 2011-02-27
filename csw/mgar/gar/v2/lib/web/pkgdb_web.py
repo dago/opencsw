@@ -18,7 +18,7 @@ urls = (
   r'/srv4/([0-9a-f]{32})/', 'Srv4Detail',
   r'/srv4/([0-9a-f]{32})/files/', 'Srv4DetailFiles',
   r'/catalogs/', 'CatalogList',
-  r'/catalogs/([^-]+)-([^-]+)-([^-]+)/', 'CatalogDetail',
+  r'/catalogs/([\w-]+)-(sparc|i386)-(SunOS[^-]+)/', 'CatalogDetail',
   r'/maintainers/', 'MaintainerList',
   r'/maintainers/(\d+)/', 'MaintainerDetail',
   r'/maintainers/(\d+)/checkpkg/', 'MaintainerCheckpkgReport',
@@ -27,11 +27,11 @@ urls = (
   r'/catalognames/', 'CatalognameList',
   r'/catalognames/([^/]+)/', 'Catalogname',
   r'/error-tags/', 'ErrorTagList',
-  r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/', 'Catalogs',
-  r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/pkgname-by-filename',
+  r'/rest/catalogs/([\w-]+)-(sparc|i386)-(SunOS[^-]+)/', 'Catalogs',
+  r'/rest/catalogs/([\w-]+)-(sparc|i386)-(SunOS[^-]+)/pkgname-by-filename',
       'PkgnameByFilename',
   # Query by catalog release, arch, OS release and catalogname
-  r'/rest/catalogs/([^/]+)/([^/]+)/([^/]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
+  r'/rest/catalogs/([\w-]+)-(sparc|i386)-(SunOS[^-]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
 )
 
