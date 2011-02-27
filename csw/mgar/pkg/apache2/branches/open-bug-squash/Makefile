@@ -41,6 +41,8 @@ DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
 DISTFILES += CSWap2worker.postinstall CSWap2worker.postremove
 DISTFILES += CSWap2worker.preinstall
 
+DISTFILES += CSWapache2-devel.cswreleasenotes
+
 # Configuration templates
 DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
