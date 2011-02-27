@@ -1,4 +1,4 @@
-83;40003;0cCHECKPKG_OVERRIDES_CSWapache2 += file-collision|/opt/csw/apache2/etc/extra/httpd-info.conf.CSW|CSWapache2|CSWapache2c
+CHECKPKG_OVERRIDES_CSWapache2 += file-collision|/opt/csw/apache2/etc/extra/httpd-info.conf.CSW|CSWapache2|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2 += file-collision|/etc/opt/csw/init.d/cswapache2|CSWapache2|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2 += file-collision|/opt/csw/apache2/etc/extra/httpd-autoindex.conf.CSW|CSWapache2|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2 += file-collision|/opt/csw/apache2/etc/extra/httpd-dav.conf.CSW|CSWapache2|CSWapache2c
@@ -492,9 +492,6 @@ CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/
 CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/mod/mod_charset_lite.html.en
 CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/mod/mod_ext_filter.html.en
 CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/mod/mod_ext_filter.html.ko.euc-kr
-CHECKPKG_OVERRIDES_CSWapache2 += file-with-bad-content|/usr/local|root/opt/csw/apache2/man/man1/htdbm.1
-CHECKPKG_OVERRIDES_CSWapache2 += file-with-bad-content|/usr/local|root/opt/csw/apache2/man/man1/htpasswd.1
-CHECKPKG_OVERRIDES_CSWapache2 += file-with-bad-content|/usr/local|root/opt/csw/apache2/man/man8/httpd.8
 CHECKPKG_OVERRIDES_CSWapache2 += file-with-bad-content|/usr/local|root/opt/csw/apache2/sbin/httpd.prefork
 CHECKPKG_OVERRIDES_CSWapache2 += file-with-bad-content|/usr/local|root/opt/csw/apache2/share/cgi-bin/printenv
 CHECKPKG_OVERRIDES_CSWap2worker += file-with-bad-content|/usr/local|root/opt/csw/apache2/sbin/httpd.worker
