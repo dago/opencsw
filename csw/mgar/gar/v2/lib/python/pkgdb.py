@@ -74,6 +74,14 @@ stats_version:  $stats_version
 """
 
 DEFAULT_TEMPLATE_FILENAME = "../lib/python/pkg-review-template.html"
+CATALOGS_ALLOWED_TO_GENERATE = frozenset([
+  "unstable",
+  "dublin",
+  "kiel",
+])
+CATALOGS_ALLOWED_TO_BE_IMPORTED = frozenset([
+  "current",
+])
 
 
 class Error(Exception):
@@ -191,6 +199,9 @@ class CatalogImporter(object):
 
     Imports srv4 files if necessary.
     """
+    if catrel not in CATALOGS_ALLOWED_TO_BE_IMPORTED:
+      raise UsageError("Catalogs that can be imported: %s"
+                       % CATALOGS_ALLOWED_TO_BE_IMPORTED)
     catalog_dir = os.path.dirname(catalog_file)
     # The plan:
     # - read in the catalog file, and build a md5-filename correspondence
@@ -536,9 +547,14 @@ def main():
     for obj in res:
       print obj.catalogname, obj.basename, obj.md5_sum
   elif command == 'gen-cat':
-    catrel = 'unstable'
+    catrel = options.catrel or 'dublin'
     if options.catrel and options.catrel != catrel:
       logging.warn("Generating the %s catalog.", catrel)
+    if catrel not in CATALOGS_ALLOWED_TO_GENERATE:
+      raise UsageError(
+          "Catalog %s not allowed to be generated from the database. "
+          "Allowed catalogs are: %s"
+          % (catrel, CATALOGS_ALLOWED_TO_GENERATE))
     if len(args) != 2:
       raise UsageError("Wrong number of arguments, see usage.")
     allpkgs_dir, target_dir = args
