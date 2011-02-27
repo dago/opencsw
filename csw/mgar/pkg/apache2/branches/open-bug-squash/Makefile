@@ -280,5 +280,15 @@ post-merge:
 		s/^#(Include.*httpd-ssl.conf)/$$1/' $$f; \
 		mv $$f $$f.CSW; \
 		done )
+	@echo Fixing usr/local references in the online manaual...
+	@(cd $(PKGROOT)/$(prefix)/apache2/share/manual; \
+		/opt/csw/bin/gfind . -type f -print0 | \
+		/opt/csw/bin/gxargs -0 \
+			 perl -pi \
+			  -e 's@/usr/local/apache2*@/opt/csw/apache2@g;' \
+			  -e 's@/usr/local@/opt/csw/apache2@g')
+	@echo Fixing usr/local reference in the cgi-bin scripts
+	@(cd $(PKGROOT)/$(prefix)/apache2/share/cgi-bin; \
+		perl -pi -e 's@/usr/local/bin@/opt/csw/bin@g' *)
 	@$(MAKECOOKIE)
 
