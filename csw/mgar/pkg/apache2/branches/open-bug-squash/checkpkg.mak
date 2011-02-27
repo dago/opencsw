@@ -364,14 +364,5 @@ CHECKPKG_OVERRIDES_CSWapache2-devel += file-collision|/opt/csw/apache2/share/err
 CHECKPKG_OVERRIDES_CSWapache2-devel += file-collision|/opt/csw/apache2/share/error/include/top.html|CSWapache2-devel|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2 += file-collision|/opt/csw/apache2/etc/extra/httpd-info.conf.CSW|CSWapache2|CSWapache2c
 
-CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/logs.html.en
-CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/logs.html.ja.utf8
-CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/logs.html.tr.utf8
-CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/logs.html.ko.euc-kr
-CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/mod/mod_ext_filter.html.ja.utf8
-CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/mod/mod_charset_lite.html.ko.euc-kr
-CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/mod/mod_charset_lite.html.en
-CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/mod/mod_ext_filter.html.en
-CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/mod/mod_ext_filter.html.ko.euc-kr
 CHECKPKG_OVERRIDES_CSWapache2 += file-with-bad-content|/usr/local|root/opt/csw/apache2/sbin/httpd.prefork
 CHECKPKG_OVERRIDES_CSWap2worker += file-with-bad-content|/usr/local|root/opt/csw/apache2/sbin/httpd.worker
