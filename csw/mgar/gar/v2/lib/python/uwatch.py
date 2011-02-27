@@ -1597,12 +1597,15 @@ class CommandProcessor(object):
 
 
 class UwatchRegexGenerator(object):
-  
+  """Guesses uwatch regexes based on distfiles."""
+
   WS_RE = re.compile(r'\s+')
   DIGIT_RE = re.compile(r'\d+')
   DIGIT_REMOVAL_RE = re.compile(r'\d+(?:\.\d+)*[a-z]?')
-  DIGIT_MATCH_MAKE_RE_1 = r'(\d+(?:\.\d+)*[a-z]?)'
-  DIGIT_MATCH_MAKE_RE_2 = r'(\d+(?:\.\d+)*)'
+  DIGIT_MATCH_MAKE_RE_1 = r'(\d+(?:[\.-]\d+)*[a-z]?)'
+  DIGIT_MATCH_MAKE_RE_2 = r'(\d+(?:[\.-]\d+)*)'
+  DIGIT_MATCH_MAKE_RE_3 = r'(\d+(?:\.\d+)*[a-z]?)'
+  DIGIT_MATCH_MAKE_RE_4 = r'(\d+(?:\.\d+)*)'
   ARCHIVE_RE = re.compile(r"\.(?:tar(?:\.(?:gz|bz2))|tgz)?$")
 
   def _ChooseDistfile(self, file_list):
@@ -1623,10 +1626,15 @@ class UwatchRegexGenerator(object):
     # The first approach is to split by '-'
     assert filename
     parts = filename.split('-')
-    if self._CanBeSoftwarename(parts[0], catalogname):
-      return parts[0], '-' + '-'.join(parts[1:])
-    return '', filename
-  
+    parts_c_or_v = map(
+        lambda x: self._CanBeSoftwareName(x, catalogname),
+        parts)
+    if False in parts_c_or_v:
+      i = parts_c_or_v.index(False)
+    else:
+      i = 1
+    return '-'.join(parts[:i]), '-' + '-'.join(parts[i:])
+
   def _SeparateArchiveName(self, filename):
     if self.ARCHIVE_RE.search(filename):
       first_part = self.ARCHIVE_RE.split(filename)[0]
@@ -1634,9 +1642,11 @@ class UwatchRegexGenerator(object):
       return first_part, archive_part
     return filename, ''
 
-  def _CanBeSoftwarename(self, s, catalogname):
+  def _CanBeSoftwareName(self, s, catalogname):
     if s == catalogname:
       return True
+    if re.match(self.DIGIT_MATCH_MAKE_RE_1, s):
+      return False
     # This is stupid.  But let's wait for a real world counterexample.
     return True
 
@@ -1645,13 +1655,17 @@ class UwatchRegexGenerator(object):
     dist_file = self._ChooseDistfile(dist_list)
     if not dist_file:
       return []
+    dist_file = dist_file.strip()
     softwarename, rest_of_filename = self._SeparateSoftwareName(
         catalogname, dist_file)
     rest_of_filename, archive_part = self._SeparateArchiveName(rest_of_filename)
     no_numbers = self.DIGIT_REMOVAL_RE.split(rest_of_filename)
-    regex_list = []
-    regex_list.append(softwarename + self.DIGIT_MATCH_MAKE_RE_1.join(no_numbers) + archive_part)
-    regex_list.append(softwarename + self.DIGIT_MATCH_MAKE_RE_2.join(no_numbers) + archive_part)
+    regex_list = [
+      softwarename + self.DIGIT_MATCH_MAKE_RE_1.join(no_numbers) + archive_part,
+      softwarename + self.DIGIT_MATCH_MAKE_RE_2.join(no_numbers) + archive_part,
+      softwarename + self.DIGIT_MATCH_MAKE_RE_3.join(no_numbers) + archive_part,
+      softwarename + self.DIGIT_MATCH_MAKE_RE_4.join(no_numbers) + archive_part,
+    ]
     return regex_list
 
 
