@@ -75,6 +75,9 @@ class MakeCatalognameByPkgnameTest(unittest.TestCase):
     # Pluses?  Plusen?  Plusi?
     self.assertEqual("libnetcdf_c++5", struct_util.MakeCatalognameByPkgname("CSWlibnetcdf-c++5"))
 
+  def testWithDigits(self):
+    self.assertEqual("libfoo1_1", struct_util.MakeCatalognameByPkgname("CSWlibfoo1-1"))
+
 
 if __name__ == '__main__':
 	unittest.main()
