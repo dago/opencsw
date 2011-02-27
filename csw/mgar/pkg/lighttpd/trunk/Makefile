@@ -17,12 +17,24 @@ endef
 
 MASTER_SITES = http://download.lighttpd.net/lighttpd/releases-1.4.x/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
+EXTRA_LIB = $(prefix)/lib
 EXTRA_LDFLAGS += -lsendfile
+
 # To fix undefined symbol 'dlopen' on Solaris 9
 EXTRA_LDFLAGS_5.9 += -ldl
 EXTRA_LDFLAGS += $(EXTRA_LDFLAGS_$(GAROSREL))
+
 PATCHFILES += 0001-Work-around-linking-problem-buffer.c.patch
 
+# The module compilation ignores LDFLAGS by default, let's force them to
+# inject the right -R flag.
+PATCHFILES += 0002-Force-LDFLAGS-on-mod_compress.patch
+
+# lighttpd puts its modules under libdir, so we pass libdir as a subdirectory,
+# because modules are not supposed to be in /opt/csw/lib.
+libdir = $(prefix)/lib/lighttpd
+
+CONFIGURE_ARGS  = $(DIRPATHS)
 # Solaris 9 does not have IPV6_V6ONLY.
 # IPv6 support only works on Solaris 10.
 CONFIGURE_ARGS_5.9 = --disable-ipv6
@@ -31,6 +43,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL))
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386                                                                          
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
+# One test is still failing.
 TEST_TARGET = check
 
 include gar/category.mk
