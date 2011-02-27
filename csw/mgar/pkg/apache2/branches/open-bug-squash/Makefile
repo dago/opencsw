@@ -167,6 +167,7 @@ CONFIGURE_ARGS += --with-suexec-uidmin=100
 CONFIGURE_ARGS += --with-suexec-gidmin=100
 CONFIGURE_ARGS += --with-suexec-logfile=$(prefix)/apache2/var/log/suexec_log
 CONFIGURE_ARGS += --with-suexec-bin=$(prefix)/apache2/sbin/suexec
+CONFIGURE_ARGS += --with-suexec-safepath=/opt/csw/bin:/usr/bin:/bin
 CONFIGURE_ARGS += --enable-authn-alias
 CONFIGURE_ARGS += --enable-authnz-ldap
 CONFIGURE_ARGS += --enable-file-cache
