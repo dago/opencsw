@@ -1,0 +1,27 @@
+From 98e846e18d3269a596aa1badf8e612947d33387c Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 27 Feb 2011 13:39:51 +0100
+Subject: [PATCH] Work around linking problem (buffer.c)
+
+---
+ configure                |    2 +
+ src/configparser.c       |  240 +++++++++++++++++++++++-----------------------
+ src/mod_ssi_exprparser.c |   56 ++++++------
+ 3 files changed, 149 insertions(+), 149 deletions(-)
+
+diff --git a/configure b/configure
+index 3320daa..0bbc9be 100755
+--- a/configure
++++ b/configure
+@@ -5423,6 +5423,8 @@ case $host_os in
+ 	*darwin*|*cygwin*|*aix*|*mingw* ) NO_RDYNAMIC=yes;;
+ 	* ) NO_RDYNAMIC=no;;
+ esac
++# It's the case on Solaris too
++NO_RDYNAMIC=yes
+  if test x$NO_RDYNAMIC = xyes; then
+   NO_RDYNAMIC_TRUE=
+   NO_RDYNAMIC_FALSE='#'
+-- 
+1.7.3.2
+

@@ -1,3 +1,4 @@
+# $Id$
 NAME = lighttpd
 VERSION = 1.4.28
 CATEGORIES = devel
@@ -16,5 +17,7 @@ endef
 
 MASTER_SITES = http://download.lighttpd.net/lighttpd/releases-1.4.x/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
+
+PATCHFILES += 0001-Work-around-linking-problem-buffer.c.patch
 
 include gar/category.mk
