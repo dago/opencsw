@@ -45,6 +45,7 @@ import pysvn
 import MySQLdb
 import datetime
 import ConfigParser
+import logging
 
 from urllib2 import Request, urlopen, URLError
 from optparse import OptionParser
@@ -274,10 +275,13 @@ class UwatchConfiguration(object):
                 self._uwatch_pkg_root = None
 
         # This member variable is a flag which defines the status of the verbose mode (True : activated)
-        if args.verbose != None:
+        logging_level = logging.INFO
+        if args.verbose is not None:
             self._verbose = args.verbose
+            logging_level = logging.DEBUG
         else:
             self._verbose = False
+        logging.basicConfig(level=logging_level)
 
         # This member variable defines the value of the version of the package
         # Current revision is not passed as a separated argument. It is part of the opencsw version number. 
@@ -726,6 +730,8 @@ class CheckUpstreamCommand(UpstreamWatchCommand):
             # Search the strings matching the regexp passed through command line arguments
             p = re.compile(self.config.getRegexp())
             matches = p.findall(content)
+            logging.info("CheckUpstreamCommand.execute(): matches=%s",
+                         repr(matches))
 
             # Check if we have found some results
             if len(matches) == 0:
@@ -811,8 +817,15 @@ class GetUpstreamLatestVersionCommand(UpstreamWatchCommand):
             content = self.UrlContentRetrieve(self.config.getUpstreamURL())
 
             # Search the strings matching the regexp passed through command line arguments
-            p = re.compile(self.config.getRegexp())
+            regex_str = self.config.getRegexp()
+            p = re.compile(regex_str)
             matches = p.findall(content)
+            logging.info("GetUpstreamLatestVersionCommand.execute(): "
+                         "regex=%s",
+                         repr(regex_str))
+            logging.info("GetUpstreamLatestVersionCommand.execute(): "
+                         "matches=%s",
+                         repr(matches))
 
             # Check if we have found some results
             if len(matches) == 0:
