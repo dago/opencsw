@@ -537,7 +537,7 @@ def main():
       print obj.catalogname, obj.basename, obj.md5_sum
   elif command == 'gen-cat':
     catrel = 'unstable'
-    if options.catrel != catrel:
+    if options.catrel and options.catrel != catrel:
       logging.warn("Generating the %s catalog.", catrel)
     if len(args) != 2:
       raise UsageError("Wrong number of arguments, see usage.")
