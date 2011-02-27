@@ -100,6 +100,8 @@ CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWap2prefork
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 
+CHECKPKG_OVERRIDES_CSWapache2-devel += file-with-bad-content|/usr/local|root/opt/csw/apache2/include/httpd.h
+
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
 
