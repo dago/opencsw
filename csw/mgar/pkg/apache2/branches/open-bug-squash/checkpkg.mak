@@ -363,7 +363,7 @@ CHECKPKG_OVERRIDES_CSWapache2-devel += file-collision|/opt/csw/apache2/share/err
 CHECKPKG_OVERRIDES_CSWapache2-devel += file-collision|/opt/csw/apache2/share/error/include/spacer.html|CSWapache2-devel|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2-devel += file-collision|/opt/csw/apache2/share/error/include/top.html|CSWapache2-devel|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2 += file-collision|/opt/csw/apache2/etc/extra/httpd-info.conf.CSW|CSWapache2|CSWapache2c
-CHECKPKG_OVERRIDES_CSWap2suexec += file-with-bad-content|/usr/local|root/opt/csw/apache2/sbin/suexec
+
 CHECKPKG_OVERRIDES_CSWapache2-devel += file-with-bad-content|/usr/local|root/opt/csw/apache2/include/httpd.h
 
 CHECKPKG_OVERRIDES_CSWapache2-manual += file-with-bad-content|/export/home|root/opt/csw/apache2/share/manual/logs.html.en
