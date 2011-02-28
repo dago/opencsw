@@ -1,15 +1,5 @@
 PHP5EXT_NAME = pdosqlite
 
-PACKAGES += CSWphp5pdosqlite
-
-CATALOGNAME_CSWphp5pdosqlite = php5_pdosqlite
-SPKG_DESC_CSWphp5pdosqlite = A Sqlite specific database access abstraction module for PHP applications
-RUNTIME_DEP_PKGS_CSWphp5pdosqlite = CSWphp5 CSWphp5pdo
-
-CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
-
-PKGFILES_CSWphp5pdosqlite = .*/lib/php/extensions/.*/pdo_sqlite.*
-
 define CSWphp5pdosqlite_postinstall
 #!/bin/sh
 

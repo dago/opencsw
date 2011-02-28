@@ -1,15 +1,5 @@
 PHP5EXT_NAME = mysql
 
-PACKAGES += CSWphp5mysql
-
-CATALOGNAME_CSWphp5mysql = php5_mysql
-SPKG_DESC_CSWphp5mysql = mysql Extention for PHP5
-RUNTIME_DEP_PKGS_CSWphp5mysql = CSWphp5 CSWmysql5rt
-
-CONFIGURE_ARGS += --with-mysql=shared,$(prefix)
-
-PKGFILES_CSWphp5mysql = .*/lib/php/extensions/.*/mysql\.so
-
 define CSWphp5mysql_postinstall
 #!/bin/sh
 
