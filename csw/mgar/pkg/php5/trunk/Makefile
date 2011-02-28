@@ -83,6 +83,8 @@ PACKAGES += CSWphp5xmlwriter
 PACKAGES += CSWphp5xsl
 PACKAGES += CSWphp5zip
 
+BUILD_DEP_PKGS += CSWlibgdbm-dev
+
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 
