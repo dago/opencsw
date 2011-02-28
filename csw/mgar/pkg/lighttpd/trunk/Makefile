@@ -30,6 +30,9 @@ PATCHFILES += 0001-Work-around-linking-problem-buffer.c.patch
 # inject the right -R flag.
 PATCHFILES += 0002-Force-LDFLAGS-on-mod_compress.patch
 
+# There's a thread started on lighttpd forums about the issue:
+# http://redmine.lighttpd.net/boards/2/topics/4163
+
 # lighttpd puts its modules under libdir, so we pass libdir as a subdirectory,
 # because modules are not supposed to be in /opt/csw/lib.
 libdir = $(prefix)/lib/lighttpd
