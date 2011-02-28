@@ -215,7 +215,7 @@ SPKG_DESC_CSWphp5pdo = A database access abstraction module for PHP applications
 RUNTIME_DEP_PKGS_CSWphp5pdo = CSWphp5 
 
 CATALOGNAME_CSWphp5pdomysql = php5_pdomysql
-SPKG_DESC_CSWphp5pdomysql = A MySQL specific database access abstraction module for PHP applications
+SPKG_DESC_CSWphp5pdomysql = A MySQL specific database access abstraction module for PHP applications (pdo version)
 RUNTIME_DEP_PKGS_CSWphp5pdomysql = CSWphp5 CSWmysql5rt CSWzlib CSWphp5pdo
 
 CATALOGNAME_CSWphp5pdoodbc = php5_pdoodbc
@@ -223,11 +223,11 @@ SPKG_DESC_CSWphp5pdoodbc = An ODBC specific database access abstraction module f
 RUNTIME_DEP_PKGS_CSWphp5pdoodbc = CSWphp5 CSWunixodbc CSWphp5pdo
 
 CATALOGNAME_CSWphp5pdopgsql = php5_pdopgsql
-SPKG_DESC_CSWphp5pdopgsql = A PgSQL specific database access abstraction module for PHP applications
+SPKG_DESC_CSWphp5pdopgsql = A PgSQL specific database access abstraction module for PHP applications (pdo version)
 RUNTIME_DEP_PKGS_CSWphp5pdopgsql = CSWphp5 CSWlibpq CSWphp5pdo
 
 CATALOGNAME_CSWphp5pdosqlite = php5_pdosqlite
-SPKG_DESC_CSWphp5pdosqlite = A Sqlite specific database access abstraction module for PHP applications
+SPKG_DESC_CSWphp5pdosqlite = A Sqlite specific database access abstraction module for PHP applications (pdo version)
 RUNTIME_DEP_PKGS_CSWphp5pdosqlite = CSWphp5 CSWphp5pdo
 
 CATALOGNAME_CSWphp5pgsql = php5_pgsql
