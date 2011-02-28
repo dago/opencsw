@@ -1,16 +1,5 @@
 PHP5EXT_NAME = pdomysql
 
-PACKAGES += CSWphp5pdomysql
-
-CATALOGNAME_CSWphp5pdomysql = php5_pdomysql
-SPKG_DESC_CSWphp5pdomysql = A MySQL specific database access abstraction module for PHP applications
-RUNTIME_DEP_PKGS_CSWphp5pdomysql = CSWphp5 CSWmysql5rt CSWzlib CSWphp5pdo
-
-CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)
-CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
-
-PKGFILES_CSWphp5pdomysql = .*/lib/php/extensions/.*/pdo_mysql.*
-
 define CSWphp5pdomysql_postinstall
 #!/bin/sh
 

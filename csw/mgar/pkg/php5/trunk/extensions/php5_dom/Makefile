@@ -1,17 +1,5 @@
 PHP5EXT_NAME = dom
 
-PACKAGES += CSWphp5dom
-
-CATALOGNAME_CSWphp5dom = php5_dom
-SPKG_DESC_CSWphp5dom = dom Extention for PHP5
-RUNTIME_DEP_PKGS_CSWphp5dom = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
-
-CONFIGURE_ARGS += --enable-dom=shared
-CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
-
-PKGFILES_CSWphp5dom = .*/lib/php/extensions/.*/dom.*
-PKGFILES_CSWphp5dom = .*/include/php/ext/dom.*
-
 define CSWphp5dom_postinstall
 #!/bin/sh
 

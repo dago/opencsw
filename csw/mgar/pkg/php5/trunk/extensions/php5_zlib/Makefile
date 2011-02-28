@@ -1,8 +1,5 @@
 PHP5EXT_NAME = zlib
 
-
-CONFIGURE_ARGS += --with-zlib=$(prefix)
-
 define CSWphp5zlib_postinstall
 #!/bin/sh
 

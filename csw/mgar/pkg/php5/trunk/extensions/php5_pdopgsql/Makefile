@@ -1,17 +1,5 @@
 PHP5EXT_NAME = pdopgsql
 
-PACKAGES += CSWphp5pdopgsql
-
-CATALOGNAME_CSWphp5pdopgsql = php5_pdopgsql
-SPKG_DESC_CSWphp5pdopgsql = A PgSQL specific database access abstraction module for PHP applications
-RUNTIME_DEP_PKGS_CSWphp5pdopgsql = CSWphp5 CSWlibpq CSWphp5pdo
-
-PATCHFILES += pdopgsql.diff
-
-CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(prefix)/postgresql
-
-PKGFILES_CSWphp5pdopgsql = .*/lib/php/extensions/.*/pdo_pgsql.*
-
 define CSWphp5pdopgsql_postinstall
 #!/bin/sh
 

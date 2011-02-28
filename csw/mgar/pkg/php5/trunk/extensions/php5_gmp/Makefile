@@ -1,15 +1,5 @@
 PHP5EXT_NAME = gmp
 
-PACKAGES += CSWphp5gmp
-
-CATALOGNAME_CSWphp5gmp = php5_gmp
-SPKG_DESC_CSWphp5gmp = gmp Extention for PHP5
-RUNTIME_DEP_PKGS_CSWphp5gmp = CSWphp5 CSWlibgmp
-
-CONFIGURE_ARGS += --with-gmp=shared,$(prefix)
-
-PKGFILES_CSWphp5gmp = .*/lib/php/extensions/.*/gmp.*
-
 define CSWphp5gmp_postinstall
 #!/bin/sh
 
