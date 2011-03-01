@@ -487,11 +487,8 @@ CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
 CONFIGURE_ARGS += --enable-cli
-CONFIGURE_ARGS += --enable-fastcgi
-CONFIGURE_ARGS += --enable-force-cgi-redirect
 CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --enable-magic-quotes
-CONFIGURE_ARGS += --enable-spl=shared
 CONFIGURE_ARGS += --with-pcre-regex
 CONFIGURE_ARGS += --with-pear=shared
 CONFIGURE_ARGS += --with-pear=shared
@@ -506,7 +503,6 @@ CONFIGURE_ARGS += --enable-dba=shared
 CONFIGURE_ARGS += --with-ndbm
 CONFIGURE_ARGS += --with-gdbm=$(prefix)
 CONFIGURE_ARGS += --with-db4=$(prefix)/bdb4
-CONFIGURE_ARGS += --enable-dbase=shared
 CONFIGURE_ARGS += --enable-dom=shared
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --enable-exif=shared
@@ -518,7 +514,6 @@ CONFIGURE_ARGS += --with-jpeg-dir=$(prefix)
 CONFIGURE_ARGS += --with-png-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 CONFIGURE_ARGS += --with-xpm-dir=$(prefix)
-CONFIGURE_ARGS += --with-ttf=$(prefix)
 CONFIGURE_ARGS += --with-freetype-dir=$(prefix)
 CONFIGURE_ARGS += --with-t1lib=$(prefix)
 CONFIGURE_ARGS += --enable-gd-native-ttf
@@ -539,11 +534,9 @@ CONFIGURE_ARGS += --enable-mbregex=shared
 CONFIGURE_ARGS += --with-mcrypt=shared,$(prefix)
 CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
 CONFIGURE_ARGS += --enable-phar=shared
-CONFIGURE_ARGS += --with-mime-magic=shared
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)/mysql5
 CONFIGURE_ARGS += --with-mysqli=shared,$(prefix)/mysql5/bin/$(ISA_DEFAULT)/mysql_config
-CONFIGURE_ARGS += --with-ncurses=shared,$(prefix)
 CONFIGURE_ARGS += --with-unixODBC=shared,$(prefix)
 CONFIGURE_ARGS += --with-openssl=shared,$(prefix)
 CONFIGURE_ARGS += --enable-pcntl=shared
