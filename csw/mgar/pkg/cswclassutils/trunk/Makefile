@@ -100,6 +100,7 @@ $(foreach C,$(CSWCLASSES),$(call surplus_dep,$(C)))
 
 PKGFILES_CSWcas-cptemplates += /opt/csw/etc/templates
 PKGFILES_CSWcas-initsmf += /opt/csw/etc/init.d/.*
+PKGFILES_CSWcas-initsmf += /etc/opt/csw/init.d.*
 PKGFILES_CSWcas-initsmf += /var/opt/csw/svc/.*
 
 # Mark these as _extra_ so they're applied after the excludes, which would
@@ -117,6 +118,7 @@ install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
 	@ginstall -m 0755 -d $(DESTDIR)/opt/csw/etc/init.d
+	@ginstall -m 0755 -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 0755 -d $(DESTDIR)/opt/csw/etc/templates
 	@ginstall -m 0755 -d $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -m 0755 -d $(DESTDIR)/usr/sadm/install/scripts
