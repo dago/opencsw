@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# Copyright 2005 Sergiusz Pawlowicz  All rights reserved.
+# Use is subject to license terms.
+# Modified for lighttpd
+#
+#
+
+LIGHTTPD_HOME=/opt/csw
+CONF_FILE=/opt/csw/etc/lighttpd.conf
+PIDFILE=/var/run/lighttpd.pid
+HTTPD="${LIGHTTPD_HOME}/sbin/lighttpd"
+
+[ ! -f ${CONF_FILE} ] &&  exit $CONF_FILE
+
+case "$1" in
+start)
+        /bin/rm -f ${PIDFILE}
+# Enable NCA:
+        NCAKMODCONF=/etc/nca/ncakmod.conf
+        if [ -f $NCAKMODCONF ]; then
+            . $NCAKMODCONF
+            if [ "x$status" = "xenabled" ]; then
+                 HTTPD="env LD_PRELOAD=/usr/lib/ncad_addr.so $HTTPD"
+            fi
+        fi
+        exec $HTTPD -f ${CONF_FILE} 2>&1
+        ;;
+refresh)
+        if [ -f "$PIDFILE" ]; then
+                /usr/bin/kill -HUP `/usr/bin/cat $PIDFILE`
+        fi
+        ;;
+stop)
+        if [ -f "$PIDFILE" ]; then
+                /usr/bin/kill -QUIT `/usr/bin/cat $PIDFILE`
+        fi
+        ;;
+*)
+        echo "Usage: $0 {start|stop|refresh}"
+        exit 1
+        ;;
+esac
