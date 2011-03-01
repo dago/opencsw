@@ -43,9 +43,11 @@ define catname
 $(call set,$(call var_name,CATALOGNAME,$(1)),$(call catname_val,$(1)))
 endef
 
-define surplus_dep
-$(eval CHECKPKG_OVERRIDES_CSWcswclassutils += surplus-dependency|$(call csw_pkgname,$(1)))
-endef
+# checkpkg understands this relationship now, so no need to override it
+# any more.  keep it here in case it ever becomes useful for something else
+# define surplus_dep
+# $(eval CHECKPKG_OVERRIDES_CSWcswclassutils += surplus-dependency|$(call csw_pkgname,$(1)))
+# endef
 
 # end of handy functions
 
@@ -94,7 +96,7 @@ $(foreach C,$(CSWCLASSES),$(call pkg_files,$(C)))
 $(foreach C,$(CSWCLASSES),$(call catname,$(C)))
 
 # tell checkpkg to ignore the surplus dep on the subpkgs
-$(foreach C,$(CSWCLASSES),$(call surplus_dep,$(C)))
+#$(foreach C,$(CSWCLASSES),$(call surplus_dep,$(C)))
 
 # Add non-auto changes to checkpkg overrides, pkg files, etc.
 
