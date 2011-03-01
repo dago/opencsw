@@ -212,7 +212,7 @@ PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
 #PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/apache2/sbin/suexec" { $$$$4 = "4755" }; $$$$3 ~ /cswap2mod/ { $$$$4 = "0555" }; { print }'
 
-include checkpkg.mak
+#include checkpkg.mak
 
 include gar/category.mk
 
