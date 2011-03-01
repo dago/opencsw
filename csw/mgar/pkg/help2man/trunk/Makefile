@@ -1,5 +1,5 @@
 NAME = help2man
-VERSION = 1.38.4
+VERSION = 1.39.1
 CATEGORIES = devel
 
 DESCRIPTION = A tool for automatically generating simple manual pages from program output
@@ -25,4 +25,6 @@ CHECKPKG_OVERRIDES_CSWhelp2man += surplus-dependency|CSWpmlocalegettext
 include gar/category.mk
 
 post-install-modulated:
-	-perl -pi -e 's,/usr/lib,$(libdir),' $(DESTDIR)$(infodir)/help2man.info
+	-perl -pi -e 's,/usr/lib,$(libdir),g;' \
+		-e 's,/usr/share,$(sharedstatedir),g;' \
+		$(DESTDIR)$(infodir)/help2man.info
