@@ -95,121 +95,121 @@ RUNTIME_DEP_PKGS_CSWphp5     += CSWlibxml2 CSWzlib
 RUNTIME_DEP_PKGS_CSWphp5     += CSWlibmm CSWapache2
 
 CATALOGNAME_CSWphp5bcmath = php5_bcmath
-SPKG_DESC_CSWphp5bcmath = bcmath Extention for PHP5
+SPKG_DESC_CSWphp5bcmath = bcmath Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5bcmath = CSWphp5
 
 CATALOGNAME_CSWphp5bz2 = php5_bz2
-SPKG_DESC_CSWphp5bz2 = bz2 Extention for PHP5
+SPKG_DESC_CSWphp5bz2 = bz2 Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5bz2 = CSWphp5 CSWbzip2
 
 CATALOGNAME_CSWphp5calendar = php5_calendar
-SPKG_DESC_CSWphp5calendar = calendar Extention for PHP5
+SPKG_DESC_CSWphp5calendar = calendar Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5calendar = CSWphp5
 
 CATALOGNAME_CSWphp5ctype = php5_ctype
-SPKG_DESC_CSWphp5ctype = ctype Extention for PHP5
+SPKG_DESC_CSWphp5ctype = ctype Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5ctype = CSWphp5
 
 CATALOGNAME_CSWphp5curl = php5_curl
-SPKG_DESC_CSWphp5curl = curl Extention for PHP5
+SPKG_DESC_CSWphp5curl = curl Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5curl  = CSWphp5 CSWcurlrt CSWlibidn 
 RUNTIME_DEP_PKGS_CSWphp5curl += CSWoldaprt CSWosslrt CSWzlib
 
 CATALOGNAME_CSWphp5dba = php5_dba
-SPKG_DESC_CSWphp5dba = dba Extention for PHP5
+SPKG_DESC_CSWphp5dba = dba Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5dba = CSWphp5 CSWbdb CSWgdbm
 
 CATALOGNAME_CSWphp5dbase = php5_dbase
-SPKG_DESC_CSWphp5dbase = dbase Extention for PHP5
+SPKG_DESC_CSWphp5dbase = dbase Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5dbase = CSWphp5
 
 CATALOGNAME_CSWphp5dom = php5_dom
-SPKG_DESC_CSWphp5dom = dom Extention for PHP5
+SPKG_DESC_CSWphp5dom = dom Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5dom = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
 
 CATALOGNAME_CSWphp5exif = php5_exif
-SPKG_DESC_CSWphp5exif = exif Extention for PHP5
+SPKG_DESC_CSWphp5exif = exif Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5exif = CSWphp5
 
 CATALOGNAME_CSWphp5ftp = php5_ftp
-SPKG_DESC_CSWphp5ftp = ftp Extention for PHP5
+SPKG_DESC_CSWphp5ftp = ftp Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5ftp = CSWphp5 CSWosslrt
 
 CATALOGNAME_CSWphp5gd = php5_gd
-SPKG_DESC_CSWphp5gd = gd Extention for PHP5
+SPKG_DESC_CSWphp5gd = gd Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5gd  = CSWphp5 CSWftype2 CSWgd CSWjpeg
 RUNTIME_DEP_PKGS_CSWphp5gd += CSWpng CSWt1lib CSWxpm CSWzlib
 
 CATALOGNAME_CSWphp5gettext = php5_gettext
-SPKG_DESC_CSWphp5gettext = gettext Extention for PHP5
+SPKG_DESC_CSWphp5gettext = gettext Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5gettext = CSWphp5 CSWggettextrt
 
 CATALOGNAME_CSWphp5gmp = php5_gmp
-SPKG_DESC_CSWphp5gmp = gmp Extention for PHP5
+SPKG_DESC_CSWphp5gmp = gmp Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5gmp = CSWphp5 CSWlibgmp
 
 CATALOGNAME_CSWphp5hash = php5_hash
-SPKG_DESC_CSWphp5hash = hash Extention for PHP5
+SPKG_DESC_CSWphp5hash = hash Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5hash = CSWphp5
 
 CATALOGNAME_CSWphp5iconv = php5_iconv
-SPKG_DESC_CSWphp5iconv = iconv Extention for PHP5
+SPKG_DESC_CSWphp5iconv = iconv Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5iconv = CSWphp5 CSWiconv
 
 CATALOGNAME_CSWphp5imap = php5_imap
-SPKG_DESC_CSWphp5imap = imap Extention for PHP5
+SPKG_DESC_CSWphp5imap = imap Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5imap = CSWphp5 CSWimaprt CSWkrb5lib CSWosslrt
 
 CATALOGNAME_CSWphp5json = php5_json
-SPKG_DESC_CSWphp5json = json Extention for PHP5
+SPKG_DESC_CSWphp5json = json Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5json = CSWphp5
 
 CATALOGNAME_CSWphp5ldap = php5_ldap
-SPKG_DESC_CSWphp5ldap = ldap Extention for PHP5
+SPKG_DESC_CSWphp5ldap = ldap Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5ldap = CSWphp5 CSWoldaprt CSWsasl
 
 CATALOGNAME_CSWphp5mbstring = php5_mbstring
-SPKG_DESC_CSWphp5mbstring = mbstring Extention for PHP5
+SPKG_DESC_CSWphp5mbstring = mbstring Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5mbstring = CSWphp5
 
 CATALOGNAME_CSWphp5mcrypt = php5_mcrypt
-SPKG_DESC_CSWphp5mcrypt = mcrypt Extention for PHP5
+SPKG_DESC_CSWphp5mcrypt = mcrypt Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5mcrypt = CSWphp5 CSWlibmcrypt CSWlibtoolrt
 
 CATALOGNAME_CSWphp5mhash = php5_mhash
-SPKG_DESC_CSWphp5mhash = mhash Extention for PHP5
+SPKG_DESC_CSWphp5mhash = mhash Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5mhash = CSWphp5 CSWlibmhash
 
 CATALOGNAME_CSWphp5mimemagic = php5_mime_magic
-SPKG_DESC_CSWphp5mimemagic = mime magic Extention for PHP5
+SPKG_DESC_CSWphp5mimemagic = mime magic Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5mimemagic = CSWphp5
 
 CATALOGNAME_CSWphp5mssql = php5_mssql
-SPKG_DESC_CSWphp5mssql = mssql Extention for PHP5
+SPKG_DESC_CSWphp5mssql = mssql Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5mssql = CSWphp5 CSWfreetds
 
 CATALOGNAME_CSWphp5mysql = php5_mysql
-SPKG_DESC_CSWphp5mysql = mysql Extention for PHP5
+SPKG_DESC_CSWphp5mysql = mysql Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5mysql = CSWphp5 CSWmysql5rt
 
 CATALOGNAME_CSWphp5mysqli = php5_mysqli
-SPKG_DESC_CSWphp5mysqli = mysqli Extention for PHP5
+SPKG_DESC_CSWphp5mysqli = mysqli Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5mysqli = CSWphp5 CSWmysql5rt CSWzlib
 
 CATALOGNAME_CSWphp5ncurses = php5_ncurses
-SPKG_DESC_CSWphp5ncurses = ncurses Extention for PHP5
+SPKG_DESC_CSWphp5ncurses = ncurses Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5ncurses = CSWphp5 CSWncurses
 
 CATALOGNAME_CSWphp5odbc = php5_odbc
-SPKG_DESC_CSWphp5odbc = odbc Extention for PHP5
+SPKG_DESC_CSWphp5odbc = odbc Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5odbc = CSWphp5 CSWunixodbc
 
 CATALOGNAME_CSWphp5openssl = php5_openssl
-SPKG_DESC_CSWphp5openssl = openssl Extention for PHP5
+SPKG_DESC_CSWphp5openssl = openssl Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5openssl = CSWphp5 CSWosslrt CSWkrb5lib
 
 CATALOGNAME_CSWphp5pcntl = php5_pcntl
-SPKG_DESC_CSWphp5pcntl = pcntl Extention for PHP5
+SPKG_DESC_CSWphp5pcntl = pcntl Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5pcntl = CSWphp5
 
 CATALOGNAME_CSWphp5pdo = php5_pdo
@@ -233,88 +233,88 @@ SPKG_DESC_CSWphp5pdosqlite = A Sqlite specific database access abstraction modul
 RUNTIME_DEP_PKGS_CSWphp5pdosqlite = CSWphp5 CSWphp5pdo
 
 CATALOGNAME_CSWphp5pgsql = php5_pgsql
-SPKG_DESC_CSWphp5pgsql = pgsql Extention for PHP5
+SPKG_DESC_CSWphp5pgsql = pgsql Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5pgsql = CSWphp5 CSWlibpq
 
 CATALOGNAME_CSWphp5posix = php5_posix
-SPKG_DESC_CSWphp5posix = posix Extention for PHP5
+SPKG_DESC_CSWphp5posix = posix Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5posix = CSWphp5
 
 CATALOGNAME_CSWphp5pspell = php5_pspell
-SPKG_DESC_CSWphp5pspell = pspell Extention for PHP5
+SPKG_DESC_CSWphp5pspell = pspell Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5pspell = CSWphp5 CSWaspell
 
 CATALOGNAME_CSWphp5readline = php5_readline
-SPKG_DESC_CSWphp5readline = readline Extention for PHP5
+SPKG_DESC_CSWphp5readline = readline Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5readline = CSWphp5 CSWreadline CSWncurses
 
 CATALOGNAME_CSWphp5session = php5_session
-SPKG_DESC_CSWphp5session = session Extention for PHP5
+SPKG_DESC_CSWphp5session = session Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5session = CSWphp5 CSWlibmm
 
 CATALOGNAME_CSWphp5shmop = php5_shmop
-SPKG_DESC_CSWphp5shmop = shmop Extention for PHP5
+SPKG_DESC_CSWphp5shmop = shmop Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5shmop = CSWphp5
 
 CATALOGNAME_CSWphp5snmp = php5_snmp
-SPKG_DESC_CSWphp5snmp = snmp Extention for PHP5
+SPKG_DESC_CSWphp5snmp = snmp Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5snmp = CSWphp5 CSWnetsnmp CSWosslrt CSWtcpwrap
 
 CATALOGNAME_CSWphp5soap = php5_soap
-SPKG_DESC_CSWphp5soap = soap Extention for PHP5
+SPKG_DESC_CSWphp5soap = soap Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5soap = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
 
 CATALOGNAME_CSWphp5sockets = php5_sockets
-SPKG_DESC_CSWphp5sockets = sockets Extention for PHP5
+SPKG_DESC_CSWphp5sockets = sockets Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5sockets = CSWphp5
 
 CATALOGNAME_CSWphp5sqlite = php5_sqlite
-SPKG_DESC_CSWphp5sqlite = sqlite Extention for PHP5
+SPKG_DESC_CSWphp5sqlite = sqlite Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5sqlite = CSWphp5 CSWsqlite
 
 CATALOGNAME_CSWphp5sysvmsg = php5_sysvmsg
-SPKG_DESC_CSWphp5sysvmsg = sysvmsg Extention for PHP5
+SPKG_DESC_CSWphp5sysvmsg = sysvmsg Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5sysvmsg = CSWphp5
 
 CATALOGNAME_CSWphp5sysvsem = php5_sysvsem
-SPKG_DESC_CSWphp5sysvsem = sysvsem Extention for PHP5
+SPKG_DESC_CSWphp5sysvsem = sysvsem Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5sysvsem = CSWphp5
 
 CATALOGNAME_CSWphp5sysvshm = php5_sysvshm
-SPKG_DESC_CSWphp5sysvshm = sysvshm Extention for PHP5
+SPKG_DESC_CSWphp5sysvshm = sysvshm Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5sysvshm = CSWphp5
 
 CATALOGNAME_CSWphp5tidy = php5_tidy
-SPKG_DESC_CSWphp5tidy = tidy Extention for PHP5
+SPKG_DESC_CSWphp5tidy = tidy Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5tidy = CSWphp5 CSWhtmltidy
 
 CATALOGNAME_CSWphp5tokenizer = php5_tokenizer
-SPKG_DESC_CSWphp5tokenizer = tokenizer Extention for PHP5
+SPKG_DESC_CSWphp5tokenizer = tokenizer Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5tokenizer = CSWphp5
 
 CATALOGNAME_CSWphp5wddx = php5_wddx
-SPKG_DESC_CSWphp5wddx = wddx Extention for PHP5
+SPKG_DESC_CSWphp5wddx = wddx Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5wddx = CSWphp5
 
 CATALOGNAME_CSWphp5xmlreader = php5_xmlreader
-SPKG_DESC_CSWphp5xmlreader = xmlreader Extention for PHP5
+SPKG_DESC_CSWphp5xmlreader = xmlreader Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5xmlreader = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
 
 CATALOGNAME_CSWphp5xmlrpc = php5_xmlrpc
-SPKG_DESC_CSWphp5xmlrpc = xmlrpc Extention for PHP5
+SPKG_DESC_CSWphp5xmlrpc = xmlrpc Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5xmlrpc = CSWphp5 CSWiconv CSWlibxml2 CSWzlib CSWexpat
 
 CATALOGNAME_CSWphp5xmlwriter = php5_xmlwriter
-SPKG_DESC_CSWphp5xmlwriter = xmlwriter Extention for PHP5
+SPKG_DESC_CSWphp5xmlwriter = xmlwriter Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5xmlwriter = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
 
 CATALOGNAME_CSWphp5xsl = php5_xsl
-SPKG_DESC_CSWphp5xsl = xsl Extention for PHP5
+SPKG_DESC_CSWphp5xsl = xsl Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5xsl  = CSWphp5 CSWiconv CSWlibxml2 
 RUNTIME_DEP_PKGS_CSWphp5xsl += CSWlibxslt CSWzlib
 
 CATALOGNAME_CSWphp5zip = php5_zip
-SPKG_DESC_CSWphp5zip = zip Extention for PHP5
+SPKG_DESC_CSWphp5zip = zip Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5zip = CSWphp5 CSWzlib
 
 PKGFILES_CSWphp5devel  = $(bindir)/php-config
