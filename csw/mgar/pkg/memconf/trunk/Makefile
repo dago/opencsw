@@ -1,5 +1,5 @@
 NAME = memconf
-VERSION = 2.16
+VERSION = 2.17
 CATEGORIES = utils
 
 DESCRIPTION = Perl script that displays memory modules installed
@@ -21,6 +21,9 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
+# We prepended /opt/csw/bin but keep /usr/lcoal/bin
+CHECKPKG_OVERRIDES_CSWmemconf += file-with-bad-content|/usr/local|root/opt/csw/bin/memconf
+
 include gar/category.mk
 
 WORKSRC = $(WORKDIR)
@@ -31,7 +34,10 @@ install-custom:
 	@rm -rf $(DESTDIR)
 	@ginstall -d $(DESTDIR)$(bindir)
 	@ginstall -d $(DESTDIR)$(mandir)/man1
-	@cp $(WORKSRC)/$(NAME) $(DESTDIR)$(bindir)/$(NAME)
+	@# Make sure /opt/csw/bin is used before /usr/local/bin, but keep /usr/local/bin anyway
+	@cat $(WORKSRC)/$(NAME) | \
+		perl -npe 's,(:/usr/local/bin),:$(bindir)$$1,' \
+		> $(DESTDIR)$(bindir)/$(NAME)
 	@cp $(WORKSRC)/$(NAME).man $(DESTDIR)$(mandir)/man1/$(NAME).1
 	@chmod 755 $(DESTDIR)$(bindir)/$(NAME)
 	@chmod 644 $(DESTDIR)$(mandir)/man1/$(NAME).1
