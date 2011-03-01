@@ -89,7 +89,6 @@ PROTOTYPE_FILES_cas = /usr/sadm/install/scripts/.*
 PROTOTYPE_USER_cas = bin
 PROTOTYPE_GROUP_cas = sys
 
-
 # set a unique description for each CAS
 $(foreach C,$(CSWCLASSES),$(call spkg_desc,$(C)))
 SPKG_DESC_CSWcswclassutils = $(DESCRIPTION)
@@ -122,6 +121,9 @@ PKGFILES_CSWcas-pycompile_SHARED += /var/opt/csw/cswclassutils
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-missing-cswinitsmf-class
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location
 CHECKPKG_OVERRIDES_CSWcas-initsmf += init-file-wrong-location|/opt/csw/etc/init.d/csw.smf.sample
+
+# the doctype string
+CHECKPKG_OVERRIDES_CSWcas-initsmf += file-with-bad-content|/usr/share|root/usr/sadm/install/scripts/i.cswinitsmf
 
 include gar/category.mk
 
