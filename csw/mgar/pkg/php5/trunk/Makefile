@@ -540,14 +540,16 @@ CONFIGURE_ARGS += --with-mcrypt=shared,$(prefix)
 CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
 CONFIGURE_ARGS += --with-mime-magic=shared
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
-CONFIGURE_ARGS += --with-mysql=shared,$(prefix)
-CONFIGURE_ARGS += --with-mysqli=shared,$(bindir)/mysql_config
+CONFIGURE_ARGS += --with-mysql=shared,$(prefix)/mysql5
+CONFIGURE_ARGS += --with-mysqli=shared,$(prefix)/mysql5/bin/$(ISA_DEFAULT)/mysql_config
 CONFIGURE_ARGS += --with-ncurses=shared,$(prefix)
 CONFIGURE_ARGS += --with-unixODBC=shared,$(prefix)
 CONFIGURE_ARGS += --with-openssl=shared,$(prefix)
 CONFIGURE_ARGS += --enable-pcntl=shared
 CONFIGURE_ARGS += --enable-pdo=shared
-CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)
+# not documented, but you can pass the path to mysql_config directly
+# we need the 32-bit version, so we have to force this
+CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/mysql5/bin/$(ISA_DEFAULT)/mysql_config
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
 CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(prefix)/postgresql
