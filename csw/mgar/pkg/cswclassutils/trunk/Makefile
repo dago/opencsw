@@ -52,7 +52,7 @@ endef
 DESCRIPTION = CSW class action utilities
 
 MASTER_SITES =
-DISTFILES = COPYING
+DISTFILES = COPYING CSWcas-initsmf.cswreleasenotes
 
 ARCHALL = 1
 

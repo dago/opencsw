@@ -1,0 +1,2 @@
+* Creating /etc/opt/csw/init.d so other packages relying on it aren't borked
+  - mantis 4635
