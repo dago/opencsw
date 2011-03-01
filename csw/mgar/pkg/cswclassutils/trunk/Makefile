@@ -49,6 +49,10 @@ endef
 # $(eval CHECKPKG_OVERRIDES_CSWcswclassutils += surplus-dependency|$(call csw_pkgname,$(1)))
 # endef
 
+define bad_location
+$(eval CHECKPKG_OVERRIDES_CSWcas-$(1) += bad-location-of-file|file=/usr/sadm/install/scripts/$(2).csw$(1))
+endef
+
 # end of handy functions
 
 DESCRIPTION = CSW class action utilities
@@ -97,6 +101,11 @@ $(foreach C,$(CSWCLASSES),$(call catname,$(C)))
 
 # tell checkpkg to ignore the surplus dep on the subpkgs
 #$(foreach C,$(CSWCLASSES),$(call surplus_dep,$(C)))
+
+# tell checkpkg to ignore the bad file location in the subpackages
+$(foreach C,$(CSWCLASSES),$(call bad_location,$(call cas_shortname,$(C)),i))
+$(foreach C,$(CSWCLASSES),$(call bad_location,$(call cas_shortname,$(C)),r))
+
 
 # Add non-auto changes to checkpkg overrides, pkg files, etc.
 
