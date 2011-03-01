@@ -505,7 +505,7 @@ CONFIGURE_ARGS += --with-curlwrappers
 CONFIGURE_ARGS += --enable-dba=shared
 CONFIGURE_ARGS += --with-ndbm
 CONFIGURE_ARGS += --with-gdbm=$(prefix)
-CONFIGURE_ARGS += --with-db4=$(prefix)
+CONFIGURE_ARGS += --with-db4=$(prefix)/bdb4
 CONFIGURE_ARGS += --enable-dbase=shared
 CONFIGURE_ARGS += --enable-dom=shared
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
