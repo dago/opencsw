@@ -1,0 +1,13 @@
+This small package adds debugging capabilities to the hook caller (eg:
+the package tool).  It does nothing other than echo the hook name and
+the arguments passed to stdout (with ansi colours to make them easily
+visible).
+
+The package hook requirements are detailed here:
+http://wiki.opencsw.org/package-hooks
+
+Currently, this is only implemented in pkgutil v1.7 or later.
+
+These scripts are licensed under the GPL v3.
+
+Ben Walton <bwalton@opencsw.org>
