@@ -538,6 +538,7 @@ CONFIGURE_ARGS += --enable-mbstring=shared
 CONFIGURE_ARGS += --enable-mbregex=shared
 CONFIGURE_ARGS += --with-mcrypt=shared,$(prefix)
 CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
+CONFIGURE_ARGS += --enable-phar=shared
 CONFIGURE_ARGS += --with-mime-magic=shared
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)/mysql5
