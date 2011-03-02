@@ -1,0 +1,40 @@
+From 02889f366c472ec30d6f19cfd882385fd936b734 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Wed, 2 Mar 2011 04:10:08 +0100
+Subject: [PATCH] Patch a few more usr/local references
+
+Set default DLN paths
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ dln.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/dln.c b/dln.c
+index 93d912c..4711d4c 100644
+--- a/dln.c
++++ b/dln.c
+@@ -156,7 +156,7 @@ init_funcname_len(buf, file)
+ #endif
+ 
+ #ifndef DLN_DEFAULT_LIB_PATH
+-#  define DLN_DEFAULT_LIB_PATH "/lib:/usr/lib:/usr/local/lib:."
++#  define DLN_DEFAULT_LIB_PATH "/lib:/usr/lib:/opt/csw/lib:."
+ #endif
+ 
+ #include <errno.h>
+@@ -1663,9 +1663,9 @@ dln_find_exe(fname, path)
+ 
+     if (!path) {
+ #if defined(MSDOS) || defined(_WIN32) || defined(__human68k__) || defined(__MACOS__)
+-	path = "/usr/local/bin;/usr/ucb;/usr/bin;/bin;.";
++	path = "/opt/csw/bin;/usr/ucb;/usr/bin;/bin;.";
+ #else
+-	path = "/usr/local/bin:/usr/ucb:/usr/bin:/bin:.";
++	path = "/opt/csw/bin:/usr/ucb:/usr/bin:/bin:.";
+ #endif
+     }
+     return dln_find_1(fname, path, 1);
+-- 
+1.7.3.2
+
