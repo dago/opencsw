@@ -1,0 +1,25 @@
+From 1cc5e8c85d1afa2e814e3dc16280ff79f382e0af Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 2 Mar 2011 19:34:54 +0100
+Subject: [PATCH] Test for unsigned or test will fail
+
+---
+ src/test_strncpy_crlf.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/test_strncpy_crlf.c b/src/test_strncpy_crlf.c
+index dccf1cf..9b3bffd 100644
+--- a/src/test_strncpy_crlf.c
++++ b/src/test_strncpy_crlf.c
+@@ -28,7 +28,7 @@
+ void
+ test_strncpy_crlf (void)
+ {	const char *src = "a\nb\nc\n" ;
+-	char *dest ;
++	unsigned char *dest ;
+ 	int dest_len ;
+ 
+ 	print_test_name ("Testing psf_strncpy_crlf") ;
+-- 
+1.7.3.2
+

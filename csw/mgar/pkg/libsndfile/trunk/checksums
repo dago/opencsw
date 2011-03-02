@@ -1,5 +1,1 @@
-5a1c6c4bfb8b8426d8ebc8d67814a7c8  0001-Add-lrintf-workaround-to-regtest.patch
-ab0c6ea20d4bda60f6f6dd4fa4c26871  0002-Add-workaround-for-missing-libm-function-lrint-and-l.patch
-599bd5f64872bbddf993ce0815d28417  0003-Workaround-mising-stdint.h-and-Sun-Studio-shortcomin.patch
-732c648739e94cb5fd2e70d983390318  0004-Disable-stop-on-error-until-cpp_test-refcount-error-.patch
-880a40ec636ab2185b97f8927299b292  libsndfile-1.0.21.tar.gz
+d0e22b5ff2ef945615db33960376d733  libsndfile-1.0.23.tar.gz
