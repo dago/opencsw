@@ -1,6 +1,6 @@
 # $Id$
 NAME = parallel
-VERSION = 20101222
+VERSION = 20110205
 CATEGORIES = utils
 
 DESCRIPTION = Shell tool for executing jobs in parallel
@@ -33,6 +33,15 @@ ARCHALL = 1
 # (good that they show up during the testsuite run)
 RUNTIME_DEP_PKGS = CSWperl
 CHECKPKG_OVERRIDES_CSWparallel += surplus-dependency|CSWperl
+
+# This references a special ssh like /usr/local/bin/myssh
+CHECKPKG_OVERRIDES_CSWparallel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/parallel/parallel.html
+# This references a special ssh like /usr/local/bin/myssh
+CHECKPKG_OVERRIDES_CSWparallel += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/parallel.1
+# This is only in a comment
+CHECKPKG_OVERRIDES_CSWparallel += file-with-bad-content|/usr/local|root/opt/csw/bin/parallel
+# This is only in a comment
+CHECKPKG_OVERRIDES_CSWparallel += file-with-bad-content|/usr/local|root/opt/csw/bin/sem
 
 include gar/category.mk
 
