@@ -14,18 +14,11 @@ DISTFILES  = $(NAME)-$(VERSION).tar.xz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES += CSWlibogg
-CATALOGNAME_CSWlibogg = libogg
-SPKG_DESC_CSWlibogg = Transitional package as contents moved to CSWlibogg0
-PKGFILES_CSWlibogg = NOFILES
-ARCHALL_CSWlibogg = 1
-RUNTIME_DEP_PKGS_CSWlibogg = CSWlibogg0
-CHECKPKG_OVERRIDES_CSWlibogg += surplus-dependency|CSWlibogg0
-
 PACKAGES += CSWlibogg0
 CATALOGNAME_CSWlibogg0 = libogg0
 SPKG_DESC_CSWlibogg0 = Ogg bitstream format support library providing libogg.so.0
 PKGFILES_CSWlibogg0 = $(call baseisadirs,$(libdir),libogg\.so\.0(\.\d+)*)
+OBSOLETES_CSWlibogg0 = CSWlibogg
 
 PACKAGES += CSWlibogg-dev
 CATALOGNAME_CSWlibogg-dev = libogg_dev
