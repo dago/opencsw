@@ -3,11 +3,10 @@
 # $Id$
 
 NAME = libsndfile
-VERSION = 1.0.21
-
+VERSION = 1.0.23
 CATEGORIES = lib
 
-DESCRIPTION = a C library for reading and writing files containing sampled sound
+DESCRIPTION = C library for reading and writing files containing sampled sound
 
 define BLURB
   Libsndfile is a C library for reading and writing files containing sampled
@@ -36,21 +35,38 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES = 0001-Add-lrintf-workaround-to-regtest.patch
 PATCHFILES += 0002-Add-workaround-for-missing-libm-function-lrint-and-l.patch
 PATCHFILES += 0003-Workaround-mising-stdint.h-and-Sun-Studio-shortcomin.patch
-PATCHFILES += 0004-Disable-stop-on-error-until-cpp_test-refcount-error-.patch
+PATCHFILES += 0004-Add-branch-for-inttypes.h.patch
+PATCHFILES += 0005-Test-for-unsigned-or-test-will-fail.patch
 
-# TODO: The __func__ replacement may be enhanced with
-#   http://mail-index.netbsd.org/pkgsrc-users/2009/05/18/msg009885.html
-# PATCHFILES += sunpro-extensions.patch
+PACKAGES += CSWlibsndfile
+CATALOGNAME_CSWlibsndfile = libsndfile
+SPKG_DESC_CSWlibsndfile = Tools for reading and writing files containing sampled sound
+RUNTIME_DEP_PKGS_CSWlibsndfile += CSWlibogg
+RUNTIME_DEP_PKGS_CSWlibsndfile += CSWflac
+RUNTIME_DEP_PKGS_CSWlibsndfile += CSWvorbis
+RUNTIME_DEP_PKGS_CSWlibsndfile += CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWlibsndfile += CSWlibsndfile1
 
-RUNTIME_DEP_PKGS = CSWvorbis CSWflac CSWlibogg CSWsqlite3rt
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+PACKAGES += CSWlibsndfile1
+CATALOGNAME_CSWlibsndfile1 = libsndfile1
+SPKG_DESC_CSWlibsndfile1 = Library for reading and writing files containing sampled sound, libsndfile.so.1
+PKGFILES_CSWlibsndfile1 = $(call baseisadirs,$(libdir),libsndfile\.so\.1(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibsndfile1 += CSWlibogg
+RUNTIME_DEP_PKGS_CSWlibsndfile1 += CSWflac
+RUNTIME_DEP_PKGS_CSWlibsndfile1 += CSWvorbis
 
-SPKG_SOURCEURL = http://www.mega-nerd.com/libsndfile/
+PACKAGES += CSWlibsndfile-dev
+CATALOGNAME_CSWlibsndfile-dev = libsndfile_dev
+SPKG_DESC_CSWlibsndfile-dev = Development files for libsndfile.so.1
+PKGFILES_CSWlibsndfile-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibsndfile-dev += $(docdir)/.*
+RUNTIME_DEP_PKGS_CSWlibsndfile-dev += CSWlibsndfile1
+
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibsndfile)
+
+VENDOR_URL = http://www.mega-nerd.com/libsndfile/
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# EXTRA_CFLAGS = -features=extensions
-# EXTRA_CXXFLAGS = -features=extensions
 
 BUILD64 = 1
 NOISAEXEC = 1
@@ -62,6 +78,11 @@ TEST_TARGET = check
 MERGE_DIRS_isa-extra = $(libdir)
 
 # Relocate docs to standard location
-EXTRA_PAX_ARGS += -s ',^\.$(prefix)/share/doc/libsndfile1-dev,.$(BUILD_PREFIX)/share/doc/$(NAME),'
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/share/doc/libsndfile1-dev,.$(prefix)/share/doc/$(NAME),'
+
+# These are all examples
+CHECKPKG_OVERRIDES_CSWlibsndfile-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libsndfile/html/FAQ.html
+CHECKPKG_OVERRIDES_CSWlibsndfile-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libsndfile/html/octave.html
+CHECKPKG_OVERRIDES_CSWlibsndfile-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libsndfile/html/pkgconfig.html
 
 include gar/category.mk
