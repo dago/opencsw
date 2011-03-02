@@ -17,22 +17,30 @@ SPKG_SOURCEURL = http://www.cpan.org/src
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES = CSWperl CSWperldoc
-ARCHALL_CSWperldoc = 1
-RUNTIME_DEP_PKGS_CSWperl = CSWbdb48 CSWgdbm
-RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
-INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
-
+PACKAGES += CSWperl
 SPKG_DESC_CSWperl = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWperl += CSWbdb48
+RUNTIME_DEP_PKGS_CSWperl += CSWgdbm
+
+PACKAGES += CSWperldoc
 SPKG_DESC_CSWperldoc = Perl documentation
+PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
+ARCHALL_CSWperldoc = 1
+INCOMPATIBLE_PKGS_CSWperl += CSWperlmods
+INCOMPATIBLE_PKGS_CSWperl += CSWpmdigest
+INCOMPATIBLE_PKGS_CSWperl += CSWpmi18nlangtags
+
+# The diagnostics.pm module needs the podfile to output its messages.
+# That means it must be included in the main package, not the docs.
+EXTRA_PKGFILES_EXCLUDED_CSWperldoc = .*\/perldiag.pod
+EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
 
 LICENSE = Copying
 
 PATCHFILES += 0001-change-inc-based-on-rhel5-patch.patch
 
-CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWperl += surplus-dependency|CSWgdbm
-CHECKPKG_OVERRIDES_CSWperl += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/perl/5.10.1/auto/GDBM_File/GDBM_File.so
+# CHECKPKG_OVERRIDES_CSWperl += surplus-dependency|CSWgdbm
+# CHECKPKG_OVERRIDES_CSWperl += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/perl/5.10.1/auto/GDBM_File/GDBM_File.so
 
 # Core module updates
 # Not used at the moment, leave one as example
@@ -42,9 +50,7 @@ CHECKPKG_OVERRIDES_CSWperl += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw
 
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
-# Dependencies
-#LIBDEPS += bdb48/lib
-LIBDEPS += lib/gdbm
+BUILD64 = 1
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
@@ -53,7 +59,10 @@ CONFIGURE_SCRIPTS = perl
 INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0
 
 # Force use of db-4.8
-PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl
+# TBD: Take out libperl.so, see below.
+PERL_LIBS-32 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl
+PERL_LIBS-64 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc
+PERL_LIBS = $(PERL_LIBS-$(MEMORYMODEL))
 
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION)
@@ -74,13 +83,14 @@ CONFIGURE_ARGS += -Dman3ext=3perl
 CONFIGURE_ARGS += -Doptimize="$(OPTFLAGS)"
 CONFIGURE_ARGS += -Dperladmin="root@localhost"
 CONFIGURE_ARGS += -Dprefix=$(prefix)
+CONFIGURE_ARGS += -Dbin=$(bindir)
+CONFIGURE_ARGS += -Dscriptdir=$(bindir)
 CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION)
 CONFIGURE_ARGS += -Dsitearch=$(libdir)/perl/site_perl
 CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/site_perl
 CONFIGURE_ARGS += -Dsiteman1dir=$(mandir)/man1
 CONFIGURE_ARGS += -Dsiteman3dir=$(mandir)/man3
 CONFIGURE_ARGS += -Dsiteprefix=/usr
-CONFIGURE_ARGS += -Duselargefiles
 CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
@@ -89,8 +99,12 @@ CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
 CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
-CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/lib"
+CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib $(libdir)"
 CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
+
+# On 64 bit there are no largefile issues and the definition disturbs other builds (like NetSNMP embeddded Perl)
+CONFIGURE_ARGS-32 += -Duselargefiles
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 EXTRA_LIB += $(prefix)/bdb48/lib
 EXTRA_INC += $(prefix)/bdb48/include
@@ -102,22 +116,21 @@ EXTRA_INC += $(prefix)/bdb48/include
 #   https://www.opencsw.org/mantis/view.php?id=4544
 EXTRA_CFLAGS = $(CPPFLAGS)
 
-EXTRA_LDFLAGS = -L$(libdir) -lperl
-
-EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
-PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
-
-# The diagnostics.pm module needs the podfile to output its messages.
-# That means it must be included in the main package, not the docs.
-EXTRA_PKGFILES_EXCLUDED_CSWperldoc = .*\/perldiag.pod
-EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
+# Adding -lperl requires that libperl.so is available during compilation, which is not
+# the case on bootstrapping. However, we require explicit libperl linkage or programs
+# embedding perl will have problems with duplicated static variables.
+# XXX Investigate further after 64 bit has built
+EXTRA_LDFLAGS-32 = -L$(libdir) -lperl
+EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL))
 
 # Tests take a long time
-TEST_SCRIPTS =
+# SKIPTEST ?= 1
 
 # Make sure we don't include the path to the newly built perl as the
 # library is not in place yet.
 IGNORE_DESTDIR = 1
+
+EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
 
 # Do not exclude static libs as at least DynaLoader.a is needed for XS compilation
 MERGE_EXCLUDE_STATICLIBS =
@@ -129,6 +142,9 @@ CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/c
 
 include gar/category.mk
 
+# This is probably due to -lperl, but during Configure the one in /opt/csw/lib is picked up and
+# the one in $WORKSRC has not been built yet
+# TBD: Investigate
 post-extract-modulated:
 	mkdir -p $(WORKSRC)
 	gln -s libperl.so.5.10.1 $(WORKSRC)/libperl.so
