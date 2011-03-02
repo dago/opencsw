@@ -62,7 +62,10 @@ PKGFILES_CSWlibsndfile-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibsndfile-dev += $(docdir)/.*
 RUNTIME_DEP_PKGS_CSWlibsndfile-dev += CSWlibsndfile1
 
-BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibsndfile)
+BUILD_DEP_PKGS += CSWlibogg
+BUILD_DEP_PKGS += CSWflac
+BUILD_DEP_PKGS += CSWvorbis
+BUILD_DEP_PKGS += CSWsqlite3devel
 
 VENDOR_URL = http://www.mega-nerd.com/libsndfile/
 
