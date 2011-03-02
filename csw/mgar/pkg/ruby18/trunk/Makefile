@@ -19,14 +19,14 @@ ARCHALL_CSWrubymode-el = 1
 
 LICENSE = COPYING
 
-RUNTIME_DEP_PKGS_CSWruby = CSWbdb48 CSWgdbm CSWiconv CSWlibruby1
+RUNTIME_DEP_PKGS_CSWruby = CSWbdb48 CSWlibgdbm3 CSWiconv CSWlibruby1
 RUNTIME_DEP_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
 
 RUNTIME_DEP_PKGS_CSWrubydoc = CSWruby
 
 RUNTIME_DEP_PKGS_CSWrubytk = CSWruby CSWtk CSWtcl CSWlibruby1
 
-RUNTIME_DEP_PKGS_CSWrubydev = CSWruby CSWcoreutils
+RUNTIME_DEP_PKGS_CSWrubydev = CSWruby CSWlibruby1 CSWcoreutils
 
 RUNTIME_DEP_PKGS_CSWrubymode = CSWemacscommon
 
