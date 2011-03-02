@@ -1,5 +1,5 @@
 NAME = sox
-VERSION = 14.3.1
+VERSION = 14.3.2
 CATEGORIES = apps
 
 DESCRIPTION = Swiss Army Knife of sound processing utilities
@@ -21,36 +21,61 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://sox.sourceforge.net/
 
-PACKAGES = CSWsox CSWlibsox1 CSWlibsoxdevel
+PACKAGES += CSWsox
+CATALOGNAME_CSWsox = sox
+SPKG_DESC_CSWsox = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWsox += CSWlibsox1
+RUNTIME_DEP_PKGS_CSWsox += CSWvorbis
+RUNTIME_DEP_PKGS_CSWsox += CSWlibogg
+RUNTIME_DEP_PKGS_CSWsox += CSWlibmad
+RUNTIME_DEP_PKGS_CSWsox += CSWlibid3tag
+RUNTIME_DEP_PKGS_CSWsox += CSWflac
+RUNTIME_DEP_PKGS_CSWsox += CSWlibao
+RUNTIME_DEP_PKGS_CSWsox += CSWlibsndfile
+RUNTIME_DEP_PKGS_CSWsox += CSWpng
+RUNTIME_DEP_PKGS_CSWsox += CSWwavpack
+RUNTIME_DEP_PKGS_CSWsox += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWsox += CSWlibmp3lame0
+RUNTIME_DEP_PKGS_CSWsox += CSWzlib
 
-CATALOGNAME_CSWsox         = sox
-CATALOGNAME_CSWlibsox1     = libsox1
+PACKAGES += CSWlibsox1
+CATALOGNAME_CSWlibsox1 = libsox1
+SPKG_DESC_CSWlibsox1 = SOX Library for Audio Processing
+PKGFILES_CSWlibsox1 += $(PKGFILES_RT)
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWvorbis
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWlibogg
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWlibmad
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWlibid3tag
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWflac
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWlibao
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWlibsndfile
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWpng
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWwavpack
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWlibsox1 += CSWlibmp3lame0
+
+PACKAGES += CSWlibsox-dev
+CATALOGNAME_CSWlibsox-dev = libsox_dev
+SPKG_DESC_CSWlibsox-dev = SOX Library Development Files
+PKGFILES_CSWlibsox-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibsox-dev = CSWlibsox1
+
+OBSOLETES_CSWlibsox-dev = CSWlibsoxdevel
 CATALOGNAME_CSWlibsoxdevel = libsox_devel
 
-SPKG_DESC_CSWsox         = $(DESCRIPTION)
-SPKG_DESC_CSWlibsox1     = SOX Library for Audio Processing
-SPKG_DESC_CSWlibsoxdevel = SOX Library Development Files
-
-RUNTIME_DEP_PKGS_CSWsox = CSWlibsox1 CSWvorbis CSWlibogg CSWlibmad CSWlame CSWlibid3tag
-RUNTIME_DEP_PKGS_CSWsox += CSWflac CSWlibao CSWlibsndfile CSWpng CSWwavpack CSWzlib CSWlibmagic
-
-RUNTIME_DEP_PKGS_CSWlibsox1 = CSWvorbis CSWlibogg CSWlibmad CSWlame CSWlibid3tag
-RUNTIME_DEP_PKGS_CSWlibsox1 += CSWflac CSWlibao CSWlibsndfile CSWpng CSWwavpack CSWzlib CSWlibmagic
-
-RUNTIME_DEP_PKGS_CSWlibsoxdevel = CSWlibsox1
-
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWsox)
+BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWsox)
+BUILD_DEP_PKGS += CSWlibmagic-dev
+BUILD_DEP_PKGS += CSWlame-devel
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS +=  --without-libltdl
 
 BUILD64 = 1
 NOISAEXEC = 1
+
 TEST_TARGET = check
 
 MERGE_DIRS_isa-extra = $(libdir)
-
-PKGFILES_CSWlibsox1 = $(PKGFILES_RT)
-PKGFILES_CSWlibsoxdevel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
