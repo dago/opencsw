@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.6.4
+VERSION = 2.6.5
 CATEGORIES = apps
 
 define BLURB
@@ -20,18 +20,17 @@ define BLURB
   applications as well as test systems identical to production environments.
 endef
 
-MASTER_SITES = http://reductivelabs.com/downloads/puppet/
+MASTER_SITES = http://puppetlabs.com/downloads/puppet/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswpuppetd
 DISTFILES += cswpuppetmasterd
 DISTFILES += cswusergroup
-DISTFILES += CSWpuppet.cron.root
+DISTFILES += puppetd.xml
+DISTFILES += puppetmaster.xml
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-SPKG_SOURCEURL = http://www.puppetlabs.com/
+SPKG_SOURCEURL = http://puppetlabs.com/
 
-# Disabling SMF support for puppetd.  There are problems with it.  It's a
-# better choice to run it from cron.
-# INITSMF  = $(sysconfdir)/init\.d/cswpuppetd
+INITSMF += $(sysconfdir)/init\.d/cswpuppetd
 INITSMF += $(sysconfdir)/init\.d/cswpuppetmasterd
 USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 
@@ -70,8 +69,8 @@ PATCHFILES += 0003-Use-opt-csw-share-puppet-modules-as-default.patch
 CHECKPKG_OVERRIDES_CSWpuppet       += surplus-dependency|CSWfacter
 CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWpuppet
 
-CRONDIR = $(sysconfdir)/pkg/CSWpuppet/crontabs
-CRONTABS = $(CRONDIR)/root
+# CRONDIR = $(sysconfdir)/pkg/CSWpuppet/crontabs
+# CRONTABS = $(CRONDIR)/root
 CHECKPKG_OVERRIDES_CSWpuppet += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/cswpuppetd|class=none
 CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWruby
 # Puppet has hardcoded paths to look at for many OSes, many of which involve
@@ -118,5 +117,7 @@ install-puppet:
 	# and we don't want that. It could be split off to another package, but
 	# this file doesn't seem to be of any use on Solaris, so we can safely
 	# remove it.
-	rm $(DESTDIR)$(libdir)/ruby/site_ruby/1.8/puppet/provider/package/yumhelper.py
+	# markp: Putting this back in. Will look at deps later. Some places do run
+	# yum on Solaris, would you believe.
+	# rm $(DESTDIR)$(libdir)/ruby/site_ruby/1.8/puppet/provider/package/yumhelper.py
 	@$(MAKECOOKIE)
