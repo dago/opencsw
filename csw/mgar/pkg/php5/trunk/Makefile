@@ -23,6 +23,8 @@ MASTER_SITES   = http://us.php.net/distributions/
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
 STRIP_DIRS    := $(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
 
+LICENSE = LICENSE
+
 DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
@@ -117,7 +119,7 @@ RUNTIME_DEP_PKGS_CSWphp5curl += CSWoldaprt CSWosslrt CSWzlib
 
 CATALOGNAME_CSWphp5dba = php5_dba
 SPKG_DESC_CSWphp5dba = The dba extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5dba = CSWphp5 CSWbdb CSWgdbm
+RUNTIME_DEP_PKGS_CSWphp5dba = CSWphp5 CSWlibgdbm3 CSWbdb42
 
 CATALOGNAME_CSWphp5dbase = php5_dbase
 SPKG_DESC_CSWphp5dbase = The dbase extension for PHP5
