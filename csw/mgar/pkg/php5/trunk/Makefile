@@ -176,7 +176,7 @@ RUNTIME_DEP_PKGS_CSWphp5mbstring = CSWphp5
 
 CATALOGNAME_CSWphp5mcrypt = php5_mcrypt
 SPKG_DESC_CSWphp5mcrypt = The mcrypt extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5mcrypt = CSWphp5 CSWlibmcrypt CSWlibtoolrt
+RUNTIME_DEP_PKGS_CSWphp5mcrypt = CSWphp5 CSWlibmcrypt CSWlibltdl7
 
 CATALOGNAME_CSWphp5mhash = php5_mhash
 SPKG_DESC_CSWphp5mhash = The mhash extension for PHP5
