@@ -16,7 +16,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://download.lighttpd.net/lighttpd/releases-1.4.x/
-DISTFILES    = $(NAME)-$(VERSION).tar.gz
+DISTFILES   += $(NAME)-$(VERSION).tar.gz
+DISTFILES   += cswlighttpd
 
 PATCHFILES += 0001-Work-around-linking-problem-buffer.c.patch
 
@@ -46,6 +47,10 @@ EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(GAROSREL))
 # because modules are not supposed to be in /opt/csw/lib.
 libdir = $(prefix)/lib/lighttpd
 
+# Solaris Zones support
+sysconfdir = /etc$(prefix)
+localstatedir = /var$(prefix)
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 # Solaris 9 does not have IPV6_V6ONLY.
@@ -59,4 +64,31 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 # One test is still failing.
 TEST_TARGET = check
 
+INITSMF = $(sysconfdir)/init\.d/cswlighttpd
+PRESERVECONF = $(sysconfdir)/lighttpd\.conf
+USERGROUP = $(sysconfdir)/pkg/$(NAME)/cswusergroup
+
+# To allow lighttpd to write logs
+PROTOTYPE_MODIFIERS = user
+PROTOTYPE_FILES_user = $(localstatedir)/log/lighttpd
+PROTOTYPE_USER_user = lighttpd
+PROTOTYPE_GROUP_user = lighttpd
+PROTOTYPE_CLASS_user = ugfiles
+
 include gar/category.mk
+
+post-install-modulated:
+	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 $(DOWNLOADDIR)/cswlighttpd $(DESTDIR)$(sysconfdir)/init.d
+	# ginstall -m 644 $(WORKSRC)/doc/config/lighttpd.conf $(DESTDIR)$(sysconfdir)
+	# gsed -i -e 's+/usr/local+/opt/csw+g' $(DESTDIR)$(sysconfdir)/lighttpd.conf
+	ginstall -m 644 $(FILEDIR)/lighttpd.conf $(DESTDIR)$(sysconfdir)
+	gsed -i -e 's+/usr/local+/opt/csw+g' $(DESTDIR)$(sysconfdir)/lighttpd.conf
+	ginstall -d -m 755 $(DESTDIR)$(localstatedir)/run
+	ginstall -d -m 755 $(DESTDIR)$(datadir)/lighttpd-root
+	echo 'lighttpd is working!' > $(DESTDIR)$(datadir)/lighttpd-root/index.html
+	ginstall -d -m 755 $(DESTDIR)$(localstatedir)/log/lighttpd
+	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/$(NAME)
+	echo "lighttpd:lighttpd:lighttpd web server::::" \
+		> $(DESTDIR)$(sysconfdir)/pkg/$(NAME)/cswusergroup
+	@$(MAKECOOKIE)
