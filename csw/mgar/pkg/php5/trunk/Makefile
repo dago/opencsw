@@ -594,31 +594,5 @@ CONFIGURE_ARGS += --with-zlib=$(prefix)
 SKIPTEST = 1
 #ENABLE_CHECK = 0
 
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/apache/libexec/libphp5.so
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/apache2/libexec/libphp5.so
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php-cgi
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php.ini.CSW
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/phpize.m4
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/libtool.m4
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/shtool
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/acinclude.m4
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/PEAR/Config.php
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/man/man1/php-config.1
-CHECKPKG_OVERRIDES_CSWphp5 += license-missing|/opt/csw/share/doc/php5/license
-CHECKPKG_OVERRIDES_CSWphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/apache/libexec/libphp5.so
-CHECKPKG_OVERRIDES_CSWphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/apache2/libexec/libphp5.so
-CHECKPKG_OVERRIDES_CSWphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/php5/bin/php
-CHECKPKG_OVERRIDES_CSWphp5 += bad-rpath-entry|/usr/ucblib|opt/csw/php5/bin/php-cgi
-
-CHECKPKG_OVERRIDES_CSWphp5 += file-collision|/opt/csw/apache2/libexec/libphp5.so|CSWap2modphp5|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5 += file-collision|/opt/csw/apache/libexec/libphp5.so|CSWmodphp5|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5 += file-collision|/opt/csw/apache2/etc/extra/httpd-php5.conf.CSW|CSWap2modphp5|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5devel += action-class-only-in-pkginfo|none
-CHECKPKG_OVERRIDES_CSWphp5devel += catalogname-does-not-match-pkgname|pkgname=CSWphp5devel|catalogname=php5_devel|expected-catalogname=php5devel
-CHECKPKG_OVERRIDES_CSWphp5devel += license-missing|/opt/csw/share/doc/php5_devel/license
-
-
-
 include files/scripts.mk
 include gar/category.mk
