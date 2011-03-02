@@ -65,6 +65,8 @@ ARCHALL_CSWapache2-manual = 1
 ARCHALL_CSWap2prefork = 1
 ARCHALL_CSWapache2rt = 1
 
+OBSOLETES_CSWapache2 = CSWapache2c
+
 CATALOGNAME_CSWapache2 = apache2
 CATALOGNAME_CSWapache2-devel = apache2_devel
 CATALOGNAME_CSWapache2-manual = apache2_manual
@@ -80,8 +82,6 @@ SPKG_DESC_CSWap2suexec = The standard suEXEC binary for Apache2.
 SPKG_DESC_CSWap2worker = The apache worker mpm.
 SPKG_DESC_CSWap2prefork = A stub for the old prefork mpm package.
 SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package.
-
-INCOMPATIBLE_PKGS_CSWapache2  = CSWapache2c
 
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv CSWosslutils
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
