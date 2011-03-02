@@ -7,8 +7,8 @@
 #
 
 LIGHTTPD_HOME=/opt/csw
-CONF_FILE=/opt/csw/etc/lighttpd.conf
-PIDFILE=/var/run/lighttpd.pid
+CONF_FILE=/etc/opt/csw/lighttpd.conf
+PIDFILE=/var/opt/csw/run/lighttpd.pid
 HTTPD="${LIGHTTPD_HOME}/sbin/lighttpd"
 
 [ ! -f ${CONF_FILE} ] &&  exit $CONF_FILE
