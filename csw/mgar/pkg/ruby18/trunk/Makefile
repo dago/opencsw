@@ -88,6 +88,7 @@ DISTFILES += CSWrubydoc.cswreleasenotes
 PATCHFILES = rdoc_parse_order_fix.patch
 PATCHFILES += 0002-Correct-potential-segfault-caused-during-garbage-col.patch
 PATCHFILES += 0003-Force-ld-to-embed-the-proper-SONAME-for-libruby.patch
+PATCHFILES += 0004-Patch-a-few-more-usr-local-references.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pthread
@@ -130,7 +131,7 @@ CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/fileutils.rb
 CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ruby.1
 CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/bin/ri
-CHECKPKG_OVERRIDES_CSWrubydoc += file-with-bad-content|/usr/local
+CHECKPKG_OVERRIDES_CSWrubydoc += file-with-bad-content
 
 include gar/category.mk
 
