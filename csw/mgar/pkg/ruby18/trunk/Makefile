@@ -134,6 +134,8 @@ CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/bin/
 CHECKPKG_OVERRIDES_CSWrubydoc += file-with-bad-content
 
 CHECKPKG_OVERRIDES_CSWrubytk += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/1.8/tk/dialog.rb
+CHECKPKG_OVERRIDES_CSWrubytk += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/tkextlib/itcl/setup.rb
+CHECKPKG_OVERRIDES_CSWrubytk += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/tkextlib/itk/setup.rb
 
 include gar/category.mk
 
