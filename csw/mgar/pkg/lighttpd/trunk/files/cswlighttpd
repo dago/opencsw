@@ -13,8 +13,7 @@ HTTPD="${LIGHTTPD_HOME}/sbin/lighttpd"
 
 [ ! -f ${CONF_FILE} ] &&  exit $CONF_FILE
 
-case "$1" in
-start)
+start_service() {
         /bin/rm -f ${PIDFILE}
 # Enable NCA:
         NCAKMODCONF=/etc/nca/ncakmod.conf
@@ -25,19 +24,37 @@ start)
             fi
         fi
         exec $HTTPD -f ${CONF_FILE} 2>&1
-        ;;
-refresh)
-        if [ -f "$PIDFILE" ]; then
-                /usr/bin/kill -HUP `/usr/bin/cat $PIDFILE`
-        fi
-        ;;
-stop)
+}
+
+stop_service() {
         if [ -f "$PIDFILE" ]; then
                 /usr/bin/kill -QUIT `/usr/bin/cat $PIDFILE`
         fi
+}
+
+refresh_service() {
+        if [ -f "$PIDFILE" ]; then
+                /usr/bin/kill -HUP `/usr/bin/cat $PIDFILE`
+        fi
+}
+
+case "$1" in
+start)
+        start_service
+        ;;
+refresh|reload)
+        refresh_service
+        ;;
+stop)
+        stop_service
+        ;;
+restart)
+        stop_service
+        sleep 1
+        start_service
         ;;
 *)
-        echo "Usage: $0 {start|stop|refresh}"
+        echo "Usage: $0 {start|stop|refresh|reload|restart}"
         exit 1
         ;;
 esac
