@@ -1,0 +1,25 @@
+From 8f88354e18616ecb05d7b89444b480f62a579a31 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 3 Mar 2011 12:13:50 +0100
+Subject: [PATCH 2/2] Do not use -Wall
+
+---
+ configure |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index 37b66f3..dd88113 100755
+--- a/configure
++++ b/configure
+@@ -11616,7 +11616,7 @@ fi
+ subdirs="$subdirs zlib"
+ 
+ 
+-CFLAGS="$CFLAGS -Wall"
++# CFLAGS="$CFLAGS -Wall"
+ 
+                                                                                                               ac_config_files="$ac_config_files Makefile doc/Makefile m4/Makefile include/Makefile include/id3/Makefile id3com/Makefile id3com/Sample/Makefile src/Makefile examples/Makefile prj/Makefile libprj/Makefile"
+ cat >confcache <<\_ACEOF
+-- 
+1.7.3.2
+

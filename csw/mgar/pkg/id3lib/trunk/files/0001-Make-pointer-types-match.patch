@@ -1,0 +1,28 @@
+From b86576549ffe181d4115db418c836a284ce7d226 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 3 Mar 2011 12:11:57 +0100
+Subject: [PATCH 1/2] Make pointer types match
+
+---
+ src/tag_file.cpp |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/tag_file.cpp b/src/tag_file.cpp
+index 09461fc..b3cb304 100644
+--- a/src/tag_file.cpp
++++ b/src/tag_file.cpp
+@@ -285,9 +285,9 @@ size_t RenderV2ToFile(const ID3_TagImpl& tag, fstream& file)
+     uchar tmpBuffer[BUFSIZ];
+     while (file)
+     {
+-      file.read(tmpBuffer, BUFSIZ);
++      file.read( (char *) tmpBuffer, BUFSIZ);
+       size_t nBytes = file.gcount();
+-      tmpOut.write(tmpBuffer, nBytes);
++      tmpOut.write( (char *) tmpBuffer, nBytes);
+     }
+ 
+     close(fd); //closes the file
+-- 
+1.7.3.2
+
