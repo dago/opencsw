@@ -89,6 +89,7 @@ PATCHFILES = rdoc_parse_order_fix.patch
 PATCHFILES += 0002-Correct-potential-segfault-caused-during-garbage-col.patch
 PATCHFILES += 0003-Force-ld-to-embed-the-proper-SONAME-for-libruby.patch
 PATCHFILES += 0004-Patch-a-few-more-usr-local-references.patch
+PATCHFILES += 0005-Correct-a-usr-local-reference-in-mkmf.rb.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pthread
