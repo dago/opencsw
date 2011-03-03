@@ -124,7 +124,6 @@ else
 SOS12_LD_FLAGS =
 endif
 
-CHECKPKG_OVERRIDES_CSWrubydev += surplus-dependency|CSWcoreutils
 CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWpython
 
