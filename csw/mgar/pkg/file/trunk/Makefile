@@ -20,6 +20,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # These flags are not understood by Sun Studio
 CONFIGURE_ARGS += --disable-warnings
 TEST_TARGET = check
+PATCHFILES += 0001-Remove-surplus-flags-output-on-SPARC.patch
 
 NOISAEXEC = 1
 
