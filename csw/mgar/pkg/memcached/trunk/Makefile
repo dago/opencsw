@@ -21,6 +21,9 @@ PATCHFILES += 0002-Take-endianness-into-account-on-alignment-check.patch
 # leading to broken tests when it is not waited for more packages.
 PATCHFILES += 0003-Make-sure-to-wait-for-data.patch
 
+# Looks like the data structure is not clean on sparcv9 (only!)
+PATCHFILES += 0004-Make-sure-to-clean-ai_flags-in-testsuite-or-test-fai.patch
+
 # If we enable GIT patching this makes a .git repo in $WORKSRC.
 # Unfortunatly this triggers maintainer mode for t/whitespace.t which
 # then fails because the developer GIT repo contains more things than the
