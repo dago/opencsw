@@ -17,7 +17,9 @@ DISTFILES = $(NAME)-$(VERSION).tar.gz
 PATCHFILES += 0001-Fix-alignment-check-as-84148994-0x05040302.patch
 PATCHFILES += 0002-Take-endianness-into-account-on-alignment-check.patch
 
-PATCHFILES += 0001-Make-sure-to-wait-for-data.patch
+# The addition of more status field made the data arrive in multiple packets
+# leading to broken tests when it is not waited for more packages.
+PATCHFILES += 0003-Make-sure-to-wait-for-data.patch
 
 # If we enable GIT patching this makes a .git repo in $WORKSRC.
 # Unfortunatly this triggers maintainer mode for t/whitespace.t which
@@ -45,12 +47,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 CONFIGURE_ARGS-sol5.10 += --enable-dtrace
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-sol$(GAROSREL))
-
-# From Trond Norbye:
-# The 101 test is a "bogus" test (it is there to prove that a deadlock is in the
-# client and not in the memcached server) and it will suck up all resources on the box...
-#SKIP_TEST_101 = 1
-#EXTRA_TEST_EXPORTS = SKIP_TEST_101
 
 include gar/category.mk
 
