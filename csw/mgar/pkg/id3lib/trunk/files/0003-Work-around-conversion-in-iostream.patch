@@ -1,0 +1,36 @@
+From 068b7f19083b5fcd37890ad5a55cd2e4af20db9a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 3 Mar 2011 12:33:24 +0100
+Subject: [PATCH] Work around conversion in iostream
+
+---
+ examples/test_io.cpp |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/examples/test_io.cpp b/examples/test_io.cpp
+index bee1a27..bbefb92 100644
+--- a/examples/test_io.cpp
++++ b/examples/test_io.cpp
+@@ -11,6 +11,7 @@
+ #include <id3/io_strings.h>
+ #include <id3/utils.h>
+ 
++using std::cin;
+ using std::cout;
+ using std::endl;
+ using std::cerr;
+@@ -116,7 +117,10 @@ main(size_t argc, const char** argv)
+   cout << "binary number:";
+   for (size_t i = 0; i < number.size(); ++i)
+   {
+-    cout << " 0x" << hex << (size_t) (0xFF & number[i]) << dec;
++    cout << " 0x";
++    cout.flags(ios::hex);
++    cout << (size_t) (0xFF & number[i]);
++    cout.flags(ios::dec);
+   }
+   cout << endl;
+ 
+-- 
+1.7.3.2
+
