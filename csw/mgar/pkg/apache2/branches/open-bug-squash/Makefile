@@ -38,8 +38,8 @@ DISTFILES += config.layout
 DISTFILES += CSWapache2.killproc cswapache2
 
 DISTFILES += CSWapache2.preinstall CSWapache2.postinstall
-DISTFILES += CSWap2worker.postinstall CSWap2worker.postremove
-DISTFILES += CSWap2worker.preinstall
+DISTFILES += CSWap2-worker.postinstall CSWap2worker.postremove
+DISTFILES += CSWap2-worker.preinstall
 
 DISTFILES += CSWapache2-devel.cswreleasenotes
 
@@ -66,7 +66,7 @@ OBSOLETES_CSWap2-prefork = CSWap2prefork
 OBSOLETES_CSWap2-worker = CSWap2worker
 
 ARCHALL_CSWapache2-manual = 1
-ARCHALL_CSWap2prefork = 1
+ARCHALL_CSWap2-prefork = 1
 ARCHALL_CSWapache2rt = 1
 
 OBSOLETES_CSWapache2 = CSWapache2c
