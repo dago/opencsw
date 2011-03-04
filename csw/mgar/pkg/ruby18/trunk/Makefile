@@ -13,6 +13,13 @@ BUILD_DEP_PKGS += CSWreadline CSWzlib CSWossldevel
 PACKAGES = CSWruby18 CSWruby18-doc CSWruby18-tk CSWruby18-dev CSWruby18-mode
 PACKAGES += CSWruby18-mode-el CSWlibruby1
 
+OBSOLETES_CSWruby18 = CSWruby
+OBSOLETES_CSWruby18-doc = CSWrubydoc
+OBSOLETES_CSWruby18-tk = CSWrubytk
+OBSOLETES_CSWruby18-dev = CSWrubydev
+OBSOLETES_CSWruby18-mode = CSWrubymode
+OBSOLETES_CSWruby18-mode-el = CSWrubymodeel
+
 ARCHALL_CSWruby18-doc = 1
 ARCHALL_CSWruby18-mode = 1
 ARCHALL_CSWruby18-mode-el = 1
@@ -70,8 +77,6 @@ PKGFILES_CSWruby18-mode-el = $(datadir)/emacs/site-lisp/.*el$
 
 PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.so.1
 PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.so.1.*
-
-OBSOLETES_CSWruby18-mode-el = CSWrubymodeel
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
