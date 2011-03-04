@@ -1,5 +1,5 @@
 NAME = dnstop
-VERSION = 20090128
+VERSION = 20110127
 CATEGORIES = net
 
 DESCRIPTION = Displays various tables of DNS traffic
@@ -7,16 +7,14 @@ define BLURB
   Displays various tables of DNS traffic
 endef
 
+SPKG_SOURCEURL = http://dns.measurement-factory.com/tools/dnstop
 MASTER_SITES = http://dns.measurement-factory.com/tools/dnstop/src/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += dnstop.pod
 DISTFILES += dnstop.8
 
 LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS = CSWlibpcap
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom

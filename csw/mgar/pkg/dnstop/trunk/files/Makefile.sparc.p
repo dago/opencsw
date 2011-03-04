@@ -1,13 +1,13 @@
---- Makefile	2010-01-13 19:25:50.435317055 +0100
-+++ Makefile	2010-01-13 19:24:07.075661494 +0100
-@@ -2,9 +2,9 @@
- DATE != date +%Y%m%d
+--- Makefile	Sat Mar  5 00:33:14 2011
++++ Makefile.new	Sat Mar  5 00:34:19 2011
+@@ -2,8 +2,8 @@
  
- CC=/opt/studio/SOS11/SUNWspro/bin/cc
--CFLAGS=-xO3 -xarch=v8
--LIBS=-lresolv -lnsl -lsocket -lcurses 
-+CFLAGS=-xO3 -xarch=v8 -I/opt/csw/include
-+LIBS=-lresolv -lnsl -lsocket -lcurses -lpcap
  OPTFLAGS= -DUSE_IPV6=1
+ CC=/opt/SUNWspro/bin/cc
+-CFLAGS=-xO3 -m32 -xarch=v8 -xnorunpath ${OPTFLAGS}
+-LIBS=-lresolv -lnsl -lsocket -lpcap -lncurses 
++CFLAGS=-xO3 -m32 -xarch=v8 -xnorunpath ${OPTFLAGS} -I/opt/csw/include
++LIBS=-lresolv -lnsl -lsocket -lpcap -lcurses 
  
  prefix=/opt/csw
+ exec_prefix=/opt/csw
