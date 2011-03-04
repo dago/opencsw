@@ -129,6 +129,19 @@ else
 SOS12_LD_FLAGS =
 endif
 
+# Transitional overrides.  Once the packages with 18 in the names are
+# released, these can be removed...oh and checkpkg will need a tweak too
+CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby18-doc += surplus-dependency|CSWruby18
+CHECKPKG_OVERRIDES_CSWruby18-dev += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby18-dev += surplus-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_CSWruby18-dev += surplus-dependency|CSWruby18
+CHECKPKG_OVERRIDES_CSWruby18-tk += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby18-tk += surplus-dependency|CSWruby18
+CHECKPKG_OVERRIDES_CSWruby18 += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWrubydev += archall-devel-package
+# End of transitional overrides.
+
 CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWpython
 
