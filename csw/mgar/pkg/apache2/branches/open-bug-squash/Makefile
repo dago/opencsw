@@ -55,11 +55,11 @@ PATCHFILES += 0003-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
-PACKAGES  = CSWapache2 CSWapache2-devel CSWapache2-manual CSWap2suexec
-PACKAGES += CSWap2worker
+PACKAGES  = CSWapache2 CSWapache2-devel CSWapache2-manual CSWap2-suexec
+PACKAGES += CSWap2-worker
 # These packages are dummy versions to make dependencies nicer
 # as various things depend on CSWap2prefork currently
-PACKAGES += CSWap2prefork CSWapache2rt
+PACKAGES += CSWap2-prefork CSWapache2rt
 
 ARCHALL_CSWapache2-manual = 1
 ARCHALL_CSWap2prefork = 1
@@ -78,9 +78,9 @@ CATALOGNAME_CSWapache2rt = apache2rt
 SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
 SPKG_DESC_CSWapache2-devel = The development files for Apache2.
 SPKG_DESC_CSWapache2-manual = The Apache2 manual files.
-SPKG_DESC_CSWap2suexec = The standard suEXEC binary for Apache2.
-SPKG_DESC_CSWap2worker = The apache worker mpm.
-SPKG_DESC_CSWap2prefork = A stub for the old prefork mpm package.
+SPKG_DESC_CSWap2-suexec = The standard suEXEC binary for Apache2.
+SPKG_DESC_CSWap2-worker = The apache worker mpm.
+SPKG_DESC_CSWap2-prefork = A stub for the old prefork mpm package.
 SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package.
 
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv CSWosslutils
@@ -88,17 +88,17 @@ RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-devel  = CSWapache2
-RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
-RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2
-RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWapr CSWexpat CSWap2prefork
-RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWbdb48 CSWapr-util CSWiconv
+RUNTIME_DEP_PKGS_CSWap2-suexec	   = CSWapache2
+RUNTIME_DEP_PKGS_CSWap2-prefork     = CSWapache2
+RUNTIME_DEP_PKGS_CSWap2-worker      = CSWapache2 CSWapr CSWexpat CSWap2-prefork
+RUNTIME_DEP_PKGS_CSWap2-worker 	  += CSWbdb48 CSWapr-util CSWiconv
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
-CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWalternatives
-CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWap2prefork
+CHECKPKG_OVERRIDES_CSWap2-prefork += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWap2-worker += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWap2-worker += surplus-dependency|CSWap2prefork
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 
 CHECKPKG_OVERRIDES_CSWapache2-devel += file-with-bad-content|/usr/local|root/opt/csw/apache2/include/httpd.h
