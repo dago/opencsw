@@ -61,6 +61,10 @@ PACKAGES += CSWap2-worker
 # as various things depend on CSWap2prefork currently
 PACKAGES += CSWap2-prefork CSWapache2rt
 
+OBSOLETES_CSWap2-suexec = CSWap2suexec
+OBSOLETES_CSWap2-prefork = CSWap2prefork
+OBSOLETES_CSWap2-worker = CSWap2worker
+
 ARCHALL_CSWapache2-manual = 1
 ARCHALL_CSWap2prefork = 1
 ARCHALL_CSWapache2rt = 1
