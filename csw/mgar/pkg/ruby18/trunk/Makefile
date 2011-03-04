@@ -1,4 +1,4 @@
-NAME = ruby
+NAME = ruby18
 DISTVERSION = 1.8.7
 PATCHLEVEL = p334
 VERSION = $(DISTVERSION)
@@ -10,27 +10,27 @@ TEST_ARGS = test-all
 BUILD_DEP_PKGS =  CSWbdb48devel CSWlibgdbm3 CSWcoreutils CSWiconv CSWncurses
 BUILD_DEP_PKGS += CSWreadline CSWzlib CSWossldevel
 
-PACKAGES = CSWruby CSWrubydoc CSWrubytk CSWrubydev CSWrubymode CSWrubymode-el
-PACKAGES += CSWlibruby1
+PACKAGES = CSWruby18 CSWruby18-doc CSWruby18-tk CSWruby18-dev CSWruby18-mode
+PACKAGES += CSWruby18-mode-el CSWlibruby1
 
-ARCHALL_CSWrubydoc = 1
-ARCHALL_CSWrubymode = 1
-ARCHALL_CSWrubymode-el = 1
+ARCHALL_CSWruby18-doc = 1
+ARCHALL_CSWruby18-mode = 1
+ARCHALL_CSWruby18-mode-el = 1
 
 LICENSE = COPYING
 
-RUNTIME_DEP_PKGS_CSWruby = CSWbdb48 CSWlibgdbm3 CSWiconv CSWlibruby1
-RUNTIME_DEP_PKGS_CSWruby += CSWncurses CSWosslrt CSWreadline CSWzlib
+RUNTIME_DEP_PKGS_CSWruby18 = CSWbdb48 CSWlibgdbm3 CSWiconv CSWlibruby1
+RUNTIME_DEP_PKGS_CSWruby18 += CSWncurses CSWosslrt CSWreadline CSWzlib
 
-RUNTIME_DEP_PKGS_CSWrubydoc = CSWruby
+RUNTIME_DEP_PKGS_CSWruby18-doc = CSWruby18
 
-RUNTIME_DEP_PKGS_CSWrubytk = CSWruby CSWtk CSWtcl CSWlibruby1
+RUNTIME_DEP_PKGS_CSWruby18-tk = CSWruby18 CSWtk CSWtcl CSWlibruby1
 
-RUNTIME_DEP_PKGS_CSWrubydev = CSWruby CSWlibruby1 CSWcoreutils
+RUNTIME_DEP_PKGS_CSWruby18-dev = CSWruby18 CSWlibruby1 CSWcoreutils
 
-RUNTIME_DEP_PKGS_CSWrubymode = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWruby18-mode = CSWemacscommon
 
-RUNTIME_DEP_PKGS_CSWrubymode-el = CSWemacscommon
+RUNTIME_DEP_PKGS_CSWruby18-mode-el = CSWemacscommon
 
 DESCRIPTION = An object-oriented language for quick and easy programming.
 define BLURB
@@ -43,35 +43,35 @@ define BLURB
   closures.
 endef
 
-SPKG_DESC_CSWruby  = $(DESCRIPTION)
+SPKG_DESC_CSWruby18  = $(DESCRIPTION)
 
-SPKG_DESC_CSWlibruby1 = The libruby.so.1* files
+SPKG_DESC_CSWlibruby1 = The libruby.so.1* files (Ruby 1.8)
 
-SPKG_DESC_CSWrubydoc = Documentation for Ruby
+SPKG_DESC_CSWruby18-doc = Documentation for Ruby 1.8
 
-SPKG_DESC_CSWrubytk = Ruby Tcl/TK Extension
+SPKG_DESC_CSWruby18-tk = Ruby 1.8 Tcl/TK Extension
 
-SPKG_DESC_CSWrubydev = Ruby Extension Development Files
+SPKG_DESC_CSWruby18-dev = Ruby 1.8 Extension Development Files
 
-SPKG_DESC_CSWrubymode = Ruby major mode for Emacs
+SPKG_DESC_CSWruby18-mode = Ruby 1.8 major mode for Emacs
 
-SPKG_DESC_CSWrubymode-el = Elisp source for ruby mode
+SPKG_DESC_CSWruby18-mode-el = Elisp source for ruby mode (Ruby 1.8)
 
-PKGFILES_CSWrubydoc = $(datadir)/ri/.* $(docdir)/ruby/sample.*
+PKGFILES_CSWruby18-doc = $(datadir)/ri/.* $(docdir)/ruby/sample.*
 
-PKGFILES_CSWrubytk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
+PKGFILES_CSWruby18-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
-PKGFILES_CSWrubydev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
-PKGFILES_CSWrubydev += /opt/csw/lib/libruby.so
+PKGFILES_CSWruby18-dev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
+PKGFILES_CSWruby18-dev += /opt/csw/lib/libruby.so
 
-PKGFILES_CSWrubymode = $(datadir)/emacs/site-lisp/.*elc$
+PKGFILES_CSWruby18-mode = $(datadir)/emacs/site-lisp/.*elc$
 
-PKGFILES_CSWrubymode-el = $(datadir)/emacs/site-lisp/.*el$
+PKGFILES_CSWruby18-mode-el = $(datadir)/emacs/site-lisp/.*el$
 
 PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.so.1
 PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.so.1.*
 
-OBSOLETES_CSWrubymode-el = CSWrubymodeel
+OBSOLETES_CSWruby18-mode-el = CSWrubymodeel
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
@@ -80,7 +80,7 @@ MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
 # software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-p(\d+).tar.bz2
 
-DISTFILES  = $(NAME)-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
+DISTFILES  = ruby-$(DISTVERSION)-$(PATCHLEVEL).tar.bz2
 DISTFILES += CSWruby.cswreleasenotes
 DISTFILES += CSWrubydoc.cswreleasenotes CSWrubytk.cswreleasenotes
 
@@ -106,7 +106,7 @@ CONFIGURE_ARGS += --enable-install-doc
 
 INSTALL_ARGS = install
 
-DISTNAME = $(NAME)-$(VERSION)-$(PATCHLEVEL)
+DISTNAME = ruby-$(VERSION)-$(PATCHLEVEL)
 
 # We want libruby-static.a to ship.  mkmf tests for various things using it.
 MERGE_EXCLUDE_STATICLIBS = 
