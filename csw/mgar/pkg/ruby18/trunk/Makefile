@@ -129,18 +129,18 @@ else
 SOS12_LD_FLAGS =
 endif
 
-CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWrubydoc += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWpython
 
 # usr/local overrides
-CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/fileutils.rb
-CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ruby.1
-CHECKPKG_OVERRIDES_CSWruby += file-with-bad-content|/usr/local|root/opt/csw/bin/ri
-CHECKPKG_OVERRIDES_CSWrubydoc += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/fileutils.rb
+CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ruby.1
+CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/bin/ri
+CHECKPKG_OVERRIDES_CSWruby18-doc += file-with-bad-content
 
-CHECKPKG_OVERRIDES_CSWrubytk += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/1.8/tk/dialog.rb
-CHECKPKG_OVERRIDES_CSWrubytk += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/tkextlib/itcl/setup.rb
-CHECKPKG_OVERRIDES_CSWrubytk += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/tkextlib/itk/setup.rb
+CHECKPKG_OVERRIDES_CSWruby18-tk += file-with-bad-content|/usr/share|root/opt/csw/lib/ruby/1.8/tk/dialog.rb
+CHECKPKG_OVERRIDES_CSWruby18-tk += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/tkextlib/itcl/setup.rb
+CHECKPKG_OVERRIDES_CSWruby18-tk += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/tkextlib/itk/setup.rb
 
 include gar/category.mk
 
