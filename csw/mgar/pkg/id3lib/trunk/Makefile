@@ -18,6 +18,7 @@ PACKAGES += CSWlibid3-3-8-3
 CATALOGNAME_CSWlibid3-3-8-3 = libid3_3_8_3
 SPKG_DESC_CSWlibid3-3-8-3 = Library for manipulating ID3v1/v1.1 and ID3v2 tags, libid3-3.8.so.3
 PKGFILES_CSWlibid3-3-8-3 = $(call baseisadirs,$(libdir),libid3-3\.8\.so\.3(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibid3-3-8-3 += CSWzlib
 
 PACKAGES += CSWlibid3-dev
 CATALOGNAME_CSWlibid3-dev = libid3_dev
@@ -36,6 +37,14 @@ RUNTIME_DEP_PKGS_CSWlibid3-utils += CSWzlib
 OBSOLETES_CSWlibid3-utils = CSWid3lib
 
 EXTRA_LDFLAGS = -norunpath
+
+# The following part is to make the library self-sufficient
+# (that means a simple -lid3 is sufficient).
+# We link with /usr/ccs/bin/ld which requires setting the path to libCstd.so,
+# using CC as linker would have made this automatic.
+SUBDIR64-sparc = v9
+SUBDIR64-i386 = amd64
+EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCstd -lz
 
 BUILD64 = 1
 NOISAEXEC = 1
