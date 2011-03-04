@@ -102,7 +102,7 @@ CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
 CHECKPKG_OVERRIDES_CSWap2-prefork += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2-worker += surplus-dependency|CSWalternatives
-CHECKPKG_OVERRIDES_CSWap2-worker += surplus-dependency|CSWap2prefork
+CHECKPKG_OVERRIDES_CSWap2-worker += surplus-dependency|CSWap2-prefork
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 
 CHECKPKG_OVERRIDES_CSWapache2-devel += file-with-bad-content|/usr/local|root/opt/csw/apache2/include/httpd.h
@@ -206,12 +206,12 @@ APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
 LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
-PKGFILES_CSWap2suexec = .*sbin/suexec .*libexec/.*suexec.* .*/man/.*suexec.*
-PKGFILES_CSWap2suexec += .*ap2mod/suexec
+PKGFILES_CSWap2-suexec = .*sbin/suexec .*libexec/.*suexec.* .*/man/.*suexec.*
+PKGFILES_CSWap2-suexec += .*ap2mod/suexec
 PKGFILES_CSWapache2-devel = .*include/.* .*\.(a|la)
 PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
-PKGFILES_CSWap2prefork = .*share/doc/ap2_prefork.*
-PKGFILES_CSWap2worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
+PKGFILES_CSWap2-prefork = .*share/doc/ap2_prefork.*
+PKGFILES_CSWap2-worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
 
 #PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/apache2/sbin/suexec" { $$$$4 = "4755" }; $$$$3 ~ /cswap2mod/ { $$$$4 = "0555" }; { print }'
