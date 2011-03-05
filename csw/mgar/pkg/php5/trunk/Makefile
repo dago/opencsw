@@ -29,10 +29,10 @@ DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
 PACKAGES = CSWphp5 CSWphp5devel
-PACKAGES += CSWphp5bcmath
-PACKAGES += CSWphp5bz2
-PACKAGES += CSWphp5calendar
-PACKAGES += CSWphp5ctype
+PACKAGES += CSWphp5-bcmath
+PACKAGES += CSWphp5-bz2
+PACKAGES += CSWphp5-calendar
+PACKAGES += CSWphp5-ctype
 PACKAGES += CSWphp5curl
 PACKAGES += CSWphp5dba
 PACKAGES += CSWphp5dbase
@@ -96,21 +96,25 @@ RUNTIME_DEP_PKGS_CSWphp5      = CSWiconv
 RUNTIME_DEP_PKGS_CSWphp5     += CSWlibxml2 CSWzlib
 RUNTIME_DEP_PKGS_CSWphp5     += CSWlibmm CSWapache2
 
-CATALOGNAME_CSWphp5bcmath = php5_bcmath
-SPKG_DESC_CSWphp5bcmath = The bcmath extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5bcmath = CSWphp5
+CATALOGNAME_CSWphp5-bcmath = php5_bcmath
+SPKG_DESC_CSWphp5-bcmath = The bcmath extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-bcmath = CSWphp5
+OBSOLETES_CSWphp5-bcmath = CSWphp5bcmath
 
-CATALOGNAME_CSWphp5bz2 = php5_bz2
-SPKG_DESC_CSWphp5bz2 = The bz2 extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5bz2 = CSWphp5 CSWbzip2
+CATALOGNAME_CSWphp5-bz2 = php5_bz2
+SPKG_DESC_CSWphp5-bz2 = The bz2 extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-bz2 = CSWphp5 CSWbzip2
+OBSOLETES_CSWphp5-bz2 = CSWphp5bz2
 
-CATALOGNAME_CSWphp5calendar = php5_calendar
-SPKG_DESC_CSWphp5calendar = The calendar extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5calendar = CSWphp5
+CATALOGNAME_CSWphp5-calendar = php5_calendar
+SPKG_DESC_CSWphp5-calendar = The calendar extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-calendar = CSWphp5
+OBSOLETES_CSWphp5-calendar = CSWphp5calendar
 
-CATALOGNAME_CSWphp5ctype = php5_ctype
-SPKG_DESC_CSWphp5ctype = The ctype extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5ctype = CSWphp5
+CATALOGNAME_CSWphp5-ctype = php5_ctype
+SPKG_DESC_CSWphp5-ctype = The ctype extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-ctype = CSWphp5
+OBSOLETES_CSWphp5-ctype = CSWphp5ctype
 
 CATALOGNAME_CSWphp5curl = php5_curl
 SPKG_DESC_CSWphp5curl = The curl extension for PHP5
@@ -142,9 +146,10 @@ SPKG_DESC_CSWphp5gd = The gd extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5gd  = CSWphp5 CSWftype2 CSWgd CSWjpeg
 RUNTIME_DEP_PKGS_CSWphp5gd += CSWpng CSWt1lib CSWxpm CSWzlib
 
-CATALOGNAME_CSWphp5gettext = php5_gettext
-SPKG_DESC_CSWphp5gettext = The gettext extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5gettext = CSWphp5 CSWggettextrt
+CATALOGNAME_CSWphp5-gettext = php5_gettext
+SPKG_DESC_CSWphp5-gettext = The gettext extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-gettext = CSWphp5 CSWggettextrt
+OBSOLETES_CSWphp5-gettext = CSWphp5gettext
 
 CATALOGNAME_CSWphp5gmp = php5_gmp
 SPKG_DESC_CSWphp5gmp = The gmp extension for PHP5
@@ -341,13 +346,13 @@ PKGFILES_CSWphp5devel += $(includedir)/php/ext/xml.*
 PKGFILES_CSWphp5devel += $(mandir)/man1/php-config.1
 PKGFILES_CSWphp5devel += $(mandir)/man1/phpize.1
 
-PKGFILES_CSWphp5bcmath = .*/lib/php/extensions/.*/bcmath.*
+PKGFILES_CSWphp5-bcmath = .*/lib/php/extensions/.*/bcmath.*
 
-PKGFILES_CSWphp5bz2 = .*/lib/php/extensions/.*/bz2.*
+PKGFILES_CSWphp5-bz2 = .*/lib/php/extensions/.*/bz2.*
 
-PKGFILES_CSWphp5calendar = .*/lib/php/extensions/.*/calendar.*
+PKGFILES_CSWphp5-calendar = .*/lib/php/extensions/.*/calendar.*
 
-PKGFILES_CSWphp5ctype = .*/lib/php/extensions/.*/ctype.*
+PKGFILES_CSWphp5-ctype = .*/lib/php/extensions/.*/ctype.*
 
 PKGFILES_CSWphp5curl = .*/lib/php/extensions/.*/curl.*
 
@@ -365,7 +370,7 @@ PKGFILES_CSWphp5ftp = .*/lib/php/extensions/.*/ftp.*
 PKGFILES_CSWphp5gd  = .*/lib/php/extensions/.*/gd.*
 PKGFILES_CSWphp5gd  += .*/include/php/ext/gd.*
 
-PKGFILES_CSWphp5gettext = .*/lib/php/extensions/.*/gettext.*
+PKGFILES_CSWphp5-gettext = .*/lib/php/extensions/.*/gettext.*
 
 PKGFILES_CSWphp5gmp = .*/lib/php/extensions/.*/gmp.*
 
@@ -600,13 +605,13 @@ SKIPTEST = 1
 #ENABLE_CHECK = 0
 
 CHECKPKG_OVERRIDES_CSWphp5pdo += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5bcmath += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-bcmath += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5gd += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5tidy += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5pdopgsql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5snmp += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5ctype += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5calendar += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-ctype += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-calendar += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5hash += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sysvshm += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5xmlwriter += surplus-dependency|CSWphp5
@@ -617,7 +622,7 @@ CHECKPKG_OVERRIDES_CSWphp5dbase += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5mbstring += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5xsl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5exif += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5bz2 += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-bz2 += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5pdoodbc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5dba += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5sysvmsg += surplus-dependency|CSWphp5
@@ -646,7 +651,7 @@ CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5mimemagic += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5posix += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5ftp += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5gettext += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-gettext += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5mcrypt += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5sqlite += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5xmlrpc += surplus-dependency|CSWphp5
