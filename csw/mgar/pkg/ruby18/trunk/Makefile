@@ -199,10 +199,10 @@ rbconfig:
 
 # Copy samples
 samples:
-	@mkdir -p $(DESTDIR)$(docdir)/ruby/
-	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/ruby/
+	@mkdir -p $(DESTDIR)$(docdir)/ruby18/
+	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/ruby18/
 	@for ext in bigdecimal dl tk ; do \
-		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/ruby/sample/$$ext ; \
+		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/ruby18/sample/$$ext ; \
 	done
 	@$(MAKECOOKIE)
 
@@ -210,7 +210,7 @@ samples:
 rbscripts:
 	@echo " ==> Fixing shebang path in distributed ruby scripts"
 	@find $(DESTDIR)$(prefix) -type f -name '*.rb' -exec \
-		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/ruby}g" {} \;
+		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/ruby18}g" {} \;
 	@$(MAKECOOKIE)
 
 
