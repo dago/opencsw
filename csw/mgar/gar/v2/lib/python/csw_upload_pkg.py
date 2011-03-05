@@ -85,6 +85,9 @@ class Srv4Uploader(object):
   def _RemoveFile(self, filename):
     md5_sum = self._GetFileMd5sum(filename)
     file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
+    if not file_metadata:
+      logging.warning("Could not find metadata for file %s", repr(filename))
+      return
     osrel = file_metadata['osrel']
     arch = file_metadata['arch']
     catalogs = self._MatchSrv4ToCatalogs(
