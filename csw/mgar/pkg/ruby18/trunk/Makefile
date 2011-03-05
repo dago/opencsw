@@ -11,7 +11,7 @@ BUILD_DEP_PKGS =  CSWbdb48devel CSWlibgdbm3 CSWcoreutils CSWiconv CSWncurses
 BUILD_DEP_PKGS += CSWreadline CSWzlib CSWossldevel
 
 PACKAGES = CSWruby18 CSWruby18-doc CSWruby18-tk CSWruby18-dev CSWruby18-mode
-PACKAGES += CSWruby18-mode-el CSWlibruby1
+PACKAGES += CSWruby18-mode-el CSWlibruby18-1
 
 OBSOLETES_CSWruby18 = CSWruby
 OBSOLETES_CSWruby18-doc = CSWrubydoc
@@ -19,6 +19,7 @@ OBSOLETES_CSWruby18-tk = CSWrubytk
 OBSOLETES_CSWruby18-dev = CSWrubydev
 OBSOLETES_CSWruby18-mode = CSWrubymode
 OBSOLETES_CSWruby18-mode-el = CSWrubymodeel
+OBSOLETES_CSWlibruby18-1 = CSWlibruby1
 
 ALTERNATIVES_CSWruby18 = ruby
 ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby18 10 $(bindir)/irb irb $(bindir)/irb18 $(bindir)/erb erb $(bindir)/erb18 $(bindir)/rdoc rdoc $(bindir)/rdoc18 $(bindir)/ri ri $(bindir)/ri18 $(bindir)/testrb testrb $(bindir)/testrb18 $(mandir)/man1/ruby.1 ruby.1 $(mandir)/man1/ruby18.1
@@ -29,14 +30,14 @@ ARCHALL_CSWruby18-mode-el = 1
 
 LICENSE = COPYING
 
-RUNTIME_DEP_PKGS_CSWruby18 = CSWbdb48 CSWlibgdbm3 CSWiconv CSWlibruby1
+RUNTIME_DEP_PKGS_CSWruby18 = CSWbdb48 CSWlibgdbm3 CSWiconv CSWlibruby18-1
 RUNTIME_DEP_PKGS_CSWruby18 += CSWncurses CSWosslrt CSWreadline CSWzlib
 
 RUNTIME_DEP_PKGS_CSWruby18-doc = CSWruby18
 
-RUNTIME_DEP_PKGS_CSWruby18-tk = CSWruby18 CSWtk CSWtcl CSWlibruby1
+RUNTIME_DEP_PKGS_CSWruby18-tk = CSWruby18 CSWtk CSWtcl CSWlibruby18-1
 
-RUNTIME_DEP_PKGS_CSWruby18-dev = CSWruby18 CSWlibruby1 CSWcoreutils
+RUNTIME_DEP_PKGS_CSWruby18-dev = CSWruby18 CSWlibruby18-1 CSWcoreutils
 
 RUNTIME_DEP_PKGS_CSWruby18-mode = CSWemacscommon
 
@@ -55,7 +56,7 @@ endef
 
 SPKG_DESC_CSWruby18  = $(DESCRIPTION)
 
-SPKG_DESC_CSWlibruby1 = The libruby.so.1* files (Ruby 1.8)
+SPKG_DESC_CSWlibruby18-1 = The libruby.so.1* files (Ruby 1.8)
 
 SPKG_DESC_CSWruby18-doc = Documentation for Ruby 1.8
 
@@ -78,8 +79,8 @@ PKGFILES_CSWruby18-mode = $(datadir)/emacs/site-lisp/.*elc$
 
 PKGFILES_CSWruby18-mode-el = $(datadir)/emacs/site-lisp/.*el$
 
-PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.*.so.1
-PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.*.so.1.*
+PKGFILES_CSWlibruby18-1 += /opt/csw/lib/libruby.*.so.1
+PKGFILES_CSWlibruby18-1 += /opt/csw/lib/libruby.*.so.1.*
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
