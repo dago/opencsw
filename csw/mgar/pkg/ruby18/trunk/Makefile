@@ -21,7 +21,7 @@ OBSOLETES_CSWruby18-mode = CSWrubymode
 OBSOLETES_CSWruby18-mode-el = CSWrubymodeel
 
 ALTERNATIVES_CSWruby18 = ruby
-ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby18 10 $(bindir)/irb irb $(bindir)/irb18 $(bindir)/erb erb $(bindir)/erb18 $(bindir)/rdoc rdoc $(bindir)/rdoc18 $(bindir)/ri ri $(bindir)/ri18 $(bindir)/testrb testrb $(bindir)/testrb18
+ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby18 10 $(bindir)/irb irb $(bindir)/irb18 $(bindir)/erb erb $(bindir)/erb18 $(bindir)/rdoc rdoc $(bindir)/rdoc18 $(bindir)/ri ri $(bindir)/ri18 $(bindir)/testrb testrb $(bindir)/testrb18 $(mandir)/man1/ruby.1 ruby.1 $(mandir)/man1/ruby18.1
 
 ARCHALL_CSWruby18-doc = 1
 ARCHALL_CSWruby18-mode = 1
@@ -151,7 +151,7 @@ CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWpython
 
 # usr/local overrides
 CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/fileutils.rb
-CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ruby.1
+CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ruby18.1
 CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/bin/ri
 CHECKPKG_OVERRIDES_CSWruby18-doc += file-with-bad-content
 
