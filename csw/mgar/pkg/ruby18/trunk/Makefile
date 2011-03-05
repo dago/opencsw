@@ -67,7 +67,7 @@ SPKG_DESC_CSWruby18-mode = Ruby 1.8 major mode for Emacs
 
 SPKG_DESC_CSWruby18-mode-el = Elisp source for ruby mode (Ruby 1.8)
 
-PKGFILES_CSWruby18-doc = $(datadir)/ri/.* $(docdir)/ruby/sample.*
+PKGFILES_CSWruby18-doc = $(datadir)/ri/.* $(docdir)/$(NAME)/sample.*
 
 PKGFILES_CSWruby18-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
