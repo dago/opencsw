@@ -149,6 +149,8 @@ CHECKPKG_OVERRIDES_CSWrubydev += archall-devel-package
 CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWpython
 
+CHECKPKG_OVERRIDES_CSWruby18 += surplus-dependency|CSWalternatives
+
 # usr/local overrides
 CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/1.8/fileutils.rb
 CHECKPKG_OVERRIDES_CSWruby18 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ruby18.1
