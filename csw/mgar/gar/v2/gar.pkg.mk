@@ -44,6 +44,9 @@ OBSOLETED_PKGS ?= $(sort $(foreach P,$(PACKAGES),$(OBSOLETES_$P)))
 SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(OBSOLETED_PKGS) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE)))
 endif
 
+# For creating default pkgnames, e.g. CSWpy-$(DASHED_NAME)
+DASHED_NAME    ?= $(subst _,-,$(patsubst CSW%,%,$(NAME)))
+
 # Automatic definitions for source package
 CATALOGNAME_$(SRCPACKAGE)   ?= $(patsubst CSW%,%,$(SRCPACKAGE_BASE))_src
 SPKG_DESC_$(SRCPACKAGE)     ?= $(SPKG_DESC_$(SRCPACKAGE_BASE)) Source Package
