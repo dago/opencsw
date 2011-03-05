@@ -33,30 +33,30 @@ PACKAGES += CSWphp5-bcmath
 PACKAGES += CSWphp5-bz2
 PACKAGES += CSWphp5-calendar
 PACKAGES += CSWphp5-ctype
-PACKAGES += CSWphp5curl
-PACKAGES += CSWphp5dba
-PACKAGES += CSWphp5dbase
-PACKAGES += CSWphp5dom
-PACKAGES += CSWphp5exif
-PACKAGES += CSWphp5ftp
-PACKAGES += CSWphp5gd
-PACKAGES += CSWphp5gettext
-PACKAGES += CSWphp5gmp
-PACKAGES += CSWphp5hash
-PACKAGES += CSWphp5iconv
-PACKAGES += CSWphp5imap
-PACKAGES += CSWphp5json
-PACKAGES += CSWphp5ldap
-PACKAGES += CSWphp5mbstring
-PACKAGES += CSWphp5mcrypt
-PACKAGES += CSWphp5mhash
-PACKAGES += CSWphp5mimemagic
-PACKAGES += CSWphp5mssql
-PACKAGES += CSWphp5mysql
+PACKAGES += CSWphp5-curl
+PACKAGES += CSWphp5-dba
+PACKAGES += CSWphp5-dbase
+PACKAGES += CSWphp5-dom
+PACKAGES += CSWphp5-exif
+PACKAGES += CSWphp5-ftp
+PACKAGES += CSWphp5-gd
+PACKAGES += CSWphp5-gettext
+PACKAGES += CSWphp5-gmp
+PACKAGES += CSWphp5-hash
+PACKAGES += CSWphp5-iconv
+PACKAGES += CSWphp5-imap
+PACKAGES += CSWphp5-json
+PACKAGES += CSWphp5-ldap
+PACKAGES += CSWphp5-mbstring
+PACKAGES += CSWphp5-mcrypt
+PACKAGES += CSWphp5-mhash
+PACKAGES += CSWphp5-mimemagic
+PACKAGES += CSWphp5-mssql
+PACKAGES += CSWphp5-mysql
 PACKAGES += CSWphp5-mysqli
-PACKAGES += CSWphp5ncurses
-PACKAGES += CSWphp5odbc
-PACKAGES += CSWphp5openssl
+PACKAGES += CSWphp5-ncurses
+PACKAGES += CSWphp5-odbc
+PACKAGES += CSWphp5-openssl
 PACKAGES += CSWphp5pcntl
 PACKAGES += CSWphp5pdo
 PACKAGES += CSWphp5pdomysql
@@ -116,105 +116,126 @@ SPKG_DESC_CSWphp5-ctype = The ctype extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-ctype = CSWphp5
 OBSOLETES_CSWphp5-ctype = CSWphp5ctype
 
-CATALOGNAME_CSWphp5curl = php5_curl
-SPKG_DESC_CSWphp5curl = The curl extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5curl  = CSWphp5 CSWcurlrt CSWlibidn 
-RUNTIME_DEP_PKGS_CSWphp5curl += CSWoldaprt CSWosslrt CSWzlib
+CATALOGNAME_CSWphp5-curl = php5_curl
+SPKG_DESC_CSWphp5-curl = The curl extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-curl  = CSWphp5 CSWcurlrt CSWlibidn 
+RUNTIME_DEP_PKGS_CSWphp5-curl += CSWoldaprt CSWosslrt CSWzlib
+OBSOLETES_CSWphp5-curl = CSWphp5curl
 
-CATALOGNAME_CSWphp5dba = php5_dba
-SPKG_DESC_CSWphp5dba = The dba extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5dba = CSWphp5 CSWlibgdbm3 CSWbdb42
+CATALOGNAME_CSWphp5-dba = php5_dba
+SPKG_DESC_CSWphp5-dba = The dba extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-dba = CSWphp5 CSWlibgdbm3 CSWbdb42
+OBSOLETES_CSWphp5-dba = CSWphp5dba
 
-CATALOGNAME_CSWphp5dbase = php5_dbase
-SPKG_DESC_CSWphp5dbase = The dbase extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5dbase = CSWphp5
+CATALOGNAME_CSWphp5-dbase = php5_dbase
+SPKG_DESC_CSWphp5-dbase = The dbase extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-dbase = CSWphp5
+OBSOLETES_CSWphp5-dbase = CSWphp5dbase
 
-CATALOGNAME_CSWphp5dom = php5_dom
-SPKG_DESC_CSWphp5dom = The dom extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5dom = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
+CATALOGNAME_CSWphp5-dom = php5_dom
+SPKG_DESC_CSWphp5-dom = The dom extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-dom = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
+OBSOLETES_CSWphp5-dom = CSWphp5dom
 
-CATALOGNAME_CSWphp5exif = php5_exif
-SPKG_DESC_CSWphp5exif = The exif extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5exif = CSWphp5
+CATALOGNAME_CSWphp5-exif = php5_exif
+SPKG_DESC_CSWphp5-exif = The exif extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-exif = CSWphp5
+OBSOLETES_CSWphp5-exif = CSWphp5exif
 
-CATALOGNAME_CSWphp5ftp = php5_ftp
-SPKG_DESC_CSWphp5ftp = The ftp extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5ftp = CSWphp5 CSWosslrt
+CATALOGNAME_CSWphp5-ftp = php5_ftp
+SPKG_DESC_CSWphp5-ftp = The ftp extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-ftp = CSWphp5 CSWosslrt
+OBSOLETES_CSWphp5-ftp = CSWphp5ftp
 
-CATALOGNAME_CSWphp5gd = php5_gd
-SPKG_DESC_CSWphp5gd = The gd extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5gd  = CSWphp5 CSWftype2 CSWgd CSWjpeg
-RUNTIME_DEP_PKGS_CSWphp5gd += CSWpng CSWt1lib CSWxpm CSWzlib
+CATALOGNAME_CSWphp5-gd = php5_gd
+SPKG_DESC_CSWphp5-gd = The gd extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-gd  = CSWphp5 CSWftype2 CSWgd CSWjpeg
+RUNTIME_DEP_PKGS_CSWphp5-gd += CSWpng CSWt1lib CSWxpm CSWzlib
+OBSOLETES_CSWphp5-gd = CSWphp5gd
 
 CATALOGNAME_CSWphp5-gettext = php5_gettext
 SPKG_DESC_CSWphp5-gettext = The gettext extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-gettext = CSWphp5 CSWggettextrt
 OBSOLETES_CSWphp5-gettext = CSWphp5gettext
 
-CATALOGNAME_CSWphp5gmp = php5_gmp
-SPKG_DESC_CSWphp5gmp = The gmp extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5gmp = CSWphp5 CSWlibgmp
+CATALOGNAME_CSWphp5-gmp = php5_gmp
+SPKG_DESC_CSWphp5-gmp = The gmp extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-gmp = CSWphp5 CSWlibgmp
+OBSOLETES_CSWphp5-gmp = CSWphp5gmp
 
-CATALOGNAME_CSWphp5hash = php5_hash
-SPKG_DESC_CSWphp5hash = The hash extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5hash = CSWphp5
+CATALOGNAME_CSWphp5-hash = php5_hash
+SPKG_DESC_CSWphp5-hash = The hash extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-hash = CSWphp5
+OBSOLETES_CSWphp5-hash = CSWphp5hash
 
-CATALOGNAME_CSWphp5iconv = php5_iconv
-SPKG_DESC_CSWphp5iconv = The iconv extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5iconv = CSWphp5 CSWiconv
+CATALOGNAME_CSWphp5-iconv = php5_iconv
+SPKG_DESC_CSWphp5-iconv = The iconv extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-iconv = CSWphp5 CSWiconv
+OBSOLETES_CSWphp5-iconv = CSWphp5iconv
 
-CATALOGNAME_CSWphp5imap = php5_imap
-SPKG_DESC_CSWphp5imap = The imap extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5imap = CSWphp5 CSWimaprt CSWkrb5lib CSWosslrt
+CATALOGNAME_CSWphp5-imap = php5_imap
+SPKG_DESC_CSWphp5-imap = The imap extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-imap = CSWphp5 CSWimaprt CSWkrb5lib CSWosslrt
+OBSOLETES_CSWphp5-imap = CSWphp5imap
 
-CATALOGNAME_CSWphp5json = php5_json
-SPKG_DESC_CSWphp5json = The json extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5json = CSWphp5
+CATALOGNAME_CSWphp5-json = php5_json
+SPKG_DESC_CSWphp5-json = The json extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-json = CSWphp5
+OBSOLETES_CSWphp5-json = CSWphp5json
 
-CATALOGNAME_CSWphp5ldap = php5_ldap
-SPKG_DESC_CSWphp5ldap = The ldap extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5ldap = CSWphp5 CSWoldaprt CSWsasl
+CATALOGNAME_CSWphp5-ldap = php5_ldap
+SPKG_DESC_CSWphp5-ldap = The ldap extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-ldap = CSWphp5 CSWoldaprt CSWsasl
 
-CATALOGNAME_CSWphp5mbstring = php5_mbstring
-SPKG_DESC_CSWphp5mbstring = The mbstring extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5mbstring = CSWphp5
+CATALOGNAME_CSWphp5-mbstring = php5_mbstring
+SPKG_DESC_CSWphp5-mbstring = The mbstring extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-mbstring = CSWphp5
+OBSOLETES_CSWphp5-mbstring = CSWphp5mbstring
 
-CATALOGNAME_CSWphp5mcrypt = php5_mcrypt
-SPKG_DESC_CSWphp5mcrypt = The mcrypt extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5mcrypt = CSWphp5 CSWlibmcrypt CSWlibltdl7
+CATALOGNAME_CSWphp5-mcrypt = php5_mcrypt
+SPKG_DESC_CSWphp5-mcrypt = The mcrypt extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-mcrypt = CSWphp5 CSWlibmcrypt CSWlibltdl7
+OBSOLETES_CSWphp5-mcrypt = CSWphp5mcrypt
 
-CATALOGNAME_CSWphp5mhash = php5_mhash
-SPKG_DESC_CSWphp5mhash = The mhash extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5mhash = CSWphp5 CSWlibmhash
+CATALOGNAME_CSWphp5-mhash = php5_mhash
+SPKG_DESC_CSWphp5-mhash = The mhash extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-mhash = CSWphp5 CSWlibmhash
+OBSOLETES_CSWphp5-mhash = CSWphp5mhash
 
-CATALOGNAME_CSWphp5mimemagic = php5_mime_magic
-SPKG_DESC_CSWphp5mimemagic = The mime magic Extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5mimemagic = CSWphp5
+CATALOGNAME_CSWphp5-mimemagic = php5_mime_magic
+SPKG_DESC_CSWphp5-mimemagic = The mime magic Extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-mimemagic = CSWphp5
+OBSOLETES_CSWphp5-mimemagic = CSWphp5mimemagic
 
-CATALOGNAME_CSWphp5mssql = php5_mssql
-SPKG_DESC_CSWphp5mssql = The mssql extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5mssql = CSWphp5 CSWfreetds
+CATALOGNAME_CSWphp5-mssql = php5_mssql
+SPKG_DESC_CSWphp5-mssql = The mssql extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-mssql = CSWphp5 CSWfreetds
+OBSOLETES_CSWphp5-mssql = CSWphp5mssql
 
-CATALOGNAME_CSWphp5mysql = php5_mysql
-SPKG_DESC_CSWphp5mysql = The mysql extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5mysql = CSWphp5 CSWmysql5rt
+CATALOGNAME_CSWphp5-mysql = php5_mysql
+SPKG_DESC_CSWphp5-mysql = The mysql extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-mysql = CSWphp5 CSWmysql5rt
+OBSOLETES_CSWphp5-mysql = CSWphp5mysql
 
 CATALOGNAME_CSWphp5-mysqli = php5_mysqli
 SPKG_DESC_CSWphp5-mysqli = The mysqli extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mysqli = CSWphp5 CSWmysql5rt CSWzlib
-OBSOLETES_CSWphp5-mysqli = CSWphp5mysqli
+OBSOLETES_CSWphp5-mysqli = CSWphp5-mysqli
 
-CATALOGNAME_CSWphp5ncurses = php5_ncurses
-SPKG_DESC_CSWphp5ncurses = The ncurses extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5ncurses = CSWphp5 CSWncurses
+CATALOGNAME_CSWphp5-ncurses = php5_ncurses
+SPKG_DESC_CSWphp5-ncurses = The ncurses extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-ncurses = CSWphp5 CSWncurses
+OBSOLETES_CSWphp5-ncurses = CSWphp5ncurses
 
-CATALOGNAME_CSWphp5odbc = php5_odbc
-SPKG_DESC_CSWphp5odbc = The odbc extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5odbc = CSWphp5 CSWunixodbc
+CATALOGNAME_CSWphp5-odbc = php5_odbc
+SPKG_DESC_CSWphp5-odbc = The odbc extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-odbc = CSWphp5 CSWunixodbc
+OBSOLETES_CSWPhp5-odbc = CSWphp5odbc
 
-CATALOGNAME_CSWphp5openssl = php5_openssl
-SPKG_DESC_CSWphp5openssl = The openssl extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5openssl = CSWphp5 CSWosslrt CSWkrb5lib
+CATALOGNAME_CSWphp5-openssl = php5_openssl
+SPKG_DESC_CSWphp5-openssl = The openssl extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-openssl = CSWphp5 CSWosslrt CSWkrb5lib
+OBSOLETES_CSWphp5-openssl = CSWphp5openssl
 
 CATALOGNAME_CSWphp5pcntl = php5_pcntl
 SPKG_DESC_CSWphp5pcntl = The pcntl extension for PHP5
@@ -354,58 +375,58 @@ PKGFILES_CSWphp5-calendar = .*/lib/php/extensions/.*/calendar.*
 
 PKGFILES_CSWphp5-ctype = .*/lib/php/extensions/.*/ctype.*
 
-PKGFILES_CSWphp5curl = .*/lib/php/extensions/.*/curl.*
+PKGFILES_CSWphp5-curl = .*/lib/php/extensions/.*/curl.*
 
-PKGFILES_CSWphp5dba = .*/lib/php/extensions/.*/dba\.so
+PKGFILES_CSWphp5-dba = .*/lib/php/extensions/.*/dba\.so
 
-PKGFILES_CSWphp5dbase = .*/lib/php/extensions/.*/dbase.*
+PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 
-PKGFILES_CSWphp5dom = .*/lib/php/extensions/.*/dom.*
-PKGFILES_CSWphp5dom += .*/include/php/ext/dom.*
+PKGFILES_CSWphp5-dom = .*/lib/php/extensions/.*/dom.*
+PKGFILES_CSWphp5-dom += .*/include/php/ext/dom.*
 
-PKGFILES_CSWphp5exif = .*/lib/php/extensions/.*/exif.*
+PKGFILES_CSWphp5-exif = .*/lib/php/extensions/.*/exif.*
 
-PKGFILES_CSWphp5ftp = .*/lib/php/extensions/.*/ftp.*
+PKGFILES_CSWphp5-ftp = .*/lib/php/extensions/.*/ftp.*
 
-PKGFILES_CSWphp5gd  = .*/lib/php/extensions/.*/gd.*
-PKGFILES_CSWphp5gd  += .*/include/php/ext/gd.*
+PKGFILES_CSWphp5-gd  = .*/lib/php/extensions/.*/gd.*
+PKGFILES_CSWphp5-gd  += .*/include/php/ext/gd.*
 
 PKGFILES_CSWphp5-gettext = .*/lib/php/extensions/.*/gettext.*
 
-PKGFILES_CSWphp5gmp = .*/lib/php/extensions/.*/gmp.*
+PKGFILES_CSWphp5-gmp = .*/lib/php/extensions/.*/gmp.*
 
-PKGFILES_CSWphp5hash = .*/lib/php/extensions/.*/hash.*
-PKGFILES_CSWphp5hash += .*/include/php/ext/hash.*
+PKGFILES_CSWphp5-hash = .*/lib/php/extensions/.*/hash.*
+PKGFILES_CSWphp5-hash += .*/include/php/ext/hash.*
 
-PKGFILES_CSWphp5iconv = .*/lib/php/extensions/.*/iconv.*
-PKGFILES_CSWphp5iconv += .*/include/php/ext/iconv.*
+PKGFILES_CSWphp5-iconv = .*/lib/php/extensions/.*/iconv.*
+PKGFILES_CSWphp5-iconv += .*/include/php/ext/iconv.*
 
-PKGFILES_CSWphp5imap = .*/lib/php/extensions/.*/imap.*
+PKGFILES_CSWphp5-imap = .*/lib/php/extensions/.*/imap.*
 
-PKGFILES_CSWphp5json = .*/lib/php/extensions/.*/json.*
+PKGFILES_CSWphp5-json = .*/lib/php/extensions/.*/json.*
 
-PKGFILES_CSWphp5ldap = .*/lib/php/extensions/.*/ldap.*
+PKGFILES_CSWphp5-ldap = .*/lib/php/extensions/.*/ldap.*
 
-PKGFILES_CSWphp5mbstring = .*/lib/php/extensions/.*/mbstring.*
-PKGFILES_CSWphp5mbstring += .*/include/php/ext/mbstring.*
+PKGFILES_CSWphp5-mbstring = .*/lib/php/extensions/.*/mbstring.*
+PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
 
-PKGFILES_CSWphp5mcrypt = .*/lib/php/extensions/.*/mcrypt.*
+PKGFILES_CSWphp5-mcrypt = .*/lib/php/extensions/.*/mcrypt.*
 
-PKGFILES_CSWphp5mhash = .*/lib/php/extensions/.*/mhash.*
+PKGFILES_CSWphp5-mhash = .*/lib/php/extensions/.*/mhash.*
 
-PKGFILES_CSWphp5mimemagic = .*/lib/php/extensions/.*/mime_magic.*
+PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
-PKGFILES_CSWphp5mssql = .*/lib/php/extensions/.*/mssql.*
+PKGFILES_CSWphp5-mssql = .*/lib/php/extensions/.*/mssql.*
 
-PKGFILES_CSWphp5mysql = .*/lib/php/extensions/.*/mysql\.so
+PKGFILES_CSWphp5-mysql = .*/lib/php/extensions/.*/mysql\.so
 
 PKGFILES_CSWphp5-mysqli = .*/lib/php/extensions/.*/mysqli.*
 
-PKGFILES_CSWphp5ncurses = .*/lib/php/extensions/.*/ncurses.*
+PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
 
-PKGFILES_CSWphp5odbc = .*/lib/php/extensions/.*/odbc.*
+PKGFILES_CSWphp5-odbc = .*/lib/php/extensions/.*/odbc.*
 
-PKGFILES_CSWphp5openssl = .*/lib/php/extensions/.*/openssl.*
+PKGFILES_CSWphp5-openssl = .*/lib/php/extensions/.*/openssl.*
 
 PKGFILES_CSWphp5pcntl = .*/lib/php/extensions/.*/pcntl.*
 
@@ -606,58 +627,58 @@ SKIPTEST = 1
 
 CHECKPKG_OVERRIDES_CSWphp5pdo += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-bcmath += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5gd += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5tidy += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5pdopgsql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5snmp += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ctype += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-calendar += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5hash += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-hash += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sysvshm += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5xmlwriter += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5xmlreader += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5mysql += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5iconv += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5dbase += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5mbstring += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-mysql += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-iconv += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-dbase += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-mbstring += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5xsl += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5exif += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-exif += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-bz2 += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5pdoodbc += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5dba += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-dba += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5sysvmsg += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5imap += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5odbc += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-imap += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-odbc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5openssl += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-openssl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5pdosqlite += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5sockets += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5ldap += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5ncurses += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5json += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-ldap += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-ncurses += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-json += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5tokenizer += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5dom += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-dom += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5soap += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5pspell += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5wddx += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5gmp += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5mssql += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-gmp += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-mssql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5pcntl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5zip += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5pdomysql += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5curl += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5sysvsem += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5mimemagic += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5posix += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5ftp += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-ftp += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-gettext += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5mcrypt += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5sqlite += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5xmlrpc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5pgsql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5shmop += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5mhash += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-mhash += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5session += surplus-dependency|CSWphp5
 
 include files/scripts.mk
