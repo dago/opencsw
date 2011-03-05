@@ -23,5 +23,6 @@ TEST_SCRIPTS ?= $(WORKSRC)/setup.py
 LICENSE ?= PKG-INFO
 SPKG_SOURCEURL ?= http://pypi.python.org/pypi/$(NAME)
 MASTER_SITES ?= $(PYPI_MIRROR)
+PACKAGES ?= CSWpy-$(DASHED_NAME)
 
 include gar/gar.mk
