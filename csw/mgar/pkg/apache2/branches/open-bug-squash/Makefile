@@ -102,6 +102,7 @@ CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
 CHECKPKG_OVERRIDES_CSWap2-prefork += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2-worker += surplus-dependency|CSWap2-prefork
+CHECKPKG_OVERRIDES_CSWap2-worker += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 
 CHECKPKG_OVERRIDES_CSWapache2-devel += file-with-bad-content|/usr/local|root/opt/csw/apache2/include/httpd.h
