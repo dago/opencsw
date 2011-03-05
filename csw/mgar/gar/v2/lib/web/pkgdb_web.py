@@ -27,11 +27,11 @@ urls = (
   r'/catalognames/', 'CatalognameList',
   r'/catalognames/([^/]+)/', 'Catalogname',
   r'/error-tags/', 'ErrorTagList',
-  r'/rest/catalogs/([\w-]+)-(sparc|i386)-(SunOS[^-]+)/', 'Catalogs',
-  r'/rest/catalogs/([\w-]+)-(sparc|i386)-(SunOS[^-]+)/pkgname-by-filename',
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/', 'Catalogs',
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
   # Query by catalog release, arch, OS release and catalogname
-  r'/rest/catalogs/([\w-]+)-(sparc|i386)-(SunOS[^-]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
 )
 
