@@ -57,24 +57,24 @@ PACKAGES += CSWphp5-mysqli
 PACKAGES += CSWphp5-ncurses
 PACKAGES += CSWphp5-odbc
 PACKAGES += CSWphp5-openssl
-PACKAGES += CSWphp5pcntl
-PACKAGES += CSWphp5pdo
-PACKAGES += CSWphp5pdomysql
-PACKAGES += CSWphp5pdoodbc
-PACKAGES += CSWphp5pdopgsql
-PACKAGES += CSWphp5pdosqlite
-PACKAGES += CSWphp5pgsql
-PACKAGES += CSWphp5posix
-PACKAGES += CSWphp5pspell
+PACKAGES += CSWphp5-pcntl
+PACKAGES += CSWphp5-pdo
+PACKAGES += CSWphp5-pdomysql
+PACKAGES += CSWphp5-pdoodbc
+PACKAGES += CSWphp5-pdopgsql
+PACKAGES += CSWphp5-pdosqlite
+PACKAGES += CSWphp5-pgsql
+PACKAGES += CSWphp5-posix
+PACKAGES += CSWphp5-pspell
 PACKAGES += CSWphp5-readline
-PACKAGES += CSWphp5session
-PACKAGES += CSWphp5shmop
-PACKAGES += CSWphp5snmp
-PACKAGES += CSWphp5soap
-PACKAGES += CSWphp5sockets
-PACKAGES += CSWphp5sqlite
-PACKAGES += CSWphp5sysvmsg
-PACKAGES += CSWphp5sysvsem
+PACKAGES += CSWphp5-session
+PACKAGES += CSWphp5-shmop
+PACKAGES += CSWphp5-snmp
+PACKAGES += CSWphp5-soap
+PACKAGES += CSWphp5-sockets
+PACKAGES += CSWphp5-sqlite
+PACKAGES += CSWphp5-sysvmsg
+PACKAGES += CSWphp5-sysvsem
 PACKAGES += CSWphp5-sysvshm
 PACKAGES += CSWphp5tidy
 PACKAGES += CSWphp5tokenizer
@@ -237,83 +237,100 @@ SPKG_DESC_CSWphp5-openssl = The openssl extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-openssl = CSWphp5 CSWosslrt CSWkrb5lib
 OBSOLETES_CSWphp5-openssl = CSWphp5openssl
 
-CATALOGNAME_CSWphp5pcntl = php5_pcntl
-SPKG_DESC_CSWphp5pcntl = The pcntl extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5pcntl = CSWphp5
+CATALOGNAME_CSWphp5-pcntl = php5_pcntl
+SPKG_DESC_CSWphp5-pcntl = The pcntl extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-pcntl = CSWphp5
+OBSOLETES_CSWphp5-pcntl = CSWphp5pcntl
 
-CATALOGNAME_CSWphp5pdo = php5_pdo
-SPKG_DESC_CSWphp5pdo = A database access abstraction module for PHP applications
-RUNTIME_DEP_PKGS_CSWphp5pdo = CSWphp5 
+CATALOGNAME_CSWphp5-pdo = php5_pdo
+SPKG_DESC_CSWphp5-pdo = A database access abstraction module for PHP applications
+RUNTIME_DEP_PKGS_CSWphp5-pdo = CSWphp5 
+OBSOLETES_CSWphp5-pdo = CSWphp5pdo
 
-CATALOGNAME_CSWphp5pdomysql = php5_pdomysql
-SPKG_DESC_CSWphp5pdomysql = A MySQL specific database access abstraction module for PHP applications (pdo version)
-RUNTIME_DEP_PKGS_CSWphp5pdomysql = CSWphp5 CSWmysql5rt CSWzlib CSWphp5pdo
+CATALOGNAME_CSWphp5-pdomysql = php5_pdomysql
+SPKG_DESC_CSWphp5-pdomysql = A MySQL specific database access abstraction module for PHP applications (pdo version)
+RUNTIME_DEP_PKGS_CSWphp5-pdomysql = CSWphp5 CSWmysql5rt CSWzlib CSWphp5-pdo
+OBSOLETS_CSWphp5-pdomysql = CSWphp5pdomysql
 
-CATALOGNAME_CSWphp5pdoodbc = php5_pdoodbc
-SPKG_DESC_CSWphp5pdoodbc = An ODBC specific database access abstraction module for PHP applications
-RUNTIME_DEP_PKGS_CSWphp5pdoodbc = CSWphp5 CSWunixodbc CSWphp5pdo
+CATALOGNAME_CSWphp5-pdoodbc = php5_pdoodbc
+SPKG_DESC_CSWphp5-pdoodbc = An ODBC specific database access abstraction module for PHP applications
+RUNTIME_DEP_PKGS_CSWphp5-pdoodbc = CSWphp5 CSWunixodbc CSWphp5-pdo
+OBSOLETS_CSWphp5-pdoodbc = CSWphp5pdoodbc
 
-CATALOGNAME_CSWphp5pdopgsql = php5_pdopgsql
-SPKG_DESC_CSWphp5pdopgsql = A PgSQL specific database access abstraction module for PHP applications (pdo version)
-RUNTIME_DEP_PKGS_CSWphp5pdopgsql = CSWphp5 CSWlibpq CSWphp5pdo
+CATALOGNAME_CSWphp5-pdopgsql = php5_pdopgsql
+SPKG_DESC_CSWphp5-pdopgsql = A PgSQL specific database access abstraction module for PHP applications (pdo version)
+RUNTIME_DEP_PKGS_CSWphp5-pdopgsql = CSWphp5 CSWlibpq CSWphp5-pdo
+OBSOLETS_CSWphp5-pdopgsql = CSWphp5pdopgsql
 
-CATALOGNAME_CSWphp5pdosqlite = php5_pdosqlite
-SPKG_DESC_CSWphp5pdosqlite = A Sqlite specific database access abstraction module for PHP applications (pdo version)
-RUNTIME_DEP_PKGS_CSWphp5pdosqlite = CSWphp5 CSWphp5pdo
+CATALOGNAME_CSWphp5-pdosqlite = php5_pdosqlite
+SPKG_DESC_CSWphp5-pdosqlite = A Sqlite specific database access abstraction module for PHP applications (pdo version)
+RUNTIME_DEP_PKGS_CSWphp5-pdosqlite = CSWphp5 CSWphp5-pdo
+OBSOLETES_CSWphp5-pdosqlite = CSWphp5pdosqlite
 
-CATALOGNAME_CSWphp5pgsql = php5_pgsql
-SPKG_DESC_CSWphp5pgsql = The pgsql extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5pgsql = CSWphp5 CSWlibpq
+CATALOGNAME_CSWphp5-pgsql = php5_pgsql
+SPKG_DESC_CSWphp5-pgsql = The pgsql extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-pgsql = CSWphp5 CSWlibpq
+OBSOLETES_CSWphp5-pgsql = CSWphp5pgsql
 
-CATALOGNAME_CSWphp5posix = php5_posix
-SPKG_DESC_CSWphp5posix = The posix extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5posix = CSWphp5
+CATALOGNAME_CSWphp5-posix = php5_posix
+SPKG_DESC_CSWphp5-posix = The posix extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-posix = CSWphp5
+OBSOLETES_CSWphp5-posix = CSWphp5posix
 
-CATALOGNAME_CSWphp5pspell = php5_pspell
-SPKG_DESC_CSWphp5pspell = The pspell extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5pspell = CSWphp5 CSWaspell
+CATALOGNAME_CSWphp5-pspell = php5_pspell
+SPKG_DESC_CSWphp5-pspell = The pspell extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-pspell = CSWphp5 CSWaspell
+OBSOLETES_CSWphp5-pspell = CSWphp5pspell
 
 CATALOGNAME_CSWphp5-readline = php5_readline
 SPKG_DESC_CSWphp5-readline = The readline extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-readline = CSWphp5 CSWreadline CSWncurses
 OBSOLETES_CSWphp5-readline = CSWphp5readline
 
-CATALOGNAME_CSWphp5session = php5_session
-SPKG_DESC_CSWphp5session = The session extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5session = CSWphp5 CSWlibmm
+CATALOGNAME_CSWphp5-session = php5_session
+SPKG_DESC_CSWphp5-session = The session extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-session = CSWphp5 CSWlibmm
+OBSOLETES_CSWphp5-session = CSWphp5-session
 
-CATALOGNAME_CSWphp5shmop = php5_shmop
-SPKG_DESC_CSWphp5shmop = The shmop extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5shmop = CSWphp5
+CATALOGNAME_CSWphp5-shmop = php5_shmop
+SPKG_DESC_CSWphp5-shmop = The shmop extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-shmop = CSWphp5
+OBSOLETS_CSWphp5-shmop = CSWphp5shmop
 
-CATALOGNAME_CSWphp5snmp = php5_snmp
-SPKG_DESC_CSWphp5snmp = The snmp extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5snmp = CSWphp5 CSWnetsnmp CSWosslrt CSWtcpwrap
+CATALOGNAME_CSWphp5-snmp = php5_snmp
+SPKG_DESC_CSWphp5-snmp = The snmp extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-snmp = CSWphp5 CSWnetsnmp CSWosslrt CSWtcpwrap
+OBSOLETES_CSWphp5-snmp = CSWphp5snmp
 
-CATALOGNAME_CSWphp5soap = php5_soap
-SPKG_DESC_CSWphp5soap = The soap extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5soap = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
+CATALOGNAME_CSWphp5-soap = php5_soap
+SPKG_DESC_CSWphp5-soap = The soap extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-soap = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
+OBSOLETES_CSWphp5-soap = CSWphp5soap
 
-CATALOGNAME_CSWphp5sockets = php5_sockets
-SPKG_DESC_CSWphp5sockets = The sockets extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5sockets = CSWphp5
+CATALOGNAME_CSWphp5-sockets = php5_sockets
+SPKG_DESC_CSWphp5-sockets = The sockets extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-sockets = CSWphp5
+OBSOLETES_CSWphp5-sockets = CSWphp5sockets
 
-CATALOGNAME_CSWphp5sqlite = php5_sqlite
-SPKG_DESC_CSWphp5sqlite = The sqlite extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5sqlite = CSWphp5 CSWsqlite
+CATALOGNAME_CSWphp5-sqlite = php5_sqlite
+SPKG_DESC_CSWphp5-sqlite = The sqlite extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-sqlite = CSWphp5 CSWsqlite
+OBSOLETS_CSWphp5-sqlite = CSWphp5sqlite
 
-CATALOGNAME_CSWphp5sysvmsg = php5_sysvmsg
-SPKG_DESC_CSWphp5sysvmsg = The sysvmsg extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5sysvmsg = CSWphp5
+CATALOGNAME_CSWphp5-sysvmsg = php5_sysvmsg
+SPKG_DESC_CSWphp5-sysvmsg = The sysvmsg extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-sysvmsg = CSWphp5
+OBSOLETS_CSWphp5-sysvmsg = CSWphp5sysvmsg
 
-CATALOGNAME_CSWphp5sysvsem = php5_sysvsem
-SPKG_DESC_CSWphp5sysvsem = The sysvsem extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5sysvsem = CSWphp5
+CATALOGNAME_CSWphp5-sysvsem = php5_sysvsem
+SPKG_DESC_CSWphp5-sysvsem = The sysvsem extension for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-sysvsem = CSWphp5
+OBSOLETS_CSWphp5-sysvsem = CSWphp5sysvsem
 
 CATALOGNAME_CSWphp5-sysvshm = php5_sysvshm
 SPKG_DESC_CSWphp5-sysvshm = The sysvshm extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-sysvshm = CSWphp5
-OBSOLETES_CSWphp5-sysvshm = CSWphp5sysvshm
+OBSOLETES_CSWphp5-sysvshm = CSWphp5-sysvshm
 
 CATALOGNAME_CSWphp5tidy = php5_tidy
 SPKG_DESC_CSWphp5tidy = The tidy extension for PHP5
@@ -428,44 +445,44 @@ PKGFILES_CSWphp5-odbc = .*/lib/php/extensions/.*/odbc.*
 
 PKGFILES_CSWphp5-openssl = .*/lib/php/extensions/.*/openssl.*
 
-PKGFILES_CSWphp5pcntl = .*/lib/php/extensions/.*/pcntl.*
+PKGFILES_CSWphp5-pcntl = .*/lib/php/extensions/.*/pcntl.*
 
-PKGFILES_CSWphp5pdo  = .*/lib/php/extensions/.*/pdo\.so*
-PKGFILES_CSWphp5pdo += .*/include/php/ext/pdo.*
+PKGFILES_CSWphp5-pdo  = .*/lib/php/extensions/.*/pdo\.so*
+PKGFILES_CSWphp5-pdo += .*/include/php/ext/pdo.*
 
-PKGFILES_CSWphp5pdomysql = .*/lib/php/extensions/.*/pdo_mysql.*
+PKGFILES_CSWphp5-pdomysql = .*/lib/php/extensions/.*/pdo_mysql.*
 
-PKGFILES_CSWphp5pdoodbc = .*/lib/php/extensions/.*/pdo_odbc.*
+PKGFILES_CSWphp5-pdoodbc = .*/lib/php/extensions/.*/pdo_odbc.*
 
-PKGFILES_CSWphp5pdopgsql = .*/lib/php/extensions/.*/pdo_pgsql.*
+PKGFILES_CSWphp5-pdopgsql = .*/lib/php/extensions/.*/pdo_pgsql.*
 
-PKGFILES_CSWphp5pdosqlite = .*/lib/php/extensions/.*/pdo_sqlite.*
+PKGFILES_CSWphp5-pdosqlite = .*/lib/php/extensions/.*/pdo_sqlite.*
 
-PKGFILES_CSWphp5pgsql = .*/lib/php/extensions/.*/pgsql.*
+PKGFILES_CSWphp5-pgsql = .*/lib/php/extensions/.*/pgsql.*
 
-PKGFILES_CSWphp5posix = .*/lib/php/extensions/.*/posix.*
+PKGFILES_CSWphp5-posix = .*/lib/php/extensions/.*/posix.*
 
-PKGFILES_CSWphp5pspell = .*/lib/php/extensions/.*/pspell.*
+PKGFILES_CSWphp5-pspell = .*/lib/php/extensions/.*/pspell.*
 
 PKGFILES_CSWphp5-readline = .*/lib/php/extensions/.*/readline.*
 
-PKGFILES_CSWphp5session = .*/lib/php/extensions/.*/session.*
-PKGFILES_CSWphp5session += .*/include/php/ext/session.*
+PKGFILES_CSWphp5-session = .*/lib/php/extensions/.*/session.*
+PKGFILES_CSWphp5-session += .*/include/php/ext/session.*
 
-PKGFILES_CSWphp5shmop = .*/lib/php/extensions/.*/shmop.*
+PKGFILES_CSWphp5-shmop = .*/lib/php/extensions/.*/shmop.*
 
-PKGFILES_CSWphp5snmp = .*/lib/php/extensions/.*/snmp.*
+PKGFILES_CSWphp5-snmp = .*/lib/php/extensions/.*/snmp.*
 
-PKGFILES_CSWphp5soap = .*/lib/php/extensions/.*/soap.*
+PKGFILES_CSWphp5-soap = .*/lib/php/extensions/.*/soap.*
 
-PKGFILES_CSWphp5sockets = .*/lib/php/extensions/.*/sockets.*
+PKGFILES_CSWphp5-sockets = .*/lib/php/extensions/.*/sockets.*
 
-PKGFILES_CSWphp5sqlite = .*/lib/php/extensions/.*/sqlite.*
-PKGFILES_CSWphp5sqlite += .*/include/php/ext/sqlite.*
+PKGFILES_CSWphp5-sqlite = .*/lib/php/extensions/.*/sqlite.*
+PKGFILES_CSWphp5-sqlite += .*/include/php/ext/sqlite.*
 
-PKGFILES_CSWphp5sysvmsg = .*/lib/php/extensions/.*/sysvmsg.*
+PKGFILES_CSWphp5-sysvmsg = .*/lib/php/extensions/.*/sysvmsg.*
 
-PKGFILES_CSWphp5sysvsem = .*/lib/php/extensions/.*/sysvsem.*
+PKGFILES_CSWphp5-sysvsem = .*/lib/php/extensions/.*/sysvsem.*
 
 PKGFILES_CSWphp5-sysvshm = .*/lib/php/extensions/.*/sysvshm.*
 
@@ -625,12 +642,12 @@ CONFIGURE_ARGS += --with-zlib=$(prefix)
 SKIPTEST = 1
 #ENABLE_CHECK = 0
 
-CHECKPKG_OVERRIDES_CSWphp5pdo += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pdo += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-bcmath += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5tidy += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5pdopgsql += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5snmp += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ctype += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-calendar += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-hash += surplus-dependency|CSWphp5
@@ -644,42 +661,42 @@ CHECKPKG_OVERRIDES_CSWphp5-mbstring += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5xsl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-exif += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-bz2 += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5pdoodbc += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-dba += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5sysvmsg += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-sysvmsg += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-imap += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-odbc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-openssl += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5pdosqlite += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5sockets += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-sockets += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ldap += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ncurses += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-json += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5tokenizer += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-dom += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5soap += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5pspell += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pspell += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5wddx += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-gmp += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mssql += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5pcntl += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pcntl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5zip += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5pdomysql += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5sysvsem += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-sysvsem += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5posix += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-posix += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ftp += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-gettext += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5sqlite += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-sqlite += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5xmlrpc += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5pgsql += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5shmop += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pgsql += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-shmop += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mhash += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5session += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-session += surplus-dependency|CSWphp5
 
 include files/scripts.mk
 include gar/category.mk
