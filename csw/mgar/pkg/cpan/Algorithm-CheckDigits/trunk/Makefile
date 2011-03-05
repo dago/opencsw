@@ -1,17 +1,20 @@
 NAME = Algorithm-CheckDigits
-VERSION = 0.53
+VERSION = v1.1.1
 CATEGORIES = cpan
 AUTHOR = MAMAWE
 
-DESCRIPTION = Perl extension to generate and test check digits
+DESCRIPTION = Generate and test check digits
 define BLURB
-  Perl extension to generate and test check digits
+  Generate and test check digits
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmalgorithmchkdig
-CATALOGNAME = pm_algorithmchkdig
-ARCHALL = 1
+PACKAGES += CSWpm-algorithm-checkdigits
+CATALOGNAME_CSWpm-algorithm-checkdigits = pm_algorithm_checkdigits
+SPKG_DESC_CSWpm-algorithm-checkdigits = $(DESCRIPTION)
+ARCHALL_CSWpm-algorithm-checkdigits = 1
+OBSOLETES_CSWpm-algorithm-checkdigits = CSWpmalgorithmchkdig
+CATALOGNAME_CSWpmalgorithmchkdig = pm_algorithmchkdig
 
 include gar/category.mk
