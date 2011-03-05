@@ -7,6 +7,10 @@ _EXTRA_GAR_PKGS += CSWpython
 # It breaks pysetuptools and trac.  Here's a relevant reading:
 # http://fedoraproject.org/wiki/Packaging:Python#Packaging_eggs_and_setuptools_concerns
 
+# No need to include unit tests in released packages.
+_MERGE_EXCLUDE_CATEGORY += .*/$(NAME)/test
+_MERGE_EXCLUDE_CATEGORY += .*/$(NAME)/test/.*
+
 # Activate cswpycompile support to exclude .pyc and .pyo files from 
 # the package and compile them on installation. File exclusion is 
 # handled by gar.mk and cswclassutils integration by gar.pkg.mk
