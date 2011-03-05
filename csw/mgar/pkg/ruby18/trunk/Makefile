@@ -20,6 +20,9 @@ OBSOLETES_CSWruby18-dev = CSWrubydev
 OBSOLETES_CSWruby18-mode = CSWrubymode
 OBSOLETES_CSWruby18-mode-el = CSWrubymodeel
 
+ALTERNATIVES_CSWruby18 = ruby
+ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby18 10 $(bindir)/irb irb $(bindir)/irb18 $(bindir)/erb erb $(bindir)/erb18 $(bindir)/rdoc rdoc $(bindir)/rdoc18 $(bindir)/ri ri $(bindir)/ri18 $(bindir)/testrb testrb $(bindir)/testrb18
+
 ARCHALL_CSWruby18-doc = 1
 ARCHALL_CSWruby18-mode = 1
 ARCHALL_CSWruby18-mode-el = 1
@@ -172,6 +175,7 @@ post-install-modulated: $(PI_TARGETS)
 suffixbins:
 	@echo "Making binaries use 18 suffix"
 	@(cd $(DESTDIR)$(bindir); for f in *; do mv $$f $${f}18; done)
+	@$(MAKECOOKIE)
 
 multiconfig:
 	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
