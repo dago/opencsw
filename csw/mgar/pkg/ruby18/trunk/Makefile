@@ -111,6 +111,7 @@ CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
 CONFIGURE_ARGS += --with-readline-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 CONFIGURE_ARGS += --enable-install-doc
+CONFIGURE_ARGS += --program-suffix=18
 
 INSTALL_ARGS = install
 
@@ -164,17 +165,12 @@ SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
 RBCONFIG = /opt/csw/lib/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb
 
-PI_TARGETS  = samples rbconfig rbscripts rubymode suffixbins
+PI_TARGETS  = samples rbconfig rbscripts rubymode
 ifndef USEGCC
 PI_TARGETS += multiconfig
 endif
 
 post-install-modulated: $(PI_TARGETS)
-	@$(MAKECOOKIE)
-
-suffixbins:
-	@echo "Making binaries use 18 suffix"
-	@(cd $(DESTDIR)$(bindir); for f in *; do mv $$f $${f}18; done)
 	@$(MAKECOOKIE)
 
 multiconfig:
