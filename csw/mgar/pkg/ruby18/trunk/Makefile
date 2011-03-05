@@ -72,14 +72,14 @@ PKGFILES_CSWruby18-doc = $(datadir)/ri/.* $(docdir)/ruby/sample.*
 PKGFILES_CSWruby18-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
 PKGFILES_CSWruby18-dev = $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
-PKGFILES_CSWruby18-dev += /opt/csw/lib/libruby.so
+PKGFILES_CSWruby18-dev += /opt/csw/lib/libruby.*.so
 
 PKGFILES_CSWruby18-mode = $(datadir)/emacs/site-lisp/.*elc$
 
 PKGFILES_CSWruby18-mode-el = $(datadir)/emacs/site-lisp/.*el$
 
-PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.so.1
-PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.so.1.*
+PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.*.so.1
+PKGFILES_CSWlibruby1 += /opt/csw/lib/libruby.*.so.1.*
 
 MASTER_SITES  = ftp://ftp.ruby-lang.org/pub/ruby/
 MASTER_SITES += ftp://www.ibiblio.org/pub/languages/ruby/
