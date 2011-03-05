@@ -121,7 +121,7 @@ AP2_MODS = 1
 AP2_MODFILES = *suexec*\.so
 
 ALTERNATIVES_CSWapache2 = prefork
-ALTERNATIVES_CSWap2worker = worker
+ALTERNATIVES_CSWap2-worker = worker
 ALTERNATIVE_prefork = /opt/csw/apache2/sbin/httpd httpd /opt/csw/apache2/sbin/httpd.prefork 50
 ALTERNATIVE_worker = /opt/csw/apache2/sbin/httpd httpd /opt/csw/apache2/sbin/httpd.worker 100
 
