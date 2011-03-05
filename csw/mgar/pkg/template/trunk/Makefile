@@ -57,8 +57,9 @@ MASTER_SITES =
 ## $(MASTER_SITES).
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 ##
-## We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+## We define upstream file regex so we can be notifed of new upstream software
+## release
+## UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 ##
 ## Catalog name is the name to be used with pkg{-get,util} -i <pkgname>.
 ## It is different from the system package name, which by convention is CSWpkgname.
