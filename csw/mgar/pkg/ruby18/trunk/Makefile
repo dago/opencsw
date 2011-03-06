@@ -19,7 +19,6 @@ OBSOLETES_CSWruby18-tk = CSWrubytk
 OBSOLETES_CSWruby18-dev = CSWrubydev
 OBSOLETES_CSWruby18-mode = CSWrubymode
 OBSOLETES_CSWruby18-mode-el = CSWrubymodeel
-OBSOLETES_CSWlibruby18-1 = CSWlibruby1
 
 ALTERNATIVES_CSWruby18 = ruby
 ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby18 10 $(bindir)/irb irb $(bindir)/irb18 $(bindir)/erb erb $(bindir)/erb18 $(bindir)/rdoc rdoc $(bindir)/rdoc18 $(bindir)/ri ri $(bindir)/ri18 $(bindir)/testrb testrb $(bindir)/testrb18 $(mandir)/man1/ruby.1 ruby.1 $(mandir)/man1/ruby18.1
