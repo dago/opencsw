@@ -18,7 +18,6 @@ RUNTIME_DEP_PKGS_CSWmpg321 += CSWlibid3tag
 RUNTIME_DEP_PKGS_CSWmpg321 += CSWlibmad
 RUNTIME_DEP_PKGS_CSWmpg321 += CSWzlib
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS_CSWmpg321)
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 TEST_TARGET = check
 CONFIGURE_ARGS = $(DIRPATHS)
 # A fix for an inline function and 'symbol not found'.
