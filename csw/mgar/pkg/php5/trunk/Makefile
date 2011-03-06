@@ -299,7 +299,7 @@ OBSOLETES_CSWphp5-shmop = CSWphp5shmop
 
 CATALOGNAME_CSWphp5-snmp = php5_snmp
 SPKG_DESC_CSWphp5-snmp = The snmp extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-snmp = CSWphp5 CSWnetsnmp CSWosslrt CSWtcpwrap
+RUNTIME_DEP_PKGS_CSWphp5-snmp = CSWphp5 CSWnetsnmp
 OBSOLETES_CSWphp5-snmp = CSWphp5snmp
 
 CATALOGNAME_CSWphp5-soap = php5_soap
