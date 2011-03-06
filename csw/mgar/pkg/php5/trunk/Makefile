@@ -692,8 +692,6 @@ CHECKPKG_OVERRIDES_CSWphp5-pcntl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-zip += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-sysvsem += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-posix += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ftp += surplus-dependency|CSWphp5
@@ -704,7 +702,6 @@ CHECKPKG_OVERRIDES_CSWphp5-xmlrpc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pgsql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-shmop += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mhash += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-session += surplus-dependency|CSWphp5
 
 include files/scripts.mk
 include gar/category.mk
