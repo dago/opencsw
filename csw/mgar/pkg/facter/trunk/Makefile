@@ -3,10 +3,10 @@
 # $Id$
 
 NAME = facter
-VERSION = 1.5.7
+VERSION = 1.5.8
 CATEGORIES = apps
 
-DESCRIPTION = a system fact gatherer
+DESCRIPTION = A system fact gatherer
 define BLURB
   A cross-platform Ruby library for retrieving facts from operating systems.
   Supports multiple resolution mechanisms, any of which can be restricted to
@@ -18,13 +18,16 @@ define BLURB
   additional mechanisms for retrieving facts.
 endef
 
-MASTER_SITES = http://reductivelabs.com/downloads/facter/
+MASTER_SITES = http://puppetlabs.com/downloads/facter/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+SPKG_SOURCEURL = http://puppetlabs.com/
 
 RUNTIME_DEP_PKGS = CSWruby
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
-# We define upstream file regex so we can be notifed of new upstream software release
+# We define upstream file regex so we can be notifed of new upstream software
+# release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 ARCHALL=1
@@ -33,6 +36,12 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = facter
+
+CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/ssh.rb
+CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/Cfkey.rb
+CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/util/manufacturer.rb
+CHECKPKG_OVERRIDES_CSWfacter += pkginfo-description-not-starting-with-uppercase|a|system|fact|gatherer
+
 
 include gar/category.mk
 
