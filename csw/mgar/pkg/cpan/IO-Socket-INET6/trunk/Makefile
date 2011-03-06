@@ -1,5 +1,5 @@
 NAME = IO-Socket-INET6
-VERSION = 2.65
+VERSION = 2.67
 CATEGORIES = cpan
 AUTHOR = SHLOMIF
 
@@ -10,8 +10,11 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmiosocketinet6
-CATALOGNAME = pm_iosocketinet6
+PACKAGES = CSWpm-io-socket-inet6
+CATALOGNAME = pm_io_socket_inet6
 ARCHALL = 1
+SPKG_DESC_CSWpm-io-socket-inet6 = $(DESCRIPTION)
+OBSOLETES_CSWpm-io-socket-inet6 = CSWpmiosocketinet6
+CATALOGNAME_CSWpmiosocketinet6 = pm_iosocketinet6
 
 include gar/category.mk
