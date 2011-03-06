@@ -1,7 +1,7 @@
 NAME = App-CLI
-VERSION = 0.08
+VERSION = 0.313
 CATEGORIES = cpan
-AUTHOR = ALEXMV
+AUTHOR = CORNELIUS
 
 DESCRIPTION = Dispatcher module for command line interface programs
 define BLURB
@@ -12,13 +12,16 @@ endef
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
-PACKAGES = CSWpmappcli
-CATALOGNAME = pm_appcli
+PACKAGES = CSWpm-app-cli
+CATALOGNAME = pm_app_cli
+SPKG_DESC_CSWpm-app-cli = $(DESCRIPTION)
 ARCHALL = 1
+OBSOLETES_CSWpm-app-cli = CSWpmappcli
+CATALOGNAME_CSWpmappcli = pm_appcli
 
 RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple CSWpmpodsimple
 
-CHECKPKG_OVERRIDES_CSWpmappcli += surplus-dependency|CSWpmpodsimple
-CHECKPKG_OVERRIDES_CSWpmappcli += surplus-dependency|CSWpmlclemktxtsimple
+#CHECKPKG_OVERRIDES_CSWpmappcli += surplus-dependency|CSWpmpodsimple
+#CHECKPKG_OVERRIDES_CSWpmappcli += surplus-dependency|CSWpmlclemktxtsimple
 
 include gar/category.mk
