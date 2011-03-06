@@ -1,5 +1,5 @@
 NAME = DBD-SQLite
-VERSION = 1.29
+VERSION = 1.31
 CATEGORIES = cpan
 AUTHOR = ADAMK
 
@@ -11,8 +11,12 @@ define BLURB
     module, and nothing else.
 endef
 
-PACKAGES = CSWpmdbdsqlite
-CATALOGNAME = pm_dbdsqlite
+PACKAGES = CSWpm-dbd-sqlite
+CATALOGNAME = pm_dbd_sqlite
+SPKG_DESC_CSWpm-dbd-sqlite = $(DESCRIPTION)
+OBSOLETES_CSWpm-dbd-sqlite = CSWpmdbdsqlite
+CATALOGNAME_CSWpmdbdsqlite = pm_dbdsqlite
+
 RUNTIME_DEP_PKGS = CSWpmdbi
 
 LICENSE = LICENSE
