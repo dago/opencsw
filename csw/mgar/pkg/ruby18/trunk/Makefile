@@ -167,19 +167,12 @@ SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
 RBCONFIG = /opt/csw/lib/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb
 
-PI_TARGETS  = samples rbconfig rbscripts rubymode legacylinks
+PI_TARGETS  = samples rbconfig rbscripts rubymode
 ifndef USEGCC
 PI_TARGETS += multiconfig
 endif
 
 post-install-modulated: $(PI_TARGETS)
-	@$(MAKECOOKIE)
-
-legacylinks:
-	@(cd $(DESTDIR)$(libdir); \
-		for f in libruby.so libruby.so.1.8.7; do \
-			ln -s libruby18.so.1 $$f; \
-		done)
 	@$(MAKECOOKIE)
 
 multiconfig:
