@@ -203,7 +203,7 @@ RUNTIME_DEP_PKGS_CSWphp5-mhash = CSWphp5 CSWlibmhash
 OBSOLETES_CSWphp5-mhash = CSWphp5mhash
 
 CATALOGNAME_CSWphp5-mime-magic = php5_mime_magic
-SPKG_DESC_CSWphp5-mime=magic = The mime magic Extension for PHP5
+SPKG_DESC_CSWphp5-mime-magic = The mime magic Extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mime-magic = CSWphp5
 OBSOLETES_CSWphp5-mime-magic = CSWphp5mimemagic
 
