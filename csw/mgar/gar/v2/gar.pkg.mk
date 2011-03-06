@@ -59,15 +59,20 @@ RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR
 CATALOG_RELEASE ?= current
 
 define obsoleted_pkg
-CATALOGNAME_$(1) = $(call catalogname,$(1))
+CATALOGNAME_$(1) ?= $(call catalogname,$(1))
 # The length of the description has been limited to 100 characters,
 # the string is cut (no longer on word boundaries).
 SPKG_DESC_$(1) ?= $(shell echo Transitional package. Content moved to $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),$P)) | perl -npe 's/^(.{100}).+/substr($$1,0,-4) . " ..."/')
 RUNTIME_DEP_PKGS_$(1) = $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),$P))
 PKGFILES_$(1) = NOFILES
 ARCHALL_$(1) = 1
+# For legacy packages we know that the dependency is correct because we deliberately set it
+# The catalog name may not match for legacy packages
+# The overridden package may be a devel package, as it is empty it is ok to be archall
 $(foreach P,$(PACKAGES),$(if $(filter $(1),$(OBSOLETES_$P)),
   CHECKPKG_OVERRIDES_$(1) += surplus-dependency|$P
+  CHECKPKG_OVERRIDES_$(1) += catalogname-does-not-match-pkgname
+  CHECKPKG_OVERRIDES_$(1) += archall-devel-package
 
 ))
 endef
