@@ -127,14 +127,13 @@ MERGE_EXCLUDE_STATICLIBS =
 
 COMPILE_ELISP = 1
 
-ifdef USEGCC
-GARCOMPILER = GNU
-RUNTIME_DEP_PKGS_CSWruby += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWrubydev += CSWgcc4core
+ifeq ($(COMPILER),gcc4)
 # This is for rbconfig.rb: without this, modules built may not get a proper
 # setting.
+GARCOMPILER = GNU
 EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
 else
+GARCOMPILER = SUN
 SOS12_LD_FLAGS =
 endif
 
@@ -172,6 +171,9 @@ SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
 RBCONFIG = /opt/csw/lib/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb
 
+merge-copy-custom: $(PKGROOT) $(INSTALLISADIR)
+	$(_DBUG_MERGE)(cp $(INSTALLIDADIR)$(RBCONFIG).$(COMPILER) \
+		$(PKGROOT)$(RBCONFIG).$(COMPILER)
 
 post-install-modulated:
 	@echo "Stripping DESTDIR from rbconfig.rb"
