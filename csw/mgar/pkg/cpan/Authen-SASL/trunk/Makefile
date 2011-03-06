@@ -1,5 +1,5 @@
 NAME = Authen-SASL
-VERSION = 2.12
+VERSION = 2.15
 CATEGORIES = cpan
 AUTHOR = GBARR
 
@@ -12,8 +12,11 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmauthensasl
-CATALOGNAME = pm_authensasl
+PACKAGES = CSWpm-authen-sasl
+CATALOGNAME = pm_authen_sasl
+SPKG_DESC_CSWpm-authen-sasl = $(DESCRIPTION)
+OBSOLETES_CSWpm-authen-sasl = CSWpmauthensasl
+CATALOGNAME_CSWpmauthensasl = pm_authensasl
 
 RUNTIME_DEP_PKGS = CSWpmgssapi CSWpmdigesthmac
 BUILD_DEP_PKGS = CSWperl
