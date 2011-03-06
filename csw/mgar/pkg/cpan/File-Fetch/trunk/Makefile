@@ -1,5 +1,5 @@
 NAME = File-Fetch
-VERSION = 0.24
+VERSION = 0.32
 CATEGORIES = cpan
 AUTHOR = BINGOS
 
@@ -12,8 +12,11 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmfilefetch
-CATALOGNAME = pm_filefetch
+PACKAGES = CSWpm-file-fetch
+CATALOGNAME = pm_file_fetch
+SPKG_DESC_CSWpm-file-fetch = $(DESCRIPTION)
+OBSOLETES_CSWpm-file-fetch = CSWpmfilefetch
+CATALOGNAME_CSWpmfilefetch = pm_filefetch
 
 ARCHALL = 1
 
