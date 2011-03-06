@@ -220,7 +220,7 @@ OBSOLETES_CSWphp5-mysql = CSWphp5mysql
 CATALOGNAME_CSWphp5-mysqli = php5_mysqli
 SPKG_DESC_CSWphp5-mysqli = The mysqli extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mysqli = CSWphp5 CSWmysql5rt CSWzlib
-OBSOLETES_CSWphp5-mysqli = CSWphp5-mysqli
+OBSOLETES_CSWphp5-mysqli = CSWphp5mysqli
 
 CATALOGNAME_CSWphp5-ncurses = php5_ncurses
 SPKG_DESC_CSWphp5-ncurses = The ncurses extension for PHP5
@@ -290,7 +290,7 @@ OBSOLETES_CSWphp5-readline = CSWphp5readline
 CATALOGNAME_CSWphp5-session = php5_session
 SPKG_DESC_CSWphp5-session = The session extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-session = CSWphp5 CSWlibmm
-OBSOLETES_CSWphp5-session = CSWphp5-session
+OBSOLETES_CSWphp5-session = CSWphp5session
 
 CATALOGNAME_CSWphp5-shmop = php5_shmop
 SPKG_DESC_CSWphp5-shmop = The shmop extension for PHP5
@@ -330,7 +330,7 @@ OBSOLETES_CSWphp5-sysvsem = CSWphp5sysvsem
 CATALOGNAME_CSWphp5-sysvshm = php5_sysvshm
 SPKG_DESC_CSWphp5-sysvshm = The sysvshm extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-sysvshm = CSWphp5
-OBSOLETES_CSWphp5-sysvshm = CSWphp5-sysvshm
+OBSOLETES_CSWphp5-sysvshm = CSWphp5sysvshm
 
 CATALOGNAME_CSWphp5-tidy = php5_tidy
 SPKG_DESC_CSWphp5-tidy = The tidy extension for PHP5
