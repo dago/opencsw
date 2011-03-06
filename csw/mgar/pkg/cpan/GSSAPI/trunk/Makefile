@@ -1,17 +1,20 @@
 NAME = GSSAPI
-VERSION = 0.26
+VERSION = 0.28
 CATEGORIES = cpan
 AUTHOR = AGROLMS
 
-DESCRIPTION = Perl extension providing access to the GSSAPIv2 library
+DESCRIPTION = Providing access to the GSSAPIv2 library
 define BLURB
-  Perl extension providing access to the GSSAPIv2 library.
+  Providing access to the GSSAPIv2 library.
 endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmgssapi
+PACKAGES = CSWpm-gssapi
 CATALOGNAME = pm_gssapi
+SPKG_DESC_CSWpm-gssapi = $(DESCRIPTION)
+OBSOLETES_CSWpm-gssapi = CSWpmgssapi
+CATALOGNAME_CSWpmgssapi = pm_gssapi2
 
 RUNTIME_DEP_PKGS = CSWkrb5lib
 
