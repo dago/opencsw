@@ -1,5 +1,5 @@
 NAME = Compress-Raw-Bzip2
-VERSION = 2.032
+VERSION = 2.033
 CATEGORIES = cpan
 AUTHOR = PMQS
 
@@ -11,8 +11,11 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmcompressrawbz2
-CATALOGNAME = pm_compressrawbz2
+PACKAGES = CSWpm-compress-raw-bzip2
+CATALOGNAME = pm_compress_raw_bzip2
+SPKG_DESC_CSWpm-compress-raw-bzip2 = $(DESCRIPTION)
+OBSOLETES_CSWpm-compress-raw-bzip2 = CSWpmcompressrawbz2
+CATALOGNAME_CSWpmcompressrawbz2 = pm_compressrawbz2
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
