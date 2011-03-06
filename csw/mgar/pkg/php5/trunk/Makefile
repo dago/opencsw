@@ -88,6 +88,7 @@ BUILD_DEP_PKGS += CSWlibgdbm-dev
 
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
+INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic
 
 CATALOGNAME_CSWphp5devel   = php5_devel
 SPKG_DESC_CSWphp5devel     = Development files for php5
