@@ -45,7 +45,7 @@ EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(GAROSREL))
 
 # lighttpd puts its modules under libdir, so we pass libdir as a subdirectory,
 # because modules are not supposed to be in /opt/csw/lib.
-libdir = $(prefix)/lib/lighttpd
+libdir_install = $(prefix)/lib/lighttpd
 
 # Solaris Zones support
 sysconfdir = /etc$(prefix)
@@ -75,6 +75,8 @@ PROTOTYPE_USER_user = lighttpd
 PROTOTYPE_GROUP_user = lighttpd
 PROTOTYPE_CLASS_user = ugfiles
 
+BUILD64 = 1
+
 include gar/category.mk
 
 post-install-modulated:
@@ -91,4 +93,6 @@ post-install-modulated:
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/$(NAME)
 	echo "lighttpd:lighttpd:lighttpd web server::::" \
 		> $(DESTDIR)$(sysconfdir)/pkg/$(NAME)/cswusergroup
+	(cd $(DESTDIR)$(libdir_install); ln -s $(ISA_DEFAULT) 32)
+	(cd $(DESTDIR)$(libdir_install); ln -s $(ISA_DEFAULT64) 64)
 	@$(MAKECOOKIE)
