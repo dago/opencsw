@@ -1,5 +1,5 @@
 NAME = HTML-Parser
-VERSION = 3.64
+VERSION = 3.68
 CATEGORIES = cpan
 AUTHOR = GAAS
 
@@ -13,8 +13,11 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmhtmlparser
-CATALOGNAME = pm_htmlparser
+PACKAGES = CSWpm-html-parser
+CATALOGNAME = pm_html_parser
+SPKG_DESC_CSWpm-html-parser = $(DESCRIPTION)
+OBSOLETES_CSWpm-html-parser = CSWpmhtmlparser
+CATALOGNAME_CSWpmhtmlparser = pm_htmlparser
 
 RUNTIME_DEP_PKGS = CSWpmhtmltagset
 
