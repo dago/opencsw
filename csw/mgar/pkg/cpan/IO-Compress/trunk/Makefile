@@ -1,5 +1,5 @@
 NAME = IO-Compress
-VERSION = 2.032
+VERSION = 2.033
 CATEGORIES = cpan
 AUTHOR = PMQS
 
@@ -18,7 +18,6 @@ define BLURB
     IO-Compress-Zlib
     IO-Compress-Bzip2
     IO-Compress-Base
-
 endef
 
 DISTFILES += COPYING
@@ -31,8 +30,11 @@ RUNTIME_DEP_PKGS += CSWpmcompressrawbz2
 INCOMPATIBLE_PKGS += CSWpmiocompressbase
 INCOMPATIBLE_PKGS += CSWpmiocompresszlib
 
-PACKAGES = CSWpmiocompress
-CATALOGNAME = pm_iocompress
+PACKAGES = CSWpm-io-compress
+CATALOGNAME = pm_io_compress
+SPKG_DESC_CSWpm-io-compress = $(DESCRIPTION)
+OBSOLETES_CSWpm-io-compress = CSWpmiocompress
+CATALOGNAME_CSWpmiocompress = pm_iocompress
 
 ARCHALL = 1
 
