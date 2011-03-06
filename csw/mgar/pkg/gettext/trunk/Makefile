@@ -235,6 +235,15 @@ post-install-isa-amd64:
 	$(MAKECOOKIE)
 
 post-merge:
+	@echo "Setting up gnu links..."
+	@(cd $(PKGROOT)$(prefix); \
+		mkdir gnu; cd gnu; \
+		for f in ../bin/g*; do \
+			echo Linking $$f; \
+			base=$$(basename $$f); \
+			gln -s $$f ./$${base/g/}; \
+		done )
+	@echo "Fixing usr/local and usr/share references..."
 	@(cd $(PKGROOT); \
 		find .$(docdir) .$(datadir)/aclocal -type f -print0 | \
 		xargs -0 perl -pi \
