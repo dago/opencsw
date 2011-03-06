@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.6.5
+VERSION = 2.6.4
 CATEGORIES = apps
 
 define BLURB
@@ -32,6 +32,8 @@ SPKG_SOURCEURL = http://puppetlabs.com/
 
 INITSMF += $(sysconfdir)/init\.d/cswpuppetd
 INITSMF += $(sysconfdir)/init\.d/cswpuppetmasterd
+#MANIFEST /var${prefix}/svc/manifest/network/puppetd.xml
+#MANIFEST /var${prefix}/svc/manifest/network/puppetmaster.xml
 USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 
 # Creating a separate package CSWpuppetmaster so that the cswpuppetmaster
@@ -51,6 +53,7 @@ PKGFILES_CSWpuppetmaster  = $(sysconfdir)/init\.d/cswpuppetmasterd
 PKGFILES_CSWpuppetmaster += $(sbindir)/puppetmasterd
 PKGFILES_CSWpuppetmaster += $(mandir)/man8/puppetmasterd.8
 PKGFILES_CSWpuppetmaster += $(libdir)/.*/puppet/application/puppetmasterd.rb
+PKGFILES_CSWpuppetmaster += /var${prefix}/svc/manifest/network/puppetmaster.xml
 
 ARCHALL = 1
 
@@ -67,6 +70,7 @@ PATCHFILES += 0002-Using-the-single-option-of-pkgutil.patch
 PATCHFILES += 0003-Use-opt-csw-share-puppet-modules-as-default.patch
 
 CHECKPKG_OVERRIDES_CSWpuppet       += surplus-dependency|CSWfacter
+CHECKPKG_OVERRIDES_CSWpuppet += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWpuppet
 
 # CRONDIR = $(sysconfdir)/pkg/CSWpuppet/crontabs
@@ -83,10 +87,6 @@ install-puppet:
 	ginstall -m 755 -d $(DESTDIR)
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/puppet
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)/puppet/run
-	ginstall -m 755 -d $(DESTDIR)$(CRONDIR)
-	ginstall -m 644 \
-		$(FILEDIR)/CSWpuppet.cron.root \
-		$(DESTDIR)$(CRONDIR)/root
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(sysconfdir)/init.d
