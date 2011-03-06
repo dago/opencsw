@@ -1,5 +1,5 @@
 NAME = IO-Socket-SSL
-VERSION = 1.33
+VERSION = 1.39
 CATEGORIES = cpan
 AUTHOR = SULLR
 
@@ -15,8 +15,11 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmiosocketssl
-CATALOGNAME = pm_iosocketssl
+PACKAGES = CSWpm-io-socket-ssl
+CATALOGNAME = pm_io_socket_ssl
+SPKG_DESC_CSWpm-io-socket-ssl = $(DESCRIPTION)
+OBSOLETES_CSWpm-io-socket-ssl = CSWpmiosocketssl
+CATALOGNAME_CSWpmiosocketssl = pm_iosocketssl
 
 ARCHALL = 1
 
