@@ -1,5 +1,5 @@
 NAME = Archive-Extract
-VERSION = 0.46
+VERSION = 0.48
 CATEGORIES = cpan
 AUTHOR = BINGOS
 
@@ -14,9 +14,12 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmarchiveextract
-CATALOGNAME = pm_archiveextract
+PACKAGES = CSWpm-archive-extract
+CATALOGNAME = pm_archive_extract
+SPKG_DESC_CSWpm-archive-extract = $(DESCRIPTION)
 ARCHALL = 1
+OBSOLETES_CSWpm-archive-extract = CSWpmarchiveextract
+CATALOGNAME_CSWpmarchiveextract = pm_archiveextract
 
 RUNTIME_DEP_PKGS += CSWpmipccmd CSWpmlclemktxtsimple CSWpmmodloadcond CSWpmprmscheck
 
