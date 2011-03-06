@@ -50,7 +50,6 @@ PACKAGES += CSWphp5-ldap
 PACKAGES += CSWphp5-mbstring
 PACKAGES += CSWphp5-mcrypt
 PACKAGES += CSWphp5-mhash
-PACKAGES += CSWphp5-mime-magic
 PACKAGES += CSWphp5-mssql
 PACKAGES += CSWphp5-mysql
 PACKAGES += CSWphp5-mysqli
@@ -201,11 +200,6 @@ CATALOGNAME_CSWphp5-mhash = php5_mhash
 SPKG_DESC_CSWphp5-mhash = The mhash extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mhash = CSWphp5 CSWlibmhash
 OBSOLETES_CSWphp5-mhash = CSWphp5mhash
-
-CATALOGNAME_CSWphp5-mime-magic = php5_mime_magic
-SPKG_DESC_CSWphp5-mime-magic = The mime magic Extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-mime-magic = CSWphp5
-OBSOLETES_CSWphp5-mime-magic = CSWphp5mimemagic
 
 CATALOGNAME_CSWphp5-mssql = php5_mssql
 SPKG_DESC_CSWphp5-mssql = The mssql extension for PHP5
