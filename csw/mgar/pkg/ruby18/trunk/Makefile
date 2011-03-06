@@ -13,6 +13,11 @@ BUILD_DEP_PKGS += CSWreadline CSWzlib CSWossldevel
 PACKAGES = CSWruby18 CSWruby18-doc CSWruby18-tk CSWruby18-dev CSWruby18-mode
 PACKAGES += CSWruby18-mode-el CSWlibruby18-1
 
+EXTRA_MODULATORS = COMPILER
+MODULATIONS_COMPILER = sun gcc4
+MERGE_SCRIPTS_isa-default-compiler-sun = copy-all
+MERGE_SCRIPTS_isa-default-compiler-gcc4 = copy-custom
+
 OBSOLETES_CSWruby18 = CSWruby
 OBSOLETES_CSWruby18-doc = CSWrubydoc
 OBSOLETES_CSWruby18-tk = CSWrubytk
@@ -167,52 +172,29 @@ SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
 RBCONFIG = /opt/csw/lib/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb
 
-PI_TARGETS  = samples rbconfig rbscripts rubymode
-ifndef USEGCC
-PI_TARGETS += multiconfig
-endif
 
-post-install-modulated: $(PI_TARGETS)
-	@$(MAKECOOKIE)
-
-multiconfig:
-	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
-	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).SOS12
-	@gcp $(FILEDIR)/rbconfig.rb.GCC4.$(GARCH) $(DESTDIR)/$(RBCONFIG).GCC4
-	@gln -n -s $(RBCONFIG).SOS12 $(DESTDIR)$(RBCONFIG)
-	@gcp $(FILEDIR)/cswrbconfig $(DESTDIR)/opt/csw/bin/
-	@chmod 755 $(DESTDIR)/opt/csw/bin/cswrbconfig
-	@ginstall -c -d -m 0755 $(DESTDIR)$(docdir)/ruby/
-	@ginstall -c -m 0644 $(FILEDIR)/README.csw $(DESTDIR)$(docdir)/ruby/
-	@$(MAKECONFIG)
-
-rubymode: RMDIR=$(DESTDIR)/$(datadir)/emacs/site-lisp/ruby-mode
-rubymode:
-	@echo " ===> Installing and Compilingn ruby-mode elisp"
-	@(mkdir -p $(RMDIR); \
-		cp $(WORKSRC)/misc/*el $(RMDIR))
-	@$(MAKECOOKIE)
-
-# Fix up rbconfig
-rbconfig:
+post-install-modulated:
+	@echo "Stripping DESTDIR from rbconfig.rb"
 	@gsed -i -e s,$(DESTDIR),, \
 		$(DESTDIR)$(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb
 	@$(MAKECOOKIE)
+	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
+	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).$(COMPILER)
+	@$(MAKECONFIG)
 
-# Copy samples
-samples:
+post-merge: RMDIR=$(PKGROOT)/$(datadir)/emacs/site-lisp/ruby-mode
+post-merge:
+	@echo "Installing ruby-mode elisp..."
+	@(mkdir -p $(RMDIR); \
+		cp $(WORKSRC_FIRSTMOD)/misc/*el $(RMDIR))
+	@echo "Copying in sample code..."
 	@mkdir -p $(DESTDIR)$(docdir)/ruby18/
-	@cp -R $(WORKSRC_FIRSTMOD)/sample $(DESTDIR)$(docdir)/ruby18/
+	@cp -R $(WORKSRC_FIRSTMOD)/sample $(PKGROOT)$(docdir)/ruby18/
 	@for ext in bigdecimal dl tk ; do \
-		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample $(DESTDIR)$(docdir)/ruby18/sample/$$ext ; \
+		cp -R $(WORKSRC_FIRSTMOD)/ext/$$ext/sample \
+			$(PKGROOT)$(docdir)/ruby18/sample/$$ext ; \
 	done
-	@$(MAKECOOKIE)
-
-# Some scripts come with /usr/local/bin/ruby hard coded.
-rbscripts:
-	@echo " ==> Fixing shebang path in distributed ruby scripts"
-	@find $(DESTDIR)$(prefix) -type f -name '*.rb' -exec \
+	@echo "Fixing shebang path in distributed ruby scripts..."
+	@find $(PKGROOT)$(prefix) -type f -name '*.rb' -exec \
 		perl -i -plne "s{^#!/usr/local/bin/ruby}{#!$(bindir)/ruby18}g" {} \;
 	@$(MAKECOOKIE)
-
-
