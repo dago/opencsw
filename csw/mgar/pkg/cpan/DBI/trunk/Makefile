@@ -1,5 +1,5 @@
 NAME = DBI
-VERSION = 1.609
+VERSION = 1.616
 CATEGORIES = cpan
 AUTHOR = TIMB
 
@@ -13,10 +13,11 @@ endef
 
 DISTFILES = COPYING
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-PACKAGES = CSWpmdbi
+PACKAGES = CSWpm-dbi
 CATALOGNAME = pm_dbi
+SPKG_DESC_CSWpm-dbi = $(DESCRIPTION)
+OBSOLETES_CSWpm-dbi = CSWpmdbi
+CATALOGNAME_CSWpmdbi = pm_dbi2
 
 #RUNTIME_DEP_PKGS = CSWpmplrpc
 
