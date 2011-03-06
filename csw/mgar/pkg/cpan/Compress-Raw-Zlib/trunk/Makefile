@@ -1,5 +1,5 @@
 NAME = Compress-Raw-Zlib
-VERSION = 2.032
+VERSION = 2.033
 CATEGORIES = cpan
 AUTHOR = PMQS
 
@@ -11,8 +11,11 @@ endef
 
 DISTFILES += COPYING
 
-CATALOGNAME = pm_compressrawzlib
-PACKAGES = CSWpmcompressrawzlib
+PACKAGES = CSWpm-compress-raw-zlib
+CATALOGNAME = pm_compress_raw_zlib
+SPKG_DESC_CSWpm-compress-raw-zlib = $(DESCRIPTION)
+OBSOLETES_CSWpm-compress-raw-zlib = CSWpmcompressrawzlib
+CATALOGNAME_CSWpmcompressrawzlib = pmcompressrawzlib
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
