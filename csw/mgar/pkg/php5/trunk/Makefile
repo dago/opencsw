@@ -89,7 +89,7 @@ PACKAGES += CSWmod-php5
 BUILD_DEP_PKGS += CSWlibgdbm-dev
 
 CATALOGNAME_CSWmod-php5 = mod_php5
-SPKG_DESC_CSWmodphp5 = The apache 1.3.x php5 module
+SPKG_DESC_CSWmod-php5 = The apache 1.3.x php5 module
 RUNTIME_DEP_PKGS_CSWmod-php5 = CSWphp5 CSWapache CSWlibxml2 CSWiconv
 OBSOLETES_CSWmod-php5 = CSWmodphp5
 
