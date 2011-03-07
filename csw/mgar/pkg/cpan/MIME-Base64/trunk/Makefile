@@ -1,5 +1,5 @@
 NAME = MIME-Base64
-VERSION = 3.09
+VERSION = 3.13
 CATEGORIES = cpan
 AUTHOR = GAAS
 
@@ -10,11 +10,11 @@ endef
 
 DISTFILES += COPYING
 
-CATALOGNAME = pm_mimebase64
-PACKAGES = CSWpmmimebase64
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+PACKAGES = CSWpm-mime-base64
+CATALOGNAME = pm_mime_base64
+SPKG_DESC_CSWpm-mime-base64 = $(DESCRIPTION)
+OBSOLETES_CSWpm-mime-base64 = CSWpmmimebase64
+CATALOGNAME_CSWpmmimebase64 = pm_mimebase64
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod .*\/man\/.*
 
