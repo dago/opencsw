@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 #
-# Based on the Ubuntu PostgreSQL package.
+# The idea is based on the Ubuntu PostgreSQL package.
 
 # This BUILD is NOT READY!  It needs work before it's usable.
 
@@ -64,6 +64,9 @@ DISTFILES += cswusergroup.tmpl
 DISTFILES += postgresql.conf.tmpl
 DISTFILES += README-CSW.txt
 DISTFILES += CSWpostgresql-$(BASE_VERSION_G).postinstall
+
+PATCHFILES += 0001-postgresql-Removed-two-usr-local-occurrences.patch
+PATCHFILES += 0003-postgresql-Removed-usr-local-from-ecpg.c.patch
 
 PACKAGES += CSWpostgresql
 CATALOGNAME_CSWpostgresql = postgresql
@@ -270,6 +273,7 @@ CATALOGNAME_CSWlibpq4 = libpq4
 PKGFILES_CSWlibpq4 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibpq4 += PostgreSQL C client library, libpq.so.4
 RUNTIME_DEP_PKGS_CSWlibpq4 += CSWosslrt
+OBSOLETES_CSWlibpq4 = CSWlibpq
 
 PACKAGES += CSWlibpgtypes1
 CATALOGNAME_CSWlibpgtypes1 = libpgtypes1
@@ -308,6 +312,22 @@ RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibpgtypes2
 RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibecpg5
 RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibpq5
 OBSOLETES_CSWlibecpg-compat2 = CSWlibpq
+
+
+# This occurrence is okay.
+#    # On HPUX platforms, gcc is usually configured to search for libraries
+#    # in /usr/local/lib, but ld won't do so.  Add an explicit -L switch so
+#    # ld can find the same libraries gcc does.  Make sure it goes after any
+#    # -L switches provided explicitly.
+#    ifeq ($(GCC), yes)
+#      SHLIB_LINK  += -L/usr/local/lib
+#    endif
+#
+# CHECKPKG_OVERRIDES_CSWpostgresql-90 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/postgresql/pgxs/src/Makefile.shlib
+# CHECKPKG_OVERRIDES_CSWpostgresql-90 += file-with-bad-content|/usr/local|root/opt/csw/lib/postgresql/pgxs/src/Makefile.shlib
+
+# CHECKPKG_OVERRIDES_CSWpostgresql-90 += file-with-bad-content|/usr/local|root/opt/csw/lib/postgresql/9.0/bin/ecpg
+# CHECKPKG_OVERRIDES_CSWpostgresql-90 += file-with-bad-content|/usr/local|root/opt/csw/lib/postgresql/9.0/bin/sparcv9/ecpg
 
 include gar/category.mk
 
