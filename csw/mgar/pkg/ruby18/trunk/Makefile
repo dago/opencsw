@@ -163,6 +163,8 @@ CHECKPKG_OVERRIDES_CSWrubydev += archall-devel-package
 CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWpython
 
+CHECKPKG_OVERRIDES_CSWruby18-gcc4 += surplus-dependency|CSWalternatives
+
 CHECKPKG_OVERRIDES_CSWruby18 += surplus-dependency|CSWalternatives
 
 # usr/local overrides
