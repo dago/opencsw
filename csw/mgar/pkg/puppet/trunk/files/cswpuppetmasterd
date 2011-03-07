@@ -1,5 +1,10 @@
 #!/bin/sh
 #
+#   2011-03-06 Mark Phillips
+#     * Added getprop
+#
+#   2009-11-23 Gary Law
+#     * Original version
 
 . /lib/svc/share/smf_include.sh
 
@@ -10,14 +15,18 @@ sbindir=/opt/csw/sbin
 
 pidfile=/var/opt/csw/puppet/run/puppetmasterd.pid
 
+getprop() {
+    val=`/usr/bin/svcprop -p $1 $SMF_FMRI`
+    [ -n "$val" ] && echo $val
+}
+
 case "$1" in
 start)
     cd /
     # Start daemons.
 
     printf "Starting Puppet server services:"
-
-    /opt/csw/sbin/puppetmasterd
+    ${sbindir}/puppetmasterd
 
     printf " puppetmaster"
     echo ""
@@ -59,4 +68,3 @@ status)
 esac
 exit 0
 
-# $Id$
