@@ -75,9 +75,9 @@ OBSOLETES_CSWapache2 = CSWapache2c
 CATALOGNAME_CSWapache2 = apache2
 CATALOGNAME_CSWapache2-dev = apache2_dev
 CATALOGNAME_CSWapache2-manual = apache2_manual
-CATALOGNAME_CSWap2suexec = ap2_suexec
-CATALOGNAME_CSWap2prefork = ap2_prefork
-CATALOGNAME_CSWap2worker = ap2_worker
+CATALOGNAME_CSWap2-suexec = ap2_suexec
+CATALOGNAME_CSWap2-prefork = ap2_prefork
+CATALOGNAME_CSWap2-worker = ap2_worker
 CATALOGNAME_CSWapache2rt = apache2rt
 
 SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
