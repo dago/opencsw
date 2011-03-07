@@ -1,5 +1,5 @@
 NAME = libwww-perl
-VERSION = 5.833
+VERSION = 5.837
 CATEGORIES = cpan
 AUTHOR = GAAS
 
@@ -13,9 +13,12 @@ endef
 
 DISTFILES = COPYING
 
-CATALOGNAME = pm_libwww
-PACKAGES = CSWpmlibwww
+PACKAGES = CSWpm-libwww-perl
+CATALOGNAME = pm_libwww_perl
+SPKG_DESC_CSWpm-libwww-perl = $(DESCRIPTION)
 ARCHALL = 1
+OBSOLETES_CSWpm-libwww-perl = CSWpmlibwww
+CATALOGNAME_CSWpmlibwww = pm_libwww
 
 RUNTIME_DEP_PKGS = CSWpmhtmltagset CSWpmuri CSWpmhtmlparser CSWpmiocompress CSWpmhtmlfmt CSWpmmimebase64
 
