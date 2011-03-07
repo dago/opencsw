@@ -84,8 +84,14 @@ PACKAGES += CSWphp5-xmlrpc
 PACKAGES += CSWphp5-xmlwriter
 PACKAGES += CSWphp5-xsl
 PACKAGES += CSWphp5-zip
+PACKAGES += CSWmod-php5
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev
+
+CATALOGNAME_CSWmod-php5 = mod_php5
+SPKG_DESC_CSWmodphp5 = The apache 1.3.x php5 module
+RUNTIME_DEP_PKGS_CSWmod-php5 = CSWphp5 CSWapache CSWlibxml2 CSWiconv
+OBSOLETES_CSWmod-php5 = CSWmodphp5
 
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
@@ -394,6 +400,8 @@ PKGFILES_CSWphp5devel += $(mandir)/man1/php-config.1
 PKGFILES_CSWphp5devel += $(mandir)/man1/phpize.1
 
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
+
+PKGFILES_CSWmod-php5 += $(prefix)/apache/.*
 
 PKGFILES_CSWphp5-bcmath = .*/lib/php/extensions/.*/bcmath.*
 
@@ -712,6 +720,7 @@ CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
+CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
 include files/scripts.mk
 include gar/category.mk
