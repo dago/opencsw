@@ -15,7 +15,9 @@ fi
 
 if [ ! -d $PKG_INSTALL_ROOT/var/lib ]; then
     /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/mkdir -p /var/lib/puppet
-    /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/ln -s /var/lib/puppet /var/opt/csw/puppet
+    if [ ! -d $PKG_INSTALL_ROOT/var/opt/csw/puppet ]; then
+        /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/ln -s /var/lib/puppet /var/opt/csw/puppet
+    fi
 fi
 
 if [ ! -d $PKG_INSTALL_ROOT/opt/csw/var/puppet ]; then 
