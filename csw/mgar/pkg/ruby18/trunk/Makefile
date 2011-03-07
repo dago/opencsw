@@ -186,13 +186,13 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 	@echo "Setting up the CSW rbconfig stuff so we can switch between compilers"
 	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).$(COMPILER)
+	@echo "Installing ruby-mode elisp..."
+	@(mkdir -p $(RMDIR); \
+		cp $(WORKSRC_FIRSTMOD)/misc/*el $(RMDIR))
 	@$(MAKECONFIG)
 
 post-merge: RMDIR=$(PKGROOT)/$(datadir)/emacs/site-lisp/ruby-mode
 post-merge:
-	@echo "Installing ruby-mode elisp..."
-	@(mkdir -p $(RMDIR); \
-		cp $(WORKSRC_FIRSTMOD)/misc/*el $(RMDIR))
 	@echo "Copying in sample code..."
 	@mkdir -p $(DESTDIR)$(docdir)/ruby18/
 	@cp -R $(WORKSRC_FIRSTMOD)/sample $(PKGROOT)$(docdir)/ruby18/
