@@ -1,5 +1,5 @@
 NAME = perl-ldap
-VERSION = 0.39
+VERSION = 0.4001
 CATEGORIES = cpan
 AUTHOR = GBARR
 
@@ -10,19 +10,20 @@ define BLURB
   maintenance functions such as adding, deleting or modifying entries.
 endef
 
-DISTFILES = COPYING
+DISTFILES  = COPYING
+DISTFILES += CSWpm-ldap.releasenotes
 
-PACKAGES = CSWpmldap
+PACKAGES = CSWpm-ldap
 CATALOGNAME = pm_ldap
+SPKG_DESC_CSWpm-ldap = $(DESCRIPTION)
 ARCHALL = 1
+OBSOLETES_CSWpm-ldap = CSWpmldap
+CATALOGNAME_CSWpmldap = pm_ldap2
+
+# Harmless /usr/local references
+CHECKPKG_OVERRIDES_CSWpm-ldap += file-with-bad-content
 
 RUNTIME_DEP_PKGS = CSWpmxmlsax CSWpmauthensasl CSWpmiosocketssl CSWpmuri CSWpmconvertasn1 CSWpmmimebase64
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-DEPENDS += cpan/Convert-ASN1 cpan/IO-Socket-SSL
-DEPENDS += cpan/Authen-SASL cpan/XML-SAX
 
 # Module version numbers defeat Sort::Versions
 #MANUAL_UPDATE = 1
