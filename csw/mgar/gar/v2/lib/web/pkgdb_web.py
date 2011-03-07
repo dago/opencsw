@@ -32,6 +32,7 @@ urls = (
       'PkgnameByFilename',
   # Query by catalog release, arch, OS release and catalogname
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
+  r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames/([^/]+)/', 'Srv4ByCatAndPkgname',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
 )
 
@@ -288,6 +289,41 @@ class Srv4ByCatAndCatalogname(object):
           models.Srv4FileInCatalog.q.arch==sqo_arch,
           models.Srv4FileInCatalog.q.catrel==sqo_catrel,
           models.Srv4FileStats.q.catalogname==catalogname,
+          models.Srv4FileStats.q.use_to_generate_catalogs==True),
+        join=join,
+    )
+    try:
+      srv4 = res.getOne()
+      mimetype, data = srv4.GetRestRepr()
+      web.header('Content-type', mimetype)
+      return json.dumps(data)
+    except sqlobject.main.SQLObjectNotFound:
+      return json.dumps(None)
+    except sqlobject.dberrors.OperationalError, e:
+      raise web.internalerror(e)
+
+
+class Srv4ByCatAndPkgname(object):
+
+  def GET(self, catrel_name, arch_name, osrel_name, pkgname):
+    """Get a srv4 reference by catalog ane pkgname."""
+    configuration.SetUpSqlobjectConnection()
+    sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
+        osrel_name, arch_name, catrel_name)
+    join = [
+        sqlbuilder.INNERJOINOn(None,
+          models.Srv4FileInCatalog,
+          models.Srv4FileInCatalog.q.srv4file==models.Srv4FileStats.q.id),
+        sqlbuilder.INNERJOINOn(None,
+          models.Pkginst,
+          models.Pkginst.q.id==models.Srv4FileStats.q.pkginst),
+    ]
+    res = models.Srv4FileStats.select(
+        sqlobject.AND(
+          models.Srv4FileInCatalog.q.osrel==sqo_osrel,
+          models.Srv4FileInCatalog.q.arch==sqo_arch,
+          models.Srv4FileInCatalog.q.catrel==sqo_catrel,
+          models.Pkginst.q.pkgname==pkgname,
           models.Srv4FileStats.q.use_to_generate_catalogs==True),
         join=join,
     )
