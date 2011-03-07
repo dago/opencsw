@@ -179,6 +179,7 @@ merge-copy-custom: $(PKGROOT) $(INSTALLISADIR)
 			cp $(DESTDIR)$(RBCONFIG).$(COMPILER) \
 				$(PKGROOT)$(RBCONFIG).$(COMPILER) )
 
+post-install-modulated: RMDIR=$(PKGROOT)/$(datadir)/emacs/site-lisp/ruby-mode
 post-install-modulated:
 	@echo "Stripping DESTDIR from rbconfig.rb"
 	@gsed -i -e s,$(DESTDIR),, \
@@ -188,10 +189,9 @@ post-install-modulated:
 	@mv $(DESTDIR)$(RBCONFIG) $(DESTDIR)$(RBCONFIG).$(COMPILER)
 	@echo "Installing ruby-mode elisp..."
 	@(mkdir -p $(RMDIR); \
-		cp $(WORKSRC_FIRSTMOD)/misc/*el $(RMDIR))
+		cp $(WORKSRC)/misc/*el $(RMDIR))
 	@$(MAKECONFIG)
 
-post-merge: RMDIR=$(PKGROOT)/$(datadir)/emacs/site-lisp/ruby-mode
 post-merge:
 	@echo "Copying in sample code..."
 	@mkdir -p $(DESTDIR)$(docdir)/ruby18/
