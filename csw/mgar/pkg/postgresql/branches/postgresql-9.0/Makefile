@@ -325,6 +325,8 @@ OBSOLETES_CSWlibecpg-compat2 = CSWlibpq
 #
 CHECKPKG_OVERRIDES_CSWpostgresql-90 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/postgresql/pgxs/src/Makefile.shlib
 CHECKPKG_OVERRIDES_CSWpostgresql-90 += file-with-bad-content|/usr/local|root/opt/csw/lib/postgresql/pgxs/src/Makefile.shlib
+CHECKPKG_OVERRIDES_CSWpostgresql-90 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/postgresql/pgxs/src/Makefile.shlib
+CHECKPKG_OVERRIDES_CSWpostgresql-90 += file-with-bad-content|/usr/local|root/opt/csw/lib/postgresql/pgxs/src/Makefile.shlib
 
 # CHECKPKG_OVERRIDES_CSWpostgresql-90 += file-with-bad-content|/usr/local|root/opt/csw/lib/postgresql/9.0/bin/ecpg
 # CHECKPKG_OVERRIDES_CSWpostgresql-90 += file-with-bad-content|/usr/local|root/opt/csw/lib/postgresql/9.0/bin/sparcv9/ecpg
