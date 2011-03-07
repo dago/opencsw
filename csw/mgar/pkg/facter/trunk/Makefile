@@ -20,15 +20,10 @@ endef
 
 MASTER_SITES = http://puppetlabs.com/downloads/facter/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 SPKG_SOURCEURL = http://puppetlabs.com/
 
 RUNTIME_DEP_PKGS = CSWruby
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
-
-# We define upstream file regex so we can be notifed of new upstream software
-# release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 ARCHALL=1
 
