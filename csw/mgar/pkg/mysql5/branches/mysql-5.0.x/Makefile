@@ -187,12 +187,11 @@ PROTOTYPE_GROUP_dbdir = mysql
 PROTOTYPE_PERMS_dbdir = 0700
 PROTOTYPE_CLASS_dbdir = ugfiles
 
-CHECKPKG_OVERRIDES_CSWmysql5test += surplus-dependency|CSWmysql5
-CHECKPKG_OVERRIDES_CSWmysql5devel += surplus-dependency|CSWmysql5rt
 CHECKPKG_OVERRIDES_CSWmysql5 += surplus-dependency|CSWmysql5client
+CHECKPKG_OVERRIDES_CSWmysql5bench += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWmysql5bench += surplus-dependency|CSWmysql5
 CHECKPKG_OVERRIDES_CSWmysql5test += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWmysql5bench += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWmysql5test += surplus-dependency|CSWmysql5
 
 CHECKPKG_OVERRIDES_CSWmysql5client += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysqlaccess.1
 CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/info/mysql.info
@@ -209,6 +208,8 @@ CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/share|root/opt/csw/my
 CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/share|root/opt/csw/mysql5/share/man/man1/mysql_tzinfo_to_sql.1
 CHECKPKG_OVERRIDES_CSWmysql5devel += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysql_config.1
 
+CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/bin/i386/mysqlbug
+CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/bin/amd64/mysqlbug
 
 include gar/category.mk
 
