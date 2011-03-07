@@ -115,8 +115,9 @@ CONFIGURE_ARGS += --with-iconv-dir=$(prefix)
 CONFIGURE_ARGS += --with-openssl-dir=$(prefix)
 CONFIGURE_ARGS += --with-readline-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
-CONFIGURE_ARGS += --enable-install-doc
 CONFIGURE_ARGS += --program-suffix=18
+EXTRA_CONFIGURE_ARGS_isa-default-compiler-sun = --enable-install-doc
+
 
 INSTALL_ARGS = install
 
@@ -169,11 +170,14 @@ include gar/category.mk
 
 SPKG_VERSION := $(SPKG_VERSION)$(PATCHLEVEL)
 
-RBCONFIG = /opt/csw/lib/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb
+RBCDIR = $(libdir)/ruby/1.8/$(GARCH)-solaris2.9
+RBCONFIG = $(RBCDIR)/rbconfig.rb
 
 merge-copy-custom: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBUG_MERGE)(cp $(INSTALLIDADIR)$(RBCONFIG).$(COMPILER) \
-		$(PKGROOT)$(RBCONFIG).$(COMPILER)
+	$(_DBUG_MERGE)( [ -d "$(PKGROOT)$(RBCDIR)" ] || \
+			mkdir -p $(PKGROOT)$(RBCDIR); \
+			cp $(DESTDIR)$(RBCONFIG).$(COMPILER) \
+				$(PKGROOT)$(RBCONFIG).$(COMPILER) )
 
 post-install-modulated:
 	@echo "Stripping DESTDIR from rbconfig.rb"
