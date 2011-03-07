@@ -18,7 +18,6 @@ Checks implemented:
  - outside /opt/csw, /etc/opt/csw, /var/opt/csw -> error
 
 Development plan for checkpkg:
-- Notify maintainers when their package is available from mirrors
 - Allow maintainers to opt-out from these notifications
 - Add support for the 'overridden' field in the database
 - When adding a package to a catalog, store the time and date of the
@@ -45,6 +44,7 @@ Items done:
 - Generalize dependency checking by adding NeedFile(file_list, reason) to
   error_mgr.  It's possible to need one of the listed files only, so files are
   given as alternatives, but the reason is common.
+- Notify maintainers when their package is available from mirrors
 
 Known problems:
 - libmagic fails sometimes when processing the whole catalog
