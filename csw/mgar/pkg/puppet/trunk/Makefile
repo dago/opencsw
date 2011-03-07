@@ -25,15 +25,11 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswpuppetd
 DISTFILES += cswpuppetmasterd
 DISTFILES += cswusergroup
-DISTFILES += puppetd.xml
-DISTFILES += puppetmaster.xml
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES += CSWpuppet.postinstall
 SPKG_SOURCEURL = http://puppetlabs.com/
 
 INITSMF += $(sysconfdir)/init\.d/cswpuppetd
 INITSMF += $(sysconfdir)/init\.d/cswpuppetmasterd
-#MANIFEST /var${prefix}/svc/manifest/network/puppetd.xml
-#MANIFEST /var${prefix}/svc/manifest/network/puppetmaster.xml
 USERGROUP = $(sysconfdir)/pkg/puppet/cswusergroup
 
 # Creating a separate package CSWpuppetmaster so that the cswpuppetmaster
@@ -53,7 +49,7 @@ PKGFILES_CSWpuppetmaster  = $(sysconfdir)/init\.d/cswpuppetmasterd
 PKGFILES_CSWpuppetmaster += $(sbindir)/puppetmasterd
 PKGFILES_CSWpuppetmaster += $(mandir)/man8/puppetmasterd.8
 PKGFILES_CSWpuppetmaster += $(libdir)/.*/puppet/application/puppetmasterd.rb
-PKGFILES_CSWpuppetmaster += /var${prefix}/svc/manifest/network/puppetmaster.xml
+PKGFILES_CSWpuppetmaster += $(sysconfdir)/puppet/auth.conf
 
 ARCHALL = 1
 
@@ -70,7 +66,7 @@ PATCHFILES += 0002-Using-the-single-option-of-pkgutil.patch
 PATCHFILES += 0003-Use-opt-csw-share-puppet-modules-as-default.patch
 
 CHECKPKG_OVERRIDES_CSWpuppet       += surplus-dependency|CSWfacter
-CHECKPKG_OVERRIDES_CSWpuppet += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpuppet       += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWpuppet
 
 # CRONDIR = $(sysconfdir)/pkg/CSWpuppet/crontabs
@@ -91,12 +87,8 @@ install-puppet:
 	ginstall -m 755 $(FILEDIR)/cswpuppetd $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/cswpuppetmasterd $(DESTDIR)/etc$(prefix)/init.d
-	(cd $(WORKSRC) && \
-	gsed -e "s|/var/puppet|/var/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
-	gsed -e "s|/etc/puppet|/etc/opt/csw/puppet|g" -i ./lib/puppet/defaults.rb; \
-	gsed -e "s|/var/run/puppet|/var/opt/csw/puppet/run|g" -i ./lib/puppet/defaults.rb)
 	cd $(WORKSRC) && $(INSTALL_ENV) ruby install.rb \
-		--configdir=$(sysconfdir) \
+		--configdir=$(sysconfdir)/puppet \
 		--bindir=$(bindir) \
 		--sbindir=$(sbindir) \
 		--full
@@ -111,13 +103,6 @@ install-puppet:
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/puppet
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/puppet/cswusergroup
-	( [ -d $(DESTDIR)/var/lib ] && echo "$(DESTDIR)/var/lib" must not exist && false ) || true
+	# ( [ -d $(DESTDIR)/var/lib ] && echo "$(DESTDIR)/var/lib" must not exist && false ) || true
 	mkdir -p $(DESTDIR)$(localstatedir)/lib
-	# For this file to run, CSWpuppet would need to depend on CSWpython,
-	# and we don't want that. It could be split off to another package, but
-	# this file doesn't seem to be of any use on Solaris, so we can safely
-	# remove it.
-	# markp: Putting this back in. Will look at deps later. Some places do run
-	# yum on Solaris, would you believe.
-	# rm $(DESTDIR)$(libdir)/ruby/site_ruby/1.8/puppet/provider/package/yumhelper.py
 	@$(MAKECOOKIE)
