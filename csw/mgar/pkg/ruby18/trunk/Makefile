@@ -11,7 +11,7 @@ BUILD_DEP_PKGS =  CSWbdb48devel CSWlibgdbm3 CSWcoreutils CSWiconv CSWncurses
 BUILD_DEP_PKGS += CSWreadline CSWzlib CSWossldevel
 
 PACKAGES = CSWruby18 CSWruby18-doc CSWruby18-tk CSWruby18-dev CSWruby18-mode
-PACKAGES += CSWruby18-mode-el CSWlibruby18-1
+PACKAGES += CSWruby18-mode-el CSWlibruby18-1 CSWruby18-gcc4
 
 EXTRA_MODULATORS = COMPILER
 MODULATIONS_COMPILER = sun gcc4
@@ -25,17 +25,24 @@ OBSOLETES_CSWruby18-dev = CSWrubydev
 OBSOLETES_CSWruby18-mode = CSWrubymode
 OBSOLETES_CSWruby18-mode-el = CSWrubymodeel
 
-ALTERNATIVES_CSWruby18 = ruby
+ALTERNATIVES_CSWruby18 = ruby rbconfig18
 ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby18 10 $(bindir)/irb irb $(bindir)/irb18 $(bindir)/erb erb $(bindir)/erb18 $(bindir)/rdoc rdoc $(bindir)/rdoc18 $(bindir)/ri ri $(bindir)/ri18 $(bindir)/testrb testrb $(bindir)/testrb18 $(mandir)/man1/ruby.1 ruby.1 $(mandir)/man1/ruby18.1
+ALTERNATIVE_rbconfig18 += $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb rbconfig18 $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb.sun 5
+
+ALTERNATIVES_CSWruby18-gcc4 = rbconfig18
+ALTERNATIVE_rbconfig18 += $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb rbconfig18 $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb.gcc4 10
 
 ARCHALL_CSWruby18-doc = 1
 ARCHALL_CSWruby18-mode = 1
 ARCHALL_CSWruby18-mode-el = 1
+ARCHALL_CSWruby18-gcc4 = 1
 
 LICENSE = COPYING
 
 RUNTIME_DEP_PKGS_CSWruby18 = CSWbdb48 CSWlibgdbm3 CSWiconv CSWlibruby18-1
 RUNTIME_DEP_PKGS_CSWruby18 += CSWncurses CSWosslrt CSWreadline CSWzlib
+
+RUNTIME_DEP_PKGS_CSWruby18-gcc4 = CSWruby18
 
 RUNTIME_DEP_PKGS_CSWruby18-doc = CSWruby18
 
@@ -60,6 +67,8 @@ endef
 
 SPKG_DESC_CSWruby18  = $(DESCRIPTION)
 
+SPKG_DESC_CSWruby18-gcc4  = A gcc4 compatible rbconfig.rb (Ruby 1.8)
+
 SPKG_DESC_CSWlibruby18-1 = The libruby.so.1* files (Ruby 1.8)
 
 SPKG_DESC_CSWruby18-doc = Documentation for Ruby 1.8
@@ -73,6 +82,8 @@ SPKG_DESC_CSWruby18-mode = Ruby 1.8 major mode for Emacs
 SPKG_DESC_CSWruby18-mode-el = Elisp source for ruby mode (Ruby 1.8)
 
 PKGFILES_CSWruby18-doc = $(datadir)/ri/.* $(docdir)/$(NAME)/sample.*
+
+PKGFILES_CSWruby18-gcc4 = $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/.*gcc4
 
 PKGFILES_CSWruby18-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
@@ -117,7 +128,6 @@ CONFIGURE_ARGS += --with-readline-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 CONFIGURE_ARGS += --program-suffix=18
 EXTRA_CONFIGURE_ARGS_isa-default-compiler-sun = --enable-install-doc
-
 
 INSTALL_ARGS = install
 
