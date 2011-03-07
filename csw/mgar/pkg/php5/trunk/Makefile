@@ -29,6 +29,7 @@ DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
 PACKAGES = CSWphp5 CSWphp5devel
+PACKAGES += CSWap2-modphp5
 PACKAGES += CSWphp5-bcmath
 PACKAGES += CSWphp5-bz2
 PACKAGES += CSWphp5-calendar
@@ -94,7 +95,12 @@ CATALOGNAME_CSWphp5devel   = php5_devel
 SPKG_DESC_CSWphp5devel     = Development files for php5
 RUNTIME_DEP_PKGS_CSWphp5      = CSWiconv 
 RUNTIME_DEP_PKGS_CSWphp5     += CSWlibxml2 CSWzlib
-RUNTIME_DEP_PKGS_CSWphp5     += CSWlibmm CSWapache2
+
+CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
+SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
+RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
+OBSOLETES_CSWap2-modphp5 = CSWap2modphp5
 
 CATALOGNAME_CSWphp5-bcmath = php5_bcmath
 SPKG_DESC_CSWphp5-bcmath = The bcmath extension for PHP5
@@ -119,7 +125,7 @@ OBSOLETES_CSWphp5-ctype = CSWphp5ctype
 CATALOGNAME_CSWphp5-curl = php5_curl
 SPKG_DESC_CSWphp5-curl = The curl extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-curl  = CSWphp5 CSWcurlrt CSWlibidn 
-RUNTIME_DEP_PKGS_CSWphp5-curl += CSWoldaprt CSWosslrt CSWzlib
+RUNTIME_DEP_PKGS_CSWphp5-curl += CSWoldaprt CSWosslrt CSWzlib CSWlibcares
 OBSOLETES_CSWphp5-curl = CSWphp5curl
 
 CATALOGNAME_CSWphp5-dba = php5_dba
@@ -170,7 +176,7 @@ OBSOLETES_CSWphp5-hash = CSWphp5hash
 
 CATALOGNAME_CSWphp5-iconv = php5_iconv
 SPKG_DESC_CSWphp5-iconv = The iconv extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-iconv = CSWphp5 CSWiconv
+RUNTIME_DEP_PKGS_CSWphp5-iconv = CSWphp5
 OBSOLETES_CSWphp5-iconv = CSWphp5iconv
 
 CATALOGNAME_CSWphp5-imap = php5_imap
@@ -259,7 +265,7 @@ OBSOLETES_CSWphp5-pdopgsql = CSWphp5pdopgsql
 
 CATALOGNAME_CSWphp5-pdosqlite = php5_pdosqlite
 SPKG_DESC_CSWphp5-pdosqlite = A Sqlite specific database access abstraction module for PHP applications (pdo version)
-RUNTIME_DEP_PKGS_CSWphp5-pdosqlite = CSWphp5 CSWphp5-pdo
+RUNTIME_DEP_PKGS_CSWphp5-pdosqlite = CSWphp5 CSWphp5-pdo CSWsqlite3rt
 OBSOLETES_CSWphp5-pdosqlite = CSWphp5pdosqlite
 
 CATALOGNAME_CSWphp5-pgsql = php5_pgsql
@@ -349,7 +355,7 @@ OBSOLETES_CSWphp5-xmlreader = CSWphp5xmlreader
 
 CATALOGNAME_CSWphp5-xmlrpc = php5_xmlrpc
 SPKG_DESC_CSWphp5-xmlrpc = The xmlrpc extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-xmlrpc = CSWphp5 CSWiconv CSWlibxml2 CSWzlib CSWexpat
+RUNTIME_DEP_PKGS_CSWphp5-xmlrpc = CSWphp5 CSWiconv CSWexpat
 OBSOLETES_CSWphp5-xmlrpc = CSWphp5xmlrpc
 
 CATALOGNAME_CSWphp5-xmlwriter = php5_xmlwriter
@@ -386,6 +392,8 @@ PKGFILES_CSWphp5devel += $(includedir)/php/ext/standard.*
 PKGFILES_CSWphp5devel += $(includedir)/php/ext/xml.*
 PKGFILES_CSWphp5devel += $(mandir)/man1/php-config.1
 PKGFILES_CSWphp5devel += $(mandir)/man1/phpize.1
+
+PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
 PKGFILES_CSWphp5-bcmath = .*/lib/php/extensions/.*/bcmath.*
 
@@ -697,6 +705,13 @@ CHECKPKG_OVERRIDES_CSWphp5-xmlrpc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pgsql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-shmop += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mhash += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-session += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
+CHECKPKG_OVERRIDES_CSWphp5-sysvsem += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5-pdo
+CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5-pdo
+CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
 
 include files/scripts.mk
 include gar/category.mk
