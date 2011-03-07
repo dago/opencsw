@@ -20,6 +20,9 @@ Checks implemented:
 Development plan for checkpkg:
   Primary focus:
   - Add support for tiering (core/active/unsupported)
+  - Add MySQL database garbage collection
+    - Currently, the database is growing indefinitely, at the time of writing
+      it's 1.5GB uncompressed.
   - Add support for the 'overridden' field in the database
   - When adding a package to a catalog, store the time and date of the
     addition
