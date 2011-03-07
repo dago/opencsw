@@ -1,5 +1,5 @@
 NAME = IPC-Cmd
-VERSION = 0.64
+VERSION = 0.70
 CATEGORIES = cpan
 AUTHOR = BINGOS
 
@@ -11,9 +11,12 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmipccmd
-CATALOGNAME = pm_ipccmd 
+PACKAGES = CSWpm-ipc-cmd
+CATALOGNAME = pm_ipc_cmd 
+SPKG_DESC_CSWpm-ipc-cmd = $(DESCRIPTION)
 ARCHALL = 1
+OBSOLETES_CSWpm-ipc-cmd = CSWpmipccmd
+CATALOGNAME_CSWpmipccmd = pm_ipccmd
 
 RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple CSWpmmodloadcond CSWpmprmscheck
 
