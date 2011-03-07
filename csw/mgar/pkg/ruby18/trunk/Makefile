@@ -35,7 +35,6 @@ ALTERNATIVE_rbconfig18 += $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb rbc
 ARCHALL_CSWruby18-doc = 1
 ARCHALL_CSWruby18-mode = 1
 ARCHALL_CSWruby18-mode-el = 1
-ARCHALL_CSWruby18-gcc4 = 1
 
 LICENSE = COPYING
 
