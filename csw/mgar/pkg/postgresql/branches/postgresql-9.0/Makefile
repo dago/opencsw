@@ -73,14 +73,14 @@ PACKAGES += CSWpostgresql-$(BASE_VERSION_G)-doc
 CATALOGNAME_CSWpostgresql-$(BASE_VERSION_G)-doc  = postgresql_$(BASE_VERSION_G)_doc
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)-doc = PostgreSQL $(BASE_VERSION).x Documentation
 
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibgnugetopt
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWzlib
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWreadline
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibgnugetopt
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxslt
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWreadline
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWzlib
 
 ARCHALL_CSWpostgresql                       = 1
 ARCHALL_CSWpostgresql-$(BASE_VERSION_G)-doc = 1
