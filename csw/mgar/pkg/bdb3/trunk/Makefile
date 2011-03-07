@@ -19,6 +19,8 @@ DISTFILES = $(NAME)-$(VERSION).tar.gz
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
+# GIT Patching does not work when WORKSRC is explicitly set
+NOGITPATCH = 1
 WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)/build_unix
 
 PATCHDIR = $(WORKSRC)/..
@@ -50,32 +52,45 @@ FIXCONFIG_DIRS  = $(DESTDIR)$(prefix)/bdb33/lib
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-PACKAGES = CSWbdb3 CSWbdb3devel CSWbdb3doc
-
-CATALOGNAME_CSWbdb3      = berkeleydb3
-CATALOGNAME_CSWbdb3devel = berkeleydb3_devel
-CATALOGNAME_CSWbdb3doc   = berkeleydb3_doc
-
-ARCHALL_CSWbdb3doc = 1
-
-SPKG_DESC_CSWbdb3      = BerkeleyDB 3.3 embedded database libraries and utilities
-SPKG_DESC_CSWbdb3devel = BerkeleyDB 3.3 development support
-SPKG_DESC_CSWbdb3doc   = BerkeleyDB 3.3 documentation
-
-SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
-
-RUNTIME_DEP_PKGS_CSWbdb3devel = CSWbdb3
-
 LICENSE = LICENSE
+VENDOR_URL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
+
+PACKAGES += CSWbdb3
+CATALOGNAME_CSWbdb3 = berkeleydb3
+SPKG_DESC_CSWbdb3 = BerkeleyDB 3.3 embedded database libraries and utilities
+RUNTIME_DEP_PKGS_CSWbdb3 += CSWtcl
+CHECKPKG_OVERRIDES_CSWbdb3 += catalogname-does-not-match-pkgname|pkgname=CSWbdb3|catalogname=berkeleydb3|expected-catalogname=bdb3
+
+PACKAGES += CSWbdb3devel
+CATALOGNAME_CSWbdb3devel = berkeleydb3_devel
+SPKG_DESC_CSWbdb3devel = BerkeleyDB 3.3 development support
+# Keep these in the main package
+PKGFILES_DEVEL_SHAREDLIBLINK =
+PKGFILES_CSWbdb3devel = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWbdb3devel = CSWbdb3
+CHECKPKG_OVERRIDES_CSWbdb3devel += surplus-dependency|CSWbdb3
+CHECKPKG_OVERRIDES_CSWbdb3devel += catalogname-does-not-match-pkgname|pkgname=CSWbdb3devel|catalogname=berkeleydb3_devel|expected-catalogname=bdb3devel
+
+PACKAGES += CSWbdb3doc
+CATALOGNAME_CSWbdb3doc = berkeleydb3_doc
+SPKG_DESC_CSWbdb3doc = BerkeleyDB 3.3 documentation
+PKGFILES_CSWbdb3doc = $(PKGFILES_DOC)
+ARCHALL_CSWbdb3doc = 1
+CHECKPKG_OVERRIDES_CSWbdb3doc += catalogname-does-not-match-pkgname|pkgname=CSWbdb3doc|catalogname=berkeleydb3_doc|expected-catalogname=bdb3doc
+
+# These are all pure examples
+CHECKPKG_OVERRIDES_CSWbdb3doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/berkeleydb3/ref/build_unix/flags.html
+CHECKPKG_OVERRIDES_CSWbdb3doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/berkeleydb3/ref/build_unix/install.html
+CHECKPKG_OVERRIDES_CSWbdb3doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/berkeleydb3/ref/build_unix/conf.html
+CHECKPKG_OVERRIDES_CSWbdb3doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/berkeleydb3/ref/build_unix/notes.html
+CHECKPKG_OVERRIDES_CSWbdb3doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/berkeleydb3/ref/sendmail/intro.html
+CHECKPKG_OVERRIDES_CSWbdb3doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/berkeleydb3/ref/tcl/intro.html
 
 INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir includedir libdir
 
 EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb3),'
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.*
-
-PKGFILES_CSWbdb3doc = $(PKGFILES_DOC)
-PKGFILES_CSWbdb3devel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
