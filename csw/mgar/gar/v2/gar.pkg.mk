@@ -322,15 +322,29 @@ baseisadirs = $(1)/$(2) $(call isadirs,$(1),$(2))
 # PKGFILES_RT selects files belonging to a runtime package
 PKGFILES_RT += $(call baseisadirs,$(libdir),[^/]*\.so\.\d+(\.\d+)*)
 
+# PKGFILES_LIB selects just one library. The '.' will be escaped automatically!
+# Use PKGFILES_CSWlibfoo1 = $(call pkgfiles_lib,libfoo.so.1)
+pkgfiles_lib += $(call baseisadirs,$(libdir),$(subst .,\.,$(1))(\.\d+)*)
+
 # PKGFILES_DEVEL selects files belonging to a developer package
-PKGFILES_DEVEL += $(call baseisadirs,$(bindir),[^/]*-config)
-PKGFILES_DEVEL += $(call baseisadirs,$(libdir),[^/]*\.so)
-PKGFILES_DEVEL += $(call baseisadirs,$(libdir),[^/]*\.(a|la))
-PKGFILES_DEVEL += $(call baseisadirs,$(libdir),pkgconfig(/.*)?)
-PKGFILES_DEVEL += $(includedir)/.*
-PKGFILES_DEVEL += $(sharedstatedir)/aclocal/.*
-PKGFILES_DEVEL += $(mandir)/man1/.*-config\.1.*
-PKGFILES_DEVEL += $(mandir)/man3/.*\.3
+PKGFILES_DEVEL_CONFIG ?= $(call baseisadirs,$(bindir),[^/]*-config)
+PKGFILES_DEVEL += $(PKGFILES_DEVEL_CONFIG)
+PKGFILES_DEVEL_SHAREDLIBLINK ?= $(call baseisadirs,$(libdir),[^/]*\.so)
+PKGFILES_DEVEL += $(PKGFILES_DEVEL_SHAREDLIBLINK)
+PKGFILES_DEVEL_STATICLIB ?= $(call baseisadirs,$(libdir),[^/]*\.a)
+PKGFILES_DEVEL += $(PKGFILES_DEVEL_STATICLIB)
+PKGFILES_DEVEL_LIBTOOL ?= $(call baseisadirs,$(libdir),[^/]*\.la)
+PKGFILES_DEVEL += $(PKGFILES_DEVEL_LIBTOOL)
+PKGFILES_DEVEL_PKGCONFIG ?= $(call baseisadirs,$(libdir),pkgconfig(/.*)?)
+PKGFILES_DEVEL += $(PKGFILES_DEVEL_PKGCONFIG)
+PKGFILES_DEVEL_INCLUDEDIR ?= $(includedir)/.*
+PKGFILES_DEVEL += $(PKGFILES_DEVEL_INCLUDEDIR)
+PKGFILES_DEVEL_ACLOCAL ?= $(sharedstatedir)/aclocal/.*
+PKGFILES_DEVEL += $(PKGFILES_DEVEL_ACLOCAL)
+PKGFILES_DEVEL_CONFIG_MANPAGE ?= $(mandir)/man1/.*-config\.1.*
+PKGFILES_DEVEL += $(PKGFILES_DEVEL_CONFIG_MANPAGE)
+PKGFILES_DEVEL_MAN3_MANPAGE ?= $(mandir)/man3/.*\.3
+PKGFILES_DEVEL += $(PKGFILES_DEVEL_MAN3_MANPAGE)
 
 # PKGFILES_DOC selects files beloging to a documentation package
 PKGFILES_DOC  = $(docdir)/.*
