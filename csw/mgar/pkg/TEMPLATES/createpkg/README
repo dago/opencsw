@@ -86,9 +86,8 @@ before compiling (for example, to hand-hack config.h) create a file called
 
 DONT FORGET to update all fields in the pkginfo file, and also to create
 appropriate copyright, depend and prototype files.
-If you dont know what to put into
-the prototype file, an initial build will most likely bomb out, after creating
-one for you in build/*/cswstage/prototype.
+Note that there is a make target that explicitly tries to generate one
+for you: pkgproto
 
 
 
@@ -107,8 +106,9 @@ Currently supported makefile targets by the full-length makefiles, are:
  * distclean
  * reallyclean
  * package
+ * pkgproto
 
-Note that there is a single shared upstream source tree, that should be
+Note that there is a single shared upstream source archive, that should be
 extracted under a "build" directory.
 The "clean" and "distclean" targets, are only pass-through targets, that
 will call the upstream source tree makefile with that argument.
