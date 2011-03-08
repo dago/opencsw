@@ -1,0 +1,60 @@
+From eabf65adb61703819191835031fd864e040f9cb5 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 8 Mar 2011 03:56:45 +0100
+Subject: [PATCH] Patch usr/share references out of the manpages
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ xml/xmlmantohtml.1.xml |    6 +++---
+ xml/xmltoman.1.xml     |   12 ++++++------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/xml/xmlmantohtml.1.xml b/xml/xmlmantohtml.1.xml
+index 735a779..e757305 100644
+--- a/xml/xmlmantohtml.1.xml
++++ b/xml/xmlmantohtml.1.xml
+@@ -12,10 +12,10 @@
+ 
+ <p>xmlmantohtml is a small script to convert xml/man to html.</p>
+ 
+-<p>You will find the dtd in <file>/usr/share/xmltoman/</file> on a
+-debian system. There is also an xsl file to generate html using
++<p>You will find the dtd in <file>/opt/csw/share/xmltoman/</file> on an
++OpenCSW system. There is also an xsl file to generate html using
+ <manref name="xsltproc" section="1"/>.
+-See also <file>/usr/share/doc/xmltoman/examples</file> for examples.</p>
++See also <file>/opt/csw/share/doc/xmltoman/examples</file> for examples.</p>
+                                                                                                              <p>If xsltproc proves to be a useful alternative, this program
+ will be obsoleted.</p>
+ 
+diff --git a/xml/xmltoman.1.xml b/xml/xmltoman.1.xml
+index 662c8f2..7040175 100644
+--- a/xml/xmltoman.1.xml
++++ b/xml/xmltoman.1.xml
+@@ -15,17 +15,17 @@ format. It features the usual man page items such a description,
+ options, see also etc. The xml format also supports converting to html
+ pages.</p>
+ 
+-<p>You will find the dtd in <file>/usr/share/xmltoman/</file> on a
+-debian system. There is also an xsl file to generate html using
++<p>You will find the dtd in <file>/opt/csw/share/xmltoman/</file> on an
++OpenCSW system. There is also an xsl file to generate html using
+ <manref name="xsltproc" section="1"/>.
+-See also <file>/usr/share/doc/xmltoman/examples</file> for examples.</p>
++See also <file>/opt/csw/share/doc/xmltoman/examples</file> for examples.</p>
+ 
+ </description>
+ 
+ <section name ="Files">
+-<p><file>/usr/share/xmltoman/xmltoman.dtd</file> the DTD file.</p>
+-<p><file>/usr/share/xmltoman/xmltoman.xsl</file> XSLT stylesheet to generate html.</p>
+-<p><file>/usr/share/xmltoman/xmltoman.css</file> stylesheet to be used for HTML.</p>
++<p><file>/opt/csw/share/xmltoman/xmltoman.dtd</file> the DTD file.</p>
++<p><file>/opt/csw/share/xmltoman/xmltoman.xsl</file> XSLT stylesheet to generate html.</p>
++<p><file>/opt/csw/share/xmltoman/xmltoman.css</file> stylesheet to be used for HTML.</p>
+ </section>
+ 
+ <section name = "Author">
+-- 
+1.7.3.2
+
