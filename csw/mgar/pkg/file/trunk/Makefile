@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.05
+VERSION = 5.04
 CATEGORIES = utils
 
 define BLURB
@@ -20,7 +20,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # These flags are not understood by Sun Studio
 CONFIGURE_ARGS += --disable-warnings
 TEST_TARGET = check
-PATCHFILES += 0001-Remove-surplus-flags-output-on-SPARC.patch
+# PATCHFILES += 0001-Remove-surplus-flags-output-on-SPARC.patch
 
 NOISAEXEC = 1
 
