@@ -1,5 +1,5 @@
 NAME = Module-Signature
-VERSION = 0.63
+VERSION = 0.66
 CATEGORIES = cpan
 AUTHOR = FLORA
 
@@ -11,16 +11,15 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmmodulesign
-CATALOGNAME = pm_modulesign
+PACKAGES = CSWpm-module-signature
+CATALOGNAME = pm_module_signature
+SPKG_DESC_CSWpm-module-signature = $(DESCRIPTION)
 ARCHALL = 1
+OBSOLETES_CSWpm-module-signature = CSWpmmodulesign
+CATALOGNAME_CSWpmmodulesign = pm_modulesign
 
 RUNTIME_DEP_PKGS += CSWgnupg
 RUNTIME_DEP_PKGS += CSWpmpardist
 RUNTIME_DEP_PKGS += CSWpmtextdiff
-
-CHECKPKG_OVERRIDES_CSWpmmodulesign += surplus-dependency|CSWpmpardist
-CHECKPKG_OVERRIDES_CSWpmmodulesign += surplus-dependency|CSWgnupg
-CHECKPKG_OVERRIDES_CSWpmmodulesign += surplus-dependency|CSWpmtextdiff
 
 include gar/category.mk
