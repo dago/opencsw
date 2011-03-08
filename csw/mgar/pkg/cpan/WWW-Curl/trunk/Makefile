@@ -1,5 +1,5 @@
 NAME = WWW-Curl
-VERSION = 4.11
+VERSION = 4.15
 CATEGORIES = cpan
 AUTHOR = SZBALINT
 
@@ -10,15 +10,22 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmwwwcurl
-CATALOGNAME = pm_wwwcurl
+PACKAGES = CSWpm-www-curl
+CATALOGNAME = pm_www_curl
+SPKG_DESC_CSWpm-www-curl = $(DESCRIPTION)
+OBSOLETES_CSWpm-www-curl = CSWpmwwwcurl
+CATALOGNAME_CSWpmwwwcurl = pm_wwwcurl
 
-RUNTIME_DEP_PKGS = CSWcurlrt CSWlibidn CSWoldaprt CSWosslrt CSWzlib
-
-EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
+RUNTIME_DEP_PKGS += CSWcurlrt
+RUNTIME_DEP_PKGS += CSWlibidn
+RUNTIME_DEP_PKGS += CSWoldaprt
+RUNTIME_DEP_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS += CSWzlib
+RUNTIME_DEP_PKGS += CSWlibcares
 
 CONFIGURE_ARGS = 
 
-TEST_SCRIPTS = 
+# Note that 08ssl.t fails (probably due to connection issues)
+#TEST_SCRIPTS = 
 
 include gar/category.mk
