@@ -5,6 +5,7 @@ d none /opt/csw/lib 0755 root bin
 d none /opt/csw/lib/gtk-2.0 0755 root bin
 d none /opt/csw/lib/gtk-2.0/2.10.0 0755 root bin
 d none /opt/csw/lib/gtk-2.0/2.10.0/engines 0755 root bin
+f none /opt/csw/lib/gtk-2.0/2.10.0/engines/COPYING=COPYING 0755 root bin
 f none /opt/csw/lib/gtk-2.0/2.10.0/engines/libcrux-engine.la 0755 root bin
 f none /opt/csw/lib/gtk-2.0/2.10.0/engines/libmist.la 0755 root bin
 f none /opt/csw/lib/gtk-2.0/2.10.0/engines/libglide.so 0755 root bin
