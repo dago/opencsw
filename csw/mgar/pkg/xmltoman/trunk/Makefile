@@ -18,3 +18,11 @@ CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+post-build-modulated:
+	@(cd $(WORKSRC); for m in xmltoman xmlmantohtml; do gmake $$m.1; done)
+	@$(MAKECOOKIE);
+
+post-install-modulated:
+	@(cd $(WORKSRC); gmkdir -p $(DESTDIR)$(mandir)/man1; for m in xmltoman xmlmantohtml; do cp $$m.1 $(DESTDIR)$(mandir)/man1; done)
+	@$(MAKECOOKIE)
