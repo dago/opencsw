@@ -1,0 +1,23 @@
+From e61ef0560a36132fbb5751805bcc74f1fba8158d Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 8 Mar 2011 03:25:19 +0100
+Subject: [PATCH 3/3] Use CSW perl instead of system perl
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ xmltoman |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/xmltoman b/xmltoman
+index 6a7489a..33b99bf 100755
+--- a/xmltoman
++++ b/xmltoman
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl -w
++#!/opt/csw/bin/perl -w
+ 
+ #    xmltoman - simple xml to man converter
+ #    Copyright (C) 2000-2002 Oliver Kurth <oku@masqmail.cx>
+-- 
+1.7.3.2
+
