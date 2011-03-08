@@ -10,11 +10,11 @@
 
 # Where do we keep local downloads of software src files
 ARCHIVEDIR ?= /home/src
-ARCHIVENAME ?= gtk-engines-2.18.5.tar.bz2
+ARCHIVENAME ?= gtk-engines-2.20.2.tar.bz2
 EXTRACTPROG ?= /usr/sfw/bin/gtar jfx
 
 # Only use ONE here. The name is used for compat with 'gar'.
-MASTER_SITES ?= http://ftp.acc.umu.se/pub/GNOME/sources/gtk-engines/2.18
+MASTER_SITES ?= http://ftp.acc.umu.se/pub/GNOME/sources/gtk-engines/2.20
 
 ARCH := $(shell /bin/uname -p)
 
@@ -28,8 +28,8 @@ SRCDIR= build/*
 # DO NOT specify the arch-64 stuff such as -m64 here.
 # the individual targets will do that.
 
-CFLAGS_COMMON   ?= -mt -xnorunpath -xO2
-CXXFLAGS_COMMON ?= -mt -norunpath  -xO2
+CFLAGS_COMMON   ?= -mt -xnorunpath -xO3
+CXXFLAGS_COMMON ?= -mt -norunpath  -xO3
 CFLAGS_sparc    ?= -xarch=v8
 CFLAGS_i386     ?= -xarch=386
 
