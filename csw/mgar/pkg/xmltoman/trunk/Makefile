@@ -5,7 +5,7 @@ CATEGORIES = utils
 
 DESCRIPTION = A man page creation tool
 define BLURB
-
+A special tool to convert xml files to man pages.
 endef
 
 MASTER_SITES = $(SF_MIRROR)
@@ -16,6 +16,10 @@ PATCHFILES += 0003-Use-ginstall-not-system-install.patch
 
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
+
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWperl
 
 include gar/category.mk
 
