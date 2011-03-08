@@ -1,6 +1,6 @@
 PKG=CSWgtkengines
 NAME=gtk_engines - A collection of basic theme engines for GTK+
-VERSION=2.18.5,REV=2010.06.29
+VERSION=2.20.2,REV=YYYY.MM.DD
 CATEGORY=application
 VENDOR=http://www.gnome.org/ packaged for CSW by Philip Brown
 HOTLINE=http://www.opencsw.org/bugtrack/
