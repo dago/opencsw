@@ -13,6 +13,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES += 0001-Override-default-hard-coded-prefix-with-opt-csw.patch
 PATCHFILES += 0002-Use-CSW-perl-instead-of-system-perl.patch
 PATCHFILES += 0003-Use-ginstall-not-system-install.patch
+PATCHFILES += 0004-Patch-usr-share-references-out-of-the-manpages.patch
 
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
@@ -28,5 +29,11 @@ post-build-modulated:
 	@$(MAKECOOKIE);
 
 post-install-modulated:
-	@(cd $(WORKSRC); gmkdir -p $(DESTDIR)$(mandir)/man1; for m in xmltoman xmlmantohtml; do cp $$m.1 $(DESTDIR)$(mandir)/man1; done)
+	@(cd $(WORKSRC); \
+		gmkdir -p $(DESTDIR)$(mandir)/man1 \
+			$(DESTDIR)$(docdir)/$(NAME); \
+		for m in xmltoman xmlmantohtml; do \
+			cp $$m.1 $(DESTDIR)$(mandir)/man1; \
+		done; \
+		cp -pR xml $(DESTDIR)$(docdir)/$(NAME)/examples; )
 	@$(MAKECOOKIE)
