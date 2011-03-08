@@ -1,5 +1,5 @@
 NAME = Pod-Simple
-VERSION = 3.14
+VERSION = 3.15
 CATEGORIES = cpan
 AUTHOR = DWHEELER
 
@@ -13,8 +13,12 @@ endef
 
 DISTFILES = COPYING
 
-PACKAGES = CSWpmpodsimple
-CATALOGNAME = pm_podsimple
+PACKAGES = CSWpm-pod-simple
+CATALOGNAME = pm_pod_simple
+SPKG_DESC_CSWpm-pod-simple = $(DESCRIPTION)
+OBSOLETES_CSWpm-pod-simple = CSWpmpodsimple
+CATALOGNAME_CSWpmpodsimple = pm_podsimple
+
 ARCHALL = 1
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3\/.*
