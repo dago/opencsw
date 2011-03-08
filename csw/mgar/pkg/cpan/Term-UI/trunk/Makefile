@@ -1,7 +1,7 @@
 NAME = Term-UI
-VERSION = 0.20
+VERSION = 0.26
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = Term::ReadLine UI made easy
 define BLURB
@@ -12,11 +12,21 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmtermui
-CATALOGNAME = pm_termui
+PACKAGES = CSWpm-term-ui
+CATALOGNAME = pm_term_ui
+SPKG_DESC_CSWpm-term-ui = $(DESCRIPTION)
+OBSOLETES_CSWpm-term-ui = CSWpmtermui
+CATALOGNAME_CSWpmtermui = pm_termui
+
 ARCHALL = 1
 
-RUNTIME_DEP_PKGS += CSWpmlclemktxtsimple CSWpmlogmsgsimple CSWpmprmscheck
+RUNTIME_DEP_PKGS += CSWpmlclemktxtsimple
+RUNTIME_DEP_PKGS += CSWpm-log-message-simple
+RUNTIME_DEP_PKGS += CSWpm-params-check
+
+# Not yet released/renamed packages
+CHECKPKG_OVERRIDES_CSWpm-term-ui += unidentified-dependency|CSWpm-params-check
+CHECKPKG_OVERRIDES_CSWpm-term-ui += unidentified-dependency|CSWpm-log-message-simple
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
