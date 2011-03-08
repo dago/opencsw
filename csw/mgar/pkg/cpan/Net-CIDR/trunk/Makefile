@@ -1,5 +1,5 @@
 NAME = Net-CIDR
-VERSION = 0.13
+VERSION = 0.14
 CATEGORIES = cpan
 AUTHOR = MRSAM
 
@@ -8,13 +8,17 @@ define BLURB
   Manipulate IPv4/IPv6 netblocks in CIDR notation
 endef
 
-DISTFILES = COPYING
+# For some reason it's in a testing subdir even though it's an official release
+MASTER_SITES = http://search.cpan.org/CPAN/authors/id/M/MR/MRSAM/testing/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += COPYING
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES = CSWpm-net-cidr
+CATALOGNAME = pm_net_cidr
+SPKG_DESC_CSWpm-net-cidr = $(DESCRIPTION)
+OBSOLETES_CSWpm-net-cidr = CSWpmnetcidr
+CATALOGNAME_CSWpmnetcidr = pm_netcidr
 
-PACKAGES = CSWpmnetcidr
-CATALOGNAME = pm_netcidr
 ARCHALL = 1
 
 include gar/category.mk
