@@ -1,7 +1,7 @@
 NAME = Params-Check
-VERSION = 0.26
+VERSION = 0.28
 CATEGORIES = cpan
-AUTHOR = KANE
+AUTHOR = BINGOS
 
 DESCRIPTION = A generic input parsing/checking mechanism.
 define BLURB
@@ -12,8 +12,12 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmprmscheck 
-CATALOGNAME = pm_prmscheck 
+PACKAGES = CSWpm-params-check 
+CATALOGNAME = pm_params_check 
+SPKG_DESC_CSWpm-params-check = $(DESCRIPTION)
+OBSOLETES_CSWpm-params-check = CSWpmprmscheck
+CATALOGNAME_CSWpmprmscheck = pm_prmscheck
+
 ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple
