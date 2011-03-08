@@ -1,5 +1,5 @@
 NAME = Schedule-At
-VERSION = 1.10
+VERSION = 1.11
 CATEGORIES = cpan
 AUTHOR = JOSERODR
 
@@ -10,8 +10,12 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmscheduleat
-CATALOGNAME = pm_scheduleat
+PACKAGES = CSWpm-schedule-at
+CATALOGNAME = pm_schedule_at
+SPKG_DESC_CSWpm-schedule-at = $(DESCRIPTION)
+OBSOLETES_CSWpm-schedule-at = CSWpmscheduleat
+CATALOGNAME_CSWpmscheduleat = pm_scheduleat
+
 ARCHALL = 1
 
 include gar/category.mk
