@@ -1,7 +1,7 @@
 NAME = Test-Deep
-VERSION = 0.106
+VERSION = 0.108
 CATEGORIES = cpan
-AUTHOR = FDALY
+AUTHOR = RJBS
 
 DESCRIPTION = Extremely flexible deep comparison
 define BLURB
@@ -10,8 +10,15 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmtestdeep
-CATALOGNAME = pm_testdeep
+PACKAGES = CSWpm-test-deep
+CATALOGNAME = pm_test_deep
+SPKG_DESC_CSWpm-test-deep = $(DESCRIPTION)
+OBSOLETES_CSWpm-test-deep = CSWpmtestdeep
+CATALOGNAME_CSWpmtestdeep = pm_testdeep
+
 ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpmtesttester
+RUNTIME_DEP_PKGS += CSWpmtestnowarnings
 
 include gar/category.mk
