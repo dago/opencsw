@@ -34,20 +34,27 @@ COMPILER_TAGNAME_GCC3 = gcc3
 COMPILER_TAGNAME_GCC4 = gcc4
 COMPILER_TAGNAME_SOS12 = sos12
 
-PACKAGES = CSWlibtool CSWlibltdl7 CSWlibtoolrt
+VENDOR_URL = http://www.gnu.org/software/libtool/
 
+PACKAGES += CSWlibtool
 CATALOGNAME_CSWlibtool = libtool
+SPKG_DESC_CSWlibtool = A generic library support tool
+# Double-legacy packages may not even depend on CSWlibtoolrt, so we must
+# also directly depend on CSWlibltdl3
+RUNTIME_DEP_PKGS_CSWlibtool += CSWlibltdl3
+RUNTIME_DEP_PKGS_CSWlibtool += CSWlibltdl7
+CHECKPKG_OVERRIDES_CSWlibtool += surplus-dependency|CSWlibltdl3
+CHECKPKG_OVERRIDES_CSWlibtool += surplus-dependency|CSWlibltdl7
+
+# This is built from pkgs/libltdl3
+FOREIGN_PACKAGES += CSWlibltdl3
+OBSOLETES_CSWlibltdl3 += CSWlibtoolrt
+
+PACKAGES += CSWlibltdl7
 CATALOGNAME_CSWlibltdl7 = libltdl7
-CATALOGNAME_CSWlibtoolrt = libtool_rt
-
-SPKG_SOURCEURL = http://www.gnu.org/software/libtool/
-
-RUNTIME_DEP_PKGS_CSWlibtool = CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibtoolrt = CSWlibltdl3 CSWlibltdl7
-
-SPKG_DESC_CSWlibtool   = A generic library support tool
-SPKG_DESC_CSWlibltdl7  = Libtool libltdl.so.7 from libtool 2.x
-SPKG_DESC_CSWlibtoolrt = Runtime libraries for libtool
+SPKG_DESC_CSWlibltdl7 = Libtool libltdl.so.7 from libtool 2.x
+PKGFILES_CSWlibltdl7 += $(PKGFILES_RT)
+OBSOLETES_CSWlibltdl7 += CSWlibtoolrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -68,15 +75,6 @@ SKIPTEST ?= 1
 
     MERGE_SCRIPTS_isa-default-garcompiler-GCC3 = copy-tags
     MERGE_SCRIPTS_isa-default-garcompiler-GCC4 = copy-tags
-
-PKGFILES_CSWlibltdl7 = $(PKGFILES_RT)
-PKGFILES_CSWlibtoolrt = NONE
-
-ARCHALL_CSWlibtoolrt = 1
-
-CHECKPKG_OVERRIDES_CSWlibtool += surplus-dependency|CSWlibltdl7
-CHECKPKG_OVERRIDES_CSWlibtoolrt += surplus-dependency|CSWlibltdl3
-CHECKPKG_OVERRIDES_CSWlibtoolrt += surplus-dependency|CSWlibltdl7
 
 include gar/category.mk
 
