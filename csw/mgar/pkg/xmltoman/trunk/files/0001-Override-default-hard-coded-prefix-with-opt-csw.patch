@@ -1,0 +1,26 @@
+From 73929a0716f96c262920b3bd40efac71e17cbac2 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 8 Mar 2011 03:24:20 +0100
+Subject: [PATCH] Override default (hard coded) prefix with /opt/csw
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 1195c52..ae89d52 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,6 @@
+-PREFIX=/usr/local
++PREFIX=/opt/csw/
+ PACKAGE=xmltoman
+-VERSION=0.3
++VERSION=0.4
+ DISTNAME=$(PACKAGE)-$(VERSION)
+ DISTFILES= COPYING Makefile README xml/ xmlmantohtml xmltoman xmltoman.css xmltoman.dtd xmltoman.xsl
+ 
+-- 
+1.7.3.2
+

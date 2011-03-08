@@ -1,0 +1,42 @@
+From 2227aedee4ee6d2c0b7d8d8864e752d101f0381c Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 8 Mar 2011 03:40:36 +0100
+Subject: [PATCH] Use ginstall, not system install
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ Makefile |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index ae89d52..194ba20 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3,6 +3,7 @@ PACKAGE=xmltoman
+ VERSION=0.4
+ DISTNAME=$(PACKAGE)-$(VERSION)
+ DISTFILES= COPYING Makefile README xml/ xmlmantohtml xmltoman xmltoman.css xmltoman.dtd xmltoman.xsl
++INSTALL=/opt/csw/bin/ginstall
+ 
+ all: xmltoman.1 xmlmantohtml.1
+ 
+@@ -13,11 +14,11 @@ xmlmantohtml.1: xml/xmlmantohtml.1.xml
+ 	./xmltoman $< > $@
+ 
+ install:
+-	install -D xmltoman $(DESTDIR)/$(PREFIX)/bin/xmltoman
+-	install -D xmlmantohtml $(DESTDIR)/$(PREFIX)/bin/xmlmantohtml
+-	install -D -m 0644 xmltoman.dtd $(DESTDIR)/$(PREFIX)/share/xmltoman/xmltoman.dtd
+-	install -D -m 0644 xmltoman.css $(DESTDIR)/$(PREFIX)/share/xmltoman/xmltoman.css
+-	install -D -m 0644 xmltoman.xsl $(DESTDIR)/$(PREFIX)/share/xmltoman/xmltoman.xsl
++	$(INSTALL) -D xmltoman $(DESTDIR)/$(PREFIX)/bin/xmltoman
++	$(INSTALL) -D xmlmantohtml $(DESTDIR)/$(PREFIX)/bin/xmlmantohtml
++	$(INSTALL) -D -m 0644 xmltoman.dtd $(DESTDIR)/$(PREFIX)/share/xmltoman/xmltoman.dtd
++	$(INSTALL) -D -m 0644 xmltoman.css $(DESTDIR)/$(PREFIX)/share/xmltoman/xmltoman.css
++	$(INSTALL) -D -m 0644 xmltoman.xsl $(DESTDIR)/$(PREFIX)/share/xmltoman/xmltoman.xsl
+ 
+ dist:
+ 	[ -d $(DISTNAME) ] && rm -rf $(DISTNAME) || true
+-- 
+1.7.3.2
+
