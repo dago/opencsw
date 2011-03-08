@@ -1,5 +1,5 @@
 NAME = Module-Load-Conditional
-VERSION = 0.38
+VERSION = 0.44
 CATEGORIES = cpan
 AUTHOR = BINGOS
 
@@ -11,9 +11,12 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmmodloadcond
-CATALOGNAME = pm_modloadcond
+PACKAGES = CSWpm-module-load-conditional
+CATALOGNAME = pm_module_load_conditional
+SPKG_DESC_CSWpm-module-load-conditional = $(DESCRIPTION)
 ARCHALL = 1
+OBSOLETES_CSWpm-module-load-conditional = CSWpmmodloadcond
+CATALOGNAME_CSWpmmodloadcond = pm_modloadcond
 
 RUNTIME_DEP_PKGS = CSWpmprmscheck CSWpmmodload CSWpmlclemktxtsimple
 
