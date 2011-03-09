@@ -14,7 +14,7 @@ PACKAGES = CSWpm-gssapi
 CATALOGNAME = pm_gssapi
 SPKG_DESC_CSWpm-gssapi = $(DESCRIPTION)
 OBSOLETES_CSWpm-gssapi = CSWpmgssapi
-CATALOGNAME_CSWpmgssapi = pm_gssapi2
+CATALOGNAME_CSWpmgssapi = pm_gssapi_stub
 
 RUNTIME_DEP_PKGS = CSWkrb5lib
 
