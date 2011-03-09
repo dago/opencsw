@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.04
+VERSION = 5.05
 CATEGORIES = utils
 
 define BLURB
@@ -21,9 +21,13 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-warnings
 TEST_TARGET = check
 
-PATCHFILES += 0001-libtool-dir-used-for-linking.patch 
-PATCHFILES += 0002-CSW-runpath.patch
-# PATCHFILES += 0001-Remove-surplus-flags-output-on-SPARC.patch
+# Patches specific to the 5.04 version:
+# PATCHFILES += 0001-libtool-dir-used-for-linking.patch 
+# PATCHFILES += 0002-CSW-runpath.patch
+
+# Patches specific to the 5.05 version:
+PATCHFILES += 0001-Remove-surplus-flags-output-on-SPARC.patch
+PATCHFILES += 0002-Do-not-use-find_library-at-runtime.patch
 
 NOISAEXEC = 1
 
@@ -41,12 +45,9 @@ PACKAGES += CSWpy-libmagic
 PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 SPKG_DESC_CSWpy-libmagic = Python extension for libmagic
 CATALOGNAME_CSWpy-libmagic = py_libmagic
-# py-libmagic should have a .so object in it, so it's architecture-specific.
-# ARCHALL_CSWpy-libmagic = 1
+ARCHALL_CSWpy-libmagic = 1
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic1
-RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibpython2-6-1-0
-CHECKPKG_OVERRIDES_CSWpy-libmagic += surplus-dependency|CSWpython
 
 PACKAGES += CSWlibmagic-data
 CATALOGNAME_CSWlibmagic-data = libmagic_data
@@ -80,7 +81,7 @@ IGNORE_DESTDIR = 1
 DISTUTILS_DEBUG = 1
 export DISTUTILS_DEBUG
 
-# BUILD64 = 1
+BUILD64 = 1
 
 include gar/category.mk
 
@@ -99,6 +100,11 @@ post-install-modulated:
 	ginstall -d -m 755 $(DESTDIR)$(prefix)/gnu
 	(cd $(DESTDIR) && \
 		gln -s ../bin/gfile $(DESTDIR)$(prefix)/gnu/file)
+	# Injecting a symlink pointing at libmagic.so.1 on the filesystem, so that
+	# checkpkg realizes that the dependency is necessary.
+	if [ -d $(DESTDIR)$(libdir)/python/site-packages ]; then \
+	  ln -s ../../libmagic.so.1 $(DESTDIR)$(libdir)/python/site-packages/need-libmagic; \
+	fi
 	@$(MAKECOOKIE)
 
 post-merge:

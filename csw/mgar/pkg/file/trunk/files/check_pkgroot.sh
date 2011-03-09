@@ -11,5 +11,5 @@ set -u
 set -e
 set -x
 
-# This file was missing in file-5.05, and that broke py_libmagic.
-test -f ${PKGROOT}/opt/csw/lib/python/site-packages/magic.so
+# The 5.05 version has a pure Python rewrite of the Python bindings.
+# test -f ${PKGROOT}/opt/csw/lib/python/site-packages/magic.so
