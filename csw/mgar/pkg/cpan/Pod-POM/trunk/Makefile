@@ -1,7 +1,7 @@
 NAME = Pod-POM
-VERSION = 0.17
+VERSION = 0.27
 CATEGORIES = cpan
-AUTHOR = ABW
+AUTHOR = ANDREWF
 
 DESCRIPTION = POD Object Model
 define BLURB
@@ -15,12 +15,14 @@ define BLURB
   form or another.
 endef
 
-DISTFILES += CSWpmpodpom.gspec CSWpmpodpom.depend
+DISTFILES += COPYING
 
-#DEPENDS += cpan/Text-Diff
+PACKAGES = CSWpm-pod-pom
+CATALOGNAME_CSWpm-pod-pom = pm_pod_pom
+SPKG_DESC_CSWpm-pod-pom = $(DESCRIPTION)
+OBSOLETES_CSWpm-pod-pom = CSWpmpodpom
+CATALOGNAME_CSWpmpodpom = pm_podpom
 
-# The 'htmlview' function is currently broken (0.17)
-# =for sections are being ignored!
-PATCHFILES = htmlview.diff
+ARCHALL = 1
 
 include gar/category.mk
