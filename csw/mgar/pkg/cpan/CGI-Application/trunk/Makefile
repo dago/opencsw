@@ -1,5 +1,5 @@
 NAME = CGI-Application
-VERSION = 4.06
+VERSION = 4.31
 CATEGORIES = cpan
 AUTHOR = MARKSTOS
 
@@ -11,8 +11,16 @@ define BLURB
   document, easier to write, and easier to evolve.
 endef
 
-DISTFILES += $(call admfiles,CSWpmcgiapp,depend prototype)
+LICENSE = ARTISTIC
 
-DEPENDS += cpan/HTML-Template
+PACKAGES = CSWpm-cgi-application
+CATALOGNAME_CSWpm-cgi-application = pm_cgi_application
+SPKG_DESC_CSWpm-cgi-application = $(DESCRIPTION)
+OBSOLETES_CSWpm-cgi-application = CSWpmcgiapp
+CATALOGNAME_CSWpmcgiapp = pm_cgiapp
+
+ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpmhtmltmpl
 
 include gar/category.mk
