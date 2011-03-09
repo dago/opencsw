@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.05
+VERSION = 5.04
 CATEGORIES = utils
 
 define BLURB
