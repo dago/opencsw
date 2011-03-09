@@ -15,6 +15,6 @@ CATALOGNAME = pm_json
 SPKG_DESC_CSWpm-json = $(DESCRIPTION)
 ARCHALL = 1
 OBSOLETES_CSWpm-json = CSWpmjson
-CATALOGNAME_CSWpmjson = pm_json2
+CATALOGNAME_CSWpmjson = pm_json_stub
 
 include gar/category.mk
