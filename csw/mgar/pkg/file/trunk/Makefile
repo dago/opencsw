@@ -45,6 +45,8 @@ CATALOGNAME_CSWpy-libmagic = py_libmagic
 # ARCHALL_CSWpy-libmagic = 1
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic1
+RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibpython2-6-1-0
+CHECKPKG_OVERRIDES_CSWpy-libmagic += surplus-dependency|CSWpython
 
 PACKAGES += CSWlibmagic-data
 CATALOGNAME_CSWlibmagic-data = libmagic_data
