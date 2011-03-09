@@ -20,6 +20,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 # These flags are not understood by Sun Studio
 CONFIGURE_ARGS += --disable-warnings
 TEST_TARGET = check
+
+PATCHFILES += 0001-libtool-dir-used-for-linking.patch 
+PATCHFILES += 0002-CSW-runpath.patch
 # PATCHFILES += 0001-Remove-surplus-flags-output-on-SPARC.patch
 
 NOISAEXEC = 1
@@ -42,7 +45,6 @@ CATALOGNAME_CSWpy-libmagic = py_libmagic
 # ARCHALL_CSWpy-libmagic = 1
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic1
-CHECKPKG_OVERRIDES_CSWpy-libmagic += surplus-dependency|CSWlibmagic1
 
 PACKAGES += CSWlibmagic-data
 CATALOGNAME_CSWlibmagic-data = libmagic_data
@@ -88,7 +90,7 @@ post-build-modulated:
 
 post-install-modulated:
 	(cd $(WORKSRC)/python && \
-		python setup.py install --root=$(DESTDIR) --prefix=$(prefix))
+		$(BUILD_ENV) python setup.py install --root=$(DESTDIR) --prefix=$(prefix))
 	(cd $(DESTDIR) && \
 		mv $(DESTDIR)$(bindir)/file $(DESTDIR)$(bindir)/gfile && \
 		mv $(DESTDIR)$(mandir)/man1/file\.1 $(DESTDIR)$(mandir)/man1/gfile\.1)
