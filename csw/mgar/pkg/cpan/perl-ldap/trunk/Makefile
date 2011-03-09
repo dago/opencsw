@@ -18,7 +18,7 @@ CATALOGNAME = pm_ldap
 SPKG_DESC_CSWpm-ldap = $(DESCRIPTION)
 ARCHALL = 1
 OBSOLETES_CSWpm-ldap = CSWpmldap
-CATALOGNAME_CSWpmldap = pm_ldap2
+CATALOGNAME_CSWpmldap = pm_ldap_stub
 
 # Harmless /usr/local references
 CHECKPKG_OVERRIDES_CSWpm-ldap += file-with-bad-content
