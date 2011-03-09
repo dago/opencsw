@@ -44,13 +44,6 @@ RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic1
 CHECKPKG_OVERRIDES_CSWpy-libmagic += surplus-dependency|CSWlibmagic1
 
-PACKAGES += CSWlibmagic
-ARCHALL_CSWlibmagic = 1
-SPKG_DESC_CSWlibmagic = Empty transitional package
-RUNTIME_DEP_PKGS_CSWlibmagic += CSWlibmagic1
-CHECKPKG_OVERRIDES_CSWlibmagic += surplus-dependency|CSWlibmagic1
-PKGFILES_CSWlibmagic = NONE
-
 PACKAGES += CSWlibmagic-data
 CATALOGNAME_CSWlibmagic-data = libmagic_data
 SPKG_DESC_CSWlibmagic-data = Database for libmagic
