@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.04
+VERSION = 5.05
 CATEGORIES = utils
 
 define BLURB
@@ -82,7 +82,7 @@ IGNORE_DESTDIR = 1
 DISTUTILS_DEBUG = 1
 export DISTUTILS_DEBUG
 
-BUILD64 = 1
+# BUILD64 = 1
 
 include gar/category.mk
 
