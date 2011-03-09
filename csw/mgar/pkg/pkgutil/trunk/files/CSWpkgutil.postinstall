@@ -22,7 +22,7 @@ else
 fi
 
 if [ ! -f "$VAR2/admin" ]; then
-  echo "Copying sample admin to /var/opt/csw/pkgutil."
+  echo "Copying sample admin from /opt/csw/var/pkgutil to /var/opt/csw/pkgutil."
   cp -p $VAR1/admin.CSW $VAR2/admin
 else
   echo "/var/opt/csw/pkutil/admin already exists, will not copy admin.CSW to it."

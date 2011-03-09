@@ -2,7 +2,7 @@
 # svn co -r 9999 https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 gar
 
 NAME = pkgutil
-VERSION = 2.3
+VERSION = 2.4b1
 GARVERSION = $(VERSION)
 CATEGORIES = utils
 
@@ -18,7 +18,7 @@ endef
 COMMON_PKG_DEPENDS = 
 
 #MASTER_SITES = $(SF_MIRRORS)
-MASTER_SITES = http://sourceforge.net/projects/pkgutil/files/pkgutil/2.3/
+MASTER_SITES = http://sourceforge.net/projects/pkgutil/files/pkgutil/2.4/
 DISTFILES  = $(NAME)-$(VERSION).zip
 
 DISTFILES += $(call admfiles,CSWpkgutil,prototype preremove postinstall)
@@ -61,9 +61,6 @@ PKGFILES_CSWpkgutilplus += .*opencsw.py
 PKGFILES_CSWpkgutilplus += .*cswcatalog
 
 ARCHALL_CSWpkgutilplus = 1
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).zip
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
