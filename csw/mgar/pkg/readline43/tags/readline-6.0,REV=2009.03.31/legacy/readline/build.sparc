@@ -1,0 +1,74 @@
+#!/bin/sh
+
+VERSION=5.1
+BASE=/export/medusa/mark
+HOST=ra
+
+cd $BASE/build-$HOST 
+rm -rf readline-$VERSION
+gtar xzvf /export/medusa/src/readline-$VERSION.tar.gz
+cd readline-$VERSION
+
+# First, make 64-bit version
+
+LD_OPTIONS="-R/opt/csw/lib/64 -L/opt/csw/lib/64 -z defs -lc -lcurses" CC="cc -fast -xtarget=ultra -xarch=v9" ./configure --prefix=/opt/csw
+
+LD_OPTIONS="-R/opt/csw/lib/64 -L/opt/csw/lib/64 -z defs -lc -lcurses" CC="cc -fast -xtarget=ultra -xarch=v9" gmake
+
+gmake prefix=$BASE/build-$HOST/readline-$VERSION/cswstage/opt/csw install
+LD_OPTIONS="-R/opt/csw/lib/64 -L/opt/csw/lib/64 -z defs -lc -lcurses" CC="cc -fast -xtarget=ultra -xarch=v9" gmake shared
+gmake prefix=$BASE/build-$HOST/readline-$VERSION/cswstage/opt/csw install-shared
+
+cd cswstage/opt/csw/lib
+mkdir sparcv9
+mv *.so* *.a* sparcv9/
+
+
+
+# Now, build the 32-bit version
+
+cd ../../../../
+gmake distclean
+
+LD_OPTIONS="-R/opt/csw/lib -L/opt/csw/lib -z defs -lc -lcurses" CC="cc -fast -xarch=v8" ./configure --prefix=/opt/csw
+LD_OPTIONS="-R/opt/csw/lib -L/opt/csw/lib -z defs -lc -lcurses" CC="cc -fast -xarch=v8" gmake
+gmake prefix=$BASE/build-$HOST/readline-$VERSION/cswstage/opt/csw install
+LD_OPTIONS="-R/opt/csw/lib -L/opt/csw/lib -z defs -lc -lcurses" CC="cc -fast -xarch=v8" gmake shared
+gmake prefix=$BASE/build-$HOST/readline-$VERSION/cswstage/opt/csw install-shared
+
+
+echo "Waiting for input - do any additional stuff now..."
+read input
+
+# Clean up according to CSW standards
+cd cswstage/opt/csw
+[ ! -d share ] && mkdir share
+for dir in man doc info; do
+  [ -d $dir ] && mv $dir share/ && ln -s share/$dir $dir
+done
+
+
+cd ../../
+
+# Bug in the makefiles...
+find . -name '*.old' -exec rm {} +
+
+pkgproto . | sed "s/e opt/e \/opt/" | sed "s/mark csw/root bin/" > prototype.full
+echo "i pkginfo" > prototype.tmp
+echo "i copyright" >> prototype.tmp
+cat prototype.full >> prototype.tmp
+rm prototype.full
+
+cat prototype.tmp | sed "/info\/dir 0644/d" | sed "/info=share/d" | sed "/man=share/d" | sed "/doc=share/d" | sed "/opt 0755/d" | sed "/prototype.full/d" > prototype
+rm prototype.tmp
+
+
+for file in copyright pkginfo; do
+  cp /export/home/mark/pkgs/readline/$file .
+done
+
+createpkg -r . 
+
+mv *.gz /export/home/mark/pkgs/readline/ 
+
+echo "All done!"

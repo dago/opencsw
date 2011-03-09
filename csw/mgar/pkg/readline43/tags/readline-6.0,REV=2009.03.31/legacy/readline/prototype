@@ -1,0 +1,18 @@
+i pkginfo
+i copyright
+d none /opt/csw 0755 root bin
+d none /opt/csw/lib 0755 root bin
+f none /opt/csw/lib/libhistory.so.4 0644 root bin
+s none /opt/csw/lib/libhistory.so=libhistory.so.4
+f none /opt/csw/lib/libreadline.so.4 0644 root bin
+s none /opt/csw/lib/libreadline.so=libreadline.so.4
+d none /opt/csw/include 0755 root bin
+d none /opt/csw/include/readline 0755 root bin
+f none /opt/csw/include/readline/readline.h 0644 root bin
+f none /opt/csw/include/readline/chardefs.h 0644 root bin
+f none /opt/csw/include/readline/keymaps.h 0644 root bin
+f none /opt/csw/include/readline/history.h 0644 root bin
+f none /opt/csw/include/readline/tilde.h 0644 root bin
+f none /opt/csw/include/readline/rlstdc.h 0644 root bin
+f none /opt/csw/include/readline/rlconf.h 0644 root bin
+f none /opt/csw/include/readline/rltypedefs.h 0644 root bin
