@@ -165,6 +165,11 @@ CHECKPKG_OVERRIDES_CSWlibintl3 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibintl8 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibasprintf0 += surplus-dependency|CSWggettext-data
 
+CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibintl2
+CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibintl3
+CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibgettextlib0-14-1
+CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibgettextlib0-17
+
 ARCHALL_CSWggettextrt = 1
 ARCHALL_CSWggettext-data = 1
 ARCHALL_CSWggettextdoc = 1
