@@ -102,3 +102,7 @@ post-install-modulated:
 	(cd $(DESTDIR) && \
 		gln -s ../bin/gfile $(DESTDIR)$(prefix)/gnu/file)
 	@$(MAKECOOKIE)
+
+post-merge:
+	$(FILEDIR)/check_pkgroot.sh "$(PKGROOT)"
+	@$(MAKECOOKIE)
