@@ -38,7 +38,8 @@ PACKAGES += CSWpy-libmagic
 PKGFILES_CSWpy-libmagic += /opt/csw/lib/python.*
 SPKG_DESC_CSWpy-libmagic = Python extension for libmagic
 CATALOGNAME_CSWpy-libmagic = py_libmagic
-ARCHALL_CSWpy-libmagic = 1
+# py-libmagic should have a .so object in it, so it's architecture-specific.
+# ARCHALL_CSWpy-libmagic = 1
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-libmagic += CSWlibmagic1
 CHECKPKG_OVERRIDES_CSWpy-libmagic += surplus-dependency|CSWlibmagic1
