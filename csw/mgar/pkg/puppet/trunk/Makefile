@@ -68,7 +68,9 @@ INSTALL_SCRIPTS   = puppet
 # Not required. As soon as I've confirmed the downloaded version works well, I'll cut this fromt he Makefile.
 # PATCHFILES  = 0001-pkgutil-support.patch
 # PATCHFILES += 0002-Using-the-single-option-of-pkgutil.patch
-PATCHFILES += 0003-Use-opt-csw-share-puppet-modules-as-default.patch
+PATCHFILES = 0003-Use-opt-csw-share-puppet-modules-as-default.patch
+# https://projects.puppetlabs.com/issues/6324
+PATCHFILES += 0004-patch-to-smf-provider-6324.patch
 
 CHECKPKG_OVERRIDES_CSWpuppet       += surplus-dependency|CSWfacter
 CHECKPKG_OVERRIDES_CSWpuppet       += missing-dependency|CSWpython
