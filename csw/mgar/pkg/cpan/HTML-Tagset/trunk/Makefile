@@ -11,8 +11,11 @@ endef
 
 DISTFILES = COPYING
 
-PACKAGES = CSWpmhtmltagset
-CATALOGNAME = pm_htmltagset
+PACKAGES = CSWpm-html-tagset
+CATALOGNAME = pm_html_tagset
+SPKG_DESC_CSWpm-html-tagset = $(DESCRIPTION)
+OBSOLETES_CSWpm-html-tagset = CSWpmhtmltagset
+CATALOGNAME_CSWpmhtmltagset = pm_htmltagset
 
 # CONFIGURE_ARGS = -n
 
