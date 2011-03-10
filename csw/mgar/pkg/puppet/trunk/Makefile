@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.6.4
+VERSION = 2.6.6
 CATEGORIES = apps
 
 define BLURB
@@ -26,6 +26,9 @@ DISTFILES += cswpuppetd
 DISTFILES += cswpuppetmasterd
 DISTFILES += cswusergroup
 DISTFILES += CSWpuppet.postinstall
+# pkgutil.rb is from https://github.com/gw42/puppet/blob/tickets%2Fmaster%2F4258-dev/lib/puppet/provider/package/pkgutil.rb
+# Dom Cleal of RedHat has advised this is a good working version
+DISTFILES += pkgutil.rb
 SPKG_SOURCEURL = http://puppetlabs.com/
 
 INITSMF += $(sysconfdir)/init\.d/cswpuppetd
@@ -53,16 +56,18 @@ PKGFILES_CSWpuppetmaster += $(sysconfdir)/puppet/auth.conf
 
 ARCHALL = 1
 
-sysconfdir    = /etc$(prefix)
-localstatedir = /var$(prefix)
+sysconfdir     = /etc$(prefix)
+localstatedir  = /var$(prefix)
+rubysitelibdir = $(shell ruby -rrbconfig -e "puts Config::CONFIG['sitelibdir']")
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
-PATCHFILES  = 0001-pkgutil-support.patch
-PATCHFILES += 0002-Using-the-single-option-of-pkgutil.patch
+# Not required. As soon as I've confirmed the downloaded version works well, I'll cut this fromt he Makefile.
+# PATCHFILES  = 0001-pkgutil-support.patch
+# PATCHFILES += 0002-Using-the-single-option-of-pkgutil.patch
 PATCHFILES += 0003-Use-opt-csw-share-puppet-modules-as-default.patch
 
 CHECKPKG_OVERRIDES_CSWpuppet       += surplus-dependency|CSWfacter
@@ -92,6 +97,7 @@ install-puppet:
 		--bindir=$(bindir) \
 		--sbindir=$(sbindir) \
 		--full
+	ginstall -m 755 $(FILEDIR)/pkgutil.rb $(DESTDIR)$(rubysitelibdir)/puppet/provider/package
 	cd $(DESTDIR)$(mandir)/man8 && gunzip *
 	(cd $(WORKSRC)/examples/etc/puppet && \
 	for f in *; do \
