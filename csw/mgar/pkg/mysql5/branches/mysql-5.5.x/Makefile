@@ -3,9 +3,9 @@
 # $Id$
 
 PROJ_NAME = mysql
-NAME = $(PROJ_NAME)51
-BASE_VERSION = 5.1
-PATCHLEVEL = 49
+NAME = $(PROJ_NAME)55
+BASE_VERSION = 5.5
+PATCHLEVEL = 9
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
@@ -39,10 +39,10 @@ PACKAGES += CSW$(NAME)devel
 PACKAGES += CSW$(NAME)rt
 PACKAGES += CSW$(NAME)test
 
-PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
-PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
-PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
-PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
+#PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
+#PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
+#PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
+#PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
 
 SPKG_DESC_CSW$(NAME)       = Multithreaded SQL database
 SPKG_DESC_CSW$(NAME)bench  = MySQL $(BASE_VERSION) benchmarking
@@ -162,6 +162,8 @@ EXTRA_LIB = /opt/csw/lib
 # # prototype.
 # EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 # EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+
+# TBD: MySQL 5.5 uses CMake :-(
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)

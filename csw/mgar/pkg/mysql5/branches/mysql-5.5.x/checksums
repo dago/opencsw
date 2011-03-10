@@ -1,12 +1,1 @@
-8940e0673e599689932e94fec906aec9  0001-Use-libc-not-libcrypt.patch
-1414d06fab1530484a508927a0de4154  0002-cast-user_info-pw_gid-to-gid_t.patch
-5415f365f1b0f7a179d1efc25f45bbee  0003-OpenCSW-perl-for-tests.patch
-0cea0d771ff324ccdd31de4b6311b12f  0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
-a1008df3aee0528449eb18f39bc21603  CSWmysql51.postinstall
-fe58fe0af20a51143893495b56964682  CSWmysql51.preinstall
-e691b0cf00a3925ac55c1844045d6e30  ChangeLog
-59f9d5aa04d8e8d3806bec666d01e096  README.CSW
-22a8164a101fa7e4be35fd6aa674d272  cswmysql51
-e3000190fef8aa4cfbd527bb5e40d9a6  cswusergroup
-a90d87a71fa3c23dff6d78afc8e3184c  mysql-5.1.49.tar.gz
-028a9f9167edee23d2e946239af5a2fb  quick_start-csw
+701c0c44b7f1c2300adc0dc45729f903  mysql-5.5.9.tar.gz
