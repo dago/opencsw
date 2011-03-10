@@ -59,7 +59,7 @@ endif
 
 include gar/category.mk
 
-PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
+PATH := ~/bin:/opt/csw/gnu:/opt/csw/bin:$(PATH)
 
 post-install-modulated:
 	@echo Cleaning up install directory...
