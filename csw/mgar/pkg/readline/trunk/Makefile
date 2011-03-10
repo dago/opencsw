@@ -22,13 +22,13 @@ VENDOR_URL = http://tiswww.case.edu/php/chet/readline/rltop.html
 FOREIGN_PACKAGES += CSWlibhistory4
 OBSOLETES_CSWlibhistory4 = CSWreadline
 FOREIGN_PACKAGES += CSWlibreadline4
-OBSOLETES_CSWlibhreadline4 = CSWreadline
+OBSOLETES_CSWlibreadline4 = CSWreadline
 
 # From pkg/readline52
 FOREIGN_PACKAGES += CSWlibhistory5
 OBSOLETES_CSWlibhistory5 = CSWreadline
 FOREIGN_PACKAGES += CSWlibreadline5
-OBSOLETES_CSWlibhreadline5 = CSWreadline
+OBSOLETES_CSWlibreadline5 = CSWreadline
 
 PACKAGES += CSWlibhistory6
 CATALOGNAME_CSWlibhistory6 = libhistory6
@@ -44,7 +44,7 @@ CATALOGNAME_CSWlibreadline6 = libreadline6
 SPKG_DESC_CSWlibreadline6 = GNU readline library, libreadline.so.6
 PKGFILES_CSWlibreadline6 = $(call pkgfiles_lib,libreadline.so.6)
 RUNTIME_DEP_PKGS_CSWlibreadline6 += CSWncurses
-OBSOLETES_CSWlibhreadline6 = CSWreadline
+OBSOLETES_CSWlibreadline6 = CSWreadline
 
 PACKAGES += CSWlibreadline-dev
 CATALOGNAME_CSWlibreadline-dev = libreadline_dev
