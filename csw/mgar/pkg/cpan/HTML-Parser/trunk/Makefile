@@ -19,9 +19,7 @@ SPKG_DESC_CSWpm-html-parser = $(DESCRIPTION)
 OBSOLETES_CSWpm-html-parser = CSWpmhtmlparser
 CATALOGNAME_CSWpmhtmlparser = pm_htmlparser
 
-RUNTIME_DEP_PKGS = CSWpm-html-tagset
-
-CHECKPKG_OVERRIDES_CSWpm-html-parser += unidentified-dependency|CSWpm-html-tagset
+RUNTIME_DEP_PKGS = CSWpmhtmltagset
 
 CONFIGURE_ARGS = -n
 
