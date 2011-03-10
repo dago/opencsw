@@ -32,9 +32,9 @@ getprop() {
 
 start_puppetd() {
     cd /
-    confdir=`getprop puppet/confdir`
-    vardir=`getprop puppet/vardir`
-    ssldir=`getprop puppet/ssldir`
+    #confdir=`getprop puppet/confdir`
+    #vardir=`getprop puppet/vardir`
+    #ssldir=`getprop puppet/ssldir`
     
     # Start daemons.
     #${sbindir}/puppetd --confdir=$confdir --vardir=$vardir --ssldir=$ssldir
