@@ -1,9 +1,6 @@
 NAME = readline
-VERSION = 6.1
+VERSION = 6.2
 CATEGORIES = lib
-
-EXTRA_MODULATORS = VERSION
-MODULATIONS_VERSION = 4.3 5.2 6.1
 
 DESCRIPTION = GNU readline
 define BLURB
@@ -16,20 +13,47 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(foreach V,$(MODULATIONS_VERSION),$(NAME)-$(V).tar.gz)
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+PATCHFILES += patch-history.3.diff
 
-PATCHFILES_isa-sparcv8-garversion-6.1 = patch-history.3.diff
-PATCHFILES_isa-sparcv9-garversion-6.1 = patch-history.3.diff
-PATCHFILES_isa-i386-garversion-6.1 = patch-history.3.diff
-PATCHFILES_isa-amd64-garversion-6.1 = patch-history.3.diff
+VENDOR_URL = http://tiswww.case.edu/php/chet/readline/rltop.html
 
-RUNTIME_DEP_PKGS = CSWncurses
+# From pkg/readline43
+FOREIGN_PACKAGES += CSWlibhistory4
+OBSOLETES_CSWlibhistory4 = CSWreadline
+FOREIGN_PACKAGES += CSWlibreadline4
+OBSOLETES_CSWlibhreadline4 = CSWreadline
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+# From pkg/readline52
+FOREIGN_PACKAGES += CSWlibhistory5
+OBSOLETES_CSWlibhistory5 = CSWreadline
+FOREIGN_PACKAGES += CSWlibreadline5
+OBSOLETES_CSWlibhreadline5 = CSWreadline
+
+PACKAGES += CSWlibhistory6
+CATALOGNAME_CSWlibhistory6 = libhistory6
+SPKG_DESC_CSWlibhistory6 = GNU readline library, libhistory.so.6
+PKGFILES_CSWlibhistory6 = $(call pkgfiles_lib,libhistory.so.6)
+# This dependency is not really necessary, just because we unconditionally add
+# "-lncurses" to LDFLAGS as this does not happen automatically.
+RUNTIME_DEP_PKGS_CSWlibhistory6 += CSWncurses
+OBSOLETES_CSWlibhistory6 = CSWreadline
+
+PACKAGES += CSWlibreadline6
+CATALOGNAME_CSWlibreadline6 = libreadline6
+SPKG_DESC_CSWlibreadline6 = GNU readline library, libreadline.so.6
+PKGFILES_CSWlibreadline6 = $(call pkgfiles_lib,libreadline.so.6)
+RUNTIME_DEP_PKGS_CSWlibreadline6 += CSWncurses
+OBSOLETES_CSWlibhreadline6 = CSWreadline
+
+PACKAGES += CSWlibreadline-dev
+CATALOGNAME_CSWlibreadline-dev = libreadline_dev
+SPKG_DESC_CSWlibreadline-dev = GNU readline development files
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibreadline-dev += CSWlibhistory6
+RUNTIME_DEP_PKGS_CSWlibreadline-dev += CSWlibreadline6
 
 BUILD64 = 1
-
 NORUNPATH = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -37,26 +61,11 @@ CONFIGURE_ARGS += --with-curses
 
 TEST_TARGET = check
 
-MERGE_SCRIPTS_isa-default-garversion-4.3 = copy-only
-MERGE_DIRS_isa-default-garversion-4.3 = $(libdir)
-MERGE_SCRIPTS_isa-default64-garversion-4.3 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-4.3 = $(libdir)
-
-MERGE_SCRIPTS_isa-default-garversion-5.2 = copy-only
-MERGE_DIRS_isa-default-garversion-5.2 = $(libdir)
-MERGE_SCRIPTS_isa-default64-garversion-5.2 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-5.2 = $(libdir)
-
-MERGE_SCRIPTS_isa-default-garversion-6.1 = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-6.1 = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-6.1 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
-
-SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/readline/rltop.html
-
 include gar/category.mk
 
-post-install:
-	@chmod 555 $(DESTDIR)$(libdir)/libhistory.*
-	@chmod 555 $(DESTDIR)$(libdir)/libreadline.*
+post-install-modulated:
+	perl -pi -e 's,/usr/local/lib,$(libdir),' \
+		$(DESTDIR)/opt/csw/share/readline/rl-fgets.c
+	@$(MAKECOOKIE)
 
 LDFLAGS := $(filter-out -xarch=%,$(filter-out -m%,$(LDFLAGS))) -R$(libdir) -lncurses
