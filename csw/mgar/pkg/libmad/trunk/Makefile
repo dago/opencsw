@@ -17,11 +17,22 @@ DISTFILES += mad-32.pc mad-64.pc
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-SPKG_SOURCEURL = http://www.underbit.com/products/mad/
+VENDOR_URL = http://www.underbit.com/products/mad/
 
-CONFIGURE_ARGS  = $(DIRPATHS)
+PACKAGES += CSWlibmad0
+CATALOGNAME_CSWlibmad0 = libmad0
+SPKG_DESC_CSWlibmad0 = MPEG audio decoder library, libmad.so.0
+PKGFILES_CSWlibmad0 += $(call pkgfiles_lib,libmad.so.0)
+OBSOLETES_CSWlibmad0 = CSWlibmad
+
+PACKAGES += CSWlibmad-dev
+CATALOGNAME_CSWlibmad-dev = libmad_dev
+SPKG_DESC_CSWlibmad-dev = Development files for libmad.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibmad-dev = CSWlibmad0
 
 BUILD64 = 1
+CONFIGURE_ARGS  = $(DIRPATHS)
 
 TEST_TARGET = check
 
