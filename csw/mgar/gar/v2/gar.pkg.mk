@@ -700,6 +700,7 @@ reset-merge-license:
 
 merge-README.CSW: $(WORKDIR)
 	$(_DBG)if test -f $(WORKDIR)/README.CSW; then \
+		$(foreach P,$(_PKG_SPECS),mkdir -p $(PKGROOT)$(docdir)/$(call catalogname,$P);) \
 		$(foreach P,$(_PKG_SPECS),cp $(WORKDIR)/README.CSW $(PKGROOT)$(docdir)/$(call catalogname,$P)/README.CSW;) \
 	fi
 	@$(MAKECOOKIE)
