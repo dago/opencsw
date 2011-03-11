@@ -2,7 +2,7 @@
 # svn co -r 9999 https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 gar
 
 NAME = pkgutil
-VERSION = 2.4b1
+VERSION = 2.4b2
 GARVERSION = $(VERSION)
 CATEGORIES = utils
 
