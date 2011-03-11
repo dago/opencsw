@@ -299,7 +299,11 @@ class FileMagic(object):
     magic_cookie = magic.open(self.cookie_count)
     self.cookie_count += 1
     magic_cookie.load()
-    magic_cookie.setflags(magic.MAGIC_MIME)
+    if "MAGIC_MIME" in dir(magic):
+      flag = magic.MAGIC_MIME
+    elif "MIME" in dir(magic):
+      flag = magic.MIME
+    magic_cookie.setflags(flag)
     return magic_cookie
 
   def _LazyInit(self):
