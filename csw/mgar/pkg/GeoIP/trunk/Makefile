@@ -10,28 +10,27 @@ endef
 MASTER_SITES = http://geolite.maxmind.com/download/geoip/api/c/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES = CSWgeoip CSWgeoipdevel
-RUNTIME_DEP_PKGS_CSWgeoip = CSWgeolitedb CSWzlib CSWgcc3corert
-RUNTIME_DEP_PKGS_CSWgeoipdevel = CSWgeoip
+PACKAGES += CSWgeoip
 CATALOGNAME_CSWgeoip = geoip
-CATALOGNAME_CSWgeoipdevel = geoip_devel
 SPKG_DESC_CSWgeoip = $(DESCRIPTION)
-SPKG_DESC_CSWgeoipdevel = GeoIP C API development support
+RUNTIME_DEP_PKGS_CSWgeoip = CSWgeolitedb CSWzlib CSWgcc3corert
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWgeoip-dev
+CATALOGNAME_CSWgeoip-dev = geoip_dev
+SPKG_DESC_CSWgeoip-dev = GeoIP C API development support
+RUNTIME_DEP_PKGS_CSWgeoip-dev = CSWgeoip
 
 GARCOMPILER = GCC4
 TEST_TARGET = check
 
-PKGFILES_CSWgeoipdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWgeoip-dev = $(PKGFILES_DEVEL)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*GeoIP.dat$
 
 # Do not exclude static libs (needed for devel package)
 MERGE_EXCLUDE_STATICLIBS =
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
 
 include gar/category.mk
