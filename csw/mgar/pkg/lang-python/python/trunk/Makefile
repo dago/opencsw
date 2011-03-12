@@ -35,8 +35,6 @@ UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
 # Patches
 PATCHFILES += faqwiz.diff
 PATCHFILES += makesetup.diff
@@ -91,22 +89,23 @@ PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }
 
 PACKAGES  = CSWidle$(CVER)
 PACKAGES += CSWpython$(CVER)
-PACKAGES += CSWpython$(CVER)-devel
+PACKAGES += CSWpython$(CVER)-dev
 PACKAGES += CSWpython$(CVER)-test
 PACKAGES += CSWpython$(CVER)-tk
 PACKAGES += CSWlibpython$(DVER)-1-0
 
 INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
+OBSOLETES_CSWpython$(CVER)-dev = CSWpython$(CVER)-devel
 
 PKGFILES_CSWidle$(CVER)  = $(libdir)/.*/idlelib/.*
 PKGFILES_CSWidle$(CVER) += $(bindir)/idle
-PKGFILES_CSWpython$(CVER)-devel  = $(includedir)/.*
-PKGFILES_CSWpython$(CVER)-devel += $(libdir)/.*/config/.*
-PKGFILES_CSWpython$(CVER)-devel += $(bindir)/.*config.*
-PKGFILES_CSWpython-devel += $(libdir)/libpython$(VER).so
+PKGFILES_CSWpython$(CVER)-dev  = $(includedir)/.*
+PKGFILES_CSWpython$(CVER)-dev += $(libdir)/.*/config/.*
+PKGFILES_CSWpython$(CVER)-dev += $(bindir)/.*config.*
+PKGFILES_CSWpython$(CVER)-dev += $(libdir)/libpython$(VER).so
 # No idea why would this be in CSWpython, and no good idea for a better package
 # to put it.
-PKGFILES_CSWpython$(CVER)-devel += $(bindir)/smtpd.py
+PKGFILES_CSWpython$(CVER)-dev += $(bindir)/smtpd.py
 PKGFILES_CSWpython$(CVER)-tk  = $(libdir)/.*/lib-tk/.*
 PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
 PKGFILES_CSWpython$(CVER)-test  = $(libdir)/python/test/.*
@@ -135,8 +134,8 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWosslrt
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWreadline 
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWsqlite3rt
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWzlib
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-devel += CSWlibpython$(DVER)-1-0
-RUNTIME_DEP_PKGS_CSWpython$(CVER)-devel += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-test  += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
@@ -156,14 +155,14 @@ CHECKPKG_OVERRIDES_CSWpython-test += file-with-bad-content
 
 CATALOGNAME_CSWidle$(CVER)         = idle
 CATALOGNAME_CSWpython$(CVER)       = python
-CATALOGNAME_CSWpython$(CVER)-devel = python$(CVER)_devel
+CATALOGNAME_CSWpython$(CVER)-dev = python$(CVER)_devel
 CATALOGNAME_CSWpython$(CVER)-tk    = python$(CVER)_tk
 CATALOGNAME_CSWpython$(CVER)-test  = python$(CVER)_test
 CATALOGNAME_CSWlibpython$(DVER)-1-0  = libpython$(UVER)_1_0
 
 SPKG_DESC_CSWidle$(CVER)         = Python IDE
 SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
-SPKG_DESC_CSWpython$(CVER)-devel = Development Files for Python
+SPKG_DESC_CSWpython$(CVER)-dev = Development Files for Python
 SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
 SPKG_DESC_CSWpython$(CVER)-test  = Python Test modules
 SPKG_DESC_CSWlibpython$(DVER)-1-0  = Python shared library ($(VER))
@@ -175,8 +174,8 @@ CHECKPKG_OVERRIDES_CSWidle$(CVER)         += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWidle$(CVER)         += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
@@ -189,6 +188,7 @@ post-configure-modulated:
 			Makefile \
 			Makefile.pre \
 			Lib/idlelib/EditorWindow.py \
+			Lib/pydoc_topics.py \
 			Lib/idlelib/config-main.def \
 			; do \
 		gsed -i -e 's+/usr/local+/opt/csw+g' $(WORKSRC)/$${f}; \
