@@ -20,29 +20,24 @@ MASTER_SITES = http://www.clamav.net/internal/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 #DISTFILES  = $(NAME)-devel-latest.tar.gz
 
-PACKAGES = CSWclamav CSWlibclam6 CSWlibclam6-devel
-
+PACKAGES += CSWclamav
 CATALOGNAME_CSWclamav = clamav
 SPKG_DESC_CSWclamav = $(DESCRIPTION)
-
-CATALOGNAME_CSWlibclam6 = libclam6
-SPKG_DESC_CSWlibclam6 = $(DESCRIPTION) Library
-
-CATALOGNAME_CSWlibclam6-devel = libclam6_devel
-SPKG_DESC_CSWlibclam6-devel = $(DESCRIPTION) Development
-
 RUNTIME_DEP_PKGS_CSWclamav = CSWlibclam6 CSWzlib CSWbzip2 CSWiconv CSWncurses
 RUNTIME_DEP_PKGS_CSWclamav += CSWlibltdl7
 
+PACKAGES += CSWlibclam6
+CATALOGNAME_CSWlibclam6 = libclam6
+SPKG_DESC_CSWlibclam6 = $(DESCRIPTION) Library
 RUNTIME_DEP_PKGS_CSWlibclam6 = CSWzlib CSWbzip2 CSWiconv
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibltdl7
 INCOMPATIBLE_PKGS_CSWlibclam6 = CSWlibclamav
 
-RUNTIME_DEP_PKGS_CSWlibclam6-devel = CSWlibclam6
-INCOMPATIBLE_PKGS_CSWlibclam6-devel = CSWlibclamav-devel
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWlibclam6-dev
+CATALOGNAME_CSWlibclam6-dev = libclam6_dev
+SPKG_DESC_CSWlibclam6-dev = $(DESCRIPTION) Development
+RUNTIME_DEP_PKGS_CSWlibclam6-dev = CSWlibclam6
+INCOMPATIBLE_PKGS_CSWlibclam6-dev = CSWlibclamav-devel
 
 PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
@@ -75,29 +70,29 @@ CONFIGURE_ARGS += --enable-clamdtop
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
-PKGFILES_CSWlibclam6-devel = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibclam6  = $(PKGFILES_RT)
-PKGFILES_CSWlibclam6 += $(docdir)/libclamav/.*
+PKGFILES_CSWlibclam6-dev = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibclam6     = $(PKGFILES_RT)
+PKGFILES_CSWlibclam6    += $(docdir)/libclamav/.*
 
 PROTOTYPE_MODIFIERS = 1
-PROTOTYPE_FILES_1 = \/var\/opt\/csw\/clamav.*
-PROTOTYPE_CLASS_1 = ugfiles
-PROTOTYPE_USER_1 = clamav
+PROTOTYPE_FILES_1   = \/var\/opt\/csw\/clamav.*
+PROTOTYPE_CLASS_1   = ugfiles
+PROTOTYPE_USER_1    = clamav
 
-INITSMF  = /etc/opt/csw/init.d/cswclamd
-INITSMF += /etc/opt/csw/init.d/cswclamav-milter
+INITSMF     = /etc/opt/csw/init.d/cswclamd
+INITSMF    += /etc/opt/csw/init.d/cswclamav-milter
 SAMPLECONF  = /etc/opt/csw/clamd.conf
 SAMPLECONF += /etc/opt/csw/clamav-milter.conf
 SAMPLECONF += /etc/opt/csw/freshclam.conf
-USERGROUP = /etc/opt/csw/pkg/CSWclamav/cswusergroup
+USERGROUP   = /etc/opt/csw/pkg/CSWclamav/cswusergroup
 
-MIGRATE_FILES_CSWclamav = clamd.conf clamav-milter.conf freshclam.conf
+MIGRATE_FILES_CSWclamav      = clamd.conf clamav-milter.conf freshclam.conf
 MIGRATE_SOURCE_DIR_CSWclamav = /opt/csw/etc
-MIGRATE_DEST_DIR_CSWclamav = /etc/opt/csw
+MIGRATE_DEST_DIR_CSWclamav   = /etc/opt/csw
 
 SPKG_SOURCEURL = http://www.clamav.net
 
-SKIPTEST = 1
+#SKIPTEST = 1
 TEST_TARGET = check
 
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/etc/opt/csw/clamd.conf.CSW
