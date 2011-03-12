@@ -1,0 +1,25 @@
+From 3df52cf4b79e361ce963afb88fa4df8d6bbddcd7 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 6 Feb 2011 00:39:32 +0100
+Subject: [PATCH] OpenCSW-specific libffi include dir
+
+---
+ setup.py |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 86f112a..c6f9d5b 100644
+--- a/setup.py
++++ b/setup.py
+@@ -358,6 +358,8 @@ class PyBuildExt(build_ext):
+         # Ensure that /opt/csw is always used
+         add_dir_to_list(self.compiler.library_dirs, '/opt/csw/lib')
+         add_dir_to_list(self.compiler.include_dirs, '/opt/csw/include')
++        # OpenCSW-specific include dir for libffi.
++        add_dir_to_list(self.compiler.include_dirs, '/opt/csw/lib/libffi-3.0.8/include')
+ 
+         # Add paths specified in the environment variables LDFLAGS and
+         # CPPFLAGS for header and library files.
+-- 
+1.7.3.2
+
