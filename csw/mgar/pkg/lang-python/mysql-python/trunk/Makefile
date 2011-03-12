@@ -1,8 +1,9 @@
-NAME = MySQL-python
-VERSION = 1.2.2
-CATEGORIES = lang
+# $Id$
 
-DESCRIPTION = MySQL support for Python
+NAME = MySQL-python
+VERSION = 1.2.3
+CATEGORIES = python
+
 define BLURB
   MySQL support for Python
 endef
@@ -11,34 +12,23 @@ SF_PROJ = $(call TOLOWER,$(NAME))
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES = CSWpymysql
-RUNTIME_DEP_PKGS_CSWpymysql = CSWmysql5rt CSWpython-rt CSWosslrt CSWzlib
+PACKAGES = CSWpy-mysql
+CATALOGNAME_CSWpy-mysql = py_mysql
+RUNTIME_DEP_PKGS_CSWpy-mysql += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-mysql += CSWzlib
+RUNTIME_DEP_PKGS_CSWpy-mysql += CSWlibmysqlclient-r15
+
+SPKG_DESC_CSWpy-mysql = MySQL Support for Python
+
+OBSOLETES_CSWpy-mysql = CSWpymysql
 CATALOGNAME_CSWpymysql = pymysql
-SPKG_DESC = MySQL Support for Python
 
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*)
+mysql_prefix = $(prefix)/mysql5
+mysql_bindir = $(mysql_prefix)/bin/$(ISA_DEFAULT_$(GARCH))
 
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc 
-PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES = none cswpycompile
-RUNTIME_DEP_PKGS += CSWcswclassutils
-
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = $(WORKSRC)/setup.py
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = $(WORKSRC)/setup.py
-
-INSTALL_ARGS  = --root=$(DESTDIR)
-INSTALL_ARGS += --prefix=$(prefix)
+CHECKPKG_OVERRIDES_CSWpymysql += surplus-dependency|CSWpython
 
 include gar/category.mk
 
-mysql_prefix = $(prefix)/mysql5
-mysql_bindir = $(mysql_prefix)/bin
-
-EXTRA_LD_OPTIONS = -R/opt/csw/mysql5/lib/mysql/\$$ISALIST
 PATH       := $(mysql_bindir):$(PATH)
 export PATH 
-
