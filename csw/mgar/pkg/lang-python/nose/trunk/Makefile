@@ -1,5 +1,7 @@
+# $Id$
+
 NAME = nose
-VERSION = 0.11.2
+VERSION = 0.11.3
 CATEGORIES = python
 
 DESCRIPTION = Nose extends unittest to make testing easier
@@ -11,16 +13,14 @@ define BLURB
   other common use cases.
 endef
 
-MASTER_SITES = http://somethingaboutorange.com/mrl/projects/$(NAME)/
+SPKG_SOURCEURL = http://code.google.com/p/python-nose/
+GOOGLE_PROJECT = python-nose
+MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES = CSWpy-nose
 CATALOGNAME = py_nose
 SPKG_DESC = $(DESCRIPTION)
-
-EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS =
 # tests fail because some multiprocessing module doesn't like Solaris sem_open
@@ -31,4 +31,9 @@ ARCHALL = 1
 
 include gar/category.mk
 
-INSTALL_ARGS += --install-data=$(prefix)/share
+post-install-modulated:
+	ginstall -d -m 755 $(DESTDIR)$(datadir)/man/man1
+	gmv -v $(DESTDIR)$(prefix)/man/man1/nosetests.1 $(DESTDIR)$(datadir)/man/man1
+	grmdir -v $(DESTDIR)$(prefix)/man/man1
+	grmdir -v $(DESTDIR)$(prefix)/man
+	@$(MAKECOOKIE)
