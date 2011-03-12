@@ -157,7 +157,7 @@ CHECKPKG_OVERRIDES_CSWpython-test += file-with-bad-content
 
 CATALOGNAME_CSWidle$(CVER)         = idle
 CATALOGNAME_CSWpython$(CVER)       = python
-CATALOGNAME_CSWpython$(CVER)-dev = python$(CVER)_devel
+CATALOGNAME_CSWpython$(CVER)-dev = python$(CVER)_dev
 CATALOGNAME_CSWpython$(CVER)-tk    = python$(CVER)_tk
 CATALOGNAME_CSWpython$(CVER)-test  = python$(CVER)_test
 CATALOGNAME_CSWlibpython$(DVER)-1-0  = libpython$(UVER)_1_0
