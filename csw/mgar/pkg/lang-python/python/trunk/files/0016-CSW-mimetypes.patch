@@ -1,0 +1,30 @@
+From ca1537af5fa31adaae862911f508abfe12083c3b Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 6 Feb 2011 17:51:16 +0100
+Subject: [PATCH] CSW mimetypes
+
+---
+ Lib/mimetypes.py |    7 +++----
+ 1 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/Lib/mimetypes.py b/Lib/mimetypes.py
+index f0a5ecf..f9f31cc 100644
+--- a/Lib/mimetypes.py
++++ b/Lib/mimetypes.py
+@@ -37,10 +37,9 @@ knownfiles = [
+     "/etc/httpd/conf/mime.types",               # Apache
+     "/etc/apache/mime.types",                   # Apache 1
+     "/etc/apache2/mime.types",                  # Apache 2
+-    "/usr/local/etc/httpd/conf/mime.types",
+-    "/usr/local/lib/netscape/mime.types",
+-    "/usr/local/etc/httpd/conf/mime.types",     # Apache 1.2
+-    "/usr/local/etc/mime.types",                # Apache 1.3
++    "/opt/csw/apache2/etc/mime.types",          # .CSW CSWapache2c, CSWapache2
++    "/etc/opt/csw/nginx/mime.types",            # .CSW CSWnginx
++    "/etc/opt/csw/mime.types",                  # .CSW CSWmutt-base
+     ]
+ 
+ inited = False
+-- 
+1.7.3.2
+

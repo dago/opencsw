@@ -1,0 +1,25 @@
+From 212f5d4caf3a89b375688e907b42d833cd8b1a8c Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 6 Feb 2011 17:56:46 +0100
+Subject: [PATCH 18/18] Removing /usr/local from mailcap
+
+---
+ Lib/mailcap.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Lib/mailcap.py b/Lib/mailcap.py
+index b2ddacd..299ea35 100644
+--- a/Lib/mailcap.py
++++ b/Lib/mailcap.py
+@@ -44,7 +44,7 @@ def listmailcapfiles():
+             # Don't bother with getpwuid()
+             home = '.' # Last resort
+         mailcaps = [home + '/.mailcap', '/etc/mailcap',
+-                '/usr/etc/mailcap', '/usr/local/etc/mailcap']
++                '/usr/etc/mailcap']
+     return mailcaps
+ 
+ 
+-- 
+1.7.3.2
+

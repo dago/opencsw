@@ -1,0 +1,30 @@
+From aa2f27e4f0ccee85cad628807e4ae86f050eb32a Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 6 Feb 2011 11:28:12 +0100
+Subject: [PATCH] Use /opt/csw/bin/python in cgi.py
+
+---
+ Lib/cgi.py |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Lib/cgi.py b/Lib/cgi.py
+index db10a62..ec4c702 100755
+--- a/Lib/cgi.py
++++ b/Lib/cgi.py
+@@ -1,9 +1,9 @@
+-#! /usr/local/bin/python
++#! /opt/csw/bin/python
+ 
+-# NOTE: the above "/usr/local/bin/python" is NOT a mistake.  It is
++# NOTE: the above "/opt/csw/bin/python" is NOT a mistake.  It is
+ # intentionally NOT "/usr/bin/env python".  On many systems
+-# (e.g. Solaris), /usr/local/bin is not in $PATH as passed to CGI
+-# scripts, and /usr/local/bin is the default directory where Python is
++# (e.g. Solaris), /opt/csw/bin is not in $PATH as passed to CGI
++# scripts, and /opt/csw/bin is the default directory where Python is
+ # installed, so /usr/bin/env would be unable to find python.  Granted,
+ # binary installations by Linux vendors often install Python in
+ # /usr/bin.  So let those vendors patch cgi.py to match their choice
+-- 
+1.7.3.2
+

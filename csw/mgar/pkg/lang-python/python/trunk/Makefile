@@ -3,6 +3,11 @@
 NAME = Python
 VERSION = 2.6.6
 CATEGORIES = lang
+VER = 2.6
+DVER = 2-6
+UVER = 2_6
+PVER = python$(VER)
+CVER =
 
 # Known issues:
 #
@@ -30,7 +35,6 @@ UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
-# We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Patches
@@ -43,12 +47,28 @@ PATCHFILES += site.diff
 PATCHFILES += python-config-in.diff
 PATCHFILES += setup.diff
 PATCHFILES += 0001-FFI_DEFAULT_ABI-to-use-__i386.patch
+# PATCHFILES += 0010-Hardcoding-the-use-of-libffi.patch
+# PATCHFILES += 0011-OpenCSW-specific-libffi-include-dir.patch
+# PATCHFILES += 0012-temporary-hack-to-compile-against-system-ffi.patch
+PATCHFILES += 0013-Use-opt-csw-bin-python-in-cgi.py.patch
+PATCHFILES += 0015-Adding-opt-csw-lib-to-dyld.py.patch
+PATCHFILES += 0016-CSW-mimetypes.patch
+PATCHFILES += 0017-Random-insignificant-removals-of-usr-local.patch
+PATCHFILES += 0018-Removing-usr-local-from-mailcap.patch
 
 # Test for sunaudiodev fails.
 SKIPTEST = 1
 
 EXTRA_INC += $(prefix)/bdb47/include
 EXTRA_LIB += $(prefix)/bdb47/lib
+
+# There is a file name conflict over libffi.so symlink between libffi package
+# and a gcc-java package.  While it will ultimately belong to libffi_dev, the
+# symlink is currently under a subdirectory.
+# pkgchk -L CSWlibffi-dev
+# (...)
+# /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
+EXTRA_LIB += $(libdir)/ffi
 
 BASECFLAGS = $(CFLAGS)
 EXTRA_COMMON_EXPORTS = BASECFLAGS
@@ -69,92 +89,109 @@ EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
 # use prototype filters to set the class 
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
-PACKAGES  = CSWidle
-PACKAGES += CSWpython
-PACKAGES += CSWpython-devel
-PACKAGES += CSWpython-test
-PACKAGES += CSWpython-tk
-PACKAGES += CSWlibpython2-6-1-0
+PACKAGES  = CSWidle$(CVER)
+PACKAGES += CSWpython$(CVER)
+PACKAGES += CSWpython$(CVER)-devel
+PACKAGES += CSWpython$(CVER)-test
+PACKAGES += CSWpython$(CVER)-tk
+PACKAGES += CSWlibpython$(DVER)-1-0
 
-INCOMPATIBLE_PKGS_CSWpython = CSWpydistutils
+INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
 
-PKGFILES_CSWidle  = $(libdir)/.*/idlelib/.*
-PKGFILES_CSWidle += $(bindir)/idle
-PKGFILES_CSWpython-devel  = $(includedir)/.*
-PKGFILES_CSWpython-devel += $(libdir)/.*/config/.*
-PKGFILES_CSWpython-devel += $(bindir)/.*config.*
-PKGFILES_CSWpython-devel += $(libdir)/libpython2.6.so
+PKGFILES_CSWidle$(CVER)  = $(libdir)/.*/idlelib/.*
+PKGFILES_CSWidle$(CVER) += $(bindir)/idle
+PKGFILES_CSWpython$(CVER)-devel  = $(includedir)/.*
+PKGFILES_CSWpython$(CVER)-devel += $(libdir)/.*/config/.*
+PKGFILES_CSWpython$(CVER)-devel += $(bindir)/.*config.*
+PKGFILES_CSWpython-devel += $(libdir)/libpython$(VER).so
 # No idea why would this be in CSWpython, and no good idea for a better package
 # to put it.
-PKGFILES_CSWpython-devel += $(bindir)/smtpd.py
-PKGFILES_CSWpython-tk  = $(libdir)/.*/lib-tk/.*
-PKGFILES_CSWpython-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
-PKGFILES_CSWpython-test  = $(libdir)/python/test/.*
-PKGFILES_CSWpython-test += $(libdir)/python/bsddb/test.*
-PKGFILES_CSWpython-test += $(libdir)/python/ctypes/test.*
-PKGFILES_CSWpython-test += $(libdir)/python/email/test.*
-PKGFILES_CSWpython-test += $(libdir)/python/distutils/tests.*
-PKGFILES_CSWpython-test += $(libdir)/python/json/tests.*
-PKGFILES_CSWpython-test += $(libdir)/python/lib2to3/tests.*
-PKGFILES_CSWpython-test += $(libdir)/python/sqlite3/test.*
-PKGFILES_CSWlibpython2-6-1-0 += $(libdir)/libpython2\.6\.so\..*
+PKGFILES_CSWpython$(CVER)-devel += $(bindir)/smtpd.py
+PKGFILES_CSWpython$(CVER)-tk  = $(libdir)/.*/lib-tk/.*
+PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
+PKGFILES_CSWpython$(CVER)-test  = $(libdir)/python/test/.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/bsddb/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/ctypes/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/email/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/distutils/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/json/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/lib2to3/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/sqlite3/test.*
+PKGFILES_CSWlibpython$(DVER)-1-0 += $(libdir)/libpython$(VER)\.so\.[0-9\.]+
 
-ARCHALL_CSWpython-test = 1
-ARCHALL_CSWidle        = 1
+ARCHALL_CSWpython$(CVER)-test = 1
+ARCHALL_CSWidle$(CVER)        = 1
 
-RUNTIME_DEP_PKGS_CSWidle         += CSWpython
-RUNTIME_DEP_PKGS_CSWidle         += CSWpython-tk
-RUNTIME_DEP_PKGS_CSWpython       += CSWbdb47
-RUNTIME_DEP_PKGS_CSWpython       += CSWbzip2
-RUNTIME_DEP_PKGS_CSWpython       += CSWgdbm
-RUNTIME_DEP_PKGS_CSWpython       += CSWggettextrt 
-RUNTIME_DEP_PKGS_CSWpython       += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWpython       += CSWncurses
-RUNTIME_DEP_PKGS_CSWpython       += CSWosslrt
-RUNTIME_DEP_PKGS_CSWpython       += CSWreadline 
-RUNTIME_DEP_PKGS_CSWpython       += CSWsqlite3rt
-RUNTIME_DEP_PKGS_CSWpython       += CSWzlib
-RUNTIME_DEP_PKGS_CSWpython-tk    += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWpython-tk    += CSWpython
-RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtcl
-RUNTIME_DEP_PKGS_CSWpython-tk    += CSWtk 
-RUNTIME_DEP_PKGS_CSWpython-devel += CSWpython
-RUNTIME_DEP_PKGS_CSWpython-test  += CSWpython
+RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)-tk
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbdb47
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbzip2
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgdbm3
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWncurses
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWreadline 
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWzlib
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-devel += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-devel += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-test  += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtcl
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtk 
 
 # There are packages depending on libpython2.5, and listing CSWpython as the
 # dependency.
 RUNTIME_DEP_PKGS_CSWpython               += CSWlibpython2-5-1-0
+CHECKPKG_OVERRIDES_CSWpython       += surplus-dependency|CSWlibpython2-5-1-0
 
 # This could be handled by automatic dependency detection
-CHECKPKG_OVERRIDES_CSWidle += surplus-dependency|CSWpython-tk
+CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
 
-CATALOGNAME_CSWidle         = idle
-CATALOGNAME_CSWpython       = python
-CATALOGNAME_CSWpython-devel = python_devel
-CATALOGNAME_CSWpython-tk    = python_tk
-CATALOGNAME_CSWpython-test  = python_test
-CATALOGNAME_CSWlibpython2-6-1-0  = libpython2_6_1_0
+# This package is not meant to be released
+CHECKPKG_OVERRIDES_CSWpython-test += file-with-bad-content
 
-SPKG_DESC_CSWidle              = Python IDE
-SPKG_DESC_CSWpython            = A high-level scripting language.
-SPKG_DESC_CSWpython-devel      = Development Files for Python
-SPKG_DESC_CSWpython-tk         = Python Tk Interface (TkInter)
-SPKG_DESC_CSWpython-test       = Python Test modules
-SPKG_DESC_CSWlibpython2-6-1-0  = Python shared library (2.6)
+CATALOGNAME_CSWidle$(CVER)         = idle
+CATALOGNAME_CSWpython$(CVER)       = python
+CATALOGNAME_CSWpython$(CVER)-devel = python$(CVER)_devel
+CATALOGNAME_CSWpython$(CVER)-tk    = python$(CVER)_tk
+CATALOGNAME_CSWpython$(CVER)-test  = python$(CVER)_test
+CATALOGNAME_CSWlibpython$(DVER)-1-0  = libpython$(UVER)_1_0
+
+SPKG_DESC_CSWidle$(CVER)         = Python IDE
+SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
+SPKG_DESC_CSWpython$(CVER)-devel = Development Files for Python
+SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
+SPKG_DESC_CSWpython$(CVER)-test  = Python Test modules
+SPKG_DESC_CSWlibpython$(DVER)-1-0  = Python shared library ($(VER))
 
 LICENSE = LICENSE
 
 # This is an exception, since these are original Python packages.
-CHECKPKG_OVERRIDES_CSWpython-test  += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython-test  += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython-tk    += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython-tk    += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWidle         += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWidle         += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython-devel += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython-devel += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython       += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython       += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython       += surplus-dependency|CSWlibpython2-5-1-0
+CHECKPKG_OVERRIDES_CSWidle$(CVER)         += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWidle$(CVER)         += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-devel += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-not-start-with-py_
 
 include gar/category.mk
+
+post-configure-modulated:
+	for f in Modules/Setup \
+			Makefile \
+			Makefile.pre \
+			Lib/idlelib/EditorWindow.py \
+			Lib/idlelib/config-main.def \
+			; do \
+		gsed -i -e 's+/usr/local+/opt/csw+g' $(WORKSRC)/$${f}; \
+		gsed -i -e 's+/usr/share+/opt/csw/share+g' $(WORKSRC)/$${f}; \
+	done
+	@$(MAKECOOKIE)
