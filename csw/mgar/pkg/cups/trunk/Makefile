@@ -169,29 +169,33 @@ RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcupsimage2
 
 PACKAGES += CSWcupsdoc
+CHECKPKG_OVERRIDES_CSWcupsdoc += file-with-bad-content
 
 # Devel package
-PACKAGES += CSWcups-devel
-SPKG_DESC_CSWcups-devel    = CUPS header files
-CATALOGNAME_CSWcups-devel = cups_devel
-PKGFILES_CSWcups-devel  = $(includedir)/cups/?.*
-PKGFILES_CSWcups-devel += $(mandir)/man1/cups-config.1
-PKGFILES_CSWcups-devel += $(bindir)/cups-config
-PKGFILES_CSWcups-devel += $(datadir)/cups/ppdc.*
-PKGFILES_CSWcups-devel += $(datadir)/cups/drv.*
-PKGFILES_CSWcups-devel += $(libdir)/libcups.so
-PKGFILES_CSWcups-devel += $(libdir)/libcupscgi.so
-PKGFILES_CSWcups-devel += $(libdir)/libcupsdriver.so
-PKGFILES_CSWcups-devel += $(libdir)/libcupsimage.so
-PKGFILES_CSWcups-devel += $(libdir)/libcupsmime.so
-PKGFILES_CSWcups-devel += $(libdir)/libcupsppdc.so
+PACKAGES += CSWcups-dev
+SPKG_DESC_CSWcups-dev    = CUPS header files
+CATALOGNAME_CSWcups-dev = cups_dev
+PKGFILES_CSWcups-dev  = $(includedir)/cups/?.*
+PKGFILES_CSWcups-dev += $(mandir)/man1/cups-config.1
+PKGFILES_CSWcups-dev += $(bindir)/cups-config
+PKGFILES_CSWcups-dev += $(datadir)/cups/ppdc.*
+PKGFILES_CSWcups-dev += $(datadir)/cups/drv.*
+PKGFILES_CSWcups-dev += $(libdir)/libcups.so
+PKGFILES_CSWcups-dev += $(libdir)/libcupscgi.so
+PKGFILES_CSWcups-dev += $(libdir)/libcupsdriver.so
+PKGFILES_CSWcups-dev += $(libdir)/libcupsimage.so
+PKGFILES_CSWcups-dev += $(libdir)/libcupsmime.so
+PKGFILES_CSWcups-dev += $(libdir)/libcupsppdc.so
 # The development package needs all the libraries
-RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcupsppdc1
-RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcupsdriver1
-RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcupsmime1
-RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcupsimage2
-RUNTIME_DEP_PKGS_CSWcups-devel += CSWlibcupscgi1
+RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupsppdc1
+RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupsdriver1
+RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupsmime1
+RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupsimage2
+RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupscgi1
+
+OBSOLETES_CSWcups-dev += CSWcups-devel
+OBSOLETES_CSWcups-dev += CSWcupsdev
 
 # Former devel package
 PACKAGES += CSWcupsdev
