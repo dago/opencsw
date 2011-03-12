@@ -21,15 +21,15 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 LICENSE = LICENSE
 
-PACKAGES = CSWdhcp CSWdhcpdevel
-
+PACKAGES += CSWdhcp
 RUNTIME_DEP_PKGS_CSWdhcp = CSWosslrt
 SPKG_DESC_CSWdhcp = ISC DHCP reference implementation
 
-RUNTIME_DEP_PKGS_CSWdhcpdevel = CSWdhcp
-SPKG_DESC_CSWdhcpdevel = ISC DHCP development package
-CATALOGNAME_CSWdhcpdevel = dhcp_devel
-ARCHALL_CSWdhcpdevel = 1
+PACKAGES += CSWdhcp-dev
+RUNTIME_DEP_PKGS_CSWdhcp-dev = CSWdhcp
+SPKG_DESC_CSWdhcp-dev = ISC DHCP development package
+CATALOGNAME_CSWdhcp-dev = dhcp_dev
+ARCHALL_CSWdhcp-dev = 1
 
 UFILES_REGEX = ($(NAME)-\d+(?:\.\d+)*).tar.gz
 
@@ -42,18 +42,20 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw/dhcp
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
-PKGFILES_CSWdhcpdevel = $(PKGFILES_DEVEL)
+PKGFILES_CSWdhcp-dev = $(PKGFILES_DEVEL)
 
 #ENABLE_CHECK = 0
 
 INSTALL_SCRIPTS = custom
 
-INITSMF = /etc/opt/csw/init.d/cswdhcpd
-SAMPLECONF = /etc/opt/csw/dhcpd.conf /etc/opt/csw/dhclient.conf /var/opt/csw/dhcp/db/dhcpd.leases
+INITSMF     = /etc/opt/csw/init.d/cswdhcpd
+SAMPLECONF  = /etc/opt/csw/dhcpd.conf
+SAMPLECONF += /etc/opt/csw/dhclient.conf
+SAMPLECONF += /var/opt/csw/dhcp/db/dhcpd.leases
 
 SPKG_SOURCEURL = https://www.isc.org/software/dhcp
 
-CHECKPKG_OVERRIDES_CSWdhcpdevel += archall-devel-package
+CHECKPKG_OVERRIDES_CSWdhcp-dev += archall-devel-package
 
 include gar/category.mk
 
