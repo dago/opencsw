@@ -142,6 +142,8 @@ RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtcl
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtk 
 
+BUILD_DEP_PKGS += CSWlibffi-dev
+
 # There are packages depending on libpython2.5, and listing CSWpython as the
 # dependency.
 RUNTIME_DEP_PKGS_CSWpython               += CSWlibpython2-5-1-0
