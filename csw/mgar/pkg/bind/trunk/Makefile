@@ -30,30 +30,33 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
-PACKAGES = CSWbind CSWbinddevel CSWlibbind CSWbindutils CSWbindchroot
-
-CATALOGNAME_CSWbinddevel = bind_devel
-CATALOGNAME_CSWbindutils = bind_utils
-CATALOGNAME_CSWbindchroot = bind_chroot
-
-ARCHALL_CSWbindchroot = 1
-
 LICENSE = COPYRIGHT
 
+PACKAGES = CSWbind
+CATALOGNAME_CSWbind = bind
 SPKG_DESC_CSWbind = ISC BIND DNS main package
-SPKG_DESC_CSWbinddevel = ISC BIND DNS development package
-SPKG_DESC_CSWlibbind = ISC BIND DNS library package
-SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
-SPKG_DESC_CSWbindchroot = ISC BIND DNS chroot package
-
 RUNTIME_DEP_PKGS_CSWbind = CSWlibbind CSWbindutils CSWiconv CSWlibxml2 CSWosslrt CSWzlib
-RUNTIME_DEP_PKGS_CSWbinddevel = CSWbind CSWlibbind
-RUNTIME_DEP_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
-RUNTIME_DEP_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt CSWzlib
-RUNTIME_DEP_PKGS_CSWbindchroot = CSWbind
 
-UPSTREAM_MASTER_SITES = http://ftp.isc.org/isc/bind9/
-UFILES_REGEX = (\d+(?:\.\d+)*)
+PACKAGES = CSWbind-dev
+CATALOGNAME_CSWbind-dev = bind_dev
+SPKG_DESC_CSWbind-dev = ISC BIND DNS development package
+RUNTIME_DEP_PKGS_CSWbind-dev = CSWbind CSWlibbind
+
+PACKAGES = CSWlibbind
+CATALOGNAME_CSWlibbind = libbind
+SPKG_DESC_CSWlibbind = ISC BIND DNS library package
+RUNTIME_DEP_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
+
+PACKAGES = CSWbindutils
+CATALOGNAME_CSWbindutils = bind_utils
+SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
+RUNTIME_DEP_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt CSWzlib
+
+PACKAGES = CSWbindchroot
+CATALOGNAME_CSWbindchroot = bind_chroot
+SPKG_DESC_CSWbindchroot = ISC BIND DNS chroot package
+RUNTIME_DEP_PKGS_CSWbindchroot = CSWbind
+ARCHALL_CSWbindchroot = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libtool
@@ -65,25 +68,25 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw/named
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
-PKGFILES_CSWbinddevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWbinddevel += .*\.so
-PKGFILES_CSWlibbind = .*\.so\..*
-PKGFILES_CSWbindutils = $(bindir)/.*
+PKGFILES_CSWbind-dev   = $(PKGFILES_DEVEL)
+PKGFILES_CSWbind-dev  += .*\.so
+PKGFILES_CSWlibbind    = .*\.so\..*
+PKGFILES_CSWbindutils  = $(bindir)/.*
 PKGFILES_CSWbindchroot = .*chroot.*
 
 INSTALL_SCRIPTS = custom
 
 PROTOTYPE_MODIFIERS = 1
-PROTOTYPE_FILES_1 = /var/opt/csw/named.*
-PROTOTYPE_CLASS_1 = ugfiles
-PROTOTYPE_USER_1 = named
-PROTOTYPE_GROUP_1 = named
+PROTOTYPE_FILES_1   = /var/opt/csw/named.*
+PROTOTYPE_CLASS_1   = ugfiles
+PROTOTYPE_USER_1    = named
+PROTOTYPE_GROUP_1   = named
 
-INITSMF = /etc/opt/csw/init.d/cswnamed
+INITSMF     = /etc/opt/csw/init.d/cswnamed
 SAMPLECONF  = /etc/opt/csw/named.conf
 SAMPLECONF += /etc/opt/csw/bind.keys
 SAMPLECONF += /etc/opt/csw/pkg/CSWbind/bind
-USERGROUP = /etc/opt/csw/pkg/CSWbind/cswusergroup
+USERGROUP   = /etc/opt/csw/pkg/CSWbind/cswusergroup
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
 
@@ -91,7 +94,7 @@ CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
 CHECKPKG_OVERRIDES_CSWlibbind += non-uniform-lib-versions-in-package|sonames=libbind9.so.60,libdns.so.69,libisc.so.62,libisccc.so.60,libisccfg.so.62,liblwres.so.60
 CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
 CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CSWbindutils|catalogname=bind_utils|expected-catalogname=bindutils
-CHECKPKG_OVERRIDES_CSWbinddevel += catalogname-does-not-match-pkgname|pkgname=CSWbinddevel|catalogname=bind_devel|expected-catalogname=binddevel
+CHECKPKG_OVERRIDES_CSWbind-dev += catalogname-does-not-match-pkgname|pkgname=CSWbinddevel|catalogname=bind_dev|expected-catalogname=binddev
 
 include gar/category.mk
 
