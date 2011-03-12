@@ -1,0 +1,71 @@
+From d698357000bbfba7443cab845a6aa426658c2bac Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 12 Mar 2011 15:22:48 +0100
+Subject: [PATCH] Apply proposed upstream patch to fix a *utimens gnulib bug
+
+This patch changes the the use of some *futimens definitions to use
+the rpl_ prefix to avoid cyclic function calls on solaris 10.
+
+This patch was imported from:
+http://www.mail-archive.com/bug-gnulib@gnu.org/msg21995.html
+
+It addresses Mantis ID 4671.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ lib/sys_stat.in.h |   16 ++++++++++++++--
+ 1 files changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/lib/sys_stat.in.h b/lib/sys_stat.in.h
+index f175bcb..89d9c08 100644
+--- a/lib/sys_stat.in.h
++++ b/lib/sys_stat.in.h
+@@ -357,7 +357,11 @@ _GL_WARN_ON_USE (fstatat, "fstatat is not portable - "
+ 
+ 
+ #if @GNULIB_FUTIMENS@
+-# if @REPLACE_FUTIMENS@
++/* Use the rpl_ prefix also on Solaris <= 9, because on Solaris 9 our
++   futimens implementation relies on futimesat, which on Solaris 10
++   makes an invocation to futimens that is meant to invoke the libc's
++   futimens(), not gnulib's futimens().  */
++# if @REPLACE_FUTIMENS@ || defined __sun
+ #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+ #   undef futimens
+ #   define futimens rpl_futimens
+@@ -370,7 +374,9 @@ _GL_FUNCDECL_SYS (futimens, int, (int fd, struct timespec const times[2]));
+ #  endif
+ _GL_CXXALIAS_SYS (futimens, int, (int fd, struct timespec const times[2]));
+ # endif
++# if @HAVE_FUTIMENS@
+ _GL_CXXALIASWARN (futimens);
++# endif
+ #elif defined GNULIB_POSIXCHECK
+ # undef futimens
+ # if HAVE_RAW_DECL_FUTIMENS
+@@ -611,7 +617,11 @@ _GL_WARN_ON_USE (stat, "stat is unportable - "
+ 
+ 
+ #if @GNULIB_UTIMENSAT@
+-# if @REPLACE_UTIMENSAT@
++/* Use the rpl_ prefix also on Solaris <= 9, because on Solaris 9 our
++   utimensat implementation relies on futimesat, which on Solaris 10
++   makes an invocation to utimensat that is meant to invoke the libc's
++   utimensat(), not gnulib's utimensat().  */
++# if @REPLACE_UTIMENSAT@ || defined __sun
+ #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+ #   undef utimensat
+ #   define utimensat rpl_utimensat
+@@ -630,7 +640,9 @@ _GL_FUNCDECL_SYS (utimensat, int, (int fd, char const *name,
+ _GL_CXXALIAS_SYS (utimensat, int, (int fd, char const *name,
+                                    struct timespec const times[2], int flag));
+ # endif
++# if @HAVE_UTIMENSAT@
+ _GL_CXXALIASWARN (utimensat);
++# endif
+ #elif defined GNULIB_POSIXCHECK
+ # undef utimensat
+ # if HAVE_RAW_DECL_UTIMENSAT
+-- 
+1.7.3.2
+
