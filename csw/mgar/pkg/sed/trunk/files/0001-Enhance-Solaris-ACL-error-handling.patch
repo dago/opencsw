@@ -1,0 +1,58 @@
+From 0f12f3e3f629d05ae8ca63d8e3820875e73be453 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sun, 13 Mar 2011 14:57:11 +0100
+Subject: [PATCH] Enhance Solaris ACL error handling
+
+Gracefully handle EOPNOTSUPP in qcopy_acl and qset_acl.  These
+functions, as used in coreutils, were causing the test suite to fail
+on Solaris 8 i386 with ZFS-backed NFSv3 mounts.  The failures included
+errors such as:
+
+gsed -i -e '/^##/d' Makefile
+gsed: preserving permissions for `./sedYtai3X': Operation not
+supported on transport endpoint
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ lib/copy-acl.c     |    4 ++--
+ lib/set-mode-acl.c |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/lib/copy-acl.c b/lib/copy-acl.c
+index af85a08..55999ec 100644
+--- a/lib/copy-acl.c
++++ b/lib/copy-acl.c
+@@ -253,7 +253,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
+ 
+       if (ace_count < 0)
+ 	{
+-	  if (errno == ENOSYS || errno == EINVAL)
++	  if (errno == ENOSYS || errno == EINVAL || errno == EOPNOTSUPP)
+ 	    {
+ 	      ace_count = 0;
+ 	      ace_entries = NULL;
+@@ -358,7 +358,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
+       if (ret < 0 && saved_errno == 0)
+ 	{
+ 	  saved_errno = errno;
+-	  if (errno == ENOSYS && !acl_nontrivial (count, entries))
++	  if ((errno == ENOSYS || errno == EOPNOTSUPP) && !acl_nontrivial (count, entries))
+ 	    saved_errno = 0;
+ 	}
+       else
+diff --git a/lib/set-mode-acl.c b/lib/set-mode-acl.c
+index a24b9f3..28c6d4e 100644
+--- a/lib/set-mode-acl.c
++++ b/lib/set-mode-acl.c
+@@ -387,7 +387,7 @@ qset_acl (char const *name, int desc, mode_t mode)
+       ret = acl (name, SETACL, sizeof (entries) / sizeof (aclent_t), entries);
+     if (ret < 0)
+       {
+-	if (errno == ENOSYS)
++	if (errno == ENOSYS || errno == EOPNOTSUPP)
+ 	  return chmod_or_fchmod (name, desc, mode);
+ 	return -1;
+       }
+-- 
+1.7.3.2
+
