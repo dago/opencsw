@@ -17,6 +17,9 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 PATCHFILES += 0001-Enhance-Solaris-ACL-error-handling.patch
 
+# the patch above is not stock, but fixes mantis id 4705
+VERSION_FLAG_PATCH = 1
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
