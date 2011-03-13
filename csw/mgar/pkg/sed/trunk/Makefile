@@ -27,7 +27,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # See http://markmail.org/message/7ki46iiok3ddu3sa
 GARCOMPILER = GNU
 
-RUNTIME_DEP_PKGS = CSWiconv
 RUNTIME_DEP_PKGS += CSWlibintl8
 
 # No special platform optimization 
