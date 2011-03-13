@@ -72,7 +72,7 @@ BUILD_DEP_PKGS += SUNWhea
 BUILD_DEP_PKGS += SUNWlibm
 BUILD_DEP_PKGS += SUNWslpu
 
-UFILES_REGEX = cups-(\d+(?:\.\d+)*)-source.tar.bz2
+EXTRA_CXXFLAGS += -norunpath
 
 # The main metapackage
 PACKAGES           += CSWcups
