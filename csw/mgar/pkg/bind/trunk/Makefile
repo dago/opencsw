@@ -2,7 +2,7 @@
 # owner/group for device files? (root:sys)
 
 NAME = bind
-VERSION = 9.7.3
+VERSION = 9.8.0
 CATEGORIES = net
 
 # Enable these for Px-releases
@@ -32,27 +32,27 @@ DISTFILES += CSWbindchroot.postinstall
 
 LICENSE = COPYRIGHT
 
-PACKAGES = CSWbind
+PACKAGES += CSWbind
 CATALOGNAME_CSWbind = bind
 SPKG_DESC_CSWbind = ISC BIND DNS main package
 RUNTIME_DEP_PKGS_CSWbind = CSWlibbind CSWbindutils CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 
-PACKAGES = CSWbind-dev
+PACKAGES += CSWbind-dev
 CATALOGNAME_CSWbind-dev = bind_dev
 SPKG_DESC_CSWbind-dev = ISC BIND DNS development package
 RUNTIME_DEP_PKGS_CSWbind-dev = CSWbind CSWlibbind
 
-PACKAGES = CSWlibbind
+PACKAGES += CSWlibbind
 CATALOGNAME_CSWlibbind = libbind
 SPKG_DESC_CSWlibbind = ISC BIND DNS library package
 RUNTIME_DEP_PKGS_CSWlibbind = CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 
-PACKAGES = CSWbindutils
+PACKAGES += CSWbindutils
 CATALOGNAME_CSWbindutils = bind_utils
 SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
 RUNTIME_DEP_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWlibxml2 CSWosslrt CSWzlib
 
-PACKAGES = CSWbindchroot
+PACKAGES += CSWbindchroot
 CATALOGNAME_CSWbindchroot = bind_chroot
 SPKG_DESC_CSWbindchroot = ISC BIND DNS chroot package
 RUNTIME_DEP_PKGS_CSWbindchroot = CSWbind
@@ -90,11 +90,13 @@ USERGROUP   = /etc/opt/csw/pkg/CSWbind/cswusergroup
 
 SPKG_SOURCEURL = http://www.isc.org/software/bind
 
+# Temporary override since package is being renamed
+CHECKPKG_OVERRIDES_CSWbind-dev += file-collision
+
 CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
-CHECKPKG_OVERRIDES_CSWlibbind += non-uniform-lib-versions-in-package|sonames=libbind9.so.60,libdns.so.69,libisc.so.62,libisccc.so.60,libisccfg.so.62,liblwres.so.60
-CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
+CHECKPKG_OVERRIDES_CSWlibbind += non-uniform-lib-versions-in-package|sonames=libbind9.so.80,libdns.so.81,libisc.so.81,libisccc.so.80,libisccfg.so.80,liblwres.so.80
 CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CSWbindutils|catalogname=bind_utils|expected-catalogname=bindutils
-CHECKPKG_OVERRIDES_CSWbind-dev += catalogname-does-not-match-pkgname|pkgname=CSWbinddevel|catalogname=bind_dev|expected-catalogname=binddev
+CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
 
 include gar/category.mk
 
