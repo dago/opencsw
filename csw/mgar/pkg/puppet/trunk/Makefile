@@ -29,6 +29,8 @@ DISTFILES += CSWpuppet.postinstall
 # pkgutil.rb is from https://github.com/gw42/puppet/blob/tickets%2Fmaster%2F4258-dev/lib/puppet/provider/package/pkgutil.rb
 # Dom Cleal of RedHat has advised this is a good working version
 DISTFILES += pkgutil.rb
+DISTFILES += README.CSW
+DISTFILES += puppet.conf.example-CSW
 SPKG_SOURCEURL = http://puppetlabs.com/
 
 INITSMF += $(sysconfdir)/init\.d/cswpuppetd
@@ -65,9 +67,6 @@ BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
-# Not required. As soon as I've confirmed the downloaded version works well, I'll cut this fromt he Makefile.
-# PATCHFILES  = 0001-pkgutil-support.patch
-# PATCHFILES += 0002-Using-the-single-option-of-pkgutil.patch
 PATCHFILES = 0003-Use-opt-csw-share-puppet-modules-as-default.patch
 # https://projects.puppetlabs.com/issues/6324
 PATCHFILES += 0004-patch-to-smf-provider-6324.patch
@@ -76,18 +75,26 @@ CHECKPKG_OVERRIDES_CSWpuppet       += surplus-dependency|CSWfacter
 CHECKPKG_OVERRIDES_CSWpuppet       += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWpuppet
 
-# CRONDIR = $(sysconfdir)/pkg/CSWpuppet/crontabs
-# CRONTABS = $(CRONDIR)/root
 CHECKPKG_OVERRIDES_CSWpuppet += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/cswpuppetd|class=none
 CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWruby
 # Puppet has hardcoded paths to look at for many OSes, many of which involve
 # /usr/share and /usr/local.
 CHECKPKG_OVERRIDES_CSWpuppet += file-with-bad-content
 
+# These two files are quite deliberate - without them users will not get
+# CSW behaviour. The README explains
+CHECKPKG_OVERRIDES_CSWpuppet += bad-location-of-file|file=/etc/puppet
+CHECKPKG_OVERRIDES_CSWpuppet += bad-location-of-file|file=/etc/puppet/README.CSW
+CHECKPKG_OVERRIDES_CSWpuppet += bad-location-of-file|file=/etc/puppet/puppet.conf.example-CSW
+
+
 include gar/category.mk
 
 install-puppet:
 	ginstall -m 755 -d $(DESTDIR)
+	ginstall -m 755 -d $(DESTDIR)/etc/puppet
+	ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)/etc/puppet/README.CSW
+	ginstall -m 644 $(FILEDIR)/puppet.conf.example-CSW $(DESTDIR)/etc/puppet/puppet.conf.example-CSW
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/puppet
 	ginstall -m 755 -d $(DESTDIR)$(localstatedir)/puppet/run
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
@@ -108,6 +115,8 @@ install-puppet:
 	        chmod 644 $(DESTDIR)$(sysconfdir)/puppet/$$f.example; \
 	    fi; \
 	done)
+	mv $(DESTDIR)$(sysconfdir)/puppet/auth.conf $(DESTDIR)$(sysconfdir)/puppet/auth.conf.example
+	ginstall -m 644 $(FILEDIR)/puppet.conf.example-CSW $(DESTDIR)$(sysconfdir)/puppet/puppet.conf.example
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/puppet
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/puppet/cswusergroup
