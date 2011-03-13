@@ -1,10 +1,10 @@
 NAME = dhcp
-VERSION = 4.2.0
-RELEASE = P2
-DISTVERSION = $(VERSION)-$(RELEASE)
-SPKG_VERSION = $(VERSION)$(RELEASE)
-DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+VERSION = 4.2.1
+#RELEASE = P2
+#DISTVERSION = $(VERSION)-$(RELEASE)
+#SPKG_VERSION = $(VERSION)$(RELEASE)
+#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
 DESCRIPTION = ISC DHCP reference implementation
@@ -29,9 +29,6 @@ PACKAGES += CSWdhcp-dev
 RUNTIME_DEP_PKGS_CSWdhcp-dev = CSWdhcp
 SPKG_DESC_CSWdhcp-dev = ISC DHCP development package
 CATALOGNAME_CSWdhcp-dev = dhcp_dev
-ARCHALL_CSWdhcp-dev = 1
-
-UFILES_REGEX = ($(NAME)-\d+(?:\.\d+)*).tar.gz
 
 GARCOMPILER = GNU
 TEST_TARGET = check
@@ -55,7 +52,8 @@ SAMPLECONF += /var/opt/csw/dhcp/db/dhcpd.leases
 
 SPKG_SOURCEURL = https://www.isc.org/software/dhcp
 
-CHECKPKG_OVERRIDES_CSWdhcp-dev += archall-devel-package
+CHECKPKG_OVERRIDES_CSWdhcp-dev += file-collision
+CHECKPKG_OVERRIDES_CSWdhcp += surplus-dependency|CSWosslrt
 
 include gar/category.mk
 
