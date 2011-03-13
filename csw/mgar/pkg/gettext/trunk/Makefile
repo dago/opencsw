@@ -192,7 +192,7 @@ PATCHFILES += 0002-Update-ltmain.sh-to-prevent-libtool-stripping-runpat.patch
 #This patch is not a simple 'make it compile' so we flag the feature
 #patch below
 PATCHFILES += 0003-Patch-around-thread-handling-differences-between-9-a.patch
-FLAG_PATCH = 1
+VERSION_FLAG_PATCH = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
