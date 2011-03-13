@@ -27,10 +27,10 @@ OBSOLETES_CSWruby18-mode-el = CSWrubymodeel
 
 ALTERNATIVES_CSWruby18 = ruby rbconfig18
 ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby18 10 $(bindir)/irb irb $(bindir)/irb18 $(bindir)/erb erb $(bindir)/erb18 $(bindir)/rdoc rdoc $(bindir)/rdoc18 $(bindir)/ri ri $(bindir)/ri18 $(bindir)/testrb testrb $(bindir)/testrb18 $(mandir)/man1/ruby.1 ruby.1 $(mandir)/man1/ruby18.1
-ALTERNATIVE_rbconfig18 += $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb rbconfig18 $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb.sun 5
+ALTERNATIVE_rbconfig18 = $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb rbconfig18 $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb.sun 5
 
-ALTERNATIVES_CSWruby18-gcc4 = rbconfig18
-ALTERNATIVE_rbconfig18 += $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb rbconfig18 $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb.gcc4 10
+ALTERNATIVES_CSWruby18-gcc4 = rbconfig18_gcc
+ALTERNATIVE_rbconfig18_gcc = $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb rbconfig18 $(libdir)/ruby/1.8/$(GARCH)-solaris2.9/rbconfig.rb.gcc4 10
 
 ARCHALL_CSWruby18-doc = 1
 ARCHALL_CSWruby18-mode = 1
