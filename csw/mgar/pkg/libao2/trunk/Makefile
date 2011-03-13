@@ -17,7 +17,10 @@ VENDOR_URL = http://www.xiph.org/ao/
 PACKAGES += CSWlibao2
 CATALOGNAME_CSWlibao2 = libao2
 SPKG_DESC_CSWlibao2 = Cross-platform audio library, libao.so.2
-PKGFILES_CSWlibao2 = $(call pkgfiles_lib,libao.so.2)
+PKGFILES_CSWlibao2 += $(call pkgfiles_lib,libao.so.2)
+# These are private libraries
+PKGFILES_CSWlibao2 += $(call baseisadirs,$(libdir),ao/.*)
+RUNTIME_DEP_PKGS_CSWlibao2 += CSWesound
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
