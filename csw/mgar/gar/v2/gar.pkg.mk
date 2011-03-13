@@ -63,7 +63,7 @@ define obsoleted_pkg
 CATALOGNAME_$(1) ?= $(call catalogname,$(1))
 # The length of the description has been limited to 100 characters,
 # the string is cut (no longer on word boundaries).
-SPKG_DESC_$(1) ?= $(shell echo Transitional package. Content moved to $(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETES_$P)),$P)) | perl -npe 's/(.{0,97}\s|\S{0,97})(.+)/$$1.../')
+SPKG_DESC_$(1) ?= $(shell echo Transitional package. Content moved to $(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETES_$P)),$P)) | perl -npe 's/(.{100}).+/substr($$1,96) . " ..."/e')
 RUNTIME_DEP_PKGS_$(1) = $(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETES_$P)),$P))
 PKGFILES_$(1) = NOFILES
 ARCHALL_$(1) = 1
