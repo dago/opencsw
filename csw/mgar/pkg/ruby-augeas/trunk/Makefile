@@ -1,26 +1,41 @@
-NAME = ruby-augeas
-VERSION = 0.3.0
-CATEGORIES = ruby
+NAME       = ruby-augeas
+VERSION    = 0.3.0
+CATEGORIES = lang
 
 DESCRIPTION = Augeas Ruby Bindings
 define BLURB
 endef
 
 MASTER_SITES = http://augeas.net/download/ruby/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tgz
+VENDOR_URL   = http://augeas.net
 
-VENDOR_URL = http://augeas.net
-
-PACKAGES = CSWrubyaugeas
+PACKAGES    = CSWrubyaugeas
 CATALOGNAME = ruby_augeas
-DEP_PKGS = CSWaugeas
-DEP_PKGS += CSWruby
 
-BUILD_DEP_PKGS = CSWrake
-TEST_SCRIPTS = 
-# TEST_TARGET = check
+PATCHFILES  = 0001-Does-this-fix-the-building-issues.patch
+
+RUNTIME_DEP_PKGS_CSWrubyaugeas   += CSWaugeas
+RUNTIME_DEP_PKGS_CSWrubyaugeas   += CSWruby
+CHECKPKG_OVERRIDES_CSWrubyaugeas += catalogname-does-not-match-pkgname|pkgname=CSWrubyaugeas|catalogname=ruby_augeas|expected-catalogname=rubyaugeas
+CHECKPKG_OVERRIDES_CSWrubyaugeas += missing-dependency|CSWlibruby1
+
+BUILD_DEP_PKGS    = CSWrake
+BUILD_SCRIPTS     =
+CONFIGURE_SCRIPTS =
+TEST_SCRIPTS      = 
+INSTALL_SCRIPTS   = ruby-augeas
+
+sitelibdir = $(shell ruby -rrbconfig -e "puts Config::CONFIG['sitelibdir']")
+sitearchdir = $(shell ruby -rrbconfig -e "puts Config::CONFIG['sitearchdir']")
 
 include gar/category.mk
 
 install-ruby-augeas:
-
+	ginstall -m 755 -d $(DESTDIR)
+	ginstall -m 755 -d $(DESTDIR)$(sitearchdir)
+	ginstall -m 755 -d $(DESTDIR)$(sitelibdir)
+	cd $(WORKSRC) && $(INSTALL_ENV) rake build
+	ginstall -m 755 $(WORKSRC)/lib/augeas.rb $(DESTDIR)$(sitelibdir)
+	ginstall -m 755 $(WORKSRC)/ext/augeas/_augeas.so $(DESTDIR)$(sitearchdir)
+	@$(MAKECOOKIE)
