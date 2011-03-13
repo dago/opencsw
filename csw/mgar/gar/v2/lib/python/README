@@ -12,6 +12,8 @@ Checks to implement:
    ('transitional', 'stub', 'legacy')
  - Dependency on CSWcas-initsmf + rc* files --> error
  - A package must not be incompatible with itself
+ - If a pkgmap entry has username or group outside the default list of users,
+   the file's class needs to be 'ugfiles'
 
 Checks implemented:
  - foo_bar != CSWfoo-bar -> error
