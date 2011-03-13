@@ -27,7 +27,7 @@ OBSOLETES_CSWlibaudiofile0 = CSWaudiofile
 PACKAGES += CSWlibaudiofile-utils
 CATALOGNAME_CSWlibaudiofile-utils = libaudiofile_utils
 SPKG_DESC_CSWlibaudiofile-utils = Utility programs from Silicon Graphics audio file library
-PKGFILES_CSWlibaudiofile-utils = $(call baseisadirs,$(bindir),.*)
+PKGFILES_CSWlibaudiofile-utils = $(call baseisadirs,$(bindir),sf.*)
 RUNTIME_DEP_PKGS_CSWlibaudiofile-utils += CSWlibaudiofile0
 OBSOLETES_CSWlibaudiofile-utils = CSWaudiofile
 
