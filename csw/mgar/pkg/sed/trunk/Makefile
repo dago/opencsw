@@ -14,7 +14,8 @@ endef
 SPKG_DESC_CSWgsed = $(DESCRIPTION)
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(NAME)-$(VERSION).tar.gz 
+DISTFILES = $(NAME)-$(VERSION).tar.gz
+PATCHFILES += 0001-Enhance-Solaris-ACL-error-handling.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
