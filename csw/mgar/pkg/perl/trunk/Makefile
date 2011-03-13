@@ -1,5 +1,5 @@
 NAME = perl
-VERSION = 5.10.1
+VERSION = 5.12.3
 CATEGORIES = lang
 
 DESCRIPTION = A high-level, general-purpose programming language
@@ -17,22 +17,24 @@ SPKG_SOURCEURL = http://www.cpan.org/src
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES = CSWperl CSWperldoc
-ARCHALL_CSWperldoc = 1
-RUNTIME_DEP_PKGS_CSWperl = CSWbdb48 CSWgdbm
-RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
+PACKAGES += CSWperl
+SPKG_DESC_CSWperl = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWperl = CSWbdb48 CSWlibgdbm3
 INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
 
-SPKG_DESC_CSWperl = $(DESCRIPTION)
+PACKAGES += CSWperldoc
 SPKG_DESC_CSWperldoc = Perl documentation
+RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
+ARCHALL_CSWperldoc = 1
 
 LICENSE = Copying
 
-PATCHFILES += 0001-change-inc-based-on-rhel5-patch.patch
+# Will need to fix this patch to make it apply to 5.12.3
+#PATCHFILES += 0001-change-inc-based-on-rhel5-patch.patch
 
+CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content|/usr/share
 CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWperl += surplus-dependency|CSWgdbm
-CHECKPKG_OVERRIDES_CSWperl += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/perl/5.10.1/auto/GDBM_File/GDBM_File.so
+##CHECKPKG_OVERRIDES_CSWperl += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/perl/5.10.1/auto/GDBM_File/GDBM_File.so
 
 # Core module updates
 # Not used at the moment, leave one as example
@@ -113,7 +115,7 @@ EXTRA_PKGFILES_EXCLUDED_CSWperldoc = .*\/perldiag.pod
 EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
 
 # Tests take a long time
-TEST_SCRIPTS =
+#TEST_SCRIPTS =
 
 # Make sure we don't include the path to the newly built perl as the
 # library is not in place yet.
@@ -124,14 +126,15 @@ MERGE_EXCLUDE_STATICLIBS =
 
 # Splitting of a separate libperl.so requires more work and careful planning.
 # Override for now.
-CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.10.1|soname=libperl.so.5.10.1|pkgname=CSWperl|expected=CSWlibperl5-10-1
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch|file=opt/csw/lib/libperl.so.5.12.3|soname=libperl.so.5.12.3|pkgname=CSWperl|expected=CSWlibperl5-12-3
 CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
 
 include gar/category.mk
 
 post-extract-modulated:
 	mkdir -p $(WORKSRC)
-	gln -s libperl.so.5.10.1 $(WORKSRC)/libperl.so
+	gln -s libperl.so.5.12.3 $(WORKSRC)/libperl.so
 	@$(MAKECOOKIE)
 
 ifneq ($(CORE_UPDATES),)
