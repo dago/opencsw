@@ -43,10 +43,6 @@ SHELL = /bin/bash
 EXTRA_MERGE_EXCLUDE_FILES = $(sharedstatedir)/.*locale.alias
 EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/charset.alias
 
-# this shouldn't be required, but until I know why checkpkg isn't happy,
-# i'll put it here so I can get this going...
-CHECKPKG_OVERRIDES_CSWgsed += surplus-dependency|CSWiconv
-
 include gar/category.mk
 
 # Make sure we are using gnu tools (esp. sed)
