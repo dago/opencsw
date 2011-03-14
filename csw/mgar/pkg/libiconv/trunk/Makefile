@@ -22,17 +22,10 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Package naming is a bit unfortunate CSWiconv vs. libiconv :/ but
-# that's not something i want to change right now. CSWiconv has
-# heaps of dependents.
-#PACKAGES = CSWiconv
-#CATALOGNAME_CSWiconv = libiconv
-
 PACKAGES += CSWlibiconv2
 CATALOGNAME_CSWlibiconv2 = libiconv2
 SPKG_DESC_CSWlibiconv2 = GNU iconv library, libiconv.so.2
 PKGFILES_CSWlibiconv2 += $(call pkgfiles_lib,libiconv.so.2)
-PKGFILES_CSWlibiconv2 += $(libdir)/preloadable_libiconv.so
 
 PACKAGES += CSWlibcharset1
 CATALOGNAME_CSWlibcharset1 = libcharset1
@@ -42,13 +35,27 @@ PKGFILES_CSWlibcharset1 += $(call pkgfiles_lib,libcharset.so.1)
 CHECKPKG_OVERRIDES_CSWlibcharset1 += disallowed-path|opt/csw/lib/charset.alias
 PKGFILES_CSWlibcharset1 += $(libdir)/charset.alias
 
+PACKAGES += CSWlibiconv-dev
+CATALOGNAME_CSWlibiconv-dev = libiconv_dev
+SPKG_DESC_CSWlibiconv-dev = Development files for libiconv.so.2
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibiconv-dev += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibiconv-dev += CSWlibcharset1
+# This is from an example in a comment
+CHECKPKG_OVERRIDES_CSWlibiconv-dev += file-with-bad-content|/usr/local|root/opt/csw/include/iconv.h
+
 PACKAGES += CSWlibiconv-utils
 CATALOGNAME_CSWlibiconv-utils = libiconv_utils
 SPKG_DESC_CSWlibiconv-utils = GNU iconv utility programs
 PKGFILES_CSWlibiconv-utils += $(bindir)/.*
 PKGFILES_CSWlibiconv-utils += .*iconv\.1.*
+PKGFILES_CSWlibiconv-utils += $(call baseisadirs,$(libdir),preloadable_libiconv\.so)
+# The SONAME of preloadable_libiconv.so is set to libiconv.so.0, although it doesn't
+# matter in any way as this library is only used for LD_PRELOAD and is never being
+# linked against during compile time.
+CHECKPKG_OVERRIDES_CSWlibiconv-utils += soname-not-part-of-filename|soname=libiconv.so.0|filename=preloadable_libiconv.so
+CHECKPKG_OVERRIDES_CSWlibiconv-utils += shared-lib-pkgname-mismatch|sonames=libiconv.so.0|pkgname=CSWlibiconv-utils|expected=CSWlibiconv0|
 RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibcharset1
 OBSOLETES_CSWlibiconv-utils = CSWiconv
 
 NOISAEXEC = 1
@@ -90,4 +97,10 @@ post-install-modulated:
 	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 	ginstall -D $(WORKSRC)/srcm4/iconv.m4 \
 		$(DESTDIR)$(datadir)/aclocal/iconv.m4
+	@$(MAKECOOKIE)
+
+post-merge:
+	@# Make the 64 bit charset-alias the same as the one for 32 bit
+	rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/charset.alias
+	gln -s ../charset.alias $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/charset.alias
 	@$(MAKECOOKIE)
