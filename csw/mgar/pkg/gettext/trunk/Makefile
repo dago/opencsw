@@ -163,6 +163,7 @@ CHECKPKG_OVERRIDES_CSWlibgettextlib0-14-1 += soname-equals-filename|file=/opt/cs
 CHECKPKG_OVERRIDES_CSWlibgettextlib0-17 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextlib-0.17.so
 CHECKPKG_OVERRIDES_CSWlibgettextlib0-17 += soname-equals-filename|file=/opt/csw/lib/libgettextlib-0.17.so
 CHECKPKG_OVERRIDES_CSWlibgettextsrc0-17 += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libgettextsrc-0.17.so
+CHECKPKG_OVERRIDES_CSWlibgettextsrc0-17 += soname-equals-filename|file=/opt/csw/lib/libgettextsrc-0.17.so
 CHECKPKG_OVERRIDES_CSWlibgettextpo0 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibgettextsrc0-18-1 += surplus-dependency|CSWggettext-data
 CHECKPKG_OVERRIDES_CSWlibgettextlib0-18-1 += surplus-dependency|CSWggettext-data
