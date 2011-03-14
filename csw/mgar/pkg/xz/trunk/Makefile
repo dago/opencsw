@@ -20,7 +20,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES += CSWxz
 CATALOGNAME_CSWxz = xz
 SPKG_DESC_CSWxz = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWxz += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWxz += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWxz += CSWliblzma5
 
 PACKAGES += CSWlzma
