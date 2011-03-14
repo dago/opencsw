@@ -1,0 +1,25 @@
+From f67593e5e96dfc0becb3dc3a2272f4b3cabc4e13 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 14 Mar 2011 08:07:09 +0100
+Subject: [PATCH] libffi.pc should point at /opt/csw/include
+
+---
+ libffi.pc.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/libffi.pc.in b/libffi.pc.in
+index c2e1c7b..5f0e9db 100644
+--- a/libffi.pc.in
++++ b/libffi.pc.in
+@@ -1,7 +1,7 @@
+ prefix=@prefix@
+ exec_prefix=@exec_prefix@
+ libdir=@libdir@
+-includedir=${libdir}/@PACKAGE_NAME@-@PACKAGE_VERSION@/include
++includedir=${libdir}/include
+ 
+ Name: @PACKAGE_NAME@
+ Description: Library supporting Foreign Function Interfaces
+-- 
+1.7.3.2
+
