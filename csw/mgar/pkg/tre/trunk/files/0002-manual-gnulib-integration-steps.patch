@@ -1,0 +1,42 @@
+From b21553bc4d82a184224ea90bb4c7aa6e5370fe03 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 14 Mar 2011 22:36:28 +0100
+Subject: [PATCH 2/2] manual gnulib integration steps
+
+---
+ configure.ac    |    2 ++
+ src/Makefile.am |    2 +-
+ 2 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 20d486d..600671c 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -9,9 +9,11 @@ AM_GNU_GETTEXT_VERSION(0.17)
+ 
+ dnl Checks for programs.
+ AC_PROG_CC
++gl_EARLY
+ AC_PROG_CPP
+ AC_PROG_INSTALL
+ AM_PROG_CC_C_O
++gl_INIT
+ 
+ tre_version_1=`echo $PACKAGE_VERSION | cut -d . -f 1`
+ tre_version_2=`echo $PACKAGE_VERSION | cut -d . -f 2`
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 9635404..ba83ea6 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -7,7 +7,7 @@ if TRE_AGREP
+ bin_PROGRAMS = agrep
+ 
+ agrep_SOURCES = agrep.c
+-agrep_LDADD = ../lib/libtre.la $(LTLIBINTL)
++agrep_LDADD = ../lib/libtre.la $(LTLIBINTL) $(top_srcdir)/lib/libgnu.a
+ agrep_CFLAGS = -DLOCALEDIR=\"$(localedir)\"
+ if TRE_PROFILE
+ agrep_LDFLAGS = -static
+-- 
+1.7.3.2
+
