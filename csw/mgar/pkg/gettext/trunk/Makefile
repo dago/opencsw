@@ -175,6 +175,8 @@ CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibintl2
 CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibintl3
 CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibgettextlib0-14-1
 CHECKPKG_OVERRIDES_CSWggettext += surplus-dependency|CSWlibgettextlib0-17
+CHECKPKG_OVERRIDES_CSWggettext += file-with-bad-content|/usr/local|root/opt/csw/share/aclocal/lib-prefix.m4
+CHECKPKG_OVERRIDES_CSWggettext += file-with-bad-content|/usr/local|root/opt/csw/share/aclocal/lib-link.m4
 
 CHECKPKG_OVERRIDES_CSWggettextdoc += file-with-bad-content
 
@@ -188,6 +190,7 @@ MASTER_SITES = $(GNU_MIRROR)
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWggettextdoc.cswreleasenotes
+DISTFILES += CSWggettext.cswreleasenotes
 
 PATCHFILES += 0001-Use-the-auto-detected-SHELL-to-run-convert-archive.patch
 PATCHFILES += 0002-Update-ltmain.sh-to-prevent-libtool-stripping-runpat.patch
