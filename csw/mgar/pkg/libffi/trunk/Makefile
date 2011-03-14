@@ -27,6 +27,7 @@ PATCHFILES += ffi_target.h.patch
 # found at http://software.intel.com/en-us/forums/showthread.php?t=56652
 # originally for icc, but at least get the stuff to compile
 PATCHFILES += ffi64.c.patch
+PATCHFILES += 0005-libffi.pc-should-point-at-opt-csw-include.patch
 
 PACKAGES += CSWlibffi
 CATALOGNAME_CSWlibffi = libffi
@@ -55,8 +56,6 @@ SPKG_DESC_CSWlibffi5 = $(DESCRIPTION) - libffi.so.5
 PKGFILES_CSWlibffi5 += .*/libffi\.so\.5.*
 
 LICENSE = LICENSE
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 
