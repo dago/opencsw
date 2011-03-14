@@ -22,7 +22,7 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 NAME = subversion
-VERSION = 1.6.15
+VERSION = 1.6.16
 CATEGORIES = utils
 
 DESCRIPTION = Version control rethought
