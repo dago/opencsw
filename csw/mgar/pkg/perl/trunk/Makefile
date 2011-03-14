@@ -32,9 +32,9 @@ LICENSE = Copying
 # Will need to fix this patch to make it apply to 5.12.3
 #PATCHFILES += 0001-change-inc-based-on-rhel5-patch.patch
 
-CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content|/usr/share
+CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
-##CHECKPKG_OVERRIDES_CSWperl += soname-not-found|libgdbm.so.3|is|needed|by|opt/csw/lib/perl/5.10.1/auto/GDBM_File/GDBM_File.so
 
 # Core module updates
 # Not used at the moment, leave one as example
