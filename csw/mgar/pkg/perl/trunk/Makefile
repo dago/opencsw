@@ -17,6 +17,8 @@ SPKG_SOURCEURL = http://www.cpan.org/src
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 PACKAGES += CSWperl
 SPKG_DESC_CSWperl = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWperl = CSWbdb48 CSWlibgdbm3
@@ -52,7 +54,7 @@ LIBDEPS += lib/gdbm
 CONFIGURE_SCRIPTS = perl
 
 # Compatable with all prior patch revs
-INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0
+INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1
 
 # Force use of db-4.8
 PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl
@@ -86,6 +88,11 @@ CONFIGURE_ARGS += -Duselargefiles
 CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
+
+ifeq ($(shell uname -r), 5.10)
+  CONFIGURE_ARGS += -Dusedtrace
+endif
+
 #CONFIGURE_ARGS += -Dusedtrace
 CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
