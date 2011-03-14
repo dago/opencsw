@@ -25,11 +25,32 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # Package naming is a bit unfortunate CSWiconv vs. libiconv :/ but
 # that's not something i want to change right now. CSWiconv has
 # heaps of dependents.
-PACKAGES = CSWiconv
-CATALOGNAME_CSWiconv = libiconv
+#PACKAGES = CSWiconv
+#CATALOGNAME_CSWiconv = libiconv
 
-# The current 1.12 only has a 32-Bit iconv binary, leave it that way
-EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/bin/.*/iconv
+PACKAGES += CSWlibiconv2
+CATALOGNAME_CSWlibiconv2 = libiconv2
+SPKG_DESC_CSWlibiconv2 = GNU iconv library, libiconv.so.2
+PKGFILES_CSWlibiconv2 += $(call pkgfiles_lib,libiconv.so.2)
+PKGFILES_CSWlibiconv2 += $(libdir)/preloadable_libiconv.so
+
+PACKAGES += CSWlibcharset1
+CATALOGNAME_CSWlibcharset1 = libcharset1
+SPKG_DESC_CSWlibcharset1 = GNU iconv charset library, libcharset.so.1
+PKGFILES_CSWlibcharset1 += $(call pkgfiles_lib,libcharset.so.1)
+# Now *this* time it is ok, iconv is the only package that is allowed to ship this!
+CHECKPKG_OVERRIDES_CSWlibcharset1 += disallowed-path|opt/csw/lib/charset.alias
+PKGFILES_CSWlibcharset1 += $(libdir)/charset.alias
+
+PACKAGES += CSWlibiconv-utils
+CATALOGNAME_CSWlibiconv-utils = libiconv_utils
+SPKG_DESC_CSWlibiconv-utils = GNU iconv utility programs
+PKGFILES_CSWlibiconv-utils += $(bindir)/.*
+PKGFILES_CSWlibiconv-utils += .*iconv\.1.*
+RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibcharset1
+OBSOLETES_CSWlibiconv-utils = CSWiconv
+
 NOISAEXEC = 1
 BUILD64 = 1
 
@@ -58,6 +79,8 @@ TEST_TARGET = check
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-rpath
+
+MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
 
