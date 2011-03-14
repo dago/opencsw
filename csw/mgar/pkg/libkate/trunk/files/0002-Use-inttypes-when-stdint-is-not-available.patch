@@ -1,0 +1,30 @@
+From 990b5dc885670acfc13eac4db0fc06e800c0cc6e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 14 Mar 2011 14:43:03 +0100
+Subject: [PATCH] Use inttypes when stdint is not available
+
+---
+ tests/check_sizes.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/tests/check_sizes.c b/tests/check_sizes.c
+index a99cc73..45c25a0 100644
+--- a/tests/check_sizes.c
++++ b/tests/check_sizes.c
+@@ -7,7 +7,13 @@
+    file 'COPYING'. Please read these terms before distributing. */
+ 
+ 
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#else
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++#endif
+ #include <stdio.h>
+ #include "kate/kate.h"
+ 
+-- 
+1.7.3.2
+
