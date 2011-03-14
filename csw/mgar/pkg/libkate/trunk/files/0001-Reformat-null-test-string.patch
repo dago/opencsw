@@ -1,0 +1,21 @@
+From 031abef771ed1ed9120a1329cee3ac3acfdc3308 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 14 Mar 2011 17:25:39 +0100
+Subject: [PATCH] Reformat null test string
+
+---
+ tests/text.c |  Bin 5917 -> 5920 bytes
+ 1 files changed, 0 insertions(+), 0 deletions(-)
+
+diff --git a/tests/text.c b/tests/text.c
+index 253112ae77c45d6dba033c4d5ebcfe3653622bd7..b107bf08ed0fa1ea1d7dc8808e49e4a7c2c51de4 100644
+GIT binary patch
+delta 17
+YcmbQMw?J=$8!t;tg@M6lciwB905%i_y8r+H
+
+delta 14
+VcmZ3WH&<_i8!scnW-s1roB$-k1cv|s
+
+-- 
+1.7.3.2
+
