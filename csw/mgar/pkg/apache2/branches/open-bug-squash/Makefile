@@ -58,8 +58,8 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES  = CSWapache2 CSWapache2-dev CSWapache2-manual CSWap2-suexec
 PACKAGES += CSWap2-worker
 # These packages are dummy versions to make dependencies nicer
-# as various things depend on CSWap2prefork currently
-PACKAGES += CSWap2-prefork CSWapache2rt
+# as various things depend on them currently
+PACKAGES += CSWap2-prefork CSWapache2rt CSWapache2c
 
 OBSOLETES_CSWap2-suexec = CSWap2suexec
 OBSOLETES_CSWap2-prefork = CSWap2prefork
@@ -69,8 +69,7 @@ OBSOLETES_CSWapache2-dev = CSWapache2-devel
 ARCHALL_CSWapache2-manual = 1
 ARCHALL_CSWap2-prefork = 1
 ARCHALL_CSWapache2rt = 1
-
-OBSOLETES_CSWapache2 = CSWapache2c
+ARCHALL_CSWapache2c = 1
 
 CATALOGNAME_CSWapache2 = apache2
 CATALOGNAME_CSWapache2-dev = apache2_dev
@@ -87,10 +86,12 @@ SPKG_DESC_CSWap2-suexec = The standard suEXEC binary for Apache2.
 SPKG_DESC_CSWap2-worker = The apache worker mpm.
 SPKG_DESC_CSWap2-prefork = A stub for the old prefork mpm package.
 SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package.
+SPKG_DESC_CSWapache2c = A stub for the old apache2c package.
 
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv CSWosslutils
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util CSWbdb48
+RUNTIME_DEP_PKGS_CSWapache2       += CSWapache2c
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-dev  = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2-suexec	   = CSWapache2
@@ -214,6 +215,7 @@ PKGFILES_CSWapache2-manual = .*share/.*manual.* .*etc/extra/httpd-manual.conf
 PKGFILES_CSWap2-prefork = .*share/doc/ap2_prefork.*
 PKGFILES_CSWap2-worker = .*share/doc/ap2_worker.* .*sbin/httpd.worker
 PKGFILES_CSWapache2rt = .*share/doc/apache2rt.*
+PKGFILES_CSWapache2c = .*share/doc/apache2c.*
 
 #PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/apache2/sbin/suexec" { $$$$4 = "4755" }; $$$$3 ~ /cswap2mod/ { $$$$4 = "0555" }; { print }'
 
