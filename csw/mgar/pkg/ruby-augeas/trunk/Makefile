@@ -35,7 +35,7 @@ install-ruby-augeas:
 	ginstall -m 755 -d $(DESTDIR)
 	ginstall -m 755 -d $(DESTDIR)$(sitearchdir)
 	ginstall -m 755 -d $(DESTDIR)$(sitelibdir)
-	cd $(WORKSRC) && $(INSTALL_ENV) rake build
+	cd $(WORKSRC) && rake build
 	ginstall -m 755 $(WORKSRC)/lib/augeas.rb $(DESTDIR)$(sitelibdir)
 	ginstall -m 755 $(WORKSRC)/ext/augeas/_augeas.so $(DESTDIR)$(sitearchdir)
 	@$(MAKECOOKIE)
