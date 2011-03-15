@@ -102,6 +102,7 @@ RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
+CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWap2-prefork += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2-worker += surplus-dependency|CSWap2-prefork
 CHECKPKG_OVERRIDES_CSWap2-worker += surplus-dependency|CSWalternatives
