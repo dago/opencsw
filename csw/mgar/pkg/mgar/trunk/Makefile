@@ -43,5 +43,6 @@ install-custom:
 	mkdir -p $(DESTDIR)$(prefix)/etc/bash_completion.d
 	cp $(WORKSRC)/mgar $(DESTDIR)$(bindir)
 	cp $(WORKSRC)/mgar.1 $(DESTDIR)$(mandir)/man1/
-	cp $(WORKSRC)/bash_completion.mgar $(DESTDIR)$(prefix)/etc/bash_completion.d
+	cp $(WORKSRC)/bash_completion.mgar \
+		$(DESTDIR)$(prefix)/etc/bash_completion.d/mgar
 	$(MAKECOOKIE)
