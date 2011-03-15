@@ -17,6 +17,7 @@ SPKG_SOURCEURL = http://www.cpan.org/src
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
+PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 PACKAGES += CSWperl
