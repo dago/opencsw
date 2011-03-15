@@ -28,7 +28,7 @@ LICENSE = LICENSE
 DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
-PACKAGES = CSWphp5 CSWphp5devel
+PACKAGES = CSWphp5 CSWphp5-dev
 PACKAGES += CSWap2-modphp5
 PACKAGES += CSWphp5-bcmath
 PACKAGES += CSWphp5-bz2
@@ -97,10 +97,10 @@ CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic
 
-CATALOGNAME_CSWphp5devel   = php5_devel
+CATALOGNAME_CSWphp5-dev   = php5_dev
 SPKG_DESC_CSWphp5devel     = Development files for php5
-RUNTIME_DEP_PKGS_CSWphp5      = CSWiconv 
-RUNTIME_DEP_PKGS_CSWphp5     += CSWlibxml2 CSWzlib
+RUNTIME_DEP_PKGS_CSWphp5-dev      = CSWphp5
+OBSOLETES_CSWphp5-dev = CSWphp5devel
 
 CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
 SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
