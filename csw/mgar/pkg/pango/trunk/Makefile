@@ -43,7 +43,7 @@ EXTRA_SOS_LD_OPTIONS = -R$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
 
 BUILD64 = 1
 NOISALIST = 1
-ISAEXEC_EXCLUDE_FILES = $(bindir)/pango-querymodules
+EXTRA_ISAEXEC_EXCLUDE_FILES = $(bindir)/pango-querymodules
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-x --enable-gtk-doc
 CONFIGURE_ARGS += --x-include=$(prefix)/X11/include

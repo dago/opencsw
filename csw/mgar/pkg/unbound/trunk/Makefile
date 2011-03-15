@@ -51,12 +51,12 @@ MERGE_DIRS_isa-sparcv8plus += $(sbindir)
 MERGE_DIRS_isa-pentium_pro  = $(libdir)
 MERGE_DIRS_isa-pentium_pro += $(sbindir)
 
-ISAXEC_DIRS            = $(sbindir)
-ISAEXEC_EXCLUDE_FILES  = $(sbindir)/unbound-anchor
-ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-checkconf
-ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control
-ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control-setup
-ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-host
+ISAXEC_DIRS                  = $(sbindir)
+EXTRA_ISAEXEC_EXCLUDE_FILES  = $(sbindir)/unbound-anchor
+EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-checkconf
+EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control
+EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-control-setup
+EXTRA_ISAEXEC_EXCLUDE_FILES += $(sbindir)/unbound-host
 
 EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro  = $(prefix)/sbin/unbound-anchor
 EXTRA_MERGE_EXCLUDE_FILES_isa-pentium_pro += $(prefix)/sbin/unbound-checkconf

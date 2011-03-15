@@ -866,8 +866,8 @@ ENABLE_CHECK ?= 1
 # The files in ISAEXEC get relocated and will be replaced by the isaexec-wrapper.
 # The trick is to delay the calculcation of the variable values until that time
 # when PKGROOT has already been populated.
-_ISAEXEC_EXCLUDE_FILES = $(bindir)/%-config $(bindir)/%/%-config
-_buildpackage: _ISAEXEC_FILES=$(filter-out $(foreach F,$(_ISAEXEC_EXCLUDE_FILES) $(ISAEXEC_EXCLUDE_FILES),$(PKGROOT)$(F)), \
+ISAEXEC_EXCLUDE_FILES ?= $(bindir)/%-config $(bindir)/%/%-config
+_buildpackage: _ISAEXEC_FILES=$(filter-out $(foreach F,$(ISAEXEC_EXCLUDE_FILES) $(EXTRA_ISAEXEC_EXCLUDE_FILES),$(PKGROOT)$(F)), \
 			$(wildcard $(foreach D,$(ISAEXEC_DIRS),$(PKGROOT)$(D)/* )) \
 		)
 _buildpackage: ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,               \
