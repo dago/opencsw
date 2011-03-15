@@ -11,7 +11,7 @@ endef
 
 VENDOR_URL = http://gar.opencsw.org
 SVNROOT    = https://opencsw.svn.sourceforge.net/svnroot/opencsw/gar-wrapper
-SVNREV     = 359
+SVNREV     = 360
 
 ARCHALL = 1
 
