@@ -86,7 +86,7 @@ PACKAGES += CSWphp5-xsl
 PACKAGES += CSWphp5-zip
 PACKAGES += CSWmod-php5
 
-BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev
+BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev
 
 CATALOGNAME_CSWmod-php5 = mod_php5
 SPKG_DESC_CSWmod-php5 = The apache 1.3.x php5 module
