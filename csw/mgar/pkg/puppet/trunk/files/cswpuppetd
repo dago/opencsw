@@ -75,9 +75,9 @@ get_line_with() {
 }
 
 get_pid_file() {
-    # The default pid file is /var/opt/csw/puppet/run/puppetd.pid
+    # The default pid file is /var/opt/csw/puppet/run/agent.pid
     # but a different pid file can be set in puppet.conf.
-    __pidfile="/var/opt/csw/puppet/run/puppetd.pid"
+    __pidfile="/var/opt/csw/puppet/run/agent.pid"
     conffile="/etc/opt/csw/puppet/puppet.conf"
     if [ -r "$conffile" ]; then
         pid_line=`get_line_with pidfile ${conffile}`
