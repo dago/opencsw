@@ -130,7 +130,7 @@ OBSOLETES_CSWphp5-ctype = CSWphp5ctype
 
 CATALOGNAME_CSWphp5-curl = php5_curl
 SPKG_DESC_CSWphp5-curl = The curl extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-curl  = CSWphp5 CSWcurlrt CSWlibidn 
+RUNTIME_DEP_PKGS_CSWphp5-curl  = CSWphp5 CSWcurlrt CSWlibidn11 
 RUNTIME_DEP_PKGS_CSWphp5-curl += CSWoldaprt CSWosslrt CSWzlib CSWlibcares
 OBSOLETES_CSWphp5-curl = CSWphp5curl
 
@@ -161,13 +161,13 @@ OBSOLETES_CSWphp5-ftp = CSWphp5ftp
 
 CATALOGNAME_CSWphp5-gd = php5_gd
 SPKG_DESC_CSWphp5-gd = The gd extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-gd  = CSWphp5 CSWftype2 CSWgd CSWjpeg
+RUNTIME_DEP_PKGS_CSWphp5-gd  = CSWphp5 CSWftype2 CSWlibgd2 CSWjpeg
 RUNTIME_DEP_PKGS_CSWphp5-gd += CSWpng CSWt1lib CSWxpm CSWzlib
 OBSOLETES_CSWphp5-gd = CSWphp5gd
 
 CATALOGNAME_CSWphp5-gettext = php5_gettext
 SPKG_DESC_CSWphp5-gettext = The gettext extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-gettext = CSWphp5 CSWggettextrt
+RUNTIME_DEP_PKGS_CSWphp5-gettext = CSWphp5 CSWlibintl8
 OBSOLETES_CSWphp5-gettext = CSWphp5gettext
 
 CATALOGNAME_CSWphp5-gmp = php5_gmp
