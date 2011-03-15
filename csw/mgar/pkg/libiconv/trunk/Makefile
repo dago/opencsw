@@ -54,8 +54,9 @@ PKGFILES_CSWlibiconv-utils += $(call baseisadirs,$(libdir),preloadable_libiconv\
 # matter in any way as this library is only used for LD_PRELOAD and is never being
 # linked against during compile time.
 CHECKPKG_OVERRIDES_CSWlibiconv-utils += soname-not-part-of-filename|soname=libiconv.so.0|filename=preloadable_libiconv.so
-CHECKPKG_OVERRIDES_CSWlibiconv-utils += shared-lib-pkgname-mismatch|sonames=libiconv.so.0|pkgname=CSWlibiconv-utils|expected=CSWlibiconv0|
+CHECKPKG_OVERRIDES_CSWlibiconv-utils += shared-lib-pkgname-mismatch|sonames=libiconv.so.0|pkgname=CSWlibiconv-utils|expected=CSWlibiconv0
 RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibintl8
 OBSOLETES_CSWlibiconv-utils = CSWiconv
 
 NOISAEXEC = 1
