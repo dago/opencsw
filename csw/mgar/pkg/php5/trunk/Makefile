@@ -98,7 +98,7 @@ SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic
 
 CATALOGNAME_CSWphp5-dev   = php5_dev
-SPKG_DESC_CSWphp5devel     = Development files for php5
+SPKG_DESC_CSWphp5-dev     = Development files for php5
 RUNTIME_DEP_PKGS_CSWphp5-dev      = CSWphp5
 OBSOLETES_CSWphp5-dev = CSWphp5devel
 
@@ -380,24 +380,24 @@ SPKG_DESC_CSWphp5-zip = The zip extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-zip = CSWphp5 CSWzlib
 OBSOLETES_CSWphp5-zip = CSWphp5zip
 
-PKGFILES_CSWphp5devel  = $(bindir)/php-config
-PKGFILES_CSWphp5devel += $(bindir)/phpize
-PKGFILES_CSWphp5devel += $(bindir)/peardev
-PKGFILES_CSWphp5devel += $(libdir)/php/build/.*
-PKGFILES_CSWphp5devel += $(includedir)/php/TSRM.*
-PKGFILES_CSWphp5devel += $(includedir)/php/Zend.*
-PKGFILES_CSWphp5devel += $(includedir)/php/include.*
-PKGFILES_CSWphp5devel += $(includedir)/php/main.*
-PKGFILES_CSWphp5devel += $(includedir)/php/regex.*
-PKGFILES_CSWphp5devel += $(includedir)/php/ext/date.*
-PKGFILES_CSWphp5devel += $(includedir)/php/ext/filter.*
-PKGFILES_CSWphp5devel += $(includedir)/php/ext/libxml.*
-PKGFILES_CSWphp5devel += $(includedir)/php/ext/pcre.*
-PKGFILES_CSWphp5devel += $(includedir)/php/ext/spl.*
-PKGFILES_CSWphp5devel += $(includedir)/php/ext/standard.*
-PKGFILES_CSWphp5devel += $(includedir)/php/ext/xml.*
-PKGFILES_CSWphp5devel += $(mandir)/man1/php-config.1
-PKGFILES_CSWphp5devel += $(mandir)/man1/phpize.1
+PKGFILES_CSWphp5-dev  = $(bindir)/php-config
+PKGFILES_CSWphp5-dev += $(bindir)/phpize
+PKGFILES_CSWphp5-dev += $(bindir)/peardev
+PKGFILES_CSWphp5-dev += $(libdir)/php/build/.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/TSRM.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/Zend.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/include.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/main.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/regex.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/date.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/filter.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/libxml.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/pcre.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/spl.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/standard.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/xml.*
+PKGFILES_CSWphp5-dev += $(mandir)/man1/php-config.1
+PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
 
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
