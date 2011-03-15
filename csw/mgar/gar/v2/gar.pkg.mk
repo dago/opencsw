@@ -957,13 +957,18 @@ redirpackage: pkgreset dirpackage
 
 # This rule automatically logs into every host where a package for this software should
 # be built. It is especially suited for automated build bots.
+
+# Heads up: Don't use MAKEFLAGS to propagate -I to remote GAR invocations as
+# this will also make it visible to the build environment. Some software builds
+# use hard-coded non-GNU make which then errs out on -I (unknown option).
+
 platforms: _PACKAGING_PLATFORMS=$(if $(ARCHALL),$(firstword $(PACKAGING_PLATFORMS)),$(PACKAGING_PLATFORMS))
 platforms:
 	$(foreach P,$(_PACKAGING_PLATFORMS),\
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) GAR_PLATFORM=$P _package && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -I $(GARDIR) -C $(CURDIR) GAR_PLATFORM=$P _package" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
@@ -978,7 +983,7 @@ platforms:
 			echo " (built on this host)";\
 			  $(MAKE) -s GAR_PLATFORM=$P _pkgshow;echo;,\
 			echo " (built on host '$(PACKAGING_HOST_$P)')";\
-			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $(CURDIR) -s GAR_PLATFORM=$P _pkgshow";echo;\
+			  $(SSH) $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -I $(GARDIR) -C $(CURDIR) -s GAR_PLATFORM=$P _pkgshow";echo;\
 		)\
 	)
 	@$(MAKECOOKIE)
@@ -989,7 +994,7 @@ platforms-%:
 		$(if $(PACKAGING_HOST_$P),\
 			$(if $(filter $(THISHOST),$(PACKAGING_HOST_$P)),\
 				$(MAKE) -s GAR_PLATFORM=$P $* && ,\
-				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin MAKEFLAGS=\"$(MAKEFLAGS)\" $(MAKE) -C $(CURDIR) GAR_PLATFORM=$P $*" && \
+				$(SSH) -t $(PACKAGING_HOST_$P) "PATH=$$PATH:/opt/csw/bin $(MAKE) -I $(GARDIR) -C $(CURDIR) GAR_PLATFORM=$P $*" && \
 			),\
 			$(error *** No host has been defined for platform $P)\
 		)\
