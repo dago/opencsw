@@ -20,22 +20,19 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-PACKAGES += CSWperl
-SPKG_DESC_CSWperl = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWperl = CSWbdb48 CSWlibgdbm3
+PACKAGES                 += CSWperl
+SPKG_DESC_CSWperl         = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWperl  = CSWbdb48 CSWlibgdbm3
 INCOMPATIBLE_PKGS_CSWperl = CSWperlmods CSWpmdigest CSWpmi18nlangtags
 
-PACKAGES += CSWperldoc
-SPKG_DESC_CSWperldoc = Perl documentation
+PACKAGES                   += CSWperldoc
+SPKG_DESC_CSWperldoc        = Perl documentation
 RUNTIME_DEP_PKGS_CSWperldoc = CSWperl
-ARCHALL_CSWperldoc = 1
+ARCHALL_CSWperldoc          = 1
 
 LICENSE = Copying
 
-# Will need to fix this patch to make it apply to 5.12.3
-#PATCHFILES += 0001-change-inc-based-on-rhel5-patch.patch
-
-CHECKPKG_OVERRIDES_CSWperl += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 
@@ -90,11 +87,11 @@ CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
 
+# When built on Solaris 10, enable DTrace support
 ifeq ($(shell uname -r), 5.10)
   CONFIGURE_ARGS += -Dusedtrace
 endif
 
-#CONFIGURE_ARGS += -Dusedtrace
 CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
@@ -122,7 +119,7 @@ PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
 EXTRA_PKGFILES_EXCLUDED_CSWperldoc = .*\/perldiag.pod
 EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
 
-# Tests take a long time
+# Tests take a long time, run once for every release
 #TEST_SCRIPTS =
 
 # Make sure we don't include the path to the newly built perl as the
@@ -167,18 +164,6 @@ libperl:
 		ln -s libperl.so.$(VERSION) libperl.so.$(LIB_MINOR) ; \
 		ln -s libperl.so.$(VERSION) libperl.so )
 	@$(MAKECOOKIE)
-#	echo YOUAREHERE
-#	( cd $(DESTDIR)$(libdir)/perl/$(VERSION)/${TARGET}/CORE ; \
-#	   chmod 755 libperl.so.$(VERSION) ; \
-#	   rm libperl.so.$(LIB_MINOR) libperl.so ; \
-#	   ln -s libperl.so.$(VERSION) libperl.so.$(LIB_MINOR) ; \
-#	   ln -s libperl.so.$(VERSION) libperl.so )
-#	( cd $(DESTDIR)$(libdir)/perl/$(VERSION)/${TARGET} ; \
-#	   rm libperl* ; \
-#	   ln -s CORE/libperl.so.$(VERSION) libperl.so.$(VERSION) ; \
-#	   ln -s CORE/libperl.so.$(VERSION) libperl.so.$(LIB_MINOR) ; \
-#	   ln -s CORE/libperl.so.$(VERSION) libperl.so )
-#	$(MAKECOOKIE)
 
 # Remove build paths from Config
 POST_TARGETS += perlconf
