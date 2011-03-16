@@ -150,7 +150,7 @@ post-install-modulated:
 		/opt/csw/share/doc/rrdtool-1.4.5/html/rrdcgi.html \
 		)
 
-	perl -pi -e 's,/usr/share,$(prefix),g' \
+	perl -pi -e 's,/usr/share,$(sharedstatedir),g' \
 		$(addprefix $(DESTDIR), \
 		/opt/csw/share/man/man1/rrdbuild.1 \
 		/opt/csw/share/doc/rrdtool-1.4.5/txt/rrdbuild.txt \
