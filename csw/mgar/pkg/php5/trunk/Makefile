@@ -653,6 +653,9 @@ CONFIGURE_ARGS += --with-zlib=$(prefix)
 SKIPTEST = 1
 #ENABLE_CHECK = 0
 
+CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWmod-php5 += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWmod-php5 += surplus-dependency|CSWapache
 CHECKPKG_OVERRIDES_CSWphp5-pdo += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-bcmath += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWphp5
