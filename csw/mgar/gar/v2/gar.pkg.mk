@@ -523,9 +523,9 @@ $(WORKDIR)/%.prototype-$(GARCH): | $(WORKDIR)/%.prototype
 # actually matching the _TEXINFO_FILTER. This is done at the prototype-level.
 $(WORKDIR)/%.depend: $(WORKDIR)/$*.prototype
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(_CATEGORY_RUNTIME_DEP_PKGS)
+$(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach I,$(ISAEXEC_FILES),print "yes" if( $$F[2] =~ m(^\Q$I\E(=.*)?$$));)')),CSWisaexec)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(if $(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane 'print "yes" if( $$F[1] eq "cswalternatives")')),CSWalternatives)
 $(WORKDIR)/%.depend: _EXTRA_GAR_PKGS += $(foreach P,$(strip $(shell cat $(WORKDIR)/$*.prototype | perl -ane '$(foreach C,$(filter-out ugfiles,$(_CSWCLASSES)),print "$C " if( $$F[1] eq "$C");)')),CSWcas-$(subst csw,,$(P)))
-
 $(WORKDIR)/%.depend: _DEP_PKGS=$(or $(RUNTIME_DEP_PKGS_ONLY_$*),$(RUNTIME_DEP_PKGS_ONLY),$(sort $(_EXTRA_GAR_PKGS)) $(or $(RUNTIME_DEP_PKGS_$*),$(RUNTIME_DEP_PKGS),$(DEP_PKGS_$*),$(DEP_PKGS)))
 $(WORKDIR)/%.depend: $(WORKDIR)
 # The final "true" is for packages without dependencies to make the shell happy as "( )" is not allowed.
@@ -877,7 +877,6 @@ _buildpackage: ISAEXEC_FILES ?= $(if $(_ISAEXEC_FILES),$(patsubst $(PKGROOT)%,%,
 			$(shell for F in $(_ISAEXEC_FILES); do          \
 				if test -f "$$F" -a \! -h "$$F"; then echo $$F; fi;     \
 			done)),)
-_buildpackage: _EXTRA_GAR_PKGS += $(if $(ISAEXEC_FILES),CSWisaexec)
 _buildpackage: pre-package $(PACKAGE_TARGETS) post-package $(if $(filter-out 0,$(ENABLE_CHECK)),pkgcheck)
 
 _package: validateplatform extract-global merge $(SPKG_DESTDIRS) _buildpackage
