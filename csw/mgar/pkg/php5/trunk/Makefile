@@ -516,10 +516,10 @@ PKGFILES_CSWphp5-xsl = .*/lib/php/extensions/.*/xsl.*
 
 PKGFILES_CSWphp5-zip = .*/lib/php/extensions/.*/zip.*
 
-PATCHFILES += configure.diff
-PATCHFILES += odbc.diff
-PATCHFILES += pdopgsql.diff
-PATCHFILES += pgsql.diff
+# PATCHFILES += configure.diff
+# PATCHFILES += odbc.diff
+# PATCHFILES += pdopgsql.diff
+# PATCHFILES += pgsql.diff
 
 # PHP Extensions, currently deactivated
 #
