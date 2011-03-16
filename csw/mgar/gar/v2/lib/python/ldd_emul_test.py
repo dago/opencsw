@@ -1,3 +1,5 @@
+#!/usr/bin/env python2.6
+
 import unittest
 import ldd_emul
 import mox
@@ -123,24 +125,36 @@ class GetLinesBySonameUnitTest(unittest.TestCase):
     self.assertFalse(not_expected in result,
                      "%s is in %s" % (not_expected, result))
 
-  def testEmulateSymlinks_5(self):
+  def SystemLibSymlinkExpansion_LibPresent(self, lib_symlink):
     """Install time symlink expansion."""
-    runpath_list = ["/opt/csw/lib/i386"]
+    runpath_list = [lib_symlink]
     expected = "/opt/csw/lib"
     result = self.e.Emulate64BitSymlinks(runpath_list)
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
 
-  def testEmulateSymlinks_6(self):
+  def SystemLibSymlinkExpansion_LibSubdirAbsent(self, lib_symlink):
     """ExpandSymlink for /opt/csw/lib/i386."""
-    runpath_list = ["/opt/csw/lib/i386"]
+    runpath_list = [lib_symlink]
     expected = "/opt/csw/lib"
-    not_expected = "/opt/csw/lib/i386"
-    result = self.e.ExpandSymlink("/opt/csw/lib/i386",
-                                    "/opt/csw/lib",
-                                    "/opt/csw/lib/i386")
+    not_expected = lib_symlink
+    result = self.e.ExpandSymlink(lib_symlink,
+                                  "/opt/csw/lib",
+                                  lib_symlink)
     self.assertTrue(expected in result, "%s not in %s" % (expected, result))
     self.assertFalse(not_expected in result,
                      "%s is in %s" % (not_expected, result))
+
+  def testLibPresent_i386(self):
+    self.SystemLibSymlinkExpansion_LibPresent("/opt/csw/lib/i386")
+
+  def testLibPresent_sparcv8(self):
+    self.SystemLibSymlinkExpansion_LibPresent("/opt/csw/lib/sparcv8")
+
+  def testLibSubdirAbsent_i386(self):
+    self.SystemLibSymlinkExpansion_LibSubdirAbsent("/opt/csw/lib/i386")
+
+  def testLibSubdirAbsent_sparcv8(self):
+    self.SystemLibSymlinkExpansion_LibSubdirAbsent("/opt/csw/lib/sparcv8")
 
   def testSanitizeRunpath_1(self):
     self.assertEqual("/opt/csw/lib",

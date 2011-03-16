@@ -14,6 +14,7 @@ SYSTEM_SYMLINKS = (
     ("/opt/csw/bdb4",     ("/opt/csw/bdb42",)),
     ("/64",               ("/amd64", "/sparcv9")),
     ("/opt/csw/lib/i386", ("/opt/csw/lib",)),
+    ("/opt/csw/lib/sparcv8", ("/opt/csw/lib",)),
 )
 
 DEFAULT_INSTALL_CONTENTS_FILE = "/var/sadm/install/contents"
