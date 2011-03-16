@@ -41,7 +41,7 @@ LICENSE = COPYING
 RUNTIME_DEP_PKGS_CSWruby18 = CSWbdb48 CSWlibgdbm3 CSWiconv CSWlibruby18-1
 RUNTIME_DEP_PKGS_CSWruby18 += CSWncurses CSWosslrt CSWreadline CSWzlib
 
-RUNTIME_DEP_PKGS_CSWruby18-gcc4 = CSWruby18
+RUNTIME_DEP_PKGS_CSWruby18-gcc4 = CSWruby18 CSWgcc4core
 
 RUNTIME_DEP_PKGS_CSWruby18-doc = CSWruby18
 
@@ -164,6 +164,7 @@ CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWruby18-doc += missing-dependency|CSWpython
 
 CHECKPKG_OVERRIDES_CSWruby18-gcc4 += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWruby18-gcc4 += surplus-dependency|CSWgcc4core
 
 CHECKPKG_OVERRIDES_CSWruby18 += surplus-dependency|CSWalternatives
 
