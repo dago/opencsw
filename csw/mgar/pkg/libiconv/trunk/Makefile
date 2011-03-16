@@ -86,6 +86,8 @@ PATCHFILES += patch-configure-stdbool.diff
 # and can safely be ignored as it is a failure in the testsuite.
 TEST_TARGET = check
 
+EXTRA_CPPFLAGS = -D_REENTRANT
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-rpath
 
