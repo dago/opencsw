@@ -57,7 +57,10 @@ GARSYSTEMVERSION ?= $(shell $(SVN) propget svn:externals $(CURDIR) | perl -ane '
 GARPKG_v1 = CSWgar-v1
 GARPKG_v2 = CSWgar-v2
 RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
-CATALOG_RELEASE ?= current
+
+# Set the catalog release based on hostname.  E.g. building on current9s will
+# set CATALOG_RELEASE to 'current'.
+CATALOG_RELEASE ?= $(shell hostname | gsed -e 's/[0-9].*$$//')
 
 define obsoleted_pkg
 CATALOGNAME_$(1) ?= $(call catalogname,$(1))
