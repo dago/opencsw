@@ -42,7 +42,6 @@ PACKAGES += CSWpythonsvn CSWrbsvn CSWjavasvn
 PACKAGES += CSWsvn-contrib CSWsvn-tools
 
 SPKG_DESC_CSWsvn           = Version control rethought
-CATALOGNAME_CSWsvn         = subversion
 RUNTIME_DEP_PKGS_CSWsvn      = CSWbdb48
 RUNTIME_DEP_PKGS_CSWsvn      += CSWexpat
 RUNTIME_DEP_PKGS_CSWsvn      += CSWlibintl8
@@ -58,12 +57,10 @@ RUNTIME_DEP_PKGS_CSWsvn      += CSWapr-util
 
 
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
-CATALOGNAME_CSWsvn-devel   = subversion_devel
 ARCHALL_CSWsvn-devel       = 1
 PKGFILES_CSWsvn-devel      = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-devel     += $(docdir)/$(CATALOGNAME_CSWsvn-devel)/changelog.CSW
 CHECKPKG_OVERRIDES_CSWsvn-devel += archall-devel-package
-CHECKPKG_OVERRIDES_CSWsvn-devel += catalogname-does-not-match-pkgname|pkgname=CSWsvn-devel|catalogname=subversion_devel|expected-catalogname=svn_devel
 
 SPKG_DESC_CSWsvn-contrib   = Contributed subversion scripts
 CATALOGNAME_CSWsvn-contrib = subversion_contrib
@@ -137,7 +134,6 @@ CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/li
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
-CATALOGNAME_CSWpmsvn       = pm_subversion
 PKGFILES_CSWpmsvn          = $(libdir)/perl.*
 PKGFILES_CSWpmsvn         += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
