@@ -18,6 +18,9 @@ define BLURB
 	available.
 endef
 
+# at least for a decent echo used during build.
+PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
+
 VENDOR_URL     = http://www.php.net/
 MASTER_SITES   = http://us.php.net/distributions/
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
@@ -85,7 +88,7 @@ PACKAGES += CSWphp5-xsl
 PACKAGES += CSWphp5-zip
 PACKAGES += CSWmod-php5
 
-BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev
+BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 
 CATALOGNAME_CSWmod-php5 = mod_php5
 SPKG_DESC_CSWmod-php5 = The apache 1.3.x php5 module
