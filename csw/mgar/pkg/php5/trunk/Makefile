@@ -50,7 +50,6 @@ PACKAGES += CSWphp5-json
 PACKAGES += CSWphp5-ldap
 PACKAGES += CSWphp5-mbstring
 PACKAGES += CSWphp5-mcrypt
-PACKAGES += CSWphp5-mhash
 PACKAGES += CSWphp5-mssql
 PACKAGES += CSWphp5-mysql
 PACKAGES += CSWphp5-mysqli
@@ -95,7 +94,7 @@ OBSOLETES_CSWmod-php5 = CSWmodphp5
 
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
-INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic
+INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash
 
 CATALOGNAME_CSWphp5-dev   = php5_dev
 SPKG_DESC_CSWphp5-dev     = Development files for php5
@@ -208,11 +207,6 @@ CATALOGNAME_CSWphp5-mcrypt = php5_mcrypt
 SPKG_DESC_CSWphp5-mcrypt = The mcrypt extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mcrypt = CSWphp5 CSWlibmcrypt CSWlibltdl7
 OBSOLETES_CSWphp5-mcrypt = CSWphp5mcrypt
-
-CATALOGNAME_CSWphp5-mhash = php5_mhash
-SPKG_DESC_CSWphp5-mhash = The mhash extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-mhash = CSWphp5 CSWlibmhash
-OBSOLETES_CSWphp5-mhash = CSWphp5mhash
 
 CATALOGNAME_CSWphp5-mssql = php5_mssql
 SPKG_DESC_CSWphp5-mssql = The mssql extension for PHP5
@@ -447,8 +441,6 @@ PKGFILES_CSWphp5-mbstring = .*/lib/php/extensions/.*/mbstring.*
 PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
 
 PKGFILES_CSWphp5-mcrypt = .*/lib/php/extensions/.*/mcrypt.*
-
-PKGFILES_CSWphp5-mhash = .*/lib/php/extensions/.*/mhash.*
 
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
@@ -714,7 +706,6 @@ CHECKPKG_OVERRIDES_CSWphp5-sqlite += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xmlrpc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pgsql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-shmop += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-mhash += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-session += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-sysvsem += surplus-dependency|CSWphp5
