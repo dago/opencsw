@@ -89,7 +89,7 @@ RUNTIME_DEP_PKGS_CSWrb-rrdtool += CSWlibruby1
 RUNTIME_DEP_PKGS_CSWrb-rrdtool += CSWlibrrd4
 OBSOLETES_CSWrb-rrdtool = CSWrrd
 # This is crappy and needs fixing, unfortunately inside extconf.rb which is hard.
-CHECKPKG_OVERRIDES_CSWrb-rrdtool += bad-rpath-entry|/home/dam/mgar/pkg/rrdtool/trunk/work/solaris9-sparc/install-isa-sparcv8/opt/csw/lib|opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.9/RRD.so
+CHECKPKG_OVERRIDES_CSWrb-rrdtool += bad-rpath-entry
 
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWlibrrd4)
 BUILD_DEP_PKGS += CSWpangodevel
