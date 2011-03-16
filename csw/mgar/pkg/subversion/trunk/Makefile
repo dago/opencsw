@@ -63,6 +63,7 @@ ARCHALL_CSWsvn-devel       = 1
 PKGFILES_CSWsvn-devel      = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-devel     += $(docdir)/$(CATALOGNAME_CSWsvn-devel)/changelog.CSW
 CHECKPKG_OVERRIDES_CSWsvn-devel += archall-devel-package
+CHECKPKG_OVERRIDES_CSWsvn-devel += catalogname-does-not-match-pkgname|pkgname=CSWsvn-devel|catalogname=subversion_devel|expected-catalogname=svn_devel
 
 SPKG_DESC_CSWsvn-contrib   = Contributed subversion scripts
 CATALOGNAME_CSWsvn-contrib = subversion_contrib
@@ -114,6 +115,8 @@ RUNTIME_DEP_PKGS_CSWap2svn   += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWap2svn   += CSWiconv
 PKGFILES_CSWap2svn            = $(prefix)/apache2.*
 PKGFILES_CSWap2svn           += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
+CHECKPKG_OVERRIDES_CSWap2svn += catalogname-does-not-match-pkgname|pkgname=CSWap2svn|catalogname=ap2_subversion|expected-catalogname=ap2svn
+
 
 SPKG_DESC_CSWjavasvn           = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn         = javasvn
