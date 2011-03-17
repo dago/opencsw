@@ -26,6 +26,7 @@ PACKAGES += CSWlibiconv2
 CATALOGNAME_CSWlibiconv2 = libiconv2
 SPKG_DESC_CSWlibiconv2 = GNU iconv library, libiconv.so.2
 PKGFILES_CSWlibiconv2 += $(call pkgfiles_lib,libiconv.so.2)
+OBSOLETES_CSWlibiconv2 += CSWiconv
 
 PACKAGES += CSWlibcharset1
 CATALOGNAME_CSWlibcharset1 = libcharset1
@@ -34,6 +35,7 @@ PKGFILES_CSWlibcharset1 += $(call pkgfiles_lib,libcharset.so.1)
 # Now *this* time it is ok, iconv is the only package that is allowed to ship this!
 CHECKPKG_OVERRIDES_CSWlibcharset1 += disallowed-path|opt/csw/lib/charset.alias
 PKGFILES_CSWlibcharset1 += $(call baseisadirs,$(libdir),charset\.alias)
+OBSOLETES_CSWlibcharset1 += CSWiconv
 
 PACKAGES += CSWlibiconv-dev
 CATALOGNAME_CSWlibiconv-dev = libiconv_dev
@@ -58,7 +60,7 @@ CHECKPKG_OVERRIDES_CSWlibiconv-utils += soname-not-part-of-filename|soname=libic
 CHECKPKG_OVERRIDES_CSWlibiconv-utils += shared-lib-pkgname-mismatch|sonames=libiconv.so.0|pkgname=CSWlibiconv-utils|expected=CSWlibiconv0
 RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibintl8
-OBSOLETES_CSWlibiconv-utils = CSWiconv
+OBSOLETES_CSWlibiconv-utils += CSWiconv
 
 NOISAEXEC = 1
 BUILD64 = 1
