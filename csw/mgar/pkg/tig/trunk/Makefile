@@ -1,9 +1,6 @@
 NAME = tig
-VERSION = 0.14.1
+VERSION = 0.17
 CATEGORIES = utils
-PATCHLEVEL = 1e69632
-
-VENDOR_URL = http://jonas.nitro.dk/tig/
 
 DESCRIPTION = A git repository browser
 define BLURB
@@ -17,18 +14,27 @@ and showing the commit with the log message, diffstat, and the diff.
 Using it as a pager, it will display input from stdin and colorize it.
 endef
 
+MASTER_SITES = http://jonas.nitro.dk/tig/releases/
+DISTFILES = $(NAME)-$(VERSION).tar.gz
+
+VENDOR_URL = http://jonas.nitro.dk/tig/
+
+BUILD_DEP_PKGS += CSWncurses
+BUILD_DEP_PKGS += CSWasciidoc
+BUILD_DEP_PKGS += CSWxmlto
+BUILD_DEP_PKGS += CSWiconv
+
+RUNTIME_DEP_PKGS += CSWncurses
+RUNTIME_DEP_PKGS += CSWiconv
+RUNTIME_DEP_PKGS += CSWgit
+# Yes, we do need git
+CHECKPKG_OVERRIDES_CSWtig += surplus-dependency|CSWgit
+
 GARCOMPILER = GNU
 
-BUILD_DEP_PKGS = CSWncurses CSWasciidoc CSWxmlto CSWiconv
-
-RUNTIME_DEP_PKGS = CSWncurses CSWiconv CSWgit
-
-GIT_REPOS = http://jonas.nitro.dk/tig/tig.git
-GIT_TREEISH_tig.git = $(PATCHLEVEL)
-
-PATCHFILES = 0001-add-install-detection-to-the-autoconf-setup.patch
-
 sysconfdir = /etc/opt/csw
+
+EXTRA_CPPFLAGS = -I$(includedir)/ncursesw
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=$(prefix)
@@ -39,11 +45,5 @@ INSTALL_ARGS = install install-doc
 
 include gar/category.mk
 
-# Set a slightly altered revstamp to indicate that we're not using a
-# pressed release.
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(PATCHLEVEL)
-
-# automake isn't used, but we want install-sh.  automake exits 1, so
-# we run true after to keep gmake happy
-pre-configure-modulated:
-	@(cd $(WORKSRC); autoreconf; automake --add-missing; true)
+# For GNU install to be available as "install"
+PATH := /opt/csw/gnu:$(PATH)
