@@ -30,10 +30,10 @@ define BLURB
 endef
 
 PACKAGES  =  CSWruby19 CSWruby19-samples CSWruby19-ri CSWruby19-tk
-PACKAGES += CSWruby19dev
+PACKAGES += CSWruby19-dev
 
-ARCHALL_CSWruby19samples = 1
-ARCHALL_CSWruby19ri = 1
+ARCHALL_CSWruby19-samples = 1
+ARCHALL_CSWruby19-ri = 1
 
 # checkpkg overrides
 CHECKPKG_OVERRIDES_CSWruby19-dev += missing-dependency|CSWruby
