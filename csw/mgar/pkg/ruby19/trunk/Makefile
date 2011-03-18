@@ -29,50 +29,51 @@ define BLURB
   closures.
 endef
 
-PACKAGES =  CSWruby19 CSWruby19samples CSWruby19ri CSWruby19tk CSWruby19dev
+PACKAGES  =  CSWruby19 CSWruby19-samples CSWruby19-ri CSWruby19-tk
+PACKAGES += CSWruby19dev
 
 ARCHALL_CSWruby19samples = 1
 ARCHALL_CSWruby19ri = 1
 
 # checkpkg overrides
-CHECKPKG_OVERRIDES_CSWruby19dev += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby19dev += surplus-dependency|CSWruby19
-CHECKPKG_OVERRIDES_CSWruby19samples += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWruby19samples += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby19samples += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWruby19samples += surplus-dependency|CSWruby19
-CHECKPKG_OVERRIDES_CSWruby19tk += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby19tk += surplus-dependency|CSWruby19
+CHECKPKG_OVERRIDES_CSWruby19-dev += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby19-dev += surplus-dependency|CSWruby19
+CHECKPKG_OVERRIDES_CSWruby19-samples += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWruby19-samples += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby19-samples += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWruby19-samples += surplus-dependency|CSWruby19
+CHECKPKG_OVERRIDES_CSWruby19-tk += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWruby19-tk += surplus-dependency|CSWruby19
 CHECKPKG_OVERRIDES_CSWruby19 += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWruby19ri += surplus-dependency|CSWruby19
-CHECKPKG_OVERRIDES_CSWruby19tk += linked-against-discouraged-library|tcltklib.so|libX11.so.4
-CHECKPKG_OVERRIDES_CSWruby19tk += soname-not-found|libruby19.so
+CHECKPKG_OVERRIDES_CSWruby19-ri += surplus-dependency|CSWruby19
+CHECKPKG_OVERRIDES_CSWruby19-tk += linked-against-discouraged-library|tcltklib.so|libX11.so.4
+CHECKPKG_OVERRIDES_CSWruby19-tk += soname-not-found|libruby19.so
 CHECKPKG_OVERRIDES_CSWruby19 += soname-not-found|libruby19.so
 
 RUNTIME_DEP_PKGS_CSWruby19 = CSWgdbm CSWiconv CSWncurses CSWosslrt
 RUNTIME_DEP_PKGS_CSWruby19 += CSWreadline CSWzlib
-RUNTIME_DEP_PKGS_CSWruby19samples = CSWruby19
-RUNTIME_DEP_PKGS_CSWruby19tk = CSWruby19 CSWtk CSWtcl
-RUNTIME_DEP_PKGS_CSWruby19dev = CSWruby19
-RUNTIME_DEP_PKGS_CSWruby19ri = CSWruby19
+RUNTIME_DEP_PKGS_CSWruby19-samples = CSWruby19
+RUNTIME_DEP_PKGS_CSWruby19-tk = CSWruby19 CSWtk CSWtcl
+RUNTIME_DEP_PKGS_CSWruby19-dev = CSWruby19
+RUNTIME_DEP_PKGS_CSWruby19-ri = CSWruby19
 
 SPKG_DESC_CSWruby19 = $(DESCRIPTION)
 
-SPKG_DESC_CSWruby19samples = Example programs for Ruby 1.9
+SPKG_DESC_CSWruby19-samples = Example programs for Ruby 1.9
 
-SPKG_DESC_CSWruby19ri = Ruby 1.9 Interactive Reference
+SPKG_DESC_CSWruby19-ri = Ruby 1.9 Interactive Reference
 
-SPKG_DESC_CSWruby19tk = Ruby 1.9 Tcl/TK Extension
+SPKG_DESC_CSWruby19-tk = Ruby 1.9 Tcl/TK Extension
 
-SPKG_DESC_CSWruby19dev = Ruby 1.9 Extension Development Files
+SPKG_DESC_CSWruby19-dev = Ruby 1.9 Extension Development Files
 
-PKGFILES_CSWruby19samples = $(docdir)/ruby19/sample.*
+PKGFILES_CSWruby19-samples = $(docdir)/ruby19/sample.*
 
-PKGFILES_CSWruby19ri = $(datadir)/ri19.* $(bindir)/ri19
+PKGFILES_CSWruby19-ri = $(datadir)/ri19.* $(bindir)/ri19
 
-PKGFILES_CSWruby19tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
+PKGFILES_CSWruby19-tk = $(libdir)/.*/tcl.* $(libdir)/.*/tk.* $(libdir)/.*-tk.rb
 
-PKGFILES_CSWruby19dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
+PKGFILES_CSWruby19-dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*/mkmf.rb $(libdir)/.*static.a
 
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
@@ -97,7 +98,7 @@ EXTRA_LIB = $(prefix)/X11/lib
 ifdef USEGCC
 GARCOMPILER = GCC4
 RUNTIME_DEP_PKGS_CSWruby19 += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWruby19dev += CSWgcc4core
+RUNTIME_DEP_PKGS_CSWruby19-dev += CSWgcc4core
 # This is for rbconfig.rb: without this, modules built may not get a
 # proper setting.
 EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
