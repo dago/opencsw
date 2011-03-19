@@ -110,7 +110,7 @@ PKGFILES_CSWgit-gui = $(call _git_files,git-gui) $(call _git_files,git-citool)
 PKGFILES_CSWgitk = $(call _git_files,gitk)
 PKGFILES_CSWgit-cvs = $(foreach d,$(fdirs),$(d)/.*cvs.*)
 PKGFILES_CSWgit-emacs = .*emacs.*
-PKGFILES_CSWgit-doc = $(docdir)/.*
+PKGFILES_CSWgit-doc = $(docdir)/git-doc.*
 PKGFILES_CSWgit-completion = .*/bash_completion.d/.*
 PKGFILES_CSWgit-dev = $(includedir)/.* $(libdir)/.*
 
@@ -228,6 +228,7 @@ post-install-modulated:
 		cp contrib/completion/* \
 			$(BD)/ )
 	@( cd $(WORKSRC)/contrib/hooks; \
+		perl -pi -e 's!/usr/share/doc/git-core!/opt/csw/share/doc/git!' post-receive-email
 		ginstall -c -d -m 0755 $(CONTHOOKS); \
 		ginstall -c -m 0644 post-receive-email $(CONTHOOKS) )
 	@$(MAKECOOKIE)
