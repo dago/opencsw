@@ -228,7 +228,7 @@ post-install-modulated:
 		cp contrib/completion/* \
 			$(BD)/ )
 	@( cd $(WORKSRC)/contrib/hooks; \
-		perl -pi -e 's!/usr/share/doc/git-core!/opt/csw/share/doc/git!' post-receive-email
+		perl -pi -e 's!/usr/share/doc/git-core!/opt/csw/share/doc/git!' post-receive-email; \
 		ginstall -c -d -m 0755 $(CONTHOOKS); \
 		ginstall -c -m 0644 post-receive-email $(CONTHOOKS) )
 	@$(MAKECOOKIE)
