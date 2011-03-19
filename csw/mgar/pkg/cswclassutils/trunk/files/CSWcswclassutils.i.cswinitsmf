@@ -235,14 +235,16 @@ EOF
     if [ "`grep '^#AUTOENABLE' $dest`" ]; then
       AUTOENABLE=`grep '^#AUTOENABLE' $dest | awk '{print $2}' | /usr/xpg4/bin/tr -s '[:upper:]' '[:lower:]'`
     fi
-    if [ "$daemon" = "yes" -a "$AUTOENABLE" != "no" -a "$AUTOENABLE" != "false" ]; then
-      load_smf_service_state "$FMRI/$service"
-      if [ "$SMF_STATE" = "enabled" ]; then
-        echo "Clearing svc:/$FMRI/$service in case it's in the maintenance state..."
-        /usr/sbin/svcadm clear svc:/$FMRI/$service > /dev/null 2>&1
-        echo Enabling svc:/$FMRI/$service ...
-        /usr/sbin/svcadm enable svc:/$FMRI/$service > /dev/null 2>&1
-      fi
+
+    load_smf_service_state "$FMRI/$service"
+    # enable the service if it was enabled before, OR if $daemon = yes and AUTOENABLE is set
+    # previous SMF state always takes precedence
+    # note: autoenable_daemons and autoenable_$service controls $daemon, $AUTOENABLE is set by the package itself
+    if [ "$SMF_STATE" = "enabled" ] || [ "$daemon" = "yes" -a "$AUTOENABLE" != "no" -a "$AUTOENABLE" != "false" ]; then
+      echo "Clearing svc:/$FMRI/$service in case it's in the maintenance state..."
+      /usr/sbin/svcadm clear svc:/$FMRI/$service > /dev/null 2>&1
+      echo Enabling svc:/$FMRI/$service ...
+      /usr/sbin/svcadm enable svc:/$FMRI/$service > /dev/null 2>&1
     fi
   else
     # Copy the service script
