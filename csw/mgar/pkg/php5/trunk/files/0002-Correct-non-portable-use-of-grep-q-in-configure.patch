@@ -1,0 +1,29 @@
+From 15a1fff863652aa6575aa1dcd44a5f31e4424873 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 19 Mar 2011 16:55:06 +0100
+Subject: [PATCH] Correct non-portable use of grep -q in configure
+
+Discard the stdout/stderr and test exit status instead.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ configure |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index 65da668..503369a 100755
+--- a/configure
++++ b/configure
+@@ -73068,7 +73068,8 @@ EOF
+ 
+   echo $ac_n "checking for openssl dependencies""... $ac_c" 1>&6
+ echo "configure:73108: checking for openssl dependencies" >&5
+-  if grep -q openssl $PGSQL_INCLUDE/libpq-fe.h ; then
++grep openssl $PGSQL_INCLUDE/libpq-fe.h >/dev/null 2>&1
++  if [ $? -eq 0 ] ; then
+     echo "$ac_t""yes" 1>&6
+         # Extract the first word of "pkg-config", so it can be a program name with args.
+ set dummy pkg-config; ac_word=$2
+-- 
+1.7.3.2
+
