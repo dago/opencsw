@@ -31,6 +31,9 @@ LICENSE = LICENSE
 DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
+PATCHFILES += 0001-Strip-usr-ucblib-references.patch
+PATCHFILES += 0002-Correct-non-portable-use-of-grep-q-in-configure.patch
+
 PACKAGES = CSWphp5 CSWphp5-dev
 PACKAGES += CSWap2-modphp5
 PACKAGES += CSWphp5-bcmath
