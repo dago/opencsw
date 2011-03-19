@@ -12,26 +12,33 @@ VENDOR_URL = http://git-scm.org/
 
 TEST_SCRIPTS =
 
-PACKAGES = CSWgit CSWgitk CSWgitgui CSWgitsvn CSWgitcvs CSWgitemacs CSWgitdoc
-PACKAGES += CSWgitcompletion CSWgitdevel
+PACKAGES  = CSWgit CSWgitk CSWgit-gui CSWgit-svn CSWgit-cvs
+PACKAGES += CSWgit-emacs CSWgit-doc CSWgit-completion CSWgit-dev
+
+OBSOLETES_CSWgit-gui = CSWgitgui
+OBSOLETES_CSWgit-svn = CSWgitsvn
+OBSOLETES_CSWgit-emacs = CSWgitemacs
+OBSOLETES_CSWgit-doc = CSWgitdoc
+OBSOLETES_CSWgit-completion = CSWgitcompletion
+OBSOLETES_CSWgit-dev = CSWgitdevel
 
 CATALOGNAME_CSWgit = git
-CATALOGNAME_CSWgitcvs = git_cvs
-CATALOGNAME_CSWgitsvn = git_svn
-CATALOGNAME_CSWgitemacs = git_emacs
-CATALOGNAME_CSWgitgui = git_gui
-CATALOGNAME_CSWgitdoc = git_doc
+CATALOGNAME_CSWgit-cvs = git_cvs
+CATALOGNAME_CSWgit-svn = git_svn
+CATALOGNAME_CSWgit-emacs = git_emacs
+CATALOGNAME_CSWgit-gui = git_gui
+CATALOGNAME_CSWgit-doc = git_doc
 CATALOGNAME_CSWgitk = gitk
-CATALOGNAME_CSWgitcompletion = git_completion
-CATALOGNAME_CSWgitdevel = git_devel
+CATALOGNAME_CSWgit-completion = git_completion
+CATALOGNAME_CSWgit-dev = git_devel
 
-ARCHALL_CSWgitsvn = 1
-ARCHALL_CSWgitcvs = 1
+ARCHALL_CSWgit-svn = 1
+ARCHALL_CSWgit-cvs = 1
 ARCHALL_CSWgitk = 1
-ARCHALL_CSWgitgui = 1
-ARCHALL_CSWgitemacs = 1
-ARCHALL_CSWgitdoc = 1
-ARCHALL_CSWgitcompletion = 1
+ARCHALL_CSWgit-gui = 1
+ARCHALL_CSWgit-emacs = 1
+ARCHALL_CSWgit-doc = 1
+ARCHALL_CSWgit-completion = 1
 
 BUILD_DEP_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurldevel
 BUILD_DEP_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
@@ -44,21 +51,21 @@ RUNTIME_DEP_PKGS_CSWgit += CSWpmtermreadkey CSWpmnetsmtpssl CSWless
 
 RUNTIME_DEP_PKGS_CSWgitk = CSWgit CSWtk
 
-RUNTIME_DEP_PKGS_CSWgitgui = CSWgit CSWtk
+RUNTIME_DEP_PKGS_CSWgit-gui = CSWgit CSWtk
 
-RUNTIME_DEP_PKGS_CSWgitsvn = CSWgit CSWpmsvn
+RUNTIME_DEP_PKGS_CSWgit-svn = CSWgit CSWpmsvn
 
-RUNTIME_DEP_PKGS_CSWgitcvs = CSWgit CSWcvs CSWcvsps
+RUNTIME_DEP_PKGS_CSWgit-cvs = CSWgit CSWcvs CSWcvsps
 
-RUNTIME_DEP_PKGS_CSWgitemacs = CSWgit CSWemacscommon
+RUNTIME_DEP_PKGS_CSWgit-emacs = CSWgit CSWemacscommon
 
-RUNTIME_DEP_PKGS_CSWgitdoc = CSWgit
+RUNTIME_DEP_PKGS_CSWgit-doc = CSWgit
 
-RUNTIME_DEP_PKGS_CSWgitdevel = CSWgit
+RUNTIME_DEP_PKGS_CSWgit-dev = CSWgit
 
 # We include bash here even though git itself depends on it because in theory
 # git could use any other POSIX compliant shell and drop the dependency...
-RUNTIME_DEP_PKGS_CSWgitcompletion = CSWgit CSWbash CSWbashcmplt
+RUNTIME_DEP_PKGS_CSWgit-completion = CSWgit CSWbash CSWbashcmplt
 
 LICENSE = COPYING
 
@@ -71,13 +78,13 @@ endef
 
 SPKG_DESC_CSWgit = Fast Version Control System
 SPKG_DESC_CSWgitk = Git revision tree visualiser
-SPKG_DESC_CSWgitgui = Git GUI tool
-SPKG_DESC_CSWgitsvn = Git tools for working with Subversion repositories
-SPKG_DESC_CSWgitcvs = Git tools for working with CVS repositories
-SPKG_DESC_CSWgitdoc = Documentation for Git
-SPKG_DESC_CSWgitemacs = Git VCS support for Emacs
-SPKG_DESC_CSWgitcompletion = Bash completion support for Git
-SPKG_DESC_CSWgitdevel = Headers and static libraries for Git
+SPKG_DESC_CSWgit-gui = Git GUI tool
+SPKG_DESC_CSWgit-svn = Git tools for working with Subversion repositories
+SPKG_DESC_CSWgit-cvs = Git tools for working with CVS repositories
+SPKG_DESC_CSWgit-doc = Documentation for Git
+SPKG_DESC_CSWgit-emacs = Git VCS support for Emacs
+SPKG_DESC_CSWgit-completion = Bash completion support for Git
+SPKG_DESC_CSWgit-dev = Headers and static libraries for Git
 
 #NOTE: If you need to proxy git:// connections, set GIT_USE_PROXY in
 #	your .garrc file.  (That leaves this recipe in a more generic form.)
@@ -97,14 +104,14 @@ define _git_files
 $(foreach d,$(fdirs),$(d)/.*$(1).*) $(sharedstatedir)/$(1).*
 endef
 
-PKGFILES_CSWgitsvn = $(call _git_files,git-svn)
-PKGFILES_CSWgitgui = $(call _git_files,git-gui) $(call _git_files,git-citool)
+PKGFILES_CSWgit-svn = $(call _git_files,git-svn)
+PKGFILES_CSWgit-gui = $(call _git_files,git-gui) $(call _git_files,git-citool)
 PKGFILES_CSWgitk = $(call _git_files,gitk)
-PKGFILES_CSWgitcvs = $(foreach d,$(fdirs),$(d)/.*cvs.*)
-PKGFILES_CSWgitemacs = .*emacs.*
-PKGFILES_CSWgitdoc = $(docdir)/.*
-PKGFILES_CSWgitcompletion = .*/bash_completion.d/.*
-PKGFILES_CSWgitdevel = $(includedir)/.* $(libdir)/.*
+PKGFILES_CSWgit-cvs = $(foreach d,$(fdirs),$(d)/.*cvs.*)
+PKGFILES_CSWgit-emacs = .*emacs.*
+PKGFILES_CSWgit-doc = $(docdir)/.*
+PKGFILES_CSWgit-completion = .*/bash_completion.d/.*
+PKGFILES_CSWgit-dev = $(includedir)/.* $(libdir)/.*
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
@@ -139,14 +146,14 @@ MERGE_EXCLUDE_STATICLIBS =
 
 ETCSERVICES = /opt/csw/etc/pkg/CSWgit/services
 
-CHECKPKG_OVERRIDES_CSWgitcompletion += surplus-dependency|CSWbash
-CHECKPKG_OVERRIDES_CSWgitcompletion += surplus-dependency|CSWbashcmplt
-CHECKPKG_OVERRIDES_CSWgitcompletion += surplus-dependency|CSWgit
-CHECKPKG_OVERRIDES_CSWgitdoc += surplus-dependency|CSWgit
-CHECKPKG_OVERRIDES_CSWgitdoc += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWgitdevel += discouraged-path-in-pkgmap|/opt/csw/lib/git/libgit.a
-CHECKPKG_OVERRIDES_CSWgitdevel += discouraged-path-in-pkgmap|/opt/csw/lib/git/libxdiff.a
-CHECKPKG_OVERRIDES_CSWgitdevel += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgit-completion += surplus-dependency|CSWbash
+CHECKPKG_OVERRIDES_CSWgit-completion += surplus-dependency|CSWbashcmplt
+CHECKPKG_OVERRIDES_CSWgit-completion += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgit-doc += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgit-doc += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWgit-dev += discouraged-path-in-pkgmap|/opt/csw/lib/git/libgit.a
+CHECKPKG_OVERRIDES_CSWgit-dev += discouraged-path-in-pkgmap|/opt/csw/lib/git/libxdiff.a
+CHECKPKG_OVERRIDES_CSWgit-dev += surplus-dependency|CSWgit
 CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWpmerror
 CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWbash
 CHECKPKG_OVERRIDES_CSWgit += surplus-dependency|CSWosshclient
@@ -158,16 +165,16 @@ CHECKPKG_OVERRIDES_CSWgit += file-with-bad-content|/usr/local|root/opt/csw/share
 CHECKPKG_OVERRIDES_CSWgit += file-with-bad-content|/usr/share|root/opt/csw/libexec/git-core/git-send-email
 CHECKPKG_OVERRIDES_CSWgit += file-with-bad-content|/usr/share|root/opt/csw/share/gitweb/gitweb.cgi
 CHECKPKG_OVERRIDES_CSWgit += file-with-bad-content|/usr/local|root/opt/csw/libexec/git-core/git-instaweb
-CHECKPKG_OVERRIDES_CSWgitgui += surplus-dependency|CSWtk
-CHECKPKG_OVERRIDES_CSWgitgui += surplus-dependency|CSWgit
-CHECKPKG_OVERRIDES_CSWgitemacs += surplus-dependency|CSWgit
-CHECKPKG_OVERRIDES_CSWgitcvs += surplus-dependency|CSWcvsps
-CHECKPKG_OVERRIDES_CSWgitcvs += surplus-dependency|CSWgit
-CHECKPKG_OVERRIDES_CSWgitcvs += surplus-dependency|CSWcvs
+CHECKPKG_OVERRIDES_CSWgit-gui += surplus-dependency|CSWtk
+CHECKPKG_OVERRIDES_CSWgit-gui += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgit-emacs += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgit-cvs += surplus-dependency|CSWcvsps
+CHECKPKG_OVERRIDES_CSWgit-cvs += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgit-cvs += surplus-dependency|CSWcvs
 CHECKPKG_OVERRIDES_CSWgitk += surplus-dependency|CSWtk
 CHECKPKG_OVERRIDES_CSWgitk += surplus-dependency|CSWgit
-CHECKPKG_OVERRIDES_CSWgitsvn += surplus-dependency|CSWgit
-CHECKPKG_OVERRIDES_CSWgitsvn += surplus-dependency|CSWpmsvn
+CHECKPKG_OVERRIDES_CSWgit-svn += surplus-dependency|CSWgit
+CHECKPKG_OVERRIDES_CSWgit-svn += surplus-dependency|CSWpmsvn
 
 include gar/category.mk
 
