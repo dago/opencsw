@@ -21,6 +21,7 @@ OBSOLETES_CSWgit-emacs = CSWgitemacs
 OBSOLETES_CSWgit-doc = CSWgitdoc
 OBSOLETES_CSWgit-completion = CSWgitcompletion
 OBSOLETES_CSWgit-dev = CSWgitdevel
+OBSOLETES_CSWgit-cvs = CSWgitcvs
 
 CATALOGNAME_CSWgit = git
 CATALOGNAME_CSWgit-cvs = git_cvs
