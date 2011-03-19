@@ -30,7 +30,7 @@ CATALOGNAME_CSWgit-gui = git_gui
 CATALOGNAME_CSWgit-doc = git_doc
 CATALOGNAME_CSWgitk = gitk
 CATALOGNAME_CSWgit-completion = git_completion
-CATALOGNAME_CSWgit-dev = git_devel
+CATALOGNAME_CSWgit-dev = git_dev
 
 ARCHALL_CSWgit-svn = 1
 ARCHALL_CSWgit-cvs = 1
