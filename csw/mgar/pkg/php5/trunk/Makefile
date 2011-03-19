@@ -32,6 +32,7 @@ DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
 
 PATCHFILES += 0001-Strip-usr-ucblib-references.patch
+# this one is filed upstream: http://bugs.php.net/bug.php?id=54318
 PATCHFILES += 0002-Correct-non-portable-use-of-grep-q-in-configure.patch
 
 PACKAGES = CSWphp5 CSWphp5-dev
