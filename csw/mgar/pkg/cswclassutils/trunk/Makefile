@@ -1,10 +1,10 @@
 # $HeadURL$
 
 NAME = cswclassutils
-VERSION = 1.42
+VERSION = 1.43
 CATEGORIES = utils
 
-# a few handy functions for defining 'generic' things dynmaically
+# a few handy functions for defining 'generic' things dynamically
 set = $(eval $1 := $2)
 
 define cas_shortname
