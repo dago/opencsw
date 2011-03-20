@@ -19,7 +19,10 @@
 PKGPREF=CSW
 
 
-PATH=$PATH:/usr/sbin
+#Modifing path here, both to have sysadmin type tools in path, but also
+# to force use of /usr/bin/file, vs /opt/csw/gnu/file, which breaks things
+
+PATH=/usr/bin:/usr/sbin:$PATH
 
 # This is actually a base for tmpfiles, not the full name
 # Most things go into EXTRACTDIR, lower down
