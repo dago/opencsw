@@ -16,7 +16,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibxml2-2 CSWlibxml2devel CSWpy-libxml2
 
-OBSOLETS_CSWlibxml2-2 = CSWlibxml2
+OBSOLETES_CSWlibxml2-2 = CSWlibxml2
 OBSOLETES_CSWpy-libxml2 = CSWpylibxml2
 OBSOLETES_CSWlibxml2-dev = CSWlibxml2devel
 
@@ -24,11 +24,11 @@ CATALOGNAME_CSWlibxml2-2 = libxml2_2
 CATALOGNAME_CSWlibxml2-dev = libxml2_dev
 CATALOGNAME_CSWpy-libxml2 = py_libxml2
 
-SPKG_DESC_CSWlibxml2      = XML Parser Library
+SPKG_DESC_CSWlibxml2-2   = XML Parser Library
 SPKG_DESC_CSWlibxml2-dev = XML Parser Library Developer Files
-SPKG_DESC_CSWpy-libxml2    = XML Parser Library Python Bindings
+SPKG_DESC_CSWpy-libxml2  = XML Parser Library Python Bindings
 
-RUNTIME_DEP_PKGS_CSWlibxml2 = CSWiconv CSWzlib
+RUNTIME_DEP_PKGS_CSWlibxml2-2 = CSWiconv CSWzlib
 RUNTIME_DEP_PKGS_CSWlibxml2-dev = CSWlibxml2
 RUNTIME_DEP_PKGS_CSWpy-libxml2  = CSWlibpython2-6-1-0 CSWlibxml2
 RUNTIME_DEP_PKGS_CSWpy-libxml2 += CSWiconv CSWzlib
