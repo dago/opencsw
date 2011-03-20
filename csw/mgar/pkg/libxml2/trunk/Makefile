@@ -26,7 +26,7 @@ SPKG_DESC_CSWpylibxml2    = XML Parser Library Python Bindings
 
 RUNTIME_DEP_PKGS_CSWlibxml2 = CSWiconv CSWzlib
 RUNTIME_DEP_PKGS_CSWlibxml2devel = CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpylibxml2 = CSWpython CSWlibxml2 CSWiconv CSWzlib
+RUNTIME_DEP_PKGS_CSWpylibxml2 = CSWlibpython2-6-1-0 CSWlibxml2 CSWiconv CSWzlib
 
 # We don't have 64 bit Python yet
 CONFIGURE_ARGS_32 = --with-python=$(prefix)
