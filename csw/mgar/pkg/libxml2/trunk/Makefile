@@ -29,8 +29,8 @@ SPKG_DESC_CSWlibxml2-dev = XML Parser Library Developer Files
 SPKG_DESC_CSWpy-libxml2  = XML Parser Library Python Bindings
 
 RUNTIME_DEP_PKGS_CSWlibxml2-2 = CSWiconv CSWzlib
-RUNTIME_DEP_PKGS_CSWlibxml2-dev = CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpy-libxml2  = CSWlibpython2-6-1-0 CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibxml2-dev = CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWpy-libxml2  = CSWlibpython2-6-1-0 CSWpython CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWpy-libxml2 += CSWiconv CSWzlib
 
 # We don't have 64 bit Python yet
