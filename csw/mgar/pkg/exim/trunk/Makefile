@@ -17,7 +17,7 @@ endef
 MASTER_SITES = ftp://ftp.exim.org/pub/exim/exim4/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSWexim.postinstall CSWexim.postremove CSWexim.preremove
-DISTFILES += CSWexim.request
+DISTFILES += CSWexim.request CSWexim.cswreleasenotes
 
 # NOTE TO FUTURE MAINTAINERS:
 # This patch should be thoroughly reviewed for each update so as not to
@@ -76,6 +76,7 @@ CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzipextras
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzip
 CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/log
 CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/log/exim
+CHECKPKG_OVERRIDES_CSWexim += file-with-bad-content|/usr/local|root/opt/csw/sbin/exim
 
 PROTOTYPE_MODIFIERS = eximsuid eximlogs
 PROTOTYPE_PERMS_eximsuid = 4755
