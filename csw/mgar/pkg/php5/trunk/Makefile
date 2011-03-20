@@ -539,11 +539,7 @@ EXTENSION_MAKEFILES := $(wildcard extensions/*/Makefile)
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 
-export CPPFLAGS
-EXTRA_CPPFLAGS = -I../ext/mbstring
-
-EXTRA_LDFLAGS += -L$(libdir) -R$(libdir)
-LIBS += -lrt -lintl 
+#LIBS += -lrt -lintl 
 
 NOISALIST = 1
 STRIP_LIBTOOL = 1
