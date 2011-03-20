@@ -14,7 +14,7 @@ PATCHFILES = ld-symbol-handling-fixup.patch
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWlibxml2-2 CSWlibxml2devel CSWpy-libxml2
+PACKAGES = CSWlibxml2-2 CSWlibxml2-dev CSWpy-libxml2
 
 OBSOLETES_CSWlibxml2-2 = CSWlibxml2
 OBSOLETES_CSWpy-libxml2 = CSWpylibxml2
