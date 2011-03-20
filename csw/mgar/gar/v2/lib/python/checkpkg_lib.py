@@ -225,8 +225,10 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
       db_stat_objs_by_pkgname[pkg.pkginst.pkgname] = pkg
     logging.debug("Deleting old errors from the database.")
     sqo_os_rel, sqo_arch, sqo_catrel = self.GetSqlobjectTriad()
+    overrides_by_pkgname = {}
     for pkgname, db_obj in db_stat_objs_by_pkgname.iteritems():
       db_obj.RemoveCheckpkgResults(sqo_os_rel, sqo_arch, sqo_catrel)
+      overrides_by_pkgname[pkgname] = list(db_obj.GetOverridesResult())
     errors, messages, gar_lines = self.GetAllTags(self.sqo_pkgs_list)
     pbar = self.GetProgressBar()
     pbar.maxval = len(errors) + 1
@@ -239,14 +241,24 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
         if e.pkgname not in db_stat_objs_by_pkgname:
           logging.warning("Not saving an error for %s.", e.pkgname)
           continue
-        db_error = m.CheckpkgErrorTag(srv4_file=db_stat_objs_by_pkgname[e.pkgname],
-                                      pkgname=e.pkgname,
-                                      tag_name=e.tag_name,
-                                      tag_info=e.tag_info,
-                                      msg=e.msg,
-                                      os_rel=sqo_os_rel,
-                                      catrel=sqo_catrel,
-                                      arch=sqo_arch)
+        error_tag_in_db = m.CheckpkgErrorTag(
+            srv4_file=db_stat_objs_by_pkgname[e.pkgname],
+            pkgname=e.pkgname,
+            tag_name=e.tag_name,
+            tag_info=e.tag_info,
+            msg=e.msg,
+            os_rel=sqo_os_rel,
+            catrel=sqo_catrel,
+            arch=sqo_arch)
+        # Check whether any of the overrides apply to this tag, and
+        # store the result.
+        overridden = False
+        for override in overrides_by_pkgname[pkgname]:
+          if override.DoesApply(error_tag_in_db):
+            logging.debug("%s overrides %s", override, error_tag_in_db)
+            overridden = True
+            break
+        error_tag_in_db.overridden = overridden
       pbar.update(count.next())
     pbar.finish()
     flat_error_list = reduce(operator.add, errors.values(), [])
