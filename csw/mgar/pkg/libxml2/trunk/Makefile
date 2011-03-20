@@ -1,5 +1,5 @@
 NAME = libxml2
-VERSION = 2.7.7
+VERSION = 2.7.8
 CATEGORIES = lib
 
 DESCRIPTION = XML Parser Library
