@@ -443,7 +443,7 @@ if [[ $pkgname != "${PKGPREF}texinfo" ]] ; then
 fi
 
 if [[ "$badstrings" != "" ]] ; then
-	print hunting for which speficic file have bad strings in them
+	print hunting for which specific file have bad strings in them
 	p=$PWD
 	cd $EXTRACTDIR/$pkgname
 	for badpath in $badpaths ; do
