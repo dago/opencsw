@@ -538,7 +538,6 @@ EXTENSION_MAKEFILES := $(wildcard extensions/*/Makefile)
 #include $(EXTENSION_MAKEFILES)
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
-EXTRA_CFLAGS   += -I/opt/csw/include
 
 export CPPFLAGS
 EXTRA_CPPFLAGS = -I../ext/mbstring
@@ -587,8 +586,7 @@ CONFIGURE_ARGS += --enable-gd-jis-conv
 CONFIGURE_ARGS += --with-gettext=shared,$(prefix)
 CONFIGURE_ARGS += --with-gmp=shared,$(prefix)
 CONFIGURE_ARGS += --enable-hash=shared
-CONFIGURE_ARGS += --with-iconv=shared
-CONFIGURE_ARGS += --with-iconv-dir=$(prefix)
+CONFIGURE_ARGS += --with-iconv=shared,$(prefix)
 CONFIGURE_ARGS += --with-imap=shared,$(prefix)
 CONFIGURE_ARGS += --with-kerberos=$(prefix)
 CONFIGURE_ARGS += --with-imap-ssl=$(prefix)
@@ -647,7 +645,6 @@ CONFIGURE_ARGS += --enable-xmlreader=shared
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --with-xmlrpc=shared
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
-CONFIGURE_ARGS += --with-iconv-dir=$(prefix)
 CONFIGURE_ARGS += --with-libexpat-dir=$(prefix)
 CONFIGURE_ARGS += --enable-xmlwriter=shared
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
