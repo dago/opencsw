@@ -66,11 +66,10 @@ PKGFILES_CSWlibxml2-dev += $(call isadirs,$(libdir),xml2Conf.sh)
 PKGFILES_CSWpy-libxml2  = $(libdir)/python/.*
 PKGFILES_CSWpy-libxml2 += $(docdir)/pylibxml2/.*
 
+CHECKPKG_OVERRIDES_CSWlibxml2-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/libxml2/html/xml.html
+
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
-
-# override checkpkg for this
-CHECKPKG_OVERRIDES_CSWlibxml2-dev += surplus-dependency|CSWlibxml2
 
 include gar/category.mk
 
