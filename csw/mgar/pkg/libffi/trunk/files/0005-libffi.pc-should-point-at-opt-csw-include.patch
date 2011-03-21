@@ -16,7 +16,7 @@ index c2e1c7b..5f0e9db 100644
  exec_prefix=@exec_prefix@
  libdir=@libdir@
 -includedir=${libdir}/@PACKAGE_NAME@-@PACKAGE_VERSION@/include
-+includedir=${libdir}/include
++includedir=${prefix}/include
  
  Name: @PACKAGE_NAME@
  Description: Library supporting Foreign Function Interfaces
