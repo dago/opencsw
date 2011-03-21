@@ -92,17 +92,19 @@ RUNTIME_DEP_PKGS_CSWapache2       += CSWapache2c
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-dev  = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
-RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2
+RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2 CSWapache2c
 RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWapr CSWexpat CSWap2prefork
-RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWbdb48 CSWapr-util CSWiconv
+RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWbdb48 CSWapr-util CSWiconv CSWapache2c
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWap2prefork
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 
 CHECKPKG_OVERRIDES_CSWapache2-dev += file-with-bad-content|/usr/local|root/opt/csw/apache2/include/httpd.h
