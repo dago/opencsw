@@ -72,17 +72,21 @@ class Srv4Detail(object):
       overrides = pkg.GetOverridesResult()
       tags_by_cat = {}
       tags_and_catalogs = []
-      arch = pkg.arch
       osrels = models.OsRelease.select()
       catrels = models.CatalogRelease.select()
       all_tags = list(models.CheckpkgErrorTag.selectBy(srv4_file=pkg))
+      if pkg.arch.name == 'all':
+        archs = models.Architecture.select(models.Architecture.q.name!='all')
+      else:
+        archs = [arch]
       for catrel in catrels:
-        for osrel in osrels:
-          tags = pkg.GetErrorTagsResult(osrel, arch, catrel)
-          key = (osrel, arch, catrel)
-          tags = list(tags)
-          tags_by_cat[key] = tags
-          tags_and_catalogs.append((osrel, arch, catrel, tags))
+        for arch in archs:
+          for osrel in osrels:
+            tags = pkg.GetErrorTagsResult(osrel, arch, catrel)
+            key = (osrel, arch, catrel)
+            tags = list(tags)
+            tags_by_cat[key] = tags
+            tags_and_catalogs.append((osrel, arch, catrel, tags))
       return render.Srv4Detail(pkg, overrides, tags_by_cat, all_tags,
           tags_and_catalogs)
     except sqlobject.main.SQLObjectNotFound, e:
