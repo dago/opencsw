@@ -16,6 +16,9 @@ DISTFILES = $(NAME)-$(VERSION).tar.gz
 PATCHFILES += patch-bindings-perl-piped-Makefile.PL
 PATCHFILES += patch-bindings-perl-shared-Makefile.PL
 
+# This is the stub
+CATALOGNAME_CSWrrd = rrd_stub
+
 PACKAGES += CSWrrdtool
 CATALOGNAME_CSWrrdtool = rrdtool
 SPKG_DESC_CSWrrdtool = Time-series data logging and graphing
