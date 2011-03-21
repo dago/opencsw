@@ -548,6 +548,7 @@ CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
 CONFIGURE_ARGS += --enable-cli
+CONFIGURE_ARGS += --with-apxs2=/opt/csw/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --enable-magic-quotes
 CONFIGURE_ARGS += --with-pcre-regex
