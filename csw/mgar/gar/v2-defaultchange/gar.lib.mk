@@ -807,6 +807,8 @@ NODIRPATHS += --lispdir
 
 DIRPATHS = $(filter-out $(addsuffix %,$(NODIRPATHS)), $(TMP_DIRPATHS))
 
+CONFIGURE_ARGS ?= $(DIRPATHS) $(EXTRA_CONFIGURE_ARGS)
+
 # configure a package that has an autoconf-style configure
 # script.
 configure-%/configure:
@@ -928,7 +930,7 @@ clean-%/setup.py:
 
 #################### TEST RULES ####################
 
-TEST_TARGET ?= test
+TEST_TARGET ?= check
 
 # Run tests on pre-built sources
 test-%/Makefile:
