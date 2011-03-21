@@ -1,0 +1,20 @@
+$def with (cat_name, pkgs)
+<html>
+  <head>
+    <title>
+      Recently built and checked packages
+    </title>
+  </head>
+  <body>
+    <h3>$cat_name</h3>
+    <p>$pkgs.count() packages</p>
+    <ul>
+$for pkg in pkgs:
+  <li>
+  <a href="../../srv4/$pkg.md5_sum/">
+  $pkg
+  </a>
+  </li>
+</ul>
+</body>
+</html>
