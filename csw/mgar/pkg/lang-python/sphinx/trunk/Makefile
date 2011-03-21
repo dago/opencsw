@@ -11,4 +11,6 @@ define BLURB
 endef
 DISTFILES  = $(DISTNAME).tar.gz
 ARCHALL_CSWpy-sphinx = 1
+DEP_PKGS = CSWpy-pygments
+CHECKPKG_OVERRIDES_CSWpy-sphinx += surplus-dependency|CSWpy-pygments
 include gar/category.mk
