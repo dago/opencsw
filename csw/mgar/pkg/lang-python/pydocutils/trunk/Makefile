@@ -1,43 +1,29 @@
+# Copyright 2009 OpenCSW
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
 NAME = docutils
-VERSION = 0.5
-CATEGORIES = lang
-
-DESCRIPTION = Documentation Utiltiies for Python
+VERSION = 0.7
+CATEGORIES = python
+DESCRIPTION = Plaintext documentation processing system
+SPKG_DESC_CSWpy-docutils = $(DESCRIPTION)
 define BLURB
-  Documentation Utilities for Python
+  Documentation utilities for Python
 endef
-
+PACKAGES += CSWpy-docutils
+TEST_SCRIPTS =
+SPKG_SOURCEURL = http://docutils.sourceforge.net/
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
-
-ARCHALL_CSWpydocutils = 1
-PACKAGES = CSWpydocutils
-RUNTIME_DEP_PKGS_CSWpydocutils = CSWpython
+INCOMPATIBLE_PKGS_CSWpy-docutils = CSWzope
+OBSOLETES_CSWpy-docutils = CSWpydocutils
 CATALOGNAME_CSWpydocutils = pydocutils
-SPKG_DESC = Documentation Utiltiies for Python
-
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc 
-PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES = none cswpycompile
-RUNTIME_DEP_PKGS += CSWcswclassutils
-
-
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = $(WORKSRC)/setup.py
-TEST_SCRIPTS = 
-INSTALL_SCRIPTS = $(WORKSRC)/setup.py
-
-INSTALL_ARGS += --root=$(DESTDIR)
-
+ARCHALL_CSWpy-docutils = 1
+CHECKPKG_OVERRIDES_CSWpydocutils += surplus-dependency|CSWpython
 include gar/category.mk
 
 post-install:
-	install -d $(DESTDIR)$(docdir)
-	cp -R $(WORKSRC)/docs $(DESTDIR)$(docdir)/pydocutils
-	cp -R $(WORKSRC)/extras $(DESTDIR)$(docdir)/pydocutils
-	$(DONADA)
-
+	ginstall -d $(DESTDIR)$(docdir)
+	gcp -Rv $(WORKSRC)/docs $(DESTDIR)$(docdir)/pydocutils
+	gcp -Rv $(WORKSRC)/extras $(DESTDIR)$(docdir)/pydocutils
+	@$(MAKECOOKIE)
