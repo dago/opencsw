@@ -21,7 +21,7 @@
 #   ...and send the patch to the subversion dev mailing list.
 #   http://subversion.apache.org/mailing-lists.html
 
-NAME = subversion
+NAME = svn
 VERSION = 1.6.16
 CATEGORIES = utils
 
