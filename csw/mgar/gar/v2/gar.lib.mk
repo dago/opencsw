@@ -713,7 +713,7 @@ extract-archive-%: cp-extract-%
 
 #################### PATCH RULES ####################
 
-PATCHDIR ?= $(WORKSRC)
+PATCHDIR ?= $(WORKDIR)/$(DISTNAME)
 PATCHDIRLEVEL ?= 1
 PATCHDIRFUZZ ?= 2
 GARPATCH = gpatch -d$(PATCHDIR) -p$(PATCHDIRLEVEL) -F$(PATCHDIRFUZZ)
@@ -724,7 +724,7 @@ xz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@xz -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
 	@( if [ -z "$(NOGITPATCH)" ]; then \
-		cd $(WORKSRC); git add -A; \
+		cd $(PATCHDIR); git add -A; \
 		git commit -am "old xz-style patch: $*"; \
 	   fi )
 	@$(MAKECOOKIE)
@@ -734,7 +734,7 @@ bz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@bzip2 -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
 	@( if [ -z "$(NOGITPATCH)" ]; then \
-		cd $(WORKSRC); git add -A; \
+		cd $(PATCHDIR); git add -A; \
 		git commit -am "old bz-style patch: $*"; \
 	   fi )
 	@$(MAKECOOKIE)
@@ -744,7 +744,7 @@ gz-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@gzip -dc $(DOWNLOADDIR)/$* | $(GARPATCH)
 	@( if [ -z "$(NOGITPATCH)" ]; then \
-		cd $(WORKSRC); git add -A; \
+		cd $(PATCHDIR); git add -A; \
 		git commit -am "old gz-style patch: $*"; \
 	   fi )
 	@$(MAKECOOKIE)
@@ -754,7 +754,7 @@ normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
 	@( if ggrep -q 'diff --git' $(abspath $(DOWNLOADDIR)/$*); then \
 		if [ -z "$(NOGITPATCH)" ]; then \
-			cd $(WORKSRC);\
+			cd $(PATCHDIR);\
 			git am --ignore-space-change --ignore-whitespace $(abspath $(DOWNLOADDIR)/$*); \
 		else \
 			$(GARPATCH) < $(DOWNLOADDIR)/$*; \
@@ -763,7 +763,7 @@ normal-patch-%:
 		echo Adding old-style patch...; \
 		$(GARPATCH) < $(DOWNLOADDIR)/$*; \
 		if [ -z "$(NOGITPATCH)" ]; then \
-			cd $(WORKSRC); \
+			cd $(PATCHDIR); \
 			git add -A; \
 			git commit -am "old style patch: $*"; \
 		fi; \

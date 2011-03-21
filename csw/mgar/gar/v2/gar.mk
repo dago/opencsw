@@ -428,9 +428,9 @@ pre-extract-git-check:
 	@$(MAKECOOKIE)
 
 post-extract-gitsnap: $(EXTRACT_TARGETS)
-	@( if [ -d "$(WORKSRC)" ]; then \
+	@( if [ -d "$(PATCHDIR)" ]; then \
 		echo ' ==> Snapshotting extracted source tree with git'; \
-		cd $(WORKSRC); git init; git add .; \
+		cd $(PATCHDIR); git init; git add .; \
 		git commit -m "Upstream $(VERSION)"; \
 		git tag -am "Upstream $(VERSION)" upstream-$(VERSION); \
 		git checkout -b csw; \
@@ -474,9 +474,9 @@ patch-p:
 
 post-patch-gitsnap: $(PATCH_TARGETS)
 
-	@( if [ -d "$(WORKSRC)/.git" ]; then \
+	@( if [ -d "$(PATCHDIR)/.git" ]; then \
 		echo "Tagging top of current csw patch stack..."; \
-		cd $(WORKSRC); \
+		cd $(PATCHDIR); \
 		git tag -am "CSW $(VERSION)" csw-$(VERSION); \
 	  fi )
 	@$(MAKECOOKIE)
@@ -490,9 +490,9 @@ makepatch-nogit:
 
 # Allow generation of patches from modified work source.
 makepatch-modulated: $(FILEDIR)
-	@( if [ -d "$(WORKSRC)/.git" ]; then \
+	@( if [ -d "$(PATCHDIR)/.git" ]; then \
 		echo " ==> Makepatch: Looking for changes in modulation $(MODULATION)"; \
-		cd $(WORKSRC); \
+		cd $(PATCHDIR); \
 		git add -u; \
 		git diff --cached --quiet; \
 		if test $$? -eq 0; then \
