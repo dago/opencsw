@@ -17,7 +17,7 @@ PACKAGES = CSWlibxslt CSWlibxslt-dev CSWpy-libxslt
 OBSOLETES_CSWpy-libxslt = CSWpylibxslt
 OBSOLETES_CSWlibxslt-dev = CSWlibxsltdevel
 
-CATALOGNAME_CSWlibxslt-dev = libxslt_devel
+CATALOGNAME_CSWlibxslt-dev = libxslt_dev
 CATALOGNAME_CSWpy-libxslt = py_libxslt
 
 BUILD_DEP_PKGS = CSWlibxml2 CSWlibxml2devel
