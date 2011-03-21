@@ -57,7 +57,7 @@ $else:
 
 <h3>Error tags</h3>
 
-<p>Error tags in catalogs.<p>
+<p>Error tags associated with catalogs.<p>
 <ul>
 $for osrel, arch, catrel, tags_in_cat in tags_and_catalogs:
   $if tags_in_cat:
@@ -72,32 +72,13 @@ $for osrel, arch, catrel, tags_in_cat in tags_and_catalogs:
         <span style="color: gray;">
       $else:
         <span style="color: black;">
-      $tag
+      <a href="http://wiki.opencsw.org/checkpkg-error-tags#$tag.tag_name" title="Information about the $tag.tag_name tag.">$tag.tag_name</a> $tag.tag_info
       $if tag.overridden:
         (overridden)
       </span>
       </li>
     </ul>
     </li>
-</ul>
-<p>All error tags for this srv4 file.</p>
-<ul>
-$for tag in tags:
-  <li>
-  $if tag.overridden:
-    <span style="color: gray;">
-  $else:
-    <span style="color: black;">
-  <a href="http://wiki.opencsw.org/checkpkg-error-tags#$tag.tag_name" title="Information about the $tag.tag_name tag.">$tag.tag_name</a> $tag.tag_info
-  $if tag.overridden:
-    [overridden]
-  <span style="font-size: 80%">
-  ($tag.catrel.name
-  $tag.arch.name
-  $tag.os_rel.short_name)
-  </span>
-  </span>
-  </li>
 </ul>
 
 </body>
