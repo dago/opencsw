@@ -78,7 +78,7 @@ class Srv4Detail(object):
       if pkg.arch.name == 'all':
         archs = models.Architecture.select(models.Architecture.q.name!='all')
       else:
-        archs = [arch]
+        archs = [pkg.arch]
       for catrel in catrels:
         for arch in archs:
           for osrel in osrels:
