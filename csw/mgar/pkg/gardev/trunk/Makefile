@@ -59,11 +59,15 @@ CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWpy-progressbar
 CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWpy-sqlobject
 CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWpy-yaml
 
+CHECKPKG_OVERRIDES_CSWgardevel += unidentified-dependency|CSWgar-dev
+
 include gar/category.mk
 
-install-custom: DOCDIR=$(DESTDIR)/$(docdir)/$(NAME)
+install-custom: DOCDIR=$(DESTDIR)/$(docdir)/gar_dev
+install-custom: OBS_DOCDIR=$(DESTDIR)/$(docdir)/gardevel
 install-custom: $(WORKSRC)
-	@(gmkdir -p $(DOCDIR); \
+	@(gmkdir -p $(DOCDIR) $(OBS_DOCDIR); \
 		cp $(FILEDIR)/README.csw $(DOCDIR); \
-		echo 'This is a dummy package, covered by a dummy license.' >> $(DOCDIR)/license)
+		echo 'This is a dummy package, covered by a dummy license.' >> $(DOCDIR)/license; \
+		echo 'This is a dummy package, covered by a dummy license.' >> $(OBS_DOCDIR)/license)
 	@$(MAKECOOKIE)
