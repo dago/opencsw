@@ -58,3 +58,9 @@ PKGFILES_CSWpy-libxslt += $(docdir)/libxslt-python-$(VERSION)/.*
 CHECKPKG_OVERRIDES_CSWlibxslt-dev += surplus-dependency|CSWlibxslt
 
 include gar/category.mk
+
+post-merge:
+	@echo Correcting DTD reference in tutorial materials.
+	@( cd $(PKGROOT)$(docdir)/$(NAME)-$(VERSION)/html/tutorial2/; \
+		perl -pi -e 's!/usr/share!/opt/csw/share!' libxslt_pipes.xml)
+	@$(MAKECOOKIE)
