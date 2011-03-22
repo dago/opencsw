@@ -19,9 +19,22 @@ $for pkg in pkgs:
 
   $if tags_by_md5[pkg.md5_sum]:
     <ul>
-    $for tag in tags_by_md5[pkg.md5_sum]:
+    $for catrel, arch, osrel in tags_by_md5[pkg.md5_sum]:
       <li>
-      $tag
+      $catrel $arch $osrel
+      <ul>
+      $for tag in tags_by_md5[pkg.md5_sum][(catrel, arch, osrel)]:
+        <li>
+        $if tag.overridden:
+          <span class="overridden">
+        $else:
+          <span>
+        <a href="http://wiki.opencsw.org/checkpkg-error-tags#$tag.tag_name" title="Information about the $tag.tag_name tag.">$tag.tag_name</a> $tag.tag_info
+        $if tag.overridden:
+          [overridden]
+        </span>
+        </li>
+      </ul>
       </li>
     </ul>
   </li>
