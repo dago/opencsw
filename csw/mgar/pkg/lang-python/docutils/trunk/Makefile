@@ -20,9 +20,13 @@ OBSOLETES_CSWpy-docutils = CSWpydocutils
 CATALOGNAME_CSWpydocutils = pydocutils
 ARCHALL_CSWpy-docutils = 1
 CHECKPKG_OVERRIDES_CSWpydocutils += surplus-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpy-docutils += file-with-bad-content|/usr/share|root/opt/csw/share/doc/pydocutils/dev/distributing.txt
 include gar/category.mk
 
-post-install:
+post-install-modulated:
+	ginstall -m 644 \
+		$(WORKSRC)/extras/roman.py \
+		$(DESTDIR)$(libdir)/python/site-packages
 	ginstall -d $(DESTDIR)$(docdir)
 	gcp -Rv $(WORKSRC)/docs $(DESTDIR)$(docdir)/pydocutils
 	gcp -Rv $(WORKSRC)/extras $(DESTDIR)$(docdir)/pydocutils
