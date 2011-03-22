@@ -1,23 +1,29 @@
 NAME = package
-VERSION = 1.0
-CATEGORIES = category
+VERSION = 1.52
+CATEGORIES = utils
 
 DESCRIPTION = Brief description
 define BLURB
   Long description
 endef
 
-MASTER_SITES = 
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpackage,)
+MASTER_SITES = http://www.nicemice.net/par/
+DISTNAME = Par152
+DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += $(DISTNAME)-autoconf.tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+LICENSE = par.doc
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+INSTALL_SCRIPTS = custom
+
 include gar/category.mk
+
+install-custom:
+	mkdir -p $(DESTDIR)$(bindir)
+	ginstall $(WORKSRC)/par $(DESTDIR)$(bindir)/par
+	mkdir -p $(DESTDIR)$(mandir)/man1
+	ginstall $(WORKSRC)/par.1 $(DESTDIR)$(mandir)/man1/par.1
+	mkdir -p $(DESTDIR)$(docdir)/par
+	ginstall $(WORKSRC)/par.doc $(DESTDIR)$(docdir)/par/par.txt
