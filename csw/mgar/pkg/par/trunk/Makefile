@@ -1,10 +1,10 @@
-NAME = package
+NAME = par
 VERSION = 1.52
 CATEGORIES = utils
 
-DESCRIPTION = Brief description
+DESCRIPTION = Paragraph reformatter similar to fmt
 define BLURB
-  Long description
+  par is a paragraph reformatter, vaguely similar to fmt, but better.
 endef
 
 MASTER_SITES = http://www.nicemice.net/par/
