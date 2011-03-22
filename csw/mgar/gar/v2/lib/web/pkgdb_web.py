@@ -194,8 +194,13 @@ class MaintainerCheckpkgReport(object):
     tags_by_md5 = {}
     pkgs = list(pkgs)
     for pkg in pkgs:
-      tags = list(models.CheckpkgErrorTag.selectBy(srv4_file=pkg))
-      tags_by_md5.setdefault(pkg.md5_sum, tags)
+      tags = list(models.CheckpkgErrorTag.selectBy(srv4_file=pkg).orderBy(
+        ('tag_name', 'tag_info')))
+      tags_by_cat_id = {}
+      for tag in tags:
+        key = (tag.catrel.name, tag.arch.name, tag.os_rel.short_name)
+        tags_by_cat_id.setdefault(key, []).append(tag)
+      tags_by_md5.setdefault(pkg.md5_sum, tags_by_cat_id)
     return render.MaintainerCheckpkgReport(maintainer, pkgs, tags_by_md5)
 
 
