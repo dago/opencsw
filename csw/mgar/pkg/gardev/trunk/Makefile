@@ -13,6 +13,7 @@ endef
 ARCHALL = 1
 PACKAGES = CSWgar-dev
 CATALOGNAME_CSWgar-dev = gar_dev
+SPKG_DESC_CSWgar-dev = $(DESCRIPTION)
 OBSOLETES_CSWgar-dev = CSWgardevel
 
 # git and netcat are required if a GAR repo is tracking a git repo instead
