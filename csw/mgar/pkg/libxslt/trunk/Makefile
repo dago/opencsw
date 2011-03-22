@@ -14,6 +14,19 @@ PATCHFILES += 0001-Forcefully-disable-version-script-use.patch
 
 PACKAGES = CSWlibxslt CSWlibxslt-dev CSWpy-libxslt
 
+PACKAGES += CSWlibexslt0
+CATALOGNAME_CSWlibexslt0 = libexslt0
+PKGFILES_CSWlibexslt0 += $(call baseisadirs,$(libdir),libexslt\.so\.0\.8\.15)
+PKGFILES_CSWlibexslt0 += $(call baseisadirs,$(libdir),libexslt\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibexslt0 += XSLT engine runtime package, libexslt.so.0
+
+PACKAGES += CSWlibxslt1
+CATALOGNAME_CSWlibxslt1 = libxslt1
+PKGFILES_CSWlibxslt1 += $(call baseisadirs,$(libdir),libxslt\.so\.1\.1\.26)
+PKGFILES_CSWlibxslt1 += $(call baseisadirs,$(libdir),libxslt\.so\.1(\.\d+)*)
+SPKG_DESC_CSWlibxslt1 += XSLT engine runtime package, libxslt.so.1
+RUNTIME_DEP_PKGS_CSWlibxslt += CSWlibxslt1
+
 OBSOLETES_CSWpy-libxslt = CSWpylibxslt
 OBSOLETES_CSWlibxslt-dev = CSWlibxsltdevel
 
