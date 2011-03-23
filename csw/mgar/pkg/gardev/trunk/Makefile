@@ -1,4 +1,4 @@
-NAME = gar_devel
+NAME = gar_dev
 VERSION = 1.0
 CATEGORIES = devel
 
