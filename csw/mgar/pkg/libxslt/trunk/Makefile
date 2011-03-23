@@ -18,7 +18,7 @@ PACKAGES = CSWlibxslt
 SPKG_DESC_CSWlibxslt =  XSLT engine runtime package
 CATALOGNAME_CSWlibxslt = libxslt
 RUNTIME_DEP_PKGS_CSWlibxslt += CSWgcrypt CSWgpgerr CSWiconv CSWlibxml2 CSWzlib
-RUNTIME_DEP_PKGS_CSWlibxslt += CSWlibxslt1 CSWlibexslt0 CSWlibxslt1
+RUNTIME_DEP_PKGS_CSWlibxslt += CSWlibxslt1 CSWlibexslt0
 
 PACKAGES += CSWlibxslt-dev
 CATALOGNAME_CSWlibxslt-dev = libxslt_dev
