@@ -16,6 +16,9 @@ CATALOGNAME_CSWgar-dev = gar_dev
 SPKG_DESC_CSWgar-dev = $(DESCRIPTION)
 OBSOLETES_CSWgar-dev = CSWgardevel
 
+# not sure why this is required...getting odd results in this one.
+CATALOGNAME_CSWgardevel = gardevel
+
 # git and netcat are required if a GAR repo is tracking a git repo instead
 # of upstream tarballs.  svn is required for commiting gar recipes
 RUNTIME_DEP_PKGS_CSWgar-dev  = CSWgmake CSWgtar CSWggrep CSWdiffutils
@@ -58,8 +61,6 @@ CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWpy-libmagic
 CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWpy-progressbar
 CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWpy-sqlobject
 CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWpy-yaml
-
-CHECKPKG_OVERRIDES_CSWgardevel += unidentified-dependency|CSWgar-dev
 
 include gar/category.mk
 
