@@ -92,6 +92,7 @@ install-tomcat:
 	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/logs $(DESTDIR)/var/opt/csw/$(NAME) )
 	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/work $(DESTDIR)/var/opt/csw/$(NAME) )
 	( mv     $(DESTDIR)/opt/csw/share/$(NAME)/temp $(DESTDIR)/var/opt/csw/$(NAME) )
+	( rm $(DESTDIR)/var/opt/csw/tomcat6/temp/safeToDelete.tmp )
 	( ln -s /etc/opt/csw/$(NAME)/conf $(DESTDIR)/opt/csw/share/$(NAME)/conf )
 	( ln -s /var/opt/csw/$(NAME)/logs $(DESTDIR)/opt/csw/share/$(NAME)/logs )
 	( ln -s /var/opt/csw/$(NAME)/work $(DESTDIR)/opt/csw/share/$(NAME)/work )
