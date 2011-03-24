@@ -1,0 +1,36 @@
+From 776853e108fef618f562297b404e9750f1beddb4 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 24 Mar 2011 16:43:41 +0100
+Subject: [PATCH 2/2] Skip syslog tests that rely on LOG_PERROR unless it's defined
+
+Instead of checking looking at the platform to determine if the tests
+relying on LOG_PERROR should be run, look for the definition of the
+constant as this will be robust against all platforms as long as the
+underlying syslog.c code sets it up correctly.
+
+This specifically addresses failures on Solaris 9.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ test/test_syslog.rb |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/test/test_syslog.rb b/test/test_syslog.rb
+index 265b0d7..97b9254 100644
+--- a/test/test_syslog.rb
++++ b/test/test_syslog.rb
+@@ -135,8 +135,9 @@ class TestSyslog < Test::Unit::TestCase
+     stderr[1].close
+     Process.waitpid(pid)
+ 
+-    # LOG_PERROR is not yet implemented on Cygwin.
+-    return if RUBY_PLATFORM =~ /cygwin/
++    # LOG_PERROR is not implemented on Cygwin or Solaris.  Only test
++    # these on systems that define it.
++    return unless Syslog.const_defined?(:LOG_PERROR)
+ 
+     2.times {
+       assert_equal("syslog_test: test1 - hello, world!\n", stderr[0].gets)
+-- 
+1.7.3.2
+
