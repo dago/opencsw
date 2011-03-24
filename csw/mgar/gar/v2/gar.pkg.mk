@@ -63,7 +63,8 @@ RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR
 CATALOG_RELEASE ?= $(shell hostname | gsed -e 's/[0-9].*$$//')
 
 define obsoleted_pkg
-CATALOGNAME_$(1) ?= $(call catalogname,$(1))
+# function 'catalogname' must not be used due to recursive calls to CATALOGNAME_*
+CATALOGNAME_$(1) ?= $(subst -,_,$(patsubst CSW%,%,$(1)))_stub
 # The length of the description has been limited to 100 characters,
 # the string is cut (no longer on word boundaries).
 SPKG_DESC_$(1) ?= $(shell echo Transitional package. Content moved to $(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETES_$P)),$P)) | perl -npe 's/(.{100}).+/substr($$1,96) . " ..."/e')
