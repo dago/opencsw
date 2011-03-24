@@ -13,27 +13,15 @@ DISTFILES += php-mode.el
 
 BUILD_DEP_PKGS = CSWemacs
 
-PACKAGES = CSWphpmode
+PACKAGES = CSWphp-mode
 
-CATALOGNAME_CSWphpmode = php_mode
-
-RUNTIME_DEP_PKGS_CSWphpmode = CSWemacscommon CSWemacssitestart
-
-CHECKPKG_OVERRIDES_CSWphpmode += surplus-dependency|CSWemacssitestart
+SPKG_DESC_CSWphp-mode = $(DESCRIPTION)
+CATALOGNAME_CSWphp-mode = php_mode
+RUNTIME_DEP_PKGS_CSWphp-mode = CSWemacscommon CSWemacssitestart
+CHECKPKG_OVERRIDES_CSWphp-mode += surplus-dependency|CSWemacssitestart
+OBSOLETES_CSWphp-mode = CSWphpmode
 
 ARCHALL = 1
-
-SPKG_DESC_CSWphpmode = An Emacs mode for editting PHP code
-
-# We define upstream file regex so we can be notifed of new upstream
-# software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of
-# MASTER_SITES, then uncomment the next line. Otherwise it is set by
-# default to the value of MASTER_SITES
-
-# UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_SCRIPTS =
 BUILD_ARGS = php-mode.info
