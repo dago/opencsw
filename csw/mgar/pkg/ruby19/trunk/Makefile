@@ -95,17 +95,16 @@ CONFIGURE_ARGS += --enable-shared
 EXTRA_INC = $(prefix)/X11/include
 EXTRA_LIB = $(prefix)/X11/lib
 
-ifdef USEGCC
 GARCOMPILER = GCC4
-RUNTIME_DEP_PKGS_CSWruby19 += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWruby19-dev += CSWgcc4core
-# This is for rbconfig.rb: without this, modules built may not get a
-# proper setting.
-EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
-else
-GARCOMPILER = SOS12
-SOS12_LD_FLAGS =
-endif
+# RUNTIME_DEP_PKGS_CSWruby19 += CSWgcc4corert
+# RUNTIME_DEP_PKGS_CSWruby19-dev += CSWgcc4core
+# # This is for rbconfig.rb: without this, modules built may not get a
+# # proper setting.
+# EXTRA_LDFLAGS = -R $(abspath /opt/csw/gcc4/lib/$(MM_LIBDIR))
+# else
+# GARCOMPILER = SOS12
+# SOS12_LD_FLAGS =
+# endif
 
 include gar/category.mk
 
