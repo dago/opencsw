@@ -78,6 +78,9 @@ PKGFILES_CSWruby19-dev = $(includedir)/.*\.h $(libdir)/.*\.h $(libdir)/.*/mkmf.r
 MASTER_SITES = ftp://ftp.ruby-lang.org/pub/ruby/1.9/
 DISTFILES  = $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-Use-LOG_PID-instead-of-LOG_PERROR-in-Syslog.open-tes.patch
+PATCHFILES += 0002-Skip-syslog-tests-that-rely-on-LOG_PERROR-unless-it-.patch
+
 # We define upstream file regex so we can be notifed of new upstream
 # software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
