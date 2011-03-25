@@ -20,7 +20,7 @@ SPKG_DESC_CSWlibao2 = Cross-platform audio library, libao.so.2
 PKGFILES_CSWlibao2 += $(call pkgfiles_lib,libao.so.2)
 # These are private libraries
 PKGFILES_CSWlibao2 += $(call baseisadirs,$(libdir),ao/.*)
-RUNTIME_DEP_PKGS_CSWlibao2 += CSWesound
+RUNTIME_DEP_PKGS_CSWlibao2 += CSWlibesd0
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
