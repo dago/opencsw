@@ -1,0 +1,274 @@
+#!/opt/csw/bin/perl
+
+use strict;
+use warnings;
+
+use CPAN;
+use YAML qw(LoadFile);
+use File::Path;
+use File::Temp qw(:POSIX);
+use Module::Version 'get_version';
+use version 0.77; # get latest bug-fixes and API
+use Data::Dumper;
+
+# These three routines are used to capture the output of sub processes and
+# perl routines (such as CPAN::Module::get) into a log file.  If the command
+# completes successfuly, the log file is thrown away.  If the command fails,
+# the log file is printed along with an error message by calling fail.
+
+our ($verbose, $logfile, $pgm);
+sub logoutput {
+        if( ! $verbose ) {
+                $logfile = tmpnam();
+                open( OLDOUT, '>&STDOUT' );
+                open( OLDERR, '>&STDERR' );
+                open( STDOUT, "> $logfile" );
+                open( STDERR, "> $logfile" );
+        }
+}
+
+sub endlog {
+        if( ! $verbose ) {
+                # Reference fh to silence warning
+                select( OLDERR ); select( OLDOUT );
+
+                # Restore output.
+                select( STDOUT);
+                close( STDOUT );
+                open( STDOUT, ">&OLDOUT" );
+                close( STDERR );
+                open( STDERR, ">&OLDERR" );
+
+                rmtree( $logfile );
+        }
+}
+
+sub fail {
+        close( STDOUT );
+        open( STDOUT, ">&OLDOUT" );
+        close( STDERR );
+        open( STDERR, ">&OLDERR" );
+        open( LOG, "< $logfile" ) or
+        	die "$pgm: Error, @_ - can't open log\n";
+        print STDERR foreach <LOG>;
+        close( LOG );
+        rmtree( $logfile );
+        die "\n$pgm: Error, @_\n";
+}
+
+sub guess_name_from_module {
+  my $modname = shift @_;
+  my $mod = (CPAN::Shell->expand("Module", $modname))[0];
+  if( !$mod ) {
+    print STDERR "ERROR: Can not find module $modname/n";
+    return;
+  }
+  my $filename = $mod->distribution->base_id;
+  my ($name, $fileversion) = ($filename =~ /^(\D+)-(\d+(?:\.\d+)*)/);
+  my $dirname = $name;
+  my $pkgname = lc( $name );
+  $pkgname = "CSWpm-" . $pkgname;
+  return ($pkgname, $dirname);
+}
+
+sub path2pkg {
+  my @pathes = @_;
+
+  return () if( @pathes == 0 );
+
+  my %pkgs;
+  open P, "/home/dam/mgar/gar/v2/bin/pkgdb show filename " . join( " ", @pathes ) . " |" or die "Cannot open gar/bin/pkgdb";
+  while( <P> ) {
+    my $path = shift @pathes;
+    $pkgs{$path} = [ split( /\s+/, $_ ) ];
+  }
+  close P;
+
+  return %pkgs;
+}
+
+sub mod2pkg {
+  my $modname = shift @_;
+  my @result;
+  my $path = `/opt/csw/bin/perl -S /opt/csw/bin/pmpath $modname 2>&1`;
+  chomp $path;
+  if( $path =~ /Can't locate/ ) {
+    print STDERR "$modname is missing\n";
+    return;
+  }
+
+  my %pkgs = path2pkg( $path );
+  return (map { @{$pkgs{$_} or ["undef $_"]} } keys %pkgs);
+}
+
+sub dep_pkgs {
+  my $req = shift @_;
+  my @result;
+  foreach my $modname (keys %$req) {
+    my $version = version->parse( $req->{$modname} );
+    if( $modname eq "perl" ) {
+      if( version->parse($^V) < $version ) {
+        die "requires perl version $version";
+      }
+      next;
+    }
+    if( $version > version->parse( get_version($modname) ) ) {
+      print STDERR "Version of $modname is too old. Required is $version, installed is ",
+        (get_version($modname) or "nothing"), "\n";
+    }
+
+    my @pkgs = mod2pkg( $modname );
+    if( @pkgs > 1 ) {
+      print STDERR "ERROR: More than one package for module '$modname' found: @pkgs\n";
+    }
+    my $pkg = shift @pkgs;
+    if( $pkg ) {
+      print STDERR "Packages for module '$modname': $pkg\n";
+      next if( $pkg eq 'CSWperl' );
+    } else {
+      print STDERR "MISSING package for '$modname'\n";
+      # Guess name of missing module
+      my $dirname;
+      ($pkg, $dirname) = guess_name_from_module( $modname );
+      if( $pkg ) {
+        if( ! -d $dirname ) {
+          print STDERR "MISSING $pkg directory '$dirname', to build please invoke   makemake $modname\n";
+        } else {
+          print STDERR "MISSING $pkg Please build and install module in $dirname\n";
+        }
+      }
+    }
+    push @result, $pkg if( $pkg );
+  }
+
+  return @result;
+}
+
+
+
+my $modname = shift @ARGV;
+
+logoutput();
+my $mod = (CPAN::Shell->expand("Module", $modname))[0];
+endlog();
+
+die "can not locate CPAN module $modname" unless( $mod );
+
+# We need this so dependencies can be retreived
+#logoutput();
+#close( STDIN );
+#$mod->distribution->make;
+#endlog();
+# print "Make done\n";
+
+
+my $filename = $mod->cpan_file;
+my $author = (split(/\//, $filename))[2];
+my $author1 = substr($author,0,1);
+my $author2 = substr($author,0,2);
+print STDERR "WARNING: Strange username, CPAN lists " . $mod->userid . " but module is stored for $author\n" if( $author ne $mod->userid );
+
+my ($notstandard, $fileonly) = ($filename =~ m,^${author1}/${author2}/${author}/(.*/)?([^/]+)$,);
+
+# That is the version of the module which may be different than the one from the file
+# my $version = $mod->cpan_version;
+my ($name, $fileversion) = ($fileonly =~ /^(\D+)-(\d+(?:\.\d+)*)/);
+
+#print "filename: $filename\n";
+#print "notstandard: $notstandard\n";
+#print "fileonly: $fileonly\n";
+#print "name: $name\n";
+#print "fileversion: $fileversion\n";
+#print "author: $author\n";
+
+my $cswpkg = lc( $modname );
+$cswpkg =~ s/::/-/g;
+$cswpkg = "CSWpm-" . $cswpkg;
+
+my $cswcatalog = lc( $modname );
+$cswcatalog =~ s/::/_/g;
+$cswcatalog = "pm_" . $cswcatalog;
+
+
+# print "DSLIP: ", Dumper( $mod->dslip_status() );
+my $dslip = $mod->dslip_status;
+my $archall = (!defined $dslip->{L} ? 2 :
+               $dslip->{L} eq 'p'   ? 1 :
+                                      0);
+
+logoutput();
+$mod->distribution->get;
+endlog();
+#$mod->distribution->make;
+my $distdir = $mod->distribution->dir;
+
+my (@build_dep_pkgs, @runtime_dep_pkgs);
+
+my $description;
+if( -f "$distdir/META.yml" ) {
+  my $meta = LoadFile( "$distdir/META.yml" );
+  $description = $meta->{abstract} if( exists $meta->{abstract} );
+  my $req = $meta->{requires};
+  my $recommends = $meta->{recommends};
+  my $build_requires = $meta->{build_requires};
+
+  @build_dep_pkgs = dep_pkgs( $build_requires );
+  @runtime_dep_pkgs = dep_pkgs( $req );
+}
+
+$description ||= $mod->description;
+$description ||= $mod->manpage_headline;
+$description ||= $mod->distribution->as_glimpse;
+$description ||= "";
+$description = ucfirst( $description );
+chomp( $description );
+
+print "NAME = $name\n";
+print "VERSION = $fileversion\n";
+print "CATEGORIES = cpan\n";
+print "AUTHOR = $author\n";
+print "\n";
+print "DESCRIPTION = $description\n";
+print "define BLURB\n";
+print "endef\n";
+print "\n";
+
+my $upstreaminfo = 0;
+if( $notstandard ) {
+  print "MASTER_SITES = \$(addsuffix ${notstandard},\$(CPAN_MIRRORS))\n";
+  $upstreaminfo = 1;
+}
+if( $fileonly ne "${name}-${fileversion}.tar.gz" ) {
+  print "MODDIST = $fileonly\n";
+  $upstreaminfo = 1;
+}
+print "\n" if( $upstreaminfo );
+
+if( @build_dep_pkgs ) {
+  foreach my $p (@build_dep_pkgs) {
+    print "BUILD_DEP_PKGS += $p\n";
+  }
+  print "\n";
+}
+
+print "CATALOG_RELEASE = unstable\n";
+print "\n";
+
+print "PACKAGES += $cswpkg\n";
+print "CATALOGNAME_$cswpkg = $cswcatalog\n";
+
+# Do we have the package in the catalog and has it the same name?
+# dam@login [login]:/home/dam >  curl -s http://buildfarm.opencsw.org/pkgdb/rest/catalogs/current/sparc/SunOS5.9/pkgnames/CSWvim/
+# {"maintainer_full_name": "Dagobert Michelsen", "version_string": "7.3.055,REV=2010.11.25", "basename": "vim-7.3.055,REV=2010.11.25-SunOS5.9-sparc-CSW.pkg.gz", "maintainer_email": "dam@opencsw.org", "mtime": "2010-11-27 05:31:11", "file_basename": "vim-7.3.055,REV=2010.11.25-SunOS5.9-sparc-CSW.pkg.gz", "arch": "sparc", "osrel": "SunOS5.9", "size": 1026296, "md5_sum": "96bda1535071daa08372ceee7787b17b", "pkgname": "CSWvim", "rev": "2010.11.25", "filename_arch": "sparc", "version": "7.3.055,REV=2010.11.25", "cadam@login [login]:/home/dam > 
+# Or does it need to be obsoleted?
+
+print "# There was no information if this is pure Perl or not. Please remove if necessary.\n" if( $archall == 2 );
+print "ARCHALL_$cswpkg = 1\n" if( $archall );
+
+foreach my $p (@runtime_dep_pkgs) {
+  print "RUNTIME_DEP_PKGS_$cswpkg += $p\n";
+}
+
+print "\n";
+
+print "include gar/category.mk\n";
