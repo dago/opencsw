@@ -80,6 +80,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 PATCHFILES += 0001-Use-LOG_PID-instead-of-LOG_PERROR-in-Syslog.open-tes.patch
 PATCHFILES += 0002-Skip-syslog-tests-that-rely-on-LOG_PERROR-unless-it-.patch
+PATCHFILES += 0003-Use-echo-port-instead-of-http-for-gem-server-test.patch
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
