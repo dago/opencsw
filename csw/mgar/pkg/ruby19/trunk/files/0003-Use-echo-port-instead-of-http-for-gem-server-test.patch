@@ -1,0 +1,33 @@
+From f83d10012cb3f37a5e4b249ce3fb865a785bab87 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 25 Mar 2011 02:43:56 +0100
+Subject: [PATCH] Use echo port instead of http for gem server test
+
+Solaris doesn't include http in /etc/services by default which causes
+test_handle_options_port(TestGemCommandsServerCommand) in the rubygems
+test suite to fail.  Use echo instead as just about every platform
+should have that.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ test/rubygems/test_gem_commands_server_command.rb |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/test/rubygems/test_gem_commands_server_command.rb b/test/rubygems/test_gem_commands_server_command.rb
+index 780e542..c872378 100644
+--- a/test/rubygems/test_gem_commands_server_command.rb
++++ b/test/rubygems/test_gem_commands_server_command.rb
+@@ -37,8 +37,8 @@ class TestGemCommandsServerCommand < RubyGemTestCase
+     @cmd.send :handle_options, %w[-p 65535]
+     assert_equal 65535, @cmd.options[:port]
+ 
+-    @cmd.send :handle_options, %w[-p http]
+-    assert_equal 80, @cmd.options[:port]
++    @cmd.send :handle_options, %w[-p echo]
++    assert_equal 7, @cmd.options[:port]
+ 
+     e = assert_raises OptionParser::InvalidArgument do
+       @cmd.send :handle_options, %w[-p nonexistent]
+-- 
+1.7.3.2
+
