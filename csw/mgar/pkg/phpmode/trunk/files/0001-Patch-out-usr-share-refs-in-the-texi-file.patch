@@ -1,0 +1,32 @@
+From e9c8780d26d35d277467469c4daee0166a1f2b59 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 25 Mar 2011 02:31:29 +0100
+Subject: [PATCH] Patch out /usr/share refs in the texi file.
+
+No good replacement, so s/usr\/share/path\/to/.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ php-mode.texi |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/php-mode.texi b/php-mode.texi
+index 639af93..89d3510 100644
+--- a/php-mode.texi
++++ b/php-mode.texi
+@@ -851,10 +851,10 @@ setting its value in your Emacs initialization file
+ To create a file that can be set for
+ @code{php-completion-file}, create with the following shell
+ commands with the HTML version of the PHP manual installed
+-at @file{/usr/share/doc/php-manual/en/html}.
++at @file{/path/to/doc/php-manual/en/html}.
+ 
+ @example
+-$ cd /usr/share/doc/php-manual/en/html
++$ cd /path/to/doc/php-manual/en/html
+ $ ls -1 function*.html \
+   | sed -e 's/^function\.\([-a-zA-Z_0-9]*\)\.html/\1/' \
+   | tr - _ \
+-- 
+1.7.3.2
+

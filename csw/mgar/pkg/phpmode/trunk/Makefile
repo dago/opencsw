@@ -10,6 +10,7 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += php-mode.el
+PATCHFILES += 0001-Patch-out-usr-share-refs-in-the-texi-file.patch
 
 BUILD_DEP_PKGS = CSWemacs
 
