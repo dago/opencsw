@@ -23,7 +23,10 @@ SPKG_DESC_CSWlibao4 = Cross-platform audio library, libao.so.4
 PKGFILES_CSWlibao4 += $(call pkgfiles_lib,libao.so.4)
 # These are private libraries
 PKGFILES_CSWlibao4 += $(call baseisadirs,$(libdir),ao/.*)
-RUNTIME_DEP_PKGS_CSWlibao4 += CSWesound
+PKGFILES_CSWlibao4 += $(sysconfdir)/.*
+PKGFILES_CSWlibao4 += $(mandir)/.*
+RUNTIME_DEP_PKGS_CSWlibao4 += CSWlibaudiofile0
+RUNTIME_DEP_PKGS_CSWlibao4 += CSWlibesd0
 OBSOLETES_CSWlibao4 = CSWlibao
 
 PACKAGES += CSWlibao-dev
@@ -32,9 +35,24 @@ SPKG_DESC_CSWlibao-dev = Development files for libao.so.4
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibao-dev = CSWlibao4
 
+# Default is /etc/libao.conf
+LIBAO_CONF = $(sysconfdir)/libao.conf
+EXTRA_CPPFLAGS = -DAO_SYSTEM_CONFIG=\\\"$(LIBAO_CONF)\\\"
+
+PRESERVECONF = $(LIBAO_CONF)
+
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
 include gar/category.mk
+
+post-install-modulated:
+	perl -pi -e 's,/etc/libao.conf,$(LIBAO_CONF),;' \
+		$(DESTDIR)$(mandir)/man5/libao.conf.5 \
+		$(DESTDIR)$(docdir)/$(DISTNAME)/config.html
+	mkdir -p $(DESTDIR)$(dir $(LIBAO_CONF))
+	echo "default_driver=sun" > $(DESTDIR)$(LIBAO_CONF).CSW
+	@$(MAKECOOKIE)
+
