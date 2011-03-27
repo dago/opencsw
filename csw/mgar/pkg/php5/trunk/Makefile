@@ -731,3 +731,9 @@ pre-install-modulated:
 		cp $(AP2SYSCONF)/httpd.conf $(DESTDIR)$(AP2SYSCONF); \
 		cp $(APSYSCONF)/httpd.conf $(DESTDIR)$(APSYSCONF) )
 	@$(MAKECOOKIE)
+
+pre-install-modulated: APSYSCONF=/opt/csw/apache/conf/httpd.conf
+pre-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc/httpd.conf
+post-install-modulated:
+	@( rm $(DESTDIR)$(APSYSCONF) $(DESTDIR)$(AP2SYSCONF) )
+	@$(MAKECOOKIE)
