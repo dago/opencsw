@@ -8,7 +8,7 @@ Subject: [PATCH 2/2] CSW bash
  1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/wgetpaste b/wgetpaste
-index 9b40432..f536fbc 100755
+index bfaad61..9fc913e 100755
 --- a/wgetpaste
 +++ b/wgetpaste
 @@ -1,4 +1,4 @@
@@ -16,7 +16,4 @@ index 9b40432..f536fbc 100755
 +#!/opt/csw/bin/bash
  # A Script that automates pasting to a number of pastebin services
  # relying only on bash, sed, coreutils (mktemp/sort/tr/wc/whoami/tee) and wget
- # Copyright (c) 2007 Bo Ørsted Andresen <bo.andresen@zlin.dk>
--- 
-1.6.3.2
-
+ # Copyright (c) 2007-2009 Bo Ørsted Andresen <bo.andresen@zlin.dk>
