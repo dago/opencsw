@@ -3,6 +3,8 @@ NAME = proj
 VERSION = 4.7.0
 CATEGORIES = lib
 
+TEST_TARGET=check
+
 DESCRIPTION = Cartographic Projections Library
 define BLURB
 The PROJ.4 Cartographic Projections library was originally written by Gerald Evenden then of the USGS.
