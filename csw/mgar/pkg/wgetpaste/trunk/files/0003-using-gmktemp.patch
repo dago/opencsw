@@ -1,0 +1,35 @@
+From 2cec712ea2e09737008bef1ea49adeafd3f874bf Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 28 Mar 2011 01:26:52 +0200
+Subject: [PATCH] using gmktemp
+
+In attempt to fix https://www.opencsw.org/mantis/view.php?id=4316
+---
+ wgetpaste |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/wgetpaste b/wgetpaste
+index 6a17c8e..06a755a 100755
+--- a/wgetpaste
++++ b/wgetpaste
+@@ -679,7 +679,7 @@ fi
+ 
+ # create tmpfile for use with tee
+ if [[ $TEE ]]; then
+-	TMPF=$(mktemp /tmp/wgetpaste.XXXXXX)
++	TMPF=$(/opt/csw/bin/gmktemp /tmp/wgetpaste.XXXXXX)
+ 	[[ -f $TMPF ]] || die "Could not create a temporary file for use with tee."
+ fi
+ 
+@@ -775,7 +775,7 @@ if [[ $SERVICE == tinyurl ]]; then
+ else
+ 	# create temp file (wget is much more reliable reading
+ 	# large input via --post-file rather than --post-data)
+-	[[ -f $TMPF ]] || TMPF=$(mktemp /tmp/wgetpaste.XXXXXX)
++	[[ -f $TMPF ]] || TMPF=$(/opt/csw/bin/gmktemp /tmp/wgetpaste.XXXXXX)
+ 	if [[ -f $TMPF ]]; then
+ 		postdata > "$TMPF" || die "Failed to write to temporary file: \"$TMPF\"."
+ 		WGETARGS="--post-file=$TMPF"
+-- 
+1.7.4.1
+

@@ -1,0 +1,57 @@
+From d3484ffa165d4ba530268c4208b6cab51f35c993 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 28 Mar 2011 01:37:07 +0200
+Subject: [PATCH] OpenCSW-specific config directory
+
+---
+ wgetpaste |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/wgetpaste b/wgetpaste
+index 3eb47fc..d2a3629 100755
+--- a/wgetpaste
++++ b/wgetpaste
+@@ -114,7 +114,7 @@ notreadable() {
+ noxclip() {
+ 	cat <<EOF >&2
+ Could not find xclip on your system. In order to use --x$1 you must either
+-emerge x11-misc/xclip or define x_$1() globally in /etc/wgetpaste.conf or
++emerge x11-misc/xclip or define x_$1() globally in /etc/opt/csw/wgetpaste.conf or
+ per user in ~/.wgetpaste.conf to use another program (such as e.g. xcut or
+ klipper) to $2 your clipboard.
+ 
+@@ -303,11 +303,11 @@ Options:
+         --debug                   be *very* verbose (implies -v)
+ 
+     -h, --help                    show this help
+-    -g, --ignore-configs          ignore /etc/wgetpaste.conf, ~/.wgetpaste.conf etc.
++    -g, --ignore-configs          ignore /etc/opt/csw/wgetpaste.conf, ~/.wgetpaste.conf etc.
+         --version                 show version information
+ 
+ Defaults (DEFAULT_{NICK,LANGUAGE,EXPIRATION}[_\${SERVICE}] and DEFAULT_SERVICE)
+-can be overridden globally in /etc/wgetpaste.conf or /etc/wgetpaste.d/*.conf or
++can be overridden globally in /etc/opt/csw/wgetpaste.conf or /etc/opt/csw/wgetpaste.d/*.conf or
+ per user in any of ~/.wgetpaste.conf or ~/.wgetpaste.d/*.conf.
+ EOF
+ }
+@@ -586,7 +586,7 @@ load_configs() {
+ 	if [[ ! $IGNORECONFIGS ]]; then
+ 		# compatibility code
+ 		local f deprecated=
+-		for f in {/etc/,~/.}wgetpaste{.d/*.bash,}; do
++		for f in {/etc/opt/csw/,~/.}wgetpaste{.d/*.bash,}; do
+ 			if [[ -f $f ]]; then
+ 				if [[ -z $deprecated ]]; then
+ 					echo "The config files for wgetpaste have changed to *.conf.$N" >&2
+@@ -598,7 +598,7 @@ load_configs() {
+ 		done
+ 		[[ -n $deprecated ]] && echo >&2
+ 		# new locations override old ones in case they collide
+-		for f in {/etc/,~/.}wgetpaste{.d/*,}.conf; do
++		for f in {/etc/opt/csw/,~/.}wgetpaste{.d/*,}.conf; do
+ 			if [[ -f $f ]]; then
+ 				source "$f" || die "Failed to source $f"
+ 			fi
+-- 
+1.7.4.1
+
