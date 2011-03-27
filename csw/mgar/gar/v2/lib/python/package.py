@@ -380,27 +380,26 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
     may be empty.  It will always contain the valid entries.
     """
 
+    has_obsolete_info = False
     obsoleted_syntax_ok = True
     obsoleted_by = []
     obsoleted_by_path = os.path.join(self.directory, "install", "obsolete")
 
-    if not os.path.exists(obsoleted_by_path):
-      return { "syntax_ok": True,
-               "obsoleted_by": obsoleted_by,
-               "has_obsolete_info": False }
+    if os.path.exists(obsoleted_by_path):
+      has_obsolete_info = True
+      with open(obsoleted_by_path, "r") as fd:
+        for line in fd:
+          fields = re.split(c.WS_RE, line)
+          if len(fields) < 2:
+            obsoleted_syntax_ok = False
+            logging.warning("Bad line in obsolete file: %s", repr(line))
+            continue
+          pkgname, catalogname = fields[0:2]
+          obsoleted_by.append((pkgname, catalogname))
 
-    with open(obsoleted_by_path, "r") as fd:
-      for line in fd:
-        fields = re.split(c.WS_RE, line)
-        if len(fields) < 2:
-          obsoleted_syntax_ok = False
-          logging.warning("Bad line in obsolete file: %s", repr(line))
-          continue
-        pkgname, catalogname = fields[0:2]
-        obsoleted_by.append((pkgname, catalogname))
     return { "syntax_ok": obsoleted_syntax_ok,
              "obsoleted_by": obsoleted_by,
-             "has_obsolete_info": True }
+             "has_obsolete_info": has_obsolete_info }
 
   def CheckPkgpathExists(self):
     if not os.path.isdir(self.directory):
