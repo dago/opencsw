@@ -381,7 +381,7 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
     obsoleted_by_path = os.path.join(self.directory, "install", "obsolete")
 
     if not os.path.exists(obsoleted_by_path):
-      return obsoleted_by
+      return { "syntax_ok": True, "obsoleted_by": obsoleted_by }
 
     with open(obsoleted_by_path, "r") as fd:
       for line in fd:
