@@ -3,7 +3,7 @@ NAME = proj
 VERSION = 4.7.0
 CATEGORIES = lib
 
-TEST_TARGET=check
+GARTYPE = v2-defaultchange
 
 DESCRIPTION = Cartographic Projections Library
 define BLURB
