@@ -12,6 +12,7 @@ endef
 
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += $(NAME)-datumgrid-1.5.zip
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
