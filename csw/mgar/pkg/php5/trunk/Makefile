@@ -24,7 +24,7 @@ PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 VENDOR_URL     = http://www.php.net/
 MASTER_SITES   = http://us.php.net/distributions/
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
-STRIP_DIRS    := $(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
+#STRIP_DIRS    := $(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
 
 LICENSE = LICENSE
 
@@ -548,7 +548,6 @@ CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --with-exec-dir=$(prefix)/php5/bin
 CONFIGURE_ARGS += --enable-cli
-CONFIGURE_ARGS += --with-apxs2=/opt/csw/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --enable-magic-quotes
 CONFIGURE_ARGS += --with-pcre-regex
@@ -721,3 +720,14 @@ CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
 include files/scripts.mk
 include gar/category.mk
+
+# this allows apxs to install the module.  stupid, but i couldn't make
+# the darn thing _not_ do try to add the httpd.conf lines, even with
+# patching...
+pre-install-modulated: APSYSCONF=/opt/csw/apache/conf
+pre-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc
+pre-install-modulated:
+	@(mkdir -p $(DESTDIR)$(AP2SYSCONF) $(DESTDIR)$(APSYSCONF); \
+		cp $(AP2SYSCONF)/httpd.conf $(DESTDIR)$(AP2SYSCONF); \
+		cp $(APSYSCONF)/httpd.conf $(DESTDIR)$(APSYSCONF) )
+	@$(MAKECOOKIE)
