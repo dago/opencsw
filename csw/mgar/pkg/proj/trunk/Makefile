@@ -41,3 +41,7 @@ SPKG_DESC_CSWproj-data = Data files used by $(NAME)
 PKGFILES_CSWproj-data = /opt/csw/share/$(NAME)/.*
 
 include gar/category.mk
+
+zip-extract-proj-datumgrid-1.5.zip:
+	@(unzip -d $(WORKSRC)/nad $(DOWNLOADDIR)/proj-datumgrid-1.5.zip)
+	@$(MAKECOOKIE)
