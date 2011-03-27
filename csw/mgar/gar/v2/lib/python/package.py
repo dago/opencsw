@@ -358,6 +358,42 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
     fd.close()
     return depends
 
+  def GetObsoletedBy(self):
+    """Collects obsolescence information from the package if it exists
+
+    Documentation:
+    http://wiki.opencsw.org/obsoleting-packages
+
+    Returns:
+    A dictionary of "syntax_ok" and "obsoleted_by" where obsoleted_by
+    is a list of (pkgname, catalogname) tuples and syntax_ok is a
+    boolean.
+
+    If the package has not been obsoleted or the package predates the
+    implementation of this mechanism, obsoleted_by is an empty list.
+    If the package provides obsolescence information but the format of
+    the information is invalid, syntax_ok will be False and the list
+    may be empty.  It will always contain the valid entries.
+    """
+
+    obsoleted_syntax_ok = True
+    obsoleted_by = []
+    obsoleted_by_path = os.path.join(self.directory, "install", "obsolete")
+
+    if not os.path.exists(obsoleted_by_path):
+      return obsoleted_by
+
+    with open(obsoleted_by_path, "r") as fd:
+      for line in fd:
+        fields = re.split(c.WS_RE, line)
+        if len(fields) < 2:
+          obsoleted_syntax_ok = False
+          logging.warning("Bad line in obsolete file: %s", repr(line))
+          continue
+        pkgname, catalogname = fields[0:2]
+        obsoleted_by.append((pkgname, catalogname))
+    return { "syntax_ok": obsoleted_syntax_ok, "obsoleted_by": obsoleted_by }
+
   def CheckPkgpathExists(self):
     if not os.path.isdir(self.directory):
       raise PackageError("%s does not exist or is not a directory"
