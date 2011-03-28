@@ -216,7 +216,7 @@ class CheckpkgManagerBase(SqlobjectHelperMixin):
   def Run(self):
     """Runs all the checks
 
-    Returns a tuple of an exit code and a report.
+    Returns a tuple of (exit code, report).
     """
     self._ResetState()
     assert self.sqo_pkgs_list, "The list of packages must not be empty."
@@ -412,6 +412,7 @@ class CheckInterfaceBase(object):
     self.needed_pkgs.append(NeededPackage(pkgname, needed_pkg, reason))
 
   def ReportErrorForPkgname(self, pkgname, tag_name, tag_info=None, msg=None):
+    # TODO: Make this bit use the CheckpkgErrorTag class from models.py
     checkpkg_tag = tag.CheckpkgTag(pkgname, tag_name, tag_info, msg=msg)
     self.AddError(checkpkg_tag)
 

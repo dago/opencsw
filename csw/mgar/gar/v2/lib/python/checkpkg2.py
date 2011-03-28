@@ -150,7 +150,6 @@ def main():
     args = (sqo_osrel, sqo_arch, sqo_catrel)
     tag_lists = [list(pkg.GetErrorTagsResult(*args)) for pkg in sqo_pkgs]
     error_tags = reduce(operator.add, tag_lists)
-    # TODO: Set the 'overriden' tag for specific error tags
     (tags_after_overrides,
      unapplied_overrides) = overrides.ApplyOverrides(error_tags, override_list)
     tags_for_all_osrels.extend(tags_after_overrides)
