@@ -36,7 +36,6 @@ digraph connections {
 		label = "unstable{9,10}{s,x}";
 	}
 	mail_server [label="mail server"];
-	mail_server -> maintainer;
 	cron [shape=circle];
 	cron -> catalog_generator;
 	cron -> catalog_notifier;
