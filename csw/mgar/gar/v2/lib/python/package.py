@@ -342,20 +342,32 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
     self.SetPkginfoEntry("NAME", pkginfo_name)
 
   def GetDependencies(self):
+    """Gets dependencies information.
+
+    Returns:
+      A tuple of (list, list) of depends and i_depends.
+    """
+    # The collection of dependencies needs to be a list (as opposed to
+    # a set) because there might be duplicates and it's necessary to
+    # carry that information.
     depends = []
+    i_depends = []
     depend_file_path = os.path.join(self.directory, "install", "depend")
     if not os.path.exists(depend_file_path):
       return depends
     with open(depend_file_path, "r") as fd:
-      # It needs to be a list because there might be duplicates and it's
-      # necessary to carry that information.
       for line in fd:
         fields = re.split(c.WS_RE, line)
+        if len(fields) < 2:
+          logging.warning("Bad depends line: %s", repr(line))
         if fields[0] == "P":
           pkgname = fields[1]
           pkg_desc = " ".join(fields[1:])
           depends.append((pkgname, pkg_desc))
-    return depends
+        if fields[0] == "I":
+          pkgname = fields[1]
+          i_depends.append(pkgname)
+    return depends, i_depends
 
   def GetObsoletedBy(self):
     """Collects obsolescence information from the package if it exists
