@@ -20,7 +20,8 @@ import rest
 import struct_util
 
 
-BASE_URL = "http://buildfarm.opencsw.org/releases/"
+BASE_URL = "http://buildfarm.opencsw.org"
+RELEASES_APP = "/releases"
 DEFAULT_CATREL = "unstable"
 USAGE = """%prog [ options ] <pkg1> [ <pkg2> [ ... ] ]
 
@@ -61,12 +62,14 @@ class DataError(Error):
 
 class Srv4Uploader(object):
 
-  def __init__(self, filenames, os_release=None, debug=False):
+  def __init__(self, filenames, rest_url, os_release=None, debug=False):
+    super(Srv4Uploader, self).__init__()
     self.filenames = filenames
     self.md5_by_filename = {}
     self.debug = debug
-    self._rest_client = rest.RestClient()
     self.os_release = os_release
+    self.rest_url = rest_url
+    self._rest_client = rest.RestClient(self.rest_url)
 
   def Upload(self):
     for filename in self.filenames:
@@ -106,8 +109,8 @@ class Srv4Uploader(object):
     parsed_basename = opencsw.ParsePackageFileName(basename)
     # TODO: Move this bit to a separate class (RestClient)
     url = (
-        "%scatalogs/unstable/%s/%s/%s/"
-        % (BASE_URL, arch, osrel, md5_sum))
+        "%s%s/catalogs/unstable/%s/%s/%s/"
+        % (self.rest_url, RELEASES_APP, arch, osrel, md5_sum))
     logging.debug("DELETE @ URL: %s %s", type(url), url)
     c = pycurl.Curl()
     d = StringIO()
@@ -257,8 +260,8 @@ class Srv4Uploader(object):
     parsed_basename = opencsw.ParsePackageFileName(basename)
     logging.debug("parsed_basename: %s", parsed_basename)
     url = (
-        "%scatalogs/unstable/%s/%s/%s/"
-        % (BASE_URL, arch, osrel, md5_sum))
+        "%s%s/catalogs/unstable/%s/%s/%s/"
+        % (self.rest_url, RELEASES_APP, arch, osrel, md5_sum))
     logging.debug("URL: %s %s", type(url), url)
     c = pycurl.Curl()
     d = StringIO()
@@ -299,7 +302,7 @@ class Srv4Uploader(object):
 
   def _GetSrv4FileMetadata(self, md5_sum):
     logging.debug("_GetSrv4FileMetadata(%s)", repr(md5_sum))
-    url = BASE_URL + "srv4/" + md5_sum + "/"
+    url = self.rest_url + RELEASES_APP + "/srv4/" + md5_sum + "/"
     c = pycurl.Curl()
     d = StringIO()
     h = StringIO()
@@ -330,7 +333,7 @@ class Srv4Uploader(object):
     c = pycurl.Curl()
     d = StringIO()
     h = StringIO()
-    url = BASE_URL + "srv4/"
+    url = self.rest_url + RELEASES_APP + "/srv4/"
     c.setopt(pycurl.URL, url)
     c.setopt(pycurl.POST, 1)
     post_data = [
@@ -370,6 +373,10 @@ if __name__ == '__main__':
   parser.add_option("--os-release",
       dest="os_release",
       help="If specified, only uploads to the specified OS release.")
+  parser.add_option("--rest-url",
+      dest="rest_url",
+      default=BASE_URL,
+      help="Base URL for REST, e.g. %s" % BASE_URL)
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -383,6 +390,7 @@ if __name__ == '__main__':
   if os_release:
     os_release = struct_util.OsReleaseToLong(os_release)
   uploader = Srv4Uploader(args,
+                          options.rest_url,
                           os_release=os_release,
                           debug=options.debug)
   if options.remove:
