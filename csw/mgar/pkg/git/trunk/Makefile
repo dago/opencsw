@@ -14,13 +14,13 @@ TEST_SCRIPTS =
 PACKAGES  = CSWgit CSWgitk CSWgit-gui CSWgit-svn CSWgit-cvs
 PACKAGES += CSWgit-emacs CSWgit-doc CSWgit-completion CSWgit-dev
 
-OBSOLETES_CSWgit-gui = CSWgitgui
-OBSOLETES_CSWgit-svn = CSWgitsvn
-OBSOLETES_CSWgit-emacs = CSWgitemacs
-OBSOLETES_CSWgit-doc = CSWgitdoc
-OBSOLETES_CSWgit-completion = CSWgitcompletion
-OBSOLETES_CSWgit-dev = CSWgitdevel
-OBSOLETES_CSWgit-cvs = CSWgitcvs
+OBSOLETED_BY_CSWgit-gui = CSWgitgui
+OBSOLETED_BY_CSWgit-svn = CSWgitsvn
+OBSOLETED_BY_CSWgit-emacs = CSWgitemacs
+OBSOLETED_BY_CSWgit-doc = CSWgitdoc
+OBSOLETED_BY_CSWgit-completion = CSWgitcompletion
+OBSOLETED_BY_CSWgit-dev = CSWgitdevel
+OBSOLETED_BY_CSWgit-cvs = CSWgitcvs
 
 CATALOGNAME_CSWgit = git
 CATALOGNAME_CSWgit-cvs = git_cvs
