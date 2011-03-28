@@ -1,6 +1,12 @@
 # $Id$
 # coding=utf-8
 
+"""Code related to overrides.
+
+The override class is now in the models.py file, because it's one of the
+SQLObject classes, with objects persisted in the database.
+"""
+
 import copy
 import re
 import configuration as c

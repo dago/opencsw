@@ -230,6 +230,7 @@ class Indexer(object):
     args = ["uname"]
     if uname_option:
       args.append(uname_option)
+    # TODO: Don't fork during unit tests
     uname_proc = subprocess.Popen(args,
                                   stdout=subprocess.PIPE)
     stdout, stderr = uname_proc.communicate()
