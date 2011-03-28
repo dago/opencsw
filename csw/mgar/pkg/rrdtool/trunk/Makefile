@@ -31,7 +31,7 @@ RUNTIME_DEP_PKGS_CSWrrdtool += CSWtcpwrap
 RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibdbi1
 RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibrrd4
 RUNTIME_DEP_PKGS_CSWrrdtool += CSWlibrrd-th4
-OBSOLETES_CSWrrdtool = CSWrrd
+OBSOLETED_BY_CSWrrdtool = CSWrrd
 
 PACKAGES += CSWrrdtool-dev
 CATALOGNAME_CSWrrdtool-dev = rrdtool_dev
@@ -73,7 +73,7 @@ PKGFILES_CSWpm-rrdtool += $(sharedstatedir)/rrdtool/examples/.*
 PKGFILES_CSWpm-rrdtool += .*\.3perl
 RUNTIME_DEP_PKGS_CSWpm-rrdtool += CSWperl
 RUNTIME_DEP_PKGS_CSWpm-rrdtool += CSWlibrrd4
-OBSOLETES_CSWpm-rrdtool = CSWrrd
+OBSOLETED_BY_CSWpm-rrdtool = CSWrrd
 
 PACKAGES += CSWpy-rrdtool
 CATALOGNAME_CSWpy-rrdtool = py_rrdtool
@@ -82,7 +82,7 @@ PKGFILES_CSWpy-rrdtool = $(libdir)/python/.*
 RUNTIME_DEP_PKGS_CSWpy-rrdtool += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-rrdtool += CSWlibrrd4
 RUNTIME_DEP_PKGS_CSWpy-rrdtool += CSWlibintl8
-OBSOLETES_CSWpy-rrdtool = CSWrrd
+OBSOLETED_BY_CSWpy-rrdtool = CSWrrd
 
 PACKAGES += CSWrb-rrdtool
 CATALOGNAME_CSWrb-rrdtool = rb_rrdtool
@@ -90,7 +90,7 @@ SPKG_DESC_CSWpy-rrdtool = Python egg for RRD access (part of RRDtool)
 PKGFILES_CSWrb-rrdtool = $(libdir)/ruby/.*
 RUNTIME_DEP_PKGS_CSWrb-rrdtool += CSWlibruby1
 RUNTIME_DEP_PKGS_CSWrb-rrdtool += CSWlibrrd4
-OBSOLETES_CSWrb-rrdtool = CSWrrd
+OBSOLETED_BY_CSWrb-rrdtool = CSWrrd
 # This is crappy and needs fixing, unfortunately inside extconf.rb which is hard.
 CHECKPKG_OVERRIDES_CSWrb-rrdtool += bad-rpath-entry
 

@@ -48,13 +48,13 @@ CHECKPKG_OVERRIDES_CSWlibtool += surplus-dependency|CSWlibltdl7
 
 # This is built from pkgs/libltdl3
 FOREIGN_PACKAGES += CSWlibltdl3
-OBSOLETES_CSWlibltdl3 += CSWlibtoolrt
+OBSOLETED_BY_CSWlibltdl3 += CSWlibtoolrt
 
 PACKAGES += CSWlibltdl7
 CATALOGNAME_CSWlibltdl7 = libltdl7
 SPKG_DESC_CSWlibltdl7 = Libtool libltdl.so.7 from libtool 2.x
 PKGFILES_CSWlibltdl7 += $(PKGFILES_RT)
-OBSOLETES_CSWlibltdl7 += CSWlibtoolrt
+OBSOLETED_BY_CSWlibltdl7 += CSWlibtoolrt
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz

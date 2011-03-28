@@ -18,7 +18,7 @@ PACKAGES += CSWlibogg0
 CATALOGNAME_CSWlibogg0 = libogg0
 SPKG_DESC_CSWlibogg0 = Ogg bitstream format support library providing libogg.so.0
 PKGFILES_CSWlibogg0 = $(call baseisadirs,$(libdir),libogg\.so\.0(\.\d+)*)
-OBSOLETES_CSWlibogg0 = CSWlibogg
+OBSOLETED_BY_CSWlibogg0 = CSWlibogg
 
 PACKAGES += CSWlibogg-dev
 CATALOGNAME_CSWlibogg-dev = libogg_dev

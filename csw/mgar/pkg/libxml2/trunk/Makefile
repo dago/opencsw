@@ -16,9 +16,9 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 PACKAGES = CSWlibxml2-2 CSWlibxml2-dev CSWpy-libxml2
 
-OBSOLETES_CSWlibxml2-2 = CSWlibxml2
-OBSOLETES_CSWpy-libxml2 = CSWpylibxml2
-OBSOLETES_CSWlibxml2-dev = CSWlibxml2devel
+OBSOLETED_BY_CSWlibxml2-2 = CSWlibxml2
+OBSOLETED_BY_CSWpy-libxml2 = CSWpylibxml2
+OBSOLETED_BY_CSWlibxml2-dev = CSWlibxml2devel
 
 CATALOGNAME_CSWlibxml2-2 = libxml2_2
 CATALOGNAME_CSWlibxml2-dev = libxml2_dev

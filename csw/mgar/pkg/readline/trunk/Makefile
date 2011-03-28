@@ -20,15 +20,15 @@ VENDOR_URL = http://tiswww.case.edu/php/chet/readline/rltop.html
 
 # From pkg/readline43
 FOREIGN_PACKAGES += CSWlibhistory4
-OBSOLETES_CSWlibhistory4 = CSWreadline
+OBSOLETED_BY_CSWlibhistory4 = CSWreadline
 FOREIGN_PACKAGES += CSWlibreadline4
-OBSOLETES_CSWlibreadline4 = CSWreadline
+OBSOLETED_BY_CSWlibreadline4 = CSWreadline
 
 # From pkg/readline52
 FOREIGN_PACKAGES += CSWlibhistory5
-OBSOLETES_CSWlibhistory5 = CSWreadline
+OBSOLETED_BY_CSWlibhistory5 = CSWreadline
 FOREIGN_PACKAGES += CSWlibreadline5
-OBSOLETES_CSWlibreadline5 = CSWreadline
+OBSOLETED_BY_CSWlibreadline5 = CSWreadline
 
 PACKAGES += CSWlibhistory6
 CATALOGNAME_CSWlibhistory6 = libhistory6
@@ -37,14 +37,14 @@ PKGFILES_CSWlibhistory6 = $(call pkgfiles_lib,libhistory.so.6)
 # This dependency is not really necessary, just because we unconditionally add
 # "-lncurses" to LDFLAGS as this does not happen automatically.
 RUNTIME_DEP_PKGS_CSWlibhistory6 += CSWncurses
-OBSOLETES_CSWlibhistory6 = CSWreadline
+OBSOLETED_BY_CSWlibhistory6 = CSWreadline
 
 PACKAGES += CSWlibreadline6
 CATALOGNAME_CSWlibreadline6 = libreadline6
 SPKG_DESC_CSWlibreadline6 = GNU readline library, libreadline.so.6
 PKGFILES_CSWlibreadline6 = $(call pkgfiles_lib,libreadline.so.6)
 RUNTIME_DEP_PKGS_CSWlibreadline6 += CSWncurses
-OBSOLETES_CSWlibreadline6 = CSWreadline
+OBSOLETED_BY_CSWlibreadline6 = CSWreadline
 
 PACKAGES += CSWlibreadline-dev
 CATALOGNAME_CSWlibreadline-dev = libreadline_dev
