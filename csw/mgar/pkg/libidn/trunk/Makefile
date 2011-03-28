@@ -39,7 +39,7 @@ SPKG_DESC_CSWlibidn-utils = GNU IDN utilities
 RUNTIME_DEP_PKGS_CSWlibidn-utils += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWlibidn-utils += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWlibidn-utils += CSWiconv
-OBSOLETES_CSWlibidn-utils = CSWlibidn
+OBSOLETED_BY_CSWlibidn-utils = CSWlibidn
 
 BUILD64 = 1
 NOISAEXEC = 1

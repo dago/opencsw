@@ -15,7 +15,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL = http://www.xiph.org/ao/
 
 FOREIGN_PACKAGES += CSWlibao2
-OBSOLETES_CSWlibao2 = CSWlibao
+OBSOLETED_BY_CSWlibao2 = CSWlibao
 
 PACKAGES += CSWlibao4
 CATALOGNAME_CSWlibao4 = libao4
@@ -27,7 +27,7 @@ PKGFILES_CSWlibao4 += $(sysconfdir)/.*
 PKGFILES_CSWlibao4 += $(mandir)/.*
 RUNTIME_DEP_PKGS_CSWlibao4 += CSWlibaudiofile0
 RUNTIME_DEP_PKGS_CSWlibao4 += CSWlibesd0
-OBSOLETES_CSWlibao4 = CSWlibao
+OBSOLETED_BY_CSWlibao4 = CSWlibao
 
 PACKAGES += CSWlibao-dev
 CATALOGNAME_CSWlibao-dev = libao_dev

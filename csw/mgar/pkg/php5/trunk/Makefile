@@ -97,7 +97,7 @@ BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 CATALOGNAME_CSWmod-php5 = mod_php5
 SPKG_DESC_CSWmod-php5 = The apache 1.3.x php5 module
 RUNTIME_DEP_PKGS_CSWmod-php5 = CSWphp5 CSWapache CSWlibxml2 CSWiconv
-OBSOLETES_CSWmod-php5 = CSWmodphp5
+OBSOLETED_BY_CSWmod-php5 = CSWmodphp5
 
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
@@ -106,100 +106,100 @@ INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash
 CATALOGNAME_CSWphp5-dev   = php5_dev
 SPKG_DESC_CSWphp5-dev     = Development files for php5
 RUNTIME_DEP_PKGS_CSWphp5-dev      = CSWphp5
-OBSOLETES_CSWphp5-dev = CSWphp5devel
+OBSOLETED_BY_CSWphp5-dev = CSWphp5devel
 
 CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
 SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
-OBSOLETES_CSWap2-modphp5 = CSWap2modphp5
+OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
 
 CATALOGNAME_CSWphp5-bcmath = php5_bcmath
 SPKG_DESC_CSWphp5-bcmath = The bcmath extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-bcmath = CSWphp5
-OBSOLETES_CSWphp5-bcmath = CSWphp5bcmath
+OBSOLETED_BY_CSWphp5-bcmath = CSWphp5bcmath
 
 CATALOGNAME_CSWphp5-bz2 = php5_bz2
 SPKG_DESC_CSWphp5-bz2 = The bz2 extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-bz2 = CSWphp5 CSWbzip2
-OBSOLETES_CSWphp5-bz2 = CSWphp5bz2
+OBSOLETED_BY_CSWphp5-bz2 = CSWphp5bz2
 
 CATALOGNAME_CSWphp5-calendar = php5_calendar
 SPKG_DESC_CSWphp5-calendar = The calendar extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-calendar = CSWphp5
-OBSOLETES_CSWphp5-calendar = CSWphp5calendar
+OBSOLETED_BY_CSWphp5-calendar = CSWphp5calendar
 
 CATALOGNAME_CSWphp5-ctype = php5_ctype
 SPKG_DESC_CSWphp5-ctype = The ctype extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-ctype = CSWphp5
-OBSOLETES_CSWphp5-ctype = CSWphp5ctype
+OBSOLETED_BY_CSWphp5-ctype = CSWphp5ctype
 
 CATALOGNAME_CSWphp5-curl = php5_curl
 SPKG_DESC_CSWphp5-curl = The curl extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-curl  = CSWphp5 CSWcurlrt CSWlibidn11 
 RUNTIME_DEP_PKGS_CSWphp5-curl += CSWoldaprt CSWosslrt CSWzlib CSWlibcares
-OBSOLETES_CSWphp5-curl = CSWphp5curl
+OBSOLETED_BY_CSWphp5-curl = CSWphp5curl
 
 CATALOGNAME_CSWphp5-dba = php5_dba
 SPKG_DESC_CSWphp5-dba = The dba extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-dba = CSWphp5 CSWlibgdbm3 CSWbdb42
-OBSOLETES_CSWphp5-dba = CSWphp5dba
+OBSOLETED_BY_CSWphp5-dba = CSWphp5dba
 
 CATALOGNAME_CSWphp5-dbase = php5_dbase
 SPKG_DESC_CSWphp5-dbase = The dbase extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-dbase = CSWphp5
-OBSOLETES_CSWphp5-dbase = CSWphp5dbase
+OBSOLETED_BY_CSWphp5-dbase = CSWphp5dbase
 
 CATALOGNAME_CSWphp5-dom = php5_dom
 SPKG_DESC_CSWphp5-dom = The dom extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-dom = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
-OBSOLETES_CSWphp5-dom = CSWphp5dom
+OBSOLETED_BY_CSWphp5-dom = CSWphp5dom
 
 CATALOGNAME_CSWphp5-exif = php5_exif
 SPKG_DESC_CSWphp5-exif = The exif extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-exif = CSWphp5
-OBSOLETES_CSWphp5-exif = CSWphp5exif
+OBSOLETED_BY_CSWphp5-exif = CSWphp5exif
 
 CATALOGNAME_CSWphp5-ftp = php5_ftp
 SPKG_DESC_CSWphp5-ftp = The ftp extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-ftp = CSWphp5 CSWosslrt
-OBSOLETES_CSWphp5-ftp = CSWphp5ftp
+OBSOLETED_BY_CSWphp5-ftp = CSWphp5ftp
 
 CATALOGNAME_CSWphp5-gd = php5_gd
 SPKG_DESC_CSWphp5-gd = The gd extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-gd  = CSWphp5 CSWftype2 CSWlibgd2 CSWjpeg
 RUNTIME_DEP_PKGS_CSWphp5-gd += CSWpng CSWt1lib CSWxpm CSWzlib
-OBSOLETES_CSWphp5-gd = CSWphp5gd
+OBSOLETED_BY_CSWphp5-gd = CSWphp5gd
 
 CATALOGNAME_CSWphp5-gettext = php5_gettext
 SPKG_DESC_CSWphp5-gettext = The gettext extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-gettext = CSWphp5 CSWlibintl8
-OBSOLETES_CSWphp5-gettext = CSWphp5gettext
+OBSOLETED_BY_CSWphp5-gettext = CSWphp5gettext
 
 CATALOGNAME_CSWphp5-gmp = php5_gmp
 SPKG_DESC_CSWphp5-gmp = The gmp extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-gmp = CSWphp5 CSWlibgmp
-OBSOLETES_CSWphp5-gmp = CSWphp5gmp
+OBSOLETED_BY_CSWphp5-gmp = CSWphp5gmp
 
 CATALOGNAME_CSWphp5-hash = php5_hash
 SPKG_DESC_CSWphp5-hash = The hash extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-hash = CSWphp5
-OBSOLETES_CSWphp5-hash = CSWphp5hash
+OBSOLETED_BY_CSWphp5-hash = CSWphp5hash
 
 CATALOGNAME_CSWphp5-iconv = php5_iconv
 SPKG_DESC_CSWphp5-iconv = The iconv extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-iconv = CSWphp5
-OBSOLETES_CSWphp5-iconv = CSWphp5iconv
+OBSOLETED_BY_CSWphp5-iconv = CSWphp5iconv
 
 CATALOGNAME_CSWphp5-imap = php5_imap
 SPKG_DESC_CSWphp5-imap = The imap extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-imap = CSWphp5 CSWimaprt CSWkrb5lib CSWosslrt
-OBSOLETES_CSWphp5-imap = CSWphp5imap
+OBSOLETED_BY_CSWphp5-imap = CSWphp5imap
 
 CATALOGNAME_CSWphp5-json = php5_json
 SPKG_DESC_CSWphp5-json = The json extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-json = CSWphp5
-OBSOLETES_CSWphp5-json = CSWphp5json
+OBSOLETED_BY_CSWphp5-json = CSWphp5json
 
 CATALOGNAME_CSWphp5-ldap = php5_ldap
 SPKG_DESC_CSWphp5-ldap = The ldap extension for PHP5
@@ -208,178 +208,178 @@ RUNTIME_DEP_PKGS_CSWphp5-ldap = CSWphp5 CSWoldaprt CSWsasl
 CATALOGNAME_CSWphp5-mbstring = php5_mbstring
 SPKG_DESC_CSWphp5-mbstring = The mbstring extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mbstring = CSWphp5
-OBSOLETES_CSWphp5-mbstring = CSWphp5mbstring
+OBSOLETED_BY_CSWphp5-mbstring = CSWphp5mbstring
 
 CATALOGNAME_CSWphp5-mcrypt = php5_mcrypt
 SPKG_DESC_CSWphp5-mcrypt = The mcrypt extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mcrypt = CSWphp5 CSWlibmcrypt CSWlibltdl7
-OBSOLETES_CSWphp5-mcrypt = CSWphp5mcrypt
+OBSOLETED_BY_CSWphp5-mcrypt = CSWphp5mcrypt
 
 CATALOGNAME_CSWphp5-mssql = php5_mssql
 SPKG_DESC_CSWphp5-mssql = The mssql extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mssql = CSWphp5 CSWfreetds
-OBSOLETES_CSWphp5-mssql = CSWphp5mssql
+OBSOLETED_BY_CSWphp5-mssql = CSWphp5mssql
 
 CATALOGNAME_CSWphp5-mysql = php5_mysql
 SPKG_DESC_CSWphp5-mysql = The mysql extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mysql = CSWphp5 CSWmysql5rt
-OBSOLETES_CSWphp5-mysql = CSWphp5mysql
+OBSOLETED_BY_CSWphp5-mysql = CSWphp5mysql
 
 CATALOGNAME_CSWphp5-mysqli = php5_mysqli
 SPKG_DESC_CSWphp5-mysqli = The mysqli extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mysqli = CSWphp5 CSWmysql5rt CSWzlib
-OBSOLETES_CSWphp5-mysqli = CSWphp5mysqli
+OBSOLETED_BY_CSWphp5-mysqli = CSWphp5mysqli
 
 CATALOGNAME_CSWphp5-ncurses = php5_ncurses
 SPKG_DESC_CSWphp5-ncurses = The ncurses extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-ncurses = CSWphp5 CSWncurses
-OBSOLETES_CSWphp5-ncurses = CSWphp5ncurses
+OBSOLETED_BY_CSWphp5-ncurses = CSWphp5ncurses
 
 CATALOGNAME_CSWphp5-odbc = php5_odbc
 SPKG_DESC_CSWphp5-odbc = The odbc extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-odbc = CSWphp5 CSWunixodbc
-OBSOLETES_CSWPhp5-odbc = CSWphp5odbc
+OBSOLETED_BY_CSWPhp5-odbc = CSWphp5odbc
 
 CATALOGNAME_CSWphp5-openssl = php5_openssl
 SPKG_DESC_CSWphp5-openssl = The openssl extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-openssl = CSWphp5 CSWosslrt CSWkrb5lib
-OBSOLETES_CSWphp5-openssl = CSWphp5openssl
+OBSOLETED_BY_CSWphp5-openssl = CSWphp5openssl
 
 CATALOGNAME_CSWphp5-pcntl = php5_pcntl
 SPKG_DESC_CSWphp5-pcntl = The pcntl extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-pcntl = CSWphp5
-OBSOLETES_CSWphp5-pcntl = CSWphp5pcntl
+OBSOLETED_BY_CSWphp5-pcntl = CSWphp5pcntl
 
 CATALOGNAME_CSWphp5-pdo = php5_pdo
 SPKG_DESC_CSWphp5-pdo = A database access abstraction module for PHP applications
 RUNTIME_DEP_PKGS_CSWphp5-pdo = CSWphp5 
-OBSOLETES_CSWphp5-pdo = CSWphp5pdo
+OBSOLETED_BY_CSWphp5-pdo = CSWphp5pdo
 
 CATALOGNAME_CSWphp5-pdomysql = php5_pdomysql
 SPKG_DESC_CSWphp5-pdomysql = A MySQL specific database access abstraction module for PHP applications (pdo version)
 RUNTIME_DEP_PKGS_CSWphp5-pdomysql = CSWphp5 CSWmysql5rt CSWzlib CSWphp5-pdo
-OBSOLETES_CSWphp5-pdomysql = CSWphp5pdomysql
+OBSOLETED_BY_CSWphp5-pdomysql = CSWphp5pdomysql
 
 CATALOGNAME_CSWphp5-pdoodbc = php5_pdoodbc
 SPKG_DESC_CSWphp5-pdoodbc = An ODBC specific database access abstraction module for PHP applications
 RUNTIME_DEP_PKGS_CSWphp5-pdoodbc = CSWphp5 CSWunixodbc CSWphp5-pdo
-OBSOLETES_CSWphp5-pdoodbc = CSWphp5pdoodbc
+OBSOLETED_BY_CSWphp5-pdoodbc = CSWphp5pdoodbc
 
 CATALOGNAME_CSWphp5-pdopgsql = php5_pdopgsql
 SPKG_DESC_CSWphp5-pdopgsql = A PgSQL specific database access abstraction module for PHP applications (pdo version)
 RUNTIME_DEP_PKGS_CSWphp5-pdopgsql = CSWphp5 CSWlibpq CSWphp5-pdo
-OBSOLETES_CSWphp5-pdopgsql = CSWphp5pdopgsql
+OBSOLETED_BY_CSWphp5-pdopgsql = CSWphp5pdopgsql
 
 CATALOGNAME_CSWphp5-pdosqlite = php5_pdosqlite
 SPKG_DESC_CSWphp5-pdosqlite = A Sqlite specific database access abstraction module for PHP applications (pdo version)
 RUNTIME_DEP_PKGS_CSWphp5-pdosqlite = CSWphp5 CSWphp5-pdo CSWsqlite3rt
-OBSOLETES_CSWphp5-pdosqlite = CSWphp5pdosqlite
+OBSOLETED_BY_CSWphp5-pdosqlite = CSWphp5pdosqlite
 
 CATALOGNAME_CSWphp5-pgsql = php5_pgsql
 SPKG_DESC_CSWphp5-pgsql = The pgsql extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-pgsql = CSWphp5 CSWlibpq
-OBSOLETES_CSWphp5-pgsql = CSWphp5pgsql
+OBSOLETED_BY_CSWphp5-pgsql = CSWphp5pgsql
 
 CATALOGNAME_CSWphp5-posix = php5_posix
 SPKG_DESC_CSWphp5-posix = The posix extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-posix = CSWphp5
-OBSOLETES_CSWphp5-posix = CSWphp5posix
+OBSOLETED_BY_CSWphp5-posix = CSWphp5posix
 
 CATALOGNAME_CSWphp5-pspell = php5_pspell
 SPKG_DESC_CSWphp5-pspell = The pspell extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-pspell = CSWphp5 CSWaspell
-OBSOLETES_CSWphp5-pspell = CSWphp5pspell
+OBSOLETED_BY_CSWphp5-pspell = CSWphp5pspell
 
 CATALOGNAME_CSWphp5-readline = php5_readline
 SPKG_DESC_CSWphp5-readline = The readline extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-readline = CSWphp5 CSWreadline CSWncurses
-OBSOLETES_CSWphp5-readline = CSWphp5readline
+OBSOLETED_BY_CSWphp5-readline = CSWphp5readline
 
 CATALOGNAME_CSWphp5-session = php5_session
 SPKG_DESC_CSWphp5-session = The session extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-session = CSWphp5 CSWlibmm
-OBSOLETES_CSWphp5-session = CSWphp5session
+OBSOLETED_BY_CSWphp5-session = CSWphp5session
 
 CATALOGNAME_CSWphp5-shmop = php5_shmop
 SPKG_DESC_CSWphp5-shmop = The shmop extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-shmop = CSWphp5
-OBSOLETES_CSWphp5-shmop = CSWphp5shmop
+OBSOLETED_BY_CSWphp5-shmop = CSWphp5shmop
 
 CATALOGNAME_CSWphp5-snmp = php5_snmp
 SPKG_DESC_CSWphp5-snmp = The snmp extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-snmp = CSWphp5 CSWnetsnmp
-OBSOLETES_CSWphp5-snmp = CSWphp5snmp
+OBSOLETED_BY_CSWphp5-snmp = CSWphp5snmp
 
 CATALOGNAME_CSWphp5-soap = php5_soap
 SPKG_DESC_CSWphp5-soap = The soap extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-soap = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
-OBSOLETES_CSWphp5-soap = CSWphp5soap
+OBSOLETED_BY_CSWphp5-soap = CSWphp5soap
 
 CATALOGNAME_CSWphp5-sockets = php5_sockets
 SPKG_DESC_CSWphp5-sockets = The sockets extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-sockets = CSWphp5
-OBSOLETES_CSWphp5-sockets = CSWphp5sockets
+OBSOLETED_BY_CSWphp5-sockets = CSWphp5sockets
 
 CATALOGNAME_CSWphp5-sqlite = php5_sqlite
 SPKG_DESC_CSWphp5-sqlite = The sqlite extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-sqlite = CSWphp5 CSWsqlite
-OBSOLETES_CSWphp5-sqlite = CSWphp5sqlite
+OBSOLETED_BY_CSWphp5-sqlite = CSWphp5sqlite
 
 CATALOGNAME_CSWphp5-sysvmsg = php5_sysvmsg
 SPKG_DESC_CSWphp5-sysvmsg = The sysvmsg extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-sysvmsg = CSWphp5
-OBSOLETES_CSWphp5-sysvmsg = CSWphp5sysvmsg
+OBSOLETED_BY_CSWphp5-sysvmsg = CSWphp5sysvmsg
 
 CATALOGNAME_CSWphp5-sysvsem = php5_sysvsem
 SPKG_DESC_CSWphp5-sysvsem = The sysvsem extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-sysvsem = CSWphp5
-OBSOLETES_CSWphp5-sysvsem = CSWphp5sysvsem
+OBSOLETED_BY_CSWphp5-sysvsem = CSWphp5sysvsem
 
 CATALOGNAME_CSWphp5-sysvshm = php5_sysvshm
 SPKG_DESC_CSWphp5-sysvshm = The sysvshm extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-sysvshm = CSWphp5
-OBSOLETES_CSWphp5-sysvshm = CSWphp5sysvshm
+OBSOLETED_BY_CSWphp5-sysvshm = CSWphp5sysvshm
 
 CATALOGNAME_CSWphp5-tidy = php5_tidy
 SPKG_DESC_CSWphp5-tidy = The tidy extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-tidy = CSWphp5 CSWhtmltidy
-OBSOLETES_CSWphp5-tidy = CSWphp5tidy
+OBSOLETED_BY_CSWphp5-tidy = CSWphp5tidy
 
 CATALOGNAME_CSWphp5-tokenizer = php5_tokenizer
 SPKG_DESC_CSWphp5-tokenizer = The tokenizer extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-tokenizer = CSWphp5
-OBSOLETES_CSWphp5-tokenizer = CSWphp5tokenizer
+OBSOLETED_BY_CSWphp5-tokenizer = CSWphp5tokenizer
 
 CATALOGNAME_CSWphp5-wddx = php5_wddx
 SPKG_DESC_CSWphp5-wddx = The wddx extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-wddx = CSWphp5
-OBSOLETES_CSWphp5-wddx = CSWphp5wddx
+OBSOLETED_BY_CSWphp5-wddx = CSWphp5wddx
 
 CATALOGNAME_CSWphp5-xmlreader = php5_xmlreader
 SPKG_DESC_CSWphp5-xmlreader = The xmlreader extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-xmlreader = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
-OBSOLETES_CSWphp5-xmlreader = CSWphp5xmlreader
+OBSOLETED_BY_CSWphp5-xmlreader = CSWphp5xmlreader
 
 CATALOGNAME_CSWphp5-xmlrpc = php5_xmlrpc
 SPKG_DESC_CSWphp5-xmlrpc = The xmlrpc extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-xmlrpc = CSWphp5 CSWiconv CSWexpat
-OBSOLETES_CSWphp5-xmlrpc = CSWphp5xmlrpc
+OBSOLETED_BY_CSWphp5-xmlrpc = CSWphp5xmlrpc
 
 CATALOGNAME_CSWphp5-xmlwriter = php5_xmlwriter
 SPKG_DESC_CSWphp5-xmlwriter = The xmlwriter extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-xmlwriter = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
-OBSOLETES_CSWphp5-xmlwriter = CSWphp5xmlwriter
+OBSOLETED_BY_CSWphp5-xmlwriter = CSWphp5xmlwriter
 
 CATALOGNAME_CSWphp5-xsl = php5_xsl
 SPKG_DESC_CSWphp5-xsl = The xsl extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-xsl  = CSWphp5 CSWiconv CSWlibxml2 
 RUNTIME_DEP_PKGS_CSWphp5-xsl += CSWlibxslt CSWzlib
-OBSOLETES_CSWphp5-xsl = CSWphp5xsl
+OBSOLETED_BY_CSWphp5-xsl = CSWphp5xsl
 
 CATALOGNAME_CSWphp5-zip = php5_zip
 SPKG_DESC_CSWphp5-zip = The zip extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-zip = CSWphp5 CSWzlib
-OBSOLETES_CSWphp5-zip = CSWphp5zip
+OBSOLETED_BY_CSWphp5-zip = CSWphp5zip
 
 PKGFILES_CSWphp5-dev  = $(bindir)/php-config
 PKGFILES_CSWphp5-dev += $(bindir)/phpize
