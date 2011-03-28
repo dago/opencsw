@@ -15,7 +15,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-params-check 
 CATALOGNAME = pm_params_check 
 SPKG_DESC_CSWpm-params-check = $(DESCRIPTION)
-OBSOLETES_CSWpm-params-check = CSWpmprmscheck
+OBSOLETED_BY_CSWpm-params-check = CSWpmprmscheck
 CATALOGNAME_CSWpmprmscheck = pm_prmscheck
 
 ARCHALL = 1

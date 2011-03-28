@@ -16,7 +16,7 @@ DISTFILES += CSWpm-config-inifiles.cswreleasenotes
 PACKAGES = CSWpm-config-inifiles
 CATALOGNAME_CSWpm-config-inifiles = pm_config_inifiles
 SPKG_DESC_CSWpm-config-inifiles = $(DESCRIPTION)
-OBSOLETES_CSWpm-config-inifiles = CSWpmcfginifls
+OBSOLETED_BY_CSWpm-config-inifiles = CSWpmcfginifls
 CATALOGNAME_CSWpmcfginifls = pm_configinifiles
 
 ARCHALL = 1

@@ -15,7 +15,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-term-ui
 CATALOGNAME = pm_term_ui
 SPKG_DESC_CSWpm-term-ui = $(DESCRIPTION)
-OBSOLETES_CSWpm-term-ui = CSWpmtermui
+OBSOLETED_BY_CSWpm-term-ui = CSWpmtermui
 CATALOGNAME_CSWpmtermui = pm_termui
 
 ARCHALL = 1

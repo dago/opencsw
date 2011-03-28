@@ -15,7 +15,7 @@ PACKAGES = CSWpm-ipc-cmd
 CATALOGNAME = pm_ipc_cmd 
 SPKG_DESC_CSWpm-ipc-cmd = $(DESCRIPTION)
 ARCHALL = 1
-OBSOLETES_CSWpm-ipc-cmd = CSWpmipccmd
+OBSOLETED_BY_CSWpm-ipc-cmd = CSWpmipccmd
 CATALOGNAME_CSWpmipccmd = pm_ipccmd
 
 RUNTIME_DEP_PKGS = CSWpmlclemktxtsimple CSWpmmodloadcond CSWpmprmscheck

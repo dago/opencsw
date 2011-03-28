@@ -16,7 +16,7 @@ DISTFILES = COPYING
 PACKAGES = CSWpm-pod-simple
 CATALOGNAME = pm_pod_simple
 SPKG_DESC_CSWpm-pod-simple = $(DESCRIPTION)
-OBSOLETES_CSWpm-pod-simple = CSWpmpodsimple
+OBSOLETED_BY_CSWpm-pod-simple = CSWpmpodsimple
 CATALOGNAME_CSWpmpodsimple = pm_podsimple
 
 ARCHALL = 1

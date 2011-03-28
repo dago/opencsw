@@ -22,14 +22,14 @@ PACKAGES += CSWlibaudiofile0
 CATALOGNAME_CSWlibaudiofile0 = libaudiofile0
 SPKG_DESC_CSWlibaudiofile0 = Silican Graphics audio file library, libaudiofile.so.0
 PKGFILES_CSWlibaudiofile0 = $(call pkgfiles_lib,libaudiofile.so.0)
-OBSOLETES_CSWlibaudiofile0 = CSWaudiofile
+OBSOLETED_BY_CSWlibaudiofile0 = CSWaudiofile
 
 PACKAGES += CSWlibaudiofile-utils
 CATALOGNAME_CSWlibaudiofile-utils = libaudiofile_utils
 SPKG_DESC_CSWlibaudiofile-utils = Utility programs from Silicon Graphics audio file library
 PKGFILES_CSWlibaudiofile-utils = $(call baseisadirs,$(bindir),sf.*)
 RUNTIME_DEP_PKGS_CSWlibaudiofile-utils += CSWlibaudiofile0
-OBSOLETES_CSWlibaudiofile-utils = CSWaudiofile
+OBSOLETED_BY_CSWlibaudiofile-utils = CSWaudiofile
 
 PACKAGES += CSWlibaudiofile-dev
 CATALOGNAME_CSWlibaudiofile-dev = libaudiofile_dev

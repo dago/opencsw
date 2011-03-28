@@ -13,7 +13,7 @@ PACKAGES += CSWpm-devel-stacktrace
 CATALOGNAME_CSWpm-devel-stacktrace = pm_devel_stacktrace
 SPKG_DESC_CSWpm-devel-stacktrace = $(DESCRIPTION)
 ARCHALL_CSWpm-devel-stacktrace = 1
-OBSOLETES_CSWpm-devel-stacktrace = CSWpmdevstacktrace
+OBSOLETED_BY_CSWpm-devel-stacktrace = CSWpmdevstacktrace
 CATALOGNAME_CSWpmdevstacktrace = pm_devstacktrace
 
 include gar/category.mk

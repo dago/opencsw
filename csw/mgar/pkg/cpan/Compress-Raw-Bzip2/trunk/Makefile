@@ -14,7 +14,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-compress-raw-bzip2
 CATALOGNAME = pm_compress_raw_bzip2
 SPKG_DESC_CSWpm-compress-raw-bzip2 = $(DESCRIPTION)
-OBSOLETES_CSWpm-compress-raw-bzip2 = CSWpmcompressrawbz2
+OBSOLETED_BY_CSWpm-compress-raw-bzip2 = CSWpmcompressrawbz2
 CATALOGNAME_CSWpmcompressrawbz2 = pm_compressrawbz2
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*

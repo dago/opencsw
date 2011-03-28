@@ -25,7 +25,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-io-compress
 CATALOGNAME = pm_io_compress
 SPKG_DESC_CSWpm-io-compress = $(DESCRIPTION)
-OBSOLETES_CSWpm-io-compress = CSWpmiocompress
+OBSOLETED_BY_CSWpm-io-compress = CSWpmiocompress
 CATALOGNAME_CSWpmiocompress = pm_iocompress
 
 ARCHALL = 1

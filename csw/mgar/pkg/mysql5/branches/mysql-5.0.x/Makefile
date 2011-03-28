@@ -53,13 +53,13 @@ PACKAGES += CSWlibmysqlclient15
 PKGFILES_CSWlibmysqlclient15 += $(call baseisadirs,$(libdir),libmysqlclient\.so\.15(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient15 += MySQL $(BASE_VERSION) client library, libmysqlclient.so.15
 RUNTIME_DEP_PKGS_CSWlibmysqlclient15 += CSWzlib
-OBSOLETES_CSWlibmysqlclient15 += CSWmysql5rt
+OBSOLETED_BY_CSWlibmysqlclient15 += CSWmysql5rt
 
 PACKAGES += CSWlibmysqlclient-r15
 PKGFILES_CSWlibmysqlclient-r15 += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.15(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient-r15 += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.15
 RUNTIME_DEP_PKGS_CSWlibmysqlclient-r15 += CSWzlib
-OBSOLETES_CSWlibmysqlclient-r15 += CSWmysql5rt
+OBSOLETED_BY_CSWlibmysqlclient-r15 += CSWmysql5rt
 
 PACKAGES += CSW$(NAME)client
 SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries

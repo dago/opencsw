@@ -15,7 +15,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-file-fetch
 CATALOGNAME = pm_file_fetch
 SPKG_DESC_CSWpm-file-fetch = $(DESCRIPTION)
-OBSOLETES_CSWpm-file-fetch = CSWpmfilefetch
+OBSOLETED_BY_CSWpm-file-fetch = CSWpmfilefetch
 CATALOGNAME_CSWpmfilefetch = pm_filefetch
 
 ARCHALL = 1

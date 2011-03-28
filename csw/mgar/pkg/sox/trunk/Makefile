@@ -61,7 +61,7 @@ SPKG_DESC_CSWlibsox-dev = SOX Library Development Files
 PKGFILES_CSWlibsox-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibsox-dev = CSWlibsox1
 
-OBSOLETES_CSWlibsox-dev = CSWlibsoxdevel
+OBSOLETED_BY_CSWlibsox-dev = CSWlibsoxdevel
 CATALOGNAME_CSWlibsoxdevel = libsox_devel
 
 BUILD_DEP_PKGS += $(RUNTIME_DEP_PKGS_CSWsox)

@@ -34,7 +34,7 @@ RUNTIME_DEP_PKGS_CSWlibid3-3-8-3 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibid3-utils += CSWlibid3-3-8-3
 RUNTIME_DEP_PKGS_CSWlibid3-utils += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibid3-utils += CSWzlib
-OBSOLETES_CSWlibid3-utils = CSWid3lib
+OBSOLETED_BY_CSWlibid3-utils = CSWid3lib
 
 EXTRA_LDFLAGS = -norunpath
 

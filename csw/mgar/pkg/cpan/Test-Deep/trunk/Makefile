@@ -13,7 +13,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-test-deep
 CATALOGNAME = pm_test_deep
 SPKG_DESC_CSWpm-test-deep = $(DESCRIPTION)
-OBSOLETES_CSWpm-test-deep = CSWpmtestdeep
+OBSOLETED_BY_CSWpm-test-deep = CSWpmtestdeep
 CATALOGNAME_CSWpmtestdeep = pm_testdeep
 
 ARCHALL = 1

@@ -15,7 +15,7 @@ PACKAGES = CSWpm-log-message-simple
 CATALOGNAME = pm_log_message_simple 
 SPKG_DESC_CSWpm-log-message-simple = $(DESCRIPTION)
 ARCHALL = 1
-OBSOLETES_CSWpm-log-message-simple = CSWpmlogmsgsimple
+OBSOLETED_BY_CSWpm-log-message-simple = CSWpmlogmsgsimple
 CATALOGNAME_CSWpmlogmsgsimple = pm_logmsgsimple
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*

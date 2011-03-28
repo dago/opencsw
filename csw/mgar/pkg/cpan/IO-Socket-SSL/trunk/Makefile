@@ -18,7 +18,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-io-socket-ssl
 CATALOGNAME = pm_io_socket_ssl
 SPKG_DESC_CSWpm-io-socket-ssl = $(DESCRIPTION)
-OBSOLETES_CSWpm-io-socket-ssl = CSWpmiosocketssl
+OBSOLETED_BY_CSWpm-io-socket-ssl = CSWpmiosocketssl
 CATALOGNAME_CSWpmiosocketssl = pm_iosocketssl
 
 ARCHALL = 1

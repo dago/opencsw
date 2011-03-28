@@ -13,7 +13,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-class-accessor-chained
 CATALOGNAME = pm_class_accessor_chained
 SPKG_DESC_CSWpm-class-accessor-chained = $(DESCRIPTION)
-OBSOLETES_CSWpm-class-accessor-chained = CSWpmclsaccessorchnd
+OBSOLETED_BY_CSWpm-class-accessor-chained = CSWpmclsaccessorchnd
 CATALOGNAME_CSWpmclsaccessorchnd = pm_clsaccessorchnd
 
 ARCHALL = 1

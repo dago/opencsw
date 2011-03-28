@@ -17,7 +17,7 @@ PACKAGES = CSWpm-ldap
 CATALOGNAME = pm_ldap
 SPKG_DESC_CSWpm-ldap = $(DESCRIPTION)
 ARCHALL = 1
-OBSOLETES_CSWpm-ldap = CSWpmldap
+OBSOLETED_BY_CSWpm-ldap = CSWpmldap
 CATALOGNAME_CSWpmldap = pm_ldap_stub
 
 # Harmless /usr/local references

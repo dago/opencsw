@@ -22,7 +22,7 @@ SPKG_DESC_CSWlibvorbis0 = Vorbis codec library, libvorbis.so.0
 PKGFILES_CSWlibvorbis0 += $(call baseisadirs,$(libdir),libvorbis\.so\.0(\.\d+)*)
 RUNTIME_DEP_PKGS_CSWlibvorbis0 += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWlibvorbis0 += CSWsunmath
-OBSOLETES_CSWlibvorbis0 = CSWvorbis
+OBSOLETED_BY_CSWlibvorbis0 = CSWvorbis
 
 PACKAGES += CSWlibvorbisenc2
 CATALOGNAME_CSWlibvorbisenc2 = libvorbisenc2
@@ -31,7 +31,7 @@ PKGFILES_CSWlibvorbisenc2 += $(call baseisadirs,$(libdir),libvorbisenc\.so\.2(\.
 RUNTIME_DEP_PKGS_CSWlibvorbisenc2 += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWlibvorbisenc2 += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWlibvorbisenc2 += CSWsunmath
-OBSOLETES_CSWlibvorbisenc2 = CSWvorbis
+OBSOLETED_BY_CSWlibvorbisenc2 = CSWvorbis
 
 PACKAGES += CSWlibvorbisfile3
 CATALOGNAME_CSWlibvorbisfile3 = libvorbisfile3
@@ -40,7 +40,7 @@ PKGFILES_CSWlibvorbisfile3 += $(call baseisadirs,$(libdir),libvorbisfile\.so\.3(
 RUNTIME_DEP_PKGS_CSWlibvorbisfile3 += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWlibvorbisfile3 += CSWlibvorbis0
 RUNTIME_DEP_PKGS_CSWlibvorbisfile3 += CSWsunmath
-OBSOLETES_CSWlibvorbisfile3 = CSWvorbis
+OBSOLETED_BY_CSWlibvorbisfile3 = CSWvorbis
 
 PACKAGES += CSWlibvorbis-dev
 CATALOGNAME_CSWlibvorbis-dev = libvorbis_dev

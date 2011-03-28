@@ -13,7 +13,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-mime-base64
 CATALOGNAME = pm_mime_base64
 SPKG_DESC_CSWpm-mime-base64 = $(DESCRIPTION)
-OBSOLETES_CSWpm-mime-base64 = CSWpmmimebase64
+OBSOLETED_BY_CSWpm-mime-base64 = CSWpmmimebase64
 CATALOGNAME_CSWpmmimebase64 = pm_mimebase64
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod .*\/man\/.*

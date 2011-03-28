@@ -14,7 +14,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-compress-raw-zlib
 CATALOGNAME = pm_compress_raw_zlib
 SPKG_DESC_CSWpm-compress-raw-zlib = $(DESCRIPTION)
-OBSOLETES_CSWpm-compress-raw-zlib = CSWpmcompressrawzlib
+OBSOLETED_BY_CSWpm-compress-raw-zlib = CSWpmcompressrawzlib
 CATALOGNAME_CSWpmcompressrawzlib = pm_compressrawzlib
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*

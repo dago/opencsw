@@ -20,7 +20,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-pod-pom
 CATALOGNAME_CSWpm-pod-pom = pm_pod_pom
 SPKG_DESC_CSWpm-pod-pom = $(DESCRIPTION)
-OBSOLETES_CSWpm-pod-pom = CSWpmpodpom
+OBSOLETED_BY_CSWpm-pod-pom = CSWpmpodpom
 CATALOGNAME_CSWpmpodpom = pm_podpom
 
 ARCHALL = 1

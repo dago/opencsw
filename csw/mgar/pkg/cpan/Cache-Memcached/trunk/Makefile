@@ -14,7 +14,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-cache-memcached
 CATALOGNAME_CSWpm-cache-memcached = pm_cache_memcached
 SPKG_DESC_CSWpm-cache-memcached = $(DESCRIPTION)
-OBSOLETES_CSWpm-cache-memcached = CSWpmcachememcached
+OBSOLETED_BY_CSWpm-cache-memcached = CSWpmcachememcached
 CATALOGNAME_CSWpmcachememcached = pm_cachememcached
 
 ARCHALL = 1

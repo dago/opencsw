@@ -13,7 +13,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-www-curl
 CATALOGNAME = pm_www_curl
 SPKG_DESC_CSWpm-www-curl = $(DESCRIPTION)
-OBSOLETES_CSWpm-www-curl = CSWpmwwwcurl
+OBSOLETED_BY_CSWpm-www-curl = CSWpmwwwcurl
 CATALOGNAME_CSWpmwwwcurl = pm_wwwcurl
 
 RUNTIME_DEP_PKGS += CSWcurlrt

@@ -16,7 +16,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-html-parser
 CATALOGNAME = pm_html_parser
 SPKG_DESC_CSWpm-html-parser = $(DESCRIPTION)
-OBSOLETES_CSWpm-html-parser = CSWpmhtmlparser
+OBSOLETED_BY_CSWpm-html-parser = CSWpmhtmlparser
 CATALOGNAME_CSWpmhtmlparser = pm_htmlparser
 
 RUNTIME_DEP_PKGS = CSWpm-html-tagset
