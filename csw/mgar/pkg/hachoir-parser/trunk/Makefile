@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = hachoir-parser
-VERSION = 1.3.3
+VERSION = 1.3.4
 CATEGORIES = python
 DESCRIPTION = Allows to view and edit a binary stream field by field (core)
 define BLURB
@@ -15,7 +15,6 @@ endef
 SPKG_SOURCEURL = http://bitbucket.org/haypo/hachoir/wiki/Home
 MASTER_SITES = http://cheeseshop.python.org/packages/source/h/$(NAME)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 CATALOGNAME = py_hachoir_parser
 PACKAGES = CSWpy-hachoir-parser
 INCOMPATIBLE_PKGS = CSWhachoir-parser
