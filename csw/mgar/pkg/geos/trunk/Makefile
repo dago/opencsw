@@ -1,7 +1,7 @@
 # $Id$
 NAME = geos
 VERSION = 3.2.2
-CATEGORIES = libs
+CATEGORIES = lib
 
 DESCRIPTION = Geometry Engine, Open Source
 define BLURB
@@ -9,7 +9,7 @@ GEOS (Geometry Engine - Open Source) is a C++ port of the  Java Topology Suite (
 endef
 
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
-DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES  = $(DISTNAME).tar.bz2
 
 GARTYPE = v2-defaultchange
 
