@@ -1,0 +1,31 @@
+From d0988c3028b8b99bf73e8a85adecbba142b983df Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 28 Mar 2011 12:36:19 +0200
+Subject: [PATCH] Honour CFLAGS
+
+---
+ Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 062a31e..1f7e344 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,12 +2,12 @@
+ 
+ VERS=$(shell sed <ascii.spec -n -e '/Version: \(.*\)/s//\1/p')
+ 
+-CFLAGS = -O
++CFLAGS ?= -O
+ 
+ all: ascii ascii.1
+ 
+ ascii: ascii.c splashscreen.h nametable.h
+-	$(CC) -DREVISION=$(VERS) ascii.c -o ascii
++	$(CC) $(CFLAGS) -DREVISION=$(VERS) ascii.c -o ascii
+ 
+ splashscreen.h: splashscreen
+ 	sed <splashscreen >splashscreen.h -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/.*/P("&");/' 
+-- 
+1.7.3.2
+
