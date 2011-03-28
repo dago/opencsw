@@ -374,7 +374,7 @@ class Srv4Uploader(object):
     if successful:
       metadata = json.loads(d.getvalue())
     else:
-      logging.info("Data for %s not found" % repr(md5_sum))
+      logging.info("Metadata for %s were not found in the database" % repr(md5_sum))
     return successful, metadata
 
   def _PostFile(self, filename):
