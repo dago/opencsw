@@ -1,5 +1,6 @@
 #!/usr/bin/env python2.6
 
+import unittest2 as unittest
 import checkpkg_lib
 import copy
 import cPickle
@@ -13,7 +14,6 @@ import pprint
 import sqlobject
 import tag
 import test_base
-import unittest
 from testdata import stubs
 
 from testdata.neon_stats import pkgstats as neon_stats
