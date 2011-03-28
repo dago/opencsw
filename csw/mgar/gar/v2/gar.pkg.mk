@@ -41,7 +41,7 @@ CATALOGNAME    ?= $(if $(filter-out $(firstword $(PACKAGES)),$(PACKAGES)),,$(sub
 SRCPACKAGE_BASE = $(firstword $(PACKAGES))
 SRCPACKAGE     ?= $(SRCPACKAGE_BASE)-src
 OBSOLETING_PKGS ?= $(sort $(PACKAGES) $(FOREIGN_PACKAGES))
-OBSOLETED_PKGS ?= $(sort $(foreach P,$(OBSOLETING_PKGS),$(OBSOLETES_$P)))
+OBSOLETED_PKGS ?= $(sort $(foreach P,$(OBSOLETING_PKGS),$(OBSOLETED_BY_$P)))
 SPKG_SPECS     ?= $(sort $(basename $(filter %.gspec,$(DISTFILES))) $(PACKAGES) $(OBSOLETED_PKGS) $(if $(NOSOURCEPACKAGE),,$(SRCPACKAGE)))
 endif
 
@@ -67,15 +67,15 @@ define obsoleted_pkg
 CATALOGNAME_$(1) ?= $(subst -,_,$(patsubst CSW%,%,$(1)))_stub
 # The length of the description has been limited to 100 characters,
 # the string is cut (no longer on word boundaries).
-SPKG_DESC_$(1) ?= $(shell echo Transitional package. Content moved to $(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETES_$P)),$P)) | perl -npe 's/(.{100}).+/substr($$1,96) . " ..."/e')
-RUNTIME_DEP_PKGS_$(1) = $(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETES_$P)),$P))
+SPKG_DESC_$(1) ?= $(shell echo Transitional package. Content moved to $(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETED_BY_$P)),$P)) | perl -npe 's/(.{100}).+/substr($$1,96) . " ..."/e')
+RUNTIME_DEP_PKGS_$(1) = $(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETED_BY_$P)),$P))
 PKGFILES_$(1) = NOFILES
 ARCHALL_$(1) = 1
 # For legacy packages we know that the dependency is correct because we deliberately set it
 # A legacy dependency from another package may not have been released
 # The catalog name may not match for legacy packages
 # The overridden package may be a devel package, as it is empty it is ok to be archall
-$(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETES_$P)),
+$(foreach P,$(OBSOLETING_PKGS),$(if $(filter $(1),$(OBSOLETED_BY_$P)),
 CHECKPKG_OVERRIDES_$(1) += surplus-dependency|$P
 $(if $(filter $P,$(FOREIGN_PACKAGES)),CHECKPKG_OVERRIDES_$(1) += unidentified-dependency|$P)
 ))
@@ -716,7 +716,7 @@ reset-merge-README.CSW:
 	$(_DBG)rm -f $(COOKIEDIR)/merge-README.CSW $(foreach SPEC,$(_PKG_SPECS),$(PKGROOT)$(docdir)/$(call catalogname,$(SPEC))/README.CSW)
 
 merge-obsolete: $(WORKDIR_GLOBAL)
-	$(_DBG)$(foreach P,$(OBSOLETED_PKGS),$(foreach Q,$(OBSOLETING_PKGS),$(if $(filter $P,$(OBSOLETES_$Q)), \
+	$(_DBG)$(foreach P,$(OBSOLETED_PKGS),$(foreach Q,$(OBSOLETING_PKGS),$(if $(filter $P,$(OBSOLETED_BY_$Q)), \
 		($(if $(SPKG_DESC_$Q), \
 			echo "$Q $(call catalogname,$Q) - $(SPKG_DESC_$Q)";, \
 			echo "$(shell (/usr/bin/pkginfo $Q || echo "$Q - ") | $(GAWK) '{ $$1 = "P"; print }')"; \
