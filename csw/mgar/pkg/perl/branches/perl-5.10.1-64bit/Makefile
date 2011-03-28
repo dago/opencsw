@@ -20,7 +20,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PACKAGES += CSWperl
 SPKG_DESC_CSWperl = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWperl += CSWbdb48
-RUNTIME_DEP_PKGS_CSWperl += CSWgdbm
+RUNTIME_DEP_PKGS_CSWperl += CSWlibgdbm3
 
 PACKAGES += CSWperldoc
 SPKG_DESC_CSWperldoc = Perl documentation
@@ -51,6 +51,7 @@ PATCHFILES += 0001-change-inc-based-on-rhel5-patch.patch
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
 
 BUILD64 = 1
+NOISAEXEC = 1
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
