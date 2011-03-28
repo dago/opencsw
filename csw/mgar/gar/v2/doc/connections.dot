@@ -49,4 +49,5 @@ digraph connections {
 	pkgdb -> database [label="mysql"];
 	csw_upload_pkg -> releases_web_app [label="HTTP / REST"];
 	csw_upload_pkg -> web_app [label="HTTP / REST"];
+	csw_upload_pkg -> checkpkg [label="shell"];
 }
