@@ -11,10 +11,11 @@ sys.path.append(os.path.join(*module_path))
 
 # To add more test files, create <name>.py file and add a corresponding line
 # here:
-from catalog_test            import *
 from catalog_notifier_test   import *
+from catalog_test            import *
 from checkpkg_lib_test       import *
 from checkpkg_test           import *
+from csw_upload_pkg_test     import *
 from dependency_checks_test  import *
 from inspective_package_test import *
 from ldd_emul_test           import *
