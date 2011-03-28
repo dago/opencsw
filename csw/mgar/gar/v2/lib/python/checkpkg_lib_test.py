@@ -351,7 +351,7 @@ class CheckpkgManager2DatabaseIntegrationTest(
     # Verifying that there are some reported error tags.
     self.assertTrue(list(models.CheckpkgErrorTag.select()))
 
-  def disabled_testReRunCheckpkg(self):
+  def testReRunCheckpkg(self):
     """Error tags should not accumulate.
 
     FIXME(maciej): Figure out what's wrong with this one: It errors out.
