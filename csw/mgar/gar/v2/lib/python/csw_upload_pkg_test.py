@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.6
 
-import unittest
+import unittest2 as unittest
 import csw_upload_pkg
 import mox
 import rest
