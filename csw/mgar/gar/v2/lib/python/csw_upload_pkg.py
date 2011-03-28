@@ -18,6 +18,7 @@ import common_constants
 import socket
 import rest
 import struct_util
+import subprocess
 
 
 BASE_URL = "http://buildfarm.opencsw.org"
@@ -72,14 +73,88 @@ class Srv4Uploader(object):
     self._rest_client = rest.RestClient(self.rest_url)
 
   def Upload(self):
+    do_upload = True
+    planned_modifications = []
+    metadata_by_md5 = {}
     for filename in self.filenames:
-      parsed_basename = opencsw.ParsePackageFileName(
-          os.path.basename(filename))
-      if parsed_basename["vendortag"] != "CSW":
-        raise PackageCheckError(
-            "Package vendor tag is %s instead of CSW."
-            % parsed_basename["vendortag"])
-      self._UploadFile(filename)
+      md5_sum = self._GetFileMd5sum(filename)
+      file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
+      if file_in_allpkgs:
+        logging.debug("File %s already uploaded.", filename)
+      else:
+        if do_upload:
+          logging.debug("Uploading %s.", filename)
+          self._PostFile(filename)
+          # Querying the database again, this time the data should be
+          # there
+          file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
+      logging.debug("file_metadata %s", repr(file_metadata))
+      if not file_metadata:
+        logging.error(
+            "File metadata was not found in the database.  "
+            "This happens when the package you're trying to upload was never "
+            "unpacked and imported into the database.  "
+            "To fix the problem, run checkpkg against your package and try "
+            "importing again.")
+        raise DataError("file_metadata is empty: %s" % repr(file_metadata))
+      osrel = file_metadata['osrel']
+      arch = file_metadata['arch']
+      metadata_by_md5[md5_sum] = file_metadata
+      catalogs = self._MatchSrv4ToCatalogs(
+          filename, DEFAULT_CATREL, arch, osrel, md5_sum)
+      for unused_catrel, cat_arch, cat_osrel in catalogs:
+        planned_modifications.append(
+            (filename, md5_sum,
+             arch, osrel, cat_arch, cat_osrel))
+    # The plan: 
+    # - Create groups of files to be inserted into each of the catalogs
+    # - Invoke checkpkg to check every target catalog
+    checkpkg_sets = self._CheckpkgSets(planned_modifications)
+    bin_dir = os.path.dirname(__file__)
+    checkpkg_executable = os.path.join(bin_dir, "checkpkg")
+    checks_failed_for_catalogs = []
+    args_by_cat = {}
+    for arch, osrel in checkpkg_sets:
+      if "5.11" in osrel:
+        logging.debug("Skipping Solaris 11 checks")
+        continue
+      print ("Checking packages against catalog %s %s %s"
+             % (DEFAULT_CATREL, arch, osrel))
+      md5_sums = []
+      basenames = []
+      for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
+        md5_sums.append(md5_sum)
+        basenames.append(os.path.basename(filename))
+      # Not using the checkpkg Python API.  The reason is that checkpkg
+      # requires the process calling its API to have an established
+      # MySQL connection, while csw-upload-pkg does not, and it's better
+      # if it stays that way.
+      args_by_cat[(arch, osrel)] = [
+          checkpkg_executable,
+          "--catalog-release", DEFAULT_CATREL,
+          "--os-release", osrel,
+          "--architecture", arch,
+      ] + md5_sums
+      ret = subprocess.call(args_by_cat[(arch, osrel)] + ["--quiet"])
+      if ret:
+        checks_failed_for_catalogs.append(
+            (arch, osrel, basenames)
+        )
+    if checks_failed_for_catalogs:
+      print "Checks failed for catalogs:"
+      for arch, osrel, basenames in checks_failed_for_catalogs:
+        print "  - %s %s" % (arch, osrel)
+        for basename in basenames:
+          print "    %s" % basename
+        print "To see errors, run:"
+        print " ", " ".join(args_by_cat[(arch, osrel)])
+      print ("Packages have not been submitted to the %s catalog."
+             % DEFAULT_CATREL)
+    else:
+      print "All checks successful. Proceeding."
+      for arch, osrel in checkpkg_sets:
+        for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
+          self._InsertIntoCatalog(filename, arch, osrel, file_metadata)
 
   def Remove(self):
     for filename in self.filenames:
@@ -213,38 +288,13 @@ class Srv4Uploader(object):
             catalogs.append(cat_key)
           else:
             logging.info(
-                "Not inserting %s %s package into %s containing a %s package",
+                "Not matching %s %s package with %s containing a %s package",
                 catalogname,
                 srv4_osrel, osrel, srv4_in_catalog["osrel"])
           logging.debug(
               "Catalog %s %s %s has another version of %s.",
               catrel, arch, osrel, catalogname)
     return tuple(catalogs)
-
-  def _UploadFile(self, filename):
-    md5_sum = self._GetFileMd5sum(filename)
-    file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
-    if file_in_allpkgs:
-      logging.debug("File %s already uploaded.", filename)
-    else:
-      logging.debug("Uploading %s.", filename)
-      self._PostFile(filename)
-    file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
-    logging.debug("file_metadata %s", repr(file_metadata))
-    if not file_metadata:
-      logging.error(
-          "File metadata was not found in the database.  "
-          "This happens when the package you're trying to upload was never "
-          "unpacked and imported into the database.  "
-          "To fix the problem, run checkpkg against your package and try "
-          "importing again.")
-      raise DataError("file_metadata is empty: %s" % repr(file_metadata))
-    osrel = file_metadata['osrel']
-    arch = file_metadata['arch']
-    catalogs = self._MatchSrv4ToCatalogs(
-        filename, DEFAULT_CATREL, arch, osrel, md5_sum)
-    for unused_catrel, cat_arch, cat_osrel in catalogs:
-      self._InsertIntoCatalog(filename, cat_arch, cat_osrel, file_metadata)
 
   def _InsertIntoCatalog(self, filename, arch, osrel, file_metadata):
     logging.debug(
@@ -359,6 +409,26 @@ class Srv4Uploader(object):
     logging.debug("File POST http code: %s", http_code)
     if http_code >= 400 and http_code <= 499:
       raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
+
+  def _CheckpkgSets(self, planned_modifications):
+    """Groups packages according to catalogs.
+    
+    Used to determine groups of packages to check together, against
+    a specific catalog.
+
+    Args:
+      A list of tuples
+
+    Returns:
+      A dictionary of tuples, indexed by (arch, osrel) tuples.
+    """
+    by_catalog = {}
+    for fields in planned_modifications:
+      filename, md5_sum, pkg_arch, pkg_osrel, cat_arch, cat_osrel = fields
+      key = cat_arch, cat_osrel
+      by_catalog.setdefault(key, [])
+      by_catalog[key].append((filename, md5_sum))
+    return by_catalog
 
 
 if __name__ == '__main__':

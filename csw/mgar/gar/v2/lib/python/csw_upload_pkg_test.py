@@ -51,6 +51,26 @@ GDB_STRUCT_11 = {
     "size": 7617270,
     "version_string": "7.2,REV=2011.01.21",
 }
+TEST_PLANNED_MODIFICATIONS_1 = [
+ ('foo.pkg',
+  '58f564d11d6419592dcca3915bfabc55',
+  u'all',
+  u'SunOS5.9',
+  'sparc',
+  u'SunOS5.9'),
+ ('foo.pkg',
+  '58f564d11d6419592dcca3915bfabc55',
+  u'all',
+  u'SunOS5.9',
+  'sparc',
+  u'SunOS5.10'),
+ ('bar.pkg',
+  '84b409eb7c2faf87e22ee0423e55b888',
+  u'sparc',
+  u'SunOS5.9',
+  u'sparc',
+  u'SunOS5.9'),
+]
 
 
 class Srv4UploaderUnitTest(mox.MoxTestBase):
@@ -296,6 +316,16 @@ class Srv4UploaderDataDrivenUnitTest(mox.MoxTestBase):
     self.assertEquals(expected, result)
     self.mox.ResetAll()
     self.mox.UnsetStubs()
+
+  def test_CheckpkgSets(self):
+    su = csw_upload_pkg.Srv4Uploader(None, None)
+    expected = {
+        ('sparc', u'SunOS5.10'):
+          [('foo.pkg', '58f564d11d6419592dcca3915bfabc55')],
+        ('sparc', u'SunOS5.9'):
+          [('foo.pkg', '58f564d11d6419592dcca3915bfabc55'),
+           ('bar.pkg', '84b409eb7c2faf87e22ee0423e55b888')]}
+    self.assertEqual(expected, su._CheckpkgSets(TEST_PLANNED_MODIFICATIONS_1))
 
 
 if __name__ == '__main__':
