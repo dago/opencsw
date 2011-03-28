@@ -492,6 +492,11 @@ class CheckpkgManager2(CheckpkgManagerBase):
   Its purpose is to reduce the amount of boilerplate code and allow for easier
   unit test writing.
   """
+
+  def __init__(self, *args, **kwargs):
+    super(CheckpkgManager2, self).__init__(*args, **kwargs)
+    self.checks_registered = False
+
   def _RegisterIndividualCheck(self, function):
     self.individual_checks.append(function)
 
@@ -501,6 +506,9 @@ class CheckpkgManager2(CheckpkgManagerBase):
   def _AutoregisterChecks(self):
     """Autodetects all defined checks."""
     logging.debug("CheckpkgManager2._AutoregisterChecks()")
+    if self.checks_registered:
+      logging.debug("Checks already registered.")
+      return
     checkpkg_module = package_checks
     members = dir(checkpkg_module)
     for member_name in members:
@@ -513,6 +521,7 @@ class CheckpkgManager2(CheckpkgManagerBase):
         elif member_name.startswith("SetCheck"):
           logging.debug("Registering set check %s", repr(member_name))
           self._RegisterSetCheck(member)
+    self.checks_registered = True
 
   def _ReportDependencies(self, checkpkg_interface, needed_files, needed_pkgs,
       messenger, declared_deps_by_pkgname):
