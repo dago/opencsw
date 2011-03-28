@@ -129,6 +129,10 @@ IGNORE_DESTDIR = 1
 # Do not exclude static libs as at least DynaLoader.a is needed for XS compilation
 MERGE_EXCLUDE_STATICLIBS =
 
+# This is for the communication with checkpkg. These pathes are searched for modules
+# when resolving dependencies.
+PROTOTYPE_FILTER_CSWperl = ( cat; echo "i cswperlincpath=CSWperl.cswperlincpath")
+
 # Splitting of a separate libperl.so requires more work and careful planning.
 # Override for now.
 CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libperl.so
@@ -187,6 +191,10 @@ perlconf:
             print \
         " Config.pm Config_heavy.pl )
 	@$(MAKECOOKIE)
+
+POST_TARGETS += CSWperl.cswperlincpath
+CSWperl.cswperlincpath:
+	LD_LIBRARY_PATH=$(WORKSRC) $(WORKSRC)/perl -I./lib -e 'print "$$_\n" foreach(@INC)' >$(WORKDIR_GLOBAL)/CSWperl.cswperlincpath
 
 # Invoke post-install targets
 post-install-modulated: $(POST_TARGETS)
