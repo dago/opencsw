@@ -22,7 +22,7 @@ import sharedlib_utils
 
 from sqlobject import sqlbuilder
 
-PACKAGE_STATS_VERSION = 11L
+PACKAGE_STATS_VERSION = 12L
 BAD_CONTENT_REGEXES = (
     # Slightly obfuscating these by using the default concatenation of
     # strings.
@@ -187,10 +187,12 @@ class PackageStatsMixin(object):
     # there are packages with 'i386' in the pkgname and 'all' as the
     # architecture.
     arch = basic_stats["parsed_basename"]["arch"]
+    depends, i_depends = dir_pkg.GetDependencies()
     pkg_stats = {
         "binaries": dir_pkg.ListBinaries(),
         "binaries_dump_info": self.GetBinaryDumpInfo(),
-        "depends": dir_pkg.GetDependencies(),
+        "depends": depends,
+        "i_depends": i_depends,
         "obsoleteness_info": dir_pkg.GetObsoletedBy(),
         "isalist": sharedlib_utils.GetIsalist(arch),
         "overrides": override_dicts,

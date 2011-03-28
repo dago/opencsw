@@ -48,7 +48,7 @@ class PackageStatsWithDbUnitTest(test_base.SqlObjectTestMixin,
     mock_srv4.GetSize().AndReturn(42)
     mock_dirpkg.ListBinaries().AndReturn([])
     mock_dirpkg.GetBinaryDumpInfo().AndReturn([])
-    mock_dirpkg.GetDependencies().AndReturn([])
+    mock_dirpkg.GetDependencies().AndReturn(([], []))
     mock_srv4.GetPkgchkOutput().AndReturn((0, "", ""))
     mock_dirpkg.GetParsedPkginfo().AndReturn({
       "ARCH": "sparc",
