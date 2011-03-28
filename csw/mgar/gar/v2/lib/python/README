@@ -75,6 +75,24 @@ sudo aptitude install \
   python-sqlobject \
   python-yaml
 
+Solaris package dependencies.
+
+CSWpy-unittest2
+CSWpy-curl
+CSWpy-libmagic
+CSWpy-sqlobject
+CSWpy-cheetah
+CSWpy-mox
+CSWpy-mysql
+CSWpy-progressbar
+
+For pkgdb-web
+
+CSWapache2
+CSWap2modpython
+modpython_gateway (together with pkgdb_web.py in the same dir)
+
+
 ===Checkpkg database===
 
 Additional database indexes:
