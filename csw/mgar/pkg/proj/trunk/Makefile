@@ -14,6 +14,8 @@ MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += $(NAME)-datumgrid-1.5.zip
 
+BUILD64 = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 PACKAGES = CSWproj CSWproj-dev CSWlibproj0 CSWproj-data
