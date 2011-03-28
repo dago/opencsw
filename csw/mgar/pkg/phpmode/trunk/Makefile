@@ -20,7 +20,7 @@ SPKG_DESC_CSWphp-mode = $(DESCRIPTION)
 CATALOGNAME_CSWphp-mode = php_mode
 RUNTIME_DEP_PKGS_CSWphp-mode = CSWemacscommon CSWemacssitestart
 CHECKPKG_OVERRIDES_CSWphp-mode += surplus-dependency|CSWemacssitestart
-OBSOLETES_CSWphp-mode = CSWphpmode
+OBSOLETED_BY_CSWphp-mode = CSWphpmode
 
 ARCHALL = 1
 

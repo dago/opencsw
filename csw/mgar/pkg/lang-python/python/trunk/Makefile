@@ -95,7 +95,7 @@ PACKAGES += CSWpython$(CVER)-tk
 PACKAGES += CSWlibpython$(DVER)-1-0
 
 INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
-OBSOLETES_CSWpython$(CVER)-dev = CSWpython$(CVER)-devel
+OBSOLETED_BY_CSWpython$(CVER)-dev = CSWpython$(CVER)-devel
 
 PKGFILES_CSWidle$(CVER)  = $(libdir)/.*/idlelib/.*
 PKGFILES_CSWidle$(CVER) += $(bindir)/idle

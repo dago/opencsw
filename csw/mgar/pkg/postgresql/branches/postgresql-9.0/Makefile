@@ -207,7 +207,7 @@ PKGFILES_CSWlibpq5 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibpq5 += PostgreSQL C client library (built from $(BASE_VERSION).x sources), libpq.so.5
 RUNTIME_DEP_PKGS_CSWlibpq5 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibpq5 += CSWkrb5lib
-OBSOLETES_CSWlibpq5 += CSWlibpq
+OBSOLETED_BY_CSWlibpq5 += CSWlibpq
 
 PACKAGES += CSWlibecpg6
 CATALOGNAME_CSWlibecpg6 = libecpg6
@@ -215,7 +215,7 @@ PKGFILES_CSWlibecpg6 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.6(\.\d+)*)
 SPKG_DESC_CSWlibecpg6 += Embedded PostgreSQL for C library (built from $(BASE_VERSION).x sources), libecpg.so.6
 RUNTIME_DEP_PKGS_CSWlibecpg6 += CSWlibpgtypes3
 RUNTIME_DEP_PKGS_CSWlibecpg6 += CSWlibpq5
-OBSOLETES_CSWlibecpg6 += CSWlibpq
+OBSOLETED_BY_CSWlibecpg6 += CSWlibpq
 
 PACKAGES += CSWlibecpg-compat3
 CATALOGNAME_CSWlibecpg-compat3 = libecpg_compat3
@@ -224,14 +224,14 @@ SPKG_DESC_CSWlibecpg-compat3 += Older version of run-time library for ECPG progr
 RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibecpg6
 RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibpgtypes3
 RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibpq5
-OBSOLETES_CSWlibecpg-compat3 = CSWlibpq
+OBSOLETED_BY_CSWlibecpg-compat3 = CSWlibpq
 
 PACKAGES += CSWlibpgtypes3
 CATALOGNAME_CSWlibpgtypes3 = libpgtypes3
 PKGFILES_CSWlibpgtypes3 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.3\.0)
 PKGFILES_CSWlibpgtypes3 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibpgtypes3 += Used by programs built with ecpg (Embedded PostgreSQL for C, from $(BASE_VERSION).x sources), libpgtypes.so.3
-OBSOLETES_CSWlibpgtypes3 = CSWlibpq
+OBSOLETED_BY_CSWlibpgtypes3 = CSWlibpq
 
 PACKAGES += CSWlibpq-dev
 CATALOGNAME_CSWlibpq-dev = libpq_dev
@@ -266,26 +266,26 @@ CATALOGNAME_CSWlibpq3 = libpq3
 PKGFILES_CSWlibpq3 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibpq3 += PostgreSQL C client library, libpq.so.3
 RUNTIME_DEP_PKGS_CSWlibpq3 += CSWosslrt
-OBSOLETES_CSWlibpq3 = CSWlibpq
+OBSOLETED_BY_CSWlibpq3 = CSWlibpq
 
 PACKAGES += CSWlibpq4
 CATALOGNAME_CSWlibpq4 = libpq4
 PKGFILES_CSWlibpq4 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibpq4 += PostgreSQL C client library, libpq.so.4
 RUNTIME_DEP_PKGS_CSWlibpq4 += CSWosslrt
-OBSOLETES_CSWlibpq4 = CSWlibpq
+OBSOLETED_BY_CSWlibpq4 = CSWlibpq
 
 PACKAGES += CSWlibpgtypes1
 CATALOGNAME_CSWlibpgtypes1 = libpgtypes1
 PKGFILES_CSWlibpgtypes1 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibpgtypes1 += Used by programs built with ecpg (Embedded PostgreSQL for C), libpgtypes.so.1
-OBSOLETES_CSWlibpgtypes1 = CSWlibpq
+OBSOLETED_BY_CSWlibpgtypes1 = CSWlibpq
 
 PACKAGES += CSWlibpgtypes2
 CATALOGNAME_CSWlibpgtypes2 = libpgtypes2
 PKGFILES_CSWlibpgtypes2 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibpgtypes2 += Used by programs built with ecpg (Embedded PostgreSQL for C), libpgtypes.so.2
-OBSOLETES_CSWlibpgtypes2 = CSWlibpq
+OBSOLETED_BY_CSWlibpgtypes2 = CSWlibpq
 
 PACKAGES += CSWlibecpg4
 CATALOGNAME_CSWlibecpg4 = libecpg4
@@ -294,7 +294,7 @@ SPKG_DESC_CSWlibecpg4 += Embedded PostgreSQL for C library, libecpg.so.4
 RUNTIME_DEP_PKGS_CSWlibecpg4 += CSWlibpgtypes1
 RUNTIME_DEP_PKGS_CSWlibecpg4 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibecpg4 += CSWlibpq3
-OBSOLETES_CSWlibecpg4 += CSWlibpq
+OBSOLETED_BY_CSWlibecpg4 += CSWlibpq
 
 PACKAGES += CSWlibecpg5
 CATALOGNAME_CSWlibecpg5 = libecpg5
@@ -302,7 +302,7 @@ PKGFILES_CSWlibecpg5 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibecpg5 += Embedded PostgreSQL for C library, libecpg.so.5
 RUNTIME_DEP_PKGS_CSWlibecpg5 += CSWlibpgtypes2
 RUNTIME_DEP_PKGS_CSWlibecpg5 += CSWlibpq5
-OBSOLETES_CSWlibecpg5 += CSWlibpq
+OBSOLETED_BY_CSWlibecpg5 += CSWlibpq
 
 PACKAGES += CSWlibecpg-compat2
 CATALOGNAME_CSWlibecpg-compat2 = libecpg_compat2
@@ -311,7 +311,7 @@ SPKG_DESC_CSWlibecpg-compat2 += Older version of run-time library for ECPG progr
 RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibpgtypes2
 RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibecpg5
 RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibpq5
-OBSOLETES_CSWlibecpg-compat2 = CSWlibpq
+OBSOLETED_BY_CSWlibecpg-compat2 = CSWlibpq
 
 
 # This occurrence is okay.

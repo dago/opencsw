@@ -11,7 +11,7 @@ endef
 PACKAGES = CSWpm-net-idn-encode
 CATALOGNAME = pm_net_idn_encode
 SPKG_DESC_CSWpm-net-idn-encode = $(DESCRIPTION)
-OBSOLETES_CSWpm-net-idn-encode = CSWpmnetidnencode
+OBSOLETED_BY_CSWpm-net-idn-encode = CSWpmnetidnencode
 CATALOGNAME_CSWpmnetidnencode = pm_netidnencode
 
 ARCHALL = 1

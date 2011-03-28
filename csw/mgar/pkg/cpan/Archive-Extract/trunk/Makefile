@@ -18,7 +18,7 @@ PACKAGES = CSWpm-archive-extract
 CATALOGNAME = pm_archive_extract
 SPKG_DESC_CSWpm-archive-extract = $(DESCRIPTION)
 ARCHALL = 1
-OBSOLETES_CSWpm-archive-extract = CSWpmarchiveextract
+OBSOLETED_BY_CSWpm-archive-extract = CSWpmarchiveextract
 CATALOGNAME_CSWpmarchiveextract = pm_archiveextract
 
 RUNTIME_DEP_PKGS += CSWpmipccmd CSWpmlclemktxtsimple CSWpmmodloadcond CSWpmprmscheck

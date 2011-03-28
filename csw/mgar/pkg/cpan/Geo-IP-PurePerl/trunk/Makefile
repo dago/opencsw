@@ -17,7 +17,7 @@ PACKAGES = CSWpm-geo-ip-pureperl
 CATALOGNAME = pm_geo_ip_pureperl
 SPKG_DESC_CSWpm-geo-ip-pureperl = $(DESCRIPTION)
 ARCHALL = 1
-OBSOLETES_CSWpm-geo-ip-pureperl = CSWpmgeoippureperl
+OBSOLETED_BY_CSWpm-geo-ip-pureperl = CSWpmgeoippureperl
 CATALOGNAME_CSWpmgeoippureperl = pm_geoippureperl
 
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz

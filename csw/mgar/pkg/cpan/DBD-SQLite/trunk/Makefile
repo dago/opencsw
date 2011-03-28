@@ -14,7 +14,7 @@ endef
 PACKAGES = CSWpm-dbd-sqlite
 CATALOGNAME = pm_dbd_sqlite
 SPKG_DESC_CSWpm-dbd-sqlite = $(DESCRIPTION)
-OBSOLETES_CSWpm-dbd-sqlite = CSWpmdbdsqlite
+OBSOLETED_BY_CSWpm-dbd-sqlite = CSWpmdbdsqlite
 CATALOGNAME_CSWpmdbdsqlite = pm_dbdsqlite
 
 RUNTIME_DEP_PKGS = CSWpmdbi

@@ -15,7 +15,7 @@ PACKAGES = CSWpm-module-signature
 CATALOGNAME = pm_module_signature
 SPKG_DESC_CSWpm-module-signature = $(DESCRIPTION)
 ARCHALL = 1
-OBSOLETES_CSWpm-module-signature = CSWpmmodulesign
+OBSOLETED_BY_CSWpm-module-signature = CSWpmmodulesign
 CATALOGNAME_CSWpmmodulesign = pm_modulesign
 
 RUNTIME_DEP_PKGS += CSWgnupg

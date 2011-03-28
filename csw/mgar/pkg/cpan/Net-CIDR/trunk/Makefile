@@ -16,7 +16,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-net-cidr
 CATALOGNAME = pm_net_cidr
 SPKG_DESC_CSWpm-net-cidr = $(DESCRIPTION)
-OBSOLETES_CSWpm-net-cidr = CSWpmnetcidr
+OBSOLETED_BY_CSWpm-net-cidr = CSWpmnetcidr
 CATALOGNAME_CSWpmnetcidr = pm_netcidr
 
 ARCHALL = 1

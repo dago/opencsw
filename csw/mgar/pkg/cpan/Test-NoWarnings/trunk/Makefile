@@ -11,7 +11,7 @@ endef
 PACKAGES = CSWpm-test-nowarnings
 CATALOGNAME = pm_test_nowarnings
 SPKG_DESC_CSWpm-test-nowarnings = $(DESCRIPTION)
-OBSOLETES_CSWpm-test-nowarnings = CSWpmtestnowarnings
+OBSOLETED_BY_CSWpm-test-nowarnings = CSWpmtestnowarnings
 CATALOGNAME_CSWpmtestnowarnings = pm_testnowarnings
 
 ARCHALL = 1

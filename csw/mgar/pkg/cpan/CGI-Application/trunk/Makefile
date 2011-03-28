@@ -16,7 +16,7 @@ LICENSE = ARTISTIC
 PACKAGES = CSWpm-cgi-application
 CATALOGNAME_CSWpm-cgi-application = pm_cgi_application
 SPKG_DESC_CSWpm-cgi-application = $(DESCRIPTION)
-OBSOLETES_CSWpm-cgi-application = CSWpmcgiapp
+OBSOLETED_BY_CSWpm-cgi-application = CSWpmcgiapp
 CATALOGNAME_CSWpmcgiapp = pm_cgiapp
 
 ARCHALL = 1

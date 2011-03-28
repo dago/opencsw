@@ -20,7 +20,7 @@ RUNTIME_DEP_PKGS_CSWpy-mysql += CSWlibmysqlclient-r15
 
 SPKG_DESC_CSWpy-mysql = MySQL Support for Python
 
-OBSOLETES_CSWpy-mysql = CSWpymysql
+OBSOLETED_BY_CSWpy-mysql = CSWpymysql
 CATALOGNAME_CSWpymysql = pymysql
 
 mysql_prefix = $(prefix)/mysql5

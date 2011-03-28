@@ -18,12 +18,12 @@ MODULATIONS_COMPILER = sun gcc4
 MERGE_SCRIPTS_isa-default-compiler-sun = copy-all
 MERGE_SCRIPTS_isa-default-compiler-gcc4 = copy-custom
 
-OBSOLETES_CSWruby18 = CSWruby
-OBSOLETES_CSWruby18-doc = CSWrubydoc
-OBSOLETES_CSWruby18-tk = CSWrubytk
-OBSOLETES_CSWruby18-dev = CSWrubydev
-OBSOLETES_CSWruby18-mode = CSWrubymode
-OBSOLETES_CSWruby18-mode-el = CSWrubymodeel
+OBSOLETED_BY_CSWruby18 = CSWruby
+OBSOLETED_BY_CSWruby18-doc = CSWrubydoc
+OBSOLETED_BY_CSWruby18-tk = CSWrubytk
+OBSOLETED_BY_CSWruby18-dev = CSWrubydev
+OBSOLETED_BY_CSWruby18-mode = CSWrubymode
+OBSOLETED_BY_CSWruby18-mode-el = CSWrubymodeel
 
 ALTERNATIVES_CSWruby18 = ruby rbconfig18
 ALTERNATIVE_ruby = $(bindir)/ruby ruby $(bindir)/ruby18 10 $(bindir)/irb irb $(bindir)/irb18 $(bindir)/erb erb $(bindir)/erb18 $(bindir)/rdoc rdoc $(bindir)/rdoc18 $(bindir)/ri ri $(bindir)/ri18 $(bindir)/testrb testrb $(bindir)/testrb18 $(mandir)/man1/ruby.1 ruby.1 $(mandir)/man1/ruby18.1

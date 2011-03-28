@@ -17,7 +17,7 @@ PACKAGES = CSWpm-libwww-perl
 CATALOGNAME = pm_libwww_perl
 SPKG_DESC_CSWpm-libwww-perl = $(DESCRIPTION)
 ARCHALL = 1
-OBSOLETES_CSWpm-libwww-perl = CSWpmlibwww
+OBSOLETED_BY_CSWpm-libwww-perl = CSWpmlibwww
 CATALOGNAME_CSWpmlibwww = pm_libwww
 
 RUNTIME_DEP_PKGS = CSWpmhtmltagset CSWpmuri CSWpmhtmlparser CSWpmiocompress CSWpmhtmlfmt CSWpmmimebase64

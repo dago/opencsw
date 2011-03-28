@@ -25,7 +25,7 @@ PACKAGES += CSWlibdbi-dev
 CATALOGNAME_CSWlibdbi-dev = libdbi_dev
 SPKG_DESC_CSWlibdbi-dev = Development files for libdbi.so.1
 RUNTIME_DEP_PKGS_CSWlibdbi-dev = CSWlibdbi1
-OBSOLETES_CSWlibdbi-dev = CSWlibdbi-devel
+OBSOLETED_BY_CSWlibdbi-dev = CSWlibdbi-devel
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)

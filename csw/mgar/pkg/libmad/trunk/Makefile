@@ -23,7 +23,7 @@ PACKAGES += CSWlibmad0
 CATALOGNAME_CSWlibmad0 = libmad0
 SPKG_DESC_CSWlibmad0 = MPEG audio decoder library, libmad.so.0
 PKGFILES_CSWlibmad0 += $(call pkgfiles_lib,libmad.so.0)
-OBSOLETES_CSWlibmad0 = CSWlibmad
+OBSOLETED_BY_CSWlibmad0 = CSWlibmad
 
 PACKAGES += CSWlibmad-dev
 CATALOGNAME_CSWlibmad-dev = libmad_dev

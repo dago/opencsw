@@ -18,7 +18,7 @@ PACKAGES = CSWpm-cgi-session
 CATALOGNAME = pm_cgi_session
 SPKG_DESC_CSWpm-cgi-session = $(DESCRIPTION)
 ARCHALL = 1
-OBSOLETES_CSWpm-cgi-session = CSWpmcgisession
+OBSOLETED_BY_CSWpm-cgi-session = CSWpmcgisession
 CATALOGNAME_CSWpmcgisession = pm_cgisession
 
 include gar/category.mk

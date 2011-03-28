@@ -194,8 +194,8 @@ RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupsmime1
 RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWcups-dev += CSWlibcupscgi1
 
-OBSOLETES_CSWcups-dev += CSWcups-devel
-OBSOLETES_CSWcups-dev += CSWcupsdev
+OBSOLETED_BY_CSWcups-dev += CSWcups-devel
+OBSOLETED_BY_CSWcups-dev += CSWcupsdev
 
 # Former devel package
 PACKAGES += CSWcupsdev

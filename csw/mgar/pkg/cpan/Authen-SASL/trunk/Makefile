@@ -15,7 +15,7 @@ DISTFILES += COPYING
 PACKAGES = CSWpm-authen-sasl
 CATALOGNAME = pm_authen_sasl
 SPKG_DESC_CSWpm-authen-sasl = $(DESCRIPTION)
-OBSOLETES_CSWpm-authen-sasl = CSWpmauthensasl
+OBSOLETED_BY_CSWpm-authen-sasl = CSWpmauthensasl
 CATALOGNAME_CSWpmauthensasl = pm_authensasl
 
 RUNTIME_DEP_PKGS = CSWpmgssapi CSWpmdigesthmac

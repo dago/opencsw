@@ -15,7 +15,7 @@ PACKAGES = CSWpm-module-load-conditional
 CATALOGNAME = pm_module_load_conditional
 SPKG_DESC_CSWpm-module-load-conditional = $(DESCRIPTION)
 ARCHALL = 1
-OBSOLETES_CSWpm-module-load-conditional = CSWpmmodloadcond
+OBSOLETED_BY_CSWpm-module-load-conditional = CSWpmmodloadcond
 CATALOGNAME_CSWpmmodloadcond = pm_modloadcond
 
 RUNTIME_DEP_PKGS = CSWpmprmscheck CSWpmmodload CSWpmlclemktxtsimple

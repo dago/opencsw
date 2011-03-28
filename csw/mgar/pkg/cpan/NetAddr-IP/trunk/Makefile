@@ -13,7 +13,7 @@ DISTFILES = COPYING
 PACKAGES = CSWpm-netaddr-ip
 CATALOGNAME = pm_netaddr_ip
 SPKG_DESC_CSWpm-netaddr-ip = $(DESCRIPTION)
-OBSOLETES_CSWpm-netaddr-ip = CSWpmnetaddrip
+OBSOLETED_BY_CSWpm-netaddr-ip = CSWpmnetaddrip
 CATALOGNAME_CSWpmnetaddrip = pm_netaddrip
 
 # One IPv6 related test fails, make sure to check all others

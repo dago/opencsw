@@ -14,7 +14,7 @@ PACKAGES += CSWpm-algorithm-checkdigits
 CATALOGNAME_CSWpm-algorithm-checkdigits = pm_algorithm_checkdigits
 SPKG_DESC_CSWpm-algorithm-checkdigits = $(DESCRIPTION)
 ARCHALL_CSWpm-algorithm-checkdigits = 1
-OBSOLETES_CSWpm-algorithm-checkdigits = CSWpmalgorithmchkdig
+OBSOLETED_BY_CSWpm-algorithm-checkdigits = CSWpmalgorithmchkdig
 CATALOGNAME_CSWpmalgorithmchkdig = pm_algorithmchkdig
 
 include gar/category.mk

@@ -17,7 +17,7 @@ DISTFILES += CSWpm-dbi.cswreleasenotes
 PACKAGES = CSWpm-dbi
 CATALOGNAME = pm_dbi
 SPKG_DESC_CSWpm-dbi = $(DESCRIPTION)
-OBSOLETES_CSWpm-dbi = CSWpmdbi
+OBSOLETED_BY_CSWpm-dbi = CSWpmdbi
 CATALOGNAME_CSWpmdbi = pm_dbi_stub
 
 CHECKPKG_OVERRIDES_CSWpm-dbi += file-with-bad-content|/usr/local|root/opt/csw/lib/perl/csw/DBD/File.pm
