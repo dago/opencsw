@@ -112,6 +112,10 @@ class Srv4Uploader(object):
     checkpkg_sets = self._CheckpkgSets(planned_modifications)
     bin_dir = os.path.dirname(__file__)
     checkpkg_executable = os.path.join(bin_dir, "checkpkg")
+    assert os.path.exists(checkpkg_executable), (
+        "Could not find %s. Make sure that the checkpkg executable is "
+        "available \n"
+        "from the same directory as csw-upload-pkg." % checkpkg_executable)
     checks_failed_for_catalogs = []
     args_by_cat = {}
     for arch, osrel in checkpkg_sets:
