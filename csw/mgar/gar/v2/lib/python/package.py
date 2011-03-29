@@ -353,20 +353,19 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
     depends = []
     i_depends = []
     depend_file_path = os.path.join(self.directory, "install", "depend")
-    if not os.path.exists(depend_file_path):
-      return depends
-    with open(depend_file_path, "r") as fd:
-      for line in fd:
-        fields = re.split(c.WS_RE, line)
-        if len(fields) < 2:
-          logging.warning("Bad depends line: %s", repr(line))
-        if fields[0] == "P":
-          pkgname = fields[1]
-          pkg_desc = " ".join(fields[1:])
-          depends.append((pkgname, pkg_desc))
-        if fields[0] == "I":
-          pkgname = fields[1]
-          i_depends.append(pkgname)
+    if os.path.exists(depend_file_path):
+      with open(depend_file_path, "r") as fd:
+        for line in fd:
+          fields = re.split(c.WS_RE, line)
+          if len(fields) < 2:
+            logging.warning("Bad depends line: %s", repr(line))
+          if fields[0] == "P":
+            pkgname = fields[1]
+            pkg_desc = " ".join(fields[1:])
+            depends.append((pkgname, pkg_desc))
+          if fields[0] == "I":
+            pkgname = fields[1]
+            i_depends.append(pkgname)
     return depends, i_depends
 
   def GetObsoletedBy(self):
