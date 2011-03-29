@@ -1,5 +1,5 @@
 NAME = pbzip2
-VERSION = 1.1.1
+VERSION = 1.1.3
 CATEGORIES = utils
 
 DESCRIPTION = Parallel BZIP2 Data Compression Software
@@ -13,23 +13,17 @@ endef
 MASTER_SITES = http://compression.ca/pbzip2/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWpbzip2
+CATALOGNAME_CSWpbzip2 = pbzip2
+SPKG_DESC_CSWpbzip2 = Parallel BZIP2 Data Compression Software
+RUNTIME_DEP_PKGS_CSWpbzip2 += CSWbzip2
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-# we require
-RUNTIME_DEP_PKGS = CSWbzip2
-
-# since there is no configure script, this is intentionally left empty
+# Since there is no configure script, this is intentionally left empty
 CONFIGURE_SCRIPTS =
 
-# no build tests
-SKIPTEST = 1
+# There is no testsuite
+TEST_SCRIPTS =
 
-# custom install
 INSTALL_SCRIPTS = custom
 
 # After some testing. Using a special ISA modulation does *not* speed
@@ -38,7 +32,7 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 pre-build-modulated:
-	@gsed -i'' 's,-lpthread,-norunpath -lpthread,g;s,-pthread,-I$(includedir) -L$(libdir),g;s,g++,$(CXX),;s,-O2,-fast $(filter-out -xnorunpath,$(CFLAGS)),' $(WORKSRC)/Makefile
+	gsed -i'' 's,-lpthread,-norunpath -lpthread,g;s,-pthread,-I$(includedir) -L$(libdir),g;s,g++,$(CXX),;s,-O2,-fast $(filter-out -xnorunpath,$(CFLAGS)),' $(WORKSRC)/Makefile
 
 install-custom:
 	[ ! -d "$(DESTDIR)$(mandir)/man1" ] && \
