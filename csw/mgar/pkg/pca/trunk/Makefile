@@ -1,5 +1,5 @@
 NAME = pca
-VERSION = 20101221-01
+VERSION = 20110329-01
 CATEGORIES = utils
 
 DESCRIPTION = Patch Check Advanced
@@ -21,12 +21,11 @@ DISTFILES += pca.conf
 PATCHFILES  = 0001-prefer-opencsw-perl.diff
 PATCHFILES += 0002-Add-etc-opt-csw-as-config-location.patch
 
-#PATCHDIRLEVEL = 0
-
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d{8}-\d{2})
 
 WORKSRC = $(WORKDIR)
+PATCHDIR = $(WORKDIR)
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -39,6 +38,10 @@ SPKG_VERSION = $(shell echo $(VERSION) | sed -e 's/-/./g')
 SAMPLECONF = /etc/opt/csw/pca.conf
 
 ARCHALL = 1
+
+# Search path for wget, get all we can
+CHECKPKG_OVERRIDES_CSWpca += file-with-bad-content|/usr/local|root/opt/csw/bin/pca
+CHECKPKG_OVERRIDES_CSWpca += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/pca.8
 
 include gar/category.mk
 
