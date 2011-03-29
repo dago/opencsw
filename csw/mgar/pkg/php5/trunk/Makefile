@@ -43,7 +43,6 @@ PACKAGES += CSWphp5-calendar
 PACKAGES += CSWphp5-ctype
 PACKAGES += CSWphp5-curl
 PACKAGES += CSWphp5-dba
-PACKAGES += CSWphp5-dbase
 PACKAGES += CSWphp5-dom
 PACKAGES += CSWphp5-exif
 PACKAGES += CSWphp5-ftp
@@ -101,7 +100,7 @@ OBSOLETED_BY_CSWmod-php5 = CSWmodphp5
 
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
-INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash
+INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 
 CATALOGNAME_CSWphp5-dev   = php5_dev
 SPKG_DESC_CSWphp5-dev     = Development files for php5
@@ -144,11 +143,6 @@ CATALOGNAME_CSWphp5-dba = php5_dba
 SPKG_DESC_CSWphp5-dba = The dba extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-dba = CSWphp5 CSWlibgdbm3 CSWbdb42
 OBSOLETED_BY_CSWphp5-dba = CSWphp5dba
-
-CATALOGNAME_CSWphp5-dbase = php5_dbase
-SPKG_DESC_CSWphp5-dbase = The dbase extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-dbase = CSWphp5
-OBSOLETED_BY_CSWphp5-dbase = CSWphp5dbase
 
 CATALOGNAME_CSWphp5-dom = php5_dom
 SPKG_DESC_CSWphp5-dom = The dom extension for PHP5
