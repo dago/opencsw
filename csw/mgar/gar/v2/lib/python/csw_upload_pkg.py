@@ -61,6 +61,10 @@ class DataError(Error):
   """Unexpected data found."""
 
 
+class WorkflowError(Error):
+  """Unexpected state of workflow, e.g. expected element not found."""
+
+
 class Srv4Uploader(object):
 
   def __init__(self, filenames, rest_url, os_release=None, debug=False):
@@ -72,11 +76,37 @@ class Srv4Uploader(object):
     self.rest_url = rest_url
     self._rest_client = rest.RestClient(self.rest_url)
 
+  def _ImportMetadata(self, filename):
+    md5_sum = self._GetFileMd5sum(filename)
+    metadata = self._rest_client.GetPkgByMd5(md5_sum)
+    if metadata:
+      # Metadata are already in the database.
+      return
+    logging.warning("%s (%s) is not known to the database.", filename, md5_sum)
+    bin_dir = os.path.dirname(__file__)
+    pkgdb_executable = os.path.join(bin_dir, "pkgdb")
+    assert os.path.exists(pkgdb_executable), (
+        "Could not find %s. Make sure that the pkgdb executable is "
+        "available \n"
+        "from the same directory as csw-upload-pkg." % pkgdb_executable)
+    args = [pkgdb_executable, "importpkg", filename]
+    ret = subprocess.call(args)
+    if ret:
+      raise OSError("An error occurred when running %s." % args)
+    # Verify that the import succeeded
+    metadata = self._rest_client.GetPkgByMd5(md5_sum)
+    if not metadata:
+      raise WorkflowError(
+          "Metadata of %s could not be imported into the database."
+          % filename)
+
+
   def Upload(self):
     do_upload = True
     planned_modifications = []
     metadata_by_md5 = {}
     for filename in self.filenames:
+      self._ImportMetadata(filename)
       md5_sum = self._GetFileMd5sum(filename)
       file_in_allpkgs, file_metadata = self._GetSrv4FileMetadata(md5_sum)
       if file_in_allpkgs:
