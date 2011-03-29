@@ -3,7 +3,7 @@ NAME = ascii
 VERSION = 3.11
 CATEGORIES = utils
 
-DESCRIPTION = Provides easy conversion between various byte representations and ASCII
+DESCRIPTION = Interactive ASCII name and synonym chart
 define BLURB
 endef
 
