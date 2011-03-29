@@ -30,12 +30,18 @@ class RestClient(object):
       return json.loads(data)
     except urllib2.HTTPError, e:
       logging.warning("%s -- %s", url, e)
-      return {
-          "maintainer_email": "Unknown",
-      }
+      if e.code == 404:
+        # Code 404 is fine, it means that the package with given md5 does not
+        # exist.
+        return None
+      else:
+        # Other HTTP errors are should be thrown.
+        raise
 
   def GetMaintainerByMd5(self, md5_sum):
     pkg = self.GetPkgByMd5(md5_sum)
+    if not pkg:
+      pkg = {"maintainer_email": "Unknown"}
     return {
         "maintainer_email": pkg["maintainer_email"],
     }
