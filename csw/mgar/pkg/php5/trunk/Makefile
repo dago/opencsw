@@ -684,7 +684,6 @@ CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pspell += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-wddx += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-gmp += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-gmp += soname-not-found|libgmp.so.3|is|needed|by|opt/csw/php5/lib/php/extensions/no-debug-non-zts-20090626/gmp.so
 CHECKPKG_OVERRIDES_CSWphp5-gmp += surplus-dependency|CSWlibgmp
 CHECKPKG_OVERRIDES_CSWphp5-mssql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pcntl += surplus-dependency|CSWphp5
