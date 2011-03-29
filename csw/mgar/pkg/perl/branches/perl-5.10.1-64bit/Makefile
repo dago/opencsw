@@ -45,7 +45,7 @@ PATCHFILES += 0001-change-inc-based-on-rhel5-patch.patch
 # Core module updates
 # Not used at the moment, leave one as example
 #MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
-#CORE_UPDATES  += PathTools-3.30
+#CORE_UPDATES  += PathTools-3.30z
 #CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
 
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
@@ -64,6 +64,22 @@ INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0
 PERL_LIBS-32 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl
 PERL_LIBS-64 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc
 PERL_LIBS = $(PERL_LIBS-$(MEMORYMODEL))
+
+# TBD: 64 bit pathes
+#     ld='/opt/SUNWspro/bin/cc', ldflags ='-m64 -xarch=sparc -L/opt/csw/bdb48/lib/64 -L/opt/csw/lib/64 -L/usr/lib -L/usr/ccs/lib -L/lib -xarch=v9'
+
+# /usr/lib -> /usr/lib/64
+# /usr/ccs/lib -> /usr/ccs/lib/sparcv9
+# /lib -> /lib/64
+
+#    libpth=/usr/lib /usr/ccs/lib /lib /opt/csw/lib/64
+#    libs=-lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc
+#    perllibs=-lsocket -lnsl -ldb-4.8 -ldl -lm -lpthread -lc
+#    libc=/usr/lib/sparcv9/libc.so, so=so, useshrplib=true, libperl=libperl.so.5.10.1
+#    gnulibc_version=''
+#  Dynamic Linking:
+#    dlsrc=dl_dlopen.xs, dlext=so, d_dlsymun=undef, ccdlflags='-R /opt/csw/lib/64'
+#    cccdlflags='-KPIC', lddlflags='-G -xarch=v9 -L/opt/csw/bdb48/lib/64 -L/opt/csw/lib/64 -L/usr/lib -L/usr/ccs/lib -L/lib'
 
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION)
@@ -125,7 +141,7 @@ EXTRA_LDFLAGS-32 = -L$(libdir) -lperl
 EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL))
 
 # Tests take a long time
-# SKIPTEST ?= 1
+SKIPTEST ?= 1
 
 # Make sure we don't include the path to the newly built perl as the
 # library is not in place yet.
