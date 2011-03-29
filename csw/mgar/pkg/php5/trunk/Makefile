@@ -184,7 +184,7 @@ OBSOLETED_BY_CSWphp5-hash = CSWphp5hash
 
 CATALOGNAME_CSWphp5-iconv = php5_iconv
 SPKG_DESC_CSWphp5-iconv = The iconv extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-iconv = CSWphp5
+RUNTIME_DEP_PKGS_CSWphp5-iconv = CSWphp5 CSWiconv
 OBSOLETED_BY_CSWphp5-iconv = CSWphp5iconv
 
 CATALOGNAME_CSWphp5-imap = php5_imap
