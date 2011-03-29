@@ -59,7 +59,6 @@ PACKAGES += CSWphp5-mcrypt
 PACKAGES += CSWphp5-mssql
 PACKAGES += CSWphp5-mysql
 PACKAGES += CSWphp5-mysqli
-PACKAGES += CSWphp5-ncurses
 PACKAGES += CSWphp5-odbc
 PACKAGES += CSWphp5-openssl
 PACKAGES += CSWphp5-pcntl
@@ -101,6 +100,7 @@ OBSOLETED_BY_CSWmod-php5 = CSWmodphp5
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
+INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses
 
 CATALOGNAME_CSWphp5-dev   = php5_dev
 SPKG_DESC_CSWphp5-dev     = Development files for php5
@@ -223,11 +223,6 @@ CATALOGNAME_CSWphp5-mysqli = php5_mysqli
 SPKG_DESC_CSWphp5-mysqli = The mysqli extension for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-mysqli = CSWphp5 CSWmysql5rt CSWzlib
 OBSOLETED_BY_CSWphp5-mysqli = CSWphp5mysqli
-
-CATALOGNAME_CSWphp5-ncurses = php5_ncurses
-SPKG_DESC_CSWphp5-ncurses = The ncurses extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-ncurses = CSWphp5 CSWncurses
-OBSOLETED_BY_CSWphp5-ncurses = CSWphp5ncurses
 
 CATALOGNAME_CSWphp5-odbc = php5_odbc
 SPKG_DESC_CSWphp5-odbc = The odbc extension for PHP5
