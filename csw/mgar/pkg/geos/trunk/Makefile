@@ -11,7 +11,7 @@ endef
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.bz2
 
-GARTYPE = v2-defaultchange
+GARTYPE = v2
 
 GARCOMPILER = GNU
 
