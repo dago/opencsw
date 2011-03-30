@@ -8,7 +8,7 @@ define BLURB
 GDAL is a translator library for raster geospatial data formats that is released under an X/MIT style Open Source license by the Open Source Geospatial Foundation. As a library, it presents a single abstract data model to the calling application for all supported formats. It also comes with a variety of useful commandline utilities for data translation and processing.
 endef
 
-GARTYPE = v2-defaultchange
+GARTYPE = v2
 
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
@@ -26,5 +26,10 @@ CONFIGURE_ARGS += --with-mysql=/opt/csw/mysql5/bin/mysql_config
 # not working yet.
 #CONFIGURE_ARGS += --with-pg=/opt/csw/postgresql/bin/pg_config
 CONFIGURE_ARGS += --with-sqlite3=$(prefix)
+
+# doesn't have tests?
+TEST_TARGET = 
+
+LICENSE = LICENSE.TXT
 
 include gar/category.mk
