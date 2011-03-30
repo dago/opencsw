@@ -13,8 +13,10 @@ define BLURB
   It works on all versions of Solaris, both SPARC and x86.
 endef
 
-MASTER_SITES = http://www.par.univie.ac.at/solaris/pca/download/
+MASTER_SITES += http://www.par.univie.ac.at/solaris/pca/download/
+MASTER_SITES += http://www.par.univie.ac.at/solaris/pca/contrib/
 DISTFILES  = $(NAME)-$(VERSION)
+DISTFILES += chkmin
 DISTFILES += COPYING
 DISTFILES += pca.conf
 
@@ -52,6 +54,7 @@ post-extract-modulated:
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall $(WORKSRC)/pca $(DESTDIR)$(bindir)/pca
+	ginstall $(WORKSRC)/chkmin $(DESTDIR)$(bindir)/chkmin
 	ginstall -d $(DESTDIR)/etc/opt/csw
 	ginstall $(WORKSRC)/pca.conf $(DESTDIR)/etc/opt/csw
 	ginstall -d $(DESTDIR)$(mandir)/man8
