@@ -27,22 +27,24 @@ RUNTIME_DEP_PKGS_CSWbluefish += CSWpango
 RUNTIME_DEP_PKGS_CSWbluefish += CSWfconfig
 RUNTIME_DEP_PKGS_CSWbluefish += CSWglib2
 
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/treemagic|CSWbluefish|CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/globs|CSWbluefish|CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/generic-icons|CSWbluefish|CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/aliases|CSWbluefish|CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/subclasses|CSWbluefish|CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/magic|CSWbluefish|CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/globs2|CSWbluefish|CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/applications/mimeinfo.cache|CSWbluefish|CSWcontrolcenter
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/mime.cache|CSWbluefish|CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/types|CSWbluefish|CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/XMLnamespaces|CSWbluefish|CSWsharedmimeinfo
-CHECKPKG_OVERRIDES_CSWbluefish += file-collision|/opt/csw/share/mime/icons|CSWbluefish|CSWsharedmimeinfo
-
-CHECKPKG_OVERRIDES_CSWbluefish += file-with-bad-content|/usr/local|root/opt/csw/share/bluefish/bflang/all-php.bfinc
+EXTRA_MERGE_EXCLUDE_FILES = .*treemagic.*
+EXTRA_MERGE_EXCLUDE_FILES += .*globs.*
+EXTRA_MERGE_EXCLUDE_FILES += .*generic-icons.*
+EXTRA_MERGE_EXCLUDE_FILES += .*aliases.*
+EXTRA_MERGE_EXCLUDE_FILES += .*subclasses.*
+EXTRA_MERGE_EXCLUDE_FILES += .*magic.*
+EXTRA_MERGE_EXCLUDE_FILES += .*globs2.*
+EXTRA_MERGE_EXCLUDE_FILES += .*mimeinfo.cache.*
+EXTRA_MERGE_EXCLUDE_FILES += .*mime.cache.*
+EXTRA_MERGE_EXCLUDE_FILES += .*types.*
+EXTRA_MERGE_EXCLUDE_FILES += .*XMLnamespaces.*
+EXTRA_MERGE_EXCLUDE_FILES += .*icons.*
 
 include gar/category.mk
 
 # ./configure needs this to find ggettext
 PATH := /opt/csw/gnu:$(PATH)
+
+# search/replace /usr/local with /opt/csw
+post-install-modulated:
+	perl -pi -e 's|/usr/local|$(prefix)|' $(DESTDIR)/opt/csw/share/bluefish/bflang/all-php.bfinc
