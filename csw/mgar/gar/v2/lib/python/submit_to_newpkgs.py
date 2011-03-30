@@ -104,15 +104,31 @@ def RsyncFiles(files_to_rsync, dst_arg):
 
 class FileSetChecker(object):
 
+  def _CheckUncommitted(self, files_with_metadata):
+    tags = []
+    expected_vendor_tag = "CSW"
+    for filename, parsed_filename in files_with_metadata:
+      if parsed_filename["vendortag"] != expected_vendor_tag:
+        tags.append(tag.CheckpkgTag(
+          None,
+          "bad-vendor-tag",
+          "%s expected=%s actual=%s"
+          % (parsed_filename["catalogname"],
+             expected_vendor_tag,
+             parsed_filename["vendortag"])))
+    return tags
+
   def CheckFiles(self, file_list):
     """Checks a set of files. Returns error tags."""
     catalognames_by_arch = {
         "i386": set(),
         "sparc": set(),
     }
+    files_with_metadata = []
     for file_path in file_list:
       pkg_path, basename = os.path.split(file_path)
       parsed = opencsw.ParsePackageFileName(basename)
+      files_with_metadata.append((basename, parsed))
       if parsed["arch"] == "all":
         for arch in ("i386", "sparc"):
           catalognames_by_arch[arch].add(parsed["catalogname"])
@@ -125,6 +141,7 @@ class FileSetChecker(object):
       tags.append(tag.CheckpkgTag(None, "sparc-arch-missing", catalogname))
     for catalogname in sparc.difference(i386):
       tags.append(tag.CheckpkgTag(None, "i386-arch-missing", catalogname))
+    tags.extend(self._CheckUncommitted(files_with_metadata))
     return tags
 
 
