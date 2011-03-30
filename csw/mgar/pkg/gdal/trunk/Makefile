@@ -18,5 +18,10 @@ CONFIGURE_ARGS += --with-libz=$(prefix)
 CONFIGURE_ARGS += --with-png=$(prefix)
 CONFIGURE_ARGS += --with-libtiff=$(prefix)
 CONFIGURE_ARGS += --with-jpeg=$(prefix)
+CONFIGURE_ARGS += --with-expat=$(prefix)
+CONFIGURE_ARGS += --with-mysql=/opt/csw/mysql5/bin/mysql_config
+# not working yet.
+#CONFIGURE_ARGS += --with-pg=/opt/csw/postgresql/bin/pg_config
+CONFIGURE_ARGS += --with-sqlite3=$(prefix)
 
 include gar/category.mk
