@@ -13,4 +13,10 @@ GARTYPE = v2-defaultchange
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
 
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-libz=$(prefix)
+CONFIGURE_ARGS += --with-png=$(prefix)
+CONFIGURE_ARGS += --with-libtiff=$(prefix)
+CONFIGURE_ARGS += --with-jpeg=$(prefix)
+
 include gar/category.mk
