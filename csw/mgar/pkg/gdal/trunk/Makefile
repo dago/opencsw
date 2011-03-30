@@ -12,6 +12,7 @@ GARTYPE = v2-defaultchange
 
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
+PATCHFILES += 0001-Force-the-use-of-CSWbash.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libz=$(prefix)

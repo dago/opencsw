@@ -1,0 +1,29 @@
+From 25241ade123f17a5e4a381c0057004d28ba7035e Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Wed, 30 Mar 2011 18:00:00 +0200
+Subject: [PATCH] Force the use of CSWbash
+
+This is required to make libtool execute properly since it has
+bashisms.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ GDALmake.opt.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/GDALmake.opt.in b/GDALmake.opt.in
+index bdeba13..4595a2f 100644
+--- a/GDALmake.opt.in
++++ b/GDALmake.opt.in
+@@ -8,7 +8,7 @@ top_builddir	=	$(GDAL_ROOT)
+ # Solaris users: the LIBTOOL line is expanded to $(SHELL) $(top_builddir)/libtool
+ # but the libtool script uses bashism, so you may need to uncomment the following
+ # line :
+-#SHELL=/usr/bin/bash
++SHELL=/opt/csw/bin/bash
+ 
+ HAVE_LIBTOOL	=	@HAVE_LIBTOOL@
+ LIBTOOL	=	@LIBTOOL@
+-- 
+1.7.3.2
+
