@@ -688,8 +688,8 @@ reset-install-modulated:
 # - If there are builds for more than one ISA the destination differs depending on if
 #   the binaries should be executed by isaexec. This is usually bin, sbin and libexec.
 #
-# default:        relocate to ISA subdirs if more than one ISA, use isaexec-wrapper for bin/, etc.
-# NOISAEXEC = 1: ISA_DEFAULT gets installed in bin/..., all others in bin/$ISA/
+# default:       ISA_DEFAULT gets installed in bin/..., all others in bin/$ISA/
+# ISAEXEC = 1:   relocate to ISA subdirs if more than one ISA, use isaexec-wrapper for bin/, etc.
 #
 # Automatic merging is only possible if you have the default modulation "ISA"
 # Otherwise you *must* specify merge scripts for all modulations.
@@ -705,14 +705,14 @@ MERGE_SCRIPTS_isa-default ?= copy-all $(EXTRA_MERGE_SCRIPTS_$(ISA_DEFAULT)) $(EX
 MERGE_SCRIPTS_isa-$(ISA_DEFAULT) ?= $(MERGE_SCRIPTS_isa-default)
 MERGE_SCRIPTS_$(MODULATION) ?= $(MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSED))
 else
-ISAEXEC_DIRS ?= $(if $(NOISAEXEC),,$(bindir) $(sbindir) $(libexecdir))
+ISAEXEC_DIRS ?= $(if $(ISAEXEC),$(bindir) $(sbindir) $(libexecdir))
 MERGE_DIRS_isa-default ?= $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA_DEFAULT))
-MERGE_DIRS_isa-extra ?= $(bindir) $(sbindir) $(libexecdir) $(libdir) $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-$(ISA))
+MERGE_DIRS_isa-extra ?= $(if $(ISAEXEC),$(bindir) $(sbindir) $(libexecdir)) $(libdir) $(EXTRA_MERGE_DIRS) $(EXTRA_MERGE_DIRS_isa-extra) $(EXTRA_MERGE_DIRS_isa-$(ISA))
 MERGE_DIRS_$(MODULATION_ISACOLLAPSED64) ?= $(MERGE_DIRS_$(MODULATION_ISACOLLAPSEDEXTRA))
 MERGE_DIRS_$(MODULATION) ?= $(MERGE_DIRS_$(MODULATION_ISACOLLAPSED))
 
 MERGE_SCRIPTS_isa-default ?= copy-relocate $(EXTRA_MERGE_SCRIPTS_isa-$(ISA_DEFAULT)) $(EXTRA_MERGE_SCRIPTS)
-MERGE_SCRIPTS_isa-extra ?= copy-relocated-only $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS)
+MERGE_SCRIPTS_isa-extra ?= copy-relocated-only copy-config-only $(EXTRA_MERGE_SCRIPTS_isa-$(ISA)) $(EXTRA_MERGE_SCRIPTS_isa-extra) $(EXTRA_MERGE_SCRIPTS)
 MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSED64) ?= $(MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSEDEXTRA))
 MERGE_SCRIPTS_$(MODULATION) ?= $(MERGE_SCRIPTS_$(MODULATION_ISACOLLAPSED))
 endif

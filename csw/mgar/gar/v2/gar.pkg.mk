@@ -102,7 +102,8 @@ GARPKG_v2 = CSWgar-v2
 RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
 
 # Sanity checks for r8335
-$(if $(NO_ISAEXEC),$(error The deprecated variable 'NO_ISAEXEC' is defined, please replace it with NOISAEXEC))
+$(if $(NO_ISAEXEC),$(error The deprecated variable 'NO_ISAEXEC' is defined, this is now the default, please remove the line))
+$(if $(NOISAEXEC),$(error The deprecated variable 'NOISAEXEC' is defined, this is now the default, please remove the line))
 $(if $(PREREQUISITE_PKGS),$(error The deprecated variable 'PREREQUISITE_PKGS' is defined, please replace it with BUILD_DEP_PKGS))
 $(foreach P,$(SPKG_SPECS),$(if $(PREREQUISITE_PKGS_$P),$(error The deprecated variable 'PREREQUISITE_PKGS_$P' is defined, please replace it with BUILD_DEP_PKGS_$P)))
 $(if $(REQUIRED_PKGS),$(error The deprecated variable 'REQUIRED_PKGS' is defined, please replace it with RUNTIME_DEP_PKGS))
@@ -867,7 +868,7 @@ validateplatform:
 # modulations and does not fill global/.
 ENABLE_CHECK ?= 1
 
-# The files in ISAEXEC get relocated and will be replaced by the isaexec-wrapper.
+# The files in ISAEXEC_FILES get relocated and will be replaced by the isaexec-wrapper.
 # The trick is to delay the calculcation of the variable values until that time
 # when PKGROOT has already been populated.
 ISAEXEC_EXCLUDE_FILES ?= $(bindir)/%-config $(bindir)/%/%-config
