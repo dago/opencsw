@@ -1,8 +1,8 @@
 NAME = c-ares
-VERSION = 1.7.0
+VERSION = 1.7.4
 CATEGORIES = lib
 
-DESCRIPTION = c-ares library to perform DNS requests and name resolves asynchronously
+DESCRIPTION = C-ares library to perform DNS requests and name resolves asynchronously
 define BLURB
 endef
 
@@ -13,13 +13,18 @@ DISTFILES += ares_build.h
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES = CSWlibcares CSWlibcaresdevel
+PACKAGES += CSWlibcares2
+CATALOGNAME_CSWlibcares2 = libcares2
+SPKG_DESC_CSWlibcares2 = C-ares library to perform DNS requests and name resolves asynchronously
+PKGFILES_CSWlibcares2 = $(call pkgfiles_lib,libcares.so.2)
+OBSOLETED_BY_CSWlibcares2 = CSWlibcares
 
-CATALOGNAME_CSWlibcares = libcares
-CATALOGNAME_CSWlibcaresdevel = libcares_devel
-
-SPKG_DESC_CSWlibcares = $(DESCRIPTION)
-SPKG_DESC_CSWlibcaresdevel = c-ares library developer files
+PACKAGES += CSWlibcares-dev
+CATALOGNAME_CSWlibcares-dev = libcares_dev
+SPKG_DESC_CSWlibcares-dev = Development files for libcares.so.2
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibcares-dev += CSWlibcares2
+OBSOLETED_BY_CSWlibcares-dev = CSWlibcaresdevel
 
 RUNTIME_DEP_PKGS_CSWlibcaresdevel = CSWlibcares
 
@@ -28,13 +33,9 @@ LICENSE = README.cares
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
 EXTRA_PAX_ARGS_32 = -s ",^\.$(includedir)/ares_build.h$$,.$(includedir)/ares_build-32.h,p"
 EXTRA_PAX_ARGS_64 = -s ",^\.$(includedir)/ares_build.h$$,.$(includedir)/ares_build-64.h,p"
 EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
-
-PKGFILES_CSWlibcaresdevel = $(PKGFILES_DEVEL)
 
 include gar/category.mk
 
