@@ -10,6 +10,9 @@ CHECKPATH ?= $(firstword $(CPAN_MIRRORS))
 # Tests are enabled by default, unless overridden at the test level
 ENABLE_TEST ?= 1
 
+# Test target is test by default (in CPAN category)
+TEST_TARGET ?= test
+
 # Every CPAN module depends on Perl
 #DEPENDS += lang/perl
 
