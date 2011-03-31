@@ -1,5 +1,5 @@
 NAME = zutils
-VERSION = 0.8
+VERSION = 0.9
 CATEGORIES = utils
 
 DESCRIPTION = Utilities to deal with compressed and non-compressed files
@@ -12,23 +12,23 @@ define BLURB
   planned to be implemented soon.
 endef
 
+
 MASTER_SITES = http://download.savannah.gnu.org/releases/zutils/
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(DISTNAME).tar.gz
 PATCHFILES  = 0001-Use-inttypes.h-instead-of-stdint.h-and-add-signal.h.patch
 PATCHFILES += 0002-Use-correct-path-on-testsuite.patch
 PATCHFILES += 0003-Use-Zutils-instead-of-zutils.patch
-PATCHFILES += 0004-Fix-ambinguity-to-str.insert.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-BUILD_DEP_PKGS = CSWhelp2man CSWlzip
+BUILD_DEP_PKGS += CSWhelp2man
+BUILD_DEP_PKGS += CSWlzip
 
 # The lzip binary is used from the scripts which is not detected by checkpkg
 RUNTIME_DEP_PKGS = CSWlzip
 CHECKPKG_OVERRIDES_CSWzutils += surplus-dependency|CSWlzip
 
 VENDOR_URL = http://www.nongnu.org/zutils/zutils.html
+
+EXTRA_LINKER_FLAGS = -norunpath
 
 NODIRPATHS = --includedir
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -43,18 +43,6 @@ INSTALL_OVERRIDE_VARS = INSTALL
 INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
 
 EXTRA_PAX_ARGS = -s ",/z,/Z,p"
-
-# These are false positives as lower case 'z' is in CSWgzipextras.
-CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zcmp|CSWgzipextras|CSWzutils
-CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/share/man/man1/Zcat.1|CSWgzipextras|CSWzutils
-CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zcat|CSWgzipextras|CSWzutils
-CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/share/man/man1/Zcmp.1|CSWgzipextras|CSWzutils
-CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zgrep|CSWgzipextras|CSWzutils
-CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zegrep|CSWgzipextras|CSWzutils
-CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zdiff|CSWgzipextras|CSWzutils
-CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/share/man/man1/Zdiff.1|CSWgzipextras|CSWzutils
-CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/bin/Zfgrep|CSWgzipextras|CSWzutils
-CHECKPKG_OVERRIDES_CSWzutils += file-collision|/opt/csw/share/man/man1/Zgrep.1|CSWgzipextras|CSWzutils
 
 include gar/category.mk
 
