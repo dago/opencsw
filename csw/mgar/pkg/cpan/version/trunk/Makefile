@@ -1,5 +1,5 @@
 NAME = version
-VERSION = 0.82
+VERSION = 0.88
 CATEGORIES = cpan
 AUTHOR = JPEACOCK
 
@@ -12,8 +12,11 @@ endef
 
 DISTFILES += COPYING
 
-PACKAGES = CSWpmversion
+PACKAGES = CSWpm-version
 CATALOGNAME = pm_version
+SPKG_DESC_CSWpm-version = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-version = CSWpmversion
+CATALOGNAME_CSWpmversion = pm_version_stub
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3.* .*\/man\/man1.*
 
