@@ -1,5 +1,5 @@
 NAME = plzip
-VERSION = 0.6
+VERSION = 0.7
 CATEGORIES = utils
 
 DESCRIPTION = A lossless data compressor based on the LZMA algorithm
@@ -12,19 +12,18 @@ define BLURB
   planned to be implemented soon.
 endef
 
-MASTER_SITES = http://download.savannah.gnu.org/releases/lzip/ 
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+GNU_PROJ = lzip
+MASTER_SITES = $(GNU_NMIRROR)
+DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES  = 0001-Add-prototype-for-kill-2.patch
 PATCHFILES += 0002-Use-ucb-echo.patch
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DEP_PKGS = CSWlzlib
 
 VENDOR_URL = http://www.nongnu.org/lzip/lzlib.html
 
 EXTRA_CXXFLAGS = -xcode=pic32
+EXTRA_LINKER_FLAGS = -norunpath
 
 NOISALIST = 1
 NODIRPATHS = --includedir
@@ -33,8 +32,6 @@ CONFIGURE_ARGS += CXX="$(CXX)"
 CONFIGURE_ARGS += CPPFLAGS="$(CPPFLAGS)"
 CONFIGURE_ARGS += CXXFLAGS="$(CXXFLAGS)"
 CONFIGURE_ARGS += LDFLAGS="$(LDFLAGS)"
-
-TEST_TARGET = check
 
 INSTALL_OVERRIDE_VARS = INSTALL
 INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
