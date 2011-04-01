@@ -38,6 +38,8 @@ _CATEGORY_GSPEC_INCLUDE ?= csw_rbgems_dyngspec.gspec
 # Ruby module dependencies can not be properly tracked right now
 _CATEGORY_CHECKPKG_OVERRIDES = surplus-dependency
 
+_MERGE_EXCLUDE_CATEGORY ?= .*\.o
+
 # gem specification actionmailer-2.3.8.gem
 # -> YAML for
 # - dependency generation
