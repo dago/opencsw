@@ -37,6 +37,10 @@ CHECKPKG_OVERRIDES_CSWperl    += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 
+# We contain libperl.so and libperl.so.5.12.3
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink
+CHECKPKG_OVERRIDES_CSWperl += shared-lib-pkgname-mismatch
+
 # Core module updates
 # Not used at the moment, leave one as example
 #MASTER_SITES  += $(CPAN_FIRST_MIRROR)/S/SM/SMUELLER/
@@ -52,7 +56,12 @@ CONFIGURE_SCRIPTS = perl
 INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1
 
 # Force use of db-4.8
-PERL_LIBS += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl
+# TBD: Reinsert libperl.so, see below.
+PERL_LIBS-32 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl 
+PERL_LIBS-64 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc 
+PERL_LIBS = $(PERL_LIBS-$(MEMORYMODEL)) 
+
+BUILD64 = 1
 
 # Configuration flags
 CONFIGURE_ARGS += -Darchlib=$(libdir)/perl/$(VERSION)
@@ -73,26 +82,31 @@ CONFIGURE_ARGS += -Dman3ext=3perl
 CONFIGURE_ARGS += -Doptimize="$(OPTFLAGS)"
 CONFIGURE_ARGS += -Dperladmin="root@localhost"
 CONFIGURE_ARGS += -Dprefix=$(prefix)
+CONFIGURE_ARGS += -Dbin=$(bindir)
+CONFIGURE_ARGS += -Dscriptdir=$(bindir)
 CONFIGURE_ARGS += -Dprivlib=$(datadir)/perl/$(VERSION)
 CONFIGURE_ARGS += -Dsitearch=$(libdir)/perl/site_perl
 CONFIGURE_ARGS += -Dsitelib=$(datadir)/perl/site_perl
 CONFIGURE_ARGS += -Dsiteman1dir=$(mandir)/man1
 CONFIGURE_ARGS += -Dsiteman3dir=$(mandir)/man3
 CONFIGURE_ARGS += -Dsiteprefix=/usr
-CONFIGURE_ARGS += -Duselargefiles
 CONFIGURE_ARGS += -Duseshrplib
 CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
 
 # When built on Solaris 10, enable DTrace support
-EXTRA_CONFIGURE_ARGS-5.10 = -Dusedtrace
-CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS-$(GAROSREL))
+CONFIGURE_ARGS-5.10 = -Dusedtrace
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(GAROSREL))
+
+# Largefiles is on by default for 64 bit
+CONFIGURE_ARGS-32 += -Duselargefiles 
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL)) 
 
 CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
 CONFIGURE_ARGS += -Dvendorprefix=$(prefix)
 CONFIGURE_ARGS += -Dlibs="$(PERL_LIBS)"
-CONFIGURE_ARGS += -Dlibsdirs=" /usr/lib /opt/csw/lib"
+CONFIGURE_ARGS += -Dlibsdirs=" $(abspath /usr/lib/$(MEMORYMODEL)) $(libdir)"
 CONFIGURE_ARGS += -Dsed=$(bindir)/gsed
 
 EXTRA_LIB += $(prefix)/bdb48/lib
@@ -105,7 +119,15 @@ EXTRA_INC += $(prefix)/bdb48/include
 #   https://www.opencsw.org/mantis/view.php?id=4544
 EXTRA_CFLAGS = $(CPPFLAGS)
 
-EXTRA_LDFLAGS = -L$(libdir) -lperl
+# Adding -lperl requires that libperl.so is available during compilation, which is not 
+# the case on bootstrapping. However, we require explicit libperl linkage or programs 
+# embedding perl will have problems with duplicated static variables. 
+# XXX Investigate further after 64 bit has built 
+EXTRA_LDFLAGS-32 = -L$(libdir) -lperl 
+EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL)) 
+
+# We want 64 bit binaries
+MERGE_DIRS_isa-extra = $(bindir) $(sbindir) $(libdir) $(libexecdir)
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/perllocal.pod
 PKGFILES_CSWperldoc = .*\/pod\/.*\.pod .*\/man\/man.\/.*
@@ -137,6 +159,9 @@ CHECKPKG_OVERRIDES_CSWperl += shared-lib-package-contains-so-symlink|file=/opt/c
 
 include gar/category.mk
 
+# This is probably due to -lperl, but during Configure the one in /opt/csw/lib is picked up and 
+# the one in $WORKSRC has not been built yet 
+# TBD: Investigate
 post-extract-modulated:
 	mkdir -p $(WORKSRC)
 	gln -s libperl.so.5.12.3 $(WORKSRC)/libperl.so
