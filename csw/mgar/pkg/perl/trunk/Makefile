@@ -17,6 +17,7 @@ SPKG_SOURCEURL = http://www.cpan.org/src
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
+# Make extra Solaris 10 package with DTrace support
 PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
@@ -43,10 +44,6 @@ CHECKPKG_OVERRIDES_CSWperldoc += surplus-dependency|CSWperl
 #CORE_OBSOLETE += Cwd.pm File/Spec* auto/Cwd
 
 DISTFILES += $(foreach N,$(CORE_UPDATES),$(N).tar.gz)
-
-# Dependencies
-#LIBDEPS += bdb48/lib
-LIBDEPS += lib/gdbm
 
 # Custom configure
 CONFIGURE_SCRIPTS = perl
@@ -88,9 +85,8 @@ CONFIGURE_ARGS += -Dusesitecustomize
 CONFIGURE_ARGS += -Dusethreads
 
 # When built on Solaris 10, enable DTrace support
-ifeq ($(shell uname -r), 5.10)
-  CONFIGURE_ARGS += -Dusedtrace
-endif
+EXTRA_CONFIGURE_ARGS-5.10 = -Dusedtrace
+CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS-$(GAROSREL))
 
 CONFIGURE_ARGS += -Dvendorarch=$(libdir)/perl/csw
 CONFIGURE_ARGS += -Dvendorlib=$(datadir)/perl/csw
