@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use File::chdir;
 use CPAN;
 use YAML qw(LoadFile);
 use File::Path;
@@ -10,6 +11,15 @@ use File::Temp qw(:POSIX);
 use Module::Version 'get_version';
 use version 0.77; # get latest bug-fixes and API
 use Data::Dumper;
+
+# TBD:
+# [10:14] El_Che: no fix for require, but it gives you filenames of the source
+# [10:16] Dagobert: Ahhhh.... sorry, I missed that
+# [10:16] Dagobert: How does it work? Does it access a static copy of the CPAN database?
+# [10:17] El_Che: I guess it looks locally looking at the deployed modules
+# [10:17] El_Che: looks looking
+# [10:17] El_Che: goodmorning
+# [10:18] El_Che: there is also a path option
 
 # These three routines are used to capture the output of sub processes and
 # perl routines (such as CPAN::Module::get) into a log file.  If the command
@@ -148,6 +158,8 @@ sub dep_pkgs {
 
 my $modname = shift @ARGV;
 
+my $cpandir = $CWD;
+
 logoutput();
 my $mod = (CPAN::Shell->expand("Module", $modname))[0];
 endlog();
@@ -223,52 +235,65 @@ $description ||= "";
 $description = ucfirst( $description );
 chomp( $description );
 
-print "NAME = $name\n";
-print "VERSION = $fileversion\n";
-print "CATEGORIES = cpan\n";
-print "AUTHOR = $author\n";
-print "\n";
-print "DESCRIPTION = $description\n";
-print "define BLURB\n";
-print "endef\n";
-print "\n";
+# Come back from cpan module build directory to GAR cpan/
+$CWD = $cpandir;
+
+if( ! -d $name ) {
+  system( "pwd; gmake newpkg-$name" );
+}
+
+open( MF, ">$name/trunk/Makefile" ) or die "Couldn't write to $name/trunk/Makefile";
+
+print MF "NAME = $name\n";
+print MF "VERSION = $fileversion\n";
+print MF "CATEGORIES = cpan\n";
+print MF "AUTHOR = $author\n";
+print MF "\n";
+print MF "DESCRIPTION = $description\n";
+print MF "define BLURB\n";
+print MF "endef\n";
+print MF "\n";
 
 my $upstreaminfo = 0;
 if( $notstandard ) {
-  print "MASTER_SITES = \$(addsuffix ${notstandard},\$(CPAN_MIRRORS))\n";
+  print MF "MASTER_SITES = \$(addsuffix ${notstandard},\$(CPAN_MIRRORS))\n";
   $upstreaminfo = 1;
 }
 if( $fileonly ne "${name}-${fileversion}.tar.gz" ) {
-  print "MODDIST = $fileonly\n";
+  print MF "MODDIST = $fileonly\n";
   $upstreaminfo = 1;
 }
-print "\n" if( $upstreaminfo );
+print MF "\n" if( $upstreaminfo );
 
 if( @build_dep_pkgs ) {
   foreach my $p (@build_dep_pkgs) {
-    print "BUILD_DEP_PKGS += $p\n";
+    print MF "BUILD_DEP_PKGS += $p\n";
   }
-  print "\n";
+  print MF "\n";
 }
 
-print "CATALOG_RELEASE = unstable\n";
-print "\n";
+print MF "CATALOG_RELEASE = unstable\n";
+print MF "\n";
 
-print "PACKAGES += $cswpkg\n";
-print "CATALOGNAME_$cswpkg = $cswcatalog\n";
+print MF "PACKAGES += $cswpkg\n";
+print MF "CATALOGNAME_$cswpkg = $cswcatalog\n";
 
 # Do we have the package in the catalog and has it the same name?
 # dam@login [login]:/home/dam >  curl -s http://buildfarm.opencsw.org/pkgdb/rest/catalogs/current/sparc/SunOS5.9/pkgnames/CSWvim/
 # {"maintainer_full_name": "Dagobert Michelsen", "version_string": "7.3.055,REV=2010.11.25", "basename": "vim-7.3.055,REV=2010.11.25-SunOS5.9-sparc-CSW.pkg.gz", "maintainer_email": "dam@opencsw.org", "mtime": "2010-11-27 05:31:11", "file_basename": "vim-7.3.055,REV=2010.11.25-SunOS5.9-sparc-CSW.pkg.gz", "arch": "sparc", "osrel": "SunOS5.9", "size": 1026296, "md5_sum": "96bda1535071daa08372ceee7787b17b", "pkgname": "CSWvim", "rev": "2010.11.25", "filename_arch": "sparc", "version": "7.3.055,REV=2010.11.25", "cadam@login [login]:/home/dam > 
 # Or does it need to be obsoleted?
 
-print "# There was no information if this is pure Perl or not. Please remove if necessary.\n" if( $archall == 2 );
-print "ARCHALL_$cswpkg = 1\n" if( $archall );
+print MF "# There was no information if this is pure Perl or not. Please remove if necessary.\n" if( $archall == 2 );
+print MF "ARCHALL_$cswpkg = 1\n" if( $archall );
 
 foreach my $p (@runtime_dep_pkgs) {
-  print "RUNTIME_DEP_PKGS_$cswpkg += $p\n";
+  print MF "RUNTIME_DEP_PKGS_$cswpkg += $p\n";
 }
 
-print "\n";
+print MF "\n";
 
-print "include gar/category.mk\n";
+print MF "include gar/category.mk\n";
+
+close( MF );
+
+system( "cd $name/trunk; gmake makesum; gmake package ");
