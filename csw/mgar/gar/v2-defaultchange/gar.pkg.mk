@@ -124,7 +124,7 @@ BUNDLE ?= $(NAME)
 #
 define pkgname
 $(strip 
-  $(if $(filter $(1),$(PACKAGES)),
+  $(if $(filter $(1),$(PACKAGES) $(OBSOLETED_PKGS)),
     $(1),
     $(shell perl -F'\s+' -ane 'print "$$F[2]" if( $$F[0] eq "%var" && $$F[1] eq "pkgname")' files/$(1).gspec)
   )
