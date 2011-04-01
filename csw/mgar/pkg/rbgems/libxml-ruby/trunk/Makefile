@@ -10,4 +10,6 @@ endef
 
 GEM_BUILD_FLAGS += --with-xml2-config=$(bindir)/xml2-config
 
+LICENSE = LICENSE
+
 include gar/category.mk
