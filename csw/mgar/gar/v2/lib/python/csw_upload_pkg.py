@@ -19,6 +19,7 @@ import socket
 import rest
 import struct_util
 import subprocess
+import file_set_checker
 
 
 BASE_URL = "http://buildfarm.opencsw.org"
@@ -493,6 +494,15 @@ if __name__ == '__main__':
   os_release = options.os_release
   if os_release:
     os_release = struct_util.OsReleaseToLong(os_release)
+
+  # Check the file set.
+  fc = file_set_checker.FileSetChecker()
+  error_tags = fc.CheckFiles(args)
+  if error_tags:
+    for error_tag in error_tags:
+      print error_tag
+    sys.exit(1)
+
   uploader = Srv4Uploader(args,
                           options.rest_url,
                           os_release=os_release,
