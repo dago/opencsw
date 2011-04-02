@@ -37,7 +37,11 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     self.mox.StubOutWithMock(magic, 'open')
     magic.open(0).AndReturn(magic_cookie_mock)
     magic_cookie_mock.load()
-    magic_cookie_mock.setflags(magic.MIME)
+    if "MAGIC_MIME" in dir(magic):
+      flag = magic.MAGIC_MIME
+    elif "MIME" in dir(magic):
+      flag = magic.MIME
+    magic_cookie_mock.setflags(flag)
     magic_cookie_mock.file(
         u'/fake/path/CSWfoo/root/foo-file').AndReturn(
             "application/x-executable")
