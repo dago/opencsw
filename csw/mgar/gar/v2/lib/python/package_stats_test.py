@@ -46,10 +46,11 @@ class PackageStatsWithDbUnitTest(test_base.SqlObjectTestMixin,
     mock_dirpkg.GetCatalogname().AndReturn("mock_catalogname")
     mock_srv4.GetMd5sum().AndReturn("mock md5sum")
     mock_srv4.GetSize().AndReturn(42)
+    mock_dirpkg.GetDependencies().AndReturn(([], []))
     mock_dirpkg.ListBinaries().AndReturn([])
     mock_dirpkg.GetBinaryDumpInfo().AndReturn([])
-    mock_dirpkg.GetDependencies().AndReturn(([], []))
     mock_srv4.GetPkgchkOutput().AndReturn((0, "", ""))
+    mock_dirpkg.GetObsoletedBy().AndReturn(([], []))
     mock_dirpkg.GetParsedPkginfo().AndReturn({
       "ARCH": "sparc",
       "EMAIL": "maintainer@example.com",
