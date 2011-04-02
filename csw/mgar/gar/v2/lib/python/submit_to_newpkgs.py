@@ -35,6 +35,7 @@ import sys
 import opencsw
 import tag
 import common_constants
+import file_set_checker
 
 
 CONFIG_INFO = """Create a file in ~/.releases.ini with the following content:
@@ -101,82 +102,6 @@ def RsyncFiles(files_to_rsync, dst_arg):
            "Are you on the login host?" % (p, dst_arg))
     logging.error(msg)
     raise PackageSubmissionError(msg)
-
-
-class FileSetChecker(object):
-
-  def _CheckUncommitted(self, files_with_metadata):
-    tags = []
-    expected_vendor_tag = "CSW"
-    for filename, parsed_filename in files_with_metadata:
-      if parsed_filename["vendortag"] != expected_vendor_tag:
-        tags.append(tag.CheckpkgTag(
-          None,
-          "bad-vendor-tag",
-          "%s expected=%s actual=%s"
-          % (parsed_filename["catalogname"],
-             expected_vendor_tag,
-             parsed_filename["vendortag"])))
-    return tags
-
-  def _CheckMissingArchs(self, files_with_metadata):
-    tags = []
-    catalognames_by_arch = {}
-    # We check all the OS releases that are included in the file set.
-    # We won't report a missing i386-SunOS5.8 package if there was no
-    # SunOS5.8 package in the set.
-    osrels = set(x[1]["osrel"] for x in files_with_metadata)
-    # Prepopulate sets, so that we have one set per each arch-osrel pair
-    # that is applicable to this set of files.
-    for arch in common_constants.PHYSICAL_ARCHITECTURES:
-      for osrel in osrels:
-      	key = arch, osrel
-      	catalognames_by_arch[key] = set()
-    # Assign files from the set to appropriate set.
-    for file_path, file_metadata in files_with_metadata:
-      catalogname = file_metadata["catalogname"]
-      if file_metadata["arch"] == "all":
-        archs = common_constants.PHYSICAL_ARCHITECTURES
-      else:
-        archs = [file_metadata["arch"]]
-      osrel = file_metadata["osrel"]
-      for arch in archs:
-        key = arch, osrel
-        catalognames_by_arch[key].add(catalogname)
-    missing = {}
-    for key1, set1 in catalognames_by_arch.iteritems():
-      for catalogname in set1:
-        for key2, set2 in catalognames_by_arch.iteritems():
-          if catalogname not in set2:
-            arch, osrel = key2
-            missing_key = arch, osrel, catalogname
-            missing.setdefault(missing_key, set()).add(
-                "Because %s-%s-%s exists" % (catalogname, key1[0], key1[1]))
-    for arch, osrel, catalogname in missing:
-      error_tag_name = "%s-%s-missing" % (arch, osrel)
-      tags.append(tag.CheckpkgTag(None, error_tag_name, catalogname))
-    return tags
-
-  def CheckFiles(self, file_list):
-    """Checks a set of files. Returns error tags."""
-    files_with_metadata = []
-    for file_path in file_list:
-      pkg_path, basename = os.path.split(file_path)
-      parsed = opencsw.ParsePackageFileName(basename)
-      catalogname = parsed["catalogname"]
-      files_with_metadata.append((basename, parsed))
-      if parsed["arch"] == "all":
-        archs = common_constants.PHYSICAL_ARCHITECTURES
-      else:
-        archs = [parsed["arch"]]
-      for arch in archs:
-        for osrel in common_constants.OS_RELS:
-          key = arch, osrel
-          # catalognames_by_arch.setdefault(key, set()).add(catalogname)
-    tags = []
-    tags.extend(self._CheckMissingArchs(files_with_metadata))
-    tags.extend(self._CheckUncommitted(files_with_metadata))
-    return tags
 
 
 def main():
@@ -275,7 +200,7 @@ def main():
     remote_package_files.append(dst_arg)
     package_base_file_name = os.path.split(p)[1]
     remote_package_references.append(dst_arg + "/" + package_base_file_name)
-  fc = FileSetChecker()
+  fc = file_set_checker.FileSetChecker()
   error_tags = fc.CheckFiles(files_to_rsync)
   if error_tags:
     for error_tag in error_tags:
