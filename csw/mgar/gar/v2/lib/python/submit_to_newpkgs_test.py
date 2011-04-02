@@ -1,4 +1,4 @@
-#!/opt/csw/bin/python2.6
+#!/usr/bin/env python2.6
 
 import unittest
 import submit_to_newpkgs as stn
