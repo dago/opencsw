@@ -31,10 +31,13 @@ from Cheetah.Template import Template
 USAGE = """
   Preparing the database:
        %prog initdb
-       %prog importpkg <file1> [ ... ]
        %prog system-files-to-file [ <infile-contents> <infile-pkginfo>
                                     [ <outfile> [ <osrel> <arch> ] ] ]
        %prog import-system-file <infile>
+
+  Managing individual packages:
+       %prog importpkg <file1> [ ... ]
+       %prog removepkg <md5sum> [ ... ]
 
   Managing catalogs:
        %prog add-to-cat <osrel> <arch> <cat-release> <md5sum> [ ... ]
@@ -449,6 +452,20 @@ def main():
           stats["basic_stats"]["md5_sum"],
           stats["basic_stats"]["pkg_basename"])
       package_stats.PackageStats.ImportPkg(stats, options.replace)
+  elif command == 'removepkg':
+    for md5_sum in md5_sums:
+      srv4 = GetPkg(md5_sum)
+      in_catalogs = list(srv4.in_catalogs)
+      if in_catalogs:
+        for in_catalog in in_catalogs:
+          logging.warning("%s", in_catalog)
+        logging.warning(
+            "Not removing from the database, because the package "
+            "in question is part of at least one catalog.")
+      else:
+        logging.info("Removing %s", srv4)
+        srv4.DeleteAllDependentObjects()
+        srv4.destroySelf()
   elif command == 'add-to-cat':
     if len(args) <= 3:
       raise UsageError("Not enough arguments, see usage.")
