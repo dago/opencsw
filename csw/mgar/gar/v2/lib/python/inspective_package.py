@@ -9,6 +9,7 @@ import copy
 import common_constants
 import subprocess
 import ldd_emul
+import configuration as c
 
 """This file isolates code dependent on hachoir parser.
 
