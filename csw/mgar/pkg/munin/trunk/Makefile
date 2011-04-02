@@ -49,7 +49,7 @@ ARCHALL_CSWmuninnode = 1
 ARCHALL_CSWmunincommon = 1
 
 RUNTIME_DEP_PKGS_CSWmuninmaster = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpmlog4perl CSWmunincommon
-RUNTIME_DEP_PKGS_CSWmuninmaster += CSWrrdtool CSWpm-rrdtool CSWapache2 
+RUNTIME_DEP_PKGS_CSWmuninmaster += CSWpm-rrdtool CSWapache2 
 RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils
 
 RUNTIME_DEP_PKGS_CSWmuninnode = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunincommon
