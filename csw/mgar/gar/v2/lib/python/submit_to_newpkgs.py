@@ -34,6 +34,7 @@ import subprocess
 import sys
 import opencsw
 import tag
+import common_constants
 
 
 CONFIG_INFO = """Create a file in ~/.releases.ini with the following content:
@@ -118,29 +119,62 @@ class FileSetChecker(object):
              parsed_filename["vendortag"])))
     return tags
 
+  def _CheckMissingArchs(self, files_with_metadata):
+    tags = []
+    catalognames_by_arch = {}
+    # We check all the OS releases that are included in the file set.
+    # We won't report a missing i386-SunOS5.8 package if there was no
+    # SunOS5.8 package in the set.
+    osrels = set(x[1]["osrel"] for x in files_with_metadata)
+    # Prepopulate sets, so that we have one set per each arch-osrel pair
+    # that is applicable to this set of files.
+    for arch in common_constants.PHYSICAL_ARCHITECTURES:
+      for osrel in osrels:
+      	key = arch, osrel
+      	catalognames_by_arch[key] = set()
+    # Assign files from the set to appropriate set.
+    for file_path, file_metadata in files_with_metadata:
+      catalogname = file_metadata["catalogname"]
+      if file_metadata["arch"] == "all":
+        archs = common_constants.PHYSICAL_ARCHITECTURES
+      else:
+        archs = [file_metadata["arch"]]
+      osrel = file_metadata["osrel"]
+      for arch in archs:
+        key = arch, osrel
+        catalognames_by_arch[key].add(catalogname)
+    missing = {}
+    for key1, set1 in catalognames_by_arch.iteritems():
+      for catalogname in set1:
+        for key2, set2 in catalognames_by_arch.iteritems():
+          if catalogname not in set2:
+            arch, osrel = key2
+            missing_key = arch, osrel, catalogname
+            missing.setdefault(missing_key, set()).add(
+                "Because %s-%s-%s exists" % (catalogname, key1[0], key1[1]))
+    for arch, osrel, catalogname in missing:
+      error_tag_name = "%s-%s-missing" % (arch, osrel)
+      tags.append(tag.CheckpkgTag(None, error_tag_name, catalogname))
+    return tags
+
   def CheckFiles(self, file_list):
     """Checks a set of files. Returns error tags."""
-    catalognames_by_arch = {
-        "i386": set(),
-        "sparc": set(),
-    }
     files_with_metadata = []
     for file_path in file_list:
       pkg_path, basename = os.path.split(file_path)
       parsed = opencsw.ParsePackageFileName(basename)
+      catalogname = parsed["catalogname"]
       files_with_metadata.append((basename, parsed))
       if parsed["arch"] == "all":
-        for arch in ("i386", "sparc"):
-          catalognames_by_arch[arch].add(parsed["catalogname"])
+        archs = common_constants.PHYSICAL_ARCHITECTURES
       else:
-        catalognames_by_arch[parsed["arch"]].add(parsed["catalogname"])
-    i386 = catalognames_by_arch["i386"]
-    sparc = catalognames_by_arch["sparc"]
+        archs = [parsed["arch"]]
+      for arch in archs:
+        for osrel in common_constants.OS_RELS:
+          key = arch, osrel
+          # catalognames_by_arch.setdefault(key, set()).add(catalogname)
     tags = []
-    for catalogname in i386.difference(sparc):
-      tags.append(tag.CheckpkgTag(None, "sparc-arch-missing", catalogname))
-    for catalogname in sparc.difference(i386):
-      tags.append(tag.CheckpkgTag(None, "i386-arch-missing", catalogname))
+    tags.extend(self._CheckMissingArchs(files_with_metadata))
     tags.extend(self._CheckUncommitted(files_with_metadata))
     return tags
 

@@ -22,10 +22,22 @@ SAMPLE_FILES = [
 
 class FileSetCheckerUnitTest(unittest.TestCase):
 
-  def testNsprFiles(self):
+  def testMissingArchitecture(self):
     fc = stn.FileSetChecker()
-    expected = [tag.CheckpkgTag(None, 'i386-arch-missing', 'libnspr4')]
+    expected = [tag.CheckpkgTag(None, 'i386-SunOS5.9-missing', 'libnspr4')]
     self.assertEqual(expected, fc.CheckFiles(SAMPLE_FILES))
+
+  def testMissingArchitectureWithOsrel(self):
+    files = [
+        'foo-1.0,REV=2011.03.30-SunOS5.9-i386-CSW.pkg.gz',
+        'foo-1.0,REV=2011.03.30-SunOS5.9-sparc-CSW.pkg.gz',
+        'foo-1.0,REV=2011.03.30-SunOS5.10-i386-CSW.pkg.gz',
+        # Intentionally missing
+        # 'foo-1.0,REV=2011.03.30-SunOS5.10-sparc-CSW.pkg.gz',
+    ]
+    fc = stn.FileSetChecker()
+    expected = [tag.CheckpkgTag(None, 'sparc-SunOS5.10-missing', 'foo')]
+    self.assertEqual(expected, fc.CheckFiles(files))
 
   def testUncommitted(self):
     fc = stn.FileSetChecker()
