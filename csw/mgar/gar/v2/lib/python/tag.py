@@ -5,7 +5,12 @@ import re
 import configuration as c
 
 class CheckpkgTag(object):
-  """Represents a tag to be written to the checkpkg tag file."""
+  """Represents a tag to be written to the checkpkg tag file.
+
+  This class is only used by submitpkg.  The main tag class lives in the
+  models.py file.  The main difference is that this class does not need
+  a database.
+  """
 
   def __init__(self, pkgname, tag_name, tag_info=None, severity=None, msg=None):
     self.pkgname = pkgname
