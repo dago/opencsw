@@ -16,11 +16,26 @@ DISTFILES  = $(SPKG_NAME)-$(VERSION).tar.gz
 #DISTFILES  = $(SPKG_NAME)-$(VERSION)-rc3.tar.gz
 DISTFILES += COPYING
 
-RUNTIME_DEP_PKGS  = CSWgnupg CSWosslrt CSWperl CSWpmdbi
-RUNTIME_DEP_PKGS += CSWpmiosocketinet6 CSWpmiosocketssl CSWpmiozlib
-RUNTIME_DEP_PKGS += CSWpmipcountry CSWpmldap CSWpmlibwww CSWpmmaildkim
-RUNTIME_DEP_PKGS += CSWpmmailspf CSWpmmailtools CSWpmmimebase64 CSWpmnetaddrip CSWpmnetdns
-RUNTIME_DEP_PKGS += CSWrazor CSWpmuri CSWpmhtmlparser CSWzlib
+RUNTIME_DEP_PKGS  = CSWgnupg
+RUNTIME_DEP_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS += CSWperl
+RUNTIME_DEP_PKGS += CSWpm-dbi
+RUNTIME_DEP_PKGS += CSWpm-html-parser
+RUNTIME_DEP_PKGS += CSWpm-io-socket-inet6
+RUNTIME_DEP_PKGS += CSWpm-io-socket-ssl
+RUNTIME_DEP_PKGS += CSWpmiozlib
+RUNTIME_DEP_PKGS += CSWpmipcountry
+RUNTIME_DEP_PKGS += CSWpm-ldap
+RUNTIME_DEP_PKGS += CSWpm-libwww-perl
+RUNTIME_DEP_PKGS += CSWpmmaildkim
+RUNTIME_DEP_PKGS += CSWpmmailspf
+RUNTIME_DEP_PKGS += CSWpmmailtools
+RUNTIME_DEP_PKGS += CSWpm-mime-base64
+RUNTIME_DEP_PKGS += CSWpm-netaddr-ip
+RUNTIME_DEP_PKGS += CSWpmnetdns
+RUNTIME_DEP_PKGS += CSWpmuri
+RUNTIME_DEP_PKGS += CSWrazor
+RUNTIME_DEP_PKGS += CSWzlib
 
 UFILES_REGEX = $(SPKG_NAME)-(\d+(?:\.\d+)*).tar.gz
 
@@ -28,7 +43,8 @@ SAMPLECONF  = /etc/opt/csw/spamassassin/.+\.pre\.CSW
 SAMPLECONF += /etc/opt/csw/spamassassin/local\.cf\.CSW
 SAMPLECONF += /etc/opt/csw/spamassassin/spamd\.CSW
 USERGROUP = /etc/opt/csw/pkg/CSWspamassassin/cswusergroup
-INITSMF = /opt/csw/etc/init.d/cswspamd
+#INITSMF = /opt/csw/etc/init.d/cswspamd
+INITSMF = /etc/opt/csw/init.d/cswspamd
 POSTMSG = /opt/csw/share/doc/spamassassin/README.upgrade
 
 MIGRATE_FILES = init.pre local.cf v310.pre v312.pre v320.pre
@@ -100,8 +116,10 @@ test-custom:
 install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
 	@rm -rf $(DESTDIR)
-	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/init.d
-	@ginstall -m 755 $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)/opt/csw/etc/init.d/cswspamd
+#	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc/init.d
+#	@ginstall -m 755 $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)/opt/csw/etc/init.d/cswspamd
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -m 755 $(FILEDIR)/CSWspamassassin.cswspamd $(DESTDIR)/etc/opt/csw/init.d/cswspamd
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWspamassassin
 	@ginstall -m 644 $(FILEDIR)/CSWspamassassin.cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWspamassassin/cswusergroup
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/spamassassin
