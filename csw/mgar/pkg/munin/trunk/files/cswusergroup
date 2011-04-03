@@ -1,1 +1,1 @@
-munin:munin:Munin user:/etc/opt/csw/munin:/bin/false:m:r
+munin:munin:Munin user:/etc/opt/csw/munin::m:r:NP

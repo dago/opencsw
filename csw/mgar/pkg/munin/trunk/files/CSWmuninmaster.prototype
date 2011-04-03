@@ -100,3 +100,5 @@ d ugfiles /var/opt/csw/munin/log 0755 munin munin
 d ugfiles /var/opt/csw/munin/run 0755 munin munin
 d ugfiles /var/opt/csw/munin/www 0755 munin munin
 f cswcptemplates /opt/csw/etc/templates/CSWmuninmaster/var/opt/csw/munin/www/.htaccess 0644 munin munin
+d none /etc/opt/csw/pkg/CSWmuninmaster/crontabs 0755 root bin
+f cswcrontab /etc/opt/csw/pkg/CSWmuninmaster/crontabs/munin 0644 root bin

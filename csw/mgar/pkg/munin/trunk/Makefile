@@ -50,14 +50,14 @@ ARCHALL_CSWmunincommon = 1
 
 RUNTIME_DEP_PKGS_CSWmuninmaster = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpmlog4perl CSWmunincommon
 RUNTIME_DEP_PKGS_CSWmuninmaster += CSWpm-rrdtool CSWapache2 
-RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils CSWcas-cptemplates CSWcas-crontab
 
 RUNTIME_DEP_PKGS_CSWmuninnode = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunincommon
 RUNTIME_DEP_PKGS_CSWmuninnode += CSWcswclassutils CSWcas-cptemplates
 
 RUNTIME_DEP_PKGS_CSWmuninnode += CSWperl CSWpmnetssleay
 
-SPKG_CLASSES_CSWmuninmaster = none cswusergroup cswcptemplates ugfiles
+SPKG_CLASSES_CSWmuninmaster = none cswusergroup cswcrontab cswcptemplates ugfiles
 SPKG_CLASSES_CSWmuninnode = none cswusergroup ugfiles cswcptemplates cswinitsmf
 SPKG_CLASSES_CSWmunincommon = none
 
@@ -100,6 +100,8 @@ install-custom:
 	@#
 	@# create user munin during package deployment -> cswusergroup
 	@#
+	@ginstall -d $(DESTDIR)/opt/csw/etc/pkg/CSWmuninmaster
+	@ginstall -d $(DESTDIR)/opt/csw/etc/pkg/CSWmuninnode
 	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmuninmaster/cswusergroup
 	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmuninnode/cswusergroup
 	@#
@@ -108,10 +110,13 @@ install-custom:
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	@ginstall -m 755 $(FILEDIR)/cswmuninnode $(DESTDIR)/etc/opt/csw/init.d/cswmuninnode
 	@#
+	@# create crontab for user munin -> cswcrontab
+	@#
+	@ginstall -d 755 $(DESTDIR)/etc/opt/csw/pkg/CSWmuninmaster/crontabs
+	@ginstall -m 644 $(FILEDIR)/crontab.munin $(DESTDIR)/etc/opt/csw/pkg/CSWmuninmaster/crontabs/munin
+	@#
 	@# handle some other files
 	@#
-	@ginstall -d $(DESTDIR)/opt/csw/etc/pkg/CSWmuninmaster
-	@ginstall -d $(DESTDIR)/opt/csw/etc/pkg/CSWmuninnode
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc/munin_master
 	@ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)/opt/csw/share/doc/munin_master/README.CSW
