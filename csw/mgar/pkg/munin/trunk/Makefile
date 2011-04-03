@@ -13,8 +13,7 @@ endef
 SF_PROJ = munin
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += CSWmuninmaster.postinstall
-DISTFILES += CSWmuninmaster.prototype CSWmuninmaster.postinstall
+DISTFILES += CSWmuninmaster.prototype
 DISTFILES += CSWmuninnode.prototype cswmuninnode
 DISTFILES += CSWmunincommon.prototype
 DISTFILES += cswusergroup
@@ -50,15 +49,15 @@ ARCHALL_CSWmunincommon = 1
 
 RUNTIME_DEP_PKGS_CSWmuninmaster = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpmlog4perl CSWmunincommon
 RUNTIME_DEP_PKGS_CSWmuninmaster += CSWpm-rrdtool CSWapache2 
-RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils CSWcas-cptemplates CSWcas-crontab
+RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils CSWcas-cptemplates CSWcas-crontab CSWcas-postmsg
 
 RUNTIME_DEP_PKGS_CSWmuninnode = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunincommon
 RUNTIME_DEP_PKGS_CSWmuninnode += CSWcswclassutils CSWcas-cptemplates
 
 RUNTIME_DEP_PKGS_CSWmuninnode += CSWperl CSWpmnetssleay
 
-SPKG_CLASSES_CSWmuninmaster = none cswusergroup cswcrontab cswcptemplates ugfiles
-SPKG_CLASSES_CSWmuninnode = none cswusergroup ugfiles cswcptemplates cswinitsmf
+SPKG_CLASSES_CSWmuninmaster = none cswusergroup cswcrontab cswcptemplates ugfiles cswpostmsg
+SPKG_CLASSES_CSWmuninnode = none cswusergroup ugfiles cswcptemplates cswinitsmf 
 SPKG_CLASSES_CSWmunincommon = none
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -115,11 +114,14 @@ install-custom:
 	@ginstall -d 755 $(DESTDIR)/etc/opt/csw/pkg/CSWmuninmaster/crontabs
 	@ginstall -m 644 $(FILEDIR)/crontab.munin $(DESTDIR)/etc/opt/csw/pkg/CSWmuninmaster/crontabs/munin
 	@#
-	@# handle some other files
+	@# print a postmessage -> cswpostmessage
 	@#
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc/munin_master
 	@ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)/opt/csw/share/doc/munin_master/README.CSW
+	@#
+	@# handle some other files
+	@#
 	@ginstall -d $(DESTDIR)/opt/csw/share/munin/fonts
 	@ginstall -m 644 $(WORKSRC)/master/VeraMono.ttf $(DESTDIR)/opt/csw/share/munin/fonts/VeraMono.ttf
 	@$(MAKECOOKIE)
