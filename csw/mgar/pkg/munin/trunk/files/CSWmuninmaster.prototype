@@ -1,9 +1,12 @@
 d none /etc/opt/csw/munin 0755 root bin
 d none /etc/opt/csw/munin/apache 0755 root bin
-f cswpreserveconf /etc/opt/csw/munin/apache/apache-munin-cgi.conf.CSW 0644 root bin
-f cswpreserveconf /etc/opt/csw/munin/apache/apache-munin.conf.CSW 0644 root bin
+d none /opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin 0755 root bin
+d none /opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/apache 0755 root bin
+d none /opt/csw/etc/templates/CSWmuninmaster/var/opt/csw/munin/www 0755 root bin
+f cswcptemplates /opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/apache/apache-munin-cgi.conf 0644 root bin
+f cswcptemplates /opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/apache/apache-munin.conf 0644 root bin
 d none /etc/opt/csw/munin/munin-conf.d 0755 root bin
-f cswpreserveconf /etc/opt/csw/munin/munin.conf.CSW 0644 root bin
+f cswcptemplates /opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/munin.conf 0644 root bin
 d none /etc/opt/csw/munin/plugin-conf.d 0755 root bin
 d ugfiles /etc/opt/csw/munin/templates 0755 munin munin
 f none /etc/opt/csw/munin/templates/definitions.html 0644 root bin
@@ -96,4 +99,4 @@ d ugfiles /var/opt/csw/munin/db 0755 munin munin
 d ugfiles /var/opt/csw/munin/log 0755 munin munin
 d ugfiles /var/opt/csw/munin/run 0755 munin munin
 d ugfiles /var/opt/csw/munin/www 0755 munin munin
-f cswpreserveconf /var/opt/csw/munin/www/.htaccess.CSW 0644 munin munin
+f cswcptemplates /opt/csw/etc/templates/CSWmuninmaster/var/opt/csw/munin/www/.htaccess 0644 munin munin
