@@ -53,12 +53,12 @@ RUNTIME_DEP_PKGS_CSWmuninmaster += CSWpm-rrdtool CSWapache2
 RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils
 
 RUNTIME_DEP_PKGS_CSWmuninnode = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunincommon
-RUNTIME_DEP_PKGS_CSWmuninnode += CSWcswclassutils
+RUNTIME_DEP_PKGS_CSWmuninnode += CSWcswclassutils CSWcas-cptemplates
 
 RUNTIME_DEP_PKGS_CSWmuninnode += CSWperl CSWpmnetssleay
 
-SPKG_CLASSES_CSWmuninmaster = none cswusergroup cswpreserveconf ugfiles
-SPKG_CLASSES_CSWmuninnode = none cswusergroup ugfiles cswpreserveconf cswinitsmf
+SPKG_CLASSES_CSWmuninmaster = none cswusergroup cswcptemplates ugfiles
+SPKG_CLASSES_CSWmuninnode = none cswusergroup ugfiles cswcptemplates cswinitsmf
 SPKG_CLASSES_CSWmunincommon = none
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -79,26 +79,42 @@ build-custom:
 	@$(MAKECOOKIE)
 
 install-custom:
+	@#
+	@# because the configure / installation process of munin is somewhat unusual
+	@# we have to do it manually
+	@#
 	@cat $(WORKSRC)/Makefile | sed -e "s;DESTDIR =;& $(DESTDIR);g" > $(WORKSRC)/Makefile.tmp
 	@( cd $(WORKSRC); gmake -f Makefile ; cp Makefile.tmp Makefile ; gmake -f Makefile install)
-	@mv $(DESTDIR)/etc/opt/csw/munin/munin-node.conf $(DESTDIR)/etc/opt/csw/munin/munin-node.conf.CSW
-	@mv $(DESTDIR)/etc/opt/csw/munin/munin.conf $(DESTDIR)/etc/opt/csw/munin/munin.conf.CSW
-	@mv $(DESTDIR)/var/opt/csw/munin/www/.htaccess $(DESTDIR)/var/opt/csw/munin/www/.htaccess.CSW
-	#@ginstall -d $(DESTDIR)/opt/csw/munin
-	@ginstall -d $(DESTDIR)/etc/opt/csw/munin/apache
-	@ginstall -m 644 $(FILEDIR)/apache-munin.conf.CSW $(DESTDIR)/etc/opt/csw/munin/apache/apache-munin.conf.CSW
-	@ginstall -m 644 $(FILEDIR)/apache-munin-cgi.conf.CSW $(DESTDIR)/etc/opt/csw/munin/apache/apache-munin-cgi.conf.CSW
+	@#
+	@# we are using cswclassutils -> cswcptemplate
+	@#
+	@ginstall -d $(DESTDIR)/opt/csw/etc/templates/CSWmuninnode/etc/opt/csw/munin
+	@ginstall -d $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin
+	@ginstall -d $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/apache
+	@ginstall -d $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/var/opt/csw/munin/www
+	@mv $(DESTDIR)/etc/opt/csw/munin/munin-node.conf $(DESTDIR)/opt/csw/etc/templates/CSWmuninnode/etc/opt/csw/munin/
+	@mv $(DESTDIR)/etc/opt/csw/munin/munin.conf $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/
+	@ginstall -m 644 $(FILEDIR)/apache-munin.conf.CSW $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/apache/apache-munin.conf
+	@ginstall -m 644 $(FILEDIR)/apache-munin-cgi.conf.CSW $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/apache/apache-munin-cgi.conf
+	@mv $(DESTDIR)/var/opt/csw/munin/www/.htaccess $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/var/opt/csw/munin/www/
+	@#
+	@# create user munin during package deployment -> cswusergroup
+	@#
+	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmuninmaster/cswusergroup
+	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmuninnode/cswusergroup
+	@#
+	@# create init script / smf -> cswinitsmf
+	@#
+	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
+	@ginstall -m 755 $(FILEDIR)/cswmuninnode $(DESTDIR)/etc/opt/csw/init.d/cswmuninnode
+	@#
+	@# handle some other files
+	@#
 	@ginstall -d $(DESTDIR)/opt/csw/etc/pkg/CSWmuninmaster
 	@ginstall -d $(DESTDIR)/opt/csw/etc/pkg/CSWmuninnode
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc/munin_master
 	@ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)/opt/csw/share/doc/munin_master/README.CSW
-	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmuninmaster/cswusergroup
-	@ginstall -m 644 $(FILEDIR)/cswusergroup $(DESTDIR)/opt/csw/etc/pkg/CSWmuninnode/cswusergroup
-	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -m 755 $(FILEDIR)/cswmuninnode $(DESTDIR)/etc/opt/csw/init.d/cswmuninnode
 	@ginstall -d $(DESTDIR)/opt/csw/share/munin/fonts
-	#@ginstall -m 644 $(DESTDIR)/opt/csw/libexec/munin/VeraMono.ttf $(DESTDIR)/opt/csw/share/munin/fonts/VeraMono.ttf
 	@ginstall -m 644 $(WORKSRC)/master/VeraMono.ttf $(DESTDIR)/opt/csw/share/munin/fonts/VeraMono.ttf
-	#@rm $(DESTDIR)/opt/csw/libexec/munin/VeraMono.ttf
 	@$(MAKECOOKIE)
