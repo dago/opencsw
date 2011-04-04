@@ -1,5 +1,5 @@
 NAME = Log-Log4perl
-VERSION = 1.25
+VERSION = 1.32
 CATEGORIES = cpan
 AUTHOR = MSCHILLI
 
@@ -10,9 +10,12 @@ define BLURB
   Log4j logging package in pure Perl.
 endef
 
-PACKAGES = CSWpmlog4perl
-CATALOGNAME = pm_log4perl
-ARCHALL = 1
 LICENSE = LICENSE
+
+PACKAGES += CSWpm-log-log4perl
+CATALOGNAME = pm_log_log4perl
+SPKG_DESC_CSWpm-log-log4perl = Log4j implementation for Perl
+ARCHALL_CSWpm-log-log4perl = 1
+OBSOLETED_BY_CSWpm-log-log4perl = CSWpmlog4perl
 
 include gar/category.mk
