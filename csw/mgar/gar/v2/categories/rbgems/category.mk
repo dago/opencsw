@@ -9,15 +9,15 @@ GEMVERSION ?= $(VERSION)
 GEMFILE   ?= $(GEMNAME)-$(GEMVERSION).gem
 DISTFILES += $(GEMFILE)
 
-GEMPKGNAME ?= $(GEMNAME)
+GEMPKGNAME ?= $(GEMNAME)-$(subst .,-,$(GEMVERSION))
 GEMCATALOGNAME ?= $(subst -,_,$(GEMPKGNAME))
 
 # PACKAGES ?= CSWgem-$(GEMPKGNAME) CSWgem-$(GEMPKGNAME)-doc
-PACKAGES ?= CSWgem-$(GEMPKGNAME)
-CATALOGNAME_CSWgem-$(GEMPKGNAME) ?= gem_$(GEMCATALOGNAME)
-CATALOGNAME_CSWgem-$(GEMPKGNAME)-doc ?= gem_$(GEMCATALOGNAME)_doc
+PACKAGES ?= CSWrb18-$(GEMPKGNAME)
+CATALOGNAME_CSWrb18-$(GEMPKGNAME) ?= rb18_$(GEMCATALOGNAME)
+CATALOGNAME_rb18-$(GEMPKGNAME)-doc ?= rb18_$(GEMCATALOGNAME)_doc
 
-SPKG_DESC_CSWgem-$(GEMPKGNAME)-doc ?= $(or $(SPKG_DESC_CSWgem-$(GEMPKGNAME)),$(SPKG_DESC)) documentation
+SPKG_DESC_CSWrb18-$(GEMPKGNAME)-doc ?= $(or $(SPKG_DESC_CSWrb18-$(GEMPKGNAME)),$(SPKG_DESC)) documentation
 
 # RUNTIME_DEP_PKGS_CSWgem-$(GEMPKGNAME) ?= $(shell gem specification $(DOWNLOADDIR)/$(GEMFILE) | $(GARBIN)/gemdeps.rb)
 
@@ -68,7 +68,7 @@ extract-archive-%.gem: gem-extract-%.gem
 include gar/gar.mk
 
 # During the configure phase we check that all dependend modules are available
-configure-check-gem-deps: GEM_DEPS?=$(addprefix CSWgem-,$(shell gem specification $(DOWNLOADDIR)/$(GEMFILE) | $(GARBIN)/gemdeps.rb))
+configure-check-gem-deps: GEM_DEPS?=$(addprefix CSWrb18-,$(shell gem specification $(DOWNLOADDIR)/$(GEMFILE) | $(GARBIN)/gemdeps.rb))
 configure-check-gem-deps:
 	@echo "=== Checking dependencies of GEM $(GEMFILE) ==="
 	@$(GARBIN)/check_for_deps $(GEM_DEPS)
