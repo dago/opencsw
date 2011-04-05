@@ -50,6 +50,10 @@ f none /opt/csw/libexec/munin/plugins/fail2ban 0755 root bin
 f none /opt/csw/libexec/munin/plugins/foldingathome 0755 root bin
 f none /opt/csw/libexec/munin/plugins/foldingathome_rank 0755 root bin
 f none /opt/csw/libexec/munin/plugins/foldingathome_wu 0755 root bin
+f none /opt/csw/libexec/munin/plugins/freeradius_acct 0755 root bin
+f none /opt/csw/libexec/munin/plugins/freeradius_auth 0755 root bin
+f none /opt/csw/libexec/munin/plugins/freeradius_proxy_acct 0755 root bin
+f none /opt/csw/libexec/munin/plugins/freeradius_proxy_auth 0755 root bin
 f none /opt/csw/libexec/munin/plugins/haproxy_ 0755 root bin
 f none /opt/csw/libexec/munin/plugins/hddtemp 0755 root bin
 f none /opt/csw/libexec/munin/plugins/hddtemp2 0755 root bin
@@ -80,6 +84,7 @@ f none /opt/csw/libexec/munin/plugins/mhttping 0755 root bin
 f none /opt/csw/libexec/munin/plugins/multigraph_tester 0755 root bin
 f none /opt/csw/libexec/munin/plugins/multiping 0755 root bin
 f none /opt/csw/libexec/munin/plugins/multips 0755 root bin
+f none /opt/csw/libexec/munin/plugins/multips_memory 0755 root bin
 f none /opt/csw/libexec/munin/plugins/munin_stats 0755 root bin
 f none /opt/csw/libexec/munin/plugins/munin_update 0755 root bin
 f none /opt/csw/libexec/munin/plugins/mysql_ 0755 root bin
@@ -110,8 +115,8 @@ f none /opt/csw/libexec/munin/plugins/paging_in 0755 root bin
 f none /opt/csw/libexec/munin/plugins/paging_out 0755 root bin
 f none /opt/csw/libexec/munin/plugins/perdition 0755 root bin
 f none /opt/csw/libexec/munin/plugins/ping_ 0755 root bin
-f none /opt/csw/libexec/munin/plugins/plugin.sh 0644 root bin
-f none /opt/csw/libexec/munin/plugins/plugins.history 0644 root bin
+f none /opt/csw/libexec/munin/plugins/plugin.sh 0755 root bin
+f none /opt/csw/libexec/munin/plugins/plugins.history 0755 root bin
 f none /opt/csw/libexec/munin/plugins/pm3users_ 0755 root bin
 f none /opt/csw/libexec/munin/plugins/pop_stats 0755 root bin
 f none /opt/csw/libexec/munin/plugins/postfix_mailqueue 0755 root bin
@@ -131,6 +136,7 @@ f none /opt/csw/libexec/munin/plugins/postgres_tuples_ 0755 root bin
 f none /opt/csw/libexec/munin/plugins/postgres_users 0755 root bin
 f none /opt/csw/libexec/munin/plugins/postgres_xlog 0755 root bin
 f none /opt/csw/libexec/munin/plugins/processes 0755 root bin
+f none /opt/csw/libexec/munin/plugins/proxy_plugin 0755 root bin
 f none /opt/csw/libexec/munin/plugins/ps_ 0755 root bin
 f none /opt/csw/libexec/munin/plugins/psu_ 0755 root bin
 f none /opt/csw/libexec/munin/plugins/qmailqstat 0755 root bin
@@ -228,8 +234,6 @@ f none /opt/csw/share/man/man3/Munin::Plugin::Pgsql.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Munin::Plugin::SNMP.3perl 0444 root bin
 d none /opt/csw/share/man/man5 0755 root bin
 f none /opt/csw/share/man/man5/munin-node.conf.5 0644 root bin
-d none /opt/csw/share/man/man8 0755 root bin
-f none /opt/csw/share/man/man8/munin.8 0644 root bin
 d none /opt/csw/share/munin 0755 root bin
 d none /opt/csw/share/perl 0755 root bin
 d none /opt/csw/share/perl/site_perl 0755 root bin

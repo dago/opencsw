@@ -5,6 +5,7 @@ f none /opt/csw/share/man/man3/Munin::Common::TLS.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Munin::Common::TLSClient.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Munin::Common::TLSServer.3perl 0444 root bin
 f none /opt/csw/share/man/man3/Munin::Common::Timeout.3perl 0444 root bin
+d none /opt/csw/share/perl/site_perl/Munin 0755 root bin
 d none /opt/csw/share/perl/site_perl/Munin/Common 0755 root bin
 f none /opt/csw/share/perl/site_perl/Munin/Common/Config.pm 0444 root bin
 f none /opt/csw/share/perl/site_perl/Munin/Common/Defaults.pm 0444 root bin

@@ -13,9 +13,10 @@ endef
 SF_PROJ = munin
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += CSWmuninmaster.prototype
-DISTFILES += CSWmuninnode.prototype cswmuninnode
+DISTFILES += cswmuninnode
+DISTFILES += CSWmuninnode.prototype
 DISTFILES += CSWmunincommon.prototype
+DISTFILES += CSWmuninmaster.prototype
 DISTFILES += cswusergroup
 DISTFILES += apache-munin.conf.CSW apache-munin-cgi.conf.CSW
 DISTFILES += README.CSW
@@ -47,6 +48,8 @@ ARCHALL_CSWmuninmaster = 1
 ARCHALL_CSWmuninnode = 1
 ARCHALL_CSWmunincommon = 1
 
+RUNTIME_DEP_PKGS_CSWmuincommon = CSWperl
+
 RUNTIME_DEP_PKGS_CSWmuninmaster = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpmlog4perl CSWmunincommon
 RUNTIME_DEP_PKGS_CSWmuninmaster += CSWpm-rrdtool CSWapache2 
 RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils CSWcas-cptemplates CSWcas-crontab CSWcas-postmsg
@@ -56,7 +59,7 @@ RUNTIME_DEP_PKGS_CSWmuninnode += CSWcswclassutils CSWcas-cptemplates
 
 RUNTIME_DEP_PKGS_CSWmuninnode += CSWperl CSWpmnetssleay
 
-SPKG_CLASSES_CSWmuninmaster = none cswusergroup cswcrontab cswcptemplates ugfiles cswpostmsg
+SPKG_CLASSES_CSWmuninmaster = none cswusergroup ugfiles cswcrontab cswcptemplates cswpostmsg
 SPKG_CLASSES_CSWmuninnode = none cswusergroup ugfiles cswcptemplates cswinitsmf 
 SPKG_CLASSES_CSWmunincommon = none
 
@@ -107,11 +110,11 @@ install-custom:
 	@# create init script / smf -> cswinitsmf
 	@#
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -m 755 $(FILEDIR)/cswmuninnode $(DESTDIR)/etc/opt/csw/init.d/cswmuninnode
+	@ginstall -m 644 $(FILEDIR)/cswmuninnode $(DESTDIR)/etc/opt/csw/init.d/cswmuninnode
 	@#
 	@# create crontab for user munin -> cswcrontab
 	@#
-	@ginstall -d 755 $(DESTDIR)/etc/opt/csw/pkg/CSWmuninmaster/crontabs
+	@ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSWmuninmaster/crontabs
 	@ginstall -m 644 $(FILEDIR)/crontab.munin $(DESTDIR)/etc/opt/csw/pkg/CSWmuninmaster/crontabs/munin
 	@#
 	@# print a postmessage -> cswpostmessage
