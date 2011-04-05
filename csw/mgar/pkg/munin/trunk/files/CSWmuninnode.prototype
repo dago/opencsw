@@ -1,6 +1,10 @@
 d none /etc/opt/csw/init.d 0755 root bin
 f cswinitsmf /etc/opt/csw/init.d/cswmuninnode 0755 root bin
 d none /etc/opt/csw/munin 0755 root bin
+d none /opt/csw/etc/templates/CSWmuninnode 0755 root bin
+d none /opt/csw/etc/templates/CSWmuninnode/etc 0755 root bin
+d none /opt/csw/etc/templates/CSWmuninnode/etc/opt 0755 root bin
+d none /opt/csw/etc/templates/CSWmuninnode/etc/opt/csw 0755 root bin
 d none /opt/csw/etc/templates/CSWmuninnode/etc/opt/csw/munin 0755 root bin
 f cswcptemplates /opt/csw/etc/templates/CSWmuninnode/etc/opt/csw/munin/munin-node.conf 0644 root bin
 d none /etc/opt/csw/munin/plugin-conf.d 0755 root bin

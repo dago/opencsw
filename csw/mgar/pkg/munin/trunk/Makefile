@@ -100,6 +100,8 @@ install-custom:
 	@ginstall -m 644 $(FILEDIR)/apache-munin-cgi.conf.CSW $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/apache/apache-munin-cgi.conf
 	@mv $(DESTDIR)/var/opt/csw/munin/www/.htaccess $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/var/opt/csw/munin/www/
 	@#
+	@mv $(DESTDIR)/etc/opt/csw/munin/templates $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin
+	@#
 	@# create user munin during package deployment -> cswusergroup
 	@#
 	@ginstall -d $(DESTDIR)/opt/csw/etc/pkg/CSWmuninmaster
