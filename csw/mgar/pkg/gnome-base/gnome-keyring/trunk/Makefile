@@ -90,4 +90,8 @@ RUNTIME_DEP_PKGS_CSWlibgp11-0 += CSWglib2
 RUNTIME_DEP_PKGS_CSWgnomekeyring += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgnomekeyring += CSWlibtasn1-3
 
+# HAVE_GETPEERUCRED is available on Solaris 10 but not on 9
+PACKAGING_PLATFORMS  = solaris9-sparc  solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386 
+
 include gar/category.mk
