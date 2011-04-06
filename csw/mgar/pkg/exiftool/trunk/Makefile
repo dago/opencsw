@@ -1,5 +1,5 @@
 NAME = exiftool
-VERSION = 8.31
+VERSION = 8.54
 CATEGORIES = cpan
 
 DESCRIPTION = Read, Write and Edit Image File Meta Information
