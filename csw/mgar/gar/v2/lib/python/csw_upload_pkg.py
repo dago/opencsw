@@ -189,6 +189,7 @@ class Srv4Uploader(object):
       print "All checks successful. Proceeding."
       for arch, osrel in checkpkg_sets:
         for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
+          file_metadata = metadata_by_md5[md5_sum]
           self._InsertIntoCatalog(filename, arch, osrel, file_metadata)
 
   def Remove(self):
