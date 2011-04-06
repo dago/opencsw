@@ -19,6 +19,7 @@ CHECKPKG_OVERRIDES_CSWrubyaugeas += catalogname-does-not-match-pkgname|pkgname=C
 CHECKPKG_OVERRIDES_CSWrubyaugeas += missing-dependency|CSWruby
 
 BUILD_DEP_PKGS    = CSWrake
+BUILD_DEP_PKGS    += CSWruby18
 BUILD_SCRIPTS     =
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS      = 
