@@ -15,7 +15,7 @@ GEMCATALOGNAME ?= $(subst -,_,$(GEMPKGNAME))
 # PACKAGES ?= CSWgem-$(GEMPKGNAME) CSWgem-$(GEMPKGNAME)-doc
 PACKAGES ?= CSWrb18-$(GEMPKGNAME)
 CATALOGNAME_CSWrb18-$(GEMPKGNAME) ?= rb18_$(GEMCATALOGNAME)
-CATALOGNAME_rb18-$(GEMPKGNAME)-doc ?= rb18_$(GEMCATALOGNAME)_doc
+CATALOGNAME_CSWrb18-$(GEMPKGNAME)-doc ?= rb18_$(GEMCATALOGNAME)_doc
 
 SPKG_DESC_CSWrb18-$(GEMPKGNAME)-doc ?= $(or $(SPKG_DESC_CSWrb18-$(GEMPKGNAME)),$(SPKG_DESC)) documentation
 
@@ -57,7 +57,7 @@ INSTALL_SCRIPTS ?= rbgem
 STRIP_DIRS ?= $(shell for f in `find $(DESTDIR)$(GEMDIR) -name '*so'`; do dirname $$f; done)
 
 # Allow splitting of documentation automatically
-PKGFILES_CSWgem-$(GEMPKGNAME)-doc ?= $(GEMDIR)/doc/.*
+PKGFILES_CSWrb18-$(GEMPKGNAME)-doc ?= $(GEMDIR)/doc/.*
 
 gem-extract-%:
 	@echo " ==> Decompressing $(DOWNLOADDIR)/$*"
