@@ -54,6 +54,8 @@ BUILD_SCRIPTS ?=
 TEST_SCRIPTS ?= 
 INSTALL_SCRIPTS ?= rbgem
 
+STRIP_DIRS ?= $(shell for f in `find $(DESTDIR)$(GEMDIR) -name '*so'`; do dirname $$f; done)
+
 # Allow splitting of documentation automatically
 PKGFILES_CSWgem-$(GEMPKGNAME)-doc ?= $(GEMDIR)/doc/.*
 
