@@ -1,10 +1,10 @@
 NAME = dhcp
 VERSION = 4.2.1
-#RELEASE = P2
-#DISTVERSION = $(VERSION)-$(RELEASE)
-#SPKG_VERSION = $(VERSION)$(RELEASE)
-#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-#WORKSRC = $(WORKDIR)/$(DISTNAME)
+RELEASE = P1
+DISTVERSION = $(VERSION)-$(RELEASE)
+SPKG_VERSION = $(VERSION)$(RELEASE)
+DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
 DESCRIPTION = ISC DHCP reference implementation
@@ -52,7 +52,6 @@ SAMPLECONF += /var/opt/csw/dhcp/db/dhcpd.leases
 
 SPKG_SOURCEURL = https://www.isc.org/software/dhcp
 
-CHECKPKG_OVERRIDES_CSWdhcp-dev += file-collision
 CHECKPKG_OVERRIDES_CSWdhcp += surplus-dependency|CSWosslrt
 
 include gar/category.mk
