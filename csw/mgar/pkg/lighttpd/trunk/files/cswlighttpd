@@ -28,7 +28,7 @@ start_service() {
 
 stop_service() {
         if [ -f "$PIDFILE" ]; then
-                /usr/bin/kill -QUIT `/usr/bin/cat $PIDFILE`
+                /usr/bin/kill -TERM `/usr/bin/cat $PIDFILE`
         fi
 }
 
