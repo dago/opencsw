@@ -1,7 +1,7 @@
 # $Id$
 NAME = lighttpd
 VERSION = 1.4.28
-CATEGORIES = devel
+CATEGORIES = server
 
 DESCRIPTION = HTTP server built for security, speed, compliance, and flexibility
 define BLURB
