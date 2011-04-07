@@ -32,6 +32,8 @@ INSTALL_SCRIPTS = custom
 
 CHECKPKG_OVERRIDES_CSWrubygems += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/rubygems/gem_path_searcher.rb
 
+ALTERNATIVE = $(bindir)/gem gem $(bindir)/gem18 5
+
 include gar/category.mk
 
 install-custom:
