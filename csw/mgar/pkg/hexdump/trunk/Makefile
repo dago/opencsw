@@ -1,5 +1,5 @@
 NAME = hexdump
-VERSION = 1.6
+VERSION = 1.7
 CATEGORIES = utils
 
 DESCRIPTION = A hex dumper that can handle EBCDIC
@@ -7,10 +7,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.catb.org/~esr/hexdump/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 CONFIGURE_SCRIPTS =
 BUILD_TARGETS = hexdump hexdump.1
