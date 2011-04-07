@@ -1,5 +1,5 @@
 NAME = rubygems
-VERSION = 1.3.7
+VERSION = 1.7.2
 CATEGORIES = xtra
 
 DESCRIPTION = Ruby package manager
@@ -15,8 +15,8 @@ MASTER_SITES   = http://rubyforge.org/frs/download.php/70696/
 DISTFILES  = $(NAME)-$(VERSION).tgz
 
 ARCHALL = 1
-BUILD_DEP_PKGS = CSWruby
-RUNTIME_DEP_PKGS_CSWrubygems = CSWruby
+BUILD_DEP_PKGS = CSWruby18
+RUNTIME_DEP_PKGS_CSWrubygems = CSWruby18
 
 LICENSE_CSWrubygems = LICENSE.txt
 
