@@ -13,6 +13,7 @@ SPKG_SOURCEURL = http://rubyforge.org/projects/rubygems/
 MASTER_SITES   = http://production.cf.rubygems.org/rubygems/
 
 DISTFILES  = $(NAME)-$(VERSION).tgz
+DISTFILES += CSWrubygems.cswreleasenotes
 
 ARCHALL = 1
 BUILD_DEP_PKGS = CSWruby18
@@ -28,6 +29,12 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = 
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
+
+# drop these after updating checkpkg
+CHECKPKG_OVERRIDES_CSWrubygems += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWrubygems += surplus-dependency|CSWruby18
+
+CHECKPKG_OVERRIDES_CSWrubygems += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/rubygems/gem_path_searcher.rb
 
 include gar/category.mk
 
