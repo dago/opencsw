@@ -13,9 +13,9 @@ endef
 VENDOR_URL   = http://www.nano-editor.org/
 MASTER_SITES = http://www.nano-editor.org/dist/v2.2/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWncurses
+RUNTIME_DEP_PKGS  = CSWncurses
+RUNTIME_DEP_PKGS += CSWlibintl8
 
 EXTRA_INC = /opt/csw/include/ncurses
 
@@ -39,10 +39,8 @@ post-install-modulated:
 	cp $(WORKSRC)/doc/nanorc.sample $(DOCDEST)/examples
 	cp $(addprefix $(WORKSRC)/, $(DOCS)) $(DOCDEST)
 	perl -pi -e 's|/usr/share/doc|$(docdir)|' \
-		$(addprefix $(DESTDIR)$(mandir)/, \
-			man1/nano.1 \
-			man5/nanorc.5 \
-			fr/man1/nano.1 \
-			fr/man5/nanorc.5 \
-		)
+		`find $(DESTDIR)$(sharedir) \
+			-name \*.html -o \
+			-name \*.1 -o \
+			-name \*.5`
 	@$(MAKECOOKIE)
