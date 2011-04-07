@@ -44,6 +44,7 @@ install-custom:
 	@$(MAKECOOKIE)
 
 post-install-modulated: copy-contrib
+	@$(MAKECOOKIE)
 
 copy-contrib:
 	@mkdir -p $(DESTDIR)$(docdir)/$(NAME)
