@@ -10,7 +10,7 @@ endef
 
 
 SPKG_SOURCEURL = http://rubyforge.org/projects/rubygems/
-MASTER_SITES   = http://rubyforge.org/frs/download.php/70696/
+MASTER_SITES   = http://production.cf.rubygems.org/rubygems/
 
 DISTFILES  = $(NAME)-$(VERSION).tgz
 
