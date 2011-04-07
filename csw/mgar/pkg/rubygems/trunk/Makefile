@@ -30,10 +30,6 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-# drop these after updating checkpkg
-CHECKPKG_OVERRIDES_CSWrubygems += missing-dependency|CSWruby
-CHECKPKG_OVERRIDES_CSWrubygems += surplus-dependency|CSWruby18
-
 CHECKPKG_OVERRIDES_CSWrubygems += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/rubygems/gem_path_searcher.rb
 
 include gar/category.mk
