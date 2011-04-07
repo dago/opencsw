@@ -1,5 +1,5 @@
 NAME = dcc
-VERSION = 1.3.127
+VERSION = 1.3.139
 CATEGORIES = net
 
 DESCRIPTION = E-mail greylisting and a cooperative, distributed system to identify spam
@@ -12,8 +12,7 @@ LICENSE = LICENSE
 
 RUNTIME_DEP_PKGS += CSWperl
 
-# Upstream watch
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.Z
+CHECKPKG_OVERRIDES_CSWdcc += file-with-bad-content
 
 #CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS  =
@@ -34,6 +33,7 @@ GARCOMPILER = GNU
 
 # dcc has no tests
 TEST_SCRIPTS =
+
 INSTALL_SCRIPTS = custom
 
 SAMPLECONF  = /var/opt/csw/dcc/dcc_conf
