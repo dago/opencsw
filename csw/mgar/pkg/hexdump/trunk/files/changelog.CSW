@@ -1,8 +1,15 @@
+hexdump (1.7,REV=2011.04.07)
+
+  * Version bump to 1.7
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Thu,  7 Apr 2011 23:37:16 +0200
+
 hexdump (1.6,REV=2009.07.04)
 
   * Adopted and built using GAR.
 
  -- Sebastian Kayser <skayser@opencsw.org>  Sat,  4 Jul 2009 02:06:57 +0200
+
 hexdump (1.6,REV=2009.07.04)
 
   * Adopted and built using GAR.
