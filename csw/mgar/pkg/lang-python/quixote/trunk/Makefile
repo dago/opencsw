@@ -20,6 +20,8 @@ DISTFILES    = $(DISTNAME).tar.gz
 PACKAGES     = CSWpy-quixote
 CATALOGNAME  = py_quixote
 
+RUNTIME_DEP_PKGS_CSWpy-quixote += CSWlibpython2-6-1-0
+
 TEST_SCRIPTS = 
 
 include gar/category.mk
