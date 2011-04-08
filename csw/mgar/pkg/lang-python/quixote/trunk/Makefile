@@ -17,7 +17,8 @@ MASTER_SITES = http://quixote.ca/releases/
 DISTNAME     = $(subst q,Q,$(NAME))-$(VERSION)
 DISTFILES    = $(DISTNAME).tar.gz
 
-PACKAGES     = py_quixote
+PACKAGES     = CSWpy-quixote
+CATALOGNAME  = py_quixote
 
 TEST_SCRIPTS = 
 
