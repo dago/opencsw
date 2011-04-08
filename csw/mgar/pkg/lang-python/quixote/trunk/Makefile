@@ -27,8 +27,8 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 post-install-modulated:
-	mkdir -p $(DESTDIR)$(docdir)/$(PACKAGES)
-	gcp -r $(WORKSRC)/doc/* $(DESTDIR)$(docdir)/$(PACKAGES)
+	mkdir -p $(DESTDIR)$(docdir)/$(CATALOGNAME)
+	gcp -r $(WORKSRC)/doc/* $(DESTDIR)$(docdir)/$(CATALOGNAME)
 	@$(MAKECOOKIE)
 
 # Install changelog.CSW
