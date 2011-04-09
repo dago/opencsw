@@ -45,6 +45,7 @@ SAMPLECONF += /var/opt/csw/dcc/map.txt
 SAMPLECONF += /var/opt/csw/dcc/whiteclnt
 SAMPLECONF += /var/opt/csw/dcc/whitecommon
 SAMPLECONF += /var/opt/csw/dcc/whitelist
+USERGROUP   = /etc/opt/csw/pkg/CSWdcc/cswusergroup
 
 # Fix ownership of map file
 PROTOTYPE_MODIFIERS = 1
@@ -53,7 +54,7 @@ PROTOTYPE_USER_1 = dcc
 
 SPKG_SOURCEURL = http://www.rhyolite.com/dcc/
 CONFFILES =  dcc_conf flod grey_flod grey_whitelist ids map.txt whiteclnt whitecommon whitelist
-DOCFILES = CHANGES FAQ.txt INSTALL.txt RESTRICTIONS misc/README misc/dcc.m4 misc/dccdnsbl.m4 misc/site.config.m4
+DOCFILES = CHANGES FAQ.html INSTALL.html RESTRICTIONS misc/README misc/dcc.m4 misc/dccdnsbl.m4 misc/site.config.m4
 
 include gar/category.mk
 
@@ -69,15 +70,17 @@ install-custom:
 	   cd .. ; \
 	   gmake install )
 	@( cd $(DESTDIR)/var/opt/csw/$(NAME) ; \
-	  sed 's/bonivart/dcc/' dcc_conf > tmp.sed ; \
-	  mv tmp.sed dcc_conf )
+	   sed 's/bonivart/dcc/' dcc_conf > tmp.sed ; \
+	   mv tmp.sed dcc_conf )
 	@( cd $(DESTDIR)/opt/csw/libexec/$(NAME) ; \
-	  sed 's/bonivart/dcc/' fix-map > tmp.sed ; \
-	  mv tmp.sed fix-map )
+	   sed 's/bonivart/dcc/' fix-map > tmp.sed ; \
+	   mv tmp.sed fix-map )
 #	@$(foreach FILE, $(CONFFILES), mv $(DESTDIR)/var/opt/csw/$(NAME)/$(FILE) $(DESTDIR)/var/opt/csw/$(NAME) ;)
 	@ginstall -d $(DESTDIR)$(docdir)/$(NAME)/misc
 	@$(foreach FILE, $(DOCFILES), cp $(WORKSRC)/$(FILE) $(DESTDIR)$(docdir)/$(NAME)/$(FILE) ;)
 	@cp $(FILEDIR)/CSWdcc.INSTALL.CSW.txt $(DESTDIR)$(docdir)/$(NAME)/INSTALL.CSW.txt
 	@cp $(FILEDIR)/CSWdcc.dcc.xml $(DESTDIR)$(docdir)/$(NAME)/dcc.xml
 	@cp $(FILEDIR)/CSWdcc.svc-dcc $(DESTDIR)$(docdir)/$(NAME)/svc-dcc
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWdcc
+	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWdcc
 	@$(MAKECOOKIE)
