@@ -49,11 +49,12 @@ USERGROUP   = /etc/opt/csw/pkg/CSWdcc/cswusergroup
 
 # Fix ownership of map file
 PROTOTYPE_MODIFIERS = 1
-PROTOTYPE_FILES_1 = /var/opt/csw/dcc/map
-PROTOTYPE_USER_1 = dcc
+PROTOTYPE_FILES_1   = /var/opt/csw/dcc/map
+PROTOTYPE_USER_1    = dcc
+PROTOTYPE_CLASS_1   = ugfiles
 
 SPKG_SOURCEURL = http://www.rhyolite.com/dcc/
-CONFFILES =  dcc_conf flod grey_flod grey_whitelist ids map.txt whiteclnt whitecommon whitelist
+CONFFILES = dcc_conf flod grey_flod grey_whitelist ids map.txt whiteclnt whitecommon whitelist
 DOCFILES = CHANGES FAQ.html INSTALL.html RESTRICTIONS misc/README misc/dcc.m4 misc/dccdnsbl.m4 misc/site.config.m4
 
 include gar/category.mk
