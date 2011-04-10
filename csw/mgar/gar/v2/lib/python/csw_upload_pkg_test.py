@@ -330,10 +330,10 @@ class Srv4UploaderDataDrivenUnitTest(mox.MoxTestBase):
   def testSortFilenames(self):
     su = csw_upload_pkg.Srv4Uploader(None, None)
     wrong_order = [
-        "gdb-7.2,REV=2011.01.21-SunOS5.9-i386-CSW.pkg.gz",
-        "gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz",
         "gdb-7.2,REV=2011.01.21-SunOS5.10-i386-CSW.pkg.gz",
         "gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.9-i386-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz",
     ]
     good_order = [
         "gdb-7.2,REV=2011.01.21-SunOS5.9-i386-CSW.pkg.gz",
