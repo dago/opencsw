@@ -356,6 +356,85 @@ class Srv4UploaderDataDrivenUnitTest(mox.MoxTestBase):
         su.SortFilenames,
         wrong_order)
 
+class Srv4UploaderIntegrationUnitTest(mox.MoxTestBase):
+
+  def testUploadOrder(self):
+    wrong_order = [
+        "gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz",
+    ]
+    su = csw_upload_pkg.Srv4Uploader(wrong_order, "http://localhost/",
+        output_to_screen=False)
+    # Not an optimal design: a lot of methods need to be stubbed to
+    # test what we need to test.  This is what happens if you don't
+    # write tests at the same time you write the code.
+    import_metadata_mock = self.mox.StubOutWithMock(su, '_GetFileMd5sum')
+    import_metadata_mock = self.mox.StubOutWithMock(su, '_ImportMetadata')
+    import_metadata_mock = self.mox.StubOutWithMock(su, '_InsertIntoCatalog')
+    import_metadata_mock = self.mox.StubOutWithMock(su, '_RemoveFromCatalog')
+    import_metadata_mock = self.mox.StubOutWithMock(su, '_PostFile')
+    import_metadata_mock = self.mox.StubOutWithMock(su, '_GetSrv4FileMetadata')
+    import_metadata_mock = self.mox.StubOutWithMock(su, '_MatchSrv4ToCatalogs')
+    import_metadata_mock = self.mox.StubOutWithMock(su, '_RunCheckpkg')
+    rest_mock = self.mox.CreateMock(rest.RestClient)
+    su._rest_client = rest_mock
+
+    # The 5.9 package
+    su._ImportMetadata("gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz")
+    su._GetFileMd5sum(wrong_order[1]).AndReturn("md5-2")
+    su._GetSrv4FileMetadata("md5-2").AndReturn((True, GDB_STRUCT_9))
+
+    # The 5.10 package
+    su._ImportMetadata("gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz")
+    su._GetFileMd5sum(wrong_order[0]).AndReturn("md5-1")
+    su._GetSrv4FileMetadata("md5-1").AndReturn((True, GDB_STRUCT_10))
+
+    # Matching to catalogs
+    su._MatchSrv4ToCatalogs('gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz',
+                            'unstable', 'sparc', 'SunOS5.9',
+                            'md5-2').AndReturn((
+                              ('unstable', 'sparc', 'SunOS5.9'),
+                              ('unstable', 'sparc', 'SunOS5.10'),
+                              ))
+
+    su._MatchSrv4ToCatalogs('gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz',
+                            'unstable', 'sparc', 'SunOS5.10',
+                            'md5-1').AndReturn((('unstable', 'sparc', 'SunOS5.10'),))
+
+    su._RunCheckpkg(
+        {
+          ('sparc', 'SunOS5.10'):
+              [('gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz', 'md5-2'),
+               ('gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz', 'md5-1')],
+          ('sparc', 'SunOS5.9'):
+              [('gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz', 'md5-2')]}).AndReturn(True)
+
+
+    # This is the critical part of the test: The 5.9 package must not
+    # overwrite the 5.10 package in the 5.10 catalog.  It's okay for the
+    # 5.10 package to overwrite the 5.9 package in the 5.10 catalog.
+    #
+    #   This would be wrong:
+    #
+    # su._InsertIntoCatalog('gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz',
+    #                       'sparc', 'SunOS5.10', GDB_STRUCT_9)
+    # su._InsertIntoCatalog('gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz',
+    #                       'sparc', 'SunOS5.9', GDB_STRUCT_9)
+    # su._InsertIntoCatalog('gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz',
+    #                       'sparc', 'SunOS5.10', GDB_STRUCT_10)
+
+    # This is right. The first insert is superfluous, but harmless.
+    su._InsertIntoCatalog('gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz',
+                          'sparc', 'SunOS5.10', GDB_STRUCT_9)
+    su._InsertIntoCatalog('gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz',
+                          'sparc', 'SunOS5.10', GDB_STRUCT_10)
+    su._InsertIntoCatalog('gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz',
+                          'sparc', 'SunOS5.9', GDB_STRUCT_9)
+
+
+    self.mox.ReplayAll()
+    su.Upload()
+
 
 if __name__ == '__main__':
   unittest.main()

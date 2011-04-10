@@ -72,7 +72,7 @@ class Srv4Uploader(object):
   def __init__(self, filenames, rest_url, os_release=None, debug=False,
       output_to_screen=True):
     super(Srv4Uploader, self).__init__()
-    self.filenames = filenames
+    self.filenames = self.SortFilenames(filenames)
     self.md5_by_filename = {}
     self.debug = debug
     self.os_release = os_release
