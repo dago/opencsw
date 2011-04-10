@@ -327,6 +327,35 @@ class Srv4UploaderDataDrivenUnitTest(mox.MoxTestBase):
            ('bar.pkg', '84b409eb7c2faf87e22ee0423e55b888')]}
     self.assertEqual(expected, su._CheckpkgSets(TEST_PLANNED_MODIFICATIONS_1))
 
+  def testSortFilenames(self):
+    su = csw_upload_pkg.Srv4Uploader(None, None)
+    wrong_order = [
+        "gdb-7.2,REV=2011.01.21-SunOS5.9-i386-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.10-i386-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz",
+    ]
+    good_order = [
+        "gdb-7.2,REV=2011.01.21-SunOS5.9-i386-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.10-i386-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz",
+    ]
+    self.assertEqual(good_order, su.SortFilenames(wrong_order))
+
+  def testSortFilenamesThrowsDataError(self):
+    su = csw_upload_pkg.Srv4Uploader(None, None)
+    wrong_order = [
+        "gdb-7.2,REV=2011.01.21-kittens-i386-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.9-sparc-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.10-i386-CSW.pkg.gz",
+        "gdb-7.2,REV=2011.01.21-SunOS5.10-sparc-CSW.pkg.gz",
+    ]
+    self.assertRaises(
+        csw_upload_pkg.DataError,
+        su.SortFilenames,
+        wrong_order)
+
 
 if __name__ == '__main__':
   unittest.main()

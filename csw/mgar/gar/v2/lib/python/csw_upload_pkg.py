@@ -466,6 +466,27 @@ class Srv4Uploader(object):
       by_catalog[key].append((filename, md5_sum))
     return by_catalog
 
+  def SortFilenames(self, filenames):
+    """Sorts filenames according to OS release.
+
+    The idea is that in lexicographic sorting, SunOS5.9 is after
+    SunOS5.10, while we want 5.9 to be first.
+    """
+    by_osrel = {}
+    sorted_filenames = []
+    for filename in filenames:
+      basename = os.path.basename(filename)
+      parsed_basename = opencsw.ParsePackageFileName(basename)
+      by_osrel.setdefault(parsed_basename["osrel"], []).append(filename)
+    for osrel in common_constants.OS_RELS:
+      if osrel in by_osrel:
+        for filename in by_osrel.pop(osrel):
+          sorted_filenames.append(filename)
+    if by_osrel:
+      raise DataError("Unexpected architecture found in file list: %s."
+                      % (repr(by_osrel),))
+    return sorted_filenames
+
 
 if __name__ == '__main__':
   parser = optparse.OptionParser(USAGE)
