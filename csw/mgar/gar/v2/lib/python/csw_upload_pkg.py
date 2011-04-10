@@ -69,7 +69,8 @@ class WorkflowError(Error):
 
 class Srv4Uploader(object):
 
-  def __init__(self, filenames, rest_url, os_release=None, debug=False):
+  def __init__(self, filenames, rest_url, os_release=None, debug=False,
+      output_to_screen=True):
     super(Srv4Uploader, self).__init__()
     self.filenames = filenames
     self.md5_by_filename = {}
@@ -77,6 +78,7 @@ class Srv4Uploader(object):
     self.os_release = os_release
     self.rest_url = rest_url
     self._rest_client = rest.RestClient(self.rest_url)
+    self.output_to_screen = output_to_screen
 
   def _ImportMetadata(self, filename):
     md5_sum = self._GetFileMd5sum(filename)
@@ -142,52 +144,10 @@ class Srv4Uploader(object):
     # - Create groups of files to be inserted into each of the catalogs
     # - Invoke checkpkg to check every target catalog
     checkpkg_sets = self._CheckpkgSets(planned_modifications)
-    bin_dir = os.path.dirname(__file__)
-    checkpkg_executable = os.path.join(bin_dir, "checkpkg")
-    assert os.path.exists(checkpkg_executable), (
-        "Could not find %s. Make sure that the checkpkg executable is "
-        "available \n"
-        "from the same directory as csw-upload-pkg." % checkpkg_executable)
-    checks_failed_for_catalogs = []
-    args_by_cat = {}
-    for arch, osrel in checkpkg_sets:
-      if "5.11" in osrel:
-        logging.debug("Skipping Solaris 11 checks")
-        continue
-      print ("Checking packages against catalog %s %s %s"
-             % (DEFAULT_CATREL, arch, osrel))
-      md5_sums = []
-      basenames = []
-      for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
-        md5_sums.append(md5_sum)
-        basenames.append(os.path.basename(filename))
-      # Not using the checkpkg Python API.  The reason is that checkpkg
-      # requires the process calling its API to have an established
-      # MySQL connection, while csw-upload-pkg does not, and it's better
-      # if it stays that way.
-      args_by_cat[(arch, osrel)] = [
-          checkpkg_executable,
-          "--catalog-release", DEFAULT_CATREL,
-          "--os-release", osrel,
-          "--architecture", arch,
-      ] + md5_sums
-      ret = subprocess.call(args_by_cat[(arch, osrel)] + ["--quiet"])
-      if ret:
-        checks_failed_for_catalogs.append(
-            (arch, osrel, basenames)
-        )
-    if checks_failed_for_catalogs:
-      print "Checks failed for catalogs:"
-      for arch, osrel, basenames in checks_failed_for_catalogs:
-        print "  - %s %s" % (arch, osrel)
-        for basename in basenames:
-          print "    %s" % basename
-        print "To see errors, run:"
-        print " ", " ".join(args_by_cat[(arch, osrel)])
-      print ("Packages have not been submitted to the %s catalog."
-             % DEFAULT_CATREL)
-    else:
-      print "All checks successful. Proceeding."
+    checks_successful = self._RunCheckpkg(checkpkg_sets)
+    if checks_successful:
+      if self.output_to_screen:
+        print "All checks successful. Proceeding."
       for arch, osrel in checkpkg_sets:
         for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
           file_metadata = metadata_by_md5[md5_sum]
@@ -487,6 +447,53 @@ class Srv4Uploader(object):
       raise DataError("Unexpected architecture found in file list: %s."
                       % (repr(by_osrel),))
     return sorted_filenames
+
+  def _RunCheckpkg(self, checkpkg_sets):
+    bin_dir = os.path.dirname(__file__)
+    checkpkg_executable = os.path.join(bin_dir, "checkpkg")
+    assert os.path.exists(checkpkg_executable), (
+        "Could not find %s. Make sure that the checkpkg executable is "
+        "available \n"
+        "from the same directory as csw-upload-pkg." % checkpkg_executable)
+    checks_failed_for_catalogs = []
+    args_by_cat = {}
+    for arch, osrel in checkpkg_sets:
+      if "5.11" in osrel:
+        logging.debug("Skipping Solaris 11 checks")
+        continue
+      print ("Checking packages against catalog %s %s %s"
+             % (DEFAULT_CATREL, arch, osrel))
+      md5_sums = []
+      basenames = []
+      for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
+        md5_sums.append(md5_sum)
+        basenames.append(os.path.basename(filename))
+      # Not using the checkpkg Python API.  The reason is that checkpkg
+      # requires the process calling its API to have an established
+      # MySQL connection, while csw-upload-pkg does not, and it's better
+      # if it stays that way.
+      args_by_cat[(arch, osrel)] = [
+          checkpkg_executable,
+          "--catalog-release", DEFAULT_CATREL,
+          "--os-release", osrel,
+          "--architecture", arch,
+      ] + md5_sums
+      ret = subprocess.call(args_by_cat[(arch, osrel)] + ["--quiet"])
+      if ret:
+        checks_failed_for_catalogs.append(
+            (arch, osrel, basenames)
+        )
+    if checks_failed_for_catalogs:
+      print "Checks failed for catalogs:"
+      for arch, osrel, basenames in checks_failed_for_catalogs:
+        print "  - %s %s" % (arch, osrel)
+        for basename in basenames:
+          print "    %s" % basename
+        print "To see errors, run:"
+        print " ", " ".join(args_by_cat[(arch, osrel)])
+      print ("Packages have not been submitted to the %s catalog."
+             % DEFAULT_CATREL)
+    return (not checks_failed_for_catalogs, checkpkg_sets)
 
 
 if __name__ == '__main__':
