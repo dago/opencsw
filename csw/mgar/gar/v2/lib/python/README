@@ -74,7 +74,9 @@ sudo aptitude install \
   python-magic \
   python-mox \
   python-progressbar \
+  python-pycurl \
   python-sqlobject \
+  python-unittest2 \
   python-yaml
 
 Solaris package dependencies.
