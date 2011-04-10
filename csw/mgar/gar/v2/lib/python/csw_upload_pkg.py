@@ -20,6 +20,7 @@ import rest
 import struct_util
 import subprocess
 import file_set_checker
+import sys
 
 
 BASE_URL = "http://buildfarm.opencsw.org"
@@ -516,6 +517,10 @@ if __name__ == '__main__':
   os_release = options.os_release
   if os_release:
     os_release = struct_util.OsReleaseToLong(os_release)
+
+  if not args:
+    parser.print_usage()
+    sys.exit(1)
 
   # Check the file set.
   fc = file_set_checker.FileSetChecker()
