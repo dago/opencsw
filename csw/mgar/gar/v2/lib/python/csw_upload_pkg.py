@@ -533,8 +533,9 @@ if __name__ == '__main__':
   fc = file_set_checker.FileSetChecker()
   error_tags = fc.CheckFiles(args)
   if error_tags:
+    print "There is a problem with the presented file list."
     for error_tag in error_tags:
-      print error_tag
+      print "*", error_tag
     sys.exit(1)
 
   uploader = Srv4Uploader(args,
