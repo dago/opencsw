@@ -149,7 +149,7 @@ class Srv4Uploader(object):
     if checks_successful:
       if self.output_to_screen:
         print "All checks successful. Proceeding."
-      for arch, osrel in checkpkg_sets:
+      for arch, osrel in sorted(checkpkg_sets):
         for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
           file_metadata = metadata_by_md5[md5_sum]
           self._InsertIntoCatalog(filename, arch, osrel, file_metadata)
@@ -168,7 +168,7 @@ class Srv4Uploader(object):
     arch = file_metadata['arch']
     catalogs = self._MatchSrv4ToCatalogs(
         filename, DEFAULT_CATREL, arch, osrel, md5_sum)
-    for unused_catrel, cat_arch, cat_osrel in catalogs:
+    for unused_catrel, cat_arch, cat_osrel in sorted(catalogs):
       self._RemoveFromCatalog(filename, cat_arch, cat_osrel, file_metadata)
 
   def _RemoveFromCatalog(self, filename, arch, osrel, file_metadata):
