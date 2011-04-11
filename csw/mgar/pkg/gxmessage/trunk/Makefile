@@ -12,19 +12,17 @@ SPKG_SOURCEURL = http://homepages.ihug.co.nz/~trmusson/programs.html
 MASTER_SITES  = http://homepages.ihug.co.nz/~trmusson/stuff/
 MASTER_SITES += http://ftp.gnu.org/pub/gnu/gxmessage/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-TEST_TARGET = check
+EXTRA_INC = $(prefix)/include/gtk-2.0
 CONFIGURE_ARGS = $(DIRPATHS)
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWfconfig
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWftype2
-RUNTIME_DEP_PKGS_CSWgxmessage += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWglib2
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWgtk2
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibatk
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibcairo
-RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibxext
+RUNTIME_DEP_PKGS_CSWgxmessage += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgxmessage += CSWpango
-EXTRA_LINKER_FLAGS = /usr/openwin/lib/libXext.so
+PATCHFILES += 0001-removing-a-usr-local-reference.patch
 include gar/category.mk
 
 post-install-modulated:

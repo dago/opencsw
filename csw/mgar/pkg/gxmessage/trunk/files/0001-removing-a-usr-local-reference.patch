@@ -1,0 +1,25 @@
+From 3597bb5edf755ddaf87b45be0e8187a811f3acdd Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 12 Apr 2011 00:55:33 +0200
+Subject: [PATCH] removing a /usr/local reference
+
+---
+ doc/gxmessage.info |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/doc/gxmessage.info b/doc/gxmessage.info
+index a623bf7..e61b2da 100644
+--- a/doc/gxmessage.info
++++ b/doc/gxmessage.info
+@@ -291,7 +291,7 @@ right-clicking on any text file, selecting `Properties', then `Open
+ With'.
+ 
+      #! /bin/bash
+-     # Filename: /usr/local/bin/gxview
++     # Filename: /opt/csw/bin/gxview
+ 
+      ##
+      ## Usage: %PROG% [OPTIONS] [FILE]
+-- 
+1.7.3.2
+
