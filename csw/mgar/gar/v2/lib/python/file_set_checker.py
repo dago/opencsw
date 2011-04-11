@@ -52,7 +52,14 @@ class FileSetChecker(object):
       osrel = file_metadata["osrel"]
       for arch in archs:
         key = arch, osrel
-        catalognames_by_arch[key].add(catalogname)
+        if key in catalognames_by_arch:
+          catalognames_by_arch[key].add(catalogname)
+        else:
+          tags.append(
+              tag.CheckpkgTag(None,
+                              "bad-arch-or-os-release",
+                              "%s arch=%s osrel=%s" % (file_path, arch, osrel))
+          )
     missing = {}
     for key1, set1 in catalognames_by_arch.iteritems():
       for catalogname in set1:

@@ -53,6 +53,15 @@ class FileSetCheckerUnitTest(unittest.TestCase):
              'nspr_devel-4.8.6,REV=2010.10.16-SunOS5.9-i386-UNCOMMITTED.pkg.gz']
     self.assertEqual(expected, fc.CheckFiles(files))
 
+  def testBadInput(self):
+    fc = file_set_checker.FileSetChecker()
+    expected = [
+        tag.CheckpkgTag(None, 'bad-arch-or-os-release', 'csw-upload-pkg arch=pkg osrel=unspecified'),
+        tag.CheckpkgTag(None, 'bad-vendor-tag', 'csw expected=CSW actual=UNKN'),
+    ]
+    files = ['csw-upload-pkg']
+    self.assertEqual(expected, fc.CheckFiles(files))
+
 
 if __name__ == '__main__':
 	unittest.main()
