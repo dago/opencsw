@@ -109,6 +109,7 @@ class Srv4Uploader(object):
     do_upload = True
     planned_modifications = []
     metadata_by_md5 = {}
+    print "Processing %s file(s). Please wait." % (len(self.filenames),)
     for filename in self.filenames:
       self._ImportMetadata(filename)
       md5_sum = self._GetFileMd5sum(filename)
@@ -171,11 +172,11 @@ class Srv4Uploader(object):
       self._RemoveFromCatalog(filename, cat_arch, cat_osrel, file_metadata)
 
   def _RemoveFromCatalog(self, filename, arch, osrel, file_metadata):
-    logging.info("Removing %s (%s %s) from catalog %s %s %s",
-                 file_metadata["catalogname"],
-                 file_metadata["arch"],
-                 file_metadata["osrel"],
-                 DEFAULT_CATREL, arch, osrel)
+    print("Removing %s (%s %s) from catalog %s %s %s"
+          % (file_metadata["catalogname"],
+             file_metadata["arch"],
+             file_metadata["osrel"],
+             DEFAULT_CATREL, arch, osrel))
     md5_sum = self._GetFileMd5sum(filename)
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
@@ -302,11 +303,11 @@ class Srv4Uploader(object):
     logging.debug(
         "_InsertIntoCatalog(%s, %s, %s)",
         repr(arch), repr(osrel), repr(filename))
-    logging.info("Inserting %s (%s %s) into catalog %s %s %s",
-                 file_metadata["catalogname"],
-                 file_metadata["arch"],
-                 file_metadata["osrel"],
-                 DEFAULT_CATREL, arch, osrel)
+    print("Inserting %s (%s %s) into catalog %s %s %s"
+          % (file_metadata["catalogname"],
+             file_metadata["arch"],
+             file_metadata["osrel"],
+             DEFAULT_CATREL, arch, osrel))
     md5_sum = self._GetFileMd5sum(filename)
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
@@ -472,8 +473,8 @@ class Srv4Uploader(object):
       if "5.11" in osrel:
         logging.debug("Skipping Solaris 11 checks")
         continue
-      print ("Checking packages against catalog %s %s %s"
-             % (DEFAULT_CATREL, arch, osrel))
+      print ("Checking %s package(s) against catalog %s %s %s"
+             % (len(checkpkg_sets[(arch, osrel)]), DEFAULT_CATREL, arch, osrel))
       md5_sums = []
       basenames = []
       for filename, md5_sum in checkpkg_sets[(arch, osrel)]:
