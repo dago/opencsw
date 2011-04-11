@@ -181,8 +181,13 @@ class Srv4Uploader(object):
     parsed_basename = opencsw.ParsePackageFileName(basename)
     # TODO: Move this bit to a separate class (RestClient)
     url = (
-        "%s%s/catalogs/unstable/%s/%s/%s/"
-        % (self.rest_url, RELEASES_APP, arch, osrel, md5_sum))
+        "%s%s/catalogs/%s/%s/%s/%s/"
+        % (self.rest_url,
+           RELEASES_APP,
+           DEFAULT_CATREL,
+           arch,
+           osrel,
+           md5_sum))
     logging.debug("DELETE @ URL: %s %s", type(url), url)
     c = pycurl.Curl()
     d = StringIO()
@@ -307,8 +312,13 @@ class Srv4Uploader(object):
     parsed_basename = opencsw.ParsePackageFileName(basename)
     logging.debug("parsed_basename: %s", parsed_basename)
     url = (
-        "%s%s/catalogs/unstable/%s/%s/%s/"
-        % (self.rest_url, RELEASES_APP, arch, osrel, md5_sum))
+        "%s%s/catalogs/%s/%s/%s/%s/"
+        % (self.rest_url,
+           RELEASES_APP,
+           DEFAULT_CATREL,
+           arch,
+           osrel,
+           md5_sum))
     logging.debug("URL: %s %s", type(url), url)
     c = pycurl.Curl()
     d = StringIO()
