@@ -73,6 +73,7 @@ PROTOTYPE_GROUP_user = lighttpd
 PROTOTYPE_CLASS_user = ugfiles
 
 BUILD64 = 1
+ISAEXEC = 1
 
 include gar/category.mk
 
