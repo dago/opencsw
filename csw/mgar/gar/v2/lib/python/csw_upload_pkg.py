@@ -274,8 +274,8 @@ class Srv4Uploader(object):
             first_cat_osrel_seen = srv4_in_catalog["osrel"]
           else:
             first_cat_osrel_seen = srv4_osrel
-          logging.info("Considering %s the base OS to match",
-                       first_cat_osrel_seen)
+          logging.debug("Considering %s the base OS to match",
+                        first_cat_osrel_seen)
         if (not srv4_in_catalog
             or srv4_in_catalog["osrel"] == srv4_osrel
             or srv4_in_catalog["osrel"] == first_cat_osrel_seen):
@@ -289,7 +289,7 @@ class Srv4Uploader(object):
             logging.debug("OS release specified and matches %s.", osrel)
             catalogs.append(cat_key)
           else:
-            logging.info(
+            logging.debug(
                 "Not matching %s %s package with %s containing a %s package",
                 catalogname,
                 srv4_osrel, osrel, srv4_in_catalog["osrel"])
@@ -381,11 +381,12 @@ class Srv4Uploader(object):
     if successful:
       metadata = json.loads(d.getvalue())
     else:
-      logging.info("Metadata for %s were not found in the database" % repr(md5_sum))
+      logging.debug("Metadata for %s were not found in the database" % repr(md5_sum))
     return successful, metadata
 
   def _PostFile(self, filename):
-    logging.info("Uploading %s", repr(filename))
+    if self.output_to_screen:
+      print "Uploading %s" % repr(filename)
     md5_sum = self._GetFileMd5sum(filename)
     c = pycurl.Curl()
     d = StringIO()
