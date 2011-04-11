@@ -61,9 +61,6 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL))
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386                                                                          
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-# One test is still failing.
-TEST_TARGET = check
-
 INITSMF = $(sysconfdir)/init\.d/cswlighttpd
 PRESERVECONF = $(sysconfdir)/lighttpd\.conf
 USERGROUP = $(sysconfdir)/pkg/$(NAME)/cswusergroup
