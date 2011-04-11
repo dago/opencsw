@@ -171,11 +171,11 @@ class Srv4Uploader(object):
       self._RemoveFromCatalog(filename, cat_arch, cat_osrel, file_metadata)
 
   def _RemoveFromCatalog(self, filename, arch, osrel, file_metadata):
-    logging.info("Removing %s (%s %s) from catalog %s %s",
+    logging.info("Removing %s (%s %s) from catalog %s %s %s",
                  file_metadata["catalogname"],
                  file_metadata["arch"],
                  file_metadata["osrel"],
-                 arch, osrel)
+                 DEFAULT_CATREL, arch, osrel)
     md5_sum = self._GetFileMd5sum(filename)
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
@@ -302,11 +302,11 @@ class Srv4Uploader(object):
     logging.debug(
         "_InsertIntoCatalog(%s, %s, %s)",
         repr(arch), repr(osrel), repr(filename))
-    logging.info("Inserting %s (%s %s) into catalog %s %s",
+    logging.info("Inserting %s (%s %s) into catalog %s %s %s",
                  file_metadata["catalogname"],
                  file_metadata["arch"],
                  file_metadata["osrel"],
-                 arch, osrel)
+                 DEFAULT_CATREL, arch, osrel)
     md5_sum = self._GetFileMd5sum(filename)
     basename = os.path.basename(filename)
     parsed_basename = opencsw.ParsePackageFileName(basename)
