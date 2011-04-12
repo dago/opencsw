@@ -18,5 +18,6 @@ CONFIGURE_ARGS += --with-readline=$(prefix)
 CONFIGURE_ARGS += --with-python=$(prefix)
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-openssl=$(prefix)
+CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5
 
 include gar/category.mk
