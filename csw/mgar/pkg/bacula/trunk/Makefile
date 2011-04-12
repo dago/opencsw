@@ -15,6 +15,7 @@ BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
 BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-working-dir=$(localstatedir)/$(NAME)/working
 CONFIGURE_ARGS += --with-libiconv-prefix=$(prefix)
 CONFIGURE_ARGS += --with-libintl-prefix=$(prefix)
 CONFIGURE_ARGS += --with-readline=$(prefix)
