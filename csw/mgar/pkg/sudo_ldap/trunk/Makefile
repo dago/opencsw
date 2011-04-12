@@ -14,22 +14,21 @@ MASTER_SITES = ftp://ftp.sudo.ws/pub/sudo/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 PATCHFILES = install.diff
 
-# We define upstream file regex so we can be notifed of new 
-# upstream software release
-UFILES_REGEX = $(NAME)-((\d+(?:\.\d+)*)(p\d+)?).tar.gz
-
 PACKAGES = CSWsudoldap 
 
 CATALOGNAME_CSWsudoldap = sudo_ldap
 SPKG_DESC_CSWsudoldap = $(DESCRIPTION)
 SPKG_SOURCEURL_CSWsudoldap = http://www.sudo.ws
-RUNTIME_DEP_PKGS_CSWsudoldap = CSWsudo-common CSWggettextrt CSWoldaprt CSWzlib
+RUNTIME_DEP_PKGS_CSWsudoldap += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWsudoldap += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsudoldap += CSWsudo-common
+RUNTIME_DEP_PKGS_CSWsudoldap += CSWzlib
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWsudoldap) CSWggettext
 
 CHECKPKG_OVERRIDES_CSWsudoldap += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWsudoldap += surplus-dependency|CSWsudo-common
 
-LOGPATH = /var/opt/csw/log/sudo
+LOGPATH = /var$(prefix)/log/sudo
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-pam
@@ -63,6 +62,9 @@ LICENSE = LICENSE
 ALTERNATIVES_CSWsudoldap = sudoldap
 ALTERNATIVE_sudoldap  = $(bindir)/sudo     sudo     $(bindir)/sudo.ldap     60
 ALTERNATIVE_sudoldap += $(bindir)/sudoedit sudoedit $(bindir)/sudoedit.ldap
+
+# Legacy naming.
+CHECKPKG_OVERRIDES_CSWsudoldap += catalogname-does-not-match-pkgname|pkgname=CSWsudoldap|catalogname=sudo_ldap|expected-catalogname=sudoldap
 
 include gar/category.mk
 
