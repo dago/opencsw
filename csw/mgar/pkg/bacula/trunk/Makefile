@@ -1,25 +1,14 @@
 # $Id$
 NAME = bacula
-VERSION = 1.0
-CATEGORIES = category
+VERSION = 5.0.3
+CATEGORIES = apps
 
-DESCRIPTION = Brief description
+DESCRIPTION = The Open Source Network Backup Solution
 define BLURB
-  Long description
+Bacula is a set of Open Source, enterprise ready, computer programs that permit you (or the system administrator) to manage backup, recovery, and verification of computer data across a network of computers of different kinds. Bacula is relatively easy to use and efficient, while offering many advanced storage management features that make it easy to find and recover lost or damaged files. In technical terms, it is an Open Source, enterprise ready, network based backup program. 
 endef
 
-MASTER_SITES = 
+MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
-
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
