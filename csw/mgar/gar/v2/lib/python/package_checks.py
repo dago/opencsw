@@ -715,13 +715,12 @@ def CheckDiscouragedFileNamePatterns(pkg_data, error_mgr, logger, messenger):
 def CheckBadContent(pkg_data, error_mgr, logger, messenger):
   for regex in pkg_data["bad_paths"]:
     for file_name in pkg_data["bad_paths"][regex]:
-      messenger.Message("File %s contains bad content: %s. "
-                        "It's usually build-machine data. "
-                        "If it's a legacy file you can't modify, "
-                        "add an override "
-                        "for this file.  After doing so, run checkpkg "
-                        "again, you'll need to add an override for "
-                        "the override file too." % (file_name, regex))
+      messenger.Message(
+          "File %s contains bad content: %s. "
+          "If it's a legacy file you can't modify, "
+          "or if you investigated the issue and the string does not pose "
+          "a real issue, you can override this error. "
+          % (file_name, repr(regex)))
       error_mgr.ReportError("file-with-bad-content", "%s %s" % (regex, file_name))
 
 
