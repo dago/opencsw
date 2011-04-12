@@ -31,9 +31,13 @@ RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWpmhtmltree
 RUNTIME_DEP_PKGS += CSWpmlibwww
 RUNTIME_DEP_PKGS += CSWpmyaml
+RUNTIME_DEP_PKGS += CSWpy-cheetah
+RUNTIME_DEP_PKGS += CSWpy-hachoir-core
 RUNTIME_DEP_PKGS += CSWpy-hachoir-parser
 RUNTIME_DEP_PKGS += CSWpy-libmagic
 RUNTIME_DEP_PKGS += CSWpy-progressbar
+RUNTIME_DEP_PKGS += CSWpy-sqlobject
+RUNTIME_DEP_PKGS += CSWpy-yaml
 RUNTIME_DEP_PKGS += CSWpython
 
 WORKSRC = $(WORKDIR)
