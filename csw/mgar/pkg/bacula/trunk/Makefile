@@ -14,6 +14,8 @@ DISTFILES  = $(DISTNAME).tar.gz
 BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
 BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
 
+RUNTIME_DEP_PKGS += CSWmtx
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-working-dir=$(localstatedir)/$(NAME)/working
 CONFIGURE_ARGS += --with-libiconv-prefix=$(prefix)
