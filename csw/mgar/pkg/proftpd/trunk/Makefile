@@ -1,5 +1,5 @@
 NAME = proftpd
-VERSION = 1.3.3d
+VERSION = 1.3.3e
 CATEGORIES = server
 
 DESCRIPTION = Advanced, incredibly configurable and secure FTP daemon
@@ -21,13 +21,13 @@ LICENSE      = COPYING
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-RUNTIME_DEP_PKGS = CSWosslrt CSWggettextrt CSWiconv CSWoldaprt CSWzlib CSWmysql5rt CSWsqlite3rt
+RUNTIME_DEP_PKGS = CSWosslrt CSWlibintl8 CSWiconv CSWoldaprt CSWzlib CSWmysql5rt CSWsqlite3rt
 
 EXTRA_BUILD_ISAS_i386  = amd64
 EXTRA_BUILD_ISAS_sparc = sparcv9
 
-ISAEXEC_DIRS                 = $(bindir) $(sbindir)
-EXTRA_ISAEXEC_EXCLUDE_FILES  = $(bindir)/ftpasswd $(bindir)/ftpmail $(bindir)/ftpquota $(bindir)/prxs
+ISAEXEC_DIRS                = $(bindir) $(sbindir)
+EXTRA_ISAEXEC_EXCLUDE_FILES = $(bindir)/ftpasswd $(bindir)/ftpmail $(bindir)/ftpquota $(bindir)/prxs
 
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64   = $(prefix)/bin/amd64/ftpasswd $(prefix)/bin/amd64/ftpmail $(prefix)/bin/amd64/ftpquota $(prefix)/bin/amd64/prxs
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = $(prefix)/bin/sparcv9/ftpasswd $(prefix)/bin/sparcv9/ftpmail $(prefix)/bin/sparcv9/ftpquota $(prefix)/bin/sparcv9/prxs
@@ -57,6 +57,8 @@ CONFIGURE_ARGS += --with-includes=$(prefix)/include:$(prefix)/include/openssl:$(
 CONFIGURE_ARGS += --with-modules=mod_facl
 CONFIGURE_ARGS += --with-shared=mod_auth_pam:mod_ban:mod_ctrls_admin:mod_dynmasq:mod_exec:mod_ident:mod_ifsession:mod_ldap:mod_load:mod_quotatab:mod_quotatab_file:mod_quotatab_ldap:mod_quotatab_radius:mod_quotatab_sql:mod_radius:mod_ratio:mod_readme:mod_rewrite:mod_sftp:mod_sftp_pam:mod_sftp_sql:mod_shaper:mod_site_misc:mod_sql:mod_sql_mysql:mod_sql_passwd:mod_sql_sqlite:mod_tls:mod_tls_shmcache:mod_unique_id:mod_wrap2:mod_wrap2_file:mod_wrap2_sql
 
+CHECKPKG_OVERRIDES_CSWproftpd += bad-location-of-file|file=/var/run/proftpd
+
 TEST_SCRIPTS =
 
 INITSMF      = $(sysconfdir)/init.d/cswproftpd
@@ -71,6 +73,32 @@ post-configure-modulated:
 	gsed -i s/\^LDFLAGS=/#LDFLAGS=/ $(WORKSRC)/contrib/mod_load/Makefile
 	gsed -i s/\^LDFLAGS=/#LDFLAGS=/ $(WORKSRC)/contrib/mod_sftp/Makefile
 	gsed -i s/\^LDFLAGS=/#LDFLAGS=/ $(WORKSRC)/contrib/mod_wrap2/Makefile
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/NEWS
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/RELEASE_NOTES
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/sample-configurations/anonymous.conf
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/sample-configurations/virtual.conf
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/Configuration.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/faq.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/ftpasswd.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/ftpquota.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_ldap.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_quotatab_file.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_quotatab_ldap.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_quotatab_radius.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_sftp.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_sql_odbc.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_sql_sqlite.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_tls.html
+	gsed -i s#/usr/local#/opt/csw#g $(WORKSRC)/doc/howto/Compiling.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/howto/ConfigFile.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/howto/ConfigurationTricks.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/howto/DNS.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/howto/DSO.html
+	gsed -i s#/usr/local#/opt/csw#g $(WORKSRC)/doc/howto/SQL.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/howto/Stopping.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/howto/TLS.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/modules/mod_dso.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/modules/mod_lang.html
 	$(MAKECOOKIE)
 
 post-install-modulated:
