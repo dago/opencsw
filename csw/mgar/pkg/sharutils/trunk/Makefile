@@ -7,7 +7,7 @@
 # at r10011.
 
 NAME = sharutils
-VERSION = 4.9
+VERSION = 4.10
 CATEGORIES = utils
 DESCRIPTION = Makes so-called shell archives out of many files
 define BLURB
@@ -15,18 +15,28 @@ endef
 SPKG_SOURCEURL = http://www.gnu.org/software/sharutils/
 MASTER_SITES = ftp://ftp.gnu.org/gnu/sharutils/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-TEST_TARGET = check
-CONFIGURE_ARGS = $(DIRPATHS)
 # Apparently, 64 bit builds are frown upon:
 # http://lists.opencsw.org/pipermail/pkgsubmissions/2010-June/000907.html
 # BUILD64 = 1
 
 # To make the test use gmd5sum
 MD5SUM = gmd5sum
-RUNTIME_DEP_PKGS_CSWsharutils += CSWggettextrt
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWsharutils) CSWcoreutils
 export MD5SUM
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWsharutils) CSWcoreutils
+
+RUNTIME_DEP_PKGS_CSWsharutils += CSWlibintl8
+
+PACKAGES += CSWsharutils
+SPKG_DESC_CSWsharutils = $(DESCRIPTION)
+CHECKPKG_OVERRIDES_CSWsharutils += file-with-bad-content|/usr/share|root/opt/csw/share/locale/es/LC_MESSAGES/sharutils.mo
+
+PACKAGES += CSWuuencode
+SPKG_DESC_CSWuuencode = Utility to encode and decode data
+PKGFILES_CSWuuencode = $(bindir)/uu(en|de)code
+RUNTIME_DEP_PKGS_CSWuuencode += CSWlibintl8
+# We won't be releasing CSWuuencode from this package.
+CHECKPKG_OVERRIDES_CSWuuencode += file-collision
+
 include gar/category.mk
 
 post-merge:
