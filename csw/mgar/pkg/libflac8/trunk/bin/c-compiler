@@ -1,0 +1,22 @@
+#!/opt/csw/bin/perl -w
+
+use strict;
+
+my @oargs;
+
+my @includes = grep { /^-I/ } @ARGV;
+@includes = ((grep { /^-I[^\/]/ } @includes),(grep { /^-I[\/]/ } @includes));
+my @argswoincludes = grep { !/^-I/ } @ARGV;
+
+foreach (@ARGV) {
+  if( /^-I/ ) {
+    push @oargs, @includes, @argswoincludes;
+    last;
+  }
+  push @oargs, shift @argswoincludes;
+}
+
+my $cc = "/opt/studio/SOS11/SUNWspro/bin/" . ($0 =~ /cc/ ? "cc" : "CC");
+
+print "$cc ", join( " ", @oargs ), "\n";
+exec( $cc, @oargs );
