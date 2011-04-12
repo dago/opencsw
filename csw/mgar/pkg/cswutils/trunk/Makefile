@@ -51,6 +51,16 @@ CHECKPKG_OVERRIDES_CSWcswutils += surplus-dependency
 CHECKPKG_OVERRIDES_CSWcswutils += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWcswutils += catalogname-does-not-start-with-py_
 
+# possibly remove these and omit the *test* files from distribution entirely
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/home|root/opt/csw/lib/python/csw/testdata/rpaths.py
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/home|root/opt/csw/lib/python/csw/package_checks_test.py
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/opt/build|root/opt/csw/lib/python/csw/testdata/rpaths.py
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/opt/build|root/opt/csw/lib/python/csw/package_checks_test.py
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/usr/local|root/opt/csw/lib/python/csw/package_checks_test.py
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/usr/local|root/opt/csw/lib/python/csw/testdata/rpaths.py
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/lib/python/csw/package_checks_test.py
+CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/lib/python/csw/testdata/rpaths.py
+
 include gar/category.mk
 
 install-custom:
