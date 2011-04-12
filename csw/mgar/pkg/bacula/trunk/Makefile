@@ -26,6 +26,7 @@ CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5
 CONFIGURE_ARGS += --with-scriptdir=$(libexecdir_install)/$(NAME)
 CONFIGURE_ARGS += --with-logdir=$(localstatedir)/log/$(NAME)
 CONFIGURE_ARGS += --with-pid-dir=$(localstatedir)/run
+CONFIGURE_ARGS += --with-subsys-dir=$(localstatedir)/run/subsys
 CONFIGURE_ARGS += --enable-tray-monitor
 
 # no tests supplied.
