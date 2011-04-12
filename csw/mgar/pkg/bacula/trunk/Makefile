@@ -25,6 +25,7 @@ CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5
 CONFIGURE_ARGS += --with-scriptdir=$(libexecdir_install)/$(NAME)
 CONFIGURE_ARGS += --with-logdir=$(localstatedir)/log/$(NAME)
+CONFIGURE_ARGS += --with-pid-dir=$(localstatedir)/run
 
 # no tests supplied.
 TEST_SCRIPTS =
