@@ -1,5 +1,5 @@
 NAME       = nginx
-VERSION    = 0.8.54
+VERSION    = 1.0.0
 CATEGORIES = server
 
 GARCOMPILER = SOS11
@@ -60,11 +60,12 @@ CONFIGURE_ARGS += --sbin-path=$(sbindir)/nginx
 CONFIGURE_ARGS += --prefix=$(localstatedir)/nginx
 CONFIGURE_ARGS += --http-client-body-temp-path=$(localstatedir)/nginx/client
 CONFIGURE_ARGS += --http-fastcgi-temp-path=$(localstatedir)/nginx/fastcgi
+CONFIGURE_ARGS += --http-scgi-temp-path=$(localstatedir)/nginx/scgi
+CONFIGURE_ARGS += --http-uwsgi-temp-path=$(localstatedir)/nginx/uwsgi
 CONFIGURE_ARGS += --http-proxy-temp-path=$(localstatedir)/nginx/proxy
 CONFIGURE_ARGS += --error-log-path=$(localstatedir)/nginx/logs/error.log
 CONFIGURE_ARGS += --http-log-path=$(localstatedir)/nginx/logs/access.log
-CONFIGURE_ARGS += --with-md5=YES
-CONFIGURE_ARGS += --with-sha1=YES
+CONFIGURE_ARGS += --with-ipv6
 CONFIGURE_ARGS += --with-http_addition_module
 CONFIGURE_ARGS += --with-http_dav_module
 CONFIGURE_ARGS += --with-http_flv_module
@@ -97,7 +98,9 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(localstatedir)/nginx/fastcgi
 	ginstall -d $(DESTDIR)$(localstatedir)/nginx/logs
 	ginstall -d $(DESTDIR)$(localstatedir)/nginx/proxy
+	ginstall -d $(DESTDIR)$(localstatedir)/nginx/scgi
 	ginstall -d $(DESTDIR)$(localstatedir)/nginx/sites
+	ginstall -d $(DESTDIR)$(localstatedir)/nginx/uwsgi
 	cp $(WORKDIR)/cswnginx $(DESTDIR)$(sysconfdir)/init.d/
 	cd $(WORKSRC); \
 	cp -r contrib/* $(DESTDIR)$(sharedstatedir)/nginx/contrib; \
