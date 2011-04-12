@@ -11,4 +11,12 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
 
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --with-libiconv-prefix=$(prefix)
+CONFIGURE_ARGS += --with-libintl-prefix=$(prefix)
+CONFIGURE_ARGS += --with-readline=$(prefix)
+CONFIGURE_ARGS += --with-python=$(prefix)
+CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
+CONFIGURE_ARGS += --with-openssl=$(prefix)
+
 include gar/category.mk
