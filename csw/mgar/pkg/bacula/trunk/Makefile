@@ -20,6 +20,8 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-working-dir=$(localstatedir)/$(NAME)/working
 CONFIGURE_ARGS += --with-libiconv-prefix=$(prefix)
 CONFIGURE_ARGS += --with-libintl-prefix=$(prefix)
+CONFIGURE_ARGS += --disable-conio
+CONFIGURE_ARGS += --enable-readline
 CONFIGURE_ARGS += --with-readline=$(prefix)
 CONFIGURE_ARGS += --with-python=$(prefix)
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
@@ -30,6 +32,9 @@ CONFIGURE_ARGS += --with-logdir=$(localstatedir)/log/$(NAME)
 CONFIGURE_ARGS += --with-pid-dir=$(localstatedir)/run
 CONFIGURE_ARGS += --with-subsys-dir=$(localstatedir)/run/subsys
 CONFIGURE_ARGS += --enable-tray-monitor
+
+EXTRA_INC += $(includedir)/ncursesw/
+EXTRA_LIB += $(libdir)/ncursesw/
 
 # no tests supplied.
 TEST_SCRIPTS =
