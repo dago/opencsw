@@ -49,8 +49,8 @@ CONFIGURE_ARGS += --with-pid-dir=$(localstatedir)/run
 CONFIGURE_ARGS += --with-subsys-dir=$(localstatedir)/run/subsys
 CONFIGURE_ARGS += --enable-tray-monitor
 
-EXTRA_INC += $(includedir)/ncursesw/
-EXTRA_LIB += $(libdir)/ncursesw/
+EXTRA_INC += $(includedir)/ncursesw
+EXTRA_LIB += $(libdir)/ncursesw
 
 # no tests supplied.
 TEST_SCRIPTS =
