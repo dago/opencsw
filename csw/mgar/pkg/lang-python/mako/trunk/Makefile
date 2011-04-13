@@ -24,4 +24,6 @@ DISTFILES   += changelog.CSW
 
 UPSTREAM_MASTER_SITES = http://www.makotemplates.org/download.html
 
+ARCHALL = 1
+
 include gar/category.mk
