@@ -705,19 +705,19 @@ merge-license: $(foreach SPEC,$(_PKG_SPECS),merge-license-$(SPEC))
 reset-merge-license:
 	@rm -f $(COOKIEDIR)/merge-license $(foreach SPEC,$(_PKG_SPECS),$(COOKIEDIR)/merge-license-$(SPEC))
 
-merge-README.CSW: $(WORKDIR)
-	$(_DBG)if test -f $(WORKDIR)/README.CSW; then \
+merge-distfile-%: $(DOWNLOADDIR)
+	$(_DBG_MERGE)if test -f $(DOWNLOADDIR)/$*; then \
 		$(foreach P,$(_PKG_SPECS),mkdir -p $(PKGROOT)$(docdir)/$(call catalogname,$P);) \
-		$(foreach P,$(_PKG_SPECS),cp $(WORKDIR)/README.CSW $(PKGROOT)$(docdir)/$(call catalogname,$P)/README.CSW;) \
+		$(foreach P,$(_PKG_SPECS),cp $(DOWNLOADDIR)/$* $(PKGROOT)$(docdir)/$(call catalogname,$P)/$*;) \
 	fi
 	@$(MAKECOOKIE)
 
-.PHONY: reset-merge-README.CSW
-reset-merge-README.CSW:
-	$(_DBG)rm -f $(COOKIEDIR)/merge-README.CSW $(foreach SPEC,$(_PKG_SPECS),$(PKGROOT)$(docdir)/$(call catalogname,$(SPEC))/README.CSW)
+.PHONY: reset-merge-distfile-%
+reset-merge-distfile-%:
+	$(_DBG_MERGE)rm -f $(COOKIEDIR)/merge-distfile-$* $(foreach SPEC,$(_PKG_SPECS),$(PKGROOT)$(docdir)/$(call catalogname,$(SPEC))/$*)
 
 merge-obsolete: $(WORKDIR_GLOBAL)
-	$(_DBG)$(foreach P,$(OBSOLETED_PKGS),$(foreach Q,$(OBSOLETING_PKGS),$(if $(filter $P,$(OBSOLETED_BY_$Q)), \
+	$(_DBG_MERGE)$(foreach P,$(OBSOLETED_PKGS),$(foreach Q,$(OBSOLETING_PKGS),$(if $(filter $P,$(OBSOLETED_BY_$Q)), \
 		($(if $(SPKG_DESC_$Q), \
 			echo "$Q $(call catalogname,$Q) - $(SPKG_DESC_$Q)";, \
 			echo "$(shell (/usr/bin/pkginfo $Q || echo "$Q - ") | $(GAWK) '{ $$1 = "P"; print }')"; \
