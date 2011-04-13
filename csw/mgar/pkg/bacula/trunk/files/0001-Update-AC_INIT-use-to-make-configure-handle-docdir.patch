@@ -1,6 +1,6 @@
-From 1530af24085deb5d6798c88147fe7090f0048c72 Mon Sep 17 00:00:00 2001
+From b7109446f989d6b9bb449dca6cde6bc9dfddb1fe Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
-Date: Wed, 13 Apr 2011 20:54:02 +0200
+Date: Wed, 13 Apr 2011 22:08:21 +0200
 Subject: [PATCH] Update AC_INIT use to make configure handle docdir
 
 This patch allows AC_INIT to properly set the PACKAGE variables in the
@@ -17,7 +17,7 @@ Signed-off-by: Ben Walton <bwalton@opencsw.org>
  1 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/autoconf/configure.in b/autoconf/configure.in
-index 0ce9d94..dffcd5f 100644
+index 0ce9d94..1115e7a 100644
 --- a/autoconf/configure.in
 +++ b/autoconf/configure.in
 @@ -3,8 +3,10 @@ dnl
@@ -27,9 +27,9 @@ index 0ce9d94..dffcd5f 100644
 -AC_PREREQ(2.61)
 -AC_INIT(src/version.h)
 +AC_PREREQ(2.62)
-+AC_CONFIG_SRCDIR(src/version.h)
-+AC_INIT([bacula], my_esyscmd([sed -n -e 's/^.*VERSION.*"\(.*\)"$/\1/p' ${srcdir}/src/version.h]))
 +
++AC_INIT([bacula], m4_esyscmd([sed -n -e 's/^.*VERSION.*"\(.*\)"$/\1/p' `pwd`/src/version.h | tr -d '\n']))
++AC_CONFIG_SRCDIR(src/version.h)
  BUILD_DIR=`pwd`
  cd ..
  TOP_DIR=`pwd`
