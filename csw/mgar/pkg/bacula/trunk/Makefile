@@ -10,7 +10,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
-PATCHFILES += 0001-correct-the-autoconf-initializations.patch
+PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 
 BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
 BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
