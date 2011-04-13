@@ -1,5 +1,5 @@
 NAME = miltergreylist
-VERSION = 4.2.6
+VERSION = 4.2.7
 #RELEASE = rc1
 #DISTVERSION = $(VERSION)$(RELEASE)
 DISTVERSION = $(VERSION)
@@ -13,18 +13,18 @@ define BLURB
 endef
 
 MASTER_SITES = http://ftp.espci.fr/pub/milter-greylist/
-DISTFILES  = milter-greylist-$(DISTVERSION).tgz
-DISTFILES += COPYING
+DISTFILES    = milter-greylist-$(DISTVERSION).tgz
+DISTFILES   += COPYING
+
+RUNTIME_DEP_PKGS = CSWcurlrt CSWgeoip CSWlibspf2
 
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
+CHECKPKG_OVERRIDES += surplus-dependency|CSWgeoip
+CHECKPKG_OVERRIDES += file-with-bad-content
+
 PATCHFILES += 0001-Path-and-user-changes-in-conf-file.patch
-
-RUNTIME_DEP_PKGS = CSWcurlrt CSWgeoip CSWlibspf2
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS  = --prefix=/opt/csw
@@ -39,18 +39,25 @@ CONFIGURE_ARGS += --with-libcurl=/opt/csw/lib
 CONFIGURE_ARGS += --with-libspf2=/opt/csw/lib
 CONFIGURE_ARGS += --mandir=/opt/csw/share/man
 
+# milter-greylist has no tests
 TEST_SCRIPTS = 
+
 INSTALL_SCRIPTS = custom
-USERGROUP = /opt/csw/etc/pkg/CSWmiltergreylist/cswusergroup
+
+USERGROUP  = /opt/csw/etc/pkg/CSWmiltergreylist/cswusergroup
 SAMPLECONF = /etc/opt/csw/greylist.conf
-INITSMF = /etc/opt/csw/init.d/cswmiltergreylist
-POSTMSG = /opt/csw/share/doc/miltergreylist/README.CSW
+INITSMF    = /etc/opt/csw/init.d/cswmiltergreylist
+POSTMSG    = /opt/csw/share/doc/miltergreylist/README.CSW
+
+MIGRATE_FILES      = greylist.conf
+MIGRATE_SOURCE_DIR = /opt/csw/etc/mail
+MIGRATE_DEST_DIR   = /etc/opt/csw
 
 PROTOTYPE_MODIFIERS = 1
-PROTOTYPE_FILES_1 = /var/opt/csw/miltergreylist
-PROTOTYPE_CLASS_1 = ugfiles
-PROTOTYPE_PERMS_1 = 0700
-PROTOTYPE_USER_1 = greylist
+PROTOTYPE_FILES_1   = /var/opt/csw/miltergreylist
+PROTOTYPE_CLASS_1   = ugfiles
+PROTOTYPE_PERMS_1   = 0700
+PROTOTYPE_USER_1    = greylist
 
 include gar/category.mk
 
