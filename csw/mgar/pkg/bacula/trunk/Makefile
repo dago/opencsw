@@ -10,6 +10,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += CSWbacula.cswreleasenotes
 PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 
 BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
@@ -54,6 +55,10 @@ EXTRA_LIB += $(libdir)/ncursesw ($prefix)/mysql5/lib
 
 # no tests supplied.
 TEST_SCRIPTS =
+
+# these are both original documentation files from the tarball
+CHECKPKG_OVERRIDES_CSWbacula += file-with-bad-content|/usr/share|root/opt/csw/share/doc/bacula/technotes
+CHECKPKG_OVERRIDES_CSWbacula += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bacula/INSTALL
 
 include gar/category.mk
 
