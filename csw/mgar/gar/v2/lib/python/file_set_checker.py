@@ -23,8 +23,8 @@ class FileSetChecker(object):
         tags.append(tag.CheckpkgTag(
           None,
           "bad-vendor-tag",
-          "%s expected=%s actual=%s"
-          % (parsed_filename["catalogname"],
+          "filename=%s expected=%s actual=%s"
+          % (filename,
              expected_vendor_tag,
              parsed_filename["vendortag"])))
     return tags
