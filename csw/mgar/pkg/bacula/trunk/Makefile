@@ -10,6 +10,7 @@ endef
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
+PATCHFILES += 0001-correct-the-autoconf-initializations.patch
 
 BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
 BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
@@ -40,3 +41,10 @@ EXTRA_LIB += $(libdir)/ncursesw/
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+pre-configure-modulated:
+	(cd $(WORKSRC); \
+		autoconf --prepend-include=$(abspath $(WORKSRC))/autoconf \
+			autoconf/configure.in > configure; \
+        chmod 755 configure)
+	@$(MAKECOOKIE)
