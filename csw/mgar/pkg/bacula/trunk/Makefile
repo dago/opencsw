@@ -16,6 +16,21 @@ BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
 BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
 
 RUNTIME_DEP_PKGS += CSWmtx
+RUNTIME_DEP_PKGS += CSWtcpwrap
+RUNTIME_DEP_PKGS += CSWfconfig
+RUNTIME_DEP_PKGS += CSWlibatk
+RUNTIME_DEP_PKGS += CSWlibintl8
+RUNTIME_DEP_PKGS += CSWlibcairo
+RUNTIME_DEP_PKGS += CSWzlib
+RUNTIME_DEP_PKGS += CSWncurses
+RUNTIME_DEP_PKGS += CSWreadline
+RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS += CSWpango
+RUNTIME_DEP_PKGS += CSWperl
+RUNTIME_DEP_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS += CSWftype2
+RUNTIME_DEP_PKGS += CSWgtk2
+RUNTIME_DEP_PKGS += CSWglib2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-working-dir=$(localstatedir)/$(NAME)/working
