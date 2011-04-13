@@ -44,8 +44,12 @@ class FileSetCheckerUnitTest(unittest.TestCase):
   def testUncommitted(self):
     fc = file_set_checker.FileSetChecker()
     expected = [
-        tag.CheckpkgTag(None, 'bad-vendor-tag', 'nspr_devel expected=CSW actual=UNCOMMITTED'),
-        tag.CheckpkgTag(None, 'bad-vendor-tag', 'nspr_devel expected=CSW actual=UNCOMMITTED'),
+        tag.CheckpkgTag(
+          None, 'bad-vendor-tag',
+          'filename=nspr_devel-4.8.6,REV=2010.10.16-SunOS5.9-sparc-UNCOMMITTED.pkg.gz expected=CSW actual=UNCOMMITTED'),
+        tag.CheckpkgTag(
+          None, 'bad-vendor-tag',
+          'filename=nspr_devel-4.8.6,REV=2010.10.16-SunOS5.9-i386-UNCOMMITTED.pkg.gz expected=CSW actual=UNCOMMITTED'),
     ]
     files = ['/home/experimental/maciej/'
              'nspr_devel-4.8.6,REV=2010.10.16-SunOS5.9-sparc-UNCOMMITTED.pkg.gz',
@@ -57,7 +61,7 @@ class FileSetCheckerUnitTest(unittest.TestCase):
     fc = file_set_checker.FileSetChecker()
     expected = [
         tag.CheckpkgTag(None, 'bad-arch-or-os-release', 'csw-upload-pkg arch=pkg osrel=unspecified'),
-        tag.CheckpkgTag(None, 'bad-vendor-tag', 'csw expected=CSW actual=UNKN'),
+        tag.CheckpkgTag(None, 'bad-vendor-tag', 'filename=csw-upload-pkg expected=CSW actual=UNKN'),
     ]
     files = ['csw-upload-pkg']
     self.assertEqual(expected, fc.CheckFiles(files))
