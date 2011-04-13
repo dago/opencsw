@@ -58,8 +58,13 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 pre-configure-modulated:
-	(cd $(WORKSRC); \
+	@echo Re-generating configure so docdir works properly...
+	@(cd $(WORKSRC); \
 		autoconf --prepend-include=$(abspath $(WORKSRC))/autoconf \
 			autoconf/configure.in > configure; \
         chmod 755 configure)
+	@$(MAKECOOKIE)
+
+post-merge:
+	@(cd $(PKGROOT); rmdir tmp)
 	@$(MAKECOOKIE)
