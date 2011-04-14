@@ -30,6 +30,7 @@ LICENSE = LICENSE
 
 DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += php.ini.CSW phpext pear.conf.CSW CSWphp5.postinstall
+DISTFILES += CSWphp5.cswreleasenotes
 
 PATCHFILES += 0001-Strip-usr-ucblib-references.patch
 # this one is filed upstream: http://bugs.php.net/bug.php?id=54318
@@ -103,6 +104,20 @@ SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2 CSWiconv CSWexpat CSWzlib
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses
+# embeded 'magic' information to detect file types...odd, but...
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/libtool.m4
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/acinclude.m4
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/shtool
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/phpize.m4
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/PEAR/Config.php
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/man/man1/php-config.1
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php-cgi
+# verify these...
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php.ini.CSW
+
+
+# end verify...
 
 CATALOGNAME_CSWphp5-dev   = php5_dev
 SPKG_DESC_CSWphp5-dev     = Development files for php5
