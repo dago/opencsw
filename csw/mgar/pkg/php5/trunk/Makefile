@@ -89,21 +89,15 @@ PACKAGES += CSWphp5-xmlrpc
 PACKAGES += CSWphp5-xmlwriter
 PACKAGES += CSWphp5-xsl
 PACKAGES += CSWphp5-zip
-PACKAGES += CSWmod-php5
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
-
-CATALOGNAME_CSWmod-php5 = mod_php5
-SPKG_DESC_CSWmod-php5 = The apache 1.3.x php5 module
-RUNTIME_DEP_PKGS_CSWmod-php5 = CSWphp5 CSWapache CSWlibxml2 CSWiconv
-RUNTIME_DEP_PKGS_CSWmod-php5 += CSWexpat CSWzlib
-OBSOLETED_BY_CSWmod-php5 = CSWmodphp5
 
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
 RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2 CSWiconv CSWexpat CSWzlib
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
-INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses
+INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
+
 # embeded 'magic' information to detect file types...odd, but...
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/libtool.m4
@@ -408,8 +402,6 @@ PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
 
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
-PKGFILES_CSWmod-php5 += $(prefix)/apache/.*
-
 PKGFILES_CSWphp5-bcmath = .*/lib/php/extensions/.*/bcmath.*
 
 PKGFILES_CSWphp5-bz2 = .*/lib/php/extensions/.*/bz2.*
@@ -660,8 +652,6 @@ SKIPTEST = 1
 #ENABLE_CHECK = 0
 
 CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWmod-php5 += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWmod-php5 += surplus-dependency|CSWapache
 CHECKPKG_OVERRIDES_CSWphp5-pdo += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-bcmath += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWphp5
