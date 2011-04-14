@@ -1,0 +1,20 @@
+$def with (pkgs)
+<html>
+  <head>
+    <title>
+      Recently built and checked packages
+    </title>
+    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+  </head>
+  <body>
+    <table>
+$for pkg, ago in pkgs:
+  <tr>
+  <td><a href="$pkg.md5_sum/">$pkg.basename</a></td>
+  <td><a href="../maintainers/$pkg.maintainer.id/">$pkg.maintainer.email.split("@")[0]</a></td>
+  <td>$ago ago</td>
+  <td>$pkg.mtime</td>
+  </tr>
+</ul>
+</body>
+</html>
