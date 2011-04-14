@@ -18,6 +18,9 @@ ARCHALL = 1
 
 TEST_SCRIPTS =
 
+# XDG_DATADIRS contains /usr/share ... after /opt/csw/share
+CHECKPKG_OVERRIDES += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/xdg/BaseDirectory.py
+
 include gar/category.mk
 
 pre-configure-modulated:
