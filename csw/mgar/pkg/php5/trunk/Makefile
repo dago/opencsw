@@ -646,6 +646,7 @@ CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 CONFIGURE_ARGS += --enable-zip=shared
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
+CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
@@ -719,16 +720,13 @@ include gar/category.mk
 # this allows apxs to install the module.  stupid, but i couldn't make
 # the darn thing _not_ do try to add the httpd.conf lines, even with
 # patching...
-pre-install-modulated: APSYSCONF=/opt/csw/apache/conf
 pre-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc
 pre-install-modulated:
-	@(mkdir -p $(DESTDIR)$(AP2SYSCONF) $(DESTDIR)$(APSYSCONF); \
-		cp $(AP2SYSCONF)/httpd.conf $(DESTDIR)$(AP2SYSCONF); \
-		cp $(APSYSCONF)/httpd.conf $(DESTDIR)$(APSYSCONF) )
+	@(mkdir -p $(DESTDIR)$(AP2SYSCONF); \
+		cp $(AP2SYSCONF)/httpd.conf $(DESTDIR)$(AP2SYSCONF) )
 	@$(MAKECOOKIE)
 
-# post-install-modulated: APSYSCONF=/opt/csw/apache/conf/httpd.conf
-# post-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc/httpd.conf
-# post-install-modulated:
-# 	@( rm $(DESTDIR)$(APSYSCONF) $(DESTDIR)$(AP2SYSCONF) )
-# 	@$(MAKECOOKIE)
+post-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc/httpd.conf
+post-install-modulated:
+	@rm $(DESTDIR)$(AP2SYSCONF)
+	@$(MAKECOOKIE)

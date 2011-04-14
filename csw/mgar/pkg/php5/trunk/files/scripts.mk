@@ -15,7 +15,6 @@ $(shell $(call _get_php_prefix,$(1))/bin/php -i | grep "Configuration File .* Pa
 endef
 
 PI_SCRIPTS  = install-extras
-PI_SCRIPTS += install-ap2modphp5
 PI_SCRIPTS += install-cleanup
 
 post-install-modulated: $(PI_SCRIPTS)
@@ -35,14 +34,6 @@ install-extras:
 	gcp $(DOWNLOADDIR)/php.ini.CSW.fixed $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))/php.ini.CSW
 	gmv $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf.CSW
 	gchmod 0644 $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))/php.ini.CSW
-	@$(MAKECOOKIE)
-
-install-ap2modphp5:
-	@echo "[====> Now Installing ap2_modphp5 <====]"
-	$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi
-	strip $(DESTDIR)$(prefix)/apache2/libexec/libphp5.so
-	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	ginstall -m 0644 $(DOWNLOADDIR)/httpd-php5.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra
 	@$(MAKECOOKIE)
 
 install-cleanup:
