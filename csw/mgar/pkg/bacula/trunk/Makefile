@@ -13,6 +13,7 @@ PACKAGES += CSWbacula-director
 
 CATALOG_NAME_CSWbacula-common = bacula_common
 SPKG_DESC_CSWbacula-common = $(DESCRIPTION) - shared files
+RUNTIME_DEP_PKGS_CSWbacula-common += CSWmysql5rt
 PKGFILES_CSWbacula-common += .*libbac-$(VERSION).so .*libbac.so
 PKGFILES_CSWbacula-common +=  .*libbaccfg-$(VERSION).so .*libbaccfg.so
 PKGFILES_CSWbacula-common += .*libbacfind-$(VERSION).so .*libbacfind.so
@@ -22,14 +23,18 @@ PKGFILES_CSWbacula-common += .*sbin/bsmtp .*sbin/btraceback
 PKGFILES_CSWbacula-common += .*man1/bsmtp.1.gz .*man1/btraceback.1.gz
 PKGFILES_CSWbacula-common += .*man8/bacula.8.gz
 PKGFILES_CSWbacula-common += .*libexec/btraceback.gdb
+CHECKPKG_OVERRIDES_CSWbacula-common += shared-lib-package-contains-so-symlink
 
 CATALOG_NAME_CSWbacula-fd = bacula_fd
 SPKG_DESC_CSWbacula-fd = $(DESCRIPTION) - File Daemon
+RUNTIME_DEP_PKGS_CSWbacula-fd = CSWbacula-common
 PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd
 PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz
 
 CATALOG_NAME_CSWbacula-sd = bacula_sd
 SPKG_DESC_CSWbacula-sd = $(DESCRIPTION) - Storage Daemon
+RUNTIME_DEP_PKGS_CSWbacula-sd = CSWbacula-common
+RUNTIME_DEP_PKGS_CSWbacula-sd += CSWmysq5rt
 PKGFILES_CSWbacula-sd += .*libexec.*disk-changer .*libexec.*dvd-handler
 PKGFILES_CSWbacula-sd += .*libexec.*mtx-changer.*
 PKGFILES_CSWbacula-sd += .*sbin/bacula-sd .*sbin/bextract .*sbin/bls
@@ -40,6 +45,8 @@ PKGFILES_CSWbacula-sd += .*man8/bcopy.8.gz .*man8/bscan.8.gz
 
 CATALOG_NAME_CSWbacula-director = bacula_director
 SPKG_DESC_CSWbacula-director = $(DESCRIPTION) - Director
+RUNTIME_DEP_PKGS_CSWbacula-director = CSWbacula-common
+RUNTIME_DEP_PKGS_CSWbacula-director += CSWmysql5rt
 PKGFILES_CSWbacula-director += .*sbin/bregex .*sbin/bwild .*sbin/bacula-dir
 PKGFILES_CSWbacula-director += .*sbin/dbcheck
 PKGFILES_CSWbacula-director += .*libexec.*catalog_backup.* .*libexec.*query.sql
@@ -54,22 +61,22 @@ PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
 BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
 
-RUNTIME_DEP_PKGS += CSWmtx
-RUNTIME_DEP_PKGS += CSWtcpwrap
-RUNTIME_DEP_PKGS += CSWfconfig
-RUNTIME_DEP_PKGS += CSWlibatk
-RUNTIME_DEP_PKGS += CSWlibintl8
-RUNTIME_DEP_PKGS += CSWlibcairo
-RUNTIME_DEP_PKGS += CSWzlib
-RUNTIME_DEP_PKGS += CSWncurses
-RUNTIME_DEP_PKGS += CSWreadline
-RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS += CSWpango
-RUNTIME_DEP_PKGS += CSWperl
-RUNTIME_DEP_PKGS += CSWosslrt
-RUNTIME_DEP_PKGS += CSWftype2
-RUNTIME_DEP_PKGS += CSWgtk2
-RUNTIME_DEP_PKGS += CSWglib2
+# RUNTIME_DEP_PKGS += CSWmtx
+# RUNTIME_DEP_PKGS += CSWtcpwrap
+# RUNTIME_DEP_PKGS += CSWfconfig
+# RUNTIME_DEP_PKGS += CSWlibatk
+# RUNTIME_DEP_PKGS += CSWlibintl8
+# RUNTIME_DEP_PKGS += CSWlibcairo
+# RUNTIME_DEP_PKGS += CSWzlib
+# RUNTIME_DEP_PKGS += CSWncurses
+# RUNTIME_DEP_PKGS += CSWreadline
+# RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
+# RUNTIME_DEP_PKGS += CSWpango
+# RUNTIME_DEP_PKGS += CSWperl
+# RUNTIME_DEP_PKGS += CSWosslrt
+# RUNTIME_DEP_PKGS += CSWftype2
+# RUNTIME_DEP_PKGS += CSWgtk2
+# RUNTIME_DEP_PKGS += CSWglib2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-working-dir=$(localstatedir)/$(NAME)/working
