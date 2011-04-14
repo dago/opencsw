@@ -14,7 +14,8 @@ MASTER_SITES = http://www.freedesktop.org/~lanius/
 DISTFILES    = $(DISTNAME).tar.gz
 DISTFILES   += changelog.CSW
 
-ARCHALL = 1
+PACKAGES = CSWpy-xdg
+ARCHALL  = 1
 
 TEST_SCRIPTS =
 
