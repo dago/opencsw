@@ -49,8 +49,8 @@ PKGFILES_CSWbacula-common += .*libexec/btraceback.gdb
 PKGFILES_CSWbacula-common += .*doc/$(NAME)/.*
 CHECKPKG_OVERRIDES_CSWbacula-common += shared-lib-package-contains-so-symlink
 # these are both original documentation files from the tarball
-CHECKPKG_OVERRIDES_CSWbacula += file-with-bad-content|/usr/share|root/opt/csw/share/doc/bacula/technotes
-CHECKPKG_OVERRIDES_CSWbacula += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bacula/INSTALL
+CHECKPKG_OVERRIDES_CSWbacula-common += file-with-bad-content|/usr/share|root/opt/csw/share/doc/bacula/technotes
+CHECKPKG_OVERRIDES_CSWbacula-common += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bacula/INSTALL
 
 CATALOG_NAME_CSWbacula-fd = bacula_fd
 SPKG_DESC_CSWbacula-fd = $(DESCRIPTION) - File Daemon
