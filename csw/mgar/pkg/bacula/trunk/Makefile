@@ -9,7 +9,15 @@ Bacula is a set of Open Source, enterprise ready, computer programs that permit 
 endef
 
 PACKAGES  = CSWbacula-common CSWbacula-fd CSWbacula-sd
-PACKAGES += CSWbacula-director CSWbacula-client
+PACKAGES += CSWbacula-director CSWbacula-client CSWbacula
+
+CATALOG_NAME_CSWbacula = bacula
+SPKG_DESC_CSWbacula = $(DESCRIPTION)
+RUNTIME_DEP_PKGS = CSWbacula-fd CSWbacula-sd CSWbacula-director
+PKGFILES_CSWbacula = NOFILES
+CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-sd
+CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-fd
+CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-director
 
 CATALOG_NAME_CSWbacula-client = bacula_client
 SPKG_DESC_CSWbacula-client = $(DESCRIPTION) - Client meta-package
