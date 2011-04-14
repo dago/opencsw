@@ -10,6 +10,7 @@ endef
 
 PACKAGES  = CSWbacula-common CSWbacula-fd CSWbacula-sd
 PACKAGES += CSWbacula-director CSWbacula-client CSWbacula
+PACKAGES += CSWbacula-tray-monitor
 
 CATALOG_NAME_CSWbacula = bacula
 SPKG_DESC_CSWbacula = $(DESCRIPTION)
@@ -29,6 +30,22 @@ OBSOLETED_BY_CSWbacula-client = CSWbaculaclient
 # set this explicitly to help phil's tools for now
 CATALOG_NAME_CSWbaculaclient = bacula_client_stub
 CHECKPKG_OVERRIDES_CSWbacula-client += surplus-dependency|CSWbacula-fd
+
+CATALOG_NAME_CSWbacula-tray-monitor = bacula_tray_monitor
+SPKG_DESC_CSWbacula-tray-monitor = $(DESCRIPTION) - Tray monitor
+RUNTIME_DEP_PKGS_CSWbacula-tray-monitor = CSWbacula-common
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWtcpwrap
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWosslrt
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWftype2
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWzlib
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWgtk2
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWlibatk
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWpango
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWlibcairo
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWfconfig
+CHECKPKG_OVERRIDES_CSWbacula-tray-monitor += missing-dependency|CSWglib2
+PKGFILES_CSWbacula-tray-monitor = .*tray-monitor.*
 
 CATALOG_NAME_CSWbacula-common = bacula_common
 SPKG_DESC_CSWbacula-common = $(DESCRIPTION) - shared files
