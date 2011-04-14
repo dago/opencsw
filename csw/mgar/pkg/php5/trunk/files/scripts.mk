@@ -16,7 +16,6 @@ endef
 
 PI_SCRIPTS  = install-extras
 PI_SCRIPTS += install-ap2modphp5
-PI_SCRIPTS += install-modphp5
 PI_SCRIPTS += install-cleanup
 
 post-install-modulated: $(PI_SCRIPTS)
@@ -39,25 +38,11 @@ install-extras:
 	@$(MAKECOOKIE)
 
 install-ap2modphp5:
-	@echo "[====> Now Building ap2_modphp5 <====]"
-	if [ -f $(WORKSRC)/Makefile ]; then \
-		$(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi
-	cd $(WORKSRC) && $(BUILD_ENV) \
-		./configure $(CONFIGURE_ARGS) --with-apxs2=$(prefix)/apache2/sbin/apxs
-	$(GARBIN)/fixlibtool $(WORKSRC)
+	@echo "[====> Now Installing ap2_modphp5 <====]"
 	$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi
 	strip $(DESTDIR)$(prefix)/apache2/libexec/libphp5.so
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
 	ginstall -m 0644 $(DOWNLOADDIR)/httpd-php5.conf.CSW $(DESTDIR)$(prefix)/apache2/etc/extra
-	@$(MAKECOOKIE)
-
-install-modphp5:
-	@echo "[====> Now Building mod_php5 <====]"
-	if [ -f $(WORKSRC)/Makefile ]; then $(BUILD_ENV) gmake -C $(WORKSRC) distclean; fi
-	cd $(WORKSRC) && $(BUILD_ENV) ./configure $(CONFIGURE_ARGS) --with-apxs=$(prefix)/apache/bin/apxs
-	$(GARBIN)/fixlibtool $(WORKSRC)
-	$(BUILD_ENV) $(INSTALL_ENV) gmake -C $(WORKSRC) install-sapi
-	strip $(DESTDIR)$(prefix)/apache/libexec/libphp5.so
 	@$(MAKECOOKIE)
 
 install-cleanup:
