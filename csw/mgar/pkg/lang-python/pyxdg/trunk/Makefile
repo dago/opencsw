@@ -12,6 +12,7 @@ endef
 VENDOR_URL   = http://www.freedesktop.org/wiki/Software/pyxdg
 MASTER_SITES = http://www.freedesktop.org/~lanius/
 DISTFILES    = $(DISTNAME).tar.gz
+DISTFILES    = changelog.CSW
 
 ARCHALL = 1
 
