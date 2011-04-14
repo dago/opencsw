@@ -714,14 +714,29 @@ CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
-include files/scripts.mk
 include gar/category.mk
+
+# funcion Definitions and mGar Extra Scripts
+#
+
+define _get_php_config
+$(abspath $(shell gfind $(1) -name php-config -print))
+endef
+
+define _get_php_prefix
+$(shell $(call _get_php_config,$(1)) --prefix)
+endef
+
+define _get_php_ini_path
+$(shell $(call _get_php_prefix,$(1))/bin/php -i | grep "Configuration File .* Path" | gawk '{print $$NF}')
+endef
+
 
 # this allows apxs to install the module.  stupid, but i couldn't make
 # the darn thing _not_ do try to add the httpd.conf lines, even with
 # patching...
 pre-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc
-pre-install-modulated:
+pre-install-modulated: $(PI_SCRIPTS)
 	@(mkdir -p $(DESTDIR)$(AP2SYSCONF); \
 		cp $(AP2SYSCONF)/httpd.conf $(DESTDIR)$(AP2SYSCONF) )
 	@$(MAKECOOKIE)
@@ -730,3 +745,35 @@ post-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc/httpd.conf
 post-install-modulated:
 	@rm $(DESTDIR)$(AP2SYSCONF)
 	@$(MAKECOOKIE)
+
+PI_SCRIPTS  = install-extras
+PI_SCRIPTS += install-cleanup
+
+install-extras:
+	@echo "[====> Fixing Admin Scripts <====]"
+	gcp $(DOWNLOADDIR)/php.ini.CSW $(DOWNLOADDIR)/php.ini.CSW.fixed
+	perl -i -pne "s|x_PHPEXTDIR_x|_PHPEXTDIR_|" $(DOWNLOADDIR)/php.ini.CSW.fixed
+	perl -i -pne "s|_PHPINIFILE_|$(call _get_php_ini_path,$(DESTDIR))/php.ini|" `gfind $(DOWNLOADDIR) -type f -print`
+	perl -i -pne "s|_PHPLIBDIR_|$(call _get_php_ini_path,$(DESTDIR))|" `gfind $(DOWNLOADDIR) -type f -print`
+	perl -i -pne "s|_PHPBINDIR_|$(call _get_php_prefix,$(DESTDIR))/bin|" `gfind $(DOWNLOADDIR) -type f -print`
+	perl -i -pne "s|_PHPETCDIR_|$(call _get_php_prefix,$(DESTDIR))/etc|" `gfind $(DOWNLOADDIR) -type f -print`
+	perl -i -pne 's|_PHPEXTDIR_|$(shell $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)|' `gfind $(DOWNLOADDIR) -type f -print`
+	@echo "[====> Installing Extra Files <====]"
+	ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin
+	gcp $(DOWNLOADDIR)/php.ini.CSW.fixed $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))/php.ini.CSW
+	gmv $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf.CSW
+	gchmod 0644 $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))/php.ini.CSW
+	@$(MAKECOOKIE)
+
+install-cleanup:
+	@echo "[====> Cleaning Up Extra Install Files <====]"
+	gfind $(DESTDIR) -name \.[a-z]\* -print |xargs grm -fr
+	gfind $(DESTDIR)$(prefix)/apache* -mindepth 1 -type d | egrep -v "etc|libexec" | xargs grm -fr
+	$(GARBIN)/stripbin $(DESTDIR)$(shell $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)
+	$(GARBIN)/stripbin $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin
+	$(MAKECOOKIE)
+
+EXTFILES = $(shell find extensions/*/files/* -prune -type f)
+pre-fetch:
+	$(foreach F,$(EXTFILES),$(shell cp $(F) $(DOWNLOADDIR)))
+
