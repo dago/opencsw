@@ -773,7 +773,3 @@ install-cleanup:
 	$(GARBIN)/stripbin $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin
 	$(MAKECOOKIE)
 
-EXTFILES = $(shell find extensions/*/files/* -prune -type f)
-pre-fetch:
-	$(foreach F,$(EXTFILES),$(shell cp $(F) $(DOWNLOADDIR)))
-
