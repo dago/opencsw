@@ -24,7 +24,8 @@ function fetch-wget() {
 function fetch-file() {
     local file=$1
     [ ! -f $file ] && return 1
-    gln -sf /$file $TARGET_DIR/`basename $file`
+    local abspath="`greadlink -m $file`"
+    gln -sf $abspath $TARGET_DIR/`basename $file`
 }
 
 function fetch-svn() {
