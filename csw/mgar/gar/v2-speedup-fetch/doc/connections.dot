@@ -1,0 +1,63 @@
+// This diagram shows connections between different components on the
+// buildfarm.
+
+digraph connections {
+	subgraph cluster0 {
+		catalog_generator [label="catalog generator"];
+		catalog_notifier [label="catalog notifier"];
+		catalog_notifier -> mirror [label="HTTP (catalog file)"];
+		catalog_generator -> web_app [label="HTTP / REST"];
+		catalog_generator -> mirror_dir [label="writes files"];
+		sync_mirror -> mirror_dir [label="reads files"];
+		sync_mirror [label="sync-mirror"];
+		mirror_dir [label="/home/mirror/opencsw-future"];
+		subgraph cluster01 {
+			web_app [label="pkgdb public web app\nhttp://buildfarm.opencsw.org/pkgdb/rest/"];
+			releases_web_app [label="pkgdb releases internal web app\nhttp://buildfarm.opencsw.org/releases/"];
+			label = "apache";
+		}
+		pickled_files [label="pickles"];
+		catalog_notifier -> pickled_files;
+		label = "web zone";
+	}
+
+	subgraph cluster1 {
+		database [label="'checkpkg' database"];
+		label = "mysql zone";
+	}
+
+	subgraph cluster2 {
+		checkpkg_ini [label="/etc/opt/csw/checkpkg.ini",shape=rectangle];
+		csw_upload_pkg [label="csw-upload-pkg"];
+		pkgdb [label="pkgdb cli utility"];
+		mgar [label="mgar"];
+		checkpkg;
+		label = "unstable{9,10}{s,x}";
+	}
+	subgraph cluster3 {
+		mirror [label="master mirror\nhttp://mirror.opencsw.org/opencsw-future/"];
+		sync_mirror -> mirror [label="writes files (rsync)"];
+		label = "master mirror";
+	}
+	maintainer [shape=circle];
+	maintainer -> csw_upload_pkg;
+	maintainer -> pkgdb;
+	maintainer -> mgar;
+	mgar -> checkpkg [label="shell"];
+	mail_server [label="mail server"];
+	cron [shape=circle];
+	cron -> sync_mirror;
+	cron -> catalog_generator;
+	cron -> catalog_notifier;
+
+	catalog_notifier -> mail_server [label="SMTP"];
+	checkpkg -> checkpkg_ini;
+	pkgdb -> checkpkg_ini;
+	web_app -> database [label="mysql"];
+	releases_web_app -> database [label="mysql"];
+	checkpkg -> database [label="mysql"];
+	pkgdb -> database [label="mysql"];
+	csw_upload_pkg -> releases_web_app [label="HTTP / REST"];
+	csw_upload_pkg -> web_app [label="HTTP / REST"];
+	csw_upload_pkg -> checkpkg [label="shell"];
+}

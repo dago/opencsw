@@ -1,0 +1,47 @@
+#!/bin/bash
+
+set -u
+set -e
+
+URL=$1
+TARGET_DIR=$2
+
+function fetch-rsync() {
+    local url=$1
+    rsync -azvLP $url $TARGET_DIR/
+}
+
+function fetch-scp() {
+    local url=$1
+    scp -C $url $TARGET_DIR/
+}
+
+function fetch-wget() {
+    local url=$1
+    wget ${WGET_OPTS:-} -T 30 -c -P $TARGET_DIR $url
+}
+
+function fetch-file() {
+    local file=$1
+    [ ! -f $file ] && return 1
+    gln -sf /$file $TARGET_DIR/`basename $file`
+}
+
+function fetch-svn() {
+    local url=$1
+    svn co ${SVNHTTP_CO_ARGS:-} $url $TARGET_DIR/`basename $url`
+}
+
+case $URL in
+    ftp://*)        fetch-wget $URL;;
+    http://*)       fetch-wget $URL;;
+    https://*)      fetch-wget $URL;;
+    file://*)       fetch-file `echo $URL | sed -e 's,file://,,'`;;
+    rsync://*)      fetch-rsync $URL;;
+    svn-http://*)   fetch-svn `echo $URL | sed -e 's,svn-,,'`;;
+    svn-https://*)  fetch-svn `echo $URL | sed -e 's,svn-,,'`;;
+    scp://*)        fetch-scp `echo $URL | sed -e 's,scp://,,'`;;
+    *)              echo "ERROR: unsupported scheme" >&2; exit 1;;
+esac
+
+exit $?
