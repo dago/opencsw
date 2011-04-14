@@ -89,6 +89,7 @@ RUNTIME_DEP_PKGS_CSWbacula-director += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbacula-director += CSWperl
 PKGFILES_CSWbacula-director += .*sbin/bregex .*sbin/bwild .*sbin/bacula-dir
 PKGFILES_CSWbacula-director += .*sbin/dbcheck
 PKGFILES_CSWbacula-director += .*libexec.*catalog_backup.* .*libexec.*query.sql
