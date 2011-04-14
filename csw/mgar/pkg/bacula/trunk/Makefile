@@ -9,7 +9,15 @@ Bacula is a set of Open Source, enterprise ready, computer programs that permit 
 endef
 
 PACKAGES  = CSWbacula-common CSWbacula-fd CSWbacula-sd
-PACKAGES += CSWbacula-director
+PACKAGES += CSWbacula-director CSWbacula-client
+
+CATALOG_NAME_CSWbacula-client = bacula_client
+SPKG_DESC_CSWbacula-client = $(DESCRIPTION) - Client meta-package
+RUNTIME_DEP_PKGS_CSWbacula-client += CSWbacula-fd
+PKGFILES_CSWbacula-client = NOFILES
+OBSOLETED_BY_CSWbacula-client = CSWbaculaclient
+# set this explicitly to help phil's tools for now
+CATALOG_NAME_CSWbaculaclient = bacula_client_stub
 
 CATALOG_NAME_CSWbacula-common = bacula_common
 SPKG_DESC_CSWbacula-common = $(DESCRIPTION) - shared files
