@@ -26,6 +26,7 @@ PKGFILES_CSWbacula-client = NOFILES
 OBSOLETED_BY_CSWbacula-client = CSWbaculaclient
 # set this explicitly to help phil's tools for now
 CATALOG_NAME_CSWbaculaclient = bacula_client_stub
+CHECKPKG_OVERRIDES_CSWbacula-client += surplus-dependency|CSWbacula-fd
 
 CATALOG_NAME_CSWbacula-common = bacula_common
 SPKG_DESC_CSWbacula-common = $(DESCRIPTION) - shared files
@@ -43,7 +44,11 @@ PKGFILES_CSWbacula-common += .*sbin/bsmtp .*sbin/btraceback
 PKGFILES_CSWbacula-common += .*man1/bsmtp.1.gz .*man1/btraceback.1.gz
 PKGFILES_CSWbacula-common += .*man8/bacula.8.gz
 PKGFILES_CSWbacula-common += .*libexec/btraceback.gdb
+PKGFILES_CSWbacula-common += .*doc/$(NAME)/.*
 CHECKPKG_OVERRIDES_CSWbacula-common += shared-lib-package-contains-so-symlink
+# these are both original documentation files from the tarball
+CHECKPKG_OVERRIDES_CSWbacula += file-with-bad-content|/usr/share|root/opt/csw/share/doc/bacula/technotes
+CHECKPKG_OVERRIDES_CSWbacula += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bacula/INSTALL
 
 CATALOG_NAME_CSWbacula-fd = bacula_fd
 SPKG_DESC_CSWbacula-fd = $(DESCRIPTION) - File Daemon
@@ -90,7 +95,7 @@ PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
-DISTFILES += CSWbacula.cswreleasenotes
+DISTFILES += CSWbacula-common.cswreleasenotes
 PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 
 BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
@@ -122,10 +127,6 @@ EXTRA_LINKER_FLAGS = -norunpath
 
 # no tests supplied.
 TEST_SCRIPTS =
-
-# these are both original documentation files from the tarball
-CHECKPKG_OVERRIDES_CSWbacula += file-with-bad-content|/usr/share|root/opt/csw/share/doc/bacula/technotes
-CHECKPKG_OVERRIDES_CSWbacula += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bacula/INSTALL
 
 include gar/category.mk
 
