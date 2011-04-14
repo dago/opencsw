@@ -19,3 +19,10 @@ ARCHALL = 1
 TEST_SCRIPTS =
 
 include gar/category.mk
+
+pre-configure-modulated:
+	gsed -i \
+		-e 's,/usr/local/share,$(sharedstatedir),' \
+		-e 's,/etc,$(sysconfdir),' \
+		$(WORKSRC)/xdg/BaseDirectory.py
+	@$(MAKECOOKIE)
