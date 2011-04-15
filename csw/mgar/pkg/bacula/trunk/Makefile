@@ -27,15 +27,15 @@ CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-console
 
 CATALOG_NAME_CSWbacula-console = bacula_console
 SPKG_DESC_CSWbacula-console = $(DESCRIPTION) - Console
-RUNTIME_DEP_PKGS = CSWbacula-common
-RUNTIME_DEP_PKGS += CSWtcpwrap
-RUNTIME_DEP_PKGS += CSWncurses
-RUNTIME_DEP_PKGS += CSWzlib
-RUNTIME_DEP_PKGS += CSWlibintl8
-RUNTIME_DEP_PKGS += CSWreadline
-RUNTIME_DEP_PKGS += CSWosslrt
-RUNTIME_DEP_PKGS += CSWgcc4corert
-RUNTIME_DEP_PKGS += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWbacula-console = CSWbacula-common
+RUNTIME_DEP_PKGS_CSWbacula-console += CSWtcpwrap
+RUNTIME_DEP_PKGS_CSWbacula-console += CSWncurses
+RUNTIME_DEP_PKGS_CSWbacula-console += CSWzlib
+RUNTIME_DEP_PKGS_CSWbacula-console += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWbacula-console += CSWreadline
+RUNTIME_DEP_PKGS_CSWbacula-console += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbacula-console += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWbacula-console += CSWgcc4g++rt
 PKGFILES_CSWbacula-console  = .*sbin/bconsole .*man8/bconsole.* .*bconsole.conf
 PKGFILES_CSWbacula-console += .*libexec.*bconsole
 
