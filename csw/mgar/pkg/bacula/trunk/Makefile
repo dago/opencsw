@@ -12,16 +12,24 @@ GARCOMPILER = GNU
 
 PACKAGES  = CSWbacula-common CSWbacula-fd CSWbacula-sd
 PACKAGES += CSWbacula-director CSWbacula-client CSWbacula
-PACKAGES += CSWbacula-tray-monitor
+PACKAGES += CSWbacula-tray-monitor CSWbacula-console
 
 CATALOG_NAME_CSWbacula = bacula
 SPKG_DESC_CSWbacula = $(DESCRIPTION)
 ARCHALL_CSWbacula = 1
-RUNTIME_DEP_PKGS = CSWbacula-fd CSWbacula-sd CSWbacula-director
+RUNTIME_DEP_PKGS  = CSWbacula-fd CSWbacula-sd CSWbacula-director
+RUNTIME_DEP_PKGS += CSWbacula-console
 PKGFILES_CSWbacula = NOFILES
 CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-sd
 CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-fd
 CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-director
+CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-console
+
+CATALOG_NAME_CSWbacula-console = bacula_console
+SPKG_DESC_CSWbacula-console = $(DESCRIPTION) - Console
+RUNTIME_DEP_PKGS = CSWbacula-common
+PKGFILES_CSWbacula-console  = .*sbin/bconsole .*man8/bconsole.* .*bconsole.conf
+PKGFILES_CSWbacula-console += .*libexec.*bconsole
 
 CATALOG_NAME_CSWbacula-client = bacula_client
 SPKG_DESC_CSWbacula-client = $(DESCRIPTION) - Client meta-package
