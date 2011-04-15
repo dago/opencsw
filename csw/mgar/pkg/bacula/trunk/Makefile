@@ -27,6 +27,8 @@ ARCHALL_CSWbacula-client = 1
 RUNTIME_DEP_PKGS_CSWbacula-client += CSWbacula-fd
 PKGFILES_CSWbacula-client = NOFILES
 OBSOLETED_BY_CSWbacula-client = CSWbaculaclient CSWbaculagnome
+SPKG_DESC_CSWbaculagnome = Obsolete bacula gnome console
+CATALOG_NAME_CSWbaculagnome = bacula_gnome_stub
 # set this explicitly to help phil's tools for now
 CATALOG_NAME_CSWbaculaclient = bacula_client_stub
 CHECKPKG_OVERRIDES_CSWbacula-client += surplus-dependency|CSWbacula-fd
