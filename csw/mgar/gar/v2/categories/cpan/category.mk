@@ -9,12 +9,16 @@ CHECKPATH ?= $(firstword $(CPAN_MIRRORS))
 
 # Tests are enabled by default, unless overridden at the test level
 ENABLE_TEST ?= 1
+TEST_TARGET ?= test
 
 # Test target is test by default (in CPAN category)
 TEST_TARGET ?= test
 
 # Every CPAN module depends on Perl
 #DEPENDS += lang/perl
+
+# Build also for 64 bit Perl by default
+BUILD64 ?= $(if $(shell if test -f $(bindir_install)/$(ISA_DEFAULT64)/perl; then echo perl64; fi),1)
 
 # Standard Perl module configuration script
 CONFIGURE_SCRIPTS ?= $(WORKSRC)/Makefile.PL
@@ -66,7 +70,7 @@ PERL_CONFIGURE_ARGS ?= INSTALLDIRS=vendor $(EXTRA_PERL_CONFIGURE_ARGS)
 configure-%/Makefile.PL:
 	@echo " ==> Running Makefile.PL in $*"
 	( cd $* ; \
-	    $(CONFIGURE_ENV) perl Makefile.PL \
+	    $(CONFIGURE_ENV) $(bindir)/perl Makefile.PL \
 	        $(CONFIGURE_ARGS) $(PERL_CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
@@ -74,7 +78,7 @@ PERLBUILD_CONFIGURE_ARGS ?= installdirs=vendor $(EXTRA_PERLBUILD_CONFIGURE_ARGS)
 configure-%/Build.PL:
 	@echo " ==> Running Build.PL in $*"
 	( cd $* ; \
-	    $(CONFIGURE_ENV) perl Build.PL \
+	    $(CONFIGURE_ENV) $(bindir)/perl Build.PL \
 	        $(PERLBUILD_CONFIGURE_ARGS) $(CONFIGURE_ARGS) )
 	@$(MAKECOOKIE)
 
