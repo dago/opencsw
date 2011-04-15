@@ -103,7 +103,7 @@ RUNTIME_DEP_PKGS_CSWbacula-fd += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWosslrt
-PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd
+PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd .*bacula/working
 PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz .*bacula-fd.conf
 
 CATALOG_NAME_CSWbacula-sd = bacula_sd
@@ -122,7 +122,7 @@ PKGFILES_CSWbacula-sd += .*libexec.*mtx-changer.* .*bacula-sd.conf
 PKGFILES_CSWbacula-sd += .*sbin/bacula-sd .*sbin/bextract .*sbin/bls
 PKGFILES_CSWbacula-sd += .*sbin/bcopy .*sbin/bscan .*sbin/btape
 PKGFILES_CSWbacula-sd += .*man8/bacula-sd.8.gz .*man8/bextract.8.gz
-PKGFILES_CSWbacula-sd += .*man8/bls.8.gz .*man8/btape.8.gz
+PKGFILES_CSWbacula-sd += .*man8/bls.8.gz .*man8/btape.8.gz .*bacula/working
 PKGFILES_CSWbacula-sd += .*man8/bcopy.8.gz .*man8/bscan.8.gz
 
 CATALOG_NAME_CSWbacula-director = bacula_director
@@ -138,7 +138,7 @@ RUNTIME_DEP_PKGS_CSWbacula-director += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWosslrt
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWperl
 PKGFILES_CSWbacula-director += .*sbin/bregex .*sbin/bwild .*sbin/bacula-dir
-PKGFILES_CSWbacula-director += .*sbin/dbcheck
+PKGFILES_CSWbacula-director += .*sbin/dbcheck .*bacula/working
 PKGFILES_CSWbacula-director += .*libexec.*catalog_backup.* .*libexec.*query.sql
 PKGFILES_CSWbacula-director += .*libexec.*mysql_tables.* .*bacula-dir.conf
 PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
