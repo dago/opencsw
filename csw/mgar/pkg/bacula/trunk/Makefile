@@ -88,6 +88,7 @@ RUNTIME_DEP_PKGS_CSWbacula-fd += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWosslrt
 PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd
 PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz
+CHECKPKG_OVERRIDES_CSWbacula-fd += soname-not-found|libbacpy-5.0.3.so|is|needed|by|opt/csw/sbin/bacula-fd
 
 CATALOG_NAME_CSWbacula-sd = bacula_sd
 SPKG_DESC_CSWbacula-sd = $(DESCRIPTION) - Storage Daemon
@@ -107,6 +108,7 @@ PKGFILES_CSWbacula-sd += .*sbin/bcopy .*sbin/bscan .*sbin/btape
 PKGFILES_CSWbacula-sd += .*man8/bacula-sd.8.gz .*man8/bextract.8.gz
 PKGFILES_CSWbacula-sd += .*man8/bls.8.gz .*man8/btape.8.gz
 PKGFILES_CSWbacula-sd += .*man8/bcopy.8.gz .*man8/bscan.8.gz
+CHECKPKG_OVERRIDES_CSWbacula-sd += soname-not-found|libbacpy-5.0.3.so|is|needed|by|opt/csw/sbin/bacula-sd
 
 CATALOG_NAME_CSWbacula-director = bacula_director
 SPKG_DESC_CSWbacula-director = $(DESCRIPTION) - Director
@@ -125,6 +127,7 @@ PKGFILES_CSWbacula-director += .*sbin/dbcheck
 PKGFILES_CSWbacula-director += .*libexec.*catalog_backup.* .*libexec.*query.sql
 PKGFILES_CSWbacula-director += .*libexec.*mysql_tables.*
 PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
+CHECKPKG_OVERRIDES_CSWbacula-director += soname-not-found|libbacpy-5.0.3.so|is|needed|by|opt/csw/sbin/bacula-dir
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
