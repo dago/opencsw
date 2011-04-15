@@ -143,7 +143,7 @@ CONFIGURE_ARGS += --with-subsys-dir=$(localstatedir)/run/subsys
 CONFIGURE_ARGS += --enable-tray-monitor
 
 EXTRA_INC += $(includedir)/ncursesw
-EXTRA_LIB += $(libdir)/ncursesw $(prefix)/mysql5/lib/mysql
+EXTRA_LIB += $(prefix)/lib/ncursesw $(prefix)/mysql5/lib/mysql
 EXTRA_LINKER_FLAGS = -norunpath
 
 # no tests supplied.
