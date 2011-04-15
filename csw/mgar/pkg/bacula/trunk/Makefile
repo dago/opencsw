@@ -190,6 +190,13 @@ pre-configure-modulated:
         chmod 755 configure)
 	@$(MAKECOOKIE)
 
+post-install-modulated: INITD=$(DESTDIR)/etc/$(prefix)/init.d
+post-install-modulated:
+	@(cd $(WORKSRC)/platforms/solaris; \
+		ginstall -d -m 0755 $(INITD); \
+		ginstall -m 0755 bacula-fd bacula-sd bacula-dir $(INITD)/ )
+	@$(MAKECOOKIE)
+
 post-merge:
 	@(cd $(PKGROOT); rmdir tmp)
 	@$(MAKECOOKIE)
