@@ -153,6 +153,7 @@ BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
 
 # force libraries into a separate subdirectory
 libdir = $(prefix)/lib/$(NAME)
+sysconfdir = /etc/$(prefix)/$(NAME)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-working-dir=$(localstatedir)/$(NAME)/working
