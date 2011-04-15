@@ -26,7 +26,7 @@ SPKG_DESC_CSWbacula-client = $(DESCRIPTION) - Client meta-package
 ARCHALL_CSWbacula-client = 1
 RUNTIME_DEP_PKGS_CSWbacula-client += CSWbacula-fd
 PKGFILES_CSWbacula-client = NOFILES
-OBSOLETED_BY_CSWbacula-client = CSWbaculaclient
+OBSOLETED_BY_CSWbacula-client = CSWbaculaclient CSWbaculagnome
 # set this explicitly to help phil's tools for now
 CATALOG_NAME_CSWbaculaclient = bacula_client_stub
 CHECKPKG_OVERRIDES_CSWbacula-client += surplus-dependency|CSWbacula-fd
