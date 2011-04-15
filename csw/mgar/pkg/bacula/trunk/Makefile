@@ -103,7 +103,7 @@ RUNTIME_DEP_PKGS_CSWbacula-fd += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWosslrt
-PKGFILES_CSWbacula-fd += .*init.d/bacula-fd
+PKGFILES_CSWbacula-fd += .*init.d/cswbacula-fd
 PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd .*bacula/working
 PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz .*bacula-fd.conf
 
@@ -118,7 +118,7 @@ RUNTIME_DEP_PKGS_CSWbacula-sd += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWosslrt
-PKGFILES_CSWbacula-sd += .*init.d/bacula-sd
+PKGFILES_CSWbacula-sd += .*init.d/cswbacula-sd
 PKGFILES_CSWbacula-sd += .*libexec.*disk-changer .*libexec.*dvd-handler
 PKGFILES_CSWbacula-sd += .*libexec.*mtx-changer.* .*bacula-sd.conf
 PKGFILES_CSWbacula-sd += .*sbin/bacula-sd .*sbin/bextract .*sbin/bls
@@ -139,7 +139,7 @@ RUNTIME_DEP_PKGS_CSWbacula-director += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWosslrt
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWperl
-PKGFILES_CSWbacula-director += .*init.d/bacula-dir
+PKGFILES_CSWbacula-director += .*init.d/cswbacula-dir
 PKGFILES_CSWbacula-director += .*sbin/bregex .*sbin/bwild .*sbin/bacula-dir
 PKGFILES_CSWbacula-director += .*sbin/dbcheck .*bacula/working
 PKGFILES_CSWbacula-director += .*libexec.*catalog_backup.* .*libexec.*query.sql
@@ -183,8 +183,8 @@ EXTRA_LINKER_FLAGS = -norunpath
 # no tests supplied.
 TEST_SCRIPTS =
 
-INITSMF = /etc/opt/csw/init.d/bacula-dir /etc/opt/csw/init.d/bacula-sd
-INITSMF += /etc/opt/csw/init.d/bacula-fd
+INITSMF = /etc/opt/csw/init.d/cswbacula-dir /etc/opt/csw/init.d/cswbacula-sd
+INITSMF += /etc/opt/csw/init.d/cswbacula-fd
 
 include gar/category.mk
 
@@ -200,7 +200,9 @@ post-install-modulated: INITD=$(DESTDIR)/etc/$(prefix)/init.d
 post-install-modulated:
 	@(cd $(WORKSRC)/platforms/solaris; \
 		ginstall -d -m 0755 $(INITD); \
-		ginstall -m 0755 bacula-fd bacula-sd bacula-dir $(INITD)/ )
+		for s in dir fd sd; do \
+			ginstall -m 0755 bacula-$$s $(INITD)/cswbacula-$$s; \
+		done )
 	@$(MAKECOOKIE)
 
 post-merge:
