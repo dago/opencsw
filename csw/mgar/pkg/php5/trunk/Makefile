@@ -18,6 +18,9 @@ define BLURB
 	available.
 endef
 
+# turn on the build scripts to enable/disable modules
+PHP5_EXT = 1
+
 # at least for a decent echo used during build.
 PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 
