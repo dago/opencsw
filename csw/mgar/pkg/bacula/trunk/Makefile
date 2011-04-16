@@ -156,7 +156,7 @@ PKGFILES_CSWbacula-director += /var/opt/csw/run
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
-DISTFILES += CSWbacula-common.cswreleasenotes
+DISTFILES += CSWbacula-doc.cswreleasenotes
 PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
 
