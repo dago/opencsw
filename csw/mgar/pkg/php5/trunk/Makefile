@@ -742,7 +742,7 @@ pre-install-modulated: $(PI_SCRIPTS)
 	@$(MAKECOOKIE)
 
 post-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc/httpd.conf
-post-install-modulated: INIDEST=$(DESTDIR)$(prefix)/php5/etc/php.ini.CSW
+post-install-modulated: INIDEST=$(DESTDIR)$(prefix)/php5/lib/php.ini.CSW
 post-install-modulated:
 	@rm -f $(DESTDIR)$(AP2SYSCONF)
 	@cp $(WORKSRC)/php.ini-production $(INIDEST)
