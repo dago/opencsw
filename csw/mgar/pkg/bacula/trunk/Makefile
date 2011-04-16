@@ -106,6 +106,7 @@ RUNTIME_DEP_PKGS_CSWbacula-fd += CSWosslrt
 PKGFILES_CSWbacula-fd += .*init.d/cswbacula-fd
 PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd .*bacula/working
 PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz .*bacula-fd.conf
+PKGFILES_CSWbacula-fd += /var/opt/csw/run
 
 CATALOG_NAME_CSWbacula-sd = bacula_sd
 SPKG_DESC_CSWbacula-sd = $(DESCRIPTION) - Storage Daemon
@@ -126,6 +127,7 @@ PKGFILES_CSWbacula-sd += .*sbin/bcopy .*sbin/bscan .*sbin/btape
 PKGFILES_CSWbacula-sd += .*man8/bacula-sd.8.gz .*man8/bextract.8.gz
 PKGFILES_CSWbacula-sd += .*man8/bls.8.gz .*man8/btape.8.gz .*bacula/working
 PKGFILES_CSWbacula-sd += .*man8/bcopy.8.gz .*man8/bscan.8.gz
+PKGFILES_CSWbacula-sd += /var/opt/csw/run
 
 CATALOG_NAME_CSWbacula-director = bacula_director
 SPKG_DESC_CSWbacula-director = $(DESCRIPTION) - Director
@@ -145,6 +147,7 @@ PKGFILES_CSWbacula-director += .*sbin/dbcheck .*bacula/working
 PKGFILES_CSWbacula-director += .*libexec.*catalog_backup.* .*libexec.*query.sql
 PKGFILES_CSWbacula-director += .*libexec.*mysql_tables.* .*bacula-dir.conf
 PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
+PKGFILES_CSWbacula-director += /var/opt/csw/run
 
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
@@ -203,6 +206,7 @@ post-install-modulated:
 		for s in dir fd sd; do \
 			ginstall -m 0755 bacula-$$s $(INITD)/cswbacula-$$s; \
 		done )
+	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
 	@$(MAKECOOKIE)
 
 post-merge:
