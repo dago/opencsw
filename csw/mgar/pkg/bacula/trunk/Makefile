@@ -12,18 +12,19 @@ GARCOMPILER = GNU
 
 PACKAGES  = CSWbacula-common CSWbacula-fd CSWbacula-sd
 PACKAGES += CSWbacula-director CSWbacula-client CSWbacula
-PACKAGES += CSWbacula-tray-monitor CSWbacula-console
+PACKAGES += CSWbacula-tray-monitor CSWbacula-console CSWbacula-doc
 
 CATALOG_NAME_CSWbacula = bacula
 SPKG_DESC_CSWbacula = $(DESCRIPTION)
 ARCHALL_CSWbacula = 1
 RUNTIME_DEP_PKGS  = CSWbacula-fd CSWbacula-sd CSWbacula-director
-RUNTIME_DEP_PKGS += CSWbacula-console
+RUNTIME_DEP_PKGS += CSWbacula-console CSWbacula-doc
 PKGFILES_CSWbacula = NOFILES
 CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-sd
 CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-fd
 CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-director
 CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-console
+CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-doc
 
 CATALOG_NAME_CSWbacula-console = bacula_console
 SPKG_DESC_CSWbacula-console = $(DESCRIPTION) - Console
@@ -50,6 +51,10 @@ CATALOG_NAME_CSWbaculagnome = bacula_gnome_stub
 # set this explicitly to help phil's tools for now
 CATALOG_NAME_CSWbaculaclient = bacula_client_stub
 CHECKPKG_OVERRIDES_CSWbacula-client += surplus-dependency|CSWbacula-fd
+
+CATALOG_NAME_CSWbacula-doc = bacula_doc
+SPKG_DESC_CSWbacula-doc = $(DESCRIPTION) - Documentation
+PKGFILES_CSWbacula-doc += .*doc/$(NAME)/.*
 
 CATALOG_NAME_CSWbacula-tray-monitor = bacula_tray_monitor
 SPKG_DESC_CSWbacula-tray-monitor = $(DESCRIPTION) - Tray monitor
@@ -88,10 +93,6 @@ PKGFILES_CSWbacula-common += .*sbin/bsmtp .*sbin/btraceback
 PKGFILES_CSWbacula-common += .*man1/bsmtp.1.gz .*man1/btraceback.1.gz
 PKGFILES_CSWbacula-common += .*man8/bacula.8.gz
 PKGFILES_CSWbacula-common += .*libexec/btraceback.gdb
-PKGFILES_CSWbacula-common += .*doc/$(NAME)/.*
-# these are both original documentation files from the tarball
-CHECKPKG_OVERRIDES_CSWbacula-common += file-with-bad-content|/usr/share|root/opt/csw/share/doc/bacula/technotes
-CHECKPKG_OVERRIDES_CSWbacula-common += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bacula/INSTALL
 
 CATALOG_NAME_CSWbacula-fd = bacula_fd
 SPKG_DESC_CSWbacula-fd = $(DESCRIPTION) - File Daemon
@@ -105,7 +106,7 @@ RUNTIME_DEP_PKGS_CSWbacula-fd += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWosslrt
 PKGFILES_CSWbacula-fd += .*init.d/cswbacula-fd
 PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd .*bacula/working
-PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz .*bacula-fd.conf
+PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz .*bacula/bacula-fd.conf
 PKGFILES_CSWbacula-fd += /var/opt/csw/run
 
 CATALOG_NAME_CSWbacula-sd = bacula_sd
@@ -121,7 +122,7 @@ RUNTIME_DEP_PKGS_CSWbacula-sd += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWosslrt
 PKGFILES_CSWbacula-sd += .*init.d/cswbacula-sd
 PKGFILES_CSWbacula-sd += .*libexec.*disk-changer .*libexec.*dvd-handler
-PKGFILES_CSWbacula-sd += .*libexec.*mtx-changer.* .*bacula-sd.conf
+PKGFILES_CSWbacula-sd += .*libexec.*mtx-changer.* .*bacula/bacula-sd.conf
 PKGFILES_CSWbacula-sd += .*sbin/bacula-sd .*sbin/bextract .*sbin/bls
 PKGFILES_CSWbacula-sd += .*sbin/bcopy .*sbin/bscan .*sbin/btape
 PKGFILES_CSWbacula-sd += .*man8/bacula-sd.8.gz .*man8/bextract.8.gz
@@ -145,7 +146,8 @@ PKGFILES_CSWbacula-director += .*init.d/cswbacula-dir
 PKGFILES_CSWbacula-director += .*sbin/bregex .*sbin/bwild .*sbin/bacula-dir
 PKGFILES_CSWbacula-director += .*sbin/dbcheck .*bacula/working
 PKGFILES_CSWbacula-director += .*libexec.*catalog_backup.* .*libexec.*query.sql
-PKGFILES_CSWbacula-director += .*libexec.*mysql_tables.* .*bacula-dir.conf
+PKGFILES_CSWbacula-director += .*libexec.*mysql_tables.*
+PKGFILES_CSWbacula-director += .*bacula/bacula-dir.conf
 PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
 PKGFILES_CSWbacula-director += /var/opt/csw/run
 
@@ -199,6 +201,7 @@ pre-configure-modulated:
         chmod 755 configure)
 	@$(MAKECOOKIE)
 
+post-install-modulated: DOCD=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated: INITD=$(DESTDIR)/etc/$(prefix)/init.d
 post-install-modulated:
 	@(cd $(WORKSRC)/platforms/solaris; \
@@ -207,6 +210,7 @@ post-install-modulated:
 			ginstall -m 0755 bacula-$$s $(INITD)/cswbacula-$$s; \
 		done )
 	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
+	@(ginstall -d -m 0755 $(DOCD); gcp -pR $(WORKSRC)/examples $(DOCD))
 	@$(MAKECOOKIE)
 
 post-merge:
