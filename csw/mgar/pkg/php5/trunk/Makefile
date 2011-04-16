@@ -746,7 +746,7 @@ post-install-modulated: INIDEST=$(DESTDIR)$(prefix)/php5/etc/php.ini.CSW
 post-install-modulated:
 	@rm -f $(DESTDIR)$(AP2SYSCONF)
 	@cp $(WORKSRC)/php.ini-production $(INIDEST)
-	@perl -pi -e 's/^;extension=php_(.*).dll/;extension=$1.so/' $(INIDEST)
+	@perl -pi -e 's/^;extension=php_(.*).dll/;extension=$$1.so/' $(INIDEST)
 	@$(MAKECOOKIE)
 
 install-extras:
