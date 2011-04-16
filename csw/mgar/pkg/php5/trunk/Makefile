@@ -716,22 +716,6 @@ CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
 include gar/category.mk
 
-# funcion Definitions and mGar Extra Scripts
-#
-
-define _get_php_config
-$(abspath $(shell gfind $(1) -name php-config -print))
-endef
-
-define _get_php_prefix
-$(shell $(call _get_php_config,$(1)) --prefix)
-endef
-
-define _get_php_ini_path
-$(shell $(call _get_php_prefix,$(1))/bin/php -i | grep "Configuration File .* Path" | gawk '{print $$NF}')
-endef
-
-
 # this allows apxs to install the module.  stupid, but i couldn't make
 # the darn thing _not_ do try to add the httpd.conf lines, even with
 # patching...
@@ -751,12 +735,6 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 install-extras:
-	@echo "[====> Fixing Admin Scripts <====]"
-	perl -i -pne "s|x_PHPEXTDIR_x|_PHPEXTDIR_|" $(DOWNLOADDIR)/php.ini.CSW.fixed
-	@echo "[====> Installing Extra Files <====]"
-	ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/bin
-	gcp $(DOWNLOADDIR)/php.ini.CSW.fixed $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))/php.ini.CSW
 	gmv $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf.CSW
-	gchmod 0644 $(DESTDIR)$(call _get_php_ini_path,$(DESTDIR))/php.ini.CSW
 	@$(MAKECOOKIE)
 
