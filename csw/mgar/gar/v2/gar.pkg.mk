@@ -231,6 +231,7 @@ TEXINFO ?= $(infodir)/.*\.info(?:-\d+)? $(EXTRA_TEXINFO)
 # if AP2_MODS is set, files matching this shell glob (passed to find)
 # will have 'build' set as their class
 AP2_MODFILES ?= opt/csw/apache2/libexec/*so $(EXTRA_AP2_MODFILES)
+PHP5_EXTFILES ?= *so $(EXTRA_PHP5_EXTFILES)
 
 # - set class for all config files
 _CSWCLASS_FILTER = | perl -ane '\
@@ -245,6 +246,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
 		$(foreach FILE,$(TEXINFO),$$F[1] = "cswtexinfo" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(AP2_MODS),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/apache2/ap2mod/.*));) \
+		$(if $(PHP5_EXT),@F = ("e", "build", $$F[2], "?", "?", "?") if ($$F[2] =~ m(^/opt/csw/php5/extensions/.*));) \
 		$$F[1] = "cswcptemplates" if( $$F[2] =~ m(^/opt/csw/etc/templates/.+$$) and $$F[0] eq "f" ); \
 		print join(" ",@F),"\n";'
 
@@ -735,6 +737,9 @@ reset-merge-classutils: reset-merge-migrateconf reset-merge-usergroup reset-merg
 
 reset-merge-ap2mod:
 	@rm -f $(COOKIEDIR)/post-merge-ap2mod
+
+reset-merge-php5ext:
+	@rm -f $(COOKIEDIR)/post-merge-php5ext
 
 merge-migrateconf: $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),merge-migrateconf-$S))
 	@$(MAKECOOKIE)
