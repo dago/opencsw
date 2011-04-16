@@ -56,6 +56,8 @@ CATALOG_NAME_CSWbacula-doc = bacula_doc
 SPKG_DESC_CSWbacula-doc = $(DESCRIPTION) - Documentation
 PKGFILES_CSWbacula-doc += .*doc/$(NAME)/.*
 CHECKPKG_OVERRIDES_CSWbacula-doc += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWbacula-doc += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWbacula-doc += missing-dependency|CSWperl
 
 CATALOG_NAME_CSWbacula-tray-monitor = bacula_tray_monitor
 SPKG_DESC_CSWbacula-tray-monitor = $(DESCRIPTION) - Tray monitor
