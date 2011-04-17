@@ -75,8 +75,8 @@ $(eval $(call php5_subpackage,json))
 $(eval $(call php5_subpackage,ldap,CSWoldaprt CSWsasl))
 $(eval $(call php5_subpackage,mbstring))
 PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
+$(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt CSWlibltdl7))
 
-PACKAGES += CSWphp5-mcrypt
 PACKAGES += CSWphp5-mssql
 PACKAGES += CSWphp5-mysql
 PACKAGES += CSWphp5-mysqli
@@ -143,11 +143,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-mcrypt = php5_mcrypt
-SPKG_DESC_CSWphp5-mcrypt = The mcrypt extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-mcrypt = CSWphp5 CSWlibmcrypt CSWlibltdl7
-OBSOLETED_BY_CSWphp5-mcrypt = CSWphp5mcrypt
 
 CATALOGNAME_CSWphp5-mssql = php5_mssql
 SPKG_DESC_CSWphp5-mssql = The mssql extension for PHP5
@@ -332,8 +327,6 @@ PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
 PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
-
-PKGFILES_CSWphp5-mcrypt = .*/lib/php/extensions/.*/mcrypt.*
 
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
@@ -569,7 +562,6 @@ CHECKPKG_OVERRIDES_CSWphp5-zip += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-posix += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sqlite += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xmlrpc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pgsql += surplus-dependency|CSWphp5
