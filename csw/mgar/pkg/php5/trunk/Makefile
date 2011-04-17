@@ -38,6 +38,19 @@ PATCHFILES += 0001-Strip-usr-ucblib-references.patch
 # this one is filed upstream: http://bugs.php.net/bug.php?id=54318
 PATCHFILES += 0002-Correct-non-portable-use-of-grep-q-in-configure.patch
 
+BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
+BUILD_DEP_PKGS += CSWlibxml2-dev CSWexpat CSWzlib CSWcurldevel CSWjpeg
+BUILD_DEP_PKGS += CSWpng CSWt1lib CSWxpm CSWlibgdbm-dev CSWlibgmp
+BUILD_DEP_PKGS += CSWggettext-dev CSWossldevel CSWlibgd2 CSWbdb42devel
+BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWiconv CSWimap-devel
+BUILD_DEP_PKGS += CSWoldapdevel CSWkrb5libdev CSWsasl CSWlibtdl7
+BUILD_DEP_PKGS += CSWlibmcrypt CSWfreetds CSWmysql5devel CSWunixodbc
+BUILD_DEP_PKGS += CSWlibpq CSWreadline CSWncurses CSWnetsnmp
+BUILD_DEP_PKGS += CSWsqlite3devel CSWaspell CSWhtmltidy
+# NOTE: I think this is a leftover bug.  we shouldn't depend on two versions
+# of sqlite...
+BUILD_DEP_PKGS += CSWsqlite
+
 define php5_subpackage
 PACKAGES += CSWphp5-$(1)
 CATALOGNAME_CSWphp5-$(1) ?= php5_$(1)
@@ -168,8 +181,6 @@ $(eval $(call php5_subpackage,xmlrpc,CSWiconv CSWexpat))
 $(eval $(call php5_subpackage,xmlwriter,CSWiconv CSWlibxml2 CSWzlib))
 $(eval $(call php5_subpackage,xsl,CSWiconv CSWlibxml2 CSWlibxslt CSWzlib))
 $(eval $(call php5_subpackage,zip,CSWzlib))
-
-BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 
