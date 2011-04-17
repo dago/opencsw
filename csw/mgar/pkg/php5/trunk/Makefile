@@ -104,8 +104,8 @@ $(eval $(call php5_subpackage,session,CSWlibmm))
 PKGFILES_CSWphp5-session += .*/include/php/ext/session.*
 $(eval $(call php5_subpackage,shmop))
 $(eval $(call php5_subpackage,snmp,CSWnetsnmp))
+$(eval $(call php5_subpackage,soap,CSWiconv CSWlibxml2 CSWzlib))
 
-PACKAGES += CSWphp5-soap
 PACKAGES += CSWphp5-sockets
 PACKAGES += CSWphp5-sqlite
 PACKAGES += CSWphp5-sysvmsg
@@ -153,11 +153,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-soap = php5_soap
-SPKG_DESC_CSWphp5-soap = The soap extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-soap = CSWphp5 CSWiconv CSWlibxml2 CSWzlib
-OBSOLETED_BY_CSWphp5-soap = CSWphp5soap
 
 CATALOGNAME_CSWphp5-sockets = php5_sockets
 SPKG_DESC_CSWphp5-sockets = The sockets extension for PHP5
@@ -251,8 +246,6 @@ PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
-
-PKGFILES_CSWphp5-soap = .*/lib/php/extensions/.*/soap.*
 
 PKGFILES_CSWphp5-sockets = .*/lib/php/extensions/.*/sockets.*
 
@@ -426,7 +419,6 @@ CHECKPKG_OVERRIDES_CSWphp5-sysvmsg += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sockets += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ncurses += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-tokenizer += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-wddx += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-zip += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
