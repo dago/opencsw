@@ -78,8 +78,8 @@ PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
 $(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt CSWlibltdl7))
 $(eval $(call php5_subpackage,mssql,CSWfreetds))
 $(eval $(call php5_subpackage,mysql,CSWmysql5rt))
+$(eval $(call php5_subpackage,mysqli,CSWmysql5rt CSWzlib))
 
-PACKAGES += CSWphp5-mysqli
 PACKAGES += CSWphp5-odbc
 PACKAGES += CSWphp5-openssl
 PACKAGES += CSWphp5-pcntl
@@ -143,11 +143,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-mysqli = php5_mysqli
-SPKG_DESC_CSWphp5-mysqli = The mysqli extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-mysqli = CSWphp5 CSWmysql5rt CSWzlib
-OBSOLETED_BY_CSWphp5-mysqli = CSWphp5mysqli
 
 CATALOGNAME_CSWphp5-odbc = php5_odbc
 SPKG_DESC_CSWphp5-odbc = The odbc extension for PHP5
@@ -319,8 +314,6 @@ PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
-
-PKGFILES_CSWphp5-mysqli = .*/lib/php/extensions/.*/mysqli.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
 
@@ -555,7 +548,6 @@ CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-sysvsem += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5-pdo
-CHECKPKG_OVERRIDES_CSWphp5-mysqli += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
