@@ -65,6 +65,9 @@ INITSMF = $(sysconfdir)/init\.d/cswlighttpd
 PRESERVECONF = $(sysconfdir)/lighttpd\.conf
 USERGROUP = $(sysconfdir)/pkg/$(NAME)/cswusergroup
 
+# Migrating the configuration file from /opt/csw/etc to /etc/opt/csw
+MIGRATE_FILES = lighttpd.conf
+
 # To allow lighttpd to write logs
 PROTOTYPE_MODIFIERS = user
 PROTOTYPE_FILES_user = $(localstatedir)/log/lighttpd
