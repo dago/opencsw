@@ -93,8 +93,10 @@ CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
 $(eval $(call php5_subpackage,pdopgsql,CSWlibpq CSWphp5-pdo))
 PKGFILES_CSWphp5-pdopgsql = .*/lib/php/extensions/.*/pdo_pgsql.so
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
+$(eval $(call php5_subpackage,pdosqlite,CSWsqlite3rt CSWphp5-pdo))
+PKGFILES_CSWphp5-pdosqlite = .*/lib/php/extensions/.*/pdo_sqlite.so
+CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
 
-PACKAGES += CSWphp5-pdosqlite
 PACKAGES += CSWphp5-pgsql
 PACKAGES += CSWphp5-posix
 PACKAGES += CSWphp5-pspell
@@ -150,11 +152,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-pdosqlite = php5_pdosqlite
-SPKG_DESC_CSWphp5-pdosqlite = A Sqlite specific database access abstraction module for PHP applications (pdo version)
-RUNTIME_DEP_PKGS_CSWphp5-pdosqlite = CSWphp5 CSWphp5-pdo CSWsqlite3rt
-OBSOLETED_BY_CSWphp5-pdosqlite = CSWphp5pdosqlite
 
 CATALOGNAME_CSWphp5-pgsql = php5_pgsql
 SPKG_DESC_CSWphp5-pgsql = The pgsql extension for PHP5
@@ -288,8 +285,6 @@ PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
-
-PKGFILES_CSWphp5-pdosqlite = .*/lib/php/extensions/.*/pdo_sqlite.*
 
 PKGFILES_CSWphp5-pgsql = .*/lib/php/extensions/.*/pgsql.*
 
@@ -479,7 +474,6 @@ CHECKPKG_OVERRIDES_CSWphp5-dbase += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sysvmsg += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sockets += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ncurses += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-tokenizer += surplus-dependency|CSWphp5
@@ -494,7 +488,6 @@ CHECKPKG_OVERRIDES_CSWphp5-xmlrpc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pgsql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-shmop += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-session += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-sysvsem += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
