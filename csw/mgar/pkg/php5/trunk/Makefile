@@ -39,6 +39,16 @@ PATCHFILES += 0001-Strip-usr-ucblib-references.patch
 # this one is filed upstream: http://bugs.php.net/bug.php?id=54318
 PATCHFILES += 0002-Correct-non-portable-use-of-grep-q-in-configure.patch
 
+define php5_subpackage
+PACKAGES += CSWphp5-$(1)
+CATALOGNAME_CSWphp5-$(1) ?= php5_$(1)
+SPKG_DESC_CSWphp5-$(1) ?= The $(1) extention for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-$(1) ?= CSWphp5
+OBSOLETED_BY_CSWphp5-$(1) ?= CSWphp5$(1)
+PKGFILES_CSWphp5-$(1) ?= .*lib/php/extensions/.*$(1).* .*php5/extensions/$(1)
+CHECKPKG_OVERRIDES_CSWphp5-$(1) += surplus-dependency|CSWphp5
+endef
+
 PACKAGES = CSWphp5 CSWphp5-dev
 PACKAGES += CSWap2-modphp5
 PACKAGES += CSWphp5-bcmath
