@@ -118,8 +118,7 @@ $(eval $(call php5_subpackage,xmlreader,CSWiconv CSWlibxml2 CSWzlib))
 $(eval $(call php5_subpackage,xmlrpc,CSWiconv CSWexpat))
 $(eval $(call php5_subpackage,xmlwriter,CSWiconv CSWlibxml2 CSWzlib))
 $(eval $(call php5_subpackage,xsl,CSWiconv CSWlibxml2 CSWlibxslt CSWzlib))
-
-PACKAGES += CSWphp5-zip
+$(eval $(call php5_subpackage,zip,CSWzlib))
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 
@@ -155,11 +154,6 @@ RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
 
-CATALOGNAME_CSWphp5-zip = php5_zip
-SPKG_DESC_CSWphp5-zip = The zip extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-zip = CSWphp5 CSWzlib
-OBSOLETED_BY_CSWphp5-zip = CSWphp5zip
-
 PKGFILES_CSWphp5-dev  = $(bindir)/php-config
 PKGFILES_CSWphp5-dev += $(bindir)/phpize
 PKGFILES_CSWphp5-dev += $(bindir)/peardev
@@ -184,8 +178,6 @@ PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
-
-PKGFILES_CSWphp5-zip = .*/lib/php/extensions/.*/zip.*
 
 # PATCHFILES += configure.diff
 # PATCHFILES += odbc.diff
@@ -323,7 +315,6 @@ SKIPTEST = 1
 
 CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ncurses += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-zip += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
