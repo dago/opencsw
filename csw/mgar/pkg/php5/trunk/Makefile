@@ -27,7 +27,6 @@ PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
 VENDOR_URL     = http://www.php.net/
 MASTER_SITES   = http://us.php.net/distributions/
 INSTALL_ENV   += INSTALL_ROOT=$(DESTDIR)
-#STRIP_DIRS    := $(shell $(call _get_php_prefix,$(DESTDIR))/bin/php-config --extension-dir)/*/
 
 LICENSE = LICENSE
 
@@ -49,8 +48,58 @@ PKGFILES_CSWphp5-$(1) ?= .*lib/php/extensions/.*/$(1).so .*php5/extensions/$(1)
 CHECKPKG_OVERRIDES_CSWphp5-$(1) += surplus-dependency|CSWphp5
 endef
 
-PACKAGES = CSWphp5 CSWphp5-dev
+PACKAGES = CSWphp5
+CATALOGNAME_CSWphp5        = php5
+SPKG_DESC_CSWphp5          = A High-Level Scripting Language
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2 CSWiconv CSWexpat CSWzlib
+INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
+INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
+# embeded 'magic' information to detect file types...odd, but...
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/libtool.m4
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/acinclude.m4
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/shtool
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/phpize.m4
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/PEAR/Config.php
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/man/man1/php-config.1
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php-cgi
+# verify these...
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php.ini.CSW
+
+
+PACKAGES += CSWphp5-dev
+CATALOGNAME_CSWphp5-dev   = php5_dev
+SPKG_DESC_CSWphp5-dev     = Development files for php5
+RUNTIME_DEP_PKGS_CSWphp5-dev      = CSWphp5
+OBSOLETED_BY_CSWphp5-dev = CSWphp5devel
+PKGFILES_CSWphp5-dev  = $(bindir)/php-config
+PKGFILES_CSWphp5-dev += $(bindir)/phpize
+PKGFILES_CSWphp5-dev += $(bindir)/peardev
+PKGFILES_CSWphp5-dev += $(libdir)/php/build/.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/TSRM.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/Zend.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/include.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/main.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/regex.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/date.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/filter.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/libxml.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/pcre.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/spl.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/standard.*
+PKGFILES_CSWphp5-dev += $(includedir)/php/ext/xml.*
+PKGFILES_CSWphp5-dev += $(mandir)/man1/php-config.1
+PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
+CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
+
 PACKAGES += CSWap2-modphp5
+CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
+SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
+RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
+OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
+PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
+CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
 $(eval $(call php5_subpackage,bcmath))
 $(eval $(call php5_subpackage,bz2,CSWbzip2))
@@ -122,58 +171,7 @@ $(eval $(call php5_subpackage,zip,CSWzlib))
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 
-CATALOGNAME_CSWphp5        = php5
-SPKG_DESC_CSWphp5          = A High-Level Scripting Language
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2 CSWiconv CSWexpat CSWzlib
-INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
-INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
-
-# embeded 'magic' information to detect file types...odd, but...
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/libtool.m4
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/acinclude.m4
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/shtool
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/phpize.m4
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/PEAR/Config.php
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/man/man1/php-config.1
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php-cgi
-# verify these...
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php.ini.CSW
-
-
 # end verify...
-
-CATALOGNAME_CSWphp5-dev   = php5_dev
-SPKG_DESC_CSWphp5-dev     = Development files for php5
-RUNTIME_DEP_PKGS_CSWphp5-dev      = CSWphp5
-OBSOLETED_BY_CSWphp5-dev = CSWphp5devel
-
-CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
-SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
-RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
-OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-PKGFILES_CSWphp5-dev  = $(bindir)/php-config
-PKGFILES_CSWphp5-dev += $(bindir)/phpize
-PKGFILES_CSWphp5-dev += $(bindir)/peardev
-PKGFILES_CSWphp5-dev += $(libdir)/php/build/.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/TSRM.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/Zend.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/include.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/main.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/regex.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/date.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/filter.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/libxml.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/pcre.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/spl.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/standard.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/xml.*
-PKGFILES_CSWphp5-dev += $(mandir)/man1/php-config.1
-PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
-
-PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
 # PATCHFILES += configure.diff
 # PATCHFILES += odbc.diff
@@ -308,9 +306,6 @@ CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
 #ENABLE_CHECK = 0
-
-CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
 include gar/category.mk
 
