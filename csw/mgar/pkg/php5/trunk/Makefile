@@ -115,8 +115,8 @@ $(eval $(call php5_subpackage,tidy,CSWhtmltidy))
 $(eval $(call php5_subpackage,tokenizer))
 $(eval $(call php5_subpackage,wddx))
 $(eval $(call php5_subpackage,xmlreader,CSWiconv CSWlibxml2 CSWzlib))
+$(eval $(call php5_subpackage,xmlrpc,CSWiconv CSWexpat))
 
-PACKAGES += CSWphp5-xmlrpc
 PACKAGES += CSWphp5-xmlwriter
 PACKAGES += CSWphp5-xsl
 PACKAGES += CSWphp5-zip
@@ -154,11 +154,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-xmlrpc = php5_xmlrpc
-SPKG_DESC_CSWphp5-xmlrpc = The xmlrpc extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-xmlrpc = CSWphp5 CSWiconv CSWexpat
-OBSOLETED_BY_CSWphp5-xmlrpc = CSWphp5xmlrpc
 
 CATALOGNAME_CSWphp5-xmlwriter = php5_xmlwriter
 SPKG_DESC_CSWphp5-xmlwriter = The xmlwriter extension for PHP5
@@ -200,8 +195,6 @@ PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
-
-PKGFILES_CSWphp5-xmlrpc = .*/lib/php/extensions/.*/xmlrpc.*
 
 PKGFILES_CSWphp5-xmlwriter = .*/lib/php/extensions/.*/xmlwriter.*
 
@@ -349,7 +342,6 @@ CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ncurses += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-zip += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-xmlrpc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
 include gar/category.mk
