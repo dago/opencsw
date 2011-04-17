@@ -62,8 +62,9 @@ $(eval $(call php5_subpackage,dom,CSWiconv CSWlibxml2 CSWzlib))
 PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
 $(eval $(call php5_subpackage,exif))
 $(eval $(call php5_subpackage,ftp,CSWosslrt))
+$(eval $(call php5_subpackage,gd,CSWftype2 CSWlibgd2 CSWjpeg CSWpng CSWt1lib CSWxpm CSWzlib))
+PKGFILES_CSWphp-gd += .*/include/php/ext/gd.*
 
-PACKAGES += CSWphp5-gd
 PACKAGES += CSWphp5-gettext
 PACKAGES += CSWphp5-gmp
 PACKAGES += CSWphp5-hash
@@ -139,12 +140,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-gd = php5_gd
-SPKG_DESC_CSWphp5-gd = The gd extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-gd  = CSWphp5 CSWftype2 CSWlibgd2 CSWjpeg
-RUNTIME_DEP_PKGS_CSWphp5-gd += CSWpng CSWt1lib CSWxpm CSWzlib
-OBSOLETED_BY_CSWphp5-gd = CSWphp5gd
 
 CATALOGNAME_CSWphp5-gettext = php5_gettext
 SPKG_DESC_CSWphp5-gettext = The gettext extension for PHP5
@@ -374,9 +369,6 @@ PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
 PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 
-PKGFILES_CSWphp5-gd  = .*/lib/php/extensions/.*/gd.*
-PKGFILES_CSWphp5-gd  += .*/include/php/ext/gd.*
-
 PKGFILES_CSWphp5-gettext = .*/lib/php/extensions/.*/gettext.*
 
 PKGFILES_CSWphp5-gmp = .*/lib/php/extensions/.*/gmp.*
@@ -605,7 +597,6 @@ SKIPTEST = 1
 
 CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdo += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-gd += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-tidy += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWphp5
