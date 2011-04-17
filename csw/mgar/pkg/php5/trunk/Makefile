@@ -72,8 +72,8 @@ $(eval $(call php5_subpackage,iconv,CSWiconv))
 PKGFILES_CSWphp5-iconv += .*/include/php/ext/iconv.*
 $(eval $(call php5_subpackage,imap,CSWimaprt CSWkrb5lib CSWosslrt))
 $(eval $(call php5_subpackage,json))
+$(eval $(call php5_subpackage,ldap,CSWoldaprt CSWsasl))
 
-PACKAGES += CSWphp5-ldap
 PACKAGES += CSWphp5-mbstring
 PACKAGES += CSWphp5-mcrypt
 PACKAGES += CSWphp5-mssql
@@ -142,10 +142,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-ldap = php5_ldap
-SPKG_DESC_CSWphp5-ldap = The ldap extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-ldap = CSWphp5 CSWoldaprt CSWsasl
 
 CATALOGNAME_CSWphp5-mbstring = php5_mbstring
 SPKG_DESC_CSWphp5-mbstring = The mbstring extension for PHP5
@@ -340,8 +336,6 @@ PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
 PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
-
-PKGFILES_CSWphp5-ldap = .*/lib/php/extensions/.*/ldap.*
 
 PKGFILES_CSWphp5-mbstring = .*/lib/php/extensions/.*/mbstring.*
 PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
@@ -572,7 +566,6 @@ CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-openssl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sockets += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-ldap += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ncurses += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-tokenizer += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWphp5
