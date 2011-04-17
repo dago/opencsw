@@ -64,8 +64,8 @@ $(eval $(call php5_subpackage,exif))
 $(eval $(call php5_subpackage,ftp,CSWosslrt))
 $(eval $(call php5_subpackage,gd,CSWftype2 CSWlibgd2 CSWjpeg CSWpng CSWt1lib CSWxpm CSWzlib))
 PKGFILES_CSWphp-gd += .*/include/php/ext/gd.*
+$(eval $(call php5_subpackage,gettext,CSWlibintl8))
 
-PACKAGES += CSWphp5-gettext
 PACKAGES += CSWphp5-gmp
 PACKAGES += CSWphp5-hash
 PACKAGES += CSWphp5-iconv
@@ -140,11 +140,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-gettext = php5_gettext
-SPKG_DESC_CSWphp5-gettext = The gettext extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-gettext = CSWphp5 CSWlibintl8
-OBSOLETED_BY_CSWphp5-gettext = CSWphp5gettext
 
 CATALOGNAME_CSWphp5-gmp = php5_gmp
 SPKG_DESC_CSWphp5-gmp = The gmp extension for PHP5
@@ -368,8 +363,6 @@ PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
 PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
-
-PKGFILES_CSWphp5-gettext = .*/lib/php/extensions/.*/gettext.*
 
 PKGFILES_CSWphp5-gmp = .*/lib/php/extensions/.*/gmp.*
 
@@ -632,7 +625,6 @@ CHECKPKG_OVERRIDES_CSWphp5-zip += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-posix += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-gettext += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mcrypt += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sqlite += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xmlrpc += surplus-dependency|CSWphp5
