@@ -111,8 +111,8 @@ PKGFILES_CSWphp5-sqlite += .*/include/php/ext/sqlite.*
 $(eval $(call php5_subpackage,sysvmsg))
 $(eval $(call php5_subpackage,sysvsem))
 $(eval $(call php5_subpackage,sysvshm))
+$(eval $(call php5_subpackage,tidy,CSWhtmltidy))
 
-PACKAGES += CSWphp5-tidy
 PACKAGES += CSWphp5-tokenizer
 PACKAGES += CSWphp5-wddx
 PACKAGES += CSWphp5-xmlreader
@@ -154,11 +154,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-tidy = php5_tidy
-SPKG_DESC_CSWphp5-tidy = The tidy extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-tidy = CSWphp5 CSWhtmltidy
-OBSOLETED_BY_CSWphp5-tidy = CSWphp5tidy
 
 CATALOGNAME_CSWphp5-tokenizer = php5_tokenizer
 SPKG_DESC_CSWphp5-tokenizer = The tokenizer extension for PHP5
@@ -222,8 +217,6 @@ PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
-
-PKGFILES_CSWphp5-tidy = .*/lib/php/extensions/.*/tidy.*
 
 PKGFILES_CSWphp5-tokenizer = .*/lib/php/extensions/.*/tokenizer.*
 
@@ -374,7 +367,6 @@ SKIPTEST = 1
 #ENABLE_CHECK = 0
 
 CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-tidy += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xmlwriter += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xmlreader += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-dbase += surplus-dependency|CSWphp5
