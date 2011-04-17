@@ -56,8 +56,8 @@ $(eval $(call php5_subpackage,bcmath))
 $(eval $(call php5_subpackage,bz2,CSWbzip2))
 $(eval $(call php5_subpackage,calendar))
 $(eval $(call php5_subpackage,ctype))
+$(eval $(call php5_subpackage,curl,CSWcurlrt CSWlibidn11 CSWoldaprt CSWosslrt CSWzlib CSWlibcares))
 
-PACKAGES += CSWphp5-curl
 PACKAGES += CSWphp5-dba
 PACKAGES += CSWphp5-dom
 PACKAGES += CSWphp5-exif
@@ -138,12 +138,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-curl = php5_curl
-SPKG_DESC_CSWphp5-curl = The curl extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-curl  = CSWphp5 CSWcurlrt CSWlibidn11 
-RUNTIME_DEP_PKGS_CSWphp5-curl += CSWoldaprt CSWosslrt CSWzlib CSWlibcares
-OBSOLETED_BY_CSWphp5-curl = CSWphp5curl
 
 CATALOGNAME_CSWphp5-dba = php5_dba
 SPKG_DESC_CSWphp5-dba = The dba extension for PHP5
@@ -396,8 +390,6 @@ PKGFILES_CSWphp5-dev += $(mandir)/man1/php-config.1
 PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
 
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
-
-PKGFILES_CSWphp5-curl = .*/lib/php/extensions/.*/curl.*
 
 PKGFILES_CSWphp5-dba = .*/lib/php/extensions/.*/dba\.so
 
@@ -678,7 +670,6 @@ CHECKPKG_OVERRIDES_CSWphp5-mssql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pcntl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-zip += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-curl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-posix += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ftp += surplus-dependency|CSWphp5
