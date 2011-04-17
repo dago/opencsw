@@ -14,7 +14,7 @@ PACKAGES  = CSWbacula-common CSWbacula-fd CSWbacula-sd
 PACKAGES += CSWbacula-director CSWbacula-client CSWbacula
 PACKAGES += CSWbacula-tray-monitor CSWbacula-console CSWbacula-doc
 
-CATALOG_NAME_CSWbacula = bacula
+CATALOGNAME_CSWbacula = bacula
 SPKG_DESC_CSWbacula = $(DESCRIPTION)
 ARCHALL_CSWbacula = 1
 RUNTIME_DEP_PKGS_CSWbacula  = CSWbacula-fd CSWbacula-sd CSWbacula-director
@@ -26,7 +26,7 @@ CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-director
 CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-console
 CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-doc
 
-CATALOG_NAME_CSWbacula-console = bacula_console
+CATALOGNAME_CSWbacula-console = bacula_console
 SPKG_DESC_CSWbacula-console = $(DESCRIPTION) - Console
 RUNTIME_DEP_PKGS_CSWbacula-console = CSWbacula-common
 RUNTIME_DEP_PKGS_CSWbacula-console += CSWtcpwrap
@@ -40,26 +40,26 @@ RUNTIME_DEP_PKGS_CSWbacula-console += CSWgcc4g++rt
 PKGFILES_CSWbacula-console  = .*sbin/bconsole .*man8/bconsole.* .*bconsole.conf
 PKGFILES_CSWbacula-console += .*libexec.*bconsole
 
-CATALOG_NAME_CSWbacula-client = bacula_client
+CATALOGNAME_CSWbacula-client = bacula_client
 SPKG_DESC_CSWbacula-client = $(DESCRIPTION) - Client meta-package
 ARCHALL_CSWbacula-client = 1
 RUNTIME_DEP_PKGS_CSWbacula-client += CSWbacula-fd
 PKGFILES_CSWbacula-client = NOFILES
 OBSOLETED_BY_CSWbacula-client = CSWbaculaclient CSWbaculagnome
 SPKG_DESC_CSWbaculagnome = Obsolete bacula gnome console
-CATALOG_NAME_CSWbaculagnome = bacula_gnome_stub
+CATALOGNAME_CSWbaculagnome = bacula_gnome_stub
 # set this explicitly to help phil's tools for now
-CATALOG_NAME_CSWbaculaclient = bacula_client_stub
+CATALOGNAME_CSWbaculaclient = bacula_client_stub
 CHECKPKG_OVERRIDES_CSWbacula-client += surplus-dependency|CSWbacula-fd
 
-CATALOG_NAME_CSWbacula-doc = bacula_doc
+CATALOGNAME_CSWbacula-doc = bacula_doc
 SPKG_DESC_CSWbacula-doc = $(DESCRIPTION) - Documentation
 PKGFILES_CSWbacula-doc += .*doc/$(NAME)/.*
 CHECKPKG_OVERRIDES_CSWbacula-doc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWbacula-doc += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWbacula-doc += missing-dependency|CSWperl
 
-CATALOG_NAME_CSWbacula-tray-monitor = bacula_tray_monitor
+CATALOGNAME_CSWbacula-tray-monitor = bacula_tray_monitor
 SPKG_DESC_CSWbacula-tray-monitor = $(DESCRIPTION) - Tray monitor
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWbacula-common
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWgcc4g++rt
@@ -77,7 +77,7 @@ RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWfconfig
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWglib2
 PKGFILES_CSWbacula-tray-monitor = .*tray-monitor.*
 
-CATALOG_NAME_CSWbacula-common = bacula_common
+CATALOGNAME_CSWbacula-common = bacula_common
 SPKG_DESC_CSWbacula-common = $(DESCRIPTION) - shared files
 RUNTIME_DEP_PKGS_CSWbacula-common += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWbacula-common += CSWgcc4corert
@@ -97,7 +97,7 @@ PKGFILES_CSWbacula-common += .*man1/bsmtp.1.gz .*man1/btraceback.1.gz
 PKGFILES_CSWbacula-common += .*man8/bacula.8.gz
 PKGFILES_CSWbacula-common += .*libexec/btraceback.gdb
 
-CATALOG_NAME_CSWbacula-fd = bacula_fd
+CATALOGNAME_CSWbacula-fd = bacula_fd
 SPKG_DESC_CSWbacula-fd = $(DESCRIPTION) - File Daemon
 RUNTIME_DEP_PKGS_CSWbacula-fd = CSWbacula-common
 RUNTIME_DEP_PKGS_CSWbacula-fd += CSWgcc4g++rt
@@ -112,7 +112,7 @@ PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd .*bacula/working
 PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz .*bacula/bacula-fd.conf
 PKGFILES_CSWbacula-fd += /var/opt/csw/run
 
-CATALOG_NAME_CSWbacula-sd = bacula_sd
+CATALOGNAME_CSWbacula-sd = bacula_sd
 SPKG_DESC_CSWbacula-sd = $(DESCRIPTION) - Storage Daemon
 RUNTIME_DEP_PKGS_CSWbacula-sd = CSWbacula-common
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWgcc4g++rt
@@ -133,7 +133,7 @@ PKGFILES_CSWbacula-sd += .*man8/bls.8.gz .*man8/btape.8.gz .*bacula/working
 PKGFILES_CSWbacula-sd += .*man8/bcopy.8.gz .*man8/bscan.8.gz
 PKGFILES_CSWbacula-sd += /var/opt/csw/run
 
-CATALOG_NAME_CSWbacula-director = bacula_director
+CATALOGNAME_CSWbacula-director = bacula_director
 SPKG_DESC_CSWbacula-director = $(DESCRIPTION) - Director
 RUNTIME_DEP_PKGS_CSWbacula-director = CSWbacula-common
 RUNTIME_DEP_PKGS_CSWbacula-director += CSWgcc4g++rt
