@@ -6,16 +6,16 @@ DISTNAME    = $(SF_PROJ)-$(VERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
-	PHP is a widely-used Open Source general-purpose scripting language that is
-	especially suited for Web development and can be embedded into HTML. Its
-	syntax draws upon C, Java, and Perl, and is easy to learn. PHP runs on many
-	different platforms and can be used as a standalone executable or as a
-	module under a variety of Web servers. It has excellent support for
-	databases, XML, LDAP, IMAP, Java, various Internet protocols, and general
-	data manipulation, and is extensible via its powerful API. It is actively
-	developed and supported by a talented and energetic international team.
-	Numerous Open Source and commercial PHP-based application packages are
-	available.
+PHP is a widely-used Open Source general-purpose scripting language that is
+especially suited for Web development and can be embedded into HTML. Its
+syntax draws upon C, Java, and Perl, and is easy to learn. PHP runs on many
+different platforms and can be used as a standalone executable or as a
+module under a variety of Web servers. It has excellent support for
+databases, XML, LDAP, IMAP, Java, various Internet protocols, and general
+data manipulation, and is extensible via its powerful API. It is actively
+developed and supported by a talented and energetic international team.
+Numerous Open Source and commercial PHP-based application packages are
+available.
 endef
 
 # turn on the build scripts to enable/disable modules
