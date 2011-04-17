@@ -212,8 +212,6 @@ PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
 
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
-PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
-
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
@@ -369,7 +367,6 @@ SKIPTEST = 1
 CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xmlwriter += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xmlreader += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-dbase += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ncurses += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-tokenizer += surplus-dependency|CSWphp5
