@@ -66,8 +66,9 @@ $(eval $(call php5_subpackage,gd,CSWftype2 CSWlibgd2 CSWjpeg CSWpng CSWt1lib CSW
 PKGFILES_CSWphp-gd += .*/include/php/ext/gd.*
 $(eval $(call php5_subpackage,gettext,CSWlibintl8))
 $(eval $(call php5_subpackage,gmp,CSWlibgmp))
+$(eval $(call php5_subpackage,hash))
+PKGFILES_CSWphp5-hash += .*/include/php/ext/hash.*
 
-PACKAGES += CSWphp5-hash
 PACKAGES += CSWphp5-iconv
 PACKAGES += CSWphp5-imap
 PACKAGES += CSWphp5-json
@@ -140,11 +141,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-hash = php5_hash
-SPKG_DESC_CSWphp5-hash = The hash extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-hash = CSWphp5
-OBSOLETED_BY_CSWphp5-hash = CSWphp5hash
 
 CATALOGNAME_CSWphp5-iconv = php5_iconv
 SPKG_DESC_CSWphp5-iconv = The iconv extension for PHP5
@@ -358,9 +354,6 @@ PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
 PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
-
-PKGFILES_CSWphp5-hash = .*/lib/php/extensions/.*/hash.*
-PKGFILES_CSWphp5-hash += .*/include/php/ext/hash.*
 
 PKGFILES_CSWphp5-iconv = .*/lib/php/extensions/.*/iconv.*
 PKGFILES_CSWphp5-iconv += .*/include/php/ext/iconv.*
@@ -586,7 +579,6 @@ CHECKPKG_OVERRIDES_CSWphp5-pdo += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-tidy += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-hash += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sysvshm += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xmlwriter += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xmlreader += surplus-dependency|CSWphp5
