@@ -175,10 +175,6 @@ PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
 
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
-PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
-
-PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
-
 # PATCHFILES += configure.diff
 # PATCHFILES += odbc.diff
 # PATCHFILES += pdopgsql.diff
@@ -314,8 +310,6 @@ SKIPTEST = 1
 #ENABLE_CHECK = 0
 
 CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-ncurses += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
 include gar/category.mk
