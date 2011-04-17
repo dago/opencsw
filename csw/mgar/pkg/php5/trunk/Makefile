@@ -53,8 +53,8 @@ PACKAGES = CSWphp5 CSWphp5-dev
 PACKAGES += CSWap2-modphp5
 
 $(eval $(call php5_subpackage,bcmath))
+$(eval $(call php5_subpackage,bz2,CSWbzip2))
 
-PACKAGES += CSWphp5-bz2
 PACKAGES += CSWphp5-calendar
 PACKAGES += CSWphp5-ctype
 PACKAGES += CSWphp5-curl
@@ -138,11 +138,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-bz2 = php5_bz2
-SPKG_DESC_CSWphp5-bz2 = The bz2 extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-bz2 = CSWphp5 CSWbzip2
-OBSOLETED_BY_CSWphp5-bz2 = CSWphp5bz2
 
 CATALOGNAME_CSWphp5-calendar = php5_calendar
 SPKG_DESC_CSWphp5-calendar = The calendar extension for PHP5
@@ -412,8 +407,6 @@ PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
 
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
-PKGFILES_CSWphp5-bz2 = .*/lib/php/extensions/.*/bz2.*
-
 PKGFILES_CSWphp5-calendar = .*/lib/php/extensions/.*/calendar.*
 
 PKGFILES_CSWphp5-ctype = .*/lib/php/extensions/.*/ctype.*
@@ -678,7 +671,6 @@ CHECKPKG_OVERRIDES_CSWphp5-dbase += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mbstring += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-exif += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-bz2 += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-dba += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sysvmsg += surplus-dependency|CSWphp5
