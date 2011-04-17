@@ -98,8 +98,8 @@ PKGFILES_CSWphp5-pdosqlite = .*/lib/php/extensions/.*/pdo_sqlite.so
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
 $(eval $(call php5_subpackage,pgsql,CSWlibpq))
 $(eval $(call php5_subpackage,posix))
+$(eval $(call php5_subpackage,pspell,CSWaspell))
 
-PACKAGES += CSWphp5-pspell
 PACKAGES += CSWphp5-readline
 PACKAGES += CSWphp5-session
 PACKAGES += CSWphp5-shmop
@@ -152,11 +152,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-pspell = php5_pspell
-SPKG_DESC_CSWphp5-pspell = The pspell extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-pspell = CSWphp5 CSWaspell
-OBSOLETED_BY_CSWphp5-pspell = CSWphp5pspell
 
 CATALOGNAME_CSWphp5-readline = php5_readline
 SPKG_DESC_CSWphp5-readline = The readline extension for PHP5
@@ -275,8 +270,6 @@ PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
-
-PKGFILES_CSWphp5-pspell = .*/lib/php/extensions/.*/pspell.*
 
 PKGFILES_CSWphp5-readline = .*/lib/php/extensions/.*/readline.*
 
@@ -464,7 +457,6 @@ CHECKPKG_OVERRIDES_CSWphp5-sockets += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-ncurses += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-tokenizer += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-pspell += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-wddx += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-zip += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
