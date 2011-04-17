@@ -85,11 +85,15 @@ $(eval $(call php5_subpackage,pcntl))
 $(eval $(call php5_subpackage,pdo))
 PKGFILES_CSWphp5-pdo += .*/include/php/ext/pdo.*
 $(eval $(call php5_subpackage,pdomysql,CSWmysql5rt CSWzlib CSWphp5-pdo))
+PKGFILES_CSWphp5-pdopgsql = .*/lib/php/extensions/.*/pdo_mysql.so
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5-pdo
 $(eval $(call php5_subpackage,pdoodbc,CSWunixodbc CSWphp5-pdo))
+PKGFILES_CSWphp5-pdopgsql = .*/lib/php/extensions/.*/pdo_odbc.so
+CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
+$(eval $(call php5_subpackage,pdopgsql,CSWlibpq CSWphp5-pdo))
+PKGFILES_CSWphp5-pdopgsql = .*/lib/php/extensions/.*/pdo_pgsql.so
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
 
-PACKAGES += CSWphp5-pdopgsql
 PACKAGES += CSWphp5-pdosqlite
 PACKAGES += CSWphp5-pgsql
 PACKAGES += CSWphp5-posix
@@ -146,11 +150,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-pdopgsql = php5_pdopgsql
-SPKG_DESC_CSWphp5-pdopgsql = A PgSQL specific database access abstraction module for PHP applications (pdo version)
-RUNTIME_DEP_PKGS_CSWphp5-pdopgsql = CSWphp5 CSWlibpq CSWphp5-pdo
-OBSOLETED_BY_CSWphp5-pdopgsql = CSWphp5pdopgsql
 
 CATALOGNAME_CSWphp5-pdosqlite = php5_pdosqlite
 SPKG_DESC_CSWphp5-pdosqlite = A Sqlite specific database access abstraction module for PHP applications (pdo version)
@@ -289,8 +288,6 @@ PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
-
-PKGFILES_CSWphp5-pdopgsql = .*/lib/php/extensions/.*/pdo_pgsql.*
 
 PKGFILES_CSWphp5-pdosqlite = .*/lib/php/extensions/.*/pdo_sqlite.*
 
@@ -474,7 +471,6 @@ SKIPTEST = 1
 
 CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-tidy += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-snmp += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sysvshm += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xmlwriter += surplus-dependency|CSWphp5
@@ -500,7 +496,6 @@ CHECKPKG_OVERRIDES_CSWphp5-shmop += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-session += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-sysvsem += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 
 include gar/category.mk
