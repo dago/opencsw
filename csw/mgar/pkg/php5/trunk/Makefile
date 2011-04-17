@@ -315,6 +315,7 @@ post-install-modulated:
 	@cp $(WORKSRC)/php.ini-production $(INIDEST)
 	@ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(prefix)/php5/bin/
 	@perl -pi -e 's/^;extension=php_(.*).dll/;extension=$$1.so/' $(INIDEST)
+	@rm -rf $(DESTDIR)/.cha $(DESTDIR)/.dep* $(DESTDIR)/.reg* $(DESTDIR)/.l*
 	@$(MAKECOOKIE)
 
 install-extras:
