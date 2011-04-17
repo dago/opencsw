@@ -81,8 +81,8 @@ $(eval $(call php5_subpackage,mysql,CSWmysql5rt))
 $(eval $(call php5_subpackage,mysqli,CSWmysql5rt CSWzlib))
 $(eval $(call php5_subpackage,odbc,CSWunixodbc))
 $(eval $(call php5_subpackage,openssl,CSWosslrt CSWkrb5lib))
+$(eval $(call php5_subpackage,pcntl))
 
-PACKAGES += CSWphp5-pcntl
 PACKAGES += CSWphp5-pdo
 PACKAGES += CSWphp5-pdomysql
 PACKAGES += CSWphp5-pdoodbc
@@ -143,11 +143,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-pcntl = php5_pcntl
-SPKG_DESC_CSWphp5-pcntl = The pcntl extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-pcntl = CSWphp5
-OBSOLETED_BY_CSWphp5-pcntl = CSWphp5pcntl
 
 CATALOGNAME_CSWphp5-pdo = php5_pdo
 SPKG_DESC_CSWphp5-pdo = A database access abstraction module for PHP applications
@@ -306,8 +301,6 @@ PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
-
-PKGFILES_CSWphp5-pcntl = .*/lib/php/extensions/.*/pcntl.*
 
 PKGFILES_CSWphp5-pdo  = .*/lib/php/extensions/.*/pdo\.so*
 PKGFILES_CSWphp5-pdo += .*/include/php/ext/pdo.*
@@ -518,7 +511,6 @@ CHECKPKG_OVERRIDES_CSWphp5-tokenizer += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-soap += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pspell += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-wddx += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-pcntl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-zip += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-mimemagic += surplus-dependency|CSWphp5
