@@ -63,7 +63,7 @@ PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
 $(eval $(call php5_subpackage,exif))
 $(eval $(call php5_subpackage,ftp,CSWosslrt))
 $(eval $(call php5_subpackage,gd,CSWftype2 CSWlibgd2 CSWjpeg CSWpng CSWt1lib CSWxpm CSWzlib))
-PKGFILES_CSWphp-gd += .*/include/php/ext/gd.*
+PKGFILES_CSWphp5-gd += .*/include/php/ext/gd.*
 $(eval $(call php5_subpackage,gettext,CSWlibintl8))
 $(eval $(call php5_subpackage,gmp,CSWlibgmp))
 $(eval $(call php5_subpackage,hash))
