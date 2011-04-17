@@ -79,8 +79,8 @@ $(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt CSWlibltdl7))
 $(eval $(call php5_subpackage,mssql,CSWfreetds))
 $(eval $(call php5_subpackage,mysql,CSWmysql5rt))
 $(eval $(call php5_subpackage,mysqli,CSWmysql5rt CSWzlib))
+$(eval $(call php5_subpackage,odbc,CSWunixodbc))
 
-PACKAGES += CSWphp5-odbc
 PACKAGES += CSWphp5-openssl
 PACKAGES += CSWphp5-pcntl
 PACKAGES += CSWphp5-pdo
@@ -143,11 +143,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-odbc = php5_odbc
-SPKG_DESC_CSWphp5-odbc = The odbc extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-odbc = CSWphp5 CSWunixodbc
-OBSOLETED_BY_CSWPhp5-odbc = CSWphp5odbc
 
 CATALOGNAME_CSWphp5-openssl = php5_openssl
 SPKG_DESC_CSWphp5-openssl = The openssl extension for PHP5
@@ -316,8 +311,6 @@ PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 PKGFILES_CSWphp5-mimemagic = .*/lib/php/extensions/.*/mime_magic.*
 
 PKGFILES_CSWphp5-ncurses = .*/lib/php/extensions/.*/ncurses.*
-
-PKGFILES_CSWphp5-odbc = .*/lib/php/extensions/.*/odbc.*
 
 PKGFILES_CSWphp5-openssl = .*/lib/php/extensions/.*/openssl.*
 
@@ -524,7 +517,6 @@ CHECKPKG_OVERRIDES_CSWphp5-dbase += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sysvmsg += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-odbc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-openssl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5
