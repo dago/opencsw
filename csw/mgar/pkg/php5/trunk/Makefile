@@ -64,7 +64,7 @@ endef
 PACKAGES = CSWphp5
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2 CSWiconv CSWexpat CSWzlib
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2-2 CSWiconv CSWexpat CSWzlib
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
 # embeded 'magic' information to detect file types...odd, but...
@@ -108,7 +108,7 @@ CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
 PACKAGES += CSWap2-modphp5
 CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
 SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
-RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
+RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2-2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
@@ -120,7 +120,7 @@ $(eval $(call php5_subpackage,calendar))
 $(eval $(call php5_subpackage,ctype))
 $(eval $(call php5_subpackage,curl,CSWcurlrt CSWlibidn11 CSWoldaprt CSWosslrt CSWzlib CSWlibcares))
 $(eval $(call php5_subpackage,dba,CSWlibgdbm3 CSWbdb42))
-$(eval $(call php5_subpackage,dom,CSWiconv CSWlibxml2 CSWzlib))
+$(eval $(call php5_subpackage,dom,CSWiconv CSWlibxml2-2 CSWzlib))
 PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
 $(eval $(call php5_subpackage,exif))
 $(eval $(call php5_subpackage,ftp,CSWosslrt))
@@ -166,7 +166,7 @@ $(eval $(call php5_subpackage,session,CSWlibmm))
 PKGFILES_CSWphp5-session += .*/include/php/ext/session.*
 $(eval $(call php5_subpackage,shmop))
 $(eval $(call php5_subpackage,snmp,CSWnetsnmp))
-$(eval $(call php5_subpackage,soap,CSWiconv CSWlibxml2 CSWzlib))
+$(eval $(call php5_subpackage,soap,CSWiconv CSWlibxml2-2 CSWzlib))
 $(eval $(call php5_subpackage,sockets))
 $(eval $(call php5_subpackage,sqlite,CSWsqlite))
 PKGFILES_CSWphp5-sqlite += .*/include/php/ext/sqlite.*
@@ -176,10 +176,10 @@ $(eval $(call php5_subpackage,sysvshm))
 $(eval $(call php5_subpackage,tidy,CSWhtmltidy))
 $(eval $(call php5_subpackage,tokenizer))
 $(eval $(call php5_subpackage,wddx))
-$(eval $(call php5_subpackage,xmlreader,CSWiconv CSWlibxml2 CSWzlib))
+$(eval $(call php5_subpackage,xmlreader,CSWiconv CSWlibxml2-2 CSWzlib))
 $(eval $(call php5_subpackage,xmlrpc,CSWiconv CSWexpat))
-$(eval $(call php5_subpackage,xmlwriter,CSWiconv CSWlibxml2 CSWzlib))
-$(eval $(call php5_subpackage,xsl,CSWiconv CSWlibxml2 CSWlibxslt CSWzlib))
+$(eval $(call php5_subpackage,xmlwriter,CSWiconv CSWlibxml2-2 CSWzlib))
+$(eval $(call php5_subpackage,xsl,CSWiconv CSWlibxml2-2 CSWlibxslt CSWzlib))
 $(eval $(call php5_subpackage,zip,CSWzlib))
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
