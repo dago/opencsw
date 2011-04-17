@@ -171,28 +171,7 @@ $(eval $(call php5_subpackage,zip,CSWzlib))
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 
-# end verify...
-
-# PATCHFILES += configure.diff
-# PATCHFILES += odbc.diff
-# PATCHFILES += pdopgsql.diff
-# PATCHFILES += pgsql.diff
-
-# PHP Extensions, currently deactivated
-#
-# GAR needs performance enhancements to handle an integrated build with
-# all the extensions otherwise the build takes ages.
-# 1) File downloads are triggered via gmake invocations -> s l o w !!
-# 2) Unless gmake is called -r there are heaps of implicit rule searches
-#      for the included Makefiles (gmake tries to remake them)
-# 3) ... TBD, probably more
-#
-EXTENSION_MAKEFILES := $(wildcard extensions/*/Makefile)
-#include $(EXTENSION_MAKEFILES)
-
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
-
-#LIBS += -lrt -lintl 
 
 NOISALIST = 1
 STRIP_LIBTOOL = 1
