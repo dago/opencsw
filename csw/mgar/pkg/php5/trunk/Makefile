@@ -70,8 +70,8 @@ $(eval $(call php5_subpackage,hash))
 PKGFILES_CSWphp5-hash += .*/include/php/ext/hash.*
 $(eval $(call php5_subpackage,iconv,CSWiconv))
 PKGFILES_CSWphp5-iconv += .*/include/php/ext/iconv.*
+$(eval $(call php5_subpackage,imap,CSWimaprt CSWkrb5lib CSWosslrt))
 
-PACKAGES += CSWphp5-imap
 PACKAGES += CSWphp5-json
 PACKAGES += CSWphp5-ldap
 PACKAGES += CSWphp5-mbstring
@@ -142,11 +142,6 @@ SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
 RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2 CSWiconv
 RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
-
-CATALOGNAME_CSWphp5-imap = php5_imap
-SPKG_DESC_CSWphp5-imap = The imap extension for PHP5
-RUNTIME_DEP_PKGS_CSWphp5-imap = CSWphp5 CSWimaprt CSWkrb5lib CSWosslrt
-OBSOLETED_BY_CSWphp5-imap = CSWphp5imap
 
 CATALOGNAME_CSWphp5-json = php5_json
 SPKG_DESC_CSWphp5-json = The json extension for PHP5
@@ -351,7 +346,6 @@ PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 
 PKGFILES_CSWphp5-dbase = .*/lib/php/extensions/.*/dbase.*
 
-PKGFILES_CSWphp5-imap = .*/lib/php/extensions/.*/imap.*
 
 PKGFILES_CSWphp5-json = .*/lib/php/extensions/.*/json.*
 
@@ -581,7 +575,6 @@ CHECKPKG_OVERRIDES_CSWphp5-mbstring += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-xsl += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-sysvmsg += surplus-dependency|CSWphp5
-CHECKPKG_OVERRIDES_CSWphp5-imap += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-odbc += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-readline += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphp5-openssl += surplus-dependency|CSWphp5
