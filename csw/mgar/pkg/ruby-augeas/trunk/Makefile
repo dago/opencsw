@@ -13,7 +13,7 @@ VENDOR_URL   = http://augeas.net
 PACKAGES    = CSWrubyaugeas
 CATALOGNAME = ruby_augeas
 
-RUNTIME_DEP_PKGS_CSWrubyaugeas += CSWruby
+RUNTIME_DEP_PKGS_CSWrubyaugeas += CSWruby18
 RUNTIME_DEP_PKGS_CSWrubyaugeas += CSWlibruby18-1
 RUNTIME_DEP_PKGS_CSWrubyaugeas += CSWaugeas
 CHECKPKG_OVERRIDES_CSWrubyaugeas += catalogname-does-not-match-pkgname|pkgname=CSWrubyaugeas|catalogname=ruby_augeas|expected-catalogname=rubyaugeas
