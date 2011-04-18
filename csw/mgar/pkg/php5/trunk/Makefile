@@ -58,7 +58,6 @@ SPKG_DESC_CSWphp5-$(1) ?= The $(1) extention for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-$(1) ?= CSWphp5 $(2)
 OBSOLETED_BY_CSWphp5-$(1) ?= CSWphp5$(1)
 PKGFILES_CSWphp5-$(1) ?= .*lib/php/extensions/.*/$(1).so .*php5/extensions/$(1)
-CHECKPKG_OVERRIDES_CSWphp5-$(1) += surplus-dependency|CSWphp5
 endef
 
 PACKAGES = CSWphp5
@@ -70,7 +69,6 @@ INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
 # embeded 'magic' information to detect file types...odd, but...
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/PEAR/Config.php
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/man/man1/php-config.1
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php-cgi
 # verify these...
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php.ini.CSW
@@ -103,6 +101,7 @@ CHECKPKG_OVERRIDES_CSWphp5-dev += file-with-bad-content|/usr/local|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWphp5-dev += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/acinclude.m4
 CHECKPKG_OVERRIDES_CSWphp5-dev += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/shtool
 CHECKPKG_OVERRIDES_CSWphp5-dev += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/phpize.m4
+CHECKPKG_OVERRIDES_CSWphp5-dev += file-with-bad-content|/usr/local|root/opt/csw/php5/man/man1/php-config.1
 
 PACKAGES += CSWap2-modphp5
 CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
