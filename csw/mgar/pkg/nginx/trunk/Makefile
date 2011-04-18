@@ -21,7 +21,7 @@ PATCHFILES   = patch.errno
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS = CSWosslrt CSWpcrert CSWzlib CSWperl
+RUNTIME_DEP_PKGS = CSWosslrt CSWlibpcre0 CSWzlib CSWperl
 
 PACKAGING_PLATFORMS  = solaris9-sparc  solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
@@ -75,6 +75,8 @@ CONFIGURE_ARGS += --with-http_realip_module
 CONFIGURE_ARGS += --with-http_secure_link_module
 CONFIGURE_ARGS += --with-http_ssl_module
 CONFIGURE_ARGS += --with-http_stub_status_module
+
+CHECKPKG_OVERRIDES_CSWnginx += bad-location-of-file|file=/var/run/nginx
 
 TEST_SCRIPTS =
 
