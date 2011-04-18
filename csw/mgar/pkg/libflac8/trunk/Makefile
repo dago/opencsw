@@ -21,6 +21,7 @@ DISTFILES = $(DISTNAME).tar.gz
 PATCHFILES += libtool-64bit.patch
 PATCHFILES += strip-nasm-1.2.1.patch
 PATCHFILES += no-stdint.patch
+PATCHFILES += 0004-Preserve-norunpath-in-libtool.patch
 
 BUILD_DEP_PKGS += CSWbash
 
@@ -28,17 +29,51 @@ PACKAGES += CSWlibflac8
 CATALOGNAME_CSWlibflac8 = libflac8
 SPKG_DESC_CSWlibflac8 = Free lossless audio codec library, libflac.so.8
 PKGFILES_CSWlibflac8 = $(call pkgfiles_lib,libFLAC.so.8)
-RUNTIME_DEP_PKGS_CSWlibflac8 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibflac8 += CSWlibogg0
+OBSOLETED_BY_CSWlibflac8 = CSWlibflac
 
-# Override conflicts with CSWflac as the new CSWflac is built from the latest libflac
-CHECKPKG_OVERRIDES_CSWlibflac7 += file-collision|/opt/csw/lib/libFLAC.so.7.0.0|CSWflac|CSWlibflac7
-CHECKPKG_OVERRIDES_CSWlibflac7 += file-collision|/opt/csw/lib/libFLAC.so.7|CSWflac|CSWlibflac7
+PACKAGES += CSWlibflac++6
+CATALOGNAME_CSWlibflac++6 = libflac++6
+SPKG_DESC_CSWlibflac++6 = Free lossless audio codec library, libFLAC++.so.6
+PKGFILES_CSWlibflac++6 = $(call pkgfiles_lib,libFLAC++.so.6)
+RUNTIME_DEP_PKGS_CSWlibflac++6 += CSWlibflac8
+OBSOLETED_BY_CSWlibflac++6 = CSWlibflac
+
+PACKAGES += CSWlibflac-dev
+CATALOGNAME_CSWlibflac-dev = libflac_dev
+SPKG_DESC_CSWlibflac-dev = Development files for libflac.so.8
+PKGFILES_CSWlibflac-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibflac-dev += $(docdir)/flac/.*
+RUNTIME_DEP_PKGS_CSWlibflac-dev = CSWlibflac8
+RUNTIME_DEP_PKGS_CSWlibflac-dev += CSWlibflac++6
+
+PACKAGES += CSWlibflac-utils
+CATALOGNAME_CSWlibflac-utils = libflac_utils
+SPKG_DESC_CSWlibflac-utils = Utility programs for the Free Lossless Audio Codec (FLAC)
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibflac-utils += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWlibflac-utils += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibflac-utils += CSWlibflac8
+OBSOLETED_BY_CSWlibflac-utils = CSWflac
+
+PACKAGES += CSWxmms-flac
+PKGFILES_CSWxmms-flac = $(libdir)/xmms/.*
+SPKG_DESC_CSWxmms-flac = XMMS plugin for the FLAC audio file format
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWglib
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWgtk
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibflac8
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWxmms
+OBSOLETED_BY_CSWxmms-flac = CSWxmmsflac
+
 
 VENDOR_URL = http://flac.sourceforge.net/
 
 LICENSE = $(foreach lic,FDL GPL LGPL Xiph,COPYING.$(lic))
 
 # EXTRA_LINKER_FLAGS = -liconv -lm
+EXTRA_LINKER_FLAGS = -norunpath
+# EXTRA_CXXFLAGS = -norunpath
 
 # Must be defined and empty or -I$(includedir) is added too early
 # EXTRA_INC = ../../include
@@ -48,6 +83,8 @@ EXTRA_CFLAGS = $(INCLUDE_FLAGS) -D__inline=
 
 STRIP_LIBTOOL = 1
 
+BUILD64 = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_CONFIGURE_ARGS_mm-64 = --disable-xmms-plugin
@@ -56,10 +93,10 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 # XXX: Assembler optimization just doesn't work. Disable for now.
 CONFIGURE_ARGS += --disable-asm-optimizations
 
-TEST_TARGET = check
-
-# There is one test failing, but as this is really a long-outdated legacy library
-# I don't care much for now.
-# SKIPTEST ?= 1
+EXTRA_PAX_ARGS = -s ',$(docdir)/flac-$(VERSION),$(docdir)/flac,'
 
 include gar/category.mk
+
+post-install-modulated:
+	perl -pi -e 's,/usr/share/doc,$(docdir),' \
+		$(DESTDIR)$(mandir)/man1/flac.1
