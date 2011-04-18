@@ -1,5 +1,5 @@
 NAME = sqlite3
-VERSION = 3070500
+VERSION = 3070602
 CATEGORIES = lib
 
 DESCRIPTION  = An embeddable SQL engine in a C library
@@ -29,35 +29,20 @@ RUNTIME_DEP_PKGS_CSWsqlite3 += CSWreadline
 PACKAGES += CSWlibsqlite3-0
 CATALOGNAME_CSWlibsqlite3-0 = libsqlite3_0
 SPKG_DESC_CSWlibsqlite3-0 = SQLite library providing libsqlite3.so.0
-PKGFILES_CSWlibsqlite3-0 = $(call baseisadirs,$(libdir),libsqlite3\.so\.0(\.\d+)*)
+PKGFILES_CSWlibsqlite3-0 = $(call pkgfiles_lib,libsqlite3.so.0)
+OBSOLETED_BY_CSWlibsqlite3-0 = CSWsqlite3rt
 
 PACKAGES += CSWlibsqlite3-dev
 CATALOGNAME_CSWlibsqlite3-dev = libsqlite3_dev
 SPKG_DESC_CSWlibsqlite3-dev = Development files for libsqlite3.so
 PKGFILES_CSWlibsqlite3-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibsqlite3-dev = CSWlibsqlite3-0
-
-PACKAGES += CSWsqlite3rt
-CATALOGNAME_CSWsqlite3rt = sqlite3_rt
-SPKG_DESC_CSWsqlite3rt = Transitional package as contents moved to CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWsqlite3rt = CSWlibsqlite3-0
-CHECKPKG_OVERRIDES_CSWsqlite3rt += surplus-dependency|CSWlibsqlite3-0
-PKGFILES_CSWsqlite3rt = NOFILES
-ARCHALL_CSWsqlite3rt = 1
-
-PACKAGES += CSWsqlite3devel
-CATALOGNAME_CSWsqlite3devel = sqlite3_devel
-SPKG_DESC_CSWsqlite3devel = Transitional package as contents moved to CSWlibsqlite3-dev
-PKGFILES_CSWsqlite3devel = NOFILES
+OBSOLETED_BY_CSWlibsqlite3-dev = CSWsqlite3devel
 
 BUILD_DEP_PKGS += CSWreadline
 
 BUILD64 = 1
-NOISAEXEC = 1
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
+EXTRA_MERGE_DIRS_isa-extra = $(bindir)
 
 include gar/category.mk
 
