@@ -69,16 +69,11 @@ INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
 # embeded 'magic' information to detect file types...odd, but...
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/libtool.m4
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/acinclude.m4
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/shtool
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/phpize.m4
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/PEAR/Config.php
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/man/man1/php-config.1
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php-cgi
 # verify these...
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php.ini.CSW
-
 
 PACKAGES += CSWphp5-dev
 CATALOGNAME_CSWphp5-dev   = php5_dev
@@ -104,6 +99,10 @@ PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/ext/xml.*
 PKGFILES_CSWphp5-dev += $(prefix)/php5/man/man1/php-config.1
 PKGFILES_CSWphp5-dev += $(prefix)/php5/man/man1/phpize.1
 CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWphp5-dev += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/libtool.m4
+CHECKPKG_OVERRIDES_CSWphp5-dev += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/acinclude.m4
+CHECKPKG_OVERRIDES_CSWphp5-dev += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/shtool
+CHECKPKG_OVERRIDES_CSWphp5-dev += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/build/phpize.m4
 
 PACKAGES += CSWap2-modphp5
 CATALOGNAME_CSWap2-modphp5 = ap2_modphp5

@@ -1,0 +1,3 @@
+/usr/local references:
+	   php/build/* -> build stuff that doesn't matter
+	   PEAR/Config.php -> default for gpg if not in $PATH
