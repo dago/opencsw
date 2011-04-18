@@ -32,7 +32,8 @@ lcase = $(shell echo $(1) | tr '[A-Z]' '[a-z]' )
 # Ideally this would also figure out the AUTHOR by querying CPAN. Alternatively
 # we might think about dropping the AUTHOR field and determine that on the fly
 # during the build. Ideas?
-newpkg-%: catalogname = $(shell echo $(call lcase,$*) | tr -d ':-' )
+newpkg-%: catalogname = $(call lcase,$(subst ::,_,$*))
+newpkg-%: pkgname = $(call lcase,$(subst ::,-,$*))
 newpkg-%: dir = $(subst ::,-,$*)
 newpkg-%:
 	@svn mkdir $(dir) $(dir)/tags $(dir)/branches $(dir)/trunk $(dir)/trunk/files
@@ -46,7 +47,7 @@ newpkg-%:
 	echo "  Long description";                                      \
 	echo "endef";                                                   \
 	echo "";                                                        \
-	echo "PACKAGES = CSWpm$(catalogname)";                                \
+	echo "PACKAGES = CSWpm-$(pkgname)";                                \
 	echo "CATALOGNAME = pm_$(catalogname)";                               \
 	echo "";                                                        \
 	echo "include gar/category.mk";                                 \
