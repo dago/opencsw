@@ -25,6 +25,7 @@ CHECKPKG_OVERRIDES += surplus-dependency|CSWgeoip
 CHECKPKG_OVERRIDES += file-with-bad-content
 
 PATCHFILES += 0001-Path-and-user-changes-in-conf-file.patch
+PATCHFILES += 0002-change-socket-path.patch
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS  = --prefix=/opt/csw
