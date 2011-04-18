@@ -332,7 +332,7 @@ PKGFILES_RT += $(call baseisadirs,$(libdir),[^/]*\.so\.\d+(\.\d+)*)
 
 # PKGFILES_LIB selects just one library. The '.' will be escaped automatically!
 # Use PKGFILES_CSWlibfoo1 = $(call pkgfiles_lib,libfoo.so.1)
-pkgfiles_lib += $(call baseisadirs,$(libdir),$(subst .,\.,$(1))(\.\d+)*)
+pkgfiles_lib += $(call baseisadirs,$(libdir),$(subst .,\.,$(subst +,\+,$(1)))(\.\d+)*)
 
 # PKGFILES_DEVEL selects files belonging to a developer package
 PKGFILES_DEVEL_CONFIG ?= $(call baseisadirs,$(bindir),[^/]*-config)
