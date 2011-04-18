@@ -849,26 +849,27 @@ post-merge-php5ext:
 
 # This merges the 
 merge-modulated: install-modulated pre-merge-modulated pre-merge-$(MODULATION) $(MERGE_TARGETS) post-merge-$(MODULATION) post-merge-modulated
+	$(warning M: $(MERGE_DIRS))
 	@$(MAKECOOKIE)
 
 # Copy the whole tree verbatim
 merge-copy-all: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pcopy $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") \
 		. $(PKGROOT))
 	@$(MAKECOOKIE)
 
 # Copy only the merge directories
 merge-copy-only: $(PKGROOT)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
-		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") -s ",.*,," \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pcopy $(_PAX_ARGS) \
+		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/,p") -m \
 		. $(PKGROOT) \
 	)
 	@$(MAKECOOKIE)
 
 # Copy the whole tree and relocate the directories in $(MERGE_DIRS)
 merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pcopy $(_PAX_ARGS) \
 		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") \
 		. $(PKGROOT) \
 	)
@@ -876,15 +877,15 @@ merge-copy-relocate: $(PKGROOT) $(INSTALLISADIR)
 
 # Copy only the relocated directories
 merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
-	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
-		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") -s ",.*,," \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pcopy $(_PAX_ARGS) \
+		$(foreach DIR,$(MERGE_DIRS),-s ",^\(\.$(DIR)/\),.$(call mergebase,$(DIR))/$(ISA)/,p") -m \
 		 . $(PKGROOT) \
 	)
 	@$(MAKECOOKIE)
 
 # Copy 
 merge-copy-config-only:
-	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pax -r -w -v $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pcopy $(_PAX_ARGS) \
 		-s ",^\(\.$(bindir)/.*-config\)\$$,\1,p" \
 		-s ",.*,," \
 		. $(PKGROOT) \
@@ -895,12 +896,13 @@ merge-copy-config-only:
 remerge: reset-merge merge
 
 reset-merge: reset-package $(addprefix reset-merge-,$(MODULATIONS)) reset-merge-license reset-merge-classutils reset-merge-checkpkgoverrides reset-merge-alternatives reset-merge-distfile-README.CSW reset-merge-distfile-changelog.CSW reset-merge-obsolete reset-merge-ap2mod reset-merge-php5ext reset-merge-src
-	@rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
-	@rm -rf $(PKGROOT)
+	rm -f $(COOKIEDIR)/pre-merge $(foreach M,$(MODULATIONS),$(COOKIEDIR)/merge-$M) $(COOKIEDIR)/merge $(COOKIEDIR)/post-merge
+	rm -rf $(PKGROOT)
 
 reset-merge-modulated:
 	@$(call _pmod,Reset merge state)
-	@rm -f $(COOKIEDIR)/merge-*
+	echo rm -f $(COOKIEDIR)/merge-*
+	rm -f $(COOKIEDIR)/merge-*
 
 # The clean rule.  It must be run if you want to re-download a
 # file after a successful checksum (or just remove the checksum
