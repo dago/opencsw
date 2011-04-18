@@ -14,12 +14,14 @@ PATCHFILES += 0001-Need-minor-tweaks-for-Solaris.patch
 
 PACKAGES = CSWgcal
 CATALOGNAME_CSWgcal = gcal
-RUNTIME_DEP_PKGS_CSWgcal += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWgcal += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgcal += CSWncurses
 RUNTIME_DEP_PKGS_CSWgcal += CSWperl
 
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+
+EXTRA_CPPFLAGS = -DGCAL_SYS_DATADIR=\\\"$(sharedstatedir)/gcal\\\"
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
