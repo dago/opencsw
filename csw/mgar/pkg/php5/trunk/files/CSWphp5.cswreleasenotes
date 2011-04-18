@@ -1,6 +1,4 @@
 /usr/local references:
 	   bin/php -> embeds 'magic' filetype info in the binary
 	   bin/php-cgi -> embeds 'magic' filetype info in the binary
-	   php/build/* -> build stuff that doesn't matter
 	   PEAR/Config.php -> default for gpg if not in $PATH
-	   man1/php-config.1 -> an example path
