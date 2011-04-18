@@ -118,7 +118,7 @@ $(eval $(call php5_subpackage,bcmath))
 $(eval $(call php5_subpackage,bz2,CSWbzip2))
 $(eval $(call php5_subpackage,calendar))
 $(eval $(call php5_subpackage,ctype))
-$(eval $(call php5_subpackage,curl,CSWcurlrt CSWlibidn11 CSWoldaprt CSWosslrt CSWzlib CSWlibcares))
+$(eval $(call php5_subpackage,curl,CSWcurlrt CSWlibidn11 CSWoldaprt CSWosslrt CSWzlib CSWlibcares2))
 $(eval $(call php5_subpackage,dba,CSWlibgdbm3 CSWbdb42))
 $(eval $(call php5_subpackage,dom,CSWiconv CSWlibxml2-2 CSWzlib))
 PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
