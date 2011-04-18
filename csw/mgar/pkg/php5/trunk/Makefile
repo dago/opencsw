@@ -85,24 +85,24 @@ CATALOGNAME_CSWphp5-dev   = php5_dev
 SPKG_DESC_CSWphp5-dev     = Development files for php5
 RUNTIME_DEP_PKGS_CSWphp5-dev      = CSWphp5
 OBSOLETED_BY_CSWphp5-dev = CSWphp5devel
-PKGFILES_CSWphp5-dev  = $(bindir)/php-config
-PKGFILES_CSWphp5-dev += $(bindir)/phpize
-PKGFILES_CSWphp5-dev += $(bindir)/peardev
-PKGFILES_CSWphp5-dev += $(libdir)/php/build/.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/TSRM.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/Zend.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/include.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/main.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/regex.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/date.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/filter.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/libxml.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/pcre.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/spl.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/standard.*
-PKGFILES_CSWphp5-dev += $(includedir)/php/ext/xml.*
-PKGFILES_CSWphp5-dev += $(mandir)/man1/php-config.1
-PKGFILES_CSWphp5-dev += $(mandir)/man1/phpize.1
+PKGFILES_CSWphp5-dev  = $(prefix)/php5/bin/php-config
+PKGFILES_CSWphp5-dev += $(prefix)/php5/bin/phpize
+PKGFILES_CSWphp5-dev += $(prefix)/php5/bin/peardev
+PKGFILES_CSWphp5-dev += $(prefix)/php5/lib/php/build/.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/TSRM.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/Zend.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/include.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/main.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/regex.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/ext/date.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/ext/filter.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/ext/libxml.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/ext/pcre.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/ext/spl.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/ext/standard.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/include/php/ext/xml.*
+PKGFILES_CSWphp5-dev += $(prefix)/php5/man/man1/php-config.1
+PKGFILES_CSWphp5-dev += $(prefix)/php5/man/man1/phpize.1
 CHECKPKG_OVERRIDES_CSWphp5-dev += surplus-dependency|CSWphp5
 
 PACKAGES += CSWap2-modphp5
@@ -147,7 +147,7 @@ $(eval $(call php5_subpackage,pcntl))
 $(eval $(call php5_subpackage,pdo))
 PKGFILES_CSWphp5-pdo += .*/include/php/ext/pdo.*
 $(eval $(call php5_subpackage,pdomysql,CSWmysql5rt CSWzlib CSWphp5-pdo))
-PKGFILES_CSWphp5-pdopgsql = .*/lib/php/extensions/.*/pdo_mysql.so
+PKGFILES_CSWphp5-pdomysql = .*/lib/php/extensions/.*/pdo_mysql.so
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5-pdo
 $(eval $(call php5_subpackage,pdoodbc,CSWunixodbc CSWphp5-pdo))
 PKGFILES_CSWphp5-pdoodbc = .*/lib/php/extensions/.*/pdo_odbc.so
