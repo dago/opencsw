@@ -16,9 +16,6 @@ DISTFILES += copyright-release.html
 
 LICENSE = copyright-release.html
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = sqlite-(\d+(?:\.\d+)*).tar.gz
-
 PACKAGES += CSWsqlite3
 CATALOGNAME_CSWsqlite3 = sqlite3
 SPKG_DESC_CSWsqlite3 = $(DESCRIPTION)
