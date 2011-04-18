@@ -1,0 +1,25 @@
+From 4593b146f039662547960a5b72858f1e48822ffd Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 18 Apr 2011 15:56:36 +0200
+Subject: [PATCH] Preserve norunpath in libtool
+
+---
+ ltmain.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/ltmain.sh b/ltmain.sh
+index 7a320ef..e19a625 100644
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -1533,7 +1533,7 @@ EOF
+       # +DA*, +DD* enable 64-bit mode on the HP compiler
+       # -q* pass through compiler args for the IBM compiler
+       # -m* pass through architecture-specific compiler args for GCC
+-      -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*)
++      -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*|-norunpath)
+ 
+ 	# Unknown arguments in both finalize_command and compile_command need
+ 	# to be aesthetically quoted because they are evaled later.
+-- 
+1.7.3.2
+
