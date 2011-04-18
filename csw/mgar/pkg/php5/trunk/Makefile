@@ -33,6 +33,7 @@ LICENSE = LICENSE
 DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += phpext pear.conf.CSW CSWphp5.postinstall
 DISTFILES += CSWphp5.cswreleasenotes
+DISTFILES += CSWap2-modphp5.cswreleasenotes
 
 PATCHFILES += 0001-Strip-usr-ucblib-references.patch
 # this one is filed upstream: http://bugs.php.net/bug.php?id=54318
@@ -111,6 +112,7 @@ RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
+CHECKPKG_OVERRIDES_CSWap2-modphp5 += file-with-bad-content|/usr/local|root/opt/csw/apache2/libexec/libphp5.so
 
 $(eval $(call php5_subpackage,bcmath))
 $(eval $(call php5_subpackage,bz2,CSWbzip2))
