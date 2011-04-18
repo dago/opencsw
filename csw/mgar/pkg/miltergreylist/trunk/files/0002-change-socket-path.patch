@@ -1,0 +1,34 @@
+From 65288f5c0bf0b7111ba16dad73a9c33fd4a06cde Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Mon, 18 Apr 2011 10:55:40 +0200
+Subject: [PATCH] change-socket-path
+
+---
+ milter-greylist.m4 |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/milter-greylist.m4 b/milter-greylist.m4
+index 9f61507..9bbcb59 100644
+--- a/milter-greylist.m4
++++ b/milter-greylist.m4
+@@ -18,7 +18,7 @@ dnl
+ dnl    confGREYLIST_SOCKET
+ dnl        socket to communicate with milter
+ dnl        default value :
+-dnl           local:/var/milter-greylist/milter-greylist.sock
++dnl           local:/var/opt/csw/miltergreylist/milter-greylist.sock
+ dnl
+ dnl    confGREYLIST_OPTIONS
+ dnl       extra parameters to be used in INPUT_MAIL_FILTER
+@@ -34,7 +34,7 @@ dnl
+ ifdef(`confGREYLIST_SOCKET',`dnl
+ define(`confGREYLIST_ARGS',`S=confGREYLIST_SOCKET')dnl
+ dnl',`dnl
+-define(`confGREYLIST_ARGS',`S=local:/var/milter-greylist/milter-greylist.sock')dnl
++define(`confGREYLIST_ARGS',`S=local:/var/opt/csw/miltergreylist/milter-greylist.sock')dnl
+ dnl')dnl
+ ifdef(`confGREYLIST_OPTIONS',`dnl
+ define(`confGREYLIST_ARGS',confGREYLIST_ARGS`, confGREYLIST_OPTIONS')dnl
+-- 
+1.7.3.2
+
