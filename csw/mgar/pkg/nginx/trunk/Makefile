@@ -16,6 +16,8 @@ DISTFILES   += cswnginx
 
 LICENSE      = LICENSE
 
+PATCHFILES   = patch.errno
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
