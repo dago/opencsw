@@ -1,0 +1,19 @@
+<%
+  package_name = name.replace("::","-").lower()
+  catalog_name = name.replace("::","_").lower()
+%>
+NAME = ${name}
+VERSION = ${version}
+GARTYPE = v2
+CATEGORIES = cpan
+AUTHOR = MYSELF
+
+DESCRIPTION = Brief description
+define BLURB
+  Long description
+endef
+
+PACKAGES = CSWpm-${package_name}
+CATALOGNAME = pm_${catalog_name}
+
+include gar/category.mk
