@@ -217,7 +217,3 @@ post-install-modulated:
 	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
 	@(ginstall -d -m 0755 $(DOCD); gcp -pR $(WORKSRC)/examples $(DOCD))
 	@$(MAKECOOKIE)
-
-post-merge:
-	@(cd $(PKGROOT); rmdir tmp)
-	@$(MAKECOOKIE)
