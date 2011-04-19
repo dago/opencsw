@@ -132,6 +132,7 @@ PKGFILES_CSWbacula-sd += .*man8/bacula-sd.8.gz .*man8/bextract.8.gz
 PKGFILES_CSWbacula-sd += .*man8/bls.8.gz .*man8/btape.8.gz .*bacula/working
 PKGFILES_CSWbacula-sd += .*man8/bcopy.8.gz .*man8/bscan.8.gz
 PKGFILES_CSWbacula-sd += /var/opt/csw/run
+PKGFILES_CSWbacula-sd += $(localstatedir)/$(NAME)/archive
 
 CATALOGNAME_CSWbacula-director = bacula_director
 SPKG_DESC_CSWbacula-director = $(DESCRIPTION) - Director
@@ -169,6 +170,7 @@ sysconfdir = /etc$(prefix)/$(NAME)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-working-dir=$(localstatedir)/$(NAME)/working
+CONFIGURE_ARGS += --with-archivedir=$(localstatedir)/$(NAME)/archive
 CONFIGURE_ARGS += --with-libiconv-prefix=$(prefix)
 CONFIGURE_ARGS += --with-libintl-prefix=$(prefix)
 CONFIGURE_ARGS += --disable-conio
