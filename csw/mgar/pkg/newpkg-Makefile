@@ -1,8 +1,9 @@
 # $Id: Makefile 13420 2011-02-20 21:04:03Z bdwalton $
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-NAME = %NAME%
-VERSION = %VERSION%
+NAME = ${name}
+VERSION = ${version}
+GARTYPE = v2
 CATEGORIES = category
 
 DESCRIPTION = Brief description

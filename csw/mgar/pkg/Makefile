@@ -69,32 +69,10 @@ pkglist:
 newpkg-%:
 	@svn mkdir $* $*/tags $*/branches $*/trunk $*/trunk/files
 	@svn cp template/Makefile $*/Makefile
-	@(echo '# $$Id$$';   								\
-	echo "NAME = $*";                                     								\
-	echo "VERSION = 1.0";                                        								\
-	echo "CATEGORIES = category";                                   								\
-	echo "";                                                        								\
-	echo "DESCRIPTION = Brief description";                         								\
-	echo "define BLURB";                                            								\
-	echo "  Long description";                                      								\
-	echo "endef";                                                   								\
-	echo "";                                                        								\
-	echo "MASTER_SITES = ";                                         								\
-	echo "DISTFILES  = $$(DISTNAME).tar.gz";          								\
-	echo "";                                                        								\
-	echo "# File name regex to get notifications about upstream software releases"; \
-	echo "# NOTE: Use this only if the automatic regex creation"; \
-	echo "#       does not work for your package";	\
-	echo "# UFILES_REGEX = $$(NAME)-(\d+(?:\.\d+)*).tar.gz";										\
-	echo "";                                                        								\
-	echo "# If the url used to check for software update is different of MASTER_SITES, then ";   	\
-	echo "# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES"; 	\
-	echo "# UPSTREAM_MASTER_SITES = ";                                         						\
-	echo "";                                                        								\
-	echo "CONFIGURE_ARGS = $$(DIRPATHS)";                          									\
-	echo "";                                                        								\
-	echo "include gar/category.mk";                                 								\
-	) > $*/trunk/Makefile
+	@python -c 'from mako.template import Template; \
+		v = { "name": "$*", "version": "x.y" }; \
+		t = Template(filename="newpkg-Makefile"); \
+		print t.render(**v)' > $*/trunk/Makefile
 	@touch $*/trunk/checksums
 	@svn add $*/trunk/Makefile $*/trunk/checksums
 	@svn ps svn:keywords Id $*/trunk/Makefile
