@@ -85,7 +85,7 @@ EXTRA_INC = $(EXTRA_INC_version-$(VERSION))
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
-MIGRATECONF = openldap
+MIGRATE_FILES = openldap
 
 # Is this causing this?
 #   https://www.opencsw.org/mantis/view.php?id=4555
@@ -96,7 +96,6 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 NODIRPATHS = --docdir
 
 BUILD64 = 1
-NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-crypt
 CONFIGURE_ARGS += --enable-lmpasswd
@@ -130,7 +129,6 @@ CONFIGURE_ARGS_64 += --enable-perl=no
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
 SKIPTEST ?= 1
-TEST_TARGET = check
 
 MERGE_SCRIPTS_isa-default-version-2.3.43 = copy-only
 MERGE_DIRS_isa-default-version-2.3.43 = $(libdir)
@@ -142,8 +140,8 @@ MERGE_SCRIPTS_isa-default64-version-2.4.23 = copy-relocated-only
 MERGE_DIRS_isa-default64-version-2.4.23 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 # Perl backend is built, although it has been told not to.
-EXTRA_PAX_ARGS = -s,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
-EXTRA_PAX_ARGS = -s,.*/opt/csw/libexec/amd64/openldap/back_perl.*,,
+EXTRA_PAX_ARGS = -s ,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
+EXTRA_PAX_ARGS = -s ,.*/opt/csw/libexec/amd64/openldap/back_perl.*,,
 
 # Make sure we do not use the 2.3 .so-links in any case
 EXTRA_MERGE_EXCLUDE_FILES_isa-i386-version-2.3.43 = .*\.so
