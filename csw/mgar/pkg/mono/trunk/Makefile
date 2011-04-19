@@ -1,5 +1,5 @@
 NAME = mono
-VERSION = 1.1.10
+VERSION = 2.10.1
 CATEGORIES = lang
 
 DESCRIPTION = Mono Runtime
@@ -10,8 +10,8 @@ define BLURB
   based on the ECMA standards for C# and  the Common Language Infrastructure.
 endef
 
-MASTER_SITES = http://go-mono.com/sources/mono-1.1/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz 
+MASTER_SITES = http://ftp.novell.com/pub/mono/sources/mono/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += CSWmono.gspec CSWmono.depend CSWmono.prototype
 
 # We define upstream file regex so we can be notifed of new upstream software release
