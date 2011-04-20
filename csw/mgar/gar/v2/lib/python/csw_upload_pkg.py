@@ -526,7 +526,7 @@ class Srv4Uploader(object):
         print " ", " ".join(args_by_cat[(arch, osrel)])
       print ("Packages have not been submitted to the %s catalog."
              % DEFAULT_CATREL)
-    return (not checks_failed_for_catalogs, checkpkg_sets)
+    return not checks_failed_for_catalogs
 
 
 if __name__ == '__main__':
