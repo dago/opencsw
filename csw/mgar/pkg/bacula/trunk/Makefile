@@ -220,4 +220,5 @@ post-install-modulated:
 	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
 	@(ginstall -d -m 0755 $(DOCD); gcp -pR $(WORKSRC)/examples $(DOCD))
 	@(ginstall -m 0644 $(WORKDIR)/README.CSW $(DOCD))
+	@(cd $(DESTDIR)$(sysconfdir); for f in *conf; do mv $$f $$f.CSW; done)
 	@$(MAKECOOKIE)
