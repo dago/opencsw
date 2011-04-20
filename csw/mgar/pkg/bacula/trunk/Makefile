@@ -10,6 +10,15 @@ endef
 
 GARCOMPILER = GNU
 
+MASTER_SITES = $(SF_MIRRORS)
+DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += CSWbacula-doc.cswreleasenotes
+PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
+PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
+
+BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
+BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
+
 PACKAGES  = CSWbacula-common CSWbacula-fd CSWbacula-sd
 PACKAGES += CSWbacula-director CSWbacula-client CSWbacula
 PACKAGES += CSWbacula-tray-monitor CSWbacula-console CSWbacula-doc
@@ -154,15 +163,6 @@ PKGFILES_CSWbacula-director += .*libexec.*mysql_tables.*
 PKGFILES_CSWbacula-director += .*bacula/bacula-dir.conf
 PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
 PKGFILES_CSWbacula-director += /var/opt/csw/run
-
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(DISTNAME).tar.gz
-DISTFILES += CSWbacula-doc.cswreleasenotes
-PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
-PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
-
-BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
-BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
 
 # force libraries into a separate subdirectory
 libdir = $(prefix)/lib/$(NAME)
