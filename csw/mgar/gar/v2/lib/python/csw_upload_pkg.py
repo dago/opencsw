@@ -21,6 +21,7 @@ import struct_util
 import subprocess
 import file_set_checker
 import sys
+import getpass
 
 
 BASE_URL = "http://buildfarm.opencsw.org"
@@ -70,7 +71,8 @@ class WorkflowError(Error):
 class Srv4Uploader(object):
 
   def __init__(self, filenames, rest_url, os_release=None, debug=False,
-      output_to_screen=True):
+      output_to_screen=True,
+      username=None, password=None):
     super(Srv4Uploader, self).__init__()
     self.filenames = self.SortFilenames(filenames)
     self.md5_by_filename = {}
@@ -79,6 +81,18 @@ class Srv4Uploader(object):
     self.rest_url = rest_url
     self._rest_client = rest.RestClient(self.rest_url)
     self.output_to_screen = output_to_screen
+    self.username = username
+    self.password = password
+
+  def _SetAuth(self, c):
+    """Set basic HTTP auth options on given Curl object."""
+    if self.username:
+      logging.debug("Using basic AUTH for user %s", self.username)
+      c.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_ANY)
+      c.setopt(pycurl.USERPWD, "%s:%s" % (self.username, self.password))
+    else:
+      logging.debug("User and password not set, not using HTTP AUTH")
+    return c
 
   def _ImportMetadata(self, filename):
     md5_sum = self._GetFileMd5sum(filename)
@@ -198,6 +212,7 @@ class Srv4Uploader(object):
     c.setopt(pycurl.WRITEFUNCTION, d.write)
     c.setopt(pycurl.HEADERFUNCTION, h.write)
     c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
+    c = self._SetAuth(c)
     if self.debug:
       c.setopt(c.VERBOSE, 1)
     c.perform()
@@ -334,6 +349,7 @@ class Srv4Uploader(object):
     c.setopt(pycurl.WRITEFUNCTION, d.write)
     c.setopt(pycurl.HEADERFUNCTION, h.write)
     c.setopt(pycurl.HTTPHEADER, ["Expect:"]) # Fixes the HTTP 417 error
+    c = self._SetAuth(c)
     if self.debug:
       c.setopt(c.VERBOSE, 1)
     c.perform()
@@ -367,6 +383,7 @@ class Srv4Uploader(object):
     c.setopt(pycurl.URL, url)
     c.setopt(pycurl.WRITEFUNCTION, d.write)
     c.setopt(pycurl.HEADERFUNCTION, h.write)
+    c = self._SetAuth(c)
     if self.debug:
       c.setopt(c.VERBOSE, 1)
     c.perform()
@@ -398,6 +415,7 @@ class Srv4Uploader(object):
     url = self.rest_url + RELEASES_APP + "/srv4/"
     c.setopt(pycurl.URL, url)
     c.setopt(pycurl.POST, 1)
+    c = self._SetAuth(c)
     post_data = [
         ('srv4_file', (pycurl.FORM_FILE, filename)),
         ('submit', 'Upload'),
@@ -552,11 +570,14 @@ if __name__ == '__main__':
     for error_tag in error_tags:
       print "*", error_tag
     sys.exit(1)
-
+  username = os.environ["LOGNAME"]
+  password = getpass.getpass("{0}'s pkg release password> ".format(username))
   uploader = Srv4Uploader(args,
                           options.rest_url,
                           os_release=os_release,
-                          debug=options.debug)
+                          debug=options.debug,
+                          username=username,
+                          password=password)
   if options.remove:
     uploader.Remove()
   else:
