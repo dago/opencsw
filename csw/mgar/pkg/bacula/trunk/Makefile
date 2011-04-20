@@ -214,8 +214,10 @@ post-install-modulated: INITD=$(DESTDIR)/etc/$(prefix)/init.d
 post-install-modulated:
 	@(cd $(WORKSRC)/platforms/solaris; \
 		ginstall -d -m 0755 $(INITD); \
-		for s in dir fd sd; do \
-			ginstall -m 0755 bacula-$$s $(INITD)/cswbacula-$$s; \
+		(echo '#AUTOENABLE no'; cat bacula-dir) > bacula-dir.csw; \
+		ginstall -m 0755 bacula-dir.csw $(INITD)/cswbacula-dir
+		for s in fd sd; do \
+			ginstall -m 0755 bacula-$$s. $(INITD)/cswbacula-$$s; \
 		done )
 	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
 	@(ginstall -d -m 0755 $(DOCD); gcp -pR $(WORKSRC)/examples $(DOCD))
