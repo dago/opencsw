@@ -722,7 +722,7 @@ merge-obsolete: $(WORKDIR_GLOBAL)
 	$(_DBG_MERGE)$(foreach P,$(OBSOLETED_PKGS),($(foreach Q,$(OBSOLETING_PKGS),$(if $(filter $P,$(OBSOLETED_BY_$Q)), \
 		$(if $(SPKG_DESC_$Q), \
 			echo "$Q $(call catalogname,$Q) - $(SPKG_DESC_$Q)";, \
-			echo "$(shell (/usr/bin/pkginfo $Q || echo "$Q - ") | $(GAWK) '{ $$1 = "P"; print }')"; \
+			echo "$(shell (/usr/bin/pkginfo $Q || echo "$Q - ") | perl -npe 's/^\S*\s//;s/\s+/ /')"; \
 		)))) > $(WORKDIR_GLOBAL)/$P.obsolete; \
 	)
 	@$(MAKECOOKIE)
