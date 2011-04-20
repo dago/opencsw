@@ -28,6 +28,7 @@ CONFIGURE_ARGS += --with-openssl=/opt/csw
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWiconv
+RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibao4
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWlibsamplerate0
 RUNTIME_DEP_PKGS_CSWrdesktop += CSWosslrt
 
