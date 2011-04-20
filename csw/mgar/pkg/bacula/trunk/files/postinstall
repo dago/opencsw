@@ -1,0 +1,79 @@
+# Postinstall script for bacula
+# 2006-01-09 Add SMF capability
+# 2007-01-19 Add csw.conf support
+# 2007-09-11 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
+#            relocatable packages.
+#
+# Copy configuration files if they do not exist
+#
+host=`hostname`
+if [ ! -f ${PKG_INSTALL_ROOT}/opt/csw/etc/bacula/bacula-dir.conf ]; then
+	echo "Creating initial copy of /opt/csw/etc/bacula/bacula-dir.conf"
+	sed -e "s/Name = ra/Name = $host/g" -e "s/Name = thor/Name = $host/g" -e "s/Address = ra/Address = $host/g" -e "s/Address = thor/Address = $host/g" -e "s/Client = ra/Client = $host/g" -e "s/Client = thor/Client = $host/g" -e "s/Client=ra/Client=$host/g" -e "s/Client=thor/Client=$host/g" ${PKG_INSTALL_ROOT}/opt/csw/etc/bacula/bacula-dir.conf.CSW >${PKG_INSTALL_ROOT}/opt/csw/etc/bacula/bacula-dir.conf
+        chown root:bin ${PKG_INSTALL_ROOT}/opt/csw/etc/bacula/bacula-dir.conf
+fi
+
+if [ ! -f ${PKG_INSTALL_ROOT}/opt/csw/etc/bacula/bacula-sd.conf ]; then
+	echo "Creating initial copy of /opt/csw/etc/bacula/bacula-sd.conf"
+	sed -e "s/Name = ra/Name = $host/g" -e "s/Name = thor/Name = $host/g" -e "s/director = ra/director = $host/g" -e "s/director = thor/director = $host/g" ${PKG_INSTALL_ROOT}/opt/csw/etc/bacula/bacula-sd.conf.CSW >${PKG_INSTALL_ROOT}/opt/csw/etc/bacula/bacula-sd.conf
+        chown root:bin ${PKG_INSTALL_ROOT}/opt/csw/etc/bacula/bacula-sd.conf
+fi
+
+# daemons are started by default
+enable_daemon=yes
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# If defined, autoenable for the specific daemon name takes precedence
+if [ "$autoenable_bacula" = "no" ] ; then
+  enable_daemon=no
+elif [ "$autoenable_daemons" = "no" -a ! -n "$autoenable_bacula" ] ; then
+  enable_daemon=no
+fi
+
+# Set variable for the availability of SMF
+smf=no
+if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] 
+  then 
+  smf=yes
+fi
+
+# Stop bacula if it is running.
+if [ "$enable_daemon" = "yes" -a x"$PKG_INSTALL_ROOT" = x"" ] ; then
+  echo " "
+  echo "Stopping bacula"
+  if [ $smf = no ]
+  then
+	/etc/init.d/cswbacula stop
+  else
+	/usr/sbin/svcadm disable svc:application/cswbacula
+  fi
+  sleep 3
+fi
+
+# Start bacula
+if [ "$enable_daemon" = "yes" -a x"$PKG_INSTALL_ROOT" = x"" ] ; then
+  echo "Starting bacula"
+  if [ $smf = no ]
+  then
+	/etc/init.d/cswbacula start
+  else
+	/usr/sbin/svcadm enable svc:application/cswbacula
+  fi
+fi
+
+echo
+echo "*** START OF IMPORTANT NOTICE ***"
+echo "  With bacula 2.2.7 and later, the MySQL version is changed"
+echo "  from 4.1 to 5.0.  See /opt/csw/share/doc/bacula/README.CSW"
+echo "  for notes on the database upgrade."
+echo "*** END OF IMPORTANT NOTICE ***"
+echo
+
+exit 0
