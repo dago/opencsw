@@ -14,7 +14,7 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += CSWbacula-doc.cswreleasenotes
 DISTFILES += README.CSW
-DISTFILES += CSWbacula-directory.postinstall
+DISTFILES += CSWbacula-director.postinstall
 PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
 
