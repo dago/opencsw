@@ -223,6 +223,7 @@ post-install-modulated:
 			ginstall -m 0755 bacula-$$s $(INITD)/cswbacula-$$s; \
 		done )
 	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
-	@(ginstall -d -m 0755 $(DOCD); gcp -pR $(WORKSRC)/examples $(DOCD))
-	@(ginstall -m 0644 $(WORKDIR)/README.CSW $(DOCD))
+	@(ginstall -d -m 0755 $(DOCD) $(DOCD)_director; \
+		 gcp -pR $(WORKSRC)/examples $(DOCD); \
+		ginstall -m 0644 $(WORKDIR)/README.CSW $(DESTDIR)/$(docdir)/$(NAME)_director/)
 	@$(MAKECOOKIE)
