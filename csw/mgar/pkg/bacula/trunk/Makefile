@@ -199,6 +199,9 @@ TEST_SCRIPTS =
 INITSMF = /etc/opt/csw/init.d/cswbacula-dir /etc/opt/csw/init.d/cswbacula-sd
 INITSMF += /etc/opt/csw/init.d/cswbacula-fd
 
+PRESERVECONF = $(sysconfdir)/bacula-dir.conf $(sysconfdir)/bacula-sd.conf
+PRESERVECONF += $(sysconfdir)/bacula-fd.conf $(sysconfdir)/bconsole.conf
+
 include gar/category.mk
 
 pre-configure-modulated:
@@ -215,12 +218,11 @@ post-install-modulated:
 	@(cd $(WORKSRC)/platforms/solaris; \
 		ginstall -d -m 0755 $(INITD); \
 		(echo '#AUTOENABLE no'; cat bacula-dir) > bacula-dir.csw; \
-		ginstall -m 0755 bacula-dir.csw $(INITD)/cswbacula-dir
+		ginstall -m 0755 bacula-dir.csw $(INITD)/cswbacula-dir; \
 		for s in fd sd; do \
 			ginstall -m 0755 bacula-$$s. $(INITD)/cswbacula-$$s; \
 		done )
 	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
 	@(ginstall -d -m 0755 $(DOCD); gcp -pR $(WORKSRC)/examples $(DOCD))
 	@(ginstall -m 0644 $(WORKDIR)/README.CSW $(DOCD))
-	@(cd $(DESTDIR)$(sysconfdir); for f in *conf; do mv $$f $$f.CSW; done)
 	@$(MAKECOOKIE)
