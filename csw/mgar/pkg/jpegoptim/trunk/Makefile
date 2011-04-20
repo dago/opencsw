@@ -1,5 +1,5 @@
 NAME = jpegoptim
-VERSION = 1.2.3
+VERSION = 1.2.4
 CATEGORIES = utils
 
 DESCRIPTION = Utility to optimize jpeg files
@@ -10,10 +10,9 @@ endef
 MASTER_SITES = http://www.kokkonen.net/tjko/src/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-RUNTIME_DEP_PKGS = CSWjpeg
+PATCHFILES += 0001-Remove-Wall-reference.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+RUNTIME_DEP_PKGS = CSWjpeg
 
 TEST_TARGET =
 INSTALL_SCRIPTS = custom

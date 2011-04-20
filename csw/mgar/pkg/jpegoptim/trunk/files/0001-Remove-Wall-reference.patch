@@ -1,0 +1,25 @@
+From 662e771db49dd61d275acf9a9a696f6e0f46f081 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Wed, 20 Apr 2011 14:47:36 +0200
+Subject: [PATCH] Remove-Wall-reference
+
+---
+ Makefile.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index da51df6..4668240 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -32,7 +32,7 @@ mandir = $(prefix)/share/man
+ 
+ CC        = @CC@ 
+ XCPPFLAGS = @CPPFLAGS@
+-CFLAGS    = @CFLAGS@ $(XCPPFLAGS) $(DEFS) -Wall
++CFLAGS    = @CFLAGS@ $(XCPPFLAGS) $(DEFS)
+ LDFLAGS   = @LDFLAGS@
+ LIBS      = @LIBS@
+ STRIP     = strip
+-- 
+1.7.3.2
+
