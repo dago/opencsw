@@ -377,7 +377,10 @@ class Srv4Uploader(object):
         http_code,
         c.getinfo(pycurl.EFFECTIVE_URL))
     c.close()
-    successful = http_code >= 200 and http_code <= 299
+    logging.debug("HTTP code: %s", http_code)
+    if http_code == 401:
+      raise RestCommunicationError("Received HTTP code {0}".format(http_code))
+    successful = (http_code >= 200 and http_code <= 299)
     metadata = None
     if successful:
       metadata = json.loads(d.getvalue())
