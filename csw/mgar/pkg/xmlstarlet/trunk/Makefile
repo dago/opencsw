@@ -1,5 +1,5 @@
 NAME = xmlstarlet
-VERSION = 1.0.2
+VERSION = 1.1.0
 CATEGORIES = utils
 
 DESCRIPTION = XML transformation utility
@@ -16,31 +16,27 @@ MASTER_SITES = $(SF_MIRRORS)
 MASTER_SITES += http://xmlstar.sourceforge.net/downloads/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-RUNTIME_DEP_PKGS = CSWiconv CSWlibxml2 CSWlibxslt CSWzlib   
+VENDOR_URL = http://xmlstar.sourceforge.net/
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=66612
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
+RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibxslt
 
 BUILD64 = 1
+ISAEXEC = 1
 
-CONFIGURE_ENV += LIBXML_PREFIX=$(prefix)
-CONFIGURE_ENV += LIBXML_CFLAGS="$(shell $(bindir)/xml2-config --cflags)"
-CONFIGURE_ENV += LIBXML_LIBS="$(shell $(bindir)/xml2-config --libs)"
-CONFIGURE_ENV += LIBXSLT_PREFIX=$(prefix)
-CONFIGURE_ENV += LIBXSLT_CFLAGS="$(shell $(bindir)/xslt-config --cflags)"
-CONFIGURE_ENV += LIBXSLT_LIBS="$(shell $(bindir)/xslt-config --libs) -lexslt"
+CONFIGURE_ENV += LIBXML_CONFIG=$(bindir)/xml2-config
+CONFIGURE_ENV += LIBXSLT_CONFIG=$(bindir)/xslt-config
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-static-libs
+CONFIGURE_ARGS += --with-libxml-include-prefix=$(includedir)/libxml2
+CONFIGURE_ARGS += --with-libxml-libs-prefix=$(libdir)
 
-TEST_TARGET = check
+BUILD_OVERRIDE_VARS = CFLAGS CPPFLAGS LDFLAGS
+BUILD_OVERRIDE_VAR_CFLAGS = $(CFLAGS)
+BUILD_OVERRIDE_VAR_CPPFLAGS = $(CPPFLAGS)
+BUILD_OVERRIDE_VAR_LDFLAGS = $(LDFLAGS)
 
-CHECKPKG_OVERRIDES_CSWxmlstarlet += soname-not-found|libm.so.2
+EXTRA_PAX_ARGS = -s ,$(bindir)/xml,$(bindir)/xmlstarlet,
 
 include gar/category.mk
-
-post-install-modulated:
-	@echo " ==> Renaming program to xmlstarlet"
-	@mv $(DESTDIR)$(bindir)/xml $(DESTDIR)$(bindir)/xmlstarlet
-	@$(MAKECOOKIE)
