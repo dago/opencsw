@@ -18,6 +18,7 @@ DISTFILES += CSWbacula-director.postinstall
 DISTFILES += CSWbacula-sd.postinstall
 DISTFILES += CSWbacula-fd.postinstall
 DISTFILES += CSWbacula-console.postinstall
+DISTFILES += postmsg
 PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
 
@@ -125,6 +126,7 @@ PKGFILES_CSWbacula-fd += .*init.d/cswbacula-fd
 PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd .*bacula/working
 PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz .*bacula/bacula-fd.conf.CSW
 PKGFILES_CSWbacula-fd += /var/opt/csw/run
+PKGFILES_CSWbacula-fd += .*bacula_fd/.*postmsg
 
 CATALOGNAME_CSWbacula-sd = bacula_sd
 SPKG_DESC_CSWbacula-sd = $(DESCRIPTION) - Storage Daemon
@@ -147,6 +149,7 @@ PKGFILES_CSWbacula-sd += .*man8/bls.8.gz .*man8/btape.8.gz .*bacula/working
 PKGFILES_CSWbacula-sd += .*man8/bcopy.8.gz .*man8/bscan.8.gz
 PKGFILES_CSWbacula-sd += /var/opt/csw/run
 PKGFILES_CSWbacula-sd += $(localstatedir)/$(NAME)/archive
+PKGFILES_CSWbacula-sd += .*bacula_sd/.*postmsg
 
 CATALOGNAME_CSWbacula-director = bacula_director
 SPKG_DESC_CSWbacula-director = $(DESCRIPTION) - Director
@@ -169,6 +172,7 @@ PKGFILES_CSWbacula-director += .*bacula/bacula-dir.conf.CSW
 PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
 PKGFILES_CSWbacula-director += /var/opt/csw/run
 PKGFILES_CSWbacula-director += .*share/doc/bacula_director/README.CSW
+PKGFILES_CSWbacula-director += .*bacula_director/.*postmsg
 
 # force libraries into a separate subdirectory
 libdir = $(prefix)/lib/$(NAME)
@@ -205,6 +209,11 @@ INITSMF += /etc/opt/csw/init.d/cswbacula-fd
 PRESERVECONF = $(sysconfdir)/bacula-dir.conf $(sysconfdir)/bacula-sd.conf
 PRESERVECONF += $(sysconfdir)/bacula-fd.conf $(sysconfdir)/bconsole.conf
 
+POSTMSG  = /opt/csw/share/doc/bacula_director/README.postmsg
+POSTMSG += /opt/csw/share/doc/bacula_console/README.postmsg
+POSTMSG += /opt/csw/share/doc/bacula_sd/README.postmsg
+POSTMSG += /opt/csw/share/doc/bacula_fd/README.postmsg
+
 include gar/category.mk
 
 pre-configure-modulated:
@@ -226,6 +235,10 @@ post-install-modulated:
 			ginstall -m 0755 bacula-$$s $(INITD)/cswbacula-$$s; \
 		done )
 	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
+	@(for p in console director sd fd; do \
+		ginstall -d -m 0755 $(DOCD)_$$p; \
+		ginstall -m 0644 $(WORKDIR)/postmsg $(DOCD)_$$p/README.postmsg; \
+	done)
 	@(ginstall -d -m 0755 $(DOCD) $(DOCD)_director; \
 		 gcp -pR $(WORKSRC)/examples $(DOCD); \
 		ginstall -m 0644 $(WORKDIR)/README.CSW $(DESTDIR)/$(docdir)/$(NAME)_director/)
