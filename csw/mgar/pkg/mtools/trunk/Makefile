@@ -1,5 +1,5 @@
 NAME = mtools
-VERSION = 4.0.15
+VERSION = 4.0.16
 CATEGORIES = utils
 
 DESCRIPTION = Read/write/list/format DOS disks under Unix
@@ -19,9 +19,5 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.lz
 RUNTIME_DEP_PKGS = CSWiconv
 
 EXTRA_LINKER_FLAGS = -liconv -lnsl
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
 
 include gar/category.mk
