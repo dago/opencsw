@@ -9,8 +9,6 @@ MODULATIONS_GARCOMPILER = GCC3 GCC4 SOS12
 # Compile 64 bit libraries only with SOS12
 SKIP_MODULATIONS += $(foreach I,sparcv9 amd64,$(foreach C,GCC3 GCC4,isa-$I-garcompiler-$C))
 
-# TODO: Make sure -xnorunpath / -norunpath stays in cc and CC
-
 DESCRIPTION = A generic library support tool
 define BLURB
   GNU libtool is a generic library support script. Libtool hides the complexity
@@ -46,6 +44,11 @@ RUNTIME_DEP_PKGS_CSWlibtool += CSWlibltdl7
 CHECKPKG_OVERRIDES_CSWlibtool += surplus-dependency|CSWlibltdl3
 CHECKPKG_OVERRIDES_CSWlibtool += surplus-dependency|CSWlibltdl7
 
+# These *may* be ok, as users could have installed stuff to /usr/local
+# However, I think it is best to make linkage to /opt/csw/lib explicit and not
+# auto-enable this as a simple replacement.
+CHECKPKG_OVERRIDES_CSWlibtool += file-with-bad-content
+
 # This is built from pkgs/libltdl3
 FOREIGN_PACKAGES += CSWlibltdl3
 OBSOLETED_BY_CSWlibltdl3 += CSWlibtoolrt
@@ -56,15 +59,9 @@ SPKG_DESC_CSWlibltdl7 = Libtool libltdl.so.7 from libtool 2.x
 PKGFILES_CSWlibltdl7 += $(PKGFILES_RT)
 OBSOLETED_BY_CSWlibltdl7 += CSWlibtoolrt
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 CONFIGURE_ARGS = $(DIRPATHS)
 
 BUILD64 = 1
-NOISAEXEC = 1
-
-TEST_TARGET = check
 
 # Some Fortran-specific tests fail which is probably not that important
 SKIPTEST ?= 1
