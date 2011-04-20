@@ -142,6 +142,7 @@ RUNTIME_DEP_PKGS_CSWbacula-sd += CSWosslrt
 PKGFILES_CSWbacula-sd += .*init.d/cswbacula-sd
 PKGFILES_CSWbacula-sd += .*libexec.*disk-changer .*libexec.*dvd-handler
 PKGFILES_CSWbacula-sd += .*libexec.*mtx-changer.* .*bacula/bacula-sd.conf.CSW
+PKGFILES_CSWbacula-sd += /etc/opt/csw/bacula/mtx-changer.conf.CSW
 PKGFILES_CSWbacula-sd += .*sbin/bacula-sd .*sbin/bextract .*sbin/bls
 PKGFILES_CSWbacula-sd += .*sbin/bcopy .*sbin/bscan .*sbin/btape
 PKGFILES_CSWbacula-sd += .*man8/bacula-sd.8.gz .*man8/bextract.8.gz
@@ -167,6 +168,7 @@ PKGFILES_CSWbacula-director += .*init.d/cswbacula-dir
 PKGFILES_CSWbacula-director += .*sbin/bregex .*sbin/bwild .*sbin/bacula-dir
 PKGFILES_CSWbacula-director += .*sbin/dbcheck .*bacula/working
 PKGFILES_CSWbacula-director += .*libexec.*catalog_backup.* .*libexec.*query.sql
+PKGFILES_CSWbacula-director += /etc/opt/csw/bacula/query.sql.CSW
 PKGFILES_CSWbacula-director += .*libexec.*mysql_tables.*
 PKGFILES_CSWbacula-director += .*bacula/bacula-dir.conf.CSW
 PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
@@ -208,6 +210,7 @@ INITSMF += /etc/opt/csw/init.d/cswbacula-fd
 
 PRESERVECONF = $(sysconfdir)/bacula-dir.conf $(sysconfdir)/bacula-sd.conf
 PRESERVECONF += $(sysconfdir)/bacula-fd.conf $(sysconfdir)/bconsole.conf
+PRESERVECONF += $(sysconfdir)/mtx-changer.conf $(sysconfdir)/query.sql
 
 POSTMSG  = /opt/csw/share/doc/bacula_director/README.postmsg
 POSTMSG += /opt/csw/share/doc/bacula_console/README.postmsg
@@ -242,4 +245,9 @@ post-install-modulated:
 	@(ginstall -d -m 0755 $(DOCD) $(DOCD)_director; \
 		 gcp -pR $(WORKSRC)/examples $(DOCD); \
 		ginstall -m 0644 $(WORKDIR)/README.CSW $(DESTDIR)/$(docdir)/$(NAME)_director/)
+	@( cd $(DESTDIR)/opt/csw/libexec/bacula/; \
+	   for f in mtx-changer.conf query.sql; do \
+		mv $$f $(DESTDIR)/etc/opt/csw/bacula/$$f; \
+		ln -s /etc/opt/csw/bacula/$$f $$f; \
+	   done)
 	@$(MAKECOOKIE)
