@@ -165,7 +165,7 @@ PKGFILES_CSWbacula-director += .*libexec.*mysql_tables.*
 PKGFILES_CSWbacula-director += .*bacula/bacula-dir.conf.CSW
 PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
 PKGFILES_CSWbacula-director += /var/opt/csw/run
-PKGFILES_CSWbacula-director += .*share/doc/bacula/README.CSW
+PKGFILES_CSWbacula-director += .*share/doc/bacula_director/README.CSW
 
 # force libraries into a separate subdirectory
 libdir = $(prefix)/lib/$(NAME)
@@ -220,7 +220,7 @@ post-install-modulated:
 		(echo '#AUTOENABLE no'; cat bacula-dir) > bacula-dir.csw; \
 		ginstall -m 0755 bacula-dir.csw $(INITD)/cswbacula-dir; \
 		for s in fd sd; do \
-			ginstall -m 0755 bacula-$$s. $(INITD)/cswbacula-$$s; \
+			ginstall -m 0755 bacula-$$s $(INITD)/cswbacula-$$s; \
 		done )
 	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
 	@(ginstall -d -m 0755 $(DOCD); gcp -pR $(WORKSRC)/examples $(DOCD))
