@@ -719,12 +719,12 @@ reset-merge-distfile-%:
 	$(_DBG_MERGE)rm -f $(COOKIEDIR)/merge-distfile-$* $(foreach SPEC,$(_PKG_SPECS),$(PKGROOT)$(docdir)/$(call catalogname,$(SPEC))/$*)
 
 merge-obsolete: $(WORKDIR_GLOBAL)
-	$(_DBG_MERGE)$(foreach P,$(OBSOLETED_PKGS),$(foreach Q,$(OBSOLETING_PKGS),$(if $(filter $P,$(OBSOLETED_BY_$Q)), \
-		($(if $(SPKG_DESC_$Q), \
+	$(_DBG_MERGE)$(foreach P,$(OBSOLETED_PKGS),($(foreach Q,$(OBSOLETING_PKGS),$(if $(filter $P,$(OBSOLETED_BY_$Q)), \
+		$(if $(SPKG_DESC_$Q), \
 			echo "$Q $(call catalogname,$Q) - $(SPKG_DESC_$Q)";, \
 			echo "$(shell (/usr/bin/pkginfo $Q || echo "$Q - ") | $(GAWK) '{ $$1 = "P"; print }')"; \
-		)) > $(WORKDIR_GLOBAL)/$P.obsolete; \
-	)))
+		)))) > $(WORKDIR_GLOBAL)/$P.obsolete; \
+	)
 	@$(MAKECOOKIE)
 
 .PHONY: reset-merge-obsolete
