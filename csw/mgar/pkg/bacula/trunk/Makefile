@@ -13,6 +13,7 @@ GARCOMPILER = GNU
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += CSWbacula-doc.cswreleasenotes
+DISTFILES += README.CSW
 PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
 
@@ -163,6 +164,7 @@ PKGFILES_CSWbacula-director += .*libexec.*mysql_tables.*
 PKGFILES_CSWbacula-director += .*bacula/bacula-dir.conf
 PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
 PKGFILES_CSWbacula-director += /var/opt/csw/run
+PKGFILES_CSWbacula-director += .*share/doc/bacula/README.CSW
 
 # force libraries into a separate subdirectory
 libdir = $(prefix)/lib/$(NAME)
@@ -216,4 +218,5 @@ post-install-modulated:
 		done )
 	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
 	@(ginstall -d -m 0755 $(DOCD); gcp -pR $(WORKSRC)/examples $(DOCD))
+	@(ginstall -m 0644 $(WORKDIR)/README.CSW $(DOCD))
 	@$(MAKECOOKIE)
