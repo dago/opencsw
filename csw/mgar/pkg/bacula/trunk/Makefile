@@ -17,6 +17,7 @@ DISTFILES += README.CSW
 DISTFILES += CSWbacula-director.postinstall
 DISTFILES += CSWbacula-sd.postinstall
 DISTFILES += CSWbacula-fd.postinstall
+DISTFILES += CSWbacula-console.postinstall
 PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
 
