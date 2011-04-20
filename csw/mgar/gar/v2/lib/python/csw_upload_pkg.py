@@ -571,7 +571,9 @@ if __name__ == '__main__':
       print "*", error_tag
     sys.exit(1)
   username = os.environ["LOGNAME"]
-  password = getpass.getpass("{0}'s pkg release password> ".format(username))
+  # password = getpass.getpass("{0}'s pkg release password> ".format(username))
+  # Disabling for the time being.
+  password = False
   uploader = Srv4Uploader(args,
                           options.rest_url,
                           os_release=os_release,
