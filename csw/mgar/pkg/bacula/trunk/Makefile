@@ -236,20 +236,18 @@ post-install-modulated:
 		ginstall -m 0755 bacula-dir.csw $(INITD)/cswbacula-dir; \
 		for s in fd sd; do \
 			ginstall -m 0755 bacula-$$s $(INITD)/cswbacula-$$s; \
-		done )
-	@(ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run)
+		done; \
+		cd ../..; \
+		ginstall -m 0755 updatedb/update_mysql_tables_10_to_11 $(DESTDIR)$(prefix)/libexec/bacula; \
+		gcp -pR examples $(DOCD); \
+		ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run;)
 	@(for p in console director sd fd; do \
 		ginstall -d -m 0755 $(DOCD)_$$p; \
 		ginstall -m 0644 $(WORKDIR)/postmsg $(DOCD)_$$p/README.postmsg; \
 	done)
-	@(ginstall -d -m 0755 $(DOCD) $(DOCD)_director; \
-		 gcp -pR $(WORKSRC)/examples $(DOCD); \
-		ginstall -m 0644 $(WORKDIR)/README.CSW $(DESTDIR)/$(docdir)/$(NAME)_director/)
 	@( cd $(DESTDIR)/opt/csw/libexec/bacula/; \
 	   for f in mtx-changer.conf query.sql; do \
 		mv $$f $(DESTDIR)/etc/opt/csw/bacula/$$f; \
 		ln -s /etc/opt/csw/bacula/$$f $$f; \
 	   done)
-	@(cd $(WORKSRC)/updatedb; \
-		ginstall -m 0755 update_mysql_tables_10_to_11 $(DESTDIR)$(prefix)/libexec/bacula )
 	@$(MAKECOOKIE)
