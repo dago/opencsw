@@ -1,3 +1,11 @@
+2011-04-21
+
+It's been a long time since the last bacula release.  If this is not a
+fresh installation, you'll need to use the
+libexec/bacula/update_mysql_tables_10_to_11 before running the current
+update_mysql_tables script.
+
+
 01Jan2008
 With the 2.2.7 release, the mysql database libraries are changed from mysql4
    to mysql5.  You may have been using previous releases of bacula with
