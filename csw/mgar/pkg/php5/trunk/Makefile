@@ -277,7 +277,6 @@ CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
 CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(prefix)/postgresql
 CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
 CONFIGURE_ARGS += --with-pear=shared
-CONFIGURE_ARGS += --with-pear=shared
 CONFIGURE_ARGS += --with-pgsql=shared,$(prefix)/postgresql
 CONFIGURE_ARGS += --with-png-dir=$(prefix)
 CONFIGURE_ARGS += --with-pspell=shared,$(prefix)
