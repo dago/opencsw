@@ -8,13 +8,15 @@ define BLURB
   Common Stuff for Net::UCP Module
 endef
 
-PACKAGES = CSWpmnetucpcommon
+PACKAGES = CSWpm-netucpcommon
 CATALOGNAME = pm_netucpcommon
 
 CHECKPKG_OVERRIDES_CSWpmnetucpcommon += catalogname-does-not-match-pkgname|pkgname=CSWpmnetucpcommon|catalogname=pm_netucpcommon|expected-catalogname=pmnetucpcommon
 
 DISTFILES += LICENSE
 ARCHALL = 1
+
+INCOMPATIBLE_PKGS_CSWpm-netucpcommon = CSWpmnetucpcommon
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)/opt/csw/share/doc/pm_netucpcommon
