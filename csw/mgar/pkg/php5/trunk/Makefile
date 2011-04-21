@@ -20,6 +20,8 @@ endef
 
 # turn on the build scripts to enable/disable modules
 PHP5_EXT = 1
+AP2_MODS = 1
+AP2_MODFILES = *libphp5.so
 
 # at least for a decent echo used during build.
 PATH := /opt/csw/gnu:/opt/csw/bin:$(PATH)
