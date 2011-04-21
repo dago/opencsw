@@ -18,6 +18,9 @@ Numerous Open Source and commercial PHP-based application packages are
 available.
 endef
 
+EXTRA_MODULATORS = SAPI
+MODULATIONS_SAPI = cgi ap2
+
 # turn on the build scripts to enable/disable modules
 PHP5_EXT = 1
 AP2_MODS = 1
@@ -195,7 +198,13 @@ STRIP_LIBTOOL = 1
 
 
 
+CONFIGURE_ARGS += --prefix=$(prefix)/php5
+## build this static, php can not run without it.
+## it is more efficient to have this built into the php binary
+CONFIGURE_ARGS += --enable-simplexml
 CONFIGURE_ARGS += --disable-static
+
+ifeq ($(SAPI),ap2)
 CONFIGURE_ARGS += --enable-bcmath=shared
 CONFIGURE_ARGS += --enable-calendar=shared
 CONFIGURE_ARGS += --enable-cli
@@ -218,9 +227,6 @@ CONFIGURE_ARGS += --enable-phar=shared
 CONFIGURE_ARGS += --enable-posix=shared
 CONFIGURE_ARGS += --enable-session=shared
 CONFIGURE_ARGS += --enable-shmop=shared
-## build this static, php can not run without it.
-## it is more efficient to have this built into the php binary
-CONFIGURE_ARGS += --enable-simplexml
 CONFIGURE_ARGS += --enable-soap=shared
 CONFIGURE_ARGS += --enable-sockets=shared
 CONFIGURE_ARGS += --enable-sqlite-utf8
@@ -233,7 +239,6 @@ CONFIGURE_ARGS += --enable-xml
 CONFIGURE_ARGS += --enable-xmlreader=shared
 CONFIGURE_ARGS += --enable-xmlwriter=shared
 CONFIGURE_ARGS += --enable-zip=shared
-CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --with-apxs2=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-bz2=shared,$(prefix)
 CONFIGURE_ARGS += --with-curl=shared,$(prefix)
@@ -287,6 +292,7 @@ CONFIGURE_ARGS += --with-xpm-dir=$(prefix)
 CONFIGURE_ARGS += --with-xsl=shared,$(prefix)
 CONFIGURE_ARGS += --with-zlib-dir=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
+endif
 
 # Disable Tests (report submitted to PHP QA)
 SKIPTEST = 1
