@@ -29,6 +29,8 @@ SPKG_DESC_CSWlibsqlite3-0 = SQLite library providing libsqlite3.so.0
 PKGFILES_CSWlibsqlite3-0 = $(call pkgfiles_lib,libsqlite3.so.0)
 OBSOLETED_BY_CSWlibsqlite3-0 = CSWsqlite3rt
 
+CATALOGNAME_CSWsqlite3rt = sqlite3_rt_stub
+
 PACKAGES += CSWlibsqlite3-dev
 CATALOGNAME_CSWlibsqlite3-dev = libsqlite3_dev
 SPKG_DESC_CSWlibsqlite3-dev = Development files for libsqlite3.so
