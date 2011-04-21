@@ -250,4 +250,6 @@ post-install-modulated:
 		mv $$f $(DESTDIR)/etc/opt/csw/bacula/$$f; \
 		ln -s /etc/opt/csw/bacula/$$f $$f; \
 	   done)
+	@(cd $(WORKSRC)/updatedb; \
+		ginstall -m 0755 update_mysql_tables_10_to_11 $(DESTDIR)$(prefix)/libexec/bacula )
 	@$(MAKECOOKIE)
