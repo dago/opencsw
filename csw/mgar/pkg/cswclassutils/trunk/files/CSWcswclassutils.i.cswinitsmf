@@ -22,6 +22,7 @@
 # 2009-08-05 Set new timeout values for manifest (Bug ID 0003764)
 # 2009-08-10 Fix autoenable bug (Bug ID 0003785)
 # 2010-10-25 Fix grep bug in FMRI 'dot in name' detection (Bug ID 0004588)
+# 2011-04-21 Read absolute state value instead of defaulting to enabled
 
 DEBUG=		# clear to disable debug, set to anything to enable
 SVCDIR=/var/opt/csw/svc
@@ -32,14 +33,17 @@ SMF_STATE_FILE="$SMF_STATE_DIR/smf.state"
 # retrieve the previous state of a service identified by the given FRMI
 load_smf_service_state ()
 {
-    SMF_STATE="enabled"
+  SMF_STATE=""
 
-    if [ -f "$SMF_STATE_FILE" ]; then
-        set -- `/usr/bin/awk " \\\$1 == \"$1\" { print \\\$2 } " "$SMF_STATE_FILE"`
-        if [ "$1" = "disabled" ]; then
-            SMF_STATE="disabled"
-        fi
+  if [ -f "$SMF_STATE_FILE" ]; then
+    set -- `/usr/bin/awk " \\\$1 == \"$1\" { print \\\$2 } " "$SMF_STATE_FILE"`
+    if [ "$1" = "disabled" ]; then
+      SMF_STATE="disabled"
     fi
+    if [ "$1" = "enabled" ]; then
+      SMF_STATE="enabled"
+    fi
+  fi
 }
 
 # Source csw.conf, if it exists
