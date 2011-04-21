@@ -232,11 +232,11 @@ post-install-modulated: INITD=$(DESTDIR)/etc/$(prefix)/init.d
 post-install-modulated:
 	@(cd $(WORKSRC)/platforms/solaris; \
 		ginstall -d -m 0755 $(INITD); \
-		(ggrep '^#' bacula-dir; echo '#AUTOENABLE no'; ggrep -v '^#' bacula-dir) > bacula-dir.csw; \
-		ginstall -m 0755 bacula-dir.csw $(INITD)/cswbacula-dir; \
-		for s in fd sd; do \
-			ginstall -m 0755 bacula-$$s $(INITD)/cswbacula-$$s; \
+		for s in dir sd; do \
+			(ggrep '^#' bacula-$$s; echo '#AUTOENABLE no'; ggrep -v '^#' bacula-$$s) > bacula-$$s.csw; \
+			ginstall -m 0755 bacula-$$s.csw $(INITD)/cswbacula-$$s; \
 		done; \
+		ginstall -m 0755 bacula-fd $(INITD)/cswbacula-fd; \
 		cd ../..; \
 		ginstall -m 0755 updatedb/update_mysql_tables_10_to_11 $(DESTDIR)$(prefix)/libexec/bacula; \
 		gcp -pR examples $(DOCD); \
