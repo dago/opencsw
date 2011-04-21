@@ -1,3 +1,4 @@
+* Read absolute state value instead of defaulting to enabled
 * Creating /etc/opt/csw/init.d so other packages relying on it aren't borked
   - mantis 4635
 * Override /usr/share warning as it's part of the doctype string
