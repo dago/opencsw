@@ -59,6 +59,8 @@ BUILD_DEP_PKGS += CSWsqlite3devel CSWaspell CSWhtmltidy
 # of sqlite...
 BUILD_DEP_PKGS += CSWsqlite
 
+PRESERVECONF = $(prefix)/php5/lib/php.ini
+
 define php5_subpackage
 PACKAGES += CSWphp5-$(1)
 CATALOGNAME_CSWphp5-$(1) ?= php5_$(1)
@@ -311,7 +313,7 @@ pre-install-modulated: $(PI_SCRIPTS)
 	@$(MAKECOOKIE)
 
 post-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc/httpd.conf
-post-install-modulated: INIDEST=$(DESTDIR)$(prefix)/php5/lib/php.ini.CSW
+post-install-modulated: INIDEST=$(DESTDIR)$(prefix)/php5/lib/php.ini
 post-install-modulated:
 	@rm -f $(DESTDIR)$(AP2SYSCONF)
 	@cp $(WORKSRC)/php.ini-production $(INIDEST)
