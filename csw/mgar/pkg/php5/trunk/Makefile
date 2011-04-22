@@ -203,6 +203,8 @@ CONFIGURE_ARGS += --prefix=$(prefix)/php5
 ## it is more efficient to have this built into the php binary
 CONFIGURE_ARGS += --enable-simplexml
 CONFIGURE_ARGS += --disable-static
+CONFIGURE_ARGS += --enable-xml
+CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 
 ifeq ($(SAPI),ap2)
 CONFIGURE_ARGS += --enable-bcmath=shared
@@ -235,7 +237,6 @@ CONFIGURE_ARGS += --enable-sysvsem=shared
 CONFIGURE_ARGS += --enable-sysvshm=shared
 CONFIGURE_ARGS += --enable-tokenizer=shared
 CONFIGURE_ARGS += --enable-wddx=shared
-CONFIGURE_ARGS += --enable-xml
 CONFIGURE_ARGS += --enable-xmlreader=shared
 CONFIGURE_ARGS += --enable-xmlwriter=shared
 CONFIGURE_ARGS += --enable-zip=shared
@@ -259,7 +260,6 @@ CONFIGURE_ARGS += --with-ldap-sasl=$(prefix)
 CONFIGURE_ARGS += --with-ldap=shared,$(prefix)
 CONFIGURE_ARGS += --with-libedit=no
 CONFIGURE_ARGS += --with-libexpat-dir=$(prefix)
-CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --with-mcrypt=shared,$(prefix)
 CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
 CONFIGURE_ARGS += --with-mm=$(prefix)
