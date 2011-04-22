@@ -208,6 +208,14 @@ TEST_SCRIPTS =
 INITSMF = /etc/opt/csw/init.d/cswbacula-dir /etc/opt/csw/init.d/cswbacula-sd
 INITSMF += /etc/opt/csw/init.d/cswbacula-fd
 
+MIGRATE_FILES_CSWbacula-director = "query.sql bacula-dir.conf"
+MIGRATE_FILES_CSWbacula-sd = "mtx-changer.conf bacula-sd.conf"
+MIGRATE_FILES_CSWbacula-sd = "bacula-fd.conf"
+MIGRATE_FILES_CSWbacula-console = "bconsole.conf"
+MIGRATE_FILES_CSWbacula-tray-monitor = "tray-monitor.conf"
+MIGRATE_SOURCE_DIR = /opt/csw/etc/bacula
+MIGRATE_DEST_DIR = $(sysconfdir)
+
 PRESERVECONF = $(sysconfdir)/bacula-dir.conf $(sysconfdir)/bacula-sd.conf
 PRESERVECONF += $(sysconfdir)/bacula-fd.conf $(sysconfdir)/bconsole.conf
 PRESERVECONF += $(sysconfdir)/mtx-changer.conf $(sysconfdir)/query.sql
