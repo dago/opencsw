@@ -807,7 +807,7 @@ endef
 
 # The basic merge merges the compiles for all ISAs on the current architecture
 merge: checksum pre-merge merge-do merge-license merge-classutils merge-checkpkgoverrides merge-alternatives $(if $(COMPILE_ELISP),compile-elisp) $(if $(NOSOURCEPACKAGE),,merge-src) merge-distfile-README.CSW merge-distfile-changelog.CSW merge-obsolete $(if $(AP2_MODS),post-merge-ap2mod) $(if $(PHP5_EXT),post-merge-php5ext) post-merge
-	banner merge
+	@banner merge
 	@$(MAKECOOKIE)
 
 .PHONY: merge-do
