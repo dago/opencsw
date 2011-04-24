@@ -1,5 +1,5 @@
 NAME = libserf
-VERSION = 0.7.0
+VERSION = 0.7.2
 DISTNAME = serf-$(VERSION)
 CATEGORIES = lib
 
