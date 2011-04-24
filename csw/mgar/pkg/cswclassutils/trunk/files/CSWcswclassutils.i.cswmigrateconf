@@ -168,8 +168,8 @@ while read confsrc confdst ; do
     exit 1
   fi
 
-  if [ -z "${MIGRATE_FILES}" ]; then
-    echo "ERROR! \$MIGRATE_FILES variable is empty."
+  if [ -z "${MIGRATE_FILES:-}" ]; then
+    echo "ERROR! The \$MIGRATE_FILES variable is empty."
     exit 1
   fi
 
@@ -228,13 +228,17 @@ while read confsrc confdst ; do
     # moved already.
     if [ -r "${srcpath}" ]
     then
+      debug "'${srcpath}' exists, moving to '${archpath}'"
       give_a_chance_to_stop
       place_signpost_for "${srcpath}"
       debug "Moving '${srcpath}' to '${archpath}'"
+      mkdir -p "${PKG_INSTALL_ROOT}/${archdir}"
       mv "${srcpath}" "${archpath}"
       if [ -r "${srcpath}" ]; then
         echo "WARNING: '${srcpath}' still exists"
       fi
+    else
+      debug "'${srcpath}' does not exist"
     fi
 
     # If the destination file is not there and the archived file is, copy it over.
@@ -249,13 +253,15 @@ while read confsrc confdst ; do
 
       # Directories are copied in whole
       if [ -d "${archpath}" ]; then
-        debug "(cd ${archpath}/..; tar cf - `basename ${archpath}` \
-| ( mkdir ${dstpath}; cd ${dstpath}; cd ..; tar xf -))"
-        (cd ${archpath}/..; tar cf - `basename ${archpath}` \
-            | ( mkdir ${dstpath}; cd ${dstpath}; cd ..; tar xf -) \
+        debug "(tar cf - -C "${archpath}/.." `basename "${archpath}"` \
+            | ( mkdir -p "${dstpath}"; cd "${dstpath}"; cd ..; tar xfp -) \
+        )"
+        (tar cf - -C "${archpath}/.." `basename "${archpath}"` \
+            | ( mkdir -p "${dstpath}"; cd "${dstpath}"; cd ..; tar xfp -) \
         )
       elif [ -f "${archpath}" ]; then
         debug cp "${archpath}" "${dstpath}"
+        mkdir -p "${PKG_INSTALL_ROOT}${dstdir}"
         cp "${archpath}" "${dstpath}"
       else
         echo "WARNING: ${archpath} is neither a file or directory."
