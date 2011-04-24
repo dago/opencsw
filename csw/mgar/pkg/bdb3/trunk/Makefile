@@ -65,6 +65,7 @@ RUNTIME_DEP_PKGS_CSWbdb3-dev = CSWbdb3
 CHECKPKG_OVERRIDES_CSWbdb3-dev += surplus-dependency|CSWbdb3
 CHECKPKG_OVERRIDES_CSWbdb3-dev += catalogname-does-not-match-pkgname|pkgname=CSWbdb3-dev|catalogname=berkeleydb3_dev|expected-catalogname=bdb3_dev
 OBSOLETED_BY_CSWbdb3-dev = CSWbdb3devel
+CATALOGNAME_CSWbdb3devel = berkeleydb3_devel_stub
 
 PACKAGES += CSWbdb3-doc
 CATALOGNAME_CSWbdb3-doc = berkeleydb3_doc
@@ -73,6 +74,7 @@ PKGFILES_CSWbdb3-doc = $(PKGFILES_DOC)
 ARCHALL_CSWbdb3-doc = 1
 CHECKPKG_OVERRIDES_CSWbdb3-doc += catalogname-does-not-match-pkgname|pkgname=CSWbdb3-doc|catalogname=berkeleydb3_doc|expected-catalogname=bdb3_doc
 OBSOLETED_BY_CSWbdb3-doc = CSWbdb3doc
+CATALOGNAME_CSWbdb3doc = berkeleydb3_doc_stub
 
 # These are all pure examples
 CHECKPKG_OVERRIDES_CSWbdb3-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/berkeleydb3/ref/build_unix/flags.html
