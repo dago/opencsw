@@ -1,6 +1,6 @@
 # $Id$
 NAME = parallel
-VERSION = 20110322
+VERSION = 20110422
 CATEGORIES = utils
 
 DESCRIPTION = Shell tool for executing jobs in parallel
@@ -18,14 +18,7 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
 VENDOR_URL = http://www.gnu.org/software/parallel/
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
 
 ARCHALL = 1
 
