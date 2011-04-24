@@ -201,6 +201,7 @@ $(eval $(call php5_subpackage,xsl,CSWiconv CSWlibxml2-2 CSWlibxslt CSWzlib))
 $(eval $(call php5_subpackage,zip,CSWzlib))
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
+EXTRA_LIB = /opt/csw/postgresql/lib
 
 NOISALIST = 1
 STRIP_LIBTOOL = 1
