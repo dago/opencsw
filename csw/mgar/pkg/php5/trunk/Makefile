@@ -45,6 +45,11 @@ DISTFILES += CSWap2-modphp5.cswreleasenotes
 PATCHFILES += 0001-Strip-usr-ucblib-references.patch
 # this one is filed upstream: http://bugs.php.net/bug.php?id=54318
 PATCHFILES += 0002-Correct-non-portable-use-of-grep-q-in-configure.patch
+# technically this is only required in the ap2 modulation where we build the
+# postgres stuff, but protect the cgi modulation too
+PATCHFILES_isa-sparcv8-sapi-cgi += 0003-Force-the-PDO-pgsql-checks-to-use-32-bit-pg_config.patch
+PATCHFILES_isa-sparcv8-sapi-ap2 += 0003-Force-the-PDO-pgsql-checks-to-use-32-bit-pg_config.patch
+
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 BUILD_DEP_PKGS += CSWlibxml2-dev CSWexpat CSWzlib CSWcurldevel CSWjpeg
