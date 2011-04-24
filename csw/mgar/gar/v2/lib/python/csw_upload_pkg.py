@@ -570,10 +570,17 @@ if __name__ == '__main__':
     for error_tag in error_tags:
       print "*", error_tag
     sys.exit(1)
+
   username = os.environ["LOGNAME"]
-  # password = getpass.getpass("{0}'s pkg release password> ".format(username))
-  # Disabling for the time being.
-  password = False
+  authfile = os.path.join('/etc/opt/csw/releases/auth', username)
+
+  try:
+    with open(authfile, 'r') as af:
+      password = af.read().strip()
+  except IOError, e:
+    logging.warning("Error reading %s: %s", authfile, e)
+    password = getpass.getpass("{0}'s pkg release password> ".format(username))
+
   uploader = Srv4Uploader(args,
                           options.rest_url,
                           os_release=os_release,
