@@ -14,6 +14,8 @@ Checks to implement:
  - A package must not be incompatible with itself
  - If a pkgmap entry has username or group outside the default list of users,
    the file's class needs to be 'ugfiles'
+ - If there is bin/*-config and there is lib/(sparcv9|amd64)/.*, there must
+   also be bin/(sparcv9|amd64)/*(-|_)config
 
 Checks implemented:
  - foo_bar != CSWfoo-bar -> error
