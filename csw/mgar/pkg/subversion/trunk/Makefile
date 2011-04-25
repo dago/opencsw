@@ -210,7 +210,7 @@ CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-jdk=$(JAVA_HOME)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
-CONFIGURE_ARGS += --with-zlib
+CONFIGURE_ARGS += --with-zlib=$(prefix)
 CONFIGURE_ARGS += --with-serf=$(prefix)
 
 # Once you have verified that a new upstream release passes the tests, you can use
