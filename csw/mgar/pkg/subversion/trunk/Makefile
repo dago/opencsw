@@ -21,7 +21,7 @@
 #   ...and send the patch to the subversion dev mailing list.
 #   http://subversion.apache.org/mailing-lists.html
 
-NAME = svn
+NAME = subversion
 VERSION = 1.6.16
 CATEGORIES = utils
 
@@ -42,9 +42,10 @@ PACKAGES += CSWpythonsvn CSWrbsvn CSWjavasvn
 PACKAGES += CSWsvn-contrib CSWsvn-tools
 
 SPKG_DESC_CSWsvn           = Version control rethought
+CATALOGNAME_CSWsvn         = subversion
 RUNTIME_DEP_PKGS_CSWsvn      = CSWbdb48
 RUNTIME_DEP_PKGS_CSWsvn      += CSWexpat
-RUNTIME_DEP_PKGS_CSWsvn      += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWsvn      += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWsvn      += CSWiconv
 RUNTIME_DEP_PKGS_CSWsvn      += CSWneon
 RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf0-0
@@ -57,6 +58,7 @@ RUNTIME_DEP_PKGS_CSWsvn      += CSWapr-util
 
 
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
+CATALOGNAME_CSWsvn-devel   = subversion_devel
 ARCHALL_CSWsvn-devel       = 1
 PKGFILES_CSWsvn-devel      = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-devel     += $(docdir)/$(CATALOGNAME_CSWsvn-devel)/changelog.CSW
@@ -69,19 +71,6 @@ ARCHALL_CSWsvn-contrib     = 1
 CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWemacscommon
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/contrib/cgi/tweak-log.cgi
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/contrib/hook-scripts/commit-block-joke.py
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/contrib/hook-scripts/case-insensitive.py
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/contrib/server-side/backup-recipe.sh
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/contrib/server-side/svnstsw/README
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/contrib/server-side/svnstsw/INSTALL
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/contrib/server-side/svnstsw/conf/find_apr.m4
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/contrib/client-side/svnmerge/svnmerge-migrate-test.sh
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/contrib/client-side/svncopy/svncopy.README
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/contrib/client-side/svn2cl/README
-CHECKPKG_OVERRIDES_CSWsvn-contrib += file-with-bad-content|/export/home|root/opt/csw/share/doc/subversion/contrib/cgi/mirror_dir_through_svn.cgi
-CHECKPKG_OVERRIDES_CSWsvn-contrib += catalogname-does-not-match-pkgname|pkgname=CSWsvn-contrib|catalogname=subversion_contrib|expected-catalogname=svn_contrib
-
 
 SPKG_DESC_CSWsvn-tools     = Additional subversion tools
 CATALOGNAME_CSWsvn-tools   = subversion_tools
@@ -91,29 +80,15 @@ CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWemacscommon
-CHECKPKG_OVERRIDES_CSWsvn-tools += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/tools/examples/testwrite.c
-CHECKPKG_OVERRIDES_CSWsvn-tools += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/tools/examples/svnput.c
-CHECKPKG_OVERRIDES_CSWsvn-tools += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/tools/examples/headrev.c
-CHECKPKG_OVERRIDES_CSWsvn-tools += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/tools/examples/minimal_client.c
-CHECKPKG_OVERRIDES_CSWsvn-tools += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/tools/examples/getlocks_test.c
-CHECKPKG_OVERRIDES_CSWsvn-tools += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/tools/dev/prebuild-cleanup.sh
-CHECKPKG_OVERRIDES_CSWsvn-tools += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/tools/buildbot/slaves/i686-debian-sarge1/svnbuild.sh
-CHECKPKG_OVERRIDES_CSWsvn-tools += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/tools/buildbot/slaves/osx10.4-gcc4.0.1-ia32/svnbuild.sh
-CHECKPKG_OVERRIDES_CSWsvn-tools += file-with-bad-content|/usr/local|root/opt/csw/share/doc/subversion/tools/buildbot/slaves/ubuntu-x64/svnbuild.sh
-CHECKPKG_OVERRIDES_CSWsvn-tools += file-with-bad-content|/usr/share|root/opt/csw/share/doc/subversion/tools/buildbot/slaves/ubuntu-x64/svnbuild.sh
-CHECKPKG_OVERRIDES_CSWsvn-tools += catalogname-does-not-match-pkgname|pkgname=CSWsvn-tools|catalogname=subversion_tools|expected-catalogname=svn_tools
-
 
 SPKG_DESC_CSWap2svn           = Subversion Modules for Apache 2.2
 CATALOGNAME_CSWap2svn         = ap2_subversion
 RUNTIME_DEP_PKGS_CSWap2svn    = CSWsvn
 RUNTIME_DEP_PKGS_CSWap2svn   += CSWapache2
-RUNTIME_DEP_PKGS_CSWap2svn   += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWap2svn   += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWap2svn   += CSWiconv
 PKGFILES_CSWap2svn            = $(prefix)/apache2.*
 PKGFILES_CSWap2svn           += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
-CHECKPKG_OVERRIDES_CSWap2svn += catalogname-does-not-match-pkgname|pkgname=CSWap2svn|catalogname=ap2_subversion|expected-catalogname=ap2svn
-
 
 SPKG_DESC_CSWjavasvn           = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn         = javasvn
@@ -122,7 +97,7 @@ PKGFILES_CSWjavasvn           += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.C
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWexpat
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWsvn
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWiconv
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWjavasvn   += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWneon
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWapr-util
@@ -134,6 +109,7 @@ CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/li
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
+CATALOGNAME_CSWpmsvn       = pm_subversion
 PKGFILES_CSWpmsvn          = $(libdir)/perl.*
 PKGFILES_CSWpmsvn         += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
@@ -142,7 +118,7 @@ RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWexpat
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWiconv
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpmsvn += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWapr-util
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWbdb48
@@ -153,7 +129,7 @@ CATALOGNAME_CSWrbsvn       = rbsvn
 PKGFILES_CSWrbsvn          = $(libdir)/ruby.*
 PKGFILES_CSWrbsvn         += $(SVNLIB)/.*swig_ruby.*
 PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWrbsvn += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWiconv
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
@@ -174,7 +150,7 @@ RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWexpat
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWpython
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWsvn
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWiconv
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWapr-util
 RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWbdb48
@@ -226,8 +202,7 @@ STRIP_LIBTOOL = 1
 NODIRPATHS      = --libdir --libexecdir
 CONFIGURE_ARGS  = $(DIRPATHS) --libdir=$(SVNLIB) --libexecdir=$(SVNLIB)
 CONFIGURE_ARGS += --disable-mod-activation
-CONFIGURE_ARGS += --disable-static
-CONFIGURE_ARGS += --with-berkeley-db=db.h:/opt/csw/bdb48/include:/opt/csw/bdb48/lib:db
+CONFIGURE_ARGS += --with-jdk=/usr/jdk/j2sdk1.4.2_02/j2se
 CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
 CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
@@ -235,7 +210,7 @@ CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 CONFIGURE_ARGS += --with-jdk=$(JAVA_HOME)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
-CONFIGURE_ARGS += --with-zlib=$(prefix)
+CONFIGURE_ARGS += --with-zlib
 CONFIGURE_ARGS += --with-serf=$(prefix)
 
 # Once you have verified that a new upstream release passes the tests, you can use
@@ -295,15 +270,11 @@ post-configure-modulated:
 	fi )
 	@$(MAKECOOKIE)
 
-copy-apache-templates:
-	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
-	ginstall -m 0644 \
-		$(WORKDIR)/httpd-svn.conf.CSW \
-		$(DESTDIR)$(prefix)/apache2/etc/extra
-	ginstall -m 0644 \
-		$(WORKDIR)/svn_access.conf.CSW \
-		$(DESTDIR)$(prefix)/apache2/etc
-	@$(MAKECOOKIE)
+PI_DEPENDS  = $(BINDING_TARGETS)
+PI_DEPENDS += contrib
+PI_DEPENDS += rbsvn-prototype
+PI_DEPENDS += copy-templates
+PI_DEPENDS += install-man
 
 # libsvn_ra_dav-1* has been renamed to libsvn_ra_neon-1* in the new versions
 # of subversion (starting with?), we need to link for backward compatability
@@ -333,8 +304,11 @@ svn-python:
 	touch \
 		$(WORKSRC)/subversion/bindings/swig/python/*.c \
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
-	$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
-	$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py 
+	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
+	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py \
+		swig_pydir=$(libdir)/python2.3/libsvn \
+		swig_pydir_extra=$(libdir)/python2.3/svn
+	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-py
 	@$(MAKECOOKIE)
 
 svn-perl:
@@ -362,6 +336,34 @@ svn-java:
 
 post-merge: $(foreach P,$(_PKG_SPECS),install-changelog-$P)
 
-install-changelog-%:
-	ginstall -D $(FILEDIR)/changelog.CSW \
-		$(PKGROOT)$(docdir)/$(call catalogname,$*)/changelog.CSW
+$(DESTDIR)$(docdir):
+	mkdir -p $@
+
+svnbook: $(DESTDIR)$(docdir)
+	@echo " ==> Installing svn book"
+	( cd $(WORKSRC)/doc/book ; \
+	  ginstall svn-book.html $(DESTDIR)$(docdir) ; \
+	  ginstall svn-book.pdf $(DESTDIR)$(docdir) )
+	@$(MAKECOOKIE)
+
+contrib: $(DESTDIR)$(docdir)
+	@echo " ==> Installing contrib scripts"
+	@gcp -vr $(WORKSRC)/contrib $(DESTDIR)$(docdir)
+	@$(MAKECOOKIE)
+
+copy-templates:
+	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra
+	ginstall -m 0644 \
+		$(WORKDIR)/httpd-svn.conf.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc/extra
+	ginstall -m 0644 \
+		$(WORKDIR)/svn_access.conf.CSW \
+		$(DESTDIR)$(prefix)/apache2/etc
+	@$(MAKECOOKIE)
+
+install-man:
+	ginstall -m 0644 \
+		$(WORKSRC)/subversion/svnsync/svnsync.1 \
+		$(DESTDIR)$(mandir)/man1
+	@$(MAKECOOKIE)
+
