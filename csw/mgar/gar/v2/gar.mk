@@ -73,7 +73,6 @@ all: build
 
 # include the configuration file to override any of these variables
 include $(GARDIR)/gar.conf.mk
-include $(GARDIR)/gar.lib.mk
 
 # ========================= MODULATIONS ======================== 
 
@@ -91,6 +90,8 @@ modulations = $(if $(word 2,$(1)),\
 	$(call expand_modulator_1,$(1)))
 
 MODULATIONS ?= $(filter-out $(SKIP_MODULATIONS),$(strip $(call modulations,$(strip $(MODULATORS)))))
+
+include $(GARDIR)/gar.lib.mk
 
 # _modulate(ISA STATIC,,,)
 # -> _modulate2(STATIC,isa-i386,ISA,ISA=i386)
