@@ -10,7 +10,7 @@ cd $MERGEDIR/
 for a in $*; do
     for f in $(find . -name "*$a*"); do
 	modfile=$(basename $f)
-	modname=$(echo $modfile | sed 's/mod_//; s/\.so$//')
+	modname=$(echo $modfile | sed 's/^mod_//; s/^lib//; s/\.so$//')
 	ap2modfile=$AP2MODS/$modname
 	cat <<EOF > $ap2modfile
 
