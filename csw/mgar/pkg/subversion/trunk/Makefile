@@ -231,7 +231,7 @@ include gar/category.mk
 BINDING_LANGS   = java perl python ruby
 BINDING_TARGETS = $(addprefix svn-,$(BINDING_LANGS))
 
-PI_DEPENDS += copy-apache-templates
+PI_DEPENDS += copy-templates
 PI_DEPENDS += create-ra_dav-symlinks
 PI_DEPENDS += install-extras
 PI_DEPENDS += $(BINDING_TARGETS)
