@@ -93,19 +93,6 @@ PKGFILES_CSWneon-devel = $(PKGFILES_DEVEL)
 PKGFILES_CSWneon-devel += $(docdir)/.*
 
 
-# ALTERNATIVES_CSWneon = minimal
-# ALTERNATIVES_CSWneonfull = full
-
-# ALTERNATIVE_minimal  = $(libdir)/libneon.so.27.2.3 neon $(libdir)/libneon-minimal.so.27.2.3 100
-# ALTERNATIVE_minimal += $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.3 neon64 $(libdir)/$(ISA_DEFAULT64)/libneon-minimal.so.27.2.3
-# ALTERNATIVE_minimal += $(libdir)/libneon.so.26.0.4 neon.26 $(libdir)/libneon-minimal.so.26.0.4
-# ALTERNATIVE_minimal += $(libdir)/$(ISA_DEFAULT64)/libneon.so.26.0.4 neon64.26 $(libdir)/$(ISA_DEFAULT64)/libneon-minimal.so.26.0.4
-
-# ALTERNATIVE_full     = $(libdir)/libneon.so.27.2.3 neon $(libdir)/libneon-full.so.27.2.3 200
-# ALTERNATIVE_full    += $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.3 neon64 $(libdir)/$(ISA_DEFAULT64)/libneon-full.so.27.2.3
-# ALTERNATIVE_full    += $(libdir)/libneon.so.26.0.4 neon.26 $(libdir)/libneon-full.so.26.0.4
-# ALTERNATIVE_full    += $(libdir)/$(ISA_DEFAULT64)/libneon.so.26.0.4 neon64.26 $(libdir)/$(ISA_DEFAULT64)/libneon-full.so.26.0.4
-
 FEATURE_LIBRARIES  = libneon.26 libneon64.26
 FEATURE_LIBRARIES += libneon.27 libneon64.27
 FEATURES_libneon.26  = $(libdir)/libneon.so.26.0.4
@@ -126,6 +113,18 @@ CHECKPKG_OVERRIDES_CSWneonfull += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libn
 CHECKPKG_OVERRIDES_CSWneonfull += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libneon-full.so.27.2.3
 
 CHECKPKG_OVERRIDES_CSWneon-devel += surplus-dependency|CSWneon
+CHECKPKG_OVERRIDES_CSWneonfull += surplus-dependency|CSWpakchois
+CHECKPKG_OVERRIDES_CSWneonfull += surplus-dependency|CSWosslrt
+CHECKPKG_OVERRIDES_CSWneonfull += surplus-dependency|CSWggettextrt
+CHECKPKG_OVERRIDES_CSWneonfull += surplus-dependency|CSWzlib
+CHECKPKG_OVERRIDES_CSWneonfull += surplus-dependency|CSWexpat
+CHECKPKG_OVERRIDES_CSWneonfull += surplus-dependency|CSWkrb5lib
+CHECKPKG_OVERRIDES_CSWneonfull += surplus-dependency|CSWlibproxy
+CHECKPKG_OVERRIDES_CSWneon += surplus-dependency|CSWexpat
+CHECKPKG_OVERRIDES_CSWneon += surplus-dependency|CSWosslrt
+CHECKPKG_OVERRIDES_CSWneon += surplus-dependency|CSWggettextrt
+CHECKPKG_OVERRIDES_CSWneon += surplus-dependency|CSWzlib
+
 
 include gar/category.mk
 
