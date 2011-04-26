@@ -1,5 +1,5 @@
 NAME = asciidoc
-VERSION = 8.6.1
+VERSION = 8.6.4
 CATEGORIES = utils
 
 DESCRIPTION = A Documentation Generator
@@ -27,14 +27,7 @@ DISTFILES += $(AUTOFILES)
 PATCHFILES = handle-csw-etc-paths.patch
 PATCHFILES += 0002-Add-opt-csw-gnu-bin-to-PATH-in-a2x.py.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=67797
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
-
-sysconfdir = /etc/opt/csw
-
-CONFIGURE_ARGS = $(DIRPATHS)
+TEST_TARGET = test
 
 INSTALL_ARGS = vimdir=/opt/csw/etc/vim
 
