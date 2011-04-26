@@ -64,7 +64,10 @@ BUILD_DEP_PKGS += CSWsqlite3devel CSWaspell CSWhtmltidy CSWpostgresql
 # of sqlite...
 BUILD_DEP_PKGS += CSWsqlite
 
-PRESERVECONF = $(prefix)/php5/lib/php.ini
+PRESERVECONF = /etc/$(prefix)/php5/php.ini
+MIGRATE_FILES_CSWphp5 = "php.ini"
+MIGRATE_SOURCE_DIR = /opt/csw/php5/lib
+MIGRATE_DEST_DIR = $(sysconfdir)
 
 define php5_subpackage
 PACKAGES += CSWphp5-$(1)
@@ -86,7 +89,7 @@ CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php/PEAR/Config.php
 CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/bin/php-cgi
 # verify these...
-CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/opt/csw/php5/lib/php.ini.CSW
+CHECKPKG_OVERRIDES_CSWphp5 += file-with-bad-content|/usr/local|root/etc/opt/csw/php5/php.ini.CSW
 
 PACKAGES += CSWphp5-dev
 CATALOGNAME_CSWphp5-dev   = php5_dev
@@ -206,7 +209,7 @@ EXTRA_LIB = /opt/csw/postgresql/lib
 NOISALIST = 1
 STRIP_LIBTOOL = 1
 
-
+sysconfdir = /etc/$(prefix)/php5
 
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
 ## build this static, php can not run without it.
@@ -215,6 +218,7 @@ CONFIGURE_ARGS += --enable-simplexml
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --enable-xml
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
+CONFIGURE_ARGS += --with-config-file-path=$(sysconfdir)
 
 ifeq ($(SAPI),ap2)
 CONFIGURE_ARGS += --enable-bcmath=shared
@@ -319,7 +323,7 @@ pre-install-modulated: $(PI_SCRIPTS)
 	@$(MAKECOOKIE)
 
 post-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc/httpd.conf
-post-install-modulated: INIDEST=$(DESTDIR)$(prefix)/php5/lib/php.ini
+post-install-modulated: INIDEST=$(DESTDIR)/etc$(prefix)/php5/php.ini
 post-install-modulated:
 	@rm -f $(DESTDIR)$(AP2SYSCONF)
 	@cp $(WORKSRC)/php.ini-production $(INIDEST)
