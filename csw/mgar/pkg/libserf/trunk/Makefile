@@ -20,25 +20,19 @@ DEP_PKGS = CSWapr CSWapr-util CSWbdb48 CSWexpat CSWiconv CSWoldaprt CSWosslrt CS
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(DISTNAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PACKAGES += CSWlibserf
-CATALOGNAME_CSWlibserf = libserf
-SPKG_DESC_CSWlibserf = Stub as contents moved to CSWlibserf0-0 and CSWlibserf-devel
-PKGFILES_CSWlibserf = NOFILES
-RUNTIME_DEP_PKGS_CSWlibserf = CSWlibserf0-0 CSWlibserf-devel
-ARCHALL_CSWlibserf = 1
-CHECKPKG_OVERRIDES_CSWlibserf += surplus-dependency|CSWlibserf0-0
-CHECKPKG_OVERRIDES_CSWlibserf += surplus-dependency|CSWlibserf-devel
+OBSOLETED_BY_CSWlibserf0-0 = CSWlibserf
+OBSOLETED_BY_CSWlibserf-dev = CSWlibserf
 
 PACKAGES += CSWlibserf0-0
 CATALOGNAME_CSWlibserf0-0 = libserf0_0
 SPKG_DESC_CSWlibserf0-0 += HTTP client library built on APR, multiplexes connections, provides libserf-0.so.0
 PKGFILES_CSWlibserf0-0 += $(call baseisadirs,$(libdir),libserf-0\.so\.0(\.\d+)*)
 
-PACKAGES += CSWlibserf-devel
-CATALOGNAME_CSWlibserf-devel = libserf_devel
-SPKG_DESC_CSWlibserf-devel = Development files for libserf
-PKGFILES_CSWlibserf-devel += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibserf-devel = CSWlibserf0-0
+PACKAGES += CSWlibserf-dev
+CATALOGNAME_CSWlibserf-dev = libserf_dev
+SPKG_DESC_CSWlibserf-dev = Development files for libserf
+PKGFILES_CSWlibserf-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibserf-dev = CSWlibserf0-0
 
 LICENSE = LICENSE
 
