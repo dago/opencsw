@@ -67,7 +67,7 @@ CHECKPKG_OVERRIDES_CSWlibneon27-feature += bad-rpath-entry|/opt/csw/lib/|opt/csw
 # is obviously different from the soname in this case.
 CHECKPKG_OVERRIDES_CSWlibneon27-feature += soname-not-part-of-filename|soname=libneon.so.27|filename=libneon-feature.so.27.2.5
 CHECKPKG_OVERRIDES_CSWlibneon27-feature += soname-not-part-of-filename|soname=libneon.so.27|filename=libneon-feature.so.27.2.5
-CHECKPKG_OVERRIDES_CSWlibneon27-feature += shared-lib-pkgname-mismatch|sonames=libneon.so.27|pkgname=CSWlibneon27-feature|expected=CSWlibneon27|
+CHECKPKG_OVERRIDES_CSWlibneon27-feature += shared-lib-pkgname-mismatch
 
 # These will go away after release
 CHECKPKG_OVERRIDES_CSWlibneon27 += file-collision|/opt/csw/lib/libneon.so.27|CSWlibneon27|CSWneon
