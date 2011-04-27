@@ -64,7 +64,7 @@ BUILD_DEP_PKGS += CSWsqlite3devel CSWaspell CSWhtmltidy CSWpostgresql
 # of sqlite...
 BUILD_DEP_PKGS += CSWsqlite
 
-PRESERVECONF = /etc/$(prefix)/php5/php.ini
+PRESERVECONF = /etc$(prefix)/php5/php.ini
 MIGRATE_FILES_CSWphp5 = "php.ini"
 MIGRATE_SOURCE_DIR = /opt/csw/php5/lib
 MIGRATE_DEST_DIR = $(sysconfdir)
