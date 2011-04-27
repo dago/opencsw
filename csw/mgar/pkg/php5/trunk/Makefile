@@ -212,6 +212,7 @@ STRIP_LIBTOOL = 1
 sysconfdir = /etc/$(prefix)/php5
 
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
+CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 ## build this static, php can not run without it.
 ## it is more efficient to have this built into the php binary
 CONFIGURE_ARGS += --enable-simplexml
