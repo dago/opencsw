@@ -197,6 +197,13 @@ CONFIGURE_ARGS += --with-logdir=$(localstatedir)/log/$(NAME)
 CONFIGURE_ARGS += --with-pid-dir=$(localstatedir)/run
 CONFIGURE_ARGS += --with-subsys-dir=$(localstatedir)/run/subsys
 CONFIGURE_ARGS += --enable-tray-monitor
+# we add these so that our template configs change less over time
+CONFIGURE_ARGS += --with-dir-password=S4B2ZIN1kBli3AtC0yPR7Iaw7EiIVCOsI9IOSF7HucND
+CONFIGURE_ARGS += --with-fd-password=iUXtIn91oqxXhUHw9UmmdePGRaKn8aRXX8oX2e02BwCL
+CONFIGURE_ARGS += --with-sd-password=h6F8l+Vkp8eiJpZclqqA/bpLD71bP8S+vMG01qxXzlrX
+CONFIGURE_ARGS += --with-mon-dir-password=QhTqgNyq8s6l7RJc/+3NmVqQkyxkqlnaJLPwsZF7fXUp
+CONFIGURE_ARGS += --with-mon-fd-password=IEKXaPXrRO8BzJYBJueDJgkVsXzR/1cVvPNGJhZPrsHB
+CONFIGURE_ARGS += --with-mon-sd-password=e5fbjZnW+1hohTYFBfTXFe1KP7BIgCrAvY4fA4fg39TN
 
 EXTRA_INC += $(includedir)/ncursesw
 EXTRA_LIB += $(prefix)/lib/ncursesw $(prefix)/mysql5/lib/mysql
