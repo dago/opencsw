@@ -9,7 +9,8 @@ VENDOR_URL = http://git-scm.org/
 # 1.7.2.1 and 1.7.3 have a failure on current9s when fr.UFT-8 is
 # detected as the first available utf8 locale.  the failure is
 # harmless though.
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
+TEST_TARGET = test
 
 PACKAGES  = CSWgit CSWgitk CSWgit-gui CSWgit-svn CSWgit-cvs
 PACKAGES += CSWgit-emacs CSWgit-doc CSWgit-completion CSWgit-dev
