@@ -29,6 +29,10 @@ RUNTIME_DEP_PKGS_CSWlibneon26 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibneon26 += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibneon26 += CSWlibintl8
 
+# These will go away later
+CHECKPKG_OVERRIDES_CSWlibneon26 += unidentified-dependency|CSWlibneon27
+CHECKPKG_OVERRIDES_CSWlibneon26 += file-collision|/opt/csw/lib/amd64/libneon.so.26|CSWlibneon26|CSWneon
+
 PACKAGES += CSWlibneon26-feature
 CATALOGNAME_CSWlibneon26_feature = libneon26_feature
 SPKG_DESC_CSWlibneon26-feature = Neon HTTP and WebDAV client library with all features enabled, supersedes libneon.so.26
@@ -49,7 +53,7 @@ CHECKPKG_OVERRIDES_CSWlibneon26-feature += bad-rpath-entry|/opt/csw/lib/|opt/csw
 # is obviously different from the soname in this case.
 CHECKPKG_OVERRIDES_CSWlibneon26-feature += soname-not-part-of-filename|soname=libneon.so.26|filename=libneon-feature.so.26.0.4
 CHECKPKG_OVERRIDES_CSWlibneon26-feature += soname-not-part-of-filename|soname=libneon.so.26|filename=libneon-feature.so.26.0.4
-CHECKPKG_OVERRIDES_CSWlibneon26-feature += shared-lib-pkgname-mismatch|sonames=libneon.so.26|pkgname=CSWlibneon26-feature|expected=CSWlibneon26|
+CHECKPKG_OVERRIDES_CSWlibneon26-feature += shared-lib-pkgname-mismatch
 
 # These will go away after release
 CHECKPKG_OVERRIDES_CSWlibneon26 += file-collision|/opt/csw/lib/libneon.so.26|CSWlibneon26|CSWneon
