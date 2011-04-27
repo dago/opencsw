@@ -50,13 +50,12 @@ CONFIGURE_ARGS += --with-expat
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_features-$(FEATURES))
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 # Omit version number suffix on docdir
 INSTALL_OVERRIDE_VARS = docdir
 INSTALL_OVERRIDE_VAR_docdir = $(datadir)/doc/neon
 
-# isa-sparcv8-garversion-0.26.4-features-minimal isa-sparcv8-garversion-0.26.4-features-full isa-sparcv8-garversion-0.29.5-features-minimal isa-sparcv8-garversion-0.29.5-features-full isa-sparcv9-garversion-0.26.4-features-minimal isa-sparcv9-garversion-0.26.4-features-full isa-sparcv9-garversion-0.29.5-features-minimal isa-sparcv9-garversion-0.29.5-features-full
+# isa-sparcv8-version-0.26.4-features-minimal isa-sparcv8-version-0.26.4-features-full isa-sparcv8-version-0.29.5-features-minimal isa-sparcv8-version-0.29.5-features-full isa-sparcv9-version-0.26.4-features-minimal isa-sparcv9-version-0.26.4-features-full isa-sparcv9-version-0.29.5-features-minimal isa-sparcv9-version-0.29.5-features-full
 
 # We select pkgconfig for minimal library bindings. As libneon is self-contained (links
 # to all necessary libs directly) the full version can simly be linked in.
@@ -64,27 +63,27 @@ EXTRA_PAX_ARGS_features-full = -s ",.*/pkgconfig.*,,"
 EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS_features-$(FEATURES))
 
 EXTRA_PAX_ARGS-32 += -s ",\(\.$(libdir)/libneon\)\(\.so\.26\.0\.4\),\1-$(FEATURES)\2,p"
-EXTRA_PAX_ARGS-32 += -s ",\(\.$(libdir)/libneon\)\(\.so\.27\.2\.3\),\1-$(FEATURES)\2,p"
+EXTRA_PAX_ARGS-32 += -s ",\(\.$(libdir)/libneon\)\(\.so\.27\.2\.4\),\1-$(FEATURES)\2,p"
 EXTRA_PAX_ARGS-64 += -s ",\.$(libdir)/libneon\(\.so\.26\.0\.4\),.$(libdir_install)/$(ISA)/libneon-$(FEATURES)\1,p"
-EXTRA_PAX_ARGS-64 += -s ",\.$(libdir)/libneon\(\.so\.27\.2\.3\),.$(libdir_install)/$(ISA)/libneon-$(FEATURES)\1,p"
+EXTRA_PAX_ARGS-64 += -s ",\.$(libdir)/libneon\(\.so\.27\.2\.4\),.$(libdir_install)/$(ISA)/libneon-$(FEATURES)\1,p"
 EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS-$(MEMORYMODEL))
 
-MERGE_SCRIPTS_isa-default-garversion-0.26.4-features-minimal = copy-only
-MERGE_DIRS_isa-default-garversion-0.26.4-features-minimal = $(libdir)
-MERGE_SCRIPTS_isa-default64-garversion-0.26.4-features-minimal = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-0.26.4-features-minimal = $(libdir)
-MERGE_SCRIPTS_isa-default-garversion-0.26.4-features-full = copy-only
-MERGE_DIRS_isa-default-garversion-0.26.4-features-full = $(libdir)
-MERGE_SCRIPTS_isa-default64-garversion-0.26.4-features-full = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-0.26.4-features-full = $(libdir)
+MERGE_SCRIPTS_isa-default-version-0.26.4-features-minimal = copy-only
+MERGE_DIRS_isa-default-version-0.26.4-features-minimal = $(libdir)
+MERGE_SCRIPTS_isa-default64-version-0.26.4-features-minimal = copy-relocated-only
+MERGE_DIRS_isa-default64-version-0.26.4-features-minimal = $(libdir)
+MERGE_SCRIPTS_isa-default-version-0.26.4-features-full = copy-only
+MERGE_DIRS_isa-default-version-0.26.4-features-full = $(libdir)
+MERGE_SCRIPTS_isa-default64-version-0.26.4-features-full = copy-relocated-only
+MERGE_DIRS_isa-default64-version-0.26.4-features-full = $(libdir)
 
-MERGE_SCRIPTS_isa-default-garversion-0.29.5-features-minimal = copy-all
-MERGE_SCRIPTS_isa-default64-garversion-0.29.5-features-minimal = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-0.29.5-features-minimal = $(bindir) $(sbindir) $(libexecdir) $(libdir)
-MERGE_SCRIPTS_isa-default-garversion-0.29.5-features-full = copy-only
-MERGE_DIRS_isa-default-garversion-0.29.5-features-full = $(libdir)
-MERGE_SCRIPTS_isa-default64-garversion-0.29.5-features-full = copy-relocated-only
-MERGE_DIRS_isa-default64-garversion-0.29.5-features-full = $(libdir)
+MERGE_SCRIPTS_isa-default-version-0.29.5-features-minimal = copy-all
+MERGE_SCRIPTS_isa-default64-version-0.29.5-features-minimal = copy-relocated-only
+MERGE_DIRS_isa-default64-version-0.29.5-features-minimal = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-version-0.29.5-features-full = copy-only
+MERGE_DIRS_isa-default-version-0.29.5-features-full = $(libdir)
+MERGE_SCRIPTS_isa-default64-version-0.29.5-features-full = copy-relocated-only
+MERGE_DIRS_isa-default64-version-0.29.5-features-full = $(libdir)
 
 EXTRA_LINKER_FLAGS = -lintl
 
@@ -101,16 +100,16 @@ FEATURES_libneon.26 += libneon-full.so.26.0.4
 FEATURES_libneon64.26  = $(libdir)/$(ISA_DEFAULT64)/libneon.so.26.0.4
 FEATURES_libneon64.26 += libneon-minimal.so.26.0.4
 FEATURES_libneon64.26 += libneon-full.so.26.0.4
-FEATURES_libneon.27  = $(libdir)/libneon.so.27.2.3
-FEATURES_libneon.27 += libneon-minimal.so.27.2.3
-FEATURES_libneon.27 += libneon-full.so.27.2.3
-FEATURES_libneon64.27  = $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.3
-FEATURES_libneon64.27 += libneon-minimal.so.27.2.3
-FEATURES_libneon64.27 += libneon-full.so.27.2.3
+FEATURES_libneon.27  = $(libdir)/libneon.so.27.2.5
+FEATURES_libneon.27 += libneon-minimal.so.27.2.5
+FEATURES_libneon.27 += libneon-full.so.27.2.5
+FEATURES_libneon64.27  = $(libdir)/$(ISA_DEFAULT64)/libneon.so.27.2.5
+FEATURES_libneon64.27 += libneon-minimal.so.27.2.5
+FEATURES_libneon64.27 += libneon-full.so.27.2.5
 
 # This comes from krb5-config --libs
 CHECKPKG_OVERRIDES_CSWneonfull += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libneon-full.so.26.0.4
-CHECKPKG_OVERRIDES_CSWneonfull += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libneon-full.so.27.2.3
+CHECKPKG_OVERRIDES_CSWneonfull += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libneon-full.so.27.2.5
 
 CHECKPKG_OVERRIDES_CSWneon-devel += surplus-dependency|CSWneon
 CHECKPKG_OVERRIDES_CSWneonfull += surplus-dependency|CSWpakchois
