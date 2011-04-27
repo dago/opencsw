@@ -1,5 +1,5 @@
 NAME = msmtp
-VERSION = 1.4.23
+VERSION = 1.4.24
 CATEGORIES = net
 
 DESCRIPTION = SMTP client
@@ -28,27 +28,26 @@ DISTFILES = $(NAME)-$(VERSION).tar.bz2
 PACKAGES += CSWmsmtp
 CATALOGNAME_CSWmsmtp = msmtp
 SPKG_DESC_CSWmsmtp = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgsasl7
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgnome-keyring0
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWmsmtp += CSWglib2
+
+RUNTIME_DEP_PKGS_5.9 = CSWlibgnugetopt
+RUNTIME_DEP_PKGS_CSWmsmtp += $(RUNTIME_DEP_PKGS_$(GAROSREL))
+
+EXTRA_LINKER_FLAGS_5.9 = -lgnugetopt
+EXTRA_LINKER_FLAGS = $(EXTRA_LINKER_FLAGS_$(GAROSREL))
 
 VENDOR_URL = http://msmtp.sourceforge.net/
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD_DEP_PKGS += CSWgnutlsdevel
 BUILD_DEP_PKGS += CSWlibgsasldevel
 BUILD_DEP_PKGS += CSWggettext
 
-RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibidn
-RUNTIME_DEP_PKGS_CSWmsmtp += CSWgnutls
-RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgsasl7
-RUNTIME_DEP_PKGS_CSWmsmtp += CSWggettextrt
-
-sysconfdir = /etc/opt/csw
-CONFIGURE_ARGS = $(DIRPATHS)
-
 PRESERVECONF = $(sysconfdir)/msmtprc
-
-TEST_TARGET = check
 
 include gar/category.mk
 
