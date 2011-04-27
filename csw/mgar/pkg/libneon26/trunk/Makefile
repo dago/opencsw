@@ -30,6 +30,7 @@ PACKAGES += CSWlibneon26-feature
 CATALOGNAME_CSWlibneon26_feature = libneon26_feature
 SPKG_DESC_CSWlibneon26-feature = Neon HTTP and WebDAV client library with all features enabled, supersedes libneon.so.26
 PKGFILES_CSWlibneon26-feature = $(call pkgfiles_lib,libneon-feature.so.26)
+RUNTIME_DEP_PKGS_CSWlibneon26-feature += CSWlibneon26
 RUNTIME_DEP_PKGS_CSWlibneon26-feature += CSWexpat
 RUNTIME_DEP_PKGS_CSWlibneon26-feature += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibneon26-feature += CSWzlib
