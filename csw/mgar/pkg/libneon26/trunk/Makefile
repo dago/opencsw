@@ -21,6 +21,8 @@ PACKAGES += CSWlibneon26
 CATALOGNAME_CSWlibneon26 = libneon26
 SPKG_DESC_CSWlibneon26 = Neon HTTP and WebDAV client library, libneon.so.26
 PKGFILES_CSWlibneon26 += $(call pkgfiles_lib,libneon.so.26)
+# Depend on the newer package as it contains the locale message files
+RUNTIME_DEP_PKGS_CSWlibneon26 += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWlibneon26 += CSWexpat
 RUNTIME_DEP_PKGS_CSWlibneon26 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibneon26 += CSWzlib
