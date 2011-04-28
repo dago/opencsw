@@ -265,4 +265,6 @@ post-install-modulated:
 		mv $$f $(DESTDIR)/etc/opt/csw/bacula/$$f; \
 		ln -s /etc/opt/csw/bacula/$$f $$f; \
 	   done)
+	@( cd $(DESTDIR)/etc/opt/csw/bacula; \
+		perl -pi -e "s!<bacula-source>!$(docdir)/$(NAME)!" query.sql )
 	@$(MAKECOOKIE)
