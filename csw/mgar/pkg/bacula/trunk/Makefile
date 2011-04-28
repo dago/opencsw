@@ -248,7 +248,7 @@ POSTMSG += /opt/csw/share/doc/bacula_console/README.postmsg
 POSTMSG += /opt/csw/share/doc/bacula_sd/README.postmsg
 POSTMSG += /opt/csw/share/doc/bacula_fd/README.postmsg
 
-PROTOTYPE_MODIFIERS = usergroupfiles confgroup
+PROTOTYPE_MODIFIERS = usergroupfiles confgroup generalperms
 PROTOTYPE_FILES_usergroupfiles = /var/opt/csw/bacula.*
 PROTOTYPE_CLASS_usergroupfiles = ugfiles
 PROTOTYPE_USER_usergroupfiles = bacula
@@ -257,6 +257,8 @@ PROTOTYPE_PERMS_usergroupfiles = 0770
 PROTOTYPE_FILES_confgroup = /etc/opt/csw/bacula/.*
 PROTOTYPE_CLASS_confgroup = ugfiles
 PROTOTYPE_GROUP_confgroup = bacula
+PROTOTYPE_FILES_generalperms = /opt/csw/sbin/.* /opt/csw/libexec/bacula/.*
+PROTOTYPE_PERMS_generalperms = 0755
 
 include gar/category.mk
 
