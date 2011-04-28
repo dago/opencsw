@@ -332,5 +332,6 @@ post-install-modulated:
 	@ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(prefix)/php5/bin/
 	@perl -pi -e 's/^;extension=php_(.*).dll/;extension=$$1.so/' $(INIDEST)
 	@rm -rf $(DESTDIR)/.cha* $(DESTDIR)/.dep* $(DESTDIR)/.reg* $(DESTDIR)/.l* $(DESTDIR)/.f*
+	@perl -pi -e 's!s:17:"http://proxy:3128!s:0:"!' $(DESTDIR)$(sysconfdir)/pear.conf*
 	@$(MAKECOOKIE)
 
