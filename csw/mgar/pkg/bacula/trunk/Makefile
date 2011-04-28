@@ -111,7 +111,7 @@ PKGFILES_CSWbacula-common += .*libbacsql-$(VERSION).so .*libbacsql.so
 PKGFILES_CSWbacula-common += .*sbin/bsmtp .*sbin/btraceback
 PKGFILES_CSWbacula-common += .*man1/bsmtp.1.gz .*man1/btraceback.1.gz
 PKGFILES_CSWbacula-common += .*man8/bacula.8.gz
-PKGFILES_CSWbacula-common += .*libexec/btraceback.gdb
+PKGFILES_CSWbacula-common += .*libexec/bacula/btraceback.*
 
 CATALOGNAME_CSWbacula-fd = bacula_fd
 SPKG_DESC_CSWbacula-fd = $(DESCRIPTION) - File Daemon
