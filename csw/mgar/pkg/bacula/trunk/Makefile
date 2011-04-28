@@ -233,6 +233,7 @@ MIGRATE_DEST_DIR = $(sysconfdir)
 PRESERVECONF = $(sysconfdir)/bacula-dir.conf $(sysconfdir)/bacula-sd.conf
 PRESERVECONF += $(sysconfdir)/bacula-fd.conf $(sysconfdir)/bconsole.conf
 PRESERVECONF += $(sysconfdir)/mtx-changer.conf $(sysconfdir)/query.sql
+PRESERVECONF += $(sysconfdir)/tray-monitor.conf
 
 USERGROUP += /etc/opt/csw/pkg/CSWbacula-director/cswusergroup
 USERGROUP += /etc/opt/csw/pkg/CSWbacula-sd/cswusergroup
