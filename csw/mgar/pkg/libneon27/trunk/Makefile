@@ -23,6 +23,8 @@ OBSOLETED_BY_CSWlibneon26 = CSWneon
 FOREIGN_PACKAGES += CSWlibneon26-feature
 OBSOLETED_BY_CSWlibneon26-feature = CSWneonfull
 
+CATALOGNAME_CSWneonfull = neon_full_stub
+
 PACKAGES += CSWlibneon27
 CATALOGNAME_CSWlibneon27 = libneon27
 SPKG_DESC_CSWlibneon27 = Neon HTTP and WebDAV client library, libneon.so.27
