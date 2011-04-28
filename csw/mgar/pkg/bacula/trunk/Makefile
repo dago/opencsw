@@ -151,6 +151,7 @@ PKGFILES_CSWbacula-sd += .*man8/bcopy.8.gz .*man8/bscan.8.gz
 PKGFILES_CSWbacula-sd += /var/opt/csw/run
 PKGFILES_CSWbacula-sd += $(localstatedir)/$(NAME)/archive
 PKGFILES_CSWbacula-sd += .*bacula_sd/.*postmsg
+PKGFILES_CSWbacula-sd += /etc/opt/csw/pkg/CSWbacula-sd/cswusergroup
 
 CATALOGNAME_CSWbacula-director = bacula_director
 SPKG_DESC_CSWbacula-director = $(DESCRIPTION) - Director
@@ -175,6 +176,7 @@ PKGFILES_CSWbacula-director += .*man8/bacula-dir.8.gz .*man8/dbcheck.8.gz
 PKGFILES_CSWbacula-director += /var/opt/csw/run
 PKGFILES_CSWbacula-director += .*share/doc/bacula_director/README.CSW
 PKGFILES_CSWbacula-director += .*bacula_director/.*postmsg
+PKGFILES_CSWbacula-director += /etc/opt/csw/pkg/CSWbacula-director/cswusergroup
 
 # force libraries into a separate subdirectory
 libdir = $(prefix)/lib/$(NAME)
@@ -227,6 +229,9 @@ PRESERVECONF = $(sysconfdir)/bacula-dir.conf $(sysconfdir)/bacula-sd.conf
 PRESERVECONF += $(sysconfdir)/bacula-fd.conf $(sysconfdir)/bconsole.conf
 PRESERVECONF += $(sysconfdir)/mtx-changer.conf $(sysconfdir)/query.sql
 
+USERGROUP += /etc/opt/csw/pkg/CSWbacula-director/cswusergroup
+USERGROUP += /etc/opt/csw/pkg/CSWbacula-sd/cswusergroup
+
 POSTMSG  = /opt/csw/share/doc/bacula_director/README.postmsg
 POSTMSG += /opt/csw/share/doc/bacula_console/README.postmsg
 POSTMSG += /opt/csw/share/doc/bacula_sd/README.postmsg
@@ -268,3 +273,12 @@ post-install-modulated:
 	@( cd $(DESTDIR)/etc/opt/csw/bacula; \
 		perl -pi -e "s!<bacula-source>!$(docdir)/$(NAME)!" query.sql )
 	@$(MAKECOOKIE)
+
+post-merge:
+	@echo Adding user/group creation info...
+	@(cd $(PKGROOT)/etc/opt/csw; \
+		for p in director sd; do \
+			mkdir -p pkg/CSWbacula-$$p; \
+			echo "bacula:bacula:Bacula:/var/opt/csw/bacula/:/bin/false:::NP" > pkg/CSWbacula-$$p/cswusergroup; \
+		done)
+
