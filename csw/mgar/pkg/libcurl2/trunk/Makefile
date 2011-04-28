@@ -1,5 +1,5 @@
 NAME = curl
-VERSION = 7.21.2
+VERSION = 7.11.2
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers
@@ -16,15 +16,13 @@ endef
 MASTER_SITES = http://curl.haxx.se/download/
 DISTFILES += libcurl.so.2.0.2.s
 DISTFILES += libcurl.so.2.0.2.i
+DISTFILES += COPYING
 
 PACKAGES += CSWlibcurl2
 CATALOGNAME_CSWlibcurl2 = libcurl2
 SPKG_DESC_CSWlibcurl2 = Library for client-side URL transfers, libcurl.so.2
 RUNTIME_DEP_PKGS_CSWlibcurl2 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibcurl2 += CSWzlib
-
-# Yes, the license *is* missing
-CHECKPKG_OVERRIDES_CSWlibcurl2 += license-missing|/opt/csw/share/doc/libcurl2/license
 
 VENDOR_URL = http://curl.haxx.se
 
