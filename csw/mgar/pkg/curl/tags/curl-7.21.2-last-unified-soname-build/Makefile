@@ -43,6 +43,8 @@ EXTRA_CONFIGURE_ARGS_features-minimal = --disable-ldap --without-libssh2 --disab
 EXTRA_CONFIGURE_ARGS_features-full    = --enable-ares --with-spnego=$(libdir)
 EXTRA_CONFIGURE_ARGS_features-full   += --enable-ldap --enable-ldaps
 
+EXTRA_LDFLAGS = -L$(libdir)/libnet-new
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl=/opt/csw/ssl
 CONFIGURE_ARGS += --with-ca-path=/opt/csw/ssl/certs
@@ -51,7 +53,6 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_features-$(FEATURES))
 BUILD64 = 1
 
 # We are doing 64 bit only for the libs
-NOISAEXEC = 1
 
 RUNTIME_DEP_PKGS_CSWcurl = CSWlibidn CSWlibnet CSWoldaprt CSWosslrt CSWzlib CSWsasl CSWcurlrt CSWlibcares CSWlibssh2
 RUNTIME_DEP_PKGS_CSWcurlrt = CSWlibidn CSWosslrt CSWzlib 
