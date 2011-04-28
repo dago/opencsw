@@ -206,6 +206,11 @@ CONFIGURE_ARGS += --with-sd-password=h6F8l+Vkp8eiJpZclqqA/bpLD71bP8S+vMG01qxXzlr
 CONFIGURE_ARGS += --with-mon-dir-password=QhTqgNyq8s6l7RJc/+3NmVqQkyxkqlnaJLPwsZF7fXUp
 CONFIGURE_ARGS += --with-mon-fd-password=IEKXaPXrRO8BzJYBJueDJgkVsXzR/1cVvPNGJhZPrsHB
 CONFIGURE_ARGS += --with-mon-sd-password=e5fbjZnW+1hohTYFBfTXFe1KP7BIgCrAvY4fA4fg39TN
+# don't run as root except for the file daemon which will need those privs
+CONFIGURE_ARGS += --with-dir-user=bacula
+CONFIGURE_ARGS += --with-dir-group=bacula
+CONFIGURE_ARGS += --with-sd-user=bacula
+CONFIGURE_ARGS += --with-sd-group=bacula
 
 EXTRA_INC += $(includedir)/ncursesw
 EXTRA_LIB += $(prefix)/lib/ncursesw $(prefix)/mysql5/lib/mysql
