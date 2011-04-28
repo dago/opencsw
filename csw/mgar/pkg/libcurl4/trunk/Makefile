@@ -1,0 +1,156 @@
+NAME = curl
+VERSION = 7.21.6
+CATEGORIES = net
+
+DESCRIPTION = Command line tool and library for client-side URL transfers
+define BLURB
+  curl and libcurl is a tool for transferring files using URL syntax. It
+  supports HTTP, HTTPS, FTP, FTPS, DICT, TELNET, LDAP, FILE, and GOPHER, as
+  well as HTTP-post, HTTP-put, cookies, FTP upload, resumed transfers,
+  passwords, portnumbers, SSL certificates, Kerberos, and proxies. It is
+  powered by libcurl, the client-side URL transfer library. There are
+  bindings/interfaces to libcurl for more than a dozen languages and
+  environments.
+endef
+
+MASTER_SITES = http://curl.haxx.se/download/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES += curlbuild.h
+
+# Use patch until this is fixed:
+#   https://sourceforge.net/tracker/?func=detail&aid=3294509&group_id=976&atid=100976
+PATCHFILES += 0001-Use-stdint.h-only-when-it-is-available-fall-back-to-.patch
+
+FOREIGN_PACKAGES += CSWlibcurl2
+OBSOLETED_BY_CSWlibcurl2 += CSWcurlrt
+CATALOGNAME_CSWcurlrt = curl_rt_stub
+
+FOREIGN_PACKAGES += CSWlibcurl3
+OBSOLETED_BY_CSWlibcurl3 += CSWcurlrt
+
+PACKAGES += CSWlibcurl4
+CATALOGNAME_CSWlibcurl4 = libcurl4
+SPKG_DESC_CSWlibcurl4 = Library for client-side URL transfers, libcurl.so.4
+PKGFILES_CSWlibcurl4 = $(call pkgfiles_lib,libcurl.so.4)
+OBSOLETED_BY_CSWlibcurl4 = CSWcurlrt
+RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibidn
+RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWzlib 
+
+PACKAGES += CSWlibcurl4-feature
+CATALOGNAME_CSWlibcurl4-feature = libcurl4_feature
+SPKG_DESC_CSWlibcurl4-feature = Full-features library for client-side URL transfers superseding libcurl.so.4
+PKGFILES_CSWlibcurl4-feature = $(call pkgfiles_lib,libcurl-feature.so.4)
+OBSOLETED_BY_CSWlibcurl4-feature = CSWcurlrtfull
+CATALOGNAME_CSWcurlrtfull = curl_rt_full_stub
+RUNTIME_DEP_PKGS_CSWcurl-feature += CSWlibidn
+RUNTIME_DEP_PKGS_CSWcurl-feature += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWcurl-feature += CSWosslrt
+RUNTIME_DEP_PKGS_CSWcurl-feature += CSWzlib
+RUNTIME_DEP_PKGS_CSWcurl-feature += CSWlibcares
+RUNTIME_DEP_PKGS_CSWcurl-feature += CSWlibssh2
+RUNTIME_DEP_PKGS_CSWcurl-feature += CSWlibfbopenssl
+
+PACKAGES += CSWlibcurl-dev
+CATALOGNAME_CSWlibcurl-dev = libcurl_dev
+SPKG_DESC_CSWlibcurl-dev = Development files for libcurl.so.4
+PKGFILES_CSWlibcurl-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibcurl-dev = CSWlibcurl4
+OBSOLETED_BY_CSWlibcurl-dev = CSWcurldevel
+CATALOGNAME_CSWcurldevel = curl_devel_stub
+
+PACKAGES += CSWcurl
+CATALOGNAME_CSWcurl = curl
+SPKG_DESC_CSWcurl = A command line tool and library for client-side URL transfers
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibnet
+RUNTIME_DEP_PKGS_CSWcurl += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWcurl += CSWzlib
+RUNTIME_DEP_PKGS_CSWcurl += CSWsasl
+RUNTIME_DEP_PKGS_CSWcurl += CSWcurlrt
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibcares
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibssh2
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibfbopenssl
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibcurl4
+
+BUILD_DEP_PKGS += CSWoldapdevel
+BUILD_DEP_PKGS += CSWossldevel
+BUILD_DEP_PKGS += CSWlibcaresdevel
+BUILD_DEP_PKGS += CSWlibssh2devel
+
+VENDOR_URL = http://curl.haxx.se
+
+EXTRA_MODULATORS = FEATURES
+MODULATIONS_FEATURES = minimal full
+
+EXTRA_CONFIGURE_ARGS_features-minimal += --disable-ldap
+EXTRA_CONFIGURE_ARGS_features-minimal += --without-libssh2
+EXTRA_CONFIGURE_ARGS_features-minimal += --disable-ares
+
+EXTRA_CONFIGURE_ARGS_features-full += --enable-ares
+EXTRA_CONFIGURE_ARGS_features-full += --with-spnego=$(libdir)
+EXTRA_CONFIGURE_ARGS_features-full += --enable-ldap
+EXTRA_CONFIGURE_ARGS_features-full += --enable-ldaps
+
+# Make sure to link to the new libnet. See for details http://wiki.opencsw.org/project-libnet
+EXTRA_LDFLAGS = -L$(libdir)/libnet-new
+
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-ssl=/opt/csw/ssl
+CONFIGURE_ARGS += --with-ca-path=/opt/csw/ssl/certs
+CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_features-$(FEATURES))
+
+BUILD64 = 1
+
+
+SKIPTEST = 1
+
+# isa-sparcv8-features-minimal isa-sparcv8-features-full isa-sparcv9-features-minimal isa-sparcv9-features-full
+
+# TBD: Unify curlbuild.h with something like diff -D (sparcv9|amd64) curlbuild-32.h curlbuild-64.h > curlbuild.h
+# Inspired from http://cvs.opensolaris.org/source/xref/sfw/usr/src/cmd/apr/apr-1.3/Makefile.sfw
+EXTRA_PAX_ARGS_32 = -s ",^\.$(includedir)/curl/curlbuild.h$$,.$(includedir)/curl/curlbuild-32.h,p"
+EXTRA_PAX_ARGS_64 = -s ",^\.$(includedir)/curl/curlbuild.h$$,.$(includedir)/curl/curlbuild-64.h,p"
+EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
+
+# EXTRA_PAX_ARGS_32 += -s ",.*/libcurl\.so(\.\d+)?$$,$(libdir)/libcurl-$(FEATURES).so.4.2.0,p"
+# EXTRA_PAX_ARGS_64 += -s ",$(libdir)/libcurl\.so\.4\.2\.0$$,$(libdir_install)/$(ISA)/libcurl-$(FEATURES).so.4.2.0,p"
+
+EXTRA_PAX_ARGS_isa-sparcv8-features-full += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\(\.$(libdir)/libcurl\)\(\.so\.\d+\..*\),\1-feature\2,p"
+EXTRA_PAX_ARGS_isa-i386-features-full    += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\(\.$(libdir)/libcurl\)\(\.so\.\d+\..*\),\1-feature\2,p"
+EXTRA_PAX_ARGS_isa-sparcv9-features-full += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\.$(libdir)/libcurl\(\.so\.\d+\..*\),.$(libdir_install)/$(ISA)/libcurl-feature\1,p"
+EXTRA_PAX_ARGS_isa-amd64-features-full   += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\.$(libdir)/libcurl\(\.so\.\d+\..*\),.$(libdir_install)/$(ISA)/libcurl-feature\1,p"
+
+# We select pkgconfig for minimal library bindings. As libneon is self-contained (links
+# to all necessary libs directly) the full version can simly be linked in.
+EXTRA_PAX_ARGS_features-full = -s ",.*/pkgconfig.*,,"
+EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS_features-$(FEATURES))
+
+MERGE_SCRIPTS_isa-default-features-minimal = copy-all
+MERGE_SCRIPTS_isa-default64-features-minimal = copy-relocated-only
+MERGE_DIRS_isa-default64-features-minimal = $(libdir)
+MERGE_SCRIPTS_isa-default-features-full = copy-only
+MERGE_DIRS_isa-default-features-full = $(libdir)
+MERGE_SCRIPTS_isa-default64-features-full = copy-relocated-only
+MERGE_DIRS_isa-default64-features-full = $(libdir)
+
+include gar/category.mk
+
+post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: EXTRA_LD_OPTIONS = -f libcurl-feature.so.4
+post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: 
+	rm -f $(WORKSRC)/lib/libcurl.la
+	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(WORKSRC) $(BUILD_ARGS)
+	@$(MAKECOOKIE)
+
+post-merge:
+	@# This is needed because the substitutions from pax args do not change the
+	@# contents of the symlink
+	rm -f $(PKGROOT)$(libdir)/libcurl-feature.so.4
+	ln -s libcurl-feature.so.4.2.0 $(PKGROOT)$(libdir)/libcurl-feature.so.4
+	rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libcurl-feature.so.4
+	ln -s libcurl-feature.so.4.2.0 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libcurl-feature.so.4
+
+post-merge:
+	ginstall $(FILEDIR)/curlbuild.h $(PKGROOT)$(includedir)/curl/curlbuild.h
+	@$(MAKECOOKIE)
