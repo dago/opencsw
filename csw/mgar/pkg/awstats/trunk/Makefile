@@ -1,5 +1,5 @@
 NAME = awstats
-VERSION = 6.9
+VERSION = 7.0
 CATEGORIES = apps
 
 DESCRIPTION = Featureful tool for web, ftp and mail server statistics
@@ -15,21 +15,42 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += CSWawstats.postinstall
+DISTFILES += $(DISTNAME).tar.gz
+DISTFILES += CSWawstats.postmsg
+PATCHFILES += 0001-Adjust-pathes-for-OpenCSW.patch
 
-PATCHFILES = patch-configdir.diff
+PACKAGES += CSWawstats
+CATALOGNAME_CSWawstats = awstats
+SPKG_DESC_CSWawstats = Featureful tool for web, ftp and mail server statistics
+RUNTIME_DEP_PKGS_CSWawstats += CSWperl
+ARCHALL_CSWawstats = 1
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+# These are documentation files, ignore for now
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/doc/awstats/awstats_setup.html
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/doc/awstats/awstats_faq.html
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/doc/awstats/awstats_contrib.html
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/doc/awstats/awstats_webmin.html
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/doc/awstats/awstats_changelog.txt
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+# Only in comments, patches by 0001
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/www/awstats/cgi-bin/awstats.pl
 
-SPKG_SOURCEURL = http://awstats.sourceforge.net
+# These are all comments, I patched all important occurrences
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/etc/opt/csw/awstats.conf.CSW
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/awstats/awstats_buildstaticpages.pl
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/awstats/awstats_configure.pl
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/awstats/geoip_generator.pl
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/local|root/opt/csw/share/awstats/webmin/awstats-1.9.wbm
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/share|root/etc/opt/csw/awstats.conf.CSW
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/share|root/opt/csw/share/www/awstats/cgi-bin/awstats.pl
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/share|root/opt/csw/share/www/awstats/cgi-bin/plugins/tooltips.pm
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/share|root/opt/csw/share/awstats/awstats_exportlib.pl
+CHECKPKG_OVERRIDES_CSWawstats += file-with-bad-content|/usr/share|root/opt/csw/share/doc/awstats/awstats_config.html
 
-RUNTIME_DEP_PKGS = CSWapache2 CSWperl
+# awstats is pretty generic, do not directly depend
+CHECKPKG_OVERRIDES_CSWawstats += missing-dependency|CSWapache2
+
+VENDOR_URL = http://awstats.sourceforge.net
 
 LICENSE = docs/LICENSE.TXT
 
@@ -38,10 +59,8 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-PRESERVECONF  = $(prefix)/apache2/etc/extra/httpd-awstats.conf.CSW
-PRESERVECONF += $(sysconfdir)/awstats.conf.CSW
-
-ARCHALL = 1
+PRESERVECONF  = $(prefix)/apache2/etc/extra/httpd-awstats.conf
+PRESERVECONF += $(sysconfdir)/awstats.conf
 
 include gar/category.mk
 
@@ -61,20 +80,20 @@ install-custom:
 		$(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/
 
 	ginstall -d $(DESTDIR)$(sysconfdir)/awstats/
-	cat $(WORKSRC)/tools/wwwroot/cgi-bin/awstats.model.conf | perl -p -e '\
-		s!/var/log/httpd/mylog.log!/var/opt/csw/awstats!;
-		'> $(DESTDIR)$(sysconfdir)/awstats.conf.CSW
+	cat $(WORKSRC)/wwwroot/cgi-bin/awstats.model.conf | perl -p \
+		-e 's!/var/log/httpd/mylog.log!/var/opt/csw/awstats/awstats.log!;' \
+		> $(DESTDIR)$(sysconfdir)/awstats.conf
 	rm -f $(DESTDIR)$(sharedstatedir)/www/awstats/cgi-bin/awstats.model.conf
 
 	ginstall -d $(DESTDIR)$(prefix)/apache2/etc/extra/
-	cat $(WORKSRC)/tools/httpd_conf | perl -p -e '\
-		s!/usr/local/awstats/wwwroot/cgi-bin/!$(sharedstatedir)/www/awstats/cgi-bin/!; \
-		s!/usr/local/awstats/wwwroot/!$(sharedstatedir)/www/awstats/htdocs/!; \
-		s!/usr/local/awstats/wwwroot!$(sharedstatedir)/www/awstats/htdocs!; \
-		'> $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-awstats.conf.CSW
+	cat $(WORKSRC)/tools/httpd_conf | perl -p \
+		-e 's!/usr/local/awstats/wwwroot/cgi-bin/!$(sharedstatedir)/www/awstats/cgi-bin/!;' \
+		-e 's!/usr/local/awstats/wwwroot/!$(sharedstatedir)/www/awstats/htdocs/!;' \
+		-e 's!/usr/local/awstats/wwwroot!$(sharedstatedir)/www/awstats/htdocs!;' \
+		-e 's!/usr/local/awstats/!$(sharedstatedir)/www/awstats/!;' \
+		> $(DESTDIR)$(prefix)/apache2/etc/extra/httpd-awstats.conf
 	rm -f $(DESTDIR)$(sharedstatedir)/awstats/httpd_conf
-
 	@$(MAKECOOKIE)
 
-# ./awstats_updateall.pl now -awstatsprog=/opt/csw/share/www/awstats/cgi-bin/awstats.pl -configdir=/opt/csw/etc
+# ./awstats_updateall.pl now -awstatsprog=/opt/csw/share/www/awstats/cgi-bin/awstats.pl -configdir=/etc/opt/csw
 
