@@ -70,6 +70,7 @@ CHECKPKG_OVERRIDES_CSWbacula-client += surplus-dependency|CSWbacula-fd
 CATALOGNAME_CSWbacula-doc = bacula_doc
 SPKG_DESC_CSWbacula-doc = $(DESCRIPTION) - Documentation
 PKGFILES_CSWbacula-doc += .*doc/$(NAME)/.*
+ARCHALL_CSWbacula-doc = 1
 CHECKPKG_OVERRIDES_CSWbacula-doc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWbacula-doc += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWbacula-doc += missing-dependency|CSWperl
