@@ -33,9 +33,9 @@ CATALOGNAME_CSWlibcurl4 = libcurl4
 SPKG_DESC_CSWlibcurl4 = Library for client-side URL transfers, libcurl.so.4
 PKGFILES_CSWlibcurl4 = $(call pkgfiles_lib,libcurl.so.4)
 OBSOLETED_BY_CSWlibcurl4 = CSWcurlrt
-RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibidn
 RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWzlib 
+RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibidn11
 
 PACKAGES += CSWlibcurl4-feature
 CATALOGNAME_CSWlibcurl4-feature = libcurl4_feature
@@ -43,13 +43,19 @@ SPKG_DESC_CSWlibcurl4-feature = Full-features library for client-side URL transf
 PKGFILES_CSWlibcurl4-feature = $(call pkgfiles_lib,libcurl-feature.so.4)
 OBSOLETED_BY_CSWlibcurl4-feature = CSWcurlrtfull
 CATALOGNAME_CSWcurlrtfull = curl_rt_full_stub
-RUNTIME_DEP_PKGS_CSWcurl-feature += CSWlibidn
-RUNTIME_DEP_PKGS_CSWcurl-feature += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWcurl-feature += CSWosslrt
-RUNTIME_DEP_PKGS_CSWcurl-feature += CSWzlib
-RUNTIME_DEP_PKGS_CSWcurl-feature += CSWlibcares
-RUNTIME_DEP_PKGS_CSWcurl-feature += CSWlibssh2
-RUNTIME_DEP_PKGS_CSWcurl-feature += CSWlibfbopenssl
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibfbopenssl
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibidn11
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibssh2
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcares2
+
+# These are artifacts of the feature lib being a regular one.
+# As it is never linked against the soname doesn't matter here and the package name
+# is obviously different from the soname in this case.
+CHECKPKG_OVERRIDES_CSWlibcurl4-feature += shared-lib-pkgname-mismatch
+CHECKPKG_OVERRIDES_CSWlibcurl4-feature += soname-not-part-of-filename
 
 PACKAGES += CSWlibcurl-dev
 CATALOGNAME_CSWlibcurl-dev = libcurl_dev
@@ -63,16 +69,10 @@ PACKAGES += CSWcurl
 CATALOGNAME_CSWcurl = curl
 SPKG_DESC_CSWcurl = A command line tool and library for client-side URL transfers
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWcurl += CSWlibnet
-RUNTIME_DEP_PKGS_CSWcurl += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWcurl += CSWzlib
-RUNTIME_DEP_PKGS_CSWcurl += CSWsasl
-RUNTIME_DEP_PKGS_CSWcurl += CSWcurlrt
-RUNTIME_DEP_PKGS_CSWcurl += CSWlibcares
-RUNTIME_DEP_PKGS_CSWcurl += CSWlibssh2
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibidn11
-RUNTIME_DEP_PKGS_CSWcurl += CSWlibfbopenssl
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWcurl += CSWosslrt
 
 BUILD_DEP_PKGS += CSWoldapdevel
 BUILD_DEP_PKGS += CSWossldevel
@@ -128,7 +128,7 @@ EXTRA_PAX_ARGS_features-full = -s ",.*/pkgconfig.*,,"
 EXTRA_PAX_ARGS += $(EXTRA_PAX_ARGS_features-$(FEATURES))
 
 MERGE_SCRIPTS_isa-default-features-minimal = copy-all
-MERGE_SCRIPTS_isa-default64-features-minimal = copy-relocated-only
+MERGE_SCRIPTS_isa-default64-features-minimal = copy-relocated-only copy-config-only
 MERGE_DIRS_isa-default64-features-minimal = $(libdir)
 MERGE_SCRIPTS_isa-default-features-full = copy-only
 MERGE_DIRS_isa-default-features-full = $(libdir)
@@ -140,7 +140,7 @@ include gar/category.mk
 post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: EXTRA_LD_OPTIONS = -f libcurl-feature.so.4
 post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: 
 	rm -f $(WORKSRC)/lib/libcurl.la
-	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(WORKSRC) $(BUILD_ARGS)
+	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(WORKSRC)/lib $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 post-merge:
@@ -150,7 +150,5 @@ post-merge:
 	ln -s libcurl-feature.so.4.2.0 $(PKGROOT)$(libdir)/libcurl-feature.so.4
 	rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libcurl-feature.so.4
 	ln -s libcurl-feature.so.4.2.0 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libcurl-feature.so.4
-
-post-merge:
 	ginstall $(FILEDIR)/curlbuild.h $(PKGROOT)$(includedir)/curl/curlbuild.h
 	@$(MAKECOOKIE)
