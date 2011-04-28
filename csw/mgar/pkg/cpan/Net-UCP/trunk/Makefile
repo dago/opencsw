@@ -10,18 +10,16 @@ endef
 
 MODDIST = $(NAME)-$(VERSION).tgz
 
-PACKAGES = CSWpmnetucp
-CATALOGNAME = pm_netucp
-
-CHECKPKG_OVERRIDES_CSWpmnetucp += catalogname-does-not-match-pkgname|pkgname=CSWpmnetucp|catalogname=pm_netucp|expected-catalogname=pmnetucp
+PACKAGES = CSWpm-net-ucp
+CATALOGNAME = pm_net_ucp
 
 DISTFILES += LICENSE
 ARCHALL = 1
 
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS_CSWpmnetucp = CSWpmnetucpcommon
-RUNTIME_DEP_PKGS_CSWpmnetucp = CSWpmnetucpinttimeout
-RUNTIME_DEP_PKGS_CSWpmnetucp = CSWpmnetucptransactionmanager
+RUNTIME_DEP_PKGS_CSWpmnetucp = CSWpm-net-ucp-common
+RUNTIME_DEP_PKGS_CSWpmnetucp = CSWpm-net-ucp-inttimeout
+RUNTIME_DEP_PKGS_CSWpmnetucp = CSWpm-net-ucp-transactionmanager
 
 include gar/category.mk
