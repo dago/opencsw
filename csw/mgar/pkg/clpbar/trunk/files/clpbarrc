@@ -1,0 +1,35 @@
+#
+# This is an example of what a ~/.clpbarrc file
+# might look like. Note that lines beginning
+# with a # are ignored.
+#
+# display-twiddle: no
+# display-ansi: yes
+# space-background: black
+# twiddle-foreground: green
+# twiddle-background: normal
+# twiddle-bold: no
+# count-foreground: green
+# count-background: magenta
+# count-bold: yes
+# throughput-label-foreground: normal
+# throughput-label-background: red
+# throughput-label-bold: no
+# throughput-foreground: green
+# throughput-background: black
+# throughput-bold: yes
+# time-label-foreground: normal
+# time-label-background: red
+# time-label-bold: no
+# time-foreground: green
+# time-background: black
+# time-bold: yes
+# percent-foreground: green
+# percent-background: green
+# percent-bold: yes
+# bar-brace-foreground: red
+# bar-brace-background: blue
+# bar-brace-bold: no
+# bar-foreground: yellow
+# bar-background: blue
+# bar-bold: yes
