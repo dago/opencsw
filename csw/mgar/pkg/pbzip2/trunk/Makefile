@@ -1,5 +1,5 @@
 NAME = pbzip2
-VERSION = 1.1.3
+VERSION = 1.1.4
 CATEGORIES = utils
 
 DESCRIPTION = Parallel BZIP2 Data Compression Software
