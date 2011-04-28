@@ -64,9 +64,10 @@ BUILD_DEP_PKGS += CSWsqlite3devel CSWaspell CSWhtmltidy CSWpostgresql
 # of sqlite...
 BUILD_DEP_PKGS += CSWsqlite
 
-PRESERVECONF = /etc$(prefix)/php5/php.ini
-MIGRATE_FILES_CSWphp5 = "php.ini"
-MIGRATE_SOURCE_DIR = /opt/csw/php5/lib
+PRESERVECONF = /etc$(prefix)/php5/php.ini /etc$(prefix)/php5/pear.conf
+MIGRATE_FILES_CSWphp5 = "php.ini pear.conf"
+MIGRATE_SOURCE_DIR_php_ini = /opt/csw/php5/lib
+MIGRATE_SOURCE_DIR_pear_conf = /opt/csw/php5/etc
 MIGRATE_DEST_DIR = $(sysconfdir)
 
 define php5_subpackage
@@ -331,9 +332,5 @@ post-install-modulated:
 	@ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(prefix)/php5/bin/
 	@perl -pi -e 's/^;extension=php_(.*).dll/;extension=$$1.so/' $(INIDEST)
 	@rm -rf $(DESTDIR)/.cha* $(DESTDIR)/.dep* $(DESTDIR)/.reg* $(DESTDIR)/.l* $(DESTDIR)/.f*
-	@$(MAKECOOKIE)
-
-install-extras:
-	gmv $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf $(DESTDIR)$(call _get_php_prefix,$(DESTDIR))/etc/pear.conf.CSW
 	@$(MAKECOOKIE)
 
