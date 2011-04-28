@@ -42,7 +42,7 @@ post-install-isa-sparcv8:
 	ln -s libcurl.so.2.0.2 $(DESTDIR)$(libdir)/libcurl.so.2
 	@$(MAKECOOKIE)
 
-post-install-isa-i386-features-minimal:
+post-install-isa-i386:
 	ginstall -d $(DESTDIR)$(libdir)
 	cp $(WORKDIR)/libcurl.so.2.0.2.i $(DESTDIR)$(libdir)/libcurl.so.2.0.2
 	ln -s libcurl.so.2.0.2 $(DESTDIR)$(libdir)/libcurl.so.2
