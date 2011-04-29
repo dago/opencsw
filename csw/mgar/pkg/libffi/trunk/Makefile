@@ -47,9 +47,7 @@ PKGFILES_CSWlibffi-dev += $(libdir)/.*/include/.*
 PKGFILES_CSWlibffi-dev += $(datadir)/.*
 
 # An empty stub to let checkpkg know about the rename
-PACKAGES += CSWlibffidevel
-SPKG_DESC_CSWlibffidevel = A stub package, do not release
-PKGFILES_CSWlibffidevel = NOFILES
+OBSOLETED_BY_CSWlibffi-dev = CSWlibffidevel
 
 PACKAGES += CSWlibffi5
 SPKG_DESC_CSWlibffi5 = $(DESCRIPTION) - libffi.so.5
