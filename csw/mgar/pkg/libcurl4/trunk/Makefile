@@ -72,6 +72,12 @@ RUNTIME_DEP_PKGS_CSWcurl += CSWzlib
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWcurl += CSWosslrt
+# Double-legacy packages may not even depend on CSWcurlrt, so we must
+# also directly depend on CSWlibcurl2 and CSWlibcurl3
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibcurl2
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibcurl3
+CHECKPKG_OVERRIDES_CSWcurl += surplus-dependency|CSWlibcurl2
+CHECKPKG_OVERRIDES_CSWcurl += surplus-dependency|CSWlibcurl3
 
 BUILD_DEP_PKGS += CSWoldapdevel
 BUILD_DEP_PKGS += CSWossldevel
@@ -96,6 +102,7 @@ EXTRA_CONFIGURE_ARGS_features-full += --enable-ldaps
 EXTRA_LDFLAGS = -L$(libdir)/libnet-new
 
 CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --with-ssl=/opt/csw/ssl
 CONFIGURE_ARGS += --with-ca-path=/opt/csw/ssl/certs
 CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_features-$(FEATURES))
@@ -125,6 +132,9 @@ MERGE_SCRIPTS_isa-default-features-full = copy-only
 MERGE_DIRS_isa-default-features-full = $(libdir)
 MERGE_SCRIPTS_isa-default64-features-full = copy-relocated-only
 MERGE_DIRS_isa-default64-features-full = $(libdir)
+
+# TBD: Use alternatives on curl-config between minimal and feature as it is possible to
+# use options to find out about installed features and protocols by calling it.
 
 include gar/category.mk
 
