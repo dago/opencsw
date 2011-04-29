@@ -138,6 +138,9 @@ MERGE_DIRS_isa-default64-features-full = $(libdir)
 
 include gar/category.mk
 
+# These are not really necessary and they confuse the linker as described in #4550
+$(GARCOMPILER)_LD_FLAGS :=
+
 post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: EXTRA_LD_OPTIONS = -f libcurl-feature.so.4
 post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: 
 	rm -f $(WORKSRC)/lib/libcurl.la
