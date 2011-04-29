@@ -129,6 +129,7 @@ PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz .*bacula/bacula-fd.conf.CSW
 PKGFILES_CSWbacula-fd += /var/opt/csw/run
 PKGFILES_CSWbacula-fd += .*bacula_fd/.*postmsg
 PKGFILES_CSWbacula-fd += /etc/opt/csw/pkg/CSWbacula-fd/cswusergroup
+PKGFILES_CSWbacula-fd += /etc/opt/csw/pkg/CSWbacula-fd/services
 
 CATALOGNAME_CSWbacula-sd = bacula_sd
 SPKG_DESC_CSWbacula-sd = $(DESCRIPTION) - Storage Daemon
@@ -154,6 +155,7 @@ PKGFILES_CSWbacula-sd += /var/opt/csw/run
 PKGFILES_CSWbacula-sd += $(localstatedir)/$(NAME)/archive
 PKGFILES_CSWbacula-sd += .*bacula_sd/.*postmsg
 PKGFILES_CSWbacula-sd += /etc/opt/csw/pkg/CSWbacula-sd/cswusergroup
+PKGFILES_CSWbacula-sd += /etc/opt/csw/pkg/CSWbacula-sd/services
 
 CATALOGNAME_CSWbacula-director = bacula_director
 SPKG_DESC_CSWbacula-director = $(DESCRIPTION) - Director
@@ -183,6 +185,7 @@ PKGFILES_CSWbacula-director += /var/opt/csw/run
 PKGFILES_CSWbacula-director += .*share/doc/bacula_director/README.CSW
 PKGFILES_CSWbacula-director += .*bacula_director/.*postmsg
 PKGFILES_CSWbacula-director += /etc/opt/csw/pkg/CSWbacula-director/cswusergroup
+PKGFILES_CSWbacula-director += /etc/opt/csw/pkg/CSWbacula-director/services
 
 # force libraries into a separate subdirectory
 libdir = $(prefix)/lib/$(NAME)
@@ -250,6 +253,10 @@ POSTMSG += /opt/csw/share/doc/bacula_console/README.postmsg
 POSTMSG += /opt/csw/share/doc/bacula_sd/README.postmsg
 POSTMSG += /opt/csw/share/doc/bacula_fd/README.postmsg
 
+ETCSERVICES  = /etc/opt/csw/pkg/CSWbacula-dir/services
+ETCSERVICES += /etc/opt/csw/pkg/CSWbacula-fd/services
+ETCSERVICES += /etc/opt/csw/pkg/CSWbacula-sd/services
+
 PROTOTYPE_MODIFIERS = usergroupfiles confgroup generalperms
 PROTOTYPE_FILES_usergroupfiles = /var/opt/csw/bacula.*
 PROTOTYPE_CLASS_usergroupfiles = ugfiles
@@ -306,5 +313,8 @@ post-merge:
 		for p in director sd fd; do \
 			mkdir -p pkg/CSWbacula-$$p; \
 			echo "bacula:bacula:Bacula:/var/opt/csw/bacula/:/bin/false:::NP" > pkg/CSWbacula-$$p/cswusergroup; \
+		echo "bacula-dir 9101/tcp" > pkg/CSWbacula-dir/services; \
+		echo "bacula-fd 9102/tcp" > pkg/CSWbacula-fd/services; \
+		echo "bacula-sd 9103/tcp" > pkg/CSWbacula-sd/services; \
 		done)
 
