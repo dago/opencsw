@@ -314,6 +314,6 @@ post-merge:
 			mkdir -p pkg/CSWbacula-$$p; \
 			echo "bacula:bacula:Bacula:/var/opt/csw/bacula/:/bin/false:::NP" > pkg/CSWbacula-$$p/cswusergroup; \
 		done; \
-		echo "bacula-dir 9101/tcp" > pkg/CSWbacula-dir/services; \
+		echo "bacula-dir 9101/tcp" > pkg/CSWbacula-director/services; \
 		echo "bacula-fd 9102/tcp" > pkg/CSWbacula-fd/services; \
 		echo "bacula-sd 9103/tcp" > pkg/CSWbacula-sd/services )
