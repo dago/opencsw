@@ -263,7 +263,8 @@ _CSWCLASS_FILTER = | perl -ane '\
 # than the conf handling classes.  this allows one to manually set the
 # user/group on conf files with prototype modifiers while still
 # leveraging the conf handler classes.  this is a priority issue as
-# per the above note.
+# per the above note.  (See bacula for an example of where this is
+# required.)
 
 _CSWCLASSES  = cswusergroup ugfiles
 _CSWCLASSES += cswmigrateconf cswcpsampleconf cswpreserveconf cswcptemplates
