@@ -128,6 +128,7 @@ PKGFILES_CSWbacula-fd += .*/bpipe-fd.so .*sbin/bacula-fd .*bacula/working
 PKGFILES_CSWbacula-fd += .*man8/bacula-fd.8.gz .*bacula/bacula-fd.conf.CSW
 PKGFILES_CSWbacula-fd += /var/opt/csw/run
 PKGFILES_CSWbacula-fd += .*bacula_fd/.*postmsg
+PKGFILES_CSWbacula-fd += /etc/opt/csw/pkg/CSWbacula-fd/cswusergroup
 
 CATALOGNAME_CSWbacula-sd = bacula_sd
 SPKG_DESC_CSWbacula-sd = $(DESCRIPTION) - Storage Daemon
@@ -242,6 +243,7 @@ PRESERVECONF += $(sysconfdir)/tray-monitor.conf
 
 USERGROUP += /etc/opt/csw/pkg/CSWbacula-director/cswusergroup
 USERGROUP += /etc/opt/csw/pkg/CSWbacula-sd/cswusergroup
+USERGROUP += /etc/opt/csw/pkg/CSWbacula-fd/cswusergroup
 
 POSTMSG  = /opt/csw/share/doc/bacula_director/README.postmsg
 POSTMSG += /opt/csw/share/doc/bacula_console/README.postmsg
@@ -301,7 +303,7 @@ post-install-modulated:
 post-merge:
 	@echo Adding user/group creation info...
 	@(cd $(PKGROOT)/etc/opt/csw; \
-		for p in director sd; do \
+		for p in director sd fd; do \
 			mkdir -p pkg/CSWbacula-$$p; \
 			echo "bacula:bacula:Bacula:/var/opt/csw/bacula/:/bin/false:::NP" > pkg/CSWbacula-$$p/cswusergroup; \
 		done)
