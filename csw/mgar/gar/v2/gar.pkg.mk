@@ -259,9 +259,15 @@ _CSWCLASS_FILTER = | perl -ane '\
 #	you need to ensure any binaries and config files are already on disk
 #	and able to be consumed by a service that might be started.
 
-_CSWCLASSES  = cswmigrateconf cswcpsampleconf cswpreserveconf cswcptemplates
+# NOTE: cswusergroup and ugfiles were moved to have higher priority
+# than the conf handling classes.  this allows one to manually set the
+# user/group on conf files with prototype modifiers while still
+# leveraging the conf handler classes.  this is a priority issue as
+# per the above note.
+
+_CSWCLASSES  = cswusergroup ugfiles
+_CSWCLASSES += cswmigrateconf cswcpsampleconf cswpreserveconf cswcptemplates
 _CSWCLASSES += cswetcservices
-_CSWCLASSES += cswusergroup ugfiles
 _CSWCLASSES += cswcrontab
 _CSWCLASSES += cswpycompile
 _CSWCLASSES += cswinetd
