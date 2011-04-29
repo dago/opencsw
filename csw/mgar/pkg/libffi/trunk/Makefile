@@ -46,9 +46,6 @@ PKGFILES_CSWlibffi-dev += $(libdir)/(.*/)?ffi/libffi\.so
 PKGFILES_CSWlibffi-dev += $(libdir)/.*/include/.*
 PKGFILES_CSWlibffi-dev += $(datadir)/.*
 
-# An empty stub to let checkpkg know about the rename
-OBSOLETED_BY_CSWlibffi-dev = CSWlibffidevel
-
 PACKAGES += CSWlibffi5
 SPKG_DESC_CSWlibffi5 = $(DESCRIPTION) - libffi.so.5
 PKGFILES_CSWlibffi5 += .*/libffi\.so\.5.*
