@@ -21,6 +21,7 @@ DISTFILES += CSWbacula-console.postinstall
 DISTFILES += postmsg
 PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
+PATCHFILES += 0003-Make-the-solaris-init-scripts-user-group-aware.patch
 
 BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
 BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
