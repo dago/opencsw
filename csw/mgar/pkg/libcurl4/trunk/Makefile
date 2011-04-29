@@ -15,7 +15,6 @@ endef
 
 MASTER_SITES = http://curl.haxx.se/download/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += curlbuild.h
 
 # Use patch until this is fixed:
 #   https://sourceforge.net/tracker/?func=detail&aid=3294509&group_id=976&atid=100976
@@ -103,19 +102,11 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_features-$(FEATURES))
 
 BUILD64 = 1
 
+# There are some failing tests, ignore for now
+SKIPTEST ?= 1
 
-SKIPTEST = 1
-
-# isa-sparcv8-features-minimal isa-sparcv8-features-full isa-sparcv9-features-minimal isa-sparcv9-features-full
-
-# TBD: Unify curlbuild.h with something like diff -D (sparcv9|amd64) curlbuild-32.h curlbuild-64.h > curlbuild.h
-# Inspired from http://cvs.opensolaris.org/source/xref/sfw/usr/src/cmd/apr/apr-1.3/Makefile.sfw
-EXTRA_PAX_ARGS_32 = -s ",^\.$(includedir)/curl/curlbuild.h$$,.$(includedir)/curl/curlbuild-32.h,p"
-EXTRA_PAX_ARGS_64 = -s ",^\.$(includedir)/curl/curlbuild.h$$,.$(includedir)/curl/curlbuild-64.h,p"
-EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
-
-# EXTRA_PAX_ARGS_32 += -s ",.*/libcurl\.so(\.\d+)?$$,$(libdir)/libcurl-$(FEATURES).so.4.2.0,p"
-# EXTRA_PAX_ARGS_64 += -s ",$(libdir)/libcurl\.so\.4\.2\.0$$,$(libdir_install)/$(ISA)/libcurl-$(FEATURES).so.4.2.0,p"
+# We do special 32/64 merging for this one, see post-merge
+EXTRA_MERGE_EXCLUDE_FILES += $(includedir)/curl/curlbuild.h
 
 EXTRA_PAX_ARGS_isa-sparcv8-features-full += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\(\.$(libdir)/libcurl\)\(\.so\.\d+\..*\),\1-feature\2,p"
 EXTRA_PAX_ARGS_isa-i386-features-full    += -s ",.*/libcurl\.so(\.\d+)?$$,," -s ",\(\.$(libdir)/libcurl\)\(\.so\.\d+\..*\),\1-feature\2,p"
@@ -150,5 +141,10 @@ post-merge:
 	ln -s libcurl-feature.so.4.2.0 $(PKGROOT)$(libdir)/libcurl-feature.so.4
 	rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libcurl-feature.so.4
 	ln -s libcurl-feature.so.4.2.0 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libcurl-feature.so.4
-	ginstall $(FILEDIR)/curlbuild.h $(PKGROOT)$(includedir)/curl/curlbuild.h
+	pwd
+	gdiff -D 64bit \
+		$(WORKROOTDIR)/install-isa-$(ISA_DEFAULT64)-features-minimal$(includedir)/curl/curlbuild.h \
+		$(WORKROOTDIR)/install-isa-$(ISA_DEFAULT)-features-minimal$(includedir)/curl/curlbuild.h \
+		| sed -e 's/ifndef 64bit/if defined __amd64 || defined __x86_64 || defined __sparcv9/' \
+		> $(PKGROOT)$(includedir)/curl/curlbuild.h
 	@$(MAKECOOKIE)
