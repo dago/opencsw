@@ -255,8 +255,9 @@ PROTOTYPE_USER_usergroupfiles = bacula
 PROTOTYPE_GROUP_usergroupfiles = bacula
 PROTOTYPE_PERMS_usergroupfiles = 0770
 PROTOTYPE_FILES_confgroup = /etc/opt/csw/bacula/.*
-PROTOTYPE_CLASS_confgroup = ugfiles
+PROTOTYPE_CLASS_confgroup = cswpreserveconf
 PROTOTYPE_GROUP_confgroup = bacula
+PROTOTYPE_PERMS_confgroup = 0640
 PROTOTYPE_FILES_generalperms = /opt/csw/sbin/.* /opt/csw/libexec/bacula/.*
 PROTOTYPE_PERMS_generalperms = 0755
 
