@@ -887,8 +887,7 @@ merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
 # Copy 
 merge-copy-config-only:
 	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pcopy $(_PAX_ARGS) \
-		-s ",^\(\.$(bindir)/.*-config\)\$$,\1,p" \
-		-s ",.*,," \
+		-m -s ",^\(\.$(bindir)/.*-config\)\$$,\1,p" \
 		. $(PKGROOT) \
 	)
 	@$(MAKECOOKIE)
