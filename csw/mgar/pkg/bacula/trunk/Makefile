@@ -253,7 +253,7 @@ POSTMSG += /opt/csw/share/doc/bacula_console/README.postmsg
 POSTMSG += /opt/csw/share/doc/bacula_sd/README.postmsg
 POSTMSG += /opt/csw/share/doc/bacula_fd/README.postmsg
 
-ETCSERVICES  = /etc/opt/csw/pkg/CSWbacula-dir/services
+ETCSERVICES  = /etc/opt/csw/pkg/CSWbacula-director/services
 ETCSERVICES += /etc/opt/csw/pkg/CSWbacula-fd/services
 ETCSERVICES += /etc/opt/csw/pkg/CSWbacula-sd/services
 
