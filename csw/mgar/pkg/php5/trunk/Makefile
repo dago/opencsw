@@ -41,6 +41,7 @@ DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += phpext pear.conf.CSW CSWphp5.postinstall
 DISTFILES += CSWphp5.cswreleasenotes
 DISTFILES += CSWap2-modphp5.cswreleasenotes
+DISTFILES += httpd-php5.conf
 
 PATCHFILES += 0001-Strip-usr-ucblib-references.patch
 # this one is filed upstream: http://bugs.php.net/bug.php?id=54318
@@ -65,6 +66,7 @@ BUILD_DEP_PKGS += CSWsqlite3devel CSWaspell CSWhtmltidy CSWpostgresql
 BUILD_DEP_PKGS += CSWsqlite
 
 PRESERVECONF = /etc$(prefix)/php5/php.ini /etc$(prefix)/php5/pear.conf
+PRESERVECONF += /opt/csw/apache2/etc/extra/httpd-php5.conf
 MIGRATE_FILES_CSWphp5 = "php.ini pear.conf"
 MIGRATE_SOURCE_DIR_php_ini = /opt/csw/php5/lib
 MIGRATE_SOURCE_DIR_pear_conf = /opt/csw/php5/etc
@@ -325,9 +327,12 @@ pre-install-modulated: $(PI_SCRIPTS)
 	@$(MAKECOOKIE)
 
 post-install-modulated: AP2SYSCONF=/opt/csw/apache2/etc/httpd.conf
+post-install-modulated: AP2EXTCONF=/opt/csw/apache2/etc/extra
 post-install-modulated: INIDEST=$(DESTDIR)/etc$(prefix)/php5/php.ini
 post-install-modulated:
 	@rm -f $(DESTDIR)$(AP2SYSCONF)
+	@mkdir -p $(DESTDIR)$(AP2EXTCONF)
+	@cp $(WORKSRC)/httpd-php5.conf $(AP2EXTCONF)
 	@cp $(WORKSRC)/php.ini-production $(INIDEST)
 	@ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(prefix)/php5/bin/
 	@perl -pi -e 's/^;extension=php_(.*).dll/;extension=$$1.so/' $(INIDEST)
