@@ -7,7 +7,7 @@
 # at r10011.
 
 NAME = sharutils
-VERSION = 4.10
+VERSION = 4.11.1
 CATEGORIES = utils
 DESCRIPTION = Makes so-called shell archives out of many files
 define BLURB
@@ -36,6 +36,8 @@ PKGFILES_CSWuuencode = $(bindir)/uu(en|de)code
 RUNTIME_DEP_PKGS_CSWuuencode += CSWlibintl8
 # We won't be releasing CSWuuencode from this package.
 CHECKPKG_OVERRIDES_CSWuuencode += file-collision
+
+SKIPTEST ?= 1
 
 include gar/category.mk
 
