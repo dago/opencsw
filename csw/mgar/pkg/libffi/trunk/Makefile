@@ -29,13 +29,8 @@ PATCHFILES += ffi_target.h.patch
 PATCHFILES += ffi64.c.patch
 PATCHFILES += 0005-libffi.pc-should-point-at-opt-csw-include.patch
 
-PACKAGES += CSWlibffi
-CATALOGNAME_CSWlibffi = libffi
-SPKG_DESC_CSWlibffi = Empty transitional package
-ARCHALL_CSWlibffi = 1
-# Backward compatibility ensured via a dependency
-RUNTIME_DEP_PKGS_CSWlibffi += CSWlibffi5
-CHECKPKG_OVERRIDES_CSWlibffi += surplus-dependency|CSWlibffi5
+OBSOLETED_BY_CSWlibffi5 = CSWlibffi
+OBSOLETED_BY_CSWlibffi5-dev = CSWlibffi
 
 PACKAGES += CSWlibffi-dev
 CATALOGNAME_CSWlibffi-dev = libffi_dev
