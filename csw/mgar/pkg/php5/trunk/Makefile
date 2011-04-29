@@ -332,7 +332,7 @@ post-install-modulated: INIDEST=$(DESTDIR)/etc$(prefix)/php5/php.ini
 post-install-modulated:
 	@rm -f $(DESTDIR)$(AP2SYSCONF)
 	@mkdir -p $(DESTDIR)$(AP2EXTCONF)
-	@cp $(WORKDIR)/httpd-php5.conf $(AP2EXTCONF)
+	@cp $(WORKDIR)/httpd-php5.conf $(DESTDIR)$(AP2EXTCONF)
 	@cp $(WORKSRC)/php.ini-production $(INIDEST)
 	@ginstall -m 0755 $(DOWNLOADDIR)/phpext $(DESTDIR)$(prefix)/php5/bin/
 	@perl -pi -e 's/^;extension=php_(.*).dll/;extension=$$1.so/' $(INIDEST)
