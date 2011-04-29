@@ -124,10 +124,13 @@ def main():
                       dest="catalognames",
                       help="A comma-separated list of catalog names: "
                            "cups,cupsdevel,libcups")
-    parser.add_option("-d", "--debug",
+    parser.add_option("--debug",
                       dest="debug", default=False,
                       action="store_true",
                       help="Print debugging messages")
+    parser.add_option("-d", "--package-dir",
+                      dest="package_dir",
+                      help="Specify the directory with packages")
     parser.add_option("--no-clean",
                       dest="clean", default=True,
                       action="store_false",
@@ -164,8 +167,11 @@ def main():
     print CONFIG_INFO
     print e
     sys.exit(1)
-  staging_dir = opencsw.StagingDir(config.get(CONFIG_RELEASE_SECTION,
-                                                  "package dir"))
+
+  package_dir = config.get(CONFIG_RELEASE_SECTION, "package dir")
+  if options.package_dir:
+    package_dir = options.package_dir
+  staging_dir = opencsw.StagingDir(package_dir)
   if options.catalognames:
     catalognames = options.catalognames.split(",")
   else:
