@@ -122,7 +122,7 @@ esac
 		else
 			file=$template
 		fi
-		contents=`grep "^${file} " $PKG_INSTALL_ROOT/var/sadm/install/contents`
+		contents=`grep "^${TEMPLATEDIR}/${PKG}/${file} " $PKG_INSTALL_ROOT/var/sadm/install/contents`
 		if [ "$contents" ]; then
 			mode=`echo $contents | awk '{print $4}'`
 			user=`echo $contents | awk '{print $5}'`
