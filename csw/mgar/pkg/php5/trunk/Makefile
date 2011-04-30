@@ -41,6 +41,8 @@ DISTFILES += $(DISTNAME).tar.bz2
 DISTFILES += phpext pear.conf.CSW CSWphp5.postinstall
 DISTFILES += CSWphp5.cswreleasenotes
 DISTFILES += CSWap2-modphp5.cswreleasenotes
+DISTFILES += CSWap2-modphp5.postinstall
+DISTFILES += CSWap2-modphp5.preremove
 DISTFILES += httpd-php5.conf
 
 PATCHFILES += 0001-Strip-usr-ucblib-references.patch

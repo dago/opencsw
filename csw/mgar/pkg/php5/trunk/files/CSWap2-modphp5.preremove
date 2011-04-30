@@ -1,0 +1,16 @@
+#!/bin/sh
+
+CSW_PREFIX=${PKG_INSTALL_ROOT}/opt/csw
+AP2_CONFIG=$CSW_PREFIX/apache2/etc/httpd.conf
+
+echo "Disabling httpd-php5.conf in httpd.conf"
+perl -i -plne 's,(?<!#)(Include etc/extra/httpd-php5.conf),#$1,' $AP2_CONFIG
+
+cat <<END
+
+NOTICE: mod_php5 is disabled in httpd.conf but the server was not restarted.
+Please check your configuration and restart apache.
+
+END
+
+exit 0
