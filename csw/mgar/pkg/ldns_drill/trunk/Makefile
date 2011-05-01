@@ -1,5 +1,5 @@
 NAME = ldns_drill
-VERSION = 1.6.8
+VERSION = 1.6.9
 CATEGORIES = utils
 
 DESCRIPTION = A dig style dnssec aware dns debugging tool (ldns)
