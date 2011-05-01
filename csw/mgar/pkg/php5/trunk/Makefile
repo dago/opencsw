@@ -318,7 +318,7 @@ CONFIGURE_ARGS += --with-zlib=$(prefix)
 endif
 
 # Disable Tests (report submitted to PHP QA)
-#SKIPTEST = 1
+SKIPTEST = 1
 #ENABLE_CHECK = 0
 TEST_TARGET = test
 
