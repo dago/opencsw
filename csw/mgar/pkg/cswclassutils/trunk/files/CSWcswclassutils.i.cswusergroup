@@ -5,8 +5,10 @@
 # $Id$
 #
 # Written by Peter Bonivart
+# Modified by Ben Walton
 #
 # 2009-02-10 First release
+# 2011-04-29 Add support for auxgroups
 #
 # Documentation: http://wiki.opencsw.org/cswclassutils-package
 #
@@ -171,6 +173,7 @@ create_user() {
   shell="$5"
   create="$6" 
   nopass="$7"
+  auxgroups="$8"
 
   if getent passwd $user > /dev/null; then
     echo User $user already exists
@@ -186,10 +189,11 @@ create_user() {
   [ -n "$dir" ] && dir="-d $dir"
   [ -n "$shell" ] && shell="-s $shell"
   [ -n "$create" ] && create="-m"
+  [ -n "$auxgroups" ] && auxgroups="-G $auxgroups"
 
-  debug_echo "/usr/sbin/useradd -g $uid $gcos $group $create $dir $shell $user"
+  debug_echo "/usr/sbin/useradd -g $uid $gcos $group $auxgroups $create $dir $shell $user"
   if /usr/sbin/useradd \
-       -u $uid $gcos $group $create $dir $shell $user > /dev/null
+       -u $uid $gcos $group $auxgroups $create $dir $shell $user > /dev/null
   then
     echo User $user has been added
   else
@@ -253,6 +257,7 @@ while read src dest; do
     shell=`echo $i | awk -F':' '{print $5}'`
     create=`echo $i | awk -F':' '{print $6}'`
     nopass=`echo $i | awk -F':' '{print $8}'`
+    auxgroups=`echo $i | awk -F':' '{print $9}'`
 
     if [ -n "$group" ]; then
       create_group $group
@@ -262,7 +267,7 @@ while read src dest; do
 
     if [ -n "$user" ]; then
       create_user \
-        "$user" "$group" "$gcos" "$dir" "$shell" "$create" "$nopass"
+        "$user" "$group" "$gcos" "$dir" "$shell" "$create" "$nopass" "$auxgroups"
     else
       echo No user to create
     fi
