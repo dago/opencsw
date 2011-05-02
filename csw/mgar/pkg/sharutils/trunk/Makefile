@@ -30,16 +30,14 @@ PACKAGES += CSWsharutils
 SPKG_DESC_CSWsharutils = $(DESCRIPTION)
 CHECKPKG_OVERRIDES_CSWsharutils += file-with-bad-content|/usr/share|root/opt/csw/share/locale/es/LC_MESSAGES/sharutils.mo
 
-PACKAGES += CSWuuencode
-SPKG_DESC_CSWuuencode = Utility to encode and decode data
-PKGFILES_CSWuuencode = $(bindir)/uu(en|de)code
-RUNTIME_DEP_PKGS_CSWuuencode += CSWlibintl8
-# We won't be releasing CSWuuencode from this package.
-CHECKPKG_OVERRIDES_CSWuuencode += file-collision
-
 SKIPTEST ?= 1
 
 include gar/category.mk
+
+post-install-modulated:
+	gmv $(DESTDIR)$(bindir)/uuencode $(DESTDIR)$(bindir)/uuencode-sharutils
+	gmv $(DESTDIR)$(bindir)/uudecode $(DESTDIR)$(bindir)/uudecode-sharutils
+	@$(MAKECOOKIE)
 
 post-merge:
 	rm $(PKGROOT)$(libdir)/charset.alias
