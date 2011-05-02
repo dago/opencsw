@@ -261,7 +261,6 @@ ETCSERVICES += /etc/opt/csw/pkg/CSWbacula-sd/services
 PROTOTYPE_MODIFIERS = usergroupfiles confgroup generalperms
 PROTOTYPE_FILES_usergroupfiles = /var/opt/csw/bacula.*
 PROTOTYPE_CLASS_usergroupfiles = ugfiles
-PROTOTYPE_USER_usergroupfiles = bacula
 PROTOTYPE_GROUP_usergroupfiles = bacula
 PROTOTYPE_PERMS_usergroupfiles = 0770
 PROTOTYPE_FILES_confgroup = /etc/opt/csw/bacula/.*
