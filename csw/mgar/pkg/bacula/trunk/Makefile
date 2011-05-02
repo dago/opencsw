@@ -311,10 +311,12 @@ post-install-modulated:
 post-merge:
 	@echo Adding user/group creation info...
 	@(cd $(PKGROOT)/etc/opt/csw; \
-		for p in director sd fd; do \
-			mkdir -p pkg/CSWbacula-$$p; \
-			echo "bacula:bacula:Bacula:/var/opt/csw/bacula/:/bin/false:::NP" > pkg/CSWbacula-$$p/cswusergroup; \
-		done; \
+		mkdir -p pkg/CSWbacula-director; \
+		echo "bacula-dir:bacula:Bacula Director:/var/opt/csw/bacula/:/bin/false:::NP" > pkg/CSWbacula-director/cswusergroup; \
 		echo "bacula-dir 9101/tcp" > pkg/CSWbacula-director/services; \
-		echo "bacula-fd 9102/tcp" > pkg/CSWbacula-fd/services; \
-		echo "bacula-sd 9103/tcp" > pkg/CSWbacula-sd/services )
+		mkdir -p pkg/CSWbacula-sd; \
+		echo "bacula-sd:bacula:Bacula Storage Daemon:/var/opt/csw/bacula/:/bin/false:::NP" > pkg/CSWbacula-sd/cswusergroup; \
+		echo "bacula-sd 9103/tcp" > pkg/CSWbacula-sd/services; \
+		mkdir -p pkg/CSWbacula-fd; \
+		echo ":bacula::::::" > pkg/CSWbacula-fd/cswusergroup; \
+		echo "bacula-fd 9102/tcp" > pkg/CSWbacula-fd/services)
