@@ -169,23 +169,23 @@ $(eval $(call php5_subpackage,pcntl))
 $(eval $(call php5_subpackage,pdo))
 PKGFILES_CSWphp5-pdo += .*/include/php/ext/pdo.*
 $(eval $(call php5_subpackage,pdomysql,CSWmysql5rt CSWzlib CSWphp5-pdo))
-PKGFILES_CSWphp5-pdomysql = .*/lib/php/extensions/.*/pdo_mysql.so
-PKGFILES_CSWphp5-pdomysql = .*extensions/pdo_mysql
+PKGFILES_CSWphp5-pdomysql += .*/lib/php/extensions/.*/pdo_mysql.so
+PKGFILES_CSWphp5-pdomysql += .*extensions/pdo_mysql
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5
 $(eval $(call php5_subpackage,pdoodbc,CSWunixodbc CSWphp5-pdo))
-PKGFILES_CSWphp5-pdoodbc = .*/lib/php/extensions/.*/pdo_odbc.so
-PKGFILES_CSWphp5-pdoodbc = .*extensions/pdo_odbc
+PKGFILES_CSWphp5-pdoodbc += .*/lib/php/extensions/.*/pdo_odbc.so
+PKGFILES_CSWphp5-pdoodbc += .*extensions/pdo_odbc
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdoodbc += surplus-dependency|CSWphp5
 $(eval $(call php5_subpackage,pdopgsql,CSWlibpq CSWphp5-pdo))
-PKGFILES_CSWphp5-pdopgsql = .*/lib/php/extensions/.*/pdo_pgsql.so
-PKGFILES_CSWphp5-pdopgsql = .*extensions/pdo_pgsql
+PKGFILES_CSWphp5-pdopgsql += .*/lib/php/extensions/.*/pdo_pgsql.so
+PKGFILES_CSWphp5-pdopgsql += .*extensions/pdo_pgsql
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdopgsql += surplus-dependency|CSWphp5
 $(eval $(call php5_subpackage,pdosqlite,CSWlibsqlite3-0 CSWphp5-pdo))
-PKGFILES_CSWphp5-pdosqlite = .*/lib/php/extensions/.*/pdo_sqlite.so
-PKGFILES_CSWphp5-pdosqlite = .*extensions/pdo_sqlite
+PKGFILES_CSWphp5-pdosqlite += .*/lib/php/extensions/.*/pdo_sqlite.so
+PKGFILES_CSWphp5-pdosqlite += .*extensions/pdo_sqlite
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5-pdo
 CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5
 $(eval $(call php5_subpackage,pgsql,CSWlibpq))
