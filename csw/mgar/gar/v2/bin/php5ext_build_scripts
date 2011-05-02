@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 MERGEDIR=$1; shift
 PHP5MODS=opt/csw/php5/extensions
 PHP5EXTDIR=opt/csw/php5/lib/php/extensions/no-debug-non-zts-20090626
