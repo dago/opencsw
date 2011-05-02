@@ -217,9 +217,9 @@ CONFIGURE_ARGS += --with-mon-dir-password=QhTqgNyq8s6l7RJc/+3NmVqQkyxkqlnaJLPwsZ
 CONFIGURE_ARGS += --with-mon-fd-password=IEKXaPXrRO8BzJYBJueDJgkVsXzR/1cVvPNGJhZPrsHB
 CONFIGURE_ARGS += --with-mon-sd-password=e5fbjZnW+1hohTYFBfTXFe1KP7BIgCrAvY4fA4fg39TN
 # don't run as root except for the file daemon which will need those privs
-CONFIGURE_ARGS += --with-dir-user=bacula
+CONFIGURE_ARGS += --with-dir-user=bacula-dir
 CONFIGURE_ARGS += --with-dir-group=bacula
-CONFIGURE_ARGS += --with-sd-user=bacula
+CONFIGURE_ARGS += --with-sd-user=bacula-sd
 CONFIGURE_ARGS += --with-sd-group=bacula
 
 EXTRA_INC += $(includedir)/ncursesw
