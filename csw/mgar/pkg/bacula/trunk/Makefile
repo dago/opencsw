@@ -314,7 +314,7 @@ post-merge:
 		echo "bacula-dir:bacula:Bacula Director:/var/opt/csw/bacula/:/bin/false:::NP" > pkg/CSWbacula-director/cswusergroup; \
 		echo "bacula-dir 9101/tcp" > pkg/CSWbacula-director/services; \
 		mkdir -p pkg/CSWbacula-sd; \
-		echo "bacula-sd:bacula:Bacula Storage Daemon:/var/opt/csw/bacula/:/bin/false:::NP" > pkg/CSWbacula-sd/cswusergroup; \
+		echo "bacula-sd:bacula:Bacula Storage Daemon:/var/opt/csw/bacula/:/bin/false:::NP:sys" > pkg/CSWbacula-sd/cswusergroup; \
 		echo "bacula-sd 9103/tcp" > pkg/CSWbacula-sd/services; \
 		mkdir -p pkg/CSWbacula-fd; \
 		echo ":bacula::::::" > pkg/CSWbacula-fd/cswusergroup; \
