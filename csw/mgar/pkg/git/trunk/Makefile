@@ -99,6 +99,9 @@ PATCHFILES += 0002-Alter-the-value-of-_PATH_DEFPATH-when-paths.h-not-pr.patch
 PATCHFILES += 0003-Update-path-in-sample-hook-file.patch
 PATCHFILES += 0004-Use-bash-and-set-PATH-in-contributed-hook-file.patch
 PATCHFILES += 0005-Add-OpenCSW-apache2-path-to-instaweb-search-path.patch
+# this patch is required on current9s (not necessarily all sparc boxes) due
+# to the selection of available utf8 locales.
+PATCHFILES_isa-sparcv8 += 0006-Force-en_US.UTF-8-for-a-git-svn-test.patch
 
 fdirs = $(bindir_install) $(mandir) $(libexecdir_install)
 define _git_files
