@@ -347,3 +347,5 @@ post-install-modulated:
 	@perl -pi -e 's!s:17:"http://proxy:3128!s:0:"!' $(DESTDIR)$(sysconfdir)/pear.conf*
 	@$(MAKECOOKIE)
 
+post-merge:
+	@(rm $(PKGROOT)/opt/csw/php5/extensions/phar)
