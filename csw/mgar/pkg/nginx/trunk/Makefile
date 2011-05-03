@@ -1,5 +1,5 @@
 NAME       = nginx
-VERSION    = 1.0.0
+VERSION    = 1.0.1
 CATEGORIES = server
 
 GARCOMPILER = SOS11
@@ -15,8 +15,6 @@ DISTFILES    = $(NAME)-$(VERSION).tar.gz
 DISTFILES   += cswnginx
 
 LICENSE      = LICENSE
-
-PATCHFILES   = patch.errno
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
