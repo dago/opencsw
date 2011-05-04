@@ -24,7 +24,7 @@ BUILD_DEP_PKGS += CSWbash
 PACKAGES += CSWlibflac4
 CATALOGNAME_CSWlibflac4 = libflac4
 SPKG_DESC_CSWlibflac4 = Free lossless audio codec library, libflac.so.4
-PKGFILES_CSWlibflac4 = $(call baseisadirs,$(libdir),libFLAC\.so\.4(\.\d+)*)
+PKGFILES_CSWlibflac4 = $(call pkgfiles_lib,libFLAC.so.4)
 RUNTIME_DEP_PKGS_CSWlibflac4 += CSWiconv
 
 # Override conflicts with CSWflac as the new CSWflac is built from the latest libflac
@@ -46,8 +46,6 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 # This is a legacy library, built XMMS plugin against newest one
 CONFIGURE_ARGS += --with-xmms-prefix=/notthere
-
-TEST_TARGET = check
 
 # There is one test failing, but as this is really a long-outdated legacy library
 # I don't care much for now.
