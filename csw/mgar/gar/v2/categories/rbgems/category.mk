@@ -9,7 +9,8 @@ GEMVERSION ?= $(VERSION)
 GEMFILE   ?= $(GEMNAME)-$(GEMVERSION).gem
 DISTFILES += $(GEMFILE)
 
-GEMPKGNAME ?= $(GEMNAME)-$(subst .,-,$(GEMVERSION))
+GEMPKGVERSION ?= $(subst .,-,$(GEMVERSION))
+GEMPKGNAME ?= $(GEMNAME)-$(GEMPKGVERSION)
 GEMCATALOGNAME ?= $(subst -,_,$(GEMPKGNAME))
 
 # PACKAGES ?= CSWgem-$(GEMPKGNAME) CSWgem-$(GEMPKGNAME)-doc
@@ -76,11 +77,13 @@ configure-check-gem-deps:
 	@$(GARBIN)/check_for_deps $(GEM_DEPS)
 	@$(MAKECOOKIE)
 
+GEM_INSTALL_NO_TEST ?= --no-test
+
 install-rbgem:
 	gem install \
 		--ignore-dependencies \
 		--local \
-		--no-test \
+		$(GEM_INSTALL_NO_TEST) \
 		--install-dir $(DESTDIR)$(GEMDIR) \
 		$(EXTRA_GEM_INSTALL_ARGS) \
 		$(DOWNLOADDIR)/$(GEMFILE) \
