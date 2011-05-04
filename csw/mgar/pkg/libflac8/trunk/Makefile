@@ -47,14 +47,13 @@ PKGFILES_CSWlibflac-dev += $(docdir)/flac/.*
 RUNTIME_DEP_PKGS_CSWlibflac-dev = CSWlibflac8
 RUNTIME_DEP_PKGS_CSWlibflac-dev += CSWlibflac++6
 
-PACKAGES += CSWlibflac-utils
-CATALOGNAME_CSWlibflac-utils = libflac_utils
-SPKG_DESC_CSWlibflac-utils = Utility programs for the Free Lossless Audio Codec (FLAC)
+PACKAGES += CSWflac
+CATALOGNAME_CSWflac = flac
+SPKG_DESC_CSWflac = Utility programs for the Free Lossless Audio Codec (FLAC)
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWlibflac-utils += CSWlibogg0
-RUNTIME_DEP_PKGS_CSWlibflac-utils += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibflac-utils += CSWlibflac8
-OBSOLETED_BY_CSWlibflac-utils = CSWflac
+RUNTIME_DEP_PKGS_CSWflac += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWflac += CSWiconv
+RUNTIME_DEP_PKGS_CSWflac += CSWlibflac8
 
 PACKAGES += CSWxmms-flac
 PKGFILES_CSWxmms-flac = $(libdir)/xmms/.*
@@ -71,15 +70,11 @@ VENDOR_URL = http://flac.sourceforge.net/
 
 LICENSE = $(foreach lic,FDL GPL LGPL Xiph,COPYING.$(lic))
 
-# EXTRA_LINKER_FLAGS = -liconv -lm
 EXTRA_LINKER_FLAGS = -norunpath
-# EXTRA_CXXFLAGS = -norunpath
 
 # Must be defined and empty or -I$(includedir) is added too early
-# EXTRA_INC = ../../include
 CPPFLAGS =
 EXTRA_CFLAGS = $(INCLUDE_FLAGS) -D__inline=
-# EXTRA_CFLAGS = -D__inline=
 
 STRIP_LIBTOOL = 1
 
