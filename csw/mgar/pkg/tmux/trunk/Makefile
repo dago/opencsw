@@ -11,9 +11,6 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 #   https://sourceforge.net/tracker/?func=detail&aid=3152389&group_id=200378&atid=973264
 PATCHFILES = 0001-Use-inttypes.h-if-stdint.h-is-not-available.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
-
 RUNTIME_DEP_PKGS = CSWlibevent2-0-5
 BUILD_DEP_PKGS = CSWlibevent-devel
 
@@ -29,14 +26,15 @@ SKIPTEST = 1
 
 INSTALL_SCRIPTS = custom
 
-# New libevent2_0_5 has not been released, remove after release
-CHECKPKG_OVERRIDES_CSWtmux += soname-not-found|libevent-2.0.so.5|is|needed|by|opt/csw/bin/tmux
-CHECKPKG_OVERRIDES_CSWtmux += surplus-dependency|CSWlibevent2-0-5
-CHECKPKG_OVERRIDES_CSWtmux += unidentified-dependency|CSWlibevent2-0-5
-
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
+
+post-extract-modulated:
+	@# Make sure tmux.conf is found in /etc/opt/csw as reported in #4696
+	perl -pi -e 's,/etc/tmux\.conf,$(sysconfdir)/tmux.conf,g' \
+		$(WORKSRC)/tmux.h \
+		$(WORKSRC)/tmux.1
 
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
