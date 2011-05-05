@@ -1,0 +1,25 @@
+From fbf5e90e620e6ecbd8f75d7e79e8d0a7b3b6aac8 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 5 May 2011 11:19:33 +0200
+Subject: [PATCH] Default location of hyphen.mashed
+
+---
+ src/rl_addons/rl_accel/pyHnjmodule.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/rl_addons/rl_accel/pyHnjmodule.c b/src/rl_addons/rl_accel/pyHnjmodule.c
+index d03d5cd..7fb68e7 100644
+--- a/src/rl_addons/rl_accel/pyHnjmodule.c
++++ b/src/rl_addons/rl_accel/pyHnjmodule.c
+@@ -209,7 +209,7 @@ newHyphenobject(PyObject *module, PyObject *args) {
+   PyArg_ParseTuple(args, "|s", &filename);
+ 
+   if(filename == NULL)
+-    filename = "/usr/local/share/pyHnj/hyphen.mashed";  /* default */
++    filename = "/opt/csw/lib/python/site-packages/reportlab/lib/hyphen.mashed";  /* default */
+     
+   self = PyObject_NEW(Hyphenobject, &Hyphentype);
+   if (self == NULL)
+-- 
+1.7.3.2
+

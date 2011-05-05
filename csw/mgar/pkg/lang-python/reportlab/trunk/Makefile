@@ -5,7 +5,7 @@
 NAME = reportlab
 VERSION = 2.5
 CATEGORIES = python
-DESCRIPTION = Programatically creating documents in PDF format
+SPKG_DESC_CSWpy-reportlab = Programatically creating documents in PDF format
 define BLURB
   Free Open Source PDF library is suitable for web publishers, developers
   or creative design professionals who need to quickly and easily create
@@ -19,7 +19,19 @@ define BLURB
 endef
 MASTER_SITES = http://www.reportlab.com/ftp/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-RUNTIME_DEP_PKGS_CSWreportlab = CSWpil
+PATCHFILES += 0001-Default-location-of-hyphen.mashed.patch
+RUNTIME_DEP_PKGS_CSWpy-reportlab = CSWpil
 TEST_SCRIPTS =
-ARCHALL_CSWpy-reportlab = 1
+OBSOLETED_BY_CSWpy-reportlab  = CSWreportlab
+OBSOLETED_BY_CSWpy-reportlab += CSWrenderpm
+RUNTIME_DEP_PKGS_CSWpy-reportlab += CSWftype2
+RUNTIME_DEP_PKGS_CSWpy-reportlab += CSWlibpython2-6-1-0
+# Some checks in default locations; won't do any harm.
+CHECKPKG_OVERRIDES_CSWpy-reportlab += file-with-bad-content|/usr/local|root/opt/csw/lib/python/site-packages/reportlab/rl_config.py
+CHECKPKG_OVERRIDES_CSWpy-reportlab += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/reportlab/rl_config.py
+# checkpkg does not detect Python deps; also the Python category causes the
+# transitional packages to depend on Python (which is okay).
+CHECKPKG_OVERRIDES_CSWrenderpm += surplus-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWreportlab += surplus-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWpy-reportlab += surplus-dependency|CSWpil
 include gar/category.mk
