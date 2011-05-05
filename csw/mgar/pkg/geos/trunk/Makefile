@@ -11,8 +11,6 @@ endef
 MASTER_SITES = http://download.osgeo.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.bz2
 
-GARTYPE = v2
-
 GARCOMPILER = GNU
 
 PACKAGES = CSWlibgeos3-2-2
@@ -50,5 +48,8 @@ PKGFILES_CSWgeos-dev += $(PKGFILES_DEVEL_MAN3_MANPAGE)
 PKGFILES_CSWgeos-dev += .*libgeos.so .*libgeos_c.so
 RUNTIME_DEP_PKGS_CSWgeos-dev = CSWlibgeos3-2-2 CSWlibgeos-c1
 OBSOLETED_BY_CSWlibgeos-dev = CSWgeos
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-ruby
 
 include gar/category.mk
