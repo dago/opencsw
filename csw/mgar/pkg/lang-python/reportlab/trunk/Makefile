@@ -35,3 +35,8 @@ CHECKPKG_OVERRIDES_CSWrenderpm += surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWreportlab += surplus-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWpy-reportlab += surplus-dependency|CSWpil
 include gar/category.mk
+
+post-extract-modulated:
+	@# The label 'ERR' confuses the compiler on i386
+	perl -pi -e 's,ERR,ERRLABEL,g;' \
+		$(WORKSRC)/src/rl_addons/renderPM/_renderPM.c
