@@ -88,6 +88,9 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 # XXX: Assembler optimization just doesn't work. Disable for now.
 CONFIGURE_ARGS += --disable-asm-optimizations
 
+# Testsuite takes forever, disable once for new version
+SKIPTEST ?= 1
+
 EXTRA_PAX_ARGS = -s ',$(docdir)/flac-$(VERSION),$(docdir)/flac,'
 
 include gar/category.mk
