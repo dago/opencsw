@@ -10,43 +10,32 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 
-PACKAGES = CSWlibtasn1 CSWlibtasn1-3 CSWlibtasn1devel
+VENDOR_URL = http://www.gnu.org/software/gnutls/
 
-CATALOGNAME_CSWlibtasn1 = libtasn1
-CATALOGNAME_CSWlibtasn1-3 = libtasn1_3
-CATALOGNAME_CSWlibtasn1devel = libtasn1_devel
+PACKAGES += CSWlibtasn1-3
+SPKG_DESC_CSWlibtasn1-3 = GNU ASN 1 library, libtasn1.so.3
+PKGFILES_CSWlibtasn1-3 = $(call pkgfiles_lib,libtasn1.so.3)
 
-SPKG_DESC_CSWlibtasn1 = $(DESCRIPTION)
-SPKG_DESC_CSWlibtasn1-3 = GNU ASN 1 Library libtasn1.so.3
-SPKG_DESC_CSWlibtasn1devel = Development files for libtasn1
+PACKAGES += CSWlibtasn1-dev
+SPKG_DESC_CSWlibtasn1-dev = Development files for libtasn1.so.3
+PKGFILES_CSWlibtasn1-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibtasn1-dev = CSWlibtasn1-3
+OBSOLETED_BY_CSWlibtasn1-dev += CSWlibtasn1devel
+CATALOGNAME_CSWlibtasn1devel = libtasn1_devel_stub
 
-RUNTIME_DEP_PKGS_CSWlibtasn1 = CSWlibtasn1-3
-RUNTIME_DEP_PKGS_CSWlibtasn1devel = CSWlibtasn1-3
-
-SPKG_SOURCEURL = http://www.gnu.org/software/gnutls/
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWlibtasn1-utils
+SPKG_DESC_CSWlibtasn1-utils = GNU ASN1 utilities
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibtasn1-utils = CSWlibtasn1-3
+OBSOLETED_BY_CSWlibtasn1-utils = CSWlibtasn1
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-static
-
-TEST_TARGET = check
-
-MERGE_DIRS_isa-extra = $(libdir)
-
-PKGFILES_CSWlibtasn1-3 = $(PKGFILES_RT)
-PKGFILES_CSWlibtasn1devel = $(PKGFILES_DEVEL)
-
-CHECKPKG_OVERRIDES_CSWlibtasn1devel += surplus-dependency|CSWlibtasn1-3
 
 include gar/category.mk
 
