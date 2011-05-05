@@ -20,6 +20,7 @@ PACKAGES += CSWlibidn11
 CATALOGNAME_CSWlibidn11 = libidn11
 SPKG_DESC_CSWlibidn11 = GNU IDN library, libidn.so.11
 PKGFILES_CSWlibidn11 += $(call pkgfiles_lib,libidn.so.11)
+PKGFILES_CSWlibidn11 += .*/libidn\.mo
 RUNTIME_DEP_PKGS_CSWlibidn11 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibidn11 += CSWiconv
 
