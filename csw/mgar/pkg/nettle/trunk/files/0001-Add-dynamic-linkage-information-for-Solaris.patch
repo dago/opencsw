@@ -1,0 +1,61 @@
+From 834e429f07e890d943a517501f1d566ad2dbccd7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 5 May 2011 11:25:05 +0200
+Subject: [PATCH] Add dynamic linkage information for Solaris
+
+---
+ configure    |   13 +++++++++++++
+ configure.ac |   13 +++++++++++++
+ 2 files changed, 26 insertions(+), 0 deletions(-)
+
+diff --git a/configure b/configure
+index f7d6767..0f0cbca 100755
+--- a/configure
++++ b/configure
+@@ -4198,6 +4198,19 @@ case "$host_os" in
+     LIBHOGWEED_LINK='$(CC) -dynamiclib $(LDFLAGS)'
+     LIBHOGWEED_LIBS=''
+     ;;
++  solaris*)
++    LIBNETTLE_FORLINK=libnettle.so
++    LIBNETTLE_SONAME='$(LIBNETTLE_FORLINK).$(LIBNETTLE_MAJOR)'
++    LIBNETTLE_FILE='$(LIBNETTLE_SONAME).$(LIBNETTLE_MINOR)'
++    LIBNETTLE_LINK='$(CC) $(LDFLAGS) -G -h $(LIBNETTLE_SONAME)'
++    LIBNETTLE_LIBS=''
++
++    LIBHOGWEED_FORLINK=libhogweed.so
++    LIBHOGWEED_SONAME='$(LIBHOGWEED_FORLINK).$(LIBHOGWEED_MAJOR)'
++    LIBHOGWEED_FILE='$(LIBHOGWEED_SONAME).$(LIBHOGWEED_MINOR)'
++    LIBHOGWEED_LINK='$(CC) $(LDFLAGS) -L. -G -h $(LIBHOGWEED_SONAME)'
++    LIBHOGWEED_LIBS='-lnettle -lgmp'
++    ;;
+   *)
+     LIBNETTLE_FORLINK=libnettle.so
+     LIBNETTLE_SONAME='$(LIBNETTLE_FORLINK).$(LIBNETTLE_MAJOR)'
+diff --git a/configure.ac b/configure.ac
+index 0251ffa..439cee8 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -259,6 +259,19 @@ case "$host_os" in
+     LIBHOGWEED_LINK='$(CC) -dynamiclib $(LDFLAGS)'
+     LIBHOGWEED_LIBS=''
+     ;;
++  solaris*)
++    LIBNETTLE_FORLINK=libnettle.so
++    LIBNETTLE_SONAME='$(LIBNETTLE_FORLINK).$(LIBNETTLE_MAJOR)'
++    LIBNETTLE_FILE='$(LIBNETTLE_SONAME).$(LIBNETTLE_MINOR)'
++    LIBNETTLE_LINK='$(CC) $(LDFLAGS) -G -h $(LIBNETTLE_SONAME)'
++    LIBNETTLE_LIBS=''
++
++    LIBHOGWEED_FORLINK=libhogweed.so
++    LIBHOGWEED_SONAME='$(LIBHOGWEED_FORLINK).$(LIBHOGWEED_MAJOR)'
++    LIBHOGWEED_FILE='$(LIBHOGWEED_SONAME).$(LIBHOGWEED_MINOR)'
++    LIBHOGWEED_LINK='$(CC) $(LDFLAGS) -L. -G -h $(LIBHOGWEED_SONAME)'
++    LIBHOGWEED_LIBS='-lnettle -lgmp'
++    ;;
+   *)
+     LIBNETTLE_FORLINK=libnettle.so
+     LIBNETTLE_SONAME='$(LIBNETTLE_FORLINK).$(LIBNETTLE_MAJOR)'
+-- 
+1.7.3.2
+
