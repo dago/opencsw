@@ -639,7 +639,7 @@ $(if $(filter-out $(firstword $(SPKG_SPECS)),$(SPKG_SPECS)),\
 		$(if $(SPKG_DESC_$(P)),,$(error Multiple packages defined and SPKG_DESC_$(P) is not set.))))
 
 $(foreach P,$(SPKG_SPECS),\
-  $(foreach Q,$(filter-out $(P),$(SPKG_SPECS)),\
+  $(foreach Q,$(filter-out $(P) $(OBSOLETED_PKGS),$(SPKG_SPECS)),\
 	$(if $(filter-out $(subst  ,_,$(SPKG_DESC_$(P))),$(subst  ,_,$(SPKG_DESC_$(Q)))),,$(error The package descriptions for $(P) [$(if $(SPKG_DESC_$(P)),$(SPKG_DESC_$(P)),<not set>)] and $(Q) [$(if $(SPKG_DESC_$(Q)),$(SPKG_DESC_$(Q)),<not set>)] are identical.  Please make sure that all descriptions are unique by setting SPKG_DESC_<pkg> for each package.))))
 
 .PRECIOUS: $(WORKDIR)/%.pkginfo
