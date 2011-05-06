@@ -143,6 +143,7 @@ RUNTIME_DEP_PKGS_CSWbacula-sd += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWzlib
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbacula-sd += CSWmtx
 PKGFILES_CSWbacula-sd += .*init.d/cswbacula-sd
 PKGFILES_CSWbacula-sd += .*libexec.*disk-changer .*libexec.*dvd-handler
 PKGFILES_CSWbacula-sd += .*libexec.*mtx-changer.* .*bacula/bacula-sd.conf.CSW
