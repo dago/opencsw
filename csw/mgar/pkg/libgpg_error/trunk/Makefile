@@ -17,6 +17,7 @@ SPKG_DESC_CSWgpg-error = Tools for libgpg-error.so
 RUNTIME_DEP_PKGS_CSWgpg-error = CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWgpg-error += CSWlibintl8
 OBSOLETED_BY_CSWgpg-error = CSWgpgerr
+CATALOGNAME_CSWgpgerr = libgpg_error_stub
 
 PACKAGES += CSWlibgpg-error0
 CATALOGNAME_CSWlibgpg-error0 = libgpg_error0
