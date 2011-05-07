@@ -16,6 +16,18 @@ GARCOMPILER = GNU
 PACKAGES = CSWlibgeos3-2-2
 PACKAGES += CSWlibgeos-c1
 PACKAGES += CSWgeos-dev
+PACKAGES += CSWrb18-geos3-2-2
+
+CATALOGNAME_CSWrb18-geos3-2-2 = rb18_geos3_2_2
+SPKG_DESC_CSWrb18-geos3-2-2 += $(DESCRIPTION), ruby 1.8 bindings
+RUNTIME_DEP_PKGS_CSWrb18-geos3-2-2 = CSWruby18
+RUNTIME_DEP_PKGS_CSWrb18-geos3-2-2 += CSWlibgeos-c1
+RUNTIME_DEP_PKGS_CSWrb18-geos3-2-2 += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWrb18-geos3-2-2 += CSWlibruby18-1
+RUNTIME_DEP_PKGS_CSWrb18-geos3-2-2 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWrb18-geos3-2-2 += CSWlibgeos3-2-2
+PKGFILES_CSWrb18-geos3-2-2 += .*ruby.*
+CHECKPKG_OVERRIDES_CSWrb18-geos3-2-2 += surplus-dependency|CSWruby18
 
 CATALOGNAME_CSWlibgeos3-2-2 = libgeos3_2_2
 SPKG_DESC_CSWlibgeos3-2-2 += $(DESCRIPTION), libgeos-3.2.2.so
