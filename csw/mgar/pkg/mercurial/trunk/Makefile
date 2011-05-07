@@ -20,6 +20,9 @@ BUILD_SCRIPTS = $(WORKSRC)/setup.py
 TEST_SCRIPTS      =
 #TEST_TARGET = #tests
 
+CHECKPKG_OVERRIDES_CSWmercurial += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWmercurial += catalogname-does-not-start-with-py_
+
 include gar/category.mk
 
 pre-build-modulated:
