@@ -72,7 +72,7 @@ CONFIGURE_ARGS += --with-libtiff=$(prefix)
 CONFIGURE_ARGS += --with-jpeg=$(prefix)
 CONFIGURE_ARGS += --with-expat=$(prefix)
 CONFIGURE_ARGS += --with-mysql=/opt/csw/mysql5/bin/mysql_config
-CONFIGURE_ARGS += --with-pg=/opt/csw/postgresql/bin/sparcv8/pg_config
+
 CONFIGURE_ARGS += --with-sqlite3=$(prefix)
 
 # doesn't have tests?
@@ -81,3 +81,9 @@ TEST_TARGET =
 LICENSE = LICENSE.TXT
 
 include gar/category.mk
+
+ifeq ($(GARCH),sparc)
+CONFIGURE_ARGS += --with-pg=/opt/csw/postgresql/bin/sparcv8/pg_config
+else
+CONFIGURE_ARGS += --with-pg=/opt/csw/postgresql/bin/pg_config
+endif
