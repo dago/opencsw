@@ -37,10 +37,7 @@ MASTER_SITES = http://subversion.tigris.org/downloads/
 DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-PACKAGES  = CSWsvn CSWsvn-devel CSWap2svn CSWpmsvn
-PACKAGES += CSWpythonsvn CSWrbsvn CSWjavasvn
-PACKAGES += CSWsvn-contrib CSWsvn-tools
-
+PACKAGES  = CSWsvn
 SPKG_DESC_CSWsvn           = Version control rethought
 CATALOGNAME_CSWsvn         = subversion
 RUNTIME_DEP_PKGS_CSWsvn      = CSWbdb48
@@ -57,6 +54,7 @@ RUNTIME_DEP_PKGS_CSWsvn      += CSWapr
 RUNTIME_DEP_PKGS_CSWsvn      += CSWapr-util
 
 
+PACKAGES += CSWsvn-devel
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
 CATALOGNAME_CSWsvn-devel   = subversion_devel
 ARCHALL_CSWsvn-devel       = 1
@@ -64,6 +62,7 @@ PKGFILES_CSWsvn-devel      = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-devel     += $(docdir)/$(CATALOGNAME_CSWsvn-devel)/changelog.CSW
 CHECKPKG_OVERRIDES_CSWsvn-devel += archall-devel-package
 
+PACKAGES += CSWsvn-contrib
 SPKG_DESC_CSWsvn-contrib   = Contributed subversion scripts
 CATALOGNAME_CSWsvn-contrib = subversion_contrib
 PKGFILES_CSWsvn-contrib    = $(docdir)/subversion/contrib.*
@@ -72,6 +71,7 @@ CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWsvn-contrib += missing-dependency|CSWemacscommon
 
+PACKAGES += CSWsvn-tools
 SPKG_DESC_CSWsvn-tools     = Additional subversion tools
 CATALOGNAME_CSWsvn-tools   = subversion_tools
 PKGFILES_CSWsvn-tools      = $(docdir)/subversion/tools.*
@@ -81,6 +81,7 @@ CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWsvn-tools += missing-dependency|CSWemacscommon
 
+PACKAGES += CSWap2svn
 SPKG_DESC_CSWap2svn           = Subversion Modules for Apache 2.2
 CATALOGNAME_CSWap2svn         = ap2_subversion
 RUNTIME_DEP_PKGS_CSWap2svn    = CSWsvn
@@ -90,6 +91,7 @@ RUNTIME_DEP_PKGS_CSWap2svn   += CSWiconv
 PKGFILES_CSWap2svn            = $(prefix)/apache2.*
 PKGFILES_CSWap2svn           += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
 
+PACKAGES += CSWjavasvn
 SPKG_DESC_CSWjavasvn           = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn         = javasvn
 PKGFILES_CSWjavasvn            = $(SVNLIB)/.*java.*
@@ -108,6 +110,7 @@ CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/s
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 
+PACKAGES += CSWpmsvn
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
 CATALOGNAME_CSWpmsvn       = pm_subversion
 PKGFILES_CSWpmsvn          = $(libdir)/perl.*
@@ -124,6 +127,7 @@ RUNTIME_DEP_PKGS_CSWpmsvn += CSWapr-util
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWapr
 
+PACKAGES += CSWrbsvn
 SPKG_DESC_CSWrbsvn         = Subversion Ruby Language Binding
 CATALOGNAME_CSWrbsvn       = rbsvn
 PKGFILES_CSWrbsvn          = $(libdir)/ruby.*
@@ -141,6 +145,7 @@ RUNTIME_DEP_PKGS_CSWrbsvn += CSWapr
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby1
 
 
+PACKAGES += CSWpythonsvn
 SPKG_DESC_CSWpythonsvn           = Subversion Python Language Binding
 CATALOGNAME_CSWpythonsvn         = pythonsvn
 PKGFILES_CSWpythonsvn            = $(libdir)/python.*
