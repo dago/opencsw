@@ -65,11 +65,14 @@ CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/usr/local|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/lib/python/csw/package_checks_test.py
 CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/lib/python/csw/testdata/rpaths.py
 
+ALTERNATIVES_CSWcswutils = checkpkg
+ALTERNATIVE_checkpkg = /opt/csw/bin/checkpkg checkpkg /opt/csw/bin/checkpkg.legacy 5
+
 include gar/category.mk
 
 install-custom:
 	@ginstall -d $(DESTDIR)$(bindir)
-	@ginstall $(WORKSRC)/checkpkg $(DESTDIR)$(bindir)
+	@ginstall $(WORKSRC)/checkpkg $(DESTDIR)$(bindir)/checkpkg.legacy
 	@ginstall $(WORKSRC)/cpan2pkg $(DESTDIR)$(bindir)
 	@ginstall $(WORKSRC)/createpkg $(DESTDIR)$(bindir)
 	@ginstall $(WORKSRC)/stagepkg $(DESTDIR)$(bindir)
