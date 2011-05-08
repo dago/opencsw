@@ -28,6 +28,17 @@ INSTALL_SCRIPTS = custom
 
 PRESERVECONF = .*/meta/[^/]+ .*/config/[^/]+
 
+CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/share|root/opt/csw/share/scala/misc/scala-tool-support/scite/README
+CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/share|root/opt/csw/share/scala/misc/scala-tool-support/kate/README
+CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/share|root/opt/csw/share/scala/misc/scala-tool-support/gedit/README
+CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/share|root/opt/csw/share/scala/misc/scala-tool-support/a2ps/README
+CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/local|root/opt/csw/share/scala/misc/scala-tool-support/jedit/console/commando/scala.xml
+CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/local|root/opt/csw/share/scala/misc/scala-tool-support/jedit/console/commando/scalac.xml
+CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/scala.1
+CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/scalac.1
+CHECKPKG_OVERRIDES_CSWscala += license-missing|/opt/csw/share/doc/scala/license
+CHECKPKG_OVERRIDES_CSWscala += missing-dependency|CSWemacscommon
+
 include gar/category.mk
 
 install-dirs: 
