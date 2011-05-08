@@ -18,7 +18,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 DEP_PKGS = CSWapr CSWapr-util CSWbdb48 CSWexpat CSWiconv CSWoldaprt CSWosslrt CSWzlib
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(DISTNAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = serf-(\d+(?:\.\d+)*).tar.bz2
 
 OBSOLETED_BY_CSWlibserf0-0 = CSWlibserf
 OBSOLETED_BY_CSWlibserf-dev = CSWlibserf
