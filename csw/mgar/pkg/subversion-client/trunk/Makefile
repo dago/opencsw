@@ -22,19 +22,20 @@ UFILES_REGEX = subversion-(\d+(?:\.\d+)*).tar.bz2
 
 
 PACKAGES  = CSWsvn-client
-SPKG_DESC_CSWsvn           = subversion version control client
-CATALOGNAME_CSWsvn         = svn-client
-RUNTIME_DEP_PKGS_CSWsvn      += CSWexpat
-RUNTIME_DEP_PKGS_CSWsvn      += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWsvn      += CSWiconv
-RUNTIME_DEP_PKGS_CSWsvn      += CSWneon
-RUNTIME_DEP_PKGS_CSWsvn      += CSWlibserf0-0
-RUNTIME_DEP_PKGS_CSWsvn      += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWsvn      += CSWsasl
-RUNTIME_DEP_PKGS_CSWsvn      += CSWsqlite3rt
-RUNTIME_DEP_PKGS_CSWsvn      += CSWzlib
-RUNTIME_DEP_PKGS_CSWsvn      += CSWapr
-RUNTIME_DEP_PKGS_CSWsvn      += CSWapr-util
+SPKG_DESC_CSWsvn-client         = subversion version control client
+CATALOGNAME_CSWsvn-client       = svn-client
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWapr
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWapr-util
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWexpat
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWiconv
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWlibserf0-0
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWlibneon27
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWosslrt
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWsasl
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWsvn-client += CSWzlib
 
 EXTRA_LINKER_FLAGS = -lintl -liconv
 
