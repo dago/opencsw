@@ -1,9 +1,9 @@
 # $Id$
 #
 
-NAME = svn-client
-VERSION = 1.6.16
-DISTNAME = subversion-$(VERSION)
+NAME       = svn-client
+VERSION    = 1.6.16
+DISTNAME   = subversion-$(VERSION)
 CATEGORIES = utils
 
 DESCRIPTION = subversion version control, client
@@ -12,18 +12,17 @@ define BLURB
     that is a compelling replacement for CVS in the open source community.
 endef
 
-VENDOR_URL   = http://subversion.apache.org/
-MASTER_SITES = http://subversion.tigris.org/downloads/
-#MASTER_SITES = http://orac.ece.utexas.edu/pub/svn/1.6.7/yuletide-eggnog/
-DISTFILES    = $(DISTNAME).tar.bz2
-DISTFILES   += fixme.sh
+VENDOR_URL    = http://subversion.apache.org/
+MASTER_SITES  = http://subversion.tigris.org/downloads/
+DISTFILES     = $(DISTNAME).tar.bz2
+DISTFILES    += fixme.sh
 
 UFILES_REGEX = subversion-(\d+(?:\.\d+)*).tar.bz2
 
 
-PACKAGES  = CSWsvn-client
+PACKAGES                        = CSWsvn-client
 SPKG_DESC_CSWsvn-client         = subversion version control client
-CATALOGNAME_CSWsvn-client       = svn-client
+CATALOGNAME_CSWsvn-client       = svn_client
 RUNTIME_DEP_PKGS_CSWsvn-client += CSWapr
 RUNTIME_DEP_PKGS_CSWsvn-client += CSWapr-util
 RUNTIME_DEP_PKGS_CSWsvn-client += CSWexpat
