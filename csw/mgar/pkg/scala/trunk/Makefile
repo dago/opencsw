@@ -1,5 +1,5 @@
 NAME = scala
-VERSION = 2.7.7
+VERSION = 2.8.1
 CATEGORIES = java
 
 DESCRIPTION = The Scala programming language
@@ -36,7 +36,7 @@ CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/local|root/opt/csw/sha
 CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/local|root/opt/csw/share/scala/misc/scala-tool-support/jedit/console/commando/scalac.xml
 CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/scala.1
 CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/scalac.1
-CHECKPKG_OVERRIDES_CSWscala += license-missing|/opt/csw/share/doc/scala/license
+CHECKPKG_OVERRIDES_CSWscala += file-with-bad-content|/usr/share|root/opt/csw/share/scala/misc/scala-tool-support/gedit/scala.lang
 CHECKPKG_OVERRIDES_CSWscala += missing-dependency|CSWemacscommon
 
 include gar/category.mk
