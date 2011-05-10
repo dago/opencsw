@@ -4,6 +4,9 @@
 #
 # /etc/opt/csw/init.d/cswpuppetd
 #
+#   2011-05-06 Mark Phillips
+#     * Check if we're on Solaris 10 before including the smf_include stuff
+#
 #   2011-03-06 Mark Phillips
 #     * Added getprop - not used, yet
 #
@@ -17,7 +20,10 @@
 #   2009-11-23 Gary Law
 #     * changed sbindir
 
-. /lib/svc/share/smf_include.sh
+# Check if we're on 10; therefore SMF
+if [ -x /usr/sbin/svcadm ]; then
+    . /lib/svc/share/smf_include.sh
+fi
 
 prefix="/opt/csw"
 exec_prefix="/opt/csw"
@@ -89,7 +95,7 @@ get_pid_file() {
     echo "${__pidfile}"
 }
 
-pidfile=`get_pid_file`
+pidfile=`$prefix/bin/puppet agent --genconf | awk '/pidfile/ { print $3 }'`
 
 case "$1" in
     start)

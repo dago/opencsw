@@ -1,19 +1,25 @@
 #!/bin/sh
 #
+#   2011-05-06 Mark Phillips
+#     * Check if we're on Solaris 10 before including the smf_include stuff
+#
 #   2011-03-06 Mark Phillips
 #     * Added getprop
 #
 #   2009-11-23 Gary Law
 #     * Original version
 
-. /lib/svc/share/smf_include.sh
+# Check if we're on 10; therefore SMF
+if [ -x /usr/sbin/svcadm ]; then
+    . /lib/svc/share/smf_include.sh
+fi
 
 prefix=/opt/csw
 exec_prefix=/opt/csw
 sysconfdir=/opt/csw/etc
 sbindir=/opt/csw/sbin
 
-pidfile=/var/opt/csw/puppet/run/puppetmasterd.pid
+pidfile=`$prefix/bin/puppet master --genconf | awk '/pidfile/ { print $3 }'`
 
 getprop() {
     val=`/usr/bin/svcprop -p $1 $SMF_FMRI`
