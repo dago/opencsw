@@ -107,5 +107,5 @@ post-install-modulated:
 	cd $(WORKSRC); \
 	cp -r contrib/* $(DESTDIR)$(sharedstatedir)/nginx/contrib; \
 	cp $(NGINXDOCS) $(DESTDIR)$(docdir)/nginx
-	rm $(DESTDIR)/var/run/nginx
+	rm -rf $(DESTDIR)/var/run/nginx
 	$(MAKECOOKIE)
