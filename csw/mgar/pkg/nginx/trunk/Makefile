@@ -1,5 +1,5 @@
 NAME       = nginx
-VERSION    = 1.0.1
+VERSION    = 1.0.2
 CATEGORIES = server
 
 GARCOMPILER = SOS11
@@ -74,7 +74,7 @@ CONFIGURE_ARGS += --with-http_secure_link_module
 CONFIGURE_ARGS += --with-http_ssl_module
 CONFIGURE_ARGS += --with-http_stub_status_module
 
-CHECKPKG_OVERRIDES_CSWnginx += bad-location-of-file|file=/var/run/nginx
+#CHECKPKG_OVERRIDES_CSWnginx += bad-location-of-file|file=/var/run/nginx
 
 TEST_SCRIPTS =
 
