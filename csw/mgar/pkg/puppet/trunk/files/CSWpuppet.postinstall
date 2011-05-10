@@ -20,7 +20,7 @@ if [ ! -d $PKG_INSTALL_ROOT/var/lib ]; then
     fi
 fi
 
-if [ ! -d $PKG_INSTALL_ROOT/opt/csw/var/puppet ]; then 
+if [ ! -d $PKG_INSTALL_ROOT/opt/csw/var/puppet -o ! -L $PKG_INSTALL_ROOT/opt/csw/var/puppet ]; then 
     /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/ln -s /var/lib/puppet /opt/csw/var/puppet
 fi
 
