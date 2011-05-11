@@ -29,8 +29,6 @@ TEST_TARGET = check
 PATCHFILES += 0001-Remove-surplus-flags-output-on-SPARC.patch
 PATCHFILES += 0002-Do-not-use-find_library-at-runtime.patch
 
-ISAEXEC = 0
-
 PACKAGES += CSWgfile
 PKGFILES_CSWgfile += $(bindir)/gfile
 PKGFILES_CSWgfile += $(bindir)/$(ISA_DEFAULT64)/gfile
