@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = file
-VERSION = 5.05
+VERSION = 5.07
 CATEGORIES = utils
 
 define BLURB
@@ -29,7 +29,7 @@ TEST_TARGET = check
 PATCHFILES += 0001-Remove-surplus-flags-output-on-SPARC.patch
 PATCHFILES += 0002-Do-not-use-find_library-at-runtime.patch
 
-NOISAEXEC = 1
+ISAEXEC = 0
 
 PACKAGES += CSWgfile
 PKGFILES_CSWgfile += $(bindir)/gfile
