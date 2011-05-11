@@ -1,0 +1,62 @@
+From 4950c61a325c468aa31c6bc75377ad2ece76bfef Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 11 May 2011 12:41:05 +0200
+Subject: [PATCH] Remove 'inline' as it confuses the compiler
+
+---
+ src/modules.c |    4 ++--
+ src/packet.c  |    2 +-
+ src/parse.c   |    2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/modules.c b/src/modules.c
+index 4d4e6c9..62e5190 100644
+--- a/src/modules.c
++++ b/src/modules.c
+@@ -946,7 +946,7 @@ void	module_loadall(int module_load)
+ #endif
+ }
+ 
+-inline int	Module_IsAlreadyChild(Module *parent, Module *child)
++int	Module_IsAlreadyChild(Module *parent, Module *child)
+ {
+ 	ModuleChild *mcp;
+ 	
+@@ -958,7 +958,7 @@ inline int	Module_IsAlreadyChild(Module *parent, Module *child)
+ 	return 0;
+ }
+ 
+-inline void	Module_AddAsChild(Module *parent, Module *child)
++void	Module_AddAsChild(Module *parent, Module *child)
+ {
+ 	ModuleChild	*childp = NULL;
+ 	
+diff --git a/src/packet.c b/src/packet.c
+index fa64d9a..8e4f9c9 100644
+--- a/src/packet.c
++++ b/src/packet.c
+@@ -304,7 +304,7 @@ void    add_CommandX(char *name, char *token, int (*func)(), unsigned char param
+ 		cmd->friend = NULL;
+ }
+ 
+-inline aCommand *find_CommandEx(char *cmd, int (*func)(), int token)
++aCommand *find_CommandEx(char *cmd, int (*func)(), int token)
+ {
+ 	aCommand *p;
+ 	
+diff --git a/src/parse.c b/src/parse.c
+index 25f03a2..790341b 100644
+--- a/src/parse.c
++++ b/src/parse.c
+@@ -156,7 +156,7 @@ void ban_flooder(aClient *cptr)
+ /*
+  * This routine adds fake lag if needed.
+  */
+-inline void parse_addlag(aClient *cptr, int cmdbytes)
++void parse_addlag(aClient *cptr, int cmdbytes)
+ {
+ 	if (!IsServer(cptr) && !IsNoFakeLag(cptr) &&
+ #ifdef FAKELAG_CONFIGURABLE
+-- 
+1.7.3.2
+
