@@ -48,7 +48,7 @@ OBSOLETED_BY_CSWlibreadline6 = CSWreadline
 
 PACKAGES += CSWlibreadline-dev
 CATALOGNAME_CSWlibreadline-dev = libreadline_dev
-SPKG_DESC_CSWlibreadline-dev = GNU readline development files
+SPKG_DESC_CSWlibreadline-dev = GNU readline development files for libreadline.so.6 and libhistory.so.6
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibreadline-dev += CSWlibhistory6
 RUNTIME_DEP_PKGS_CSWlibreadline-dev += CSWlibreadline6
