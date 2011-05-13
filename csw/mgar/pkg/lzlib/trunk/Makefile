@@ -14,13 +14,20 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES =  0001-gcc-to-sunstudio.patch
 PATCHFILES += 0002-gcc-to-sunstudio-2.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 VENDOR_URL = http://www.nongnu.org/lzip/lzlib.html
 
+PACKAGES += CSWliblz1
+SPKG_DESC_CSWliblz1 = A lossless data compression library based on the LZMA algorithm, liblz.so.1
+PKGFILES_CSWliblz1 = $(call pkgfiles_lib,liblz.so.1)
+OBSOLETED_BY_CSWliblz1 = CSWlzlib
+
+PACKAGES += CSWliblz-dev
+SPKG_DESC_CSWliblz-dev = Development files for liblz.so.1
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWliblz-dev = CSWliblz1
+
 EXTRA_CXXFLAGS = -xcode=pic32
-EXTRA_LINKER_FLAGS = -lCrun
+EXTRA_LINKER_FLAGS = -lCrun -norunpath
 
 BUILD64 = 1
 NOISALIST = 1
@@ -31,10 +38,10 @@ CONFIGURE_ARGS += CPPFLAGS="$(CPPFLAGS)"
 CONFIGURE_ARGS += CXXFLAGS="$(CXXFLAGS)"
 CONFIGURE_ARGS += LDFLAGS="$(LDFLAGS)"
 
-TEST_TARGET = check
-
-INSTALL_OVERRIDE_VARS = INSTALL
+INSTALL_OVERRIDE_VARS = INSTALL LDCONFIG
 INSTALL_OVERRIDE_VAR_INSTALL = /opt/csw/bin/ginstall
+# This is close to a NOP
+INSTALL_OVERRIDE_VAR_LDCONFIG = echo
 
 include gar/category.mk
 
