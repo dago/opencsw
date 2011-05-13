@@ -12,23 +12,37 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.libspf2.org/spf/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://www.libspf2.org
 
-SPKG_SOURCEURL = http://www.libspf2.org
+LICENSE = LICENSES
 
-RUNTIME_DEP_PKGS = CSWggettextrt
+PACKAGES += CSWlibspf2-2
+SPKG_DESC_CSWlibspf2-2 = Library that implements Sender Policy Framework, libspf2.so.2
+PKGFILES_CSWlibspf2-2 = $(call pkgfiles_lib,libspf2.so.2)
+RUNTIME_DEP_PKGS_CSWlibspf2-2 += CSWlibintl8
+OBSOLETED_BY_CSWlibspf2-2 = CSWlibspf2
+
+PACKAGES += CSWlibspf2-utils
+SPKG_DESC_CSWlibspf2-utils = Utility programs to query SPF
+PKGFILES_CSWlibspf2-utils = $(bindir)/.*
+RUNTIME_DEP_PKGS_CSWlibspf2-utils += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibspf2-utils += CSWlibspf2-2
+OBSOLETED_BY_CSWlibspf2-utils = CSWlibspf2
+
+PACKAGES += CSWlibspf2-dev
+SPKG_DESC_CSWlibspf2-dev = Development files for libspf2.so.2
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibspf2-dev = CSWlibspf2-2
 
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS = $(DIRPATHS)
 
 EXTRA_LINKER_FLAGS = -lresolv  -lsocket  -lnsl 
 
-TEST_TARGET = check
-
-MERGE_DIRS_isa-extra = $(libdir)
+# These are the same as the ones without '_static', but linked statically
+# against libspf2.a
+# I guess nobody needs that as we always depend on the library package anyway
+EXTRA_MERGE_EXCLUDE_FILES = $(bindir)/.*_static
 
 include gar/category.mk
