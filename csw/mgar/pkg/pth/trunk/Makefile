@@ -10,33 +10,26 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWpth,)
+DISTFILES  = $(DISTNAME).tar.gz
 
-SPKG_SOURCEURL = http://www.gnu.org/software/pth/
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-## Patch PTH.H to increase FD_SETSIZE for 64bit builds
+# Patch PTH.H to increase FD_SETSIZE for 64bit builds
 PATCHFILES = patch_pth_fdsetsize64.diff
 
+VENDOR_URL = http://www.gnu.org/software/pth/
+
+PACKAGES += CSWlibpth20
+SPKG_DESC_CSWlibpth20 = GNU Pth portable threads
+PKGFILES_CSWlibpth20 = $(call pkgfiles_lib,libpth.so.20)
+OBSOLETED_BY_CSWlibpth20 = CSWpth
+
+PACKAGES += CSWlibpth-dev
+SPKG_DESC_CSWlibpth-dev = Development files for libpth.so.20
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibpth-dev = CSWlibpth20
+
 BUILD64 = 1
-NOISAEXEC = 1
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-# Add static libs as under Solaris 7/8 x86 shared libpth doesn't work correctly.
-MERGE_EXCLUDE_STATICLIBS =
+# This is an example of 'configure'
+CHECKPKG_OVERRIDES_CSWlibpth-dev += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/pth.3
 
 include gar/category.mk
-
-# No shared libraries on Solaris 7/8 x86:
-#   http://www.mail-archive.com/pth-users@gnu.org/msg00113.html
-# and (from ChangeLog)
-#   *) Make --disable-shared the default under Solaris-2.[78]/x86, because
-#      it is known to segfault sporadically if Pth is built as a DSO.  As
-#      traces showed, it is not a Pth problem, but it looks like a problem with
-#      the dynamic linker on Solaris/x86.  The same Solaris versions on SPARC
-#      don't have this problem.
-#      [Ralf S. Engelschall]
