@@ -74,12 +74,10 @@ CONFIGURE_ARGS += --with-http_secure_link_module
 CONFIGURE_ARGS += --with-http_ssl_module
 CONFIGURE_ARGS += --with-http_stub_status_module
 
-#CHECKPKG_OVERRIDES_CSWnginx += bad-location-of-file|file=/var/run/nginx
-
 TEST_SCRIPTS =
 
 INITSMF      = $(sysconfdir)/init.d/cswnginx
-PRESERVECONF = $(sysconfdir)/nginx/fastcgi.conf $(sysconfdir)/nginx/fastcgi_params $(sysconfdir)/nginx/mime.types $(sysconfdir)/nginx/nginx.conf $(sysconfdir)/nginx/scgi_params $(sysconfdir)/nginx/uwsgi_params $(localstatedir)/nginx/html/50x.html
+PRESERVECONF = $(sysconfdir)/nginx/fastcgi.conf $(sysconfdir)/nginx/fastcgi_params $(sysconfdir)/nginx/mime.types $(sysconfdir)/nginx/nginx.conf $(sysconfdir)/nginx/scgi_params $(sysconfdir)/nginx/uwsgi_params $(localstatedir)/nginx/html/50x.html $(localstatedir)/nginx/html/index.html
 
 NGINXDOCS    = CHANGES CHANGES.ru LICENSE README
 
