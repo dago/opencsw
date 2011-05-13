@@ -1,5 +1,5 @@
 NAME = gnuplot
-VERSION = 4.4.2
+VERSION = 4.4.3
 CATEGORIES = utils
 
 DESCRIPTION = The Gnuplot Plotting Utility
@@ -11,9 +11,6 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES = 0001-Remove-definition-unclear-why-leaving-it-in-causes-e.patch
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://www.gnuplot.info/
 
@@ -27,7 +24,7 @@ RUNTIME_DEP_PKGS_CSWgnuplot += CSWemacscommon
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWfconfig
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWiconv
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWreadline
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWgd
+RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibgd2
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWxpm
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWncurses
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWlua
@@ -42,7 +39,7 @@ RUNTIME_DEP_PKGS_CSWgnuplot-wx = CSWgnuplot
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWwxwidgetscommon
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibatk
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWpango
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWpng
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWfconfig
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibcairo
@@ -50,7 +47,7 @@ RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWiconv
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWwxwidgetsgtk2
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWreadline
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWgtk2
-RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWgd
+RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlibgd2
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWxpm
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWncurses
 RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWlua
@@ -62,6 +59,8 @@ RUNTIME_DEP_PKGS_CSWgnuplot-wx += CSWjpeg
 
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWgnuplot-wx)
 
+EXTRA_LINKER_FLAGS = -norunpath
+
 EXTRA_MODULATORS = WXWIDGETS
 MODULATIONS_WXWIDGETS = yes no
 
@@ -69,6 +68,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 CONFIGURE_ARGS_wxwidgets-no += --without-cairo
 CONFIGURE_ARGS_wxwidgets-no += --disable-wxwidgets
+CONFIGURE_ARGS_wxwidgets-no += --without-x
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_wxwidgets-$(WXWIDGETS))
 
 # Preset value until this is fixed:
@@ -78,8 +78,6 @@ CONFIGURE_ARGS += ac_cv_type__Bool=no
 # Make sure we don't run the interactive displays from demo/
 EXTRA_TEST_EXPORTS = DISPLAY
 DISPLAY =
-
-TEST_TARGET = check
 
 MERGE_SCRIPTS_isa-default-wxwidgets-yes = copy-all
 MERGE_SCRIPTS_isa-default-wxwidgets-no = copy-all
@@ -109,4 +107,24 @@ PKGFILES_CSWgnuplot-wx = $(addsuffix -$(WXSUFFIX-yes),$(ALTERNATIVE_FILES))
 CHECKPKG_OVERRIDES_CSWgnuplot += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWgnuplot-wx += surplus-dependency|CSWalternatives
 
+# These are just examples
+CHECKPKG_OVERRIDES_CSWgnuplot += file-with-bad-content|/usr/local|root/opt/csw/share/gnuplot/4.4/gnuplot.gih-nowx
+CHECKPKG_OVERRIDES_CSWgnuplot-wx += file-with-bad-content|/usr/local|root/opt/csw/share/gnuplot/4.4/gnuplot.gih-wx
+CHECKPKG_OVERRIDES_CSWgnuplot += file-with-bad-content|/usr/local|root/opt/csw/share/info/gnuplot.info
+
+# Is this GDFONTPATH related? That would be bad... CHECK!!!
+#CHECKPKG_OVERRIDES_CSWgnuplot += file-with-bad-content|/usr/local|root/opt/csw/bin/gnuplot-nowx
+#CHECKPKG_OVERRIDES_CSWgnuplot-wx += file-with-bad-content|/usr/local|root/opt/csw/bin/gnuplot-wx
+#CHECKPKG_OVERRIDES_CSWgnuplot += file-with-bad-content|/usr/share|root/opt/csw/bin/gnuplot-nowx
+#CHECKPKG_OVERRIDES_CSWgnuplot-wx += file-with-bad-content|/usr/share|root/opt/csw/bin/gnuplot-wx
+
 include gar/category.mk
+
+# Adjust font pathes. /usr/sfw is just the last resort for a font, it could have been ommitted.
+post-extract-modulated:
+	perl -pi \
+		-e 's,/usr/X11R6/lib/X11/fonts/Type1,/usr/openwin/lib/X11/fonts/Type1,;' \
+		-e 's,/usr/X11R6/lib/X11/fonts/truetype,/usr/openwin/lib/X11/fonts/TrueType,;' \
+		-e 's,/usr/share/ghostscript/fonts,/opt/csw/share/ghostscript/fonts,;' \
+		-e 's,/usr/local/share/ghostscript/fonts,/usr/sfw/share/ghostscript/fonts,;' \
+		$(WORKSRC)/src/variable.c
