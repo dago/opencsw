@@ -12,21 +12,26 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.wavpack.com/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
-RUNTIME_DEP_PKGS = CSWiconv
+DISTFILES  = $(DISTNAME).tar.bz2
 
 LICENSE = license.txt
 
+PACKAGES += CSWlibwavpack1
+SPKG_DESC_CSWlibwavpack1 = Open audio compression format library, libwavpack.so.1
+PKGFILES_CSWlibwavpack1 = $(call pkgfiles_lib,libwavpack.so.1)
+RUNTIME_DEP_PKGS_CSWlibwavpack1 += CSWiconv
+
+PACKAGES += CSWwavpack
+SPKG_DESC_CSWwavpack = Wavpack audio compression format tools
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWwavpack += CSWiconv
+RUNTIME_DEP_PKGS_CSWwavpack += CSWlibwavpack1
+
+PACKAGES += CSWlibwavpack-dev
+SPKG_DESC_CSWlibwavpack-dev = Development files for libwavpack.so.1
+PKGFILES_CSWlibwavpack-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibwavpack-dev = CSWlibwavpack1
+
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
