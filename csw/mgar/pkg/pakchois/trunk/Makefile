@@ -9,18 +9,24 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.manyfish.co.uk/pakchois/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
+DISTFILES += COPYING
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://www.manyfish.co.uk/pakchois/
 
-SPKG_SOURCEURL = http://www.manyfish.co.uk/pakchois/
+PACKAGES += CSWlibpakchois0
+SPKG_DESC_CSWlibpakchois0 = Just another PKCS \#11 wrapper library, libpakchois.so.0
+PKGFILES_CSWlibpakchois0 = $(call pkgfiles_lib,libpakchois.so.0)
+RUNTIME_DEP_PKGS_CSWlibpakchois0 += CSWlibintl8
+OBSOLETED_BY_CSWlibpakchois0 = CSWpakchois
+
+PACKAGES += CSWlibpakchois-dev
+SPKG_DESC_CSWlibpakchois-dev = Development files for libpakchois.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibpakchois-dev = CSWlibpakchois0
 
 BUILD64 = 1
 NOISALIST = 1
 EXTRA_LINKER_FLAGS = -lintl
-CONFIGURE_ARGS = $(DIRPATHS)
-
-RUNTIME_DEP_PKGS = CSWggettextrt
 
 include gar/category.mk
