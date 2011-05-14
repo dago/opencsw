@@ -162,6 +162,7 @@ PKGFILES_CSWbacula-sd += $(localstatedir)/$(NAME)/archive
 PKGFILES_CSWbacula-sd += .*bacula_sd/.*postmsg
 PKGFILES_CSWbacula-sd += /etc/opt/csw/pkg/CSWbacula-sd/cswusergroup
 PKGFILES_CSWbacula-sd += /etc/opt/csw/pkg/CSWbacula-sd/services
+CHECKPKG_OVERRIDES_CSWbacula-sd += surplus-dependency|CSWmtx
 
 CATALOGNAME_CSWbacula-director = bacula_director
 SPKG_DESC_CSWbacula-director = $(DESCRIPTION) - Director
