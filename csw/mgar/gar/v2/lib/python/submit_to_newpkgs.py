@@ -103,6 +103,25 @@ def RsyncFiles(files_to_rsync, dst_arg):
     logging.error(msg)
     raise PackageSubmissionError(msg)
 
+def DisplayCswUploadPkgTeaser(files_to_rsync):
+  if not files_to_rsync:
+    print "No files have been processed."
+    return
+  print
+  print "Please try the new package upload tool."
+  print "It will upload your packages to the opencsw-future catalog."
+  print "http://mirror.opencsw.org/opencsw-future/"
+  print "Once uploaded, your packages will be available in a couple hours."
+  print "To upload, run the following command:"
+  print
+  script_path = os.path.join(
+      os.path.dirname(sys.argv[0]),
+      "csw-upload-pkg")
+  print "%s \\" % script_path
+  for f in files_to_rsync[:-1]:
+    print "  %s \\" % f
+  print "  %s" % files_to_rsync[-1]
+
 
 def main():
   try:
@@ -246,6 +265,7 @@ def main():
     print "Your e-mail hasn't been sent yet!"
     print "Issue the following command to have it sent:"
     print "sendmail -t < %s" % DEFAULT_FILE_NAME
+  DisplayCswUploadPkgTeaser(files_to_rsync)
 
 
 if __name__ == '__main__':
