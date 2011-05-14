@@ -44,6 +44,7 @@ CHECKPKG_OVERRIDES_CSWbacula += surplus-dependency|CSWbacula-doc
 
 CATALOGNAME_CSWbacula-console = bacula_console
 SPKG_DESC_CSWbacula-console = $(DESCRIPTION) - Console
+OBSOLETED_BY_CSWbacula-console = CSWbaculaclient
 RUNTIME_DEP_PKGS_CSWbacula-console = CSWbacula-common
 RUNTIME_DEP_PKGS_CSWbacula-console += CSWtcpwrap
 RUNTIME_DEP_PKGS_CSWbacula-console += CSWncurses
@@ -61,12 +62,14 @@ SPKG_DESC_CSWbacula-client = $(DESCRIPTION) - Client meta-package
 ARCHALL_CSWbacula-client = 1
 RUNTIME_DEP_PKGS_CSWbacula-client += CSWbacula-fd
 PKGFILES_CSWbacula-client = NOFILES
-OBSOLETED_BY_CSWbacula-client = CSWbaculaclient CSWbaculagnome
-SPKG_DESC_CSWbaculagnome = Obsolete bacula gnome console
-CATALOGNAME_CSWbaculagnome = bacula_gnome_stub
+OBSOLETED_BY_CSWbacula-client = CSWbaculaclient
+CHECKPKG_OVERRIDES_CSWbacula-client += surplus-dependency|CSWbacula-fd
+
 # set this explicitly to help phil's tools for now
 CATALOGNAME_CSWbaculaclient = bacula_client_stub
-CHECKPKG_OVERRIDES_CSWbacula-client += surplus-dependency|CSWbacula-fd
+
+SPKG_DESC_CSWbaculagnome = Obsolete bacula gnome console
+CATALOGNAME_CSWbaculagnome = bacula_gnome_stub
 
 CATALOGNAME_CSWbacula-doc = bacula_doc
 SPKG_DESC_CSWbacula-doc = $(DESCRIPTION) - Documentation
@@ -78,6 +81,7 @@ CHECKPKG_OVERRIDES_CSWbacula-doc += missing-dependency|CSWperl
 
 CATALOGNAME_CSWbacula-tray-monitor = bacula_tray_monitor
 SPKG_DESC_CSWbacula-tray-monitor = $(DESCRIPTION) - Tray monitor
+OBSOLETED_BY_CSWbacula-tray-monitor = CSWbaculaclient
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWbacula-common
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWbacula-tray-monitor += CSWgcc4corert
