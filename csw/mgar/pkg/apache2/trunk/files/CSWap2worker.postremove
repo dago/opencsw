@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+    . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+    . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# On removal of the worker mpm, restart apache to use the prefork (default)
+# mpm...only if it's currently running though
+if [ -n "`pgrep -f apache2/sbin/httpd`" ]; then
+    # Determine if SMF should be used or not
+    smf=no
+
+    if [ "$use_smf" = "no" ]; then
+	smf=no
+    else
+	if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ]; then
+	    smf=yes
+	fi
+    fi
+
+    if [ "$smf" = "yes" ]; then
+	svcadm restart cswapache2
+    else
+	/etc/init.d/cswapache2 restart
+    fi
+fi

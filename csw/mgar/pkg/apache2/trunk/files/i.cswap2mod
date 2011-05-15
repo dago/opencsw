@@ -1,0 +1,79 @@
+#!/bin/sh
+#
+# i.cswap2mod - Class action script for installing apache2 modules
+#
+# Written by Ben Walton
+#
+# 2010-09-29 First Release
+#
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+AP2_PREFIX=/opt/csw/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_LIBEXEC=$AP2_PREFIX/libexec
+AP2_CONFDIR=$AP2_PREFIX/etc
+AP2_CONFIG=$AP2_CONFDIR/httpd.conf
+AP2_APXS=$AP2_BINDIR/apxs
+
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-'/'}
+
+while read src dest; do
+      # Place the file first
+      /usr/bin/cp -p $src $dest || exit 2
+      echo $dest
+      
+      CONF=$PKG_INSTALL_ROOT/$AP2_CONFIG
+      APXS=$PKG_INSTALL_ROOT/$AP2_APXS
+      MODFILE=`basename $dest`
+      MODNAME=`echo $MODFILE | sed 's/mod_//; s/\.so$//'`
+
+      # Modules will be enabled by default, but a global kill switch
+      # is checked , followed by a module specific value.  Thus,
+      # either ap2_enable_modules or ap2_enable_suexec (for example)
+      # could disable activation of the suexec module.  The 
+      #
+      # This value is passed to apxs (-a: add, enable; -A: add,
+      # disable)
+      enmod=-a
+
+      if [ "$ap2_enable_modules" = "no" ]; then
+	  enmod=-A
+      fi
+
+      eval ap2_mod_specific="\$ap2_enable_$MODNAME"
+      if [ "$ap2_mod_specific" = "no" ]; then
+	  enmod=-A
+      elif [ "$ap2_mod_specific" = "yes" ]; then
+	  enmod=-a
+      fi
+
+      if [ -f "$CONF" -a -x "$APXS" ]; then
+	  # Add the module module, optionally enabling it by default
+	  chroot $PKG_INSTALL_ROOT \
+	      $APXS -e $enmod -n $MODNAME $MODFILE
+	  conftouched=1
+      fi
+done
+
+if [ "$conftouched" = "1" ]; then
+	  cat <<END
+
+
+NOTICE: One or more LoadModule lines was added to your httpd.conf.
+Depending on your csw.conf settings for ap2_enable_modules or
+ap2_enable_\$modulename they may be enabled.  Please review the
+changes, make any futher modifications and then restart apache as
+required.
+
+
+END
+fi
+
+exit 0

@@ -1,0 +1,29 @@
+From 4565f79569130fc4ec0bae99fd3829785394f937 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 28 Feb 2011 01:23:44 +0100
+Subject: [PATCH] Switch usr/local for opt/csw in default cgi path
+
+Modify the default PATH for cgi scripts to use /opt/csw/bin as the
+final element instead of /usr/local/bin.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ include/httpd.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/include/httpd.h b/include/httpd.h
+index 40351b7..0fff717 100644
+--- a/include/httpd.h
++++ b/include/httpd.h
+@@ -150,7 +150,7 @@ extern "C" {
+ 
+ /** The default path for CGI scripts if none is currently set */
+ #ifndef DEFAULT_PATH
+-#define DEFAULT_PATH "/bin:/usr/bin:/usr/ucb:/usr/bsd:/usr/local/bin"
++#define DEFAULT_PATH "/bin:/usr/bin:/usr/ucb:/usr/bsd:/opt/csw/bin"
+ #endif
+ 
+ /** The path to the suExec wrapper, can be overridden in Configuration */
+-- 
+1.7.3.2
+
