@@ -3,8 +3,6 @@ Hello CSW User/Sysadmin,
 Please note that recent changes may affect the way you're used to
 working with the CSW apache2 packages.
 
-*****************************************************
-
 In the past, CSWap2prefork and CSWap2worker delivered a specific mpm
 module for use with apache2.  We now ship the prefork mpm as part of
 CSWapache2 while the worker mpm remains in CSWap2worker.
@@ -15,24 +13,6 @@ thus it is activated as httpd (manual restart required).  You can
 change this at any time using the alternatives command.  See
 /opt/csw/sbin/alternatives --help for information on how you can do
 this.
-
-
-*****************************************************
-
-We are also moving configuration of apache from /opt/csw/apache2/etc
-to /etc/opt/csw/apache2.  The files should be auto-migrated upon
-upgrade but if you've broken from the standard config file layout,
-you'll need to manually copy in those additional files.  Sorry for the
-hassle, but this really needs to be done for a package like apache
-where the configuration will be unique on most machines.
-
-*****************************************************
-
-The default log directory is now /var/opt/csw/log/apache2.  Old logs
-are not touched and the configuration will honour the old location.  You
-should updated this and move the logs manually.
-
-*****************************************************
 
 Thanks
 -The OpenCSW apache2 team.

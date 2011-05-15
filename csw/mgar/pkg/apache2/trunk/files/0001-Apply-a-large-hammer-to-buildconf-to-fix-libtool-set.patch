@@ -1,0 +1,33 @@
+From 386d1e486af82bffc18f4668a96565b892b1ae48 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 20 Jan 2011 02:16:26 +0100
+Subject: [PATCH] Apply a large hammer to buildconf to fix libtool setup
+
+The heuristics used in buildconf are broken with our newest version of
+the libtool stack.  For now, apply an ugly hack to the script to make
+it work.  Later, we'll polish it and make it general enough to submit
+upstream.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ srclib/apr/buildconf |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/srclib/apr/buildconf b/srclib/apr/buildconf
+index 1041af4..f84e205 100755
+--- a/srclib/apr/buildconf
++++ b/srclib/apr/buildconf
+@@ -52,8 +52,8 @@ if [ -f libtool.m4 ]; then
+    ltfile=`pwd`/libtool.m4
+ elif grep all_pkgmacro_files $libtoolize > /dev/null; then
+     # libtool 2.x
+-   aclocal_dir=`sed -n '/^aclocaldir=/{s/.*=//;p;q;}' < $libtoolize`
+-   ltfiles=`sed -n '/^all_pkgmacro_files=/{s/.*=//;;s/"//;p;q;}' < $libtoolize`
++   aclocal_dir=/opt/csw/share/aclocal
++   ltfiles=`sed -n '/all_pkgmacro_files=/{s/.*=//;;s/"//;p;q;}' < $libtoolize`
+    for f in $ltfiles; do
+        test -f "$aclocal_dir/$f" && cp "$aclocal_dir/$f" build
+    done
+-- 
+1.7.3.2
+

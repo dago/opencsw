@@ -1,6 +1,6 @@
 #!/bin/sh
 
-	# Source csw.conf, if it exists
+# Source csw.conf, if it exists
 if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
     . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
 fi
@@ -8,20 +8,9 @@ if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
     . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
 fi
 
-# Determine if service should be started or not
-daemon=yes
-if [ "$autoenable_daemons" = "no" ]; then
-    daemon=no
-fi
-
-if [ "$autoenable_cswapache2" = "no" ]; then
-
-    daemon=no
-elif [ "$autoenable_cswapache2" = "yes" ]; then
-    daemon=yes
-fi
-
-if [ "$daemon" = "yes" ]; then
+# On removal of the worker mpm, restart apache to use the prefork (default)
+# mpm...only if it's currently running though
+if [ -n "`pgrep -f apache2/sbin/httpd`" ]; then
     # Determine if SMF should be used or not
     smf=no
 

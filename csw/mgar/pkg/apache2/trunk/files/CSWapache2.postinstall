@@ -1,0 +1,101 @@
+#!/bin/sh
+
+ROOT=${PKG_INSTALL_ROOT:-/}
+CSW_PREFIX=${ROOT}/opt/csw
+AP2_PREFIX=$CSW_PREFIX/apache2
+AP2_BINDIR=$AP2_PREFIX/sbin
+AP2_LIBEXEC=$AP2_PREFIX/libexec
+AP2_CONFDIR=$AP2_PREFIX/etc
+AP2_EXTRADIR=$AP2_CONFDIR/extra
+AP2_RUNDIR=$AP2_PREFIX/var/run
+
+
+UPGRADE_CONFIGS="\
+    httpd.conf \
+    ssl.conf \
+    extra/httpd-ssl.conf \
+    extra/httpd-mpm.conf \
+    "
+# Don't overwrite config if it exists
+warn_update=0
+# For use in config files and certificate generation
+hostname=`hostname`
+echo "Checking configuration files:"
+for file in $UPGRADE_CONFIGS; do
+    config=$AP2_CONFDIR/$file
+    if [ -f "$config" ]; then 
+        if [ -n "`grep mod_auth.so $config`" ]; then
+            echo "Updating syntax of $config to Apache 2.2"
+            $AP2_BINDIR/update20to22 $config
+            warn_update=1
+        fi
+        # Ensure that the PidFile is pointed at ServerRoot relative path.
+        perl -i -plne 's#PidFile /var#PidFile var#'
+    elif [ -f "$config.CSW" ]; then
+        echo "Creating $config from template"
+        sed -e s,@HOSTNAME@,$hostname,g   \
+            -e s,@USER@,nobody,g          \
+            -e s,@GROUP@,nobody,g         \
+            -e s,@ADMIN@,root@$hostname,g $config.CSW > $config
+    fi
+done
+
+if [ $warn_update -eq 1 ] ; then
+cat << EOF
+
+*** NOTICE: Existing configuration files have been updated to
+*** Apache 2.2 syntax.  Additional files can be updated using
+*** /opt/csw/apache2/sbin/update20to22.
+
+EOF
+fi
+
+# Copy templates
+template_list="\
+    share/htdocs/index.html \
+    etc/extra/httpd-autoindex.conf \
+    etc/extra/httpd-dav.conf \
+    etc/extra/httpd-default.conf \
+    etc/extra/httpd-info.conf \
+    etc/extra/httpd-languages.conf \
+    etc/extra/httpd-multilang-errordoc.conf \
+    etc/extra/httpd-userdir.conf \
+    etc/extra/httpd-vhosts.conf \
+    etc/magic \
+    etc/mime.types"
+
+echo Copying CSW templates:
+for file in $template_list
+do
+    filepath=$AP2_PREFIX/$file
+    if [ -f "$filepath" ]; then
+        echo "  preserving $filepath"
+    elif [ -f "$filepath.CSW" ]; then
+        echo "  creating $filepath"
+        cp $filepath.CSW $filepath
+    fi
+done
+
+if [ ! -f $AP2_CONFDIR/server.crt -a ! -f $AP2_CONFDIR/server.key ]; then
+    echo Generating dummy ssl key and certificate...
+    # this is likely overkill for a dummy cert, but why not
+    umask 0077
+    cat <<EOF | /usr/sbin/chroot ${ROOT} /opt/csw/bin/openssl req -new -newkey rsa:1024 -days 365 -nodes -x509 -keyout /opt/csw/apache2/etc/server.key  -out /opt/csw/apache2/etc/server.crt >/dev/null 2>&1
+TS
+Westfarthing
+Hobbiton
+
+
+$hostname
+bilbo@example.net
+
+
+EOF
+fi
+
+if [ ! -d "$AP2_RUNDIR" ]; then
+    echo "Creating var/run..."
+    mkdir -p "$AP2_RUNDIR"
+fi
+
+exit 0

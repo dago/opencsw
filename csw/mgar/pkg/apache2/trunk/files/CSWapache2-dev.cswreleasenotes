@@ -1,0 +1,3 @@
+* /usr/local references:
+  - include/httpd.h: specifies default if no HTTPD_ROOT set, overridden via
+    		     ap_config_auto.h
