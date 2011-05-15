@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = cswutils
-VERSION = 1.16
+VERSION = 1.17
 CATEGORIES = utils
 
 DESCRIPTION = Utilities for CSW maintainers
@@ -88,4 +88,6 @@ install-custom:
 		$(DESTDIR)$(bindir)/comparepkg
 	@ln -s ../lib/python/csw/submit_to_newpkgs.py \
 		$(DESTDIR)$(bindir)/submitpkg
+	@ln -s ../lib/python/csw/csw_upload_pkg.py \
+		$(DESTDIR)$(bindir)/csw-upload-pkg
 	@$(MAKECOOKIE)
