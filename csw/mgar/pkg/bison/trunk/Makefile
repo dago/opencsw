@@ -1,6 +1,5 @@
 NAME = bison
-# VERSION = 2.4.2.8-cb76
-VERSION = 2.4.3
+VERSION = 2.5
 CATEGORIES = devel
 
 DESCRIPTION = GNU Project parser generator (yacc replacement)
@@ -12,25 +11,22 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 # MASTER_SITES += http://alpha.gnu.org/gnu/bison/
 
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(DISTNAME).tar.gz
 
-BUILD_DEP_PKGS = CSWgnulinks
-RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWgm4
+RUNTIME_DEP_PKGS_CSWbison += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWbison += CSWiconv
+RUNTIME_DEP_PKGS_CSWbison += CSWgm4
 
-SPKG_SOURCEURL = http://www.gnu.org/software/bison/
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
+VENDOR_URL = http://www.gnu.org/software/bison/
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset\.alias
 
 # I guess we really need these
 CHECKPKG_OVERRIDES_CSWbison += surplus-dependency|CSWgm4
 CHECKPKG_OVERRIDES_CSWbison += surplus-dependency|CSWiconv
+
+# Skip tests as some fail due to problems in CSWlibgnugetopt includes
+SKIPTEST ?= 1
 
 include gar/category.mk
 
@@ -41,4 +37,7 @@ post-install-modulated:
 	mv $(DESTDIR)$(bindir)/yacc $(DESTDIR)$(bindir)/gyacc
 	ginstall -d $(DESTDIR)$(prefix)/gnu
 	ln -s ../bin/gyacc $(DESTDIR)$(prefix)/gnu/yacc
+	perl -pi \
+		-e 's,/usr/local,$(prefix),g' \
+		$(DESTDIR)$(infodir)/bison.info
 	@$(MAKECOOKIE)
