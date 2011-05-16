@@ -1,5 +1,5 @@
 NAME = grep
-VERSION = 2.7
+VERSION = 2.8
 CATEGORIES = utils
 
 DESCRIPTION = GNU grep
@@ -17,13 +17,11 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(DISTNAME).tar.xz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.xz
-
 PACKAGES = CSWggrep
 CATALOGNAME = ggrep
-
-DEP_PKGS = CSWggettextrt CSWiconv CSWpcrert
+RUNTIME_DEP_PKGS_CSWggrep += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWggrep += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWggrep += CSWiconv
 
 EXTRA_LINKER_FLAGS = -liconv
 
@@ -33,8 +31,6 @@ CONFIGURE_ARGS += --program-prefix=g
 # Skip tests as they fail only in gnulib and are probably harmless:
 #   https://savannah.gnu.org/bugs/?29380
 SKIPTEST ?= 1
-
-TEST_TARGET = check
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
