@@ -23,6 +23,7 @@ CONFIGURE_ARGS += --disable-debug-syms
 
 RUNTIME_DEP_PKGS_CSWhyperion += CSWzlib
 PATCHFILES += 0001-Using-localstatedir-instead-of-prefix-var.patch
+PATCHFILES += 0002-Use-OpenCSW-paths.patch
 
 CHECKPKG_OVERRIDES_CSWhyperion += file-with-bad-content|/usr/local|root/etc/opt/csw/dancer-ircd/example.conf
 
