@@ -1,0 +1,36 @@
+From 4e515cca8568d318d234235dc73f4a64663add96 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 16 May 2011 23:49:38 +0200
+Subject: [PATCH] Using localstatedir instead of prefix/var
+
+---
+ Makefile.am |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 22c2226..29944ea 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -23,14 +23,14 @@ dist-hook:
+ 	(cd $(distdir)/include && cmp config.h.dist config.h || cp config.h.dist config.h)
+ 
+ install-exec-hook:
+-	(${mkinstalldirs} ${DESTDIR}${prefix}/var/lib/dancer-ircd && \
+-	cd ${DESTDIR}${prefix}/var/lib/dancer-ircd && \
++	(${mkinstalldirs} ${DESTDIR}${localstatedir}/lib/dancer-ircd && \
++	cd ${DESTDIR}${localstatedir}/lib/dancer-ircd && \
+ 	([ -f kline.conf ] || [ -L kline.conf ] || touch kline.conf) && \
+ 	([ -f dline.conf ] || [ -L dline.conf ] || touch dline.conf))
+-	(${mkinstalldirs} ${DESTDIR}${prefix}/var/log/dancer-ircd && \
+-	cd ${DESTDIR}${prefix}/var/log/dancer-ircd && \
++	(${mkinstalldirs} ${DESTDIR}${localstatedir}/log/dancer-ircd && \
++	cd ${DESTDIR}${localstatedir}/log/dancer-ircd && \
+ 	([ -f ircd.log ] || [ -L ircd.log ] || touch ircd.log))
+-	${mkinstalldirs} ${DESTDIR}${prefix}/var/run/dancer-ircd
++	${mkinstalldirs} ${DESTDIR}${localstatedir}/run/dancer-ircd
+ 
+ sign:
+ 	gpg --detach-sign $(distdir).tar.gz
+-- 
+1.7.3.2
+
