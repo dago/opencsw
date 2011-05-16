@@ -1,0 +1,49 @@
+From 6e3349a385e42a81163e943c2e15e524c29003f7 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 17 May 2011 00:20:48 +0200
+Subject: [PATCH] Use OpenCSW paths
+
+---
+ src/paths.c |   26 +++++++++++++-------------
+ 1 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/src/paths.c b/src/paths.c
+index 8a84399..c8ac250 100644
+--- a/src/paths.c
++++ b/src/paths.c
+@@ -65,19 +65,19 @@
+ 
+ #define DPATH    PREFIX "/"
+ #define SPATH    "sbin/hyperion-ircd"
+-#define CPATH    "etc/dancer-ircd/ircd.conf"
+-#define MPATH    "etc/dancer-ircd/motd"
+-#define HPATH    "etc/dancer-ircd/ohelp"
+-#define OPATH    "etc/dancer-ircd/omotd"
+-#define LPATH    "var/log/dancer-ircd/ircd.log"
+-#define HLBASE   "var/log/dancer-ircd/hash"
+-#define USERLOG  "var/log/dancer-ircd/user.log"
+-#define OPERLOG  "var/log/dancer-ircd/oper.log"
+-#define PPATH    "var/run/dancer-ircd/dancer-ircd.pid"
+-#define KPATH    "var/lib/dancer-ircd/kline.conf"
+-#define DLPATH   "var/lib/dancer-ircd/dline.conf"
+-#define MXPATH   "var/lib/dancer-ircd/ircd.max"
+-#define DUMPPATH "var/lib/dancer-ircd/dump"
++#define CPATH    "../../etc/opt/csw/dancer-ircd/ircd.conf"
++#define MPATH    "../../etc/opt/csw/dancer-ircd/motd"
++#define HPATH    "../../etc/opt/csw/dancer-ircd/ohelp"
++#define OPATH    "../../etc/opt/csw/dancer-ircd/omotd"
++#define LPATH    "../../var/opt/csw/log/dancer-ircd/ircd.log"
++#define HLBASE   "../../var/opt/csw/log/dancer-ircd/hash"
++#define USERLOG  "../../var/opt/csw/log/dancer-ircd/user.log"
++#define OPERLOG  "../../var/opt/csw/log/dancer-ircd/oper.log"
++#define PPATH    "../../var/opt/csw/run/dancer-ircd/dancer-ircd.pid"
++#define KPATH    "../../var/opt/csw/lib/dancer-ircd/kline.conf"
++#define DLPATH   "../../var/opt/csw/lib/dancer-ircd/dline.conf"
++#define MXPATH   "../../var/opt/csw/lib/dancer-ircd/ircd.max"
++#define DUMPPATH "../../var/opt/csw/lib/dancer-ircd/dump"
+ 
+ const char *work_dir = DPATH;
+ const char *config_file = CPATH;
+-- 
+1.7.3.2
+
