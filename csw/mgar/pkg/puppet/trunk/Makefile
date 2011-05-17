@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.6.6
+VERSION = 2.6.8
 CATEGORIES = apps
 
 define BLURB
@@ -47,6 +47,7 @@ SPKG_DESC_CSWpuppetmaster = System configuration management tool, server
 
 RUNTIME_DEP_PKGS                  = CSWfacter
 RUNTIME_DEP_PKGS                 += CSWruby
+RUNTIME_DEP_PKGS				 += CSWrubyaugeas
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWpuppet
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWruby
 
@@ -71,22 +72,21 @@ PATCHFILES = 0003-Use-opt-csw-share-puppet-modules-as-default.patch
 # https://projects.puppetlabs.com/issues/6324
 PATCHFILES += 0004-patch-to-smf-provider-6324.patch
 
-CHECKPKG_OVERRIDES_CSWpuppet       += surplus-dependency|CSWfacter
-CHECKPKG_OVERRIDES_CSWpuppet       += missing-dependency|CSWpython
-CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWpuppet
+CHECKPKG_OVERRIDES_CSWpuppetmaster  = surplus-dependency|CSWruby
 
-CHECKPKG_OVERRIDES_CSWpuppet += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/cswpuppetd|class=none
-CHECKPKG_OVERRIDES_CSWpuppetmaster += surplus-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWpuppet        = surplus-dependency|CSWfacter
+CHECKPKG_OVERRIDES_CSWpuppet	   += surplus-dependency|CSWrubyaugeas
+CHECKPKG_OVERRIDES_CSWpuppet       += missing-dependency|CSWpython
+
 # Puppet has hardcoded paths to look at for many OSes, many of which involve
 # /usr/share and /usr/local.
-CHECKPKG_OVERRIDES_CSWpuppet += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWpuppet 	   += file-with-bad-content
 
-# These two files are quite deliberate - without them users will not get
-# CSW behaviour. The README explains
-CHECKPKG_OVERRIDES_CSWpuppet += bad-location-of-file|file=/etc/puppet
-CHECKPKG_OVERRIDES_CSWpuppet += bad-location-of-file|file=/etc/puppet/README.CSW
-CHECKPKG_OVERRIDES_CSWpuppet += bad-location-of-file|file=/etc/puppet/puppet.conf.example-CSW
-
+# These files are quite deliberate - without them users will not get CSW
+# behaviour. The README explains
+CHECKPKG_OVERRIDES_CSWpuppet 	   += bad-location-of-file|file=/etc/puppet
+CHECKPKG_OVERRIDES_CSWpuppet 	   += bad-location-of-file|file=/etc/puppet/README.CSW
+CHECKPKG_OVERRIDES_CSWpuppet 	   += bad-location-of-file|file=/etc/puppet/puppet.conf.example-CSW
 
 include gar/category.mk
 
@@ -120,6 +120,5 @@ install-puppet:
 	ginstall -d -m 755 $(DESTDIR)$(sysconfdir)/pkg/puppet
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/puppet/cswusergroup
-	# ( [ -d $(DESTDIR)/var/lib ] && echo "$(DESTDIR)/var/lib" must not exist && false ) || true
 	mkdir -p $(DESTDIR)$(localstatedir)/lib
 	@$(MAKECOOKIE)
