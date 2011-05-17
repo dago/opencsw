@@ -5,6 +5,7 @@
 import web
 import sqlobject
 import json
+import pprint
 from lib.python import models
 from lib.python import configuration
 from lib.python import pkgdb
@@ -75,6 +76,7 @@ class Srv4Detail(object):
       osrels = models.OsRelease.select()
       catrels = models.CatalogRelease.select()
       all_tags = list(models.CheckpkgErrorTag.selectBy(srv4_file=pkg))
+      pkgstats_raw = pprint.pformat(pkg.GetStatsStruct())
       if pkg.arch.name == 'all':
         archs = models.Architecture.select(models.Architecture.q.name!='all')
       else:
@@ -88,7 +90,7 @@ class Srv4Detail(object):
             tags_by_cat[key] = tags
             tags_and_catalogs.append((osrel, arch, catrel, tags))
       return render.Srv4Detail(pkg, overrides, tags_by_cat, all_tags,
-          tags_and_catalogs)
+          tags_and_catalogs, pkgstats_raw)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
