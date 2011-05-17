@@ -1,4 +1,4 @@
-$def with (pkg, overrides, tags_by_cat, tags, tags_and_catalogs)
+$def with (pkg, overrides, tags_by_cat, tags, tags_and_catalogs, pkgstats_raw)
 <html>
   <head>
     <title>
@@ -83,6 +83,11 @@ $for osrel, arch, catrel, tags_in_cat in tags_and_catalogs:
     </ul>
     </li>
 </ul>
+
+<h3>Raw dump of the Python data structure</h3>
+<pre>
+$pkgstats_raw
+</pre>
 
 </body>
 </html>
