@@ -38,6 +38,7 @@ RUNTIME_DEP_PKGS += CSWpy-libmagic
 RUNTIME_DEP_PKGS += CSWpy-progressbar
 RUNTIME_DEP_PKGS += CSWpy-sqlobject
 RUNTIME_DEP_PKGS += CSWpy-yaml
+RUNTIME_DEP_PKGS += CSWpy-curl
 RUNTIME_DEP_PKGS += CSWpython
 
 WORKSRC = $(WORKDIR)
