@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+PKG_INSTALL_ROOT=${PKG_INSTALL_ROOT:-/}
+
+# Migration of the configuration files?
+# This is horrible. Puppet insists on it's directories and will FORCE them to
+# _be_ directories. Therefore, to fit in with the CSW layout the only vaguely
+# sensible thing to do is to symlink TO the CSW layout and not FROM it.
+if [ ! -d $PKG_INSTALL_ROOT/opt/csw/etc/puppet ]; then
+    /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/ln -s /etc/opt/csw/puppet /opt/csw/etc/puppet
+fi
+
+if [ ! -d $PKG_INSTALL_ROOT/var/lib ]; then
+    /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/mkdir -p /var/lib/puppet
+    /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/chown puppet /var/lib/puppet
+    if [ ! -d $PKG_INSTALL_ROOT/var/opt/csw/puppet ]; then
+        /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/ln -s /var/lib/puppet /var/opt/csw/puppet
+    fi
+fi
+
+if [ ! -d $PKG_INSTALL_ROOT/opt/csw/var/puppet -o ! -L $PKG_INSTALL_ROOT/opt/csw/var/puppet ]; then 
+    /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/bin/ln -s /var/lib/puppet /opt/csw/var/puppet
+fi
+
+# Replaced with INITSMF
+
+exit 0
+
+touch $PKG_INSTALL_ROOT/etc/opt/csw/puppet/puppet.conf
+/usr/bin/test -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf && . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+/usr/bin/test -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf && . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+if [ "$autoenable_daemons" != "no" ] ; then
+    /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/sbin/svccfg import /opt/csw/var/svc/manifest/puppetd.xml || /bin/true
+    /usr/sbin/chroot $PKG_INSTALL_ROOT /usr/sbin/svcadm enable svc:network/puppetd  || /bin/true
+fi
