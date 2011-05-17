@@ -1,23 +1,22 @@
-From 98520890bdf48d718490927f04197c48a1958647 Mon Sep 17 00:00:00 2001
-From: dam <dam@lcsw.(none)>
-Date: Mon, 9 Nov 2009 03:55:19 +0100
+From ded5e4cdfd4ee2c3091f159db81425e4ae442ab7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 17 May 2011 14:02:20 +0200
 Subject: [PATCH] Remove linker version
 
 ---
- configure    |    8 --------
- configure.ac |   12 ------------
- 2 files changed, 0 insertions(+), 20 deletions(-)
+ configure |    8 --------
+ 1 files changed, 0 insertions(+), 8 deletions(-)
 
 diff --git a/configure b/configure
-index 9342074..cafccae 100755
+index ae375d5..b28749d 100755
 --- a/configure
 +++ b/configure
-@@ -15629,14 +15629,6 @@ if test "x${ac_enable_gcc_werror}" = xyes ; then
+@@ -12747,14 +12747,6 @@ if test "x${ac_enable_gcc_werror}" = xyes ; then
  fi
  
  
 -case "$target_os" in
--  linux* | solaris*|k*bsd*-gnu*|gnu-*)
+-  linux* | solaris*|k*bsd*-gnu*|gnu*)
 -    SHLIB_VERSION_ARG="-Wl,--version-script=Version_script"
 -    ;;
 -  *)
@@ -28,5 +27,5 @@ index 9342074..cafccae 100755
  
  
 -- 
-1.6.3.2
+1.7.3.2
 

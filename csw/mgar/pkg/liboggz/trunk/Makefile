@@ -1,5 +1,5 @@
 NAME = liboggz
-VERSION = 1.1.0
+VERSION = 1.1.1
 CATEGORIES = lib
 
 DESCRIPTION = A commandline tool for manipulating Ogg files
@@ -14,27 +14,36 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/liboggz/
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(DISTNAME).tar.gz
 PATCHFILES = 0001-Remove-linker-version.patch
-PATCHFILES += 0002-Add-getopt.h.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://www.xiph.org/oggz/
 
 BUILD_DEP_PKGS = CSWdoxygen
-RUNTIME_DEP_PKGS = CSWlibogg
+
+PACKAGES += CSWliboggz2
+SPKG_DESC_CSWliboggz2 = Ogg file manipulatin library, liboggz.so.2
+PKGFILES_CSWliboggz2 = $(call pkgfiles_lib,liboggz.so.2)
+RUNTIME_DEP_PKGS_CSWliboggz2 += CSWlibogg0
+
+PACKAGES += CSWliboggz-dev
+SPKG_DESC_CSWliboggz-dev = Development files for liboggz.so.2
+PKGFILES_CSWliboggz-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWliboggz-dev += $(docdir)/.*
+RUNTIME_DEP_PKGS_CSWliboggz-dev += CSWliboggz2
+
+PACKAGES += CSWoggz
+SPKG_DESC_CSWoggz = Commandline tools for manipulating Ogg files
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWoggz += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWoggz += CSWliboggz2
+OBSOLETED_BY_CSWoggz = CSWliboggz
+CATALOGNAME_CSWliboggz = liboggz_stub
 
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS = $(DIRPATHS)
 
-TEST_TARGET = check
-
-MERGE_DIRS_isa-extra = $(libdir)
+# This is just docs
+CHECKPKG_OVERRIDES_CSWliboggz-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/liboggz/html/group__install.html
+CHECKPKG_OVERRIDES_CSWliboggz-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/liboggz/latex/group__install.tex
 
 include gar/category.mk
-
-# Solaris 10 does have getopt.h which interferes with the shipped one included first.
-post-configure-isa-amd64:
-	rm -f $(WORKSRC)/include/getopt.h
-	@$(MAKECOOKIE)
