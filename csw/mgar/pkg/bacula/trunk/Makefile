@@ -325,3 +325,6 @@ post-merge:
 		mkdir -p pkg/CSWbacula-fd; \
 		echo ":bacula::::::" > pkg/CSWbacula-fd/cswusergroup; \
 		echo "bacula-fd 9102/tcp" > pkg/CSWbacula-fd/services)
+	@echo Unzipping manpages...a hack for now...
+	@(cd $(PKGROOT)/opt/csw/share/man; \
+		find . -name '*gz' -print | xargs gunzip )
