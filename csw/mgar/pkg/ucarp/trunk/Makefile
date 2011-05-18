@@ -14,11 +14,15 @@ define BLURB
   Protocol (CARP, OpenBSD's alternative to the patents-bloated VRRP).
 endef
 
-VENDOR_URL   = http://www.ucarp.org/project/ucarp
 MASTER_SITES = http://download.pureftpd.org/pub/ucarp/
-DISTFILES    = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES += $(DISTNAME).tar.bz2
 
-CONFIGURE_ARGS = $(DIRPATHS)
+PATCHFILES += 0001-Solaris-hacks.patch
+PATCHFILES += 0002-Remove-double-invocation-of-SHELL.patch
+
+VENDOR_URL = http://www.ucarp.org/project/ucarp
+
+RUNTIME_DEP_PKGS_CSWucarp += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWucarp += CSWlibpcap1
 
 include gar/category.mk

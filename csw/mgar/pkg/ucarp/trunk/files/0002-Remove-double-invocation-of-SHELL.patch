@@ -1,0 +1,25 @@
+From b836965f62ece383a84a12b94fc0f9659b617940 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 18 May 2011 18:37:55 +0200
+Subject: [PATCH] Remove double invocation of $SHELL
+
+---
+ po/Makefile.in.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/po/Makefile.in.in b/po/Makefile.in.in
+index fecf500..19f5a07 100644
+--- a/po/Makefile.in.in
++++ b/po/Makefile.in.in
+@@ -40,7 +40,7 @@ INSTALL_DATA = @INSTALL_DATA@
+ # either as "/path/to/mkdir -p" or ".../install-sh -c -d". For these automake
+ # versions, $(mkinstalldirs) and $(install_sh) are unused.
+ mkinstalldirs = $(SHELL) @install_sh@ -d
+-install_sh = $(SHELL) @install_sh@
++install_sh = @install_sh@
+ MKDIR_P = @MKDIR_P@
+ mkdir_p = @mkdir_p@
+ 
+-- 
+1.7.3.2
+
