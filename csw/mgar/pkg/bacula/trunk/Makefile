@@ -13,6 +13,7 @@ GARCOMPILER = GNU
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
 DISTFILES += CSWbacula-doc.cswreleasenotes
+DISTFILES += CSWbacula-common.cswreleasenotes
 DISTFILES += README.CSW
 DISTFILES += CSWbacula-director.postinstall
 DISTFILES += CSWbacula-sd.postinstall
