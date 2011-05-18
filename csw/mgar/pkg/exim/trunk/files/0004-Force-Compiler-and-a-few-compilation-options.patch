@@ -1,6 +1,6 @@
-From 3cc753695b92fae90252d3beb8f83dfd1133f6aa Mon Sep 17 00:00:00 2001
+From fe5dfda4e0b20be76a30dfe20a4bee8265bd00f6 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
-Date: Tue, 14 Dec 2010 04:37:19 +0100
+Date: Thu, 19 May 2011 01:51:46 +0200
 Subject: [PATCH] Force Compiler and a few compilation options
 
 We need to force the use of compiler and add a few extra CFLAGS and
@@ -12,11 +12,11 @@ Signed-off-by: Ben Walton <bwalton@opencsw.org>
  1 files changed, 11 insertions(+), 0 deletions(-)
 
 diff --git a/Local/Makefile b/Local/Makefile
-index 6ba1bf8..60f0199 100644
+index e0e9e36..68bd009 100644
 --- a/Local/Makefile
 +++ b/Local/Makefile
 @@ -1,5 +1,16 @@
- # $Cambridge: exim/exim-src/src/EDITME,v 1.23 2009/11/20 12:18:19 nm4 Exp $
+ # $Cambridge: exim/src/src/EDITME,v 1.27 2010/06/12 15:21:25 jetmore Exp $
  
 +# -I (CSW_WORKSRC).. is needed for the SPF2 hack (to pick up patched
 +# SPF2 headers locally)
