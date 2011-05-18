@@ -8,29 +8,32 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.tcpdump.org/release/ 
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
+
+VENDOR_URL = http://www.tcpdump.org/
 
 LICENSE = LICENSE
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWlibpcap1
+SPKG_DESC_CSWlibpcap1 = System-independent interface for user-level packet capture, libpcap.so.1
+PKGFILES_CSWlibpcap1 += $(call pkgfiles_lib,libpcap.so.1)
+PKGFILES_CSWlibpcap1 += $(mandir)/man5/.*
+OBSOLETED_BY_CSWlibpcap1 += CSWlibpcap
 
-PACKAGES = CSWlibpcap CSWlibpcapdevel
-
-CATALOGNAME_CSWlibpcap = libpcap
-CATALOGNAME_CSWlibpcapdevel = libpcap_devel
-
-SPKG_DESC_CSWlibpcap = System-independent interface for user-level packet capture
-SPKG_DESC_CSWlibpcapdevel = Development files for libpcap
-
-RUNTIME_DEP_PKGS_CSWlibpcapdevel = CSWlibpcap
+PACKAGES += CSWlibpcap-dev
+SPKG_DESC_CSWlibpcap-dev = Development files for libpcap
+RUNTIME_DEP_PKGS_CSWlibpcap-dev = CSWlibpcap1
+# PKGFILES is catchall
+# Lots of packages require libpcap.so as the old library didn't have a SONAME set.
+# As this link is only in CSWlibpcap-dev the old CSWlibpcap needs to depend on it.
+OBSOLETED_BY_CSWlibpcap-dev += CSWlibpcap
+OBSOLETED_BY_CSWlibpcap-dev += CSWlibpcapdevel
+CATALOGNAME_CSWlibpcapdevel = libpcap_devel_stub
 
 BUILD64 = 1
 
 EXTRA_BUILD_ISAS_sparc = sparcv8plus
 EXTRA_BUILD_ISAS_i386  = pentium
-
-TEST_TARGET = check
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-ipv6
@@ -45,8 +48,7 @@ TEST_SCRIPTS =
 MERGE_DIRS_isa-sparcv8plus = $(libdir)
 MERGE_DIRS_isa-pentium = $(libdir)
 
-PKGFILES_CSWlibpcapdevel = $(PKGFILES_DEVEL)
-
-CHECKPKG_OVERRIDES_CSWlibpcapdevel += surplus-dependency|CSWlibpcap
+# These are in the binaries only and specifiy compiler lines for unused includes
+CHECKPKG_OVERRIDES_CSWlibpcap1 += file-with-bad-content
 
 include gar/category.mk
