@@ -117,6 +117,7 @@ PKGFILES_CSWbacula-common += .*sbin/bsmtp .*sbin/btraceback
 PKGFILES_CSWbacula-common += .*man1/bsmtp.1 .*man1/btraceback.1
 PKGFILES_CSWbacula-common += .*man8/bacula.8
 PKGFILES_CSWbacula-common += .*libexec/bacula/btraceback.*
+CHECKPKG_OVERRIDES_CSWbacula-common += file-with-bad-content|/usr/share|root/opt/csw/share/man/man8/bacula.8
 
 CATALOGNAME_CSWbacula-fd = bacula_fd
 SPKG_DESC_CSWbacula-fd = $(DESCRIPTION) - File Daemon
