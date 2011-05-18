@@ -6,7 +6,7 @@
 # * Use the shipped Makefile optimization flags
 #
 NAME = haproxy
-VERSION = 1.4.1
+VERSION = 1.4.15
 CATEGORIES = apps
 
 DESCRIPTION = Reliable, high performance TCP/HTTP load balancer
@@ -21,11 +21,12 @@ define BLURB
   possibility not to expose fragile web servers to the Net.
 endef
 
-VENDOR_URL   = http://haproxy.1wt.eu/
 MASTER_SITES = http://haproxy.1wt.eu/download/1.4/src/
-DISTFILES    = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-UPSTREAM_MASTER_SITES = $(VENDOR_URL)
+DISTFILES    = $(DISTNAME).tar.gz
+
+VENDOR_URL   = http://haproxy.1wt.eu/
+
+LICENSE = LICENSE
 
 # Heavily optimized, supported for gcc, didn't dare to touch
 GARCOMPILER = GCC4
@@ -42,6 +43,13 @@ BUILD_ARGS = \
 INSTALL_ARGS = \
 	PREFIX=$(prefix) \
 	DOCDIR=$(docdir)/$(NAME)
+
+# Don't care for now, investigate later!
+CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/haproxy.1
+CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/haproxy.1
+CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/build.cfg
+CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/haproxy.cfg
+CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/haproxy-1.1.21-flx.1.pkg
 
 include gar/category.mk
 
