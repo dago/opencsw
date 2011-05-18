@@ -46,10 +46,10 @@ SPKG_DESC_CSWpuppet       = System configuration management tool, client daemon
 SPKG_DESC_CSWpuppetmaster = System configuration management tool, server
 
 RUNTIME_DEP_PKGS                  = CSWfacter
-RUNTIME_DEP_PKGS                 += CSWruby
+RUNTIME_DEP_PKGS                 += CSWruby18
 RUNTIME_DEP_PKGS				 += CSWrubyaugeas
 RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWpuppet
-RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWruby
+RUNTIME_DEP_PKGS_CSWpuppetmaster += CSWruby18
 
 PKGFILES_CSWpuppetmaster  = $(sysconfdir)/init\.d/cswpuppetmasterd
 PKGFILES_CSWpuppetmaster += $(sbindir)/puppetmasterd
