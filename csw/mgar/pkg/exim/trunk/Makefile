@@ -1,5 +1,5 @@
 NAME = exim
-VERSION = 4.72
+VERSION = 4.76
 CATEGORIES = server
 
 DESCRIPTION = The Exim Mail Transfer Agent
