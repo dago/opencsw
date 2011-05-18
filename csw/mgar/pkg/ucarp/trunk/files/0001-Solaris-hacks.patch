@@ -1,0 +1,127 @@
+From 462481081513bb9513a7ec2690ad98f7d75084ba Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 18 May 2011 18:14:26 +0200
+Subject: [PATCH] Solaris hacks
+
+---
+ src/carp.c    |   70 ++++++++++++++++++++++++++++++++------------------------
+ src/ip_carp.h |    5 ++++
+ 2 files changed, 45 insertions(+), 30 deletions(-)
+
+diff --git a/src/carp.c b/src/carp.c
+index 0ac5aa7..d08ee56 100644
+--- a/src/carp.c
++++ b/src/carp.c
+@@ -48,6 +48,16 @@
+ # include <dmalloc.h>
+ #endif
+ 
++#define timersub(a,b,result) \
++  do {                                                                        \
++    (result)->tv_sec = (a)->tv_sec - (b)->tv_sec;                             \
++    (result)->tv_usec = (a)->tv_usec - (b)->tv_usec;                          \
++    if ((result)->tv_usec < 0) {                                              \
++      --(result)->tv_sec;                                                     \
++      (result)->tv_usec += 1000000;                                           \
++    }                                                                         \
++  } while (0)
++
+ static void carp_set_state(struct carp_softc *sc, int state)
+ {
+     if ((int) sc->sc_state == state) {
+@@ -247,27 +257,27 @@ static void carp_send_ad(struct carp_softc *sc)
+     sum = cksum(&ch, sizeof ch);
+     ch.carp_cksum = htons(sum);    
+     
+-    eh.ether_shost[0] = 0x00;
+-    eh.ether_shost[1] = 0x00;
+-    eh.ether_shost[2] = 0x5e;
+-    eh.ether_shost[3] = 0x00;
+-    eh.ether_shost[4] = 0x00;
+-    eh.ether_shost[5] = vhid;
++    eh.ether_shost.ether_addr_octet[0] = 0x00;
++    eh.ether_shost.ether_addr_octet[1] = 0x00;
++    eh.ether_shost.ether_addr_octet[2] = 0x5e;
++    eh.ether_shost.ether_addr_octet[3] = 0x00;
++    eh.ether_shost.ether_addr_octet[4] = 0x00;
++    eh.ether_shost.ether_addr_octet[5] = vhid;
+     
+     if (no_mcast) {
+-        eh.ether_dhost[0] = 0xff;
+-        eh.ether_dhost[1] = 0xff;
+-        eh.ether_dhost[2] = 0xff;
+-        eh.ether_dhost[3] = 0xff;
+-        eh.ether_dhost[4] = 0xff;
+-        eh.ether_dhost[5] = 0xff;        
++        eh.ether_dhost.ether_addr_octet[0] = 0xff;
++        eh.ether_dhost.ether_addr_octet[1] = 0xff;
++        eh.ether_dhost.ether_addr_octet[2] = 0xff;
++        eh.ether_dhost.ether_addr_octet[3] = 0xff;
++        eh.ether_dhost.ether_addr_octet[4] = 0xff;
++        eh.ether_dhost.ether_addr_octet[5] = 0xff;        
+     } else {
+-        eh.ether_dhost[0] = 0x01;
+-        eh.ether_dhost[1] = 0x00;
+-        eh.ether_dhost[2] = 0x5e;
+-        eh.ether_dhost[3] = 0x00;
+-        eh.ether_dhost[4] = 0x00;
+-        eh.ether_dhost[5] = 0x12;        
++        eh.ether_dhost.ether_addr_octet[0] = 0x01;
++        eh.ether_dhost.ether_addr_octet[1] = 0x00;
++        eh.ether_dhost.ether_addr_octet[2] = 0x5e;
++        eh.ether_dhost.ether_addr_octet[3] = 0x00;
++        eh.ether_dhost.ether_addr_octet[4] = 0x00;
++        eh.ether_dhost.ether_addr_octet[5] = 0x12;        
+     }    
+     eh.ether_type = htons(ETHERTYPE_IP);    
+     
+@@ -433,18 +443,18 @@ static void packethandler(unsigned char *dummy,
+     logfile(LOG_DEBUG, "Ethernet "
+              "[%02x:%02x:%02x:%02x:%02x:%02x]->[%02x:%02x:%02x:%02x:%02x:%02x] "
+              "type [%04x]",
+-            (unsigned int) etherhead.ether_shost[0],
+-            (unsigned int) etherhead.ether_shost[1],
+-            (unsigned int) etherhead.ether_shost[2],
+-            (unsigned int) etherhead.ether_shost[3],
+-            (unsigned int) etherhead.ether_shost[4],
+-            (unsigned int) etherhead.ether_shost[5],
+-            (unsigned int) etherhead.ether_dhost[0],
+-            (unsigned int) etherhead.ether_dhost[1],
+-            (unsigned int) etherhead.ether_dhost[2],
+-            (unsigned int) etherhead.ether_dhost[3],
+-            (unsigned int) etherhead.ether_dhost[4],
+-            (unsigned int) etherhead.ether_dhost[5],
++            (unsigned int) etherhead.ether_shost.ether_addr_octet[0],
++            (unsigned int) etherhead.ether_shost.ether_addr_octet[1],
++            (unsigned int) etherhead.ether_shost.ether_addr_octet[2],
++            (unsigned int) etherhead.ether_shost.ether_addr_octet[3],
++            (unsigned int) etherhead.ether_shost.ether_addr_octet[4],
++            (unsigned int) etherhead.ether_shost.ether_addr_octet[5],
++            (unsigned int) etherhead.ether_dhost.ether_addr_octet[0],
++            (unsigned int) etherhead.ether_dhost.ether_addr_octet[1],
++            (unsigned int) etherhead.ether_dhost.ether_addr_octet[2],
++            (unsigned int) etherhead.ether_dhost.ether_addr_octet[3],
++            (unsigned int) etherhead.ether_dhost.ether_addr_octet[4],
++            (unsigned int) etherhead.ether_dhost.ether_addr_octet[5],
+             (unsigned int) ntohs(etherhead.ether_type));
+ #endif
+     sp += sizeof etherhead;
+diff --git a/src/ip_carp.h b/src/ip_carp.h
+index 9504a8e..e7e1f54 100644
+--- a/src/ip_carp.h
++++ b/src/ip_carp.h
+@@ -54,6 +54,11 @@
+ #ifndef __IP_CARP_H__
+ #define __IP_CARP_H__ 1
+ 
++#define u_int8_t uint8_t
++#define u_int16_t uint16_t
++#define u_int32_t uint32_t
++#define u_int64_t uint64_t
++
+ struct carp_header {
+ #ifdef WORDS_BIGENDIAN
+         u_int8_t        carp_version:4,
+-- 
+1.7.3.2
+
