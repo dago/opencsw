@@ -1,5 +1,5 @@
 NAME = pv
-VERSION = 1.1.4
+VERSION = 1.2.0
 CATEGORIES = utils
 
 DESCRIPTION =  Monitor the progress of data through a pipe
@@ -12,31 +12,25 @@ define BLURB
   completion.
 endef
 
-# Project URL
-SPKG_SOURCEURL = http://www.ivarch.com/programs/pv.shtml
-
-# Source files
+VENDOR_URL   = http://www.ivarch.com/programs/pv.shtml
 MASTER_SITES = http://pipeviewer.googlecode.com/files/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-LICENSE = doc/COPYING
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+LICENSE      = doc/COPYING
+
+UPSTREAM_MASTER_SITES = $(VENDOR_URL)
 
 RUNTIME_DEP_PKGS = CSWiconv CSWggettextrt
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# Test with dd (010-dd) is unrealiable because of partial reads on SPARC.
-# Upstream patch for a rewritten test is pending.
-# Substituted with 010-opencsw-cksum in the meantime.
-# See also: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=324308
-PATCHFILES = fix-test-010.diff
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
 
+# test-012 uses tr complements (-c) which don't work with /usr/bin/tr
+PATH := /opt/csw/gnu:$(PATH)
+
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
-	@gunzip $(DESTDIR)$(mandir)/man1/pv.1.gz
-	@ginstall -d -m 755 $(DOCDEST)
-	@cp $(WORKSRC)/doc/NEWS $(FILEDIR)/changelog.CSW $(DOCDEST)
+	gunzip $(DESTDIR)$(mandir)/man1/pv.1.gz
+	ginstall -d -m 755 $(DOCDEST)
+	cp $(WORKSRC)/doc/NEWS $(FILEDIR)/changelog.CSW $(DOCDEST)
+	@$(MAKECOOKIE)
