@@ -1,6 +1,6 @@
 all: diagrams
 
-diagrams: connections.png
+diagrams: connections.png release-workflow.png
 
 %.png: %.dot
 	dot -Tpng -o $@ $<
