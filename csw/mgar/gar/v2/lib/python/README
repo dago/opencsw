@@ -16,6 +16,8 @@ Checks to implement:
    the file's class needs to be 'ugfiles'
  - If there is bin/*-config and there is lib/(sparcv9|amd64)/.*, there must
    also be bin/(sparcv9|amd64)/*(-|_)config
+ - Binaries from /opt/csw/bin and/or sbin should not have the same names
+   as any binaries from /usr/bin and/or sbin.
 
 Checks implemented:
  - foo_bar != CSWfoo-bar -> error
