@@ -15,7 +15,6 @@ MASTER_SITES = http://www.graphviz.org/pub/graphviz/stable/SOURCES/
 ENABLE_CHECK = 0
 
 PATCHFILES += configure.patch
-PATCHFILES +=  Draw.c.diff
 
 PACKAGES = CSWgraphviz \
 	CSWgraphvizdevel \
