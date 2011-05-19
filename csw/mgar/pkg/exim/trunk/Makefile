@@ -76,6 +76,8 @@ CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzipextras
 CHECKPKG_OVERRIDES_CSWexim += surplus-dependency|CSWgzip
 CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/log
 CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/log/exim
+CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/spool
+CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/spool/exim
 CHECKPKG_OVERRIDES_CSWexim += file-with-bad-content|/usr/local|root/opt/csw/sbin/exim
 
 PROTOTYPE_MODIFIERS = eximsuid eximowned
