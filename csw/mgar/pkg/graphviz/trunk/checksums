@@ -4,4 +4,5 @@ b66d09e11339fc981ab7c62518b3f92e  CSWgraphvizdevil.postuninstall
 b66d09e11339fc981ab7c62518b3f92e  CSWgraphvizgd.postinstall
 b66d09e11339fc981ab7c62518b3f92e  CSWgraphvizgd.postuninstall
 bb58d5086e1aaa2519a7184b9ef1748f  configure.patch
+85ebea4df5ba1af93d04f52dbf7b94b6  Makefile.am.patch
 8d26c1171f30ca3b1dc1b429f7937e58  graphviz-2.28.0.tar.gz
