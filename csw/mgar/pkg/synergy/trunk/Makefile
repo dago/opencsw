@@ -11,7 +11,7 @@
 # "../../lib/server/CConfig.h", line 145: Error: A declaration was expected instead of ">"
 #
 NAME = synergy
-VERSION = 1.3.4
+VERSION = 1.4.2
 CATEGORIES = apps
 
 DESCRIPTION = Software-based TCP/IP "KVM" switch
@@ -22,15 +22,11 @@ define BLURB
  on their desk since each system uses its own monitor(s). 
 endef
 
-VENDOR_URL     = http://synergy-foss.org/
-MASTER_SITES   = $(GOOGLE_MIRROR)
-GOOGLE_PROJECT = synergy-plus
-DISTFILES      = synergy-plus-$(VERSION).tar.gz
-DISTNAME       = synergy-plus-$(VERSION)
+MASTER_SITES = $(GOOGLE_MIRROR)
+DISTNAME = synergy-$(VERSION)-Source
+DISTFILES += $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = http://synergy-foss.org/pm/projects/synergy/tabs/download
-UFILES_REGEX = synergy-plus-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://synergy-foss.org/
 
 # Was required with synergy 1.3.1, still required?
 # Adjust code so that it compiles with Sun Studio Compiler
@@ -42,16 +38,22 @@ UFILES_REGEX = synergy-plus-(\d+(?:\.\d+)*).tar.gz
 # http://sf.net/tracker/index.php?func=detail&aid=2359359&group_id=59275&atid=490469
 #PATCHFILES += link-xlibs.diff
 
-CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw
-CONFIGURE_ARGS += --x-includes=/usr/openwin/include
-CONFIGURE_ARGS += --x-libraries=/usr/openwin/lib
-
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
 
 #pre-configure:
 #	cd $(WORKSRC) && autoreconf
 #	@$(MAKECOOKIE)
+
+CONFIGURE_SCRIPTS = custom
+BUILD_SCRIPTS = custom
+
+include gar/category.mk
+
+configure-custom:
+	cd $(WORKSRC) && ./hm.sh configure
+
+build-custom:
+	cd $(WORKSRC) && ./hm.sh build
 
 post-install:
 	ginstall -d $(DESTDIR)$(sysconfdir)
@@ -69,5 +71,3 @@ post-install:
 		$(WORKSRC)/doc/images/* \
 		$(DESTDIR)$(docdir)/$(NAME)/images
 	@$(MAKECOOKIE)
-
-include gar/category.mk
