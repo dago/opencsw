@@ -1,5 +1,5 @@
 NAME = graphviz
-VERSION = 2.26.3
+VERSION = 2.28.0
 CATEGORIES = utils
 
 DESCRIPTION = Graph visualization tools 
