@@ -11,26 +11,42 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/theora/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES  = $(NAME)-$(VERSION).tar.xz
 
-SPKG_SOURCEURL = http://www.theora.org
+VENDOR_URL = http://www.theora.org
 
 BUILD_DEP_PKGS = CSWtransfig
-RUNTIME_DEP_PKGS = CSWlibogg
 
-PACKAGES = CSWtheora
-CATALOGNAME = libtheora
+PACKAGES += CSWlibtheora0
+PKGFILES_CSWlibtheora0 += $(call pkgfiles_lib,libtheora.so.0)
+SPKG_DESC_CSWlibtheora0 += Theora video codec support library, libtheora.so.0
+RUNTIME_DEP_PKGS_CSWlibtheora0 += CSWlibogg0
+OBSOLETED_BY_CSWlibtheora0 = CSWtheora
+CATALOGNAME_CSWtheora = libtheora_stub
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*).tar.bz2
+PACKAGES += CSWlibtheoradec1
+PKGFILES_CSWlibtheoradec1 += $(call pkgfiles_lib,libtheoradec.so.1)
+SPKG_DESC_CSWlibtheoradec1 += Theora video codec support library, libtheoradec.so.1
+OBSOLETED_BY_CSWlibtheora0 = CSWtheora
+
+PACKAGES += CSWlibtheoraenc1
+PKGFILES_CSWlibtheoraenc1 += $(call pkgfiles_lib,libtheoraenc.so.1)
+SPKG_DESC_CSWlibtheoraenc1 += Theora video codec support library, libtheoraenc.so.1
+RUNTIME_DEP_PKGS_CSWlibtheoraenc1 += CSWlibogg0
+OBSOLETED_BY_CSWlibtheora0 = CSWtheora
+
+PACKAGES += CSWlibtheora-dev
+SPKG_DESC_CSWlibtheora-dev = Development files for libtheora.so.0, libtheoradec.so.1 and libtheoraenc.so.1
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibtheora-dev += CSWlibtheora0
+RUNTIME_DEP_PKGS_CSWlibtheora-dev += CSWlibtheoradec1
+RUNTIME_DEP_PKGS_CSWlibtheora-dev += CSWlibtheoraenc1
 
 BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-examples
 CONFIGURE_ARGS += --disable-asm
-
-TEST_TARGET = check
 
 EXTRA_PAX_ARGS += -s ',^\.$(docdir)/$(NAME)-$(VERSION),.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME),'
 
