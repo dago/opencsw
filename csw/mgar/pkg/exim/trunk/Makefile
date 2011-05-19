@@ -78,13 +78,14 @@ CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/log
 CHECKPKG_OVERRIDES_CSWexim += discouraged-path-in-pkgmap|/opt/csw/var/log/exim
 CHECKPKG_OVERRIDES_CSWexim += file-with-bad-content|/usr/local|root/opt/csw/sbin/exim
 
-PROTOTYPE_MODIFIERS = eximsuid eximlogs
+PROTOTYPE_MODIFIERS = eximsuid eximowned
 PROTOTYPE_PERMS_eximsuid = 4755
 PROTOTYPE_FILES_eximsuid = $(sbindir)/exim
-PROTOTYPE_USER_eximlogs = exim
-PROTOTYPE_GROUP_eximlogs = exim
-PROTOTYPE_PERMS_eximlogs = 750
-PROTOTYPE_FILES_eximlogs = $(prefix)/var/log/exim
+PROTOTYPE_CLASS_eximowned = ugfiles
+PROTOTYPE_USER_eximowned = exim
+PROTOTYPE_GROUP_eximowned = exim
+PROTOTYPE_PERMS_eximowned = 750
+PROTOTYPE_FILES_eximowned = $(prefix)/var/log/exim $(prefix)/var/spool/exim
 
 include gar/category.mk
 
@@ -120,6 +121,7 @@ post-install-modulated:
 	(cd $(DESTDIR); mkdir -p etc/opt/csw/init.d; \
 		cp $(abspath $(FILEDIR)/cswexim) etc/opt/csw/init.d )
 	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
+	mkdir -p $(DESTDIR)$(prefix)/var/spool/exim
 	cp -p files/README.CSW  $(DESTDIR)$(prefix)/share/doc/exim/README.CSW
 	cp -p files/exim-env.sh $(DESTDIR)$(prefix)/etc/exim/exim-env.sh.CSW
 	(cd $(WORKSRC)/doc; \
