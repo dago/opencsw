@@ -7,22 +7,30 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.us.xiph.org/releases/libshout/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWlibshout3
+SPKG_DESC_CSWlibshout3 = Icecast library, libshout.so.3
+PKGFILES_CSWlibshout3 = $(call pkgfiles_lib,libshout.so.3)
+RUNTIME_DEP_PKGS_CSWlibshout3 += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWlibshout3 += CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWlibshout3 += CSWlibtheora0
+OBSOLETED_BY_CSWlibshout3 = CSWlibshout
 
-RUNTIME_DEP_PKGS = CSWlibogg CSWtheora CSWvorbis
-PRERQUISITE_PKGS = $(RUNTIME_DEP_PKGS)
+PACKAGES += CSWlibshout-dev
+SPKG_DESC_CSWlibshout-dev = Development files for libshout.so.3
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibshout-dev = CSWlibshout3
+
+BUILD64 = 1
 
 #         GAR default: -xO3 -xarch=v8 -I/opt/csw/include
 # Configure hardwired: -xO4 -fast -w -fsimple -native -xcg92
-
-BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-BUILD_ARGS = CFLAGS="-xO4 -fast -w -fsimple -native -xcg92 $(filter -xarch=% -I%,$(CFLAGS))"
-
-TEST_TARGET = check
+BUILD_ARGS = CFLAGS="-xO4 -fsimple -native -xcg92 $(filter -m% -xarch=% -I%,$(CFLAGS))"
 
 include gar/category.mk
+
+post-extract-modulated:
+	perl -pi \
+		-e 's,/usr/local,$(prefix),' \
+		$(WORKSRC)/m4/shout.m4
