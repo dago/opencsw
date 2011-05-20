@@ -1,3 +1,9 @@
+# TBD before release:
+# - compile 64 bit version with embedded perl, this should resolve the largefile issue
+# - reenable tcpwrappers for both 32 and 64 bit
+# - reenable python bindings
+#
+
 NAME = netsnmp
 VERSION = 5.6.1
 CATEGORIES = apps
@@ -31,18 +37,15 @@ BUILD64 = 1
 CPPFLAGS =
 EXTRA_CFLAGS = $(INCLUDE_FLAGS)
 
-# CONFIGURE_ARGS_mm-32  = --disable-embedded-perl --with-perl-modules=yes
-CONFIGURE_ARGS_mm-32  = --enable-embedded-perl --with-perl-modules=yes
-# Disable MIBs due to LARGEFILE issue
-CONFIGURE_ARGS_mm-32 += --with-out-mib-modules="ucd_snmp host mibII/ipv6 ucd_snmp/memory ucd_snmp/memory_solaris2 ucd_snmp/proc host/hr_swrun host/hr_storage"
-#CONFIGURE_ARGS_mm-32 += --disable-perl-cc-checks
-CONFIGURE_ARGS_mm-32 += enable_perl_cc_checks=no
+CONFIGURE_ARGS_mm-32  = --disable-embedded-perl --with-perl-modules=yes
+# Enable Perl for 64 bit later
+# CONFIGURE_ARGS_mm-32  = --enable-embedded-perl --with-perl-modules=yes
 
-enable_perl_cc_checks = no
-EXTRA_CONFIGURE_EXPORTS = enable_perl_cc_checks
+# This throws compile error, investigate later
+# CONFIGURE_ARGS_mm-32 += --with-python-modules=yes
 
-CONFIGURE_ARGS_mm-32 += --with-python-modules=yes
-CONFIGURE_ARGS_mm-64  = --disable-embedded-perl --without-perl-modules
+# CONFIGURE_ARGS_mm-64  = --disable-embedded-perl --without-perl-modules
+CONFIGURE_ARGS_mm-64  = --enable-embedded-perl --with-perl-modules
 CONFIGURE_ARGS_mm-64 += --without-python-modules
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -52,11 +55,15 @@ CONFIGURE_ARGS += --with-sys-location=unknown
 CONFIGURE_ARGS += --with-logfile=/var/log/snmpd.log
 CONFIGURE_ARGS += --with-persistent-directory=/opt/csw/var/net-snmp
 CONFIGURE_ARGS += --with-mib-modules="ucd-snmp/diskio agentx mibII/mta_sendmail"
-CONFIGURE_ARGS += --with-libwrap=/opt/csw/lib
+# Disable for now
+# CONFIGURE_ARGS += --with-libwrap=/opt/csw/lib
 CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --with-transports="UDP TCP Unix"
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
+# Solaris /bin/bash does not allow empty lists in "for i in ; do echo; done"
+CONFIG_SHELL = /opt/csw/bin/bash
+EXTRA_CONFIGURE_ENV = CONFIG_SHELL
 
 # TBD: Make alternatives
 # - with embedded Perl and disabled modules
@@ -66,9 +73,13 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_mm-$(MEMORYMODEL))
 
 # Disable testsuite until this has been fixed or /tmp will fill up:
 #   https://sourceforge.net/tracker/?func=detail&aid=3006962&group_id=12694&atid=112694
-SKIPTEST ?= 1
+# SKIPTEST ?= 1
+
+TEST_TARGET = test
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
+
+MERGE_DIRS_isa-extra = $(bindir) $(libdir) $(sbindir) $(libexecdir)
 
 # Overriding specific libs is not possible right now. Refine when finished.
 # CHECKPKG_OVERRIDES_CSWnetsnmp  = symbol-not-found|opt/csw/lib/python/site-packages/netsnmp/client_intf.so
