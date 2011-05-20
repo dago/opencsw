@@ -17,6 +17,7 @@ ENABLE_CHECK = 0
 PATCHFILES += configure.patch
 PATCHFILES += Makefile.am.patch
 PATCHFILES += trapezoid.c.patch
+PATCHFILES += post_process.c.patch
 
 PACKAGES = CSWgraphviz \
 	CSWgraphvizdevel \
