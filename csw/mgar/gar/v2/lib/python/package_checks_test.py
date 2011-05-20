@@ -1715,5 +1715,25 @@ class TestCheckCatalognameMatchesPkgname(CheckpkgUnitTestHelper,
     self.RunCheckpkgTest(self.CheckpkgTest2)
 
 
+class TestCheckCatalognameMatchesPkgname(CheckpkgUnitTestHelper,
+                                         unittest.TestCase):
+  FUNCTION_NAME = 'CheckPkginfoOpencswRepository'
+
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    del self.pkg_data["pkginfo"]["OPENCSW_REPOSITORY"]
+    self.error_mgr_mock.ReportError('pkginfo-opencsw-repository-missing')
+
+  def CheckpkgTest2(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkginfo"]["OPENCSW_REPOSITORY"] = (
+        "https://gar.svn.sourceforge.net/svnroot/gar/"
+        "csw/mgar/pkg/puppet/trunk@UNCOMMITTED")
+    self.error_mgr_mock.ReportError('pkginfo-opencsw-repository-uncommitted')
+
+  def testTwo(self):
+    self.RunCheckpkgTest(self.CheckpkgTest2)
+
+
 if __name__ == '__main__':
   unittest.main()
