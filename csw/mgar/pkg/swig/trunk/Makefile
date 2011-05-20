@@ -1,5 +1,5 @@
 NAME = swig
-VERSION = 1.3.40
+VERSION = 2.0.3
 CATEGORIES = devel
 
 DESCRIPTION = A scripting interface generator for C/C++ code.
