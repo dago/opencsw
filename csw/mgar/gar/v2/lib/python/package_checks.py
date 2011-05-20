@@ -1272,3 +1272,14 @@ def CheckSonameMustNotBeEqualToFileNameIfFilenameEndsWithSo(
 def CheckLinkableSoFileMustBeAsymlink(
     pkg_data, error_mgr, logger, messenger):
   pass
+
+
+def CheckPkginfoOpencswRepository(
+    pkg_data, error_mgr, logger, messenger):
+  repotag = "OPENCSW_REPOSITORY"
+  pkginfo = pkg_data["pkginfo"]
+  if repotag not in pkginfo:
+    error_mgr.ReportError("pkginfo-opencsw-repository-missing")
+    return
+  if "UNCOMMITTED" in pkginfo[repotag]:
+    error_mgr.ReportError("pkginfo-opencsw-repository-uncommitted")
