@@ -1,0 +1,13 @@
+--- graphviz2/lib/ortho/trapezoid.c.orig	2011-05-20 10:21:30.053193399 -0400
++++ graphviz2/lib/ortho/trapezoid.c	2011-05-20 10:15:18.261136653 -0400
+@@ -28,6 +28,10 @@
+ 
+ #ifdef WIN32
+ #define log2(x)  (log(x)/log(2))
++#else
++#ifndef HAVE_LOG2
++#define log2(x)  (log(x)/log(2))
++#endif
+ #endif
+ 
+ /* Node types */
