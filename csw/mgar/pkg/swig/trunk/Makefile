@@ -33,6 +33,7 @@ LICENSE_CSWswig = LICENSE
 
 RUNTIME_DEP_PKGS = CSWzlib
 RUNTIME_DEP_PKGS_CSWswig += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWswig += CSWzlib
 
 #SWIG doesn't DEPEND on the languages it supports being installed
 # but, for the record, languages we *do* have:
