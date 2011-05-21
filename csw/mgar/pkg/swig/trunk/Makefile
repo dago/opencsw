@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = swig
 VERSION = 2.0.3
 CATEGORIES = devel
@@ -58,9 +60,12 @@ CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWruby
 CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWpython
 
+EXTRA_MERGE_EXCLUDE_FILES = .*test-suite/preproc_include_(d|e|f).*
+
 include gar/category.mk
 
 post-install-modulated: install-swig-doc
+	@$(MAKECOOKIE)
 
 install-swig-doc:
 	@mkdir -p $(DESTDIR)$(docdir)/$(NAME)
