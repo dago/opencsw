@@ -32,13 +32,13 @@ UPSTREAM_USE_SF = 1
 LICENSE_CSWswig = LICENSE
 
 RUNTIME_DEP_PKGS = CSWzlib
+RUNTIME_DEP_PKGS_CSWswig += CSWlibpcre0
 
 #SWIG doesn't DEPEND on the languages it supports being installed
 # but, for the record, languages we *do* have:
 #DEPEND += lang/tcl lang/python lang/perl lang/guile
 #DEPEND += lang/ruby lang/php4 lang/ocaml
 #DEPEND += lang/lua
-
 # and languages we don't have, yet:
 #DEPEND += lang/pike lang/chicken lang/mono lang/mzscheme 
 
@@ -56,10 +56,40 @@ MAKE_ARGS += docs
 TEST_TARGET = check
 TEST_SCRIPTS =
 
+#SWIG doesn't DEPEND on the languages it supports being installed
 CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWruby
+CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWruby|or|CSWruby18
 CHECKPKG_OVERRIDES_CSWswig += missing-dependency|CSWpython
 
+# lots of '/usr/local' in documentation and examples
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/Makefile
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/Makefile.in
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/pike/enum/README
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/tcl/index.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/python/index.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/python/libffi/Makefile
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/ruby/index.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Examples/test-suite/ocaml/makedebugtop
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Introduction.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Pike.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Ruby.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Scripting.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/SWIGDocumentation.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/CCache.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Perl5.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Library.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Tcl.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Java.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/doc/swig/Doc/Manual/Python.html
+CHECKPKG_OVERRIDES_CSWswig += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ccache-swig.1
+
+# not sure about these
+CHECKPKG_OVERRIDES_CSWswig += bad-rpath-entry|/lib|opt/csw/bin/swig
+CHECKPKG_OVERRIDES_CSWswig += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/swig
+CHECKPKG_OVERRIDES_CSWswig += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/swig
+CHECKPKG_OVERRIDES_CSWswig += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bin/swig
+
+# pkgmk can't handle spaces in filenames
 EXTRA_MERGE_EXCLUDE_FILES = .*test-suite/preproc_include_(d|e|f).*
 
 include gar/category.mk
