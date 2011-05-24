@@ -1,5 +1,5 @@
 NAME = apr-util
-VERSION = 1.3.10
+VERSION = 1.3.12
 CATEGORIES = lib
 
 DESCRIPTION = Apache Portable Runtime Utilities
