@@ -1,5 +1,5 @@
 NAME = apr
-VERSION = 1.4.2
+VERSION = 1.4.5
 CATEGORIES = lib
 
 DESCRIPTION = Apache Portable Runtime
