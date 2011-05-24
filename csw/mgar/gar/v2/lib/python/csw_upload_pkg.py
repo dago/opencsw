@@ -125,7 +125,8 @@ class Srv4Uploader(object):
     do_upload = True
     planned_modifications = []
     metadata_by_md5 = {}
-    print "Processing %s file(s). Please wait." % (len(self.filenames),)
+    if self.output_to_screen:
+      print "Processing %s file(s). Please wait." % (len(self.filenames),)
     for filename in self.filenames:
       self._ImportMetadata(filename)
       md5_sum = self._GetFileMd5sum(filename)
