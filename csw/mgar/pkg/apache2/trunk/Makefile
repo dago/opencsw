@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = httpd
-VERSION = 2.2.17
+VERSION = 2.2.19
 CATEGORIES = server
 
 DESCRIPTION = A high performance HTTP server.
@@ -11,7 +11,7 @@ define BLURB
 endef
 
 # Source location
-MASTER_SITES  = http://www.ibiblio.com/pub/mirrors/apache/httpd/
+MASTER_SITES  = http://www.eu.apache.org/dist/httpd/
 
 # work around dumb checkpkg not recognizing the license file ...
 LICENSE = LICENSE
