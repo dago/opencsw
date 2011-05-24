@@ -136,13 +136,6 @@ def main():
                            % repr(opt_name))
     usage = """%s [options] [file1 file2 ...]""" % sys.argv[0]
     parser = optparse.OptionParser(usage)
-    parser.add_option("-p",
-                      dest="pkgnames",
-                      help="A deprecated options. Please use --catalognames.")
-    parser.add_option("-c", "--catalognames",
-                      dest="catalognames",
-                      help="A comma-separated list of catalog names: "
-                           "cups,cupsdevel,libcups")
     parser.add_option("--debug",
                       dest="debug", default=False,
                       action="store_true",
@@ -157,21 +150,17 @@ def main():
     parser.add_option("-n", "--dry-run",
                       dest="dry_run",
                       default=False, action="store_true",
-                      help="")
+                      help="Do not perform write operations")
+    parser.add_option("-f", "--force",
+                       dest="force",
+                       default=False, action="store_true",
+                       help="Proceed even if errors are reported")
     (options, args) = parser.parse_args()
     file_names = args
     level = logging.INFO
     if options.debug:
       level = logging.DEBUG
     logging.basicConfig(level=level)
-    if options.pkgnames:
-      logging.warn("The -p option is deprecated. Please use "
-                   "--catalognames or -c")
-      if options.catalognames:
-        options.catalognames = ",".join([options.catalognames,
-                                         options.pkgnames])
-      else:
-        options.catalognames = options.pkgnames
     if config.has_option(CONFIG_RELEASE_SECTION, "release manager name"):
       release_mgr_name = config.get(CONFIG_RELEASE_SECTION,
                                     "release manager name")
@@ -191,28 +180,17 @@ def main():
   if options.package_dir:
     package_dir = options.package_dir
   staging_dir = opencsw.StagingDir(package_dir)
-  if options.catalognames:
-    catalognames = options.catalognames.split(",")
-  else:
-    catalognames = []
-  if file_names:
-    for file_name in file_names:
-      base_name = os.path.basename(file_name)
-      if base_name != file_name:
-        logging.warn("Removing %s, using only %s"
-                     % (repr(os.path.dirname(file_name)), repr(base_name)))
-        logging.warn("Only %s will be searched for packages."
-                     % repr(staging_dir))
-      parsed_file_name = opencsw.ParsePackageFileName(base_name)
-      catalognames.append(parsed_file_name["catalogname"])
+  catalognames = []
+  for file_name in file_names:
+    base_name = os.path.basename(file_name)
+    parsed_file_name = opencsw.ParsePackageFileName(base_name)
+    catalognames.append(parsed_file_name["catalogname"])
   catalognames = sorted(set(catalognames))
-  if not catalognames:
+  if not file_names:
     parser.print_help()
-    raise ConfigurationError("You need to specify a package name or names.")
+    raise ConfigurationError("You need to specify package file names.")
 
-  package_files = []
-  for p in catalognames:
-    package_files.extend(staging_dir.GetLatest(p))
+  package_files = file_names
   logging.debug("Copying files to the target host:dir")
   remote_package_files = []
   remote_package_references = []
@@ -230,10 +208,9 @@ def main():
   if error_tags:
     for error_tag in error_tags:
       print error_tag
-    print(
-        "There is a package that is available for one architecture, "
-        "but not the other.")
-    sys.exit(1)
+    print "There seems to be a problem with the specified package set."
+    if not options.force:
+      sys.exit(1)
   if options.clean:
     RemoveOldFiles(catalognames, target_host, target_dir)
   if options.dry_run:
