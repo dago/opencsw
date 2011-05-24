@@ -19,8 +19,9 @@ CATALOGNAME = apr_util
 
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS = CSWapr CSWiconv CSWsqlite3rt CSWunixodbc CSWexpat
+RUNTIME_DEP_PKGS = CSWapr CSWiconv CSWlibsqlite3-0 CSWunixodbc CSWexpat
 RUNTIME_DEP_PKGS += CSWbdb48 CSWoldaprt 
+
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -56,7 +57,7 @@ CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/o
 CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbm_db.so
 CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_ldap.so
 CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libaprutil-1.so
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-pkgname-mismatch|file=opt/csw/lib/libaprutil-1.so.0.3.10|soname=libaprutil-1.so.0|pkgname=CSWapr-util|expected=['CSWlibaprutil-10',|'CSWlibaprutil-1-0']
+CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-pkgname-mismatch|file=opt/csw/lib/libaprutil-1.so.0.3.12|soname=libaprutil-1.so.0|pkgname=CSWapr-util|expected=['CSWlibaprutil-10',|'CSWlibaprutil-1-0']
 CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbd_odbc.so
 CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbd_sqlite3.so
 CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbm_db.so
