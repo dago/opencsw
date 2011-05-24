@@ -74,7 +74,9 @@ class Srv4Uploader(object):
       output_to_screen=True,
       username=None, password=None):
     super(Srv4Uploader, self).__init__()
-    self.filenames = self.SortFilenames(filenames)
+    if filenames:
+      filenames = self.SortFilenames(filenames)
+    self.filenames = filenames
     self.md5_by_filename = {}
     self.debug = debug
     self.os_release = os_release
