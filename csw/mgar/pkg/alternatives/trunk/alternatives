@@ -26,6 +26,10 @@ function usage {
 	print " See comments in usage function code for more information."
 	print "  $prog --install {/full/path/name} {name} {#priority}"
 	print "  $prog --remove {name} {/full/path}"
+	print ""
+	print " The following are opencsw-only:"
+	print "  $prog --relink-missing  : create missing symlinks"
+	
 
 # I dont want to bloat up the usage message, so here's some more docs
 #  
@@ -98,10 +102,9 @@ function print_alternatives {
 		nawk '$2 == "'$1'" {print}' | sort -nr +3
 }
 
-# User facing function.
+# User facing function, as well as internal
 # enables "alternatives --list"
 function list_alternatives {
-	echo "List of installed software that uses the alternatives system:"
 	cat $PRIORITIESDIR/* 2>/dev/null| nawk '{print $2}' | sort -u
 }
 
@@ -136,7 +139,7 @@ function fileerr_exit {
 	exit 1
 }
 
-# Called only by set_alternative.
+# Called only internally, by set_alternative.
 #  args:   {target} {shortname} {implementation-path}
 # Split out, because one "alternatives" line may have multiple "slave" links
 function set_link {
@@ -384,6 +387,15 @@ function config_alternative {
 	set_manual_prio $1 $fullpath
 }
 
+# User facing function: --relink-missing
+#   Used as a damage control function for zones that are non-sparse.
+# Even though we dont officially support non-sparse zones :-)
+# Go through and create links for all alternatives known.
+function relink_missing {
+	for alt in `list_alternatives` ; do
+		set_alternative $alt
+	done
+}
 ############################################################
 # Return to "main" area below
 
@@ -422,6 +434,7 @@ case $1 in
 		revert_to_auto $1
 		;;
 	--list)
+		echo "List of installed software that uses the alternatives system:"
 		list_alternatives
 		;;
 	--display)
@@ -435,6 +448,9 @@ case $1 in
 	--set)
 		shift
 		set_manual_prio $1 $2
+		;;
+	--relink-missing)
+		relink_missing
 		;;
 	*)
 		print -- $1 is not a recognized command.
