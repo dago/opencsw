@@ -5,3 +5,22 @@ because the debian one was hugely bloated, and the redhat smaller one,
 did not play nicely with NFS-shared /opt/csw
 So pleaes dont go getting ideas that we can migrated back to redhat,etc
 in the future! :) we tried, and it failed.
+
+
+Internal implementation notes:
+
+ My initial version seems to expect each "alternative" to have its own
+file in /opt/csw/share/alternatives/xyz.
+One line per file only would be nice, please
+
+When a choice is manually set (overriding auto settings), it records that
+fact by making a symlink from the shipped file, to 
+/etc/opt/csw/alternatives/(progname)
+
+This way, you can have the binary, and alternatives files per software,
+NFS-shared, but then have machine-local overrides.
+
+Reminder: Do NOT have to get fancy with the class action script not 
+ getting called with pathnames on sparse zones with pkg-inherit-dir,
+ because since /opt/csw is shared, the symlink will already be in place.
+
