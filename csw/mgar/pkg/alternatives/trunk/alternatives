@@ -1,8 +1,9 @@
 #!/bin/ksh -p
 
 # ksh high-level implentation of linux style "alternatives".
-# Author: Philip Brown, phil@bolthole.com, 2010
-# @(#) alternatives 1.8@(#)
+# Adjusted for OpenCSW needs
+# Author: Philip Brown, phil@bolthole.com, 2010-2011
+# 
 
 PRIORITIESDIR=/opt/csw/share/alternatives 
 MANUALDIR=/etc/opt/csw/alternatives  #manual override location
@@ -19,7 +20,6 @@ function usage {
 	print "  $prog --auto {name}"
 	print "  $prog --set {name} {/full/path}"
 	print "  $prog --config {name}"
-	print "  $prog --list"
 	print "  "
 	print " The following are provided for compatibility, but do not work"
 	print " in exactly the same way as linux variants"
@@ -29,6 +29,9 @@ function usage {
 	print ""
 	print " The following are opencsw-only:"
 	print "  $prog --relink-missing  : create missing symlinks"
+	print "  $prog --list"
+	print ""
+	print "See /opt/csw/share/doc/alternatives/ for more docs"
 	
 
 # I dont want to bloat up the usage message, so here's some more docs
@@ -303,6 +306,12 @@ function revert_to_auto {
 }
 
 # Usage: set_manual_prio shortname /full/path
+# Sets a manual override for priorities, for "shortname", by finding
+# the alternatives file supporting the desired combo, and making
+# a symlink under $MANUALDIR, pointing to it.
+# Attempting to set non-alternatives-supported paths is a user error
+# Will then call our internal "make a symlink" routine to create the
+# user-facing symlink for 'shortname'.
 function set_manual_prio {
 	case $1 in
 		*/*)
@@ -318,7 +327,7 @@ function set_manual_prio {
 		print Error: $MANUALDIR does not exist. Cannot continue
 		exit 1
 	fi
-	check=`egrep -l "^[^ ]* $1 $2 " $PRIORITIESDIR/*`
+	check=`egrep -l "^[^ ]* [ ]*$1 [ ]*$2 " $PRIORITIESDIR/*`
 	if [[ "$check" == "" ]] ; then
 		print Error: no installed match found for $1 $2
 		exit 1
