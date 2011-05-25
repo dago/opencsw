@@ -31,10 +31,6 @@ RUNTIME_DEP_PKGS_CSWgnuplot += CSWlua
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWftype2
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWzlib
 RUNTIME_DEP_PKGS_CSWgnuplot += CSWjpeg
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWlibcairo
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWpango
-RUNTIME_DEP_PKGS_CSWgnuplot += CSWglib2
 
 PACKAGES += CSWgnuplot-wx
 CATALOGNAME_CSWgnuplot-wx = gnuplot_wx
@@ -72,7 +68,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 CONFIGURE_ARGS_wxwidgets-no += --without-cairo
 CONFIGURE_ARGS_wxwidgets-no += --disable-wxwidgets
-CONFIGURE_ARGS_wxwidgets-no += --without-x
+#CONFIGURE_ARGS_wxwidgets-no += --without-x
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_wxwidgets-$(WXWIDGETS))
 
 # Preset value until this is fixed:
@@ -88,6 +84,7 @@ MERGE_SCRIPTS_isa-default-wxwidgets-no = copy-all
 
 # These are exactly the differing files between the install-directories
 ALTERNATIVE_FILES += /opt/csw/bin/gnuplot
+ALTERNATIVE_FILES += /opt/csw/libexec/gnuplot/4.4/gnuplot_x11
 ALTERNATIVE_FILES += /opt/csw/share/emacs/site-lisp/gnuplot-gui.elc
 ALTERNATIVE_FILES += /opt/csw/share/emacs/site-lisp/gnuplot.elc
 ALTERNATIVE_FILES += /opt/csw/share/gnuplot/4.4/gnuplot.gih
