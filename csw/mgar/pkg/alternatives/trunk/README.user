@@ -1,0 +1,44 @@
+This is a short documentation file for the OpenCSW targetted implementation of
+linux style "alternatives", aka "update-alternatives" in debian.
+
+USER LEVEL DOCS
+
+  alternatives --display shortname
+  # will display any currently installed symlink for "shortname"
+  # will display any installed packages that provide "shortname".
+  # will display current decision mode for --install, for "shortname"
+  #    (either "auto", or [?? something else]
+  
+
+  alternatives --config shortname
+  # will display any installed packages that provide "shortname".
+  # will prompt user for their preferred choice of package to use,
+     or to stick/revert to auto mode.
+
+  alternatives --auto shortname
+  # sets shortname to be auto-chosen. Will adjust symlinks now, if appropriate
+
+  alternatives --set shortname /provided/path
+  # sets shortname to be the implementation provided by /provided/path,
+  #  IF PRESENT.
+  # Basically, sets that one to be artificially "highest priority", then
+  # configure the link now.
+  # If the manual setting is invalid, it will be ignored
+
+  alternatives --install /full/path/name shortname /path/xx priority [...]
+  # notifies the alternatives handler, and says,
+  # "hey, here's an implementation. If its highest priority right now,
+  #   use it!"
+  # Unlike redhat, we dont actually "register" anything.
+
+  alternatives --remove shortname /full/path/name
+  # basically, a hint to reconfigure shortname "as appropriate",
+  # while ignoring anything matching /full/path/name as a valid alternative
+
+  alternatives --list
+  # Gives a short list of programs "known" to alternatives, on this machine.
+
+  alternatives --relink-missing
+  # if you are in a situation where symlinks have not been created,
+  # call this, and it will create any missing ones as appropriate
+
