@@ -1,3 +1,8 @@
+# $Id$
+#
+# NOTE: This build description is not used.  The released CSWcommon package is
+# built from a different source.
+
 NAME = cswcommon
 VERSION = 1.4.6
 CATEGORIES = utils
