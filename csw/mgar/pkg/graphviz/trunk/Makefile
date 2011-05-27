@@ -220,6 +220,7 @@ CONFIGURE_ARGS += --disable-ocaml
 CONFIGURE_ARGS += --disable-php
 CONFIGURE_ARGS += --disable-r
 CONFIGURE_ARGS += --enable-static --enable-shared
+CONFIGURE_ARGS += "PANGOCAIRO_CFLAGS=`pkg-config --cflags pangocairo`"
 
 
 EXTRA_LD_FLAGS = -lm
