@@ -8,5 +8,5 @@ bb58d5086e1aaa2519a7184b9ef1748f  configure.patch
 5ced04f48ec6c223d6a6e51c2f6219d0  trapezoid.c.patch
 31f8a6e9e31075ad537fc2b9d2e6ab09  post_process.c.patch
 a9e6a8d6711f217155272c1e17e7d106  gvpr_Makefile.am.patch
-a474494b403fe8217785c50eaee4a5df  gv_Makefile.am.patch
+53b4189304d377812b47c885a4f97342  gv_Makefile.am.patch
 8d26c1171f30ca3b1dc1b429f7937e58  graphviz-2.28.0.tar.gz

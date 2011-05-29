@@ -15,7 +15,6 @@ MASTER_SITES = http://www.graphviz.org/pub/graphviz/stable/SOURCES/
 ENABLE_CHECK = 0
 
 GARCOMPILER = GCC4
-#NORUNPATH = 1
 
 PATCHFILES += configure.patch
 PATCHFILES += Makefile.am.patch
