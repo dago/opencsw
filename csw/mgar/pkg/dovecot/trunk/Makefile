@@ -5,7 +5,7 @@
 # - USERGROUP doesn't work yet, wrong usage?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 NAME = dovecot
-VERSION = 1.2.16
+VERSION = 1.2.17
 CATEGORIES = server
 
 DESCRIPTION = Secure IMAP server
