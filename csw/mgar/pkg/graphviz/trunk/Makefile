@@ -14,10 +14,15 @@ MASTER_SITES = http://www.graphviz.org/pub/graphviz/stable/SOURCES/
 # disable dependency checks because plugins depend on libs from base package
 ENABLE_CHECK = 0
 
+GARCOMPILER = GCC4
+#NORUNPATH = 1
+
 PATCHFILES += configure.patch
 PATCHFILES += Makefile.am.patch
 PATCHFILES += trapezoid.c.patch
 PATCHFILES += post_process.c.patch
+PATCHFILES += gvpr_Makefile.am.patch
+PATCHFILES += gv_Makefile.am.patch
 
 PACKAGES = CSWgraphviz \
 	CSWgraphvizdevel \
@@ -220,6 +225,7 @@ CONFIGURE_ARGS += --disable-ocaml
 CONFIGURE_ARGS += --disable-php
 CONFIGURE_ARGS += --disable-r
 CONFIGURE_ARGS += --enable-static --enable-shared
+CONFIGURE_ARGS += --disable-silent-rules
 CONFIGURE_ARGS += "PANGOCAIRO_CFLAGS=`pkg-config --cflags pangocairo`"
 
 

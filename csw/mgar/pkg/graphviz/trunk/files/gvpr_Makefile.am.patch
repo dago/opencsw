@@ -1,0 +1,11 @@
+--- graphviz-2.28.0/lib/gvpr/Makefile.am.orig	2011-05-29 14:42:32.102324093 +0200
++++ graphviz-2.28.0/lib/gvpr/Makefile.am	2011-05-29 14:42:51.192032898 +0200
+@@ -3,6 +3,8 @@
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+ 
++LIBS=
++
+ GVPR_VERSION="2:0:0"
+ 
+ AM_CPPFLAGS = \
