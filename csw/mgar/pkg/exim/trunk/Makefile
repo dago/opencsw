@@ -42,6 +42,9 @@ LD_OPTIONS = -R/opt/csw/lib/\$$ISALIST -R/opt/csw/lib
 
 INITSMF = /etc/opt/csw/init.d/cswexim
 
+PRESERVECONF += /etc/opt/csw/exim/exim.conf /etc/opt/csw/exim/exim-env.sh
+PRESERVECONF += /etc/opt/csw/exim/aliases
+
 # scripts/exim_install has been patched to use this variable
 EXIM_VERSION = $(VERSION)
 export EXIM_VERSION
@@ -113,19 +116,12 @@ post-install-modulated:
 	mv exim-$(VERSION)-1 exim; \
 	/usr/ccs/bin/strip $(BINS); \
 	/usr/ccs/bin/mcs -d $(BINS))
-	(cd $(DESTDIR)/etc/$(prefix)/exim; \
-	for i in aliases exim.conf; do \
-		if [ -r "$$i" ]; then \
-			echo "$$i -> $$i.CSW"; \
-			mv "$$i" "$$i.CSW";	\
-		fi \
-	done)
 	(cd $(DESTDIR); mkdir -p etc/opt/csw/init.d; \
 		cp $(abspath $(FILEDIR)/cswexim) etc/opt/csw/init.d )
 	mkdir -p $(DESTDIR)$(prefix)/share/doc/exim
 	mkdir -p $(DESTDIR)/var/$(prefix)/spool/exim
 	cp -p files/README.CSW  $(DESTDIR)$(prefix)/share/doc/exim/README.CSW
-	cp -p files/exim-env.sh $(DESTDIR)/etc/$(prefix)/exim/exim-env.sh.CSW
+	cp -p files/exim-env.sh $(DESTDIR)/etc/$(prefix)/exim/
 	(cd $(WORKSRC)/doc; \
 	cp -p $(DOC_LIST) $(DESTDIR)$(prefix)/share/doc/exim)
 	gzip -f $(DESTDIR)$(prefix)/share/doc/exim/ChangeLog
