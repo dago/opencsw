@@ -1,6 +1,6 @@
 #!/sbin/sh
 CONFDIR=$PKG_INSTALL_ROOT/opt/csw/etc/exim
-CONFFILES="aliases exim.conf exim-env.sh"
+
 PATH=/bin:/usr/bin:"$PATH"
 export PATH
 
@@ -8,21 +8,6 @@ is_usr_readonly()
 {
   mount | grep '^/usr ' | grep 'read only' >/dev/null
 }
-
-### Set up config-file related stuff
-
-echo ""
-echo "Setting up config-files..."
-for file in $CONFFILES; do
-    confpath="$CONFDIR/$file"
-    if [ -r "$confpath" ]; then
-	echo "Not touching existing $confpath"
-    else
-	echo "Copying $confpath.CSW to $confpath"
-	cp -p "$confpath.CSW" "$confpath"
-    fi
-done
-echo ""
 
 is_usr_readonly
 
