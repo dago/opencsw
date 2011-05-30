@@ -1,7 +1,9 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-# ! ./configure fails, check for GeoIP doesn't include -lsocket
+# ! Final linking fails
+#   /opt/SUNWspro/bin/cc -m32 -xarch=386 -L/opt/csw/lib -o ipv6calc ipv6calc.o showinfo.o ../getopt/getopt.o ../getopt/getopt1.o ../md5/md5.o -lipv6calc -L../lib/ -L/opt/csw/lib -lGeoIP
+#   ld: fatal: library -lipv6calc: not found
 #
 NAME = ipv6calc
 VERSION = 0.90.0
@@ -22,9 +24,19 @@ VENDOR_URL   = http://www.deepspace6.net/projects/ipv6calc.html
 MASTER_SITES = ftp://ftp.bieringer.de/pub/linux/IPv6/ipv6calc/
 DISTFILES    = $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-Include-lsocket-and-lnsl-in-.-configure-checks.patch
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-geoip
 CONFIGURE_ARGS += --with-geoip-headers=$(includedir)
 CONFIGURE_ARGS += --with-geoip-lib=$(libdir)
 
+# ipv6calc pre-sets DEFAULT_CFLAGS with gcc'isms, override these
+BUILD_OVERRIDE_VARS = DEFAULT_CFLAGS
+DEFAULT_CFLAGS =
+
 include gar/category.mk
+
+pre-configure-modulated:
+	@cd $(WORKSRC) && autoreconf -fi
+	@$(MAKECOOKIE)
