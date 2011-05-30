@@ -62,24 +62,28 @@ ARCHALL_CSWgraphviz2 = 1
 BUILD_DEP_PKGS = 
 
 RUNTIME_DEP_PKGS_CSWgraphviz = CSWexpat CSWpango CSWlibcairo CSWgts CSWlibxrender \
-	CSWgs CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2 CSWiconv \
-	CSWlibatk CSWliblasi CSWpng CSWzlib CSWxpm CSWlibrsvg
+	CSWgs CSWfconfig CSWftype2 CSWglib2 CSWgtk2 CSWiconv \
+	CSWlibatk CSWliblasi CSWpng CSWzlib CSWxpm CSWlibrsvg \
+	CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 
 RUNTIME_DEP_PKGS_CSWgraphvizdevel = CSWgraphviz
 RUNTIME_DEP_PKGS_CSWgraphvizdoc = 
 RUNTIME_DEP_PKGS_CSWgraphvizgraphs = 
-RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWgd CSWjpeg CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizdevil = CSWdevil
-RUNTIME_DEP_PKGS_CSWgraphvizsharp = CSWmono CSWexpat CSWgraphviz CSWzlib
-RUNTIME_DEP_PKGS_CSWgraphvizguile = CSWguile
-RUNTIME_DEP_PKGS_CSWgraphvizjava = CSWjava
-RUNTIME_DEP_PKGS_CSWgraphvizlua = CSWlua
-RUNTIME_DEP_PKGS_CSWgraphvizocaml = CSWocaml
-RUNTIME_DEP_PKGS_CSWgraphvizperl = CSWperl
-RUNTIME_DEP_PKGS_CSWgraphvizphp = CSWphp5
-RUNTIME_DEP_PKGS_CSWgraphvizpython = CSWpython CSWexpat CSWgraphviz CSWzlib 
-RUNTIME_DEP_PKGS_CSWgraphvizr = CSWr
-RUNTIME_DEP_PKGS_CSWgraphvizruby = CSWruby
-RUNTIME_DEP_PKGS_CSWgraphviztcl = CSWtcl CSWtk CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWgd CSWjpeg CSWglib2 CSWxpm CSWftype2 CSWiconv CSWgts \
+	CSWpango CSWlibintl8 CSWpng CSWfconfig CSWlibcairo CSWexpat CSWzlib \
+	CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizdevil = CSWdevil CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizsharp = CSWmono CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizguile = CSWguile CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizjava = CSWjava CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizlua = CSWlua CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizocaml = CSWocaml CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizperl = CSWperl CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizphp = CSWphp5 CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizpython = CSWpython CSWexpat CSWzlib  CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizr = CSWr CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizruby = CSWruby CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphviztcl = CSWtcl CSWtk CSWlibcairo CSWfconfig CSWpango CSWftype2 CSWgts CSWlibintl8 \
+	CSWglib2 CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
 RUNTIME_DEP_PKGS_CSWgraphviz2 = CSWgraphviz
 
 LICENSE_CSWgraphviz = COPYING
@@ -243,3 +247,82 @@ test-custom:
 post-merge:
 	gln -s . $(PKGROOT)$(prefix)/graphviz2
 	@$(MAKECOOKIE)
+
+CHECKPKG_OVERRIDES_CSWgraphvizperl += file-with-bad-content|/usr/local|root/opt/csw/share/graphviz/demo/modgraph.pl
+CHECKPKG_OVERRIDES_CSWgraphvizperl += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/perl/libgv_perl.so
+CHECKPKG_OVERRIDES_CSWgraphvizperl += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/perl/libgv_perl.so
+CHECKPKG_OVERRIDES_CSWgraphvizperl += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/perl/libgv_perl.so
+CHECKPKG_OVERRIDES_CSWgraphvizsharp += surplus-dependency|CSWmono
+CHECKPKG_OVERRIDES_CSWgraphvizsharp += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/sharp/libgv_sharp.so
+CHECKPKG_OVERRIDES_CSWgraphvizsharp += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/sharp/libgv_sharp.so
+CHECKPKG_OVERRIDES_CSWgraphvizsharp += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/sharp/libgv_sharp.so
+CHECKPKG_OVERRIDES_CSWgraphviz2 += surplus-dependency|CSWgraphviz
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWglib2
+CHECKPKG_OVERRIDES_CSWgraphvizgd += surplus-dependency|CSWgd
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWexpat
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWxpm
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWzlib
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWftype2
+CHECKPKG_OVERRIDES_CSWgraphvizgd += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_gd.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWlibltdl7
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWiconv
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWgts
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWpango
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWpng
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWfconfig
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWlibcairo
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWlibcairo
+CHECKPKG_OVERRIDES_CSWgraphviztcl += surplus-dependency|CSWtcl
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWfconfig
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWgcc3corert|or|CSWgcc4corert
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWpango
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWftype2
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWgts
+CHECKPKG_OVERRIDES_CSWgraphviztcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/tcldot.3tcl
+CHECKPKG_OVERRIDES_CSWgraphviztcl += file-with-bad-content|/export/medusa|root/opt/csw/lib/graphviz/tcl/libtcldot.so.0.0.0
+CHECKPKG_OVERRIDES_CSWgraphviztcl += file-with-bad-content|/export/medusa|root/opt/csw/lib/graphviz/tcl/libtclplan.so.0.0.0
+CHECKPKG_OVERRIDES_CSWgraphviztcl += file-with-bad-content|/export/medusa|root/opt/csw/lib/graphviz/tcl/libtcldot_builtin.so.0.0.0
+CHECKPKG_OVERRIDES_CSWgraphviztcl += file-with-bad-content|/export/medusa|root/opt/csw/lib/graphviz/tcl/libtkspline.so.0.0.0
+CHECKPKG_OVERRIDES_CSWgraphviztcl += file-with-bad-content|/export/medusa|root/opt/csw/lib/graphviz/tcl/libgv_tcl.so
+CHECKPKG_OVERRIDES_CSWgraphviztcl += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/tcl/libgv_tcl.so
+CHECKPKG_OVERRIDES_CSWgraphviztcl += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/tcl/libtcldot.so.0.0.0
+CHECKPKG_OVERRIDES_CSWgraphviztcl += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/tcl/libgv_tcl.so
+CHECKPKG_OVERRIDES_CSWgraphviztcl += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/tcl/libgv_tcl.so
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWlibltdl7
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWexpat
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWgcc3g++rt|or|CSWgcc4g++rt
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWglib2
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWzlib
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_lasi.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_pango.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/libgraph.so.5.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/libcgraph.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += file-with-bad-content|/usr/local|root/opt/csw/bin/gvpr_static
+CHECKPKG_OVERRIDES_CSWgraphviz += file-with-bad-content|/usr/local|root/opt/csw/lib/libgvpr.so.2.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += non-uniform-lib-versions-in-package|sonames=libcdt.so.5,libcgraph.so.6,libgraph.so.5,libgvc.so.6,libgvpr.so.2,libpathplan.so.4,libxdot.so.4
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_neato_layout.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/libgvc.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/libgvplugin_lasi.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/libgvplugin_lasi.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libcgraph.so.5|is|needed|by|opt/csw/lib/libgvpr.so.2.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_core.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_gs.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_rsvg.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_dot_layout.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_gdk_pixbuf.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphvizpython += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/python/libgv_python.so
+CHECKPKG_OVERRIDES_CSWgraphvizpython += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/python/libgv_python.so
+CHECKPKG_OVERRIDES_CSWgraphvizpython += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/python/libgv_python.so
+CHECKPKG_OVERRIDES_CSWgraphvizgraphs += file-with-bad-content|/usr/share|root/opt/csw/share/graphviz/graphs/directed/pmpipe.gv
+CHECKPKG_OVERRIDES_CSWgraphvizdoc += file-with-bad-content|/usr/share|root/opt/csw/share/graphviz/doc/html/FAQ.html
+CHECKPKG_OVERRIDES_CSWgraphvizdoc += file-with-bad-content|/usr/local|root/opt/csw/share/graphviz/doc/html/FAQ.html
+CHECKPKG_OVERRIDES_CSWgraphvizdoc += file-with-bad-content|/usr/local|root/opt/csw/share/graphviz/doc/ChangeLog
+CHECKPKG_OVERRIDES_CSWgraphvizdoc += file-with-bad-content|/usr/local|root/opt/csw/share/graphviz/doc/html/winbuild.html
+CHECKPKG_OVERRIDES_CSWgraphvizdoc += file-with-bad-content|/usr/local|root/opt/csw/share/graphviz/doc/html/build.html
+CHECKPKG_OVERRIDES_CSWgraphvizdoc += file-with-bad-content|/usr/share|root/opt/csw/share/graphviz/doc/html/info/command.html
+CHECKPKG_OVERRIDES_CSWgraphvizguile += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/guile/libgv_guile.so
+CHECKPKG_OVERRIDES_CSWgraphvizguile += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/guile/libgv_guile.so
+CHECKPKG_OVERRIDES_CSWgraphvizguile += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/guile/libgv_guile.so
+
