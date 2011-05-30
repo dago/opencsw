@@ -14,8 +14,8 @@ fi
 
 DAEMON=/opt/csw/sbin/exim
 PIDFILE=/var/run/exim.pid
-CONFFILE=/opt/csw/etc/exim/exim.conf
-ENVFILE=/opt/csw/etc/exim/exim-env.sh
+CONFFILE=/etc/opt/csw/exim/exim.conf
+ENVFILE=/etc/opt/csw/exim/exim-env.sh
 
 # Exit if there's no exim binary
 test -x "$DAEMON" || exit 0
