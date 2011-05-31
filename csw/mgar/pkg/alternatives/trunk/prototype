@@ -3,3 +3,6 @@ i copyright
 f none /usr/sadm/install/scripts/i.cswalternatives=i.cswalternatives 0755 root bin
 f none /usr/sadm/install/scripts/r.cswalternatives=r.cswalternatives 0755 root bin
 f none /opt/csw/sbin/alternatives=alternatives 0755 root bin
+d none /opt/csw/share/doc/alternatives 0755 root bin
+f none /opt/csw/share/doc/alternatives/README.user=README.user 0644 root bin
+f none /opt/csw/share/doc/alternatives/README.code=README 0644 root bin
