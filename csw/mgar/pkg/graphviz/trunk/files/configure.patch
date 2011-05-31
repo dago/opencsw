@@ -1,6 +1,6 @@
---- graphviz-2.24.0/configure.orig	2009-06-17 01:24:55.000000000 +0200
-+++ graphviz-2.24.0/configure	2010-01-28 02:57:28.658585976 +0100
-@@ -3425,7 +3425,7 @@
+--- graphviz-2.28.0/configure.orig	2011-05-07 05:27:36.000000000 +0200
++++ graphviz-2.28.0/configure	2011-05-31 14:13:54.695706826 +0200
+@@ -4056,7 +4056,7 @@
  if test "x${prefix}" != "x/usr"; then
  	CPPFLAGS="$CPPFLAGS -I${prefix}/include"
  	LDFLAGS="$LDFLAGS -L${prefix}/lib"
@@ -9,3 +9,31 @@
  	export PKG_CONFIG_PATH
  fi
  
+@@ -25115,7 +25115,7 @@
+ 
+       if test -n "$GDLIB_CONFIG"; then
+         GD_INCLUDES=`$GDLIB_CONFIG --includes`
+-        GD_LDFLAGS=`$GDLIB_CONFIG --ldflags | sed 's/-xarch=386 //'`
++        GD_LDFLAGS=`$GDLIB_CONFIG --ldflags | sed 's/-xarch=[^ ]* //'`
+         GD_LIBS=`$GDLIB_CONFIG --libs`
+         GD_MAJORVERSION=`$GDLIB_CONFIG --majorversion`
+         GD_MINORVERSION=`$GDLIB_CONFIG --minorversion`
+@@ -25270,7 +25270,8 @@
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lgd $GD_LIBS $LIBS"
++GD_LIBS="$GD_LDFLAGS -lgd $GD_LIBS"
++LIBS="$GD_LIBS $LIBS"
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -25296,8 +25297,6 @@
+ $as_echo "$ac_cv_lib_gd_main" >&6; }
+ if test "x$ac_cv_lib_gd_main" = x""yes; then :
+ 
+-	  GD_LIBS="$GD_LDFLAGS -lgd $GD_LIBS"
+-
+ cat >>confdefs.h <<_ACEOF
+ #define HAVE_LIBGD 1
+ _ACEOF
