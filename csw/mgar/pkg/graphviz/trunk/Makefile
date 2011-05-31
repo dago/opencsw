@@ -16,6 +16,8 @@ endef
 
 MASTER_SITES = http://www.graphviz.org/pub/graphviz/stable/SOURCES/
 
+LICENSE = COPYING
+
 GARCOMPILER = GCC4
 
 PATCHFILES += configure.patch
@@ -25,116 +27,45 @@ PATCHFILES += post_process.c.patch
 PATCHFILES += gvpr_Makefile.am.patch
 PATCHFILES += gv_Makefile.am.patch
 
-PACKAGES = CSWgraphviz \
-	CSWgraphvizdevel \
-	CSWgraphvizdoc \
-	CSWgraphvizgraphs \
-	CSWgraphvizgd \
-	CSWgraphvizsharp \
-	CSWgraphvizguile \
-	CSWgraphvizperl \
-	CSWgraphvizpython \
-	CSWgraphviztcl
-
-#	CSWgraphvizdevil \
-#	CSWgraphvizjava \
-#	CSWgraphvizlua \
-#	CSWgraphvizocaml \
-#	CSWgraphvizphp \
-#	CSWgraphvizr \
-#	CSWgraphvizruby \
-#
-
 INCOMPATIBLE_PKGS = CSWgraphvis
-
-# This is a compatibility package which should go away after some time.
-# It only contains a link to CSWgraphviz.
-PACKAGES += CSWgraphviz2
-
 # defer for some time to allow CSWgraphviz2 upgrades
 # INCOMPATIBLE_PKGS = CSWgraphviz2
-
-ARCHALL_CSWgraphvizdoc = 1
-ARCHALL_CSWgraphvizgraphs = 1
-ARCHALL_CSWgraphviz2 = 1
 
 # Waiting for liblasi, gts, gd, ghostscript and tcl/tk
 #BUILD64 = 1
 
 BUILD_DEP_PKGS = 
 
-RUNTIME_DEP_PKGS_CSWgraphviz = CSWexpat CSWpango CSWlibcairo CSWgts CSWlibxrender \
-	CSWgs CSWfconfig CSWftype2 CSWglib2 CSWgtk2 CSWiconv \
-	CSWlibatk CSWliblasi CSWzlib CSWxpm CSWlibrsvg \
-	CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 
-RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibintl8
-
-RUNTIME_DEP_PKGS_CSWgraphvizdevel = CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibpathplan4
-RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibxdot4
-RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibgraph5
-RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibcdt5
-RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibgvc6
-RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibcgraph6
-RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibgvpr2
-RUNTIME_DEP_PKGS_CSWgraphvizdoc = 
-RUNTIME_DEP_PKGS_CSWgraphvizgraphs = 
-RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWgd CSWjpeg CSWglib2 CSWxpm CSWftype2 CSWiconv CSWgts \
-	CSWpango CSWlibintl8 CSWpng CSWfconfig CSWlibcairo CSWexpat CSWzlib \
-	CSWgcc4corert CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibcdt5
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibpathplan4
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibxdot4
-RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibgraph5
-RUNTIME_DEP_PKGS_CSWgraphvizdevil = CSWdevil CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizsharp = CSWmono CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWlibpathplan4
-RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWlibxdot4
-RUNTIME_DEP_PKGS_CSWgraphvizguile = CSWguile CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWlibpathplan4
-RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWlibxdot4
-RUNTIME_DEP_PKGS_CSWgraphvizjava = CSWjava CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizlua = CSWlua CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizocaml = CSWocaml CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizperl = CSWperl CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibpathplan4
-RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibxdot4
-RUNTIME_DEP_PKGS_CSWgraphvizphp = CSWphp5 CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizpython = CSWpython CSWexpat CSWzlib  CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibpython2-6-1-0
-RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibpathplan4
-RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibxdot4
-RUNTIME_DEP_PKGS_CSWgraphvizr = CSWr CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphvizruby = CSWruby CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphviztcl = CSWtcl CSWtk CSWlibcairo CSWfconfig CSWpango CSWftype2 CSWgts CSWlibintl8 \
-	CSWglib2 CSWexpat CSWzlib CSWgcc4corert CSWgcc4g++rt CSWlibltdl7 CSWgraphviz
-RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibcdt5
-RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibpathplan4
-RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibxdot4
-RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibgraph5
-RUNTIME_DEP_PKGS_CSWgraphviz2 = CSWgraphviz
-
-LICENSE = COPYING
-
-SPKG_DESC_CSWgraphviz = Graph Visualization Tools
-SPKG_DESC_CSWgraphvizdevel = Graphviz Headers etc. for development
-SPKG_DESC_CSWgraphvizdoc = Graphviz documentation
-SPKG_DESC_CSWgraphvizgraphs = Graphviz example graphs
-SPKG_DESC_CSWgraphvizgd = Graphviz renderers using gd
-SPKG_DESC_CSWgraphvizdevil = Graphviz renderers using DevIL
-SPKG_DESC_CSWgraphvizsharp = Graphviz language binding for C#
-SPKG_DESC_CSWgraphvizguile = Graphviz language binding for guile
-SPKG_DESC_CSWgraphvizjava = Graphviz language binding for java
-SPKG_DESC_CSWgraphvizlua = Graphviz language binding for lua
-SPKG_DESC_CSWgraphvizocaml = Graphviz language binding for ocaml
-SPKG_DESC_CSWgraphvizperl = Graphviz language binding for perl
-SPKG_DESC_CSWgraphvizphp = Graphviz language binding for php
-SPKG_DESC_CSWgraphvizpython = Graphviz language binding for python
-SPKG_DESC_CSWgraphvizr = Graphviz language binding for R
-SPKG_DESC_CSWgraphvizruby = Graphviz language binding for ruby
-SPKG_DESC_CSWgraphviztcl = Graphviz language binding for tcl
+# This is a compatibility package which should go away after some time.
+# It only contains a link to CSWgraphviz.
+PACKAGES += CSWgraphviz2
 SPKG_DESC_CSWgraphviz2 = Stub to the CSWgraphviz package
+RUNTIME_DEP_PKGS_CSWgraphviz2 = CSWgraphviz
+PKGFILES_CSWgraphviz2 = $(prefix)/graphviz2
+ARCHALL_CSWgraphviz2 = 1
 
+PACKAGES += CSWgraphviz
+SPKG_DESC_CSWgraphviz = Graph Visualization Tools
+RUNTIME_DEP_PKGS_CSWgraphviz = CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWpango
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWgts
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWgs
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWfconfig
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWftype2
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWglib2
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWgtk2
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWiconv
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibatk
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWliblasi
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWxpm
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibrsvg
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphviz += CSWlibintl8
 PKGFILES_CSWgraphviz = $(bindir)/(?!(diffimg|dot_static)).*
 PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_core\.so\..*
 PKGFILES_CSWgraphviz += $(libdir)/graphviz/libgvplugin_gdk_pixbuf\.so\..*
@@ -149,69 +80,238 @@ PKGFILES_CSWgraphviz += $(sharedstatedir)/graphviz/lefty/.*
 PKGFILES_CSWgraphviz += $(mandir)/man1/.*\.1
 PKGFILES_CSWgraphviz += $(mandir)/man7/.*\.7
 
+PACKAGES += CSWgraphvizdevel
+SPKG_DESC_CSWgraphvizdevel = Graphviz Headers etc. for development
+
+RUNTIME_DEP_PKGS_CSWgraphvizdevel = CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibpathplan4
+RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibxdot4
+RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibgraph5
+RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibcdt5
+RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibgvc6
+RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibcgraph6
+RUNTIME_DEP_PKGS_CSWgraphvizdevel += CSWlibgvpr2
 PKGFILES_CSWgraphvizdevel = $(libdir)/pkgconfig/.*\.pc
 PKGFILES_CSWgraphvizdevel += $(libdir)/lib.*\.so
 PKGFILES_CSWgraphvizdevel += $(includedir)/.*\.h
 PKGFILES_CSWgraphvizdevel += $(mandir)/man3/.*\.3
 
+PACKAGES += CSWgraphvizdoc
+SPKG_DESC_CSWgraphvizdoc = Graphviz documentation
+ARCHALL_CSWgraphvizdoc = 1
+RUNTIME_DEP_PKGS_CSWgraphvizdoc = 
 PKGFILES_CSWgraphvizdoc = $(sharedstatedir)/graphviz/doc/.*
 
+PACKAGES += CSWgraphvizgraphs
+SPKG_DESC_CSWgraphvizgraphs = Graphviz example graphs
+ARCHALL_CSWgraphvizgraphs = 1
+RUNTIME_DEP_PKGS_CSWgraphvizgraphs = 
 PKGFILES_CSWgraphvizgraphs = $(sharedstatedir)/graphviz/graphs/.* 
 
+PACKAGES += CSWgraphvizgd
+SPKG_DESC_CSWgraphvizgd = Graphviz renderers using gd
+RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWgd
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWjpeg
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWglib2
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWxpm
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWftype2
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWiconv
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWgts
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWpango
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWpng
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWfconfig
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibcdt5
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibpathplan4
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibxdot4
+RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWlibgraph5
 PKGFILES_CSWgraphvizgd = $(libdir)/graphviz/libgvplugin_gd\.so\..*
 PKGFILES_CSWgraphvizgd += $(bindir)/diffimg
 PKGFILES_CSWgraphvizgd += $(bindir)/dot_static
 
+#PACKAGES += CSWgraphvizdevil
+SPKG_DESC_CSWgraphvizdevil = Graphviz renderers using DevIL
+RUNTIME_DEP_PKGS_CSWgraphvizdevil = CSWdevil
+RUNTIME_DEP_PKGS_CSWgraphvizdevil += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizdevil += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizdevil += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizdevil += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizdevil += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizdevil += CSWgraphviz
 PKGFILES_CSWgraphvizdevil = $(libdir)/graphviz/libgvplugin_devil\.so\..*
 
+PACKAGES += CSWgraphvizsharp
+SPKG_DESC_CSWgraphvizsharp = Graphviz language binding for C#
+RUNTIME_DEP_PKGS_CSWgraphvizsharp = CSWmono
+RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWlibpathplan4
+RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWlibxdot4
 PKGFILES_CSWgraphvizsharp = $(libdir)/graphviz/sharp/.*
 PKGFILES_CSWgraphvizsharp += $(mandir)/man3/.*\.3sharp
 PKGFILES_CSWgraphvizsharp += $(sharedstatedir)/graphviz/demo/.*\.cs
 
+PACKAGES += CSWgraphvizguile
+SPKG_DESC_CSWgraphvizguile = Graphviz language binding for guile
+RUNTIME_DEP_PKGS_CSWgraphvizguile = CSWguile
+RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWlibpathplan4
+RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWlibxdot4
 PKGFILES_CSWgraphvizguile = $(libdir)/graphviz/guile/.*
 PKGFILES_CSWgraphvizguile += $(mandir)/man3/.*\.3guile
 PKGFILES_CSWgraphvizguile += $(sharedstatedir)/graphviz/demo/.*\.guile
 
+#PACKAGES += CSWgraphvizjava
+SPKG_DESC_CSWgraphvizjava = Graphviz language binding for java
+RUNTIME_DEP_PKGS_CSWgraphvizjava = CSWjava
+RUNTIME_DEP_PKGS_CSWgraphvizjava += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizjava += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizjava += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizjava += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizjava += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizjava += CSWgraphviz
 PKGFILES_CSWgraphvizjava = $(libdir)/graphviz/java/.*
 PKGFILES_CSWgraphvizjava += $(mandir)/man3/.*\.3java
 PKGFILES_CSWgraphvizjava += $(sharedstatedir)/graphviz/demo/.*\.java
 
+#PACKAGES += CSWgraphvizlua
+SPKG_DESC_CSWgraphvizlua = Graphviz language binding for lua
+RUNTIME_DEP_PKGS_CSWgraphvizlua = CSWlua
+RUNTIME_DEP_PKGS_CSWgraphvizlua += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizlua += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizlua += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizlua += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizlua += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizlua += CSWgraphviz
 PKGFILES_CSWgraphvizlua = $(libdir)/graphviz/lua/.*
 PKGFILES_CSWgraphvizlua += $(mandir)/man3/.*\.3lua
 PKGFILES_CSWgraphvizlua += $(sharedstatedir)/graphviz/demo/.*\.lua
 
+#PACKAGES += CSWgraphvizocaml
+SPKG_DESC_CSWgraphvizocaml = Graphviz language binding for ocaml
+RUNTIME_DEP_PKGS_CSWgraphvizocaml = CSWocaml
+RUNTIME_DEP_PKGS_CSWgraphvizocaml += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizocaml += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizocaml += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizocaml += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizocaml += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizocaml += CSWgraphviz
 PKGFILES_CSWgraphvizocaml = $(libdir)/graphviz/ocaml/.*
 PKGFILES_CSWgraphvizocaml += $(mandir)/man3/.*\.3ocaml
 PKGFILES_CSWgraphvizocaml += $(sharedstatedir)/graphviz/demo/.*\.ml
 
+PACKAGES += CSWgraphvizperl
+SPKG_DESC_CSWgraphvizperl = Graphviz language binding for perl
+RUNTIME_DEP_PKGS_CSWgraphvizperl = CSWperl
+RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibpathplan4
+RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibxdot4
 PKGFILES_CSWgraphvizperl = $(libdir)/graphviz/perl/.*
 PKGFILES_CSWgraphvizperl += $(mandir)/man3/.*\.3perl
 PKGFILES_CSWgraphvizperl += $(sharedstatedir)/graphviz/demo/.*\.pl
 
+#PACKAGES += CSWgraphvizphp
+SPKG_DESC_CSWgraphvizphp = Graphviz language binding for php
+RUNTIME_DEP_PKGS_CSWgraphvizphp = CSWphp5
+RUNTIME_DEP_PKGS_CSWgraphvizphp += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizphp += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizphp += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizphp += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizphp += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizphp += CSWgraphviz
 PKGFILES_CSWgraphvizphp = $(libdir)/graphviz/php/.*
 PKGFILES_CSWgraphvizphp += $(mandir)/man3/.*\.3php
 PKGFILES_CSWgraphvizphp += $(sharedstatedir)/graphviz/demo/.*\.php
 
+PACKAGES += CSWgraphvizpython
+SPKG_DESC_CSWgraphvizpython = Graphviz language binding for python
+RUNTIME_DEP_PKGS_CSWgraphvizpython = CSWpython
+RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibpathplan4
+RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibxdot4
 PKGFILES_CSWgraphvizpython = $(libdir)/graphviz/python/.*
 PKGFILES_CSWgraphvizpython += $(mandir)/man3/.*\.3python
 PKGFILES_CSWgraphvizpython += $(sharedstatedir)/graphviz/demo/.*\.py
 
+#PACKAGES += CSWgraphvizr
+SPKG_DESC_CSWgraphvizr = Graphviz language binding for R
+RUNTIME_DEP_PKGS_CSWgraphvizr = CSWr
+RUNTIME_DEP_PKGS_CSWgraphvizr += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizr += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizr += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizr += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizr += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizr += CSWgraphviz
 PKGFILES_CSWgraphvizr = $(libdir)/graphviz/R/.*
 PKGFILES_CSWgraphvizr += $(mandir)/man3/.*\.3r
 PKGFILES_CSWgraphvizr += $(sharedstatedir)/graphviz/demo/.*\.r
 
+#PACKAGES += CSWgraphvizruby
+SPKG_DESC_CSWgraphvizruby = Graphviz language binding for ruby
+RUNTIME_DEP_PKGS_CSWgraphvizruby = CSWruby
+RUNTIME_DEP_PKGS_CSWgraphvizruby += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizruby += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphvizruby += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphvizruby += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphvizruby += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphvizruby += CSWgraphviz
 PKGFILES_CSWgraphvizruby = $(libdir)/graphviz/ruby/.*
 PKGFILES_CSWgraphvizruby += $(mandir)/man3/.*\.3ruby
 PKGFILES_CSWgraphvizruby += $(sharedstatedir)/graphviz/demo/.*\.rb
 
+PACKAGES += CSWgraphviztcl
+SPKG_DESC_CSWgraphviztcl = Graphviz language binding for tcl
+RUNTIME_DEP_PKGS_CSWgraphviztcl = CSWtcl
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWtk
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWfconfig
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWpango
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWftype2
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWgts
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibintl8 
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWglib2
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWgraphviz
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibcdt5
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibpathplan4
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibxdot4
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibgraph5
 PKGFILES_CSWgraphviztcl = $(libdir)/graphviz/tcl/.*
 PKGFILES_CSWgraphviztcl += $(mandir)/man3/.*\.3tcl
 PKGFILES_CSWgraphviztcl += $(mandir)/man3/.*\.3tk
 PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/.*\.tcl
 PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/.*\.tcl.README
 PKGFILES_CSWgraphviztcl += $(sharedstatedir)/graphviz/demo/pathplan_data/.*
-
-PKGFILES_CSWgraphviz2 = $(prefix)/graphviz2
 
 # Shared libraries
 PACKAGES += CSWlibcdt5
