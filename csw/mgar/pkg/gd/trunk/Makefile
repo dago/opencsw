@@ -1,5 +1,5 @@
 NAME = gd
-VERSION = 2.0.35
+VERSION = 2.0.36RC1
 CATEGORIES = lib
 
 DESCRIPTION = A library used for dynamic image creation
@@ -13,7 +13,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.libgd.org/releases/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+# Master site down.  This version archived at:  http://www.graphviz.org/pub/tmp/gd-2.0.36RC1.tar.gz
+#     Contact:  ellson@opencsw.org
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
+
+PATCHFILES += gdkanji.c.patch
+
+#GARCOMPILER = GCC4
 
 PACKAGES = CSWgd
 CATALOGNAME_CSWgd = gd
@@ -47,7 +53,7 @@ SPKG_DESC_CSWlibgd-dev = Development files for libgd.so
 PKGFILES_CSWlibgd-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibgd-dev = CSWlibgd2
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CSW_DEFAULT_FONTPATH = $(sharedstatedir)/fonts/truetype
 
@@ -88,8 +94,8 @@ post-extract-modulated:
 
 # The shipped libtool doesn't know about Sun Studio C++ compiler 'CC'
 pre-configure-modulated:
-	grm -f $(WORKSRC)/config/ltmain.sh
-	gcp /opt/csw/share/libtool/config/ltmain.sh $(WORKSRC)/config/ltmain.sh
-	cd $(WORKSRC) && aclocal && automake
+#	grm -f $(WORKSRC)/config/ltmain.sh
+#	gcp /opt/csw/share/libtool/config/ltmain.sh $(WORKSRC)/config/ltmain.sh
+#	cd $(WORKSRC) && aclocal && automake
 	@$(MAKECOOKIE)
 
