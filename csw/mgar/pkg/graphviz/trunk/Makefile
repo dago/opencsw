@@ -21,6 +21,7 @@ LICENSE = COPYING
 GARCOMPILER = GCC4
 
 PATCHFILES += configure.patch
+PATCHFILES += configure_gd.patch
 PATCHFILES += Makefile.am.patch
 PATCHFILES += trapezoid.c.patch
 PATCHFILES += post_process.c.patch
