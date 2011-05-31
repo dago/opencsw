@@ -1,26 +1,66 @@
-A quickie readme for the future, about this "alternatives" implementation:
+This file is more of an "internals" thoughts and notes file.
+For user facing documentation, see  README.user
 
 Phil decided that a from-scratch, CSW-custom implementation was needed,
 because the debian one was hugely bloated, and the redhat smaller one,
 did not play nicely with NFS-shared /opt/csw
-So pleaes dont go getting ideas that we can migrated back to redhat,etc
+So please dont go getting ideas that we can migrated back to redhat,etc
 in the future! :) we tried, and it failed.
 
+Sections below:
+   * CODE NOTES
+   * FILE FORMATS
+   
 
-Internal implementation notes:
+CODE NOTES
 
  My initial version seems to expect each "alternative" to have its own
-file in /opt/csw/share/alternatives/xyz.
-One line per file only would be nice, please
+file as /opt/csw/share/alternatives/xyz
+One line per file only would be nice, please. But this suports
+multiple lines per file now.
 
 When a choice is manually set (overriding auto settings), it records that
-fact by making a symlink from the shipped file, to 
+fact by making a symlink from the relevant shipped file, to 
 /etc/opt/csw/alternatives/(progname)
+and then it will make the user-facing symlink(s) indicated by that file
 
 This way, you can have the binary, and alternatives files per software,
-NFS-shared, but then have machine-local overrides.
+in NFS-shared /opt/csw, but then have machine-local overrides.
 
 Reminder: Do NOT have to get fancy with the class action script not 
  getting called with pathnames on sparse zones with pkg-inherit-dir,
  because since /opt/csw is shared, the symlink will already be in place.
 
+  Ambuguity for --remove:
+  what if --remove is used, on something that has a manually set pref?
+  (rather than calling --auto)
+  I choose that it will LEAVE the manual choice.
+  That is to say, it will leave the saved preference as valid.
+  BUT, if the manual choice matches the --remove", then 
+  it should skip it as a "what to match" option..? !!
+
+  This is to potentially make our pkgrm/pkgadd upgrade cycle
+  function as a user expects: to preserve their manual choice.
+
+FILE FORMATS
+
+  Packages that provide implementation of an "alternative" for a
+  particular path, need to provide a file in
+  /opt/csw/share/alternatives/[softwarename]
+
+  *** Note that it MUST be in that directory and nowhere else !!!  ***
+
+  The format of this file, is one or more lines, of the following format:
+
+  /full/path shortname /provided/path priority [/slave/path shortname /provide!
+
+  Note that tabs are not allowed.
+
+  The purpose of the "slave path", is that sometimes, when the "main" path
+  changes its implementation, one or more other ones must be changed
+  to match.
+
+  This line format, is normally passed onto our
+  "alternatives" binary by the class action script, directly as
+  an arg list to the --install option.
+  
