@@ -1,3 +1,2 @@
-88e69d03742a55f979e2822d97c525c1  download/Makefile.diff
-c9a4f9ee0fdef233a2ab0f5394672f2c  download/fixme.sh
-6c6c3dbb7bf079e0bb5fbbfd3bb8a71c  download/gd-2.0.35.tar.bz2
+1eb8ddb8d9fc77f7502bb6cbcd706c08  gdkanji.c.patch
+39ac48e6d5e0012a3bd2248a0102f209  gd-2.0.36RC1.tar.gz
