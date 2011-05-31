@@ -110,7 +110,7 @@ PKGFILES_CSWgraphvizgraphs = $(sharedstatedir)/graphviz/graphs/.*
 
 PACKAGES += CSWgraphvizgd
 SPKG_DESC_CSWgraphvizgd = Graphviz renderers using gd
-RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWgd
+RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWlibgd2
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWjpeg
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWglib2
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWxpm
