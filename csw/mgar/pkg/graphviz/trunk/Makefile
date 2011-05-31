@@ -40,7 +40,6 @@ BUILD_DEP_PKGS =
 # It only contains a link to CSWgraphviz.
 PACKAGES += CSWgraphviz2
 SPKG_DESC_CSWgraphviz2 = Stub to the CSWgraphviz package
-RUNTIME_DEP_PKGS_CSWgraphviz2 = CSWgraphviz
 PKGFILES_CSWgraphviz2 = $(prefix)/graphviz2
 ARCHALL_CSWgraphviz2 = 1
 
@@ -110,7 +109,8 @@ PKGFILES_CSWgraphvizgraphs = $(sharedstatedir)/graphviz/graphs/.*
 
 PACKAGES += CSWgraphvizgd
 SPKG_DESC_CSWgraphvizgd = Graphviz renderers using gd
-RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWlibgd2
+# FIXME - graphviz seems to be using internal copy of libgd
+#RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWlibgd2
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWjpeg
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWglib2
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWxpm
@@ -154,7 +154,6 @@ RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWzlib
 RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWgraphviz
 RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWlibpathplan4
 RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWlibxdot4
 PKGFILES_CSWgraphvizsharp = $(libdir)/graphviz/sharp/.*
@@ -163,13 +162,11 @@ PKGFILES_CSWgraphvizsharp += $(sharedstatedir)/graphviz/demo/.*\.cs
 
 PACKAGES += CSWgraphvizguile
 SPKG_DESC_CSWgraphvizguile = Graphviz language binding for guile
-RUNTIME_DEP_PKGS_CSWgraphvizguile = CSWguile
-RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizguile = CSWexpat
 RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWzlib
 RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWgraphviz
 RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWlibpathplan4
 RUNTIME_DEP_PKGS_CSWgraphvizguile += CSWlibxdot4
 PKGFILES_CSWgraphvizguile = $(libdir)/graphviz/guile/.*
@@ -223,7 +220,6 @@ RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWzlib
 RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWgraphviz
 RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibpathplan4
 RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibxdot4
 PKGFILES_CSWgraphvizperl = $(libdir)/graphviz/perl/.*
@@ -251,7 +247,6 @@ RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWzlib
 RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWgraphviz
 RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibpathplan4
 RUNTIME_DEP_PKGS_CSWgraphvizpython += CSWlibxdot4
@@ -287,8 +282,7 @@ PKGFILES_CSWgraphvizruby += $(sharedstatedir)/graphviz/demo/.*\.rb
 
 PACKAGES += CSWgraphviztcl
 SPKG_DESC_CSWgraphviztcl = Graphviz language binding for tcl
-RUNTIME_DEP_PKGS_CSWgraphviztcl = CSWtcl
-RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWtk
+RUNTIME_DEP_PKGS_CSWgraphviztcl = CSWtk
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibcairo
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWfconfig
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWpango
@@ -301,7 +295,6 @@ RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWzlib
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWgraphviz
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibcdt5
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibpathplan4
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibxdot4
@@ -408,9 +401,7 @@ CONFIGURE_ARGS += --enable-static --enable-shared
 CONFIGURE_ARGS += --disable-silent-rules
 CONFIGURE_ARGS += "PANGOCAIRO_CFLAGS=`pkg-config --cflags pangocairo`"
 
-
 EXTRA_LD_FLAGS = -lm
-
 STRIP_LIBTOOL=1
 
 TEST_SCRIPTS =
@@ -423,6 +414,47 @@ CHECKPKG_OVERRIDES_CSWgraphvizsharp += surplus-dependency|CSWmono
 
 # /usr/local references from the docs are allright
 CHECKPKG_OVERRIDES_CSWgraphvizdoc += file-with-bad-content
+
+# these dependencies are all provided by this set of packages !
+CHECKPKG_OVERRIDES_CSWlibgvc6 += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/libgvc.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphvizgd += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_gd.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphvizguile += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/guile/libgv_guile.so
+CHECKPKG_OVERRIDES_CSWgraphvizguile += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/guile/libgv_guile.so
+CHECKPKG_OVERRIDES_CSWgraphvizguile += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/guile/libgv_guile.so
+CHECKPKG_OVERRIDES_CSWlibgvpr2 += soname-not-found|libcgraph.so.5|is|needed|by|opt/csw/lib/libgvpr.so.2.0.0
+CHECKPKG_OVERRIDES_CSWgraphvizsharp += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/sharp/libgv_sharp.so
+CHECKPKG_OVERRIDES_CSWgraphvizsharp += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/sharp/libgv_sharp.so
+CHECKPKG_OVERRIDES_CSWgraphvizsharp += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/sharp/libgv_sharp.so
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_neato_layout.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_pango.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_lasi.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_core.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_gs.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_rsvg.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_dot_layout.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/libgvplugin_lasi.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/libgvplugin_lasi.so.6.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/libgvplugin_gdk_pixbuf.so.6.0.0
+CHECKPKG_OVERRIDES_CSWlibgraph5 += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/libgraph.so.5.0.0
+CHECKPKG_OVERRIDES_CSWgraphvizperl += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/perl/libgv_perl.so
+CHECKPKG_OVERRIDES_CSWgraphvizperl += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/perl/libgv_perl.so
+CHECKPKG_OVERRIDES_CSWgraphvizperl += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/perl/libgv_perl.so
+CHECKPKG_OVERRIDES_CSWgraphviztcl += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/tcl/libgv_tcl.so
+CHECKPKG_OVERRIDES_CSWgraphviztcl += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/tcl/libgv_tcl.so
+CHECKPKG_OVERRIDES_CSWgraphviztcl += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/tcl/libtcldot.so.0.0.0
+CHECKPKG_OVERRIDES_CSWgraphviztcl += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/tcl/libgv_tcl.so
+CHECKPKG_OVERRIDES_CSWgraphvizpython += soname-not-found|libgvc.so.5|is|needed|by|opt/csw/lib/graphviz/python/libgv_python.so
+CHECKPKG_OVERRIDES_CSWgraphvizpython += soname-not-found|libgraph.so.4|is|needed|by|opt/csw/lib/graphviz/python/libgv_python.so
+CHECKPKG_OVERRIDES_CSWgraphvizpython += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/graphviz/python/libgv_python.so
+CHECKPKG_OVERRIDES_CSWlibcgraph6 += soname-not-found|libcdt.so.4|is|needed|by|opt/csw/lib/libcgraph.so.6.0.0
+
+#FIXME - sometime - demo code
+CHECKPKG_OVERRIDES_CSWgraphvizgraphs += file-with-bad-content|/usr/share|root/opt/csw/share/graphviz/graphs/directed/pmpipe.gv
+CHECKPKG_OVERRIDES_CSWgraphvizperl += file-with-bad-content|/usr/local|root/opt/csw/share/graphviz/demo/modgraph.pl
+
+#FIXME - sometime - non-critical feature for now
+CHECKPKG_OVERRIDES_CSWlibgvpr2 += file-with-bad-content|/usr/local|root/opt/csw/lib/libgvpr.so.2.0.0
+CHECKPKG_OVERRIDES_CSWgraphviz += file-with-bad-content|/usr/local|root/opt/csw/bin/gvpr_static
 
 include gar/category.mk
 
