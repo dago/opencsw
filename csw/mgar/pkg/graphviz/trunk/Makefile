@@ -110,7 +110,7 @@ PKGFILES_CSWgraphvizgraphs = $(sharedstatedir)/graphviz/graphs/.*
 PACKAGES += CSWgraphvizgd
 SPKG_DESC_CSWgraphvizgd = Graphviz renderers using gd
 # FIXME - graphviz seems to be using internal copy of libgd
-#RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWlibgd2
+RUNTIME_DEP_PKGS_CSWgraphvizgd = CSWlibgd2
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWjpeg
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWglib2
 RUNTIME_DEP_PKGS_CSWgraphvizgd += CSWxpm
@@ -148,8 +148,7 @@ PKGFILES_CSWgraphvizdevil = $(libdir)/graphviz/libgvplugin_devil\.so\..*
 
 PACKAGES += CSWgraphvizsharp
 SPKG_DESC_CSWgraphvizsharp = Graphviz language binding for C#
-RUNTIME_DEP_PKGS_CSWgraphvizsharp = CSWmono
-RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWexpat
+RUNTIME_DEP_PKGS_CSWgraphvizsharp = CSWexpat
 RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWzlib
 RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWgraphvizsharp += CSWgcc4g++rt
@@ -292,6 +291,11 @@ RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWglib2
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWexpat
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWzlib
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWpng
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWjpeg
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibgd2
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWiconv
+RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWxpm
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWgcc4g++rt
 RUNTIME_DEP_PKGS_CSWgraphviztcl += CSWlibltdl7
@@ -408,9 +412,6 @@ TEST_SCRIPTS =
 
 # It's a known problem with the tcl library.
 CHECKPKG_OVERRIDES_CSWgraphviztcl += file-with-bad-content
-
-# checkpkg can't detect a dependency on CSWmono
-CHECKPKG_OVERRIDES_CSWgraphvizsharp += surplus-dependency|CSWmono
 
 # /usr/local references from the docs are allright
 CHECKPKG_OVERRIDES_CSWgraphvizdoc += file-with-bad-content
