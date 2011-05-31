@@ -31,7 +31,6 @@ Development plan for checkpkg:
   - Add MySQL database garbage collection
     - Currently, the database is growing indefinitely, at the time of writing
       it's 1.5GB uncompressed.
-  - Add support for the 'overridden' field in the database
   - When adding a package to a catalog, store the time and date of the
     addition
     - Can be generalized as logging
@@ -61,6 +60,7 @@ Items done:
   error_mgr.  It's possible to need one of the listed files only, so files are
   given as alternatives, but the reason is common.
 - Notify maintainers when their package is available from mirrors
+- Add support for the 'overridden' field in the database
 
 Known problems:
 - libmagic fails sometimes when processing the whole catalog
