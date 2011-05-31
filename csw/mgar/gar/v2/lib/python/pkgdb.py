@@ -451,7 +451,12 @@ def main():
           "Importing %s, %s",
           stats["basic_stats"]["md5_sum"],
           stats["basic_stats"]["pkg_basename"])
-      package_stats.PackageStats.ImportPkg(stats, options.replace)
+      try:
+        package_stats.PackageStats.ImportPkg(stats, options.replace)
+      except sqlobject.dberrors.OperationalError, e:
+        logging.fatal(
+            "A problem when importing package data has occurred: %s", e)
+        sys.exit(1)
   elif command == 'removepkg':
     for md5_sum in md5_sums:
       srv4 = GetPkg(md5_sum)
