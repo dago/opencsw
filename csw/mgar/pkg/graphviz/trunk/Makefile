@@ -457,6 +457,15 @@ CHECKPKG_OVERRIDES_CSWgraphvizperl += file-with-bad-content|/usr/local|root/opt/
 CHECKPKG_OVERRIDES_CSWlibgvpr2 += file-with-bad-content|/usr/local|root/opt/csw/lib/libgvpr.so.2.0.0
 CHECKPKG_OVERRIDES_CSWgraphviz += file-with-bad-content|/usr/local|root/opt/csw/bin/gvpr_static
 
+# Seems I have to both add the dependencies and mark them as surplus!
+# Something wrong with lingd2, I think.
+CHECKPKG_OVERRIDES_CSWgraphviztcl += surplus-dependency|CSWxpm
+CHECKPKG_OVERRIDES_CSWgraphviztcl += surplus-dependency|CSWiconv
+CHECKPKG_OVERRIDES_CSWgraphviztcl += surplus-dependency|CSWlibgd2
+CHECKPKG_OVERRIDES_CSWgraphviztcl += surplus-dependency|CSWjpeg
+CHECKPKG_OVERRIDES_CSWgraphviztcl += surplus-dependency|CSWpng
+CHECKPKG_OVERRIDES_CSWgraphvizgd += surplus-dependency|CSWlibgd2
+
 include gar/category.mk
 
 post-merge:
