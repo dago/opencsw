@@ -1,5 +1,5 @@
 NAME = tnef
-VERSION = 1.4.7
+VERSION = 1.4.8
 CATEGORIES = utils
 
 DESCRIPTION = Unpacks Microsoft TNEF MIME attachments
@@ -10,18 +10,11 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.sourceforge.net/tnef/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
-RUNTIME_DEP_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS_CSWtnef += CSWlibintl8
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=57057
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-#GARCOMPILER=GCC4
 CONFIGURE_ARGS = $(DIRPATHS)
-#OPT_FLAGS_SOS = -xO2
 
 NOISALIST = 1
 
