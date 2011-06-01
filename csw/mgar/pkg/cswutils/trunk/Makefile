@@ -65,8 +65,9 @@ CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/usr/local|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/lib/python/csw/package_checks_test.py
 CHECKPKG_OVERRIDES_CSWcswutils += file-with-bad-content|/export/medusa|root/opt/csw/lib/python/csw/testdata/rpaths.py
 
-ALTERNATIVES_CSWcswutils = checkpkg
-ALTERNATIVE_checkpkg = /opt/csw/bin/checkpkg checkpkg /opt/csw/bin/checkpkg.legacy 5
+ALTERNATIVES_CSWcswutils = legacy python
+ALTERNATIVE_legacy = /opt/csw/bin/checkpkg checkpkg /opt/csw/bin/checkpkg.legacy 5
+ALTERNATIVE_python = /opt/csw/bin/checkpkg checkpkg /opt/csw/bin/checkpkg.python 10
 
 include gar/category.mk
 
@@ -90,4 +91,8 @@ install-custom:
 		$(DESTDIR)$(bindir)/submitpkg
 	@ln -s ../lib/python/csw/csw_upload_pkg.py \
 		$(DESTDIR)$(bindir)/csw-upload-pkg
+	@ln -s ../lib/python/csw/checkpkg2.py \
+		$(DESTDIR)$(bindir)/checkpkg.python
+	@ln -s ../lib/python/csw/pkgdb.py \
+		$(DESTDIR)$(bindir)/pkgdb
 	@$(MAKECOOKIE)
