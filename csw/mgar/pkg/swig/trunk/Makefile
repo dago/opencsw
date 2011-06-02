@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = swig
-VERSION = 2.0.3
+VERSION = 2.0.4
 CATEGORIES = devel
 
 DESCRIPTION = A scripting interface generator for C/C++ code.
