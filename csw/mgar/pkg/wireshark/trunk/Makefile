@@ -1,5 +1,5 @@
 NAME = wireshark
-VERSION = 1.4.3
+VERSION = 1.4.7
 CATEGORIES = apps
 
 DESCRIPTION = Wireshark (was Ethereal) is a free network protocol analyzer
@@ -27,23 +27,13 @@ CHECKPKG_OVERRIDES_CSWwireshark += bad-rpath-entry|/opt/csw/lib/|opt/csw/bin/tsh
 CHECKPKG_OVERRIDES_CSWwireshark += bad-rpath-entry|/opt/csw/lib/|opt/csw/bin/wireshark
 CHECKPKG_OVERRIDES_CSWwireshark += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libwireshark.so.0.0.1
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
-SPKG_SOURCEURL = http://www.wireshark.org/
-
-#EXTRA_INC = $(prefix)/X11/include
-#EXTRA_LIB = $(prefix)/X11/lib
-#EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-
-# We want to be link with Xrender from $(prefix)/X11/lib not $(prefix)/lib
-# since the latter is linked to /usr/openwin/lib/libX11.so.4
-#EXTRA_SOS_LD_FLAGS += -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+VENDOR_URL = http://www.wireshark.org/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-usr-local=no
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
 
 include gar/category.mk
 
