@@ -168,7 +168,6 @@ CHECKPKG_OVERRIDES_CSWpythonsvn += catalogname-does-not-start-with-py_
 DISTFILES += CSWsvn.checkinstall
 DISTFILES += CSWap2svn.postinstall CSWap2svn.preremove
 DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
-DISTFILES += fixme.sh
 
 # Fix: Add java headers for nested classes
 # https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
@@ -249,8 +248,6 @@ post-install-modulated: $(PI_DEPENDS)
 # are then used in the "svn-ruby" target.
 # See http://lists.opencsw.org/pipermail/maintainers/2009-May/002325.html
 post-configure-modulated:
-	@echo "~~~ Fixing Libtool ~~~"
-	$(DOWNLOADDIR)/fixme.sh $(WORKSRC)
 	@echo "~~~ Creating GCC Makefile and libtool for ruby ~~~"
 
 	gcp $(WORKSRC)/Makefile $(WORKSRC)/Makefile.gcc
