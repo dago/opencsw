@@ -424,6 +424,27 @@ CHECKPKG_OVERRIDES_CSWgraphvizperl += file-with-bad-content|/usr/local|root/opt/
 CHECKPKG_OVERRIDES_CSWlibgvpr2 += file-with-bad-content|/usr/local|root/opt/csw/lib/libgvpr.so.2.0.0
 CHECKPKG_OVERRIDES_CSWgraphviz += file-with-bad-content|/usr/local|root/opt/csw/bin/gvpr_static
 
+# These are provide by *this* package set, so this a reasonable.
+# NB - must unistall anl older CSWgraphvizdevel for this 
+#
+CHECKPKG_OVERRIDES_CSWgraphvizperl += missing-dependency|CSWlibcdt5
+CHECKPKG_OVERRIDES_CSWgraphvizperl += missing-dependency|CSWlibgvc6
+CHECKPKG_OVERRIDES_CSWgraphvizperl += missing-dependency|CSWlibgraph5
+CHECKPKG_OVERRIDES_CSWlibgraph5 += missing-dependency|CSWlibcdt5
+CHECKPKG_OVERRIDES_CSWgraphvizsharp += missing-dependency|CSWlibcdt5
+CHECKPKG_OVERRIDES_CSWgraphvizsharp += missing-dependency|CSWlibgvc6
+CHECKPKG_OVERRIDES_CSWgraphvizsharp += missing-dependency|CSWlibgraph5
+CHECKPKG_OVERRIDES_CSWlibgvc6 += missing-dependency|CSWlibgraph5
+CHECKPKG_OVERRIDES_CSWlibcgraph6 += missing-dependency|CSWlibcdt5
+CHECKPKG_OVERRIDES_CSWgraphvizgd += missing-dependency|CSWlibgvc6
+CHECKPKG_OVERRIDES_CSWgraphviztcl += missing-dependency|CSWlibgvc6
+CHECKPKG_OVERRIDES_CSWgraphvizguile += missing-dependency|CSWlibcdt5
+CHECKPKG_OVERRIDES_CSWgraphvizguile += missing-dependency|CSWlibgvc6
+CHECKPKG_OVERRIDES_CSWgraphvizguile += missing-dependency|CSWlibgraph5
+CHECKPKG_OVERRIDES_CSWlibgvpr2 += missing-dependency|CSWlibcgraph6
+CHECKPKG_OVERRIDES_CSWgraphvizpython += missing-dependency|CSWlibcdt5
+CHECKPKG_OVERRIDES_CSWgraphvizpython += missing-dependency|CSWlibgvc6
+CHECKPKG_OVERRIDES_CSWgraphvizpython += missing-dependency|CSWlibgraph5
 include gar/category.mk
 
 post-merge:
