@@ -16,12 +16,19 @@ PACKAGES  = CSWgit CSWgitk CSWgit-gui CSWgit-svn CSWgit-cvs
 PACKAGES += CSWgit-emacs CSWgit-doc CSWgit-completion CSWgit-dev
 
 OBSOLETED_BY_CSWgit-gui = CSWgitgui
+CATALOGNAME_CSWgitgui = git_gui_stub
 OBSOLETED_BY_CSWgit-svn = CSWgitsvn
+CATALOGNAME_CSWgitsvn = git_svn_stub
 OBSOLETED_BY_CSWgit-emacs = CSWgitemacs
+CATALOGNAME_CSWgitemacs = git_emacs_stub
 OBSOLETED_BY_CSWgit-doc = CSWgitdoc
+CATALOGNAME_CSWgitdoc = git_doc_stub
 OBSOLETED_BY_CSWgit-completion = CSWgitcompletion
+CATALOGNAME_CSWgitcompletion = git_completion_stub
 OBSOLETED_BY_CSWgit-dev = CSWgitdevel
+CATALOGNAME_CSWgitdevel = git_devel_stub
 OBSOLETED_BY_CSWgit-cvs = CSWgitcvs
+CATALOGNAME_CSWgitcvs = git_cvs_stub
 
 CATALOGNAME_CSWgit = git
 CATALOGNAME_CSWgit-cvs = git_cvs
