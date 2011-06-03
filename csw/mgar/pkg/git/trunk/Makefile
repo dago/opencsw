@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 1.7.5
+VERSION = 1.7.5.4
 #PATCHLEVEL = rc1
 CATEGORIES = devel
 
@@ -87,12 +87,9 @@ SPKG_DESC_CSWgit-emacs = Git VCS support for Emacs
 SPKG_DESC_CSWgit-completion = Bash completion support for Git
 SPKG_DESC_CSWgit-dev = Headers and static libraries for Git
 
-#NOTE: If you need to proxy git:// connections, set GIT_USE_PROXY in
-#	your .garrc file.  (That leaves this recipe in a more generic form.)
-GIT_REPOS  = git://git.kernel.org/pub/scm/git/git.git
-GIT_TREEISH_git.git = v$(VERSION)$(if $(PATCHLEVEL),-$(PATCHLEVEL))
-
-DISTFILES = CSWgit.postinstall
+MASTER_SITES = http://kernel.org/pub/software/scm/$(NAME)/
+DISTFILES += $(NAME)-$(VERSION).tar.bz2
+DISTFILES += CSWgit.postinstall
 
 PATCHFILES += 0001-Update-path-in-documentation-to-be-CSW-proper.patch
 PATCHFILES += 0002-Alter-the-value-of-_PATH_DEFPATH-when-paths.h-not-pr.patch
