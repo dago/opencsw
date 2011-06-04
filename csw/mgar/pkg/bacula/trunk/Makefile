@@ -213,7 +213,7 @@ CONFIGURE_ARGS += --with-python=$(prefix)
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5
-CONFIGURE_ARGS += --with-scriptdir=$(libexecdir_install)/$(NAME)
+CONFIGURE_ARGS += --with-scriptdir=$(sysconfdir)/scripts
 CONFIGURE_ARGS += --with-logdir=$(localstatedir)/log/$(NAME)
 CONFIGURE_ARGS += --with-pid-dir=$(localstatedir)/run
 CONFIGURE_ARGS += --with-subsys-dir=$(localstatedir)/run/subsys
@@ -276,7 +276,7 @@ PROTOTYPE_FILES_confgroup = /etc/opt/csw/bacula/.*
 PROTOTYPE_CLASS_confgroup = cswpreserveconf
 PROTOTYPE_GROUP_confgroup = bacula
 PROTOTYPE_PERMS_confgroup = 0640
-PROTOTYPE_FILES_generalperms = /opt/csw/sbin/.* /opt/csw/libexec/bacula/.*
+PROTOTYPE_FILES_generalperms = /opt/csw/sbin/.* /etc/opt/csw/bacula/scripts
 PROTOTYPE_PERMS_generalperms = 0755
 
 include gar/category.mk
@@ -307,11 +307,6 @@ post-install-modulated:
 		ginstall -d -m 0755 $(DOCD)_$$p; \
 		ginstall -m 0644 $(WORKDIR)/postmsg $(DOCD)_$$p/README.postmsg; \
 	done)
-	@( cd $(DESTDIR)/opt/csw/libexec/bacula/; \
-	   for f in mtx-changer.conf query.sql; do \
-		mv $$f $(DESTDIR)/etc/opt/csw/bacula/$$f; \
-		ln -s /etc/opt/csw/bacula/$$f $$f; \
-	   done)
 	@( cd $(DESTDIR)/etc/opt/csw/bacula; \
 		perl -pi -e "s!<bacula-source>!$(docdir)/$(NAME)!" query.sql )
 	@$(MAKECOOKIE)
