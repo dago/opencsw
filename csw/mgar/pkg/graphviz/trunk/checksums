@@ -4,7 +4,7 @@ b66d09e11339fc981ab7c62518b3f92e  CSWgraphvizdevil.postuninstall
 b66d09e11339fc981ab7c62518b3f92e  CSWgraphvizgd.postinstall
 b66d09e11339fc981ab7c62518b3f92e  CSWgraphvizgd.postuninstall
 d039829d638e26ea600f4db3e213959f  configure.patch
-85ebea4df5ba1af93d04f52dbf7b94b6  Makefile.am.patch
+f2c5f062fb643dbb0db352a25bf09e6c  Makefile.am.patch
 5ced04f48ec6c223d6a6e51c2f6219d0  trapezoid.c.patch
 31f8a6e9e31075ad537fc2b9d2e6ab09  post_process.c.patch
 a9e6a8d6711f217155272c1e17e7d106  gvpr_Makefile.am.patch
