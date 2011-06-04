@@ -250,6 +250,9 @@ RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibxdot4
 RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibcdt5
 RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibgvc6
 RUNTIME_DEP_PKGS_CSWgraphvizperl += CSWlibgraph5
+PKGFILES_CSWgraphvizperl = $(libdir)/graphviz/perl/.*
+PKGFILES_CSWgraphvizperl += $(mandir)/man3/.*\.3perl
+PKGFILES_CSWgraphvizperl += $(sharedstatedir)/graphviz/demo/.*\.pl
 
 #PACKAGES += CSWgraphvizphp
 SPKG_DESC_CSWgraphvizphp = Graphviz language binding for php
@@ -368,7 +371,7 @@ PKGFILES_CSWlibcgraph6 += $(call baseisadirs,$(libdir),libcgraph\.so\.6(\.\d+)*)
 SPKG_DESC_CSWlibcgraph6 += Graph Visualization Tools, libcgraph.so.6
 RUNTIME_DEP_PKGS_CSWlibcgraph6 += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibcgraph6 += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWlibcgraph6 += CCSWlibcdt5
+RUNTIME_DEP_PKGS_CSWlibcgraph6 += CSWlibcdt5
 
 PACKAGES += CSWlibgraph5
 CATALOGNAME_CSWlibgraph5 = libgraph5
