@@ -23,6 +23,7 @@ DISTFILES += postmsg
 PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
 PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
 PATCHFILES += 0003-Make-the-solaris-init-scripts-user-group-aware.patch
+PATCHFILES += 0004-Update-man-page-installation-so-we-don-t-get-gzipped.patch
 
 BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
 BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
@@ -327,6 +328,3 @@ post-merge:
 		mkdir -p pkg/CSWbacula-fd; \
 		echo ":bacula::::::" > pkg/CSWbacula-fd/cswusergroup; \
 		echo "bacula-fd 9102/tcp" > pkg/CSWbacula-fd/services)
-	@echo Unzipping manpages...a hack for now...
-	@(cd $(PKGROOT)/opt/csw/share/man; \
-		find . -name '*gz' -print | xargs gunzip )
