@@ -1,0 +1,19 @@
+=======================================================================
+
+From Nagios 3.2.3 on the configuration and log files for this package
+are stored in /etc/opt/csw/nagios/ and /var/opt/csw/nagios/.
+
+All files under /opt/csw/nagios/etc and /opt/csw/nagios/var were moved
+automatically to their new locations. All path names in these files 
+were changed accordingly. In case you created files outside these
+directories, please move them manually and check the path names in them.
+
+Please validate the changed configuration with the following command:
+
+   /opt/csw/nagios/bin/nagios -v /etc/opt/csw/nagios/nagios.cfg
+
+You can find additional information at:
+
+   http://wiki.opencsw.org/nagios
+
+=======================================================================

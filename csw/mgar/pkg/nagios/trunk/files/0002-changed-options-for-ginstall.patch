@@ -1,0 +1,34 @@
+From 104bbe890512e033db7654c1a0251e9a5a00572a Mon Sep 17 00:00:00 2001
+From: Juergen Arndt <ja@opencsw.org>
+Date: Thu, 21 Apr 2011 15:41:53 +0200
+Subject: [PATCH] changed options for ginstall
+
+---
+ configure |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index 386ed46..db5e00c 100755
+--- a/configure
++++ b/configure
+@@ -6127,7 +6127,7 @@ cat >>confdefs.h <<_ACEOF
+ #define DEFAULT_NAGIOS_GROUP "$nagios_grp"
+ _ACEOF
+ 
+-INSTALL_OPTS="-o $nagios_user -g $nagios_grp"
++INSTALL_OPTS="-o $install_user -g $install_group"
+ 
+ 
+ 
+@@ -6148,7 +6148,7 @@ fi
+ 
+ 
+ 
+-COMMAND_OPTS="-o $command_user -g $command_grp"
++COMMAND_OPTS="-o $install_user -g $install_group"
+ 
+ 
+ MAIL_PROG=no
+-- 
+1.7.3.2
+
