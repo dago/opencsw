@@ -349,3 +349,4 @@ post-install-modulated:
 
 post-merge:
 	@(rm $(PKGROOT)/opt/csw/php5/extensions/phar)
+	@$(MAKECOOKIE)
