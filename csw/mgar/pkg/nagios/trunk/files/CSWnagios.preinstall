@@ -1,25 +1,22 @@
-# This script exists to make sure the required user
-# accounts nagios and groups nagios, nagioscm exist.
-# 2006-02-27: group nagioscm is required.
-# 2007-09-11 Fix PKG_INSTALL_ROOT usage.  BASEDIR is not used for non
-#            relocatable packages.
-
-
 echo "Executing preinstall"
 
 cat << EOF
 
 =======================================================================
 
-From Nagios 3.2.1 on the configuration and log files for this package
+From Nagios 3.2.3 on the configuration and log files for this package
 are stored in /etc/opt/csw/nagios/ and /var/opt/csw/nagios/.
 
-The standard config files will be moved automatically to the new 
-location.  Files made by your own will remain in /opt/csw/nagios/etc/
-and have to be moved manually by you.
+All files under /opt/csw/nagios/etc and /opt/csw/nagios/var will be
+moved automatically to their new locations. All path names in these
+files will be changed accordingly. In case you created files outside
+these directories, please move them manually and check the path names 
+in them.
 
-Don't forget to change the pathes in your config files. Verify the 
-new config with the following command:
+If you don't have a backup of your configuration, you might want to
+do it now.
+
+Please validate the changed configuration with the following command:
 
    /opt/csw/nagios/bin/nagios -v /etc/opt/csw/nagios/nagios.cfg
 
@@ -27,38 +24,16 @@ You can find additional information at:
 
    http://wiki.opencsw.org/nagios
 
-         The installation will proceed in 30 seconds.
+         The installation will proceed in 15 seconds.
              Press CTRL+C if you want to stop now.
 
 =======================================================================
 EOF
 
-sleep 30
+for i in 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+do
+	printf "$i "
+	sleep 1
+done
 
-#If installing package on a filesystem tree not running the OS; then exit.
-if [ ! x"$PKG_INSTALL_ROOT" = x"" ] ; then exit 0 ; fi
-
-NAGIOSHOME=/opt/csw/nagios
-
-if [ "$NEEDNAGGROUP" = 1 ] ; then
-        echo adding nagios group
-        /usr/sbin/groupadd nagios
-fi
-
-if [ "$NEEDNAGUSER" = 1 ] ; then
-        echo adding nagios user
-        /usr/sbin/useradd -g nagios nagios
-        /usr/sbin/usermod -s /bin/false -d $NAGIOSHOME nagios
-else
-	echo not adding user
-fi
-
-if [ "$NEEDCMDGROUP" = 1 ] ; then
-        echo adding nagioscm group
-        /usr/sbin/groupadd nagioscm
-        echo adding nagios user to nagioscm group
-        /usr/sbin/usermod -G nagioscm nagios
-fi
-
-
-exit 0
+echo

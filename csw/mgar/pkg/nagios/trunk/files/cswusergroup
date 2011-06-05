@@ -1,0 +1,3 @@
+:nagioscm::::::
+:nagios::::::
+nagios:nagios:Nagios user:/etc/opt/csw/nagios::m:r:NP:nagioscm

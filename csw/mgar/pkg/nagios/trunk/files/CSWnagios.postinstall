@@ -1,28 +1,58 @@
+ETCSRCDIR=/opt/csw/nagios/etc
+ETCDESTDIR=/etc/opt/csw/nagios
+
+VARSRCDIR=/opt/csw/nagios/var
+VARDESTDIR=/var/opt/csw/nagios
+
 #
-# just print out the warning because of the new config directory
+# move contents of olddir to newdir
 #
 
-cat << EOF
+move_contents()
+{
+	olddir=$1
+	newdir=$2
 
-=======================================================================
+	export olddir
+	export newdir
 
-From Nagios 3.2.1 on the configuration and log files for this package
-are stored in /etc/opt/csw/nagios/ and /var/opt/csw/nagios/.
+	if [ -x $olddir ]
+	then
+		tar cpf - -C $olddir . | (cd $newdir ; tar xpf -)
+		rm -r $olddir
+	fi
+}
 
-The standard config files will be moved automatically to the new 
-location.  Files made by your own will remain in /opt/csw/nagios/etc/
-and have to be moved manually by you.
+#
+# go through all files and set the new path
+#
 
-Don't forget to change the pathes in your config files. Verify the 
-new config with the following command:
+replace_path_in_files()
+{
+	oldpath=$1
+	newpath=$2
+	curpath=$3
 
-   /opt/csw/nagios/bin/nagios -v /etc/opt/csw/nagios/nagios.cfg
+	cd $curpath
+	files=`find ./ -type f`
 
-You can find additional information at:
+	for file in `echo $files`
+	do
+		cp -p $file $file.tmp
+		cat $file.tmp | sed -e "s;$ETCSRCDIR;$ETCDESTDIR;g" -e "s;$VARSRCDIR;$VARDESTDIR;g" > $file
+		rm $file.tmp
+	done
+}
 
-   http://wiki.opencsw.org/nagios
 
-=======================================================================
-EOF
+if [ -x $ETCSRCDIR ]
+then
+	move_contents $ETCSRCDIR $ETCDESTDIR
+	replace_path_in_files $ETCSRCDIR $ETCDESTDIR $ETCDESTDIR
+fi
 
-
+if [ -x $VARSRCDIR ]
+then
+	move_contents $VARSRCDIR $VARDESTDIR
+	replace_path_in_files $VARSRCDIR $VARDESTDIR $VARDESTDIR
+fi
