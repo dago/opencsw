@@ -25,7 +25,7 @@ RUNTIME_DEP_PKGS_CSWgar-dev += CSWsvn CSWpython CSWpy-cheetah
 RUNTIME_DEP_PKGS_CSWgar-dev += CSWxz CSWgfile CSWpy-hachoir-core
 RUNTIME_DEP_PKGS_CSWgar-dev += CSWpy-hachoir-parser CSWpy-libmagic
 RUNTIME_DEP_PKGS_CSWgar-dev += CSWpy-progressbar CSWpy-sqlobject CSWpy-yaml
-RUNTIME_DEP_PKGS_CSWgar-dev += CSWpy-curl CSWpy-mako CSWmgar
+RUNTIME_DEP_PKGS_CSWgar-dev += CSWpy-curl CSWpy-mako
 
 MASTER_SITES = 
 
@@ -36,7 +36,6 @@ INSTALL_SCRIPTS = custom
 
 CHECKPKG_OVERRIDES_CSWgar-dev += archall-devel-package
 CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWlftp
-CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWmgar
 CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWgmake
 CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWgsed
 CHECKPKG_OVERRIDES_CSWgar-dev += surplus-dependency|CSWggrep
