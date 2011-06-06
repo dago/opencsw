@@ -1,0 +1,8 @@
+PKG=CSWmbrowse
+NAME=mbrowse - SNMP MIB browser
+VERSION=0.4.3,REV=YYYY.MM.DD
+CATEGORY=application
+VENDOR=http://sourceforge.net/projects/mbrowse/ packaged for CSW by Philip Brown
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=phil@opencsw.org
+OPENCSW_REPOSITORY=https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/mbrowse/trunk

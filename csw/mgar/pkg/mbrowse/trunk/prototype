@@ -1,0 +1,7 @@
+i pkginfo
+i copyright
+i depend
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/mbrowse 0755 root bin
+d none /opt/csw/share/doc/mbrowse 0755 root bin
+f none /opt/csw/share/doc/mbrowse/COPYING=COPYING 0755 root bin
