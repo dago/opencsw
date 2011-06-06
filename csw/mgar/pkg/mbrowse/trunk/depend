@@ -1,5 +1,11 @@
 P       CSWcommon
 P       CSWnetsnmp
-P       CSWgtk
-P       CSWglib
+P       CSWgtk2
+P       CSWglib2
+P       CSWlibatk
+P       CSWfconfig
+P       CSWftype2
+P       CSWlibcairo
+P       CSWlibintl8
+P       CSWpango
 P	CSWosslrt
