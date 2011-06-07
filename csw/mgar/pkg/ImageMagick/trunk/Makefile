@@ -183,11 +183,16 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgraph5
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibcairo
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibgvc6
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWgcc3g++rt
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWperl
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibfftw3-3
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmf0-2-7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmflite0-2-7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWliblzma5
+
+PACKAGES += CSWpm-imagemagick
+SPKG_DESC_CSWpm-imagemagick = Image::Magick: Perl binding for Imagemagick
+PKGFILES_CSWpm-imagemagick += $(libdir)/perl/.*
+RUNTIME_DEP_PKGS_CSWpm-imagemagick += CSWperl
+RUNTIME_DEP_PKGS_CSWpm-imagemagick += CSWlibmagickcore4
 
 BUILD_DEP_PKGS += CSWdjvulibredevel
 BUILD_DEP_PKGS += CSWgraphvizdevel
@@ -247,7 +252,8 @@ CHECKPKG_OVERRIDES_CSWimagemagick += soname-not-found|libdpstk.so.5|is|needed|by
 # Only remove libtool files from the public lib directory, keep the private ones for libtool dlopn
 MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/lib.*\.la
 
-EXTRA_MERGE_EXCLUDE_FILES = .*/perllocal.pod
+EXTRA_MERGE_EXCLUDE_FILES += .*/perllocal.pod
+EXTRA_MERGE_EXCLUDE_FILES += .*/\.packlist
 
 STRIP_LIBTOOL = 1
 
