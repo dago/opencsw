@@ -30,7 +30,7 @@ RUNTIME_DEP_PKGS_CSWwmf += CSWpng
 RUNTIME_DEP_PKGS_CSWwmf += CSWzlib
 RUNTIME_DEP_PKGS_CSWwmf += CSWwmffonts
 RUNTIME_DEP_PKGS_CSWwmf += CSWiconv
-RUNTIME_DEP_PKGS_CSWwmf += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWwmf += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWwmf += CSWlibwmf0-2-7
 RUNTIME_DEP_PKGS_CSWwmf += CSWlibwmflite0-2-7
 CHECKPKG_OVERRIDES_CSWwmf += surplus-dependency|CSWwmffonts
@@ -50,7 +50,7 @@ RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibwmflite0-2-7
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWpng
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWftype2
 OBSOLETED_BY_CSWlibwmf0-2-7 = CSWlibwmf
 
@@ -85,7 +85,7 @@ CATALOGNAME_CSWlibwmfgtk = libwmf_gtk
 CHECKPKG_OVERRIDES_CSWlibwmfgtk += catalogname-does-not-match-pkgname|pkgname=CSWlibwmfgtk|catalogname=libwmf_gtk|expected-catalogname=libwmfgtk
 SPKG_DESC_CSWlibwmfgtk += Library and tools for manipulating Windows metafiles - GTK loader
 PKGFILES_CSWlibwmfgtk = $(libdir).*/io-wmf.so
-RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWglib2
 RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWgtk2
 RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWlibwmf0-2-7
