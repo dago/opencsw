@@ -32,6 +32,10 @@ RUNTIME_DEP_PKGS_CSWwebp += CSWjpeg
 
 BUILD64 = 1
 
+# On amd64 -xO3 results in an assembler error
+OPT_FLAGS_SOS-amd64 = -xO2
+OPT_FLAGS_SOS = $(or $(OPT_FLAGS_SOS-$(ISA)),-xO3)
+
 include gar/category.mk
 
 post-extract-modulated:
