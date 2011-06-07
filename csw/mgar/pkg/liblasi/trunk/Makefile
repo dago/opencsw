@@ -50,7 +50,7 @@ CHECKPKG_OVERRIDES_CSWliblasi-dev += file-with-bad-content|/usr/local|root/opt/c
 
 BUILD64 = 1
 
-EXTRA_CXX_FLAGS = -lCstd -norunpath
+LDFLAGS = -L/usr/lib -lCstd -norunpath
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
