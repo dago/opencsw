@@ -67,6 +67,8 @@ RUNTIME_DEP_PKGS_CSWrsvg += CSWglib2
 
 PACKAGES += CSWlibrsvggnome
 CATALOGNAME_CSWlibrsvggnome = librsvg_gnome
+# This is a legacy package name
+CHECKPKG_OVERRIDES_CSWlibrsvggnome += catalogname-does-not-match-pkgname|pkgname=CSWlibrsvggnome|catalogname=librsvg_gnome|expected-catalogname=librsvggnome
 PKGFILES_CSWlibrsvggnome = $(libdir)/gtk-2.0/.*
 SPKG_DESC_CSWlibrsvggnome += Scalable Vector Graphics library - Gnome module
 RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibrsvg2-2
