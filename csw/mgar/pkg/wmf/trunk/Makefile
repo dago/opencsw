@@ -71,7 +71,7 @@ PKGFILES_CSWlibwmfdevel = NOFILES
 ARCHALL_CSWlibwmfdevel = 1
 # Come on, it has no files
 CHECKPKG_OVERRIDES_CSWlibwmfdevel += archall-devel-package
-RUNTIME_DEP_PKGs_CSWlibwmfdevel = CSWlibwmf-dev
+RUNTIME_DEP_PKGS_CSWlibwmfdevel = CSWlibwmf-dev
 
 PACKAGES += CSWlibwmf-dev
 CATALOGNAME_CSWlibwmf-dev = libwmf_dev
