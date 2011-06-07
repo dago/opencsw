@@ -36,17 +36,9 @@ RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWglib2
 
 PACKAGES += CSWlibrsvg-dev
 SPKG_DESC_CSWlibrsvg-dev = Development files for librsvg-2.so.2
-PKGFILES_CSWlibrsvg-dev = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibrsvg-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibrsvg-dev += $(sharedstatedir)/gtk-doc/.*
 RUNTIME_DEP_PKGS_CSWlibrsvg-dev += CSWlibrsvg2-2
-OBSOLETED_BY_CSWlibrsvg-dev = CSWlibrsvgdevel
-CATALOGNAME_CSWlibrsvgdevel = librsvg_devel_stub
-
-PACKAGES += CSWlibrsvg-doc
-SPKG_DESC_CSWlibrsvg-doc = Documentation for librsvg
-PKGFILES_CSWlibrsvg-doc = $(sharedstatedir)/gtk-doc/.*
-ARCHALL_CSWlibrsvg-doc = 1
-OBSOLETED_BY_CSWlibrsvg-doc = CSWlibrsvgdoc
-CATALOGNAME_CSWlibrsvgdoc = librsvg_doc_stub
 
 PACKAGES += CSWrsvg
 SPKG_DESC_CSWrsvg += SVG to raster image conversion utility
@@ -65,25 +57,22 @@ RUNTIME_DEP_PKGS_CSWrsvg += CSWfconfig
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibgsf
 RUNTIME_DEP_PKGS_CSWrsvg += CSWglib2
 
-PACKAGES += CSWlibrsvggnome
-CATALOGNAME_CSWlibrsvggnome = librsvg_gnome
-# This is a legacy package name
-CHECKPKG_OVERRIDES_CSWlibrsvggnome += catalogname-does-not-match-pkgname|pkgname=CSWlibrsvggnome|catalogname=librsvg_gnome|expected-catalogname=librsvggnome
-PKGFILES_CSWlibrsvggnome = $(libdir)/gtk-2.0/.*
-SPKG_DESC_CSWlibrsvggnome += Scalable Vector Graphics library - Gnome module
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibrsvg2-2
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWpango
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWpng
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWftype2
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibcairo
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWgtk2
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibatk
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibcroco
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWfconfig
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWlibgsf
-RUNTIME_DEP_PKGS_CSWlibrsvggnome += CSWglib2
+PACKAGES += CSWlibrsvg-gnome
+PKGFILES_CSWlibrsvg-gnome = $(libdir)/gtk-2.0/.*
+SPKG_DESC_CSWlibrsvg-gnome += Scalable Vector Graphics library - Gnome module
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibrsvg2-2
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWpango
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWpng
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibcairo
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibatk
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibcroco
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibgsf
+RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWglib2
 
 BUILD_DEP_PKGS += CSWlibxml2-dev
 
