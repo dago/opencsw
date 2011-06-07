@@ -188,11 +188,11 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmf0-2-7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmflite0-2-7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWliblzma5
 
-PACKAGES += CSWpm-imagemagick
-SPKG_DESC_CSWpm-imagemagick = Image::Magick: Perl binding for Imagemagick
-PKGFILES_CSWpm-imagemagick += $(libdir)/perl/.*
-RUNTIME_DEP_PKGS_CSWpm-imagemagick += CSWperl
-RUNTIME_DEP_PKGS_CSWpm-imagemagick += CSWlibmagickcore4
+PACKAGES += CSWpm-image-magick
+SPKG_DESC_CSWpm-image-magick = Image::Magick: Perl binding for Imagemagick
+PKGFILES_CSWpm-image-magick += $(libdir)/perl/.*
+RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWperl
+RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWlibmagickcore4
 
 BUILD_DEP_PKGS += CSWdjvulibredevel
 BUILD_DEP_PKGS += CSWgraphvizdevel
