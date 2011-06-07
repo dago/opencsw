@@ -2,9 +2,6 @@ NAME = liblasi
 VERSION = 1.1.0
 CATEGORIES = lib
 
-SF_PROJ      = lasi
-SOURCENAME = libLASi
-
 DESCRIPTION = C++ Unicode support for PostScript
 define BLURB
   libLASi is a library written by Larry Siden that provides a C++ stream output
@@ -23,55 +20,44 @@ define BLURB
   ability to produce Postscript independent of any one application framework. 
 endef
 
+SF_PROJ = lasi
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(SOURCENAME)-$(VERSION).tar.gz
+SOURCENAME = libLASi
 DISTNAME = $(SOURCENAME)-$(VERSION)
-
-SPKG_SOURCEURL = http://unifont.org/lasi/
+DISTFILES  = $(DISTNAME).tar.gz
 
 PATCHFILES = liblasi-consts.diff
 
-RUNTIME_DEP_PKGS = CSWftype2 CSWggettextrt CSWglib2 CSWpango CSWzlib
+VENDOR_URL = http://unifont.org/lasi/
 
-PACKAGES = CSWliblasi CSWliblasidevel CSWliblasidoc
-CATALOGNAME_CSWliblasi = liblasi
-CATALOGNAME_CSWliblasidevel = liblasi_devel
-CATALOGNAME_CSWliblasidoc = liblasi_doc
+PACKAGES += CSWliblasi0
+SPKG_DESC_CSWliblasi0 = C++ Unicode support for PostScript, libLASi.so.0
+PKGFILES_CSWliblasi0 = $(call pkgfiles_lib,libLASi.so.0)
+RUNTIME_DEP_PKGS_CSWliblasi0 += CSWftype2
+RUNTIME_DEP_PKGS_CSWliblasi0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWliblasi0 += CSWglib2
+RUNTIME_DEP_PKGS_CSWliblasi0 += CSWpango
+RUNTIME_DEP_PKGS_CSWliblasi0 += CSWfconfig
+OBSOLETED_BY_CSWliblasi0 = CSWliblasi
 
-SPKG_DESC_CSWliblasi = C++ Unicode support for PostScript
-SPKG_DESC_CSWliblasidevel = C++ Unicode support for PostScript - developer package
-SPKG_DESC_CSWliblasidoc = C++ Unicode support for PostScript - documentation package
+PACKAGES += CSWliblasi-dev
+SPKG_DESC_CSWliblasi-dev = Developer support for libLASi.so.0
+PKGFILES_CSWliblasi-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWliblasi-dev += $(sharedstatedir)/doc/.*
+RUNTIME_DEP_PKGS_CSWliblasi-dev += CSWliblasi0
+# That is ok
+CHECKPKG_OVERRIDES_CSWliblasi-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/liblasi/examples/README
 
-RUNTIME_DEP_PKGS_CSWliblasi += CSWftype2 CSWggettextrt CSWglib2 CSWpango
-RUNTIME_DEP_PKGS_CSWliblasi += CSWfconfig
-RUNTIME_DEP_PKGS_CSWliblasidevel += CSWliblasi
-RUNTIME_DEP_PKGS_CSWliblasidoc = 
+BUILD64 = 1
 
-PKGFILES_CSWliblasidevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWliblasidoc    = $(sharedstatedir)/doc/.*
+EXTRA_CXX_FLAGS = -lCstd -norunpath
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(SOURCENAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# 187113 is the group_id for the liblasi project on sourceforge
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE) = 187113
-
-BUILD64 = 1
-
-CMAKE_CXX_FLAGS = $(CXXFLAGS)
-EXTRA_COMMON_EXPORTS = CMAKE_CXX_FLAGS
-
 include gar/category.mk
-
-#WORKSRC = $(WORKDIR)/$(SOURCENAME)-$(VERSION)
-
 
 configure-custom:
 	@echo " ==> Configuring $(NAME) (custom)"
