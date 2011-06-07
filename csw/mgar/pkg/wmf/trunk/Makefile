@@ -35,20 +35,11 @@ RUNTIME_DEP_PKGS_CSWwmf += CSWlibwmf0-2-7
 RUNTIME_DEP_PKGS_CSWwmf += CSWlibwmflite0-2-7
 CHECKPKG_OVERRIDES_CSWwmf += surplus-dependency|CSWwmffonts
 
-PACKAGES += CSWlibwmf
-CATALOGNAME_CSWlibwmf = libwmf
-SPKG_DESC_CSWlibwmf = Transitional package as contents moved to 
-PKGFILES_CSWlibwmf = NOFILES
-ARCHALL_CSWlibwmf = 1
-RUNTIME_DEP_PKGS_CSWlibwmf += CSWlibwmf0-2-7
-CHECKPKG_OVERRIDES_CSWlibwmf += surplus-dependency|CSWlibwmf0-2-7
-RUNTIME_DEP_PKGS_CSWlibwmf += CSWlibwmflite0-2-7
-CHECKPKG_OVERRIDES_CSWlibwmf += surplus-dependency|CSWlibwmflite0-2-7
-
 PACKAGES += CSWlibwmflite0-2-7
 CATALOGNAME_CSWlibwmflite0-2-7 = libwmflite0_2_7
 PKGFILES_CSWlibwmflite0-2-7 += $(call baseisadirs,$(libdir),libwmflite-0\.2\.so\.7(\.\d+)*)
 SPKG_DESC_CSWlibwmflite0-2-7 += Library and tools for manipulating Windows metafiles - runtime package, libwmflite-0.2.so.7
+OBSOLETED_BY_CSWlibwmflite0-2-7 = CSWlibwmf
 
 PACKAGES += CSWlibwmf0-2-7
 CATALOGNAME_CSWlibwmf0-2-7 = libwmf0_2_7
@@ -61,17 +52,7 @@ RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibxml2
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWftype2
-
-PACKAGES += CSWlibwmfdevel
-CATALOGNAME_CSWlibwmfdevel = libwmf_devel
-# This is a legacy name
-CHECKPKG_OVERRIDES_CSWlibwmfdevel += catalogname-does-not-match-pkgname|pkgname=CSWlibwmfdevel|catalogname=libwmf_devel|expected-catalogname=libwmfdevel
-SPKG_DESC_CSWlibwmfdevel = Transitional package as contents moved to CSWlibwmf-dev
-PKGFILES_CSWlibwmfdevel = NOFILES
-ARCHALL_CSWlibwmfdevel = 1
-# Come on, it has no files
-CHECKPKG_OVERRIDES_CSWlibwmfdevel += archall-devel-package
-RUNTIME_DEP_PKGS_CSWlibwmfdevel = CSWlibwmf-dev
+OBSOLETED_BY_CSWlibwmf0-2-7 = CSWlibwmf
 
 PACKAGES += CSWlibwmf-dev
 CATALOGNAME_CSWlibwmf-dev = libwmf_dev
@@ -79,6 +60,8 @@ SPKG_DESC_CSWlibwmf-dev += Library and tools for manipulating Windows metafiles 
 PKGFILES_CSWlibwmf-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibwmf-dev += CSWlibwmflite0-2-7
 RUNTIME_DEP_PKGS_CSWlibwmf-dev += CSWlibwmf0-2-7
+OBSOLETED_BY_CSWlibwmf-dev = CSWlibwmfdevel
+CATALOGNAME_CSWlibwmfdevel = libwmf_devel_stub
 
 PACKAGES += CSWlibwmfdoc
 CATALOGNAME_CSWlibwmfdoc = libwmf_doc
@@ -113,7 +96,6 @@ BUILD_DEP_PKGS += CSWgtk2devel
 CSW_DEFAULT_FONTPATH = $(sharedstatedir)/fonts/truetype
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-x
@@ -128,11 +110,6 @@ CONFIGURE_ARGS += --with-sysfontmap=$(datadir)/fonts/fontmap
 #CONFIGURE_ARGS += --with-xtrafontmap=
 CONFIGURE_ARGS += --with-gsfontmap=$(datadir)/ghostscript/Resource/Init/Fontmap.GS
 CONFIGURE_ARGS += --with-gsfontdir=$(datadir)/ghostscript/fonts
-
-TEST_TARGET = check
-
-MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
-MERGE_DIRS_isa-extra = $(libdir)
 
 # These are just docs
 CHECKPKG_OVERRIDES_CSWlibwmfdoc += file-with-bad-content
