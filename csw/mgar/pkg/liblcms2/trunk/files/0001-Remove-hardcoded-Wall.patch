@@ -1,0 +1,25 @@
+From 3e8a1c71e3c350e9a0f31a00cb747959d48d73ba Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 7 Jun 2011 15:32:08 +0200
+Subject: [PATCH] Remove hardcoded -Wall
+
+---
+ testbed/Makefile.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/testbed/Makefile.in b/testbed/Makefile.in
+index 89f5c13..0be576f 100644
+--- a/testbed/Makefile.in
++++ b/testbed/Makefile.in
+@@ -81,7 +81,7 @@ AUTOMAKE = @AUTOMAKE@
+ AWK = @AWK@
+ CC = @CC@
+ CCDEPMODE = @CCDEPMODE@
+-CFLAGS = --pedantic -Wall -std=c99 -O2
++CFLAGS = @CFLAGS@
+ CPP = @CPP@
+ CPPFLAGS = @CPPFLAGS@
+ CXX = @CXX@
+-- 
+1.7.5.4
+
