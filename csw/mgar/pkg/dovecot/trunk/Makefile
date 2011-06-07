@@ -81,8 +81,8 @@ STRIP_DIRS  = $(DESTDIR)$(libexecdir)/dovecot
 # cswclassutils integration
 INITSMF    = $(sysconfdir)/init.d/cswdovecot
 USERGROUP  = dovecot:dovecot:Dovecot IMAP Server:/var/opt/csw/run/dovecot/login:/bin/false
-SAMPLECONF_CSWdovecot = .*/dovecot.pem $(sysconfdir)/dovecot.conf
-MIGRATE_FILES_CSWdovecot = dovecot.conf
+SAMPLECONF = .*/dovecot.pem $(sysconfdir)/dovecot.conf
+MIGRATE_FILES = dovecot.conf
 
 CHECKPKG_OVERRIDES_CSWdovecot += bad-rpath-entry|/opt/csw/lib/|opt/csw/libexec/dovecot/dovecot-auth
 CHECKPKG_OVERRIDES_CSWdovecot += bad-rpath-entry|/opt/csw/lib/|opt/csw/sbin/dovecotpw
