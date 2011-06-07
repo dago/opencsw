@@ -21,24 +21,19 @@ MASTER_SITES   = http://dovecot.org/releases/1.2/
 DISTFILES      = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX   = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-# Sieve plugin is packaged via a post-package hook (see package-sieveplugin:)
-PACKAGES  = CSWdovecot CSWdovecot-devel CSWdovecot-sieve
-NOPACKAGE = CSWdovecot-sieve
+PACKAGES  = CSWdovecot CSWdovecot-devel
 
 CATALOGNAME_CSWdovecot = dovecot
 CATALOGNAME_CSWdovecot-devel = dovecot_devel
-CATALOGNAME_CSWdovecot-sieve = dovecot_sieve
 
 SPKG_DESC_CSWdovecot = Secure IMAP server
 SPKG_DESC_CSWdovecot-devel = Dovecot secure IMAP server header files
-SPKG_DESC_CSWdovecot-sieve = Dovecot secure IMAP server sieve plugin
 
 RUNTIME_DEP_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt CSWlibpq
 RUNTIME_DEP_PKGS_CSWdovecot      += CSWzlib CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWdovecot      += CSWbzip2 CSWiconv
 RUNTIME_DEP_PKGS_CSWdovecot      += CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWdovecot-devel = CSWdovecot
-RUNTIME_DEP_PKGS_CSWdovecot-sieve = CSWdovecot
 
 BUILD_DEP_PKGS  = CSWossldevel CSWosslrt
 BUILD_DEP_PKGS += CSWmysql5devel CSWmysql5rt
@@ -47,7 +42,6 @@ BUILD_DEP_PKGS += CSWlibpq
 BUILD_DEP_PKGS += CSWkrb5lib CSWkrb5libdev
 
 PKGFILES_CSWdovecot-devel = $(PKGFILES_DEVEL)
-PKGFILES_CSWdovecot-sieve = .*sieve.*
 
 # These directories belong to CSWosslrt
 PROTOTYPE_FILTER  = awk '\
@@ -87,8 +81,11 @@ STRIP_DIRS  = $(DESTDIR)$(libexecdir)/dovecot
 # cswclassutils integration
 INITSMF    = $(sysconfdir)/init.d/cswdovecot
 USERGROUP  = dovecot:dovecot:Dovecot IMAP Server:/var/opt/csw/run/dovecot/login:/bin/false
-SAMPLECONF = .*/dovecot.pem $(sysconfdir)/dovecot.conf
-MIGRATE_FILES = dovecot.conf
+SAMPLECONF_CSWdovecot = .*/dovecot.pem $(sysconfdir)/dovecot.conf
+MIGRATE_FILES_CSWdovecot = dovecot.conf
+
+CHECKPKG_OVERRIDES_CSWdovecot += bad-rpath-entry|/opt/csw/lib/|opt/csw/libexec/dovecot/dovecot-auth
+CHECKPKG_OVERRIDES_CSWdovecot += bad-rpath-entry|/opt/csw/lib/|opt/csw/sbin/dovecotpw
 
 include gar/category.mk
 
@@ -104,9 +101,6 @@ pre-install-modulated:
 		s| /usr/lib/dovecot| /opt/csw/lib/dovecot|; \
 		s| /usr/local| /opt/csw/|;' \
 		$(WORKSRC)/*-example.conf
-# replace bad paths with /opt/csw in doc/wiki/*.txt
-	perl -pi -e 's|/usr/share|/opt/csw/share|' $(WORKSRC)/doc/wiki/*.txt
-	perl -pi -e 's|/usr/local|/opt/csw|' $(WORKSRC)/doc/wiki/*.txt
 	@$(MAKECOOKIE)
 
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
@@ -139,13 +133,17 @@ post-install-modulated: build-and-install-sieveplugin
 	# Copy init script
 	ginstall -Dm 755 $(FILEDIR)/cswdovecot  \
 		$(DESTDIR)/etc/opt/csw/init.d/cswdovecot
+
+	# Search replace paths in docs
+	perl -pi -e 's|/usr/share|/opt/csw/share|' \
+		$(DESTDIR)/opt/csw/share/doc/dovecot/wiki/*
+	perl -pi -e 's|/usr/local|/opt/csw|' \
+		$(DESTDIR)/opt/csw/share/doc/dovecot/wiki/*
 	@$(MAKECOOKIE)
 
-post-package: package-sieveplugin
-	@$(MAKECOOKIE)
-
-# Extra targets for the Sieve plugin build and packaging process, invoked
-# via post-install-modulated and post-package.
+# Extra targets for the Sieve plugin build process, invoked via post-install-modulated.
+# There used to be a separate sieve package but the sieve related files are now included
+# in the main CSWdovecot package.
 
 SIEVEVERSION = 1.1.8
 SIEVEDIST    = dovecot-sieve-$(SIEVEVERSION)
@@ -163,11 +161,11 @@ build-and-install-sieveplugin:
 		$(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS); \
 		$(BUILD_ENV) gmake $(BUILD_ARGS); \
 		$(INSTALL_ENV) gmake DESTDIR=$(DESTDIR) $(INSTALL_ARGS) install; )
+	# search and replace paths for sieveplugin doc files
+	perl -pi -e 's|/usr/share|/opt/csw/share|' \
+		$(DESTDIR)/opt/csw/share/doc/dovecot/wiki/*
+	perl -pi -e 's|/usr/local|/opt/csw|' \
+		$(DESTDIR)/opt/csw/share/doc/dovecot/wiki/*
+
 	rm -rf $(SIEVEDIST)*
 	@$(MAKECOOKIE)
-
-# Sieve plugin needs to be packaged with version != $(VERSION)
-package-sieveplugin:
-	gmake -o post-package \
-		NOPACKAGE="CSWdovecot CSWdovecot-devel" SPKG_VERSION=$(SIEVEVERSION) \
-		repackage
