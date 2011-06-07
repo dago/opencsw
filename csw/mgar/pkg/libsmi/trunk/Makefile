@@ -40,6 +40,7 @@ PKGFILES_CSWlibsmi-mibs = $(sharedstatedir)/mibs/.*
 PKGFILES_CSWlibsmi-mibs += $(sharedstatedir)/pibs/.*
 ARCHALL_CSWlibsmi-mibs = 1
 OBSOLETED_BY_CSWlibsmi-mibs = CSWlibsmimibs
+CATALOGNAME_CSWlibsmimibs = libsmi_mibs_stub
 
 BUILD64 = 1
 
