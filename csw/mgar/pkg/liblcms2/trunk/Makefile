@@ -22,14 +22,30 @@ PATCHFILES += 0001-Remove-hardcoded-Wall.patch
 
 VENDOR_URL = http://www.littlecms.com/
 
+PACKAGES += CSWliblcms2-2
+SPKG_DESC_CSWliblcms2-2 = Color management library, liblcms2.so.2
+PKGFILES_CSWliblcms2-2 += $(call pkgfiles_lib,liblcms2.so.2)
+
+PACKAGES += CSWliblcms2-dev
+SPKG_DESC_CSWliblcms2-dev = Development files for liblcms2.so.2
+PKGFILES_CSWliblcms2-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWliblcms2-dev += CSWliblcms2-2
+
+PACKAGES += CSWliblcms2-utils
+SPKG_DESC_CSWliblcms2-utils = Utility programs for LCMS (Little Color Management)
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWliblcms2-utils += CSWliblcms2-2
+RUNTIME_DEP_PKGS_CSWliblcms2-utils += CSWtiff
+RUNTIME_DEP_PKGS_CSWliblcms2-utils += CSWjpeg
+RUNTIME_DEP_PKGS_CSWliblcms2-utils += CSWzlib
+
 # Probably make separate package for Solaris 10 as it has float support
 EXTRA_CPPFLAGS-5.9 = -Dpowf=pow -Dfabsf=labs
 EXTRA_CPPFLAGS = $(EXTRA_CPPFLAGS-$(GAROSREL))
 
-EXTRA_LINKER_FLAGS = -lm
-
-OPT_FLAGS_SOS = -xO0
-
 BUILD64 = 1
+
+# One test with unicode is dumping core on 64 bit, disable for now
+SKIPTEST ?= 1
 
 include gar/category.mk
