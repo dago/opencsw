@@ -22,9 +22,6 @@ VENDOR_URL = http://rsync.samba.org/
 RUNTIME_DEP_PKGS_CSWrsync  = CSWiconv
 RUNTIME_DEP_PKGS_CSWrsync += CSWlibpopt
 
-BUILD64 = 1
-ISAEXEC = 1
-
 # The location of rsyncd.conf to OpenCSW standard has been done in 3.0.8
 MIGRATE_FILES = rsyncd.conf
 MIGRATE_SOURCE_DIR = /etc
