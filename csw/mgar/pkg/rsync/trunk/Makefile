@@ -37,4 +37,5 @@ post-install-modulated:
 		$(DESTDIR)$(mandir)/man5/rsyncd.conf.5
 	perl -pi \
 		-e 's,/usr/local,$(prefix),g;' \
+		-e 's,/etc/rsyncd.conf,$(sysconfdir)/rsyncd.conf,g;' \
 		$(DESTDIR)$(mandir)/man1/rsync.1
