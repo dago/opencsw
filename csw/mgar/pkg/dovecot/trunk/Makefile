@@ -21,19 +21,19 @@ MASTER_SITES   = http://dovecot.org/releases/1.2/
 DISTFILES      = $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX   = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-PACKAGES  = CSWdovecot CSWdovecot-devel
+PACKAGES  = CSWdovecot CSWdovecot-dev
 
 CATALOGNAME_CSWdovecot = dovecot
-CATALOGNAME_CSWdovecot-devel = dovecot_devel
+CATALOGNAME_CSWdovecot-dev = dovecot_dev
 
 SPKG_DESC_CSWdovecot = Secure IMAP server
-SPKG_DESC_CSWdovecot-devel = Dovecot secure IMAP server header files
+SPKG_DESC_CSWdovecot-dev = Dovecot secure IMAP server header files
 
 RUNTIME_DEP_PKGS_CSWdovecot       = CSWosslrt CSWmysql5rt CSWoldaprt CSWlibpq
 RUNTIME_DEP_PKGS_CSWdovecot      += CSWzlib CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWdovecot      += CSWbzip2 CSWiconv
 RUNTIME_DEP_PKGS_CSWdovecot      += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWdovecot-devel = CSWdovecot
+RUNTIME_DEP_PKGS_CSWdovecot-dev = CSWdovecot
 
 BUILD_DEP_PKGS  = CSWossldevel CSWosslrt
 BUILD_DEP_PKGS += CSWmysql5devel CSWmysql5rt
@@ -41,7 +41,7 @@ BUILD_DEP_PKGS += CSWoldaprt CSWoldapdevel
 BUILD_DEP_PKGS += CSWlibpq
 BUILD_DEP_PKGS += CSWkrb5lib CSWkrb5libdev
 
-PKGFILES_CSWdovecot-devel = $(PKGFILES_DEVEL)
+PKGFILES_CSWdovecot-dev = $(PKGFILES_DEVEL)
 
 # These directories belong to CSWosslrt
 PROTOTYPE_FILTER  = awk '\
