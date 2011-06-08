@@ -57,7 +57,7 @@ RUNTIME_DEP_PKGS_CSWbacula-console += CSWosslrt
 RUNTIME_DEP_PKGS_CSWbacula-console += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWbacula-console += CSWgcc4g++rt
 PKGFILES_CSWbacula-console  = .*sbin/bconsole .*man8/bconsole.* .*bconsole.conf.CSW
-PKGFILES_CSWbacula-console += .*libexec.*bconsole
+PKGFILES_CSWbacula-console += /etc/opt/csw/bacula/scripts/bconsole
 
 CATALOGNAME_CSWbacula-client = bacula_client
 SPKG_DESC_CSWbacula-client = $(DESCRIPTION) - Client meta-package
@@ -118,7 +118,7 @@ PKGFILES_CSWbacula-common += .*libbacsql-$(VERSION).so .*libbacsql.so
 PKGFILES_CSWbacula-common += .*sbin/bsmtp .*sbin/btraceback
 PKGFILES_CSWbacula-common += .*man1/bsmtp.1 .*man1/btraceback.1
 PKGFILES_CSWbacula-common += .*man8/bacula.8
-PKGFILES_CSWbacula-common += .*libexec/bacula/btraceback.*
+PKGFILES_CSWbacula-common += /etc/opt/csw//bacula/scripts/btraceback.*
 CHECKPKG_OVERRIDES_CSWbacula-common += file-with-bad-content|/usr/share|root/opt/csw/share/man/man8/bacula.8
 
 CATALOGNAME_CSWbacula-fd = bacula_fd
@@ -152,8 +152,10 @@ RUNTIME_DEP_PKGS_CSWbacula-sd += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWosslrt
 RUNTIME_DEP_PKGS_CSWbacula-sd += CSWmtx
 PKGFILES_CSWbacula-sd += .*init.d/cswbacula-sd
-PKGFILES_CSWbacula-sd += .*libexec.*disk-changer .*libexec.*dvd-handler
-PKGFILES_CSWbacula-sd += .*libexec.*mtx-changer.* .*bacula/bacula-sd.conf.CSW
+PKGFILES_CSWbacula-sd += /etc/opt/csw/bacula/.*disk-changer
+PKGFILES_CSWbacula-sd += /etc/opt/csw/bacula/.*dvd-handler
+PKGFILES_CSWbacula-sd += /etc/opt/csw/bacula/.*mtx-changer.*
+PKGFILES_CSWbacula-sd += /etc/opt/csw/bacula/bacula-sd.conf.CSW
 PKGFILES_CSWbacula-sd += /etc/opt/csw/bacula/mtx-changer.conf.CSW
 PKGFILES_CSWbacula-sd += .*sbin/bacula-sd .*sbin/bextract .*sbin/bls
 PKGFILES_CSWbacula-sd += .*sbin/bcopy .*sbin/bscan .*sbin/btape
@@ -182,13 +184,13 @@ RUNTIME_DEP_PKGS_CSWbacula-director += CSWperl
 PKGFILES_CSWbacula-director += .*init.d/cswbacula-dir
 PKGFILES_CSWbacula-director += .*sbin/bregex .*sbin/bwild .*sbin/bacula-dir
 PKGFILES_CSWbacula-director += .*sbin/dbcheck .*bacula/working
-PKGFILES_CSWbacula-director += .*libexec.*catalog_backup.* .*libexec.*query.sql
-PKGFILES_CSWbacula-director += /etc/opt/csw/bacula/query.sql.CSW
-PKGFILES_CSWbacula-director += .*libexec/bacula/.*_tables
-PKGFILES_CSWbacula-director += .*libexec/bacula/.*_database
-PKGFILES_CSWbacula-director += .*libexec/bacula/.*_privileges
-PKGFILES_CSWbacula-director += .*libexec/bacula/.*_catalog.*
-PKGFILES_CSWbacula-director += .*libexec/bacula/update.*tables.*
+PKGFILES_CSWbacula-director += /etc/opt/csw/bacula/scripts/catalog_backup.*
+PKGFILES_CSWbacula-director += /etc/opt/csw/bacula/scripts/query.sql.CSW
+PKGFILES_CSWbacula-director += /etc/opt/csw/bacula/.*_tables
+PKGFILES_CSWbacula-director += /etc/opt/csw/bacula/.*_database
+PKGFILES_CSWbacula-director += /etc/opt/csw/bacula/.*_privileges
+PKGFILES_CSWbacula-director += /etc/opt/csw/bacula/.*_catalog.*
+PKGFILES_CSWbacula-director += /etc/opt/csw/bacula/update.*tables.*
 PKGFILES_CSWbacula-director += .*bacula/bacula-dir.conf.CSW
 PKGFILES_CSWbacula-director += .*man8/bacula-dir.8 .*man8/dbcheck.8
 PKGFILES_CSWbacula-director += /var/opt/csw/run
@@ -300,7 +302,7 @@ post-install-modulated:
 		done; \
 		ginstall -m 0755 bacula-fd $(INITD)/cswbacula-fd; \
 		cd ../..; \
-		ginstall -m 0755 updatedb/update_mysql_tables_10_to_11 $(DESTDIR)$(prefix)/libexec/bacula; \
+		ginstall -m 0755 updatedb/update_mysql_tables_10_to_11 $(DESTDIR)/etc/opt/csw/bacula/scripts; \
 		gcp -pR examples $(DOCD); \
 		ginstall -d -m 0755 $(DESTDIR)/var/opt/csw/run;)
 	@(for p in console director sd fd; do \
