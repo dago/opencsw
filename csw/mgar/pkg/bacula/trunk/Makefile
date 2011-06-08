@@ -198,6 +198,8 @@ PKGFILES_CSWbacula-director += .*share/doc/bacula_director/README.CSW
 PKGFILES_CSWbacula-director += .*bacula_director/.*postmsg
 PKGFILES_CSWbacula-director += /etc/opt/csw/pkg/CSWbacula-director/cswusergroup
 PKGFILES_CSWbacula-director += /etc/opt/csw/pkg/CSWbacula-director/services
+# this is because the .pl script is .pl.CSW due to preserveconf
+CHECKPKG_OVERRIDES_CSWbacula-director += surplus-dependency|CSWperl
 
 # force libraries into a separate subdirectory
 libdir = $(prefix)/lib/$(NAME)
