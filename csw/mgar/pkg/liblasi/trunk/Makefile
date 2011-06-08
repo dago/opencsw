@@ -34,7 +34,6 @@ PACKAGES += CSWliblasi0
 SPKG_DESC_CSWliblasi0 = C++ Unicode support for PostScript, libLASi.so.0
 PKGFILES_CSWliblasi0 = $(call pkgfiles_lib,libLASi.so.0)
 RUNTIME_DEP_PKGS_CSWliblasi0 += CSWftype2
-RUNTIME_DEP_PKGS_CSWliblasi0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWliblasi0 += CSWglib2
 RUNTIME_DEP_PKGS_CSWliblasi0 += CSWpango
 RUNTIME_DEP_PKGS_CSWliblasi0 += CSWfconfig
@@ -45,9 +44,15 @@ SPKG_DESC_CSWliblasi-dev = Developer support for libLASi.so.0
 PKGFILES_CSWliblasi-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWliblasi-dev += $(sharedstatedir)/doc/.*
 RUNTIME_DEP_PKGS_CSWliblasi-dev += CSWliblasi0
+
 # That is ok
 CHECKPKG_OVERRIDES_CSWliblasi-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/liblasi/examples/README
 
+# FIXME - I don't understand this - please review
+CHECKPKG_OVERRIDES_CSWliblasi0 += binary-architecture-does-not-match-placement|file=opt/csw/lib/libLASi.so.0.0.1|arch_id=18|arch_name=sparcv8+
+
+# Didn't like libfreetype.so
+#      ld: fatal: file /opt/csw/lib/sparcv9/libfreetype.so: wrong ELF class: ELFCLASS64
 # BUILD64 = 1
 
 CXXFLAGS = -L/usr/lib -lCstd -norunpath
