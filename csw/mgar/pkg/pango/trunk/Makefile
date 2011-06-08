@@ -74,6 +74,7 @@ ARCHALL_CSWpango-doc = 1
 OBSOLETED_BY_CSWpango-doc = CSWpangodoc
 CATALOGNAME_CSWpangodoc = libpango_doc_stub
 
+BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWgtk-doc
 BUILD_DEP_PKGS += CSWlibxslt
 BUILD_DEP_PKGS += CSWglib2devel
@@ -81,12 +82,8 @@ BUILD_DEP_PKGS += CSWlibxft2devel
 
 BUILD64 = 1
 
-sysconfdir_isa-sparcv9 = $(prefix)/etc/64
-sysconfdir_isa-sparcv8 = $(prefix)/etc
-sysconfdir_isa-i386    = $(prefix)/etc
-sysconfdir_global      = $(prefix)/etc
-sysconfdir_isa-amd64   = $(prefix)/etc/64
-sysconfdir         = $(sysconfdir_$(MODULATION))
+sysconfdir-suffix-64 = /64
+sysconfdir = /etc/opt/csw$(sysconfdir-suffix-$(MEMORYMODEL))
 
 # EXTRA_ISAEXEC_EXCLUDE_FILES = $(bindir)/pango-querymodules
 CONFIGURE_ARGS  = $(DIRPATHS)
