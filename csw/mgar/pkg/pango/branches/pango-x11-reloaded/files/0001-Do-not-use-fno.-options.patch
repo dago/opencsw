@@ -1,0 +1,25 @@
+From 3ca0493a5604435a8eabb6bd3c655fd7f4181f12 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 6 May 2010 14:35:40 +0200
+Subject: [PATCH 1/2] Do not use -fno... options
+
+---
+ configure |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index 22cef9c..47664d6 100755
+--- a/configure
++++ b/configure
+@@ -6115,7 +6115,7 @@ done
+ 
+ 
+ # Make sure we don't link to libstdc++ (needs de-gcc-fication)
+-CXXFLAGS="$CXXFLAGS -fno-rtti -fno-exceptions"
++# CXXFLAGS="$CXXFLAGS -fno-rtti -fno-exceptions"
+ 
+ 
+ #
+-- 
+1.7.0
+

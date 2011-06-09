@@ -1,0 +1,25 @@
+From 0f13862a85468b38292c93eb3ecd4c840318d7c4 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 6 May 2010 14:36:00 +0200
+Subject: [PATCH 2/2] Use inttypes.h instead of stdint.h
+
+---
+ pango/opentype/hb-common.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/pango/opentype/hb-common.h b/pango/opentype/hb-common.h
+index 11f64ed..cfee546 100644
+--- a/pango/opentype/hb-common.h
++++ b/pango/opentype/hb-common.h
+@@ -27,7 +27,7 @@
+ #ifndef HB_COMMON_H
+ #define HB_COMMON_H
+ 
+-#include <stdint.h>
++#include <inttypes.h>
+ 
+ # ifdef __cplusplus
+ #  define HB_BEGIN_DECLS	extern "C" {
+-- 
+1.7.0
+
