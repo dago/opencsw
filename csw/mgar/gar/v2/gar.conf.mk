@@ -273,8 +273,8 @@ ARCHFLAGS_SOS12U1_sparcv8plus+vis = -m32 -xarch=sparcvis
       MEMORYMODEL_sparcv8plus+vis = 32
 
       ARCHFLAGS_SOS11_sparcv8plus = -xarch=v8plus
-      ARCHFLAGS_SOS12_sparcv8plus = -m32 -xarch=v8plus
-    ARCHFLAGS_SOS12U1_sparcv8plus = -m32 -xarch=v8plus
+      ARCHFLAGS_SOS12_sparcv8plus = -m32 -xarch=sparc
+    ARCHFLAGS_SOS12U1_sparcv8plus = -m32 -xarch=sparc
        ARCHFLAGS_GCC3_sparcv8plus = -mcpu=v8 -mv8plus
        ARCHFLAGS_GCC4_sparcv8plus = -mcpu=v8 -mv8plus
           MEMORYMODEL_sparcv8plus = 32
