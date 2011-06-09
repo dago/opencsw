@@ -1,5 +1,5 @@
 NAME = clamav
-VERSION = 0.97
+VERSION = 0.97.1
 #VERSION = 0.97rc
 #DISTNAME = $(NAME)-devel-latest
 CATEGORIES = apps
@@ -37,7 +37,7 @@ PACKAGES += CSWlibclam6-dev
 CATALOGNAME_CSWlibclam6-dev = libclam6_dev
 SPKG_DESC_CSWlibclam6-dev = $(DESCRIPTION) Development
 RUNTIME_DEP_PKGS_CSWlibclam6-dev = CSWlibclam6
-INCOMPATIBLE_PKGS_CSWlibclam6-dev = CSWlibclamav-devel
+INCOMPATIBLE_PKGS_CSWlibclam6-dev = CSWlibclamav-devel CSWlibclamav6-devel
 
 PATCHFILES  = CSWclamav.freshclam.conf.p
 PATCHFILES += CSWclamav.clamd.conf.p
@@ -103,9 +103,18 @@ CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/sh
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node56.html
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node24.html
 CHECKPKG_OVERRIDES_CSWclamav += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamav/html/node15.html
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.9|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.9|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
-CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.9|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
+
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamav.so.6.1.10|soname=libclamav.so.6|pkgname=CSWlibclam6|expected=CSWlibclamav6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar.so.6.1.10|soname=libclamunrar.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar6
+CHECKPKG_OVERRIDES_CSWlibclam6 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libclamunrar_iface.so.6.1.10|soname=libclamunrar_iface.so.6|pkgname=CSWlibclam6|expected=CSWlibclamunrar-iface6
+
+# Should only be necessary during transition of devel -> dev
+CHECKPKG_OVERRIDES_CSWlibclam6-dev += file-collision|/opt/csw/lib/libclamunrar.so|CSWlibclam6-dev|CSWlibclam6-devel
+CHECKPKG_OVERRIDES_CSWlibclam6-dev += file-collision|/opt/csw/bin/clamav-config|CSWlibclam6-dev|CSWlibclam6-devel
+CHECKPKG_OVERRIDES_CSWlibclam6-dev += file-collision|/opt/csw/lib/libclamunrar_iface.so|CSWlibclam6-dev|CSWlibclam6-devel
+CHECKPKG_OVERRIDES_CSWlibclam6-dev += file-collision|/opt/csw/include/clamav.h|CSWlibclam6-dev|CSWlibclam6-devel
+CHECKPKG_OVERRIDES_CSWlibclam6-dev += file-collision|/opt/csw/lib/pkgconfig/libclamav.pc|CSWlibclam6-dev|CSWlibclam6-devel
+CHECKPKG_OVERRIDES_CSWlibclam6-dev += file-collision|/opt/csw/lib/libclamav.so|CSWlibclam6-dev|CSWlibclam6-devel
 
 include gar/category.mk
 
