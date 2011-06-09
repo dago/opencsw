@@ -40,8 +40,6 @@ PACKAGES += CSWlibcurl4-feature
 CATALOGNAME_CSWlibcurl4-feature = libcurl4_feature
 SPKG_DESC_CSWlibcurl4-feature = Full-features library for client-side URL transfers superseding libcurl.so.4
 PKGFILES_CSWlibcurl4-feature = $(call pkgfiles_lib,libcurl-feature.so.4)
-OBSOLETED_BY_CSWlibcurl4-feature = CSWcurlrtfull
-CATALOGNAME_CSWcurlrtfull = curl_rt_full_stub
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibfbopenssl
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibidn11
@@ -141,6 +139,7 @@ include gar/category.mk
 # These are not really necessary and they confuse the linker as described in #4550
 $(GARCOMPILER)_LD_FLAGS :=
 
+# Rebuild the minimal library with AUX linkage to feature library
 post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: EXTRA_LD_OPTIONS = -f libcurl-feature.so.4
 post-build-isa-sparcv8-features-minimal post-build-isa-sparcv9-features-minimal post-build-isa-i386-features-minimal post-build-isa-amd64-features-minimal: 
 	rm -f $(WORKSRC)/lib/libcurl.la
