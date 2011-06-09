@@ -2,7 +2,7 @@ NAME = zlib
 VERSION = 1.2.5
 CATEGORIES = lib
 
-DESCRIPTION = Zlib Data Compression Library
+DESCRIPTION = Zlib data compression library
 define BLURB
  zlib is designed to be a free, general-purpose, legally unencumbered -- that
  is, not covered by any patents -- lossless data-compression library for use 
@@ -15,27 +15,31 @@ define BLURB
  in compression
 endef
 
-SF_PROJ=libpng
-MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += license
+MASTER_SITES = http://www.zlib.net/
+DISTFILES  = $(DISTNAME).tar.bz2
+DISTFILES += COPYING
 
-SPKG_SOURCEURL = http://www.zlib.net
-
-LICENSE = license
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=5624
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
-
-PATCHFILES = Makefile.in.diff
+PATCHFILES += Makefile.in.diff
 PATCHFILES += configure.diff
 
+PACKAGES += CSWlibz1
+SPKG_DESC_CSWlibz1 = Zlib data compression library, libz.so.1
+PKGFILES_CSWlibz1 = $(call pkgfiles_lib,libz.so.1)
+OBSOLETED_BY_CSWlibz1 = CSWzlib
+
+PACKAGES += CSWzlib-dev
+SPKG_DESC_CSWzlib-dev = Development files for libz.so.1
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWzlib-dev = CSWlibz1
+
 BUILD64 = 1
-#NOISAEXEC = 1
+
 EXTRA_BUILD_ISAS = sparcv8plus sparcv8plus+vis pentium_pro+mmx pentium
 
-CONFIGURE_ARGS = --prefix=$(prefix) --eprefix=$(exec_prefix) 
-CONFIGURE_ARGS += --libdir=$(libdir) --includedir=$(includedir)  --shared
+CONFIGURE_ARGS += --prefix=$(prefix)
+CONFIGURE_ARGS += --eprefix=$(exec_prefix) 
+CONFIGURE_ARGS += --libdir=$(libdir)
+CONFIGURE_ARGS += --includedir=$(includedir)
+CONFIGURE_ARGS += --shared
 
 include gar/category.mk
