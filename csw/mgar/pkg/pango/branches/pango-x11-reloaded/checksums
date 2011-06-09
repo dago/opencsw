@@ -1,0 +1,4 @@
+0d271c3e260126c315003d6019734736  0001-Do-not-use-fno.-options.patch
+8e1db1634a431b0b2dd1657b46b7e8de  0002-Use-inttypes.h-instead-of-stdint.h.patch
+236547eb782b42500d0d743f25340599  CSWpango.postinstall
+545ae8becf7ed74008120f96f4b095f4  pango-1.28.0.tar.bz2
