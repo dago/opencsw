@@ -21,7 +21,7 @@ SPKG_DESC_CSWwireshark = Wireshark (was Ethereal) is a free network protocol ana
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWwireshark += CSWgcrypt
 RUNTIME_DEP_PKGS_CSWwireshark += CSWglib2
-RUNTIME_DEP_PKGS_CSWwireshark += CSWgpgerr
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWgtk2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWpango
 RUNTIME_DEP_PKGS_CSWwireshark += CSWzlib
