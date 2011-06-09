@@ -26,7 +26,7 @@ PATCHFILES += 0003-Make-the-solaris-init-scripts-user-group-aware.patch
 PATCHFILES += 0004-Update-man-page-installation-so-we-don-t-get-gzipped.patch
 
 BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
-BUILD_DEP_PKGS += CSWreadline CSWggettext-dev
+BUILD_DEP_PKGS += CSWreadline CSWggettext-dev CSWlibcairo-dev
 
 PACKAGES  = CSWbacula-common CSWbacula-fd CSWbacula-sd
 PACKAGES += CSWbacula-director CSWbacula-client CSWbacula
