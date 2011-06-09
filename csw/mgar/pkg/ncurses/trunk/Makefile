@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = ncurses
-VERSION = 5.7
+VERSION = 5.9
 CATEGORIES = lib
 
 define BLURB
@@ -17,26 +17,94 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PATCHFILES = patch-xcode.diff
-
 LICENSE = README
 
-PACKAGES = CSWncurses CSWterminfo
-
+PACKAGES += CSWncurses
 SPKG_DESC_CSWncurses = A free software emulation of curses
-SPKG_DESC_CSWterminfo = Database of terminal information, part of ncurses
+RUNTIME_DEP_PKGS_CSWncurses += CSWterminfo
+CHECKPKG_OVERRIDES_CSWncurses += surplus-dependency|CSWterminfo
+RUNTIME_DEP_PKGS_CSWncurses += CSWlibncursesw5
 
-SPKG_SOURCEURL = http://www.gnu.org/software/ncurses/ncurses.html
+PACKAGES += CSWlibform5
+PKGFILES_CSWlibform5 += $(call pkgfiles_lib,libform.so.5)
+SPKG_DESC_CSWlibform5 += A free software emulation of curses, libform.so.5
+RUNTIME_DEP_PKGS_CSWlibform5 += CSWlibncurses5
+
+PACKAGES += CSWlibformw5
+PKGFILES_CSWlibformw5 += $(call pkgfiles_lib,libformw.so.5)
+SPKG_DESC_CSWlibformw5 += A free software emulation of curses, libformw.so.5
+RUNTIME_DEP_PKGS_CSWlibformw5 += CSWlibncursesw5
+
+PACKAGES += CSWlibmenu5
+CATALOGNAME_CSWlibmenu5 = libmenu5
+PKGFILES_CSWlibmenu5 += $(call pkgfiles_lib,libmenu.so.5)
+SPKG_DESC_CSWlibmenu5 += A free software emulation of curses, libmenu.so.5
+RUNTIME_DEP_PKGS_CSWlibmenu5 += CSWlibncurses5
+
+PACKAGES += CSWlibmenuw5
+CATALOGNAME_CSWlibmenuw5 = libmenuw5
+PKGFILES_CSWlibmenuw5 += $(call pkgfiles_lib,libmenuw.so.5)
+SPKG_DESC_CSWlibmenuw5 += A free software emulation of curses, libmenuw.so.5
+RUNTIME_DEP_PKGS_CSWlibmenuw5 += CSWlibncursesw5
+
+PACKAGES += CSWlibncurses5
+CATALOGNAME_CSWlibncurses5 = libncurses5
+PKGFILES_CSWlibncurses5 += $(call pkgfiles_lib,libncurses.so.5)
+SPKG_DESC_CSWlibncurses5 += A free software emulation of curses, libncurses.so.5
+
+PACKAGES += CSWlibncursesw5
+CATALOGNAME_CSWlibncursesw5 = libncursesw5
+PKGFILES_CSWlibncursesw5 += $(call pkgfiles_lib,libncursesw.so.5)
+SPKG_DESC_CSWlibncursesw5 += A free software emulation of curses, libncursesw.so.5
+
+PACKAGES += CSWlibpanel5
+CATALOGNAME_CSWlibpanel5 = libpanel5
+PKGFILES_CSWlibpanel5 += $(call pkgfiles_lib,libpanel.so.5)
+SPKG_DESC_CSWlibpanel5 += A free software emulation of curses, libpanel.so.5
+RUNTIME_DEP_PKGS_CSWlibpanel5 += CSWlibncurses5
+
+PACKAGES += CSWlibpanelw5
+CATALOGNAME_CSWlibpanelw5 = libpanelw5
+PKGFILES_CSWlibpanelw5 += $(call pkgfiles_lib,libpanelw.so.5)
+SPKG_DESC_CSWlibpanelw5 += A free software emulation of curses, libpanelw.so.5
+RUNTIME_DEP_PKGS_CSWlibpanelw5 += CSWlibncursesw5
+
+PACKAGES += CSWlibncurses-dev
+SPKG_DESC_CSWlibncurses-dev = Development files for libncurses.so.5 and assorted libraries
+PKGFILES_CSWlibncurses-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibncurses-dev += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSWlibncurses-dev += CSWlibmenuw5
+RUNTIME_DEP_PKGS_CSWlibncurses-dev += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWlibncurses-dev += CSWlibpanel5
+RUNTIME_DEP_PKGS_CSWlibncurses-dev += CSWlibformw5
+RUNTIME_DEP_PKGS_CSWlibncurses-dev += CSWlibform5
+RUNTIME_DEP_PKGS_CSWlibncurses-dev += CSWlibpanelw5
+RUNTIME_DEP_PKGS_CSWlibncurses-dev += CSWlibmenu5
+
+PACKAGES += CSWterminfo
+SPKG_DESC_CSWterminfo = Database of terminal information, part of ncurses
+ARCHALL_CSWterminfo = 1
+PKGFILES_CSWterminfo = $(datadir)/terminfo.*
+
+VENDOR_URL = http://www.gnu.org/software/ncurses/ncurses.html
 
 BUILD64 = 1
-NOISAEXEC = 1
-RUNPATHQUOTE = 1
 
 EXTRA_MODULATORS = WIDEC
 MODULATIONS_WIDEC = disable enable
 
 EXTRA_CONFIGURE_WIDEC-disable = --disable-widec
 EXTRA_CONFIGURE_WIDEC-enable = --enable-widec
+
+# Switch to larger model or these kinds of errors occur:
+#   ld.so.1: tic: fatal: relocation error: R_AMD64_PC32: file /home/dam/mgar/pkg/ncurses/trunk/work/solaris9-i386/build-isa-amd64-widec-disable/ncurses-5.9/lib/libncurses.so.5: symbol putc: value 0x280010b35b0 does not fit
+# (only valid on 64 bit x86)
+# See for details
+#   http://developers.sun.com/solaris/articles/about_amd64_abi.html
+#EXTRA_CFLAGS-amd64 = -xmodel=medium
+EXTRA_CFLAGS-amd64 = -Kpic
+EXTRA_CFLAGS = $(EXTRA_CFLAGS-$(ISA))
+EXTRA_LDFLAGS = $(EXTRA_CFLAGS-$(ISA))
 
 CONFIGURE_ARGS = --prefix=$(prefix)
 CONFIGURE_ARGS += --bindir=$(bindir)
@@ -54,6 +122,8 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_WIDEC-$(WIDEC))
 #   <http://opencsw.org/bugtrack/view.php?id=2942>
 #   <http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6569261>
 CONFIGURE_ARGS += --without-xterm-new
+
+TEST_TARGET = test
 
 MERGE_SCRIPTS_isa-sparcv8-widec-disable = copy-only copy-config-only
    MERGE_DIRS_isa-sparcv8-widec-disable = $(libdir) $(includedir)
@@ -73,12 +143,17 @@ MERGE_SCRIPTS_isa-sparcv9-widec-disable = copy-relocated-only copy-config-only
    MERGE_SCRIPTS_isa-amd64-widec-enable = copy-relocated-only copy-config-only
       MERGE_DIRS_isa-amd64-widec-enable = $(libdir)
 
-RUNTIME_DEP_PKGS_CSWncurses = CSWterminfo
+# This is termcap location which defaults to 
+#   /etc/termcap, /usr/share/misc/termcap and $HOME/.termcap
+# which I think is ok
+CHECKPKG_OVERRIDES_CSWlibncurses-dev += file-with-bad-content|/usr/share|root/opt/csw/share/man/man3/ncurses.3x
 
-ARCHALL_CSWterminfo = 1
-PKGFILES_CSWterminfo = $(datadir)/terminfo.*
+# I *think* this is a default, but keep an eye on it
+CHECKPKG_OVERRIDES_CSWlibncurses-dev += file-with-bad-content|/usr/share|root/opt/csw/include/ncursesw/tic.h
+CHECKPKG_OVERRIDES_CSWlibncurses-dev += file-with-bad-content|/usr/share|root/opt/csw/include/ncurses/tic.h
 
-CHECKPKG_OVERRIDES_CSWncurses += surplus-dependency|CSWterminfo
+# I have no idea what this is. Inspect on problems.
+CHECKPKG_OVERRIDES_CSWterminfo += file-with-bad-content|/usr/share|root/opt/csw/share/terminfo/p/pcmw
 
 include gar/category.mk
 
