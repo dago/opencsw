@@ -313,7 +313,7 @@ PROTOTYPE_FILES_confgroup = /etc/opt/csw/bacula/.*
 PROTOTYPE_CLASS_confgroup = cswpreserveconf
 PROTOTYPE_GROUP_confgroup = bacula
 PROTOTYPE_PERMS_confgroup = 0640
-PROTOTYPE_FILES_generalperms = /opt/csw/sbin/.* /etc/opt/csw/bacula/scripts
+PROTOTYPE_FILES_generalperms = /opt/csw/sbin/.* /etc/opt/csw/bacula/scripts.*
 PROTOTYPE_PERMS_generalperms = 0755
 
 include gar/category.mk
