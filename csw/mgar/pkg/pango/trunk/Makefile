@@ -1,5 +1,5 @@
 NAME = pango
-VERSION = 1.24.5
+VERSION = 1.28.4
 CATEGORIES = lib
 
 DESCRIPTION = A framework for the layout and rendering of international text
@@ -13,6 +13,13 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += CSWpango.postinstall
+
+# Use patch unless this is fixed
+#   https://bugzilla.gnome.org/show_bug.cgi?id=652228
+PATCHFILES += 0001-Do-not-use-gcc-specific-flags-unconditionally.patch
+# Use patch unless this is fixed:
+#   https://bugzilla.gnome.org/show_bug.cgi?id=652227
+PATCHFILES += 0002-Use-inttypes.h-when-stdint.h-is-not-available.patch
 
 VENDOR_URL = http://www.pango.org/
 
