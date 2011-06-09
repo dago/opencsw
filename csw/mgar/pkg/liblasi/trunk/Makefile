@@ -34,10 +34,10 @@ PACKAGES += CSWliblasi0
 SPKG_DESC_CSWliblasi0 = C++ Unicode support for PostScript, libLASi.so.0
 PKGFILES_CSWliblasi0 = $(call pkgfiles_lib,libLASi.so.0)
 RUNTIME_DEP_PKGS_CSWliblasi0 += CSWftype2
+RUNTIME_DEP_PKGS_CSWliblasi0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWliblasi0 += CSWglib2
 RUNTIME_DEP_PKGS_CSWliblasi0 += CSWpango
 RUNTIME_DEP_PKGS_CSWliblasi0 += CSWfconfig
-RUNTIME_DEP_PKGS_CSWliblasi0 += CSWlibintl8
 OBSOLETED_BY_CSWliblasi0 = CSWliblasi
 
 PACKAGES += CSWliblasi-dev
@@ -45,21 +45,12 @@ SPKG_DESC_CSWliblasi-dev = Developer support for libLASi.so.0
 PKGFILES_CSWliblasi-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWliblasi-dev += $(sharedstatedir)/doc/.*
 RUNTIME_DEP_PKGS_CSWliblasi-dev += CSWliblasi0
-
 # That is ok
 CHECKPKG_OVERRIDES_CSWliblasi-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/liblasi/examples/README
 
-# Not sure about these
-CHECKPKG_OVERRIDES_CSWliblasi0 += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/libLASi.so.0.0.1
-CHECKPKG_OVERRIDES_CSWliblasi0 += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/libLASi.so.0.0.1
-CHECKPKG_OVERRIDES_CSWliblasi0 += bad-rpath-entry|/lib|opt/csw/lib/libLASi.so.0.0.1
-CHECKPKG_OVERRIDES_CSWliblasi0 += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/libLASi.so.0.0.1
+BUILD64 = 1
 
-# Didn't like libfreetype.so
-#      ld: fatal: file /opt/csw/lib/sparcv9/libfreetype.so: wrong ELF class: ELFCLASS64
-# BUILD64 = 1
-
-EXTRA_LIB = -L/usr/lib -lCstd -norunpath
+EXTRA_CXX_FLAGS = -lCstd -norunpath
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
