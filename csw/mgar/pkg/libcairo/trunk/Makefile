@@ -60,6 +60,8 @@ SPKG_DESC_CSWlibcairo-dev = Development files for libcairo.so.2
 RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlibcairo-script-interpreter2
 RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlibcairo-gobject2
+# This is important or pkgconfig on cairo will fail
+RUNTIME_DEP_PKGS_CSWlibcairo-dev += CSWlibpixman-dev
 OBSOLETED_BY_CSWlibcairo-dev = CSWlibcairodevel
 CATALOGNAME_CSWlibcairodevel = libcairo_devel_stub
 
