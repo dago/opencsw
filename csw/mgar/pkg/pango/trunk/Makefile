@@ -59,6 +59,7 @@ PACKAGES += CSWpango-dev
 SPKG_DESC_CSWpango-dev = Developer files for libpango-1.0.so.0 and assorted libs
 PKGFILES_CSWpango-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWpango-dev += CSWpango
+RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibcairo-dev
 #RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpango1-0-0
 #RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpangocairo-1-0-0
 #RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpangoft2-1-0-0
