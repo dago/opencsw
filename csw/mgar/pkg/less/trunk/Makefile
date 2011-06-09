@@ -1,5 +1,5 @@
 NAME = less
-VERSION = 443
+VERSION = 444
 CATEGORIES = utils
 
 DESCRIPTION = Less is a free, open-source file pager
@@ -9,18 +9,14 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.greenwoodsoftware.com/$(NAME)/
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(DISTNAME).tar.gz
 
 LICENSE = LICENSE
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 RUNTIME_DEP_PKGS_CSWless += CSWncurses
 RUNTIME_DEP_PKGS_CSWless += CSWlibintl8
 
 NOISALIST = 1
-CONFIGURE_ARGS = $(DIRPATHS)
 
 # There is no testsuite
 TEST_TARGET =
