@@ -1,0 +1,25 @@
+From 8ef6a7aa023c4be33134fc8f022b3e82b3af5ef5 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 9 Jun 2011 20:30:13 +0200
+Subject: [PATCH 1/2] Do not use gcc-specific flags unconditionally
+
+---
+ configure |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index d3e10de..4504459 100755
+--- a/configure
++++ b/configure
+@@ -5627,7 +5627,7 @@ done
+ 
+ 
+ # Make sure we don't link to libstdc++ (needs de-gcc-fication)
+-CXXFLAGS="$CXXFLAGS -fno-rtti -fno-exceptions"
++#CXXFLAGS="$CXXFLAGS -fno-rtti -fno-exceptions"
+ 
+ 
+ #
+-- 
+1.7.5.4
+
