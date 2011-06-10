@@ -1,7 +1,1 @@
-39b575a4c1dd2234a88d755a13332458  0001-Make-sure-we-have-the-include-for-major-minor.patch
-77188ce430577f5db01ba9d73aed5bcd  0001-Replace-.-not-understood-by-Sun-Studio.patch
-9f66027a275eb34d80a68ec8927bf66e  CMSG_LEN.patch
-f1f3c182f64be06ab57d8b01016af074  FIXED_STR.patch
-cdbe09f15536b526e19f06893e9b64ef  glib-2.25.10.tar.bz2
-8f683820d9ecab1abd9dbe81997ab9eb  glib-typedetect.patch
-bb2fb8eef43c995fea6c08563487ace6  gsize.patch
+178638858de315a472d45dfa3dd19299  glib-2.29.6.tar.bz2
