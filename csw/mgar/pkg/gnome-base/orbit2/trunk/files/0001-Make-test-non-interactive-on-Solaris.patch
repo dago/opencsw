@@ -1,0 +1,25 @@
+From eaf8384d63f9ed26ba2accc35748af9438ae8237 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 10 Jun 2011 11:41:51 +0200
+Subject: [PATCH] Make test non-interactive on Solaris
+
+---
+ test/timeout.sh |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/test/timeout.sh b/test/timeout.sh
+index 4f262e1..3856de8 100755
+--- a/test/timeout.sh
++++ b/test/timeout.sh
+@@ -24,6 +24,8 @@ MINGW*)
+ *)
+     echo Please kill timeout-server and/or lt-timeout-server from another window,
+     echo then type something here.
++    pkill -9 timeout-server
++    pkill -9 lt-timeout-server
+     wait $server
+     ;;
+ esac
+-- 
+1.7.5.4
+
