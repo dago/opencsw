@@ -1,5 +1,7 @@
+# $Id$
+
 NAME = eventlog
-VERSION = 0.2.9
+VERSION = 0.2.12
 CATEGORIES = lib
 
 DESCRIPTION = Replacement of the simple syslog() API providing structure to messages.
@@ -14,14 +16,8 @@ define BLURB
 	via a configuration file.
 endef
 
-PACKAGES = CSWeventlog
-CATALOGNAME = eventlog
-
 MASTER_SITES = http://www.balabit.com/downloads/files/eventlog/0.2/
 DISTFILES  = $(NAME)_$(VERSION).tar.gz
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -29,5 +25,19 @@ RUNTIME_DEP_PKGS += CSWgcc4corert
 
 GARCOMPILER = GNU
 TEST_SCRIPTS =
+
+OBSOLETED_BY_CSWeventlog-dev = CSWeventlog
+
+PACKAGES = CSWlibevtlog0
+CATALOGNAME_CSWlibevtlog0 = libevtlog0
+PKGFILES_CSWlibevtlog0 += $(call baseisadirs,$(libdir),libevtlog\.so\.0\.0\.0)
+PKGFILES_CSWlibevtlog0 += $(call baseisadirs,$(libdir),libevtlog\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibevtlog0 += Replacement of the simple syslog() API providing structure to messages., libevtlog.so.0
+RUNTIME_DEP_PKGS_CSWeventlog += CSWlibevtlog0
+PACKAGES += CSWeventlog-dev
+PKGFILES_CSWeventlog-dev += $(PKGFILES_DEV)
+CATALOGNAME_CSWeventlog-dev = eventlog_dev
+SPKG_DESC_CSWeventlog-dev = $(DESCRIPTION) - development files
+RUNTIME_DEP_PKGS_CSWeventlog-dev += CSWlibevtlog0
 
 include gar/category.mk
