@@ -3,11 +3,11 @@
 # $Id$
 
 NAME = netcdf
-VERSION = 4.1.1
+VERSION = 4.1.2
 CATEGORIES = lib
 DESCRIPTION = Machine-independent data formats for array-oriented scientific data
 SPKG_SOURCEURL = http://www.unidata.ucar.edu/software/netcdf/
-MASTER_SITES = http://www.unidata.ucar.edu/downloads/netcdf/ftp/
+MASTER_SITES = ftp://ftp.unidata.ucar.edu/pub/netcdf/
 DISTFILES  += $(NAME)-$(VERSION).tar.gz
 DISTFILES  += CSWlibnetcdf6.cswreleasemgr
 DISTFILES  += CSWlibnetcdff5.cswreleasemgr
