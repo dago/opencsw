@@ -27,6 +27,7 @@ GARCOMPILER = GNU
 TEST_SCRIPTS =
 
 OBSOLETED_BY_CSWeventlog-dev = CSWeventlog
+OBSOLETED_BY_CSWlibeventlog0 = CSWeventlog
 
 PACKAGES = CSWlibevtlog0
 CATALOGNAME_CSWlibevtlog0 = libevtlog0
