@@ -24,6 +24,8 @@ PATCHFILES += 0002-Use-inttypes.h-when-stdint.h-is-not-available.patch
 VENDOR_URL = http://www.pango.org/
 
 PACKAGES += CSWpango
+CATALOGNAME_CSWpango = libpango
+CHECKPKG_OVERRIDES_CSWpango += catalogname-does-not-match-pkgname|pkgname=CSWpango|catalogname=libpango|expected-catalogname=pango
 SPKG_DESC_CSWpango = Pango, a framework for the layout and rendering of international text
 RUNTIME_DEP_PKGS_CSWpango += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWpango += CSWlibxft2
@@ -62,25 +64,26 @@ CHECKPKG_OVERRIDES_CSWpango += shared-lib-pkgname-mismatch
 #SPKG_DESC_CSWlibpangoxft1-0-0 = XFT bindings for Pango, libpangoxft-1.0.so.0
 #PKGFILES_CSWlibpangoxft1-0-0 = $(call pkgfiles_lib,libpangoxft-1.0.so.0)
 
-PACKAGES += CSWpango-dev
-SPKG_DESC_CSWpango-dev = Developer files for libpango-1.0.so.0 and assorted libs
-PKGFILES_CSWpango-dev = $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWpango-dev += CSWpango
-RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibcairo-dev
+PACKAGES += CSWpangodevel
+CATALOGNAME_CSWpangodevel = libpango_devel
+CHECKPKG_OVERRIDES_CSWpangodevel += catalogname-does-not-match-pkgname|pkgname=CSWpangodevel|catalogname=libpango_devel|expected-catalogname=pangodevel
+SPKG_DESC_CSWpangodevel = Developer files for libpango-1.0.so.0 and assorted libs
+PKGFILES_CSWpangodevel = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWpangodevel += CSWpango
+RUNTIME_DEP_PKGS_CSWpangodevel += CSWlibcairo-dev
 #RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpango1-0-0
 #RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpangocairo-1-0-0
 #RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpangoft2-1-0-0
 #RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpangox1-0-0
 #RUNTIME_DEP_PKGS_CSWpango-dev += CSWlibpangoxft1-0-0
-OBSOLETED_BY_CSWpango-dev = CSWpangodevel
-CATALOGNAME_CSWpangodevel = libpango_devel_stub
 
-PACKAGES += CSWpango-doc
-SPKG_DESC_CSWpango-doc = Documentation for Pango
-PKGFILES_CSWpango-doc = $(sharedstatedir)/gtk-doc/.*
-ARCHALL_CSWpango-doc = 1
-OBSOLETED_BY_CSWpango-doc = CSWpangodoc
-CATALOGNAME_CSWpangodoc = libpango_doc_stub
+PACKAGES += CSWpangodoc
+# This is a legacy name
+CATALOGNAME_CSWpangodoc = libpango_doc
+CHECKPKG_OVERRIDES_CSWpangodoc += catalogname-does-not-match-pkgname|pkgname=CSWpangodoc|catalogname=libpango_doc|expected-catalogname=pangodoc
+SPKG_DESC_CSWpangodoc = Documentation for Pango
+PKGFILES_CSWpangodoc = $(sharedstatedir)/gtk-doc/.*
+ARCHALL_CSWpangodoc = 1
 
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWgtk-doc
