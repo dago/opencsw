@@ -1,5 +1,7 @@
+# $Id$
+
 NAME = sendmail
-VERSION = 8.14.4
+VERSION = 8.14.5
 CATEGORIES = server
 
 DESCRIPTION = Sendmail MTA
@@ -23,9 +25,8 @@ DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
 DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+# Enable support for files > 2GB in size.
+EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 
 # we require
 PACKAGES = CSWsendmail 
