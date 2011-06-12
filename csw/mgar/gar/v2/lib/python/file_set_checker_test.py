@@ -73,6 +73,15 @@ class FileSetCheckerUnitTest(unittest.TestCase):
     self.assertEqual(expected, fc._CheckUncommitted(files_with_metadata))
     self.assertEqual(expected_2, fc._CheckMissingArchs(files_with_metadata))
 
+  def testFilenames(self):
+    fc = file_set_checker.FileSetChecker()
+    expected = [
+        tag.CheckpkgTag(None, 'bad-filename', 'filename=csw-upload-pkg'),
+    ]
+    files = ['csw-upload-pkg']
+    files_with_metadata = fc._FilesWithMetadata(files)
+    self.assertEqual(expected, fc._CheckFilenames(files_with_metadata))
+
 
 if __name__ == '__main__':
 	unittest.main()

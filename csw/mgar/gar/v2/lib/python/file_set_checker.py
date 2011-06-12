@@ -29,6 +29,16 @@ class FileSetChecker(object):
              parsed_filename["vendortag"])))
     return tags
 
+  def _CheckFilenames(self, files_with_metadata):
+    tags = []
+    for filename, parsed_filename in files_with_metadata:
+      if not filename.endswith(".pkg.gz") or not filename.endswith(".pkg"):
+        tags.append(tag.CheckpkgTag(
+          None,
+          "bad-filename",
+          "filename=%s" % filename))
+    return tags
+
   def _CheckMissingArchs(self, files_with_metadata):
     tags = []
     catalognames_by_arch = {}
@@ -96,6 +106,7 @@ class FileSetChecker(object):
     tags = []
     tags.extend(self._CheckMissingArchs(files_with_metadata))
     tags.extend(self._CheckUncommitted(files_with_metadata))
+    tags.extend(self._CheckFilenames(files_with_metadata))
     return tags
 
 
