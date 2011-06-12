@@ -9,14 +9,15 @@ define BLURB
   Sendmail MTA
 endef
 
-INSTALLISADIR = $(WORKROOTDIR)/install-$(GAROSREL)-$(MODULATION)
-WORKDIR = $(WORKROOTDIR)/build-$(GAROSREL)-$(MODULATION)
-WORKDIR_FIRSTMOD = $(WORKROOTDIR)/build-$(GAROSREL)-$(firstword $(MODULATIONS))
-COOKIEDIR = $(COOKIEROOTDIR)/$(GAROSREL)-$(MODULATION)
+#INSTALLISADIR = $(WORKROOTDIR)/install-$(GAROSREL)-$(MODULATION)
+#WORKDIR = $(WORKROOTDIR)/build-$(GAROSREL)-$(MODULATION)
+#WORKDIR_FIRSTMOD = $(WORKROOTDIR)/build-$(GAROSREL)-$(firstword $(MODULATIONS))
+#COOKIEDIR = $(COOKIEROOTDIR)/$(GAROSREL)-$(MODULATION)
 
 MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
+SPKG_SOURCEURL = http://www.sendmail.org
 
-MY_CLASSES = CSWsendmail.i.sol9 CSWsendmail.i.sol10
+#MY_CLASSES = CSWsendmail.i.sol9 CSWsendmail.i.sol10
 
 DISTFILES  = $(NAME).$(VERSION).tar.gz
 DISTFILES += README.CSW sendmail.schema CSWsendmail.postinstall
@@ -24,30 +25,34 @@ DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
 DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
 DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
+DISTFILES += COPYING
 
 # Enable support for files > 2GB in size.
 EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 
-# we require
 PACKAGES = CSWsendmail 
-SPKG_SOURCEURL = http://www.sendmail.org
-SPKG_DESC_CSWsendmail = $(DESCRIPTION)
 CATALOGNAME_CSWsendmail = sendmail
+SPKG_DESC_CSWsendmail = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS_CSWsendmail  = CSWbdb48 CSWoldaprt CSWosslrt CSWsasl CSWtcpwrap 
-RUNTIME_DEP_PKGS_CSWsendmail += CSWcswclassutils 
+RUNTIME_DEP_PKGS_CSWsendmail  = CSWbdb48
+RUNTIME_DEP_PKGS_CSWsendmail += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsendmail += CSWosslrt
+RUNTIME_DEP_PKGS_CSWsendmail += CSWsasl
+RUNTIME_DEP_PKGS_CSWsendmail += CSWtcpwrap 
 
-PROTOTYPE_FILTER = awk \
-	'$$$$2 ~/i.sol9/ { next } \
-	$$$$2 ~/i.sol10/ { next } \
-	$$$$3 ~/\/init\.d\/cswsendmail$$$$/ {$$$$2 = "cswinitsmf"} \
-	$$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
-	$$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
-	{ print } \
-	END { { print "i i.sol9=CSWsendmail.i.sol9" } \
-	{ print "i i.sol10=CSWsendmail.i.sol10" } }'
+INITSMF = /etc/opt/csw/init.d/cswsendmail
 
-ENABLE_CHECK = 0
+#PROTOTYPE_FILTER = awk \
+#	'$$$$2 ~/i.sol9/ { next } \
+#	$$$$2 ~/i.sol10/ { next } \
+#	$$$$3 ~/\/init\.d\/cswsendmail$$$$/ {$$$$2 = "cswinitsmf"} \
+#	$$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
+#	$$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
+#	{ print } \
+#	END { { print "i i.sol9=CSWsendmail.i.sol9" } \
+#	{ print "i i.sol10=CSWsendmail.i.sol10" } }'
+
+#ENABLE_CHECK = 0
 
 # patch away GNUism
 PATCHFILES = patch-CC-M.m4
@@ -57,6 +62,30 @@ BUILD_SCRIPTS       = custom
 TEST_SCRIPTS        = custom
 INSTALL_SCRIPTS     = custom
 EXTRA_MERGE_SCRIPTS = OS
+
+# Temporary overrides
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/README
+CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/mailq.1|CSWpostfix|CSWsendmail
+CHECKPKG_OVERRIDES_CSWsendmail += surplus-dependency|CSWbdb48
+CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/newaliases|CSWpostfix|CSWsendmail
+CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man5/aliases.5|CSWpostfix|CSWsendmail
+CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/mailq|CSWpostfix|CSWsendmail
+CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/newaliases.1|CSWpostfix|CSWsendmail
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/share|root/opt/csw/share/mail/cf/README
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/smrsh.8
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/sendmail.8
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/ostype/freebsd6.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/ostype/freebsd5.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/ostype/powerux.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/ostype/dragonfly.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/feature/local_procmail.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/cf/mail.cs.mc
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/cf/mail.eecs.mc
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/cf/knecht.mc
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/qpage.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/fax.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/procmail.m4
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/phquery.m4
 
 include gar/category.mk
 
