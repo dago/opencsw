@@ -27,7 +27,8 @@ class FileSetCheckerUnitTest(unittest.TestCase):
   def testMissingArchitecture(self):
     fc = file_set_checker.FileSetChecker()
     expected = [tag.CheckpkgTag(None, 'i386-SunOS5.9-missing', 'libnspr4')]
-    self.assertEqual(expected, fc.CheckFiles(SAMPLE_FILES))
+    files_with_metadata = fc._FilesWithMetadata(SAMPLE_FILES)
+    self.assertEqual(expected, fc._CheckMissingArchs(files_with_metadata))
 
   def testMissingArchitectureWithOsrel(self):
     files = [
@@ -39,7 +40,8 @@ class FileSetCheckerUnitTest(unittest.TestCase):
     ]
     fc = file_set_checker.FileSetChecker()
     expected = [tag.CheckpkgTag(None, 'sparc-SunOS5.10-missing', 'foo')]
-    self.assertEqual(expected, fc.CheckFiles(files))
+    files_with_metadata = fc._FilesWithMetadata(files)
+    self.assertEqual(expected, fc._CheckMissingArchs(files_with_metadata))
 
   def testUncommitted(self):
     fc = file_set_checker.FileSetChecker()
@@ -55,16 +57,21 @@ class FileSetCheckerUnitTest(unittest.TestCase):
              'nspr_devel-4.8.6,REV=2010.10.16-SunOS5.9-sparc-UNCOMMITTED.pkg.gz',
              '/home/experimental/maciej/'
              'nspr_devel-4.8.6,REV=2010.10.16-SunOS5.9-i386-UNCOMMITTED.pkg.gz']
-    self.assertEqual(expected, fc.CheckFiles(files))
+    files_with_metadata = fc._FilesWithMetadata(files)
+    self.assertEqual(expected, fc._CheckUncommitted(files_with_metadata))
 
   def testBadInput(self):
     fc = file_set_checker.FileSetChecker()
     expected = [
+        tag.CheckpkgTag(None, 'bad-vendor-tag', 'filename=csw-upload-pkg expected=CSW actual=UNKN')
+    ]
+    expected_2 = [
         tag.CheckpkgTag(None, 'bad-arch-or-os-release', 'csw-upload-pkg arch=pkg osrel=unspecified'),
-        tag.CheckpkgTag(None, 'bad-vendor-tag', 'filename=csw-upload-pkg expected=CSW actual=UNKN'),
     ]
     files = ['csw-upload-pkg']
-    self.assertEqual(expected, fc.CheckFiles(files))
+    files_with_metadata = fc._FilesWithMetadata(files)
+    self.assertEqual(expected, fc._CheckUncommitted(files_with_metadata))
+    self.assertEqual(expected_2, fc._CheckMissingArchs(files_with_metadata))
 
 
 if __name__ == '__main__':
