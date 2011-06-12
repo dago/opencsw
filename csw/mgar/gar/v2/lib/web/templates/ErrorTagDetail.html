@@ -8,13 +8,33 @@ $def with (tag_name, tags)
   </head>
   <body>
     <h3>$tag_name</h3>
-    <ul>
+    <table>
+    <tr>
+    <th>file name</th>
+    <th>OS release</th>
+    <th>Architecture</th>
+    <th>Catalog release</th>
+    <th>Additional information</th>
+    </tr>
 $for tag in tags:
   $if tag.srv4_file.registered:
-    <li>
-    <a href="../../srv4/$tag.srv4_file.md5_sum/">$tag.srv4_file.basename</a>:
+    <tr>
+    <td>
+    <a href="../../srv4/$tag.srv4_file.md5_sum/">$tag.srv4_file.basename</a>
+    </td>
+    <td>
+    $tag.os_rel.full_name
+    </td>
+    <td>
+    $tag.arch.name
+    </td>
+    <td>
+    $tag.catrel.name
+    </td>
+    <td>
     $tag.tag_info
-    </li>
-</ul>
+    </td>
+    </tr>
+</table>
 </body>
 </html>

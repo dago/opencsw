@@ -27,7 +27,6 @@ urls = (
   r'/error-tags/([^/]+)/', 'ErrorTagDetail',
   r'/catalognames/', 'CatalognameList',
   r'/catalognames/([^/]+)/', 'Catalogname',
-  r'/error-tags/', 'ErrorTagList',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/', 'Catalogs',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
@@ -221,7 +220,7 @@ class ErrorTagDetail(object):
           models.Srv4FileStats.q.use_to_generate_catalogs==True,
           ),
         join=join,
-    ).orderBy(('basename', 'tag_info'))
+    ).orderBy(('basename', 'tag_info', 'os_rel_id', 'arch_id', 'catrel_id'))
     return render.ErrorTagDetail(tag_name, tags)
 
 class ErrorTagList(object):
