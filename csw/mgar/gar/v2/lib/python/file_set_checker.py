@@ -74,8 +74,7 @@ class FileSetChecker(object):
       tags.append(tag.CheckpkgTag(None, error_tag_name, catalogname))
     return tags
 
-  def CheckFiles(self, file_list):
-    """Checks a set of files. Returns error tags."""
+  def _FilesWithMetadata(self, file_list):
     files_with_metadata = []
     for file_path in file_list:
       pkg_path, basename = os.path.split(file_path)
@@ -89,7 +88,11 @@ class FileSetChecker(object):
       for arch in archs:
         for osrel in common_constants.OS_RELS:
           key = arch, osrel
-          # catalognames_by_arch.setdefault(key, set()).add(catalogname)
+    return files_with_metadata
+
+  def CheckFiles(self, file_list):
+    """Checks a set of files. Returns error tags."""
+    files_with_metadata = self._FilesWithMetadata(file_list)
     tags = []
     tags.extend(self._CheckMissingArchs(files_with_metadata))
     tags.extend(self._CheckUncommitted(files_with_metadata))
