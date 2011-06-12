@@ -50,6 +50,7 @@ DISTFILES += CSWcupsclient.preinstall
 DISTFILES += CSWcupsd.preinstall
 DISTFILES += CSWcupsd.postremove
 DISTFILES += client.conf.CSW
+DISTFILES += CSWcupsclient.README
 
 PATCHFILES  = 0001-cswcups-for-service-name.patch
 PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
@@ -84,22 +85,12 @@ CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsclient
 CHECKPKG_OVERRIDES_CSWcups += surplus-dependency|CSWcupsd
 
 # Empty transitional package
-PACKAGES               += CSWlibcups
-SPKG_DESC_CSWlibcups    = Empty transitional package (was: CUPS libraries)
-PKGFILES_CSWlibcups     = NONE
-RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcupscgi1
-RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcupsdriver1
-RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcupsimage2
-RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcupsmime1
-RUNTIME_DEP_PKGS_CSWlibcups += CSWlibcupsppdc1
-CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcupsppdc1
-CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcupsdriver1
-CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcups2
-CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcupsmime1
-CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcupsimage2
-CHECKPKG_OVERRIDES_CSWlibcups += surplus-dependency|CSWlibcupscgi1
-ARCHALL_CSWlibcups = 1
+OBSOLETED_BY_CSWlibcups2 += CSWlibcups
+OBSOLETED_BY_CSWlibcupscgi1 += CSWlibcups
+OBSOLETED_BY_CSWlibcupsdriver1 += CSWlibcups
+OBSOLETED_BY_CSWlibcupsimage2 += CSWlibcups
+OBSOLETED_BY_CSWlibcupsmime1 += CSWlibcups
+OBSOLETED_BY_CSWlibcupsppdc1 += CSWlibcups
 
 # The daemon
 PACKAGES += CSWcupsd
@@ -163,6 +154,7 @@ PKGFILES_CSWcupsclient += $(mandir)/man5/client.conf.5
 PKGFILES_CSWcupsclient += $(mandir)/man5/ppdcfile\.5
 PKGFILES_CSWcupsclient += $(mandir)/man7/(drv|notifier)\.7
 PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
+PKGFILES_CSWcupsclient += $(datadir)/doc/cupsclient.*
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWosslrt
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
@@ -214,10 +206,8 @@ PKGFILES_CSWcupsdev = None
 
 ARCHALL_CSWcupsdoc   = 1
 
-
-
-PKGFILES_CSWcupsdoc  = $(datadir)/doc
-PKGFILES_CSWcupsdoc += $(datadir)/doc/.*
+PKGFILES_CSWcupsdoc += $(datadir)/doc/cups
+PKGFILES_CSWcupsdoc += $(datadir)/doc/cups/.*
 PKGFILES_CSWcupsdoc += $(datadir)/cups/examples.*
 SPKG_DESC_CSWcupsdoc    = CUPS documentation
 
@@ -351,6 +341,10 @@ post-install-modulated: $(CUPSLINKS_TARGET)
 	for f in $(DESTDIR)$(libdir)/cups/backend/*; do \
 		chmod 0700 $${f}; \
 	done
+	# https://www.opencsw.org/mantis/view.php?id=4532
+	ginstall -m 755 -d $(DESTDIR)$(datadir)/doc/cupsclient
+	ginstall -m 755 $(DOWNLOADDIR)/CSWcupsclient.README \
+		$(DESTDIR)$(datadir)/doc/cupsclient/README
 	@$(MAKECOOKIE)
 
 cupslinks:

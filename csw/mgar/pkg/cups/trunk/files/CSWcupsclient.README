@@ -1,0 +1,4 @@
+This is the CUPS client package, containing client binaries.  It only works
+with a corresponding CUPS server, either local or remote.  If you're looking
+at setting up a new CUPS installation, you will need to install the cupsd
+package as well.  For documentation, look at the cupsdoc package.
