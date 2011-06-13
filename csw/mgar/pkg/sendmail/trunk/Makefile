@@ -20,15 +20,16 @@ SPKG_SOURCEURL = http://www.sendmail.org
 #MY_CLASSES = CSWsendmail.i.sol9 CSWsendmail.i.sol10
 
 DISTFILES  = $(NAME).$(VERSION).tar.gz
-DISTFILES += README.CSW sendmail.schema CSWsendmail.postinstall
 DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
-DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
-DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
 DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
-DISTFILES += COPYING
+DISTFILES += README.CSW sendmail.schema
+DISTFILES += cswsendmail site.config.m4
+#DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
+#DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
+#DISTFILES += README.CSW sendmail.schema CSWsendmail.postinstall
+#DISTFILES += COPYING
 
-# Enable support for files > 2GB in size.
-EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
+LICENSE = LICENSE
 
 PACKAGES = CSWsendmail 
 CATALOGNAME_CSWsendmail = sendmail
@@ -41,6 +42,10 @@ RUNTIME_DEP_PKGS_CSWsendmail += CSWsasl
 RUNTIME_DEP_PKGS_CSWsendmail += CSWtcpwrap 
 
 INITSMF = /etc/opt/csw/init.d/cswsendmail
+USERGROUP = /etc/opt/csw/pkg/CSWsendmail/cswusergroup
+
+# Enable support for files > 2GB in size.
+EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 
 #PROTOTYPE_FILTER = awk \
 #	'$$$$2 ~/i.sol9/ { next } \
@@ -89,9 +94,9 @@ CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/
 
 include gar/category.mk
 
-ADMSCRIPTS = preremove preinstall space depend i.sol9 i.sol10
+#ADMSCRIPTS = preremove preinstall space depend i.sol9 i.sol10
 
-SOLVER    = sol$(shell uname -r |sed 's/5\.//')
+#SOLVER    = sol$(shell uname -r |sed 's/5\.//')
 PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
 OBJDIR    = $(WORKDIR)/$(DISTNAME)/obj.SunOS.$(GAROSREL).$(PLATFORM)
 LIBFILES  = sendmail/sendmail mail.local/mail.local smrsh/smrsh rmail/rmail
@@ -105,20 +110,24 @@ MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
             rmail/rmail.8 editmap/editmap.8
 
 configure-custom:
+	@echo " ==> Configuring $(NAME) (custom)"
 	@( gsed 's,%CFLAGS%,$(CFLAGS),;s,%OCSWCC%,$(CC),' \
 		$(DOWNLOADDIR)/site.config.m4 > \
 		$(WORKSRC)/devtools/Site/site.config.m4 )
 	@$(MAKECOOKIE)
 
 build-custom:
+	@echo " ==> Building $(NAME) (custom)"
 	cd $(WORKSRC) && ./Build
 	@$(MAKECOOKIE)
 
 test-custom:
+	@echo " ==> Testing $(NAME) (custom)"
 	@$(MAKECOOKIE)
 
 install-custom:
 	@# install dirs
+	@echo " ==> Installing $(NAME) (custom)"
 	ginstall -d $(DESTDIR)$(libdir)
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(sbindir)
@@ -142,15 +151,15 @@ install-custom:
 		done )
 
 	@# rename libraries and binaries os-specific
-	( for file in `ls $(DESTDIR)$(libdir)`; do  \
-		mv $(DESTDIR)$(libdir)/$$file $(DESTDIR)$(libdir)/$(SOLVER).$$file; \
-		done )
-	( for file in `ls $(DESTDIR)$(bindir)`; do  \
-		mv $(DESTDIR)$(bindir)/$$file $(DESTDIR)$(bindir)/$(SOLVER).$$file; \
-		done )
-	( for file in `ls $(DESTDIR)$(sbindir)`; do  \
-		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file;\
-		done )
+#	( for file in `ls $(DESTDIR)$(libdir)`; do  \
+#		mv $(DESTDIR)$(libdir)/$$file $(DESTDIR)$(libdir)/$(SOLVER).$$file; \
+#		done )
+#	( for file in `ls $(DESTDIR)$(bindir)`; do  \
+#		mv $(DESTDIR)$(bindir)/$$file $(DESTDIR)$(bindir)/$(SOLVER).$$file; \
+#		done )
+#	( for file in `ls $(DESTDIR)$(sbindir)`; do  \
+#		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file;\
+#		done )
 
 	@# install manpages
 	( for file in $(MANFILES1) ; do \
@@ -182,6 +191,7 @@ install-custom:
 
 merge-OS:
 	@# create links in bindir
+	@echo " ==> Merging $(NAME) (custom)"
 	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/newaliases
 	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/mailq
 	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/purgestats
