@@ -1,5 +1,7 @@
-2009-07-31
+2011-06-13
 Initial GAR version of sendmail.
+
+By Mike Watters, Benny von Mossner, Maciej Blizinski and Peter Bonivart.
 
 2007-12-09
 Previous package versions replaced some of Sun's sendmail files with symlinks
