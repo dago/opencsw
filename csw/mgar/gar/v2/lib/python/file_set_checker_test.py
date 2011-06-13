@@ -82,6 +82,13 @@ class FileSetCheckerUnitTest(unittest.TestCase):
     files_with_metadata = fc._FilesWithMetadata(files)
     self.assertEqual(expected, fc._CheckFilenames(files_with_metadata))
 
+  def testFilenamesGood(self):
+    fc = file_set_checker.FileSetChecker()
+    files = ['/home/experimental/maciej/'
+             'nspr-4.8.6,REV=2010.10.16-SunOS5.9-all-CSW.pkg.gz']
+    files_with_metadata = fc._FilesWithMetadata(files)
+    self.assertEqual([], fc._CheckFilenames(files_with_metadata))
+
 
 if __name__ == '__main__':
 	unittest.main()

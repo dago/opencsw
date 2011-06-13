@@ -32,7 +32,7 @@ class FileSetChecker(object):
   def _CheckFilenames(self, files_with_metadata):
     tags = []
     for filename, parsed_filename in files_with_metadata:
-      if not filename.endswith(".pkg.gz") or not filename.endswith(".pkg"):
+      if not filename.endswith(".pkg.gz") and not filename.endswith(".pkg"):
         tags.append(tag.CheckpkgTag(
           None,
           "bad-filename",
