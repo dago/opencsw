@@ -218,7 +218,7 @@ EXTRA_LIB = /opt/csw/postgresql/lib
 NOISALIST = 1
 STRIP_LIBTOOL = 1
 
-sysconfdir = /etc/$(prefix)/php5
+sysconfdir = /etc$(prefix)/php5
 
 CONFIGURE_ARGS += --prefix=$(prefix)/php5
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
