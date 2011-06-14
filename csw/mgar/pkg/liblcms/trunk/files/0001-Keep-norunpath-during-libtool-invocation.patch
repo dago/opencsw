@@ -1,0 +1,25 @@
+From 3d795082b4f78d262572c3a00a0bc5fe3fb25e5c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 14 Jun 2011 11:19:58 +0200
+Subject: [PATCH] Keep -norunpath during libtool invocation
+
+---
+ ltmain.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/ltmain.sh b/ltmain.sh
+index 5b6dd95..25ad8ef 100755
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -1663,7 +1663,7 @@ EOF
+       # -pg, --coverage pass through profiling flag for GCC
+       # @file GCC response files
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+-      -t[45]*|-txscale*|-pg|--coverage|@*)
++      -t[45]*|-txscale*|-pg|--coverage|@*|-norunpath)
+ 
+ 	# Unknown arguments in both finalize_command and compile_command need
+ 	# to be aesthetically quoted because they are evaled later.
+-- 
+1.7.5.4
+
