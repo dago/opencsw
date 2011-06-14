@@ -69,7 +69,7 @@ BUILD_DEP_PKGS += CSWsqlite
 
 PRESERVECONF = /etc$(prefix)/php5/php.ini /etc$(prefix)/php5/pear.conf
 PRESERVECONF += /opt/csw/apache2/etc/extra/httpd-php5.conf
-MIGRATE_FILES_CSWphp5 = "php.ini pear.conf"
+MIGRATE_FILES_CSWphp5 = "php.ini"
 MIGRATE_SOURCE_DIR_CSWphp5 = /opt/csw/php5/lib
 MIGRATE_DEST_DIR = $(sysconfdir)
 
