@@ -1,5 +1,11 @@
 # $Id$
 
+# - post message
+
+# + cpsample conf files
+# + remove COPYING file
+# + copy usergroup file into place
+
 NAME = sendmail
 VERSION = 8.14.5
 CATEGORIES = server
@@ -42,6 +48,15 @@ RUNTIME_DEP_PKGS_CSWsendmail += CSWsasl
 RUNTIME_DEP_PKGS_CSWsendmail += CSWtcpwrap 
 
 INITSMF = /etc/opt/csw/init.d/cswsendmail
+SAMPLECONF  = /etc/opt/csw/mail/aliases.CSW
+SAMPLECONF += /etc/opt/csw/mail/helpfile.CSW
+SAMPLECONF += /etc/opt/csw/mail/local-host-names.CSW
+SAMPLECONF += /etc/opt/csw/mail/README.CSW
+SAMPLECONF += /etc/opt/csw/mail/sendmail.cf.CSW
+SAMPLECONF += /etc/opt/csw/mail/sm-client.st.CSW
+SAMPLECONF += /etc/opt/csw/mail/statistics.CSW
+SAMPLECONF += /etc/opt/csw/mail/submit.cf.CSW
+SAMPLECONF += /etc/opt/csw/mail/trusted-users.CSW
 USERGROUP = /etc/opt/csw/pkg/CSWsendmail/cswusergroup
 
 # Enable support for files > 2GB in size.
@@ -187,6 +202,8 @@ install-custom:
 		done )
 	( mv $(DESTDIR)$(sysconfdir)/mail/sm-client.st.CSW \
 		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
+	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail
+	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail/
 	@$(MAKECOOKIE)
 
 merge-OS:
