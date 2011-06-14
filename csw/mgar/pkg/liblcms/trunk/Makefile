@@ -1,42 +1,71 @@
-NAME = lcms
-VERSION = 1.18a
-CATEGORIES = apps
-LCMS_VERSION := $(shell echo $(VERSION) | sed -e 's/[a-z]//g')
-LCMS_RELEASE := $(shell echo $(VERSION) | sed -e 's/[^a-z]//g')
+# $Id: Makefile 11888 2010-12-12 12:43:48Z skayser $
 
-DISTNAME = $(NAME)-$(LCMS_VERSION)
+NAME = lcms
+VERSION = 1.19
+GARSUBREV = 
+CATEGORIES = lib
+
 DESCRIPTION = The little color management system and tools
 define BLURB
-	Little cms intends to be a small-footprint, speed optimized 
-	color management engine in open source form. Since the initial release, 
-	back in 1998, lcms has been continuously evolving, mostly thanks to 
-	contributions done by skilled programmers, who generously donated 
-	their valuable time to review the engine and the documentation. 
-	For now, little cms has been ported to a big number of platforms and 
-	is currently used in many open source and commercial products, 
-	as well as being distributed in major linux environments. 
+        LittleCMS is a CMM, a color management engine; it implements fast transforms
+        between ICC profiles. "Little" stands for its small overhead. With a typical
+        footprint of about 100K including C runtime, you can color-enable your
+        application without the pain of ActiveX, OCX, redistributables or binaries
+        of any kind. We are using little cms in several commercial projects, however,
+        we are offering lcms library free for anybody under an extremely liberal
+        open source license.
 endef
 
-MASTER_SITES = http://www.littlecms.com/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = $(SF_MIRRORS)
+DISTFILES  = $(NAME)-$(VERSION)$(GARSUBREV).tar.gz
 
-PACKAGES = CSWlcms 
-CATALOGNAME_CSWlcms = lcms
-SPKG_DESC_CSWlcms = $(DESCRIPTION)
+PATCHFILES += 0001-Keep-norunpath-during-libtool-invocation.patch
 
-RUNTIME_DEP_PKGS_CSWlcms   = CSWjpeg CSWtiff CSWzlib
+VENDOR_URL = http://www.littlecms.com
 
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWliblcms1
+SPKG_DESC_CSWliblcms1 = Color management library, liblcms.so.1
+PKGFILES_CSWliblcms1 += $(call pkgfiles_lib,liblcms.so.1)
+OBSOLETED_BY_CSWliblcms1 = CSWlcmsrt
+CATALOGNAME_CSWliblcmsrt = lcms_rt_stub
+
+PACKAGES += CSWliblcms-dev
+SPKG_DESC_CSWliblcms-dev = Development files for liblcms.so.1
+PKGFILES_CSWliblcms-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWliblcms-dev += CSWliblcms1
+OBSOLETED_BY_CSWliblcms-dev = CSWlcmsdevel
+CATALOGNAME_CSWlcmsdevel = lcms_devel_stub
+
+PACKAGES += CSWliblcms-utils
+SPKG_DESC_CSWliblcms-utils = Utility programs for LCMS (Little Color Management)
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWliblcms-utils += CSWliblcms1
+RUNTIME_DEP_PKGS_CSWliblcms-utils += CSWtiff
+RUNTIME_DEP_PKGS_CSWliblcms-utils += CSWjpeg
+RUNTIME_DEP_PKGS_CSWliblcms-utils += CSWzlib
+OBSOLETED_BY_CSWliblcms-utils = CSWlcms
+CATALOGNAME_CSWlcms = lcms_stub
+
+PACKAGES += CSWpy-lcms
+CATALOGNAME_CSWpy-lcms = py_lcms
+SPKG_DESC_CSWpy-lcms += Python bindings for LCMS (Little Color Management)
+PKGFILES_CSWpy-lcms = $(libdir).*/python/site-packages/.*
+RUNTIME_DEP_PKGS_CSWpy-lcms += CSWliblcms1
+RUNTIME_DEP_PKGS_CSWpy-lcms += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-lcms += CSWpython
+
+EXTRA_LINKER_FLAGS = -norunpath
+
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --enable-static=no
+
+CONFIGURE_ARGS-32 += --with-python
+CONFIGURE_ARGS-64 += --without-python
+CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 BUILD64 = 1
-STRIP_LIBTOOL = 1
-
-CONFIGURE_ARGS  = $(DIRPATHS)
-TEST_TARGET = check
 
 include gar/category.mk
-SPKG_VERSION  := $(LCMS_VERSION)
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(LCMS_RELEASE)
+
+CXXFLAGS += -D_RWSTD_NO_WSTR=1
 
