@@ -1,0 +1,49 @@
+From 81091b26250f51d48024f1d7d6627fb1906c41f9 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 24 May 2011 12:29:49 +0200
+Subject: [PATCH 3/3] Remove extra conversion in function call causing errors
+
+---
+ converter/ppm/ppmtompeg/parallel.c |    4 ++--
+ converter/ppm/ppmtompeg/psocket.c  |    3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/converter/ppm/ppmtompeg/parallel.c b/converter/ppm/ppmtompeg/parallel.c
+index 021e6d2..66ab2bf 100644
+--- a/converter/ppm/ppmtompeg/parallel.c
++++ b/converter/ppm/ppmtompeg/parallel.c
+@@ -145,7 +145,7 @@ int     ClientPid[MAX_MACHINES+4];
+  *=====================*/
+ 
+ 
+-static void PM_GNU_PRINTF_ATTR(1,2)
++static void 
+ machineDebug(const char format[], ...) {
+ 
+     va_list args;
+@@ -164,7 +164,7 @@ machineDebug(const char format[], ...) {
+ 
+ 
+ 
+-static void PM_GNU_PRINTF_ATTR(1,2)
++static void
+ errorExit(const char format[], ...) {
+ 
+     const char * const hostname = GetHostName();
+diff --git a/converter/ppm/ppmtompeg/psocket.c b/converter/ppm/ppmtompeg/psocket.c
+index 707f1d8..fd4c6d6 100644
+--- a/converter/ppm/ppmtompeg/psocket.c
++++ b/converter/ppm/ppmtompeg/psocket.c
+@@ -9,6 +9,9 @@
+ 
+ ============================================================================*/
+ 
++#define PM_GNU_PRINTF_ATTR(a,b)
++
++
+ #define _XOPEN_SOURCE 500 /* Make sure stdio.h contains pclose() */
+ /* _ALL_SOURCE is needed on AIX to make the C library include the 
+    socket services (e.g. define struct sockaddr) 
+-- 
+1.7.3.2
+

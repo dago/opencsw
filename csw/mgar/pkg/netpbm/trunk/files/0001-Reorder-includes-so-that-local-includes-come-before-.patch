@@ -1,0 +1,25 @@
+From aecad6315ae396625724f7253308b25b4be888c6 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 24 May 2011 12:27:37 +0200
+Subject: [PATCH 1/3] Reorder includes so that local includes come before /opt/csw/include
+
+---
+ Makefile.common |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile.common b/Makefile.common
+index 2946589..33bfb8a 100644
+--- a/Makefile.common
++++ b/Makefile.common
+@@ -68,7 +68,7 @@
+ 
+ include $(SRCDIR)/Makefile.version
+ 
+-INCLUDES2 := $(INCLUDES) -I$(SRCDIR)/$(SUBDIR) -I. -I importinc
++INCLUDES2 := -I$(SRCDIR)/$(SUBDIR) -I. $(INCLUDES) -I importinc
+ 
+ ifeq ($(NETPBMLIBTYPE),unixstatic)
+   NETPBMLIBFNAME = libnetpbm.$(STATICLIBSUFFIX)
+-- 
+1.7.3.2
+

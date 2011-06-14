@@ -1,0 +1,39 @@
+From 094b2208dec73eac12014b3dcf8a03f07e94ab7e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 24 May 2011 15:48:02 +0200
+Subject: [PATCH] Move /opt/csw/include to the end
+
+---
+ Makefile.common                  |    2 +-
+ converter/ppm/ppmtompeg/Makefile |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.common b/Makefile.common
+index 2ff30fd..43e7687 100644
+--- a/Makefile.common
++++ b/Makefile.common
+@@ -68,7 +68,7 @@
+ 
+ include $(SRCDIR)/Makefile.version
+ 
+-INCLUDES2 := -I$(SRCDIR)/$(SUBDIR) -I. $(INCLUDES) -I importinc
++INCLUDES2 := -I$(SRCDIR)/$(SUBDIR) -I. $(INCLUDES) -I importinc $(INCLUDES1)
+ 
+ ifeq ($(NETPBMLIBTYPE),unixstatic)
+   NETPBMLIBFNAME = libnetpbm.$(STATICLIBSUFFIX)
+diff --git a/converter/ppm/ppmtompeg/Makefile b/converter/ppm/ppmtompeg/Makefile
+index 4e0ad8d..0a11e8a 100644
+--- a/converter/ppm/ppmtompeg/Makefile
++++ b/converter/ppm/ppmtompeg/Makefile
+@@ -22,7 +22,7 @@ INCLUDES = -I$(SRCDIR)/$(SUBDIR)/headers
+ 
+ ifneq ($(JPEGHDR_DIR),NONE)
+   ifneq ($(JPEGHDR_DIR)x,x)
+-    INCLUDES += -I$(JPEGHDR_DIR)
++    INCLUDES1 += -I$(JPEGHDR_DIR)
+   endif
+ endif
+ 
+-- 
+1.7.3.2
+

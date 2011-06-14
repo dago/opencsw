@@ -1,5 +1,5 @@
 NAME = netpbm
-VERSION = 10.26.43
+VERSION = 10.35.80
 CATEGORIES = utils
 
 DESCRIPTION = Netpbm is a toolkit for manipulation of graphic images
@@ -9,61 +9,69 @@ define BLURB
 endef
 
 MASTER_SITES += $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tgz netpbm-doc.tgz
-DISTFILES += CSWnetpbm.gspec CSWnetpbm.postinstall
+DISTFILES += $(DISTNAME).tgz
+DISTFILES += Makefile.config
 
-PATCHFILES = netpbm-config.diff netpbm-makefile.diff csw-perl.diff makeman.diff manweb.diff cflags-fix.diff netpbm-pm_config.h.diff 
+EXPANDVARS += Makefile.config
 
-INSTDIR = $(DESTDIR)/opt/csw
+PATCHFILES += 0001-Reorder-includes-so-that-local-includes-come-before-.patch
+PATCHFILES += 0002-Remove-unused-external-references-causing-link-error.patch
+PATCHFILES += 0003-Remove-extra-conversion-in-function-call-causing-err.patch
+PATCHFILES += 0004-Move-opt-csw-include-to-the-end.patch
 
-CONFIGURE_SCRIPTS =
-INSTALL_ARGS = package pkgdir=$(INSTDIR)
-ENABLE_TEST = 0
+VENDOR_URL = http://netpbm.sourceforge.net/
 
-# Remove the following rules and uncomment the
-# include before building.
-all: .DEFAULT
-.DEFAULT:
-	@true
+LICENSE = doc/GPL_LICENSE.txt
 
-NETPBMDOCDIR = $(WORKDIR)/doc
+PACKAGES += CSWnetpbm
+SPKG_DESC_CSWnetpbm = A toolkit for manipulation of graphic images
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWjpeg
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWtiff
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWpng
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWiconv
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWzlib
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWnetpbm += CSWlibnetpbm10
 
-pre-install:
-	rm -rf $(INSTDIR)
+PACKAGES += CSWlibnetpbm10
+SPKG_DESC_CSWlibnetpbm10 = Library for manipulation of graphic images, libnetpbm.so.10
+PKGFILES_CSWlibnetpbm10 = $(call pkgfiles_lib,libnetpbm.so.10)
 
-post-install: netpbm-config fix-install install-doc
-#.PHONY: post-install
+PACKAGES += CSWlibnetpbm-dev
+SPKG_DESC_CSWlibnetpbm-dev = Development files for libnetpbm.so.10
+PKGFILES_CSWlibnetpbm-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibnetpbm-dev += CSWlibnetpbm10
 
-netpbm-config:
-	cd files && ./make-netpbm-config.sh $(INSTDIR) 
+CONFIGURE_SCRIPTS = custom
 
-fix-install:
-	-mkdir -p $(INSTDIR)/share/netpbm
-	-mv $(INSTDIR)/misc/* $(INSTDIR)/share/netpbm
-	-rmdir $(INSTDIR)/misc
-	-rm $(INSTDIR)/pkginfo
-	-rm $(INSTDIR)/VERSION
-	-rm $(INSTDIR)/README
-	-mv $(INSTDIR)/man $(INSTDIR)/share
-	-rm -rf $(INSTDIR)/link
-	-cd $(INSTDIR)/lib; ln -s libnetpbm.so.10 libnetpbm.so
+EXTRA_CFLAGS += -D__inline=
 
-install-doc:
-	-mkdir -p $(INSTDIR)/etc
-	@echo "#Configuration file for Manweb" > $(INSTDIR)/etc/manweb.conf.CSW
-	@echo "webdir=/opt/csw/share/man/web" >> $(INSTDIR)/etc/manweb.conf.CSW
-	@echo "#browser=lynx\n" >> $(INSTDIR)/etc/manweb.conf.CSW
-	-mkdir -p $(INSTDIR)/share/doc/netpbm
-	cp -r $(NETPBMDOCDIR)/* $(INSTDIR)/share/doc/netpbm
-#	cd $(NETPBMDOCDIR) && make WORKSRC=$(WORKSRC) DESTDIR=$(INSTDIR) -f /export/home/damjan/csw/utils/netpbm/$(WORKSRC)/buildtools/Makefile.manpage manpages
-#	cd $(NETPBMDOCDIR) && make WORKSRC=$(WORKSRC) DESTDIR=$(INSTDIR) -f /export/home/damjan/csw/utils/netpbm/$(WORKSRC)/buildtools/Makefile.manpage installman
-	cd $(INSTDIR)/share/doc/netpbm && /export/home/damjan/csw/utils/netpbm/$(WORKSRC)/buildtools/makecat *.html
-	cd $(INSTDIR)/share/doc/netpbm && perl -pi.bak -e 's/\/export\/home\/damjan\/tmp\/build.5.8-i386//' *.1
-	cd $(INSTDIR)/share/doc/netpbm && rm *.bak
-	cd $(INSTDIR)/share/doc/netpbm && (mv libnetpbm.1 libnetpbm.3 && mv pam.1 pam.5 && mv pbm.1 pbm.5 && mv pfm.1 pfm.5 && mv pgm.1 pgm.5 && mv pnm.1 pnm.5 && mv ppm.1 ppm.5)
-	mkdir -p $(INSTDIR)/share/man/cat1 $(INSTDIR)/share/man/cat3 $(INSTDIR)/share/man/cat5
-	cd $(INSTDIR)/share/doc/netpbm && (mv *.1 $(INSTDIR)/share/man/cat1 && mv *.3 $(INSTDIR)/share/man/cat3 && mv *.5 $(INSTDIR)/share/man/cat5)
-	rm -rf $(INSTDIR)/share/man/man?
+INSTALL_OVERRIDE_VARS += PKGMANDIR
+INSTALL_ARGS = package pkgdir=$(DESTDIR)$(prefix)
+INSTALL_OVERRIDE_VAR_PKGMANDIR = share/man
 
+# Package has no testsuite
+TEST_SCRIPTS =
+
+EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/README
+EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/pkginfo
+EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/VERSION
+EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/config_template
+EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/man/.*
+EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/link/.*
+
+EXTRA_PAX_ARGS = -s ",$(prefix)/misc,$(sharedstatedir)/netpbm,"
 
 include gar/category.mk
+
+configure-custom:
+	cp $(WORKDIR)/Makefile.config $(WORKSRC)
+	perl -pi \
+		-e 's,(#define\s+RGB_DB1\s+).*,$$1"/opt/csw/share/netpbm/rgb.txt",;' \
+		-e 's,(#define\s+RGB_DB2\s+).*,$$1"/usr/openwin/lib/X11/rgb.txt",;' \
+		-e 's,(#define\s+RGB_DB3\s+).*,$$1"/usr/openwin/lib/rgb.txt",;' \
+		$(WORKSRC)/pm_config.in.h
+	@$(MAKECOOKIE)
+
+pre-install-modulated:
+	mkdir -p $(DESTDIR)/opt
