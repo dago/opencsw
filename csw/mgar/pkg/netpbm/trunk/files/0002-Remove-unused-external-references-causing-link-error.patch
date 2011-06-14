@@ -1,0 +1,39 @@
+From 80e9de931b2dd00d1513c9d76cac3f93de7d16ff Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 24 May 2011 12:28:06 +0200
+Subject: [PATCH 2/3] Remove unused external references causing link errors
+
+---
+ other/pamx/image.h |   16 ----------------
+ 1 files changed, 0 insertions(+), 16 deletions(-)
+
+diff --git a/other/pamx/image.h b/other/pamx/image.h
+index ea597b2..64f8911 100644
+--- a/other/pamx/image.h
++++ b/other/pamx/image.h
+@@ -65,22 +65,6 @@ freeImage(Image * const imageP);
+ unsigned int
+ depthToColors(unsigned int const depth);
+ 
+-extern unsigned short RedIntensity[];
+-extern unsigned short GreenIntensity[];
+-extern unsigned short BlueIntensity[];
+-
+-static __inline__ unsigned int
+-colorIntensity(unsigned int const red,
+-               unsigned int const grn,
+-               unsigned int const blu) {
+-/*----------------------------------------------------------------------------
+-  Return the (approximate) intensity of a color.
+------------------------------------------------------------------------------*/
+-    return (RedIntensity[red / 256] +
+-            GreenIntensity[grn / 256] +
+-            BlueIntensity[blu / 256]);
+-}
+-
+ Image *
+ pbmLoad(const char * const fullname,
+         const char * const name,
+-- 
+1.7.3.2
+
