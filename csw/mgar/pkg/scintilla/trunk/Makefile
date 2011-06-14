@@ -19,6 +19,14 @@ LICENSE = License.txt
 PACKAGES += CSWlibscintilla2
 SPKG_DESC_CSWlibscintilla2 = Library source code editing component, libscintilla.so.2
 PKGFILES_CSWlibscintilla2 = $(call pkgfiles_lib,libscintilla.so.2)
+RUNTIME_DEP_PKGS_CSWlibscintilla2 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibscintilla2 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibscintilla2 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibscintilla2 += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibscintilla2 += CSWlibatk
+RUNTIME_DEP_PKGS_CSWlibscintilla2 += CSWpango
+RUNTIME_DEP_PKGS_CSWlibscintilla2 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibscintilla2 += CSWglib2
 
 PACKAGES += CSWlibscintilla-dev
 SPKG_DESC_CSWlibscintilla-dev = Development files for libscintilla.so.2
@@ -33,6 +41,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 # pic13 is too small
 EXTRA_CXXFLAGS = -xcode=pic32
+
+EXTRA_LINKER_FLAGS = -norunpath
 
 # Ugh, manual makefile.
 CONFIGURE_SCRIPTS =
@@ -49,12 +59,12 @@ INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
-install-custom: _LINK64=$(if $(filter 64,$(MEMORYMODEL)),-64,)
+install-custom: LINKFLAGS_GTK=$(shell PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) $(bindir_install)/pkg-config --libs gtk+-2.0)
 install-custom:
 	mkdir -p $(DESTDIR)$(includedir)
 	cp $(WORKDIR)/$(DISTNAME)/include/* $(DESTDIR)$(includedir)
 	mkdir -p $(DESTDIR)$(libdir)
-	cd $(WORKDIR)/$(DISTNAME)/bin && ld $(_LINK64) -G -z allextract -h libscintilla.so.2 scintilla.a  -o $(DESTDIR)$(libdir)/libscintilla.so.2.26
+	cd $(WORKDIR)/$(DISTNAME)/bin && $(CXX) $(LDFLAGS) -R $(libdir) -lCstd $(LINKFLAGS_GTK) -G -z allextract -h libscintilla.so.2 scintilla.a  -o $(DESTDIR)$(libdir)/libscintilla.so.2.26
 	ln -s libscintilla.so.2.26 $(DESTDIR)$(libdir)/libscintilla.so.2
 	ln -s libscintilla.so.2.26 $(DESTDIR)$(libdir)/libscintilla.so
 	@$(MAKECOOKIE)
