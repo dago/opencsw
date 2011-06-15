@@ -1,7 +1,14 @@
 # $Id$
 
+# TODO
+# - migrate conf from /opt/csw/etc/mail
 # - post message
 # - libmilter
+# - try to fix bugs
+#   - 2915 Must stop built-in sendmail manually
+#   - 3864 Sendmail must be relinked with new berekeley db
+#   - 4150 Sendmail 8.14.4 released
+#   - 4486 Provide sendmail's contrib/ tools as a separate package?
 
 # + cpsample conf files
 # + remove COPYING file
@@ -36,7 +43,6 @@ DISTFILES += cswsendmail site.config.m4
 #DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
 #DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
 #DISTFILES += README.CSW sendmail.schema CSWsendmail.postinstall
-#DISTFILES += COPYING
 
 LICENSE = LICENSE
 
@@ -44,22 +50,16 @@ PACKAGES = CSWsendmail
 CATALOGNAME_CSWsendmail = sendmail
 SPKG_DESC_CSWsendmail = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS_CSWsendmail  = CSWbdb48
-RUNTIME_DEP_PKGS_CSWsendmail += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsendmail  = CSWoldaprt
 RUNTIME_DEP_PKGS_CSWsendmail += CSWosslrt
 RUNTIME_DEP_PKGS_CSWsendmail += CSWsasl
 RUNTIME_DEP_PKGS_CSWsendmail += CSWtcpwrap 
+#RUNTIME_DEP_PKGS_CSWsendmail += CSWbdb48 # not needed? makemap not compiled with hash support?
 
-INITSMF = /etc/opt/csw/init.d/cswsendmail
-SAMPLECONF  = /etc/opt/csw/mail/aliases
-SAMPLECONF += /etc/opt/csw/mail/helpfile
-SAMPLECONF += /etc/opt/csw/mail/local-host-names
-SAMPLECONF += /etc/opt/csw/mail/sendmail.cf
-SAMPLECONF += /etc/opt/csw/mail/sm-client.st
-SAMPLECONF += /etc/opt/csw/mail/statistics
-SAMPLECONF += /etc/opt/csw/mail/submit.cf
-SAMPLECONF += /etc/opt/csw/mail/trusted-users
-USERGROUP = /etc/opt/csw/pkg/CSWsendmail/cswusergroup
+INITSMF     = /etc/opt/csw/init.d/cswsendmail
+SAMPLECONF += $(addprefix /etc/opt/csw/mail/,$(CONFFILES))
+SAMPLECONF += /var/opt/csw/spool/clientmqueue/sm-client.st
+USERGROUP   = /etc/opt/csw/pkg/CSWsendmail/cswusergroup
 
 # Enable support for files > 2GB in size.
 EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
@@ -76,7 +76,7 @@ EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 
 #ENABLE_CHECK = 0
 
-# patch away GNUism
+# Patch away GNUism
 PATCHFILES = patch-CC-M.m4
 
 CONFIGURE_SCRIPTS   = custom
@@ -85,14 +85,14 @@ TEST_SCRIPTS        = custom
 INSTALL_SCRIPTS     = custom
 EXTRA_MERGE_SCRIPTS = OS
 
-# Temporary overrides
-CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/README
+# Collisions with Postfix naming it's files after the Sendmail de facto standard
 CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/mailq.1|CSWpostfix|CSWsendmail
-CHECKPKG_OVERRIDES_CSWsendmail += surplus-dependency|CSWbdb48
 CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/newaliases|CSWpostfix|CSWsendmail
 CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man5/aliases.5|CSWpostfix|CSWsendmail
 CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/mailq|CSWpostfix|CSWsendmail
 CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/newaliases.1|CSWpostfix|CSWsendmail
+# Look thru these to see if they are harmless, e.g. examples
+CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/README
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/share|root/opt/csw/share/mail/cf/README
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/smrsh.8
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/sendmail.8
@@ -125,8 +125,8 @@ MANFILES5 = sendmail/aliases.5
 MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
             praliases/praliases.8 smrsh/smrsh.8 mail.local/mail.local.8 \
             rmail/rmail.8 editmap/editmap.8
-CONFFILES = aliases helpfile local-host-names README.CSW sendmail.cf \
-            sm-client.st statistics submit.cf trusted-users
+CONFFILES = aliases helpfile local-host-names sendmail.cf \
+            statistics submit.cf trusted-users
 
 configure-custom:
 	@echo " ==> Configuring $(NAME) (custom)"
@@ -204,12 +204,16 @@ install-custom:
 		ginstall -m 644 $(DOWNLOADDIR)/$$file \
 		$(DESTDIR)$(sysconfdir)/mail/$$file; \
 		done )
-	( mv $(DESTDIR)$(sysconfdir)/mail/sm-client.st \
+	( mv $(DOWNLOADDIR)/sm-client.st \
 		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
 
 	@# usergroup
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail
 	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail/
+
+	@# README
+	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+	@ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)/
 
 	@$(MAKECOOKIE)
 

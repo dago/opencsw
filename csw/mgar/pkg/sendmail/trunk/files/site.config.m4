@@ -10,7 +10,7 @@ define(`confMBINDIR',`/opt/csw/lib')
 define(`confEBINDIR',`/opt/csw/lib')
 define(`confUBINDIR',`/opt/csw/bin')
 define(`confSBINDIR',`/opt/csw/sbin')
-define(`confSTDIR', `/opt/csw/etc/mail')
+define(`confSTDIR', `/etc/opt/csw/mail')
 define(`confSHAREDLIBDIR', `/opt/csw/lib')
 define(`confMANROOT', `/opt/csw/share/man/cat')
 define(`confMANROOTMAN', `/opt/csw/share/man/man')
@@ -21,6 +21,13 @@ dnl ### add OpenCSW lib and include directories
 APPENDDEF(`confLIBDIRS', `-L/opt/csw/lib -R/opt/csw/lib')
 APPENDDEF(`confINCDIRS', `-I/opt/csw/include')
 APPENDDEF(`conf_sendmail_ENVDEF', `-I/opt/csw/include')
+
+dnl ### add BerkeleyDB hash support
+dnl APPENDDEF(`confLIBDIRS', `-L/opt/csw/bdb48/lib')
+dnl APPENDDEF(`confINCDIRS', `-I/opt/csw/bdb48/include')
+dnl APPENDDEF(`confLIBDIRS', `-L/opt/csw/lib')
+dnl APPENDDEF(`confINCDIRS', `-I/opt/csw/include')
+dnl APPENDDEF(`confENVDEF', `-DNEWDB')
 
 dnl ### add NIS/NIS+ support
 APPENDDEF(`confENVDEF', `-DNIS')
