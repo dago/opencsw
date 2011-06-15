@@ -4,18 +4,17 @@ CATEGORIES = apps
 
 DESCRIPTION = A command-line tool that randomizes lines of input.
 define BLURB
-  rl is a command-line tool that reads lines from an input file or stdin, randomizes the lines and outputs a specified number of lines. It does this with only a single pass over the input while trying to use as little memory as possible.
+  rl is a command-line tool that reads lines from an input file or stdin, randomizes the
+  lines and outputs a specified number of lines. It does this with only a single pass over
+  the input while trying to use as little memory as possible.
 endef
 
-MASTER_SITES = http://ch.tudelft.nl/~arthur/rl/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWrl,)
+MASTER_SITES = http://arthurdejong.org/rl/
+DISTFILES  = $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PATCHFILES += 0001-Add-missing-typedef.patch
 
-CONFIGURE_ARGS = $(DIRPATHS)
 # Not gonna do it
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
 
 include gar/category.mk
