@@ -28,9 +28,11 @@ SPKG_SOURCEURL = http://www.sendmail.org
 
 DISTFILES  = $(NAME).$(VERSION).tar.gz
 DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
-DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
+DISTFILES += aliases helpfile local-host-names sendmail.cf
+DISTFILES += sm-client.st statistics submit.cf trusted-users
 DISTFILES += README.CSW sendmail.schema
 DISTFILES += cswsendmail site.config.m4
+#DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 #DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
 #DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
 #DISTFILES += README.CSW sendmail.schema CSWsendmail.postinstall
@@ -52,7 +54,6 @@ INITSMF = /etc/opt/csw/init.d/cswsendmail
 SAMPLECONF  = /etc/opt/csw/mail/aliases
 SAMPLECONF += /etc/opt/csw/mail/helpfile
 SAMPLECONF += /etc/opt/csw/mail/local-host-names
-SAMPLECONF += /etc/opt/csw/mail/README
 SAMPLECONF += /etc/opt/csw/mail/sendmail.cf
 SAMPLECONF += /etc/opt/csw/mail/sm-client.st
 SAMPLECONF += /etc/opt/csw/mail/statistics
@@ -124,7 +125,7 @@ MANFILES5 = sendmail/aliases.5
 MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
             praliases/praliases.8 smrsh/smrsh.8 mail.local/mail.local.8 \
             rmail/rmail.8 editmap/editmap.8
-CONFFILES = aliases helpfile local-host-names README sendmail.cf \
+CONFFILES = aliases helpfile local-host-names README.CSW sendmail.cf \
             sm-client.st statistics submit.cf trusted-users
 
 configure-custom:
@@ -203,10 +204,13 @@ install-custom:
 		ginstall -m 644 $(DOWNLOADDIR)/$$file \
 		$(DESTDIR)$(sysconfdir)/mail/$$file; \
 		done )
-	( mv $(DESTDIR)$(sysconfdir)/mail/sm-client.st.CSW \
+	( mv $(DESTDIR)$(sysconfdir)/mail/sm-client.st \
 		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
+
+	@# usergroup
 	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail
 	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail/
+
 	@$(MAKECOOKIE)
 
 merge-OS:
