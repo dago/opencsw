@@ -64,6 +64,7 @@ CONFIGURE_ARGS-64 += --without-python
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 BUILD64 = 1
+ISAEXEC = 1
 
 include gar/category.mk
 
