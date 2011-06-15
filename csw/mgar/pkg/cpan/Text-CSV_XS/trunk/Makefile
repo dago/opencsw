@@ -1,5 +1,5 @@
 NAME = Text-CSV_XS
-VERSION = 0.70
+VERSION = 0.81
 CATEGORIES = cpan
 AUTHOR = HMBRAND
 
@@ -10,13 +10,17 @@ define BLURB
   fields into a CSV string and parse a CSV string into fields.
 endef
 
-PACKAGES = CSWpmtextcsvxs
-CATALOGNAME = pm_textcsvxs
+# This module uses .tgz instead of .tar.gz :-(
+MODDIST = $(NAME)-$(VERSION).tgz
+
+PACKAGES = CSWpm-text-csv-xs
+CATALOGNAME = pm_text_csv_xs
+SPKG_DESC_CSWpm-text-csv-xs = Comma-separated values manipulation routines
+OBSOLETED_BY_CSWpm-text-csv-xs = CSWpmtextcsvxs
+RUNTIME_DEP_PKGS_CSWpm-text-csv-xs = CSWpm-text-csv
 
 # This was the previous name. Note the typo!
 INCOMPATIBLE_PKGS = CSWpmttextcsvxs
 
-# This module uses .tgz instead of .tar.gz :-(
-MODDIST = $(NAME)-$(VERSION).tgz
 
 include gar/category.mk
