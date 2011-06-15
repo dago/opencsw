@@ -1,6 +1,7 @@
 # $Id$
 
 # - post message
+# - libmilter
 
 # + cpsample conf files
 # + remove COPYING file
@@ -48,15 +49,15 @@ RUNTIME_DEP_PKGS_CSWsendmail += CSWsasl
 RUNTIME_DEP_PKGS_CSWsendmail += CSWtcpwrap 
 
 INITSMF = /etc/opt/csw/init.d/cswsendmail
-SAMPLECONF  = /etc/opt/csw/mail/aliases.CSW
-SAMPLECONF += /etc/opt/csw/mail/helpfile.CSW
-SAMPLECONF += /etc/opt/csw/mail/local-host-names.CSW
-SAMPLECONF += /etc/opt/csw/mail/README.CSW
-SAMPLECONF += /etc/opt/csw/mail/sendmail.cf.CSW
-SAMPLECONF += /etc/opt/csw/mail/sm-client.st.CSW
-SAMPLECONF += /etc/opt/csw/mail/statistics.CSW
-SAMPLECONF += /etc/opt/csw/mail/submit.cf.CSW
-SAMPLECONF += /etc/opt/csw/mail/trusted-users.CSW
+SAMPLECONF  = /etc/opt/csw/mail/aliases
+SAMPLECONF += /etc/opt/csw/mail/helpfile
+SAMPLECONF += /etc/opt/csw/mail/local-host-names
+SAMPLECONF += /etc/opt/csw/mail/README
+SAMPLECONF += /etc/opt/csw/mail/sendmail.cf
+SAMPLECONF += /etc/opt/csw/mail/sm-client.st
+SAMPLECONF += /etc/opt/csw/mail/statistics
+SAMPLECONF += /etc/opt/csw/mail/submit.cf
+SAMPLECONF += /etc/opt/csw/mail/trusted-users
 USERGROUP = /etc/opt/csw/pkg/CSWsendmail/cswusergroup
 
 # Enable support for files > 2GB in size.
@@ -123,6 +124,8 @@ MANFILES5 = sendmail/aliases.5
 MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
             praliases/praliases.8 smrsh/smrsh.8 mail.local/mail.local.8 \
             rmail/rmail.8 editmap/editmap.8
+CONFFILES = aliases helpfile local-host-names README sendmail.cf \
+            sm-client.st statistics submit.cf trusted-users
 
 configure-custom:
 	@echo " ==> Configuring $(NAME) (custom)"
@@ -196,8 +199,8 @@ install-custom:
 		cp -p $(DOWNLOADDIR)/cswsendmail $(DESTDIR)/etc/opt/csw/init.d
 
 	@# install configurations, XXX missing submit.cf/sendmail.cf
-	( for file in `cd $(DOWNLOADDIR) && ls *.CSW`; do \
-		ginstall -m 644  $(DOWNLOADDIR)/$$file \
+	( for file in $(CONFFILES) ; do \
+		ginstall -m 644 $(DOWNLOADDIR)/$$file \
 		$(DESTDIR)$(sysconfdir)/mail/$$file; \
 		done )
 	( mv $(DESTDIR)$(sysconfdir)/mail/sm-client.st.CSW \
