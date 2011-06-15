@@ -54,7 +54,7 @@ RUNTIME_DEP_PKGS_CSWsendmail  = CSWoldaprt
 RUNTIME_DEP_PKGS_CSWsendmail += CSWosslrt
 RUNTIME_DEP_PKGS_CSWsendmail += CSWsasl
 RUNTIME_DEP_PKGS_CSWsendmail += CSWtcpwrap 
-#RUNTIME_DEP_PKGS_CSWsendmail += CSWbdb48 # not needed? makemap not compiled with hash support?
+RUNTIME_DEP_PKGS_CSWsendmail += CSWbdb48
 
 INITSMF     = /etc/opt/csw/init.d/cswsendmail
 SAMPLECONF += $(addprefix /etc/opt/csw/mail/,$(CONFFILES))
@@ -204,7 +204,7 @@ install-custom:
 		ginstall -m 644 $(DOWNLOADDIR)/$$file \
 		$(DESTDIR)$(sysconfdir)/mail/$$file; \
 		done )
-	( mv $(DOWNLOADDIR)/sm-client.st \
+	( ginstall -m 644  $(DOWNLOADDIR)/sm-client.st \
 		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
 
 	@# usergroup

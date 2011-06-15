@@ -23,11 +23,9 @@ APPENDDEF(`confINCDIRS', `-I/opt/csw/include')
 APPENDDEF(`conf_sendmail_ENVDEF', `-I/opt/csw/include')
 
 dnl ### add BerkeleyDB hash support
-dnl APPENDDEF(`confLIBDIRS', `-L/opt/csw/bdb48/lib')
-dnl APPENDDEF(`confINCDIRS', `-I/opt/csw/bdb48/include')
-dnl APPENDDEF(`confLIBDIRS', `-L/opt/csw/lib')
-dnl APPENDDEF(`confINCDIRS', `-I/opt/csw/include')
-dnl APPENDDEF(`confENVDEF', `-DNEWDB')
+APPENDDEF(`confLIBDIRS', `-L/opt/csw/bdb48/lib -R/opt/csw/bdb48/lib')
+APPENDDEF(`confINCDIRS', `-I/opt/csw/bdb48/include')
+APPENDDEF(`confENVDEF', `-DNEWDB')
 
 dnl ### add NIS/NIS+ support
 APPENDDEF(`confENVDEF', `-DNIS')
