@@ -44,6 +44,7 @@ EXTRA_CPPFLAGS-5.9 = -Dpowf=pow -Dfabsf=labs
 EXTRA_CPPFLAGS = $(EXTRA_CPPFLAGS-$(GAROSREL))
 
 BUILD64 = 1
+ISAEXEC = 1
 
 # One test with unicode is dumping core on 64 bit, disable for now
 SKIPTEST ?= 1
