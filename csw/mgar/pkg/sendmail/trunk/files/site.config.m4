@@ -32,7 +32,9 @@ APPENDDEF(`confENVDEF', `-DNIS')
 APPENDDEF(`confENVDEF', `-DNISPLUS')
 
 dnl ### use our sendmail.cf path
-APPENDDEF(`confENVDEF', `-DUSE_VENDOR_CF_PATH')
+dnl APPENDDEF(`confENVDEF', `-DUSE_VENDOR_CF_PATH')
+APPENDDEF(`confENVDEF', `-D_PATH_SENDMAILCF=\"/etc/opt/csw/mail/sendmail.cf\"')
+APPENDDEF(`confENVDEF', `-D_DIR_SENDMAILCF=\"/etc/opt/csw/mail/\"')
 
 dnl ### add LDAP support
 APPENDDEF(`conf_libsm_ENVDEF', `-DLDAPMAP')
