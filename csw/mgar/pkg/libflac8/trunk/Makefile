@@ -64,7 +64,7 @@ RUNTIME_DEP_PKGS_CSWxmms-flac += CSWgtk
 RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibflac8
 RUNTIME_DEP_PKGS_CSWxmms-flac += CSWxmms
 OBSOLETED_BY_CSWxmms-flac = CSWxmmsflac
-
+CATALOGNAME_CSWxmmsflac = xmms_flac_stub
 
 VENDOR_URL = http://flac.sourceforge.net/
 
