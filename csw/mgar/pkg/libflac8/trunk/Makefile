@@ -62,7 +62,7 @@ RUNTIME_DEP_PKGS_CSWxmms-flac += CSWglib
 RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWxmms-flac += CSWgtk
 RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibflac8
-RUNTIME_DEP_PKGS_CSWxmms-flac += CSWxmms
+RUNTIME_DEP_PKGS_CSWxmms-flac += CSWlibxmms1
 OBSOLETED_BY_CSWxmms-flac = CSWxmmsflac
 CATALOGNAME_CSWxmmsflac = xmms_flac_stub
 
