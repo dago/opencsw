@@ -22,9 +22,12 @@ PKGFILES_CSWlibao2 += $(call pkgfiles_lib,libao.so.2)
 PKGFILES_CSWlibao2 += $(call baseisadirs,$(libdir),ao/.*)
 RUNTIME_DEP_PKGS_CSWlibao2 += CSWlibesd0
 
-BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
+# Default is /etc/libao.conf
+LIBAO_CONF = $(sysconfdir)/libao.conf
+EXTRA_CPPFLAGS = -DAO_SYSTEM_CONFIG=\\\"$(LIBAO_CONF)\\\"
 
-TEST_TARGET = check
+# The file libao.conf is delivered with the newer libao4
+
+BUILD64 = 1
 
 include gar/category.mk
