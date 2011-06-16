@@ -1,8 +1,9 @@
 # $Id$
 
 # TODO
+# - use alternatives to clear collisions with postfix, see gnuplot as example
+#   - tcpwrap, mutt. set 100 on both sendmail/postfix
 # - migrate conf from /opt/csw/etc/mail
-# - post message
 # - libmilter
 # - try to fix bugs
 #   - 2915 Must stop built-in sendmail manually
@@ -10,6 +11,8 @@
 #   - 4150 Sendmail 8.14.4 released
 #   - 4486 Provide sendmail's contrib/ tools as a separate package?
 
+# + post message
+# + never start cswsendmail by default (collides with system sendmail)
 # + path to sendmail.cf (/etc/opt/csw/mail)
 # + bdb hash support
 # + cpsample conf files
@@ -62,6 +65,7 @@ INITSMF     = /etc/opt/csw/init.d/cswsendmail
 SAMPLECONF += $(addprefix /etc/opt/csw/mail/,$(CONFFILES))
 SAMPLECONF += /var/opt/csw/spool/clientmqueue/sm-client.st
 USERGROUP   = /etc/opt/csw/pkg/CSWsendmail/cswusergroup
+POSTMSG     = $(docdir)/sendmail/README.postinstall
 
 # Enable support for files > 2GB in size.
 EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
@@ -85,14 +89,23 @@ CONFIGURE_SCRIPTS   = custom
 BUILD_SCRIPTS       = custom
 TEST_SCRIPTS        = custom
 INSTALL_SCRIPTS     = custom
-EXTRA_MERGE_SCRIPTS = OS
+#EXTRA_MERGE_SCRIPTS = OS
+
+# Some files collide with CSWpostfix
+ALTERNATIVE  = $(bindir)/mailq mailq $(bindir)/mailq1.sendmail 100
+ALTERNATIVE += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail 100
+ALTERNATIVE += $(mandir)/man1/mailq.1 mailq1.1 $(mandir)/man1/mailq1.1.sendmail 100
+ALTERNATIVE += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/newaliases.1.sendmail 100
+ALTERNATIVE += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail 100
 
 # Collisions with Postfix naming it's files after the Sendmail de facto standard
-CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/mailq.1|CSWpostfix|CSWsendmail
-CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/newaliases|CSWpostfix|CSWsendmail
-CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man5/aliases.5|CSWpostfix|CSWsendmail
-CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/mailq|CSWpostfix|CSWsendmail
-CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/newaliases.1|CSWpostfix|CSWsendmail
+#CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/mailq|CSWpostfix|CSWsendmail
+#CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/newaliases|CSWpostfix|CSWsendmail
+#CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/mailq.1|CSWpostfix|CSWsendmail
+#CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/newaliases.1|CSWpostfix|CSWsendmail
+#CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man5/aliases.5|CSWpostfix|CSWsendmail
+# Surely this should not be needed
+CHECKPKG_OVERRIDES_CSWsendmail += surplus-dependency|CSWalternatives
 # Look thru these to see if they are harmless, e.g. examples
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/README
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/share|root/opt/csw/share/mail/cf/README
@@ -147,7 +160,7 @@ test-custom:
 	@$(MAKECOOKIE)
 
 install-custom:
-	@# install dirs
+	@# Install dirs
 	@echo " ==> Installing $(NAME) (custom)"
 	ginstall -d $(DESTDIR)$(libdir)
 	ginstall -d $(DESTDIR)$(bindir)
@@ -160,12 +173,12 @@ install-custom:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -d $(DESTDIR)$(sysconfdir)/mail
 
-	@# install the libraries
+	@# Install the libraries
 	@( for file in $(LIBFILES) ; do \
 		ginstall -c -m 755 $(OBJDIR)/$$file $(DESTDIR)$(libdir) ; \
 		done )
 
-	@# install the binaries
+	@# Install the binaries
 	ginstall -m 755 $(OBJDIR)/$(BINFILES) $(DESTDIR)$(bindir)
 	( for file in $(SBINFILES) ; do \
 		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(sbindir) ; \
@@ -182,7 +195,7 @@ install-custom:
 #		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file;\
 #		done )
 
-	@# install manpages
+	@# Install manpages
 	( for file in $(MANFILES1) ; do \
 		ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(mandir)/man1 ; \
 		done )
@@ -193,15 +206,15 @@ install-custom:
 		ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(mandir)/man8 ; \
 		done )
 
-	@# install m4/cf macros
+	@# Install m4/cf macros
 	find $(WORKSRC)/cf -type f -exec chmod 644 {} +
 	cp -r $(WORKSRC)/cf $(DESTDIR)$(sharedstatedir)/mail
 
-	@# install startup script
+	@# Install startup script
 	chmod +x $(DOWNLOADDIR)/cswsendmail && \
 		cp -p $(DOWNLOADDIR)/cswsendmail $(DESTDIR)/etc/opt/csw/init.d
 
-	@# install configurations, XXX missing submit.cf/sendmail.cf
+	@# Install configurations, XXX missing submit.cf/sendmail.cf
 	( for file in $(CONFFILES) ; do \
 		ginstall -m 644 $(DOWNLOADDIR)/$$file \
 		$(DESTDIR)$(sysconfdir)/mail/$$file; \
@@ -217,11 +230,27 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
 	@ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)/
 
+	@# Create links in bindir
+	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/newaliases
+	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/mailq
+	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/purgestats
+	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/hoststat
+
+	@# Fix alternatives files
+	mv $(DESTDIR)$(bindir)/mailq $(DESTDIR)$(bindir)/mailq1.sendmail
+	mv $(DESTDIR)$(bindir)/newaliases $(DESTDIR)$(bindir)/newaliases.sendmail
+	mv $(DESTDIR)$(mandir)/man1/mailq.1 $(DESTDIR)$(mandir)/man1/mailq1.1.sendmail
+	mv $(DESTDIR)$(mandir)/man1/newaliases.1 $(DESTDIR)$(mandir)/man1/newaliases.1.sendmail
+	mv $(DESTDIR)$(mandir)/man5/aliases.5 $(DESTDIR)$(mandir)/man5/aliases.5.sendmail
+
+	@# Post install message
+	@ginstall -m 444 $(FILEDIR)/CSWsendmail.postmsg $(DESTDIR)$(docdir)/sendmail/README.postinstall
+
 	@$(MAKECOOKIE)
 
 merge-OS:
-	@# create links in bindir
 	@echo " ==> Merging $(NAME) (custom)"
+	@# create links in bindir
 	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/newaliases
 	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/mailq
 	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/purgestats
