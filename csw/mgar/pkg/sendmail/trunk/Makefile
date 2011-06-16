@@ -10,6 +10,8 @@
 #   - 4150 Sendmail 8.14.4 released
 #   - 4486 Provide sendmail's contrib/ tools as a separate package?
 
+# + path to sendmail.cf (/etc/opt/csw/mail)
+# + bdb hash support
 # + cpsample conf files
 # + remove COPYING file
 # + copy usergroup file into place
