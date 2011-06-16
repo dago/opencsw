@@ -1,0 +1,45 @@
+=== SAMPLE FROM OTHER PACKAGES ===
+
+--- POSTFIX ---
+
+Note for users upgrading from postfix 2.4.6 and previous
+--------------------------------------------------------
+
+- Starting with postfix 2.6.x the spool location has changed from 
+
+    /opt/csw/var/spool/postfix to
+    /var/opt/csw/spool/postfix
+
+  If you have any pending email in the old spool location, please move
+  it to the new spool location and run "postsuper" before starting
+  postfix. An example script on how this can be done is shipped with the
+  package (migrate-queuefiles.sh). Make sure to understand what you are
+  doing.
+
+- Starting with postfix 2.6.x this package will _not_ automatically
+  substitute the common sendmail binaries with links to the postfix
+  binaries any more. Thus, the following files will be untouched and
+  possibly belong to the system sendmail installation.
+  
+    /usr/lib/sendmail
+    /usr/bin/mailq
+    /usr/bin/newaliases
+  
+  This makes the package installation less troublesome for shared zones
+  and leaves the choice of fully replacing your system sendmail up to you.
+  If you intend to replace those binaries above with the ones from this
+  postfix package, please see README.CSW.
+
+--- MUTT ---
+
+There are now two versions of mutt on the system installed:
+
+  * mutt-ncurses  with ncurses interface
+  * mutt-slang    with slang interface (per default linked to 'mutt')
+
+You can easily select between the versions with the alternatives(8)
+system by executing
+
+  /opt/csw/sbin/alternatives --config mutt
+
+See http://www.opencsw.org/packages/alternatives for details.
