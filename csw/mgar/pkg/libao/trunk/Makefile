@@ -10,7 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/ao/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = $(DISTFILES).tar.gz
 
 VENDOR_URL = http://www.xiph.org/ao/
 
@@ -42,9 +42,6 @@ EXTRA_CPPFLAGS = -DAO_SYSTEM_CONFIG=\\\"$(LIBAO_CONF)\\\"
 PRESERVECONF = $(LIBAO_CONF)
 
 BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
 
 include gar/category.mk
 
