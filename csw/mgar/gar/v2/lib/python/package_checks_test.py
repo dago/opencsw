@@ -1735,5 +1735,25 @@ class TestCheckCatalognameMatchesPkgname(CheckpkgUnitTestHelper,
     self.RunCheckpkgTest(self.CheckpkgTest2)
 
 
+class TestCheckAlternativesDependency(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckAlternativesDependency'
+  ALTERNATIVES_EXECUTABLE = "/opt/csw/sbin/alternatives"
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      'class': 'cswalternatives',
+      'group': 'bin',
+      'line': ('1 f cswalternatives /opt/csw/share/alternatives/sendmail '
+               '0644 root bin 408 36322 1308243112'),
+      'mode': '0644',
+      'path': '/opt/csw/share/alternatives/sendmail',
+      'target': None,
+      'type': 'f',
+      'user': 'root',
+    })
+    self.error_mgr_mock.NeedFile(
+        self.ALTERNATIVES_EXECUTABLE,
+        "The alternatives subsystem is used")
+
+
 if __name__ == '__main__':
   unittest.main()
