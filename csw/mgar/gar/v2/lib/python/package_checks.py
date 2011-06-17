@@ -1283,3 +1283,18 @@ def CheckPkginfoOpencswRepository(
     return
   if "UNCOMMITTED" in pkginfo[repotag]:
     error_mgr.ReportError("pkginfo-opencsw-repository-uncommitted")
+
+def CheckAlternativesDependency(
+    pkg_data, error_mgr, logger, messenger):
+
+  need_alternatives = False
+  for entry in pkg_data["pkgmap"]:
+    if not entry["path"]:
+      continue
+    if entry["class"] == "cswalternatives":
+      need_alternatives = True
+      break
+  if need_alternatives:
+    error_mgr.NeedFile(
+        "/opt/csw/sbin/alternatives",
+        "The alternatives subsystem is used")
