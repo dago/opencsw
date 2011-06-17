@@ -195,7 +195,7 @@ class Srv4CatalogAssignment(object):
         "error_message": unicode(e),
       })
       web.header('Content-Length', len(response))
-      return response
+      raise web.notacceptable(data=response)
 
   def DELETE(self, catrel_name, arch_name, osrel_name, md5_sum):
     configuration.SetUpSqlobjectConnection()
