@@ -1,11 +1,12 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-# ! Build fails
-#   "src/RIPEMD160.c", line 47: cannot find include file: <stdint.h>
+# * pyconfig.h (via "Python.h") unconditionally sets _FILE_OFFSET_BITS = 64.
 #   "/opt/csw/include/python2.6/pyconfig.h", line 1016: warning: macro redefined: _FILE_OFFSET_BITS
-#   cc: acomp failed for src/RIPEMD160.c
-#   error: command '/opt/SUNWspro/bin/cc' failed with exit status 2
+#
+# * setup.py unconditionally passes gcc flags
+#     cc: Warning: illegal option -d=c99
+#     cc: Warning: illegal option -fomit-frame-pointer
 #
 
 NAME = pycrypto
@@ -22,6 +23,9 @@ endef
 
 MASTER_SITES = http://ftp.dlitz.net/pub/dlitz/crypto/pycrypto/
 DISTFILES    = $(DISTNAME).tar.gz
+
+# c.f. https://bugs.launchpad.net/pycrypto/+bug/518871
+PATCHFILES += 0001-On-Solaris-Use-sys-inttypes.h-instead-of-stdint.h.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
