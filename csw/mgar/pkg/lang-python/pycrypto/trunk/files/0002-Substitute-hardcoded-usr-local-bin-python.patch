@@ -1,0 +1,22 @@
+From c2c98941699d20c6797d8dfd21938d0b299c5fd3 Mon Sep 17 00:00:00 2001
+From: Sebastian Kayser <skayser@opencsw.org>
+Date: Sat, 18 Jun 2011 14:27:02 +0200
+Subject: [PATCH] Substitute hardcoded /usr/local/bin/python
+
+---
+ lib/Crypto/Util/RFC1751.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lib/Crypto/Util/RFC1751.py b/lib/Crypto/Util/RFC1751.py
+index 85e0e99..f25ed8f 100644
+--- a/lib/Crypto/Util/RFC1751.py
++++ b/lib/Crypto/Util/RFC1751.py
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/python
++#!/usr/bin/env python
+ # rfc1751.py : Converts between 128-bit strings and a human-readable
+ # sequence of words, as defined in RFC1751: "A Convention for
+ # Human-Readable 128-bit Keys", by Daniel L. McDonald.
+-- 
+1.7.5.4
+

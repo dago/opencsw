@@ -23,10 +23,14 @@ endef
 
 MASTER_SITES = http://ftp.dlitz.net/pub/dlitz/crypto/pycrypto/
 DISTFILES    = $(DISTNAME).tar.gz
+LICENSE      = COPYRIGHT
+PACKAGES     = CSWpy-crypto
+
+RUNTIME_DEP_PKGS  = CSWlibgmp
+RUNTIME_DEP_PKGS += CSWlibpython2-6-1-0
 
 # c.f. https://bugs.launchpad.net/pycrypto/+bug/518871
 PATCHFILES += 0001-On-Solaris-Use-sys-inttypes.h-instead-of-stdint.h.patch
-
-CONFIGURE_ARGS = $(DIRPATHS)
+PATCHFILES += 0002-Substitute-hardcoded-usr-local-bin-python.patch
 
 include gar/category.mk
