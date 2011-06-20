@@ -1,0 +1,25 @@
+From 17828185f9dc37075de6bcff9d60bdb0f4ad6245 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Mon, 20 Jun 2011 20:06:35 +0200
+Subject: [PATCH] add libmilter to the Makefile
+
+---
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 97b2afc..ca7804f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,7 +2,7 @@
+ 
+ SHELL= /bin/sh
+ SUBDIRS= libsm libsmutil libsmdb sendmail editmap mail.local \
+-	 mailstats makemap praliases rmail smrsh vacation
++	 mailstats makemap praliases rmail smrsh vacation libmilter
+ # libmilter: requires pthread
+ BUILD=   ./Build
+ OPTIONS= $(CONFIG) $(FLAGS)
+-- 
+1.7.5.4
+
