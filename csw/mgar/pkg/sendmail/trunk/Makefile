@@ -94,11 +94,13 @@ INSTALL_SCRIPTS     = custom
 #EXTRA_MERGE_SCRIPTS = OS
 
 # Some files collide with CSWpostfix
-ALTERNATIVE  = $(bindir)/mailq mta $(bindir)/mailq1.sendmail 100
-ALTERNATIVE += $(bindir)/newaliases mta $(bindir)/newaliases.sendmail 100
-ALTERNATIVE += $(mandir)/man1/mailq.1 mta $(mandir)/man1/mailq1.1.sendmail 100
-ALTERNATIVE += $(mandir)/man1/newaliases.1 mta $(mandir)/man1/newaliases.1.sendmail 100
-ALTERNATIVE += $(mandir)/man5/aliases.5 mta $(mandir)/man5/aliases.5.sendmail 100
+ALTERNATIVES_CSWsendmail = sendmail
+ALTERNATIVE_sendmail  = $(bindir)/mailq mailq $(bindir)/mailq1.sendmail 100
+ALTERNATIVE_sendmail += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail
+ALTERNATIVE_sendmail += $(mandir)/man1/mailq.1 mailq.1 $(mandir)/man1/mailq1.1.sendmail
+ALTERNATIVE_sendmail += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/newaliases.1.sendmail
+ALTERNATIVE_sendmail += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail
+
 #ALTERNATIVE  = $(bindir)/mailq mailq $(bindir)/mailq1.sendmail 100
 #ALTERNATIVE += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail 100
 #ALTERNATIVE += $(mandir)/man1/mailq.1 mailq1.1 $(mandir)/man1/mailq1.1.sendmail 100
@@ -111,8 +113,7 @@ ALTERNATIVE += $(mandir)/man5/aliases.5 mta $(mandir)/man5/aliases.5.sendmail 10
 #CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/mailq.1|CSWpostfix|CSWsendmail
 #CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/newaliases.1|CSWpostfix|CSWsendmail
 #CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man5/aliases.5|CSWpostfix|CSWsendmail
-# Surely this should not be needed
-#CHECKPKG_OVERRIDES_CSWsendmail += surplus-dependency|CSWalternatives
+
 # Look thru these to see if they are harmless, e.g. examples
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/README
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/share|root/opt/csw/share/mail/cf/README
