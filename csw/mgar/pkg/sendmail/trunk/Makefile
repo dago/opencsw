@@ -1,6 +1,8 @@
 # $Id$
 
 # TODO
+# - Tests?
+# - Build separate 9/10 packages?
 # - use alternatives to clear collisions with postfix, see gnuplot as example
 #   - tcpwrap, mutt. set 100 on both sendmail/postfix
 # - migrate conf from /opt/csw/etc/mail
@@ -92,11 +94,16 @@ INSTALL_SCRIPTS     = custom
 #EXTRA_MERGE_SCRIPTS = OS
 
 # Some files collide with CSWpostfix
-ALTERNATIVE  = $(bindir)/mailq mailq $(bindir)/mailq1.sendmail 100
-ALTERNATIVE += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail 100
-ALTERNATIVE += $(mandir)/man1/mailq.1 mailq1.1 $(mandir)/man1/mailq1.1.sendmail 100
-ALTERNATIVE += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/newaliases.1.sendmail 100
-ALTERNATIVE += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail 100
+ALTERNATIVE  = $(bindir)/mailq mta $(bindir)/mailq1.sendmail 100
+ALTERNATIVE += $(bindir)/newaliases mta $(bindir)/newaliases.sendmail 100
+ALTERNATIVE += $(mandir)/man1/mailq.1 mta $(mandir)/man1/mailq1.1.sendmail 100
+ALTERNATIVE += $(mandir)/man1/newaliases.1 mta $(mandir)/man1/newaliases.1.sendmail 100
+ALTERNATIVE += $(mandir)/man5/aliases.5 mta $(mandir)/man5/aliases.5.sendmail 100
+#ALTERNATIVE  = $(bindir)/mailq mailq $(bindir)/mailq1.sendmail 100
+#ALTERNATIVE += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail 100
+#ALTERNATIVE += $(mandir)/man1/mailq.1 mailq1.1 $(mandir)/man1/mailq1.1.sendmail 100
+#ALTERNATIVE += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/newaliases.1.sendmail 100
+#ALTERNATIVE += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail 100
 
 # Collisions with Postfix naming it's files after the Sendmail de facto standard
 #CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/mailq|CSWpostfix|CSWsendmail
@@ -105,7 +112,7 @@ ALTERNATIVE += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendm
 #CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/newaliases.1|CSWpostfix|CSWsendmail
 #CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man5/aliases.5|CSWpostfix|CSWsendmail
 # Surely this should not be needed
-CHECKPKG_OVERRIDES_CSWsendmail += surplus-dependency|CSWalternatives
+#CHECKPKG_OVERRIDES_CSWsendmail += surplus-dependency|CSWalternatives
 # Look thru these to see if they are harmless, e.g. examples
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/README
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/share|root/opt/csw/share/mail/cf/README
