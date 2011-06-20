@@ -1,18 +1,18 @@
 # $Id$
 
 # TODO
+# - Include activate/deactivate scripts
 # - Tests?
 # - Build separate 9/10 packages?
-# - use alternatives to clear collisions with postfix, see gnuplot as example
-#   - tcpwrap, mutt. set 100 on both sendmail/postfix
 # - migrate conf from /opt/csw/etc/mail
-# - libmilter
 # - try to fix bugs
 #   - 2915 Must stop built-in sendmail manually
 #   - 3864 Sendmail must be relinked with new berekeley db
 #   - 4150 Sendmail 8.14.4 released
 #   - 4486 Provide sendmail's contrib/ tools as a separate package?
 
+# + libmilter
+# + use alternatives to clear collisions with postfix, see sudo as example
 # + post message
 # + never start cswsendmail by default (collides with system sendmail)
 # + path to sendmail.cf (/etc/opt/csw/mail)
@@ -53,24 +53,36 @@ DISTFILES += cswsendmail site.config.m4
 
 LICENSE = LICENSE
 
-PACKAGES = CSWsendmail 
-CATALOGNAME_CSWsendmail = sendmail
-SPKG_DESC_CSWsendmail = $(DESCRIPTION)
-
+PACKAGES                      = CSWsendmail 
+CATALOGNAME_CSWsendmail       = sendmail
+SPKG_DESC_CSWsendmail         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWsendmail  = CSWoldaprt
 RUNTIME_DEP_PKGS_CSWsendmail += CSWosslrt
 RUNTIME_DEP_PKGS_CSWsendmail += CSWsasl
 RUNTIME_DEP_PKGS_CSWsendmail += CSWtcpwrap 
 RUNTIME_DEP_PKGS_CSWsendmail += CSWbdb48
 
+PACKAGES                     += CSWlibmilter 
+CATALOGNAME_CSWlibmilter      = libmilter
+SPKG_DESC_CSWlibmilter        = Sendmail MTA milter
+PKGFILES_CSWlibmilter         = $(docdir)/libmilter/.*
+PKGFILES_CSWlibmilter        += /opt/csw/include/libmilter.h
+PKGFILES_CSWlibmilter        += $(libdir)/libmilter.a
+PKGFILES_CSWlibmilter        += $(libdir)/libsm.a
+PKGFILES_CSWlibmilter        += $(libdir)/libsmdb.a
+PKGFILES_CSWlibmilter        += $(libdir)/libsmutil.a
+
 INITSMF     = /etc/opt/csw/init.d/cswsendmail
-SAMPLECONF += $(addprefix /etc/opt/csw/mail/,$(CONFFILES))
+SAMPLECONF  = $(addprefix /etc/opt/csw/mail/,$(CONFFILES))
 SAMPLECONF += /var/opt/csw/spool/clientmqueue/sm-client.st
 USERGROUP   = /etc/opt/csw/pkg/CSWsendmail/cswusergroup
 POSTMSG     = $(docdir)/sendmail/README.postinstall
 
 # Enable support for files > 2GB in size.
 EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
+
+# Do not remove the static libs from libmilter
+MERGE_EXCLUDE_STATICLIBS =
 
 #PROTOTYPE_FILTER = awk \
 #	'$$$$2 ~/i.sol9/ { next } \
@@ -85,7 +97,10 @@ EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 #ENABLE_CHECK = 0
 
 # Patch away GNUism
-PATCHFILES = patch-CC-M.m4
+#PATCHFILES = patch-CC-M.m4
+
+PATCHFILES += 0001-add-libmilter-to-the-Makefile.patch
+PATCHFILES += 0002-no-gnuism.patch
 
 CONFIGURE_SCRIPTS   = custom
 BUILD_SCRIPTS       = custom
@@ -95,24 +110,11 @@ INSTALL_SCRIPTS     = custom
 
 # Some files collide with CSWpostfix
 ALTERNATIVES_CSWsendmail  = mailq newaliases mailq.1 newaliases.1 aliases.5
-ALTERNATIVE_mailq         = $(bindir)/mailq mailq $(bindir)/mailq1.sendmail 100
+ALTERNATIVE_mailq         = $(bindir)/mailq mailq $(bindir)/mailq.sendmail 100
 ALTERNATIVE_newaliases   += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail 100
 ALTERNATIVE_mailq.1      += $(mandir)/man1/mailq.1 mailq.1 $(mandir)/man1/mailq1.1.sendmail 100
 ALTERNATIVE_newaliases.1 += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/newaliases.1.sendmail 100
 ALTERNATIVE_aliases.5    += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail 100
-
-#ALTERNATIVE  = $(bindir)/mailq mailq $(bindir)/mailq1.sendmail 100
-#ALTERNATIVE += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail 100
-#ALTERNATIVE += $(mandir)/man1/mailq.1 mailq1.1 $(mandir)/man1/mailq1.1.sendmail 100
-#ALTERNATIVE += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/newaliases.1.sendmail 100
-#ALTERNATIVE += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail 100
-
-# Collisions with Postfix naming it's files after the Sendmail de facto standard
-#CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/mailq|CSWpostfix|CSWsendmail
-#CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/bin/newaliases|CSWpostfix|CSWsendmail
-#CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/mailq.1|CSWpostfix|CSWsendmail
-#CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man1/newaliases.1|CSWpostfix|CSWsendmail
-#CHECKPKG_OVERRIDES_CSWsendmail += file-collision|/opt/csw/share/man/man5/aliases.5|CSWpostfix|CSWsendmail
 
 # Look thru these to see if they are harmless, e.g. examples
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/README
@@ -132,6 +134,12 @@ CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/procmail.m4
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/phquery.m4
 
+# The static libs from libmilter
+CHECKPKG_OVERRIDES_CSWlibmilter += discouraged-path-in-pkgmap|/opt/csw/lib/libsmutil.a
+CHECKPKG_OVERRIDES_CSWlibmilter += discouraged-path-in-pkgmap|/opt/csw/lib/libmilter.a
+CHECKPKG_OVERRIDES_CSWlibmilter += discouraged-path-in-pkgmap|/opt/csw/lib/libsm.a
+CHECKPKG_OVERRIDES_CSWlibmilter += discouraged-path-in-pkgmap|/opt/csw/lib/libsmdb.a
+
 include gar/category.mk
 
 #ADMSCRIPTS = preremove preinstall space depend i.sol9 i.sol10
@@ -140,6 +148,7 @@ include gar/category.mk
 PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
 OBJDIR    = $(WORKDIR)/$(DISTNAME)/obj.SunOS.$(GAROSREL).$(PLATFORM)
 LIBFILES  = sendmail/sendmail mail.local/mail.local smrsh/smrsh rmail/rmail
+LIBMILTER = libmilter/libmilter.a libsm/libsm.a libsmdb/libsmdb.a libsmutil/libsmutil.a
 BINFILES  = vacation/vacation
 SBINFILES = makemap/makemap editmap/editmap praliases/praliases \
             mailstats/mailstats
@@ -150,6 +159,7 @@ MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
             rmail/rmail.8 editmap/editmap.8
 CONFFILES = aliases helpfile local-host-names sendmail.cf \
             statistics submit.cf trusted-users
+INCLFILES = libmilter/libmilter.h
 
 configure-custom:
 	@echo " ==> Configuring $(NAME) (custom)"
@@ -180,9 +190,10 @@ install-custom:
 	ginstall -d $(DESTDIR)$(sharedstatedir)/mail
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -d $(DESTDIR)$(sysconfdir)/mail
+	ginstall -d $(DESTDIR)/opt/csw/include
 
 	@# Install the libraries
-	@( for file in $(LIBFILES) ; do \
+	( for file in $(LIBFILES) ; do \
 		ginstall -c -m 755 $(OBJDIR)/$$file $(DESTDIR)$(libdir) ; \
 		done )
 
@@ -214,6 +225,16 @@ install-custom:
 		ginstall -m 644 $(OBJDIR)/$$file $(DESTDIR)$(mandir)/man8 ; \
 		done )
 
+	@# Install milter lib files
+	( for file in $(LIBMILTER) ; do \
+		ginstall -m 444 $(OBJDIR)/$$file $(DESTDIR)$(libdir) ; \
+		done )
+
+	@# Install include files
+	( for file in $(INCLFILES) ; do \
+		ginstall -m 444 $(OBJDIR)/$$file $(DESTDIR)/opt/csw/include ; \
+		done )
+
 	@# Install m4/cf macros
 	find $(WORKSRC)/cf -type f -exec chmod 644 {} +
 	cp -r $(WORKSRC)/cf $(DESTDIR)$(sharedstatedir)/mail
@@ -231,12 +252,12 @@ install-custom:
 		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
 
 	@# usergroup
-	@ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail
-	@ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail/
+	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail
+	ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail/
 
 	@# README
-	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
-	@ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)/
+	ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+	ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)/
 
 	@# Create links in bindir
 	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/newaliases
@@ -245,14 +266,18 @@ install-custom:
 	ln -s $(libdir)/sendmail $(DESTDIR)$(bindir)/hoststat
 
 	@# Fix alternatives files
-	mv $(DESTDIR)$(bindir)/mailq $(DESTDIR)$(bindir)/mailq1.sendmail
+	mv $(DESTDIR)$(bindir)/mailq $(DESTDIR)$(bindir)/mailq.sendmail
 	mv $(DESTDIR)$(bindir)/newaliases $(DESTDIR)$(bindir)/newaliases.sendmail
 	mv $(DESTDIR)$(mandir)/man1/mailq.1 $(DESTDIR)$(mandir)/man1/mailq1.1.sendmail
 	mv $(DESTDIR)$(mandir)/man1/newaliases.1 $(DESTDIR)$(mandir)/man1/newaliases.1.sendmail
 	mv $(DESTDIR)$(mandir)/man5/aliases.5 $(DESTDIR)$(mandir)/man5/aliases.5.sendmail
 
 	@# Post install message
-	@ginstall -m 444 $(FILEDIR)/CSWsendmail.postmsg $(DESTDIR)$(docdir)/sendmail/README.postinstall
+	ginstall -m 444 $(FILEDIR)/CSWsendmail.postmsg $(DESTDIR)$(docdir)/sendmail/README.postinstall
+
+	@# Milter doc files
+	ginstall -m 755 -d $(DESTDIR)$(docdir)/libmilter
+	ginstall -m 644 $(WORKSRC)/libmilter/docs/* $(DESTDIR)$(docdir)/libmilter
 
 	@$(MAKECOOKIE)
 
