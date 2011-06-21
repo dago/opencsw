@@ -1,8 +1,6 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
-# ! Needs pycrypto to be built/released/installed first
-#
 NAME = paramiko
 VERSION = 1.7.7.1
 GARTYPE = v2
@@ -18,7 +16,16 @@ endef
 
 MASTER_SITES = http://www.lag.net/paramiko/download/
 DISTFILES    = $(DISTNAME).tar.gz
+ARCHALL      = 1
+
+RUNTIME_DEP_PKGS   = CSWpy-crypto
+CHECKPKG_OVERRIDES = surplus-dependency|CSWpy-crypto
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
+
+post-merge-modulated:
+	gsed -ie 's,/usr/local/etc/moduli,/opt/csw/etc/ssh/moduli,' \
+		$(PKGROOT)$(libdir)/python/site-packages/paramiko/transport.py
+	@$(MAKECOOKIE)
