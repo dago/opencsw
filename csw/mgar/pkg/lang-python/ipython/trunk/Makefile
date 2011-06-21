@@ -1,39 +1,26 @@
+# $Id: Makefile 14849 2011-06-21 09:07:58Z skayser $
+# TODO (release-critical prefixed with !, non release-critical with *)
+#
+# ! Remove /usr references in $(docdir)
+# ! Determine how to run the integrated test suite (iptest/nose) and run it
+# 
 NAME    = ipython
-VERSION = 0.10
-CATEGORIES = lang
+VERSION = 0.10.2
+CATEGORIES = python
 
-DESCRIPTION = Python toolkit for generation of output for the web
+DESCRIPTION = Enhanced interactive python shell
 define BLURB
-	Genshi is a Python library that provides an integrated set of 
-	components for parsing, generating, and processing HTML, XML 
-	or other textual content for output generation on the web
 endef
 
 MASTER_SITES = http://ipython.scipy.org/dist/$(VERSION)/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
+ARCHALL      = 1
 
-ARCHALL_CSWipython = 1
-PACKAGES = CSWipython
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
-# comment what this does or remove it
-# PROTOTYPE_FILTER = awk '$$$$3 ~ /.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
-SPKG_CLASSES = none cswpycompile
-RUNTIME_DEP_PKGS += CSWcswclassutils
+# /opt/csw/share/doc/ipython/ contains plenty of references, override
+# them for now and focus on whether ipython actually stops segfaulting
+CHECKPKG_OVERRIDES += file-with-bad-content|/usr/local
+CHECKPKG_OVERRIDES += file-with-bad-content|/usr/local
 
-RUNTIME_DEP_PKGS_CSWipython = CSWpython-rt
-CATALOGNAME_CSWipython = ipython
-SPKG_DESC_CSWipython   = $(DESCRIPTION)
-
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
-
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS   = $(WORKSRC)/setup.py
-TEST_SCRIPTS    = 
-INSTALL_SCRIPTS = $(WORKSRC)/setup.py
-
-INSTALL_ARGS += --root=$(DESTDIR)
+SKIPTEST = 1
 
 include gar/category.mk
-
