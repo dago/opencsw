@@ -13,8 +13,8 @@ ERRMSG1='WARNING: /var/mail is NFS-mounted without setting actimeo=0,'
 ERRMSG2='this can cause mailbox locking and access problems.'
 SERVER_PID_FILE="/var/run/sendmail.pid"
 CLIENT_PID_FILE="/var/opt/csw/spool/clientmqueue/sm-client.pid"
-DEFAULT_FILE="/opt/csw/etc/default/sendmail"
-ALIASES_FILE="/opt/csw/etc/mail/aliases"
+DEFAULT_FILE="/etc/opt/csw/default/sendmail"
+ALIASES_FILE="/etc/opt/csw/mail/aliases"
 
 check_queue_interval_syntax()
 {
@@ -36,7 +36,7 @@ case "$1" in
 	;;
 
 'start')
-	if [ -f /opt/csw/lib/sendmail -a -f /opt/csw/etc/mail/sendmail.cf ]; then
+	if [ -f /opt/csw/lib/sendmail -a -f /etc/opt/csw/mail/sendmail.cf ]; then
 		if [ ! -d /var/opt/csw/spool/mqueue ]; then
 			/usr/bin/mkdir -pm 0750 /var/opt/csw/spool/mqueue
 			/usr/bin/chown root:bin /var/opt/csw/spool/mqueue

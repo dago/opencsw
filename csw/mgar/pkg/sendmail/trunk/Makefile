@@ -3,13 +3,14 @@
 # TODO
 # - Build separate 9/10 packages?
 
+# + post message
+# + Fix paths in sendmail.cf and cswsendmail
 # + #4486 Provide sendmail's contrib/ tools as a separate package?
 # + Include activate/deactivate scripts
 # + migrate conf from /opt/csw/etc/mail
 # + Tests? Not really possible to test during build
-# + libmilter
+# + build libmilter
 # + use alternatives to clear collisions with postfix, see sudo as example
-# + post message
 # + never start cswsendmail by default (collides with system sendmail)
 # + path to sendmail.cf (/etc/opt/csw/mail)
 # + bdb hash support
@@ -29,15 +30,8 @@ define BLURB
   Sendmail MTA
 endef
 
-#INSTALLISADIR = $(WORKROOTDIR)/install-$(GAROSREL)-$(MODULATION)
-#WORKDIR = $(WORKROOTDIR)/build-$(GAROSREL)-$(MODULATION)
-#WORKDIR_FIRSTMOD = $(WORKROOTDIR)/build-$(GAROSREL)-$(firstword $(MODULATIONS))
-#COOKIEDIR = $(COOKIEROOTDIR)/$(GAROSREL)-$(MODULATION)
-
 MASTER_SITES = ftp://ftp.sendmail.org/pub/sendmail/
 SPKG_SOURCEURL = http://www.sendmail.org
-
-#MY_CLASSES = CSWsendmail.i.sol9 CSWsendmail.i.sol10
 
 DISTFILES  = $(NAME).$(VERSION).tar.gz
 DISTFILES += aliases helpfile local-host-names sendmail.cf
@@ -45,10 +39,6 @@ DISTFILES += sm-client.st statistics submit.cf trusted-users
 DISTFILES += README.CSW sendmail.schema site.config.m4
 DISTFILES += oracle-sendmail-deactivate.sh oracle-sendmail-reactivate.sh
 DISTFILES += cswsendmail cswusergroup
-#DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
-#DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
-#DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
-#DISTFILES += README.CSW sendmail.schema CSWsendmail.postinstall
 
 LICENSE = LICENSE
 
@@ -108,16 +98,6 @@ EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 # Do not remove the static libs from libmilter
 MERGE_EXCLUDE_STATICLIBS =
 
-#PROTOTYPE_FILTER = awk \
-#	'$$$$2 ~/i.sol9/ { next } \
-#	$$$$2 ~/i.sol10/ { next } \
-#	$$$$3 ~/\/init\.d\/cswsendmail$$$$/ {$$$$2 = "cswinitsmf"} \
-#	$$$$3 ~/sol9\./ { $$$$2 = "sol9" } \
-#	$$$$3 ~/sol10\./ { $$$$2 = "sol10" } \
-#	{ print } \
-#	END { { print "i i.sol9=CSWsendmail.i.sol9" } \
-#	{ print "i i.sol10=CSWsendmail.i.sol10" } }'
-
 # Patch away GNUism
 PATCHFILES += 0001-add-libmilter-to-the-Makefile.patch
 PATCHFILES += 0002-no-gnuism.patch
@@ -131,7 +111,6 @@ CONFIGURE_SCRIPTS   = custom
 BUILD_SCRIPTS       = custom
 TEST_SCRIPTS        = custom
 INSTALL_SCRIPTS     = custom
-#EXTRA_MERGE_SCRIPTS = OS
 
 # Some files collide with CSWpostfix
 ALTERNATIVES_CSWsendmail  = mailq newaliases mailq.1 newaliases.1 aliases.5
@@ -175,9 +154,6 @@ CHECKPKG_OVERRIDES_CSWlibmilter += discouraged-path-in-pkgmap|/opt/csw/lib/libsm
 
 include gar/category.mk
 
-#ADMSCRIPTS = preremove preinstall space depend i.sol9 i.sol10
-
-#SOLVER    = sol$(shell uname -r |sed 's/5\.//')
 PLATFORM  = $(shell if [ `uname -i` = "i86pc" ] ; then echo i86pc ; else echo sun4 ; fi )
 OBJDIR    = $(WORKDIR)/$(DISTNAME)/obj.SunOS.$(GAROSREL).$(PLATFORM)
 LIBFILES  = sendmail/sendmail mail.local/mail.local smrsh/smrsh rmail/rmail
@@ -249,17 +225,6 @@ install-custom:
 	( for file in $(SBINFILES) ; do \
 		ginstall -m 755 $(OBJDIR)/$$file $(DESTDIR)$(sbindir) ; \
 		done )
-
-	@# rename libraries and binaries os-specific
-#	( for file in `ls $(DESTDIR)$(libdir)`; do  \
-#		mv $(DESTDIR)$(libdir)/$$file $(DESTDIR)$(libdir)/$(SOLVER).$$file; \
-#		done )
-#	( for file in `ls $(DESTDIR)$(bindir)`; do  \
-#		mv $(DESTDIR)$(bindir)/$$file $(DESTDIR)$(bindir)/$(SOLVER).$$file; \
-#		done )
-#	( for file in `ls $(DESTDIR)$(sbindir)`; do  \
-#		mv $(DESTDIR)$(sbindir)/$$file $(DESTDIR)$(sbindir)/$(SOLVER).$$file;\
-#		done )
 
 	@# Install manpages
 	( for file in $(MANFILES1) ; do \
@@ -345,23 +310,3 @@ install-custom:
 	ginstall -m 755 $(DOWNLOADDIR)/oracle-sendmail-reactivate.sh $(DESTDIR)$(docdir)/sendmail
 
 	@$(MAKECOOKIE)
-
-merge-OS:
-	@echo " ==> Merging $(NAME) (custom)"
-	@# create links in bindir
-	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/newaliases
-	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/mailq
-	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/purgestats
-	ln -s $(libdir)/sendmail $(PKGROOT)$(bindir)/hoststat
-
-	@# Install the other install trees
-	( for dir in `ls -d $(abspath $(WORKROOTDIR)/install*-$(MODULATION))` ; do \
-		( if [ "x`echo $$dir |sed "s/.*install-\(5.[0-9]*\)-$(MODULATION).*/\1/"`x" != "x$(GAROSREL)x" ]; then \
-			cd $$dir$(bindir) && \
-				/usr/bin/pax -rw -v * $(PKGROOT)$(bindir);\
-			cd $$dir$(sbindir) && \
-				/usr/bin/pax -rw -v * $(PKGROOT)$(sbindir);\
-			cd $$dir$(libdir) && \
-				/usr/bin/pax -rw -v * $(PKGROOT)$(libdir); \
-		fi ) \
-	done )
