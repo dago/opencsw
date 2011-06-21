@@ -1,16 +1,12 @@
 # $Id$
 
 # TODO
-# - Include activate/deactivate scripts
-# - Tests?
 # - Build separate 9/10 packages?
-# - migrate conf from /opt/csw/etc/mail
-# - try to fix bugs
-#   - 2915 Must stop built-in sendmail manually
-#   - 3864 Sendmail must be relinked with new berekeley db
-#   - 4150 Sendmail 8.14.4 released
-#   - 4486 Provide sendmail's contrib/ tools as a separate package?
 
+# + #4486 Provide sendmail's contrib/ tools as a separate package?
+# + Include activate/deactivate scripts
+# + migrate conf from /opt/csw/etc/mail
+# + Tests? Not really possible to test during build
 # + libmilter
 # + use alternatives to clear collisions with postfix, see sudo as example
 # + post message
@@ -20,6 +16,9 @@
 # + cpsample conf files
 # + remove COPYING file
 # + copy usergroup file into place
+# + #3864 Sendmail must be relinked with new berkeley db -> bdb48
+# + #2915 Must stop built-in sendmail manually -> n/a
+# + #4150 Sendmail 8.14.4 released -> this is 8.14.5
 
 NAME = sendmail
 VERSION = 8.14.5
@@ -41,11 +40,11 @@ SPKG_SOURCEURL = http://www.sendmail.org
 #MY_CLASSES = CSWsendmail.i.sol9 CSWsendmail.i.sol10
 
 DISTFILES  = $(NAME).$(VERSION).tar.gz
-DISTFILES += Sun-sendmail-deactivate.sh Sun-sendmail-reactivate.sh
 DISTFILES += aliases helpfile local-host-names sendmail.cf
 DISTFILES += sm-client.st statistics submit.cf trusted-users
-DISTFILES += README.CSW sendmail.schema
-DISTFILES += cswsendmail site.config.m4
+DISTFILES += README.CSW sendmail.schema site.config.m4
+DISTFILES += oracle-sendmail-deactivate.sh oracle-sendmail-reactivate.sh
+DISTFILES += cswsendmail cswusergroup
 #DISTFILES += $(foreach FILE,$(shell cd $(FILEDIR) && ls *.CSW),$(FILE))
 #DISTFILES += CSWsendmail.preremove CSWsendmail.preinstall CSWsendmail.space
 #DISTFILES += cswsendmail site.config.m4 $(MY_CLASSES) CSWsendmail.checkinstall
@@ -62,15 +61,40 @@ RUNTIME_DEP_PKGS_CSWsendmail += CSWsasl
 RUNTIME_DEP_PKGS_CSWsendmail += CSWtcpwrap 
 RUNTIME_DEP_PKGS_CSWsendmail += CSWbdb48
 
-PACKAGES                     += CSWlibmilter 
-CATALOGNAME_CSWlibmilter      = libmilter
-SPKG_DESC_CSWlibmilter        = Sendmail MTA milter
-PKGFILES_CSWlibmilter         = $(docdir)/libmilter/.*
-PKGFILES_CSWlibmilter        += /opt/csw/include/libmilter.h
-PKGFILES_CSWlibmilter        += $(libdir)/libmilter.a
-PKGFILES_CSWlibmilter        += $(libdir)/libsm.a
-PKGFILES_CSWlibmilter        += $(libdir)/libsmdb.a
-PKGFILES_CSWlibmilter        += $(libdir)/libsmutil.a
+PACKAGES                += CSWlibmilter 
+CATALOGNAME_CSWlibmilter = libmilter
+SPKG_DESC_CSWlibmilter   = Sendmail MTA milter
+PKGFILES_CSWlibmilter    = $(docdir)/libmilter/.*
+PKGFILES_CSWlibmilter   += /opt/csw/include/libmilter.h
+PKGFILES_CSWlibmilter   += $(libdir)/libmilter.a
+PKGFILES_CSWlibmilter   += $(libdir)/libsm.a
+PKGFILES_CSWlibmilter   += $(libdir)/libsmdb.a
+PKGFILES_CSWlibmilter   += $(libdir)/libsmutil.a
+
+PACKAGES                            += CSWsendmail-contrib 
+CATALOGNAME_CSWsendmail-contrib      = sendmail_contrib
+SPKG_DESC_CSWsendmail-contrib        = Sendmail MTA contrib
+RUNTIME_DEP_PKGS_CSWsendmail-contrib = CSWperl
+ARCHALL_CSWsendmail-contrib          = 1
+PKGFILES_CSWsendmail-contrib         = $(docdir)/sendmail_contrib/.*
+PKGFILES_CSWsendmail-contrib        += $(bindir)/link_hash.sh
+PKGFILES_CSWsendmail-contrib        += $(bindir)/movemail.pl
+PKGFILES_CSWsendmail-contrib        += $(bindir)/smcontrol.pl
+PKGFILES_CSWsendmail-contrib        += $(bindir)/passwd-to-alias.pl
+PKGFILES_CSWsendmail-contrib        += $(bindir)/socketmapClient.pl
+PKGFILES_CSWsendmail-contrib        += $(bindir)/bounce-resender.pl
+PKGFILES_CSWsendmail-contrib        += $(bindir)/doublebounce.pl
+PKGFILES_CSWsendmail-contrib        += $(bindir)/mailprio
+PKGFILES_CSWsendmail-contrib        += $(bindir)/socketmapServer.pl
+PKGFILES_CSWsendmail-contrib        += $(bindir)/qtool.pl
+PKGFILES_CSWsendmail-contrib        += $(bindir)/buildvirtuser
+PKGFILES_CSWsendmail-contrib        += $(bindir)/etrn.pl
+PKGFILES_CSWsendmail-contrib        += $(bindir)/re-mqueue.pl
+PKGFILES_CSWsendmail-contrib        += $(bindir)/cidrexpand
+PKGFILES_CSWsendmail-contrib        += $(bindir)/expn.pl
+PKGFILES_CSWsendmail-contrib        += $(mandir)/man1/etrn.0
+PKGFILES_CSWsendmail-contrib        += $(mandir)/man8/qtool.8
+PKGFILES_CSWsendmail-contrib        += $(sysconfdir)/movemail.conf
 
 INITSMF     = /etc/opt/csw/init.d/cswsendmail
 SAMPLECONF  = $(addprefix /etc/opt/csw/mail/,$(CONFFILES))
@@ -94,13 +118,14 @@ MERGE_EXCLUDE_STATICLIBS =
 #	END { { print "i i.sol9=CSWsendmail.i.sol9" } \
 #	{ print "i i.sol10=CSWsendmail.i.sol10" } }'
 
-#ENABLE_CHECK = 0
-
 # Patch away GNUism
-#PATCHFILES = patch-CC-M.m4
-
 PATCHFILES += 0001-add-libmilter-to-the-Makefile.patch
 PATCHFILES += 0002-no-gnuism.patch
+
+MIGRATE_FILES_CSWsendmail      = aliases helpfile local-host-names sendmail.cf
+MIGRATE_FILES_CSWsendmail     += statistics submit.cf trusted-users
+MIGRATE_SOURCE_DIR_CSWsendmail = /opt/csw/etc/mail
+MIGRATE_DEST_DIR_CSWsendmail   = /etc/opt/csw/mail
 
 CONFIGURE_SCRIPTS   = custom
 BUILD_SCRIPTS       = custom
@@ -133,6 +158,14 @@ CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/fax.m4
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/procmail.m4
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/mailer/phquery.m4
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/etc/opt/csw/movemail.conf
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/share/doc/sendmail_contrib/mmuegel
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/etrn.pl
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/doublebounce.pl
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/movemail.pl
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/expn.pl
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/bounce-resender.pl
+CHECKPKG_OVERRIDES_CSWsendmail-contrib += file-with-bad-content|/usr/local|root/opt/csw/bin/re-mqueue.pl
 
 # The static libs from libmilter
 CHECKPKG_OVERRIDES_CSWlibmilter += discouraged-path-in-pkgmap|/opt/csw/lib/libsmutil.a
@@ -160,6 +193,15 @@ MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
 CONFFILES = aliases helpfile local-host-names sendmail.cf \
             statistics submit.cf trusted-users
 INCLFILES = libmilter/libmilter.h
+CONTBIN   = link_hash.sh movemail.pl smcontrol.pl \
+            passwd-to-alias.pl socketmapClient.pl bounce-resender.pl \
+            doublebounce.pl mailprio socketmapServer.pl \
+            qtool.pl buildvirtuser etrn.pl re-mqueue.pl \
+            cidrexpand expn.pl
+CONTDOC   = dnsblaccess.m4 domainmap.m4 mmuegel
+CONTMAN1  = etrn.0
+CONTMAN8  = qtool.8
+CONTCONF  = movemail.conf
 
 configure-custom:
 	@echo " ==> Configuring $(NAME) (custom)"
@@ -178,8 +220,9 @@ test-custom:
 	@$(MAKECOOKIE)
 
 install-custom:
-	@# Install dirs
 	@echo " ==> Installing $(NAME) (custom)"
+
+	@# Install dirs
 	ginstall -d $(DESTDIR)$(libdir)
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(sbindir)
@@ -191,6 +234,10 @@ install-custom:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -d $(DESTDIR)$(sysconfdir)/mail
 	ginstall -d $(DESTDIR)/opt/csw/include
+	ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
+	ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)_contrib
+	ginstall -m 755 -d $(DESTDIR)$(docdir)/libmilter
+	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail
 
 	@# Install the libraries
 	( for file in $(LIBFILES) ; do \
@@ -252,11 +299,9 @@ install-custom:
 		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
 
 	@# usergroup
-	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail
 	ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail/
 
 	@# README
-	ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
 	ginstall -m 644 $(FILEDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)/
 
 	@# Create links in bindir
@@ -276,8 +321,28 @@ install-custom:
 	ginstall -m 444 $(FILEDIR)/CSWsendmail.postmsg $(DESTDIR)$(docdir)/sendmail/README.postinstall
 
 	@# Milter doc files
-	ginstall -m 755 -d $(DESTDIR)$(docdir)/libmilter
 	ginstall -m 644 $(WORKSRC)/libmilter/docs/* $(DESTDIR)$(docdir)/libmilter
+
+	@# Contrib files
+	( for file in $(CONTBIN) ; do \
+		ginstall -m 755 $(WORKSRC)/contrib/$$file $(DESTDIR)$(bindir) ; \
+		done )
+	( for file in $(CONTCONF) ; do \
+		ginstall -m 644 $(WORKSRC)/contrib/$$file $(DESTDIR)$(sysconfdir) ; \
+		done )
+	( for file in $(CONTDOC) ; do \
+		ginstall -m 444 $(WORKSRC)/contrib/$$file $(DESTDIR)$(docdir)/sendmail_contrib ; \
+		done )
+	( for file in $(CONTMAN1) ; do \
+		ginstall -m 644 $(WORKSRC)/contrib/$$file $(DESTDIR)$(mandir)/man1 ; \
+		done )
+	( for file in $(CONTMAN8) ; do \
+		ginstall -m 644 $(WORKSRC)/contrib/$$file $(DESTDIR)$(mandir)/man8 ; \
+		done )
+
+	@# Deactivate/reactivate scripts
+	ginstall -m 755 $(DOWNLOADDIR)/oracle-sendmail-deactivate.sh $(DESTDIR)$(docdir)/sendmail
+	ginstall -m 755 $(DOWNLOADDIR)/oracle-sendmail-reactivate.sh $(DESTDIR)$(docdir)/sendmail
 
 	@$(MAKECOOKIE)
 
