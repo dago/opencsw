@@ -2,8 +2,7 @@
 
 PATH=/bin:/usr/bin:/opt/csw/bin:/sbin:/usr/sbin:/opt/csw/sbin
 
-curextdir=`perl -lne '/(no-debug-non-zts-[0-9]+)/ && print $1' /etc/opt/csw/php
-5/php.ini`
+curextdir=`perl -lne '/(no-debug-non-zts-[0-9]+)/ && print $1' /etc/opt/csw/php5/php.ini`
 
 # the new php.ini doesn't have this line at all, but the old one might.
 # update it if required.
