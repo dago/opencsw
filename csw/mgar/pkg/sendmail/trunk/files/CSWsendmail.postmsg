@@ -1,45 +1,67 @@
-=== SAMPLE FROM OTHER PACKAGES ===
+Notes for users of previous versions of CSWsendmail
+===================================================
 
---- POSTFIX ---
+Solaris built-in Sendmail
+-------------------------
 
-Note for users upgrading from postfix 2.4.6 and previous
---------------------------------------------------------
+The CSWsendmail package no longer tries to deactivate the built-in
+Sendmail in Solaris. Instead you get similar scripts that you can
+run yourself if you don't want to do the modifications manually.
 
-- Starting with postfix 2.6.x the spool location has changed from 
+  * /opt/csw/share/doc/sendmail/oracle-sendmail-deactivate.sh
+  * /opt/csw/share/doc/sendmail/oracle-sendmail-reactivate.sh
 
-    /opt/csw/var/spool/postfix to
-    /var/opt/csw/spool/postfix
+You should, as a minimum, disable the built-in Sendmail from starting
+at boot to avoid port 25 conflicts. Also, many utilities using mail
+expect Sendmail to be located in /usr/lib/sendmail e.g.
 
-  If you have any pending email in the old spool location, please move
-  it to the new spool location and run "postsuper" before starting
-  postfix. An example script on how this can be done is shipped with the
-  package (migrate-queuefiles.sh). Make sure to understand what you are
-  doing.
+If you disable the rc-script in Solaris 9 and create links to
+CSWsendmail binaries manually or with the above mentioned script
+please be aware that Oracle patches may very well restore this.
+You have to be aware of this when patching as long as the built-in
+Sendmail packages are on your system.
 
-- Starting with postfix 2.6.x this package will _not_ automatically
-  substitute the common sendmail binaries with links to the postfix
-  binaries any more. Thus, the following files will be untouched and
-  possibly belong to the system sendmail installation.
-  
-    /usr/lib/sendmail
-    /usr/bin/mailq
-    /usr/bin/newaliases
-  
-  This makes the package installation less troublesome for shared zones
-  and leaves the choice of fully replacing your system sendmail up to you.
-  If you intend to replace those binaries above with the ones from this
-  postfix package, please see README.CSW.
+Default paths
+-------------
 
---- MUTT ---
+The default paths are now:
 
-There are now two versions of mutt on the system installed:
+  * /etc/opt/csw/mail
+  * /var/opt/csw/spool
 
-  * mutt-ncurses  with ncurses interface
-  * mutt-slang    with slang interface (per default linked to 'mutt')
+Your configuration files in /opt/csw/etc/mail will be migrated to
+the new location automatically.
 
-You can easily select between the versions with the alternatives(8)
-system by executing
+You can of course control almost everything by building a new
+sendmail.cf, take a look in /opt/csw/share/mail/cf. The init script
+(/etc/opt/csw/init.d/cswsendmail) may also need modification if you
+want to use other paths.
 
-  /opt/csw/sbin/alternatives --config mutt
+Alternatives
+------------
+
+A few files are provided by both the Sendmail and Postfix packages:
+
+  * /opt/csw/bin/mailq
+  * /opt/csw/bin/newaliases
+  * /opt/csw/share/man/man1/aliases.1
+  * /opt/csw/share/man/man1/mailq.1
+  * /opt/csw/share/man/man1/newaliases.1
+
+Normally you don't have both those packages on the same system but
+if you do you can easily select between the versions with the
+alternatives(8) system by executing e.g.:
+
+  # /opt/csw/sbin/alternatives --config mailq
 
 See http://www.opencsw.org/packages/alternatives for details.
+
+Contrib
+-------
+
+There's a new package, CSWsendmail-contrib, which contains the
+contents of the contrib dir in the Sendmail source. There's some
+useful scripts there.
+
+-- 
+Peter Bonivart, OpenCSW, 2011-06-21
