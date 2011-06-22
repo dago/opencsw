@@ -18,7 +18,7 @@ for a in $*; do
 PIR=\${PKG_INSTALL_ROOT:-'/'}
 PHP5_PREFIX=/opt/csw/php5
 PHP5_BINDIR=\$PHP5_PREFIX/bin
-PHP5_CONFIG=\$PHP5_PREFIX/lib/php.ini
+PHP5_CONFIG=/etc/opt/csw/php5/php.ini
 PHPEXT=\$PHP5_BINDIR/phpext
 
 if [ "\$1" = install ]; then
