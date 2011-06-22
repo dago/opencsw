@@ -20,7 +20,8 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-RUNTIME_DEP_PKGS = CSWlibpcap CSWncurses
+RUNTIME_DEP_PKGS_CSWiftop += CSWncurses
+RUNTIME_DEP_PKGS_CSWiftop += CSWlibpcap1
 
 
 CONFIGURE_ARGS  = $(DIRPATHS)
