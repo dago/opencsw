@@ -465,7 +465,7 @@ O TrustedUser=smmsp
 #O MaxAliasRecursion=10
 
 # location of pid file
-O PidFile=/var/run/sm-client.pid
+O PidFile=/var/run/csw-sm-client.pid
 
 # Prefix string for the process title shown on 'ps' listings
 #O ProcessTitlePrefix=prefix

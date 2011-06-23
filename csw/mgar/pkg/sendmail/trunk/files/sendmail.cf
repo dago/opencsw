@@ -473,7 +473,7 @@ O MaxHeadersLength=32768
 #O MaxAliasRecursion=10
 
 # location of pid file
-#O PidFile=/var/run/sendmail.pid
+O PidFile=/var/run/csw-sendmail.pid
 
 # Prefix string for the process title shown on 'ps' listings
 #O ProcessTitlePrefix=prefix

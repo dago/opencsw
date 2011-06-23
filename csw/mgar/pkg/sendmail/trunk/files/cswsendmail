@@ -11,8 +11,8 @@
 
 ERRMSG1='WARNING: /var/mail is NFS-mounted without setting actimeo=0,'
 ERRMSG2='this can cause mailbox locking and access problems.'
-SERVER_PID_FILE="/var/run/sendmail.pid"
-CLIENT_PID_FILE="/var/opt/csw/spool/clientmqueue/sm-client.pid"
+SERVER_PID_FILE="/var/run/csw-sendmail.pid"
+CLIENT_PID_FILE="/var/run/csw-sm-client.pid"
 DEFAULT_FILE="/etc/opt/csw/default/sendmail"
 ALIASES_FILE="/etc/opt/csw/mail/aliases"
 
@@ -74,7 +74,7 @@ case "$1" in
 		# the :client part is optional; see etrn(1M) for details.
 		# server is the name of the server to prod; a mail queue run
 		# is requested for each client name.  This is comparable to
-		# running "/usr/lib/sendmail -qRclient" on the host server.
+		# running "/opt/csw/lib/sendmail -qRclient" on the host server.
 		#
 		# See RFC 1985 for more information.
 		#
