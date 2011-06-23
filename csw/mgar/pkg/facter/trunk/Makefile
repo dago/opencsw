@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = facter
-VERSION = 1.5.8
+VERSION = 1.5.9
 CATEGORIES = apps
 
 DESCRIPTION = A system fact gatherer
@@ -22,11 +22,12 @@ MASTER_SITES = http://puppetlabs.com/downloads/facter/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 SPKG_SOURCEURL = http://puppetlabs.com/
 
-RUNTIME_DEP_PKGS = CSWruby
+RUNTIME_DEP_PKGS = CSWruby18
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
-ARCHALL=1
+PATCHFILES += 0001-Patch-to-prtconf-run-in-memory.rb.patch
 
+ARCHALL = 1
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
@@ -35,8 +36,7 @@ INSTALL_SCRIPTS   = facter
 CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/ssh.rb
 CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/Cfkey.rb
 CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/util/manufacturer.rb
-CHECKPKG_OVERRIDES_CSWfacter += pkginfo-description-not-starting-with-uppercase|a|system|fact|gatherer
-
+CHECKPKG_OVERRIDES_CSWfacter += pkginfo-opencsw-repository-uncommitted
 
 include gar/category.mk
 
