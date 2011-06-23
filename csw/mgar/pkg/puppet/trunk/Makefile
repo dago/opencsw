@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.7.1
+VERSION = 2.6.9
 CATEGORIES = apps
 
 define BLURB
@@ -26,9 +26,9 @@ DISTFILES += cswpuppetd
 DISTFILES += cswpuppetmasterd
 DISTFILES += cswusergroup
 DISTFILES += CSWpuppet.postinstall
-# pkgutil.rb is from https://github.com/gw42/puppet/blob/tickets%2Fmaster%2F4258-dev/lib/puppet/provider/package/pkgutil.rb
-# Dom Cleal of RedHat has advised this is a good working version
-# DISTFILES += pkgutil.rb
+# pkgutil.rb is from https://raw.github.com/domcleal/puppet/tickets/master/8011/lib/puppet/provider/package/pkgutil.rb
+# Should be headed into 2.7 code - supports -t REPO
+DISTFILES += pkgutil.rb
 DISTFILES += README.CSW
 DISTFILES += puppet.conf.example-CSW
 SPKG_SOURCEURL = http://puppetlabs.com/
@@ -71,6 +71,9 @@ TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
 PATCHFILES = 0003-Use-opt-csw-share-puppet-modules-as-default.patch
+# https://projects.puppetlabs.com/issues/6324
+PATCHFILES += 0004-patch-to-smf-provider-6324.patch
+
 
 CHECKPKG_OVERRIDES_CSWpuppetmaster  = surplus-dependency|CSWruby18
 CHECKPKG_OVERRIDES_CSWpuppet        = surplus-dependency|CSWfacter
@@ -103,6 +106,7 @@ install-puppet:
 		--bindir=$(bindir) \
 		--sbindir=$(sbindir) \
 		--full
+	ginstall -m 755 $(FILEDIR)/pkgutil.rb $(DESTDIR)$(rubysitelibdir)/puppet/provider/package
 	cd $(DESTDIR)$(mandir)/man8 && gunzip *
 	(cd $(WORKSRC)/examples/etc/puppet && \
 	for f in *; do \
