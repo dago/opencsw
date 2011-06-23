@@ -1,0 +1,25 @@
+From a99e009edb9c5b948947466a9247a820ea907cb4 Mon Sep 17 00:00:00 2001
+From: Mark Phillips <none@none>
+Date: Tue, 31 May 2011 19:35:05 +0200
+Subject: [PATCH] Patch to prtconf run in memory.rb
+
+---
+ lib/facter/memory.rb |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lib/facter/memory.rb b/lib/facter/memory.rb
+index 9dd2e29..fdb3099 100644
+--- a/lib/facter/memory.rb
++++ b/lib/facter/memory.rb
+@@ -172,7 +172,7 @@ if Facter.value(:kernel) == "SunOS"
+     end
+ 
+     # Total memory size available from prtconf
+-    pconf = Facter::Util::Resolution.exec('/usr/sbin/prtconf')
++    pconf = Facter::Util::Resolution.exec('/usr/sbin/prtconf 2>/dev/null')
+     phymem = ""
+     pconf.each do |line|
+         if line =~ /^Memory size:\s+(\d+) Megabytes/
+-- 
+1.7.3.2
+
