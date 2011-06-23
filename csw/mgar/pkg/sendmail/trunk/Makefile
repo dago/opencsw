@@ -4,11 +4,10 @@
 # - Build separate 9/10 packages?
 # - One big "mta" switch in alternatives between sendmail/postfix
 
-# - csw-sm-client.pid, csw-sendmail.pid
-# - smmsp:smmsp /var/opt/csw/spool/clientmqueue
-# - -rw-r--r-- 1 smmsp  smmsp     47 2011-06-22 23:53 sm-client.pid
-# - Include Makefile in /etc/opt/csw/mail
-
+# + remove statistics
+# + csw-sm-client.pid, csw-sendmail.pid
+# + smmsp:smmsp /var/opt/csw/spool/clientmqueue
+# + Include Makefile in /etc/opt/csw/mail
 # + post message
 # + Fix paths in sendmail.cf and cswsendmail
 # + #4486 Provide sendmail's contrib/ tools as a separate package?
@@ -41,7 +40,7 @@ SPKG_SOURCEURL = http://www.sendmail.org
 
 DISTFILES  = $(NAME).$(VERSION).tar.gz
 DISTFILES += aliases helpfile local-host-names sendmail.cf
-DISTFILES += statistics submit.cf trusted-users
+DISTFILES += submit.cf trusted-users
 DISTFILES += README.CSW sendmail.schema site.config.m4
 DISTFILES += oracle-sendmail-deactivate.sh oracle-sendmail-reactivate.sh
 DISTFILES += cswsendmail cswusergroup
@@ -108,7 +107,7 @@ PATCHFILES += 0001-add-libmilter-to-the-Makefile.patch
 PATCHFILES += 0002-no-gnuism.patch
 
 MIGRATE_FILES_CSWsendmail      = aliases helpfile local-host-names sendmail.cf
-MIGRATE_FILES_CSWsendmail     += statistics submit.cf trusted-users
+MIGRATE_FILES_CSWsendmail     += submit.cf trusted-users
 MIGRATE_SOURCE_DIR_CSWsendmail = /opt/csw/etc/mail
 MIGRATE_DEST_DIR_CSWsendmail   = /etc/opt/csw/mail
 
@@ -178,7 +177,7 @@ MANFILES8 = sendmail/sendmail.8 mailstats/mailstats.8 makemap/makemap.8 \
             praliases/praliases.8 smrsh/smrsh.8 mail.local/mail.local.8 \
             rmail/rmail.8 editmap/editmap.8
 CONFFILES = aliases helpfile local-host-names sendmail.cf \
-            statistics submit.cf trusted-users
+            submit.cf trusted-users
 INCLFILES = libmilter/libmilter.h
 CONTBIN   = link_hash.sh movemail.pl smcontrol.pl \
             passwd-to-alias.pl socketmapClient.pl bounce-resender.pl \
