@@ -1,3 +1,5 @@
 eed0e7f40f22e580ccf5d78884ebe1a0  0001-Do-not-use-_N-already-taken-on-Solaris.patch
 b9cbbe07e58bba1572838ec0cb1f6c49  0002-Hack-in-isblank-as-gnutools-dont-seem-to-be-used.patch
 a6a6a5515d7bbebe61c1e90db12eef72  augeas-0.7.0.tar.gz
+e425bcfc46fd5b18473a4ff47c2878d3  augeas-0.8.0.tar.gz
+62d47bdc60e175f93aed3b81cb8e2785  augeas-0.8.1.tar.gz

@@ -1,5 +1,5 @@
 NAME = augeas
-VERSION = 0.7.0
+VERSION = 0.8.1
 CATEGORIES = lib
 
 DESCRIPTION = A configuration editing tool
@@ -11,26 +11,27 @@ endef
 
 MASTER_SITES = http://augeas.net/download/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-PATCHFILES  = 0001-Do-not-use-_N-already-taken-on-Solaris.patch
-PATCHFILES += 0002-Hack-in-isblank-as-gnutools-dont-seem-to-be-used.patch
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
+#PATCHFILES  = 0001-Do-not-use-_N-already-taken-on-Solaris.patch
+#PATCHFILES += 0002-Hack-in-isblank-as-gnutools-dont-seem-to-be-used.patch
 VENDOR_URL = http://augeas.net
 
 RUNTIME_DEP_PKGS = CSWgcc4corert CSWlibgnugetopt CSWreadline
-
 GARCOMPILER = GCC4
-
 EXTRA_LDFLAGS = -lgnugetopt
 
-# Building on Solaris 10 doesn't work as it support C99 and the above fixes are not necessary there.
+# Building on Solaris 10 doesn't work as it support C99 and the above fixes are
+# not necessary there.
 # Disable 64 bit for now.
 # BUILD64 = 1
-NOISAEXEC = 1
+# NOISAEXEC = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
+
+CHECKPKG_OVERRIDES_CSWaugeas   += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWaugeas += non-uniform-lib-versions-in-package|sonames=libaugeas.so.0,libfa.so.1
+CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-package-contains-so-symlink
+
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/charset.alias
 MERGE_DIRS_isa-extra = $(libdir)
