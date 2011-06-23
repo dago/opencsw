@@ -11,8 +11,8 @@ define BLURB
   wrapper with additions. 
 endef
 
-PACKAGES = CSWpm-logdispatchfilerotate
-CATALOGNAME = pm_logdispatchfilerotate
+PACKAGES = CSWpm-log-dispatch-filerotate
+CATALOGNAME = pm_log_dispatch_filerotate
 
 DEP_PKGS = CSWpmlogdispatch
 
