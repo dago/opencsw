@@ -5,6 +5,7 @@
 #
 #ident	"@(#)sendmail	1.19	01/12/05 SMI"
 # Modified for CSW by Alex Moore 01/01/2004
+# Modified for CSW by Peter Bonivart 2011-06-23
 
 # Magic comments for use with cswinitsmf
 #AUTOENABLE no
@@ -40,6 +41,11 @@ case "$1" in
 		if [ ! -d /var/opt/csw/spool/mqueue ]; then
 			/usr/bin/mkdir -pm 0750 /var/opt/csw/spool/mqueue
 			/usr/bin/chown root:bin /var/opt/csw/spool/mqueue
+		fi
+		if [ ! -f $CLIENT_PID_FILE ]; then
+			/usr/bin/touch $CLIENT_PID_FILE
+			/usr/bin/chown smmsp:smmsp $CLIENT_PID_FILE
+			/usr/bin/chmod 0600 $CLIENT_PID_FILE
 		fi
 		if [ ! -f $ALIASES_FILE.db ] && [ ! -f $ALIASES_FILE.dir ] \
 		    && [ ! -f $ALIASES_FILE.pag ]; then

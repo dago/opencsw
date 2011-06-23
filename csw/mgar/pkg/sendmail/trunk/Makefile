@@ -116,6 +116,7 @@ PROTOTYPE_MODIFIERS = 1
 PROTOTYPE_FILES_1   = /var/opt/csw/spool/clientmqueue
 PROTOTYPE_USER_1    = smmsp
 PROTOTYPE_GROUP_1   = smmsp
+PROTOTYPE_PERMS_1   = 0750
 
 CONFIGURE_SCRIPTS   = custom
 BUILD_SCRIPTS       = custom
