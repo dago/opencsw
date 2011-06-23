@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.6.8
+VERSION = 2.7.1
 CATEGORIES = apps
 
 define BLURB
@@ -28,10 +28,12 @@ DISTFILES += cswusergroup
 DISTFILES += CSWpuppet.postinstall
 # pkgutil.rb is from https://github.com/gw42/puppet/blob/tickets%2Fmaster%2F4258-dev/lib/puppet/provider/package/pkgutil.rb
 # Dom Cleal of RedHat has advised this is a good working version
-DISTFILES += pkgutil.rb
+# DISTFILES += pkgutil.rb
 DISTFILES += README.CSW
 DISTFILES += puppet.conf.example-CSW
 SPKG_SOURCEURL = http://puppetlabs.com/
+LICENSE_CSWpuppet = LICENSE
+LICENSE_CSWpuppetmaster = LICENSE
 
 INITSMF += $(sysconfdir)/init\.d/cswpuppetd
 INITSMF += $(sysconfdir)/init\.d/cswpuppetmasterd
@@ -69,19 +71,14 @@ TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
 PATCHFILES = 0003-Use-opt-csw-share-puppet-modules-as-default.patch
-# https://projects.puppetlabs.com/issues/6324
-PATCHFILES += 0004-patch-to-smf-provider-6324.patch
 
-CHECKPKG_OVERRIDES_CSWpuppetmaster  = surplus-dependency|CSWruby
-
+CHECKPKG_OVERRIDES_CSWpuppetmaster  = surplus-dependency|CSWruby18
 CHECKPKG_OVERRIDES_CSWpuppet        = surplus-dependency|CSWfacter
 CHECKPKG_OVERRIDES_CSWpuppet	   += surplus-dependency|CSWrubyaugeas
 CHECKPKG_OVERRIDES_CSWpuppet       += missing-dependency|CSWpython
-
 # Puppet has hardcoded paths to look at for many OSes, many of which involve
 # /usr/share and /usr/local.
 CHECKPKG_OVERRIDES_CSWpuppet 	   += file-with-bad-content
-
 # These files are quite deliberate - without them users will not get CSW
 # behaviour. The README explains
 CHECKPKG_OVERRIDES_CSWpuppet 	   += bad-location-of-file|file=/etc/puppet
@@ -106,7 +103,6 @@ install-puppet:
 		--bindir=$(bindir) \
 		--sbindir=$(sbindir) \
 		--full
-	ginstall -m 755 $(FILEDIR)/pkgutil.rb $(DESTDIR)$(rubysitelibdir)/puppet/provider/package
 	cd $(DESTDIR)$(mandir)/man8 && gunzip *
 	(cd $(WORKSRC)/examples/etc/puppet && \
 	for f in *; do \
