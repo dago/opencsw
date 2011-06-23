@@ -2,6 +2,12 @@
 
 # TODO
 # - Build separate 9/10 packages?
+# - One big "mta" switch in alternatives between sendmail/postfix
+
+# - csw-sm-client.pid, csw-sendmail.pid
+# - smmsp:smmsp /var/opt/csw/spool/clientmqueue
+# - -rw-r--r-- 1 smmsp  smmsp     47 2011-06-22 23:53 sm-client.pid
+# - Include Makefile in /etc/opt/csw/mail
 
 # + post message
 # + Fix paths in sendmail.cf and cswsendmail
@@ -35,7 +41,7 @@ SPKG_SOURCEURL = http://www.sendmail.org
 
 DISTFILES  = $(NAME).$(VERSION).tar.gz
 DISTFILES += aliases helpfile local-host-names sendmail.cf
-DISTFILES += sm-client.st statistics submit.cf trusted-users
+DISTFILES += statistics submit.cf trusted-users
 DISTFILES += README.CSW sendmail.schema site.config.m4
 DISTFILES += oracle-sendmail-deactivate.sh oracle-sendmail-reactivate.sh
 DISTFILES += cswsendmail cswusergroup
@@ -88,7 +94,6 @@ PKGFILES_CSWsendmail-contrib        += $(sysconfdir)/movemail.conf
 
 INITSMF     = /etc/opt/csw/init.d/cswsendmail
 SAMPLECONF  = $(addprefix /etc/opt/csw/mail/,$(CONFFILES))
-SAMPLECONF += /var/opt/csw/spool/clientmqueue/sm-client.st
 USERGROUP   = /etc/opt/csw/pkg/CSWsendmail/cswusergroup
 POSTMSG     = $(docdir)/sendmail/README.postinstall
 
@@ -106,6 +111,11 @@ MIGRATE_FILES_CSWsendmail      = aliases helpfile local-host-names sendmail.cf
 MIGRATE_FILES_CSWsendmail     += statistics submit.cf trusted-users
 MIGRATE_SOURCE_DIR_CSWsendmail = /opt/csw/etc/mail
 MIGRATE_DEST_DIR_CSWsendmail   = /etc/opt/csw/mail
+
+PROTOTYPE_MODIFIERS = 1
+PROTOTYPE_FILES_1   = /var/opt/csw/spool/clientmqueue
+PROTOTYPE_USER_1    = smmsp
+PROTOTYPE_GROUP_1   = smmsp
 
 CONFIGURE_SCRIPTS   = custom
 BUILD_SCRIPTS       = custom
@@ -260,8 +270,6 @@ install-custom:
 		ginstall -m 644 $(DOWNLOADDIR)/$$file \
 		$(DESTDIR)$(sysconfdir)/mail/$$file; \
 		done )
-	( ginstall -m 644  $(DOWNLOADDIR)/sm-client.st \
-		$(DESTDIR)/var/opt/csw/spool/clientmqueue/ )
 
 	@# usergroup
 	ginstall -m 444 $(FILEDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSWsendmail/
@@ -308,5 +316,8 @@ install-custom:
 	@# Deactivate/reactivate scripts
 	ginstall -m 755 $(DOWNLOADDIR)/oracle-sendmail-deactivate.sh $(DESTDIR)$(docdir)/sendmail
 	ginstall -m 755 $(DOWNLOADDIR)/oracle-sendmail-reactivate.sh $(DESTDIR)$(docdir)/sendmail
+
+	@# Makefile for databases
+	ginstall -m 644 $(FILEDIR)/CSWsendmail.Makefile $(DESTDIR)$(sysconfdir)/mail/Makefile
 
 	@$(MAKECOOKIE)
