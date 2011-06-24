@@ -9,15 +9,19 @@ endef
 
 PACKAGES    = CSWgnupg
 CATALOGNAME = gnupg
-SPKG_DESC   = GnuPG is a complete and free replacement for PGP.
+SPKG_DESC   = GnuPG is a complete and free replacement for PGP
+
+RUNTIME_DEP_PKGS_CSWgnupg  = CSWbzip2
+RUNTIME_DEP_PKGS_CSWgnupg += CSWcurlrt
+RUNTIME_DEP_PKGS_CSWgnupg += CSWreadline
+RUNTIME_DEP_PKGS_CSWgnupg += CSWiconv
+RUNTIME_DEP_PKGS_CSWgnupg += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWgnupg += CSWzlib
+RUNTIME_DEP_PKGS_CSWgnupg += CSWlibintl8
 
 SPKG_SOURCEURL = http://www.gnupg.org/
 MASTER_SITES   = ftp://ftp.gnupg.org/gcrypt/gnupg/
 DISTFILES      = $(NAME)-$(VERSION).tar.bz2
-
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libcurl=$(prefix)
@@ -33,14 +37,17 @@ CONFIGURE_ARGS += --enable-threads=solaris
 CONFIGURE_ARGS += --disable-asm
 
 EXTRA_MERGE_EXCLUDE_FILES += .*/charset.alias
+EXTRA_MERGE_EXCLUDE_FILES += .*/gpg-zip.1
 
-PROTOTYPE_MODIFIERS = suid
+PROTOTYPE_MODIFIERS  = suid
 PROTOTYPE_FILES_suid = .*/gpg
 PROTOTYPE_PERMS_suid = 4755
 
-RUNTIME_DEP_PKGS_CSWgnupg  = CSWbzip2 CSWcurlrt CSWggettextrt CSWiconv
-RUNTIME_DEP_PKGS_CSWgnupg += CSWoldaprt CSWreadline CSWzlib
-
 TEST_TARGET = check
+
+CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.ru.1
+CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.1
+CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/info/gnupg1.info
+#CHECKPKG_OVERRIDES_CSWgnupg += file-collision|/opt/csw/share/man/man1/gpg-zip.1|CSWgnupg|CSWgnupg2
 
 include gar/category.mk
