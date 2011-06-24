@@ -226,6 +226,8 @@ PKGFILES_CSWapache2c = .*share/doc/apache2c.*
 
 #PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/apache2/sbin/suexec" { $$$$4 = "4755" }; $$$$3 ~ /cswap2mod/ { $$$$4 = "0555" }; { print }'
 
+TEST_TARGET = test
+
 include gar/category.mk
 
 CFLAGS := -DSSL_EXPERIMENTAL -DSSL_ENGINE $(CFLAGS)
