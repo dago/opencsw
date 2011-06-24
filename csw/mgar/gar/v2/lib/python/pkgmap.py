@@ -26,7 +26,8 @@ class Pkgmap(object):
       "s": "symlink",
       "l": "link",
       "i": "script",
-      "e": "editable file"
+      "e": "editable file",
+      "p": "pipe"
   }
 
   def __init__(self, input, permissions=False,
@@ -62,7 +63,7 @@ class Pkgmap(object):
     target = None
     if len(fields) < 2:
       return None
-    elif line_type in ('f', 'd'):
+    elif line_type in ('f', 'd', 'p'):
       # Files and directories
       line_to_add = fields[3]
       installed_path = fields[3]

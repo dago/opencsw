@@ -26,6 +26,7 @@ PKGMAP_LINE_6 = ("/usr/lib/libc.so.1 f none 0755 root bin 867444 58567 "
                  "1250803966 SUNWcsl")
 PKGMAP_LINE_7 = ("/opt/csw/include/mozilla/accessibility/nsAccessNode.h "
                  "f none 0644 root bin 5557 10685 1068611657 !CSWmozilla")
+PKGMAP_LINE_8 = ("/etc/scn/scn_aa_read p none 0600 root sys SUNWscn-agentfacade-r")
 
 
 class IndexerUnitTest(unittest.TestCase):
@@ -84,6 +85,27 @@ class IndexerUnitTest(unittest.TestCase):
         'minor': None,
     }
     self.assertEqual(expected, spi._ParsePkgmapLine(PKGMAP_LINE_5))
+
+  def test_ParsePkgmapLineTypePipe(self):
+    """A pipe is a valid type and we have to cope with it."""
+    spi = system_pkgmap.Indexer()
+    expected = {
+        'modtime': None,
+        'major': None,
+        'pkgnames': ['SUNWscn-agentfacade-r'],
+        'cksum': None,
+        'owner': 'root',
+        'path': '/etc/scn/scn_aa_read',
+        'line': PKGMAP_LINE_8,
+        'class': 'none',
+        'size': None,
+        'group': 'sys',
+        'target': None,
+        'mode': '0600',
+        'type': 'p',
+        'minor': None,
+    }
+    self.assertEqual(expected, spi._ParsePkgmapLine(PKGMAP_LINE_8))
 
   def test_ParsePkgmapLibc(self):
     """A question mark is not a valid type, but we have to cope with it."""

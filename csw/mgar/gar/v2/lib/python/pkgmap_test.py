@@ -23,6 +23,7 @@ PKGMAP_3 = """1 d none /opt/csw/apache2/ap2mod 0755 root bin
 1 e build /opt/csw/apache2/ap2mod/suexec ? ? ? 1472 50478 1289099700
 1 d none /opt/csw/apache2/libexec 0755 root bin
 1 f none /opt/csw/apache2/libexec/mod_suexec.so 0755 root bin 6852 52597 1289092061
+1 p none /etc/scn/scn_aa_read 0600 root sys
 """
 
 class PkgmapUnitTest(unittest.TestCase):

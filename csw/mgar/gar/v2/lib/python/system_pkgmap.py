@@ -148,7 +148,7 @@ class Indexer(object):
     elif file_type == 'l':
       # ftype l: path l class package
       f_path, f_type, f_class, f_pkgname = parts
-    elif file_type in ('d', 'x'):
+    elif file_type in ('d', 'x', 'p'):
       # ftype d: path d class mode owner group package(s)
       # ftype x: path x class mode owner group package
       f_path, f_type, f_class, f_mode, f_owner, f_group = parts[:6]
