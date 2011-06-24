@@ -18,6 +18,8 @@ RUNTIME_DEP_PKGS_CSWgnupg += CSWiconv
 RUNTIME_DEP_PKGS_CSWgnupg += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWgnupg += CSWzlib
 RUNTIME_DEP_PKGS_CSWgnupg += CSWlibintl8
+# Needed because of missing in CSWncurses, checkpkg only requires readline
+RUNTIME_DEP_PKGS_CSWgnupg += CSWlibncurses5
 
 SPKG_SOURCEURL = http://www.gnupg.org/
 MASTER_SITES   = ftp://ftp.gnupg.org/gcrypt/gnupg/
@@ -49,5 +51,7 @@ TEST_TARGET = check
 CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.ru.1
 CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.1
 CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/info/gnupg1.info
+# Remove after checkpkg/ncurses bugs fixed
+CHECKPKG_OVERRIDES_CSWgnupg += surplus-dependency|CSWlibncurses5
 
 include gar/category.mk
