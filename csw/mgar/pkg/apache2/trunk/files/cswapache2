@@ -41,4 +41,4 @@ stop)
     ;;
 esac
 
-exec $APACHECTL -k $cmd 2>&1
+exec $APACHECTL -f $CONF_FILE -k $cmd 2>&1
