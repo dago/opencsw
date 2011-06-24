@@ -1,6 +1,6 @@
 NAME = imagemagick
 VERSION = 6.7.0
-GARSUBREV = 4
+GARSUBREV = 7
 CATEGORIES = lib
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -15,32 +15,11 @@ MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/
 DISTNAME = ImageMagick-$(VERSION)-$(GARSUBREV)
 DISTFILES  = $(DISTNAME).tar.xz
 
+PATCHFILES += 0001-Do-not-strip-norunpath.patch
+
 VENDOR_URL = http://www.imagemagick.org
 
 LICENSE = LICENSE
-
-# Shared library suffix .10 has been used to mean "1.0"
-
-#PACKAGES += CSWlibmagick++10
-#PKGFILES_CSWlibmagick++10 += $(call pkgfiles_lib,libMagick++.so.10)
-#SPKG_DESC_CSWlibmagick++10 += Library from ImageMagick, libMagick++.so.10
-#RUNTIME_DEP_PKGS_CSWlibmagick++10 += CSWlibwand10
-#RUNTIME_DEP_PKGS_CSWlibmagick++10 += CSWftype2
-#RUNTIME_DEP_PKGS_CSWlibmagick++10 += CSWlibmagick10
-#RUNTIME_DEP_PKGS_CSWlibmagick++10 += CSWsunmath
-#RUNTIME_DEP_PKGS_CSWlibmagick++10 += CSWzlib
-
-#PACKAGES += CSWlibmagick++2
-#PKGFILES_CSWlibmagick++2 += $(call pkgfiles_lib,libMagick++.so.2)
-#SPKG_DESC_CSWlibmagick++2 += Library from ImageMagick, libMagick++.so.2
-#RUNTIME_DEP_PKGS_CSWlibmagick++2 += CSWlibmagickwand2
-#RUNTIME_DEP_PKGS_CSWlibmagick++2 += CSWjpeg
-#RUNTIME_DEP_PKGS_CSWlibmagick++2 += CSWlcmsrt
-#RUNTIME_DEP_PKGS_CSWlibmagick++2 += CSWtiff
-#RUNTIME_DEP_PKGS_CSWlibmagick++2 += CSWzlib
-#RUNTIME_DEP_PKGS_CSWlibmagick++2 += CSWftype2
-#RUNTIME_DEP_PKGS_CSWlibmagick++2 += CSWlibmagickcore2
-#RUNTIME_DEP_PKGS_CSWlibmagick++2 += CSWfconfig
 
 PACKAGES += CSWlibmagick++4
 PKGFILES_CSWlibmagick++4 += $(call pkgfiles_lib,libMagick++.so.4)
@@ -60,29 +39,6 @@ RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWfconfig
 RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWglib2
 RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWlibfftw3-3
 RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWliblzma5
-
-
-#PACKAGES += CSWlibmagick10
-#PKGFILES_CSWlibmagick10 += $(call pkgfiles_lib,libMagick.so.10)
-#SPKG_DESC_CSWlibmagick10 += Library from ImageMagick, libMagick.so.10
-#RUNTIME_DEP_PKGS_CSWlibmagick10 += CSWjpeg
-#RUNTIME_DEP_PKGS_CSWlibmagick10 += CSWsunmath
-#RUNTIME_DEP_PKGS_CSWlibmagick10 += CSWtiff
-#RUNTIME_DEP_PKGS_CSWlibmagick10 += CSWzlib
-#RUNTIME_DEP_PKGS_CSWlibmagick10 += CSWftype2
-#RUNTIME_DEP_PKGS_CSWlibmagick10 += CSWlcmsrt
-#RUNTIME_DEP_PKGS_CSWlibmagick10 += CSWbzip2
-#RUNTIME_DEP_PKGS_CSWlibmagick10 += CSWfconfig
-
-#PACKAGES += CSWlibmagickcore2
-#PKGFILES_CSWlibmagickcore2 += $(call pkgfiles_lib,libMagickCore.so.2)
-#SPKG_DESC_CSWlibmagickcore2 += Library from ImageMagick, libMagickCore.so.2
-#RUNTIME_DEP_PKGS_CSWlibmagickcore2 += CSWjpeg
-#RUNTIME_DEP_PKGS_CSWlibmagickcore2 += CSWlcmsrt
-#RUNTIME_DEP_PKGS_CSWlibmagickcore2 += CSWtiff
-#RUNTIME_DEP_PKGS_CSWlibmagickcore2 += CSWzlib
-#RUNTIME_DEP_PKGS_CSWlibmagickcore2 += CSWftype2
-#RUNTIME_DEP_PKGS_CSWlibmagickcore2 += CSWfconfig
 
 PACKAGES += CSWlibmagickcore4
 PKGFILES_CSWlibmagickcore4 += $(call pkgfiles_lib,libMagickCore.so.4)
@@ -104,17 +60,6 @@ RUNTIME_DEP_PKGS_CSWlibmagickcore4 += CSWliblzma5
 # XXX: Is this correct?
 CHECKPKG_OVERRIDES_CSWlibmagickcore4 += file-with-bad-content|/usr/local|root/opt/csw/lib/libMagickCore.so.4.0.1
 
-#PACKAGES += CSWlibmagickwand2
-#PKGFILES_CSWlibmagickwand2 += $(call pkgfiles_lib,libMagickWand.so.2)
-#SPKG_DESC_CSWlibmagickwand2 += Library from ImageMagick, libMagickWand.so.2
-#RUNTIME_DEP_PKGS_CSWlibmagickwand2 += CSWjpeg
-#RUNTIME_DEP_PKGS_CSWlibmagickwand2 += CSWlcmsrt
-#RUNTIME_DEP_PKGS_CSWlibmagickwand2 += CSWtiff
-#RUNTIME_DEP_PKGS_CSWlibmagickwand2 += CSWzlib
-#RUNTIME_DEP_PKGS_CSWlibmagickwand2 += CSWftype2
-#RUNTIME_DEP_PKGS_CSWlibmagickwand2 += CSWlibmagickcore2
-#RUNTIME_DEP_PKGS_CSWlibmagickwand2 += CSWfconfig
-
 PACKAGES += CSWlibmagickwand4
 PKGFILES_CSWlibmagickwand4 += $(call pkgfiles_lib,libMagickWand.so.4)
 SPKG_DESC_CSWlibmagickwand4 += Library from ImageMagick, libMagickWand.so.4
@@ -132,14 +77,6 @@ RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWfconfig
 RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWglib2
 RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWlibfftw3-3
 RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWliblzma5
-
-#PACKAGES += CSWlibwand10
-#PKGFILES_CSWlibwand10 += $(call pkgfiles_lib,libWand.so.10)
-#SPKG_DESC_CSWlibwand10 += Library from ImageMagick, libWand.so.10
-#RUNTIME_DEP_PKGS_CSWlibwand10 += CSWftype2
-#RUNTIME_DEP_PKGS_CSWlibwand10 += CSWsunmath
-#RUNTIME_DEP_PKGS_CSWlibwand10 += CSWlibmagick10
-#RUNTIME_DEP_PKGS_CSWlibwand10 += CSWzlib
 
 PACKAGES += CSWimagemagick-dev
 SPKG_DESC_CSWimagemagick-dev = Development files for ImageMagick libraries
@@ -207,14 +144,20 @@ BUILD_DEP_PKGS += CSWopenexrdevel
 EXTRA_LINKER_FLAGS = -norunpath
 
 # Somehow the above flag does not make it to the linker
-CHECKPKG_OVERRIDES_CSWlibmagick++4 += bad-rpath-entry|/lib|opt/csw/lib/libMagick++.so.4.0.1
-CHECKPKG_OVERRIDES_CSWlibmagick++4 += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/libMagick++.so.4.0.1
-CHECKPKG_OVERRIDES_CSWlibmagick++4 += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/libMagick++.so.4.0.1
-CHECKPKG_OVERRIDES_CSWlibmagick++4 += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/libMagick++.so.4.0.1
+#CHECKPKG_OVERRIDES_CSWlibmagick++4 += bad-rpath-entry|/lib|opt/csw/lib/libMagick++.so.4.0.1
+#CHECKPKG_OVERRIDES_CSWlibmagick++4 += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/libMagick++.so.4.0.1
+#CHECKPKG_OVERRIDES_CSWlibmagick++4 += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/libMagick++.so.4.0.1
+#CHECKPKG_OVERRIDES_CSWlibmagick++4 += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/libMagick++.so.4.0.1
+
+# This is for libdps, skipping this line makes the following tests fail:
+#   FAIL: tests/validate-formats-on-disk.sh
+#   FAIL: Magick++/tests/coderInfo.sh
+EXTRA_LIB = /usr/openwin/lib
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
 CONFIGURE_ARGS += --enable-shared --disable-static
+CONFIGURE_ARGS += --enable-hdri
 CONFIGURE_ARGS += --with-dps=yes
 # Ghostscript lib is linked to Sun X11
 # CONFIGURE_ARGS += --with-gslib=no
@@ -229,9 +172,6 @@ CONFIGURE_ARGS += --disable-silent-rules
 CONFIGURE_ARGS-64 += --without-gvc
 CONFIGURE_ARGS-64 += --without-rsvg
 CONFIGURE_ARGS-64 += --without-perl
-CONFIGURE_ARGS-64 += --without-gvc
-CONFIGURE_ARGS-64 += --without-rsvg
-CONFIGURE_ARGS-64 += --without-perl
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 # One test is failing:
@@ -243,11 +183,9 @@ SKIPTEST ?= 1
 # Dependencies not 64-bit yet
 #BUILD64 = 1
 
-# This is for coders/dps.so to find libdps.so.5 and libdpstk.so.5
-# EXTRA_LIB = /usr/openwin/lib
 # Is this really a problem?
-CHECKPKG_OVERRIDES_CSWimagemagick += soname-not-found|libdps.so.5|is|needed|by|opt/csw/lib/ImageMagick-6.7.0/modules-Q16/coders/dps.so
-CHECKPKG_OVERRIDES_CSWimagemagick += soname-not-found|libdpstk.so.5|is|needed|by|opt/csw/lib/ImageMagick-6.7.0/modules-Q16/coders/dps.so
+#CHECKPKG_OVERRIDES_CSWimagemagick += soname-not-found|libdps.so.5|is|needed|by|opt/csw/lib/ImageMagick-6.7.0/modules-Q16/coders/dps.so
+#CHECKPKG_OVERRIDES_CSWimagemagick += soname-not-found|libdpstk.so.5|is|needed|by|opt/csw/lib/ImageMagick-6.7.0/modules-Q16/coders/dps.so
 
 # Only remove libtool files from the public lib directory, keep the private ones for libtool dlopn
 MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/lib.*\.la
@@ -255,26 +193,13 @@ MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/lib.*\.la
 EXTRA_MERGE_EXCLUDE_FILES += .*/perllocal.pod
 EXTRA_MERGE_EXCLUDE_FILES += .*/\.packlist
 
-STRIP_LIBTOOL = 1
+EXTRA_PAX_ARGS = -s ',$(bindir)/compare,$(bindir)/compare-imagemagick,'
 
+STRIP_LIBTOOL = 1
 
 include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(GARSUBREV)
-
-#post-install-isa-sparcv8:
-#	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.2.9.s.tar.bz2 |tar xf -)
-#	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.5.2.s.tar.bz2 |tar xf -)
-#	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
-#	@mv $(INSTALLISADIR)$(bindir)/compare $(INSTALLISADIR)$(bindir)/compare2
-#	@$(MAKECOOKIE)
-#
-#post-install-isa-i386:
-#	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.2.9.i.tar.bz2 |tar xf -)
-#	@( cd $(INSTALLISADIR)$(libdir) ; bzip2 -dc $(CURDIR)/$(FILEDIR)/6.5.2.i.tar.bz2 |tar xf -)
-#	@mv $(INSTALLISADIR)$(mandir)/man1/compare.1 $(INSTALLISADIR)$(mandir)/man1/compare2.1
-#	@mv $(INSTALLISADIR)$(bindir)/compare $(INSTALLISADIR)$(bindir)/compare2
-#	@$(MAKECOOKIE)
 
 post-install-modulated:
 	perl -pi \
