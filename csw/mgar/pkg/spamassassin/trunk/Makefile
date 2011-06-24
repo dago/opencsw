@@ -1,6 +1,6 @@
 NAME = spamassassin
 SPKG_NAME = Mail-SpamAssassin
-VERSION = 3.3.1
+VERSION = 3.3.2
 CATEGORIES = net
 
 DESCRIPTION = Mail filter with a wide range of tests
@@ -10,8 +10,8 @@ define BLURB
   DNS blocklists, and collaborative filtering databases.
 endef
 
-#MASTER_SITES = http://people.apache.org/~jm/devel/
 MASTER_SITES = http://apache.dataphone.se/spamassassin/source/
+#MASTER_SITES = http://people.apache.org/~jm/devel/
 DISTFILES  = $(SPKG_NAME)-$(VERSION).tar.gz
 #DISTFILES  = $(SPKG_NAME)-$(VERSION)-rc3.tar.gz
 DISTFILES += COPYING
@@ -37,45 +37,65 @@ RUNTIME_DEP_PKGS += CSWpmuri
 RUNTIME_DEP_PKGS += CSWrazor
 RUNTIME_DEP_PKGS += CSWzlib
 
-UFILES_REGEX = $(SPKG_NAME)-(\d+(?:\.\d+)*).tar.gz
-
 SAMPLECONF  = /etc/opt/csw/spamassassin/.+\.pre\.CSW
 SAMPLECONF += /etc/opt/csw/spamassassin/local\.cf\.CSW
 SAMPLECONF += /etc/opt/csw/spamassassin/spamd\.CSW
-USERGROUP = /etc/opt/csw/pkg/CSWspamassassin/cswusergroup
-#INITSMF = /opt/csw/etc/init.d/cswspamd
-INITSMF = /etc/opt/csw/init.d/cswspamd
-POSTMSG = /opt/csw/share/doc/spamassassin/README.upgrade
+USERGROUP   = /etc/opt/csw/pkg/CSWspamassassin/cswusergroup
+INITSMF     = /etc/opt/csw/init.d/cswspamd
+POSTMSG     = /opt/csw/share/doc/spamassassin/README.upgrade
 
-MIGRATE_FILES = init.pre local.cf v310.pre v312.pre v320.pre
+MIGRATE_FILES      = init.pre local.cf v310.pre v312.pre v320.pre
 MIGRATE_SOURCE_DIR = /opt/csw/etc/spamassassin
-MIGRATE_DEST_DIR = /etc/opt/csw/spamassassin
+MIGRATE_DEST_DIR   = /etc/opt/csw/spamassassin
 
 CONFIGURE_SCRIPTS = custom
-BUILD_SCRIPTS = custom
-TEST_SCRIPTS = custom
-#TEST_SCRIPTS = 
-INSTALL_SCRIPTS = custom
+BUILD_SCRIPTS     = custom
+TEST_SCRIPTS      = custom
+#TEST_SCRIPTS      = 
+INSTALL_SCRIPTS   = custom
 
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmaildkim
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmiosocketssl
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmipcountry
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmnetdns
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWrazor
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmdbi
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmnetaddrip
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmlibwww
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmimebase64
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmuri
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-mime-base64
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWgnupg
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-netaddr-ip
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-ldap
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-dbi
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-io-socket-ssl
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmailspf
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmhtmlparser
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmldap
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmiosocketinet6
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWrazor
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmuri
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-io-socket-inet6
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmailtools
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWzlib
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWgnupg
-CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWosslrt
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-libwww-perl
 CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmiozlib
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWosslrt
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmipcountry
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpmmaildkim
+CHECKPKG_OVERRIDES_CSWspamassassin += surplus-dependency|CSWpm-html-parser
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/local|root/opt/csw/bin/spamassassin
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/local|root/opt/csw/share/perl/csw/Mail/SpamAssassin.pm
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/spamassassin.1
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/local|root/opt/csw/share/doc/spamassassin/sql/README
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/bin/spamd
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/bin/spamassassin
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/local|root/opt/csw/share/doc/spamassassin/README
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/bin/sa-compile
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/bin/sa-learn
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/perl/csw/Mail/SpamAssassin/Util/DependencyInfo.pm
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/perl/csw/Mail/SpamAssassin/Conf.pm
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/perl/csw/spamassassin-run.pod
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/perl/csw/Mail/SpamAssassin.pm
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/perl/csw/Mail/SpamAssassin/Locales.pm
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/sa-learn.1
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/spamd.1
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/sa-compile.1
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/spamassassin.1
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/man/man3/spamassassin-run.3perl
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/spamassassin-run.1
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/man/man3/Mail::SpamAssassin::Conf.3perl
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/doc/spamassassin/README
+CHECKPKG_OVERRIDES_CSWspamassassin += file-with-bad-content|/usr/share|root/opt/csw/share/doc/spamassassin/USAGE
 
 include gar/category.mk
 
