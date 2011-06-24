@@ -345,6 +345,11 @@ post-install-modulated:
 	@perl -pi -e 's/^;extension=php_(.*).dll/;extension=$$1.so/' $(INIDEST)
 	@rm -rf $(DESTDIR)/.cha* $(DESTDIR)/.dep* $(DESTDIR)/.reg* $(DESTDIR)/.l* $(DESTDIR)/.f*
 	@perl -pi -e 's!s:17:"http://proxy:3128!s:0:"!' $(DESTDIR)$(sysconfdir)/pear.conf*
+	@mkdir -p $(DESTDIR)/opt/csw/bin
+	@( cd $(DESTDIR)/opt/csw/bin; \
+	   for f in pear peardev pecl phar php php-config; do \
+		ln -s ../php5/bin/$$f $$f; \
+	   done )
 	@$(MAKECOOKIE)
 
 post-merge:
