@@ -1,5 +1,5 @@
-NAME    = gnupg
-VERSION = 1.4.11
+NAME       = gnupg
+VERSION    = 1.4.11
 CATEGORIES = apps
 
 DESCRIPTION = GnuPG is a complete and free replacement for PGP.
@@ -37,6 +37,7 @@ CONFIGURE_ARGS += --enable-threads=solaris
 CONFIGURE_ARGS += --disable-asm
 
 EXTRA_MERGE_EXCLUDE_FILES += .*/charset.alias
+# Collision with gnupg2
 EXTRA_MERGE_EXCLUDE_FILES += .*/gpg-zip.1
 
 PROTOTYPE_MODIFIERS  = suid
@@ -48,6 +49,5 @@ TEST_TARGET = check
 CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.ru.1
 CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.1
 CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/info/gnupg1.info
-#CHECKPKG_OVERRIDES_CSWgnupg += file-collision|/opt/csw/share/man/man1/gpg-zip.1|CSWgnupg|CSWgnupg2
 
 include gar/category.mk
