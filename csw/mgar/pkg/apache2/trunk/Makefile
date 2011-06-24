@@ -48,7 +48,7 @@ DISTFILES += update20to22
 DISTFILES += README.CSW.apache2 README.CSW.ap2_prefork
 DISTFILES += README.CSW.apache2rt
 
-PATCHFILES += 0001-Apply-a-large-hammer-to-buildconf-to-fix-libtool-set.patch
+#PATCHFILES += 0001-Apply-a-large-hammer-to-buildconf-to-fix-libtool-set.patch
 PATCHFILES += 0002-Adjust-a-few-usr-local-paths-in-the-man-pages.patch
 PATCHFILES += 0003-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
 
