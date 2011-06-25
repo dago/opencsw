@@ -13,4 +13,6 @@ CATALOGNAME = pm_fcgi
 
 LICENSE = README
 
+CHECKPKG_OVERRIDES_CSWpmfcgi += catalogname-does-not-match-pkgname|pkgname=CSWpmfcgi|catalogname=pm_fcgi|expected-catalogname=pmfcgi
+
 include gar/category.mk
