@@ -20,6 +20,8 @@ LICENSE = README
 
 EXTRA_MERGE_EXCLUDE_FILES = .*\/man\/man3\/.* .*\/man\/man1\/.*
 
+CHECKPKG_OVERRIDES_CSWpmobjaccessor += catalogname-does-not-match-pkgname|pkgname=CSWpmobjaccessor|catalogname=pm_objaccessor|expected-catalogname=pmobjaccessor
+
 include gar/category.mk
 
 post-extract:
