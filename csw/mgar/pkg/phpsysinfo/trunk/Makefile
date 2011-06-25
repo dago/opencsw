@@ -16,7 +16,10 @@ CATALOGNAME_CSWphpsysinfo = phpsysinfo
 SPKG_DESC = $(DESCRIPTION)
 SPKG_SOURCEURL = http://phpsysinfo.sourceforge.net
 
-RUNTIME_DEP_PKGS = CSWapache2 CSWap2modphp5 CSWphp5
+RUNTIME_DEP_PKGS  = CSWapache2
+RUNTIME_DEP_PKGS += CSWap2modphp5
+RUNTIME_DEP_PKGS += CSWphp5
+RUNTIME_DEP_PKGS += CSWphp5-mbstring
 
 ARCHALL = 1
 
