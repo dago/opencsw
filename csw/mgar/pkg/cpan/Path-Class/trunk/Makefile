@@ -1,5 +1,5 @@
 NAME = Path-Class
-VERSION = 0.23
+VERSION = 0.24
 CATEGORIES = cpan
 AUTHOR = KWILLIAMS
 
@@ -26,6 +26,7 @@ CHECKPKG_OVERRIDES_CSWpmpathclass += file-with-bad-content|/usr/local|root/opt/c
 CHECKPKG_OVERRIDES_CSWpmpathclass += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/Path::Class::Dir.3perl
 CHECKPKG_OVERRIDES_CSWpmpathclass += file-with-bad-content|/usr/local|root/opt/csw/share/perl/csw/Path/Class/File.pm
 CHECKPKG_OVERRIDES_CSWpmpathclass += file-with-bad-content|/usr/local|root/opt/csw/share/perl/csw/Path/Class/Dir.pm
+CHECKPKG_OVERRIDES_CSWpmpathclass += catalogname-does-not-match-pkgname|pkgname=CSWpmpathclass|catalogname=pm_pathclass|expected-catalogname=pmpathclass
 
 include gar/category.mk
 
