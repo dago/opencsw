@@ -19,4 +19,6 @@ PERL_CONFIGURE_ARGS = --skip
 
 ARCHALL = 1
 
+CHECKPKG_OVERRIDES_CSWpmxmlnssupp += catalogname-does-not-match-pkgname|pkgname=CSWpmxmlnssupp|catalogname=pm_xmlnssupp|expected-catalogname=pmxmlnssupp
+
 include gar/category.mk
