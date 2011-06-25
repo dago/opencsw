@@ -1,5 +1,5 @@
 SHORTNAME = net
-VERSION = 2.2
+VERSION = 3.0.1
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
@@ -53,7 +53,8 @@ install-custom:
 	@ginstall -d $(DESTDIR)$(datadir)/java
 	@gcp -fp $(WORKSRC)/$(DISTNAME)/$(NAME)-$(VERSION).jar $(DESTDIR)$(datadir)/java
 	@( cd $(DESTDIR)$(datadir)/java ; \
-	   ln -s $(NAME)-$(VERSION).jar $(NAME)-2.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-3.0.jar ; \
+	   ln -s $(NAME)-$(VERSION).jar $(NAME)-3.jar ; \
 	   ln -s $(NAME)-$(VERSION).jar $(NAME).jar )
 	@ginstall -d $(DESTDIR)$(datadir)/doc/$(NAME)
 	@gcp -frp $(WORKSRC)/$(DISTNAME)/apidocs/* $(DESTDIR)$(datadir)/doc/$(NAME)
