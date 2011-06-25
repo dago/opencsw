@@ -1,5 +1,5 @@
 NAME = phpsysinfo
-VERSION = 3.0.4
+VERSION = 3.0.11
 CATEGORIES = utils
 
 DESCRIPTION = Displays information about the host being accessed
@@ -18,9 +18,6 @@ SPKG_SOURCEURL = http://phpsysinfo.sourceforge.net
 
 RUNTIME_DEP_PKGS = CSWapache2 CSWap2modphp5 CSWphp5
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 ARCHALL = 1
 
 CONFIGURE_SCRIPTS =
@@ -35,6 +32,7 @@ SAMPLECONF = .*config.php
 CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWap2modphp5
 CHECKPKG_OVERRIDES_CSWphpsysinfo += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWphpsysinfo += file-with-bad-content|/usr/local|root/opt/csw/share/www/phpsysinfo/includes/class.CommonFunctions.inc.php
 
 include gar/category.mk
 
