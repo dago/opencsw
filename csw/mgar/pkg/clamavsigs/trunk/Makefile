@@ -10,8 +10,9 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.inetmsg.com/pub/
-DISTFILES  = clamav-unofficial-sigs-$(VERSION).tar.gz
-PATCHFILES = 0001-use-ksh-instead-of-sh-on-solaris.patch
+DISTFILES    = clamav-unofficial-sigs-$(VERSION).tar.gz
+
+PATCHFILES  = 0001-use-ksh-instead-of-sh-on-solaris.patch
 PATCHFILES += 0002-make-defaults-match-csw-clamav.patch
 
 LICENSE = LICENSE
@@ -19,22 +20,22 @@ ARCHALL = 1
 
 RUNTIME_DEP_PKGS = CSWgnupg CSWrsync CSWcurl CSWsocat
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWrsync
 CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWgnupg
 CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWsocat
 CHECKPKG_OVERRIDES_CSWclamavsigs += surplus-dependency|CSWcurl
+CHECKPKG_OVERRIDES_CSWclamavsigs += file-with-bad-content|/usr/local|root/etc/opt/csw/clamav-unofficial-sigs.conf.CSW
+CHECKPKG_OVERRIDES_CSWclamavsigs += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamavsigs/CHANGELOG
+CHECKPKG_OVERRIDES_CSWclamavsigs += file-with-bad-content|/usr/local|root/opt/csw/share/doc/clamavsigs/INSTALL
 
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
+BUILD_SCRIPTS     =
+TEST_SCRIPTS      =
+INSTALL_SCRIPTS   = custom
 
 SAMPLECONF = /etc/opt/csw/clamav-unofficial-sigs.conf
-POSTMSG = /opt/csw/share/doc/clamavsigs/README.CSW
-CRONTABS = /etc/opt/csw/pkg/CSWclamavsigs/crontabs/root
+POSTMSG    = /opt/csw/share/doc/clamavsigs/README.CSW
+CRONTABS   = /etc/opt/csw/pkg/CSWclamavsigs/crontabs/root
 
 include gar/category.mk
 
