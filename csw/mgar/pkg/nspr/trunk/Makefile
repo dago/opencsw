@@ -26,13 +26,17 @@ PATCHFILES  = nspr-4.6.1-config.patch
 PACKAGES = CSWnspr-dev
 CATALOGNAME_CSWnspr-dev = nspr_dev
 SPKG_DESC_CSWnspr-dev = Netscape Portable Runtime, header files
-PKGFILES_CSWnspr-dev += $(prefix)/include.*
-PKGFILES_CSWnspr-dev += $(bindir).*nspr-config
-PKGFILES_CSWnspr-dev += .*/nspr\.pc
-PKGFILES_CSWnspr-dev += .*compile-et\.pl
+# PKGFILES_CSWnspr-dev += $(prefix)/include.*
+# PKGFILES_CSWnspr-dev += $(bindir).*nspr-config
+# PKGFILES_CSWnspr-dev += .*/nspr\.pc
+# PKGFILES_CSWnspr-dev += .*compile-et\.pl
 RUNTIME_DEP_PKGS_CSWnspr-dev  = CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWnspr-dev += CSWperl
 OBSOLETED_BY_CSWnspr-dev = CSWnspr-devel
+OBSOLETED_BY_CSWnspr-dev += CSWmozilla
+OBSOLETED_BY_CSWnspr-dev += CSWsunbird
+INCOMPATIBLE_PKGS_CSWnspr-dev = CSWmozilla
+INCOMPATIBLE_PKGS_CSWnspr-dev += CSWsunbird
 
 # Library splits
 
@@ -49,6 +53,13 @@ SPKG_DESC_CSWlibplc4 = Netscape Portable Runtime, libplc4.so
 PKGFILES_CSWlibplc4 += $(call baseisadirs,$(libdir),libplc4.so)
 RUNTIME_DEP_PKGS_CSWlibplc4 += CSWlibnspr4
 CHECKPKG_OVERRIDES_CSWlibplc4 += soname-equals-filename
+
+PACKAGES += CSWlibplds4
+CATALOGNAME_CSWlibplds4 = libplds4
+SPKG_DESC_CSWlibplds4 = Netscape Portable Runtime, libplds4.so
+PKGFILES_CSWlibplds4 += $(call baseisadirs,$(libdir),libplds4.so)
+RUNTIME_DEP_PKGS_CSWlibplds4 += CSWlibnspr4
+CHECKPKG_OVERRIDES_CSWlibplds4 += soname-equals-filename
 
 PACKAGES += CSWlibnspr-flt4
 CATALOGNAME_CSWlibnspr-flt4 = libnspr_flt4
