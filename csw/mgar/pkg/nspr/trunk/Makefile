@@ -8,7 +8,7 @@
 
 NAME = nspr
 MAJOR_VERSION = 4
-MIN_VERSION = 8.6
+MIN_VERSION = 8.7
 VERSION = $(MAJOR_VERSION).$(MIN_VERSION)
 CATEGORIES = lib
 
@@ -23,32 +23,41 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += LICENSE
 PATCHFILES  = nspr-4.6.1-config.patch
 
-PACKAGES += CSWnspr
-PACKAGES += CSWnspr-devel
-PACKAGES += CSWlibnspr4-devel
+PACKAGES = CSWnspr-dev
+CATALOGNAME_CSWnspr-dev = nspr_dev
+SPKG_DESC_CSWnspr-dev = Netscape Portable Runtime, header files
+PKGFILES_CSWnspr-dev += $(prefix)/include.*
+PKGFILES_CSWnspr-dev += $(bindir).*nspr-config
+PKGFILES_CSWnspr-dev += .*/nspr\.pc
+PKGFILES_CSWnspr-dev += .*compile-et\.pl
+RUNTIME_DEP_PKGS_CSWnspr-dev  = CSWlibnspr4
+RUNTIME_DEP_PKGS_CSWnspr-dev += CSWperl
+OBSOLETED_BY_CSWnspr-dev = CSWnspr-devel
+
+# Library splits
+
 PACKAGES += CSWlibnspr4
-PKGFILES_CSWlibnspr4-devel += $(PKGFILES_DEVEL)
-PKGFILES_CSWlibnspr4-devel += $(bindir).*nspr-config
-PKGFILES_CSWlibnspr4-devel += .*/nspr\.pc
-PKGFILES_CSWlibnspr4-devel += .*compile-et\.pl
-PKGFILES_CSWnspr         = Invisible-Pink-Unicorn
-PKGFILES_CSWnspr-devel   = Flying-Spaghetti-Monster
+CATALOGNAME_CSWlibnspr4 = libnspr4
+SPKG_DESC_CSWlibnspr4 = Netscape Portable Runtime, libnspr4.so
+PKGFILES_CSWlibnspr4 += $(call baseisadirs,$(libdir),libnspr4.so)
+OBSOLETED_BY_CSWlibnspr4 = CSWnspr
+CHECKPKG_OVERRIDES_CSWlibnspr4 += soname-equals-filename
 
-SPKG_DESC_CSWnspr        = Empty, transitional package (CSWnspr)
-SPKG_DESC_CSWnspr-devel  = Empty, transitional package (CSWnspr-devel)
-SPKG_DESC_CSWlibnspr4       = Netscape Portable Runtime
-SPKG_DESC_CSWlibnspr4-devel = Netscape Portable Runtime, header files
-CATALOGNAME_CSWnspr-devel   = nspr_devel
-CATALOGNAME_CSWlibnspr4-devel   = libnspr4_devel
-RUNTIME_DEP_PKGS_CSWnspr        = CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWnspr-devel  = CSWlibnspr4-devel
-RUNTIME_DEP_PKGS_CSWlibnspr4-devel  = CSWlibnspr4
-RUNTIME_DEP_PKGS_CSWlibnspr4-devel += CSWperl
-ARCHALL_CSWnspr = 1
+PACKAGES += CSWlibplc4
+CATALOGNAME_CSWlibplc4 = libplc4
+SPKG_DESC_CSWlibplc4 = Netscape Portable Runtime, libplc4.so
+PKGFILES_CSWlibplc4 += $(call baseisadirs,$(libdir),libplc4.so)
+RUNTIME_DEP_PKGS_CSWlibplc4 += CSWlibnspr4
+CHECKPKG_OVERRIDES_CSWlibplc4 += soname-equals-filename
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWlibnspr-flt4
+CATALOGNAME_CSWlibnspr-flt4 = libnspr_flt4
+SPKG_DESC_CSWlibnspr-flt4 = Netscape Portable Runtime, libnspr-flt4.so
+PKGFILES_CSWlibnspr-flt4 += $(libdir).*/libnspr_flt4\.so
+CHECKPKG_OVERRIDES_CSWlibnspr-flt4 += soname-equals-filename
 
 PERL = /opt/csw/bin/perl
+
 
 CONFIGURE_SCRIPTS = nspr
 BUILD_SCRIPTS = nspr
@@ -80,15 +89,9 @@ BUILD64 = 1
 
 LICENSE = LICENSE
 
-# Checkpkg suggests CSWlibp (the longest common substring), but we want the
-# three libraries to be in one package.
-CHECKPKG_OVERRIDES_CSWlibnspr4 += shared-lib-pkgname-mismatch
-
-CHECKPKG_OVERRIDES_CSWlibnspr4-devel += surplus-dependency|CSWlibnspr4
-
-# For transitional packages
-CHECKPKG_OVERRIDES_CSWnspr += surplus-dependency|CSWlibnspr4
-CHECKPKG_OVERRIDES_CSWnspr-devel += surplus-dependency|CSWlibnspr4-devel
+# # Checkpkg suggests CSWlibp (the longest common substring), but we want the
+# # three libraries to be in one package.
+# CHECKPKG_OVERRIDES_CSWlibnspr4 += shared-lib-pkgname-mismatch
 
 include gar/category.mk
 
