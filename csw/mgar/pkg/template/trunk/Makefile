@@ -82,7 +82,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 ## INCOMPATIBLE_PKGS =
 ##
 ##  The name of the license file that should be included in your package. Defaults
-##  to COPYING. See http://sourceforge.net/apps/trac/gar/wiki/CopyRightfor details
+##  to COPYING. See http://sourceforge.net/apps/trac/gar/wiki/CopyRight for details
 ##  on including and displaying licenses.
 ## LICENSE =
 ##
