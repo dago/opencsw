@@ -1,0 +1,23 @@
+From 003977c00c9523f4a3a913b40b1460eb718b5d0e Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sat, 25 Jun 2011 19:18:48 +0200
+Subject: [PATCH] Set libdir to /opt/csw/lib/ffi.
+
+---
+ libffi.pc.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/libffi.pc.in b/libffi.pc.in
+index 692296d..88391dc 100644
+--- a/libffi.pc.in
++++ b/libffi.pc.in
+@@ -6,5 +6,5 @@ includedir=${prefix}/include
+ Name: @PACKAGE_NAME@
+ Description: Library supporting Foreign Function Interfaces
+ Version: @PACKAGE_VERSION@
+-Libs: -L${libdir} -lffi
++Libs: -L${libdir}/ffi -lffi
+ Cflags: -I${includedir}
+-- 
+1.7.5.4
+

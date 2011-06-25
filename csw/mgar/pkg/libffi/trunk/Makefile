@@ -28,9 +28,11 @@ PATCHFILES += ffi_target.h.patch
 # originally for icc, but at least get the stuff to compile
 PATCHFILES += ffi64.c.patch
 PATCHFILES += 0005-libffi.pc-should-point-at-opt-csw-include.patch
+PATCHFILES += 0006-Set-libdir-to-opt-csw-lib-ffi.patch
 
 OBSOLETED_BY_CSWlibffi5 = CSWlibffi
 OBSOLETED_BY_CSWlibffi5-dev = CSWlibffi
+INCOMPATIBLE_PKGS_CSWlibffi5 = CSWlibffi
 
 PACKAGES += CSWlibffi-dev
 CATALOGNAME_CSWlibffi-dev = libffi_dev
