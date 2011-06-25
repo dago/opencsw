@@ -1,5 +1,5 @@
 NAME = qpopper
-VERSION = 4.0.19
+VERSION = 4.1.0
 WORKSRC = $(WORKDIR)/$(NAME)$(VERSION)
 CATEGORIES = apps
 
@@ -15,9 +15,6 @@ MASTER_SITES = ftp://ftp.qualcomm.com/eudora/servers/unix/popper/
 DISTFILES  = $(NAME)$(VERSION).tar.gz
 DISTFILES += README.CSW
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*).tar.gz
-
 PACKAGES = CSWqpopper
 CATALOGNAME_CSWqpopper = qpopper
 SPKG_DESC_CSWqpopper = $(DESCRIPTION)
@@ -29,7 +26,10 @@ SPKG_SOURCEURL = http://www.eudora.com/qpopper
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-specialauth
 
+TEST_SCRIPTS    =
 INSTALL_SCRIPTS = custom
+
+CHECKPKG_OVERRIDES_CSWqpopper += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/popper.8
 
 include gar/category.mk
 
