@@ -1,5 +1,5 @@
 SHORTNAME = codec
-VERSION = 1.4
+VERSION = 1.5
 
 NAME = commons-$(SHORTNAME)
 CATEGORIES = java
