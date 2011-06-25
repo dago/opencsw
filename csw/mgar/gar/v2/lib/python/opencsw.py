@@ -484,7 +484,7 @@ def SplitByCase(s):
   casechange = [False] + [x != y for x, y in neighbors]
   str_list = [(cc * "_") + l.lower() for l, cc in zip(s, casechange)]
   s2 = "".join(str_list)
-  return re.findall(r"[a-z]+", s2)
+  return re.findall(r"[a-z0-9]+", s2)
 
 
 def CatalogNameGroupName(catalogname_list):

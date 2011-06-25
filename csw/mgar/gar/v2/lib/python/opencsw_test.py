@@ -399,6 +399,10 @@ class PackageTest(unittest.TestCase):
     self.assertEquals("stuf_with_some_dashes",
                       opencsw.PkgnameToCatName("STUFwith-some-dashes"))
 
+  def testPkgnameToCatName5(self):
+    self.assertNotEquals(opencsw.PkgnameToCatName("SUNWi4rf"),
+                         opencsw.PkgnameToCatName("SUNWi7rf"))
+
   def test_4(self):
     pkginfo_dict = opencsw.ParsePkginfo(TEST_PKGINFO.splitlines())
     expected = "sunw_bash-11.10.0,REV=2005.01.08.01.09-SunOS5.10-i386-SUNW.pkg"
