@@ -175,8 +175,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 ## OPT_FLAGS_SOS = -xO3
 ## OPT_FLAGS_GCC = -O2 -pipe
 ##
-## The compiler to use. Defaults to SOS11, can be also: SOS12, GCC3, GCC4.
-## GARCOMPILER = SOS11
+## The compiler to use. This can be also: SOS11, GCC3, GCC4.
+## Specifying GNU will default to GCC4, specifying SUN will default to SOS12
+## GARCOMPILER = SOS12
 ##
 # Remove the following rules and uncomment the
 # include before building.
