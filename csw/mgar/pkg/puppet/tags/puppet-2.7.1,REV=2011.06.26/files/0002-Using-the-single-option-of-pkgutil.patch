@@ -1,0 +1,57 @@
+From bf4be0c98f180175dbadeaf3d841bd426b23752e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Fri, 13 Nov 2009 15:44:24 +0000
+Subject: [PATCH] Using the --single option of pkgutil.
+
+---
+ lib/puppet/provider/package/apt.rb     |    1 +
+ lib/puppet/provider/package/pkgutil.rb |    5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/lib/puppet/provider/package/apt.rb b/lib/puppet/provider/package/apt.rb
+index a99ee4c..91e0121 100755
+--- a/lib/puppet/provider/package/apt.rb
++++ b/lib/puppet/provider/package/apt.rb
+@@ -1,3 +1,4 @@
++# vim:set sw=4 ts=4 sts=4:
+ Puppet::Type.type(:package).provide :apt, :parent => :dpkg, :source => :dpkg do
+     # Provide sorting functionality
+     include Puppet::Util::Package
+diff --git a/lib/puppet/provider/package/pkgutil.rb b/lib/puppet/provider/package/pkgutil.rb
+index cde7482..c2489cc 100755
+--- a/lib/puppet/provider/package/pkgutil.rb
++++ b/lib/puppet/provider/package/pkgutil.rb
+@@ -1,4 +1,5 @@
+ # Packaging using pkgutil from http://pkgutil.wikidot.com/
++# vim:set sw=4 ts=4 sts=4:
+ Puppet::Type.type(:package).provide :pkgutil, :parent => :sun, :source => :sun do
+     desc "Package management using ``pkgutil`` command on Solaris."
+     pkgutil = "pkgutil"
+@@ -20,6 +21,7 @@ Puppet::Type.type(:package).provide :pkgutil, :parent => :sun, :source => :sun d
+         end
+     end
+ 
++    # It's a class method. Returns a list of instances of this class.
+     def self.instances(hash = {})
+         blastlist(hash).collect do |bhash|
+             bhash.delete(:avail)
+@@ -32,6 +34,7 @@ Puppet::Type.type(:package).provide :pkgutil, :parent => :sun, :source => :sun d
+         command = ["-c"]
+ 
+         if hash[:justme]
++            command << ["--single"]
+             command << hash[:justme]
+         end
+ 
+@@ -86,7 +89,7 @@ Puppet::Type.type(:package).provide :pkgutil, :parent => :sun, :source => :sun d
+         pkgutil "-y", "--install", @resource[:name]
+     end
+ 
+-    # Retrieve the version from the current package file.
++    # What's the latest version of the package available?
+     def latest
+         hash = self.class.blastlist(:justme => @resource[:name])
+         hash[:avail]
+-- 
+1.6.5.1
+
