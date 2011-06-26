@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.6.9
+VERSION = 2.7.1
 CATEGORIES = apps
 
 define BLURB
@@ -71,9 +71,6 @@ TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
 PATCHFILES = 0003-Use-opt-csw-share-puppet-modules-as-default.patch
-# https://projects.puppetlabs.com/issues/6324
-PATCHFILES += 0004-patch-to-smf-provider-6324.patch
-
 
 CHECKPKG_OVERRIDES_CSWpuppetmaster  = surplus-dependency|CSWruby18
 CHECKPKG_OVERRIDES_CSWpuppet        = surplus-dependency|CSWfacter
