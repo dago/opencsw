@@ -32,9 +32,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # File name regex to get notifications about upstream software releases
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+RUNTIME_DEP_PKGS_CSWsipcalc += CSWlibgnugetopt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
