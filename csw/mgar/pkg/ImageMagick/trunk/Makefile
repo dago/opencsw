@@ -1,6 +1,6 @@
 NAME = imagemagick
 VERSION = 6.7.0
-GARSUBREV = 7
+GARSUBREV = 8
 CATEGORIES = lib
 
 DESCRIPTION = A comprehensive package supporting automated and interative manipulation of images
@@ -26,7 +26,7 @@ PKGFILES_CSWlibmagick++4 += $(call pkgfiles_lib,libMagick++.so.4)
 SPKG_DESC_CSWlibmagick++4 += Library from ImageMagick, libMagick++.so.4
 RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWjpeg
-RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWlcmsrt
+RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWliblcms2-2
 RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWliblqr
 RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibmagick++4 += CSWtiff
@@ -45,7 +45,7 @@ PKGFILES_CSWlibmagickcore4 += $(call pkgfiles_lib,libMagickCore.so.4)
 SPKG_DESC_CSWlibmagickcore4 += Library from ImageMagick, libMagickCore.so.4
 RUNTIME_DEP_PKGS_CSWlibmagickcore4 += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibmagickcore4 += CSWjpeg
-RUNTIME_DEP_PKGS_CSWlibmagickcore4 += CSWlcmsrt
+RUNTIME_DEP_PKGS_CSWlibmagickcore4 += CSWliblcms2-2
 RUNTIME_DEP_PKGS_CSWlibmagickcore4 += CSWliblqr
 RUNTIME_DEP_PKGS_CSWlibmagickcore4 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibmagickcore4 += CSWtiff
@@ -65,7 +65,7 @@ PKGFILES_CSWlibmagickwand4 += $(call pkgfiles_lib,libMagickWand.so.4)
 SPKG_DESC_CSWlibmagickwand4 += Library from ImageMagick, libMagickWand.so.4
 RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWjpeg
-RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWlcmsrt
+RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWliblcms2-2
 RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWliblqr
 RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWtiff
@@ -80,6 +80,8 @@ RUNTIME_DEP_PKGS_CSWlibmagickwand4 += CSWliblzma5
 
 PACKAGES += CSWimagemagick-dev
 SPKG_DESC_CSWimagemagick-dev = Development files for ImageMagick libraries
+# In man3 there is just the manpage for the Perl module
+PKGFILES_DEVEL_MAN3_MANPAGE =
 PKGFILES_CSWimagemagick-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWimagemagick-dev += $(docdir)/.*
 RUNTIME_DEP_PKGS_CSWimagemagick-dev += CSWlibmagick++4
@@ -94,7 +96,7 @@ SPKG_DESC_CSWimagemagick = A comprehensive package supporting automated and inte
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibmagickcore4
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibmagickwand4
-RUNTIME_DEP_PKGS_CSWimagemagick += CSWlcmsrt
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWliblcms2-2
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWbzip2
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWilmbase
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWpng
@@ -124,22 +126,26 @@ RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibfftw3-3
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmf0-2-7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwmflite0-2-7
 RUNTIME_DEP_PKGS_CSWimagemagick += CSWliblzma5
+RUNTIME_DEP_PKGS_CSWimagemagick += CSWlibwebp0
 
 PACKAGES += CSWpm-image-magick
 SPKG_DESC_CSWpm-image-magick = Image::Magick: Perl binding for Imagemagick
 PKGFILES_CSWpm-image-magick += $(libdir)/perl/.*
+PKGFILES_CSWpm-image-magick += $(mandir)/.*\.3perl
+
 RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWperl
 RUNTIME_DEP_PKGS_CSWpm-image-magick += CSWlibmagickcore4
 
 BUILD_DEP_PKGS += CSWdjvulibredevel
 BUILD_DEP_PKGS += CSWgraphvizdevel
 BUILD_DEP_PKGS += CSWilmbasedevel
-BUILD_DEP_PKGS += CSWlcmsdevel
+BUILD_DEP_PKGS += CSWliblcms-dev
 BUILD_DEP_PKGS += CSWlibcairodevel
 BUILD_DEP_PKGS += CSWliblqrdevel
 BUILD_DEP_PKGS += CSWlibwmf-dev
 BUILD_DEP_PKGS += CSWliblzma-dev
 BUILD_DEP_PKGS += CSWopenexrdevel
+BUILD_DEP_PKGS += CSWlibwebp-dev
 
 EXTRA_LINKER_FLAGS = -norunpath
 
@@ -153,6 +159,10 @@ EXTRA_LINKER_FLAGS = -norunpath
 #   FAIL: tests/validate-formats-on-disk.sh
 #   FAIL: Magick++/tests/coderInfo.sh
 EXTRA_LIB = /usr/openwin/lib
+
+# We especially don't want ISALIST for the above /usr/openwin/lib
+# This should be reworked after a general rework of ISALIST in GAR
+RUNPATH_ISALIST = $(libpath_install)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-perl=$(bindir)/perl
@@ -193,7 +203,8 @@ MERGE_EXCLUDE_LIBTOOL ?= $(libdir)/lib.*\.la
 EXTRA_MERGE_EXCLUDE_FILES += .*/perllocal.pod
 EXTRA_MERGE_EXCLUDE_FILES += .*/\.packlist
 
-EXTRA_PAX_ARGS = -s ',$(bindir)/compare,$(bindir)/compare-imagemagick,'
+EXTRA_PAX_ARGS += -s ',$(bindir)/compare,$(bindir)/compare-imagemagick,'
+EXTRA_PAX_ARGS += -s ',$(mandir)/man1/compare\.1,$(mandir)/man1/compare-imagemagick.1,'
 
 STRIP_LIBTOOL = 1
 
