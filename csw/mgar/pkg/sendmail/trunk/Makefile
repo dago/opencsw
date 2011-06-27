@@ -123,12 +123,12 @@ TEST_SCRIPTS        = custom
 INSTALL_SCRIPTS     = custom
 
 # Some files collide with CSWpostfix
-ALTERNATIVES_CSWsendmail  = mailq newaliases mailq.1 newaliases.1 aliases.5
-ALTERNATIVE_mailq         = $(bindir)/mailq mailq $(bindir)/mailq.sendmail 100
-ALTERNATIVE_newaliases   += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail 100
-ALTERNATIVE_mailq.1      += $(mandir)/man1/mailq.1 mailq.1 $(mandir)/man1/mailq1.1.sendmail 100
-ALTERNATIVE_newaliases.1 += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/newaliases.1.sendmail 100
-ALTERNATIVE_aliases.5    += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail 100
+ALTERNATIVES_CSWsendmail  = sendmail
+ALTERNATIVE_sendmail  = $(bindir)/mailq sendmail $(bindir)/mailq.sendmail 100
+ALTERNATIVE_sendmail += $(bindir)/newaliases newaliases $(bindir)/newaliases.sendmail
+ALTERNATIVE_sendmail += $(mandir)/man1/mailq.1 mailq.1 $(mandir)/man1/mailq1.1.sendmail
+ALTERNATIVE_sendmail += $(mandir)/man1/newaliases.1 newaliases.1 $(mandir)/man1/newaliases.1.sendmail
+ALTERNATIVE_sendmail += $(mandir)/man5/aliases.5 aliases.5 $(mandir)/man5/aliases.5.sendmail
 
 # Look thru these to see if they are harmless, e.g. examples
 CHECKPKG_OVERRIDES_CSWsendmail += file-with-bad-content|/usr/local|root/opt/csw/share/mail/cf/README
