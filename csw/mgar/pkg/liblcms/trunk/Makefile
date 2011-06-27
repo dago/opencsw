@@ -27,7 +27,7 @@ PACKAGES += CSWliblcms1
 SPKG_DESC_CSWliblcms1 = Color management library, liblcms.so.1
 PKGFILES_CSWliblcms1 += $(call pkgfiles_lib,liblcms.so.1)
 OBSOLETED_BY_CSWliblcms1 = CSWlcmsrt
-CATALOGNAME_CSWliblcmsrt = lcms_rt_stub
+CATALOGNAME_CSWlcmsrt = lcms_rt_stub
 
 PACKAGES += CSWliblcms-dev
 SPKG_DESC_CSWliblcms-dev = Development files for liblcms.so.1
