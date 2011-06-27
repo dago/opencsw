@@ -24,6 +24,14 @@ SPKG_DESC_CSWncurses = A free software emulation of curses
 RUNTIME_DEP_PKGS_CSWncurses += CSWterminfo
 CHECKPKG_OVERRIDES_CSWncurses += surplus-dependency|CSWterminfo
 RUNTIME_DEP_PKGS_CSWncurses += CSWlibncursesw5
+# These are legacy dependencies for packages still depending on CSWncurses
+# instead of the specific libraries
+RUNTIME_DEP_PKGS_CSWncurses += CSWlibncurses5
+CHECKPKG_OVERRIDES_CSWncurses += surplus-dependency|CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWncurses += CSWlibpanel5
+CHECKPKG_OVERRIDES_CSWncurses += surplus-dependency|CSWlibpanel5
+RUNTIME_DEP_PKGS_CSWncurses += CSWlibpanelw5
+CHECKPKG_OVERRIDES_CSWncurses += surplus-dependency|CSWlibpanelw5
 
 PACKAGES += CSWlibform5
 PKGFILES_CSWlibform5 += $(call pkgfiles_lib,libform.so.5)
