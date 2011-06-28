@@ -1,6 +1,11 @@
 #!/usr/bin/env python2.6
 
-import unittest2 as unittest
+# Try to use unittest2, fall back to unittest
+try:
+  import unittest2 as unittest
+except ImportError:
+  import unittest
+
 import checkpkg_lib
 import copy
 import cPickle
