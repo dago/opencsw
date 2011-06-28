@@ -1,12 +1,12 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
-# ! As soon as AUTOSSH_PORT is set, the invocation of autossh will
-#   pass wrong options to ssh.
+#
 # * man page doesn't properly format on Solaris. Upstream notified on
 #   2009-06-24, intends to work on it, has access to his own Solaris
-#   box. In case of a new upstream version, verify whether man page
+#   box. In case of a upstream version >1.4b, verify whether man page
 #   formats properly (for now see install-preformatted-manpage: below).
 # * DESTDIR and --with-ssh handling could be fixed. See the Debian
 #   patch tracker: http://patch-tracker.debian.org/package/autossh/1.4b-1
+#
 NAME = autossh
 VERSION = 1.4b
 CATEGORIES = net
@@ -23,16 +23,13 @@ MASTER_SITES = http://www.harding.motd.ca/autossh/
 DISTFILES    = $(NAME)-$(VERSION).tgz
 
 TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom preformatted-manpage
+INSTALL_SCRIPTS = custom preformatted-manpage extracted-license
 
 CONFIGURE_ARGS = $(DIRPATHS)
 NORUNPATH = 1
 
 # --with-ssh=/usr/bin/ssh doesn't work -> checking for ssh... /opt/csw/bin/ssh
 BUILD_ARGS = 'SSH=/usr/bin/ssh'
-
-# autossh doesn't ship a license and can't find one on $VENDOR_URL either
-CHECKPKG_OVERRIDES_CSWautossh += license-missing
 
 include gar/category.mk
 
@@ -49,7 +46,6 @@ install-custom:
 	cp $(WORKSRC)/autossh $(DESTDIR)$(prefix)/libexec/autossh
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
 	cp $(addprefix $(WORKSRC)/,autossh.host rscreen) $(DOCDEST)/examples
-	cp $(FILEDIR)/changelog.CSW $(DOCDEST)
 
 	@$(MAKECOOKIE)
 
@@ -62,4 +58,19 @@ install-preformatted-manpage:
 	ginstall -d $(DESTDIR)$(mandir)/catman1
 	groff -m doc -Tascii -P-cuob $(WORKSRC)/autossh.1 > \
 		$(DESTDIR)$(mandir)/catman1/autossh.1
+	@$(MAKECOOKIE)
+
+# autossh doesn't ship with an explicit license file, thus we extract
+# the license that's given in the source code
+install-extracted-license: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
+install-extracted-license: assert-no-upstream-license
+	sed -n '/ \* Copyright/,/ \*\//p' $(WORKSRC)/autossh.c | \
+		sed 's, \*[ /]*,,' > $(DOCDEST)/license
+	@$(MAKECOOKIE)
+
+assert-no-upstream-license:
+	if [ -f $(WORKSRC)/$(LICENSE) ]; then \
+		echo "Target install-extracted-license is obsolete!"; \
+		exit 2; \
+	fi
 	@$(MAKECOOKIE)
