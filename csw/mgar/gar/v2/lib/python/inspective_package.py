@@ -37,18 +37,21 @@ class InspectivePackage(package.DirectoryFormatPackage):
     if not self.files_metadata:
       self.CheckPkgpathExists()
       self.files_metadata = []
-      files_root = os.path.join(self.directory, "root")
+      files_root = self.GetFilesDir()
       all_files = self.GetAllFilePaths()
       def StripRe(x, strip_re):
         return re.sub(strip_re, "", x)
-      root_re = re.compile(r"^root/")
+      root_re = re.compile(r"^(reloc|root)/")
       file_magic = FileMagic()
+      basedir = self.GetBasedir()
       for file_path in all_files:
         full_path = unicode(self.MakeAbsolutePath(file_path))
         file_info = {
             "path": StripRe(file_path, root_re),
             "mime_type": file_magic.GetFileMimeType(full_path)
         }
+        if basedir:
+          file_info["path"] = os.path.join(basedir, file_info["path"])
         if not file_info["mime_type"]:
           logging.error("Could not establish the mime type of %s",
                         full_path)
@@ -108,16 +111,30 @@ class InspectivePackage(package.DirectoryFormatPackage):
       self.binaries.sort()
     return self.binaries
 
+  def GetPathsInSubdir(self, remove_prefix, subdir):
+    file_paths = []
+    for root, dirs, files in os.walk(os.path.join(self.pkgpath, subdir)):
+      full_paths = [os.path.join(root, f) for f in files]
+      file_paths.extend([f.replace(remove_prefix, "") for f in full_paths])
+    return file_paths
+
   def GetAllFilePaths(self):
     """Returns a list of all paths from the package."""
     if not self.file_paths:
+      # Support for relocatable packages
+      basedir = self.GetBasedir()
       self.CheckPkgpathExists()
       remove_prefix = "%s/" % self.pkgpath
-      self.file_paths = []
-      for root, dirs, files in os.walk(os.path.join(self.pkgpath, "root")):
-        full_paths = [os.path.join(root, f) for f in files]
-        self.file_paths.extend([f.replace(remove_prefix, "") for f in full_paths])
+      self.file_paths = self.GetPathsInSubdir(remove_prefix, "root")
+      self.file_paths += self.GetPathsInSubdir(remove_prefix, "reloc")
     return self.file_paths
+
+  def GetFilesDir(self):
+    """Returns the subdirectory in which files, are either "reloc" or "root"."""
+    if os.path.exists(os.path.join(self.directory, "reloc")):
+      return "reloc"
+    else:
+      return "root"
 
   def GetBinaryDumpInfo(self):
     # Binaries. This could be split off to a separate function.
@@ -125,15 +142,26 @@ class InspectivePackage(package.DirectoryFormatPackage):
     env = copy.copy(os.environ)
     env["LD_NOAUXFLTR"] = "1"
     binaries_dump_info = []
+    basedir = self.GetBasedir()
     for binary in self.ListBinaries():
-      binary_abs_path = os.path.join(self.directory, "root", binary)
-      binary_base_name = os.path.basename(binary)
+      # Relocatable packages complicate things. Binaries returns paths with
+      # the basedir, but files in reloc are in paths without the basedir, so
+      # we need to strip that bit.
+      binary_in_tmp_dir = binary
+      if basedir:
+        binary_in_tmp_dir = binary_in_tmp_dir[len(basedir):]
+        binary_in_tmp_dir = binary_in_tmp_dir.lstrip("/")
+      binary_abs_path = os.path.join(self.directory, self.GetFilesDir(), binary_in_tmp_dir)
+      binary_base_name = os.path.basename(binary_in_tmp_dir)
       args = [common_constants.DUMP_BIN, "-Lv", binary_abs_path]
+      logging.debug("Running: %s", args)
       dump_proc = subprocess.Popen(args, stdout=subprocess.PIPE, env=env)
       stdout, stderr = dump_proc.communicate()
       ret = dump_proc.wait()
       binary_data = ldd_emul.ParseDumpOutput(stdout)
       binary_data["path"] = binary
+      if basedir:
+        binary_data["path"] = os.path.join(basedir, binary_data["path"])
       binary_data["base_name"] = binary_base_name
       binaries_dump_info.append(binary_data)
     return binaries_dump_info

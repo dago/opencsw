@@ -271,9 +271,21 @@ class DirectoryFormatPackage(shell.ShellMixin, object):
     self.ShellCommand(args, quiet=True)
     return target_path
 
+  def GetBasedir(self):
+    basedir_id = "BASEDIR"
+    pkginfo = self.GetParsedPkginfo()
+    if basedir_id in pkginfo:
+      basedir = pkginfo[basedir_id]
+    else:
+      basedir = ""
+    # The convention in checkpkg is to not include the leading slash in paths. 
+    basedir = basedir.lstrip("/")
+    return basedir
+
   def GetPkgmap(self, analyze_permissions=False, strip=None):
     fd = open(os.path.join(self.directory, "pkgmap"), "r")
-    return pkgmap.Pkgmap(fd, analyze_permissions, strip)
+    basedir = self.GetBasedir()
+    return pkgmap.Pkgmap(fd, analyze_permissions, strip, basedir)
 
   def SetPkginfoEntry(self, key, value):
     pkginfo = self.GetParsedPkginfo()
