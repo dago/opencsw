@@ -21,7 +21,7 @@ LDD_R_OUTPUT_1 =  """\tlibc.so.1 =>  /lib/libc.so.1
 
 class InspectivePackageUnitTest(mox.MoxTestBase):
 
-  def testOne(self):
+  def testInstantiate(self):
     self.mox.StubOutWithMock(hachoir_parser, 'createParser',
         use_mock_anything=True)
     hachoir_parser_mock = self.mox.CreateMockAnything()

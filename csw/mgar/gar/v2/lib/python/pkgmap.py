@@ -31,14 +31,22 @@ class Pkgmap(object):
   }
 
   def __init__(self, input, permissions=False,
-               strip=None):
+               strip=None, basedir=""):
     self.paths = set()
     self.analyze_permissions = permissions
     self.entries = []
     self.classes = None
     self.strip = strip
+    self.basedir = basedir
     for line in input:
       entry, line_to_add = self._ParseLine(line)
+      # Relocatable packages support
+      if "path" in entry and entry["path"]:
+        entry["path"] = os.path.join(basedir, entry["path"])
+        # basedir here does not include the leading slash, but in pkgmap we
+        # need it.
+        if not entry["path"].startswith("/"):
+          entry["path"] = "/" + entry["path"]
       self.entries.append(entry)
       if line_to_add:
         self.paths.add(line_to_add)

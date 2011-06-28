@@ -61,6 +61,7 @@ Items done:
   given as alternatives, but the reason is common.
 - Notify maintainers when their package is available from mirrors
 - Add support for the 'overridden' field in the database
+- Support for relocatable packages
 
 Known problems:
 - libmagic fails sometimes when processing the whole catalog
