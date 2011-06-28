@@ -1,0 +1,48 @@
+From 18d824bd040abbed1d0259e655ab67eefa11a915 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 28 Jun 2011 11:55:17 +0200
+Subject: [PATCH] Rename option
+
+---
+ getopt_long.c |    2 +-
+ getopt_long.h |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/getopt_long.c b/getopt_long.c
+index 09f6245..a53d677 100644
+--- a/getopt_long.c
++++ b/getopt_long.c
+@@ -37,7 +37,7 @@
+ int
+ getopt_long(int argc,char * const argv[],
+             const char *optstring,
+-            const struct option *longopts,int *longindex)
++            const struct _option *longopts,int *longindex)
+ {
+   int i;   /* for looping through options */
+   int l;   /* for length */
+diff --git a/getopt_long.h b/getopt_long.h
+index 0f03e4d..de715ef 100644
+--- a/getopt_long.h
++++ b/getopt_long.h
+@@ -28,7 +28,7 @@
+ #define optional_argument      2
+ 
+ 
+-typedef struct option {
++typedef struct _option {
+   const char *name;
+   int has_arg;
+   int *flag;
+@@ -44,7 +44,7 @@ typedef struct option {
+    */
+ int getopt_long(int argc,char * const argv[],
+                 const char *optstring,
+-                const struct option *longopts,int *longindex);
++                const struct _option *longopts,int *longindex);
+ 
+ 
+ #endif /* _GETOPT_LONG_H */
+-- 
+1.7.5.4
+

@@ -13,6 +13,7 @@ MASTER_SITES = http://arthurdejong.org/rl/
 DISTFILES  = $(DISTNAME).tar.gz
 
 PATCHFILES += 0001-Add-missing-typedef.patch
+PATCHFILES += 0002-Rename-option.patch
 
 # Not gonna do it
 # TEST_SCRIPTS =
