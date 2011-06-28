@@ -46,6 +46,7 @@ install-custom:
 	cp $(WORKSRC)/autossh $(DESTDIR)$(prefix)/libexec/autossh
 	cp $(addprefix $(WORKSRC)/,$(DOCS)) $(DOCDEST)
 	cp $(addprefix $(WORKSRC)/,autossh.host rscreen) $(DOCDEST)/examples
+	gsed -i 's,/usr/local/bin/ssh,/usr/bin/ssh,' $(DOCDEST)/examples/*
 
 	@$(MAKECOOKIE)
 
