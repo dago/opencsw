@@ -1,5 +1,5 @@
 NAME = p7zip
-VERSION = 9.04
+VERSION = 9.20.1
 CATEGORIES = utils
 
 DESCRIPTION = File archiver with high compression ratio
@@ -22,32 +22,45 @@ ratio (www.7-zip.org) with lots of features:
 * Self-extracting capability for 7z format
 endef
 
-MASTER_SITES = http://garr.dl.sourceforge.net/sourceforge/p7zip/
-DISTFILES  = $(NAME)_$(VERSION)_src_all.tar.bz2
+MASTER_SITES = $(SF_MIRROR)
+DISTNAME = $(NAME)_$(VERSION)
+DISTFILES = $(DISTNAME)_src_all.tar.bz2
+PATCHFILES += patch-CPP-7zip-Archive-Zip-ZipHandler.cpp
+PATCHFILES += patch-install.sh
+PATCHFILES += 0001-Disable-unrecognized-pragma.patch
 
-# We define upstream file regex so we can be notifed of new upstream software 
-# release, atm not used
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+VENDOR_URL = http://p7zip.sourceforge.net/
+LICENSE = DOCS/License.txt
 
 # since there is no configure script, this is intentionally left empty
 CONFIGURE_SCRIPTS =
 
-# add CFLAGS
-BUILD_ARGS = LOCAL_FLAGS="$(CFLAGS)"
+# Defaults taken from makefile.solaris_sparc_CC_32
+EXTRA_CPPFLAGS = -s -mt \
+        -DHAVE_LONG_LONG \
+        -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+        -DENV_UNIX \
+        -DNDEBUG -D_REENTRANT
+EXTRA_CPPFLAGS += -DBREAK_HANDLER -DUNICODE -D_UNICODE
+EXTRA_CPPFLAGS += -I../../C
 
-# add INSTALL arguments
-INSTALL_ARGS = DEST_HOME="$(DESTDIR)/$(prefix)"
-INSTALL_ARGS += DEST_MAN="$(DESTDIR)/$(mandir)"
+BUILD_OVERRIDE_VARS = CXX CC CC_SHARED LINK_SHARED LOCAL_LIBS LOCAL_LIBS_DLL OBJ_CRC32
+BUILD_OVERRIDE_VAR_CXX = $(CXX) $(CPPFLAGS) $(CXXFLAGS)
+BUILD_OVERRIDE_VAR_CC = $(CC) $(CPPFLAGS) $(CFLAGS)
+BUILD_OVERRIDE_VAR_CC_SHARED = $(LDFLAGS) -KPIC
+BUILD_OVERRIDE_VAR_LINK_SHARED = $(LDFLAGS) -KPIC -G
+BUILD_OVERRIDE_VAR_LOCAL_LIBS = -lpthread -lCrun
+BUILD_OVERRIDE_VAR_LOCAL_LIBS += -norunpath
+BUILD_OVERRIDE_VAR_LOCAL_LIBS_DLL = -lpthread -lCrun -ldl
+BUILD_OVERRIDE_VAR_LOCAL_LIBS_DLL += -norunpath
+BUILD_OVERRIDE_VAR_OBJ_CRC32 = $$(OBJ_CRC32_C)
 
-# fix distname
-DISTNAME = $(NAME)_$(VERSION)
+INSTALL_ARGS = DEST_HOME="$(DESTDIR)$(prefix)"
+INSTALL_ARGS += DEST_MAN="$(DESTDIR)$(mandir)"
 
-# patch files
-PATCHFILES  = patch-CPP-7zip-Archive-Zip-ZipHandler.cpp
-PATCHFILES += patch-install.sh
+# Location of the system locale
+CHECKPKG_OVERRIDES_CSWp7zip += file-with-bad-content|/usr/share|root/opt/csw/share/doc/p7zip/README
+# This is an example
+CHECKPKG_OVERRIDES_CSWp7zip += file-with-bad-content|/usr/local|root/opt/csw/share/doc/p7zip/README
 
 include gar/category.mk
-
-# makefile
-pre-build-modulated:
-	@cp $(WORKSRC)/makefile.solaris_sparc_CC_32 $(WORKSRC)/makefile.machine

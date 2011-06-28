@@ -1,0 +1,34 @@
+From 64f606a0f73a205186f35579a739380f6f92ba4c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 28 Jun 2011 11:45:39 +0200
+Subject: [PATCH 3/3] Disable unrecognized pragma
+
+---
+ C/Ppmd.h |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/C/Ppmd.h b/C/Ppmd.h
+index 621d927..d0ecf4a 100644
+--- a/C/Ppmd.h
++++ b/C/Ppmd.h
+@@ -29,7 +29,7 @@ EXTERN_C_BEGIN
+ #define PPMD_N4 ((128 + 3 - 1 * PPMD_N1 - 2 * PPMD_N2 - 3 * PPMD_N3) / 4)
+ #define PPMD_NUM_INDEXES (PPMD_N1 + PPMD_N2 + PPMD_N3 + PPMD_N4)
+ 
+-#pragma pack(push,1)
++/* #pragma pack(push,1) */
+ 
+ /* SEE-contexts for PPM-contexts with masked symbols */
+ typedef struct
+@@ -50,7 +50,7 @@ typedef struct
+   UInt16 SuccessorHigh;
+ } CPpmd_State;
+ 
+-#pragma pack(pop)
++/* #pragma pack(pop) */
+ 
+ typedef
+   #ifdef PPMD_32BIT
+-- 
+1.7.5.4
+
