@@ -21,9 +21,11 @@ endef
 VENDOR_URL   = http://www.harding.motd.ca/autossh/
 MASTER_SITES = http://www.harding.motd.ca/autossh/
 DISTFILES    = $(NAME)-$(VERSION).tgz
+DISTFILES   += changelog.CSW
 
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom preformatted-manpage extracted-license
+EXTRA_PAX_ARGS = '-s,CHANGES,changelog,p'
 
 CONFIGURE_ARGS = $(DIRPATHS)
 NORUNPATH = 1
