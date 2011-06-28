@@ -1,12 +1,13 @@
-autossh (1.4b,REV=2010.02.23)
+autossh (1.4b,REV=2011.06.28)
 
   * Merged version suffix into package version. (Closes #4003)
+  * Added license file.
   * Package now ships with a preformatted autossh.1 catman page so
     that "man autossh" works with Solaris nroff.
 
- -- Sebastian Kayser <skayser@opencsw.org>  Tue, 23 Feb 2010 21:01:41 +0100
+ -- Sebastian Kayser <skayser@opencsw.org>  Tue, 28 Jun 2011 23:01:56 +0200
 
-autossh (1.4b,REV=2009.06.25)
+autossh (1.4,REV=2009.06.25_b)
 
   * Initial release.
 
