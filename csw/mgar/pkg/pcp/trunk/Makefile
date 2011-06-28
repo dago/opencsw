@@ -8,7 +8,8 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.unix.ms/pcp/
-DISTFILES = pcp.txt
+DISTFILES  = pcp.txt
+DISTFILES += COPYING
 
 ARCHALL = 1
 
@@ -16,8 +17,6 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
-
-CHECKPKG_OVERRIDES = license-missing
 
 include gar/category.mk
 
