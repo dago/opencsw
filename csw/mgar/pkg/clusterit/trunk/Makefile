@@ -4,28 +4,48 @@ CATEGORIES = net
 
 DESCRIPTION = Suite of tools for managing large clusters of machines
 define BLURB
-	This is a collection of clustering tools, to turn your ordinary everyday pile of UNIX workstations into a speedy parallel beast. Initially this work was based on the work of IBM's PSSP, and copied heavily from the ideas there. Its also lightly based on the work pioneered in GLUnix.
+  This is a collection of clustering tools, to turn your ordinary everyday pile of
+  UNIX workstations into a speedy parallel beast. Initially this work was based on
+  the work of IBM's PSSP, and copied heavily from the ideas there.
+  Its also lightly based on the work pioneered in GLUnix.
 endef
 
-SF_PROJ = $(NAME)
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES = $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWclusterit,)
+DISTFILES = $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=154528
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)
+VENDOR_URL = http://clusterit.sourceforge.net/
+LICENSE = README
 
-PREFIX = /opt/csw/$(NAME)
-CONFIGURE_ARGS = --prefix=$(PREFIX)
+EXTRA_PAX_ARGS += -s ',$(bindir),/opt/csw/clusterit/bin,'
+EXTRA_PAX_ARGS += -s ',\.1$$,.1clusterit,'
 
-# Not gonna do it
-TEST_SCRIPTS =
+BINS += barrier
+BINS += barrierd
+BINS += clustersed
+BINS += dsh
+BINS += dshbak
+BINS += dtop
+BINS += dvt
+BINS += jsd
+# CSWschilyutils
+COLLIDING_BINS += jsh
+# CSWsynce
+COLLIDING_BINS += pcp
+BINS += pdf
+# CSWsynce
+COLLIDING_BINS += prm
+BINS += rseq
+BINS += run
+BINS += rvt
+
+# This is an example path
+CHECKPKG_OVERRIDES_CSWclusterit += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/pcp.1clusterit
 
 include gar/category.mk
 
-pre-install:
-	( if [ ! -d $(DESTDIR)/opt/csw/bin ] ; then mkdir -p $(DESTDIR)/opt/csw/bin ; fi )
-	( cd $(DESTDIR)/opt/csw/bin && for f in barrier catman dsh dtop dvt jsd pcp rvt ; do ln -s ../$(NAME)/bin/$$f . ; done )
+post-merge:
+	if [ ! -d $(PKGROOT)/opt/csw/bin ] ; then mkdir -p $(PKGROOT)/opt/csw/bin ; fi
+	$(foreach B,$(BINS),ln -s ../clusterit/bin/$B $(PKGROOT)/opt/csw/bin/$B;)
+	$(foreach B,$(COLLIDING_BINS),ln -s ../clusterit/bin/$B $(PKGROOT)/opt/csw/bin/$B-clusterit;)
+	@$(MAKECOOKIE)
 
