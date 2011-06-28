@@ -302,6 +302,7 @@ class CheckInterfaceBase(object):
     self.catrel = catrel
     self.catalog = catalog
     self.common_paths = {}
+    self.pkgs_by_path_cache = {}
     if lines_dict:
       self.lines_dict = lines_dict
     else:
@@ -353,19 +354,22 @@ class CheckInterfaceBase(object):
 
   def GetPkgByPath(self, file_path):
     """Proxies calls to self.system_pkgmap."""
-    pkgs_in_catalog = self.catalog.GetPkgByPath(
-        file_path, self.osrel, self.arch, self.catrel)
-    # This response comes from catalog; we need to simulate the state the
-    # catalog would have if the set under test in the catalog.  First, we
-    # remove all packages that are under test.
-    pkgs = set(pkgs_in_catalog.difference(set(self.pkg_set_files)))
-    if file_path in self.pkgs_by_file:
-      for pkg in self.pkgs_by_file[file_path]:
-        pkgs.add(pkg)
-    logging_response = pprint.pformat(pkgs)
-    logging.debug("GetPkgByPath(%s).AndReturn(%s)"
-                  % (file_path, logging_response))
-    return pkgs
+    key = (file_path, self.osrel, self.arch, self.catrel)
+    if not key in self.pkgs_by_path_cache:
+      pkgs_in_catalog = self.catalog.GetPkgByPath(
+          file_path, self.osrel, self.arch, self.catrel)
+      # This response comes from catalog; we need to simulate the state the
+      # catalog would have if the set under test in the catalog.  First, we
+      # remove old versions of packages under test.
+      pkgs = set(pkgs_in_catalog.difference(set(self.pkg_set_files)))
+      if file_path in self.pkgs_by_file:
+        for pkg in self.pkgs_by_file[file_path]:
+          pkgs.add(pkg)
+      logging_response = pprint.pformat(pkgs)
+      logging.debug("GetPkgByPath(%s).AndReturn(%s)"
+                    % (file_path, logging_response))
+      self.pkgs_by_path_cache[key] = pkgs
+    return self.pkgs_by_path_cache[key]
 
   def GetInstalledPackages(self):
     return self.catalog.GetInstalledPackages(
@@ -624,8 +628,10 @@ class CheckpkgManager2(CheckpkgManagerBase):
         ]
       ]
     """
-    logging.debug("_ReportMissingDependencies(error_mgr, %s, %s, %s)",
-        pkgname, declared_deps, pprint.pformat(req_pkgs_reasons))
+    # Disabling the logging, because pprint.pformat can take an awful lot of
+    # time.
+    # logging.debug("_ReportMissingDependencies(error_mgr, %s, %s, %s)",
+    #     pkgname, declared_deps, pprint.pformat(req_pkgs_reasons))
     missing_reasons_by_pkg = {}
     for reason_group in req_pkgs_reasons:
       for pkg, reason in reason_group:
