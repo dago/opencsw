@@ -9,14 +9,9 @@ endef
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libassuan/
 DISTFILES  = $(DISTNAME).tar.bz2
 
-# Use this patch unless this is fixed:
-#   https://bugs.g10code.com/gnupg/issue1282
-#PATCHFILES = 0001-Add-INADDR_NONE-for-Solaris.patch
-
 VENDOR_URL = http://www.gnupg.org/download/#libassuan
 
-BUILD_DEP_PKGS += CSWgpgerr
-BUILD_DEP_PKGS += CSWpth
+BUILD_DEP_PKGS += CSWlibgpgerr-dev
 
 PACKAGES += CSWlibassuan0
 SPKG_DESC_CSWlibassuan0 = IPC library used by some GnuPG related software, libassuan.so.0
@@ -31,10 +26,8 @@ RUNTIME_DEP_PKGS_CSWlibassuan-dev += CSWlibassuan0
 
 BUILD64 = 1
 
-# EXTRA_LDFLAGS = -lrt -lsocket -lnsl
-
 # Disable tests until this is fixed:
-#   https://bugs.g10code.com/gnupg/msg3633
-# SKIPTEST ?= 1
+#   https://bugs.g10code.com/gnupg/msg4081
+SKIPTEST ?= 1
 
 include gar/category.mk
