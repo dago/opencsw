@@ -1,5 +1,5 @@
 NAME = libgcrypt
-VERSION = 1.4.6
+VERSION = 1.5.0
 CATEGORIES = lib
 
 DESCRIPTION = GNU libgcrypt
@@ -8,21 +8,29 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libgcrypt/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES  = $(DISTNAME).tar.bz2
 
-PACKAGES = CSWgcrypt
-CATALOGNAME = libgcrypt
+VENDOR_URL = http://www.gnupg.org/related_software/libraries.en.html#lib-libgcrypt
 
-SPKG_SOURCEURL = http://www.gnupg.org/related_software/libraries.en.html#lib-libgcrypt
+PACKAGES += CSWlibgcrypt11
+SPKG_DESC_CSWlibgcrypt11 = GNU libgcrypt, libgcrypt.so.11
+PKGFILES_CSWlibgcrypt11 += $(call pkgfiles_lib,libgcrypt.so.11)
+RUNTIME_DEP_PKGS_CSWlibgcrypt11 += CSWlibgpg-error0
 
-RUNTIME_DEP_PKGS = CSWgpgerr
+PACKAGES += CSWlibgcrypt-dev
+SPKG_DESC_CSWlibgcrypt-dev = Development files for libgcrypt.so.11
+PKGFILES_CSWlibgcrypt-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibgcrypt-dev += CSWlibgcrypt11
+
+PACKAGES += CSWlibgcrypt-utils
+SPKG_DESC_CSWlibgcrypt-utils = Utility programs for libgcrypt
+# PKGFILES is catchall
+OBSOLETED_BY_CSWlibgcrypt-utils = CSWgcrypt
+CATALOGNAME_CSWgcrypt = libgcrypt_stub
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-asm
-
-TEST_TARGET = check
 
 include gar/category.mk
