@@ -16,6 +16,9 @@ DISTFILES = $(DISTNAME).tar.gz
 VENDOR_URL = http://clusterit.sourceforge.net/
 LICENSE = README
 
+# As reported in #3616
+RUNTIME_DEP_PKGS_CSWclusterit += CSWgawk
+
 EXTRA_PAX_ARGS += -s ',$(bindir),/opt/csw/clusterit/bin,'
 EXTRA_PAX_ARGS += -s ',\.1$$,.1clusterit,'
 
