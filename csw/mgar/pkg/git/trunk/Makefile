@@ -53,7 +53,7 @@ BUILD_DEP_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
 BUILD_DEP_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
 BUILD_DEP_PKGS += CSWpython
 
-RUNTIME_DEP_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWcurlrt CSWosslrt
+RUNTIME_DEP_PKGS_CSWgit = CSWzlib CSWperl CSWrsync CSWlibcurl4 CSWosslrt
 RUNTIME_DEP_PKGS_CSWgit += CSWosshclient CSWiconv CSWexpat CSWbash CSWpmerror
 RUNTIME_DEP_PKGS_CSWgit += CSWpmtermreadkey CSWpmnetsmtpssl CSWless
 
