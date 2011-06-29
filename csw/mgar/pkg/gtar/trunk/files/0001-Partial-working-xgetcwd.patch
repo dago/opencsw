@@ -1,0 +1,40 @@
+From 8f6d3dd4fde6da12ea84807d0afc07ff56a62e10 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 29 Jun 2011 16:38:07 +0200
+Subject: [PATCH] Partial working xgetcwd
+
+---
+ gnu/xgetcwd.c |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
+
+diff --git a/gnu/xgetcwd.c b/gnu/xgetcwd.c
+index 2f1da89..fd4c2f9 100644
+--- a/gnu/xgetcwd.c
++++ b/gnu/xgetcwd.c
+@@ -26,6 +26,7 @@
+ 
+ #include <errno.h>
+ #include <unistd.h>
++#include <limits.h>
+ 
+ #include "xalloc.h"
+ 
+@@ -36,7 +37,14 @@
+ char *
+ xgetcwd (void)
+ {
+-  char *cwd = getcwd (NULL, 0);
++  char *cwd;
++#ifdef HAVE_PARTLY_WORKING_GETCWD
++  cwd = getcwd (NULL, 0);
++#else
++  cwd = malloc(PATH_MAX);
++  if (cwd)
++    getcwd (cwd, PATH_MAX);
++#endif
+   if (! cwd && errno == ENOMEM)
+     xalloc_die ();
+   return cwd;
+-- 
+1.7.5.4
+
