@@ -18,6 +18,10 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES += 0001-Partial-working-xgetcwd.patch
 
+# Apply patch from
+#   http://debbugs.gnu.org/cgi/bugreport.cgi?bug=8230#20
+PATCHFILES += 0002-Fix-endless-recursion-when-compiling-on-Solaris-9-an.patch
+
 VENDOR_URL = http://www.gnu.org/software/tar/
 
 PACKAGES = CSWgtar
