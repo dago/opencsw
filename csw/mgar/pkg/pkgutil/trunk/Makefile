@@ -21,7 +21,7 @@ DISTFILES  = $(NAME)-$(VERSION).zip
 #DISTFILES += CSWpkgutil.prototype
 DISTFILES += CSWpkgutil.postinstall
 DISTFILES += CSWpkgutil.preremove
-DISTFILES += COPYING
+#DISTFILES += COPYING
 
 #DISTFILES += $(call admfiles,CSWpkgutil,preremove postinstall)
 #ifeq ($(shell uname -p), sparc)
