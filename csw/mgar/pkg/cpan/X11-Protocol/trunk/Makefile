@@ -13,8 +13,7 @@ LICENSE = README
 
 PACKAGES += CSWpm-x11-protocol
 SPKG_DESC_CSWpm-x11-protocol = $(DESCRIPTION)
-OBSOLETED_BY_CSWpm-x11-protocol += CSWpmx11protocol
-
 ARCHALL_CSWpm-x11-protocol = 1
+OBSOLETED_BY_CSWpm-x11-protocol += CSWpmx11protocol
 
 include gar/category.mk
