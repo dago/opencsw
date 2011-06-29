@@ -1,5 +1,5 @@
 NAME = libksba
-VERSION = 1.0.8
+VERSION = 1.2.0
 CATEGORIES = lib
 
 DESCRIPTION = Libksba is a CMS and X.509 access library
@@ -11,20 +11,21 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.gnupg.org/gcrypt/libksba/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES = $(DISTNAME).tar.bz2
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(VERSION)-(\d+(?:\.\d+)*).tar.bz2
+VENDOR_URL = http://www.gnupg.org/related_software/libksba/
 
-SPKG_SOURCEURL = http://www.gnupg.org/related_software/libksba/
+PACKAGES += CSWlibksba8
+SPKG_DESC_CSWlibksba8 = CMS and X.509 access library, libksba.so.8
+PKGFILES_CSWlibksba8 = $(call pkgfiles_lib,libksba.so.8)
+RUNTIME_DEP_PKGS_CSWlibksba8 += CSWlibgpg-error0
+OBSOLETED_BY_CSWlibksba8 += CSWlibksba
 
-RUNTIME_DEP_PKGS = CSWgpgerr
+PACKAGES += CSWlibksba-dev
+SPKG_DESC_CSWlibksba-dev = Development files for libksba.so.8
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibksba-dev += CSWlibksba8
 
 BUILD64 = 1
-NOISAEXEC = 1
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
 
 include gar/category.mk
