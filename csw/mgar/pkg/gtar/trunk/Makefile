@@ -1,5 +1,5 @@
 NAME = tar
-VERSION = 1.25
+VERSION = 1.26
 CATEGORIES = utils
 
 DESCRIPTION = GNU tape archiver
@@ -17,34 +17,18 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-# These two patches are from
-#   http://cvs.opensolaris.org/source/xref/sfw/usr/src/cmd/gtar/Patches/
-PATCHFILES += verify.diff
-PATCHFILES += xgetcwd.diff
-
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-
-PACKAGES = CSWgtar
-CATALOGNAME_CSWgtar = gtar
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 VENDOR_URL = http://www.gnu.org/software/tar/
 
+PACKAGES = CSWgtar
+
 BUILD_DEP_PKGS = CSWgcpio
-RUNTIME_DEP_PKGS_CSWgtar += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWgtar += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgtar += CSWiconv
 RUNTIME_DEP_PKGS_CSWgtar += CSWgcpio
 
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS) --program-prefix=g
 CONFIGURE_ARGS += --with-rmt=/opt/csw/libexec/grmt
-# As suggested in http://lists.gnu.org/archive/html/bug-tar/2010-11/msg00073.html
-CONFIGURE_ARGS-sol5.9 += gl_cv_func_futimesat_works=yes
-CONFIGURE_ARGS += $(CONFIGURE_ARGS-sol$(GAROSREL))
-TEST_TARGET = check
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
