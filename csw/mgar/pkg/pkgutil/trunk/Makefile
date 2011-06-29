@@ -1,9 +1,5 @@
-# Do not update gar, new gar doesn't work on sol8! If removed, recreate with:
-# svn co -r 9999 https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/gar/v2 gar
-
 NAME = pkgutil
 VERSION = 2.4
-GARVERSION = $(VERSION)
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -17,11 +13,16 @@ endef
 # Disable inclusion of CSWcommon by default.
 COMMON_PKG_DEPENDS = 
 
-#MASTER_SITES = $(SF_MIRRORS)
-MASTER_SITES = http://sourceforge.net/projects/pkgutil/files/pkgutil/2.4/
+MASTER_SITES = $(SF_MIRRORS)
+#MASTER_SITES = http://sourceforge.net/projects/pkgutil/files/pkgutil/2.4/
 DISTFILES  = $(NAME)-$(VERSION).zip
 
-DISTFILES += $(call admfiles,CSWpkgutil,prototype preremove postinstall)
+#DISTFILES += $(call admfiles,CSWpkgutil,prototype preremove postinstall)
+#DISTFILES += CSWpkgutil.prototype
+DISTFILES += CSWpkgutil.postinstall
+DISTFILES += CSWpkgutil.preremove
+DISTFILES += COPYING
+
 #DISTFILES += $(call admfiles,CSWpkgutil,preremove postinstall)
 #ifeq ($(shell uname -p), sparc)
 #  DISTFILES += CSWpkgutilsparc.prototype
@@ -33,25 +34,35 @@ DISTFILES += build_sun_catalog.py
 DISTFILES += opencsw.py
 DISTFILES += cswcatalog
 
-PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
+PACKAGES               = CSWpkgutil
+CATALOGNAME_CSWpkgutil = pkgutil
+SPKG_DESC_CSWpkgutil   = $(DESCRIPTION)
+ARCHALL_CSWpkgutil     = 1
 
-CHECKPKG_OVERRIDES_CSWpkgutilplus += unidentified-dependency|CSWpmstringapprox
-CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpmstringapprox
+PACKAGES                  += CSWpkgutilplus
+CATALOGNAME_CSWpkgutilplus = pkgutilplus
+SPKG_DESC_CSWpkgutilplus   = Extends pkgutil functionality
+ARCHALL_CSWpkgutilplus     = 1
+
+# Explicitly depend on CSWcommon here since it's not the default
+RUNTIME_DEP_PKGS_CSWpkgutilplus   = CSWcommon CSWperl CSWgnupg CSWpkgutil
+RUNTIME_DEP_PKGS_CSWpkgutilplus  += CSWcswpkgloghooks CSWpython CSWpmstringapprox
+#RUNTIME_DEP_PKGS_CSWpkgutilplus += CSWpmwwwcurl
+
+CHECKPKG_OVERRIDES_CSWpkgutil += file-with-bad-content|/usr/local|root/opt/csw/bin/pkgutil
+CHECKPKG_OVERRIDES_CSWpkgutil += discouraged-path-in-pkgmap|/opt/csw/var/pkgutil
+CHECKPKG_OVERRIDES_CSWpkgutil += discouraged-path-in-pkgmap|/opt/csw/var/pkgutil/admin.CSW
+CHECKPKG_OVERRIDES_CSWpkgutil += archall-with-arch-paths|/opt/csw/libexec/pkgutil/wget-i386
+CHECKPKG_OVERRIDES_CSWpkgutil += archall-with-binaries|opt/csw/libexec/pkgutil/wget-i386
+CHECKPKG_OVERRIDES_CSWpkgutil += archall-with-binaries|opt/csw/libexec/pkgutil/wget-sparc
+CHECKPKG_OVERRIDES_CSWpkgutil += binary-wrong-architecture|file=opt/csw/libexec/pkgutil/wget-i386|pkginfo-says=all|actual-binary=i386
+CHECKPKG_OVERRIDES_CSWpkgutil += binary-wrong-architecture|file=opt/csw/libexec/pkgutil/wget-sparc|pkginfo-says=all|actual-binary=sparc
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWcswpkgloghooks
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWgnupg
+CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpmstringapprox
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpkgutil
-CHECKPKG_OVERRIDES_CSWpkgutil += disallowed-path
-
-PACKAGES = CSWpkgutil CSWpkgutilplus
-
-SPKG_DESC_CSWpkgutil = $(DESCRIPTION)
-SPKG_DESC_CSWpkgutilplus = Extends pkgutil functionality
-
-# Explicitly depend on CSWcommon here since it's not the default
-RUNTIME_DEP_PKGS_CSWpkgutilplus  = CSWcommon CSWperl CSWgnupg CSWpkgutil
-RUNTIME_DEP_PKGS_CSWpkgutilplus += CSWcswpkgloghooks CSWpython CSWpmstringapprox
-#RUNTIME_DEP_PKGS_CSWpkgutilplus += CSWpmwwwcurl
+CHECKPKG_OVERRIDES_CSWpkgutilplus += file-with-bad-content|/export/home|root/opt/csw/bin/cswcatalog
 
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
 PKGFILES_CSWpkgutilplus += .*chkcat.*
@@ -59,8 +70,6 @@ PKGFILES_CSWpkgutilplus += .*pkgutilplus.*
 PKGFILES_CSWpkgutilplus += .*build_sun_catalog.*
 PKGFILES_CSWpkgutilplus += .*opencsw.py
 PKGFILES_CSWpkgutilplus += .*cswcatalog
-
-ARCHALL_CSWpkgutilplus = 1
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
@@ -70,7 +79,7 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 WORKSRC = $(WORKDIR)
-SPKG_SOURCEURL = http://pkgutil.wikidot.com/
+SPKG_SOURCEURL = http://pkgutil.net/
 
 install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
@@ -84,8 +93,8 @@ install-custom:
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/etc
 	@ginstall -m 644 $(WORKSRC)/$(NAME).conf $(DESTDIR)/opt/csw/etc/$(NAME).conf.CSW
 	@ginstall -m 755 -d $(DESTDIR)/opt/csw/libexec/$(NAME)
-#	@ginstall -m 755 $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(NAME)/
-	@ginstall -m 755 $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(NAME)/wget
+	@ginstall -m 755 $(WORKSRC)/wget-* $(DESTDIR)/opt/csw/libexec/$(NAME)/
+#	@ginstall -m 755 $(WORKSRC)/wget-`uname -p` $(DESTDIR)/opt/csw/libexec/$(NAME)/wget
 	@ginstall -m 755 $(FILEDIR)/build_sun_catalog.py $(FILEDIR)/opencsw.py $(DESTDIR)/opt/csw/libexec/$(NAME)
 	@ln -s ../libexec/pkgutil/build_sun_catalog.py $(DESTDIR)$(bindir)/build_sun_catalog
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)

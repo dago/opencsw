@@ -1,5 +1,6 @@
 i pkginfo=CSWpkgutil.pkginfo
 i copyright=CSWpkgutil.copyright
+i checkpkg_override=CSWpkgutil.checkpkg_override
 d none /etc/opt/csw 0755 root bin
 f none /etc/opt/csw/pkgutil.conf.CSW 644 root bin
 d none /opt/csw 0755 root bin
@@ -11,9 +12,6 @@ d none /opt/csw/libexec 0755 root bin
 d none /opt/csw/libexec/pkgutil 0755 root bin
 f none /opt/csw/libexec/pkgutil/wget 755 root bin
 d none /opt/csw/share 0755 root bin
-d none /opt/csw/share/checkpkg 0755 root bin
-d none /opt/csw/share/checkpkg/overrides 0755 root bin
-f none /opt/csw/share/checkpkg/overrides/pkgutil 0644 root bin
 d none /opt/csw/share/doc 0755 root bin
 d none /opt/csw/share/doc/pkgutil 0755 root bin
 f none /opt/csw/share/doc/pkgutil/license 444 root bin
