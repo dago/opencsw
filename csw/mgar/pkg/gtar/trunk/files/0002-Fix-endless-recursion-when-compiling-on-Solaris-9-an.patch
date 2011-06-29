@@ -1,0 +1,63 @@
+From 265b9d3dfad6bd260610413f3200f5050e81af49 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 29 Jun 2011 17:16:04 +0200
+Subject: [PATCH] Fix endless recursion when compiling on Solaris 9 and
+ running on Solaris 10
+
+---
+ gnu/sys_stat.in.h |   16 ++++++++++++++--
+ 1 files changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/gnu/sys_stat.in.h b/gnu/sys_stat.in.h
+index 70f43e2..6346bd4 100644
+--- a/gnu/sys_stat.in.h
++++ b/gnu/sys_stat.in.h
+@@ -357,7 +357,11 @@ _GL_WARN_ON_USE (fstatat, "fstatat is not portable - "
+ 
+ 
+ #if @GNULIB_FUTIMENS@
+-# if @REPLACE_FUTIMENS@
++/* Use the rpl_ prefix also on Solaris <= 9, because on Solaris 9 our futimens
++   implementation relies on futimesat, which on Solaris 10 makes an invocation
++   to futimens that is meant to invoke the libc's futimens(), not gnulib's
++   futimens().  */
++# if @REPLACE_FUTIMENS@ || defined __sun
+ #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+ #   undef futimens
+ #   define futimens rpl_futimens
+@@ -370,7 +374,9 @@ _GL_FUNCDECL_SYS (futimens, int, (int fd, struct timespec const times[2]));
+ #  endif
+ _GL_CXXALIAS_SYS (futimens, int, (int fd, struct timespec const times[2]));
+ # endif
++# if @HAVE_FUTIMENS@
+ _GL_CXXALIASWARN (futimens);
++# endif
+ #elif defined GNULIB_POSIXCHECK
+ # undef futimens
+ # if HAVE_RAW_DECL_FUTIMENS
+@@ -614,7 +620,11 @@ _GL_WARN_ON_USE (stat, "stat is unportable - "
+ 
+ 
+ #if @GNULIB_UTIMENSAT@
+-# if @REPLACE_UTIMENSAT@
++/* Use the rpl_ prefix also on Solaris <= 9, because on Solaris 9 our utimensat
++   implementation relies on futimesat, which on Solaris 10 makes an invocation
++   to utimensat that is meant to invoke the libc's utimensat(), not gnulib's
++   utimensat().  */
++# if @REPLACE_UTIMENSAT@ || defined __sun
+ #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+ #   undef utimensat
+ #   define utimensat rpl_utimensat
+@@ -633,7 +643,9 @@ _GL_FUNCDECL_SYS (utimensat, int, (int fd, char const *name,
+ _GL_CXXALIAS_SYS (utimensat, int, (int fd, char const *name,
+                                    struct timespec const times[2], int flag));
+ # endif
++# if @HAVE_UTIMENSAT@
+ _GL_CXXALIASWARN (utimensat);
++# endif
+ #elif defined GNULIB_POSIXCHECK
+ # undef utimensat
+ # if HAVE_RAW_DECL_UTIMENSAT
+-- 
+1.7.5.4
+
