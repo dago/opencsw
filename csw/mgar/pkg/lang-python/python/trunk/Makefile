@@ -83,7 +83,7 @@ CONFIGURE_ARGS += --with-system-ffi
 
 # This doesn't work here, as _PYCOMPILE_FILES is not the directory Python uses.
 # PYCOMPILE = 1
-EXTRA_MERGE_EXCLUDE_FILES = .*\.pyo .*\.pyc
+EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 # use prototype filters to set the class 
 PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
@@ -93,6 +93,9 @@ PACKAGES += CSWpython$(CVER)-dev
 PACKAGES += CSWpython$(CVER)-test
 PACKAGES += CSWpython$(CVER)-tk
 PACKAGES += CSWlibpython$(DVER)-1-0
+CATALOGNAME_CSWlibpython$(DVER)-1-0 = libpython$(UVER)_1_0
+PKGFILES_CSWlibpython$(DVER)-1-0 += $(call baseisadirs,$(libdir),libpython$(VER)\.so\.1\.0(\.\d+)*)
+SPKG_DESC_CSWlibpython$(DVER)-1-0  = Python shared library ($(VER))
 
 INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
 OBSOLETED_BY_CSWpython$(CVER)-dev = CSWpython$(CVER)-devel
@@ -106,6 +109,7 @@ PKGFILES_CSWpython$(CVER)-dev += $(libdir)/libpython$(VER).so
 # No idea why would this be in CSWpython, and no good idea for a better package
 # to put it.
 PKGFILES_CSWpython$(CVER)-dev += $(bindir)/smtpd.py
+
 PKGFILES_CSWpython$(CVER)-tk  = $(libdir)/.*/lib-tk/.*
 PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
 PKGFILES_CSWpython$(CVER)-test  = $(libdir)/python/test/.*
@@ -116,7 +120,6 @@ PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/distutils/tests.*
 PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/json/tests.*
 PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/lib2to3/tests.*
 PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/sqlite3/test.*
-PKGFILES_CSWlibpython$(DVER)-1-0 += $(libdir)/libpython$(VER)\.so\.[0-9\.]+
 
 ARCHALL_CSWpython$(CVER)-test = 1
 ARCHALL_CSWidle$(CVER)        = 1
@@ -126,10 +129,11 @@ RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)-tk
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbdb47
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbzip2
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgdbm3
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpython$(DVER)-1-0
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWncurses
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpanel5
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWosslrt
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWreadline 
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWsqlite3rt
@@ -160,14 +164,12 @@ CATALOGNAME_CSWpython$(CVER)       = python
 CATALOGNAME_CSWpython$(CVER)-dev = python$(CVER)_dev
 CATALOGNAME_CSWpython$(CVER)-tk    = python$(CVER)_tk
 CATALOGNAME_CSWpython$(CVER)-test  = python$(CVER)_test
-CATALOGNAME_CSWlibpython$(DVER)-1-0  = libpython$(UVER)_1_0
 
 SPKG_DESC_CSWidle$(CVER)         = Python IDE
 SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
 SPKG_DESC_CSWpython$(CVER)-dev = Development Files for Python
 SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
 SPKG_DESC_CSWpython$(CVER)-test  = Python Test modules
-SPKG_DESC_CSWlibpython$(DVER)-1-0  = Python shared library ($(VER))
 
 LICENSE = LICENSE
 
