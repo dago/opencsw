@@ -3,7 +3,7 @@ VERSION = 1.19
 CATEGORIES = cpan
 AUTHOR = MARKPF
 
-DESCRIPTION = Log::Dispatch::FileRotate - Log to files that archive/rotate themselves
+DESCRIPTION = Log to files that archive/rotate themselves
 define BLURB
   This module provides a simple object for logging to files under the 
   Log::Dispatch::* system, and automatically rotating them according 
