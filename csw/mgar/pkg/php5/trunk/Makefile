@@ -249,7 +249,6 @@ CONFIGURE_ARGS += --enable-gd-native-ttf
 CONFIGURE_ARGS += --enable-hash=shared
 CONFIGURE_ARGS += --enable-json=shared
 CONFIGURE_ARGS += --enable-magic-quotes
-CONFIGURE_ARGS += --enable-mbregex=shared
 CONFIGURE_ARGS += --enable-mbstring=shared
 CONFIGURE_ARGS += --enable-pcntl=shared
 CONFIGURE_ARGS += --enable-pdo=shared
