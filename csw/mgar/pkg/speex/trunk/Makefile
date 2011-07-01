@@ -3,8 +3,7 @@
 # $Id$
 
 NAME = speex
-VERSION = 1.2
-REV = rc1
+VERSION = 1.2rc1
 CATEGORIES = lib
 
 DESCRIPTION = Speex audio codec support library
@@ -12,7 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = http://downloads.xiph.org/releases/speex/
-DISTFILES  = $(NAME)-$(VERSION)$(REV).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 
 # The important lines are these:
 #
@@ -34,27 +33,43 @@ DISTFILES  = $(NAME)-$(VERSION)$(REV).tar.gz
 # All the other stuff is generated (and the newlines on getopt*.c were stripped of ^M)
 PATCHFILES = speex-getopt.patch.bz2
 
+VENDOR_URL = http://www.speex.org/
+
+BUILD_DEP_PKGS += CSWlibogg-dev
+
 PACKAGES = CSWspeex
-CATALOGNAME = libspeex
-RUNTIME_DEP_PKGS = CSWlibogg
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+SPKG_DESC_CSWspeex = Speex audio codec tools
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWspeex += CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWspeex += CSWlibspeexdsp1
+RUNTIME_DEP_PKGS_CSWspeex += CSWlibogg0
 
-SPKG_SOURCEURL = http://www.speex.org/
+PACKAGES += CSWlibspeex-dev
+SPKG_DESC_CSWlibspeex-dev = Development files for libspeex.so.1
+PKGFILES_CSWlibspeex-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibspeex-dev += $(docdir)/libspeex/manual.pdf
+RUNTIME_DEP_PKGS_CSWlibspeex-dev += CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWlibspeex-dev += CSWlibspeexdsp1
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWlibspeex1
+SPKG_DESC_CSWlibspeex1 = Speex audio codec library, libspeex.so.1
+PKGFILES_CSWlibspeex1 += $(call pkgfiles_lib,libspeex.so.1)
 
-WORKSRC = $(WORKDIR)/$(NAME)-$(VERSION)$(REV)
+PACKAGES += CSWlibspeexdsp1
+SPKG_DESC_CSWlibspeexdsp1 = Speex audio codec support library, libspeexdsp.so.1
+PKGFILES_CSWlibspeexdsp1 += $(call pkgfiles_lib,libspeexdsp.so.1)
 
 # 64-bit doesn't build on x86.
 BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-TEST_SCRIPTS =
+# TEST_SCRIPTS =
+
+CONFIGURE_ARGS += $(DIRPATHS)
+# Otherwise we must unnecessarily link to CSW provided libgnugetopt
+CONFIGURE_ARGS += ac_cv_func_getopt_long=no
+CONFIGURE_ARGS += ac_cv_lib_gnugetopt_getopt_long=no
 
 INSTALL_OVERRIDE_VARS = PACKAGE
 INSTALL_OVERRIDE_VAR_PACKAGE = libspeex
 
 include gar/category.mk
-
-SPKG_VERSION := $(SPKG_VERSION)_rev=$(REV)
 
