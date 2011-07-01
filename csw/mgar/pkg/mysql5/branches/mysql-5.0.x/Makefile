@@ -177,6 +177,10 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 # TODO: Make the tests pass. They don't at the moment.
 TEST_SCRIPTS =
 
+ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)
+ALTERNATIVE_mysql$(BASE_VERSION) = $(global_bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
+ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
+	$(global_bindir)/$C $C $(bindir)/$C)
 
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
@@ -250,12 +254,12 @@ post-merge:
 		        $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	# Create symlinks to binaries
 	ginstall -m 755 -d $(PKGROOT)$(global_bindir)
-	for f in $(PKGROOT)$(bindir)/*; do \
-		if echo $$f | grep amd64$$; then continue; fi; \
-		if echo $$f | grep sparcv9$$; then continue; fi; \
-		ln -s ../$(NAME)/bin/`basename $$f` \
-		      $(PKGROOT)$(global_bindir)/`basename $$f`; \
-	done
+	#for f in $(PKGROOT)$(bindir)/*; do \
+	#	if echo $$f | grep amd64$$; then continue; fi; \
+	#	if echo $$f | grep sparcv9$$; then continue; fi; \
+	#	ln -s ../$(NAME)/bin/`basename $$f` \
+	#	      $(PKGROOT)$(global_bindir)/`basename $$f`; \
+	#done
 	# http://www.opencsw.org/bugtrack/view.php?id=4149
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)
 	@$(MAKECOOKIE)
