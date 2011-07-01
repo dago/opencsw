@@ -193,7 +193,7 @@ CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5
 $(eval $(call php5_subpackage,pgsql,CSWlibpq))
 $(eval $(call php5_subpackage,posix))
 $(eval $(call php5_subpackage,pspell,CSWaspell))
-$(eval $(call php5_subpackage,readline,CSWreadline CSWncurses))
+$(eval $(call php5_subpackage,readline,CSWreadline CSWlibncurses5))
 $(eval $(call php5_subpackage,session,CSWlibmm))
 PKGFILES_CSWphp5-session += .*/include/php/ext/session.*
 $(eval $(call php5_subpackage,shmop))
