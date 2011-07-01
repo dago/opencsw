@@ -46,6 +46,7 @@ RUNTIME_DEP_PKGS_CSWvorbistools += CSWiconv
 EXTRA_LINKER_FLAGS += -lrt
 
 BUILD64 = 1
+ISAEXEC = 1
 EXTRA_BUILD_ISAS = sparcv8plus+vis pentium_pro
 
 include gar/category.mk
