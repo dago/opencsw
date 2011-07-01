@@ -16,31 +16,36 @@ DISTFILES = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.vorbis.com
 
-PACKAGES = CSWvtools
-CATALOGNAME = vorbistools
+PACKAGES = CSWvorbistools
+SPKG_DESC_CSWvorbistools = Vorbis audio tools
+OBSOLETED_BY_CSWvorbistools = CSWvtools
+CATALOGNAME_CSWvtools = vorbistools_stub
 
-BUILD_DEP_PKGS = CSWcurldevel
+BUILD_DEP_PKGS += CSWlibcurl-dev
+BUILD_DEP_PKGS += CSWlibkate-dev
+BUILD_DEP_PKGS += CSWlibogg-dev
+BUILD_DEP_PKGS += CSWlibvorbis-dev
+BUILD_DEP_PKGS += CSWlibflac-dev
+BUILD_DEP_PKGS += CSWlibao-dev
+BUILD_DEP_PKGS += CSWlibspeex-dev
+BUILD_DEP_PKGS += CSWggettext-dev
 
-RUNTIME_DEP_PKGS += CSWcurlrt
-RUNTIME_DEP_PKGS += CSWflac
-RUNTIME_DEP_PKGS += CSWggettextrt
-RUNTIME_DEP_PKGS += CSWiconv
-RUNTIME_DEP_PKGS += CSWlibao
-RUNTIME_DEP_PKGS += CSWlibogg
-RUNTIME_DEP_PKGS += CSWspeex
-RUNTIME_DEP_PKGS += CSWsunmath
-RUNTIME_DEP_PKGS += CSWvorbis
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = (\d+(?:\.\d+)*)
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWlibkate1
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWliboggkate1
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWlibvorbisfile3
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWlibflac8
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWlibao4
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWlibspeex1
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWvorbistools += CSWiconv
 
 EXTRA_LINKER_FLAGS += -lrt
 
 BUILD64 = 1
 EXTRA_BUILD_ISAS = sparcv8plus+vis pentium_pro
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
 
 include gar/category.mk
