@@ -69,3 +69,6 @@ DO_NOT_REPORT_SURPLUS_FOR = [r"CSW[a-z\-]+dev(el)?"]
 DO_NOT_REPORT_MISSING_RE = [r"\*?SUNW.*"]
 
 PSTAMP_RE = r"(?P<username>\w+)@(?P<hostname>[\w\.-]+)-(?P<timestamp>\d+)"
+
+# The directory with shared, architecture independent data files.
+OPENCSW_SHARE = "/opt/csw/share/opencsw"
