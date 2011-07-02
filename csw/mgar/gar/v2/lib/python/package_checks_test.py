@@ -1113,6 +1113,21 @@ class TestConflictingFiles(CheckpkgUnitTestHelper,
         'CSWfoo', 'file-collision', '/opt/csw/share/foo CSWbar CSWfoo')
     self.pkg_data = [self.CSWbar_DATA, self.CSWfoo_DATA]
 
+  def CheckpkgTest2(self):
+    # What if these two packages are not currently in the catalog?
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/share/foo').AndReturn(
+        frozenset([]))
+    self.error_mgr_mock.GetPkgByPath('/opt/csw/share/foo').AndReturn(
+        frozenset([]))
+    self.error_mgr_mock.ReportError(
+        'CSWbar', 'file-collision', '/opt/csw/share/foo CSWbar CSWfoo')
+    self.error_mgr_mock.ReportError(
+        'CSWfoo', 'file-collision', '/opt/csw/share/foo CSWbar CSWfoo')
+    self.pkg_data = [self.CSWbar_DATA, self.CSWfoo_DATA]
+
+  def testTwo(self):
+    self.RunCheckpkgTest(self.CheckpkgTest2)
+
 
 class TestSetCheckSharedLibraryConsistencyIvtools(CheckpkgUnitTestHelper,
                                                   unittest.TestCase):
