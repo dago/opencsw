@@ -1,0 +1,59 @@
+#!/bin/sh
+#
+# i.cswetcshells - Class action script for CSW /etc/shells registrations
+#
+# Written and maintained by Ben Walton
+#
+# 2011-07-02 Initial release
+
+echo "Installing class <cswetcshells> ..."
+
+PIR=${PKG_INSTALL_ROOT:-/}
+
+shellfile=$PIR/etc/shells
+
+while read src dest; do
+  echo $dest
+  /usr/bin/cp $src $dest || exit 2
+
+  shell=$dest
+
+  if [ ! -f "$shellfile" ]; then
+      echo "Creating /etc/shells with default set of shells (see: man shells)"
+      cat <<EOF >$shellfile
+/bin/bash
+/bin/csh
+/bin/jsh
+/bin/ksh
+/bin/pfcsh
+/bin/pfksh
+/bin/pfsh
+/bin/sh
+/bin/tcsh
+/bin/zsh
+/sbin/jsh
+/sbin/sh
+/usr/bin/bash
+/usr/bin/csh
+/usr/bin/jsh
+/usr/bin/ksh
+/usr/bin/pfcsh
+/usr/bin/pfksh
+/usr/bin/pfsh
+/usr/bin/sh
+/usr/bin/tcsh
+/usr/bin/zsh
+EOF
+	fi
+
+  exists=`awk "\\\$1 == \"$shell\" { print \"found\" }" $shellfile`
+
+  if [ "$exists" != "found" ]; then
+      echo "Registering $shell in $shellfile."
+      echo "$shell	# $PKGINST" >> $shellfile
+  else
+      echo "Not registering $shell in $shellfile.  It is already registered."
+  fi
+done
+
+exit 0

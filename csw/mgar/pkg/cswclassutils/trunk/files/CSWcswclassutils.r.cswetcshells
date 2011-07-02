@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# r.cswetcshells - Class action script for CSW /etc/shells registrations
+#
+# Written and maintained by Ben Walton
+#
+# 2011-07-02 Initial release
+
+while read dest; do
+    echo $dest
+    perl -ani.csw -e "print \"@F\n\" unless \$F[0] eq \"$dest\"" /etc/shells
+    rm -f $dest
+done
