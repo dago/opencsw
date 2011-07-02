@@ -950,6 +950,55 @@ class TestCheckDisallowedPaths_2(CheckpkgUnitTestHelper, unittest.TestCase):
         'This path is already provided by CSWcommon '
         'or is not allowed for other reasons.')
 
+
+class TestCheckGzippedManpages(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = "CheckGzippedManpages"
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "none",
+      "group": "bin",
+      "line": "",
+      "mode": '0755',
+      "path": "/opt/csw/share/man/man5/puppet.conf.5.gz",
+      "type": "f",
+      "user": "root"
+    })
+    self.error_mgr_mock.ReportError(
+      'gzipped-manpage-in-pkgmap', '/opt/csw/share/man/man5/puppet.conf.5.gz',
+      "Solaris' man cannot automatically inflate man pages. "
+      "Solution: man page should be gunzipped.")
+
+
+class TestCheckGzippedManpages_good(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = "CheckGzippedManpages"
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "none",
+      "group": "bin",
+      "line": "",
+      "mode": '0755',
+      "path": "/opt/csw/share/man/man5/puppet.conf.5",
+      "type": "f",
+      "user": "root"
+    })
+
+
+# Although this is a gzipped manpage, it is not in a directory associated with
+# manpages, so we should not trigger an error here.
+class TestCheckGzippedManpages_misplaced(CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = "CheckGzippedManpages"
+  def CheckpkgTest(self):
+    self.pkg_data["pkgmap"].append({
+      "class": "none",
+      "group": "bin",
+      "line": "",
+      "mode": '0755',
+      "path": "/etc/opt/csw/puppet/puppet.conf.5.gz",
+      "type": "f",
+      "user": "root"
+    })
+
+
 class TestCheckArchitecture_sparcv8plus(CheckpkgUnitTestHelper,
                                         unittest.TestCase):
   FUNCTION_NAME = "CheckArchitecture"

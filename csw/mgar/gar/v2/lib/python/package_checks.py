@@ -220,6 +220,15 @@ def CheckPerlLocal(pkg_data, error_mgr, logger, messenger):
       if re.search(perllocal_re, entry["path"]):
         error_mgr.ReportError("perllocal-pod-in-pkgmap", entry["path"])
 
+def CheckGzippedManpages(pkg_data, error_mgr, logger, messenger):
+  gzipman_re = re.compile(r'share/man/man.*/.*\.gz$')
+  for entry in pkg_data["pkgmap"]:
+    if entry["path"]:
+      if re.search(gzipman_re, entry["path"]):
+        error_mgr.ReportError(
+          'gzipped-manpage-in-pkgmap', entry["path"],
+          "Solaris' man cannot automatically inflate man pages. "
+          "Solution: man page should be gunzipped.")
 
 def CheckMultipleDepends(pkg_data, error_mgr, logger, messenger):
   new_depends = set()
