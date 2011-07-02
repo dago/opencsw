@@ -33,8 +33,4 @@ NORUNPATH = 1
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-curses
 
-TEST_TARGET = check
-
-MERGE_DIRS_isa-extra = $(libdir)
-
 include gar/category.mk
