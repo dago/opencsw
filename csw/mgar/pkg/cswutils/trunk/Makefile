@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = cswutils
-VERSION = 1.20
+VERSION = 1.21
 CATEGORIES = utils
 
 DESCRIPTION = Utilities for CSW maintainers
