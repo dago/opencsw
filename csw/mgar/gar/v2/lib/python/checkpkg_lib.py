@@ -36,6 +36,10 @@ class CatalogDatabaseError(Error):
   pass
 
 
+class DataError(Error):
+  """A problem with reading required data."""
+
+
 REPORT_TMPL = u"""#if $missing_deps or $surplus_deps or $orphan_sonames
 Dependency issues of $pkgname:
 #end if
@@ -377,12 +381,23 @@ class CheckInterfaceBase(object):
 
   def _GetPathsForArch(self, arch):
     if not arch in self.lines_dict:
-      file_name = os.path.join(
-          os.path.dirname(__file__), "..", "..", "etc", "commondirs-%s" % arch)
-      logging.debug("opening %s", file_name)
-      f = open(file_name, "r")
-      self.lines_dict[arch] = f.read().splitlines()
-      f.close()
+      base_name = "commondirs-%s" % arch
+      paths = [
+        os.path.join(os.path.dirname(__file__), "..", "..", "etc", base_name),
+        os.path.join(common_constants.OPENCSW_SHARE, "gar", base_name)
+      ]
+      path_found = False
+      for file_name in paths:
+        if not os.path.exists(file_name):
+          continue
+        # There is a race condition here, but we don't worry about it.
+        path_found = True
+        logging.debug("opening %s", file_name)
+        with open(file_name, "r") as f:
+          self.lines_dict[arch] = f.read().splitlines()
+        break
+      if not path_found:
+        raise DataError("Could not find the %s file." % base_name)
     return self.lines_dict[arch]
 
   def GetCommonPaths(self, arch):
