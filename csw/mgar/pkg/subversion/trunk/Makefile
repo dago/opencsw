@@ -22,7 +22,7 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 NAME = subversion
-VERSION = 1.6.17
+VERSION = 1.7.0-alpha2
 CATEGORIES = utils
 
 DESCRIPTION = Version control rethought
@@ -32,7 +32,7 @@ define BLURB
 endef
 
 VENDOR_URL   = http://subversion.apache.org/
-MASTER_SITES = http://subversion.tigris.org/downloads/
+MASTER_SITES = http://archive.apache.org/dist/subversion/
 #MASTER_SITES = http://orac.ece.utexas.edu/pub/svn/1.6.7/yuletide-eggnog/
 DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
