@@ -36,14 +36,14 @@ SPKG_DESC_CSWlibhistory6 = GNU readline library, libhistory.so.6
 PKGFILES_CSWlibhistory6 = $(call pkgfiles_lib,libhistory.so.6)
 # This dependency is not really necessary, just because we unconditionally add
 # "-lncurses" to LDFLAGS as this does not happen automatically.
-RUNTIME_DEP_PKGS_CSWlibhistory6 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibhistory6 += CSWlibncurses5
 OBSOLETED_BY_CSWlibhistory6 = CSWreadline
 
 PACKAGES += CSWlibreadline6
 CATALOGNAME_CSWlibreadline6 = libreadline6
 SPKG_DESC_CSWlibreadline6 = GNU readline library, libreadline.so.6
 PKGFILES_CSWlibreadline6 = $(call pkgfiles_lib,libreadline.so.6)
-RUNTIME_DEP_PKGS_CSWlibreadline6 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibreadline6 += CSWlibncurses5
 OBSOLETED_BY_CSWlibreadline6 = CSWreadline
 
 PACKAGES += CSWlibreadline-dev
@@ -58,8 +58,6 @@ NORUNPATH = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-curses
-
-TEST_TARGET = check
 
 include gar/category.mk
 

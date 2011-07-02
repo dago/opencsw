@@ -1,15 +1,6 @@
 diff -Naur readline-6.0.orig/doc/history.3 readline-6.0.patched/doc/history.3
 --- readline-6.0.orig/doc/history.3	2008-08-12 22:40:59.000000000 +0200
 +++ readline-6.0.patched/doc/history.3	2009-03-30 18:28:59.014167720 +0200
-@@ -8,7 +8,7 @@
- .\"
- .\"	Last Change: Thu Jul 31 08:46:08 EDT 2003
- .\"
--.TH HISTORY 3 "2003 July 31" "GNU History 6.0"
-+.TH HISTORY 3 "2003 July 31" "GNU History 5.0"
- .\"
- .\" File Name macro.  This used to be `.PN', for Path Name,
- .\" but Sun doesn't seem to like that very much.
 @@ -18,17 +18,17 @@
  ..
  .ds lp \fR\|(\fP
