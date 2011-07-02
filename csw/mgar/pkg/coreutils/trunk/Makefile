@@ -28,10 +28,6 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.gz
-PATCHFILES += 0001-Apply-proposed-upstream-patch-to-fix-a-utimens-gnuli.patch
-
-# patch ...apply proposed upstream... is a deviation from stock 8.10
-VERSION_FLAG_PATCH = 1
 
 # We define upstream file regex so we can be notifed of new upstream
 # software release
