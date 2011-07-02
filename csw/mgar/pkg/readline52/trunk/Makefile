@@ -23,23 +23,19 @@ SPKG_DESC_CSWlibhistory5 = GNU readline library, libhistory.so.5
 PKGFILES_CSWlibhistory5 = $(call pkgfiles_lib,libhistory.so.5)
 # This dependency is not really necessary, just because we unconditionally add
 # "-lncurses" to LDFLAGS as this does not happen automatically.
-RUNTIME_DEP_PKGS_CSWlibhistory5 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibhistory5 += CSWlibncurses5
 
 PACKAGES += CSWlibreadline5
 CATALOGNAME_CSWlibreadline5 = libreadline5
 SPKG_DESC_CSWlibreadline5 = GNU readline library, libreadline.so.5
 PKGFILES_CSWlibreadline5 = $(call pkgfiles_lib,libreadline.so.5)
-RUNTIME_DEP_PKGS_CSWlibreadline5 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibreadline5 += CSWlibncurses5
 
 BUILD64 = 1
 NORUNPATH = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-curses
-
-TEST_TARGET = check
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
 
