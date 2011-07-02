@@ -1,7 +1,7 @@
 # $HeadURL$
 
 NAME = cswclassutils
-VERSION = 1.44
+VERSION = 1.45
 CATEGORIES = utils
 
 # a few handy functions for defining 'generic' things dynamically
