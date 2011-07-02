@@ -83,6 +83,8 @@ install-custom:
 	@ginstall $(WORKSRC)/createpkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall $(WORKSRC)/stagepkg.8 $(DESTDIR)$(mandir)/man8/
 	@ginstall -d $(DESTDIR)$(libdir)/python/csw
+	@ginstall -d $(DESTDIR)$(datadir)/opencsw/gar
+	@ginstall -m 0644 $(GARDIR)/etc/commondirs* $(DESTDIR)/$(datadir)/opencsw/gar/
 	@rsync -av --exclude=.svn/ --exclude='*.pyc' $(GARDIR)/lib/python/ \
 		$(DESTDIR)/$(libdir)/python/csw/
 	@ln -s ../lib/python/csw/compare_pkgs.py \
