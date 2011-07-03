@@ -14,12 +14,6 @@ define BLURB
 endef
 
 CHECKPKG_OVERRIDES_CSWfindutils += file-with-bad-content|/usr/local|root/opt/csw/share/info/find.info
-CHECKPKG_OVERRIDES_CSWfindutils += file-collision|/opt/csw/gnu/oldfind|CSWfindutils|CSWgnulinks
-CHECKPKG_OVERRIDES_CSWfindutils += file-collision|/opt/csw/gnu/xargs|CSWfindutils|CSWgnulinks
-CHECKPKG_OVERRIDES_CSWfindutils += file-collision|/opt/csw/gnu/find|CSWfindutils|CSWgnulinks
-CHECKPKG_OVERRIDES_CSWfindutils += file-collision|/opt/csw/gnu/locate|CSWfindutils|CSWgnulinks
-CHECKPKG_OVERRIDES_CSWfindutils += file-collision|/opt/csw/gnu/updatedb|CSWfindutils|CSWgnulinks
-
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
