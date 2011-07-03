@@ -56,7 +56,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 # The PACKAGES variable tell GAR which packages to build
 PACKAGES  = CSWapache2 CSWapache2-dev CSWapache2-manual CSWap2suexec
-PACKAGES += CSWap2worker
+PACKAGES += CSWap2worker CSWapache2-utils
 # These packages are dummy versions to make dependencies nicer
 # as various things depend on them currently
 PACKAGES += CSWap2prefork CSWapache2rt CSWapache2c
@@ -71,6 +71,7 @@ ARCHALL_CSWapache2c = 1
 CATALOGNAME_CSWapache2 = apache2
 CATALOGNAME_CSWapache2-dev = apache2_dev
 CATALOGNAME_CSWapache2-manual = apache2_manual
+CATALOGNAME_CSWapache2-utils = apache2_utils
 CATALOGNAME_CSWap2suexec = ap2_suexec
 CATALOGNAME_CSWap2prefork = ap2_prefork
 CATALOGNAME_CSWap2worker = ap2_worker
@@ -79,16 +80,18 @@ CATALOGNAME_CSWapache2rt = apache2rt
 SPKG_DESC_CSWapache2 = A high performance Unix-based HTTP server.
 SPKG_DESC_CSWapache2-dev = The development files for Apache2.
 SPKG_DESC_CSWapache2-manual = The Apache2 manual files.
+SPKG_DESC_CSWapache2-utils = Utility programs for Apache2.
 SPKG_DESC_CSWap2suexec = The standard suEXEC binary for Apache2.
 SPKG_DESC_CSWap2worker = The apache worker mpm.
 SPKG_DESC_CSWap2prefork = A stub for the old prefork mpm package.
 SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package.
 SPKG_DESC_CSWapache2c = A stub for the old apache2c package.
 
+
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv CSWosslutils
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
 RUNTIME_DEP_PKGS_CSWapache2       += CSWapr CSWapr-util CSWbdb48
-RUNTIME_DEP_PKGS_CSWapache2       += CSWapache2c CSWperl
+RUNTIME_DEP_PKGS_CSWapache2       += CSWapache2c CSWperl CSWapache2-utils
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-dev  = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
@@ -215,6 +218,12 @@ APACHE_ROOT   = $(DESTDIR)$(prefix)/apache2
 LIBTOOL_LADIR = $(APACHE_ROOT)/lib
 STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 
+PKGFILES_CSWapache2-utils = .*sbin/ab .*sbin/dbmmanage .*sbin/htdbm
+PKGFILES_CSWapache2-utils += .*sbin/htdigest .*sbin/htpasswd .*sbin/logresolve
+PKGFILES_CSWapache2-utils += .*sbin/htcacheclean .*sbin/rotatelogs
+PKGFILES_CSWapache2-utils = .*man8/ab .*man1/dbmmanage .*man1/htdbm
+PKGFILES_CSWapache2-utils += .*man1/htdigest .*man1/htpasswd .*man8/logresolve
+PKGFILES_CSWapache2-utils += .*man8/htcacheclean .*man8/rotatelogs
 PKGFILES_CSWap2suexec = .*sbin/suexec .*libexec/.*suexec.* .*/man/.*suexec.*
 PKGFILES_CSWap2suexec += .*ap2mod/suexec
 PKGFILES_CSWapache2-dev = .*include/.* .*\.(a|la)
