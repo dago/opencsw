@@ -26,7 +26,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWfindutils.postinstall
 DISTFILES += CSWfindutils.cswreleasenotes
 
-RUNTIME_DEP_PKGS = CSWlibintl8
+RUNTIME_DEP_PKGS = CSWlibintl8 CSWmktemp
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
@@ -37,6 +37,10 @@ EXTRA_MERGE_EXCLUDE_FILES += /opt/csw/share/info/dir
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw
+# consider adding these once other bugs sorted out.
+# CONFIGURE_ARGS += --enable-leaf-optimisation
+# CONFIGURE_ARGS += --enable-d_type-optimization
+
 
 # Use OPT_FLAGS_SOS instead instead of CFLAGS_EXTRA, because we want -fast
 # to be first, and to have portions of it overridden by the ISA specific
@@ -46,8 +50,8 @@ OPT_FLAGS_SOS = -fast -xnolibmopt
 
 
 # Test target requires GNU diff
-TEST_TARGET = check
 TEST_ARGS = "PATH=/opt/csw/gnu:$$PATH"
+TEST_SCRIPTS = 
 
 # 12 of the tests fail:
 # iregex1.old-O0
@@ -66,7 +70,7 @@ TEST_ARGS = "PATH=/opt/csw/gnu:$$PATH"
 
 # Skip tests until the following is resolved, or we can backport the fixes as patches
 #   https://savannah.gnu.org/bugs/?30883
-SKIPTEST ?= 1
+# SKIPTEST ?= 1
 
 include gar/category.mk
 
