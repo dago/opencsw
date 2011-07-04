@@ -231,8 +231,7 @@ CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --enable-xml
 CONFIGURE_ARGS += --with-libxml-dir=$(prefix)
 CONFIGURE_ARGS += --with-config-file-path=$(sysconfdir)
-# enable this for the next release...
-#CONFIGURE_ARGS += --with-config-file-scan-dir=$(sysconfdir)/conf.d
+CONFIGURE_ARGS += --with-config-file-scan-dir=$(sysconfdir)/conf.d
 
 ifeq ($(SAPI),ap2)
 CONFIGURE_ARGS += --enable-bcmath=shared
