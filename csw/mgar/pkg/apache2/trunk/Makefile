@@ -112,6 +112,7 @@ CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapache2-utils
+CHECKPKG_OVERRIDES_CSWapache2-utils += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWap2prefork
