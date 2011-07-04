@@ -107,7 +107,6 @@ RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWapr CSWexpat CSWap2prefork
 RUNTIME_DEP_PKGS_CSWap2worker 	  += CSWbdb48 CSWapr-util CSWiconv CSWapache2c
 RUNTIME_DEP_PKGS_CSWapache2rt	   = CSWapache2
 
-CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWperl
@@ -115,7 +114,6 @@ CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapache2-utils
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWap2prefork
-CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWalternatives
 CHECKPKG_OVERRIDES_CSWap2worker += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2rt += surplus-dependency|CSWapache2
 
