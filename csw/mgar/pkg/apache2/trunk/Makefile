@@ -227,6 +227,7 @@ STRIP_DIRS    = $(APACHE_ROOT)/sbin $(APACHE_ROOT)/libexec
 PKGFILES_CSWapache2-utils = .*sbin/ab .*sbin/dbmmanage .*sbin/htdbm
 PKGFILES_CSWapache2-utils += .*sbin/htdigest .*sbin/htpasswd .*sbin/logresolve
 PKGFILES_CSWapache2-utils += .*sbin/htcacheclean .*sbin/rotatelogs
+PKGFILES_CSWapache2-utils += .*sbin/checkgid
 PKGFILES_CSWapache2-utils += .*man8/ab.8 .*man1/dbmmanage.1 .*man1/htdbm.1
 PKGFILES_CSWapache2-utils += .*man1/htdigest.1 .*man1/htpasswd.1
 PKGFILES_CSWapache2-utils += .*man8/logresolve.8
