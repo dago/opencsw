@@ -61,7 +61,7 @@ BUILD_DEP_PKGS += CSWggettext-dev CSWossldevel CSWlibgd2 CSWbdb42devel
 BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWiconv CSWimap-devel
 BUILD_DEP_PKGS += CSWoldapdevel CSWkrb5libdev CSWsasl CSWlibltdl7
 BUILD_DEP_PKGS += CSWlibmcrypt CSWfreetds CSWmysql5devel CSWunixodbc
-BUILD_DEP_PKGS += CSWlibpq CSWreadline CSWlibncurses-dev CSWnetsnmp
+BUILD_DEP_PKGS += CSWlibpq CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp
 BUILD_DEP_PKGS += CSWsqlite3devel CSWaspell CSWhtmltidy CSWpostgresql
 # NOTE: I think this is a leftover bug.  we shouldn't depend on two versions
 # of sqlite...
@@ -193,7 +193,7 @@ CHECKPKG_OVERRIDES_CSWphp5-pdosqlite += surplus-dependency|CSWphp5
 $(eval $(call php5_subpackage,pgsql,CSWlibpq))
 $(eval $(call php5_subpackage,posix))
 $(eval $(call php5_subpackage,pspell,CSWaspell))
-$(eval $(call php5_subpackage,readline,CSWreadline CSWlibncurses5))
+$(eval $(call php5_subpackage,readline,CSWlibreadline6 CSWlibncurses5))
 $(eval $(call php5_subpackage,session,CSWlibmm))
 PKGFILES_CSWphp5-session += .*/include/php/ext/session.*
 $(eval $(call php5_subpackage,shmop))
