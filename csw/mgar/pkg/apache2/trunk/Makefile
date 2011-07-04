@@ -101,6 +101,7 @@ RUNTIME_DEP_PKGS_CSWapache2-utils += CSWapr-util
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWosslrt
+RUNTIME_DEP_PKGS_CSWapache2-utils += CSWperl
 RUNTIME_DEP_PKGS_CSWap2suexec	   = CSWapache2
 RUNTIME_DEP_PKGS_CSWap2prefork     = CSWapache2 CSWapache2c
 RUNTIME_DEP_PKGS_CSWap2worker      = CSWapache2 CSWapr CSWexpat CSWap2prefork
