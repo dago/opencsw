@@ -54,6 +54,11 @@ SPKG_DESC_CSWflac = Utility programs for the Free Lossless Audio Codec (FLAC)
 RUNTIME_DEP_PKGS_CSWflac += CSWlibogg0
 RUNTIME_DEP_PKGS_CSWflac += CSWiconv
 RUNTIME_DEP_PKGS_CSWflac += CSWlibflac8
+# Dependencies for legacy packages needing old libs but depending on CSWflac
+RUNTIME_DEP_PKGS_CSWflac += CSWlibflac4
+CHECKPKG_OVERRIDES_CSWflac += surplus-dependency|CSWlibflac4
+RUNTIME_DEP_PKGS_CSWflac += CSWlibflac7
+CHECKPKG_OVERRIDES_CSWflac += surplus-dependency|CSWlibflac7
 
 PACKAGES += CSWxmms-flac
 PKGFILES_CSWxmms-flac = $(libdir)/xmms/.*
