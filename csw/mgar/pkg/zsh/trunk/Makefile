@@ -58,6 +58,7 @@ CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share/zsh/functions/_complete_tag
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share/zsh/functions/_twisted
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share/zsh/functions/compaudit
+CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/share/zsh/functions/mere
 
 include gar/category.mk
 
