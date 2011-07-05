@@ -17,7 +17,7 @@ PATCHFILES += 0003-Work-around-conversion-in-iostream.patch
 PACKAGES += CSWlibid3-3-8-3
 CATALOGNAME_CSWlibid3-3-8-3 = libid3_3_8_3
 SPKG_DESC_CSWlibid3-3-8-3 = Library for manipulating ID3v1/v1.1 and ID3v2 tags, libid3-3.8.so.3
-PKGFILES_CSWlibid3-3-8-3 = $(call baseisadirs,$(libdir),libid3-3\.8\.so\.3(\.\d+)*)
+PKGFILES_CSWlibid3-3-8-3 = $(call pkgfiles_lib,libid3-3.8.so.3)
 RUNTIME_DEP_PKGS_CSWlibid3-3-8-3 += CSWzlib
 
 PACKAGES += CSWlibid3-dev
@@ -47,11 +47,5 @@ SUBDIR64-i386 = amd64
 EXTRA_LINKER_FLAGS = -L$($(GARCOMPILER)_CC_HOME)/lib/$(SUBDIR$(MEMORYMODEL)-$(GARCH)) -lCstd -lz
 
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
