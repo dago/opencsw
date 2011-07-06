@@ -11,12 +11,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.astron.com/pub/tcsh/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += CSWtcsh.postinstall
-DISTFILES += CSWtcsh.postremove
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES  = $(DISTNAME).tar.gz
 
 LICENSE = Copyright
 
@@ -24,16 +19,24 @@ RUNTIME_DEP_PKGS = CSWiconv
 
 VENDOR_URL = http://www.tcsh.org/
 
-EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
+EXTRA_CPPFLAGS += -D_FILE_OFFSET_BITS=64
+# As documented in README, this overrides the setting in pathnames.h
+EXTRA_CPPFLAGS += -D_PATH_LOCAL=\'\"$(bindir)\"\'
+# EXTRA_CPPFLAGS += -D_PATH_TCSHELL=\"$(bindir)/tcsh\"
 
 # Skip tests until this one is fixed:
 #   http://bugs.gw.com/view.php?id=87
 SKIPTEST = 1
 
 INSTALL_ARGS = install.man
+
+ETCSHELLS = /opt/csw/bin/tcsh
+
+# These are examples only
+CHECKPKG_OVERRIDES_CSWtcsh += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/tcsh.1
+
+# This is from tw.h, possibly harmless.
+#   #define DEFAULTLIST ":/usr/man/cat1:/usr/man/cat8:/usr/man/cat6:/usr/local/man/cat1:/usr/local/man/cat8:/usr/local/man/cat6"    /* if no HPATH */
+CHECKPKG_OVERRIDES_CSWtcsh += file-with-bad-content|/usr/local|root/opt/csw/bin/tcsh
 
 include gar/category.mk
