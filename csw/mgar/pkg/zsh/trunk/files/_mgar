@@ -1,0 +1,39 @@
+#compdef mgar
+
+local curcontext="$curcontext" ret=1
+local subcmd
+local -a cmds
+
+if (( CURRENT == 2 )); then
+  cmds=(
+    help:list\ available\ commands
+    ${${(M)${(f)"$(_call_program commands ${words[1]} help)"}:#  *}//  (#b)([a-z-]##)[^A-Z]##(?)/$match[1]:${match[2]:l}}
+  )
+
+  _describe 'mgar command' cmds && ret=0
+else
+  shift words
+  (( CURRENT-- ))
+  subcmd="$words[1]"
+  curcontext="${curcontext%:*}-${subcmd}:"
+  case $subcmd in
+  commit)
+    _arguments '-m:commit message' && ret=0
+  ;;
+  scm)
+    service=svn
+    _subversion && ret=0
+  ;;
+  init)
+    _directories && ret=0
+  ;;
+  up)
+    _arguments '--all' && ret=0
+  ;;
+  *)
+    _default && ret=0
+  ;;
+  esac
+fi
+
+return ret
