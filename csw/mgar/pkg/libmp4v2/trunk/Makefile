@@ -44,7 +44,7 @@ RUNTIME_DEP_PKGS_CSWlibmp4v2-dev += CSWlibmp4v2-0
 PACKAGES += CSWlibmp4v2-utils
 SPKG_DESC_CSWlibmp4v2-utils = Utility programs for mp4 file manipulation
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWlibmp4v2-utils += CSWlibgnugetopt1
+RUNTIME_DEP_PKGS_CSWlibmp4v2-utils += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSWlibmp4v2-utils += CSWlibmp4v2-0
 
 EXTRA_LINKER_FLAGS += -norunpath
