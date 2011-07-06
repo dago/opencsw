@@ -241,6 +241,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 		$(foreach FILE,$(ETCSERVICES),$$F[1] = "cswetcservices" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(INETDCONF),$$F[1] = "cswinetd" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(INITSMF),$$F[1] = "cswinitsmf" if( $$F[2] =~ m(^$(FILE)$$) );)\
+		$(foreach FILE,$(ETCSHELLS),$$F[1] = "cswetcshells" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(USERGROUP),$$F[1] = "cswusergroup" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(foreach FILE,$(CRONTABS),$$F[1] = "cswcrontab" if( $$F[2] =~ m(^$(FILE)$$) );)\
 		$(if $(PYCOMPILE),$(foreach FILE,$(_PYCOMPILE_FILES),$$F[1] = "cswpycompile" if( $$F[2] =~ m(^$(FILE)$$) );))\
@@ -269,6 +270,7 @@ _CSWCLASS_FILTER = | perl -ane '\
 _CSWCLASSES  = cswusergroup ugfiles
 _CSWCLASSES += cswmigrateconf cswcpsampleconf cswpreserveconf cswcptemplates
 _CSWCLASSES += cswetcservices
+_CSWCLASSES += cswetcshells
 _CSWCLASSES += cswcrontab
 _CSWCLASSES += cswpycompile
 _CSWCLASSES += cswinetd
