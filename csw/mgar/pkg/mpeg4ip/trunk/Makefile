@@ -1,3 +1,7 @@
+# This is pretty hard to build and outdated:
+#   https://trac.macports.org/ticket/17141
+# Use libmp4v2 instead.
+
 NAME = mpeg4ip
 VERSION = 1.6.1
 CATEGORIES = lib
@@ -27,9 +31,6 @@ PATCHFILES  = 0002-Move-external-function-definition-out-of-function.patch
 PATCHFILES += 0003-Change-type-from-Void-to-void.patch
 PATCHFILES += 0004-Add-one-more-scratch-channel-or-compilation-fails.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 GARCOMPILER = GNU
 BUILD64 = 1
 
@@ -38,9 +39,11 @@ EXTRA_CPPFLAGS = -DHAVE_GETOPT_H -D__GNU_LIBRARY__
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/cvs_bootstrap
 
+# The player needs ffmpeg which needs faad which needs mpeg4ip.
+# Build the player in a separate recipe after we have the lib to break the circle.
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-static
-CONFIGURE_ARGS += --enable-server --enable-player
+CONFIGURE_ARGS += --enable-server --disable-player
 CONFIGURE_ARGS += --enable-mp4live
 CONFIGURE_ARGS += --enable-ipv6
 
