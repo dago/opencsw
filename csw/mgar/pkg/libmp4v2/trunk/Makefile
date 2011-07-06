@@ -1,3 +1,9 @@
+# TBD:
+# - Collision with CSWfaad2:
+#     /csw/lib/libmp4v2.so
+#     /opt/csw/include/mp4.h
+# - How does ths library relate to mpeg4ip, both released 1.5.0.1 and unreleased 1.6.1 ?
+
 NAME = libmp4v2
 VERSION = 1.5.0.1
 CATEGORIES = lib
@@ -38,7 +44,7 @@ RUNTIME_DEP_PKGS_CSWlibmp4v2-dev += CSWlibmp4v2-0
 PACKAGES += CSWlibmp4v2-utils
 SPKG_DESC_CSWlibmp4v2-utils = Utility programs for mp4 file manipulation
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWlibmp4v2-utils += CSWlibgnugetopt
+RUNTIME_DEP_PKGS_CSWlibmp4v2-utils += CSWlibgnugetopt1
 RUNTIME_DEP_PKGS_CSWlibmp4v2-utils += CSWlibmp4v2-0
 
 EXTRA_LINKER_FLAGS += -norunpath
