@@ -1,0 +1,47 @@
+From 7766515552cdbb601d17dadbdac393590a793783 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 6 Jul 2011 10:40:28 +0200
+Subject: [PATCH] Sanitize getopt.h
+
+---
+ gnu/getopt.h |   13 +++++++------
+ 1 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/gnu/getopt.h b/gnu/getopt.h
+index d6ceb0e..135bade 100644
+--- a/gnu/getopt.h
++++ b/gnu/getopt.h
+@@ -78,7 +78,7 @@ extern int optopt;
+ 
+ struct option
+ {
+-#if defined (__STDC__) && __STDC__
++#if defined (__STDC__) && (__STDC__ || defined __sun)
+   const char *name;
+ #else
+   char *name;
+@@ -96,15 +96,16 @@ struct option
+ #define required_argument	1
+ #define optional_argument	2
+ 
+-#if defined (__STDC__) && __STDC__
+-#ifdef __GNU_LIBRARY__
++
++#if defined (__STDC__) && (__STDC__ || defined __sun)
++#if defined __GNU_LIBRARY__ || defined __sun
+ /* Many other libraries have conflicting prototypes for getopt, with
+    differences in the consts, in stdlib.h.  To avoid compilation
+-   errors, only prototype getopt for the GNU C library.  */
++   errors, only prototype getopt for the GNU C library and for Solaris.  */
+ extern int getopt (int argc, char *const *argv, const char *shortopts);
+-#else /* not __GNU_LIBRARY__ */
++#else /* not __GNU_LIBRARY__ || __sun */
+ extern int getopt ();
+-#endif /* __GNU_LIBRARY__ */
++#endif /* __GNU_LIBRARY__ || __sun */
+ extern int getopt_long (int argc, char *const *argv, const char *shortopts,
+ 		        const struct option *longopts, int *longind);
+ extern int getopt_long_only (int argc, char *const *argv,
+-- 
+1.7.6
+
