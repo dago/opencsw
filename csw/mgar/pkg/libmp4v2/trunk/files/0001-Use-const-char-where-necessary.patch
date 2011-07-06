@@ -1,0 +1,25 @@
+From 191a900264f5b85de5533fd9f341a36d250c8c41 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 6 Jul 2011 10:29:34 +0200
+Subject: [PATCH] Use const char where necessary
+
+---
+ rtphint.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/rtphint.cpp b/rtphint.cpp
+index 6a193ac..def6998 100644
+--- a/rtphint.cpp
++++ b/rtphint.cpp
+@@ -314,7 +314,7 @@ void MP4RtpHintTrack::GetPayload(
+ 	char **ppEncodingParams)
+ {
+   const char* pRtpMap;
+-  char* pSlash;
++  const char* pSlash;
+   u_int32_t length;
+ 	InitPayload();
+ 
+-- 
+1.7.5.4
+

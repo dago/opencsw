@@ -1,0 +1,135 @@
+From 0dec5ae5d46a3708ff6ad6f6338e4f9db4984ec6 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 6 Jul 2011 14:53:50 +0200
+Subject: [PATCH] Add libgnugetopt.so to executables
+
+---
+ test/Makefile.am |   10 +++++-----
+ test/Makefile.in |   10 +++++-----
+ util/Makefile.am |   14 +++++++-------
+ util/Makefile.in |   14 +++++++-------
+ 4 files changed, 24 insertions(+), 24 deletions(-)
+
+diff --git a/test/Makefile.am b/test/Makefile.am
+index 86ece8e..758ae6f 100644
+--- a/test/Makefile.am
++++ b/test/Makefile.am
+@@ -7,17 +7,17 @@ c_api_SOURCES = c_api.c
+ c_api_LDADD = $(top_builddir)/libmp4v2.la -lstdc++
+ 
+ mp4broadcaster_SOURCES = mp4broadcaster.cpp
+-mp4broadcaster_LDADD = $(top_builddir)/libmp4v2.la -lsocket -lnsl -lresolv
++mp4broadcaster_LDADD = $(top_builddir)/libmp4v2.la -lsocket -lnsl -lresolv -lgnugetopt
+ 
+ nullcreate_SOURCES = nullcreate.cpp
+-nullcreate_LDADD = $(top_builddir)/libmp4v2.la
++nullcreate_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+ nullvplayer_SOURCES = nullvplayer.cpp
+-nullvplayer_LDADD = $(top_builddir)/libmp4v2.la
++nullvplayer_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+ urltrack_SOURCES = urltrack.cpp
+-urltrack_LDADD = $(top_builddir)/libmp4v2.la
++urltrack_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+ mp4clip_SOURCES = mp4clip.cpp
+-mp4clip_LDADD = $(top_builddir)/libmp4v2.la 
++mp4clip_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+diff --git a/test/Makefile.in b/test/Makefile.in
+index e2bde38..e72699f 100644
+--- a/test/Makefile.in
++++ b/test/Makefile.in
+@@ -199,15 +199,15 @@ INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/util
+ c_api_SOURCES = c_api.c
+ c_api_LDADD = $(top_builddir)/libmp4v2.la -lstdc++
+ mp4broadcaster_SOURCES = mp4broadcaster.cpp
+-mp4broadcaster_LDADD = $(top_builddir)/libmp4v2.la -lsocket -lnsl -lresolv
++mp4broadcaster_LDADD = $(top_builddir)/libmp4v2.la -lsocket -lnsl -lresolv -lgnugetopt
+ nullcreate_SOURCES = nullcreate.cpp
+-nullcreate_LDADD = $(top_builddir)/libmp4v2.la
++nullcreate_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ nullvplayer_SOURCES = nullvplayer.cpp
+-nullvplayer_LDADD = $(top_builddir)/libmp4v2.la
++nullvplayer_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ urltrack_SOURCES = urltrack.cpp
+-urltrack_LDADD = $(top_builddir)/libmp4v2.la
++urltrack_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ mp4clip_SOURCES = mp4clip.cpp
+-mp4clip_LDADD = $(top_builddir)/libmp4v2.la 
++mp4clip_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ all: all-am
+ 
+ .SUFFIXES:
+diff --git a/util/Makefile.am b/util/Makefile.am
+index 0ea0af3..de43e64 100644
+--- a/util/Makefile.am
++++ b/util/Makefile.am
+@@ -6,25 +6,25 @@ bin_PROGRAMS = mp4dump mp4extract mp4info mp4trackdump mp4tags mp4art
+ check_PROGRAMS = mp4syncfiles
+ 
+ mp4dump_SOURCES = mp4dump.cpp mpeg4ip_getopt.h
+-mp4dump_LDADD = $(top_builddir)/libmp4v2.la
++mp4dump_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+ mp4extract_SOURCES = mp4extract.cpp mpeg4ip_getopt.h
+-mp4extract_LDADD = $(top_builddir)/libmp4v2.la 
++mp4extract_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+ mp4info_SOURCES = mp4info.cpp mpeg4ip_getopt.h
+-mp4info_LDADD = $(top_builddir)/libmp4v2.la
++mp4info_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+ mp4trackdump_SOURCES = mp4trackdump.cpp mpeg4ip_getopt.h
+-mp4trackdump_LDADD = $(top_builddir)/libmp4v2.la
++mp4trackdump_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+ mp4tags_SOURCES = mp4tags.cpp mpeg4ip_getopt.h
+-mp4tags_LDADD = $(top_builddir)/libmp4v2.la 
++mp4tags_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+ mp4art_SOURCES = mp4art.cpp mpeg4ip_getopt.h
+-mp4art_LDADD = $(top_builddir)/libmp4v2.la
++mp4art_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+ mp4syncfiles_SOURCES = mp4syncfiles.cpp
+-mp4syncfiles_LDADD = $(top_builddir)/libmp4v2.la
++mp4syncfiles_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ 
+ EXTRA_DIST = mp4dump60.dsp  \
+ 	mp4info.dsp mp4tags.dsp
+diff --git a/util/Makefile.in b/util/Makefile.in
+index b52ce56..67973bf 100644
+--- a/util/Makefile.in
++++ b/util/Makefile.in
+@@ -199,19 +199,19 @@ sysconfdir = @sysconfdir@
+ target_alias = @target_alias@
+ INCLUDES = -I$(top_srcdir)
+ mp4dump_SOURCES = mp4dump.cpp mpeg4ip_getopt.h
+-mp4dump_LDADD = $(top_builddir)/libmp4v2.la
++mp4dump_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ mp4extract_SOURCES = mp4extract.cpp mpeg4ip_getopt.h
+-mp4extract_LDADD = $(top_builddir)/libmp4v2.la 
++mp4extract_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ mp4info_SOURCES = mp4info.cpp mpeg4ip_getopt.h
+-mp4info_LDADD = $(top_builddir)/libmp4v2.la
++mp4info_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ mp4trackdump_SOURCES = mp4trackdump.cpp mpeg4ip_getopt.h
+-mp4trackdump_LDADD = $(top_builddir)/libmp4v2.la
++mp4trackdump_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ mp4tags_SOURCES = mp4tags.cpp mpeg4ip_getopt.h
+-mp4tags_LDADD = $(top_builddir)/libmp4v2.la 
++mp4tags_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ mp4art_SOURCES = mp4art.cpp mpeg4ip_getopt.h
+-mp4art_LDADD = $(top_builddir)/libmp4v2.la
++mp4art_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ mp4syncfiles_SOURCES = mp4syncfiles.cpp
+-mp4syncfiles_LDADD = $(top_builddir)/libmp4v2.la
++mp4syncfiles_LDADD = $(top_builddir)/libmp4v2.la -lgnugetopt
+ EXTRA_DIST = mp4dump60.dsp  \
+ 	mp4info.dsp mp4tags.dsp
+ 
+-- 
+1.7.5.4
+

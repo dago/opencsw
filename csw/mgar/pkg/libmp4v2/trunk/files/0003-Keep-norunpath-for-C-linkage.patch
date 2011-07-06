@@ -1,0 +1,25 @@
+From d47639eb2005c28aaaeed453189b8e1e9f4e30b1 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 6 Jul 2011 11:16:04 +0200
+Subject: [PATCH] Keep -norunpath for C++ linkage
+
+---
+ ltmain.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/ltmain.sh b/ltmain.sh
+index 06823e0..80f9e41 100644
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -1623,7 +1623,7 @@ EOF
+       # -pg pass through profiling flag for GCC
+       # @file GCC response files
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*|-pg| \
+-      -t[45]*|-txscale*|@*)
++      -t[45]*|-txscale*|@*|-norunpath)
+ 
+ 	# Unknown arguments in both finalize_command and compile_command need
+ 	# to be aesthetically quoted because they are evaled later.
+-- 
+1.7.5.4
+
