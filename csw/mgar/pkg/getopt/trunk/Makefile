@@ -18,13 +18,15 @@ PATCHFILES += 0001-Include-locale.h-when-using-gettext.patch
 PATCHFILES += 0002-Do-not-make-standalone-version.patch
 PATCHFILES += 0003-Makefile-settings.patch
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+# Patch from http://lists.gnu.org/archive/html/bug-bison/2010-04/msg00046.html
+PATCHFILES += 0004-Sanitize-getopt.h.patch
 
 PACKAGES = CSWggetopt
 CATALOGNAME = ggetopt
 
 VENDOR_URL = http://software.frodo.looijaard.name/getopt/
+
+EXTRA_CFLAGS += -Xc
 
 # No scipt there...
 CONFIGURE_SCRIPTS =
@@ -49,3 +51,8 @@ include gar/category.mk
 
 # Use correct version of 'install'
 PATH := /opt/csw/gnu:$(PATH)
+
+post-install-modulated:
+	perl -pi -e 's,/usr/local/lib,$(libdir),' \
+		$(DESTDIR)$(mandir)/man1/getopt.1
+
