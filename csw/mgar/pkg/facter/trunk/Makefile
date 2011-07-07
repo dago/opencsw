@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = facter
-VERSION = 1.5.9
+VERSION = 1.6.0
 CATEGORIES = apps
 
 DESCRIPTION = A system fact gatherer
@@ -18,14 +18,15 @@ define BLURB
   additional mechanisms for retrieving facts.
 endef
 
-MASTER_SITES = http://puppetlabs.com/downloads/facter/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES   = http://puppetlabs.com/downloads/facter/
+DISTFILES      = $(NAME)-$(VERSION).tar.gz
 SPKG_SOURCEURL = http://puppetlabs.com/
+LICENSE        = LICENSE
 
 RUNTIME_DEP_PKGS = CSWruby18
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
-PATCHFILES += 0001-Patch-to-prtconf-run-in-memory.rb.patch
+#PATCHFILES += 0001-Patch-to-prtconf-run-in-memory.rb.patch
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
@@ -36,7 +37,6 @@ INSTALL_SCRIPTS   = facter
 CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/ssh.rb
 CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/Cfkey.rb
 CHECKPKG_OVERRIDES_CSWfacter += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/site_ruby/1.8/facter/util/manufacturer.rb
-CHECKPKG_OVERRIDES_CSWfacter += pkginfo-opencsw-repository-uncommitted
 
 include gar/category.mk
 
