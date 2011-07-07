@@ -12,14 +12,13 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += _pkgutil _mgar
-DISTFILES += CSWzsh.postinstall CSWzsh.postremove
 
 PACKAGES = CSWzsh
 CATALOGNAME_CSWzsh = zsh
 
 LICENSE = LICENCE
 
-RUNTIME_DEP_PKGS = CSWiconv CSWlibncursesw5 CSWlibpcre0 CSWlibgdbm3
+RUNTIME_DEP_PKGS = CSWiconv CSWlibncursesw5 CSWlibpcre0 CSWlibgdbm3 CSWcas-etcshells
 BUILD_DEP_PKGS = CSWpcre
 
 SPKG_SOURCEURL = http://www.zsh.org
@@ -59,6 +58,9 @@ CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share/zsh/functions/_twisted
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share/zsh/functions/compaudit
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/share/zsh/functions/mere
+
+SPKG_CLASSES = none cswetcshells
+ETCSHELLS = /opt/csw/bin/zsh
 
 include gar/category.mk
 
