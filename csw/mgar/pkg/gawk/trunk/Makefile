@@ -17,12 +17,16 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(DISTNAME).tar.xz
 
+PATCHFILES += 0001-Be-not-that-strict-on-standard.patch
+
 RUNTIME_DEP_PKGS_CSWgawk += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgawk += CSWlibsigsegv2
 RUNTIME_DEP_PKGS_CSWgawk += CSWlibreadline6
 
-# Coompilation requires setting of __STDC__ to at least 1
-EXTRA_CFLAGS = -Xc
+# Otherwise libsigsegv is not detected properly on Solaris 9 i386 as reported in
+#   http://lists.gnu.org/archive/html/bug-gnulib/2011-07/msg00008.html
+# Also needs the above patch.
+EXTRA_CFLAGS = -features=extensions
 
 # These are install instructions for other platforms (os/2... 'nuff said.)
 CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/share|root/opt/csw/share/info/gawk.info
@@ -33,10 +37,6 @@ CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/local|root/opt/csw/shar
 # This is an example path (YMMV in the docs)
 CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gawk.1
 CHECKPKG_OVERRIDES_CSWgawk += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/pgawk.1
-
-# This is a detection problem, reported upstream.
-CHECKPKG_OVERRIDES_CSWgawk-i386 += surplus-dependency|CSWlibsigsegv2
-CHECKPKG_OVERRIDES_CSWgawk += $(CHECKPKG_OVERRIDES_CSWgawk-$(GARCH))
 
 include gar/category.mk
 
