@@ -1,5 +1,6 @@
 NAME = daemontools
 VERSION = 0.76
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = A collection of tools for managing UNIX services

@@ -1,5 +1,6 @@
 NAME = sword
 VERSION = 1.5.9
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = SWORD Engine (gcc3)

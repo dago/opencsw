@@ -1,5 +1,6 @@
 NAME = gftp
 VERSION = 2.0.19
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = A file transfer client with text and graphical user interfaces.

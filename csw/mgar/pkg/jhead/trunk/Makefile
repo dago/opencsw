@@ -1,5 +1,6 @@
 NAME = jhead
 VERSION = 2.7
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = EXIF parser for JPEG images

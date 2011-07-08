@@ -1,5 +1,6 @@
 NAME = mono
 VERSION = 2.10.1
+GARTYPE = v1
 CATEGORIES = lang
 
 DESCRIPTION = Mono Runtime

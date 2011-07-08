@@ -1,5 +1,6 @@
 NAME = firefox
 VERSION = 3.0.13
+GARTYPE = v1
 CATEGORIES = x11
 DISTNAME = $(NAME)
 

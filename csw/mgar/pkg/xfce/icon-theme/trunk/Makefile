@@ -1,4 +1,5 @@
 NAME = xfce4-icon-theme
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Icon Theme

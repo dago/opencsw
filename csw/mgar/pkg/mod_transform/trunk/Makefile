@@ -1,5 +1,6 @@
 NAME = mod_transform
 VERSION = 0.6.0
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = XSLT filter for Apache 2.0

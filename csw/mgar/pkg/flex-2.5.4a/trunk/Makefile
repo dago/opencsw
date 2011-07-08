@@ -1,5 +1,6 @@
 NAME = flex
 VERSION = 2.5.4
+GARTYPE = v1
 CATEGORIES = devel
 
 DESCRIPTION = older version of the 'flex' parser generator

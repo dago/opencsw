@@ -1,5 +1,6 @@
 NAME = Terminal
 VERSION = 0.2.8
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Terminal Emulator

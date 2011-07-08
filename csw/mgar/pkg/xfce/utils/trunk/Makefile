@@ -1,4 +1,5 @@
 NAME = xfce-utils
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Utilities

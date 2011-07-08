@@ -1,5 +1,6 @@
 NAME = openal
 VERSION = 0.0.8
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = openal - A 3D positional spatialized sound library (gcc3)

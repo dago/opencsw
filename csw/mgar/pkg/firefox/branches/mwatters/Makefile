@@ -1,5 +1,6 @@
 NAME = firefox
 VERSION = 3.5
+GARTYPE = v1
 CATEGORIES = apps
 DISTNAME = $(NAME)
 

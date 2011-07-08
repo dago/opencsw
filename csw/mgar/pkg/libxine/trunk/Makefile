@@ -1,5 +1,6 @@
 NAME = libxine
 VERSION = 1.1.8
+GARTYPE = v1
 CATEGORIES = apps
 
 DESCRIPTION = Xine-lib 1.1.8

@@ -1,4 +1,5 @@
 NAME = xfce4-appfinder
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Application Finder

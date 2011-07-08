@@ -1,5 +1,6 @@
 NAME = toplevel
 VERSION = 1.0
+GARTYPE = v1
 CATEGORIES = meta
 
 DESCRIPTION = Blastwave automated build

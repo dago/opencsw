@@ -1,6 +1,7 @@
 NAME = avantfax
 VERSION = 3.1.2
 SF_PROJ = avantfax
+GARTYPE = v1
 CATEGORIES = apps
 
 DESCRIPTION = AvantFAX is a web application for managing faxes on HylaFAX fax servers

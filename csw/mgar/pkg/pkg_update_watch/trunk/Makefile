@@ -1,5 +1,6 @@
 NAME = pkg_update_watch
 VERSION = 1.0
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = Package updates watcher

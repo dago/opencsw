@@ -1,4 +1,5 @@
 NAME = kdetoys
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Fun apps for KDE (gcc3)

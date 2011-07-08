@@ -1,5 +1,6 @@
 NAME = textutils
 VERSION = 2.1
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = Text utilities

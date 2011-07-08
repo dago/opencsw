@@ -1,5 +1,6 @@
 NAME      = tomcat4
 VERSION   = 4.1.37
+GARTYPE = v1
 CATEGORIES   = server
 
 DESCRIPTION  =  Apache Jakarta Tomcat 4 Servlet/JSP Container

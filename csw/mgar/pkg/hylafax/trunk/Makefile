@@ -1,5 +1,6 @@
 NAME = hylafax
 VERSION = 5.2.5
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = An enterprise-class system for sending and receiving facsimiles and alpha-numeric pages

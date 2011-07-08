@@ -1,4 +1,5 @@
 NAME = xfdesktop
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Desktop Manager

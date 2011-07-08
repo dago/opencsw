@@ -1,6 +1,7 @@
 NAME = ap2_modgeoip
 SPKG_NAME = mod_geoip
 VERSION = 1.2.5
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = Apache 2.x GeoIP module

@@ -1,4 +1,5 @@
 NAME = xfwm4-themes
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Window Manager Themes

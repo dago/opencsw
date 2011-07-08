@@ -1,5 +1,6 @@
 NAME = ca-certificates
 VERSION = $(shell date '+%Y%m%d')
+GARTYPE = v1
 CATEGORIES = xtra
 
 DESCRIPTION = CA certificates

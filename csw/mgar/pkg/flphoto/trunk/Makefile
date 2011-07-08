@@ -1,5 +1,6 @@
 NAME = flphoto
 VERSION = 1.2
+GARTYPE = v1
 CATEGORIES = apps
 
 DESCRIPTION = basic image management and display program based on the FLTK toolkit

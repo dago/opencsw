@@ -1,5 +1,6 @@
 NAME = ddd
 VERSION = 3.3.8
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = Common graphical user interface for GDB, DBX and XDB

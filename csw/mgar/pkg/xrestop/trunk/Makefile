@@ -1,5 +1,6 @@
 NAME = xrestop
 VERSION = 0.3
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = 'top' like staticstics for X11 server side resource usage

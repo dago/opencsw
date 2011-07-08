@@ -1,5 +1,6 @@
 NAME = daimonin
 VERSION = 
+GARTYPE = v1
 CATEGORIES = apps
 
 DESCRIPTION = FREE online role playing game (MMORPG)

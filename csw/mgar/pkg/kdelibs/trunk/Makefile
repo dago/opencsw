@@ -1,4 +1,5 @@
 NAME = kdelibs
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Base set of libraries needed by KDE programs (gcc3)

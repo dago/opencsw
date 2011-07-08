@@ -1,5 +1,6 @@
 NAME = apg
 VERSION = 2.2.3
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = Automated Password Generator

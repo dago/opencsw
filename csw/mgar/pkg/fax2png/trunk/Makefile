@@ -1,5 +1,6 @@
 NAME = fax2png
 VERSION = 1.0
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = 1-bit multipage TIFF (fax or scan) to PNG image converter

@@ -1,5 +1,6 @@
 NAME = fileutils
 VERSION = 4.1
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = File utilities

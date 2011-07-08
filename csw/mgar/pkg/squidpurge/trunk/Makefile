@@ -1,5 +1,6 @@
 NAME = purge
 VERSION = 20040201
+GARTYPE = v1
 CATEGORIES = net
 
 DESCRIPTION = Purge squid cache entries.

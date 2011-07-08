@@ -1,5 +1,6 @@
 NAME = pwsafe
 VERSION = 0.1.6
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = command-line password database.

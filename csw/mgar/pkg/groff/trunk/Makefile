@@ -1,5 +1,6 @@
 NAME = groff
 VERSION = 1.19
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = front end for the groff document formatting system

@@ -1,5 +1,6 @@
 NAME = libglade
 VERSION = 0.17
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = library to load Glade XML user interface files at runtime

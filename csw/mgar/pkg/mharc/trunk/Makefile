@@ -1,5 +1,6 @@
 NAME = mharc
 VERSION = 0.7.3
+GARTYPE = v1
 CATEGORIES = utils
 GARCH = all
 

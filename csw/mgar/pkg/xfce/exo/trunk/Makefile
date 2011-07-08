@@ -1,4 +1,5 @@
 NAME = exo
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Extensions Library 

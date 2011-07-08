@@ -1,5 +1,6 @@
 NAME = pubcookie
 VERSION = 3.3.3
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = Open-source software for intra-institutional web authentication

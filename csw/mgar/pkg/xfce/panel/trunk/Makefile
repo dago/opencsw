@@ -1,4 +1,5 @@
 NAME = xfce4-panel
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Panel

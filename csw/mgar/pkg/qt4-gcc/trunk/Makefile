@@ -1,5 +1,6 @@
 NAME = qt
 VERSION = 4.3.2
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = TrollTech C++ application framework

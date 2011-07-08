@@ -1,5 +1,6 @@
 NAME      = jboss4
 VERSION   = 4.2.2.GA
+GARTYPE = v1
 CATEGORIES   = server
 
 DESCRIPTION  =  J2EE Application Server

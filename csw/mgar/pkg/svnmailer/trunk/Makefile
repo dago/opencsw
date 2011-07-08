@@ -2,6 +2,7 @@ NAME = svnmailer
 VERSION = 1.1.0
 GARSVNREV  = r1373
 GARRELEASE = dev-$(GARSVNREV)
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = A tool to post subversion repository information.

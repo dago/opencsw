@@ -1,5 +1,6 @@
 NAME = gaim
 VERSION = 2.0.0beta3
+GARTYPE = v1
 CATEGORIES = gnome
 
 DESCRIPTION = A GTK2-based instant messaging client.

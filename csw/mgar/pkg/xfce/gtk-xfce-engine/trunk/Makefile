@@ -1,4 +1,5 @@
 NAME = gtk-xfce-engine
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce GTK theme engine 

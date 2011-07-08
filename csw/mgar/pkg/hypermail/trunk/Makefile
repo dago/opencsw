@@ -1,5 +1,6 @@
 NAME = hypermail
 VERSION = 2.2.0
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = mail archive tool

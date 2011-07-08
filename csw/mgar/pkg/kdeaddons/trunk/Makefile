@@ -1,4 +1,5 @@
 NAME = kdeaddons
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Additional plugins/scripts for KDE (gcc3)

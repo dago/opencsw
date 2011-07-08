@@ -1,5 +1,6 @@
 NAME = ethereal
 VERSION = 0.99.0
+GARTYPE = v1
 CATEGORIES = net
 
 DESCRIPTION = A GUI network protocol analyzer.

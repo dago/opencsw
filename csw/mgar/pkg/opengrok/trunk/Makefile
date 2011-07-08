@@ -1,5 +1,6 @@
 NAME = opengrok
 VERSION = 0.7
+GARTYPE = v1
 CATEGORIES = devel
 
 DESCRIPTION = A wicked fast source browser

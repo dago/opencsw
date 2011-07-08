@@ -1,4 +1,5 @@
 NAME = libxfcegui4
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Widget Library 

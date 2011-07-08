@@ -1,5 +1,6 @@
 NAME = dcraw
 VERSION = 8.77
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = Raw Digital Photo Decoder

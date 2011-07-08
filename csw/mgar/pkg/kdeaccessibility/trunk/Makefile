@@ -1,4 +1,5 @@
 NAME = kdeaccessibility
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Accessibility apps for KDE environment (gcc3)

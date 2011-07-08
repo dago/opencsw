@@ -1,5 +1,6 @@
 NAME = system-tray-applet
 VERSION = 0.15
+GARTYPE = v1
 CATEGORIES = gnome
 
 DESCRIPTION = Gnome 2 System Tray Applet

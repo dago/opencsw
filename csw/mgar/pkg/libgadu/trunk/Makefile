@@ -1,5 +1,6 @@
 NAME = libgadu
 VERSION = 1.8.2
+GARTYPE = v1
 CATEGORIES = lib
 SPKG_SOURCEURL = http://toxygen.net/libgadu
 

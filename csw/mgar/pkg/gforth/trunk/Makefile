@@ -1,5 +1,6 @@
 NAME = gforth
 VERSION = 0.6.9-20070604
+GARTYPE = v1
 CATEGORIES = lang
 
 DESCRIPTION = gforth - a fast and portable implementation of the ANS Forth language

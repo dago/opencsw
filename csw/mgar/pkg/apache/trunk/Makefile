@@ -1,5 +1,6 @@
 NAME = apache
 VERSION = 1.3.36
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = A high performance Unix-based HTTP server.

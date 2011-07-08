@@ -1,5 +1,6 @@
 NAME = mm
 VERSION = 1.4.2
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = Shared Memory Allocation abstraction library.

@@ -1,5 +1,6 @@
 NAME = imapfilter
 VERSION = 1.2.2
+GARTYPE = v1
 CATEGORIES = net
 
 DESCRIPTION = IMAP mail filtering utility

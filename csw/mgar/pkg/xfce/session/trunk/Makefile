@@ -1,4 +1,5 @@
 NAME = xfce4-session
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Session Manager

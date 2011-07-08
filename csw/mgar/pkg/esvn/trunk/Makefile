@@ -1,6 +1,7 @@
 NAME = esvn
 VERSION = 0.6.11_1
 DISTVERSION = $(subst _,-,$(VERSION))
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = A GUI frontend to the Subversion revision system

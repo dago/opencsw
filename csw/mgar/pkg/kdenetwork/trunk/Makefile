@@ -1,4 +1,5 @@
 NAME = kdenetwork
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Networking apps for KDE (gcc3)

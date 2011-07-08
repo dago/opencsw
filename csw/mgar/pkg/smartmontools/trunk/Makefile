@@ -1,5 +1,6 @@
 NAME = smartmontools
 VERSION = 5.38
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = S.M.A.R.T. disk monitoring tools

@@ -1,5 +1,6 @@
 NAME = xine-ui
 VERSION = 0.99.4
+GARTYPE = v1
 CATEGORIES = gnome
 
 DESCRIPTION = Xine media player user interface.

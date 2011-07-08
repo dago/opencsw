@@ -1,4 +1,5 @@
 NAME = xfce4-mixer
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Volume Control

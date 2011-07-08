@@ -1,5 +1,6 @@
 NAME = mod_highlight
 VERSION = 0.1.0
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = Syntax highlighting module for Apache 2.0

@@ -1,5 +1,6 @@
 NAME = smbldap-tools
 VERSION = 0.9.4
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = smbldap-tools 

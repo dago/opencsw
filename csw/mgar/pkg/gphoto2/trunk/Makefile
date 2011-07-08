@@ -1,5 +1,6 @@
 NAME = gphoto2
 VERSION = 2.3.1
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = gphoto2 is a command-line frontend to libgphoto2

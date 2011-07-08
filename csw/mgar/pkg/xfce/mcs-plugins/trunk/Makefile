@@ -1,4 +1,5 @@
 NAME = xfce-mcs-plugins
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Settings Manager Plugins

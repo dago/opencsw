@@ -1,5 +1,6 @@
 NAME = kile
 VERSION = 1.9.3
+GARTYPE = v1
 CATEGORIES = apps
 
 DESCRIPTION = An integrated LaTeX environment

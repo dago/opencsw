@@ -1,5 +1,6 @@
 NAME = mod_fastcgi
 VERSION = 2.4.6
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = Apache 2.x FastCGI module

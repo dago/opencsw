@@ -1,5 +1,6 @@
 NAME = hicolor-icon-theme
 VERSION = 0.5
+GARTYPE = v1
 CATEGORIES = xtra
 
 DESCRIPTION = Default Gtk icon theme.

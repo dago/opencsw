@@ -1,5 +1,6 @@
 NAME = htmltidy
 VERSION = 2005.09.21
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = Cleans up HTML source and formats it nicely.

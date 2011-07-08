@@ -1,5 +1,6 @@
 NAME      = swtlibs
 VERSION   = 3.2.2
+GARTYPE = v1
 CATEGORIES   = lib
 
 DESCRIPTION  = Standard Widget Toolkit (SWT) libraries

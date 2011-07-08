@@ -1,5 +1,6 @@
 NAME = SDL_net
 VERSION = 1.2.7
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = A small cross-platform network library for SDL

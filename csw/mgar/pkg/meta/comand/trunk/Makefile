@@ -1,5 +1,6 @@
 NAME = comand
 VERSION = 1.0
+GARTYPE = v1
 CATEGORIES = meta
 
 DESCRIPTION = Temporary meta target for C. Omand

@@ -1,5 +1,6 @@
 NAME = fox
 VERSION = 1.4.33
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = Fox Toolkit runtime

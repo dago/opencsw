@@ -1,5 +1,6 @@
 NAME = SDL_ttf
 VERSION = 2.0.9
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = TrueType font rendering library for SDL applications
