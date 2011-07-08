@@ -1,5 +1,6 @@
 NAME = ogle
 VERSION = 0.9.2
+GARTYPE = v1
 CATEGORIES = apps
 
 DESCRIPTION = opensource DVD player with DVD menu support

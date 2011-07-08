@@ -1,5 +1,6 @@
 NAME = rails
 VERSION = 0.14.3
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = Ruby web application framework

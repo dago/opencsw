@@ -1,5 +1,6 @@
 NAME = listadmin
 VERSION = 2.37
+GARTYPE = v1
 CATEGORIES = apps
 
 DESCRIPTION = Command line utility for processing the moderator queue on Mailman lists

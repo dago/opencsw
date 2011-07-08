@@ -1,5 +1,6 @@
 NAME = boost
 VERSION = 1.33.0
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = A collection of C++ libraries

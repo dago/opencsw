@@ -1,5 +1,6 @@
 NAME = xinetd
 VERSION = 2.3.13
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = Powerful inetd replacement

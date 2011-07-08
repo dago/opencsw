@@ -1,5 +1,6 @@
 NAME = SAMP
 VERSION = 1.0
+GARTYPE = v1
 CATEGORIES = meta
 
 DESCRIPTION = Solaris Mysql Perl/PHP/Python (SAMP)

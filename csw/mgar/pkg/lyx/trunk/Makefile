@@ -1,5 +1,6 @@
 NAME = lyx
 VERSION = 1.4.4
+GARTYPE = v1
 CATEGORIES = apps
 
 DESCRIPTION = WYSIWYM document processor

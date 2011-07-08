@@ -1,4 +1,5 @@
 NAME = kdeartwork
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Additional artwork for KDE (gcc3)

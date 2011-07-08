@@ -1,5 +1,6 @@
 NAME = libdvdread
 VERSION = 0.9.7
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = provides a simple foundation for reading DVD-Video images

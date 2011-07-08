@@ -1,4 +1,5 @@
 NAME = kde
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = The K Desktop Environment (KDE) (gcc3)

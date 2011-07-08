@@ -1,6 +1,7 @@
 NAME = iozone
 VERSION = 3.291
 DISTVERSION = $(shell echo $(VERSION) | sed -e 's/\./_/g')
+GARTYPE = v1
 CATEGORIES = apps
 
 DESCRIPTION = IO benchmarking tool

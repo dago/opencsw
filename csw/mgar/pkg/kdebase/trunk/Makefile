@@ -1,4 +1,5 @@
 NAME = kdebase
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Basic applications for KDE (gcc3)

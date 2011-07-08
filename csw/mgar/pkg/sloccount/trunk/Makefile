@@ -1,5 +1,6 @@
 NAME = sloccount
 VERSION = 2.24
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = A suite of programs for counting physical source lines of code.

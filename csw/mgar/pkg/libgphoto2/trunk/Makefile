@@ -1,5 +1,6 @@
 NAME = libgphoto2
 VERSION = 2.3.1
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = library to be used by applications to access digital cameras

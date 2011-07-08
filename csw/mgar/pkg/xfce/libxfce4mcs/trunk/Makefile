@@ -1,4 +1,5 @@
 NAME = libxfce4mcs
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Settings Manager Library 

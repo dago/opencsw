@@ -1,6 +1,7 @@
 NAME = emacs
 VERSION = 21.4
 PATCHLEVEL = a
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = Emacs editor

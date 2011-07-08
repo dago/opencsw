@@ -1,5 +1,6 @@
 NAME = mod_auth_mysql
 VERSION = 3.0.0
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = Implements basic authentication on top of MySQL

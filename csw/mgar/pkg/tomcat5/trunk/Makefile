@@ -1,5 +1,6 @@
 NAME      = tomcat5
 VERSION   = 5.5.27
+GARTYPE = v1
 CATEGORIES   = server
 
 DESCRIPTION  =  Apache Jakarta Tomcat 5.5 Servlet/JSP Container

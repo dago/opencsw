@@ -1,5 +1,6 @@
 NAME = openvpn
 VERSION = 2.0.9
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = secure IP tunnel daemon

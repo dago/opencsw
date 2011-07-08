@@ -1,5 +1,6 @@
 NAME = mousepad
 VERSION = 0.2.13
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Mousepad Text Editor

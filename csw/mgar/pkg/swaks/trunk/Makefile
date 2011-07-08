@@ -1,5 +1,6 @@
 NAME = swaks
 VERSION = 20061116.0
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = Swiss Army Knife SMTP

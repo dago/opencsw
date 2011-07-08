@@ -1,5 +1,6 @@
 NAME = sasl
 VERSION = 2.1.22
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = Simple Authentication and Security Layer

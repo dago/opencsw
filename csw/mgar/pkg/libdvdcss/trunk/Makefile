@@ -1,5 +1,6 @@
 NAME = libdvdcss
 VERSION = 1.2.9
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = library for accessing DVDs like a block device without having to bother about decryption

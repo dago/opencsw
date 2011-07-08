@@ -2,6 +2,7 @@
 
 NAME = boost
 VERSION = 1.45.0
+GARTYPE = v1
 CATEGORIES = lib
 
 define BLURB

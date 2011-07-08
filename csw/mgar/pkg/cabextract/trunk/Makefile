@@ -1,5 +1,6 @@
 NAME = cabextract
 VERSION = 1.2
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = Extract Microsoft cabinet files

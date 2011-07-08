@@ -1,5 +1,6 @@
 NAME = slrn
 VERSION = 0.9.8.1
+GARTYPE = v1
 CATEGORIES = net
 
 DESCRIPTION = command-line news reader

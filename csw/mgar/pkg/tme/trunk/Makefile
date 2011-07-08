@@ -1,5 +1,6 @@
 NAME = tme
 VERSION = 0.6
+GARTYPE = v1
 CATEGORIES = apps
 
 DESCRIPTION = The Machine Emulator

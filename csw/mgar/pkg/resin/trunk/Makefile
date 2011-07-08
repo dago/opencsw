@@ -1,5 +1,6 @@
 NAME = resin
 VERSION = 3.0.9
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = JSP and Servlet engine.

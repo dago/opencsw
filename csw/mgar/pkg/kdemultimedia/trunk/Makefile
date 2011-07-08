@@ -1,4 +1,5 @@
 NAME = kdemultimedia
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Multimedia apps for KDE (gcc3)

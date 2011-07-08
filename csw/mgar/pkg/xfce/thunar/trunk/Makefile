@@ -1,5 +1,6 @@
 NAME = Thunar
 VERSION = 0.9.0
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Thunar File Manager

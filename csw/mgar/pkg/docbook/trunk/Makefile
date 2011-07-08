@@ -1,5 +1,6 @@
 NAME = docbook
 VERSION = 1.68.1
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = docbook xsl stylesheets

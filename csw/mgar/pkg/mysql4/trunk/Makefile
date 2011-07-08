@@ -1,5 +1,6 @@
 NAME = mysql
 VERSION = 4.1.18
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = A fast SQL database server.

@@ -1,4 +1,5 @@
 NAME = kdeadmin
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Administration utilities for KDE (gcc3)

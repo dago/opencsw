@@ -1,5 +1,6 @@
 NAME = meanwhile
 VERSION = 1.0.2
+GARTYPE = v1
 CATEGORIES = lib
 
 #Need to use either gcc or studio 12 with -features=extensions

@@ -1,4 +1,5 @@
 NAME = xfprint
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Printing Helper

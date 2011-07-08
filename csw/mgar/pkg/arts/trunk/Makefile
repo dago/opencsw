@@ -1,5 +1,6 @@
 NAME = arts
 VERSION = 1.5.2
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Analog RealTime Synthesizer for KDE (gcc3)

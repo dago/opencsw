@@ -1,4 +1,5 @@
 NAME = gimp
+GARTYPE = v1
 CATEGORIES = gnome
 
 DESCRIPTION = The GNU Image Manipulation Program.

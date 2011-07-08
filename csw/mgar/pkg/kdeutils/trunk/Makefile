@@ -1,4 +1,5 @@
 NAME = kdeutils
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Utilities for the KDE (gcc3)

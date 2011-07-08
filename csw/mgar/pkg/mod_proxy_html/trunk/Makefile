@@ -1,5 +1,6 @@
 NAME = mod_proxy_html
 VERSION = 2.5.2
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = Apache 2 output filter to rewrite HTML links

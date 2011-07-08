@@ -1,4 +1,5 @@
 NAME = xfce4-dev-tools
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Development Tools

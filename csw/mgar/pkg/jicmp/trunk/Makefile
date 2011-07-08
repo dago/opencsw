@@ -1,5 +1,6 @@
 NAME = jicmp
 VERSION = 1.0.4
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = JICMP is a Java interface to the ICMP protocol (ping)

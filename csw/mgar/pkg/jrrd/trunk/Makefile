@@ -1,5 +1,6 @@
 NAME = jrrd
 VERSION = 1.0.1
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = JRRD is a Java interface to RRDTool

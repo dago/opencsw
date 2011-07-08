@@ -1,4 +1,5 @@
 NAME = orage
+GARTYPE = v1
 CATEGORIES = xfce
 
 DESCRIPTION = Xfce Orage Calendar

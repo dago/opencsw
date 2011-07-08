@@ -1,5 +1,6 @@
 NAME = SDL_sound
 VERSION = 1.0.1
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = A library that handles the decoding of several popular sound file formats

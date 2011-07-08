@@ -1,5 +1,6 @@
 NAME = mysql-ruby
 VERSION = 2.7
+GARTYPE = v1
 CATEGORIES = lang
 
 DESCRIPTION = Ruby MySQL Extension

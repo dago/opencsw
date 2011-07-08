@@ -1,5 +1,6 @@
 NAME = ogle_gui
 VERSION = 0.9.2
+GARTYPE = v1
 CATEGORIES = gnome
 
 DESCRIPTION = gtk user interface for Ogle DVD player 

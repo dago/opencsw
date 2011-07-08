@@ -1,4 +1,5 @@
 NAME = quanta
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = The KDE Web Development Tool (gcc3)

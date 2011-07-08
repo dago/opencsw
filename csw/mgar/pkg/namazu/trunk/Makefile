@@ -1,5 +1,6 @@
 NAME = namazu
 VERSION = 2.0.14
+GARTYPE = v1
 CATEGORIES = utils
 
 DESCRIPTION = full-text search engine

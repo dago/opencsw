@@ -1,4 +1,5 @@
 NAME = kdegames
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Games for KDE (gcc3)

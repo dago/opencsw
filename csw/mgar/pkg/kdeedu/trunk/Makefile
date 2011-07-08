@@ -1,4 +1,5 @@
 NAME = kdeedu
+GARTYPE = v1
 CATEGORIES = kde
 
 DESCRIPTION = Collection of educational apps for KDE (gcc3)

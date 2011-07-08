@@ -1,5 +1,6 @@
 NAME = qt4
 VERSION = 4.7.1
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = TrollTech C++ application framework

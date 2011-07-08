@@ -1,5 +1,6 @@
 NAME = mod_svn_view
 VERSION = 0.0.0
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = Subversion repository viewer

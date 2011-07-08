@@ -1,5 +1,6 @@
 NAME = fastcgi
 VERSION = 2.4.0
+GARTYPE = v1
 CATEGORIES = lib
 
 DESCRIPTION = A FastCGI Library

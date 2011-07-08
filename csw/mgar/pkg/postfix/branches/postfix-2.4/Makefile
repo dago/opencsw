@@ -1,5 +1,6 @@
 NAME = postfix
 VERSION = 2.4.7
+GARTYPE = v1
 CATEGORIES = server
 
 DESCRIPTION = Postfix aims to be an alternative to the widely-used sendmail program
