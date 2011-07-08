@@ -26,7 +26,7 @@ LICENSE        = LICENSE
 RUNTIME_DEP_PKGS = CSWruby18
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
-#PATCHFILES += 0001-Patch-to-prtconf-run-in-memory.rb.patch
+PATCHFILES += 0001-puppetlabs-ticket-7038-prtdiag-fixes.patch
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
