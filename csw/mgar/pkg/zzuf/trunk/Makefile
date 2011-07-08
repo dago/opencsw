@@ -10,6 +10,13 @@
 #cc: acomp failed for libzzuf/lib-stream.c
 #   gmake[4]: *** [libzzuf_la-lib-stream.lo] Error 1
 #
+# Builds fine with gcc, linking fails though
+#
+# libtool: link: /opt/csw/gcc4/bin/gcc -DLIBDIR=\"/opt/csw/lib/zzuf\" -I./common -O2 -pipe -mcpu=v8 -g -O2 -Wall -W -Wpointer-arith -Wcast-align -Wcast-qual -Wstrict-prototypes -Wshadow -Waggregate-return -Wmissing-prototypes -Wnested-externs -Wsign-compare -mcpu=v8 -o zzuf zzuf-zzuf.o zzuf-opts.o zzuf-md5.o zzuf-timer.o zzuf-myfork.o zzuf-random.o zzuf-ranges.o zzuf-fd.o zzuf-fuzz.o  -lm -L/opt/csw/gcc4/lib/. -L/opt/csw/lib
+#Undefined                       first referenced
+# symbol                             in file
+#getopt_long                         zzuf-zzuf.o
+
 
 NAME = zzuf
 VERSION = 0.13
@@ -26,6 +33,8 @@ endef
 VENDOR_URL   = http://caca.zoy.org/wiki/zzuf
 MASTER_SITES = http://caca.zoy.org/files/zzuf/
 DISTFILES    = $(DISTNAME).tar.gz
+
+GARCOMPILER = GNU
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
