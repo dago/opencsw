@@ -5,6 +5,11 @@
 #   /opt/SUNWspro/bin/cc -m32 -xarch=386 -L/opt/csw/lib -o ipv6calc ipv6calc.o showinfo.o ../getopt/getopt.o ../getopt/getopt1.o ../md5/md5.o -lipv6calc -L../lib/ -L/opt/csw/lib -lGeoIP
 #   ld: fatal: library -lipv6calc: not found
 #
+#   ^^ Happens in ipv6calc subdir, ../lib has a static libipv6calc
+#   $ cd .. && find . -name libipv6calc.a
+#   ./lib/libipv6calc.a
+#
+#
 NAME = ipv6calc
 VERSION = 0.90.0
 GARTYPE = v2
