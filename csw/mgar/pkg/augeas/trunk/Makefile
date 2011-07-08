@@ -6,18 +6,18 @@ DESCRIPTION = A configuration editing tool
 define BLURB
   Augeas is a configuration editing tool. It parses configuration files in
   their native formats and transforms them into a tree. Configuration changes
-  are made by manipulating this tree and saving it back into native config files.
+  are made by manipulating this tree and saving it back into native config
+  files.
 endef
 
 MASTER_SITES = http://augeas.net/download/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-#PATCHFILES  = 0001-Do-not-use-_N-already-taken-on-Solaris.patch
-#PATCHFILES += 0002-Hack-in-isblank-as-gnutools-dont-seem-to-be-used.patch
 VENDOR_URL = http://augeas.net
 
 RUNTIME_DEP_PKGS = CSWgcc4corert CSWlibgnugetopt CSWreadline
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
+PATCHFILES += 0001-add-csw-paths-for-sudoers.patch
 
 # Building on Solaris 10 doesn't work as it support C99 and the above fixes are
 # not necessary there.
@@ -28,10 +28,9 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET = check
 
-CHECKPKG_OVERRIDES_CSWaugeas   += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWaugeas += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWaugeas += non-uniform-lib-versions-in-package|sonames=libaugeas.so.0,libfa.so.1
 CHECKPKG_OVERRIDES_CSWaugeas += shared-lib-package-contains-so-symlink
-
 
 EXTRA_MERGE_EXCLUDE_FILES = .*/charset.alias
 MERGE_DIRS_isa-extra = $(libdir)
