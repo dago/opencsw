@@ -14,7 +14,8 @@ MASTER_SITES = http://augeas.net/download/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL = http://augeas.net
 
-RUNTIME_DEP_PKGS = CSWgcc4corert CSWlibgnugetopt CSWreadline
+RUNTIME_DEP_PKGS  = CSWgcc4corert CSWlibgnugetopt
+RUNTIME_DEP_PKGS += CSWlibreadline6
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
 PATCHFILES += 0001-add-csw-paths-for-sudoers.patch
