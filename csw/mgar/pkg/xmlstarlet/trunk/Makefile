@@ -1,5 +1,5 @@
 NAME = xmlstarlet
-VERSION = 1.2.0
+VERSION = 1.2.1
 CATEGORIES = utils
 
 DESCRIPTION = XML transformation utility
@@ -13,10 +13,12 @@ endef
 
 SF_PROJ = xmlstar
 MASTER_SITES = $(SF_MIRRORS)
-MASTER_SITES += http://xmlstar.sourceforge.net/downloads/
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+DISTFILES = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://xmlstar.sourceforge.net/
+
+BUILD_DEP_PKGS += CSWlibxml2-dev
+BUILD_DEP_PKGS += CSWlibxsltdevel
 
 RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibxslt
