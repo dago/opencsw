@@ -24,9 +24,9 @@ SPKG_SOURCEURL = http://puppetlabs.com/
 LICENSE        = LICENSE
 
 RUNTIME_DEP_PKGS = CSWruby18
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
+BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
 
-PATCHFILES += 0001-puppetlabs-ticket-7038-prtdiag-fixes.patch
+PATCHFILES += 0001-puppetlabs-ticket-7038-to-fix-prtdiag.patch
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
