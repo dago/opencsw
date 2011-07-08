@@ -1,0 +1,76 @@
+From c112d39f68a2c378e6e9c6a7e33b67ac4a701deb Mon Sep 17 00:00:00 2001
+From: Mark Phillips <none@none>
+Date: Fri, 8 Jul 2011 16:35:07 +0200
+Subject: [PATCH] puppetlabs bug 7038 prtdiag
+
+---
+ lib/facter/util/manufacturer.rb |    7 ++++---
+ lib/facter/util/prtdiag.rb      |   29 +++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 3 deletions(-)
+ create mode 100644 lib/facter/util/prtdiag.rb
+
+diff --git a/lib/facter/util/manufacturer.rb b/lib/facter/util/manufacturer.rb
+index 8e9bde2..33389c9 100644
+--- a/lib/facter/util/manufacturer.rb
++++ b/lib/facter/util/manufacturer.rb
+@@ -1,6 +1,8 @@
+ # mamufacturer.rb
+ # Support methods for manufacturer specific facts
+ 
++require 'facter/util/prtdiag'
++
+ module Facter::Manufacturer
+ 
+     def self.get_dmi_table()
+@@ -62,11 +64,10 @@ module Facter::Manufacturer
+     end
+ 
+     def self.prtdiag_sparc_find_system_info()
+-        # Parses prtdiag for a SPARC architecture string, won't work with Solaris x86
+-        output = Facter::Util::Resolution.exec('/usr/sbin/prtdiag')
+ 
++        # Parses prtdiag for a SPARC architecture string, won't work with Solaris x86
+         # System Configuration:  Sun Microsystems  sun4u Sun SPARC Enterprise M3000 Server
+-        sysconfig = output.split("\n")[0]
++        sysconfig = Facter::Util::Prtdiag.system_configuration
+         if sysconfig =~ /^System Configuration:\s+(.+?)\s+(sun\d+\S+)\s+(.+)/ then
+             Facter.add('manufacturer') do
+                 setcode do
+diff --git a/lib/facter/util/prtdiag.rb b/lib/facter/util/prtdiag.rb
+new file mode 100644
+index 0000000..5edce5b
+--- /dev/null
++++ b/lib/facter/util/prtdiag.rb
+@@ -0,0 +1,29 @@
++# Module to safely query prtdiag
++#
++# prtdiag will fail if it is called on a non-solaris host, or if it is in a
++# zone, and it will hang if a service that prtdiag relies on is crashed.
++# This should abstract safely retrieving information from prtdiag
++
++require 'timeout'
++
++module Facter::Util::Prtdiag
++
++  def self.system_configuration
++    begin
++      Timeout.timeout(6) do
++        output = Facter::Util::Resolution.exec('/usr/sbin/prtdiag')
++        if output
++          output.each_line do |pd|
++            return pd if pd =~ /System Configuration/
++          end
++        end
++      end
++    rescue Timeout::Error => detail
++      warn "Timed out while calling prtdiag"
++      # This call avoids zombies -- basically, create a thread that will
++      # dezombify all of the child processes that we're ignoring because
++      # of the timeout.
++      Thread.new { Process.waitall }
++    end
++  end
++end
+-- 
+1.7.6
+
