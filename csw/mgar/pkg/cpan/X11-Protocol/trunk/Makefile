@@ -15,5 +15,6 @@ PACKAGES += CSWpm-x11-protocol
 SPKG_DESC_CSWpm-x11-protocol = $(DESCRIPTION)
 ARCHALL_CSWpm-x11-protocol = 1
 OBSOLETED_BY_CSWpm-x11-protocol += CSWpmx11protocol
+CATALOGNAME_CSWpmx11protocol = pm_x11protocol_stub
 
 include gar/category.mk
