@@ -42,8 +42,6 @@ LICENSE = README
 
 FILES = axfr-get axfrdns axfrdns-conf dnscache dnscache-conf dnsfilter dnsip dnsipq dnsmx dnsname dnsq dnsqr dnstrace dnstracesort dnstxt pickdns pickdns-conf pickdns-data random-ip rbldns rbldns-conf rbldns-data tinydns tinydns-conf tinydns-data tinydns-edit tinydns-get walldns walldns-conf
 
-GARCOMPILER = GNU
-
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS = custom
