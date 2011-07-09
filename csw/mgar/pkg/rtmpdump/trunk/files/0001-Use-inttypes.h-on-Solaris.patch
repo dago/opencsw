@@ -1,0 +1,119 @@
+From f64709c93b38180fbd6cdd8c403dac15cbc7d0ef Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 9 Jul 2011 17:16:11 +0200
+Subject: [PATCH] Use inttypes.h on Solaris
+
+---
+ librtmp/amf.h   |    4 ++++
+ librtmp/bytes.h |    5 +++++
+ librtmp/dh.h    |    5 +++++
+ librtmp/log.h   |    5 +++++
+ librtmp/rtmp.c  |    5 +++++
+ librtmp/rtmp.h  |    6 ++++++
+ 6 files changed, 30 insertions(+), 0 deletions(-)
+
+diff --git a/librtmp/amf.h b/librtmp/amf.h
+index b945beb..42035f9 100644
+--- a/librtmp/amf.h
++++ b/librtmp/amf.h
+@@ -25,7 +25,11 @@
+  *  http://www.gnu.org/copyleft/lgpl.html
+  */
+ 
++#if defined(__sun)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
+ 
+ #ifndef TRUE
+ #define TRUE	1
+diff --git a/librtmp/bytes.h b/librtmp/bytes.h
+index 8c6e80d..f7ceb1e 100644
+--- a/librtmp/bytes.h
++++ b/librtmp/bytes.h
+@@ -26,7 +26,12 @@
+ #ifndef __BYTES_H__
+ #define __BYTES_H__
+ 
++#if defined(__sun)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
++
+ 
+ #ifdef _WIN32
+ /* Windows is little endian only */
+diff --git a/librtmp/dh.h b/librtmp/dh.h
+index 8e285a6..30e46cc 100644
+--- a/librtmp/dh.h
++++ b/librtmp/dh.h
+@@ -21,7 +21,12 @@
+  *  http://www.gnu.org/copyleft/lgpl.html
+  */
+ 
++#if defined(__sun)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
++
+ #include <stdlib.h>
+ #include <string.h>
+ #include <assert.h>
+diff --git a/librtmp/log.h b/librtmp/log.h
+index 97c9aac..fbc5b28 100644
+--- a/librtmp/log.h
++++ b/librtmp/log.h
+@@ -26,7 +26,12 @@
+ 
+ #include <stdio.h>
+ #include <stdarg.h>
++
++#if defined(__sun)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
+ 
+ #ifdef __cplusplus
+ extern "C" {
+diff --git a/librtmp/rtmp.c b/librtmp/rtmp.c
+index f152648..5461bb6 100644
+--- a/librtmp/rtmp.c
++++ b/librtmp/rtmp.c
+@@ -23,7 +23,12 @@
+  *  http://www.gnu.org/copyleft/lgpl.html
+  */
+ 
++#if defined(__sun)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
++
+ #include <stdlib.h>
+ #include <string.h>
+ #include <assert.h>
+diff --git a/librtmp/rtmp.h b/librtmp/rtmp.h
+index de0b795..5942906 100644
+--- a/librtmp/rtmp.h
++++ b/librtmp/rtmp.h
+@@ -30,7 +30,13 @@
+ #endif
+ 
+ #include <errno.h>
++
++#if defined(__sun)
++#include <inttypes.h>
++#else
+ #include <stdint.h>
++#endif
++
+ #include <stddef.h>
+ 
+ #include "amf.h"
+-- 
+1.7.6
+
