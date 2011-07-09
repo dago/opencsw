@@ -2,7 +2,7 @@ NAME = gawk
 VERSION = 4.0.0
 CATEGORIES = utils
 
-DESCRIPTION = GNU grep
+DESCRIPTION = GNU awk
 define BLURB
 	The GNU family of grep utilities may be the "fastest grep in the west".
 	GNU grep is based on a fast lazy-state deterministic matcher (about
