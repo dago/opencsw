@@ -12,7 +12,7 @@ MASTER_SITES = ftp://xmlsoft.org/libxslt/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 PATCHFILES += 0001-Forcefully-disable-version-script-use.patch
 
-BUILD_DEP_PKGS = CSWlibxml2-2 CSWlibxml2-dev
+BUILD_DEP_PKGS = CSWlibxml2-dev CSWlibgcrypt-dev
 
 PACKAGES = CSWlibxslt
 SPKG_DESC_CSWlibxslt =  XSLT engine runtime package
