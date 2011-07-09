@@ -11,29 +11,40 @@ endef
 
 SF_PROJ = modgssapache
 MASTER_SITES = $(SF_MIRRORS)
+DISTNAME = $(NAME)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += COPYING
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-SPKG_SOURCEURL = http://sourceforge.net/projects/modgssapache
+VENDOR_URL = http://sourceforge.net/projects/modgssapache
 
 BUILD_DEP_PKGS = CSWossldevel
 RUNTIME_DEP_PKGS = CSWosslrt
 
-PACKAGES = CSWlibfbopenssl
-CATALOGNAME = libfbopenssl
+PACKAGES += CSWlibfbopenssl0
+SPKG_DESC_CSWlibfbopenssl0 = Extensions to OpenSSL including support for GSS-API and SPNEGO, libfbopenssl.so.0
+PKGFILES_CSWlibfbopenssl0 += $(call pkgfiles_lib,libfbopenssl.so.0)
+OBSOLETED_BY_CSWlibfbopenssl0 += CSWlibfbopenssl
+
+PACKAGES += CSWlibfbopenssl-dev
+SPKG_DESC_CSWlibfbopenssl-dev = Development files for libfbopenssl.so.0
+# PKGFILES is catchall
+# These are no header files in there, is this correct?
+RUNTIME_DEP_PKGS_CSWlibfbopenssl-dev += CSWlibfbopenssl0
 
 BUILD64 = 1
-WORKSRC = $(WORKDIR)/$(NAME)
+
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = custom
 TEST_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 EXTRA_CFLAGS = -Kpic
 
-FILES=src/asn1/asn1help src/file/filehelp src/gssapi/gssapi src/krb5/krb5help src/spnego/spnego src/spnego/spnegohelp
+FILES += src/asn1/asn1help
+FILES += src/file/filehelp
+FILES += src/gssapi/gssapi
+FILES += src/krb5/krb5help
+FILES += src/spnego/spnego
+FILES += src/spnego/spnegohelp
 
 .c.o:
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
@@ -44,7 +55,9 @@ include gar/category.mk
 # just compiling the needed stuff here. Please take care on version bumps!
 
 build-custom: $(foreach F,$(FILES),$(WORKSRC)/$F.o)
-	cd $(WORKSRC) && $(BUILD_ENV) $(CC) $(LDFLAGS) $(foreach F,$(FILES),$F.o) -lcrypto -G -o libfbopenssl.so
+	cd $(WORKSRC) && $(BUILD_ENV) $(CC) $(LDFLAGS) $(foreach F,$(FILES),$F.o) -lcrypto -G -h libfbopenssl.so.0 -o libfbopenssl.so.$(VERSION)
+	gln -s libfbopenssl.so.$(VERSION) $(WORKSRC)/libfbopenssl.so.0
+	gln -s libfbopenssl.so.0 $(WORKSRC)/libfbopenssl.so
 	@$(MAKECOOKIE)
 
 test-custom:
@@ -60,6 +73,9 @@ test-custom:
 
 install-custom:
 	ginstall -d $(DESTDIR)$(libdir)
-	ginstall $(WORKSRC)/libfbopenssl.so $(DESTDIR)$(libdir)
+	ginstall $(WORKSRC)/libfbopenssl.so.$(VERSION) $(DESTDIR)$(libdir)
+	gln -s libfbopenssl.so.$(VERSION) $(DESTDIR)$(libdir)/libfbopenssl.so.0
+	gln -s libfbopenssl.so.0 $(DESTDIR)$(libdir)/libfbopenssl.so
 	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
 	ginstall $(WORKSRC)/readme.txt $(DESTDIR)$(docdir)/$(CATALOGNAME)/
+	@$(MAKECOOKIE)
