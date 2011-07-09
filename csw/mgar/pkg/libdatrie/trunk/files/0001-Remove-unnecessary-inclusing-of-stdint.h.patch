@@ -1,0 +1,37 @@
+From 978cdfe1134e27b35897951bd44957a76573e45e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 9 Jul 2011 15:27:27 +0200
+Subject: [PATCH] Remove unnecessary inclusing of stdint.h
+
+---
+ datrie/darray.c |    1 -
+ datrie/tail.c   |    1 -
+ 2 files changed, 0 insertions(+), 2 deletions(-)
+
+diff --git a/datrie/darray.c b/datrie/darray.c
+index 234e904..02471e2 100644
+--- a/datrie/darray.c
++++ b/datrie/darray.c
+@@ -26,7 +26,6 @@
+ 
+ #include <string.h>
+ #include <stdlib.h>
+-#include <stdint.h>
+ #include <stdio.h>
+ 
+ #include "trie-private.h"
+diff --git a/datrie/tail.c b/datrie/tail.c
+index 4e31d9f..d835c57 100644
+--- a/datrie/tail.c
++++ b/datrie/tail.c
+@@ -26,7 +26,6 @@
+ 
+ #include <string.h>
+ #include <stdlib.h>
+-#include <stdint.h>
+ #include <stdio.h>
+ 
+ #include "tail.h"
+-- 
+1.7.6
+
