@@ -2,7 +2,7 @@ NAME = djbdns
 VERSION = 1.05
 CATEGORIES = apps
 
-DESCRIPTION = retrieve and publish Domain Name System information
+DESCRIPTION = Retrieve and publish Domain Name System information
 define BLURB
 djbdns is a collection of Domain Name System tools.  It includes several
 components:
@@ -31,15 +31,18 @@ This is not required unless you want to replicate to a secondary djbdns server
 and is not required if your secondary is a BIND DNS server.
 endef
 
-MASTER_SITES = http://cr.yp.to/djbdns/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWdjbdns,)
+MASTER_SITES += http://cr.yp.to/djbdns/
+MASTER_SITES += http://smarden.org/pape/djb/manpages/
+DISTFILES += $(DISTNAME).tar.gz
+#DISTFILES += doc.tar.gz
+DISTFILES += $(DISTNAME)-man.tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://cr.yp.to/djbdns.html
+LICENSE = README
 
-CONFIGURE_ARGS = $(DIRPATHS)
 FILES = axfr-get axfrdns axfrdns-conf dnscache dnscache-conf dnsfilter dnsip dnsipq dnsmx dnsname dnsq dnsqr dnstrace dnstracesort dnstxt pickdns pickdns-conf pickdns-data random-ip rbldns rbldns-conf rbldns-data tinydns tinydns-conf tinydns-data tinydns-edit tinydns-get walldns walldns-conf
+
+GARCOMPILER = GNU
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
@@ -52,18 +55,25 @@ include gar/category.mk
 
 configure-custom:
 	@echo "==> Configuring $(NAME)"
-	@cd $(WORKSRC)/ && sed "s|/usr/local|$(prefix)|g" < conf-home > conf-home.csw && mv conf-home.csw conf-home
+	@echo $(prefix) >$(WORKSRC)/conf-home
+	@echo $(CC) $(CFLAGS) >$(WORKSRC)/conf-cc
 	@$(MAKECOOKIE)
 
 build-custom:
 	@echo "==> building $(NAME)"
-	@cd $(WORKSRC) && PATH=/opt/csw/gnu:/opt/csw/gcc3/bin/:/usr/bin/:$PATH && export PATH && make
+	cd $(WORKSRC) && gmake
 	@$(MAKECOOKIE)
 
 install-custom:
 	@echo "==> installing $(NAME)"
 	@echo "==> to $(DESTDIR)$(prefix)/bin"
-	@rm -rf   $(DESTDIR)$(prefix)
-	@mkdir -p $(DESTDIR)$(prefix)/bin
-	@ginstall -m 755 $(foreach FILE, $(FILES), $(WORKSRC)/$(FILE)) $(DESTDIR)$(prefix)/bin 
+	rm -rf   $(DESTDIR)$(prefix)
+	mkdir -p $(DESTDIR)$(prefix)/bin
+	ginstall -m 755 $(addprefix $(WORKSRC)/,$(FILES)) $(DESTDIR)$(prefix)/bin 
+	mkdir -p $(DESTDIR)$(mandir)/man1
+	ginstall -m 644 $(WORKDIR)/djbdns-man/*.1 $(DESTDIR)$(mandir)/man1
+	mkdir -p $(DESTDIR)$(mandir)/man5
+	ginstall -m 644 $(WORKDIR)/djbdns-man/*.5 $(DESTDIR)$(mandir)/man5
+	mkdir -p $(DESTDIR)$(mandir)/man8
+	ginstall -m 644 $(WORKDIR)/djbdns-man/*.8 $(DESTDIR)$(mandir)/man8
 	@$(MAKECOOKIE)
