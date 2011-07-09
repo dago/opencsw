@@ -1,0 +1,25 @@
+From 911084d67928fb1799573155b9c3409736f38cf7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 9 Jul 2011 17:39:36 +0200
+Subject: [PATCH] Use Solaris ld syntax for shared libs
+
+---
+ librtmp/Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/librtmp/Makefile b/librtmp/Makefile
+index 6774db7..4ee84e0 100644
+--- a/librtmp/Makefile
++++ b/librtmp/Makefile
+@@ -61,7 +61,7 @@ librtmp.a: $(OBJS)
+ 	$(AR) rs $@ $?
+ 
+ librtmp.$(SO_EXT): $(OBJS)
+-	$(CC) -shared -Wl,-soname,$@ $(LDFLAGS) -o $@ $^ $> $(CRYPTO_LIB)
++	$(CC) -G -h $@ $(LDFLAGS) -o $@ $^ $> $(CRYPTO_LIB)
+ 	ln -sf $@ librtmp.so
+ 
+ log.o: log.c log.h Makefile
+-- 
+1.7.6
+
