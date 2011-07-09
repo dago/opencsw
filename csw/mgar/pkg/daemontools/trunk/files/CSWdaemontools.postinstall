@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# Paranoia, I know.
+: ${BASEDIR=/opt/csw}
+
+INIT="/usr/sbin/init"
+INITTAB="$PKG_INSTALL_ROOT/etc/inittab"
+
+# The </dev/null is required on Solaris, otherwise init goes bonkers.
+SVLINE="SV:123456:respawn:$BASEDIR/bin/svscanboot </dev/null"
+
+xit=0
+echo
+
+if test -f "$INITTAB"; then
+
+    if grep svscanboot "$INITTAB" >/dev/null 2>&1; then
+	echo "It appears that daemontools is already present in $INITTAB"
+	echo "so there's nothing for this postinstall script to do."
+
+    else
+	echo "Adding daemontools to the $INITTAB file."
+	if echo "$SVLINE" >> "$INITTAB" 2>/dev/null; then
+
+	    # We could test for either a zero length package install root,
+	    # or for SI_INSTALL_APP set to something like jumpstart.  THe
+	    # idea is the same; do not poke the init process if pkgadd is
+	    # run with -R, since that typically means the system doing the
+	    # installation is NOT the system that will run the software.
+
+	    if test -z "$PKG_INSTALL_ROOT"; then
+		echo "Starting daemontools from init."
+
+		# If this fails, don't bomb out of the install, since
+		# we're 99% of the way done.  Just tell the admin that
+		# things have gone bad, and let them fix it.
+		"$INIT" q || {
+		    x="$?"
+		    echo "Tried to tell init to check $INITTAB, but failed."
+		    echo "The command was $INIT q"
+		    echo "and it returned $x"
+		    echo "After fixing the problem, be sure to run $INIT q"
+		    echo "to start the daemontools service."
+		}
+	    fi
+
+	else
+	    x="$?"
+	    echo "Unable to add a line to the $INITTAB file."
+	    echo "Using echo, appending to that file, returned $x"
+	    xit=2
+	fi
+    fi
+
+else
+    echo "Unable to locate the $INITTAB file; therefore, the"
+    echo "daemontools svscanboot script could not be added to"
+    echo "the configuration file for init.  Add the following"
+    echo "line to your inittab file:"
+    echo
+    echo "$SVLINE"
+    echo
+    echo "Then, run the following as root: $INIT q"
+    xit=2
+fi
+
+echo
+exit $xit

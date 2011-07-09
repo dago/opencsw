@@ -1,0 +1,50 @@
+#!/bin/sh
+
+INITTAB="$PKG_INSTALL_ROOT/etc/inittab"
+
+if test -z "$SKIP_INITTAB" -a ! -f "$INITTAB"; then
+    echo "Unable to locate the /etc/inittab file; therefore,"
+    echo "daemontools cannot be removed from this system safely."
+    echo "Please correct this problem and try again."
+    echo
+    echo "Alternatively, remove the svscanboot utility from your"
+    echo "inittab file (wherever it may be), and refresh your init"
+    echo "daemon.  Once you are certain that daemontools is not"
+    echo "running via the init process, you can re-run your pkgrm"
+    echo "with SKIP_INITTAB set in the environment to bypass this"
+    echo "step and continue with the package removal."
+    echo
+    exit 1
+fi
+
+if grep svscanboot "$INITTAB" >/dev/null 2>&1; then
+    echo "Removing svscanboot from $INITTAB"
+    ed - "$INITTAB" <<!
+g,^SV:.*/opt/csw/bin/svscanboot,d
+w
+q
+!
+
+    # We could test for either a zero length package install root,
+    # or for SI_INSTALL_APP set to something like jumpstart.  THe
+    # idea is the same; do not tweak the process table if pkgrm is
+    # run with -R, since that typically means the system doing the
+    # removal is NOT the system running the software.
+
+    if test -z "$PKG_INSTALL_ROOT"; then
+	echo "Killing daemontools processes."
+	/usr/sbin/init q
+	sleep 1
+	ps -e -o pid,ppid,comm \
+	|sed -e 's/^ *//' \
+	|egrep '(readproctitle|svscan)' \
+	|cut '-d ' -f1 \
+	|xargs kill
+    fi
+
+else
+    echo "It appears that daemontools is not present in $INITTAB"
+    echo "so there's nothing for this preremove script to do."
+fi
+
+exit 0
