@@ -40,10 +40,8 @@ FILES += who@
 
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
-TEST_SCRIPTS = custom
-INSTALL_SCRIPTS = custom
-
 TEST_SCRIPTS =
+INSTALL_SCRIPTS = custom
 
 include gar/category.mk
 
