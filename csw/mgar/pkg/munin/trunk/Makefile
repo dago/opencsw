@@ -1,5 +1,5 @@
 NAME = munin
-VERSION = 1.4.5
+VERSION = 1.4.6
 CATEGORIES = apps
 
 SPKG_DESC_CSWmuninmaster = master component of the graphical network and system monitoring munin
@@ -29,8 +29,6 @@ PATCHFILES += munin.conf.in.patch
 PATCHFILES += munin-htaccess.in.patch
 PATCHFILES += munin-graph.in.patch # match some paths to /{etc|var}/opt/csw/munin 
 PATCHFILES += perl.patch # shebang correctly set
-PATCHFILES += if.in.patch # added support for Solaris 10
-PATCHFILES += if_err.in.patch # added support for Solaris 10
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
