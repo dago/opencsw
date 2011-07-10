@@ -1,0 +1,25 @@
+From 800a93c29e829ad9b715880d51506544a6dc90c6 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 10 Jul 2011 12:25:25 +0200
+Subject: [PATCH 1/2] Use 127.0.0.1 for localhost or fail
+
+---
+ test/automatic/protocol.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/test/automatic/protocol.c b/test/automatic/protocol.c
+index d04219e..6eaa081 100644
+--- a/test/automatic/protocol.c
++++ b/test/automatic/protocol.c
+@@ -17,7 +17,7 @@
+ 
+ #include "script.h"
+ 
+-#define LOCALHOST "127.0.67.67"
++#define LOCALHOST "127.0.0.1"
+ #define LOCALPORT 17219
+ 
+ #define debug(msg...) \
+-- 
+1.7.6
+
