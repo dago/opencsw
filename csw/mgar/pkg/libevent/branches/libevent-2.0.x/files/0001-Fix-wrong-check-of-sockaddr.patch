@@ -1,0 +1,25 @@
+From 866fdd0d769e1a6c2187b9bdc94c475e8094b42c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 10 Jul 2011 10:40:38 +0200
+Subject: [PATCH] Fix wrong check of sockaddr
+
+---
+ util-internal.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/util-internal.h b/util-internal.h
+index fe9ff35..eb22946 100644
+--- a/util-internal.h
++++ b/util-internal.h
+@@ -207,7 +207,7 @@ long _evutil_weakrand(void);
+ #define EVUTIL_FAILURE_CHECK(cond) EVUTIL_UNLIKELY(cond)
+ #endif
+ 
+-#ifndef _EVENT_HAVE_STRUCT_SOCKADDR_STORAGE
++#if 0
+ /* Replacement for sockaddr storage that we can use internally on platforms
+  * that lack it.  It is not space-efficient, but neither is sockaddr_storage.
+  */
+-- 
+1.7.6
+

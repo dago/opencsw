@@ -1,5 +1,5 @@
 NAME = libevent
-VERSION = 2.0.10
+VERSION = 2.0.12
 CATEGORIES = lib
 
 DESCRIPTION = Event notification library
@@ -14,23 +14,25 @@ MASTER_SITES = http://www.monkey.org/~provos/
 DISTNAME = $(NAME)-$(VERSION)-stable
 DISTFILES += $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-stable.tar.gz
-
-PACKAGES += CSWlibevent2-0-5
-CATALOGNAME_CSWlibevent2-0-5 = libevent2_0_5
-SPKG_DESC_CSWlibevent2-0-5 = Event notification library 2.0, libevent*-2.0.so.5
-RUNTIME_DEP_PKGS_CSWlibevent2-0-5 += CSWosslrt
-
-
-PACKAGES += CSWlibevent-devel
-CATALOGNAME_CSWlibevent-devel = libevent_devel
-SPKG_DESC_CSWlibevent-devel = Development files for libevent 2.0
-RUNTIME_DEP_PKGS_CSWlibevent-devel += CSWlibevent2-0-5
-RUNTIME_DEP_PKGS_CSWlibevent-devel += CSWpython
+# Use this patch until bug is fixed:
+#   http://sourceforge.net/tracker/?func=detail&aid=3361614&group_id=50884&atid=461322
+PATCHFILES += 0001-Fix-wrong-check-of-sockaddr.patch
 
 VENDOR_URL = http://www.monkey.org/~provos/libevent/
 LICENSE = LICENSE
+
+BUILD_DEP_PKGS += CSWossldevel
+
+PACKAGES += CSWlibevent2-0-5
+SPKG_DESC_CSWlibevent2-0-5 = Event notification library 2.0, libevent*-2.0.so.5
+PKGFILES_CSWlibevent2-0-5 = $(PKGFILES_RT)
+RUNTIME_DEP_PKGS_CSWlibevent2-0-5 += CSWosslrt
+
+PACKAGES += CSWlibevent-dev
+SPKG_DESC_CSWlibevent-dev = Development files for libevent*-2.0.so.5
+RUNTIME_DEP_PKGS_CSWlibevent-dev += CSWlibevent2-0-5
+RUNTIME_DEP_PKGS_CSWlibevent-dev += CSWpython
+OBSOLETED_BY_CSWlibevent-dev += CSWlibevent-devel
 
 # We don't need it and if defined the test breaks
 NOISALIST = 1
@@ -38,17 +40,10 @@ LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS  = $(DIRPATHS) 
 
 TEST_TARGET = verify
 
-PKGFILES_CSWlibevent2-0-5 = $(PKGFILES_RT)
-
-# These will go away after package release as the files have been moved from CSWlibevent to *-devel
-CHECKPKG_OVERRIDES_CSWlibevent-devel += file-collision
-
-# The package name guessing has a bug, overwrite for now.
+# This is a unified package with all libraries in there
 CHECKPKG_OVERRIDES_CSWlibevent2-0-5 += shared-lib-pkgname-mismatch
 
 include gar/category.mk
