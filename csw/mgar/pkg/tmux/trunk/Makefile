@@ -1,15 +1,11 @@
 NAME = tmux
-VERSION = 1.4
+VERSION = 1.5
 CATEGORIES = apps
 
 DESCRIPTION = Terminal Multiplexer
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-
-# Use patch unless this is fixed:
-#   https://sourceforge.net/tracker/?func=detail&aid=3152389&group_id=200378&atid=973264
-PATCHFILES = 0001-Use-inttypes.h-if-stdint.h-is-not-available.patch
+DISTFILES  = $(DISTNAME).tar.gz
 
 RUNTIME_DEP_PKGS = CSWlibevent2-0-5
 BUILD_DEP_PKGS = CSWlibevent-devel
@@ -17,14 +13,10 @@ BUILD_DEP_PKGS = CSWlibevent-devel
 LICENSE = NOTES
 VENDOR_URL = http://tmux.sourceforge.net
 
-CONFIGURE_ARGS = 
-
-EXTRA_CPPFLAGS = -D__inline=inline
-
-# There is no testsuite
-SKIPTEST = 1
-
-INSTALL_SCRIPTS = custom
+EXTRA_CPPFLAGS += -I/opt/csw/include/ncursesw
+EXTRA_CPPFLAGS += -D__inline=inline
+# Grabbed from Solaris 10 /usr/include/iso/math_c99.h
+EXTRA_CPPFLAGS += -DINFINITY=__builtin_infinity
 
 include gar/category.mk
 
@@ -35,9 +27,3 @@ post-extract-modulated:
 	perl -pi -e 's,/etc/tmux\.conf,$(sysconfdir)/tmux.conf,g' \
 		$(WORKSRC)/tmux.h \
 		$(WORKSRC)/tmux.1
-
-install-custom:
-	ginstall -d $(DESTDIR)$(bindir)
-	ginstall $(WORKSRC)/tmux $(DESTDIR)$(bindir)
-	ginstall -d $(DESTDIR)$(mandir)/man1
-	ginstall $(WORKSRC)/tmux.1 $(DESTDIR)$(mandir)/man1
