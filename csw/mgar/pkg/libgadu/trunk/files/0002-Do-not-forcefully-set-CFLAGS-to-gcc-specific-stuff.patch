@@ -1,0 +1,39 @@
+From 2962c7258aa0128a478b4814449f75b75b5d6d7f Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 10 Jul 2011 12:27:02 +0200
+Subject: [PATCH 2/2] Do not forcefully set CFLAGS to gcc-specific stuff
+
+---
+ test/automatic/Makefile.am |    2 --
+ test/automatic/Makefile.in |    2 +-
+ 2 files changed, 1 insertions(+), 3 deletions(-)
+
+diff --git a/test/automatic/Makefile.am b/test/automatic/Makefile.am
+index a032342..8d4be7c 100644
+--- a/test/automatic/Makefile.am
++++ b/test/automatic/Makefile.am
+@@ -2,8 +2,6 @@ TESTS = convert message2 message1 $(OPTIONAL_TESTS_GLIBC) $(OPTIONAL_TESTS_PERL)
+ check_PROGRAMS = convert message2 message1 $(OPTIONAL_TESTS_GLIBC) $(OPTIONAL_TESTS_PERL)
+ EXTRA_PROGRAMS = convert message2 message1 connect packet resolver protocol
+ 
+-CFLAGS = -Wall -ggdb -DGG_IGNORE_DEPRECATED
+-
+ protocol_SOURCES = protocol.c
+ nodist_protocol_SOURCES = script/script.c
+ protocol_CFLAGS = -Iscript
+diff --git a/test/automatic/Makefile.in b/test/automatic/Makefile.in
+index 1185a8f..b1bf94e 100644
+--- a/test/automatic/Makefile.in
++++ b/test/automatic/Makefile.in
+@@ -169,7 +169,7 @@ AUTOMAKE = @AUTOMAKE@
+ AWK = @AWK@
+ CC = @CC@
+ CCDEPMODE = @CCDEPMODE@
+-CFLAGS = -Wall -ggdb -DGG_IGNORE_DEPRECATED
++CFLAGS = @CFLAGS@
+ CPP = @CPP@
+ CPPFLAGS = @CPPFLAGS@
+ CYGPATH_W = @CYGPATH_W@
+-- 
+1.7.6
+
