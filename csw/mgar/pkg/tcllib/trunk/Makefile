@@ -33,7 +33,7 @@ CHECKPKG_OVERRIDES_CSWtcllib += file-with-bad-content|/usr/share|root/opt/csw/li
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-CONFIGURE_ARGS = --prefix=$(prefix)
+CONFIGURE_ARGS = --prefix=$(prefix) --mandir=$(prefix)/share/man
 
 include gar/category.mk
 
