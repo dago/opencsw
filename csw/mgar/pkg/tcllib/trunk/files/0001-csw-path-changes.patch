@@ -1,0 +1,75 @@
+From 9cc0fd54cf707a756de8606c08eb315e465659da Mon Sep 17 00:00:00 2001
+From: Kester Habermann <kester@opencsw.org>
+Date: Mon, 11 Jul 2011 11:15:59 +0200
+Subject: [PATCH] csw path changes
+
+---
+ modules/doctools/docidx.man   |    4 ++--
+ modules/doctools/doctoc.man   |    4 ++--
+ modules/doctools/doctools.man |    4 ++--
+ modules/ncgi/ncgi.man         |    2 +-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/modules/doctools/docidx.man b/modules/doctools/docidx.man
+index f6b19b8..aa7571a 100644
+--- a/modules/doctools/docidx.man
++++ b/modules/doctools/docidx.man
+@@ -301,8 +301,8 @@ through the command [cmd ::doctools::idx::search].
+ It contains initially one path, the subdirectory [file mpformats] of
+ the directory the package itself is located in. In other words, if the
+ package implementation [file docidx.tcl] is installed in the directory
+-[file /usr/local/lib/tcllib/doctools] then it will by default search
+-the directory [file /usr/local/lib/tcllib/doctools/mpformats] for
++[file /opt/csw/lib/tcllib1.13/doctools] then it will by default search
++the directory [file /opt/csw/lib/tcllib1.13/doctools/mpformats] for
+ format implementations.
+ 
+ [enum]
+diff --git a/modules/doctools/doctoc.man b/modules/doctools/doctoc.man
+index d09a5ef..9e5a0a8 100644
+--- a/modules/doctools/doctoc.man
++++ b/modules/doctools/doctoc.man
+@@ -301,8 +301,8 @@ through the command [cmd ::doctools::toc::search].
+ It contains initially one path, the subdirectory [file mpformats] of
+ the directory the package itself is located in. In other words, if the
+ package implementation [file doctoc.tcl] is installed in the directory
+-[file /usr/local/lib/tcllib/doctools] then it will by default search
+-the directory [file /usr/local/lib/tcllib/doctools/mpformats] for
++[file /opt/csw/lib/tcllib1.13/doctools] then it will by default search
++the directory [file /opt/csw/lib/tcllib1.13/doctools/mpformats] for
+ format implementations.
+ 
+ [enum]
+diff --git a/modules/doctools/doctools.man b/modules/doctools/doctools.man
+index 9c2c139..aeb4370 100644
+--- a/modules/doctools/doctools.man
++++ b/modules/doctools/doctools.man
+@@ -381,10 +381,10 @@ It contains initially one path, the subdirectory [file mpformats] of
+ the directory the package itself is located in.
+ 
+ In other words, if the package implementation [file doctools.tcl] is
+-installed in the directory [file /usr/local/lib/tcllib/doctools] then
++installed in the directory [file /opt/csw/lib/tcllib1.13/doctools] then
+ it will by default search the
+ 
+-directory [file /usr/local/lib/tcllib/doctools/mpformats] for format
++directory [file /opt/csw/lib/tcllib1.13/doctools/mpformats] for format
+ implementations.
+ 
+ [enum]
+diff --git a/modules/ncgi/ncgi.man b/modules/ncgi/ncgi.man
+index 4b24de7..155b861 100644
+--- a/modules/ncgi/ncgi.man
++++ b/modules/ncgi/ncgi.man
+@@ -311,7 +311,7 @@ Name: <input type="text" name="filedesc"><br>
+ </html>
+ 
+ TCL: upload.cgi
+-#!/usr/local/bin/tclsh
++#!/opt/csw/bin/tclsh
+ 
+ ::ncgi::parse
+ set filedata [::ncgi::value filedata]
+-- 
+1.7.6
+
