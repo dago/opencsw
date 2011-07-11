@@ -17,28 +17,20 @@ DISTFILES  = $(DISTNAME).tar.gz
 PATCHFILES = 0001-Use-inttypes.h.patch
 PATCHFILES += 0002-Enable-getisax-only-for-Solaris-10.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://liboil.freedesktop.org/
 
-PACKAGES = CSWliboil CSWliboildevel
+PACKAGES += CSWliboil0-3-0
+SPKG_DESC_CSWliboil0-3-0 = A library of simple functions that are optimized for various CPUs, liboil-0.3.so.0
+PKGFILES_CSWliboil0-3-0 += $(call pkgfiles_lib,liboil-0.3.so.0)
+OBSOLETED_BY_CSWliboil0-3-0 = CSWliboil
 
-CATALOGNAME_CSWliboil = liboil
-CATALOGNAME_CSWliboildevel = liboil_devel
-
-SPKG_DESC_CSWliboil = $(DESCRIPTION)
-SPKG_DESC_CSWliboildevel = Development files for liboil
-
-RUNTIME_DEP_PKGS_CSWliboildevel = CSWliboil
-
-SPKG_SOURCEURL = http://liboil.freedesktop.org/
+PACKAGES += CSWliboil-dev
+SPKG_DESC_CSWliboil-dev = Development files for liboil-0.3.so.0
+RUNTIME_DEP_PKGS_CSWliboil-dev += CSWliboil0-3-0
+# PKGFILES is catchall
+OBSOLETED_BY_CSWliboil-dev += CSWliboildevel
+CATALOGNAME_CSWliboildevel = liboil_devel_stub
 
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
-
-PKGFILES_CSWliboildevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWliboildevel += $(sharedstatedir)/gtk-doc/.*
 
 include gar/category.mk
