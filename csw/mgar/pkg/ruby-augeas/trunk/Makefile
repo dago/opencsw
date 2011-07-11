@@ -1,5 +1,5 @@
 NAME       = ruby-augeas
-VERSION    = 0.3.0
+VERSION    = 0.4.1
 CATEGORIES = lang
 
 DESCRIPTION = Augeas Ruby Bindings
@@ -17,7 +17,9 @@ RUNTIME_DEP_PKGS_CSWrubyaugeas += CSWruby18
 RUNTIME_DEP_PKGS_CSWrubyaugeas += CSWlibruby18-1
 RUNTIME_DEP_PKGS_CSWrubyaugeas += CSWaugeas
 CHECKPKG_OVERRIDES_CSWrubyaugeas += catalogname-does-not-match-pkgname|pkgname=CSWrubyaugeas|catalogname=ruby_augeas|expected-catalogname=rubyaugeas
-CHECKPKG_OVERRIDES_CSWrubyaugeas += missing-dependency|CSWruby
+# covered by CSWaugeas - and agreed not to split
+CHECKPKG_OVERRIDES_CSWrubyaugeas += soname-not-found|libaugeas.so.0|is|needed|by|opt/csw/lib/ruby/site_ruby/1.8/sparc-solaris2.9/_augeas.so
+
 
 BUILD_DEP_PKGS    = CSWrake
 BUILD_DEP_PKGS    += CSWruby18
