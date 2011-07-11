@@ -20,7 +20,7 @@ BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibncurses-dev
 BUILD_DEP_PKGS += CSWglib2devel
 BUILD_DEP_PKGS += CSWgtk2devel
-BUILD_DEP_PKGS += CSWatk2devel
+BUILD_DEP_PKGS += CSWlibatkdevel
 BUILD_DEP_PKGS += CSWpangodevel
 BUILD_DEP_PKGS += CSWlibcairo-dev
 
