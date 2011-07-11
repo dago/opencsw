@@ -1,0 +1,158 @@
+From 466c43f6ab8ecb36b006367c4fc633f19a43b747 Mon Sep 17 00:00:00 2001
+From: Kester Habermann <kester@opencsw.org>
+Date: Mon, 11 Jul 2011 17:13:36 +0200
+Subject: [PATCH] path-change-shells
+
+---
+ modules/fumagic/filetypes.tcl |   21 ++++++++--------
+ modules/fumagic/mimetypes.tcl |   52 +++++++++++++++++++---------------------
+ 2 files changed, 35 insertions(+), 38 deletions(-)
+
+diff --git a/modules/fumagic/filetypes.tcl b/modules/fumagic/filetypes.tcl
+index 8872af3..db6af98 100644
+--- a/modules/fumagic/filetypes.tcl
++++ b/modules/fumagic/filetypes.tcl
+@@ -2017,25 +2017,24 @@ if {[S 0 == {\#!\ /bin/sh} b]} {emit {Bourne shell script text executable}}
+ if {[S 0 == {\#!\ /bin/csh} b]} {emit {C shell script text executable}}
+ if {[S 0 == {\#!\ /bin/ksh} b]} {emit {Korn shell script text executable}}
+ if {[S 0 == {\#!\ /bin/tcsh} b]} {emit {Tenex C shell script text executable}}
+-if {[S 0 == {\#!\ /usr/local/tcsh} b]} {emit {Tenex C shell script text executable}}
+-if {[S 0 == {\#!\ /usr/local/bin/tcsh} b]} {emit {Tenex C shell script text executable}}
++if {[S 0 == {\#!\ /opt/csw/bin/tcsh} b]} {emit {Tenex C shell script text executable}}
+ if {[S 0 == {\#!\ /bin/zsh} b]} {emit {Paul Falstad's zsh script text executable}}
+ if {[S 0 == {\#!\ /usr/bin/zsh} b]} {emit {Paul Falstad's zsh script text executable}}
+-if {[S 0 == {\#!\ /usr/local/bin/zsh} b]} {emit {Paul Falstad's zsh script text executable}}
+-if {[S 0 == {\#!\ /usr/local/bin/ash} b]} {emit {Neil Brown's ash script text executable}}
+-if {[S 0 == {\#!\ /usr/local/bin/ae} b]} {emit {Neil Brown's ae script text executable}}
++if {[S 0 == {\#!\ /opt/csw/bin/zsh} b]} {emit {Paul Falstad's zsh script text executable}}
++if {[S 0 == {\#!\ /opt/csw/bin/ash} b]} {emit {Neil Brown's ash script text executable}}
++if {[S 0 == {\#!\ /opt/csw/bin/ae} b]} {emit {Neil Brown's ae script text executable}}
+ if {[S 0 == {\#!\ /bin/nawk} b]} {emit {new awk script text executable}}
+ if {[S 0 == {\#!\ /usr/bin/nawk} b]} {emit {new awk script text executable}}
+-if {[S 0 == {\#!\ /usr/local/bin/nawk} b]} {emit {new awk script text executable}}
++if {[S 0 == {\#!\ /opt/csw/bin/nawk} b]} {emit {new awk script text executable}}
+ if {[S 0 == {\#!\ /bin/gawk} b]} {emit {GNU awk script text executable}}
+ if {[S 0 == {\#!\ /usr/bin/gawk} b]} {emit {GNU awk script text executable}}
+-if {[S 0 == {\#!\ /usr/local/bin/gawk} b]} {emit {GNU awk script text executable}}
++if {[S 0 == {\#!\ /opt/csw/bin/gawk} b]} {emit {GNU awk script text executable}}
+ if {[S 0 == {\#!\ /bin/awk} b]} {emit {awk script text executable}}
+ if {[S 0 == {\#!\ /usr/bin/awk} b]} {emit {awk script text executable}}
+ if {[S 0 == BEGIN]} {emit {awk script text}}
+ if {[S 0 == {\#!\ /bin/rc} b]} {emit {Plan 9 rc shell script text executable}}
+ if {[S 0 == {\#!\ /bin/bash} b]} {emit {Bourne-Again shell script text executable}}
+-if {[S 0 == {\#!\ /usr/local/bin/bash} b]} {emit {Bourne-Again shell script text executable}}
++if {[S 0 == {\#!\ /opt/csw/bin/bash} b]} {emit {Bourne-Again shell script text executable}}
+ if {[S 0 == {\#!/usr/bin/env}]} {emit a
+ if {[S 15 x {}]} {emit {%s script text executable}}
+ }
+@@ -2045,7 +2044,7 @@ if {[S 16 x {}]} {emit {%s script text executable}}
+ if {[S 0 == <?php c]} {emit {PHP script text}}
+ if {[S 0 == {<?\n}]} {emit {PHP script text}}
+ if {[S 0 == {<?\r}]} {emit {PHP script text}}
+-if {[S 0 == {\#!\ /usr/local/bin/php} b]} {emit {PHP script text executable}}
++if {[S 0 == {\#!\ /opt/csw/php5/bin/php} b]} {emit {PHP script text executable}}
+ if {[S 0 == {\#!\ /usr/bin/php} b]} {emit {PHP script text executable}}
+ if {[S 0 == {Zend\x00}]} {emit {PHP script Zend Optimizer data}}
+ if {[Sx 1 0 == {$Suite}]} {emit {TTCN Abstract Test Suite}
+@@ -4406,8 +4405,8 @@ if {[S 0 == {\#!\ /bin/perl} b]} {emit {perl script text executable}}
+ if {[S 0 == {eval\ \"exec\ /bin/perl}]} {emit {perl script text}}
+ if {[S 0 == {\#!\ /usr/bin/perl} b]} {emit {perl script text executable}}
+ if {[S 0 == {eval\ \"exec\ /usr/bin/perl}]} {emit {perl script text}}
+-if {[S 0 == {\#!\ /usr/local/bin/perl} b]} {emit {perl script text}}
+-if {[S 0 == {eval\ \"exec\ /usr/local/bin/perl}]} {emit {perl script text executable}}
++if {[S 0 == {\#!\ /opt/csw/bin/perl} b]} {emit {perl script text}}
++if {[S 0 == {eval\ \"exec\ /opt/csw/bin/perl}]} {emit {perl script text executable}}
+ if {[S 0 == {eval\ '(exit\ $?0)'\ &&\ eval\ 'exec}]} {emit {perl script text}}
+ if {[S 0 == package]} {emit {Perl5 module source text}}
+ if {[S 0 == perl-store]} {emit {perl Storable\(v0.6\) data}
+diff --git a/modules/fumagic/mimetypes.tcl b/modules/fumagic/mimetypes.tcl
+index d73f573..2633102 100644
+--- a/modules/fumagic/mimetypes.tcl
++++ b/modules/fumagic/mimetypes.tcl
+@@ -183,38 +183,36 @@ proc ::fileutil::magic::mimetype::run {} {
+     if {[S 0 == {\#!/bin/tcsh} ]} {emit application/x-csh}
+     if {[S 0 == {\#!\ /bin/tcsh} ]} {emit application/x-csh}
+     if {[S 0 == {\#!\	/bin/tcsh} ]} {emit application/x-csh}
+-    if {[S 0 == {\#!/usr/local/tcsh} ]} {emit application/x-csh}
+-    if {[S 0 == {\#!\ /usr/local/tcsh} ]} {emit application/x-csh}
+-    if {[S 0 == {\#!/usr/local/bin/tcsh} ]} {emit application/x-csh}
+-    if {[S 0 == {\#!\ /usr/local/bin/tcsh} ]} {emit application/x-csh}
+-    if {[S 0 == {\#!\	/usr/local/bin/tcsh} ]} {emit application/x-csh}
+-    if {[S 0 == {\#!/usr/local/bin/zsh} ]} {emit application/x-zsh}
+-    if {[S 0 == {\#!\ /usr/local/bin/zsh} ]} {emit application/x-zsh}
+-    if {[S 0 == {\#!\	/usr/local/bin/zsh} ]} {emit application/x-zsh}
+-    if {[S 0 == {\#!/usr/local/bin/ash} ]} {emit application/x-sh}
+-    if {[S 0 == {\#!\ /usr/local/bin/ash} ]} {emit application/x-zsh}
+-    if {[S 0 == {\#!\	/usr/local/bin/ash} ]} {emit application/x-zsh}
+-    if {[S 0 == {\#!/usr/local/bin/ae} ]} {emit text/script}
+-    if {[S 0 == {\#!\ /usr/local/bin/ae} ]} {emit text/script}
+-    if {[S 0 == {\#!\	/usr/local/bin/ae} ]} {emit text/script}
++    if {[S 0 == {\#!/opt/csw/bin/tcsh} ]} {emit application/x-csh}
++    if {[S 0 == {\#!\ /opt/csw/bin/tcsh} ]} {emit application/x-csh}
++    if {[S 0 == {\#!\	/opt/csw/bin/tcsh} ]} {emit application/x-csh}
++    if {[S 0 == {\#!/opt/csw/bin/zsh} ]} {emit application/x-zsh}
++    if {[S 0 == {\#!\ /opt/csw/bin/zsh} ]} {emit application/x-zsh}
++    if {[S 0 == {\#!\	/opt/csw/bin/zsh} ]} {emit application/x-zsh}
++    if {[S 0 == {\#!/opt/csw/bin/ash} ]} {emit application/x-sh}
++    if {[S 0 == {\#!\ /opt/csw/bin/ash} ]} {emit application/x-zsh}
++    if {[S 0 == {\#!\	/opt/csw/bin/ash} ]} {emit application/x-zsh}
++    if {[S 0 == {\#!/opt/csw/bin/ae} ]} {emit text/script}
++    if {[S 0 == {\#!\ /opt/csw/bin/ae} ]} {emit text/script}
++    if {[S 0 == {\#!\	/opt/csw/bin/ae} ]} {emit text/script}
+     if {[S 0 == {\#!/bin/nawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!\ /bin/nawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!\	/bin/nawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!/usr/bin/nawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!\ /usr/bin/nawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!\	/usr/bin/nawk} ]} {emit application/x-awk}
+-    if {[S 0 == {\#!/usr/local/bin/nawk} ]} {emit application/x-awk}
+-    if {[S 0 == {\#!\ /usr/local/bin/nawk} ]} {emit application/x-awk}
+-    if {[S 0 == {\#!\	/usr/local/bin/nawk} ]} {emit application/x-awk}
++    if {[S 0 == {\#!/opt/csw/bin/nawk} ]} {emit application/x-awk}
++    if {[S 0 == {\#!\ /opt/csw/bin/nawk} ]} {emit application/x-awk}
++    if {[S 0 == {\#!\	/opt/csw/bin/nawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!/bin/gawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!\ /bin/gawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!\	/bin/gawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!/usr/bin/gawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!\ /usr/bin/gawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!\	/usr/bin/gawk} ]} {emit application/x-awk}
+-    if {[S 0 == {\#!/usr/local/bin/gawk} ]} {emit application/x-awk}
+-    if {[S 0 == {\#!\ /usr/local/bin/gawk} ]} {emit application/x-awk}
+-    if {[S 0 == {\#!\	/usr/local/bin/gawk} ]} {emit application/x-awk}
++    if {[S 0 == {\#!/opt/csw/bin/gawk} ]} {emit application/x-awk}
++    if {[S 0 == {\#!\ /opt/csw/bin/gawk} ]} {emit application/x-awk}
++    if {[S 0 == {\#!\	/opt/csw/bin/gawk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!/bin/awk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!\ /bin/awk} ]} {emit application/x-awk}
+     if {[S 0 == {\#!\	/bin/awk} ]} {emit application/x-awk}
+@@ -230,19 +228,19 @@ proc ::fileutil::magic::mimetype::run {} {
+     if {[S 0 == {\#!\ /usr/bin/perl} ]} {emit application/x-perl}
+     if {[S 0 == {\#!\	/usr/bin/perl} ]} {emit application/x-perl}
+     if {[S 0 == {eval\ \"exec\ /usr/bin/perl} ]} {emit application/x-perl}
+-    if {[S 0 == {\#!/usr/local/bin/perl} ]} {emit application/x-perl}
+-    if {[S 0 == {\#!\ /usr/local/bin/perl} ]} {emit application/x-perl}
+-    if {[S 0 == {\#!\	/usr/local/bin/perl} ]} {emit application/x-perl}
+-    if {[S 0 == {eval\ \"exec\ /usr/local/bin/perl} ]} {emit application/x-perl}
++    if {[S 0 == {\#!/opt/csw/bin/perl} ]} {emit application/x-perl}
++    if {[S 0 == {\#!\ /opt/csw/bin/perl} ]} {emit application/x-perl}
++    if {[S 0 == {\#!\	/opt/csw/bin/perl} ]} {emit application/x-perl}
++    if {[S 0 == {eval\ \"exec\ /opt/csw/bin/perl} ]} {emit application/x-perl}
+     if {[S 0 == {\#!/bin/rc} ]} {emit text/script}
+     if {[S 0 == {\#!\ /bin/rc} ]} {emit text/script}
+     if {[S 0 == {\#!\	/bin/rc} ]} {emit text/script}
+     if {[S 0 == {\#!/bin/bash} ]} {emit application/x-sh}
+     if {[S 0 == {\#!\ /bin/bash} ]} {emit application/x-sh}
+     if {[S 0 == {\#!\	/bin/bash} ]} {emit application/x-sh}
+-    if {[S 0 == {\#!/usr/local/bin/bash} ]} {emit application/x-sh}
+-    if {[S 0 == {\#!\ /usr/local/bin/bash} ]} {emit application/x-sh}
+-    if {[S 0 == {\#!\	/usr/local/bin/bash} ]} {emit application/x-sh}
++    if {[S 0 == {\#!/opt/csw/bin/bash} ]} {emit application/x-sh}
++    if {[S 0 == {\#!\ /opt/csw/bin/bash} ]} {emit application/x-sh}
++    if {[S 0 == {\#!\	/opt/csw/bin/bash} ]} {emit application/x-sh}
+     if {[S 0 == {\#!\ /} ]} {emit text/script}
+     if {[S 0 == {\#!\	/} ]} {emit text/script}
+     if {[S 0 == {\#!/} ]} {emit text/script}
+-- 
+1.7.6
+
