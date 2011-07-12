@@ -1,0 +1,25 @@
+From 2c3ce069cf55b3fc13d580ee3ec38f7c3130b562 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 12 Jul 2011 17:38:27 +0200
+Subject: [PATCH] Use lgrp.h
+
+---
+ lsof_4.84_src/dialects/sun/machine.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lsof_4.84_src/dialects/sun/machine.h b/lsof_4.84_src/dialects/sun/machine.h
+index 3a8b96a..8c2186d 100644
+--- a/lsof_4.84_src/dialects/sun/machine.h
++++ b/lsof_4.84_src/dialects/sun/machine.h
+@@ -55,7 +55,7 @@
+  * #include.
+  */
+ 
+-/* #include <sys/lgrp.h> */
++#include <sys/lgrp.h>
+ # endif	/* solaris>=90000 */
+ 
+ 
+-- 
+1.7.6
+
