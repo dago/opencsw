@@ -14,10 +14,6 @@ MASTER_SITES = http://www.monkey.org/~provos/
 DISTNAME = $(NAME)-$(VERSION)-stable
 DISTFILES += $(DISTNAME).tar.gz
 
-# Use this patch until bug is fixed:
-#   http://sourceforge.net/tracker/?func=detail&aid=3361614&group_id=50884&atid=461322
-PATCHFILES += 0001-Fix-wrong-check-of-sockaddr.patch
-
 VENDOR_URL = http://www.monkey.org/~provos/libevent/
 LICENSE = LICENSE
 
@@ -38,6 +34,11 @@ OBSOLETED_BY_CSWlibevent-dev += CSWlibevent-devel
 NOISALIST = 1
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+
+# Pass incudes via CFLAGS until this is fixed:
+#   http://sourceforge.net/tracker/?func=detail&aid=3361614&group_id=50884&atid=461322
+CPPFLAGS =
+EXTRA_CFLAGS += $(INCLUDE_FLAGS)
 
 BUILD64 = 1
 
