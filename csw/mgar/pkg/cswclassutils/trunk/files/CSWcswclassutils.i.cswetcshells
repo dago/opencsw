@@ -8,19 +8,16 @@
 
 echo "Installing class <cswetcshells> ..."
 
-PIR=${PKG_INSTALL_ROOT:-/}
-
-shellfile=$PIR/etc/shells
+shellfile=/etc/shells
 
 while read src dest; do
-  echo $dest
   /usr/bin/cp $src $dest || exit 2
 
   shell=$dest
 
-  if [ ! -f "$shellfile" ]; then
+  if [ ! -f "${PKG_INSTALL_ROOT}$shellfile" ]; then
       echo "Creating /etc/shells with default set of shells (see: man shells)"
-      cat <<EOF >$shellfile
+      cat <<EOF >${PKG_INSTALL_ROOT}$shellfile
 /bin/bash
 /bin/csh
 /bin/jsh
@@ -46,11 +43,11 @@ while read src dest; do
 EOF
 	fi
 
-  exists=`awk "\\\$1 == \"$shell\" { print \"found\" }" $shellfile`
+  exists=`awk "\\\$1 == \"$shell\" { print \"found\" }" ${PKG_INSTALL_ROOT}$shellfile`
 
   if [ "$exists" != "found" ]; then
       echo "Registering $shell in $shellfile."
-      echo "$shell	# $PKGINST" >> $shellfile
+      echo "$shell	# $PKGINST" >> ${PKG_INSTALL_ROOT}$shellfile
   else
       echo "Not registering $shell in $shellfile.  It is already registered."
   fi
