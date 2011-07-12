@@ -1,0 +1,27 @@
+From a5bbac4a10d8f2a2958e1f4baf0c43e318f28bce Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 12 Jul 2011 15:42:35 +0200
+Subject: [PATCH 07/10] Need headers for major()/minor()
+
+---
+ libexplain/buffer/file_type.h |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/libexplain/buffer/file_type.h b/libexplain/buffer/file_type.h
+index 1e5569c..9bead66 100644
+--- a/libexplain/buffer/file_type.h
++++ b/libexplain/buffer/file_type.h
+@@ -20,6 +20,10 @@
+ #ifndef LIBEXPLAIN_BUFFER_FILE_TYPE_H
+ #define LIBEXPLAIN_BUFFER_FILE_TYPE_H
+ 
++/* For major()/minor() */
++#include <sys/types.h>
++#include <sys/mkdev.h>
++
+ struct explain_string_buffer_t; /* forward */
+ 
+ /**
+-- 
+1.7.6
+
