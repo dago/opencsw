@@ -1,5 +1,8 @@
+# TBD:
+# - Probably VxFS bindings
+
 NAME = lsof
-VERSION = 4.83
+VERSION = 4.84
 CATEGORIES = utils
 
 DESCRIPTION = List open files
@@ -11,25 +14,33 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/
-TOPDIST   = $(NAME)_$(VERSION)
-SRCDIST   = $(TOPDIST)_src
-DISTFILES = $(TOPDIST).tar.bz2
+DISTNAME = $(NAME)_$(VERSION)
+DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += lsof-license
-WORKSRC   = $(WORKDIR)/$(TOPDIST)/$(SRCDIST)
 
-SPKG_SOURCEURL = http://people.freebsd.org/~abe/
+# This seems to be necessary as the above comment says
+PATCHFILES += 0001-Use-lgrp.h.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)_(\d+(?:\.\d+)*).tar.bz2
+SRCDIST = $(DISTNAME)_src
+WORKSRC   = $(WORKDIR)/$(DISTNAME)/$(SRCDIST)
 
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
+VENDOR_URL = http://people.freebsd.org/~abe/
 LICENSE = lsof-license
 
 BUILD64 = 1
+ISAEXEC = 1
 
 CONFIGURE_SCRIPTS = custom
 CONFIGURE_ARGS    = -n solariscc
 
 TEST_SCRIPTS = custom
+
+# Tests require root
+SKIPTEST ?= 1
+
 INSTALL_SCRIPTS = custom
 
 # Environment variables affecting Solaris builds:
@@ -50,7 +61,13 @@ SOLARIS_CCDIR = $(CC_HOME)/bin
 SOLARIS_INSTR = $(ISA)
 SOLARIS_KERNBITS = $(MEMORYMODEL)
 
-PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386 solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
+BUILD_OVERRIDE_VARS = CDEF
+BUILD_OVERRIDE_VAR_CDEF = $(CFLAGS)
+
+PROTOTYPE_MODIFIERS = lsof
+PROTOTYPE_FILES_lsof = $(bindir)/lsof
+PROTOTYPE_GROUP_lsof = sys
+PROTOTYPE_PERMS_lsof = 2755
 
 include gar/category.mk
 
@@ -58,25 +75,25 @@ INSTALLISADIR ?= $(WORKROOTDIR)/install-$(MODULATION)
 
 post-extract-modulated:
 	@echo " ==> Extracting source distribution"
-	$(if $(filter-out global,$(MODULATION)),( cd $(WORKDIR)/$(TOPDIST) ; tar xf $(SRCDIST).tar ))
-	$(MAKECOOKIE)
+	@$(if $(filter-out global,$(MODULATION)),( cd $(WORKDIR)/$(DISTNAME) ; tar xf $(SRCDIST).tar ))
+	@$(MAKECOOKIE)
 
 configure-custom:
 	@echo " ==> Configuring in $(WORKSRC)"
 	( cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) )
-	$(MAKECOOKIE)
+	@$(MAKECOOKIE)
 
 test-custom:
 	@echo " ==> Testing in $(WORKSRC)/tests"
-	@$(MAKE) -C $(WORKSRC)/tests all opt
-	$(MAKECOOKIE)
+	$(MAKE) -C $(WORKSRC)/tests
+	@$(MAKECOOKIE)
 
 install-custom:
 	@echo " ==> Installing $(NAME) $(VERSION) for $(MODULATION)"
 	echo DESTDIR: $(DESTDIR)
 	@( cd $(WORKSRC) ; \
 		ginstall -d $(DESTDIR)$(bindir) ; \
-		ginstall -m 2755 -g sys lsof $(DESTDIR)$(bindir) ; \
+		ginstall -m 755 lsof $(DESTDIR)$(bindir) ; \
 		ginstall -d $(DESTDIR)$(mandir)/man8 ; \
 		ginstall -m 444 lsof.8 $(DESTDIR)$(mandir)/man8 )
-	$(MAKECOOKIE)
+	@$(MAKECOOKIE)
