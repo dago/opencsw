@@ -1,0 +1,65 @@
+From 01afd1d431d9e8e63e0e7523cc2bba554db45bb6 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 12 Jul 2011 15:43:34 +0200
+Subject: [PATCH 08/10] inttypes.h is needed for int*_t
+
+---
+ libexplain/buffer/int16_t.h |    2 ++
+ libexplain/buffer/int32_t.h |    2 ++
+ libexplain/buffer/int64_t.h |    7 +++++++
+ 3 files changed, 11 insertions(+), 0 deletions(-)
+
+diff --git a/libexplain/buffer/int16_t.h b/libexplain/buffer/int16_t.h
+index 4a69a58..de07d9c 100644
+--- a/libexplain/buffer/int16_t.h
++++ b/libexplain/buffer/int16_t.h
+@@ -21,6 +21,8 @@
+ 
+ #include <libexplain/ac/stdint.h>
+ 
++#include <inttypes.h>
++
+ #include <libexplain/string_buffer.h>
+ 
+ /**
+diff --git a/libexplain/buffer/int32_t.h b/libexplain/buffer/int32_t.h
+index 0bd6c9b..338c55d 100644
+--- a/libexplain/buffer/int32_t.h
++++ b/libexplain/buffer/int32_t.h
+@@ -21,6 +21,8 @@
+ 
+ #include <libexplain/ac/stdint.h>
+ 
++#include <inttypes.h>
++
+ #include <libexplain/string_buffer.h>
+ 
+ /**
+diff --git a/libexplain/buffer/int64_t.h b/libexplain/buffer/int64_t.h
+index 6d56b3b..c6195e8 100644
+--- a/libexplain/buffer/int64_t.h
++++ b/libexplain/buffer/int64_t.h
+@@ -21,8 +21,13 @@
+ 
+ #include <libexplain/ac/stdint.h>
+ 
++#include <inttypes.h>
++
+ #include <libexplain/string_buffer.h>
+ 
++/* Not detected during configure yet */
++#ifdef HAVE_INT64_
++
+ /**
+   * The explain_buffer_int64_t function may be used
+   * to print a representation of a int64_t value.
+@@ -73,4 +78,6 @@ void explain_buffer_uint64_t(explain_string_buffer_t *sb, uint64_t data);
+ void explain_buffer_uint64_array(explain_string_buffer_t *sb,
+     const uint64_t *data, size_t data_size);
+ 
++#endif
++
+ #endif /* LIBEXPLAIN_BUFFER_INT64_T_H */
+-- 
+1.7.6
+

@@ -1,0 +1,34 @@
+From 8567de31506529df979aec30f881c949457eb9bf Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 12 Jul 2011 15:38:36 +0200
+Subject: [PATCH 03/10] Do not return anything in void functions
+
+---
+ libexplain/buffer/eio.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libexplain/buffer/eio.c b/libexplain/buffer/eio.c
+index 7dba043..4978a1f 100644
+--- a/libexplain/buffer/eio.c
++++ b/libexplain/buffer/eio.c
+@@ -207,7 +207,7 @@ explain_buffer_eio_fildes(explain_string_buffer_t *sb, int fildes)
+         explain_buffer_eio(sb);
+         return;
+     }
+-    return explain_buffer_eio_stat(sb, fildes, &st);
++    explain_buffer_eio_stat(sb, fildes, &st);
+ }
+ 
+ 
+@@ -221,7 +221,7 @@ explain_buffer_eio_path(explain_string_buffer_t *sb, const char *path)
+         explain_buffer_eio(sb);
+         return;
+     }
+-    return explain_buffer_eio_stat(sb, -1, &st);
++    explain_buffer_eio_stat(sb, -1, &st);
+ }
+ 
+ 
+-- 
+1.7.6
+

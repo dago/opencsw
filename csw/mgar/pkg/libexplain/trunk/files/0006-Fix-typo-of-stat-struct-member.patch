@@ -1,0 +1,25 @@
+From f0174aefb4aca52215bbea8f27a92c69ad499ca7 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 12 Jul 2011 15:41:07 +0200
+Subject: [PATCH 06/10] Fix typo of stat struct member
+
+---
+ libexplain/buffer/file_type.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/libexplain/buffer/file_type.c b/libexplain/buffer/file_type.c
+index 2400e12..365c082 100644
+--- a/libexplain/buffer/file_type.c
++++ b/libexplain/buffer/file_type.c
+@@ -422,7 +422,7 @@ explain_buffer_file_type_st(explain_string_buffer_t *sb, const struct stat *st)
+         switch (st->st_rdev)
+         {
+         default:
+-            explain_buffer_file_type(sb, st->mode);
++            explain_buffer_file_type(sb, st->st_mode);
+             break;
+ 
+         case S_INSEM:
+-- 
+1.7.6
+
