@@ -1,0 +1,15 @@
+The notice below was taken from comments in the ttcp.c source code.
+
+ * Usable on 4.2, 4.3, and 4.1a systems by defining one of
+ * BSD42 BSD43 (BSD41a)
+ *
+ * Modified for operation under 4.2BSD, 18 Dec 84
+ *      T.C. Slattery, USNA
+ * Minor improvements, Mike Muuss and Terry Slattery, 16-Oct-85.
+ *
+ * Mike Muuss and Terry Slattery have released this code to the Public Domain.
+
+
+Some copies of ttcp claim the original author is unknown. However, according to
+http://ftp.arl.mil/~mike/ttcp.html
+Mike Muuss (now deceased) was the original author
