@@ -21,6 +21,9 @@ DISTFILES += lsof-license
 # This seems to be necessary as the above comment says
 PATCHFILES += 0001-Use-lgrp.h.patch
 
+# Do not automatically use VxFS
+PATCHFILES += 0002-Disable-VxFS-autodetect.patch
+
 SRCDIST = $(DISTNAME)_src
 WORKSRC   = $(WORKDIR)/$(DISTNAME)/$(SRCDIST)
 
@@ -31,17 +34,13 @@ VENDOR_URL = http://people.freebsd.org/~abe/
 LICENSE = lsof-license
 
 BUILD64 = 1
+
+EXTRA_BUILD_ISAS = sparcv8plus
+
 ISAEXEC = 1
 
 CONFIGURE_SCRIPTS = custom
 CONFIGURE_ARGS    = -n solariscc
-
-TEST_SCRIPTS = custom
-
-# Tests require root
-SKIPTEST ?= 1
-
-INSTALL_SCRIPTS = custom
 
 # Environment variables affecting Solaris builds:
 #   SOLARIS_23P101318     If this environment variable has a non-NULL value, the
@@ -54,12 +53,28 @@ INSTALL_SCRIPTS = custom
 #   SOLARIS_KERNBITS      specifies the number of bits in the Solaris 7, 8, 9 or
 #   SOLARIS_VSOCK         If this environment variable has a value of "Y" or "y",
 #   SOLARIS_VXFSINCL      This environment variable defines the path to the
-#   SOLARIS_VXFSLIB               This environment variable defines the path to the
+#   SOLARIS_VXFSLIB       This environment variable defines the path to the
 
-CONFIGURE_EXPORTS = LSOF_CFGF SOLARIS_CCDIR SOLARIS_INSTR SOLARIS_KERNBITS
+CONFIGURE_EXPORTS = LSOF_CFGF SOLARIS_CCDIR SOLARIS_INSTR SOLARIS_KERNBITS SOLARIS_VXFSINCL SOLARIS_VXFSLIB
 SOLARIS_CCDIR = $(CC_HOME)/bin
 SOLARIS_INSTR = $(ISA)
 SOLARIS_KERNBITS = $(MEMORYMODEL)
+
+# The Veritas Filesystem library libvxfsutil.a is sparcv8+, make sure to build that
+# specific ISA and not link when building sparcv8
+SOLARIS_VXFSINCL-sparcv8plus = /opt/VRTS/include
+SOLARIS_VXFSINCL-sparcv9     = /opt/VRTS/include
+SOLARIS_VXFSLIB-sparcv8plus = /opt/VRTS/lib
+SOLARIS_VXFSLIB-sparcv9     = /opt/VRTS/lib
+SOLARIS_VXFSINCL = $(SOLARIS_VXFSINCL-$(ISA))
+SOLARIS_VXFSLIB = $(SOLARIS_VXFSLIB-$(ISA))
+
+TEST_SCRIPTS = custom
+
+# Tests require root
+SKIPTEST ?= 1
+
+INSTALL_SCRIPTS = custom
 
 BUILD_OVERRIDE_VARS = CDEF
 BUILD_OVERRIDE_VAR_CDEF = $(CFLAGS)
