@@ -33,7 +33,11 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 VENDOR_URL = http://people.freebsd.org/~abe/
 LICENSE = lsof-license
 
-BUILD64 = 1
+# Do not build a unified 32/64 bit package for Solaris 9 i386
+BUILD64-sparc-5.9 = 1
+BUILD64-sparc-5.10 = 1
+BUILD64-i386-5.10 = 1
+BUILD64 = $(BUILD64-$(GARCH)-$(GAROSREL))
 
 EXTRA_BUILD_ISAS = sparcv8plus
 
@@ -64,8 +68,12 @@ SOLARIS_KERNBITS = $(MEMORYMODEL)
 # specific ISA and not link when building sparcv8
 SOLARIS_VXFSINCL-sparcv8plus = /opt/VRTS/include
 SOLARIS_VXFSINCL-sparcv9     = /opt/VRTS/include
+SOLARIS_VXFSINCL-i386        = /opt/VRTS/include
+SOLARIS_VXFSINCL-amd64       = /opt/VRTS/include
 SOLARIS_VXFSLIB-sparcv8plus = /opt/VRTS/lib
 SOLARIS_VXFSLIB-sparcv9     = /opt/VRTS/lib
+SOLARIS_VXFSLIB-i386        = /opt/VRTS/lib
+SOLARIS_VXFSLIB-amd64       = /opt/VRTS/lib
 SOLARIS_VXFSINCL = $(SOLARIS_VXFSINCL-$(ISA))
 SOLARIS_VXFSLIB = $(SOLARIS_VXFSLIB-$(ISA))
 
