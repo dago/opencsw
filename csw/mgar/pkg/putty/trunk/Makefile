@@ -15,6 +15,10 @@ MASTER_SITES = http://the.earth.li/~sgtatham/putty/latest/
 
 DISTFILES = $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-solaris-9-uses-inttypes.h-instead-of-stdint.h.patch
+
+LICENSE = LICENSE
+
 CONFIGURE_ARGS = $(DIRPATHS)
 
 WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
