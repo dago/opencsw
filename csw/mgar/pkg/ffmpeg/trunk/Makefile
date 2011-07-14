@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = ffmpeg
-VERSION = 0.5
+VERSION = 0.8
 CATEGORIES = lib
 
 DESCRIPTION = Very fast video and audio converter (includes libavcodec)
@@ -15,18 +15,27 @@ endef
 MASTER_SITES = http://ffmpeg.org/releases/
 DISTFILES  = $(DISTNAME).tar.bz2
 
-PATCHFILES = gnu-grep.patch
-PATCHFILES += 0001-Use-inttypes-instead-of-stdint.patch
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 BUILD64 = 1
-NOISAEXEC = 1
 
-FFMPEG_CONFIGURE_ARGS_1 = $(filter-out --exec_%,$(DIRPATHS))
-FFMPEG_CONFIGURE_ARGS_2 = $(filter-out --sbindir%,$(FFMPEG_CONFIGURE_ARGS_1))
-CONFIGURE_ARGS = $(FFMPEG_CONFIGURE_ARGS)
+NODIRPATHS += --exec_prefix
+NODIRPATHS += --sbindir
+NODIRPATHS += --libexecdir
+NODIRPATHS += --sysconfdir
+NODIRPATHS += --sharedstatedir
+
+CONFIGURE_ARGS += --prefix=$(prefix)
+CONFIGURE_ARGS += --bindir=$(bindir)
+CONFIGURE_ARGS += --datadir=$(datadir)
+CONFIGURE_ARGS += --libdir=$(libdir)
+CONFIGURE_ARGS += --shlibdir=$(libdir)
+CONFIGURE_ARGS += --incdir=$(includedir)
+CONFIGURE_ARGS += --mandir=$(mandir)
 
 GARCOMPILER = GNU
 
 include gar/category.mk
+
+# For 'grep -q'
+PATH := /opt/csw/gnu:$(PATH)
