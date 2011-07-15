@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = netcdf
-VERSION = 4.1.2
+VERSION = 4.1.3
 CATEGORIES = lib
 DESCRIPTION = Machine-independent data formats for array-oriented scientific data
 SPKG_SOURCEURL = http://www.unidata.ucar.edu/software/netcdf/
