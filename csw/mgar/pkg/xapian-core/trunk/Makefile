@@ -1,5 +1,5 @@
 NAME = xapian-core
-VERSION = 1.0.11
+VERSION = 1.2.6
 CATEGORIES = lib
 
 DESCRIPTION = An open source search engine library
@@ -13,41 +13,38 @@ MASTER_SITES = http://oligarchy.co.uk/xapian/$(VERSION)/
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PATCHFILES += 0001-Fix-include-issue-on-Solaris-9.patch
 
-PACKAGES = CSWxapian CSWxapianrt CSWxapiandevel
+PACKAGES += CSWxapian
 CATALOGNAME_CSWxapian = xapian
-CATALOGNAME_CSWxapianrt = xapian_rt
-CATALOGNAME_CSWxapiandevel = xapian_devel
-
 SPKG_DESC_CSWxapian = An open source search engine library
+RUNTIME_DEP_PKGS_CSWxapian += CSWxapianrt
+
+PACKAGES += CSWxapianrt
+CATALOGNAME_CSWxapianrt = xapian_rt
 SPKG_DESC_CSWxapianrt = Xapian runtime libraries
-SPKG_DESC_CSWxapiandevel = Xapian development files
-RUNTIME_DEP_PKGS_CSWxapianrt = CSWstlport CSWzlib
-RUNTIME_DEP_PKGS_CSWxapian = CSWxapianrt
-RUNTIME_DEP_PKGS_CSWxapiandevel = CSWxapian
+PKGFILES_CSWxapianrt = $(PKGFILES_RT)
+RUNTIME_DEP_PKGS_CSWxapianrt += CSWstlport
+RUNTIME_DEP_PKGS_CSWxapianrt += CSWzlib
+
+PACKAGES += CSWxapian-dev
+SPKG_DESC_CSWxapian-dev = Xapian development files
+PKGFILES_CSWxapian-dev = $(PKGFILES_DEVEL)
+PKGFILES_CSWxapian-dev += $(docdir)/xapian-core/apidoc/.*
+RUNTIME_DEP_PKGS_CSWxapian-dev += CSWxapian
 
 # If we compile with Sun Studio it is impossible to build the Ruby bindings as
-# Ruby is compiled with GCC.
-# Compiling with GCC4 yields the error "__sync_fetch_and_add_4 not found".
-GARCOMPILER = GCC3
+# TBD: Still true?
 
+# TBD: Is this necessary
 EXTRA_LD_FLAGS = -lm
 
-# GCC3 can not build amd64
-#BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
+BUILD64 = 1
 
-#BUILD_ARGS = AM_CXXFLAGS="-library=stlport4 -features=tmplife"
-
-TEST_TARGET = check
+# Can't we just pass this via EXTRA_CXXFLAGS?
+BUILD_ARGS = AM_CXXFLAGS="-library=stlport4 -features=tmplife"
 
 # We need the .la-file, otherwise xapian-config doesn't work
 MERGE_EXCLUDE_LIBTOOL =
-
-PKGFILES_CSWxapianrt = $(PKGFILES_RT)
-PKGFILES_CSWxapiandevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWxapiandevel += $(docdir)/xapian-core/apidoc/.*
 
 include gar/category.mk

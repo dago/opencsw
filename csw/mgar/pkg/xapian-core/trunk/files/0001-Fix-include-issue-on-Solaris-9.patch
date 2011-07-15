@@ -1,0 +1,24 @@
+From 257758591a51f3f361cf38b3e80d14044129c879 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 15 Jul 2011 17:55:41 +0200
+Subject: [PATCH] Fix include issue on Solaris 9
+
+---
+ tests/soaktest/soaktest.cc |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/tests/soaktest/soaktest.cc b/tests/soaktest/soaktest.cc
+index 2c742c3..37b1aba 100644
+--- a/tests/soaktest/soaktest.cc
++++ b/tests/soaktest/soaktest.cc
+@@ -28,6 +28,7 @@
+ #include "testsuite.h"
+ 
+ #include <cstdlib>
++#include <stdlib.h>
+ 
+ using namespace std;
+ 
+-- 
+1.7.6
+
