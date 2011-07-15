@@ -3,21 +3,19 @@
 # $Id$
 
 NAME = gmtcoast
-VERSION = 2.1.0
+VERSION = 2.2.0
 CATEGORIES = apps
-DESCRIPTION = Coastline Definition Files for Generic Mapping Tools
+DESCRIPTION = Coastline Definition Files for the Generic Mapping Tools (GMT)
 define BLURB
 Support data for the Generic Mapping Tools (GMT) including GSHHS coastlines, rivers, and political boundaries.
 endef
 
 SPKG_SOURCEURL = http://gmt.soest.hawaii.edu/
-MASTER_SITES = ftp://ftp.iris.washington.edu/pub/gmt/ ftp://ftp.soest.hawaii.edu/gmt/ ftp://gd.tuwien.ac.at/pub/gmt/
+MASTER_SITES = ftp://ftp.soest.hawaii.edu/gmt/ ftp://gd.tuwien.ac.at/pub/gmt/
 
-DISTFILES  = GSHHS$(VERSION)_coast.tar.bz2 \
-	     GSHHS$(VERSION)_full.tar.bz2 \
-	     GSHHS$(VERSION)_high.tar.bz2 
+DISTFILES  = gshhs-$(VERSION).tar.bz2 
 
-UFILES_REGEX = GSHHS(\d+(?:\.\d+)*)_(.*).tar.gz
+UFILES_REGEX = gshhs-(\d+(?:\.\d+)*).tar.gz
 
 ARCHALL = 1
 
@@ -34,20 +32,9 @@ datadir = /opt/csw/share/gmt
 ## The tarballs just dump into the current directory
 WORKSRC = $(WORKDIR)
 
-PACKAGES += CSWgmtcoast-low
-CATALOGNAME_CSWgmtcoast-low = gmtcoast_low
-SPKG_DESC_CSWgmtcoast-low = Low resolution coastlines for the Generic Mapping Tools (GMT)
-#PKGFILES_CSWgmtcoast-low += $(datadir)/coast/.*_[cli]\.cdf
-
-PACKAGES += CSWgmtcoast-high
-CATALOGNAME_CSWgmtcoast-high = gmtcoast_high
-SPKG_DESC_CSWgmtcoast-high = High resolution coastlines for the Generic Mapping Tools (GMT)
-PKGFILES_CSWgmtcoast-high += $(datadir)/coast/.*_h\.cdf
-
-PACKAGES += CSWgmtcoast-full
-CATALOGNAME_CSWgmtcoast-full = gmtcoast_full
-SPKG_DESC_CSWgmtcoast-full = Full resolution coastlines for the Generic Mapping Tools (GMT)
-PKGFILES_CSWgmtcoast-full += $(datadir)/coast/(.*)_f\.cdf
+OBSOLETED_BY_CSWgmtcoast += CSWgmtcoast-low
+OBSOLETED_BY_CSWgmtcoast += CSWgmtcoast-high
+OBSOLETED_BY_CSWgmtcoast += CSWgmtcoast-full
 
 include gar/category.mk
 
