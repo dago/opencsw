@@ -641,7 +641,12 @@ def main():
           else:
             # Hardlink
             logging.debug("cp -l %s %s/%s", src_path, tgt_path, pkg.basename)
-            os.link(src_path, os.path.join(tgt_path, pkg.basename))
+            tgt_filename = os.path.join(tgt_path, pkg.basename)
+            try:
+              os.link(src_path, tgt_filename)
+            except OSError, e:
+              logging.fatal("Could not link %s to %s", src_path, tgt_filename)
+              raise
       prev_osrels.append(osrel_short)
   elif (command, subcommand) == ('show', 'files'):
     md5_sum = args[0]
