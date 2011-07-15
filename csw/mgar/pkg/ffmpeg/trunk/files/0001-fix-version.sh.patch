@@ -1,0 +1,22 @@
+From 203595cdab30aea5661fbe8be7cea2143b0f6507 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Fri, 15 Jul 2011 08:44:12 +0200
+Subject: [PATCH] fix-version.sh
+
+---
+ version.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/version.sh b/version.sh
+index 41ae520..a83a539 100755
+--- a/version.sh
++++ b/version.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ 
+ # check for git short hash
+ if ! test "$revision"; then
+-- 
+1.7.6
+
