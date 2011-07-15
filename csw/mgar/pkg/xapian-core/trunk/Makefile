@@ -14,37 +14,36 @@ MASTER_SITES = http://oligarchy.co.uk/xapian/$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES += 0001-Fix-include-issue-on-Solaris-9.patch
+PATCHFILES += 0002-Do-not-strip-norunpath-on-libtool.patch
+
+VENDOR_URL = http://xapian.org/
 
 PACKAGES += CSWxapian
 CATALOGNAME_CSWxapian = xapian
-SPKG_DESC_CSWxapian = An open source search engine library
-RUNTIME_DEP_PKGS_CSWxapian += CSWxapianrt
+SPKG_DESC_CSWxapian = Xapian search engine binaries
+RUNTIME_DEP_PKGS_CSWxapian += CSWlibxapian22
+RUNTIME_DEP_PKGS_CSWxapian += CSWstlport
+RUNTIME_DEP_PKGS_CSWxapian += CSWzlib
 
-PACKAGES += CSWxapianrt
-CATALOGNAME_CSWxapianrt = xapian_rt
-SPKG_DESC_CSWxapianrt = Xapian runtime libraries
-PKGFILES_CSWxapianrt = $(PKGFILES_RT)
-RUNTIME_DEP_PKGS_CSWxapianrt += CSWstlport
-RUNTIME_DEP_PKGS_CSWxapianrt += CSWzlib
+PACKAGES += CSWlibxapian22
+SPKG_DESC_CSWlibxapian22 = An open source search engine library, libxapian.so.22
+PKGFILES_CSWlibxapian22 = $(call pkgfiles_lib,libxapian.so.22)
+RUNTIME_DEP_PKGS_CSWlibxapian22 += CSWstlport
+RUNTIME_DEP_PKGS_CSWlibxapian22 += CSWzlib
 
 PACKAGES += CSWxapian-dev
 SPKG_DESC_CSWxapian-dev = Xapian development files
 PKGFILES_CSWxapian-dev = $(PKGFILES_DEVEL)
 PKGFILES_CSWxapian-dev += $(docdir)/xapian-core/apidoc/.*
-RUNTIME_DEP_PKGS_CSWxapian-dev += CSWxapian
+PKGFILES_CSWxapian-dev += .*\.cmake
+RUNTIME_DEP_PKGS_CSWxapian-dev += CSWlibxapian22
 
-# If we compile with Sun Studio it is impossible to build the Ruby bindings as
-# TBD: Still true?
-
-# TBD: Is this necessary
-EXTRA_LD_FLAGS = -lm
+EXTRA_LD_FLAGS = -norunpath -lCrun
 
 BUILD64 = 1
+ISAEXEC = 1
 
-# Can't we just pass this via EXTRA_CXXFLAGS?
-BUILD_ARGS = AM_CXXFLAGS="-library=stlport4 -features=tmplife"
-
-# We need the .la-file, otherwise xapian-config doesn't work
-MERGE_EXCLUDE_LIBTOOL =
+# This is just an example of the default install location
+CHECKPKG_OVERRIDES_CSWxapian += file-with-bad-content|/usr/local|root/opt/csw/share/doc/xapian-core/install.html
 
 include gar/category.mk
