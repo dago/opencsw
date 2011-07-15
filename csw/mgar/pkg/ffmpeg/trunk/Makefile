@@ -16,6 +16,7 @@ MASTER_SITES = http://ffmpeg.org/releases/
 DISTFILES  = $(DISTNAME).tar.bz2
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PATCHFILES = 0001-fix-version.sh.patch
 
 BUILD64 = 1
 
@@ -32,6 +33,8 @@ CONFIGURE_ARGS += --libdir=$(libdir)
 CONFIGURE_ARGS += --shlibdir=$(libdir)
 CONFIGURE_ARGS += --incdir=$(includedir)
 CONFIGURE_ARGS += --mandir=$(mandir)
+CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --disable-static
 
 GARCOMPILER = GNU
 
