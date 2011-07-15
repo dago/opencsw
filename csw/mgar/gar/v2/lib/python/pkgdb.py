@@ -596,7 +596,7 @@ def main():
       return osrel.replace("SunOS", "")
 
     # TODO: Move this definition to a better place
-    for osrel in ("SunOS5.%s" % x for x in (8, 9, 10)):
+    for osrel in ("SunOS5.%s" % x for x in (8, 9, 10, 11)):
       for arch in archs:
         sqo_osrel, sqo_arch, sqo_catrel = GetSqoTriad(
             osrel, arch, catrel)
