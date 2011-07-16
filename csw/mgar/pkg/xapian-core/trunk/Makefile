@@ -31,12 +31,12 @@ PKGFILES_CSWlibxapian22 = $(call pkgfiles_lib,libxapian.so.22)
 RUNTIME_DEP_PKGS_CSWlibxapian22 += CSWstlport
 RUNTIME_DEP_PKGS_CSWlibxapian22 += CSWzlib
 
-PACKAGES += CSWxapian-dev
-SPKG_DESC_CSWxapian-dev = Xapian development files
-PKGFILES_CSWxapian-dev = $(PKGFILES_DEVEL)
-PKGFILES_CSWxapian-dev += $(docdir)/xapian-core/apidoc/.*
-PKGFILES_CSWxapian-dev += .*\.cmake
-RUNTIME_DEP_PKGS_CSWxapian-dev += CSWlibxapian22
+PACKAGES += CSWlibxapian-dev
+SPKG_DESC_CSWlibxapian-dev = Xapian development files
+PKGFILES_CSWlibxapian-dev = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibxapian-dev += $(docdir)/xapian-core/apidoc/.*
+PKGFILES_CSWlibxapian-dev += .*\.cmake
+RUNTIME_DEP_PKGS_CSWlibxapian-dev += CSWlibxapian22
 
 EXTRA_LD_FLAGS = -norunpath -lCrun
 
