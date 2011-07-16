@@ -1,0 +1,27 @@
+From ae30dfc8465c8bbd628d18ee5f7d175cba0ea3ef Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 16 Jul 2011 22:47:51 +0200
+Subject: [PATCH] Do not bail out on missing .la
+
+---
+ xapian-config.in |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/xapian-config.in b/xapian-config.in
+index 7fdd2ea..6ad567b 100644
+--- a/xapian-config.in
++++ b/xapian-config.in
+@@ -281,8 +281,8 @@ for arg in $actions ; do
+ 		continue
+ 	    fi
+ 
+-	    echo "$0: Can't find libxapian@LIBRARY_VERSION_SUFFIX@.la to link against." 1>&2
+-	    exit 1
++#	    echo "$0: Can't find libxapian@LIBRARY_VERSION_SUFFIX@.la to link against." 1>&2
++#	    exit 1
+ 	fi
+ 
+ 	set_L_to_library_path
+-- 
+1.7.6
+
