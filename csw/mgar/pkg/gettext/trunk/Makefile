@@ -210,7 +210,6 @@ CONFIGURE_ARGS += --with-included-gettext
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
-NOISAEXEC = 1
 STRIP_LIBTOOL = 1
 EXTRA_LINKER_FLAGS = -xnorunpath
 
