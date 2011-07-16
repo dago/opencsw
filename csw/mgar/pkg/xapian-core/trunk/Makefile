@@ -15,6 +15,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PATCHFILES += 0001-Fix-include-issue-on-Solaris-9.patch
 PATCHFILES += 0002-Do-not-strip-norunpath-on-libtool.patch
+PATCHFILES += 0003-Do-not-bail-out-on-missing-.la.patch
 
 VENDOR_URL = http://xapian.org/
 
