@@ -32,7 +32,7 @@ RUNTIME_DEP_PKGS_CSWlibxapian22 += CSWstlport
 RUNTIME_DEP_PKGS_CSWlibxapian22 += CSWzlib
 
 PACKAGES += CSWlibxapian-dev
-SPKG_DESC_CSWlibxapian-dev = Xapian development files
+SPKG_DESC_CSWlibxapian-dev = Xapian development files for libxapian.so.22
 PKGFILES_CSWlibxapian-dev = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibxapian-dev += $(docdir)/xapian-core/apidoc/.*
 PKGFILES_CSWlibxapian-dev += .*\.cmake
