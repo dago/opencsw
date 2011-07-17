@@ -25,6 +25,10 @@ CATALOGNAME_CSWlibserf1-0 = libserf1_0
 SPKG_DESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, provides libserf-1.so.0
 DEP_PKGS = CSWapr CSWapr-util CSWbdb48 CSWexpat CSWiconv CSWoldaprt CSWosslrt CSWzlib
 
+OBSOLETED_BY_CSWlibserf1-0 = CSWlibserf
+OBSOLETED_BY_CSWlibserf1-0 = CSWlibserf-devel
+OBSOLETED_BY_CSWlibserf1-0 = CSWlibserf0-0
+
 # Make sure the current directory comes before everything else
 INCLUDE_FLAGS = -I. -I$(includedir)
 
@@ -40,10 +44,6 @@ CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
 
 TEST_TARGET = check
 
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_bucket_util.h|CSWlibserf-devel|CSWlibserf1-0
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_private.h|CSWlibserf-devel|CSWlibserf1-0
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_bucket_types.h|CSWlibserf-devel|CSWlibserf1-0
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf.h|CSWlibserf-devel|CSWlibserf1-0
 CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-1.so
 CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-1.so
 
