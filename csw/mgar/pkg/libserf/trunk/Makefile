@@ -14,29 +14,16 @@ endef
 
 MASTER_SITES = http://serf.googlecode.com/files/
 DISTFILES  = $(DISTNAME).tar.bz2
-
-DEP_PKGS = CSWapr CSWapr-util CSWbdb48 CSWexpat CSWiconv CSWoldaprt CSWosslrt CSWzlib
+LICENSE = LICENSE
+VENDOR_URL = http://code.google.com/p/serf/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = serf-(\d+(?:\.\d+)*).tar.bz2
 
-OBSOLETED_BY_CSWlibserf0-0 = CSWlibserf
-OBSOLETED_BY_CSWlibserf-dev = CSWlibserf
-
-PACKAGES += CSWlibserf0-0
-CATALOGNAME_CSWlibserf0-0 = libserf0_0
-SPKG_DESC_CSWlibserf0-0 += HTTP client library built on APR, multiplexes connections, provides libserf-0.so.0
-PKGFILES_CSWlibserf0-0 += $(call baseisadirs,$(libdir),libserf-0\.so\.0(\.\d+)*)
-
-PACKAGES += CSWlibserf-dev
-CATALOGNAME_CSWlibserf-dev = libserf_dev
-SPKG_DESC_CSWlibserf-dev = Development files for libserf
-PKGFILES_CSWlibserf-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibserf-dev = CSWlibserf0-0
-
-LICENSE = LICENSE
-
-VENDOR_URL = http://code.google.com/p/serf/
+PACKAGES += CSWlibserf1-0
+CATALOGNAME_CSWlibserf1-0 = libserf1_0
+SPKG_DESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, provides libserf-1.so.0
+DEP_PKGS = CSWapr CSWapr-util CSWbdb48 CSWexpat CSWiconv CSWoldaprt CSWosslrt CSWzlib
 
 # Make sure the current directory comes before everything else
 INCLUDE_FLAGS = -I. -I$(includedir)
@@ -52,6 +39,13 @@ CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
 CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
 
 TEST_TARGET = check
+
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_bucket_util.h|CSWlibserf-devel|CSWlibserf1-0
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_private.h|CSWlibserf-devel|CSWlibserf1-0
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_bucket_types.h|CSWlibserf-devel|CSWlibserf1-0
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf.h|CSWlibserf-devel|CSWlibserf1-0
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-1.so
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-1.so
 
 include gar/category.mk
 
