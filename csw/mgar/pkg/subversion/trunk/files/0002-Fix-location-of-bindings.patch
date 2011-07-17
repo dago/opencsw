@@ -1,0 +1,50 @@
+From 986ad30cb4787968527abcb3743ec4b9fee130f2 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 17 Jul 2011 21:50:56 +0200
+Subject: [PATCH] Fix location of bindings
+
+---
+ Makefile.in                               |   10 +++++-----
+ subversion/bindings/swig/python/svn/fs.py |    2 +-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 03133c6..8661d07 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -85,14 +85,14 @@ swig_pl_libdir = @libdir@
+ swig_rb_libdir = @libdir@
+ 
+ ### these possibly need further discussion
+-swig_pydir = @libdir@/svn-python/libsvn
+-swig_pydir_extra = @libdir@/svn-python/svn
+-swig_pldir = @libdir@/svn-perl
++swig_pydir = @libdir@/python/site-packages/libsvn
++swig_pydir_extra = @libdir@/python/site-packages/svn
++#swig_pldir = @libdir@/svn-perl
+ swig_rbdir = $(SWIG_RB_SITE_ARCH_DIR)/svn/ext
+ toolsdir = @bindir@/svn-tools
+ 
+-javahl_javadir = @libdir@/svn-javahl
+-javahl_javahdir = @libdir@/svn-javahl/include
++javahl_javadir = @libdir@
++javahl_javahdir = @libdir@/include
+ javahl_libdir = @libdir@
+ javahl_test_rootdir=$(abs_builddir)/subversion/bindings/javahl/test-work
+ javahl_test_srcdir=$(abs_srcdir)/subversion/bindings/javahl
+diff --git a/subversion/bindings/swig/python/svn/fs.py b/subversion/bindings/swig/python/svn/fs.py
+index e82e495..438ad06 100644
+--- a/subversion/bindings/swig/python/svn/fs.py
++++ b/subversion/bindings/swig/python/svn/fs.py
+@@ -109,7 +109,7 @@ class FileDiff:
+ 
+     # use an array for the command to avoid the shell and potential
+     # security exposures
+-    cmd = ["diff"] \
++    cmd = ["gdiff"] \
+           + self.diffoptions \
+           + [self.tempfile1, self.tempfile2]
+ 
+-- 
+1.7.6
+

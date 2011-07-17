@@ -1,6 +1,6 @@
-From e522142a1517f9c9ffdd670eb2fd0aa974a9a9a1 Mon Sep 17 00:00:00 2001
-From: Rupert Thurner <rupert@build8s.(none)>
-Date: Sun, 20 Dec 2009 12:33:52 -0600
+From 0c866a35b462bc704a48e91d1d17a38a0175b743 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 17 Jul 2011 21:54:47 +0200
 Subject: [PATCH] make subversion sysconfigdir as it should be for csw
 
 ---
@@ -8,18 +8,18 @@ Subject: [PATCH] make subversion sysconfigdir as it should be for csw
  1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/subversion/libsvn_subr/config_impl.h b/subversion/libsvn_subr/config_impl.h
-index b5c9d4b..67d46aa 100644
+index d795771..0bc6464 100644
 --- a/subversion/libsvn_subr/config_impl.h
 +++ b/subversion/libsvn_subr/config_impl.h
-@@ -110,7 +110,7 @@ svn_error_t *svn_config__parse_registry(svn_config_t *cfg,
- #ifdef WIN32
- #  define SVN_CONFIG__SUBDIRECTORY    "Subversion"
- #else  /* ! WIN32 */
+@@ -121,7 +121,7 @@ svn_error_t *svn_config__parse_registry(svn_config_t *cfg,
+ #  define SVN_CONFIG__SYS_DIRECTORY   "subversion"
+ #  define SVN_CONFIG__USR_DIRECTORY   "subversion"
+ #else  /* ! WIN32 && ! __HAIKU__ */
 -#  define SVN_CONFIG__SYS_DIRECTORY   "/etc/subversion"
 +#  define SVN_CONFIG__SYS_DIRECTORY   "/etc/opt/csw/subversion"
  #  define SVN_CONFIG__USR_DIRECTORY   ".subversion"
  #endif /* WIN32 */
  
 -- 
-1.6.5.1
+1.7.6
 
