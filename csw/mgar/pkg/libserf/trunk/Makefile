@@ -26,7 +26,6 @@ SPKG_DESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connect
 DEP_PKGS = CSWapr CSWapr-util CSWbdb48 CSWlibexpat1 CSWiconv CSWoldaprt CSWosslrt CSWzlib
 
 OBSOLETED_BY_CSWlibserf1-0 = CSWlibserf-devel
-OBSOLETED_BY_CSWlibserf1-0 = CSWlibserf0-0
 
 # Make sure the current directory comes before everything else
 INCLUDE_FLAGS = -I. -I$(includedir)
