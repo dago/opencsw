@@ -23,7 +23,7 @@ UFILES_REGEX = serf-(\d+(?:\.\d+)*).tar.bz2
 PACKAGES += CSWlibserf1-0
 CATALOGNAME_CSWlibserf1-0 = libserf1_0
 SPKG_DESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, provides libserf-1.so.0
-DEP_PKGS = CSWapr CSWapr-util CSWbdb48 CSWexpat CSWiconv CSWoldaprt CSWosslrt CSWzlib
+DEP_PKGS = CSWapr CSWapr-util CSWbdb48 CSWlibexpat1 CSWiconv CSWoldaprt CSWosslrt CSWzlib
 
 OBSOLETED_BY_CSWlibserf1-0 = CSWlibserf-devel
 OBSOLETED_BY_CSWlibserf1-0 = CSWlibserf0-0
