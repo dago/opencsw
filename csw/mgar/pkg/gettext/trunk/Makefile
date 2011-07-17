@@ -8,7 +8,7 @@ define BLURB
 endef
 
 
-BUILD_DEP_PKGS += CSWlibncurses-dev
+BUILD_DEP_PKGS += CSWlibncurses-dev CSWlibxml2-dev
 
 PACKAGES += CSWggettext
 PACKAGES += CSWggettextdoc
@@ -68,7 +68,7 @@ RUNTIME_DEP_PKGS_CSWggettext += CSWlibgettextsrc0-18-1
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibintl2
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibintl3
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWggettext += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWggettext += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibasprintf0
@@ -91,7 +91,7 @@ RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWiconv
@@ -103,7 +103,7 @@ RUNTIME_DEP_PKGS_CSWlibgettextsrc0-17 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibgettextlib0-18-1
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWlibintl2 += CSWiconv
