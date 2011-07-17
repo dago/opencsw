@@ -7,6 +7,9 @@ define BLURB
 	GNU gettext utilities are a set of tools that provides a framework to help other GNU packages produce multi-lingual messages
 endef
 
+
+BUILD_DEP_PKGS += CSWlibncurses-dev
+
 PACKAGES += CSWggettext
 PACKAGES += CSWggettextdoc
 PACKAGES += CSWlibasprintf0
@@ -66,7 +69,7 @@ RUNTIME_DEP_PKGS_CSWggettext += CSWlibintl2
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibintl3
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWggettext += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWggettext += CSWncurses
+RUNTIME_DEP_PKGS_CSWggettext += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWggettext += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibasprintf0
 RUNTIME_DEP_PKGS_CSWggettext-dev += CSWlibgettextlib0-18-1
@@ -85,11 +88,11 @@ RUNTIME_DEP_PKGS_CSWlibgettextlib0-14-1 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-14-1 += CSWlibintl3
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-17 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWlibgettextlib0-18-1 += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextpo0 += CSWlibintl8
@@ -101,7 +104,7 @@ RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibgettextlib0-18-1
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWncurses
+RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWlibgettextsrc0-18-1 += CSWggettext-data
 RUNTIME_DEP_PKGS_CSWlibintl2 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibintl2 += CSWggettext-data
