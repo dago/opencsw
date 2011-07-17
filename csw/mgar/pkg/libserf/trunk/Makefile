@@ -17,51 +17,29 @@ DISTFILES  = $(DISTNAME).tar.bz2
 LICENSE = LICENSE
 VENDOR_URL = http://code.google.com/p/serf/
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = serf-(\d+(?:\.\d+)*).tar.bz2
-
 PACKAGES += CSWlibserf1-0
 CATALOGNAME_CSWlibserf1-0 = libserf1_0
-SPKG_DESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, provides libserf-1.so.0
-DEP_PKGS = CSWapr CSWapr-util CSWbdb48 CSWlibexpat1 CSWiconv CSWoldaprt CSWosslrt CSWzlib
+SPKG_DESC_CSWlibserf1-0 += HTTP client library built on APR, multiplexes connections, libserf-1.so.0
+RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWapr
+RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWapr-util
+RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWbdb48
+RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibserf1-0 += CSWzlib
 
-OBSOLETED_BY_CSWlibserf1-0 = CSWlibserf-devel
-
-# Make sure the current directory comes before everything else
-INCLUDE_FLAGS = -I. -I$(includedir)
+PACKAGES += CSWlibserf-dev
+CATALOGNAME_CSWlibserf-dev = libserf_dev
+SPKG_DESC_CSWlibserf-dev = Development files for libserf.so.1
+PKGFILES_CSWlibserf-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibserf-dev = CSWlibserf1-0
+OBSOLETED_BY_CSWlibserf-dev += CSWlibserf-devel
 
 EXTRA_LIB = $(prefix)/bdb48/lib
-
-# We don't need it and if defined the test breaks
-LD_OPTIONS =
-EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
 CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
 
-TEST_TARGET = check
-
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-0.so
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-1.so
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-1.so
-
-# overrides which whould not be necessary, as the package is obsoleted by this one
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_bucket_util.h|CSWlibserf-devel|CSWlibserf1-0
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_declare.h|CSWlibserf-devel|CSWlibserf1-0
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_private.h|CSWlibserf-devel|CSWlibserf1-0
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_bucket_types.h|CSWlibserf-devel|CSWlibserf1-0
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf.h|CSWlibserf-devel|CSWlibserf1-0
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/lib/libserf-0.so|CSWlibserf-devel|CSWlibserf1-0
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-0.so
-CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-pkgname-mismatch|sonames=libserf-0.so.0,libserf-1.so.0|pkgname=CSWlibserf1-0|expected=CSWlibserf0|
-
-
 include gar/category.mk
-
-post-configure-modulated: APR_LIBTOOL = $(shell $(bindir)/apr-1-config --apr-libtool)
-post-configure-modulated:
-	gcp $(APR_LIBTOOL) $(WORKSRC)
-	perl -i -pne 's|$(APR_LIBTOOL)|$(abspath $(WORKSRC)/libtool)|' $(WORKSRC)/Makefile
-	$(GARBIN)/fixlibtool $(WORKSRC)
-	@$(MAKECOOKIE)
