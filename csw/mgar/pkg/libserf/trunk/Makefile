@@ -43,14 +43,19 @@ CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
 
 TEST_TARGET = check
 
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-0.so
 CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-1.so
 CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-1.so
 
 # overrides which whould not be necessary, as the package is obsoleted by this one
 CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_bucket_util.h|CSWlibserf-devel|CSWlibserf1-0
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_declare.h|CSWlibserf-devel|CSWlibserf1-0
 CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_private.h|CSWlibserf-devel|CSWlibserf1-0
 CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_bucket_types.h|CSWlibserf-devel|CSWlibserf1-0
 CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf.h|CSWlibserf-devel|CSWlibserf1-0
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/lib/libserf-0.so|CSWlibserf-devel|CSWlibserf1-0
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-0.so
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-pkgname-mismatch|sonames=libserf-0.so.0,libserf-1.so.0|pkgname=CSWlibserf1-0|expected=CSWlibserf0|
 
 
 include gar/category.mk
