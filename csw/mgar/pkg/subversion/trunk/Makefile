@@ -2,6 +2,8 @@
 #
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
+# ! Install does not work as there is no contrib any more. Where is this stuff?
+#
 # * How about shipping a changelog.CSW (example in files/)?
 # * The language binding packages all have a whole stack of dependencies
 #   (mostly the same libs that the main svn package has). Are those really
@@ -22,7 +24,7 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 NAME = subversion
-VERSION = 1.7.0-alpha2
+VERSION = 1.7.0-alpha3
 CATEGORIES = utils
 
 DESCRIPTION = Version control rethought
@@ -35,7 +37,10 @@ VENDOR_URL   = http://subversion.apache.org/
 MASTER_SITES = http://archive.apache.org/dist/subversion/
 #MASTER_SITES = http://orac.ece.utexas.edu/pub/svn/1.6.7/yuletide-eggnog/
 DISTFILES    = $(NAME)-$(VERSION).tar.bz2
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+
+BUILD_DEP_PKGS += CSWlibexpat-dev
+BUILD_DEP_PKGS += CSWlibserf-dev
+BUILD_DEP_PKGS += CSWlibsqlite3-dev
 
 PACKAGES  = CSWsvn
 SPKG_DESC_CSWsvn           = Version control rethought
@@ -105,10 +110,10 @@ RUNTIME_DEP_PKGS_CSWjavasvn   += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWapr-util
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWbdb48
 RUNTIME_DEP_PKGS_CSWjavasvn   += CSWapr
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
-CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+#CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+#CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+#CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
+#CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 
 PACKAGES += CSWpmsvn
 SPKG_DESC_CSWpmsvn         = Subversion Perl Language Binding
@@ -172,8 +177,12 @@ DISTFILES += httpd-svn.conf.CSW svn_access.conf.CSW
 # Fix: Add java headers for nested classes
 # https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2008-June/004633.html
 PATCHFILES += javahl_headers_for_nested_classes.diff
-PATCHFILES += subversion161.diff
+
+# Hardcode location of system wide configuration to /etc/opt/csw/subversion
 PATCHFILES += 0001-make-subversion-sysconfigdir-as-it-should-be-for-csw.patch
+
+# Relocate locations of foreign language bindings
+PATCHFILES += 0002-Fix-location-of-bindings.patch
 
 SVNLIB     = $(prefix)/lib/svn
 JAVA_HOME  = /usr/jdk1.6.0_20
@@ -190,10 +199,11 @@ EXTRA_LINKER_FLAGS = -lintl -liconv
 RUNPATH_ISALIST  = $(libdir)
 #RUNPATH_ISALIST += $(filter-out /opt/csw/apache2/lib $(SVNLIB),$(EXTRA_LIB)) 
 
-EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
-PROTOTYPE_MODIFIERS += cswpycompile
-PROTOTYPE_FILES_cswpycompile = $(libdir)/python/.*\.py
-PROTOTYPE_CLASS_cswpycompile = cswpycompile
+#EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
+#PROTOTYPE_MODIFIERS += cswpycompile
+#PROTOTYPE_FILES_cswpycompile = $(libdir)/python/.*\.py
+#PROTOTYPE_CLASS_cswpycompile = cswpycompile
+PYCOMPILE = 1
 
 # All of the perl modules go to $(libdir)/perl/site_perl. We are not interested
 # in the version specific perl directory which only contains a perllocal.pod.
@@ -237,7 +247,8 @@ BINDING_TARGETS = $(addprefix svn-,$(BINDING_LANGS))
 
 PI_DEPENDS += copy-templates
 PI_DEPENDS += create-ra_dav-symlinks
-PI_DEPENDS += install-extras
+# TBD: There is no contrib/ in 1.7.0 any more, how to proceed? Other tarball? Or just drop in the future?
+# PI_DEPENDS += install-extras
 PI_DEPENDS += $(BINDING_TARGETS)
 
 post-install-modulated: $(PI_DEPENDS)
@@ -329,6 +340,7 @@ svn-ruby:
 	$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-rb
 	@$(MAKECOOKIE)
 
+svn-java: EXTRA_LINKER_FLAGS += -norunpath
 svn-java:
 	@echo " ==> Building Java bindings"
 	touch $(WORKSRC)/subversion/bindings/javahl/native/*.c
