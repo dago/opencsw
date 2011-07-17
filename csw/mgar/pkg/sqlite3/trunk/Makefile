@@ -1,5 +1,5 @@
 NAME = sqlite3
-VERSION = 3070602
+VERSION = 3070701
 CATEGORIES = lib
 
 DESCRIPTION  = An embeddable SQL engine in a C library
@@ -21,7 +21,7 @@ CATALOGNAME_CSWsqlite3 = sqlite3
 SPKG_DESC_CSWsqlite3 = $(DESCRIPTION)
 PKGFILES_CSWsqlite3 = $(bindir)/.*
 RUNTIME_DEP_PKGS_CSWsqlite3 += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWsqlite3 += CSWreadline
+RUNTIME_DEP_PKGS_CSWsqlite3 += CSWlibreadline6
 
 PACKAGES += CSWlibsqlite3-0
 CATALOGNAME_CSWlibsqlite3-0 = libsqlite3_0
