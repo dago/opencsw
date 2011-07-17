@@ -46,6 +46,13 @@ TEST_TARGET = check
 CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-1.so
 CHECKPKG_OVERRIDES_CSWlibserf1-0 += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libserf-1.so
 
+# overrides which whould not be necessary, as the package is obsoleted by this one
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_bucket_util.h|CSWlibserf-devel|CSWlibserf1-0
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_private.h|CSWlibserf-devel|CSWlibserf1-0
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf_bucket_types.h|CSWlibserf-devel|CSWlibserf1-0
+CHECKPKG_OVERRIDES_CSWlibserf1-0 += file-collision|/opt/csw/include/serf.h|CSWlibserf-devel|CSWlibserf1-0
+
+
 include gar/category.mk
 
 post-configure-modulated: APR_LIBTOOL = $(shell $(bindir)/apr-1-config --apr-libtool)
