@@ -45,19 +45,15 @@ CHECKPKG_OVERRIDES_CSWelinks += file-with-bad-content|/usr/local|root/opt/csw/bi
 
 MASTER_SITES = http://elinks.cz/download/
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += CSWelinks.prototype
 DISTFILES += changelog.CSW
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 # Debian security path for CVE-2007-2027
 PATCHFILES += elinks-417789.diff
 
+# Provided by iconv
+MERGE_EXCLUDE_FILES  = .*/charset.alias
+MERGE_EXCLUDE_FILES += .*/locale.alias
 
 ##### Build and installation information #####
 
