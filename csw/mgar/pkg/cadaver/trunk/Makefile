@@ -59,5 +59,6 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 post-merge:
-	@ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW
+	ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW
+
 
