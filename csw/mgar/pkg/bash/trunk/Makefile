@@ -55,13 +55,12 @@ CHECKPKG_OVERRIDES_CSWbash += bad-location-of-file|file=/etc/shells
 
 ###### Upstream and opencsw files information #######
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = bash-(\d+\.\d+).tar.gz $(PATCHFILE_PREFIX)-(\d+)
-
 # Patches download location
 MASTER_SITES = $(GNU_MIRROR)/bash-$(BASH_VERSION)-patches/
 # Main archive location
 MASTER_SITES += $(GNU_MIRROR)
+UPSTREAM_MASTER_SITES = $(GNU_MIRROR)
+
 DISTNAME = $(NAME)-$(BASH_VERSION)
 DISTFILES  = $(NAME)-$(BASH_VERSION).tar.gz
 DISTFILES += changelog.CSW
