@@ -1,3 +1,11 @@
+vsftpd (2.3.4,REV=2011.07.19) unstable
+
+  * New upstream release.
+  * Fixed default configuration files paths information 
+    in vsftpd.conf man page.
+
+ -- Yann Rouillard <yann@opencsw.org>  Tue, 19 Jul 2011 00:08:17 +0200
+
 vsftpd (2.3.2,REV=2010.09.03) UNRELEASED
 
   * Configuration file migration from /opt/csw/etc/vsftpd to

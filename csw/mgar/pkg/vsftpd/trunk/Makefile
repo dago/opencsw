@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = vsftpd
-VERSION = 2.3.2
+VERSION = 2.3.4
 CATEGORIES = server
 
 DESCRIPTION = A very secure and fast FTP server.
@@ -25,7 +25,7 @@ define BLURB
   per-user / per-IP configuration. 
 endef
 
-MASTER_SITES = ftp://vsftpd.beasts.org/users/cevans/
+MASTER_SITES = https://security.appspot.com/downloads/
 
 PACKAGES = CSWvsftpd
 
@@ -45,9 +45,6 @@ CHECKPKG_OVERRIDES_CSWvsftpd += file-with-bad-content|/usr/share|root/opt/csw/sh
 
 
 ###### Upstream and opencsw files information #######
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWvsftpd.preinstall
