@@ -32,6 +32,17 @@ PACKAGES = CSWvsftpd
 RUNTIME_DEP_PKGS  = CSWtcpwrap 
 RUNTIME_DEP_PKGS += CSWosslrt 
 
+# Reference to DTD path, can be safely ignored
+CHECKPKG_OVERRIDES_CSWvsftpd += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswvsftpd.xml
+
+# Various reference to default vsftpd path in documentation files, can be safely ignored
+CHECKPKG_OVERRIDES_CSWvsftpd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/vsftpd/EXAMPLE/INTERNET_SITE/vsftpd.xinetd
+CHECKPKG_OVERRIDES_CSWvsftpd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/vsftpd/EXAMPLE/INTERNET_SITE/README
+CHECKPKG_OVERRIDES_CSWvsftpd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/vsftpd/INSTALL
+CHECKPKG_OVERRIDES_CSWvsftpd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/vsftpd/Changelog
+CHECKPKG_OVERRIDES_CSWvsftpd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/vsftpd/INSTALL
+CHECKPKG_OVERRIDES_CSWvsftpd += file-with-bad-content|/usr/share|root/opt/csw/share/doc/vsftpd/README.ssl
+
 
 ###### Upstream and opencsw files information #######
 
