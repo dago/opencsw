@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = bash
-VERSION = 4.1.9
+VERSION = 4.2.10
 CATEGORIES = devel
 
 DESCRIPTION = A sh-compatible command language interpreter
@@ -26,7 +26,7 @@ BASH_PATCHLEVEL = $(shell echo -n $(VERSION) | cut -d. -f3)
 
 PACKAGES = CSWbash
 
-RUNTIME_DEP_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS = CSWlibintl8
 RUNTIME_DEP_PKGS += CSWiconv
 
 SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/bash/bashtop.html
@@ -36,6 +36,15 @@ SPKG_CLASSES = none build
 # /etc/shells is only updated by an action class scripts
 # this file collision is not important
 CHECKPKG_OVERRIDES_CSWbash += file-collision|/etc/shells|CSWbash|CSWksh
+
+# /usr/local is present in the default path, this can be safely ignored
+CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/bin/bash
+CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/bin/bashbug
+CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bash/NOTES
+CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bash/FAQ
+CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/bash.1
+CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bashref.html
+CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bash.html
 
 ###### Upstream and opencsw files information #######
 
