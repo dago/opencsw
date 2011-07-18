@@ -14,10 +14,7 @@ MASTER_SITES = http://www.rarlab.com/rar/
 DISTFILES  = unrarsrc-$(VERSION).tar.gz
 DISTFILES += unrar.1
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-SPKG_SOURCEURL = http://www.rarlab.com/rar_add.htm
+VENDOR_URL = http://www.rarlab.com/rar_add.htm
 
 LICENSE = license.txt
 
