@@ -1,5 +1,5 @@
 NAME = unrar
-VERSION = 4.0.2
+VERSION = 4.0.7
 CATEGORIES = utils
 
 DESCRIPTION = RAR archive extractor
@@ -23,6 +23,7 @@ DISTNAME = unrar
 CONFIGURE_SCRIPTS =
 
 OPT_FLAGS_SOS = -fast -erroff=wvarhidemem
+EXTRA_LINKER_FLAGS = -norunpath
 
 BUILD_ARGS = -f makefile.unix CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" DEFINES="-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE" STRIP=strip
 
@@ -31,6 +32,10 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk
+
+post-extract-modulated:
+	-perl -pi -e 's("/etc","/etc/rar","/usr/lib","/usr/local/lib","/usr/local/etc")("/etc/opt/csw","/opt/csw/etc")' \
+		$(WORKSRC)/pathfn.cpp
 
 install-custom:
 	ginstall -d $(DESTDIR)$(mandir)/man1
