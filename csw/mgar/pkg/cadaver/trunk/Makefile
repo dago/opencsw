@@ -40,15 +40,12 @@ CHECKPKG_OVERRIDES_CSWcadav += catalogname-does-not-match-pkgname|pkgname=CSWcad
 MASTER_SITES = http://www.webdav.org/cadaver/
 UPSTREAM_MASTER_SITES = http://www.webdav.org/cadaver/
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += CSWcadav.prototype
 DISTFILES += changelog.CSW
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+
 
 ##### Build and installation information #####
 
