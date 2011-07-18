@@ -43,9 +43,6 @@ UPSTREAM_MASTER_SITES = http://www.webdav.org/cadaver/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += changelog.CSW
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 
 ##### Build and installation information #####
 
