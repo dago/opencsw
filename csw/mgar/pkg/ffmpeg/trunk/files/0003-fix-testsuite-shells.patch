@@ -1,0 +1,110 @@
+From 2b29e3734ad0db1d9cde466f7d424bd886ce5084 Mon Sep 17 00:00:00 2001
+From: Jan Holzhueter <jh@opencsw.org>
+Date: Mon, 18 Jul 2011 13:02:57 +0200
+Subject: [PATCH] fix-testsuite-shells
+
+---
+ tests/codec-regression.sh    |    2 +-
+ tests/copycooker.sh          |    2 +-
+ tests/fate-run.sh            |    2 +-
+ tests/fate-update.sh         |    2 +-
+ tests/fate.sh                |    2 +-
+ tests/ffserver-regression.sh |    2 +-
+ tests/lavf-regression.sh     |    2 +-
+ tests/lavfi-regression.sh    |    2 +-
+ tests/regression-funcs.sh    |    2 +-
+ 9 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/tests/codec-regression.sh b/tests/codec-regression.sh
+index b210231..3453d96 100755
+--- a/tests/codec-regression.sh
++++ b/tests/codec-regression.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ #
+ # automatic regression test for ffmpeg
+ #
+diff --git a/tests/copycooker.sh b/tests/copycooker.sh
+index 4b5811d..f1e1fcc 100755
+--- a/tests/copycooker.sh
++++ b/tests/copycooker.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ 
+ LC_ALL=C
+ export LC_ALL
+diff --git a/tests/fate-run.sh b/tests/fate-run.sh
+index 366145d..a6beab0 100755
+--- a/tests/fate-run.sh
++++ b/tests/fate-run.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#!/opt/csw/bin/bash
+ 
+ export LC_ALL=C
+ 
+diff --git a/tests/fate-update.sh b/tests/fate-update.sh
+index 6b4668f..cf3ee98 100755
+--- a/tests/fate-update.sh
++++ b/tests/fate-update.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#!/opt/csw/bin/bash
+ 
+ set -e
+ 
+diff --git a/tests/fate.sh b/tests/fate.sh
+index 9fd117c..5f91b3b 100755
+--- a/tests/fate.sh
++++ b/tests/fate.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#!/opt/csw/bin/bash
+ 
+ config=$1
+ 
+diff --git a/tests/ffserver-regression.sh b/tests/ffserver-regression.sh
+index 11e4a54..2690699 100755
+--- a/tests/ffserver-regression.sh
++++ b/tests/ffserver-regression.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ 
+ #perl -e 'chomp($wd = `pwd`); print map { s!tests/data/!!; "<Stream $_>\nFile $wd/tests/data/$_\n</Stream>\n\n" } @ARGV' tests/data/a* >> tests/data/ffserver.conf
+ #perl -e 'chomp($wd = `pwd`); print map { s!tests/data/!!; "<Stream $_.asf>\nFile $wd/tests/data/$_\n</Stream>\n\n" } @ARGV' tests/data/a* >> tests/data/ffserver.conf
+diff --git a/tests/lavf-regression.sh b/tests/lavf-regression.sh
+index 39e752b..373fe84 100755
+--- a/tests/lavf-regression.sh
++++ b/tests/lavf-regression.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ #
+ # automatic regression test for libavformat
+ #
+diff --git a/tests/lavfi-regression.sh b/tests/lavfi-regression.sh
+index 0322134..bd83fab 100755
+--- a/tests/lavfi-regression.sh
++++ b/tests/lavfi-regression.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ #
+ # automatic regression test for libavfilter
+ #
+diff --git a/tests/regression-funcs.sh b/tests/regression-funcs.sh
+index e57cdf1..a6fd652 100755
+--- a/tests/regression-funcs.sh
++++ b/tests/regression-funcs.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ #
+ # common regression functions for ffmpeg
+ #
+-- 
+1.7.6
+
