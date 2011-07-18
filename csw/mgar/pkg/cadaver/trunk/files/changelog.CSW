@@ -1,3 +1,14 @@
+cadaver (0.23.3,rev=2011.07.18) unstable
+
+  * Updated dependancies names:
+  	CSWgettextrt -> CSWlibintl8
+	CSWreadline -> CSWlibreadline6
+	CSWneon -> CSWlibneon27
+  * Removed unnecessary gnutls dependancy.
+  * [GAR] Switched to dynamic prototype.
+
+ -- Yann rouillard <yann@opencsw.org>  Mon, 18 Jul 2011 22:42:52 +0200
+
 cadaver (0.23.3,rev=2009.12.23) unstable
 
   * new upstream version.
