@@ -17,6 +17,8 @@ DISTFILES  = $(DISTNAME).tar.bz2
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PATCHFILES = 0001-fix-version.sh.patch
+PATCHFILES += 0002-change-linker-flags.patch
+PATCHFILES += 0003-fix-testsuite-shells.patch
 
 BUILD64 = 1
 
@@ -33,8 +35,10 @@ CONFIGURE_ARGS += --libdir=$(libdir)
 CONFIGURE_ARGS += --shlibdir=$(libdir)
 CONFIGURE_ARGS += --incdir=$(includedir)
 CONFIGURE_ARGS += --mandir=$(mandir)
+CONFIGURE_ARGS += --disable-debug
+CONFIGURE_ARGS += --enable-gpl
 CONFIGURE_ARGS += --enable-shared
-CONFIGURE_ARGS += --disable-static
+#CONFIGURE_ARGS += --disable-static
 
 GARCOMPILER = GNU
 
