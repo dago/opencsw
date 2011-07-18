@@ -46,6 +46,13 @@ CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/shar
 CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bashref.html
 CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bash.html
 
+
+# We must modify /etc/shells, this is the cause of the following checkpkg errors that we must override
+# This will be better fixed when we will use cswetcshells (soon)
+CHECKPKG_OVERRIDES_CSWbash += missing-dependency|BOstdenv|or|CSWboincclient|or|CSWconserver|or|CSWdevmon|or|CSWhobbit|or|CSWhobbitc|or|CSWhylafax|or|CSWjabberd|or|CSWjetty6|or|CSWopenvpn|or|CSWw9wm-dtlogin|or|IPLTdsr
+CHECKPKG_OVERRIDES_CSWbash += bad-location-of-file|file=/etc/shells
+
+
 ###### Upstream and opencsw files information #######
 
 # We define upstream file regex so we can be notifed of new upstream software release
