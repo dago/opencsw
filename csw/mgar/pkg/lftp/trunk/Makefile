@@ -40,9 +40,6 @@ CHECKPKG_OVERRIDES_CSWlftp += file-with-bad-content|/usr/local|root/opt/csw/shar
 
 MASTER_SITES = http://ftp.yars.free.net/pub/source/lftp/
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += changelog.CSW
 
