@@ -25,9 +25,15 @@ endef
 PACKAGES = CSWcadav
 CATALOGNAME_CSWcadav = cadaver
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWneon CSWosslrt CSWreadline CSWzlib CSWgcrypt CSWgnutls CSWgpgerr
+RUNTIME_DEP_PKGS = CSWosslrt 
+RUNTIME_DEP_PKGS += CSWlibintl8
+RUNTIME_DEP_PKGS += CSWlibneon27
+RUNTIME_DEP_PKGS += CSWlibreadline6
+RUNTIME_DEP_PKGS += CSWzlib
+RUNTIME_DEP_PKGS += CSWexpat
 
-
+# We will not fix this today
+CHECKPKG_OVERRIDES_CSWcadav += catalogname-does-not-match-pkgname|pkgname=CSWcadav|catalogname=cadaver|expected-catalogname=cadav
 
 ###### Upstream and opencsw files information #######
 
@@ -44,11 +50,12 @@ DISTFILES += changelog.CSW
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-
 ##### Build and installation information #####
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-nls
+CONFIGURE_ARGS += --with-ssl=openssl
+CONFIGURE_ARGS += --with-expat
 
 TEST_SCRIPTS =
 
