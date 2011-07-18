@@ -24,7 +24,16 @@ endef
 PACKAGES = CSWlftp
 CATALOGNAME_CSWlftp = lftp
 
-RUNTIME_DEP_PKGS = CSWexpat CSWggettextrt CSWiconv CSWosslrt CSWreadline CSWlibsocks
+RUNTIME_DEP_PKGS = CSWexpat
+RUNTIME_DEP_PKGS += CSWiconv
+RUNTIME_DEP_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS += CSWlibsocks
+RUNTIME_DEP_PKGS += CSWlibintl8
+RUNTIME_DEP_PKGS += CSWlibreadline6
+
+
+# Reference to configuration file default path for configure, can be safely ignored
+CHECKPKG_OVERRIDES_CSWlftp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/lftp.1
 
 
 ###### Upstream and opencsw files information #######
@@ -61,6 +70,10 @@ MIGRATE_FILES_CSWlftp = lftp.conf
 # see http://wiki.opencsw.org/shared-opt-csw-setup
 localstatedir   = /var$(prefix)
 sysconfdir      = /etc$(prefix)
+
+# We don't want Sun Studio RPATH entries
+# see http://wiki.opencsw.org/checkpkg-error-tags#bad-rpath-entry
+EXTRA_LINKER_FLAGS = -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 # previous maintainer compiled with openssl
