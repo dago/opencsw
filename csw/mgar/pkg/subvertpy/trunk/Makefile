@@ -9,17 +9,17 @@ DESCRIPTION = Alternative python bindings for subversion
 
 MASTER_SITES = http://launchpad.net/subvertpy/trunk/$(VERSION)/+download/
 DISTFILES  = $(DISTNAME).tar.gz
-#UPSTREAM_MASTER_SITES = http://launchpad.net/subvertpy/trunk
+UPSTREAM_MASTER_SITES = http://launchpad.net/subvertpy/trunk
+LICENSE = COPYING
 
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWapr
+RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibpython2-6-1-0
+RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWsvn
 
 CONFIGURE_ARGS = $(DIRPATHS)
 SVN_PREFIX = /opt/csw
 EXTRA_LIB = /opt/csw/lib/svn
-TEST_TARGET = 
+TEST_SCRIPTS = 
 
 include gar/category.mk
 
