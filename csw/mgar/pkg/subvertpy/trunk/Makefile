@@ -17,6 +17,9 @@ DISTFILES  = $(DISTNAME).tar.gz
 # UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 CONFIGURE_ARGS = $(DIRPATHS)
+SVN_PREFIX = /opt/csw
+EXTRA_LIB = /opt/csw/lib/svn
+TEST_TARGET = 
 
 include gar/category.mk
 
