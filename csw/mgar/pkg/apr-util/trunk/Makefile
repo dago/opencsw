@@ -11,29 +11,31 @@ endef
 
 MASTER_SITES  = http://apache.crihan.fr/dist/apr/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
+LICENSE = LICENSE
 
 PATCHFILES = 0001-Make-sure-to-find-newly-built-libs-earlier.patch
 
-PACKAGES = CSWapr-util
-CATALOGNAME = apr_util
+PACKAGES += CSWlibaprutil1-0
+CATALOGNAME_CSWlibaprutil1-0 = libaprutil1_0
+SPKG_DESC_CSWlibaprutil1-0 += Apache Portable Runtime Utilities, libaprutil-1.so.0
+OBSOLETED_BY_CSWlibaprutil1-0 += CSWlibaprutil
+PKGFILES_CSWlibaprutil1-0 += $(call baseisadirs,$(libdir),libaprutil-1\.so\.0\.3\.12)
+PKGFILES_CSWlibaprutil1-0 += $(call baseisadirs,$(libdir),libaprutil-1\.so\.0(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWapr
+RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWlibexpat1
 
-LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS = CSWapr CSWiconv CSWlibsqlite3-0 CSWunixodbc CSWexpat
-RUNTIME_DEP_PKGS += CSWbdb48 CSWoldaprt 
-
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWapr-util-dev
+CATALOGNAME_CSWapr-util-dev = apr_util_dev
+SPKG_DESC_CSWapr-util-dev += Apache Portable Runtime Utilities, libaprutil-dev
+PKGFILES_CSWapr-util-dev += /opt/csw/lib/apr-util-1/apr_dbd_odbc.so
+PKGFILES_CSWapr-util-dev += /opt/csw/lib/apr-util-1/apr_dbd_sqlite3.so
+PKGFILES_CSWapr-util-dev += /opt/csw/lib/apr-util-1/apr_dbm_db.so
+PKGFILES_CSWapr-util-dev += /opt/csw/lib/apr-util-1/apr_ldap.so
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
-
-# It looks like Solars 9 x86 has a problem with libuuid, investigate later:
-# testing9x# cd /usr/lib
-# testing9x# ls -l libuuid*
-# -rwxr-xr-x   1 root     bin        22344 Dec 23  2004 libuuid.so.1
-# testing9x# ln -s libuuid.so.1 libuuid.so
 
 NOISALIST = 1
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -41,28 +43,5 @@ CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
 CONFIGURE_ARGS += --with-ldap
 CONFIGURE_ARGS += --with-berkeley-db=/opt/csw/bdb48
 CONFIGURE_ARGS += --without-freetds --without-sqlite2
-
-#BUILD64 = 1
-#reason is that no sparcv9 binaries are built for some reason and checkpkg suggests:
-#CHECKPKG_OVERRIDES_CSWapr-util += binary-disallowed-placement|file=opt/csw/lib/sparcv9/libaprutil-1.so.0.3.9|arch_id=2|arch_name=sparcv8|bad_path=sparcv9
-# dam: The reason is the files are actually built as sparcv8, because we don't have a separate
-#   /opt/csw/share/build-1/apr_rules.mk
-# for 32 and 64 bit. We need to inspire us from
-#   http://cvs.opensolaris.org/source/xref/sfw/usr/src/cmd/apr/apr-1.3/Makefile.sfw
-# for some unification.
-
-# add new checkpkg remarks for the moment to get security fix out
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbd_odbc.so
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbd_sqlite3.so
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbm_db.so
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_ldap.so
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libaprutil-1.so
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-pkgname-mismatch|file=opt/csw/lib/libaprutil-1.so.0.3.12|soname=libaprutil-1.so.0|pkgname=CSWapr-util|expected=['CSWlibaprutil-10',|'CSWlibaprutil-1-0']
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbd_odbc.so
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbd_sqlite3.so
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_dbm_db.so
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/apr-util-1/apr_ldap.so
-CHECKPKG_OVERRIDES_CSWapr-util += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libaprutil-1.so
-
 
 include gar/category.mk
