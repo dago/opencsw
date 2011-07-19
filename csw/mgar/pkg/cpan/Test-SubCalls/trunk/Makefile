@@ -15,6 +15,8 @@ endef
 PACKAGES = CSWpm-test-subcalls
 CATALOGNAME = pm_test_subcalls
 
+ARCHALL = 1
+
 LICENSE = LICENSE
 
 include gar/category.mk
