@@ -18,13 +18,12 @@ ARCHALL = 1
 
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS += CSWpm-exception-class
 RUNTIME_DEP_PKGS += CSWpm-ppi
+RUNTIME_DEP_PKGS += CSWpmexceptcls
 RUNTIME_DEP_PKGS += CSWpmreadonly
 RUNTIME_DEP_PKGS += CSWpmtaskweaken
 
 # Unreleased packages, remove next time
-CHECKPKG_OVERRIDES_CSWpm-ppix-utilities += unidentified-dependency|CSWpm-exception-class
 CHECKPKG_OVERRIDES_CSWpm-ppix-utilities += unidentified-dependency|CSWpm-ppi
 
 include gar/category.mk
