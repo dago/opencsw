@@ -1,5 +1,5 @@
 NAME = hdf5
-VERSION = 1.8.7
+VERSION = 1.8.6
 CATEGORIES = lib
 
 DESCRIPTION = Event notification library
@@ -10,7 +10,7 @@ define BLURB
   regular timeouts.
 endef
 
-MASTER_SITES = http://www.hdfgroup.org/ftp/HDF5/current/src/
+MASTER_SITES += http://www.hdfgroup.org/ftp/HDF5/hdf5-$(VERSION)/src/
 DISTFILES += $(DISTNAME).tar.gz
 
 PACKAGES += CSWlibhdf5-7
