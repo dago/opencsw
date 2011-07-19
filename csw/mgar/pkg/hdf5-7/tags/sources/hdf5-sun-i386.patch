@@ -1,0 +1,11 @@
+--- hdf5-1.6.6/fortran/src/H5f90i.h.orig	Sat Dec 29 22:35:57 2007
++++ hdf5-1.6.6/fortran/src/H5f90i.h	Sat Dec 29 22:36:29 2007
+@@ -147,7 +147,7 @@
+ #define _fcdtocp(desc) (desc)
+ #endif /* Cray X1 */
+ 
+-#if (defined(SUN) || defined(sun) || defined(__sun__) || defined(__SUNPRO_C)) & !defined(__i386)
++#if (defined(SUN) || defined(sun) || defined(__sun__) || defined(__SUNPRO_C))
+ 
+ typedef char              *_fcd;
+ typedef long long         haddr_t_f;
