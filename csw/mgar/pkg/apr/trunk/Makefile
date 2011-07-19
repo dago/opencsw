@@ -11,13 +11,17 @@ endef
 
 MASTER_SITES = http://apache.crihan.fr/dist/apr/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-
+LICENSE = LICENSE
 PATCHFILES = 0001-Force-newly-built-libs-in-testsuite.patch
 
-LICENSE = LICENSE
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWapr-dev
+CATALOGNAME_CSWapr-dev = apr_dev
+PKGFILES_CSWapr-dev += /opt/csw/lib/libapr-1.so
+PKGFILES_CSWapr-dev += /opt/csw/lib/sparcv9/libapr-1.so
+CHECKPKG_OVERRIDES_CSWapr-dev += file-collision|/opt/csw/lib/libapr-1.so|CSWapr|CSWapr-dev
+CHECKPKG_OVERRIDES_CSWapr-dev += file-collision|/opt/csw/lib/sparcv9/libapr-1.so|CSWapr|CSWapr-dev
+
 
 BUILD64 = 1
 
