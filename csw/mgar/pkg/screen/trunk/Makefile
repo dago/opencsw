@@ -28,6 +28,10 @@ RUNTIME_DEP_PKGS = CSWterminfo
 
 CHECKPKG_OVERRIDES_CSWscrn += surplus-dependency|CSWterminfo
 
+# Default path referenced in documentation file, can be safely ignored
+CHECKPKG_OVERRIDES_CSWscrn += file-with-bad-content|/usr/local|root/opt/csw/share/doc/screen/INSTALL
+
+
 PRESERVECONF = /etc/opt/csw/screenrc
 MIGRATE_FILES = screenrc
 
@@ -42,11 +46,16 @@ PATCHFILES += screen-maxwin.patch
 # screen is not installed with setuid bit so we disable utmp update
 PATCHFILES += screen-utmp.patch
 
+# update of file paths referenced in documentation files to follow
+# opencsw policy
+PATCHFILES += opencsw_paths.patch
+
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-pam
 CONFIGURE_ARGS += --enable-telnet
 CONFIGURE_ARGS += --enable-colors256
 CONFIGURE_ARGS += --with-sys-screenrc=/etc$(prefix)/screenrc
+CONFIGURE_ARGS += --with-socket-dir=/var$(prefix)/run/screen
 
 TEST_TARGET = check
 
@@ -62,5 +71,6 @@ post-merge:
 	done
 	ginstall -D $(WORKDIR_FIRSTMOD)/screenrc $(PKGROOT)/etc/$(prefix)/screenrc.CSW
 	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(NAME)/changelog.CSW
+	ginstall -m 777 -d $(PKGROOT)/var/$(prefix)/run/screens
 	@$(MAKECOOKIE)
 

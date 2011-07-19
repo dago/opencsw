@@ -1,3 +1,11 @@
+screen (4.0.3,REV=2011.07.19) unstable
+ 
+  * Moved socket directory from /tmp/uscreens to /var/opt/csw/run/screen for
+  security reasons.
+  * Fixed some screen files paths in documentation files.
+ 
+ -- Yann Rouillard <yann@opencsw.org>  Tue, 19 Jul 2011 23:46:39 +0200
+
 screen (4.0.3,REV=2010.01.10) unstable
  
   * Now linked with opencsw libncurses.
