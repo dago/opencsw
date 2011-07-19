@@ -14,7 +14,6 @@ endef
 VENDOR_URL   = http://www.gnu.org/software/screen/
 MASTER_SITES = http://ftp.gnu.org/gnu/screen/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 DISTFILES += screenrc
 DISTFILES += changelog.CSW
