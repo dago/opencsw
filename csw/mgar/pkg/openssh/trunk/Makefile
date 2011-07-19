@@ -93,10 +93,16 @@ CHECKPKG_OVERRIDES_CSWosshclient += file-with-bad-content|/usr/local|root/opt/cs
 CHECKPKG_OVERRIDES_CSWossh += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssh/INSTALL
 CHECKPKG_OVERRIDES_CSWossh += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswopenssh.xml
 
+#  We will not fix this today
+CHECKPKG_OVERRIDES_CSWossh += catalogname-does-not-match-pkgname|pkgname=CSWossh|catalogname=openssh|expected-catalogname=ossh
+CHECKPKG_OVERRIDES_CSWosshclient += catalogname-does-not-match-pkgname|pkgname=CSWosshclient|catalogname=openssh_client|expected-catalogname=osshclient
+
+
 
 ###### Upstream and OpenCSW files information #######
 
 MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/ http://www.sxw.org.uk/computing/patches/
+UPSTREAM_MASTER_SITES = ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*p\d+).tar.gz
