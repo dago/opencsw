@@ -32,6 +32,7 @@ PACKAGES = CSWscreen CSWscrn
 SPKG_DESC_CSWscrn = Transitional package for screen package renaming
 CATALOGNAME_CSWscrn = screen_transitional
 RUNTIME_DEP_PKGS_CSWscrn = CSWscreen
+ARCHALL_CSWscrn = 1
 
 SPKG_DESC_CSWscreen = A window manager that multiplexes a physical terminal.
 CATALOGNAME_CSWscreen = screen
