@@ -23,10 +23,15 @@ endef
 
 PACKAGES = CSWrlwrap
 
-RUNTIME_DEP_PKGS  = CSWreadline 
+RUNTIME_DEP_PKGS  = CSWlibreadline6
 
 # We don't want to depend on OpenCSW perl
 CHECKPKG_OVERRIDES_CSWrlwrap += missing-dependency|CSWperl
+
+# Reference to default paths in documentation or sample files, can be safely ignored
+CHECKPKG_OVERRIDES_CSWrlwrap += file-with-bad-content|/usr/share|root/opt/csw/share/rlwrap/filters/paint_prompt
+CHECKPKG_OVERRIDES_CSWrlwrap += file-with-bad-content|/usr/local|root/opt/csw/share/doc/rlwrap/NEWS
+
 
 ###### Upstream and opencsw files information #######
 
