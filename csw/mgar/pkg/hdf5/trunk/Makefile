@@ -1,12 +1,6 @@
 NAME = hdf5
-VERSION = 1.8.5
+VERSION = 1.8.7
 CATEGORIES = lib
-
-EXTRA_MODULATORS = VERSION
-MODULATIONS_VERSION = 1.6.10 1.8.5
-
-SKIP_MODULATIONS = isa-sparcv9-garversion-1.6.10
-SKIP_MODULATIONS += isa-amd64-garversion-1.6.10
 
 DESCRIPTION = Event notification library
 define BLURB
@@ -17,49 +11,48 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.hdfgroup.org/ftp/HDF5/current/src/
-MASTER_SITES += http://www.hdfgroup.org/ftp/HDF5/current16/src/
-SOURCEFILES = $(foreach V,$(MODULATIONS_VERSION),$(NAME)-$V.tar.gz)
-DISTFILES += $(SOURCEFILES)
+DISTFILES += $(DISTNAME).tar.gz
 
-NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz,$(SOURCEFILES))
+PACKAGES += CSWlibhdf5-7
+SPKG_DESC_CSWlibhdf5-7 = HDF5 (hierarchical data format 5) library, libhdf5.so.7
+PKGFILES_CSWlibhdf5-7 += $(call pkgfiles_lib,libhdf5.so.7)
+OBSOLETED_BY_CSWlibhdf5-7 += CSWhdf5rt
+CATALOGNAME_CSWhdf5rt = hdf5_rt_stub
+RUNTIME_DEP_PKGS_CSWlibhdf5-7 += CSWzlib
 
-PACKAGES = CSWhdf5rt CSWhdf5
+PACKAGES += CSWlibhdf5hl7
+SPKG_DESC_CSWlibhdf5hl7 = HDF5 (hierarchical data format 5) library, libhdf5_hl.so.7
+PKGFILES_CSWlibhdf5hl7 += $(call pkgfiles_lib,libhdf5_hl.so.7)
+RUNTIME_DEP_PKGS_CSWlibhdf5hl7 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibhdf5hl7 += CSWlibhdf5-7
+OBSOLETED_BY_CSWlibhdf5hl7 += CSWhdf5rt
 
-RUNTIME_DEP_PKGS_CSWhdf5 = CSWhdf5rt CSWzlib
-RUNTIME_DEP_PKGS_CSWhdf5rt = CSWzlib
+PACKAGES += CSWlibhdf5-dev
+SPKG_DESC_CSWlibhdf5-dev = Development files for libhdf5.so.7 and libhdf5_hl.so.7
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibhdf5-dev += CSWlibhdf5-7
+RUNTIME_DEP_PKGS_CSWlibhdf5-dev += CSWlibhdf5hl7
 
-CATALOGNAME_CSWhdf5 = hdf5
-CATALOGNAME_CSWhdf5rt = hdf5_rt
+PACKAGES += CSWhdf5
+SPKG_DESC_CSWhdf5 = HDF5 (hierarchical data format 5) software utilities
+PKGFILES_CSWhdf5 += $(bindir)/.*
+RUNTIME_DEP_PKGS_CSWhdf5 += CSWlibhdf5-7
+RUNTIME_DEP_PKGS_CSWhdf5 += CSWlibhdf5hl7
+RUNTIME_DEP_PKGS_CSWhdf5 += CSWzlib
 
-SPKG_DESC_CSWhdf5 = HDF5 (Hierarchical Data Format 5) Software Utilities
-SPKG_DESC_CSWhdf5rt = HDF5 (Hierarchical Data Format 5) Software Runtime Libraries
+VENDOR_URL = http://www.hdfgroup.org/HDF5/
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-SPKG_SOURCEURL = http://www.hdfgroup.org/HDF5/
+# By default -L/opt/csw/lib is used which makes the new libhdf5_hl.so link to
+# the existing /opt/csw/lib/libhdf5.so
+LINKER_FLAGS =
 
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS  = $(DIRPATHS) 
 
-TEST_TARGET = check
+# Image files can be really big
+ISAEXEC = 1
 
-MERGE_SCRIPTS_isa-default-garversion-1.6.10 = copy-only
-MERGE_DIRS_isa-default-garversion-1.6.10 = $(libdir)
-MERGE_SCRIPTS_isa-extra-garversion-1.6.10 = copy-relocated-only
-MERGE_DIRS_isa-extra-garversion-1.6.10 = $(libdir)
-
-MERGE_SCRIPTS_isa-default-garversion-1.8.5 = copy-all
-MERGE_SCRIPTS_isa-extra-garversion-1.8.5 = copy-relocated-only
-MERGE_DIRS_isa-extra-garversion-1.8.5 = $(libdir)
-
-PKGFILES_CSWhdf5rt = $(PKGFILES_RT)
+CONFIGURE_ARGS += $(DIRPATHS)
+#CONFIGURE_ARGS += --enable-fortran
+#CONFIGURE_ARGS += --enable-cxx
 
 include gar/category.mk
-
-pre-install-modulated:
-	ginstall -d $(DESTDIR)$(libdir)
-	ginstall -d $(DESTDIR)$(includedir)
-	ginstall -d $(DESTDIR)$(bindir)
-	@$(MAKECOOKIE)
