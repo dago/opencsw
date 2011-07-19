@@ -27,16 +27,26 @@ PROTOTYPE_PERMS_run = 0777
 PROTOTYPE_USER_run = root
 PROTOTYPE_GROUP_run = root
 
-PACKAGES = CSWscrn
-CATALOGNAME = screen
+PACKAGES = CSWscreen CSWscrn 
 
-RUNTIME_DEP_PKGS = CSWterminfo
+SPKG_DESC_CSWscrn = Transitional package for screen package renaming
+CATALOGNAME_CSWscrn = screen_transitional
+RUNTIME_DEP_PKGS_CSWscrn = CSWscreen
 
-CHECKPKG_OVERRIDES_CSWscrn += surplus-dependency|CSWterminfo
+SPKG_DESC_CSWscreen = A window manager that multiplexes a physical terminal.
+CATALOGNAME_CSWscreen = screen
+RUNTIME_DEP_PKGS_CSWscreen = CSWterminfo
+
+CHECKPKG_OVERRIDES_CSWscreen += surplus-dependency|CSWterminfo
 
 # Default path referenced in documentation file, can be safely ignored
-CHECKPKG_OVERRIDES_CSWscrn += file-with-bad-content|/usr/local|root/opt/csw/share/doc/screen/INSTALL
+CHECKPKG_OVERRIDES_CSWscreen += file-with-bad-content|/usr/local|root/opt/csw/share/doc/screen/INSTALL
 
+CHECKPKG_OVERRIDES_CSWscrn += surplus-dependency|CSWscreen
+CHECKPKG_OVERRIDES_CSWscrn += catalogname-does-not-match-pkgname|pkgname=CSWscrn|catalogname=screen_transitional|expected-catalogname=scrn
+
+
+PKGFILES_CSWscreen = .*
 
 PRESERVECONF = /etc/opt/csw/screenrc
 MIGRATE_FILES = screenrc
