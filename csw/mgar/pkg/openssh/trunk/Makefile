@@ -85,10 +85,6 @@ MIGRATE_FILES_CSWosshclient += ssh_prng_cmds
 MIGRATE_SOURCE_DIR = $(prefix)/etc/ssh
 MIGRATE_DEST_DIR = $(sysconfdir)/ssh
 
-# The openssh package installs the server and the client
-CHECKPKG_OVERRIDES_CSWossh = surplus-dependency|CSWosshclient
-
-
 CHECKPKG_OVERRIDES_CSWosshclient += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssh_client/INSTALL
 CHECKPKG_OVERRIDES_CSWossh += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssh/INSTALL
 CHECKPKG_OVERRIDES_CSWossh += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswopenssh.xml
