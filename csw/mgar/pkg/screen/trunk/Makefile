@@ -21,6 +21,12 @@ DISTFILES += changelog.CSW
 
 DOCFILES = FAQ INSTALL NEWS NEWS.3.5 NEWS.3.6 NEWS.3.7 NEWS.3.9 README TODO ChangeLog
 
+PROTOTYPE_MODIFIERS = run
+PROTOTYPE_FILES_run = \/var\/opt\/csw\/run\/screen
+PROTOTYPE_PERMS_run = 0777
+PROTOTYPE_USER_run = root
+PROTOTYPE_GROUP_run = root
+
 PACKAGES = CSWscrn
 CATALOGNAME = screen
 
@@ -71,6 +77,6 @@ post-merge:
 	done
 	ginstall -D $(WORKDIR_FIRSTMOD)/screenrc $(PKGROOT)/etc/$(prefix)/screenrc.CSW
 	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$(NAME)/changelog.CSW
-	ginstall -m 777 -d $(PKGROOT)/var/$(prefix)/run/screens
+	ginstall -d $(PKGROOT)/var/$(prefix)/run/screen
 	@$(MAKECOOKIE)
 
