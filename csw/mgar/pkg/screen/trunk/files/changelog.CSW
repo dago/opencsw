@@ -3,6 +3,7 @@ screen (4.0.3,REV=2011.07.19) unstable
   * Moved socket directory from /tmp/uscreens to /var/opt/csw/run/screen for
   security reasons.
   * Fixed some screen files paths in documentation files.
+  * Renamed package name from CSWscrn to CSWscreen
  
  -- Yann Rouillard <yann@opencsw.org>  Tue, 19 Jul 2011 23:46:39 +0200
 
