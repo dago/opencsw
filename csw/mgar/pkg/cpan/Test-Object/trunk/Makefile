@@ -12,6 +12,9 @@ define BLURB
   Thoroughly testing objects via registered handlers
 endef
 
+PACKAGES = CSWpm-test-object
+CATALOGNAME = pm_test_object
+
 LICENSE = LICENSE
 
 CONFIGURE_ARGS = $(DIRPATHS)
