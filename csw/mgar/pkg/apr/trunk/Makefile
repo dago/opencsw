@@ -41,7 +41,7 @@ EXTRA_TEST_EXPORTS = LD_LIBRARY_PATH
 
 CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libapr-1.so
 CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libapr-1.so
-CHECKPKG_OVERRIDES_CSWapr += shared-lib-pkgname-mismatch|sonames=libapr-1.so.0|pkgname=CSWapr|expected=CSWlibapr10,CSWlibapr1-0|
+CHECKPKG_OVERRIDES_CSWapr += shared-lib-pkgname-mismatch
 CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libapr-1.so
 CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libapr-1.so
 CHECKPKG_OVERRIDES_CSWapr += file-with-bad-content|/usr/local|root/opt/csw/share/build-1/libtool
