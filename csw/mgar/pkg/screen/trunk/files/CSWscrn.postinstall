@@ -1,0 +1,8 @@
+
+# Screen socket directory has changed, so we move all existing files
+# to the new directory
+for DIR in /tmp/uscreens /tmp/screens; do
+	if [ -d "$DIR" ]; then
+		mv "$DIR"/* /var/opt/csw/run/screen/
+	fi
+done

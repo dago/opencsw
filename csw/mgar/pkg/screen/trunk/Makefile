@@ -17,6 +17,7 @@ DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += screenrc
 DISTFILES += changelog.CSW
+DISTFILES += CSWscrn.postinstall
 
 DOCFILES = FAQ INSTALL NEWS NEWS.3.5 NEWS.3.6 NEWS.3.7 NEWS.3.9 README TODO ChangeLog
 
