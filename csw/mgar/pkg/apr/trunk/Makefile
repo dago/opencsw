@@ -45,6 +45,8 @@ CHECKPKG_OVERRIDES_CSWapr += shared-lib-pkgname-mismatch
 CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libapr-1.so
 CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libapr-1.so
 CHECKPKG_OVERRIDES_CSWapr += file-with-bad-content|/usr/local|root/opt/csw/share/build-1/libtool
+CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/libapr-1.so
+CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/amd64/libapr-1.so
 
 include gar/category.mk
 
