@@ -31,12 +31,6 @@ RUNTIME_DEP_PKGS += CSWiconv
 
 SPKG_SOURCEURL = http://tiswww.case.edu/php/chet/bash/bashtop.html
 
-SPKG_CLASSES = none build
-
-# /etc/shells is only updated by an action class scripts
-# this file collision is not important
-CHECKPKG_OVERRIDES_CSWbash += file-collision|/etc/shells|CSWbash|CSWksh
-
 # /usr/local is present in the default path, this can be safely ignored
 CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/bin/bash
 CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/bin/bashbug
@@ -45,13 +39,6 @@ CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/shar
 CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/bash.1
 CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bashref.html
 CHECKPKG_OVERRIDES_CSWbash += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bash.html
-
-
-# We must modify /etc/shells, this is the cause of the following checkpkg errors that we must override
-# This will be better fixed when we will use cswetcshells (soon)
-CHECKPKG_OVERRIDES_CSWbash += missing-dependency|BOstdenv|or|CSWboincclient|or|CSWconserver|or|CSWdevmon|or|CSWhobbit|or|CSWhobbitc|or|CSWhylafax|or|CSWjabberd|or|CSWjetty6|or|CSWopenvpn|or|CSWw9wm-dtlogin|or|IPLTdsr
-CHECKPKG_OVERRIDES_CSWbash += bad-location-of-file|file=/etc/shells
-
 
 ###### Upstream and opencsw files information #######
 
@@ -64,9 +51,6 @@ UPSTREAM_MASTER_SITES = $(GNU_MIRROR)
 DISTNAME = $(NAME)-$(BASH_VERSION)
 DISTFILES  = $(NAME)-$(BASH_VERSION).tar.gz
 DISTFILES += changelog.CSW
-
-# build action script to modify /etc/shells at package installation and removal time
-DISTFILES += shells
 
 PATCHFILE_PREFIX = bash$(subst .,,$(BASH_VERSION))
 PATCHDIRLEVEL = 0
@@ -91,14 +75,7 @@ PATCHFILES += 0001-bashbug-editor-path.patch
 LICENSE = COPYING
 
 # we add CSW bash to the /etc/shells files using the build script
-PROTOTYPE_MODIFIERS = shell
-PROTOTYPE_FILES_shell = \/etc\/shells   # a normal Perl regexp. Watch out for links!
-PROTOTYPE_PERMS_shell = ?
-PROTOTYPE_CLASS_shell = build
-PROTOTYPE_USER_shell = ?
-PROTOTYPE_GROUP_shell = ?
-PROTOTYPE_FTYPE_shell = e
-
+ETCSHELLS = /opt/csw/bin/bash
 
 ##### Build and installation information #####
 
@@ -118,6 +95,5 @@ post-merge:
 		 ginstall -D $(WORKSRC_FIRSTMOD)/$$FILE $(PKGROOT)$(docdir)/$(NAME)/`basename $$FILE`; \
 	done )
 	ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)$(docdir)/$(NAME)/changelog.CSW
-	ginstall -D $(WORKDIR_FIRSTMOD)/shells $(PKGROOT)/etc/shells
 	( cd "$(PKGROOT)/$(bindir)" && rm -f rbash && ln -sf bash rbash )
 	rm -f $(PKGROOT)/$(infodir)/bash.info
