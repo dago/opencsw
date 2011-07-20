@@ -1,6 +1,6 @@
 NAME = vim
 DISTVERSION = 7.3
-PATCHREV = 055
+PATCHREV = 254
 VERSION = $(DISTVERSION).$(PATCHREV)
 CATEGORIES = utils
 SPKG_SOURCEURL = http://www.vim.org/download.php
@@ -13,12 +13,34 @@ define BLURB
   Unix, MS Windows, OS/2, Macintosh, VMS, and Amiga.
 endef
 
-PACKAGES = CSWvim CSWvimrt
+PACKAGES = CSWvim
 CATALOGNAME_CSWvim = vim
-CATALOGNAME_CSWvimrt = vimrt
 SPKG_DESC_CSWvim = Vi IMproved without GUI
+RUNTIME_DEP_PKGS_CSWvim += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWvim += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWvim += CSWiconv
+# This contains base configuration stuff checkpkg cannot track
+RUNTIME_DEP_PKGS_CSWvim += CSWvimrt
+CHECKPKG_OVERRIDES_CSWvim += surplus-dependency|CSWvimrt
+INCOMPATIBLE_PKGS_CSWvim = CSWvim-minimal
+
+PACKAGES += CSWvimrt
+CATALOGNAME_CSWvimrt = vimrt
 SPKG_DESC_CSWvimrt = Vi IMproved runtime and documentation
+PKGFILES_CSWvimrt = $(sharedstatedir)/.*
 ARCHALL_CSWvimrt = 1
+
+# We have .el files, but that is purely optional
+CHECKPKG_OVERRIDES_CSWvimrt += missing-dependency|CSWemacscommon
+
+# Some tools need Perl and one is hardcoded to CSW Perl:
+#   /opt/csw/share/vim/vim73/tools/efm_perl.pl
+# Maybe the tools should be separated package depending on CSWperl.
+# Overwrite for the moment.
+CHECKPKG_OVERRIDES_CSWvimrt += missing-dependency|CSWperl
+
+# These are all in the docs
+CHECKPKG_OVERRIDES_CSWvimrt += file-with-bad-content
 
 MASTER_SITES  = ftp://ftp.vim.org/pub/vim/patches/$(DISTVERSION)/
 MASTER_SITES += ftp://ftp.vim.org/pub/vim/extra/
@@ -32,7 +54,9 @@ DISTFILES += COPYING
 
 PATCHFILES  = $(foreach T,$(shell gseq -f "%03g" 001 $(PATCHREV)),$(DISTVERSION).$(T))
 
-WORKSRC = $(WORKDIR)/$(NAME)$(subst .,,$(DISTVERSION))
+PATCHFILES += 0001-Expect-tab-instead-of-whitespace.patch
+
+DISTNAME = $(NAME)$(subst .,,$(DISTVERSION))
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-xim
@@ -45,27 +69,17 @@ CONFIGURE_ARGS += --with-tlib=ncurses
 CONFIGURE_ARGS += --enable-multibyte
 CONFIGURE_ARGS += --enable-cscope
 
+CONFIGURE_ARGS += --enable-pythoninterp=dynamic
+CONFIGURE_ARGS += --with-python-config-dir=$(libdir)/python
+
 BUILD_ARGS  = "VIMRCLOC=/opt/csw/share/vim"
 BUILD_ARGS += "VIMRUNTIMEDIR=/opt/csw/share/vim/vim$(subst .,,$(DISTVERSION))"
 
 PATCHDIRLEVEL = 0
 
-RUNTIME_DEP_PKGS_CSWvim = CSWggettextrt CSWiconv CSWncurses CSWvimrt
-INCOMPATIBLE_PKGS_CSWvim = CSWvim-minimal
-
-PKGFILES_CSWvimrt = /opt/csw/share/.*
-
 # Note: Tests require controlling terminal
 TEST_TARGET = test
 
-CHECKPKG_OVERRIDES_CSWvim += surplus-dependency|CSWvimrt
-# We have .el files, but that is purely optional
-CHECKPKG_OVERRIDES_CSWvimrt += missing-dependency|CSWemacscommon
-# Some tools need Perl and one is hardcoded to CSW Perl:
-#   /opt/csw/share/vim/vim73/tools/efm_perl.pl
-# Maybe the tools should be separated package depending on CSWperl.
-# Overwrite for the moment.
-CHECKPKG_OVERRIDES_CSWvimrt += missing-dependency|CSWperl
 
 include gar/category.mk
 

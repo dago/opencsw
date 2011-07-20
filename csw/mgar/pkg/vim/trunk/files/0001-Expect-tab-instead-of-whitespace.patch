@@ -1,0 +1,19 @@
+From 9befd8901e41aeac1f72cbf155aa3f8474ab581e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 20 Jul 2011 12:44:53 +0200
+Subject: [PATCH] Expect tab instead of whitespace
+
+---
+ src/testdir/test77.ok |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/testdir/test77.ok b/src/testdir/test77.ok
+index 11f148c..c8f3917 100644
+--- a/src/testdir/test77.ok
++++ b/src/testdir/test77.ok
+@@ -1 +1 @@
+-3678979763 14888896 Xtest
++3678979763	14888896	Xtest
+-- 
+1.7.6
+
