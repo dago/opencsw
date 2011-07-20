@@ -48,8 +48,7 @@ CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/share|root/var/opt
 SF_PROJ = squirrelmail
 MASTER_SITES = $(SF_MIRRORS)
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = up-$(NAME)-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = http://squirrelmail.org/download.php#imap_proxy
 
 DISTFILES  = squirrelmail-imap_proxy-$(VERSION).tar.gz
 DISTFILES += imapproxy.conf
