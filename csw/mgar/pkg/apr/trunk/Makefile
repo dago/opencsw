@@ -14,15 +14,6 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 LICENSE = LICENSE
 PATCHFILES = 0001-Force-newly-built-libs-in-testsuite.patch
 
-
-PACKAGES += CSWapr-dev
-CATALOGNAME_CSWapr-dev = apr_dev
-PKGFILES_CSWapr-dev += /opt/csw/lib/libapr-1.so
-PKGFILES_CSWapr-dev += /opt/csw/lib/sparcv9/libapr-1.so
-CHECKPKG_OVERRIDES_CSWapr-dev += file-collision|/opt/csw/lib/libapr-1.so|CSWapr|CSWapr-dev
-CHECKPKG_OVERRIDES_CSWapr-dev += file-collision|/opt/csw/lib/sparcv9/libapr-1.so|CSWapr|CSWapr-dev
-
-
 BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -47,6 +38,13 @@ EXTRA_TEST_EXPORTS = LD_LIBRARY_PATH
 
 # TBD: This is dependent on 32/64, make sure to have both in separate pathes:
 #   /opt/csw/share/build-1/apr_rules.mk
+
+CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libapr-1.so
+CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libapr-1.so
+CHECKPKG_OVERRIDES_CSWapr += shared-lib-pkgname-mismatch|sonames=libapr-1.so.0|pkgname=CSWapr|expected=CSWlibapr10,CSWlibapr1-0|
+CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libapr-1.so
+CHECKPKG_OVERRIDES_CSWapr += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libapr-1.so
+CHECKPKG_OVERRIDES_CSWapr += file-with-bad-content|/usr/local|root/opt/csw/share/build-1/libtool
 
 include gar/category.mk
 
