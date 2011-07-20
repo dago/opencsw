@@ -12,7 +12,7 @@ for SOCKET_DIR in /tmp/uscreens /tmp/screens; do
 		getfacl "$DIR" | setfacl -f - "$NEW_SOCKET_DIR/$DIR"
 		for SESSION in "$DIR"/*; do
 			[ -p "$SESSION" ] || continue
-			ln -s "$SESSION" "$NEW_SOCKET_DIR/$SESSION"
+			ln -sf "$SOCKET_DIR/$SESSION" "$NEW_SOCKET_DIR/$SESSION"
 		done
 	done
 done
