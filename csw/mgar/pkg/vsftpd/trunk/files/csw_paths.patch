@@ -6,7 +6,7 @@ diff --speed-large-files --minimal -Nru vsftpd-2.0.4.orig/defs.h vsftpd-2.0.4/de
  #define VSF_DEFS_H
  
 -#define VSFTP_DEFAULT_CONFIG    "/etc/vsftpd.conf"
-+#define VSFTP_DEFAULT_CONFIG    "/opt/csw/etc/vsftpd/vsftpd.conf"
++#define VSFTP_DEFAULT_CONFIG    "/etc/opt/csw/vsftpd/vsftpd.conf"
  
  #define VSFTP_COMMAND_FD        0
  
@@ -28,12 +28,12 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
    install_str_setting(0, &tunable_ftpd_banner);
 -  install_str_setting("/etc/vsftpd.banned_emails", &tunable_banned_email_file);
 -  install_str_setting("/etc/vsftpd.chroot_list", &tunable_chroot_list_file);
-+  install_str_setting("/opt/csw/etc/vsftpd/vsftpd.banned_emails", &tunable_banned_email_file);
-+  install_str_setting("/opt/csw/etc/vsftpd/vsftpd.chroot_list", &tunable_chroot_list_file);
++  install_str_setting("/etc/opt/csw/vsftpd/vsftpd.banned_emails", &tunable_banned_email_file);
++  install_str_setting("/etc/opt/csw/vsftpd/vsftpd.chroot_list", &tunable_chroot_list_file);
    install_str_setting("ftp", &tunable_pam_service_name);
    install_str_setting("ftp", &tunable_guest_username);
 -  install_str_setting("/etc/vsftpd.user_list", &tunable_userlist_file);
-+  install_str_setting("/opt/csw/etc/vsftpd/vsftpd.user_list", &tunable_userlist_file);
++  install_str_setting("/etc/opt/csw/vsftpd/vsftpd.user_list", &tunable_userlist_file);
    install_str_setting(0, &tunable_anon_root);
    install_str_setting(0, &tunable_local_root);
    install_str_setting(0, &tunable_banner_file);
@@ -42,7 +42,7 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
    install_str_setting(0, &tunable_deny_file);
    install_str_setting(0, &tunable_user_sub_token);
 -  install_str_setting("/etc/vsftpd.email_passwords",
-+  install_str_setting("/opt/csw/etc/vsftpd/vsftpd.email_passwords",
++  install_str_setting("/etc/opt/csw/vsftpd/vsftpd.email_passwords",
                        &tunable_email_password_file);
 -  install_str_setting("/usr/share/ssl/certs/vsftpd.pem",
 +  install_str_setting("/opt/csw/ssl/certs/vsftpd.pem",
@@ -56,7 +56,7 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
  vsftpd.conf may be used to control various aspects of vsftpd's behaviour. By
  default, vsftpd looks for this file at the location
 -.BR /etc/vsftpd.conf .
-+.BR /opt/csw/etc/vsftpd.conf .
++.BR /etc/opt/csw/vsftpd.conf .
  However, you may override this by specifying a command line argument to
  vsftpd. The command line argument is the pathname of the configuration file
  for vsftpd. This behaviour is useful because you may wish to use an advanced
@@ -65,7 +65,7 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
  a list of users which are NOT to be placed in a chroot() jail.
  By default, the file containing this list is
 -/etc/vsftpd.chroot_list, but you may override this with the
-+/opt/csw/etc/vsftpd.chroot_list, but you may override this with the
++/etc/opt/csw/vsftpd.chroot_list, but you may override this with the
  .BR chroot_list_file
  setting.
  
@@ -74,7 +74,7 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
  If activated, you may provide a list of anonymous password e-mail responses
  which cause login to be denied. By default, the file containing this list is
 -/etc/vsftpd.banned_emails, but you may override this with the
-+/opt/csw/etc/vsftpd.banned_emails, but you may override this with the
++/etc/opt/csw/vsftpd.banned_emails, but you may override this with the
  .BR banned_email_file
  setting.
  
@@ -83,7 +83,7 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
  .BR email_password_file
  setting. The file format is one password per line, no extra whitespace. The
 -default filename is /etc/vsftpd.email_passwords.
-+default filename is /opt/csw/etc/vsftpd.email_passwords.
++default filename is /etc/opt/csw/vsftpd.email_passwords.
  
  Default: NO
  .TP
@@ -92,7 +92,7 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
  is enabled.
  
 -Default: /etc/vsftpd.banned_emails
-+Default: /opt/csw/etc/vsftpd.banned_emails
++Default: /etc/opt/csw/vsftpd.banned_emails
  .TP
  .B banner_file
  This option is the name of a file containing text to display when someone
@@ -101,7 +101,7 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
  chroot() jail.
  
 -Default: /etc/vsftpd.chroot_list
-+Default: /opt/csw/etc/vsftpd.chroot_list
++Default: /etc/opt/csw/vsftpd.chroot_list
  .TP
  .B cmds_allowed
  This options specifies a comma separated list of allowed FTP commands (post
@@ -110,7 +110,7 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
  setting.
  
 -Default: /etc/vsftpd.email_passwords
-+Default: /opt/csw/etc/vsftpd.email_passwords
++Default: /etc/opt/csw/vsftpd.email_passwords
  .TP
  .B ftp_username
  This is the name of the user we use for handling anonymous FTP. The home
@@ -132,3 +132,12 @@ diff --speed-large-files --minimal -Nru vsftpd-2.1.0.orig/tunables.c vsftpd-2.1.
  .TP
  .B ssl_ciphers
  This option can be used to select which SSL ciphers vsftpd will allow for
+@@ -1026,7 +1026,7 @@ This option is the name of the file loaded when the
+ .BR userlist_enable
+ option is active.
+ 
+-Default: /etc/vsftpd.user_list
++Default: /etc/opt/csw/vsftpd.user_list
+ .TP
+ .B vsftpd_log_file
+ This option is the name of the file to which we write the vsftpd style

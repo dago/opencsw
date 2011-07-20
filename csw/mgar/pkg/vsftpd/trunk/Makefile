@@ -26,6 +26,7 @@ define BLURB
 endef
 
 MASTER_SITES = https://security.appspot.com/downloads/
+UPSTREAM_MASTER_SITES = https://security.appspot.com/vsftpd.html
 
 PACKAGES = CSWvsftpd
 
@@ -57,7 +58,9 @@ PRESERVECONF = $(sysconfdir)/vsftpd/vsftpd.conf $(sysconfdir)/vsftpd/vsftpd.user
 USERGROUP = /etc/opt/csw/pkg/CSWvsftpd/cswusergroup
 INITSMF = /etc/opt/csw/init.d/cswvsftpd
 
-MIGRATE_FILES = vsftpd
+MIGRATE_FILES = vsftpd.conf vsftpd.chroot_list vsftpd.banned_emails vsftpd.email_passwords vsftpd.user_list
+MIGRATE_SOURCE_DIR = $(prefix)/etc/vsftpd
+MIGRATE_DEST_DIR = $(sysconfdir)/vsftpd
 
 # The vsftpd user home directory has special rights
 PROTOTYPE_MODIFIERS = empty
