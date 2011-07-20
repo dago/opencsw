@@ -11,8 +11,8 @@ for SOCKET_DIR in /tmp/uscreens /tmp/screens; do
 		mkdir "$NEW_SOCKET_DIR/$DIR"
 		getfacl "$DIR" | setfacl -f - "$NEW_SOCKET_DIR/$DIR"
 		for SESSION in "$DIR"/*; do
-			[ -p "$DIR/$SESSION" ] || continue
-			ln -s "$DIR/$SESSION" "$NEW_SOCKET_DIR/$DIR/$SESSION"
+			[ -p "$SESSION" ] || continue
+			ln -s "$SESSION" "$NEW_SOCKET_DIR/$DIR/$SESSION"
 		done
 	done
 done
