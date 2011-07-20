@@ -16,6 +16,10 @@ RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWapr
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWsvn
 
+SVN_LIBRARY_PATH = $(libdir)/svn
+SVN_HEADER_PATH = $(includedir)/subversion-1
+EXTRA_COMMON_EXPORTS = SVN_LIBRARY_PATH SVN_HEADER_PATH
+
 CONFIGURE_ARGS = $(DIRPATHS)
 SVN_PREFIX = /opt/csw
 EXTRA_LIB = /opt/csw/lib/svn
