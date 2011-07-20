@@ -11,9 +11,9 @@ To enable the imapproxy daemon:
 * under Solaris <= 9:
 
 	- create the configuration file using the CSW template:
-		cp /opt/csw/etc/imapproxy.conf.CSW /opt/csw/etc/imapproxy.conf
+		cp /etc/opt/csw/imapproxy.conf.CSW /etc/opt/csw/imapproxy.conf
 
-	- set the server_hostname variable in the /opt/csw/etc/imapproxy.conf 
+	- set the server_hostname variable in the /etc/opt/csw/imapproxy.conf 
 	file to a valid imap server hostname.
 
 	- launch the daemon:
@@ -21,7 +21,7 @@ To enable the imapproxy daemon:
 
 * under Solaris >= 10:
 
-	- set the server_hostname variable in the /opt/csw/etc/imapproxy.conf 
+	- set the server_hostname variable in the /etc/opt/csw/imapproxy.conf 
 	file to a valid imap server hostname.
 
 	- enable the imapproxy daemon:

@@ -6,7 +6,7 @@ diff --speed-large-files --minimal -Nru up-imapproxy-1.2.5rc1.orig/include/imapp
  
  #ifndef DEFAULT_CONFIG_FILE
 -#define DEFAULT_CONFIG_FILE     "/etc/imapproxy.conf"
-+#define DEFAULT_CONFIG_FILE     "/opt/csw/etc/imapproxy.conf"
++#define DEFAULT_CONFIG_FILE     "/etc/opt/csw/imapproxy.conf"
  #endif
  
  #define LITERAL_PASSWORD        1

@@ -45,7 +45,7 @@ Modified for CSWimapproxy by Yann Rouillard 07/06
 				restart_on='refresh'
 				type='path'>
 				<service_fmri
-					value='file://localhost/opt/csw/etc/imapproxy.conf' />
+					value='file://localhost/etc/opt/csw/imapproxy.conf' />
 			</dependency>
 
 			<dependent

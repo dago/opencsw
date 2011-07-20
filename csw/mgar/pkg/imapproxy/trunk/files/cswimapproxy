@@ -16,7 +16,7 @@
 PROGNAME=in.imapproxyd
 BINPATH=/opt/csw/sbin
 INIT_FILE=/etc/init.d/cswimapproxy
-CONF_DIR=/opt/csw/etc
+CONF_DIR=/etc/opt/csw
 CONF_FILE=$CONF_DIR/imapproxy.conf
 OPTIONS=""
 

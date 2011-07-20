@@ -61,6 +61,8 @@ DISTNAME = squirrelmail-imap_proxy-$(VERSION)
 INITSMF = /etc/opt/csw/init.d/cswimapproxy
 PRESERVECONF = /etc/opt/csw/imapproxy.conf
 
+MIGRATE_FILES = imapproxy.conf
+
 # imapproxy lacks include of openssl/md5.h
 # PATCHFILES += md5_include.patch
 
