@@ -6,7 +6,7 @@ NEW_SOCKET_DIR="/var/opt/csw/run/screen/"
 for SOCKET_DIR in /tmp/uscreens /tmp/screens; do
 	[ -d "$SOCKET_DIR" ] || continue
 	cd $SOCKET_DIR
-	for DIR in *; do
+	for DIR in S-*; do
 		[ -d "$DIR" ] || continue
 		mkdir -m 700 -p "$NEW_SOCKET_DIR/$DIR"
 		ls -lnd "$DIR" | awk ' { print $3, $4 }' | { 
