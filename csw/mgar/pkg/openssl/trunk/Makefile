@@ -81,7 +81,7 @@ CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/penti
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
 endif
 
-# the /usr/local reference in the documents file are relevant
+# the /usr/local references in the documents files are relevant
 CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/FAQ
 CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/INSTALL
 CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/CHANGES
@@ -101,6 +101,11 @@ CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libssl.so.0.9.7
 CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libcrypto.so.0.9.7
 
+# We will not fix this today
+CHECKPKG_OVERRIDES_CSWosslutils += catalogname-does-not-match-pkgname|pkgname=CSWosslutils|catalogname=openssl_utils|expected-catalogname=osslutils
+CHECKPKG_OVERRIDES_CSWossldevel += catalogname-does-not-match-pkgname|pkgname=CSWossldevel|catalogname=openssl_devel|expected-catalogname=ossldevel
+CHECKPKG_OVERRIDES_CSWossl += catalogname-does-not-match-pkgname|pkgname=CSWossl|catalogname=openssl|expected-catalogname=ossl
+CHECKPKG_OVERRIDES_CSWosslrt += catalogname-does-not-match-pkgname|pkgname=CSWosslrt|catalogname=openssl_rt|expected-catalogname=osslrt
 
 
 ###### Upstream and opencsw files information #######
@@ -123,6 +128,9 @@ DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS R
 # solaris-386-cc, solaris-pentium-cc, solaris-pentium_pro-cc, solaris-sparcv9+vis-cc
 PATCHFILES = more_configure_targets.patch
 
+# Update openssl.cnf path in man page to follow opencsw standard
+PATCHFILES += opencsw_paths.patch
+
 LICENSE=LICENSE
 
 ##### Build and installation information #####
@@ -137,10 +145,6 @@ endif
 # provide optimized libraries and binaries
 EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
 EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
-
-# we don't yet use isaexec support so we disable
-# isa relocation for default isa
-NOISAEXEC = 1
 
 # GAR wants and puts sparcv9 in lib/64 but openssl build system
 # isn't the standard autoconf/automake one so we disable this
@@ -189,6 +193,8 @@ ifneq ($(shell /usr/bin/uname -r),5.9)
 	CONFIGURE_ARGS += --pk11-libname=$(abspath /usr/lib/$(MM_LIBDIR)/libpkcs11.so) 
 endif
 endif 
+
+TEST_SCRIPTS =
 
 include gar/category.mk
 
