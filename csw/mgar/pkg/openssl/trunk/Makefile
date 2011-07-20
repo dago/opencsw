@@ -111,9 +111,10 @@ CHECKPKG_OVERRIDES_CSWosslrt += catalogname-does-not-match-pkgname|pkgname=CSWos
 ###### Upstream and opencsw files information #######
 
 MASTER_SITES = http://www.openssl.org/source/ http://openssl.org/news/
+UPSTREAM_MASTER_SITES = http://www.openssl.org/source/ 
 
 # We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
+UFILES_REGEX = $(NAME)-(0.9.8[a-z]).tar.gz
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 DISTFILES += CSWossl.prototype
