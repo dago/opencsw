@@ -8,11 +8,13 @@ for SOCKET_DIR in /tmp/uscreens /tmp/screens; do
 	cd $SOCKET_DIR
 	for DIR in *; do
 		[ -d "$DIR" ] || continue
-		mkdir "$NEW_SOCKET_DIR/$DIR"
+		mkdir -p "$NEW_SOCKET_DIR/$DIR"
 		getfacl "$DIR" | setfacl -f - "$NEW_SOCKET_DIR/$DIR"
 		for SESSION in "$DIR"/*; do
 			[ -p "$SESSION" ] || continue
-			ln -s "$SESSION" "$NEW_SOCKET_DIR/$DIR/$SESSION"
+			ln -s "$SESSION" "$NEW_SOCKET_DIR/$SESSION"
 		done
 	done
 done
+
+true
