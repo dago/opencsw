@@ -109,9 +109,7 @@ CHECKPKG_OVERRIDES_CSWcyrusimapd += catalogname-does-not-match-pkgname|pkgname=C
 ###### Upstream and opencsw files information #######
 
 MASTER_SITES = ftp://ftp.cyrusimap.org/cyrus-imapd/ http://email.uoa.gr/download/cyrus/cyrus-imapd-$(VERSION)/ http://www.vx.sk/download/patches/cyrus-imapd/
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(shell echo $(NAME) | tr '_' '-')-(\d+(?:\.\d+)*).tar.gz
+UPSTREAM_MASTER_SITES = ftp://ftp.cyrusimap.org/cyrus-imapd/
 
 DISTNAME = $(shell echo $(NAME) | tr '_' '-')-$(VERSION)
 
