@@ -17,22 +17,24 @@ PATCHFILES = 0001-Make-sure-to-find-newly-built-libs-earlier.patch
 
 PACKAGES += CSWlibaprutil1-0
 CATALOGNAME_CSWlibaprutil1-0 = libaprutil1_0
-SPKG_DESC_CSWlibaprutil1-0 += Apache Portable Runtime Utilities, libaprutil-1.so.0
-OBSOLETED_BY_CSWlibaprutil1-0 += CSWlibaprutil
-PKGFILES_CSWlibaprutil1-0 += $(call baseisadirs,$(libdir),libaprutil-1\.so\.0\.3\.12)
-PKGFILES_CSWlibaprutil1-0 += $(call baseisadirs,$(libdir),libaprutil-1\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibaprutil1-0 += Apache Portable Runtime Utilities, libaprutil-1.so.0 and private libraries
+PKGFILES_CSWlibaprutil1-0 += $(call pkgfiles_lib,libaprutil-1.so.0)
+PKGFILES_CSWlibaprutil1-0 += $(libdir)/apr-util-1/.*
 RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWapr
 RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWunixodbc
+RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWbdb48
+RUNTIME_DEP_PKGS_CSWlibaprutil1-0 += CSWoldaprt
+OBSOLETED_BY_CSWlibaprutil1-0 += CSWapr-util
+# These are private libraries in lib/apr-util-1/ and it is ok to have no soname
+CHECKPKG_OVERRIDES_CSWlibaprutil1-0 += shared-lib-package-contains-so-symlink
 
-
-PACKAGES += CSWapr-util-dev
-CATALOGNAME_CSWapr-util-dev = apr_util_dev
-SPKG_DESC_CSWapr-util-dev += Apache Portable Runtime Utilities, libaprutil-dev
-PKGFILES_CSWapr-util-dev += /opt/csw/lib/apr-util-1/apr_dbd_odbc.so
-PKGFILES_CSWapr-util-dev += /opt/csw/lib/apr-util-1/apr_dbd_sqlite3.so
-PKGFILES_CSWapr-util-dev += /opt/csw/lib/apr-util-1/apr_dbm_db.so
-PKGFILES_CSWapr-util-dev += /opt/csw/lib/apr-util-1/apr_ldap.so
+PACKAGES += CSWlibaprutil-dev
+SPKG_DESC_CSWlibaprutil-dev += Apache Portable Runtime Utilities, libaprutil-dev
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibaprutil-dev += CSWlibaprutil1-0
 
 # We need this to get bdb48/lib into the runpath
 EXTRA_LIB = $(prefix)/bdb48/lib
