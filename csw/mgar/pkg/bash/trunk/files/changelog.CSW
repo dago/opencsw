@@ -1,3 +1,11 @@
+bash (4.2.10,REV=2011.07.21) unstable
+
+  * New upstream release.
+  * Updated dependancy names (CSWgettextrt -> CSWlibintl8)
+  * Now use cswetcshells class action scripts in order to update /etc/shells.
+
+ -- Yann Rouillard <yann@opencsw.org>  Sat, 18 Dec 2010 09:19:42 +0100
+
 bash (4.1.09,REV=2010.12.18) unstable
 
   * Added bash patches bash41-008 and bash41-009.
