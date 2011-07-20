@@ -1,3 +1,9 @@
+cyrus_imapd (2.4.10,rev=2011.07.20) unstable
+
+  * New upstream version.
+
+ -- Yann Rouillard <yann@opencsw.org>  Wed, 20 Jul 2011 16:18:11 +0200
+
 cyrus_imapd (2.4.6,rev=2011.02.07) unstable
 
   * New upstream version.
