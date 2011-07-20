@@ -1,0 +1,25 @@
+From 5cc48489f88048d512fb902b11fdd1f34e42bdbe Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Wed, 20 Jul 2011 15:10:06 +0200
+Subject: [PATCH] cyradmrc.pl path modification
+
+---
+ perl/imap/IMAP/Shell.pm                   |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/perl/imap/IMAP/Shell.pm b/perl/imap/IMAP/Shell.pm
+index c605079..274228b 100644
+--- a/perl/imap/IMAP/Shell.pm
++++ b/perl/imap/IMAP/Shell.pm
+@@ -439,7 +439,7 @@ sub run {
+ sub shell {
+   my ($server, $port, $authz, $auth, $systemrc, $userrc, $dorc, $mech, $pw,
+       $tlskey, $notls) =
+-    ('', 143, undef, $ENV{USER} || $ENV{LOGNAME}, '/usr/local/etc/cyradmrc.pl',
++    ('', 143, undef, $ENV{USER} || $ENV{LOGNAME}, '/etc/opt/csw/cyrus/cyradmrc.pl',
+      "$ENV{HOME}/.cyradmrc.pl", 1, undef, undef, undef, undef);
+   GetOptions('user|u=s' => \$auth,
+ 	     'authz|z=s' => \$authz,
+-- 
+1.7.6
+
