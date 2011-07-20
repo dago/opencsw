@@ -8,7 +8,7 @@ for SOCKET_DIR in /tmp/uscreens /tmp/screens; do
 	cd $SOCKET_DIR
 	for DIR in *; do
 		[ -d "$DIR" ] || continue
-		mkdir Ã-m 700 -p "$NEW_SOCKET_DIR/$DIR"
+		mkdir -m 700 -p "$NEW_SOCKET_DIR/$DIR"
 		ls -lnd "$DIR" | awk ' { print $3, $4 }' | { 
 			read _UID _GID
 			chown $_UID:$_GID "$NEW_SOCKET_DIR/$DIR"
