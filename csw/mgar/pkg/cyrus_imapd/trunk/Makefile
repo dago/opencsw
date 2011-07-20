@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = cyrus_imapd
-VERSION = 2.4.6
+VERSION = 2.4.10
 CATEGORIES = server
 
 DESCRIPTION = Pop and Imap server from the Cyrus mail system
