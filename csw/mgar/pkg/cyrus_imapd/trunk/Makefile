@@ -33,12 +33,12 @@ PACKAGES = CSWcyrusimapd CSWcyrusimapdutils CSWpmcyrus
 
 SPKG_DESC_CSWcyrusimapd = Pop and Imap server from the Cyrus mail system
 CATALOGNAME_CSWcyrusimapd = cyrus_imapd
-RUNTIME_DEP_PKGS_CSWcyrusimapd = CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWnetsnmp CSWzlib CSWtcpwrap
+RUNTIME_DEP_PKGS_CSWcyrusimapd = CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWnetsnmp CSWzlib CSWtcpwrap CSWlibpcreposix0 CSWlibpcre0
 #SPKG_CLASSES_CSWcyrusimapd = none services cswpreserveconf cswinitsmf
 
 SPKG_DESC_CSWcyrusimapdutils = Various admin utilities for Cyrus Imapd/Popd
 CATALOGNAME_CSWcyrusimapdutils = cyrus_imapd_utils
-RUNTIME_DEP_PKGS_CSWcyrusimapdutils = CSWpmcyrus CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWzlib
+RUNTIME_DEP_PKGS_CSWcyrusimapdutils = CSWpmcyrus CSWosslrt CSWsasl CSWbdb42 CSWkrb5lib CSWzlib CSWlibpcreposix0 CSWlibpcre0
 #SPKG_CLASSES_CSWcyrusimapdutils = none 
 
 SPKG_DESC_CSWpmcyrus = Perl interface to Cyrus Imap functions
@@ -99,6 +99,12 @@ CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/cs
 CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cyrus_imapd/text/install-testing
 CHECKPKG_OVERRIDES_CSWcyrusimapd += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cyrus_imapd/text/install-compile
 
+# We will not fix this today
+CHECKPKG_OVERRIDES_CSWpmcyrus += catalogname-does-not-match-pkgname|pkgname=CSWpmcyrus|catalogname=pm_cyrus|expected-catalogname=pmcyrus
+CHECKPKG_OVERRIDES_CSWcyrusimapdutils += catalogname-does-not-match-pkgname|pkgname=CSWcyrusimapdutils|catalogname=cyrus_imapd_utils|expected-catalogname=cyrusimapdutils
+CHECKPKG_OVERRIDES_CSWcyrusimapd += catalogname-does-not-match-pkgname|pkgname=CSWcyrusimapd|catalogname=cyrus_imapd|expected-catalogname=cyrusimapd
+
+
 
 ###### Upstream and opencsw files information #######
 
@@ -157,6 +163,9 @@ PATCHFILES += 0001-Force-linkage-to-libperl.so.patch
 # mandatory to work with assignment like
 # "CC="/opt/SUNWspro/bin/cc -xrunpath"
 PATCHFILES += 0002-fix-config2header.patch
+
+# cyradmrc.pl should be in /etc/opt/csw/etc/cyrus, not in /usr/local/etc/
+PATCHFILES += cyradmrc.pl-path-modification.patch
 
 #GARCOMPILER = GNU
 #GNU_CC_OPT = -g
