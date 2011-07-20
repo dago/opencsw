@@ -32,23 +32,35 @@ RUNTIME_DEP_PKGS += CSWosslrt
 
 SPKG_CLASSES = none cswpreserveconf cswinitsmf
 
+# Default paths referenced in documentation files, can be safely ignored
+CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imapproxy/README
+CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imapproxy/README.ssl
+CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imapproxy/README.known_issues
+
+# DTD paths referenced in smf manifest file, can be safely ignored
+CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/share|root/var/opt/csw/svc/manifest/network/cswimapproxy.xml
+
+
 ###### Upstream and opencsw files information #######
 
-MASTER_SITES = http://www.imapproxy.org/downloads/
+# Imapproxy is now Squirrelmail IMAP Proxy and is now available
+# in squirrelaim sourceforge projet
+SF_PROJ = squirrelmail
+MASTER_SITES = $(SF_MIRRORS)
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = up-$(NAME)-(\d+(?:\.\d+)*).tar.gz
 
-DISTFILES  = up-$(NAME)-$(VERSION).tar.gz
+DISTFILES  = squirrelmail-imap_proxy-$(VERSION).tar.gz
 DISTFILES += imapproxy.conf
 DISTFILES += changelog.CSW README.CSW
 # init and smf stuffs
 DISTFILES += cswimapproxy cswimapproxy.xml
 
-DISTNAME = up-$(NAME)-$(VERSION)
+DISTNAME = squirrelmail-imap_proxy-$(VERSION)
 
-INITSMF = /etc/init.d/cswimapproxy
-PRESERVECONF = /opt/csw/etc/imapproxy.conf
+INITSMF = /etc/opt/csw/init.d/cswimapproxy
+PRESERVECONF = /etc/opt/csw/imapproxy.conf
 
 # imapproxy lacks include of openssl/md5.h
 # PATCHFILES += md5_include.patch
@@ -79,7 +91,7 @@ post-merge:
 	ginstall -D $(WORKSRC_FIRSTMOD)/README.ssl $(PKGROOT)$(docdir)/$(NAME)/README.ssl
 	ginstall -D $(WORKDIR_FIRSTMOD)/imapproxy.conf $(PKGROOT)$(sysconfdir)/imapproxy.conf.CSW
 	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy.xml" "$(PKGROOT)/var/opt/csw/svc/manifest/network/cswimapproxy.xml"
-	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy" "$(PKGROOT)/etc/init.d/cswimapproxy"
+	ginstall -D "$(WORKDIR_FIRSTMOD)/cswimapproxy" "$(PKGROOT)/etc/opt/csw/init.d/cswimapproxy"
 	@$(MAKECOOKIE)
 
 

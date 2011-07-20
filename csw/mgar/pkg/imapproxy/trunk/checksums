@@ -1,8 +1,1 @@
-05c9327816e6c24ba9fe253c6e76c71a  README.CSW
-a782ea33ea43ac1859cd27679bc1bf9a  changelog.CSW
-c70c04af058e01012ef1beb8caaeb296  conf_file_location.patch
-645dbf4681fba2e3430b4bdfb28cb540  cswimapproxy
-2d586e6018bd82b6ac4c49b75ff837ad  cswimapproxy.xml
-497ca80cf7e1ccbb4caac0319533a17e  destdir.patch
-5d51df28803c859277b7f6c3b68acf9e  imapproxy.conf
-036b487a9a6d2b955f81eb80bd9faee0  up-imapproxy-1.2.7.tar.gz
+02fb038a13efaf991917f87862c714fb  squirrelmail-imap_proxy-1.2.7.tar.gz
