@@ -1,0 +1,18 @@
+--- logrotate-3.8.0/config.c	Tue Jun 21 08:12:02 2011
++++ logrotate-3.8.0-solfix/config.c	Sun Jun 26 23:54:28 2011
+@@ -1,5 +1,5 @@
+ #include <sys/queue.h>
+-#ifdef _ALLOCA_H
++#ifndef _ALLOCA_H
+ #include <alloca.h>
+ #else
+ #include <limits.h>
+--- logrotate-3.8.0/logrotate.c	Tue Jun 21 08:12:02 2011
++++ logrotate-3.8.0-solfix/logrotate.c	Sun Jun 26 23:35:19 2011
+@@ -1,5 +1,5 @@
+ #include <sys/queue.h>
+-#ifdef _ALLOCA_H
++#ifndef _ALLOCA_H
+ #include <alloca.h>
+ #else
+ #include <limits.h>

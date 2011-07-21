@@ -1,0 +1,40 @@
+--- logrotate-3.8.0/Makefile	2011-06-21 08:12:03.000000000 +0000
++++ logrotate-3.8.0-solfix/Makefile	2011-06-27 01:08:10.876632251 +0000
+@@ -41,16 +41,14 @@
+ 
+ # Solaris using gcc
+ ifeq ($(OS_NAME),SunOS)
+-    CFLAGS = -I/opt/baw/include -D_GNU_SOURCE -D$(OS_NAME) -DVERSION=\"$(VERSION)\" $(RPM_OPT_FLAGS) $(LFS)
++    CFLAGS = -D_GNU_SOURCE -D$(OS_NAME) -DVERSION=\"$(VERSION)\" $(RPM_OPT_FLAGS) $(LFS)
+     CC ?= gcc
+     CPP = $(CC) -E -M
+     INSTALL = /usr/ucb/install
+     ifeq ($(CC),cc)
+         CPP = cc -xM
+     endif
+-	ifeq ($(BASEDIR),)
+-	BASEDIR = /usr/local
+-    endif
++    BASEDIR ?= /usr/local
+ endif
+ 
+ # Red Hat Linux
+@@ -83,7 +81,7 @@
+ endif
+ 
+ BINDIR = $(BASEDIR)/sbin
+-MANDIR = $(BASEDIR)/man
++MANDIR ?= $(BASEDIR)/man
+ 
+ #--------------------------------------------------------------------------
+ 
+@@ -95,6 +93,9 @@
+ LDFLAGS = -g
+ endif
+ 
++LDFLAGS += $(EXTRA_LDFLAGS) $(EXTRA_LIBS)
++CFLAGS  += $(EXTRA_CPPFLAGS) $(EXTRA_CFLAGS) 
++
+ ifeq (.depend,$(wildcard .depend))
+ TARGET=$(PROG)
+ else
