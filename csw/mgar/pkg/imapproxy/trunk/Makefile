@@ -30,8 +30,6 @@ PACKAGES = CSWimapproxy
 RUNTIME_DEP_PKGS  = CSWtcpwrap 
 RUNTIME_DEP_PKGS += CSWosslrt 
 
-SPKG_CLASSES = none cswpreserveconf cswinitsmf
-
 # Default paths referenced in documentation files, can be safely ignored
 CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imapproxy/README
 CHECKPKG_OVERRIDES_CSWimapproxy += file-with-bad-content|/usr/local|root/opt/csw/share/doc/imapproxy/README.ssl
