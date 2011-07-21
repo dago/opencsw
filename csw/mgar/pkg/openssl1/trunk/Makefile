@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = openssl
-VERSION = 1.0.0b
+VERSION = 1.0.0c
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
@@ -24,7 +24,7 @@ define BLURB
   as a full-strength general-purpose cryptography library.
 endef
 
-PACKAGES = CSWlibssl1-0-0 CSWlibssl1-0-0-devel CSWossl1utils
+PACKAGES = CSWlibssl1-0-0 CSWlibssl1-0-0-devel CSWopenssl1-utils
 
 CATALOGNAME_CSWlibssl1-0-0 = libssl1_0_0
 RUNTIME_DEP_PKGS_CSWlibssl1-0-0 = CSWcacertificates
@@ -39,20 +39,20 @@ SPKG_DESC_CSWlibssl1-0-0-devel = Openssl 1.0 development support files
 PKGFILES_CSWlibssl1-0-0-devel = $(PKGFILES_DEVEL) 
 PKGFILES_CSWlibssl1-0-0-devel += $(docdir)/libssl1_0_0_devel/.*
 
-CATALOGNAME_CSWossl1utils = openssl1_utils
-RUNTIME_DEP_PKGS_CSWossl1utils = CSWlibssl1-0-0
-SPKG_DESC_CSWossl1utils = Openssl 1.0 binaries and related tools
-SPKG_CLASSES_CSWossl1utils = none cswpreserveconf
-PKGFILES_CSWossl1utils = $(bindir)/[^/]* $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.* 
-PKGFILES_CSWossl1utils += $(prefix)/ssl/misc/.* 
-PKGFILES_CSWossl1utils += $(prefix)/ssl/openssl\.cnf $(sysconfdir)/ssl/openssl\.cnf.*
-PKGFILES_CSWossl1utils += $(docdir)/openssl1_utils/.*
+CATALOGNAME_CSWopenssl1-utils = openssl1_utils
+RUNTIME_DEP_PKGS_CSWopenssl1-utils = CSWlibssl1-0-0
+SPKG_DESC_CSWopenssl1-utils = Openssl 1.0 binaries and related tools
+SPKG_CLASSES_CSWopenssl1-utils = none cswpreserveconf
+PKGFILES_CSWopenssl1-utils = $(bindir)/[^/]* $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.* 
+PKGFILES_CSWopenssl1-utils += $(prefix)/ssl/misc/.* 
+PKGFILES_CSWopenssl1-utils += $(prefix)/ssl/openssl\.cnf $(sysconfdir)/ssl/openssl\.cnf.*
+PKGFILES_CSWopenssl1-utils += $(docdir)/openssl1_utils/.*
 
 
 PRESERVECONF = $(sysconfdir)/ssl/openssl.cnf
 
 # We use SUN perl, not the opencsw one
-CHECKPKG_OVERRIDES_CSWossl1utils += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWopenssl1-utils += missing-dependency|CSWperl
 
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += surplus-dependency|CSWcacertificates
 
@@ -69,6 +69,24 @@ CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/l
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
 endif
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += surplus-dependency|CSWlibssl1-0-0
+
+# We do ship libcrypto in libssl package
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/pentium_pro/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+
+# References to default path in documentation files, can be safely ignored
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0_devel/INSTALL
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0_devel/CHANGES
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0_devel/FAQ
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0/INSTALL
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0/FAQ
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0/CHANGES
+CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/CHANGES
+CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/FAQ
+CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/INSTALL
+CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ca.1
+
 
 
 ###### Upstream and opencsw files information #######
@@ -93,7 +111,15 @@ PATCHFILES = more_configure_targets.patch
 # patch
 PATCHFILES += dont_use_slash_64_directory.patch
 
-PATCHFILES += fix-test-failure.patch
+#PATCHFILES += fix-test-failure.patch
+
+# We install engines libraries in /opt/csw/lib/engines/1.0.0/
+# instead of /opt/csw/lib/engines to avoid clashes with 0.9.8
+# and futur new release of ssl libraries
+PATCHFILES += 0003-make-engines-directory-soname-dependant.patch
+
+# Update openssl.cnf path in man page to follow opencsw standard
+PATCHFILES += opencsw_paths.patch
 
 LICENSE = LICENSE
 
@@ -103,10 +129,6 @@ LICENSE = LICENSE
 # provide optimized libraries and binaries
 EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
 EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
-
-# we don't yet use isaexec support so we disable
-# isa relocation for default isa
-NOISAEXEC = 1
 
 # GAR wants and puts sparcv9 in lib/64 but openssl build system
 # isn't the standard autoconf/automake one so we disable this
@@ -136,6 +158,9 @@ CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefi
 # For now we want the sun perl to be used
 CONFIGURE_ENV += PERL="/usr/bin/perl"
 
+# We export the soname to the configure script 
+CONFIGURE_ENV += SONAME=$(shell echo $(VERSION) | )
+
 # Some optimization
 EXT_CFLAGS   += -mt -xstrconst
 EXT_CXXFLAGS += -noex -mt
@@ -143,6 +168,8 @@ EXT_CXXFLAGS += -noex -mt
 # By default, the install target put man pages under
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man
 INSTALL_ARGS += MANDIR=$(mandir)
+
+TEST_SCRIPTS = 
 
 include gar/category.mk
 
@@ -174,13 +201,12 @@ install-doc:
 	@$(MAKECOOKIE)
 
 install-certs: 
-	[ -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] && \
+	[ ! -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] || \
 		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW
 	ginstall -d $(PKGROOT)/etc/$(prefix)/ssl/private
 	rm -rf $(PKGROOT)/$(prefix)/ssl/openssl.cnf && ln -s ../etc/ssl/openssl.cnf $(PKGROOT)/$(prefix)/ssl/openssl.cnf
 	rm -rf $(PKGROOT)/$(prefix)/ssl/certs && ln -s ../etc/ssl/certs $(PKGROOT)/$(prefix)/ssl/certs
 	rm -rf $(PKGROOT)/$(prefix)/ssl/private && ln -s ../../../etc/opt/csw/ssl/private $(PKGROOT)/$(prefix)/ssl/private
-	rm -rf $(PKGROOT)/$(prefix)/etc/ssl/private && ln -s ../../../../etc/opt/csw/ssl/private $(PKGROOT)/$(prefix)/etc/ssl/private 
 	@$(MAKECOOKIE)
 
 remove-generic-so-files:

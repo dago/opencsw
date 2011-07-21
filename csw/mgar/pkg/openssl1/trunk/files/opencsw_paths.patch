@@ -1,0 +1,25 @@
+From 0aeef9a058183acd958d397e983be0d7e4d42750 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Wed, 20 Jul 2011 15:04:22 +0200
+Subject: [PATCH] Configuration file path update in man page.
+
+---
+ doc/apps/ca.pod          |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/doc/apps/ca.pod b/doc/apps/ca.pod
+index 5618c2d..ddcc446 100644
+--- a/doc/apps/ca.pod
++++ b/doc/apps/ca.pod
+@@ -580,7 +580,7 @@ Note: the location of all files can change either by compile time options,
+ configuration file entries, environment variables or command line options.
+ The values below reflect the default values.
+ 
+- /usr/local/ssl/lib/openssl.cnf - master configuration file
++ /etc/opt/csw/ssl/openssl.cnf   - master configuration file
+  ./demoCA                       - main CA directory
+  ./demoCA/cacert.pem            - CA certificate
+  ./demoCA/private/cakey.pem     - CA private key
+-- 
+1.7.6
+
