@@ -1,0 +1,16 @@
+diff -ur logrotate-3.8.0/config.h logrotate-3.8.0-sol10fix/config.h
+--- logrotate-3.8.0/config.h	2011-06-21 10:12:02.000000000 +0200
++++ logrotate-3.8.0-sol10fix/config.h	2011-07-22 01:37:57.603640585 +0200
+@@ -13,9 +13,9 @@
+ 
+ #ifdef SunOS
+ #define DEFAULT_MAIL_COMMAND "/usr/bin/mailx"
+-#define COMPRESS_COMMAND "/usr/local/bin/gzip"
+-#define UNCOMPRESS_COMMAND "/usr/local/bin/gunzip"
+-#define STATEFILE "/var/log/logrotate.status"
++#define COMPRESS_COMMAND "/opt/csw/bin/gzip"
++#define UNCOMPRESS_COMMAND "/opt/csw/bin/gunzip"
++#define STATEFILE "/var/opt/csw/log/logrotate.status"
+ #endif
+ 
+ #ifdef __NetBSD__

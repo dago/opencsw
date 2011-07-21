@@ -1,0 +1,8 @@
+590f77c13077a4c384dbec7ca9c5f242 logrotate-3.8.0.tar.gz
+59ed81c960568f086b9e59388807f6a3  001-makefu.patch
+5603f2be02e6fd4bbd8d57a4f3e9dcd4  002-strndup.patch
+02f36862d4e190a7eb920bd816ca4927  003-test.patch
+e98fb00c0ea9c7c0102e2029292308dd  004-alloca.patch
+d6232a06412a2302a582abdc51607518  005-gzippath.patch
+27ac9259ade93a47f71779d396c6a096  006-mbrtowc_empty.patch
+384b011461b8aef679a884051dc25015  007-warn-unreached.patch
