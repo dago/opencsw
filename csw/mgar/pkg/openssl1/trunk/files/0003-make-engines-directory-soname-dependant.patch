@@ -1,0 +1,69 @@
+--- a/Configure
++++ b/Configure
+@@ -1690,7 +1690,7 @@ while (<IN>)
+ 		}
+ 	elsif	(/^#define\s+ENGINESDIR/)
+ 		{
+-		my $foo = "$prefix/$libdir/engines";
++		my $foo = "$prefix/$libdir/engines/$shlib_version_number";
+ 		$foo =~ s/\\/\\\\/g;
+ 		print OUT "#define ENGINESDIR \"$foo\"\n";
+ 		}
+--- a/Makefile
++++ b/Makefile
+@@ -196,6 +196,7 @@ BUILDENV=	PLATFORM='$(PLATFORM)' PROCESSOR='$(PROCESSOR)' \
+ 		ZLIB_INCLUDE='$(ZLIB_INCLUDE)' LIBZLIB='$(LIBZLIB)'	\
+ 		EXE_EXT='$(EXE_EXT)' SHARED_LIBS='$(SHARED_LIBS)'	\
+ 		SHLIB_EXT='$(SHLIB_EXT)' SHLIB_TARGET='$(SHLIB_TARGET)'	\
++		SHLIB_VERSION_NUMBER='$(SHLIB_VERSION_NUMBER)' \
+ 		PEX_LIBS='$(PEX_LIBS)' EX_LIBS='$(EX_LIBS)'	\
+ 		CPUID_OBJ='$(CPUID_OBJ)'			\
+ 		BN_ASM='$(BN_ASM)' DES_ENC='$(DES_ENC)' 	\
+--- a/engines/Makefile
++++ b/engines/Makefile
+@@ -107,7 +107,7 @@
+ 	@[ -n "$(INSTALLTOP)" ] # should be set by top Makefile...
+ 	@if [ -n "$(SHARED_LIBS)" ]; then \
+ 		set -e; \
+-		$(PERL) $(TOP)/util/mkdir-p.pl $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines; \
++		$(PERL) $(TOP)/util/mkdir-p.pl $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$(SHLIB_VERSION_NUMBER); \
+ 		for l in $(LIBNAMES); do \
+ 			( echo installing $$l; \
+ 			  pfx=lib; \
+@@ -119,13 +119,13 @@
+ 				*DSO_WIN32*)	sfx="eay32.dll"; pfx=;;	\
+ 				*)		sfx=".bad";;	\
+ 				esac; \
+-				cp $$pfx$$l$$sfx $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$$pfx$$l$$sfx.new; \
++				cp $$pfx$$l$$sfx $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$(SHLIB_VERSION_NUMBER)/$$pfx$$l$$sfx.new; \
+ 			  else \
+ 				sfx=".so"; \
+ 				cp cyg$$l.dll $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$$pfx$$l$$sfx.new; \
+ 			  fi; \
+-			  chmod 555 $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$$pfx$$l$$sfx.new; \
+-			  mv -f $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$$pfx$$l$$sfx.new $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$$pfx$$l$$sfx ); \
++			  chmod 555 $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$(SHLIB_VERSION_NUMBER)/$$pfx$$l$$sfx.new; \
++			  mv -f $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$(SHLIB_VERSION_NUMBER)/$$pfx$$l$$sfx.new $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$(SHLIB_VERSION_NUMBER)/$$pfx$$l$$sfx ); \
+ 		done; \
+ 	fi
+ 	@target=install; $(RECURSIVE_MAKE)
+--- a/engines/ccgost/Makefile
++++ b/engines/ccgost/Makefile
+@@ -53,13 +53,13 @@
+ 			*DSO_WIN32*) sfx="eay32.dll"; pfx=;; \
+ 			*) sfx=".bad";; \
+ 			esac; \
+-			cp $${pfx}$(LIBNAME)$$sfx $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$${pfx}$(LIBNAME)$$sfx.new; \
++			cp $${pfx}$(LIBNAME)$$sfx $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$(SHLIB_VERSION_NUMBER)/$${pfx}$(LIBNAME)$$sfx.new; \
+ 		else \
+ 			sfx=".so"; \
+-			cp cyg$(LIBNAME).dll $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$${pfx}$(LIBNAME)$$sfx.new; \
++			cp cyg$(LIBNAME).dll $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$(SHLIB_VERSION_NUMBER)/$${pfx}$(LIBNAME)$$sfx.new; \
+ 		fi; \
+-		chmod 555 $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$${pfx}$(LIBNAME)$$sfx.new; \
+-		mv -f $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$${pfx}$(LIBNAME)$$sfx.new $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$${pfx}$(LIBNAME)$$sfx; \
++		chmod 555 $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$(SHLIB_VERSION_NUMBER)/$${pfx}$(LIBNAME)$$sfx.new; \
++		mv -f $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$(SHLIB_VERSION_NUMBER)/$${pfx}$(LIBNAME)$$sfx.new $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$(SHLIB_VERSION_NUMBER)/$${pfx}$(LIBNAME)$$sfx; \
+ 	fi
+ 
+ links:
