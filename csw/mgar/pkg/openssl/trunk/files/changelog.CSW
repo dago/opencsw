@@ -1,6 +1,7 @@
 openssl (0.9.8r,REV=2011.07.20) unstable
 
   * Fixed openssl.cnf paths in ca man page.
+  * Fixed certificates migration code (Closes: #4807)
 
    -- Yann Rouillard <yann@opencsw.org>  Wed, 20 Jul 2011 15:59:52 +0200
 
