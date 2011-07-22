@@ -16,7 +16,7 @@ index fc7b407..e5af45a 100644
  void Networker::SocketSinglePF(int s,int pf)
  {
 -#if INET6
-+#if INET6 && !(defined (__SVR4) && defined (__sun))
++#if INET6 && !(defined (IPV6_V6ONLY))
     if(pf==PF_INET6) {
        int on = 1;
        if(-1==setsockopt(s, IPPROTO_IPV6, IPV6_V6ONLY, (char *)&on, sizeof(on)))
