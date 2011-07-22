@@ -1,8 +1,8 @@
 NAME = openldap
-VERSION = 2.4.23
+VERSION = 2.4.26
 CATEGORIES = server
 EXTRA_MODULATORS = VERSION
-MODULATIONS_VERSION = 2.3.43 2.4.23
+MODULATIONS_VERSION = 2.3.43 2.4.26
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
 define BLURB
@@ -23,10 +23,10 @@ DISTFILES += cswopenldap openldap.xml
 EXPANDVARS = cswopenldap
 EXPANDVARS += CSWoldap.postinstall
 
-PATCHFILES_isa-sparcv8-version-2.4.23 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-sparcv9-version-2.4.23 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-i386-version-2.4.23 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-amd64-version-2.4.23 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv8-version-2.4.26 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-sparcv9-version-2.4.26 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-i386-version-2.4.26 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES_isa-amd64-version-2.4.26 = patch-oldap-2.4.16-ntlm.diff
 PATCHFILES += patch-libtool-64bit.diff
 DISTFILES += patch-oldap-2.4.16-ntlm.diff
 
@@ -74,8 +74,8 @@ EXTRA_INC_version-2.3.43 = $(prefix)/bdb44/include
 
 # This is also used during EXPANDVARS
 bdbdir = $(prefix)/bdb48
-EXTRA_LIB_version-2.4.23 = $(bdbdir)/lib 
-EXTRA_INC_version-2.4.23 = $(bdbdir)/include
+EXTRA_LIB_version-2.4.26 = $(bdbdir)/lib 
+EXTRA_INC_version-2.4.26 = $(bdbdir)/include
 EXTRA_LIB = $(EXTRA_LIB_version-$(VERSION))
 EXTRA_INC = $(EXTRA_INC_version-$(VERSION))
 
@@ -135,9 +135,9 @@ MERGE_DIRS_isa-default-version-2.3.43 = $(libdir)
 MERGE_SCRIPTS_isa-default64-version-2.3.43 = copy-relocated-only
 MERGE_DIRS_isa-default64-version-2.3.43 = $(libdir)
 
-MERGE_SCRIPTS_isa-default-version-2.4.23 = copy-all
-MERGE_SCRIPTS_isa-default64-version-2.4.23 = copy-relocated-only
-MERGE_DIRS_isa-default64-version-2.4.23 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
+MERGE_SCRIPTS_isa-default-version-2.4.26 = copy-all
+MERGE_SCRIPTS_isa-default64-version-2.4.26 = copy-relocated-only
+MERGE_DIRS_isa-default64-version-2.4.26 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
 
 # Perl backend is built, although it has been told not to.
 EXTRA_PAX_ARGS = -s ,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
