@@ -1,6 +1,6 @@
 # $Id$
 NAME = openldap
-VERSION = 2.4.23
+VERSION = 2.4.26
 CATEGORIES = server
 
 DESCRIPTION = Brief description
