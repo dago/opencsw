@@ -52,8 +52,6 @@ DISTFILES += README.CSW.apache2rt
 PATCHFILES += 0002-Adjust-a-few-usr-local-paths-in-the-man-pages.patch
 PATCHFILES += 0003-Switch-usr-local-for-opt-csw-in-default-cgi-path.patch
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 # The PACKAGES variable tell GAR which packages to build
 PACKAGES  = CSWapache2 CSWapache2-dev CSWapache2-manual CSWap2suexec
 PACKAGES += CSWap2worker CSWapache2-utils
@@ -86,7 +84,6 @@ SPKG_DESC_CSWap2worker = The apache worker mpm.
 SPKG_DESC_CSWap2prefork = A stub for the old prefork mpm package.
 SPKG_DESC_CSWapache2rt = A stub for the old apache2rt package.
 SPKG_DESC_CSWapache2c = A stub for the old apache2c package.
-
 
 RUNTIME_DEP_PKGS_CSWapache2       += CSWexpat CSWiconv CSWosslutils
 RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWzlib
