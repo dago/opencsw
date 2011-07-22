@@ -1,0 +1,12 @@
+--- a/src/attach.h
++++ b/src/attach.h
+@@ -39,6 +39,9 @@
+ #elif HAVE_WS2TCPIP_H
+ # include <ws2tcpip.h>
+ #endif
++#ifndef SUN_LEN
++# define SUN_LEN(ptr) ((size_t) (((struct sockaddr_un *) 0)->sun_path) + strlen ((ptr)->sun_path))
++#endif
+ 
+ #include "SMTask.h"
+ #include "Error.h"
