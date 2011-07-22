@@ -60,7 +60,10 @@ PATCHFILES += dont_use_csw_getopt_h.patch
 # Add a --disable-ipv6 option to configure so we can disable ipv6 support
 # under Solaris 9 and workaround "IPV6_V6ONLY symbole missing" issue
 # see http://wiki.opencsw.org/porting-faq#toc14
-PATCHFILES += disable_ipv6_configure_option.patch
+#PATCHFILES += disable_ipv6_configure_option.patch
+
+# Disable the use of IPV6_V6ONLY
+PATCHFILES += 0006-no-ipv6_v6only-setsock-option-under-solaris-9.patch
 
 # sun should not be used as a variable as sun is a macro under Solaris
 PATCHFILES += do_not_use_sun_as_a_variable.patch
