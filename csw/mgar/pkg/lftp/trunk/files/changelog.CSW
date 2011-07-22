@@ -1,3 +1,13 @@
+lftp (4.3.1,REV=2011.07.19) unstable
+
+  * New upstream release.
+  * Updated dependancies names:
+  	CSWgettextrt -> CSWlibintl8
+	CSWreadline -> CSWlibreadline6
+  * Removed SUNWspro hardcoded RPATH from binaries.
+
+ -- Yann Rouillard <yann@opencsw.org>  Tue, 19 Jul 2011 00:12:44 +0200
+
 lftp (4.0.10,REV=2010.09.03) unstable
 
   * New upstream release.

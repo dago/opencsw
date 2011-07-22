@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = lftp
-VERSION = 4.0.10
+VERSION = 4.3.1
 CATEGORIES = net
 
 DESCRIPTION = A sophisticated command-line ftp/http client
@@ -57,11 +57,28 @@ PATCHFILES += sun_cc_no_restrict.patch
 
 PATCHFILES += dont_use_csw_getopt_h.patch
 
+# Add a --disable-ipv6 option to configure so we can disable ipv6 support
+# under Solaris 9 and workaround "IPV6_V6ONLY symbole missing" issue
+# see http://wiki.opencsw.org/porting-faq#toc14
+PATCHFILES += disable_ipv6_configure_option.patch
+
+# sun should not be used as a variable as sun is a macro under Solaris
+PATCHFILES += do_not_use_sun_as_a_variable.patch
+
+# SUN_LEN macro is not defined under Solaris
+PATCHFILES += sun_len_definition.patch
+
 PRESERVECONF = $(sysconfdir)/lftp.conf
 
 MIGRATE_FILES_CSWlftp = lftp.conf
 
 ##### Build and installation information #####
+
+# We build solaris 10 specific version to be able to enable
+# ipv6 support on these platforms
+# see http://wiki.opencsw.org/porting-faq#toc14
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386                                        
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # to support shared /opt/csw setup
 # see http://wiki.opencsw.org/shared-opt-csw-setup
@@ -73,6 +90,13 @@ sysconfdir      = /etc$(prefix)
 EXTRA_LINKER_FLAGS = -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+# Solaris 9 does not have IPV6_V6ONLY.
+# IPv6 support only works on Solaris 10.
+CONFIGURE_ARGS_5.9 = --disable-ipv6
+CONFIGURE_ARGS_5.10 = --enable-ipv6
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL))
+
 # previous maintainer compiled with openssl
 # instead of gnutls, no need to change that
 CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
@@ -84,7 +108,7 @@ TEST_SCRIPTS =
 include gar/category.mk
 
 # we re-run autoconf because we patched a m4 file
-pre-configure:
+pre-configure-modulated:
 	cd $(WORKSRC) && autoconf
 	@$(MAKECOOKIE)
 
