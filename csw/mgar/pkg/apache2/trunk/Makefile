@@ -59,6 +59,8 @@ PACKAGES += CSWap2worker CSWapache2-utils
 # as various things depend on them currently
 PACKAGES += CSWap2prefork CSWapache2rt CSWapache2c
 
+BUILD_DEP_PKGS += CSWlibaprutil-dev
+
 OBSOLETED_BY_CSWapache2-dev = CSWapache2-devel
 
 ARCHALL_CSWapache2-manual = 1
