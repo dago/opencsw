@@ -15,6 +15,7 @@
 NAME = openssl
 VERSION = 1.0.0c
 CATEGORIES = lib
+SONAME=$(shell echo $(VERSION) | tr -d '[a-z]')
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS
 define BLURB
@@ -85,9 +86,12 @@ CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += file-with-bad-content|/usr/local|root/opt/c
 CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/CHANGES
 CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/FAQ
 CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/INSTALL
-CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/ca.1
+
+# We share /opt/csw/lib/ssl
+CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += missing-dependency|CSWosslrt
 
 
+include checkpkg.overrides
 
 ###### Upstream and opencsw files information #######
 
@@ -139,6 +143,8 @@ libdir = /opt/csw/lib
 # we include *.a files in the devel package so we don't want them excluded
 MERGE_EXCLUDE_STATICLIBS = 
 
+EXTRA_MERGE_DIRS_isa-$(ISA) = /opt/csw/lib/engines/
+
 # The corresponding os/compiler to pass to the
 # openssl Configure script
 i386_OS_COMPILER 	= solaris-x86-cc
@@ -158,8 +164,6 @@ CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefi
 # For now we want the sun perl to be used
 CONFIGURE_ENV += PERL="/usr/bin/perl"
 
-# We export the soname to the configure script 
-CONFIGURE_ENV += SONAME=$(shell echo $(VERSION) | )
 
 # Some optimization
 EXT_CFLAGS   += -mt -xstrconst
@@ -213,5 +217,14 @@ remove-generic-so-files:
 	gfind $(PKGROOT)/$(libdir) -name "libcrypto.so" -exec rm '{}' ';'
 	gfind $(PKGROOT)/$(libdir) -name "libssl.so" -exec rm '{}' ';'
 
+move-engines-libraries:
+	for ISA in "" $(EXTRA_BUILD_ISAS_$(GARCH)); do \
+		ginstall -d "$(PKGROOT)/$(libdir)/openssl-$(SONAME)/engines/$$ISA"; \
+		( cd $(PKGROOT)/$(libdir)/engines/$$ISA; \
+		  for FILE in *; do \
+			[ -f "$$FILE" ] || continue; \
+			mv "$$FILE" $(SONAME)/; \
+		  done ); \
+	done
 
-pre-package: install-certs install-changelog install-doc remove-generic-so-files
+pre-package: install-certs install-changelog install-doc remove-generic-so-files move-engines-libraries
