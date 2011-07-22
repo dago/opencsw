@@ -80,8 +80,8 @@ MIGRATE_FILES_CSWlftp = lftp.conf
 # We build solaris 10 specific version to be able to enable
 # ipv6 support on these platforms
 # see http://wiki.opencsw.org/porting-faq#toc14
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386                                        
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386                                        
+#PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # to support shared /opt/csw setup
 # see http://wiki.opencsw.org/shared-opt-csw-setup
