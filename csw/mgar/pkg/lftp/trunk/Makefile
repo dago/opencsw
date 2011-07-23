@@ -22,7 +22,6 @@ define BLURB
 endef
 
 PACKAGES = CSWlftp
-CATALOGNAME_CSWlftp = lftp
 
 RUNTIME_DEP_PKGS = CSWexpat
 RUNTIME_DEP_PKGS += CSWiconv
@@ -30,11 +29,6 @@ RUNTIME_DEP_PKGS += CSWosslrt
 RUNTIME_DEP_PKGS += CSWlibsocks
 RUNTIME_DEP_PKGS += CSWlibintl8
 RUNTIME_DEP_PKGS += CSWlibreadline6
-
-
-# Reference to configuration file default path for configure, can be safely ignored
-CHECKPKG_OVERRIDES_CSWlftp += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/lftp.1
-
 
 ###### Upstream and opencsw files information #######
 
@@ -57,12 +51,10 @@ PATCHFILES += sun_cc_no_restrict.patch
 
 PATCHFILES += dont_use_csw_getopt_h.patch
 
-# Add a --disable-ipv6 option to configure so we can disable ipv6 support
-# under Solaris 9 and workaround "IPV6_V6ONLY symbole missing" issue
-# see http://wiki.opencsw.org/porting-faq#toc14
-#PATCHFILES += disable_ipv6_configure_option.patch
-
-# Disable the use of IPV6_V6ONLY
+# Disable the use of IPV6_V6ONLY function
+# It is not mandatory here, lftp uses the option for the torrent listen socket
+# it opens a socket first for ipv4 then for ipv6, so the ipv6 one will never
+# catch the ipv4 connection even if IPV6_V6ONLY can't be set
 PATCHFILES += 0006-no-ipv6_v6only-setsock-option-under-solaris-9.patch
 
 # sun should not be used as a variable as sun is a macro under Solaris
@@ -72,21 +64,11 @@ PATCHFILES += do_not_use_sun_as_a_variable.patch
 PATCHFILES += sun_len_definition.patch
 
 PRESERVECONF = $(sysconfdir)/lftp.conf
-
 MIGRATE_FILES_CSWlftp = lftp.conf
 
+MERGE_EXCLUDE_FILES  = .*/charset.alias
+
 ##### Build and installation information #####
-
-# We build solaris 10 specific version to be able to enable
-# ipv6 support on these platforms
-# see http://wiki.opencsw.org/porting-faq#toc14
-#PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386                                        
-#PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
-
-# to support shared /opt/csw setup
-# see http://wiki.opencsw.org/shared-opt-csw-setup
-localstatedir   = /var$(prefix)
-sysconfdir      = /etc$(prefix)
 
 # We don't want Sun Studio RPATH entries
 # see http://wiki.opencsw.org/checkpkg-error-tags#bad-rpath-entry
@@ -94,19 +76,16 @@ EXTRA_LINKER_FLAGS = -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
-# Solaris 9 does not have IPV6_V6ONLY.
-# IPv6 support only works on Solaris 10.
-CONFIGURE_ARGS_5.9 = --disable-ipv6
-CONFIGURE_ARGS_5.10 = --enable-ipv6
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL))
-
 # previous maintainer compiled with openssl
 # instead of gnutls, no need to change that
 CONFIGURE_ARGS += --without-gnutls --with-openssl=/opt/csw
 # Requested see https://www.opencsw.org/mantis/view.php?id=4481
 CONFIGURE_ARGS += --with-socksdante
 
+# No test suite here
 TEST_SCRIPTS =
+
+
 
 include gar/category.mk
 
@@ -117,6 +96,5 @@ pre-configure-modulated:
 
 post-merge:
 	@ginstall -D $(DOWNLOADDIR)/changelog.CSW $(PKGROOT)/$(docdir)/lftp/changelog.CSW
-	@rm $(PKGROOT)/$(libdir)/charset.alias
 	@$(MAKECOOKIE)
 
