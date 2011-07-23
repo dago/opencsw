@@ -134,7 +134,11 @@ class OpencswCatalog(object):
   def _GetCatalogData(self, fd):
     catalog_data = []
     for line in fd:
+      if not line.strip(): continue
       if line.startswith("#"): continue
+      if line.startswith("-----BEGIN PGP SIGNED"): continue
+      if line.startswith("Hash: "): continue
+      if line.startswith("-----BEGIN PGP SIGNATURE"): break
       try:
         parsed = self._ParseCatalogLine(line)
         catalog_data.append(parsed)
