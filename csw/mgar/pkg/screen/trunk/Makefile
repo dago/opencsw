@@ -35,7 +35,7 @@ PACKAGES = CSWscreen
 # /tmp/screens|uscreens to /var/opt/csw/run/screens as we changed the
 # screen socket dir path at the same time
 OBSOLETED_BY_CSWscreen = CSWscrn
-CATALOG_NAME_CSWscrn = screen_stub
+CATALOGNAME_CSWscrn = screen_stub
 DISTFILES += CSWscrn.postinstall
 
 SPKG_DESC_CSWscreen = A window manager that multiplexes a physical terminal.
