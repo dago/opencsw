@@ -69,7 +69,7 @@ PATCHFILES += 0007-update-configuration-files-paths-in-documentation.patch
 PRESERVECONF = $(sysconfdir)/lftp.conf
 MIGRATE_FILES_CSWlftp = lftp.conf
 
-MERGE_EXCLUDE_FILES  = .*/charset.alias
+EXTRA_MERGE_EXCLUDE_FILES  = .*/charset.alias
 
 ##### Build and installation information #####
 
