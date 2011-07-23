@@ -1,0 +1,24 @@
+From 4dcd1af03e96e63ea860b8da1a3845f94c85b4a0 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Fri, 22 Jul 2011 23:26:04 +0200
+Subject: [PATCH] no ipv6_v6only setsock option under solaris 9
+
+---
+ src/network.cc |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/network.cc b/src/network.cc
+index fc7b407..e5af45a 100644
+--- a/src/network.cc
++++ b/src/network.cc
+@@ -285,7 +285,7 @@ int Networker::SocketAccept(int fd,sockaddr_u *u,const char *hostname)
+ 
+ void Networker::SocketSinglePF(int s,int pf)
+ {
+-#if INET6
++#if INET6 && IPV6_V6ONLY
+    if(pf==PF_INET6) {
+       int on = 1;
+       if(-1==setsockopt(s, IPPROTO_IPV6, IPV6_V6ONLY, (char *)&on, sizeof(on)))
+-- 
+1.7.6

@@ -63,6 +63,9 @@ PATCHFILES += do_not_use_sun_as_a_variable.patch
 # SUN_LEN macro is not defined under Solaris
 PATCHFILES += sun_len_definition.patch
 
+# Update the system-wide lftp.conf path in the man page
+PATCHFILES += 0007-update-configuration-files-paths-in-documentation.patch
+
 PRESERVECONF = $(sysconfdir)/lftp.conf
 MIGRATE_FILES_CSWlftp = lftp.conf
 
