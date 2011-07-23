@@ -1,25 +1,30 @@
-From cf77aa35548cfa9399165f7363270b051e813a51 Mon Sep 17 00:00:00 2001
+From 0a48a2ff1a544085c65c1ff9692c89027b702aea Mon Sep 17 00:00:00 2001
 From: Yann Rouillard <yann@pleiades.fr.eu.org>
-Date: Sat, 23 Jul 2011 02:01:55 +0200
-Subject: [PATCH] update configuration files paths in documentation files
+Date: Sat, 23 Jul 2011 02:57:32 +0200
+Subject: [PATCH] toto:
 
 ---
- doc/lftp.1 |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ doc/lftp.1 |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/doc/lftp.1 b/doc/lftp.1
-index 3446281..5232795 100644
+index 3446281..139f565 100644
 --- a/doc/lftp.1
 +++ b/doc/lftp.1
-@@ -1963,7 +1963,7 @@ used to set initial color:dir-colors variable.
+@@ -1963,11 +1963,8 @@ used to set initial color:dir-colors variable.
  
  .SH FILES
  .TP
 -.I "/etc/lftp.conf"
+-system-wide startup file. Actual location depends on \-\-sysconfdir
+-configure option. It is \fI/etc\fR when prefix is \fI/usr\fR,
+-\fI/usr/local/etc\fR by default.
+-
 +.I "/etc/opt/csw/lftp.conf"
- system-wide startup file. Actual location depends on \-\-sysconfdir
- configure option. It is \fI/etc\fR when prefix is \fI/usr\fR,
- \fI/usr/local/etc\fR by default.
++system-wide startup file.
+ .TP
+ .I "~/.lftp/rc," "~/.lftprc"
+ These files are executed on lftp startup after \fI/etc/lftp.conf\fR.
 -- 
 1.7.6
 
