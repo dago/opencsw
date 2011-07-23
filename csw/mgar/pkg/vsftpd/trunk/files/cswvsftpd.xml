@@ -38,7 +38,7 @@ Modified for CSWvsftpd by Yann Rouillard 05/06
 				restart_on='refresh'
 				type='path'>
 				<service_fmri
-					value='file://localhost/opt/csw/etc/vsftpd/vsftpd.conf' />
+					value='file://localhost/etc/opt/csw/vsftpd/vsftpd.conf' />
 			</dependency>
 
 			<dependent
