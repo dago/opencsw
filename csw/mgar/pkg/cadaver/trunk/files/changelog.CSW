@@ -1,5 +1,6 @@
 cadaver (0.23.3,rev=2011.07.18) unstable
 
+  * Renamed package from CSWcadav to CSWcadaver
   * Updated dependancies names:
   	CSWgettextrt -> CSWlibintl8
 	CSWreadline -> CSWlibreadline6
