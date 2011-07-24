@@ -29,8 +29,8 @@ RUNTIME_DEP_PKGS = CSWosslrt
 RUNTIME_DEP_PKGS += CSWlibintl8
 RUNTIME_DEP_PKGS += CSWlibneon27
 RUNTIME_DEP_PKGS += CSWlibreadline6
+RUNTIME_DEP_PKGS += CSWlibexpat1
 RUNTIME_DEP_PKGS += CSWzlib
-RUNTIME_DEP_PKGS += CSWexpat
 
 # We will not fix this today
 CHECKPKG_OVERRIDES_CSWcadav += catalogname-does-not-match-pkgname|pkgname=CSWcadav|catalogname=cadaver|expected-catalogname=cadav

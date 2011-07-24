@@ -4,6 +4,7 @@ cadaver (0.23.3,rev=2011.07.18) unstable
   	CSWgettextrt -> CSWlibintl8
 	CSWreadline -> CSWlibreadline6
 	CSWneon -> CSWlibneon27
+	CSWexpat -> CSWlibexpat1
   * Removed unnecessary gnutls dependancy.
   * [GAR] Switched to dynamic prototype.
 
