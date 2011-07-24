@@ -1,3 +1,17 @@
+From 19481ff83894faf3b114dd7c460be7ca2b8dcea2 Mon Sep 17 00:00:00 2001
+From: Yann Rouillard <yann@pleiades.fr.eu.org>
+Date: Sun, 24 Jul 2011 02:18:21 +0200
+Subject: [PATCH] Make engines directory soname dependant
+
+---
+ Configure               |    2 +-
+ Makefile.org            |    3 ++-
+ engines/Makefile        |   10 +++++-----
+ engines/ccgost/Makefile |    8 ++++----
+ 4 files changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/Configure b/Configure
+index 17b3648..f7e2e0e 100755
 --- a/Configure
 +++ b/Configure
 @@ -1690,7 +1690,7 @@ while (<IN>)
@@ -9,3 +23,80 @@
  		$foo =~ s/\\/\\\\/g;
  		print OUT "#define ENGINESDIR \"$foo\"\n";
  		}
+diff --git a/Makefile.org b/Makefile.org
+index fb0af7e..c9edd8f 100644
+--- a/Makefile.org
++++ b/Makefile.org
+@@ -194,6 +194,7 @@ BUILDENV=	PLATFORM='$(PLATFORM)' PROCESSOR='$(PROCESSOR)' \
+ 		ZLIB_INCLUDE='$(ZLIB_INCLUDE)' LIBZLIB='$(LIBZLIB)'	\
+ 		EXE_EXT='$(EXE_EXT)' SHARED_LIBS='$(SHARED_LIBS)'	\
+ 		SHLIB_EXT='$(SHLIB_EXT)' SHLIB_TARGET='$(SHLIB_TARGET)'	\
++		SHLIB_VERSION_NUMBER='$(SHLIB_VERSION_NUMBER)'  \
+ 		PEX_LIBS='$(PEX_LIBS)' EX_LIBS='$(EX_LIBS)'	\
+ 		CPUID_OBJ='$(CPUID_OBJ)'			\
+ 		BN_ASM='$(BN_ASM)' DES_ENC='$(DES_ENC)' 	\
+@@ -497,7 +498,7 @@ install: all install_docs install_sw
+ install_sw:
+ 	@$(PERL) $(TOP)/util/mkdir-p.pl $(INSTALL_PREFIX)$(INSTALLTOP)/bin \
+ 		$(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR) \
+-		$(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines \
++		$(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines \
+ 		$(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/pkgconfig \
+ 		$(INSTALL_PREFIX)$(INSTALLTOP)/include/openssl \
+ 		$(INSTALL_PREFIX)$(OPENSSLDIR)/misc \
+diff --git a/engines/Makefile b/engines/Makefile
+index 2fa9534..16554ea 100644
+--- a/engines/Makefile
++++ b/engines/Makefile
+@@ -107,7 +107,7 @@ install:
+ 	@[ -n "$(INSTALLTOP)" ] # should be set by top Makefile...
+ 	@if [ -n "$(SHARED_LIBS)" ]; then \
+ 		set -e; \
+-		$(PERL) $(TOP)/util/mkdir-p.pl $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines; \
++		$(PERL) $(TOP)/util/mkdir-p.pl $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines; \
+ 		for l in $(LIBNAMES); do \
+ 			( echo installing $$l; \
+ 			  pfx=lib; \
+@@ -119,13 +119,13 @@ install:
+ 				*DSO_WIN32*)	sfx="eay32.dll"; pfx=;;	\
+ 				*)		sfx=".bad";;	\
+ 				esac; \
+-				cp $$pfx$$l$$sfx $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$$pfx$$l$$sfx.new; \
++				cp $$pfx$$l$$sfx $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines/$$pfx$$l$$sfx.new; \
+ 			  else \
+ 				sfx=".so"; \
+-				cp cyg$$l.dll $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$$pfx$$l$$sfx.new; \
++				cp cyg$$l.dll $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines/$$pfx$$l$$sfx.new; \
+ 			  fi; \
+-			  chmod 555 $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$$pfx$$l$$sfx.new; \
+-			  mv -f $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$$pfx$$l$$sfx.new $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$$pfx$$l$$sfx ); \
++			  chmod 555 $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines/$$pfx$$l$$sfx.new; \
++			  mv -f $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines/$$pfx$$l$$sfx.new $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines/$$pfx$$l$$sfx ); \
+ 		done; \
+ 	fi
+ 	@target=install; $(RECURSIVE_MAKE)
+diff --git a/engines/ccgost/Makefile b/engines/ccgost/Makefile
+index dadb523..e71e6f5 100644
+--- a/engines/ccgost/Makefile
++++ b/engines/ccgost/Makefile
+@@ -53,13 +53,13 @@ install:
+ 			*DSO_WIN32*) sfx="eay32.dll"; pfx=;; \
+ 			*) sfx=".bad";; \
+ 			esac; \
+-			cp $${pfx}$(LIBNAME)$$sfx $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$${pfx}$(LIBNAME)$$sfx.new; \
++			cp $${pfx}$(LIBNAME)$$sfx $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines/$${pfx}$(LIBNAME)$$sfx.new; \
+ 		else \
+ 			sfx=".so"; \
+-			cp cyg$(LIBNAME).dll $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$${pfx}$(LIBNAME)$$sfx.new; \
++			cp cyg$(LIBNAME).dll $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines/$${pfx}$(LIBNAME)$$sfx.new; \
+ 		fi; \
+-		chmod 555 $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$${pfx}$(LIBNAME)$$sfx.new; \
+-		mv -f $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$${pfx}$(LIBNAME)$$sfx.new $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines/$${pfx}$(LIBNAME)$$sfx; \
++		chmod 555 $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines/$${pfx}$(LIBNAME)$$sfx.new; \
++		mv -f $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines/$${pfx}$(LIBNAME)$$sfx.new $(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/openssl-$(SHLIB_VERSION_NUMBER)/engines/$${pfx}$(LIBNAME)$$sfx; \
+ 	fi
+ 
+ links:
+-- 
+1.7.6
+

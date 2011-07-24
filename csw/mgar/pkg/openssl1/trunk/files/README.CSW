@@ -18,6 +18,3 @@ With this package, you can configure which CA are considered valid and add
 new certificates.
 See /opt/csw/share/doc/ca_certificates/README.CSW for more details.
 
-For comptability purpose, the openssl_rt package depends on the ca_certificates 
-packages
-

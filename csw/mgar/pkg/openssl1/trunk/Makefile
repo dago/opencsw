@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = openssl
-VERSION = 1.0.0c
+VERSION = 1.0.0d
 CATEGORIES = lib
 SONAME=$(shell echo $(VERSION) | tr -d '[a-z]')
 
@@ -27,35 +27,27 @@ endef
 
 PACKAGES = CSWlibssl1-0-0 CSWlibssl1-0-0-devel CSWopenssl1-utils
 
-CATALOGNAME_CSWlibssl1-0-0 = libssl1_0_0
-RUNTIME_DEP_PKGS_CSWlibssl1-0-0 = CSWcacertificates
 SPKG_DESC_CSWlibssl1-0-0 = Openssl 1.0 runtime libraries
 PKGFILES_CSWlibssl1-0-0 = $(libdir).*\.so(\.\d+)*
-PKGFILES_CSWlibssl1-0-0 += $(sysconfdir)/etc/ssl/private $(prefix)/ssl/private $(prefix)/ssl/certs /etc/$(prefix)/ssl/private
+PKGFILES_CSWlibssl1-0-0 += $(prefix)/etc/ssl/private $(prefix)/etc/ssl/certs 
 PKGFILES_CSWlibssl1-0-0 += $(docdir)/libssl1_0_0/.* 
 
-CATALOGNAME_CSWlibssl1-0-0-devel = libssl1_0_0_devel
 RUNTIME_DEP_PKGS_CSWlibssl1-0-0-devel = CSWlibssl1-0-0
 SPKG_DESC_CSWlibssl1-0-0-devel = Openssl 1.0 development support files
 PKGFILES_CSWlibssl1-0-0-devel = $(PKGFILES_DEVEL) 
 PKGFILES_CSWlibssl1-0-0-devel += $(docdir)/libssl1_0_0_devel/.*
 
-CATALOGNAME_CSWopenssl1-utils = openssl1_utils
 RUNTIME_DEP_PKGS_CSWopenssl1-utils = CSWlibssl1-0-0
 SPKG_DESC_CSWopenssl1-utils = Openssl 1.0 binaries and related tools
-SPKG_CLASSES_CSWopenssl1-utils = none cswpreserveconf
 PKGFILES_CSWopenssl1-utils = $(bindir)/[^/]* $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.* 
 PKGFILES_CSWopenssl1-utils += $(prefix)/ssl/misc/.* 
-PKGFILES_CSWopenssl1-utils += $(prefix)/ssl/openssl\.cnf $(sysconfdir)/ssl/openssl\.cnf.*
+PKGFILES_CSWopenssl1-utils += $(prefix)/etc/ssl/openssl\.cnf.*
 PKGFILES_CSWopenssl1-utils += $(docdir)/openssl1_utils/.*
 
-
-PRESERVECONF = $(sysconfdir)/ssl/openssl.cnf
+PRESERVECONF = $(prefix)/etc/ssl/openssl.cnf
 
 # We use SUN perl, not the opencsw one
 CHECKPKG_OVERRIDES_CSWopenssl1-utils += missing-dependency|CSWperl
-
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += surplus-dependency|CSWcacertificates
 
 # We ship the .a files in the devel package
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
@@ -87,18 +79,11 @@ CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/op
 CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/FAQ
 CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/INSTALL
 
-# We share /opt/csw/lib/ssl
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += missing-dependency|CSWosslrt
-
-
 include checkpkg.overrides
 
 ###### Upstream and opencsw files information #######
 
-MASTER_SITES = http://www.openssl.org/source/ http://openssl.org/news/
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*[a-z]?).tar.gz
+MASTER_SITES = http://www.openssl.org/source/
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
 DISTFILES += CSWlibssl1-0-0.checkinstall CSWlibssl1-0-0.preinstall CSWlibssl1-0-0.postinstall
@@ -109,11 +94,6 @@ DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS R
 # This patch add optimised build targets for some solaris isa, ie:
 # solaris-pentium_pro-cc and solaris-sparcv9+vis-cc
 PATCHFILES = more_configure_targets.patch
-
-# Since 1.0.0, openssl tries to install x64 libraries in $(prefix)/64 directory
-# we prefer to rely on gar system to take of this so we remove this using this
-# patch
-PATCHFILES += dont_use_slash_64_directory.patch
 
 #PATCHFILES += fix-test-failure.patch
 
@@ -134,16 +114,11 @@ LICENSE = LICENSE
 EXTRA_BUILD_ISAS_i386 = pentium_pro amd64
 EXTRA_BUILD_ISAS_sparc = sparcv8plus+vis sparcv9
 
-# GAR wants and puts sparcv9 in lib/64 but openssl build system
-# isn't the standard autoconf/automake one so we disable this
-# relocation for now
-ISALIBDIR_sparcv9 = .
-libdir = /opt/csw/lib
-
 # we include *.a files in the devel package so we don't want them excluded
 MERGE_EXCLUDE_STATICLIBS = 
 
-EXTRA_MERGE_DIRS_isa-$(ISA) = /opt/csw/lib/engines/
+# No .so files in libraries
+EXTRA_MERGE_EXCLUDE_FILES = .*/libcrypto.so .*/libssl.so
 
 # The corresponding os/compiler to pass to the
 # openssl Configure script
@@ -157,13 +132,12 @@ sparcv8plus_OS_COMPILER		= solaris-sparcv9-cc
 sparcv8plus+vis_OS_COMPILER	= solaris-sparcv9+vis-cc
 sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
 
-CONFIGURE_ARGS = --prefix=$(prefix) shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
+CONFIGURE_ARGS = --prefix=$(prefix) --openssldir=$(prefix)/etc/ssl shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
 
 # We want the csw perl to be used
 #CONFIGURE_ENV += PERL="/opt/csw/bin/perl"
 # For now we want the sun perl to be used
 CONFIGURE_ENV += PERL="/usr/bin/perl"
-
 
 # Some optimization
 EXT_CFLAGS   += -mt -xstrconst
@@ -177,54 +151,17 @@ TEST_SCRIPTS =
 
 include gar/category.mk
 
-
 pre-configure-modulated:
 	echo " ==> Creating configure script"
 	cd $(WORKSRC) && ln -nf Configure configure
 	@$(MAKECOOKIE)
 
-# we remove every debug information except symbol table
-# (should rather be done in the gar scripts)
-post-install-modulated:
-	echo " ==> Stripping libraries"
-	chmod -R u+w $(DESTDIR)$(libdir)
-	find $(DESTDIR)$(libdir) -name "*.so*" -exec strip -x '{}' ';'
-
-install-changelog:
-	for CATALOGNAME in $(foreach PKG, $(PACKAGES), $(call catalogname,$(PKG))); do \
-		ginstall -D $(WORKDIR_FIRSTMOD)/changelog.CSW $(PKGROOT)/$(docdir)/$$CATALOGNAME/changelog.CSW; \
-	done	
-	@$(MAKECOOKIE)
-
-install-doc:
+merge-doc:
 	for CATALOGNAME in $(foreach PKG, $(PACKAGES), $(call catalogname,$(PKG))); do \
 		ginstall -d $(PKGROOT)/$(docdir)/$$CATALOGNAME; \
+		(cd $(DOWNLOADDIR)/ && ginstall README.CSW changelog.CSW $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
 		(cd $(WORKSRC_FIRSTMOD)/ && ginstall $(DOCFILES) $(PKGROOT)/$(docdir)/$$CATALOGNAME/); \
-		ginstall -D $(WORKDIR_FIRSTMOD)/README.CSW $(PKGROOT)/$(docdir)/$$CATALOGNAME/README.CSW; \
 	done
 	@$(MAKECOOKIE)
 
-install-certs: 
-	[ ! -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] || \
-		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW
-	ginstall -d $(PKGROOT)/etc/$(prefix)/ssl/private
-	rm -rf $(PKGROOT)/$(prefix)/ssl/openssl.cnf && ln -s ../etc/ssl/openssl.cnf $(PKGROOT)/$(prefix)/ssl/openssl.cnf
-	rm -rf $(PKGROOT)/$(prefix)/ssl/certs && ln -s ../etc/ssl/certs $(PKGROOT)/$(prefix)/ssl/certs
-	rm -rf $(PKGROOT)/$(prefix)/ssl/private && ln -s ../../../etc/opt/csw/ssl/private $(PKGROOT)/$(prefix)/ssl/private
-	@$(MAKECOOKIE)
-
-remove-generic-so-files:
-	gfind $(PKGROOT)/$(libdir) -name "libcrypto.so" -exec rm '{}' ';'
-	gfind $(PKGROOT)/$(libdir) -name "libssl.so" -exec rm '{}' ';'
-
-move-engines-libraries:
-	for ISA in "" $(EXTRA_BUILD_ISAS_$(GARCH)); do \
-		ginstall -d "$(PKGROOT)/$(libdir)/openssl-$(SONAME)/engines/$$ISA"; \
-		( cd $(PKGROOT)/$(libdir)/engines/$$ISA; \
-		  for FILE in *; do \
-			[ -f "$$FILE" ] || continue; \
-			mv "$$FILE" $(SONAME)/; \
-		  done ); \
-	done
-
-pre-package: install-certs install-changelog install-doc remove-generic-so-files move-engines-libraries
+post-merge: merge-doc 
