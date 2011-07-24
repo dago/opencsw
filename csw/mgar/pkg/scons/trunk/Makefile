@@ -1,5 +1,5 @@
 NAME = scons
-VERSION = 1.3.1
+VERSION = 2.0.1
 CATEGORIES = python
 
 DESCRIPTION = A next-generation build tool
