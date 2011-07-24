@@ -134,8 +134,6 @@ sparcv9_OS_COMPILER		= solaris64-sparcv9-cc
 
 CONFIGURE_ARGS = --prefix=$(prefix) --openssldir=$(prefix)/etc/ssl shared $($(ISA)_OS_COMPILER) --install_prefix=$(DESTDIR)
 
-# We want the csw perl to be used
-#CONFIGURE_ENV += PERL="/opt/csw/bin/perl"
 # For now we want the sun perl to be used
 CONFIGURE_ENV += PERL="/usr/bin/perl"
 
@@ -146,6 +144,9 @@ EXT_CXXFLAGS += -noex -mt
 # By default, the install target put man pages under
 # /opt/csw/ssl/man, but we want them under /opt/csw/share/man
 INSTALL_ARGS += MANDIR=$(mandir)
+
+# library files are not automatically stripped
+STRIP_DIRS = $(DESTDIR)/$(libdir) $(DESTDIR)/$(libdir)/openssl-$(SONAME)/engines/
 
 TEST_SCRIPTS = 
 
