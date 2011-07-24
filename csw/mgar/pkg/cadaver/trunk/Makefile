@@ -22,8 +22,7 @@ define BLURB
  operations (copy/move), collection deletion/creation, property manipulation, and locking operations.
 endef
 
-PACKAGES = CSWcadav
-CATALOGNAME_CSWcadav = cadaver
+PACKAGES = CSWcadaver
 
 RUNTIME_DEP_PKGS = CSWosslrt 
 RUNTIME_DEP_PKGS += CSWlibintl8
@@ -32,17 +31,18 @@ RUNTIME_DEP_PKGS += CSWlibreadline6
 RUNTIME_DEP_PKGS += CSWlibexpat1
 RUNTIME_DEP_PKGS += CSWzlib
 
-# We will not fix this today
-CHECKPKG_OVERRIDES_CSWcadav += catalogname-does-not-match-pkgname|pkgname=CSWcadav|catalogname=cadaver|expected-catalogname=cadav
+# Stub package that allow us to rename transparently the package
+# from CSWcadav to CSWcadaver
+OBSOLETED_BY_CSWcadaver = CSWcadav
+CATALOGNAME_CSWcadav = cadaver_stub
+
 
 ###### Upstream and opencsw files information #######
 
 MASTER_SITES = http://www.webdav.org/cadaver/
-UPSTREAM_MASTER_SITES = http://www.webdav.org/cadaver/
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += changelog.CSW
-
 
 ##### Build and installation information #####
 
