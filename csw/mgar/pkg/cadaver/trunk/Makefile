@@ -23,6 +23,7 @@ define BLURB
 endef
 
 PACKAGES = CSWcadaver
+SPKG_DESC_CSWcadaver = $(DESCRIPTION)
 
 RUNTIME_DEP_PKGS = CSWosslrt 
 RUNTIME_DEP_PKGS += CSWlibintl8
