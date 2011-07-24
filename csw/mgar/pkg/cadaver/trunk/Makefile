@@ -25,12 +25,12 @@ endef
 PACKAGES = CSWcadaver
 SPKG_DESC_CSWcadaver = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS = CSWosslrt 
-RUNTIME_DEP_PKGS += CSWlibintl8
-RUNTIME_DEP_PKGS += CSWlibneon27
-RUNTIME_DEP_PKGS += CSWlibreadline6
-RUNTIME_DEP_PKGS += CSWlibexpat1
-RUNTIME_DEP_PKGS += CSWzlib
+RUNTIME_DEP_PKGS_CSWcadaver = CSWosslrt 
+RUNTIME_DEP_PKGS_CSWcadaver += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWcadaver += CSWlibneon27
+RUNTIME_DEP_PKGS_CSWcadaver += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWcadaver += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWcadaver += CSWzlib
 
 # Stub package that allow us to rename transparently the package
 # from CSWcadav to CSWcadaver
