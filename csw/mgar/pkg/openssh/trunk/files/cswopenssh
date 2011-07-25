@@ -17,15 +17,12 @@ PIDFILE=/var/run/cswsshd.pid
 case $1 in 
 'start')
         if [ -x /opt/csw/bin/ssh-keygen ]; then
-                if [ ! -f "$KEYDIR/ssh_host_rsa_key" ]; then
-                        echo "Creating new RSA public/private host key pair"
-                        ssh-keygen -f $KEYDIR/ssh_host_rsa_key -t rsa -N ''
-                fi
-
-                if [ ! -f "$KEYDIR/ssh_host_dsa_key" ]; then
-                        echo "Creating new DSA public/private host key pair"
-                        ssh-keygen -f $KEYDIR/ssh_host_dsa_key -t dsa -N ''
-                fi     
+		for ALGO in rsa dsa ecdsa; do
+			if [ ! -f "$KEYDIR/ssh_host_${ALGO}_key" ]; then
+				echo "Creating new ${ALGO} public/private host key pair"
+				ssh-keygen -f $KEYDIR/ssh_host_${ALGO}_key -t rsa -N ''
+			fi
+		done
         fi
 
         [ -x /opt/csw/sbin/sshd ] && [ -f /etc/opt/csw/ssh/sshd_config ] && /opt/csw/sbin/sshd &
