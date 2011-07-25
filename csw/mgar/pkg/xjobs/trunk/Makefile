@@ -1,5 +1,5 @@
 NAME = xjobs
-VERSION = 20100915
+VERSION = 20110724
 CATEGORIES = utils
 
 DESCRIPTION = Executes jobs in parallel similar to xargs
@@ -15,16 +15,13 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.maier-komor.de/xjobs/
-DISTFILES  = $(NAME)-$(VERSION).tgz
+DISTFILES  = $(DISTNAME).tgz
 
-SPKG_SOURCEURL = http://www.maier-komor.de/xjobs.html
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
-
-CONFIGURE_ARGS = $(DIRPATHS)
+VENDOR_URL = http://www.maier-komor.de/xjobs.html
 
 # No tests available
 TEST_SCRIPTS =
+
+INSTALL_OVERRIDE_DIRS = bindir mandir
 
 include gar/category.mk
