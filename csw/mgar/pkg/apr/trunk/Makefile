@@ -28,18 +28,17 @@ LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 BUILD64 = 1
+NOISALIST = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-other-child
-CONFIGURE_ARGS += --with-installbuilddir=$(datadir)/$(MM_BINDIR)/build-1
+CONFIGURE_ARGS += --with-installbuilddir=$(libexecdir)/apr/build-1
 
-MERGEBASE_/opt/csw/share/sparcv9 = $(datadir)
-MERGEBASE_/opt/csw/share/amd64= $(datadir)
-EXTRA_MERGE_DIRS_isa-extra = $(abspath $(datadir)/$(MM_BINDIR))
+EXTRA_MERGE_DIRS_isa-extra = $(libexecdir)
 
 include gar/category.mk
 
 post-install-modulated:
 	perl -pi -e 's,/usr/local/lib,$(libdir),g' \
-		$(DESTDIR)$(datadir)/$(MM_BINDIR)/build-1/libtool
+		$(DESTDIR)$(libexecdir)/apr/build-1/libtool
