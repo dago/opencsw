@@ -1,0 +1,11 @@
+
+This program is in the Public Domain.
+
+ACKNOWLEDGMENTS
+
+Rahul Dhesi  wrote the  'zoo' archiver and the  'booz' archive extractor.
+Haruhiko Okumura  wrote the  LZH code (originally for his 'ar' archiver).
+David Schwaderer provided the CRC-16 calculation in PC Tech Journal 4/85.
+Jeff Damens  wrote the name match code in 'booz' (originally for Kermit).
+Harald Boegeholz  ported 'unzoo' to OS/2 with the emx development system.
+Dave Bayer ported 'unzoo' to the Macintosh,  including Macbinary support.
