@@ -1,0 +1,27 @@
+From 0d6eca6feaade2c8c3d02b1b67585e1f1569bb22 Mon Sep 17 00:00:00 2001
+From: Peter Bonivart <bonivart@opencsw.org>
+Date: Thu, 28 Jul 2011 16:22:43 +0200
+Subject: [PATCH] use-bash-for-tests
+
+---
+ tests/runtests.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/tests/runtests.sh b/tests/runtests.sh
+index d7b1b95..f78d672 100755
+--- a/tests/runtests.sh
++++ b/tests/runtests.sh
+@@ -1,7 +1,8 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ rm -rf test-results trash-directory*
+ 
++PATH=/opt/csw/gnu:$PATH
+-SHELL_PATH="/bin/sh"
++SHELL_PATH="/opt/csw/bin/bash"
+
+ uname_s=$(uname -s)
+ case "${uname_s}" in
+-- 
+1.7.6
+
