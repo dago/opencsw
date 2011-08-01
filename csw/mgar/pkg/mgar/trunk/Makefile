@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = mgar
-VERSION = 0.91
+VERSION = 0.92
 CATEGORIES = apps
 
 DESCRIPTION = Command line interface to the OpenCSW build system
