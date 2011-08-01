@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = gmp
 VERSION = 5.0.1
 CATEGORIES = lib
@@ -21,9 +23,6 @@ MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 SPKG_SOURCEURL = http://gmplib.org/
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 #GARCOMPILER = GCC4
 BUILD64 = 1
