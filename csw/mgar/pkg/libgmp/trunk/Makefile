@@ -73,9 +73,6 @@ RUNTIME_DEP_PKGS_CSWlibgmp-dev = CSWlibgmp10
 
 #RUNTIME_DEP_PKGS = CSWgcc4corert
 
-# We have collisions with legacy CSWlibgmp until re-release
-CHECKPKG_OVERRIDES_CSWlibgmp-dev += file-collision
-
 # It's only an .info file.
 CHECKPKG_OVERRIDES_CSWlibgmp-dev += file-with-bad-content|/usr/local|root/opt/csw/share/info/gmp.info-1
 
