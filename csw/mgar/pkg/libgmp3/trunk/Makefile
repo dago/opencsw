@@ -59,6 +59,13 @@ PKGFILES_CSWlibgmp = $(call baseisadirs,$(libdir),libgmp\.so\.3(\.\d+)*)
 # This is a legacy package, tolerate the wrong name until this is obsoleted
 CHECKPKG_OVERRIDES_CSWlibgmp += shared-lib-pkgname-mismatch
 
+PACKAGES += CSWlibgmp-dev
+CATALOGNAME_CSWlibgmp-dev = libgmp_dev
+SPKG_DESC_CSWlibgmp-dev = GNU Multiple Precision Arithmetic Library, development files
+RUNTIME_DEP_PKGS_CSWlibgmp-dev += CSWlibgmp
+# /usr/local mentioned content in .info file.
+CHECKPKG_OVERRIDES_CSWlibgmp-dev += file-with-bad-content|/usr/local|root/opt/csw/share/info/gmp.info-1
+
 RUNTIME_DEP_PKGS = CSWgcc4corert
 
 include gar/category.mk
