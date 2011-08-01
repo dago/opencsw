@@ -1,3 +1,4 @@
+# $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = mgar
@@ -11,7 +12,7 @@ endef
 
 VENDOR_URL = http://gar.opencsw.org
 SVNROOT    = https://opencsw.svn.sourceforge.net/svnroot/opencsw/gar-wrapper
-SVNREV     = 360
+SVNREV     = 380
 
 ARCHALL = 1
 
