@@ -21,7 +21,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 # It also requires the files /opt/csw/src/config/mkinstalldirs
 # and /opt/csw/src/config/installFile.tcl to be present.
 # (location is specified using --with-itcl)
-CONFIGURE_ARGS = $(DIRPATHS) --with-itcl=/opt/csw/src
+CONFIGURE_ARGS = $(DIRPATHS) --with-itcl=$(prefix)/src
 
 BUILD_SCRIPTS =
 
