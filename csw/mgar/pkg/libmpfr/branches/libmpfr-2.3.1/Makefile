@@ -3,6 +3,9 @@
 NAME = mpfr
 VERSION = 2.3.1
 CATEGORIES = lib
+GARTYPE = v2
+
+# ! 3 tests are failing, debugging necessary
 
 DESCRIPTION = GNU Multiple Precision floating-point arithmetic library
 define BLURB
@@ -10,7 +13,7 @@ define BLURB
 	computations with correct rounding.
 endef
 
-MASTER_SITES = http://www.mpfr.org/mpfr-current/
+MASTER_SITES = http://www.mpfr.org/mpfr-$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWlibmpfr
