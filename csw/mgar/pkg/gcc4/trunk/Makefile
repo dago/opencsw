@@ -1,6 +1,9 @@
+# $Id$
+
 NAME      = gcc
-VERSION   = 4.5.0
+VERSION   = 4.6.1
 CATEGORIES   = lang
+GARTYPE = v2
 
 DESCRIPTION  = The GNU Compiler Collection
 define BLURB
@@ -11,10 +14,6 @@ endef
 
 DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
-
-# We define upstream file regex so we can be notifed 
-# of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386

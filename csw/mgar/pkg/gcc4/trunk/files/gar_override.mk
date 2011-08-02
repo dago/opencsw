@@ -40,6 +40,6 @@ TEST_SCRIPTS            = skip
 post-configure-modulated: fix-bootflags
 MERGE_SCRIPTS_isa-i386  = amd
 
-## Run checkpkg Manually
-ENABLE_CHECK            = 0
-
+# <maciej> This should not be necessary any more thanks to checkpkg overrides.
+# ## Run checkpkg Manually
+# ENABLE_CHECK            = 0
