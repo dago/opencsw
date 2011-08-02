@@ -1,5 +1,7 @@
+# $Id$
+
 NAME = mpfr
-VERSION = 2.4.2
+VERSION = 3.0.1
 CATEGORIES = lib
 
 DESCRIPTION = GNU Multiple Precision floating-point arithmetic library
@@ -18,10 +20,6 @@ SPKG_SOURCEURL_CSWlibmpfr = http://www.mpfr.org/
 
 RUNTIME_DEP_PKGS_CSWlibmpfr  = 
 #PATCHFILES = patches
-
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 BUILD64 = 1
 STRIP_LIBTOOL = 1
