@@ -25,10 +25,9 @@ TEST_SCRIPTS =
 TEST_TARGET = 
 
 install-custom:
-	( TCL_INSTDIR=$(DESTDIR)/opt/csw/lib/tcl`echo 'puts $$tcl_version' | /opt/csw/bin/tclsh`/$(NAME)$(VERSION) ;\
+	( TCL_INSTDIR=$(DESTDIR)$(libdir)/tcl`echo 'puts $$tcl_version' | $(bindir)/tclsh`/$(NAME)$(VERSION) ;\
 	mkdir -p -m 755 $$TCL_INSTDIR ;\
 	cp -pr $(WORKSRC)/* $$TCL_INSTDIR )
 	$(MAKECOOKIE)
 
 include gar/category.mk
-
