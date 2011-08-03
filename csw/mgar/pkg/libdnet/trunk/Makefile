@@ -5,6 +5,9 @@ CATEGORIES = lib
 GARTYPE = v2
 
 # ! .so extension missing http://code.google.com/p/libdnet/issues/detail?id=18
+# An idea:
+#   http://www.v7w.com/debian/libtool-missing_so.html
+#   http://www.v7w.com/debian/libtool-updating.html
 
 DESCRIPTION = A simplified, portable interface to several low-level networking routines
 define BLURB
