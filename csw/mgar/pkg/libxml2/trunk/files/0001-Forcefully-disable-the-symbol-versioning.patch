@@ -1,0 +1,38 @@
+From 022f9c9f9f02233f175bd6c1d604072b82790c3f Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Wed, 3 Aug 2011 03:28:15 +0200
+Subject: [PATCH] Forcefully disable the symbol versioning
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ configure |   11 +++--------
+ 1 files changed, 3 insertions(+), 8 deletions(-)
+
+diff --git a/configure b/configure
+index 605e8c4..068295c 100755
+--- a/configure
++++ b/configure
+@@ -11410,17 +11410,12 @@ if test "$lt_cv_prog_gnu_ld" = yes; then
+   VERSION_SCRIPT_FLAGS=-Wl,--version-script=
+ else
+   case $host in
+-  *-*-sunos*) VERSION_SCRIPT_FLAGS="-Wl,-M -Wl,";;
++  *-*-sunos*) VERSION_SCRIPT_FLAGS="-Wl,-M";;
+   esac
+ fi
+ 
+- if test -z "$VERSION_SCRIPT_FLAGS"; then
+-  USE_VERSION_SCRIPT_TRUE=
+-  USE_VERSION_SCRIPT_FALSE='#'
+-else
+-  USE_VERSION_SCRIPT_TRUE='#'
+-  USE_VERSION_SCRIPT_FALSE=
+-fi
++USE_VERSION_SCRIPT_TRUE='#'
++USE_VERSION_SCRIPT_FALSE=
+ 
+ 
+ 
+-- 
+1.7.6
+
