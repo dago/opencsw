@@ -1307,3 +1307,12 @@ def CheckAlternativesDependency(
     error_mgr.NeedFile(
         "/opt/csw/sbin/alternatives",
         "The alternatives subsystem is used")
+
+
+def CheckSharedLibrarySoExtension(pkg_data, error_mgr, logger, messenger):
+  shared_libs = set(su.GetSharedLibs(pkg_data))
+  for shared_lib in shared_libs:
+    if ".so" not in shared_lib:
+      error_mgr.ReportError(
+          "shared-library-missing-dot-so",
+          "file=%s" % shared_lib)

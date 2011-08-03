@@ -1819,5 +1819,21 @@ class TestCheckAlternativesDependency(CheckpkgUnitTestHelper, unittest.TestCase)
         "The alternatives subsystem is used")
 
 
+class TestCheckSharedLibrarySoExtension(
+    CheckpkgUnitTestHelper, unittest.TestCase):
+  FUNCTION_NAME = 'CheckSharedLibrarySoExtension'
+  def CheckpkgTest(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+
+  def CheckpkgTest2(self):
+    self.pkg_data = copy.deepcopy(neon_stats[0])
+    self.pkg_data["files_metadata"][11]["path"] = "foo.1"
+    self.error_mgr_mock.ReportError(
+        'shared-library-missing-dot-so', 'file=foo.1')
+
+  def testTwo(self):
+    self.RunCheckpkgTest(self.CheckpkgTest2)
+
+
 if __name__ == '__main__':
   unittest.main()
