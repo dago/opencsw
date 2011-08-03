@@ -4,6 +4,8 @@ VERSION = 1.12
 CATEGORIES = lib
 GARTYPE = v2
 
+# ! .so extension missing http://code.google.com/p/libdnet/issues/detail?id=18
+
 DESCRIPTION = A simplified, portable interface to several low-level networking routines
 define BLURB
 endef
