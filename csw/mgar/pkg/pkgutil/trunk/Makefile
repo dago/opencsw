@@ -1,5 +1,5 @@
 NAME = pkgutil
-VERSION = 2.4
+VERSION = 2.5b1
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -9,9 +9,6 @@ define BLURB
 	dependencies so all required packages are installed before the desired 
 	package automatically.
 endef
-
-# Disable inclusion of CSWcommon by default.
-COMMON_PKG_DEPENDS = 
 
 MASTER_SITES = $(SF_MIRRORS)
 #MASTER_SITES = http://sourceforge.net/projects/pkgutil/files/pkgutil/2.4/
@@ -33,6 +30,11 @@ DISTFILES += CSWpkgutil.preremove
 DISTFILES += build_sun_catalog.py
 DISTFILES += opencsw.py
 DISTFILES += cswcatalog
+
+LICENSE = license
+
+# Disable inclusion of CSWcommon by default.
+COMMON_PKG_DEPENDS = 
 
 PACKAGES               = CSWpkgutil
 CATALOGNAME_CSWpkgutil = pkgutil
@@ -98,9 +100,10 @@ install-custom:
 	@ginstall -m 755 $(FILEDIR)/build_sun_catalog.py $(FILEDIR)/opencsw.py $(DESTDIR)/opt/csw/libexec/$(NAME)
 	@ln -s ../libexec/pkgutil/build_sun_catalog.py $(DESTDIR)$(bindir)/build_sun_catalog
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
-	@ginstall -m 444 $(WORKSRC)/readme $(WORKSRC)/license $(DESTDIR)$(docdir)/$(NAME)/
+	@ginstall -m 444 $(WORKSRC)/readme $(DESTDIR)$(docdir)/$(NAME)/
+#	@ginstall -m 444 $(WORKSRC)/license $(DESTDIR)$(docdir)/$(NAME)/
 	@ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)plus
-	@ginstall -m 444 $(WORKSRC)/license $(DESTDIR)$(docdir)/$(NAME)plus/
+#	@ginstall -m 444 $(WORKSRC)/license $(DESTDIR)$(docdir)/$(NAME)plus/
 	@ginstall -m 444 $(WORKSRC)/readme.pkgutilplus $(DESTDIR)$(docdir)/$(NAME)plus/readme
 	@ginstall -m 755 -d $(DESTDIR)$(mandir)/man1
 	@pod2man --section=1 $(WORKSRC)/$(NAME) > $(DESTDIR)$(mandir)/man1/pkgutil.1
