@@ -640,9 +640,16 @@ $(if $(filter-out $(firstword $(SPKG_SPECS)),$(SPKG_SPECS)),\
 	$(foreach P,$(SPKG_SPECS),\
 		$(if $(SPKG_DESC_$(P)),,$(error Multiple packages defined and SPKG_DESC_$(P) is not set.))))
 
+# There was a bug here.
+# http://sourceforge.net/apps/trac/gar/ticket/56
+# The workaround was to add an additional check whether the strings are the
+# same or not.
 $(foreach P,$(SPKG_SPECS),\
   $(foreach Q,$(filter-out $(P) $(OBSOLETED_PKGS),$(SPKG_SPECS)),\
-	$(if $(filter-out $(subst  ,_,$(SPKG_DESC_$(P))),$(subst  ,_,$(SPKG_DESC_$(Q)))),,$(error The package descriptions for $(P) [$(if $(SPKG_DESC_$(P)),$(SPKG_DESC_$(P)),<not set>)] and $(Q) [$(if $(SPKG_DESC_$(Q)),$(SPKG_DESC_$(Q)),<not set>)] are identical.  Please make sure that all descriptions are unique by setting SPKG_DESC_<pkg> for each package.))))
+	$(if $(filter-out $(subst  ,_,$(SPKG_DESC_$(P))),$(subst  ,_,$(SPKG_DESC_$(Q)))),\
+	  ,\
+	  $(if $(shell if [ "$(SPKG_DESC_$(P))" = "$(SPKG_DESC_$(Q))" ]; then echo bad; fi),\
+	    $(error The package descriptions for $(P) [$(if $(SPKG_DESC_$(P)),$(SPKG_DESC_$(P)),<not set>)] and $(Q) [$(if $(SPKG_DESC_$(Q)),$(SPKG_DESC_$(Q)),<not set>)] are identical.  Please make sure that all descriptions are unique by setting SPKG_DESC_<pkg> for each package.),))))
 
 .PRECIOUS: $(WORKDIR)/%.pkginfo
 
