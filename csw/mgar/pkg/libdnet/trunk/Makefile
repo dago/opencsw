@@ -22,6 +22,13 @@ LICENSE = LICENSE
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
+PATCHFILES  = 0001-Using-the-m4-subdirectory-for-macros.patch
+PATCHFILES += 0002-Moved-acinclude.m4-to-the-m4-directory.patch
+
 MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
+
+pre-configure-modulated:
+	(cd $(WORKSRC) && autoreconf -fi)
+	@$(MAKECOOKIE)
