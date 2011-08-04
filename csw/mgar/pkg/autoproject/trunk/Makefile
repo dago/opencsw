@@ -23,13 +23,17 @@ SPKG_SOURCEURL = http://packages.debian.org/unstable/devel/autoproject
 MASTER_SITES = http://ftp.de.debian.org/debian/pool/main/a/$(NAME)/
 DISTFILES  = $(NAME)_$(VERSION).orig.tar.gz
 PATCHFILES = 0001-gawk-and-ggrep.patch
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWautomake CSWbash CSWgawk CSWggrep
 TEST_SCRIPTS =
 CONFIGURE_ARGS = $(DIRPATHS)
 AWK=gawk
-export AWK
 GREP=ggrep
-export GREP
+EXTRA_EXPORTS = AWK GREP
+
+# checkpkg can't detect that gawk and ggrep are necessary
+CHECKPKG_OVERRIDES_CSWautoproject += surplus-dependency
+# /usr/local in the documentation.
+CHECKPKG_OVERRIDES_CSWautoproject += file-with-bad-content
+
 include gar/category.mk
