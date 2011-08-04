@@ -1,0 +1,40 @@
+From f97e55e5fb9b8ad5ba3d049db75a27fa8e834fbc Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 4 Aug 2011 15:21:51 +0200
+Subject: [PATCH 1/2] Using the m4 subdirectory for macros
+
+---
+ Makefile.am  |    2 ++
+ configure.in |    3 +++
+ 2 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index add9529..fc61b0b 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -2,6 +2,8 @@
+ 
+ include $(top_srcdir)/Makefile.am.common
+ 
++ACLOCAL_AMFLAGS = -I m4
++
+ SUBDIRS =	include man src python test
+ 
+ bin_SCRIPTS =	dnet-config
+diff --git a/configure.in b/configure.in
+index 72ac63c..0ddbdcd 100644
+--- a/configure.in
++++ b/configure.in
+@@ -12,6 +12,9 @@ AC_SUBST(ac_aux_dir)
+ AM_INIT_AUTOMAKE(libdnet, 1.12)
+ AM_CONFIG_HEADER(include/config.h)
+ 
++# for libtoolize
++AC_CONFIG_MACRO_DIR([m4])
++
+ dnl XXX - stop the insanity!@#$
+ AM_MAINTAINER_MODE
+ 
+-- 
+1.7.6
+
