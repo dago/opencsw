@@ -26,4 +26,10 @@ STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
+# With the default -xO3, there are failing unit tests.
+OPT_FLAGS_SOS = -xO2
+
 include gar/category.mk
+
+# Might be useful, not sure yet:
+# PATH := /opt/csw/gnu:/usr/xpg4/bin:$(PATH)
