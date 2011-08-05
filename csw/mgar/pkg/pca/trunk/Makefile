@@ -1,5 +1,5 @@
 NAME = pca
-VERSION = 20110329-01
+VERSION = 20110805-02
 CATEGORIES = utils
 
 DESCRIPTION = Patch Check Advanced
@@ -23,9 +23,6 @@ DISTFILES += pca.conf
 PATCHFILES  = 0001-prefer-opencsw-perl.diff
 PATCHFILES += 0002-Add-etc-opt-csw-as-config-location.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d{8}-\d{2})
-
 WORKSRC = $(WORKDIR)
 PATCHDIR = $(WORKDIR)
 
@@ -34,7 +31,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-SPKG_SOURCEURL = http://www.par.univie.ac.at/solaris/pca/
+VENDOR_URL = http://www.par.univie.ac.at/solaris/pca/
 SPKG_VERSION = $(shell echo $(VERSION) | sed -e 's/-/./g')
 
 SAMPLECONF = /etc/opt/csw/pca.conf
