@@ -26,7 +26,6 @@ CATALOGNAME = bzip2
 LICENSE = LICENSE
 
 BUILD64              = 1
-NOISAEXEC            = 1
 MERGE_DIRS_isa-extra = $(libdir)
 
 EXTRA_CFLAGS  += -KPIC -D_FILE_OFFSET_BITS=64
