@@ -123,8 +123,17 @@ def main():
   sqo_pkgs = list(models.Srv4FileStats.select(
     sqlobject.IN(models.Srv4FileStats.q.md5_sum, md5_sums)))
   tags_for_all_osrels = []
+  try:
+    sqo_catrel = models.CatalogRelease.selectBy(name=options.catrel).getOne()
+  except sqlobject.main.SQLObjectNotFound, e:
+    logging.fatal("Fetching from the db has failed: catrel=%s",
+                  repr(str(options.catrel)))
+    logging.fatal("Available catalog releases:")
+    sqo_catrels = models.CatalogRelease.select()
+    for sqo_catrel in sqo_catrels:
+      logging.fatal(" - %s", sqo_catrel.name)
+    raise
   sqo_arch = models.Architecture.selectBy(name=options.arch).getOne()
-  sqo_catrel = models.CatalogRelease.selectBy(name=options.catrel).getOne()
   for osrel in osrel_list:
     sqo_osrel = models.OsRelease.selectBy(short_name=osrel).getOne()
     dm.VerifyContents(sqo_osrel, sqo_arch)
