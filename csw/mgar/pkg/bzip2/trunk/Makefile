@@ -2,7 +2,7 @@ NAME = bzip2
 VERSION = 1.0.5
 CATEGORIES = utils
 
-DESCRIPTION = bzip2 Compression Utility
+DESCRIPTION = Compression Utility
 define BLURB
 bzip2 is a freely available, patent free, high-quality data compressor. It typically
 compresses files to within 10% to 15% of the best available techniques (the PPM family of
@@ -24,8 +24,6 @@ PACKAGES    = CSWbzip2
 CATALOGNAME = bzip2
 
 LICENSE = LICENSE
-
-CHECKPKG_OVERRIDES_CSWbzip2 += pkginfo-description-not-starting-with-uppercase|bzip2|Compression|Utility
 
 BUILD64              = 1
 NOISAEXEC            = 1
