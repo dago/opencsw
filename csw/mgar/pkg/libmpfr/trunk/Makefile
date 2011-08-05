@@ -35,20 +35,23 @@ OPT_FLAGS_SOS = -xO2
 
 EXTRA_INC += $(includedir)/$(ISA)
 
-PACKAGES = CSWlibmpfr4
-SPKG_DESC_CSWlibmpfr4 = $(DESCRIPTION)
-PKGFILES_CSWlibmpfr4 += .*libmpfr\.so\.4.*
+PACKAGES =
+PACKAGES += CSWlibmpfr4
+CATALOGNAME_CSWlibmpfr4 = libmpfr4
+PKGFILES_CSWlibmpfr4 += $(call baseisadirs,$(libdir),libmpfr\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibmpfr4 += $(DESCRIPTION), libmpfr.so.4
+RUNTIME_DEP_PKGS_CSWlibmpfr4 += CSWlibgmp10
 
 PACKAGES += CSWlibmpfr-dev
-# PKGFILES_CSWlibmpfr-dev += $(PKGFILES_DEVEL)
 SPKG_DESC_CSWlibmpfr-dev = MPFR development files
 RUNTIME_DEP_PKGS_CSWlibmpfr-dev += CSWlibmpfr4
+
+# Obsoleting the CSWlibmpfr package
+OBSOLETED_BY_CSWlibmpfr-dev = CSWlibmpfr
+OBSOLETED_BY_CSWlibmpfr4 = CSWlibmpfr
 
 # It's only documentation.
 CHECKPKG_OVERRIDES_CSWlibmpfr-dev += file-with-bad-content|/usr/local|root/opt/csw/share/info/mpfr.info
 CHECKPKG_OVERRIDES_CSWlibmpfr-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/mpfr/FAQ.html
 
 include gar/category.mk
-
-# Might be useful, not sure yet:
-# PATH := /opt/csw/gnu:/usr/xpg4/bin:$(PATH)
