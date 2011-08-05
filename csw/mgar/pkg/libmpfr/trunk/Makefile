@@ -48,7 +48,6 @@ RUNTIME_DEP_PKGS_CSWlibmpfr-dev += CSWlibmpfr4
 
 # Obsoleting the CSWlibmpfr package
 OBSOLETED_BY_CSWlibmpfr-dev = CSWlibmpfr
-OBSOLETED_BY_CSWlibmpfr4 = CSWlibmpfr
 
 # It's only documentation.
 CHECKPKG_OVERRIDES_CSWlibmpfr-dev += file-with-bad-content|/usr/local|root/opt/csw/share/info/mpfr.info
