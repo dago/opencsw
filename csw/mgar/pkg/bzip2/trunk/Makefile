@@ -16,10 +16,6 @@ PATCHFILES   = 0001-CFLAGS-LDFLAGS-for-SOS12-shared-lib.patch
 PATCHFILES  += 0002-test-should-depend-on-bzip2.patch
 PATCHFILES  += 0003-generate-bzip2recover.patch
 
-# We define upstream file regex so we can be notifed of new upstream
-# software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 PACKAGES    = CSWbzip2
 CATALOGNAME = bzip2
 
