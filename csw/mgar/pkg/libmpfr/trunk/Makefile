@@ -11,7 +11,7 @@ define BLURB
 	computations with correct rounding.
 endef
 
-MASTER_SITES = http://www.mpfr.org/mpfr-current/
+MASTER_SITES = http://www.mpfr.org/mpfr-$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES = CSWlibmpfr
