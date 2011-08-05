@@ -54,11 +54,8 @@ MPN_amd64 = "x86_64 generic"
 
 CONFIGURE_ARGS = ABI=$(ABI_$(ISA)) MPN_PATH=$(MPN_$(ISA)) $(DIRPATHS)
 
-#EXTRA_MERGE_DIRS_isa-sparcv8plus = $(includedir)
-#EXTRA_MERGE_DIRS_isa-sparcv8plus+vis = $(includedir)
-#EXTRA_MERGE_DIRS_isa-sparcv9 = $(includedir)
-#EXTRA_MERGE_DIRS_isa-amd64 = $(includedir)
-#EXTRA_MERGE_DIRS_isa-pentium = $(includedir)
+# For 64-bit compilation, we need /opt/csw/include/sparcv9/gmp.h
+EXTRA_MERGE_DIRS_isa-extra = $(includedir)
 
 PACKAGES += CSWlibgmp10
 CATALOGNAME_CSWlibgmp10 = libgmp10
