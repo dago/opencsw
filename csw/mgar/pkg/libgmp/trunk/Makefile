@@ -32,8 +32,6 @@ EXTRA_BUILD_ISAS_i386  = pentium
 
 BUILD_DEP_PKGS = CSWgm4
 
-TEST_TARGET = check
-
 # Solaris m4 seems to fail on Solaris 10 amd64 only, use gm4 for all builds
 M4 = /opt/csw/bin/gm4
 EXTRA_CONFIGURE_EXPORTS = M4
