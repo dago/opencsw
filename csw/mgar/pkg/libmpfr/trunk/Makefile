@@ -14,6 +14,8 @@ endef
 MASTER_SITES = http://www.mpfr.org/mpfr-$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
+BUILD_DEP_PKGS = CSWlibgmp-dev
+
 PACKAGES = CSWlibmpfr
 CATALOGNAME_CSWlibmpfr = libmpfr
 SPKG_DESC_CSWlibmpfr = $(DESCRIPTION)
