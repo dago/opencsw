@@ -10,7 +10,7 @@ define BLURB
   HTTP server and reverse proxy, as well as an IMAP/POP3 proxy server.
 endef
 
-MASTER_SITES = http://sysoev.ru/nginx/
+MASTER_SITES = http://nginx.org/download/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 DISTFILES   += cswnginx
 
