@@ -24,7 +24,6 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 SPKG_SOURCEURL = http://gmplib.org/
 
-#GARCOMPILER = GCC4
 BUILD64 = 1
 
 EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv8plus+vis 
@@ -52,8 +51,9 @@ MPN_amd64 = "x86_64 generic"
 
 CONFIGURE_ARGS = ABI=$(ABI_$(ISA)) MPN_PATH=$(MPN_$(ISA)) $(DIRPATHS)
 
-# For 64-bit compilation, we need /opt/csw/include/sparcv9/gmp.h
-EXTRA_MERGE_DIRS_isa-extra = $(includedir)
+EXTRA_PAX_ARGS_32 = -s ",^\.$(includedir)/gmp.h$$,.$(includedir)/gmp-32.h,p"
+EXTRA_PAX_ARGS_64 = -s ",^\.$(includedir)/gmp.h$$,.$(includedir)/gmp-64.h,p"
+EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
 
 PACKAGES += CSWlibgmp10
 CATALOGNAME_CSWlibgmp10 = libgmp10
@@ -66,17 +66,11 @@ SPKG_DESC_CSWlibgmp-dev = Development Files for libgmp
 # Catchall PKGFILES
 RUNTIME_DEP_PKGS_CSWlibgmp-dev = CSWlibgmp10
 
-#RUNTIME_DEP_PKGS = CSWgcc4corert
-
 # It's only an .info file.
 CHECKPKG_OVERRIDES_CSWlibgmp-dev += file-with-bad-content|/usr/local|root/opt/csw/share/info/gmp.info-1
 
 include gar/category.mk
 
-#ifeq ($(ISA), sparcv8plus)
-#	ARCHFLAGS_$(GARCOMPILER)_$(ISA) = -mcpu=v9 -mv8plus
-#endif
-#ifeq ($(ISA), sparcv8plus+vis)
-#	ARCHFLAGS_$(GARCOMPILER)_$(ISA) = -mcpu=ultrasparc -mvis
-#endif
-
+post-merge:
+	ginstall $(FILEDIR)/gmp.h $(PKGROOT)$(includedir)/gmp.h
+	@$(MAKECOOKIE)
