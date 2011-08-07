@@ -1,4 +1,0 @@
-%var            bitname libiconv
-%var            pkgname CSWlibiconv
-%include        url file://%{PKGLIB}/csw_dyndepend.gspec
-%copyright      url file://%{WORKSRC}/COPYRIGHT

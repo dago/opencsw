@@ -4,7 +4,7 @@
 # the upstream name and split off a devel pkg.
 #
 NAME = libiconv
-VERSION = 1.13.1
+VERSION = 1.14
 CATEGORIES = lib
 
 DESCRIPTION = GNU iconv library
@@ -19,8 +19,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+DISTFILES = $(DISTNAME).tar.gz
 
 PACKAGES += CSWlibiconv2
 CATALOGNAME_CSWlibiconv2 = libiconv2
@@ -57,22 +56,12 @@ PKGFILES_CSWlibiconv-utils += $(call baseisadirs,$(libdir),preloadable_libiconv\
 # matter in any way as this library is only used for LD_PRELOAD and is never being
 # linked against during compile time.
 CHECKPKG_OVERRIDES_CSWlibiconv-utils += soname-not-part-of-filename|soname=libiconv.so.0|filename=preloadable_libiconv.so
-CHECKPKG_OVERRIDES_CSWlibiconv-utils += shared-lib-pkgname-mismatch|sonames=libiconv.so.0|pkgname=CSWlibiconv-utils|expected=CSWlibiconv0
+CHECKPKG_OVERRIDES_CSWlibiconv-utils += shared-lib-pkgname-mismatch
 RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibintl8
 OBSOLETED_BY_CSWlibiconv-utils += CSWiconv
 
-NOISAEXEC = 1
 BUILD64 = 1
-
-# Optimize. -fast causes ./configure on Sparc to hang on the stdbool.h test.
-# Patch the stdbool test away, stdbool is only available in C99 anyway.
-#
-# See the following posts for details
-# - http://lists.opencsw.org/pipermail/maintainers/2009-July/003152.html
-# - http://forums.sun.com/thread.jspa?threadID=5397065&tstart=0
-OPT_FLAGS_SOS = -fast -xnolibmopt
-PATCHFILES += patch-configure-stdbool.diff
 
 # 'gmake test' shows three errors of coredumping printf's
 #
@@ -86,14 +75,11 @@ PATCHFILES += patch-configure-stdbool.diff
 # This is due to bug #6550204
 #   http://sunsolve.sun.com/search/document.do?assetkey=1-1-6550204-1
 # and can safely be ignored as it is a failure in the testsuite.
-TEST_TARGET = check
 
 EXTRA_CPPFLAGS = -D_REENTRANT
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-rpath
-
-MERGE_DIRS_isa-extra = $(libdir)
 
 include gar/category.mk
 
