@@ -16,11 +16,6 @@ DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 BUILD_DEP_PKGS = CSWlibgmp-dev
 
-PACKAGES = CSWlibmpfr
-CATALOGNAME_CSWlibmpfr = libmpfr
-SPKG_DESC_CSWlibmpfr = $(DESCRIPTION)
-SPKG_SOURCEURL_CSWlibmpfr = http://www.mpfr.org/
-
 RUNTIME_DEP_PKGS_CSWlibmpfr  = 
 #PATCHFILES = patches
 
@@ -42,9 +37,6 @@ RUNTIME_DEP_PKGS_CSWlibmpfr4 += CSWlibgmp10
 PACKAGES += CSWlibmpfr-dev
 SPKG_DESC_CSWlibmpfr-dev = MPFR development files
 RUNTIME_DEP_PKGS_CSWlibmpfr-dev += CSWlibmpfr4
-
-# Obsoleting the CSWlibmpfr package
-OBSOLETED_BY_CSWlibmpfr-dev = CSWlibmpfr
 
 # It's only documentation.
 CHECKPKG_OVERRIDES_CSWlibmpfr-dev += file-with-bad-content|/usr/local|root/opt/csw/share/info/mpfr.info
