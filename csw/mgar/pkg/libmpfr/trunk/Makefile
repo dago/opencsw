@@ -29,13 +29,8 @@ STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 
-# It's necessary to include architecture-specific headers from gmp.
-EXTRA_INC += $(includedir)/$(ISA)
-
 # With the default -xO3, there are failing unit tests.
 OPT_FLAGS_SOS = -xO2
-
-EXTRA_INC += $(includedir)/$(ISA)
 
 PACKAGES =
 PACKAGES += CSWlibmpfr4
