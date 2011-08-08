@@ -59,7 +59,15 @@ CHECKPKG_OVERRIDES_CSWlibiconv-utils += soname-not-part-of-filename|soname=libic
 CHECKPKG_OVERRIDES_CSWlibiconv-utils += shared-lib-pkgname-mismatch
 RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibiconv-utils += CSWlibintl8
-OBSOLETED_BY_CSWlibiconv-utils += CSWiconv
+
+# Removing this dependency to break a dependency cycle.
+# See:
+#  - http://lists.opencsw.org/pipermail/devel/2011-August/020098.html
+#
+# "CSWiconv needs CSWlibiconv-utils which needs CSWlibintl8 which needs
+# CSWiconv"
+#
+# OBSOLETED_BY_CSWlibiconv-utils += CSWiconv
 
 BUILD64 = 1
 
