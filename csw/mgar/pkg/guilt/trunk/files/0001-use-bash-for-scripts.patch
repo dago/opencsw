@@ -1,0 +1,22 @@
+From 13f7765ede23c6f4bc201d36ae80a31f9f52b57c Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <oliver.kiddle@esa.int>
+Date: Tue, 9 Aug 2011 16:54:14 +0200
+Subject: [PATCH 2/3] use bash for scripts
+
+---
+ guilt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/guilt b/guilt
+index d1e17d4..07fc4fd 100755
+--- a/guilt
++++ b/guilt
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # Copyright (c) Josef "Jeff" Sipek, 2006-2011
+ #
+-- 
+1.7.6
+

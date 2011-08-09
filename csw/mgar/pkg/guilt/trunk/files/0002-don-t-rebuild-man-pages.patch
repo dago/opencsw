@@ -1,0 +1,25 @@
+From 83c1dd03e66ca9a9cc2d178ce815283e846694cb Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <oliver.kiddle@esa.int>
+Date: Tue, 9 Aug 2011 16:54:41 +0200
+Subject: [PATCH 3/3] don't rebuild man pages
+
+---
+ Documentation/Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 9fc1165..49ec4fa 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -32,7 +32,7 @@ man: man1 man7
+ man1: $(DOC_MAN1)
+ man7: $(DOC_MAN7)
+ 
+-install: man
++install:
+ 	$(INSTALL) -d -m755 $(DESTDIR)$(man1dir) $(DESTDIR)$(man7dir)
+ 	$(INSTALL) -m644 $(DOC_MAN1) $(DESTDIR)$(man1dir)
+ 	$(INSTALL) -m644 $(DOC_MAN7) $(DESTDIR)$(man7dir)
+-- 
+1.7.6
+
