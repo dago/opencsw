@@ -2,7 +2,7 @@ NAME = guilt
 VERSION = 0.35
 CATEGORIES = utils
 
-DESCRIPTION = quilt on top of git
+DESCRIPTION = Manipulate quilt like patches on top of git
 define BLURB
   Guilt (Git Quilt) adds functionality similar to quilt, Mercurial
   Queues or Stacked git to git. the main distinguishing feature from
