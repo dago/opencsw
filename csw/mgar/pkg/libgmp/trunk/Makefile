@@ -26,8 +26,17 @@ SPKG_SOURCEURL = http://gmplib.org/
 
 BUILD64 = 1
 
-EXTRA_BUILD_ISAS_sparc = sparcv8plus sparcv8plus+vis 
-EXTRA_BUILD_ISAS_i386  = pentium
+# Disabling sparcv8plus with GCC
+# /var/tmp//ccPKyHnL.s: Assembler messages:
+# /var/tmp//ccPKyHnL.s:11: Error: Architecture mismatch on "return".
+# /var/tmp//ccPKyHnL.s:11:  (Requires v9|v9a|v9b; requested architecture is
+# v8.)
+# EXTRA_BUILD_ISAS_sparc = sparcv8plus
+# EXTRA_BUILD_ISAS_sparc += sparcv8plus+vis 
+#
+# If you believe that a sparcv8plus build is necessary, feel free to develop
+# this recipe so that these ISAs successfully build.
+EXTRA_BUILD_ISAS_i386  = pentium_pro
 
 BUILD_DEP_PKGS = CSWgm4
 
@@ -43,34 +52,70 @@ MPN_sparcv9 = "sparc64 generic"
 ABI_sparcv8 = 32
 ABI_sparcv9 = 64
 ABI_i386 = 32
-ABI_pentium = 32
+ABI_pentium_pro = 32
 ABI_amd64 = 64
 MPN_i386 = "x86 generic"
-MPN_pentium = "x86/pentium x86 generic"
+MPN_pentium_pro = "x86/pentium_pro x86 generic"
 MPN_amd64 = "x86_64 generic"
 
-CONFIGURE_ARGS = ABI=$(ABI_$(ISA)) MPN_PATH=$(MPN_$(ISA)) $(DIRPATHS)
+CONFIGURE_ARGS  = ABI=$(ABI_$(ISA))
+CONFIGURE_ARGS += MPN_PATH=$(MPN_$(ISA))
+CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --enable-cxx
 
-EXTRA_PAX_ARGS_32 = -s ",^\.$(includedir)/gmp.h$$,.$(includedir)/gmp-32.h,p"
-EXTRA_PAX_ARGS_64 = -s ",^\.$(includedir)/gmp.h$$,.$(includedir)/gmp-64.h,p"
+EXTRA_PAX_ARGS_32  = -s ",^\.$(includedir)/gmp.h$$,.$(includedir)/gmp-32.h,p"
+EXTRA_PAX_ARGS_32 += -s ",^\.$(includedir)/gmpxx.h$$,.$(includedir)/gmpxx-32.h,p"
+EXTRA_PAX_ARGS_64  = -s ",^\.$(includedir)/gmp.h$$,.$(includedir)/gmp-64.h,p"
+EXTRA_PAX_ARGS_64 += -s ",^\.$(includedir)/gmpxx.h$$,.$(includedir)/gmpxx-64.h,p"
 EXTRA_PAX_ARGS = $(EXTRA_PAX_ARGS_$(MEMORYMODEL))
 
 PACKAGES += CSWlibgmp10
 CATALOGNAME_CSWlibgmp10 = libgmp10
 SPKG_DESC_CSWlibgmp10 = GNU Multiple Precision Arithmetic Library, libgmp.so.10
 PKGFILES_CSWlibgmp10 = $(call baseisadirs,$(libdir),libgmp\.so\.10(\.\d+)*)
+RUNTIME_DEP_PKGS_CSWlibgmp10 += CSWgcc4corert
+
+PACKAGES += CSWlibgmpxx4
+CATALOGNAME_CSWlibgmpxx4 = libgmpxx4
+PKGFILES_CSWlibgmpxx4 += $(call baseisadirs,$(libdir),libgmpxx\.so\.4\.2\.2)
+PKGFILES_CSWlibgmpxx4 += $(call baseisadirs,$(libdir),libgmpxx\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibgmpxx4 += Development Files for libgmp, libgmpxx.so.4
+RUNTIME_DEP_PKGS_CSWlibgmpxx4 += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWlibgmpxx4 += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWlibgmpxx4 += CSWgcc4corert
 
 PACKAGES += CSWlibgmp-dev
 CATALOGNAME_CSWlibgmp-dev = libgmp_dev
 SPKG_DESC_CSWlibgmp-dev = Development Files for libgmp
 # Catchall PKGFILES
 RUNTIME_DEP_PKGS_CSWlibgmp-dev = CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWlibgmp-dev += CSWlibgmpxx4
 
 # It's only an .info file.
 CHECKPKG_OVERRIDES_CSWlibgmp-dev += file-with-bad-content|/usr/local|root/opt/csw/share/info/gmp.info-1
 
+# To work around a problem with __attribute__((const)) being in the
+# C compiler, but not the C++ compiler in Solaris Studio.
+# http://gmplib.org/list-archives/gmp-discuss/2009-January/003518.html
+# EXTRA_CXXFLAGS = -D__GMP_NO_ATTRIBUTE_CONST_PURE
+
+# We cannot compile libgmp with Solaris Studio, because we need to build the
+# C++ bindings, which will be used by gcc later on.
+GARCOMPILER = GNU
+
 include gar/category.mk
+
+# Undefined symbol __sync_fetch_and_add_4
+# http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
+# http://opencsw.wikidot.com/porting-faq#toc6
+ifeq ($(ISA),sparcv8)
+OPT_FLAGS_GCC =
+endif
+ifeq ($(ISA),i386)
+OPT_FLAGS_GCC =
+endif
 
 post-merge:
 	ginstall $(FILEDIR)/gmp.h $(PKGROOT)$(includedir)/gmp.h
+	ginstall $(FILEDIR)/gmpxx.h $(PKGROOT)$(includedir)/gmpxx.h
 	@$(MAKECOOKIE)
