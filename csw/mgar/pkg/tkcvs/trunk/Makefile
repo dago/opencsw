@@ -14,12 +14,8 @@ MASTER_SITES = http://www.twobarleycorns.net/
 DISTNAME = $(NAME)_$(subst .,_,$(VERSION))
 DISTFILES  = $(NAME)_$(subst .,_,$(VERSION)).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
+UPSTREAM_MASTER_SITES = $(MASTER_SITES)/tkcvs.html
 UFILES_REGEX = $(NAME)_(\d+(?:_\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =

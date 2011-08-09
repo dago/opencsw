@@ -39,7 +39,6 @@ PATCHFILES = 0001-forcing-lglib-2.0.patch
 
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 
-UFILES_REGEX = (\d+(?:\.\d+)*).tar.bz2
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --without-ffi
 

@@ -20,6 +20,7 @@ CATALOGNAME = py_dateutil
 
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 
+UPSTREAM_MASTER_SITES = http://labix.org/python-dateutil/
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 TEST_SCRIPTS = dateutil

@@ -22,11 +22,7 @@ RUNTIME_DEP_PKGS = CSWiconv CSWlibncursesw5 CSWlibpcre0 CSWlibgdbm3 CSWcas-etcsh
 BUILD_DEP_PKGS = CSWpcre
 
 SPKG_SOURCEURL = http://www.zsh.org
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=4068
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
+UPSTREAM_MASTER_SITES = http://www.zsh.org/pub/
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-maildir-support

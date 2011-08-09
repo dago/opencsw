@@ -14,7 +14,6 @@ endef
 
 MASTER_SITES = http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
 DISTFILES  = $(DISTNAME).tar.bz2
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
