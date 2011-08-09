@@ -17,6 +17,7 @@ SPKG_SOURCEURL = http://code.google.com/p/python-nose/
 GOOGLE_PROJECT = python-nose
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
+UPSTREAM_MASTER_SITES = http://code.google.com/p/python-nose/downloads/list
 
 PACKAGES = CSWpy-nose
 CATALOGNAME = py_nose

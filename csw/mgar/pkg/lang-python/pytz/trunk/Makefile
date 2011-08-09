@@ -20,8 +20,6 @@ CATALOGNAME = py_tz
 
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 
-UFILES_REGEX = $(NAME)-(\d+[a-z]).tar.bz2
-
 LICENSE = LICENSE.txt
 ARCHALL = 1
 
