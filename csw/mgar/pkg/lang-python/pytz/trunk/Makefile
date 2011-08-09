@@ -1,6 +1,6 @@
 # $Id$
 NAME = pytz
-VERSION = 2010l
+VERSION = 2011h
 CATEGORIES = python
 
 DESCRIPTION = Pytz brings the Olson timezone database into Python.
