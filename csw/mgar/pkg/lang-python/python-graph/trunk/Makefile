@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = python-graph
-VERSION = 1.7.0
+VERSION = 1.8.0
 CATEGORIES = python
 DESCRIPTION = A library for working with graphs in Python
 define BLURB
@@ -11,14 +11,13 @@ endef
 SPKG_SOURCEURL = http://pypi.python.org/pypi/python-graph
 MASTER_SITES = $(GOOGLE_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 PACKAGES = CSWpy-graph
 CATALOGNAME_CSWpy-graph = py_graph
 BUILD_SCRIPTS =
-# INSTALL_SCRIPTS = python-graph
 TEST_SCRIPTS =
 BUILD_SCRIPTS ?= $(WORKSRC)/core/setup.py
 INSTALL_SCRIPTS ?= $(WORKSRC)/core/setup.py
+LICENSE = COPYING
 
 ARCHALL_CSWpy-graph = 1
 
