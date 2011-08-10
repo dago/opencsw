@@ -1,0 +1,25 @@
+From 9fe352174a969508d92d53582d6cd629bf3f09b2 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <oliver.kiddle@esa.int>
+Date: Wed, 10 Aug 2011 16:55:06 +0200
+Subject: [PATCH] fix installation target
+
+---
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 27924e0..59482a6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -6,7 +6,7 @@ OptDbg=-ggdb
+ #CFLAGS=$(OptDbg) -Wall -Werror
+ 
+ # STRIP = -s
+-INSTALL = /usr/bin/install
++INSTALL = ginstall
+ DESTDIR = 
+ BINDIR  = /usr/bin
+ MANDIR  = /usr/share/man
+-- 
+1.7.6
+

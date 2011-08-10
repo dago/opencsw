@@ -1,0 +1,25 @@
+From bbbc93dee71c5f051d2ae80b38833cd67301026c Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <oliver.kiddle@esa.int>
+Date: Wed, 10 Aug 2011 16:16:59 +0200
+Subject: [PATCH] fix for building with solstudio
+
+---
+ merge2.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/merge2.c b/merge2.c
+index 9c605ea..7f76e56 100644
+--- a/merge2.c
++++ b/merge2.c
+@@ -79,7 +79,7 @@ int check_alreadyapplied(struct file af, struct file cf,
+ 	return 1;
+ }
+ 
+-inline int isolate_conflicts(struct file af, struct file bf, struct file cf,
++static inline int isolate_conflicts(struct file af, struct file bf, struct file cf,
+ 			      struct csl *csl1, struct csl *csl2, int words,
+ 			      struct merge *m)
+ {
+-- 
+1.7.6
+

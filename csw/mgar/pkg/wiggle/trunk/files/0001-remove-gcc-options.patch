@@ -1,0 +1,25 @@
+From 5a542bbaf284fa51c2c8f9a5f1e22cc2a0dccc8e Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <oliver.kiddle@esa.int>
+Date: Wed, 10 Aug 2011 16:07:03 +0200
+Subject: [PATCH] remove gcc options
+
+---
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 6725969..27924e0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3,7 +3,7 @@
+ #OptDbg=-O3
+ #OptDbg=-O3 -march=pentium2
+ OptDbg=-ggdb
+-CFLAGS=$(OptDbg) -Wall -Werror
++#CFLAGS=$(OptDbg) -Wall -Werror
+ 
+ # STRIP = -s
+ INSTALL = /usr/bin/install
+-- 
+1.7.6
+
