@@ -1,0 +1,88 @@
+From 10c8836418770cfe25d2cf7a2bf76cffaa98a11a Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <oliver.kiddle@esa.int>
+Date: Wed, 10 Aug 2011 17:41:08 +0200
+Subject: [PATCH] skip time in test script
+
+---
+ Makefile |    2 +-
+ dotest   |   30 +++++++++++++++---------------
+ 2 files changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 59482a6..dc3335a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -22,7 +22,7 @@ wiggle.o load.o split.o extract.o diff.o bestmatch.o ReadMe.o merge.o \
+                merge2.o vpatch.o : wiggle.h
+ 
+ test: wiggle dotest
+-	sh dotest
++	bash dotest
+ 
+ wiggle.man : wiggle.1
+ 	nroff -man wiggle.1 > wiggle.man
+diff --git a/dotest b/dotest
+index 6d3a27e..0e1b0a0 100755
+--- a/dotest
++++ b/dotest
+@@ -34,42 +34,42 @@ do
+     case $base in 
+ 	script ) ./script ;;
+ 	diff ) if [ -f new ]
+-		then /usr/bin/time -o .time -f '%U' $WIGGLE -dw orig new | diff -u diff - ; xit=$?
+-		else /usr/bin/time -o .time -f '%U' $WIGGLE -dwp1 orig patch | diff -u diff - ; xit=$?
++		then $WIGGLE -dw orig new | diff -u diff - ; xit=$?
++		else $WIGGLE -dwp1 orig patch | diff -u diff - ; xit=$?
+ 		fi
+ 		;;
+ 	ldiff ) if [ -f new ]
+-		then /usr/bin/time -o .time -f '%U' $WIGGLE -dl orig new | diff -u ldiff - ; xit=$?
+-		else /usr/bin/time -o .time -f '%U' $WIGGLE -dlp1 orig patch | diff -u ldiff - ; xit=$?
++		then $WIGGLE -dl orig new | diff -u ldiff - ; xit=$?
++		else $WIGGLE -dlp1 orig patch | diff -u ldiff - ; xit=$?
+ 		fi
+ 		;;
+-	reldiff ) /usr/bin/time -o .time -f '%U' $WIGGLE -dl patch | diff -u reldiff - ; xit=$?
++	reldiff ) $WIGGLE -dl patch | diff -u reldiff - ; xit=$?
+ 		;;
+-	rediff ) /usr/bin/time -o .time -f '%U' $WIGGLE -dw patch | diff -u rediff - ; xit=$?
++	rediff ) $WIGGLE -dw patch | diff -u rediff - ; xit=$?
+ 		;;
+ 	merge )  if [ -f patch ]
+-		 then /usr/bin/time -o .time -f '%U' $WIGGLE -m orig patch | diff -u merge - ; xit=$?
++		 then $WIGGLE -m orig patch | diff -u merge - ; xit=$?
+ 		 elif [ -f new ] 
+-                 then /usr/bin/time -o .time -f '%U' $WIGGLE -m orig new new2 | diff -u merge - ; xit=$?
+-		 else /usr/bin/time -o .time -f '%U' $WIGGLE -m orig | diff -u merge - ; xit=$?
++                 then $WIGGLE -m orig new new2 | diff -u merge - ; xit=$?
++		 else $WIGGLE -m orig | diff -u merge - ; xit=$?
+ 		 fi
+ 		;;
+ 	replace ) cp orig orig.tmp
+ 		 if [ -f patch ]
+-		 then /usr/bin/time -o .time -f '%U' $WIGGLE -mr orig.tmp patch 
+-		 else /usr/bin/time -o .time -f '%U' $WIGGLE -mr orig.tmp new new2
++		 then $WIGGLE -mr orig.tmp patch 
++		 else $WIGGLE -mr orig.tmp new new2
+ 		 fi
+ 		 diff -u merge orig.tmp ; xit=$?
+ 		 rm  orig.tmp orig.tmp.porig
+ 		;;
+ 	lmerge )  if [ -f patch ]
+-		 then /usr/bin/time -o .time -f '%U' $WIGGLE -ml orig patch | diff -u lmerge - ; xit=$?
+-		 else /usr/bin/time -o .time -f '%U' $WIGGLE -ml orig new new2 | diff -u lmerge - ; xit=$?
++		 then $WIGGLE -ml orig patch | diff -u lmerge - ; xit=$?
++		 else $WIGGLE -ml orig new new2 | diff -u lmerge - ; xit=$?
+ 		 fi
+ 		 ;;
+ 	wmerge )  if [ -f patch ]
+-		 then /usr/bin/time -o .time -f '%U' $WIGGLE -mw orig patch | diff -u wmerge - ; xit=$?
+-		 else /usr/bin/time -o .time -f '%U' $WIGGLE -mw orig new new2 | diff -u wmerge - ; xit=$?
++		 then $WIGGLE -mw orig patch | diff -u wmerge - ; xit=$?
++		 else $WIGGLE -mw orig new new2 | diff -u wmerge - ; xit=$?
+ 		 fi
+ 		 ;;
+    esac
+-- 
+1.7.6
+
