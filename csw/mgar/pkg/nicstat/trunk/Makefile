@@ -14,6 +14,7 @@ DISTFILES  = $(NAME)-src-$(VERSION).tar.gz
 
 VENDOR_URL = http://blogs.sun.com/timc/entry/nicstat_the_solaris_and_linux
 
+# Harmless build example not relevant to usage
 CHECKPKG_OVERRIDES_CSWnicstat += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nicstat/README.txt
 
 CONFIGURE_ARGS = $(DIRPATHS)
