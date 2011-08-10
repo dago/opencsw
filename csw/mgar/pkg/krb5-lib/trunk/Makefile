@@ -24,8 +24,6 @@ BUILD_DEP_PKGS = CSWtcl
 
 PACKAGES = CSWlibkrb5-dev
 
-CATALOGNAME_CSWkrb5lib         = krb5_lib
-
 SPKG_DESC_CSWkrb5lib         = MIT Kerberos 5 core libraries
 SPKG_DESC_CSWlibkrb5-dev      = MIT Kerberos 5 developer libraries
 
