@@ -109,10 +109,10 @@ include gar/category.mk
 # http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
 # http://opencsw.wikidot.com/porting-faq#toc6
 ifeq ($(ISA),sparcv8)
-OPT_FLAGS_GCC =
+OPT_FLAGS_GCC = -O0
 endif
 ifeq ($(ISA),i386)
-OPT_FLAGS_GCC =
+OPT_FLAGS_GCC = -O0
 endif
 
 post-merge:
