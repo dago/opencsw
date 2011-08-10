@@ -1,21 +1,20 @@
 NAME = nicstat
-VERSION = 1.22
+VERSION = 1.90
 CATEGORIES = net
+WORKSRC = $(WORKDIR)/$(NAME)-src-$(VERSION)
 
 DESCRIPTION = Network monitoring tool
 define BLURB
   Network monitoring tool
 endef
 
-MASTER_SITES = http://blogs.sun.com/roller/resources/timc/nicstat/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = $(SF_MIRRORS)
+SF_PROJ = $(NAME)
+DISTFILES  = $(NAME)-src-$(VERSION).tar.gz
 
-SPKG_SOURCEURL = http://blogs.sun.com/timc/entry/nicstat_the_solaris_and_linux
+VENDOR_URL = http://blogs.sun.com/timc/entry/nicstat_the_solaris_and_linux
 
-LICENSE = LICENSE.txt
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+CHECKPKG_OVERRIDES_CSWnicstat += file-with-bad-content|/usr/local|root/opt/csw/share/doc/nicstat/README.txt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -42,9 +41,10 @@ build-custom:
 install-custom:
 	@echo " ==> Install $(NAME) (custom)"
 	@ginstall -d -m 755 $(DESTDIR)$(bindir)
-	@cp $(WORKSRC)/nicstat $(DESTDIR)$(bindir)
+	@ginstall -m 755 $(WORKSRC)/.nicstat* $(DESTDIR)$(bindir)/nicstat
 	@ginstall -d -m 755 $(DESTDIR)$(mandir)/man1
-	@cp $(WORKSRC)/nicstat.1 $(DESTDIR)$(mandir)/man1
+	@ginstall -m 444 $(WORKSRC)/nicstat.1 $(DESTDIR)$(mandir)/man1
 	@ginstall -d -m 755 $(DESTDIR)$(docdir)/$(NAME)
-	@cp $(WORKSRC)/README.txt $(DESTDIR)$(docdir)/$(NAME)
+	@ginstall -m 444 $(WORKSRC)/README.txt $(WORKSRC)/ChangeLog.txt $(DESTDIR)$(docdir)/$(NAME)
+	@ginstall -m 444 $(WORKSRC)/LICENSE.txt $(DESTDIR)$(docdir)/$(NAME)/license
 	@$(MAKECOOKIE)
