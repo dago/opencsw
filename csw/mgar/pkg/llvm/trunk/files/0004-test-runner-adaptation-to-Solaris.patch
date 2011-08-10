@@ -1,0 +1,41 @@
+From 2f18958deeaf3be901798baea4d01dac8693e42e Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 10 Aug 2011 15:34:29 +0200
+Subject: [PATCH] test runner adaptation to Solaris
+
+---
+ utils/lit/lit/LitConfig.py |    5 ++++-
+ utils/lit/lit/Util.py      |    1 +
+ 2 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/utils/lit/lit/LitConfig.py b/utils/lit/lit/LitConfig.py
+index 7ca1b9c..ad7d761 100644
+--- a/utils/lit/lit/LitConfig.py
++++ b/utils/lit/lit/LitConfig.py
+@@ -74,7 +74,10 @@ class LitConfig:
+         self.bashPath = Util.which('bash', os.pathsep.join(self.path))
+         if self.bashPath is None:
+             # Check some known paths.
+-            for path in ('/bin/bash', '/usr/bin/bash', '/usr/local/bin/bash'):
++            for path in ('/opt/csw/bin/bash',
++                         '/bin/bash',
++                         '/usr/bin/bash',
++                         '/usr/local/bin/bash'):
+                 if os.path.exists(path):
+                     self.bashPath = path
+                     break
+diff --git a/utils/lit/lit/Util.py b/utils/lit/lit/Util.py
+index 5635f50..1ac512c 100644
+--- a/utils/lit/lit/Util.py
++++ b/utils/lit/lit/Util.py
+@@ -54,6 +54,7 @@ def which(command, paths = None):
+ 
+     if paths is None:
+         paths = os.environ.get('PATH','')
++    paths = "/opt/csw/bin:" + paths
+ 
+     # Check for absolute match first.
+     if os.path.exists(command):
+-- 
+1.7.6
+
