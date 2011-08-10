@@ -1,5 +1,5 @@
 NAME = krb5
-VERSION = 1.9
+VERSION = 1.9.1
 CATEGORIES = server
 
 DESCRIPTION = MIT Kerberos 5
@@ -14,9 +14,6 @@ endef
 MASTER_SITES = http://web.mit.edu/kerberos/dist/krb5/$(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')/
 DISTFILES  = $(NAME)-$(VERSION)-signed.tar
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-signed.tar
-
 PATCHFILES  = patch-man2html-perl.patch
 PATCHFILES += 0002-libintl-for-kproplog.patch
 # PATCHFILES += 0003-local-libraries-first-when-linking.patch
@@ -25,24 +22,25 @@ PATCHFILES += 0005-Add-strings.h-to-setenv.c-for-strlen-and-other-stuff.patch
 
 BUILD_DEP_PKGS = CSWtcl
 
-PACKAGES = CSWkrb5lib CSWkrb5libdev
+PACKAGES = CSWlibkrb5-dev
 
 CATALOGNAME_CSWkrb5lib         = krb5_lib
-CATALOGNAME_CSWkrb5libdev      = krb5_lib_dev
 
 SPKG_DESC_CSWkrb5lib         = MIT Kerberos 5 core libraries
-SPKG_DESC_CSWkrb5libdev      = MIT Kerberos 5 developer libraries
+SPKG_DESC_CSWlibkrb5-dev      = MIT Kerberos 5 developer libraries
 
 
 PACKAGES += CSWlibcom-err3
 CATALOGNAME_CSWlibcom-err3 = libcom_err3
 PKGFILES_CSWlibcom-err3 +=  $(call baseisadirs,$(libdir),libcom_err\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibcom-err3 += MIT Kerberos 5 core libraries, libcom_err.so.3
+OBSOLETED_BY_CSWlibcom-err3 = CSWkrb5lib
 
 PACKAGES += CSWlibgssapi-krb5-2
 CATALOGNAME_CSWlibgssapi-krb5-2 = libgssapi_krb5_2
 PKGFILES_CSWlibgssapi-krb5-2 +=  $(call baseisadirs,$(libdir),libgssapi_krb5\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibgssapi-krb5-2 += MIT Kerberos 5 core libraries, libgssapi_krb5.so.2
+OBSOLETED_BY_CSWlibgssapi-krb5-2 = CSWkrb5lib
 
 # This is a private library
 #PACKAGES += CSWlibgssrpc4
@@ -54,6 +52,7 @@ PACKAGES += CSWlibk5crypto3
 CATALOGNAME_CSWlibk5crypto3 = libk5crypto3
 PKGFILES_CSWlibk5crypto3 += $(call baseisadirs,$(libdir),libk5crypto\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibk5crypto3 += MIT Kerberos 5 core libraries, libk5crypto.so.3
+OBSOLETED_BY_CSWlibk5crypto3 = CSWkrb5lib
 
 # This is a private library
 #PACKAGES += CSWlibkadm5clnt-mit7
@@ -77,18 +76,14 @@ PACKAGES += CSWlibkrb5-3
 CATALOGNAME_CSWlibkrb5-3 = libkrb5_3
 PKGFILES_CSWlibkrb5-3 += $(call baseisadirs,$(libdir),libkrb5\.so\.3(\.\d+)*)
 SPKG_DESC_CSWlibkrb5-3 += MIT Kerberos 5 core libraries, libkrb5.so.3
+OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
 
 PACKAGES += CSWlibkrb5support0
 CATALOGNAME_CSWlibkrb5support0 = libkrb5support0
 PKGFILES_CSWlibkrb5support0 += $(call baseisadirs,$(libdir),libkrb5support\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibkrb5support0 += MIT Kerberos 5 core libraries, libkrb5support.so.0
+OBSOLETED_BY_CSWlibkrb5-3 = CSWlibkrb5lib
 
-RUNTIME_DEP_PKGS_CSWkrb5libdev = CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWkrb5lib += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWkrb5lib += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWkrb5lib += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWkrb5lib += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWkrb5lib += CSWlibkrb5support0
 
 ARCHALL_CSWkrb5lib = 1
 RUNTIME_DEP_PKGS_CSWlibgssapi-krb5-2 += CSWlibkrb5-3
@@ -101,17 +96,17 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibk5crypto3 += CSWlibkrb5support0
 
-RUNTIME_DEP_PKGS_CSWkrb5libdev += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWkrb5libdev += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWkrb5libdev += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWkrb5libdev += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWkrb5libdev += CSWlibkrb5support0
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev = CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5support0
 
 LICENSE = doc/copyright.texinfo
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
-NOISAEXEC = 1
 BUILD64 = 1
 
 # We turn off almost everything as we are just interested in the library.
@@ -139,21 +134,22 @@ INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile
 
 PKGFILES_CSWkrb5lib  = NOFILES
 
-PKGFILES_CSWkrb5libdev  = $(mandir)/man8/sserver.8
-PKGFILES_CSWkrb5libdev += $(mandir)/man1/(sclient|krb5-config|compile_et)\.1
-PKGFILES_CSWkrb5libdev += $(sbindir)/(uuserver|sserver|sim_server|gss-server)
-PKGFILES_CSWkrb5libdev += $(includedir)/.*
-PKGFILES_CSWkrb5libdev += $(bindir)/(uuclient|sim_client|sclient|krb5-config|gss-client|compile_et)
+PKGFILES_CSWlibkrb5-dev  = $(mandir)/man8/sserver.8
+PKGFILES_CSWlibkrb5-dev += $(mandir)/man1/(sclient|krb5-config|compile_et)\.1
+PKGFILES_CSWlibkrb5-dev += $(sbindir)/(uuserver|sserver|sim_server|gss-server)
+PKGFILES_CSWlibkrb5-dev += $(includedir)/.*
+PKGFILES_CSWlibkrb5-dev += $(bindir)/(uuclient|sim_client|sclient|krb5-config|gss-client|compile_et)
+OBSOLETED_BY_CSWlibkrb5-dev = CSWkrb5libdev
+CATALOGNAME_CSWkrb5libdev = krb5_lib_dev_stub
+# /usr/local in a manpage is OK.
+CHECKPKG_OVERRIDES_CSWlibkrb5-dev += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/sserver.8
 
 # This name is so old that there it is not recognized as devel-package
-CHECKPKG_OVERRIDES_CSWkrb5libdev += surplus-dependency|CSWkrb5lib
+CHECKPKG_OVERRIDES_CSWlibkrb5-dev += surplus-dependency|CSWkrb5lib
 
-# This is the "collect all" legacy lib, no other reason for the dependencies.
-CHECKPKG_OVERRIDES_CSWkrb5lib += surplus-dependency|CSWlibkrb5support0
-CHECKPKG_OVERRIDES_CSWkrb5lib += surplus-dependency|CSWlibcom-err3
-CHECKPKG_OVERRIDES_CSWkrb5lib += surplus-dependency|CSWlibgssapi-krb5-2
-CHECKPKG_OVERRIDES_CSWkrb5lib += surplus-dependency|CSWlibkrb5-3
-CHECKPKG_OVERRIDES_CSWkrb5lib += surplus-dependency|CSWlibk5crypto3
+# pkgname=CSWkrb5lib|catalogname=krb5_lib|expected-catalogname=krb5lib
+CHECKPKG_OVERRIDES_CSWkrb5lib += catalogname-does-not-match-pkgname
+CATALOGNAME_CSWkrb5lib = krb5_lib_stub
 
 include gar/category.mk
 
@@ -164,6 +160,7 @@ CXXFLAGS := $(strip $(CXXFLAGS) -D__EXTENSIONS__)
 
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+
 
 post-extract-modulated:
 	@# TODO: Check signature
