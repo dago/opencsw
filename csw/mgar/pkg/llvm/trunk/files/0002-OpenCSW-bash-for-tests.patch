@@ -1,0 +1,22 @@
+From 0de11898c1205e814aec09a05fd74e657a4493ad Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 10 Aug 2011 11:40:18 +0200
+Subject: [PATCH] OpenCSW bash for tests
+
+---
+ test/TestRunner.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/test/TestRunner.sh b/test/TestRunner.sh
+index ab50856..1686f72 100755
+--- a/test/TestRunner.sh
++++ b/test/TestRunner.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/opt/csw/bin/bash
+ # Deprecated, use 'llvm-lit'.
+ 
+ echo "warning: '$0' is deprecated, use 'llvm-lit' instead."
+-- 
+1.7.6
+
