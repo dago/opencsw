@@ -22,6 +22,8 @@ VENDOR_URL = http://www.cs.unipr.it/ppl/
 # C++ bindings require the consistency between GMP, PPL and GCC.
 GARCOMPILER = GNU
 
+BUILD64 = 1
+
 # Undefined symbol __sync_fetch_and_add_4
 # http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
 # http://opencsw.wikidot.com/porting-faq#toc6
@@ -31,6 +33,12 @@ endif
 ifeq ($(ISA),i386)
 OPT_FLAGS_GCC = -O0
 endif
+
+# http://wiki.opencsw.org/porting-faq#toc13
+RUNTIME_DEP_PKGS = $(RUNTIME_DEP_PKGS_$(GAROSREL))
+RUNTIME_DEP_PKGS_5.9 = CSWlibgnugetopt
+EXTRA_LDFLAGS = $(EXTRA_LDFLAGS_$(GAROSREL))
+EXTRA_LDFLAGS_5.9 = -lgnugetopt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
