@@ -1,0 +1,30 @@
+From 940bca742236bc7be8ff157175b43630f6bf84dd Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 11 Aug 2011 17:28:18 +0200
+Subject: [PATCH] Use LOG_PERROR only when available
+
+---
+ dbus/dbus-sysdeps-util-unix.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/dbus/dbus-sysdeps-util-unix.c b/dbus/dbus-sysdeps-util-unix.c
+index a80f643..079a14d 100644
+--- a/dbus/dbus-sysdeps-util-unix.c
++++ b/dbus/dbus-sysdeps-util-unix.c
+@@ -425,7 +425,12 @@ _dbus_request_file_descriptor_limit (unsigned int limit)
+ void 
+ _dbus_init_system_log (void)
+ {
+-  openlog ("dbus", LOG_PID | LOG_PERROR, LOG_DAEMON);
++  openlog ("dbus", LOG_PID
++#ifdef LOG_PERROR
++  | LOG_PERROR
++#endif
++    , LOG_DAEMON);
++
+ }
+ /**
+  * Log a message to the system log file (e.g. syslog on Unix).
+-- 
+1.7.6
+
