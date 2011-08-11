@@ -80,7 +80,7 @@ PACKAGES += CSWlibkrb5support0
 CATALOGNAME_CSWlibkrb5support0 = libkrb5support0
 PKGFILES_CSWlibkrb5support0 += $(call baseisadirs,$(libdir),libkrb5support\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibkrb5support0 += MIT Kerberos 5 core libraries, libkrb5support.so.0
-OBSOLETED_BY_CSWlibkrb5-3 = CSWlibkrb5lib
+OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
 
 
 ARCHALL_CSWkrb5lib = 1
