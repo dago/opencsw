@@ -1,7 +1,7 @@
 # $Id$
 
 NAME      = gcc
-VERSION   = 4.6.1
+VERSION   = 4.3.6
 CATEGORIES   = lang
 GARTYPE = v2
 
