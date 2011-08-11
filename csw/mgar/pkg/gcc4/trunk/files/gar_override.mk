@@ -8,7 +8,7 @@ OBJECT_DIR    = $(WORKDIR)/objdir
 WORKSRC       = $(OBJECT_DIR)
 DIRPATHS      = 
 OPTFLAGS      =
-CONFIG_SHELL  = /bin/bash
+CONFIG_SHELL  = /opt/csw/bin/bash
 GARCOMPILER   = GCC3
 GCC3_CC       = /opt/csw/gcc3/bin/gcc -g -O2 -mcpu=v8 -pipe
 CFLAGS        = -I/opt/csw/include
