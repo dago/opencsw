@@ -16,7 +16,7 @@ fi
 
 prefix=/opt/csw
 exec_prefix=/opt/csw
-sysconfdir=/opt/csw/etc
+sysconfdir=/etc/opt/csw
 sbindir=/opt/csw/sbin
 
 pidfile=`$prefix/bin/puppet master --genconf | awk '/pidfile/ { print $3 }'`
