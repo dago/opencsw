@@ -24,7 +24,8 @@ CONFIGURE_SCRIPTS =
 PATCHFILES += 0001-remove-gcc-options.patch \
     0002-fix-for-building-with-solstudio.patch \
     0003-fix-installation-target.patch \
-    0004-skip-time-in-test-script.patch
+    0004-skip-time-in-test-script.patch \
+    0005-replace-GCC-extension.patch
 BUILD_ARGS = wiggle wiggle.man
 TEST_TARGET = test
 
