@@ -42,6 +42,53 @@ EXTRA_LDFLAGS_5.9 = -lgnugetopt
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+PACKAGES = CSWlibppl-dev
+SPKG_DESC_CSWlibppl-dev = $(DESCRIPTION) development files
+# catch-all package
+RUNTIME_DEP_PKGS_CSWlibppl-dev += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibppl-dev += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWlibppl-dev += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWlibppl-dev += CSWlibgmpxx4
+RUNTIME_DEP_PKGS_CSWlibppl-dev += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSWlibppl-dev += CSWlibppl-c4
+RUNTIME_DEP_PKGS_CSWlibppl-dev += CSWlibppl9
+RUNTIME_DEP_PKGS_CSWlibppl-dev += CSWlibpwl5
+CHECKPKG_OVERRIDES_CSWlibppl-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/ppl/README.doc
+CHECKPKG_OVERRIDES_CSWlibppl-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/pwl/README.doc
+
+PACKAGES += CSWlibppl9
+CATALOGNAME_CSWlibppl9 = libppl9
+PKGFILES_CSWlibppl9 += $(call baseisadirs,$(libdir),libppl\.so\.9\.0\.0)
+PKGFILES_CSWlibppl9 += $(call baseisadirs,$(libdir),libppl\.so\.9(\.\d+)*)
+SPKG_DESC_CSWlibppl9 += Parma Polyhedra Library, libppl.so.9
+RUNTIME_DEP_PKGS_CSWlibppl9 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibppl9 += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWlibppl9 += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWlibppl9 += CSWlibgmpxx4
+RUNTIME_DEP_PKGS_CSWlibppl9 += CSWlibgnugetopt0
+
+PACKAGES += CSWlibppl-c4
+CATALOGNAME_CSWlibppl-c4 = libppl_c4
+PKGFILES_CSWlibppl-c4 += $(call baseisadirs,$(libdir),libppl_c\.so\.4\.0\.0)
+PKGFILES_CSWlibppl-c4 += $(call baseisadirs,$(libdir),libppl_c\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibppl-c4 += Parma Polyhedra Library, libppl_c.so.4
+RUNTIME_DEP_PKGS_CSWlibppl-c4 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibppl-c4 += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWlibppl-c4 += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWlibppl-c4 += CSWlibgmpxx4
+RUNTIME_DEP_PKGS_CSWlibppl-c4 += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSWlibppl-c4 += CSWlibppl9
+RUNTIME_DEP_PKGS_CSWlibppl-c4 += CSWlibpwl5
+
+PACKAGES += CSWlibpwl5
+CATALOGNAME_CSWlibpwl5 = libpwl5
+PKGFILES_CSWlibpwl5 += $(call baseisadirs,$(libdir),libpwl\.so\.5\.0\.0)
+PKGFILES_CSWlibpwl5 += $(call baseisadirs,$(libdir),libpwl\.so\.5(\.\d+)*)
+SPKG_DESC_CSWlibpwl5 += Parma Polyhedra Library, libpwl.so.5
+RUNTIME_DEP_PKGS_CSWlibpwl5 += CSWgcc3corert
+RUNTIME_DEP_PKGS_CSWlibpwl5 += CSWgcc4g++rt
+RUNTIME_DEP_PKGS_CSWlibpwl5 += CSWlibgnugetopt0
+
 include gar/category.mk
 
 # To help the configure script find GNU M4
