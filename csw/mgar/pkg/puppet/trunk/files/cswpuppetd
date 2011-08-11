@@ -27,7 +27,7 @@ fi
 
 prefix="/opt/csw"
 exec_prefix="/opt/csw"
-sysconfdir="/etc/csw/opt"
+sysconfdir="/etc/opt/csw"
 sbindir="/opt/csw/sbin"
 localstatedir="/var/opt/csw"
 
