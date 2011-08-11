@@ -1,5 +1,17 @@
 # $Id$
+# 
+# ! The library builds, but there are two failing tests.
+# - http://www.cs.unipr.it/pipermail/ppl-devel/2011-August/017604.html
 #
+# The problem could be GCC Bug 40024 which seems to be affecting our released
+# version of the compiler.
+# 
+# http://lists.opencsw.org/pipermail/users/2011-May/008908.html
+# http://gcc.gnu.org/bugzilla/show_bug.cgi?id=40024
+#
+# One way to fix this, would be to build a newer version of the 4.3 line, e.g.
+# 4.3.6 and see what happens.
+
 NAME = ppl
 VERSION = 0.11.2
 GARTYPE = v2
