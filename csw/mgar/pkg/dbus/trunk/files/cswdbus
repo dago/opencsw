@@ -8,8 +8,8 @@
 
 . /lib/svc/share/smf_include.sh
 
-DBUS_VAR_DIR=/opt/csw/var/lib/dbus
-DBUS_VAR_RUN_DIR=/opt/csw/var/run/dbus
+DBUS_VAR_DIR=/var/opt/csw/lib/dbus
+DBUS_VAR_RUN_DIR=/var/opt/csw/run/dbus
 DBUS_MACHINE_ID_FILE=machine-id
 
 if [ ! -d $DBUS_VAR_DIR ]; then
@@ -22,7 +22,7 @@ fi
 
 if smf_is_nonglobalzone; then
        /usr/sbin/svcadm disable -t svc:/system/cswdbus
-        echo "dbus-daemon cannot be run in non-global zones"
+       echo "dbus-daemon cannot be run in non-global zones"
        sleep 5 &
        exit $SMF_EXIT_OK
 fi
