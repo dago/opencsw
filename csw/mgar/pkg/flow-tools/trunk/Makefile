@@ -1,7 +1,14 @@
+# $Id$
+
 NAME = flow-tools
 VERSION = 0.68.5.1
 CATEGORIES = net
-DESCRIPTION = Software for collection/processing NetFlow data from Cisco/Juniper.
+DESCRIPTION = Software for collection/processing NetFlow data from Cisco/Juniper
+
+# Issues:
+# /usr/local is referenced by two binaries:
+#  - /opt/csw/bin/flow-rptfmt
+#  - /opt/csw/bin/flow-rpt2rrd
 
 define BLURB
 
@@ -29,10 +36,27 @@ CONFIGURE_ARGS += --with-mysql=/opt/csw
 
 EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
 
-RUNTIME_DEP_PKGS_CSWflow-tools += CSWmysql5rt
+PACKAGES = CSWflow-tools
+SPKG_DESC_CSWflow-tools = $(DESCRIPTION)
+# Catch-all package, no PKGFILES.
+RUNTIME_DEP_PKGS_CSWflow-tools += CSWlibft0
 RUNTIME_DEP_PKGS_CSWflow-tools += CSWosslrt
 RUNTIME_DEP_PKGS_CSWflow-tools += CSWzlib
-RUNTIME_DEP_PKGS_CSWflow-tools += CSWpostgresql
+# Doesn't link against PostgreSQL libraries in practice.
+# RUNTIME_DEP_PKGS_CSWflow-tools += CSWpostgresql
+RUNTIME_DEP_PKGS_CSWflow-tools += CSWlibmysqlclient15
+OBSOLETED_BY_CSWflow-tools = CSWflowtools
+
+PACKAGES += CSWlibft0
+CATALOGNAME_CSWlibft0 = libft0
+PKGFILES_CSWlibft0 += $(call baseisadirs,$(libdir),libft\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibft0 += Software for collection/processing NetFlow data from Cisco/Juniper., libft.so.0
+RUNTIME_DEP_PKGS_CSWlibft0 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibft0 += CSWzlib
+
+PACKAGES += CSWflow-tools-dev
+SPKG_DESC_CSWflow-tools-dev = Flow-tools development files
+PKGFILES_CSWflow-tools-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWflow-tools-dev += CSWlibft0
 
 include gar/category.mk
-
