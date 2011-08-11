@@ -1,0 +1,101 @@
+From 8627bfc7f6dca6f2ba793c843813b404281a7bd2 Mon Sep 17 00:00:00 2001
+From: Oliver Kiddle <oliver.kiddle@esa.int>
+Date: Thu, 11 Aug 2011 11:05:32 +0200
+Subject: [PATCH] replace GCC extension
+
+---
+ vpatch.c |   64 +++++++++++++++++++++++++++++++++++--------------------------
+ 1 files changed, 37 insertions(+), 27 deletions(-)
+
+diff --git a/vpatch.c b/vpatch.c
+index 5f76ee8..1e48538 100644
+--- a/vpatch.c
++++ b/vpatch.c
+@@ -1541,7 +1541,16 @@ void merge_window(struct plist *p, FILE *f, int reverse)
+ 			if (row >= rows)
+ 				row = rows;
+ 			break;
+-		case '0' ... '9':
++                case '0':
++                case '1':
++                case '2':
++                case '3':
++                case '4':
++                case '5':
++                case '6':
++                case '7':
++                case '8':
++                case '9':
+ 			if (tnum < 0) tnum = 0;
+ 			num = tnum*10 + (c-'0');
+ 			break;
+@@ -1600,32 +1609,6 @@ void merge_window(struct plist *p, FILE *f, int reverse)
+ 				refresh = 1;
+ 			}
+ 			break;
+-		case SEARCH(' ') ... SEARCH('~'):
+-		case SEARCH('\t'):
+-			meta = SEARCH(0);
+-			if (searchlen < sizeof(search)-1)
+-				search[searchlen++] = c & (0x7f);
+-			search[searchlen] = 0;
+-			tpos = pos; trow = row;
+-		search_again:
+-			search_notfound = 1;
+-			do {
+-				if (mcontains(tpos, fm,fb,fa,ci.merger,mode,search)) {
+-					pos = tpos;
+-					row = trow;
+-					search_notfound = 0;
+-					break;
+-				}
+-				if (searchdir) {
+-					trow--;
+-					prev_mline(&tpos, fm,fb,fa,ci.merger,mode);
+-				} else {
+-					trow++;
+-					next_mline(&tpos, fm,fb,fa,ci.merger,mode);
+-				}
+-			} while (tpos.p.m >= 0 && ci.merger[tpos.p.m].type != End);
+-
+-			break;
+ 		case 'L'-64:
+ 			refresh = 2;
+ 			if (toprow >= 1) row -= (toprow+1);
+@@ -1771,6 +1754,33 @@ void merge_window(struct plist *p, FILE *f, int reverse)
+ #endif
+ 		}
+ 
++if (((c | tmeta) >= SEARCH(' ') && (c | tmeta) <= SEARCH('~')) ||
++ (c | tmeta) == SEARCH('\t')) {
++ 			meta = SEARCH(0);
++			if (searchlen < sizeof(search)-1)
++				search[searchlen++] = c & (0x7f);
++			search[searchlen] = 0;
++			tpos = pos; trow = row;
++		search_again:
++			search_notfound = 1;
++			do {
++				if (mcontains(tpos, fm,fb,fa,ci.merger,mode,search)) {
++					pos = tpos;
++					row = trow;
++					search_notfound = 0;
++					break;
++				}
++				if (searchdir) {
++					trow--;
++					prev_mline(&tpos, fm,fb,fa,ci.merger,mode);
++				} else {
++					trow++;
++					next_mline(&tpos, fm,fb,fa,ci.merger,mode);
++				}
++			} while (tpos.p.m >= 0 && ci.merger[tpos.p.m].type != End);
++
++}
++
+ 		if (meta == SEARCH(0)) {
+ 			if (anchor == NULL ||
+ 			    !same_mpos(anchor->pos, pos) ||
+-- 
+1.7.6
+
