@@ -2,7 +2,7 @@ NAME = krb5
 VERSION = 1.9.1
 CATEGORIES = server
 
-DESCRIPTION = MIT Kerberos 5
+DESCRIPTION = MIT Kerberos 5 core libraries
 define BLURB
   Kerberos is a network authentication protocol. It is designed to
   provide strong authentication for client/server applications by
@@ -23,10 +23,18 @@ PATCHFILES += 0005-Add-strings.h-to-setenv.c-for-strlen-and-other-stuff.patch
 BUILD_DEP_PKGS = CSWtcl
 
 PACKAGES = CSWlibkrb5-dev
-
-SPKG_DESC_CSWkrb5lib         = MIT Kerberos 5 core libraries
 SPKG_DESC_CSWlibkrb5-dev      = MIT Kerberos 5 developer libraries
-
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev = CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5support0
+# Catch-all package
+OBSOLETED_BY_CSWlibkrb5-dev = CSWkrb5libdev
+CATALOGNAME_CSWkrb5libdev = krb5_lib_dev_stub
+# /usr/local in a manpage is OK.
+CHECKPKG_OVERRIDES_CSWlibkrb5-dev += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/sserver.8
 
 PACKAGES += CSWlibcom-err3
 CATALOGNAME_CSWlibcom-err3 = libcom_err3
@@ -94,13 +102,6 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibkrb5-3 += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWlibk5crypto3 += CSWlibkrb5support0
 
-RUNTIME_DEP_PKGS_CSWlibkrb5-dev = CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5-3
-RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibk5crypto3
-RUNTIME_DEP_PKGS_CSWlibkrb5-dev += CSWlibkrb5support0
-
 LICENSE = doc/copyright.texinfo
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
@@ -129,18 +130,6 @@ TEST_TARGET = check
 SKIPTEST ?= 1
 
 INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile
-
-PKGFILES_CSWkrb5lib  = NOFILES
-
-PKGFILES_CSWlibkrb5-dev  = $(mandir)/man8/sserver.8
-PKGFILES_CSWlibkrb5-dev += $(mandir)/man1/(sclient|krb5-config|compile_et)\.1
-PKGFILES_CSWlibkrb5-dev += $(sbindir)/(uuserver|sserver|sim_server|gss-server)
-PKGFILES_CSWlibkrb5-dev += $(includedir)/.*
-PKGFILES_CSWlibkrb5-dev += $(bindir)/(uuclient|sim_client|sclient|krb5-config|gss-client|compile_et)
-OBSOLETED_BY_CSWlibkrb5-dev = CSWkrb5libdev
-CATALOGNAME_CSWkrb5libdev = krb5_lib_dev_stub
-# /usr/local in a manpage is OK.
-CHECKPKG_OVERRIDES_CSWlibkrb5-dev += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/sserver.8
 
 # This name is so old that there it is not recognized as devel-package
 CHECKPKG_OVERRIDES_CSWlibkrb5-dev += surplus-dependency|CSWkrb5lib
