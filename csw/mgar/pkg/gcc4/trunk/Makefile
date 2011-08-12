@@ -18,6 +18,9 @@ MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
+# GIT init takes a long time, disable for now, reenable if build works
+NOGITPATCH ?= 1
+
 ## build options
 CONFIGURE_ARGS  = --prefix=$(BUILD_PREFIX)/gcc4
 CONFIGURE_ARGS += --exec-prefix=$(BUILD_PREFIX)/gcc4
