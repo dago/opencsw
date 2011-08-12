@@ -6,7 +6,9 @@
 #RC_SLEV 3          # Run levels that should have a start script symlink
 #FMRI system        # FMRI path for service (S10+), default is /network.
 
-. /lib/svc/share/smf_include.sh
+if [ -f /lib/svc/share/smf_include.sh ]; then
+  . /lib/svc/share/smf_include.sh
+fi
 
 DBUS_VAR_DIR=/var/opt/csw/lib/dbus
 DBUS_VAR_RUN_DIR=/var/opt/csw/run/dbus
@@ -16,15 +18,15 @@ if [ ! -d $DBUS_VAR_DIR ]; then
     mkdir -p $DBUS_VAR_DIR
 fi
 
-if [ ! -f $DBUS_VAR_DIR/$DBUS_MACHINE_ID_FILE ]; then
-    /opt/csw/bin/dbus-uuidgen --ensure
-fi
-
-if smf_is_nonglobalzone; then
+if test "`uname -r`" = "5.10" && smf_is_nonglobalzone; then
        /usr/sbin/svcadm disable -t svc:/system/cswdbus
        echo "dbus-daemon cannot be run in non-global zones"
        sleep 5 &
        exit $SMF_EXIT_OK
+fi
+
+if [ ! -f $DBUS_VAR_DIR/$DBUS_MACHINE_ID_FILE ]; then
+    /opt/csw/bin/dbus-uuidgen --ensure
 fi
 
 case $1 in 
@@ -32,7 +34,13 @@ case $1 in
         if [ ! -d $DBUS_VAR_RUN_DIR ]; then
                 mkdir -p $DBUS_VAR_RUN_DIR
         fi
+
         if [ -f $DBUS_VAR_RUN_DIR/pid ]; then
+		kill -0 `cat $DBUS_VAR_RUN_DIR/pid`
+		if [ $? -eq 0 ]; then
+			echo "dbus already running"
+			exit 1
+		fi
                 rm -f $DBUS_VAR_RUN_DIR/pid
         fi
 
