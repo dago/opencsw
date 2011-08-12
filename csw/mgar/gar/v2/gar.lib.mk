@@ -813,12 +813,12 @@ CONFIGURE_ARGS ?= $(DIRPATHS) $(EXTRA_CONFIGURE_ARGS)
 # script.
 configure-%/configure:
 	@echo " ==> Running configure in $*"
-	cd $* && $(CONFIGURE_ENV) ./configure $(CONFIGURE_ARGS)
+	cd $* && mkdir -p $(OBJDIR) && cd $(OBJDIR) && $(CONFIGURE_ENV) $(abspath $*)/configure $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
 
 configure-%/autogen.sh:
 	@echo " ==> Running autogen.sh in $*"
-	@cd $* && $(CONFIGURE_ENV) ./autogen.sh $(CONFIGURE_ARGS)
+	cd $* && mkdir -p $(OBJDIR) && cd $(OBJDIR) && $(CONFIGURE_ENV) $(abspath $*)/autogen.sh $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
 
 # configure a package that uses imake
@@ -845,17 +845,17 @@ configure-%/waf:
 # build from a standard gnu-style makefile's default rule.
 build-%/Makefile:
 	@echo " ==> Running make in $*"
-	$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
+	cd $* && $(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/makefile:
 	@echo " ==> Running make in $*"
-	@$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
+	cd $* && @$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/GNUmakefile:
 	@echo " ==> Running make in $*"
-	@$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))")  $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(BUILD_ARGS)
+	cd $* && @$(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))")  $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/Jamfile:
@@ -900,17 +900,17 @@ CLEAN_ARGS ?= clean
 # build from a standard gnu-style makefile's default rule.
 clean-%/Makefile:
 	@echo " ==> Running clean in $*"
-	@$(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(CLEAN_ARGS)
+	@cd $* && $(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(CLEAN_ARGS)
 	@rm -f $(COOKIEDIR)/build-$*
 
 clean-%/makefile:
 	@echo " ==> Running clean in $*"
-	@$(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(CLEAN_ARGS)
+	@cd $* && $(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(CLEAN_ARGS)
 	@rm -f $(COOKIEDIR)/build-$*
 
 clean-%/GNUmakefile:
 	@echo " ==> Running clean in $*"
-	@$(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(CLEAN_ARGS)
+	@cd $* && $(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(CLEAN_ARGS)
 	@rm -f $(COOKIEDIR)/build-$*
 
 clean-%/Jamfile:
@@ -935,33 +935,33 @@ TEST_TARGET ?= check
 # Run tests on pre-built sources
 test-%/Makefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
+	cd $* && $(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 test-%/makefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@cd $* && $(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 test-%/GNUmakefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	@$(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $* $(TEST_ARGS) $(TEST_TARGET)
+	@cd $* && $(TEST_ENV) $(MAKE) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 # Ruby makefiles
 test-%/Rakefile:
 	@echo " ==> Running rake $(TEST_TARGET) in $*"
-	@( cd $* ; $(TEST_ENV) rake $(RAKEFLAGS) $(TEST_ARGS) $(TEST_TARGET) )
+	@( cd $* ; cd $(OBJDIR) ; $(TEST_ENV) rake $(RAKEFLAGS) $(TEST_ARGS) $(TEST_TARGET) )
 	@$(MAKECOOKIE)
 
 test-%/rakefile:
 	@echo " ==> Running rake $(TEST_TARGET) in $*"
-	@( cd $* ; $(TEST_ENV) rake $(RAKEFLAGS) $(TEST_ARGS) $(TEST_TARGET) )
+	@( cd $* ; cd $(OBJDIR) ; $(TEST_ENV) rake $(RAKEFLAGS) $(TEST_ARGS) $(TEST_TARGET) )
 	@$(MAKECOOKIE)
 
 test-%/setup.py:
 	@echo " ==> Running setup.py test in $*"
-	@( cd $* ; $(TEST_ENV) python ./setup.py test $(TEST_ARGS) )
+	@( cd $* ; cd $(OBJDIR) ; $(TEST_ENV) python ./setup.py test $(TEST_ARGS) )
 	@$(MAKECOOKIE)
 
 ################# INSTALL RULES ####################
@@ -969,17 +969,17 @@ test-%/setup.py:
 # just run make install and hope for the best.
 install-%/Makefile:
 	@echo " ==> Running make install in $*"
-	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
+	@cd $* && $(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
 	@$(MAKECOOKIE)
 
 install-%/makefile:
 	@echo " ==> Running make install in $*"
-	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
+	@cd $* && $(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
 	@$(MAKECOOKIE)
 
 install-%/GNUmakefile:
 	@echo " ==> Running make install in $*"
-	@$(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $* $(INSTALL_ARGS) install
+	@cd $* && $(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
 	@$(MAKECOOKIE)
 
 # Ruby makefiles
