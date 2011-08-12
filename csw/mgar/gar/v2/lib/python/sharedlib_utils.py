@@ -173,6 +173,8 @@ def GetCommonVersion(sonames):
 
 def ValidateCollectionName(l):
   letters = "".join(re.findall(r"[a-zA-Z]", l))
+  # Special case for libz
+  if len(letters) == 1 and letters[0] == 'z': return True
   if len(letters) <= 1:
     return False
   return True
