@@ -60,3 +60,8 @@ PKGFILES_CSWflow-tools-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWflow-tools-dev += CSWlibft0
 
 include gar/category.mk
+
+post-install-modulated:
+	/opt/csw/gnu/sed -in 's#/usr/local/netflow/var/#/etc/opt/csw/#g' $(DESTDIR)/opt/csw/bin/flow-rpt2rrd
+	/opt/csw/gnu/sed -in 's#/usr/local/netflow/var/#/etc/opt/csw/#g' $(DESTDIR)/opt/csw/bin/flow-rptfmt
+
