@@ -57,6 +57,8 @@ CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/cs
 CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/libdbus-1.so.3.6.3
 CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libdbus-1.so.3.6.3
 CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libdbus-1.so.3.6.3
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libdbus-1.so.3.6.3
+CHECKPKG_OVERRIDES_CSWlibdbus1-3 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libdbus-1.so.3.6.3
 
 PACKAGES += CSWlibdbus-dev
 SPKG_DESC_CSWlibdbus-dev = Development files for libdbus
