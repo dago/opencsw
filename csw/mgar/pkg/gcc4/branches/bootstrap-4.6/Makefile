@@ -12,14 +12,14 @@ define BLURB
 	for these languages (libstdc++, libgcj,...).
 endef
 
-DISTFILES    = $(NAME)-$(VERSION).tar.bz2
+DISTFILES    = $(DISTNAME).tar.bz2
 MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # GIT init takes a long time, disable for now, reenable if build works
-NOGITPATCH ?= 1
+# NOGITPATCH ?= 1
 
 ## build options
 CONFIGURE_ARGS  = --prefix=$(BUILD_PREFIX)/gcc4
@@ -34,20 +34,40 @@ CONFIGURE_ARGS += --with-libiconv-prefix=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-x
 CONFIGURE_ARGS += --with-mpfr=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-gmp=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --enable-java-awt=xlib
-CONFIGURE_ARGS += --enable-libada
+# CONFIGURE_ARGS += --enable-java-awt=xlib
+# CONFIGURE_ARGS += --enable-libada
 CONFIGURE_ARGS += --enable-libssp
 CONFIGURE_ARGS += --enable-objc-gc
 CONFIGURE_ARGS += --enable-threads=posix 
 CONFIGURE_ARGS += --enable-stage1-languages=c
-CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
+# We'll build ada later.
+# CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
+CONFIGURE_ARGS += --enable-languages=c,c++,fortran,java,objc
+CONFIGURE_ARGS += --enable-bootstrap
 
-## For cleanliness I split the Configuration into separate files
-include files/gar_override.mk
-include files/package_def.mk
-include files/pkg_scripts.mk
-include files/package_files.mk
-include files/amd_merge.mk
+# Different objdir
+OBJDIR          = objdir
+
+# These flags are passed when gcc is built with gcc.
+# Needed to remove FLAVOR_FLAGS, because they were Sun Studio specific.
+CFLAGS_FOR_TARGET = -O2 $(ARCHFLAGS_GCC4_$(ISA)) $(EXTRA_GCC4_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
+CXXFLAGS_FOR_TARGET = -O2 $(ARCHFLAGS_GCC4_$(ISA)) $(EXTRA_GCC4_CXX_FLAGS) $(EXTRA_GCC_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
+EXTRA_EXPORTS += CFLAGS_FOR_TARGET
+EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
+
+# bash must be used, otherwise:
+# http://fixunix.com/solaris/490396-gcc-build-fails-cannot-compute-suffix-object-files.html
+CONFIG_SHELL = /opt/csw/bin/bash
+EXTRA_EXPORTS += CONFIG_SHELL
+
+EXTRA_CONFIGURE_EXPORTS += CFLAGS_FOR_TARGET
+EXTRA_CONFIGURE_EXPORTS += CXXFLAGS_FOR_TARGET
+
+OBJDUMP=/opt/csw/bin/gobjdump
+EXTRA_EXPORTS += OBJDUMP
+
+PATCHFILES += 0001-clear-AM_CFLAGS-in-lto-plugin.patch
+
 include gar/category.mk
 
 # We need GNU find as find
