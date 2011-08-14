@@ -13,4 +13,7 @@ RUNTIME_DEP_PKGS += CSWgem-hoe
 
 GEM_BUILD_FLAGS = --with-mysql-config=$(abspath $(CURDIR))/mysql_config_wrapper
 
+# the default license for ruby gems is MIT-LICENSE
+LICENSE = COPYING
+
 include gar/category.mk
