@@ -1,0 +1,28 @@
+#!/opt/csw/bin/bash
+
+# Due to the way the gem command works, patching the source doesn't
+# help.  We need a way to filter the output of mysql_config directly.
+# This is ugly, but mysql_config --libs passes values like -m32,
+# -xarch= and -norunpath that make ld barf.  This is likely a mysql
+# bug but I need to do further investigation before filing it and want
+# to proceed with other tasks first
+
+case "$(uname -p)" in
+    sparc) MC=/opt/csw/mysql5/bin/sparcv8/mysql_config;;
+	*) MC=/opt/csw/mysql5/bin/i386/mysql_config;;
+esac
+
+case "$1" in
+    --libs)
+	_l=$(${MC} --libs)
+	LIBS=
+	for l in ${_l}; do
+	    case "${l}" in
+		-m*|*norunpath|*xarch*) ;;
+		*) LIBS="${LIBS} ${l}";;
+	    esac
+	done
+	echo ${LIBS}
+	;;
+	*) "${MC}" $@;;
+esac

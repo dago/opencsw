@@ -11,4 +11,6 @@ endef
 RUNTIME_DEP_PKGS += CSWgem-rake-compiler
 RUNTIME_DEP_PKGS += CSWgem-hoe
 
+GEM_BUILD_FLAGS = --with-mysql-config=$(abspath $(CURDIR))/mysql_config_wrapper
+
 include gar/category.mk
