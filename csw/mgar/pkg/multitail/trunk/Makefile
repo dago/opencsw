@@ -1,5 +1,5 @@
 NAME = multitail
-VERSION = 5.2.6
+VERSION = 5.2.8
 CATEGORIES = utils
 
 DESCRIPTION = View one or multiple files like the original tail program
@@ -19,7 +19,8 @@ MASTER_SITES = http://www.vanheusden.com/multitail/
 DISTFILES = $(NAME)-$(VERSION).tgz
 LICENSE = license.txt
 
-RUNTIME_DEP_PKGS = CSWncurses
+RUNTIME_DEP_PKGS_CSWmultitail += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWmultitail += CSWlibpanel5
 
 CONFIGURE_SCRIPTS = 
 TEST_SCRIPTS =
@@ -36,6 +37,7 @@ BUILD_ARGS  = -f makefile.solaris_sunwspro
 PRESERVECONF = .*/multitail\.conf
 MIGRATE_FILES = multitail.conf
 
+# perl is optional, needed for colorscript examples in $(sharedir)
 CHECKPKG_OVERRIDES_CSWmultitail += missing-dependency|CSWperl
 
 include gar/category.mk
