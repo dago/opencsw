@@ -10,4 +10,6 @@ endef
 
 LICENSE = COPYING
 
+RUNTIME_DEP_PKGS_CSWrb18-json-1-5-3 += CSWlibruby18-1
+
 include gar/category.mk
