@@ -126,18 +126,9 @@ class HtmlGenerator(object):
     for identifier in self.identifiers:
       srv4 = GetPkg(identifier)
       data = srv4.GetStatsStruct()
-      if "OPENCSW_REPOSITORY" in data["pkginfo"]:
-        build_src = data["pkginfo"]["OPENCSW_REPOSITORY"]
-        build_src_url_svn = re.sub(r'([^@]*).*', r'\1/Makefile', build_src)
-        build_src_url_trac = re.sub(
-            r'https://gar.svn.(sf|sourceforge).net/svnroot/gar/([^@]+)@(.*)',
-            r'http://sourceforge.net/apps/trac/gar/browser/\2/Makefile?rev=\3',
-            build_src)
-      else:
-        build_src = None
-        build_src_url_svn = None
-        build_src_url_trac = None
-      data["build_src"] = build_src
+      build_src_url_svn = srv4.GetSvnUrl()
+      build_src_url_trac = srv4.GetTracUrl()
+      data["build_src"] = data["pkginfo"]["OPENCSW_REPOSITORY"]
       data["build_src_url_svn"] = build_src_url_svn
       data["build_src_url_trac"] = build_src_url_trac
       data["error_tags"] = list(self.GetErrorTagsResult(srv4))
