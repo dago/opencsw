@@ -3,6 +3,7 @@
 # Defines models for package database.
 
 import logging
+import re
 import sqlobject
 import os.path
 from sqlobject import sqlbuilder
@@ -143,6 +144,10 @@ class Srv4FileStats(sqlobject.SQLObject):
   files = sqlobject.MultipleJoin('CswFile',
           joinColumn='id')
 
+  def __init__(self, *args, **kwargs):
+    super(Srv4FileStats, self).__init__(*args, **kwargs)
+    self._cached_pkgstats = None
+
   def DeleteAllDependentObjects(self):
     data_obj = self.data_obj
     self.data_obj = None
@@ -207,7 +212,40 @@ class Srv4FileStats(sqlobject.SQLObject):
         % (self.catalogname, self.version_string, self.arch.name))
 
   def GetStatsStruct(self):
-    return cPickle.loads(str(self.data_obj.pickle))
+    if not self._cached_pkgstats:
+      self._cached_pkgstats = cPickle.loads(str(self.data_obj.pickle))
+    return self._cached_pkgstats
+
+  def _GetBuildSource(self):
+    data = self.GetStatsStruct()
+    build_src = None
+    if "OPENCSW_REPOSITORY" in data["pkginfo"]:
+      build_src = data["pkginfo"]["OPENCSW_REPOSITORY"]
+    return build_src
+
+  def GetSvnUrl(self):
+    build_src = self._GetBuildSource()
+    svn_url = None
+    if build_src:
+      svn_url = re.sub(r'([^@]*).*', r'\1/Makefile', build_src)
+    return svn_url
+
+  def GetTracUrl(self):
+    build_src = self._GetBuildSource()
+    trac_url = None
+    if build_src:
+      trac_url = re.sub(
+            r'https://gar.svn.(sf|sourceforge).net/svnroot/gar/([^@]+)@(.*)',
+            r'http://sourceforge.net/apps/trac/gar/browser/\2/Makefile?rev=\3',
+            build_src)
+    return trac_url
+
+  def GetVendorUrl(self):
+    data = self.GetStatsStruct()
+    vendor_url = None
+    if "VENDOR" in data["pkginfo"]:
+      vendor_url = re.split(r"\s+", data["pkginfo"]["VENDOR"])[0]
+    return vendor_url
 
   def GetRestRepr(self):
     mimetype = "application/x-vnd.opencsw.pkg;type=srv4-detail"
@@ -230,6 +268,8 @@ class Srv4FileStats(sqlobject.SQLObject):
         # For compatibility with the catalog parser from catalog.py
         'version': self.version_string,
         # 'in_catalogs': unicode([unicode(x) for x in self.in_catalogs]),
+        'vendor_url': self.GetVendorUrl(),
+        'repository_url': self.GetSvnUrl(),
     }
     return mimetype, data
 
