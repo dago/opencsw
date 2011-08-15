@@ -44,6 +44,8 @@ CONFIGURE_ARGS += --enable-stage1-languages=c
 # CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
 CONFIGURE_ARGS += --enable-languages=c,c++,fortran,java,objc
 CONFIGURE_ARGS += --enable-bootstrap
+# CONFIGURE_ARGS += --with-arch=v8
+# CONFIGURE_ARGS += --with-arch-32=v8
 
 # GCC can't be built in the same directory with the sources.
 OBJDIR          = objdir
@@ -60,6 +62,9 @@ EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
 CONFIG_SHELL = /opt/csw/bin/bash
 EXTRA_EXPORTS += CONFIG_SHELL
 
+# work/solaris9-sparc/build-isa-sparcv8/gcc-4.6.1/objdir/lto-plugin/libtool
+# LIBTOOL = $(WORKSRC)/$(OBJDIR)/lto-plugin/libtool
+
 EXTRA_CONFIGURE_EXPORTS += CFLAGS_FOR_TARGET
 EXTRA_CONFIGURE_EXPORTS += CXXFLAGS_FOR_TARGET
 
@@ -67,6 +72,7 @@ EXTRA_CONFIGURE_EXPORTS += CXXFLAGS_FOR_TARGET
 # EXTRA_EXPORTS += OBJDUMP
 
 PATCHFILES += 0001-clear-AM_CFLAGS-in-lto-plugin.patch
+PATCHFILES += 0002-use-system-libtool.patch
 
 include gar/category.mk
 

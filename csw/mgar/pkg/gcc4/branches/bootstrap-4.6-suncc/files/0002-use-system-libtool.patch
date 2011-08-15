@@ -1,0 +1,30 @@
+From 652fb0024f50d2c2d3096337cff5c66152daf6e6 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Mon, 15 Aug 2011 17:59:19 +0200
+Subject: [PATCH] use system libtool
+
+Works around a compilation breakage:
+http://gcc.gnu.org/ml/gcc-help/2011-08/msg00191.html
+
+It looks like there are 2 ways to compile it:
+ - to not have /opt/csw/bin/libtool
+ - or to have /opt/csw/bin/libtool and force the use with lto-plugin
+---
+ Makefile.in |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 660f813..f878c76 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -45247,6 +45247,7 @@ configure-lto-plugin:
+ 	srcdiroption="--srcdir=$${topdir}/lto-plugin"; \
+ 	libsrcdir="$$s/lto-plugin"; \
+ 	$(SHELL) $${libsrcdir}/configure \
++	  LIBTOOL=/opt/csw/bin/libtool \
+ 	  $(HOST_CONFIGARGS) --build=${build_alias} --host=${host_alias} \
+ 	  --target=${target_alias} $${srcdiroption} --enable-shared \
+ 	  || exit 1
+-- 
+1.7.6
+
