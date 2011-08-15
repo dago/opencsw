@@ -84,6 +84,14 @@ $for osrel, arch, catrel, tags_in_cat in tags_and_catalogs:
     </li>
 </ul>
 
+<h3>pkgmap</h3>
+
+<div style="background-color: #DDD; font-family: monospace;">
+<pre>
+$for entry in pkg.GetStatsStruct()["pkgmap"]: $entry["line"]
+</pre>
+</div>
+
 <h3>Raw dump of the Python data structure</h3>
 <pre>
 $pkgstats_raw
