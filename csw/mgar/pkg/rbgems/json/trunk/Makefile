@@ -8,4 +8,6 @@ define BLURB
   This is a JSON implementation as a Ruby extension in C.
 endef
 
+LICENSE = COPYING
+
 include gar/category.mk
