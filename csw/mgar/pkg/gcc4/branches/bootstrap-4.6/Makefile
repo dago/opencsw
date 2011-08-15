@@ -34,7 +34,7 @@ CONFIGURE_ARGS += --with-libiconv-prefix=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-x
 CONFIGURE_ARGS += --with-mpfr=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-gmp=$(BUILD_PREFIX)
-# CONFIGURE_ARGS += --enable-java-awt=xlib
+CONFIGURE_ARGS += --enable-java-awt=xlib
 # CONFIGURE_ARGS += --enable-libada
 CONFIGURE_ARGS += --enable-libssp
 CONFIGURE_ARGS += --enable-objc-gc
@@ -45,7 +45,7 @@ CONFIGURE_ARGS += --enable-stage1-languages=c
 CONFIGURE_ARGS += --enable-languages=c,c++,fortran,java,objc
 CONFIGURE_ARGS += --enable-bootstrap
 
-# Different objdir
+# GCC can't be built in the same directory with the sources.
 OBJDIR          = objdir
 
 # These flags are passed when gcc is built with gcc.
@@ -63,8 +63,8 @@ EXTRA_EXPORTS += CONFIG_SHELL
 EXTRA_CONFIGURE_EXPORTS += CFLAGS_FOR_TARGET
 EXTRA_CONFIGURE_EXPORTS += CXXFLAGS_FOR_TARGET
 
-OBJDUMP=/opt/csw/bin/gobjdump
-EXTRA_EXPORTS += OBJDUMP
+# OBJDUMP=/opt/csw/bin/gobjdump
+# EXTRA_EXPORTS += OBJDUMP
 
 PATCHFILES += 0001-clear-AM_CFLAGS-in-lto-plugin.patch
 
