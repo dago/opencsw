@@ -1,0 +1,26 @@
+From 8386fb5b4d4557eaf78f62409780c4fb6df6e55b Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 16 Aug 2011 17:51:24 +0200
+Subject: [PATCH] Make call to version explicit to avoid clash with math.h
+ from gcc
+
+---
+ interfaces/Java/jni/ppl_java_globals.cc |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/interfaces/Java/jni/ppl_java_globals.cc b/interfaces/Java/jni/ppl_java_globals.cc
+index 019d02f..c17e439 100644
+--- a/interfaces/Java/jni/ppl_java_globals.cc
++++ b/interfaces/Java/jni/ppl_java_globals.cc
+@@ -735,7 +735,7 @@ Java_parma_1polyhedra_1library_Parma_1Polyhedra_1Library_version_1beta
+ JNIEXPORT jstring JNICALL
+ Java_parma_1polyhedra_1library_Parma_1Polyhedra_1Library_version
+ (JNIEnv* env, jclass) {
+-  return env->NewStringUTF(version());
++  return env->NewStringUTF(Parma_Polyhedra_Library::version());
+ }
+ 
+ JNIEXPORT jstring JNICALL
+-- 
+1.7.6
+

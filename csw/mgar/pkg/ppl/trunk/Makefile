@@ -30,6 +30,7 @@ MASTER_SITES = http://www.cs.unipr.it/ppl/Download/ftp/releases/$(VERSION)/
 DISTFILES  = $(DISTNAME).tar.gz
 
 PATCHFILES += 0001-R1-is-defined-in-usr-include-ia32-sys-reg.h-disturbi.patch
+PATCHFILES += 0002-Make-call-to-version-explicit-to-avoid-clash-with-ma.patch
 
 VENDOR_URL = http://www.cs.unipr.it/ppl/
 
