@@ -1,0 +1,26 @@
+From 22af798915437c4e0f6a39fe372baf5082ef67fd Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 16 Aug 2011 14:10:03 +0200
+Subject: [PATCH] R1 is defined in /usr/include/ia32/sys/reg.h disturbing the
+ test
+
+---
+ tests/Box/refinewithconstraints1.cc |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/tests/Box/refinewithconstraints1.cc b/tests/Box/refinewithconstraints1.cc
+index ac4c91f..179da0d 100644
+--- a/tests/Box/refinewithconstraints1.cc
++++ b/tests/Box/refinewithconstraints1.cc
+@@ -23,6 +23,8 @@ site: http://www.cs.unipr.it/ppl/ . */
+ 
+ #include "ppl_test.hh"
+ 
++#undef R1
++
+ namespace {
+ 
+ bool
+-- 
+1.7.6
+
