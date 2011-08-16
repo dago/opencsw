@@ -64,4 +64,7 @@ include gar/category.mk
 post-install-modulated:
 	/opt/csw/gnu/sed -in 's#/usr/local/netflow/var/#/etc/opt/csw/#g' $(DESTDIR)/opt/csw/bin/flow-rpt2rrd
 	/opt/csw/gnu/sed -in 's#/usr/local/netflow/var/#/etc/opt/csw/#g' $(DESTDIR)/opt/csw/bin/flow-rptfmt
+	rm -f $(DESTDIR)/opt/csw/bin/flow-rpt2rrdn
+	rm -f $(DESTDIR)/opt/csw/bin/flow-rptfmtn
+
 
