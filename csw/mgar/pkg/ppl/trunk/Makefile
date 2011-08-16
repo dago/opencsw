@@ -29,6 +29,8 @@ BUILD_DEP_PKGS += CSWgm4
 MASTER_SITES = http://www.cs.unipr.it/ppl/Download/ftp/releases/$(VERSION)/
 DISTFILES  = $(DISTNAME).tar.gz
 
+PATCHFILES += 0001-R1-is-defined-in-usr-include-ia32-sys-reg.h-disturbi.patch
+
 VENDOR_URL = http://www.cs.unipr.it/ppl/
 
 # C++ bindings require the consistency between GMP, PPL and GCC.
