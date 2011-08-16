@@ -1,11 +1,12 @@
-# Todo:
+# TODO (release-critical prefixed with !, non release-critical with *)
+# ! config file patch currently doesn't apply cleanly
 # * postinstall mknod not possible within zone (mknod fails with "not owner")
 #   Work around this or provide README.CSW with instructions for chroot
 #   --> Why should /dev/zero be required at all? google suggests relation
 #       to pthreads .. truss doesn't show /dev/zero usage on Solaris 10
 #       Test on Solaris 8 / 9 for comparison
 NAME = stunnel
-VERSION = 4.33
+VERSION = 4.41
 CATEGORIES = net
 
 DESCRIPTION = Universal SSL Wrapper
@@ -18,13 +19,17 @@ define BLURB
 endef
 
 VENDOR_URL   = http://www.stunnel.org
-MASTER_SITES = http://www.stunnel.org/download/stunnel/src/
+MASTER_SITES = ftp://ftp.stunnel.org/stunnel/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+
+# Note that upstream moves versions to an obsolete/ subdir over time
+MAJOR_VER = $(firstword $(subst ., ,$(VERSION)))
+MASTER_SITES += ftp://ftp.stunnel.org/stunnel/obsolete/$(MAJOR_VER).x/
 
 RUNTIME_DEP_PKGS = CSWzlib CSWosslrt CSWtcpwrap
 
 # Make stunnel.conf-sample.in honor $localstatedir adjustments
+# c.f. http://marc.info/?l=stunnel-users&m=128035848632004&w=2
 PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
