@@ -29,7 +29,10 @@ MASTER_SITES += ftp://ftp.stunnel.org/stunnel/obsolete/$(MAJOR_VER).x/
 RUNTIME_DEP_PKGS = CSWzlib CSWosslrt CSWtcpwrap
 
 # Make stunnel.conf-sample.in honor $localstatedir adjustments
-# c.f. http://marc.info/?l=stunnel-users&m=128035848632004&w=2
+# cf. http://marc.info/?l=stunnel-users&m=128035848632004&w=2
+# Not merged upstream as ./configure without arguments leads to
+# expansions that the config file doesn't understand, e.g.
+# sysconfdir='${prefix}/etc' (cf. config.log)
 PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
