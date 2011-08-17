@@ -7,8 +7,8 @@ define BLURB
   Rake is a Make-like program implemented in Ruby. Tasks and dependencies are specified in standard Ruby syntax.
 endef
 
-PACKAGES = CSWgem-rake
-CATALOGNAME = gem_rake
+#PACKAGES = CSWgem-rake
+#CATALOGNAME = gem_rake
 
 LICENSE = MIT-LICENSE
 
