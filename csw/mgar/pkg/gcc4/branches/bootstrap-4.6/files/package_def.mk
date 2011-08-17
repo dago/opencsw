@@ -50,37 +50,24 @@ RUNTIME_DEP_PKGS_CSWgcc4adart       = CSWgcc4corert
 # RUNTIME_DEP_PKGS_CSWgcc4gfortranrt  = CSWgcc4corert
 # PKGFILES_CSWgcc4gfortranrt  = $(libdir)/.*libgfortran.*\.so.*
 
-PACKAGES += CSWgcc4javart
-CATALOGNAME_CSWgcc4javart     = gcc4javart
-SPKG_DESC_CSWgcc4javart     = GNU Java Compiler Run Time
-RUNTIME_DEP_PKGS_CSWgcc4javart      = CSWgcc4corert CSWgcc4g++rt
-PKGFILES_CSWgcc4javart  = $(libdir)/.*libgij.*\.so.*
-PKGFILES_CSWgcc4javart += $(libdir)/.*libffi.*\.so.*
-PKGFILES_CSWgcc4javart += $(libdir)/.*lib-gnu-awt.*\.so.*
-PKGFILES_CSWgcc4javart += $(libdir)/.*security/classpath.*
-PKGFILES_CSWgcc4javart += $(libdir)/.*logging.properties
-PKGFILES_CSWgcc4javart += $(libdir)/.*pkgconfig.*
-PKGFILES_CSWgcc4javart += $(libdir)/.*gcj.*\.so.*
-PKGFILES_CSWgcc4javart += $(libdir)/.*libgcj.*\.so.*
+# PACKAGES += CSWgcc4javart
+# CATALOGNAME_CSWgcc4javart     = gcc4javart
+# SPKG_DESC_CSWgcc4javart     = GNU Java Compiler Run Time
+# RUNTIME_DEP_PKGS_CSWgcc4javart      = CSWgcc4corert CSWgcc4g++rt
+# PKGFILES_CSWgcc4javart  = $(libdir)/.*libgij.*\.so.*
+# PKGFILES_CSWgcc4javart += $(libdir)/.*libffi.*\.so.*
+# PKGFILES_CSWgcc4javart += $(libdir)/.*lib-gnu-awt.*\.so.*
+# PKGFILES_CSWgcc4javart += $(libdir)/.*security/classpath.*
+# PKGFILES_CSWgcc4javart += $(libdir)/.*logging.properties
+# PKGFILES_CSWgcc4javart += $(libdir)/.*pkgconfig.*
+# PKGFILES_CSWgcc4javart += $(libdir)/.*gcj.*\.so.*
+# PKGFILES_CSWgcc4javart += $(libdir)/.*libgcj.*\.so.*
 
-PACKAGES += CSWgcc4objc
-CATALOGNAME_CSWgcc4objc       = gcc4objc
-SPKG_DESC_CSWgcc4objc       = GNU Objective C Compiler
-PKGFILES_CSWgcc4objc  = $(libexecdir)/.*cc1obj
-PKGFILES_CSWgcc4objc += $(libdir)/.*libobjc.*a
-PKGFILES_CSWgcc4objc += $(includedir)/.*objc/.*
-PKGFILES_CSWgcc4objc += $(libdir)/.*/include/objc/.*
-RUNTIME_DEP_PKGS_CSWgcc4objc += CSWgcc4objcrt
-RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibmpfr4
-RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibgmp10
-
-
-PACKAGES += CSWgcc4objcrt
-CATALOGNAME_CSWgcc4objcrt     = gcc4objcrt
-SPKG_DESC_CSWgcc4objcrt     = GNU Objective C Compiler Run Time
-RUNTIME_DEP_PKGS_CSWgcc4objcrt      = CSWgcc4corert
-PKGFILES_CSWgcc4objcrt = $(libdir)/.*libobjc.*\.so.*
+# PACKAGES += CSWgcc4objcrt
+# CATALOGNAME_CSWgcc4objcrt     = gcc4objcrt
+# SPKG_DESC_CSWgcc4objcrt     = GNU Objective C Compiler Run Time
+# RUNTIME_DEP_PKGS_CSWgcc4objcrt      = CSWgcc4corert
+# PKGFILES_CSWgcc4objcrt = $(libdir)/.*libobjc.*\.so.*
  
 ## Source URLs
 VENDOR_URL = http://gcc.gnu.org
