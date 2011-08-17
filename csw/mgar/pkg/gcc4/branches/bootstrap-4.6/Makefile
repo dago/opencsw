@@ -62,9 +62,13 @@ CONFIGURE_ARGS += --with-system-zlib
 # aren't so let's specify architectures by hand.
 CPU_sparc_32 = v8
 CPU_sparc_64 = v9
+CPU_i386_32 = i386
+CPU_i386_64 = amd64
 
-CONFIGURE_ARGS += --with-arch-32=$(CPU_$(GARCH)_32)
-CONFIGURE_ARGS += --with-arch-64=$(CPU_$(GARCH)_64)
+# CONFIGURE_ARGS += --with-cpu-32=$(CPU_$(GARCH)_32)
+# CONFIGURE_ARGS += --with-cpu-64=$(CPU_$(GARCH)_64)
+
+CONFIGURE_ARGS += --with-cpu=$(CPU_$(GARCH)_32)
 
 # GCC can't be built in the same directory with the sources.
 OBJDIR          = objdir
@@ -100,7 +104,54 @@ SKIPTEST = 1
 
 PACKAGES = CSWgcc4core
 SPKG_DESC_CSWgcc4core = GNU C compiler
-RUNTIME_DEP_PKGS_CSWgcc4core = CSWbinutils
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlib-gnu-awt-xlib12
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibffi4
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcj-tools12
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcj12
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgij12
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgomp1
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibmpc2
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibmpfr4
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibssp0
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibz1
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWpython
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWbinutils
+RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibmpc2
+RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibobjc-gc3
+RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibobjc3
+RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgcj-tools12 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgcj12 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgij12 += CSWlibz1
+
+# Because I can.
+CHECKPKG_OVERRIDES_CSWgcc4core += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWgcc4g++ += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWgcc4java += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWlibgcj12 += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|/opt/csw/gcc4/libexec/gcc/sparc-sun-solaris2.9/4.6.1/liblto_plugin.la
+CHECKPKG_OVERRIDES_CSWgcc4objc += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWgcc4gfortran += file-with-bad-content
+# Due to complex regular expressions
+CHECKPKG_OVERRIDES_CSWgcc4java += file-collision|/opt/csw/gcc4/include/c++/4.6.1/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
+CHECKPKG_OVERRIDES_CSWgcc4g++ += file-collision|/opt/csw/gcc4/include/c++/4.6.1/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
+
+# From the 'hopeless errors' department:
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/libffi.so|CSWgcc3javart|CSWgcc4core
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/libgcc_s.so|CSWgcc3core|CSWgcc4core
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/libgcj.so|CSWgcc3javart|CSWgcc4core
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/libobjc.so|CSWgcc3objcrt|CSWgcc4core
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/sparcv9/lib-gnu-awt-xlib.so|CSWgcc3javart|CSWgcc4core
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/sparcv9/libffi.so|CSWgcc3javart|CSWgcc4core
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/sparcv9/libgcj.so|CSWgcc3javart|CSWgcc4core
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/sparcv9/libobjc.so|CSWgcc3objcrt|CSWgcc4core
+CHECKPKG_OVERRIDES_CSWgcc4objc += file-collision|/opt/csw/lib/libobjc.so|CSWgcc3objcrt|CSWgcc4objc
+CHECKPKG_OVERRIDES_CSWgcc4objc += file-collision|/opt/csw/lib/sparcv9/libobjc.so|CSWgcc3objcrt|CSWgcc4objc
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/lib-gnu-awt-xlib.so|CSWgcc3javart|CSWgcc4core
+
+
 # Catch-all package
 
 PACKAGES += CSWlib-gnu-awt-xlib12
@@ -194,14 +245,16 @@ PKGFILES_CSWgcc4g++  = $(bindir)/g\+\+
 PKGFILES_CSWgcc4g++ += $(bindir)/c\+\+
 PKGFILES_CSWgcc4g++ += $(libexecdir)/.*cc1plus
 PKGFILES_CSWgcc4g++ += $(libdir)/.*libstdc.*a
+PKGFILES_CSWgcc4g++ += $(call baseisadirs,$(libdir),libstdc\+\+\.so)
 PKGFILES_CSWgcc4g++ += $(mandir)/.*g\+\+.1
+# I do not understand this regular expression.
 PKGFILES_CSWgcc4g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/[a-fA-F,h-iH-I,k-nI-N,p-zP-Z,]+.*
 PKGFILES_CSWgcc4g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/ostream.*
-RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibmpfr4
-RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibgmp10
-RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibmpc2
+RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibmpfr4
+RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibz1
 
 OBSOLETED_BY_CSWlibgcc-s1 += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWlibgij12 += CSWlibgcc-s1
@@ -211,22 +264,30 @@ PACKAGES += CSWgcc4gfortran
 CATALOGNAME_CSWgcc4gfortran   = gcc4gfortran
 SPKG_DESC_CSWgcc4gfortran   = GNU Fortran Compiler
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibmpfr4
-RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibgfortran3
+RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibmpc2
+RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibz1
 PKGFILES_CSWgcc4gfortran  = $(bindir)/gfortran
 PKGFILES_CSWgcc4gfortran += $(libdir)/.*libgfortran.*a
 PKGFILES_CSWgcc4gfortran += $(libexecdir)/.*f951
 PKGFILES_CSWgcc4gfortran += $(mandir)/.*gfortran.1
 PKGFILES_CSWgcc4gfortran += .*/gcc4/info/gfortran.*
+PKGFILES_CSWgcc4gfortran += $(call baseisadirs,$(libdir),libgfortran\.so)
+OBSOLETED_BY_CSWgcc4gfortran  = CSWgcc4g95
+OBSOLETED_BY_CSWgcc4gfortran += CSWgcc4g95rt
 
 PACKAGES += CSWgcc4java
 CATALOGNAME_CSWgcc4java       = gcc4java
 SPKG_DESC_CSWgcc4java       = GNU Java Compiler
-RUNTIME_DEP_PKGS_CSWgcc4java        = CSWgcc4corert CSWgcc4javart
-RUNTIME_DEP_PKGS_CSWgcc4java += CSWzlib
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibmpfr4
-RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgmp10
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcj-tools12
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcj12
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgij12
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibmpc2
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibz1
 
 PKGFILES_CSWgcc4java  = $(bindir)/.*gcj.*
 PKGFILES_CSWgcc4java += $(bindir)/.*jv-scan
@@ -282,6 +343,17 @@ PKGFILES_CSWgcc4java += $(includedir)/.*java.*
 PKGFILES_CSWgcc4java += $(includedir)/.*ffi.h
 PKGFILES_CSWgcc4java += $(includedir)/.*org/.*
 
+PACKAGES += CSWgcc4objc
+CATALOGNAME_CSWgcc4objc       = gcc4objc
+SPKG_DESC_CSWgcc4objc       = GNU Objective C Compiler
+PKGFILES_CSWgcc4objc  = $(libexecdir)/.*cc1obj
+PKGFILES_CSWgcc4objc += $(libdir)/.*libobjc.*a
+PKGFILES_CSWgcc4objc += $(includedir)/.*objc/.*
+PKGFILES_CSWgcc4objc += $(libdir)/.*/include/objc/.*
+PKGFILES_CSWgcc4objc += $(call baseisadirs,$(libdir),libobjc.so)
+PKGFILES_CSWgcc4objc += $(call baseisadirs,$(libdir),libobjc_gc.so)
+RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibmpfr4
+RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibgmp10
 
 include gar/category.mk
 
