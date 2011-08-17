@@ -1,5 +1,4 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
-# ! config file patch currently doesn't apply cleanly
 # * postinstall mknod not possible within zone (mknod fails with "not owner")
 #   Work around this or provide README.CSW with instructions for chroot
 #   --> Why should /dev/zero be required at all? google suggests relation
@@ -55,7 +54,7 @@ PROTOTYPE_FILES_restrict = $(localstatedir)/lib/stunnel.*
 PROTOTYPE_USER_restrict  = nobody
 PROTOTYPE_GROUP_restrict = nobody
 
-EXTRA_PAX_ARGS = '-s,ChangeLog$$,changelog,p'
+EXTRA_PAX_ARGS = -s ',ChangeLog$$,changelog,p'
 
 include gar/category.mk
 
