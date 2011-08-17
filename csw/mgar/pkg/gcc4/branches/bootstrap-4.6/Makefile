@@ -1,4 +1,6 @@
 # $Id$
+#
+# ! Ada is not built yet, it requires PPL which isn't built yet.
 
 NAME      = gcc
 VERSION   = 4.6.1
@@ -20,6 +22,12 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 # GIT init takes a long time, disable for now, reenable if build works
 NOGITPATCH ?= 1
+
+## Source URLs
+VENDOR_URL = http://gcc.gnu.org
+
+## Copyright File
+LICENSE = COPYING3
 
 prefix = $(BUILD_PREFIX)/gcc4
 libdir_install = $(BUILD_PREFIX)/lib
@@ -60,6 +68,8 @@ CONFIGURE_ARGS += --with-system-zlib
 
 # there could be some abstractions in gar.conf.mk, but at the moment there
 # aren't so let's specify architectures by hand.
+#
+# This avoids the sparcv8+ binaries.
 CPU_sparc_32 = v8
 CPU_sparc_64 = v9
 CPU_i386_32 = i386
@@ -355,6 +365,7 @@ PKGFILES_CSWgcc4objc += $(call baseisadirs,$(libdir),libobjc_gc.so)
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibmpfr4
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibgmp10
 
+include files/scripts.mk
 include gar/category.mk
 
 # We need GNU find as find
