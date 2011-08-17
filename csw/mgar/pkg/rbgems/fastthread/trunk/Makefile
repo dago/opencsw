@@ -14,4 +14,6 @@ CATALOGNAME = gem_fastthread
 
 LICENSE = COPYING
 
+RUNTIME_DEP_PKGS = CSWlibruby18-1
+
 include gar/category.mk
