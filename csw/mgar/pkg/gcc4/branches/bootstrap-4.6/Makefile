@@ -1,6 +1,10 @@
 # $Id$
 #
 # ! Ada is not built yet, it requires PPL which isn't built yet.
+#
+# amd64 compilation fails
+# potentially related bug:
+# http://gcc.gnu.org/bugzilla/show_bug.cgi?id=39048
 
 NAME      = gcc
 VERSION   = 4.6.1
@@ -142,13 +146,14 @@ CHECKPKG_OVERRIDES_CSWgcc4core += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4g++ += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4java += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWlibgcj12 += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|/opt/csw/gcc4/libexec/gcc/sparc-sun-solaris2.9/4.6.1/liblto_plugin.la
-CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|/opt/csw/gcc4/libexec/gcc/i386-pc-solaris2.9/4.6.1/liblto_plugin.la
+CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|/opt/csw/gcc4/libexec/gcc/i386-pc-solaris2.9/$(VERSION)/liblto_plugin.la
+CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|/opt/csw/gcc4/libexec/gcc/sparc-sun-solaris2.9/$(VERSION)/liblto_plugin.la
+CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|/opt/csw/gcc4/libexec/gcc/sparc-sun-solaris2.10/$(VERSION)/liblto_plugin.la
 CHECKPKG_OVERRIDES_CSWgcc4objc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4gfortran += file-with-bad-content
 # Due to complex regular expressions
-CHECKPKG_OVERRIDES_CSWgcc4java += file-collision|/opt/csw/gcc4/include/c++/4.6.1/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
-CHECKPKG_OVERRIDES_CSWgcc4g++ += file-collision|/opt/csw/gcc4/include/c++/4.6.1/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
+CHECKPKG_OVERRIDES_CSWgcc4java += file-collision|/opt/csw/gcc4/include/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
+CHECKPKG_OVERRIDES_CSWgcc4g++ += file-collision|/opt/csw/gcc4/include/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
 
 # From the 'hopeless errors' department:
 CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/libffi.so|CSWgcc3javart|CSWgcc4core
@@ -163,6 +168,10 @@ CHECKPKG_OVERRIDES_CSWgcc4objc += file-collision|/opt/csw/lib/libobjc.so|CSWgcc3
 CHECKPKG_OVERRIDES_CSWgcc4objc += file-collision|/opt/csw/lib/sparcv9/libobjc.so|CSWgcc3objcrt|CSWgcc4objc
 CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/lib-gnu-awt-xlib.so|CSWgcc3javart|CSWgcc4core
 
+# Some static libraries are required to build binaries with gcc, for example
+# libgcc.a and libgcc_eh.a. Otherwise: ld: fatal: library -lgcc: not found
+MERGE_EXCLUDE_LIBTOOL =
+MERGE_EXCLUDE_STATICLIBS =
 
 # Catch-all package
 
