@@ -1,4 +1,1 @@
-e75c460d8ff1a91bd295277824b4f080  0001-CFLAGS-LDFLAGS-for-SOS12-shared-lib.patch
-989947c7661176ad26174bf5b65f4ee0  0002-test-should-depend-on-bzip2.patch
-f76155cd90d532f21ea33d5e681ba3a9  0003-generate-bzip2recover.patch
-3c15a0c8d1d3ee1c46a1634d00617b1a  bzip2-1.0.5.tar.gz
+00b516f4704d4a7cb50a1d97e6e8e15b  bzip2-1.0.6.tar.gz
