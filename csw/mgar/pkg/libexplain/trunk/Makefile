@@ -67,3 +67,6 @@ TEST_OVERRIDE_VAR_SH = /bin/bash
 
 include gar/category.mk
 
+# Needed for GNU fmt as discussed here:
+#   http://sourceforge.net/mailarchive/message.php?msg_id=27942063
+PATH := /opt/csw/gnu:$(PATH)
