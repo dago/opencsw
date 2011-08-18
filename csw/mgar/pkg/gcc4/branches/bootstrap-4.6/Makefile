@@ -254,8 +254,13 @@ PACKAGES_i386 += CSWlibquadmath0
 CATALOGNAME_CSWlibquadmath0 = libquadmath0
 PKGFILES_CSWlibquadmath0 += $(call baseisadirs,$(libdir),libquadmath\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibquadmath0 += GNU C compiler, libquadmath.so.0
-RUNTIME_DEP_PKGS_CSWgfortran3 += CSWlibquadmath0
+RUNTIME_DEP_PKGS_CSWlibquadmath0 += CSWlibgcc-s1
 
+# Dependencies only on Intel
+RUNTIME_DEP_PKGS_CSWgcc4core_i386 += CSWlibquadmath0
+RUNTIME_DEP_PKGS_CSWlibgfortran3_i386 += CSWlibquadmath0
+RUNTIME_DEP_PKGS_CSWgcc4core += $(RUNTIME_DEP_PKGS_CSWgcc4core_$(GARCH))
+RUNTIME_DEP_PKGS_CSWgcc4libgfortran3 += $(RUNTIME_DEP_PKGS_CSWgcc4libgfortran3_$(GARCH))
 
 PACKAGES += CSWgcc4g++
 CATALOGNAME_CSWgcc4g++ = gcc4g++
