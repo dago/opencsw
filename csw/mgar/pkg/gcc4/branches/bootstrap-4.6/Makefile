@@ -142,6 +142,7 @@ CHECKPKG_OVERRIDES_CSWgcc4g++ += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4java += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWlibgcj12 += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|/opt/csw/gcc4/libexec/gcc/sparc-sun-solaris2.9/4.6.1/liblto_plugin.la
+CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|/opt/csw/gcc4/libexec/gcc/i386-pc-solaris2.9/4.6.1/liblto_plugin.la
 CHECKPKG_OVERRIDES_CSWgcc4objc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4gfortran += file-with-bad-content
 # Due to complex regular expressions
@@ -247,6 +248,15 @@ PKGFILES_CSWlibstdc++6 += $(call baseisadirs,$(libdir),libstdc\+\+\.so\.6(\.\d+)
 SPKG_DESC_CSWlibstdc++6 += The GNU Compiler Collection, libstdc++.so.6
 RUNTIME_DEP_PKGS_CSWlibstdc++6 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibstdc++6 = CSWgcc4g++rt
+
+# The libquadmath.so.0 library is only build on Intel
+ifeq ($(GARCH),i386)
+PACKAGES += CSWlibquadmath0
+CATALOGNAME_CSWlibquadmath0 = libquadmath0
+PKGFILES_CSWlibquadmath0 += $(call baseisadirs,$(libdir),libquadmath\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibquadmath0 += GNU C compiler, libquadmath.so.0
+RUNTIME_DEP_PKGS_CSWgfortran3 += CSWlibquadmath0
+endif
 
 PACKAGES += CSWgcc4g++
 CATALOGNAME_CSWgcc4g++ = gcc4g++
