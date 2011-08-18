@@ -250,13 +250,12 @@ RUNTIME_DEP_PKGS_CSWlibstdc++6 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibstdc++6 = CSWgcc4g++rt
 
 # The libquadmath.so.0 library is only build on Intel
-ifeq ($(GARCH),i386)
-PACKAGES += CSWlibquadmath0
+PACKAGES_i386 += CSWlibquadmath0
 CATALOGNAME_CSWlibquadmath0 = libquadmath0
 PKGFILES_CSWlibquadmath0 += $(call baseisadirs,$(libdir),libquadmath\.so\.0(\.\d+)*)
 SPKG_DESC_CSWlibquadmath0 += GNU C compiler, libquadmath.so.0
 RUNTIME_DEP_PKGS_CSWgfortran3 += CSWlibquadmath0
-endif
+
 
 PACKAGES += CSWgcc4g++
 CATALOGNAME_CSWgcc4g++ = gcc4g++
@@ -374,6 +373,8 @@ PKGFILES_CSWgcc4objc += $(call baseisadirs,$(libdir),libobjc.so)
 PKGFILES_CSWgcc4objc += $(call baseisadirs,$(libdir),libobjc_gc.so)
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibmpfr4
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibgmp10
+
+PACKAGES += $(PACKAGES_$(GARCH))
 
 include files/scripts.mk
 include gar/category.mk
