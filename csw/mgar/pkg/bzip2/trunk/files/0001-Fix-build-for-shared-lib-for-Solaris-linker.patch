@@ -1,0 +1,75 @@
+From 3d6ba563435533b4093a409bcd27db652239cd81 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 18 Aug 2011 14:35:35 +0200
+Subject: [PATCH] Fix build for shared lib for Solaris linker
+
+---
+ Makefile-libbz2_so |   39 ++++++++++++++++++++++++++++++---------
+ 1 files changed, 30 insertions(+), 9 deletions(-)
+
+diff --git a/Makefile-libbz2_so b/Makefile-libbz2_so
+index e58791b..a492706 100644
+--- a/Makefile-libbz2_so
++++ b/Makefile-libbz2_so
+@@ -22,9 +22,6 @@
+ 
+ 
+ SHELL=/bin/sh
+-CC=gcc
+-BIGFILES=-D_FILE_OFFSET_BITS=64
+-CFLAGS=-fpic -fPIC -Wall -Winline -O2 -g $(BIGFILES)
+ 
+ OBJS= blocksort.o  \
+       huffman.o    \
+@@ -34,14 +31,19 @@ OBJS= blocksort.o  \
+       decompress.o \
+       bzlib.o
+ 
+-all: $(OBJS)
+-	$(CC) -shared -Wl,-soname -Wl,libbz2.so.1.0 -o libbz2.so.1.0.6 $(OBJS)
+-	$(CC) $(CFLAGS) -o bzip2-shared bzip2.c libbz2.so.1.0.6
+-	rm -f libbz2.so.1.0
+-	ln -s libbz2.so.1.0.6 libbz2.so.1.0
++all: libbz2.so.1.0.6 bzip2 bzip2recover
++
++bzip2: libbz2.so.1.0.6
++	$(CC) $(CFLAGS) $(LDFLAGS) -o bzip2 bzip2.c libbz2.so.1.0.6
++
++bzip2recover: bzip2recover.o
++	$(CC) $(CFLAGS) -o bzip2recover bzip2recover.o
++
++libbz2.so.1.0.6:  $(OBJS)
++	$(CC) -G $(CFLAGS) -h libbz2.so.1.0 $(LDFLAGS) -o libbz2.so.1.0.6 $(OBJS)
+ 
+ clean: 
+-	rm -f $(OBJS) bzip2.o libbz2.so.1.0.6 libbz2.so.1.0 bzip2-shared
++	rm -f $(OBJS) bzip2.o libbz2.so.1.0.6 libbz2.so.1.0 bzip2
+ 
+ blocksort.o: blocksort.c
+ 	$(CC) $(CFLAGS) -c blocksort.c
+@@ -57,3 +59,22 @@ decompress.o: decompress.c
+ 	$(CC) $(CFLAGS) -c decompress.c
+ bzlib.o: bzlib.c
+ 	$(CC) $(CFLAGS) -c bzlib.c
++
++check: test
++
++test: bzip2
++	@cat words1
++	./bzip2 -1 < sample1.ref > sample1.rb2
++	./bzip2 -2  < sample2.ref > sample2.rb2
++	./bzip2 -3  < sample3.ref > sample3.rb2
++	./bzip2 -d  < sample1.bz2 > sample1.tst
++	./bzip2 -d  < sample2.bz2 > sample2.tst
++	./bzip2 -ds < sample3.bz2 > sample3.tst
++	cmp sample1.bz2 sample1.rb2
++	cmp sample2.bz2 sample2.rb2
++	cmp sample3.bz2 sample3.rb2
++	cmp sample1.tst sample1.ref
++	cmp sample2.tst sample2.ref
++	cmp sample3.tst sample3.ref
++	@cat words3
++
+-- 
+1.7.6
+
