@@ -48,6 +48,7 @@ localstatedir=/var/opt/csw
 
 INITSMF = $(sysconfdir)/init.d/cswstunnel
 SAMPLECONF = $(sysconfdir)/stunnel.pem
+MIGRATE_FILES = stunnel # migrate the /opt/csw/etc/stunnel sub directory
 
 PROTOTYPE_MODIFIERS = restrict
 PROTOTYPE_FILES_restrict = $(localstatedir)/lib/stunnel.*
