@@ -80,7 +80,7 @@ CPU_i386_32 = i386
 CPU_i386_64 = x86-64
 
 CONFIGURE_ARGS_sparc += --with-cpu=$(CPU_$(GARCH)_32)
-CONFIGURE_ARGS_i386 += --with-cpu-32=$(CPU_$(GARCH)_32)
+# CONFIGURE_ARGS_i386 += --with-cpu-32=$(CPU_$(GARCH)_32)
 # CONFIGURE_ARGS_i386 += --with-cpu-64=$(CPU_$(GARCH)_64)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
 
@@ -154,6 +154,12 @@ CHECKPKG_OVERRIDES_CSWgcc4gfortran += file-with-bad-content
 # Due to complex regular expressions
 CHECKPKG_OVERRIDES_CSWgcc4java += file-collision|/opt/csw/gcc4/include/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
 CHECKPKG_OVERRIDES_CSWgcc4g++ += file-collision|/opt/csw/gcc4/include/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
+
+# The .a files are necessary
+CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap
+CHECKPKG_OVERRIDES_CSWgcc4objc += discouraged-path-in-pkgmap
+CHECKPKG_OVERRIDES_CSWgcc4java += discouraged-path-in-pkgmap
+CHECKPKG_OVERRIDES_CSWgcc4gfortran += discouraged-path-in-pkgmap
 
 # From the 'hopeless errors' department:
 CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/libffi.so|CSWgcc3javart|CSWgcc4core
