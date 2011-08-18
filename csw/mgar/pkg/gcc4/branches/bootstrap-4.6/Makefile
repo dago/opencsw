@@ -75,10 +75,10 @@ CPU_sparc_64 = v9
 CPU_i386_32 = i386
 CPU_i386_64 = amd64
 
-# CONFIGURE_ARGS += --with-cpu-32=$(CPU_$(GARCH)_32)
-# CONFIGURE_ARGS += --with-cpu-64=$(CPU_$(GARCH)_64)
-
-CONFIGURE_ARGS += --with-cpu=$(CPU_$(GARCH)_32)
+CONFIGURE_ARGS_sparc += --with-cpu=$(CPU_$(GARCH)_32)
+CONFIGURE_ARGS_i386 += --with-cpu-32=$(CPU_$(GARCH)_32)
+CONFIGURE_ARGS_i386 += --with-cpu-64=$(CPU_$(GARCH)_64)
+CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
 
 # GCC can't be built in the same directory with the sources.
 OBJDIR          = objdir
