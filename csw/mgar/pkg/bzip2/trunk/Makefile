@@ -31,7 +31,6 @@ SPKG_DESC_CSWlibbz2-dev = Development files for libbz2.so.1.0
 PKGFILES_CSWlibbz2-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibbz2-dev += $(docdir)/.*
 RUNTIME_DEP_PKGS_CSWlibbz2-dev += CSWlibbz2-1-0
-CHECKPKG_OVERRIDES_CSWlibbz2-dev += surplus-dependency|CSWlibbz2-1-0
 # These are default install locations
 CHECKPKG_OVERRIDES_CSWlibbz2-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bzip2/CHANGES
 CHECKPKG_OVERRIDES_CSWlibbz2-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/bzip2/README
@@ -79,7 +78,7 @@ install-custom:
 		ln bzmore bzless && \
 		ln bzdiff bzcmp
 	ginstall -d $(DESTDIR)$(mandir)/man1
-	cd $(WORKSRC) && ginstall -m 644 bzip2.1 bzdiff.1 bzgrep bzip2recover $(DESTDIR)$(mandir)/man1/
+	cd $(WORKSRC) && ginstall -m 644 bzip2.1 bzdiff.1 bzgrep.1 bzmore.1 $(DESTDIR)$(mandir)/man1/
 	echo ".so man1/bzgrep.1" > $(DESTDIR)$(mandir)/man1/bzegrep.1
 	echo ".so man1/bzgrep.1" > $(DESTDIR)$(mandir)/man1/bzfgrep.1
 	echo ".so man1/bzmore.1" > $(DESTDIR)$(mandir)/man1/bzless.1
