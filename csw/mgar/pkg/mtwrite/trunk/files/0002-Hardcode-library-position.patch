@@ -1,22 +1,21 @@
-From 252a4e3086661f851e90ea32690ca734548a015b Mon Sep 17 00:00:00 2001
+From c3cecb517aad9f2d69df2b4c9898ec0306b4ff76 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Wed, 5 May 2010 12:34:13 +0200
-Subject: [PATCH 2/2] Hardcode library position
+Date: Sat, 22 May 2010 22:16:52 +0200
+Subject: [PATCH] Hardcode library position
 
 ---
  mtcp    |    3 +--
  mtgtar  |    3 +--
  mtstar  |    3 +--
- mttar   |    3 +--
  mtunzip |    3 +--
- 5 files changed, 5 insertions(+), 10 deletions(-)
+ 4 files changed, 4 insertions(+), 8 deletions(-)
 
 diff --git a/mtcp b/mtcp
-index 5e9a373..a6d7aa6 100755
+index 456ef54..431fe6d 100755
 --- a/mtcp
 +++ b/mtcp
 @@ -1,6 +1,5 @@
- #!/bin/ksh
+ #!/bin/sh
 -INSTALLDIR=`dirname $0`/../lib
 -LD_PRELOAD=$INSTALLDIR/`uname -s`-`uname -m`/mtwrite.so
 +LD_PRELOAD=/opt/csw/lib/mtwrite.so
@@ -24,11 +23,11 @@ index 5e9a373..a6d7aa6 100755
  MTWRITE_MAXTHREADS=${MTWRITE_MAXTHREADS:=32}		# default
  MTWRITE_MEMPERTHREAD=${MTWRITE_MEMPERTHREAD:=16M}	# default
 diff --git a/mtgtar b/mtgtar
-index b56399c..f697ebc 100755
+index 0e6e129..5a0fe40 100755
 --- a/mtgtar
 +++ b/mtgtar
 @@ -1,6 +1,5 @@
- #!/bin/ksh
+ #!/bin/sh
 -INSTALLDIR=`dirname $0`/../lib
 -LD_PRELOAD=$INSTALLDIR/`uname -s`-`uname -m`/mtwrite.so
 +LD_PRELOAD=/opt/csw/lib/mtwrite.so
@@ -36,35 +35,23 @@ index b56399c..f697ebc 100755
  MTWRITE_MAXTHREADS=${MTWRITE_MAXTHREADS:=32}		# default
  MTWRITE_MEMPERTHREAD=${MTWRITE_MEMPERTHREAD:=16M}	# default
 diff --git a/mtstar b/mtstar
-index ed37a89..ab40828 100755
+index 63d5002..64de85a 100755
 --- a/mtstar
 +++ b/mtstar
 @@ -1,6 +1,5 @@
- #!/bin/ksh
+ #!/bin/sh
 -INSTALLDIR=`dirname $0`/../lib
 -LD_PRELOAD=$INSTALLDIR/`uname -s`-`uname -m`/mtwrite.so
 +LD_PRELOAD=/opt/csw/lib/mtwrite.so
  MTWRITE_VERBOSE=${MTWRITE_VERBOSE:=1}			# default
  MTWRITE_MAXTHREADS=${MTWRITE_MAXTHREADS:=32}		# default
  MTWRITE_MEMPERTHREAD=${MTWRITE_MEMPERTHREAD:=16M}	# default
-diff --git a/mttar b/mttar
-index ec45cec..90c85ee 100755
---- a/mttar
-+++ b/mttar
-@@ -1,6 +1,5 @@
- #!/bin/ksh
--INSTALLDIR=`dirname $0`/../lib
--LD_PRELOAD=${LD_PRELOAD:-}:$INSTALLDIR/`uname -s`-`uname -m`/mtwrite.so
-+LD_PRELOAD=/opt/csw/lib/mtwrite.so
- MTWRITE_VERBOSE=${MTWRITE_VERBOSE:=1}			# default
- MTWRITE_MAXTHREADS=${MTWRITE_MAXTHREADS:=32}		# default
- MTWRITE_MEMPERTHREAD=${MTWRITE_MEMPERTHREAD:=16M}	# default
 diff --git a/mtunzip b/mtunzip
-index 1763686..a2f6b62 100755
+index db4e93f..8e4ead4 100755
 --- a/mtunzip
 +++ b/mtunzip
 @@ -1,6 +1,5 @@
- #!/bin/ksh
+ #!/bin/sh
 -INSTALLDIR=`dirname $0`/../lib
 -LD_PRELOAD=$INSTALLDIR/`uname -s`-`uname -m`/mtwrite.so
 +LD_PRELOAD=/opt/csw/lib/mtwrite.so
@@ -72,5 +59,5 @@ index 1763686..a2f6b62 100755
  MTWRITE_MAXTHREADS=${MTWRITE_MAXTHREADS:=32}		# default
  MTWRITE_MEMPERTHREAD=${MTWRITE_MEMPERTHREAD:=16M}	# default
 -- 
-1.7.0
+1.7.1
 
