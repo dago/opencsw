@@ -1,5 +1,5 @@
 NAME = pcre
-VERSION = 8.12
+VERSION = 8.13
 CATEGORIES = lib
 
 DESCRIPTION = Perl-compatible regular expression tools
@@ -11,63 +11,60 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES  = $(DISTNAME).tar.bz2
 PATCHFILES = 0001-Allow-norunpath-for-libtool.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
 VENDOR_URL = http://www.pcre.org
-
-BUILD_DEP_PKGS = CSWgnulinks
 
 PACKAGES = CSWpcre
 CATALOGNAME_CSWpcre = pcre
 SPKG_DESC_CSWpcre = Perl-compatible regular expression tools
-RUNTIME_DEP_PKGS_CSWpcre += CSWreadline
+RUNTIME_DEP_PKGS_CSWpcre += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWpcre += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSWpcre += CSWbzip2
-RUNTIME_DEP_PKGS_CSWpcre += CSWzlib
+RUNTIME_DEP_PKGS_CSWpcre += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWpcre += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpcre += CSWlibpcreposix0
 
-PACKAGES += CSWpcrert
-CATALOGNAME_CSWpcrert = pcre_rt
-SPKG_DESC_CSWpcrert = Legacy stub as contents was moved to libpcre0, libpcrecpp0 and libpcreposix0
-PKGFILES_CSWpcrert = NOFILES
-RUNTIME_DEP_PKGS_CSWpcrert = CSWlibpcre0 CSWlibpcrecpp0 CSWlibpcreposix0
-# This is a legacy lib, force dependencies to new libraries
-CHECKPKG_OVERRIDES_CSWpcrert += surplus-dependency|CSWlibpcrecpp0
-CHECKPKG_OVERRIDES_CSWpcrert += surplus-dependency|CSWlibpcreposix0
-CHECKPKG_OVERRIDES_CSWpcrert += surplus-dependency|CSWlibpcre0
-ARCHALL_CSWpcrert = 1
-
-PACKAGES += CSWpcre-devel
-CATALOGNAME_CSWpcre-devel = pcre_devel
-SPKG_DESC_CSWpcre-devel = Development files for PCRE
-RUNTIME_DEP_PKGS_CSWpcre-devel += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSWpcre-devel += CSWlibpcreposix0
-RUNTIME_DEP_PKGS_CSWpcre-devel += CSWlibpcrecpp0
-PKGFILES_CSWpcre-devel = $(PKGFILES_DEVEL)
+PACKAGES += CSWlibpcre-dev
+SPKG_DESC_CSWlibpcre-dev = Development files for libpcre.so.0, libpcrecpp.so.0 and libpcreposix.so.0
+RUNTIME_DEP_PKGS_CSWlibpcre-dev += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWlibpcre-dev += CSWlibpcreposix0
+RUNTIME_DEP_PKGS_CSWlibpcre-dev += CSWlibpcrecpp0
+PKGFILES_CSWlibpcre-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibpcre-dev += $(docdir)/.*
+OBSOLETED_BY_CSWlibpcre-dev += CSWpcre-devel
+# Leave these in the docs for now
+CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/pcre-config.txt
+CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/pcre.txt
+CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/README
+CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/html/pcre-config.html
+CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/html/pcresample.html
+CHECKPKG_OVERRIDES_CSWlibpcre-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pcre/html/pcredemo.html
 
 PACKAGES += CSWlibpcre0
 CATALOGNAME_CSWlibpcre0 = libpcre0
 SPKG_DESC_CSWlibpcre0 = Perl-compatible regular expression tools, libpcre.so.0
-PKGFILES_CSWlibpcre0 = $(call baseisadirs,$(libdir),libpcre\.so\.0(\.\d+)*)
+PKGFILES_CSWlibpcre0 = $(call pkgfiles_lib,libpcre.so.0)
+OBSOLETED_BY_CSWlibpcre0 += CSWpcrert
+CATALOGNAME_CSWpcrert = pcre_rt_stub
 
 PACKAGES += CSWlibpcrecpp0
 CATALOGNAME_CSWlibpcrecpp0 = libpcrecpp0
 SPKG_DESC_CSWlibpcrecpp0 += Perl-compatible regular expression tools, libpcrecpp.so.0
-PKGFILES_CSWlibpcrecpp0 += $(call baseisadirs,$(libdir),libpcrecpp\.so\.0(\.\d+)*)
+PKGFILES_CSWlibpcrecpp0 += $(call pkgfiles_lib,libpcrecpp.so.0)
 RUNTIME_DEP_PKGS_CSWlibpcrecpp0 += CSWlibpcre0
+OBSOLETED_BY_CSWlibpcrecpp0 += CSWpcrert
 
 PACKAGES += CSWlibpcreposix0
 CATALOGNAME_CSWlibpcreposix0 = libpcreposix0
 SPKG_DESC_CSWlibpcreposix0 += Perl-compatible regular expression tools, libpcreposix.so.0
-PKGFILES_CSWlibpcreposix0 += $(call baseisadirs,$(libdir),libpcreposix\.so\.0(\.\d+)*)
+PKGFILES_CSWlibpcreposix0 += $(call pkgfiles_lib,libpcreposix.so.0)
 RUNTIME_DEP_PKGS_CSWlibpcreposix0 += CSWlibpcre0
+OBSOLETED_BY_CSWlibpcreposix0 += CSWpcrert
 
 BUILD64 = 1
-NOISAEXEC = 1
+
+EXTRA_LINKER_FLAGS = -norunpath
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-unicode-properties
@@ -75,13 +72,13 @@ CONFIGURE_ARGS += --enable-pcregrep-libz
 CONFIGURE_ARGS += --enable-pcregrep-libbz2
 CONFIGURE_ARGS += --enable-pcretest-libreadline
 
-TEST_TARGET = check
-
-MERGE_SCRIPTS_isa-extra = copy-relocated-only copy-config-only
-MERGE_DIRS_isa-extra = $(libdir)
-
 include gar/category.mk
 
 # The testcases need 'diff -u' which Solaris 8 diff does not have,
 # but we need Solaris strip, otherwise pcregrep is broken and 200m in size...
 PATH := /usr/ccs/bin:/opt/csw/gnu:$(PATH)
+
+post-install-modulated:
+	perl -pi -e 's,/usr/local,$(prefix),g' \
+		$(DESTDIR)$(mandir)/man3/pcresample.3 \
+		$(DESTDIR)$(mandir)/man1/pcre-config.1
