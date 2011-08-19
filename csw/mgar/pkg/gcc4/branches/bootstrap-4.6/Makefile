@@ -174,6 +174,9 @@ CHECKPKG_OVERRIDES_CSWgcc4objc += file-collision|/opt/csw/lib/libobjc.so|CSWgcc3
 CHECKPKG_OVERRIDES_CSWgcc4objc += file-collision|/opt/csw/lib/sparcv9/libobjc.so|CSWgcc3objcrt|CSWgcc4objc
 CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/lib-gnu-awt-xlib.so|CSWgcc3javart|CSWgcc4core
 
+# CSWbinutils could be rebuilt
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/lib/libiberty.a|CSWbinutils|CSWgcc4core
+
 # Some static libraries are required to build binaries with gcc, for example
 # libgcc.a and libgcc_eh.a. Otherwise: ld: fatal: library -lgcc: not found
 MERGE_EXCLUDE_LIBTOOL =
