@@ -27,7 +27,7 @@ SPKG_DESC_CSWlibz1 = Zlib data compression library, libz.so.1
 PKGFILES_CSWlibz1 = $(call pkgfiles_lib,libz.so.1)
 OBSOLETED_BY_CSWlibz1 = CSWzlib
 
-PACKAGES += CSWzlib-dev
+PACKAGES += CSWlibz-dev
 SPKG_DESC_CSWzlib-dev = Development files for libz.so.1
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWzlib-dev = CSWlibz1
