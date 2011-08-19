@@ -22,7 +22,6 @@ DISTFILES  = $(DISTNAME).tar.gz
 LICENSE = LICENSE
 
 PACKAGES += CSWdhcp
-RUNTIME_DEP_PKGS_CSWdhcp = CSWosslrt
 SPKG_DESC_CSWdhcp = ISC DHCP reference implementation
 
 PACKAGES += CSWdhcp-dev
