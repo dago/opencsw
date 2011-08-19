@@ -51,8 +51,6 @@ SAMPLECONF += /var/opt/csw/dhcp/db/dhcpd.leases
 
 SPKG_SOURCEURL = https://www.isc.org/software/dhcp
 
-CHECKPKG_OVERRIDES_CSWdhcp += surplus-dependency|CSWosslrt
-
 include gar/category.mk
 
 install-custom:
