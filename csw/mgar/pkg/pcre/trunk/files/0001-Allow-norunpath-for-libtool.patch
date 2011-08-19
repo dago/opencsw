@@ -1,6 +1,6 @@
-From a023da4c69da0ad9f922764b0701762c7e6c53d6 Mon Sep 17 00:00:00 2001
+From af449151a800845da508097fb85bae299b2e15ab Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Mon, 3 Jan 2011 15:04:02 +0100
+Date: Tue, 16 Aug 2011 17:12:43 +0200
 Subject: [PATCH] Allow -norunpath for libtool
 
 ---
@@ -8,18 +8,18 @@ Subject: [PATCH] Allow -norunpath for libtool
  1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/ltmain.sh b/ltmain.sh
-index 04eaea4..fd4ac68 100755
+index 3061e3c..5817d54 100755
 --- a/ltmain.sh
 +++ b/ltmain.sh
-@@ -5091,7 +5091,7 @@ func_mode_link ()
-       # @file                GCC response files
-       # -tp=*                Portland pgcc target processor selection
+@@ -5840,7 +5840,7 @@ func_mode_link ()
+       # -O*, -flto*, -fwhopr*, -fuse-linker-plugin GCC link-time optimization
        -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
--      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*)
-+      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|-norunpath)
+       -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|--sysroot=*| \
+-      -O*|-flto*|-fwhopr*|-fuse-linker-plugin)
++      -O*|-flto*|-fwhopr*|-fuse-linker-plugin|-norunpath)
          func_quote_for_eval "$arg"
  	arg="$func_quote_for_eval_result"
          func_append compile_command " $arg"
 -- 
-1.7.3.2
+1.7.6
 
