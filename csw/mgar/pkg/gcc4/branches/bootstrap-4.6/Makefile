@@ -97,6 +97,11 @@ CXXFLAGS_FOR_TARGET = $(CXXFLAGS_FOR_TARGET_$(GARCH))
 EXTRA_EXPORTS += CFLAGS_FOR_TARGET
 EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
 
+ifeq ($(MODULATION),isa-i386)
+CFLAGS =
+CXXFLAGS =
+endif
+
 # Might be necessary, but CFLAGS_FOR_TARGET seem to be enough for now.
 # BOOT_CFLAGS = $(CFLAGS_FOR_TARGET)
 # EXTRA_EXPORTS += BOOT_FLAGS
@@ -312,6 +317,7 @@ RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibgfortran3
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibz1
 PKGFILES_CSWgcc4gfortran  = $(bindir)/gfortran
+PKGFILES_CSWgcc4gfortran += $(bindir)/sparc-sun-solaris2.10-gfortran
 PKGFILES_CSWgcc4gfortran += $(libdir)/.*libgfortran.*a
 PKGFILES_CSWgcc4gfortran += $(libexecdir)/.*f951
 PKGFILES_CSWgcc4gfortran += $(mandir)/.*gfortran.1
