@@ -1203,11 +1203,14 @@ def CheckDanglingSymlinks(pkg_data, error_mgr, logger, messenger):
   for pkgmap_entry in pkg_data["pkgmap"]:
     if "path" not in pkgmap_entry: continue
     if not pkgmap_entry["path"]: continue
-    if pkgmap_entry["type"] == "s":
+    if pkgmap_entry["type"] in ("s", "l"):
+      link_type = "symlink"
+      if pkgmap_entry["type"] == "l":
+        link_type = "hardling"
       error_mgr.NeedFile(
           pkgmap_entry["target"],
-          "%s contains a symlink (%s) which needs the target file: %s."
-          % (pkgname, repr(pkgmap_entry["path"]), repr(pkgmap_entry["target"])))
+          "%s contains a %s (%s) which needs the target file: %s."
+          % (link_type, pkgname, repr(pkgmap_entry["path"]), repr(pkgmap_entry["target"])))
 
 
 def CheckPrefixDirs(pkg_data, error_mgr, logger, messenger):

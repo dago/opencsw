@@ -1649,6 +1649,23 @@ class TestCheckDanglingSymlinks(CheckpkgUnitTestHelper,
          'target': '/opt/csw/lib/libpq.so.5'})
     self.error_mgr_mock.NeedFile('/opt/csw/lib/libpq.so.5', mox.IsA(str))
 
+  # Hardlinks work the same way.
+  def CheckpkgTest2(self):
+    self.pkg_data = copy.deepcopy(tree_stats[0])
+    self.pkg_data["pkgmap"].append(
+        {'class': 'none',
+         'group': None,
+         'line': None,
+         'mode': None,
+         'path': '/opt/csw/lib/postgresql/9.0/lib/libpq.so.5',
+         'type': 'l',
+         'user': None,
+         'target': '/opt/csw/lib/libpq.so.5'})
+    self.error_mgr_mock.NeedFile('/opt/csw/lib/libpq.so.5', mox.IsA(str))
+
+  def testTwo(self):
+    self.RunCheckpkgTest(self.CheckpkgTest2)
+
 
 class TestCheckPrefixDirs(CheckpkgUnitTestHelper,
                           unittest.TestCase):
