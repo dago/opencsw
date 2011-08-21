@@ -97,9 +97,17 @@ CXXFLAGS_FOR_TARGET = $(CXXFLAGS_FOR_TARGET_$(GARCH))
 EXTRA_EXPORTS += CFLAGS_FOR_TARGET
 EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
 
+# The theory goes that the CFLAGS and others cause problems with the multilib
+# builds where 64-bit binaries are built.  This is triggered by the gcc build;
+# the compiler binaries are 32-bit only, but since the compiler can generate
+# 32-bit and 64-bit binaries, the libraries have to be built for both
+# architectures.
 ifeq ($(MODULATION),isa-i386)
 CFLAGS =
 CXXFLAGS =
+FFLAGS =
+FCFLAGS =
+OPTFLAGS =
 endif
 
 # Might be necessary, but CFLAGS_FOR_TARGET seem to be enough for now.
