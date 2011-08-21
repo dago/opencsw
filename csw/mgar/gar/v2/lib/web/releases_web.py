@@ -164,11 +164,20 @@ class Srv4CatalogAssignment(object):
         package_stats.PackageStats.ImportPkg(stats, True)
         srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       c = checkpkg_lib.Catalog()
-      # See if there already is a package with that catalogname.
       sqo_osrel, sqo_arch, sqo_catrel = pkgdb.GetSqoTriad(
           osrel_name, arch_name, catrel_name)
+      # See if there already is a package with that catalogname.
       res = c.GetConflictingSrv4ByCatalognameResult(
           srv4, srv4.catalogname,
+          sqo_osrel, sqo_arch, sqo_catrel)
+      if res.count() == 1:
+        # Removing old version of the package from the catalog
+        for pkg_in_catalog in res:
+          srv4_to_remove = pkg_in_catalog.srv4file
+          c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
+      # See if there already is a package with that pkgname.
+      res = c.GetConflictingSrv4ByPkgnameResult(
+          srv4, srv4.pkginst.pkgname,
           sqo_osrel, sqo_arch, sqo_catrel)
       if res.count() == 1:
         # Removing old version of the package from the catalog
