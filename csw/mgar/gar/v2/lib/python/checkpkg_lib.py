@@ -991,6 +991,27 @@ class CatalogMixin(SqlobjectHelperMixin):
                   m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
     return res
 
+  def GetConflictingSrv4ByPkgnameResult(self,
+      sqo_srv4, pkgname,
+      sqo_osrel, sqo_arch, sqo_catrel):
+    join = [
+          m.Srv4FileStats,
+          m.Pkginst.q.id==m.Srv4FileStats.q.pkginst,
+        sqlbuilder.INNERJOINOn(None,
+          m.Srv4FileInCatalog,
+          m.Srv4FileStats.q.id==m.Srv4FileInCatalog.q.srv4file),
+    ]
+    res = m.Srv4FileStats.select(
+            m.Pkginst.q.pkgname==pkgname
+            ).throughTo.in_catalogs.filter(
+                sqlobject.AND(
+                  m.Srv4FileInCatalog.q.osrel==sqo_osrel,
+                  m.Srv4FileInCatalog.q.arch==sqo_arch,
+                  m.Srv4FileInCatalog.q.catrel==sqo_catrel,
+                  m.Srv4FileInCatalog.q.srv4file!=sqo_srv4),
+            join=join)
+    return res
+
   def AddSrv4ToCatalog(self, sqo_srv4, osrel, arch, catrel):
     """Registers a srv4 file in a catalog."""
     logging.debug("AddSrv4ToCatalog(%s, %s, %s, %s)",
