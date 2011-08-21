@@ -66,7 +66,7 @@ CONFIGURE_ARGS += --enable-threads=posix
 CONFIGURE_ARGS += --enable-stage1-languages=c
 # We'll build ada later. It requires the PPL library.
 # CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
-CONFIGURE_ARGS += --enable-languages=c,c++,fortran,java,objc
+CONFIGURE_ARGS += --enable-languages=c,c++,fortran,java,objc,go
 CONFIGURE_ARGS += --enable-bootstrap
 CONFIGURE_ARGS += --with-system-zlib
 
