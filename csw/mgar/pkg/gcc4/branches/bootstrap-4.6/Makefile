@@ -297,8 +297,8 @@ RUNTIME_DEP_PKGS_CSWlibgfortran3 += $(RUNTIME_DEP_PKGS_CSWlibgfortran3_$(GARCH))
 PACKAGES += CSWgcc4g++
 CATALOGNAME_CSWgcc4g++ = gcc4g++
 SPKG_DESC_CSWgcc4g++ = GNU C++ Compiler
-PKGFILES_CSWgcc4g++  = $(bindir)/g\+\+
-PKGFILES_CSWgcc4g++ += $(bindir)/c\+\+
+PKGFILES_CSWgcc4g++  = $(bindir)/[cg]\+\+
+PKGFILES_CSWgcc4g++ += $(bindir)/\w+-pc-solaris[\d\.]+-[cg]\+\+
 PKGFILES_CSWgcc4g++ += $(libexecdir)/.*cc1plus
 PKGFILES_CSWgcc4g++ += $(libdir)/.*libstdc.*a
 PKGFILES_CSWgcc4g++ += $(call baseisadirs,$(libdir),libstdc\+\+\.so)
@@ -326,6 +326,7 @@ RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibz1
 PKGFILES_CSWgcc4gfortran  = $(bindir)/gfortran
 PKGFILES_CSWgcc4gfortran += $(bindir)/sparc-sun-solaris2.10-gfortran
+PKGFILES_CSWgcc4gfortran += $(bindir)/i386-pc-solaris2.10-gfortran
 PKGFILES_CSWgcc4gfortran += $(libdir)/.*libgfortran.*a
 PKGFILES_CSWgcc4gfortran += $(libexecdir)/.*f951
 PKGFILES_CSWgcc4gfortran += $(mandir)/.*gfortran.1
@@ -411,6 +412,18 @@ PKGFILES_CSWgcc4objc += $(call baseisadirs,$(libdir),libobjc.so)
 PKGFILES_CSWgcc4objc += $(call baseisadirs,$(libdir),libobjc_gc.so)
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibmpfr4
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibgmp10
+
+# Solaris 10 on i386 specific:
+RUNTIME_DEP_PKGS_CSWgcc4core_i386_5.10 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgcc4g++_i386_5.10 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgcc4gfortran_i386_5.10 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgcc4objc_i386_5.10 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgcc4java_i386_5.10 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgcc4core += $(RUNTIME_DEP_PKGS_CSWgcc4core_$(GARCH)_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSWgcc4g++ += $(RUNTIME_DEP_PKGS_CSWgcc4g++_$(GARCH)_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSWgcc4gfortran += $(RUNTIME_DEP_PKGS_CSWgcc4gfortran_$(GARCH)_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSWgcc4objc += $(RUNTIME_DEP_PKGS_CSWgcc4objc_$(GARCH)_$(GAROSREL))
+RUNTIME_DEP_PKGS_CSWgcc4java += $(RUNTIME_DEP_PKGS_CSWgcc4java_$(GARCH)_$(GAROSREL))
 
 PACKAGES += $(PACKAGES_$(GARCH))
 
