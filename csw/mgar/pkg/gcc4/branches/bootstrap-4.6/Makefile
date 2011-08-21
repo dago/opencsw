@@ -43,8 +43,22 @@ libdir = $(abspath $(BUILD_PREFIX)/lib/$(MM_LIBDIR))
 # Could be used to break out of the /opt/csw/gcc4 prefix
 # CONFIGURE_ARGS += --program-prefix=gcc4-
 
-CONFIGURE_ARGS += --with-pkgversion=OpenCSW
 CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += --prefix=$(prefix)
+# The theory is that this confuses the installer
+# CONFIGURE_ARGS += --includedir=$(prefix)/include
+CONFIGURE_ARGS += --exec_prefix=$(prefix)
+CONFIGURE_ARGS += --bindir=$(bindir)
+CONFIGURE_ARGS += --sbindir=$(sbindir)
+CONFIGURE_ARGS += --libexecdir=$(libexecdir)
+CONFIGURE_ARGS += --datadir=$(datadir)
+CONFIGURE_ARGS += --sysconfdir=/etc$(prefix)
+CONFIGURE_ARGS += --sharedstatedir=$(prefix)/share
+CONFIGURE_ARGS += --localstatedir=/var$(prefix)
+CONFIGURE_ARGS += --libdir=$(libdir)
+CONFIGURE_ARGS += --infodir=$(datadir)/info
+CONFIGURE_ARGS += --mandir=$(mandir)
+
 CONFIGURE_ARGS += --exec-prefix=$(BUILD_PREFIX)/gcc4
 CONFIGURE_ARGS += --with-gnu-as
 CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
