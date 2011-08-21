@@ -1206,7 +1206,7 @@ def CheckDanglingSymlinks(pkg_data, error_mgr, logger, messenger):
     if pkgmap_entry["type"] in ("s", "l"):
       link_type = "symlink"
       if pkgmap_entry["type"] == "l":
-        link_type = "hardling"
+        link_type = "hardlink"
       error_mgr.NeedFile(
           pkgmap_entry["target"],
           "%s contains a %s (%s) which needs the target file: %s."
