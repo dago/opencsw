@@ -367,7 +367,7 @@ class Srv4Uploader(object):
     #   logging.debug("*** Headers")
     #   logging.debug(h.getvalue())
     #   logging.debug("*** Data")
-    if http_code >= 400 and http_code <= 499:
+    if http_code >= 400 and http_code <= 599:
       if not self.debug:
         # In debug mode, all headers are printed to screen, and we aren't
         # interested in the response body.
