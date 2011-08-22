@@ -33,7 +33,7 @@ DOCFILES += NEWS
 DOCFILES += README
 
 # Fix for problem introduced between 12101[7-8]-17 and 12101[7-8]-20
-CXXFLAGS += -D_RWSTD_NO_WSTR=1
+EXTRA_CPPFLAGS += -D_RWSTD_NO_WSTR=1
 
 BUILD64 = 1
 
