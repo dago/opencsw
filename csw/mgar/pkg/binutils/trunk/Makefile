@@ -21,8 +21,10 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 # http://sourceware.org/bugzilla/show_bug.cgi?id=12265
 CONFIGURE_ARGS += --disable-werror
-CONFIGURE_ARGS_i386 += --enable-targets=i386-pc-solaris2.10,i686-pc-mingw32
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
+# CONFIGURE_ARGS_i386 += --enable-targets=i386-pc-solaris2.10,i686-pc-mingw32
+# CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
+CONFIGURE_ARGS += --enable-targets=all
+CONFIGURE_ARGS += --enable-64-bit-bfd
 
 TEST_TARGET = check
 
