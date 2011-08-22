@@ -44,6 +44,7 @@ libdir = $(abspath $(BUILD_PREFIX)/lib/$(MM_LIBDIR))
 # CONFIGURE_ARGS += --program-prefix=gcc4-
 
 CONFIGURE_ARGS += --prefix=$(prefix)
+CONFIGURE_ARGS += --libdir=$(libdir)
 # The theory is that DIRPATHS confuse the installer, e.g. includedir
 # CONFIGURE_ARGS += --includedir=$(prefix)/include
 CONFIGURE_ARGS += --exec-prefix=$(BUILD_PREFIX)/gcc4
