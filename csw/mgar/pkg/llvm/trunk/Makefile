@@ -6,7 +6,7 @@ VERSION = 2.9
 GARTYPE = v2
 CATEGORIES = lib
 
-DESCRIPTION = Brief description
+DESCRIPTION = Collection of modular and reusable compiler and toolchain technologies
 define BLURB
   Long description
 endef
@@ -20,6 +20,8 @@ DISTFILES  = $(DISTNAME).tgz
 
 GARCOMPILER = GNU
 
+libdir = $(prefix)/lib/llvm
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-optimized
 # ocaml causes a compilation failure
@@ -32,6 +34,9 @@ PATCHFILES += 0001-limits.h-used-for-MAX_PATH.patch
 PATCHFILES += 0002-OpenCSW-bash-for-tests.patch
 PATCHFILES += 0003-OpenCSW-bash-with-the-Python-test-runner.patch
 PATCHFILES += 0004-test-runner-adaptation-to-Solaris.patch
+
+RUNTIME_DEP_PKGS_CSWllvm += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWllvm += CSWgcc4corert
 
 ENABLE_OPTIMIZED = 1
 OPTIMIZE_OPTION = -O0
