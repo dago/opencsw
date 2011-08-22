@@ -1,6 +1,5 @@
 NAME = libfpx
 VERSION = 1.3.0
-GARSUBREV = 1
 CATEGORIES = lib
 
 DESCRIPTION = FlashPIX library
@@ -8,40 +7,41 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/delegates/
-DISTFILES  = $(NAME)-$(VERSION)-$(GARSUBREV).tar.bz2
+DISTFILES  = $(DISTNAME).tar.xz
 
-PACKAGES = CSWlibfpx CSWlibfpxdevel
-CATALOGNAME_CSWlibfpx = libfpx
-CATALOGNAME_CSWlibfpxdevel = libfpx_devel
-
-SPKG_DESC_CSWlibfpx += FlashPIX library
-SPKG_DESC_CSWlibfpxdevel += FlashPIX library - developer package
-
-RUNTIME_DEP_PKGS_CSWlibfpx +=
-RUNTIME_DEP_PKGS_CSWlibfpxdevel += CSWlibfpx
-
-PKGFILES_CSWlibfpxdevel = $(PKGFILES_DEVEL)
-
-SPKG_SOURCEURL = http://www.imagemagick.org
-
-PATCHFILES = olecomm.h.patch
+PATCHFILES += olecomm.h.patch
 PATCHFILES += tchar.patch
 
+VENDOR_URL = http://www.imagemagick.org
 LICENSE = flashpix.h
 
-DOCFILES = AUTHORS ChangeLog NEWS README
+PACKAGES += CSWlibfpx1
+SPKG_DESC_CSWlibfpx1 = FlashPIX library, libfpx.so.1
+PKGFILES_CSWlibfpx1 += $(call pkgfiles_lib,libfpx.so.1)
+OBSOLETED_BY_CSWlibfpx1 += CSWlibfpx
 
-UFILES_REGEX = $(NAME)-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
+PACKAGES += CSWlibfpx-dev
+SPKG_DESC_CSWlibfpx-dev = Development files for libfpx.so.1
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibfpx-dev += CSWlibfpx1
+OBSOLETED_BY_CSWlibfpx-dev += CSWlibfpxdevel
+CATALOGNAME_CSWlibfpxdevel = libfpx_devel_stub
+
+DOCFILES += AUTHORS
+DOCFILES += ChangeLog
+DOCFILES += NEWS
+DOCFILES += README
 
 # Fix for problem introduced between 12101[7-8]-17 and 12101[7-8]-20
 CXXFLAGS += -D_RWSTD_NO_WSTR=1
 
-CONFIGURE_ARGS  = $(DIRPATHS)
-
-STRIP_LIBTOOL=1
-
-TEST_TARGET = check
-
 BUILD64 = 1
 
+STRIP_LIBTOOL = 1
+
 include gar/category.mk
+
+post-install-modulated:
+	ginstall -d $(DESTDIR)$(docdir)/libfpx_dev
+	cd $(WORKSRC) && ginstall -m 0644 $(DOCFILES) $(DESTDIR)$(docdir)/libfpx_dev
+	@$(MAKECOOKIE)
