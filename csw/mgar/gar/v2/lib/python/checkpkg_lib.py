@@ -995,21 +995,19 @@ class CatalogMixin(SqlobjectHelperMixin):
       sqo_srv4, pkgname,
       sqo_osrel, sqo_arch, sqo_catrel):
     join = [
-          m.Srv4FileStats,
-          m.Pkginst.q.id==m.Srv4FileStats.q.pkginst,
         sqlbuilder.INNERJOINOn(None,
-          m.Srv4FileInCatalog,
-          m.Srv4FileStats.q.id==m.Srv4FileInCatalog.q.srv4file),
+          m.Pkginst,
+          m.Srv4FileStats.q.pkginst==m.Pkginst.q.id),
     ]
     res = m.Srv4FileStats.select(
-            m.Pkginst.q.pkgname==pkgname
+            m.Pkginst.q.pkgname==pkgname,
+            join=join
             ).throughTo.in_catalogs.filter(
                 sqlobject.AND(
                   m.Srv4FileInCatalog.q.osrel==sqo_osrel,
                   m.Srv4FileInCatalog.q.arch==sqo_arch,
                   m.Srv4FileInCatalog.q.catrel==sqo_catrel,
-                  m.Srv4FileInCatalog.q.srv4file!=sqo_srv4),
-            join=join)
+                  m.Srv4FileInCatalog.q.srv4file!=sqo_srv4))
     return res
 
   def AddSrv4ToCatalog(self, sqo_srv4, osrel, arch, catrel):
