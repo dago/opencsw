@@ -149,7 +149,6 @@ RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibmpfr4
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibssp0
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibz1
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWpython
-RUNTIME_DEP_PKGS_CSWgcc4core += CSWbinutils
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibobjc-gc3
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibobjc3
