@@ -1,0 +1,57 @@
+From 66e0c1525bca0830ea8e9f420927d18f4676e46f Mon Sep 17 00:00:00 2001
+From: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date: Tue, 23 Aug 2011 12:05:00 +0100
+Subject: [PATCH] On Solaris, define CMSG_ALIGN, CMSG_LEN, CMSG_SPACE if
+ undefined
+
+Bug: https://bugs.freedesktop.org/show_bug.cgi?id=40235
+---
+ dbus/dbus-sysdeps-unix.c |   32 ++++++++++++++++++++++++++++++++
+ 1 files changed, 32 insertions(+), 0 deletions(-)
+
+diff --git a/dbus/dbus-sysdeps-unix.c b/dbus/dbus-sysdeps-unix.c
+index e69f3b5..171977d 100644
+--- a/dbus/dbus-sysdeps-unix.c
++++ b/dbus/dbus-sysdeps-unix.c
+@@ -90,6 +90,38 @@
+ #define socklen_t int
+ #endif
+ 
++#if defined (__sun) || defined (__sun__)
++/*
++ * CMS_SPACE etc. definitions for Solaris < 10, based on
++ *   http://mailman.videolan.org/pipermail/vlc-devel/2006-May/024402.html
++ * via
++ *   http://wiki.opencsw.org/porting-faq#toc10
++ *
++ * These are only redefined for Solaris, for now: if your OS needs these too,
++ * please file a bug. (Or preferably, improve your OS so they're not needed.)
++ */
++
++# ifndef CMSG_ALIGN
++#   ifdef __sun__
++#     define CMSG_ALIGN(len) _CMSG_DATA_ALIGN (len)
++#   else
++      /* aligning to sizeof (long) is assumed to be portable (fd.o#40235) */
++#     define CMSG_ALIGN(len) (((len) + sizeof (long) - 1) & \
++                              ~(sizeof (long) - 1))
++#   endif
++# endif
++
++# ifndef CMSG_SPACE
++#   define CMSG_SPACE(len) (CMSG_ALIGN (sizeof (struct cmsghdr)) + \
++                            CMSG_ALIGN (len))
++# endif
++
++# ifndef CMSG_LEN
++#   define CMSG_LEN(len) (CMSG_ALIGN (sizeof (struct cmsghdr)) + (len))
++# endif
++
++#endif /* Solaris */
++
+ static dbus_bool_t
+ _dbus_open_socket (int              *fd_p,
+                    int               domain,
+-- 
+1.7.5.4
+

@@ -5,8 +5,8 @@
  #include <netdb.h>
  #include <grp.h>
 +#include <alloca.h>
-+#define CMSG_SPACE(l) ((size_t)_CMSG_HDR_ALIGN(sizeof (struct cmsghdr) + (l)))
-+#define CMSG_LEN(l) ((size_t)_CMSG_DATA_ALIGN(sizeof (struct cmsghdr)) + (l))
++#define XXXCMSG_SPACE(l) ((size_t)_CMSG_HDR_ALIGN(sizeof (struct cmsghdr) + (l)))
++#define XXXCMSG_LEN(l) ((size_t)_CMSG_DATA_ALIGN(sizeof (struct cmsghdr)) + (l))
 
  #ifdef HAVE_ERRNO_H
  #include <errno.h>
