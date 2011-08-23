@@ -119,6 +119,13 @@ OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
 
 LICENSE = doc/copyright.texinfo
 
+# Wrong quoting, either fix $ISALIST or disable for now
+#NOISALIST = 1
+#LD_OPTIONS =
+#EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+
+EXTRA_CPPFLAGS += -D__EXTENSIONS__
+
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
 
 BUILD64 = 1
@@ -140,7 +147,6 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 
 TEST_SCRIPTS = $(WORKSRC)/src/Makefile
-TEST_TARGET = check
 
 SKIPTEST ?= 1
 
@@ -155,16 +161,10 @@ CATALOGNAME_CSWkrb5lib = krb5_lib_stub
 
 include gar/category.mk
 
-# The flags must not contain additional spaces or the build freaks out
-CFLAGS := $(strip $(CFLAGS) -L$(libdir) -D__EXTENSIONS__)
-CXXFLAGS := $(strip $(CXXFLAGS) -D__EXTENSIONS__)
-#LDFLAGS := $(strip $(LDFLAGS))
-
-LD_OPTIONS =
-EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
-
-
 post-extract-modulated:
 	@# TODO: Check signature
-	@cd $(WORKDIR) && (gzip -c -d $(NAME)-$(VERSION).tar.gz | tar xf -)
+	cd $(WORKDIR) && (gzip -c -d $(NAME)-$(VERSION).tar.gz | tar xf -)
+	@# libcrypto.so is part of openssl and expected to be linkable without setting a linker search path
+	perl -pi -e 's,-lcrypto,-L$(libdir) -lcrypto,' \
+		$(WORKSRC)/src/plugins/preauth/pkinit/Makefile.in
 	@$(MAKECOOKIE)
