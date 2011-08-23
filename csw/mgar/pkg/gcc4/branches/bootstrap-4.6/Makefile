@@ -414,17 +414,26 @@ PKGFILES_CSWgcc4objc += $(call baseisadirs,$(libdir),libobjc_gc.so)
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibmpfr4
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibgmp10
 
-# Solaris 10 on i386 specific:
-RUNTIME_DEP_PKGS_CSWgcc4core_i386_5.10 += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgcc4g++_i386_5.10 += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgcc4gfortran_i386_5.10 += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgcc4objc_i386_5.10 += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgcc4java_i386_5.10 += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgcc4core += $(RUNTIME_DEP_PKGS_CSWgcc4core_$(GARCH)_$(GAROSREL))
-RUNTIME_DEP_PKGS_CSWgcc4g++ += $(RUNTIME_DEP_PKGS_CSWgcc4g++_$(GARCH)_$(GAROSREL))
-RUNTIME_DEP_PKGS_CSWgcc4gfortran += $(RUNTIME_DEP_PKGS_CSWgcc4gfortran_$(GARCH)_$(GAROSREL))
-RUNTIME_DEP_PKGS_CSWgcc4objc += $(RUNTIME_DEP_PKGS_CSWgcc4objc_$(GARCH)_$(GAROSREL))
-RUNTIME_DEP_PKGS_CSWgcc4java += $(RUNTIME_DEP_PKGS_CSWgcc4java_$(GARCH)_$(GAROSREL))
+# libiconv deps cropped up relatively late in the porting process. Perhaps
+# they apply to all arch/OS combinations.
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibiconv2
+
+# Maybe it's unnecessary.
+# # Solaris 10 on i386 specific:
+# RUNTIME_DEP_PKGS_CSWgcc4core_i386_5.10 += CSWlibiconv2
+# RUNTIME_DEP_PKGS_CSWgcc4g++_i386_5.10 += CSWlibiconv2
+# RUNTIME_DEP_PKGS_CSWgcc4gfortran_i386_5.10 += CSWlibiconv2
+# RUNTIME_DEP_PKGS_CSWgcc4objc_i386_5.10 += CSWlibiconv2
+# RUNTIME_DEP_PKGS_CSWgcc4java_i386_5.10 += CSWlibiconv2
+# RUNTIME_DEP_PKGS_CSWgcc4core += $(RUNTIME_DEP_PKGS_CSWgcc4core_$(GARCH)_$(GAROSREL))
+# RUNTIME_DEP_PKGS_CSWgcc4g++ += $(RUNTIME_DEP_PKGS_CSWgcc4g++_$(GARCH)_$(GAROSREL))
+# RUNTIME_DEP_PKGS_CSWgcc4gfortran += $(RUNTIME_DEP_PKGS_CSWgcc4gfortran_$(GARCH)_$(GAROSREL))
+# RUNTIME_DEP_PKGS_CSWgcc4objc += $(RUNTIME_DEP_PKGS_CSWgcc4objc_$(GARCH)_$(GAROSREL))
+# RUNTIME_DEP_PKGS_CSWgcc4java += $(RUNTIME_DEP_PKGS_CSWgcc4java_$(GARCH)_$(GAROSREL))
 
 PACKAGES += $(PACKAGES_$(GARCH))
 
