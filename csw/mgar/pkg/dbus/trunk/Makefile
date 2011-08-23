@@ -1,10 +1,12 @@
-# TBD:
-# - test position of pidfile in compilation and cswdbus
-# - cleanup of /usr/share, /usr/local occurrences
+# $Id: Makefile 15327 2011-08-12 21:35:23Z dmichelsen $
+# TODO (release-critical prefixed with !, non release-critical with *)
+#
+# ! test position of pidfile in compilation and cswdbus
+# ! cleanup of /usr/share, /usr/local occurrences
 
-NAME      = dbus
-VERSION   = 1.5.6
-CATEGORIES   = lib
+NAME = dbus
+VERSION = 1.5.6
+CATEGORIES = lib
 
 DESCRIPTION  = DBus Message Bus System
 define BLURB
@@ -28,9 +30,21 @@ DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += cswusergroup
 DISTFILES += cswdbus
 
-PATCHFILES += dbus-sysdeps-unix.c.diff
-PATCHFILES += dbus-sysdeps.h.diff
+# Use this patch until this issue is fixed:
+#   http://bugs.freedesktop.org/show_bug.cgi?id=40235
+#PATCHFILES += dbus-sysdeps-unix.c.diff
+
+#PATCHFILES += dbus-sysdeps.h.diff
+
+# Use patch until this is fixed:
+#   http://bugs.freedesktop.org/show_bug.cgi?id=40313
+PATCHFILES += 0002-Add-missing-inclusion-of-inttypes.h.patch
+
+# Use this custom-patch unless this is fixed:
+#   http://bugs.freedesktop.org/show_bug.cgi?id=39987
 PATCHFILES += 0001-Use-LOG_PERROR-only-when-available.patch
+
+PATCHFILES += attachment-50480.patch
 
 PACKAGES += CSWdbus
 CATALOGNAME_CSWdbus = dbus
