@@ -29,8 +29,8 @@ PATCHFILES += 0005-Add-strings.h-to-setenv.c-for-strlen-and-other-stuff.patch
 BUILD_DEP_PKGS = CSWtcl
 
 # Uncomment for a better view of file-package allocations.
-PACKAGES = CSWdo-not-use
-SPKG_DESC_CSWdo-not-use = Do not use this catch all package
+# PACKAGES = CSWdo-not-use
+# SPKG_DESC_CSWdo-not-use = Do not use this catch all package
 
 PACKAGES += CSWkrb5doc
 PKGFILES_CSWkrb5doc = NOFILES
