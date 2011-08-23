@@ -119,11 +119,6 @@ OBSOLETED_BY_CSWlibkrb5-3 = CSWkrb5lib
 
 LICENSE = doc/copyright.texinfo
 
-# Wrong quoting, either fix $ISALIST or disable for now
-#NOISALIST = 1
-#LD_OPTIONS =
-#EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
-
 EXTRA_CPPFLAGS += -D__EXTENSIONS__
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/src/configure
