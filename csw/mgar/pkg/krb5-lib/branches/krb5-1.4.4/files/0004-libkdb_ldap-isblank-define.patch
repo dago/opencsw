@@ -1,0 +1,25 @@
+From 468a5bf5227b847f3975fa1f55d3fa2b7424f819 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 5 Feb 2010 10:34:03 +0100
+Subject: [PATCH 4/4] libkdb_ldap isblank define
+
+---
+ src/plugins/kdb/ldap/libkdb_ldap/kdb_ldap.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/plugins/kdb/ldap/libkdb_ldap/kdb_ldap.c b/src/plugins/kdb/ldap/libkdb_ldap/kdb_ldap.c
+index 08a87fe..20a4faa 100644
+--- a/src/plugins/kdb/ldap/libkdb_ldap/kdb_ldap.c
++++ b/src/plugins/kdb/ldap/libkdb_ldap/kdb_ldap.c
+@@ -40,7 +40,7 @@
+ #include <kadm5/admin.h>
+ 
+ #if defined(NEED_ISBLANK_PROTO) && !defined(isblank)
+-extern int isblank();
++# define isblank(c) ((c) == ' ' || (c) == '\t')
+ #endif
+ 
+ krb5_error_code
+-- 
+1.6.6
+
