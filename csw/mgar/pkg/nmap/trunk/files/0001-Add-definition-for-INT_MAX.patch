@@ -1,0 +1,24 @@
+From a93f6c299e460dd381c3459aa4dad61d9e2b213b Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 23 Aug 2011 13:35:57 +0200
+Subject: [PATCH 1/2] Add definition for INT_MAX
+
+---
+ ncat/ncat_listen.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/ncat/ncat_listen.c b/ncat/ncat_listen.c
+index 82d7d67..d0fe6f6 100644
+--- a/ncat/ncat_listen.c
++++ b/ncat/ncat_listen.c
+@@ -96,6 +96,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <sys/types.h>
++#include <limits.h>
+ #ifndef WIN32
+ #include <unistd.h>
+ #include <sys/socket.h>
+-- 
+1.7.6
+

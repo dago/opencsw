@@ -1,0 +1,24 @@
+From ef6e71ddbd2a264500c997c3bd64a3e6d92bdd3e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 23 Aug 2011 17:32:18 +0200
+Subject: [PATCH] Do not use __attribute__
+
+---
+ nmap_error.h |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/nmap_error.h b/nmap_error.h
+index 356dd8c..9313f5e 100644
+--- a/nmap_error.h
++++ b/nmap_error.h
+@@ -124,6 +124,7 @@ extern "C" {
+ #ifdef WIN32
+ __declspec(noreturn)
+ #endif  
++#define __attribute__(x)
+ void fatal(const char *fmt, ...)
+      __attribute__ ((noreturn))
+      __attribute__ ((format (printf, 1, 2)));
+-- 
+1.7.6
+

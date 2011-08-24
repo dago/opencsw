@@ -1,0 +1,26 @@
+From bd9b0814c81cda23e49293e9471417753e97fa1c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 24 Aug 2011 15:32:51 +0200
+Subject: [PATCH] Make lt_sockaddr_storage::operator const or compiler bails
+ out
+
+---
+ traceroute.cc |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/traceroute.cc b/traceroute.cc
+index b972828..dec5353 100644
+--- a/traceroute.cc
++++ b/traceroute.cc
+@@ -1338,7 +1338,7 @@ void TracerouteState::remove_finished_hosts() {
+ 
+ /* Dummy class to use sockaddr_storage as a map key. */
+ struct lt_sockaddr_storage {
+-  bool operator()(const struct sockaddr_storage& a, const struct sockaddr_storage& b) {
++  bool operator()(const struct sockaddr_storage& a, const struct sockaddr_storage& b) const {
+     return sockaddr_storage_cmp(&a, &b) < 0;
+   }
+ };
+-- 
+1.7.5.4
+

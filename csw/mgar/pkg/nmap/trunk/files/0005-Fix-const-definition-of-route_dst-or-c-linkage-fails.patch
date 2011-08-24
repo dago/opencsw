@@ -1,0 +1,25 @@
+From f5d0f3a8fc5376b0fe0aedb7863ec77b0d6173b0 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 24 Aug 2011 17:04:41 +0200
+Subject: [PATCH] Fix const definition of route_dst or c++ linkage fails
+
+---
+ libnetutil/netutil.cc |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/libnetutil/netutil.cc b/libnetutil/netutil.cc
+index 56ed36d..211d275 100644
+--- a/libnetutil/netutil.cc
++++ b/libnetutil/netutil.cc
+@@ -3217,7 +3217,7 @@ static int route_dst_generic(const struct sockaddr_storage *dst,
+  * Even if spoofss is NULL, if user specified a network device with -e, 
+  * it should still be passed. Note that it's OK to pass either NULL or 
+  * an empty string as the "device", as long as spoofss==NULL. */
+-int route_dst(const struct sockaddr_storage *dst, struct route_nfo *rnfo,
++int route_dst(const struct sockaddr_storage *const dst, struct route_nfo *rnfo,
+               const char *device, const struct sockaddr_storage *spoofss) {
+ #ifdef HAVE_LINUX_RTNETLINK_H
+   return route_dst_netlink(dst, rnfo, device, spoofss);
+-- 
+1.7.5.4
+
