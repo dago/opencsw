@@ -1,0 +1,40 @@
+From aa4410cb0368057455629d0e1adfa73e25662eb5 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 23 Aug 2011 13:36:17 +0200
+Subject: [PATCH 2/2] Add definitions for CMSG_ALIGN, CMSG_SPACE and CMSG_LEN
+
+---
+ libnetutil/netutil.cc |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
+
+diff --git a/libnetutil/netutil.cc b/libnetutil/netutil.cc
+index ded7550..56ed36d 100644
+--- a/libnetutil/netutil.cc
++++ b/libnetutil/netutil.cc
+@@ -111,6 +111,23 @@
+ #endif
+ #include <net/if_arp.h>
+ 
++#ifndef CMSG_ALIGN
++#   if defined(__sun) || defined(__sun__)
++#       define CMSG_ALIGN _CMSG_DATA_ALIGN
++#   else
++#       define CMSG_ALIGN(len) (((len)+sizeof(long)-1) & ~(sizeof(long)-1))
++#   endif
++#endif
++
++#ifndef CMSG_SPACE
++#   define CMSG_SPACE(len) (CMSG_ALIGN(sizeof(struct cmsghdr))+CMSG_ALIGN(len))
++#endif
++
++#ifndef CMSG_LEN
++#   define CMSG_LEN(len) (CMSG_ALIGN(sizeof(struct cmsghdr))+(len))
++#endif
++
++
+ #if HAVE_NETINET_IN_H
+ #include <netinet/in.h>
+ #endif
+-- 
+1.7.6
+
