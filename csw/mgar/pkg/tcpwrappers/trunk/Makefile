@@ -19,29 +19,38 @@ DISTNAME = $(NAME)_$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 DISTFILES += COPYING
 DISTFILES += README
-DISTFILES += CSWtcpwrap.postmsg
 
 PATCHFILES = patch-cflags.diff
-PATCHFILES += man.patch
 PATCHFILES += sharedlib.patch
 
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+PACKAGES += CSWtcpwrapper
+SPKG_DESC_CSWtcpwrapper = Wrapper around common tools using libwrap.so.1
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWtcpwrapper += CSWlibwrap1
+OBSOLETED_BY_CSWtcpwrapper += CSWtcpwrap
+CATALOGNAME_CSWtcpwrap = tcpwrappers_stub
 
-PACKAGES = CSWtcpwrap
-CATALOGNAME = tcpwrappers
+PACKAGES += CSWlibwrap1
+SPKG_DESC_CSWlibwrap1 = Socket wrappers for pre-screening tcp connections (ipv6.4 patched), libwrap.so.1
+PKGFILES_CSWlibwrap1 += $(call pkgfiles_lib,libwrap.so.1)
+PKGFILES_CSWlibwrap1 += $(mandir)/man5/.*
 SPKG_DESC_CSWtcpwrap = $(DESCRIPTION)
 
-SPKG_VERSION = $(BASEVERSION)
-
-EXTRA_MODULATORS = EXTENDED
-MODULATIONS_EXTENDED = on off
+PACKAGES += CSWlibwrap-dev
+SPKG_DESC_CSWlibwrap-dev = Development files for libwrap.so.1
+PKGFILES_CSWlibwrap-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibwrap-dev += CSWlibwrap1
 
 BUILD_ARGS = REAL_DAEMON_DIR=/usr/sbin
 BUILD_ARGS += STYLE=-DPROCESS_OPTIONS
 BUILD_ARGS += USER_CFLAGS="$(CFLAGS)"
 BUILD_ARGS += LIBS="-lsocket -lnsl"
 
+# EXTENDED = off
+EXTENDED = on
+
 BUILD64 = 1
+NOISALIST = 1
 
 CONFIGURE_SCRIPTS =
 
@@ -53,64 +62,41 @@ BUILD_SCRIPTS = custom
 # No test suite
 TEST_SCRIPTS =
 
-LIBNAME_EXTENDED-off = libwrap-std.so.0
-LIBNAME_EXTENDED-on  = libwrap-ext.so.0
-
 INSTALL_SCRIPTS = custom
 
-MERGE_SCRIPTS_isa-default-extended-off = copy-all
- MERGE_SCRIPTS_isa-default-extended-on = copy-only
-    MERGE_DIRS_isa-default-extended-on = $(libdir)
+MIGRATE_FILES_CSWlibwrap1 = hosts.allow hosts.deny
 
-MERGE_SCRIPTS_isa-default64-extended-off = copy-relocated-only
-   MERGE_DIRS_isa-default64-extended-off = $(libdir)
- MERGE_SCRIPTS_isa-default64-extended-on = copy-relocated-only
-    MERGE_DIRS_isa-default64-extended-on = $(libdir)
-
-MIGRATE_FILES = hosts.allow hosts.deny
-
-ALTERNATIVES = std ext
-ALTERNATIVE_std  = $(libdir)/libwrap.so.0 tcpwrappers $(libdir)/libwrap-std.so.0 200
-ALTERNATIVE_std += $(libdir)/$(ISA_DEFAULT64)/libwrap.so.0 tcpwrappers64 $(libdir)/$(ISA_DEFAULT64)/libwrap-std.so.0
-ALTERNATIVE_ext  = $(libdir)/libwrap.so.0 tcpwrappers $(libdir)/libwrap-ext.so.0 100
-ALTERNATIVE_ext += $(libdir)/$(ISA_DEFAULT64)/libwrap.so.0 tcpwrappers64 $(libdir)/$(ISA_DEFAULT64)/libwrap-ext.so.0
-
-POSTMSG = $(docdir)/$(CATALOGNAME)/CSWtcpwrap.postmsg
-
-PACKAGES += CSWlibwrap0
-CATALOGNAME_CSWlibwrap0 = libwrap0
-PKGFILES_CSWlibwrap0 += $(call baseisadirs,$(libdir),libwrap\.so\.0(\.\d+)*)
-SPKG_DESC_CSWlibwrap0 += $(DESCRIPTION), libwrap.so.0
-RUNTIME_DEP_PKGS_CSWtcpwrap += CSWlibwrap0
-
-PACKAGES += CSWtcpwrap-dev
-SPKG_DESC_CSWtcpwrap-dev = $(DESCRIPTION) development package
-PKGFILES_CSWtcpwrap-dev += $(PKGFILES_DEVEL)
-CATALOGNAME_CSWtcpwrap-dev = tcpwrappers_dev
-
-# These binaries link against libwrap.so which will be linked by alternatives
-# after package install. Until then they can obviously not link properly.
-CHECKPKG_OVERRIDES  = symbol-not-found|tcpdmatch
-CHECKPKG_OVERRIDES += symbol-not-found|tcpd
-CHECKPKG_OVERRIDES += symbol-not-found|try-from
-CHECKPKG_OVERRIDES += symbol-not-found|tcpdchk
+# This is an example to /usr/local/lib/ntalkd
+CHECKPKG_OVERRIDES_CSWtcpwrapper += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/tcpd.8
 
 include gar/category.mk
 
+SPKG_VERSION = $(subst -,_,$(VERSION))
+
+post-extract-modulated:
+	-cd $(WORKSRC) && perl -pi -e 's,/etc/hosts\.,$(sysconfdir)/hosts.,g' \
+		hosts_access.3 \
+		hosts_access.5 \
+		tcpd.8 \
+		tcpdchk.8 \
+		tcpdmatch.8
+	@$(MAKECOOKIE)
+
 build-custom:
-	$(MAKE) -C $(WORKSRC) $(BUILD_ARGS) $(BUILD_TARGET_EXTENDED_$(EXTENDED))
+	$(BUILD_ENV) $(MAKE) -C $(WORKSRC) $(BUILD_ARGS) $(BUILD_TARGET_EXTENDED_$(EXTENDED))
 	@$(MAKECOOKIE)
 
 install-custom:
-	@echo " => Installing $(CATALOGNAME)"
-	ginstall -d $(DESTDIR)$(docdir)/$(CATALOGNAME)
-	cd $(WORKDIR) && ginstall -v -m 644 README $(DESTDIR)$(docdir)/$(CATALOGNAME)
+	@echo " => Installing tcpwrapper"
+	ginstall -d $(DESTDIR)$(docdir)/tcpwrapper"
+	cd $(WORKDIR) && ginstall -v -m 644 README $(DESTDIR)$(docdir)/tcpwrapper/README
 	ginstall -d $(DESTDIR)$(libexecdir)
 	cd $(WORKSRC) && ginstall -v -m 755 safe_finger tcpd tcpdchk tcpdmatch try-from $(DESTDIR)$(libexecdir)
 	ginstall -d $(DESTDIR)$(includedir)
 	cd $(WORKSRC) && ginstall -v -m 644 tcpd.h $(DESTDIR)$(includedir)
 	ginstall -d $(DESTDIR)$(libdir)
-	cd $(WORKSRC) && ginstall -v -m 644 libwrap.so.0 $(DESTDIR)$(libdir)/$(LIBNAME_EXTENDED-$(EXTENDED))
+	cd $(WORKSRC) && ginstall -v -m 644 libwrap.so.1 $(DESTDIR)$(libdir)/libwrap.so.1
+	gln -s libwrap.so.1 $(DESTDIR)$(libdir)/libwrap.so
 	ginstall -d $(DESTDIR)$(mandir)/man3
 	cd $(WORKSRC) && ginstall -v -m 644 *.3 $(DESTDIR)$(mandir)/man3
 	ginstall -d $(DESTDIR)$(mandir)/man5
@@ -118,18 +104,4 @@ install-custom:
 	ginstall -d $(DESTDIR)$(mandir)/man8
 	cd $(WORKSRC) && ginstall -v -m 644 *.8 $(DESTDIR)$(mandir)/man8
 	@$(MAKECOOKIE)
-
-post-merge:
-	ginstall -d $(PKGROOT)$(dir $(POSTMSG))
-	ginstall $(WORKDIR)/$(notdir $(POSTMSG)) $(PKGROOT)$(POSTMSG)
-	ln -s libwrap.so.0 $(PKGROOT)$(libdir)/libwrap.so
-	ln -s libwrap.so.0 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libwrap.so
-	@# As libwrap.so.0 is the SONAME to be bound against we must register it with the package
-	@# to allow chkpkg to look up the pkgname for the library. This is rewritten by alternatives
-	@# on installation and is solely to register the link path, the destination doesn't matter.
-	ln -s /etc/opt/csw/alternatives/tcpwrappers $(PKGROOT)$(libdir)/libwrap.so.0
-	ln -s /etc/opt/csw/alternatives/tcpwrappers64 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libwrap.so.0
-	@$(MAKECOOKIE)
-
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_rev=$(RELEASE)
 

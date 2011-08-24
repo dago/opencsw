@@ -8,8 +8,8 @@ diff -Naur tcp_wrappers_7.6-ipv6.4.orig/Makefile tcp_wrappers_7.6-ipv6.4.patched
 +sunos5-shared:
 +	@$(MAKE) REAL_DAEMON_DIR=$(REAL_DAEMON_DIR) STYLE=$(STYLE) \
 +	LIBS="-lsocket -lnsl" RANLIB=/bin/true \
-+	AR=ld ARFLAGS="-G -h libwrap.so.0 -lsocket -lnsl -o " \
-+	LIB=libwrap.so.0 VSYSLOG= \
++	AR=ld ARFLAGS="-G -h libwrap.so.1 -lsocket -lnsl -o " \
++	LIB=libwrap.so.1 VSYSLOG= \
 +	NETGROUP=-DNETGROUP AUX_OBJ="setenv.o sharedhack.o" TLI=-DTLI \
 +	BUGS="$(BUGS) -DSOLARIS_24_GETHOSTBYNAME_BUG" IPV6="$(IPV6)" \
 +	EXTRA_CFLAGS="-DUSE_STRERROR -Kpic" all
@@ -17,8 +17,8 @@ diff -Naur tcp_wrappers_7.6-ipv6.4.orig/Makefile tcp_wrappers_7.6-ipv6.4.patched
 +sunos5-sharedext:
 +	@$(MAKE) REAL_DAEMON_DIR=$(REAL_DAEMON_DIR) STYLE=$(STYLE) \
 +	LIBS="-lsocket -lnsl" RANLIB=/bin/true \
-+	AR=ld ARFLAGS="-G -h libwrap.so.0 -lsocket -lnsl -o " \
-+	LIB=libwrap.so.0 VSYSLOG= STYLE=-DPROCESS_OPTIONS \
++	AR=ld ARFLAGS="-G -h libwrap.so.1 -lsocket -lnsl -o " \
++	LIB=libwrap.so.1 VSYSLOG= STYLE=-DPROCESS_OPTIONS \
 +	NETGROUP=-DNETGROUP AUX_OBJ="setenv.o sharedhack.o" TLI=-DTLI \
 +	BUGS="$(BUGS) -DSOLARIS_24_GETHOSTBYNAME_BUG" IPV6="$(IPV6)" \
 +	EXTRA_CFLAGS="-DUSE_STRERROR -Kpic" all
