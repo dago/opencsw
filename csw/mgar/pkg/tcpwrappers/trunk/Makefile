@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = tcp_wrappers
 BASEVERSION = 7.6
 RELEASE = ipv6.4
@@ -26,9 +28,6 @@ PACKAGES = CSWtcpwrap
 CATALOGNAME = tcpwrappers
 
 SPKG_VERSION = $(BASEVERSION)
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)_(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_MODULATORS = EXTENDED
 MODULATIONS_EXTENDED = on off
