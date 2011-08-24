@@ -143,6 +143,13 @@ BUILD_SCRIPTS  = $(WORKSRC)/src/Makefile
 
 TEST_SCRIPTS = $(WORKSRC)/src/Makefile
 
+# Some tests are failing:
+# TOP=/home/maciej/src/opencsw/pkg/krb5-lib/trunk/work/solaris9-sparc/build-isa-sparcv8/krb5-1.9.1/src/kadmin
+# Running pass `tcp' ...
+# server didn't start in 30 secondscan't read "expect_out(buffer)": no such
+# variable
+#     while executing
+#     "verbose $expect_out(buffer) 1"
 SKIPTEST ?= 1
 
 INSTALL_SCRIPTS = $(WORKSRC)/src/Makefile
