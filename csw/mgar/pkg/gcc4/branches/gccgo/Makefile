@@ -7,7 +7,7 @@
 # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=39048
 
 NAME      = gcc
-VERSION   = 4.6.1
+VERSION   = 4.7-20110820
 CATEGORIES   = lang
 GARTYPE = v2
 
@@ -19,7 +19,8 @@ define BLURB
 endef
 
 DISTFILES    = $(DISTNAME).tar.bz2
-MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
+# MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
+MASTER_SITES = ftp://ftp.fu-berlin.de/unix/languages/gcc/snapshots/$(VERSION)/
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
