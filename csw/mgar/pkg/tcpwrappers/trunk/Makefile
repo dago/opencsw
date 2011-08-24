@@ -24,21 +24,22 @@ PATCHFILES = patch-cflags.diff
 PATCHFILES += sharedlib.patch
 
 PACKAGES += CSWtcpwrapper
-SPKG_DESC_CSWtcpwrapper = Wrapper around common tools using libwrap.so.0
+SPKG_DESC_CSWtcpwrapper = Wrapper around common tools using libwrap.so.1
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWtcpwrapper += CSWlibwrap0
+RUNTIME_DEP_PKGS_CSWtcpwrapper += CSWlibwrap1
 OBSOLETED_BY_CSWtcpwrapper += CSWtcpwrap
 CATALOGNAME_CSWtcpwrap = tcpwrappers_stub
 
-PACKAGES += CSWlibwrap0
-SPKG_DESC_CSWlibwrap0 = Socket wrappers for pre-screening tcp connections (ipv6.4 patched), libwrap.so.0
-PKGFILES_CSWlibwrap0 += $(call pkgfiles_lib,libwrap.so.0)
-PKGFILES_CSWlibwrap0 += $(mandir)/man5/.*
+PACKAGES += CSWlibwrap1
+SPKG_DESC_CSWlibwrap1 = Socket wrappers for pre-screening tcp connections (ipv6.4 patched), libwrap.so.1
+PKGFILES_CSWlibwrap1 += $(call pkgfiles_lib,libwrap.so.1)
+PKGFILES_CSWlibwrap1 += $(mandir)/man5/.*
+SPKG_DESC_CSWtcpwrap = $(DESCRIPTION)
 
 PACKAGES += CSWlibwrap-dev
-SPKG_DESC_CSWlibwrap-dev = Development files for libwrap.so.0
+SPKG_DESC_CSWlibwrap-dev = Development files for libwrap.so.1
 PKGFILES_CSWlibwrap-dev += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWlibwrap-dev += CSWlibwrap0
+RUNTIME_DEP_PKGS_CSWlibwrap-dev += CSWlibwrap1
 
 BUILD_ARGS = REAL_DAEMON_DIR=/usr/sbin
 BUILD_ARGS += STYLE=-DPROCESS_OPTIONS
@@ -63,7 +64,7 @@ TEST_SCRIPTS =
 
 INSTALL_SCRIPTS = custom
 
-MIGRATE_FILES_CSWlibwrap0 = hosts.allow hosts.deny
+MIGRATE_FILES_CSWlibwrap1 = hosts.allow hosts.deny
 
 # This is an example to /usr/local/lib/ntalkd
 CHECKPKG_OVERRIDES_CSWtcpwrapper += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/tcpd.8
@@ -94,8 +95,8 @@ install-custom:
 	ginstall -d $(DESTDIR)$(includedir)
 	cd $(WORKSRC) && ginstall -v -m 644 tcpd.h $(DESTDIR)$(includedir)
 	ginstall -d $(DESTDIR)$(libdir)
-	cd $(WORKSRC) && ginstall -v -m 644 libwrap.so.0 $(DESTDIR)$(libdir)/libwrap.so.0
-	gln -s libwrap.so.0 $(DESTDIR)$(libdir)/libwrap.so
+	cd $(WORKSRC) && ginstall -v -m 644 libwrap.so.1 $(DESTDIR)$(libdir)/libwrap.so.1
+	gln -s libwrap.so.1 $(DESTDIR)$(libdir)/libwrap.so
 	ginstall -d $(DESTDIR)$(mandir)/man3
 	cd $(WORKSRC) && ginstall -v -m 644 *.3 $(DESTDIR)$(mandir)/man3
 	ginstall -d $(DESTDIR)$(mandir)/man5
