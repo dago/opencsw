@@ -19,6 +19,7 @@ LICENSE      = LICENSE
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
+BUILD_DEP_PKGS = CSWlibz-dev
 RUNTIME_DEP_PKGS = CSWosslrt CSWlibpcre0 CSWlibz1 CSWperl
 
 PACKAGING_PLATFORMS  = solaris9-sparc  solaris9-i386
