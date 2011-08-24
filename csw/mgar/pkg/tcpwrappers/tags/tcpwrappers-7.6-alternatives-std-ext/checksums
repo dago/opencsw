@@ -1,0 +1,7 @@
+071bd69cb78b18888ea5e3da5c3127fa  COPYING
+4976fe1425f77a0d4c494bb9a032c992  CSWtcpwrap.postmsg
+b268880c14ab6d31140015275c82d6aa  README
+89e8f9d1ed25d8e809674af9bf3d18e6  man.patch
+af28873e5c16c4f921237148e2507826  patch-cflags.diff
+61ef4684e9615e45e4a66d83bdd541d0  sharedlib.patch
+ccbc2676977c31bbd43783abfbf2fdcf  tcp_wrappers_7.6-ipv6.4.tar.gz
