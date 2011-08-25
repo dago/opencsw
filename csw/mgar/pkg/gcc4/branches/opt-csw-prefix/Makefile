@@ -40,20 +40,13 @@ LICENSE = COPYING3
 # CONFIGURE_ARGS += --libdir=$(libdir)
 # CONFIGURE_ARGS += --exec-prefix=$(BUILD_PREFIX)/gcc4
 
-# Trying to fix the include problem.
-# http://gcc.gnu.org/ml/gcc-help/2011-08/msg00247.html
-CONFIGURE_ARGS += --bindir=$(prefix)/gcc4/bin
-CONFIGURE_ARGS += --libexecdir=$(prefix)/gcc4/libexec
-CONFIGURE_ARGS += --exec-prefix=$(prefix)/gcc4
-
 ## build options
 # http://gcc.gnu.org/install/configure.html
 
 # Could be used to break out of the /opt/csw/gcc4 prefix
 # CONFIGURE_ARGS += --program-prefix=gcc4-
 
-# The theory is that DIRPATHS confuse the installer, e.g. includedir
-# CONFIGURE_ARGS += --includedir=$(prefix)/include
+CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-gnu-as
 CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
 CONFIGURE_ARGS += --without-gnu-ld
