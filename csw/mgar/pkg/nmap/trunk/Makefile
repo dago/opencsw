@@ -23,6 +23,12 @@ PATCHFILES += 0003-Do-not-use-__attribute__.patch
 PATCHFILES += 0004-Make-lt_sockaddr_storage-operator-const-or-compiler-.patch
 PATCHFILES += 0005-Fix-const-definition-of-route_dst-or-c-linkage-fails.patch
 
+# From http://seclists.org/nmap-dev/2011/q3/640
+# This is needed for pcre 8.13
+#PATCHFILES += collatingsvn.patch
+# The above doesn't apply, this is the forward-port:
+PATCHFILES += 0006-Forward-port-of-collatingsvn.patch.patch
+
 BUILD_DEP_PKGS += CSWlibpcre-dev
 BUILD_DEP_PKGS += CSWlibpcap-dev
 BUILD_DEP_PKGS += CSWossldevel
