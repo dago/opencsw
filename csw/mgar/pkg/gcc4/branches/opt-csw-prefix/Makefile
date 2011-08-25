@@ -169,6 +169,14 @@ CHECKPKG_OVERRIDES_CSWgcc4gfortran += file-with-bad-content
 # Due to complex regular expressions
 CHECKPKG_OVERRIDES_CSWgcc4java += file-collision|/opt/csw/gcc4/include/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
 CHECKPKG_OVERRIDES_CSWgcc4g++ += file-collision|/opt/csw/gcc4/include/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
+CHECKPKG_OVERRIDES_CSWgcc4java += file-collision|/opt/csw/include/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
+CHECKPKG_OVERRIDES_CSWgcc4g++ += file-collision|/opt/csw/include/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
+
+# Only man pages, so not a big problem. Alternatives could be used, but it
+# requires rebuilding libffi.
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/share/man/man3/ffi_call.3|CSWgcc4core|CSWlibffi-dev
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/share/man/man3/ffi.3|CSWgcc4core|CSWlibffi-dev
+CHECKPKG_OVERRIDES_CSWgcc4core += file-collision|/opt/csw/share/man/man3/ffi_prep_cif.3|CSWgcc4core|CSWlibffi-dev
 
 # The .a files are necessary
 CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap
