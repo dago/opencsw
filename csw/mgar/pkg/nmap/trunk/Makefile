@@ -31,9 +31,24 @@ PACKAGES += CSWnmap
 SPKG_DESC_CSWnmap = A network exploration tool and security/port scanner
 RUNTIME_DEP_PKGS_CSWnmap += CSWstlport
 RUNTIME_DEP_PKGS_CSWnmap += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSWnmap += CSWlua
 RUNTIME_DEP_PKGS_CSWnmap += CSWosslrt
 RUNTIME_DEP_PKGS_CSWnmap += CSWlibpcap1
+RUNTIME_DEP_PKGS_CSWnmap += CSWlua
+RUNTIME_DEP_PKGS_CSWnmap += CSWpython
+
+# Tons of docs and identification of programs installed there
+CHECKPKG_OVERRIDES_CSWnmap += file-with-bad-content
+
+# The Python module is really embedded here, that is ok
+CHECKPKG_OVERRIDES_CSWnmap += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWnmap += catalogname-does-not-start-with-py_
+
+#PACKAGES += CSWzenmap
+SPKG_DESC_CSWzenmap = zenmap
+PKGFILES_CSWzenmap += $(bindir)/zenmap
+PKGFILES_CSWzenmap += $(libdir)/python/.*
+PKGFILES_CSWzenmap += $(mandir)/.*/zenmap\.1
+PKGFILES_CSWzenmap += $(sharedstatedir)/zenmap/.*
 
 # See standards(5) for details
 EXTRA_CPPFLAGS += -features=extensions -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED=1 -D__EXTENSIONS__
@@ -49,16 +64,11 @@ CONFIGURE_ARGS += --with-openssl=$(prefix)
 #   http://nmap.org/svn/libdnet-stripped/NMAP_MODIFICATIONS
 CONFIGURE_ARGS += --with-libdnet=included
 
-#
 CONFIGURE_ARGS += --with-liblua=$(prefix)
-# CONFIGURE_ARGS += --with-libnbase=
-#CONFIGURE_ARGS += --with-libnsock=
 
-# Disable most of the tools for now, enable later one by one
-CONFIGURE_ARGS += --without-ndiff
-CONFIGURE_ARGS += --without-zenmap
-CONFIGURE_ARGS += --without-nping
-CONFIGURE_ARGS += --without-ncat
+# Not necessary
+# CONFIGURE_ARGS += --with-libnbase=
+# CONFIGURE_ARGS += --with-libnsock=
 
 # We can't put this in EXTRA_LINKER_FLAGS as LDFLAGS is used for cc too and -library=stlport4 breaks cc
 BUILD_OVERRIDE_VARS = STATIC
@@ -67,8 +77,10 @@ BUILD_OVERRIDE_VAR_STATIC = -library=stlport4 -norunpath
 # There is no testsuite
 TEST_SCRIPTS =
 
-# Tons of docs and identification of programs installed there
-CHECKPKG_OVERRIDES_CSWnmap += file-with-bad-content
+PYCOMPILE = 1
+
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/uninstall_zenmap
+EXTRA_PAX_ARGS += -s ',/ndiff,/nmap-ndiff,'
 
 include gar/category.mk
 
