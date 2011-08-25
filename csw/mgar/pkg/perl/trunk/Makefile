@@ -1,5 +1,5 @@
 NAME = perl
-VERSION = 5.12.3
+VERSION = 5.12.4
 CATEGORIES = lang
 
 DESCRIPTION = A high-level, general-purpose programming language
@@ -57,7 +57,8 @@ INC_COMPAT = 5.8.0 5.8.2 5.8.4 5.8.6 5.8.7 5.8.8 5.10.0 5.10.1 5.12.0 5.12.1
 
 # Force use of db-4.8
 # TBD: Reinsert libperl.so, see below.
-PERL_LIBS-32 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl 
+#PERL_LIBS-32 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc -lperl 
+PERL_LIBS-32 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc
 PERL_LIBS-64 += -lsocket -lnsl -lgdbm -ldb-4.8 -ldl -lm -lpthread -lc 
 PERL_LIBS = $(PERL_LIBS-$(MEMORYMODEL)) 
 
@@ -123,7 +124,8 @@ EXTRA_CFLAGS = $(CPPFLAGS)
 # the case on bootstrapping. However, we require explicit libperl linkage or programs 
 # embedding perl will have problems with duplicated static variables. 
 # XXX Investigate further after 64 bit has built 
-EXTRA_LDFLAGS-32 = -L$(libdir) -lperl 
+#EXTRA_LDFLAGS-32 = -L$(libdir) -lperl 
+EXTRA_LDFLAGS-32 = -L$(libdir)
 EXTRA_LDFLAGS += $(EXTRA_LDFLAGS-$(MEMORYMODEL)) 
 
 # We want 64 bit binaries
@@ -139,6 +141,10 @@ EXTRA_PKGFILES_INCLUDED_CSWperl = .*\/perldiag.pod
 
 # Tests take a long time, run once for every release
 #TEST_SCRIPTS =
+
+BUILD_SCRIPTS = perl
+
+TEST_SCRIPTS = perl
 
 # Make sure we don't include the path to the newly built perl as the
 # library is not in place yet.
@@ -164,7 +170,7 @@ include gar/category.mk
 # TBD: Investigate
 post-extract-modulated:
 	mkdir -p $(WORKSRC)
-	gln -s libperl.so.5.12.3 $(WORKSRC)/libperl.so
+	gln -s libperl.so.$(VERSION) $(WORKSRC)/libperl.so
 	@$(MAKECOOKIE)
 
 ifneq ($(CORE_UPDATES),)
@@ -173,8 +179,25 @@ include files/updatecore.mk
 endif
 
 # How to configure Perl
+#configure-perl: CONFIGURE_EXPORTS = PATH LD_OPTIONS
+configure-perl: ARGS-64 = -dusedtrace
 configure-perl:
-	@(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -des)
+	(cd $(WORKSRC) ; $(CONFIGURE_ENV) ./Configure $(CONFIGURE_ARGS) -des)
+	#cd $(WORKSRC) && ./Configure -ders -Dusethreads -Duselongdouble -Dinc_version_list=none $(ARGS-$(GAROSREL)) -Dprefix=$(prefix) -Dsed=/usr/bin/sed -Duseshrplib -Dcf_by='Claudio_Ramirez' -Dcf_email=claudio.ramirez@smals.be
+	@# 64 bit: -Duse64bitall 
+	@$(MAKECOOKIE)
+
+build-perl: BUILD_EXPORTS = LD_OPTIONS
+build-perl:
+	@echo " ==> Running make in $*"
+	@#cd $* && $(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
+	cd $(WORKSRC) && $(BUILD_ENV) gmake
+	@$(MAKECOOKIE)
+
+test-perl:
+	@echo " ==> Running make $(TEST_TARGET) in $*"
+	@#cd $* && $(TEST_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(TEST_ARGS) $(TEST_TARGET)
+	cd $(WORKSRC) && gmake check
 	@$(MAKECOOKIE)
 
 # Make links to libperl
