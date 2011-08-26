@@ -17,6 +17,8 @@ endef
 MASTER_SITES = http://nmap.org/dist/
 DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
+# Patches unless this is fixed:
+#   http://seclists.org/nmap-dev/2011/q3/646
 PATCHFILES += 0001-Add-definition-for-INT_MAX.patch
 PATCHFILES += 0002-Add-definitions-for-CMSG_ALIGN-CMSG_SPACE-and-CMSG_L.patch
 PATCHFILES += 0003-Do-not-use-__attribute__.patch
@@ -41,6 +43,8 @@ RUNTIME_DEP_PKGS_CSWnmap += CSWosslrt
 RUNTIME_DEP_PKGS_CSWnmap += CSWlibpcap1
 RUNTIME_DEP_PKGS_CSWnmap += CSWlua
 RUNTIME_DEP_PKGS_CSWnmap += CSWpython
+# For Zenmap
+RUNTIME_DEP_PKGS_CSWnmap += CSWpygtk
 
 # Tons of docs and identification of programs installed there
 CHECKPKG_OVERRIDES_CSWnmap += file-with-bad-content
