@@ -271,8 +271,8 @@ def SuggestLibraryPackage(error_mgr, messenger,
       r'$(call baseisadirs,$(libdir),%s(\.\d+)*)'
       % (pkgname, escaped_soname))
   messenger.SuggestGarLine(
-      "SPKG_DESC_%s += %s, %s"
-      % (pkgname, description, soname))
+      "SPKG_DESC_%s += $(DESCRIPTION), %s"
+      % (pkgname, soname))
   messenger.SuggestGarLine(
       "RUNTIME_DEP_PKGS_%s += %s"
       % (base_pkgname, pkgname))
