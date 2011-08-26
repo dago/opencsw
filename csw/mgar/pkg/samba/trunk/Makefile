@@ -1,5 +1,5 @@
 NAME = samba
-VERSION = 3.5.6
+VERSION = 3.6.0
 CATEGORIES = apps
 
 DESCRIPTION = Tools to access a servers filespace and printers via SMB (server)
@@ -10,37 +10,39 @@ endef
 MASTER_SITES = http://samba.org/samba/ftp/stable/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES = CSWsamba CSWsambaclient CSWsambacommon CSWsambadoc CSWsambalib CSWsambalibdev CSWsambaswat CSWsambawb
+BUILD_DEP_PKGS += CSWlibtalloc-dev
 
-CATALOGNAME_CSWsamba = samba
+PACKAGES += CSWsamba
 SPKG_DESC_CSWsamba = $(DESCRIPTION)
-CATALOGNAME_CSWsambaclient =  samba_client
-SPKG_DESC_CSWsambaclient = Client binaries for samba
-CATALOGNAME_CSWsambacommon = samba_common
-SPKG_DESC_CSWsambacommon = Shared support files for samba
-CATALOGNAME_CSWsambadoc = samba_doc
-SPKG_DESC_CSWsambadoc = Samba documentation
-CATALOGNAME_CSWsambalib = samba_lib
-SPKG_DESC_CSWsambalib = Samba shared libraries
-CATALOGNAME_CSWsambalibdev = samba_libdev
-SPKG_DESC_CSWsambalibdev = Development files for the samba libraries
-CATALOGNAME_CSWsambaswat = samba_swat
-SPKG_DESC_CSWsambaswat = Web-based samba administration tools
-CATALOGNAME_CSWsambawb = samba_wb
-SPKG_DESC_CSWsambawb = not sure what this is
-
 RUNTIME_DEP_PKGS_CSWsamba = CSWsasl CSWsambacommon CSWoldaprt CSWlibpopt CSWlibnet CSWlibcups CSWkrb5lib CSWiconv CSWggettext CSWfam
-RUNTIME_DEP_PKGS_CSWsambaclient = CSWsasl  CSWsambacommon CSWreadline CSWlibpopt CSWlibnet CSWkrb5lib CSWiconv CSWggettext
-RUNTIME_DEP_PKGS_CSWsambacommon = CSWsasl CSWreadline CSWlibpopt CSWlibnet CSWkrb5lib CSWiconv CSWggettext
-RUNTIME_DEP_PKGS_CSWsambalib = CSWsasl CSWlibnet CSWkrb5lib CSWiconv
-RUNTIME_DEP_PKGS_CSWsambalibdev = CSWsasl CSWlibnet CSWkrb5lib CSWiconv
-RUNTIME_DEP_PKGS_CSWsambaswat = CSWsasl CSWlibpopt CSWlibnet CSWlibcups CSWkrb5lib CSWiconv CSWggettext
-RUNTIME_DEP_PKGS_CSWsambawb = CSWsamba
 
+#PACKAGES += CSWsambaclient
+SPKG_DESC_CSWsambaclient = Client binaries for samba
+RUNTIME_DEP_PKGS_CSWsambaclient = CSWsasl  CSWsambacommon CSWreadline CSWlibpopt CSWlibnet CSWkrb5lib CSWiconv CSWggettext
+
+#PACKAGES += CSWsambacommon
+SPKG_DESC_CSWsambacommon = Shared support files for samba
+RUNTIME_DEP_PKGS_CSWsambacommon = CSWsasl CSWreadline CSWlibpopt CSWlibnet CSWkrb5lib CSWiconv CSWggettext
+
+#PACKAGES += CSWsambadoc
+SPKG_DESC_CSWsambadoc = Samba documentation
 ARCHALL_CSWsambadoc = 1
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+#PACKAGES += CSWsambalib
+SPKG_DESC_CSWsambalib = Samba shared libraries
+RUNTIME_DEP_PKGS_CSWsambalib = CSWsasl CSWlibnet CSWkrb5lib CSWiconv
+
+#PACKAGES += CSWsambalibdev
+SPKG_DESC_CSWsambalibdev = Development files for the samba libraries
+RUNTIME_DEP_PKGS_CSWsambalibdev = CSWsasl CSWlibnet CSWkrb5lib CSWiconv
+
+#PACKAGES += CSWsambaswat
+SPKG_DESC_CSWsambaswat = Web-based samba administration tools
+RUNTIME_DEP_PKGS_CSWsambaswat = CSWsasl CSWlibpopt CSWlibnet CSWlibcups CSWkrb5lib CSWiconv CSWggettext
+
+#PACKAGES += CSWsambawb
+SPKG_DESC_CSWsambawb = not sure what this is
+RUNTIME_DEP_PKGS_CSWsambawb = CSWsamba
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/source3/configure
 CONFIGURE_ARGS = $(DIRPATHS)
