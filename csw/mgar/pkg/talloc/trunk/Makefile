@@ -1,6 +1,6 @@
 # $Id$
 NAME = talloc
-VERSION = 2.0.5
+VERSION = 2.0.6
 CATEGORIES = lib
 
 DESCRIPTION = A hierarchical, reference counted memory pool system
@@ -10,27 +10,28 @@ endef
 MASTER_SITES = http://samba.org/ftp/talloc/
 DISTFILES  = $(DISTNAME).tar.gz
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://talloc.samba.org/talloc/doc/html/index.html
+
+LICENSE = NEWS
 
 PACKAGES += CSWlibtalloc2
 CATALOGNAME_CSWlibtalloc2 = libtalloc2
 SPKG_DESC_CSWlibtalloc2 = A hierarchical, reference counted memory pool system, libtalloc.so.2
-PKGFILES_CSWlibtalloc2 += $(call baseisadirs,$(libdir),libtalloc\.so\.2(\.\d+)*)
+PKGFILES_CSWlibtalloc2 += $(call pkgfiles_lib,libtalloc.so.2)
 
 PACKAGES += CSWlibtalloc-dev
 CATALOGNAME_CSWlibtalloc-dev = libtalloc_dev
 SPKG_DESC_CSWlibtalloc-dev = Development Files for libtalloc
+# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibtalloc-dev += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibtalloc-dev += CSWpy-talloc
-# PKGFILES is catchall
 
 PACKAGES += CSWlibpytalloc-util2
 CATALOGNAME_CSWlibpytalloc-util2 = libpytalloc_util2
 SPKG_DESC_CSWlibpytalloc-util2 = Python talloc library, libpytalloc-util.so.2
+PKGFILES_CSWlibpytalloc-util2 = $(call pkgfiles_lib,libpytalloc-util.so.2)
 RUNTIME_DEP_PKGS_CSWlibpytalloc-util2 += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWlibpytalloc-util2 += CSWlibpython2-6-1-0
-PKGFILES_CSWlibpytalloc-util2 = $(call baseisadirs,$(libdir),libpytalloc-util\.so\.2(\.\d+)*)
 
 PACKAGES += CSWpy-talloc
 CATALOGNAME_CSWpy-talloc = py_talloc
@@ -49,10 +50,6 @@ PKGFILES_CSWpy-talloc-dev += $(call baseisadirs,$(libdir),pkgconfig/pytalloc-uti
 RUNTIME_DEP_PKGS_CSWpy-talloc-dev += CSWpython-devel
 RUNTIME_DEP_PKGS_CSWpy-talloc-dev += CSWpy-talloc
 RUNTIME_DEP_PKGS_CSWpy-talloc-dev += CSWlibpytalloc-util2
-
-VENDOR_URL = http://talloc.samba.org/talloc/doc/html/index.html
-
-LICENSE = NEWS
 
 BUILD64 = 1
 NODIRPATHS = --exec_prefix
