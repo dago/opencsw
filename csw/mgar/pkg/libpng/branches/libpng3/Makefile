@@ -10,7 +10,7 @@
 #   pentium_pro
 
 NAME = libpng
-VERSION = 1.5.4
+VERSION = 1.2.46
 CATEGORIES = lib
 DESCRIPTION = The official library for Portable Network Graphics format (PNG)
 define BLURB
@@ -29,17 +29,24 @@ EXTRA_BUILD_ISAS += pentium_pro
 
 PACKAGES = CSWlibpng-dev
 SPKG_DESC_CSWlibpng-dev = $(DESCRIPTION), development files
-RUNTIME_DEP_PKGS_CSWlibpng-dev += CSWlibpng15-15
+RUNTIME_DEP_PKGS_CSWlibpng-dev += CSWlibpng3
+RUNTIME_DEP_PKGS_CSWlibpng-dev += CSWlibpng12-0
 
-PACKAGES += CSWlibpng15-15
-CATALOGNAME_CSWlibpng15-15 = libpng15_15
-PKGFILES_CSWlibpng15-15 += $(call baseisadirs,$(libdir),libpng15\.so\.15(\.\d+)*)
-SPKG_DESC_CSWlibpng15-15 += $(DESCRIPTION), libpng15.so.15
-RUNTIME_DEP_PKGS_CSWlibpng += CSWlibpng15-15
-RUNTIME_DEP_PKGS_CSWlibpng15-15 += CSWlibz1
+PACKAGES += CSWlibpng3
+CATALOGNAME_CSWlibpng3 = libpng3
+PKGFILES_CSWlibpng3 += $(call baseisadirs,$(libdir),libpng\.so\.3(\.\d+)*)
+SPKG_DESC_CSWlibpng3 += $(DESCRIPTION), libpng.so.3
+RUNTIME_DEP_PKGS_CSWlibpng += CSWlibpng3
+OBSOLETED_BY_CSWlibpng3 += CSWpng
+RUNTIME_DEP_PKGS_CSWlibpng3 += CSWlibz1
 
-# The CSWpng package must also pull in libpng.so.3 and libpng12.so.0
-OBSOLETED_BY_CSWlibpng15-15 = CSWpng
+PACKAGES += CSWlibpng12-0
+CATALOGNAME_CSWlibpng12-0 = libpng12_0
+PKGFILES_CSWlibpng12-0 += $(call baseisadirs,$(libdir),libpng12\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibpng12-0 += $(DESCRIPTION), libpng12.so.0
+RUNTIME_DEP_PKGS_CSWlibpng += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWlibpng12-0 += CSWlibz1
+OBSOLETED_BY_CSWlibpng12-0 += CSWpng
 
 BUILD64 = 1
 
