@@ -1,0 +1,890 @@
+From 416f06b7eb37217a2432aa16b1305b1a92aa3218 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Fri, 26 Aug 2011 14:54:00 +0200
+Subject: [PATCH] Port patches to 1.12.1
+
+---
+ src/AdaptiveURISelector.cc          |    2 +-
+ src/BitfieldMan.cc                  |   26 ++++++++++++------------
+ src/ConsoleStatCalc.cc              |    2 +-
+ src/DefaultBtProgressInfoFile.cc    |    2 +-
+ src/DownloadEngine.cc               |    4 +++
+ src/DownloadEngineFactory.cc        |    2 +-
+ src/DownloadResult.h                |    6 +++++
+ src/FtpConnection.cc                |    2 +-
+ src/FtpNegotiationCommand.cc        |    9 +++++++-
+ src/HttpResponse.h                  |    7 ++++++
+ src/MultiUrlRequestInfo.cc          |    4 +-
+ src/Option.cc                       |    9 ++++++-
+ src/OptionHandlerImpl.cc            |    2 +-
+ src/OptionParser.cc                 |    2 +-
+ src/PeerConnection.cc               |    8 +++---
+ src/Piece.h                         |    7 ++++++
+ src/PieceSelector.h                 |    2 +-
+ src/PieceStatMan.cc                 |    3 ++
+ src/ProgressAwareEntry.h            |    7 ++++++
+ src/ProtocolDetector.cc             |    2 +-
+ src/Segment.h                       |    7 ++++++
+ src/SelectEventPoll.cc              |   11 ++++++++-
+ src/SimpleRandomizer.cc             |    4 +-
+ src/SingleFileAllocationIterator.cc |    2 +-
+ src/SocketRecvBuffer.cc             |    2 +-
+ src/TimeA2.h                        |    6 +++++
+ src/TransferStat.h                  |    7 ++++++
+ src/UnknownLengthPieceStorage.cc    |   21 ++++++++++---------
+ src/array_fun.h                     |    2 +
+ src/bitfield.h                      |    2 +-
+ src/common.h                        |    7 ++++++
+ src/fmt.cc                          |    6 +++++
+ src/util.cc                         |   37 +++++++++++++++++++++++-----------
+ 33 files changed, 162 insertions(+), 60 deletions(-)
+
+diff --git a/src/AdaptiveURISelector.cc b/src/AdaptiveURISelector.cc
+index 02a598f..0e9907d 100644
+--- a/src/AdaptiveURISelector.cc
++++ b/src/AdaptiveURISelector.cc
+@@ -331,7 +331,7 @@ std::string AdaptiveURISelector::getFirstToTestUri
+     counter = ss->getCounter();
+     if(counter > 8)
+       continue;
+-    power = (int)pow(2.0, (float)counter);
++    power = (int)std::pow(2.0f, (float)counter);
+     /* We test the mirror another time if it has not been
+      * tested since 2^counter days */
+     if(ss->getLastUpdated().difference() > power*24*60*60) {
+diff --git a/src/BitfieldMan.cc b/src/BitfieldMan.cc
+index 5535af1..80fd972 100644
+--- a/src/BitfieldMan.cc
++++ b/src/BitfieldMan.cc
+@@ -64,8 +64,8 @@ BitfieldMan::BitfieldMan(size_t blockLength, uint64_t totalLength)
+     bitfieldLength_ = blocks_/8+(blocks_%8 ? 1 : 0);
+     bitfield_ = new unsigned char[bitfieldLength_];
+     useBitfield_ = new unsigned char[bitfieldLength_];
+-    memset(bitfield_, 0, bitfieldLength_);
+-    memset(useBitfield_, 0, bitfieldLength_);
++    std::memset(bitfield_, 0, bitfieldLength_);
++    std::memset(useBitfield_, 0, bitfieldLength_);
+     updateCache();
+   }
+ }
+@@ -85,11 +85,11 @@ BitfieldMan::BitfieldMan(const BitfieldMan& bitfieldMan)
+    cachedFilteredCompletedLength_(0),
+    cachedFilteredTotalLength_(0)
+ {
+-  memcpy(bitfield_, bitfieldMan.bitfield_, bitfieldLength_);
+-  memcpy(useBitfield_, bitfieldMan.useBitfield_, bitfieldLength_);
++  std::memcpy(bitfield_, bitfieldMan.bitfield_, bitfieldLength_);
++  std::memcpy(useBitfield_, bitfieldMan.useBitfield_, bitfieldLength_);
+   if(filterEnabled_) {
+     filterBitfield_ = new unsigned char[bitfieldLength_];
+-    memcpy(filterBitfield_, bitfieldMan.filterBitfield_, bitfieldLength_);
++    std::memcpy(filterBitfield_, bitfieldMan.filterBitfield_, bitfieldLength_);
+   }
+   updateCache();
+ }
+@@ -105,16 +105,16 @@ BitfieldMan& BitfieldMan::operator=(const BitfieldMan& bitfieldMan)
+ 
+     delete [] bitfield_;
+     bitfield_ = new unsigned char[bitfieldLength_];
+-    memcpy(bitfield_, bitfieldMan.bitfield_, bitfieldLength_);
++    std::memcpy(bitfield_, bitfieldMan.bitfield_, bitfieldLength_);
+ 
+     delete [] useBitfield_;
+     useBitfield_ = new unsigned char[bitfieldLength_];
+-    memcpy(useBitfield_, bitfieldMan.useBitfield_, bitfieldLength_);
++    std::memcpy(useBitfield_, bitfieldMan.useBitfield_, bitfieldLength_);
+ 
+     delete [] filterBitfield_;
+     if(filterEnabled_) {
+       filterBitfield_ = new unsigned char[bitfieldLength_];
+-      memcpy(filterBitfield_, bitfieldMan.filterBitfield_, bitfieldLength_);
++      std::memcpy(filterBitfield_, bitfieldMan.filterBitfield_, bitfieldLength_);
+     } else {
+       filterBitfield_ = 0;
+     }
+@@ -560,13 +560,13 @@ void BitfieldMan::setBitfield(const unsigned char* bitfield, size_t bitfieldLeng
+   if(bitfieldLength_ != bitfieldLength) {
+     return;
+   }
+-  memcpy(bitfield_, bitfield, bitfieldLength_);
+-  memset(useBitfield_, 0, bitfieldLength_);
++  std::memcpy(bitfield_, bitfield, bitfieldLength_);
++  std::memset(useBitfield_, 0, bitfieldLength_);
+   updateCache();
+ }
+ 
+ void BitfieldMan::clearAllBit() {
+-  memset(bitfield_, 0, bitfieldLength_);
++  std::memset(bitfield_, 0, bitfieldLength_);
+   updateCache();
+ }
+ 
+@@ -578,7 +578,7 @@ void BitfieldMan::setAllBit() {
+ }
+ 
+ void BitfieldMan::clearAllUseBit() {
+-  memset(useBitfield_, 0, bitfieldLength_);
++  std::memset(useBitfield_, 0, bitfieldLength_);
+   updateCache();
+ }
+ 
+@@ -596,7 +596,7 @@ void BitfieldMan::ensureFilterBitfield()
+ {
+   if(!filterBitfield_) {
+     filterBitfield_ = new unsigned char[bitfieldLength_];
+-    memset(filterBitfield_, 0, bitfieldLength_);
++    std::memset(filterBitfield_, 0, bitfieldLength_);
+   }
+ }
+ 
+diff --git a/src/ConsoleStatCalc.cc b/src/ConsoleStatCalc.cc
+index c8969f1..5b76c8f 100644
+--- a/src/ConsoleStatCalc.cc
++++ b/src/ConsoleStatCalc.cc
+@@ -214,7 +214,7 @@ void printProgressSummary
+     char buf[26];
+     if(time(&now) != (time_t)-1 && (staticNowtmPtr = localtime(&now)) != 0 &&
+        asctime_r(staticNowtmPtr, buf) != 0) {
+-      char* lfptr = strchr(buf, '\n');
++      char* lfptr = std::strchr(buf, '\n');
+       if(lfptr) {
+         *lfptr = '\0';
+       }
+diff --git a/src/DefaultBtProgressInfoFile.cc b/src/DefaultBtProgressInfoFile.cc
+index 2b81681..a9a4b8b 100644
+--- a/src/DefaultBtProgressInfoFile.cc
++++ b/src/DefaultBtProgressInfoFile.cc
+@@ -126,7 +126,7 @@ void DefaultBtProgressInfoFile::save()
+     // If this is BitTorrent download, then 0x00000001
+     // Otherwise, 0x00000000
+     char extension[4];
+-    memset(extension, 0, sizeof(extension));
++    std::memset(extension, 0, sizeof(extension));
+     if(torrentDownload) {
+       extension[3] = 1;
+     }
+diff --git a/src/DownloadEngine.cc b/src/DownloadEngine.cc
+index a18e36a..d7f28eb 100644
+--- a/src/DownloadEngine.cc
++++ b/src/DownloadEngine.cc
+@@ -36,6 +36,10 @@
+ 
+ #include <signal.h>
+ 
++#ifdef HAVE_STDLIB_H
++#include <stdlib.h>
++#endif
++
+ #include <cstring>
+ #include <cerrno>
+ #include <algorithm>
+diff --git a/src/DownloadEngineFactory.cc b/src/DownloadEngineFactory.cc
+index 5bd8d53..843df2e 100644
+--- a/src/DownloadEngineFactory.cc
++++ b/src/DownloadEngineFactory.cc
+@@ -127,7 +127,7 @@ DownloadEngineFactory::newDownloadEngine
+           if(pollMethod == V_SELECT) {
+             eventPoll.reset(new SelectEventPoll());
+           } else {
+-            abort();
++            std::abort();
+           }
+   DownloadEngineHandle e(new DownloadEngine(eventPoll));
+   e->setOption(op);
+diff --git a/src/DownloadResult.h b/src/DownloadResult.h
+index 93bd807..b605790 100644
+--- a/src/DownloadResult.h
++++ b/src/DownloadResult.h
+@@ -37,7 +37,13 @@
+ 
+ #include "common.h"
+ 
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ 
+ #include <string>
+ #include <vector>
+diff --git a/src/FtpConnection.cc b/src/FtpConnection.cc
+index 220bccf..ed090b1 100644
+--- a/src/FtpConnection.cc
++++ b/src/FtpConnection.cc
+@@ -451,7 +451,7 @@ unsigned int FtpConnection::receiveMdtmResponse(Time& time)
+     if(response.first == 213) {
+       char buf[15]; // YYYYMMDDhhmmss+\0, milli second part is dropped.
+       sscanf(response.second.c_str(), "%*u %14s", buf);
+-      if(strlen(buf) == 14) {
++      if(std::strlen(buf) == 14) {
+         // We don't use Time::parse(buf,"%Y%m%d%H%M%S") here because Mac OS X
+         // and included strptime doesn't parse data for this format.
+         struct tm tm;
+diff --git a/src/FtpNegotiationCommand.cc b/src/FtpNegotiationCommand.cc
+index 96c0947..b67a063 100644
+--- a/src/FtpNegotiationCommand.cc
++++ b/src/FtpNegotiationCommand.cc
+@@ -34,7 +34,14 @@
+ /* copyright --> */
+ #include "FtpNegotiationCommand.h"
+ 
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++
+ #include <cassert>
+ #include <utility>
+ #include <map>
+@@ -918,7 +925,7 @@ bool FtpNegotiationCommand::processSequence
+   case SEQ_WAIT_CONNECTION:
+     return waitConnection();
+   default:
+-    abort();
++    std::abort();
+   }
+   return doNextSequence;
+ }
+diff --git a/src/HttpResponse.h b/src/HttpResponse.h
+index 2a28916..44a42df 100644
+--- a/src/HttpResponse.h
++++ b/src/HttpResponse.h
+@@ -37,7 +37,14 @@
+ 
+ #include "common.h"
+ 
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++
+ #include <vector>
+ 
+ #include "SharedHandle.h"
+diff --git a/src/MultiUrlRequestInfo.cc b/src/MultiUrlRequestInfo.cc
+index 760fe7e..8442d0e 100644
+--- a/src/MultiUrlRequestInfo.cc
++++ b/src/MultiUrlRequestInfo.cc
+@@ -121,11 +121,11 @@ ares_addr_node* parseAsyncDNSServers(const std::string& serversOpt)
+       if(node->family == AF_INET) {
+         struct sockaddr_in* in =
+           reinterpret_cast<struct sockaddr_in*>(res->ai_addr);
+-        memcpy(&node->addr.addr4, &(in->sin_addr), 4);
++        std::memcpy(&node->addr.addr4, &(in->sin_addr), 4);
+       } else {
+         struct sockaddr_in6* in =
+           reinterpret_cast<struct sockaddr_in6*>(res->ai_addr);
+-        memcpy(&node->addr.addr6, &(in->sin6_addr), 16);
++        std::memcpy(&node->addr.addr6, &(in->sin6_addr), 16);
+       }
+       tail->next = node;
+       tail = node;
+diff --git a/src/Option.cc b/src/Option.cc
+index 579d7e7..555c91b 100644
+--- a/src/Option.cc
++++ b/src/Option.cc
+@@ -38,6 +38,11 @@
+ #include <cstdlib>
+ #include <cstring>
+ 
++// For strtoll not in cstdlib in Solaris 9
++#ifdef HAVE_STDLIB_H
++#include <stdlib.h>
++#endif
++
+ namespace aria2 {
+ 
+ Option::Option() {}
+@@ -73,7 +78,7 @@ int32_t Option::getAsInt(const std::string& name) const {
+   if(value.empty()) {
+     return 0;
+   } else {
+-    return strtol(value.c_str(), 0, 10);
++    return std::strtol(value.c_str(), 0, 10);
+   }
+ }
+ 
+@@ -95,7 +100,7 @@ double Option::getAsDouble(const std::string& name) const {
+   if(value.empty()) {
+     return 0.0;
+   } else {
+-    return strtod(value.c_str(), 0);
++    return std::strtod(value.c_str(), 0);
+   }
+ }
+ 
+diff --git a/src/OptionHandlerImpl.cc b/src/OptionHandlerImpl.cc
+index c8967f0..e0203d6 100644
+--- a/src/OptionHandlerImpl.cc
++++ b/src/OptionHandlerImpl.cc
+@@ -291,7 +291,7 @@ FloatNumberOptionHandler::~FloatNumberOptionHandler() {}
+ void FloatNumberOptionHandler::parseArg
+ (Option& option, const std::string& optarg)
+ {
+-  double number = strtod(optarg.c_str(), 0);
++  double number = std::strtod(optarg.c_str(), 0);
+   if((min_ < 0 || min_ <= number) && (max_ < 0 || number <= max_)) {
+     option.put(optName_, optarg);
+   } else {
+diff --git a/src/OptionParser.cc b/src/OptionParser.cc
+index c2a00ee..0633e35 100644
+--- a/src/OptionParser.cc
++++ b/src/OptionParser.cc
+@@ -96,7 +96,7 @@ void putOptions(struct option* longOpts, int* plopt,
+         (*longOpts).has_arg = no_argument;
+         break;
+       default:
+-        abort();
++        std::abort();
+       }
+       if((*first)->getShortName() == 0) {
+         (*longOpts).flag = plopt;
+diff --git a/src/PeerConnection.cc b/src/PeerConnection.cc
+index b894f8a..bb2a926 100644
+--- a/src/PeerConnection.cc
++++ b/src/PeerConnection.cc
+@@ -132,7 +132,7 @@ bool PeerConnection::receiveMessage(unsigned char* data, size_t& dataLength) {
+       return false;
+     }
+     uint32_t payloadLength;
+-    memcpy(&payloadLength, lenbuf_, sizeof(payloadLength));
++    std::memcpy(&payloadLength, lenbuf_, sizeof(payloadLength));
+     payloadLength = ntohl(payloadLength);
+     if(payloadLength > MAX_PAYLOAD_LEN) {
+       throw DL_ABORT_EX(fmt(EX_TOO_LONG_PAYLOAD, payloadLength));
+@@ -169,7 +169,7 @@ bool PeerConnection::receiveMessage(unsigned char* data, size_t& dataLength) {
+   resbufLength_ = 0;
+   lenbufLength_ = 0;
+   if(data) {
+-    memcpy(data, resbuf_, currentPayloadLength_);
++    std::memcpy(data, resbuf_, currentPayloadLength_);
+   }
+   dataLength = currentPayloadLength_;
+   return true;
+@@ -201,7 +201,7 @@ bool PeerConnection::receiveHandshake(unsigned char* data, size_t& dataLength,
+     }
+   }
+   size_t writeLength = std::min(resbufLength_, dataLength);
+-  memcpy(data, resbuf_, writeLength);
++  std::memcpy(data, resbuf_, writeLength);
+   dataLength = writeLength;
+   if(retval && !peek) {
+     resbufLength_ = 0;
+@@ -235,7 +235,7 @@ void PeerConnection::enableEncryption
+ void PeerConnection::presetBuffer(const unsigned char* data, size_t length)
+ {
+   size_t nwrite = std::min((size_t)MAX_PAYLOAD_LEN, length);
+-  memcpy(resbuf_, data, nwrite);
++  std::memcpy(resbuf_, data, nwrite);
+   resbufLength_ = length;
+ }
+ 
+diff --git a/src/Piece.h b/src/Piece.h
+index 128c83a..c30aa75 100644
+--- a/src/Piece.h
++++ b/src/Piece.h
+@@ -37,7 +37,14 @@
+ 
+ #include "common.h"
+ 
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++
+ #include <vector>
+ #include <string>
+ 
+diff --git a/src/PieceSelector.h b/src/PieceSelector.h
+index 659a386..5d2756a 100644
+--- a/src/PieceSelector.h
++++ b/src/PieceSelector.h
+@@ -46,7 +46,7 @@ public:
+   virtual ~PieceSelector() {}
+ 
+   virtual bool select
+-  (size_t& index, const unsigned char* bitfield, size_t nbits) const = 0;
++  (std::size_t& index, const unsigned char* bitfield, std::size_t nbits) const = 0;
+ };
+ 
+ } // namespace aria2
+diff --git a/src/PieceStatMan.cc b/src/PieceStatMan.cc
+index a196702..91b4d33 100644
+--- a/src/PieceStatMan.cc
++++ b/src/PieceStatMan.cc
+@@ -36,6 +36,9 @@
+ 
+ #include <algorithm>
+ 
++// For SIZE_MAX
++#include <limits.h>
++
+ #include "SimpleRandomizer.h"
+ #include "bitfield.h"
+ 
+diff --git a/src/ProgressAwareEntry.h b/src/ProgressAwareEntry.h
+index 48f0ad0..9acb576 100644
+--- a/src/ProgressAwareEntry.h
++++ b/src/ProgressAwareEntry.h
+@@ -37,7 +37,14 @@
+ 
+ #include "common.h"
+ 
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++
+ #include <unistd.h>
+ 
+ #include "SharedHandle.h"
+diff --git a/src/ProtocolDetector.cc b/src/ProtocolDetector.cc
+index 1daa199..2cd839c 100644
+--- a/src/ProtocolDetector.cc
++++ b/src/ProtocolDetector.cc
+@@ -97,7 +97,7 @@ bool ProtocolDetector::guessMetalinkFile(const std::string& uri) const
+   if(in) {
+     char head[6];
+     in >> std::setw(6) >> head;
+-    return strcmp(head, "<?xml") == 0;
++    return std::strcmp(head, "<?xml") == 0;
+   } else {
+     return false;
+   }
+diff --git a/src/Segment.h b/src/Segment.h
+index b8f38c9..945ca57 100644
+--- a/src/Segment.h
++++ b/src/Segment.h
+@@ -37,7 +37,14 @@
+ 
+ #include "common.h"
+ 
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++
+ #include <string>
+ 
+ #include "SharedHandle.h"
+diff --git a/src/SelectEventPoll.cc b/src/SelectEventPoll.cc
+index bb3c21a..f1665f9 100644
+--- a/src/SelectEventPoll.cc
++++ b/src/SelectEventPoll.cc
+@@ -172,8 +172,8 @@ void SelectEventPoll::poll(const struct timeval& tv)
+   fd_set rfds;
+   fd_set wfds;
+   
+-  memcpy(&rfds, &rfdset_, sizeof(fd_set));
+-  memcpy(&wfds, &wfdset_, sizeof(fd_set));
++  std::memcpy(&rfds, &rfdset_, sizeof(fd_set));
++  std::memcpy(&wfds, &wfdset_, sizeof(fd_set));
+ #ifdef __MINGW32__
+   fd_set efds;
+   FD_ZERO(&efds);
+@@ -248,8 +248,15 @@ void SelectEventPoll::updateFdSet()
+ #else // !__MINGW32__
+   fdmax_ = 0;
+ #endif // !__MINGW32__
++/*
++  using namespace std;
+   FD_ZERO(&rfdset_);
+   FD_ZERO(&wfdset_);
++*/
++( void ) std::memset ( ( & rfdset_ ) , 0 , sizeof ( * ( & rfdset_ ) ) ) ; 
++( void ) std::memset ( ( & wfdset_ ) , 0 , sizeof ( * ( & wfdset_ ) ) ) ; 
++
++
+   for(std::deque<SharedHandle<SocketEntry> >::const_iterator i =
+         socketEntries_.begin(), eoi = socketEntries_.end(); i != eoi; ++i) {
+     sock_t fd = (*i)->getSocket();
+diff --git a/src/SimpleRandomizer.cc b/src/SimpleRandomizer.cc
+index 27d3e0c..87eba7a 100644
+--- a/src/SimpleRandomizer.cc
++++ b/src/SimpleRandomizer.cc
+@@ -52,7 +52,7 @@ const SharedHandle<SimpleRandomizer>& SimpleRandomizer::getInstance()
+   
+ void SimpleRandomizer::init()
+ {
+-  srand(time(0)^getpid());
++  std::srand(time(0)^getpid());
+ }
+ 
+ SimpleRandomizer::SimpleRandomizer() {}
+@@ -61,7 +61,7 @@ SimpleRandomizer::~SimpleRandomizer() {}
+ 
+ long int SimpleRandomizer::getRandomNumber()
+ {
+-  return rand();
++  return std::rand();
+ }
+ 
+ long int SimpleRandomizer::getMaxRandomNumber()
+diff --git a/src/SingleFileAllocationIterator.cc b/src/SingleFileAllocationIterator.cc
+index a12df5d..9552ccd 100644
+--- a/src/SingleFileAllocationIterator.cc
++++ b/src/SingleFileAllocationIterator.cc
+@@ -82,7 +82,7 @@ void SingleFileAllocationIterator::init()
+ #else
+   buffer_ = new unsigned char[BUFSIZE];
+ #endif // HAVE_POSIX_MEMALIGN
+-  memset(buffer_, 0, BUFSIZE);
++  std::memset(buffer_, 0, BUFSIZE);
+ }
+ 
+ void SingleFileAllocationIterator::allocateChunk()
+diff --git a/src/SocketRecvBuffer.cc b/src/SocketRecvBuffer.cc
+index 2c5a1cd..254cb04 100644
+--- a/src/SocketRecvBuffer.cc
++++ b/src/SocketRecvBuffer.cc
+@@ -70,7 +70,7 @@ ssize_t SocketRecvBuffer::recv()
+ void SocketRecvBuffer::shiftBuffer(size_t offset)
+ {
+   assert(offset <= bufLen_);
+-  memmove(buf_, buf_+offset, bufLen_-offset);
++  std::memmove(buf_, buf_+offset, bufLen_-offset);
+   bufLen_ -= offset;
+ }
+ 
+diff --git a/src/TimeA2.h b/src/TimeA2.h
+index 97302a5..b8679fb 100644
+--- a/src/TimeA2.h
++++ b/src/TimeA2.h
+@@ -37,7 +37,13 @@
+ 
+ #include "common.h"
+ 
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ 
+ #include <string>
+ 
+diff --git a/src/TransferStat.h b/src/TransferStat.h
+index b8ffef4..fb9a8ac 100644
+--- a/src/TransferStat.h
++++ b/src/TransferStat.h
+@@ -36,7 +36,14 @@
+ #define D_TRANSFER_STAT_H
+ 
+ #include "common.h"
++
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ 
+ namespace aria2 {
+ 
+diff --git a/src/UnknownLengthPieceStorage.cc b/src/UnknownLengthPieceStorage.cc
+index c0809df..0a6669c 100644
+--- a/src/UnknownLengthPieceStorage.cc
++++ b/src/UnknownLengthPieceStorage.cc
+@@ -75,7 +75,7 @@ void UnknownLengthPieceStorage::initStorage()
+ 
+ bool UnknownLengthPieceStorage::hasMissingPiece(const SharedHandle<Peer>& peer)
+ {
+-  abort();
++  std::abort();
+ }
+ 
+ void UnknownLengthPieceStorage::getMissingPiece
+@@ -84,7 +84,7 @@ void UnknownLengthPieceStorage::getMissingPiece
+  const SharedHandle<Peer>& peer,
+  cuid_t cuid)
+ {
+-  abort();
++  std::abort();
+ }
+ 
+ void UnknownLengthPieceStorage::getMissingPiece
+@@ -94,7 +94,7 @@ void UnknownLengthPieceStorage::getMissingPiece
+  const std::vector<size_t>& excludedIndexes,
+  cuid_t cuid)
+ {
+-  abort();
++  std::abort();
+ }
+ 
+ void UnknownLengthPieceStorage::getMissingFastPiece
+@@ -103,7 +103,7 @@ void UnknownLengthPieceStorage::getMissingFastPiece
+  const SharedHandle<Peer>& peer,
+  cuid_t cuid)
+ {
+-  abort();
++  std::abort();
+ }
+ 
+ void UnknownLengthPieceStorage::getMissingFastPiece
+@@ -113,14 +113,14 @@ void UnknownLengthPieceStorage::getMissingFastPiece
+  const std::vector<size_t>& excludedIndexes,
+  cuid_t cuid)
+ {
+-  abort();
++  std::abort();
+ }
+ 
+ SharedHandle<Piece> UnknownLengthPieceStorage::getMissingPiece
+ (const SharedHandle<Peer>& peer,
+  cuid_t cuid)
+ {
+-  abort();
++  std::abort();
+ }
+ 
+ SharedHandle<Piece> UnknownLengthPieceStorage::getMissingPiece
+@@ -128,13 +128,14 @@ SharedHandle<Piece> UnknownLengthPieceStorage::getMissingPiece
+  const std::vector<size_t>& excludedIndexes,
+  cuid_t cuid)
+ {
+-  abort();
++  std::abort();
+ }
+ #endif // ENABLE_BITTORRENT
+ 
+ bool UnknownLengthPieceStorage::hasMissingUnusedPiece()
+ {
+-  abort();
++  std::abort();
++  return false;
+ }
+ 
+ SharedHandle<Piece> UnknownLengthPieceStorage::getMissingPiece
+@@ -241,13 +242,13 @@ void UnknownLengthPieceStorage::markAllPiecesDone()
+ void UnknownLengthPieceStorage::markPiecesDone(uint64_t length)
+ {
+   // TODO not implemented yet
+-  abort();
++  std::abort();
+ }
+ 
+ void UnknownLengthPieceStorage::markPieceMissing(size_t index)
+ {
+   // TODO not implemented yet
+-  abort();
++  std::abort();
+ }
+ 
+ void UnknownLengthPieceStorage::getInFlightPieces
+diff --git a/src/array_fun.h b/src/array_fun.h
+index 897a7a8..a27899e 100644
+--- a/src/array_fun.h
++++ b/src/array_fun.h
+@@ -41,8 +41,10 @@
+ namespace aria2 {
+ 
+ // calculate length of array
++/* Error: An integer constant expression is required within the array subscript operator
+ template<typename T, size_t N>
+ char (&char_array_ref_fun(T (&)[N]))[N];
++*/
+ 
+ // For 0 length array
+ template<typename T>
+diff --git a/src/bitfield.h b/src/bitfield.h
+index 39313a1..47576ec 100644
+--- a/src/bitfield.h
++++ b/src/bitfield.h
+@@ -116,7 +116,7 @@ inline size_t countSetBit(const unsigned char* bitfield, size_t nbits)
+   size_t to = len/size;
+   for(size_t i = 0; i < to; ++i) {
+     uint32_t v;
+-    memcpy(&v, &bitfield[i*size], sizeof(v));
++    std::memcpy(&v, &bitfield[i*size], sizeof(v));
+     count += countBit32(v);
+   }
+   for(size_t i = len-len%size; i < len; ++i) {
+diff --git a/src/common.h b/src/common.h
+index dee2bff..671aeff 100644
+--- a/src/common.h
++++ b/src/common.h
+@@ -77,6 +77,13 @@ typedef _off_t off_t;
+ // use C99 limit macros
+ #define __STDC_LIMIT_MACROS
+ // included here for compatibility issues with old compiler/libraries.
++
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
+ 
+ #endif // D_COMMON_H
+diff --git a/src/fmt.cc b/src/fmt.cc
+index a4e9733..6432bb5 100644
+--- a/src/fmt.cc
++++ b/src/fmt.cc
+@@ -34,6 +34,12 @@
+ /* copyright --> */
+ #include "fmt.h"
+ 
++// Make sure Sun Studio knows about va_list
++#ifdef __SUNPRO_CC
++#include <stddef.h>
++#include <stdarg.h>
++#endif 
++
+ #include <cstring>
+ #include <cstdio>
+ #include <cstdlib>
+diff --git a/src/util.cc b/src/util.cc
+index 16e4d5e..888e922 100644
+--- a/src/util.cc
++++ b/src/util.cc
+@@ -36,13 +36,26 @@
+ 
+ #include <signal.h>
+ #include <limits.h>
++
++#ifdef HAVE_STDINT_H
+ #include <stdint.h>
++#endif
++
++#ifdef HAVE_INTTYPES_H
++#include <inttypes.h>
++#endif
++
+ 
+ #include <cerrno>
+ #include <cassert>
+ #include <cstring>
+ #include <cstdio>
+ #include <cstdlib>
++
++#ifdef HAVE_STDLIB_H /* for strtoll and strtoul not in iso cstdlib */
++#include <stdlib.h>
++#endif
++
+ #include <sstream>
+ #include <ostream>
+ #include <algorithm>
+@@ -498,9 +511,9 @@ std::string secfmt(time_t sec) {
+ 
+ int getNum(const char* buf, int offset, size_t length) {
+   char* temp = new char[length+1];
+-  memcpy(temp, buf+offset, length);
++  std::memcpy(temp, buf+offset, length);
+   temp[length] = '\0';
+-  int x = strtol(temp, 0, 10);
++  int x = std::strtol(temp, 0, 10);
+   delete [] temp;
+   return x;
+ }
+@@ -517,14 +530,14 @@ int32_t parseInt(const std::string& s, int32_t base)
+ 
+ bool parseIntNoThrow(int32_t& result, const std::string& s, int base)
+ {
+-  // Without trim, strtol("  -1  ",..) emits error.
++  // Without trim, std::strtol("  -1  ",..) emits error.
+   std::string trimed = strip(s);
+   if(trimed.empty()) {
+     return false;
+   }
+   char* stop;
+   errno = 0;
+-  long int v = strtol(trimed.c_str(), &stop, base);
++  long int v = std::strtol(trimed.c_str(), &stop, base);
+   if(*stop != '\0') {
+     return false;
+   } else if(((v == LONG_MAX || v == LONG_MIN) && (errno == ERANGE)) ||
+@@ -547,7 +560,7 @@ uint32_t parseUInt(const std::string& s, int base)
+ 
+ bool parseUIntNoThrow(uint32_t& result, const std::string& s, int base)
+ {
+-  // Without trim, strtol("  -1  ",..) emits error.
++  // Without trim, std::strtol("  -1  ",..) emits error.
+   std::string trimed = strip(s);
+   if(trimed.empty()) {
+     return false;
+@@ -590,7 +603,7 @@ int64_t parseLLInt(const std::string& s, int32_t base)
+ 
+ bool parseLLIntNoThrow(int64_t& result, const std::string& s, int base)
+ {
+-  // Without trim, strtol("  -1  ",..) emits error.
++  // Without trim, std::strtol("  -1  ",..) emits error.
+   std::string trimed = strip(s);
+   if(trimed.empty()) {
+     return false;
+@@ -926,7 +939,7 @@ std::string randomAlpha(size_t length, const RandomizerHandle& randomizer) {
+   static const char *random_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+   std::string str;
+   for(size_t i = 0; i < length; ++i) {
+-    size_t index = randomizer->getRandomNumber(strlen(random_chars));
++    size_t index = randomizer->getRandomNumber(std::strlen(random_chars));
+     str += random_chars[index];
+   }
+   return str;
+@@ -958,7 +971,7 @@ bool isNumericHost(const std::string& name)
+ {
+   struct addrinfo hints;
+   struct addrinfo* res;
+-  memset(&hints, 0, sizeof(hints));
++  std::memset(&hints, 0, sizeof(hints));
+   hints.ai_family = AF_UNSPEC;
+   hints.ai_flags = AI_NUMERICHOST;
+   if(getaddrinfo(name.c_str(), 0, &hints, &res)) {
+@@ -982,7 +995,7 @@ void setGlobalSignalHandler(int sig, void (*handler)(int), int flags) {
+ 
+ std::string getHomeDir()
+ {
+-  const char* p = getenv("HOME");
++  const char* p = std::getenv("HOME");
+   if(p) {
+     return p;
+   } else {
+@@ -1232,7 +1245,7 @@ getNumericNameInfo(const struct sockaddr* sockaddr, socklen_t len)
+     throw DL_ABORT_EX(fmt("Failed to get hostname and port. cause: %s",
+                           gai_strerror(s)));
+   }
+-  return std::pair<std::string, uint16_t>(host, atoi(service)); // TODO
++  return std::pair<std::string, uint16_t>(host, std::atoi(service)); // TODO
+ }
+ 
+ std::string htmlEscape(const std::string& src)
+@@ -1500,7 +1513,7 @@ void executeHook
+           firstFilename.c_str(),
+           reinterpret_cast<char*>(0));
+     perror(("Could not execute user command: "+command).c_str());
+-    exit(EXIT_FAILURE);
++    std::exit(EXIT_FAILURE);
+   }
+ #else
+   PROCESS_INFORMATION pi;
+@@ -1604,7 +1617,7 @@ std::string makeString(const char* str)
+ 
+ std::string safeStrerror(int errNum)
+ {
+-  return makeString(strerror(errNum));
++  return makeString(std::strerror(errNum));
+ }
+ 
+ } // namespace util
+-- 
+1.7.6
+
