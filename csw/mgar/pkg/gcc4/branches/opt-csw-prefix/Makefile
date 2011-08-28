@@ -44,7 +44,8 @@ LICENSE = COPYING3
 # http://gcc.gnu.org/install/configure.html
 
 # Could be used to break out of the /opt/csw/gcc4 prefix
-# CONFIGURE_ARGS += --program-prefix=gcc4-
+PROGRAM_PREFIX = gcc4-
+CONFIGURE_ARGS += --program-prefix=$(PROGRAM_PREFIX)
 
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-gnu-as
@@ -81,6 +82,7 @@ CPU_i386_32 = i386
 CPU_i386_64 = x86-64
 
 CONFIGURE_ARGS_sparc += --with-cpu=$(CPU_$(GARCH)_32)
+# These two should not be defined, otherwise the Intel build breaks.
 # CONFIGURE_ARGS_i386 += --with-cpu-32=$(CPU_$(GARCH)_32)
 # CONFIGURE_ARGS_i386 += --with-cpu-64=$(CPU_$(GARCH)_64)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
@@ -305,8 +307,8 @@ RUNTIME_DEP_PKGS_CSWlibgfortran3 += $(RUNTIME_DEP_PKGS_CSWlibgfortran3_$(GARCH))
 PACKAGES += CSWgcc4g++
 CATALOGNAME_CSWgcc4g++ = gcc4g++
 SPKG_DESC_CSWgcc4g++ = GNU C++ Compiler
-PKGFILES_CSWgcc4g++  = $(bindir)/[cg]\+\+
-PKGFILES_CSWgcc4g++ += $(bindir)/\w+-\w+-solaris[\d\.]+-[cg]\+\+
+PKGFILES_CSWgcc4g++  = $(bindir)/$(PROGRAM_PREFIX)[cg]\+\+
+PKGFILES_CSWgcc4g++ += $(bindir)/$(PROGRAM_PREFIX)\w+-\w+-solaris[\d\.]+-[cg]\+\+
 PKGFILES_CSWgcc4g++ += $(libexecdir)/.*cc1plus
 PKGFILES_CSWgcc4g++ += $(libdir)/.*libstdc.*a
 PKGFILES_CSWgcc4g++ += $(call baseisadirs,$(libdir),libstdc\+\+\.so)
@@ -332,8 +334,8 @@ RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibgfortran3
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibz1
-PKGFILES_CSWgcc4gfortran  = $(bindir)/gfortran
-PKGFILES_CSWgcc4gfortran += $(bindir)/\w+-\w+-solaris[\d\.]+-gfortran
+PKGFILES_CSWgcc4gfortran  = $(bindir)/$(PROGRAM_PREFIX)gfortran
+PKGFILES_CSWgcc4gfortran += $(bindir)/$(PROGRAM_PREFIX)\w+-\w+-solaris[\d\.]+-gfortran
 PKGFILES_CSWgcc4gfortran += $(libdir)/.*libgfortran.*a
 PKGFILES_CSWgcc4gfortran += $(libexecdir)/.*f951
 PKGFILES_CSWgcc4gfortran += $(mandir)/.*gfortran.1
@@ -354,25 +356,25 @@ RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgij12
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibz1
 
-PKGFILES_CSWgcc4java  = $(bindir)/.*gcj.*
-PKGFILES_CSWgcc4java += $(bindir)/.*jv-scan
-PKGFILES_CSWgcc4java += $(bindir)/.*jv-convert
-PKGFILES_CSWgcc4java += $(bindir)/.*jcf-dump
-PKGFILES_CSWgcc4java += $(bindir)/.*grmi.*
-PKGFILES_CSWgcc4java += $(bindir)/.*grepjar
-PKGFILES_CSWgcc4java += $(bindir)/.*gjnih
-PKGFILES_CSWgcc4java += $(bindir)/.*gij
-PKGFILES_CSWgcc4java += $(bindir)/.*fastjar
-PKGFILES_CSWgcc4java += $(bindir)/.*gjar.*
-PKGFILES_CSWgcc4java += $(bindir)/.*gjavah
-PKGFILES_CSWgcc4java += $(bindir)/.*gorbd
-PKGFILES_CSWgcc4java += $(bindir)/.*addr2name.awk
-PKGFILES_CSWgcc4java += $(bindir)/.*gappletviewer
-PKGFILES_CSWgcc4java += $(bindir)/.*gkeytool
-PKGFILES_CSWgcc4java += $(bindir)/.*gserialver
-PKGFILES_CSWgcc4java += $(bindir)/.*gtnameserv
-PKGFILES_CSWgcc4java += $(bindir)/.*gnative2ascii
-PKGFILES_CSWgcc4java += $(bindir)/.*gc-analyze
+PKGFILES_CSWgcc4java  = $(bindir)/$(PROGRAM_PREFIX).*gcj.*
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX).*jv-scan
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX).*jv-convert
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX).*jcf-dump
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX).*grmi.*
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX).*grepjar
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX).*gjnih
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*gij
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*fastjar
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*gjar.*
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*gjavah
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*gorbd
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*addr2name.awk
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*gappletviewer
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*gkeytool
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*gserialver
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*gtnameserv
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*gnative2ascii
+PKGFILES_CSWgcc4java += $(bindir)/$(PROGRAM_PREFIX)/.*gc-analyze
 PKGFILES_CSWgcc4java += $(mandir)/.*/gcj.*
 PKGFILES_CSWgcc4java += $(mandir)/.*/gij.*
 PKGFILES_CSWgcc4java += $(mandir)/.*/jv.*
