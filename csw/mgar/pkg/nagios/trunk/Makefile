@@ -30,6 +30,9 @@ RUNTIME_DEP_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibt
 RUNTIME_DEP_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWap2modphp5 CSWbdb
 RUNTIME_DEP_PKGS_CSWnagios += CSWcswclassutils 
 RUNTIME_DEP_PKGS_CSWnagios += CSWlibgd2
+RUNTIME_DEP_PKGS_CSWnagios += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWnagios += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWnagios += CSWlibz1
 
 LICENSE = LICENSE
 
@@ -141,6 +144,9 @@ CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/na
 CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/configobject.html
 CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/etc/templates/CSWnagios/etc/opt/csw/nagios/nagios.cfg
 CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/etc/templates/CSWnagios/etc/opt/csw/nagios/cgi.cfg
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWpng
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWzlib
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWiconv
 
 #
 # yes, we need this dependencies
@@ -155,6 +161,7 @@ CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWap2modphp5
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWggettextrt
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWbdb
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWosslrt
+
 
 include gar/category.mk
 
