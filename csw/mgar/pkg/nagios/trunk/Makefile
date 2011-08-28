@@ -29,6 +29,7 @@ PACKAGING_PLATFORMS += solaris9-i386
 RUNTIME_DEP_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
 RUNTIME_DEP_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWap2modphp5 CSWbdb
 RUNTIME_DEP_PKGS_CSWnagios += CSWcswclassutils 
+RUNTIME_DEP_PKGS_CSWnagios += CSWlibgd2
 
 LICENSE = LICENSE
 
@@ -86,7 +87,7 @@ LD_OPTIONS += -R/opt/csw/nagios/lib
 
 BUILD_ARGS = all
 
-ENABLE_CHECK = 0
+# ENABLE_CHECK = 0
 
 TEST_TARGET = none
 
@@ -97,6 +98,63 @@ TEST_TARGET = none
 #INSTALL_ARGS += install-init
 #INSTALL_ARGS += install-config
 INSTALL_ARGS += install-commandmode
+
+#
+# override chkpkg
+# (in all html and cfg files the string /usr/local appears, which is uncritical.
+#  the string appears in /opt/csw/nagios/bin/nagios and opt/csw/nagios/bin/p1.pl too, where it is a comment)
+#
+
+CHECKPKG_OVERRIDES_CSWnagios += action-class-only-in-pkginfo|ugfiles
+CHECKPKG_OVERRIDES_CSWnagios += action-class-only-in-pkginfo|cswmigrateconf
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/bin/nagios
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/bin/p1.pl
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/cgisecurity.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/monitoring-windows.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/volatileservices.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/faststartup.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/freshness.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/macros.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/config.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/upgrading.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/quickstart-opensuse.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/notifications.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/verifyconfig.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/redundancy.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/perfdata.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/configmain.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/monitoring-printers.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/quickstart-ubuntu.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/security.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/eventhandlers.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/startstop.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/cgiincludes.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/configcgi.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/distributed.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/int-tcpwrappers.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/cgiauth.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/objectdefinitions.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/monitoring-routers.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/clusters.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/nagiostats.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/quickstart-fedora.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/nagios/share/docs/configobject.html
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/etc/templates/CSWnagios/etc/opt/csw/nagios/nagios.cfg
+CHECKPKG_OVERRIDES_CSWnagios += file-with-bad-content|/usr/local|root/opt/csw/etc/templates/CSWnagios/etc/opt/csw/nagios/cgi.cfg
+
+#
+# yes, we need this dependencies
+#
+
+CHECKPKG_OVERRIDES_CSWnagios += obsolete-dependency|CSWcswclassutils
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWgd
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWglib2
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWnagiosp
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWlibtoolrt
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWap2modphp5
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWggettextrt
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWbdb
+CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWosslrt
 
 include gar/category.mk
 
