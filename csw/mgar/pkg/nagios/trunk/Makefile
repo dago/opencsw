@@ -26,10 +26,13 @@ CATALOGNAME = nagios
 PACKAGING_PLATFORMS = solaris9-sparc
 PACKAGING_PLATFORMS += solaris9-i386
 
-RUNTIME_DEP_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWiconv CSWjpeg CSWlibtoolrt CSWggettextrt
-RUNTIME_DEP_PKGS_CSWnagios += CSWosslrt CSWperl CSWpng CSWzlib CSWnagiosp CSWap2modphp5 CSWbdb
+RUNTIME_DEP_PKGS_CSWnagios  = CSWapache2 CSWgd CSWglib2 CSWjpeg CSWlibtoolrt CSWggettextrt
+RUNTIME_DEP_PKGS_CSWnagios += CSWosslrt CSWperl CSWnagiosp CSWap2modphp5 CSWbdb
 RUNTIME_DEP_PKGS_CSWnagios += CSWcswclassutils 
 RUNTIME_DEP_PKGS_CSWnagios += CSWlibgd2
+RUNTIME_DEP_PKGS_CSWnagios += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWnagios += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWnagios += CSWlibz1
 
 LICENSE = LICENSE
 
@@ -155,7 +158,6 @@ CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWap2modphp5
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWggettextrt
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWbdb
 CHECKPKG_OVERRIDES_CSWnagios += surplus-dependency|CSWosslrt
-
 
 include gar/category.mk
 
