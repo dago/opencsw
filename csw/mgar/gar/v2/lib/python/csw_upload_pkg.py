@@ -109,7 +109,10 @@ class Srv4Uploader(object):
         "Could not find %s. Make sure that the pkgdb executable is "
         "available \n"
         "from the same directory as csw-upload-pkg." % pkgdb_executable)
-    args = [pkgdb_executable, "importpkg", filename]
+    args = [pkgdb_executable, "importpkg"]
+    if self.debug:
+      args.append("--debug")
+    args.append(filename)
     ret = subprocess.call(args)
     if ret:
       raise OSError("An error occurred when running %s." % args)
