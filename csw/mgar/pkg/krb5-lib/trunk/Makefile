@@ -101,6 +101,7 @@ RUNTIME_DEP_PKGS_CSWlibkrb5-priv += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibkrb5-priv += CSWlibkrb5support0
 RUNTIME_DEP_PKGS_CSWlibkrb5-priv += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibkrb5-priv += CSWlibk5crypto3
+CHECKPKG_OVERRIDES_CSWlibkrb5-priv += non-uniform-lib-versions-in-package
 
 PACKAGES += CSWlibkrb5-3
 CATALOGNAME_CSWlibkrb5-3 = libkrb5_3
