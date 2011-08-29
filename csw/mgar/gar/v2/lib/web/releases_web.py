@@ -149,7 +149,8 @@ class Srv4CatalogAssignment(object):
       raise web.notfound()
     try:
       if arch_name == 'all':
-        raise checkpkg_lib.CatalogDatabaseError("Cannot add to 'all' catalog.")
+        raise checkpkg_lib.CatalogDatabaseError(
+            "There is no 'all' catalog, cannot proceed.")
       srv4 = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       parsed_basename = opencsw.ParsePackageFileName(srv4.basename)
       if parsed_basename["vendortag"] != "CSW":
