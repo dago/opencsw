@@ -318,6 +318,7 @@ sub process_arguments {
         'overwrite!'   => \$config{overwrite},
         'compress!'    => \$config{compress},
         'usebzip'      => \$config{usebzip},
+        'usepigz'      => \$config{usepigz},
         'quiet|q'      => \$config{quiet},
         'help'         => \$args{help},
         'manual'       => \$args{man},
@@ -397,6 +398,7 @@ sub process_arguments {
     $config{transfer}  = 1 unless defined $config{transfer};
     $config{overwrite} = 0 unless defined $config{overwrite};
     $config{usebzip}   = 0 unless defined $config{usebzip};
+    $config{usepigz}   = 0 unless defined $config{usepigz};
 
     # Export variables to the spec
     $ENV{$_} = $config{$_} foreach qw/
@@ -911,7 +913,7 @@ sub transfer_package {
         my $compress =
           $config{usebzip}
           ? 'bzip2 -9 -f %s'
-          : 'gzip -9 -f %s';
+          : ($config{usepigz} ? 'pigz -9 -f %s' : 'gzip -9 -f %s');
 
         vexec( sprintf( $compress, $tmppkg ), "Failed to compress $tmppkg" );
         $tmppkg .= $config{usebzip} ? ".bz2" : ".gz";
@@ -953,8 +955,8 @@ mkpackage - Create one or more Solaris packages from a 'spec' file.
  mkpackage --spec <path> [--destdir <path>] [--workdir <path>]
         [--spooldir <path>] [--pkgroot <path>] [--tmpdir <path>]
         [--[no]transfer] [--[no]overwrite] [--[no]compress]
-        [--usebzip] [-v var=value...] [--dump <var>|-dumpall] [--quiet]
-        [--help] [--manual] [--version]
+        [--usebzip] [--usepigz] [-v var=value...] [--dump <var>|-dumpall]
+        [--quiet] [--help] [--manual] [--version]
 
 =head1 DESCRIPTION
 
@@ -1031,6 +1033,10 @@ bistream package will be created.
 Enable bzip2 compression.  Unless --nocompress and/or --notransfer options are
 specified, mkpackage will compress bitstream packages using gzip.  Specifying
 --usebzip will use bzip2 instead, producing smaller archives in most cases.
+
+=head2 --usepigz
+
+Use pigz, a parallel implementation of gzip.
 
 =head2 -v var=value
 
