@@ -736,6 +736,9 @@ export PATH PKG_CONFIG_PATH
 # prepend the local file listing
 FILE_SITES = $(foreach DIR,$(FILEDIR) $(GARCHIVEPATH),file://$(DIR)/)
 
+# For example, --usepigz
+EXTRA_MKPACKAGE_OPTS ?=
+
 # Extra libraries
 EXTRA_LIBS = gar.pkg.mk gar.common.mk gar.svn.mk
 ccenv:

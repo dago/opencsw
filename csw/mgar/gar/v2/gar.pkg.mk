@@ -941,6 +941,7 @@ package-%: $(WORKDIR)/%.gspec $(WORKDIR)/%.prototype-$(GARCH) $(WORKDIR)/%.depen
 						 --workdir  $(SPKG_WORKDIR) \
 						 --pkgbase  $(SPKG_PKGBASE) \
 						 --pkgroot  $(SPKG_PKGROOT) \
+						 $(EXTRA_MKPACKAGE_OPTS)  \
 						-v WORKDIR_FIRSTMOD=../build-$(firstword $(MODULATIONS)) \
 						 $(if $(_DIRPACKAGE),--notransfer --nocompress,--compress) \
 						 $(MKPACKAGE_ARGS) ) || exit 2
