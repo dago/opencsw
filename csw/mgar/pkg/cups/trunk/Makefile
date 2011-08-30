@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = cups
-VERSION = 1.4.5
+VERSION = 1.5.0
 CATEGORIES = net
 
 define BLURB
@@ -52,28 +52,32 @@ DISTFILES += CSWcupsd.postremove
 DISTFILES += client.conf.CSW
 DISTFILES += CSWcupsclient.README
 
-PATCHFILES  = 0001-cswcups-for-service-name.patch
-PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
-PATCHFILES += 0003-Reference-counting-for-printers-only.patch
-PATCHFILES += 0006-Fail-compilation-if-no-SSL-impl-chosen.patch
-PATCHFILES += 0007-Solaris-zone-support-in-init-script.patch
-PATCHFILES += CFLAGS-leaking-to-C++-compiler.patch
-PATCHFILES += 0008-Adding-CFLAGS-and-CXXFLAGS-to-linker-calls.patch
-PATCHFILES += 0009-Add-workaround-for-krb5-config-outputting-CFLAGS.patch
-PATCHFILES += 0009-giving-precedence-to-statvfs-in-printers.c.patch
+PATCHFILES += 0001-cswcups-for-the-service-name.patch
+# PATCHFILES  = 0001-cswcups-for-service-name.patch
+# PATCHFILES += 0002-Adding-the-refcount-member-to-mime_type_t.patch
+# PATCHFILES += 0003-Reference-counting-for-printers-only.patch
+# PATCHFILES += 0006-Fail-compilation-if-no-SSL-impl-chosen.patch
+# PATCHFILES += 0007-Solaris-zone-support-in-init-script.patch
+# PATCHFILES += CFLAGS-leaking-to-C++-compiler.patch
+# PATCHFILES += 0008-Adding-CFLAGS-and-CXXFLAGS-to-linker-calls.patch
+# PATCHFILES += 0009-Add-workaround-for-krb5-config-outputting-CFLAGS.patch
+# PATCHFILES += 0009-giving-precedence-to-statvfs-in-printers.c.patch
 
 BUILD_DEP_PKGS  = CSWggettext
 BUILD_DEP_PKGS += CSWjpeg
-BUILD_DEP_PKGS += CSWkrb5libdev
 BUILD_DEP_PKGS += CSWoldapdevel
 BUILD_DEP_PKGS += CSWossldevel
 BUILD_DEP_PKGS += CSWtiff
-BUILD_DEP_PKGS += CSWzlib
+BUILD_DEP_PKGS += CSWlibkrb5-dev
+BUILD_DEP_PKGS += CSWlibgcrypt-dev
+BUILD_DEP_PKGS += CSWlibgpg-error-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev
 BUILD_DEP_PKGS += SUNWhea
 BUILD_DEP_PKGS += SUNWlibm
 BUILD_DEP_PKGS += SUNWslpu
 
 EXTRA_CXXFLAGS += -norunpath
+EXTRA_LINKER_FLAGS += -liconv
 
 # The main metapackage
 PACKAGES           += CSWcups
@@ -119,17 +123,23 @@ PKGFILES_CSWcupsd += $(sysconfdir)/cups/ppd.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/snmp.*
 PKGFILES_CSWcupsd += $(sysconfdir)/cups/ssl.*
 PKGFILES_CSWcupsd += $(sysconfdir)/init\.d/.*
-RUNTIME_DEP_PKGS_CSWcupsd += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcups2
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupscgi1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsdriver1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsimage2
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsmime1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWlibcupsppdc1
-RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibslp1
+RUNTIME_DEP_PKGS_CSWcupsd += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcupsd += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWcupsd += CSWosslrt
-RUNTIME_DEP_PKGS_CSWcupsd += CSWzlib
 EXTRA_MERGE_EXCLUDE_FILES +=  $(sysconfdir)/rc.*
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
@@ -142,6 +152,8 @@ PKGFILES_CSWcupsclient += $(sbindir)/cups(accept|reject)
 PKGFILES_CSWcupsclient += $(sbindir)/(lp(admin|p|c|info|move))
 PKGFILES_CSWcupsclient += $(bindir)/(cancel|cupstest(dsc|ppd))
 PKGFILES_CSWcupsclient += $(bindir)/(lp(|options|passwd|q|r|rm|stat))
+PKGFILES_CSWcupsclient += $(bindir)/ipptool
+PKGFILES_CSWcupsclient += $(mandir)/man1/ipptool.1
 PKGFILES_CSWcupsclient += $(mandir)/man1/(cancel|cupstest(dsc|ppd)|lp).1
 PKGFILES_CSWcupsclient += $(mandir)/man1/(lpoptions|lppasswd|lpq|lpr|lprm).1
 PKGFILES_CSWcupsclient += $(mandir)/man1/lpstat.1
@@ -155,10 +167,16 @@ PKGFILES_CSWcupsclient += $(mandir)/man5/ppdcfile\.5
 PKGFILES_CSWcupsclient += $(mandir)/man7/(drv|notifier)\.7
 PKGFILES_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW
 PKGFILES_CSWcupsclient += $(datadir)/doc/cupsclient.*
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWosslrt
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWcupsclient += CSWzlib
 RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcupsimage2
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibz1
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWcupsclient += CSWlibk5crypto3
 
 PACKAGES += CSWcupsdoc
 CHECKPKG_OVERRIDES_CSWcupsdoc += file-with-bad-content
@@ -216,47 +234,82 @@ PACKAGES += CSWlibcups2
 CATALOGNAME_CSWlibcups2 = libcups2
 PKGFILES_CSWlibcups2 += $(call baseisadirs,$(libdir),libcups\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibcups2 += CUPS libraries, libcups.so.2
-RUNTIME_DEP_PKGS_CSWlibcups2 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibcups2 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibcups2 += CSWlibz1
 
 PACKAGES += CSWlibcupscgi1
 CATALOGNAME_CSWlibcupscgi1 = libcupscgi1
 PKGFILES_CSWlibcupscgi1 += $(call baseisadirs,$(libdir),libcupscgi\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibcupscgi1 += CUPS libraries, libcupscgi.so.1
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibcupscgi1 += CSWlibz1
 
 PACKAGES += CSWlibcupsdriver1
 CATALOGNAME_CSWlibcupsdriver1 = libcupsdriver1
 PKGFILES_CSWlibcupsdriver1 += $(call baseisadirs,$(libdir),libcupsdriver\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibcupsdriver1 += CUPS libraries, libcupsdriver.so.1
-RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWlibcupsdriver1 += CSWlibk5crypto3
 
 PACKAGES += CSWlibcupsimage2
 CATALOGNAME_CSWlibcupsimage2 = libcupsimage2
 PKGFILES_CSWlibcupsimage2 += $(call baseisadirs,$(libdir),libcupsimage\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibcupsimage2 += CUPS libraries, libcupsimage.so.2
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWtiff
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibcups2
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWpng
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWjpeg
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibcupsimage2 += CSWtiff
 
 PACKAGES += CSWlibcupsmime1
 CATALOGNAME_CSWlibcupsmime1 = libcupsmime1
 PKGFILES_CSWlibcupsmime1 += $(call baseisadirs,$(libdir),libcupsmime\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibcupsmime1 += CUPS libraries, libcupsmime.so.1
-RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibcom-err3
 RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibcups2
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibcupsmime1 += CSWlibz1
 
 PACKAGES += CSWlibcupsppdc1
 CATALOGNAME_CSWlibcupsppdc1 = libcupsppdc1
 PKGFILES_CSWlibcupsppdc1 += $(call baseisadirs,$(libdir),libcupsppdc\.so\.1(\.\d+)*)
 SPKG_DESC_CSWlibcupsppdc1 += CUPS libraries, libcupsppdc.so.1
-RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibcups2
+CHECKPKG_OVERRIDES_CSWlibcupsppdc1 += bad-rpath-entry
+RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWlibcupsppdc1 += CSWlibk5crypto3
 
 # http://lists.opencsw.org/pipermail/maintainers/2009-September/004249.html
 SAMPLECONF_CSWcupsclient += $(sysconfdir)/cups/client\.conf\.CSW

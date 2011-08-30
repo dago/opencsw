@@ -1,0 +1,48 @@
+From cbfd0de81191b4e5df8f2729886f743e173d5103 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 30 Aug 2011 17:38:01 +0200
+Subject: [PATCH] cswcups for the service name
+
+---
+ scheduler/Makefile |   10 ++++++----
+ 1 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/scheduler/Makefile b/scheduler/Makefile
+index 18dc80c..9711b91 100644
+--- a/scheduler/Makefile
++++ b/scheduler/Makefile
+@@ -139,6 +139,8 @@ install:	all install-data install-headers install-libs install-exec
+ # Install data files...
+ #
+ 
++INITSCRIPT = cswcups
++
+ install-data:
+ 	echo Creating $(SERVERBIN)/driver...
+ 	$(INSTALL_DIR) -m 755 $(SERVERBIN)/driver
+@@ -170,18 +172,18 @@ install-data:
+ 	if test "x$(INITDIR)" != x; then \
+ 		echo Installing init scripts...; \
+ 		$(INSTALL_DIR) -m 755 $(BUILDROOT)$(INITDIR)/init.d; \
+-		$(INSTALL_SCRIPT) cups.sh $(BUILDROOT)$(INITDIR)/init.d/cups; \
++		$(INSTALL_SCRIPT) cups.sh $(BUILDROOT)$(INITDIR)/init.d/$(INITSCRIPT); \
+ 		for level in $(RCLEVELS); do \
+ 			$(INSTALL_DIR) -m 755 $(BUILDROOT)$(INITDIR)/rc$${level}.d; \
+-			$(LN) ../init.d/cups $(BUILDROOT)$(INITDIR)/rc$${level}.d/S$(RCSTART)cups; \
++			$(LN) ../init.d/$(INITSCRIPT) $(BUILDROOT)$(INITDIR)/rc$${level}.d/S$(RCSTART)$(INITSCRIPT); \
+ 			if test `uname` = HP-UX; then \
+ 				level=`expr $$level - 1`; \
+ 				$(INSTALL_DIR) -m 755 $(BUILDROOT)$(INITDIR)/rc$${level}.d; \
+ 			fi; \
+-			$(LN) ../init.d/cups $(BUILDROOT)$(INITDIR)/rc$${level}.d/K$(RCSTOP)cups; \
++			$(LN) ../init.d/$(INITSCRIPT) $(BUILDROOT)$(INITDIR)/rc$${level}.d/K$(RCSTOP)$(INITSCRIPT); \
+ 		done; \
+ 		$(INSTALL_DIR) -m 755 $(BUILDROOT)$(INITDIR)/rc0.d; \
+-		$(LN) ../init.d/cups $(BUILDROOT)$(INITDIR)/rc0.d/K$(RCSTOP)cups; \
++		$(LN) ../init.d/$(INITSCRIPT) $(BUILDROOT)$(INITDIR)/rc0.d/K$(RCSTOP)$(INITSCRIPT); \
+ 	fi
+ 	if test "x$(INITDIR)" = x -a "x$(INITDDIR)" != x; then \
+ 		$(INSTALL_DIR) $(BUILDROOT)$(INITDDIR); \
+-- 
+1.7.6
+
