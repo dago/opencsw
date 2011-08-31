@@ -190,7 +190,7 @@ SPKG_VERSION_FLAGS ?= ,$(call ALLVERSIONFLAGS)
 endif
 
 SPKG_DESC      ?= $(DESCRIPTION)
-SPKG_VERSION   ?= $(VERSION)$(SPKG_VERSION_FLAGS)
+SPKG_VERSION   ?= $(subst -,_,$(VERSION)$(SPKG_VERSION_FLAGS))
 SPKG_CATEGORY  ?= application
 SPKG_SOURCEURL ?= $(firstword $(VENDOR_URL) \
 			$(if $(filter $(GNU_MIRROR),$(MASTER_SITES)),http://www.gnu.org/software/$(GNU_PROJ)) \
@@ -360,7 +360,7 @@ PKGFILES_DEVEL_ACLOCAL ?= $(sharedstatedir)/aclocal/.*
 PKGFILES_DEVEL += $(PKGFILES_DEVEL_ACLOCAL)
 PKGFILES_DEVEL_CONFIG_MANPAGE ?= $(mandir)/man1/.*-config\.1.*
 PKGFILES_DEVEL += $(PKGFILES_DEVEL_CONFIG_MANPAGE)
-PKGFILES_DEVEL_MAN3_MANPAGE ?= $(mandir)/man3/.*\.3
+PKGFILES_DEVEL_MAN3_MANPAGE ?= $(mandir)/man3/.*\.3.*
 PKGFILES_DEVEL += $(PKGFILES_DEVEL_MAN3_MANPAGE)
 
 # PKGFILES_DOC selects files beloging to a documentation package
