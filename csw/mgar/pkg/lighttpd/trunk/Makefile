@@ -1,6 +1,6 @@
 # $Id$
 NAME = lighttpd
-VERSION = 1.4.28
+VERSION = 1.4.29
 CATEGORIES = server
 
 DESCRIPTION = HTTP server built for security, speed, compliance, and flexibility
