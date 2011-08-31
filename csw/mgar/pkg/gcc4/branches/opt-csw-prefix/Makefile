@@ -470,16 +470,8 @@ JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 include files/scripts.mk
 include gar/category.mk
 
-install-custom:
-	ginstall -d -m 755 $(DESTDIR)$(bindir)
-	for b in $(CORE_BINARIES) $(CXX_BINARIES) \
-		$(FORTRAN_BINARIES) $(JAVA_BINARIES); do \
-		touch $(DESTDIR)$(bindir)/$${b}$(PROGRAM_SUFFIX); \
-	done
-	@$(MAKECOOKIE)
-
 post-install-modulated:
-	ginstall -d -m 755 $(DESTDIR)/opt/csw/gcc4/bin
+	ginstall -d -m 755 $(DESTDIR)$(prefix)/gcc4/bin
 	for b in $(CORE_BINARIES) $(CXX_BINARIES) \
 		$(FORTRAN_BINARIES) $(JAVA_BINARIES); do \
 		gln -v -s ../../bin/$${b}$(PROGRAM_SUFFIX) \
