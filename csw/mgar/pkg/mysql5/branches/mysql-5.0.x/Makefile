@@ -9,7 +9,7 @@
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)5
 BASE_VERSION = 5.0
-PATCHLEVEL = 87
+PATCHLEVEL = 92
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
@@ -28,7 +28,7 @@ endef
 # Change prefix to /opt/csw/$(NAME)
 prefix = /opt/csw/$(NAME)
 localstatedir = /var$(prefix)
-sysconfdir = /etc/opt/csw
+sysconfdir = /etc$(prefix)
 libdir = /opt/csw/lib
 includedir = /opt/csw/include
 
@@ -47,7 +47,7 @@ global_sysconfdir = /etc/opt/csw
 # Where to link the binaries
 global_bindir = /opt/csw/bin
 
-INITSMF = $(global_sysconfdir)/init\.d/csw$(NAME)
+INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
 PACKAGES += CSWlibmysqlclient15
 PKGFILES_CSWlibmysqlclient15 += $(call baseisadirs,$(libdir),libmysqlclient\.so\.15(\.\d+)*)
@@ -73,7 +73,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWncurses
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWzlib
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
-CSW$(NAME)client_programs  = myisamlog
+CSW$(NAME)client_programs += myisamlog
 CSW$(NAME)client_programs += myisampack
 CSW$(NAME)client_programs += mysql
 CSW$(NAME)client_programs += mysqlaccess
@@ -114,6 +114,8 @@ CATALOGNAME_CSW$(NAME)bench  = $(NAME)bench
 CATALOGNAME_CSW$(NAME)devel  = $(NAME)devel
 CATALOGNAME_CSW$(NAME)test   = $(NAME)test
 
+EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 ARCHALL_CSW$(NAME)bench = 1
 ARCHALL_CSW$(NAME)test  = 1
 
@@ -138,20 +140,16 @@ RUNTIME_DEP_PKGS_CSW$(NAME)bench      += CSWperl
 RUNTIME_DEP_PKGS_CSW$(NAME)test        = CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME)test       += CSWperl
 
-MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-$(BASE_VERSION)/
+MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(VERSION).tar.gz
 DISTFILES += csw$(NAME) quick_start-csw README.CSW ChangeLog
 DISTFILES += CSW$(NAME).preinstall
 DISTFILES += CSW$(NAME).postinstall
 DISTFILES += cswusergroup
 
-UFILES_REGEX = mysql-(\d+(?:\.\d+)*).tar.gz
-
 # TODO: Do the proper prerequsite pkgs.
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
-EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -167,7 +165,10 @@ CONFIGURE_ARGS += --with-readline
 CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-plugins=max-no-ndb
-CONFIGURE_ARGS += --with-comment
+CONFIGURE_ARGS += --with-comment="(OpenCSW)"
+CONFIGURE_ARGS += --with-mysqld-user=mysql
+CONFIGURE_ARGS += --with-fast-mutexes
+CONFIGURE_ARGS += --with-libwrap
 CONFIGURE_ARGS += --with-mysqld-libs=-lmtmalloc
 CONFIGURE_ARGS += --with-big-tables
 CONFIGURE_ARGS += --enable-thread-safe-client
@@ -175,7 +176,9 @@ CONFIGURE_ARGS_DBG = --with-debug
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 
 # TODO: Make the tests pass. They don't at the moment.
-TEST_SCRIPTS =
+SKIPTEST ?= 1
+TEST_SCRIPTS = custom
+TEST_TARGETS = check
 
 ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)
 ALTERNATIVE_mysql$(BASE_VERSION) = $(global_bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
@@ -215,6 +218,62 @@ CHECKPKG_OVERRIDES_CSWmysql5devel += file-with-bad-content|/usr/local|root/opt/c
 CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/bin/i386/mysqlbug
 CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/bin/amd64/mysqlbug
 
+EXECUTABLES += comp_err
+EXECUTABLES += innochecksum
+EXECUTABLES += msql2mysql
+EXECUTABLES += my_print_defaults
+EXECUTABLES += myisam_ftdump
+EXECUTABLES += myisamchk
+EXECUTABLES += myisamlog
+EXECUTABLES += myisampack
+EXECUTABLES += mysql
+EXECUTABLES += mysql_client_test
+EXECUTABLES += mysql_config
+EXECUTABLES += mysql_convert_table_format
+EXECUTABLES += mysql_explain_log
+EXECUTABLES += mysql_find_rows
+EXECUTABLES += mysql_fix_extensions
+EXECUTABLES += mysql_fix_privilege_tables
+EXECUTABLES += mysql_install_db
+EXECUTABLES += mysql_secure_installation
+EXECUTABLES += mysql_setpermission
+EXECUTABLES += mysql_tableinfo
+EXECUTABLES += mysql_tzinfo_to_sql
+EXECUTABLES += mysql_upgrade
+EXECUTABLES += mysql_upgrade_shell
+EXECUTABLES += mysql_waitpid
+EXECUTABLES += mysql_zap
+EXECUTABLES += mysqlaccess
+EXECUTABLES += mysqladmin
+EXECUTABLES += mysqlbinlog
+EXECUTABLES += mysqlbug
+EXECUTABLES += mysqlcheck
+EXECUTABLES += mysqld_multi
+EXECUTABLES += mysqld_safe
+EXECUTABLES += mysqldump
+EXECUTABLES += mysqldumpslow
+EXECUTABLES += mysqlhotcopy
+EXECUTABLES += mysqlimport
+EXECUTABLES += mysqlshow
+EXECUTABLES += mysqltest
+EXECUTABLES += mysqltestmanager
+EXECUTABLES += mysqltestmanager-pwgen
+EXECUTABLES += mysqltestmanagerc
+EXECUTABLES += perror
+EXECUTABLES += replace
+EXECUTABLES += resolve_stack_dump
+EXECUTABLES += resolveip
+
+ALTERNATIVES = $(EXECUTABLES)
+
+# This list could be generated automatically from $(EXECUTABLES)
+
+
+# Collisions:
+# /opt/csw/share/mysql/doc/README.CSW
+
+ALTERNATIVES_CSW$(NAME) = 
+
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
@@ -236,16 +295,17 @@ pre-configure-modulated:
 
 post-install-modulated:
 	(cd $(DESTDIR)$(libdir); gmv -v mysql/* .)
+	(cd $(DESTDIR)$(libdir); grmdir -v mysql)
 	@$(MAKECOOKIE)
 
 post-merge:
 	ginstall -m 755 -d $(PKGROOT)$(localstatedir)
-	ginstall -m 755 -d $(PKGROOT)$(datadir)/mysql/doc
-	ginstall -m 644 $(FILEDIR)/ChangeLog $(PKGROOT)$(datadir)/mysql/doc
-	ginstall -m 644 $(FILEDIR)/README.CSW $(PKGROOT)$(datadir)/mysql/doc
-	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/mysql/doc
-	gln -sf ../../../$(NAME)/share/mysql/doc/README.CSW \
-		$(PKGROOT)/opt/csw/share/mysql/doc/README.CSW
+	ginstall -m 755 -d $(PKGROOT)$(datadir)/$(NAME)/doc
+	ginstall -m 644 $(FILEDIR)/ChangeLog $(PKGROOT)$(datadir)/$(NAME)/doc
+	ginstall -m 644 $(FILEDIR)/README.CSW $(PKGROOT)$(datadir)/$(NAME)/doc
+	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/$(NAME)/doc
+	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README.CSW \
+		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README.CSW
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/csw$(NAME) $(PKGROOT)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
@@ -266,3 +326,6 @@ post-merge:
 
 show-dirpaths:
 	echo $(DIRPATHS)
+
+# We need the GNU userland
+PATH := /opt/csw/gnu:$(PATH)
