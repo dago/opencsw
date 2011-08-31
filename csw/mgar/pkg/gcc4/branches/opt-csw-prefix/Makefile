@@ -308,7 +308,8 @@ RUNTIME_DEP_PKGS_CSWlibgfortran3 += $(RUNTIME_DEP_PKGS_CSWlibgfortran3_$(GARCH))
 PACKAGES += CSWgcc4g++
 CATALOGNAME_CSWgcc4g++ = gcc4g++
 SPKG_DESC_CSWgcc4g++ = GNU C++ Compiler
-PKGFILES_CSWgcc4g++  = $(bindir)/[cg]\+\+$(PROGRAM_SUFFIX)
+PKGFILES_CSWgcc4g++  = $(foreach F,$(CXX_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
+PKGFILES_CSWgcc4g++ += $(foreach F,$(CXX_BINARIES),$(prefix)/gcc4/bin/$(F))
 PKGFILES_CSWgcc4g++ += $(bindir)/\w+-\w+-solaris[\d\.]+-[cg]\+\+$(PROGRAM_SUFFIX)
 PKGFILES_CSWgcc4g++ += $(libexecdir)/.*cc1plus
 PKGFILES_CSWgcc4g++ += $(libdir)/.*libstdc.*a
@@ -338,7 +339,8 @@ RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibgfortran3
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibz1
-PKGFILES_CSWgcc4gfortran  = $(bindir)/gfortran$(PROGRAM_SUFFIX)
+PKGFILES_CSWgcc4gfortran += $(foreach F,$(FORTRAN_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
+PKGFILES_CSWgcc4gfortran += $(foreach F,$(FORTRAN_BINARIES),$(prefix)/gcc4/bin/$(F))
 PKGFILES_CSWgcc4gfortran += $(bindir)/\w+-\w+-solaris[\d\.]+-gfortran$(PROGRAM_SUFFIX)
 PKGFILES_CSWgcc4gfortran += $(libdir)/.*libgfortran.*a
 PKGFILES_CSWgcc4gfortran += $(libexecdir)/.*f951
@@ -363,25 +365,8 @@ RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgij12
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibz1
 
-PKGFILES_CSWgcc4java  = $(bindir)/.*gcj.*$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*jv-scan$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*jv-convert$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*jcf-dump$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*grmi.*$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*grepjar$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gjnih$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gij$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*fastjar$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gjar.*$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gjavah$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gorbd$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*addr2name.awk$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gappletviewer$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gkeytool$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gserialver$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gtnameserv$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gnative2ascii$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gc-analyze$(PROGRAM_SUFFIX)
+PKGFILES_CSWgcc4java  = $(foreach F,$(JAVA_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
+PKGFILES_CSWgcc4java += $(foreach F,$(JAVA_BINARIES),$(prefix)/gcc4/bin/$(F))
 PKGFILES_CSWgcc4java += $(mandir)/.*/gcj.*
 PKGFILES_CSWgcc4java += $(mandir)/.*/gij.*
 PKGFILES_CSWgcc4java += $(mandir)/.*/jv.*
@@ -475,9 +460,32 @@ RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibiconv2
 # RUNTIME_DEP_PKGS_CSWgcc4java += $(RUNTIME_DEP_PKGS_CSWgcc4java_$(GARCH)_$(GAROSREL))
 
 PACKAGES += $(PACKAGES_$(GARCH))
+CORE_BINARIES = cpp gcc gcov
+CXX_BINARIES = g\+\+ c\+\+
+FORTRAN_BINARIES = gfortran
+JAVA_BINARIES  = gappletviewer gc-analyze gcj-dbtool gcjh gjar gjarsigner gjavah
+JAVA_BINARIES += gkeytool gnative2ascii gorbd grmic grmid grmregistry
+JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 
 include files/scripts.mk
 include gar/category.mk
+
+install-custom:
+	ginstall -d -m 755 $(DESTDIR)$(bindir)
+	for b in $(CORE_BINARIES) $(CXX_BINARIES) \
+		$(FORTRAN_BINARIES) $(JAVA_BINARIES); do \
+		touch $(DESTDIR)$(bindir)/$${b}$(PROGRAM_SUFFIX); \
+	done
+	@$(MAKECOOKIE)
+
+post-install-modulated:
+	ginstall -d -m 755 $(DESTDIR)/opt/csw/gcc4/bin
+	for b in $(CORE_BINARIES) $(CXX_BINARIES) \
+		$(FORTRAN_BINARIES) $(JAVA_BINARIES); do \
+		gln -v -s ../../bin/$${b}$(PROGRAM_SUFFIX) \
+		$(DESTDIR)$(prefix)/gcc4/bin/$${b}; \
+	done
+	@$(MAKECOOKIE)
 
 # We need GNU find as find
 PATH := /opt/csw/gnu:$(PATH)
