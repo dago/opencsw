@@ -31,6 +31,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 PATCHFILES += 0001-R1-is-defined-in-usr-include-ia32-sys-reg.h-disturbi.patch
 PATCHFILES += 0002-Make-call-to-version-explicit-to-avoid-clash-with-ma.patch
+PATCHFILES += 0003-Remove-a-const-arg-declaration.patch
 
 VENDOR_URL = http://www.cs.unipr.it/ppl/
 

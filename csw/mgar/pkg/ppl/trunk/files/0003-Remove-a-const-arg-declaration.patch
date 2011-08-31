@@ -1,0 +1,25 @@
+From e77ea81edab7f19845f0c202abf769227172830d Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 31 Aug 2011 15:46:41 +0200
+Subject: [PATCH] Remove a const arg declaration
+
+---
+ Watchdog/src/Watchdog.cc |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Watchdog/src/Watchdog.cc b/Watchdog/src/Watchdog.cc
+index 42d57fa..f8b4e40 100644
+--- a/Watchdog/src/Watchdog.cc
++++ b/Watchdog/src/Watchdog.cc
+@@ -98,7 +98,7 @@ my_getitimer(int which, struct itimerval* value) {
+ 
+ void
+ my_setitimer(int which,
+-	     const struct itimerval* value, struct itimerval* ovalue) {
++	     struct itimerval* value, struct itimerval* ovalue) {
+   if (setitimer(which, value, ovalue) != 0)
+     throw_syscall_error("setitimer");
+ }
+-- 
+1.7.5.4
+
