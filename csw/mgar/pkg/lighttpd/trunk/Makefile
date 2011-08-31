@@ -30,12 +30,15 @@ PATCHFILES += 0001-Work-around-linking-problem-buffer.c.patch
 #   http://redmine.lighttpd.net/boards/2/topics/4163
 PATCHFILES += 0003-Ignore-ENOSYS-on-mkdir-which-happens-on-automounted-.patch
 
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386                                                                          
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 PACKAGES += CSWlighttpd
 CATALOGNAME_CSWlighttpd = lighttpd
 SPKG_DESC_CSWlighttpd = HTTP server built for security, speed, compliance, and flexibility
 RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSWlighttpd += CSWbzip2
-RUNTIME_DEP_PKGS_CSWlighttpd += CSWzlib
+RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibz1
 
 EXTRA_LINKER_FLAGS += -lsendfile
 
@@ -47,19 +50,12 @@ EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(GAROSREL))
 # because modules are not supposed to be in /opt/csw/lib.
 libdir_install = $(prefix)/lib/lighttpd
 
-# Solaris Zones support
-sysconfdir = /etc$(prefix)
-localstatedir = /var$(prefix)
-
 CONFIGURE_ARGS  = $(DIRPATHS)
 
 # Solaris 9 does not have IPV6_V6ONLY.
 # IPv6 support only works on Solaris 10.
 CONFIGURE_ARGS_5.9 = --disable-ipv6
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GAROSREL))
-
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386                                                                          
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 INITSMF = $(sysconfdir)/init\.d/cswlighttpd
 PRESERVECONF = $(sysconfdir)/lighttpd\.conf
