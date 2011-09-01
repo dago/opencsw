@@ -136,16 +136,19 @@ GARCOMPILER = GNU
 # There's a lot of failing checks. Probably a lot of porting work.
 SKIPTEST = 1
 
+# Used multiple times in package definitions
+JAVA_LIB_VERSION = 13
+
 ALTERNATIVES_PRIO = 460
 
 PACKAGES = CSWgcc4core
 SPKG_DESC_CSWgcc4core = GNU C compiler
-RUNTIME_DEP_PKGS_CSWgcc4core += CSWlib-gnu-awt-xlib12
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibffi4
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcj-tools12
-RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcj12
-RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgij12
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcj-tools$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcj$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibmpc2
@@ -163,7 +166,7 @@ ALTERNATIVE_gcc4core += $(bindir)/gcov gcc_core $(bindir)/gcov$(PROGRAM_SUFFIX)
 CHECKPKG_OVERRIDES_CSWgcc4core += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4g++ += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4java += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWlibgcj12 += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|$(libexecdir)/gcc/i386-pc-solaris2.9/$(VERSION)/liblto_plugin.la
 CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|$(libexecdir)/gcc/sparc-sun-solaris2.9/$(VERSION)/liblto_plugin.la
 CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|$(libexecdir)/gcc/sparc-sun-solaris2.10/$(VERSION)/liblto_plugin.la
@@ -207,13 +210,13 @@ EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/libiberty\.a
 
 # Catch-all package
 
-PACKAGES += CSWlib-gnu-awt-xlib12
-CATALOGNAME_CSWlib-gnu-awt-xlib12 = lib_gnu_awt_xlib12
-PKGFILES_CSWlib-gnu-awt-xlib12 += $(call baseisadirs,$(libdir),lib-gnu-awt-xlib\.so\.12(\.\d+)*)
-SPKG_DESC_CSWlib-gnu-awt-xlib12 += $(DESCRIPTION), lib-gnu-awt-xlib.so.12
-RUNTIME_DEP_PKGS_CSWgcc4 += CSWlib-gnu-awt-xlib12
-RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib12 += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib12 += CSWlibgcc-s1
+PACKAGES += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
+CATALOGNAME_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) = lib_gnu_awt_xlib$(JAVA_LIB_VERSION)
+PKGFILES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),lib-gnu-awt-xlib\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
+SPKG_DESC_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(DESCRIPTION), lib-gnu-awt-xlib.so.$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4 += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 
 PACKAGES += CSWlibffi4
 CATALOGNAME_CSWlibffi4 = libffi4
@@ -231,21 +234,21 @@ RUNTIME_DEP_PKGS_CSWgcc4 += CSWlibgcc-s1
 # http://buildfarm.opencsw.org/pkgdb/srv4/1991387f2cb9f545b2a1b254b50638ef/
 OBSOLETED_BY_CSWlibgcc-s1 = CSWgcc3corert
 
-PACKAGES += CSWlibgcj-tools12
-CATALOGNAME_CSWlibgcj-tools12 = libgcj_tools12
-PKGFILES_CSWlibgcj-tools12 += $(call baseisadirs,$(libdir),libgcj-tools\.so\.12(\.\d+)*)
-SPKG_DESC_CSWlibgcj-tools12 += $(DESCRIPTION), libgcj-tools.so.12
-RUNTIME_DEP_PKGS_CSWgcc4 += CSWlibgcj-tools12
-RUNTIME_DEP_PKGS_CSWlibgcj-tools12 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibgcj-tools12 += CSWlibgcj12
-RUNTIME_DEP_PKGS_CSWlibgcj-tools12 += CSWlibz1
+PACKAGES += CSWlibgcj-tools$(JAVA_LIB_VERSION)
+CATALOGNAME_CSWlibgcj-tools$(JAVA_LIB_VERSION) = libgcj_tools$(JAVA_LIB_VERSION)
+PKGFILES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),libgcj-tools\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
+SPKG_DESC_CSWlibgcj-tools$(JAVA_LIB_VERSION) += $(DESCRIPTION), libgcj-tools.so.$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4 += CSWlibgcj-tools$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION) += CSWlibgcj$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION) += CSWlibz1
 
-PACKAGES += CSWlibgcj12
-CATALOGNAME_CSWlibgcj12 = libgcj12
-PKGFILES_CSWlibgcj12 += $(call baseisadirs,$(libdir),libgcj\.so\.12(\.\d+)*)
-SPKG_DESC_CSWlibgcj12 += $(DESCRIPTION), libgcj.so.12
-RUNTIME_DEP_PKGS_CSWlibgcj12 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibgcj12 += CSWlibz1
+PACKAGES += CSWlibgcj$(JAVA_LIB_VERSION)
+CATALOGNAME_CSWlibgcj$(JAVA_LIB_VERSION) = libgcj$(JAVA_LIB_VERSION)
+PKGFILES_CSWlibgcj$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),libgcj\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
+SPKG_DESC_CSWlibgcj$(JAVA_LIB_VERSION) += $(DESCRIPTION), libgcj.so.$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlibgcj$(JAVA_LIB_VERSION) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgcj$(JAVA_LIB_VERSION) += CSWlibz1
 
 PACKAGES += CSWlibgfortran3
 CATALOGNAME_CSWlibgfortran3 = libgfortran3
@@ -255,11 +258,11 @@ RUNTIME_DEP_PKGS_CSWgcc4 += CSWlibgfortran3
 RUNTIME_DEP_PKGS_CSWlibgfortran3 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibgfortran3 = CSWgcc4gfortranrt
 
-PACKAGES += CSWlibgij12
-CATALOGNAME_CSWlibgij12 = libgij12
-PKGFILES_CSWlibgij12 += $(call baseisadirs,$(libdir),libgij\.so\.12(\.\d+)*)
-SPKG_DESC_CSWlibgij12 += $(DESCRIPTION), libgij.so.12
-RUNTIME_DEP_PKGS_CSWlibgij12 += CSWlibz1
+PACKAGES += CSWlibgij$(JAVA_LIB_VERSION)
+CATALOGNAME_CSWlibgij$(JAVA_LIB_VERSION) = libgij$(JAVA_LIB_VERSION)
+PKGFILES_CSWlibgij$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),libgij\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
+SPKG_DESC_CSWlibgij$(JAVA_LIB_VERSION) += $(DESCRIPTION), libgij.so.$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibz1
 
 PACKAGES += CSWlibgomp1
 CATALOGNAME_CSWlibgomp1 = libgomp1
@@ -330,8 +333,8 @@ ALTERNATIVES_CSWgcc4g++ += gcc4g++
 ALTERNATIVE_gcc4g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 
 OBSOLETED_BY_CSWlibgcc-s1 += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWlibgij12 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibgij12 += CSWlibgcj12
+RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibgcj$(JAVA_LIB_VERSION)
 
 PACKAGES += CSWgcc4gfortran
 CATALOGNAME_CSWgcc4gfortran   = gcc4gfortran
@@ -361,9 +364,9 @@ SPKG_DESC_CSWgcc4java       = GNU Java Compiler
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibmpfr4
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcj-tools12
-RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcj12
-RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgij12
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcj-tools$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcj$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibz1
 
