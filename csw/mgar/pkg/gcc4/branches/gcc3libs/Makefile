@@ -35,6 +35,10 @@ PKGFILES_CSWlibstdc++5 += $(call baseisadirs,$(libdir),libstdc\+\+\.so\.5(\.\d+)
 SPKG_DESC_CSWlibstdc++5 += GCC shared library, libstdc++.so.5
 OBSOLETED_BY_CSWlibstdc++5  += CSWgcc3g++rt
 RUNTIME_DEP_PKGS_CSWlibstdc++5 += CSWgcc3corert
+# This is necessary when uploading the gcc3libs + gcc4 combo, because the
+# updated gcc3corert stub built from gcc4 sources does not include any shared
+# libraries.
+CHECKPKG_OVERRIDES_CSWlibstdc++5 += surplus-dependency|CSWgcc3corert
 
 PACKAGES += CSWlibstdc++6
 SPKG_DESC_CSWlibstdc++6 = GCC shared library libstdc++.so.6
