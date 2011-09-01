@@ -1,0 +1,25 @@
+From 3bc149078e3e003d1cb4285903df8c87ec7ea15c Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 10 Aug 2011 11:50:23 +0200
+Subject: [PATCH] OpenCSW bash with the Python test runner
+
+---
+ utils/lit/lit/TestRunner.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/utils/lit/lit/TestRunner.py b/utils/lit/lit/TestRunner.py
+index 80d0ba1..9b5ec43 100644
+--- a/utils/lit/lit/TestRunner.py
++++ b/utils/lit/lit/TestRunner.py
+@@ -358,7 +358,7 @@ def executeScript(test, litConfig, tmpBase, commands, cwd):
+         if bashPath:
+             command = [bashPath, script]
+         else:
+-            command = ['/bin/sh', script]
++            command = ['/opt/csw/bin/bash', script]
+         if litConfig.useValgrind:
+             # FIXME: Running valgrind on sh is overkill. We probably could just
+             # run on clang with no real loss.
+-- 
+1.7.6
+

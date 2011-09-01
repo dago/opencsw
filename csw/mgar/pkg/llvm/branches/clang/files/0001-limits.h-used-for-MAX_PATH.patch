@@ -1,0 +1,24 @@
+From c9ec5b3cf09a448eb53cb19f57c9099998f2aa2d Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 10 Aug 2011 03:01:22 +0200
+Subject: [PATCH] limits.h used for MAX_PATH
+
+---
+ lib/Support/Unix/PathV2.inc |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/lib/Support/Unix/PathV2.inc b/lib/Support/Unix/PathV2.inc
+index 03ff283..6a0a3df 100644
+--- a/lib/Support/Unix/PathV2.inc
++++ b/lib/Support/Unix/PathV2.inc
+@@ -42,6 +42,7 @@
+ #if HAVE_STDIO_H
+ #include <stdio.h>
+ #endif
++#include <limits.h>
+ 
+ using namespace llvm;
+ 
+-- 
+1.7.6
+
