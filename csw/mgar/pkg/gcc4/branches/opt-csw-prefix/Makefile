@@ -137,7 +137,7 @@ GARCOMPILER = GNU
 SKIPTEST = 1
 
 # Used multiple times in package definitions
-JAVA_LIB_VERSION = 13
+JAVA_LIB_VERSION = 12
 
 ALTERNATIVES_PRIO = 460
 
