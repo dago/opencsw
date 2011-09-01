@@ -136,6 +136,8 @@ GARCOMPILER = GNU
 # There's a lot of failing checks. Probably a lot of porting work.
 SKIPTEST = 1
 
+ALTERNATIVES_PRIO = 460
+
 PACKAGES = CSWgcc4core
 SPKG_DESC_CSWgcc4core = GNU C compiler
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlib-gnu-awt-xlib12
@@ -153,7 +155,7 @@ RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibz1
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWpython
 
 ALTERNATIVES_CSWgcc4core += gcc4core
-ALTERNATIVE_gcc4core += $(bindir)/cpp gcc_core $(bindir)/cpp$(PROGRAM_SUFFIX) 460
+ALTERNATIVE_gcc4core += $(bindir)/cpp gcc_core $(bindir)/cpp$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 ALTERNATIVE_gcc4core += $(bindir)/gcc gcc_core $(bindir)/gcc$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4core += $(bindir)/gcov gcc_core $(bindir)/gcov$(PROGRAM_SUFFIX)
 
@@ -325,7 +327,7 @@ RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibz1
 
 ALTERNATIVES_CSWgcc4g++ += gcc4g++
-ALTERNATIVE_gcc4g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) 460
+ALTERNATIVE_gcc4g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 
 OBSOLETED_BY_CSWlibgcc-s1 += CSWgcc4corert
 RUNTIME_DEP_PKGS_CSWlibgij12 += CSWlibgcc-s1
@@ -351,7 +353,7 @@ OBSOLETED_BY_CSWgcc4gfortran  = CSWgcc4g95
 OBSOLETED_BY_CSWgcc4gfortran += CSWgcc4g95rt
 
 ALTERNATIVES_CSWgcc4gfortran += gfortran
-ALTERNATIVE_gfortran += $(bindir)/gfortran gcc_gfortran $(bindir)/gfortran$(PROGRAM_SUFFIX) 460
+ALTERNATIVE_gfortran += $(bindir)/gfortran gcc_gfortran $(bindir)/gfortran$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 
 PACKAGES += CSWgcc4java
 CATALOGNAME_CSWgcc4java       = gcc4java
@@ -367,6 +369,7 @@ RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibz1
 
 PKGFILES_CSWgcc4java  = $(foreach F,$(JAVA_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
 PKGFILES_CSWgcc4java += $(foreach F,$(JAVA_BINARIES),$(prefix)/gcc4/bin/$(F))
+PKGFILES_CSWgcc4java += $(bindir)/\w+-\w+-solaris[\d\.]+-gcj$(PROGRAM_SUFFIX)
 PKGFILES_CSWgcc4java += $(mandir)/.*/gcj.*
 PKGFILES_CSWgcc4java += $(mandir)/.*/gij.*
 PKGFILES_CSWgcc4java += $(mandir)/.*/jv.*
@@ -402,11 +405,15 @@ PKGFILES_CSWgcc4java += $(includedir)/.*java.*
 PKGFILES_CSWgcc4java += $(includedir)/.*ffi.h
 PKGFILES_CSWgcc4java += $(includedir)/.*org/.*
 
+# The following list could be probably expanded from $(JAVA_BINARIES)
 ALTERNATIVES_CSWgcc4java += gcc4java
-ALTERNATIVE_gcc4java += $(bindir)/gappletviewer gcc_gjava $(bindir)/gappletviewer$(PROGRAM_SUFFIX) 460
+ALTERNATIVE_gcc4java += $(bindir)/aot-compile gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
+ALTERNATIVE_gcc4java += $(bindir)/gappletviewer gcc_gjava $(bindir)/gappletviewer$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gc-analyze gcc_gjava $(bindir)/gc-analyze$(PROGRAM_SUFFIX)
+ALTERNATIVE_gcc4java += $(bindir)/gcj gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gcj-dbtool gcc_gjava $(bindir)/gcj-dbtool$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gcjh gcc_gjava $(bindir)/gcjh$(PROGRAM_SUFFIX)
+ALTERNATIVE_gcc4java += $(bindir)/gij gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gjar gcc_gjava $(bindir)/gjar$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gjarsigner gcc_gjava $(bindir)/gjarsigner$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gjavah gcc_gjava $(bindir)/gjavah$(PROGRAM_SUFFIX)
@@ -416,6 +423,7 @@ ALTERNATIVE_gcc4java += $(bindir)/gorbd gcc_gjava $(bindir)/gorbd$(PROGRAM_SUFFI
 ALTERNATIVE_gcc4java += $(bindir)/grmic gcc_gjava $(bindir)/grmic$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/grmid gcc_gjava $(bindir)/grmid$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/grmregistry gcc_gjava $(bindir)/grmregistry$(PROGRAM_SUFFIX)
+ALTERNATIVE_gcc4java += $(bindir)/grmregistry gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gserialver gcc_gjava $(bindir)/gserialver$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gtnameserv gcc_gjava $(bindir)/gtnameserv$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/jcf-dump gcc_gjava $(bindir)/jcf-dump$(PROGRAM_SUFFIX)
@@ -463,7 +471,8 @@ PACKAGES += $(PACKAGES_$(GARCH))
 CORE_BINARIES = cpp gcc gcov
 CXX_BINARIES = g\+\+ c\+\+
 FORTRAN_BINARIES = gfortran
-JAVA_BINARIES  = gappletviewer gc-analyze gcj-dbtool gcjh gjar gjarsigner gjavah
+JAVA_BINARIES  = gcj gij aot-compile grmiregistry
+JAVA_BINARIES += gappletviewer gc-analyze gcj-dbtool gcjh gjar gjarsigner gjavah
 JAVA_BINARIES += gkeytool gnative2ascii gorbd grmic grmid grmregistry
 JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 
