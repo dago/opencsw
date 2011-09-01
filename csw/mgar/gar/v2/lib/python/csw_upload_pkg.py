@@ -551,6 +551,10 @@ if __name__ == '__main__':
       dest="rest_url",
       default=BASE_URL,
       help="Base URL for REST, e.g. %s" % BASE_URL)
+  parser.add_option("--no-filename-check",
+      dest="filename_check",
+      default=True, action="store_false",
+      help="Don't check the filename set (e.g. for a missing architecture)")
   options, args = parser.parse_args()
   if options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -575,7 +579,10 @@ if __name__ == '__main__':
     print "There is a problem with the presented file list."
     for error_tag in error_tags:
       print "*", error_tag
-    sys.exit(1)
+    if options.filename_check:
+      sys.exit(1)
+    else:
+      print "Continuing anyway."
 
   username = os.environ["LOGNAME"]
   authfile = os.path.join('/etc/opt/csw/releases/auth', username)
