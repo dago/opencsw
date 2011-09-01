@@ -2,15 +2,15 @@
 # owner/group for device files? (root:sys)
 
 NAME = bind
-VERSION = 9.8.0
+VERSION = 9.8.1
 CATEGORIES = net
 
 # Enable these for Px-releases
-RELEASE = P4
-DISTVERSION = $(VERSION)-$(RELEASE)
-SPKG_VERSION = $(VERSION)$(RELEASE)
-DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
+#RELEASE = P4
+#DISTVERSION = $(VERSION)-$(RELEASE)
+#SPKG_VERSION = $(VERSION)$(RELEASE)
+#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+#WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
@@ -21,12 +21,12 @@ define BLURB
 endef
 
 # Enable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
-DISTFILES  = $(DISTNAME).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+#DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
-#DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
@@ -35,7 +35,7 @@ LICENSE = COPYRIGHT
 PACKAGES += CSWbind
 CATALOGNAME_CSWbind = bind
 SPKG_DESC_CSWbind = ISC BIND DNS main package
-RUNTIME_DEP_PKGS_CSWbind = CSWlibbind CSWbindutils CSWiconv CSWosslrt CSWzlib CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWbind = CSWlibbind CSWbindutils CSWosslrt CSWlibz1 CSWlibxml2-2 CSWlibiconv2
 
 PACKAGES += CSWbind-dev
 CATALOGNAME_CSWbind-dev = bind_dev
@@ -45,12 +45,12 @@ RUNTIME_DEP_PKGS_CSWbind-dev = CSWbind CSWlibbind
 PACKAGES += CSWlibbind
 CATALOGNAME_CSWlibbind = libbind
 SPKG_DESC_CSWlibbind = ISC BIND DNS library package
-RUNTIME_DEP_PKGS_CSWlibbind = CSWiconv CSWosslrt CSWzlib CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibbind = CSWlibiconv2 CSWosslrt CSWlibz1 CSWlibxml2-2
 
 PACKAGES += CSWbindutils
 CATALOGNAME_CSWbindutils = bind_utils
 SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
-RUNTIME_DEP_PKGS_CSWbindutils = CSWlibbind CSWiconv CSWosslrt CSWzlib CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWbindutils = CSWlibbind CSWlibiconv2 CSWosslrt CSWlibz1 CSWlibxml2-2
 
 PACKAGES += CSWbindchroot
 CATALOGNAME_CSWbindchroot = bind_chroot
@@ -91,9 +91,9 @@ USERGROUP   = /etc/opt/csw/pkg/CSWbind/cswusergroup
 SPKG_SOURCEURL = http://www.isc.org/software/bind
 
 CHECKPKG_OVERRIDES_CSWbind += surplus-dependency|CSWbindutils
-CHECKPKG_OVERRIDES_CSWlibbind += non-uniform-lib-versions-in-package|sonames=libbind9.so.80,libdns.so.81,libisc.so.81,libisccc.so.80,libisccfg.so.80,liblwres.so.80
 CHECKPKG_OVERRIDES_CSWbindutils += catalogname-does-not-match-pkgname|pkgname=CSWbindutils|catalogname=bind_utils|expected-catalogname=bindutils
 CHECKPKG_OVERRIDES_CSWbindchroot += catalogname-does-not-match-pkgname|pkgname=CSWbindchroot|catalogname=bind_chroot|expected-catalogname=bindchroot
+CHECKPKG_OVERRIDES_CSWlibbind += non-uniform-lib-versions-in-package|sonames=libbind9.so.80,libdns.so.81,libisc.so.83,libisccc.so.80,libisccfg.so.82,liblwres.so.80
 
 include gar/category.mk
 
