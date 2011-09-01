@@ -29,7 +29,6 @@ PACKAGES += CSWlibexplain30
 SPKG_DESC_CSWlibexplain30 = Explains unix system call errors, libexplain.so.30
 PKGFILES_CSWlibexplain30 += $(call pkgfiles_lib,libexplain.so.30)
 RUNTIME_DEP_PKGS_CSWlibexplain30 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibexplain30 += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSWlibexplain30 += CSWlibiconv2
 
 PACKAGES += CSWlibexplain-dev
