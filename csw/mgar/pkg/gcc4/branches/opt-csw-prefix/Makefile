@@ -37,17 +37,17 @@ VENDOR_URL = http://gcc.gnu.org
 ## Copyright File
 LICENSE = COPYING3
 
-# prefix = $(BUILD_PREFIX)/gcc4
+# prefix = $(BUILD_PREFIX)/$(PKG_VERSION_TOKEN)
 # libdir_install = $(BUILD_PREFIX)/lib
 # libdir = $(abspath $(BUILD_PREFIX)/lib/$(MM_LIBDIR))
 # CONFIGURE_ARGS += --prefix=$(prefix)
 # CONFIGURE_ARGS += --libdir=$(libdir)
-# CONFIGURE_ARGS += --exec-prefix=$(BUILD_PREFIX)/gcc4
+# CONFIGURE_ARGS += --exec-prefix=$(BUILD_PREFIX)/$(PKG_VERSION_TOKEN)
 
 ## build options
 # http://gcc.gnu.org/install/configure.html
 
-# Could be used to break out of the /opt/csw/gcc4 prefix
+# Could be used to break out of the /opt/csw/$(PKG_VERSION_TOKEN) prefix
 PROGRAM_SUFFIX = -$(BASE_VERSION)
 CONFIGURE_ARGS += --program-suffix=$(PROGRAM_SUFFIX)
 
@@ -160,10 +160,10 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibssp0
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibz1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWpython
 
-ALTERNATIVES_$(PKG_BASENAME)core += gcc4core
-ALTERNATIVE_gcc4core += $(bindir)/cpp gcc_core $(bindir)/cpp$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
-ALTERNATIVE_gcc4core += $(bindir)/gcc gcc_core $(bindir)/gcc$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4core += $(bindir)/gcov gcc_core $(bindir)/gcov$(PROGRAM_SUFFIX)
+ALTERNATIVES_$(PKG_BASENAME)core += $(PKG_VERSION_TOKEN)core
+ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/cpp gcc_core $(bindir)/cpp$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gcc gcc_core $(bindir)/gcc$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/gcov gcc_core $(bindir)/gcov$(PROGRAM_SUFFIX)
 
 # Because I can.
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += file-with-bad-content
@@ -218,7 +218,7 @@ CATALOGNAME_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) = lib_gnu_awt_xlib$(JAVA_LIB_
 PKGFILES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),lib-gnu-awt-xlib\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
 SPKG_DESC_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(DESCRIPTION), lib-gnu-awt-xlib.so.$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME) += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
-RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibstdc++$(LIBSTDCXX_VERSION)
 RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 
 PACKAGES += CSWlibffi4
@@ -293,12 +293,14 @@ SPKG_DESC_CSWlibssp0 += $(DESCRIPTION), libssp.so.0
 RUNTIME_DEP_PKGS_CSWlibssp0 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibssp0 += $(PKG_BASENAME)corert
 
-PACKAGES += CSWlibstdc++6
-CATALOGNAME_CSWlibstdc++6 = libstdc++6
-PKGFILES_CSWlibstdc++6 += $(call baseisadirs,$(libdir),libstdc\+\+\.so\.6(\.\d+)*)
-SPKG_DESC_CSWlibstdc++6 += $(DESCRIPTION), libstdc++.so.6
-RUNTIME_DEP_PKGS_CSWlibstdc++6 += CSWlibgcc-s1
-OBSOLETED_BY_CSWlibstdc++6 = $(PKG_BASENAME)g++rt
+LIBSTDCXX_VERSION = 6
+
+PACKAGES += CSWlibstdc++$(LIBSTDCXX_VERSION)
+CATALOGNAME_CSWlibstdc++$(LIBSTDCXX_VERSION) = libstdc++$(LIBSTDCXX_VERSION)
+PKGFILES_CSWlibstdc++$(LIBSTDCXX_VERSION) += $(call baseisadirs,$(libdir),libstdc\+\+\.so\.$(LIBSTDCXX_VERSION)(\.\d+)*)
+SPKG_DESC_CSWlibstdc++$(LIBSTDCXX_VERSION) += $(DESCRIPTION), libstdc++.so.$(LIBSTDCXX_VERSION)
+RUNTIME_DEP_PKGS_CSWlibstdc++$(LIBSTDCXX_VERSION) += CSWlibgcc-s1
+OBSOLETED_BY_CSWlibstdc++$(LIBSTDCXX_VERSION) = $(PKG_BASENAME)g++rt
 
 # The libquadmath.so.0 library is only build on Intel
 PACKAGES_i386 += CSWlibquadmath0
@@ -316,7 +318,7 @@ RUNTIME_DEP_PKGS_CSWlibgfortran3 += $(RUNTIME_DEP_PKGS_CSWlibgfortran3_$(GARCH))
 PACKAGES += $(PKG_BASENAME)g++
 SPKG_DESC_$(PKG_BASENAME)g++ = GNU C++ Compiler
 PKGFILES_$(PKG_BASENAME)g++  = $(foreach F,$(CXX_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
-PKGFILES_$(PKG_BASENAME)g++ += $(foreach F,$(CXX_BINARIES),$(prefix)/gcc4/bin/$(F))
+PKGFILES_$(PKG_BASENAME)g++ += $(foreach F,$(CXX_BINARIES),$(prefix)/$(PKG_VERSION_TOKEN)/bin/$(F))
 PKGFILES_$(PKG_BASENAME)g++ += $(bindir)/\w+-\w+-solaris[\d\.]+-[cg]\+\+$(PROGRAM_SUFFIX)
 PKGFILES_$(PKG_BASENAME)g++ += $(libexecdir)/.*cc1plus
 PKGFILES_$(PKG_BASENAME)g++ += $(libdir)/.*libstdc.*a
@@ -328,11 +330,11 @@ PKGFILES_$(PKG_BASENAME)g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/ostream.*
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpfr4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibstdc++6
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibstdc++$(LIBSTDCXX_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibz1
 
-ALTERNATIVES_$(PKG_BASENAME)g++ += gcc4g++
-ALTERNATIVE_gcc4g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
+ALTERNATIVES_$(PKG_BASENAME)g++ += $(PKG_VERSION_TOKEN)g++
+ALTERNATIVE_$(PKG_VERSION_TOKEN)g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 
 OBSOLETED_BY_CSWlibgcc-s1 += $(PKG_BASENAME)corert
 RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibgcc-s1
@@ -346,7 +348,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgfortran3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibz1
 PKGFILES_$(PKG_BASENAME)gfortran += $(foreach F,$(FORTRAN_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
-PKGFILES_$(PKG_BASENAME)gfortran += $(foreach F,$(FORTRAN_BINARIES),$(prefix)/gcc4/bin/$(F))
+PKGFILES_$(PKG_BASENAME)gfortran += $(foreach F,$(FORTRAN_BINARIES),$(prefix)/$(PKG_VERSION_TOKEN)/bin/$(F))
 PKGFILES_$(PKG_BASENAME)gfortran += $(bindir)/\w+-\w+-solaris[\d\.]+-gfortran$(PROGRAM_SUFFIX)
 PKGFILES_$(PKG_BASENAME)gfortran += $(libdir)/.*libgfortran.*a
 PKGFILES_$(PKG_BASENAME)gfortran += $(libexecdir)/.*f951
@@ -371,7 +373,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibz1
 
 PKGFILES_$(PKG_BASENAME)java  = $(foreach F,$(JAVA_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
-PKGFILES_$(PKG_BASENAME)java += $(foreach F,$(JAVA_BINARIES),$(prefix)/gcc4/bin/$(F))
+PKGFILES_$(PKG_BASENAME)java += $(foreach F,$(JAVA_BINARIES),$(prefix)/$(PKG_VERSION_TOKEN)/bin/$(F))
 PKGFILES_$(PKG_BASENAME)java += $(bindir)/\w+-\w+-solaris[\d\.]+-gcj$(PROGRAM_SUFFIX)
 PKGFILES_$(PKG_BASENAME)java += $(mandir)/.*/gcj.*
 PKGFILES_$(PKG_BASENAME)java += $(mandir)/.*/gij.*
@@ -409,29 +411,29 @@ PKGFILES_$(PKG_BASENAME)java += $(includedir)/.*ffi.h
 PKGFILES_$(PKG_BASENAME)java += $(includedir)/.*org/.*
 
 # The following list could be probably expanded from $(JAVA_BINARIES)
-ALTERNATIVES_$(PKG_BASENAME)java += gcc4java
-ALTERNATIVE_gcc4java += $(bindir)/aot-compile gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
-ALTERNATIVE_gcc4java += $(bindir)/gappletviewer gcc_gjava $(bindir)/gappletviewer$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gc-analyze gcc_gjava $(bindir)/gc-analyze$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gcj gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gcj-dbtool gcc_gjava $(bindir)/gcj-dbtool$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gcjh gcc_gjava $(bindir)/gcjh$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gij gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gjar gcc_gjava $(bindir)/gjar$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gjarsigner gcc_gjava $(bindir)/gjarsigner$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gjavah gcc_gjava $(bindir)/gjavah$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gkeytool gcc_gjava $(bindir)/gkeytool$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gnative2ascii gcc_gjava $(bindir)/$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gorbd gcc_gjava $(bindir)/gorbd$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/grmic gcc_gjava $(bindir)/grmic$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/grmid gcc_gjava $(bindir)/grmid$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/grmregistry gcc_gjava $(bindir)/grmregistry$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/grmregistry gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gserialver gcc_gjava $(bindir)/gserialver$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/gtnameserv gcc_gjava $(bindir)/gtnameserv$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/jcf-dump gcc_gjava $(bindir)/jcf-dump$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/jv-convert gcc_gjava $(bindir)/jv-convert$(PROGRAM_SUFFIX)
-ALTERNATIVE_gcc4java += $(bindir)/rebuild-gcj-db gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
+ALTERNATIVES_$(PKG_BASENAME)java += $(PKG_VERSION_TOKEN)java
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/aot-compile gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gappletviewer gcc_gjava $(bindir)/gappletviewer$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gc-analyze gcc_gjava $(bindir)/gc-analyze$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gcj gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gcj-dbtool gcc_gjava $(bindir)/gcj-dbtool$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gcjh gcc_gjava $(bindir)/gcjh$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gij gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gjar gcc_gjava $(bindir)/gjar$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gjarsigner gcc_gjava $(bindir)/gjarsigner$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gjavah gcc_gjava $(bindir)/gjavah$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gkeytool gcc_gjava $(bindir)/gkeytool$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gnative2ascii gcc_gjava $(bindir)/$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gorbd gcc_gjava $(bindir)/gorbd$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmic gcc_gjava $(bindir)/grmic$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmid gcc_gjava $(bindir)/grmid$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmregistry gcc_gjava $(bindir)/grmregistry$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/grmregistry gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gserialver gcc_gjava $(bindir)/gserialver$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/gtnameserv gcc_gjava $(bindir)/gtnameserv$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/jcf-dump gcc_gjava $(bindir)/jcf-dump$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/jv-convert gcc_gjava $(bindir)/jv-convert$(PROGRAM_SUFFIX)
+ALTERNATIVE_$(PKG_VERSION_TOKEN)java += $(bindir)/rebuild-gcj-db gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
 
 PACKAGES += $(PKG_BASENAME)objc
 SPKG_DESC_$(PKG_BASENAME)objc       = GNU Objective C Compiler
@@ -482,11 +484,11 @@ include files/scripts.mk
 include gar/category.mk
 
 post-install-modulated:
-	ginstall -d -m 755 $(DESTDIR)$(prefix)/gcc4/bin
+	ginstall -d -m 755 $(DESTDIR)$(prefix)/$(PKG_VERSION_TOKEN)/bin
 	for b in $(CORE_BINARIES) $(CXX_BINARIES) \
 		$(FORTRAN_BINARIES) $(JAVA_BINARIES); do \
 		gln -v -s ../../bin/$${b}$(PROGRAM_SUFFIX) \
-		$(DESTDIR)$(prefix)/gcc4/bin/$${b}; \
+		$(DESTDIR)$(prefix)/$(PKG_VERSION_TOKEN)/bin/$${b}; \
 	done
 	@$(MAKECOOKIE)
 
