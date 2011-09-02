@@ -28,7 +28,7 @@ PATCHFILES += 0003-fix-testsuite-shells.patch
 
 BUILD64 = 1
 # Tests only work with static build
-#TEST_SCRIPTS = 
+TEST_SCRIPTS = 
 
 NODIRPATHS += --exec_prefix
 NODIRPATHS += --sbindir
@@ -46,7 +46,8 @@ CONFIGURE_ARGS += --mandir=$(mandir)
 CONFIGURE_ARGS += --disable-debug
 CONFIGURE_ARGS += --enable-gpl
 CONFIGURE_ARGS += --enable-version3
-#CONFIGURE_ARGS += --enable-shared
+# Needs too builds one shared one static
+CONFIGURE_ARGS += --enable-shared
 
 #externel libs:
 # libfaac is not free
@@ -54,6 +55,7 @@ CONFIGURE_ARGS += --enable-version3
 CONFIGURE_ARGS += --enable-libfreetype
 CONFIGURE_ARGS += --enable-libmp3lame
 CONFIGURE_ARGS += --enable-libspeex
+# No libtheora
 #CONFIGURE_ARGS += --enable-libtheora
 CONFIGURE_ARGS += --enable-libvorbis
 
