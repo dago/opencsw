@@ -137,14 +137,19 @@ GARCOMPILER = GNU
 # There's a lot of failing checks. Probably a lot of porting work.
 SKIPTEST = 1
 
+# Used multiple times in package definitions
+JAVA_LIB_VERSION = 13
+
+ALTERNATIVES_PRIO = 460
+
 PACKAGES = CSWgcc4core
 SPKG_DESC_CSWgcc4core = GNU C compiler
-RUNTIME_DEP_PKGS_CSWgcc4core += CSWlib-gnu-awt-xlib12
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibffi4
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcj-tools12
-RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcj12
-RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgij12
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcj-tools$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgcj$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgomp1
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibmpc2
@@ -154,7 +159,7 @@ RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibz1
 RUNTIME_DEP_PKGS_CSWgcc4core += CSWpython
 
 ALTERNATIVES_CSWgcc4core += gcc4core
-ALTERNATIVE_gcc4core += $(bindir)/cpp gcc_core $(bindir)/cpp$(PROGRAM_SUFFIX) 460
+ALTERNATIVE_gcc4core += $(bindir)/cpp gcc_core $(bindir)/cpp$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 ALTERNATIVE_gcc4core += $(bindir)/gcc gcc_core $(bindir)/gcc$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4core += $(bindir)/gcov gcc_core $(bindir)/gcov$(PROGRAM_SUFFIX)
 
@@ -162,7 +167,7 @@ ALTERNATIVE_gcc4core += $(bindir)/gcov gcc_core $(bindir)/gcov$(PROGRAM_SUFFIX)
 CHECKPKG_OVERRIDES_CSWgcc4core += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4g++ += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4java += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWlibgcj12 += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWlibgcj$(JAVA_LIB_VERSION) += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|$(libexecdir)/gcc/i386-pc-solaris2.9/$(VERSION)/liblto_plugin.la
 CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|$(libexecdir)/gcc/sparc-sun-solaris2.9/$(VERSION)/liblto_plugin.la
 CHECKPKG_OVERRIDES_CSWgcc4core += discouraged-path-in-pkgmap|$(libexecdir)/gcc/sparc-sun-solaris2.10/$(VERSION)/liblto_plugin.la
@@ -170,7 +175,8 @@ CHECKPKG_OVERRIDES_CSWgcc4objc += file-with-bad-content
 CHECKPKG_OVERRIDES_CSWgcc4gfortran += file-with-bad-content
 # Due to complex regular expressions
 CHECKPKG_OVERRIDES_CSWgcc4java += file-collision|$(includedir)/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
-CHECKPKG_OVERRIDES_CSWgcc4g++ += file-collision|$(includedir)/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
+CHECKPKG_OVERRIDES_CSWgcc4java += file-collision|/opt/csw/include/c++/4.7.0/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
+CHECKPKG_OVERRIDES_CSWgcc4g++ += file-collision|/opt/csw/include/c++/4.7.0/sun/awt/CausedFocusEvent.h|CSWgcc4g++|CSWgcc4java
 
 # Only man pages, so not a big problem. Alternatives could be used, but it
 # requires rebuilding libffi.
@@ -206,13 +212,13 @@ EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/libiberty\.a
 
 # Catch-all package
 
-PACKAGES += CSWlib-gnu-awt-xlib12
-CATALOGNAME_CSWlib-gnu-awt-xlib12 = lib_gnu_awt_xlib12
-PKGFILES_CSWlib-gnu-awt-xlib12 += $(call baseisadirs,$(libdir),lib-gnu-awt-xlib\.so\.12(\.\d+)*)
-SPKG_DESC_CSWlib-gnu-awt-xlib12 += $(DESCRIPTION), lib-gnu-awt-xlib.so.12
-RUNTIME_DEP_PKGS_CSWgcc4 += CSWlib-gnu-awt-xlib12
-RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib12 += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib12 += CSWlibgcc-s1
+PACKAGES += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
+CATALOGNAME_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) = lib_gnu_awt_xlib$(JAVA_LIB_VERSION)
+PKGFILES_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),lib-gnu-awt-xlib\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
+SPKG_DESC_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += $(DESCRIPTION), lib-gnu-awt-xlib.so.$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4 += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 
 PACKAGES += CSWlibffi4
 CATALOGNAME_CSWlibffi4 = libffi4
@@ -230,21 +236,21 @@ RUNTIME_DEP_PKGS_CSWgcc4 += CSWlibgcc-s1
 # http://buildfarm.opencsw.org/pkgdb/srv4/1991387f2cb9f545b2a1b254b50638ef/
 OBSOLETED_BY_CSWlibgcc-s1 = CSWgcc3corert
 
-PACKAGES += CSWlibgcj-tools12
-CATALOGNAME_CSWlibgcj-tools12 = libgcj_tools12
-PKGFILES_CSWlibgcj-tools12 += $(call baseisadirs,$(libdir),libgcj-tools\.so\.12(\.\d+)*)
-SPKG_DESC_CSWlibgcj-tools12 += $(DESCRIPTION), libgcj-tools.so.12
-RUNTIME_DEP_PKGS_CSWgcc4 += CSWlibgcj-tools12
-RUNTIME_DEP_PKGS_CSWlibgcj-tools12 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibgcj-tools12 += CSWlibgcj12
-RUNTIME_DEP_PKGS_CSWlibgcj-tools12 += CSWlibz1
+PACKAGES += CSWlibgcj-tools$(JAVA_LIB_VERSION)
+CATALOGNAME_CSWlibgcj-tools$(JAVA_LIB_VERSION) = libgcj_tools$(JAVA_LIB_VERSION)
+PKGFILES_CSWlibgcj-tools$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),libgcj-tools\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
+SPKG_DESC_CSWlibgcj-tools$(JAVA_LIB_VERSION) += $(DESCRIPTION), libgcj-tools.so.$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4 += CSWlibgcj-tools$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION) += CSWlibgcj$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION) += CSWlibz1
 
-PACKAGES += CSWlibgcj12
-CATALOGNAME_CSWlibgcj12 = libgcj12
-PKGFILES_CSWlibgcj12 += $(call baseisadirs,$(libdir),libgcj\.so\.12(\.\d+)*)
-SPKG_DESC_CSWlibgcj12 += $(DESCRIPTION), libgcj.so.12
-RUNTIME_DEP_PKGS_CSWlibgcj12 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibgcj12 += CSWlibz1
+PACKAGES += CSWlibgcj$(JAVA_LIB_VERSION)
+CATALOGNAME_CSWlibgcj$(JAVA_LIB_VERSION) = libgcj$(JAVA_LIB_VERSION)
+PKGFILES_CSWlibgcj$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),libgcj\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
+SPKG_DESC_CSWlibgcj$(JAVA_LIB_VERSION) += $(DESCRIPTION), libgcj.so.$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlibgcj$(JAVA_LIB_VERSION) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgcj$(JAVA_LIB_VERSION) += CSWlibz1
 
 PACKAGES += CSWlibgfortran3
 CATALOGNAME_CSWlibgfortran3 = libgfortran3
@@ -254,11 +260,11 @@ RUNTIME_DEP_PKGS_CSWgcc4 += CSWlibgfortran3
 RUNTIME_DEP_PKGS_CSWlibgfortran3 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibgfortran3 = CSWgcc4gfortranrt
 
-PACKAGES += CSWlibgij12
-CATALOGNAME_CSWlibgij12 = libgij12
-PKGFILES_CSWlibgij12 += $(call baseisadirs,$(libdir),libgij\.so\.12(\.\d+)*)
-SPKG_DESC_CSWlibgij12 += $(DESCRIPTION), libgij.so.12
-RUNTIME_DEP_PKGS_CSWlibgij12 += CSWlibz1
+PACKAGES += CSWlibgij$(JAVA_LIB_VERSION)
+CATALOGNAME_CSWlibgij$(JAVA_LIB_VERSION) = libgij$(JAVA_LIB_VERSION)
+PKGFILES_CSWlibgij$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),libgij\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
+SPKG_DESC_CSWlibgij$(JAVA_LIB_VERSION) += $(DESCRIPTION), libgij.so.$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibz1
 
 PACKAGES += CSWlibgomp1
 CATALOGNAME_CSWlibgomp1 = libgomp1
@@ -267,17 +273,17 @@ SPKG_DESC_CSWlibgomp1 += $(DESCRIPTION), libgomp.so.1
 RUNTIME_DEP_PKGS_CSWlibgomp1 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibgomp1 += CSWgcc4corert
 
-PACKAGES += CSWlibobjc3
-CATALOGNAME_CSWlibobjc3 = libobjc3
-PKGFILES_CSWlibobjc3 += $(call baseisadirs,$(libdir),libobjc\.so\.3(\.\d+)*)
-SPKG_DESC_CSWlibobjc3 += $(DESCRIPTION), libobjc.so.3
-RUNTIME_DEP_PKGS_CSWlibobjc3 += CSWlibgcc-s1
+PACKAGES += CSWlibobjc4
+CATALOGNAME_CSWlibobjc4 = libobjc4
+PKGFILES_CSWlibobjc4 += $(call baseisadirs,$(libdir),libobjc\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibobjc4 += $(DESCRIPTION), libobjc.so.4
+RUNTIME_DEP_PKGS_CSWlibobjc4 += CSWlibgcc-s1
 
-PACKAGES += CSWlibobjc-gc3
-CATALOGNAME_CSWlibobjc-gc3 = libobjc_gc3
-PKGFILES_CSWlibobjc-gc3 += $(call baseisadirs,$(libdir),libobjc_gc\.so\.3(\.\d+)*)
-SPKG_DESC_CSWlibobjc-gc3 += $(DESCRIPTION), libobjc_gc.so.3
-RUNTIME_DEP_PKGS_CSWlibobjc-gc3 += CSWlibgcc-s1
+PACKAGES += CSWlibobjc-gc4
+CATALOGNAME_CSWlibobjc-gc4 = libobjc_gc4
+PKGFILES_CSWlibobjc-gc4 += $(call baseisadirs,$(libdir),libobjc_gc\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibobjc-gc4 += $(DESCRIPTION), libobjc_gc.so.4
+RUNTIME_DEP_PKGS_CSWlibobjc-gc4 += CSWlibgcc-s1
 
 PACKAGES += CSWlibssp0
 CATALOGNAME_CSWlibssp0 = libssp0
@@ -309,7 +315,8 @@ RUNTIME_DEP_PKGS_CSWlibgfortran3 += $(RUNTIME_DEP_PKGS_CSWlibgfortran3_$(GARCH))
 PACKAGES += CSWgcc4g++
 CATALOGNAME_CSWgcc4g++ = gcc4g++
 SPKG_DESC_CSWgcc4g++ = GNU C++ Compiler
-PKGFILES_CSWgcc4g++  = $(bindir)/[cg]\+\+$(PROGRAM_SUFFIX)
+PKGFILES_CSWgcc4g++  = $(foreach F,$(CXX_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
+PKGFILES_CSWgcc4g++ += $(foreach F,$(CXX_BINARIES),$(prefix)/gcc4/bin/$(F))
 PKGFILES_CSWgcc4g++ += $(bindir)/\w+-\w+-solaris[\d\.]+-[cg]\+\+$(PROGRAM_SUFFIX)
 PKGFILES_CSWgcc4g++ += $(libexecdir)/.*cc1plus
 PKGFILES_CSWgcc4g++ += $(libdir)/.*libstdc.*a
@@ -325,11 +332,11 @@ RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWgcc4g++ += CSWlibz1
 
 ALTERNATIVES_CSWgcc4g++ += gcc4g++
-ALTERNATIVE_gcc4g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) 460
+ALTERNATIVE_gcc4g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 
 OBSOLETED_BY_CSWlibgcc-s1 += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWlibgij12 += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibgij12 += CSWlibgcj12
+RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibgcj$(JAVA_LIB_VERSION)
 
 PACKAGES += CSWgcc4gfortran
 CATALOGNAME_CSWgcc4gfortran   = gcc4gfortran
@@ -339,7 +346,8 @@ RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibgfortran3
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4gfortran += CSWlibz1
-PKGFILES_CSWgcc4gfortran  = $(bindir)/gfortran$(PROGRAM_SUFFIX)
+PKGFILES_CSWgcc4gfortran += $(foreach F,$(FORTRAN_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
+PKGFILES_CSWgcc4gfortran += $(foreach F,$(FORTRAN_BINARIES),$(prefix)/gcc4/bin/$(F))
 PKGFILES_CSWgcc4gfortran += $(bindir)/\w+-\w+-solaris[\d\.]+-gfortran$(PROGRAM_SUFFIX)
 PKGFILES_CSWgcc4gfortran += $(libdir)/.*libgfortran.*a
 PKGFILES_CSWgcc4gfortran += $(libexecdir)/.*f951
@@ -350,7 +358,7 @@ OBSOLETED_BY_CSWgcc4gfortran  = CSWgcc4g95
 OBSOLETED_BY_CSWgcc4gfortran += CSWgcc4g95rt
 
 ALTERNATIVES_CSWgcc4gfortran += gfortran
-ALTERNATIVE_gfortran += $(bindir)/gfortran gcc_gfortran $(bindir)/gfortran$(PROGRAM_SUFFIX) 460
+ALTERNATIVE_gfortran += $(bindir)/gfortran gcc_gfortran $(bindir)/gfortran$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
 
 PACKAGES += CSWgcc4java
 CATALOGNAME_CSWgcc4java       = gcc4java
@@ -358,31 +366,15 @@ SPKG_DESC_CSWgcc4java       = GNU Java Compiler
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibmpfr4
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcj-tools12
-RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcj12
-RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgij12
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcj-tools$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgcj$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4java += CSWlibz1
 
-PKGFILES_CSWgcc4java  = $(bindir)/.*gcj.*$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*jv-scan$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*jv-convert$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*jcf-dump$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*grmi.*$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*grepjar$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gjnih$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gij$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*fastjar$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gjar.*$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gjavah$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gorbd$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*addr2name.awk$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gappletviewer$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gkeytool$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gserialver$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gtnameserv$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gnative2ascii$(PROGRAM_SUFFIX)
-PKGFILES_CSWgcc4java += $(bindir)/.*gc-analyze$(PROGRAM_SUFFIX)
+PKGFILES_CSWgcc4java  = $(foreach F,$(JAVA_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
+PKGFILES_CSWgcc4java += $(foreach F,$(JAVA_BINARIES),$(prefix)/gcc4/bin/$(F))
+PKGFILES_CSWgcc4java += $(bindir)/\w+-\w+-solaris[\d\.]+-gcj$(PROGRAM_SUFFIX)
 PKGFILES_CSWgcc4java += $(mandir)/.*/gcj.*
 PKGFILES_CSWgcc4java += $(mandir)/.*/gij.*
 PKGFILES_CSWgcc4java += $(mandir)/.*/jv.*
@@ -418,11 +410,15 @@ PKGFILES_CSWgcc4java += $(includedir)/.*java.*
 PKGFILES_CSWgcc4java += $(includedir)/.*ffi.h
 PKGFILES_CSWgcc4java += $(includedir)/.*org/.*
 
+# The following list could be probably expanded from $(JAVA_BINARIES)
 ALTERNATIVES_CSWgcc4java += gcc4java
-ALTERNATIVE_gcc4java += $(bindir)/gappletviewer gcc_gjava $(bindir)/gappletviewer$(PROGRAM_SUFFIX) 460
+ALTERNATIVE_gcc4java += $(bindir)/aot-compile gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
+ALTERNATIVE_gcc4java += $(bindir)/gappletviewer gcc_gjava $(bindir)/gappletviewer$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gc-analyze gcc_gjava $(bindir)/gc-analyze$(PROGRAM_SUFFIX)
+ALTERNATIVE_gcc4java += $(bindir)/gcj gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gcj-dbtool gcc_gjava $(bindir)/gcj-dbtool$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gcjh gcc_gjava $(bindir)/gcjh$(PROGRAM_SUFFIX)
+ALTERNATIVE_gcc4java += $(bindir)/gij gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gjar gcc_gjava $(bindir)/gjar$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gjarsigner gcc_gjava $(bindir)/gjarsigner$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gjavah gcc_gjava $(bindir)/gjavah$(PROGRAM_SUFFIX)
@@ -432,6 +428,7 @@ ALTERNATIVE_gcc4java += $(bindir)/gorbd gcc_gjava $(bindir)/gorbd$(PROGRAM_SUFFI
 ALTERNATIVE_gcc4java += $(bindir)/grmic gcc_gjava $(bindir)/grmic$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/grmid gcc_gjava $(bindir)/grmid$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/grmregistry gcc_gjava $(bindir)/grmregistry$(PROGRAM_SUFFIX)
+ALTERNATIVE_gcc4java += $(bindir)/grmregistry gcc_gjava $(bindir)/rebuild-gcj-db$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gserialver gcc_gjava $(bindir)/gserialver$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/gtnameserv gcc_gjava $(bindir)/gtnameserv$(PROGRAM_SUFFIX)
 ALTERNATIVE_gcc4java += $(bindir)/jcf-dump gcc_gjava $(bindir)/jcf-dump$(PROGRAM_SUFFIX)
@@ -450,9 +447,17 @@ PKGFILES_CSWgcc4objc += $(call baseisadirs,$(libdir),libobjc_gc.so)
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibmpc2
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibmpfr4
-RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibobjc-gc3
-RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibobjc3
+RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibobjc-gc4
+RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibobjc4
 RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibz1
+
+PACKAGES += CSWlibgo0
+CATALOGNAME_CSWlibgo0 = libgo0
+PKGFILES_CSWlibgo0 += $(call baseisadirs,$(libdir),libgo\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibgo0 += $(DESCRIPTION), libgo.so.0
+RUNTIME_DEP_PKGS_CSWgcc4core += CSWlibgo0
+RUNTIME_DEP_PKGS_CSWlibgo0 += CSWlibgcc-s1
+CHECKPKG_OVERRIDES_CSWlibgo0 += file-with-bad-content
 
 # libiconv deps cropped up relatively late in the porting process. Perhaps
 # they apply to all arch/OS combinations.
@@ -476,9 +481,25 @@ RUNTIME_DEP_PKGS_CSWgcc4objc += CSWlibiconv2
 # RUNTIME_DEP_PKGS_CSWgcc4java += $(RUNTIME_DEP_PKGS_CSWgcc4java_$(GARCH)_$(GAROSREL))
 
 PACKAGES += $(PACKAGES_$(GARCH))
+CORE_BINARIES = cpp gcc gcov
+CXX_BINARIES = g\+\+ c\+\+
+FORTRAN_BINARIES = gfortran
+JAVA_BINARIES  = gcj gij aot-compile grmiregistry
+JAVA_BINARIES += gappletviewer gc-analyze gcj-dbtool gcjh gjar gjarsigner gjavah
+JAVA_BINARIES += gkeytool gnative2ascii gorbd grmic grmid grmregistry
+JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
 
 include files/scripts.mk
 include gar/category.mk
+
+post-install-modulated:
+	ginstall -d -m 755 $(DESTDIR)$(prefix)/gcc4/bin
+	for b in $(CORE_BINARIES) $(CXX_BINARIES) \
+		$(FORTRAN_BINARIES) $(JAVA_BINARIES); do \
+		gln -v -s ../../bin/$${b}$(PROGRAM_SUFFIX) \
+		$(DESTDIR)$(prefix)/gcc4/bin/$${b}; \
+	done
+	@$(MAKECOOKIE)
 
 # We need GNU find as find
 PATH := /opt/csw/gnu:$(PATH)
