@@ -34,17 +34,17 @@ CATALOGNAME_CSWlibstdc++5 = libstdc++5
 PKGFILES_CSWlibstdc++5 += $(call baseisadirs,$(libdir),libstdc\+\+\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibstdc++5 += GCC shared library, libstdc++.so.5
 OBSOLETED_BY_CSWlibstdc++5  += CSWgcc3g++rt
-RUNTIME_DEP_PKGS_CSWlibstdc++5 += CSWgcc3corert
+RUNTIME_DEP_PKGS_CSWlibstdc++5 += CSWlibgcc-s1
 # This is necessary when uploading the gcc3libs + gcc4 combo, because the
 # updated gcc3corert stub built from gcc4 sources does not include any shared
 # libraries.
-CHECKPKG_OVERRIDES_CSWlibstdc++5 += surplus-dependency|CSWgcc3corert
+CHECKPKG_OVERRIDES_CSWlibstdc++5 += surplus-dependency|CSWlibgcc-s1
 
 PACKAGES += CSWlibstdc++6
 SPKG_DESC_CSWlibstdc++6 = GCC shared library libstdc++.so.6
 PKGFILES_CSWlibstdc++6 = $(call baseisadirs,$(libdir),libstdc\+\+\.so\.6(\.\d+)*)
 OBSOLETED_BY_CSWlibstdc++6 += CSWgcc3g++rt
-RUNTIME_DEP_PKGS_CSWlibstdc++6 += CSWgcc3corert
+RUNTIME_DEP_PKGS_CSWlibstdc++6 += CSWlibgcc-s1
 
 # It's a legacy shared library which we will not rebuild.
 CHECKPKG_OVERRIDES_CSWlibstdc++5 += soname-not-found|libgcc_s.so.1|is|needed|by|opt/csw/lib/sparcv9/libstdc++.so.5.0.5
