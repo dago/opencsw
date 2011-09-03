@@ -99,9 +99,15 @@ CHECKPKG_OVERRIDES_CSWlibgmp-dev += file-with-bad-content|/usr/local|root/opt/cs
 # http://gmplib.org/list-archives/gmp-discuss/2009-January/003518.html
 # EXTRA_CXXFLAGS = -D__GMP_NO_ATTRIBUTE_CONST_PURE
 
+# GMP needs to be able to propagate exceptions to PPL
+EXTRA_CXXFLAGS = -fexceptions
+
 # We cannot compile libgmp with Solaris Studio, because we need to build the
 # C++ bindings, which will be used by gcc later on.
 GARCOMPILER = GNU
+
+# It's necessary to propagate exceptions from GMP to PPL
+EXTRA_CPPFLAGS = -fexceptions
 
 include gar/category.mk
 
@@ -109,11 +115,13 @@ include gar/category.mk
 # http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
 # http://opencsw.wikidot.com/porting-faq#toc6
 ifeq ($(ISA),sparcv8)
-OPT_FLAGS_GCC = -O0
+OPT_FLAGS_GCC =
 endif
 ifeq ($(ISA),i386)
-OPT_FLAGS_GCC = -O0
+OPT_FLAGS_GCC =
 endif
+ARCHFLAGS_GCC4_sparcv8 += -O0
+ARCHFLAGS_GCC4_i386 += -O0
 
 post-merge:
 	ginstall $(FILEDIR)/gmp.h $(PKGROOT)$(includedir)/gmp.h
