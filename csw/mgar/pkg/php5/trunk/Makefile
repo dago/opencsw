@@ -53,11 +53,11 @@ PATCHFILES_isa-sparcv8-sapi-ap2 += 0002-Force-the-PDO-pgsql-checks-to-use-32-bit
 
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
-BUILD_DEP_PKGS += CSWlibxml2-dev CSWexpat CSWzlib CSWcurldevel CSWjpeg
-BUILD_DEP_PKGS += CSWpng CSWt1lib CSWxpm CSWlibgdbm-dev CSWlibgmp
+BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibexpat1 CSWlibz-dev CSWcurldevel CSWjpeg
+BUILD_DEP_PKGS += CSWpng CSWt1lib CSWxpm CSWlibgdbm-dev CSWlibgmp10
 BUILD_DEP_PKGS += CSWggettext-dev CSWossldevel CSWlibgd2 CSWbdb42devel
-BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWiconv CSWimap-devel
-BUILD_DEP_PKGS += CSWoldapdevel CSWkrb5libdev CSWsasl CSWlibltdl7
+BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWlibiconv-dev CSWimap-devel
+BUILD_DEP_PKGS += CSWoldapdevel CSWlibkrb5-dev CSWsasl CSWlibltdl7
 BUILD_DEP_PKGS += CSWlibmcrypt CSWfreetds CSWmysql5devel CSWunixodbc
 BUILD_DEP_PKGS += CSWlibpq CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp
 BUILD_DEP_PKGS += CSWsqlite3devel CSWaspell CSWhtmltidy CSWpostgresql
@@ -84,7 +84,7 @@ endef
 PACKAGES = CSWphp5
 CATALOGNAME_CSWphp5        = php5
 SPKG_DESC_CSWphp5          = A High-Level Scripting Language
-RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2-2 CSWiconv CSWexpat CSWzlib
+RUNTIME_DEP_PKGS_CSWphp5 += CSWlibxml2-2 CSWlibiconv2 CSWlibexpat1 CSWlibz1
 INCOMPATIBLE_PKGS_CSWphp5 = CSWphp5mimemagic CSWphp5mhash CSWphp5dbase
 INCOMPATIBLE_PKGS_CSWphp5 += CSWphp5ncurses CSWmodphp5
 # embeded 'magic' information to detect file types...odd, but...
@@ -129,46 +129,46 @@ CHECKPKG_OVERRIDES_CSWphp5-dev += file-with-bad-content|/usr/local|root/opt/csw/
 PACKAGES += CSWap2-modphp5
 CATALOGNAME_CSWap2-modphp5 = ap2_modphp5
 SPKG_DESC_CSWap2-modphp5 = The apache 2.2.x php5 module
-RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2-2 CSWiconv
-RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWexpat CSWzlib
+RUNTIME_DEP_PKGS_CSWap2-modphp5  = CSWphp5 CSWapache2 CSWlibxml2-2 CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWap2-modphp5 += CSWlibexpat1 CSWlibz1
 OBSOLETED_BY_CSWap2-modphp5 = CSWap2modphp5
 PKGFILES_CSWap2-modphp5 += $(prefix)/apache2.*
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWap2-modphp5 += file-with-bad-content|/usr/local|root/opt/csw/apache2/libexec/libphp5.so
 
 $(eval $(call php5_subpackage,bcmath))
-$(eval $(call php5_subpackage,bz2,CSWbzip2))
+$(eval $(call php5_subpackage,bz2,CSWlibbz2-1-0))
 $(eval $(call php5_subpackage,calendar))
 $(eval $(call php5_subpackage,ctype))
-$(eval $(call php5_subpackage,curl,CSWlibcurl4 CSWlibidn11 CSWosslrt CSWzlib))
+$(eval $(call php5_subpackage,curl,CSWlibcurl4 CSWlibidn11 CSWosslrt CSWlibz1))
 $(eval $(call php5_subpackage,dba,CSWlibgdbm3 CSWbdb42))
-$(eval $(call php5_subpackage,dom,CSWiconv CSWlibxml2-2 CSWzlib))
+$(eval $(call php5_subpackage,dom,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
 PKGFILES_CSWphp5-dom += .*include/php/ext/dom.*
 $(eval $(call php5_subpackage,exif))
 $(eval $(call php5_subpackage,ftp,CSWosslrt))
-$(eval $(call php5_subpackage,gd,CSWftype2 CSWlibgd2 CSWjpeg CSWpng CSWt1lib CSWxpm CSWzlib))
+$(eval $(call php5_subpackage,gd,CSWftype2 CSWlibgd2 CSWjpeg CSWlibpng12-0 CSWt1lib CSWxpm CSWlibz1))
 PKGFILES_CSWphp5-gd += .*/include/php/ext/gd.*
 $(eval $(call php5_subpackage,gettext,CSWlibintl8))
-$(eval $(call php5_subpackage,gmp,CSWlibgmp))
+$(eval $(call php5_subpackage,gmp,CSWlibgmp10))
 $(eval $(call php5_subpackage,hash))
 PKGFILES_CSWphp5-hash += .*/include/php/ext/hash.*
-$(eval $(call php5_subpackage,iconv,CSWiconv))
+$(eval $(call php5_subpackage,iconv,CSWlibiconv2))
 PKGFILES_CSWphp5-iconv += .*/include/php/ext/iconv.*
-$(eval $(call php5_subpackage,imap,CSWimaprt CSWkrb5lib CSWosslrt))
+$(eval $(call php5_subpackage,imap,CSWimaprt CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWlibkrb5-3 CSWosslrt))
 $(eval $(call php5_subpackage,json))
 $(eval $(call php5_subpackage,ldap,CSWoldaprt CSWsasl))
 $(eval $(call php5_subpackage,mbstring))
 PKGFILES_CSWphp5-mbstring += .*/include/php/ext/mbstring.*
 $(eval $(call php5_subpackage,mcrypt,CSWlibmcrypt CSWlibltdl7))
 $(eval $(call php5_subpackage,mssql,CSWfreetds))
-$(eval $(call php5_subpackage,mysql,CSWmysql5rt))
-$(eval $(call php5_subpackage,mysqli,CSWmysql5rt CSWzlib))
+$(eval $(call php5_subpackage,mysql,CSWlibmysqlclient15))
+$(eval $(call php5_subpackage,mysqli,CSWlibmysqlclient15 CSWlibz1))
 $(eval $(call php5_subpackage,odbc,CSWunixodbc))
-$(eval $(call php5_subpackage,openssl,CSWosslrt CSWkrb5lib))
+$(eval $(call php5_subpackage,openssl,CSWosslrt CSWlibgssapi-krb5-2 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibcom-err3))
 $(eval $(call php5_subpackage,pcntl))
 $(eval $(call php5_subpackage,pdo))
 PKGFILES_CSWphp5-pdo += .*/include/php/ext/pdo.*
-$(eval $(call php5_subpackage,pdomysql,CSWmysql5rt CSWzlib CSWphp5-pdo))
+$(eval $(call php5_subpackage,pdomysql,CSWlibmysqlclient15 CSWlibz1 CSWphp5-pdo))
 PKGFILES_CSWphp5-pdomysql += .*/lib/php/extensions/.*/pdo_mysql.so
 PKGFILES_CSWphp5-pdomysql += .*extensions/pdo_mysql
 CHECKPKG_OVERRIDES_CSWphp5-pdomysql += surplus-dependency|CSWphp5-pdo
@@ -196,7 +196,7 @@ $(eval $(call php5_subpackage,session,CSWlibmm))
 PKGFILES_CSWphp5-session += .*/include/php/ext/session.*
 $(eval $(call php5_subpackage,shmop))
 $(eval $(call php5_subpackage,snmp,CSWnetsnmp))
-$(eval $(call php5_subpackage,soap,CSWiconv CSWlibxml2-2 CSWzlib))
+$(eval $(call php5_subpackage,soap,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
 $(eval $(call php5_subpackage,sockets))
 $(eval $(call php5_subpackage,sqlite,CSWsqlite))
 PKGFILES_CSWphp5-sqlite += .*/include/php/ext/sqlite.*
@@ -206,11 +206,11 @@ $(eval $(call php5_subpackage,sysvshm))
 $(eval $(call php5_subpackage,tidy,CSWhtmltidy))
 $(eval $(call php5_subpackage,tokenizer))
 $(eval $(call php5_subpackage,wddx))
-$(eval $(call php5_subpackage,xmlreader,CSWiconv CSWlibxml2-2 CSWzlib))
-$(eval $(call php5_subpackage,xmlrpc,CSWiconv CSWexpat))
-$(eval $(call php5_subpackage,xmlwriter,CSWiconv CSWlibxml2-2 CSWzlib))
-$(eval $(call php5_subpackage,xsl,CSWiconv CSWlibxml2-2 CSWlibxslt CSWzlib))
-$(eval $(call php5_subpackage,zip,CSWzlib))
+$(eval $(call php5_subpackage,xmlreader,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
+$(eval $(call php5_subpackage,xmlrpc,CSWlibiconv2 CSWlibexpat1))
+$(eval $(call php5_subpackage,xmlwriter,CSWlibiconv2 CSWlibxml2-2 CSWlibz1))
+$(eval $(call php5_subpackage,xsl,CSWlibiconv2 CSWlibxml2-2 CSWlibxslt1 CSWlibexslt0 CSWlibz1))
+$(eval $(call php5_subpackage,zip,CSWlibz1))
 
 EXTRA_CFLAGS = -I$(prefix)/include/ncursesw
 EXTRA_LIB = /opt/csw/postgresql/lib
