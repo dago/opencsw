@@ -44,6 +44,11 @@ LICENSE = COPYING3
 # CONFIGURE_ARGS += --libdir=$(libdir)
 # CONFIGURE_ARGS += --exec-prefix=$(BUILD_PREFIX)/$(PKG_VERSION_TOKEN)
 
+BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibgmp-dev
+BUILD_DEP_PKGS += CSWlibmpc-dev
+BUILD_DEP_PKGS += CSWlibmpfr-dev
+
 ## build options
 # http://gcc.gnu.org/install/configure.html
 
@@ -69,12 +74,10 @@ CONFIGURE_ARGS += --enable-java-awt=xlib
 CONFIGURE_ARGS += --enable-libssp
 CONFIGURE_ARGS += --enable-objc-gc
 CONFIGURE_ARGS += --enable-threads=posix 
-CONFIGURE_ARGS += --enable-stage1-languages=c
 # We'll build ada later. It requires the PPL library.
 # CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
 CONFIGURE_ARGS += --enable-languages=c,c++,fortran,java,objc
-CONFIGURE_ARGS += --enable-bootstrap
-CONFIGURE_ARGS += --with-system-zlib
+CONFIGURE_ARGS += --with-system-zlib=/opt/csw
 
 # there could be some abstractions in gar.conf.mk, but at the moment there
 # aren't so let's specify architectures by hand.
@@ -109,13 +112,13 @@ EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
 # the compiler binaries are 32-bit only, but since the compiler can generate
 # 32-bit and 64-bit binaries, the libraries have to be built for both
 # architectures.
-ifeq ($(MODULATION),isa-i386)
+# ifeq ($(MODULATION),isa-i386)
 CFLAGS =
 CXXFLAGS =
 FFLAGS =
 FCFLAGS =
 OPTFLAGS =
-endif
+# endif
 
 # Might be necessary, but CFLAGS_FOR_TARGET seem to be enough for now.
 # BOOT_CFLAGS = $(CFLAGS_FOR_TARGET)
@@ -137,7 +140,7 @@ EXTRA_CONFIGURE_EXPORTS += CXXFLAGS_FOR_TARGET
 GARCOMPILER = GNU
 
 # There's a lot of failing checks. Probably a lot of porting work.
-SKIPTEST = 1
+SKIPTEST ?= 1
 
 # Used multiple times in package definitions
 JAVA_LIB_VERSION = 12
