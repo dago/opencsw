@@ -98,7 +98,6 @@ RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWapache2-utils += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWbdb48
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-utils += CSWosslrt
