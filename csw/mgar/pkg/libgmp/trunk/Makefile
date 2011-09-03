@@ -109,19 +109,25 @@ GARCOMPILER = GNU
 # It's necessary to propagate exceptions from GMP to PPL
 EXTRA_CPPFLAGS = -fexceptions
 
+# Building for i386 or sparcv8 with optimization causes trouble.
+# http://wiki.opencsw.org/porting-faq#toc6
+# See also below.
+# Here's an idea how to build it, but unfortunately, building for sparcv8plus
+# fails too.
+# ISA_DEFAULT_i386 = pentium_pro
+# ISA_DEFAULT_sparc = sparcv8plus
+
 include gar/category.mk
 
-# Undefined symbol __sync_fetch_and_add_4
-# http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
-# http://opencsw.wikidot.com/porting-faq#toc6
+## Undefined symbol __sync_fetch_and_add_4
+## http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
+## http://opencsw.wikidot.com/porting-faq#toc6
 ifeq ($(ISA),sparcv8)
-OPT_FLAGS_GCC =
+OPT_FLAGS_GCC = -O0
 endif
 ifeq ($(ISA),i386)
-OPT_FLAGS_GCC =
+OPT_FLAGS_GCC = -O0
 endif
-ARCHFLAGS_GCC4_sparcv8 += -O0
-ARCHFLAGS_GCC4_i386 += -O0
 
 post-merge:
 	ginstall $(FILEDIR)/gmp.h $(PKGROOT)$(includedir)/gmp.h
