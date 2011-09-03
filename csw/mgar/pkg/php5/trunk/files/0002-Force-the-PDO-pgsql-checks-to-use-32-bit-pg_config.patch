@@ -1,6 +1,6 @@
-From f90347108abfe42140e3a87c5a5e6c364bc34625 Mon Sep 17 00:00:00 2001
+From 03f791ec352a08721208ff22aa1b70d4ccfd8b7a Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
-Date: Sat, 23 Apr 2011 23:52:16 +0200
+Date: Sat, 3 Sep 2011 04:22:44 +0200
 Subject: [PATCH] Force the PDO pgsql checks to use 32-bit pg_config
 
 On sparc, we have 32 and 64-bit pg_config binaries.  On i386, we only
@@ -16,12 +16,12 @@ Signed-off-by: Ben Walton <bwalton@opencsw.org>
  1 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/configure b/configure
-index 503369a..753536e 100755
+index f3772a5..5aa29c9 100755
 --- a/configure
 +++ b/configure
-@@ -73005,8 +73005,8 @@ if test "$PHP_PDO_PGSQL" != "no"; then
+@@ -73177,8 +73177,8 @@ if test "$PHP_PDO_PGSQL" != "no"; then
    echo $ac_n "checking for pg_config""... $ac_c" 1>&6
- echo "configure:73044: checking for pg_config" >&5
+ echo "configure:73216: checking for pg_config" >&5
    for i in $PHP_PDO_PGSQL $PHP_PDO_PGSQL/bin /usr/local/pgsql/bin /usr/local/bin /usr/bin ""; do
 -    if test -x $i/pg_config; then
 -      PG_CONFIG="$i/pg_config"
@@ -31,5 +31,5 @@ index 503369a..753536e 100755
      fi
    done
 -- 
-1.7.3.2
+1.7.6
 

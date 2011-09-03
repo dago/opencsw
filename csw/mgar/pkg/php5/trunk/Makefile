@@ -48,8 +48,8 @@ DISTFILES += httpd-php5.conf
 PATCHFILES += 0001-Strip-usr-ucblib-references.patch
 # technically this is only required in the ap2 modulation where we build the
 # postgres stuff, but protect the cgi modulation too
-PATCHFILES_isa-sparcv8-sapi-cgi += 0003-Force-the-PDO-pgsql-checks-to-use-32-bit-pg_config.patch
-PATCHFILES_isa-sparcv8-sapi-ap2 += 0003-Force-the-PDO-pgsql-checks-to-use-32-bit-pg_config.patch
+PATCHFILES_isa-sparcv8-sapi-cgi += 0002-Force-the-PDO-pgsql-checks-to-use-32-bit-pg_config.patch
+PATCHFILES_isa-sparcv8-sapi-ap2 += 0002-Force-the-PDO-pgsql-checks-to-use-32-bit-pg_config.patch
 
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
