@@ -2,9 +2,9 @@ NAME = munin
 VERSION = 1.4.6
 CATEGORIES = apps
 
-SPKG_DESC_CSWmuninmaster = master component of the graphical network and system monitoring munin
-SPKG_DESC_CSWmuninnode = node component of the graphical network and system monitoring munin
-SPKG_DESC_CSWmunincommon = common files for munin node and master
+SPKG_DESC_CSWmuninmaster = Master component of the graphical network and system monitoring munin
+SPKG_DESC_CSWmuninnode = Node component of the graphical network and system monitoring munin
+SPKG_DESC_CSWmunincommon = Common files for munin node and master
 
 define BLURB
   Munin the monitoring tool surveys all your computers and remembers what it saw. It presents all the information in graphs through a web interface.
@@ -46,29 +46,53 @@ ARCHALL_CSWmuninmaster = 1
 ARCHALL_CSWmuninnode = 1
 ARCHALL_CSWmunincommon = 1
 
-RUNTIME_DEP_PKGS_CSWmuincommon = CSWperl
+RUNTIME_DEP_PKGS_CSWmunincommon = CSWperl
 
 RUNTIME_DEP_PKGS_CSWmuninmaster = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpmlog4perl CSWmunincommon
 RUNTIME_DEP_PKGS_CSWmuninmaster += CSWpm-rrdtool CSWapache2 
-RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils CSWcas-cptemplates CSWcas-crontab CSWcas-postmsg
+#RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils
 
 RUNTIME_DEP_PKGS_CSWmuninnode = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunincommon
-RUNTIME_DEP_PKGS_CSWmuninnode += CSWcswclassutils CSWcas-cptemplates
-
-RUNTIME_DEP_PKGS_CSWmuninnode += CSWperl CSWpmnetssleay
+#RUNTIME_DEP_PKGS_CSWmuninnode += CSWcswclassutils 
+RUNTIME_DEP_PKGS_CSWmuninnode += CSWpmnetssleay
 
 SPKG_CLASSES_CSWmuninmaster = none cswusergroup ugfiles cswcrontab cswcptemplates cswpostmsg
 SPKG_CLASSES_CSWmuninnode = none cswusergroup ugfiles cswcptemplates cswinitsmf 
 SPKG_CLASSES_CSWmunincommon = none
 
-CONFIGURE_ARGS = $(DIRPATHS)
 
+#
+# checkpkg overrides
+#
+# the following files contain "/usr/locail" and "/usr/share" - these strings appear in perldoc or as fallback path values
+# so it's uncritical to leave them unpatched
+#
+
+
+#
+# checkpkg overrides
+#
+# yes, we need these dependencies
+#
+
+CHECKPKG_OVERRIDES_CSWmuninmaster += surplus-dependency|CSWmunincommon
+CHECKPKG_OVERRIDES_CSWmuninmaster += surplus-dependency|CSWapache2
+CHECKPKG_OVERRIDES_CSWmuninmaster += surplus-dependency|CSWpmhtmltmpl
+CHECKPKG_OVERRIDES_CSWmuninmaster += surplus-dependency|CSWpmlog4perl
+CHECKPKG_OVERRIDES_CSWmuninmaster += surplus-dependency|CSWpm-rrdtool
+CHECKPKG_OVERRIDES_CSWmuninmaster += surplus-dependency|CSWpmprmsvldt
+
+CHECKPKG_OVERRIDES_CSWmuninnode += surplus-dependency|CSWmunincommon
+CHECKPKG_OVERRIDES_CSWmuninnode += surplus-dependency|CSWpmnetsnmp
+CHECKPKG_OVERRIDES_CSWmuninnode += surplus-dependency|CSWpmnetssleay
+CHECKPKG_OVERRIDES_CSWmuninnode += surplus-dependency|CSWpmnetserver
+
+
+CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 SKIPTEST = 1
-
-ENABLE_CHECK = 0
 
 include gar/category.mk
 
