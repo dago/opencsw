@@ -39,7 +39,6 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-visibility
 
 BUILD64 = 1
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 include gar/category.mk
 
