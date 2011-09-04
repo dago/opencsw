@@ -25,7 +25,9 @@ INSTALL_SCRIPTS = custom
 
 CHECKPKG_OVERRIDES_CSWcswpki += surplus-dependency|CSWgnupg
 
-PROTOTYPE_FILTER = awk '$$$$3 ~ /\/var\/opt\/csw\/pki/ { $$$$4 = 0700 }; { print }'
+PROTOTYPE_MODIFIERS = var_pki_perms
+PROTOTYPE_FILES_var_pki_perms = /var/opt/csw/.*
+PROTOTYPE_PERMS_var_pki_perms = 0700
 
 include gar/category.mk
 
