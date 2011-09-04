@@ -14,19 +14,6 @@ endef
 MASTER_SITES =  http://www.open-mpi.org/software/hwloc/v1.2/downloads/
 DISTFILES  = $(DISTNAME).tar.gz
 
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-
-# Checkpkg suggests adding the following lines to the GAR recipe:
-# # This is a summary; see above for details.
-# # (If CSWhwloc-dev doesn't exist yet)
 PACKAGES += CSWhwloc-dev
 CATALOGNAME_CSWhwloc-dev = hwloc_dev
 SPKG_DESC_CSWhwloc += $(DESCRIPTION), development files
@@ -39,6 +26,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-visibility
 
 BUILD64 = 1
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 include gar/category.mk
 
