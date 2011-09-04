@@ -6,7 +6,7 @@ NAME = logrotate
 VERSION = 3.8.1
 CATEGORIES = apps
 
-DESCRIPTION = rotates, compresses, and mails system logs
+DESCRIPTION = Rotates, compresses, and mails system logs
 
 define BLURB
    The logrotate utility is designed to simplify the administration of log files on a system which generates a lot of log files.
@@ -19,10 +19,12 @@ MASTER_SITES = https://fedorahosted.org/releases/l/o/logrotate/
 
 PATCHFILES += 003-test.patch
 PATCHFILES += 005-gzippath.patch
+PATCHFILES += 006-mbrtowc_empty.patch
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += 003-test.patch
 DISTFILES += 005-gzippath.patch
+DISTFILES += 006-mbrtowc_empty.patch
 
 RUNTIME_DEP_PKGS = CSWlibpopt
 BUILD_DEP_PKGS   = $(RUNTIME_DEP_PKGS)
@@ -30,19 +32,16 @@ BUILD_DEP_PKGS   = $(RUNTIME_DEP_PKGS)
 CONFIGURE_SCRIPTS =
 TEST_TARGET = test
 
-# "optimize"
-NOISALIST = 1
-
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-# Don't ask, it doesn't work otherwise.
-export EXTRA_CFLAGS = -I$(includedir)
-export EXTRA_LDFLAGS = -L$(libdir)
+include gar/category.mk
+
+export EXTRA_CFLAGS := $(CFLAGS) $(CPPFLAGS)
+export EXTRA_LDFLAGS := $(LDFLAGS)
 export PREFIX = $(DESTDIR)
 export BASEDIR = $(prefix)
 export MANDIR = $(mandir)
 
-include gar/category.mk
 
 # This is a hack, as I have no idea what's going wrong.
 pre-test-modulated:
