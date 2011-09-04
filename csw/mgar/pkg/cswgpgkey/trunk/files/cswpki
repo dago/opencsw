@@ -61,10 +61,16 @@ else
 	fi
 
 	if [ "${install}" = "yes" ]; then
+	    echo
 	    echo "Importing the key used for: ${friendly_name}"
+	    echo
 	    gpg --homedir="${pki_db:-/var/opt/csw/pki/}" --import "$key"
+	    echo
+	    echo
 	else
+	    echo
 	    echo "Skipping the import of the key used for: ${friendly_name}"
+	    echo
 	fi
     done
 fi
