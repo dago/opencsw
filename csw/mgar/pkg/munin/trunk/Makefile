@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = munin
 VERSION = 1.4.6
 CATEGORIES = apps
@@ -30,13 +32,6 @@ PATCHFILES += munin-htaccess.in.patch
 PATCHFILES += munin-graph.in.patch # match some paths to /{etc|var}/opt/csw/munin 
 PATCHFILES += perl.patch # shebang correctly set
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
 PACKAGES = CSWmuninmaster CSWmuninnode CSWmunincommon
 CATALOGNAME_CSWmuninmaster = munin_master
 CATALOGNAME_CSWmuninnode = munin_node
@@ -50,10 +45,8 @@ RUNTIME_DEP_PKGS_CSWmunincommon = CSWperl
 
 RUNTIME_DEP_PKGS_CSWmuninmaster = CSWperl CSWpmhtmltmpl CSWpmprmsvldt CSWpmlog4perl CSWmunincommon
 RUNTIME_DEP_PKGS_CSWmuninmaster += CSWpm-rrdtool CSWapache2 
-#RUNTIME_DEP_PKGS_CSWmuninmaster += CSWcswclassutils
 
 RUNTIME_DEP_PKGS_CSWmuninnode = CSWperl CSWpmnetsnmp CSWpmnetserver CSWmunincommon
-#RUNTIME_DEP_PKGS_CSWmuninnode += CSWcswclassutils 
 RUNTIME_DEP_PKGS_CSWmuninnode += CSWpmnetssleay
 
 SPKG_CLASSES_CSWmuninmaster = none cswusergroup ugfiles cswcrontab cswcptemplates cswpostmsg
@@ -89,18 +82,12 @@ CHECKPKG_OVERRIDES_CSWmuninnode += surplus-dependency|CSWpmnetserver
 
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_SCRIPTS = custom
-BUILD_SCRIPTS = custom
+CONFIGURE_SCRIPTS =
+BUILD_SCRIPTS =
 INSTALL_SCRIPTS = custom
 SKIPTEST = 1
 
 include gar/category.mk
-
-configure-custom:
-	@$(MAKECOOKIE)
-
-build-custom:
-	@$(MAKECOOKIE)
 
 install-custom:
 	@#
@@ -119,7 +106,8 @@ install-custom:
 	@mv $(DESTDIR)/etc/opt/csw/munin/munin-node.conf $(DESTDIR)/opt/csw/etc/templates/CSWmuninnode/etc/opt/csw/munin/
 	@mv $(DESTDIR)/etc/opt/csw/munin/munin.conf $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/
 	@ginstall -m 644 $(FILEDIR)/apache-munin.conf.CSW $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/apache/apache-munin.conf
-	@ginstall -m 644 $(FILEDIR)/apache-munin-cgi.conf.CSW $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/apache/apache-munin-cgi.conf
+	@ginstall -m 644 $(FILEDIR)/apache-munin-cgi.conf.CSW \
+		$(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin/apache/apache-munin-cgi.conf
 	@mv $(DESTDIR)/var/opt/csw/munin/www/.htaccess $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/var/opt/csw/munin/www/
 	@#
 	@mv $(DESTDIR)/etc/opt/csw/munin/templates $(DESTDIR)/opt/csw/etc/templates/CSWmuninmaster/etc/opt/csw/munin
