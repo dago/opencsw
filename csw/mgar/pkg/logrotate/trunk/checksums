@@ -1,5 +1,4 @@
 bd2e20d8dc644291b08f9215397d28a5  logrotate-3.8.1.tar.gz
 02f36862d4e190a7eb920bd816ca4927  003-test.patch
 d6232a06412a2302a582abdc51607518  005-gzippath.patch
-27ac9259ade93a47f71779d396c6a096  006-mbrtowc_empty.patch
-6089a6cd64ea15350814e2d343bb350e  006-mbrtowc_empty.patch
+4b1205a3056b38d175a5a7cb3ddd27df  006-mbrtowc_empty.patch
