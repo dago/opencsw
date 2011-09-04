@@ -12,6 +12,7 @@ MASTER_SITES = http://www.opencsw.org/
 DISTFILES  = CSWcswpki.postinstall gpl-2.0.txt
 DISTFILES += cswpki
 DISTFILES += csw_catalog_verification.asc
+DISTFILES += csw_catalog_signing_2011-09.asc
 
 RUNTIME_DEP_PKGS = CSWgnupg
 
