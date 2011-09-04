@@ -1,0 +1,26 @@
+From cdce483f0fdaef371470f1d8ca68a960c9e702b5 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 22 Aug 2011 16:15:59 +0200
+Subject: [PATCH] Skip test /strfuncs/strtod as Solaris does not support hex
+ floats as reported in #652560
+
+---
+ glib/tests/strfuncs.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/glib/tests/strfuncs.c b/glib/tests/strfuncs.c
+index 66768e4..4b54681 100644
+--- a/glib/tests/strfuncs.c
++++ b/glib/tests/strfuncs.c
+@@ -1265,7 +1265,7 @@ main (int   argc,
+   g_test_add_func ("/strfuncs/strsplit", test_strsplit);
+   g_test_add_func ("/strfuncs/strsplit-set", test_strsplit_set);
+   g_test_add_func ("/strfuncs/strv-length", test_strv_length);
+-  g_test_add_func ("/strfuncs/strtod", test_strtod);
++  /* g_test_add_func ("/strfuncs/strtod", test_strtod); */
+   g_test_add_func ("/strfuncs/strtoull-strtoll", test_strtoll);
+   g_test_add_func ("/strfuncs/bounds-check", test_bounds);
+   g_test_add_func ("/strfuncs/strip-context", test_strip_context);
+-- 
+1.7.6
+
