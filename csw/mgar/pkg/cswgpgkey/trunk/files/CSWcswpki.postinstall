@@ -14,8 +14,8 @@ else
     echo
     echo
     echo
-    echo "pki_auto was not set to 'yes' in csw.conf so the OpenCSW"
-    echo "GPG keys are not being automatically managed."
+    echo "pki_auto was not set to 'yes' in /etc/opt/csw/csw.conf"
+    echo "so the OpenCSW GPG keys are not being automatically managed."
     echo
     echo "See /opt/csw/bin/cswpki --help for more information on"
     echo "handling this manually."
