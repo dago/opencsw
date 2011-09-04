@@ -16,6 +16,10 @@ else
     echo
     echo "pki_auto was not set to 'yes' in /etc/opt/csw/csw.conf"
     echo "so the OpenCSW GPG keys are not being automatically managed."
+    echo "eg: echo 'pki_auto=yes' >> /etc/opt/csw/csw.conf"
+    echo
+    echo "If this variable had been set, we would have run:"
+    echo "/opt/csw/bin/cswpki --import --force"
     echo
     echo "See /opt/csw/bin/cswpki --help for more information on"
     echo "handling this manually."
