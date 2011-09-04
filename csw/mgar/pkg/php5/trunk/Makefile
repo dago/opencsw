@@ -288,7 +288,7 @@ CONFIGURE_ARGS += --with-mcrypt=shared,$(prefix)
 CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
 CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
-CONFIGURE_ARGS += --with-mysql=shared,$(prefix)/
+CONFIGURE_ARGS += --with-mysql=shared,$(prefix)
 CONFIGURE_ARGS += --with-mysqli=shared,$(prefix)/mysql5/bin/$(ISA_DEFAULT)/mysql_config
 CONFIGURE_ARGS += --with-ndbm
 CONFIGURE_ARGS += --with-openssl=shared,$(prefix)
