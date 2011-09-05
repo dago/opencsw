@@ -1,9 +1,10 @@
+# $Id: Makefile 13420 2011-02-20 21:04:03Z bdwalton $
+# TODO (release-critical prefixed with !, non release-critical with *)
+#
 NAME = svnmailer
-VERSION = 1.1.0
-GARSVNREV  = r1373
-GARRELEASE = dev-$(GARSVNREV)
-GARTYPE = v1
-CATEGORIES = utils
+VERSION = 1.0.8
+GARTYPE = v2
+CATEGORIES = python
 
 DESCRIPTION = A tool to post subversion repository information.
 define BLURB
@@ -11,23 +12,14 @@ define BLURB
   mail, news or XML (to a CIA tracker).
 endef
 
-DISTNAME = $(NAME)-$(VERSION)-$(GARRELEASE)
-WORKSRC = $(WORKDIR)/$(DISTNAME)
-
-CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS = $(WORKSRC)/setup.py
-TEST_SCRIPTS = 
-INSTALL_SCRIPTS = $(WORKSRC)/setup.py
-
-INSTALL_ARGS += --root=$(DESTDIR)
-
 MASTER_SITES = http://storage.perlig.de/$(NAME)/
-DISTFILES  = $(DISTNAME).tar.bz2
-DISTFILES += $(call admfiles,CSWsvnmailer,depend)
+DISTFILES = $(DISTNAME).tar.bz2
 
-# Fix doc install paths
-PATCHFILES += install-doc.diff
+ARCHALL = 1
+
+# No test suite/scripts available, cf. README
+# A (still incomplete) test suite is available as an extra package
+# (svnmailer_test). This test package needs to be downloaded seperatly.
+TEST_SCRIPTS = 
 
 include gar/category.mk
-
-SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(GARSVNREV)
