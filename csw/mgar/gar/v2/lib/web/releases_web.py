@@ -29,7 +29,7 @@ urls = (
 # render = web.template.render('templates/')
 render = web.template.render('/home/maciej/src/pkgdb_web/templates/')
 
-OPENCSW_ROOT = "/home/mirror/opencsw-future"
+OPENCSW_ROOT = "/home/mirror/opencsw-official"
 ALLPKGS_DIR = os.path.join(OPENCSW_ROOT, "allpkgs")
 
 def ConnectToDatabase():
