@@ -92,6 +92,7 @@ RUNTIME_DEP_PKGS_CSWapache2       += CSWoldaprt CSWosslrt CSWlibz1
 RUNTIME_DEP_PKGS_CSWapache2       += CSWbdb48 CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibaprutil1-0 CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWapache2       += CSWapache2c CSWperl CSWapache2-utils
+# Note: This is required because apxs uses apr-1-config
 RUNTIME_DEP_PKGS_CSWapache2	  += CSWlibapr-dev
 RUNTIME_DEP_PKGS_CSWapache2-manual = CSWapache2
 RUNTIME_DEP_PKGS_CSWapache2-dev  = CSWapache2
@@ -114,6 +115,7 @@ CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWosslutils
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapache2c
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWapache2-utils
+CHECKPKG_OVERRIDES_CSWapache2 += surplus-dependency|CSWlibapr-dev
 CHECKPKG_OVERRIDES_CSWapache2-utils += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWapache2-utils += missing-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWap2prefork += surplus-dependency|CSWapache2
