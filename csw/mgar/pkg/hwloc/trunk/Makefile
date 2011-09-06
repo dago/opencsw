@@ -22,11 +22,14 @@ PKGFILES_CSWhwloc-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWhwloc += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWhwloc += CSWlibxml2-2
 
+#BUILDDEPS = CSWautoconf
+
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-visibility
+#CONFIGURE_ARGS += --disable-visibility
 
 BUILD64 = 1
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+GARFLAVOR = DBG
 
 include gar/category.mk
 
