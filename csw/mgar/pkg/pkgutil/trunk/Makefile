@@ -1,5 +1,5 @@
 NAME = pkgutil
-VERSION = 2.5b2
+VERSION = 2.5
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
@@ -51,19 +51,28 @@ RUNTIME_DEP_PKGS_CSWpkgutilplus   = CSWcommon CSWperl CSWgnupg CSWpkgutil
 RUNTIME_DEP_PKGS_CSWpkgutilplus  += CSWcswpkgloghooks CSWpython CSWpmstringapprox
 #RUNTIME_DEP_PKGS_CSWpkgutilplus += CSWpmwwwcurl
 
+# Harmless since /usr/local is just one (valid) search path used
 CHECKPKG_OVERRIDES_CSWpkgutil += file-with-bad-content|/usr/local|root/opt/csw/bin/pkgutil
+
+# This is a read-only template file
 CHECKPKG_OVERRIDES_CSWpkgutil += discouraged-path-in-pkgmap|/opt/csw/var/pkgutil
 CHECKPKG_OVERRIDES_CSWpkgutil += discouraged-path-in-pkgmap|/opt/csw/var/pkgutil/admin.CSW
+
+# Yes, this archall package does contain binaries of both architectures, this is intentional
 CHECKPKG_OVERRIDES_CSWpkgutil += archall-with-arch-paths|/opt/csw/libexec/pkgutil/wget-i386
 CHECKPKG_OVERRIDES_CSWpkgutil += archall-with-binaries|opt/csw/libexec/pkgutil/wget-i386
 CHECKPKG_OVERRIDES_CSWpkgutil += archall-with-binaries|opt/csw/libexec/pkgutil/wget-sparc
 CHECKPKG_OVERRIDES_CSWpkgutil += binary-wrong-architecture|file=opt/csw/libexec/pkgutil/wget-i386|pkginfo-says=all|actual-binary=i386
 CHECKPKG_OVERRIDES_CSWpkgutil += binary-wrong-architecture|file=opt/csw/libexec/pkgutil/wget-sparc|pkginfo-says=all|actual-binary=sparc
+
+# Needed for the provided scripts to work
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWcswpkgloghooks
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWgnupg
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpmstringapprox
 CHECKPKG_OVERRIDES_CSWpkgutilplus += surplus-dependency|CSWpkgutil
+
+# This is slightly suspicious, may take a look later
 CHECKPKG_OVERRIDES_CSWpkgutilplus += file-with-bad-content|/export/home|root/opt/csw/bin/cswcatalog
 
 PKGFILES_CSWpkgutilplus  = .*bldcat.*
