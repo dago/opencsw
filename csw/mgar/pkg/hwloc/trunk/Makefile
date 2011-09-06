@@ -5,7 +5,7 @@ VERSION = 1.2.1
 GARTYPE = v2
 CATEGORIES = devel
 
-DESCRIPTION = Hwloc provides an abstraction of the hierarchical topology of modern architectures
+DESCRIPTION = Hwloc provides abstraction of the hierarchical topology of modern architectures
 define BLURB
   The Portable Hardware Locality (hwloc) software package provides a portable abstraction (across OS, versions, architectures, ...) of the hierarchical topology of modern architectures, including NUMA memory nodes, sockets, shared caches, cores and simultaneous multithreading. It also gathers various system attributes such as cache and memory information. It primarily aims at helping applications with gathering information about modern computing hardware so as to exploit it accordingly and efficiently.
 endef
