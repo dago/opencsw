@@ -25,6 +25,8 @@ endef
 DISTFILES    = $(DISTNAME).tar.bz2
 MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 
+LIBOBJC = 3
+
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
@@ -76,8 +78,15 @@ CONFIGURE_ARGS += --enable-objc-gc
 CONFIGURE_ARGS += --enable-threads=posix 
 # We'll build ada later. It requires the PPL library.
 # CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
-CONFIGURE_ARGS += --enable-languages=c,c++,fortran,java,objc
+# Only c and c++ for testing
+CONFIGURE_ARGS += --enable-languages=c,c++
 CONFIGURE_ARGS += --with-system-zlib=/opt/csw
+
+# It doesn't work, it doesn't set the RPATH on libstdc++.so.6.
+# CONFIGURE_ARGS += --with-stage1-ldflags="-R$(libdir)"
+# CONFIGURE_ARGS += --with-boot-ldflags="-R$(libdir)"
+# CONFIG_SITE = --with-boot-ldflags="-R$(libdir)"
+EXTRA_EXPORTS += LD_OPTIONS
 
 # there could be some abstractions in gar.conf.mk, but at the moment there
 # aren't so let's specify architectures by hand.
@@ -106,6 +115,16 @@ CFLAGS_FOR_TARGET = $(CFLAGS_FOR_TARGET_$(GARCH))
 CXXFLAGS_FOR_TARGET = $(CXXFLAGS_FOR_TARGET_$(GARCH))
 EXTRA_EXPORTS += CFLAGS_FOR_TARGET
 EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
+
+# This branch is to facilitate efforts to fix the problem where libstdc++.so.6
+# doesn't have the RPATH set.
+# BOOT_LDFLAGS = -L$(libdir) -R$(libdir)
+# EXTRA_EXPORTS += BOOT_LDFLAGS
+# EXTRA_EXPORTS += LD_OPTIONS
+
+CONFIGURE_EXPORTS = CC $(EXTRA_EXPORTS)
+BUILD_EXPORTS =
+INSTALL_EXPORTS =
 
 # The theory goes that the CFLAGS and others cause problems with the multilib
 # builds where 64-bit binaries are built.  This is triggered by the gcc build;
@@ -277,17 +296,18 @@ SPKG_DESC_CSWlibgomp1 += $(DESCRIPTION), libgomp.so.1
 RUNTIME_DEP_PKGS_CSWlibgomp1 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibgomp1 += $(PKG_BASENAME)corert
 
-PACKAGES += CSWlibobjc3
-CATALOGNAME_CSWlibobjc3 = libobjc3
-PKGFILES_CSWlibobjc3 += $(call baseisadirs,$(libdir),libobjc\.so\.3(\.\d+)*)
-SPKG_DESC_CSWlibobjc3 += $(DESCRIPTION), libobjc.so.3
-RUNTIME_DEP_PKGS_CSWlibobjc3 += CSWlibgcc-s1
 
-PACKAGES += CSWlibobjc-gc3
-CATALOGNAME_CSWlibobjc-gc3 = libobjc_gc3
-PKGFILES_CSWlibobjc-gc3 += $(call baseisadirs,$(libdir),libobjc_gc\.so\.3(\.\d+)*)
-SPKG_DESC_CSWlibobjc-gc3 += $(DESCRIPTION), libobjc_gc.so.3
-RUNTIME_DEP_PKGS_CSWlibobjc-gc3 += CSWlibgcc-s1
+PACKAGES += CSWlibobjc$(LIBOBJC)
+CATALOGNAME_CSWlibobjc$(LIBOBJC) = libobjc$(LIBOBJC)
+PKGFILES_CSWlibobjc$(LIBOBJC) += $(call baseisadirs,$(libdir),libobjc\.so\.$(LIBOBJC)(\.\d+)*)
+SPKG_DESC_CSWlibobjc$(LIBOBJC) += $(DESCRIPTION), libobjc.so.$(LIBOBJC)
+RUNTIME_DEP_PKGS_CSWlibobjc$(LIBOBJC) += CSWlibgcc-s1
+
+PACKAGES += CSWlibobjc-gc$(LIBOBJC)
+CATALOGNAME_CSWlibobjc-gc$(LIBOBJC) = libobjc_gc$(LIBOBJC)
+PKGFILES_CSWlibobjc-gc$(LIBOBJC) += $(call baseisadirs,$(libdir),libobjc_gc\.so\.$(LIBOBJC)(\.\d+)*)
+SPKG_DESC_CSWlibobjc-gc$(LIBOBJC) += $(DESCRIPTION), libobjc_gc.so.$(LIBOBJC)
+RUNTIME_DEP_PKGS_CSWlibobjc-gc$(LIBOBJC) += CSWlibgcc-s1
 
 PACKAGES += CSWlibssp0
 CATALOGNAME_CSWlibssp0 = libssp0
@@ -482,6 +502,10 @@ JAVA_BINARIES  = gcj gij aot-compile grmiregistry
 JAVA_BINARIES += gappletviewer gc-analyze gcj-dbtool gcjh gjar gjarsigner gjavah
 JAVA_BINARIES += gkeytool gnative2ascii gorbd grmic grmid grmregistry
 JAVA_BINARIES += gserialver gtnameserv jcf-dump jv-convert rebuild-gcj-db
+
+CONFIGURE_ENV = CC=$(CC)
+BUILD_ENV =
+INSTALL_ENV =
 
 include files/scripts.mk
 include gar/category.mk
