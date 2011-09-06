@@ -1,5 +1,4 @@
 # $Id$
-# TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = hwloc
 VERSION = 1.2.1
@@ -16,8 +15,8 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 PACKAGES += CSWhwloc-dev
 CATALOGNAME_CSWhwloc-dev = hwloc_dev
-SPKG_DESC_CSWhwloc += $(DESCRIPTION), development files
-PKGFILES_CSWhwloc-dev += $(PKGFILES_DEVEL)
+SPKG_DESC_CSWhwloc-dev  += $(DESCRIPTION), development files
+PKGFILES_CSWhwloc-dev    = $(PKGFILES_DEVEL)
 
 RUNTIME_DEP_PKGS_CSWhwloc += CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWhwloc += CSWlibxml2-2
