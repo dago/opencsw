@@ -268,7 +268,12 @@ def main():
       msg['From'] = from_address
       msg['To'] = email
       s = smtplib.SMTP('localhost')
-      s.sendmail(from_address, [email], msg.as_string())
+      try:
+        s.sendmail(from_address, [email], msg.as_string())
+      except smtplib.SMTPRecipientsRefused, e:
+        logging.warning(
+            "Sending email to %s failed, recipient refused.",
+            repr(email))
       s.quit()
       logging.debug("E-mail sent.")
     else:
