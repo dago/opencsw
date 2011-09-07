@@ -13,19 +13,23 @@ endef
 MASTER_SITES =  http://www.open-mpi.org/software/hwloc/v1.2/downloads/
 DISTFILES  = $(DISTNAME).tar.gz
 
-PACKAGES += CSWhwloc
+PACKAGES  = CSWhwloc
 PACKAGES += CSWhwloc-dev
+PACKAGES += CSWhwloc-doc
 PACKAGES += CSWlibhwloc3
+
 CATALOGNAME_CSWhwloc-dev   = hwloc_dev
+CATALOGNAME_CSWhwloc-doc   = hwloc_doc
 CATALOGNAME_CSWlibhwloc3   = libhwloc3
+
 SPKG_DESC_CSWhwloc        += $(DESCRIPTION)
 SPKG_DESC_CSWhwloc-dev    += $(DESCRIPTION), development files
+SPKG_DESC_CSWhwloc-doc    += $(DESCRIPTION), documentation
 SPKG_DESC_CSWlibhwloc3    += $(DESCRIPTION), runtime
 
-PKGFILES_CSWhwloc          = $(bindir)/.*
-PKGFILES_CSWhwloc         += $(mandir)/man1
 PKGFILES_CSWlibhwloc3      = $(call pkgfiles_lib,libhwloc.so.3)
 PKGFILES_CSWhwloc-dev      = $(PKGFILES_DEVEL)
+PKGFILES_CSWhwloc-doc      = $(PKGFILES_DOC)
 
 RUNTIME_DEP_PKGS_CSWhwloc      = CSWlibcairo2
 RUNTIME_DEP_PKGS_CSWhwloc     += CSWlibxml2-2
