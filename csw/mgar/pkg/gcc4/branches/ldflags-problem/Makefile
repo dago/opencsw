@@ -84,9 +84,22 @@ CONFIGURE_ARGS += --with-system-zlib=/opt/csw
 
 # It doesn't work, it doesn't set the RPATH on libstdc++.so.6.
 # CONFIGURE_ARGS += --with-stage1-ldflags="-R$(libdir)"
-# CONFIGURE_ARGS += --with-boot-ldflags="-R$(libdir)"
 # CONFIG_SITE = --with-boot-ldflags="-R$(libdir)"
+# EXTRA_EXPORTS += LD_OPTIONS
+
+LDFLAGS = -R/env/ldflags
+EXTRA_EXPORTS += LDFLAGS
+LD_OPTIONS = -R/env/ld-options
 EXTRA_EXPORTS += LD_OPTIONS
+CONFIGURE_ARGS += --with-boot-ldflags="-R/arg/boot-ldflags"
+LDFLAGS_FOR_TARGET = -R/env/ldflags-for-target
+EXTRA_EXPORTS += LDFLAGS_FOR_TARGET
+LDFLAGS_FOR_BUILD = -R/env/ldflags-for-build
+EXTRA_EXPORTS += LDFLAGS_FOR_BUILD
+BOOT_LDFLAGS = -R/env/boot-ldflags
+EXTRA_EXPORTS += BOOT_LDFLAGS
+CONFIG_SITE = --with-boot-ldflags="-R/arg/boot-ldflags/via/config-site"
+EXTRA_EXPORTS += CONFIG_SITE
 
 # there could be some abstractions in gar.conf.mk, but at the moment there
 # aren't so let's specify architectures by hand.
@@ -118,12 +131,10 @@ EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
 
 # This branch is to facilitate efforts to fix the problem where libstdc++.so.6
 # doesn't have the RPATH set.
-# BOOT_LDFLAGS = -L$(libdir) -R$(libdir)
-# EXTRA_EXPORTS += BOOT_LDFLAGS
 # EXTRA_EXPORTS += LD_OPTIONS
 
 CONFIGURE_EXPORTS = CC $(EXTRA_EXPORTS)
-BUILD_EXPORTS =
+BUILD_EXPORTS = $(CONFIGURE_EXPORTS)
 INSTALL_EXPORTS =
 
 # The theory goes that the CFLAGS and others cause problems with the multilib
