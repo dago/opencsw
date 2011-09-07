@@ -18,9 +18,7 @@ PACKAGES += CSWhwloc-dev
 PACKAGES += CSWhwloc-doc
 PACKAGES += CSWlibhwloc3
 
-CATALOGNAME_CSWhwloc-dev   = hwloc_dev
-CATALOGNAME_CSWhwloc-doc   = hwloc_doc
-CATALOGNAME_CSWlibhwloc3   = libhwloc3
+ARCHALL_CSWhwloc-doc = 1
 
 SPKG_DESC_CSWhwloc        += $(DESCRIPTION)
 SPKG_DESC_CSWhwloc-dev    += $(DESCRIPTION), development files
