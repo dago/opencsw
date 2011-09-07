@@ -51,11 +51,12 @@ ISALISTS_BY_ARCH = {
     ARCH_ALL: frozenset([]),
 }
 
+# The list of catalogs to process. Should only contain catalogs as stored in
+# the database, and not symlinks on the mirror. For example, 'testing' is
+# a symlink, so should not be listed here.
 DEFAULT_CATALOG_RELEASES = frozenset([
-    'current',
     'dublin',
     'unstable',
-    'testing',
     'stable',
     ])
 
