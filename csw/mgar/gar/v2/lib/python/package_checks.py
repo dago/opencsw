@@ -1111,7 +1111,7 @@ def CheckSharedLibraryPkgDoesNotHaveTheSoFile(pkg_data, error_mgr, logger, messe
               "CATALOGNAME_%s-dev = %s_dev"
               % (pkgname, pkg_data["basic_stats"]["catalogname"]))
           messenger.SuggestGarLine(
-              "SPKG_DESC_%s += $(DESCRIPTION), development files" % pkgname)
+              "SPKG_DESC_%s-dev += $(DESCRIPTION), development files" % pkgname)
           messenger.SuggestGarLine(
               "PKGFILES_%s-dev += %s" % (pkgname, entry["path"]))
           messenger.SuggestGarLine("# Maybe also the generic:")
