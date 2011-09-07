@@ -3,13 +3,16 @@
 # $Id$
 
 NAME = v8
-VERSION = 2.5.1
+VERSION = 3.6.0
+DASH_VERSION = 3-6-0
+UNDER_VERSION = 3_6_0
 # VERSION = bleeding_edge
+DESCRIPTION = Open source JavaScript engine from Google
 CATEGORIES = lib
 define BLURB
 Google's open source JavaScript engine
 endef
-SPKG_SOURCEURL = http://code.google.com/p/$(NAME)/
+VENDOR_URL = http://code.google.com/p/$(NAME)/
 
 MASTER_SITES = svn-http//$(NAME).googlecode.com/svn/branches/
 DISTFILES  = bleeding_edge
@@ -20,27 +23,20 @@ BUILD_DEP_PKGS += CSWscons
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = $(NAME)
 INSTALL_SCRIPTS = $(NAME)
-TEST_SCRIPTS =
+TEST_SCRIPTS = $(NAME)
 GARCOMPILER = GNU
-SONAME_V = 2.5.1
+SONAME_V = $(VERSION)
 
 PACKAGING_PLATFORMS = solaris10-i386
 
-PACKAGES += CSWlib$(NAME)-2-5-1
-PACKAGES += CSWlib$(NAME)-devel
-CATALOGNAME_CSWlib$(NAME)-2-5-1 = lib$(NAME)_2_5_1
-CATALOGNAME_CSWlib$(NAME)-devel = lib$(NAME)_devel
+PACKAGES += CSWlibv8-3-6-0
+CATALOGNAME_CSWlibv8-3-6-0 = libv8_3_6_0
+PKGFILES_CSWlibv8-3-6-0 += $(call baseisadirs,$(libdir),libv8-3\.6\.0\.so)
+PKGFILES_CSWlibv8-3-6-0 += $(call baseisadirs,$(libdir),libv8-3\.6\.0\.so(\.\d+)*)
+SPKG_DESC_CSWlibv8-3-6-0 += $(DESCRIPTION), libv8-3.6.0.so
 
-PKGFILES_CSWlib$(NAME)-devel += $(includedir).*
-PKGFILES_CSWlib$(NAME)-devel += $(libdir)(/[^/]+)?/lib$(NAME)\.so
-
-SPKG_DESC_CSWlib$(NAME)-2-5-1 = Google\'s open source JavaScript engine
-SPKG_DESC_CSWlib$(NAME)-devel = Header files for V8
-
-RUNTIME_DEP_PKGS_CSWlib$(NAME)-2-5-1 += CSWgcc4g++rt
-RUNTIME_DEP_PKGS_CSWlib$(NAME)-2-5-1 += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWlib$(NAME)-devel += CSWlib$(NAME)-2-5-1
-CHECKPKG_OVERRIDES_CSWlib$(NAME)-devel += surplus-dependency|CSWlib$(NAME)-2-5-1
+PACKAGES += CSWlibv8-dev
+SPKG_DESC_CSWlibv8-dev += $(DESCRIPTION), development files
 
 # 64-bit support via a special scons option; passing CFLAGS and CXXFLAGS does
 # not work here.
@@ -51,25 +47,34 @@ LICENSE = LICENSE
 
 BUILD64 = 1
 
+SCONS_ENV += CC=/opt/csw/gcc4/bin/gcc
+SCONS_ENV += CXX=/opt/csw/gcc4/bin/g++
+SCONS_ENV += RANLIB=/opt/csw/gcc4/bin/ranlib
+SCONS_ENV += LD=/opt/csw/bin/gld
+SCONS_ENV += AR=/opt/csw/bin/gar
+SCONS_ENV += SHCXX=/opt/csw/gcc4/bin/g++
+SCONS_ENV += LINKFLAGS=-R/opt/csw/gcc4/lib
+
+SCONS_OPTS = visibility=default library=shared toolchain=gcc soname=on
+
 include gar/category.mk
 
 build-$(NAME):
 	(cd $(WORKSRC); mkdir -p build-solaris; \
-		 CC=/opt/csw/gcc4/bin/gcc \
-		 CXX=/opt/csw/gcc4/bin/g++ \
-		 RANLIB=/opt/csw/gcc4/bin/ranlib \
-		 LD=/opt/csw/bin/gld \
-		 AR=/opt/csw/bin/gar \
-		 SHCXX=/opt/csw/gcc4/bin/g++ \
-		 LINKFLAGS='-R/opt/csw/gcc4/lib' \
-		 scons -Y .. \
-		 $(SCONS_ARCH) \
-		 visibility=default library=shared toolchain=gcc soname=on -j3)
+		cd build-solaris; \
+		$(SCONS_ENV) \
+		\
+		scons \
+		-Y .. \
+		$(SCONS_ARCH) \
+		$(SCONS_OPTS) \
+		-j3 \
+		)
 	@$(MAKECOOKIE)
 
 install-$(NAME):
 	ginstall -d -m 755 $(DESTDIR)$(libdir)
-	ginstall -m 755 $(WORKSRC)/lib$(NAME)-$(SONAME_V).so $(DESTDIR)$(libdir)
+	ginstall -m 755 $(WORKSRC)/build-solaris/lib$(NAME)-$(SONAME_V).so $(DESTDIR)$(libdir)
 	ln -sf lib$(NAME)-$(SONAME_V).so $(DESTDIR)$(libdir)/lib$(NAME).so
 	ginstall -d -m 755 $(DESTDIR)$(includedir)
 	for f in $(WORKSRC)/include/*.h; do \
@@ -77,3 +82,16 @@ install-$(NAME):
 	done
 	tree $(DESTDIR)
 	@$(MAKECOOKIE)
+
+test-$(NAME):
+	(cd $(WORKSRC)/build-solaris; \
+		$(SCONS_ENV) scons -Y .. $(SCONS_OPTS) d8)
+	(cd $(WORKSRC)/build-solaris; \
+		$(SCONS_ENV) \
+		../tools/test.py \
+		--shell=d8 \
+		-S toolchain=gcc \
+		-S library=shared \
+		-S soname=on \
+		-S visibility=default \
+		)
