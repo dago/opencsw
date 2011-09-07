@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo "The pkg-get is deprecated for use with OpenCSW.  Please use pkgutil"
+echo "instead.  It was installed at the same time this package was updated."
+echo
+echo "We apologize for any inconveniences this causes you."
+echo
+echo
+exit 1
