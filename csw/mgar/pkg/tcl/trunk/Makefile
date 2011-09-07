@@ -11,6 +11,7 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = $(NAME)$(VERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
 DISTFILES += soname.diff
+DISTFILES += tcl.m4.patch
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
@@ -23,32 +24,34 @@ LICENSE = license.terms
 
 ## Fix for finding libsunmath on i386 and amd64
 #PATCHFILES  = configure.patch
-#PATCHFILES += tcl.m4.patch
 #PATCHFILES += tclInt.h.patch
 
 REN_LIBTCL  = libtcl8.5.so
 
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
 PATCHFILES  = soname.diff
+PATCHFILES += tcl.m4.patch
 
 PACKAGES  = CSWtcl
 PACKAGES += CSWlibtcl8-5
 PACKAGES += CSWtcl-dev
+PACKAGES += CSWtcl-doc
 CATALOGNAME_CSWtcl       = tcl
 CATALOGNAME_CSWlibtcl8-5 = libtcl8_5
-CATALOGNAME_CSWtcl       = tcl_dev
+CATALOGNAME_CSWtcl-dev   = tcl_dev
+CATALOGNAME_CSWtcl-doc   = tcl_doc
 
 RUNTIME_DEP_PKGS_CSWtcl       += CSWsunmath
 RUNTIME_DEP_PKGS_CSWlibtcl8-5 += CSWsunmath
 
-SPKG_DESC_CSWtcl       = $(DESCRIPTION)
-SPKG_DESC_CSWlibtcl8-5 = $(DESCRIPTION), libraries
-SPKG_DESC_CSWtcl-dev   = $(DESCRIPTION), development files
+SPKG_DESC_CSWtcl        = $(DESCRIPTION)
+SPKG_DESC_CSWlibtcl8-5  = $(DESCRIPTION), libraries
+SPKG_DESC_CSWtcl-dev    = $(DESCRIPTION), development files
+SPKG_DESC_CSWtcl-doc    = $(DESCRIPTION), documentation
 
-PKGFILES_CSWtcl            = $(bindir)/*
-PKGFILES_CSWtcl           += $(mandir)/man1/.*
-PKGFILES_CSWlibtcl8-5      = $(call baseisadirs,$(libdir),[^/]*\.so)
-PKGFILES_CSWtcl-dev        = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibtcl8-5   = $(call pkgfiles_lib,libtcl8.5.so.0)
+PKGFILES_CSWtcl-dev     = $(PKGFILES_DEVEL)
+PKGFILES_CSWtcl-doc     = $(PKGFILES_DOC)
 
 BUILD64 = 1
 
