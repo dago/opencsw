@@ -118,4 +118,5 @@ install-puppet:
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		$(DESTDIR)$(sysconfdir)/pkg/puppet/cswusergroup
 	mkdir -p $(DESTDIR)$(localstatedir)/lib
+	gunzip $(DESTDIR)$(mandir)/man5/puppet.conf.5.gz
 	@$(MAKECOOKIE)
