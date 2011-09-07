@@ -1,5 +1,5 @@
 NAME = tcl
-VERSION = 8.5.8
+VERSION = 8.5.10
 CATEGORIES = lang
 
 DESCRIPTION = Tcl programming language
@@ -10,22 +10,7 @@ SF_PROJ = tcl
 MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = $(NAME)$(VERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
-
-WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
-
-RUNTIME_DEP_PKGS_CSWtcl += CSWsunmath
-
-# Fix for finding libsunmath on i386 and amd64
-PATCHFILES  = configure.patch
-PATCHFILES += tcl.m4.patch
-PATCHFILES += tclInt.h.patch
-
-PATCHDIR = $(WORKDIR)/$(DISTNAME)
-
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/export/medusa|root/opt/csw/lib/libtclstub8.4.a
-CHECKPKG_OVERRIDES_CSWtcl += soname-not-found|libm.so.2
-CHECKPKG_OVERRIDES_CSWtcl += surplus-dependency|CSWsunmath
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/export/medusa|root/opt/csw/share/checkpkg/overrides/tcl
+DISTFILES += soname.diff
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
@@ -35,32 +20,76 @@ UFILES_REGEX = $(NAME)(\d+(?:\.\d+)*)-src.tar.gz
 VENDOR_URL = http://www.tcl.tk/
 LICENSE = license.terms
 
+
+## Fix for finding libsunmath on i386 and amd64
+#PATCHFILES  = configure.patch
+#PATCHFILES += tcl.m4.patch
+#PATCHFILES += tclInt.h.patch
+
+REN_LIBTCL  = libtcl8.5.so
+
+PATCHDIR = $(WORKDIR)/$(DISTNAME)
+PATCHFILES  = soname.diff
+
+PACKAGES  = CSWtcl
+PACKAGES += CSWlibtcl8-5
+PACKAGES += CSWtcl-dev
+CATALOGNAME_CSWtcl       = tcl
+CATALOGNAME_CSWlibtcl8-5 = libtcl8_5
+CATALOGNAME_CSWtcl       = tcl_dev
+
+RUNTIME_DEP_PKGS_CSWtcl       += CSWsunmath
+RUNTIME_DEP_PKGS_CSWlibtcl8-5 += CSWsunmath
+
+SPKG_DESC_CSWtcl       = $(DESCRIPTION)
+SPKG_DESC_CSWlibtcl8-5 = $(DESCRIPTION), libraries
+SPKG_DESC_CSWtcl-dev   = $(DESCRIPTION), development files
+
+PKGFILES_CSWtcl            = $(bindir)/*
+PKGFILES_CSWtcl           += $(mandir)/man1/.*
+PKGFILES_CSWlibtcl8-5      = $(call baseisadirs,$(libdir),[^/]*\.so)
+PKGFILES_CSWtcl-dev        = $(PKGFILES_DEVEL)
+
 BUILD64 = 1
-NOISAEXEC = 1
 
 INCLUDE_FLAGS =
 
-CONFIGURE_ARGS = $(DIRPATHS)
+WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
+
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-threads
+#CONFIGURE_ARGS += --enable-dtrace
 
 INSTALL_ARGS = install install-private-headers install-tzdata install-msgs
 
 # tk need the static tclstub library for some reason
 MERGE_EXCLUDE_STATICLIBS =
 
+TEST_TARGET = test
+
+# this is only temporaryly
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 include gar/category.mk
+
 
 # CFLAGS := $(filter-out -I%,$(CFLAGS))
 DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 
 pre-configure-modulated:
 	@echo " ==> Regenerating build tools..."
-	@(cd $(WORKSRC) ; cp -p ../license.terms .; autoconf)
+	@(cd $(WORKSRC) ; cp -p ../license.terms .; $(prefix)/bin/autoreconf -if )
+	@$(MAKECOOKIE)
+
+pre-test-modulated:
+	@# Need to manually create symlink to latest version
+	@echo Creating symlinks for libtcl8.5.so
+	@(cd $(WORKSRC) ; \
+		mv $(REN_LIBTCL) $(REN_LIBTCL).0 ; \
+		ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL) )
 	@$(MAKECOOKIE)
 
 post-install-isa-sparcv8:
-	@# Install legacy libs
-	@echo Installing legacy files
-	@( cd $(INSTALLISADIR); xz -dc $(CURDIR)/$(FILEDIR)/8.4.sparc.tar.xz | tar xf -)
 	@# Need to manually create symlink to latest version
 	@echo Creating tclsh link
 	@ln -s tclsh8.5 $(INSTALLISADIR)/$(bindir)/tclsh
@@ -73,9 +102,6 @@ post-install-isa-sparcv9:
 	@$(MAKECOOKIE)
 
 post-install-isa-i386:
-	@# Install legacy libs
-	@echo Installing legacy files
-	@( cd $(INSTALLISADIR); xz -dc $(CURDIR)/$(FILEDIR)/8.4.i386.tar.xz | tar xf -)
 	@# Need to manually create symlink to latest version
 	@echo Creating tclsh link
 	@ln -s tclsh8.5 $(INSTALLISADIR)/$(bindir)/tclsh
