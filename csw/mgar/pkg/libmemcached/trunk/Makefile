@@ -1,3 +1,5 @@
+# $Id$
+#
 NAME = libmemcached
 VERSION = 0.51
 VENDOR_URL = http://libmemcached.org/
