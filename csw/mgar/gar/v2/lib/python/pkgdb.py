@@ -58,8 +58,8 @@ USAGE = """
 
 
 Examples:
-    %prog add-to-cat <md5sum> SunOS5.9 sparc unstable
-    %prog del-from-cat <md5sum> SunOS5.10 i386 testing
+    %prog add-to-cat SunOS5.9 sparc unstable <md5sum>
+    %prog del-from-cat SunOS5.10 i386 testing <md5sum>
 """
 
 SHOW_PKG_TMPL = """catalogname:    $catalogname
