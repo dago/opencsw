@@ -21,6 +21,11 @@ DESCRIPTION = Parma Polyhedra Library
 define BLURB
 endef
 
+# The tests are mostly passing on sparc, but the compilation of tests fails on
+# amd64 with a cryptic error message.
+# http://www.cs.unipr.it/pipermail/ppl-devel/2011-August/017618.html
+SKIPTEST ?= 1
+
 BUILD_DEP_PKGS = CSWlibgmp-dev
 BUILD_DEP_PKGS += CSWlibmpfr-dev
 BUILD_DEP_PKGS += CSWlibmpc-dev
