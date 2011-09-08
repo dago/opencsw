@@ -10,14 +10,13 @@
  	    DL_LIBS="-ldl"
 --- tcl8.5.10/unix/Makefile.in	2011-06-23 15:18:36.000000000 +0200
 +++ tcl8.5.10/unix/Makefile.in	2011-09-07 17:12:48.393545884 +0200
-@@ -719,7 +719,10 @@
+@@ -719,7 +719,9 @@
  	    fi
  	@echo "Installing $(LIB_FILE) to $(LIB_INSTALL_DIR)/"
  	@@INSTALL_LIB@
 -	@chmod 555 "$(LIB_INSTALL_DIR)"/$(LIB_FILE)
 +	mv "$(LIB_INSTALL_DIR)"/$(LIB_FILE) "$(LIB_INSTALL_DIR)"/$(LIB_FILE).0
 +	ln -sf $(LIB_FILE).0 "$(LIB_INSTALL_DIR)"/$(LIB_FILE)
-+	ln -sf "$(LIB_INSTALL_DIR)"/$(LIB_FILE).0 ./
 +	@chmod 555 "$(LIB_INSTALL_DIR)"/$(LIB_FILE).0
  	@echo "Installing ${TCL_EXE} as $(BIN_INSTALL_DIR)/tclsh$(VERSION)@EXEEXT@"
  	@$(INSTALL_PROGRAM) ${TCL_EXE} "$(BIN_INSTALL_DIR)"/tclsh$(VERSION)@EXEEXT@
