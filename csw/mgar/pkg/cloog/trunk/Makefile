@@ -15,6 +15,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 BUILD64 = 1
 GARCOMPILER = GNU
 
+LICENSE = $(FILEDIR)/COPYING
+
 PACKAGES += CSWlibcloog-isl2
 PKGFILES_CSWlibcloog-isl2 += $(call baseisadirs,$(libdir),libcloog-isl\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibcloog-isl2 += $(DESCRIPTION), libcloog-isl.so.2
