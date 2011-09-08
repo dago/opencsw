@@ -1,16 +1,31 @@
-diff --speed-large-files --minimal -Nru dovecot-1.1.11.orig/dovecot-example.conf dovecot-1.1.11/dovecot-example.conf
---- dovecot-1.1.11.orig/dovecot-example.conf	2009-01-26 02:12:41.000000000 +0100
-+++ dovecot-1.1.11/dovecot-example.conf	2009-03-18 00:26:59.345199088 +0100
-@@ -10,10 +10,8 @@
+From 60c630258052c1b5fc22ee7954e7b7328452ba0d Mon Sep 17 00:00:00 2001
+From: builder user <builder@opencsw.org>
+Date: Thu, 8 Sep 2011 22:16:41 +0200
+Subject: [PATCH] Correct patch-exampleconf.patch to make it to apply clean.
+
+---
+ dovecot-example.conf |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/dovecot-example.conf b/dovecot-example.conf
+index efd24e5..262cf55 100644
+--- a/dovecot-example.conf
++++ b/dovecot-example.conf
+@@ -10,11 +10,8 @@
  # value inside quotes, eg.: key = "# char and trailing whitespace  "
  
  # Default values are shown for each setting, it's not required to uncomment
--# any of the lines. Exception to this are paths, they're just examples with
--# the real defaults being based on configure options. The paths listed here
--# are for configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
--# --with-ssldir=/etc/ssl
+-# those. These are exceptions to this though: No sections (e.g. namespace {})
+-# or plugin settings are added by default, they're listed only as examples.
+-# Paths are also just examples with the real defaults being based on configure
+-# options. The paths listed here are for configure --prefix=/usr
+-# --sysconfdir=/etc --localstatedir=/var --with-ssldir=/etc/ssl
 +# any of the lines. The paths have been modified to reflect the OpenCSW
 +# file system layout.
  
  # Base directory where to store runtime data.
  #base_dir = /var/run/dovecot/
+-- 
+1.7.6
+
+
