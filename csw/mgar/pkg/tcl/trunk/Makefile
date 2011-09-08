@@ -10,16 +10,12 @@ SF_PROJ = tcl
 MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = $(NAME)$(VERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
-DISTFILES += soname.diff
-DISTFILES += tcl.m4.patch
-DISTFILES += tcl-dtrace.patch
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
 UPSTREAM_USE_SF = 1
 
 VENDOR_URL = http://www.tcl.tk/
 LICENSE = license.terms
-
 
 ## Fix for finding libsunmath on i386 and amd64
 #PATCHFILES  = configure.patch
@@ -99,26 +95,9 @@ pre-test-modulated:
 		ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL) )
 	@$(MAKECOOKIE)
 
-post-install-isa-sparcv8:
+post-install:
 	@# Need to manually create symlink to latest version
 	@echo Creating tclsh link
 	@ln -s $(REN_TCLSH) $(INSTALLISADIR)/$(bindir)/tclsh
 	@$(MAKECOOKIE)
 
-post-install-isa-sparcv9:
-	@# Need to manually create symlink to latest version
-	@echo Creating tclsh link
-	@ln -s $(REN_TCLSH) $(INSTALLISADIR)/$(bindir)/tclsh
-	@$(MAKECOOKIE)
-
-post-install-isa-i386:
-	@# Need to manually create symlink to latest version
-	@echo Creating tclsh link
-	@ln -s $(REN_TCLSH) $(INSTALLISADIR)/$(bindir)/tclsh
-	@$(MAKECOOKIE)
-
-post-install-isa-amd64:
-	@# Need to manually create symlink to latest version
-	@echo Creating tclsh link
-	@ln -s $(REN_TCLSH) $(INSTALLISADIR)/$(bindir)/tclsh
-	@$(MAKECOOKIE)
