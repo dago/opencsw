@@ -12,6 +12,7 @@ DISTNAME = $(NAME)$(VERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
 DISTFILES += soname.diff
 DISTFILES += tcl.m4.patch
+DISTFILES += tcl-dtrace.patch
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
 UPSTREAM_USE_SF = 1
@@ -30,6 +31,7 @@ REN_TCLSH   = tclsh8.5
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
 PATCHFILES  = soname.diff
 PATCHFILES += tcl.m4.patch
+PATCHFILES += tcl-dtrace.patch
 
 PACKAGES  = CSWtcl
 PACKAGES += CSWlibtcl8-5-0
@@ -52,6 +54,15 @@ PKGFILES_CSWtcl-doc       = $(PKGFILES_DOC)
 
 ARCHALL_CSWtcl-doc = 1 
 
+CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/tclConfig.sh
+CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/lib/tclConfig.sh
+CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/tclsh.1
+CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/mann/clock.n
+CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/lib/tcl8.5/clock.tcl
+CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/share/man/mann/clock.n
+CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/lib/tcl8.5/clock.tcl
+
+
 BUILD64 = 1
 
 INCLUDE_FLAGS =
@@ -60,7 +71,7 @@ WORKSRC = $(WORKDIR)/$(DISTNAME)/unix
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-threads
-#CONFIGURE_ARGS += --enable-dtrace
+CONFIGURE_ARGS += --enable-dtrace
 
 INSTALL_ARGS = install install-private-headers install-tzdata install-msgs
 

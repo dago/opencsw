@@ -3,3 +3,4 @@ cc9b1bd7ddf8e27e97ef464806885349  tcl.m4.patch
 a08eaf8467c0631937067c1948dd326b  tcl8.5.10-src.tar.gz
 3c9c100904b6ba774a679ad7f2b4a036  tclInt.h.patch
 b9693a35219197fb1675fbdefb88c44f  soname.diff
+48496b40918825f111439ccfd55d9c78  tcl-dtrace.patch
