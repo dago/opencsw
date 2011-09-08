@@ -1,3 +1,8 @@
+# TODO (release-critical prefixed with !, non release-critical with *)
+# ! Make sure to honour these on an update:
+#     http://www.mail-archive.com/pca@lists.univie.ac.at/msg02692.html
+#     https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00001.html
+
 NAME = wget
 VERSION = 1.12
 CATEGORIES = net
@@ -37,8 +42,8 @@ CONFIGURE_ARGS += $(EXTRA_CONFIGURE_STATIC-$(STATIC))
 TEST_TARGET = check
 RUNTIME_DEP_PKGS = CSWosslrt
 
-SAMPLECONF = $(sysconfdir)/wgetrc.CSW
-EXTRA_PAX_ARGS = -s ",^\(.$(sysconfdir)/wgetrc\)\$$,\1.CSW,p"
+SAMPLECONF = $(sysconfdir)/wgetrc
+#EXTRA_PAX_ARGS = -s ",^\(.$(sysconfdir)/wgetrc\)\$$,\1.CSW,p"
 
 MERGE_SCRIPTS_isa-sparcv8-static-disable = copy-all
  MERGE_SCRIPTS_isa-sparcv8-static-enable = copy-static-wget-only
