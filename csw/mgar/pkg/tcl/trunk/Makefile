@@ -41,8 +41,9 @@ PACKAGES += CSWtcl-doc
 #
 RUNTIME_DEP_PKGS_CSWtcl-i386          = CSWsunmath
 RUNTIME_DEP_PKGS_CSWtcl              += CSWlibtcl8-5-0
+RUNTIME_DEP_PKGS_CSWtcl              += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
 RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-i386 += CSWsunmath
-RUNTIME_DEP_PKGS_CSWlibtcl-8-5-0     += $(RUNTIME_DEP_PKGS_CSWlibtcl-8-5-0-$(GARCH))
+RUNTIME_DEP_PKGS_CSWlibtcl8-5-0      += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-$(GARCH))
 RUNTIME_DEP_PKGS_CSWtcl-dev          += CSWlibtcl8-5-0
 
 SPKG_DESC_CSWtcl          = $(DESCRIPTION)
@@ -56,12 +57,9 @@ PKGFILES_CSWtcl-doc       = $(PKGFILES_DOC)
 
 ARCHALL_CSWtcl-doc = 1 
 
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/tclConfig.sh
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/lib/tclConfig.sh
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/tclsh.1
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/mann/clock.n
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/lib/tcl8.5/clock.tcl
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/share/man/mann/clock.n
+CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/lib/tcl8.5/clock.tcl
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/lib/tcl8.5/clock.tcl
 
 
@@ -105,5 +103,7 @@ post-install-modulated:
 	@# Need to manually create symlink to latest version
 	@echo Creating tclsh link
 	@ln -s $(REN_TCLSH) $(INSTALLISADIR)/$(bindir)/tclsh
+	@perl -pi -e "s|/usr/local|$(prefix)|g" $(INSTALLISADIR)/$(libdir)/tclConfig.sh
+	@perl -pi -e "s|/usr/local|$(prefix)|g" $(INSTALLISADIR)/$(prefix)/share/man/man1/tclsh.1
 	@$(MAKECOOKIE)
 
