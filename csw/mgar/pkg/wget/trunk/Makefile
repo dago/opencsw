@@ -45,6 +45,8 @@ EXTRA_MODULATORS = STATIC
 MODULATIONS_STATIC = disable enable
 
 EXTRA_CONFIGURE_STATIC-disable += --with-ssl
+# NTLM can only be enabled when used with OpenSSL instead of the defaulting GnuTLS
+#EXTRA_CONFIGURE_STATIC-disable += --enable-ntlm
 
 EXTRA_CONFIGURE_STATIC-enable += --without-ssl
 EXTRA_CONFIGURE_STATIC-enable += --disable-nls
