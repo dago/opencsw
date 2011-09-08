@@ -80,9 +80,6 @@ MERGE_EXCLUDE_STATICLIBS =
 
 TEST_TARGET = test
 
-# this is only temporaryly
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
 include gar/category.mk
 
 
