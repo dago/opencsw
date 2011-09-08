@@ -48,8 +48,7 @@ MASTER_SITES =
 ## SF_PROJ =
 ##
 ## A list of space separated patch filenames from files/ that are to be applied
-## to the extracted software before the ./configure stage. Patches need to be
-## included in the DISTFILES variable as well.
+## to the extracted software before the ./configure stage.
 ## PATCHFILES =
 ##
 ## Whitespace-separated list of files which comprise this build. mGAR will look
