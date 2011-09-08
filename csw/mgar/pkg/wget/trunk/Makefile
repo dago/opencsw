@@ -7,7 +7,7 @@ NAME = wget
 VERSION = 1.13.3
 CATEGORIES = net
 
-DESCRIPTION = A network utility to retrieve files from the web
+DESCRIPTION = A network utility to retrieve files from the Web
 define BLURB
   GNU Wget is a utility for noninteractive download of files from the Web. It
   supports HTTP and FTP protocols, as well as retrieval through HTTP proxies. It
