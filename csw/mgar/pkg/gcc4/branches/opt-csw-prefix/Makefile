@@ -25,6 +25,8 @@ endef
 DISTFILES    = $(DISTNAME).tar.bz2
 MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 
+LIBOBJC = 3
+
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
@@ -277,17 +279,18 @@ SPKG_DESC_CSWlibgomp1 += $(DESCRIPTION), libgomp.so.1
 RUNTIME_DEP_PKGS_CSWlibgomp1 += CSWlibgcc-s1
 OBSOLETED_BY_CSWlibgomp1 += $(PKG_BASENAME)corert
 
-PACKAGES += CSWlibobjc3
-CATALOGNAME_CSWlibobjc3 = libobjc3
-PKGFILES_CSWlibobjc3 += $(call baseisadirs,$(libdir),libobjc\.so\.3(\.\d+)*)
-SPKG_DESC_CSWlibobjc3 += $(DESCRIPTION), libobjc.so.3
-RUNTIME_DEP_PKGS_CSWlibobjc3 += CSWlibgcc-s1
 
-PACKAGES += CSWlibobjc-gc3
-CATALOGNAME_CSWlibobjc-gc3 = libobjc_gc3
-PKGFILES_CSWlibobjc-gc3 += $(call baseisadirs,$(libdir),libobjc_gc\.so\.3(\.\d+)*)
-SPKG_DESC_CSWlibobjc-gc3 += $(DESCRIPTION), libobjc_gc.so.3
-RUNTIME_DEP_PKGS_CSWlibobjc-gc3 += CSWlibgcc-s1
+PACKAGES += CSWlibobjc$(LIBOBJC)
+CATALOGNAME_CSWlibobjc$(LIBOBJC) = libobjc$(LIBOBJC)
+PKGFILES_CSWlibobjc$(LIBOBJC) += $(call baseisadirs,$(libdir),libobjc\.so\.$(LIBOBJC)(\.\d+)*)
+SPKG_DESC_CSWlibobjc$(LIBOBJC) += $(DESCRIPTION), libobjc.so.$(LIBOBJC)
+RUNTIME_DEP_PKGS_CSWlibobjc$(LIBOBJC) += CSWlibgcc-s1
+
+PACKAGES += CSWlibobjc-gc$(LIBOBJC)
+CATALOGNAME_CSWlibobjc-gc$(LIBOBJC) = libobjc_gc$(LIBOBJC)
+PKGFILES_CSWlibobjc-gc$(LIBOBJC) += $(call baseisadirs,$(libdir),libobjc_gc\.so\.$(LIBOBJC)(\.\d+)*)
+SPKG_DESC_CSWlibobjc-gc$(LIBOBJC) += $(DESCRIPTION), libobjc_gc.so.$(LIBOBJC)
+RUNTIME_DEP_PKGS_CSWlibobjc-gc$(LIBOBJC) += CSWlibgcc-s1
 
 PACKAGES += CSWlibssp0
 CATALOGNAME_CSWlibssp0 = libssp0
