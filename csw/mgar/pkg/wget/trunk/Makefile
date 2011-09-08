@@ -4,10 +4,10 @@
 #     https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00001.html
 
 NAME = wget
-VERSION = 1.12
+VERSION = 1.13.3
 CATEGORIES = net
 
-DESCRIPTION = A network utility to retrieve files from the Web
+DESCRIPTION = A network utility to retrieve files from the web
 define BLURB
   GNU Wget is a utility for noninteractive download of files from the Web. It
   supports HTTP and FTP protocols, as well as retrieval through HTTP proxies. It
@@ -19,31 +19,44 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(NAME)-$(VERSION).tar.bz2
+DISTFILES = $(NAME)-$(VERSION).tar.xz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+# This is the reformatted patch wget-1.13.3.patch from
+#    https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00001.html
+PATCHFILES += 0001-Features-patch.patch
 
-SPKG_SOURCEURL = http://www.gnu.org/software/wget/
+# This is from
+#   https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00004.html
+PATCHFILES += 0002-Make-sure-FIONBIO-is-defined.patch
+
+VENDOR_URL = http://www.gnu.org/software/wget/
+
+PACKAGES += CSWwget
+SPKG_DESC_CSWwget = A network utility to retrieve files from the web
+RUNTIME_DEP_PKGS_CSWwget += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWwget += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWwget += CSWlibgcrypt11
+RUNTIME_DEP_PKGS_CSWwget += CSWlibz1
+RUNTIME_DEP_PKGS_CSWwget += CSWlibgpg-error0
+RUNTIME_DEP_PKGS_CSWwget += CSWlibgnutls26
+RUNTIME_DEP_PKGS_CSWwget += CSWlibidn11
 
 EXTRA_MODULATORS = STATIC
 MODULATIONS_STATIC = disable enable
 
-EXTRA_CONFIGURE_STATIC-disable = --with-ssl
-EXTRA_CONFIGURE_STATIC-enable = --disable-shared
-EXTRA_CONFIGURE_STATIC-enable += --enable-static
+EXTRA_CONFIGURE_STATIC-disable += --with-ssl
+
 EXTRA_CONFIGURE_STATIC-enable += --without-ssl
+EXTRA_CONFIGURE_STATIC-enable += --disable-nls
+EXTRA_CONFIGURE_STATIC-enable += --disable-iri
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-ssl
-CONFIGURE_ARGS += --disable-nls
 CONFIGURE_ARGS += $(EXTRA_CONFIGURE_STATIC-$(STATIC))
 
-TEST_TARGET = check
-RUNTIME_DEP_PKGS = CSWosslrt
+PRESERVECONF = $(sysconfdir)/wgetrc
+MIGRATE_FILES = wgetrc
 
-SAMPLECONF = $(sysconfdir)/wgetrc
-#EXTRA_PAX_ARGS = -s ",^\(.$(sysconfdir)/wgetrc\)\$$,\1.CSW,p"
+EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/charset.alias
 
 MERGE_SCRIPTS_isa-sparcv8-static-disable = copy-all
  MERGE_SCRIPTS_isa-sparcv8-static-enable = copy-static-wget-only
@@ -53,8 +66,23 @@ MERGE_SCRIPTS_isa-sparcv8-static-disable = copy-all
      MERGE_SCRIPTS_isa-i386-static-enable = rename-wget copy-only
         MERGE_DIRS_isa-i386-static-enable = $(bindir)
 
+# This is ok, it is just one example occurrence, all others have been replaced
+CHECKPKG_OVERRIDES_CSWwget += file-with-bad-content|/usr/local|root/opt/csw/share/info/wget.info
+
+include gar/category.mk
+
+post-extract-modulated:
+	@# Make sure our perl is used as the /usr/bin/perl lacks some needed modules
+	-perl -pi -e 's,#!/usr/bin/env perl,#!/opt/csw/bin/perl,' \
+		$(WORKSRC)/tests/*.px \
+		$(WORKSRC)/tests/run-px
+
 merge-copy-static-wget-only:
 	ginstall $(INSTALLISADIR)$(bindir)/wget $(PKGROOT)$(bindir)/wget.static
 	@$(MAKECOOKIE)
 
-include gar/category.mk
+post-install-modulated:
+	perl -pi -e 's,/usr/local/etc,$(sysconfdir),g' \
+		$(DESTDIR)$(infodir)/wget.info \
+		$(DESTDIR)$(mandir)/man1/wget.1 \
+		$(DESTDIR)$(sysconfdir)/wgetrc
