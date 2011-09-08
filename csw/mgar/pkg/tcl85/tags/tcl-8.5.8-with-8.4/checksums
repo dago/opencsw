@@ -1,0 +1,5 @@
+dc8664f3dc92693aaaad68785e4426ae  configure.patch
+cc9b1bd7ddf8e27e97ef464806885349  tcl.m4.patch
+ade2c033a7b545ee108f3fdfeb629fcf  tcl8.4.19-src.tar.gz
+7f123e53b3daaaba2478d3af5a0752e3  tcl8.5.8-src.tar.gz
+3c9c100904b6ba774a679ad7f2b4a036  tclInt.h.patch

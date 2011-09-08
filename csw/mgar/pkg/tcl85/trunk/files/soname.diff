@@ -1,0 +1,23 @@
+--- tcl8.5.10/unix/tcl.m4	2011-06-23 15:18:36.000000000 +0200
++++ tcl8.5.10/unix/tcl.m4	2011-09-07 17:11:05.737368554 +0200
+@@ -1968,6 +1968,7 @@
+ 			use_sunmath=no
+ 		])
+ 	    ])
++	    TCL_SHLIB_LD_EXTRAS="-h \${TCL_LIB_FILE}.0"
+ 	    SHLIB_SUFFIX=".so"
+ 	    DL_OBJS="tclLoadDl.o"
+ 	    DL_LIBS="-ldl"
+--- tcl8.5.10/unix/Makefile.in	2011-06-23 15:18:36.000000000 +0200
++++ tcl8.5.10/unix/Makefile.in	2011-09-07 17:12:48.393545884 +0200
+@@ -719,7 +719,9 @@
+ 	    fi
+ 	@echo "Installing $(LIB_FILE) to $(LIB_INSTALL_DIR)/"
+ 	@@INSTALL_LIB@
+-	@chmod 555 "$(LIB_INSTALL_DIR)"/$(LIB_FILE)
++	mv "$(LIB_INSTALL_DIR)"/$(LIB_FILE) "$(LIB_INSTALL_DIR)"/$(LIB_FILE).0
++	ln -sf $(LIB_FILE).0 "$(LIB_INSTALL_DIR)"/$(LIB_FILE)
++	@chmod 555 "$(LIB_INSTALL_DIR)"/$(LIB_FILE).0
+ 	@echo "Installing ${TCL_EXE} as $(BIN_INSTALL_DIR)/tclsh$(VERSION)@EXEEXT@"
+ 	@$(INSTALL_PROGRAM) ${TCL_EXE} "$(BIN_INSTALL_DIR)"/tclsh$(VERSION)@EXEEXT@
+ 	@echo "Installing tclConfig.sh to $(CONFIG_INSTALL_DIR)/"

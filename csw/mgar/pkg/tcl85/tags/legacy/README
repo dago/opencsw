@@ -1,0 +1,216 @@
+###############################################################################
+#
+# FILE:		README
+#
+# DESCRIPTION:	Instructions for creating the TCL package.  Refer to the
+#		BUILD.NOTES file for specific information about the actual
+#		build and testing of the current version.
+#
+# PACKAGE:      CSWtcl
+#
+# REVISION:     04-27-08
+#
+# NOTES:	*
+#
+###############################################################################
+
+-------------------------------------------------------------------------------
+01: Switch to the correct build machine
+-------------------------------------------------------------------------------
+
+	SPARC:	    wr
+	  or
+	INTEL:	    wt
+
+-------------------------------------------------------------------------------
+02: Set the proper build environment
+-------------------------------------------------------------------------------
+
+	SPARC:	    export CC='cc -xarch=v8 -xstrconst -xildoff'
+	  or
+	INTEL:	    export CC='cc -xtarget=pentium -xstrconst -xildoff' 
+
+-------------------------------------------------------------------------------
+03: Update the pkginfo file
+-------------------------------------------------------------------------------
+
+	cd pkgs/tcl
+	vi pkginfo
+	    [edit the VERSION line including the ,REV=YYYY.MM.DD string]
+	    [edit the ARCH    line for either a 'sparc' or 'i386' build]
+
+-------------------------------------------------------------------------------
+04: Download the source code	(ONLY NEEDS TO BE DONE ONCE PER RELEASE)
+-------------------------------------------------------------------------------
+
+	cd src
+	vi Makefile		(Edit & set TVER to current version)
+
+	make get		Download source code from sourceforge:
+
+	    			or get it from personal machine with:
+	    			bwput  -d /export/home/jeff/pkgs/tcl/src \
+					  tcl*-src.tar.gz
+
+	make rename		rename the source file
+	make unpack		unpack the source
+
+-------------------------------------------------------------------------------
+05: Update the copyright file   (ONLY NEEDS TO BE DONE ONCE PER RELEASE)
+-------------------------------------------------------------------------------
+
+	cd tcl*[0-9]
+	cp license.terms ${HOME}/pkgs/tcl/copyright
+
+-------------------------------------------------------------------------------
+06: See if there are any source file modifications required for build
+-------------------------------------------------------------------------------
+	
+	cd unix 
+	less -+e ../../../BUILD.NOTES
+
+	[update as required]
+
+-------------------------------------------------------------------------------
+07: Compile the software
+-------------------------------------------------------------------------------
+
+	make distclean
+	../../CJSA.configure				# run configure
+	script zzzz					# capture output
+	make
+	make test
+	exit						# terminate script
+
+-------------------------------------------------------------------------------
+08: Review zzzz script file and update any required info in BUILD.NOTES file
+-------------------------------------------------------------------------------
+
+	vi zzzz  ../../../BUILD.NOTES
+	rm zzzz
+
+-------------------------------------------------------------------------------
+09: Install executable in a staging directory
+-------------------------------------------------------------------------------
+
+	rm -rf cswstage
+	stagepkg INSTALL_ROOT=$PWD/cswstage install 
+
+-------------------------------------------------------------------------------
+10: Make symbolic link for tclsh    [**** USING PROPER VERSION NO. ****]
+-------------------------------------------------------------------------------
+	
+	rm -f  cswstage/opt/csw/bin/tclsh
+	ls -l  cswstage/opt/csw/bin
+
+	ln -s  tclsh8.5 cswstage/opt/csw/bin/tclsh	# USE CORRECT VER. NO!
+
+	ls -l  cswstage/opt/csw/bin
+	ls -lL cswstage/opt/csw/bin
+
+-------------------------------------------------------------------------------
+11: Update the prototype file    (2nd build can use existing prototype file)
+-------------------------------------------------------------------------------
+
+	cd cswstage
+	grep '^[df]' prototype | grep -v 'root bin'
+	    [check 'f'iles & 'd'irs have owner/group 'root bin']
+	vi prototype
+	    [change all owners/groups to 'root bin']
+	    [change file permissions from 0444 to 0644]
+	    	:g/0444/s//0644/g
+	    [change file permissions from 0555 to 0755]
+	    	:g/0555/s//0755/g
+	    [add following 's' line after 'f' line: ***CHECK VERSION NO.***]
+	    	f none /opt/csw/bin/tclsh8.5 0755 root bin   [existing line]
+	    	s none /opt/csw/bin/tclsh=tclsh8.5
+
+-------------------------------------------------------------------------------
+12: Edit the shipping tclConfig.sh file to set proper paths
+-------------------------------------------------------------------------------
+
+	vi opt/csw/lib/tclConfig.sh
+	  :g#/export/home/jeff/pkgs/tcl/src/tcl[0-9.]*/unix#s##/opt/csw/lib#g
+	  :g#/export/home/jeff/pkgs/tcl/src/tcl[0-9.]*#s##/opt/csw/src/tcl#g
+	  :g#-I. -I../generic -I../../generic #s###g
+	  :wq
+
+-------------------------------------------------------------------------------
+13: Check changes in prototype from previous release and update file
+-------------------------------------------------------------------------------
+
+	diff ${HOME}/pkgs/tcl/prototype prototype | less -+e
+	    [if any odd differences, investigate and fix]
+
+	cp prototype ${HOME}/pkgs/tcl
+
+-------------------------------------------------------------------------------
+14: Create the package tcl-*-SunOS5.8-{sparc,386i}-CSW.pkg.gz
+-------------------------------------------------------------------------------
+
+	cd ${HOME}/pkgs/tcl
+	createpkg -r ${HOME}/pkgs/tcl/src/tcl*[0-9]/unix/cswstage
+
+	  [The package name should follow this format:]
+
+	  <name>-<version>[,REV=YYYY.MM.DD]-<OSname><OSrel>-<arch>-CSW.pkg.gz
+
+-------------------------------------------------------------------------------
+15: Examine list of libraries used to see if any new CSW dependencies exist
+-------------------------------------------------------------------------------
+
+    *** Current dependencies are listed in the depend file ***
+
+    If a new library is found, check package dependency:
+
+	pkgchk -l -p /opt/csw/lib/lib<...>
+   
+    Add entry to the depend file:
+
+        P	CSW<pkg>
+
+    Now repeat from step 10 and recreate the package
+
+-------------------------------------------------------------------------------
+16: Build other software for this hardware platform
+-------------------------------------------------------------------------------
+	
+	Build CSWtk   package
+	Build CSWitcl package	(if necessary)
+	Build CSWitk  package	(if necessary)
+	Build CSWtclx package	(if applicable)
+
+-------------------------------------------------------------------------------
+17: Go back to step #01 and build everything for the other hardware platform
+-------------------------------------------------------------------------------
+
+	* Continue when all packages for Sparc & X86 platforms are ready
+
+-------------------------------------------------------------------------------
+18: Clean up
+-------------------------------------------------------------------------------
+
+	cd src
+	make clean
+
+-------------------------------------------------------------------------------
+19: Copy the new package to the installation area
+-------------------------------------------------------------------------------
+
+	cd pkgs/tcl
+	cp  tcl-*.pkg.gz  /export/medusa/newpkgs
+
+-------------------------------------------------------------------------------
+20: Copy the source code tarball to the holding area
+-------------------------------------------------------------------------------
+
+	cd src
+	cp  TCL.${VER}-src.tar.gz  /export/medusa/src/tcl${VER}-src.tar.gz
+
+-------------------------------------------------------------------------------
+21: Notify package administrator
+-------------------------------------------------------------------------------
+
+	* Email phil@bolthole.com (Philip Brown) describing the update
+
+------------------------------------------------------------------------------
