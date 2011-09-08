@@ -1,0 +1,168 @@
+###############################################################################
+#
+# FILE:		BUILD.NOTES
+#
+# DESCRIPTION:	Build notes for the TCL package.  These are notes concerning
+#		the compiling and testing of this package.
+#
+#		Use the detailed instructions in the README file for package
+#		creation.
+#
+# PACKAGE:      CSWtcl
+#
+# CUR VER:	Tcl Version 8.5.2
+#
+# REVISION:     04-27-08
+#
+###############################################################################
+
+-------------------------------------------------------------------------------
+HISTORY:
+-------------------------------------------------------------------------------
+Date:		Version:		Notes:
+-------------------------------------------------------------------------------
+08-27-04	8.4.7			Initial 8.4.7  package creation
+09-11-04	8.4.7,REV=2004.09.11	Fixed email address in pkginfo file
+12-09-04	8.4.9			Initial 8.4.9  package creation
+06-11-05	8.4.10			Initial 8.9.10 package creation
+07-06-07	8.4.15			Initial 8.9.15 package creation
+02-06-08	8.5.1			Initial 8.5.1  package creation
+04-27-08	8.5.2			Initial 8.5.2  package creation
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+EDITING CHANGES:
+-------------------------------------------------------------------------------
+	
+	None
+
+-------------------------------------------------------------------------------
+SPARC:
+-------------------------------------------------------------------------------
+
+make:
+
+    * The following warning messages are produced:
+
+	./../generic/regcomp.c	[NOTE: typical lex warnings - OK]
+	    "../generic/regc_lex.c", line 426: warning: statement not reached
+	    "../generic/regc_lex.c", line 519: warning: statement not reached
+	    "../generic/regc_lex.c", line 525: warning: statement not reached
+	    "../generic/regc_lex.c", line 610: warning: statement not reached
+	    "../generic/regc_lex.c", line 642: warning: statement not reached
+	    "../generic/regc_lex.c", line 907: warning: statement not reached
+	    "../generic/regc_lex.c", line 1078: warning: statement not reached
+	./tclUnixCompat.c
+	    "./tclUnixCompat.c", line 187: warning: statement not reached
+	    "./tclUnixCompat.c", line 243: warning: statement not reached
+	    "./tclUnixCompat.c", line 299: warning: statement not reached
+	    "./tclUnixCompat.c", line 355: warning: statement not reached
+	    "./tclUnixCompat.c", line 423: warning: statement not reached
+	    "./tclUnixCompat.c", line 486: warning: statement not reached
+
+    * Otherwise, compiles cleanly.
+
+
+make test:
+
+    * All tests pass
+
+    Tests ended at Mon Apr 28 02:17:18 EDT 2008
+    all.tcl:        Total   24242   Passed  23265   Skipped 977     Failed  0
+    Sourced 137 Test Files.
+    Number of tests skipped for each constraint:
+        9       !ieeeFloatingPoint
+        2       95or98
+        3       asyncPipeChan
+        4       dontCopyLinks
+        61      emptyTest
+        2       hasIsoLocale
+        29      knownBug
+        2       knownBug !singleTestInterp
+        2       largefileSupport
+        77      littleEndian
+        100     localeRegexp
+        12      longIs64bit
+        14      macosxFileAttr
+        15      memory
+        42      nonPortable
+        5       notNetworkFilesystem
+        8       nt
+        4       readonlyAttr
+        1       testWinCPUID
+        7       testaccessproc
+        1       testexprparser && !ieeeFloatingPoint
+        8       testopenfilechannelproc
+        7       teststatproc
+        1       testwinclock
+        21      testwordend
+        3       unknownFailure
+        2       unthreaded
+        524     win
+
+-------------------------------------------------------------------------------
+INTEL:
+-------------------------------------------------------------------------------
+
+make:
+
+    * Same results as sparc
+
+make test:
+
+    * expr.test
+      ==== expr-28.362 input floating-point conversion FAILED
+      ==== Contents of test case:
+
+      # Ad2b dieee UN -720919 E-14 x \
+      	-1ef696965cbf04_10000000000000000000000001& E-28
+      convertToDouble -720919E-14
+
+      ---- Result was:
+      0xbe3ef696965cbf04
+      ---- Result should have been (exact matching):
+      0xbe3ef696965cbf05
+      ==== expr-28.362 FAILED
+
+      ==== expr-28.393 input floating-point conversion FAILED
+      ==== Contents of test case:
+
+      # Ad2b d UN +65346417 E29 x \
+        13aa1ad778f23b_0111111111111111111111111111110& E122
+      convertToDouble +65346417E29 
+      
+      [MANY other FP tests also fail by 1]
+
+      Tests ended at Wed Feb 06 21:05:53 EST 2008
+      all.tcl:   Total   24180   Passed  23081   Skipped 973     Failed  126
+      Sourced 137 Test Files.
+      Files with failing tests: expr.test
+      Number of tests skipped for each constraint:
+        9       !ieeeFloatingPoint
+        2       95or98
+        3       asyncPipeChan
+        76      bigEndian
+        4       dontCopyLinks
+        59      emptyTest
+        2       hasIsoLocale
+        29      knownBug
+        2       knownBug !singleTestInterp
+        2       largefileSupport
+        100     localeRegexp
+        12      longIs64bit
+        14      macosxFileAttr
+        15      memory
+        41      nonPortable
+        5       notNetworkFilesystem
+        8       nt
+        4       readonlyAttr
+        1       testWinCPUID
+        7       testaccessproc
+        1       testexprparser && !ieeeFloatingPoint
+        8       testopenfilechannelproc
+        7       teststatproc
+        1       testwinclock
+        21      testwordend
+        3       unknownFailure
+        2       unthreaded
+        524     win
