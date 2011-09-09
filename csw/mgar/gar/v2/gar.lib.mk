@@ -813,7 +813,7 @@ CONFIGURE_ARGS ?= $(DIRPATHS) $(EXTRA_CONFIGURE_ARGS)
 # script.
 configure-%/configure:
 	@echo " ==> Running configure in $*"
-	cd $* && mkdir -p $(OBJDIR) && cd $(OBJDIR) && $(CONFIGURE_ENV) $(abspath $*)/configure $(CONFIGURE_ARGS)
+	cd $* && mkdir -p $(OBJDIR) && cd $(OBJDIR) && /usr/bin/env -i $(CONFIGURE_ENV) $(abspath $*)/configure $(CONFIGURE_ARGS)
 	@$(MAKECOOKIE)
 
 configure-%/autogen.sh:
@@ -845,7 +845,7 @@ configure-%/waf:
 # build from a standard gnu-style makefile's default rule.
 build-%/Makefile:
 	@echo " ==> Running make in $*"
-	cd $* && $(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
+	cd $* && /usr/bin/env -i $(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(BUILD_OVERRIDE_VARS),$(TTT)="$(BUILD_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(BUILD_ARGS)
 	@$(MAKECOOKIE)
 
 build-%/makefile:
@@ -900,7 +900,7 @@ CLEAN_ARGS ?= clean
 # build from a standard gnu-style makefile's default rule.
 clean-%/Makefile:
 	@echo " ==> Running clean in $*"
-	@cd $* && $(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(CLEAN_ARGS)
+	@cd $* && /usr/bin/env -i $(BUILD_ENV) $(MAKE) $(foreach TTT,$(BUILD_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(CLEAN_ARGS)
 	@rm -f $(COOKIEDIR)/build-$*
 
 clean-%/makefile:
@@ -935,7 +935,7 @@ TEST_TARGET ?= check
 # Run tests on pre-built sources
 test-%/Makefile:
 	@echo " ==> Running make $(TEST_TARGET) in $*"
-	cd $* && $(TEST_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(TEST_ARGS) $(TEST_TARGET)
+	cd $* && /usr/bin/env -i $(TEST_ENV) $(MAKE) $(PARALLELMFLAGS) $(foreach TTT,$(TEST_OVERRIDE_VARS),$(TTT)="$(TEST_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(TEST_OVERRIDE_DIRS),$(TTT)="$($(TTT))") -C $(OBJDIR) $(TEST_ARGS) $(TEST_TARGET)
 	@$(MAKECOOKIE)
 
 test-%/makefile:
@@ -969,7 +969,7 @@ test-%/setup.py:
 # just run make install and hope for the best.
 install-%/Makefile:
 	@echo " ==> Running make install in $*"
-	@cd $* && $(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
+	@cd $* && /usr/bin/env -i $(INSTALL_ENV) $(MAKE) DESTDIR=$(DESTDIR) $(foreach TTT,$(INSTALL_OVERRIDE_VARS),$(TTT)="$(INSTALL_OVERRIDE_VAR_$(TTT))") $(foreach TTT,$(INSTALL_OVERRIDE_DIRS),$(TTT)="$(DESTDIR)$($(TTT))") -C $(OBJDIR) $(INSTALL_ARGS) install
 	@$(MAKECOOKIE)
 
 install-%/makefile:

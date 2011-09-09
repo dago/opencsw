@@ -654,7 +654,7 @@ BERLIOS_PROJECT ?= $(NAME)
 BERLIOS_MIRROR ?= http://download.berlios.de/$(BERLIOS_PROJECT)/ http://download2.berlios.de/$(BERLIOS_PROJECT)/
 
 # GNU
-GNU_SITE     = http://mirrors.kernel.org
+GNU_SITE     = http://ftp.gnu.org
 GNU_GNUROOT  = $(GNU_SITE)/gnu
 GNU_NGNUROOT = $(GNU_SITE)/non-gnu
 GNU_PROJ    ?= $(NAME)
@@ -679,6 +679,8 @@ PYPI_MIRROR = http://pypi.python.org/packages/source/$(PYPI_SUBDIR)/$(PYPI_PROJE
 # Package dir
 GARPACKAGE = $(shell basename $(CURDIR))
 
+STANDARD_EXPORTS ?= PATH
+
 # Put these variables in the environment during the
 # configure, build, test, and install stages
 ifeq ($(origin DIRECTORY_EXPORTS), undefined)
@@ -699,7 +701,7 @@ ifeq ($(origin GARPKG_EXPORTS), undefined)
 GARPKG_EXPORTS += GARCH GAROSREL GARPACKAGE
 endif
 
-COMMON_EXPORTS ?= $(DIRECTORY_EXPORTS) $(COMPILER_EXPORTS) $(GARPKG_EXPORTS) $(EXTRA_COMMON_EXPORTS) $(_CATEGORY_COMMON_EXPORTS)
+COMMON_EXPORTS ?= $(STANDARD_EXPORTS) $(DIRECTORY_EXPORTS) $(COMPILER_EXPORTS) $(GARPKG_EXPORTS) $(EXTRA_COMMON_EXPORTS) $(_CATEGORY_COMMON_EXPORTS)
 
 ifneq ($(LD_OPTIONS),)
 COMMON_EXPORTS += LD_OPTIONS
@@ -710,10 +712,10 @@ BUILD_EXPORTS     ?= $(COMMON_EXPORTS) $(EXTRA_BUILD_EXPORTS)
 TEST_EXPORTS      ?= $(COMMON_EXPORTS) $(EXTRA_TEST_EXPORTS)
 INSTALL_EXPORTS   ?= $(COMMON_EXPORTS) $(EXTRA_INSTALL_EXPORTS) DESTDIR
 
-CONFIGURE_ENV ?= $(foreach TTT,$(CONFIGURE_EXPORTS),$(TTT)="$($(TTT))")
-BUILD_ENV     ?= $(foreach TTT,$(BUILD_EXPORTS),$(TTT)="$($(TTT))")
-TEST_ENV      ?= $(foreach TTT,$(TEST_EXPORTS),$(TTT)="$($(TTT))")
-INSTALL_ENV   ?= $(foreach TTT,$(INSTALL_EXPORTS),$(TTT)="$($(TTT))")
+CONFIGURE_ENV ?= $(foreach TTT,$(filter-out $(NO_CONFIGURE_EXPORTS),$(CONFIGURE_EXPORTS)),$(TTT)="$(or $(CONFIGURE_ENV_$(TTT)),$($(TTT)))")
+BUILD_ENV     ?= $(foreach TTT,$(filter-out $(NO_BUILD_EXPORTS),$(BUILD_EXPORTS)),$(TTT)="$(or $(BUILD_ENV_$(TTT)),$($(TTT)))")
+TEST_ENV      ?= $(foreach TTT,$(filter-out $(NO_TEST_EXPORTS),$(TEST_EXPORTS)),$(TTT)="$(or $(TEST_ENV_$(TTT)),$($(TTT)))")
+INSTALL_ENV   ?= $(foreach TTT,$(filter-out $(NO_INSTALL_EXPORTS),$(INSTALL_EXPORTS)),$(TTT)="$(or $(INSTALL_ENV_$(TTT)),$($(TTT)))")
 
 # For now don't build source packages until there is some more testing
 NOSOURCEPACKAGE ?= 1
