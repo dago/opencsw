@@ -1,6 +1,5 @@
 dc8664f3dc92693aaaad68785e4426ae  configure.patch
-cc9b1bd7ddf8e27e97ef464806885349  tcl.m4.patch
-a08eaf8467c0631937067c1948dd326b  tcl8.5.10-src.tar.gz
 3c9c100904b6ba774a679ad7f2b4a036  tclInt.h.patch
 1dea9df5cd9579dce4746cf5d428aa1a  tcl-dtrace.patch
-1d6c493907986871a90c7c9612520ffd  soname.diff
+ade2c033a7b545ee108f3fdfeb629fcf  tcl8.4.19-src.tar.gz
+10ae65cdcd10dc7a4ba7d84f5d7c2338  soname.diff
