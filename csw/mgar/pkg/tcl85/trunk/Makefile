@@ -32,7 +32,6 @@ PATCHFILES += tcl-dtrace.patch
 PACKAGES  = CSWtcl
 PACKAGES += CSWlibtcl8-5-0
 PACKAGES += CSWtcl-dev
-PACKAGES += CSWtcl-doc
 
 # The dependencies on the ISAs differ, here's from tcl-x.y.z/unix/tcl.m4: 
 #
@@ -49,13 +48,10 @@ RUNTIME_DEP_PKGS_CSWtcl-dev          += CSWlibtcl8-5-0
 SPKG_DESC_CSWtcl          = $(DESCRIPTION)
 SPKG_DESC_CSWlibtcl8-5-0  = $(DESCRIPTION), libraries
 SPKG_DESC_CSWtcl-dev      = $(DESCRIPTION), development files
-SPKG_DESC_CSWtcl-doc      = $(DESCRIPTION), documentation
 
 PKGFILES_CSWlibtcl8-5-0   = $(call pkgfiles_lib,libtcl8.5.so.0)
 PKGFILES_CSWtcl-dev       = $(PKGFILES_DEVEL)
-PKGFILES_CSWtcl-doc       = $(PKGFILES_DOC)
 
-ARCHALL_CSWtcl-doc = 1 
 
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/mann/clock.n
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/share/man/mann/clock.n
