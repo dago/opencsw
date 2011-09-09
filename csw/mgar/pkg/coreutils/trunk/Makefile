@@ -15,7 +15,10 @@ SHELL = /opt/csw/bin/bash
 BUILD_DEP_PKGS =  CSWautomake CSWautoconf CSWbison CSWggettext-dev CSWgit
 BUILD_DEP_PKGS += CSWgperf CSWgzip CSWperl CSWrsync CSWgtar CSWbash
 
-RUNTIME_DEP_PKGS = CSWiconv CSWlibintl8 CSWlibgmp
+RUNTIME_DEP_PKGS_CSWcoreutils += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWcoreutils += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWcoreutils += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWcoreutils += CSWlibgmp10
 
 INCOMPATIBLE_PKGS = CSWshutils CSWtextutils
 
