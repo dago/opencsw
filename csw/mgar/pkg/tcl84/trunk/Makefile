@@ -1,8 +1,8 @@
-NAME = tcl
-VERSION = 8.5.10
+NAME = tcl8.4
+VERSION = 8.4.19
 CATEGORIES = lang
 
-DESCRIPTION = Tcl programming language
+DESCRIPTION = Tcl programming language, version 8.4
 define BLURB
 endef
 
@@ -21,47 +21,33 @@ LICENSE = license.terms
 #PATCHFILES  = configure.patch
 #PATCHFILES += tclInt.h.patch
 
-REN_LIBTCL  = libtcl8.5.so
-REN_TCLSH   = tclsh8.5
+REN_LIBTCL  = libtcl8.4.so
+REN_TCLSH   = tclsh8.4
 
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
-PATCHFILES  = soname.diff
 PATCHFILES += tcl.m4.patch
 PATCHFILES += tcl-dtrace.patch
 
 PACKAGES  = CSWtcl
-PACKAGES += CSWlibtcl8-5-0
-PACKAGES += CSWtcl-dev
-PACKAGES += CSWtcl-doc
+PACKAGES += CSWtcl8.4
+
+ALTERNATIVES_PRIO = 840
 
 # The dependencies on the ISAs differ, here's from tcl-x.y.z/unix/tcl.m4: 
 #
 #              # On Solaris 5.x i386 with the sunpro compiler we need to link
 #              # with sunmath to get floating point rounding control
 #
-RUNTIME_DEP_PKGS_CSWtcl-i386          = CSWsunmath
-RUNTIME_DEP_PKGS_CSWtcl              += CSWlibtcl8-5-0
-RUNTIME_DEP_PKGS_CSWtcl              += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
-RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-i386 += CSWsunmath
-RUNTIME_DEP_PKGS_CSWlibtcl8-5-0      += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-$(GARCH))
-RUNTIME_DEP_PKGS_CSWtcl-dev          += CSWlibtcl8-5-0
+RUNTIME_DEP_PKGS_CSWtcl           = CSWtcl8.4
+RUNTIME_DEP_PKGS_CSWtcl8.4-i386   = CSWsunmath
+RUNTIME_DEP_PKGS_CSWtcl8.4-i386  += $(RUNTIME_DEP_PKGS_CSWtcl-$(GARCH))
 
-SPKG_DESC_CSWtcl          = $(DESCRIPTION)
-SPKG_DESC_CSWlibtcl8-5-0  = $(DESCRIPTION), libraries
-SPKG_DESC_CSWtcl-dev      = $(DESCRIPTION), development files
-SPKG_DESC_CSWtcl-doc      = $(DESCRIPTION), documentation
+SPKG_DESC_CSWtcl          = $(DESCRIPTION), backwards compatibility package
+SPKG_DESC_CSWtcl8.4       = $(DESCRIPTION)
 
-PKGFILES_CSWlibtcl8-5-0   = $(call pkgfiles_lib,libtcl8.5.so.0)
-PKGFILES_CSWtcl-dev       = $(PKGFILES_DEVEL)
-PKGFILES_CSWtcl-doc       = $(PKGFILES_DOC)
-
-ARCHALL_CSWtcl-doc = 1 
-
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/mann/clock.n
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/share/man/mann/clock.n
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/lib/tcl8.5/clock.tcl
-CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/lib/tcl8.5/clock.tcl
-
+ALTERNATIVES_CSWtcl8.4 += tcl8.4
+ALTERNATIVES_tc8.4 += $(bindir)/tclsh
+ALTERNATIVES_tc8.4 += $(libdir)/tclConfig.sh
 
 BUILD64 = 1
 
@@ -89,14 +75,6 @@ DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 pre-configure-modulated:
 	@echo " ==> Regenerating build tools..."
 	@(cd $(WORKSRC) ; cp -p ../license.terms .; $(prefix)/bin/autoreconf -if )
-	@$(MAKECOOKIE)
-
-pre-test-modulated:
-	@# Need to manually create symlink to latest version
-	@echo Creating symlinks for libtcl8.5.so
-	@(cd $(WORKSRC) ; \
-		mv $(REN_LIBTCL) $(REN_LIBTCL).0 ; \
-		ln -sf $(REN_LIBTCL).0 $(REN_LIBTCL) )
 	@$(MAKECOOKIE)
 
 post-install-modulated:
