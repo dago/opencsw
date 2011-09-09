@@ -25,6 +25,7 @@ REN_LIBTCL  = libtcl8.4.so
 REN_TCLSH   = tclsh8.4
 
 PATCHDIR = $(WORKDIR)/$(DISTNAME)
+PATCHFILES  = soname.diff
 PATCHFILES += tcl.m4.patch
 PATCHFILES += tcl-dtrace.patch
 
