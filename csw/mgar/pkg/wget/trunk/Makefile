@@ -60,13 +60,9 @@ MIGRATE_FILES = wgetrc
 
 EXTRA_MERGE_EXCLUDE_FILES += $(libdir)/charset.alias
 
-MERGE_SCRIPTS_isa-sparcv8-static-disable = copy-all
- MERGE_SCRIPTS_isa-sparcv8-static-enable = copy-static-wget-only
-    MERGE_DIRS_isa-sparcv8-static-enable = $(bindir)
-
-    MERGE_SCRIPTS_isa-i386-static-disable = copy-all
-     MERGE_SCRIPTS_isa-i386-static-enable = rename-wget copy-only
-        MERGE_DIRS_isa-i386-static-enable = $(bindir)
+MERGE_SCRIPTS_isa-default-static-disable = copy-all
+ MERGE_SCRIPTS_isa-default-static-enable = copy-static-wget-only
+    MERGE_DIRS_isa-default-static-enable = $(bindir)
 
 # This is ok, it is just one example occurrence, all others have been replaced
 CHECKPKG_OVERRIDES_CSWwget += file-with-bad-content|/usr/local|root/opt/csw/share/info/wget.info
