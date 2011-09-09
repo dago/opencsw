@@ -41,12 +41,13 @@ SPKG_DESC_CSWlibtcl8-4-0  = $(DESCRIPTION), libraries
 SPKG_DESC_CSWtcl8-4-dev   = $(DESCRIPTION), development files
 
 # Make sure CSWtcl remains empty, it's just for backwards compatibility:
-PKGFILES_CSWtcl8-4        =
+PKGFILES_CSWtcl           = NOFILES
 PKGFILES_CSWlibtcl8-4-0   = $(call pkgfiles_lib,libtcl8.4.so.0)
 PKGFILES_CSWtcl8-4-dev    = $(PKGFILES_DEVEL)
 # catchall, so nothing here.
 # PKGFILES_CSWtcl8-4
 
+ARCHALL_CSWtcl = 1
 
 ALTERNATIVES_CSWtcl8-4 += tcl8_4
 ALTERNATIVE_tcl8_4     += $(bindir)/tclsh $(ALTERNATIVES_PRIO)
