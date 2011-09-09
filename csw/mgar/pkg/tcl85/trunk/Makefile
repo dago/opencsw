@@ -1,4 +1,4 @@
-NAME = tcl
+NAME = tcl8.5
 VERSION = 8.5.10
 CATEGORIES = lang
 
@@ -8,7 +8,7 @@ endef
 
 SF_PROJ = tcl
 MASTER_SITES = $(SF_MIRRORS)
-DISTNAME = $(NAME)$(VERSION)
+DISTNAME = $(SF_PROJ)$(VERSION)
 DISTFILES  = $(DISTNAME)-src.tar.gz
 
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10894
@@ -33,7 +33,7 @@ PACKAGES  = CSWtcl
 PACKAGES += CSWlibtcl8-5-0
 PACKAGES += CSWtcl-dev
 
-ALTERNATIVES_PRIO = 845
+ALTERNATIVES_PRIO = 850
 
 # The dependencies on the ISAs differ, here's from tcl-x.y.z/unix/tcl.m4: 
 #
@@ -55,8 +55,8 @@ PKGFILES_CSWlibtcl8-5-0   = $(call pkgfiles_lib,libtcl8.5.so.0)
 PKGFILES_CSWtcl8-5-dev    = $(PKGFILES_DEVEL)
 
 ALTERNATIVES_CSWtcl8_5 += tcl8_5
-ALTERNATIVES_tc8_5     += $(bindir)/tclsh $(ALTERNATIVES_PRIO)
-ALTERNATIVES_tc8_5     += $(libdir)/tclConfig.sh
+ALTERNATIVE_tcl8_5     += $(bindir)/tclsh $(ALTERNATIVES_PRIO)
+ALTERNATIVE_tcl8_5     += $(libdir)/tclConfig.sh $(ALTERNATIVES_PRIO)
 
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/mann/clock.n
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/share/man/mann/clock.n
