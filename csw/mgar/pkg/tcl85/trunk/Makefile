@@ -2,7 +2,7 @@ NAME = tcl
 VERSION = 8.5.10
 CATEGORIES = lang
 
-DESCRIPTION = Tcl programming language
+DESCRIPTION = Tcl programming language v8.5
 define BLURB
 endef
 
@@ -33,6 +33,8 @@ PACKAGES  = CSWtcl
 PACKAGES += CSWlibtcl8-5-0
 PACKAGES += CSWtcl-dev
 
+ALTERNATIVES_PRIO = 845
+
 # The dependencies on the ISAs differ, here's from tcl-x.y.z/unix/tcl.m4: 
 #
 #              # On Solaris 5.x i386 with the sunpro compiler we need to link
@@ -45,19 +47,21 @@ RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-i386 += CSWsunmath
 RUNTIME_DEP_PKGS_CSWlibtcl8-5-0      += $(RUNTIME_DEP_PKGS_CSWlibtcl8-5-0-$(GARCH))
 RUNTIME_DEP_PKGS_CSWtcl-dev          += CSWlibtcl8-5-0
 
-SPKG_DESC_CSWtcl          = $(DESCRIPTION)
+SPKG_DESC_CSWtcl8-5       = $(DESCRIPTION)
 SPKG_DESC_CSWlibtcl8-5-0  = $(DESCRIPTION), libraries
 SPKG_DESC_CSWtcl-dev      = $(DESCRIPTION), development files
 
 PKGFILES_CSWlibtcl8-5-0   = $(call pkgfiles_lib,libtcl8.5.so.0)
-PKGFILES_CSWtcl-dev       = $(PKGFILES_DEVEL)
+PKGFILES_CSWtcl8-5-dev    = $(PKGFILES_DEVEL)
 
+ALTERNATIVES_CSWtcl8_5 += tcl8_5
+ALTERNATIVES_tc8_5     += $(bindir)/tclsh $(ALTERNATIVES_PRIO)
+ALTERNATIVES_tc8_5     += $(libdir)/tclConfig.sh
 
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/share/man/mann/clock.n
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/share/man/mann/clock.n
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/local|root/opt/csw/lib/tcl8.5/clock.tcl
 CHECKPKG_OVERRIDES_CSWtcl += file-with-bad-content|/usr/share|root/opt/csw/lib/tcl8.5/clock.tcl
-
 
 BUILD64 = 1
 
@@ -96,7 +100,7 @@ pre-test-modulated:
 	@$(MAKECOOKIE)
 
 post-install-modulated:
-	@# Need to manually create symlink to latest version
+	@# Need to manually create symlink to latest version - it will be handled by alternatives
 	@echo Creating tclsh link
 	@ln -s $(REN_TCLSH) $(INSTALLISADIR)/$(bindir)/tclsh
 	@perl -pi -e "s|/usr/local|$(prefix)|g" $(INSTALLISADIR)/$(libdir)/tclConfig.sh
