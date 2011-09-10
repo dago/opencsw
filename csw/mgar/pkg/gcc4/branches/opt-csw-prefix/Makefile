@@ -250,7 +250,6 @@ CATALOGNAME_CSWlibgcj$(JAVA_LIB_VERSION) = libgcj$(JAVA_LIB_VERSION)
 PKGFILES_CSWlibgcj$(JAVA_LIB_VERSION) += $(call baseisadirs,$(libdir),libgcj\.so\.$(JAVA_LIB_VERSION)(\.\d+)*)
 SPKG_DESC_CSWlibgcj$(JAVA_LIB_VERSION) += $(DESCRIPTION), libgcj.so.$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_CSWlibgcj$(JAVA_LIB_VERSION) += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWlibgcj$(JAVA_LIB_VERSION) += CSWlibz1
 
 PACKAGES += CSWlibgfortran3
 CATALOGNAME_CSWlibgfortran3 = libgfortran3
@@ -496,3 +495,6 @@ PATH := /opt/csw/gnu:$(PATH)
 
 # This override sets the right RPATH on libstdc++ and other libraries.
 LD_OPTIONS := -R/opt/csw/lib -R/opt/csw/lib/\$$ISALIST
+CONFIGURE_ENV := PATH=$(PATH) CC=$(CC) LD_OPTIONS="$(LD_OPTIONS)"
+BUILD_ENV := PATH=$(PATH) LD_OPTIONS="$(LD_OPTIONS)"
+INSTALL_ENV := PATH=$(PATH)
