@@ -1,15 +1,6 @@
 diff -ur tcl8.4.19/unix/Makefile.in tcl8.4.19-solfix/unix/Makefile.in
 --- tcl8.4.19/unix/Makefile.in	2008-04-17 22:29:49.000000000 +0200
-+++ tcl8.4.19-solfix/unix/Makefile.in	2011-09-09 20:20:12.621101557 +0200
-@@ -207,7 +207,7 @@
- SHLIB_LD		= @SHLIB_LD@
- SHLIB_CFLAGS		= @SHLIB_CFLAGS@
- SHLIB_LD_LIBS		= @SHLIB_LD_LIBS@
--TCL_SHLIB_LD_EXTRAS	= @TCL_SHLIB_LD_EXTRAS@
-+TCL_SHLIB_LD_EXTRAS     = @TCL_SHLIB_LD_EXTRAS@
- 
- SHLIB_SUFFIX		= @SHLIB_SUFFIX@
- #SHLIB_SUFFIX		=
++++ tcl8.4.19-solfix/unix/Makefile.in	2011-09-10 04:00:22.590399176 +0200
 @@ -634,7 +634,9 @@
  	    fi
  	@echo "Installing $(LIB_FILE) to $(LIB_INSTALL_DIR)/"
@@ -21,14 +12,28 @@ diff -ur tcl8.4.19/unix/Makefile.in tcl8.4.19-solfix/unix/Makefile.in
  	@if test "$(TCL_BUILD_EXP_FILE)" != ""; then \
  	    echo "Installing $(TCL_EXP_FILE) to $(LIB_INSTALL_DIR)/"; \
  	    $(INSTALL_DATA) $(TCL_BUILD_EXP_FILE) \
+Only in tcl8.4.19-solfix/unix: autom4te.cache
+diff -ur tcl8.4.19/unix/configure.in tcl8.4.19-solfix/unix/configure.in
+--- tcl8.4.19/unix/configure.in	2008-04-17 22:29:49.000000000 +0200
++++ tcl8.4.19-solfix/unix/configure.in	2011-09-10 03:48:07.771286323 +0200
+@@ -568,7 +568,7 @@
+ 
+ # Trick to replace DBGX with TCL_DBGX
+ DBGX='${TCL_DBGX}'
+-eval "TCL_LIB_FILE=${TCL_LIB_FILE}"
++eval "TCL_LIB_FILE=${TCL_LIB_FILE}".0
+ 
+ TCL_LIBRARY='$(prefix)/lib/tcl$(VERSION)'
+ PRIVATE_INCLUDE_DIR='$(includedir)'
+Only in tcl8.4.19-solfix/unix: license.terms
 diff -ur tcl8.4.19/unix/tcl.m4 tcl8.4.19-solfix/unix/tcl.m4
 --- tcl8.4.19/unix/tcl.m4	2008-04-17 22:29:49.000000000 +0200
-+++ tcl8.4.19-solfix/unix/tcl.m4	2011-09-09 20:21:56.672149153 +0200
-@@ -1843,6 +1843,7 @@
++++ tcl8.4.19-solfix/unix/tcl.m4	2011-09-10 03:52:19.203297058 +0200
+@@ -1907,6 +1907,7 @@
  	    # symbols when dynamically loaded into tclsh.
  
  	    SHLIB_LD_LIBS='${LIBS}'
-+	    TCL_SHLIB_LD_EXTRAS="-h \${TCL_LIB_FILE}.0"
++	    TCL_SHLIB_LD_EXTRAS="-h \${TCL_LIB_FILE}"
  	    SHLIB_SUFFIX=".so"
  	    DL_OBJS="tclLoadDl.o"
  	    DL_LIBS="-ldl"
