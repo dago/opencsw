@@ -52,9 +52,8 @@ EXTRA_LDFLAGS = -lgen
 
 PROTOTYPE_FILTER  = awk '$$$$3 == "/opt/csw/bin/gsu" { $$$$4 = "4555" }; { print }'
 
-# 8.10 fails cp/fiemap-perf and cp/fiemap-2 on sparc due to gdf not returning
-# an error when running gdf -T -t ... (fiemap_capable_ in tests/init.cfg)
-ifneq ($(VERSION), 8.10)
+# move the pegs forward
+ifneq ($(VERSION), 8.13)
 TEST_TARGET = check
 else
 TEST_SCRIPTS =
