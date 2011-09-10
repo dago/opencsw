@@ -32,6 +32,8 @@ PACKAGES += CSWtcl8-4-dev
 ALTERNATIVES_PRIO = 840
 
 RUNTIME_DEP_PKGS_CSWtcl         = CSWtcl8-4
+RUNTIME_DEP_PKGS_CSWtcl        += CSWlibtcl8-4-0
+RUNTIME_DEP_PKGS_CSWtcl        += CSWtcl8-4-dev
 RUNTIME_DEP_PKGS_CSWtcl8-4      = CSWlibtcl8-4-0
 RUNTIME_DEP_PKGS_CSWtcl8-4-dev  = CSWlibtcl8-4-0
 
@@ -53,7 +55,7 @@ ALTERNATIVES_CSWtcl8-4 += tcl8_4
 ALTERNATIVE_tcl8_4     += $(bindir)/tclsh $(ALTERNATIVES_PRIO)
 ALTERNATIVE_tcl8_4     += $(libdir)/tclConfig.sh $(ALTERNATIVES_PRIO)
 
-CHECKPKG_OVERRIDES_CSWtcl += surplus-dependency|CSWtcl8-4k
+CHECKPKG_OVERRIDES_CSWtcl += surplus-dependency|CSWtcl8-4
 
 BUILD64 = 1
 
