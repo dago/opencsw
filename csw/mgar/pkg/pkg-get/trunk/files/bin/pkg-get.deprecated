@@ -1,0 +1,2923 @@
+#!/bin/ksh -p
+# The -p says "ignore .profile for ksh"
+
+# This is loosely modeled after debian "apt-get".
+
+# Philip Brown, phil@bolthole.com, http://www.bolthole.com/solaris/
+
+# Internal SCCS rev @(#) pkg-get 4.23@(#)
+
+# See the config file, $CONFFILE, for things you can tweak.
+# (commonly /etc/pkg-get.conf, or ${prefix}/etc/pkg-get.conf )
+
+#currently undocumented vars of interest:
+#PKGGET_DOWNLOAD_DIR
+#PKGGET_CACHE_FILES (set to anything, means true, 
+#                    means "dont remove after download")
+
+umask 022
+
+
+######################################################################
+######################################################################
+# Dont change anything below here
+######################################################################
+######################################################################
+
+export debug=0 # use commandline flags to change value of this, usually
+progname=$0
+
+# There is a BUG, in "New ksh", that makes its built-in uname, differ
+# from standard one. (specifically for "uname -p")
+# So make sure to use external binary.
+UNAME=/bin/uname
+
+# The difference cases:
+#   pkg-get
+#   /path/to/pkg-get
+#   local/path/to/pkg-get
+#   ./pkg-get
+
+case $progname in
+	/*)
+		progdir=${progname%/*}
+	;;
+	*/*)
+		progdir=${progname%/*}
+		progdir=`cd $progdir && /bin/pwd`
+	;;
+	*)
+		# no slashes? probably just "pkg-get"
+		progdir=`/bin/pwd`
+	;;
+esac
+export progdir
+
+home_conf=$HOME/.pkg-get
+home_pkgget_var=$HOME/pkg-get
+# LOCATE CONFIG FILE
+#
+# This block attempts to be "intelligent", and keep pkg-get to be
+# distribution-neutral, while still being able to look in distribution-specific
+# locations.
+# IFF it is installed in /opt/csw/bin/pkg-get, for example, it will look first
+# in /opt/csw/etc/pkg-get.conf, then /etc/opt/csw/pkg-get.conf for an
+# override. Only if it cannot find either of them, will it look in
+# /etc/pkg-get.conf
+#
+# RETURN VALUE:  print path of chosen config file to stdout.
+# If none existing found, will return where we think it "should" be, so our
+# auto-create routine can create it.
+#
+function locate_config_file {
+	if [[ -f $home_conf ]] ; then
+		if (( $debug > 0 )) ; then
+			print Using $home_conf as config file >/dev/fd/2
+		fi
+		print $home_conf
+		return
+	fi
+
+	case $progdir in
+	*/bin)
+		prefix=${progdir%/bin}
+		conffile=$prefix/etc/pkg-get.conf
+		if [[ -f $conffile ]] ; then
+			 print $conffile ; return
+		fi
+		shortprefix=${prefix##*/}
+		conffile=/etc/opt/$shortprefix/pkg-get.conf
+		if [[ -f $conffile ]] ; then
+			print $conffile ; return
+		fi
+
+		if [[ -d /etc/opt/$shortprefix ]] && [[ ! -f /etc/pkg-get.conf ]]
+		then
+			# do this, so that the default conf file will
+			# get created in THIS location, rather than
+			# /etc/pkg-get.conf
+			print /etc/opt/$shortprefix/pkg-get.conf
+			return
+		fi
+		;;
+	esac
+
+	# last-ditch fallback: look in /etc, if we cant tell a "normal" prefix
+
+	print /etc/pkg-get.conf; return
+}
+
+CONFFILE=`locate_config_file`
+
+
+
+
+
+function get_wget {
+	# We need wget ( or a reasonable lookalike ) to function.
+	# If this function is called.. we cant find one. so grab
+	# a temporary one that will work well enough for pkg-get use.
+	# Except that this is too yeukky right now.
+	# SO punt back to the user.
+	print ERROR: no working version of wget found, in PATH
+	print "( $PATH )"
+	print ""
+
+	print 'Attempt to ftp and install a package for it? (y/n)'
+	read ans
+	case $ans in
+		y|Y)
+			print ""
+			print 'Attempting to download wget package'
+			sleep 2
+			print ""
+
+			ftp_prog_hardway wget
+			status=$?
+			if [[ $status -eq 0 ]] ; then
+				print ""
+				return
+				#note that CALLER will handle static copy
+			fi
+		;;
+	esac
+
+	print Please install a working copy of wget,
+	print or set WGET to name another program, in $CONFFILE
+	if [[ "$SITE" != "" ]] ; then
+		print You should be able to find a working binary for wget at
+		print $SITE/wget.$ARCH
+		print "download it, rename to 'wget', chmod 0755 wget,"
+		print "and put it somewhere in your PATH"
+	fi
+
+	exit 1
+}
+
+# Grab the file named by the first arg
+# It will be downloaded to the "download dir" normally.
+# Or, if downloadonly is set, to the current directory.
+#
+# Note that there is some special handling of "file://" urls also.
+#
+function grabfunc {
+	graburl="$1"
+
+	if (( $downloadonly == 0 )) ; then
+		cd $PKGGET_DOWNLOAD_DIR
+	fi
+
+	case "$WGET" in
+		wget*)
+		WGETFLAGS=${WGETFLAGS:-"--dot-style=mega --no-directories"}
+		;;
+	esac
+
+	case $graburl in
+	    file://*)
+	    	fname=${graburl#file://}
+		# if multiple match to wildcard only use first one
+		fname=${fname%% *}
+		fname=$(print $fname)
+		if [[ ! -f $fname ]] ; then
+			print ERROR: file $fname does not exist >/dev/fd/2
+			return 1
+		fi
+		cp $fname `basename $fname`
+		return 0
+		;;
+	    ftp://*)
+	    	if [[ "$WGET" = "wget" ]] ; then
+		    	WGETFLAGS="$WGETFLAGS --passive-ftp"
+		fi
+		;;
+	esac
+
+
+	#-nv means NO progress meter at all. You dont get the dots.	
+	#	wget -nv --dot-style=mega --passive-ftp
+	$WGET $PROXYFLAGS $WGETFLAGS $graburl
+}
+
+
+
+
+
+
+
+function usage {
+	print 'pkg-get,   by Philip Brown , phil@bolthole.com'
+	print ' (Internal SCCS code revision @(#) pkg-get 4.23@(#) )'
+	print Originally from http://www.bolthole.com/solaris/pkg-get.html
+	print ""
+	print "pkg-get is used to install SVR4 style software packages"
+	print ""
+	print " Specify one of 'install', 'upgrade', 'available','compare'"
+	print "  '-i|install'   installs a package"
+	print "  '-u|upgrade'   upgrades already installed packages if possible"
+	print "  '-a|available' lists the available packages in the catalog"
+	print "  '-c|compare'   shows installed package versions vs available"
+	print "  '-l|list'      shows installed packages by software name only"
+	print "  '-e'           email provided single email address if updates needed"
+	print "                   (-e is incompatible with -c)"
+	print ""
+	print "Optional modifiers:"
+	print "  '-d|download'  just download the package, not install"
+	print "  '-D|describe'  describe available packages, or search for one"
+	print "  '-U|updatecatalog'   updates download site inventory"
+	print "  '-S|sync'      Makes update mode sync to version on mirror site"
+	print "  '-v'           Debug/verbose mode (-d and -D were taken!)"
+	print "                  Will report how many bytes would be downloaded"
+	
+	print "  '-f'           dont ask any questions: force default pkgadd behaviour"
+	print "                 Normally used with an override admin file"
+	print "                 See $PKGGET_VARDIR/admin-fullauto"
+	print ""
+	print "  '-s ftp://site/dir'  temporarily override site to get from"
+	print ""
+	print "Legendary, previously undocumented mode:"
+	print "  pkg-get {std-cmd} /directory/path PKGname1 PKGname2 ...."
+	print "  Will attempt to use the usual pkg-get command given, on packages"
+	print "  present in the local directory specified. Packages must be"
+	print "  in *directory* format."
+	print "  Useful with Sol 8/9/10 OS cdroms. Yes it pulls in dependancies there."
+}
+
+
+######################################################################
+# Funky version comparision code here. lots of legacy code.          #
+# Mainline is func newer_rev, at the bottom                          #
+######################################################################
+
+# return true (0) if first char in string is a digit
+function startsnumeric {
+	case $1 in
+		[0-9]*)
+			return 0;
+			;;
+		*)
+			return 1;
+	esac
+}
+
+# trimrev:  pass it a revision string, and it will break it up
+# into integer components, and print out the initial number and remainder.
+# Samples:
+#   1.2    ==>  1 2
+#   beta   ==>  beta
+#   beta3  ==>  beta 3
+# WARNING: WILL ALWAYS print out ' ' as minimum!!!
+function trimrev {
+	if [[ "$1" == "" ]] ; then
+		print " "
+		return
+	fi
+
+	# if string starts with a number, the return leading number.
+	# Otherwise, return initial letter tag, like "beta", or whatever.
+	# THis is for potential comparison between "alpha" and "beta"
+	case $1 in
+	    [0-9]*)
+		echo $1 | sed 's/^\([0-9][0-9]*\)[-_.+]*\(.*\)/\1 \2/'
+		return
+	esac
+
+	# No leading digits, so split off leading ascii
+	echo $1 | sed 's/^\([^0-9]*[^0-9]*\)[-_.+]*\(.*\)/\1 \2/'
+
+	
+}
+
+# Pass in two strings.
+# Return (print) longest string that is common to both of them
+function trimshared {
+	if (( $# < 2 )) ; then
+		print ERROR: trimshared needs TWO args
+		cleanup
+		exit 1
+	fi
+	savedstring="";
+
+	while (( 1 == 1 )) ; do
+		one_end=${1##?}
+		two_end=${2##?}
+		trimsnip=${1%%$one_end}
+		if [[ "$trimsnip" == "" ]] ; then
+			print $savedstring
+			return
+		fi
+
+		case $2 in
+			${trimsnip}*)
+			set -- "$one_end" "$two_end"
+			savedstring=${savedstring}${trimsnip}
+			;;
+			*)  # default
+			print $savedstring
+			return
+		esac
+	done
+	
+}
+
+# check for proper ISO type REV date:
+# REV=YYYY.MM.DD
+# If present, need to take this as proper comparator and ignore
+# rest of it.
+function has_REV_date {
+	case $1 in
+		*,REV=[0-9][0-9][0-9][0-9].[0-9][0-9].[0-9][0-9]*)
+			return 0
+		;;
+		*)
+			return 1;
+	esac
+}
+
+# pass in two values of REV=YYYY.MM.DD[*]
+# return true if first value counts as "newer"
+# Will function ok if only one has REV, but not if neither do.
+function compare_REVs {
+	typeset val1 val2 head1 head2
+
+	if has_REV_date $1 ; then
+		if ! has_REV_date $2 ; then
+			return 0  # auto-"win" if only $1 has REV.
+		fi
+	elif has_REV_date $2 ; then
+		return 1  # auto-"LOSE" if only $2 has REV.
+	fi
+
+	val1=${1#*REV=}; 	val2=${2#*REV=};
+
+
+	while [[ $val1 != "" ]] ; do
+		head1=${val1%%.*} ; val1=${val1#*.}
+		head2=${val2%%.*} ; val2=${val2#*.}
+		if [[ $head1 == $val1 ]] ; then val1=""; fi
+		if [[ $head2 == $val2 ]] ; then val2=""; fi
+
+		if startsnumeric $head1 ; then
+			if ! startsnumeric $head2 ; then
+				return 0
+			fi
+
+			#ok both must be numeric...
+
+			if [[ $head1 > $head2 ]] ; then
+				return 0
+			elif [[ $head1 < $head2 ]] ; then
+				return 1
+			fi
+
+			# else presume equal. loop on rest of val
+
+		elif startsnumeric $head2
+			then return 1
+		fi
+		
+	done
+
+	# must have been identical? therefore return "not newer"
+	return 1;
+
+}
+
+# newer_rev  rev1 rev2
+# Returns true (0) if rev1 is newer than rev2
+# Otherwise, return false (1)
+# Up to caller to only pass in revision id.
+#  from a filename "GNU-tar-v2.13.tar.gz" only pass in "v2.13"
+function newer_rev {
+
+	if (( $# < 2 )) ; then
+		print Need TWO args to newer_rev
+		exit 1
+	fi
+	if has_REV_date $1 || has_REV_date $2 ; then
+		compare_REVs $1 $2
+		return $?
+	fi
+
+	# First, snip off any common string at the front
+	shared_start=`trimshared $1 $2`
+	if [[ "$shared_start" != "" ]] ; then
+		val1=${1##$shared_start}
+		val2=${2##$shared_start}
+	else
+		val1="$1"
+		val2="$2"
+	fi
+
+	# Pathalogical case: exact same values
+	if [[ "$val1" = "$val2" ]] ; then
+		return 1
+	fi
+
+
+        # If first value has number, and second has not, then
+	# that probably means something like 0.12, vs 0.1.2
+	#   (if so, now comparing '2' vs '.2'
+	# Thus if first is numeric then first one has higher rev!
+	if startsnumeric $val1 ; then
+		# either val2 is ALSO numeric, or then return 0
+		startsnumeric $val2 || return 0
+	else
+		if startsnumeric $val2 ; then
+			# val1 is NOT numeric, val2 IS, therefore
+			# val2 has higher rev.
+			return 1
+		fi
+	fi
+
+
+	# BOTH are numeric? 
+	# IF so, then we must have differing initial numbers. Since
+	# if they were the same, trimshared should have stripped them.
+	# Should thus be able
+	# to do a straight numeric comparison, and know our answer.
+	# Isolate leading numeric components, then compare numbers
+
+	if startsnumeric $val1 && startsnumeric $val2 ; then
+		num1="" ; num2=""
+		tmprev1=`trimrev $val1`
+		set -- $tmprev1
+		num1=$1
+		tmprev2=`trimrev $val2`
+		set -- $tmprev2
+		num2=$1
+
+		if (( $num1 > $num2 )) ; then
+			return 0
+		fi
+		if (( $num1 < $num2 )) ; then
+			return 1
+		fi
+
+		# Else, must be same number, which means "not newer"
+		return 1
+	fi
+
+#	print "STRONG COMPRE: '$val1' '$val2'" 
+
+	# We are now facing two mixedtype strings (one of which may be empty)
+	# State table:  ("string" may be "")
+	#    val1       val2              equality
+	#   -----      ------          --------------
+	#    "*#*"      "*#*"          unknown, recurse
+	#    "*#*"      "string"           >
+	#    "string"   "*#*"              <
+	#    "string"   "string"       unknown, stop
+	#
+	case $val1 in
+	    *[0-9]*)
+		case $val2 in
+		    *[0-9]*)
+			return newer_rev "$val1" "$val2"
+			;;
+		    *)
+			return 0;
+			;;
+		esac
+		;;
+
+	    *)
+		case $val2 in
+		    *[0-9]*)
+			return 1
+			;;
+		esac
+		;;
+	esac
+
+	if [[ "$val1" = "" ]] ; then
+		case $val2 in
+			[Bb]eta*)
+				return 0;
+			;;
+		esac
+	fi
+	if [[ "$val2" = "" ]] ; then
+		case $val1 in
+			[Bb]eta*)
+				return 1;
+			;;
+		esac
+	fi
+
+	print 'newer_rev: fell off end of compare routine!' >/dev/fd/2
+	print "Dont know how to compare ascii strings '$val1' '$val2'" >/dev/fd/2
+	return 1;
+
+}
+
+######################################################################
+#           End of software name version comparision code            #
+######################################################################
+
+
+
+######################################################################
+# This expects a REAL "pkg" name, eg PKGINST name,  eg "SUNWapchd"
+# It then looks up the VERSION field, and prints it to stdout
+# return 1 if not installed, 0 otherwise.
+function get_installedpkg_ver {
+	#pkgname="$1"
+	vtmp=`pkgparam $1 VERSION 2>/dev/null`
+	if [[ "$vtmp" == "" ]] ; then
+		return 1
+	fi
+	case $vtmp in
+		*,REV=*)
+			# Okay, we accept this format now
+			;;
+		*,*)
+			# Arrg. someone was "creative" with the version field
+			vtmp=${vtmp%%,*}
+	esac
+	print $vtmp
+}
+
+
+
+# This expects a SOFTWARENAME string, not a package name
+# It will then check the catalog for versions of that software bundle,
+# and return the version field for the version in the catalog.
+# Normally, if there are multiple versions available, it will return the 
+#  'MULTIPLE' flag.
+# However, if we are in upgrade mode, it will just return the 
+# highest-rev version available (I hope)
+#
+function lookup_remote_ver {
+	remver=`$AWK '$1 ~ /^#/ {next} $1 == "'$1'" { print $2; }' $CATALOGFILE`
+	count=0
+	for rev in $remver ; do
+		count=$(($count + 1))
+	done
+
+	if (( $count <= 1 )) ; then
+		print $remver
+		return
+	fi
+
+	if (( $do_upgrade == 0 )) ; then
+		print MULTIPLE $remver
+		return
+	fi
+
+	# We are in upgrade mode!
+	for rev in $remver ; do
+		if [[ "$maxver" == "" ]] ; then
+			maxver=$rev
+			continue
+		fi
+		#print DEBUG: lookup_remote_ver calling newer_rev >/dev/fd/2
+		newer_rev $rev $maxver
+		if (( $? == 0 )) ; then
+			maxver=$rev
+		fi
+	done
+	print $maxver
+}
+
+function lookup_remote_ver_from_pkg {
+	remver=`$AWK '$1 ~ /^#/ {next} $3 == "'$1'" { print $2; exit; }' $CATALOGFILE`
+	print $remver
+}
+
+#call this with
+# explain_multiple softwarename MULTIPLE ver1 ver2
+function explain_multiple_install {
+	if (( $# < 4 )) ; then
+		print INTERNAL ERROR: explain multiple called badly
+		print \"explain_multiple $* \"
+		return
+	fi
+	print "Sorry, there are multiple versions possible"
+	print "Please specify one, in the following syntax"
+	software="$1"
+	shift ; shift
+	while (( $# > 0 )) ; do
+		print pkg-get $mode ${software}-$1
+		shift
+	done
+
+}
+
+function explain_multiple_remove {
+	print "Sorry, there are multiple SysV pkgs installed"
+	print "This is usually not possible, if pkg-get is used."
+	print "You will have to resolve this by hand, [with pkgrm]"
+	print "or try being more specific about the version of software"
+	print ""
+	print "The following related SysV packages have been detected"
+
+	print $*
+}
+
+
+# Given a software (NOT pkg) name, and a revision number,
+# generate a filename. prints out exact filename if available,
+# or a wildcard pattern.
+#  $1=software, $2=revnum
+function lookup_filename {
+	typeset net_name
+
+	net_name=`$AWK '$1 == "'$1'" && $2 == "'$2'" {print $4}' $CATALOGFILE`
+
+	if [[ -z "$net_name" ]] ; then
+		print ERROR: could not find filename for $1 $2 >/dev/fd/2
+		cleanup
+		exit 1
+	fi
+	
+	print "${net_name}"
+}
+
+
+# Check to see if there are any packages that have updates available
+# If yes, then send email to "emailnotify"
+#
+function notify {
+	#copy the "upgrade" function, kinda.
+	if (( $debug > 0 )); then
+		print "Checking for any packages that are out of date"
+	fi
+
+	# Meh.. i WAS going to get all fancy and do an optimized version.
+	# but since i plan to call 'compare' for a report anyway...
+	# may as well just run it, and look at output.
+	# choice of inefficiency if NO differences, vs inefficiency if
+	# there ARE differences.... Not much qualitative differrence,
+	# so I choose the one that makes shorter code!
+
+	# we're supposed to have cur dir of DOWNLOADDIR, so just use cur. dir
+	TMPDIR=${TMPDIR:-.}
+	compare_installed | tail +3 >$TMPDIR/compare.$$
+	if [[ -s $TMPDIR/compare.$$ ]] ; then
+	
+		if (( $debug > 0 )); then
+			print "Would email $emailnotify here"
+			rm $TMPDIR/compare.$$
+			exit 0
+		fi
+
+		SUBJECTLINE="pkg-get update report for `/bin/uname -n`"
+		/bin/mailx -s "$SUBJECTLINE" $emailnotify <$TMPDIR/compare.$$
+	
+	fi
+
+	rm -f $TMPDIR/compare.$$
+}
+
+#
+# Top level routine for "pkg-get upgrade"
+#
+# If no argument is given, tries to download and pkgadd newer versions
+# of every single net package already installed.
+#
+# If a specific software name are given, download/update each of those
+# specific ones.
+function upgrade {
+	do_upgrade=1  #global var
+		
+	if [[ "$1" == "" ]] ; then
+		set -- `egrep -v '^#' $CATALOGFILE | $AWK '{print $1}'|sort -u`
+		print note: upgrading ALL INSTALLED PACKAGES
+		upgrade_all=1  #global var
+
+		for name in $* ; do
+			pkgname=`$AWK '$1 == "'$name'" {print $3; exit;}' $CATALOGFILE`
+			if [[ -d $CHEATDIR/$pkgname ]] ; then
+				upgradelist="$name $upgradelist"
+			fi
+		done
+		print Installed software packages:
+		print $upgradelist
+		set -- $upgradelist
+	fi
+
+	for name in $* ; do
+		install_one_software "$name"
+	done
+}
+
+# Given a SysV pkg name, look up the software package name for it in
+# our catalog.
+# print out result, or return 1 if not found
+function lookup_software_name {
+	findname="$1"
+
+	sftname=`$AWK '$1 ~ /^#/ {next} $3 == "'$findname'" { print $1 }' $CATALOGFILE`
+	if [[ "$sftname" == "" ]] ; then
+		return 1
+	fi
+	print $sftname
+}
+	
+
+# called by both install_one_software, and remove_pkg
+# Given a common name for a software package, figure out the
+# SysV pkg name and print it, or print "",and an errormesasge
+# to stderr.
+# It is POSSIBLE it may return multiple SysV names.
+# remove_pkg() actually tries to take advantage of this.
+#
+# So if you want a guaranteed single return print, it is best to call it
+# with a second argument, giving the specific package version name.
+#
+function lookup_pkg_name {
+	findname="$1"
+	if [[ "$2" == "" ]] ; then
+	pkgname=`$AWK '$1 ~ /^#/ {next}
+		 $1 == "'$findname'" { print $3 }' $CATALOGFILE`
+	else
+	pkgname=`$AWK '$1 ~ /^#/ {next}
+		 $1 == "'$findname'" && $2 == "'$2'" { print $3 }' $CATALOGFILE`
+	fi
+
+	if [[ "$pkgname" == "" ]] ; then
+		# try name-version syntax now
+		# assume  XXX-YY-ZZ is XXX, ver YY-ZZ
+		soft=${findname%%-*}
+		find_version=${findname#*-}
+		pkgname=`$AWK '$1 ~ /^#/ {next} $1 == "'$soft'" && $2 == "'$find_version'" { print $3 }' $CATALOGFILE`
+
+	fi
+
+	# Still no match?
+	if [[ "$pkgname" == "" ]] ; then
+		print ERROR: no matching SysV PKG found. >/dev/fd/2
+		print $pkgname $soft $find_version >/dev/fd/2
+		print  '(either you mistyped it, or you need to 'updatecatalog', or' >/dev/fd/2
+		print  '  it isnt available for your OSREV yet)' >/dev/fd/2
+		return
+	fi
+
+	print $pkgname
+
+}
+
+
+# Given a software name, return true if we have a pkg of the same or newer
+# version than what is in the catalog.
+# Since "true" == 0, that means there are two cases of "false":
+#   Return 1 if there is no installed version
+#   Return 2 if there is an existing but older version.
+#
+#  if given a PKGname, (as judged by name starting with UPPERcase)
+#  just go with that.
+function uptodate {
+	typeset pkgname   # make pkgname a local var
+	typeset  i_sftname i_remversion i_currversion pkgname
+
+	i_sftname="$1"
+	case $i_sftname in
+		[[:upper:]]*)
+		pkgname=$1
+		# This does not handle "MULTIPLE" stuff, but takes first value
+		i_remversion=`lookup_remote_ver_from_pkg $pkgname`
+		if [[ "$i_remversion" == "" ]] ; then
+			print INTERNAL ERROR: cannot get remote version for $i_sftname  >/dev/fd/2
+			print Perhaps your catalog is out of date >/dev/fd/2
+			return 0
+		fi
+		;;
+
+		*)
+		i_remversion=`lookup_remote_ver $i_sftname`
+		if [[ "$i_remversion" == "" ]] ; then
+			print INTERNAL ERROR: cannot get remote version for $i_sftname  >/dev/fd/2
+			print Perhaps your catalog is out of date >/dev/fd/2
+			return 0
+		fi
+		pkgname=`lookup_pkg_name $1 $i_remversion`
+		;;
+	esac
+
+	i_currversion=`get_installedpkg_ver $pkgname`
+	if [[ $? -ne 0 ]] ; then
+		return 1  # return false: no version installed
+	fi
+
+	if [[ "$i_remversion" == "$i_currversion" ]] ; then
+		#if (( $debug > 0 )); then
+		#	print "dependancy check to $1:  up to date"
+		#fi
+		return 0
+	fi
+	newer_rev $i_remversion $i_currversion
+	if [[ $? -ne 0 ]] ; then
+		# remote version not the same, and not newer: must be older?
+		#if (( $debug > 0 )); then
+		#	print "dependancy check to $1:  local NEWER?"
+		#	print "Ignoring"
+		#fi
+		return 0
+	fi
+
+	# Must have an old version installed
+	return 2
+}
+
+# get_deps_from_cat: only works for catalogformat>=2
+#   It requires dependancy info in the catalog!
+# This is polymorphic: takes either PKGname, or softwarename.
+# requires that PKGname always start with uppercase, and 
+# softwarename always start with lowercase.
+# It extracts the dependancies field, and prints it out as a
+# space-separated list.
+# HOWEVER: if deps=="none", it will return ""
+#
+function get_deps_from_cat {
+	typeset depfield=""
+	case $1 in
+	[[:upper:]]*)
+		depfield=`$AWK '$1 ~ /^#/ {next} $3 == "'$1'" { print $7; exit;}' $CATALOGFILE`
+		;;
+	*)
+		depfield=`$AWK '$1 ~ /^#/ {next} $1 == "'$1'" { print $7; exit;}' $CATALOGFILE`
+		;;
+	esac
+	if [[ $depfield == "none" ]] ; then
+		print ""
+	else
+		print $depfield |sed 's/[|]/ /g'
+	fi
+	
+}
+
+# install_one_software(): Called by install_software, upgrade, and 
+# Also called internally via recursion, in handle_depend_file
+#
+# Must have one and only one argument: the name of a software package.
+#  eg "bison"
+# This is NOT to be confused with a pkgname, like SUNWcar
+#    (although attempts are made to handle pkgnames also)
+#
+# At one point, I supported calling it with a specific version. 
+#    eg  bison-2.34
+#  I am no longer sure this works, but there is legacy code from it )
+#
+# We try to find the actual pkgname from the $CATALOG file
+# and compare the catalog version to the version installed.
+#
+# If missing or out-of-date, 
+# we then call net_install to download and install the actual package,
+# if it is a valid target for install
+#  (or just return, doing nothing, otherwise)
+#
+function install_one_software {
+	# local var definitions
+	typeset i_sftname i_remversion i_currversion pkgname
+
+	if [[ "$1" == "" ]] ; then
+		print INTERNAL ERROR: install_one_software has no args
+		cleanup
+		exit 1
+	fi
+
+	i_sftname="$1"
+	i_remversion=""
+	# presume that "software name" must be lower case.
+	# if upper, then we have "pkg name passed in"
+	case $i_sftname in
+		[[:upper:]][[:upper:]]*)
+			pkgname=$i_sftname
+			i_sftname=`lookup_software_name $pkgname`
+			if [[ "$i_sftname" = "" ]] ; then
+				print ERROR: $pkgname unrecognized >/dev/fd/2
+				print Perhaps you need to run pkg-get -U>/dev/fd/2
+				cleanup
+				exit 1
+			fi
+		;;
+
+		# Odd legacy hack to support catalogs with multiple versions
+		# of the same name. Incompatible in cases where PKGname
+		# allows "-" in it. (whereas it is NEVER allowed for
+		# filename 'software' name
+		*-*)
+			i_remversion=${i_sftname#*-}
+			i_sftname=${i_sftname%%-*}
+		;;
+	esac
+
+
+	# XXX should check for conflicts/multiples here
+	if [[ "$i_remversion" == "" ]] ; then
+		i_remversion=`lookup_remote_ver $i_sftname`
+		if [[ "$i_remversion" == "" ]] ; then
+			print ERROR: $i_sftname unrecognized >/dev/fd/2
+			print Perhaps you need to run pkg-get -U>/dev/fd/2
+			cleanup
+			exit 1
+		fi
+	fi
+
+
+	case "$i_remversion" in
+		MULTIPLE*)
+			explain_multiple_install $i_sftname $i_remversion >/dev/fd/2
+			return
+		;;
+	esac
+
+	if [[ "$pkgname" == "" ]] ; then
+		pkgname=`lookup_pkg_name $1 $i_remversion`
+	fi
+
+	if [[ "$pkgname" == "" ]] ; then
+		return
+	fi
+
+
+	if (( $downloadonly == 1 )) ; then
+		# (net_install checks downloadonly also)
+		# In this case, we download, even if version already installed
+		net_install $i_sftname $i_remversion
+		
+		return
+	fi
+
+	i_currversion=`get_installedpkg_ver $pkgname`
+
+	if [[ "$i_remversion" == "$i_currversion" ]] ; then
+		if (( $debug > 0 )) || (( $upgrade_all == 1 )); then
+			print "$i_sftname is up to date"
+			return
+		fi
+		print "No worries... you already have version $i_remversion of $i_sftname"
+		print "If you doubt this message, run 'pkg-get -U', then run"
+		print " 'pkg-get upgrade $i_sftname'"
+		return
+	fi
+
+	if (( $upgrade_all == 0 && $catalogformat > 1 )) ; then
+		# xxx need to have some kind of "recursive-upgrade" flag...?
+		# xxxx -R like chown?
+		# Separate from "upgrade_all" perhaps??
+		if  deps_outofdate $pkgname ; then
+			print Error: dependancies for $i_sftname not up to date. >/dev/fd/2
+
+			if (( $debug > 0 )) ; then
+				print "Relevant packages needing download:"
+				print_deps $i_sftname
+
+				print_software_size  $i_sftname
+				return 1
+			fi
+			
+			print "You may call pkg-get again with '-v -u $i_sftname' to see which ones"
+			print Or, call pkg-get with "'upgrade' to bring all installed pkgs up to date"
+			return 1
+		fi
+		# If older catalog format, will have to wait until package
+		# is downloaded find out if deps are out of date....
+	fi
+
+
+	if [[ "$i_currversion" = "" ]] ; then
+		print No existing install of $pkgname found. Installing... >/dev/fd/2
+		net_install $i_sftname $i_remversion
+		if (( $? == 10 )) ; then
+			print ""
+			print Attempting to update catalog, then retry
+			print ""
+			update_catalog
+			i_newversion=`lookup_remote_ver $i_sftname`
+			if [[ "$i_newversion" = "i_remversion" ]] ; then
+				print "Didn't help, sorry."
+				return
+			fi
+			net_install $i_sftname $i_newversion
+		fi
+		return
+	fi
+
+
+	newer_rev $i_remversion $i_currversion
+	if [[ $? -ne 0 ]] ; then
+		if [[ "$sync" != "true" ]] ; then
+			print "WARNING: remote version older than current version."
+			print "Not installing remote package of $i_sftname"
+			print "(remote=$i_remversion, local=$i_currversion)"
+			return
+		else
+			print WARNING: down-revving $i_sftname to sync to site
+		fi
+	fi
+
+	net_install $i_sftname $i_remversion
+	
+}
+
+
+# Top routine for "pkg-get install"
+# Recognizes :
+#  No arguments == update all installed packages
+#  One or more arguments == treat each argument as a software name,
+#     and try to either install or update it, as appropriate
+function install_software {
+
+	softwarename="$1"
+	if [[ "$softwarename" == "" ]] ; then
+		print Please specify packages you want installed.
+		print "if you want 'all' packages installed, use"
+		print "   pkg-get install all"
+		return
+	fi
+	if [[ "$softwarename" == "all" ]] ; then
+		set -- `egrep -v '^#' $CATALOGFILE | $AWK '{print $1}'|sort -u`
+		# using 'upgrade' ensures we install only the latest versions
+		print "Installing ALL AVAILABLE SOFTWARE"
+		upgrade $*
+		return
+	fi
+	
+	for name in $* ; do
+		install_one_software "$name"
+	done
+}
+
+# Given a SysV package name, recursively remove *ALL*
+# instances of it.
+function remove_sysv_pkg {
+	if [[ -d $CHEATDIR/$1 ]] ; then
+		pkgrm $PKGRMFLAGS $ADMINFLAG ${1}'.*'
+	elif [ -d $CHEATDIR/$1.* ] ; then   # MUST use single [] here
+		pkgrm $PKGRMFLAGS $ADMINFLAG ${1}'.*'
+	fi
+	
+}
+
+# Given a common-name for a package, figure out the SysV pkg name
+# and pkgrm it
+function remove_pkg {
+
+	rm_softname="$1"
+	rm_version=""
+	
+	case $rm_softname in
+		*-*)
+		rm_version=${rm_softname#*-}
+		rm_softname=${rm_softname%%-*}
+		;;
+	esac
+
+
+	rm_pkgname=`lookup_pkg_name $rm_softname $rm_version`
+	if [[ "$rm_pkgname" == "" ]] ; then
+		return
+	fi
+
+	set -- $rm_pkgname
+	rm_pkgname="$1"
+	# First, look at all the externally possible unique pkgnames
+	while [[ "$2" != "" ]] ; do
+		if [[ "$2" != "$1" ]] ; then
+			rm_pkgname="$rm_pkgname $2"
+		fi
+		shift
+	done
+	
+	# Then see how many of them are actually INSTALLED
+	set -- $rm_pkgname
+	if [[ "$2" != "" ]] ; then
+		while [[ "$1" != "" ]] ; do
+			version=`get_installedpkg_ver $1`
+			if [[ "$version" != "" ]] ; then
+				rm_pkgname="$rm_pkgname $1"
+			fi
+			shift
+		done
+	fi
+
+	set -- $rm_pkgname
+	if [[ "$2" != "" ]] ; then
+		explain_multiple_remove $rm_pkgname >/dev/fd/2
+		return
+	fi
+
+	remove_sysv_pkg $rm_pkgname
+}
+
+# Given a common name for a software package, hand it off to 
+# remove_pkg
+function remove_packages {
+	if [[ "$1" == "" ]] ; then
+		print ERROR: no packages given to remove
+		cleanup
+		exit 1
+	fi
+
+	print "WARNING:  the remove option is not very intelligent."
+	print "If there are multiple versions of a package with the same"
+	print "PKG style name, it will remove the first one it can"
+	print "(will continue in 5 seconds)"
+
+	sleep 5
+	print "Starting remove operations now..."
+	print ""
+	for name in $* ; do
+		remove_pkg "$name"
+	done
+}
+# deps_outofdate PKGname
+#   (requires catalogformat>=2)
+#  Goes through catalog-listed dependancy of PKGname
+# Return true if a dependancy is installed, AND out of date.
+# Return false, if all dependancies are EITHER "up to date", OR 
+#  just not installed.
+function deps_outofdate {
+	typeset deplist=""
+	deplist=`get_deps_from_cat $1`
+	for d in $deplist ; do
+		uptodate $d
+		if (( $? == 2 )) ; then return 0 ; fi
+	done
+	return 1;
+}
+
+
+# Passed in a 'depend' file as arg 1.
+# Parse it, and try to install any missing dependancies.
+# XXX this wont handle dependancies with revisions, currently.
+# Additionally, it will REMOVE conflicting packages.
+# The benefit of this, is that it allows for renaming of PKGnames.
+# The drawback is that you have to be really really careful what you
+# specify in as a conflict when you create a PKG.
+#
+# return 1 on fail
+function handle_depend_file {
+	typeset removelist removepkg
+	typeset dependlist dependpkg dependsoftname
+
+	removelist=`$AWK ' $1 == "I" {print $2}' $1`
+	for removepkg in $removelist ; do
+		pkginfo -q $removepkg
+		if (( $? == 0 )) ; then
+			print ""
+			print Removing designated conflict package $removepkg
+			print ""
+			remove_sysv_pkg $removepkg
+		fi
+	done
+
+	dependlist=`$AWK ' $1 == "P" {print $2}' $1`
+	for dependpkg in $dependlist ; do
+		pkginfo -q $dependpkg
+		if [[ $? -ne 0 ]] ; then
+			# Dependancy not installed. So install it.
+
+			if [[ "$DIRECTORY" != "" ]] ; then
+				# no point in using upgrade:
+				# can only be one pkgname in a dir.
+				$progname install $DIRECTORY $dependpkg
+				continue
+			fi
+
+			# otherwise, we have to go through this whole
+			# long thing of looking up the name,
+			# so we can use pkg-get to install by softwarename.
+			# 
+		
+			dependsoftname=`lookup_software_name $dependpkg`
+			if [[ $? -ne 0 ]] ; then
+				print ERROR: no info for $dependpkg. Cannot install dependancy.
+				return 1
+			fi
+
+			print Trying to install dependancy $dependsoftname
+			upgrade $dependsoftname
+
+			#did it work?
+			pkginfo -q $dependpkg 2>/dev/null
+			if [[ $? -ne 0 ]] ; then
+				print ERROR: install of $dependpkg failed
+				return 1
+			fi
+
+			# We have installed the dependancy. next!
+			continue
+		fi
+
+		dependsoftname=`lookup_software_name $dependpkg`
+		if [[ "$dependsoftname" = "" ]] ; then
+			# cant find a software name for it. Probably
+			# a SUNWxyz package. ignore.
+			
+			if (( $debug > 0 )) ; then
+				print $dependpkg not in catalog. Presuming up to date
+			fi
+			continue
+		fi
+
+		# dependancy IS installed already.. but is it up to date?
+		# if not, it must be updated first. which can only be done
+		# safely, if we are in upgrade_all mode
+		if ! uptodate $dependsoftname; then
+			if (( $upgrade_all != 1 )); then
+				print "Error: dependancy $dependsoftname ($dependpkg) not up to date"
+				print "Call pkg-get again in 'upgrade' mode"
+				print "eg: '$progname upgrade'"
+				print This will then upgrade all packages cleanly
+				print ""
+				return 1
+			fi
+
+			#
+
+			# This is recursive. We have probably been called
+			# by this same function.
+			install_one_software $dependsoftname
+		else
+			# This will probably not get called. if debug is on,
+			# we will probably be calling print_deps instead
+			if (( $debug >1 )) ; then
+				print dependancy $dependsoftname is up to date
+			fi
+		
+		fi
+
+
+	done   ### for dependpkg in $dependlist
+}
+
+
+# This function exists for two reasons:
+#  1. solaris pkgtrans is BUGGY. it leaves droppings in /var/tmp
+#  2. THis way is much more efficient if the pkg is very large.
+#
+# SO, this works similar to pkgtrans  (pkgtrans srcfile destdir pkgname)
+# except that it ONLY extracts the depend file, if it exists, to
+#   $destdir/$pkgname/install/depend
+#
+function extract_depend_file {
+	typeset hdrblks
+        if [[ ! -d $2 ]] ; then
+                print ERROR: $2 is not a directory >/dev/fd/2
+                return 1
+        fi
+	rm -rf $2/$3 2>/dev/null # sometimes, old attempts get left over
+        mkdir $2/$3 || return 1  # and sometimes, we just dont have perms
+
+	# "lang=C" here, because cpio orders output differently otherwise
+        hdrblks=`(dd if=$1 skip=1 2>/dev/null| LANG=C LC_ALL=C cpio -i -t  >/dev/null) 2>&1 |
+                $AWK '{print $1}'`
+
+        ## print initial hdrblks=$hdrblks
+
+        hdrblks=$(($hdrblks + 1))
+
+	print Analysing special files...
+
+	# There HAS to be a "install" directory for CSW packages.
+	# (because there must always be a copyright file)
+	# but there may not always be a "depend" file in it.
+        dd if=$1 skip=$hdrblks 2>/dev/null |
+		(cd $2/$3 ; cpio -ivd 'install/*' pkgmap) >/dev/null 2>&1
+	# on fail, SOMETIMES cpio returns 1, but sometimes it returns 0!!
+	if [[ ! -f $2/$3/pkgmap ]] ; then
+                print -n Hmmm. Retrying with different archive offset...
+                # no, I cant tell in advance why/when the prev fails
+                hdrblks=$(($hdrblks + 1))
+
+		# yes, leave stderr unmasked in this case
+                dd if=$1 skip=$hdrblks 2>/dev/null|
+			(cd $2/$3 ; cpio -ivd 'install/*' pkgmap)  >/dev/null
+		if [[ $? -ne 0 ]] ; then
+			print ERROR: cpio still failed >/dev/fd/2
+			return 1
+		fi
+		print ""
+        fi
+
+	# now ensure we have the right exit status, rather than
+	# relying on "return 0 == good" from cpio
+	
+	if [[ -d $2/$3 ]] ; then return 0 ; else return 1 ; fi
+}
+
+# give location of a "wget.static" binary. copy to pkg-get internal place
+function copy_wget_static {
+	if test -x $1 ; then
+		cp $1 $fallbackdir/wget.static
+	else
+		print ERROR: copy_wget_static: passed non-executable name
+		exit 1
+	fi
+
+}
+
+# Given a filename for a pkg, gzipped or not, pkgadd it.
+# Remove the file when done, if successful, and PKGGET_CACHE_FILES not set.
+# Previously, we extracted to /var/spool/pkg.
+# But these days, we assume we have already created own own unique
+# download directory, and cd'd to it already.
+# So extract and transform pkg in the current directory and look at 'depend'
+#
+# If there are unmet dependancies, try to grab them,
+# by invoking pkg-get in a separate process, so that
+# variable names dont conflict.
+# However, we can only install dependancies if they are from the same
+# site, since we need to look up software name from pkgname.
+#
+# If do_upgrade is set, remove any older version of pkg before doing install
+#
+# It is up to the calling function to determine whether the supplied file
+# is a higher rev than any existing package. We just remove all package
+# instances with the same sysv_pkg name.
+function install_pkg_file {
+	typeset filename filetype pkgname srcfilename tmpfilename
+
+	srcfilename="$1"
+	filetype=`env LANG=C LC_ALL=C file $srcfilename |$AWK '{print $2}'`
+	case $filetype in
+		bzip2|gzip)
+			filename=${srcfilename}.tmp
+			tmpfilename=$filename
+			$filetype -d -c $srcfilename >$filename
+			if [[ $? -ne 0 ]] ; then
+				print ERROR: could not expand downloaded file $srcfilename >/dev/fd/2
+				rm $filename
+				exit 1
+			fi
+		;;
+		*)
+		filename="$srcfilename"
+		;;
+	esac
+
+
+	pkgname=`$AWK 'NR==2 {print $1;exit}' $filename`
+
+	# Special-case pkg upgrade of 'wget' package. Copy special
+	# failsafe version if we are upgrading wget package.
+	# Even if something goes horribly wrong, at least the next
+	# invocation of pkg-get should work ok then.
+	case $pkgname in
+		*[[:upper:]]wget)
+			if [[ ! -d $fallbackdir ]] ; then
+				mkdir $fallbackdir
+			fi
+			if [[ -x $prefix/sbin/wget.static ]] ; then
+				copy_wget_static $prefix/sbin/wget.static
+			elif [[ -x $prefix/bin/wget.static ]] ; then
+				copy_wget_static $prefix/bin/wget.static
+			fi
+			export PATH=$fallbackdir:$PATH
+		;;
+	esac
+
+	if (( $do_upgrade == 1 )) ; then
+		remove_sysv_pkg $pkgname
+	fi
+
+	# convert from file to to "spool" format, to check depends.
+	extract_depend_file $filename $PWD $pkgname
+	if [[ $? -ne 0 ]] ; then
+		print ERROR: could not verify downloaded file correctly
+		return 1
+	fi
+
+	if [[ -f $pkgname/install/depend ]] ; then
+		handle_depend_file $pkgname/install/depend
+		if [[ $? -ne 0 ]] ; then
+			print ERROR: could not install required dependancies for $pkgname
+			print "Once dependancies are up to date, call"
+			print "        $0 -i ${1%%-*}"
+			print "to (re)install"
+			
+			/bin/rm -r $pkgname $tmpfilename
+			return 1
+		fi
+	fi
+
+	if [[ -f $PKGASKDIR/$pkgname ]] ; then
+		PKGASK=" -r $PKGASKDIR/$pkgname"
+	elif [[ -f $GLOBAL_ASKDIR/$pkgname ]] ; then
+		PKGASK=" -r $GLOBAL_ASKDIR/$pkgname"
+	else
+		PKGASK="" ; 
+	fi
+	pkgadd -d $filename $PKGADDFLAGS$PKGASK $pkgname
+	status=$?
+	if [[ $status -ne 0 ]] ; then
+		print ERROR: could not add $pkgname.
+	else
+		# remove pkg file, only if successfully
+		if [[ "$PKGGET_CACHE_FILES" = "" ]] ; then
+			rm $srcfilename
+		fi
+	fi
+	/bin/rm -r $pkgname $tmpfilename
+
+	return $status
+
+}
+
+# grab either gzip package or wget package "the hard way"
+# return 0 on okay, 1 on fail
+function ftp_prog_hardway {
+	typeset targetprog
+
+	targetprog="$1"
+	print Press return or enter email when asked for a password
+	sleep 2
+
+	mkdir /tmp/ftp.tmp
+	cd /tmp/ftp.tmp
+	rm -f *
+	rootcheck=`ls -ld | $AWK '{print $3}'`
+	if [[ "$rootcheck" != "root" ]] ; then
+		print SECURITY ERROR: /tmp/ftp.tmp not owned by ROOT
+		#exit 1
+	fi
+
+	ftp -id $MASTERSITE <<EOF
+anonymous
+cd $MASTERBASE/$CPU/$OSREV
+bin
+mget ${targetprog}-*
+quit
+EOF
+	# Note: we CANNOT use our usual "install_pkg_file" type utils here.
+	if [ -f ${targetprog}-*.gz ] ; then gunzip ${targetprog}-*.gz; fi
+	pkgadd -n -a $PKGGET_VARDIR/admin-fullauto -d ${targetprog}-* all
+	status=$?
+	cd /tmp;
+	rm -rf /tmp/ftp.tmp
+	return $status
+}
+
+
+##
+## Check to see whether there is a config file.
+# Create one if there isnt one already.
+function check_conffile {
+if [[ ! -f $CONFFILE ]] ; then
+	# just a quick perms check (ie: if we're not root or something)
+	if touch $CONFFILE ; then
+		rm $CONFFILE
+	else
+		if (( $debug > 0 )) ; then
+			print No perms to create $CONFFILE. Falling back to $home_conf >/dev/fd/2
+		fi
+		CONFFILE=$home_conf
+
+	fi
+fi
+if [[ ! -f $CONFFILE ]] ; then
+	print ERROR: $CONFFILE not present
+	print Creating a default file
+
+	cat >$CONFFILE <<EOF
+#############################################################
+# Configuration file for "pkg-get"
+# man pkg-get for details on the program
+
+url=http://mirrors.ibiblio.org/pub/mirrors/opencsw/current
+#url=ftp://ftp.sunfreeware.com/pub/freeware
+#North american mirror of of sunfreeware
+# See http://www.sunfreeware.com/ftp.html for other mirrors
+#url=http://mirrors.xmission.com/sunfreeware
+
+# North american site for CSW packages, instead of sunfreeware ones
+#url=http://ibiblio.org/pub/packages/solaris/csw/current/
+
+# if you are behind a firewall, set these as appropriate
+#ftp_proxy=http://your-proxy:8023
+# or
+#http_proxy=http://your-proxy:8023
+#export http_proxy ftp_proxy
+#
+# If you also need to specify password, set in your own environment
+# export PROXYFLAGS="--proxy-user=xyz --proxy-passwd=yyy"
+# It wouldnt be secure to specify it in the config file.
+# It isnt that secure in your environment EITHER, so beware.
+
+# To disable use of gpg or md5, uncomment these
+#use_gpg=false
+#use_md5=false
+#############################################################
+EOF
+	if [[ $? -ne 0 ]] ; then
+		print ERROR: could not create conf file $CONFFILE
+		exit 1
+	fi
+	if [[ "$CONFFILE" = "$home_conf" ]] ; then
+		print "PKGGET_VARDIR=$home_pkgget_var" >>$CONFFILE
+		if [[ ! -d $home_pkgget_var ]] ; then
+			print Note: Creating $home_pkgget_var directory
+			mkdir $home_pkgget_var
+			print ""
+		fi
+	fi
+fi
+}
+
+function check_gzip {
+	whence gzip >/dev/null
+
+	if (( $? == 0 )) ; then return	; fi
+
+	if [[ -x /opt/csw/bin/gzip ]] ; then
+		export PATH="$PATH":/opt/csw/bin
+		return
+	fi
+
+	print "ERROR: gzip not in path. "
+	print "( $PATH )"
+	print ""
+	print 'Attempt to ftp and install a package for it? (y/n)'
+	read ans
+	case $ans in
+		y|Y)
+			ftp_prog_hardway gzip
+			status=$?
+			if [[ $status -eq 0 ]] ; then
+				print ""
+				return
+			fi
+		;;
+	esac
+	
+	print "You must have a working gzip installed."
+	print "It comes with the Solaris 8 (and later) media"
+	print "Check 'CD 2 of 2' if you do not know where to find it"
+	print Quitting
+
+	exit 1
+
+}
+
+
+# Dont bother calling this unless you already know MD5 is available!
+# return 0 if "true" (file matches checksum), 
+# return 1 if FAIL
+# return 2 if checksum program not available (broken due to upgrades?)
+# return 3 if checksum field not present in catalog
+function md5_check_file {
+	typeset  local_md5 remote_md5
+
+	if [[ "$MD5" = "" ]] ; then
+		if [[ "$use_md5" != "false" ]] ; then
+			print Note: No md5 checksum program >/dev/fd/2
+		else
+			print Note: Use of md5 disabled in config >/dev/fd/2
+		fi
+		return 2
+	fi
+	local_md5=`$MD5 $1`
+	remote_md5=`$AWK '$1 ~ /^#/ {next} $4 == "'$1'" { print $5; }' $CATALOGFILE`
+	if [[ "$remote_md5" = "" ]] ; then
+		return 3
+	fi
+	if [[ "$local_md5" = "" ]] ; then
+		# md5 currently non-functional
+		return 2
+	fi
+	
+	if [[ "$local_md5" != "$remote_md5" ]] ; then
+		return 1
+	fi
+
+	return 0
+}
+
+
+# print_deps:
+#   Usage:  print_deps softname PKGname
+#  
+#  Will print out missing/out of date dependancies of given software.
+#  ONLY CALL THIS if catalogformat >= 2
+#
+# This ONLY gets called if verbose/debug level is 1 or greater.
+# We therefore know that if we are here, then we are NOT installing,
+# whether out of date or not.
+#
+#  If debug==1,  print out size and PKGname of needed downloads
+#  If debug >=2, print out ALL deps, up to date or not.
+#
+#  "bug"(?): prints out all out-of-date dependancies, even if there is
+#  a buffer of up-to-date packages between top-level, and out-of-date
+#  package lower down.
+#
+function print_deps {
+	typeset deps_known="" deps_needed="" tmp_deps="" new_deps=""
+
+	# print "Evaluating dependancies of $1: (This may take a while...)"
+	typeset pkgname nameblob  rem_version local_version old_deps_flag=0
+	pkgname=`lookup_pkg_name $1`
+
+	deps_needed=`get_deps_from_cat $pkgname`
+
+	# I'd LIKE to use an associative array in here.
+	# Unfortunately, /bin/ksh in sol8 is too old to support that.
+	if (( $debug >1 )) ; then
+		print verbose level = $debug: printing ALL dependancies, needed or not
+	fi
+
+	for dep in $deps_needed ; do
+		deps_known="$deps_known:$dep"
+		# note: "known" does _not_ mean "printed/checked yet"
+	done
+
+	while [[ "$deps_needed" != "" ]] ; do
+		new_deps=""  tmp_deps=""
+
+### Note: we do NOT support multiple remote versions, in this function.
+		for dep in $deps_needed ; do
+			if (( $debug < 2)) ; then
+				if ! uptodate $dep ; then
+					print_pkg_size $dep
+					old_deps_flag=1
+				fi
+				
+				
+			else
+				#if uptodate $dep ; then
+				#	printf "(up to date)"
+				#fi
+				print_pkg_size $dep
+			fi
+
+			tmp_deps=`get_deps_from_cat $dep`
+
+			for d in $tmp_deps ; do
+				case $deps_known in
+					*:${d}:*)
+					:
+					;;
+					*:${d})
+					:
+					;;
+					*)
+					new_deps="$new_deps $d"
+					deps_known="$deps_known:$d"
+					;;
+				esac
+						
+			done
+		done
+
+		deps_needed="$new_deps"
+	done
+	if (( $debug < 2  && $old_deps_flag == 0 )) ; then
+		print "   (Dependancies for $1 are up to date)" >/dev/fd/2
+	fi
+
+}
+
+
+
+
+
+
+# UUUUGLY long complicated mess. 
+#  [need to pick a name for this function!]
+#
+# First, calculate direct dependancies of specified proggie that are out of date.
+# (allow for proggie itself to be up to date!)
+# THEN, calculate all things that depend ON things that would be updated.
+#   THEEEN, calculate if any of THOSE things will need to be updated as well!
+#    (and recursively, if they have needed depends, or anything depends on THEM...)
+#
+# Finally, print out whitespace'd list of those 
+function _deps {
+	typeset deps_known="" deps_needed="" tmp_deps="" new_deps=""
+# xxxxx need to rewrite this, fro the original base of print_deps it was
+#   copied from.
+
+	# print "Evaluating dependancies of $1: (This may take a while...)"
+	typeset pkgname nameblob  rem_version local_version old_deps_flag=0
+	pkgname=`lookup_pkg_name $1`
+
+	deps_needed=`get_deps_from_cat $pkgname`
+
+	# I'd LIKE to use an associative array in here.
+	# Unfortunately, /bin/ksh in sol8 is too old to support that.
+	if (( $debug >1 )) ; then
+		print verbose level = $debug: printing ALL dependancies, needed or not
+	fi
+
+	for dep in $deps_needed ; do
+		deps_known="$deps_known:$dep"
+		# note: "known" does _not_ mean "printed/checked yet"
+	done
+
+	while [[ "$deps_needed" != "" ]] ; do
+		new_deps=""  tmp_deps=""
+
+### Note: we do NOT support multiple remote versions, in this function.
+		for dep in $deps_needed ; do
+			if (( $debug < 2)) ; then
+				if ! uptodate $dep ; then
+					print_pkg_size $dep
+					old_deps_flag=1
+				fi
+				
+				
+			else
+				#if uptodate $dep ; then
+				#	printf "(up to date)"
+				#fi
+				print_pkg_size $dep
+			fi
+
+			tmp_deps=`get_deps_from_cat $dep`
+
+			for d in $tmp_deps ; do
+				case $deps_known in
+					*:${d}:*)
+					:
+					;;
+					*:${d})
+					:
+					;;
+					*)
+					new_deps="$new_deps $d"
+					deps_known="$deps_known:$d"
+					;;
+				esac
+						
+			done
+		done
+
+		deps_needed="$new_deps"
+	done
+	if (( $debug < 2  && $old_deps_flag == 0 )) ; then
+		print "   (Dependancies for $1 are up to date)" >/dev/fd/2
+	fi
+
+}
+
+
+
+
+
+# Given a PKGname, print out softname, PKGname, size in nice format
+function print_pkg_size {
+	$AWK '$1 ~ /^#/ {next} $3 == "'$1'" { printf "%20s %30s %d bytes\n", $3, $1,$6  ; exit;}' $CATALOGFILE
+}
+# Given a softwarename, print out softname, PKGname, size in nice format
+function print_software_size {
+	$AWK '$1 ~ /^#/ {next} $1 == "'$1'" { printf "%20s %30s %d bytes\n", $3, $1,$6  ; exit;}' $CATALOGFILE
+}
+
+# net_install: Currently takes as args , software name, and desired
+#   version number
+#  [basically, the arguments required to call lookup_filename() ]
+#
+# Currently called by install_one_software() only.
+# 
+# Will download a package, and install it using install_pkg_file
+#
+# Only called, if we know that package needs to be installed/upgraded
+#
+# If debug=1 (-v used) just print out file size(s) to be downloaded
+# 
+# If downloadonly set, just leave the file as-is once downloaded.
+#
+# Return 0 on okay, or 10 if wget failed  (yes, 10!)
+#  Any other returnval is undefined status
+#
+function net_install {
+	typeset net_name fullurl graburl shortname
+
+
+	if (( $debug > 0 )) ; then
+		if (( $catalogformat <2 )) ; then
+			print DEBUG: would try to grab $graburl now
+			print "      Not downloading, so cannot check dependancies"
+			return 0;
+		fi
+		# Otherwise, presume catalogformat >=2 !
+		print_software_size $1
+		print_deps $1
+		return
+	fi
+
+	net_name=`lookup_filename $1 $2`
+	fullurl=$url/$CPU/$OSREV
+
+	if [[ -f $net_name ]] ; then
+		## Found the file already downloaded. Use it,
+		## IF valid, and not in "download only" mode
+
+		md5_check_file $net_name
+		case $? in
+		0)
+			print Pre-existing local file $net_name matches checksum
+			print Keeping existing file
+			if (( $downloadonly != 1 )) ; then
+				install_pkg_file $net_name
+			fi
+			return 0
+		;;
+		2)
+			print md5 utility temporarily non-functional
+			print assuming local file $net_name valid to use
+			if (( $downloadonly != 1 )) ; then
+				install_pkg_file $net_name
+			fi
+			return 0
+		;;
+		*)
+			print Removing invalid local file $net_name
+			rm -f $net_name
+		;;
+
+		esac
+
+	fi
+
+	graburl=$fullurl/$net_name
+	case $graburl in
+	   *\*)
+	   	print ERROR: no wildcards allowed in net_install
+		print URL attempted=$graburl
+		exit
+	   ;;
+	esac
+
+
+
+	# IF PKGGET_CACHE_FILES is set, we would keep ALL files.
+	# Otherwise, we only want ONE copy of a particular software.
+	# It will be kept around until successful pkgadd only.
+	# remember, if the EXACT filename we need already exists, we should
+	# have already returned, earlier in this function
+	shortname=${net_name%%-*}
+	rm -f -- "$shortname"-*
+
+	print Trying $graburl
+	grabfunc $graburl
+	if [[ $? -ne 0 ]] || [[ ! -s $net_name ]] ; then
+		print "Error downloading $graburl"
+		print "(Perhaps you need to update your catalog?)"
+		rm $net_name
+		return 10
+	fi
+
+	if [[ "$MD5" != "" ]] ; then
+		md5_check_file $net_name
+		case $? in
+		    0)
+		    	break
+		    ;;
+		    1)
+				print ERROR: checksum $net_name does not match remote checksum
+				print "(perhaps you need to pkg-get -U ?)"
+				return
+		    ;;
+		    2)
+				# Sometimes, md5 util is broken.
+				print WARNING: md5 capability not available
+				break
+		    ;;
+		    *)
+			print "NOTE: No checksum available for package"
+		    ;;
+		esac
+	fi
+
+	if (( $downloadonly == 1 )) ; then
+		print downloaded $net_name
+		return 0
+	fi
+
+	# else... really install
+	# Duplicate any changes here, to the "file already downloaded"
+	# section at top.
+
+	install_pkg_file $net_name
+	return 0
+}
+
+
+#compare_pkg
+# called by compare_installed
+#
+# This takes info for a SINGLE PACKAGE, and compares it to
+# what is locally available.
+# The printout format must match the header in compare_installed()
+# Usage:
+#   compare_pkg softwarename availablerev   pkgname
+#
+# Notices global var compare_printall, which gets set if both -a and -c flags
+# given by user, and prints out comparison of even uninstalled pkgs.
+#
+# Returns 0 if package up to date, 1 if package out of date, 2 if not installed
+function compare_pkg {
+
+	typeset software rem_rev pkgname returnval
+
+	software="$1"
+	rem_rev="$2"
+	pkgname="$3"
+	returnval=2
+
+# gzip triggers this.
+	if [[ "$pkgname" == "" ]] ; then
+#		print ERROR: compare_pkg did not get all arguments passed
+#		print "[" $* "]"
+		return 1
+	fi
+	
+	if [[ ! -d $CHEATDIR/$pkgname ]] ; then
+		if (( $compare_printall == 0 )) ; then return 2 ; fi
+		localrev='[Not installed]'
+		returnval=2
+	else
+		localrev=`get_installedpkg_ver $pkgname 2>/dev/null`
+
+		if [[ "$localrev" == "$rem_rev" ]] ; then
+			rem_rev="SAME"
+			returnval=0
+			# only print "SAME" if either
+			# -a flag used, or specific names given
+			if (( $compare_printall == 0 )) &&
+			   (( $compare_printsame == 0 ))
+			then
+				return 0
+			fi
+
+
+		#else, must be installed, but different version
+		else
+			returnval=1
+		fi
+	fi
+
+
+	# Match printf formats with headers in compare_installed
+	if (( $debug > 0 )) ; then
+	printf "%15s  %15s %20s  %20s\n" "$software" "$pkgname" "$localrev" "$rem_rev"
+	else
+	printf "%15s  %30s %30s\n" 	"$software" "$localrev" "$rem_rev"
+	fi
+
+	return $returnval
+}
+
+# This cross-references all known install packages that match
+# the catalog file, with the installed version, vs the potential version
+# Calls compare_pkg to do actual comparison/printout.
+# That decides whether to notice -a flag from user.
+#  If we are NOT in emailnotify mode
+#  then print out a little summary
+#  of installed/up to date at end
+#
+function compare_installed {
+	typeset installed=0 uptodate=0 outofdate=0
+
+	print "# (From site $url )"
+
+	# Match printf formats with output of compare_pkg
+	if (( $debug > 0 )) ; then
+	printf "%15s  %15s %20s  %20s\n" "software" "pkgname" "localrev" "remoterev"
+	else
+	printf "%15s  %30s %30s\n" "software" "localrev" "remoterev"
+	fi
+
+	if [[ "$1" = "" ]] ; then
+		egrep -v '^#' $CATALOGFILE | while read line ; do
+			compare_pkg $line
+			case $? in
+				0)
+					uptodate=$((uptodate + 1))
+					installed=$((installed + 1))
+				;;
+				1)
+					installed=$((installed + 1))
+					outofdate=$((outofdate + 1))
+				;;
+				2)
+					:
+				;;
+				*)
+					print ERROR: unexpected return from compare_pkg
+				;;
+			esac
+		done
+		if [[ "$mode" == "compare" ]] ; then
+			print "$outofdate/$installed outofdate/installed packages"
+		fi
+
+		return
+	fi
+
+	# Else, compare specific list of packages
+	#
+	# Note that in this situation, we DO want to print out if
+	# package is "SAME". This is the principle of least surprise.
+	# If a user wants to see status of a particular package,
+	# they will want some indication that it IS actually installed.
+	export compare_printsame=1
+	while [[ "$1" != "" ]] ; do
+		$AWK '$1 == "'$1'" {print}' $CATALOGFILE | read line
+		compare_pkg $line
+		shift
+	done
+
+}
+
+
+# stolen from compare_pkg
+# but we just list the software name here, IF installed
+function list_pkg {
+
+	typeset software rem_rev pkgname
+
+	software="$1"
+	rem_rev="$2"
+	pkgname="$3"
+	if [[ -d $CHEATDIR/$pkgname ]] ; then
+		print $software
+	fi
+}
+
+# Just list installed packages, by "software name"
+# This is primarily so that people can take a list of 'installed software'
+# on one machine, then bring the other machine to an exact match
+#
+function list_installed {
+	egrep -v '^#' $CATALOGFILE | while read line ; do
+		list_pkg $line
+	done
+	
+}
+
+# If a description file is available, show either matches to given args,
+# or the whole file.
+# If there is no desc file ... oh well.
+function show_descriptions {
+	if [[ ! -f "$DESCFILE" ]] ; then
+		print "Sorry, no description file available"
+		return;
+	fi
+	print "# (Descriptions from site $SITE )"
+
+	if [[ "$1" = "" ]] ; then
+		cat $DESCFILE
+		return
+	fi
+
+	while [[ "$1" != "" ]] ; do
+		egrep "$1" $DESCFILE
+		shift
+	done
+	
+}
+
+
+# This is called to process a "catalog" file in the current directory.
+# It has already been determined to be a GPG/PGP signed file.
+function verify_catalog {
+	mv catalog catalog.asc
+	if [[ "$GPG" = "" ]] ; then
+		# gpg is not available. So just trim off the extras,
+		# and treat as unsigned
+		if [[ "$use_gpg" != "false" ]] ; then
+			print WARNING: gpg not available.
+		fi
+		print Stripping off catalog signature without verifying
+		sed -e '1,3d' -e '/BEGIN PGP SIGNATURE/,$d' catalog.asc >catalog
+		rm catalog.asc
+		return 0
+	fi
+	gpg catalog.asc
+	status=$?
+	#gpg will normally create a 'catalog' file from 'catalog.asc'
+	if [[ $status -ne 0 ]] ; then
+		print ""
+		print "ERROR: catalog failed signature check (status $status)"
+		print ""
+		if [[ "$status" = 2 ]] ; then
+			print You need to install the public key, either manually,
+			print or automatically through a keyserver.
+			print "For keyserver use, try one of"
+			print '  echo keyserver search.keyserver.net >>/.gnupg/options'
+			print '  echo keyserver search.keyserver.net >>/.gnupg/gpg.conf'
+		fi
+		if grep blastwave catalog.asc >/dev/null ; then
+			print "For manual install of the key (recommended), try"
+			print "  wget http://www.blastwave.org/mirrors.html"
+			print "  gpg --import mirrors.html "
+		fi
+		if grep opencsw catalog.asc >/dev/null ; then
+			print "For manual install of the key (recommended), try"
+			print "  wget http://www.opencsw.org/mirrors"
+			print "  gpg --import index.html "
+		fi
+		# in case they try to follow the above directions,
+		# make it easier for them.
+		if [[ ! -d $HOME/.gnupg ]] ; then mkdir $HOME/.gnupg ; fi
+		return 1
+	fi
+
+	rm catalog.asc
+	
+	return 0
+	
+}
+
+
+# Downloads the catalog file (and descriptions file if present)
+# from the current SITE.
+#  (uses grabfunc, which will set current dirrectory as appropriate.)
+#
+# Calls verify_catalog if catalog is signed
+#
+
+function update_catalog {
+	OSREV=$OSREV
+	CPU=$CPU
+
+	make_download_dir
+		
+
+	print Getting catalog...
+	# note: we first download catalog with name of "catalog".
+	# but then we rename it to the site-specific catalog name
+
+	rm -f catalog
+
+	grabfunc $url/$CPU/$OSREV/catalog
+	if [[ $? -ne 0 ]] ; then
+		print ERROR: could not get catalog file
+		cleanup
+		exit 1
+	fi
+	if [[ ! -s catalog ]] ; then
+		print ERROR: catalog file is zero length. Removing and quitting.
+		rm catalog
+		return
+	fi
+
+	grep -l 'BEGIN PGP SIGNED MESSAGE' catalog >/dev/null
+	if (( $? == 0 )) ; then
+		# Has a PGP/GPG signature...
+		verify_catalog
+		if [[ $? -ne 0 ]] ; then
+			print "Catalog failed signature verify. Quitting."
+			cleanup
+			exit 1
+		fi
+	fi
+
+	print "Updating catalog file"
+#	egrep -v '^(gzip)' catalog >$CATALOGFILE
+	cat catalog >$CATALOGFILE
+	print $CATALOGFILE updated
+	print ""
+
+	rm -f descriptions
+	grabfunc $url/$CPU/$OSREV/descriptions
+	if [[ -s descriptions ]] ; then
+		mv descriptions $DESCFILE
+		print Updated description file
+	else
+		print Failed to get a description file
+	fi
+
+
+}
+
+
+# create our download directory if available, and then cd to it
+# There is currently an ambiguity between "DOWNLOAD_DIR" and "CACHE"
+# which I should really resolve in the future.
+# CACHE files stay around forever. download dir files stay until they
+# are successfully pkgadded.
+function make_download_dir {
+	if (( $debug > 0 )) ; then return ; fi
+
+	PKGGET_DOWNLOAD_DIR=${PKGGET_DOWNLOAD_DIR:-$PKGGET_VARDIR/downloads}
+
+	## trap cleanup 2 3
+	## We no longer auto-rm all files on exit
+
+	# If downloadonly is set, we dump everything into the
+	# current directory, rather than our "official", normal directory.
+	# Therefore, if in downloadonly mode, dont bother to create/check
+	# normal download  directory.
+	if (( $downloadonly == 1 ))
+	then
+		# paranoia always pays off in the end
+		PKGGET_DOWNLOAD_DIR="no_tmp_dir_used"
+		return
+	fi
+
+
+	if [[ ! -d $PKGGET_DOWNLOAD_DIR ]] ; then
+		mkdir -p $PKGGET_DOWNLOAD_DIR
+		if [[ $? -ne 0 ]] ; then
+			print ERROR: cannot create $PKGGET_DOWNLOAD_DIR
+			exit 1
+		fi
+	fi
+	cd $PKGGET_DOWNLOAD_DIR
+}
+
+function cleanup  {
+
+# We used to automatically remove the entire download directory.
+# We dont do that any more.
+#	if [[ "$PKGGET_DOWNLOAD_DIR" = "" ]] ; then
+#		return
+#	fi
+#	if [[ "$PKGGET_DOWNLOAD_DIR" = "no_tmp_dir_used" ]] ; then
+#		return
+#	fi
+
+	:
+}
+
+
+
+######################################################################
+# This whole section, until the "main" routine, is a special off-shoot,
+# that works on CD-type distribution directories. 
+# Assumes a bunch of directory, NOT stream, format PKGs.
+
+# Just a sneaky alias for "pkginfo -d dirname" right now -
+#  its purpose is to show what packages are "available" to install
+#  from the named directory.
+# Only call this if you have verified first arg is a directory
+function dir_available {
+	pkginfo -d "$1"| $PAGER
+}
+
+#"Directory"-package compare.
+# Look in an existing directory for packages, instead of downloading them
+# Compare installed packages, to what's in a directory
+# For speed reasons, we "Cheat", and do not go through the long
+# hasses of comparing individual pkginfo output.
+# First arg is directory, rest are optional  pkgnames
+# WHICH HAVE TO BE DIRECTORY NAMES, NOT the "cute" names
+function dir_compare {
+	if [[ ! -d "$1" ]] ; then
+		print ERROR: $1 not valid directory
+		return
+	fi
+	comparedir="$1"
+	shift
+
+	# This must match up to "dir_compare_one" output.
+	# It is similar to compare_installed
+	printf "%15s  %25s  %25s\n" "PKGNAME" "Directory-rev" "Installed-rev"
+
+
+	if (( $# > 1 )) ; then
+		while (( $# > 1 )) ; do
+			dir_compare_one $comparedir "$1"
+		done
+		return
+	fi
+	#else
+	for pkg_d in $comparedir/* ; do
+		if [[ -d "$pkg_d" ]]; then
+			pkg_d=${pkg_d##*/}
+			dir_compare_one $comparedir $pkg_d
+		fi
+	done
+}
+
+#
+# arg1 is a directory. arg2 is a directory name IN that directory:
+# MUST BE RELATIVE TO arg1!!
+# Will then compare pkg there, to any installed package
+#
+function dir_compare_one {
+	tmpdir="$1"
+	tmppkg="$2"
+	tmpver=`grep VERSION $tmpdir/$tmppkg/pkginfo`
+	tmpver=${tmpver#VERSION=}
+	tmpoldver=`grep VERSION /var/sadm/pkg/$tmppkg/pkginfo 2>/dev/null`
+	if (( $? == 0 )) ; then
+		tmpoldver=${tmpoldver#VERSION=}
+		if [[ "$tmpoldver" == "$tmpver" ]] ; then
+			tmpoldver="SAME"
+		fi
+	else
+		tmpoldver="[Not installed]"
+	fi
+
+	# match with headers in dir_compare
+	printf "%15s  %25s  %25s\n" "$tmppkg" "$tmpver" "$tmpoldver"
+}
+
+
+# Given the name of a directory, install ALL packages present in
+# 'spool' form (directory, not a single file)
+# Or just install the named packages in the directory
+#
+# Remove any old versions first, IF upgrade option given
+function dir_install {
+	# we use 'DIRECTORY' as a global flag that we are installing
+	# from a directory. Or we shall use it, someday.
+	DIRECTORY="$1"
+	shift
+	if (( $# > 0 )) ; then
+		while (( $# > 0 )) ; do
+			dir_install_one $DIRECTORY "$1"
+			shift
+		done
+		return
+	fi
+	#else
+	for d in $DIRECTORY/* ; do
+		if [[ -d "$d" ]]; then
+			d=${d##*/}
+			dir_install_one $DIRECTORY $d
+		fi
+	done
+}
+
+
+#Given the name of a directory, and the name of a pkg-directory in it,
+# Remove any pre-existing packages, and install the new one
+#
+# Check dependancies while we are at it.
+function dir_install_one {
+	tmpdir="$1"
+	tmppkg="$2"
+
+	if [[ -f $tmpdir/$tmppkg/install/depend ]] ; then
+		handle_depend_file $tmpdir/$tmppkg/install/depend
+		if [[ $? -ne 0 ]] ; then
+			print ERROR: could not install required dependancies for $tmppkg
+			return 1
+		fi
+	fi
+
+	if (( $debug > 0 )) ; then
+		print DEBUG: would try to pkgadd $tmpdir/$tmppkg now
+		return 0;
+	fi
+
+	
+	if [[ -f $PKGASKDIR/$pkgname ]] ; then
+		PKGASK=" -r $PKGASKDIR/$pkgname"
+	elif [[ -f $GLOBAL_ASKDIR/$pkgname ]] ; then
+		PKGASK=" -r $GLOBAL_ASKDIR/$pkgname"
+	else
+		PKGASK="" ; 
+	fi
+
+	if (( do_upgrade == 0 )) ; then
+		# Dont bother to upgrade, just install and get out of here.
+		# If it conflicts with any existing, then it stops here.
+		pkgadd $PKGADDFLAGS$PKGASK -d $tmpdir $tmppkg
+		return $?;
+	fi
+
+	# Otherwise, we're doing the whole nine yards. Clean up any existing,
+	# so that we effectively "upgrade" any pre-existing package
+	if [[ -f /var/sadm/pkg/$tmppkg ]] ; then
+		print "Removing old version of package"
+		pkgrm $PKGRMFLAGS $ADMINFLAG $tmppkg
+	fi
+	for f in /var/sadm/pkg/${tmppkg}.* ; do
+		if [[ -d $f ]] ; then
+			f=${f##*/}
+			print "Removing old instance $f"
+			pkgrm $PKGRMFLAGS $ADMINFLAG $f
+		fi
+	done
+
+	pkgadd $PKGADDFLAGS$PKGASK -d $tmpdir $tmppkg
+}
+
+# Examine the catalog for features that are enabled for the remote site.
+function read_features {
+	export SITEFEATURES=`$AWK 'NR==1 {
+		if ( $2 == "SITEFEATURES") {$1="" ;$2="" ; print;}
+		exit}' $CATALOGFILE`
+
+	set -- $SITEFEATURES
+
+	while (( $# > 0 )) ; do
+		case $1 in
+			bzip2)
+				export bzip2catalog=1
+				;;
+			gzip)
+				export gzipcatalog=1
+				;;
+			patches)
+				export patches=1
+				;;
+			*)
+				echo WARNING: unknown feature $1
+				;;
+		esac
+		shift
+	done
+
+	# that takes care of "optional extras" the site may support.
+	# Now to check the actual catalog format, for file entries
+	# default format is "catalogformat=1"
+	numfields=`$AWK '$1 ~ /^#/ {next} { print NF; exit;}' $CATALOGFILE`
+	if (( $numfields >=8 )) ; then catalogformat=2 ; fi
+
+	
+	# print DEBUG: remote catalogformat=$catalogformat
+
+	# For the record: catalogformat 2 and above, looks like:
+	#
+	# software version PKGname filename checksum length deps categories
+
+}
+
+
+
+# Check for out of date catalog and auto-update, before doing
+# things relating to install/update.
+# Only call if we are planning to actually INSTALL something,
+# or possibly do a dry-run of an install
+# otherwise, 
+function refresh_catalog {
+
+	datecheck=`find $CATALOGFILE -mtime +30 -print 2>/dev/null`
+	if [[ "$datecheck" != "" ]] && [[ "$mode" != "updatecatalog" ]] ; then
+		print "WARNING: catalog out of date."
+		print "Automatically updating catalog first"
+		update_catalog
+	fi
+
+}
+
+
+###############################################################################
+###############################################################################
+#                    'main' routine here
+###############################################################################
+###############################################################################
+
+
+###### First, basic config file parsing, and variable setup
+###### Set variables that are allowed to be overridden, 
+######  AFTER sourcing conf file!!
+
+if [[ "$1" == "" ]] ; then
+	usage
+	exit 1
+fi
+
+
+check_conffile
+
+# set this first, to allow conf file to override it if neccessary.
+# But at the same time, we want to IGNORE if it set in general environment.
+# It is possible it could be set for some other program.
+AWK="nawk"
+# It is reported that awk breaks things, unless this is set.
+# I tried to set it for just the AWK var, but it doesnt seem to work.
+# So unfortunately, for now, force this way.
+export LC_ALL=C
+
+
+. $CONFFILE
+
+if [[ "$url" == "" ]] ; then
+	print ERROR: url variable not set in $CONFFILE
+	exit 1
+fi
+
+
+OSREV=`$UNAME -r`
+CPU=`$UNAME -p`
+
+# allow override of location in pkg-get config file
+PKGGET_VARDIR=${PKGGET_VARDIR:-/var/pkg-get}
+PAGER=${PAGER:-more}
+CHEATDIR=/var/sadm/pkg
+PKGASKDIR=$PKGGET_VARDIR/pkgask
+GLOBAL_ASKDIR=${GLOBAL_ASKDIR:-$prefix/etc/pkgask}
+
+#this is a location for "fallback binaries" (ie: static compiled ones)
+fallbackdir=$PKGGET_VARDIR/`$UNAME -p`
+
+# Some values of this, make  comparisons of "case abc in [A-Z]" 
+#  NOT WORK RIGHT. They make it case-insensitive. Which breaks
+# the nice easy quick dectection of uppercase that I want. sigh.
+
+export LC_COLLATE=C
+
+# This is only for an extreme fallback purpose.
+# Install certain packages "the hard way" via ftp if required.
+# The target package must NOT be COMPRESSED in any way!!
+MASTERSITE=${MASTERSITE:-mirrors.ibiblio.org}
+MASTERBASE=${MASTERBASE:-pub/mirrors/opencsw/current}
+
+if [[ "$TMPDIR" != "" ]] ; then
+	if [[ "$TMPDIR" != "/tmp" ]] ; then
+		print "WARNING: TMPDIR is not /tmp"
+		print "This may result in pkgadd failing, due to a pkgadd bug"
+	fi
+fi
+
+
+######################################################################
+# Arg parsing time. There's a whole lot of different ways to pass args.
+# We do the standard way first.
+# Then duplicate everything lower down, for longopts type args
+
+
+# explicitly defaulting these vars to 0 allows for faster compares
+export do_upgrade=0 downloadonly=0 upgrade_all=0
+# These are for SITEFEATURES (features set by the archive site that
+#                               create the catalog file)
+export bzip2catalog=0 gzipcatalog=0 dependscatalog=0 patches=0
+export catalogformat=1
+
+# compare_printall is checked by compare_pkg, and
+# is set when user flags  -a + -c
+export compare_printall=0  
+export compare_printsame=0  
+
+while getopts "dDe:Ss:uUacfhilrv" mode_var ; do
+	case $mode_var in
+	d)
+		mode=install
+		downloadonly=1
+	;;
+	D)
+		mode=describe
+	;;
+	v)
+		# allow for multiple levels of debug
+		debug=$(($debug + 1))
+		print DEBUG-ONLY/VERBOSE MODE: level=$debug >/dev/fd/2
+	;;
+	s)
+		url=$OPTARG
+	;;
+	e)
+		emailnotify=$OPTARG
+		mode=emailnotify
+	;;
+	u)
+		mode=upgrade
+	;;
+	U)
+		do_update=1
+	;;
+	a)
+		if [[ "$mode" == "compare" ]] ; then
+			compare_printall=1
+		else
+			mode=available
+		fi
+	;;
+	c)
+		if [[ "$mode" == "available" ]] ; then compare_printall=1; fi
+		mode=compare
+	;;
+	i)
+		mode=install
+	;;
+	l)
+		mode=list
+	;;
+	r)
+		mode=remove
+	;;
+	f)
+		force=true
+	;;
+	S)
+		sync=true
+	;;
+	*)
+		usage
+		exit 1
+	;;
+	esac
+done
+shift $(($OPTIND - 1 ))
+
+# Set these AFTER -s arg has been checked!
+# Precedence for SITE is: commandline, conf file, fallback
+SITE=${url##*//}
+SITE=${SITE%%/*}
+CATALOGFILE=$PKGGET_VARDIR/catalog-$SITE
+DESCFILE=$PKGGET_VARDIR/desc-$SITE
+
+############################################################
+# This type of arg parsing is to keep some sort of compatibility
+# with debian "apt-get", the program that inspired pkg-get
+#
+
+if [[ "$mode" == "" ]] ; then
+case "$1" in
+	updatecatalog|--updatecatalog)
+		do_update=1
+		shift
+	;;
+	upgrade|--upgrade)
+		mode=upgrade
+		shift
+	;;
+	available|--available)
+		if [[ "$mode" == "compare" ]] ; then
+			compare_printall=1
+		else
+			mode=available
+		fi
+		shift
+	;;
+	compare|--compare)
+		if [[ "$mode" == "available" ]] ; then compare_printall=1; fi
+		mode=compare
+		shift
+	;;
+	describe|--describe)
+		mode=describe
+		shift
+	;;
+	download|--download)
+		mode=install
+		downloadonly=1
+		shift
+	;;
+	install|--install)
+		mode=install
+		shift
+	;;
+	list|--list)
+		mode=list
+		shift
+	;;
+	remove|--remove)
+		mode=remove
+		shift
+	;;
+	sync|--sync)
+		sync=true
+		shift
+	;;
+	moo|--moo)
+		mode=moo
+		shift
+	;;
+	*)
+		mode=help
+esac
+fi
+
+######################################################################
+# End of arg-interpretation section.
+# Now for sanity checks, and utility function checking.
+
+# Sanity check for SITE variable
+case $url in 
+    ftp://*|http://*)
+    	;;
+    file://*)
+    	SITE=localhost
+    	;;
+    *)
+    	print ERROR: unsupported url type
+	print $url not acceptible as source location
+	exit 1
+    ;;
+esac
+
+
+# MUST HAVE gzip!
+check_gzip
+
+# Try to make sure we have wget SOMEWHERE in our path.
+# Try to cover all potential reasonable places to look for it.
+# Unless the conf file tells us to use another program, that is.
+WGET=${WGET:-wget}
+
+if [[ "$WGET" = "wget" ]] ; then
+
+	# Special 'static' (non-dependant) version, that makes upgrades safe,
+	# even if shared-lib dependancies get out of whack.
+	#
+	if [[ -x $fallbackdir/wget.static ]] ; then
+		WGET=wget.static
+		export PATH=$fallbackdir:$PATH
+	fi
+	if [[ -x $prefix/sbin/wget.static ]] ; then
+		WGET=wget.static
+		export PATH=$prefix/sbin:$PATH
+	fi
+fi
+
+if [[ "$WGET" = "wget" ]] ; then
+	# If WGET var has not been explicitly set, we might not actually
+	# HAVE wget available. Check for it.
+	whence wget >/dev/null
+	if [[ $? -ne 0 ]] ; then
+		export PATH=$PATH:/opt/csw/bin:/opt/sfw/bin:/usr/sfw/bin:/usr/local/bin:$fallbackdir
+		# Note the $PKGGET_VARDIR/ location is a special fallback case
+		# for when we've tried to upgrade wget, and failed.
+		# we may have a special backup copy of wget there.
+	fi
+
+	whence wget >/dev/null
+	if [ $? -ne 0 ] ; then
+		get_wget
+
+		# Presume we have installed our special wget pkg...
+		staticlocation=`find $prefix -name wget.static`
+		if [[ -x $staticlocation ]] ; then
+			WGET=$staticlocation
+			copy_wget_static $staticlocation
+		else
+			print ERROR: wget package is not right.
+			print Did not find wget.static under $prefix
+			print Cannot continue
+			exit 1
+		fi
+	fi
+	
+fi
+
+
+GPG=${GPG:-gpg}
+
+if [[ $use_gpg == "false" ]] ; then
+	GPG=""
+elif [[ "$GPG" = "gpg" ]] ; then
+	PATH=/opt/csw/bin:$PATH
+	whence gpg >/dev/null
+	if [[ $? -ne 0 ]] ; then
+		print WARNING: gpg not found
+		GPG=""
+	fi
+fi
+
+#
+# Check if we have md5. Use it later, if we do, via $MD5
+#
+function md5wrap {
+        md5 $1 | $AWK '{print $4}'
+}
+function gmd5sumwrap {
+	gmd5sum $1 | $AWK '{print $1}'
+}
+
+MD5=""
+if [[ -x /usr/bin/digest ]] ; then
+	MD5="/usr/bin/digest -a md5"
+elif whence md5 >/dev/null ; then
+        MD5=md5wrap
+elif whence gmd5sum >/dev/null ; then
+        MD5=gmd5sumwrap
+fi
+
+
+if [[ "$use_md5" = "false" ]] ; then
+	MD5=""
+elif [[ "$MD5" = "" ]] ; then
+	print NOTE: To have checksums compared, you must install one of:
+	print "  md5  or gmd5sum (gmd5sum is available with GNU textutils)"
+	print "  try 'pkg-get install textutils'"
+fi
+
+########################################################################
+# Now some basic up-to-date checks
+if [[ "$do_update" = 1 ]] ; then
+	update_catalog
+fi
+
+
+
+
+# check for special override file that tells pkgadd, "shut up and just do it".
+# man -s4 admin   to see the format of it, and/or see
+# /var/sadm/install/admin/default  for the default file
+#
+# -n means "ask no questions". If you dont have the fullauto version,
+# perhaps you dont want the -n flag here.
+if [[ -f $PKGGET_VARDIR/admin ]] ; then
+	ADMINFLAG="-a $PKGGET_VARDIR/admin"
+fi
+if [[ "$force" != "" ]] ; then
+	ADMINFLAG="-n $ADMINFLAG"
+fi
+
+# This is addative, so that the user can add
+#  PKGADDFLAGS=-G
+# in pkg-get.conf
+PKGADDFLAGS="$PKGADDFLAGS $ADMINFLAG"
+
+
+# Yes, I strive for a high level of compatibility with apt-get...
+function super_moo
+{
+	cat <<EOF
+         (__) 
+         (oo) 
+   /------\/ 
+  / |    ||   
+ *  /\---/\ 
+    ~~   ~~   
+...."Have you mooed today?"...
+EOF
+}
+
+
+######################################################################
+# And finally, the actual top-level routine of the "main" code.
+
+
+PATH=$PATH:/usr/sbin
+
+
+# First, check for options that a regular user might do.
+# IE, "read-only" type operations.
+# Parse them first, before doing an "auto-update catalog" check.
+
+
+
+if [[ ! -d $1 ]] ; then    #Dont whine if using local directory!
+	if [[ ! -f $CATALOGFILE ]] ; then
+		print ""
+		print WARNING: no catalog file for site $SITE
+		print "Downloading initial catalog file for site"
+		update_catalog
+	fi
+fi
+
+
+
+
+case "$mode" in
+	upgrade)
+		if [[ -d "$1" ]] ; then
+			dir_install $*
+		else
+			refresh_catalog
+			read_features
+			make_download_dir
+			upgrade $*
+		fi
+	;;
+	emailnotify)
+		refresh_catalog
+		read_features
+		
+		notify
+	;;
+	available)
+		if [[ -d "$1" ]] ; then
+			dir_available "$1"
+			cleanup
+			exit
+		fi
+		if [[ ! -f $CATALOGFILE ]] ; then
+			print "Internal error. Catalog $CATALOGFILE does not exist"
+			cleanup
+			exit 1
+		fi
+		print "#  (From site $url)"
+		$AWK '$1 ~ /^#/ {next}
+			{printf("%20s %15s\n",$1,$2);}' $CATALOGFILE | $PAGER
+	;;
+	compare)
+		if [[ -d "$1" ]] ; then
+			dir_compare $*
+		else
+			compare_installed $* | $PAGER
+		fi
+	;;
+	list)
+		list_installed $* | $PAGER
+	;;
+	describe)
+		show_descriptions "$@" | $PAGER
+	;;
+	install)
+		if [[ -d "$1" ]] ; then
+			dir_install $*
+		else
+			refresh_catalog
+			read_features
+			make_download_dir
+			install_software $*
+		fi
+	;;
+	remove)
+		remove_packages $*
+	;;
+	moo)
+		super_moo
+	;;
+	help|*)
+		if [[ "$do_update" = "" ]] ; then
+			usage
+		fi
+esac
+
+cleanup
+

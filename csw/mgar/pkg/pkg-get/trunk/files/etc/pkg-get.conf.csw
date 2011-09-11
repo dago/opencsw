@@ -1,0 +1,52 @@
+# Configuration file for "pkg-get"
+# man pkg-get for details on the program
+
+# This config file has been pre-customized for use with CSW packages.
+# The latest set of CSW mirrors is always available at
+#  http://www.opencsw.org/mirrors
+
+# default site, in USA:
+url=http://mirrors.ibiblio.org/pub/mirrors/opencsw/current
+
+
+# See above url for other sites to use.
+
+
+# If you are behind a firewall, set one of these as appropriate
+#ftp_proxy=http://your-proxy:8023
+#http_proxy=http://your-proxy:8023
+#export http_proxy ftp_proxy
+
+# You may also set PROXYFLAGS in your environment to set flags 
+# for wget like
+# export PROXYFLAGS="--proxy-user=xxxx --proxy-passwd=yyy"
+# Or set them here. but make sure the perms are readable.
+# And consider that anyone on the machine can check your environment
+# and grab the user/password combo.
+
+# Solaris 10: If you wish to limit pkg-get to installing packages
+# ONLY to the global zone, then uncomment this line
+# Sadly, there does not seem to be any -G for pkgrm.
+# But I support PKGRMFLAGS, for hope of that happy day...
+#  WARNING: this means that if you want packages to be installed at the
+# global zone, DO NOT INSTALL THEM in any child zones, because they
+# will automatically get removed when "pkgrm" is invoked in the
+# global zone.
+#PKGADDFLAGS=-G
+#PKGRMFLAGS=???
+
+#
+# pkg-get now defaults to downloading to /var/pkg-get/downloads
+# If you'd like it somewhere else, change it here
+# PKGGET_DOWNLOAD_DIR=/some/large/dir/pkg-get
+
+#
+# By default, pkg-get keeps downloaded files, in PKGGET_DOWNLOAD_DIR,
+#  but removes them once they have been successfully pkgadd'd to the system.
+# IF you set the following var to something,  it will keep the
+#  downloaded file around, even after add.
+#PKGGET_CACHE_FILES=true
+
+# To disable use of gpg or md5, uncomment these
+#use_gpg=false
+#use_md5=false
