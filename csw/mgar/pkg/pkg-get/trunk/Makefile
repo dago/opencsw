@@ -12,7 +12,6 @@ A deprecated tool for automated package download and installation.
 endef
 
 MASTER_SITES = http://opencsw.org
-DISTFILES = pkg-get license
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = 
@@ -31,7 +30,12 @@ include gar/category.mk
 install-custom:
 	@(mkdir -p $(DESTDIR)$(bindir); \
 	  mkdir -p $(DESTDIR)$(docdir)/pkg_get_stub; \
+	  mkdir -p $(DESTDIR)$(sharedstatedir); \
+	  mkdir -p $(DESTDIR)$(sysconfdir); \
 		ginstall -m 0755 $(FILEDIR)/pkg-get $(DESTDIR)$(bindir); \
+		rsync -av --exclude=.svn $(FILEDIR)/bin/ $(DESTDIR)$(bindir)/;\
+		rsync -av --exclude=.svn $(FILEDIR)/share/ $(DESTDIR)$(sharedstatedir)/; \
+		rsync -av --exclude=.svn $(FILEDIR)/etc/ $(DESTDIR)$(sysconfdir)/; \
 		ginstall -m 0644 $(FILEDIR)/license $(DESTDIR)$(docdir)/pkg_get_stub; \
 		ln -s $(docdir)/pkg_get_stub $(DESTDIR)$(docdir)/pkg_get)
 	@$(MAKECOOKIE)
