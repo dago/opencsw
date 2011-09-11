@@ -10,10 +10,8 @@ echo
 echo "Please use pkgutil(1) instead.  The CSWpkgutil package should"
 echo "have been installed at the same time as this CSWpkgget update."
 echo
-echo "If you _really_ want to run pkg-get still, you may re-enable it"
-echo "by running:"
-echo "/opt/csw/bin/alternatives --set pkgget /opt/csw/bin/pkg-get.deprecated"
-echo
+echo "If you _really_ want to run pkg-get still, you'll find it at:"
+echo "/opt/csw/bin/pkg-get.deprecated"
 echo
 echo "We apologize for any inconveniences this causes you."
 echo
