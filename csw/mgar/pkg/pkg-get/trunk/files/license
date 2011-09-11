@@ -1,1 +1,9 @@
-This is not a real package so it doesn't need a real license.
+You may use and copy this software without charge, as you see fit.
+The software is copyright (C) Philip Brown, Nov 2000-2010
+
+Dont forget to update /opt/csw/etc/pkg-get.conf with your nearest archive site.
+(or /etc/opt/csw/pkg-get.conf, if you want a  non-global config)
+Or... now you can use $HOME/.pkg-get
+
+The default site ibiblio.org may or may not be slow for you!
+

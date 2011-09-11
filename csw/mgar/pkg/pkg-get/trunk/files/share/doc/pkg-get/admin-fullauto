@@ -1,0 +1,24 @@
+# Sample 'admin' file, to change the behaviour of pkg-get
+# If you copy this file to /var/pkg-get/admin, it will use it
+# to override the system defaults set in /var/sadm/install/admin/default
+# If you use this override file, be 100% sure you trust the source
+# of packages that you point pkg-get to.
+mail=
+# Note that even if you think you want instance=overwrite, there
+# seems to be a bug in BASEDIR handling in pkgadd if you set it. 2009/01/01
+#instance=overwrite
+instance=quit
+partial=nocheck
+runlevel=nocheck
+idepend=nocheck
+rdepend=nocheck
+space=nocheck
+setuid=nocheck
+#In theory, a cleanly packaged site such as opencsw should 
+# have no conflicts. but occasionally, little cleanup items come up.
+# if you truely want to never be prompted, set to nocheck. but
+# you should review install logs in this case
+conflict=ask
+#conflict=nocheck
+action=nocheck
+basedir=default

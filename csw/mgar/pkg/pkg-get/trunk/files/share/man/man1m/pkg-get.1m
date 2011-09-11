@@ -1,0 +1,234 @@
+.\" pkg-get.1m 2009/05/29
+.TH PKG-GET 1m "May 29th, 2009" "Phil\'s Software"
+.SH NAME
+pkg-get 4.x \- automatic install and upgrade of packages over the network
+
+.SH SYNOPSIS
+ pkg-get [modifiers] {-i|install}  {pkgname [...]|all}
+ pkg-get [modifiers] {-d|download} {pkgname [...]|all}
+ pkg-get [modifiers] {-u|upgrade}   [pkgname...] 
+ pkg-get [modifiers] {-c|compare} | {-a|available}
+ pkg-get [modifiers] -e email.address
+ pkg-get [modifiers]  -D [regexp to search for]
+ pkg-get {-l|list}
+ pkg-get [...] {-i|-d|-u|-c} {/dir/} {pkgname[...]|all}
+
+.SH MODIFIERS
+ -U|updatecatalog
+ -s url://temp.site/path
+ -S|sync
+ -v
+ -f
+
+.SH DESCRIPTION
+
+pkg-get is similar to Debian Linux "apt-get". Its most basic use is that you
+tell it the name of a software package, and it automatically goes and grabs it
+from the net, then installs it on your system. It also has an upgrade mode 
+that installs newer versions of software you have installed, if available.
+
+In version 2.0, optional checksum support has been added. If the remote site 
+has md5 hashes for files, and you have either md5 or gmd5sum in your PATH,
+downloaded files will be checked against the catalog's hash.
+Additionally, if you try to re-download a file you already have, and it matches 
+the checksum, it will skip the download of that specific file as unneccessary.
+
+.SH MODES
+.TP
+pkg-get available
+
+will show you a list of freeware packages available to install
+
+.TP
+pkg-get describe {pkgname, or partial name}
+
+will show you descriptions of one, or all, packages available
+
+.TP
+pkg-get -e email@addr
+
+will email the given address, If and Only If there are out of date packages
+installed
+
+.TP
+pkg-get install {pkgname [pkgname...] | all}
+
+will install listed packages. If 'all' is specified, will install all 
+packages available, at the latest version.
+.TP
+pkg-get upgrade [pkgname [pkgname...]]
+
+will automatically upgrade the listed packages to the latest version.
+If no arguments, will upgrade all packages that are already installed.
+
+The upgrade option will remove any older versions of packages for you. It will
+also automatically choose the highest revision of a package to download, if
+there are multiple available.
+
+.TP
+pkg-get {cmd} /dir/path  {pkgname [pkgname...] | all}
+
+If you specify a directory path as your first "package", then pkg-get will
+switch into local directory mode. It will treat the specified directory as the
+package repository, with the important difference that packages must be in 
+"file system format". This is the format that packages are distributed in,
+on the Solaris 8, 9, and 10 OS disks. Not coincidentally, this is primarily
+what this mode is for :) So for example,
+
+pkg-get install /cdrom/*/Solaris*/Product SUNWfirefox
+
+will pull in the firefox package, along with any needed dependancies from that
+location
+
+
+.SH OPTIONS
+
+.TP
+-U|updatecatalog
+Grabs the latest catalog from the site before doing anything else. May be used 
+as a command by itself.
+All "compare versions" operations are done on the locally cached copy of the
+catalog.
+pkg-get will automatically update the catalog if it is older than a month.
+
+.TP
+-d|download
+Downloads the pkg file, and does NOT install. Useful if you're trying to
+create a local archive of pkg files
+.TP
+-v
+This is only meaningful for the 'install' option, without arguments.
+It adds "verbose" mode, to tell you what would be upgraded.
+ BUT... it stops the program actually downloading any newer files!
+.TP
+-i|install [softwarename]
+Looks through all packages you have installs, and compares them to the
+latest available on the site. If the site has newer versions, it will
+download and install all newer versions of software you already have.
+It will NOT install packages you do not already have installed.
+
+If you specify a particular software name, it will first
+look up the specific software name in the local contents cache.
+If you already have the same version installed, says so and quits.
+Otherwise, if it is available, pkg-get will download and install it.
+.TP
+-u|upgrade
+Attempts to upgrade any installed packages that have newer versions 
+available on the site.
+.TP
+-S|sync
+When in upgrade mode, tells pkg-get to sync pacakges to the version of the
+package on the software site, reguardless of whether it is newer or older,
+than what is installed.
+.B Warning:
+This may not always work cleanly, if dependancies in the locally installed
+package are radically different from ones for the older version on the
+software site. But generally speaking, it should work well as a "revert to
+earlier state" tool.
+.TP
+-a|available
+This just prints out the software name and revision of all packages
+available for download. It is automatically piped to "more" or similar pager.
+.TP
+-D|describe
+Prints out longer descriptions of software, if available.
+Can take a regular expression as an argument, to only print out lines that
+match the regular expression.
+.TP
+-c|compare
+Display a comparision of versions between installed packages, and what is
+available on the site. If you do not have a package installed, it will
+show "not installed" for the local version stamp.
+.TP
+-l|list
+Print out a software-name based list of all installed packages that pkg-get
+recognizes from the current catalog. This is useful if you want to duplicate
+the same installed packages on a first machine, to another machine, via
+pkg-get install `cat list`
+.TP
+-f
+Force default action on pkg add or remove; Dont ask questions.
+This may mean that it will refuse to install some packages, depending on what
+the pkgadd defaults are, whether there are conflicts, etc.
+The 'normal' defaults are specified in /var/sadm/install/admin/default.
+See the "MORE AUTOMATION" section at the bottom of this manpage.
+.TP
+-r|remove
+This option was added by request. However, it is inherently not as bulletproof
+as the other options,
+because nothing in the site catalog says that the pkg version and the software
+version have to match. However, it should work as expected 95% of the time.
+And worst case, it will ONLY remove packages that are on the remote site
+catalog; It should not remove Solaris packages.
+.TP
+-s
+Sets a new "site" url to download from, overriding "url=" definition in
+pkg-get.conf. It is permissible to use file:/// syntax for local directories
+with valid catalogs. (Must give full pathname!) Otherwise, specify a directory 
+name, for a directory with raw packages in directory format 
+(as on a solaris install cdrom)
+
+.SH PROXIES
+See /opt/csw/etc/pkg-get.conf for comments on how to use wget behind a proxy.
+Basically, just export the environment variables http_proxy and ftp_proxy.
+The conf file lets you do that without messing with users' environments 
+directly.
+
+.SH MORE AUTOMATION
+If you dont like answering pkgadd prompts, you can create an 'admin' file, as
+/var/pkg-get/admin
+
+A sample 100% hands-off admin file is provided, as
+/opt/csw/share/doc/pkg-get/admin-fullauto. 
+You may cp the file to /var/pkg-get/admin.
+Be sure to not symlink it!
+
+pkg-get will then no longer give you warnings about
+setuid installscripts, conflicts, and other issues.
+However, it may still ask you in some instances,
+"Do you want to install/remove this package",
+unless you use the -f option to pkg-get. Contrariwise, if you use
+-f without overriding the defaults, pkg-get will presume a "n" answer
+to that question, and potentially not install a 
+considerable amount of packages.
+
+For full details of the format of the admin file, man -s4 admin.
+
+Even further automation is possible, by providing "pkgask" files, on a
+package by package basis. If the file
+/var/pkg-get/pkgask/[CSWpkgname] exists, it will be fed to pkgadd, as
+a response file. (See the pkgadd manpage). pkg-get will also check for a 
+"global" file, /opt/csw/etc/pkgask/[CSWpkgname]
+
+.SH FILES
+ /etc/opt/csw/pkg-get.conf
+ /opt/csw/etc/pkg-get.conf
+ /var/pkg-get/catalog-sitename
+ /var/pkg-get/admin
+ /var/pkg-get/admin-fullauto
+ /var/pkg-get/pkgask
+ /opt/csw/etc/pkgask
+
+.SH FILES FOR HOMEDIR MODE
+ $HOME/.pkg-get (equivalent of pkg-get.conf)
+ $HOME/pkg-get  (equivalent of /var/pkg-get)
+
+.SH BUGS
+
+I wouldn't be surprised if there are one or two bugs to be worked out. If so,
+please email me about them!
+
+.SH SEE ALSO
+If you are interested in setting up your own local freeware server,
+
+ http://www.bolthole.com/solaris/makecontents 
+
+is the tool needed to automatically generate the catalog for each directory.
+[Unfortunately, it is currently the "old format", however]
+
+
+.SH AUTHOR
+Philip Brown
+ phil@bolthole.com
+ http://www.bolthole.com/solaris/
+

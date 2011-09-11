@@ -1,0 +1,78 @@
+#!/bin/sh
+
+
+# This needs to somewhat track the CONFFILE handling in pkg-get itself now
+# to be more relocation friendly. technically.
+CONFFILE=$BASEDIR/etc/pkg-get.conf
+shortprefix=`echo $BASEDIR |sed 's:.*/::'`
+localconffile=/etc/opt/$shortprefix/pkg-get.conf
+
+echo ""
+
+
+##
+## Create a default pkg-get.conf file.
+# Note: "normally", i would depend on  CSWcswclassutils.
+# However, i want this to not be dependant on anything else.
+# Additionally, i need to check for both a global, OR a local, 
+# config file, before deciding to copy over a default one somewhere.
+#
+
+if [ -f $CONFFILE ] ; then
+	echo $CONFFILE already exists. Not altering it.
+elif [ -f $localconffile ] ; then
+	echo Local conf file $localconffile exists.
+	echo Not copying $CONFFILE.csw
+	
+else
+	# Note: "normally", i would depend on  CSWcswclassutils.
+	# However, i want this to not be dependant on anything else.
+	#
+
+	echo Installing $CONFFILE.csw to pkg-get.conf
+	cp $CONFFILE.csw $CONFFILE
+	echo ""
+	echo '**** IMPORTANT ****'
+	echo 'A default configuration file for pkg-get has been created in'
+	echo "    $CONFFILE"
+	echo "You should edit it to change the 'site' configuration, to point to"
+	echo "the most appropriate mirror for you, from the list at"
+	echo "   http://www.opencsw.org/mirrors"
+	echo ""
+fi
+
+case $BASEDIR in 
+	*/opt/csw)
+	:
+	# fall through and do long hairy stuff
+	;;
+	*)
+	exit 0
+	;;
+esac
+
+##################################################
+# Fix perms.
+# Really, the "default" line in prototype should take care of
+# this.. but it doesnt?!!
+#If the directory did not exist previously, it gets set to
+#root:other.
+# SO, fix that, in keeping with csw standards!
+
+# But.. only if we're not in read-only-PREFIX mode.
+# since there is no /bin/stat call, fake it and test by creating a file.
+
+touch $BASEDIR/testfile.$$
+if [ $? -ne 0 ] ; then
+	echo No permissions to create $BASEDIR/testfile.
+	echo Presuming read-only $BASEDIR. Quitting cleanly now
+	exit 0
+fi
+
+rm $BASEDIR/testfile.$$
+
+chown root:bin $BASEDIR
+for d in bin etc share share/man share/man/man1m ; do
+	chown root:bin $BASEDIR/$d
+done
+	
