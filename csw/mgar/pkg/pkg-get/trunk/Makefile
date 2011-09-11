@@ -29,6 +29,8 @@ ALTERNATIVES_CSWapache2 = transition deprecation
 ALTERNATIVE_transition = /opt/csw/bin/pkg-get pkgget /opt/csw/bin/pkg-get.transition 10
 ALTERNATIVE_deprecation = /opt/csw/bin/pkg-get pkgget /opt/csw/bin/pkg-get.deprecated 5
 
+# going to extra effort to find wget, add /usr/local/bin to the path
+CHECKPKG_OVERRIDES_CSWpkgget += file-with-bad-content|/usr/local|root/opt/csw/bin/pkg-get.deprecated
 
 include gar/category.mk
 
