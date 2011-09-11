@@ -51,7 +51,7 @@ RUNTIME_DEP_PKGS_CSWmunin-node += CSWpmnetssleay
 #
 
 PKGFILES_CSWmunin-common += .*/Munin::Common.*
-PKGFILES_CSWmunin-common += .*/Munin/Common.*
+PKGFILES_CSWmunin-common += .*/Munin\/Common.*
 PKGFILES_CSWmunin-common += .*munin_common.*
 
 #
@@ -61,29 +61,34 @@ PKGFILES_CSWmunin-common += .*munin_common.*
 MUNINNODE_UGFILES 	= /var/opt/csw/munin /var/opt/csw/munin/log /var/opt/csw/munin/db /var/opt/csw/munin/run
 MUNINNODE_SMF		= /etc/opt/csw/init.d/cswmuninnode
 MUNINNODE_USERGROUP	= /opt/csw/etc/pkg/CSWmunin-node/cswusergroup
-MUNINNODE_EXECS		= .*munin-node.*[^\.tmpl]$ .*munin-node-configure.* .*munindoc.* .*munin-run.*
+MUNINNODE_EXECS		= .*munin-node .*munin-node-configure.* .*munindoc.* .*munin-run.*
+MUNINNODE_CONF		= .*munin-node.conf .*munin-node.1 /etc/opt/csw/munin/plugin-conf.d
 
-PKGFILES_CSWmunin-node += .*muninnode.*
+PKGFILES_CSWmunin-node += .*muninnode.* .*CSWmunin-node.*
 PKGFILES_CSWmunin-node += .*plugins.*
-PKGFILES_CSWmunin-node += .*Munin::Node.*
-PKGFILES_CSWmunin-node += .*Munin/Node.*
+PKGFILES_CSWmunin-node += .*Munin::Node.* .*Munin\/Plugin.*
+PKGFILES_CSWmunin-node += .*Munin\/Node.*
 PKGFILES_CSWmunin-node += $(MUNINNODE_UGFILES)
 PKGFILES_CSWmunin-node += $(MUNINNODE_SMF)
 PKGFILES_CSWmunin-node += $(MUNINNODE_USERGROUP)
 PKGFILES_CSWmunin-node += $(MUNINNODE_EXECS)
 
-PROTOTYPE_MODIFIERS = muninnode_ugfiles
+PROTOTYPE_MODIFIERS  = muninnode_ugfiles
+PROTOTYPE_MODIFIERS += muninnode_smf
 
 PROTOTYPE_FILES_muninnode_ugfiles = $(MUNINNODE_UGFILES)
 PROTOTYPE_USER_muninnode_ugfiles = munin
 PROTOTYPE_GROUP_muninnode_ugfiles = munin
 PROTOTYPE_CLASS_muninnode_ugfiles = ugfiles
 
+PROTOTYPE_FILES_muninnode_smf = $(MUNINNODE_SMF)
+PROTOTYPE_PERMS_muninnode_smf = 0755
+
 #
 # files for CSWmunin-master
 #
 
-MUNINMASTER_UGFILES	= /var/opt/csw/munin.*
+MUNINMASTER_UGFILES	= /var/opt/csw/munin.* /etc/opt/csw/munin/apache.* /etc/opt/csw/munin/templates.*
 MUNINMASTER_USERGROUP	= /opt/csw/etc/pkg/CSWmunin-master/cswusergroup
 MUNINMASTER_EXECS	= .*munin-check.* .*munin-cron.* .*munin-graph.* .*munin-html.* .*munin-limits.* .*munin-update.*
 MUNINMASTER_FONTS	= .*ttf.*
@@ -92,8 +97,8 @@ MUNINMASTER_POSTMSG	= /opt/csw/share/doc/munin_master/README.CSW
 
 PKGFILES_CSWmunin-master += .*muninmaster.*
 PKGFILES_CSWmunin-master += .*Munin::Master.*
-PKGFILES_CSWmunin-master += .*munin_master.*
-PKGFILES_CSWmunin-master += .*Munin/Master.*
+PKGFILES_CSWmunin-master += .*munin_master.* .*CSWmunin-master.*
+PKGFILES_CSWmunin-master += .*Munin\/Master.*
 PKGFILES_CSWmunin-master += $(MUNINMASTER_UGFILES) 
 PKGFILES_CSWmunin-master += $(MUNINMASTER_USERGROUP) 
 PKGFILES_CSWmunin-master += $(MUNINMASTER_EXECS) 
@@ -141,6 +146,7 @@ CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/cs
 CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/csw/libexec/munin/plugins/squeezebox_
 CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/local|root/opt/csw/libexec/munin/plugins/sybase_space
 CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/if_err_
+CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/share/perl/site_perl/Munin/Plugin.pm
 CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/share/man/man3/Munin::Node::Configure::PluginList.3perl
 CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/if_
 CHECKPKG_OVERRIDES_CSWmunin-node += file-with-bad-content|/usr/share|root/opt/csw/libexec/munin/plugins/ps_
@@ -203,6 +209,9 @@ install-custom:
 	@mv $(DESTDIR)/var/opt/csw/munin/www/.htaccess $(DESTDIR)/opt/csw/etc/templates/CSWmunin-master/var/opt/csw/munin/www/
 	@#
 	@mv $(DESTDIR)/etc/opt/csw/munin/templates $(DESTDIR)/opt/csw/etc/templates/CSWmunin-master/etc/opt/csw/munin
+	@ginstall -d $(DESTDIR)/etc/opt/csw/munin/apache
+	@ginstall -d $(DESTDIR)/etc/opt/csw/munin/templates
+	@ginstall -d $(DESTDIR)/etc/opt/csw/munin/templates/partial
 	@#
 	@# create user munin during package deployment -> cswusergroup
 	@#
