@@ -26,10 +26,6 @@ ARCHALL_CSWpkgget = 1
 CHECKPKG_OVERRIDES_CSWpkgget += surplus-dependency|CSWpkgutil
 CHECKPKG_OVERRIDES_CSWpkgget += catalogname-does-not-match-pkgname|pkgname=CSWpkgget|catalogname=pkg_get_stub|expected-catalogname=pkgget
 
-ALTERNATIVES_CSWpkgget = transition deprecation
-ALTERNATIVE_transition = /opt/csw/bin/pkg-get pkgget /opt/csw/bin/pkg-get.transition 10
-ALTERNATIVE_deprecation = /opt/csw/bin/pkg-get pkgget /opt/csw/bin/pkg-get.deprecated 5
-
 # going to extra effort to find wget, add /usr/local/bin to the path
 CHECKPKG_OVERRIDES_CSWpkgget += file-with-bad-content|/usr/local|root/opt/csw/bin/pkg-get.deprecated
 
@@ -40,7 +36,7 @@ install-custom:
 	  mkdir -p $(DESTDIR)$(docdir)/pkg_get_stub; \
 	  mkdir -p $(DESTDIR)$(sharedstatedir); \
 	  mkdir -p $(DESTDIR)$(sysconfdir); \
-		ginstall -m 0755 $(FILEDIR)/pkg-get $(DESTDIR)$(bindir)/pkg-get.transition; \
+		ginstall -m 0755 $(FILEDIR)/pkg-get $(DESTDIR)$(bindir)/; \
 		rsync -a --exclude=.svn $(FILEDIR)/bin/ $(DESTDIR)$(bindir)/;\
 		rsync -a --exclude=.svn $(FILEDIR)/share/ $(DESTDIR)$(sharedstatedir)/; \
 		rsync -a --exclude=.svn $(FILEDIR)/etc/ $(DESTDIR)$(sysconfdir)/; \
