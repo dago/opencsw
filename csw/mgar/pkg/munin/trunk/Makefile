@@ -62,7 +62,7 @@ MUNINNODE_UGFILES 	= /var/opt/csw/munin /var/opt/csw/munin/log /var/opt/csw/muni
 MUNINNODE_SMF		= /etc/opt/csw/init.d/cswmuninnode
 MUNINNODE_USERGROUP	= /opt/csw/etc/pkg/CSWmunin-node/cswusergroup
 MUNINNODE_EXECS		= .*munin-node .*munin-node-configure.* .*munindoc.* .*munin-run.*
-MUNINNODE_CONF		= .*munin-node.conf .*munin-node.conf.5 .*munin-node.1 /etc/opt/csw/munin/plugin-conf.d
+MUNINNODE_CONF		= .*munin-node.conf .*munin-node.conf.5 .*munin-node.1 /etc/opt/csw/munin/munin-conf.d /etc/opt/csw/munin/plugin-conf.d
 
 PKGFILES_CSWmunin-node += .*muninnode.* .*CSWmunin-node.*
 PKGFILES_CSWmunin-node += .*plugins.*
@@ -72,9 +72,9 @@ PKGFILES_CSWmunin-node += $(MUNINNODE_UGFILES)
 PKGFILES_CSWmunin-node += $(MUNINNODE_SMF)
 PKGFILES_CSWmunin-node += $(MUNINNODE_USERGROUP)
 PKGFILES_CSWmunin-node += $(MUNINNODE_EXECS)
+PKGFILES_CSWmunin-node += $(MUNINNODE_CONF)
 
-PROTOTYPE_MODIFIERS  = muninnode_ugfiles
-PROTOTYPE_MODIFIERS += muninnode_smf
+PROTOTYPE_MODIFIERS  = muninnode_ugfiles muninnode_smf
 
 PROTOTYPE_FILES_muninnode_ugfiles = $(MUNINNODE_UGFILES)
 PROTOTYPE_USER_muninnode_ugfiles = munin
@@ -224,7 +224,7 @@ install-custom:
 	@# create init script / smf -> cswinitsmf
 	@#
 	@ginstall -d $(DESTDIR)/etc/opt/csw/init.d
-	@ginstall -m 644 $(FILEDIR)/cswmuninnode $(DESTDIR)/etc/opt/csw/init.d/cswmuninnode
+	@ginstall -m 755 $(FILEDIR)/cswmuninnode $(DESTDIR)/etc/opt/csw/init.d/cswmuninnode
 	@#
 	@# create crontab for user munin -> cswcrontab
 	@#
