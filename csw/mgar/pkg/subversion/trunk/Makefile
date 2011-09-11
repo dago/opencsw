@@ -46,6 +46,8 @@ BUILD_DEP_PKGS += CSWlibsqlite3-dev
 PACKAGES  = CSWsvn
 SPKG_DESC_CSWsvn           = Version control rethought
 CATALOGNAME_CSWsvn         = subversion
+CHECKPKG_OVERRIDES_CSWsvn += catalogname-does-not-match-pkgname|pkgname=CSWsvn|catalogname=subversion|expected-catalogname=svn
+CHECKPKG_OVERRIDES_CSWsvn += license-missing|/opt/csw/share/doc/subversion/license
 RUNTIME_DEP_PKGS_CSWsvn      = CSWbdb48
 RUNTIME_DEP_PKGS_CSWsvn      += CSWsasl
 RUNTIME_DEP_PKGS_CSWsvn      += CSWzlib
@@ -59,7 +61,6 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWsvn += CSWosslrt
-CHECKPKG_OVERRIDES_CSWsvn += license-missing|/opt/csw/share/doc/subversion/license
 
 
 PACKAGES += CSWsvn-devel
@@ -69,22 +70,36 @@ ARCHALL_CSWsvn-devel       = 1
 PKGFILES_CSWsvn-devel      = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-devel     += $(docdir)/$(CATALOGNAME_CSWsvn-devel)/changelog.CSW
 CHECKPKG_OVERRIDES_CSWsvn-devel += archall-devel-package
+CHECKPKG_OVERRIDES_CSWsvn-devel += catalogname-does-not-match-pkgname|pkgname=CSWsvn-devel|catalogname=subversion_devel|expected-catalogname=svn_devel
+CHECKPKG_OVERRIDES_CSWsvn-devel += license-missing|/opt/csw/share/doc/subversion_devel/license
+
 
 PACKAGES += CSWsvn-contrib
 SPKG_DESC_CSWsvn-contrib   = Contributed subversion scripts
 CATALOGNAME_CSWsvn-contrib = subversion_contrib
 PKGFILES_CSWsvn-contrib    = $(docdir)/subversion/contrib.*
 ARCHALL_CSWsvn-contrib     = 1
+CHECKPKG_OVERRIDES_CSWsvn-contrib += action-class-only-in-pkginfo|none
+CHECKPKG_OVERRIDES_CSWsvn-contrib += catalogname-does-not-match-pkgname|pkgname=CSWsvn-contrib|catalogname=subversion_contrib|expected-catalogname=svn_contrib
+CHECKPKG_OVERRIDES_CSWsvn-contrib += license-missing|/opt/csw/share/doc/subversion_contrib/license
+
 
 PACKAGES += CSWsvn-tools
 SPKG_DESC_CSWsvn-tools     = Additional subversion tools
 CATALOGNAME_CSWsvn-tools   = subversion_tools
 PKGFILES_CSWsvn-tools      = $(docdir)/subversion/tools.*
 ARCHALL_CSWsvn-tools       = 1
+CHECKPKG_OVERRIDES_CSWsvn-tools += action-class-only-in-pkginfo|none
+CHECKPKG_OVERRIDES_CSWsvn-tools += catalogname-does-not-match-pkgname|pkgname=CSWsvn-tools|catalogname=subversion_tools|expected-catalogname=svn_tools
+CHECKPKG_OVERRIDES_CSWsvn-tools += license-missing|/opt/csw/share/doc/subversion_tools/license
+
 
 PACKAGES += CSWap2svn
 SPKG_DESC_CSWap2svn           = Subversion Modules for Apache 2.2
 CATALOGNAME_CSWap2svn         = ap2_subversion
+PKGFILES_CSWap2svn            = $(prefix)/apache2.*
+PKGFILES_CSWap2svn           += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
+CHECKPKG_OVERRIDES_CSWap2svn += license-missing|/opt/csw/share/doc/ap2_subversion/license
 RUNTIME_DEP_PKGS_CSWap2svn    = CSWsvn
 RUNTIME_DEP_PKGS_CSWap2svn   += CSWapache2
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibmagic1
@@ -96,19 +111,11 @@ RUNTIME_DEP_PKGS_CSWap2svn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWap2svn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibaprutil1-0
-PKGFILES_CSWap2svn            = $(prefix)/apache2.*
-PKGFILES_CSWap2svn           += $(docdir)/$(CATALOGNAME_CSWap2svn)/changelog.CSW
 
 PACKAGES += CSWjavasvn
 SPKG_DESC_CSWjavasvn           = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn         = javasvn
-PKGFILES_CSWjavasvn            = $(SVNLIB)/.*java.*
-PKGFILES_CSWjavasvn           += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWsvn
-RUNTIME_DEP_PKGS_CSWjavasvn   += CSWbdb48
-RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibmagic1
-RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibsqlite3-0
-RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibz1
+
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibiconv2
@@ -132,9 +139,9 @@ PKGFILES_CSWpmsvn          = $(libdir)/perl.*
 PKGFILES_CSWpmsvn         += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
 PKGFILES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
+CHECKPKG_OVERRIDES_CSWpmsvn += license-missing|/opt/csw/share/doc/pm_subversion/license
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWsvn
-RUNTIME_DEP_PKGS_CSWpmsvn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibexpat1
@@ -151,17 +158,15 @@ CATALOGNAME_CSWrbsvn       = rbsvn
 PKGFILES_CSWrbsvn          = $(libdir)/ruby.*
 PKGFILES_CSWrbsvn         += $(SVNLIB)/.*swig_ruby.*
 PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWggettextrt
+CHECKPKG_OVERRIDES_CSWrbsvn += license-missing|/opt/csw/share/doc/rbsvn/license
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibintl8-1
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWlibruby18-1
@@ -177,16 +182,6 @@ CATALOGNAME_CSWpythonsvn         = pythonsvn
 PKGFILES_CSWpythonsvn            = $(libdir)/python.*
 PKGFILES_CSWpythonsvn           += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn           += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWexpat
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWpython
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWsvn
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWiconv
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWapr-util
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWbdb48
-RUNTIME_DEP_PKGS_CSWpythonsvn   += CSWapr
-
 
 
 DISTFILES += CSWsvn.checkinstall
