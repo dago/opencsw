@@ -115,7 +115,8 @@ RUNTIME_DEP_PKGS_CSWap2svn += CSWlibaprutil1-0
 PACKAGES += CSWjavasvn
 SPKG_DESC_CSWjavasvn           = Subversion Java Language Binding
 CATALOGNAME_CSWjavasvn         = javasvn
-
+PKGFILES_CSWjavasvn            = $(SVNLIB)/.*java.*
+PKGFILES_CSWjavasvn           += $(docdir)/$(CATALOGNAME_CSWjavasvn)/changelog.CSW 
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibiconv2
@@ -124,7 +125,6 @@ RUNTIME_DEP_PKGS_CSWjavasvn += CSWsasl
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWosslrt
-
 CHECKPKG_OVERRIDES_CSWjavasvn += license-missing|/opt/csw/share/doc/javasvn/license
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
@@ -139,7 +139,6 @@ PKGFILES_CSWpmsvn          = $(libdir)/perl.*
 PKGFILES_CSWpmsvn         += $(SVNLIB)/.*perl.*
 PKGFILES_CSWpmsvn         += $(mandir)/.*swig_perl.*
 PKGFILES_CSWpmsvn         += $(docdir)/$(CATALOGNAME_CSWpmsvn)/changelog.CSW
-CHECKPKG_OVERRIDES_CSWpmsvn += license-missing|/opt/csw/share/doc/pm_subversion/license
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWperl
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibmagic1
@@ -150,6 +149,8 @@ RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibsqlite3-0
+CHECKPKG_OVERRIDES_CSWpmsvn += license-missing|/opt/csw/share/doc/pm_subversion/license
+CHECKPKG_OVERRIDES_CSWpmsvn += catalogname-does-not-match-pkgname|pkgname=CSWpmsvn|catalogname=pm_subversion|expected-catalogname=pmsvn
 
 
 PACKAGES += CSWrbsvn
