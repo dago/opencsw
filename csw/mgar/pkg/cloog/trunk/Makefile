@@ -17,6 +17,8 @@ GARCOMPILER = GNU
 
 LICENSE = $(FILEDIR)/COPYING
 
+BUILD_DEP_PKGS = CSWlibppl-dev
+
 PACKAGES += CSWlibcloog-isl2
 PKGFILES_CSWlibcloog-isl2 += $(call baseisadirs,$(libdir),libcloog-isl\.so\.2(\.\d+)*)
 SPKG_DESC_CSWlibcloog-isl2 += $(DESCRIPTION), libcloog-isl.so.2
