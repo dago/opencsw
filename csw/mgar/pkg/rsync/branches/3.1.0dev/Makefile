@@ -31,6 +31,10 @@ CONFIGURE_ARGS += --with-rsyncd-conf=$(sysconfdir)/rsyncd.conf
 
 include gar/category.mk
 
+pre-configure-modulated:
+	@(cd $(WORKSRC); ./support/git-set-file-times; ./prepare-source)
+	@$(MAKECOOKIE)
+
 post-install-modulated:
 	perl -pi \
 		-e 's,/etc/rsyncd\.conf,$(sysconfdir)/rsyncd.conf,g;' \
