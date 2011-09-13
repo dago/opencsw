@@ -1,5 +1,5 @@
 NAME = di
-VERSION = 4.27
+VERSION = 4.28
 CATEGORIES = utils
 
 DESCRIPTION = Disk information utility
@@ -13,10 +13,7 @@ endef
 MASTER_SITES = http://www.gentoo.com/di/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-DEP_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS_CSWdi += CSWlibintl8
 
 LICENSE = LICENSE
 
@@ -25,6 +22,10 @@ PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 CONFIGURE_SCRIPTS = 
+
+# Make sure the locale is configured to the right directory
+BUILD_OVERRIDE_VARS = prefix
+BUILD_OVERRIDE_VAR_prefix = $(prefix)
 
 TEST_SCRIPTS =
 
