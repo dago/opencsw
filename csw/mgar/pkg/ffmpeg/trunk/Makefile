@@ -9,7 +9,7 @@
 # They disable all optimizations though. I don't know why. 
 
 NAME = ffmpeg
-VERSION = 0.8.2
+VERSION = 0.8.3
 CATEGORIES = lib
 
 DESCRIPTION = Very fast video and audio converter (includes libavcodec)
@@ -28,7 +28,7 @@ PATCHFILES += 0003-fix-testsuite-shells.patch
 
 BUILD64 = 1
 # Tests only work with static build
-TEST_SCRIPTS = 
+#TEST_SCRIPTS = 
 
 NODIRPATHS += --exec_prefix
 NODIRPATHS += --sbindir
@@ -46,8 +46,8 @@ CONFIGURE_ARGS += --mandir=$(mandir)
 CONFIGURE_ARGS += --disable-debug
 CONFIGURE_ARGS += --enable-gpl
 CONFIGURE_ARGS += --enable-version3
-# Needs too builds one shared one static
-CONFIGURE_ARGS += --enable-shared
+# Needs two builds one shared one static
+#CONFIGURE_ARGS += --enable-shared
 
 #externel libs:
 # libfaac is not free
