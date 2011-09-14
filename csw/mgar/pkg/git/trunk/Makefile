@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 1.7.6.1
+VERSION = 1.7.6.3
 #PATCHLEVEL = rc1
 CATEGORIES = devel
 
@@ -95,8 +95,8 @@ SPKG_DESC_CSWgit-emacs = Git VCS support for Emacs
 SPKG_DESC_CSWgit-completion = Bash completion support for Git
 SPKG_DESC_CSWgit-dev = Headers and static libraries for Git
 
-MASTER_SITES = http://kernel.org/pub/software/scm/$(NAME)/
-DISTFILES += $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = http://git-core.googlecode.com/files/
+DISTFILES += $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWgit.postinstall
 
 PATCHFILES += 0001-Update-path-in-documentation-to-be-CSW-proper.patch
