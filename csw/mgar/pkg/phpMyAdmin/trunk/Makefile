@@ -1,5 +1,5 @@
 NAME = phpMyAdmin
-VERSION = 3.4.1
+VERSION = 3.4.5
 CATEGORIES = apps
 
 DESCRIPTION = Effective MySQL Management
@@ -41,8 +41,9 @@ CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWapache2
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWmysql5
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5ctype
 CHECKPKG_OVERRIDES_CSWphpmyadmin += surplus-dependency|CSWphp5mysqli
+# Only a comment
 CHECKPKG_OVERRIDES_CSWphpmyadmin += file-with-bad-content|/usr/share|root/opt/csw/share/www/phpmyadmin/libraries/vendor_config.php
-CHECKPKG_OVERRIDES_CSWphpmyadmin += file-with-bad-content|/usr/share|root/opt/csw/share/www/phpmyadmin/libraries/PHPExcel/PHPExcel/Shared/Font.php
+# Only a comment
 CHECKPKG_OVERRIDES_CSWphpmyadmin += file-with-bad-content|/usr/local|root/opt/csw/share/www/phpmyadmin/libraries/transformations/text_plain__external.inc.php
 
 include gar/category.mk
