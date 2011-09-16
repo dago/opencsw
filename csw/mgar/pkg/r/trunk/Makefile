@@ -1,5 +1,7 @@
+# Only builds on Solaris 10
+
 NAME = R
-VERSION = 2.10.1
+VERSION = 2.13.1
 CATEGORIES = apps
 
 DESCRIPTION = A language and environment for statistical computing and graphics
@@ -7,17 +9,18 @@ define BLURB
 endef
 
 MASTER_SITES = http://stat.ethz.ch/CRAN/src/base/R-2/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES = CSWr
-CATALOGNAME = r
-
-RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWlibicu CSWperl CSWreadline CSWsunmath 
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
+PACKAGES       = CSWr
+CATALOGNAME    = r
 SPKG_SOURCEURL = http://www.r-project.org/
+
+RUNTIME_DEP_PKGS  = CSWggettextrt
+RUNTIME_DEP_PKGS += CSWiconv
+RUNTIME_DEP_PKGS += CSWlibicu
+RUNTIME_DEP_PKGS += CSWperl
+RUNTIME_DEP_PKGS += CSWreadline
+RUNTIME_DEP_PKGS += CSWsunmath 
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
