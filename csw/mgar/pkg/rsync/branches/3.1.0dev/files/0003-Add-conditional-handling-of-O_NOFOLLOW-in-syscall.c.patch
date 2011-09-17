@@ -1,0 +1,56 @@
+From 1cfac0638a8720d2e9351cdc52a3d5f0f1543358 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Tue, 13 Sep 2011 02:33:24 +0200
+Subject: [PATCH] Add conditional handling of O_NOFOLLOW in syscall.c
+
+To facilitate systems without O_NOFOLLOW (eg: Solaris 9), add
+conditional support for reading a symlink in do_readlink.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ syscall.c |   27 +++++++++++++++++++++++++++
+ 1 files changed, 27 insertions(+), 0 deletions(-)
+
+diff --git a/syscall.c b/syscall.c
+index c6c571a..224bc88 100644
+--- a/syscall.c
++++ b/syscall.c
+@@ -87,8 +87,35 @@ ssize_t do_readlink(const char *path, char *buf, size_t bufsiz)
+ {
+ 	/* For --fake-super, we read the link from the file. */
+ 	if (am_root < 0) {
++#ifndef FCNTL_DEFINES_O_NOFOLLOW
++		/* Before and After stat to detect changes during race */
++		struct stat b_st, a_st;
++		if (lstat(path, &b_st) != 0)
++			return -1;
++
++		if (!S_ISREG(b_st.st_mode))
++			return -1;
++
++		int fd = open(path, O_RDONLY);
++#else
+ 		int fd = open(path, O_RDONLY|O_NOFOLLOW);
++#endif
++
+ 		if (fd >= 0) {
++#ifndef FCNTL_DEFINES_O_NOFOLLOW
++			/* Handle the race condition...File may have been
++			   changed between lstat() and open().  Double check
++			   that device and inode are the same as the
++			   pre-flight test. */
++			if (fstat(fd, &a_st) != 0)
++				return -1;
++
++			/* If the file changed, bail out! */
++			if (a_st.st_dev != b_st.st_dev ||
++					a_st.st_ino != b_st.st_ino)
++				return -1;
++#endif
++
+ 			int len = read(fd, buf, bufsiz);
+ 			close(fd);
+ 			return len;
+-- 
+1.7.6.1
+

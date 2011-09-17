@@ -1,0 +1,25 @@
+From debc0397d5608430618ab8942dbeeee999c71a85 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 15 Sep 2011 03:46:16 +0200
+Subject: [PATCH] fix PATH handling for test suite
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ runtests.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/runtests.sh b/runtests.sh
+index 43732ce..8126c95 100755
+--- a/runtests.sh
++++ b/runtests.sh
+@@ -130,6 +130,7 @@ export RUNSHFLAGS
+ 
+ # for Solaris
+ [ -d /usr/xpg4/bin ] && PATH="/usr/xpg4/bin/:$PATH"
++export PATH
+ 
+ if [ "x$loglevel" != x ] && [ "$loglevel" -gt 8 ]; then
+     if set -x; then
+-- 
+1.7.6.1
+

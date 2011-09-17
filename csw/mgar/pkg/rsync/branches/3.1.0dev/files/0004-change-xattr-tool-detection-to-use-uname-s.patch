@@ -1,0 +1,60 @@
+From a8fde88e23a3d56e20027cd4cdb970edcb64168c Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Thu, 15 Sep 2011 04:26:00 +0200
+Subject: [PATCH] change xattr tool detection to use uname -s
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ testsuite/chown.test   |    4 ++--
+ testsuite/devices.test |    4 ++--
+ testsuite/xattrs.test  |    4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/testsuite/chown.test b/testsuite/chown.test
+index d238a8f..ee1f020 100644
+--- a/testsuite/chown.test
++++ b/testsuite/chown.test
+@@ -18,8 +18,8 @@ case $0 in
+     $RSYNC --version | grep ", xattrs" >/dev/null || test_skipped "Rsync needs xattrs for fake device tests"
+     RSYNC="$RSYNC --fake-super"
+     TLS_ARGS="$TLS_ARGS --fake-super"
+-    case "`xattr 2>&1 || true`" in
+-    *--list:*)
++    case "`uname -s`" in
++    Darwin)
+ 	chown() {
+ 	    own=$1
+ 	    shift
+diff --git a/testsuite/devices.test b/testsuite/devices.test
+index a85954b..fcd3eb0 100644
+--- a/testsuite/devices.test
++++ b/testsuite/devices.test
+@@ -19,8 +19,8 @@ case $0 in
+     $RSYNC --version | grep ", xattrs" >/dev/null || test_skipped "Rsync needs xattrs for fake device tests"
+     RSYNC="$RSYNC --fake-super"
+     TLS_ARGS="$TLS_ARGS --fake-super"
+-    case "`xattr 2>&1 || true`" in
+-    *--list:*)
++    case "`uname -s`" in
++    Darwin)
+ 	mknod() {
+ 	    fn="$1"
+ 	    case "$2" in
+diff --git a/testsuite/xattrs.test b/testsuite/xattrs.test
+index c1846df..fd2957a 100644
+--- a/testsuite/xattrs.test
++++ b/testsuite/xattrs.test
+@@ -10,8 +10,8 @@ lnkdir="$tmpdir/lnk"
+ 
+ $RSYNC --version | grep ", xattrs" >/dev/null || test_skipped "Rsync is configured without xattr support"
+ 
+-case "`xattr 2>&1 || true`" in
+-*--list:*)
++case "`uname -s`" in
++Darwin)
+     xset() {
+ 	xnam="$1"
+ 	xval="$2"
+-- 
+1.7.6.1
+
