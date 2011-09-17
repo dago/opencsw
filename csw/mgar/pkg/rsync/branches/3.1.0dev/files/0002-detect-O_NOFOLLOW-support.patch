@@ -1,0 +1,26 @@
+From 50a80bb5e2c2705d5a354f4a22ce58408041d39b Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 12 Sep 2011 03:56:58 +0200
+Subject: [PATCH] detect O_NOFOLLOW support
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ configure.ac |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 8962b15..1ecd66b 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -579,6 +579,8 @@ if test x"$ac_cv_func_aclsort" = x"no"; then
+     AC_CHECK_LIB(sec, aclsort)
+ fi
+ 
++AC_CHECK_DECL(O_NOFOLLOW,[AC_DEFINE(FCNTL_DEFINES_O_NOFOLLOW, 1, [Define to 1 if your open() supports O_NOFOLLOW])], [], [[#include <fcntl.h>]])
++
+ dnl At the moment we don't test for a broken memcmp(), because all we
+ dnl need to do is test for equality, not comparison, and it seems that
+ dnl every platform has a memcmp that can do at least that.
+-- 
+1.7.6
+

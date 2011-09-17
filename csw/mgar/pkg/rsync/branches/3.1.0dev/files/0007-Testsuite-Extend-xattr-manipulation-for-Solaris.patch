@@ -1,0 +1,100 @@
+From e039547532622de2de3d742c3ded4189019e94e9 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 17 Sep 2011 15:23:11 +0200
+Subject: [PATCH] Testsuite: Extend xattr manipulation for Solaris
+
+Add chown(), mknod(), xls() and xset() shell functions for Solaris so
+that we can capably test the xattr support in the rsync binary.  The
+functions all use runat to manipulate the extended attribute space.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ testsuite/chown.test   |   11 +++++++++++
+ testsuite/devices.test |   16 ++++++++++++++++
+ testsuite/xattrs.test  |   21 +++++++++++++++++++++
+ 3 files changed, 48 insertions(+), 0 deletions(-)
+
+diff --git a/testsuite/chown.test b/testsuite/chown.test
+index 7038550..2fa599d 100644
+--- a/testsuite/chown.test
++++ b/testsuite/chown.test
+@@ -26,6 +26,17 @@ case $0 in
+ 	    xattr -s 'rsync.%stat' "100644 0,0 $own" "${@}"
+ 	}
+ 	;;
++    SunOS)
++	chown() {
++	    own=$1
++	    shift
++	    for f in "${@}"; do
++		runat "${f}" /usr/xpg4/bin/sh <<EOF
++echo "100644 0,0 $own" > rsync.%stat
++EOF
++	    done
++	}
++	;;
+     *)
+ 	chown() {
+ 	    own=$1
+diff --git a/testsuite/devices.test b/testsuite/devices.test
+index 14ed317..e6b74cd 100644
+--- a/testsuite/devices.test
++++ b/testsuite/devices.test
+@@ -34,6 +34,22 @@ case $0 in
+ 	    xattr -s 'rsync.%stat' "$mode $maj,$min 0:0" "$fn"
+ 	}
+ 	;;
++    SunOS)
++	mknod() {
++	    fn="$1"
++	    case "$2" in
++	    p) mode=10644 ;;
++	    c) mode=20644 ;;
++	    b) mode=60644 ;;
++	    esac
++	    maj="${3:-0}"
++	    min="${4:-0}"
++	    touch "$fn"
++	    runat "${fn}" /usr/xpg4/bin/sh <<EOF
++echo "$mode $maj,$min 0:0" > rsync.%stat
++EOF
++	}
++	;;
+     *)
+ 	mknod() {
+ 	    fn="$1"
+diff --git a/testsuite/xattrs.test b/testsuite/xattrs.test
+index fd2957a..42492a7 100644
+--- a/testsuite/xattrs.test
++++ b/testsuite/xattrs.test
+@@ -24,6 +24,27 @@ Darwin)
+     RSYNC_PREFIX='rsync'
+     RUSR='rsync.nonuser'
+     ;;
++SunOS)
++    xset() {
++       xnam="$1"
++       xval="$2"
++       shift 2
++       for f in "${@}"; do
++           runat "${f}" /usr/xpg4/bin/sh <<EOF
++echo "${xval}" > "${xnam}"
++EOF
++       done
++    }
++    xls() {
++       for f in "${@}"; do
++           runat "${f}" /usr/xpg4/bin/sh <<EOF
++for x in *; do echo "\$x=\`cat \$x\`"; done
++EOF
++       done
++    }
++    RSYNC_PREFIX='rsync'
++    RUSR='rsync.nonuser'
++    ;;
+ *)
+     xset() {
+ 	xnam="$1"
+-- 
+1.7.6.1
+
