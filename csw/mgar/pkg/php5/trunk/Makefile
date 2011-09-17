@@ -54,7 +54,7 @@ PATCHFILES_isa-sparcv8-sapi-ap2 += 0002-Force-the-PDO-pgsql-checks-to-use-32-bit
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
 BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibexpat1 CSWlibz-dev CSWcurldevel CSWjpeg
-BUILD_DEP_PKGS += CSWpng CSWt1lib CSWxpm CSWlibgdbm-dev CSWlibgmp10
+BUILD_DEP_PKGS += CSWlibpng-dev CSWt1lib CSWxpm CSWlibgdbm-dev CSWlibgmp10
 BUILD_DEP_PKGS += CSWggettext-dev CSWossldevel CSWlibgd2 CSWbdb42devel
 BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWlibiconv-dev CSWimap-devel
 BUILD_DEP_PKGS += CSWoldapdevel CSWlibkrb5-dev CSWsasl CSWlibltdl7
