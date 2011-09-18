@@ -16,13 +16,12 @@ endef
 
 MASTER_SITES = http://samba.anu.edu.au/ftp/rsync/
 DISTFILES = $(DISTNAME).tar.gz
-PATCHFILES += 0001-fix-PATH-handling-for-test-suite.patch
-PATCHFILES += 0002-detect-O_NOFOLLOW-support.patch
-PATCHFILES += 0003-Add-conditional-handling-of-O_NOFOLLOW-in-syscall.c.patch
-PATCHFILES += 0004-change-xattr-tool-detection-to-use-uname-s.patch
-PATCHFILES += 0005-Testsuite-Honour-PATH-when-finding-fakeroot.patch
-PATCHFILES += 0006-Testsuite-Honour-PATH-when-finding-sh.patch
-PATCHFILES += 0007-Testsuite-Extend-xattr-manipulation-for-Solaris.patch
+
+PATCHFILES += 0001-change-xattr-tool-detection-to-use-uname-s.patch
+PATCHFILES += 0002-Testsuite-Honour-PATH-when-finding-fakeroot.patch
+PATCHFILES += 0003-Testsuite-Honour-PATH-when-finding-sh.patch
+PATCHFILES += 0004-Testsuite-Extend-xattr-manipulation-for-Solaris.patch
+PATCHFILES += 0005-Modify-syscall.c-do_readlink-for-systems-without-O_N.patch
 
 VENDOR_URL = http://rsync.samba.org/
 
