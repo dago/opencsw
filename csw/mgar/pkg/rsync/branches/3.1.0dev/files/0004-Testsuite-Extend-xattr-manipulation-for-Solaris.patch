@@ -1,7 +1,7 @@
-From e039547532622de2de3d742c3ded4189019e94e9 Mon Sep 17 00:00:00 2001
+From 080d69057a366a9c8e542c9d94f4e86c4938fc28 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Sat, 17 Sep 2011 15:23:11 +0200
-Subject: [PATCH] Testsuite: Extend xattr manipulation for Solaris
+Subject: [PATCH 4/5] Testsuite: Extend xattr manipulation for Solaris
 
 Add chown(), mknod(), xls() and xset() shell functions for Solaris so
 that we can capably test the xattr support in the rsync binary.  The
@@ -15,7 +15,7 @@ Signed-off-by: Ben Walton <bwalton@opencsw.org>
  3 files changed, 48 insertions(+), 0 deletions(-)
 
 diff --git a/testsuite/chown.test b/testsuite/chown.test
-index 7038550..2fa599d 100644
+index b18db1d..d48de75 100644
 --- a/testsuite/chown.test
 +++ b/testsuite/chown.test
 @@ -26,6 +26,17 @@ case $0 in
@@ -37,7 +37,7 @@ index 7038550..2fa599d 100644
  	chown() {
  	    own=$1
 diff --git a/testsuite/devices.test b/testsuite/devices.test
-index 14ed317..e6b74cd 100644
+index 349782f..1846f2c 100644
 --- a/testsuite/devices.test
 +++ b/testsuite/devices.test
 @@ -34,6 +34,22 @@ case $0 in
@@ -96,5 +96,5 @@ index fd2957a..42492a7 100644
      xset() {
  	xnam="$1"
 -- 
-1.7.6.1
+1.7.4.1
 

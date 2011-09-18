@@ -1,7 +1,7 @@
-From 5c49cdab471a79c7bf72402aa4f14ba3b04a55e3 Mon Sep 17 00:00:00 2001
+From 636313b2b4bce8b8f6ce99d16258f10590ebf6d1 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Sat, 17 Sep 2011 15:14:23 +0200
-Subject: [PATCH] Testsuite: Honour PATH when finding fakeroot
+Subject: [PATCH 2/5] Testsuite: Honour PATH when finding fakeroot
 
 Some systems may have fakeroot, but not at /usr/bin.  Use PATH to see
 if the tool is available.  This will allow using fakeroot on a
@@ -56,5 +56,5 @@ index fcd3eb0..30bc1c4 100644
  	test_skipped "Rsync needs root/fakeroot for device tests"
  	;;
 -- 
-1.7.6.1
+1.7.4.1
 
