@@ -50,6 +50,7 @@ BUILD_DEP_PKGS += CSWlibz-dev
 BUILD_DEP_PKGS += CSWlibgmp-dev
 BUILD_DEP_PKGS += CSWlibmpc-dev
 BUILD_DEP_PKGS += CSWlibmpfr-dev
+BUILD_DEP_PKGS += CSWlibppl-dev
 
 ## build options
 # http://gcc.gnu.org/install/configure.html
@@ -149,16 +150,25 @@ SPKG_DESC_$(PKG_BASENAME)core = GNU C compiler
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibffi4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgmp10
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgmpxx4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgomp1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpfr4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibppl-c4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibppl9
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibpwl5
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibssp0
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibz1
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWpython
+
+# checkpkg-undetectable dependencies
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWbinutils
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWgsed
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWcoreutils
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWggrep
 
 ALTERNATIVES_$(PKG_BASENAME)core += $(PKG_VERSION_TOKEN)core
 ALTERNATIVE_$(PKG_VERSION_TOKEN)core += $(bindir)/cpp gcc_core $(bindir)/cpp$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
@@ -178,6 +188,11 @@ CHECKPKG_OVERRIDES_$(PKG_BASENAME)gfortran += file-with-bad-content
 # Due to complex regular expressions
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)java += file-collision|$(includedir)/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|$(PKG_BASENAME)g++|$(PKG_BASENAME)java
 CHECKPKG_OVERRIDES_$(PKG_BASENAME)g++ += file-collision|$(includedir)/c++/$(VERSION)/sun/awt/CausedFocusEvent.h|$(PKG_BASENAME)g++|$(PKG_BASENAME)java
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += missing-dependency|CSWpython
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWbinutils
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWcoreutils
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWggrep
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)core += surplus-dependency|CSWgsed
 
 # Only man pages, so not a big problem. Alternatives could be used, but it
 # requires rebuilding libffi.
@@ -327,10 +342,17 @@ PKGFILES_$(PKG_BASENAME)g++ += $(mandir)/.*g\+\+.1
 PKGFILES_$(PKG_BASENAME)g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/[a-fA-F,h-iH-I,k-nI-N,p-zP-Z,]+.*
 PKGFILES_$(PKG_BASENAME)g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/ostream.*
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibgmp10
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibgmpxx4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpfr4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibppl-c4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibppl9
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibpwl5
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibstdc++$(LIBSTDCXX_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibz1
+
+# The C++ compiler needs the C compiler.
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += $(PKG_BASENAME)core
 
 ALTERNATIVES_$(PKG_BASENAME)g++ += $(PKG_VERSION_TOKEN)g++
 ALTERNATIVE_$(PKG_VERSION_TOKEN)g++ += $(bindir)/g++ gcc_gplusplus $(bindir)/g++$(PROGRAM_SUFFIX) $(ALTERNATIVES_PRIO)
@@ -340,11 +362,6 @@ RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += CSWlibgcc-s1
 
 PACKAGES += $(PKG_BASENAME)gfortran
 SPKG_DESC_$(PKG_BASENAME)gfortran   = GNU Fortran Compiler
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpfr4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgmp10
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgfortran3
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpc2
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibz1
 PKGFILES_$(PKG_BASENAME)gfortran += $(foreach F,$(FORTRAN_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
 PKGFILES_$(PKG_BASENAME)gfortran += $(foreach F,$(FORTRAN_BINARIES),$(prefix)/$(PKG_VERSION_TOKEN)/bin/$(F))
 PKGFILES_$(PKG_BASENAME)gfortran += $(bindir)/\w+-\w+-solaris[\d\.]+-gfortran$(PROGRAM_SUFFIX)
@@ -353,6 +370,15 @@ PKGFILES_$(PKG_BASENAME)gfortran += $(libexecdir)/.*f951
 PKGFILES_$(PKG_BASENAME)gfortran += $(mandir)/.*gfortran.1
 PKGFILES_$(PKG_BASENAME)gfortran += $(infodir)/gfortran.*
 PKGFILES_$(PKG_BASENAME)gfortran += $(call baseisadirs,$(libdir),libgfortran\.so)
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpfr4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgmp10
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgfortran3
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpc2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibz1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibppl-c4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgmpxx4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibpwl5
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibppl9
 OBSOLETED_BY_$(PKG_BASENAME)gfortran  = $(PKG_BASENAME)g95
 OBSOLETED_BY_$(PKG_BASENAME)gfortran += $(PKG_BASENAME)g95rt
 
@@ -366,8 +392,12 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcj$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgmp10
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgmpxx4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpfr4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibppl-c4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibppl9
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibpwl5
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibz1
 
 PKGFILES_$(PKG_BASENAME)java  = $(foreach F,$(JAVA_BINARIES),$(bindir)/$(F)$(PROGRAM_SUFFIX))
@@ -442,10 +472,14 @@ PKGFILES_$(PKG_BASENAME)objc += $(libdir)/.*/include/objc/.*
 PKGFILES_$(PKG_BASENAME)objc += $(call baseisadirs,$(libdir),libobjc.so)
 PKGFILES_$(PKG_BASENAME)objc += $(call baseisadirs,$(libdir),libobjc_gc.so)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibgmp10
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibgmpxx4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc-gc3
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc3
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibppl-c4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibppl9
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibpwl5
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibz1
 
 # libiconv deps cropped up relatively late in the porting process. Perhaps
