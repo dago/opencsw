@@ -25,7 +25,7 @@ PATCHFILES += 0005-Modify-syscall.c-do_readlink-for-systems-without-O_N.patch
 
 VENDOR_URL = http://rsync.samba.org/
 
-RUNTIME_DEP_PKGS_CSWrsync  = CSWiconv
+RUNTIME_DEP_PKGS_CSWrsync  = CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWrsync += CSWlibpopt
 
 # The location of rsyncd.conf to OpenCSW standard has been done in 3.0.8
