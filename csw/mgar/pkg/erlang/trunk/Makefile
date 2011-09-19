@@ -12,18 +12,30 @@ endef
 
 VENDOR_URL = http://www.erlang.org/
 MASTER_SITES = http://www.erlang.org/download/
-DISTFILES  = otp_src_$(VERSION).tar.gz
+DISTNAME = otp_src_$(VERSION)
+DISTFILES  = $(DISTNAME).tar.gz
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+LICENSE = EPLICENCE
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+PACKAGES += CSWerlang
+SPKG_DESC_CSWerlang = A functional programming language from Ericsson
+RUNTIME_DEP_PKGS_CSWerlang += CSWemacscommon
+RUNTIME_DEP_PKGS_CSWerlang += CSWlibncurses5
 
-WORKSRC = $(WORKDIR)/otp_src_$(VERSION)
+PACKAGES += CSWerlang-dev
+SPKG_DESC_CSWerlang-dev = Ericson Erlang OTP library sources and headers
+PKGFILES_CSWerlang-dev += $(PKGFILES_DEVEL)
+OBSOLETED_BY_CSWerlang-dev = CSWerlangdevel
+CATALOGNAME_CSWerlangdevel = erlang_devel_stub
 
-GARCOMPILER = GCC3
+PACKAGES += CSWerlang-doc
+SPKG_DESC_CSWerlang-doc = Erlang manual and documentation
+# This is empty right now, make sure docs are build later...
+PKGFILES_CSWerlang-doc += $(docdir)/.*
+OBSOLETED_BY_CSWerlang-doc = CSWerlangdoc
+CATALOGNAME_CSWerlangdoc = erlang_doc_stub
+
+GARCOMPILER = GCC4
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-ssl
@@ -31,16 +43,14 @@ CONFIGURE_ARGS += --enable-threads
 CONFIGURE_ARGS += --enable-smp-support
 CONFIGURE_ARGS += --enable-kernel-poll
 CONFIGURE_ARGS += --enable-hipe
-CONFIGURE_ARGS += --without-odbc
+#  CONFIGURE_ARGS += --without-odbc
 
-SKIPTEST = 1
+# There doesn't seem to be a testsuite
+TEST_SCRIPTS =
 
-RUNTIME_DEP_PKGS_CSWerlang += CSWemacscommon
-RUNTIME_DEP_PKGS_CSWerlang += CSWlibncurses5
-
-post-configure-modulated:
-	@echo " ==> disabling WxWidgets"
-	@touch $(WORKDIR)/otp_src_$(VERSION)/lib/wx/SKIP
-	@$(MAKECOOKIE)
+#post-configure-modulated:
+#	@echo " ==> disabling WxWidgets"
+#	@touch $(WORKDIR)/otp_src_$(VERSION)/lib/wx/SKIP
+#	@$(MAKECOOKIE)
 
 include gar/category.mk
