@@ -46,9 +46,20 @@ DEP_PKGS += CSWcommon
 DEP_PKGS += CSWx11common
 DEP_PKGS += CSWlibpthreadstubs
 
-CHECKPKG_OVERRIDES_CSWtokyocabinet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libtokyocabinet.so
-CHECKPKG_OVERRIDES_CSWtokyocabinet += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libtokyocabinet.so.9.10.0|soname=libtokyocabinet.so.9|pkgname=CSWtokyocabinet|expected=CSWlibtokyocabinet9
-CHECKPKG_OVERRIDES_CSWtokyocabinet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libtokyocabinet.so
+PACKAGES += CSWlibtokyocabinet9
+CATALOGNAME_CSWlibtokyocabinet9 = libtokyocabinet9
+PKGFILES_CSWlibtokyocabinet9 += $(call baseisadirs,$(libdir),libtokyocabinet\.so\.9\.10\.0)
+PKGFILES_CSWlibtokyocabinet9 += $(call baseisadirs,$(libdir),libtokyocabinet\.so\.9(\.\d+)*)
+SPKG_DESC_CSWlibtokyocabinet9 += $(DESCRIPTION), libtokyocabinet.so.9
+RUNTIME_DEP_PKGS_CSWtokyocabinet += CSWlibtokyocabinet9
+PACKAGES += CSWtokyocabinet-dev
+CATALOGNAME_CSWtokyocabinet-dev = tokyocabinet_dev
+SPKG_DESC_CSWtokyocabinet-dev += $(DESCRIPTION), development files
+PKGFILES_CSWtokyocabinet-dev += /opt/csw/lib/sparcv9/libtokyocabinet.so
+
+#CHECKPKG_OVERRIDES_CSWtokyocabinet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libtokyocabinet.so
+#CHECKPKG_OVERRIDES_CSWtokyocabinet += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libtokyocabinet.so.9.10.0|soname=libtokyocabinet.so.9|pkgname=CSWtokyocabinet|expected=CSWlibtokyocabinet9
+#CHECKPKG_OVERRIDES_CSWtokyocabinet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libtokyocabinet.so
 
 include gar/category.mk
 
