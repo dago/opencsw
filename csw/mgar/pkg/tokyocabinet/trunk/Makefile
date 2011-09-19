@@ -31,14 +31,25 @@ DISTFILES  = $(DISTNAME).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS) 
+#GARFLAVOR=DBG
 GARCOMPILER = GNU
+#NOISALIST = 1
+#OPT_FLAGS_GCC =  -O3
 BUILD64 = 1
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-amd64
-ARCHALL = 1
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+#ARCHALL = 1
+#EXTRA_BUILD_ISAS = sparcv8plus+vis i686
+#PATCHFILES = tcadb_misc_iterrec_iterout_for_bdb.patch
 #ISA_DEFAULT_sparc = sparcv9
+SKIP_MODULATIONS = isa-sparcv8
+EXTRA_CPPFLAGS += -DLOG_PERROR=0x00
+EXTRA_CPPFLAGS += -D__EXTENSIONS__
 RUNTIME_DEP_PKGS_CSWtokyocabinet += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWtokyocabinet += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWtokyocabinet += CSWlibz1
+DEP_PKGS += CSWcommon
+DEP_PKGS += CSWx11common
+DEP_PKGS += CSWlibpthreadstubs
 
 include gar/category.mk
 
