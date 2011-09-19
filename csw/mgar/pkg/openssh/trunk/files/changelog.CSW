@@ -1,3 +1,9 @@
+openssh (5.9p1,REV=2011.09.19) unstable
+
+  * New upstream release.
+
+ -- Yann Rouillard <yann@opencsw.org>  Mon, 19 Sep 2011 22:31:03 +0200
+
 openssh (5.8p1,REV=2011.07.25) unstable
 
   * Added the generation of eliptic curve algoritm host keys in init script.
