@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = mpfr
-VERSION = 3.0.1
+VERSION = 3.1.0-rc1
 CATEGORIES = lib
 GARTYPE = v2
 
@@ -11,13 +11,12 @@ define BLURB
 	computations with correct rounding.
 endef
 
-MASTER_SITES = http://www.mpfr.org/mpfr-$(VERSION)/
+DL_VER = $(shell echo $(VERSION) | gsed -e 's/\([^-]\+\)\(-.*\)/\1/')
+
+MASTER_SITES = http://www.mpfr.org/mpfr-$(DL_VER)/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
 BUILD_DEP_PKGS = CSWlibgmp-dev
-
-RUNTIME_DEP_PKGS_CSWlibmpfr  = 
-#PATCHFILES = patches
 
 BUILD64 = 1
 STRIP_LIBTOOL = 1
@@ -41,5 +40,13 @@ RUNTIME_DEP_PKGS_CSWlibmpfr-dev += CSWlibmpfr4
 # It's only documentation.
 CHECKPKG_OVERRIDES_CSWlibmpfr-dev += file-with-bad-content|/usr/local|root/opt/csw/share/info/mpfr.info
 CHECKPKG_OVERRIDES_CSWlibmpfr-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/mpfr/FAQ.html
+
+# The LD_OPTIONS setting breaks the test suite, because it makes
+# /opt/csw/lib/$ISALIST be always in front, while the tests require a local
+# directory be in front instead.
+# http://websympa.loria.fr/wwsympa/arc/mpfr/2011-09/msg00009.html
+# http://wiki.opencsw.org/porting-faq#toc9
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 include gar/category.mk
