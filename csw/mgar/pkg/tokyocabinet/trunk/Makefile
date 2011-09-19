@@ -33,14 +33,9 @@ DISTFILES  = $(DISTNAME).tar.gz
 CONFIGURE_ARGS = $(DIRPATHS) 
 #GARFLAVOR=DBG
 GARCOMPILER = GNU
-#NOISALIST = 1
-#OPT_FLAGS_GCC =  -O3
 BUILD64 = 1
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-#ARCHALL = 1
-#EXTRA_BUILD_ISAS = sparcv8plus+vis i686
-#PATCHFILES = tcadb_misc_iterrec_iterout_for_bdb.patch
-#ISA_DEFAULT_sparc = sparcv9
+ARCHALL = 1
 SKIP_MODULATIONS = isa-sparcv8
 EXTRA_CPPFLAGS += -DLOG_PERROR=0x00
 EXTRA_CPPFLAGS += -D__EXTENSIONS__
@@ -50,6 +45,10 @@ RUNTIME_DEP_PKGS_CSWtokyocabinet += CSWlibz1
 DEP_PKGS += CSWcommon
 DEP_PKGS += CSWx11common
 DEP_PKGS += CSWlibpthreadstubs
+
+CHECKPKG_OVERRIDES_CSWtokyocabinet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libtokyocabinet.so
+CHECKPKG_OVERRIDES_CSWtokyocabinet += shared-lib-pkgname-mismatch|file=opt/csw/lib/sparcv9/libtokyocabinet.so.9.10.0|soname=libtokyocabinet.so.9|pkgname=CSWtokyocabinet|expected=CSWlibtokyocabinet9
+CHECKPKG_OVERRIDES_CSWtokyocabinet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/sparcv9/libtokyocabinet.so
 
 include gar/category.mk
 
