@@ -1,0 +1,25 @@
+From df2a86bd6846c1e741d0731476185fdd30004c6d Mon Sep 17 00:00:00 2001
+From: builder user <builder@opencsw.org>
+Date: Mon, 19 Sep 2011 16:02:06 +0200
+Subject: [PATCH] Use /opt/csw/bin/ggrep instead of egrep.
+
+---
+ bootstrap.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/bootstrap.sh b/bootstrap.sh
+index e079783..6152fbc 100755
+--- a/bootstrap.sh
++++ b/bootstrap.sh
+@@ -76,7 +76,7 @@ bootstrap_libtoolize() {
+ 
+     # TODO: when we have libtool2, tell libtoolize where to put its files
+     # instead of manualy moving files from ltdl to lib/libLtdl
+-    if egrep -q '^[[:space:]]*AC_LIBLTDL_' configure.ac
++    if /opt/csw/bin/ggrep -E -q '^[[:space:]]*AC_LIBLTDL_' configure.ac
+     then
+ 	ltdl="--ltdl"
+     else
+-- 
+1.7.6
+
