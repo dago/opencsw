@@ -8,6 +8,7 @@ RELEASE = 15
 DISTVERSION = $(VERSION).$(RELEASE)
 DISTNAME = squid-$(DISTVERSION)
 RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9]\).*\.[0-9]*/\1/')
+GARTPE = v2
 
 DESCRIPTION = High performance Web proxy cache
 define BLURB
