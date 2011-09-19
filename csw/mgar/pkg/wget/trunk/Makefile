@@ -4,7 +4,7 @@
 #     https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00001.html
 
 NAME = wget
-VERSION = 1.13.3
+VERSION = 1.13.4
 CATEGORIES = net
 
 DESCRIPTION = A network utility to retrieve files from the Web
@@ -20,14 +20,6 @@ endef
 
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES = $(NAME)-$(VERSION).tar.xz
-
-# This is the reformatted patch wget-1.13.3.patch from
-#    https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00001.html
-PATCHFILES += 0001-Features-patch.patch
-
-# This is from
-#   https://lists.gnu.org/archive/html/bug-wget/2011-09/msg00004.html
-PATCHFILES += 0002-Make-sure-FIONBIO-is-defined.patch
 
 VENDOR_URL = http://www.gnu.org/software/wget/
 
