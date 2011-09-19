@@ -1,6 +1,9 @@
 # Copyright 2009 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+# - TBD: Add RC and SMF Manifest
+#     /opt/csw/bin/rsync --daemon -v
+#     /usr/bin/pkill -x -u 0 rsync
 
 NAME = rsync
 VERSION = 3.0.8
