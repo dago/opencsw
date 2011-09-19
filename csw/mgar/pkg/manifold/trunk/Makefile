@@ -18,10 +18,14 @@ VENDOR_URL = http://code.google.com/p/manifold/
 
 PACKAGES += CSWmanifold
 SPKG_DESC_CSWmanifold = An SMF service manifest creation tool
-ARCHALL_CSWpy-manifold = 1
+ARCHALL_CSWmanifold = 1
 
 # That is the URL of the DTD to check against
-CHECKPKG_OVERRIDES_CSWpy-manifold += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/manifold/manifold.py
+CHECKPKG_OVERRIDES_CSWmanifold += file-with-bad-content|/usr/share|root/opt/csw/lib/python/site-packages/manifold/manifold.py
+
+# This is just a binary with a private lib
+CHECKPKG_OVERRIDES_CSWmanifold += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWmanifold += pkgname-does-not-start-with-CSWpy-
 
 include gar/category.mk
 
