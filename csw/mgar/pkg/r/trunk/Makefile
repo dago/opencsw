@@ -12,7 +12,7 @@ MASTER_SITES = http://stat.ethz.ch/CRAN/src/base/R-2/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES       = CSWr-base
-SPKG_SOURCEURL = http://www.r-project.org/
+VENDOR_URL     = http://www.r-project.org/
 
 RUNTIME_DEP_PKGS_CSWr-base += CSWsunmath 
 RUNTIME_DEP_PKGS_CSWr-base += CSWjpeg
