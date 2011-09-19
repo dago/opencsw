@@ -27,7 +27,7 @@ define BLURB
   as a full-strength general-purpose cryptography library.
 endef
 
-PACKAGES = CSWossl CSWosslrt CSWossldevel CSWosslutils
+PACKAGES = CSWossl CSWosslrt CSWossldevel CSWosslutils CSWossldoc
 
 SPKG_DESC_CSWossl = Openssl meta package
 CATALOGNAME_CSWossl = openssl
@@ -38,9 +38,12 @@ SPKG_DESC_CSWosslrt = Openssl runtime libraries
 CATALOGNAME_CSWosslrt = openssl_rt
 RUNTIME_DEP_PKGS_CSWosslrt = CSWcacertificates
 
-SPKG_DESC_CSWossldevel = Openssl development files
+SPKG_DESC_CSWossldevel = Openssl development libraries and headers
 CATALOGNAME_CSWossldevel = openssl_devel
 RUNTIME_DEP_PKGS_CSWossldevel = CSWosslrt
+
+SPKG_DESC_CSWossldoc = Openssl development documentation files
+CATALOGNAME_CSWossldoc = openssl_doc
 
 SPKG_DESC_CSWosslutils = Openssl binaries and related tools 
 CATALOGNAME_CSWosslutils = openssl_utils
@@ -99,10 +102,14 @@ CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/usr/local|root/opt/csw/sh
 CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/CHANGES
 CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/INSTALL
 CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/FAQ
+CHECKPKG_OVERRIDES_CSWossldoc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_doc/CHANGES
+CHECKPKG_OVERRIDES_CSWossldoc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_doc/INSTALL
+CHECKPKG_OVERRIDES_CSWossldoc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_doc/FAQ
 
 # We will not fix this today
 CHECKPKG_OVERRIDES_CSWosslutils += catalogname-does-not-match-pkgname|pkgname=CSWosslutils|catalogname=openssl_utils|expected-catalogname=osslutils
 CHECKPKG_OVERRIDES_CSWossldevel += catalogname-does-not-match-pkgname|pkgname=CSWossldevel|catalogname=openssl_devel|expected-catalogname=ossldevel
+CHECKPKG_OVERRIDES_CSWossldoc += catalogname-does-not-match-pkgname|pkgname=CSWossldoc|catalogname=openssl_doc|expected-catalogname=ossldoc
 CHECKPKG_OVERRIDES_CSWossl += catalogname-does-not-match-pkgname|pkgname=CSWossl|catalogname=openssl|expected-catalogname=ossl
 CHECKPKG_OVERRIDES_CSWosslrt += catalogname-does-not-match-pkgname|pkgname=CSWosslrt|catalogname=openssl_rt|expected-catalogname=osslrt
 
@@ -130,6 +137,10 @@ PATCHFILES = more_configure_targets.patch
 
 # Update openssl.cnf path in man page to follow opencsw standard
 PATCHFILES += opencsw_paths.patch
+
+# Let's always block the compromised DigiNotar CA, whatever the CA configured
+# (patch taken from Debian Package)
+PATCHFILES += block_diginotar.patch
 
 LICENSE=LICENSE
 
