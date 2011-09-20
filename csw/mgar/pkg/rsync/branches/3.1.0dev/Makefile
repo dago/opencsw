@@ -21,7 +21,6 @@ PATCHFILES += 0001-change-xattr-tool-detection-to-use-uname-s.patch
 PATCHFILES += 0002-Testsuite-Honour-PATH-when-finding-fakeroot.patch
 PATCHFILES += 0003-Testsuite-Honour-PATH-when-finding-sh.patch
 PATCHFILES += 0004-Testsuite-Extend-xattr-manipulation-for-Solaris.patch
-PATCHFILES += 0005-Modify-syscall.c-do_readlink-for-systems-without-O_N.patch
 
 VERSION_FLAG_PATCH = 1
 
