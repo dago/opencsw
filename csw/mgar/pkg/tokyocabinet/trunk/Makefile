@@ -42,10 +42,7 @@ EXTRA_CPPFLAGS += -DLOG_PERROR=0x00
 EXTRA_CPPFLAGS += -D__EXTENSIONS__
 
 PACKAGES += CSWlibtokyocabinet9
-PACKAGES += CSWtokyocabinet9
 PACKAGES += CSWtokyocabinet-dev
-
-SPKG_DESC_CSWtokyocabinet9 = Tokyo Cabinet shared library
 
 CATALOGNAME_CSWlibtokyocabinet9 = libtokyocabinet9
 CATALOGNAME_CSWtokyocabinet-dev = tokyocabinet_dev
@@ -55,23 +52,20 @@ RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWtokyocabinet-dev += CSWlibtokyocabinet9
 RUNTIME_DEP_PKGS_CSWtokyocabinet += CSWlibtokyocabinet9
-RUNTIME_DEP_PKGS_CSWtokyocabinet9 += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWtokyocabinet9 += CSWlibtokyocabinet9
-RUNTIME_DEP_PKGS_CSWtokyocabinet9 += CSWlibz1
-CHECKPKG_OVERRIDES_CSWtokyocabinet9 += surplus-dependency|CSWlibz1
-CHECKPKG_OVERRIDES_CSWtokyocabinet9 += surplus-dependency|CSWlibtokyocabinet9
-CHECKPKG_OVERRIDES_CSWtokyocabinet9 += surplus-dependency|CSWlibbz2-1-0
 CHECKPKG_OVERRIDES_CSWtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/share/tokyocabinet/doc/spex-ja.html
 CHECKPKG_OVERRIDES_CSWtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/share/tokyocabinet/doc/spex-en.html
 CHECKPKG_OVERRIDES_CSWtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/tokyocabinet.3
 
-PKGFILES_CSWlibtokyocabinet9 += $(call baseisadirs,$(libdir),libtokyocabinet\.so\.9\.10\.0)
-PKGFILES_CSWlibtokyocabinet9 += $(call baseisadirs,$(libdir),libtokyocabinet\.so\.9(\.\d+)*)
-PKGFILES_CSWtokyocabinet-dev += /opt/csw/lib/sparcv9/libtokyocabinet.so
+$(call pkgfiles_lib,libtokyocabinet.so.9)
+PKGFILES_CSWtokyocabinet-dev += $(PKGFILES_DEVEL)
 
 SPKG_DESC_CSWlibtokyocabinet9 += $(DESCRIPTION), libtokyocabinet.so.9
 SPKG_DESC_CSWtokyocabinet-dev += $(DESCRIPTION), development files
 
+#######################
+# REMOVE
+#######################
+TEST_SCRIPTS =
 include gar/category.mk
 
 PATH:=/opt/csw/gnu:$(PATH)
