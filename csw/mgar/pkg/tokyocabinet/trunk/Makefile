@@ -30,7 +30,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
-PATCHFILES = 0001-updated-paths-for-csw.patch
+PATCHFILES += 0001-updated-paths-for-csw.patch
 CONFIGURE_ARGS = $(DIRPATHS) 
 GARCOMPILER = GCC4
 BUILD64 = 1
