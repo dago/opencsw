@@ -52,9 +52,6 @@ RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWtokyocabinet-dev += CSWlibtokyocabinet9
 RUNTIME_DEP_PKGS_CSWtokyocabinet += CSWlibtokyocabinet9
-CHECKPKG_OVERRIDES_CSWtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/share/tokyocabinet/doc/spex-ja.html
-CHECKPKG_OVERRIDES_CSWtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/share/tokyocabinet/doc/spex-en.html
-CHECKPKG_OVERRIDES_CSWtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/tokyocabinet.3
 
 $(call pkgfiles_lib,libtokyocabinet.so.9)
 PKGFILES_CSWtokyocabinet-dev += $(PKGFILES_DEVEL)
