@@ -1,0 +1,36 @@
+From 7615eb0c7ed9aec93e9d10a5d8c530bf23e34005 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 20 Sep 2011 13:58:03 +0200
+Subject: [PATCH] Fix mutex stream return args in macro
+
+---
+ common/estream.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/common/estream.c b/common/estream.c
+index 2d68415..d350da6 100644
+--- a/common/estream.c
++++ b/common/estream.c
+@@ -175,16 +175,16 @@ static int estream_pth_killed;
+ 
+ # define ESTREAM_MUTEX_INITIALIZER PTH_MUTEX_INIT
+ # define ESTREAM_MUTEX_LOCK(mutex)                              \
+-  (estream_pth_killed ? dummy_mutex_call_void ((mutex))         \
++  (estream_pth_killed ? dummy_mutex_call_int ((mutex))         \
+    : pth_mutex_acquire (&(mutex), 0, NULL))
+ # define ESTREAM_MUTEX_UNLOCK(mutex)                            \
+-  (estream_pth_killed ? dummy_mutex_call_void ((mutex))         \
++  (estream_pth_killed ? dummy_mutex_call_int ((mutex))         \
+    : pth_mutex_release (&(mutex)))
+ # define ESTREAM_MUTEX_TRYLOCK(mutex)                                   \
+   (estream_pth_killed ? dummy_mutex_call_int ((mutex))                  \
+    : ((pth_mutex_acquire (&(mutex), 1, NULL) == TRUE)? 0:-1))
+ # define ESTREAM_MUTEX_INITIALIZE(mutex)                        \
+-  (estream_pth_killed ? dummy_mutex_call_void ((mutex))         \
++  (estream_pth_killed ? dummy_mutex_call_int ((mutex))         \
+    : pth_mutex_init (&(mutex)))
+ 
+ #else /*!HAVE_PTH*/
+-- 
+1.7.6.1
+
