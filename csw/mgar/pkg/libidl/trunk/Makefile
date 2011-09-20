@@ -7,24 +7,23 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-
-RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2
-
-SPKG_SOURCEURL = http://projects.gnome.org/$(NAME)/
-
 DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
-CONFIGURE_ARGS  = $(DIRPATHS)
-STRIP_LIBTOOL = 1
+VENDOR_URL = http://ftp.gnome.org/pub/gnome/sources/libIDL/
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+PACKAGES += CSWlibidl2-0
+SPKG_DESC_CSWlibidl2-0 = Library for handling CORBA IDL, libIDL-2.so.0
+PKGFILES_CSWlibidl2-0 += $(call pkgfiles_lib,libIDL-2.so.0)
+RUNTIME_DEP_PKGS_CSWlibidl2-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibidl2-0 += CSWglib2
+OBSOLETED_BY_CSWlibidl2-0 += CSWlibidl
+
+PACKAGES += CSWlibidl-dev
+SPKG_DESC_CSWlibidl-dev = Development files for libIDL-2.so.0
+# pkgfiles is catchall
+RUNTIME_DEP_PKGS_CSWlibidl-dev += CSWlibidl2-0
 
 BUILD64 = 1
-NOISAEXEC = 1
-
-TEST_TARGET = check
-
-PACKAGES = CSWlibidl
 
 CPP = /usr/lib/cpp
 EXTRA_COMMON_EXPORTS += CPP
