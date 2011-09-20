@@ -61,6 +61,9 @@ RUNTIME_DEP_PKGS_CSWtokyocabinet9 += CSWlibz1
 CHECKPKG_OVERRIDES_CSWtokyocabinet9 += surplus-dependency|CSWlibz1
 CHECKPKG_OVERRIDES_CSWtokyocabinet9 += surplus-dependency|CSWlibtokyocabinet9
 CHECKPKG_OVERRIDES_CSWtokyocabinet9 += surplus-dependency|CSWlibbz2-1-0
+CHECKPKG_OVERRIDES_CSWtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/share/tokyocabinet/doc/spex-ja.html
+CHECKPKG_OVERRIDES_CSWtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/share/tokyocabinet/doc/spex-en.html
+CHECKPKG_OVERRIDES_CSWtokyocabinet9 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man3/tokyocabinet.3
 
 PKGFILES_CSWlibtokyocabinet9 += $(call baseisadirs,$(libdir),libtokyocabinet\.so\.9\.10\.0)
 PKGFILES_CSWlibtokyocabinet9 += $(call baseisadirs,$(libdir),libtokyocabinet\.so\.9(\.\d+)*)
