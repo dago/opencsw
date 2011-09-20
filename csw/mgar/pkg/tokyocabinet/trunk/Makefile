@@ -31,10 +31,12 @@ DISTFILES  = $(DISTNAME).tar.gz
 # UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS) 
-GARCOMPILER = GNU
+GARCOMPILER = GCC4
+BUILD64 = 1
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 SKIP_MODULATIONS = isa-sparcv8
+
 
 EXTRA_CPPFLAGS += -DLOG_PERROR=0x00
 EXTRA_CPPFLAGS += -D__EXTENSIONS__
@@ -56,6 +58,9 @@ RUNTIME_DEP_PKGS_CSWtokyocabinet += CSWlibtokyocabinet9
 RUNTIME_DEP_PKGS_CSWtokyocabinet9 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWtokyocabinet9 += CSWlibtokyocabinet9
 RUNTIME_DEP_PKGS_CSWtokyocabinet9 += CSWlibz1
+CHECKPKG_OVERRIDES_CSWtokyocabinet9 += surplus-dependency|CSWlibz1
+CHECKPKG_OVERRIDES_CSWtokyocabinet9 += surplus-dependency|CSWlibtokyocabinet9
+CHECKPKG_OVERRIDES_CSWtokyocabinet9 += surplus-dependency|CSWlibbz2-1-0
 
 PKGFILES_CSWlibtokyocabinet9 += $(call baseisadirs,$(libdir),libtokyocabinet\.so\.9\.10\.0)
 PKGFILES_CSWlibtokyocabinet9 += $(call baseisadirs,$(libdir),libtokyocabinet\.so\.9(\.\d+)*)
