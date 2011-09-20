@@ -2,9 +2,9 @@ NAME       = gnupg
 VERSION    = 1.4.11
 CATEGORIES = apps
 
-DESCRIPTION = GnuPG is a complete and free replacement for PGP.
+DESCRIPTION = GnuPG is a complete and free replacement for PGP
 define BLURB
-    RFC 2440 compliant tool for secure communication and data storage
+  RFC 2440 compliant tool for secure communication and data storage
 endef
 
 PACKAGES    = CSWgnupg
@@ -45,8 +45,6 @@ EXTRA_MERGE_EXCLUDE_FILES += .*/gpg-zip.1
 PROTOTYPE_MODIFIERS  = suid
 PROTOTYPE_FILES_suid = .*/gpg
 PROTOTYPE_PERMS_suid = 4755
-
-TEST_TARGET = check
 
 CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.ru.1
 CHECKPKG_OVERRIDES_CSWgnupg += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/gpg.1
