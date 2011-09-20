@@ -1,7 +1,7 @@
-From ad3aa8df6fae500f7b123de8fe80106e87510455 Mon Sep 17 00:00:00 2001
+From c7aae0e7f18b2f0cb85f8b7ab7bf4cca882f4fab Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Sat, 17 Sep 2011 12:42:39 -0400
-Subject: [PATCH 5/5] Modify syscall.c:do_readlink for systems without O_NOFOLLOW
+Subject: [PATCH] Modify syscall.c:do_readlink for systems without O_NOFOLLOW
 
 To facilitate systems without O_NOFOLLOW (eg: Solaris 9), add
 conditional handling of the open() call with two stat() checks
@@ -14,7 +14,7 @@ Signed-off-by: Ben Walton <bwalton@opencsw.org>
  1 files changed, 27 insertions(+), 0 deletions(-)
 
 diff --git a/syscall.c b/syscall.c
-index c6c571a..974e4fa 100644
+index c6c571a..b38cbe4 100644
 --- a/syscall.c
 +++ b/syscall.c
 @@ -87,8 +87,35 @@ ssize_t do_readlink(const char *path, char *buf, size_t bufsiz)
@@ -24,7 +24,7 @@ index c6c571a..974e4fa 100644
 +#ifndef O_NOFOLLOW
 +		/* Before and After stat to detect changes during race */
 +		struct stat b_st, a_st;
-+		if (lstat(path, &b_st) != 0)
++		if (x_lstat(path, &b_st) != 0)
 +			return -1;
 +
 +		if (!S_ISREG(b_st.st_mode))
@@ -41,7 +41,7 @@ index c6c571a..974e4fa 100644
 +			   changed between lstat() and open().  Double check
 +			   that device and inode are the same as the
 +			   pre-flight test. */
-+			if (fstat(fd, &a_st) != 0)
++			if (x_fstat(fd, &a_st) != 0)
 +				return -1;
 +
 +			/* If the file changed, bail out! */
@@ -54,5 +54,5 @@ index c6c571a..974e4fa 100644
  			close(fd);
  			return len;
 -- 
-1.7.4.1
+1.7.6.1
 
