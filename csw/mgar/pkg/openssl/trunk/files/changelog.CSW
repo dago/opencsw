@@ -3,7 +3,7 @@ openssl (0.9.8r,REV=2011.09.19) unstable
   * Added patch block_diginotar.patch, taken from Debian, to always blocks 
   the compromised DigiNotar CA (Closes: #4822)
 
-   -- Yann Rouillard <yann@opencsw.org>  Wed, 20 Jul 2011 15:59:52 +0200
+   -- Yann Rouillard <yann@opencsw.org>  Mon, 19 Sep 2011 22:31:40 +0200
 
 openssl (0.9.8r,REV=2011.07.20) unstable
 
