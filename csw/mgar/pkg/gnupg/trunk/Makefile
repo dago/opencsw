@@ -11,13 +11,13 @@ PACKAGES    = CSWgnupg
 CATALOGNAME = gnupg
 SPKG_DESC   = GnuPG is a complete and free replacement for PGP
 
-RUNTIME_DEP_PKGS_CSWgnupg  = CSWbzip2
-RUNTIME_DEP_PKGS_CSWgnupg += CSWcurlrt
-RUNTIME_DEP_PKGS_CSWgnupg += CSWreadline
-RUNTIME_DEP_PKGS_CSWgnupg += CSWiconv
-RUNTIME_DEP_PKGS_CSWgnupg += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWgnupg += CSWzlib
+RUNTIME_DEP_PKGS_CSWgnupg += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWgnupg += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWgnupg += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWgnupg += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWgnupg += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWgnupg += CSWlibz1
+RUNTIME_DEP_PKGS_CSWgnupg += CSWoldaprt
 # Needed because of missing in CSWncurses, checkpkg only requires readline
 RUNTIME_DEP_PKGS_CSWgnupg += CSWlibncurses5
 
