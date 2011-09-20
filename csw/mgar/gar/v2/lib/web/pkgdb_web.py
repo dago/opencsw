@@ -276,6 +276,7 @@ class RestSrv4Detail(object):
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       mimetype, data_structure = pkg.GetRestRepr()
       web.header('Content-type', mimetype)
+      web.header('Access-Control-Allow-Origin', '*')
       return json.dumps(data_structure)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
