@@ -63,7 +63,7 @@ SPKG_DESC_CSWlibtokyocabinet9 += $(DESCRIPTION), libtokyocabinet.so.9
 SPKG_DESC_CSWtokyocabinet-dev += $(DESCRIPTION), development files
 
 #######################
-# REMOVE
+# REMOVE...leaving in place for now since the tests are incredibly disk i/o intensive.
 #######################
 TEST_SCRIPTS =
 include gar/category.mk
