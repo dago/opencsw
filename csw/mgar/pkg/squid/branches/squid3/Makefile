@@ -1,14 +1,14 @@
 # Squid 3
 # $Id$
 #
-NAME = squid3
+NAME = squid
 VERSION = 3.1
 CATEGORIES = server
 RELEASE = 15
 DISTVERSION = $(VERSION).$(RELEASE)
 DISTNAME = squid-$(DISTVERSION)
 RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9]\).*\.[0-9]*/\1/')
-GARTPE = v2
+GARTYPE = v2
 
 DESCRIPTION = High performance Web proxy cache
 define BLURB
@@ -18,7 +18,7 @@ define BLURB
 endef
 
 PACKAGES = CSW$(NAME)
-CATALOGNAME_CSWsquid = $(NAME)
+CATALOGNAME_CSW$(NAME) = $(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME) = CSWoldaprt CSWosslrt CSWsasl
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 INITSMF = /etc/opt/csw/init.d/csw$(NAME)
@@ -44,6 +44,7 @@ PATCHFILES += 0003-Check-for-ber_pvt_opt_on-instead-of-main-in-libber.patch
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/$(NAME)
 CONFIGURE_ARGS += --datadir=$(datadir)/$(NAME)
+CONFIGURE_ARGS += --docdir=$(datadir)/$(NAME)
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(NAME)
 CONFIGURE_ARGS += --enable-arp-acl
 CONFIGURE_ARGS += --enable-auth=basic
@@ -65,53 +66,16 @@ CONFIGURE_ARGS += --disable-icmp
 CONFIGURE_ARGS += --with-dl
 CONFIGURE_ARGS += --with-large-files
 CONFIGURE_ARGS += --with-openssl=$(prefix)
+CONFIGURE_ARGS += --with-default-user=$(NAME)
+
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWperl
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibltdl7
 
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/squid_unix_group.8
-CHECKPKG_OVERRIDES_CSW$(NAME) += pkginfo-opencsw-repository-uncommitted
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/lib|opt/csw/bin/squidclient
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/opt/sunstudio12.1/lib|opt/csw/bin/squidclient
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/opt/sunstudio12.1/lib/rw7|opt/csw/bin/squidclient
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/lib|opt/csw/libexec/cachemgr.cgi
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/opt/sunstudio12.1/lib|opt/csw/libexec/cachemgr.cgi
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/opt/sunstudio12.1/lib/rw7|opt/csw/libexec/cachemgr.cgi
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/lib|opt/csw/libexec/diskd
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/opt/sunstudio12.1/lib|opt/csw/libexec/diskd
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/opt/sunstudio12.1/lib/rw7|opt/csw/libexec/diskd
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/lib|opt/csw/libexec/unlinkd
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/opt/sunstudio12.1/lib|opt/csw/libexec/unlinkd
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/opt/sunstudio12.1/lib/rw7|opt/csw/libexec/unlinkd
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/lib|opt/csw/sbin/squid
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/opt/sunstudio12.1/lib|opt/csw/sbin/squid
-CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry|/opt/sunstudio12.1/lib/rw7|opt/csw/sbin/squid
-CHECKPKG_OVERRIDES_CSW$(NAME) += unidentified-dependency|CSWcas-initsmf
-CHECKPKG_OVERRIDES_CSW$(NAME) += unidentified-dependency|CSWcas-migrateconf
-CHECKPKG_OVERRIDES_CSW$(NAME) += unidentified-dependency|CSWcas-preserveconf
-CHECKPKG_OVERRIDES_CSW$(NAME) += unidentified-dependency|CSWcommon
-CHECKPKG_OVERRIDES_CSW$(NAME) += unidentified-dependency|CSWoldaprt
-CHECKPKG_OVERRIDES_CSW$(NAME) += unidentified-dependency|CSWosslrt
-CHECKPKG_OVERRIDES_CSW$(NAME) += unidentified-dependency|CSWsasl
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libsasl2.so.2|is|needed|by|opt/csw/libexec/sasl_auth
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|liblber-2.4.so.2|is|needed|by|opt/csw/libexec/squid_ldap_group
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libcrypto.so.0.9.8|is|needed|by|opt/csw/libexec/ncsa_auth
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libssl.so.0.9.8|is|needed|by|opt/csw/libexec/diskd
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libssl.so.0.9.8|is|needed|by|opt/csw/sbin/squid
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libldap-2.4.so.2|is|needed|by|opt/csw/libexec/squid_ldap_group
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libssl.so.0.9.8|is|needed|by|opt/csw/libexec/unlinkd
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libssl.so.0.9.8|is|needed|by|opt/csw/libexec/ncsa_auth
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libcrypto.so.0.9.8|is|needed|by|opt/csw/libexec/diskd
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libcrypto.so.0.9.8|is|needed|by|opt/csw/libexec/unlinkd
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libltdl.so.7|is|needed|by|opt/csw/sbin/squid
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libldap-2.4.so.2|is|needed|by|opt/csw/libexec/squid_ldap_auth
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|libcrypto.so.0.9.8|is|needed|by|opt/csw/sbin/squid
-CHECKPKG_OVERRIDES_CSW$(NAME) += soname-not-found|liblber-2.4.so.2|is|needed|by|opt/csw/libexec/squid_ldap_auth
-CHECKPKG_OVERRIDES_CSW$(NAME) += missing-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSW$(NAME) += surplus-dependency|CSWoldaprt
-CHECKPKG_OVERRIDES_CSW$(NAME) += surplus-dependency|CSWsasl
-CHECKPKG_OVERRIDES_CSW$(NAME) += surplus-dependency|CSWosslrt
-
-EXTRA_LDFLAGS += -L/opt/csw/lib -R/opt/csw/lib
 
 TEST_TARGET = 
+
+EXTRA_LINKER_FLAGS += -norunpath
 
 PROTOTYPE_MODIFIERS      = varuser
 PROTOTYPE_FILES_varuser  = /var/opt/csw/$(NAME)/cache
