@@ -26,8 +26,6 @@ PRESERVECONF = /etc/opt/csw/$(NAME)/cachemgr.conf
 PRESERVECONF = /etc/opt/csw/$(NAME)/squid.conf
 PRESERVECONF = /etc/opt/csw/$(NAME)/mime.conf
 
-CLASSES = cswusergroup none cswmigrateconf cswinitsmf
-
 MIGRATE_SOURCE_DIR = /opt/csw/etc
 MIGRATE_DEST_DIR = /etc/opt/csw/$(NAME)
 MIGRATE_FILES  = cachemgr.conf
@@ -81,13 +79,13 @@ TEST_TARGET =
 EXTRA_LINKER_FLAGS += -norunpath
 
 PROTOTYPE_MODIFIERS      = varuser
-PROTOTYPE_FILES_varuser  = /var/opt/csw/$(NAME)/cache
-PROTOTYPE_FILES_varuser += /var/opt/csw/$(NAME)/logs
+PROTOTYPE_FILES_varuser  = \/var\/opt\/csw\/$(NAME)\/cache
+PROTOTYPE_FILES_varuser += \/var\/opt\/csw\/$(NAME)\/logs
+PROTOTYPE_CLASS_varuser  = ugfiles
 PROTOTYPE_USER_varuser   = $(NAME)
 PROTOTYPE_GROUP_varuser  = $(NAME)
 
-USERGROUP = /var/opt/csw/$(NAME)/cache
-USERGROUP += /var/opt/csw/$(NAME)/logs
+USERGROUP = /etc/opt/csw/pkg/$(NAME)/cswusergroup
 
 include gar/category.mk
 
@@ -101,7 +99,8 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/logs
 	ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/cache
+	ginstall -d $(DESTDIR)/etc/opt/csw/pkg/$(NAME)
 	ginstall -m 755 $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/opt/csw/init.d/csw$(NAME)
-	ginstall -m 755 $(DOWNLOADDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/$(NAME)/cswusergroup
+	ginstall -m 644 $(DOWNLOADDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/$(NAME)/cswusergroup
 	@$(MAKECOOKIE)
 
