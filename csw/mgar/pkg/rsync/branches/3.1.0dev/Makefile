@@ -17,13 +17,6 @@ endef
 MASTER_SITES = http://samba.anu.edu.au/ftp/rsync/
 DISTFILES = $(DISTNAME).tar.gz
 
-PATCHFILES += 0001-change-xattr-tool-detection-to-use-uname-s.patch
-PATCHFILES += 0002-Testsuite-Honour-PATH-when-finding-fakeroot.patch
-PATCHFILES += 0003-Testsuite-Honour-PATH-when-finding-sh.patch
-PATCHFILES += 0004-Testsuite-Extend-xattr-manipulation-for-Solaris.patch
-
-VERSION_FLAG_PATCH = 1
-
 VENDOR_URL = http://rsync.samba.org/
 
 RUNTIME_DEP_PKGS_CSWrsync  = CSWlibiconv2
