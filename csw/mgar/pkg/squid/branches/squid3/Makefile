@@ -26,6 +26,8 @@ PRESERVECONF = /etc/opt/csw/$(NAME)/cachemgr.conf
 PRESERVECONF = /etc/opt/csw/$(NAME)/squid.conf
 PRESERVECONF = /etc/opt/csw/$(NAME)/mime.conf
 
+CLASSES = cswusergroup none cswmigrateconf cswinitsmf
+
 MIGRATE_SOURCE_DIR = /opt/csw/etc
 MIGRATE_DEST_DIR = /etc/opt/csw/$(NAME)
 MIGRATE_FILES  = cachemgr.conf
