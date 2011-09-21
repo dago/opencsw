@@ -35,6 +35,7 @@ MIGRATE_FILES += squid.conf
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(VERSION)/
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += cswsquid
+DISTFILES += cswusergroup
 
 PATCHFILES =  0000-Use-opt-csw-bin-bash-for-bootstrap.sh.patch
 PATCHFILES += 0001-Use-opt-csw-bin-ggrep-instead-of-egrep.patch
@@ -83,6 +84,9 @@ PROTOTYPE_FILES_varuser += /var/opt/csw/$(NAME)/logs
 PROTOTYPE_USER_varuser   = $(NAME)
 PROTOTYPE_GROUP_varuser  = $(NAME)
 
+USERGROUP = /var/opt/csw/$(NAME)/cache
+USERGROUP += /var/opt/csw/$(NAME)/logs
+
 include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(RELEASE)
@@ -96,5 +100,6 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/logs
 	ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/cache
 	ginstall -m 755 $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/opt/csw/init.d/csw$(NAME)
+	ginstall -m 755 $(DOWNLOADDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/$(NAME)/cswusergroup
 	@$(MAKECOOKIE)
 
