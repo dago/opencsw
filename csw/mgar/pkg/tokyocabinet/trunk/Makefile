@@ -54,14 +54,14 @@ RUNTIME_DEP_PKGS_CSWlibtokyocabinet9 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWtokyocabinet-dev += CSWlibtokyocabinet9
 RUNTIME_DEP_PKGS_CSWtokyocabinet += CSWlibtokyocabinet9
 
-$(call pkgfiles_lib,libtokyocabinet.so.9)
+PKGFILES_CSWlibtokyocabinet9 += $(call pkgfiles_lib,libtokyocabinet.so.9)
 PKGFILES_CSWtokyocabinet-dev += $(PKGFILES_DEVEL)
 
 SPKG_DESC_CSWlibtokyocabinet9 += $(DESCRIPTION), libtokyocabinet.so.9
 SPKG_DESC_CSWtokyocabinet-dev += $(DESCRIPTION), development files
 
 #######################
-# REMOVE...leaving in place for now since the tests are incredibly disk i/o intensive.
+# Skipping tests for now since the tests are incredibly disk i/o intensive.
 #######################
 TEST_SCRIPTS =
 include gar/category.mk
