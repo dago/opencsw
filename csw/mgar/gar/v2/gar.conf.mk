@@ -466,28 +466,30 @@ ISABINDIR ?= $(ISABINDIR_$(ISA))
 #
 
    GCC3_CC_HOME ?= /opt/csw/gcc3
-   GCC4_CC_HOME ?= /opt/csw/gcc4
+   GCC4_CC_HOME ?= /opt/csw
   SOS11_CC_HOME ?= /opt/studio/SOS11/SUNWspro
   SOS12_CC_HOME ?= /opt/studio/SOS12/SUNWspro
 SOS12U1_CC_HOME ?= /opt/studio/sunstudio12.1
 
+   GCC4_VERSION ?= 4.6
+
      GCC3_CC ?= $(GCC3_CC_HOME)/bin/gcc
-     GCC4_CC ?= $(GCC4_CC_HOME)/bin/gcc
+     GCC4_CC ?= $(GCC4_CC_HOME)/bin/gcc-$(GCC4_VERSION)
     SOS11_CC ?= $(SOS11_CC_HOME)/bin/cc
     SOS12_CC ?= $(SOS12_CC_HOME)/bin/cc
   SOS12U1_CC ?= $(SOS12U1_CC_HOME)/bin/cc
     GCC3_CXX ?= $(GCC3_CC_HOME)/bin/g++
-    GCC4_CXX ?= $(GCC4_CC_HOME)/bin/g++
+    GCC4_CXX ?= $(GCC4_CC_HOME)/bin/g++-$(GCC4_VERSION)
    SOS11_CXX ?= $(SOS11_CC_HOME)/bin/CC
    SOS12_CXX ?= $(SOS12_CC_HOME)/bin/CC
  SOS12U1_CXX ?= $(SOS12U1_CC_HOME)/bin/CC
     GCC3_F77 ?= $(GCC3_CC_HOME)/bin/g77
-    GCC4_F77 ?= $(GCC4_CC_HOME)/bin/gfortran
+    GCC4_F77 ?= $(GCC4_CC_HOME)/bin/gfortran-$(GCC4_VERSION)
    SOS11_F77 ?= $(SOS11_CC_HOME)/bin/f77
    SOS12_F77 ?= $(SOS12_CC_HOME)/bin/f77
  SOS12U1_F77 ?= $(SOS12U1_CC_HOME)/bin/f77
      GCC3_FC ?= $(GCC3_CC_HOME)/bin/g77
-     GCC4_FC ?= $(GCC4_CC_HOME)/bin/gfortran
+     GCC4_FC ?= $(GCC4_CC_HOME)/bin/gfortran-$(GCC4_VERSION)
     SOS11_FC ?= $(SOS11_CC_HOME)/bin/f95
     SOS12_FC ?= $(SOS12_CC_HOME)/bin/f95
   SOS12U1_FC ?= $(SOS12U1_CC_HOME)/bin/f95
