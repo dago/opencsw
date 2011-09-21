@@ -34,8 +34,8 @@ MIGRATE_FILES += squid.conf
 
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(VERSION)/
 DISTFILES = $(DISTNAME).tar.bz2
-DISTFILES += cswsquid
-DISTFILES += cswusergroup
+#DISTFILES += cswsquid
+#DISTFILES += CSWsquid.cswusergroup
 
 PATCHFILES =  0000-Use-opt-csw-bin-bash-for-bootstrap.sh.patch
 PATCHFILES += 0001-Use-opt-csw-bin-ggrep-instead-of-egrep.patch
@@ -101,6 +101,6 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/cache
 	ginstall -d $(DESTDIR)/etc/opt/csw/pkg/$(NAME)
 	ginstall -m 755 $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/opt/csw/init.d/csw$(NAME)
-	ginstall -m 644 $(DOWNLOADDIR)/cswusergroup $(DESTDIR)/etc/opt/csw/pkg/$(NAME)/cswusergroup
+	ginstall -m 644 $(DOWNLOADDIR)/CSWsquid.cswusergroup $(DESTDIR)/etc/opt/csw/pkg/$(NAME)/cswusergroup
 	@$(MAKECOOKIE)
 
