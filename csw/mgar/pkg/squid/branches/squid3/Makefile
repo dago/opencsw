@@ -17,9 +17,11 @@ define BLURB
   bandwith usage. Squid runs on all popular Unix and Windows platforms.
 endef
 
-PACKAGES = CSW$(NAME)
-CATALOGNAME_CSW$(NAME) = $(NAME)
-RUNTIME_DEP_PKGS_CSW$(NAME) = CSWoldaprt CSWosslrt CSWsasl
+PACKAGES = CSWsquid
+RUNTIME_DEP_PKGS = CSWoldaprt CSWosslrt CSWsasl
+RUNTIME_DEP_PKGS += CSWperl
+RUNTIME_DEP_PKGS += CSWlibltdl7
+
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 INITSMF = /etc/opt/csw/init.d/csw$(NAME)
 PRESERVECONF = /etc/opt/csw/$(NAME)/cachemgr.conf
@@ -33,17 +35,19 @@ MIGRATE_FILES += mime.conf
 MIGRATE_FILES += squid.conf
 
 MASTER_SITES = http://www.squid-cache.org/Versions/v$(RELVER)/$(VERSION)/
-DISTFILES = $(DISTNAME).tar.bz2
-#DISTFILES += cswsquid
-#DISTFILES += CSWsquid.cswusergroup
+DISTFILES = squid-$(DISTVERSION).tar.bz2
 
 PATCHFILES =  0000-Use-opt-csw-bin-bash-for-bootstrap.sh.patch
 PATCHFILES += 0001-Use-opt-csw-bin-ggrep-instead-of-egrep.patch
 PATCHFILES += 0002-Link-against-OpenSSL-from-OpenCSW.patch
 PATCHFILES += 0003-Check-for-ber_pvt_opt_on-instead-of-main-in-libber.patch
+PATCHFILES += 0006-Replace-usr-local-squid-libexec-with-opt-csw-libexec.patch
+PATCHFILES += 0006-Use-default-cache_dir.patch
+
+sysconfdir = /etc/opt/csw/$(NAME)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --sysconfdir=/etc/opt/csw/$(NAME)
+CONFIGURE_ARGS += --sysconfdir=${sysconfdir}
 CONFIGURE_ARGS += --datadir=$(datadir)/$(NAME)
 CONFIGURE_ARGS += --docdir=$(datadir)/$(NAME)
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(NAME)
@@ -69,14 +73,16 @@ CONFIGURE_ARGS += --with-large-files
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-default-user=$(NAME)
 
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWperl
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibltdl7
-
-CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/squid_unix_group.8
+# CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/squid_unix_group.8
 
 TEST_TARGET = 
 
 EXTRA_LINKER_FLAGS += -norunpath
+
+SAMPLECONF = squid.conf
+SAMPLECONF += cachemgr.conf
+SAMPLECONF += mime.conf
+USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
 PROTOTYPE_MODIFIERS      = varuser
 PROTOTYPE_FILES_varuser  = \/var\/opt\/csw\/$(NAME)\/cache
@@ -85,11 +91,13 @@ PROTOTYPE_CLASS_varuser  = ugfiles
 PROTOTYPE_USER_varuser   = $(NAME)
 PROTOTYPE_GROUP_varuser  = $(NAME)
 
-USERGROUP = /etc/opt/csw/pkg/$(NAME)/cswusergroup
 
 include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(RELEASE)
+
+#post-extract-modulated:
+#	@-[ ! -d ${WORKDIR}/${DISTNAME} ] && mv ${WORKDIR}/squid-$(DISTVERSION) ${WORKDIR}/${DISTNAME}
 
 pre-configure-modulated:
 	cd $(WORKSRC) && $(BUILD_ENV) ./bootstrap.sh
@@ -99,8 +107,8 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/logs
 	ginstall -d $(DESTDIR)/var/opt/csw/$(NAME)/cache
-	ginstall -d $(DESTDIR)/etc/opt/csw/pkg/$(NAME)
-	ginstall -m 755 $(DOWNLOADDIR)/cswsquid $(DESTDIR)/etc/opt/csw/init.d/csw$(NAME)
-	ginstall -m 644 $(DOWNLOADDIR)/CSWsquid.cswusergroup $(DESTDIR)/etc/opt/csw/pkg/$(NAME)/cswusergroup
+	ginstall -d $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)
+	ginstall -m 755 $(FILEDIR)/cswsquid3 $(DESTDIR)/etc/opt/csw/init.d/csw$(NAME)
+	ginstall -m 644 $(FILEDIR)/CSWsquid3.cswusergroup $(DESTDIR)/etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 	@$(MAKECOOKIE)
 

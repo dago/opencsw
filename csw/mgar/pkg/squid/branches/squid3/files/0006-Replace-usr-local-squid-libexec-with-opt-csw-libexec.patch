@@ -1,0 +1,26 @@
+From 6f0024035fe0aa19409203614e724b5a386849b7 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Wed, 21 Sep 2011 14:59:31 +0200
+Subject: [PATCH 6/7] Replace /usr/local/squid/libexec with
+ /opt/csw/libexec/squid3.
+
+---
+ helpers/external_acl/unix_group/squid_unix_group.8 |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/helpers/external_acl/unix_group/squid_unix_group.8 b/helpers/external_acl/unix_group/squid_unix_group.8
+index 72aa1a3..66c2d52 100644
+--- a/helpers/external_acl/unix_group/squid_unix_group.8
++++ b/helpers/external_acl/unix_group/squid_unix_group.8
+@@ -27,7 +27,7 @@ Strip NT domain name component from user names (/ or \\ separated)
+ This squid.conf example defines two Squid acls. usergroup1 matches users in group1, and usergroup2
+ matches users in group2 or group3
+ .IP
+-external_acl_type unix_group %LOGIN /usr/local/squid/libexec/squid_unix_group -p
++external_acl_type unix_group %LOGIN /opt/csw/libexec/squid3/squid_unix_group -p
+ .IP
+ acl usergroup1 external unix_group group1
+ .IP
+-- 
+1.7.6.1
+
