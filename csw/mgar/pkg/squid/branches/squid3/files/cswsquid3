@@ -3,7 +3,7 @@
 
 PATH=/usr/bin
 CSWPREFIX=/opt/csw
-CSWETC=/etc${PREFIX}
+CSWETC=/etc${CSWPREFIX}
 CSWSBIN=${CSWPREFIX}/sbin
 SQUID_DAEMON=${CSWSBIN}/squid
 SQUID_CONF=${CSWETC}/squid/squid.conf
