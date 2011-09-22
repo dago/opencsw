@@ -16,7 +16,7 @@ endef
 # The unicode version can't be currently built on Solaris 8.  Doing separate
 # builds on Solaris 8 and Solaris 9.  Unicode support will start in Solaris 9.
 # More details below, look for 'unicode'.
-PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
+# PACKAGING_PLATFORMS = solaris8-sparc solaris8-i386
 
 EXTRA_MODULATORS = VERSION
 
@@ -64,7 +64,6 @@ PATCHFILES_isa-sparcv8-garversion-2.8.10  = 0001-Patches-from-http-trac.wxwidget
 PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0002-Fixing-retarded-checks-for-libGL.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0003-vsscanf-support-via-ncursesw.patch
 PATCHFILES_isa-sparcv8-garversion-2.8.10 += 0005-stupid-vwscanf-workaround.patch
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 PACKAGES  = CSWwxwidgetscommon
 PACKAGES += CSWwxwidgetsdevel
 PACKAGES += CSWwxwidgetsgtk2
@@ -116,9 +115,9 @@ BUILD_DEP_PKGS += CSWkbproto
 BUILD_DEP_PKGS += CSWlibxcb
 BUILD_DEP_PKGS += CSWlibxcbdevel
 BUILD_DEP_PKGS += CSWlibxau
-BUILD_DEP_PKGS += CSWlibxaudevel
+# BUILD_DEP_PKGS += CSWlibxaudevel
 BUILD_DEP_PKGS += CSWlibxrenderdevel
-BUILD_DEP_PKGS += CSWrenderproto
+# BUILD_DEP_PKGS += CSWrenderproto
 BUILD_DEP_PKGS += SUNWxwinc
 
 PKGFILES_CSWwxwidgetsdevel  = $(PKGFILES_DEVEL)
