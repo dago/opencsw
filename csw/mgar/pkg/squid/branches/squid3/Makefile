@@ -18,9 +18,12 @@ define BLURB
 endef
 
 PACKAGES = CSWsquid
-RUNTIME_DEP_PKGS = CSWoldaprt CSWosslrt CSWsasl
+RUNTIME_DEP_PKGS = CSWoldaprt
+RUNTIME_DEP_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS += CSWsasl
 RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWlibltdl7
+RUNTIME_DEP_PKGS += CSWsambacommon
 
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
 
@@ -90,6 +93,8 @@ PROTOTYPE_CLASS_varuser  = ugfiles
 PROTOTYPE_USER_varuser   = $(NAME)
 PROTOTYPE_GROUP_varuser  = $(NAME)
 
+# Needed for CSWsambacommon: ntlm_auth and winbindd
+CHECKPKG_OVERRIDES_CSWsquid += surplus-dependency|CSWsambacommon
 
 include gar/category.mk
 
