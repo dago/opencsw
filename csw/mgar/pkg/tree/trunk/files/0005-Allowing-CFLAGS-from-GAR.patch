@@ -1,0 +1,24 @@
+From 384304832c1c4db1a4606d9935f3575c4f98ae8e Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 23 Sep 2011 00:02:05 +0200
+Subject: [PATCH 5/5] Allowing CFLAGS from GAR
+
+---
+ Makefile |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index bf1bc70..8cc8886 100644
+--- a/Makefile
++++ b/Makefile
+@@ -41,7 +41,6 @@ OBJS=tree.o unix.o html.o xml.o hash.o color.o
+ 
+ # Uncomment for Solaris:
+ CC=cc
+-CFLAGS=-xO0 -v
+ LDFLAGS=
+ OBJS+=strverscmp.o
+ MANDIR=${prefix}/share/man/man1
+-- 
+1.7.6.1
+
