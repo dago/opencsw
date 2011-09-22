@@ -1,0 +1,25 @@
+From f2594284817d767991ba54daf2c1ebade28b67e1 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 23 Sep 2011 00:22:30 +0200
+Subject: [PATCH] dash e is not available in /bin/sh
+
+---
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 8cc8886..8b36db5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -98,7 +98,7 @@ clean:
+ install: tree
+ 	$(INSTALL) -d $(DESTDIR)$(BINDIR)
+ 	$(INSTALL) -d $(DESTDIR)$(MANDIR)
+-	if [ -e $(TREE_DEST) ]; then \
++	if [ -r $(TREE_DEST) ]; then \
+ 		$(INSTALL) -s $(TREE_DEST) $(DESTDIR)$(BINDIR)/$(TREE_DEST); \
+ 	fi
+ 	$(INSTALL) doc/$(MAN) $(DESTDIR)$(MANDIR)/$(MAN)
+-- 
+1.7.6.1
+

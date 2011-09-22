@@ -1,0 +1,33 @@
+From 325e376531df4acd03995a39da3644029535a92f Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 22 Sep 2011 23:59:37 +0200
+Subject: [PATCH 3/5] Solaris settings
+
+---
+ Makefile |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 2942176..5444834 100644
+--- a/Makefile
++++ b/Makefile
+@@ -40,11 +40,11 @@ OBJS=tree.o unix.o html.o xml.o hash.o color.o
+ #OBJS+=strverscmp.o
+ 
+ # Uncomment for Solaris:
+-#CC=cc
+-#CFLAGS=-xO0 -v
+-#LDFLAGS=
+-#OBJS+=strverscmp.o
+-#MANDIR=${prefix}/share/man/man1
++CC=cc
++CFLAGS=-xO0 -v
++LDFLAGS=
++OBJS+=strverscmp.o
++MANDIR=${prefix}/share/man/man1
+ 
+ # Uncomment for Cygwin:
+ #CFLAGS=-O2 -Wall -fomit-frame-pointer -DCYGWIN
+-- 
+1.7.6.1
+

@@ -1,0 +1,43 @@
+From e50871ba9d5ecf90bce31e334b5346a68ea393a0 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 23 Sep 2011 00:00:47 +0200
+Subject: [PATCH 4/5] Using GNU install
+
+---
+ Makefile |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 5444834..bf1bc70 100644
+--- a/Makefile
++++ b/Makefile
+@@ -46,6 +46,9 @@ LDFLAGS=
+ OBJS+=strverscmp.o
+ MANDIR=${prefix}/share/man/man1
+ 
++# Using the GNU install on Solaris
++INSTALL=ginstall
++
+ # Uncomment for Cygwin:
+ #CFLAGS=-O2 -Wall -fomit-frame-pointer -DCYGWIN
+ #LDFLAGS=-s
+@@ -94,12 +97,12 @@ clean:
+ 	rm -f *~
+ 
+ install: tree
+-	install -d $(BINDIR)
+-	install -d $(MANDIR)
++	$(INSTALL) -d $(DESTDIR)$(BINDIR)
++	$(INSTALL) -d $(DESTDIR)$(MANDIR)
+ 	if [ -e $(TREE_DEST) ]; then \
+-		install -s $(TREE_DEST) $(BINDIR)/$(TREE_DEST); \
++		$(INSTALL) -s $(TREE_DEST) $(DESTDIR)$(BINDIR)/$(TREE_DEST); \
+ 	fi
+-	install doc/$(MAN) $(MANDIR)/$(MAN)
++	$(INSTALL) doc/$(MAN) $(DESTDIR)$(MANDIR)/$(MAN)
+ 
+ distclean:
+ 	if [ -f tree.o ]; then rm *.o; fi
+-- 
+1.7.6.1
+
