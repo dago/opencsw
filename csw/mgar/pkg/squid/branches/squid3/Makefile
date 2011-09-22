@@ -23,6 +23,7 @@ RUNTIME_DEP_PKGS += CSWperl
 RUNTIME_DEP_PKGS += CSWlibltdl7
 
 PACKAGING_PLATFORMS =  solaris9-sparc solaris9-i386
+
 INITSMF = /etc/opt/csw/init.d/csw$(NAME)
 PRESERVECONF = /etc/opt/csw/$(NAME)/cachemgr.conf
 PRESERVECONF = /etc/opt/csw/$(NAME)/squid.conf
@@ -52,7 +53,7 @@ CONFIGURE_ARGS += --datadir=$(datadir)/$(NAME)
 CONFIGURE_ARGS += --docdir=$(datadir)/$(NAME)
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(NAME)
 CONFIGURE_ARGS += --enable-arp-acl
-CONFIGURE_ARGS += --enable-auth=basic
+CONFIGURE_ARGS += --enable-auth=basic,ntlm
 CONFIGURE_ARGS += --enable-basic-auth-helpers=LDAP,SMB,YP,PAM,SASL,NCSA
 CONFIGURE_ARGS += --enable-cache-digests
 CONFIGURE_ARGS += --enable-carp
