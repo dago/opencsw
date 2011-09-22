@@ -9,6 +9,9 @@ OS_RELS = (
     u"SunOS5.10",
     u"SunOS5.11",
 )
+OBSOLETE_OS_RELS = (
+    u"SunOS5.8",
+)
 
 SYSTEM_SYMLINKS = (
     ("/opt/csw/bdb4",     ("/opt/csw/bdb42",)),

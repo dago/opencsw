@@ -229,8 +229,10 @@ class Srv4Uploader(object):
         http_code,
         c.getinfo(pycurl.EFFECTIVE_URL))
     c.close()
-    if http_code >= 400 and http_code <= 499:
-      raise RestCommunicationError("%s - HTTP code: %s" % (url, http_code))
+    if not (http_code >= 200 and http_code <= 299):
+      raise RestCommunicationError(
+          "%s - HTTP code: %s, content: %s"
+          % (url, http_code, d.getvalue()))
 
   def _GetFileMd5sum(self, filename):
     if filename not in self.md5_by_filename:
