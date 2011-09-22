@@ -11,6 +11,7 @@ from lib.python import pkgdb
 from lib.python import checkpkg_lib
 from lib.python import package_stats
 from lib.python import opencsw
+from lib.python import common_constants
 import datetime
 import os
 import os.path
@@ -210,14 +211,31 @@ class Srv4CatalogAssignment(object):
   def DELETE(self, catrel_name, arch_name, osrel_name, md5_sum):
     configuration.SetUpSqlobjectConnection()
     try:
+      if osrel_name not in common_constants.OS_RELS:
+        self.ReturnError(
+            "%s is not one of %s (OS releases)"
+            % (osrel_name, common_constants.OS_RELS))
+      if osrel_name in common_constants.OBSOLETE_OS_RELS:
+        self.ReturnError(
+            "package deletions from an obsolete OS release such as %s "
+            "are not allowed" % osrel_name)
       srv4_to_remove = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       c = checkpkg_lib.Catalog()
       c.RemoveSrv4(srv4_to_remove, osrel_name, arch_name, catrel_name)
     except (
         sqlobject.main.SQLObjectNotFound,
         sqlobject.dberrors.OperationalError), e:
-      # Some better error reporting would be good here.
-      raise web.internalerror()
+      self.ReturnError("An error occurred: %s" % e)
+
+  def ReturnError(self, message):
+    web.header(
+        'Content-type',
+        'application/x-vnd.opencsw.pkg;type=error-message')
+    response = json.dumps({
+      "error_message": unicode(message),
+    })
+    web.header('Content-Length', len(response))
+    raise web.notacceptable(data=response)
 
 
 def SaveToAllpkgs(basename, data):
