@@ -73,8 +73,6 @@ CONFIGURE_ARGS += --with-large-files
 CONFIGURE_ARGS += --with-openssl=$(prefix)
 CONFIGURE_ARGS += --with-default-user=$(NAME)
 
-# CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/squid_unix_group.8
-
 TEST_TARGET = 
 
 EXTRA_LINKER_FLAGS += -norunpath
@@ -95,9 +93,6 @@ PROTOTYPE_GROUP_varuser  = $(NAME)
 include gar/category.mk
 
 SPKG_REVSTAMP := $(SPKG_REVSTAMP)_$(RELEASE)
-
-#post-extract-modulated:
-#	@-[ ! -d ${WORKDIR}/${DISTNAME} ] && mv ${WORKDIR}/squid-$(DISTVERSION) ${WORKDIR}/${DISTNAME}
 
 pre-configure-modulated:
 	cd $(WORKSRC) && $(BUILD_ENV) ./bootstrap.sh
