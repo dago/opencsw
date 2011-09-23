@@ -29,7 +29,7 @@ PACKAGES += CSWlibicuio48
 SPKG_DESC_CSWlibicuio48 = International Components for Unicode, libicuio.so.48
 PKGFILES_CSWlibicuio48 += $(call pkgfiles_lib,libicuio.so.48)
 RUNTIME_DEP_PKGS_CSWlibicuio48 += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWlibicuio48 += CSWlibicui18n
+RUNTIME_DEP_PKGS_CSWlibicuio48 += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSWlibicuio48 += CSWlibicuuc48
 
 PACKAGES += CSWlibicule48
@@ -49,7 +49,7 @@ PACKAGES += CSWlibicutest48
 SPKG_DESC_CSWlibicutest48 = International Components for Unicode, libicutest.so.48
 PKGFILES_CSWlibicutest48 += $(call pkgfiles_lib,libicutest.so.48)
 RUNTIME_DEP_PKGS_CSWlibicutest48 += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWlibicutest48 += CSWlibicui18n
+RUNTIME_DEP_PKGS_CSWlibicutest48 += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSWlibicutest48 += CSWlibicutu48
 RUNTIME_DEP_PKGS_CSWlibicutest48 += CSWlibicuuc48
 
@@ -58,7 +58,7 @@ SPKG_DESC_CSWlibicutu48 = International Components for Unicode, libicutu.so.48
 PKGFILES_CSWlibicutu48 += $(call pkgfiles_lib,libicutu.so.48)
 RUNTIME_DEP_PKGS_CSWlibicutu48 += CSWlibicuuc48
 RUNTIME_DEP_PKGS_CSWlibicutu48 += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWlibicutu48 += CSWlibicui18n
+RUNTIME_DEP_PKGS_CSWlibicutu48 += CSWlibicui18n48
 
 PACKAGES += CSWlibicuuc48
 SPKG_DESC_CSWlibicuuc48 = International Components for Unicode, libicuuc.so.48
@@ -69,7 +69,7 @@ PACKAGES += CSWlibicu-dev
 SPKG_DESC_CSWlibicu-dev = Development files for libicu.so.48
 # This package is PKGFILES catchall
 RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicudata48
-RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicui18n
+RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicui18n48
 RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicuio48
 RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibicule48
 RUNTIME_DEP_PKGS_CSWlibicu-dev += CSWlibiculx48
@@ -97,4 +97,4 @@ include gar/category.mk
 
 post-extract-modulated:
 	-perl -pi -e 's,/usr/local,$(prefix),' \
-		$(WORKSRC)/source/config/icu-config-bottom
+		$(WORKSRC)/config/icu-config-bottom
