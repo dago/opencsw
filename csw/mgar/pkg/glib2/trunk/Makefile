@@ -33,6 +33,7 @@ PATCHFILES += 0011-Remove-support-for-abstract-sockets-from-g_socket_ad.patch
 PATCHFILES += 0012-Use-proper-locale-for-collate-tests-2.patch
 PATCHFILES += 0013-Fix-test-shell-script.patch
 PATCHFILES += 0014-Disable-log-tests.patch
+PATCHFILES += 0015-Do-not-ellipses-in-switch-cases.patch
 
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 # Make special build for Solaris 10 to use dtrace
