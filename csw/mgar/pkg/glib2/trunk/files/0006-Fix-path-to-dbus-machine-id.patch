@@ -1,0 +1,31 @@
+From 6afae43cf6ff72826079783017688bb9ff911895 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Thu, 8 Sep 2011 15:26:56 +0200
+Subject: [PATCH] Fix path to dbus machine-id
+
+---
+ gio/gdbusprivate.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gio/gdbusprivate.c b/gio/gdbusprivate.c
+index 5f8f1f4..8ad301a 100644
+--- a/gio/gdbusprivate.c
++++ b/gio/gdbusprivate.c
+@@ -1760,12 +1760,12 @@ _g_dbus_get_machine_id (GError **error)
+   gchar *ret;
+   /* TODO: use PACKAGE_LOCALSTATEDIR ? */
+   ret = NULL;
+-  if (!g_file_get_contents ("/var/lib/dbus/machine-id",
++  if (!g_file_get_contents ("/var/opt/csw/lib/dbus/machine-id",
+                             &ret,
+                             NULL,
+                             error))
+     {
+-      g_prefix_error (error, _("Unable to load /var/lib/dbus/machine-id: "));
++      g_prefix_error (error, _("Unable to load /var/opt/csw/lib/dbus/machine-id: "));
+     }
+   else
+     {
+-- 
+1.7.6
+
