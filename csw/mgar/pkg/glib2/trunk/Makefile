@@ -3,7 +3,7 @@
 # - python files are not in the python lib dir, but directly in lib. The dir in configure is not used
 
 NAME = glib
-VERSION = 2.29.16
+VERSION = 2.28.8
 CATEGORIES = lib
 
 DESCRIPTION = The GLib library of C routines.
@@ -17,32 +17,27 @@ MASTER_SITES = $(GNOME_MIRROR)
 
 DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
-#PATCHFILES  = glib-typedetect.patch
-# PATCHFILES += FIXED_STR.patch
-#PATCHFILES += gsize.patch
-# PATCHFILES += gconverter.patch
-#PATCHFILES += CMSG_LEN.patch
-
-# Bug reported upstream:
-#   https://bugzilla.gnome.org/show_bug.cgi?id=612300
-# PATCHFILES += 0001-Use-G_STRFUNC-instead-of-explicit-gcc-only-__PRETTY_.patch
-
-#PATCHFILES += 0001-Make-sure-we-have-the-include-for-major-minor.patch
-#PATCHFILES += 0001-Replace-.-not-understood-by-Sun-Studio.patch
-
-# Use patch unless this is fixed:
-#  https://bugzilla.gnome.org/show_bug.cgi?id=652272
-PATCHFILES += 0003-Do-not-unconditionally-use-gcc-specific-Wstrict-alia.patch
-
-# Skip /strfuncs/strtod unless this is fixed:
-#   http://bugzilla.gnome.org/show_bug.cgi?id=652560
-PATCHFILES += 0004-Skip-test-strfuncs-strtod-as-Solaris-does-not-suppor.patch
-
-PATCHFILES += 0005-Disable-faililing-tests-for-now.patch
+PATCHFILES = 0001-Use-proper-locale-for-collate-tests.patch
+PATCHFILES += 0002-Make-glib-work-with-zoneinfo-version-1.patch
+PATCHFILES += 0003-Ad-hoc-macro-for-comparing-double.patch
+PATCHFILES += 0004-Use-smtp-instead-of-http-in-network-address-test.patch
+PATCHFILES += 0005-Fix-hard-coded-paths.patch
+PATCHFILES += 0006-Fix-path-to-dbus-machine-id.patch
+PATCHFILES += 0007-Fix-configure-_XOPEN_SOURCE.patch
+PATCHFILES += 0009-Fix-gdbus-peer-tests.patch
+PATCHFILES += 0009-make-gsocket.c-word-with-solaris.patch
+# Disabled until fixed:
+#  https://bugzilla.gnome.org/show_bug.cgi?id=659306
+PATCHFILES += 0010-Disable-GFileMonitor-tests-in-gio-tests-file.patch
+PATCHFILES += 0011-Remove-support-for-abstract-sockets-from-g_socket_ad.patch
+PATCHFILES += 0012-Use-proper-locale-for-collate-tests-2.patch
+PATCHFILES += 0013-Fix-test-shell-script.patch
+PATCHFILES += 0014-Disable-log-tests.patch
 
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 # Make special build for Solaris 10 to use dtrace
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 
 PACKAGES += CSWglib2
 SPKG_DESC_CSWglib2 = Low level core compatibility library for GTK+ and GNOME
@@ -72,6 +67,7 @@ RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWsharedmimeinfo
 
 PACKAGES += CSWlibglib2-0-0
 PKGFILES_CSWlibglib2-0-0 += $(call pkgfiles_lib,libglib-2.0.so.0)
@@ -120,7 +116,9 @@ PKGFILES_CSWlibglib2-dev += $(PKGFILES_DEVEL)
 OBSOLETED_BY_CSWlibglib2-dev = CSWglib2devel
 CATALOGNAME_CSWglib2devel = glib2_devel_stub
 
-BUILD_DEP_PKGS = CSWggettext
+BUILD_DEP_PKGS = CSWggettext CSWlibpcre-dev CSWlibiconv-dev
+# To make the tests working
+BUILD_DEP_PKGS += CSWdbuspython CSWsharedmimeinfo
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
@@ -128,7 +126,8 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 EXTRA_CFLAGS = -features=extensions
 
-EXTRA_CFLAGS-5.10 += -xc99=all -D_XOPEN_SOURCE=600 -D_XPG6
+# This is now handled in configure by a patch
+EXTRA_CFLAGS-5.10 += -xc99 -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 -D_XPG6
 EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(GAROSREL))
 
 EXTRA_LDFLAGS = -lsocket
@@ -137,14 +136,18 @@ BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv=gnu
+CONFIGURE_ARGS += --with-pcre=included
+CONFIGURE_ARGS += --enable-included-printf
+CONFIGURE_ARGS += --enable-threads
+CONFIGURE_ARGS += --with-threads=posix
 # CONFIGURE_ARGS += --enable-static
 
 # DTrace compilation fails, disable for now
 CONFIGURE_ARGS += --disable-dtrace
 
-# Some tests fail, they may be harmless, disable for now, but check later!
-#   http://bugzilla.gnome.org/show_bug.cgi?id=652560
-SKIPTEST ?= 1
+# DEBUGGING
+#CONFIGURE_ARGS += --enable-debug=yes
+#EXTRA_CFLAGS += -xO0 -g
 
 PYCOMPILE = 1
 

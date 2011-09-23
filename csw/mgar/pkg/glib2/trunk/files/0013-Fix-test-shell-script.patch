@@ -1,0 +1,31 @@
+From 0f1c1f72f0c6e00299af9d1f6fa9e831b6ccab62 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sat, 17 Sep 2011 14:35:20 +0200
+Subject: [PATCH] Fix test shell script
+
+---
+ tests/run-assert-msg-test.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/run-assert-msg-test.sh b/tests/run-assert-msg-test.sh
+index 8557e02..9f2be0d 100755
+--- a/tests/run-assert-msg-test.sh
++++ b/tests/run-assert-msg-test.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /usr/bin/bash
+ 
+ fail ()
+ {
+@@ -21,7 +21,7 @@ fi
+ 
+ echo_v "Running assert-msg-test"
+ OUT=$(./assert-msg-test 2>&1) && fail "assert-msg-test should abort"
+-echo "$OUT" | grep -q '^ERROR:.*assert-msg-test.c:.*:main: assertion failed: (42 < 0)' || \
++echo "$OUT" | grep '^ERROR:.*assert-msg-test.c:.*:main: assertion failed: (42 < 0)' >/dev/null 2>&1 || \
+   fail "does not print assertion message"
+ 
+ if ! type gdb >/dev/null 2>&1; then
+-- 
+1.7.6.1
+
