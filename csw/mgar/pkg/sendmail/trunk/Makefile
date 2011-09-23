@@ -53,8 +53,8 @@ SPKG_DESC_CSWsendmail         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWsendmail  = CSWoldaprt
 RUNTIME_DEP_PKGS_CSWsendmail += CSWosslrt
 RUNTIME_DEP_PKGS_CSWsendmail += CSWsasl
-RUNTIME_DEP_PKGS_CSWsendmail += CSWtcpwrap 
 RUNTIME_DEP_PKGS_CSWsendmail += CSWbdb48
+RUNTIME_DEP_PKGS_CSWsendmail += CSWlibwrap1
 
 PACKAGES                += CSWlibmilter 
 CATALOGNAME_CSWlibmilter = libmilter
