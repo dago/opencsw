@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = rsync
-VERSION = 3.1.0dev
+VERSION = 3.1.0dev_fd91c3b
 CATEGORIES = utils
 
 DESCRIPTION = Utility which provides fast incremental file transfer
