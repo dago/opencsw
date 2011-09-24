@@ -73,16 +73,16 @@ PACKAGES += CSWlibgmp10
 CATALOGNAME_CSWlibgmp10 = libgmp10
 SPKG_DESC_CSWlibgmp10 = GNU Multiple Precision Arithmetic Library, libgmp.so.10
 PKGFILES_CSWlibgmp10 = $(call baseisadirs,$(libdir),libgmp\.so\.10(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibgmp10 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibgmp10 += CSWlibgcc-s1
 
 PACKAGES += CSWlibgmpxx4
 CATALOGNAME_CSWlibgmpxx4 = libgmpxx4
 PKGFILES_CSWlibgmpxx4 += $(call baseisadirs,$(libdir),libgmpxx\.so\.4\.2\.2)
 PKGFILES_CSWlibgmpxx4 += $(call baseisadirs,$(libdir),libgmpxx\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibgmpxx4 += Development Files for libgmp, libgmpxx.so.4
+RUNTIME_DEP_PKGS_CSWlibgmpxx4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibgmpxx4 += CSWlibgmp10
-RUNTIME_DEP_PKGS_CSWlibgmpxx4 += CSWgcc4g++rt
-RUNTIME_DEP_PKGS_CSWlibgmpxx4 += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWlibgmpxx4 += CSWlibstdc++6
 
 PACKAGES += CSWlibgmp-dev
 CATALOGNAME_CSWlibgmp-dev = libgmp_dev
@@ -114,7 +114,7 @@ EXTRA_CPPFLAGS = -fexceptions
 # See also below.
 # Here's an idea how to build it, but unfortunately, building for sparcv8plus
 # fails too.
-# ISA_DEFAULT_i386 = pentium_pro
+ISA_DEFAULT_i386 = pentium_pro
 # ISA_DEFAULT_sparc = sparcv8plus
 
 include gar/category.mk
@@ -122,12 +122,12 @@ include gar/category.mk
 ## Undefined symbol __sync_fetch_and_add_4
 ## http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
 ## http://opencsw.wikidot.com/porting-faq#toc6
-ifeq ($(ISA),sparcv8)
-OPT_FLAGS_GCC = -O0
-endif
-ifeq ($(ISA),i386)
-OPT_FLAGS_GCC = -O0
-endif
+# ifeq ($(ISA),sparcv8)
+# OPT_FLAGS_GCC =
+# endif
+# ifeq ($(ISA),i386)
+# OPT_FLAGS_GCC =
+# endif
 
 post-merge:
 	ginstall $(FILEDIR)/gmp.h $(PKGROOT)$(includedir)/gmp.h
