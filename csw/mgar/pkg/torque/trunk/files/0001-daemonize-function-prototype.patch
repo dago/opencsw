@@ -1,0 +1,25 @@
+From 291aa415c62788474b41949d68fa34f3873dc108 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Sun, 25 Sep 2011 01:14:40 +0200
+Subject: [PATCH] daemonize function prototype
+
+---
+ src/server/pbsd_main.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/server/pbsd_main.c b/src/server/pbsd_main.c
+index dc8c29b..50df2c4 100644
+--- a/src/server/pbsd_main.c
++++ b/src/server/pbsd_main.c
+@@ -193,7 +193,7 @@ extern int    get_svr_attr (int);
+ /* Local Private Functions */
+ 
+ static int    get_port (char *, unsigned int *, pbs_net_t *);
+-static int    daemonize_server (int, pid_t *);
++static int    daemonize_server (int, int *);
+ int mutex_lock (mutex_t *);
+ int mutex_unlock (mutex_t *);
+ int get_file_info (char *,unsigned long *,long *,bool_t *,bool_t *);
+-- 
+1.7.6.1
+
