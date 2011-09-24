@@ -1,5 +1,5 @@
 NAME = unbound
-VERSION = 1.4.12
+VERSION = 1.4.13
 CATEGORIES = server
 DESCRIPTION = A validating, recursive, and caching DNS resolver
 define BLUR
@@ -85,7 +85,7 @@ USERGROUP               = /etc/opt/csw/pkg/CSWunbound/cswusergroup
 CATALOGNAME_CSWunbound       = unbound
 SPKG_DESC_CSWunbound         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibunbound2
-RUNTIME_DEP_PKGS_CSWunbound += CSWexpat
+RUNTIME_DEP_PKGS_CSWunbound += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibldns1
 RUNTIME_DEP_PKGS_CSWunbound += CSWosslrt
 RUNTIME_DEP_PKGS_CSWunbound += CSWlibevent2-0-5
