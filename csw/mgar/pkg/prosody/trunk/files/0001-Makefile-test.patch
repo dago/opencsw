@@ -1,0 +1,27 @@
+From 8fabf83ef68aa31d94dd922f9d26991a046ca1df Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Sat, 24 Sep 2011 12:36:49 +0200
+Subject: [PATCH] Makefile test
+
+---
+ Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 51e376f..6fddf6a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -37,8 +37,8 @@ install: prosody.install prosodyctl.install prosody.cfg.lua.install util/encodin
+ 	install -d $(MODULES)/adhoc
+ 	install -m644 plugins/adhoc/*.lua $(MODULES)/adhoc
+ 	install -m644 man/prosodyctl.man $(MAN)/man1/prosodyctl.1
+-	test -e $(CONFIG)/prosody.cfg.lua || install -m644 prosody.cfg.lua.install $(CONFIG)/prosody.cfg.lua
+-	test -e prosody.version && install prosody.version $(SOURCE)/prosody.version || true
++	test -r $(CONFIG)/prosody.cfg.lua || install -m644 prosody.cfg.lua.install $(CONFIG)/prosody.cfg.lua
++	test -r prosody.version && install prosody.version $(SOURCE)/prosody.version || true
+ 	$(MAKE) install -C util-src
+ 
+ clean:
+-- 
+1.7.6.1
+

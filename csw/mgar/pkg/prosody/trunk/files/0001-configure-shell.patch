@@ -1,0 +1,22 @@
+From a255805b824f10d47047b65c1b599e59eb5e5e2e Mon Sep 17 00:00:00 2001
+From: Ihsan Dogan <ihsan@opencsw.org>
+Date: Sat, 24 Sep 2011 11:57:42 +0200
+Subject: [PATCH] configure shell
+
+---
+ configure |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure b/configure
+index af04622..1463342 100755
+--- a/configure
++++ b/configure
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ 
+ # Defaults
+ 
+-- 
+1.7.6.1
+
