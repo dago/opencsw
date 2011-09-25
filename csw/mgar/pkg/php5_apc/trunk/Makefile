@@ -1,5 +1,5 @@
 NAME = APC
-VERSION = 3.0.19
+VERSION = 3.1.9
 CATEGORIES = lang
 
 DESCRIPTION = APC Extention for PHP
@@ -26,12 +26,14 @@ UFILES_REGEX = (\d+(?:\.\d+)*).tgz
 
 DISTFILES = $(DISTNAME).tgz
 
-CATALOGNAME_CSWphp5apc = php5_apc
-SPKG_DESC_CSWphp5apc = APC Extention for PHP5
-RUNTIME_DEP_PKGS_CSWphp5apc = CSWphp5
+PACKAGES = CSWphp5-apc
+OBSOLETED_BY_CSWphp5-apc = CSWphp5apc
+SPKG_DESC_CSWphp5-apc = APC Extention for PHP5
+RUNTIME_DEP_PKGS_CSWphp5-apc = CSWphp5
+BUILD_DEPS = CSWapache2 CSWphp5-dev
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --with-php-config=$(PHP_BIN)/php-config
+CONFIGURE_ARGS += --with-php-config=$(bindir)/php-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 
 post-extract-modulated:
