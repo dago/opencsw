@@ -1,6 +1,6 @@
 NAME = ruby19
 VERSION = 1.9.2
-PATCHLEVEL = p180
+PATCHLEVEL = p290
 CATEGORIES = lang
 
 # Working with Jens Deppe, we've determined that the two failing tests
