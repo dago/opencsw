@@ -1,5 +1,5 @@
-NAME = postgrey
-VERSION = 1.33
+NAME       = postgrey
+VERSION    = 1.34
 CATEGORIES = net
 
 DESCRIPTION = Postfix policy server implementing greylisting
@@ -8,22 +8,23 @@ define BLURB
 endef
 
 MASTER_SITES = http://postgrey.schweikert.ch/pub/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES    = $(NAME)-$(VERSION).tar.gz
 
-RUNTIME_DEP_PKGS  = CSWperl CSWpmiomultiplex CSWpmnetserver
-RUNTIME_DEP_PKGS += CSWpostfix CSWpmberkeleydb
+RUNTIME_DEP_PKGS  = CSWperl
+RUNTIME_DEP_PKGS += CSWpmiomultiplex
+RUNTIME_DEP_PKGS += CSWpmnetserver
+RUNTIME_DEP_PKGS += CSWpostfix
+RUNTIME_DEP_PKGS += CSWpmberkeleydb
 
 ARCHALL = 1
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
+BUILD_SCRIPTS     =
+TEST_SCRIPTS      =
+INSTALL_SCRIPTS   = custom
 
-INITSMF = /etc/opt/csw/init.d/cswpostgrey
-USERGROUP = /etc/opt/csw/pkg/CSWpostgrey/cswusergroup
+INITSMF     = /etc/opt/csw/init.d/cswpostgrey
+USERGROUP   = /etc/opt/csw/pkg/CSWpostgrey/cswusergroup
 SAMPLECONF  = /etc/opt/csw/postfix/postgrey_whitelist_clients /etc/opt/csw/postfix/postgrey_whitelist_recipients
 SAMPLECONF += /etc/opt/csw/postgrey
 
