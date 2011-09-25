@@ -11,7 +11,20 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
+MASTER_SITES += http://www.xcdroast.org/xcdr098/patches/
 DISTFILES  = $(DISTNAME).tar.gz
+
+# The upstream patches have different patch levels, convert to git patches below
+#PATCHFILES += cdda2wav_version.patch
+##PATCHFILES += change_norwegian_locale.txt
+#PATCHFILES += fix_cddb_hidden_tracks.patch
+#PATCHFILES += io_compile.patch
+#PATCHFILES += parse_version.patch
+
+PATCHFILES += 0001-Upstream-patch-parse-version.patch
+PATCHFILES += 0002-Upstream-patch-io-compile.patch
+PATCHFILES += 0003-Upstream-patch-cdda2wav-version.patch
+PATCHFILES += 0004-Upstream-patch-fix-cddb-hidden-tracks.patch
 
 BUILD_DEP_PKGS += CSWgdkpixbuf
 

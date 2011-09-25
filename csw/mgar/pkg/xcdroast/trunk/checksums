@@ -1,1 +1,6 @@
+1e85ee759a197cd05a4ccdce6f41bf9f  cdda2wav_version.patch
+1637bf54a60e16193997dc7d976714c5  change_norwegian_locale.txt
+14cd6fda3e58847edba4a61435e47fb5  fix_cddb_hidden_tracks.patch
+6e676e94e8b6922ed3e2d0feef05fd60  io_compile.patch
+1004a1aed29b463d3b2c849460c2dca0  parse_version.patch
 bc3d335a30f292067eaaf1ea03ebaf17  xcdroast-0.98alpha16.tar.gz

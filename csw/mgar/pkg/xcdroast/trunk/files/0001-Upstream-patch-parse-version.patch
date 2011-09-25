@@ -1,0 +1,25 @@
+From 7222135755ec8ffeea4553951b8e2833fa0dc25c Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 25 Sep 2011 19:02:58 +0200
+Subject: [PATCH 1/4] Upstrea patch: parse version
+
+---
+ src/xtools.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/xtools.c b/src/xtools.c
+index b199369..6ffb507 100644
+--- a/src/xtools.c
++++ b/src/xtools.c
+@@ -3086,7 +3086,7 @@ gint parse_version_str(gchar *str, version_id_t *ver) {
+ gchar tmp[MAXLINE];
+ gchar *p,*q,*r;
+ 
+-        ver->major = ver->minor = ver->patch = 0;
++        ver->major = ver->minor = ver->patch = ver->branch = 0;
+ 	ver->devel='h';
+ 
+ 	strncpy(tmp, str, MAXLINE);
+-- 
+1.7.6.1
+

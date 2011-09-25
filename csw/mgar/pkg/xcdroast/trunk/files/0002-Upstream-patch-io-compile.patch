@@ -1,0 +1,35 @@
+From cd43333693cb1829d9211bbc559be98a6e0be60e Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 25 Sep 2011 19:04:10 +0200
+Subject: [PATCH 2/4] Upstream patch: io compile
+
+---
+ src/io.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/io.c b/src/io.c
+index 89937ca..a7a7933 100644
+--- a/src/io.c
++++ b/src/io.c
+@@ -1903,7 +1903,8 @@ FILE *fpin;
+ 	}
+ 
+ 	strcpy(str,"");
+-	fgets(str,MAXLINE,fpin); 
++	if (fgets(str,MAXLINE,fpin) == NULL)
++                g_error("fgets error\n");
+ 
+         if (pclose(fpin) == -1) {
+                 g_error("pclose error\n");
+@@ -4720,7 +4721,7 @@ gint fd;
+ 	dolog(3, "Saving extended output to %s\n", fname);
+ 
+ 	/* write to file */
+-	fd = open(fname,O_WRONLY | O_CREAT);
++	fd = open(fname, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+ 	if (fd < 0) {
+ 		g_warning("Can't open file %s for writing\n",fname);
+ 		return 1;
+-- 
+1.7.6.1
+
