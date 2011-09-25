@@ -1,5 +1,5 @@
-NAME = dnstop
-VERSION = 20110127
+NAME       = dnstop
+VERSION    = 20110502
 CATEGORIES = net
 
 DESCRIPTION = Displays various tables of DNS traffic
@@ -8,15 +8,15 @@ define BLURB
 endef
 
 SPKG_SOURCEURL = http://dns.measurement-factory.com/tools/dnstop
-MASTER_SITES = http://dns.measurement-factory.com/tools/dnstop/src/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += dnstop.8
+MASTER_SITES   = http://dns.measurement-factory.com/tools/dnstop/src/
+DISTFILES      = $(NAME)-$(VERSION).tar.gz
+DISTFILES     += dnstop.8
 
 LICENSE = LICENSE
 
-RUNTIME_DEP_PKGS = CSWlibpcap
+RUNTIME_DEP_PKGS = CSWlibpcap1
 
-TEST_SCRIPTS =
+TEST_SCRIPTS    =
 INSTALL_SCRIPTS = custom
 
 CONFIGURE_ARGS = $(DIRPATHS)

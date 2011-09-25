@@ -4,10 +4,10 @@
  
  OPTFLAGS= -DUSE_IPV6=1
  CC=/opt/SUNWspro/bin/cc
--CFLAGS=-xO3 -m32 -xarch=386 -xnorunpath ${OPTFLAGS}
+-CFLAGS=-xO3 -m32 -xarch=386 ${OPTFLAGS}
 -LIBS=-lresolv -lnsl -lsocket -lpcap -lncurses 
-+CFLAGS=-xO3 -m32 -xarch=386 -xnorunpath ${OPTFLAGS} -I/opt/csw/include
++CFLAGS=-xO3 -m32 -xarch=386 ${OPTFLAGS} -I/opt/csw/include
 +LIBS=-lresolv -lnsl -lsocket -lpcap -lcurses 
+ LDFLAGS=-m32 -xarch=386 -L/opt/csw/lib
  
  prefix=/opt/csw
- exec_prefix=/opt/csw
