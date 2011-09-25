@@ -1,5 +1,5 @@
 NAME = ldns
-VERSION = 1.6.9
+VERSION = 1.6.10
 CATEGORIES = lib
 
 DESCRIPTION = A library for programs conforming to DNS RFCs and drafts
@@ -23,7 +23,7 @@ CATALOGNAME_CSWlibldns-devel = libldns_devel
 
 SPKG_DESC_CSWlibldns1 = $(DESCRIPTION)
 SPKG_DESC_CSWlibldns-devel = $(DESCRIPTION) development package
-CHECKPKG_OVERRIDES_CSWlibldns-devel += surplus-dependency|CSWlibldns1
+#CHECKPKG_OVERRIDES_CSWlibldns-devel += surplus-dependency|CSWlibldns1
 
 SPKG_SOURCEURL = http://www.nlnetlabs.nl/projects/ldns/
 
@@ -533,7 +533,7 @@ CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/include/ldns/reso
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ldns_pkt_set_querytime.3|CSWlibldns-devel|CSWlibldnsdevel
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ldns_rr_dnskey_key.3|CSWlibldns-devel|CSWlibldnsdevel
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ldns_buffer_read_u8.3|CSWlibldns-devel|CSWlibldnsdevel
-CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/bin/sparcv8plus+vis/ldns-config|CSWlibldns-devel|CSWlibldnsdevel
+#CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/bin/sparcv8plus+vis/ldns-config|CSWlibldns-devel|CSWlibldnsdevel
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ldns_dnssec_trust_tree_print.3|CSWlibldns-devel|CSWlibldnsdevel
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ldns_zone_new.3|CSWlibldns-devel|CSWlibldnsdevel
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ldns_rr_dnskey_set_protocol.3|CSWlibldns-devel|CSWlibldnsdevel
@@ -544,7 +544,7 @@ CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ld
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/lib/sparcv8plus+vis/libldns.so|CSWlibldns-devel|CSWlibldnsdevel
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ldns_rr_new_frm_type.3|CSWlibldns-devel|CSWlibldnsdevel
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ldns_dnssec_derive_trust_tree_normal_rrset.3|CSWlibldns-devel|CSWlibldnsdevel
-CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/lib/amd64/libldns.so|CSWlibldns-devel|CSWlibldnsdevel
-CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/lib/pentium_pro/libldns.so|CSWlibldns-devel|CSWlibldnsdevel
+#CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/lib/amd64/libldns.so|CSWlibldns-devel|CSWlibldnsdevel
+#CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/lib/pentium_pro/libldns.so|CSWlibldns-devel|CSWlibldnsdevel
 
 include gar/category.mk
