@@ -13,22 +13,24 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(NAME)-$(VERSION).tar.gz
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-PACKAGES = CSWgmake
-CATALOGNAME = gmake
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 VENDOR_URL = http://www.gnu.org/software/make/
 
-DEP_PKGS = CSWggettextrt
+PACKAGES = CSWgmake
+SPKG_DESC_CSWgmake = GNU Make controls generation of executables and other compile-related tasks
+RUNTIME_DEP_PKGS_CSWgmake += CSWlibintl8
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
 
-TEST_TARGET = check
+# These are hardcoded fallback pathes for include (see read.c):
+#   "/usr/gnu/include", "/usr/local/include", "/usr/include"
+CHECKPKG_OVERRIDES_CSWgmake += file-with-bad-content|/usr/local|root/opt/csw/bin/gmake
+
+# These are just examples
+CHECKPKG_OVERRIDES_CSWgmake += file-with-bad-content|/usr/local|root/opt/csw/share/info/make.info-1
+CHECKPKG_OVERRIDES_CSWgmake += file-with-bad-content|/usr/local|root/opt/csw/share/info/make.info-2
 
 include gar/category.mk
 
