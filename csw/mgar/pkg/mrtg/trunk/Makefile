@@ -1,5 +1,5 @@
 NAME = mrtg
-VERSION = 2.17.1
+VERSION = 2.17.2
 CATEGORIES = utils
 
 DESCRIPTION = Multi Router Traffic Grapher (network monitor)
@@ -27,10 +27,10 @@ CONFIGURE_ARGS += --with-gd=/opt/csw
 CONFIGURE_ARGS += --with-gd-lib=/opt/csw/lib
 CONFIGURE_ARGS += --with-gd-inc=/opt/csw/include
 
-RUNTIME_DEP_PKGS += CSWperl
-RUNTIME_DEP_PKGS += CSWgd
-RUNTIME_DEP_PKGS += CSWpng
-RUNTIME_DEP_PKGS += CSWzlib
+RUNTIME_DEP_PKGS_CSWmrtg += CSWperl
+RUNTIME_DEP_PKGS_CSWmrtg += CSWlibgd2
+RUNTIME_DEP_PKGS_CSWmrtg += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWmrtg += CSWlibz1
 
 # Reviewed checkpkg overrides
 CHECKPKG_OVERRIDES_CSWmrtg += file-with-bad-content|/usr/local|root/opt/csw/lib/mrtg2/Net_SNMP_util.pm
