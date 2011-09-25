@@ -1,5 +1,5 @@
-NAME = diffuse
-VERSION = 0.4.1
+NAME       = diffuse
+VERSION    = 0.4.5
 CATEGORIES = utils
 
 DESCRIPTION = Graphical tool for comparing and merging text files
@@ -8,18 +8,21 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRRORS)
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 
-RUNTIME_DEP_PKGS = CSWpython CSWpygtk
+RUNTIME_DEP_PKGS  = CSWpython
+RUNTIME_DEP_PKGS += CSWpygtk
 ARCHALL = 1
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
+BUILD_SCRIPTS     =
+TEST_SCRIPTS      =
+INSTALL_SCRIPTS   = custom
+
+CHECKPKG_OVERRIDES_CSWdiffuse += surplus-dependency|CSWpygtk
+CHECKPKG_OVERRIDES_CSWdiffuse += surplus-dependency|CSWpython
+# This is in a comment
+CHECKPKG_OVERRIDES_CSWdiffuse += file-with-bad-content|/usr/share|root/opt/csw/bin/diffuse
 
 include gar/category.mk
 
