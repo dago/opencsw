@@ -45,15 +45,7 @@ GARCOMPILER = GNU
 
 BUILD64 = 1
 
-# Undefined symbol __sync_fetch_and_add_4
-# http://www.mail-archive.com/maintainers@lists.opencsw.org/msg06095.html
-# http://opencsw.wikidot.com/porting-faq#toc6
-ifeq ($(ISA),sparcv8)
-OPT_FLAGS_GCC = -O0
-endif
-ifeq ($(ISA),i386)
-OPT_FLAGS_GCC = -O0
-endif
+ISA_DEFAULT_i386 = pentium_pro
 
 # http://wiki.opencsw.org/porting-faq#toc13
 RUNTIME_DEP_PKGS = $(RUNTIME_DEP_PKGS_$(GAROSREL))
