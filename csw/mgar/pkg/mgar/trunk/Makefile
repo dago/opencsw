@@ -23,7 +23,7 @@ RUNTIME_DEP_PKGS += CSWfindutils
 RUNTIME_DEP_PKGS += CSWgmake
 RUNTIME_DEP_PKGS += CSWsvn
 RUNTIME_DEP_PKGS += CSWbashcmplt
-RUNTIME_DEP_PKGS += CSWgardevel # Meta pkg. Pulls in deps required by GAR.
+RUNTIME_DEP_PKGS += CSWgar-dev # Meta pkg. Pulls in deps required by GAR.
 
 CHECKPKG_OVERRIDES_CSWmgar += surplus-dependency
 
