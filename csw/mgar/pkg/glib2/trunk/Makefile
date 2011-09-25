@@ -5,6 +5,7 @@
 NAME = glib
 VERSION = 2.28.8
 CATEGORIES = lib
+GARCOMPILER = SOS12U1
 
 DESCRIPTION = The GLib library of C routines.
 define BLURB
@@ -34,6 +35,8 @@ PATCHFILES += 0012-Use-proper-locale-for-collate-tests-2.patch
 PATCHFILES += 0013-Fix-test-shell-script.patch
 PATCHFILES += 0014-Disable-log-tests.patch
 PATCHFILES += 0015-Do-not-ellipses-in-switch-cases.patch
+#PATCHFILES += 0016-Format-string-for-Solaris-lt.-10u9.patch
+#PATCHFILES += 0017-Disable-gvariant-varargs-test.patch
 
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
 # Make special build for Solaris 10 to use dtrace
@@ -127,7 +130,6 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 EXTRA_CFLAGS = -features=extensions
 
-# This is now handled in configure by a patch
 EXTRA_CFLAGS-5.10 += -xc99 -D__EXTENSIONS__ -D_XOPEN_SOURCE=600 -D_XPG6
 EXTRA_CFLAGS += $(EXTRA_CFLAGS-$(GAROSREL))
 
@@ -149,6 +151,8 @@ CONFIGURE_ARGS += --disable-dtrace
 # DEBUGGING
 #CONFIGURE_ARGS += --enable-debug=yes
 #EXTRA_CFLAGS += -xO0 -g
+
+TEST_ENV = TZ=Europe/Berlin
 
 PYCOMPILE = 1
 
