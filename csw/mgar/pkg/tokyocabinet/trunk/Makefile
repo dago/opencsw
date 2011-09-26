@@ -61,9 +61,10 @@ SPKG_DESC_CSWlibtokyocabinet9 += $(DESCRIPTION), libtokyocabinet.so.9
 SPKG_DESC_CSWtokyocabinet-dev += $(DESCRIPTION), development files
 
 #######################
-# Skipping tests for now since the tests are incredibly disk i/o intensive.
+# Tests are disk intensive. uncomment to skip tests if need be.
 #######################
-TEST_SCRIPTS =
+#TEST_SCRIPTS =
+
 include gar/category.mk
 
 PATH:=/opt/csw/gnu:$(PATH)
