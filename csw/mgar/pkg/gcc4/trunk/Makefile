@@ -51,6 +51,7 @@ BUILD_DEP_PKGS += CSWlibgmp-dev
 BUILD_DEP_PKGS += CSWlibmpc-dev
 BUILD_DEP_PKGS += CSWlibmpfr-dev
 BUILD_DEP_PKGS += CSWlibppl-dev
+BUILD_DEP_PKGS += CSWcloog-dev
 
 ## build options
 # http://gcc.gnu.org/install/configure.html
