@@ -13,7 +13,7 @@ endef
 
 DISTFILES  = $(DISTNAME).tar.gz
 PACKAGES = CSWpy-twittertools
-CATALOGNAME = CSWpy_twittertools
+CATALOGNAME = py_twittertools
 ARCHALL = 1
 
 include gar/category.mk
