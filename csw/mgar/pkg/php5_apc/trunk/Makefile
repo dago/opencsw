@@ -24,6 +24,7 @@ DISTFILES = $(DISTNAME).tgz
 
 PACKAGES = CSWphp5-apc
 OBSOLETED_BY_CSWphp5-apc = CSWphp5apc
+CATALOG_NAME_CSWphp5apc = php5_apc_stub
 SPKG_DESC_CSWphp5-apc = APC Extention for PHP5
 RUNTIME_DEP_PKGS_CSWphp5-apc = CSWphp5
 BUILD_DEPS = CSWapache2 CSWphp5-dev
