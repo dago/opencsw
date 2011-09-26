@@ -9,7 +9,6 @@ define BLURB
 	for caching and optimizing PHP intermediate code. 
 endef
 
-INSTALL_ENV += INSTALL_ROOT=$(DESTDIR)
 PHP_PREFIX = $(prefix)/php5
 PHP_BIN = $(PHP_PREFIX)/bin
 
@@ -37,6 +36,11 @@ CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 # mail.
 NO_INTERACTION = 1
 EXTRA_TEST_EXPORTS = NO_INTERACTION
+
+# this thing doesn't use destdir.  export install_root with the same
+# value
+INSTALL_ROOT = $(DESTDIR)
+EXTRA_INSTALL_EXPORTS = INSTALL_ROOT
 
 TEST_TARGET = test
 
