@@ -72,7 +72,9 @@ CONFIGURE_ARGS += --with-x
 CONFIGURE_ARGS += --with-mpfr=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-gmp=$(BUILD_PREFIX)
 # To be enabled when PPL is built
-# CONFIGURE_ARGS += --with-ppl=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --with-ppl=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --with-cloog=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --enable-cloog-backend=isl
 CONFIGURE_ARGS += --enable-java-awt=xlib
 # CONFIGURE_ARGS += --enable-libada
 CONFIGURE_ARGS += --enable-libssp
@@ -149,6 +151,7 @@ ALTERNATIVES_PRIO = 460
 PACKAGES = $(PKG_BASENAME)core
 SPKG_DESC_$(PKG_BASENAME)core = GNU C compiler
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlib-gnu-awt-xlib$(JAVA_LIB_VERSION)
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibffi4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgcj$(JAVA_LIB_VERSION)
@@ -157,6 +160,7 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgmpxx4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibgomp1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibisl7
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += CSWlibppl-c4
@@ -342,8 +346,10 @@ PKGFILES_$(PKG_BASENAME)g++ += $(mandir)/.*g\+\+.1
 # I do not understand this regular expression.
 PKGFILES_$(PKG_BASENAME)g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/[a-fA-F,h-iH-I,k-nI-N,p-zP-Z,]+.*
 PKGFILES_$(PKG_BASENAME)g++ += $(includedir)/c\+\+/(\d+(?:\.\d+)*)/ostream.*
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibgmpxx4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibisl7
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += CSWlibppl-c4
@@ -371,15 +377,18 @@ PKGFILES_$(PKG_BASENAME)gfortran += $(libexecdir)/.*f951
 PKGFILES_$(PKG_BASENAME)gfortran += $(mandir)/.*gfortran.1
 PKGFILES_$(PKG_BASENAME)gfortran += $(infodir)/gfortran.*
 PKGFILES_$(PKG_BASENAME)gfortran += $(call baseisadirs,$(libdir),libgfortran\.so)
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpfr4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgmp10
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgfortran3
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpc2
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibz1
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibppl-c4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibgmpxx4
-RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibpwl5
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibisl7
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpc2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibmpfr4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibppl-c4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibppl9
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibpwl5
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibz1
+
 OBSOLETED_BY_$(PKG_BASENAME)gfortran  = $(PKG_BASENAME)g95
 OBSOLETED_BY_$(PKG_BASENAME)gfortran += $(PKG_BASENAME)g95rt
 
@@ -388,12 +397,14 @@ ALTERNATIVE_gfortran += $(bindir)/gfortran gcc_gfortran $(bindir)/gfortran$(PROG
 
 PACKAGES += $(PKG_BASENAME)java
 SPKG_DESC_$(PKG_BASENAME)java       = GNU Java Compiler
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcj$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgcj-tools$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgij$(JAVA_LIB_VERSION)
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibgmpxx4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibisl7
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibppl-c4
@@ -472,8 +483,10 @@ PKGFILES_$(PKG_BASENAME)objc += $(includedir)/.*objc/.*
 PKGFILES_$(PKG_BASENAME)objc += $(libdir)/.*/include/objc/.*
 PKGFILES_$(PKG_BASENAME)objc += $(call baseisadirs,$(libdir),libobjc.so)
 PKGFILES_$(PKG_BASENAME)objc += $(call baseisadirs,$(libdir),libobjc_gc.so)
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibgmpxx4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibisl7
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpc2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibmpfr4
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibobjc-gc3
