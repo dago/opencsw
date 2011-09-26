@@ -46,6 +46,6 @@ TEST_TARGET = test
 
 post-extract-modulated:
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
-	$(DONADA)
+	$(MAKECOOKIE)
 
 include gar/category.mk
