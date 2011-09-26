@@ -44,8 +44,8 @@ EXTRA_INSTALL_EXPORTS = INSTALL_ROOT
 
 TEST_TARGET = test
 
-post-extract-modulated:
-	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
-	$(MAKECOOKIE)
-
 include gar/category.mk
+
+post-extract-isa-$(ISA_DEFAULT_$(GARCH)):
+	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
+	@$(MAKECOOKIE)
