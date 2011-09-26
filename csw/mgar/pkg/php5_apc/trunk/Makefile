@@ -32,6 +32,8 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-php-config=$(bindir)/php-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
 
+LICENSE = LICENSE
+
 # These should stop the test suite from asking to send results by
 # mail.
 NO_INTERACTION = 1
