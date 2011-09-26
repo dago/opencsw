@@ -287,6 +287,10 @@ install-custom:
 	# Upgrade notice for users upgrading from the 2.4 package
 	ginstall -Dm 644 $(FILEDIR)/README.upgradefrom.24 \
 		$(DESTDIR)$(docdir)/$(NAME)/README.upgradefrom.24
+
+	# Instructions to replace the system's sendmail
+	ginstall -Dm 644 $(FILEDIR)/README.CSW \
+		$(DESTDIR)$(docdir)/$(NAME)/README.CSW
 	@$(MAKECOOKIE)
 
 # Fails. A subsequent manual verify-config run is successfull,
