@@ -21,7 +21,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 # lmbench doesn't use autoconf, but their own set of Makefiles and custom
 # written platform detection scripts, cf. Makefile & src/Makefile
 CONFIGURE_SCRIPTS =
-BUILD_TARGET = build
+BUILD_ARGS = build CC=$(CC)
 
 include gar/category.mk
 
