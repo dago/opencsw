@@ -6,7 +6,6 @@ and possibly belong to the system sendmail installation.
 
   /usr/lib/sendmail
   /usr/bin/mailq
-  /usr/bin/newaliases
 
 This makes the package installation less troublesome for shared zones and
 leaves the choice of fully replacing your system sendmail up to you. If you
@@ -26,18 +25,15 @@ Put in place:
 
   mv /usr/lib/sendmail /usr/lib/sendmail.SYSTEM
   mv /usr/bin/mailq /usr/bin/mailq.SYSTEM
-  mv /usr/bin/newaliases /usr/bin/newaliases.SYSTEM
   
   ln -s /opt/csw/sbin/sendmail /usr/lib/sendmail
-  ln -s /opt/csw/bin/newaliases /usr/bin/newaliases
   ln -s /opt/csw/bin/mailq /usr/bin/mailq
 
 Roll back:
 
-  rm /usr/lib/sendmail /usr/bin/newaliases /usr/bin/mailq
+  rm /usr/lib/sendmail /usr/bin/mailq
   mv /usr/lib/sendmail.SYSTEM /usr/lib/sendmail
   mv /usr/bin/mailq.SYSTEM /usr/bin/mailq
-  mv /usr/bin/newaliases.SYSTEM /usr/bin/newaliases
 
 #2: Recommended for production systems and long term operations
 
@@ -58,14 +54,14 @@ Depending on the speed of your system the pkgrm might take a while.
 Put in place:
 
   ln -s /opt/csw/sbin/sendmail /usr/lib/sendmail
-  ln -s /opt/csw/bin/newaliases /usr/bin/newaliases
+  ln -s /opt/csw/bin/newaliases /usr/sbin/newaliases
   ln -s /opt/csw/bin/mailq /usr/bin/mailq
 
 Roll back:
 
   echo "idepend=nocheck" > ~/admin-postfix
   echo "action=nocheck" >> ~/admin-postfix
-  rm /usr/lib/sendmail /usr/bin/newaliases /usr/bin/mailq
+  rm /usr/lib/sendmail /usr/sbin/newaliases /usr/bin/mailq
   pkgadd -na ~/admin-postfix \
          -d <path_to_solaris_media>/Solaris_X/Products/ SUNWsndmr SUNWsndmu
   rm ~/admin-postfix
