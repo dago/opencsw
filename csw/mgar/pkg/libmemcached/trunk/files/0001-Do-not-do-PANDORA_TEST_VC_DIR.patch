@@ -1,0 +1,65 @@
+From 963cad2ad2905750a29ca08d383a2eb14cba3913 Mon Sep 17 00:00:00 2001
+From: Juraj Lutter <wilbury@opencsw.org>
+Date: Tue, 27 Sep 2011 22:08:15 +0200
+Subject: [PATCH] Do not do PANDORA_TEST_VC_DIR.
+
+---
+ configure               |   29 -----------------------------
+ m4/pandora_canonical.m4 |    1 -
+ 2 files changed, 0 insertions(+), 30 deletions(-)
+
+diff --git a/configure b/configure
+index b6d6df9..fad03a2 100755
+--- a/configure
++++ b/configure
+@@ -16127,35 +16127,6 @@ AM_BACKSLASH='\'
+ 
+   pandora_building_from_vc=no
+ 
+-  if test -d ".bzr" ; then
+-    pandora_building_from_bzr=yes
+-    pandora_building_from_vc=yes
+-  else
+-    pandora_building_from_bzr=no
+-  fi
+-
+-  if test -d ".svn" ; then
+-    pandora_building_from_svn=yes
+-    pandora_building_from_vc=yes
+-  else
+-    pandora_building_from_svn=no
+-  fi
+-
+-  if test -d ".hg" ; then
+-    pandora_building_from_hg=yes
+-    pandora_building_from_vc=yes
+-  else
+-    pandora_building_from_hg=no
+-  fi
+-
+-  if test -d ".git" ; then
+-    pandora_building_from_git=yes
+-    pandora_building_from_vc=yes
+-  else
+-    pandora_building_from_git=no
+-  fi
+-
+-
+         PANDORA_RELEASE_ID=`echo $VERSION | sed 's/[^0-9]//g'`
+ 
+     PANDORA_RELEASE_COMMENT=""
+diff --git a/m4/pandora_canonical.m4 b/m4/pandora_canonical.m4
+index ceb859a..cdcd112 100644
+--- a/m4/pandora_canonical.m4
++++ b/m4/pandora_canonical.m4
+@@ -117,7 +117,6 @@ AC_DEFUN([PANDORA_CANONICAL_TARGET],[
+   m4_if(PCT_VERSION_FROM_VC,yes,[
+     PANDORA_VC_INFO_HEADER
+   ],[
+-    PANDORA_TEST_VC_DIR
+ 
+     changequote(<<, >>)dnl
+     PANDORA_RELEASE_ID=`echo $VERSION | sed 's/[^0-9]//g'`
+-- 
+1.7.6.1
+
