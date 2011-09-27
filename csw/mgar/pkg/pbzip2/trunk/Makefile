@@ -15,8 +15,8 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 PACKAGES += CSWpbzip2
 CATALOGNAME_CSWpbzip2 = pbzip2
-SPKG_DESC_CSWpbzip2 = Parallel BZIP2 Data Compression Software
-RUNTIME_DEP_PKGS_CSWpbzip2 += CSWbzip2
+SPKG_DESC_CSWpbzip2 = Parallel BZIP2 data compression software
+RUNTIME_DEP_PKGS_CSWpbzip2 += CSWlibbz2-1-0
 
 # Since there is no configure script, this is intentionally left empty
 CONFIGURE_SCRIPTS =
