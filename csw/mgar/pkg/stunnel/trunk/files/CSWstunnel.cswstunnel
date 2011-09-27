@@ -6,17 +6,16 @@
 #
 # Don't enable SMF service right away
 #AUTOENABLE no
+#
+# For SMF exit codes: see PAGER='less +/exit\ status' man smf_method
 
-PATH=/opt/csw/sbin:/opt/csw/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/opt/csw/bin/stunnel
-DEFAULTPIDFILE=/var/opt/csw/run/stunnel/stunnel.pid
+PATH=@sbindir@:@bindir@:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=@bindir@/stunnel
+DEFAULTPIDFILE=@localstatedir@/run/stunnel/stunnel.pid
+CONFIG=@sysconfdir@/stunnel/stunnel.conf
 
-CONFIG=/opt/csw/etc/stunnel/stunnel.conf
-CONFIG_LOCAL=/etc/opt/csw/stunnel/stunnel.conf
-test -r $CONFIG_LOCAL && CONFIG=$CONFIG_LOCAL
-
-test -f $DAEMON || exit 0
-test -f $CONFIG || exit 0
+test -f $DAEMON || { echo "ERROR: Couldn't find stunnel binary."; exit 95; }
+test -f $CONFIG || { echo "ERROR: Couldn't find stunnel.conf."; exit 96; }
 
 CHROOT=`grep '^chroot' $CONFIG | sed 's/.*= *//'`
 PIDFILE=`grep '^pid' $CONFIG | sed 's/.*= *//'`

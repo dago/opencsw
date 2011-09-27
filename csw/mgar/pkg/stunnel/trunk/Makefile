@@ -22,8 +22,9 @@ endef
 VENDOR_URL   = http://www.stunnel.org
 MASTER_SITES = ftp://ftp.stunnel.org/stunnel/
 DISTFILES    = $(NAME)-$(VERSION).tar.gz
+DISTFILES   += CSWstunnel.cswstunnel
 
-# Note that upstream moves versions to an obsolete/ subdir over time
+# Upstream moves versions to an obsolete/ subdir over time, consider it too
 MAJOR_VER = $(firstword $(subst ., ,$(VERSION)))
 MASTER_SITES += ftp://ftp.stunnel.org/stunnel/obsolete/$(MAJOR_VER).x/
 
@@ -37,11 +38,14 @@ RUNTIME_DEP_PKGS += CSWlibz1
 # that the config file doesn't understand, e.g. sysconfdir='${prefix}/etc'
 PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
 
+sysconfdir=/etc/opt/csw
+localstatedir=/var/opt/csw
+
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --with-ssl=/opt/csw
+CONFIGURE_ARGS += --with-ssl=$(prefix)
 CONFIGURE_ARGS += --enable-ipv6
 CONFIGURE_ARGS += --enable-dh
-CONFIGURE_ARGS += --localstatedir=/var/opt/csw
+CONFIGURE_ARGS += --localstatedir=$(localstatedir)
 
 # No test target available
 TEST_SCRIPTS =
@@ -49,12 +53,12 @@ TEST_SCRIPTS =
 # tools/Makefile references ssldir, but configure only defines SSLDIR, thus
 # we pass ssldir manually as a workaround (according to --with-ssl above).
 # Should be reported and fixed upstream. Observed with 4.44.
-INSTALL_ARGS = ssldir=/opt/csw
+INSTALL_ARGS = ssldir=$(prefix)
 
-sysconfdir=/etc/opt/csw
-localstatedir=/var/opt/csw
-
+# Expand autoconf vars in our init script and mark it for SMF registration
+EXPANDVARS = CSWstunnel.cswstunnel
 INITSMF = $(sysconfdir)/init.d/cswstunnel
+
 SAMPLECONF = $(sysconfdir)/stunnel.pem
 MIGRATE_FILES = stunnel # migrate the /opt/csw/etc/stunnel sub directory
 
@@ -84,11 +88,11 @@ post-install-modulated: DOCS=AUTHORS BUGS CREDITS ChangeLog TODO
 post-install-modulated: DOCS+= doc/stunnel.*html
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(sysconfdir)/init.d
-	ginstall -m 755 $(FILEDIR)/CSWstunnel.cswstunnel \
+	ginstall -m 755 $(WORKDIR)/CSWstunnel.cswstunnel \
 		$(DESTDIR)$(sysconfdir)/init.d/cswstunnel
 
 	# create pidfile directory
-	ginstall -d $(DESTDIR)/var/opt/csw/run/stunnel
+	ginstall -d $(DESTDIR)$(localstatedir)/run/stunnel
 
 	# stunnel installs several random sample scripts, cgi scripts, and
 	# a .spec file with unadjusted paths. Leave them out for now and
