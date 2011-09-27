@@ -5,7 +5,7 @@
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)51
 BASE_VERSION = 5.1
-PATCHLEVEL = 49
+PATCHLEVEL = 59
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
@@ -52,7 +52,7 @@ PACKAGES += CSW$(NAME)test
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
-PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
+# PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
 PATCHFILES += 0004-basedir-and-datadir-in-the-cnf-files.patch
 
 SPKG_DESC_CSW$(NAME)       = Multithreaded SQL database
@@ -153,13 +153,23 @@ BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 EXTRA_INC = /opt/csw/include
 EXTRA_LIB = /opt/csw/lib
 
-# The following EXTRA_CFLAGS are necessary to compile on Solaris 8. Otherwise
-# the following problem occurs:
-#
-# "handler/i_s.cc", line 159: Error: The function "localtime_r" must have a
-# prototype.
-EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+# We're building on Solaris 9 now.
+# # The following EXTRA_CFLAGS are necessary to compile on Solaris 8. Otherwise
+# # the following problem occurs:
+# #
+# # "handler/i_s.cc", line 159: Error: The function "localtime_r" must have a
+# # prototype.
+# EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+# EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+
+#                 --with-server-suffix="-3ubuntu12.3" \
+#                 --with-system-type="debian-linux-gnu" \
+#                 --with-pstack \
+#                 --with-unix-socket-path=/var/run/mysqld/mysqld.sock \
+#                 --without-readline \
+#                  \
+#                 --without-ndbcluster \  
+
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -175,7 +185,10 @@ CONFIGURE_ARGS += --with-readline
 CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
 CONFIGURE_ARGS += --with-ssl=/opt/csw
 CONFIGURE_ARGS += --with-plugins=max-no-ndb
-CONFIGURE_ARGS += --with-comment
+CONFIGURE_ARGS += --with-comment="(OpenCSW)"
+CONFIGURE_ARGS += --with-mysqld-user=mysql
+CONFIGURE_ARGS += --with-fast-mutexes
+CONFIGURE_ARGS += --with-libwrap
 CONFIGURE_ARGS += --with-mysqld-libs=-lmtmalloc
 CONFIGURE_ARGS += --with-big-tables
 CONFIGURE_ARGS += --enable-thread-safe-client
@@ -210,14 +223,14 @@ test-custom:
 		perl mysql-test-run.pl --mem --big-test --force \
 		--skip-test=archive-big --skip-test=/gis/
 
-# pre-configure-modulated:
-# 	# To work around the following libtool version mismatch problem:
-# 	# libtool: Version mismatch error.  This is libtool 2.2.6, but the
-# 	# libtool: definition of this LT_INIT comes from libtool 2.2.6b.
-# 	# libtool: You should recreate aclocal.m4 with macros from libtool 2.2.6
-# 	# http://lists.opencsw.org/pipermail/maintainers/2009-December/005066.html
-# 	cd $(WORKSRC) && autoreconf --force --install --symlink
-# 	@$(MAKECOOKIE)
+pre-configure-modulated:
+	# To work around the following libtool version mismatch problem:
+	# libtool: Version mismatch error.  This is libtool 2.2.6, but the
+	# libtool: definition of this LT_INIT comes from libtool 2.2.6b.
+	# libtool: You should recreate aclocal.m4 with macros from libtool 2.2.6
+	# http://lists.opencsw.org/pipermail/maintainers/2009-December/005066.html
+	cd $(WORKSRC) && autoreconf --force --install --symlink
+	@$(MAKECOOKIE)
 
 post-merge:
 	ginstall -m 755 -d $(PKGROOT)$(localstatedir)
@@ -232,7 +245,7 @@ post-merge:
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
 	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
-		        $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
+						$(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	# A symlink for mysql5 include files
 	# ginstall -m 755 -d $(PKGROOT)/opt/csw/include
 	# ln -s ../$(NAME)/include/mysql $(PKGROOT)/opt/csw/include/mysql
@@ -242,7 +255,7 @@ post-merge:
 		if echo $$f | grep amd64$$; then continue; fi; \
 		if echo $$f | grep sparcv9$$; then continue; fi; \
 		ln -s ../..$(bindir)/`basename $$f` \
-		      $(PKGROOT)$(global_bindir)/`basename $$f`; \
+					$(PKGROOT)$(global_bindir)/`basename $$f`; \
 	done
 	# /opt/csw/$(NAME)/lib/sparc9/mysql -- by GAR, it's logical
 	# /opt/csw/$(NAME)/lib/mysql/sparcv9 -- expected by other packages
