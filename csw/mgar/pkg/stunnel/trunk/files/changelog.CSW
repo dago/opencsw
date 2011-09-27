@@ -1,9 +1,9 @@
-stunnel (4.41,REV=2011.08.18)
+stunnel (4.44,REV=2011.09.27)
 
-  * Updated to 4.41. (Closes: #4817, #4606)
+  * Updated to 4.44 (Closes: #4817, #4606)
   * Changed $(sysconfdir) from /opt/csw/etc/stunnel to /etc/opt/csw/stunnel.
 
- -- Sebastian Kayser <skayser@opencsw.org>  Thu, 18 Aug 2011 16:50:31 +0200
+ -- Sebastian Kayser <skayser@opencsw.org>  Tue, 27 Sep 2011 16:55:08 +0200
 
 stunnel (4,27,REV=2009.06.18)
 

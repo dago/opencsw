@@ -5,7 +5,7 @@
 #       to pthreads .. truss doesn't show /dev/zero usage on Solaris 10
 #       Test on Solaris 8 / 9 for comparison
 NAME = stunnel
-VERSION = 4.41
+VERSION = 4.44
 CATEGORIES = net
 
 DESCRIPTION = Universal SSL Wrapper
@@ -25,13 +25,14 @@ DISTFILES    = $(NAME)-$(VERSION).tar.gz
 MAJOR_VER = $(firstword $(subst ., ,$(VERSION)))
 MASTER_SITES += ftp://ftp.stunnel.org/stunnel/obsolete/$(MAJOR_VER).x/
 
-RUNTIME_DEP_PKGS = CSWzlib CSWosslrt CSWtcpwrap
+RUNTIME_DEP_PKGS += CSWosslrt
+RUNTIME_DEP_PKGS += CSWlibwrap1
+RUNTIME_DEP_PKGS += CSWlibz1
 
-# Make stunnel.conf-sample.in honor $localstatedir adjustments
+# Make stunnel.conf-sample.in honor our $localstatedir. Issue description:
 # cf. http://marc.info/?l=stunnel-users&m=128035848632004&w=2
-# Not merged upstream as ./configure without arguments leads to
-# expansions that the config file doesn't understand, e.g.
-# sysconfdir='${prefix}/etc' (cf. config.log)
+# Not merged upstream as ./configure without arguments leads to expansions
+# that the config file doesn't understand, e.g. sysconfdir='${prefix}/etc'
 PATCHFILES = 0001-Make-stunnel.conf-sample.in-honor-sysconfdir-localst.patch
 
 CONFIGURE_ARGS = $(DIRPATHS)
@@ -56,6 +57,9 @@ PROTOTYPE_USER_restrict  = nobody
 PROTOTYPE_GROUP_restrict = nobody
 
 EXTRA_PAX_ARGS = -s ',ChangeLog$$,changelog,p'
+
+# Contains a historic reference to the default install locations
+CHECKPKG_OVERRIDES += file-with-bad-content|/usr/local|root/opt/csw/share/doc/stunnel/changelog
 
 include gar/category.mk
 
