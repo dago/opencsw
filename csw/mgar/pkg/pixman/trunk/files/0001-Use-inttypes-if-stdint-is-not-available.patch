@@ -1,14 +1,15 @@
-From 51a0082ec56c17697871d3f08910a435fefefbe2 Mon Sep 17 00:00:00 2001
+From a89ac61266679d7dd2fbaece6aad691ce712f533 Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Wed, 2 Feb 2011 16:17:35 +0100
+Date: Tue, 27 Sep 2011 16:03:17 +0200
 Subject: [PATCH] Use inttypes if stdint is not available
 
 ---
- test/lowlevel-blt-bench.c |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+ test/lowlevel-blt-bench.c   |    9 ++++++++-
+ test/scaling-helpers-test.c |   10 +++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/test/lowlevel-blt-bench.c b/test/lowlevel-blt-bench.c
-index f7ebb1f..c3e402f 100644
+index 67c845f..9a4c16f 100644
 --- a/test/lowlevel-blt-bench.c
 +++ b/test/lowlevel-blt-bench.c
 @@ -22,7 +22,14 @@
@@ -27,6 +28,25 @@ index f7ebb1f..c3e402f 100644
  #include <stdio.h>
  #include <stdlib.h>
  #include <string.h>
+diff --git a/test/scaling-helpers-test.c b/test/scaling-helpers-test.c
+index c186138..4942a7f 100644
+--- a/test/scaling-helpers-test.c
++++ b/test/scaling-helpers-test.c
+@@ -1,5 +1,13 @@
+ #include <config.h>
+-#include <stdint.h>
++
++#ifdef HAVE_STDINT_H
++#	include <stdint.h>
++#else
++# ifdef HAVE_INTTYPES_H
++#	include <inttypes.h>
++# endif
++#endif
++
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <assert.h>
 -- 
-1.7.3.2
+1.7.6.1
 
