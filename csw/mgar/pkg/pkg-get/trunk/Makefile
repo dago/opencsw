@@ -23,7 +23,7 @@ PACKAGES = CSWpkgget CSWpkgget-deprecated
 
 CATALOGNAME_CSWpkgget = pkg_get_stub
 SPKG_DESC_CSWpkgget = A deprecated package delivery tool (User notice version)
-RUNTIME_DEP_PKGS_CSWpkgget = CSWpkgutil
+RUNTIME_DEP_PKGS_CSWpkgget = CSWpkgutil CSWpkgget-deprecated
 ARCHALL_CSWpkgget = 1
 CHECKPKG_OVERRIDES_CSWpkgget += surplus-dependency|CSWpkgutil
 CHECKPKG_OVERRIDES_CSWpkgget += catalogname-does-not-match-pkgname|pkgname=CSWpkgget|catalogname=pkg_get_stub|expected-catalogname=pkgget
