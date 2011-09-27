@@ -1,9 +1,11 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
+#
 # * postinstall mknod not possible within zone (mknod fails with "not owner")
 #   Work around this or provide README.CSW with instructions for chroot
 #   --> Why should /dev/zero be required at all? google suggests relation
 #       to pthreads .. truss doesn't show /dev/zero usage on Solaris 10
 #       Test on Solaris 8 / 9 for comparison
+#
 NAME = stunnel
 VERSION = 4.44
 CATEGORIES = net
@@ -43,6 +45,11 @@ CONFIGURE_ARGS += --localstatedir=/var/opt/csw
 
 # No test target available
 TEST_SCRIPTS =
+
+# tools/Makefile references ssldir, but configure only defines SSLDIR, thus
+# we pass ssldir manually as a workaround (according to --with-ssl above).
+# Should be reported and fixed upstream. Observed with 4.44.
+INSTALL_ARGS = ssldir=/opt/csw
 
 sysconfdir=/etc/opt/csw
 localstatedir=/var/opt/csw
