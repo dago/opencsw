@@ -1,5 +1,5 @@
 NAME = argtable
-VERSION = 2.12
+VERSION = 2.13
 CATEGORIES = utils
 
 DESCRIPTION = Parsing GNU style command line options with a minimum of fuss
@@ -17,16 +17,25 @@ MASTER_SITES = $(SF_MIRROR)
 DISTNAME = $(NAME)$(subst .,-,$(VERSION))
 DISTFILES  = $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 VENDOR_URL = http://argtable.sourceforge.net/
+
+PACKAGES += CSWlibargtable2-0
+SPKG_DESC_CSWlibargtable2-0 = Parsing GNU style command line options with a minimum of fuss, libargtable2.so.0
+PKGFILES_CSWlibargtable2-0 += $(call pkgfiles_lib,libargtable2.so.0)
+
+PACKAGES += CSWlibargtable2-dev
+SPKG_DESC_CSWlibargtable2-dev = Development files for libargtable2.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibargtable2-dev += CSWlibargtable2-0
+
+# These are just examples in the docs
+CHECKPKG_OVERRIDES_CSWlibargtable2-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/argtable2/argtable2.ps
+CHECKPKG_OVERRIDES_CSWlibargtable2-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/argtable2/argtable2-intro.html
+CHECKPKG_OVERRIDES_CSWlibargtable2-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/argtable2/argtable2-intro.ps
+CHECKPKG_OVERRIDES_CSWlibargtable2-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/argtable2/argtable2-advanced.ps
 
 EXTRA_LDFLAGS = -lintl
 
 BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
 
 include gar/category.mk
