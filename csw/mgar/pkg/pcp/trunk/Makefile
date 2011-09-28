@@ -8,17 +8,26 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.unix.ms/pcp/
-DISTFILES  = pcp.txt
-DISTFILES += COPYING
+DISTFILES    = pcp.txt
+DISTFILES   += COPYING
+
+PACKAGES                   = CSWpidconport
+CATALOGNAME                = pidconport
+SPKG_DESC_CSWpidconport    = $(DESCRIPTION)
+OBSOLETED_BY_CSWpidconport = CSWpcp
 
 ARCHALL = 1
 
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
+BUILD_SCRIPTS     =
+TEST_SCRIPTS      =
+INSTALL_SCRIPTS   = custom
 
 include gar/category.mk
+
+post-extract:
+	@echo " ==> Checking version of $(NAME)"
+#	SRCVER = `grep "^# v$(VERSION)" $(WORKDIR)/pcp.txt`
 
 install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
