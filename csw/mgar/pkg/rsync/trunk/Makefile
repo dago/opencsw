@@ -25,7 +25,7 @@ VENDOR_URL = http://rsync.samba.org/
 
 PACKAGES += CSWrsync
 SPKG_DESC_CSWrsync = Utility which provides fast incremental file transfer
-RUNTIME_DEP_PKGS_CSWrsync += CSWlibpopt
+RUNTIME_DEP_PKGS_CSWrsync += CSWlibpopt0
 RUNTIME_DEP_PKGS_CSWrsync += CSWlibiconv2
 
 # The location of rsyncd.conf to OpenCSW standard has been done in 3.0.8
