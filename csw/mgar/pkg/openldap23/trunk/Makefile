@@ -1,3 +1,6 @@
+# TBD:
+# ! currently libldap and libldap_r link against the installed 2.4 which is really bad
+
 NAME = openldap
 VERSION = 2.3.43
 GARTYPE = v2
@@ -20,13 +23,21 @@ PATCHFILES += patch-libtool-64bit.diff
 
 LICENSE = COPYRIGHT
 
-PACKAGES = CSWoldaprt
-CATALOGNAME_CSWoldaprt     = openldap_rt
-SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
-
-RUNTIME_DEP_PKGS_CSWoldaprt = CSWlibnet CSWosslrt CSWsasl 
-
 VENDOR_URL = http://www.openldap.org
+
+PACKAGES += CSWliblber2-3-0
+SPKG_DESC_CSWliblber2-3-0 = OpenLDAP library, liblber-2.3.so.0
+PKGFILES_CSWliblber2-3-0 += $(call pkgfiles_lib,liblber-2.3.so.0)
+
+PACKAGES += CSWlibldap2-3-0
+SPKG_DESC_CSWlibldap2-3-0 = OpenLDAP library, libldap-2.3.so.0
+PKGFILES_CSWlibldap2-3-0 += $(call pkgfiles_lib,libldap-2.3.so.0)
+RUNTIME_DEP_PKGS_CSWlibldap2-3-0 += CSWliblber2-3-0
+
+PACKAGES += CSWlibldap-r2-3-0
+SPKG_DESC_CSWlibldap-r2-3-0 = OpenLDAP library, libldap_r-2.3.so.0
+PKGFILES_CSWlibldap-r2-3-0 += $(call pkgfiles_lib,libldap_r-2.3.so.0)
+RUNTIME_DEP_PKGS_CSWlibldap-r2-3-0 += CSWliblber2-3-0
 
 # This is old, stick to BerkeleyDB 4.4
 EXTRA_LIB = $(prefix)/bdb44/lib 
@@ -66,6 +77,8 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 # Perl backend is built, although it has been told not to.
 EXTRA_PAX_ARGS = -s ,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
 EXTRA_PAX_ARGS = -s ,.*/opt/csw/libexec/amd64/openldap/back_perl.*,,
+
+TEST_ARGS += MAKEFLAGS=
 
 include gar/category.mk
 
