@@ -25,9 +25,10 @@ INSTALL_SCRIPTS   = custom
 
 include gar/category.mk
 
-post-extract:
+post-extract-modulated: FOUND_VERSION=$(shell perl -n -e 'print $$1 if( /^# v(\d+\.\d+)/ );' $(WORKDIR)/pcp.txt)
+post-extract-modulated:
 	@echo " ==> Checking version of $(NAME)"
-#	SRCVER = `grep "^# v$(VERSION)" $(WORKDIR)/pcp.txt`
+	$(if $(filter $(VERSION),$(FOUND_VERSION)),,$(error Packaging up $(VERSION) but pcp.txt is $(FOUND_VERSION)))
 
 install-custom:
 	@echo " ==> Installing $(NAME) (custom)"
