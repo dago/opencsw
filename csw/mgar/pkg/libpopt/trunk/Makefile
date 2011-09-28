@@ -25,35 +25,21 @@ PATCHFILES += 0001-Use-inttypes.h-if-stdint.h-is-not-available.patch
 #   http://www.mail-archive.com/popt-devel@rpm5.org/msg00155.html
 PATCHFILES += 0002-Fix-failing-tests.patch
 
-PACKAGES += CSWlibpopt
-CATALOGNAME_CSWlibpopt = libpopt
-SPKG_DESC_CSWlibpopt = Transitional package as contents moved to CSWlibpopt0
-PKGFILES_CSWlibpopt = NOFILES
-ARCHALL_CSWlibpopt = 1
-RUNTIME_DEP_PKGS_CSWlibpopt = CSWlibpopt0
-CHECKPKG_OVERRIDES_CSWlibpopt += surplus-dependency|CSWlibpopt0
-
 PACKAGES += CSWlibpopt0
-CATALOGNAME_CSWlibpopt0 = libpopt0
-SPKG_DESC_CSWlibpopt0 = Library for parsing command line parameters providing libpopt.so.0
-# PKGFILES_CSWlibpopt0 = $(call baseisadirs,$(libdir),libpopt\.so\.0(\.\d+)*)
+SPKG_DESC_CSWlibpopt0 = Library for parsing command line parameters, libpopt.so.0
+# PKGFILES is catchall (library and according LC_MESSAGES)
+OBSOLETED_BY_CSWlibpopt0 += CSWlibpopt
+RUNTIME_DEP_PKGS_CSWlibpopt0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibpopt0 += CSWlibiconv2
 
 PACKAGES += CSWlibpopt-dev
-CATALOGNAME_CSWlibpopt-dev = libpopt_dev
 SPKG_DESC_CSWlibpopt-dev = Development files for libpopt.so
 RUNTIME_DEP_PKGS_CSWlibpopt-dev = CSWlibpopt0
-PKGFILES_CSWlibpopt-dev = $(PKGFILES_DEVEL)
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv
+PKGFILES_CSWlibpopt-dev += $(PKGFILES_DEVEL)
+OBSOLETES_CSWlibpopt-dev += CSWlibpopt
 
 BUILD64 = 1
 NORUNPATH = 1
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
 
 include gar/category.mk
 
