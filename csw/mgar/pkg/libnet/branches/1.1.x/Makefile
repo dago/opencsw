@@ -24,41 +24,38 @@ PATCHFILES = 0001-Fix-missing-uint-instead-of-u_int.patch
 
 LICENSE = doc/COPYING
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 VENDOR_URL = http://github.com/sam-github/libnet
 
-PACKAGES = CSWlibnet CSWlibnet1 CSWlibnetdevel
-
-CATALOGNAME_CSWlibnet = libnet
-CATALOGNAME_CSWlibnet1 = libnet1
-CATALOGNAME_CSWlibnetdevel = libnet_devel
-
-SPKG_DESC_CSWlibnet = Libnet Package Construction Library (Legacy)
-SPKG_DESC_CSWlibnet1 = Libnet Package Construction Library
-SPKG_DESC_CSWlibnetdevel = Libnet Development Files
-
+PACKAGES += CSWlibnet
+SPKG_DESC_CSWlibnet = Libnet package construction library (legacy), libnet.so
 SPKG_VERSION_CSWlibnet = 1.0.2a
-
-RUNTIME_DEP_PKGS_CSWlibnetdevel = CSWlibnet1
-
-BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
-
-PKGFILES_CSWlibnet  = $(libdir)/libnet.so
+PKGFILES_CSWlibnet += $(libdir)/libnet.so
 PKGFILES_CSWlibnet += $(libdir)/libnet.so.1.0.2
-PKGFILES_CSWlibnet1  = $(call baseisadirs,$(libdir),[^/]*\.so\.1)
-PKGFILES_CSWlibnet1 += $(call baseisadirs,$(libdir),[^/]*\.so\.1\.6(\.\d+)*)
 
 # These overrides are for the legacy library which should just
 # stay the way it is.
 CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libnet.so
 CHECKPKG_OVERRIDES_CSWlibnet += bad-rpath-entry
 # CHECKPKG_OVERRIDES_CSWlibnet += bad-rpath-entry|$ORIGIN/../lib|opt/csw/lib/libnet.so.1.0.2
-CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-pkgname-mismatch|file=opt/csw/lib/libnet.so.1.0.2|soname=libnet.so.1.0.2|pkgname=CSWlibnet|expected=['CSWlibnet1-0-2']
+CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-pkgname-mismatch|file=opt/csw/lib/libnet.so.1.0.2|soname=libnet.so.1.0.2|pkgname=CSWlibnet|expected=CSWlibnet1-0-2
 CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libnet.so
+
+PACKAGES += CSWlibnet1
+SPKG_DESC_CSWlibnet1 = Libnet package construction library, libnet.so.1
+# Explicitly do *not* include libnet.so.1.0.2
+PKGFILES_CSWlibnet1  = $(call baseisadirs,$(libdir),libnet\.so\.1)
+PKGFILES_CSWlibnet1 += $(call baseisadirs,$(libdir),libnet\.so\.1\.6(\.\d+)*)
+
+PACKAGES += CSWlibnet-dev
+SPKG_DESC_CSWlibnet-dev = Development files for libnet.so.1
+# PKGFILES is catchall
+# The general layout of CSWlibnet-dev is non-standard. Please see here for a rationale:
+#   http://wiki.opencsw.org/project-libnet
+RUNTIME_DEP_PKGS_CSWlibnet-dev += CSWlibnet1
+OBSOLETED_BY_CSWlibnet-dev += CSWlibnetdevel
+CATALOGNAME_CSWlibnetdevel = libnet_devel_stub
+
+BUILD64 = 1
 
 include gar/category.mk
 
