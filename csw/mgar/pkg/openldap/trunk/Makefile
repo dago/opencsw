@@ -2,8 +2,6 @@ NAME = openldap
 VERSION = 2.4.26
 GARTYPE = v2
 CATEGORIES = server
-EXTRA_MODULATORS = VERSION
-MODULATIONS_VERSION = 2.3.43 2.4.26
 
 DESCRIPTION = Open source implementation of the Lightweight Directory Access Protocol
 define BLURB
@@ -15,8 +13,7 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/
-SOURCEFILES  = $(foreach VERSION,$(MODULATIONS_VERSION),$(NAME)-$(VERSION).tgz)
-DISTFILES  = $(SOURCEFILES)
+DISTFILES  = $(DISTNAME).tgz
 DISTFILES += CSWoldap.postinstall
 DISTFILES += README.CSW openldaprc
 DISTFILES += cswopenldap openldap.xml
@@ -24,10 +21,7 @@ DISTFILES += cswopenldap openldap.xml
 EXPANDVARS = cswopenldap
 EXPANDVARS += CSWoldap.postinstall
 
-PATCHFILES_isa-sparcv8-version-2.4.26 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-sparcv9-version-2.4.26 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-i386-version-2.4.26 = patch-oldap-2.4.16-ntlm.diff
-PATCHFILES_isa-amd64-version-2.4.26 = patch-oldap-2.4.16-ntlm.diff
+PATCHFILES += patch-oldap-2.4.16-ntlm.diff
 PATCHFILES += patch-libtool-64bit.diff
 DISTFILES += patch-oldap-2.4.16-ntlm.diff
 
@@ -36,8 +30,6 @@ DISTFILES += patch-oldap-2.4.16-ntlm.diff
 # the string
 #   /usr/local/var/ldapi
 # should be replaced by something more sane in the future.
-
-NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tgz,$(SOURCEFILES))
 
 LICENSE = COPYRIGHT
 
@@ -69,16 +61,11 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 EXTRA_DOCS = README.CSW $(PATCHFILES) openldaprc
 
-# This is old, stick to BerkeleyDB 4.4
-EXTRA_LIB_version-2.3.43 = $(prefix)/bdb44/lib 
-EXTRA_INC_version-2.3.43 = $(prefix)/bdb44/include
-
 # This is also used during EXPANDVARS
 bdbdir = $(prefix)/bdb48
-EXTRA_LIB_version-2.4.26 = $(bdbdir)/lib 
-EXTRA_INC_version-2.4.26 = $(bdbdir)/include
-EXTRA_LIB = $(EXTRA_LIB_version-$(VERSION))
-EXTRA_INC = $(EXTRA_INC_version-$(VERSION))
+
+EXTRA_LIB = $(bdbdir)/lib 
+EXTRA_INC = $(bdbdir)/include
 
 # Not released yet.
 #EXTRA_LDFLAGS = -L$(libdir)/libnet-new
@@ -131,24 +118,9 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
 SKIPTEST ?= 1
 
-MERGE_SCRIPTS_isa-default-version-2.3.43 = copy-only
-MERGE_DIRS_isa-default-version-2.3.43 = $(libdir)
-MERGE_SCRIPTS_isa-default64-version-2.3.43 = copy-relocated-only
-MERGE_DIRS_isa-default64-version-2.3.43 = $(libdir)
-
-MERGE_SCRIPTS_isa-default-version-2.4.26 = copy-all
-MERGE_SCRIPTS_isa-default64-version-2.4.26 = copy-relocated-only
-MERGE_DIRS_isa-default64-version-2.4.26 = $(bindir) $(sbindir) $(libexecdir) $(libdir)
-
 # Perl backend is built, although it has been told not to.
 EXTRA_PAX_ARGS = -s ,.*/opt/csw/libexec/sparcv9/openldap/back_perl.*,,
 EXTRA_PAX_ARGS = -s ,.*/opt/csw/libexec/amd64/openldap/back_perl.*,,
-
-# Make sure we do not use the 2.3 .so-links in any case
-EXTRA_MERGE_EXCLUDE_FILES_isa-i386-version-2.3.43 = .*\.so
-EXTRA_MERGE_EXCLUDE_FILES_isa-amd64-version-2.3.43 = .*\.so
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-version-2.3.43 = .*\.so
-EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9-version-2.3.43 = .*\.so
 
 # These are the config templates. As we have preserveconf which takes
 # care of this we exclude them in the package.
