@@ -59,8 +59,13 @@ GARPKG_v2 = CSWgar-v2
 RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR version $(GARSYSTEMVERSION) unknown))
 
 # Set the catalog release based on hostname.  E.g. building on current9s will
-# set CATALOG_RELEASE to 'current'.
-CATALOG_RELEASE ?= $(shell hostname | gsed -e 's/[0-9].*$$//')
+# set CATALOG_RELEASE to 'current'. Used by checkpkg to query the right branch
+# in the buildfarm pkgdb. For off-site usage this can default to unstable.
+HOSTNAME := $(shell hostname)
+CATALOG_RELEASE ?= $(shell echo $(HOSTNAME) | gsed -e 's/[0-9][sx]*$$//')
+ifeq ($(HOSTNAME),$(CATALOG_RELEASE))
+CATALOG_RELEASE=unstable
+endif
 
 define obsoleted_pkg
 # function 'catalogname' must not be used due to recursive calls to CATALOGNAME_*
