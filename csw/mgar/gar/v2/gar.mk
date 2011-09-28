@@ -33,7 +33,12 @@ SETONCE = $(eval $(1) ?= $(2))
 #meant to take a git url and return just the $proj.git part
 GITPROJ = $(lastword $(subst /, ,$(1)))
 
-PARALLELMFLAGS ?= $(MFLAGS)
+# GAR uses PARALLELMFLAGS to propagate make options (judging by the name, mainly
+# intended for -j). Options are determined via MFLAGS which also contains other
+# options, thus we need to filter harmful ones. e.g. -I breaks upstream builds
+# that use non-gnu make (Fatal error: Unknown option `-I'). Info on M*FLAGS:
+# http://www.gnu.org/s/hello/manual/make/Options_002fRecursion.html
+PARALLELMFLAGS ?= $(shell echo $(MFLAGS) | gsed 's,-I [^ ]*,,g' )
 export PARALLELMFLAGS
 
 DISTNAME ?= $(NAME)-$(VERSION)
