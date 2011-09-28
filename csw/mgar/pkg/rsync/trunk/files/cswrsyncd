@@ -1,0 +1,23 @@
+#!/sbin/sh
+
+CONF_FILE=/etc/opt/csw/rsyncd.conf
+
+if [ ! -f ${CONF_FILE} ]; then
+  exit 0
+fi
+
+cmd="$1"
+
+case "$cmd" in
+  start)
+    /opt/csw/bin/rsync --daemon -v
+    ;;
+  stop)
+    /usr/bin/pkill -x -u 0 rsync
+    ;;
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
