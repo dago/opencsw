@@ -27,12 +27,16 @@ RUNTIME_DEP_PKGS_CSWclamav  = CSWlibclam6
 RUNTIME_DEP_PKGS_CSWclamav += CSWlibz1
 RUNTIME_DEP_PKGS_CSWclamav += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWclamav += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWclamav += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWclamav += CSWlibiconv2
 
 PACKAGES                     += CSWlibclam6
 CATALOGNAME_CSWlibclam6       = libclam6
 SPKG_DESC_CSWlibclam6         = $(DESCRIPTION) Library
 RUNTIME_DEP_PKGS_CSWlibclam6  = CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibiconv2
 INCOMPATIBLE_PKGS_CSWlibclam6 = CSWlibclamav
 
 PACKAGES                         += CSWlibclam6-dev
