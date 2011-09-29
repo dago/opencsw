@@ -61,6 +61,9 @@ CATALOGNAME_CSWlibmilter = libmilter
 SPKG_DESC_CSWlibmilter   = Sendmail MTA milter
 PKGFILES_CSWlibmilter    = $(docdir)/libmilter/.*
 PKGFILES_CSWlibmilter   += /opt/csw/include/libmilter.h
+PKGFILES_CSWlibmilter   += /opt/csw/include/libmilter/mfapi.h
+PKGFILES_CSWlibmilter   += /opt/csw/include/libmilter/mfdef.h
+PKGFILES_CSWlibmilter   += /opt/csw/include/libsmdb/smdb.h
 PKGFILES_CSWlibmilter   += $(libdir)/libmilter.a
 PKGFILES_CSWlibmilter   += $(libdir)/libsm.a
 PKGFILES_CSWlibmilter   += $(libdir)/libsmdb.a
@@ -220,6 +223,8 @@ install-custom:
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -d $(DESTDIR)$(sysconfdir)/mail
 	ginstall -d $(DESTDIR)/opt/csw/include
+	ginstall -d $(DESTDIR)/opt/csw/include/libmilter
+	ginstall -d $(DESTDIR)/opt/csw/include/libsmdb
 	ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)
 	ginstall -m 755 -d $(DESTDIR)$(docdir)/$(NAME)_contrib
 	ginstall -m 755 -d $(DESTDIR)$(docdir)/libmilter
@@ -256,6 +261,11 @@ install-custom:
 	( for file in $(INCLFILES) ; do \
 		ginstall -m 444 $(OBJDIR)/$$file $(DESTDIR)/opt/csw/include ; \
 		done )
+
+	@# Install milter files
+	ginstall -m 444 $(WORKSRC)/include/libsmdb/smdb.h $(DESTDIR)/opt/csw/include/libsmdb ; \
+	ginstall -m 444 $(WORKSRC)/include/libmilter/mfapi.h $(DESTDIR)/opt/csw/include/libmilter ; \
+	ginstall -m 444 $(WORKSRC)/include/libmilter/mfdef.h $(DESTDIR)/opt/csw/include/libmilter ; \
 
 	@# Install m4/cf macros
 	find $(WORKSRC)/cf -type f -exec chmod 644 {} +
