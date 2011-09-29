@@ -2,9 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-# 5.0.90 doesn't build:
-# http://bugs.mysql.com/bug.php?id=50409
-# Let's wait for 5.0.91.
+# Upstream bug filed:
+# http://bugs.mysql.com/bug.php?id=62567
 
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)5
@@ -12,6 +11,8 @@ BASE_VERSION = 5.0
 PATCHLEVEL = 92
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
+
+# PACKAGING_PLATFORMS = solaris9-sparc solaris10-sparc
 
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
@@ -26,11 +27,11 @@ define BLURB
 endef
 
 # Change prefix to /opt/csw/$(NAME)
-prefix = /opt/csw/$(NAME)
+prefix = $(BUILD_PREFIX)/$(NAME)
 localstatedir = /var$(prefix)
 sysconfdir = /etc$(prefix)
-libdir = /opt/csw/lib
-includedir = /opt/csw/include
+libdir = $(BUILD_PREFIX)/lib
+includedir = $(BUILD_PREFIX)/include
 
 #  --bindir=/opt/csw/mysql5/bin
 #  --datadir=/opt/csw/mysql5/share
@@ -43,9 +44,9 @@ includedir = /opt/csw/include
 #  --sharedstatedir=/opt/csw/mysql5/share
 
 # Where to put the init script
-global_sysconfdir = /etc/opt/csw
+global_sysconfdir = /etc$(BUILD_PREFIX)
 # Where to link the binaries
-global_bindir = /opt/csw/bin
+global_bindir = $(BUILD_PREFIX)/bin
 
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
@@ -53,13 +54,13 @@ PACKAGES += CSWlibmysqlclient15
 PKGFILES_CSWlibmysqlclient15 += $(call baseisadirs,$(libdir),libmysqlclient\.so\.15(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient15 += MySQL $(BASE_VERSION) client library, libmysqlclient.so.15
 RUNTIME_DEP_PKGS_CSWlibmysqlclient15 += CSWzlib
-OBSOLETED_BY_CSWlibmysqlclient15 += CSWmysql5rt
+OBSOLETED_BY_CSWlibmysqlclient15 += CSW$(NAME)rt
 
 PACKAGES += CSWlibmysqlclient-r15
 PKGFILES_CSWlibmysqlclient-r15 += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.15(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient-r15 += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.15
 RUNTIME_DEP_PKGS_CSWlibmysqlclient-r15 += CSWzlib
-OBSOLETED_BY_CSWlibmysqlclient-r15 += CSWmysql5rt
+OBSOLETED_BY_CSWlibmysqlclient-r15 += CSW$(NAME)rt
 
 PACKAGES += CSW$(NAME)client
 SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries
@@ -103,8 +104,9 @@ PACKAGES += CSW$(NAME)test
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
-PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
+# PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
 PATCHFILES += 0004-basedir-and-datadir-in-the-cnf-files.patch
+PATCHFILES += 0004-looking-for-ps-use-basename-0.patch
 
 SPKG_DESC_CSW$(NAME)bench  = MySQL $(BASE_VERSION) benchmarking
 SPKG_DESC_CSW$(NAME)devel  = MySQL $(BASE_VERSION) header files
@@ -162,8 +164,8 @@ CONFIGURE_ARGS += --with-extra-charsets=all
 CONFIGURE_ARGS += --with-low-memory
 CONFIGURE_ARGS += --with-pthread
 CONFIGURE_ARGS += --with-readline
-CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
-CONFIGURE_ARGS += --with-ssl=/opt/csw
+CONFIGURE_ARGS += --with-zlib-dir=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --with-ssl=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-plugins=max-no-ndb
 CONFIGURE_ARGS += --with-comment="(OpenCSW)"
 CONFIGURE_ARGS += --with-mysqld-user=mysql
@@ -194,29 +196,16 @@ PROTOTYPE_GROUP_dbdir = mysql
 PROTOTYPE_PERMS_dbdir = 0700
 PROTOTYPE_CLASS_dbdir = ugfiles
 
-CHECKPKG_OVERRIDES_CSWmysql5 += surplus-dependency|CSWmysql5client
-CHECKPKG_OVERRIDES_CSWmysql5bench += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWmysql5bench += surplus-dependency|CSWmysql5
-CHECKPKG_OVERRIDES_CSWmysql5test += file-with-bad-content
-CHECKPKG_OVERRIDES_CSWmysql5test += surplus-dependency|CSWmysql5
+CHECKPKG_OVERRIDES_CSW$(NAME) += surplus-dependency|CSW$(NAME)client
+CHECKPKG_OVERRIDES_CSW$(NAME)bench += file-with-bad-content
+CHECKPKG_OVERRIDES_CSW$(NAME)bench += surplus-dependency|CSW$(NAME)
+CHECKPKG_OVERRIDES_CSW$(NAME)test += file-with-bad-content
+CHECKPKG_OVERRIDES_CSW$(NAME)test += surplus-dependency|CSW$(NAME)
 
-CHECKPKG_OVERRIDES_CSWmysql5client += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysqlaccess.1
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/info/mysql.info
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/myisam_ftdump.1
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysqld_multi.1
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysqld_safe.1
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysqldumpslow.1
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man8/mysqlmanager.8
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/mysql/mysqld_multi.server
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/bin/sparcv8/mysqlbug
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/bin/sparcv9/mysqlbug
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/export/home|root/opt/csw/mysql5/share/info/mysql.info
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/share|root/opt/csw/mysql5/share/info/mysql.info
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/share|root/opt/csw/mysql5/share/man/man1/mysql_tzinfo_to_sql.1
-CHECKPKG_OVERRIDES_CSWmysql5devel += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysql_config.1
-
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/bin/i386/mysqlbug
-CHECKPKG_OVERRIDES_CSWmysql5 += file-with-bad-content|/usr/local|root/opt/csw/mysql5/bin/amd64/mysqlbug
+CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysqlaccess.1
+# This could be reviewed.
+CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
+CHECKPKG_OVERRIDES_CSW$(NAME)devel += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysql_config.1
 
 EXECUTABLES += comp_err
 EXECUTABLES += innochecksum
