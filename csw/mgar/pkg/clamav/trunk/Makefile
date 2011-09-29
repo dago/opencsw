@@ -24,17 +24,14 @@ PACKAGES                   += CSWclamav
 CATALOGNAME_CSWclamav       = clamav
 SPKG_DESC_CSWclamav         = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWclamav  = CSWlibclam6
-RUNTIME_DEP_PKGS_CSWclamav += CSWzlib
-RUNTIME_DEP_PKGS_CSWclamav += CSWbzip2
-RUNTIME_DEP_PKGS_CSWclamav += CSWiconv
+RUNTIME_DEP_PKGS_CSWclamav += CSWlibz1
 RUNTIME_DEP_PKGS_CSWclamav += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWclamav += CSWlibncurses5
 
 PACKAGES                     += CSWlibclam6
 CATALOGNAME_CSWlibclam6       = libclam6
 SPKG_DESC_CSWlibclam6         = $(DESCRIPTION) Library
-RUNTIME_DEP_PKGS_CSWlibclam6  = CSWzlib
-RUNTIME_DEP_PKGS_CSWlibclam6 += CSWbzip2
-RUNTIME_DEP_PKGS_CSWlibclam6 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibclam6  = CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibltdl7
 INCOMPATIBLE_PKGS_CSWlibclam6 = CSWlibclamav
 
@@ -74,6 +71,9 @@ CONFIGURE_ARGS += --enable-milter
 #CONFIGURE_ARGS += --disable-llvm
 #CONFIGURE_ARGS += --enable-check
 CONFIGURE_ARGS += --enable-clamdtop
+
+# Enable support for files > 2GB in size.
+EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ $(libdir)/.*\.a $(libdir)/.*\.la
 
