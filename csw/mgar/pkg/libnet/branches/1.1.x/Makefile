@@ -36,7 +36,6 @@ PKGFILES_CSWlibnet += $(libdir)/libnet.so.1.0.2
 # stay the way it is.
 CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libnet.so
 CHECKPKG_OVERRIDES_CSWlibnet += bad-rpath-entry
-# CHECKPKG_OVERRIDES_CSWlibnet += bad-rpath-entry|$ORIGIN/../lib|opt/csw/lib/libnet.so.1.0.2
 CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-pkgname-mismatch|file=opt/csw/lib/libnet.so.1.0.2|soname=libnet.so.1.0.2|pkgname=CSWlibnet|expected=CSWlibnet1-0-2
 CHECKPKG_OVERRIDES_CSWlibnet += shared-lib-package-contains-so-symlink|file=/opt/csw/lib/libnet.so
 
@@ -56,6 +55,10 @@ OBSOLETED_BY_CSWlibnet-dev += CSWlibnetdevel
 CATALOGNAME_CSWlibnetdevel = libnet_devel_stub
 
 BUILD64 = 1
+
+EXTRA_CONFIGURE_ARGS-32 += LIBNET_CONFIG_LIBS=-L$(libdir)/libnet-new
+EXTRA_CONFIGURE_ARGS-64 += LIBNET_CONFIG_LIBS=-L$(libdir)
+EXTRA_CONFIGURE_ARGS += $(EXTRA_CONFIGURE_ARGS-$(MEMORYMODEL))
 
 include gar/category.mk
 
