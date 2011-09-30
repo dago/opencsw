@@ -1,0 +1,33 @@
+From 2b227bddcd0cd2f8f2fb299ecd6c6957cb52c496 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 11 Mar 2011 01:22:51 +0100
+Subject: [PATCH] Use OpenCSW Perl for testing
+
+---
+ mysql-test/lib/v1/mysql-test-run.pl |    2 +-
+ mysql-test/mysql-test-run.pl        |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mysql-test/lib/v1/mysql-test-run.pl b/mysql-test/lib/v1/mysql-test-run.pl
+index 5d06d9c..a1205cf 100755
+--- a/mysql-test/lib/v1/mysql-test-run.pl
++++ b/mysql-test/lib/v1/mysql-test-run.pl
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ # -*- cperl -*-
+ 
+ #
+diff --git a/mysql-test/mysql-test-run.pl b/mysql-test/mysql-test-run.pl
+index 2301b24..754e426 100755
+--- a/mysql-test/mysql-test-run.pl
++++ b/mysql-test/mysql-test-run.pl
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++#!/opt/csw/bin/perl
+ # -*- cperl -*-
+ 
+ # Copyright (c) 2004, 2010, Oracle and/or its affiliates. All rights reserved.
+-- 
+1.7.3.2
+

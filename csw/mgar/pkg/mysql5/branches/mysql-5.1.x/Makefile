@@ -37,16 +37,33 @@ INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
 MYSQL_LIB_VER = 16
 
+PACKAGES += CSWmysql-dev
+SPKG_DESC_CSWmysql-dev = MySQL development files
+PKGFILES_CSWmysql-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient$(MYSQL_LIB_VER)
+CSWmysql-dev_programs += mysql_config
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(call baseisadirs,$(bindir),$(bin_name)))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(mandir)/man1/$(bin_name)\.1)
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/bin/$(bin_name))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/sbin/$(bin_name))
+PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config\.1
+PKGFILES_CSWmysql-dev  += $(prefix)/include.*
+PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
+CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysql_config.1
+
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWosslrt
 OBSOLETED_BY_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSW$(NAME)rt
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWosslrt
 OBSOLETED_BY_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSW$(NAME)rt
 
 PACKAGES += CSW$(NAME)client
@@ -91,55 +108,37 @@ RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWosslrt
 
 PACKAGES += CSW$(NAME)bench
-PACKAGES += CSW$(NAME)devel
 PACKAGES += CSW$(NAME)test
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 # PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
 PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
-PATCHFILES += 0004-Use-OpenCSW-Perl-for-testing.patch
+# PATCHFILES += 0004-Use-OpenCSW-Perl-for-testing.patch
 PATCHFILES += 0004-looking-for-ps-use-basename-0.patch
 
 SPKG_DESC_CSW$(NAME)bench  = MySQL $(BASE_VERSION) benchmarking
-SPKG_DESC_CSW$(NAME)devel  = MySQL $(BASE_VERSION) header files
 SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
 
 CATALOGNAME_CSW$(NAME)bench  = $(NAME)bench
-CATALOGNAME_CSW$(NAME)devel  = $(NAME)devel
 CATALOGNAME_CSW$(NAME)test   = $(NAME)test
 
-COMMON_CFLAGS = -fsimple=1 -ftrap=%none -xbuiltin=%all -xlibmil -xlibmopt
+# COMMON_EXTRA_FLAGS += -fsimple=1 -ftrap=%none -xbuiltin=%all -xlibmil -xlibmopt
 
-EXTRA_CFLAGS = $(EXTRA_CFLAGS_$(GARCH)) -Xa -fast -native -xnorunpath
-EXTRA_CFLAGS_sparc = -xO4 -xstrconst $(COMMON_CFLAGS)
-EXTRA_CFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_CFLAGS)
+# EXTRA_CFLAGS_sparc = -xO4 -xstrconst $(COMMON_EXTRA_FLAGS)
+# EXTRA_CFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_EXTRA_FLAGS)
+# EXTRA_CFLAGS = $(EXTRA_CFLAGS_$(GARCH)) -Xa -fast -native -xnorunpath
 
-EXTRA_CXXFLAGS = $(EXTRA_CXXFLAGS_$(GARCH)) -noex -mt -norunpath
-EXTRA_CXXFLAGS_sparc = -xO4 $(COMMON_CFLAGS)
-EXTRA_CXXFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_CFLAGS)
+# EXTRA_CXXFLAGS_sparc = -xO4 $(COMMON_EXTRA_FLAGS)
+# EXTRA_CXXFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_EXTRA_FLAGS)
+# EXTRA_CXXFLAGS = $(EXTRA_CXXFLAGS_$(GARCH)) -noex -mt -norunpath
 
 ARCHALL_CSW$(NAME)bench = 1
-ARCHALL_CSW$(NAME)test  = 1
-
-CSW$(NAME)devel_programs += mysql_config
 
 # Enable 64 bits build
 BUILD64 = 1
 
 PKGFILES_CSW$(NAME)bench   = $(prefix)/sql-bench.*
-PKGFILES_CSW$(NAME)client  = $(bindir)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(call baseisadirs,$(bindir),$(bin_name)))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/bin/$(bin_name))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/sbin/$(bin_name))
-PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),$(call baseisadirs,$(bindir),$(bin_name)))
-PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),/opt/csw/bin/$(bin_name))
-PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),/opt/csw/sbin/$(bin_name))
-PKGFILES_CSW$(NAME)devel  += $(mandir)/man1/mysql_config\.1
-PKGFILES_CSW$(NAME)devel  += $(prefix)/include.*
-PKGFILES_CSW$(NAME)devel  += /opt/csw/include/mysql
 
 PKGFILES_CSW$(NAME)test    = $(prefix)/mysql-test.*
 
@@ -206,6 +205,16 @@ PROTOTYPE_GROUP_dbdir = mysql
 PROTOTYPE_PERMS_dbdir = 0700
 PROTOTYPE_CLASS_dbdir = ugfiles
 
+CHECKPKG_OVERRIDES_CSW$(NAME) += surplus-dependency|CSW$(NAME)client
+CHECKPKG_OVERRIDES_CSW$(NAME)bench += file-with-bad-content
+CHECKPKG_OVERRIDES_CSW$(NAME)bench += surplus-dependency|CSW$(NAME)
+CHECKPKG_OVERRIDES_CSW$(NAME)test += file-with-bad-content
+CHECKPKG_OVERRIDES_CSW$(NAME)test += surplus-dependency|CSW$(NAME)
+
+CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysqlaccess.1
+# This could be reviewed.
+CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
+
 EXECUTABLES += comp_err
 EXECUTABLES += innochecksum
 EXECUTABLES += msql2mysql
@@ -264,7 +273,7 @@ ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME
 
 include gar/category.mk
 
-CFLAGS := $(filter-out -I%,$(CFLAGS))
+# CFLAGS := $(filter-out -I%,$(CFLAGS))
 
 test-custom:
 	alias sh=/usr/bin/bash;                           \
