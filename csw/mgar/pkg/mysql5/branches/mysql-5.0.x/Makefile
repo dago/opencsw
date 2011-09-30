@@ -182,11 +182,6 @@ SKIPTEST ?= 1
 TEST_SCRIPTS = custom
 TEST_TARGETS = check
 
-ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)
-ALTERNATIVE_mysql$(BASE_VERSION) = $(global_bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
-ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
-	$(global_bindir)/$C $C $(bindir)/$C)
-
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
 PROTOTYPE_MODIFIERS = dbdir
@@ -253,15 +248,18 @@ EXECUTABLES += replace
 EXECUTABLES += resolve_stack_dump
 EXECUTABLES += resolveip
 
-ALTERNATIVES = $(EXECUTABLES)
+ALTERNATIVES =
+ALTERNATIVES_CSW$(NAME) = 
 
 # This list could be generated automatically from $(EXECUTABLES)
-
+# /home/maciej/src/opencsw/.buildsys/v2/gar//gar.pkg.mk:833: *** The variable 'ALTERNATIVE_comp_err' is empty, but must contain an alternative.  Stop.
+ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)
+ALTERNATIVE_mysql$(BASE_VERSION) = $(global_bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
+ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
+	$(global_bindir)/$C $C $(bindir)/$C)
 
 # Collisions:
 # /opt/csw/share/mysql/doc/README.CSW
-
-ALTERNATIVES_CSW$(NAME) = 
 
 include gar/category.mk
 
