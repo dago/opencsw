@@ -37,10 +37,8 @@ localstatedir   = /var/opt/csw
 
 MIGRATE_FILES   = proftpd.conf
 
-CONFIGURE_ENV   = install_user=$(USER) install_group=csw
-CONFIGURE_ENV  += PATH=/usr/ccs/bin:/bin
-CONFIGURE_ENV  += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
-CONFIGURE_ENV  += LD_LIBRARY_PATH="$(libdir)"
+EXTRA_CONFIGURE_ENV   = install_user=$(USER) install_group=csw
+EXTRA_CONFIGURE_ENV  += LD_LIBRARY_PATH="$(libdir)"
 EXTRA_LIB       = $(prefix)/mysql5/lib/mysql
 
 NODIRPATHS      = --localstatedir --libexecdir
