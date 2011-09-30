@@ -680,6 +680,8 @@ $(WORKDIR)/%.pkginfo: $(WORKDIR)
 	echo "OPENCSW_MODE64=$(call mode64,$*)"; \
 	echo "OPENCSW_REPOSITORY=$(call _URL)@$(call _REVISION)"; \
 	echo "OPENCSW_BUNDLE=$(BUNDLE)"; \
+	echo "OPENCSW_OS_RELEASE=$(SPKG_OSNAME)"; \
+	echo "OPENCSW_OS_ARCH=$(GARCH)"; \
 	$(_CATEGORY_PKGINFO) \
 	) >$@
 	$(if $(ALLOW_RELOCATE),echo "BASEDIR=$(RELOCATE_PREFIX)" >>$@)
