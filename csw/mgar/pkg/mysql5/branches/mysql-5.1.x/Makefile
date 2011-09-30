@@ -5,7 +5,7 @@
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)51
 BASE_VERSION = 5.1
-PATCHLEVEL = 49
+PATCHLEVEL = 59
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
@@ -21,49 +21,50 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-prefix = /opt/csw/$(NAME)
+# Change prefix to /opt/csw/$(NAME)
+prefix = $(BUILD_PREFIX)/$(NAME)
 localstatedir = /var$(prefix)
 sysconfdir = /etc$(prefix)
+libdir = $(BUILD_PREFIX)/lib
+includedir = $(BUILD_PREFIX)/include
 
 # Where to put the init script
-global_sysconfdir = $(sysconfdir)
+global_sysconfdir = /etc$(BUILD_PREFIX)
 # Where to link the binaries
-global_bindir = /opt/csw/bin
+global_bindir = $(BUILD_PREFIX)/bin
 
-INITSMF = $(global_sysconfdir)/init\.d/csw$(NAME)
+INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
-PACKAGES  = CSW$(NAME)
-PACKAGES += CSW$(NAME)bench
+MYSQL_LIB_VER = 16
+
+PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
+PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
+SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
+OBSOLETED_BY_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSW$(NAME)rt
+
+PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
+PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
+SPKG_DESC_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWlibz1
+OBSOLETED_BY_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSW$(NAME)rt
+
 PACKAGES += CSW$(NAME)client
-PACKAGES += CSW$(NAME)devel
-PACKAGES += CSW$(NAME)rt
-PACKAGES += CSW$(NAME)test
-
-PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
-PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
-PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
-PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
-
-SPKG_DESC_CSW$(NAME)       = Multithreaded SQL database
-SPKG_DESC_CSW$(NAME)bench  = MySQL $(BASE_VERSION) benchmarking
 SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries
-SPKG_DESC_CSW$(NAME)devel  = MySQL $(BASE_VERSION) header files
-SPKG_DESC_CSW$(NAME)rt     = MySQL $(BASE_VERSION) runtime files
-SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
-
-CATALOGNAME_CSW$(NAME)       = $(NAME)
-CATALOGNAME_CSW$(NAME)bench  = $(NAME)bench
-CATALOGNAME_CSW$(NAME)client = $(NAME)client
-CATALOGNAME_CSW$(NAME)devel  = $(NAME)devel
-CATALOGNAME_CSW$(NAME)rt     = $(NAME)rt
-CATALOGNAME_CSW$(NAME)test   = $(NAME)test
-
-
-ARCHALL_CSW$(NAME)bench = 1
-
+RPKGFILES_CSW$(NAME)client  = $(bindir)
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(call baseisadirs,$(bindir),$(bin_name)))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(mandir)/man1/$(bin_name)\.1)
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/bin/$(bin_name))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/sbin/$(bin_name))
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
+CHECKPKG_OVERRIDES_CSWmysql5client += bad-rpath-entry
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
-CSW$(NAME)client_programs  = myisamlog
+CSW$(NAME)client_programs += myisamlog
 CSW$(NAME)client_programs += myisampack
 CSW$(NAME)client_programs += mysql
 CSW$(NAME)client_programs += mysqlaccess
@@ -80,26 +81,46 @@ CSW$(NAME)client_programs += mysql_zap
 CSW$(NAME)client_programs += perror
 CSW$(NAME)client_programs += replace
 
-# Without this EXTRA_LD_OPTIONS setting, /opt/csw/bin/mysql fails with a shared
-# library not found.  EXTRA_LIB was tried too, but did not work, as the -R path
-# ended up with having two $ISALIST tokens.
-#
-# Without this setting it looks for:
-# /opt/csw/$(NAME)/lib/amd64/libmysqlclient.so.15
-# The library is at:
-# /opt/csw/$(NAME)/lib/amd64/mysql/libmysqlclient.so.15
-EXTRA_LD_OPTIONS  = -R$(libdir)/\$$ISALIST/mysql
+PACKAGES += CSW$(NAME)
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient$(MYSQL_LIB_VER)
+SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWosslrt
 
-COMMON_CFLAGS = -mt -fsimple=1 -ftrap=%none -xbuiltin=%all -xlibmil -xlibmopt
+PACKAGES += CSW$(NAME)bench
+PACKAGES += CSW$(NAME)devel
+PACKAGES += CSW$(NAME)test
 
-EXTRA_CFLAGS = $(EXTRA_CFLAGS_$(GARCH))
+PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
+PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
+# PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
+PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
+PATCHFILES += 0004-Use-OpenCSW-Perl-for-testing.patch
+PATCHFILES += 0004-looking-for-ps-use-basename-0.patch
+
+SPKG_DESC_CSW$(NAME)bench  = MySQL $(BASE_VERSION) benchmarking
+SPKG_DESC_CSW$(NAME)devel  = MySQL $(BASE_VERSION) header files
+SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
+
+CATALOGNAME_CSW$(NAME)bench  = $(NAME)bench
+CATALOGNAME_CSW$(NAME)devel  = $(NAME)devel
+CATALOGNAME_CSW$(NAME)test   = $(NAME)test
+
+COMMON_CFLAGS = -fsimple=1 -ftrap=%none -xbuiltin=%all -xlibmil -xlibmopt
+
+EXTRA_CFLAGS = $(EXTRA_CFLAGS_$(GARCH)) -Xa -fast -native -xnorunpath
 EXTRA_CFLAGS_sparc = -xO4 -xstrconst $(COMMON_CFLAGS)
 EXTRA_CFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_CFLAGS)
 
-EXTRA_CXXFLAGS = $(EXTRA_CXXFLAGS_$(GARCH))
+EXTRA_CXXFLAGS = $(EXTRA_CXXFLAGS_$(GARCH)) -noex -mt -norunpath
 EXTRA_CXXFLAGS_sparc = -xO4 $(COMMON_CFLAGS)
 EXTRA_CXXFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_CFLAGS)
 
+ARCHALL_CSW$(NAME)bench = 1
+ARCHALL_CSW$(NAME)test  = 1
 
 CSW$(NAME)devel_programs += mysql_config
 
@@ -120,39 +141,23 @@ PKGFILES_CSW$(NAME)devel  += $(mandir)/man1/mysql_config\.1
 PKGFILES_CSW$(NAME)devel  += $(prefix)/include.*
 PKGFILES_CSW$(NAME)devel  += /opt/csw/include/mysql
 
-PKGFILES_CSW$(NAME)rt      = $(libdir)
-PKGFILES_CSW$(NAME)rt     += $(libdir)/.*
 PKGFILES_CSW$(NAME)test    = $(prefix)/mysql-test.*
 
-RUNTIME_DEP_PKGS_CSW$(NAME)           += CSW$(NAME)client
-RUNTIME_DEP_PKGS_CSW$(NAME)           += CSW$(NAME)rt
-RUNTIME_DEP_PKGS_CSW$(NAME)           += CSWosslrt
-RUNTIME_DEP_PKGS_CSW$(NAME)           += CSWtcpwrap
-RUNTIME_DEP_PKGS_CSW$(NAME)           += CSWzlib
-RUNTIME_DEP_PKGS_CSW$(NAME)rt         += CSWosslrt
-RUNTIME_DEP_PKGS_CSW$(NAME)rt         += CSWzlib
+RUNTIME_DEP_PKGS_CSW$(NAME)bench       = CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME)bench      += CSWperl
-RUNTIME_DEP_PKGS_CSW$(NAME)client     += CSW$(NAME)rt
-RUNTIME_DEP_PKGS_CSW$(NAME)client     += CSWosslrt
-RUNTIME_DEP_PKGS_CSW$(NAME)client     += CSWncurses
-RUNTIME_DEP_PKGS_CSW$(NAME)client     += CSWzlib
+RUNTIME_DEP_PKGS_CSW$(NAME)test        = CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME)test       += CSWperl
 
-MASTER_SITES = ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-$(BASE_VERSION)/
+MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(VERSION).tar.gz
 DISTFILES += csw$(NAME) quick_start-csw README.CSW ChangeLog
 DISTFILES += CSW$(NAME).preinstall
 DISTFILES += CSW$(NAME).postinstall
 DISTFILES += cswusergroup
 
-UFILES_REGEX = mysql-(\d+(?:\.\d+)*).tar.gz
-
 # TODO: Do the proper prerequsite pkgs.
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 
-# MySQL-5.1.40 doesn't compile without setting EXTRA_INC.
-EXTRA_INC = /opt/csw/include
-EXTRA_LIB = /opt/csw/lib
 
 # We're building on Solaris 9 now.
 # # The following EXTRA_CFLAGS are necessary to compile on Solaris 8. Otherwise
@@ -165,7 +170,7 @@ EXTRA_LIB = /opt/csw/lib
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --disable-assembler
+CONFIGURE_ARGS += --enable-assembler
 # Why not have a docs package?
 # CONFIGURE_ARGS += --without-docs
 CONFIGURE_ARGS += --enable-local-infile
@@ -174,8 +179,8 @@ CONFIGURE_ARGS += --with-extra-charsets=all
 CONFIGURE_ARGS += --with-low-memory
 CONFIGURE_ARGS += --with-pthread
 CONFIGURE_ARGS += --with-readline
-CONFIGURE_ARGS += --with-zlib-dir=/opt/csw
-CONFIGURE_ARGS += --with-ssl=/opt/csw
+CONFIGURE_ARGS += --with-zlib-dir=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --with-ssl=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-plugins=max-no-ndb
 CONFIGURE_ARGS += --with-comment="(OpenCSW)"
 CONFIGURE_ARGS += --with-mysqld-user=mysql
@@ -192,7 +197,6 @@ SKIPTEST ?= 1
 TEST_SCRIPTS = custom
 TEST_TARGETS = check
 
-
 USERGROUP = /etc/opt/csw/pkg/CSW$(NAME)/cswusergroup
 
 PROTOTYPE_MODIFIERS = dbdir
@@ -202,19 +206,68 @@ PROTOTYPE_GROUP_dbdir = mysql
 PROTOTYPE_PERMS_dbdir = 0700
 PROTOTYPE_CLASS_dbdir = ugfiles
 
-CHECKPKG_OVERRIDES_CSWmysql51 += surplus-dependency|CSWmysql51client
-CHECKPKG_OVERRIDES_CSWmysql51rt += bad-rpath-entry
+EXECUTABLES += comp_err
+EXECUTABLES += innochecksum
+EXECUTABLES += msql2mysql
+EXECUTABLES += my_print_defaults
+EXECUTABLES += myisam_ftdump
+EXECUTABLES += myisamchk
+EXECUTABLES += myisamlog
+EXECUTABLES += myisampack
+EXECUTABLES += mysql
+EXECUTABLES += mysql_client_test
+EXECUTABLES += mysql_config
+EXECUTABLES += mysql_convert_table_format
+EXECUTABLES += mysql_explain_log
+EXECUTABLES += mysql_find_rows
+EXECUTABLES += mysql_fix_extensions
+EXECUTABLES += mysql_fix_privilege_tables
+EXECUTABLES += mysql_install_db
+EXECUTABLES += mysql_secure_installation
+EXECUTABLES += mysql_setpermission
+EXECUTABLES += mysql_tableinfo
+EXECUTABLES += mysql_tzinfo_to_sql
+EXECUTABLES += mysql_upgrade
+EXECUTABLES += mysql_upgrade_shell
+EXECUTABLES += mysql_waitpid
+EXECUTABLES += mysql_zap
+EXECUTABLES += mysqlaccess
+EXECUTABLES += mysqladmin
+EXECUTABLES += mysqlbinlog
+EXECUTABLES += mysqlbug
+EXECUTABLES += mysqlcheck
+EXECUTABLES += mysqld_multi
+EXECUTABLES += mysqld_safe
+EXECUTABLES += mysqldump
+EXECUTABLES += mysqldumpslow
+EXECUTABLES += mysqlhotcopy
+EXECUTABLES += mysqlimport
+EXECUTABLES += mysqlshow
+EXECUTABLES += mysqltest
+EXECUTABLES += mysqltestmanager
+EXECUTABLES += mysqltestmanager-pwgen
+EXECUTABLES += mysqltestmanagerc
+EXECUTABLES += perror
+EXECUTABLES += replace
+EXECUTABLES += resolve_stack_dump
+EXECUTABLES += resolveip
 
-# CHECKPKG_OVERRIDES_CSWmysql51 += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/cswmysql51|class=none
-# CHECKPKG_OVERRIDES_CSWmysql51 += surplus-dependency|CSWmysql51client
+ALTERNATIVES =
+ALTERNATIVES_CSW$(NAME) = 
 
+# This list could be generated automatically from $(EXECUTABLES)
+# /home/maciej/src/opencsw/.buildsys/v2/gar//gar.pkg.mk:833: *** The variable 'ALTERNATIVE_comp_err' is empty, but must contain an alternative.  Stop.
+ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)
+ALTERNATIVE_mysql$(BASE_VERSION) = $(global_bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
+ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
+	$(global_bindir)/$C $C $(bindir)/$C)
 
 include gar/category.mk
 
 CFLAGS := $(filter-out -I%,$(CFLAGS))
 
 test-custom:
-	alias sh=/usr/bin/bash;                                 \
+	alias sh=/usr/bin/bash;                           \
 		cd $(WORKSRC)/mysql-test;                       \
 		perl mysql-test-run.pl --mem --big-test --force \
 		--skip-test=archive-big --skip-test=/gis/
@@ -228,37 +281,36 @@ pre-configure-modulated:
 	cd $(WORKSRC) && autoreconf --force --install --symlink
 	@$(MAKECOOKIE)
 
+post-install-modulated:
+	(cd $(DESTDIR)$(libdir); gmv -v mysql/* .)
+	(cd $(DESTDIR)$(libdir); grmdir -v mysql)
+	@$(MAKECOOKIE)
+
 post-merge:
 	ginstall -m 755 -d $(PKGROOT)$(localstatedir)
 	ginstall -m 755 -d $(PKGROOT)$(datadir)/mysql/doc
 	ginstall -m 644 $(FILEDIR)/ChangeLog $(PKGROOT)$(datadir)/mysql/doc
 	ginstall -m 644 $(FILEDIR)/README.CSW $(PKGROOT)$(datadir)/mysql/doc
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/mysql/doc
-	ln -sf ../../../$(NAME)/share/mysql/doc/README.CSW \
+	gln -sf ../../../$(NAME)/share/mysql/doc/README.CSW \
 		$(PKGROOT)/opt/csw/share/mysql/doc/README.CSW
-	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/init.d
-	ginstall -m 755 $(FILEDIR)/csw$(NAME) $(PKGROOT)$(global_sysconfdir)/init.d
+	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d
+	ginstall -m 755 $(FILEDIR)/csw$(NAME) $(PKGROOT)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
 	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
-						$(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
-	# A symlink for mysql5 include files
-	ginstall -m 755 -d $(PKGROOT)/opt/csw/include
-	ln -s ../$(NAME)/include/mysql $(PKGROOT)/opt/csw/include/mysql
+		        $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	# Create symlinks to binaries
 	ginstall -m 755 -d $(PKGROOT)$(global_bindir)
-	for f in $(PKGROOT)$(bindir)/*; do \
-		if echo $$f | grep amd64$$; then continue; fi; \
-		if echo $$f | grep sparcv9$$; then continue; fi; \
-		ln -s ../$(NAME)/bin/`basename $$f` \
-		      $(PKGROOT)$(global_bindir)/`basename $$f`; \
-	done
-	# /opt/csw/$(NAME)/lib/sparc9/mysql -- by GAR, it's logical
-	# /opt/csw/$(NAME)/lib/mysql/sparcv9 -- expected by other packages
-	gln -s ../$(ISA_DEFAULT64)/mysql $(PKGROOT)$(libdir)/mysql/$(ISA_DEFAULT64)
-	# For other applications to link against
-	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
-	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/mysql/64
-	gln -s . $(PKGROOT)$(libdir)/$(ISA_DEFAULT)
-	gln -s . $(PKGROOT)$(libdir)/mysql/$(ISA_DEFAULT)
+	#for f in $(PKGROOT)$(bindir)/*; do \
+	#	if echo $$f | grep amd64$$; then continue; fi; \
+	#	if echo $$f | grep sparcv9$$; then continue; fi; \
+	#	ln -s ../$(NAME)/bin/`basename $$f` \
+	#	      $(PKGROOT)$(global_bindir)/`basename $$f`; \
+	#done
+	# http://www.opencsw.org/bugtrack/view.php?id=4149
+	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)
 	@$(MAKECOOKIE)
+
+# We need the GNU userland (nobody knows why)
+PATH := /opt/csw/gnu:$(PATH)
