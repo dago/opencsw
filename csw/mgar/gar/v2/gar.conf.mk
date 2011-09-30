@@ -714,10 +714,10 @@ BUILD_EXPORTS     ?= $(COMMON_EXPORTS) $(EXTRA_BUILD_EXPORTS)
 TEST_EXPORTS      ?= $(COMMON_EXPORTS) $(EXTRA_TEST_EXPORTS)
 INSTALL_EXPORTS   ?= $(COMMON_EXPORTS) $(EXTRA_INSTALL_EXPORTS) DESTDIR
 
-CONFIGURE_ENV ?= $(foreach TTT,$(filter-out $(NO_CONFIGURE_EXPORTS),$(CONFIGURE_EXPORTS)),$(TTT)="$(or $(CONFIGURE_ENV_$(TTT)),$($(TTT)))")
-BUILD_ENV     ?= $(foreach TTT,$(filter-out $(NO_BUILD_EXPORTS),$(BUILD_EXPORTS)),$(TTT)="$(or $(BUILD_ENV_$(TTT)),$($(TTT)))")
-TEST_ENV      ?= $(foreach TTT,$(filter-out $(NO_TEST_EXPORTS),$(TEST_EXPORTS)),$(TTT)="$(or $(TEST_ENV_$(TTT)),$($(TTT)))")
-INSTALL_ENV   ?= $(foreach TTT,$(filter-out $(NO_INSTALL_EXPORTS),$(INSTALL_EXPORTS)),$(TTT)="$(or $(INSTALL_ENV_$(TTT)),$($(TTT)))")
+CONFIGURE_ENV ?= $(foreach TTT,$(filter-out $(NO_CONFIGURE_EXPORTS),$(CONFIGURE_EXPORTS)),$(TTT)="$(or $(CONFIGURE_ENV_$(TTT)),$($(TTT)))") $(EXTRA_CONFIGURE_ENV)
+BUILD_ENV     ?= $(foreach TTT,$(filter-out $(NO_BUILD_EXPORTS),$(BUILD_EXPORTS)),$(TTT)="$(or $(BUILD_ENV_$(TTT)),$($(TTT)))") $(EXTRA_BUILD_ENV)
+TEST_ENV      ?= $(foreach TTT,$(filter-out $(NO_TEST_EXPORTS),$(TEST_EXPORTS)),$(TTT)="$(or $(TEST_ENV_$(TTT)),$($(TTT)))") $(EXTRA_TEST_ENV)
+INSTALL_ENV   ?= $(foreach TTT,$(filter-out $(NO_INSTALL_EXPORTS),$(INSTALL_EXPORTS)),$(TTT)="$(or $(INSTALL_ENV_$(TTT)),$($(TTT)))") $(EXTRA_INSTALL_ENV)
 
 # For now don't build source packages until there is some more testing
 NOSOURCEPACKAGE ?= 1
