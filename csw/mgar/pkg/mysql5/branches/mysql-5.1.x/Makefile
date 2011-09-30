@@ -273,7 +273,7 @@ ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME
 
 include gar/category.mk
 
-# CFLAGS := $(filter-out -I%,$(CFLAGS))
+CFLAGS := $(filter-out -I%,$(CFLAGS))
 
 test-custom:
 	alias sh=/usr/bin/bash;                           \
