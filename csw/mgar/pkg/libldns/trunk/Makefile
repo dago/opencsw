@@ -544,7 +544,7 @@ CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ld
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/lib/sparcv8plus+vis/libldns.so|CSWlibldns-devel|CSWlibldnsdevel
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ldns_rr_new_frm_type.3|CSWlibldns-devel|CSWlibldnsdevel
 CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/share/man/man3/ldns_dnssec_derive_trust_tree_normal_rrset.3|CSWlibldns-devel|CSWlibldnsdevel
-#CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/lib/amd64/libldns.so|CSWlibldns-devel|CSWlibldnsdevel
-#CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/lib/pentium_pro/libldns.so|CSWlibldns-devel|CSWlibldnsdevel
+CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/lib/amd64/libldns.so|CSWlibldns-devel|CSWlibldnsdevel
+CHECKPKG_OVERRIDES_CSWlibldns-devel += file-collision|/opt/csw/lib/pentium_pro/libldns.so|CSWlibldns-devel|CSWlibldnsdevel
 
 include gar/category.mk
