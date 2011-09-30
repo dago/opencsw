@@ -52,6 +52,12 @@ INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
 MYSQL_LIB_VER = 15
 
+PACKAGES += CSWmysql-dev
+SPKG_DESC_CSWmysql-dev = MySQL development files
+PKGFILES_CSWmysql-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient$(MYSQL_LIB_VER)
+
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
