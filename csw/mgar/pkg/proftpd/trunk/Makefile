@@ -39,7 +39,6 @@ MIGRATE_FILES   = proftpd.conf
 
 EXTRA_CONFIGURE_ENV   = install_user=$(USER) install_group=csw
 EXTRA_CONFIGURE_ENV  += LD_LIBRARY_PATH="$(libdir)"
-EXTRA_LIB       = $(prefix)/mysql5/lib/mysql
 
 NODIRPATHS      = --localstatedir --libexecdir
 CONFIGURE_ARGS += $(DIRPATHS)
