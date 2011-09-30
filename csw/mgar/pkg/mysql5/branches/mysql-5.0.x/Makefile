@@ -53,13 +53,13 @@ INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 PACKAGES += CSWlibmysqlclient15
 PKGFILES_CSWlibmysqlclient15 += $(call baseisadirs,$(libdir),libmysqlclient\.so\.15(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient15 += MySQL $(BASE_VERSION) client library, libmysqlclient.so.15
-RUNTIME_DEP_PKGS_CSWlibmysqlclient15 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibmysqlclient15 += CSWlibz1
 OBSOLETED_BY_CSWlibmysqlclient15 += CSW$(NAME)rt
 
 PACKAGES += CSWlibmysqlclient-r15
 PKGFILES_CSWlibmysqlclient-r15 += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.15(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient-r15 += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.15
-RUNTIME_DEP_PKGS_CSWlibmysqlclient-r15 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibmysqlclient-r15 += CSWlibz1
 OBSOLETED_BY_CSWlibmysqlclient-r15 += CSW$(NAME)rt
 
 PACKAGES += CSW$(NAME)client
@@ -70,8 +70,9 @@ PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(m
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/bin/$(bin_name))
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/sbin/$(bin_name))
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient15
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWncurses
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWzlib
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
+CHECKPKG_OVERRIDES_CSWmysql5client += bad-rpath-entry
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
 CSW$(NAME)client_programs += myisamlog
@@ -94,9 +95,12 @@ CSW$(NAME)client_programs += replace
 PACKAGES += CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r15
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient15
-SPKG_DESC_CSW$(NAME)       = Multithreaded SQL database
-RUNTIME_DEP_PKGS_CSW$(NAME)           += CSW$(NAME)client
-RUNTIME_DEP_PKGS_CSW$(NAME)           += CSWzlib
+SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
+CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
 PACKAGES += CSW$(NAME)bench
 PACKAGES += CSW$(NAME)devel
