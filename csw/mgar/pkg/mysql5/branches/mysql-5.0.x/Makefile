@@ -57,6 +57,16 @@ SPKG_DESC_CSWmysql-dev = MySQL development files
 PKGFILES_CSWmysql-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient$(MYSQL_LIB_VER)
+CSW$(NAME)devel_programs += mysql_config
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(call baseisadirs,$(bindir),$(bin_name)))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(mandir)/man1/$(bin_name)\.1)
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/bin/$(bin_name))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/sbin/$(bin_name))
+PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config\.1
+PKGFILES_CSWmysql-dev  += $(prefix)/include.*
+PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
+OBSOLETED_BY_CSWmysql-dev = CSWmysql5devel
+CHECKPKG_OVERRIDES_CSW$(NAME)devel += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysql_config.1
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -111,7 +121,6 @@ CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
 PACKAGES += CSW$(NAME)bench
-PACKAGES += CSW$(NAME)devel
 PACKAGES += CSW$(NAME)test
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
@@ -121,11 +130,9 @@ PATCHFILES += 0004-basedir-and-datadir-in-the-cnf-files.patch
 PATCHFILES += 0004-looking-for-ps-use-basename-0.patch
 
 SPKG_DESC_CSW$(NAME)bench  = MySQL $(BASE_VERSION) benchmarking
-SPKG_DESC_CSW$(NAME)devel  = MySQL $(BASE_VERSION) header files
 SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
 
 CATALOGNAME_CSW$(NAME)bench  = $(NAME)bench
-CATALOGNAME_CSW$(NAME)devel  = $(NAME)devel
 CATALOGNAME_CSW$(NAME)test   = $(NAME)test
 
 EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
@@ -133,19 +140,11 @@ EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 ARCHALL_CSW$(NAME)bench = 1
 ARCHALL_CSW$(NAME)test  = 1
 
-CSW$(NAME)devel_programs += mysql_config
 
 # Enable 64 bits build
 BUILD64 = 1
 
 PKGFILES_CSW$(NAME)bench   = $(prefix)/sql-bench.*
-PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),$(call baseisadirs,$(bindir),$(bin_name)))
-PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),/opt/csw/bin/$(bin_name))
-PKGFILES_CSW$(NAME)devel  += $(foreach bin_name,$(CSW$(NAME)devel_programs),/opt/csw/sbin/$(bin_name))
-PKGFILES_CSW$(NAME)devel  += $(mandir)/man1/mysql_config\.1
-PKGFILES_CSW$(NAME)devel  += $(prefix)/include.*
-PKGFILES_CSW$(NAME)devel  += /opt/csw/include/mysql
 
 PKGFILES_CSW$(NAME)test    = $(prefix)/mysql-test.*
 
@@ -212,7 +211,6 @@ CHECKPKG_OVERRIDES_CSW$(NAME)test += surplus-dependency|CSW$(NAME)
 CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysqlaccess.1
 # This could be reviewed.
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
-CHECKPKG_OVERRIDES_CSW$(NAME)devel += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysql_config.1
 
 EXECUTABLES += comp_err
 EXECUTABLES += innochecksum
