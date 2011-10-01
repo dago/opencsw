@@ -123,15 +123,15 @@ SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
 CATALOGNAME_CSW$(NAME)bench  = $(NAME)bench
 CATALOGNAME_CSW$(NAME)test   = $(NAME)test
 
-# COMMON_EXTRA_FLAGS += -fsimple=1 -ftrap=%none -xbuiltin=%all -xlibmil -xlibmopt
+COMMON_EXTRA_FLAGS += -fsimple=1 -ftrap=%none -xbuiltin=%all -xlibmil -xlibmopt
 
-# EXTRA_CFLAGS_sparc = -xO4 -xstrconst $(COMMON_EXTRA_FLAGS)
-# EXTRA_CFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_EXTRA_FLAGS)
-# EXTRA_CFLAGS = $(EXTRA_CFLAGS_$(GARCH)) -Xa -fast -native -xnorunpath
+EXTRA_CFLAGS_sparc = -xO4 -xstrconst $(COMMON_EXTRA_FLAGS)
+EXTRA_CFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_EXTRA_FLAGS)
+EXTRA_CFLAGS = $(EXTRA_CFLAGS_$(GARCH)) -Xa -fast -native -xnorunpath
 
-# EXTRA_CXXFLAGS_sparc = -xO4 $(COMMON_EXTRA_FLAGS)
-# EXTRA_CXXFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_EXTRA_FLAGS)
-# EXTRA_CXXFLAGS = $(EXTRA_CXXFLAGS_$(GARCH)) -noex -mt -norunpath
+EXTRA_CXXFLAGS_sparc = -xO4 $(COMMON_EXTRA_FLAGS)
+EXTRA_CXXFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_EXTRA_FLAGS)
+EXTRA_CXXFLAGS = $(EXTRA_CXXFLAGS_$(GARCH)) -noex -mt -norunpath
 
 ARCHALL_CSW$(NAME)bench = 1
 
