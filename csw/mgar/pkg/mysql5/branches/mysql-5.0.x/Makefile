@@ -33,6 +33,9 @@ global_bindir = $(BUILD_PREFIX)/bin
 
 INITSMF = $(global_sysconfdir)/init\.d/csw$(NAME)
 
+# Existing databases are in this location
+localstatedir = /var/opt/csw/mysql5
+
 MYSQL_LIB_VER = 15
 
 PACKAGES += CSWmysql-dev
