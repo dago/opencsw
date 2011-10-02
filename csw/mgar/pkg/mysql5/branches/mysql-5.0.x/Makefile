@@ -31,7 +31,7 @@ global_sysconfdir = /etc$(BUILD_PREFIX)
 # Where to link the binaries
 global_bindir = $(BUILD_PREFIX)/bin
 
-INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
+INITSMF = $(global_sysconfdir)/init\.d/csw$(NAME)
 
 MYSQL_LIB_VER = 15
 
@@ -41,15 +41,21 @@ PKGFILES_CSWmysql-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient$(MYSQL_LIB_VER)
 CSWmysql-dev_programs += mysql_config
-PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(call baseisadirs,$(bindir),$(bin_name)))
-PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/bin/$(bin_name))
-PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/sbin/$(bin_name))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(call baseisadirs,$(bindir),$(bin_name)-$(BASE_VERSION)))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(mandir)/man1/$(bin_name)\.1-$(BASE_VERSION))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/bin/$(bin_name)-$(BASE_VERSION))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/sbin/$(bin_name)-$(BASE_VERSION))
 PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config\.1
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 OBSOLETED_BY_CSWmysql-dev = CSWmysql5devel
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysql_config.1
+ALTERNATIVES_CSWmysql-dev = mysql_dev
+ALTERNATIVE_mysql_dev = $(global_bindir)/$(firstword $(CSWmysql-dev_programs)) mysql $(bindir)/$(firstword $(CSWmysql-dev_programs)) 50
+ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
+	$(bindir)/$C-$(BASE_VERSION) $C $(bindir)/$C)
+ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
+	$(mandir)/man1/$C-$(BASE_VERSION).1 $C $(mandir)/man1/$(C).1)
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
