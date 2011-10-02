@@ -56,9 +56,9 @@ CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root/opt/csw
 ALTERNATIVES_CSWmysql-dev = mysql_dev
 ALTERNATIVE_mysql_dev = $(global_bindir)/$(firstword $(CSWmysql-dev_programs)) mysql $(bindir)/$(firstword $(CSWmysql-dev_programs)) 50
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
-	$(bindir)/$C-$(BASE_VERSION) $C $(bindir)/$C)
+	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
-	$(mandir)/man1/$C-$(BASE_VERSION).1 $C $(mandir)/man1/$(C).1)
+	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)-$(BASE_VERSION).1)
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -101,6 +101,7 @@ PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/op
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWalternatives
 CHECKPKG_OVERRIDES_CSWmysql5client += bad-rpath-entry
 
 PACKAGES += CSW$(NAME)
@@ -110,6 +111,7 @@ SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWalternatives
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
@@ -142,7 +144,10 @@ EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
 MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(VERSION).tar.gz
-DISTFILES += csw$(NAME) quick_start-csw README.CSW ChangeLog
+DISTFILES += csw$(NAME).tpl
+DISTFILES += quick_start-csw
+DISTFILES += README.CSW
+DISTFILES += ChangeLog
 DISTFILES += CSW$(NAME).preinstall
 DISTFILES += CSW$(NAME).postinstall
 DISTFILES += cswusergroup
@@ -252,9 +257,9 @@ ALTERNATIVES_CSW$(NAME) =
 ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)
 ALTERNATIVE_mysql$(BASE_VERSION) = $(global_bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
 ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
-	$(bindir)/$C-$(BASE_VERSION) $C $(bindir)/$C)
+	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
-	$(mandir)/man1/$C-$(BASE_VERSION).1 $C $(mandir)/man1/$(C).1)
+	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)-$(BASE_VERSION).1)
 
 include gar/category.mk
 
@@ -289,7 +294,14 @@ post-merge:
 	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README.CSW \
 		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README.CSW
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d
-	ginstall -m 755 $(FILEDIR)/csw$(NAME) $(PKGROOT)$(sysconfdir)/init.d
+	gsed \
+		-e 's+@prefix@+$(prefix)+' \
+		-e 's+@varstatedir@+$(varstatedir)+' \
+		-e 's+@sysconfdir@+$(sysconfdir)+' \
+		-e 's+@bindir@+$(bindir)+' \
+		< $(WORKDIR)/csw$(NAME).tpl \
+		> $(WORKDIR)/csw$(NAME)
+	ginstall -m 755 $(WORKDIR)/csw$(NAME) $(PKGROOT)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
 	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
