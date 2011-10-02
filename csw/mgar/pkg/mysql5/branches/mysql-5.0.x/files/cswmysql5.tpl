@@ -1,4 +1,5 @@
 #!/bin/sh
+# vim:ft=sh:
 #
 # $Id$
 # Start script for MySQL database.
@@ -16,17 +17,18 @@
 #
 
 RETVAL=0
-prefix="/opt/csw/mysql5"
+prefix="@prefix@"
 BASEDIR="${prefix}"
-MYSQL_VAR="/var${prefix}"
-sysconfdir="/etc${prefix}"
+BINDIR="@bindir@"
+MYSQL_VAR="@varstatedir@"
+sysconfdir="@sysconfdir@"
 MYSQLD_DATADIR=$MYSQL_VAR
 MYSQLD_PID_FILE=$MYSQL_VAR/mysql.pid
 CONFFILE=${sysconfdir}/my.cnf
 
-#
-# Source configuration
+# Source the configuration
 [ -r /opt/csw/mysql5/etc/mysql5rc ] && . /opt/csw/mysql5/etc/mysql5rc
+[ -r @prefix@/etc/mysql5rc ] && . @prefix@/etc/mysql5rc
 [ -r /etc/opt/csw/mysql5rc ] && . /etc/opt/csw/mysql5rc
 
 if [ -r "${sysconfdir}/my.cnf" ]; then
@@ -94,7 +96,7 @@ start_it() {
     #    fi
 
     # 2006-04-16  --defaults-file is changed to --defaults-extra-file
-    $BASEDIR/bin/mysqld_safe \
+    ${BINDIR}/mysqld_safe \
         `[ -n "$CONFFILE" ] && echo "--defaults-extra-file=$CONFFILE"` \
         --pid-file=$MYSQLD_PID_FILE \
         `[ -n "$MYSQLD_PROG" ] && echo "--mysqld=$MYSQLD_PROG"` \
