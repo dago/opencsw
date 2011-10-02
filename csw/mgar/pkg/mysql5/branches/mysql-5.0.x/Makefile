@@ -26,23 +26,6 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-# Change prefix to /opt/csw/$(NAME)
-prefix = $(BUILD_PREFIX)/$(NAME)
-localstatedir = /var$(prefix)
-sysconfdir = /etc$(prefix)
-libdir = $(BUILD_PREFIX)/lib
-includedir = $(BUILD_PREFIX)/include
-
-#  --bindir=/opt/csw/mysql5/bin
-#  --datadir=/opt/csw/mysql5/share
-#  --exec_prefix=/opt/csw/mysql5
-#  --infodir=/opt/csw/mysql5/share/info
-#  --libexecdir=/opt/csw/mysql5/libexec
-#  --mandir=/opt/csw/mysql5/share/man
-#  --prefix=/opt/csw/mysql5
-#  --sbindir=/opt/csw/mysql5/sbin
-#  --sharedstatedir=/opt/csw/mysql5/share
-
 # Where to put the init script
 global_sysconfdir = /etc$(BUILD_PREFIX)
 # Where to link the binaries
@@ -80,17 +63,6 @@ SPKG_DESC_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client li
 RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWlibz1
 OBSOLETED_BY_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSW$(NAME)rt
 
-PACKAGES += CSW$(NAME)client
-SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries
-RPKGFILES_CSW$(NAME)client  = $(bindir)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(call baseisadirs,$(bindir),$(bin_name)))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(mandir)/man1/$(bin_name)\.1)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/bin/$(bin_name))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/sbin/$(bin_name))
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
-CHECKPKG_OVERRIDES_CSWmysql5client += bad-rpath-entry
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
 CSW$(NAME)client_programs += myisamlog
@@ -110,6 +82,18 @@ CSW$(NAME)client_programs += mysql_zap
 CSW$(NAME)client_programs += perror
 CSW$(NAME)client_programs += replace
 
+PACKAGES += CSW$(NAME)client
+SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries
+PKGFILES_CSW$(NAME)client  = $(bindir)
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(call baseisadirs,$(bindir),$(bin_name)-$(BASE_VERSION)))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(mandir)/man1/$(bin_name)-$(BASE_VERSION)\.1)
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/bin/$(bin_name)-$(BASE_VERSION))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/sbin/$(bin_name)-$(BASE_VERSION))
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
+CHECKPKG_OVERRIDES_CSWmysql5client += bad-rpath-entry
+
 PACKAGES += CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient$(MYSQL_LIB_VER)
@@ -121,7 +105,19 @@ CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
 PACKAGES += CSW$(NAME)bench
+SPKG_DESC_CSW$(NAME)bench  = MySQL $(BASE_VERSION) benchmarking
+ARCHALL_CSW$(NAME)bench = 1
+PKGFILES_CSW$(NAME)bench   = $(prefix)/sql-bench.*
+RUNTIME_DEP_PKGS_CSW$(NAME)bench       = CSW$(NAME)
+RUNTIME_DEP_PKGS_CSW$(NAME)bench      += CSWperl
+CHECKPKG_OVERRIDES_CSWmysql5bench += surplus-dependency|CSWperl
+
 PACKAGES += CSW$(NAME)test
+SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
+ARCHALL_CSW$(NAME)test  = 1
+PKGFILES_CSW$(NAME)test    = $(prefix)/mysql-test.*
+RUNTIME_DEP_PKGS_CSW$(NAME)test        = CSW$(NAME)
+RUNTIME_DEP_PKGS_CSW$(NAME)test       += CSWperl
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
@@ -129,29 +125,11 @@ PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 PATCHFILES += 0004-basedir-and-datadir-in-the-cnf-files.patch
 PATCHFILES += 0004-looking-for-ps-use-basename-0.patch
 
-SPKG_DESC_CSW$(NAME)bench  = MySQL $(BASE_VERSION) benchmarking
-SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
-
-CATALOGNAME_CSW$(NAME)bench  = $(NAME)bench
-CATALOGNAME_CSW$(NAME)test   = $(NAME)test
-
-EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-ARCHALL_CSW$(NAME)bench = 1
-ARCHALL_CSW$(NAME)test  = 1
-
-
 # Enable 64 bits build
 BUILD64 = 1
 
-PKGFILES_CSW$(NAME)bench   = $(prefix)/sql-bench.*
-
-PKGFILES_CSW$(NAME)test    = $(prefix)/mysql-test.*
-
-RUNTIME_DEP_PKGS_CSW$(NAME)bench       = CSW$(NAME)
-RUNTIME_DEP_PKGS_CSW$(NAME)bench      += CSWperl
-RUNTIME_DEP_PKGS_CSW$(NAME)test        = CSW$(NAME)
-RUNTIME_DEP_PKGS_CSW$(NAME)test       += CSWperl
+EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
 MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(VERSION).tar.gz
@@ -187,6 +165,7 @@ CONFIGURE_ARGS += --with-big-tables
 CONFIGURE_ARGS += --enable-thread-safe-client
 CONFIGURE_ARGS_DBG = --with-debug
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
+CONFIGURE_ARGS += --program-suffix=-$(BASE_VERSION)
 
 # TODO: Make the tests pass. They don't at the moment.
 SKIPTEST ?= 1
@@ -208,7 +187,7 @@ CHECKPKG_OVERRIDES_CSW$(NAME)bench += surplus-dependency|CSW$(NAME)
 CHECKPKG_OVERRIDES_CSW$(NAME)test += file-with-bad-content
 CHECKPKG_OVERRIDES_CSW$(NAME)test += surplus-dependency|CSW$(NAME)
 
-CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysqlaccess.1
+CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/mysqlaccess-5.0.1
 # This could be reviewed.
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
@@ -261,12 +240,12 @@ EXECUTABLES += resolveip
 ALTERNATIVES =
 ALTERNATIVES_CSW$(NAME) = 
 
-# This list could be generated automatically from $(EXECUTABLES)
-# /home/maciej/src/opencsw/.buildsys/v2/gar//gar.pkg.mk:833: *** The variable 'ALTERNATIVE_comp_err' is empty, but must contain an alternative.  Stop.
 ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)
 ALTERNATIVE_mysql$(BASE_VERSION) = $(global_bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
 ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
-	$(global_bindir)/$C $C $(bindir)/$C)
+	$(bindir)/$C-$(BASE_VERSION) $C $(bindir)/$C)
+ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
+	$(mandir)/man1/$C-$(BASE_VERSION).1 $C $(mandir)/man1/$(C).1)
 
 include gar/category.mk
 
