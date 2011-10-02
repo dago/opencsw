@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(hello.c)
 dnl Every other copy of the package version number gets its value from here
-AM_INIT_AUTOMAKE(hello, 0.1.0)
+AM_INIT_AUTOMAKE(hello, 0.1.1)
 AM_PROG_LIBTOOL
 AC_CONFIG_MACRO_DIR([m4])
 
