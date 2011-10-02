@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.7.1
+VERSION = 2.6.11
 CATEGORIES = apps
 
 define BLURB
@@ -28,6 +28,7 @@ DISTFILES += cswusergroup
 DISTFILES += CSWpuppet.postinstall
 # pkgutil.rb is from https://raw.github.com/domcleal/puppet/tickets/master/8011/lib/puppet/provider/package/pkgutil.rb
 # Should be headed into 2.7 code - supports -t REPO
+# Still not in 2.7.3 as of 9/9/11
 DISTFILES += pkgutil.rb
 DISTFILES += README.CSW
 DISTFILES += puppet.conf.example-CSW
