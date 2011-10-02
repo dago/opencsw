@@ -278,6 +278,16 @@ pre-configure-modulated:
 	cd $(WORKSRC) && autoreconf --force --install --symlink
 	@$(MAKECOOKIE)
 
+post-configure-modulated:
+	gsed \
+		-e 's+@prefix@+$(prefix)+' \
+		-e 's+@varstatedir@+$(varstatedir)+' \
+		-e 's+@sysconfdir@+$(sysconfdir)+' \
+		-e 's+@bindir@+$(bindir)+' \
+		< $(WORKDIR)/csw$(NAME).tpl \
+		> $(WORKDIR)/csw$(NAME)
+	@$(MAKECOOKIE)
+
 post-install-modulated:
 	(cd $(DESTDIR)$(libdir); gmv -v mysql/* .)
 	(cd $(DESTDIR)$(libdir); grmdir -v mysql)
@@ -292,13 +302,6 @@ post-merge:
 	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README.CSW \
 		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README.CSW
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d
-	gsed \
-		-e 's+@prefix@+$(prefix)+' \
-		-e 's+@varstatedir@+$(varstatedir)+' \
-		-e 's+@sysconfdir@+$(sysconfdir)+' \
-		-e 's+@bindir@+$(bindir)+' \
-		< $(WORKDIR)/csw$(NAME).tpl \
-		> $(WORKDIR)/csw$(NAME)
 	ginstall -m 755 $(WORKDIR)/csw$(NAME) $(PKGROOT)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
 	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
