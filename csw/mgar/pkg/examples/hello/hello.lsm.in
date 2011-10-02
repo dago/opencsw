@@ -1,0 +1,21 @@
+Begin3
+Title:		hello
+Version:	@VERSION@
+Entered-date:	@ISODATE@
+Description:	A hello world program.
+		@configure_input@
+		Please edit hello.lsm.in to fix the Keywords and
+		Primary-site entries, add several more lines of
+		description here if appropriate, and to delete these
+		instructions.
+Keywords:	[substitute your keywords here]
+Author: 	maciej@opencsw.org (Maciej Blizinski)
+Maintained-by:	maciej@opencsw.org (Maciej Blizinski)
+Primary-site:	metlab.unc.edu pub/Linux/apps/some/directory
+		31k hello-@VERSION@.tar.gz
+		500  hello.lsm
+Alternate-site: 
+Original-site:  
+Platforms:      
+Copying-policy:	GNU copyleft
+End
