@@ -101,8 +101,7 @@ PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/op
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWalternatives
-CHECKPKG_OVERRIDES_CSWmysql5client += bad-rpath-entry
+CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
 
 PACKAGES += CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
@@ -111,7 +110,6 @@ SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWalternatives
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
