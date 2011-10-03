@@ -291,6 +291,7 @@ post-configure-modulated:
 post-install-modulated:
 	(cd $(DESTDIR)$(libdir); gmv -v mysql/* .)
 	(cd $(DESTDIR)$(libdir); grmdir -v mysql)
+	ginstall -m 755 $(WORKDIR)/csw$(NAME) $(PKGROOT)$(sysconfdir)/init.d
 	@$(MAKECOOKIE)
 
 post-merge:
@@ -302,7 +303,6 @@ post-merge:
 	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README.CSW \
 		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README.CSW
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d
-	ginstall -m 755 $(WORKDIR)/csw$(NAME) $(PKGROOT)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
 	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
