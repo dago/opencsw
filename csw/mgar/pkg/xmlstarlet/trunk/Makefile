@@ -1,5 +1,5 @@
 NAME = xmlstarlet
-VERSION = 1.2.1
+VERSION = 1.3.0
 CATEGORIES = utils
 
 DESCRIPTION = XML transformation utility
@@ -21,7 +21,8 @@ BUILD_DEP_PKGS += CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibxsltdevel
 
 RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibxslt
+RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSWxmlstarlet += CSWlibexslt0
 
 BUILD64 = 1
 ISAEXEC = 1
