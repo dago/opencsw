@@ -281,7 +281,7 @@ pre-configure-modulated:
 post-configure-modulated:
 	gsed \
 		-e 's+@prefix@+$(prefix)+' \
-		-e 's+@varstatedir@+$(varstatedir)+' \
+		-e 's+@localstatedir@+$(localstatedir)+' \
 		-e 's+@sysconfdir@+$(sysconfdir)+' \
 		-e 's+@bindir@+$(bindir)+' \
 		< $(WORKDIR)/csw$(NAME).tpl \
