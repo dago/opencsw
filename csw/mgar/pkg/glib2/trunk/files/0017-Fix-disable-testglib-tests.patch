@@ -1,14 +1,14 @@
-From 0820120801a1f57ba4200bf8bf9cf6d56a58a07d Mon Sep 17 00:00:00 2001
-From: Rafael Ostertag <rafisol@opencsw.org>
-Date: Sun, 18 Sep 2011 08:51:17 +0200
-Subject: [PATCH] Disable log tests
+From 32edd15a61dee58fe9dc3547147d99a7a9d923fe Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Thu, 29 Sep 2011 14:08:06 +0200
+Subject: [PATCH] Fix/disable testglib tests
 
 ---
- tests/testglib.c |   53 +++++++++++++++++++++++++++--------------------------
- 1 files changed, 27 insertions(+), 26 deletions(-)
+ tests/testglib.c |   55 +++++++++++++++++++++++++++--------------------------
+ 1 files changed, 28 insertions(+), 27 deletions(-)
 
 diff --git a/tests/testglib.c b/tests/testglib.c
-index 158808a..c3e8c59 100644
+index 158808a..c012d04 100644
 --- a/tests/testglib.c
 +++ b/tests/testglib.c
 @@ -533,32 +533,33 @@ test_g_parse_debug_string (void)
@@ -71,6 +71,15 @@ index 158808a..c3e8c59 100644
  }
  
  static void
+@@ -1130,7 +1131,7 @@ gstring_tests (void)
+   for (i = 0; i < 10000; i++)
+     g_string_append_c (string1, 'a'+(i%26));
+ 
+-#ifndef G_OS_WIN32
++#if !(defined(G_OS_WIN32) || defined(__sun))
+   /* MSVC, mingw32 and LCC use the same run-time C library, which doesn't like
+      the %10000.10000f format... */
+   g_string_printf (string2, "%s|%0100d|%s|%s|%0*d|%*.*f|%10000.10000f",
 -- 
 1.7.6.1
 

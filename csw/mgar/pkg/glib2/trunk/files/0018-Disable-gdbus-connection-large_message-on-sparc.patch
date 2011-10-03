@@ -1,0 +1,26 @@
+From 07dd2c8f1086babddf273de04f566b7b984ca51c Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sat, 1 Oct 2011 11:40:25 +0200
+Subject: [PATCH] Disable gdbus/connection/large_message on sparc
+
+---
+ gio/tests/gdbus-connection-slow.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/gio/tests/gdbus-connection-slow.c b/gio/tests/gdbus-connection-slow.c
+index 5511b5f..4f774d1 100644
+--- a/gio/tests/gdbus-connection-slow.c
++++ b/gio/tests/gdbus-connection-slow.c
+@@ -209,6 +209,9 @@ main (int   argc,
+   g_setenv ("DBUS_SESSION_BUS_ADDRESS", session_bus_get_temporary_address (), TRUE);
+ 
+   g_test_add_func ("/gdbus/connection/flush", test_connection_flush);
++  /* won't work on sparc */
++#ifndef __sparc
+   g_test_add_func ("/gdbus/connection/large_message", test_connection_large_message);
++#endif
+   return g_test_run();
+ }
+-- 
+1.7.6.1
+
