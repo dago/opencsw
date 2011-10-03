@@ -24,12 +24,14 @@ EXTRA_COMMON_EXPORTS = INS_BASE INS_RBASE
 # EXTRA_COMMON_EXPORTS += LINKMODE
 BUILD_ARGS = INS_BASE=$(INS_BASE) INS_RBASE=$(INS_RBASE)
 
+PATH = /opt/csw/bin:/usr/ccs/bin:/usr/bin
+
 include gar/category.mk
 
 build-custom:
-	(cd $(WORKSRC) && smake $(BUILD_ARGS))
+	(cd $(WORKSRC) && /usr/bin/env -i PATH=$(PATH) /opt/csw/bin/smake $(BUILD_ARGS))
 	@$(MAKECOOKIE)
 
 install-custom:
-	(cd $(WORKSRC) && smake $(BUILD_ARGS) install)
+	(cd $(WORKSRC) && /usr/bin/env -i PATH=$(PATH) /opt/csw/bin/smake $(BUILD_ARGS) install)
 	@$(MAKECOOKIE)
