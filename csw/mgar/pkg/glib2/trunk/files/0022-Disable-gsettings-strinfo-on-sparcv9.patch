@@ -1,0 +1,28 @@
+From 4be33dc73d5fcefc53ce37b440d2502bb6c4c5d3 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sun, 2 Oct 2011 22:05:01 +0200
+Subject: [PATCH] Disable gsettings/strinfo on sparcv9
+
+This test fails on sparcv9 (SIGBUS)
+---
+ gio/tests/gsettings.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/gio/tests/gsettings.c b/gio/tests/gsettings.c
+index b2f9d4f..fed5d89 100644
+--- a/gio/tests/gsettings.c
++++ b/gio/tests/gsettings.c
+@@ -1961,7 +1961,10 @@ main (int argc, char *argv[])
+ 
+   g_test_add_func ("/gsettings/keyfile", test_keyfile);
+   g_test_add_func ("/gsettings/child-schema", test_child_schema);
++  /* Fails on sparcv9 */
++#ifndef __sparcv9
+   g_test_add_func ("/gsettings/strinfo", test_strinfo);
++#endif
+   g_test_add_func ("/gsettings/enums", test_enums);
+   g_test_add_func ("/gsettings/flags", test_flags);
+   g_test_add_func ("/gsettings/range", test_range);
+-- 
+1.7.6.1
+

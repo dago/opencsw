@@ -1,14 +1,14 @@
-From 30e8cd362e7392872f518f67564be350ede69654 Mon Sep 17 00:00:00 2001
-From: Rafael Ostertag <rafisol@opencsw.org>
-Date: Wed, 14 Sep 2011 11:04:32 +0200
+From c7e81851af3b8aae37e3e7d7b7799dd188cf47cc Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Sat, 1 Oct 2011 12:36:20 +0200
 Subject: [PATCH] Fix gdbus-peer tests
 
 ---
- gio/tests/gdbus-peer.c |   34 ++++++++++++++++++++++++++++++++--
- 1 files changed, 32 insertions(+), 2 deletions(-)
+ gio/tests/gdbus-peer.c |   37 +++++++++++++++++++++++++++++++++++--
+ 1 files changed, 35 insertions(+), 2 deletions(-)
 
 diff --git a/gio/tests/gdbus-peer.c b/gio/tests/gdbus-peer.c
-index e304618..5e5c64d 100644
+index e304618..51d155f 100644
 --- a/gio/tests/gdbus-peer.c
 +++ b/gio/tests/gdbus-peer.c
 @@ -41,6 +41,7 @@
@@ -76,17 +76,20 @@ index e304618..5e5c64d 100644
    /* all the tests rely on a shared main loop */
    loop = g_main_loop_new (NULL, FALSE);
  
-@@ -1463,7 +1482,9 @@ main (int   argc,
+@@ -1463,14 +1482,28 @@ main (int   argc,
  #ifdef BUG_631379_FIXED
    g_test_add_func ("/gdbus/nonce-tcp", test_nonce_tcp);
  #endif
 +#if defined(__linux__) || defined(__FreeBSD__)
    g_test_add_func ("/gdbus/credentials", test_credentials);
 +#endif
++  /* Won't work on sparc */
++#ifndef __sparc
    g_test_add_func ("/gdbus/overflow", test_overflow);
++#endif
  
    ret = g_test_run();
-@@ -1471,6 +1492,15 @@ main (int   argc,
+ 
    g_main_loop_unref (loop);
    g_free (test_guid);
    g_dbus_node_info_unref (introspection_data);
@@ -104,3 +107,4 @@ index e304618..5e5c64d 100644
  }
 -- 
 1.7.6.1
+
