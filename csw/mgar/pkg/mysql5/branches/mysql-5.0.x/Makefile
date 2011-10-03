@@ -291,7 +291,8 @@ post-configure-modulated:
 post-install-modulated:
 	(cd $(DESTDIR)$(libdir); gmv -v mysql/* .)
 	(cd $(DESTDIR)$(libdir); grmdir -v mysql)
-	ginstall -m 755 $(WORKDIR)/csw$(NAME) $(PKGROOT)$(sysconfdir)/init.d
+	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
+	ginstall -m 755 $(WORKDIR)/csw$(NAME) $(DESTDIR)$(sysconfdir)/init.d
 	@$(MAKECOOKIE)
 
 post-merge:
@@ -302,13 +303,12 @@ post-merge:
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/$(NAME)/doc
 	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README.CSW \
 		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README.CSW
-	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/init.d
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
 	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		        $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
 	# Create symlinks to binaries
-	ginstall -m 755 -d $(PKGROOT)$(global_bindir)
+	# ginstall -m 755 -d $(PKGROOT)$(global_bindir)
 	#for f in $(PKGROOT)$(bindir)/*; do \
 	#	if echo $$f | grep amd64$$; then continue; fi; \
 	#	if echo $$f | grep sparcv9$$; then continue; fi; \
