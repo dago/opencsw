@@ -250,7 +250,7 @@ EXECUTABLES += resolve_stack_dump
 EXECUTABLES += resolveip
 
 ALTERNATIVES =
-ALTERNATIVES_CSW$(NAME) = mysq$(BASE_VERSION)_main
+ALTERNATIVES_CSW$(NAME) = mysql$(BASE_VERSION)_main
 ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql $(bindir)/$(firstword $(EXECUTABLES)) 50
 ALTERNATIVE_mysql$(BASE_VERSION)_main += $(foreach C,$(wordlist 2,$(words $(EXECUTABLES)),$(EXECUTABLES)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
