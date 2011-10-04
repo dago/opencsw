@@ -6,10 +6,9 @@
 # This also mentions that ffmpeg build static is way faster then shared. So this would need two builds
 # one static for static ffmpeg and one shared to get the shared libs. 
 # Another thing is to see if it can be build with suncc see http://ftp.jaist.ac.jp/pub/pkgsrc/current/pkgsrc/multimedia/ffmpeg/Makefile.common
-# They disable all optimizations though. I don't know why. 
 
 NAME = ffmpeg
-VERSION = 0.8.3
+VERSION = 0.8.5
 CATEGORIES = lib
 
 DESCRIPTION = Very fast video and audio converter (includes libavcodec)
@@ -46,6 +45,9 @@ CONFIGURE_ARGS += --mandir=$(mandir)
 CONFIGURE_ARGS += --disable-debug
 CONFIGURE_ARGS += --enable-gpl
 CONFIGURE_ARGS += --enable-version3
+CONFIGURE_ARGS += --enable-runtime-cpudetect
+# All ASM code is broke no clue if it yasm that breaks it or solaris in gerneral. As it is disabled in pkgsrc too probably a global problem.
+CONFIGURE_ARGS += --disable-asm
 # Needs two builds one shared one static
 #CONFIGURE_ARGS += --enable-shared
 
