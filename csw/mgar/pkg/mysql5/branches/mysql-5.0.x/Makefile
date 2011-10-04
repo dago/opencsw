@@ -283,6 +283,7 @@ post-configure-modulated:
 		-e 's+@localstatedir@+$(localstatedir)+' \
 		-e 's+@sysconfdir@+$(sysconfdir)+' \
 		-e 's+@bindir@+$(bindir)+' \
+		-e 's+@BASE_VERSION@+$(BASE_VERSION)+' \
 		< $(WORKDIR)/csw$(NAME).tpl \
 		> $(WORKDIR)/csw$(NAME)
 	@$(MAKECOOKIE)
