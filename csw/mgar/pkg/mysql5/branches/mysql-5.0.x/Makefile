@@ -54,7 +54,7 @@ PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 OBSOLETED_BY_CSWmysql-dev = CSWmysql5devel
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysql_config.1
 ALTERNATIVES_CSWmysql-dev = mysql_dev
-ALTERNATIVE_mysql_dev = $(global_bindir)/$(firstword $(CSWmysql-dev_programs)) mysql $(bindir)/$(firstword $(CSWmysql-dev_programs)) 50
+ALTERNATIVE_mysql_dev = $(global_bindir)/$(firstword $(CSWmysql-dev_programs)) mysql_dev $(bindir)/$(firstword $(CSWmysql-dev_programs)) 50
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
@@ -251,12 +251,12 @@ EXECUTABLES += resolveip
 
 ALTERNATIVES =
 ALTERNATIVES_CSW$(NAME) = mysql$(BASE_VERSION)_main
-ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql $(bindir)/$(firstword $(EXECUTABLES)) 50
+ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql_main $(bindir)/$(firstword $(EXECUTABLES)) 50
 ALTERNATIVE_mysql$(BASE_VERSION)_main += $(foreach C,$(wordlist 2,$(words $(EXECUTABLES)),$(EXECUTABLES)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 
 ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)_client
-ALTERNATIVE_mysql$(BASE_VERSION)_client = $(bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
+ALTERNATIVE_mysql$(BASE_VERSION)_client = $(bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql_client $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
 ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
