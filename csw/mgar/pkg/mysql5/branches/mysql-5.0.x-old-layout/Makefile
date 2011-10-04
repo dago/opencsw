@@ -30,7 +30,7 @@ endef
 prefix = $(BUILD_PREFIX)/$(NAME)
 localstatedir = /var$(prefix)
 sysconfdir = /etc$(prefix)
-libdir = $(BUILD_PREFIX)/lib
+libdir_install = $(BUILD_PREFIX)/lib
 includedir = $(BUILD_PREFIX)/include
 
 #  --bindir=/opt/csw/mysql5/bin
