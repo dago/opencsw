@@ -201,7 +201,7 @@ CHECKPKG_OVERRIDES_CSW$(NAME)bench += surplus-dependency|CSW$(NAME)
 CHECKPKG_OVERRIDES_CSW$(NAME)test += file-with-bad-content
 CHECKPKG_OVERRIDES_CSW$(NAME)test += surplus-dependency|CSW$(NAME)
 
-CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/mysqlaccess-5.0.1
+CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root$(prefix)/share/man/man1/mysqlaccess-$(BASE_VERSION).1
 # This could be reviewed.
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
@@ -215,7 +215,6 @@ EXECUTABLES += myisamlog
 EXECUTABLES += myisampack
 EXECUTABLES += mysql
 EXECUTABLES += mysql_client_test
-EXECUTABLES += mysql_config
 EXECUTABLES += mysql_convert_table_format
 EXECUTABLES += mysql_explain_log
 EXECUTABLES += mysql_find_rows
