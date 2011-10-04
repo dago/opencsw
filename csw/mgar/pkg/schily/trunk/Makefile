@@ -19,14 +19,13 @@ TEST_SCRIPTS =
 INS_BASE = $(BUILD_PREFIX)
 INS_RBASE = $(BUILD_PREFIX)
 EXTRA_COMMON_EXPORTS = INS_BASE INS_RBASE
-# Shared libraries don't work at the moment.
-# LINKMODE = dynamic
-# EXTRA_COMMON_EXPORTS += LINKMODE
-BUILD_ARGS = INS_BASE=$(INS_BASE) INS_RBASE=$(INS_RBASE)
-
-PATH = /opt/csw/bin:/usr/ccs/bin:/usr/bin
+BUILD_ARGS  = INS_BASE=$(INS_BASE)
+BUILD_ARGS += INS_RBASE=$(INS_RBASE)
+BUILD_ARGS += LINKMODE=dynamic
 
 include gar/category.mk
+
+PATH := /usr/ccs/bin:/usr/bin:/opt/csw/bin
 
 build-custom:
 	(cd $(WORKSRC) && /usr/bin/env -i PATH=$(PATH) /opt/csw/bin/smake $(BUILD_ARGS))
