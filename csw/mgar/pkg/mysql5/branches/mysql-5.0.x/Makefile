@@ -250,13 +250,16 @@ EXECUTABLES += resolve_stack_dump
 EXECUTABLES += resolveip
 
 ALTERNATIVES =
-ALTERNATIVES_CSW$(NAME) = 
-
-ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)
-ALTERNATIVE_mysql$(BASE_VERSION) = $(global_bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
-ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
+ALTERNATIVES_CSW$(NAME) = mysq$(BASE_VERSION)_main
+ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql $(bindir)/$(firstword $(EXECUTABLES)) 50
+ALTERNATIVE_mysql$(BASE_VERSION)_main += $(foreach C,$(wordlist 2,$(words $(EXECUTABLES)),$(EXECUTABLES)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
-ALTERNATIVE_mysql$(BASE_VERSION) += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
+
+ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)_client
+ALTERNATIVE_mysql$(BASE_VERSION)_client = $(bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
+ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
+	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
+ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
 	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)-$(BASE_VERSION).1)
 
 include gar/category.mk
