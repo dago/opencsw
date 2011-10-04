@@ -1,0 +1,28 @@
+From a527f284ef5646dbdd731af007aace3daee3e946 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Maciej=20Blizi=C5=84ski?= <blizinski@google.com>
+Date: Wed, 16 Sep 2009 01:27:38 +0100
+Subject: [PATCH 1/4] Use libc, not libcrypt
+
+---
+ configure.in |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index ec432e1..577cfe3 100644
+--- a/configure.in
++++ b/configure.in
+@@ -891,7 +891,10 @@ AC_CHECK_FUNC(p2open, , AC_CHECK_LIB(gen, p2open))
+ # This may get things to compile even if bind-8 is installed
+ AC_CHECK_FUNC(bind, , AC_CHECK_LIB(bind, bind))
+ # Check if crypt() exists in libc or libcrypt, sets LIBS if needed
+-AC_SEARCH_LIBS(crypt, crypt, AC_DEFINE(HAVE_CRYPT, 1, [crypt]))
++## AC_SEARCH_LIBS(crypt, crypt, AC_DEFINE(HAVE_CRYPT, 1, [crypt]))
++# For crypt() on Solaris use libc, not libcrypt
++AC_CHECK_LIB(c, crypt)
++AC_CHECK_FUNC(crypt, AC_DEFINE([HAVE_CRYPT], [1], [crypt]))
+ # See if we need a library for address lookup.
+ AC_SEARCH_LIBS(inet_aton, [socket nsl resolv])
+ 
+-- 
+1.6.3.2
+
