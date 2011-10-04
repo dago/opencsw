@@ -69,30 +69,30 @@ OBSOLETED_BY_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSW$(NAME)rt
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
-CSW$(NAME)client_programs += myisamlog
-CSW$(NAME)client_programs += myisampack
-CSW$(NAME)client_programs += mysql
-CSW$(NAME)client_programs += mysqlaccess
-CSW$(NAME)client_programs += mysqladmin
-CSW$(NAME)client_programs += mysqlbin
-CSW$(NAME)client_programs += mysqlbinlog
-CSW$(NAME)client_programs += mysqlcheck
-CSW$(NAME)client_programs += mysql_client_test
-CSW$(NAME)client_programs += mysqldump
-CSW$(NAME)client_programs += mysqlhotcopy
-CSW$(NAME)client_programs += mysqlimport
-CSW$(NAME)client_programs += mysqlshow
-CSW$(NAME)client_programs += mysql_zap
-CSW$(NAME)client_programs += perror
-CSW$(NAME)client_programs += replace
+client_programs += myisamlog
+client_programs += myisampack
+client_programs += mysql
+client_programs += mysqlaccess
+client_programs += mysqladmin
+client_programs += mysqlbin
+client_programs += mysqlbinlog
+client_programs += mysqlcheck
+client_programs += mysql_client_test
+client_programs += mysqldump
+client_programs += mysqlhotcopy
+client_programs += mysqlimport
+client_programs += mysqlshow
+client_programs += mysql_zap
+client_programs += perror
+client_programs += replace
 
 PACKAGES += CSW$(NAME)client
 SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries
 PKGFILES_CSW$(NAME)client  = $(bindir)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(call baseisadirs,$(bindir),$(bin_name)-$(BASE_VERSION)))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),$(mandir)/man1/$(bin_name)-$(BASE_VERSION)\.1)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/bin/$(bin_name)-$(BASE_VERSION))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(CSW$(NAME)client_programs),/opt/csw/sbin/$(bin_name)-$(BASE_VERSION))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(call baseisadirs,$(bindir),$(bin_name)-$(BASE_VERSION)))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(mandir)/man1/$(bin_name)-$(BASE_VERSION)\.1)
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/bin/$(bin_name)-$(BASE_VERSION))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/sbin/$(bin_name)-$(BASE_VERSION))
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
@@ -245,17 +245,16 @@ EXECUTABLES += replace
 EXECUTABLES += resolve_stack_dump
 EXECUTABLES += resolveip
 
-ALTERNATIVES =
 ALTERNATIVES_CSW$(NAME) = mysql$(BASE_VERSION)_main
-ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql_main $(bindir)/$(firstword $(EXECUTABLES)) 50
+ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql_main $(bindir)/$(firstword $(EXECUTABLES))-$(BASE_VERSION) 50
 ALTERNATIVE_mysql$(BASE_VERSION)_main += $(foreach C,$(wordlist 2,$(words $(EXECUTABLES)),$(EXECUTABLES)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 
 ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)_client
-ALTERNATIVE_mysql$(BASE_VERSION)_client = $(bindir)/$(firstword $(CSW$(NAME)client_programs)) mysql_client $(bindir)/$(firstword $(CSW$(NAME)client_programs)) 50
-ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
+ALTERNATIVE_mysql$(BASE_VERSION)_client = $(bindir)/$(firstword $(client_programs)) mysql_client $(bindir)/$(firstword $(client_programs)) 50
+ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(client_programs)),$(client_programs)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
-ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(CSW$(NAME)client_programs)),$(CSW$(NAME)client_programs)),\
+ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(client_programs)),$(client_programs)),\
 	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)-$(BASE_VERSION).1)
 
 include gar/category.mk
