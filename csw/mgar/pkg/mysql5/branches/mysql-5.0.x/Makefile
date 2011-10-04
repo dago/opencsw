@@ -26,12 +26,7 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-# Where to put the init script
-global_sysconfdir = /etc$(BUILD_PREFIX)
-# Where to link the binaries
-global_bindir = $(BUILD_PREFIX)/bin
-
-INITSMF = $(global_sysconfdir)/init\.d/csw$(NAME)
+INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
 # Existing databases are in this location
 localstatedir = /var/opt/csw/mysql5
@@ -54,7 +49,7 @@ PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 OBSOLETED_BY_CSWmysql-dev = CSWmysql5devel
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root/opt/csw/mysql5/share/man/man1/mysql_config.1
 ALTERNATIVES_CSWmysql-dev = mysql_dev
-ALTERNATIVE_mysql_dev = $(global_bindir)/$(firstword $(CSWmysql-dev_programs)) mysql_dev $(bindir)/$(firstword $(CSWmysql-dev_programs)) 50
+ALTERNATIVE_mysql_dev = $(bindir)/$(firstword $(CSWmysql-dev_programs)) mysql_dev $(bindir)/$(firstword $(CSWmysql-dev_programs)) 50
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
@@ -308,16 +303,16 @@ post-merge:
 	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README.CSW \
 		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README.CSW
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
-	ginstall -m 755 -d $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
+	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
-		        $(PKGROOT)$(global_sysconfdir)/pkg/CSW$(NAME)
+		        $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
 	# Create symlinks to binaries
-	# ginstall -m 755 -d $(PKGROOT)$(global_bindir)
+	# ginstall -m 755 -d $(PKGROOT)$(bindir)
 	#for f in $(PKGROOT)$(bindir)/*; do \
 	#	if echo $$f | grep amd64$$; then continue; fi; \
 	#	if echo $$f | grep sparcv9$$; then continue; fi; \
 	#	ln -s ../$(NAME)/bin/`basename $$f` \
-	#	      $(PKGROOT)$(global_bindir)/`basename $$f`; \
+	#	      $(PKGROOT)$(bindir)/`basename $$f`; \
 	#done
 	# http://www.opencsw.org/bugtrack/view.php?id=4149
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)
