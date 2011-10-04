@@ -1,0 +1,46 @@
+From 6e4feb9221edd2d3992c68c56bfecaf3a0551563 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Tue, 4 Oct 2011 11:30:30 +0200
+Subject: [PATCH] Use my_print_defaults-5.0
+
+---
+ scripts/mysqld_safe.sh |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/scripts/mysqld_safe.sh b/scripts/mysqld_safe.sh
+index 71b833c..bb79476 100644
+--- a/scripts/mysqld_safe.sh
++++ b/scripts/mysqld_safe.sh
+@@ -192,20 +192,20 @@ err_log=
+ 
+ # Get first arguments from the my.cnf file, groups [mysqld] and [mysqld_safe]
+ # and then merge with the command line arguments
+-if test -x "$MY_BASEDIR_VERSION/bin/my_print_defaults"
++if test -x "$MY_BASEDIR_VERSION/bin/my_print_defaults-5.0"
+ then
+-  print_defaults="$MY_BASEDIR_VERSION/bin/my_print_defaults"
+-elif test -x ./bin/my_print_defaults
++  print_defaults="$MY_BASEDIR_VERSION/bin/my_print_defaults-5.0"
++elif test -x ./bin/my_print_defaults-5.0
+ then
+-  print_defaults="./bin/my_print_defaults"
+-elif test -x @bindir@/my_print_defaults
++  print_defaults="./bin/my_print_defaults-5.0"
++elif test -x @bindir@/my_print_defaults-5.0
+ then
+-  print_defaults="@bindir@/my_print_defaults"
+-elif test -x @bindir@/mysql_print_defaults
++  print_defaults="@bindir@/my_print_defaults-5.0"
++elif test -x @bindir@/mysql_print_defaults-5.0
+ then
+-  print_defaults="@bindir@/mysql_print_defaults"
++  print_defaults="@bindir@/mysql_print_defaults"-5.0
+ else
+-  print_defaults="my_print_defaults"
++  print_defaults="my_print_defaults-5.0"
+ fi
+ 
+ args=
+-- 
+1.7.6.1
+

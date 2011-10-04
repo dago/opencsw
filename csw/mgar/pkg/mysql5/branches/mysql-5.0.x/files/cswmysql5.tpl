@@ -22,6 +22,7 @@ BASEDIR="${prefix}"
 BINDIR="@bindir@"
 MYSQL_VAR="@localstatedir@"
 sysconfdir="@sysconfdir@"
+BASE_VERSION="@BASE_VERSION@"
 MYSQLD_DATADIR=$MYSQL_VAR
 MYSQLD_PID_FILE=$MYSQL_VAR/mysql.pid
 CONFFILE=${sysconfdir}/my.cnf
@@ -96,7 +97,8 @@ start_it() {
     #    fi
 
     # 2006-04-16  --defaults-file is changed to --defaults-extra-file
-    ${BINDIR}/mysqld_safe \
+    ${BINDIR}/mysqld_safe-${BASE_VERSION} \
+        --mysqld-version=${BASE_VERSION} \
         `[ -n "$CONFFILE" ] && echo "--defaults-extra-file=$CONFFILE"` \
         --pid-file=$MYSQLD_PID_FILE \
         `[ -n "$MYSQLD_PROG" ] && echo "--mysqld=$MYSQLD_PROG"` \

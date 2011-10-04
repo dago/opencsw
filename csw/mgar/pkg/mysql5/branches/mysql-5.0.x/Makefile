@@ -133,6 +133,8 @@ PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 # PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
 PATCHFILES += 0004-basedir-and-datadir-in-the-cnf-files.patch
 PATCHFILES += 0004-looking-for-ps-use-basename-0.patch
+# Perhaps using sed would be better, but we have a patch for now.
+PATCHFILES += 0006-Use-my_print_defaults-$(BASE_VERSION).patch
 
 # Enable 64 bits build
 BUILD64 = 1
