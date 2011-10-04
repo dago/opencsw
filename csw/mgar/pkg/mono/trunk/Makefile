@@ -1,6 +1,8 @@
+# $Id$
+
 NAME = mono
-VERSION = 2.10.1
-GARTYPE = v1
+VERSION = 2.10.6
+GARTYPE = v2
 CATEGORIES = lang
 
 DESCRIPTION = Mono Runtime
@@ -11,16 +13,12 @@ define BLURB
   based on the ECMA standards for C# and  the Common Language Infrastructure.
 endef
 
-MASTER_SITES = http://ftp.novell.com/pub/mono/sources/mono/
+MASTER_SITES = http://download.mono-project.com/sources/mono/	
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
-DISTFILES += CSWmono.gspec CSWmono.depend CSWmono.prototype
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
-TEST_SCRIPTS =
+GARCOMPILER = GNU
 
 include gar/category.mk
