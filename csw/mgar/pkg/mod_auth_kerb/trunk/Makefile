@@ -26,12 +26,13 @@ LICENSE = LICENSE
 
 PACKAGES = CSWap2modauthkerb
 CATALOGNAME = ap2_mod_auth_kerb
-RUNTIME_DEP_PKGS_CSWap2modauthkerb += CSWkrb5lib
+CHECKPKG_OVERRIDES_CSWap2modauthkerb += catalogname-does-not-match-pkgname|pkgname=CSWap2modauthkerb|catalogname=ap2_mod_auth_kerb|expected-catalogname=ap2modauthkerb
+RUNTIME_DEP_PKGS_CSWap2modauthkerb += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWap2modauthkerb += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWap2modauthkerb += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWap2modauthkerb += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWap2modauthkerb += CSWapache2
 CHECKPKG_OVERRIDES_CSWap2modauthkerb += surplus-dependency|CSWapache2
-
-# That path is almost ok
-CHECKPKG_OVERRIDES_CSWap2modauthkerb += bad-rpath-entry|/opt/csw/lib/|opt/csw/apache2/libexec/mod_auth_kerb.so
 
 # Apache paths
 AP2_ROOT      = $(prefix)/apache2
