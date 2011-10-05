@@ -138,6 +138,7 @@ PATCHFILES += 0004-looking-for-ps-use-basename-0.patch
 # Perhaps using sed would be better, but we have a patch for now.
 # PATCHFILES += 0006-Use-my_print_defaults-$(BASE_VERSION).patch
 PATCHFILES += 0007-versioned-mysqld-during-db-init-5.1.patch
+PATCHFILES += 0008-versioned-datadir-in-mysql_install_db-5.1.patch
 
 # Enable 64 bits build
 BUILD64 = 1
