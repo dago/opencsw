@@ -37,8 +37,8 @@ localstatedir   = /var/opt/csw
 
 MIGRATE_FILES   = proftpd.conf
 
-EXTRA_CONFIGURE_ENV   = install_user=$(USER) install_group=csw
-EXTRA_CONFIGURE_ENV  += LD_LIBRARY_PATH="$(libdir)"
+EXTRA_CONFIGURE_ENV  = install_user=$(USER) install_group=csw
+EXTRA_CONFIGURE_ENV += LD_LIBRARY_PATH="$(libdir)"
 
 NODIRPATHS      = --localstatedir --libexecdir
 CONFIGURE_ARGS += $(DIRPATHS)
