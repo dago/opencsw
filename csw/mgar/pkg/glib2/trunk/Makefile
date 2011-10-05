@@ -47,6 +47,9 @@ PATCHFILES += 0018-Disable-gdbus-connection-large_message-on-sparc.patch
 PATCHFILES += 0019-Disable-gdbus-threading-gdbus-method-calls-in-thread.patch
 PATCHFILES += 0019-Disable-volumemonitor-tests.patch
 PATCHFILES += 0022-Disable-gsettings-strinfo-on-sparcv9.patch
+PATCHFILES += 0023-Disable-data-input-stream-read-int-test-on-sparc.patch
+
+# SPARCv9 Specific Patches
 PATCHFILES_isa-sparcv9 += 0023-Disable-run-assert-msg-test.sh.patch
 
 PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
@@ -160,8 +163,8 @@ CONFIGURE_ARGS += --with-threads=posix
 CONFIGURE_ARGS += --disable-dtrace
 
 # DEBUGGING
-CONFIGURE_ARGS += --enable-debug=yes
-EXTRA_CFLAGS += -xO0 -g
+# CONFIGURE_ARGS += --enable-debug=yes
+# EXTRA_CFLAGS += -xO0 -g
 
 # Those are to make the checks work
 EXTRA_COMMON_EXPORTS = TZ
@@ -173,6 +176,16 @@ PYCOMPILE = 1
 
 #provided by iconv
 MERGE_EXCLUDE_FILES = .*/charset.alias
+
+# The checks below are excluded since /usr/share/ is included in default value of
+# XDG_DATA_DIRS. However, /opt/csw/share is also included, so no harm.
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/libgio-2.0.so.0.2800.8
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.2800.8
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgio-2.0.so.0.2800.8
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.2800.8
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libgio-2.0.so.0.2800.8
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libglib-2.0.so.0.2800.8
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libglib-2.0.so.0.2800.8
 
 include gar/category.mk
 
