@@ -119,7 +119,7 @@ ARCHALL_CSW$(NAME)bench = 1
 PKGFILES_CSW$(NAME)bench   = $(prefix)/sql-bench.*
 RUNTIME_DEP_PKGS_CSW$(NAME)bench       = CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME)bench      += CSWperl
-CHECKPKG_OVERRIDES_CSWmysql5bench += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSW$(NAME)bench += surplus-dependency|CSWperl
 
 PACKAGES += CSW$(NAME)test
 SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
@@ -128,6 +128,7 @@ SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
 PKGFILES_CSW$(NAME)test    = $(prefix)/mysql-test.*
 RUNTIME_DEP_PKGS_CSW$(NAME)test        = CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME)test       += CSWperl
+CHECKPKG_OVERRIDES_CSWmysql51test += bad-rpath-entry
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
@@ -262,6 +263,12 @@ ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(cl
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(client_programs)),$(client_programs)),\
 	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)-$(BASE_VERSION).1)
+
+# These are harmless, although it would be nice to clean them up eventually.
+# Help appreciated?
+CHECKPKG_OVERRIDES_CSWmysql51 += file-collision|/opt/csw/share/doc/mysql5devel_stub/README.CSW|CSWmysql5|CSWmysql51
+CHECKPKG_OVERRIDES_CSWmysql51 += file-collision|/opt/csw/share/doc/mysql_dev/README.CSW|CSWmysql5|CSWmysql51
+CHECKPKG_OVERRIDES_CSWmysql51 += file-collision|/opt/csw/share/info/mysql.info|CSWmysql5|CSWmysql51
 
 include gar/category.mk
 
