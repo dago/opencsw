@@ -21,7 +21,7 @@ LICENSE      = COPYING
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
-RUNTIME_DEP_PKGS = CSWosslrt CSWlibintl8 CSWiconv CSWoldaprt CSWzlib CSWmysql5rt CSWsqlite3rt
+RUNTIME_DEP_PKGS = CSWosslrt CSWlibintl8 CSWlibiconv2 CSWoldaprt CSWlibz1 CSWlibmysqlclient15 CSWlibsqlite3-0
 
 EXTRA_BUILD_ISAS_i386  = amd64
 EXTRA_BUILD_ISAS_sparc = sparcv9
