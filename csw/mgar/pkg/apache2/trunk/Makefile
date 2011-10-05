@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = httpd
-VERSION = 2.2.20
+VERSION = 2.2.21
 CATEGORIES = server
 
 DESCRIPTION = A high performance HTTP server.
