@@ -1,0 +1,32 @@
+From 2af244ab762435df59046f19ad492bd6d8862e62 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 6 Oct 2011 00:34:17 +0200
+Subject: [PATCH] versioned datadir in mysql_install_db 5.1
+
+---
+ scripts/mysql_install_db.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/scripts/mysql_install_db.sh b/scripts/mysql_install_db.sh
+index 1a00691..8792c2b 100644
+--- a/scripts/mysql_install_db.sh
++++ b/scripts/mysql_install_db.sh
+@@ -265,13 +265,13 @@ then
+     cannot_find_file mysqld-5.1 $basedir/libexec $basedir/sbin $basedir/bin
+     exit 1
+   fi
+-  langdir=`find_in_basedir --dir errmsg.sys share/english share/mysql/english`
++  langdir=`find_in_basedir --dir errmsg.sys share/english share/mysql/english share/mysql/5.1/mysql/english`
+   if test -z "$langdir"
+   then
+     cannot_find_file errmsg.sys $basedir/share/english $basedir/share/mysql/english
+     exit 1
+   fi
+-  pkgdatadir=`find_in_basedir --dir fill_help_tables.sql share share/mysql`
++  pkgdatadir=`find_in_basedir --dir fill_help_tables.sql share share/mysql share/mysql/5.1/mysql`
+   if test -z "$pkgdatadir"
+   then
+     cannot_find_file fill_help_tables.sql $basedir/share $basedir/share/mysql
+-- 
+1.7.6.1
+
