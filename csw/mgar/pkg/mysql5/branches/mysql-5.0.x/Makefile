@@ -30,6 +30,8 @@ INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
 # Existing databases are in this location
 localstatedir = /var/opt/csw/mysql5
+# To avoid file conflicts
+datadir = $(prefix)/share/mysql/$(BASE_VERSION)
 
 MYSQL_LIB_VER = 15
 
@@ -43,7 +45,7 @@ PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(call bas
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(mandir)/man1/$(bin_name)\.1-$(BASE_VERSION))
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/bin/$(bin_name)-$(BASE_VERSION))
 PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/sbin/$(bin_name)-$(BASE_VERSION))
-PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config\.1
+PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config-$(BASE_VERSION)\.1
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 OBSOLETED_BY_CSWmysql-dev = CSWmysql5devel
