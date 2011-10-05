@@ -9,6 +9,7 @@ PROJ_NAME = mysql
 NAME = $(PROJ_NAME)5
 BASE_VERSION = 5.0
 PATCHLEVEL = 92
+ALTS_PRIO = 50
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
@@ -51,7 +52,7 @@ PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 OBSOLETED_BY_CSWmysql-dev = CSWmysql5devel
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config-$(BASE_VERSION).1
 ALTERNATIVES_CSWmysql-dev = mysql_dev
-ALTERNATIVE_mysql_dev = $(bindir)/$(firstword $(CSWmysql-dev_programs)) mysql_dev $(bindir)/$(firstword $(CSWmysql-dev_programs)) 50
+ALTERNATIVE_mysql_dev = $(bindir)/$(firstword $(CSWmysql-dev_programs)) mysql_dev $(bindir)/$(firstword $(CSWmysql-dev_programs)) $(ALTS_PRIO)
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
@@ -248,12 +249,12 @@ EXECUTABLES += resolve_stack_dump
 EXECUTABLES += resolveip
 
 ALTERNATIVES_CSW$(NAME) = mysql$(BASE_VERSION)_main
-ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql_main $(bindir)/$(firstword $(EXECUTABLES))-$(BASE_VERSION) 50
+ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql_main $(bindir)/$(firstword $(EXECUTABLES))-$(BASE_VERSION) $(ALTS_PRIO)
 ALTERNATIVE_mysql$(BASE_VERSION)_main += $(foreach C,$(wordlist 2,$(words $(EXECUTABLES)),$(EXECUTABLES)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 
 ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)_client
-ALTERNATIVE_mysql$(BASE_VERSION)_client = $(bindir)/$(firstword $(client_programs)) mysql_client $(bindir)/$(firstword $(client_programs)) 50
+ALTERNATIVE_mysql$(BASE_VERSION)_client = $(bindir)/$(firstword $(client_programs)) mysql_client $(bindir)/$(firstword $(client_programs)) $(ALTS_PRIO)
 ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(client_programs)),$(client_programs)),\
 	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
 ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(client_programs)),$(client_programs)),\
