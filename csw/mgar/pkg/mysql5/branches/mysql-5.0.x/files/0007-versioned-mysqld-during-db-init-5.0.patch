@@ -1,0 +1,74 @@
+From cacc0eaf3e749f9e4a0a733e5164c16d2af15953 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Wed, 5 Oct 2011 19:03:02 +0200
+Subject: [PATCH] versioned mysqld during db init 5.0
+
+---
+ scripts/mysql_install_db.sh |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/scripts/mysql_install_db.sh b/scripts/mysql_install_db.sh
+index b9b31a2..1a00691 100644
+--- a/scripts/mysql_install_db.sh
++++ b/scripts/mysql_install_db.sh
+@@ -242,7 +242,7 @@ fi
+ 
+ # Now we can get arguments from the groups [mysqld] and [mysql_install_db]
+ # in the my.cfg file, then re-run to merge with command line arguments.
+-parse_arguments `$print_defaults $defaults mysqld mysql_install_db`
++parse_arguments `$print_defaults $defaults mysqld-5.0 mysql_install_db`
+ parse_arguments PICK-ARGS-FROM-ARGV "$@"
+ 
+ # Configure paths to support files
+@@ -251,7 +251,7 @@ then
+   basedir="$builddir"
+   bindir="$basedir/client"
+   extra_bindir="$basedir/extra"
+-  mysqld="$basedir/sql/mysqld"
++  mysqld="$basedir/sql/mysqld-5.0"
+   langdir="$srcdir/sql/share/english"
+   pkgdatadir="$srcdir/scripts"
+   scriptdir="$srcdir/scripts"
+@@ -259,10 +259,10 @@ elif test -n "$basedir"
+ then
+   bindir="$basedir/bin"
+   extra_bindir="$bindir"
+-  mysqld=`find_in_basedir mysqld libexec sbin bin`
++  mysqld=`find_in_basedir mysqld-5.0 libexec sbin bin`
+   if test -z "$mysqld"
+   then
+-    cannot_find_file mysqld $basedir/libexec $basedir/sbin $basedir/bin
++    cannot_find_file mysqld-5.0 $basedir/libexec $basedir/sbin $basedir/bin
+     exit 1
+   fi
+   langdir=`find_in_basedir --dir errmsg.sys share/english share/mysql/english`
+@@ -282,7 +282,7 @@ else
+   basedir="@prefix@"
+   bindir="@bindir@"
+   extra_bindir="$bindir"
+-  mysqld="@libexecdir@/mysqld"
++  mysqld="@libexecdir@/mysqld-5.0"
+   pkgdatadir="@pkgdatadir@"
+   scriptdir="@scriptdir@"
+ fi
+@@ -400,7 +400,7 @@ else
+   echo
+   echo "You can try to start the mysqld daemon with:"
+   echo
+-  echo "    shell> $mysqld --skip-grant &"
++  echo "    shell> $mysqld-5.0 --skip-grant &"
+   echo
+   echo "and use the command line tool $bindir/mysql"
+   echo "to connect to the mysql database and look at the grant tables:"
+@@ -408,7 +408,7 @@ else
+   echo "    shell> $bindir/mysql -u root mysql"
+   echo "    mysql> show tables"
+   echo
+-  echo "Try 'mysqld --help' if you have problems with paths.  Using --log"
++  echo "Try 'mysqld-5.0 --help' if you have problems with paths.  Using --log"
+   echo "gives you a log in $ldata that may be helpful."
+   echo
+   echo "Please consult the MySQL manual section"
+-- 
+1.7.6.1
+
