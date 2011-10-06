@@ -19,8 +19,8 @@ index e4747ac..907b41d 100644
  
  # The MySQL server
  [mysqld]
-+basedir         = /opt/csw/mysql5
-+datadir         = /var/opt/csw/mysql5
++basedir         = /opt/csw
++datadir         = /var/opt/csw/mysql51
  port		= @MYSQL_TCP_PORT@
  socket		= @MYSQL_UNIX_ADDR@
  skip-locking
@@ -32,8 +32,8 @@ index cda11d6..a9d5514 100644
  # The MySQL server
  #
  [mysqld]
-+basedir         = /opt/csw/mysql5
-+datadir         = /var/opt/csw/mysql5
++basedir         = /opt/csw
++datadir         = /var/opt/csw/mysql51
  
  # generic configuration options
  port		= @MYSQL_TCP_PORT@
@@ -45,8 +45,8 @@ index 981b137..8b890fb 100644
  
  # The MySQL server
  [mysqld]
-+basedir         = /opt/csw/mysql5
-+datadir         = /var/opt/csw/mysql5
++basedir         = /opt/csw
++datadir         = /var/opt/csw/mysql51
  port		= @MYSQL_TCP_PORT@
  socket		= @MYSQL_UNIX_ADDR@
  skip-locking
@@ -58,8 +58,8 @@ index c3135ea..ef841db 100644
  
  # The MySQL server
  [mysqld]
-+basedir         = /opt/csw/mysql5
-+datadir         = /var/opt/csw/mysql5
++basedir         = /opt/csw
++datadir         = /var/opt/csw/mysql51
  port		= @MYSQL_TCP_PORT@
  socket		= @MYSQL_UNIX_ADDR@
  skip-locking
@@ -71,8 +71,8 @@ index 24c0840..89299dd 100644
  
  # The MySQL server
  [mysqld]
-+basedir         = /opt/csw/mysql5
-+datadir         = /var/opt/csw/mysql5
++basedir         = /opt/csw
++datadir         = /var/opt/csw/mysql51
  port		= @MYSQL_TCP_PORT@
  socket		= @MYSQL_UNIX_ADDR@
  skip-locking
