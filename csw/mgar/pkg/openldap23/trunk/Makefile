@@ -44,6 +44,8 @@ EXTRA_LIB = $(prefix)/bdb44/lib
 EXTRA_INC = $(prefix)/bdb44/include
 
 # Not released yet.
+# !! OpenLDAP does not use libnet *at all*. This is an artifact from BeOS where libnet
+# !! is a completely different library needed for socket operations.
 EXTRA_LDFLAGS = -L$(libdir)/libnet-new
 
 # Is this causing this?
