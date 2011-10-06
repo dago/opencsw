@@ -1,6 +1,6 @@
 NAME = sasl
-VERSION = 2.1.24
-FILEVERSION = $(VERSION)rc1
+VERSION = 2.1.25
+FILEVERSION = $(VERSION)
 CATEGORIES = lib
 
 DESCRIPTION = Simple Authentication and Security Layer
@@ -20,48 +20,63 @@ DISTFILES += README.sasl README.saslauthd
 
 # PATCHFILES = saslauthd-doc.diff saslauthd-groff.diff ltmain.diff
 
-PACKAGES = CSWsasl CSWsaslauthd CSWsaslgssapi CSWsaslsql
+VENDOR_URL = http://asg.web.cmu.edu/sasl/
 
-SPKG_SOURCEURL = http://asg.web.cmu.edu/sasl/
-
+PACKAGES += CSWsasl
 CATALOGNAME_CSWsasl = sasl
+SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
+RUNTIME_DEP_PKGS_CSWsasl = CSWosslrt
+RUNTIME_DEP_PKGS_CSWsasl += CSWbdb47
+RUNTIME_DEP_PKGS_CSWsasl += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsasl += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWsasl += CSWlibsasl2-2
+
+PACKAGES += CSWsaslauthd
 CATALOGNAME_CSWsaslauthd = saslauthd
+SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWosslrt
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibkrb5support0
+
+PACKAGES += CSWsaslgssapi
 CATALOGNAME_CSWsaslgssapi = sasl_gssapi
-CATALOGNAME_CSWsaslsql = sasl_sql
-
-RUNTIME_DEP_PKGS_CSWsasl = CSWosslrt CSWbdb47 CSWoldaprt CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWsaslauthd = CSWosslrt CSWoldaprt CSWkrb5lib
+SPKG_DESC_CSWsaslgssapi = Cyrus Simple Authentication and Security Layer GSSAPI Binding
 RUNTIME_DEP_PKGS_CSWsaslgssapi = CSWsasl CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWsaslsql = CSWsasl CSWlibpq CSWmysql5rt CSWsqlite
-
 CHECKPKG_OVERRIDES_CSWsaslgssapi += surplus-dependency|CSWsasl
+
+PACKAGES += CSWsaslsql
+CATALOGNAME_CSWsaslsql = sasl_sql
+SPKG_DESC_CSWsaslsql = Cyrus Simple Authentication and Security Layer SQL Binding
+RUNTIME_DEP_PKGS_CSWsaslsql = CSWsasl CSWlibpq CSWmysql5rt CSWsqlite
 CHECKPKG_OVERRIDES_CSWsaslsql += surplus-dependency|CSWsasl
 
-SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
-SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
-SPKG_DESC_CSWsaslgssapi = Cyrus Simple Authentication and Security Layer GSSAPI Binding
-SPKG_DESC_CSWsaslsql = Cyrus Simple Authentication and Security Layer SQL Binding
+PACKAGES += CSWlibsasl2-2
+SPKG_DESC_CSWlibsasl2-2 = Simple authentication and security layer library, libsasl2.so.2
+PKGFILES_CSWlibsasl2-2 += $(call pkgfiles_lib,libsasl2.so.2)
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = cyrus-$(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWsasl-dev
+SPKG_DESC_CSWsasl-dev = Development files for SASL
+PKGFILES_CSWsasl-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWsasl-dev += CSWlibsasl2-2
 
 EXTRA_CFLAGS = -D__EXTENSIONS__
 
-BUILD_ENV = _REENTRANT=1
+EXTRA_BUILD_ENV = _REENTRANT=1
 
-EXTRA_LIB = $(prefix)/bdb47/lib
+# EXTRA_LIB = $(prefix)/bdb47/lib
 
 EXTRA_INC  = /opt/csw/include/gssapi
-EXTRA_INC += /opt/csw/mysql5/include/mysql
+EXTRA_INC += /opt/csw/include/mysql
 EXTRA_INC += /opt/csw/postgresql/include
-
-sysconfdir = /etc/opt/csw
-localstatedir = /var/opt/csw
 
 # Do not use LD_OPTIONS as it breaks tests by using the installed libraries
 # before the newly built ones.
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
-LD_OPTIONS =
+LD_OPTIONS = -L$(abspath $(prefix)/bdb47/lib/$(MM_LIBDIR)) -R$(abspath $(prefix)/bdb47/lib/$(MM_LIBDIR))
 
 BUILD64 = 1
 NOISALIST = 1
@@ -73,7 +88,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --disable-static 
 CONFIGURE_ARGS += --enable-sql
-CONFIGURE_ARGS += --with-bdb-libdir=/opt/csw/bdb47/lib 
+CONFIGURE_ARGS += --with-bdb-libdir=$(abspath /opt/csw/bdb47/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS += --with-bdb-incdir=/opt/csw/bdb47/include/ 
 CONFIGURE_ARGS += --with-saslauthd=$(localstatedir)/saslauthd 
 CONFIGURE_ARGS += --with-ipctype=unix 
@@ -81,18 +96,19 @@ CONFIGURE_ARGS += --with-ldap=$(libdir)
 # Autoconf tries to find the directory with the shared lib in it. Because of the
 # ISA suffix for 64 bit we must specify the exact library location and add
 # the include directories manually.
-CONFIGURE_ARGS += --with-mysql=$(abspath $(prefix)/mysql5/lib/$(MM_LIBDIR)/mysql)
+#CONFIGURE_ARGS += --with-mysql=$(libdir)
+CONFIGURE_ARGS += --with-mysql=$(libdir)
 CONFIGURE_ARGS += --with-pgsql=$(abspath $(prefix)/postgresql/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS += --with-openssl=$(libdir)
 CONFIGURE_ARGS += --with-dbpath=$(sysconfdir)/sasldb2
 CONFIGURE_ARGS += --with-plugindir=$(libdir)/sasl2 
 CONFIGURE_ARGS += --enable-login
+# This is for 32/64 switching. We do this all by ourselves, do not use SASLs mechanism
+CONFIGURE_ARGS += --without-lib-subdir
 
 SED=/usr/bin/sed
 EGREP=/usr/bin/egrep
 max_cmd_line=65535
-
-TEST_TARGET = check
 
 #INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir libdir includedir mandir
 
