@@ -27,7 +27,7 @@ endef
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
 # Existing databases are in this location
-# localstatedir = /var/opt/csw/mysql5
+localstatedir = /var$(BUILD_PREFIX)/$(NAME)
 # To avoid file conflicts
 datadir = $(prefix)/share/mysql/$(BASE_VERSION)
 
@@ -113,22 +113,8 @@ RUNTIME_DEP_PKGS_CSW$(NAME) += CSWosslrt
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
-PACKAGES += CSW$(NAME)bench
-SPKG_DESC_CSW$(NAME)bench  = MySQL $(BASE_VERSION) benchmarking
-ARCHALL_CSW$(NAME)bench = 1
-PKGFILES_CSW$(NAME)bench   = $(prefix)/sql-bench.*
-RUNTIME_DEP_PKGS_CSW$(NAME)bench       = CSW$(NAME)
-RUNTIME_DEP_PKGS_CSW$(NAME)bench      += CSWperl
-CHECKPKG_OVERRIDES_CSW$(NAME)bench += surplus-dependency|CSWperl
-
-PACKAGES += CSW$(NAME)test
-SPKG_DESC_CSW$(NAME)test   = MySQL $(BASE_VERSION) testing files
-# There is one binary there in 5.1
-# ARCHALL_CSW$(NAME)test  = 1
-PKGFILES_CSW$(NAME)test    = $(prefix)/mysql-test.*
-RUNTIME_DEP_PKGS_CSW$(NAME)test        = CSW$(NAME)
-RUNTIME_DEP_PKGS_CSW$(NAME)test       += CSWperl
-CHECKPKG_OVERRIDES_CSWmysql51test += bad-rpath-entry
+EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/mysql-test.*
+EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/sql-bench.*
 
 PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
