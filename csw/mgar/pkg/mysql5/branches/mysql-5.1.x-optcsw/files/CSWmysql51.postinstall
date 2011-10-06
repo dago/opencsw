@@ -9,8 +9,8 @@
 # Input may be provided for DATADIR and DEFAULTS_FILE
 #
 BASEDIR=/opt/csw
-MYSQL_VAR=/var/opt/csw/mysql/@MYSQL_BASE_VERSION@
-DEFAULTS_FILE=$BASEDIR/my.cnf
+MYSQL_VAR=/var/opt/csw/mysql51
+DEFAULTS_FILE=$BASEDIR/etc/my.cnf
 SAVE_DEFAULTS_FILE=$MYSQL_VAR/my.cnf
 MYSQLD_USER=mysql
 # Provide the default data directory
