@@ -1,4 +1,5 @@
 #!/bin/sh
+# vim:ft=sh:
 #
 # $Id$
 # Start script for MySQL database.
@@ -7,30 +8,41 @@
 # 700.
 #
 # First time installation can use quick_start-csw in
-#   /opt/csw/mysql51/share/mysql to build the mysql database for the
+#   /opt/csw/mysql55/share/mysql to build the mysql database for the
 #   grant tables.  Or create the initial database yourself.
 #
 # Use my.cnf for startup options.  See MySQL documention
 #   for 'Using Option Files'.
-# Support for mysql51rc still remains in this startup script.
+# Support for mysql55rc still remains in this startup script.
 #
 
 RETVAL=0
-MYSQLHOME=/opt/csw/mysql51
-MYSQL_VAR=/var/opt/csw/mysql51
+prefix="@prefix@"
+BASEDIR="${prefix}"
+BINDIR="@bindir@"
+MYSQL_VAR="@localstatedir@"
+sysconfdir="@sysconfdir@"
+BASE_VERSION="@BASE_VERSION@"
 MYSQLD_DATADIR=$MYSQL_VAR
 MYSQLD_PID_FILE=$MYSQL_VAR/mysql.pid
-CONFFILE=$MYSQL_VAR/my.cnf
+CONFFILE=${sysconfdir}/my.cnf
 
-#
-# Source configuration
-[ -r /opt/csw/mysql51/etc/mysql51rc ] && . /opt/csw/mysql51/etc/mysql51rc
-[ -r /etc/opt/csw/mysql51rc ] && . /etc/opt/csw/mysql51rc
+# Source the configuration
+[ -r /opt/csw/mysql5/etc/mysql5rc ] && . /opt/csw/mysql5/etc/mysql5rc
+[ -r @prefix@/etc/mysql5rc ] && . @prefix@/etc/mysql5rc
+[ -r /etc/opt/csw/mysql5rc ] && . /etc/opt/csw/mysql5rc
+
+if [ -r "${sysconfdir}/my.cnf" ]; then
+  MYSQL_HOME="${MYSQL_VAR}"
+elif [ -r "${BASEDIR}/my.cnf" ]; then
+  MYSQL_HOME="${BASEDIR}"
+fi
+export MYSQL_HOME
 
 # To get started quickly, copy a sample configuration file from
-#   $MYSQLHOME/share/mysql
+#   $BASEDIR/share/mysql
 # For example,
-#  cp /opt/csw/mysql51/share/mysql/my-medium.cnf /opt/csw/mysql51/var/my.cnf
+#  cp /opt/csw/mysql5/share/mysql/my-medium.cnf /opt/csw/mysql5/var/my.cnf
 #
 # Or, manually follow the database creation steps below, and have
 # mysql just use defaults for everything.
@@ -45,18 +57,20 @@ if [ ! -d "$MYSQLD_DATADIR/mysql" -a ! -f "$CONFFILE" ] ; then
 fi
 
 # If CONFFILE is the server default file, unset CONFFILE
-if [ x"$CONFFILE" = x"$MYSQL_VAR/my.cnf" ]; then
+if [ "${CONFFILE}" = "${MYSQL_HOME}/my.cnf" \
+      -o \
+     "${CONFFILE}" = "${sysconfdir}/my.cnf" ]; then
     CONFFILE=
 fi
 
 # If MYSQLD_DATADIR does not contain a mysql directory, unset MYSQLD_DATADIR
 # Also, check that MYSQLD_DATADIR contains a mysql directory
-if [ ! -d "$MYSQL_VAR/mysql" -a ! -d "$MYSQLD_DATADIR/mysql" ] ; then
+if [ ! -d "$MYSQL_HOME/mysql" -a ! -d "$MYSQLD_DATADIR/mysql" ] ; then
     MYSQLD_DATADIR=
 fi
 
 # Make sure required vars are set
-MYSQLD_PID_FILE=${MYSQLD_PID_FILE:=$MYSQL_VAR/mysql.pid}
+MYSQLD_PID_FILE=${MYSQLD_PID_FILE:=$MYSQL_HOME/mysql.pid}
 
 # If a database already exists, start whether or not there is a conf file.
 # If no conf file, the database will just use internal defaults for everything.
@@ -70,18 +84,21 @@ start_it() {
     fi
 
     printf "%-60s" "Starting mysqld: "
-# 2006-03-11
-# This script no longer creates the default database. You may create the
-# default database manually or use /opt/csw/mysql51/share/mysql/quick_start-csw
-#    if [ ! -d "$MYSQLHOME/var/mysql" ] ; then
-#        echo MySQL core database has not been created.
-#         echo Creating it now...
-#       $MYSQLHOME/bin/mysql_install_db
-#       chown -R mysql:mysql $MYSQLHOME/var
-#    fi
 
-# 2006-04-16  --defaults-file is changed to --defaults-extra-file
-    $MYSQLHOME/bin/mysqld_safe \
+    # 2006-03-11
+    # This script no longer creates the default database. You may create the
+    # default database manually or use
+    # /opt/csw/mysql5/share/mysql/quick_start-csw
+    #    if [ ! -d "$BASEDIR/var/mysql" ] ; then
+    #        echo MySQL core database has not been created.
+    #         echo Creating it now...
+    #       $BASEDIR/bin/mysql_install_db
+    #       chown -R mysql:mysql $BASEDIR/var
+    #    fi
+
+    # 2006-04-16  --defaults-file is changed to --defaults-extra-file
+    ${BINDIR}/mysqld_safe-${BASE_VERSION} \
+        --mysqld-version=${BASE_VERSION} \
         `[ -n "$CONFFILE" ] && echo "--defaults-extra-file=$CONFFILE"` \
         --pid-file=$MYSQLD_PID_FILE \
         `[ -n "$MYSQLD_PROG" ] && echo "--mysqld=$MYSQLD_PROG"` \
@@ -142,7 +159,7 @@ stop_it() {
 
     printf "%-60s" "Shutting down mysqld: "
     if test -f "$MYSQLD_PID_FILE" ; then
-        pkill mysqld_safe >/dev/null 2>&1
+        pkill `pgrep_opts` mysqld_safe >/dev/null 2>&1
         kill `cat $MYSQLD_PID_FILE` >/dev/null 2>&1
         RETVAL=$?
     else
@@ -157,6 +174,13 @@ stop_it() {
     return 0
 }
 
+pgrep_opts() {
+  if [ -x /bin/zonename ]
+  then
+    echo "-z `/bin/zonename`"
+  fi
+}
+
 case $1 in
     start)
     start_it
@@ -168,7 +192,7 @@ case $1 in
 
     restart)
     stop_it
-    while pgrep mysqld > /dev/null
+    while pgrep `pgrep_opts` mysqld > /dev/null
       do
       sleep 1
     done
