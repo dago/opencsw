@@ -27,16 +27,16 @@ CATEGORIES = apps
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
-SPKG_SOURCEURL = http://www.postgresql.org/
+VENDOR_URL = http://www.postgresql.org/
 
 define BLURB
 endef
 
 version_dependent = /lib/$(NAME)/$(BASE_VERSION)
 bindir_install = $(prefix)$(version_dependent)/bin
-bindir = $(prefix)$(version_dependent)/bin
+# bindir = $(prefix)$(version_dependent)/bin
 sbindir_install = $(prefix)$(version_dependent)/sbin
-sbindir = $(prefix)$(version_dependent)/sbin
+# sbindir = $(prefix)$(version_dependent)/sbin
 libdir_install = $(prefix)$(version_dependent)/lib
 # libdir = $(prefix)$(version_dependent)/lib
 # Otherwise initdb can't find the right libraries, see:
@@ -74,14 +74,16 @@ CATALOGNAME_CSWpostgresql                        = postgresql
 SPKG_DESC_CSWpostgresql                       = An advanced open source database
 SPKG_DESC_CSWpostgresql-$(BASE_VERSION_G)-doc = PostgreSQL $(BASE_VERSION).x Documentation
 
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibgnugetopt
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWzlib
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxml2
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWreadline
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibpq5
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWlibz1
+RUNTIME_DEP_PKGS_CSWpostgresql-$(BASE_VERSION_G) += CSWosslrt
+
+CHECKPKG_OVERRIDES_CSWpostgresql-$(BASE_VERSION_G) += file-with-bad-content
 
 ARCHALL_CSWpostgresql                       = 1
 ARCHALL_CSWpostgresql-$(BASE_VERSION_G)-doc = 1
@@ -202,8 +204,8 @@ PACKAGES += CSWlibpq5
 CATALOGNAME_CSWlibpq5 = libpq5
 PKGFILES_CSWlibpq5 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibpq5 += PostgreSQL C client library (built from $(BASE_VERSION).x sources), libpq.so.5
+RUNTIME_DEP_PKGS_CSWlibpq5 += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWlibpq5 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibpq5 += CSWkrb5lib
 
 PACKAGES += CSWlibecpg6
 CATALOGNAME_CSWlibecpg6 = libecpg6
@@ -229,13 +231,13 @@ SPKG_DESC_CSWlibpgtypes3 += Used by programs built with ecpg (Embedded PostgreSQ
 PACKAGES += CSWlibpq-dev
 CATALOGNAME_CSWlibpq-dev = libpq_dev
 SPKG_DESC_CSWlibpq-dev = PostgreSQL C client headers (built from $(BASE_VERSION).x sources)
-RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibxslt
-RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibxml2
+RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWreadline
-RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibgnugetopt
-RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWzlib
 PKGFILES_CSWlibpq-dev += $(prefix)/include/postgresql.*
 PKGFILES_CSWlibpq-dev += $(prefix)/lib/.*libpq.so
 PKGFILES_CSWlibpq-dev += $(prefix)/lib/.*libecpg.so
