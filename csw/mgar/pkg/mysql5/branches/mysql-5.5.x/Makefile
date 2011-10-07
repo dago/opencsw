@@ -290,7 +290,11 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 configure-custom:
-	(cd $(WORKSRC); cmake . -DCMAKE_INSTALL_PREFIX=$(prefix))
+	(cd $(WORKSRC) && \
+	 	/usr/bin/env -i \
+		  $(CONFIGURE_ENV) \
+			cmake . \
+			-DCMAKE_INSTALL_PREFIX=$(prefix))
 	@$(MAKECOOKIE)
 
 post-configure-modulated:
