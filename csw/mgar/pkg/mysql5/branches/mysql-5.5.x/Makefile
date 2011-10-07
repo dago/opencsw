@@ -24,6 +24,12 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
+# Compilation with Solaris Studio fails:
+# cg error (as) : ".../mysql-5.5.16/mysys/my_timer_cycles.il (template for
+# my_timer_cycles_il_sparc32)", line 27 : cannot use SPARC v9 instructions
+# with this target architecture
+GARCOMPILER = GNU
+
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
 # Existing databases are in this location
