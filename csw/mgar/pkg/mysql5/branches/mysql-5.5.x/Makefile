@@ -46,7 +46,6 @@ PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/s
 PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
-OBSOLETED_BY_CSWmysql-dev = CSWmysql5devel
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config-$(BASE_VERSION).1
 ALTERNATIVES_CSWmysql-dev = mysql_dev
 ALTERNATIVE_mysql_dev = $(bindir)/$(firstword $(CSWmysql-dev_programs)) mysql_dev $(bindir)/$(firstword $(CSWmysql-dev_programs)) $(ALTS_PRIO)
@@ -55,24 +54,22 @@ ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_program
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
 	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)-$(BASE_VERSION).1)
 
-PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
-PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
+# PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
+# PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 # PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
-PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
+# PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWosslrt
-OBSOLETED_BY_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSW$(NAME)rt
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWosslrt
-OBSOLETED_BY_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSW$(NAME)rt
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
@@ -121,7 +118,7 @@ CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/mysql-test.*
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/sql-bench.*
 
-PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
+# PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 # PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
 # PATCHFILES += 0004-basedir-and-datadir-in-the-cnf-files.patch
@@ -308,8 +305,8 @@ post-configure-modulated:
 	@$(MAKECOOKIE)
 
 post-install-modulated:
-	(cd $(DESTDIR)$(libdir); gmv -v mysql/* .)
-	(cd $(DESTDIR)$(libdir); grmdir -v mysql)
+	# (cd $(DESTDIR)$(libdir); gmv -v mysql/* .)
+	# (cd $(DESTDIR)$(libdir); grmdir -v mysql)
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(WORKDIR)/csw$(NAME) $(DESTDIR)$(sysconfdir)/init.d
 	@$(MAKECOOKIE)
