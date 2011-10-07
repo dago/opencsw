@@ -144,9 +144,10 @@ BUILD64 = 1
 # EXTRA_CXXFLAGS_sparc = -xO4 $(COMMON_CFLAGS)
 # EXTRA_CXXFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_CFLAGS)
 # COMMON_CFLAGS = -mt -fsimple=1 -ftrap=%none -xbuiltin=%all -xlibmil -xlibmopt
-# 
-EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+
+# These flags don't work with GCC
+# EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
+# EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
 MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(VERSION).tar.gz
