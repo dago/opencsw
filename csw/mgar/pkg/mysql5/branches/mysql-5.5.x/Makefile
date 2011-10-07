@@ -154,7 +154,7 @@ DISTFILES += cswusergroup
 
 # TODO: Do the proper prerequsite pkgs.
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
-
+BUILD_DEP_PKGS = CSWcmake
 
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
