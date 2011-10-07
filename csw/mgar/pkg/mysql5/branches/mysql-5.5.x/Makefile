@@ -37,7 +37,7 @@ localstatedir = /var$(BUILD_PREFIX)/$(NAME)
 # To avoid file conflicts
 datadir = $(prefix)/share/mysql/$(BASE_VERSION)
 
-MYSQL_LIB_VER = 17
+MYSQL_LIB_VER = 18
 
 PACKAGES += CSWmysql-dev
 SPKG_DESC_CSWmysql-dev = MySQL development files
