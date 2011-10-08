@@ -45,20 +45,20 @@ PKGFILES_CSWmysql-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWmysql-dev += CSWlibmysqlclient$(MYSQL_LIB_VER)
 CSWmysql-dev_programs += mysql_config
-PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(call baseisadirs,$(bindir),$(bin_name)-$(BASE_VERSION)))
-PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(mandir)/man1/$(bin_name)\.1-$(BASE_VERSION))
-PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/bin/$(bin_name)-$(BASE_VERSION))
-PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/sbin/$(bin_name)-$(BASE_VERSION))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(call baseisadirs,$(bindir),$(bin_name)$(PROGRAM_SUFFIX)))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),$(mandir)/man1/$(bin_name)\.1$(PROGRAM_SUFFIX))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/bin/$(bin_name)$(PROGRAM_SUFFIX))
+PKGFILES_CSWmysql-dev  += $(foreach bin_name,$(CSWmysql-dev_programs),/opt/csw/sbin/$(bin_name)$(PROGRAM_SUFFIX))
 PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
-CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config-$(BASE_VERSION).1
+CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config$(PROGRAM_SUFFIX).1
 ALTERNATIVES_CSWmysql-dev = mysql_dev
 ALTERNATIVE_mysql_dev = $(bindir)/$(firstword $(CSWmysql-dev_programs)) mysql_dev $(bindir)/$(firstword $(CSWmysql-dev_programs)) $(ALTS_PRIO)
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
-	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
+	$(bindir)/$C $C $(bindir)/$C$(PROGRAM_SUFFIX))
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
-	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)-$(BASE_VERSION).1)
+	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)$(PROGRAM_SUFFIX).1)
 
 # PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 # PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
@@ -99,10 +99,10 @@ client_programs += replace
 PACKAGES += CSW$(NAME)client
 SPKG_DESC_CSW$(NAME)client = MySQL $(BASE_VERSION) client binaries
 PKGFILES_CSW$(NAME)client  = $(bindir)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(call baseisadirs,$(bindir),$(bin_name)-$(BASE_VERSION)))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(mandir)/man1/$(bin_name)-$(BASE_VERSION)\.1)
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/bin/$(bin_name)-$(BASE_VERSION))
-PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/sbin/$(bin_name)-$(BASE_VERSION))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(call baseisadirs,$(bindir),$(bin_name)$(PROGRAM_SUFFIX)))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(mandir)/man1/$(bin_name)$(PROGRAM_SUFFIX)\.1)
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/bin/$(bin_name)$(PROGRAM_SUFFIX))
+PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/sbin/$(bin_name)$(PROGRAM_SUFFIX))
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
@@ -130,7 +130,7 @@ PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 # PATCHFILES += 0004-basedir-and-datadir-in-the-cnf-files.patch
 # PATCHFILES += 0004-looking-for-ps-use-basename-0.patch
 # Perhaps using sed would be better, but we have a patch for now.
-# PATCHFILES += 0006-Use-my_print_defaults-$(BASE_VERSION).patch
+# PATCHFILES += 0006-Use-my_print_defaults$(PROGRAM_SUFFIX).patch
 # PATCHFILES += 0007-versioned-mysqld-during-db-init-5.1.patch
 # PATCHFILES += 0008-versioned-datadir-in-mysql_install_db-5.1.patch
 
@@ -163,6 +163,7 @@ DISTFILES += cswusergroup
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS)
 BUILD_DEP_PKGS = CSWcmake
 
+PROGRAM_SUFFIX = -$(BASE_VERSION)
 # Set ./configure options
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-assembler
@@ -186,7 +187,23 @@ CONFIGURE_ARGS += --with-big-tables
 CONFIGURE_ARGS += --enable-thread-safe-client
 CONFIGURE_ARGS_DBG = --with-debug
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
-CONFIGURE_ARGS += --program-suffix=-$(BASE_VERSION)
+CONFIGURE_ARGS += --program-suffix=$(PROGRAM_SUFFIX)
+
+# http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
+CMAKE_ARGS += -DCMAKE_INSTALL_PREFIX=$(prefix)
+CMAKE_ARGS += -DMYSQL_DATADIR=$(localstatedir)
+CMAKE_ARGS += -DSYSCONFDIR=$(sysconfdir)
+CMAKE_ARGS += -DINSTALL_BINDIR=$(subst $(prefix)/,,$(bindir))
+CMAKE_ARGS += -DINSTALL_SBINDIR=$(subst $(prefix)/,,$(libexecdir))
+CMAKE_ARGS += -DINSTALL_MANDIR=$(subst $(prefix)/,,$(mandir))
+CMAKE_ARGS += -DINSTALL_LIBDIR=$(subst $(prefix)/,,$(libdir))
+CMAKE_ARGS += -DINSTALL_PLUGINDIR=$(subst $(prefix)/,,$(libdir))/$(NAME)/$(MM_LIBDIR)/plugin
+CMAKE_ARGS += -DWITH_READLINE=1
+CMAKE_ARGS += -DWITH_SSL=system
+CMAKE_ARGS += -DWITH_ZLIB=system
+CMAKE_ARGS += -DDEFAULT_CHARSET=utf8
+CMAKE_ARGS += -DDEFAULT_COLLATION=utf8_general_ci
+CMAKE_ARGS += -DWITH_COMMENT='OpenCSW'
 
 # TODO: Make the tests pass. They don't at the moment.
 SKIPTEST ?= 1
@@ -208,11 +225,10 @@ CHECKPKG_OVERRIDES_CSW$(NAME)bench += surplus-dependency|CSW$(NAME)
 CHECKPKG_OVERRIDES_CSW$(NAME)test += file-with-bad-content
 CHECKPKG_OVERRIDES_CSW$(NAME)test += surplus-dependency|CSW$(NAME)
 
-CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root$(prefix)/share/man/man1/mysqlaccess-$(BASE_VERSION).1
+CHECKPKG_OVERRIDES_CSW$(NAME)client += file-with-bad-content|/usr/local|root$(prefix)/share/man/man1/mysqlaccess$(PROGRAM_SUFFIX).1
 # This could be reviewed.
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
-EXECUTABLES += comp_err
 EXECUTABLES += innochecksum
 EXECUTABLES += msql2mysql
 EXECUTABLES += my_print_defaults
@@ -222,25 +238,24 @@ EXECUTABLES += myisamlog
 EXECUTABLES += myisampack
 EXECUTABLES += mysql
 EXECUTABLES += mysql_client_test
+EXECUTABLES += mysql_config
 EXECUTABLES += mysql_convert_table_format
-EXECUTABLES += mysql_explain_log
 EXECUTABLES += mysql_find_rows
 EXECUTABLES += mysql_fix_extensions
-EXECUTABLES += mysql_fix_privilege_tables
-EXECUTABLES += mysql_install_db
+EXECUTABLES += mysql_plugin
 EXECUTABLES += mysql_secure_installation
 EXECUTABLES += mysql_setpermission
-EXECUTABLES += mysql_tableinfo
 EXECUTABLES += mysql_tzinfo_to_sql
 EXECUTABLES += mysql_upgrade
-EXECUTABLES += mysql_upgrade_shell
 EXECUTABLES += mysql_waitpid
 EXECUTABLES += mysql_zap
 EXECUTABLES += mysqlaccess
+EXECUTABLES += mysqlaccess.conf
 EXECUTABLES += mysqladmin
 EXECUTABLES += mysqlbinlog
 EXECUTABLES += mysqlbug
 EXECUTABLES += mysqlcheck
+EXECUTABLES += mysqld
 EXECUTABLES += mysqld_multi
 EXECUTABLES += mysqld_safe
 EXECUTABLES += mysqldump
@@ -248,26 +263,24 @@ EXECUTABLES += mysqldumpslow
 EXECUTABLES += mysqlhotcopy
 EXECUTABLES += mysqlimport
 EXECUTABLES += mysqlshow
+EXECUTABLES += mysqlslap
 EXECUTABLES += mysqltest
-EXECUTABLES += mysqltestmanager
-EXECUTABLES += mysqltestmanager-pwgen
-EXECUTABLES += mysqltestmanagerc
 EXECUTABLES += perror
 EXECUTABLES += replace
 EXECUTABLES += resolve_stack_dump
 EXECUTABLES += resolveip
 
 ALTERNATIVES_CSW$(NAME) = mysql$(BASE_VERSION)_main
-ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql_main $(bindir)/$(firstword $(EXECUTABLES))-$(BASE_VERSION) $(ALTS_PRIO)
+ALTERNATIVE_mysql$(BASE_VERSION)_main = $(bindir)/$(firstword $(EXECUTABLES)) mysql_main $(bindir)/$(firstword $(EXECUTABLES))$(PROGRAM_SUFFIX) $(ALTS_PRIO)
 ALTERNATIVE_mysql$(BASE_VERSION)_main += $(foreach C,$(wordlist 2,$(words $(EXECUTABLES)),$(EXECUTABLES)),\
-	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
+	$(bindir)/$C $C $(bindir)/$C$(PROGRAM_SUFFIX))
 
 ALTERNATIVES_CSW$(NAME)client = mysql$(BASE_VERSION)_client
 ALTERNATIVE_mysql$(BASE_VERSION)_client = $(bindir)/$(firstword $(client_programs)) mysql_client $(bindir)/$(firstword $(client_programs)) $(ALTS_PRIO)
 ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(client_programs)),$(client_programs)),\
-	$(bindir)/$C $C $(bindir)/$C-$(BASE_VERSION))
+	$(bindir)/$C $C $(bindir)/$C$(PROGRAM_SUFFIX))
 ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(client_programs)),$(client_programs)),\
-	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)-$(BASE_VERSION).1)
+	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)$(PROGRAM_SUFFIX).1)
 
 # These are harmless, although it would be nice to clean them up eventually.
 # Help appreciated?
@@ -301,7 +314,7 @@ configure-custom:
 	 	/usr/bin/env -i \
 		  $(CONFIGURE_ENV) \
 			cmake . \
-			-DCMAKE_INSTALL_PREFIX=$(prefix))
+			$(CMAKE_ARGS))
 	@$(MAKECOOKIE)
 
 post-configure-modulated:
@@ -320,6 +333,11 @@ post-install-modulated:
 	# (cd $(DESTDIR)$(libdir); grmdir -v mysql)
 	ginstall -m 755 -d $(DESTDIR)$(sysconfdir)/init.d
 	ginstall -m 755 $(WORKDIR)/csw$(NAME) $(DESTDIR)$(sysconfdir)/init.d
+	# Add versions to binary names
+	for f in $(EXECUTABLES); do \
+		gmv -v "$(DESTDIR)$(bindir)/$${f}" \
+		       "$(DESTDIR)$(bindir)/$${f}$(PROGRAM_SUFFIX)"; \
+	done
 	@$(MAKECOOKIE)
 
 post-merge:
