@@ -22,7 +22,7 @@ SPKG_SOURCEURL_CSWsudoldap = http://www.sudo.ws
 RUNTIME_DEP_PKGS_CSWsudoldap += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsudoldap += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWsudoldap += CSWsudo-common
-RUNTIME_DEP_PKGS_CSWsudoldap += CSWzlib
+RUNTIME_DEP_PKGS_CSWsudoldap += CSWlibz1
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWsudoldap) CSWggettext
 
 CHECKPKG_OVERRIDES_CSWsudoldap += surplus-dependency|CSWalternatives
