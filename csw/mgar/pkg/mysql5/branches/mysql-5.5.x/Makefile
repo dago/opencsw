@@ -64,6 +64,7 @@ ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_program
 # PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 # PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
 # PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
+PATCHFILES += 0002-stop-cmake-from-messing-with-cflags.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -292,7 +293,7 @@ CONFIGURE_SCRIPTS = custom
 
 include gar/category.mk
 
-CFLAGS := $(filter-out -I%,$(CFLAGS))
+# CFLAGS := $(filter-out -I%,$(CFLAGS))
 
 test-custom:
 	alias sh=/usr/bin/bash;                           \
