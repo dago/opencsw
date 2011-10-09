@@ -25,7 +25,7 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 NAME = subversion
-VERSION = 1.7.0-rc3
+VERSION = 1.7.0-rc4
 CATEGORIES = utils
 
 DESCRIPTION = Version control rethought
