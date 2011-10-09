@@ -25,7 +25,7 @@ RUNTIME_DEP_PKGS_CSWsudoldap += CSWsudo-common
 RUNTIME_DEP_PKGS_CSWsudoldap += CSWlibz1
 BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWsudoldap) CSWggettext
 
-CHECKPKG_OVERRIDES_CSWsudoldap += surplus-dependency|CSWalternatives
+CHECKPKG_OVERRIDES_CSWsudoldap += surplus-dependency|CSWoldaprt
 CHECKPKG_OVERRIDES_CSWsudoldap += surplus-dependency|CSWsudo-common
 
 LOGPATH = /var$(prefix)/log/sudo
