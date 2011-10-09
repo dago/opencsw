@@ -58,7 +58,7 @@ PROTOTYPE_MODIFIERS = sudo
 PROTOTYPE_FILES_sudo = $(bindir)/sudo(|edit).ldap
 PROTOTYPE_PERMS_sudo = 4755
 
-LICENSE = LICENSE
+LICENSE = README
 ALTERNATIVES_CSWsudoldap = sudoldap
 ALTERNATIVE_sudoldap  = $(bindir)/sudo     sudo     $(bindir)/sudo.ldap     60
 ALTERNATIVE_sudoldap += $(bindir)/sudoedit sudoedit $(bindir)/sudoedit.ldap
