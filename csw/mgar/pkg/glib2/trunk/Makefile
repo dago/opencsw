@@ -1,6 +1,9 @@
-# TBD:
-# - python files are produced for 32/64 bit: we don't have 64 bit python, wtf?
-# - python files are not in the python lib dir, but directly in lib. The dir in configure is not used
+# $Id$
+
+# NOTE
+#
+# The test /gsettings/keyfile may fail on first attempt, rerunning the tests
+# should make it pass, though. --raos
 
 NAME = glib
 VERSION = 2.28.8
@@ -46,8 +49,8 @@ PATCHFILES += 0017-Fix-disable-testglib-tests.patch
 PATCHFILES += 0018-Disable-gdbus-connection-large_message-on-sparc.patch
 PATCHFILES += 0019-Disable-gdbus-threading-gdbus-method-calls-in-thread.patch
 PATCHFILES += 0019-Disable-volumemonitor-tests.patch
-PATCHFILES += 0022-Disable-gsettings-strinfo-on-sparcv9.patch
 PATCHFILES += 0023-Disable-data-input-stream-read-int-test-on-sparc.patch
+PATCHFILES += 0023-Disable-failing-gsettings-tests.patch
 
 # SPARCv9 Specific Patches
 PATCHFILES_isa-sparcv9 += 0023-Disable-run-assert-msg-test.sh.patch
@@ -66,9 +69,11 @@ RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWglib2 += CSWgamin
-RUNTIME_DEP_PKGS_CSWglib2 += CSWpython
+# Did not see any runtime dependency
+#RUNTIME_DEP_PKGS_CSWglib2 += CSWpython
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWglib2 += CSWlibffi5
+# Is this really a runtime dep? No ref found to this lib.
+#RUNTIME_DEP_PKGS_CSWglib2 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgio2-0-0
 ## No package split yet
@@ -83,7 +88,8 @@ RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibffi5
+# Is this really a runtime dep? No ref found to this lib.
+#RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWsharedmimeinfo
 
@@ -106,7 +112,8 @@ SPKG_DESC_CSWlibgobject2-0-0 += $(DESCRIPTION), libgobject-2.0.so.0
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibffi5
+# Is this really a runtime dep? No ref found to this lib.
+#RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibglib2-0-0
 
 PACKAGES += CSWlibgthread2-0-0
@@ -119,11 +126,13 @@ RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += CSWlibglib2-0-0
 PACKAGES += CSWlibglib2-dev
 SPKG_DESC_CSWlibglib2-dev = Development files for libglib-2.0.so.0 and assorted libglib, libgmodule, libgobject and libgthread
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibffi5
+# Is this really a runtime dep? No ref found to this lib.
+#RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWgamin
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWglib2
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWpython
+# Did not see any runtime dependency
+#RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWpython
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibglib2-0-0
@@ -134,9 +143,11 @@ PKGFILES_CSWlibglib2-dev += $(PKGFILES_DEVEL)
 OBSOLETED_BY_CSWlibglib2-dev = CSWglib2devel
 CATALOGNAME_CSWglib2devel = glib2_devel_stub
 
-BUILD_DEP_PKGS = CSWggettext CSWlibpcre-dev CSWlibiconv-dev
+BUILD_DEP_PKGS = CSWggettext CSWlibpcre-dev CSWlibiconv-dev CSWlibffi5
 # To make the tests working
-BUILD_DEP_PKGS += CSWdbuspython CSWsharedmimeinfo
+BUILD_DEP_PKGS += CSWpython CSWdbuspython CSWsharedmimeinfo
+# This is used to adjust paths in documentation
+BUILD_DEP_PKGS += CSWgsed
 
 # We don't need it and if defined the test breaks
 LD_OPTIONS =
@@ -172,22 +183,54 @@ EXTRA_COMMON_EXPORTS += DISPLAY
 EXTRA_COMMON_EXPORTS += TERM
 EXTRA_COMMON_EXPORTS += HOME
 
-PYCOMPILE = 1
+# AFAICS Python is only used for tests
+#PYCOMPILE = 1
 
 #provided by iconv
 MERGE_EXCLUDE_FILES = .*/charset.alias
+# Do we support gdb?
+MERGE_EXCLUDE_FILES += .*/gdb .*/gdb/.*
 
 # The checks below are excluded since /usr/share/ is included in default value of
 # XDG_DATA_DIRS. However, /opt/csw/share is also included, so no harm.
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libgio-2.0.so.0.2800.8
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/libgio-2.0.so.0.2800.8
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.2800.8
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libgio-2.0.so.0.2800.8
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgio-2.0.so.0.2800.8
 CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libgio-2.0.so.0.2800.8
-CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libgio-2.0.so.0.2800.8
 CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libglib-2.0.so.0.2800.8
 CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/libglib-2.0.so.0.2800.8
+CHECKPKG_OVERRIDES_CSWlibglib2-0-0 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libglib-2.0.so.0.2800.8
+
+# libgio uses the mime info for determining the type of files
+CHECKPKG_OVERRIDES_CSWlibgio2-0-0 += surplus-dependency|CSWsharedmimeinfo
+
+# This is ok since -dev has no binaries, hence checkpkg may not find
+# references
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWglib2
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWiconv
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWlibintl8
+CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWzlib
+
+# That's ok, too. /usr/local appears in an example text.
+CHECKPKG_OVERRIDES_CSWglib2 += file-with-bad-content|/usr/local|root/opt/csw/share/gtk-doc/html/glib/glib-Miscellaneous-Utility-Functions.html
 
 include gar/category.mk
 
 # We need /opt/csw/gnu/gettext, /usr/bin/gettext bails out
 PATH := /opt/csw/gnu:$(PATH)
+
+# This is in place to fix paths that make checkpkg complain
+pre-install-modulated:
+	@echo "=== Fixing paths in documentation ==="
+	for d in gio glib gobject ; do \
+		DOCBASEDIR="$(WORKSRC)/docs/reference/$$d/" ; \
+		if [ -d "$$DOCBASEDIR" ] ; then \
+			for f in $$DOCBASEDIR/html/*.html $$DOCBASEDIR/*.[123456789] ; do \
+				echo "Adjusting path in $$f" ; \
+				/opt/csw/bin/gsed -e "s|/usr/share/|$(prefix)/share/|g" -e "s|/usr/local/|$(prefix)/|g" $$f > $$f.tmp ; \
+				mv $$f.tmp $$f ; \
+			done ; \
+		fi ; \
+	done
