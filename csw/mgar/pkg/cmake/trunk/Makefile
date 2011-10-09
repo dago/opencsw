@@ -24,8 +24,8 @@ PACKAGES = CSWcmake
 CATALOGNAME_CSWcmake = cmake
 SPKG_DESC_CSWcmake = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS_CSWcmake  = CSWcurlrt CSWexpat
-RUNTIME_DEP_PKGS_CSWcmake += CSWzlib 
+RUNTIME_DEP_PKGS_CSWcmake  = CSWlibcurl4 CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWcmake += CSWlibz1
 
 
 # We define upstream file regex so we can be notifed of 
@@ -41,6 +41,81 @@ CONFIGURE_ARGS = $(DIRPATHS) --docdir=$(docdir)
 
 # switch off tests as two of them fail
 TEST_TARGET  = 
+
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/bin/cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/bin/ctest
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/bin/ccmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/bin/cpack
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/UseJava.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindSDL_image.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindSDL_sound.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindSDL_ttf.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/CMakeGenericSystem.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/GetPrerequisites.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindLAPACK.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindSDL_net.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindAVIFile.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindJava.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindProducer.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindFLTK.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/CMakeDetermineJavaCompiler.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindSelfPackers.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindPNG.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindPostgreSQL.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindFreetype.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindUnixCommands.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindSDL.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindLua50.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindTCL.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindMatlab.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindPhysFS.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindQt3.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindPike.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindwxWidgets.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindOpenAL.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindLua51.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindBLAS.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindPHP4.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindMPEG2.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindGTK.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindGTK2.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindSDL_mixer.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindCUDA.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindQt.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/CMakeDetermineSystem.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindKDE3.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindTclStub.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindFLTK2.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindJNI.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindMPEG.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/FindSquish.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/Platform/BlueGeneP-base.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/cmake-2.8.6/Modules/Platform/UnixPaths.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/cmake.1
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/cmakevars.1
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/cmakemodules.1
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cmake-2.8.6/cmake.html
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cmake-2.8.6/cmake-variables.txt
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cmake-2.8.6/cmake-modules.txt
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cmake-2.8.6/cmake.txt
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cmake-2.8.6/cmake-modules.html
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cmake-2.8.6/cmake-variables.html
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/local|root/opt/csw/share/doc/cmake-2.8.6/cmake.docbook
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/cmake-2.8.6/Modules/UseJava.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/cmake-2.8.6/Modules/FindJava.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/cmake-2.8.6/Modules/CMakeDetermineJavaCompiler.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/cmake-2.8.6/Modules/FindDart.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/cmake-2.8.6/Modules/FindQt3.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/cmake-2.8.6/Modules/FindOpenGL.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/cmake-2.8.6/Modules/FindQt.cmake
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/cmake.1
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/cmakemodules.1
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cmake-2.8.6/cmake.html
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cmake-2.8.6/cmake-modules.txt
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cmake-2.8.6/cmake.txt
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cmake-2.8.6/cmake-modules.html
+CHECKPKG_OVERRIDES_CSWcmake += file-with-bad-content|/usr/share|root/opt/csw/share/doc/cmake-2.8.6/cmake.docbook
+
 
 include gar/category.mk
 
