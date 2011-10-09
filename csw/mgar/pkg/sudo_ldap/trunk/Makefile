@@ -1,5 +1,5 @@
 NAME = sudo
-VERSION = 1.7.4p4
+VERSION = 1.8.2
 CATEGORIES = utils
 
 DESCRIPTION = Provides limited super user privileges (LDAP Enabled)
