@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = cmake
-VERSION = 2.8.4
+VERSION = 2.8.6
 CATEGORIES = devel
 
 DESCRIPTION = Cross-platform make
