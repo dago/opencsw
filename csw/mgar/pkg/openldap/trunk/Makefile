@@ -31,33 +31,86 @@ DISTFILES += patch-oldap-2.4.16-ntlm.diff
 #   /usr/local/var/ldapi
 # should be replaced by something more sane in the future.
 
+VENDOR_URL = http://www.openldap.org
+
 LICENSE = COPYRIGHT
 
-PACKAGES = CSWoldap CSWoldapclient CSWoldapdevel CSWoldaprt
+PACKAGES += CSWopenldap
+SPKG_DESC_CSWopenldap = OpenLDAP server for Lightweight Directory Access Protocol
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWopenldap += CSWbdb48
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWopenldap += CSWosslrt
+RUNTIME_DEP_PKGS_CSWopenldap += CSWsasl
+RUNTIME_DEP_PKGS_CSWopenldap += CSWunixodbc
+RUNTIME_DEP_PKGS_CSWopenldap += CSWperl
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibslp1
+RUNTIME_DEP_PKGS_CSWopenldap += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibldap-r2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicu46
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibwrap1
+OBSOLETED_BY_CSWopenldap += CSWoldap
+CATALOGNAME_CSWoldap = openldap_stub
 
-CATALOGNAME_CSWoldap       = openldap
-CATALOGNAME_CSWoldapclient = openldap_client
-CATALOGNAME_CSWoldapdevel  = openldap_devel
-CATALOGNAME_CSWoldaprt     = openldap_rt
+# Evaluate later
+CHECKPKG_OVERRIDES_CSWopenldap += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/slapd.8
 
-SPKG_DESC_CSWoldap       = OpenLDAP server for Lightweight Directory Access Protocol
-SPKG_DESC_CSWoldapclient = OpenLDAP client executables
-SPKG_DESC_CSWoldapdevel  = OpenLDAP development support
-SPKG_DESC_CSWoldaprt     = OpenLDAP runtime libraries
+PACKAGES += CSWopenldap-client
+SPKG_DESC_CSWopenldap-client = OpenLDAP client executables
+PKGFILES_CSWopenldap-client += $(bindir)/.*
+PKGFILES_CSWopenldap-client += $(mandir)/man1/.*
+RUNTIME_DEP_PKGS_CSWopenldap-client += CSWosslrt
+RUNTIME_DEP_PKGS_CSWopenldap-client += CSWsasl 
+RUNTIME_DEP_PKGS_CSWopenldap-client += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-client += CSWlibldap2-4-2
+OBSOLETED_BY_CSWopenldap-client += CSWoldapclient
+CATALOGNAME_CSWoldapclient = openldap_client_stub
 
-RUNTIME_DEP_PKGS_CSWoldap  = CSWbdb48 CSWlibnet
-RUNTIME_DEP_PKGS_CSWoldap += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWoldap += CSWosslrt CSWsasl CSWtcpwrap CSWunixodbc
-RUNTIME_DEP_PKGS_CSWoldap += CSWlibicu CSWperl
-RUNTIME_DEP_PKGS_CSWoldap += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWoldapclient = CSWlibnet CSWosslrt CSWsasl 
-RUNTIME_DEP_PKGS_CSWoldapclient += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWoldaprt = CSWlibnet CSWosslrt CSWsasl 
+PACKAGES += CSWopenldap-dev
+SPKG_DESC_CSWopenldap-dev = OpenLDAP development files for libldap-2.4.so.2, libldap_r-2.4.so.2 and liblber-2.4.so.2
+PKGFILES_CSWopenldap-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWopenldap-dev += $(mandir)/man3/.*
+RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWlibldap-r2-4-2
+RUNTIME_DEP_PKGS_CSWopenldap-dev += CSWlibldap2-4-2
+OBSOLETED_BY_CSWopenldap-dev += CSWoldapdevel
+CATALOGNAME_CSWoldapdevel = openldap_devel_stub
 
-SPKG_SOURCEURL = http://www.openldap.org
+PACKAGES += CSWliblber2-4-2
+SPKG_DESC_CSWliblber2-4-2 = OpenLDAP ASN.1 BER library, liblber-2.4.so.2
+PKGFILES_CSWliblber2-4-2 += $(call pkgfiles_lib,liblber-2.4.so.2)
+OBSOLETED_BY_CSWliblber2-4-2 += CSWoldaprt
+CATALOGNAME_CSWoldaprt = openldap_rt_stub
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWlibldap2-4-2
+SPKG_DESC_CSWlibldap2-4-2 = OpenLDAP LDAP library, libldap-2.4.so.2
+PKGFILES_CSWlibldap2-4-2 += $(call pkgfiles_lib,libldap-2.4.so.2)
+PKGFILES_CSWlibldap2-4-2 += $(sysconfdir)/ldap.conf
+PKGFILES_CSWlibldap2-4-2 += $(mandir)/man5/ldap.conf.5
+RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibldap2-4-2 += CSWsasl
+OBSOLETED_BY_CSWlibldap2-4-2 += CSWoldaprt
+
+# Evaluate later
+CHECKPKG_OVERRIDES_CSWlibldap2-4-2 += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/ldap.conf.5
+
+PACKAGES += CSWlibldap-r2-4-2
+SPKG_DESC_CSWlibldap-r2-4-2 = OpenLDAP reentrant LDAP library, libldap_r-2.4.so.2
+PKGFILES_CSWlibldap-r2-4-2 += $(call pkgfiles_lib,libldap_r-2.4.so.2)
+RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWliblber2-4-2
+RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibldap-r2-4-2 += CSWsasl
+OBSOLETED_BY_CSWlibldap-r2-4-2 += CSWoldaprt
+
+FOREIGN_PACKAGES += CSWliblber2-3-0
+OBSOLETED_BY_CSWliblber2-3-0 += CSWoldaprt
+
+FOREIGN_PACKAGES += CSWlibldap2-3-0
+OBSOLETED_BY_CSWlibldap2-3-0 += CSWoldaprt
+
+FOREIGN_PACKAGES += CSWlibldap-r2-3-0
+OBSOLETED_BY_CSWlibldap-r2-3-0 += CSWoldaprt
 
 EXTRA_DOCS = README.CSW $(PATCHFILES) openldaprc
 
@@ -67,13 +120,10 @@ bdbdir = $(prefix)/bdb48
 EXTRA_LIB = $(bdbdir)/lib 
 EXTRA_INC = $(bdbdir)/include
 
-# Not released yet.
-#EXTRA_LDFLAGS = -L$(libdir)/libnet-new
-
 sysconfdir = /etc/opt/csw
 localstatedir = /var/opt/csw
 
-MIGRATE_FILES = openldap
+MIGRATE_FILES_CSWoldapclient = openldap
 
 # Is this causing this?
 #   https://www.opencsw.org/mantis/view.php?id=4555
@@ -98,6 +148,10 @@ CONFIGURE_ARGS += --enable-dynamic
 
 # Disable MySQL Cluster
 CONFIGURE_ARGS += --disable-ndb
+
+# This libnet is meant to be provided for BeOS only, the libnet.so picked up from OpenCSW
+# is completely unrelated. Disable the linkage.
+CONFIGURE_ARGS += ac_cv_lib_net_main=no
 
 # Disable TCPwrappers in 64 bit until the libraries are available
 #   <http://opencsw.org/mantis/view.php?id=3748>
@@ -129,48 +183,7 @@ EXTRA_MERGE_EXCLUDE_FILES = .*\.default
 PRESERVECONF  = /etc/opt/csw/openldap/ldap.conf
 PRESERVECONF += /etc/opt/csw/openldap/slapd.conf
 
-PKGFILES_CSWoldapclient  = $(bindir)/.*
-PKGFILES_CSWoldapclient += $(mandir)/man1/.*
-
-PKGFILES_CSWoldapdevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWoldapdevel += $(mandir)/man3/.*
-
-PKGFILES_CSWoldaprt  = $(PKGFILES_RT)
-PKGFILES_CSWoldaprt += $(sysconfdir)/ldap.conf
-PKGFILES_CSWoldaprt += $(mandir)/man5/ldap.conf.5
-
-INITSMF = /opt/csw/etc/init.d/cswopenldap
-
-CHECKPKG_OVERRIDES_CSWoldap += init-file-wrong-location|/opt/csw/etc/init.d/cswopenldap
-
-# New libnet not released yet
-CHECKPKG_OVERRIDES_CSWoldap += deprecated-library
-CHECKPKG_OVERRIDES_CSWoldapclient += deprecated-library
-CHECKPKG_OVERRIDES_CSWoldaprt += deprecated-library
-
-# Split libraries later
-CHECKPKG_OVERRIDES_CSWoldaprt += non-uniform-lib-versions-in-package
-
-# These are all overrides because the new libnet is not in place yet.
-CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapdelete
-CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldappasswd
-CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapmodrdn
-CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapmodify
-CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapwhoami
-CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapexop
-CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapcompare
-CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapsearch
-CHECKPKG_OVERRIDES_CSWoldapclient += soname-not-found|libnet.so|is|needed|by|opt/csw/bin/ldapurl
-CHECKPKG_OVERRIDES_CSWoldapclient += surplus-dependency|CSWlibnet
-CHECKPKG_OVERRIDES_CSWoldaprt += soname-not-found|libnet.so|is|needed|by|opt/csw/lib/libldap_r-2.3.so.0.2.31
-CHECKPKG_OVERRIDES_CSWoldaprt += soname-not-found|libnet.so|is|needed|by|opt/csw/lib/liblber-2.4.so.2.5.6
-CHECKPKG_OVERRIDES_CSWoldaprt += soname-not-found|libnet.so|is|needed|by|opt/csw/lib/libldap-2.3.so.0.2.31
-CHECKPKG_OVERRIDES_CSWoldaprt += soname-not-found|libnet.so|is|needed|by|opt/csw/lib/libldap_r-2.4.so.2.5.6
-CHECKPKG_OVERRIDES_CSWoldaprt += soname-not-found|libnet.so|is|needed|by|opt/csw/lib/libldap-2.4.so.2.5.6
-CHECKPKG_OVERRIDES_CSWoldaprt += surplus-dependency|CSWlibnet
-CHECKPKG_OVERRIDES_CSWoldap += soname-not-found|libnet.so|is|needed|by|opt/csw/libexec/slapd
-CHECKPKG_OVERRIDES_CSWoldap += surplus-dependency|CSWlibnet
-
+INITSMF = /etc/opt/csw/init.d/cswopenldap
 
 include gar/category.mk
 
@@ -179,7 +192,7 @@ DIRECTORY_EXPORTS := $(filter-out includedir,$(DIRECTORY_EXPORTS))
 
 post-merge:
 	ginstall -D $(WORKDIR)/cswopenldap \
-		$(PKGROOT)/opt/csw/etc/init.d/cswopenldap
+		$(PKGROOT)/etc/opt/csw/init.d/cswopenldap
 	$(foreach F,$(EXTRA_DOCS),ginstall --mode=644 -D $(WORKDIR)/$F $(PKGROOT)$(docdir)/$(NAME)/$F;)
 	@# Enable BDB backend so OpenLDAP can start
 	perl -pi -e 's/#\s*(modulepath)/$$1/; s/#\s*(moduleload\s*back_bdb.la)/$$1/' $(PKGROOT)$(sysconfdir)/openldap/slapd.conf
