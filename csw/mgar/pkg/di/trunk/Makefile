@@ -1,5 +1,5 @@
 NAME = di
-VERSION = 4.29
+VERSION = 4.30
 CATEGORIES = utils
 
 DESCRIPTION = Disk information utility
