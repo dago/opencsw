@@ -62,7 +62,7 @@ RUNTIME_DEP_PKGS_$(SRCPACKAGE) ?= $(or $(GARPKG_$(GARSYSTEMVERSION)),$(error GAR
 # set CATALOG_RELEASE to 'current'. Used by checkpkg to query the right branch
 # in the buildfarm pkgdb. For off-site usage this can default to unstable.
 HOSTNAME := $(shell hostname)
-CATALOG_RELEASE ?= $(shell echo $(HOSTNAME) | gsed -e 's/[0-9][sx]*$$//')
+CATALOG_RELEASE ?= $(shell echo $(HOSTNAME) | gsed -re 's/[0-9]{1,2}[sx]$$//')
 ifeq ($(HOSTNAME),$(CATALOG_RELEASE))
 CATALOG_RELEASE=unstable
 endif
