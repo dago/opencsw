@@ -12,14 +12,10 @@ endef
 SF_PROJ = modauthkerb
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += CSWap2modauthkerb.postinstall
-DISTFILES += CSWap2modauthkerb.preremove
 
 # Apply patch until this is fixed:
 #   https://sourceforge.net/tracker/?func=detail&atid=464524&aid=3172644&group_id=51775
 PATCHFILES += 0001-Fix-install-destination.patch
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://modauthkerb.sourceforge.net/
 LICENSE = LICENSE
@@ -48,6 +44,9 @@ TEST_SCRIPTS =
 
 INSTALL_OVERRIDE_VARS = AP2_LIBEXEC
 INSTALL_OVERRIDE_VAR_AP2_LIBEXEC = $(AP2_LIBEXEC)
+
+AP2_MODS = 1
+AP2_MODFILES += \*auth_kerb\*so
 
 include gar/category.mk
 
