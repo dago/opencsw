@@ -1,0 +1,23 @@
+#!/bin/ksh
+#
+# $Id$
+#
+# Copyright 2006 Cory Omand <comand@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# fixlibtool - remove build-only settings from libtool .la files
+#
+
+# Remove references to temporary directories
+perl -i -plne '
+    if (/^dependency_libs/) {
+        s# -[ILR]\s*/tmp\S+##g;
+        s# -[ILR]\s*/\S+/ # #g;
+    }
+    ' $@
+

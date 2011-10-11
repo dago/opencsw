@@ -1,0 +1,23 @@
+$def with (catalogname, pkgs)
+<html>
+  <head>
+    <title>
+      $catalogname
+    </title>
+    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+  </head>
+  <body>
+
+    <h2>$catalogname</h2>
+
+    <p>Packages with catalogname '$catalogname'.</p>
+
+<ul>
+$for pkg in pkgs:
+  <li>
+  <a href="../../srv4/$pkg.md5_sum/">$pkg</a>
+  </li>
+</ul>
+
+</body>
+</html>
