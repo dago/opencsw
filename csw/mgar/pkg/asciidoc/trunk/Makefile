@@ -1,5 +1,5 @@
 NAME = asciidoc
-VERSION = 8.6.4
+VERSION = 8.6.6
 CATEGORIES = utils
 
 DESCRIPTION = A Documentation Generator
