@@ -1,0 +1,35 @@
+#!/bin/env perl -lw
+# 
+# $Id$
+#
+# Copyright 2006 Cory Omand <comand@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# stripbin - strip binaries found in the target directory
+#
+
+use strict;
+
+my $bindir = $ARGV[0] || die "Usage: $0 <binary dir>";
+
+foreach my $file (glob "$bindir/*") {
+	my ($filechar) = `file $file`;
+	die "Failed to get characteristics for file $file" unless (($? >> 8) == 0);
+
+	if ($filechar =~ /ELF/ && $filechar =~ /not stripped/) {
+		print "Stripping $file ... ";
+
+		# Make sure we can write to the file
+		my $perm = (stat $file)[2] & 07777;
+		print "making file temporarily writable ... " unless( $perm & 0200 );
+                chmod($perm | 0200, $file);
+		system "strip", $file and die "Failed.";
+		chmod($perm, $file);
+		print "Done.\n";
+	}
+}

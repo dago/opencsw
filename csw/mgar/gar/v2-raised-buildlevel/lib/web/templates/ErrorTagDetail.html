@@ -1,0 +1,40 @@
+$def with (tag_name, tags)
+<html>
+  <head>
+    <title>
+      $tag_name
+    </title>
+    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+  </head>
+  <body>
+    <h3>$tag_name</h3>
+    <table>
+    <tr>
+    <th>file name</th>
+    <th>OS release</th>
+    <th>Architecture</th>
+    <th>Catalog release</th>
+    <th>Additional information</th>
+    </tr>
+$for tag in tags:
+  $if tag.srv4_file.registered:
+    <tr>
+    <td>
+    <a href="../../srv4/$tag.srv4_file.md5_sum/">$tag.srv4_file.basename</a>
+    </td>
+    <td>
+    $tag.os_rel.full_name
+    </td>
+    <td>
+    $tag.arch.name
+    </td>
+    <td>
+    $tag.catrel.name
+    </td>
+    <td>
+    $tag.tag_info
+    </td>
+    </tr>
+</table>
+</body>
+</html>
