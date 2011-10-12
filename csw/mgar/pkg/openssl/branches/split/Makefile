@@ -19,6 +19,8 @@ NAME = openssl
 VERSION = 0.9.8r
 CATEGORIES = lib
 
+PARALLELMFLAGS =
+
 DESCRIPTION = The Open Source toolkit for SSL and TLS
 define BLURB
   The OpenSSL Project is a collaborative effort to develop a robust,
@@ -27,41 +29,55 @@ define BLURB
   as a full-strength general-purpose cryptography library.
 endef
 
-PACKAGES = CSWossl CSWosslrt CSWossldevel CSWosslutils CSWossldoc
+# STRIP_LIBTOOL = 1
+# Parallel compilation doesn't work.
+PARALLELMFLAGS =
 
-SPKG_DESC_CSWossl = Openssl meta package
-CATALOGNAME_CSWossl = openssl
-RUNTIME_DEP_PKGS_CSWossl = CSWossldevel CSWosslutils CSWosslrt
-ARCHALL_CSWossl = 1
+# PACKAGES = CSWossl CSWosslrt CSWossldevel CSWosslutils CSWossldoc
 
-SPKG_DESC_CSWosslrt = Openssl runtime libraries
-CATALOGNAME_CSWosslrt = openssl_rt
-RUNTIME_DEP_PKGS_CSWosslrt = CSWcacertificates
+PACKAGES = CSWopenssl
+SPKG_DESC_CSWopenssl = Openssl meta package
+CATALOGNAME_CSWopenssl = openssl
+RUNTIME_DEP_PKGS_CSWopenssl  = CSWopenssl-dev
+RUNTIME_DEP_PKGS_CSWopenssl += CSWopenssl-utils
+ARCHALL_CSWopenssl = 1
+OBSOLETED_BY_CSWopenssl = CSWossl
+CHECKPKG_OVERRIDES_CSWopenssl += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWopenssl += surplus-dependency|CSWopenssl-utils
+CHECKPKG_OVERRIDES_CSWopenssl += surplus-dependency|CSWopenssl-dev
 
-SPKG_DESC_CSWossldevel = Openssl development libraries and headers
-CATALOGNAME_CSWossldevel = openssl_devel
-RUNTIME_DEP_PKGS_CSWossldevel = CSWosslrt
+# SPKG_DESC_CSWosslrt = Openssl runtime libraries
+# CATALOGNAME_CSWosslrt = openssl_rt
+# RUNTIME_DEP_PKGS_CSWosslrt = CSWcacertificates
 
-SPKG_DESC_CSWossldoc = Openssl development documentation files
-CATALOGNAME_CSWossldoc = openssl_doc
+PACKAGES += CSWopenssl-dev
+SPKG_DESC_CSWopenssl-dev = Openssl development libraries and headers
+OBSOLETED_BY_CSWopenssl-dev = CSWossldevel
+PKGFILES_CSWopenssl-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWopenssl-dev += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWopenssl-dev += CSWlibcrypto0-9-8
+# The .a files are shipped in the *-dev package (not sure why).
+CHECKPKG_OVERRIDES_CSWopenssl-dev += discouraged-path-in-pkgmap
 
-SPKG_DESC_CSWosslutils = Openssl binaries and related tools 
-CATALOGNAME_CSWosslutils = openssl_utils
-RUNTIME_DEP_PKGS_CSWosslutils = CSWosslrt
-SPKG_CLASSES_CSWosslutils = none cswpreserveconf
+PACKAGES += CSWopenssl-doc
+SPKG_DESC_CSWopenssl-doc = Openssl development documentation files
+CATALOGNAME_CSWopenssl-doc = openssl_doc
+PKGFILES_CSWopenssl-doc = $(docdir).*
+ARCHALL_CSWopenssl-doc = 1
+OBSOLETED_BY_CSWopenssl-doc = CSWossldoc
+CHECKPKG_OVERRIDES_CSWopenssl-doc += file-with-bad-content
 
-# openssl is a meta-package
-CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWosslutils
-CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWossldevel
-CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWosslrt
-
+PACKAGES += CSWopenssl-utils
+SPKG_DESC_CSWopenssl-utils = Openssl binaries and related tools 
+SPKG_CLASSES_CSWopenssl-utils = none cswpreserveconf
+OBSOLETED_BY_CSWopenssl-utils = CSWosslutils
 # we use sun perl not csw one
 CHECKPKG_OVERRIDES_CSWosslutils += missing-dependency|CSWperl
-
-#CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWcacertificates
-
-# this package doesn't yet obey the new shared libraries standard
-CHECKPKG_OVERRIDES_CSWosslrt += non-uniform-lib-versions-in-package|sonames=libcrypto.so.0.9.7,libcrypto.so.0.9.8,libssl.so.0.9.7,libssl.so.0.9.8
+PKGFILES_CSWopenssl-utils += $(bindir)/c_rehash
+PKGFILES_CSWopenssl-utils += $(bindir)/openssl
+PKGFILES_CSWopenssl-utils += $(mandir)
+RUNTIME_DEP_PKGS_CSWopenssl-utils += CSWlibssl0-9-8
+RUNTIME_DEP_PKGS_CSWopenssl-utils += CSWlibcrypto0-9-8
 
 # we will not recompile old 0.9.7 version for now
 ifeq ($(shell /usr/bin/uname -p),sparc) 
@@ -72,7 +88,6 @@ CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/
 CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libssl.so.0.9.7
 CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/libcrypto.so.0.9.7
 CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/libssl.so.0.9.7
-
 
 # we do ship .a files in the devel package
 CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
@@ -90,29 +105,8 @@ CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/penti
 endif
 
 # the /usr/local references in the documents files are relevant
-CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/FAQ
-CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/INSTALL
-CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/CHANGES
-CHECKPKG_OVERRIDES_CSWossl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/INSTALL
-CHECKPKG_OVERRIDES_CSWossl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/CHANGES
-CHECKPKG_OVERRIDES_CSWossl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/FAQ
-CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/FAQ
-CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/INSTALL
-CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/CHANGES
-CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/CHANGES
-CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/INSTALL
-CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/FAQ
-CHECKPKG_OVERRIDES_CSWossldoc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_doc/CHANGES
-CHECKPKG_OVERRIDES_CSWossldoc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_doc/INSTALL
-CHECKPKG_OVERRIDES_CSWossldoc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_doc/FAQ
-
-# We will not fix this today
-CHECKPKG_OVERRIDES_CSWosslutils += catalogname-does-not-match-pkgname|pkgname=CSWosslutils|catalogname=openssl_utils|expected-catalogname=osslutils
-CHECKPKG_OVERRIDES_CSWossldevel += catalogname-does-not-match-pkgname|pkgname=CSWossldevel|catalogname=openssl_devel|expected-catalogname=ossldevel
-CHECKPKG_OVERRIDES_CSWossldoc += catalogname-does-not-match-pkgname|pkgname=CSWossldoc|catalogname=openssl_doc|expected-catalogname=ossldoc
-CHECKPKG_OVERRIDES_CSWossl += catalogname-does-not-match-pkgname|pkgname=CSWossl|catalogname=openssl|expected-catalogname=ossl
-CHECKPKG_OVERRIDES_CSWosslrt += catalogname-does-not-match-pkgname|pkgname=CSWosslrt|catalogname=openssl_rt|expected-catalogname=osslrt
-
+CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content
+CHECKPKG_OVERRIDES_CSWopenssl += file-with-bad-content
 
 ###### Upstream and opencsw files information #######
 
@@ -123,11 +117,11 @@ UPSTREAM_MASTER_SITES = http://www.openssl.org/source/
 UFILES_REGEX = $(NAME)-(0.9.8[a-z]).tar.gz
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
-DISTFILES += CSWossl.prototype
-DISTFILES += CSWosslrt.checkinstall CSWosslrt.preinstall CSWosslrt.postinstall CSWosslrt.prototype-i386 CSWosslrt.prototype-sparc
-DISTFILES += CSWossldevel.prototype-i386 CSWossldevel.prototype-sparc
-DISTFILES += CSWosslutils.prototype
-DISTFILES += changelog.CSW README.CSW
+DISTFILES += CSWosslrt.checkinstall
+DISTFILES += CSWosslrt.postinstall
+DISTFILES += CSWosslrt.preinstall
+DISTFILES += README.CSW
+DISTFILES += changelog.CSW
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
 
@@ -142,7 +136,7 @@ PATCHFILES += opencsw_paths.patch
 # (patch taken from Debian Package)
 PATCHFILES += block_diginotar.patch
 
-LICENSE=LICENSE
+LICENSE = LICENSE
 
 ##### Build and installation information #####
 
@@ -206,6 +200,36 @@ endif
 endif 
 
 TEST_SCRIPTS =
+
+PACKAGES += CSWlibcrypto0-9-7
+CATALOGNAME_CSWlibcrypto0-9-7 = libcrypto0_9_7
+PKGFILES_CSWlibcrypto0-9-7 += $(call baseisadirs,$(libdir),libcrypto\.so\.0\.9\.7)
+SPKG_DESC_CSWlibcrypto0-9-7 += $(DESCRIPTION), libcrypto.so.0.9.7
+OBSOLETED_BY_CSWlibcrypto0-9-7 = CSWosslrt
+
+PACKAGES += CSWlibcrypto0-9-8
+CATALOGNAME_CSWlibcrypto0-9-8 = libcrypto0_9_8
+PKGFILES_CSWlibcrypto0-9-8 += $(call baseisadirs,$(libdir),libcrypto\.so\.0\.9\.8)
+SPKG_DESC_CSWlibcrypto0-9-8 += $(DESCRIPTION), libcrypto.so.0.9.8
+OBSOLETED_BY_CSWlibcrypto0-9-8 = CSWosslrt
+CHECKPKG_OVERRIDES_CSWlibcrypto0-9-7 += bad-rpath-entry
+
+PACKAGES += CSWlibssl0-9-7
+CATALOGNAME_CSWlibssl0-9-7 = libssl0_9_7
+PKGFILES_CSWlibssl0-9-7 += $(call baseisadirs,$(libdir),libssl\.so\.0\.9\.7)
+SPKG_DESC_CSWlibssl0-9-7 += $(DESCRIPTION), libssl.so.0.9.7
+RUNTIME_DEP_PKGS_CSWlibssl0-9-7 += CSWlibcrypto0-9-7
+OBSOLETED_BY_CSWlibssl0-9-7 = CSWosslrt
+CHECKPKG_OVERRIDES_CSWlibssl0-9-7 += bad-rpath-entry
+
+PACKAGES += CSWlibssl0-9-8
+CATALOGNAME_CSWlibssl0-9-8 = libssl0_9_8
+PKGFILES_CSWlibssl0-9-8 += $(call baseisadirs,$(libdir),libssl\.so\.0\.9\.8)
+# The engines subdirectory belongs to the libssl library.
+PKGFILES_CSWlibssl0-9-8 += $(call baseisadirs,$(libdir),engines.*)
+RUNTIME_DEP_PKGS_CSWlibssl0-9-8 += CSWlibcrypto0-9-8
+SPKG_DESC_CSWlibssl0-9-8 += $(DESCRIPTION), libssl.so.0.9.8
+OBSOLETED_BY_CSWlibssl0-9-8 = CSWosslrt
 
 include gar/category.mk
 
