@@ -1,0 +1,46 @@
+f none /opt/csw/lib/amd64/libcrypto.so.0.9.8 0755 root bin
+f none /opt/csw/lib/amd64/libssl.so.0.9.8 0755 root bin
+d none /opt/csw/lib/engines 0755 root bin
+f none /opt/csw/lib/engines/lib4758cca.so 0555 root bin
+f none /opt/csw/lib/engines/libaep.so 0555 root bin
+f none /opt/csw/lib/engines/libatalla.so 0555 root bin
+f none /opt/csw/lib/engines/libchil.so 0555 root bin
+f none /opt/csw/lib/engines/libcswift.so 0555 root bin
+f none /opt/csw/lib/engines/libgmp.so 0555 root bin
+f none /opt/csw/lib/engines/libnuron.so 0555 root bin
+f none /opt/csw/lib/engines/libsureware.so 0555 root bin
+f none /opt/csw/lib/engines/libubsec.so 0555 root bin
+f none /opt/csw/lib/libcrypto.so.0.9.7 0555 root bin
+f none /opt/csw/lib/libcrypto.so.0.9.8 0555 root bin
+f none /opt/csw/lib/libssl.so.0.9.7 0555 root bin
+f none /opt/csw/lib/libssl.so.0.9.8 0555 root bin
+d none /opt/csw/lib/pentium_pro 0755 root bin
+f none /opt/csw/lib/pentium_pro/libcrypto.so.0.9.7 0755 root bin
+f none /opt/csw/lib/pentium_pro/libcrypto.so.0.9.8 0755 root bin
+f none /opt/csw/lib/pentium_pro/libssl.so.0.9.7 0755 root bin
+f none /opt/csw/lib/pentium_pro/libssl.so.0.9.8 0755 root bin
+d none /opt/csw/share/doc/openssl_rt 0755 root bin
+d none /opt/csw/ssl 0755 root bin
+s none /opt/csw/ssl/certs=../etc/ssl/certs
+s none /opt/csw/ssl/private=../../../etc/opt/csw/ssl/private
+d none /etc/opt/csw/ssl/private 0700 root bin
+s none /opt/csw/etc/ssl/private=../../../../etc/opt/csw/ssl/private
+f none /opt/csw/share/doc/openssl_rt/changelog.CSW 644 root bin
+f none /opt/csw/share/doc/openssl_rt/license 644 root bin
+f none /opt/csw/share/doc/openssl_rt/CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl_rt/CHANGES.SSLeay 644 root bin
+f none /opt/csw/share/doc/openssl_rt/PROBLEMS 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README 644 root bin
+f none /opt/csw/share/doc/openssl_rt/FAQ 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README.ASN1 644 root bin
+f none /opt/csw/share/doc/openssl_rt/INSTALL 644 root bin
+f none /opt/csw/share/doc/openssl_rt/NEWS 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README.ENGINE 644 root bin
+f none /opt/csw/share/doc/openssl_rt/README.CSW 644 root bin
+i checkpkg_override=checkpkg_override.CSWosslrt
+i checkinstall=CSWosslrt.checkinstall
+i copyright=CSWosslrt.copyright
+i depend=CSWosslrt.depend
+i pkginfo=CSWosslrt.pkginfo
+i postinstall=CSWosslrt.postinstall
+i preinstall=CSWosslrt.preinstall

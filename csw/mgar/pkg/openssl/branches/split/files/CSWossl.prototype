@@ -1,0 +1,14 @@
+d none /opt/csw/share/doc/openssl 0755 root bin
+f none /opt/csw/share/doc/openssl/changelog.CSW 644 root bin
+f none /opt/csw/share/doc/openssl/license 644 root bin
+f none /opt/csw/share/doc/openssl/CHANGES 644 root bin
+f none /opt/csw/share/doc/openssl/CHANGES.SSLeay 644 root bin
+f none /opt/csw/share/doc/openssl/PROBLEMS 644 root bin
+f none /opt/csw/share/doc/openssl/README 644 root bin
+f none /opt/csw/share/doc/openssl/FAQ 644 root bin
+f none /opt/csw/share/doc/openssl/README.ASN1 644 root bin
+f none /opt/csw/share/doc/openssl/INSTALL 644 root bin
+f none /opt/csw/share/doc/openssl/NEWS 644 root bin
+f none /opt/csw/share/doc/openssl/README.ENGINE 644 root bin
+f none /opt/csw/share/doc/openssl/README.CSW 644 root bin
+i checkpkg_override=checkpkg_override.CSWossl

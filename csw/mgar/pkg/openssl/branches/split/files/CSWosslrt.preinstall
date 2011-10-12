@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Certification Authority have been moved under /opt/csw/etc/ssl/certs
+# under the ca_certificates package control
+# /opt/csw/ssl/certs should now be a symbolic links 
+if [ "$MOVE_CERTS" = "Yes" ]; then
+	( 
+	cd /opt/csw/ssl/certs
+	if [ $? -eq 0 ] && [ `pwd` = "/opt/csw/ssl/certs" ]; then
+		find . -type f | while read FILE; do
+			mkdir -p -m 0755 "/opt/csw/etc/ssl/certs/`dirname $FILE`"
+			mv "$FILE" "/opt/csw/etc/ssl/certs/$FILE"
+		done		
+		find . ! -name "." -type d -exec rmdir '{}' ';'
+	fi
+	)
+	rmdir "/opt/csw/ssl/certs" 2>/dev/null || mv "/opt/csw/ssl/certs" "/opt/csw/ssl/certs.sav"
+fi
+
+true
