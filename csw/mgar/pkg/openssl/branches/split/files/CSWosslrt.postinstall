@@ -1,0 +1,9 @@
+
+
+# we regenerate the certificate hash if we moved certificates from the old /opt/csw/ssl/certs 
+# directory to /opt/csw/etc/ssl/certs
+if [ "$MOVE_CERTS" = "Yes" ]; then
+	[ ! -x "/opt/csw/sbin/update-ca-certificates" ] || /opt/csw/sbin/update-ca-certificates
+fi
+
+true

@@ -1,0 +1,48 @@
+#!/bin/sh
+
+PLATFORM=`/usr/bin/uname -p`
+VERSION=`/usr/bin/uname -r`
+
+# Solaris 8 requires patches to have /dev/random and /dev/urandom.
+if [ $VERSION -eq "5.8" ]; then
+
+	if [ ! -c $PKG_ROOT_DIR/dev/random ] && [ ! -p $PKG_ROOT_DIR/dev/random ]; then
+		echo "ERROR: /dev/random must exist."
+		err=1
+	fi
+
+	if [ ! -c $PKG_ROOT_DIR/dev/urandom ] && [ ! -p $PKG_ROOT_DIR/dev/urandom ]; then
+		echo "ERROR: /dev/urandom must exist."
+		err=1
+	fi
+
+	if [ "$err" = "1" ]; then
+		if [ $PLATFORM -eq "sparc" ]; then
+			echo "Please install patch 112438."
+		elif [ $PLATFORM -eq "i386" ]; then
+			echo "Please install patch 112439."
+		fi
+		exit 1
+	fi
+fi
+
+# Certification Authority have been moved under /opt/csw/etc/ssl/certs
+# under the ca_certificates package control
+# and /opt/csw/ssl/certs is now a symbolic links 
+
+# we test if certificates were manually installed in this directory
+if [ ! -h "/opt/csw/ssl/certs" ] &&  [ -d "/opt/csw/ssl/certs" ] && [ -n "`ls -1 /opt/csw/ssl/certs/`" ]; then
+
+	echo "Custom certificates have been installed in /opt/csw/ssl/certs/."
+	echo "They will be moved under /opt/csw/etc/ssl/certs."
+	echo "see /opt/csw/share/doc/openssl_rt/README.CSW for more information"
+        echo "about CA."
+
+	# we define the MOVE_CERTS variable so preinstall and postinstall scripts
+	# will now they have to do something about theses certificates
+	cat >>$1 <<!
+MOVE_CERTS=Yes
+!
+fi
+
+exit 0
