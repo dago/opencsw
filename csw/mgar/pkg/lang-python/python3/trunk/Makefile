@@ -98,7 +98,6 @@ PKGFILES_CSWlibpython$(DVER)-1-0 += $(call baseisadirs,$(libdir),libpython$(VER)
 SPKG_DESC_CSWlibpython$(DVER)-1-0  = Python shared library ($(VER))
 
 INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
-OBSOLETED_BY_CSWpython$(CVER)-dev = CSWpython$(CVER)-devel
 
 PKGFILES_CSWidle$(CVER)  = $(libdir)/.*/idlelib/.*
 PKGFILES_CSWidle$(CVER) += $(bindir)/idle
@@ -126,18 +125,15 @@ ARCHALL_CSWidle$(CVER)        = 1
 
 RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)-tk
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbdb47
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbzip2
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgdbm3
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpython$(DVER)-1-0
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpanel5
 RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWosslrt
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWreadline 
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWsqlite3rt
-RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWzlib
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibreadline6 
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWlibpython$(DVER)-1-0
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWpython$(CVER)
 RUNTIME_DEP_PKGS_CSWpython$(CVER)-test  += CSWpython$(CVER)
@@ -150,14 +146,11 @@ BUILD_DEP_PKGS += CSWlibffi-dev
 
 # There are packages depending on libpython2.5, and listing CSWpython as the
 # dependency.
-RUNTIME_DEP_PKGS_CSWpython               += CSWlibpython2-5-1-0
-CHECKPKG_OVERRIDES_CSWpython       += surplus-dependency|CSWlibpython2-5-1-0
+RUNTIME_DEP_PKGS_CSWpython               += CSWlibpython3-2-1-0
+CHECKPKG_OVERRIDES_CSWpython       += surplus-dependency|CSWlibpython3-2-1-0
 
 # This could be handled by automatic dependency detection
 CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
-
-# This package is not meant to be released
-CHECKPKG_OVERRIDES_CSWpython-test += file-with-bad-content
 
 CATALOGNAME_CSWidle$(CVER)         = idle
 CATALOGNAME_CSWpython$(CVER)       = python
@@ -176,14 +169,42 @@ LICENSE = LICENSE
 # This is an exception, since these are original Python packages.
 CHECKPKG_OVERRIDES_CSWidle$(CVER)         += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWidle$(CVER)         += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += catalogname-does-not-start-with-py_
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += pkgname-does-not-start-with-CSWpy-
-CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += catalogname-does-not-start-with-py_
+#CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += pkgname-does-not-start-with-CSWpy-
+#CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += catalogname-does-not-start-with-py_
+#CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += pkgname-does-not-start-with-CSWpy-
+#CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += catalogname-does-not-start-with-py_
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython += file-collision|/opt/csw/lib/pkgconfig/python3.pc|CSWpython|CSWpython31-dev
+CHECKPKG_OVERRIDES_CSWpython += file-collision|/opt/csw/bin/python3|CSWpython|CSWpython31
+
+CHECKPKG_OVERRIDES_CSWpython-tk += surplus-dependency|CSWlibpython3-2-1-0
+CHECKPKG_OVERRIDES_CSWpython-tk += surplus-dependency|CSWpython
+CHECKPKG_OVERRIDES_CSWidle += file-with-bad-content|/usr/share|root/opt/csw/lib/python3.2/idlelib/EditorWindow.py
+CHECKPKG_OVERRIDES_CSWidle += file-with-bad-content|/usr/share|root/opt/csw/lib/python3.2/idlelib/config-main.def
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/trace.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/site.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/mailcap.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/cgi.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/mimetypes.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/ctypes/macholib/dyld.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/pydoc_data/topics.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/config-3.2m/Makefile
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/config-3.2m/Setup
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/distutils/unixccompiler.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/lib/python3.2/test/test_subprocess.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/python3.2.1
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/share|root/opt/csw/lib/python3.2/test/test_posixpath.py
+CHECKPKG_OVERRIDES_CSWpython += file-with-bad-content|/usr/share|root/opt/csw/lib/python3.2/test/cfgparser.2
+CHECKPKG_OVERRIDES_CSWpython += wrong-docdir|expected=/opt/csw/shared/doc/python/...|in-package=/opt/csw/share/doc/python_devel_stub/license
+CHECKPKG_OVERRIDES_CSWpython += file-collision|/opt/csw/share/doc/python_devel_stub/license|CSWpython|CSWpython-devel
+CHECKPKG_OVERRIDES_CSWpython += file-collision|/opt/csw/lib/pkgconfig/python3.pc|CSWpython|CSWpython31-dev
+CHECKPKG_OVERRIDES_CSWpython += file-collision|/opt/csw/bin/python3|CSWpython|CSWpython31
+CHECKPKG_OVERRIDES_CSWlibpython3-2-1-0 += pkginfo-opencsw-repository-uncommitted
+CHECKPKG_OVERRIDES_CSWpython-dev += file-collision|/opt/csw/bin/python3-config|CSWpython-dev|CSWpython31-dev
+CHECKPKG_OVERRIDES_CSWpython-test += surplus-dependency|CSWpython
 
 include gar/category.mk
 
