@@ -1,4 +1,7 @@
-# $Id: Makefile 14947 2011-06-30 14:55:12Z wahwah $
+# $Id$
+#
+# See also:
+# pkg/lang-python/python/branches/python-3.1
 
 NAME = Python
 VERSION = 3.2.2
