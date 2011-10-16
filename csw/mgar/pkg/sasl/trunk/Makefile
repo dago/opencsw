@@ -1,6 +1,6 @@
 NAME = sasl
-VERSION = 2.1.22
-GARTYPE = v1
+VERSION = 2.1.25
+FILEVERSION = $(VERSION)
 CATEGORIES = lib
 
 DESCRIPTION = Simple Authentication and Security Layer
@@ -12,69 +12,129 @@ define BLURB
    layer is inserted between the protocol and the connection.
 endef
 
-# Source location
-MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail
+MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
+DISTNAME = cyrus-$(NAME)-$(VERSION)
+DISTFILES = cyrus-$(NAME)-$(FILEVERSION).tar.gz
+DISTFILES += cswsaslauthd.init saslauthd.init.CSW
+DISTFILES += README.sasl README.saslauthd
 
-# Visitor information
-SPKG_SOURCEURL = http://asg.web.cmu.edu/sasl/
+# PATCHFILES = saslauthd-doc.diff saslauthd-groff.diff ltmain.diff
 
-WORKSRC = $(WORKDIR)/cyrus-$(NAME)-$(VERSION)
+VENDOR_URL = http://asg.web.cmu.edu/sasl/
 
-DISTFILES = cyrus-$(NAME)-$(VERSION).tar.gz
+PACKAGES += CSWsasl
+CATALOGNAME_CSWsasl = sasl
+SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
+RUNTIME_DEP_PKGS_CSWsasl = CSWosslrt
+RUNTIME_DEP_PKGS_CSWsasl += CSWbdb47
+RUNTIME_DEP_PKGS_CSWsasl += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsasl += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWsasl += CSWlibsasl2-2
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = cyrus-$(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES += CSWsaslauthd
+CATALOGNAME_CSWsaslauthd = saslauthd
+SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWosslrt
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibkrb5support0
 
-BUILD_ENV = _REENTRANT=1
+PACKAGES += CSWsaslgssapi
+CATALOGNAME_CSWsaslgssapi = sasl_gssapi
+SPKG_DESC_CSWsaslgssapi = Cyrus Simple Authentication and Security Layer GSSAPI Binding
+RUNTIME_DEP_PKGS_CSWsaslgssapi = CSWsasl CSWkrb5lib
+CHECKPKG_OVERRIDES_CSWsaslgssapi += surplus-dependency|CSWsasl
 
-TEST_TARGET = check
+PACKAGES += CSWsaslsql
+CATALOGNAME_CSWsaslsql = sasl_sql
+SPKG_DESC_CSWsaslsql = Cyrus Simple Authentication and Security Layer SQL Binding
+RUNTIME_DEP_PKGS_CSWsaslsql = CSWsasl CSWlibpq CSWmysql5rt CSWsqlite
+CHECKPKG_OVERRIDES_CSWsaslsql += surplus-dependency|CSWsasl
+
+PACKAGES += CSWlibsasl2-2
+SPKG_DESC_CSWlibsasl2-2 = Simple authentication and security layer library, libsasl2.so.2
+PKGFILES_CSWlibsasl2-2 += $(call pkgfiles_lib,libsasl2.so.2)
+
+PACKAGES += CSWsasl-dev
+SPKG_DESC_CSWsasl-dev = Development files for SASL
+PKGFILES_CSWsasl-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWsasl-dev += CSWlibsasl2-2
+
+EXTRA_CFLAGS = -D__EXTENSIONS__
+
+EXTRA_BUILD_ENV = _REENTRANT=1
+
+# EXTRA_LIB = $(prefix)/bdb47/lib
+
+EXTRA_INC  = /opt/csw/include/gssapi
+EXTRA_INC += /opt/csw/include/mysql
+EXTRA_INC += /opt/csw/postgresql/include
+
+# Do not use LD_OPTIONS as it breaks tests by using the installed libraries
+# before the newly built ones.
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+LD_OPTIONS = -L$(abspath $(prefix)/bdb47/lib/$(MM_LIBDIR)) -R$(abspath $(prefix)/bdb47/lib/$(MM_LIBDIR))
+
+BUILD64 = 1
+NOISALIST = 1
+
+NODIRPATHS = --docdir
+
+# SASL configuration
+CONFIGURE_ARGS = $(DIRPATHS) 
+CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --disable-static 
+CONFIGURE_ARGS += --enable-sql
+CONFIGURE_ARGS += --with-bdb-libdir=$(abspath /opt/csw/bdb47/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS += --with-bdb-incdir=/opt/csw/bdb47/include/ 
+CONFIGURE_ARGS += --with-saslauthd=$(localstatedir)/saslauthd 
+CONFIGURE_ARGS += --with-ipctype=unix 
+CONFIGURE_ARGS += --with-ldap=$(libdir)
+# Autoconf tries to find the directory with the shared lib in it. Because of the
+# ISA suffix for 64 bit we must specify the exact library location and add
+# the include directories manually.
+#CONFIGURE_ARGS += --with-mysql=$(libdir)
+CONFIGURE_ARGS += --with-mysql=$(libdir)
+CONFIGURE_ARGS += --with-pgsql=$(abspath $(prefix)/postgresql/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS += --with-openssl=$(libdir)
+CONFIGURE_ARGS += --with-dbpath=$(sysconfdir)/sasldb2
+CONFIGURE_ARGS += --with-plugindir=$(libdir)/sasl2 
+CONFIGURE_ARGS += --enable-login
+# This is for 32/64 switching. We do this all by ourselves, do not use SASLs mechanism
+CONFIGURE_ARGS += --without-lib-subdir
 
 SED=/usr/bin/sed
 EGREP=/usr/bin/egrep
 max_cmd_line=65535
 
-# SASL libraries and utilities
-DISTFILES += $(call admfiles,CSWsasl,$(ADMSTANDARD) $(ADMISCRIPTS))
-# SASL authentication server
-DISTFILES += $(call admfiles,CSWsaslauthd,$(ADMADDON))
-# SASL sql plugin
-DISTFILES += $(call admfiles,CSWsaslsql,$(ADMSTANDARD))
-# SASL gssapi plugin
-DISTFILES += $(call admfiles,CSWsaslgssapi,$(ADMSTANDARD))
-
-# Init files for SASLAUTHD
-DISTFILES += cswsaslauthd.init saslauthd.init.CSW
-
-PATCHFILES = saslauthd-doc.diff saslauthd-groff.diff ltmain.diff
-
 #INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir libdir includedir mandir
 
-EXTRA_LIBS += /opt/csw/bdb4/lib
-EXTRA_LIBS += /opt/csw/mysql4/lib
-EXTRA_LIBS += /opt/csw/postgresql/lib
+PKGFILES_CSWsaslauthd = /etc/opt/csw/init.d/cswsaslauthd.init
+PKGFILES_CSWsaslauthd += $(bindir)/testsaslauthd
+PKGFILES_CSWsaslauthd += $(sbindir)/saslauthd
+PKGFILES_CSWsaslauthd += $(mandir)/.*/saslauthd\.8
+PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/LDAP_SASLAUTHD
+PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/README.saslauthd
+PKGFILES_CSWsaslauthd += /var/opt/csw/saslauthd
+PKGFILES_CSWsaslgssapi = $(libdir)/sasl2/libgssapiv2\..*
+PKGFILES_CSWsaslsql = $(libdir)/sasl2/libsql\..*
 
-# SASL configuration
-CONFIGURE_ARGS = $(DIRPATHS) 
-CONFIGURE_ARGS += --disable-static 
-CONFIGURE_ARGS += --enable-sql
-CONFIGURE_ARGS += --with-bdb-libdir=/opt/csw/bdb4/lib 
-CONFIGURE_ARGS += --with-bdb-incdir=/opt/csw/bdb4/include/ 
-CONFIGURE_ARGS += --with-saslauthd=/var/opt/csw/saslauthd 
-CONFIGURE_ARGS += --with-ipctype=unix 
-CONFIGURE_ARGS += --with-ldap=/opt/csw 
-CONFIGURE_ARGS += --with-mysql=/opt/csw/mysql4/ 
-CONFIGURE_ARGS += --with-pgsql=/opt/csw/postgresql 
-CONFIGURE_ARGS += --with-openssl=/opt/csw 
-CONFIGURE_ARGS += --with-dbpath=/opt/csw/etc/sasldb2 
-CONFIGURE_ARGS += --with-plugindir=/opt/csw/lib/sasl2 
-CONFIGURE_ARGS += --enable-login
+MIGRATECONF = saslauthd.conf sasldb2
+PRESERVECONF = saslauthd.conf
 
+INITSMF = /etc/opt/csw/init.d/cswsaslauthd.init
 
-all: .DEFAULT
-.DEFAULT:
-	@true
+CSWsasl_usergroup = :sasl:::::: 
 
-post-install: testsaslauthd install-testsaslauthd install-doc
+include gar/category.mk
+
+post-install-modulated: testsaslauthd install-testsaslauthd install-doc
+	ginstall -d $(DESTDIR)/etc/opt/csw/init.d/
+	ginstall $(WORKDIR)/cswsaslauthd.init $(DESTDIR)/etc/opt/csw/init.d
+	@$(MAKECOOKIE)
 
 DOC_FILES = rfc1321.txt \
                 rfc1939.txt \
@@ -120,25 +180,21 @@ DOC_FILES = rfc1321.txt \
                 TODO \
                 ONEWS
 
-INSTDIR = $(DESTDIR)/opt/csw
-
-
 testsaslauthd:
 	cd $(WORKSRC)/saslauthd && make testsaslauthd
 
 install-testsaslauthd:
-	-mkdir -p $(INSTDIR)/bin
-	cp $(WORKSRC)/saslauthd/testsaslauthd $(INSTDIR)/bin
+	mkdir -p $(DESTDIR)$(bindir)
+	cp $(WORKSRC)/saslauthd/testsaslauthd $(DESTDIR)$(bindir)
+	mkdir -p $(DESTDIR)/var/opt/csw/saslauthd
 
 install-doc:
-	-mkdir -p $(INSTDIR)/share/doc/sasl
+	mkdir -p $(DESTDIR)$(docdir)/sasl
+	cp $(WORKDIR)/README.sasl $(DESTDIR)$(docdir)/sasl/README.CSW
 	list='$(DOC_FILES)'; for file in $$list; do \
-		cp $(WORKSRC)/doc/$$file $(INSTDIR)/share/doc/sasl; \
+		cp $(WORKSRC)/doc/$$file $(DESTDIR)$(docdir)/sasl; \
 	     done
-	cp files/README.sasl $(INSTDIR)/share/doc/sasl/README.CSW
-	-mkdir -p $(INSTDIR)/share/doc/saslauthd
-	cp $(WORKSRC)/saslauthd/LDAP_SASLAUTHD $(INSTDIR)/share/doc/saslauthd
-	cp files/README.saslauthd $(INSTDIR)/share/doc/saslauthd/README.CSW
+	mkdir -p $(DESTDIR)$(docdir)/saslauthd
+	cp $(WORKSRC)/saslauthd/LDAP_SASLAUTHD $(DESTDIR)$(docdir)/saslauthd
+	cp $(WORKDIR)/README.saslauthd $(DESTDIR)$(docdir)/saslauthd/README.CSW
 
-
-include gar/category.mk

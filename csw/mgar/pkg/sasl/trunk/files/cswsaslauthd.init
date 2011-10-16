@@ -1,6 +1,18 @@
 #!/bin/sh
 # Startup script for saslauthd
 
+# s none /etc/rc2.d/S85cswsaslauthd=../init.d/cswsaslauthd
+# s none /etc/rc0.d/K15cswsaslauthd=../init.d/cswsaslauthd
+# s none /etc/rc1.d/K15cswsaslauthd=../init.d/cswsaslauthd
+# s none /etc/rc2.d/K15cswsaslauthd=../init.d/cswsaslauthd
+# s none /etc/rcS.d/K15cswsaslauthd=../init.d/cswsaslauthd
+
+# Magic setting for CSWcswclassutils
+#RC_KNUM 15
+#RC_SNUM 85
+#RC_KLEV 0,1,2,S
+#RC_SLEV 2
+
 INIT_FILE=/etc/opt/csw/saslauthd.init
 if [ -f "${INIT_FILE}" ]; then
   INIT_FILE=/opt/csw/etc/saslauthd.init
