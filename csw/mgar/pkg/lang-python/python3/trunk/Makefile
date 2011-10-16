@@ -1,7 +1,23 @@
+# $Id: Makefile 14947 2011-06-30 14:55:12Z wahwah $
+
 NAME = Python
 VERSION = 3.2.2
 CATEGORIES = lang
-PACKAGES = CSWpython3 CSWpython3-tk CSWidle3
+VER = 3.2
+DVER = 3-2
+UVER = 3_2
+PVER = python$(VER)
+CVER =
+
+# Known issues:
+#
+# - No 64-bit build
+# - ctypes module doesn't compile
+#   - http://forums.sun.com/thread.jspa?threadID=5148204
+#   - http://bugs.python.org/issue4902
+#     - Python-2.6.1/Modules/_ctypes/libffi/src/x86/sysv.S
+
+SPKG_SOURCEURL = http://python.org/download/releases/$(VERSION)
 
 DESCRIPTION = A high-level scripting language.
 define BLURB
@@ -14,41 +30,172 @@ define BLURB
   an extension language for applications that need a programmable interface.
 endef
 
-SPKG_SOURCEURL = http://python.org/
 MASTER_SITES = http://python.org/ftp/python/$(VERSION)/
+UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 
 DISTFILES  = $(DISTNAME).tar.bz2
 
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
 # Patches
-PATCHFILES += 
+#PATCHFILES += faqwiz.diff
+#PATCHFILES += makesetup.diff
+#PATCHFILES += modules.diff
+#PATCHFILES += multiprocess.diff
+#PATCHFILES += pyport.diff
+#PATCHFILES += site.diff
+#PATCHFILES += python-config-in.diff
+#PATCHFILES += setup.diff
+#PATCHFILES += 0001-FFI_DEFAULT_ABI-to-use-__i386.patch
+# PATCHFILES += 0010-Hardcoding-the-use-of-libffi.patch
+# PATCHFILES += 0011-OpenCSW-specific-libffi-include-dir.patch
+# PATCHFILES += 0012-temporary-hack-to-compile-against-system-ffi.patch
+#PATCHFILES += 0013-Use-opt-csw-bin-python-in-cgi.py.patch
+#PATCHFILES += 0015-Adding-opt-csw-lib-to-dyld.py.patch
+#PATCHFILES += 0016-CSW-mimetypes.patch
+#PATCHFILES += 0017-Random-insignificant-removals-of-usr-local.patch
+#PATCHFILES += 0018-Removing-usr-local-from-mailcap.patch
 
 # Test for sunaudiodev fails.
 SKIPTEST = 1
 
+EXTRA_INC += $(prefix)/bdb47/include
+EXTRA_LIB += $(prefix)/bdb47/lib
+
+# There is a file name conflict over libffi.so symlink between libffi package
+# and a gcc-java package.  While it will ultimately belong to libffi_dev, the
+# symlink is currently under a subdirectory.
+# pkgchk -L CSWlibffi-dev
+# (...)
+# /opt/csw/lib/ffi/libffi.so=../libffi.so.5.0.10 s none CSWlibffi-dev
+EXTRA_LIB += $(libdir)/ffi
+
+BASECFLAGS = $(CFLAGS)
+EXTRA_COMMON_EXPORTS = BASECFLAGS
+
+NOISALIST = 1
 CONFIGURE_ARGS  = $(DIRPATHS) 
+CONFIGURE_ARGS += --enable-shared
+CONFIGURE_ARGS += --enable-ipv6
+CONFIGURE_ARGS += --enable-unicode=ucs4
+CONFIGURE_ARGS += --without-gcc
+CONFIGURE_ARGS += --with-signal-module
+CONFIGURE_ARGS += --with-fpectl
+CONFIGURE_ARGS += --with-system-ffi
 
-PKGFILES_CSWidle3  = $(libdir)/python(\d+(?:\.\d+)*)/idlelib/.*
-PKGFILES_CSWidle3 += $(bindir)/idle
-PKGFILES_CSWpython3-tk  = $(libdir)/python(\d+(?:\.\d+)*)/lib-tk/.*
-PKGFILES_CSWpython3-tk += $(libdir)/python(\d+(?:\.\d+)*)/lib-dynload/_tkinter.so.*
+# This doesn't work here, as _PYCOMPILE_FILES is not the directory Python uses.
+# PYCOMPILE = 1
+EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
+# use prototype filters to set the class 
+PROTOTYPE_FILTER = awk '$$$$3 ~/.*\.py$$$$/ { $$$$2 = "cswpycompile" } { print }'
 
-RUNTIME_DEP_PKGS_CSWpython3  = CSWbdb44 CSWbzip2 CSWgdbm CSWggettextrt 
-RUNTIME_DEP_PKGS_CSWpython3 += CSWncurses CSWosslrt CSWreadline CSWzlib
-RUNTIME_DEP_PKGS_CSWpython3 += CSWsqlite3 CSWtcl CSWtk
-RUNTIME_DEP_PKGS_CSWpython3-tk = CSWpython3 CSWtcl CSWtk
-RUNTIME_DEP_PKGS_CSWidle3 = CSWpython3 CSWpython3-tk
+PACKAGES  = CSWidle$(CVER)
+PACKAGES += CSWpython$(CVER)
+PACKAGES += CSWpython$(CVER)-dev
+PACKAGES += CSWpython$(CVER)-test
+PACKAGES += CSWpython$(CVER)-tk
+PACKAGES += CSWlibpython$(DVER)-1-0
+CATALOGNAME_CSWlibpython$(DVER)-1-0 = libpython$(UVER)_1_0
+PKGFILES_CSWlibpython$(DVER)-1-0 += $(call baseisadirs,$(libdir),libpython$(VER)\.so\.1\.0(\.\d+)*)
+SPKG_DESC_CSWlibpython$(DVER)-1-0  = Python shared library ($(VER))
 
-CATALOGNAME_CSWpython3 = python
-CATALOGNAME_CSWpython3-tk = python_tk
-CATALOGNAME_CSWidle3 = idle
+INCOMPATIBLE_PKGS_CSWpython$(CVER) = CSWpydistutils
+OBSOLETED_BY_CSWpython$(CVER)-dev = CSWpython$(CVER)-devel
 
-SPKG_DESC_CSWpython3 = A high-level scripting language.
-SPKG_DESC_CSWpython3-tk = Python Tk Interface (TkInter)
-SPKG_DESC_CSWidle3 = Python IDE
+PKGFILES_CSWidle$(CVER)  = $(libdir)/.*/idlelib/.*
+PKGFILES_CSWidle$(CVER) += $(bindir)/idle
+PKGFILES_CSWpython$(CVER)-dev  = $(includedir)/.*
+PKGFILES_CSWpython$(CVER)-dev += $(libdir)/.*/config/.*
+PKGFILES_CSWpython$(CVER)-dev += $(bindir)/.*config.*
+PKGFILES_CSWpython$(CVER)-dev += $(libdir)/libpython$(VER).so
+# No idea why would this be in CSWpython, and no good idea for a better package
+# to put it.
+PKGFILES_CSWpython$(CVER)-dev += $(bindir)/smtpd.py
+
+PKGFILES_CSWpython$(CVER)-tk  = $(libdir)/.*/lib-tk/.*
+PKGFILES_CSWpython$(CVER)-tk += $(libdir)/.*/lib-dynload/_tkinter.so.*
+PKGFILES_CSWpython$(CVER)-test  = $(libdir)/python/test/.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/bsddb/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/ctypes/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/email/test.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/distutils/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/json/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/lib2to3/tests.*
+PKGFILES_CSWpython$(CVER)-test += $(libdir)/python/sqlite3/test.*
+
+ARCHALL_CSWpython$(CVER)-test = 1
+ARCHALL_CSWidle$(CVER)        = 1
+
+RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWidle$(CVER)   += CSWpython$(CVER)-tk
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbdb47
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWbzip2
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibffi5
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibgdbm3
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWlibpanel5
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWreadline 
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWsqlite3rt
+RUNTIME_DEP_PKGS_CSWpython$(CVER) += CSWzlib
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-dev += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-test  += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWlibpython$(DVER)-1-0
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWpython$(CVER)
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtcl
+RUNTIME_DEP_PKGS_CSWpython$(CVER)-tk    += CSWtk 
+
+BUILD_DEP_PKGS += CSWlibffi-dev
+
+# There are packages depending on libpython2.5, and listing CSWpython as the
+# dependency.
+RUNTIME_DEP_PKGS_CSWpython               += CSWlibpython2-5-1-0
+CHECKPKG_OVERRIDES_CSWpython       += surplus-dependency|CSWlibpython2-5-1-0
+
+# This could be handled by automatic dependency detection
+CHECKPKG_OVERRIDES_CSWidle$(CVER) += surplus-dependency|CSWpython$(CVER)-tk
+
+# This package is not meant to be released
+CHECKPKG_OVERRIDES_CSWpython-test += file-with-bad-content
+
+CATALOGNAME_CSWidle$(CVER)         = idle
+CATALOGNAME_CSWpython$(CVER)       = python
+CATALOGNAME_CSWpython$(CVER)-dev = python$(CVER)_dev
+CATALOGNAME_CSWpython$(CVER)-tk    = python$(CVER)_tk
+CATALOGNAME_CSWpython$(CVER)-test  = python$(CVER)_test
+
+SPKG_DESC_CSWidle$(CVER)         = Python IDE
+SPKG_DESC_CSWpython$(CVER)       = A high-level scripting language, $(VER) series
+SPKG_DESC_CSWpython$(CVER)-dev = Development Files for Python
+SPKG_DESC_CSWpython$(CVER)-tk    = Python Tk Interface (TkInter)
+SPKG_DESC_CSWpython$(CVER)-test  = Python Test modules
+
+LICENSE = LICENSE
+
+# This is an exception, since these are original Python packages.
+CHECKPKG_OVERRIDES_CSWidle$(CVER)         += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWidle$(CVER)         += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-test  += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-dev += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER)-tk    += catalogname-does-not-start-with-py_
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += pkgname-does-not-start-with-CSWpy-
+CHECKPKG_OVERRIDES_CSWpython$(CVER) += catalogname-does-not-start-with-py_
 
 include gar/category.mk
 
+post-configure-modulated:
+	for f in Modules/Setup \
+			Makefile \
+			Makefile.pre \
+			Lib/idlelib/EditorWindow.py \
+			Lib/pydoc_topics.py \
+			Lib/idlelib/config-main.def \
+			; do \
+		gsed -i -e 's+/usr/local+/opt/csw+g' $(WORKSRC)/$${f}; \
+		gsed -i -e 's+/usr/share+/opt/csw/share+g' $(WORKSRC)/$${f}; \
+	done
+	@$(MAKECOOKIE)
