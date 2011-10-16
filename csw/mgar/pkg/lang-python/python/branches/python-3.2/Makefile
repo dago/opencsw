@@ -36,14 +36,9 @@ UPSTREAM_MASTER_SITES = http://python.org/ftp/python/
 DISTFILES  = $(DISTNAME).tar.bz2
 
 # Patches
-PATCHFILES += faqwiz.diff
 PATCHFILES += makesetup.diff
 PATCHFILES += modules.diff
 PATCHFILES += multiprocess.diff
-# PATCHFILES += pyport.diff
-# PATCHFILES += site.diff
-# PATCHFILES += python-config-in.diff
-# PATCHFILES += setup.diff
 
 # The test for sunaudiodev fails.  Not that it's a good practice to skip
 # tests.
