@@ -1,5 +1,5 @@
 NAME = msmtp
-VERSION = 1.4.24
+VERSION = 1.4.25
 CATEGORIES = net
 
 DESCRIPTION = SMTP client
@@ -35,7 +35,7 @@ RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWmsmtp += CSWglib2
 
-RUNTIME_DEP_PKGS_5.9 = CSWlibgnugetopt
+RUNTIME_DEP_PKGS_5.9 = CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSWmsmtp += $(RUNTIME_DEP_PKGS_$(GAROSREL))
 
 EXTRA_LINKER_FLAGS_5.9 = -lgnugetopt
@@ -43,9 +43,10 @@ EXTRA_LINKER_FLAGS = $(EXTRA_LINKER_FLAGS_$(GAROSREL))
 
 VENDOR_URL = http://msmtp.sourceforge.net/
 
-BUILD_DEP_PKGS += CSWgnutlsdevel
+BUILD_DEP_PKGS += CSWlibgnutls-dev
 BUILD_DEP_PKGS += CSWlibgsasldevel
-BUILD_DEP_PKGS += CSWggettext
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWgnomekeyring-dev
 
 PRESERVECONF = $(sysconfdir)/msmtprc
 
