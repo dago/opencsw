@@ -1,5 +1,5 @@
 NAME = pca
-VERSION = 20110812-01
+VERSION = 20111018-01
 CATEGORIES = utils
 
 DESCRIPTION = Patch Check Advanced
@@ -17,6 +17,9 @@ MASTER_SITES += http://www.par.univie.ac.at/solaris/pca/download/
 MASTER_SITES += http://www.par.univie.ac.at/solaris/pca/contrib/
 DISTFILES  = $(NAME)-$(VERSION)
 DISTFILES += chkmin
+DISTFILES += mkxref
+DISTFILES += clean
+DISTFILES += cleanup_sadm
 DISTFILES += COPYING
 DISTFILES += pca.conf
 
@@ -51,7 +54,11 @@ post-extract-modulated:
 install-custom:
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall $(WORKSRC)/pca $(DESTDIR)$(bindir)/pca
-	ginstall $(WORKSRC)/chkmin $(DESTDIR)$(bindir)/chkmin
+	ginstall -d $(DESTDIR)$(sharedstatedir)/pca/contrib
+	ginstall $(WORKSRC)/chkmin $(DESTDIR)$(sharedstatedir)/pca/contrib/chkmin
+	ginstall $(WORKSRC)/mkxref $(DESTDIR)$(sharedstatedir)/pca/contrib/mkxref
+	ginstall $(WORKSRC)/clean $(DESTDIR)$(sharedstatedir)/pca/contrib/clean
+	ginstall $(WORKSRC)/cleanup_sadm $(DESTDIR)$(sharedstatedir)/pca/contrib/cleanup_sadm
 	ginstall -d $(DESTDIR)/etc/opt/csw
 	ginstall $(WORKSRC)/pca.conf $(DESTDIR)/etc/opt/csw
 	ginstall -d $(DESTDIR)$(mandir)/man8
