@@ -1,5 +1,5 @@
 NAME = bundler
-VERSION = 1.0.13
+VERSION = 1.0.14
 CATEGORIES = rbgems
 
 DESCRIPTION = Manages an application's dependencies through its entire life,
@@ -11,9 +11,9 @@ PACKAGES = CSWgem-bundler
 CATALOGNAME = gem_bundler
 
 # This is docs only
-CHECKPKG_OVERRIDES_CSWgem-bundler += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/gems/1.8/gems/bundler-1.0.13/lib/bundler/man/bundle-config
-CHECKPKG_OVERRIDES_CSWgem-bundler += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/gems/1.8/gems/bundler-1.0.13/lib/bundler/man/bundle-config.txt
-CHECKPKG_OVERRIDES_CSWgem-bundler += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/gems/1.8/gems/bundler-1.0.13/man/bundle-config.ronn
+CHECKPKG_OVERRIDES_CSWgem-bundler += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/gems/1.8/gems/bundler-1.0.14/lib/bundler/man/bundle-config
+CHECKPKG_OVERRIDES_CSWgem-bundler += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/gems/1.8/gems/bundler-1.0.14/lib/bundler/man/bundle-config.txt
+CHECKPKG_OVERRIDES_CSWgem-bundler += file-with-bad-content|/usr/local|root/opt/csw/lib/ruby/gems/1.8/gems/bundler-1.0.14/man/bundle-config.ronn
 
 LICENSE = LICENSE
 
