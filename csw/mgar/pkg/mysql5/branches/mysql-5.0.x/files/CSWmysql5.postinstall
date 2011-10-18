@@ -10,9 +10,9 @@
 #
 # http://dev.mysql.com/doc/refman/5.0/en/option-files.html
 #
-prefix="/opt/csw/mysql5"
+prefix="/opt/csw"
 BASEDIR="${prefix}"
-MYSQL_HOME="/var${prefix}"
+MYSQL_HOME="/var${prefix}/mysql5"
 sysconfdir="/etc${prefix}"
 # https://www.opencsw.org/mantis/view.php?id=4646
 DEFAULTS_FILE="${sysconfdir}/my.cnf"
@@ -64,7 +64,7 @@ fi
 echo "Creating MySQL core database in $MYSQLD_DATADIR"
 echo
 echo "###  The following messages are from mysql_install_db."
-$BASEDIR/bin/mysql_install_db \
+"$BASEDIR/bin/mysql_install_db-5.0" \
     --defaults-extra-file="$DEFAULTS_FILE" \
     --user="$MYSQLD_USER" \
     --basedir="$BASEDIR" \
@@ -72,7 +72,7 @@ $BASEDIR/bin/mysql_install_db \
 
 # Fix permissions on the data directory, since mysql_install_db was run as
 # root.
-chown -R mysql:mysql $MYSQLD_DATADIR
+chown -R ${MYSQLD_USER}:mysql $MYSQLD_DATADIR
 
 # Update --datadir in the cnf file with the correct value if file was copied
 if [ x"$CNFCOPIED" = xyes ]; then
