@@ -266,8 +266,7 @@ TEST_TARGET  = check
 
 include gar/category.mk
 
-BINDING_LANGS   = java perl ruby
-#BINDING_LANGS   = java perl python ruby
+BINDING_LANGS   = java perl python ruby
 BINDING_TARGETS = $(addprefix svn-,$(BINDING_LANGS))
 
 PI_DEPENDS += copy-templates
