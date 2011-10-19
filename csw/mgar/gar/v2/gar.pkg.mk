@@ -91,6 +91,7 @@ endef
 $(foreach P,$(OBSOLETED_PKGS),$(eval $(call obsoleted_pkg,$P)))
 
 _PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
+$(if $(_PKG_SPECS),,$(error No packages for building defined))
 
 # The is the name of the package containing the sourcefiles for all packages generated from this GAR recipe.
 # It defaults to the first defined package name or gspec. SRCPACKAGE_BASE is guaranteed
@@ -113,8 +114,6 @@ $(if $(PREREQUISITE_PKGS),$(error The deprecated variable 'PREREQUISITE_PKGS' is
 $(foreach P,$(SPKG_SPECS),$(if $(PREREQUISITE_PKGS_$P),$(error The deprecated variable 'PREREQUISITE_PKGS_$P' is defined, please replace it with BUILD_DEP_PKGS_$P)))
 $(if $(REQUIRED_PKGS),$(error The deprecated variable 'REQUIRED_PKGS' is defined, please replace it with RUNTIME_DEP_PKGS))
 $(foreach P,$(SPKG_SPECS),$(if $(REQUIRED_PKGS_$P),$(error The deprecated variable 'REQUIRED_PACKAGES_$P' is defined, please replace it with RUNTIME_DEP_PKGS_$P)))
-
-_PKG_SPECS      = $(filter-out $(NOPACKAGE),$(SPKG_SPECS))
 
 BUNDLE ?= $(NAME)
 
