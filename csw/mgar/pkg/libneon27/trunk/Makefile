@@ -47,7 +47,6 @@ RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibproxy
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibcom-err3
-RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibkrb5support0
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWlibneon27-feature += CSWlibgssapi-krb5-2
@@ -65,19 +64,12 @@ OBSOLETED_BY_CSWlibneon-dev = CSWneon-devel
 # This describes the defaults during configure
 CHECKPKG_OVERRIDES_CSWlibneon-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/neon/html/using.html
 
-# This comes from krb5-config --libs
-CHECKPKG_OVERRIDES_CSWlibneon27-feature += bad-rpath-entry|/opt/csw/lib/|opt/csw/lib/libneon-feature.so.27.2.5
-
 # These are artifacts of the feature lib being a regular one.
 # As it is never linked against the soname doesn't matter here and the package name
 # is obviously different from the soname in this case.
-CHECKPKG_OVERRIDES_CSWlibneon27-feature += soname-not-part-of-filename|soname=libneon.so.27|filename=libneon-feature.so.27.2.5
-CHECKPKG_OVERRIDES_CSWlibneon27-feature += soname-not-part-of-filename|soname=libneon.so.27|filename=libneon-feature.so.27.2.5
+CHECKPKG_OVERRIDES_CSWlibneon27-feature += soname-not-part-of-filename|soname=libneon.so.27|filename=libneon-feature.so.27.2.6
+CHECKPKG_OVERRIDES_CSWlibneon27-feature += soname-not-part-of-filename|soname=libneon.so.27|filename=libneon-feature.so.27.2.6
 CHECKPKG_OVERRIDES_CSWlibneon27-feature += shared-lib-pkgname-mismatch
-
-# These will go away after release
-CHECKPKG_OVERRIDES_CSWlibneon27 += file-collision|/opt/csw/lib/libneon.so.27|CSWlibneon27|CSWneon
-CHECKPKG_OVERRIDES_CSWlibneon27 += file-collision|/opt/csw/lib/sparcv9/libneon.so.27|CSWlibneon27|CSWneon
 
 BUILD_DEP_PKGS = CSWossldevel
 
@@ -135,6 +127,6 @@ post-merge:
 	@# This is needed because the substitutions from pax args do not change the
 	@# contents of the symlink
 	rm -f $(PKGROOT)$(libdir)/libneon-feature.so.27
-	ln -s libneon-feature.so.27.2.5 $(PKGROOT)$(libdir)/libneon-feature.so.27
+	ln -s libneon-feature.so.27.2.6 $(PKGROOT)$(libdir)/libneon-feature.so.27
 	rm -f $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libneon-feature.so.27
-	ln -s libneon-feature.so.27.2.5 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libneon-feature.so.27
+	ln -s libneon-feature.so.27.2.6 $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/libneon-feature.so.27
