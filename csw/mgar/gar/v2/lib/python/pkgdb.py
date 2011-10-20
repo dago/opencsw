@@ -128,7 +128,10 @@ class HtmlGenerator(object):
       data = srv4.GetStatsStruct()
       build_src_url_svn = srv4.GetSvnUrl()
       build_src_url_trac = srv4.GetTracUrl()
-      data["build_src"] = data["pkginfo"]["OPENCSW_REPOSITORY"]
+      if "OPENCSW_REPOSITORY" in data["pkginfo"]:
+        data["build_src"] = data["pkginfo"]["OPENCSW_REPOSITORY"]
+      else:
+        data["build_src"] = u"Repository address unknown"
       data["build_src_url_svn"] = build_src_url_svn
       data["build_src_url_trac"] = build_src_url_trac
       data["error_tags"] = list(self.GetErrorTagsResult(srv4))
