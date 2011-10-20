@@ -1,5 +1,9 @@
+# TBD:
+# - Link against new libfbopenssl0
+# - Link against new librtmp0
+
 NAME = curl
-VERSION = 7.21.6
+VERSION = 7.21.7
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers
@@ -16,10 +20,6 @@ endef
 MASTER_SITES = http://curl.haxx.se/download/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-# Use patch until this is fixed:
-#   https://sourceforge.net/tracker/?func=detail&aid=3294509&group_id=976&atid=100976
-PATCHFILES += 0001-Use-stdint.h-only-when-it-is-available-fall-back-to-.patch
-
 FOREIGN_PACKAGES += CSWlibcurl2
 OBSOLETED_BY_CSWlibcurl2 += CSWcurlrt
 CATALOGNAME_CSWcurlrt = curl_rt_stub
@@ -33,20 +33,21 @@ SPKG_DESC_CSWlibcurl4 = Library for client-side URL transfers, libcurl.so.4
 PKGFILES_CSWlibcurl4 = $(call pkgfiles_lib,libcurl.so.4)
 OBSOLETED_BY_CSWlibcurl4 = CSWcurlrt
 RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWosslrt
-RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWzlib 
+RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibcurl4 += CSWlibidn11
 
 PACKAGES += CSWlibcurl4-feature
 CATALOGNAME_CSWlibcurl4-feature = libcurl4_feature
 SPKG_DESC_CSWlibcurl4-feature = Full-features library for client-side URL transfers superseding libcurl.so.4
 PKGFILES_CSWlibcurl4-feature = $(call pkgfiles_lib,libcurl-feature.so.4)
-RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibfbopenssl
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibfbopenssl0
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWosslrt
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibssh2
 RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibcares2
+RUNTIME_DEP_PKGS_CSWlibcurl4-feature += CSWlibrtmp0
 
 # These are artifacts of the feature lib being a regular one.
 # As it is never linked against the soname doesn't matter here and the package name
@@ -66,7 +67,7 @@ PACKAGES += CSWcurl
 CATALOGNAME_CSWcurl = curl
 SPKG_DESC_CSWcurl = A command line tool and library for client-side URL transfers
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWcurl += CSWzlib
+RUNTIME_DEP_PKGS_CSWcurl += CSWlibz1
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWcurl += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWcurl += CSWosslrt
@@ -79,8 +80,10 @@ CHECKPKG_OVERRIDES_CSWcurl += surplus-dependency|CSWlibcurl3
 
 BUILD_DEP_PKGS += CSWoldapdevel
 BUILD_DEP_PKGS += CSWossldevel
-BUILD_DEP_PKGS += CSWlibcaresdevel
+BUILD_DEP_PKGS += CSWlibcares-dev
 BUILD_DEP_PKGS += CSWlibssh2devel
+BUILD_DEP_PKGS += CSWlibfbopenssl-dev
+BUILD_DEP_PKGS += CSWlibrtmp-dev
 
 VENDOR_URL = http://curl.haxx.se
 
@@ -90,6 +93,7 @@ MODULATIONS_FEATURES = minimal full
 EXTRA_CONFIGURE_ARGS_features-minimal += --disable-ldap
 EXTRA_CONFIGURE_ARGS_features-minimal += --without-libssh2
 EXTRA_CONFIGURE_ARGS_features-minimal += --disable-ares
+EXTRA_CONFIGURE_ARGS_features-minimal += --without-librtmp
 
 EXTRA_CONFIGURE_ARGS_features-full += --enable-ares
 EXTRA_CONFIGURE_ARGS_features-full += --with-spnego=$(libdir)
