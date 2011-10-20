@@ -365,8 +365,8 @@ def main():
                     default="sparc",
                     help="'i386' or 'sparc'")
   parser.add_option("-c", "--catalog-release", dest="catrel",
-                    default="current",
-                    help="E.g. current, unstable, testing, stable")
+                    default="unstable",
+                    help="E.g. unstable, dublin")
   parser.add_option("--replace", dest="replace",
                     default=False, action="store_true",
                     help="Replace packages when importing (importpkg)")
