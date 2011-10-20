@@ -60,7 +60,7 @@ ISALISTS_BY_ARCH = {
 DEFAULT_CATALOG_RELEASES = frozenset([
     'dublin',
     'unstable',
-    'stable',
+    'legacy',
     ])
 
 # At some point, it was used to prevent people from linking against
