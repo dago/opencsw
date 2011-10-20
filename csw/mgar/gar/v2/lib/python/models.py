@@ -312,7 +312,8 @@ class CheckpkgErrorTag(CheckpkgErrorTagMixin, sqlobject.SQLObject):
   catrel = sqlobject.ForeignKey('CatalogRelease', notNone=True)
 
   def __unicode__(self):
-    return u"Error: %s %s %s" % (self.pkgname, self.tag_name, self.tag_info)
+    return (u"CheckpkgErrorTag: %s %s %s"
+            % (self.pkgname, self.tag_name, self.tag_info))
 
 
 class CheckpkgOverride(sqlobject.SQLObject):

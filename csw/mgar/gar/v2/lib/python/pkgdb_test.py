@@ -1,4 +1,5 @@
 #!/usr/bin/env python2.6
+# coding=utf-8
 
 import unittest
 import pkgdb
@@ -10,7 +11,8 @@ class CatalogImporterUnitTest(unittest.TestCase):
     ci = pkgdb.CatalogImporter()
     self.assertEquals(
         "/home/mirror/opencsw/current/sparc/5.9/catalog",
-        ci.ComposeCatalogFilePath("/home/mirror/opencsw/current", "SunOS5.9", "sparc"))
+        ci.ComposeCatalogFilePath(
+          "/home/mirror/opencsw/current", "SunOS5.9", "sparc"))
 
 
 class FunctionUnitTest(unittest.TestCase):
