@@ -297,7 +297,7 @@ class SuggestLibraryPackage(mox.MoxTestBase):
         r'PKGFILES_CSWfoo-bar += '
         r'$(call baseisadirs,$(libdir),libfoo\.so\.1(\.\d+)*)')
     messenger_mock.SuggestGarLine(
-        'SPKG_DESC_CSWfoo-bar += A foo bar package, libfoo.so.1')
+        'SPKG_DESC_CSWfoo-bar += $(DESCRIPTION), libfoo.so.1')
     messenger_mock.SuggestGarLine(
         r'RUNTIME_DEP_PKGS_CSWfoo += CSWfoo-bar')
     messenger_mock.SuggestGarLine(
