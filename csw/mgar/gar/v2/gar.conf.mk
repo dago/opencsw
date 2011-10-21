@@ -411,10 +411,19 @@ FLAVOR_FLAGS ?= $($(GARFLAVOR)_ISAFLAGS_$(GARCOMPILER)_$(ISA)) $($(GARFLAVOR)_FL
 FLAVOR_FLAGS += $(EXTRA_$(GARFLAVOR)_FLAGS_$(GARCOMPILER)_$(GARCH)) $(EXTRA_$(GARFLAVOR)_FLAGS_$(GARCOMPILER))
 
 # Raise these in your .garrc if needed
-ISA_DEFAULT_sparc   ?= sparcv8
-ISA_DEFAULT_i386    ?= i386
-ISA_DEFAULT64_sparc ?= sparcv9
-ISA_DEFAULT64_i386  ?= amd64
+ISA_DEFAULT_sparc-5.9    ?= sparcv8
+ISA_DEFAULT_sparc-5.10   ?= sparcv8plus
+ISA_DEFAULT_i386-5.9     ?= i386
+ISA_DEFAULT_i386-5.10    ?= pentium_pro
+ISA_DEFAULT64_sparc-5.9  ?= sparcv9
+ISA_DEFAULT64_sparc-5.10 ?= sparcv9
+ISA_DEFAULT64_i386-5.9   ?= amd64
+ISA_DEFAULT64_i386-5.10  ?= amd64
+
+ISA_DEFAULT_sparc   ?= $(ISA_DEFAULT_sparc-$(GAROSREL))
+ISA_DEFAULT_i386    ?= $(ISA_DEFAULT_i386-$(GAROSREL))
+ISA_DEFAULT64_sparc ?= $(ISA_DEFAULT64_sparc-$(GAROSREL))
+ISA_DEFAULT64_i386  ?= $(ISA_DEFAULT64_i386-$(GAROSREL))
 
 # These are the ISAs that are always build for 32 bit and 64 bit
 # Do not overwrite these as they are used to control expansion at several other places
@@ -450,8 +459,8 @@ BUILD_ISAS ?= $(filter $(ISALIST_$(KERNELISA)),$(NEEDED_ISAS))
 
 # Subdirectories for specialized binaries and libraries
 # Use defaults for sparcv8 and i386 as those are symlinks
-ISALIBDIR_sparcv8              ?= .
-ISALIBDIR_i386                 ?= .
+ISALIBDIR_$(ISA_DEFAULT_sparc) ?= .
+ISALIBDIR_$(ISA_DEFAULT_i386)  ?= .
 $(foreach I,$(ISALIST),$(eval ISALIBDIR_$(I) ?= $I))
 
 # These are the directories where the optimized libraries should go to
