@@ -46,10 +46,14 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
         u'/fake/path/CSWfoo/root/foo-file').AndReturn(
             "application/x-executable")
     self.mox.StubOutWithMock(os.path, 'isdir')
+    self.mox.StubOutWithMock(os.path, 'exists')
     self.mox.StubOutWithMock(os, 'walk')
+    # self.mox.StubOutWithMock(__builtins__, 'open')
     os.path.isdir("/fake/path/CSWfoo").AndReturn(True)
     os.path.isdir("/fake/path/CSWfoo").AndReturn(True)
     os.path.isdir("/fake/path/CSWfoo").AndReturn(True)
+    os.path.exists("/fake/path/CSWfoo/reloc").AndReturn(False)
+    os.path.exists("/fake/path/CSWfoo/reloc").AndReturn(False)
     os.walk("/fake/path/CSWfoo/root").AndReturn(
         [
           ("/fake/path/CSWfoo/root", [], ["foo-file"]),
@@ -57,6 +61,9 @@ class InspectivePackageUnitTest(mox.MoxTestBase):
     )
     self.mox.ReplayAll()
     ip = inspective_package.InspectivePackage("/fake/path/CSWfoo")
+    ip.pkginfo_dict = {
+        "BASEDIR": "",
+    }
     self.assertEqual(["foo-file"], ip.ListBinaries())
 
 
