@@ -19,11 +19,22 @@ endef
 
 MASTER_SITES = http://ffmpeg.org/releases/
 DISTFILES  = $(DISTNAME).tar.bz2
+LICENSE = COPYING.GPLv3
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PATCHFILES = 0001-fix-version.sh.patch
 PATCHFILES += 0002-change-linker-flags.patch
 PATCHFILES += 0003-fix-testsuite-shells.patch
+
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibsdl
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibz1
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWftype2
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibmp3lame0
+RUNTIME_DEP_PKGS_CSWffmpeg += CSWlibspeex1
 
 BUILD64 = 1
 # Tests only work with static build
