@@ -34,6 +34,7 @@ urls = (
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/catalognames/([^/]+)/', 'Srv4ByCatAndCatalogname',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames/([^/]+)/', 'Srv4ByCatAndPkgname',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
+  r'/rest/srv4/([0-9a-f]{32})/files/', 'RestSrv4DetailFiles',
 )
 
 # render = web.template.render('templates/')
@@ -278,6 +279,27 @@ class RestSrv4Detail(object):
       web.header('Content-type', mimetype)
       web.header('Access-Control-Allow-Origin', '*')
       return json.dumps(data_structure)
+    except sqlobject.main.SQLObjectNotFound, e:
+      raise web.notfound()
+
+
+class RestSrv4DetailFiles(object):
+
+  def GET(self, md5_sum):
+    ConnectToDatabase()
+    try:
+      pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+      files = models.CswFile.selectBy(srv4_file=pkg)
+      web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=file-list')
+      web.header('Access-Control-Allow-Origin', '*')
+      def FileDict(file_obj):
+        return {
+            "basename": file_obj.basename,
+            "path": file_obj.path,
+            "line": file_obj.line,
+        }
+      serializable_files = [FileDict(x) for x in files]
+      return json.dumps(serializable_files)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
