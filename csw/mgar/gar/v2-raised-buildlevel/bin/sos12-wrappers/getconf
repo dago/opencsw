@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# This is a wrapper for /usr/bin/getconf to translate compiler flags from
-# Sun Studio 11 to Sun Studio 12
-
-/usr/bin/getconf "$@" | sed \
-	-e 's/-xarch=generic64/-m64/g'
