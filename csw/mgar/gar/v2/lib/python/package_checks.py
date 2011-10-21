@@ -187,14 +187,6 @@ def RemovePackagesUnderInstallation(paths_and_pkgs_by_soname,
   return new_ppbs
 
 
-def CheckCatalognameLowercase(pkg_data, error_mgr, logger, messenger):
-  catalogname = pkg_data["basic_stats"]["catalogname"]
-  if catalogname != catalogname.lower():
-    error_mgr.ReportError("catalogname-not-lowercase")
-  if not re.match(r"^[\w_]+$", catalogname):
-    error_mgr.ReportError("catalogname-is-not-a-simple-word")
-
-
 def CheckDirectoryPermissions(pkg_data, error_mgr, logger, messenger):
   for entry in pkg_data["pkgmap"]:
     if (entry["type"] == "d"
@@ -261,9 +253,15 @@ def CheckVendorURL(pkg_data, error_mgr, logger, messenger):
 def CheckCatalogname(pkg_data, error_mgr, logger, messenger):
   pkginfo = pkg_data["pkginfo"]
   catalogname = pkginfo["NAME"].split(" ")[0]
+  catalogname_2 = pkg_data["basic_stats"]["catalogname"]
+  if catalogname != catalogname_2:
+    error_mgr.ReportError("pkginfo-catalogname-disagreement pkginfo=%s filename=%s"
+        % (catalogname, catalogname_2))
   catalogname_re = r"^([\w\+]+)$"
   if not re.match(catalogname_re, catalogname):
     error_mgr.ReportError("pkginfo-bad-catalogname", catalogname)
+  if catalogname != catalogname.lower():
+    error_mgr.ReportError("catalogname-not-lowercase")
 
 
 def CheckSmfIntegration(pkg_data, error_mgr, logger, messenger):
