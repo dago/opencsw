@@ -264,7 +264,7 @@ class TestSetCheckDependenciesWithDb(
           mox.IsA(str), mox.IsA(str), mox.IsA(str))
 
 
-class TestCheckArchitecture(CheckTestHelper, unittest.TestCase):
+class TestCheckArchitectureSanity(CheckTestHelper, unittest.TestCase):
   FUNCTION_NAME = 'CheckArchitectureSanity'
   def testSimple(self):
     self.pkg_data["pkginfo"]["ARCH"] = "i386"
@@ -272,7 +272,7 @@ class TestCheckArchitecture(CheckTestHelper, unittest.TestCase):
         'srv4-filename-architecture-mismatch',
         'pkginfo=i386 filename=rsync-3.0.7,REV=2010.02.17-SunOS5.8-sparc-CSW.pkg.gz')
 
-class TestCheckArchitecture(CheckTestHelper, unittest.TestCase):
+class TestCheckArchitectureVsContents(CheckTestHelper, unittest.TestCase):
 
   FUNCTION_NAME = 'CheckArchitectureVsContents'
   def testArchallDevel(self):
@@ -900,6 +900,24 @@ class TestCheckArchitecture(CheckTestHelper, unittest.TestCase):
         'mime_type_by_hachoir': u'application/x-executable',
         'path': 'opt/csw/bin/sparcv8plus/tree'},
        ]
+
+  def testGoodSparcv8PlusInBin(self):
+    # From October 2011 on, the sparcv8+ binaries can be in bin on
+    # Solaris 10.
+    parsed_basename = self.pkg_data["basic_stats"]["parsed_basename"]
+    parsed_basename["osrel"] = "SunOS5.10"
+    self.pkg_data["files_metadata"] = [
+       {'endian': 'Big endian',
+        'machine_id': 18,
+        'mime_type': 'application/x-executable; charset=binary',
+        'mime_type_by_hachoir': u'application/x-executable',
+        'path': 'opt/csw/bin/tree'},
+       ]
+    # No error here.
+
+  # A similar test can't be written for i386, because pentium_pro and
+  # i386 have the same machine_id, so we can't distinguish between the
+  # two.
 
   def testGoodBinary(self):
     self.pkg_data["files_metadata"] = [

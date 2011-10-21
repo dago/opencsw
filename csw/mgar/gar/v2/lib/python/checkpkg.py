@@ -51,6 +51,10 @@ class SetupError(Error):
   pass
 
 
+class InternalDataError(Error):
+  """Problem with internal checkpkg data structures."""
+
+
 def ExtractDescription(pkginfo):
   desc_re = re.compile(DESCRIPTION_RE)
   m = re.match(desc_re, pkginfo["NAME"])
