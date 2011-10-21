@@ -187,7 +187,7 @@ def RemovePackagesUnderInstallation(paths_and_pkgs_by_soname,
   return new_ppbs
 
 
-def CatalognameLowercase(pkg_data, error_mgr, logger, messenger):
+def CheckCatalognameLowercase(pkg_data, error_mgr, logger, messenger):
   catalogname = pkg_data["basic_stats"]["catalogname"]
   if catalogname != catalogname.lower():
     error_mgr.ReportError("catalogname-not-lowercase")
