@@ -1,6 +1,0 @@
-%cvar           arch %{GARCH}
-%cvar           desc %{SPKG_DESC}
-%cvar           pkgfile %{SPKG_PKGFILE}
-%cvar           RC_INIT_SCRIPT csw%{bitname}
-%cvar           SMF_SCRIPT svc-csw%{bitname}
-%cvar           SMF_MANIFEST csw%{bitname}.xml

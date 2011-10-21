@@ -1,5 +1,0 @@
-{ARCH: sparc, CATEGORY: application, CLASSES: none, EMAIL: maciej@opencsw.org, HOTLINE: 'http://www.opencsw.org/bugtrack/',
-  NAME: rsync - utility which provides fast incremental file transfer, OPENCSW_CATALOGNAME: rsync,
-  OPENCSW_MODE64: '32', OPENCSW_REPOSITORY: 'https://gar.svn.sourceforge.net/svnroot/gar/csw/mgar/pkg/rsync/trunk@UNCOMMITTED',
-  PKG: CSWrsync, PSTAMP: maciej@build8s-20100217091032, VENDOR: 'http://rsync.samba.org/
-    packaged for CSW by Maciej Blizinski', VERSION: '3.0.7,REV=2010.02.17', WORKDIR_FIRSTMOD: ../build-isa-sparcv8}
