@@ -1515,15 +1515,25 @@ class TestCheckSharedLibraryPkgDoesNotHaveTheSoFileSuggestion(
         'file=/opt/csw/lib/sparcv9/libneon.so')
     self.messenger.SuggestGarLine("# (If CSWneon-dev doesn't exist yet)")
     self.messenger.SuggestGarLine('PACKAGES += CSWneon-dev')
+    self.messenger.SuggestGarLine('CATALOGNAME_CSWneon-dev = neon_dev')
+    self.messenger.SuggestGarLine(
+        'SPKG_DESC_CSWneon-dev += $(DESCRIPTION), development files')
     self.messenger.SuggestGarLine(
         'PKGFILES_CSWneon-dev += /opt/csw/lib/libneon.so')
-    self.messenger.SuggestGarLine('CATALOGNAME_CSWneon-dev = neon_dev')
+    self.messenger.SuggestGarLine('# Maybe also the generic:')
+    self.messenger.SuggestGarLine(
+        '# PKGFILES_CSWneon-dev += $(PKGFILES_DEVEL)')
     self.messenger.Message(mox.IsA(str))
     self.messenger.SuggestGarLine("# (If CSWneon-dev doesn't exist yet)")
     self.messenger.SuggestGarLine('PACKAGES += CSWneon-dev')
+    self.messenger.SuggestGarLine('CATALOGNAME_CSWneon-dev = neon_dev')
+    self.messenger.SuggestGarLine(
+        'SPKG_DESC_CSWneon-dev += $(DESCRIPTION), development files')
     self.messenger.SuggestGarLine(
         'PKGFILES_CSWneon-dev += /opt/csw/lib/sparcv9/libneon.so')
-    self.messenger.SuggestGarLine('CATALOGNAME_CSWneon-dev = neon_dev')
+    self.messenger.SuggestGarLine('# Maybe also the generic:')
+    self.messenger.SuggestGarLine(
+        '# PKGFILES_CSWneon-dev += $(PKGFILES_DEVEL)')
     self.messenger.Message(mox.IsA(str))
 
 
