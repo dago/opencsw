@@ -169,18 +169,18 @@ class TestCheckCheckSmfIntegrationWrongLocation(CheckpkgUnitTestHelper, unittest
 
 
 class TestCatalognameLowercase_1(CheckpkgUnitTestHelper, unittest.TestCase):
-  FUNCTION_NAME = 'CatalognameLowercase'
+  FUNCTION_NAME = 'CheckCatalognameLowercase'
   def CheckpkgTest(self):
     self.pkg_data["basic_stats"]["catalogname"] = "Foo"
     self.error_mgr_mock.ReportError('catalogname-not-lowercase')
 
 class TestCatalognameLowercase_2(CheckpkgUnitTestHelper, unittest.TestCase):
-  FUNCTION_NAME = 'CatalognameLowercase'
+  FUNCTION_NAME = 'CheckCatalognameLowercase'
   def CheckpkgTest(self):
     self.pkg_data["basic_stats"]["catalogname"] = "foo"
 
 class TestCatalognameLowercase_3(CheckpkgUnitTestHelper, unittest.TestCase):
-  FUNCTION_NAME = 'CatalognameLowercase'
+  FUNCTION_NAME = 'CheckCatalognameLowercase'
   def CheckpkgTest(self):
     self.pkg_data["basic_stats"]["catalogname"] = "foo+abc&123"
     self.error_mgr_mock.ReportError('catalogname-is-not-a-simple-word')
