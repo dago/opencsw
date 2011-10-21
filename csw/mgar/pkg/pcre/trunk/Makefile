@@ -1,5 +1,5 @@
 NAME = pcre
-VERSION = 8.13
+VERSION = 8.20
 CATEGORIES = lib
 
 DESCRIPTION = Perl-compatible regular expression tools
@@ -71,6 +71,9 @@ CONFIGURE_ARGS += --enable-unicode-properties
 CONFIGURE_ARGS += --enable-pcregrep-libz
 CONFIGURE_ARGS += --enable-pcregrep-libbz2
 CONFIGURE_ARGS += --enable-pcretest-libreadline
+
+# No JIT for Sparc, may try for x86 at some later time
+#CONFIGURE_ARGS += --enable-jit
 
 include gar/category.mk
 
