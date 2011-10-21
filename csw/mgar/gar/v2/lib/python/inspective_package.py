@@ -126,12 +126,16 @@ class InspectivePackage(package.DirectoryFormatPackage):
       self.CheckPkgpathExists()
       remove_prefix = "%s/" % self.pkgpath
       self.file_paths = self.GetPathsInSubdir(remove_prefix, "root")
-      self.file_paths += self.GetPathsInSubdir(remove_prefix, "reloc")
+      if self.RelocPresent():
+        self.file_paths += self.GetPathsInSubdir(remove_prefix, "reloc")
     return self.file_paths
+
+  def RelocPresent(self):
+    return os.path.exists(os.path.join(self.directory, "reloc"))
 
   def GetFilesDir(self):
     """Returns the subdirectory in which files, are either "reloc" or "root"."""
-    if os.path.exists(os.path.join(self.directory, "reloc")):
+    if self.RelocPresent():
       return "reloc"
     else:
       return "root"
