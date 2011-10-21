@@ -1,7 +1,7 @@
 # $Id$
 #
 NAME = libmemcached
-VERSION = 0.52
+VERSION = 0.53
 VENDOR_URL = http://libmemcached.org/
 CATEGORIES = lib
 DESCRIPTION = Library memcached interface
