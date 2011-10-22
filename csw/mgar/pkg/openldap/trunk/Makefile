@@ -150,7 +150,8 @@ CONFIGURE_ARGS += --enable-dynamic
 CONFIGURE_ARGS += --disable-ndb
 
 # This libnet is meant to be provided for BeOS only, the libnet.so picked up from OpenCSW
-# is completely unrelated. Disable the linkage.
+# is completely unrelated. Disable the linkage until this is fixed:
+#   http://www.openldap.org/its/index.cgi?findid=7071
 CONFIGURE_ARGS += ac_cv_lib_net_main=no
 
 # Disable TCPwrappers in 64 bit until the libraries are available
