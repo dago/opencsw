@@ -693,10 +693,10 @@ GARPACKAGE = $(shell basename $(CURDIR))
 STANDARD_EXPORTS ?= PATH
 LANG_EXPORTS ?= LC_ALL
 
-CONFIGURE_ENV_LC_ALL = C
-BUILD_ENV_LC_ALL = C
-TEST_ENV_LC_ALL = C
-INSTALL_ENV_LC_ALL = C
+CONFIGURE_ENV_LC_ALL ?= C
+BUILD_ENV_LC_ALL ?= C
+TEST_ENV_LC_ALL ?= C
+INSTALL_ENV_LC_ALL ?= C
 
 # Put these variables in the environment during the
 # configure, build, test, and install stages
