@@ -25,7 +25,7 @@
 #   http://subversion.apache.org/mailing-lists.html
 
 NAME = subversion
-VERSION = 1.7.0
+VERSION = 1.7.1
 CATEGORIES = utils
 
 DESCRIPTION = Version control rethought
@@ -266,7 +266,9 @@ TEST_TARGET  = check
 
 include gar/category.mk
 
-BINDING_LANGS   = java perl python ruby
+# pygthon bindings do not link since svn-1.6.5 ...
+#BINDING_LANGS   = java perl python ruby
+BINDING_LANGS   = java perl ruby
 BINDING_TARGETS = $(addprefix svn-,$(BINDING_LANGS))
 
 PI_DEPENDS += copy-templates
