@@ -1,5 +1,5 @@
 NAME = memcached
-VERSION = 1.4.5
+VERSION = 1.4.9
 CATEGORIES = net
 
 DESCRIPTION = Distributed memory object caching system
@@ -12,17 +12,19 @@ endef
 MASTER_SITES = http://memcached.googlecode.com/files/
 DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-# Use patches until this is applied:
-#   https://github.com/memcached/memcached/pull/3
+## Use patches until this is applied:
+##   https://github.com/memcached/memcached/pull/3
 PATCHFILES += 0001-Fix-alignment-check-as-84148994-0x05040302.patch
 PATCHFILES += 0002-Take-endianness-into-account-on-alignment-check.patch
-
-# The addition of more status field made the data arrive in multiple packets
-# leading to broken tests when it is not waited for more packages.
+#
+## The addition of more status field made the data arrive in multiple packets
+## leading to broken tests when it is not waited for more packages.
 PATCHFILES += 0003-Make-sure-to-wait-for-data.patch
-
-# Looks like the data structure is not clean on sparcv9 (only!)
+#
+## Looks like the data structure is not clean on sparcv9 (only!)
 PATCHFILES += 0004-Make-sure-to-clean-ai_flags-in-testsuite-or-test-fai.patch
+
+PATCHFILES += 0001-Fix-memcached_dtrace.d-and-add-touch-command.patch
 
 # If we enable GIT patching this makes a .git repo in $WORKSRC.
 # Unfortunatly this triggers maintainer mode for t/whitespace.t which
@@ -35,7 +37,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://memcached.org/
 
-BUILD_DEP_PKGS = CSWlibevent-devel
+BUILD_DEP_PKGS = CSWlibevent-dev
 RUNTIME_DEP_PKGS = CSWlibevent2-0-5
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
@@ -50,6 +52,8 @@ CONFIGURE_ARGS = $(DIRPATHS)
 
 CONFIGURE_ARGS-sol5.10 += --enable-dtrace
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-sol$(GAROSREL))
+
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-amd64
 
 include gar/category.mk
 
