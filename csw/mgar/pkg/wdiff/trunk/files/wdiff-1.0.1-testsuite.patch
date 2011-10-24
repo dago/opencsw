@@ -1,0 +1,45 @@
+--- a/tests/wdiff.at
++++ b/tests/wdiff.at
+@@ -173,7 +173,7 @@
+ # Due to the istty call in the sources, we have to use screen here.
+ 
+ LC_ALL=C
+-AT_TESTED([wdiff diff screen env sed grep])
++AT_TESTED([wdiff diff screen env sed tr grep])
+ AT_DATA([foo.txt], [start foo end
+ ])
+ AT_DATA([bar.txt], [start bar end
+@@ -193,7 +193,7 @@
+ AT_SKIP_IF([grep 'terminal type.*not defined' screenlog.0])
+ # Need to work around a screen bug which might cause the first
+ # character to be lost: https://savannah.gnu.org/bugs/index.php?34200
+-AT_CHECK([sed 's/^ager/Pager/;s/\r//g;' screenlog.0], 0,
++AT_CHECK([tr -d '\r' < screenlog.0 | sed 's/^ager/Pager/'], 0,
+ [Pager starting.
+ Pager line start WfooX YbarZ end printed.
+ Pager now done.
+--- a/tests/testsuite
++++ b/tests/testsuite
+@@ -593,7 +593,8 @@
+ grep
+ diff
+ screen
+-sed'
++sed
++tr'
+ # As many question marks as there are digits in the last test group number.
+ # Used to normalize the test group numbers so that `ls' lists them in
+ # numerical order.
+@@ -2380,9 +2381,9 @@
+ # Need to work around a screen bug which might cause the first
+ # character to be lost: https://savannah.gnu.org/bugs/index.php?34200
+ { set +x
+-$as_echo "$at_srcdir/wdiff.at:196: sed 's/^ager/Pager/;s/\\r//g;' screenlog.0"
+-at_fn_check_prepare_trace "wdiff.at:196"
+-( $at_check_trace; sed 's/^ager/Pager/;s/\r//g;' screenlog.0
++$as_echo "$at_srcdir/wdiff.at:196: tr -d '\\r' < screenlog.0 | sed 's/^ager/Pager/'"
++at_fn_check_prepare_notrace 'a shell pipeline' "wdiff.at:196"
++( $at_check_trace; tr -d '\r' < screenlog.0 | sed 's/^ager/Pager/'
+ ) >>"$at_stdout" 2>>"$at_stderr"
+ at_status=$? at_failed=false
+ $at_check_filter
