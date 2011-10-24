@@ -1,5 +1,5 @@
 NAME = memconf
-VERSION = 2.18
+VERSION = 2.19
 CATEGORIES = utils
 
 DESCRIPTION = Perl script that displays memory modules installed
@@ -21,7 +21,7 @@ BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-# We prepended /opt/csw/bin but keep /usr/lcoal/bin
+# We prepended /opt/csw/bin but keep /usr/local/bin
 CHECKPKG_OVERRIDES_CSWmemconf += file-with-bad-content|/usr/local|root/opt/csw/bin/memconf
 
 include gar/category.mk
