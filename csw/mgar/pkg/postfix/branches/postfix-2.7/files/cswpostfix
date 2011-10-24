@@ -1,0 +1,88 @@
+#!/bin/sh
+#
+# Start or stop Postfix
+#
+# Origionally written by Valery Kotchiev <valery@blastwave.org>
+# Adjusted by Darin Perusich <darin@blastwave.org>
+# Adjusted by Sebastian Kayser <skayser@opencsw.org>
+# based on debians's postfix init.d script
+#
+# cswclassutils settings
+#AUTOENABLE NO
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/opt/csw/bin:/opt/csw/sbin
+CFGDIR=/etc/opt/csw/postfix
+DAEMON=/opt/csw/sbin/postfix
+PIDFILE=/var/opt/csw/run/postfix.pid
+NAME=Postfix
+TZ=
+unset TZ
+
+test -x ${DAEMON} -a -f ${CFGDIR}/main.cf || exit 0
+
+running() {
+    queue=`postconf -c ${CFGDIR} -h queue_directory 2>/dev/null`
+    if [ -f ${queue}/pid/master.pid ]; then
+        pid=`sed 's/ //g' ${queue}/pid/master.pid`
+        pspid=`ps -fp $pid -o pid | sed -n '/[0-9]/{s/ //g;p;}'`
+        if [ "X$pid" = "X$pspid" ]; then
+            echo y
+        fi
+    fi
+}
+
+case "$1" in
+    start)
+        if [ ! -f ${CFGDIR}/aliases.dir ]; then
+         /opt/csw/bin/newaliases
+        fi
+
+        echo "Starting mail transport agent: Postfix"
+        ${DAEMON} -c ${CFGDIR} start 2>&1 |
+                (grep -v 'starting the Postfix' 1>&2 || /bin/true)
+    ;;
+
+    stop)
+        echo "Stopping mail transport agent: Postfix"
+        ${DAEMON} -c ${CFGDIR} stop 2>&1 |
+                (grep -v 'stopping the Postfix' 1>&2 || /bin/true)
+    ;;
+
+    restart)
+        $0 stop
+        $0 start
+    ;;
+    
+    force-reload|reload)
+        echo "Reloading Postfix configuration..."
+        ${DAEMON} -c ${CFGDIR} reload 2>&1 |
+                (grep -v 'refreshing the Postfix' 1>&2 || /bin/true)
+        echo "done."
+    ;;
+
+    flush)
+        ${DAEMON} -c ${CFGDIR} flush
+    ;;
+
+    check)
+        ${DAEMON} -c ${CFGDIR} check
+    ;;
+
+    status)
+        RUNNING=`running`
+        if [ -n "$RUNNING" ]; then
+           echo "postfix is running"
+           exit 0
+        else
+           echo "postfix is not running"
+           exit 3
+        fi
+    ;;
+
+    *)
+        echo "Usage: cswpostfix {start|stop|restart|reload|flush|check|status|force-reload}"
+        exit 1
+    ;;
+esac
+
+exit 0
