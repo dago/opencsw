@@ -1,5 +1,5 @@
 NAME = gdbm
-VERSION = 1.8.3
+VERSION = 1.9
 CATEGORIES = lib
 
 DESCRIPTION = GNU database library for C
@@ -12,32 +12,27 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# Makefile install permissions patch
-PATCHFILES = perms.diff
-
 PACKAGES = CSWgdbm
 CATALOGNAME_CSWgdbm = gdbm
 SPKG_DESC_CSWgdbm = Legacy package as contents moved to CSWlibgdbm3
 PKGFILES_CSWgdbm = NOFILES
 ARCHALL_CSWgdbm = 1
+# This is the legacy dependency for applications depending on CSWgdbm to require libgdbm.so.3
 RUNTIME_DEP_PKGS_CSWgdbm = CSWlibgdbm3
 CHECKPKG_OVERRIDES_CSWgdbm += surplus-dependency|CSWlibgdbm3
 
-PACKAGES += CSWlibgdbm3
-CATALOGNAME_CSWlibgdbm3 = libgdbm3
-SPKG_DESC_CSWlibgdbm3 = GDBM share library, libgdbm.so.3
-PKGFILES_CSWlibgdbm3 = $(call baseisadirs,$(libdir),libgdbm\.so\.3(\.\d+)*)
+PACKAGES += CSWlibgdbm4
+CATALOGNAME_CSWlibgdbm4 = libgdbm4
+SPKG_DESC_CSWlibgdbm4 = GDBM share library, libgdbm.so.4
+PKGFILES_CSWlibgdbm4 = $(call pkgfiles_lib,libgdbm.so.4)
 
 PACKAGES += CSWlibgdbm-dev
 CATALOGNAME_CSWlibgdbm-dev = libgdbm_dev
-SPKG_DESC_CSWlibgdbm-dev = Development Files for libgdbm
+SPKG_DESC_CSWlibgdbm-dev = Development files for libgdbm.so.4
 # This is catchall
-RUNTIME_DEP_PKGS_CSWlibgdbm-dev = CSWlibgdbm3
+RUNTIME_DEP_PKGS_CSWlibgdbm-dev = CSWlibgdbm4
 
 BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
 
 # gdbm package has no test suite
 TEST_SCRIPTS =
