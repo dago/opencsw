@@ -1,5 +1,5 @@
 NAME = tin
-VERSION = 1.9.6
+VERSION = 2.0.0
 CATEGORIES = net
 
 DESCRIPTION = Terminal-based news reader
@@ -9,23 +9,27 @@ define BLURB
   useful things. It has also support for different languages.
 endef
 
-MASTER_SITES = ftp://ftp.tin.org/pub/news/clients/tin/unstable/
-DISTFILES = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES = ftp://ftp.tin.org/pub/news/clients/tin/stable/
+DISTFILES = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += COPYING
-PATCHFILES = configure.patch
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+BUILD_DEP_PKGS += CSWperl
+BUILD_DEP_PKGS += CSWlibpcre-dev
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibidn-dev
+BUILD_DEP_PKGS += CSWlibicu-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev
+BUILD_DEP_PKGS += CSWlibncurses-dev
+BUILD_DEP_PKGS += CSWgsasl-dev
 
-RUNTIME_DEP_PKGS_CSWtin += CSWpcrert
-RUNTIME_DEP_PKGS_CSWtin += CSWggettextrt
 RUNTIME_DEP_PKGS_CSWtin += CSWperl
-RUNTIME_DEP_PKGS_CSWtin += CSWlibidn
+RUNTIME_DEP_PKGS_CSWtin += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWtin += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWtin += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWtin += CSWlibicu46
-RUNTIME_DEP_PKGS_CSWtin += CSWiconv
-RUNTIME_DEP_PKGS_CSWtin += CSWncurses
+RUNTIME_DEP_PKGS_CSWtin += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWtin += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSWtin += CSWlibgsasl7
-
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWpcre
 
 VENDOR_URL = http://www.tin.org/
 
@@ -50,14 +54,9 @@ TEST_TARGET =
 EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man5/mmdf\.5
 EXTRA_MERGE_EXCLUDE_FILES += $(mandir)/man5/mbox\.5
 
-# These will be necessary until CSWlibicu46 has been officially released
-CHECKPKG_OVERRIDES_CSWtin += unidentified-dependency|CSWlibicu46
-CHECKPKG_OVERRIDES_CSWtin += soname-not-found|libicuuc.so.46|is|needed|by|opt/csw/bin/tin
-CHECKPKG_OVERRIDES_CSWtin += surplus-dependency|CSWlibicu46
-
 include gar/category.mk
 
-post-install-modulated:
-	/usr/ccs/bin/strip $(DESTDIR)$(prefix)/bin/tin
-	/usr/ccs/bin/mcs -d $(DESTDIR)$(prefix)/bin/tin
+#post-install-modulated:
+#	/usr/ccs/bin/strip $(DESTDIR)$(prefix)/bin/tin
+#	/usr/ccs/bin/mcs -d $(DESTDIR)$(prefix)/bin/tin
 
