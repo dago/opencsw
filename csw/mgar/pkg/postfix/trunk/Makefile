@@ -18,6 +18,8 @@
 # - 2.4.6,REV=2008.05.28 preserves modified configuration files via
 #   package-shipped CAS class csw_conf.
 #
+# $Id$
+# 
 NAME = postfix
 VERSION = 2.7.1
 CATEGORIES = server
