@@ -1,5 +1,5 @@
 NAME = diffutils
-VERSION = 3.0
+VERSION = 3.2
 CATEGORIES = utils
 
 DESCRIPTION = Diff utilities
@@ -8,20 +8,20 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES = $(NAME)-$(VERSION).tar.gz 
+DISTFILES = $(NAME)-$(VERSION).tar.xz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+BUILD_DEP_PKGS += CSWlibsigsegv-dev
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWiconv CSWlibsigsegv
-BUILD_DEP_PKGS = CSWggettext CSWiconv CSWlibsigsegv
+RUNTIME_DEP_PKGS_CSWdiffutils += CSWlibsigsegv2
+RUNTIME_DEP_PKGS_CSWdiffutils += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWdiffutils += CSWlibiconv2
 
 VENDOR_URL = http://www.gnu.org/software/diffutils/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
-
-TEST_TARGET = check
 
 EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/lib/charset.alias
 
