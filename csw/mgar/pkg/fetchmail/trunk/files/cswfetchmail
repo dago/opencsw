@@ -1,0 +1,56 @@
+#!/bin/ksh
+
+#RC_KNUM 01         # Number used for kill script symlink, e.g. K20cswfoo
+#RC_SNUM 99         # Number used for start script symlink, e.g. S80cswfoo
+##RC_KLEV 0,1,2,S    # Run levels that should have a kill script symlink
+##RC_SLEV 3          # Run levels that should have a start script symlink
+##FMRI network       # FMRI path for service (S10+), the example would give
+
+
+
+findConf(){
+	# look for fetchmailrc file in this order: 
+	# /etc/opt/csw/fetchmailrc
+	# /opt/csw/etc/fetchmailrc
+
+	if [ -f /etc/opt/csw/fetchmailrc ] ; then
+		FETCHMAILRC=/etc/opt/csw/fetchmailrc
+	else
+		if [ -f /opt/csw/etc/fetchmailrc ] ; then
+			FETCHMAILRC=/opt/csw/etc/fetchmailrc
+		fi
+	fi
+	if [ -z "${FETCHMAILRC}" ] ; then
+		exit 1
+	fi
+}
+
+
+case $1 in
+
+	# restart is same as start because start does a stop
+	start | restart)
+		findConf
+		# always stop before start, there is no reason to have two running 
+		$0 stop
+		echo "Starting the fetchmail daemon using ${FETCHMAILRC}"
+		/opt/csw/bin/fetchmail -f ${FETCHMAILRC}
+	;;
+
+
+	stop)
+		if pgrep -f /opt/csw/bin/fetchmail > /dev/null ; then
+			echo "Stopping the fetchmail daemon"
+			/opt/csw/bin/fetchmail --quit
+			sleep 1
+		fi
+	;;
+
+	*)
+		echo "Usage: $0 { start | stop | restart }"
+		exit 1
+	;;
+
+esac
+
+exit 0
