@@ -1,5 +1,5 @@
 NAME = doxygen
-VERSION = 1.7.4
+VERSION = 1.7.5.1
 CATEGORIES = utils
 
 DESCRIPTION = A documentation system for programming languages
@@ -14,6 +14,11 @@ DISTFILES  = $(DISTNAME).src.tar.gz
 PACKAGES += CSWdoxygen
 CATALOGNAME_CSWdoxygen = doxygen
 SPKG_DESC_CSWdoxygen = A documentation system for programming languages
+# PKGFILES is catchall
+
+# That is from the BibTeX-style:
+#   %%% Modification of BibTeX style file /usr/local/texlive/2008/texmf-dist/bibtex/bst/base/plain.bst
+CHECKPKG_OVERRIDES_CSWdoxygen += file-with-bad-content|/usr/local|root/opt/csw/bin/doxygen
 
 PACKAGES += CSWdoxygen-doc
 CATALOGNAME_CSWdoxygen-doc = doxygen_doc
@@ -34,7 +39,8 @@ VENDOR_URL = http://www.stack.nl/~dimitri/doxygen/
 
 BUILD_DEP_PKGS = CSWgraphviz
 
-EXTRA_CXXFLAGS = -features=tmplrefstatic
+EXTRA_CXXFLAGS += -features=tmplrefstatic
+EXTRA_CXXFLAGS += -features=extensions -D__FUNCTION__=__func__
 EXTRA_LINKER_FLAGS = -norunpath
 
 CONFIGURE_ARGS = --prefix $(prefix)
