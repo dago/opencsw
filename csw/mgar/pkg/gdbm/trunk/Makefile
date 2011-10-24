@@ -12,14 +12,8 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES = CSWgdbm
-CATALOGNAME_CSWgdbm = gdbm
-SPKG_DESC_CSWgdbm = Legacy package as contents moved to CSWlibgdbm3
-PKGFILES_CSWgdbm = NOFILES
-ARCHALL_CSWgdbm = 1
-# This is the legacy dependency for applications depending on CSWgdbm to require libgdbm.so.3
-RUNTIME_DEP_PKGS_CSWgdbm = CSWlibgdbm3
-CHECKPKG_OVERRIDES_CSWgdbm += surplus-dependency|CSWlibgdbm3
+FOREIGN_PACKAGES = CSWlibgdbm3
+OBSOLETED_BY_CSWlibgdbm3 += CSWgdbm
 
 PACKAGES += CSWlibgdbm4
 CATALOGNAME_CSWlibgdbm4 = libgdbm4
