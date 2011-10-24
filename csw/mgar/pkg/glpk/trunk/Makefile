@@ -1,5 +1,5 @@
 NAME = glpk
-VERSION = 4.43
+VERSION = 4.47
 CATEGORIES = lib
 
 DESCRIPTION = GNU Linear Programming Kit
@@ -12,17 +12,22 @@ endef
 MASTER_SITES = $(GNU_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PACKAGES = CSWlibglpk0
+SPKG_DESC_CSWlibglpk0 = GNU linear programming kit library, libglpk.so.0
+PKGFILES_CSWlibglpk0 += $(call pkgfiles_lib,libglpk.so.0)
+OBSOLETED_BY_CSWlibglpk0 = CSWlibglpk
 
-PACKAGES = CSWlibglpk
+PACKAGES += CSWlibglpk-dev
+SPKG_DESC_CSWlibglpk-dev = Development files for libglpk.so.0
+PKGFILES_CSWlibglpk-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibglpk-dev += CSWlibglpk0
+
+PACKAGES += CSWglpk
+SPKG_DESC_CSWglpk = GNU linear programming kit
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWglpk += CSWlibglpk0
 
 BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
-
-# This is normal for amd64 on i386
-CHECKPKG_OVERRIDES_CSWlibglpk += soname-not-found|libm.so.2
+ISAEXEC = 1
 
 include gar/category.mk
