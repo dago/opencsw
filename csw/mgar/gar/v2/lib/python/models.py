@@ -248,12 +248,6 @@ class Srv4FileStats(sqlobject.SQLObject):
     return vendor_url
 
   def GetRestRepr(self):
-    """The returned data structure needs a bit of fiddling.
-
-    The frozenset and datatime.datetime objects are returned, and require
-    a specialized JSON serializer.  See lib/web/pkgdb_web.py for the
-    implementation.
-    """
     mimetype = "application/x-vnd.opencsw.pkg;type=srv4-detail"
     data = {
         'arch': self.arch.name,
@@ -276,7 +270,6 @@ class Srv4FileStats(sqlobject.SQLObject):
         # 'in_catalogs': unicode([unicode(x) for x in self.in_catalogs]),
         'vendor_url': self.GetVendorUrl(),
         'repository_url': self.GetSvnUrl(),
-        'pkg_stats': self.GetStatsStruct(),
     }
     return mimetype, data
 

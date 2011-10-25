@@ -285,6 +285,7 @@ class RestSrv4Detail(object):
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       mimetype, data_structure = pkg.GetRestRepr()
+      data_structure["pkg_stats"] = pkg.GetStatsStruct()
       web.header('Content-type', mimetype)
       web.header('Access-Control-Allow-Origin', '*')
       return json.dumps(data_structure, cls=PkgStatsEncoder)
