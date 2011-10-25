@@ -1,5 +1,5 @@
 NAME = fftw
-VERSION = 3.2.2
+VERSION = 3.3
 CATEGORIES = lib
 
 DESCRIPTION = Library for computing the discrete Fourier transform (DFT)
