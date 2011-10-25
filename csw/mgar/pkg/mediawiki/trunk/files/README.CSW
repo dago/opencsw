@@ -10,7 +10,7 @@ Configuration
 
     Using MySQL
     ===========
-    # pkg-get -i mysql5rt mysql5client mysql5 php5_mysqli
+    # pkgutil -i mysql5 php5_mysqli
     **** NOTE ****
     You will need an account with superuser privileges
     to create the database.
@@ -18,7 +18,7 @@ Configuration
 
     Using PostgreSQL
     ================
-    # pkg-get -i postgresql php5_pgsql
+    # pkgutil -i postgresql php5_pgsql
 
 2) Point your web browser to
    http://mydomain/mediawiki/index.php

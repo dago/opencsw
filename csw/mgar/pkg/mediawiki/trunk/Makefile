@@ -1,5 +1,5 @@
 NAME = mediawiki
-VERSION = 1.16.0
+VERSION = 1.17.0
 CATEGORIES = apps
 RELVER = $(shell echo $(VERSION) |gsed 's/\(^[0-9].*\)\.[0-9]*/\1/')
 DESCRIPTION = A free software wiki package written in PHP
@@ -10,7 +10,7 @@ define BLURB
 	by many other wikis, including this website, the home of MediaWiki. 
 endef
 
-MASTER_SITES = http://noc.wikimedia.org/
+MASTER_SITES = http://download.wikimedia.org/mediawiki/1.17/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWmediawiki.postinstall CSWmediawiki.preremove 
 DISTFILES += httpd-mediawiki.conf.CSW README.CSW
@@ -25,7 +25,7 @@ NOGITPATCH = 1
 CATALOGNAME_CSWmediawiki = mediawiki
 SPKG_DESC_CSWmediawiki = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS_CSWmediawiki  = CSWphp5 
+RUNTIME_DEP_PKGS_CSWmediawiki  = CSWap2modphp5 
 CHECKPKG_OVERRIDES_CSWmediawiki += surplus-dependency|CSWphp5
 CHECKPKG_OVERRIDES_CSWmediawiki += missing-dependency|CSWpython
 CHECKPKG_OVERRIDES_CSWmediawiki += missing-dependency|CSWperl
