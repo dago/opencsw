@@ -21,7 +21,7 @@
 # $Id$
 # 
 NAME = postfix
-VERSION = 2.7.1
+VERSION = 2.8.6
 CATEGORIES = server
 
 DESCRIPTION = A high-performance mail transport agent
@@ -171,8 +171,8 @@ AUXLIBS = $(LDFLAGS)
 # http://www.postfix.org/PCRE_README.html
 FEATURES += -DHAS_PCRE
 AUXLIBS  += -lpcre
-BUILD_DEP_PKGS += CSWpcre
-RUNTIME_DEP_PKGS += CSWpcrert
+BUILD_DEP_PKGS += CSWlibpcre-dev
+RUNTIME_DEP_PKGS += CSWlibpcre0
 
 # Activate support for hash and btree lookup tables
 # http://www.postfix.org/DB_README.html. !! Takeaway: Use same DB as SASL !!
@@ -211,11 +211,11 @@ RUNTIME_DEP_PKGS += CSWoldaprt
 # Activate support for MySQL
 # http://www.postfix.org/MYSQL_README.html
 FEATURES += -DHAS_MYSQL
-INCLUDES += -I/opt/csw/mysql5/include/mysql
-AUXLIBS  += -L/opt/csw/mysql5/lib/mysql -R/opt/csw/mysql5/lib/mysql
+INCLUDES += -I/opt/csw/include/mysql
+AUXLIBS  += -L/opt/csw/lib -R/opt/csw/mysql5/lib/mysql
 AUXLIBS  += -lmysqlclient
-BUILD_DEP_PKGS += CSWmysql5devel
-RUNTIME_DEP_PKGS += CSWmysql5rt
+BUILD_DEP_PKGS += CSWmysql-dev
+RUNTIME_DEP_PKGS += CSWlibmysqlclient15
 
 # Activate support for PostgreSQL
 # http://www.postfix.org/PGSQL_README.html
@@ -259,7 +259,7 @@ configure-custom:
 		AUXLIBS='$(AUXLIBS)' \
 		DEBUG= \
 		OPT=
-	@$(MAKECOOIE)
+	@$(MAKECOOKIE)
 
 install-custom:
 	$(MAKE) -C $(WORKSRC) non-interactive-package install_root=$(DESTDIR) \
