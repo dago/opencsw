@@ -1363,6 +1363,10 @@ class TestCheckSharedLibraryPkgDoesNotHaveTheSoFile(CheckTestHelper,
     self.error_mgr_mock.ReportError(
         'shared-lib-package-contains-so-symlink',
         'file=/opt/csw/lib/sparcv9/libneon.so')
+    for j in range(2):
+      for i in range(7):
+        self.messenger.SuggestGarLine(mox.IsA(str))
+      self.messenger.Message(mox.IsA(str))
 
   def SetMessenger(self):
     """Overriding this method to use mock instead of a stub."""
