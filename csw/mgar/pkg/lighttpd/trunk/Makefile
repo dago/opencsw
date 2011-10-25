@@ -39,6 +39,7 @@ SPKG_DESC_CSWlighttpd = HTTP server built for security, speed, compliance, and f
 RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlighttpd += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlighttpd += CSWosslrt
 
 EXTRA_LINKER_FLAGS += -lsendfile
 
@@ -51,6 +52,9 @@ EXTRA_LINKER_FLAGS += $(EXTRA_LINKER_FLAGS_$(GAROSREL))
 libdir_install = $(prefix)/lib/lighttpd
 
 CONFIGURE_ARGS  = $(DIRPATHS)
+
+CONFIGURE_ARGS += --with-openssl=$(prefix)
+EXTRA_LINKER_FLAGS += -lcrypto
 
 # Solaris 9 does not have IPV6_V6ONLY.
 # IPv6 support only works on Solaris 10.
