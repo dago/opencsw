@@ -1222,6 +1222,10 @@ def CheckLicenseFilePlacement(pkg_data, error_mgr, logger, messenger):
     m = docpath_re.match(pkgmap_entry["path"])
     if m:
       if m.groupdict()["docname"] != pkg_data["basic_stats"]["catalogname"]:
+        msg = ("The package contains a docdir which doesn't match its "
+               "catalog name.  To fix, repeat the merge state (mgar remerge "
+               "repackage).")
+        error_mgr.Message(msg)
         error_mgr.ReportError(
             "wrong-docdir",
             "expected=/opt/csw/shared/doc/%s/... "
