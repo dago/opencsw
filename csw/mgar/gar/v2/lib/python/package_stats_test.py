@@ -307,7 +307,7 @@ class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
     sqo_pkg2 = self.TestPackageStats.ImportPkg(neon_stats2)
     c = self.TestCatalog()
     c.AddSrv4ToCatalog(sqo_pkg1, 'SunOS5.9', 'i386', 'unstable')
-    c.AddSrv4ToCatalog(sqo_pkg2, 'SunOS5.9', 'i386', 'stable')
+    c.AddSrv4ToCatalog(sqo_pkg2, 'SunOS5.9', 'i386', 'legacy')
     expected = {
         u'/opt/csw/lib': [u'CSWneon'],
         u'/opt/csw/lib/sparcv9': [u'CSWneon']}
@@ -326,7 +326,7 @@ class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
     sqo_pkg2 = self.TestPackageStats.ImportPkg(neon_stats2)
     c = self.TestCatalog()
     c.AddSrv4ToCatalog(sqo_pkg1, 'SunOS5.9', 'i386', 'unstable')
-    c.AddSrv4ToCatalog(sqo_pkg2, 'SunOS5.9', 'i386', 'stable')
+    c.AddSrv4ToCatalog(sqo_pkg2, 'SunOS5.9', 'i386', 'legacy')
     sqo_pkg1.registered = False
     expected = {}
     self.assertEqual(
@@ -419,7 +419,7 @@ class DatabaseIntegrationTest(test_base.SqlObjectTestMixin,
     self.dbc.InitialDataImport()
     sqo_pkg1 = self.TestPackageStats.ImportPkg(neon_stats[0])
     c = self.TestCatalog()
-    args = ('SunOS5.9', 'i386', 'stable')
+    args = ('SunOS5.9', 'i386', 'legacy')
     c.AddSrv4ToCatalog(sqo_pkg1, *args)
     self.assertEquals(
         frozenset([]),
