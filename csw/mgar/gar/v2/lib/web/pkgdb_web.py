@@ -35,6 +35,7 @@ urls = (
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgnames/([^/]+)/', 'Srv4ByCatAndPkgname',
   r'/rest/srv4/([0-9a-f]{32})/', 'RestSrv4Detail',
   r'/rest/srv4/([0-9a-f]{32})/files/', 'RestSrv4DetailFiles',
+  r'/rest/srv4/([0-9a-f]{32})/pkg-stats/', 'RestSrv4FullStats',
 )
 
 # render = web.template.render('templates/')
@@ -273,22 +274,12 @@ class RestSrv4Detail(object):
 
   def GET(self, md5_sum):
     ConnectToDatabase()
-    class PkgStatsEncoder(json.JSONEncoder):
-      def default(self, obj):
-        if isinstance(obj, frozenset):
-          # Python 2.6 doesn't have the dictionary comprehension
-          # return {x: None for x in obj}
-          return list(obj)
-        if isinstance(obj, datetime.datetime):
-          return obj.isoformat()
-        return json.JSONEncoder.default(self, obj)
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       mimetype, data_structure = pkg.GetRestRepr()
-      data_structure["pkg_stats"] = pkg.GetStatsStruct()
       web.header('Content-type', mimetype)
       web.header('Access-Control-Allow-Origin', '*')
-      return json.dumps(data_structure, cls=PkgStatsEncoder)
+      return json.dumps(data_structure)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
@@ -310,6 +301,28 @@ class RestSrv4DetailFiles(object):
         }
       serializable_files = [FileDict(x) for x in files]
       return json.dumps(serializable_files)
+    except sqlobject.main.SQLObjectNotFound, e:
+      raise web.notfound()
+
+
+class RestSrv4FullStats(object):
+
+  def GET(self, md5_sum):
+    ConnectToDatabase()
+    class PkgStatsEncoder(json.JSONEncoder):
+      def default(self, obj):
+        if isinstance(obj, frozenset):
+          # Python 2.6 doesn't have the dictionary comprehension
+          # return {x: None for x in obj}
+          return list(obj)
+        if isinstance(obj, datetime.datetime):
+          return obj.isoformat()
+        return json.JSONEncoder.default(self, obj)
+    try:
+      pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
+      data_structure = pkg.GetStatsStruct()
+      web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkg-stats')
+      return json.dumps(data_structure, cls=PkgStatsEncoder)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
