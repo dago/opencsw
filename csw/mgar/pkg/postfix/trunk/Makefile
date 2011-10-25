@@ -115,9 +115,9 @@ PROTOTYPE_GROUP_pid = bin
 PROTOTYPE_PERMS_pid = 0755
 PROTOTYPE_CLASS_pid = ugfiles
 
-EXTRA_MERGE_EXCLUDE_FILES  = /etc/opt/csw/postfix/LICENSE
-EXTRA_MERGE_EXCLUDE_FILES += /etc/opt/csw/postfix/TLS_LICENSE
-EXTRA_MERGE_EXCLUDE_FILES += /etc/opt/csw/postfix/makedefs.out
+EXTRA_MERGE_EXCLUDE_FILES  = $(CONFIG_BASE)/LICENSE
+EXTRA_MERGE_EXCLUDE_FILES += $(CONFIG_BASE)/TLS_LICENSE
+EXTRA_MERGE_EXCLUDE_FILES += $(CONFIG_BASE)/makedefs.out
 
 STRIP_DIRS = $(DESTDIR)$(libexecdir)/postfix
 
@@ -132,7 +132,7 @@ INSTALL_SCRIPTS   = custom
 #   http://www.postfix.org/PACKAGE_README.html
 
 DEF_COMMAND_DIR    = /opt/csw/sbin
-DEF_CONFIG_DIR     = /etc/opt/csw/postfix
+DEF_CONFIG_DIR     = $(CONFIG_BASE)
 DEF_DAEMON_DIR     = /opt/csw/libexec/postfix
 DEF_MAILQ_PATH     = /opt/csw/bin/mailq
 DEF_HTML_DIR       = /opt/csw/share/doc/postfix/html
@@ -293,6 +293,15 @@ install-custom:
 	# Instructions to replace the system's sendmail
 	ginstall -Dm 644 $(FILEDIR)/README.CSW \
 		$(DESTDIR)$(docdir)/$(NAME)/README.CSW
+	@echo "===> Fixing /usr/local into /opt/csw"
+	find $(DESTDIR)/$(DEF_HTML_DIR) -type f -depth -print | \
+	   xargs -n 1 gsed -i -e 's|/usr/local|/opt/csw|g'
+	find $(DESTDIR)/$(DEF_README_DIR) -type f -depth -print | \
+	   xargs -n 1 gsed -i -e 's|/usr/local|/opt/csw|g'
+	find $(DESTDIR)/$(DEF_DAEMON_DIR) -type f -name '*.cf' -depth -print | \
+	   xargs -n 1 gsed -i -e 's|/usr/local|/opt/csw|g'
+	find $(DESTDIR)/$(CONFIG_BASE) -type f -name '*.cf' -depth -print | \
+	   xargs -n 1 gsed -i -e 's|/usr/local|/opt/csw|g'
 	@$(MAKECOOKIE)
 
 # Fails. A subsequent manual verify-config run is successfull,
