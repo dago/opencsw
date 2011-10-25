@@ -273,12 +273,21 @@ class RestSrv4Detail(object):
 
   def GET(self, md5_sum):
     ConnectToDatabase()
+    class PkgStatsEncoder(json.JSONEncoder):
+      def default(self, obj):
+        if isinstance(obj, frozenset):
+          # Python 2.6 doesn't have the dictionary comprehension
+          # return {x: None for x in obj}
+          return list(obj)
+        if isinstance(obj, datetime.datetime):
+          return obj.isoformat()
+        return json.JSONEncoder.default(self, obj)
     try:
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       mimetype, data_structure = pkg.GetRestRepr()
       web.header('Content-type', mimetype)
       web.header('Access-Control-Allow-Origin', '*')
-      return json.dumps(data_structure)
+      return json.dumps(data_structure, cls=PkgStatsEncoder)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
 
