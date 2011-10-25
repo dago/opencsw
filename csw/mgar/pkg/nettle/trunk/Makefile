@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = nettle
-VERSION = 2.1
+VERSION = 2.4
 GARTYPE = v2
 CATEGORIES = utils
 
@@ -15,14 +15,15 @@ endef
 
 MASTER_SITES = http://www.lysator.liu.se/~nisse/archive/
 DISTFILES  = $(DISTNAME).tar.gz
-PATCHFILES += 0001-Add-dynamic-linkage-information-for-Solaris.patch
 
 VENDOR_URL = http://www.lysator.liu.se/~nisse/nettle/
+
+LICENSE = COPYING.LIB
 
 PACKAGES += CSWlibhogweed2
 PKGFILES_CSWlibhogweed2 += $(call pkgfiles_lib,libhogweed.so.2)
 SPKG_DESC_CSWlibhogweed2 += A low-level cryptographic library, libhogweed.so.2
-RUNTIME_DEP_PKGS_CSWlibhogweed2 += CSWlibgmp
+RUNTIME_DEP_PKGS_CSWlibhogweed2 += CSWlibgmp10
 RUNTIME_DEP_PKGS_CSWlibhogweed2 += CSWlibnettle4
 
 PACKAGES += CSWlibnettle4
@@ -40,7 +41,7 @@ SPKG_DESC_CSWlibnettle-utils = Utility programs for libnettle
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibhogweed2
 RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibnettle4
-RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibgmp
+RUNTIME_DEP_PKGS_CSWlibnettle-utils += CSWlibgmp10
 
 BUILD64 = 1
 
