@@ -1,0 +1,71 @@
+Replacing the system sendmail binaries
+--------------------------------------
+This package will not automatically substitute the common sendmail binaries
+with links to the postfix binaries. Thus, the following files will be untouched
+and possibly belong to the system sendmail installation.
+
+  /usr/lib/sendmail
+  /usr/bin/mailq
+
+This makes the package installation less troublesome for shared zones and
+leaves the choice of fully replacing your system sendmail up to you. If you
+intend to replace those binaries above with the ones from this postfix package,
+there are two approaches (both currently _not_ supported in in shared zones):
+
+#1: For testing purposes - allows for quick rollback, possibly harmful
+
+This approach temporarily moves away the system sendmail binaries and replaces
+them with links to the postfix binaries. This lets you test this postfix
+package and easily roll back to the system sendmail in case you need to. It is
+_not_ suited for long term operations as system sendmail patches will possibly
+break those symlinks or worse, overwrite your postfix binaries with patched
+sendmail versions.
+
+Put in place:
+
+  mv /usr/lib/sendmail /usr/lib/sendmail.SYSTEM
+  mv /usr/bin/mailq /usr/bin/mailq.SYSTEM
+  
+  ln -s /opt/csw/sbin/sendmail /usr/lib/sendmail
+  ln -s /opt/csw/bin/mailq /usr/bin/mailq
+
+Roll back:
+
+  rm /usr/lib/sendmail /usr/bin/mailq
+  mv /usr/lib/sendmail.SYSTEM /usr/lib/sendmail
+  mv /usr/bin/mailq.SYSTEM /usr/bin/mailq
+
+#2: Recommended for production systems and long term operations
+
+This approach fully removes the system sendmail packages and replaces the
+binaries with links to the postfix binaries. Patches for the system sendmail
+will be skipped and won't harm your setup. Keep your Solaris media available
+in case you want to re-install the system sendmail packages.
+
+Remove system sendmail:
+
+  echo "rdepend=nocheck" > ~/admin-postfix
+  echo "action=nocheck" >> ~/admin-postfix
+  pkgrm -na ~/admin-postfix SUNWsndmr SUNWsndmu
+  rm ~/admin-postfix
+
+Depending on the speed of your system the pkgrm might take a while.
+
+Put in place:
+
+  ln -s /opt/csw/sbin/sendmail /usr/lib/sendmail
+  ln -s /opt/csw/bin/newaliases /usr/sbin/newaliases
+  ln -s /opt/csw/bin/mailq /usr/bin/mailq
+
+Roll back:
+
+  echo "idepend=nocheck" > ~/admin-postfix
+  echo "action=nocheck" >> ~/admin-postfix
+  rm /usr/lib/sendmail /usr/sbin/newaliases /usr/bin/mailq
+  pkgadd -na ~/admin-postfix \
+         -d <path_to_solaris_media>/Solaris_X/Products/ SUNWsndmr SUNWsndmu
+  rm ~/admin-postfix
+
+You might want to apply additional system sendmail patches that have been
+released since the Solaris release from which you install those sendmail
+packages.
