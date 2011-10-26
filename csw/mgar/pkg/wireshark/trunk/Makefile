@@ -1,5 +1,5 @@
 NAME = wireshark
-VERSION = 1.6.0
+VERSION = 1.6.2
 CATEGORIES = apps
 
 DESCRIPTION = Wireshark (was Ethereal) is a free network protocol analyzer
@@ -16,30 +16,53 @@ PATCHFILES = 0001-Solaris-9-doesn-t-have-stdint.h.patch
 
 VENDOR_URL = http://www.wireshark.org/
 
+BUILD_DEP_PKGS += CSWlibgcrypt-dev
+BUILD_DEP_PKGS += CSWglib2devel
+BUILD_DEP_PKGS += CSWlibgpg-error-dev
+BUILD_DEP_PKGS += CSWgtk2devel
+BUILD_DEP_PKGS += CSWpangodevel
+BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibcares-dev
+BUILD_DEP_PKGS += CSWlibpcap-dev
+BUILD_DEP_PKGS += CSWlibsmi-dev
+BUILD_DEP_PKGS += CSWlibkrb5-dev
+BUILD_DEP_PKGS += CSWossldevel
+BUILD_DEP_PKGS += CSWlibgnutls-dev
+BUILD_DEP_PKGS += CSWlua
+BUILD_DEP_PKGS += CSWgeoip-dev
+
 PACKAGES += CSWwireshark
 SPKG_DESC_CSWwireshark = Wireshark (was Ethereal) is a free network protocol analyzer
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWwireshark += CSWgcrypt
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgcrypt11
 RUNTIME_DEP_PKGS_CSWwireshark += CSWglib2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgpg-error0
 RUNTIME_DEP_PKGS_CSWwireshark += CSWgtk2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWpango
-RUNTIME_DEP_PKGS_CSWwireshark += CSWzlib
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibz1
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibcares2
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibpcap1
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibsmi2
-RUNTIME_DEP_PKGS_CSWwireshark += CSWkrb5lib
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWwireshark += CSWosslrt
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlibgnutls26
 RUNTIME_DEP_PKGS_CSWwireshark += CSWlua
+RUNTIME_DEP_PKGS_CSWwireshark += CSWftype2
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibatk
+RUNTIME_DEP_PKGS_CSWwireshark += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWwireshark += CSWgeoip
+RUNTIME_DEP_PKGS_CSWwireshark += CSWfconfig
 
 # No more library splitting unless absolutely necessary
 CHECKPKG_OVERRIDES_CSWwireshark += shared-lib-package-contains-so-symlink
 CHECKPKG_OVERRIDES_CSWwireshark += non-uniform-lib-versions-in-package
 
 # This is probably from kerberos, revalidate after re-release of krb5 library
-CHECKPKG_OVERRIDES_CSWwireshark += bad-rpath-entry
+# CHECKPKG_OVERRIDES_CSWwireshark += bad-rpath-entry
 
 # example, \fI/usr/local/share/wireshark/preferences\fR) on UNIX-compatible
 CHECKPKG_OVERRIDES_CSWwireshark += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/rawshark.1
@@ -56,7 +79,7 @@ CHECKPKG_OVERRIDES_CSWwireshark += file-with-bad-content|/usr/local|root/opt/csw
 
 # Hardwire largefiles unless this is fixed:
 #   https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6012
-EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
+# EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-usr-local=no
