@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/sbin/sh
 # Startup script for saslauthd
 
 # s none /etc/rc2.d/S85cswsaslauthd=../init.d/cswsaslauthd
@@ -14,7 +14,7 @@
 #RC_SLEV 2
 
 INIT_FILE=/etc/opt/csw/saslauthd.init
-if [ -f "${INIT_FILE}" ]; then
+if [ ! -f "${INIT_FILE}" ]; then
   INIT_FILE=/opt/csw/etc/saslauthd.init
 fi
 
@@ -23,14 +23,14 @@ if [ -f "${INIT_FILE}" ]; then
 	. "${INIT_FILE}"
 else
 	echo "You need to create ${INIT_FILE} and configure mechanism to be used"
-	exit 0
+	exit 1
 fi
 
 
 # Check if we have any mechanisms defined
 if [ "x${MECHANISM}" = "x" ]; then
     echo "You need to configure ${INIT_FILE} with mechanism to be used"
-    exit 0
+    exit 1
 else
     PARAMS="${PARAMS} -a ${MECHANISM}"
 fi
