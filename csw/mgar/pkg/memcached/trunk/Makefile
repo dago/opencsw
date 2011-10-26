@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = memcached
 VERSION = 1.4.9
 CATEGORIES = net
@@ -31,9 +33,6 @@ PATCHFILES += 0001-Fix-memcached_dtrace.d-and-add-touch-command.patch
 # then fails because the developer GIT repo contains more things than the
 # distributed release tarball.
 NOGITPATCH = 1
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 VENDOR_URL = http://memcached.org/
 
