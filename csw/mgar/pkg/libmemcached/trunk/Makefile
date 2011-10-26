@@ -32,7 +32,7 @@ OPT_FLAGS_GCC = -O2 -pipe
 GARCOMPILER = GCC4
 GARTYPE = 2
 
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-amd64
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 PACKAGES += CSWlibmemcached
 RUNTIME_DEP_PKGS_CSWlibmemcached += CSWlibgcc-s1
