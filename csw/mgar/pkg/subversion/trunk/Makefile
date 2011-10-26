@@ -267,8 +267,7 @@ TEST_TARGET  = check
 include gar/category.mk
 
 # pygthon bindings do not link since svn-1.6.5 ...
-#BINDING_LANGS   = java perl python ruby
-BINDING_LANGS   = java perl ruby
+BINDING_LANGS   = java perl python ruby
 BINDING_TARGETS = $(addprefix svn-,$(BINDING_LANGS))
 
 PI_DEPENDS += copy-templates
@@ -344,9 +343,7 @@ svn-python:
 		$(WORKSRC)/subversion/bindings/swig/python/*.c \
 		$(WORKSRC)/subversion/bindings/swig/python/*.py
 	@$(BUILD_ENV)   gmake -C $(WORKSRC) swig-py
-	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py \
-		swig_pydir=$(libdir)/python2.3/libsvn \
-		swig_pydir_extra=$(libdir)/python2.3/svn
+	@$(INSTALL_ENV) gmake -C $(WORKSRC) install-swig-py 
 	#@$(TEST_ENV)    gmake -C $(WORKSRC) check-swig-py
 	@$(MAKECOOKIE)
 
