@@ -1,26 +1,19 @@
 # $Id$
 NAME = libicu
-VERSION = 4.6
+VERSION = 4.6.1
 CATEGORIES = lib
 
 DESCRIPTION = International Components for Unicode
 define BLURB
 endef
 
-# filename = icu4c-$(shell echo $(1) | tr '.' '_')-src.tgz
-_V-4.6 = 4_6
-filename = icu4c-$(_V-$(1))-src.tgz
-
 MASTER_SITES = http://download.icu-project.org/files/icu4c/$(VERSION)/
-SOURCEFILES = $(call filename,$(VERSION))
+SOURCEFILES = icu4c-$(subst .,_,$(VERSION))-src.tgz
 DISTFILES = $(SOURCEFILES)
 
 # icu-config is broken with ECHO_N/ECHO_C detection:
 #   http://bugs.icu-project.org/trac/ticket/7768
 #PATCHFILES = 0001-Add-workaround-for-echo-n.patch
-
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:_\d+)*)-src.tgz
 
 PACKAGES += CSWlibicu46
 CATALOGNAME_CSWlibicu46 = libicu46
@@ -35,6 +28,10 @@ CATALOGNAME_CSWlibicu-devel = libicu_devel
 SPKG_DESC_CSWlibicu-devel = Development Files for libicu
 # This package is PKGFILES catchall
 RUNTIME_DEP_PKGS_CSWlibicu-devel = CSWlibicu46
+
+# This is just a comment for --prefix
+CHECKPKG_OVERRIDES_CSWlibicu-devel += file-with-bad-content|/usr/local|root/opt/csw/bin/icu-config
+CHECKPKG_OVERRIDES_CSWlibicu-devel += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/icu-config
 
 PACKAGES += CSWlibicu
 CATALOGNAME_CSWlibicu = libicu
@@ -70,9 +67,9 @@ CPPFLAGS =
 # packages using the libs will bail out as they assume the libs are self-contained.
 LINKER_FLAGS = -lCrun -lCstd
 
+EXTRA_CXXFLAGS = -norunpath
+
 BUILD64 = 1
-NOISAEXEC = 1
 NOISALIST = 1
-CONFIGURE_ARGS = $(DIRPATHS)
 
 include gar/category.mk
