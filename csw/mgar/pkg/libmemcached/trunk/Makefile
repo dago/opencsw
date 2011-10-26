@@ -23,24 +23,23 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --disable-dtrace
 CONFIGURE_ARGS += --disable-rpath
 
+GARCOMPILER = GNU
+GARTYPE = 2
+ISAEXEC = 1
+
 BUILD64 = 1
 SKIPTEST = 1
 
 OPT_FLAGS_SOS = -xO3
 OPT_FLAGS_GCC = -O2 -pipe
 
-GARCOMPILER = GNU
-GARTYPE = 2
-
 PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 PACKAGES += CSWlibmemcached
 RUNTIME_DEP_PKGS_CSWlibmemcached += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibmemcached += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSWlibmemcached += CSWlibevent2-0-5
 SPKG_DESC_CSWlibmemcached = $(DESCRIPTION), main library
 SPKG_FULL_REVSTAMP_CSWlibmemcached = 1
-CHECKPKG_OVERRIDES_CSWlibmemcached += surplus-dependency|CSWlibevent2-0-5
 
 PACKAGES += CSWlibhashkit1
 CATALOGNAME_CSWlibhashkit1 = libhashkit1
