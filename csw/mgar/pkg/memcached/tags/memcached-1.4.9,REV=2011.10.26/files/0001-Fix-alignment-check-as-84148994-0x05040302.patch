@@ -1,0 +1,25 @@
+From 0bbc9aaa1c7648670375cd2ed23754f736ac12aa Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 19 Jan 2011 14:16:22 +0100
+Subject: [PATCH 1/2] Fix alignment check as 84148994 == 0x05040302
+
+---
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 2a1b703..1fc9ebc 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -423,7 +423,7 @@ AC_DEFUN([AC_C_ALIGNMENT],
+        *ptr = 0x1;
+ 
+        // catch unaligned word access (ARM cpus)
+-       *buf =  1; *(buf +1) = 2; *(buf + 2) = 2; *(buf + 3) = 3; *(buf + 4) = 4;
++       *buf =  1; *(buf +1) = 2; *(buf + 2) = 3; *(buf + 3) = 4; *(buf + 4) = 5;
+        int* i = (int*)(buf+1);
+        return (84148994 == i) ? 0 : 1;
+     ])
+-- 
+1.7.3.2
+

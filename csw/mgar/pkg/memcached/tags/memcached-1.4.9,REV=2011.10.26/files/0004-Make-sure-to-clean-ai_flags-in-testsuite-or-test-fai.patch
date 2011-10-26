@@ -1,0 +1,24 @@
+From 0e2dedb53cfd7cbfeda4234758b7fc5746372cd0 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 3 Mar 2011 21:54:13 +0100
+Subject: [PATCH] Make sure to clean ai_flags in testsuite or test fails on sparcv9
+
+---
+ testapp.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/testapp.c b/testapp.c
+index 7023ece..ecf1b8d 100644
+--- a/testapp.c
++++ b/testapp.c
+@@ -382,6 +382,7 @@ static struct addrinfo *lookuphost(const char *hostname, in_port_t port)
+ {
+     struct addrinfo *ai = 0;
+     struct addrinfo hints = { .ai_family = AF_UNSPEC,
++                              .ai_flags = 0,
+                               .ai_protocol = IPPROTO_TCP,
+                               .ai_socktype = SOCK_STREAM };
+     char service[NI_MAXSERV];
+-- 
+1.7.3.2
+
