@@ -53,7 +53,7 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS-sol5.10 += --enable-dtrace
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-sol$(GAROSREL))
 
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-amd64
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 include gar/category.mk
 
