@@ -37,6 +37,7 @@ RUNTIME_DEP_PKGS_CSWlibclam6  = CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibclam6 += CSWlibgcc-s1
 INCOMPATIBLE_PKGS_CSWlibclam6 = CSWlibclamav
 
 PACKAGES                         += CSWlibclam6-dev
@@ -57,12 +58,12 @@ PACKAGING_PLATFORMS  = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 #PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-#GARCOMPILER = GCC4
+GARCOMPILER = GCC4
 
 # Seems to be a compiler bug forcing us to use -xO2 instead of -xO3
 # http://bugs.sun.com/view_bug.do?bug_id=6683773
 # New bug filed since the above one isn't really solved, no bug id yet
-OPT_FLAGS_SOS = -xO2
+#OPT_FLAGS_SOS = -xO2
 
 sysconfdir = /etc/opt/csw
 
@@ -73,7 +74,7 @@ CONFIGURE_ARGS += --with-dbdir=/var/opt/csw/$(NAME)/db
 CONFIGURE_ARGS += --localstatedir=/var/opt/csw/$(NAME)
 CONFIGURE_ARGS += --sysconfdir=$(sysconfdir)
 CONFIGURE_ARGS += --enable-milter
-#CONFIGURE_ARGS += --disable-llvm
+CONFIGURE_ARGS += --disable-llvm
 #CONFIGURE_ARGS += --enable-check
 CONFIGURE_ARGS += --enable-clamdtop
 
