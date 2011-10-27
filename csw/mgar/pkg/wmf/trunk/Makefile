@@ -53,40 +53,38 @@ OBSOLETED_BY_CSWlibwmf0-2-7 = CSWlibwmf
 PACKAGES += CSWlibwmf-dev
 CATALOGNAME_CSWlibwmf-dev = libwmf_dev
 SPKG_DESC_CSWlibwmf-dev += Library and tools for manipulating Windows metafiles - developer package
-PKGFILES_CSWlibwmf-dev = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibwmf-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibwmf-dev += $(sharedstatedir)/doc/.*
 RUNTIME_DEP_PKGS_CSWlibwmf-dev += CSWlibwmflite0-2-7
 RUNTIME_DEP_PKGS_CSWlibwmf-dev += CSWlibwmf0-2-7
-OBSOLETED_BY_CSWlibwmf-dev = CSWlibwmfdevel
+OBSOLETED_BY_CSWlibwmf-dev += CSWlibwmfdevel
 CATALOGNAME_CSWlibwmfdevel = libwmf_devel_stub
+OBSOLETED_BY_CSWlibwmf-dev += CSWlibwmfdoc
+CATALOGNAME_CSWlibwmfdoc = libwmf_doc_stub
+# These are docs only
+CHECKPKG_OVERRIDES_CSWlibwmf-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libwmf/tutapi.html
+CHECKPKG_OVERRIDES_CSWlibwmf-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libwmf/gd.html
+CHECKPKG_OVERRIDES_CSWlibwmf-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/libwmf/tutapi.html
+CHECKPKG_OVERRIDES_CSWlibwmf-dev += file-with-bad-content|/usr/share|root/opt/csw/share/doc/libwmf/index.html
 
-PACKAGES += CSWlibwmfdoc
-CATALOGNAME_CSWlibwmfdoc = libwmf_doc
-# This is a legacy name
-CHECKPKG_OVERRIDES_CSWlibwmfdoc += catalogname-does-not-match-pkgname|pkgname=CSWlibwmfdoc|catalogname=libwmf_doc|expected-catalogname=libwmfdoc
-SPKG_DESC_CSWlibwmfdoc += Library and tools for manipulating Windows metafiles - documentation
-PKGFILES_CSWlibwmfdoc = $(sharedstatedir)/doc/.*
-ARCHALL_CSWlibwmfdoc = 1
+PACKAGES += CSWwmf-fonts
+SPKG_DESC_CSWwmf-fonts += Windows metafile fonts
+PKGFILES_CSWwmf-fonts = $(sharedstatedir)/libwmf/fonts/.*
+ARCHALL_CSWwmf-fonts = 1
+OBSOLETED_BY_CSWwmf-fonts += CSWwmffonts
+CATALOGNAME_CSWwmffonts = wmf_fonts_stub
 
-PACKAGES += CSWwmffonts
-CATALOGNAME_CSWwmffonts = wmf_fonts
-# This is a legacy name
-CHECKPKG_OVERRIDES_CSWwmffonts += catalogname-does-not-match-pkgname|pkgname=CSWwmffonts|catalogname=wmf_fonts|expected-catalogname=wmffonts
-SPKG_DESC_CSWwmffonts += Library and tools for manipulating Windows metafiles - fonts
-PKGFILES_CSWwmffonts = $(sharedstatedir)/libwmf/fonts/.*
-ARCHALL_CSWwmffonts = 1
-
-PACKAGES += CSWlibwmfgtk
-CATALOGNAME_CSWlibwmfgtk = libwmf_gtk
-# This is a legacy package name
-CHECKPKG_OVERRIDES_CSWlibwmfgtk += catalogname-does-not-match-pkgname|pkgname=CSWlibwmfgtk|catalogname=libwmf_gtk|expected-catalogname=libwmfgtk
-SPKG_DESC_CSWlibwmfgtk += Library and tools for manipulating Windows metafiles - GTK loader
-PKGFILES_CSWlibwmfgtk = $(libdir).*/io-wmf.so
-RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWglib2
-RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWgtk2
-RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWlibwmf0-2-7
-RUNTIME_DEP_PKGS_CSWlibwmfgtk += CSWlibwmflite0-2-7
+PACKAGES += CSWlibwmf-gtk
+SPKG_DESC_CSWlibwmf-gtk += Library and tools for manipulating Windows metafiles - GTK loader
+PKGFILES_CSWlibwmf-gtk = $(libdir).*/io-wmf.so
+RUNTIME_DEP_PKGS_CSWlibwmf-gtk += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibwmf-gtk += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibwmf-gtk += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibwmf-gtk += CSWlibwmf0-2-7
+RUNTIME_DEP_PKGS_CSWlibwmf-gtk += CSWlibwmflite0-2-7
 BUILD_DEP_PKGS += CSWgtk2devel
+OBSOLETED_BY_CSWlibwmf-gtk += CSWlibwmfgtk
+CATALOGNAME_CSWlibwmfgtk = libwmf_gtk_stub
 
 # This *must* be the same as in the GD package
 CSW_DEFAULT_FONTPATH = $(sharedstatedir)/fonts/truetype
