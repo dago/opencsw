@@ -1225,7 +1225,7 @@ def CheckLicenseFilePlacement(pkg_data, error_mgr, logger, messenger):
         msg = ("The package contains a docdir which doesn't match its "
                "catalog name.  To fix, repeat the merge state (mgar remerge "
                "repackage).")
-        error_mgr.Message(msg)
+        messenger.Message(msg)
         error_mgr.ReportError(
             "wrong-docdir",
             "expected=/opt/csw/shared/doc/%s/... "
