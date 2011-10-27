@@ -1,5 +1,5 @@
 NAME = lzlib
-VERSION = 1.1
+VERSION = 1.2
 CATEGORIES = lib
 
 DESCRIPTION = A lossless data compression library based on the LZMA algorithm
