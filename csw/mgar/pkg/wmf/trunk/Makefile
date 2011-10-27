@@ -15,10 +15,6 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTNAME = libwmf-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=10501
-UFILES_REGEX = (\d+(?:\.\d+)*)
-
 VENDOR_URL = http://wvware.sourceforge.net
 
 PACKAGES += CSWwmf
@@ -26,10 +22,10 @@ CATALOGNAME_CSWwmf = wmf
 SPKG_DESC_CSWwmf += Library and tools for manipulating Windows metafiles
 RUNTIME_DEP_PKGS_CSWwmf += CSWftype2 
 RUNTIME_DEP_PKGS_CSWwmf += CSWjpeg
-RUNTIME_DEP_PKGS_CSWwmf += CSWpng
-RUNTIME_DEP_PKGS_CSWwmf += CSWzlib
+RUNTIME_DEP_PKGS_CSWwmf += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWwmf += CSWlibz1
 RUNTIME_DEP_PKGS_CSWwmf += CSWwmffonts
-RUNTIME_DEP_PKGS_CSWwmf += CSWiconv
+RUNTIME_DEP_PKGS_CSWwmf += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWwmf += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWwmf += CSWlibwmf0-2-7
 RUNTIME_DEP_PKGS_CSWwmf += CSWlibwmflite0-2-7
@@ -37,19 +33,19 @@ CHECKPKG_OVERRIDES_CSWwmf += surplus-dependency|CSWwmffonts
 
 PACKAGES += CSWlibwmflite0-2-7
 CATALOGNAME_CSWlibwmflite0-2-7 = libwmflite0_2_7
-PKGFILES_CSWlibwmflite0-2-7 += $(call baseisadirs,$(libdir),libwmflite-0\.2\.so\.7(\.\d+)*)
+PKGFILES_CSWlibwmflite0-2-7 += $(call pkgfiles_lib,libwmflite-0.2.so.7)
 SPKG_DESC_CSWlibwmflite0-2-7 += Library and tools for manipulating Windows metafiles - runtime package, libwmflite-0.2.so.7
 OBSOLETED_BY_CSWlibwmflite0-2-7 = CSWlibwmf
 
 PACKAGES += CSWlibwmf0-2-7
 CATALOGNAME_CSWlibwmf0-2-7 = libwmf0_2_7
-PKGFILES_CSWlibwmf0-2-7 += $(call baseisadirs,$(libdir),libwmf-0\.2\.so\.7(\.\d+)*)
+PKGFILES_CSWlibwmf0-2-7 += $(call pkgfiles_lib,libwmf-0.2.so.7)
 SPKG_DESC_CSWlibwmf0-2-7 += Library and tools for manipulating Windows metafiles - runtime package, libwmf-0.2.so.7
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWjpeg
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibwmflite0-2-7
-RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWpng
-RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWiconv
-RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibwmf0-2-7 += CSWftype2
 OBSOLETED_BY_CSWlibwmf0-2-7 = CSWlibwmf
