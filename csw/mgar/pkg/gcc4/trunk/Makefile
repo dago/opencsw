@@ -7,7 +7,7 @@
 # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=39048
 
 NAME      = gcc
-VERSION   = 4.6.1
+VERSION   = 4.6.2
 CATEGORIES   = lang
 GARTYPE = v2
 BASE_VERSION = $(shell echo $(VERSION) | gsed -e 's/^\([0-9]\+\.[0-9]\+\)\(.*\)/\1/')
