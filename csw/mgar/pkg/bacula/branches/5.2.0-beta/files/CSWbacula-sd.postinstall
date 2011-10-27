@@ -1,0 +1,10 @@
+#!/bin/sh
+
+host=`hostname`
+conf=${PKG_INSTALL_ROOT}/etc/opt/csw/bacula/bacula-sd.conf
+template=${conf}.CSW
+
+if cmp -s ${conf} ${template}; then
+    echo "Massaging templated config files for first use..."
+    perl -pi -e "s/current9[sx]/$host/g" ${conf}
+fi

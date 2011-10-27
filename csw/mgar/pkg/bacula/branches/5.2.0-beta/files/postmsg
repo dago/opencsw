@@ -1,0 +1,20 @@
+This package relies on several components sharing several password
+values.  As the components will be installed on multiple machines,
+there is no point in changing the default values as we could not make
+the same change on all systems without using a similarly well-known
+default value.
+
+You are urged to change all Password values in the files:
+/etc/opt/csw/bacula/bacula-dir.conf
+/etc/opt/csw/bacula/bacula-fd.conf
+/etc/opt/csw/bacula/bacula-sd.conf
+/etc/opt/csw/bacula/bconsole.conf
+
+This should be done on all nodes running any or all of:
+CSWbacula-director
+CSWbacula-sd
+CSWbacula-fd
+CSWbacula-console
+
+For details, please see:
+http://www.bacula.org/5.0.x-manuals/en/main/main/Customizing_Configuration_F.html#SECTION001740000000000000000

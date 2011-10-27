@@ -1,0 +1,101 @@
+From eb01ec6ad7a7ff754cf03302d522f379b1392610 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Fri, 29 Apr 2011 11:53:45 -0400
+Subject: [PATCH] Make the solaris init scripts user/group aware
+
+Import the values for the user and group settings specified by
+configure when generating the solaris init scripts.  Use these values
+for the -u and -g parameters when starting the daemons.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ platforms/solaris/bacula-dir.in |   13 ++++++++++++-
+ platforms/solaris/bacula-fd.in  |   13 ++++++++++++-
+ platforms/solaris/bacula-sd.in  |   13 ++++++++++++-
+ 3 files changed, 36 insertions(+), 3 deletions(-)
+
+diff --git a/platforms/solaris/bacula-dir.in b/platforms/solaris/bacula-dir.in
+index f34e672..c5a3a93 100755
+--- a/platforms/solaris/bacula-dir.in
++++ b/platforms/solaris/bacula-dir.in
+@@ -9,11 +9,22 @@
+ #  For Bacula release @VERSION@ (@DATE@) -- @DISTNAME@
+ #
+ 
++DIR_USER=@dir_user@
++DIR_GROUP=@dir_group@
++DIR_OPTIONS=''
++
+ RETVAL=0
+ case "$1" in
+     start)
++       if [ "${DIR_USER}" != '' ]; then
++          DIR_OPTIONS="${DIR_OPTIONS} -u ${DIR_USER}"
++       fi
++       if [ "${DIR_GROUP}" != '' ]; then
++          DIR_OPTIONS="${DIR_OPTIONS} -g ${DIR_GROUP}"
++       fi
++
+        echo "Starting the Bacula Director: "
+-       @sbindir@/bacula-dir $2 -c @sysconfdir@/bacula-dir.conf
++       @sbindir@/bacula-dir $2 ${DIR_OPTIONS} -c @sysconfdir@/bacula-dir.conf
+        ;;
+     stop)
+        echo "Stopping the Director daemon: "
+diff --git a/platforms/solaris/bacula-fd.in b/platforms/solaris/bacula-fd.in
+index cd3bef1..eeca38d 100755
+--- a/platforms/solaris/bacula-fd.in
++++ b/platforms/solaris/bacula-fd.in
+@@ -9,10 +9,21 @@
+ #  For Bacula release @VERSION@ (@DATE@) -- @DISTNAME@
+ #
+ 
++FD_USER=@fd_user@
++FD_GROUP=@fd_group@
++FD_OPTIONS=''
++
+ case "$1" in
+     start)
++       if [ "${FD_USER}" != '' ]; then
++          FD_OPTIONS="${FD_OPTIONS} -u ${FD_USER}"
++       fi
++       if [ "${FD_GROUP}" != '' ]; then
++          FD_OPTIONS="${FD_OPTIONS} -g ${FD_GROUP}"
++       fi
++
+        echo "Starting the Bacula File daemon: "
+-       @sbindir@/bacula-fd $2 -c @sysconfdir@/bacula-fd.conf
++       @sbindir@/bacula-fd $2 ${FD_OPTIONS} -c @sysconfdir@/bacula-fd.conf
+        ;;
+     stop)
+        echo "Stopping the Bacula File daemon: "
+diff --git a/platforms/solaris/bacula-sd.in b/platforms/solaris/bacula-sd.in
+index 6a0adb8..c547697 100755
+--- a/platforms/solaris/bacula-sd.in
++++ b/platforms/solaris/bacula-sd.in
+@@ -9,10 +9,21 @@
+ #  For Bacula release @VERSION@ (@DATE@) -- @DISTNAME@
+ #
+ 
++SD_USER=@sd_user@
++SD_GROUP=@sd_group@
++SD_OPTIONS=''
++
+ case "$1" in
+     start)
++       if [ "${SD_USER}" != '' ]; then
++          SD_OPTIONS="${SD_OPTIONS} -u ${SD_USER}"
++       fi
++       if [ "${SD_GROUP}" != '' ]; then
++          SD_OPTIONS="${SD_OPTIONS} -g ${SD_GROUP}"
++       fi
++
+        echo "Starting the Bacula Storage daemon: "
+-       @sbindir@/bacula-sd $2 -c @sysconfdir@/bacula-sd.conf
++       @sbindir@/bacula-sd $2 ${SD_OPTIONS} -c @sysconfdir@/bacula-sd.conf
+        ;;
+     stop)
+        echo "Stopping the Bacula Storage daemon: "
+-- 
+1.7.1
+
