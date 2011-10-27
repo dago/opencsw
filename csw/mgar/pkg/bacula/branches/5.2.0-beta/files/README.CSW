@@ -1,0 +1,191 @@
+2011-04-21
+
+It's been a long time since the last bacula release.  If this is not a
+fresh installation, you'll need to use the
+libexec/bacula/update_mysql_tables_10_to_11 before running the current
+update_mysql_tables script.
+
+
+01Jan2008
+With the 2.2.7 release, the mysql database libraries are changed from mysql4
+   to mysql5.  You may have been using previous releases of bacula with
+   mysql5; which, of course, is fine.  The MySQL developers have not 
+   released an update to MySQL 4.1 in a long while.  If you are still using
+   mysql4, please update to mysql5.  Basic bacula functions worked fine
+   with the mysql5 libraries connecting to a mysql4 database.  But,
+   you need to update as soon as possible.
+
+If you need some help with CSWmysql5 upgrade, here are the backup and restore
+   procedures that have been sucessful for me.  Using CSWmysql4, disable the 
+   bacula services and backup the bacula database with the following command.
+   Adjust the output directory as needed.  This short set of procedures does
+   assume some basic MySQL admin skills, such as creating databases and users.
+
+   Please refer to the MySQL documentation at http://www.mysql.com for details
+   and/or tips for the MySQL version upgrade.
+
+Backup command:
+/opt/csw/mysql4/bin/mysqldump --opt bacula |gzip > /export/nfs/backup/mysql4/mcsrv5-bacula-dump-`date '+%Y%m%d%H%M'`.tar.gz
+
+Be sure to dump any other databases to separate backup files.  I have not
+   been doing the backup/restore for the mysql database; but this is 
+   recommended.  I have so few entries, that I find it simpler to create the
+   necessary entries manually.
+
+After completing the backups, disable cswmysql4.
+
+Install the mysql5 package with `pkg-get -Uu mysql5`.  I recommend using a new
+   database directory and leaving the mysql4 installation alone until you are
+   confident that the migration has been successfully completed.  Run the 
+   quick-start script at /opt/csw/mysql5/share/mysql, if you like, to setup
+   the new installation.  Leave CSWmysql4 shutdown and start CSWmysql5.
+
+Create the necessary databases and users.  For the users, you should be able to
+   restore the mysql database dump, if you did that one.  gunzip the backup
+   files and restore bacula, along with any other databases, using the 
+   following command to redirect the backup file to the mysql command.
+Restore command:
+/opt/csw/mysql5/bin/mysql --password=secret bacula </export/nfs/backup/mysql4/mcsrv5-bacula-dump-200712312232.tar
+
+Start bacula and test your installation and conversion results.
+
+19Jan2007
+This release requires a mysql database update.  See the bacula documentation
+   for details.  I updated my mysql4 database and passed the hostname, 
+   which is not the bacula media server, and username.  Type any other
+   variables that you need as parameters.  For example,
+   `/opt/csw/etc/bacula/update_mysql_tables -h mcsrv5 -u bacula` is what I
+   used to connect to host mcsrv5 and use username bacula.
+
+This update adds support for csw.conf.  See the following url for details.
+   http://www.opencsw.org/standards/csw.conf.html
+   The package specific name is bacula.
+
+If any of the bacula daemons do not start after the upgrade, please check
+   the log for error messages.  For example, on Solaris 10, the log is
+   probably '/var/svc/log/application-cswbacula:default.log'.  For my
+   upgrade, I had to change the director config file before the director
+   would start.
+
+09Jan2006
+This release makes the following package changes, in addtion to being
+   a release update.
+1) Fix some dependency inaccuracies.  Mainly, mysql4 has been split
+   to provide a mysql4client package.  mysql4client contains all of
+   the mysql client programs, which is the minimum requirements for
+   running bacula.  This includes running the scripts in sysconfdir.
+   There still must be a mysql4 server somewhere, but it does not have
+   to be on the bacula host.
+2) For Solaris 10 and later, the package adds SMF capability.  The
+   FRMI is svc:/network/cswbacula:default or cswbacula for short.
+   The package scripts do the setup and continue the tradition of
+   stopping the daemons when the package is removed and starting the
+   daemons on install.
+
+24Nov2005
+This release makes the following package changes.
+
+1) On prior package releases, bacula was stopped when the bacula_client
+   package was removed.
+   With this package release, bacula is stopped when bacula or
+   bacula_client is removed.  Bacula is started when bacula or
+   bacula_client is installed.
+   Both the bacula_client and bacula packages start daemons appropriate
+   for the package.  This does mean an extra stop/start when bacula
+   is installed.
+   The end result should be a running bacula environment after package
+   installation/update.
+2) The bacula packages using SQLite, mentioned below, are not released.
+   There must be interest from the community and that does not appear
+   to exist.  Still, MySQL is the recommended database manager for 
+   bacula.
+3) I switched back to using Sun's compilers, instead of GNU compilers.
+   Let me know if this causes a problem.  I have run tests on both
+   server and client only installations and all seems fine.  The
+   CSW standard is for me to use Sun's compilers whenever
+   possible.
+4) I want to change the dependency on mysql4 to mysql4client.  If this
+   causes you a problem, please let me know.  The mysql4client package,
+   has everything needed for  bacula to use a remote MySQL server.
+   This includes the scripts to make, upgrade, drop, etc. the MySQL bacula
+   database.  This may be just me, but I do not want the MySQL daemon running
+   on every bacula client.  Please send me your comments.  If you do not have
+   my address, use the bacula package web page and click on Send email to
+   maintainer.
+   
+05Nov2005
+1) For release 1.38 on an existing 1.37 mysql installation, you need 
+   to run /opt/csw/etc/bacula/update_mysql_tables
+   Use paramaters as necessary to connect to your mysql4 host and
+   bacula database.
+
+23Jul2005
+This release makes the following changes.
+
+1) There is now a separate bacula client that uses SQLite for the 
+   database manager.  Install either this package or bacula_sqlite,
+   but NOT both.
+2) CSWmysql4 is reinstated as a dependency.
+3) Both bacula and bacula_sqlite use the same bacula_client package
+   as a dependency.
+
+12Mar2005
+This release makes the following changes.
+
+1) The bacula package is now split into a client (bacula_client or 
+   CSWbaculaclient) and this package.  bacula_client is a dependency
+   for bacula.
+
+   If you only need the file daemon, install bacula_client and point
+   the bacula_client configuration files to the bacula server.  The
+   client configuration files are bconsole.conf and bacula-fd.conf in
+   /opt/csw/etc/bacula.
+
+2) mysql4 is no longer a dependency.  This release changes the mysql4
+   dependency from mysql4 to mysql4rt.  This allows you to have the
+   bacula database on a remote mysql4 host and not have to install
+   the full mysql4 package on the bacula host.
+
+   IMPORTANT: Both bacula packages require a mysql4 server somewhere.
+   You must have installed CSWmysql4 previously or install CSWmysql4
+   yourself after installing bacula.
+
+   If you want to connect to a remote mysql4 server, setup the 
+   bacula director to point to that remote server.  Typically, this
+   requires changes to /opt/csw/mysql4/var/my.cnf in the [client]
+   section.  Also, change /opt/csw/etc/bacula/bacula-dir.conf
+   to include the keywords 'DB Address = <hostname>' and
+   'DB Port = <port nbr>' in the Catalog section.  This is not
+   complete documentation and you should read the product manuals.
+
+04Feb2005
+A few notes and/or observations.
+
+1) Read the pdf file in /opt/csw/share/doc/bacula/bacula.pdf!
+
+2) Unlike ufsdump, bacula expects a tape device to have 
+   'the original BSD behavior', hence the 'b' in the device
+   attributes.
+   bacula also expects the no-rewind device for tape.
+   For example, use /dev/rmt/0bn and NOT /dev/rmt/0n.
+
+3) The startup script is created by bacula.  I moved it to
+   /etc/init.d/cswbacula and created some symlinks.
+   There are a few variables that can be overriden in the 
+   startup script.  This is done by copying 
+   /opt/csw/share/doc/bacula/cswbacularc to either /etc/opt/csw/
+   or /opt/csw/etc/bacula/ and making the desired changes.
+   Read the docs before doing this.
+
+4) When creating the mysql database, tables, etc., you can
+   use the '-p' option to have the script prompt for a password.
+   Note that none of the scripts are modified by me and come
+   straight from the bacula developer(s).
+
+5) You may want to add the services entries noted in bacula.pdf.
+
+6) Again, get familiar with the product and do some testing and
+   please read bacula.pdf before putting the software into
+   whatever is 'production' mode for you.
+
+Alex
