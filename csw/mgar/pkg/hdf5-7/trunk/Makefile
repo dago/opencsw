@@ -18,12 +18,13 @@ SPKG_DESC_CSWlibhdf5-7 = HDF5 (hierarchical data format 5) library, libhdf5.so.7
 PKGFILES_CSWlibhdf5-7 += $(call pkgfiles_lib,libhdf5.so.7)
 OBSOLETED_BY_CSWlibhdf5-7 += CSWhdf5rt
 CATALOGNAME_CSWhdf5rt = hdf5_rt_stub
-RUNTIME_DEP_PKGS_CSWlibhdf5-7 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibhdf5-7 += CSWlibz1
 
 PACKAGES += CSWlibhdf5hl7
 SPKG_DESC_CSWlibhdf5hl7 = HDF5 (hierarchical data format 5) library, libhdf5_hl.so.7
 PKGFILES_CSWlibhdf5hl7 += $(call pkgfiles_lib,libhdf5_hl.so.7)
-RUNTIME_DEP_PKGS_CSWlibhdf5hl7 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibhdf5hl7 += CSWlibz1
+# If any of the reported errors were false positives, you can override them
 RUNTIME_DEP_PKGS_CSWlibhdf5hl7 += CSWlibhdf5-7
 OBSOLETED_BY_CSWlibhdf5hl7 += CSWhdf5rt
 
@@ -38,7 +39,7 @@ SPKG_DESC_CSWhdf5 = HDF5 (hierarchical data format 5) software utilities
 PKGFILES_CSWhdf5 += $(bindir)/.*
 RUNTIME_DEP_PKGS_CSWhdf5 += CSWlibhdf5-7
 RUNTIME_DEP_PKGS_CSWhdf5 += CSWlibhdf5hl7
-RUNTIME_DEP_PKGS_CSWhdf5 += CSWzlib
+RUNTIME_DEP_PKGS_CSWhdf5 += CSWlibz1
 
 VENDOR_URL = http://www.hdfgroup.org/HDF5/
 
