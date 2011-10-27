@@ -1,5 +1,5 @@
 NAME = sysstat
-VERSION = 20100528
+VERSION = 20111025
 CATEGORIES = utils
 
 DESCRIPTION = Key system statistics at a glance
@@ -19,12 +19,9 @@ endef
 MASTER_SITES = http://www.maier-komor.de/$(NAME)/
 DISTFILES = $(NAME)-$(VERSION).tgz
 
-RUNTIME_DEP_PKGS = CSWncurses
+RUNTIME_DEP_PKGS_CSWsysstat += CSWlibncurses5
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-SPKG_SOURCEURL = http://www.maier-komor.de/sysstat.html
+VENDOR_URL = http://www.maier-komor.de/sysstat.html
 
 LICENSE = LICENSE
 
@@ -59,8 +56,6 @@ ISAEXEC_FILES = $(sbindir)/sysstatd
 PROTOTYPE_MODIFIERS = makesuid
 PROTOTYPE_FILES_makesuid = .*/sysstatd
 PROTOTYPE_PERMS_makesuid = 4755
-
-CHECKPKG_OVERRIDES_CSWsysstat += soname-not-found|libm.so.2|is|needed|by|opt/csw/sbin/amd64/sysstatd
 
 include gar/category.mk
 
