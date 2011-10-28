@@ -1,0 +1,22 @@
+#!/bin/env perl -w
+#
+# $Id$
+#
+# Copyright 2006 Cory Omand <comand@blastwave.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#
+# map2proto - reformat a pkgmap as a prototype
+#
+
+use strict;
+
+while (<>) {
+    chomp ; my @F = split;
+    next unless @F > 3;
+    print join(" ", ($F[1] =~ /f|d|i/) ? @F[1..$#F-3] : @F[1..$#F]);
+}

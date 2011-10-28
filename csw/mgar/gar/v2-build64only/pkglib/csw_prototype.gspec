@@ -1,0 +1,1 @@
+%prototype exec cswproto -s %{TIMESTAMP} -r %{DESTDIR} %{DESTDIR}%{prefix}

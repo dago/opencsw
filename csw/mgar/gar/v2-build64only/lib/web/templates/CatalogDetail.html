@@ -1,0 +1,21 @@
+$def with (cat_name, pkgs)
+<html>
+  <head>
+    <title>
+      $cat_name
+    </title>
+    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+  </head>
+  <body>
+    <h3>$cat_name</h3>
+    <p>$pkgs.count() packages</p>
+    <ul>
+$for pkg in pkgs:
+  <li>
+  <a href="../../srv4/$pkg.md5_sum/">
+  $pkg
+  </a>
+  </li>
+</ul>
+</body>
+</html>

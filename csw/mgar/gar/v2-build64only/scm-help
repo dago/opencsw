@@ -1,0 +1,12 @@
+These are the available SCM targets
+
+scm-update-package:
+  Updates the package files
+
+scm-update-all:
+  Updates both the package files and the gar/ directory
+
+scm-update-gar:
+  Updates the contents of the gar/ directory
+
+  This should only be used inside a package directory

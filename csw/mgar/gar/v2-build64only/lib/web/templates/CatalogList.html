@@ -1,0 +1,19 @@
+$def with (keys)
+<html>
+  <head>
+    <title>
+      List of OpenCSW catalogs
+    </title>
+    <link rel="stylesheet" type="text/css" href="/pkgdb-static/pkgdb.css" />
+  </head>
+  <body>
+    <ul>
+$for osrel, arch, catrel in keys:
+  <li>
+  <a href="$catrel.name-$arch.name-$osrel.short_name/">
+  $catrel.name-$arch.name-$osrel.short_name
+  </a>
+  </li>
+</ul>
+</body>
+</html>
