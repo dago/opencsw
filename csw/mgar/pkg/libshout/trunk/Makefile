@@ -11,6 +11,10 @@ DISTFILES  = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.icecast.org
 
+BUILD_DEP_PKGS += CSWlibogg-dev
+BUILD_DEP_PKGS += CSWlibvorbis-dev
+BUILD_DEP_PKGS += CSWlibtheora-dev
+
 PACKAGES += CSWlibshout3
 SPKG_DESC_CSWlibshout3 = Icecast library, libshout.so.3
 PKGFILES_CSWlibshout3 = $(call pkgfiles_lib,libshout.so.3)
