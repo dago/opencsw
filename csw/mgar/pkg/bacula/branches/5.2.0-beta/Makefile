@@ -212,7 +212,8 @@ CONFIGURE_ARGS += --with-readline=$(prefix)
 CONFIGURE_ARGS += --with-python=$(prefix)
 CONFIGURE_ARGS += --with-tcp-wrappers=$(prefix)
 CONFIGURE_ARGS += --with-openssl=$(prefix)
-CONFIGURE_ARGS += --with-mysql=$(prefix)/mysql5
+CONFIGURE_ARGS += --with-mysql=$(prefix)
+CONFIGURE_ARGS += --with-postgresql=$(prefix)/postgresql
 CONFIGURE_ARGS += --with-scriptdir=$(sysconfdir)/scripts
 CONFIGURE_ARGS += --with-logdir=$(localstatedir)/log/$(NAME)
 CONFIGURE_ARGS += --with-pid-dir=$(localstatedir)/run
@@ -233,7 +234,7 @@ CONFIGURE_ARGS += --with-sd-group=bacula
 
 EXTRA_INC += $(includedir)/ncursesw
 EXTRA_LIB += $(prefix)/lib/ncursesw $(prefix)/mysql5/lib/mysql
-EXTRA_LINKER_FLAGS = -norunpath
+#EXTRA_LINKER_FLAGS = -norunpath
 
 # no tests supplied.
 TEST_SCRIPTS =
