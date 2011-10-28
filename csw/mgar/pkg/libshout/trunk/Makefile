@@ -9,6 +9,8 @@ endef
 MASTER_SITES = http://downloads.us.xiph.org/releases/libshout/
 DISTFILES  = $(DISTNAME).tar.gz
 
+VENDOR_URL = http://www.icecast.org
+
 PACKAGES += CSWlibshout3
 SPKG_DESC_CSWlibshout3 = Icecast library, libshout.so.3
 PKGFILES_CSWlibshout3 = $(call pkgfiles_lib,libshout.so.3)
