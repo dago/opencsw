@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = libsndfile
-VERSION = 1.0.23
+VERSION = 1.0.25
 CATEGORIES = lib
 
 DESCRIPTION = C library for reading and writing files containing sampled sound
@@ -36,24 +36,34 @@ PATCHFILES = 0001-Add-lrintf-workaround-to-regtest.patch
 PATCHFILES += 0002-Add-workaround-for-missing-libm-function-lrint-and-l.patch
 PATCHFILES += 0003-Workaround-mising-stdint.h-and-Sun-Studio-shortcomin.patch
 PATCHFILES += 0004-Add-branch-for-inttypes.h.patch
-PATCHFILES += 0005-Test-for-unsigned-or-test-will-fail.patch
+# PATCHFILES += 0005-Test-for-unsigned-or-test-will-fail.patch
 
-PACKAGES += CSWlibsndfile
-CATALOGNAME_CSWlibsndfile = libsndfile
-SPKG_DESC_CSWlibsndfile = Tools for reading and writing files containing sampled sound
-RUNTIME_DEP_PKGS_CSWlibsndfile += CSWlibogg
-RUNTIME_DEP_PKGS_CSWlibsndfile += CSWflac
-RUNTIME_DEP_PKGS_CSWlibsndfile += CSWvorbis
-RUNTIME_DEP_PKGS_CSWlibsndfile += CSWsqlite3rt
-RUNTIME_DEP_PKGS_CSWlibsndfile += CSWlibsndfile1
+VENDOR_URL = http://www.mega-nerd.com/libsndfile/
+
+BUILD_DEP_PKGS += CSWlibflac-dev
+BUILD_DEP_PKGS += CSWlibsqlite3-dev
+BUILD_DEP_PKGS += CSWlibogg-dev
+BUILD_DEP_PKGS += CSWlibvorbis-dev
+
+PACKAGES += CSWlibsndfile-utils
+CATALOGNAME_CSWlibsndfile-utils = libsndfile_utils
+SPKG_DESC_CSWlibsndfile-utils = Tools for reading and writing files containing sampled sound
+RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibflac8
+RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibsndfile1
+RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWlibsndfile-utils += CSWlibvorbisenc2
+OBSOLETED_BY_CSWlibsndfile-utils = CSWlibsndfile
 
 PACKAGES += CSWlibsndfile1
 CATALOGNAME_CSWlibsndfile1 = libsndfile1
 SPKG_DESC_CSWlibsndfile1 = Library for reading and writing files containing sampled sound, libsndfile.so.1
-PKGFILES_CSWlibsndfile1 = $(call baseisadirs,$(libdir),libsndfile\.so\.1(\.\d+)*)
-RUNTIME_DEP_PKGS_CSWlibsndfile1 += CSWlibogg
-RUNTIME_DEP_PKGS_CSWlibsndfile1 += CSWflac
-RUNTIME_DEP_PKGS_CSWlibsndfile1 += CSWvorbis
+PKGFILES_CSWlibsndfile1 = $(call pkgfiles_lib,libsndfile.so.1)
+RUNTIME_DEP_PKGS_CSWlibsndfile1 += CSWlibogg0
+RUNTIME_DEP_PKGS_CSWlibsndfile1 += CSWlibvorbis0
+RUNTIME_DEP_PKGS_CSWlibsndfile1 += CSWlibvorbisenc2
+RUNTIME_DEP_PKGS_CSWlibsndfile1 += CSWlibflac8
 
 PACKAGES += CSWlibsndfile-dev
 CATALOGNAME_CSWlibsndfile-dev = libsndfile_dev
@@ -62,23 +72,7 @@ PKGFILES_CSWlibsndfile-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibsndfile-dev += $(docdir)/.*
 RUNTIME_DEP_PKGS_CSWlibsndfile-dev += CSWlibsndfile1
 
-BUILD_DEP_PKGS += CSWlibogg
-BUILD_DEP_PKGS += CSWflac
-BUILD_DEP_PKGS += CSWvorbis
-BUILD_DEP_PKGS += CSWsqlite3devel
-
-VENDOR_URL = http://www.mega-nerd.com/libsndfile/
-
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
-
-# We want only 64 bit libs, no 64 bit executables
-MERGE_DIRS_isa-extra = $(libdir)
 
 # Relocate docs to standard location
 EXTRA_PAX_ARGS += -s ',^\.$(prefix)/share/doc/libsndfile1-dev,.$(prefix)/share/doc/$(NAME),'
