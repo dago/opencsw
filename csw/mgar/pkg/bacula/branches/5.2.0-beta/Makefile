@@ -1,6 +1,6 @@
 # $Id$
 NAME = bacula
-VERSION = 5.0.3
+VERSION = 5.2.0
 CATEGORIES = apps
 
 DESCRIPTION = The Open Source Network Backup Solution
@@ -20,12 +20,8 @@ DISTFILES += CSWbacula-sd.postinstall
 DISTFILES += CSWbacula-fd.postinstall
 DISTFILES += CSWbacula-console.postinstall
 DISTFILES += postmsg
-PATCHFILES += 0001-Update-AC_INIT-use-to-make-configure-handle-docdir.patch
-PATCHFILES += 0002-Clean-up-solaris-install-autostart-targets.patch
-PATCHFILES += 0003-Make-the-solaris-init-scripts-user-group-aware.patch
-PATCHFILES += 0004-Update-man-page-installation-so-we-don-t-get-gzipped.patch
 
-BUILD_DEP_PKGS  = CSWmysql5devel CSWiconv CSWtcpwrap CSWossldevel
+BUILD_DEP_PKGS  = CSWmysql-dev CSWiconv CSWtcpwrap CSWossldevel
 BUILD_DEP_PKGS += CSWreadline CSWggettext-dev CSWlibcairo-dev
 
 PACKAGES  = CSWbacula-common CSWbacula-fd CSWbacula-sd
