@@ -217,7 +217,7 @@ EXTRA_LIB = /opt/csw/postgresql/lib
 
 NOISALIST = 1
 STRIP_LIBTOOL = 1
-PACKAGING_PLATFORMS = solaris10-i386
+# PACKAGING_PLATFORMS = solaris10-i386
 
 sysconfdir = /etc$(prefix)/php5
 
