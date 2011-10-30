@@ -53,17 +53,17 @@ PATCHFILES_isa-sparcv8-sapi-ap2 += 0002-Force-the-PDO-pgsql-checks-to-use-32-bit
 
 
 BUILD_DEP_PKGS += CSWlibgdbm-dev CSWlibidn-dev CSWlibgd-dev CSWcoreutils
-BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibexpat1 CSWlibz-dev CSWcurldevel CSWjpeg
+BUILD_DEP_PKGS += CSWlibxml2-dev CSWlibexpat1 CSWlibz-dev CSWmysql-dev CSWjpeg
 BUILD_DEP_PKGS += CSWlibpng-dev CSWt1lib CSWxpm CSWlibgdbm-dev CSWlibgmp10
 BUILD_DEP_PKGS += CSWggettext-dev CSWossldevel CSWlibgd2 CSWbdb42devel
 BUILD_DEP_PKGS += CSWlibcares-dev CSWftype2 CSWlibiconv-dev CSWimap-devel
 BUILD_DEP_PKGS += CSWoldapdevel CSWlibkrb5-dev CSWsasl CSWlibltdl7
-BUILD_DEP_PKGS += CSWlibmcrypt CSWfreetds CSWmysql5devel CSWunixodbc
+BUILD_DEP_PKGS += CSWlibmcrypt CSWfreetds CSWmysql-dev CSWunixodbc
 BUILD_DEP_PKGS += CSWlibpq CSWlibreadline-dev CSWlibncurses-dev CSWnetsnmp
-BUILD_DEP_PKGS += CSWsqlite3devel CSWaspell CSWhtmltidy CSWpostgresql
+BUILD_DEP_PKGS += CSWlibsqlite3-dev CSWaspell CSWhtmltidy CSWpostgresql
 # NOTE: I think this is a leftover bug.  we shouldn't depend on two versions
 # of sqlite...
-BUILD_DEP_PKGS += CSWsqlite
+BUILD_DEP_PKGS += CSWlibsqlite3-0
 
 PRESERVECONF = $(sysconfdir)/php.ini $(sysconfdir)/pear.conf
 PRESERVECONF += /opt/csw/apache2/etc/extra/httpd-php5.conf
@@ -217,6 +217,7 @@ EXTRA_LIB = /opt/csw/postgresql/lib
 
 NOISALIST = 1
 STRIP_LIBTOOL = 1
+PACKAGING_PLATFORMS = solaris10-i386
 
 sysconfdir = /etc$(prefix)/php5
 
@@ -232,6 +233,8 @@ CONFIGURE_ARGS += --with-config-file-path=$(sysconfdir)
 CONFIGURE_ARGS += --with-config-file-scan-dir=$(sysconfdir)/conf.d
 
 ifeq ($(SAPI),ap2)
+MYSQL_VER = 5.0
+
 CONFIGURE_ARGS += --enable-bcmath=shared
 CONFIGURE_ARGS += --enable-calendar=shared
 CONFIGURE_ARGS += --enable-cli
@@ -289,14 +292,14 @@ CONFIGURE_ARGS += --with-mhash=shared,$(prefix)
 CONFIGURE_ARGS += --with-mm=$(prefix)
 CONFIGURE_ARGS += --with-mssql=shared,$(prefix)
 CONFIGURE_ARGS += --with-mysql=shared,$(prefix)
-CONFIGURE_ARGS += --with-mysqli=shared,$(prefix)/mysql5/bin/$(ISA_DEFAULT)/mysql_config
+CONFIGURE_ARGS += --with-mysqli=shared,$(prefix)/bin/mysql_config-$(MYSQL_VER)
 CONFIGURE_ARGS += --with-ndbm
 CONFIGURE_ARGS += --with-openssl=shared,$(prefix)
 CONFIGURE_ARGS += --with-pcre-dir=$(prefix)
 CONFIGURE_ARGS += --with-pcre-regex
 # not documented, but you can pass the path to mysql_config directly
 # we need the 32-bit version, so we have to force this
-CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/mysql5/bin/$(ISA_DEFAULT)/mysql_config
+CONFIGURE_ARGS += --with-pdo-mysql=shared,$(prefix)/bin/mysql_config-$(MYSQL_VER)
 CONFIGURE_ARGS += --with-pdo-odbc=shared,unixODBC,$(prefix)
 CONFIGURE_ARGS += --with-pdo-pgsql=shared,$(prefix)/postgresql
 CONFIGURE_ARGS += --with-pdo-sqlite=shared,$(prefix)
