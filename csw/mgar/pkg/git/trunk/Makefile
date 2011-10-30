@@ -101,7 +101,6 @@ DISTFILES += CSWgit.postinstall
 
 PATCHFILES += 0001-Update-path-in-documentation-to-be-CSW-proper.patch
 PATCHFILES += 0002-Alter-the-value-of-_PATH_DEFPATH-when-paths.h-not-pr.patch
-PATCHFILES += 0003-Update-path-in-sample-hook-file.patch
 PATCHFILES += 0004-Use-bash-and-set-PATH-in-contributed-hook-file.patch
 PATCHFILES += 0005-Add-OpenCSW-apache2-path-to-instaweb-search-path.patch
 # this patch is required on current9s (not necessarily all sparc boxes) due
