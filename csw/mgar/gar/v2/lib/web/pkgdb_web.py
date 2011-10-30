@@ -322,6 +322,18 @@ class RestSrv4FullStats(object):
       pkg = models.Srv4FileStats.selectBy(md5_sum=md5_sum).getOne()
       data_structure = pkg.GetStatsStruct()
       web.header('Content-type', 'application/x-vnd.opencsw.pkg;type=pkg-stats')
+      # There was a problem with bad utf-8 in the VENDOR field.
+      # This is a workaround.
+      if "VENDOR" in data_structure["pkginfo"]:
+        vendor = data_structure["pkginfo"]["VENDOR"]
+        if type(vendor) != unicode:
+          try:
+            vendor = unicode(vendor, 'utf-8')
+          except UnicodeDecodeError, e:
+            vendor = vendor.decode("utf-8", "ignore")
+          data_structure["pkginfo"]["VENDOR"] = (
+              vendor + " (bad unicode detected)")
+      # The end of the hack.
       return json.dumps(data_structure, cls=PkgStatsEncoder)
     except sqlobject.main.SQLObjectNotFound, e:
       raise web.notfound()
