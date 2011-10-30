@@ -10,9 +10,7 @@ $def with (maintainers)
     <ul>
 $for username, domain, maintainer in maintainers
   <li>
-  <a href="$maintainer.id/">
-    $username
-  </a>
+  <a href="$maintainer.id/">$username</a>
   ($domain.replace(".", "!"))
   $if maintainer.full_name:
     $maintainer.full_name
