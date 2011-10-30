@@ -1,5 +1,5 @@
 NAME = git
-VERSION = 1.7.6.4
+VERSION = 1.7.7.1
 #PATCHLEVEL = rc1
 CATEGORIES = devel
 
@@ -48,7 +48,7 @@ ARCHALL_CSWgit-emacs = 1
 ARCHALL_CSWgit-doc = 1
 ARCHALL_CSWgit-completion = 1
 
-BUILD_DEP_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWcurldevel
+BUILD_DEP_PKGS = CSWasciidoc CSWossldevel CSWxmlto CSWbash CSWlibcurl-dev
 BUILD_DEP_PKGS += CSWgsed CSWgnulinks CSWperl CSWtk CSWexpat
 BUILD_DEP_PKGS += CSWzlib CSWpmerror CSWpmsvn CSWcvs CSWemacs
 BUILD_DEP_PKGS += CSWpython
