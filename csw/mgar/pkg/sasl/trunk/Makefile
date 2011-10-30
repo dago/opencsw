@@ -14,11 +14,20 @@ endef
 
 MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
 DISTNAME = cyrus-$(NAME)-$(VERSION)
-DISTFILES = cyrus-$(NAME)-$(FILEVERSION).tar.gz
-DISTFILES += cswsaslauthd.init saslauthd.init.CSW
-DISTFILES += README.sasl README.saslauthd
+# This file will be renamed to cswsaslauthd during install
+DISTFILES += cswsaslauthd.init
+DISTFILES += saslauthd.init.CSW
+DISTFILES += README.sasl
+DISTFILES += README.saslauthd
 
-# PATCHFILES = saslauthd-doc.diff saslauthd-groff.diff ltmain.diff
+# For some reason or another, plugins are installed in
+# $(prefix)/lib/sasl2, regardless of what --with-plugindir is set
+# to. This patch will make the install routine put the plugins to
+# the path specified by --with-plugindir
+PATCHFILES = 0001-Install-plugin-at-proper-location.patch
+# This patch makes libtool honor -R properly, without this
+# patch libtool discards -R options passed with LDFLAGS
+PATCHFILES += ltmain.diff
 
 VENDOR_URL = http://asg.web.cmu.edu/sasl/
 
@@ -27,13 +36,12 @@ CATALOGNAME_CSWsasl = sasl
 SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
 RUNTIME_DEP_PKGS_CSWsasl = CSWosslrt
 RUNTIME_DEP_PKGS_CSWsasl += CSWbdb47
-RUNTIME_DEP_PKGS_CSWsasl += CSWoldaprt
-RUNTIME_DEP_PKGS_CSWsasl += CSWkrb5lib
 RUNTIME_DEP_PKGS_CSWsasl += CSWlibsasl2-2
 
 PACKAGES += CSWsaslauthd
 CATALOGNAME_CSWsaslauthd = saslauthd
 SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
+RUNTIME_DEP_PKGS_CSWsaslauthd += CSWsasl
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWosslrt
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibcom-err3
@@ -41,18 +49,42 @@ RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibkrb5support0
+CHECKPKG_OVERRIDES_CSWsaslauthd += surplus-dependency|CSWsasl
+PKGFILES_CSWsaslauthd = $(sysconfdir)/init.d/cswsaslauthd
+PKGFILES_CSWsaslauthd += $(sysconfdir)/saslauthd.init.CSW
+PKGFILES_CSWsaslauthd += $(sbindir)/testsaslauthd
+PKGFILES_CSWsaslauthd += $(sbindir)/saslauthd
+PKGFILES_CSWsaslauthd += $(mandir)/.*/saslauthd\.8
+PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/LDAP_SASLAUTHD
+PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/README.saslauthd
+PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/README.CSW
+PKGFILES_CSWsaslauthd += /var/opt/csw/saslauthd
 
 PACKAGES += CSWsaslgssapi
 CATALOGNAME_CSWsaslgssapi = sasl_gssapi
 SPKG_DESC_CSWsaslgssapi = Cyrus Simple Authentication and Security Layer GSSAPI Binding
-RUNTIME_DEP_PKGS_CSWsaslgssapi = CSWsasl CSWkrb5lib
-CHECKPKG_OVERRIDES_CSWsaslgssapi += surplus-dependency|CSWsasl
+RUNTIME_DEP_PKGS_CSWsaslgssapi = CSWsasl CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWsaslgssapi += CSWlibkrb5support0
+CHECKPKG_OVERRIDES_CSWsaslgssapi += catalogname-does-not-match-pkgname|pkgname=CSWsaslgssapi|catalogname=sasl_gssapi|expected-catalogname=saslgssapi
+PKGFILES_CSWsaslgssapi = $(call pkgfiles_lib,sasl2/libgs2.so)
+PKGFILES_CSWsaslgssapi += $(call pkgfiles_lib,sasl2/libgssapiv2.so)
 
 PACKAGES += CSWsaslsql
 CATALOGNAME_CSWsaslsql = sasl_sql
 SPKG_DESC_CSWsaslsql = Cyrus Simple Authentication and Security Layer SQL Binding
-RUNTIME_DEP_PKGS_CSWsaslsql = CSWsasl CSWlibpq CSWmysql5rt CSWsqlite
-CHECKPKG_OVERRIDES_CSWsaslsql += surplus-dependency|CSWsasl
+RUNTIME_DEP_PKGS_CSWsaslsql = CSWsasl
+# 2011-10-24 raos
+# libpq 64-bit is not available on Solaris 10 x86.
+ifneq ($(MODULATION),isa-amd64)
+RUNTIME_DEP_PKGS_CSWsaslsql += CSWlibpq
+endif
+RUNTIME_DEP_PKGS_CSWsaslsql += CSWlibsqlite3-0
+RUNTIME_DEP_PKGS_CSWsaslsql += CSWlibmysqlclient15
+CHECKPKG_OVERRIDES_CSWsaslsql += catalogname-does-not-match-pkgname|pkgname=CSWsaslsql|catalogname=sasl_sql|expected-catalogname=saslsql
+PKGFILES_CSWsaslsql = $(call pkgfiles_lib,sasl2/libsql.so)
 
 PACKAGES += CSWlibsasl2-2
 SPKG_DESC_CSWlibsasl2-2 = Simple authentication and security layer library, libsasl2.so.2
@@ -63,11 +95,17 @@ SPKG_DESC_CSWsasl-dev = Development files for SASL
 PKGFILES_CSWsasl-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWsasl-dev += CSWlibsasl2-2
 
+BUILD_DEP_PKGS += CSWlibkrb5-dev
+BUILD_DEP_PKGS += CSWmysql-dev
+BUILD_DEP_PKGS += CSWlibpq
+BUILD_DEP_PKGS += CSWoldapdevel 
+BUILD_DEP_PKGS += CSWlibsqlite3-dev
+BUILD_DEP_PKGS += CSWossldevel
+BUILD_DEP_PKGS += CSWbdb47devel
+
 EXTRA_CFLAGS = -D__EXTENSIONS__
 
 EXTRA_BUILD_ENV = _REENTRANT=1
-
-# EXTRA_LIB = $(prefix)/bdb47/lib
 
 EXTRA_INC  = /opt/csw/include/gssapi
 EXTRA_INC += /opt/csw/include/mysql
@@ -75,8 +113,12 @@ EXTRA_INC += /opt/csw/postgresql/include
 
 # Do not use LD_OPTIONS as it breaks tests by using the installed libraries
 # before the newly built ones.
-EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
-LD_OPTIONS = -L$(abspath $(prefix)/bdb47/lib/$(MM_LIBDIR)) -R$(abspath $(prefix)/bdb47/lib/$(MM_LIBDIR))
+EXTRA_RUNPATH_ISALIST	= $(EXTRA_RUNPATH_DIRS)
+# We use EXTRA_RUNPATH for bdb to make sure it is linked against $(prefix)/bdb47/lib/$(MM_LIBDIR))
+# which silences the check deprecated-library message.
+EXTRA_RUNPATH_DIRS = $(prefix)/bdb47/lib/$(MM_LIBDIR)
+EXTRA_LDFLAGS	 = -L$(abspath $(prefix)/bdb47/lib/$(MM_LIBDIR)) -R$(abspath $(prefix)/bdb47/lib/$(MM_LIBDIR))
+EXTRA_LDFLAGS	+= -L$(abspath $(prefix)/postgresql/lib/$(MM_LIBDIR)) -R$(abspath $(prefix)/postgresql/lib/$(MM_LIBDIR))
 
 BUILD64 = 1
 NOISALIST = 1
@@ -88,52 +130,59 @@ CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --disable-static 
 CONFIGURE_ARGS += --enable-sql
+CONFIGURE_ARGS += --enable-login
+CONFIGURE_ARGS += --enable-plain
+CONFIGURE_ARGS += --enable-cram
+CONFIGURE_ARGS += --enable-digest
+CONFIGURE_ARGS += --enable-scram
+CONFIGURE_ARGS += --enable-otp
+CONFIGURE_ARGS += --enable-gssapi
 CONFIGURE_ARGS += --with-bdb-libdir=$(abspath /opt/csw/bdb47/lib/$(MM_LIBDIR))
 CONFIGURE_ARGS += --with-bdb-incdir=/opt/csw/bdb47/include/ 
 CONFIGURE_ARGS += --with-saslauthd=$(localstatedir)/saslauthd 
 CONFIGURE_ARGS += --with-ipctype=unix 
 CONFIGURE_ARGS += --with-ldap=$(libdir)
+# SQLite3 is supported
+CONFIGURE_ARGS += --with-sqlite=no
+CONFIGURE_ARGS += --with-sqlite3=$(prefix)
 # Autoconf tries to find the directory with the shared lib in it. Because of the
 # ISA suffix for 64 bit we must specify the exact library location and add
 # the include directories manually.
 #CONFIGURE_ARGS += --with-mysql=$(libdir)
 CONFIGURE_ARGS += --with-mysql=$(libdir)
+# 2011-10-24 raos
+# libpq 64-bit is not available on Solaris 10 x86.
+# Although the configure script figures this out, the build
+# breaks complaining that libpq cannot be found for amd64.
+ifneq ($(MODULATION),isa-amd64)
 CONFIGURE_ARGS += --with-pgsql=$(abspath $(prefix)/postgresql/lib/$(MM_LIBDIR))
+endif
 CONFIGURE_ARGS += --with-openssl=$(libdir)
 CONFIGURE_ARGS += --with-dbpath=$(sysconfdir)/sasldb2
 CONFIGURE_ARGS += --with-plugindir=$(libdir)/sasl2 
-CONFIGURE_ARGS += --enable-login
+CONFIGURE_ARGS += --with-configdir=$(libdir)/sasl2 
 # This is for 32/64 switching. We do this all by ourselves, do not use SASLs mechanism
+# See also the patch 0001-Install-plugin-at-proper-location.patch
 CONFIGURE_ARGS += --without-lib-subdir
 
 SED=/usr/bin/sed
 EGREP=/usr/bin/egrep
 max_cmd_line=65535
-
-#INSTALL_OVERRIDE_DIRS = prefix exec_prefix bindir libdir includedir mandir
-
-PKGFILES_CSWsaslauthd = /etc/opt/csw/init.d/cswsaslauthd.init
-PKGFILES_CSWsaslauthd += $(bindir)/testsaslauthd
-PKGFILES_CSWsaslauthd += $(sbindir)/saslauthd
-PKGFILES_CSWsaslauthd += $(mandir)/.*/saslauthd\.8
-PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/LDAP_SASLAUTHD
-PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/README.saslauthd
-PKGFILES_CSWsaslauthd += /var/opt/csw/saslauthd
-PKGFILES_CSWsaslgssapi = $(libdir)/sasl2/libgssapiv2\..*
-PKGFILES_CSWsaslsql = $(libdir)/sasl2/libsql\..*
+SED_USR_LOCAL= sed -e 's|/usr/local|/opt/csw|g'
 
 MIGRATECONF = saslauthd.conf sasldb2
-PRESERVECONF = saslauthd.conf
+PRESERVECONF = /etc/opt/csw/saslauthd.conf /etc/opt/csw/saslauthd.init
 
-INITSMF = /etc/opt/csw/init.d/cswsaslauthd.init
+INITSMF = /etc/opt/csw/init.d/cswsaslauthd
 
 CSWsasl_usergroup = :sasl:::::: 
 
 include gar/category.mk
 
-post-install-modulated: testsaslauthd install-testsaslauthd install-doc
+post-install-modulated: install-doc fix-path-manpages
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d/
-	ginstall $(WORKDIR)/cswsaslauthd.init $(DESTDIR)/etc/opt/csw/init.d
+	ginstall $(WORKDIR)/saslauthd.init.CSW $(DESTDIR)/etc/opt/csw/
+	ginstall $(WORKDIR)/cswsaslauthd.init $(DESTDIR)/etc/opt/csw/init.d/cswsaslauthd
 	@$(MAKECOOKIE)
 
 DOC_FILES = rfc1321.txt \
@@ -180,21 +229,18 @@ DOC_FILES = rfc1321.txt \
                 TODO \
                 ONEWS
 
-testsaslauthd:
-	cd $(WORKSRC)/saslauthd && make testsaslauthd
-
-install-testsaslauthd:
-	mkdir -p $(DESTDIR)$(bindir)
-	cp $(WORKSRC)/saslauthd/testsaslauthd $(DESTDIR)$(bindir)
-	mkdir -p $(DESTDIR)/var/opt/csw/saslauthd
-
 install-doc:
 	mkdir -p $(DESTDIR)$(docdir)/sasl
 	cp $(WORKDIR)/README.sasl $(DESTDIR)$(docdir)/sasl/README.CSW
 	list='$(DOC_FILES)'; for file in $$list; do \
-		cp $(WORKSRC)/doc/$$file $(DESTDIR)$(docdir)/sasl; \
+		$(SED_USR_LOCAL) $(WORKSRC)/doc/$$file > $(DESTDIR)$(docdir)/sasl/$$file; \
 	     done
 	mkdir -p $(DESTDIR)$(docdir)/saslauthd
-	cp $(WORKSRC)/saslauthd/LDAP_SASLAUTHD $(DESTDIR)$(docdir)/saslauthd
+	$(SED_USR_LOCAL) $(WORKSRC)/saslauthd/LDAP_SASLAUTHD > $(DESTDIR)$(docdir)/saslauthd/LDAP_SASLAUTHD
 	cp $(WORKDIR)/README.saslauthd $(DESTDIR)$(docdir)/saslauthd/README.CSW
 
+fix-path-manpages:
+	for f in $(DESTDIR)$(mandir)/*/*.? ; do \
+		$(SED_USR_LOCAL) $$f > $$f.tmp ; \
+		mv $$f.tmp $$f ; \
+	done
