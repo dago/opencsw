@@ -218,7 +218,7 @@ SPKG_DEPEND_DB  = $(GARDIR)/csw/depend.db
 
 SPKG_PKGFILE ?= %{bitname}-%{SPKG_VERSION},%{SPKG_REVSTAMP}-%{SPKG_OSNAME}-%{arch}-$(or $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),CSW).pkg
 
-MIGRATECONF ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),/etc/opt/csw/pkg/$S/cswmigrateconf)))
+MIGRATECONF ?= $(strip $(foreach S,$(filter-out $(OBSOLETED_PKGS),$(SPKG_SPECS)),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),/etc/opt/csw/pkg/$S/cswmigrateconf)))
 
 # It is NOT sufficient to change the pathes here, they must be adjusted in merge-* also
 _USERGROUP_FILES ?= $(strip $(foreach S,$(SPKG_SPECS),$(if $(value $(S)_usergroup),/etc/opt/csw/pkg/$S/cswusergroup)))
@@ -765,7 +765,7 @@ reset-merge-ap2mod:
 reset-merge-php5ext:
 	@rm -f $(COOKIEDIR)/post-merge-php5ext
 
-merge-migrateconf: $(foreach S,$(SPKG_SPECS),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),merge-migrateconf-$S))
+merge-migrateconf: $(foreach S,$(filter-out $(OBSOLETED_PKGS),$(SPKG_SPECS)),$(if $(or $(MIGRATE_FILES_$S),$(MIGRATE_FILES)),merge-migrateconf-$S))
 	@$(MAKECOOKIE)
 
 merge-migrateconf-%:
