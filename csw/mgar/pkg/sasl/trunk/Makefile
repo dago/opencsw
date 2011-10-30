@@ -14,6 +14,7 @@ endef
 
 MASTER_SITES = ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
 DISTNAME = cyrus-$(NAME)-$(VERSION)
+DISTFILES = cyrus-$(NAME)-$(FILEVERSION).tar.gz
 # This file will be renamed to cswsaslauthd during install
 DISTFILES += cswsaslauthd.init
 DISTFILES += saslauthd.init.CSW
