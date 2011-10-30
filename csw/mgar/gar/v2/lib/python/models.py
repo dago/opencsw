@@ -48,6 +48,10 @@ class Maintainer(sqlobject.SQLObject):
   """The maintainer of the package, identified by the e-mail address."""
   email = sqlobject.UnicodeCol(length=255, unique=True, notNone=True)
   full_name = sqlobject.UnicodeCol(length=255, default=None)
+  # TODO: Add more fields: status (active/retired/unregistered)
+  # There are some emails that are just errors, it would be good to
+  # distinguish emails that once were velid @opencsw.org addresses from pure
+  # bugs, e.g. "someone@opencsw.or".
 
   def ObfuscatedEmail(self):
     username, domain = self.email.split("@")
