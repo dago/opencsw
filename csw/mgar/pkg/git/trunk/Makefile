@@ -12,6 +12,10 @@ VENDOR_URL = http://git-scm.org/
 # TEST_SCRIPTS =
 TEST_TARGET = test
 
+# This is just until mantis 4854 is resolved
+NO_SVN_TESTS = 1
+EXTRA_TEST_EXPORTS = NO_SVN_TESTS
+
 PACKAGES  = CSWgit CSWgitk CSWgit-gui CSWgit-svn CSWgit-cvs
 PACKAGES += CSWgit-emacs CSWgit-doc CSWgit-completion CSWgit-dev
 
