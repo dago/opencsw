@@ -9,8 +9,8 @@ define BLURB
   way, and a debugger.
 endef
 
-MASTER_SITES   = http://cloud.github.com/downloads/rocky/remake/
-DISTFILES      = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES   = http://downloads.sourceforge.net/project/bashdb/$(NAME)/$(VERSION)/
+DISTFILES      = $(NAME)-$(VERSION).tar.gz
 SPKG_SOURCEURL = http://bashdb.sourceforge.net/remake/
 
 # We define upstream file regex so we can be notifed of new upstream software release
