@@ -9,27 +9,34 @@ define BLURB
   way, and a debugger.
 endef
 
-MASTER_SITES   = http://downloads.sourceforge.net/project/bashdb/$(NAME)/$(VERSION)/
+MASTER_SITES   = http://github.com/downloads/rocky/remake/
 DISTFILES      = $(NAME)-$(VERSION).tar.gz
-SPKG_SOURCEURL = http://bashdb.sourceforge.net/remake/
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX   = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+VENDOR_URL     = http://bashdb.sourceforge.net/remake/
 
 # FIXME: having errors while compiling with Solaris Studio
 # FIXME: looks like GCC4 is broken in testing (fallback to GCC3)
-GARCOMPILER       = GCC3
+#GARCOMPILER       = GCC3
+GARCOMPILER       = GNU
 BUILD_DEP_PKGS   += CSWgcc3core
 BUILD_DEP_PKGS   += CSWggettext-dev
 BUILD_DEP_PKGS   += CSWlibiconv-dev
 BUILD_DEP_PKGS   += CSWlibncurses-dev
 BUILD_DEP_PKGS   += CSWlibreadline-dev
 
-RUNTIME_DEP_PKGS += CSWlibiconv2
-RUNTIME_DEP_PKGS += CSWlibintl8
-RUNTIME_DEP_PKGS += CSWlibncurses5
-RUNTIME_DEP_PKGS += CSWlibreadline6
+# These are fallback pathes _after_ /opt/csw/include
+CHECKPKG_OVERRIDES_CSWremake += file-with-bad-content|/usr/local|root/opt/csw/share/info/remake.info
+CHECKPKG_OVERRIDES_CSWremake += file-with-bad-content|/usr/local|root/opt/csw/bin/remake
 
-CONFIGURE_ARGS    = $(DIRPATHS)
+RUNTIME_DEP_PKGS_CSWremake += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWremake += CSWlibreadline6
+
+CONFIGURE_ARGS += $(DIRPATHS)
+# Not done yet
+# CONFIGURE_ARGS += --with-customs=$(prefix)
+CONFIGURE_ARGS += --without-customs
 
 include gar/category.mk
+
+#post-extract-modulated:
+#	if test -d $(WORKSRC); then cd $(WORKSRC) && ./autogen.sh; fi
+#	@$(MAKECOOKIE)
