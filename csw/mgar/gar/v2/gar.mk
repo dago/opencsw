@@ -572,11 +572,13 @@ strip-libtool:
 reconfigure: reset-configure configure
 
 reset-configure: $(addprefix reset-configure-,$(MODULATIONS))
-	rm -f $(COOKIEDIR)/configure
+	@rm -f $(addprefix $(COOKIEDIR)/configure-,$(MODULATIONS))
+	@rm -f $(COOKIEDIR)/configure
 
-# XXX: pre-*, post-*
 reset-configure-modulated:
-	rm -f $(addprefix $(COOKIEDIR)/,$(CONFIGURE_TARGETS))
+	@rm -f $(foreach C,pre-configure-modulated configure-modulated post-configure-modulated,$(COOKIEDIR)/$C)
+	@rm -f $(COOKIEDIR)/pre-configure-$(MODULATION) $(COOKIEDIR)/post-configure-$(MODULATION)
+	@rm -f $(addprefix $(COOKIEDIR)/,$(CONFIGURE_TARGETS))
 
 # returns true if configure has completed successfully, false
 # otherwise
