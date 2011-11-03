@@ -79,6 +79,8 @@ INSTALL_SCRIPTS = $(WORKSRC)/source3/Makefile
 
 include gar/category.mk
 
+# Use this hack until this bug has been fixed:
+#   https://bugzilla.samba.org/show_bug.cgi?id=8571
 post-extract-modulated:
 	# Make sure to EXCLUDE the include path from 'krb5-config --cflags' as it is prepended to CFLAGS
 	# leading to the inclusion of /opt/csw/include header files before the newly build ones.
