@@ -1,5 +1,5 @@
 NAME = lzo
-VERSION = 2.04
+VERSION = 2.06
 CATEGORIES = utils
 
 DESCRIPTION = LZO compression library
