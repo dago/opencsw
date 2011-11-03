@@ -1,5 +1,5 @@
 NAME = samba
-VERSION = 3.6.0
+VERSION = 3.6.1
 CATEGORIES = apps
 
 DESCRIPTION = Tools to access a servers filespace and printers via SMB (server)
@@ -10,7 +10,13 @@ endef
 MASTER_SITES = http://samba.org/samba/ftp/stable/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
+#What needs to be fixed:
+# old installed libsmbclient.h is included first at Compiling libsmb/libsmb_cache.c
+# Split libs and packages
+
 BUILD_DEP_PKGS += CSWlibtalloc-dev
+#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = isa-pentium_pro
 
 PACKAGES += CSWsamba
 SPKG_DESC_CSWsamba = $(DESCRIPTION)
@@ -45,8 +51,17 @@ SPKG_DESC_CSWsambawb = not sure what this is
 RUNTIME_DEP_PKGS_CSWsambawb = CSWsamba
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/source3/configure
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS = $(DIRPATHS) --enable-socket-wrapper
+EXTRA_CFLAGS = -lintl
+EXTRA_LDFLAGS = -lintl
+
+#Tests need root
+SKIPTEST = 1
+TEST_TARGET = test
+TEST_SCRIPTS = $(WORKSRC)/source3/Makefile
 
 BUILD_SCRIPTS = $(WORKSRC)/source3/Makefile
+INSTALL_SCRIPTS = $(WORKSRC)/source3/Makefile
+
 
 include gar/category.mk
