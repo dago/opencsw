@@ -48,9 +48,11 @@ ARCHALL_CSWsambadoc = 1
 SPKG_DESC_CSWsambalib = Samba shared libraries
 RUNTIME_DEP_PKGS_CSWsambalib = CSWsasl CSWlibnet CSWkrb5lib CSWiconv
 
-#PACKAGES += CSWsambalibdev
-SPKG_DESC_CSWsambalibdev = Development files for the samba libraries
-RUNTIME_DEP_PKGS_CSWsambalibdev = CSWsasl CSWlibnet CSWkrb5lib CSWiconv
+PACKAGES += CSWsamba-dev
+SPKG_DESC_CSWsamba-dev = Development files for the samba libraries
+PKGFILES_CSWsamba-dev += $(PKGFILES_DEVEL)
+OBSOLETED_BY_CSWsamba-dev += CSWsambalibdev
+CATALOGNAME_CSWsambalibdev = samba_libdev_stub
 
 #PACKAGES += CSWsambaswat
 SPKG_DESC_CSWsambaswat = Web-based samba administration tools
