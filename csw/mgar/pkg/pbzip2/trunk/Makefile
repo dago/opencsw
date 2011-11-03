@@ -1,5 +1,5 @@
 NAME = pbzip2
-VERSION = 1.1.5
+VERSION = 1.1.6
 CATEGORIES = utils
 
 DESCRIPTION = Parallel BZIP2 Data Compression Software
@@ -27,7 +27,7 @@ TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
 # After some testing. Using a special ISA modulation does *not* speed
-# up bzip2. Therefor i will just stick to a regular 32bit build here.
+# up bzip2. Therefore I will just stick to a regular 32bit build here.
 
 include gar/category.mk
 
