@@ -18,6 +18,8 @@ LICENSE = README
 
 # As reported in #3616
 RUNTIME_DEP_PKGS_CSWclusterit += CSWgawk
+# checkpkg cannot detect the use in dshbak
+CHECKPKG_OVERRIDES_CSWclusterit += surplus-dependency|CSWgawk
 
 EXTRA_PAX_ARGS += -s ',$(bindir),/opt/csw/clusterit/bin,'
 EXTRA_PAX_ARGS += -s ',\.1$$,.1clusterit,'
