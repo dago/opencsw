@@ -15,8 +15,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 # Split libs and packages
 
 BUILD_DEP_PKGS += CSWlibtalloc-dev
-#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-PACKAGING_PLATFORMS = isa-pentium_pro
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACKAGES += CSWsamba
 SPKG_DESC_CSWsamba = $(DESCRIPTION)
