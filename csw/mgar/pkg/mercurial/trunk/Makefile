@@ -1,5 +1,5 @@
 NAME = mercurial
-VERSION = 1.9.3
+VERSION = 2.0
 CATEGORIES = python
 
 DESCRIPTION = Fast, lightweight Source Control Management system
