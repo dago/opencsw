@@ -23,6 +23,7 @@ d none /opt/csw/share/doc/openssl_rt 0755 root bin
 d none /opt/csw/ssl 0755 root bin
 s none /opt/csw/ssl/certs=../etc/ssl/certs
 s none /opt/csw/ssl/private=../../../etc/opt/csw/ssl/private
+d none /etc/opt/csw/ssl 0755 root bin
 d none /etc/opt/csw/ssl/private 0700 root bin
 s none /opt/csw/etc/ssl/private=../../../../etc/opt/csw/ssl/private
 f none /opt/csw/share/doc/openssl_rt/changelog.CSW 644 root bin
