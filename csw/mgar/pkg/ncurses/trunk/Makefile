@@ -1,4 +1,9 @@
 # $Id$
+#
+# Things to keep in mind:
+# - Link to libtinfo5 in downstream packages if possible to avoid *w/*non-w bindings
+#   as described in this posting "Craig Small: ncurses library split - Planet Debian":
+#     https://plus.google.com/105567297772267099132/posts/Bv5GSTQvfzC
 
 NAME = ncurses
 VERSION = 5.9
