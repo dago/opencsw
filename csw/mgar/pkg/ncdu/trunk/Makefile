@@ -18,7 +18,6 @@ VENDOR_URL = http://dev.yorhel.nl/ncdu/
 
 BUILD_DEP_PKGS += CSWlibncurses-dev
 RUNTIME_DEP_PKGS_CSWncdu += CSWlibncursesw5
-RUNTIME_DEP_PKGS_CSWncdu += CSWterminfo
 
 EXTRA_INC = /opt/csw/include/ncursesw
 
