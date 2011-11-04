@@ -1,5 +1,5 @@
 NAME = ncdu
-VERSION = 1.6
+VERSION = 1.8
 CATEGORIES = utils
 
 DESCRIPTION = Ncurses version of the famous old 'du' unix
@@ -11,19 +11,19 @@ define BLURB
   seconds!
 endef
 
-SPKG_SOURCEURL = http://dev.yorhel.nl/ncdu/
-MASTER_SITES   = http://dev.yorhel.nl/download/
-DISTFILES      = $(NAME)-$(VERSION).tar.gz
-UFILES_REGEX   = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+MASTER_SITES = http://dev.yorhel.nl/download/
+DISTFILES = $(NAME)-$(VERSION).tar.gz
 
-RUNTIME_DEP_PKGS = CSWncurses
+VENDOR_URL = http://dev.yorhel.nl/ncdu/
 
-# ncdu doesn't come with a test suite
-TEST_SCRIPTS = 
+BUILD_DEP_PKGS += CSWlibncurses-dev
+RUNTIME_DEP_PKGS_CSWncdu += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSWncdu += CSWterminfo
 
 EXTRA_INC = /opt/csw/include/ncursesw
 
-CONFIGURE_ARGS = $(DIRPATHS)
+# ncdu doesn't come with a test suite
+TEST_SCRIPTS = 
 
 include gar/category.mk
 
