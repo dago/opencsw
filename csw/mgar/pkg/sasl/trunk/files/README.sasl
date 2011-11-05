@@ -1,3 +1,10 @@
+List of changes in sasl-2.1.25
+- Included sasl-sample-client and sasl-sample-server to ease
+  testing of sasl setup.
+
+- SASL application configuration files (e.g. Sendmail.conf) go into
+  /opt/csw/lib/sasl2 or /opt/csw/lib/64/sasl2 for 64-bit binaries.
+
 List of changes in sasl-2.1.22,REV=2007.06.10 
 - upgraded sasl to version 2.1.22
 - runpath was not applied for libraries [#1566][#1637][#1934][#2268] 
