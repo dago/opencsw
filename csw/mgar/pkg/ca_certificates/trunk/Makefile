@@ -12,7 +12,7 @@
 
 ###### Package information #######
 
-NAME = ca_certificates
+NAME = cacertificates
 VERSION = $(shell date '+%Y%m%d')
 CATEGORIES = xtra
 
@@ -46,7 +46,7 @@ include gar/category.mk
 
 $(WORKDIR)/hash.db: install-certificates
 	rm -f $(WORKDIR)/hash.db
-	find "$(DESTDIR)/$(sharedstatedir)/ca-certificates" -name *.pem | while read FILE; do \
+	find "$(DESTDIR)/$(sharedstatedir)/$(NAME)" -name *.pem | while read FILE; do \
 		echo "`basename $$FILE`=`/opt/csw/bin/openssl x509 -hash -fingerprint -noout -in "$$FILE" | head -n 1`.0" >> $(WORKDIR)/hash.db; \
 	done
 
@@ -55,16 +55,16 @@ $(WORKDIR)/LICENSE: $(WORKDIR)/certdata.txt
 		> "$(WORKDIR)/LICENSE"
 
 install-certificates: $(WORKDIR)/certdata.txt
-	ginstall -d "$(DESTDIR)/$(sharedstatedir)/ca-certificates/mozilla"
-	cd "$(DESTDIR)/$(sharedstatedir)/ca-certificates/mozilla" && perl "$(CURDIR)/$(WORKDIR)/certdata2pem.pl" < "$(CURDIR)/$(WORKDIR)/certdata.txt"
+	ginstall -d "$(DESTDIR)/$(sharedstatedir)/$(NAME)/mozilla"
+	cd "$(DESTDIR)/$(sharedstatedir)/$(NAME)/mozilla" && perl "$(CURDIR)/$(WORKDIR)/certdata2pem.pl" < "$(CURDIR)/$(WORKDIR)/certdata.txt"
 
 install-custom: install-certificates $(WORKDIR)/hash.db $(WORKDIR)/LICENSE
 	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl"
 	ginstall -D "$(WORKDIR)/ca-certificates.conf" "$(DESTDIR)/$(sysconfdir)/ca-certificates.conf"
 	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl/certs"
-	ginstall -d "$(DESTDIR)/$(sharedstatedir)/cacertificates"
+	ginstall -d "$(DESTDIR)/$(sharedstatedir)/$(NAME)"
 	ginstall -D "$(WORKDIR)/update-ca-certificates" "$(DESTDIR)/$(sbindir)/update-ca-certificates"
-	ginstall -D "$(WORKDIR)/hash.db" "$(DESTDIR)/$(sharedstatedir)/cacertificates/hash.db"
-	ginstall -D "$(WORKDIR)/README.CSW" "$(DESTDIR)/$(docdir)/cacertificates/README.CSW"
-	ginstall -D "$(WORKDIR)/LICENSE" "$(DESTDIR)/$(docdir)/cacertificates/license"
+	ginstall -D "$(WORKDIR)/hash.db" "$(DESTDIR)/$(sharedstatedir)/$(NAME)/hash.db"
+	ginstall -D "$(WORKDIR)/README.CSW" "$(DESTDIR)/$(docdir)/$(NAME)/README.CSW"
+	ginstall -D "$(WORKDIR)/LICENSE" "$(DESTDIR)/$(docdir)/$(NAME)/license"
 
