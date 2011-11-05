@@ -1,5 +1,5 @@
 NAME = yasm
-VERSION = 1.1.0
+VERSION = 1.2.0
 CATEGORIES = devel
 
 DESCRIPTION = A complete rewrite of the NASM assembler
@@ -17,12 +17,5 @@ MASTER_SITES = http://www.tortall.net/projects/yasm/releases/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 RUNTIME_DEP_PKGS = CSWggettextrt
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
 
 include gar/category.mk
