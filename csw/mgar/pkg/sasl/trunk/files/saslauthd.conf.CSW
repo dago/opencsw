@@ -1,0 +1,12 @@
+# Simple sample config file for saslauthd. Adjust to match your
+# environment.
+#
+# See /opt/csw/share/doc/saslauthd/LDAP_SASLAUTHD for more details on
+# this configuration file.
+#
+# To make saslauthd authenticate against LDAP, set 'MECHANISM=ldap' in
+# /etc/opt/csw/saslauthd.init and restart saslauthd.
+#
+ldap_servers: ldap://localhost
+ldap_search_base: dc=example,dc=com
+ldap_auth_method: sha
