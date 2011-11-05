@@ -33,9 +33,9 @@ DISTFILES += CSWcacertificates.postinstall CSWcacertificates.postremove
 
 PRESERVECONF = $(sysconfdir)/ca-certificates.conf
 
-##### Build and installation information #####
+MIGRATE_FILES = ca-certificates.conf
 
-CONFIGURE_ARGS = $(DIRPATHS)
+##### Build and installation information #####
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = 
@@ -62,9 +62,9 @@ install-custom: install-certificates $(WORKDIR)/hash.db $(WORKDIR)/LICENSE
 	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl"
 	ginstall -D "$(WORKDIR)/ca-certificates.conf" "$(DESTDIR)/$(sysconfdir)/ca-certificates.conf"
 	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl/certs"
-	ginstall -d "$(DESTDIR)/$(sharedstatedir)/ca-certificates"
+	ginstall -d "$(DESTDIR)/$(sharedstatedir)/cacertificates"
 	ginstall -D "$(WORKDIR)/update-ca-certificates" "$(DESTDIR)/$(sbindir)/update-ca-certificates"
-	ginstall -D "$(WORKDIR)/hash.db" "$(DESTDIR)/$(localstatedir)/cacertificates/hash.db"
+	ginstall -D "$(WORKDIR)/hash.db" "$(DESTDIR)/$(sharedstatedir)/cacertificates/hash.db"
 	ginstall -D "$(WORKDIR)/README.CSW" "$(DESTDIR)/$(docdir)/cacertificates/README.CSW"
 	ginstall -D "$(WORKDIR)/LICENSE" "$(DESTDIR)/$(docdir)/cacertificates/license"
 

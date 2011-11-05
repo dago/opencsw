@@ -22,7 +22,7 @@
 #
 
 CACERTS_CONF=/etc/opt/csw/ca-certificates.conf
-CACERTS_DIR=/opt/csw/share/ca-certificates
+CACERTS_DIR=/opt/csw/share/cacertificates
 CERTBUNDLE=ca-certificates.crt
 CERTSDIR=/etc/opt/csw/ssl/certs
 
