@@ -63,14 +63,16 @@ while (my $line = <STDIN>) {
 		$val =~ s/[\/\s,]/_/g;
 		$val =~ s/[()]//g;
 		$val = strip_diacritics ($val);
-		next if ($val =~ /Explicitly_Distrust/ or $val =~ /Bogus/);
-		$fname = $val . ".pem";
+		if ($val =~ /Explicitly_Distrust/ or $val =~ /Bogus/) {
+			undef $fname;
+		} else {
+			$fname = $val . ".pem";
+		}
 		next;
 	}
 
 	if ($line =~ /CKA_VALUE MULTILINE_OCTAL/) {
 		if (not $fname) {
-			print "ERROR: unexpected CKA_VALUE MULTILINE_OCTAL\n";
 			next;
 		}
 		my @cert_data;
