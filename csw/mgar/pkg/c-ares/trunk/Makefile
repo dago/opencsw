@@ -1,17 +1,18 @@
 NAME = c-ares
-VERSION = 1.7.4
+VERSION = 1.7.5
 CATEGORIES = lib
 
 DESCRIPTION = C-ares library to perform DNS requests and name resolves asynchronously
 define BLURB
 endef
 
-MASTER_SITES = http://c-ares.haxx.se/
+MASTER_SITES = http://c-ares.haxx.se/download/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += ares_build.h
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://c-ares.haxx.se/
+
+LICENSE = README.cares
 
 PACKAGES += CSWlibcares2
 CATALOGNAME_CSWlibcares2 = libcares2
@@ -27,8 +28,6 @@ RUNTIME_DEP_PKGS_CSWlibcares-dev += CSWlibcares2
 OBSOLETED_BY_CSWlibcares-dev = CSWlibcaresdevel
 
 RUNTIME_DEP_PKGS_CSWlibcaresdevel = CSWlibcares
-
-LICENSE = README.cares
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
