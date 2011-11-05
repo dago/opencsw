@@ -15,7 +15,7 @@ Quick Usage FAQ:
 
 * How to disable a certificate ?
 
-Just edit the /opt/csw/etc/ca-certificates.conf file and add the full path of the
+Just edit the /etc/opt/csw/ca-certificates.conf file and add the full path of the
 certificate prefixed by an exclamation mark, then launch:
 
 	/opt/csw/sbin/update-ca-certificates
@@ -43,8 +43,8 @@ hash of the certificate using the openssl binary:
 
 	pkg-get install openssl_utils (or pkg-util -i openssl_utils)
 
-Then either you add the full location of the certificate in /opt/csw/etc/ca-certificates.conf
-or you just copy the certificate in /opt/csw/etc/ssl/certs and make sure it has a 
+Then either you add the full location of the certificate in /etc/opt/csw/ca-certificates.conf
+or you just copy the certificate in /etc/opt/csw/ssl/certs and make sure it has a 
 pem extension.
 
 Eventually you launch the update-ca-certificate command:
