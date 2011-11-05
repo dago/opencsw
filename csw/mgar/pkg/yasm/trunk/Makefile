@@ -16,6 +16,6 @@ endef
 MASTER_SITES = http://www.tortall.net/projects/yasm/releases/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-RUNTIME_DEP_PKGS = CSWggettextrt
+RUNTIME_DEP_PKGS_CSWyasm += CSWlibintl8
 
 include gar/category.mk
