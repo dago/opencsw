@@ -21,10 +21,10 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-CACERTS_CONF=/opt/csw/etc/ca-certificates.conf
+CACERTS_CONF=/etc/opt/csw/ca-certificates.conf
 CACERTS_DIR=/opt/csw/share/ca-certificates
 CERTBUNDLE=ca-certificates.crt
-CERTSDIR=/opt/csw/etc/ssl/certs
+CERTSDIR=/etc/opt/csw/ssl/certs
 
 
 # find the certificate files corresponding to the given pattern

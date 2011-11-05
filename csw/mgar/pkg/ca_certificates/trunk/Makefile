@@ -1,6 +1,19 @@
-NAME = ca-certificates
+#####################################################################
+# OpenCSW build recipe for ca-certificates
+#
+# Copyright 2009 Yann Rouillard <yann@pleiades.fr.eu.org>
+# All rights reserved.  Use is subject to license terms.
+#
+# Redistribution and/or use, with or without modification, is
+# permitted.  This software is without warranty of any kind.  The
+# author(s) shall not be liable in the event that use of the
+# software causes damage.
+#####################################################################
+
+###### Package information #######
+
+NAME = ca_certificates
 VERSION = $(shell date '+%Y%m%d')
-GARTYPE = v1
 CATEGORIES = xtra
 
 DESCRIPTION = CA certificates
@@ -8,12 +21,19 @@ define BLURB
   CA certificates
 endef
 
+PACKAGES = CSWcacertificates
+
+ARCHALL = 1
+
+###### Upstream and opencsw files information #######
+
 MASTER_SITES = http://hg.mozilla.org/mozilla-central/raw-file/default/security/nss/lib/ckfw/builtins/
 DISTFILES  = certdata.txt certdata2pem.pl update-ca-certificates ca-certificates.conf README.CSW
-DISTFILES += $(call admfiles,CSWcacertificates,depend postinstall postremove)
+DISTFILES += CSWcacertificates.postinstall CSWcacertificates.postremove
 
-# We define upstream file regex so we can be notifed of new upstream software release
-# UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
+PRESERVECONF = $(sysconfdir)/ca-certificates.conf
+
+##### Build and installation information #####
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -21,8 +41,6 @@ CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = 
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
-
-SPKG_CLASSES = none cswpreserveconf
 
 include gar/category.mk
 
@@ -42,9 +60,11 @@ install-certificates: $(WORKDIR)/certdata.txt
 
 install-custom: install-certificates $(WORKDIR)/hash.db $(WORKDIR)/LICENSE
 	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl"
+	ginstall -D "$(WORKDIR)/ca-certificates.conf" "$(DESTDIR)/$(sysconfdir)/ca-certificates.conf"
 	ginstall -d "$(DESTDIR)/$(sysconfdir)/ssl/certs"
 	ginstall -d "$(DESTDIR)/$(sharedstatedir)/ca-certificates"
 	ginstall -D "$(WORKDIR)/update-ca-certificates" "$(DESTDIR)/$(sbindir)/update-ca-certificates"
-	ginstall -D "$(WORKDIR)/hash.db" "$(DESTDIR)/$(sharedstatedir)/ca-certificates/hash.db"
-	ginstall -D "$(WORKDIR)/README.CSW" "$(DESTDIR)/$(docdir)/ca-certificates/README.CSW"
+	ginstall -D "$(WORKDIR)/hash.db" "$(DESTDIR)/$(localstatedir)/cacertificates/hash.db"
+	ginstall -D "$(WORKDIR)/README.CSW" "$(DESTDIR)/$(docdir)/cacertificates/README.CSW"
+	ginstall -D "$(WORKDIR)/LICENSE" "$(DESTDIR)/$(docdir)/cacertificates/license"
 

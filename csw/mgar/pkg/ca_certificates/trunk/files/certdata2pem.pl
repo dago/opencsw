@@ -18,6 +18,33 @@ sub encode_base64
 	return $res;
 }
 
+require Encode;
+use Unicode::Normalize;
+
+sub strip_diacritics
+{
+	my $string = shift;
+
+	my $sub = sub { 
+		my $val = shift;
+		return (chr(hex($val)));
+	};
+
+	$string =~ s/\\x([0-9a-fA-F]{2})/$sub->($1)/ge;
+	$string =~ s/\xe4/ae/g; 
+	$string =~ s/\xf1/ny/g;
+	$string =~ s/\xf6/oe/g;
+	$string =~ s/\xfc/ue/g;
+	$string =~ s/\xff/yu/g;
+
+	$string = NFD( $string );
+	$string =~ s/\pM//g;     
+	$string =~ s/[^\0-\x80]//g;
+
+	return ($string);
+}
+
+
 
 while (my $line = <STDIN>) {
 	next if $line =~ /^#/;
@@ -35,6 +62,7 @@ while (my $line = <STDIN>) {
 		$val =~ s/"$//;
 		$val =~ s/[\/\s,]/_/g;
 		$val =~ s/[()]//g;
+		$val = strip_diacritics ($val);
 		$fname = $val . ".pem";
 		next;
 	}
