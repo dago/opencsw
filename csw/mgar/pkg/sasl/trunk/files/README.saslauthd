@@ -1,6 +1,12 @@
-Configuration file for saslauthd is in /opt/csw/etc/saslauthd.init
+Configuration file for saslauthd init/smf script is in /etc/opt/csw/saslauthd.init
+Configuration file for saslauthd is in /etc/opt/csw/saslauthd.conf
 
-If you experience memory leak with PAM mechanism, then try to disable worker processes with -n 0. It may affect performance, because saslauthd will spawn a new process for each authentication.
+Details concerning /etc/opt/csw/saslauthd.conf can be found in
+/opt/csw/share/doc/saslauthd/LDAP_SASLAUTHD
+
+If you experience memory leak with PAM mechanism, then try to disable
+worker processes with -n 0. It may affect performance, because
+saslauthd will spawn a new process for each authentication.
 
 
 List of changes in saslauthd-2.1.22,REV=2007.06.10
