@@ -63,6 +63,7 @@ while (my $line = <STDIN>) {
 		$val =~ s/[\/\s,]/_/g;
 		$val =~ s/[()]//g;
 		$val = strip_diacritics ($val);
+		next if ($val =~ /Explicitly_Distrust/ or $val =~ /Bogus/);
 		$fname = $val . ".pem";
 		next;
 	}
