@@ -35,11 +35,11 @@ PACKAGES = CSWossh CSWosshclient
 
 CATALOGNAME_CSWossh = openssh
 SPKG_DESC_CSWossh = OpenSSH Secure Shell server 
-RUNTIME_DEP_PKGS_CSWossh = CSWosslrt CSWlibwrap1 CSWlibz1 CSWlibkrb5_3 CSWlibgssapi-krb5-2 CSWosshclient
+RUNTIME_DEP_PKGS_CSWossh = CSWosslrt CSWlibwrap1 CSWlibz1 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3 CSWosshclient
 
 CATALOGNAME_CSWosshclient = openssh_client
 SPKG_DESC_CSWosshclient = OpenSSH Secure Shell client 
-RUNTIME_DEP_PKGS_CSWosshclient = CSWosslrt CSWlibz1 CSWlibkrb5_3 CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWosshclient = CSWosslrt CSWlibz1 CSWlibkrb5-3 CSWlibk5crypto3 CSWlibgssapi-krb5-2 CSWlibcom-err3
 
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
 
