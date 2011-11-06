@@ -1,6 +1,10 @@
 openssh (5.9p1,REV=2011.09.19) unstable
 
   * New upstream release.
+  * Updated dependancies name:
+     CSWzlib -> CSWlibz1
+     CSWtcpwrap -> CSWlibwrap1
+     CSWkrb5lib -> CSWlibkrb5_3
 
  -- Yann Rouillard <yann@opencsw.org>  Mon, 19 Sep 2011 22:31:03 +0200
 
