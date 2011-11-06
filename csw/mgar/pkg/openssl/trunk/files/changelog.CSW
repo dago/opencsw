@@ -2,10 +2,8 @@ openssl (0.9.8r,REV=2011.09.19) unstable
 
   * Added patch block_diginotar.patch, taken from Debian, to always blocks 
   the compromised DigiNotar CA (Closes: #4822).
-  * Made a separate devel doc package so openssl 1.0 and 0.9.8 will be able to
-  coexist.
   * Added 64 bits .pc files (Closes: #4843).
-  Ã* Added /etc/opt/csw/ssl in prototype with good permission cCloses:#4845).
+  * Added /etc/opt/csw/ssl in prototype with good permission (Closes:#4845).
   
    -- Yann Rouillard <yann@opencsw.org>  Mon, 19 Sep 2011 22:31:40 +0200
 
