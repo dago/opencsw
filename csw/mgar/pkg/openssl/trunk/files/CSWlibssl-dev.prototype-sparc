@@ -1058,7 +1058,7 @@ f none /opt/csw/share/man/man3/threads.3 0644 root bin
 f none /opt/csw/share/man/man3/ui.3 0644 root bin
 f none /opt/csw/share/man/man3/ui_compat.3 0644 root bin
 f none /opt/csw/share/man/man3/x509.3 0644 root bin
-i checkpkg_override=checkpkg_override.CSWossldevel
-i copyright=CSWossldevel.copyright
-i depend=CSWossldevel.depend
-i pkginfo=CSWossldevel.pkginfo
+i checkpkg_override=checkpkg_override.CSWlibssl-dev
+i copyright=CSWlibssl-dev.copyright
+i depend=CSWlibssl-dev.depend
+i pkginfo=CSWlibssl-dev.pkginfo
