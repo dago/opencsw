@@ -126,7 +126,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWossl.prototype
 DISTFILES += CSWosslrt.checkinstall CSWosslrt.preinstall CSWosslrt.postinstall CSWosslrt.prototype-i386 CSWosslrt.prototype-sparc
 DISTFILES += CSWossldevel.prototype-i386 CSWossldevel.prototype-sparc
-DISTFILES += CSWosslutils.prototype
+DISTFILES += CSWosslutils.prototype CSWossldoc.prototype
 DISTFILES += changelog.CSW README.CSW
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
