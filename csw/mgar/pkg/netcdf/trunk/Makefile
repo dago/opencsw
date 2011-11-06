@@ -103,9 +103,6 @@ BUILD_ARGS += CXXFLAGS="$(CXXFLAGS)"
 TEST_ARGS = $(BUILD_ARGS)
 
 GARCOMPILER = GCC4
-## Attempt to fix problem with configure not finding libgfortran.so.3 when 
-## compiling with GCC4
-#CONFIGURE_ENV += LD_LIBRARY_PATH=/opt/csw/gcc4/lib/$(MM_LIBDIR)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += F77=$(F77) FC=$(FC) CC=$(CC) CXX=$(CXX)
@@ -129,22 +126,6 @@ BUILD64 = 1
 
 ## Needed for "Large file support" in NetCDF
 EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
-
-## Add GCC4 lib dir to CFLAGS and friends because gcc3core_rt puts it's 
-## libgcc_s.so in /opt/csw/lib and this breaks the build in all sorts of weird 
-## places.
-## Rationale: Automake keeps wanting to put /opt/csw/lib in the front of the 
-## -L options during the linking phase, so the GCC3 libgcc_s gets pulled in 
-## first and an unresolved symbol error occurs. By adding to the 
-## CFLAGS/FFLAGS/FCFLAGS/CXXFLAGS, it is pulled in before AM_LDFLAGS in the 
-## linking stage in most automake-generated Makefiles. Ugly hack but it works.
-##
-## Adding -dalign to *FLAGS in attempt to fix bus error in nf_test/ftst_vars4
-## in fuction nf_put_vlen_element
-#EXTRA_CFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-#EXTRA_FFLAGS= -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-#EXTRA_FCFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-#EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
 
 ## During the 32-bit sparc build, the C++ bindings were barfing with an error 
 ## about undefined symbol __sync_fetch_and_add_4 in libnetcdf_c++
