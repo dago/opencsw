@@ -87,19 +87,19 @@ d none /opt/csw/lib/amd64/pkgconfig 0755 root bin
 f none /opt/csw/lib/amd64/pkgconfig/libcrypto.pc 0644 root bin
 f none /opt/csw/lib/amd64/pkgconfig/libssl.pc 0644 root bin
 f none /opt/csw/lib/amd64/pkgconfig/openssl.pc 0644 root bin
-d none /opt/csw/share/doc/openssl_devel 0755 root bin
-f none /opt/csw/share/doc/openssl_devel/changelog.CSW 644 root bin
-f none /opt/csw/share/doc/openssl_devel/license 644 root bin
-f none /opt/csw/share/doc/openssl_devel/CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_devel/CHANGES.SSLeay 644 root bin
-f none /opt/csw/share/doc/openssl_devel/PROBLEMS 644 root bin
-f none /opt/csw/share/doc/openssl_devel/README 644 root bin
-f none /opt/csw/share/doc/openssl_devel/FAQ 644 root bin
-f none /opt/csw/share/doc/openssl_devel/README.ASN1 644 root bin
-f none /opt/csw/share/doc/openssl_devel/INSTALL 644 root bin
-f none /opt/csw/share/doc/openssl_devel/NEWS 644 root bin
-f none /opt/csw/share/doc/openssl_devel/README.ENGINE 644 root bin
-f none /opt/csw/share/doc/openssl_devel/README.CSW 644 root bin
+d none /opt/csw/share/doc/libssl_dev 0755 root bin
+f none /opt/csw/share/doc/libssl_dev/changelog.CSW 644 root bin
+f none /opt/csw/share/doc/libssl_dev/license 644 root bin
+f none /opt/csw/share/doc/libssl_dev/CHANGES 644 root bin
+f none /opt/csw/share/doc/libssl_dev/CHANGES.SSLeay 644 root bin
+f none /opt/csw/share/doc/libssl_dev/PROBLEMS 644 root bin
+f none /opt/csw/share/doc/libssl_dev/README 644 root bin
+f none /opt/csw/share/doc/libssl_dev/FAQ 644 root bin
+f none /opt/csw/share/doc/libssl_dev/README.ASN1 644 root bin
+f none /opt/csw/share/doc/libssl_dev/INSTALL 644 root bin
+f none /opt/csw/share/doc/libssl_dev/NEWS 644 root bin
+f none /opt/csw/share/doc/libssl_dev/README.ENGINE 644 root bin
+f none /opt/csw/share/doc/libssl_dev/README.CSW 644 root bin
 d none /opt/csw/share/man/man3 0755 root bin
 s none /opt/csw/share/man/man3/ASN1_OBJECT_free.3=ASN1_OBJECT_new.3
 f none /opt/csw/share/man/man3/ASN1_OBJECT_new.3 0644 root bin
@@ -1059,7 +1059,7 @@ f none /opt/csw/share/man/man3/threads.3 0644 root bin
 f none /opt/csw/share/man/man3/ui.3 0644 root bin
 f none /opt/csw/share/man/man3/ui_compat.3 0644 root bin
 f none /opt/csw/share/man/man3/x509.3 0644 root bin
-i checkpkg_override=checkpkg_override.CSWossldevel
-i copyright=CSWossldevel.copyright
-i depend=CSWossldevel.depend
-i pkginfo=CSWossldevel.pkginfo
+i checkpkg_override=checkpkg_override.CSWlibssl-dev
+i copyright=CSWlibssl-dev.copyright
+i depend=CSWlibssl-dev.depend
+i pkginfo=CSWlibssl-dev.pkginfo

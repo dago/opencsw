@@ -74,4 +74,4 @@ f none /opt/csw/share/doc/openssl_utils/INSTALL 644 root bin
 f none /opt/csw/share/doc/openssl_utils/NEWS 644 root bin
 f none /opt/csw/share/doc/openssl_utils/README.ENGINE 644 root bin
 f none /opt/csw/share/doc/openssl_utils/README.CSW 644 root bin
-i checkpkg_override=checkpkg_override.CSWosslutils
+i checkpkg_override=checkpkg_override.CSWopenssl-utils

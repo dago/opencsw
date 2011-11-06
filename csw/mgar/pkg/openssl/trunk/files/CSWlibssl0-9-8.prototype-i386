@@ -19,29 +19,29 @@ f none /opt/csw/lib/pentium_pro/libcrypto.so.0.9.7 0755 root bin
 f none /opt/csw/lib/pentium_pro/libcrypto.so.0.9.8 0755 root bin
 f none /opt/csw/lib/pentium_pro/libssl.so.0.9.7 0755 root bin
 f none /opt/csw/lib/pentium_pro/libssl.so.0.9.8 0755 root bin
-d none /opt/csw/share/doc/openssl_rt 0755 root bin
+d none /opt/csw/share/doc/libssl0_9_8 0755 root bin
 d none /opt/csw/ssl 0755 root bin
 s none /opt/csw/ssl/certs=../etc/ssl/certs
 s none /opt/csw/ssl/private=../../../etc/opt/csw/ssl/private
 d none /etc/opt/csw/ssl 0755 root bin
 d none /etc/opt/csw/ssl/private 0700 root bin
 s none /opt/csw/etc/ssl/private=../../../../etc/opt/csw/ssl/private
-f none /opt/csw/share/doc/openssl_rt/changelog.CSW 644 root bin
-f none /opt/csw/share/doc/openssl_rt/license 644 root bin
-f none /opt/csw/share/doc/openssl_rt/CHANGES 644 root bin
-f none /opt/csw/share/doc/openssl_rt/CHANGES.SSLeay 644 root bin
-f none /opt/csw/share/doc/openssl_rt/PROBLEMS 644 root bin
-f none /opt/csw/share/doc/openssl_rt/README 644 root bin
-f none /opt/csw/share/doc/openssl_rt/FAQ 644 root bin
-f none /opt/csw/share/doc/openssl_rt/README.ASN1 644 root bin
-f none /opt/csw/share/doc/openssl_rt/INSTALL 644 root bin
-f none /opt/csw/share/doc/openssl_rt/NEWS 644 root bin
-f none /opt/csw/share/doc/openssl_rt/README.ENGINE 644 root bin
-f none /opt/csw/share/doc/openssl_rt/README.CSW 644 root bin
-i checkpkg_override=checkpkg_override.CSWosslrt
-i checkinstall=CSWosslrt.checkinstall
-i copyright=CSWosslrt.copyright
-i depend=CSWosslrt.depend
-i pkginfo=CSWosslrt.pkginfo
-i postinstall=CSWosslrt.postinstall
-i preinstall=CSWosslrt.preinstall
+f none /opt/csw/share/doc/libssl0_9_8/changelog.CSW 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/license 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/CHANGES 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/CHANGES.SSLeay 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/PROBLEMS 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/README 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/FAQ 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/README.ASN1 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/INSTALL 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/NEWS 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/README.ENGINE 644 root bin
+f none /opt/csw/share/doc/libssl0_9_8/README.CSW 644 root bin
+i checkpkg_override=checkpkg_override.CSWlibssl0-9-8
+i checkinstall=CSWlibssl0-9-8.checkinstall
+i copyright=CSWlibssl0-9-8.copyright
+i depend=CSWlibssl0-9-8.depend
+i pkginfo=CSWlibssl0-9-8.pkginfo
+i postinstall=CSWlibssl0-9-8.postinstall
+i preinstall=CSWlibssl0-9-8.preinstall
