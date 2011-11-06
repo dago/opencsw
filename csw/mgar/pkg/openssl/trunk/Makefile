@@ -243,6 +243,7 @@ install-certs:
 
 fix-paths:
 	gsed -i -e 's,/usr/local/ssl/lib,/opt/csw/etc/ssl,' $(PKGROOT)$(mandir)/man1/ca.1
+	gsed -i -e 's,/usr/local/ssl,/opt/csw/ssl,' $(PKGROOT)$(bindir)/c_rehash
 	@$(MAKECOOKIE)
 
 install-oldlibs: $(addprefix install-oldlibs-,$(OLDLIBS))
