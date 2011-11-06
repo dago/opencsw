@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = lftp
-VERSION = 4.3.1
+VERSION = 4.3.3
 CATEGORIES = net
 
 DESCRIPTION = A sophisticated command-line ftp/http client
@@ -42,13 +42,6 @@ DISTFILES += changelog.CSW
 # (patch only mandatory to compile with gnutls)
 #PATCHFILES = munmap.patch
 
-# Sun Studio 12 cc supports the __restrict__ keyword
-# but CC doesn't, that disturbs autoconf.
-# so we have to apply the following modification to 
-# lftp-provided autoconf m4 macros
-# http://git.savannah.gnu.org/cgit/autoconf.git/commit/?id=aa30765d64d4a50ad7ce83e78b5699223571ef36
-PATCHFILES += sun_cc_no_restrict.patch
-
 PATCHFILES += dont_use_csw_getopt_h.patch
 
 # Disable the use of IPV6_V6ONLY function
@@ -56,12 +49,6 @@ PATCHFILES += dont_use_csw_getopt_h.patch
 # it opens a socket first for ipv4 then for ipv6, so the ipv6 one will never
 # catch the ipv4 connection even if IPV6_V6ONLY can't be set
 PATCHFILES += 0006-no-ipv6_v6only-setsock-option-under-solaris-9.patch
-
-# sun should not be used as a variable as sun is a macro under Solaris
-PATCHFILES += do_not_use_sun_as_a_variable.patch
-
-# SUN_LEN macro is not defined under Solaris
-PATCHFILES += sun_len_definition.patch
 
 # Update the system-wide lftp.conf path in the man page
 PATCHFILES += 0007-update-configuration-files-paths-in-documentation.patch
@@ -87,7 +74,6 @@ CONFIGURE_ARGS += --with-socksdante
 
 # No test suite here
 TEST_SCRIPTS =
-
 
 
 include gar/category.mk
