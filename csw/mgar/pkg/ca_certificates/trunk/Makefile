@@ -67,4 +67,6 @@ install-custom: install-certificates $(WORKDIR)/hash.db $(WORKDIR)/LICENSE
 	ginstall -D "$(WORKDIR)/hash.db" "$(DESTDIR)/$(sharedstatedir)/$(NAME)/hash.db"
 	ginstall -D "$(WORKDIR)/README.CSW" "$(DESTDIR)/$(docdir)/$(NAME)/README.CSW"
 	ginstall -D "$(WORKDIR)/LICENSE" "$(DESTDIR)/$(docdir)/$(NAME)/license"
-
+	
+	ginstall -d "$(PKGROOT)/$(prefix)/etc/ssl"
+	( cd "$(PKGROOT)/$(prefix)/etc/ssl/" && ln -s "../../../..$(sysconfdir)/ssl/certs" )
