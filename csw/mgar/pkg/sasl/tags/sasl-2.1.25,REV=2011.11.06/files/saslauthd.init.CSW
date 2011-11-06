@@ -1,0 +1,16 @@
+# You must specify the authentication mechanisms you wish to use.
+# This defaults to "pam" for PAM support, but may also include
+# "shadow", "sasldb", "kerberos5", etc.
+# See saslauthd(8) for more mechanisms.
+# MECHANISM=pam
+
+# Location of config file for mechanism 
+# See /opt/csw/share/docs/saslauthd/LDAP_SASLAUTHD for ldap sample
+# This parameter is optional. 
+# CONFIG_FILE="/etc/opt/csw/saslauthd.conf"
+
+# Any optional additional parameters for saslauthd
+# e.g. -c -n <x> 
+# See saslauthd(8) for the description of parameters
+# This parameter is optional
+# PARAMS="-n 5 -c"
