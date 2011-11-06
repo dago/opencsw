@@ -15,10 +15,10 @@ DISTFILES  += CSWlibnetcdf-c++5.cswreleasemgr
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
 
-BUILD_DEP_PKGS += CSWhdf5rt CSWzlib
-BUILD_DEP_PKGS += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4g++rt
+BUILD_DEP_PKGS += CSWhdf5rt CSWlibhdf5-dev CSWzlib
+#BUILD_DEP_PKGS += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4g++rt
 BUILD_DEP_PKGS += CSWtetex 
-BUILD_DEP_PKGS += CSWgcc4gfortran
+#BUILD_DEP_PKGS += CSWgcc4gfortran
 
 PACKAGES = CSWnetcdf
 CATALOGNAME_CSWnetcdf = netcdf
@@ -105,7 +105,7 @@ TEST_ARGS = $(BUILD_ARGS)
 GARCOMPILER = GCC4
 ## Attempt to fix problem with configure not finding libgfortran.so.3 when 
 ## compiling with GCC4
-CONFIGURE_ENV += LD_LIBRARY_PATH=/opt/csw/gcc4/lib/$(MM_LIBDIR)
+#CONFIGURE_ENV += LD_LIBRARY_PATH=/opt/csw/gcc4/lib/$(MM_LIBDIR)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += F77=$(F77) FC=$(FC) CC=$(CC) CXX=$(CXX)
@@ -141,16 +141,16 @@ EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
 ##
 ## Adding -dalign to *FLAGS in attempt to fix bus error in nf_test/ftst_vars4
 ## in fuction nf_put_vlen_element
-EXTRA_CFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-EXTRA_FFLAGS= -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-EXTRA_FCFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
-EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_CFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_FFLAGS= -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_FCFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
+#EXTRA_CXXFLAGS = -L/opt/csw/gcc4/lib/$(MM_LIBDIR) -dalign
 
 ## During the 32-bit sparc build, the C++ bindings were barfing with an error 
 ## about undefined symbol __sync_fetch_and_add_4 in libnetcdf_c++
 ## From Porting FAQ: http://wiki.opencsw.org/porting-faq#toc5
 ## OPT_FLAGS_GCC = -O2 -pipe
-OPT_FLAGS_GCC = 
+#OPT_FLAGS_GCC = 
 
 ## Git patching is failing on a remerge/repackage
 NOGITPATCH = 1
