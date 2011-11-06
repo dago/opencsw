@@ -5,6 +5,8 @@ lftp (4.3.3,REV=2011.11.06) unstable
      sun_cc_no_restrict.patch
      do_not_use_sun_as_a_variable.patch
      sun_len_definition.patch
+  * Updated dependancy name:
+  	CSWiconv -> CSWlibiconv2
 
  -- Yann Rouillard <yann@opencsw.org>  Sun, 06 Nov 2011 15:16:16 +0100
 
