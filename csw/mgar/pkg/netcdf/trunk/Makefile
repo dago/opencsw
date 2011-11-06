@@ -93,7 +93,7 @@ GARCOMPILER = GCC4
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-netcdf-4
-CONFIGURE_ARGS += --enable-dap
+CONFIGURE_ARGS += --disable-dap
 CONFIGURE_ARGS += --enable-ncgen4
 CONFIGURE_ARGS += --enable-shared
 CONFIGURE_ARGS += --enable-separate-fortran
