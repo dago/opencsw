@@ -100,7 +100,7 @@ BUILD_ARGS += FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
 BUILD_ARGS += CXXFLAGS="$(CXXFLAGS)"
 
 ## Test args need to be the same otherwise various tests don't link
-TEST_ARGS = $(BUILD_ARGS)
+#TEST_ARGS = $(BUILD_ARGS)
 
 GARCOMPILER = GCC4
 
