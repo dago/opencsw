@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+use strict;
+
 sub encode_base64
 {
 	my $string = shift;
@@ -45,51 +47,106 @@ sub strip_diacritics
 }
 
 
+sub label_to_filename
+{
+	my $label = shift;
+
+	$label =~ s/^"//;
+	$label =~ s/"$//;
+	$label =~ s/[\/\s,]/_/g;
+	$label =~ s/[()]//g;
+	$label = strip_diacritics ($label);
+	return ($label . ".pem");
+}
+
+
+sub parse_multiline_octal
+{
+	my $lines = shift;
+
+	my $sub = sub { 
+		my $val = shift;
+		return (chr(oct($val)));
+	};
+
+	my $string = join ("", @{$lines});
+	$string =~ s/\\([0-9]{3})/$sub->($1)/ge;
+
+	return ($string);
+}
+
+
+my $certificates_list = {};
+my $certdata_object;
 
 while (my $line = <STDIN>) {
 	next if $line =~ /^#/;
+	chomp ($line);
 	
 	if ($line =~ /^\s*$/) {
-		undef $fname;
+
+		if (exists($certdata_object->{"SERIAL_NUMBER"})) {
+			my $serial_number = $certdata_object->{"SERIAL_NUMBER"};
+			if (exists ($certificates_list->{$serial_number})) {
+				my $certificate = $certificates_list->{$serial_number};
+
+				if ($certificate->{"ISSUER"} eq $certdata_object->{"ISSUER"}) {
+					@{$certificate}{ keys (%{$certdata_object}) } = values (%{$certdata_object});
+				}
+
+			} else {
+				$certificates_list->{$serial_number} = $certdata_object;
+			}
+
+		}
+		$certdata_object = {};
 		next;
 	}
 
-	chomp ($line);
+	my ($field, $type, $value) = split (/ /, $line, 3);
 
-	if ($line =~ /CKA_LABEL/) {
-		my ($label, $type, $val) = split (/ /, $line, 3);
-		$val =~ s/^"//;
-		$val =~ s/"$//;
-		$val =~ s/[\/\s,]/_/g;
-		$val =~ s/[()]//g;
-		$val = strip_diacritics ($val);
-		if ($val =~ /Explicitly_Distrust/ or $val =~ /Bogus/) {
-			undef $fname;
-		} else {
-			$fname = $val . ".pem";
-		}
-		next;
-	}
+	$field =~ s/^CKA_//;
 
-	if ($line =~ /CKA_VALUE MULTILINE_OCTAL/) {
-		if (not $fname) {
-			next;
-		}
-		my @cert_data;
+	next if ($field eq "CLASS" or $field eq "TOKEN" 
+		or $field eq "PRIVATE" or $field eq "MODIFIABLE");
+
+	if ($type eq "MULTILINE_OCTAL") {
+		my @multilines;
 		while ($line = <STDIN>) {
 			last if $line =~ /^END/;
 			chomp ($line);
-			my @data = split (/\\/, $line);
-			shift (@data);
-			push (@cert_data, @data);
+			push (@multilines, $line);
 		}
-		@cert_data = map (oct, @cert_data);
-		@cert_data = map (chr, @cert_data);
-		open (FH, "> $fname");
+		$value = parse_multiline_octal (\@multilines);
+	} 
+
+	$certdata_object->{$field} = $value;
+}
+
+
+foreach my $certificate (values(%{$certificates_list})) {
+	my $trusted = 1;
+	foreach my $trust ("TRUST_SERVER_AUTH", 
+		           "TRUST_EMAIL_PROTECTION",
+			   "TRUST_CODE_SIGNING") {
+	   	if ($certificate->{$trust} eq "CKT_NSS_NOT_TRUSTED") {
+			$trusted = 0;
+		}
+	}
+	if ($trusted) {
+
+		my $filename = label_to_filename ($certificate->{"LABEL"});
+
+		open (FH, "> $filename");
 		print FH "-----BEGIN CERTIFICATE-----\n";
-		print FH encode_base64 (join ("", @cert_data));
+		print FH encode_base64 ($certificate->{"VALUE"});
 		print FH "-----END CERTIFICATE-----\n";
 		close (FH);
-		print "Created $fname certificate\n";
+		print "Created $filename certificate\n";
+
+	} else {
+
+		print "Certificate " . $certificate->{"LABEL"} . " Not trusted\n";
 	}
-} 
+}
+
