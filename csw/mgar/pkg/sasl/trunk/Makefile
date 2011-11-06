@@ -98,6 +98,24 @@ SPKG_DESC_CSWsasl-dev = Development files for SASL
 PKGFILES_CSWsasl-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWsasl-dev += CSWlibsasl2-2
 
+PACKAGES += CSWsaslsample
+SPKG_DESC_CSWsaslsample = Cyrus Simple Authentication and Security Layer sample client/server
+CATALOGNAME_CSWsaslsample = sasl_sample
+RUNTIME_DEP_PKGS_CSWsaslsample = CSWsasl
+RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibsasl2-2
+RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibkrb5support0
+PKGFILES_CSWsaslsample = $(bindir)/sasl-sample-server
+PKGFILES_CSWsaslsample += $(bindir)/sasl-sample-client
+# The plugins of CSWsasl are needed, else the functionality
+# of saslsample is very limited
+CHECKPKG_OVERRIDES_CSWsaslsample += surplus-dependency|CSWsasl
+CHECKPKG_OVERRIDES_CSWsaslsample += catalogname-does-not-match-pkgname|pkgname=CSWsaslsample|catalogname=sasl_sample|expected-catalogname=saslsample
+
+
 BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWmysql-dev
 BUILD_DEP_PKGS += CSWlibpq
