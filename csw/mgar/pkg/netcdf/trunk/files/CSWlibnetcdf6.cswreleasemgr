@@ -1,2 +1,0 @@
-This package depends on CSWgcc4core due to Mantis Bug ID 4497
-The various libraries are not found by the 64 bit executable due to the 32 and 64 symlinks not being present in /opt/csw/gcc4/lib

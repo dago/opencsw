@@ -9,9 +9,6 @@ DESCRIPTION = Machine-independent data formats for array-oriented scientific dat
 SPKG_SOURCEURL = http://www.unidata.ucar.edu/software/netcdf/
 MASTER_SITES = ftp://ftp.unidata.ucar.edu/pub/netcdf/
 DISTFILES  += $(NAME)-$(VERSION).tar.gz
-DISTFILES  += CSWlibnetcdf6.cswreleasemgr
-DISTFILES  += CSWlibnetcdff5.cswreleasemgr
-DISTFILES  += CSWlibnetcdf-c++5.cswreleasemgr
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
 
@@ -92,25 +89,11 @@ RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf6
 RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdff5
 RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf-c++5
 
-## CFLAGS AND LDFLAGS are necessary due to problems with the fortran bindings when
-## building 64-bit
-BUILD_ARGS  = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" 
-BUILD_ARGS += FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
-## CXXFLAGS are necessary due to the gcc3core_rt problem noted below
-BUILD_ARGS += CXXFLAGS="$(CXXFLAGS)"
-
-## Test args need to be the same otherwise various tests don't link
-#TEST_ARGS = $(BUILD_ARGS)
-
 GARCOMPILER = GCC4
 
 CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += F77=$(F77) FC=$(FC) CC=$(CC) CXX=$(CXX)
-CONFIGURE_ARGS += CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" FFLAGS="$(FFLAGS)" FCFLAGS="$(FCFLAGS)"
 CONFIGURE_ARGS += --enable-netcdf-4
-## DAP is disabled due to bugs on Sparc Solaris 9 GCC4. Bug filed with UCAR:
-## netCDF #ARO-502165
-#CONFIGURE_ARGS += --enable-dap
+CONFIGURE_ARGS += --enable-dap
 CONFIGURE_ARGS += --disable-dap
 CONFIGURE_ARGS += --enable-ncgen4
 CONFIGURE_ARGS += --enable-shared
