@@ -18,6 +18,7 @@ DISTFILES = cyrus-$(NAME)-$(FILEVERSION).tar.gz
 # This file will be renamed to cswsaslauthd during install
 DISTFILES += cswsaslauthd.init
 DISTFILES += saslauthd.init.CSW
+DISTFILES += saslauthd.conf.CSW
 DISTFILES += README.sasl
 DISTFILES += README.saslauthd
 
@@ -53,6 +54,7 @@ RUNTIME_DEP_PKGS_CSWsaslauthd += CSWlibkrb5support0
 CHECKPKG_OVERRIDES_CSWsaslauthd += surplus-dependency|CSWsasl
 PKGFILES_CSWsaslauthd = $(sysconfdir)/init.d/cswsaslauthd
 PKGFILES_CSWsaslauthd += $(sysconfdir)/saslauthd.init.CSW
+PKGFILES_CSWsaslauthd += $(sysconfdir)/saslauthd.conf.CSW
 PKGFILES_CSWsaslauthd += $(sbindir)/testsaslauthd
 PKGFILES_CSWsaslauthd += $(sbindir)/saslauthd
 PKGFILES_CSWsaslauthd += $(mandir)/.*/saslauthd\.8
@@ -180,11 +182,26 @@ CSWsasl_usergroup = :sasl::::::
 
 include gar/category.mk
 
-post-install-modulated: install-doc fix-path-manpages
+# This is for building the sample sasl server/client
+# which can be used to test the sasl installation
+post-build-modulated:
+	test -d $(WORKSRC)/sample && cd $(WORKSRC)/sample && /usr/bin/env -i $(BUILD_ENV) $(MAKE) $(PARALLELMFLAGS) 
+	@$(MAKECOOKIE)
+
+
+post-install-modulated: install-doc fix-path-manpages install-sample
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d/
 	ginstall $(WORKDIR)/saslauthd.init.CSW $(DESTDIR)/etc/opt/csw/
+	ginstall $(WORKDIR)/saslauthd.conf.CSW $(DESTDIR)/etc/opt/csw/
 	ginstall $(WORKDIR)/cswsaslauthd.init $(DESTDIR)/etc/opt/csw/init.d/cswsaslauthd
 	@$(MAKECOOKIE)
+
+# The names 'client' and 'server' are a little generic, so we change
+# them to something more meaningfull
+install-sample:
+	test -d $(DESTDIR)$(bindir) || ginstall -d $(DESTDIR)$(bindir)
+	ginstall $(WORKSRC)/sample/.libs/client $(DESTDIR)$(bindir)/sasl-sample-client
+	ginstall $(WORKSRC)/sample/.libs/server $(DESTDIR)$(bindir)/sasl-sample-server
 
 DOC_FILES = rfc1321.txt \
                 rfc1939.txt \
