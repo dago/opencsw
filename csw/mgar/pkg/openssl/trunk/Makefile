@@ -27,85 +27,79 @@ define BLURB
   as a full-strength general-purpose cryptography library.
 endef
 
-PACKAGES = CSWossl CSWosslrt CSWossldevel CSWosslutils
+PACKAGES = CSWopenssl CSWlibssl0-9-8 CSWlibssl-dev CSWopenssl-utils
 
-SPKG_DESC_CSWossl = Openssl meta package
-CATALOGNAME_CSWossl = openssl
-RUNTIME_DEP_PKGS_CSWossl = CSWossldevel CSWosslutils CSWosslrt
-ARCHALL_CSWossl = 1
+SPKG_DESC_CSWopenssl = Openssl meta package
+CATALOGNAME_CSWopenssl = openssl
+RUNTIME_DEP_PKGS_CSWopenssl = CSWlibssl-dev CSWopenssl-utils CSWlibssl0-9-8
+ARCHALL_CSWopenssl = 1
 
-SPKG_DESC_CSWosslrt = Openssl runtime libraries
-CATALOGNAME_CSWosslrt = openssl_rt
-RUNTIME_DEP_PKGS_CSWosslrt = CSWcacertificates
+SPKG_DESC_CSWlibssl0-9-8 = Openssl runtime libraries
+CATALOGNAME_CSWlibssl0-9-8 = libssl0_9_8
+RUNTIME_DEP_PKGS_CSWlibssl0-9-8 = CSWcacertificates
 
-SPKG_DESC_CSWossldevel = Openssl development libraries and headers
-CATALOGNAME_CSWossldevel = openssl_devel
-RUNTIME_DEP_PKGS_CSWossldevel = CSWosslrt
+SPKG_DESC_CSWlibssl-dev = Openssl development libraries and headers
+CATALOGNAME_CSWlibssl-dev = libssl_dev
+RUNTIME_DEP_PKGS_CSWlibssl-dev = CSWlibssl0-9-8
 
-SPKG_DESC_CSWosslutils = Openssl binaries and related tools 
-CATALOGNAME_CSWosslutils = openssl_utils
-RUNTIME_DEP_PKGS_CSWosslutils = CSWosslrt
-SPKG_CLASSES_CSWosslutils = none cswpreserveconf
+SPKG_DESC_CSWopenssl-utils = Openssl binaries and related tools 
+CATALOGNAME_CSWopenssl-utils = openssl_utils
+RUNTIME_DEP_PKGS_CSWopenssl-utils = CSWlibssl0-9-8
+SPKG_CLASSES_CSWopenssl-utils = none cswpreserveconf
 
 # openssl is a meta-package
-CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWosslutils
-CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWossldevel
-CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWosslrt
+CHECKPKG_OVERRIDES_CSWopenssl += surplus-dependency|CSWopenssl-utils
+CHECKPKG_OVERRIDES_CSWopenssl += surplus-dependency|CSWlibssl-dev
+CHECKPKG_OVERRIDES_CSWopenssl += surplus-dependency|CSWlibssl0-9-8
 
 # we use sun perl not csw one
-CHECKPKG_OVERRIDES_CSWosslutils += missing-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
 
-#CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWcacertificates
+#CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += surplus-dependency|CSWcacertificates
 
 # this package doesn't yet obey the new shared libraries standard
-CHECKPKG_OVERRIDES_CSWosslrt += non-uniform-lib-versions-in-package|sonames=libcrypto.so.0.9.7,libcrypto.so.0.9.8,libssl.so.0.9.7,libssl.so.0.9.8
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += non-uniform-lib-versions-in-package|sonames=libcrypto.so.0.9.7,libcrypto.so.0.9.8,libssl.so.0.9.7,libssl.so.0.9.8
 
 # we will not recompile old 0.9.7 version for now
 ifeq ($(shell /usr/bin/uname -p),sparc) 
-CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7
-CHECKPKG_OVERRIDES_CSWosslrt += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libcrypto.so.0.9.7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += bad-rpath-entry|/opt/csw/lib/sparcv8plus+vis|opt/csw/lib/sparcv8plus+vis/libssl.so.0.9.7
 else
-CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libcrypto.so.0.9.7
-CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libssl.so.0.9.7
-CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/libcrypto.so.0.9.7
-CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/export/home|root/opt/csw/lib/libssl.so.0.9.7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libcrypto.so.0.9.7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/lib/pentium_pro/libssl.so.0.9.7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/lib/libcrypto.so.0.9.7
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/export/home|root/opt/csw/lib/libssl.so.0.9.7
 endif
 
 
 # we do ship .a files in the devel package
-CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
-CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
 ifeq ($(shell /usr/bin/uname -p),sparc) 
-CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
-CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
-CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libcrypto.a
-CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libssl.a
 else
-CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
-CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
-CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
-CHECKPKG_OVERRIDES_CSWossldevel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
 endif
 
 # the /usr/local references in the documents files are relevant
-CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/FAQ
-CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/INSTALL
-CHECKPKG_OVERRIDES_CSWosslutils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/CHANGES
-CHECKPKG_OVERRIDES_CSWossl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/INSTALL
-CHECKPKG_OVERRIDES_CSWossl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/CHANGES
-CHECKPKG_OVERRIDES_CSWossl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/FAQ
-CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/FAQ
-CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/INSTALL
-CHECKPKG_OVERRIDES_CSWosslrt += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/CHANGES
-CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/CHANGES
-CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/INSTALL
-CHECKPKG_OVERRIDES_CSWossldevel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/FAQ
-
-# We will not fix this today
-CHECKPKG_OVERRIDES_CSWosslutils += catalogname-does-not-match-pkgname|pkgname=CSWosslutils|catalogname=openssl_utils|expected-catalogname=osslutils
-CHECKPKG_OVERRIDES_CSWossldevel += catalogname-does-not-match-pkgname|pkgname=CSWossldevel|catalogname=openssl_devel|expected-catalogname=ossldevel
-CHECKPKG_OVERRIDES_CSWossl += catalogname-does-not-match-pkgname|pkgname=CSWossl|catalogname=openssl|expected-catalogname=ossl
-CHECKPKG_OVERRIDES_CSWosslrt += catalogname-does-not-match-pkgname|pkgname=CSWosslrt|catalogname=openssl_rt|expected-catalogname=osslrt
+CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/FAQ
+CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/INSTALL
+CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/CHANGES
+CHECKPKG_OVERRIDES_CSWopenssl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/INSTALL
+CHECKPKG_OVERRIDES_CSWopenssl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/CHANGES
+CHECKPKG_OVERRIDES_CSWopenssl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/FAQ
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/FAQ
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/INSTALL
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/CHANGES
+CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/CHANGES
+CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/INSTALL
+CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/FAQ
 
 
 ###### Upstream and opencsw files information #######
@@ -117,10 +111,10 @@ UPSTREAM_MASTER_SITES = http://www.openssl.org/source/
 UFILES_REGEX = $(NAME)-(0.9.8[a-z]).tar.gz
 
 DISTFILES  = $(NAME)-$(VERSION).tar.gz 
-DISTFILES += CSWossl.prototype
-DISTFILES += CSWosslrt.checkinstall CSWosslrt.preinstall CSWosslrt.postinstall CSWosslrt.prototype-i386 CSWosslrt.prototype-sparc
-DISTFILES += CSWossldevel.prototype-i386 CSWossldevel.prototype-sparc
-DISTFILES += CSWosslutils.prototype 
+DISTFILES += CSWopenssl.prototype
+DISTFILES += CSWlibssl0-9-8.checkinstall CSWlibssl0-9-8.preinstall CSWlibssl0-9-8.postinstall CSWlibssl0-9-8.prototype-i386 CSWlibssl0-9-8.prototype-sparc
+DISTFILES += CSWlibssl-dev.prototype-i386 CSWlibssl-dev.prototype-sparc
+DISTFILES += CSWopenssl-utils.prototype 
 DISTFILES += changelog.CSW README.CSW
 
 DOCFILES = CHANGES CHANGES.SSLeay PROBLEMS README FAQ README.ASN1 INSTALL NEWS README.ENGINE
