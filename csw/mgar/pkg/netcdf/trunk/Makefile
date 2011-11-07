@@ -11,7 +11,9 @@ MASTER_SITES = ftp://ftp.unidata.ucar.edu/pub/netcdf/
 DISTFILES  += $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
-PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+PATCHFILES += 0001-Change-usr-local-references-to-opt-csw.patch
+# Compile on Solaris 10 for i386, leave it solaris 9 for sparc
+PACKAGING_PLATFORMS = solaris10-i386 solaris9-sparc
 
 BUILD_DEP_PKGS += CSWhdf5rt CSWlibhdf5-dev CSWzlib
 #BUILD_DEP_PKGS += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4g++rt
