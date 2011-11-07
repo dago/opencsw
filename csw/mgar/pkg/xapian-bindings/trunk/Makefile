@@ -1,5 +1,5 @@
 NAME = xapian-bindings
-VERSION = 1.2.6
+VERSION = 1.2.7
 CATEGORIES = lib
 
 #EXTRA_MODULATORS = BINDING
@@ -23,10 +23,21 @@ BUILD_DEP_PKGS += CSWruby18-dev
 
 PACKAGES += CSWpy-xapian
 SPKG_DESC_CSWpy-xapian = Xapian bindings for Python
+# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWpy-xapian += CSWstlport
 RUNTIME_DEP_PKGS_CSWpy-xapian += CSWpython
 RUNTIME_DEP_PKGS_CSWpy-xapian += CSWlibxapian22
 PYCOMPILE = 1
+
+PACKAGES += CSWphp5-xapian
+SPKG_DESC_CSWphp5-xapian = Xapian bindings for PHP 5
+PKGFILES_CSWphp5-xapian += $(prefix)/php5/.*
+PKGFILES_CSWphp5-xapian += $(docdir)/xapian-bindings/php/.*
+RUNTIME_DEP_PKGS_CSWphp5-xapian += CSWstlport
+RUNTIME_DEP_PKGS_CSWphp5-xapian += CSWphp5
+RUNTIME_DEP_PKGS_CSWphp5-xapian += CSWlibxapian22
+# Checkpkg cannot detect this
+CHECKPKG_OVERRIDES_CSWphp5-xapian += surplus-dependency|CSWphp5
 
 PACKAGES += CSWrb-xapian
 SPKG_DESC_CSWrb-xapian = Xapian bindings for Ruby
