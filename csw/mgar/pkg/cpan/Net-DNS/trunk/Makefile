@@ -1,5 +1,5 @@
 NAME = Net-DNS
-VERSION = 0.66
+VERSION = 0.67
 CATEGORIES = cpan
 AUTHOR = OLAF
 
@@ -10,21 +10,18 @@ define BLURB
   beyond the capabilities of gethostbyname and gethostbyaddr.
 endef
 
-PACKAGES = CSWpmnetdns
-CATALOGNAME = pm_netdns
+PACKAGES = CSWpm-net-dns
+SPKG_DESC_CSWpm-net-dns = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-net-dns = CSWpmnetdns
+CATALOGNAME_CSWpmnetdns = pm_netdns
 
 DISTFILES += COPYING
 
 RUNTIME_DEP_PKGS = CSWpmdigesthmac CSWpmnetip
 
-DEPENDS += cpan/Net-IP
-
 CONFIGURE_ARGS  = --no-online-tests
 CONFIGURE_ARGS += --no-IPv6-tests
 
 EXTRA_MERGE_EXCLUDE_FILES = .*~ .*perllocal\.pod
-
-# Weird problem on sparc
-TEST_SCRIPTS =
 
 include gar/category.mk
