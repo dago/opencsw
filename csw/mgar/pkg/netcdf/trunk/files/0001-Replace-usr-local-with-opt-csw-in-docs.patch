@@ -1,0 +1,523 @@
+From d8f549e9bb40ba4ad0d2f434db399884ea685c9a Mon Sep 17 00:00:00 2001
+From: Geoff Davis <gadavis@opencsw.org>
+Date: Mon, 7 Nov 2011 03:55:56 +0100
+Subject: [PATCH] Replace /usr/local with /opt/csw in docs
+
+---
+ man4/netcdf-c.html     |   14 +++++++-------
+ man4/netcdf-c.info-1   |   14 +++++++-------
+ man4/netcdf-c.ps       |   12 ++++++------
+ man4/netcdf-c.texi     |   14 +++++++-------
+ man4/netcdf-c.txt      |   14 +++++++-------
+ man4/netcdf-f77.html   |    6 +++---
+ man4/netcdf-f77.info-1 |    6 +++---
+ man4/netcdf-f77.ps     |    6 +++---
+ man4/netcdf-f77.texi   |    6 +++---
+ man4/netcdf-f77.txt    |    6 +++---
+ man4/netcdf-f90.html   |    4 ++--
+ man4/netcdf-f90.ps     |    4 ++--
+ man4/netcdf-f90.texi   |    4 ++--
+ man4/netcdf-f90.txt    |    4 ++--
+ 14 files changed, 57 insertions(+), 57 deletions(-)
+
+diff --git a/man4/netcdf-c.html b/man4/netcdf-c.html
+index 5bca4e2..8232ca2 100644
+--- a/man4/netcdf-c.html
++++ b/man4/netcdf-c.html
+@@ -639,7 +639,7 @@ the C compiler always looks, you must use the -I option when invoking
+ the compiler, to specify a directory where netcdf.h is installed, for
+ example:
+ 
+-<pre class="example">     cc -c -I/usr/local/netcdf/include myprogram.c
++<pre class="example">     cc -c -I/opt/csw/include myprogram.c
+ </pre>
+    <p>Alternatively, you could specify an absolute path name in the #include
+ statement, but then your program would not compile on another platform
+@@ -654,7 +654,7 @@ flag, and the operating system supports shared libraries, then it
+ should be possible to link an application program using a relatively
+ simple command. For example:
+ 
+-<pre class="example">     cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++<pre class="example">     cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ </pre>
+    <p>It should be noted that on some operating systems, when using
+ shared libraries, the application itself may need to be compiled
+@@ -672,8 +672,8 @@ This can be accomplished in one of two ways.
+ to the LD_LIBRARY_PATH environment variable. 
+ This path is searched at runtime to locate any needed shared library. 
+ This might be accomplished, for example, by the following shell command
+-(assuming that libnetcdf.so is in /usr/local/netcdf/lib).
+-     <pre class="example">          LD_LIBRARY_PATH="/usr/local/netcdf/lib:$LD_LIBRARY_PATH"
++(assuming that libnetcdf.so is in /opt/csw/lib).
++     <pre class="example">          LD_LIBRARY_PATH="/opt/csw/lib:$LD_LIBRARY_PATH"
+           export LD_LIBRARY_PATH
+ </pre>
+      <li>Set the so-called runtime path when the application is linked
+@@ -683,11 +683,11 @@ For gcc under Linus, this is usually automatic.
+ For C compilers on Solaris (and probably other operating systems)
+ the runtime path must be specified at
+ link time. The command in this case might look like this.
+-     <pre class="example">          cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf -R/usr/local/netcdf/lib
++     <pre class="example">          cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf -R/opt/csw/lib
+ </pre>
+      <p>Note that the -R flag is also C compiler dependent. 
+ For gcc and Linux, for example, the specification is usually of this form.
+-     <pre class="example">          cc ...  -Wl,-rpath,/usr/local/netcdf/lib
++     <pre class="example">          cc ...  -Wl,-rpath,/opt/csw/lib
+ </pre>
+      <p>Other compilers may use other flags to specify this. Check
+ with the local system administrator.
+@@ -699,7 +699,7 @@ the compile command.  For example, for a netCDF-4 enabled library, it
+ will be necessary to link with two HDF5 libraries,
+ at least one compression library, and
+ (on some systems) the math library.
+-<pre class="example">     cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -L/usr/local/hdf5/lib -lnetcdf -lhdf5_hl -lhdf5 -lz
++<pre class="example">     cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf -lhdf5_hl -lhdf5 -lz
+ </pre>
+    <p>Other configuration features (e.g. DAP support or parallel IO)
+ may require additional libraries.
+diff --git a/man4/netcdf-c.info-1 b/man4/netcdf-c.info-1
+index 05df75c..9e399ef 100644
+--- a/man4/netcdf-c.info-1
++++ b/man4/netcdf-c.info-1
+@@ -547,7 +547,7 @@ the C compiler always looks, you must use the -I option when invoking
+ the compiler, to specify a directory where netcdf.h is installed, for
+ example:
+ 
+-     cc -c -I/usr/local/netcdf/include myprogram.c
++     cc -c -I/opt/csw/include myprogram.c
+ 
+    Alternatively, you could specify an absolute path name in the
+ #include statement, but then your program would not compile on another
+@@ -562,7 +562,7 @@ and the operating system supports shared libraries, then it should be
+ possible to link an application program using a relatively simple
+ command. For example:
+ 
+-     cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++     cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ 
+    It should be noted that on some operating systems, when using shared
+ libraries, the application itself may need to be compiled using some
+@@ -578,8 +578,8 @@ can be accomplished in one of two ways.
+      LD_LIBRARY_PATH environment variable.  This path is searched at
+      runtime to locate any needed shared library.  This might be
+      accomplished, for example, by the following shell command
+-     (assuming that libnetcdf.so is in /usr/local/netcdf/lib).
+-          LD_LIBRARY_PATH="/usr/local/netcdf/lib:$LD_LIBRARY_PATH"
++     (assuming that libnetcdf.so is in /opt/csw/lib).
++          LD_LIBRARY_PATH="/opt/csw/lib:$LD_LIBRARY_PATH"
+           export LD_LIBRARY_PATH
+ 
+   2. Set the so-called runtime path when the application is linked so
+@@ -588,10 +588,10 @@ can be accomplished in one of two ways.
+      automatic.  For C compilers on Solaris (and probably other
+      operating systems) the runtime path must be specified at link
+      time. The command in this case might look like this.
+-          cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf -R/usr/local/netcdf/lib
++          cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf -R/opt/csw/lib
+      Note that the -R flag is also C compiler dependent.  For gcc and
+      Linux, for example, the specification is usually of this form.
+-          cc ...  -Wl,-rpath,/usr/local/netcdf/lib
++          cc ...  -Wl,-rpath,/opt/csw/lib
+      Other compilers may use other flags to specify this. Check with
+      the local system administrator.
+ 
+@@ -600,7 +600,7 @@ reason, then it is necessary to include all the dependent libraries in
+ the compile command.  For example, for a netCDF-4 enabled library, it
+ will be necessary to link with two HDF5 libraries, at least one
+ compression library, and (on some systems) the math library.
+-     cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -L/usr/local/hdf5/lib -lnetcdf -lhdf5_hl -lhdf5 -lz
++     cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf -lhdf5_hl -lhdf5 -lz
+ 
+    Other configuration features (e.g. DAP support or parallel IO) may
+ require additional libraries.
+diff --git a/man4/netcdf-c.ps b/man4/netcdf-c.ps
+index ea6f1ac..9b3102a 100644
+--- a/man4/netcdf-c.ps
++++ b/man4/netcdf-c.ps
+@@ -4237,7 +4237,7 @@ b(<netcdf.h>)275 4367 y Fn(Unless)29 b(the)h(netcdf.h)f(\014le)g(is)g
+ g(the)g(-I)h(option)f(when)f(in)m(v)m(oking)j(the)e(compiler,)h(to)g
+ (sp)s(ecify)e(a)i(directory)f(where)150 4586 y(netcdf.h)g(is)g
+ (installed,)i(for)e(example:)390 4728 y Fh(cc)47 b(-c)g
+-(-I/usr/local/netcdf/includ)o(e)42 b(myprogram.c)275
++(-I/opt/csw/includ)o(e)42 b(myprogram.c)275
+ 4869 y Fn(Alternativ)m(ely)-8 b(,)35 b(y)m(ou)d(could)f(sp)s(ecify)h
+ (an)f(absolute)i(path)e(name)h(in)f(the)h(#include)f(statemen)m(t,)k
+ (but)150 4979 y(then)c(y)m(our)g(program)f(w)m(ould)h(not)h(compile)g
+@@ -4256,7 +4256,7 @@ h(op)s(erating)150 408 y(system)30 b(supp)s(orts)d(shared)i(libraries,)
+ i(then)e(it)h(should)f(b)s(e)g(p)s(ossible)g(to)h(link)g(an)f
+ (application)i(program)150 518 y(using)f(a)h(relativ)m(ely)h(simple)f
+ (command.)40 b(F)-8 b(or)31 b(example:)390 652 y Fh(cc)47
+-b(-o)g(myprogram)f(myprogram.o)e(-L/usr/local/netcdf/lib)e(-lnetcdf)275
++b(-o)g(myprogram)f(myprogram.o)e(-L/opt/csw/lib)e(-lnetcdf)275
+ 786 y Fn(It)d(should)g(b)s(e)g(noted)h(that)h(on)e(some)i(op)s(erating)
+ f(systems,)i(when)d(using)g(shared)g(libraries,)k(the)150
+ 896 y(application)35 b(itself)f(ma)m(y)g(need)g(to)g(b)s(e)f(compiled)h
+@@ -4293,12 +4293,12 @@ b(is)h(usually)f(automatic.)60 b(F)-8 b(or)38 b(C)d(compilers)i(on)g
+ (eci\014ed)h(at)h(link)f(time.)49 b(The)32 b(command)h(in)g(this)g
+ (case)330 2746 y(migh)m(t)e(lo)s(ok)g(lik)m(e)h(this.)570
+ 2880 y Fh(cc)47 b(-o)g(myprogram)f(myprogram.o)e
+-(-L/usr/local/netcdf/lib)e(-lnetcdf)j(-R/usr/local/netcdf/lib)330
++(-L/opt/csw/lib)e(-lnetcdf)j(-R/opt/csw/lib)330
+ 3014 y Fn(Note)35 b(that)g(the)f(-R)g(\015ag)h(is)f(also)h(C)f
+ (compiler)g(dep)s(enden)m(t.)51 b(F)-8 b(or)35 b(gcc)g(and)e(Lin)m(ux,)
+ i(for)f(example,)330 3124 y(the)d(sp)s(eci\014cation)g(is)f(usually)g
+ (of)h(this)f(form.)570 3258 y Fh(cc)47 b(...)95 b
+-(-Wl,-rpath,/usr/local/ne)o(tcd)o(f/li)o(b)330 3392 y
++(-Wl,-rpath,/opt/csw/ne)o(tcd)o(f/li)o(b)330 3392 y
+ Fn(Other)44 b(compilers)g(ma)m(y)h(use)f(other)g(\015ags)g(to)h(sp)s
+ (ecify)f(this.)82 b(Chec)m(k)44 b(with)g(the)g(lo)s(cal)i(system)330
+ 3501 y(administrator.)275 3660 y(If)35 b(shared)h(libraries)g(are)g
+@@ -4310,8 +4310,8 @@ b(F)-8 b(or)32 b(example,)f(for)150 3879 y(a)j(netCDF-4)h(enabled)f
+ (t)m(w)m(o)i(HDF5)g(libraries,)g(at)g(least)150 3988
+ y(one)c(compression)f(library)-8 b(,)31 b(and)e(\(on)i(some)g
+ (systems\))g(the)f(math)g(library)-8 b(.)390 4122 y Fh(cc)47
+-b(-o)g(myprogram)f(myprogram.o)e(-L/usr/local/netcdf/lib)e
+-(-L/usr/local/hdf5/lib)g(-lnetcdf)j(-lhdf5_hl)h(-lhdf5)g(-lz)275
++b(-o)g(myprogram)f(myprogram.o)e(-L/opt/csw/lib)
++g(-lnetcdf)j(-lhdf5_hl)h(-lhdf5)g(-lz)275
+ 4256 y Fn(Other)32 b(con\014guration)i(features)g(\(e.g.)51
+ b(D)m(AP)34 b(supp)s(ort)d(or)j(parallel)g(IO\))f(ma)m(y)h(require)f
+ (additional)150 4366 y(libraries.)275 4500 y(A)28 b(complete)i(list)f
+diff --git a/man4/netcdf-c.texi b/man4/netcdf-c.texi
+index 708f10e..657fbd0 100644
+--- a/man4/netcdf-c.texi
++++ b/man4/netcdf-c.texi
+@@ -586,7 +586,7 @@ the compiler, to specify a directory where netcdf.h is installed, for
+ example:
+ 
+ @example
+-cc -c -I/usr/local/netcdf/include myprogram.c
++cc -c -I/opt/csw/include myprogram.c
+ @end example
+ 
+ Alternatively, you could specify an absolute path name in the #include
+@@ -603,7 +603,7 @@ should be possible to link an application program using a relatively
+ simple command. For example:
+ 
+ @example
+-cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ @end example
+ 
+ It should be noted that on some operating systems, when using
+@@ -623,9 +623,9 @@ Add the path to the directory containing libnetcdf.so
+ to the LD_LIBRARY_PATH environment variable.
+ This path is searched at runtime to locate any needed shared library.
+ This might be accomplished, for example, by the following shell command
+-(assuming that libnetcdf.so is in /usr/local/netcdf/lib).
++(assuming that libnetcdf.so is in /opt/csw/lib).
+ @example
+-LD_LIBRARY_PATH="/usr/local/netcdf/lib:$LD_LIBRARY_PATH"
++LD_LIBRARY_PATH="/opt/csw/lib:$LD_LIBRARY_PATH"
+ export LD_LIBRARY_PATH
+ @end example
+ 
+@@ -638,12 +638,12 @@ For C compilers on Solaris (and probably other operating systems)
+ the runtime path must be specified at
+ link time. The command in this case might look like this.
+ @example
+-cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf -R/usr/local/netcdf/lib
++cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf -R/opt/csw/lib
+ @end example
+ Note that the -R flag is also C compiler dependent.
+ For gcc and Linux, for example, the specification is usually of this form.
+ @example
+-cc ...  -Wl,-rpath,/usr/local/netcdf/lib
++cc ...  -Wl,-rpath,/opt/csw/lib
+ @end example
+ Other compilers may use other flags to specify this. Check
+ with the local system administrator.
+@@ -656,7 +656,7 @@ will be necessary to link with two HDF5 libraries,
+ at least one compression library, and
+ (on some systems) the math library.
+ @example
+-cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -L/usr/local/hdf5/lib -lnetcdf -lhdf5_hl -lhdf5 -lz
++cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf -lhdf5_hl -lhdf5 -lz
+ @end example
+ 
+ Other configuration features (e.g. DAP support or parallel IO)
+diff --git a/man4/netcdf-c.txt b/man4/netcdf-c.txt
+index 3b38c20..75bde24 100644
+--- a/man4/netcdf-c.txt
++++ b/man4/netcdf-c.txt
+@@ -306,7 +306,7 @@ the C compiler always looks, you must use the -I option when invoking
+ the compiler, to specify a directory where netcdf.h is installed, for
+ example:
+ 
+-     cc -c -I/usr/local/netcdf/include myprogram.c
++     cc -c -I/opt/csw/include myprogram.c
+ 
+    Alternatively, you could specify an absolute path name in the
+ #include statement, but then your program would not compile on another
+@@ -321,7 +321,7 @@ and the operating system supports shared libraries, then it should be
+ possible to link an application program using a relatively simple
+ command. For example:
+ 
+-     cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++     cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ 
+    It should be noted that on some operating systems, when using shared
+ libraries, the application itself may need to be compiled using some
+@@ -337,8 +337,8 @@ can be accomplished in one of two ways.
+      LD_LIBRARY_PATH environment variable.  This path is searched at
+      runtime to locate any needed shared library.  This might be
+      accomplished, for example, by the following shell command
+-     (assuming that libnetcdf.so is in /usr/local/netcdf/lib).
+-          LD_LIBRARY_PATH="/usr/local/netcdf/lib:$LD_LIBRARY_PATH"
++     (assuming that libnetcdf.so is in /opt/csw/lib).
++          LD_LIBRARY_PATH="/opt/csw/lib:$LD_LIBRARY_PATH"
+           export LD_LIBRARY_PATH
+ 
+   2. Set the so-called runtime path when the application is linked so
+@@ -347,10 +347,10 @@ can be accomplished in one of two ways.
+      automatic.  For C compilers on Solaris (and probably other
+      operating systems) the runtime path must be specified at link
+      time. The command in this case might look like this.
+-          cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf -R/usr/local/netcdf/lib
++          cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf -R/opt/csw/lib
+      Note that the -R flag is also C compiler dependent.  For gcc and
+      Linux, for example, the specification is usually of this form.
+-          cc ...  -Wl,-rpath,/usr/local/netcdf/lib
++          cc ...  -Wl,-rpath,/opt/csw/lib
+      Other compilers may use other flags to specify this. Check with
+      the local system administrator.
+ 
+@@ -359,7 +359,7 @@ reason, then it is necessary to include all the dependent libraries in
+ the compile command.  For example, for a netCDF-4 enabled library, it
+ will be necessary to link with two HDF5 libraries, at least one
+ compression library, and (on some systems) the math library.
+-     cc -o myprogram myprogram.o -L/usr/local/netcdf/lib -L/usr/local/hdf5/lib -lnetcdf -lhdf5_hl -lhdf5 -lz
++     cc -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf -lhdf5_hl -lhdf5 -lz
+ 
+    Other configuration features (e.g. DAP support or parallel IO) may
+ require additional libraries.
+diff --git a/man4/netcdf-f77.html b/man4/netcdf-f77.html
+index e0683d6..36c4fc3 100644
+--- a/man4/netcdf-f77.html
++++ b/man4/netcdf-f77.html
+@@ -618,7 +618,7 @@ the FORTRAN compiler always looks, you must use the -I option when
+ invoking the compiler, to specify a directory where netcdf.inc is
+ installed, for example:
+ 
+-<pre class="example">     f77 -c -I/usr/local/netcdf/include myprogram.f
++<pre class="example">     f77 -c -I/opt/csw/include myprogram.f
+ </pre>
+    <p>Alternatively, you could specify an absolute path name in the INCLUDE
+ statement, but then your program would not compile on another platform
+@@ -628,11 +628,11 @@ where netCDF is installed in a different location.
+ the linker always looks, you must use the -L and -l options to link an
+ object file that uses the netCDF library. For example:
+ 
+-<pre class="example">     f77 -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++<pre class="example">     f77 -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ </pre>
+    <p>Alternatively, you could specify an absolute path name for the library:
+ 
+-<pre class="example">     f77 -o myprogram myprogram.o -l/usr/local/netcdf/lib/libnetcdf.
++<pre class="example">     f77 -o myprogram myprogram.o -l/opt/csw/lib/libnetcdf.
+ </pre>
+    <div class="node">
+ <a name="Datasets"></a>
+diff --git a/man4/netcdf-f77.info-1 b/man4/netcdf-f77.info-1
+index 1e51bde..779b8ad 100644
+--- a/man4/netcdf-f77.info-1
++++ b/man4/netcdf-f77.info-1
+@@ -518,7 +518,7 @@ the FORTRAN compiler always looks, you must use the -I option when
+ invoking the compiler, to specify a directory where netcdf.inc is
+ installed, for example:
+ 
+-     f77 -c -I/usr/local/netcdf/include myprogram.f
++     f77 -c -I/opt/csw/include myprogram.f
+ 
+    Alternatively, you could specify an absolute path name in the INCLUDE
+ statement, but then your program would not compile on another platform
+@@ -528,12 +528,12 @@ where netCDF is installed in a different location.
+ the linker always looks, you must use the -L and -l options to link an
+ object file that uses the netCDF library. For example:
+ 
+-     f77 -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++     f77 -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ 
+    Alternatively, you could specify an absolute path name for the
+ library:
+ 
+-     f77 -o myprogram myprogram.o -l/usr/local/netcdf/lib/libnetcdf.
++     f77 -o myprogram myprogram.o -l/opt/csw/lib/libnetcdf.
+ 
+ 
+ File: netcdf-f77.info,  Node: Datasets,  Next: Groups,  Prev: Use of the NetCDF Library,  Up: Top
+diff --git a/man4/netcdf-f77.ps b/man4/netcdf-f77.ps
+index 5290103..6dd9a33 100644
+--- a/man4/netcdf-f77.ps
++++ b/man4/netcdf-f77.ps
+@@ -3867,7 +3867,7 @@ b(com-)150 3728 y(piler)40 b(alw)m(a)m(ys)h(lo)s(oks,)i(y)m(ou)d(m)m
+ (ust)g(use)g(the)g(-I)g(option)g(when)f(in)m(v)m(oking)i(the)f
+ (compiler,)j(to)e(sp)s(ecify)f(a)150 3837 y(directory)31
+ b(where)f(netcdf.inc)g(is)h(installed,)g(for)f(example:)390
+-3972 y Fg(f77)47 b(-c)g(-I/usr/local/netcdf/inclu)o(de)41
++3972 y Fg(f77)47 b(-c)g(-I/opt/csw/inclu)o(de)41
+ b(myprogram.f)275 4106 y Fm(Alternativ)m(ely)-8 b(,)30
+ b(y)m(ou)c(could)h(sp)s(ecify)e(an)i(absolute)g(path)f(name)g(in)g(the)
+ g(INCLUDE)g(statemen)m(t,)k(but)150 4216 y(then)h(y)m(our)g(program)f
+@@ -3879,10 +3879,10 @@ g(INCLUDE)g(statemen)m(t,)k(but)150 4216 y(then)h(y)m(our)g(program)f
+ (options)g(to)g(link)f(an)h(ob)5 b(ject)26 b(\014le)g(that)g(uses)f
+ (the)h(netCDF)g(library)-8 b(.)150 4679 y(F)g(or)31 b(example:)390
+ 4814 y Fg(f77)47 b(-o)g(myprogram)e(myprogram.o)g
+-(-L/usr/local/netcdf/lib)d(-lnetcdf)275 4948 y Fm(Alternativ)m(ely)-8
++(-L/opt/csw/lib)d(-lnetcdf)275 4948 y Fm(Alternativ)m(ely)-8
+ b(,)33 b(y)m(ou)e(could)f(sp)s(ecify)g(an)g(absolute)h(path)g(name)f
+ (for)g(the)h(library:)390 5083 y Fg(f77)47 b(-o)g(myprogram)e
+-(myprogram.o)g(-l/usr/local/netcdf/lib/l)o(ibn)o(etcd)o(f.)p
++(myprogram.o)g(-l/opt/csw/lib/l)o(ibn)o(etcd)o(f.)p
+ eop end
+ %%Page: 6 12
+ TeXDict begin 6 11 bop eop end
+diff --git a/man4/netcdf-f77.texi b/man4/netcdf-f77.texi
+index 35296db..c76a6ff 100644
+--- a/man4/netcdf-f77.texi
++++ b/man4/netcdf-f77.texi
+@@ -542,7 +542,7 @@ invoking the compiler, to specify a directory where netcdf.inc is
+ installed, for example:
+ 
+ @example
+-f77 -c -I/usr/local/netcdf/include myprogram.f
++f77 -c -I/opt/csw/include myprogram.f
+ @end example
+ 
+ Alternatively, you could specify an absolute path name in the INCLUDE
+@@ -554,13 +554,13 @@ the linker always looks, you must use the -L and -l options to link an
+ object file that uses the netCDF library. For example:
+ 
+ @example
+-f77 -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++f77 -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ @end example
+ 
+ Alternatively, you could specify an absolute path name for the library:
+ 
+ @example
+-f77 -o myprogram myprogram.o -l/usr/local/netcdf/lib/libnetcdf.
++f77 -o myprogram myprogram.o -l/opt/csw/lib/libnetcdf.
+ @end example
+ 
+ @node Datasets, Groups, Use of the NetCDF Library, Top
+diff --git a/man4/netcdf-f77.txt b/man4/netcdf-f77.txt
+index 3863c41..d4fef3c 100644
+--- a/man4/netcdf-f77.txt
++++ b/man4/netcdf-f77.txt
+@@ -294,7 +294,7 @@ the FORTRAN compiler always looks, you must use the -I option when
+ invoking the compiler, to specify a directory where netcdf.inc is
+ installed, for example:
+ 
+-     f77 -c -I/usr/local/netcdf/include myprogram.f
++     f77 -c -I/opt/csw/include myprogram.f
+ 
+    Alternatively, you could specify an absolute path name in the INCLUDE
+ statement, but then your program would not compile on another platform
+@@ -304,12 +304,12 @@ where netCDF is installed in a different location.
+ the linker always looks, you must use the -L and -l options to link an
+ object file that uses the netCDF library. For example:
+ 
+-     f77 -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++     f77 -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ 
+    Alternatively, you could specify an absolute path name for the
+ library:
+ 
+-     f77 -o myprogram myprogram.o -l/usr/local/netcdf/lib/libnetcdf.
++     f77 -o myprogram myprogram.o -l/opt/csw/lib/libnetcdf.
+ 
+ 2 Datasets
+ **********
+diff --git a/man4/netcdf-f90.html b/man4/netcdf-f90.html
+index b6663b4..67aba27 100644
+--- a/man4/netcdf-f90.html
++++ b/man4/netcdf-f90.html
+@@ -650,7 +650,7 @@ the netCDF module was compiled. The suffix for this file is &ldquo;MOD&rdquo;
+ files, usually with the -I flag. (Some compilers, like absoft, use -p
+ instead).
+ 
+-<pre class="example">     f90 -c -I/usr/local/include mymodule.f90
++<pre class="example">     f90 -c -I/opt/csw/include mymodule.f90
+ </pre>
+    <p>Starting with version 3.6.2, another method of building the netCDF
+ fortran libraries becomes available. With the
+@@ -667,7 +667,7 @@ builds, but is not done, by default, for static library builds.
+    <p>When linking fortran programs without a separate fortran library,
+ programs must link to the netCDF library like this:
+ 
+-<pre class="example">     f90 -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++<pre class="example">     f90 -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ </pre>
+    <div class="node">
+ <a name="Datasets"></a>
+diff --git a/man4/netcdf-f90.ps b/man4/netcdf-f90.ps
+index f41c1bd..4fd89d6 100644
+--- a/man4/netcdf-f90.ps
++++ b/man4/netcdf-f90.ps
+@@ -3611,7 +3611,7 @@ b(F90)g(compilers)g(allo)m(w)g(the)g(user)e(to)i(sp)s(ecify)f(the)g(lo)
+ s(cation)i(of)f(.MOD)f(\014les,)i(usually)e(with)150
+ 2081 y(the)31 b(-I)f(\015ag.)41 b(\(Some)31 b(compilers,)g(lik)m(e)h
+ (absoft,)f(use)f(-p)g(instead\).)390 2215 y Ff(f90)47
+-b(-c)g(-I/usr/local/include)42 b(mymodule.f90)275 2350
++b(-c)g(-I/opt/csw/include)42 b(mymodule.f90)275 2350
+ y Fl(Starting)e(with)g(v)m(ersion)g(3.6.2,)45 b(another)40
+ b(metho)s(d)g(of)g(building)f(the)h(netCDF)h(fortran)f(libraries)150
+ 2459 y(b)s(ecomes)j(a)m(v)-5 b(ailable.)80 b(With)43
+@@ -3632,7 +3632,7 @@ e(builds.)275 3411 y(When)j(linking)h(fortran)f(programs)g(without)h(a)
+ g(separate)g(fortran)g(library)-8 b(,)34 b(programs)g(m)m(ust)f(link)
+ 150 3520 y(to)e(the)g(netCDF)g(library)f(lik)m(e)h(this:)390
+ 3655 y Ff(f90)47 b(-o)g(myprogram)e(myprogram.o)g
+-(-L/usr/local/netcdf/lib)d(-lnetcdf)p eop end
++(-L/opt/csw/lib)d(-lnetcdf)p eop end
+ %%Page: 7 13
+ TeXDict begin 7 12 bop 150 -116 a Fl(Chapter)30 b(2:)41
+ b(Datasets)2749 b(7)150 299 y Fi(2)80 b(Datasets)150
+diff --git a/man4/netcdf-f90.texi b/man4/netcdf-f90.texi
+index b294cae..a851257 100755
+--- a/man4/netcdf-f90.texi
++++ b/man4/netcdf-f90.texi
+@@ -572,7 +572,7 @@ files, usually with the -I flag. (Some compilers, like absoft, use -p
+ instead).
+ 
+ @example
+-f90 -c -I/usr/local/include mymodule.f90
++f90 -c -I/opt/csw/include mymodule.f90
+ @end example
+ 
+ 
+@@ -593,7 +593,7 @@ When linking fortran programs without a separate fortran library,
+ programs must link to the netCDF library like this:
+ 
+ @example
+-f90 -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++f90 -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ @end example
+ 
+ @node Datasets, Groups, Use of the NetCDF Library, Top
+diff --git a/man4/netcdf-f90.txt b/man4/netcdf-f90.txt
+index ffac5fb..9a10862 100644
+--- a/man4/netcdf-f90.txt
++++ b/man4/netcdf-f90.txt
+@@ -334,7 +334,7 @@ is "MOD" (or sometimes "mod").
+ files, usually with the -I flag. (Some compilers, like absoft, use -p
+ instead).
+ 
+-     f90 -c -I/usr/local/include mymodule.f90
++     f90 -c -I/opt/csw/include mymodule.f90
+ 
+    Starting with version 3.6.2, another method of building the netCDF
+ fortran libraries becomes available. With the -enable-separate-fortran
+@@ -353,7 +353,7 @@ builds, but is not done, by default, for static library builds.
+    When linking fortran programs without a separate fortran library,
+ programs must link to the netCDF library like this:
+ 
+-     f90 -o myprogram myprogram.o -L/usr/local/netcdf/lib -lnetcdf
++     f90 -o myprogram myprogram.o -L/opt/csw/lib -lnetcdf
+ 
+ 2 Datasets
+ **********
+-- 
+1.7.6.1
+

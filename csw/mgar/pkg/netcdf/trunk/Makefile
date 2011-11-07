@@ -11,6 +11,8 @@ MASTER_SITES = ftp://ftp.unidata.ucar.edu/pub/netcdf/
 DISTFILES  += $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
+PATCHFILES += 0001-Replace-usr-local-with-opt-csw-in-docs.patch
+PATCHFILES += 0002-Fix-ftst_vars4-vlen-size.patch
 # Compile on Solaris 10 for i386, leave it solaris 9 for sparc
 PACKAGING_PLATFORMS = solaris10-i386 solaris9-sparc
 
