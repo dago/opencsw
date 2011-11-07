@@ -13,8 +13,6 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
 PATCHFILES += 0001-Replace-usr-local-with-opt-csw-in-docs.patch
 PATCHFILES += 0002-Fix-ftst_vars4-vlen-size.patch
-# Compile on Solaris 10 for i386, leave it solaris 9 for sparc
-PACKAGING_PLATFORMS = solaris10-i386 solaris9-sparc
 
 BUILD_DEP_PKGS += CSWhdf5rt CSWlibhdf5-dev CSWzlib
 #BUILD_DEP_PKGS += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4g++rt
@@ -115,6 +113,19 @@ EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
 ## Git patching is failing on a remerge/repackage
 NOGITPATCH = 1
 
-# netcdf-install is installation instructions, no need to replace /usr/local there
+# netcdf-install is installation instructions, no need to replace /usr/local
+# there
 CHECKPKG_OVERRIDES_CSWnetcdf += file-with-bad-content|/usr/local|root/opt/csw/share/info/netcdf-install.info
+
+# Begin various approaches to get around __sync_fetch_and_add_4
+#
+# Compile on Solaris 10 due to __sync_fetch_and_add_4 problems on solaris9-i386
+# Builds fine on solaris9-sparc, but CSW tries to keep i386 and sparc catalogs
+# identical and csw-upload-pkg won't accept it solaris-10-i386 solaris9-sparc.
+#PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
+#
+# Alternate approach: raise default ISA on solaris9-i386 from i386 to 
+# pentium_pro
+ISA_DEFAULT_i386-5.9 = pentium_pro
+
 include gar/category.mk
