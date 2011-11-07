@@ -1,5 +1,5 @@
 NAME = xapian-core
-VERSION = 1.2.6
+VERSION = 1.2.7
 CATEGORIES = lib
 
 DESCRIPTION = An open source search engine library
@@ -20,17 +20,17 @@ PATCHFILES += 0003-Do-not-bail-out-on-missing-.la.patch
 VENDOR_URL = http://xapian.org/
 
 PACKAGES += CSWxapian
-CATALOGNAME_CSWxapian = xapian
 SPKG_DESC_CSWxapian = Xapian search engine binaries
+# PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWxapian += CSWlibxapian22
 RUNTIME_DEP_PKGS_CSWxapian += CSWstlport
-RUNTIME_DEP_PKGS_CSWxapian += CSWzlib
+RUNTIME_DEP_PKGS_CSWxapian += CSWlibz1
 
 PACKAGES += CSWlibxapian22
 SPKG_DESC_CSWlibxapian22 = An open source search engine library, libxapian.so.22
 PKGFILES_CSWlibxapian22 = $(call pkgfiles_lib,libxapian.so.22)
 RUNTIME_DEP_PKGS_CSWlibxapian22 += CSWstlport
-RUNTIME_DEP_PKGS_CSWlibxapian22 += CSWzlib
+RUNTIME_DEP_PKGS_CSWlibxapian22 += CSWlibz1
 
 PACKAGES += CSWlibxapian-dev
 SPKG_DESC_CSWlibxapian-dev = Xapian development files for libxapian.so.22
