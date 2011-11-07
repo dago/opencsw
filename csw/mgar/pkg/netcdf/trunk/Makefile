@@ -62,7 +62,7 @@ PKGFILES_CSWlibnetcdff5 += $(call baseisadirs,$(libdir),libnetcdff\.so\.5(\.\d+)
 SPKG_DESC_CSWlibnetcdff5 = Fortran shared libraries for netcdf - libnetcdff.so.5 
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibnetcdf6
 RUNTIME_DEP_PKGS_CSWlibnetcdff5_i386 += CSWlibquadmath0
-RUNTIME_DEP_PKGS_CSWlibnetcdff5_amd64 += CSWlibquadmath0
+# GARCH is either sparc or i386, covers 32 and 64 bit
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += $(RUNTIME_DEP_PKGS_CSWlibnetcdff5_$(GARCH))
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibhdf5-7
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibz1
