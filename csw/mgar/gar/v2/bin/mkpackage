@@ -25,10 +25,10 @@ use vars qw/
 # Tool Version/Revision Information
 $TOOLVERSION = "1.4";
 ($REVISION) = q/$Revision$/ =~ /(\d+)/;
-# This shows a warning:
-# "Use of uninitialized value $REVISION in sprintf at
-# /home/maciej/src/opencsw/pkg/nspr/trunk/gar/bin/mkpackage line 31."
-$VERSION = sprintf '%s (r%d)', $TOOLVERSION, $REVISION;
+$VERSION = $TOOLVERSION;
+if ( defined $REVISION ) {
+   $VERSION = sprintf '%s (r%d)', $TOOLVERSION, $REVISION;
+}
 
 # Discover network support
 ( $HAS_LWP_SUPPORT, $HAS_CURL_SUPPORT ) = ( 0, 0 );
