@@ -107,8 +107,6 @@ post-install-modulated:
 	perl -pi -e 's/usr\/local/opt\/csw/g' \
 		$(DESTDIR)/opt/csw/share/doc/dovecot/example-config/conf.d/*
 
-pre-merge--modulated:
-
 	# Include these in the pkg. dovecot will create them otherwise
 	# with root:root ownership, which conflicts with other pkg's
 	ginstall -d $(DESTDIR)$(localstatedir)/run 
