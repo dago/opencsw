@@ -1,0 +1,25 @@
+From bda9146ee0b10ce7c798bb437a78bb331a53cc60 Mon Sep 17 00:00:00 2001
+From: Geoff Davis <gadavis@opencsw.org>
+Date: Mon, 7 Nov 2011 04:17:08 +0100
+Subject: [PATCH] Fix ftst_vars4 vlen size
+
+---
+ nf_test/ftst_vars4.F |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/nf_test/ftst_vars4.F b/nf_test/ftst_vars4.F
+index 80d7815..ff2bb38 100644
+--- a/nf_test/ftst_vars4.F
++++ b/nf_test/ftst_vars4.F
+@@ -37,7 +37,7 @@ C     Some data about and for the vlen.
+       integer data1(vlen_len), data1_in(vlen_len)
+ 
+ C     These must be big enough to hold the stuct nc_vlen in netcdf.h.
+-      integer vlen(10), vlen_in(10)
++      integer*8 vlen(10), vlen_in(10)
+ 
+ C     Loop indexes, and error handling.
+       integer x, retval, index(1)
+-- 
+1.7.6.1
+
