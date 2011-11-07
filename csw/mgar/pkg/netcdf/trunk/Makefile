@@ -11,6 +11,7 @@ MASTER_SITES = ftp://ftp.unidata.ucar.edu/pub/netcdf/
 DISTFILES  += $(NAME)-$(VERSION).tar.gz
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 LICENSE = COPYRIGHT
+PACKAGING_PLATFORMS = solaris10-i386 solaris10-sparc
 
 BUILD_DEP_PKGS += CSWhdf5rt CSWlibhdf5-dev CSWzlib
 #BUILD_DEP_PKGS += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4g++rt
@@ -20,74 +21,65 @@ BUILD_DEP_PKGS += CSWtetex
 PACKAGES = CSWnetcdf
 CATALOGNAME_CSWnetcdf = netcdf
 SPKG_DESC_CSWnetcdf = NetCDF - Machine-independent data formats for array-oriented scientific data
-RUNTIME_DEP_PKGS_CSWnetcdf += CSWhdf5rt
-RUNTIME_DEP_PKGS_CSWnetcdf += CSWzlib
-RUNTIME_DEP_PKGS_CSWnetcdf += CSWlibnetcdf6
+RUNTIME_DEP_PKGS_CSWnetcdf += CSWlibnetcdf7
+RUNTIME_DEP_PKGS_CSWnetcdf += CSWlibhdf5-7
+RUNTIME_DEP_PKGS_CSWnetcdf += CSWlibz1
+RUNTIME_DEP_PKGS_CSWnetcdf += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWnetcdf += CSWlibhdf5hl7
 
-PACKAGES += CSWlibnetcdf6
-CATALOGNAME_CSWlibnetcdf6 = libnetcdf6
-PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/libnetcdf.so.6.0.0
-PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/libnetcdf.so.6\.[0-9\.]+
-PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/libnetcdf.so.6
-PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/sparcv9/libnetcdf.so.6.0.0
-PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/sparcv9/libnetcdf.so.6\.[0-9\.]+
-PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/sparcv9/libnetcdf.so.6
-PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/amd64/libnetcdf.so.6.0.0
-PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/amd64/libnetcdf.so.6\.[0-9\.]+
-PKGFILES_CSWlibnetcdf6 += /opt/csw/lib/amd64/libnetcdf.so.6
-SPKG_DESC_CSWlibnetcdf6 = C shared library for netcdf - libnetcdf.so.6 
-RUNTIME_DEP_PKGS_CSWlibnetcdf6  = CSWhdf5rt
-RUNTIME_DEP_PKGS_CSWlibnetcdf6 += CSWgcc4corert
-RUNTIME_DEP_PKGS_CSWlibnetcdf6 += CSWgcc4core # Mantis Bug #4497, missing 64 symlink
+PACKAGES += CSWlibnetcdf7
+CATALOGNAME_CSWlibnetcdf7 = libnetcdf7
+PKGFILES_CSWlibnetcdf7 += $(call baseisadirs,$(libdir),libnetcdf\.so\.7\.1\.1)
+PKGFILES_CSWlibnetcdf7 += $(call baseisadirs,$(libdir),libnetcdf\.so\.7(\.\d+)*)
+SPKG_DESC_CSWlibnetcdf7 += $(DESCRIPTION), libnetcdf.so.7
+RUNTIME_DEP_PKGS_CSWlibnetcdf7 += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWlibnetcdf7 += CSWlibhdf5-7
+RUNTIME_DEP_PKGS_CSWlibnetcdf7 += CSWlibhdf5hl7
+RUNTIME_DEP_PKGS_CSWlibnetcdf7 += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWlibnetcdf7 += CSWlibz1
 
-PACKAGES += CSWlibnetcdf-c++5
-CATALOGNAME_CSWlibnetcdf-c++5 = libnetcdf_c++5
-PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/libnetcdf_c\+\+.so.5.0.0
-PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/libnetcdf_c\+\+.so.5\.[0-9\.]+
-PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/libnetcdf_c\+\+.so.5
-PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/sparcv9/libnetcdf_c\+\+.so.5.0.0
-PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/sparcv9/libnetcdf_c\+\+.so.5\.[0-9\.]+
-PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/sparcv9/libnetcdf_c\+\+.so.5
-PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/amd64/libnetcdf_c\+\+.so.5.0.0
-PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/amd64/libnetcdf_c\+\+.so.5\.[0-9\.]+
-PKGFILES_CSWlibnetcdf-c++5 += /opt/csw/lib/amd64/libnetcdf_c\+\+.so.5
-SPKG_DESC_CSWlibnetcdf-c++5 += C++ shared library for netcdf - libnetcdf_c++.so.5
-RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5  = CSWhdf5rt
-RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5 += CSWgcc4corert CSWgcc4core CSWgcc4g++rt
-RUNTIME_DEP_PKGS_CSWlibnetcdf-c++5 += CSWlibnetcdf6
+PACKAGES += CSWlibnetcdf-c++4
+CATALOGNAME_CSWlibnetcdf-c++4 = libnetcdf_c++4
+PKGFILES_CSWlibnetcdf-c++4 += $(call baseisadirs,$(libdir),libnetcdf_c\+\+\.so\.4\.1\.0)
+PKGFILES_CSWlibnetcdf-c++4 += $(call baseisadirs,$(libdir),libnetcdf_c\+\+\.so\.4(\.\d+)*)
+SPKG_DESC_CSWlibnetcdf-c++4 += $(DESCRIPTION), libnetcdf_c++.so.4
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibhdf5-7
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibhdf5hl7
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibnetcdf6
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibstdc++6
+RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibgcc-s1
+
 
 PACKAGES += CSWlibnetcdff5
 CATALOGNAME_CSWlibnetcdff5 = libnetcdff5
-PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/libnetcdff.so.5.0.0
-PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/libnetcdff.so.5\.[0-9\.]+
-PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/libnetcdff.so.5
-PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/sparcv9/libnetcdff.so.5.0.0
-PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/sparcv9/libnetcdff.so.5\.[0-9\.]+
-PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/sparcv9/libnetcdff.so.5
-PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/amd64/libnetcdff.so.5.0.0
-PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/amd64/libnetcdff.so.5\.[0-9\.]+
-PKGFILES_CSWlibnetcdff5 += /opt/csw/lib/amd64/libnetcdff.so.5
+PKGFILES_CSWlibnetcdff5 += $(call baseisadirs,$(libdir),libnetcdff\.so\.5\.0\.0)
+PKGFILES_CSWlibnetcdff5 += $(call baseisadirs,$(libdir),libnetcdff\.so\.5(\.\d+)*)
 SPKG_DESC_CSWlibnetcdff5 = Fortran shared libraries for netcdf - libnetcdff.so.5 
-RUNTIME_DEP_PKGS_CSWlibnetcdff5  = CSWhdf5rt
-RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWgcc4gfortranrt CSWgcc4corert CSWgcc4core
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibnetcdf6
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibquadmath0
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibhdf5-7
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibhdf5hl7
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibgfortran3
+RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibgcc-s1
+
 
 PACKAGES += CSWnetcdf-devel
 CATALOGNAME_CSWnetcdf-devel = netcdf_devel
 SPKG_DESC_CSWnetcdf-devel = Development files for NetCDF 
-PKGFILES_CSWnetcdf-devel += /opt/csw/lib/libnetcdf.so
-PKGFILES_CSWnetcdf-devel += /opt/csw/lib/libnetcdf_c\+\+.so
-PKGFILES_CSWnetcdf-devel += /opt/csw/lib/libnetcdff.so
-PKGFILES_CSWnetcdf-devel += /opt/csw/lib/sparcv9/libnetcdf.so
-PKGFILES_CSWnetcdf-devel += /opt/csw/lib/sparcv9/libnetcdf_c\+\+.so
-PKGFILES_CSWnetcdf-devel += /opt/csw/lib/sparcv9/libnetcdff.so
-PKGFILES_CSWnetcdf-devel += /opt/csw/lib/amd64/libnetcdf.so
-PKGFILES_CSWnetcdf-devel += /opt/csw/lib/amd64/libnetcdf_c\+\+.so
-PKGFILES_CSWnetcdf-devel += /opt/csw/lib/amd64/libnetcdff.so
+PKGFILES_CSWnetcdf-devel += $(call baseisadirs,$(libdir),libnetcdf\.so)
+PKGFILES_CSWnetcdf-devel += $(call baseisadirs,$(libdir),libnetcdf_c\+\+\.so)
+PKGFILES_CSWnetcdf-devel += $(call baseisadirs,$(libdir),libnetcdff\.so)
 PKGFILES_CSWnetcdf-devel += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf6
 RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdff5
 RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf-c++5
+RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf7
+RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf-c++4
+RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWnetcdf
 
 GARCOMPILER = GCC4
 
@@ -116,6 +108,6 @@ EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
 #OPT_FLAGS_GCC = 
 
 ## Git patching is failing on a remerge/repackage
-NOGITPATCH = 1
+#NOGITPATCH = 1
 
 include gar/category.mk
