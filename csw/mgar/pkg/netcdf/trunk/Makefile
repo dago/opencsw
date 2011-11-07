@@ -52,7 +52,6 @@ RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibnetcdf6
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSWlibnetcdf-c++4 += CSWlibgcc-s1
 
-
 PACKAGES += CSWlibnetcdff5
 CATALOGNAME_CSWlibnetcdff5 = libnetcdff5
 PKGFILES_CSWlibnetcdff5 += $(call baseisadirs,$(libdir),libnetcdff\.so\.5\.0\.0)
@@ -70,19 +69,20 @@ RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibgfortran3
 RUNTIME_DEP_PKGS_CSWlibnetcdff5 += CSWlibgcc-s1
 
 
-PACKAGES += CSWnetcdf-devel
-CATALOGNAME_CSWnetcdf-devel = netcdf_devel
-SPKG_DESC_CSWnetcdf-devel = Development files for NetCDF 
-PKGFILES_CSWnetcdf-devel += $(call baseisadirs,$(libdir),libnetcdf\.so)
-PKGFILES_CSWnetcdf-devel += $(call baseisadirs,$(libdir),libnetcdf_c\+\+\.so)
-PKGFILES_CSWnetcdf-devel += $(call baseisadirs,$(libdir),libnetcdff\.so)
-PKGFILES_CSWnetcdf-devel += $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf6
-RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdff5
-RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf-c++5
-RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf7
-RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWlibnetcdf-c++4
-RUNTIME_DEP_PKGS_CSWnetcdf-devel += CSWnetcdf
+PACKAGES += CSWnetcdf-dev
+CATALOGNAME_CSWnetcdf-dev = netcdf_dev
+SPKG_DESC_CSWnetcdf-dev = Development files for NetCDF 
+PKGFILES_CSWnetcdf-dev += $(call baseisadirs,$(libdir),libnetcdf\.so)
+PKGFILES_CSWnetcdf-dev += $(call baseisadirs,$(libdir),libnetcdf_c\+\+\.so)
+PKGFILES_CSWnetcdf-dev += $(call baseisadirs,$(libdir),libnetcdff\.so)
+PKGFILES_CSWnetcdf-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdf6
+RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdff5
+RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdf-c++5
+RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdf7
+RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdf-c++4
+RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWnetcdf
+OBSOLETED_BY_CSWnetcdf-dev = CSWnetcdf-devel
 
 GARCOMPILER = GCC4
 
