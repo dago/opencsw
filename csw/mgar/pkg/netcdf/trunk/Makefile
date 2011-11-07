@@ -111,6 +111,8 @@ EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
 #OPT_FLAGS_GCC = 
 
 ## Git patching is failing on a remerge/repackage
-#NOGITPATCH = 1
+NOGITPATCH = 1
 
+# netcdf-install is installation instructions, no need to replace /usr/local there
+CHECKPKG_OVERRIDES_CSWnetcdf += file-with-bad-content|/usr/local|root/opt/csw/share/info/netcdf-install.info
 include gar/category.mk
