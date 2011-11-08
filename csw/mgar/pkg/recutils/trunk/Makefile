@@ -2,7 +2,7 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = recutils
-VERSION = 1.3.91
+VERSION = 1.4
 GARTYPE = v2
 CATEGORIES = utils
 
