@@ -89,11 +89,11 @@ CHECKPKG_OVERRIDES_CSWgmt-doc += file-with-bad-content|/usr/local|root/opt/csw/s
 include gar/category.mk
 
 # This post-install-modulated step must come after we "include gar/category.mk"
-post-install-modulated:
-	@echo Creating architecture symlinks
-	ln -s $(ISA_DEFAULT) $(DESTDIR)/opt/csw/lib/gmt/32
-	ln -s $(ISA_DEFAULT64) $(DESTDIR)/opt/csw/lib/gmt/64
-	@$(MAKECOOKIE)
+#post-install-modulated:
+#	@echo Creating architecture symlinks
+#	ln -s $(ISA_DEFAULT) $(DESTDIR)/opt/csw/lib/gmt/32
+#	ln -s $(ISA_DEFAULT64) $(DESTDIR)/opt/csw/lib/gmt/64
+#	@$(MAKECOOKIE)
 
 # TODO: post-merge, search for anything in /opt/csw/bin/64 that isn't a 
 # binary and nuke it so that things like shell scripts don't get ISAEXEC'd
