@@ -34,15 +34,18 @@ CONFIGURE_ARGS += --with-rsyncd-conf=$(sysconfdir)/rsyncd.conf
 
 INITSMF += /etc/opt/csw/init.d/cswrsyncd
 
+REINPLACE_USRLOCAL = $(mandir)/man1/rsync.1
+REINPLACE_WHEN_USRLOCAL = postinstall
+
+REINPLACEMENTS += conf
+REINPLACE_MATCH_conf = /etc/rsyncd\.conf
+REINPLACE_WITH_conf = $(sysconfdir)/rsyncd.conf
+REINPLACE_FILES_conf += $(mandir)/man1/rsync.1
+REINPLACE_FILES_conf += $(mandir)/man5/rsyncd.conf.5
+REINPLACE_WHEN_conf = postinstall
+
 include gar/category.mk
 
 post-install-modulated:
-	perl -pi \
-		-e 's,/etc/rsyncd\.conf,$(sysconfdir)/rsyncd.conf,g;' \
-		$(DESTDIR)$(mandir)/man5/rsyncd.conf.5
-	perl -pi \
-		-e 's,/usr/local,$(prefix),g;' \
-		-e 's,/etc/rsyncd.conf,$(sysconfdir)/rsyncd.conf,g;' \
-		$(DESTDIR)$(mandir)/man1/rsync.1
 	ginstall -d $(DESTDIR)/etc/opt/csw/init.d
 	ginstall -m 0755 $(WORKDIR)/cswrsyncd $(DESTDIR)/etc/opt/csw/init.d/cswrsyncd
