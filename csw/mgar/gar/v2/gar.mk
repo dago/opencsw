@@ -396,6 +396,33 @@ EXTRACT_TARGETS-global ?= $(addprefix extract-copy-,$(filter-out $(NOEXTRACT),$(
 EXTRACT_TARGETS-default = $(addprefix extract-archive-,$(filter-out $(NOEXTRACT),$(DISTFILES) $(DYNSCRIPTS) $(foreach R,$(GIT_REPOS),$(call GITPROJ,$(R)))))
 EXTRACT_TARGETS = $(or $(EXTRACT_TARGETS-$(MODULATION)),$(EXTRACT_TARGETS-default))
 
+ifdef REINPLACE_FILES
+REINPLACEMENTS ?= default
+REINPLACE_MATCH_default ?= $(REINPLACE_MATCH)
+REINPLACE_WITH_default ?= $(REINPLACE_WITH)
+REINPLACE_FILES_default ?= $(REINPLACE_FILES)
+REINPLACE_WHEN_default ?= $(REINPLACE_WHEN)
+endif
+
+REINPLACE_MATCH_USRLOCAL = /usr/local
+REINPLACE_WITH_USRLOCAL = $(prefix)
+REINPLACE_FILES_USRLOCAL = $(REINPLACE_USRLOCAL)
+
+REINPLACE_MATCH_USRSHARE = /usr/share
+REINPLACE_WITH_USRSHARE = $(sharedstatedir)
+REINPLACE_FILES_USRSHARE = $(REINPLACE_USRSHARE)
+
+_ALL_REINPLACEMENTS = $(REINPLACEMENTS) $(if $(REINPLACE_FILES_USRLOCAL),USRLOCAL) $(if $(REINPLACE_FILES_USRSHARE),USRSHARE)
+
+POSTINSTALL_REINPLACEMENTS = $(foreach R,$(_ALL_REINPLACEMENTS),$(if $(filter postinstall,$(REINPLACE_WHEN_$R)),$R))
+POSTEXTRACT_REINPLACEMENTS = $(filter-out $(POSTINSTALL_REINPLACEMENTS),$(_ALL_REINPLACEMENTS))
+
+$(foreach REINPLACEMENT,$(_ALL_REINPLACEMENTS),\
+  $(if $(REINPLACE_FILES_$(REINPLACEMENT)),,$(error Reinplacement '$(REINPLACEMENT)' has been set but REINPLACE_FILES_$(REINPLACEMENT) is empty))\
+  $(if $(REINPLACE_MATCH_$(REINPLACEMENT)),,$(error Reinplacement '$(REINPLACEMENT)' has been set but REINPLACE_MATCH_$(REINPLACEMENT) is empty))\
+  $(if $(REINPLACE_WITH_$(REINPLACEMENT)),,$(error Reinplacement '$(REINPLACEMENT)' has been set but REINPLACE_WITH_$(REINPLACEMENT) is empty))\
+)
+
 # We call an additional extract-modulated without resetting any variables so
 # a complete unpacked set goes to the global dir for packaging (like gspec)
 extract: checksum $(COOKIEDIR) pre-extract $(if $(NOGITPATCH),,pre-extract-git-check) extract-modulated $(addprefix extract-,$(MODULATIONS)) post-extract
@@ -410,7 +437,10 @@ extract-modulated: checksum-modulated $(EXTRACTDIR) $(COOKIEDIR) \
 		announce-modulation \
 		pre-extract-modulated pre-extract-$(MODULATION) $(EXTRACT_TARGETS) post-extract-$(MODULATION) post-extract-modulated \
 		$(if $(filter global,$(MODULATION)),,$(if $(NOGITPATCH),,post-extract-gitsnap)) \
-		$(foreach FILE,$(EXPANDVARS),expandvars-$(FILE))
+		$(foreach FILE,$(EXPANDVARS),expandvars-$(FILE)) \
+		$(foreach REINPLACEMENT,$(POSTEXTRACT_REINPLACEMENTS),\
+		  post-extract-reinplace-$(REINPLACEMENT) \
+		)
 	@$(DONADA)
 
 # This target ensures that the values used by git when making a commit
@@ -456,6 +486,16 @@ expandvars-%:
 	$(call _var_definitions,$(WORKDIR)/$*) perl -i-unexpanded -npe 's/@([^@]+)@/$$ENV{$$1}/eg' $(WORKDIR)/$*
 	@$(MAKECOOKIE)
 
+post-extract-reinplace-%:
+	-perl -p -i$(REINPLACE_BACKUP_$*) -e "s($(REINPLACE_MATCH_$*))($(REINPLACE_WITH_$*))g" \
+		$(addprefix $(WORKSRC)/,$(REINPLACE_FILES_$*))
+	@( if [ -d "$(PATCHDIR)/.git" ]; then \
+		echo "Committing reinplacements..."; \
+		cd $(PATCHDIR); \
+		git commit -am "Reinplacement $*"; \
+		git tag -am "Reinplacement $*" reinplacement-$*; \
+	  fi )
+	@$(MAKECOOKIE)
 
 # checkpatch	- Do a "patch -C" instead of a "patch".  Note
 # 				  that it may give incorrect results if multiple
@@ -657,7 +697,19 @@ INSTALL_TARGETS = $(addprefix install-,$(INSTALL_SCRIPTS))
 install: pre-install $(addprefix install-,$(MODULATIONS)) post-install
 	$(DONADA)
 
-install-modulated: build-modulated $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test-modulated $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) pre-install-modulated pre-install-$(MODULATION) $(INSTALL_TARGETS) post-install-$(MODULATION) post-install-modulated $(POST_INSTALL_TARGETS) 
+install-modulated: build-modulated $(addprefix dep-$(GARDIR)/,$(INSTALLDEPS)) test-modulated $(INSTALL_DIRS) $(PRE_INSTALL_TARGETS) \
+		pre-install-modulated pre-install-$(MODULATION) \
+		$(INSTALL_TARGETS) \
+		post-install-$(MODULATION) post-install-modulated \
+		$(POST_INSTALL_TARGETS) \
+		$(foreach REINPLACEMENT,$(POSTINSTALL_REINPLACEMENTS),\
+		  post-install-reinplace-$(REINPLACEMENT) \
+		)
+	@$(MAKECOOKIE)
+
+post-install-reinplace-%:
+	-perl -p -i$(REINPLACE_BACKUP_$*) -e "s($(REINPLACE_MATCH_$*))($(REINPLACE_WITH_$*))g" \
+		$(addprefix $(DESTDIR)/,$(REINPLACE_FILES_$*))
 	@$(MAKECOOKIE)
 
 # returns true if install has completed successfully, false
@@ -684,6 +736,7 @@ reset-install-modulated:
 	@rm -f $(COOKIEDIR)/strip
 	@rm -f $(foreach S,$(INSTALL_TARGETS),$(COOKIEDIR)/$S)
 	@rm -f $(COOKIEROOTDIR)/global/install-$(MODULATION)
+	@rm -f $(addprefix $(COOKIEDIR)/post-install-reinplace-,$(POSTINSTALL_REINPLACEMENTS))
 
 # merge in all isas to the package directory after installation
 
