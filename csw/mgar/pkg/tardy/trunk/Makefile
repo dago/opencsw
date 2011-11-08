@@ -23,14 +23,22 @@ BUILD_DEP_PKGS += CSWlibexplain-dev
 PACKAGES = CSWtardy
 SPKG_DESC_CSWtardy = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWtardy += CSWlibz1
+RUNTIME_DEP_PKGS_CSWtardy += CSWlibexplain30
 
 EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
+EXTRA_CXXFLAGS = -norunpath
 
 CONFIGURE_ARGS += AWK=gawk
+
+# The testsuite relies on lsof which doesn't run inside a zone on the buildfarm
+SKIPTEST ?= 1
+
+INSTALL_OVERRIDE_DIRS += bindir
+INSTALL_OVERRIDE_DIRS += mandir
 
 include gar/category.mk
 
 pre-install-modulated:
 	ginstall -d $(DESTDIR)$(bindir)
 	ginstall -d $(DESTDIR)$(mandir)/man1
-	ginstall $(WORKSRC)/man1/tardy.1 $(DESTDIR)$(mandir)/man1/tardy.1
+	ginstall $(WORKSRC)/man/man1/tardy.1 $(DESTDIR)$(mandir)/man1/tardy.1
