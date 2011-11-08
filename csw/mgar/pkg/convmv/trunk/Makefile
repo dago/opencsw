@@ -23,21 +23,23 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 LICENSE = GPL2
 ARCHALL = 1
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
 CONFIGURE_SCRIPTS = 
 BUILD_SCRIPTS = 
 
 INSTALL_ARGS = MANDIR=$(mandir) PREFIX=$(prefix)
 TEST_ARGS = TAR=gtar
 
-include gar/category.mk
+REINPLACEMENTS += perl
+REINPLACE_MATCH_perl = /usr/bin/perl
+REINPLACE_WITH_perl = /opt/csw/bin/perl
+REINPLACE_FILES_perl += convmv
 
-post-extract-modulated:
-	@perl -pi -e 's|/usr/bin/perl|/opt/csw/bin/perl|' $(WORKSRC)/convmv
-	@perl -pi -e 's|\tinstall|\tginstall|' $(WORKSRC)/Makefile
-	@$(MAKECOOKIE)
+REINPLACEMENTS += ginstall
+REINPLACE_MATCH_ginstall = \tinstall
+REINPLACE_WITH_ginstall = \tginstall
+REINPLACE_FILES_ginstall += Makefile
+
+include gar/category.mk
 
 post-install-modulated: DOCDEST=$(DESTDIR)$(docdir)/$(NAME)
 post-install-modulated:
