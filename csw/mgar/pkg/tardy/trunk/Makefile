@@ -1,6 +1,6 @@
 # $Id$
 NAME = tardy
-VERSION = 1.20
+VERSION = 1.25
 CATEGORIES = utils
 
 DESCRIPTION = A tar(1) Postprocessor
@@ -14,17 +14,19 @@ DISTFILES  = $(DISTNAME).tar.gz
 #   https://sourceforge.net/tracker/?func=detail&aid=3170673&group_id=116896&atid=676344
 PATCHFILES += 0001-Add-includes-for-va_list-on-Solaris.patch
 
-# File name regex to get notifications about upstream software releases
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+PATCHFILES += 0002-Adjust-memchr-return-type.patch
 
 LICENSE = LICENSE
 
-PACKAGES = CSWtardy
-CATALOGNAME_CSWtardy = tardy
-SPKG_DESC_CSWtardy = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWtardy += CSWzlib
+BUILD_DEP_PKGS += CSWlibexplain-dev
 
-CONFIGURE_ARGS = $(DIRPATHS)
+PACKAGES = CSWtardy
+SPKG_DESC_CSWtardy = $(DESCRIPTION)
+RUNTIME_DEP_PKGS_CSWtardy += CSWlibz1
+
+EXTRA_CPPFLAGS = -D_FILE_OFFSET_BITS=64
+
+CONFIGURE_ARGS += AWK=gawk
 
 include gar/category.mk
 
