@@ -21,6 +21,11 @@ CLPBARRC = $(sysconfdir)/clpbarrc
 
 VENDOR_URL = http://clpbar.sourceforge.net/
 
+REINPLACE_MATCH = /etc/clpbarrc
+REINPLACE_WITH = $(CLPBARRC)
+REINPLACE_FILES += args.c
+REINPLACE_FILES += bar.1.in
+
 CONFIGURE_ARGS += $(DIRPATHS)
 # It is 64 bit when *I* say so
 CONFIGURE_ARGS += --disable-use-m64
@@ -28,13 +33,6 @@ CONFIGURE_ARGS += --disable-use-m64
 PRESERVECONF = $(CLPBARRC)
 
 include gar/category.mk
-
-post-extract-modulated:
-	perl -pi \
-		-e 's,/etc/clpbarrc,$(CLPBARRC),g;' \
-		$(WORKSRC)/args.c \
-		$(WORKSRC)/bar.1.in
-	@$(MAKECOOKIE)
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)$(dir $(CLPBARRC))
