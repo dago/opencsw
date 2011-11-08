@@ -47,7 +47,8 @@ RUNTIME_DEP_PKGS_CSWopenldap += CSWperl
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibslp1
 RUNTIME_DEP_PKGS_CSWopenldap += CSWliblber2-4-2
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibldap-r2-4-2
-RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicu46
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicuuc48
+RUNTIME_DEP_PKGS_CSWopenldap += CSWlibicudata48
 RUNTIME_DEP_PKGS_CSWopenldap += CSWlibwrap1
 OBSOLETED_BY_CSWopenldap += CSWoldap
 CATALOGNAME_CSWoldap = openldap_stub
@@ -134,12 +135,17 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 NODIRPATHS = --docdir
 
 BUILD64 = 1
+
+# This takes some more work, the sbin/ files should be linked to libexec but the linklevel is not deep enough
+# ISAEXEC = 1
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-crypt
 CONFIGURE_ARGS += --enable-lmpasswd
 CONFIGURE_ARGS += --enable-modules
 CONFIGURE_ARGS += --enable-rlookups
 CONFIGURE_ARGS += --enable-slp
+CONFIGURE_ARGS += --enable-wrappers
 CONFIGURE_ARGS += --enable-backends=mod
 CONFIGURE_ARGS += --enable-overlays=mod
 
@@ -154,9 +160,6 @@ CONFIGURE_ARGS += --disable-ndb
 #   http://www.openldap.org/its/index.cgi?findid=7071
 CONFIGURE_ARGS += ac_cv_lib_net_main=no
 
-# Disable TCPwrappers in 64 bit until the libraries are available
-#   <http://opencsw.org/mantis/view.php?id=3748>
-CONFIGURE_ARGS_32 = --enable-wrappers
 # spasswd requires Cyrus SASL
 CONFIGURE_ARGS_32 += --enable-spasswd
 
@@ -171,6 +174,7 @@ CONFIGURE_ARGS_64 += --enable-perl=no
 
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MEMORYMODEL))
 
+# The testsuite takes a couple of hours
 SKIPTEST ?= 1
 
 # Perl backend is built, although it has been told not to.
