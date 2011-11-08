@@ -14,10 +14,9 @@ DISTFILES      = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL     = http://bashdb.sourceforge.net/remake/
 
 # FIXME: having errors while compiling with Solaris Studio
-# FIXME: looks like GCC4 is broken in testing (fallback to GCC3)
-#GARCOMPILER       = GCC3
 GARCOMPILER       = GNU
-BUILD_DEP_PKGS   += CSWgcc3core
+BUILD_DEP_PKGS   += CSWgcc4core 
+
 BUILD_DEP_PKGS   += CSWggettext-dev
 BUILD_DEP_PKGS   += CSWlibiconv-dev
 BUILD_DEP_PKGS   += CSWlibncurses-dev
