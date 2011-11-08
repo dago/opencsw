@@ -2,10 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-GMT_VERSION = 4.5.7
-
 NAME = gmt
-VERSION = $(GMT_VERSION)
+VERSION = 4.5.7
 CATEGORIES = apps
 DESCRIPTION = Generic Mapping Tools
 define BLURB
@@ -13,22 +11,17 @@ define BLURB
 endef
 
 SPKG_SOURCEURL = http://gmt.soest.hawaii.edu/
-MASTER_SITES += ftp://ftp.iris.washington.edu/pub/gmt/
-MASTER_SITES += ftp://ftp.soest.hawaii.edu/gmt/
-MASTER_SITES += ftp://gd.tuwien.ac.at/pub/gmt/
+MASTER_SITES += ftp://ftp.soest.hawaii.edu/gmt4/
 
-DISTFILES += GMT$(GMT_VERSION)_doc.tar.bz2
-DISTFILES += GMT$(GMT_VERSION)_share.tar.bz2
-DISTFILES += GMT$(GMT_VERSION)_src.tar.bz2
-DISTFILES += GMT$(GMT_VERSION)_suppl.tar.bz2
-UFILES_REGEX = GMT(\d+(?:\.\d+)*)_(.*).tar.gz
+DISTFILES += $(NAME)-$(VERSION).tar.bz2
+UFILES_REGEX = GMT(\d+(?:\.\d+)*)_(.*).tar.bz2
 
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnetcdf-devel CSWnetcdf
+BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS) CSWnetcdf-dev CSWnetcdf
 
 PACKAGES += CSWgmt
 CATALOGNAME_CSWgmt = gmt
 SPKG_DESC_CSWgmt = Generic Mapping Tools
-RUNTIME_DEP_PKGS_CSWgmt += CSWlibnetcdf6
+RUNTIME_DEP_PKGS_CSWgmt += CSWlibnetcdf7
 RUNTIME_DEP_PKGS_CSWgmt += CSWsunmath
 
 PACKAGES += CSWgmt-doc
@@ -41,10 +34,6 @@ ARCHALL_CSWgmt-doc = 1
 
 ## GMT Includes no unit tests
 TEST_SCRIPTS =
-
-## GMT doesn't use the GNU convention for unpacked tarballs
-#WORKSRC = $(WORKDIR)/GMT$(VERSION)
-DISTNAME = GMT$(GMT_VERSION)
 
 ## Tell the build process where to find NETCDF for 32 and 64-bit builds
 NETCDF_LIBDIR=/opt/csw/lib/$(MM_LIBDIR)
@@ -96,8 +85,12 @@ CHECKPKG_OVERRIDES_CSWgmt-doc += file-with-bad-content|/usr/local|root/opt/csw/s
 
 include gar/category.mk
 
+# This post-install-modulated step must come after we "include gar/category.mk"
 post-install-modulated:
 	@echo Creating architecture symlinks
 	ln -s $(ISA_DEFAULT) $(DESTDIR)/opt/csw/lib/gmt/32
 	ln -s $(ISA_DEFAULT64) $(DESTDIR)/opt/csw/lib/gmt/64
 	@$(MAKECOOKIE)
+
+# TODO: post-merge, search for anything in /opt/csw/bin/64 that isn't a 
+# binary and nuke it so that things like shell scripts don't get ISAEXEC'd
