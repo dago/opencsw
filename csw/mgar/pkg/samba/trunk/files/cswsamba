@@ -1,0 +1,43 @@
+#!/bin/sh
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export PATH
+
+SMBCONF=/opt/csw/etc/samba/smb.conf
+KRBCONF=/etc/krb5.conf
+export SMBCONF
+export KRBCONF
+
+case "$1" in
+	start)
+		if [ -f $SMBCONF ]; then
+			echo "Starting samba..."
+			/opt/csw/sbin/nmbd -D
+			/opt/csw/sbin/smbd -D
+			if [ -f $KRBCONF ]; then
+			    echo "Starting winbind..."
+			    /opt/csw/sbin/winbindd -B
+			fi    
+		else
+			echo "No $SMBCONF found. Not starting";
+		fi
+	;;
+	stop)
+		echo "Stopping Samba..."
+		kill "`cat /opt/csw/var/locks/smbd.pid`"
+		kill "`cat /opt/csw/var/locks/nmbd.pid`"
+		if [ -f $KRBCONF ]; then
+		    echo "Stopping Winbind..."
+		    kill "`cat /opt/csw/var/locks/winbindd.pid`"
+		fi    
+	;;
+	restart)
+		$0 stop
+		$0 start
+	;;
+	*)
+		echo "$0 {start | stop | restart}"
+		exit 1;
+	;;
+esac
+
