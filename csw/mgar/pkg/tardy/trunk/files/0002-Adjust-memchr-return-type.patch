@@ -1,0 +1,33 @@
+From 94c254ecdf380031bce41f6d77ce9476116c7f12 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 8 Nov 2011 09:32:38 +0100
+Subject: [PATCH] Adjust memchr return type
+
+---
+ libtardy/ac/string.cc |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libtardy/ac/string.cc b/libtardy/ac/string.cc
+index 2881107..6a337ed 100644
+--- a/libtardy/ac/string.cc
++++ b/libtardy/ac/string.cc
+@@ -92,14 +92,14 @@ memmem(const void *haystack_v, size_t haystack_size, const void *needle_v,
+     }
+     const unsigned char *needle = (const unsigned char *)needle_v;
+     if (needle_size == 1)
+-        return memchr(haystack_v, needle[0], haystack_size);
++        return (void *) memchr(haystack_v, needle[0], haystack_size);
+     const unsigned char *haystack = (const unsigned char *)haystack_v;
+     const unsigned char *haystack_end =
+         haystack + haystack_size - needle_size + 1;
+     while (haystack < haystack_end)
+     {
+         const unsigned char *first =
+-            memchr(haystack, needle[0], haystack_end - haystack);
++            (const unsigned char *) memchr(haystack, needle[0], haystack_end - haystack);
+         if (!first)
+             break;
+         if (0 == memcmp(first + 1, needle + 1, needle_size - 1))
+-- 
+1.7.6.1
+
