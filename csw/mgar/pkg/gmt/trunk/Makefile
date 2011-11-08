@@ -84,7 +84,8 @@ INSTALL_ARGS = install-all
 
 LICENSE = LICENSE.TXT
 
-CHECKPKG_OVERRIDES_CSWgmt-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/gmt/html/GMT_Docs/node257.html
+CHECKPKG_OVERRIDES_CSWgmt-doc += file-with-bad-content|/usr/local|root/opt/csw/share/doc/gmt/html/GMT_Docs.html
+CHECKPKG_OVERRIDES_CSWgmt-doc += file-with-bad-content|/usr/share|root/opt/csw/share/doc/gmt/html/GMT_Tutorial.html
 
 include gar/category.mk
 
