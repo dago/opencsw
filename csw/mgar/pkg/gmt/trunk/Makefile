@@ -35,6 +35,9 @@ ARCHALL_CSWgmt-doc = 1
 ## GMT Includes no unit tests
 TEST_SCRIPTS =
 
+## GMT still doesn't use the GNU convention for unpacked tarballs
+DISTNAME = GMT$(GMT_VERSION)
+
 ## Tell the build process where to find NETCDF for 32 and 64-bit builds
 NETCDF_LIBDIR=/opt/csw/lib/$(MM_LIBDIR)
 ## Tell the build process where to find libsunmath and libm
