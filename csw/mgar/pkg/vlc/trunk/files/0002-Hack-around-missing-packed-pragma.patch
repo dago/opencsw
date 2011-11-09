@@ -1,0 +1,25 @@
+From 7e4ffba8e64b9f1906d6a20ddca31e65bdd227c9 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 9 Nov 2011 14:59:05 +0100
+Subject: [PATCH] Hack around missing packed pragma
+
+---
+ include/vlc_codecs.h |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/include/vlc_codecs.h b/include/vlc_codecs.h
+index d97dcda..151f76c 100644
+--- a/include/vlc_codecs.h
++++ b/include/vlc_codecs.h
+@@ -33,7 +33,7 @@
+ #ifdef HAVE_ATTRIBUTE_PACKED
+ #   define ATTR_PACKED __attribute__((__packed__))
+ #else
+-#   error FIXME
++#   define ATTR_PACKED
+ #endif
+ 
+ /* Structures exported to the demuxers and decoders */
+-- 
+1.7.6.1
+
