@@ -1,5 +1,5 @@
 NAME = lame
-VERSION = 3.98.4
+VERSION = 3.99.1
 CATEGORIES = apps
 
 DESCRIPTION = LAME is an LGPL MP3 encoder
@@ -10,33 +10,33 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-PACKAGES = CSWlame CSWlame-mp3x CSWlame-devel CSWlibmp3lame0
-
-CATALOGNAME_CSWlame = lame
-CATALOGNAME_CSWlame-mp3x = lame_mp3x
-CATALOGNAME_CSWlame-devel = lame_devel
-CATALOGNAME_CSWlibmp3lame0 = libmp3lame0
-
-SPKG_DESC_CSWlame = $(DESCRIPTION)
-SPKG_DESC_CSWlame-mp3x = LAME Frame Analyzer for X11
-SPKG_DESC_CSWlame-devel = Development files for LAME
-SPKG_DESC_CSWlibmp3lame0 = Librare for LAME providing libmp3lame.so.0
-
-RUNTIME_DEP_PKGS_CSWlame = CSWncurses
-RUNTIME_DEP_PKGS_CSWlame-mp3x = CSWglib CSWgtk CSWncurses
-RUNTIME_DEP_PKGS_CSWlame-devel = CSWlibmp3lame0
-
-
-PKGFILES_CSWlame-mp3x = .*/mp3x
-PKGFILES_CSWlame-devel = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibmp3lame0 = $(call baseisadirs,$(libdir),libmp3lame\.so\.0(\.\d+)*)
-
 VENDOR_URL = http://lame.sourceforge.net/
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=628063
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+# For powf, fabsf, log10f only in libm on Solaris 10
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
+PACKAGES += CSWlame
+SPKG_DESC_CSWlame = LAME is an LGPL MP3 encoder
+RUNTIME_DEP_PKGS_CSWlame += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWlame += CSWlibiconv2
+
+PACKAGES += CSWlame-mp3x
+SPKG_DESC_CSWlame-mp3x = LAME Frame Analyzer for X11
+PKGFILES_CSWlame-mp3x = .*/mp3x
+RUNTIME_DEP_PKGS_CSWlame-mp3x += CSWglib
+RUNTIME_DEP_PKGS_CSWlame-mp3x += CSWgtk
+RUNTIME_DEP_PKGS_CSWlame-mp3x += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWlame-mp3x += CSWlibiconv2
+
+PACKAGES += CSWlibmp3lame-dev
+SPKG_DESC_CSWlibmp3lame-dev = Development files for libmp3lame.so.0
+PKGFILES_CSWlibmp3lame-dev = $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibmp3lame-dev = CSWlibmp3lame0
+OBSOLETED_BY_CSWlibmp3lame-dev += CSWlame-devel
+
+PACKAGES += CSWlibmp3lame0
+SPKG_DESC_CSWlibmp3lame0 = Library for LAME, libmp3lame.so.0
+PKGFILES_CSWlibmp3lame0 = $(call pkgfiles_lib,libmp3lame.so.0)
 
 BUILD64 = 1
 EXTRA_BUILD_ISAS = sparcv8plus+vis pentium_pro
