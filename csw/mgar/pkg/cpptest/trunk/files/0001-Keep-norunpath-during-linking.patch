@@ -1,0 +1,25 @@
+From 58de68149b6a716e0295aeb14128f360e44cf7cd Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 9 Nov 2011 12:33:56 +0100
+Subject: [PATCH] Keep -norunpath during linking
+
+---
+ config/ltmain.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/config/ltmain.sh b/config/ltmain.sh
+index 886f317..65c11b7 100755
+--- a/config/ltmain.sh
++++ b/config/ltmain.sh
+@@ -4809,7 +4809,7 @@ func_mode_link ()
+       # @file GCC response files
+       # -tp=* Portland pgcc target processor selection
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+-      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*)
++      -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|-norunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+-- 
+1.7.6.1
+
