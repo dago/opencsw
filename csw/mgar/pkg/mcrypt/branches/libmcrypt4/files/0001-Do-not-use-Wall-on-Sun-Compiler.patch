@@ -1,0 +1,39 @@
+From e79f30991cc404eb768138b163d3bb2e03240413 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sat, 26 Dec 2009 22:27:56 +0100
+Subject: [PATCH] Do not use Wall on Sun Compiler
+
+---
+ configure    |    2 +-
+ configure.in |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index e9109f0..9f1207b 100755
+--- a/configure
++++ b/configure
+@@ -14218,7 +14218,7 @@ fi
+ 
+ 
+ LIBS="${LIBS} ${LIBMCRYPT_LIBS}"
+-CFLAGS="${CFLAGS} ${LIBMCRYPT_CFLAGS} -Wall"
++CFLAGS="${CFLAGS} ${LIBMCRYPT_CFLAGS}"
+ 
+ 
+ { echo "$as_me:$LINENO: checking for an ANSI C-conforming const" >&5
+diff --git a/configure.in b/configure.in
+index 32512c8..d875c75 100644
+--- a/configure.in
++++ b/configure.in
+@@ -57,7 +57,7 @@ AM_GNU_GETTEXT([external])
+ *** in OpenPGP packets.))
+ 
+ LIBS="${LIBS} ${LIBMCRYPT_LIBS}"
+-CFLAGS="${CFLAGS} ${LIBMCRYPT_CFLAGS} -Wall"
++CFLAGS="${CFLAGS} ${LIBMCRYPT_CFLAGS}"
+ 
+ 
+ AC_C_CONST
+-- 
+1.6.5.1
+
