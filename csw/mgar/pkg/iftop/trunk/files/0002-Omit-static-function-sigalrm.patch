@@ -1,0 +1,23 @@
+From 24611fd8d5a36c98cc3a5f4df566a2ac5d5d72af Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 10 Nov 2011 15:03:56 +0100
+Subject: [PATCH 2/4] Omit static function sigalrm()
+
+---
+ dlcommon.h |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+diff --git a/dlcommon.h b/dlcommon.h
+index 0d1f35a..d390213 100644
+--- a/dlcommon.h
++++ b/dlcommon.h
+@@ -32,6 +32,5 @@
+ /*
+  * externs go here
+  */
+-extern	void	sigalrm();
+ 
+ #endif /* !DLCOMMON_H */
+-- 
+1.7.6.1
+

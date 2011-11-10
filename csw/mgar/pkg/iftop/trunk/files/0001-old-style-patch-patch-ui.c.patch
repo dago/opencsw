@@ -1,0 +1,25 @@
+From 0599dd0264ba1312983b93e21fd19ecb39501802 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 10 Nov 2011 14:51:53 +0100
+Subject: [PATCH 1/4] old style patch: patch-ui.c
+
+---
+ ui.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/ui.c b/ui.c
+index 032d557..9c752d7 100644
+--- a/ui.c
++++ b/ui.c
+@@ -6,7 +6,7 @@
+ #include <sys/types.h>
+ 
+ #include <ctype.h>
+-#include <curses.h>
++#include <ncurses/curses.h>
+ #include <errno.h>
+ #include <string.h>
+ #include <math.h>
+-- 
+1.7.6.1
+

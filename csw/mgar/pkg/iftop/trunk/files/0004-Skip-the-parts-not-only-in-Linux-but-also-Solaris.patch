@@ -1,0 +1,34 @@
+From 87089300bcca4638373875bb3cb0c45dfda3298a Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 10 Nov 2011 15:05:10 +0100
+Subject: [PATCH 4/4] Skip the parts not only in Linux, but also Solaris
+
+---
+ addrs_ioctl.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/addrs_ioctl.c b/addrs_ioctl.c
+index e86e2de..f80ba7e 100644
+--- a/addrs_ioctl.c
++++ b/addrs_ioctl.c
+@@ -19,7 +19,7 @@
+ #include <netinet/in.h>
+ 
+ #if defined __FreeBSD__ || defined __OpenBSD__ || defined __APPLE__ \
+-      || ( defined __GNUC__ && ! defined __linux__ )
++      || ( defined __GNUC__ && ! defined __linux__ && ! defined __sun && ! defined __sun__)
+ #include <sys/param.h>
+ #include <sys/sysctl.h>
+ #include <net/if_dl.h>
+@@ -81,7 +81,7 @@ get_addrs_ioctl(char *interface, char if_hw_addr[], struct in_addr *if_ip_addr,
+   }
+ #else
+ #if defined __FreeBSD__ || defined __OpenBSD__ || defined __APPLE__ \
+-      || ( defined __GNUC__ && ! defined __linux__ )
++      || ( defined __GNUC__ && ! defined __linux__  && ! defined __sun && ! defined __sun__)
+   {
+     int sysctlparam[6] = {CTL_NET, PF_ROUTE, 0, 0, NET_RT_IFLIST, 0};
+     size_t needed = 0;
+-- 
+1.7.6.1
+
