@@ -36,6 +36,7 @@ NOGITPATCH ?= 1
 ## Source URLs
 VENDOR_URL = http://gcc.gnu.org
 
+GCC4_CC_HOME = $(HOME)/usr-$(GARCH)
 ## Copyright File
 LICENSE = COPYING3
 
