@@ -1,0 +1,24 @@
+From 2a706743f614c855268fb22e6d15f7d1848617ab Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 10 Nov 2011 15:04:46 +0100
+Subject: [PATCH 3/4] Add sys/sockio.h to have SIOCGIFFLAGS
+
+---
+ options.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/options.c b/options.c
+index ced4125..ffa7336 100644
+--- a/options.c
++++ b/options.c
+@@ -15,6 +15,7 @@
+ 
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
++#include <sys/sockio.h>
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
+ #include <net/if.h>
+-- 
+1.7.6.1
+
