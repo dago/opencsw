@@ -77,10 +77,8 @@ post-configure-modulated:
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/sample-configurations/virtual.conf
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/Configuration.html
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/faq.html
-	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/utils/ftpasswd.html
-	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/utils/ftpquota.html
-	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/utils/ftpscrub.html
-	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/utils/ftptop.html
+	gsed -i s#/usr/local#/opt/csw#g $(WORKSRC)/doc/contrib/ftpasswd.html
+	gsed -i s#/usr/local#/opt/csw#g $(WORKSRC)/doc/contrib/ftpquota.html
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_ldap.html
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_quotatab_file.html
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_quotatab_ldap.html
@@ -99,6 +97,8 @@ post-configure-modulated:
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/howto/TLS.html
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/modules/mod_dso.html
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/modules/mod_lang.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/utils/ftpscrub.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/utils/ftptop.html
 	$(MAKECOOKIE)
 
 post-install-modulated:
