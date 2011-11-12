@@ -1,0 +1,31 @@
+# Takes care of creating the CFEngine 3 public/private keys
+
+CFEWORKDIR=${PKG_INSTALL_ROOT}/var/opt/csw/cfengine3
+CFEKEYDIR=${CFEWORKDIR}/ppkeys
+CF_KEYS=${PKG_INSTALL_ROOT}/opt/csw/sbin/cf-key
+
+if [ \! -d ${CFEWORKDIR} ]
+then
+    # Hmm, this is strange, since the prototype should have
+    # created this directory
+    echo "Creating ${CFEWORKDIR}"
+    mkdir -p ${CFEWORKDIR}
+fi
+
+if [ \! -d ${CFEKEYDIR} ]
+then
+    echo "Creating ${CFEKEYDIR}"
+    mkdir ${CFEKEYDIR}
+fi
+
+chmod 700 ${CFEKEYDIR}
+
+if [ -r ${CFEKEYDIR}/localhost.priv -a -r ${CFEKEYDIR}/localhost.pub ]
+then
+    echo "Keys for CFEngine exist."
+    exit 0
+else
+    ${CF_KEYS} -f ${CFEKEYDIR}/localhost
+fi
+
+exit 0

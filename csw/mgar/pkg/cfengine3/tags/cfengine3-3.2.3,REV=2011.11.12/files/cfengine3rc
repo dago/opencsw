@@ -1,0 +1,17 @@
+# This file is a shell script fragment which is sourced by the
+# CFEngine startup scripts. Use it to pass additional options to the
+# various CFEngine daemons.
+#
+# This fragment will be sourced if found under /opt/csw/etc/ or
+# /etc/opt/csw/. The latter takes precedence over the former if both
+# files exist.
+#
+# By default, this file defines the class `opencsw' for cf-execd and
+# cf-serverd.
+
+# Options passed to cf-serverd
+CFSERVERD_OPTS="-D opencsw"
+# Options passed to cf-execd
+CFEXECD_OPTS="-D opencsw"
+# Options passed to cf-monitord
+CFMONITORD_OPTS=""
