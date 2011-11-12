@@ -39,15 +39,22 @@ cfengine_workdir	= $(localstatedir)/$(NAME)
 cfengine_workdir_bin	= $(cfengine_workdir)/bin
 initddir		= $(sysconfdir)/init.d
 
-EXTRA_MERGE_EXCLUDE_FILES = $(datadir)/cfengine.*
-
 PACKAGES = CSW$(NAME)rt
 CATALOGNAME_CSW$(NAME)rt = $(NAME)_rt
 SPKG_DESC_CSW$(NAME)rt = CFEngine 3 runtime and documentation
 RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWbdb48
 RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSW$(NAME)rt += CSWlibpromises1
+CHECKPKG_OVERRIDES_CSW$(NAME)rt += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)rt|catalogname=$(NAME)_rt|expected-catalogname=$(NAME)rt
 
+PACKAGES += CSWlibpromises1
+SPKG_DESC_CSWlibpromises1 = CFEngine 3 promises library
+RUNTIME_DEP_PKGS_CSWlibpromises1 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibpromises1 += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWlibpromises1 += CSWbdb48
+PKGFILES_CSWlibpromises1 = $(PKGFILES_RT)
+PKGFILES_CSWlibpromises1 += .*/libpromises1/README.CSW
 
 PACKAGES += CSW$(NAME)server
 CATALOGNAME_CSW$(NAME)server = $(NAME)_server
@@ -56,12 +63,15 @@ RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWbdb48
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSW$(NAME)server += CSW$(NAME)rt
+RUNTIME_DEP_PKGS_CSW$(NAME)server += CSWlibpromises1
 PKGFILES_CSW$(NAME)server += $(sbindir)/cf-serverd
 PKGFILES_CSW$(NAME)server += $(sbindir)/cf-runagent
 PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-serverd.*
 PKGFILES_CSW$(NAME)server += $(mandir)/.*/cf-runagent.*
 PKGFILES_CSW$(NAME)server += $(initddir)/csw$(NAME)-cfserverd
 PKGFILES_CSW$(NAME)server += $(docdir)/$(NAME)_server/README.CSW
+CHECKPKG_OVERRIDES_CSW$(NAME)server += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)server|catalogname=$(NAME)_server|expected-catalogname=$(NAME)server
+CHECKPKG_OVERRIDES_CSW$(NAME)server += surplus-dependency|CSW$(NAME)rt
 
 PACKAGES += CSW$(NAME)client
 CATALOGNAME_CSW$(NAME)client = $(NAME)_client
@@ -70,6 +80,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWbdb48
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSW$(NAME)rt
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibpromises1
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-agent
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-execd
 PKGFILES_CSW$(NAME)client += $(sbindir)/cf-monitord
@@ -80,6 +91,7 @@ PKGFILES_CSW$(NAME)client += $(cfengine_workdir_bin)/cf-agent
 PKGFILES_CSW$(NAME)client += $(initddir)/csw$(NAME)-cfexecd
 PKGFILES_CSW$(NAME)client += $(initddir)/csw$(NAME)-cfmonitord
 PKGFILES_CSW$(NAME)client += $(docdir)/$(NAME)_client/README.CSW
+CHECKPKG_OVERRIDES_CSW$(NAME)client += catalogname-does-not-match-pkgname|pkgname=CSW$(NAME)client|catalogname=$(NAME)_client|expected-catalogname=$(NAME)client
 
 # CFEngine provides three daemons
 #  - cf-execd (client)
@@ -88,6 +100,8 @@ PKGFILES_CSW$(NAME)client += $(docdir)/$(NAME)_client/README.CSW
 INITSMF =  $(initddir)/csw$(NAME)-cfexecd
 INITSMF += $(initddir)/csw$(NAME)-cfmonitord
 INITSMF += $(initddir)/csw$(NAME)-cfserverd
+
+LICENSE = LICENSE
 
 # This file gets installed by CSW$(NAME)rt since it is used by
 # the server and client component
@@ -120,7 +134,7 @@ EXTRA_LDFLAGS = -L$(prefix)/bdb48/lib/$(MM_LIBDIR)
 
 include gar/category.mk
 
-post-install-modulated: rename-cfengine-dir make-cfengine-workdir install-cfengine-links install-smf-manifests install-cfengine3rc install-cfengine3-csw-doc
+post-install-modulated: rename-cfengine-dir make-cfengine-workdir install-cfengine-links install-smf-manifests install-cfengine3rc install-cfengine3-csw-doc fix-paths-in-files
 	@$(MAKECOOKIE)
 
 rename-cfengine-dir:
@@ -158,3 +172,16 @@ install-cfengine3rc:
 
 install-cfengine3-csw-doc: rename-cfengine-dir
 	ginstall $(WORKDIR)/README.CSW $(DESTDIR)$(docdir)/$(NAME)
+
+fix-paths-in-files: rename-cfengine-dir
+	for d in $(DESTDIR)$(docdir)/$(NAME)/example_config $(DESTDIR)$(docdir)/$(NAME)/examples $(DESTDIR)$(datadir)/$(NAME)/masterfiles ; do \
+		if test -d $$d ; then \
+			for f in $${d}/*.cf ; do \
+				sed -e 's|/var/cfengine/|/var/opt/csw/$(NAME)/|g' \
+					-e 's|_var_cfengine_|_var_opt_csw_$(NAME)_|g' \
+					-e 's|/usr/local/|/opt/csw/|g' \
+					-e 's|_usr_local_|_opt_csw_|g' $$f > $${f}.tmp ;\
+				mv $${f}.tmp $$f ; \
+			done ; \
+		fi ; \
+	done
