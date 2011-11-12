@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = cherrypy
-VERSION = 3.2.2
+VERSION = 3.1.2
 CATEGORIES = python
 
 DESCRIPTION = A pythonic, object-oriented web framework
@@ -22,5 +22,8 @@ ARCHALL_CSWcherrypy = 1
 # The package name is ok as this is also a daemon and well known under that name
 CHECKPKG_OVERRIDES_CSWcherrypy += pkgname-does-not-start-with-CSWpy-
 CHECKPKG_OVERRIDES_CSWcherrypy += catalogname-does-not-start-with-py_
+
+# Test testsuite
+TEST_SCRIPTS =
 
 include gar/category.mk
