@@ -13,7 +13,14 @@ endef
 MASTER_SITES = manual://
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTNAME = ips
-WORKSRC = $(WORKDIR)/$(DISTNAME)/src
+
+# Code for strncmp taken from
+#   http://bugs.mysql.com/bug.php?id=7974
+PATCHFILES += 0001-Add-missing-strndup-on-Solaris.patch
+
+VENDOR_URL = http://src.opensolaris.org/source/xref/pkg/gate/
+
+LICENSE = ips/doc/license.txt
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -23,9 +30,14 @@ BUILD_DEP_PKGS += CSWgnomedocutils
 # For intltool-merge
 BUILD_DEP_PKGS += CSWintltool
 
-PACKAGES += CSWips-pkg-server
 PYCOMPILE = 1
-ARCHALL = 1
+
+PACKAGES += CSWips-pkg-server
+SPKG_DESC_CSWips-pkg-server = IPS package server
+RUNTIME_DEP_PKGS_CSWips-pkg-server += CSWpython
+RUNTIME_DEP_PKGS_CSWips-pkg-server += CSWpy-openssl
+RUNTIME_DEP_PKGS_CSWips-pkg-server += CSWcherrypy
+RUNTIME_DEP_PKGS_CSWips-pkg-server += CSWpy-simplejson
 
 # With all the replacements and the large repo this takes forever
 NOGITPATCH = 1
@@ -33,17 +45,17 @@ NOGITPATCH = 1
 REINPLACEMENTS += intltool
 REINPLACE_MATCH_intltool = /usr/bin/intltool-merge
 REINPLACE_WITH_intltool = /opt/csw/bin/intltool-merge
-REINPLACE_FILES_intltool = setup.py
+REINPLACE_FILES_intltool = src/setup.py
 
 REINPLACEMENTS += xml2po
 REINPLACE_MATCH_xml2po = /usr/bin/xml2po
 REINPLACE_WITH_xml2po = /opt/csw/bin/xml2po
-REINPLACE_FILES_xml2po = setup.py
+REINPLACE_FILES_xml2po = src/setup.py
 
 REINPLACEMENTS += linkopts
 REINPLACE_MATCH_linkopts = \[ \"-zstrip-class=nonalloc\" \]
 REINPLACE_WITH_linkopts = \[\]
-REINPLACE_FILES_linkopts = setup.py
+REINPLACE_FILES_linkopts = src/setup.py
 
 PYVARS += py_install_dir
 #py_install_dir = 'usr/lib/python2.6/vendor-packages'
@@ -161,10 +173,16 @@ define pyrep
 REINPLACEMENTS += pyvar-$(1)
 REINPLACE_MATCH_pyvar-$(1) = $(1) = .*
 REINPLACE_WITH_pyvar-$(1) = $(1) = '.$$(PYVAR_$(1))'
-REINPLACE_FILES_pyvar-$(1) = setup.py
+REINPLACE_FILES_pyvar-$(1) = src/setup.py
 endef
 
 $(foreach VAR,$(PYVARS),$(eval $(call pyrep,$(VAR))))
+
+REINPLACEMENTS += python
+REINPLACE_MATCH_python = /usr/bin/python2.6
+REINPLACE_WITH_python = /opt/csw/bin/python
+REINPLACE_FILES_python += $(libdir)/pkg.depotd
+REINPLACE_WHEN_python = postinstall
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS = custom
@@ -174,13 +192,12 @@ INSTALL_SCRIPTS = custom
 include gar/category.mk
 
 build-custom:
-	(cd $(WORKSRC); python setup.py build)
+	(cd $(WORKSRC)/src; python setup.py build)
 	@$(MAKECOOKIE)
 
 install-custom:
-	(cd $(WORKSRC); python setup.py install --root=$(DESTDIR))
+	@echo "Copying python files"
+	(cd $(WORKSRC)/src; python setup.py install --root=$(DESTDIR))
+	@echo "Copying Sparc proto files"
+	(cd $(WORKSRC)/proto/root_sparc; tar cvf - .) | (cd $(DESTDIR); tar xf -)
 	@$(MAKECOOKIE)
-
-#post-install-modulated:
-#	gfind $(DESTDIR) -type f -name '*.pyc' -exec rm {} \;
-#	@$(MAKECOOKIE)
