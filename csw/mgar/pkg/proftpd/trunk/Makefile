@@ -77,6 +77,8 @@ post-configure-modulated:
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/sample-configurations/virtual.conf
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/Configuration.html
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/faq.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/ftpasswd.html
+	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/ftpquota.html
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_ldap.html
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_quotatab_file.html
 	gsed -i s#/usr/local#/opt/csw#  $(WORKSRC)/doc/contrib/mod_quotatab_ldap.html
