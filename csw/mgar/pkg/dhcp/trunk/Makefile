@@ -1,5 +1,5 @@
 NAME = dhcp
-VERSION = 4.2.2
+VERSION = 4.2.3
 #RELEASE = P1
 #DISTVERSION = $(VERSION)-$(RELEASE)
 #SPKG_VERSION = $(VERSION)$(RELEASE)
@@ -15,7 +15,8 @@ define BLURB
   suitable for use in high-volume and high-reliability applications. 
 endef
 
-MASTER_SITES = http://ftp.isc.org/isc/dhcp/
+#MASTER_SITES = http://ftp.isc.org/isc/dhcp/
+MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES  = $(DISTNAME).tar.gz
 
