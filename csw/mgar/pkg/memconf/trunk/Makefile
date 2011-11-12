@@ -1,5 +1,5 @@
 NAME = memconf
-VERSION = 2.19
+VERSION = 2.20
 CATEGORIES = utils
 
 DESCRIPTION = Perl script that displays memory modules installed
