@@ -35,6 +35,10 @@ OBSOLETED_BY_CSWlibtasn1-utils = CSWlibtasn1
 LD_OPTIONS =
 EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
+# Trying to put $ISALIST in LINKER_FLAGS would require more quoting here and
+# we don't really need it anyway, so disable for now.
+NOISALIST = 1
+
 BUILD64 = 1
 
 include gar/category.mk
