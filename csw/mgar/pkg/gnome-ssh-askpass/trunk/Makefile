@@ -26,13 +26,17 @@ DISTFILES += README.CSW
 # uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
 # UPSTREAM_MASTER_SITES = 
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 PACKAGES = CSW$(NAME)
 RUNTIME_DEP_PKGS = CSWgtk2
 RUNTIME_DEP_PKGS += CSWglib2
 RUNTIME_DEP_PKGS += CSWpango
-RUNTIME_DEP_PKGS += CSWlibpixman
 RUNTIME_DEP_PKGS += CSWlibatk
-RUNTIME_DEP_PKGS += CSWlibpng
+RUNTIME_DEP_PKGS += CSWlibintl8
+RUNTIME_DEP_PKGS += CSWftype2
+RUNTIME_DEP_PKGS += CSWfconfig
+RUNTIME_DEP_PKGS += CSWlibcairo2
 
 BUILD_DEP_PKGS =  CSWgtk2devel
 BUILD_DEP_PKGS += CSWglib2devel
