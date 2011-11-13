@@ -1,5 +1,5 @@
 NAME = libtasn1
-VERSION = 2.9
+VERSION = 2.10
 CATEGORIES = lib
 
 DESCRIPTION = GNU ASN1 Library
