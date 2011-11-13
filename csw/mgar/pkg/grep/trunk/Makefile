@@ -1,5 +1,5 @@
 NAME = grep
-VERSION = 2.9
+VERSION = 2.9.79-e340
 CATEGORIES = utils
 
 DESCRIPTION = GNU grep
@@ -15,22 +15,17 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
+MASTER_SITES += http://meyering.net/grep/
 DISTFILES = $(DISTNAME).tar.xz
 
 PACKAGES = CSWggrep
 CATALOGNAME = ggrep
 RUNTIME_DEP_PKGS_CSWggrep += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWggrep += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSWggrep += CSWiconv
-
-EXTRA_LINKER_FLAGS = -liconv
+RUNTIME_DEP_PKGS_CSWggrep += CSWlibiconv2
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --program-prefix=g
-
-# Skip tests as they fail only in gnulib and are probably harmless:
-#   https://savannah.gnu.org/bugs/?29380
-SKIPTEST ?= 1
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
