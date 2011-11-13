@@ -1,5 +1,5 @@
 NAME = phpMyAdmin
-VERSION = 3.4.5
+VERSION = 3.4.7.1
 CATEGORIES = apps
 
 DESCRIPTION = Effective MySQL Management
@@ -13,18 +13,27 @@ define BLURB
 endef
 
 MASTER_SITES = http://garr.dl.sourceforge.net/sourceforge/phpmyadmin/
-DISTFILES  = $(NAME)-$(VERSION)-all-languages.tar.bz2
+DISTFILES    = $(NAME)-$(VERSION)-all-languages.tar.bz2
 
-PACKAGES = CSWphpmyadmin
+PACKAGES    = CSWphpmyadmin
 CATALOGNAME = phpmyadmin
 
-RUNTIME_DEP_PKGS  = CSWapache2 CSWap2modphp5 CSWmysql5 CSWphp5 CSWphp5gd CSWphp5mcrypt
-RUNTIME_DEP_PKGS += CSWphp5mysqli CSWphp5session CSWphp5mbstring CSWphp5ctype CSWphp5zip
+RUNTIME_DEP_PKGS  = CSWap2modphp5
+RUNTIME_DEP_PKGS += CSWapache2
+RUNTIME_DEP_PKGS += CSWmysql5
+RUNTIME_DEP_PKGS += CSWphp5
+RUNTIME_DEP_PKGS += CSWphp5ctype
+RUNTIME_DEP_PKGS += CSWphp5gd
+RUNTIME_DEP_PKGS += CSWphp5mbstring
+RUNTIME_DEP_PKGS += CSWphp5mcrypt
+RUNTIME_DEP_PKGS += CSWphp5mysqli
+RUNTIME_DEP_PKGS += CSWphp5session
+RUNTIME_DEP_PKGS += CSWphp5zip
 
 CONFIGURE_SCRIPTS =
-BUILD_SCRIPTS =
-TEST_SCRIPTS =
-INSTALL_SCRIPTS = custom
+BUILD_SCRIPTS     =
+TEST_SCRIPTS      =
+INSTALL_SCRIPTS   = custom
 
 ARCHALL = 1
 SPKG_SOURCEURL = http://www.phpmyadmin.net
