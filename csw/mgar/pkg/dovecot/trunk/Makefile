@@ -1,6 +1,5 @@
 # TODO
 # - SSL certs to /etc/opt/csw/ssl?
-# - USERGROUP doesn't work yet, wrong usage?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 NAME = dovecot
 VERSION = 2.0.15
@@ -77,8 +76,7 @@ STRIP_DIRS  = $(DESTDIR)$(libexecdir)/dovecot
 
 # cswclassutils integration
 INITSMF    = $(sysconfdir)/init.d/cswdovecot
-USERGROUP  = dovecot:dovecot:Dovecot IMAP Server:/var/opt/csw/run/dovecot/login:/bin/false
-USERGROUP += dovenull:dovenull:Dovecot IMAP Server:/var/opt/csw/run/dovenull/login:/bin/false
+USERGROUP = /etc/opt/csw/pkg/CSWdovecot/cswusergroup
 SAMPLECONF = .*/dovecot.pem $(sysconfdir)/dovecot.conf
 MIGRATE_FILES = dovecot.conf
 
@@ -131,5 +129,10 @@ post-install-modulated:
 	# Copy init script
 	ginstall -Dm 755 $(FILEDIR)/cswdovecot  \
 		$(DESTDIR)/etc/opt/csw/init.d/cswdovecot
+
+	# Copy cswusergroup
+	ginstall -m 755 -d $(DESTDIR)/etc/opt/csw/pkg/CSWdovecot
+	ginstall -m 444 $(FILEDIR)/cswusergroup \
+		$(DESTDIR)/etc/opt/csw/pkg/CSWdovecot/
 
 	@$(MAKECOOKIE)

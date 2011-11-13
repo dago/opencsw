@@ -1,0 +1,2 @@
+dovecot:dovecot:Dovecot IMAP Server:/var/opt/csw/run/dovecot/login:/bin/false:::NP
+dovenull:dovenull:Dovecot IMAP Server:/var/opt/csw/run/dovenull/login:/bin/false:::NP
