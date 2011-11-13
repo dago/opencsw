@@ -2,26 +2,24 @@
 # TODO (release-critical prefixed with !, non release-critical with *)
 #
 NAME = inetutils
-VERSION = x.y
+VERSION = 1.8.150-c548
 GARTYPE = v2
-CATEGORIES = category
+CATEGORIES = net
 
-DESCRIPTION = Brief description
+DESCRIPTION = Inetutils is a collection of common network programs
 define BLURB
-  Long description
+Inetutils is a collection of common network programs. It includes:
+An ftp client and server.
+A telnet client and server.
+An rsh client and server.
+An rlogin client and server.
+A tftp client and server.
+And much more...
+Most of them are improved versions of programs originally from BSD. Some others are original versions, written from scratch.
 endef
 
-MASTER_SITES = 
+MASTER_SITES = http://daily.josefsson.org/$(NAME)/
 DISTFILES  = $(DISTNAME).tar.gz
-
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
