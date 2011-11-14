@@ -16,31 +16,38 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 VENDOR_URL = http://www.gnu.org/software/libidn/
 
+# PACKAGING_PLATFORMS = solaris10-sparc
+
 PACKAGES += CSWlibidn11
-CATALOGNAME_CSWlibidn11 = libidn11
 SPKG_DESC_CSWlibidn11 = GNU IDN library, libidn.so.11
 PKGFILES_CSWlibidn11 += $(call pkgfiles_lib,libidn.so.11)
 PKGFILES_CSWlibidn11 += .*/libidn\.mo
 RUNTIME_DEP_PKGS_CSWlibidn11 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibidn11 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibidn11 += CSWlibiconv2
 
 PACKAGES += CSWlibidn-dev
-CATALOGNAME_CSWlibidn-dev = libidn_dev
-SPKG_DESC_CSWlibidn-dev = GNU IDN development files
+SPKG_DESC_CSWlibidn-dev = GNU IDN development files for libidn.so.11
 PKGFILES_CSWlibidn-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibidn-dev += $(sharedstatedir)/emacs/.*
 PKGFILES_CSWlibidn-dev += $(infodir)/.*
 RUNTIME_DEP_PKGS_CSWlibidn-dev += CSWlibidn11
-CHECKPKG_OVERRIDES_CSWlibidn-dev += missing-dependency|CSWemacscommon
 
 PACKAGES += CSWlibidn-utils
-CATALOGNAME_CSWlibidn-utils = libidn_utils
 SPKG_DESC_CSWlibidn-utils = GNU IDN utilities
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibidn-utils += CSWlibidn11
 RUNTIME_DEP_PKGS_CSWlibidn-utils += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibidn-utils += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibidn-utils += CSWlibiconv2
 OBSOLETED_BY_CSWlibidn-utils = CSWlibidn
+
+BUILD_OVERRIDE_VARS = SHELL
+BUILD_OVERRIDE_VAR_SHELL = /opt/csw/bin/bash
+
+TEST_OVERRIDE_VARS = SHELL
+TEST_OVERRIDE_VAR_SHELL = /opt/csw/bin/bash
+
+INSTALL_OVERRIDE_VARS = SHELL
+INSTALL_OVERRIDE_VAR_SHELL = /opt/csw/bin/bash
 
 BUILD64 = 1
 
