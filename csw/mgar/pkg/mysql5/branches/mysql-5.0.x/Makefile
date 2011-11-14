@@ -169,6 +169,7 @@ CONFIGURE_ARGS += --enable-thread-safe-client
 CONFIGURE_ARGS_DBG = --with-debug
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
 CONFIGURE_ARGS += --program-suffix=-$(BASE_VERSION)
+CONFIGURE_ARGS += --with-federated-storage-engine
 
 # TODO: Make the tests pass. They don't at the moment.
 SKIPTEST ?= 1
