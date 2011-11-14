@@ -1,5 +1,5 @@
 NAME = db
-VERSION = 5.1.19
+VERSION = 5.1.29
 CATEGORIES = lib
 
 DESCRIPTION = Berkeley DB 5.1
@@ -27,7 +27,6 @@ PATCHFILES += $(notdir $(wildcard $(FILEDIR)/patch.*))
 RELEASE = p$(words $(filter patch.$(VERSION).%,$(PATCHFILES)))
 
 BUILD64 = 1
-NOISAEXEC = 1
 
 CONFIGURE_SCRIPTS = dist
 
