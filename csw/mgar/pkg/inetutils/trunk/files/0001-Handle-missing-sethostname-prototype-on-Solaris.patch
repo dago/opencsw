@@ -1,0 +1,40 @@
+From 4320c84455c9f7e78eb2670a2e8630f87e56bbf6 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Mon, 14 Nov 2011 02:30:34 +0100
+Subject: [PATCH] Handle missing sethostname prototype on Solaris
+
+Solaris before SOlaris 11 is missing a sethostname prototype in unistd.h.
+This causes a missing symbol error during compilation of src/hostname.c.
+
+Conditionally define this prototype as extern if building on Solaris 9 or
+10.
+
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ src/hostname.c |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
+
+diff --git a/src/hostname.c b/src/hostname.c
+index 3974737..a11a559 100644
+--- a/src/hostname.c
++++ b/src/hostname.c
+@@ -34,6 +34,16 @@
+ #include "xgethostname.h"
+ #include "xgetdomainname.h"
+ 
++/* Solaris 9 and 10 are missing a prototype for sethostname in
++   unistd.h.  See: http://wesunsolve.net/bugid/id/6438052. We must
++   provide our own definition and make it extern, which will not be
++   lint clean but should allow compilation. */
++#if defined(__sun) || defined(__sun__)
++ #if defined(__SunOS_5_9) || defined(__SunOS_5_10)
++  extern int sethostname(char *, int);
++ #endif
++#endif
++
+ 
+ typedef struct
+ {
+-- 
+1.7.6.1
+
