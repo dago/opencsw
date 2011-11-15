@@ -41,7 +41,7 @@ EXTRA_BUILD_ISAS_i386  = amd64
 EXTRA_BUILD_ISAS_sparc = sparcv9
 
 NGINXCPU_i386          = pentium3
-#NGINXCPU_pentium_pro   = pentium3
+NGINXCPU_pentium_pro   = pentium3
 NGINXCPU_sparcv8plus   = sparc32
 NGINXCPU_sparcv9       = sparc64
 NGINXCPU_$(ISA)       ?= $(ISA)
