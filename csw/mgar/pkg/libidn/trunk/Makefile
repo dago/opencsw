@@ -58,6 +58,6 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 # What's this? Windows DLLs? How do they end up in the Solaris build?
 EXTRA_MERGE_EXCLUDE_FILES = .*\.dll
 
-CHECKPKG_OVERRIDES_CSWlibidn += missing-dependency|CSWemacscommon
+CHECKPKG_OVERRIDES_CSWlibidn-dev += missing-dependency|CSWemacscommon
 
 include gar/category.mk
