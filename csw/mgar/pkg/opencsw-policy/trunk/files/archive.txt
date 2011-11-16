@@ -1,0 +1,1301 @@
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/
+
+[needs review]
+
+<h3>Standards for building CSW packages</h3>
+This section of web pages, relates to how to <strong>CREATE</strong> a package for CSW. Users of our packages probably wont care about these       pages, other than perhaps to feel glad that all this work is done for them! New maintainers, please go to the <a href="http://www.opencsw.org/extend-it/contribute-packages/maintainer-welcome"> New maintainers welcome page</a>, and/or the 	<a href="http://www.opencsw.org/extend-it/contribute-packages/howto-build-a-csw-pkg">simple package walkthrough page</a>
+
+This page is a guide for making a package for submission to the Solaris CSW packaging effort at opencsw.org, by someone who has  officially signed up to be "a maintainer".
+
+Note: No alpha, beta, or otherwise unstable software will be accepted to the archives.
+
+The <span style="text-decoration: underline;"><em>overriding guideline</em></span> is to provide a straightforward, easy-to-use experience for the user. For a fuller view of the principles behind CSW, see the  <a href="http://www.opencsw.org/standards/core_principles">core principles</a> page.
+
+The user should generally be able to install a software and have it just work, with no extra fuss. Anyone can suggest changes to these documents. However, changes championed by <a href="http://www.opencsw.org/maintainers">active maintainers</a> will get the most attention.  If you would like to see some of these items changed, it is suggested you either <a href="http://www.opencsw.org/maintainer-signup">volunteer to be a maintainer</a>, or forward your proposed changes to an active maintainer.
+<h3>Software Configuration standards</h3>
+All packages will be configured to deliver binaries "ready to run", as judged by professional sysadmin standards. No by-hand steps should be needed. For example, CSWossh has rc scripts that automatically build ssh host keys, if needed.Exceptions to this rule are only if the software needs fundamental by-hand configuration to do anything useful.
+Example: mysql, a database program
+
+In these cases, the package should provide either an install script, or sample configuration files, or both.
+
+Extra documentation should go under <code>/opt/csw/share/doc/programname</code>
+
+Tools in /opt/csw/*bin should not conflict with programs of the 	same name in OS-standard locations such as /usr/bin. 	If the tool is one of the standard GNU-style 'replacements', it 	can usually be configured/compiled with 	<code>--program-prefix=g</code> . 	This will prefix all executables with a 'g' (eg: "make" 	becomes "gmake", etc). 	This allows users to know which version of a program 	they are getting, reguardless of what order their PATH is set to.
+On the other hand, if a program's normal name does not conflict, 	[such as 'bison'], then using adding an  'g' to GNU programs is not 	neccessary. Similarly, if what is in /opt/csw/bin is a newer 	version of what is shipped in /bin (such as 'bash') then 	prefixing is not neccesary.
+<h3>Build standards</h3>
+Our standard compiler is the sun compiler(s), which should 	be used in preference to gcc, unless the software only compiles with 	gcc. 	Builds will be done on both Solaris 8 x86 and 	Solaris 8 sparc, 	unless there is need for a Solaris-9 specific binary also.More details on build standards, cpu optimizations,  	package filenames, and package versions, are now on the separate 	<a href="http://www.opencsw.org/standards/build">Build standards page</a>
+
+Please note that we also have <a href="http://www.opencsw.org/standards/build_farm">build farm 	machines</a> available for maintainers to compile on.
+<h3>Demon configuration standards</h3>
+[This section is still potentially in flux]
+If a user choses to install a daemon, it should be assumed that 	in the general case, they want it to be auto-configured and run, 	if it is straightforward to do so.The exception to this, is if site administrators do not wish demons 	to be auto-configured. To this end, a new configuration file, 	<a href="http://www.opencsw.org/standards/csw.conf">csw.conf</a> has been designated, that 	postinstall scripts should check before deciding to 	auto-enable demons or services.
+<h3>Shared library tips and pitfalls</h3>
+If you are building a package that contains a 	shared library, you should read our standards page 	for <a href="http://www.opencsw.org/standards/libraries">shared library packaging tips</a>
+<h3>Filesystem layout standards</h3>
+Summary:
+<ul>
+	<li> Keep your stuff under "/opt/csw" !</li>
+	<li> Dont conflict with other peoples' packages</li>
+	<li> Default ownership of files to root:bin</li>
+	<li> Install the 'common' CSW pkg first, so you get any links that need to be installed, installed.</li>
+</ul>
+A lengthier set of details can be found on the <a href="http://www.opencsw.org/standards/layout">filesystem layout page</a>. Everyone building a package should read it at least once.
+<h3>Security updates for packages</h3>
+The handling of security updates for software is a tricky thing, that tends  to be somewhat dependant on the specific software being packaged. There are some small software packages, with very responsible authors, who  from time to time have an emergency security update that is 100% reliable, and  should be packaged the same day it is released.In contrast, there are some large software packages, whose authors are infamous for never getting a security update right the first time. In this case, rushing out security update packages for those pieces of software, is a waste of time for the most part, and can actually cause more harm than good.
+
+A package maintainer is assumed to be reasonably familiar with the history of the software they are packaging. They should ideally be the best person to  judge which category their software package falls under, and  release appropriately.
+
+<hr />
+<h3>Pkg file creation</h3>
+Mechanics and policies of SysV pkg creation are in our  <a href="http://www.opencsw.org/standards/pkgcreation">package creation page(s)</a>. Anyone who would like to know how to make packages, should read the link to learn more.Once you have created your pkg file, dont forget to run <code>checkpkg</code> on it.
+"<code>checkpkg</code>" can be found in cswutils. If you use "<code>createpkg</code>" from cswutils to create the package,it will automatically run checkpkg for you.
+
+If you would like to have other people test your package before official release, you can put them in our <a href="http://mirror.opencsw.org/testing.html"> testing area</a>, by copying to /home/testing on the bo.opencsw.org build farm.
+
+As mentioned on the bottom of the  <a href="http://www.opencsw.org/standards/pkg-walkthrough">simple package walkthrough page</a>,  when you are satisfied with them, completed packages should be copied to  bender.opencsw.org:/home/newpkgs, after which, you should email our "<a href="https://lists.opencsw.org/mailman/listinfo/pkgsubmissions">pkgsubmissions</a>" list, to say you are officially all done.
+If you are using 'gar', then "gmake submitpkg" should take care of this for you.
+
+If scp from login.XX.opencsw.org to bender prompts you for a password, you can fix this yourself, by scp'ing login.XX.opencsw.org:.ssh/id_dsa.pub to your local machine, and then scp'ing that to bender.opencsw.org.
+Once you have done this, append it (note the double "&gt;&gt;") to the authorized  keys file on bender:
+<pre>cat id_dsa.pub &gt;&gt;.ssh/authorized_keys</pre>
+<h3>SMF and Solaris 10</h3>
+If you are interested in making your packages integrate with Solaris 10's SMF framework, see our <a href="/extend-it/contribute-packages/build-standards/smf">SMF package integration</a> page
+<h3>Signing up</h3>
+Still up to the task of making a CSW package? Then please  <a href="http://www.opencsw.org/maintainer-signup">let us know!</a>
+[Content of this page maintained by Phil Brown]
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/build-standards/
+
+[needs review]
+
+<h3>Table of contents</h3>
+<ul>
+	<li><a href="#compilers">Compilers</a></li>
+	<li><a href="#includes">Include paths</a></li>
+	<li><a href="#linking">Libraries, library paths, and linking</a></li>
+	<li><a href="#largefile">Large File support (2gig+ files)</a></li>
+	<li><a href="#cpuoptSPARC">CPU optimizations(SPARC)</a></li>
+	<li><a href="#cpuoptX86">CPU optimizations(X86)</a></li>
+	<li><a href="#64vs32">64bit vs 32bit</a></li>
+	<li><a href="#versioning">Package filenames and versioning</a></li>
+	<li><a href="#multiOS">Multi-OS packages</a></li>
+	<li><a href="#nonstandard">Notes on non-standard packages</a></li>
+</ul>
+<a name="compilers"></a>
+<h3>Compilers</h3>
+Our standard compiler is the sun compiler(s), which should 	be used in preference to gcc, unless the software only compiles with 	gcc. Builds will be done on both Solaris 9 x86 and Solaris 9 sparc, unless there is need for a Solaris-10 specific binary. In this case, both Solaris 9 and Solaris 10 packages must be created (unless the maintainer chooses to package binaries for both solaris 9 and 10 in a single package, and make it work transparently to the user).<strong>Please Note:</strong> If you use newer (studio 9 or later) sun compilers,  you <strong>must</strong> force it to generate v8 sparc binaries, not just  take the default.
+
+Packages created on Solaris 8, will be accepted in lieu of Solaris 9, presuming they do actually work on 9 and 10.
+
+Some areas where separate Solaris 10 packages may be needed are:
+<ul>
+	<li> Binaries that are OS-level specific</li>
+	<li> Dummy wrappers that just point to Solaris 10 integrated 	    freeware under /usr/sfw (This one is virtually never used 	     any more)</li>
+</ul>
+Builds should be configured with whatever is equivalent to
+<pre>configure --prefix=/opt/csw</pre>
+Random future tip: you may want the -xc99=all flag, to force the C compiler  to use the "C 1999" standards, or set CC=c99... except that it "isnt  available on solaris 8", unfortunately.  (presumably due to solaris 8 header files not being C99 compliant)  <a name="includes"></a>
+<h3>Include paths</h3>
+When you are compiling something, that has a dependancy on another library in a different CSW package, sometimes, it needs a little "help" to  find where to use it from.
+Usually, most programs are smart enough to figure out, "if prefix=/opt/csw, then look in /opt/csw/includes". Unfortunately, some are not. This is not so much of an issue if you use our gcc compiler. However, since  the standard compiler to use is Sun CC, which knows nothing about /opt/csw/include  by default, you may need to tell the "Pre-Processor" component of the compiler where to look.
+<pre>export CPPFLAGS=-I/opt/csw/include
+# This is often helpful when using 'cc' to compile</pre>
+<a name="linking"></a>
+<h3>Libraries, library paths, and linking</h3>
+All programs and libraries should be built with an appropriate 	  "RPATH" in the executable or library, to take advantage of 	  fully-optimized binaries, when available.
+
+Well-written configure type scripts will notice if you have your LDFLAGS variable set. Unfortunately, not all of them are well written.
+LD_OPTIONS bypasses all that and sets flags for /bin/ld directly.  A good value, for either LDFLAGS, or LD_OPTIONS, is shown below:
+<pre>export LD_OPTIONS='-R/opt/csw/lib/$ISALIST -R/opt/csw/lib -L/opt/csw/lib'
+#
+# Additionally, it may be useful to define the -L path
+# as  -L$YOUR_BUILD_DIR/lib:/opt/csw/lib
+#
+# When compiling 64bit programs, you will need
+#   export LD_OPTIONS="-R/opt/csw/lib/64 -L/opt/csw/lib/64"</pre>
+plus any other needed -R type dependancies. If you are building your package with "GAR", it does not properly handle  importing LD_OPTIONS, so you should unset it in this case.Generally speaking, binaries that we provide, should ONLY be linked against Solaris/Sun provided libraries, and our own libraries packaged under /opt/csw.
+
+The -R options above are useful for multiple reasons:
+<ol>
+	<li>Some programs will have problems "finding" our libraries</li>
+	<li>Some programs will try to pick up stuff in /usr/local first otherwise</li>
+	<li>The $ISALIST means that if there are CPU-optimized versions of shared     libraries, the program will take advantage of them at runtime,     rather than being stuck using the default "generic cpu" libraries.</li>
+</ol>
+The -L option is useful for making sure programs get "linked"(compiled)  against the csw libraries. However, it is important to note that when a program itself contains newer,incompatible  versions of libraries already in /opt/csw/lib*, adjustments may have to be made, as per the -L$YOUR_BUILD_DIR  comment, above. (Or alternatively, pkgrm the older version in /opt/csw)
+
+If feasible, libraries should be compiled with -D_REENTRANT. Many autoconf configured programs do this automatically.
+
+It is advantageous to have shared libraries compiled with any other shared library dependancies as part of them. 'autoconf' driven programs tend to do this automatically, but for non-autoconf compiles, you may want to add <code>"-z defs"</code> to your LD_OPTIONS.
+
+Binaries should be 'strip'ed. Libraries should generally be stripped, but with "strip -x", to make it easier for people to debug programs that use the libraries. (This preserves the "symbol table").
+
+static libraries should generally NOT be included, unless there is specific and clear benefit for providing them. Usually, everything just uses the shared libs.
+
+New packages should take care to <strong>EXCLUDE libtool .la files.</strong> They are not helpful, and often create more problems than they solve. Unfortunately, existing packages may need to preserve them, until all  dependant packages have their own configs adjusted to not use .la files.
+
+<a name="largefile"></a>
+<h3>Large File support (2gig+ files)</h3>
+Most modern apps automatically use the 64bit clean APIs to 	handle files larger than 2 gigs. However, if you have a legacy app 	to compile, you may choose to compile it with
+<code> -D_LARGEFILE64_SOURCE=1 </code><strong>WARNING:</strong> This may create issues with other things linked 	against it. If there are file descriptor handoffs between 	different libraries, where some libs are largefile enabled, and 	some are not, then unpredictable behaviour may result. More 	specifically, the issue is that size of (off_t) and stat() 	related structs, will be considered as different sizes between 	the two parts of the program.
+
+<a name="cpuoptSPARC"></a>
+<h3>CPU optimizations (SPARC)</h3>
+Our base OS is Solaris 8. Since sparcv7 cpus are not supported by Solaris 8, the standard cpu target for sparc should be sparcv8. Eg:
+<pre>#Sun CC
+cc -xarch=v8
+# GNU cc
+gcc -mcpu=v8</pre>
+For a reasonable standard of optimization with Sun CC, it is currently recommended to use
+<pre>cc -fast -xarch=v8  #studio 8
+cc -fast -xarch=v8 -xnolibmopt  #studio 10, forcing use of shared libm.so
+# if sparc files are still large, add -xnolibmil as well</pre>
+Note that it <strong>must be in that order!!</strong>
+Note2: If you are using newer compilers than studio8, you <strong>must</strong> specify -xarch=v8, otherwise it will generate code that will not run on some of the older, yet still supported, sparc platforms.
+Note3:  the v8 flag causes old sparc5 (sun4m) machines to perform poorly, due to lack of a hardware multiply. If you wish to be kind to the older sun4m desktop machines, you may use <code>-xarch=v8a</code> instead of v8.<strong>warning</strong>: -fast in rare cases causes bad code. You may have to drop back down to -O instead.
+
+Mantainers may choose to provide additional cpu-optimized libraries, beyond a standard one. The compiler options of interest are;
+<pre>#### for 32bit, "sparcv8plus"
+#Sun CC
+cc  -fast -xarch=v8plus
+# GNU cc (either for this, or sparcv8plus+vis, not sure)
+gcc -mcpu=ultrasparc
+#### for 32bit, "sparcv8plus+vis"
+#Sun CC   (this automatically implies -xarch=v8plusa, and other things)
+cc  -fast -xtarget=ultra
+# GNU cc (either for this, or sparcv8plus+vis, not sure)
+gcc -mv8plus
+
+#### for 64bit
+#Sun CC
+cc  -fast -xtarget=ultra -xarch=v9
+# GNU cc
+gcc -mcpu=ultrasparc -m64</pre>
+You may want to use the following additional flags for Sun CC:
+<pre>-xstrconst
+    puts "quoted strings" in read-only memory, which allows compression,
+    faster loading time, and more efficient memory usage for programs,
+    since it can be shared memory.
+-xildoff
+    turns the incremental linker off. Not normally 'needed', but sometimes
+    programs compile themselves with -g, which will result in the ild
+    adding extra space to the executables that 'strip' will not remove</pre>
+Optimized libraries go in places such as /opt/csw/lib/sparcv8plus or /opt/csw/lib/sparcv9 as apropriate. CPU-optimized executables, go in places such as /opt/csw/bin/sparcv8plus or /opt/csw/bin/sparcv9. For more details on how to package multiple libraries/binaries in a single packages, see the page on use of the <a href="http://www.opencsw.org/standards/isaexec"> 'isaexec' wrapper </a>.
+
+<a name="cpuoptX86"></a>
+<h3>CPU optimizations (x86)</h3>
+The currently prefered x86 platform optimization flags are
+<pre>(for sun cc)  cc -fast -xarch=386  # -xarch=486 does not exist
+(for gcc)     gcc -march=i486</pre>
+<strong>warning</strong>: -fast in rare cases causes bad code. You may have to drop back down to -O instead.
+
+It should be reasonable to optimize for 486 for a "base" executable or library, since Solaris 8 does not support plain old 386 processors.
+
+It MAY be suitable to optimize for pentium by default, but this is still being considered. It is always acceptible to provide an alternative binary for pentium.
+[cc -xtarget=pentium, or gcc -march=i586]
+
+Random tip, if you run into errors with "isa_defs.h" with configure scripts:
+<pre>CPP="cc -E -Xs"</pre>
+Some architectures to evaluate for  special optimization on x86:
+<ul>
+	<li>pentium_pro+mmx</li>
+	<li>pentium_pro</li>
+	<li>amd64</li>
+</ul>
+See our <a href="http://www.opencsw.org/standards/isaexec"> isaexec page</a> for details on how to set up multiple binaries in your package. As mentioned in the sparc section, you should consider whether it would be beneficial to provide multi-arch  support for binaries,  AND libraries.
+
+<a name="64vs32"></a>
+<h3>64bit vs 32bit</h3>
+Most binaries should actually be compiled as 32-bit binaries, 	even on modern sparc cpus. This is for both space and performance 	reasons. 32bit binaries often perform <strong>better</strong> than 64bit 	ones, even though that seems to be counter-intuitive.The following reasons are about the only reasons why 	you should build 64-bit anything:
+<ul>
+	<li>If an executable is <strong>noticably</strong>(10%+) faster in 64bit mode.</li>
+	<li>If an executable requires/benefits from using more than 2 gigabytes 	    of RAM</li>
+	<li>If an executable simply must be 64bit to work properly. 	(eg: if it has to be 'the same as the kernel')</li>
+</ul>
+Libraries have a side consideration. There may not be an intrinsic 	benefit of using the library itself in 64bit mode.. however, some 	executable may require the library to be provided in 64bit form, 	so that that executable may then be compiled in 64bit form.
+
+Whenever possible/practical, a package maintainer should provide a 	single package containing both 64bit and 32bit executables/libraries. 	For extremely large packages, this guideline may be reexamined, by 	bringing up the issue on the maintainers list.
+
+See our <a href="http://www.opencsw.org/standards/isaexec"> isaexec page</a> for details on how 	to set up multiple binaries in your package.
+
+<a name="versioning"></a>
+<h3>Package filenames and versioning</h3>
+Submitted package files should be named with the 	following standard:
+<pre>{SOFTWARENAME}-{REV.NUM}-`uname -s``uname -r`-{ARCH}-CSW.pkg</pre>
+EG:
+<pre>ncurses-5.3,REV=2002.12.31-SunOS5.8-i386-CSW.pkg</pre>
+The '-' character is an explicit field separator, so it is illegal to 	use except in the places shown.
+Please note: the ",REV=YYYY.MM.DD" is now <strong>mandatory</strong>. It provides a fixed-format way of telling how recent the package really is, for version comparison download purposes.
+
+<span style="text-decoration: line-through;">For purposes of backward compatibility,  <strong>anything to the left of ",REV" must be purely numeric. ie: [0-9.] </strong> </span>
+
+Please note that it is no longer mandatory to only have numeric stuff to the left of the REV field.
+
+{ARCH} is usually the output of `uname -p`. But for certain special 	packages that run on all solaris hardware(eg: scripts), or are otherwise architecture-neutral(eg: documentation), it 	may be preferable to have ARCH=all
+
+Note that the filename should exactly show the full 	VERSION field, 	including the REV section.
+
+The naming of the file <strong>does</strong> matter!! It determines how your package will be cataloged for people using pkgutil to download it.
+
+Software names (and thus the first component of the filename) must be all lower case. 	 This is an ease of use issue, so people dont have to think about whether they should use
+
+<ol>
+	<li>pkgutil -i imagemagick</li>
+	<li>pkgutil -i Imagemagick</li>
+	<li>pkgutil -i ImageMagick</li>
+</ol>
+(Plus, it makes the directory listing sort properly.)
+
+<a name="multiOS"></a>
+<h3>Multi-OS-rev packages</h3>
+Whenever practical, we need to have a single OS version of our packages. (It should be the "lowest" OS version we support: currently, Solaris 9, although Solaris 8 packages are still accepted)The reason is so that we can better support our customers that want to put our packages on a single NFS shared filesystem. (see our <a href="http://www.opencsw.org/userguide/">User Guide</a> for a reminder)
+
+This does not mean, however, that it is impossible to support features in newer revs of Solaris. It is usually possible to provide some amount of  auto-detection and "do the right thing" depending on the currently running  OS. See the lsof package, for an example.
+
+<a name="nonstandard"></a>
+<h3>Notes on non-standard packages</h3>
+Sometimes, it is appropriate to create a package with features, or a layout, that is considered unusual when compared to other packages. To avoid questions by the release manager every time, of "why are you doing this, again?", you can optionally provide a file in the package itself, describing why. The file should be named "<em>cswreleasenotes</em>", and referenced in your prototype file, as the first line, "<em>i cswreleasenotes</em>". This convention is useful, both to avoid unneccessary delays in releasing your package, but also to remind you (or some future maintainer) why the package is made that way, a year later.
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/build-standards/architecture-o…ec-and-isalist/
+
+It is possible to provide a single package, that provides architecture-specific optimized versions of executables and libraries.Where there is significant performance gain achievable, this behaviour is  strongly encouraged for our package maintainers.
+
+It is sometimes possible/beneficial to provide cpu-optimized libraries, even if there are no cpu-optimized binaries using it.
+(eg: generic binary, but cpu-specific-optimized crypto libs)
+It is sometimes possible/beneficial to provide cpu-optimized binaries, even if there are no matching cpu-optimized libraries for it to use. (except for the case of "i want to build a (64,32)bit executable but a similar "bittedness" library is not available" !)
+
+<hr /><span style="text-decoration: underline;">If you are building libraries</span>, and are providing multiple versions of a  library (each compiled for specific CPU types), then place your libraries in  the appropriate subdir of /opt/csw/lib. eg:
+<pre>/opt/csw/lib/sparcv8/libsomething.so
+/opt/csw/lib/sparcv9/libsomething.so
+/opt/csw/lib/XXXX/libsomething.so</pre>
+The "best" library, will be automatically picked up by programs that follow our  build standards,  linking with:
+
+<code>-R/opt/csw/lib/$ISALIST</code>
+
+<hr /><span style="text-decoration: underline;">If you are building an executable</span>, and wish to provide multiple versions of it, each compiled for a specific CPU type, then place your program in   the appropriate subdir of /opt/csw/bin. <strong>You must also</strong> 'depend' on CSWisaexec, and adjust your prototype file to make your program be a hard link to isaexec.
+<pre># In "prototype" file:
+l none /opt/csw/bin/yourprog=isaexec
+
+# In "depend" file:
+P	CSWisaexec
+
+# File layout
+/opt/csw/bin/sparcv8/yourprog
+/opt/csw/bin/sparcv9/yourprog
+/opt/csw/bin/XXXX/yourprog
+/opt/csw/bin/yourprog [hardlinked to isaexec]</pre>
+<hr />Possible values of "XXXX" for a specific platform, are given by the output of the "isalist" program.
+
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/build-standards/build-machines/
+
+The following build-farms are currently available:
+<ul>
+	<li><a href="http://www.opencsw.org/standards/build_farm#bo">Baltic Online, Kiel, Germany</a></li>
+	<li><a href="http://www.opencsw.org/standards/build_farm#go">W.L. Gore company</a></li>
+</ul>
+<h2><a name="bo">Build farm Baltic Online, Kiel, Germany</a></h2>
+The build-farm is accessible via ssh public key. To get access please send an email to <a href="mailto:buildfarm%20%5Bat%5D%20opencsw.org">buildfarm [at] opencsw.org</a> You can log in to the farm with
+
+<pre>ssh &lt;user&gt;@login.bo.opencsw.org</pre>
+
+The homedirectories on the farm are all NFS-shared. If you have an ssh-key in your home and put the public key in the local authorized_keys you can move between the machines without password. For further details see /etc/SETUP on the login server.
+
+There are currently build machines with different OpenCSW catalogs for the following operating systems:
+<ul>
+	<li>Solaris 8 Sparc</li>
+	<li>Solaris 8 x86</li>
+	<li>Solaris 9 Sparc</li>
+	<li>Solaris 9 x86</li>
+	<li>Solaris 10 Sparc</li>
+	<li>Solaris 10 x86</li>
+</ul>
+
+<h2><a name="go">Build farm sponsored by the W.L. Gore company</a></h2>
+The build-farm is accessible via ssh public key. To get access please send an email to <a href="mailto:buildfarm%20%5Bat%5D%20opencsw.org">buildfarm [at] opencsw.org</a> You can log in to each machine directly with <tt>ssh &lt;user&gt;@build9s.go.opencsw.org</tt>
+
+There is currently one build machine;
+<ul>
+	<li>Solaris 9 Sparc</li>
+</ul>
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/build-standards/filesystem-layout/
+
+<h3>Everything is under /opt/csw</h3>
+That's the number 1 rule of filesystem layout right there: everything goes under <code>/opt/csw</code>. The reason for this is to simplify read-only NFS sharing of <code>/opt/csw</code> to multiple systems, and to simplify management in general.
+
+The exceptions to this would be when some program is typically configured to be machine-specific in all cases. (ie: where NFS_sharing the configuration files  doesnt make sense).  For those types of packages, the SVR4 filesystem standard suggests that <code>/etc/opt/csw/[softwarename]</code> be used as a  configuration directory (although clearly labeled examples may go in <code>/opt/csw/etc</code>).
+
+<code>/opt/csw/var</code> is an anachronism, and should be removed from any package that still uses it. It is better to use <code>/var/opt/csw/[softwarename]</code> for 'var' type purposes.
+
+As a tip for dealing with out-of-date packages, it <em>is</em> possible, however, for sysadmin admins to mount a writable local  <code>/opt/csw/var</code>, on top of a read-only <code>/opt/csw</code>, so the problem may not be fatal.
+<h3>General layout philosophy</h3>
+Generally speaking, we will use a typical free software <code>/usr/local</code> style layout. Substitute <code>/opt/csw</code> in place of <code>/usr/local</code>, and everything should look "normal". In fact, if you make a symbolic link from <code>/usr/local</code> to <code>/opt/csw</code>, or lofs mount, etcetera, things should generally work as expected if you set your PATH to include <code>/usr/local/bin</code>
+<h4>Filename conflicts</h4>
+Note that filename conflicts with other packages are not allowed. At a high level, this is because we want to ensure it is possible to install all our current packages at the same time.  One reason for this, is to allow our users to more easily experiment with different versions of something (ie: sendmail vs postfix), and easily switch between the two, rather than having to deinstall and reinstall packages to do this.
+<h3>Subdirectories of /opt/csw</h3>
+<dl> <dt> <strong>bin</strong> </dt> <dd> User runnable executables
+
+<dl> <dt> <strong>bin/sparcv8plus</strong> </dt> <dd> 32-bit executables optimized for sparc "v8+" instruction set. Should have its RPATH set to use libs in <code>/opt/csw/lib/sparcv8plus.</code> </dd> <dt> <strong>bin/sparcv8plus+vis</strong> </dt> <dd> 32-bit executables optimized for sparc "v8+" instruction set, with use of the VIS extensions to the SPARC instruction set. Should have its RPATH set to use libs in <code>/opt/csw/lib/sparcv8plus+vis</code>. This is probably more useful than sparcv8plus, since all sun ultrasparcs support this sub-architecture. </dd> <dt> <strong>bin/sparcv9</strong> </dt> <dd> 64-bit executables for sparc, if isaexec is used in bin. Should have its RPATH set to use libs in <code>/opt/csw/lib/sparcv9</code>. </dd> </dl> </dd> <dt> <strong>etc</strong> </dt> <dd> <em><span style="text-decoration: underline;">Global</span></em> Configuration files.
+(Machine-local conf files should go in <code>/etc/opt/csw/[softwarename]</code> or <code>/etc/opt/csw</code>) </dd> <dt> <strong>lib</strong> </dt> <dd> "library" files, and other architecture dependant files. Typically used for "libxxx.so" files. May also be used in some cases for datafiles for a program (would normally be stored under lib/progname/). However, the preferred location for non-library data would normally be under the 'share' directory.
+
+<dl> <dt> <strong>lib/locale</strong> </dt> <dd> localized information that has been compiled to arch-specific 	      formats, belongs in here. </dd> <dt> <strong>lib/32</strong> </dt> <dd> A symbolic link back to the lib directory. </dd> <dt> <strong>lib/64</strong> </dt> <dd> Points to 64-bit versions of shared libraries found in lib directory, if available </dd> <dt> <strong>lib/sparcv8plus</strong> </dt> <dd> For libraries optimized for 32 ultrasparc cpus that have the "v8+" SPARC instruction set </dd> <dt> <strong>lib/sparcv8plus+vis</strong> </dt> <dd> For libraries optimized for 32 ultrasparc cpus that have the "v8+" SPARC instruction set AND the VIS extensions. </dd> <dt> <strong>lib/sparcv9</strong> </dt> <dd> Typically where lib/64 will point to, on sparc systems. </dd> <dt> <strong>lib/X11</strong> </dt> <dd> The equivalent of /usr/openwin/lib/X11, or /usr/X11R6/lib/X11. 	           Note that "app-defaults" files go under 		   <code>lib/X11/app-defaults</code>
+Note also, that this is SEPARATE from /opt/csw/X11/lib. </dd> </dl> </dd> <dt> <strong>libexec</strong> </dt> <dd> [Definition under construction]Tentative definition: Location for executables that are run only by other programs, not by a person at a command line prompt.
+
+</dd> <dt> <strong>sbin</strong> </dt> <dd> Executables for sysadmins to run (includes demons) </dd> <dt> <strong>share</strong> </dt> <dd> Data that is shared by multiple programs. Or, common areas that hold certain types of data. Or, a datafile storage area for programs (eg: share/progname/datafiles.txt). Things in here should be architecture-neutral (non-endian-dependant, pure data type stuff, usually textfiles, documentation, etc.)
+
+<dl> <dt> <strong>share/man</strong> </dt> <dd> manpages go under here </dd> <dt> <strong>share/doc</strong> </dt> <dd> Non man-page and non "info" documentation goes here. For example, /opt/csw/share/doc/yourprog/README. A  README file here is a good place to put additional user instructions on configuration of complex packages</dd> <dt> <strong>share/java</strong> </dt> <dd> "pure java" jarfile packages should be kept here. </dd> <dt> <strong>share/www</strong> </dt> <dd> "pure php" and other arch-neutral web packages should 	         deploy to here, for similar reasons to the java location. 		 (One reason being that we dont want to limit the users' choice 		 of web server if we dont have to). If there is a particular 		 reason why the app doesnt belong under "share", though, 		 perhaps /var/opt/csw/share/www or similar would be 		 appropriate.</dd> </dl> </dd> <dt> <strong>var</strong> </dt> <dd> Dont use this. Use /var/opt/csw instead.
+
+</dd> <dt> <strong>X11</strong> </dt> <dd> This is for our own packaged X11 libs, loosely equivalent 	  to /usr/X11R6 on other systems.
+Up until 2009, we have relied upon the system level X11 libraries 	   shipped with Solaris. In most cases, we wish to continue to do 	   so.
+However, there are some recent applications that <em>require</em> modern versions of X11 libraries. We make them available in 	   this separate subtree, so that applications will not accidentally 	   pull them in at compile time, but default to the system ones. 	   That way, our builds will only pull in our own X11 libs as 	   dependancies, if the maintainer decides it is absolutely 	   required. </dd> <dt> <strong>[programname]</strong> </dt> <dd> Sometimes, when a program has an extreme amount of subprograms, utilities, and libraries associated with it, it may warrant its own subtree under /opt/csw. Generally, programs that expect to install themselves under their own /usr/local/[programname]/ tree, would be installed in /opt/csw/[programname]/ </dd> </dl>
+<h3>Perl module locations</h3>
+Please make a note that we take advantage of perl's "vendor" options,       to maintain our own "csw" directories, as a vendor of perl packages.
+<pre>Good locations for perl modules:
+   <strong>/opt/csw/lib/perl/csw</strong>
+   <strong>/opt/csw/share/perl/csw</strong>
+Bad locations for perl modules:
+   /opt/csw/lib/perl/site_perl
+   /opt/csw/share/perl/site_perl
+</pre>
+The easy way to trigger install to these locations, depends on whether       the software in question provides Makefile.PL or Build.PL.       Choose the appropriate line from either of the following:
+<pre>perl Makefile.PL INSTALLDIRS=vendor  #DESTDIR=xxx
+# or
+perl Build.PL installdirs=vendor  #destdir=xxx
+</pre>
+<h3>Hacks</h3>
+Note that the CSWcommon package currently provides certain links for directories:
+<pre><strong>man</strong>  -&gt; share/man
+<strong>doc</strong>  -&gt; share/doc
+<strong>info</strong> -&gt; share/info
+</pre>
+This is to make it easier to do a "make install ; find /opt/csw |pkgproto" cycle and have the results come out "correct", even if the software normally installs things into $prefix/man, and so on.<strong>Do not use</strong> /opt/csw/{man|info|doc} in your pkg prototype files
+
+<hr />[Content of this page maintained by Phil Brown]
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/build-standards/package-creation/
+
+<h1>Solaris package creation walkthroughs</h1>
+The impatient will probably just want to dive into a direct "walk-through" of how to create packages for opencsw. We aim to please, with two alternative walkthrough guides:
+<ul>
+	<li> A "    <a href="http://www.opencsw.org/standards/pkg-walkthrough">you're so lucky, you get all the easy packages</a>"      walkthrough (Recommended!)</li>
+	<li> A "    <a href="http://www.opencsw.org/standards/pkg-reloc-fakeroot">I like to control everything, even when it breaks horribly</a>" walkthrough</li>
+</ul>
+However, you should <strong>still read the rest of this page</strong> to better understand what is going on under the covers.
+<h1>Mechanics of Solaris/SysV pkg creation</h1>
+<h2>The prototype file</h2>
+SysV(Solaris) packages are controlled by a 'prototype' file, that defines which  control files,  datafiles, and directories will be contained in the package. A sample prototype file will look like
+<pre>i pkginfo
+i depend
+i copyright
+d none /opt/csw/bin
+f none /opt/csw/bin/links</pre>
+The "i" is a funny way of saying "this is a control file". Other entries are  for "normal" files and directories. Note that the standard ownership for all files and directories, is:
+owner=root, group=bin
+There is a SysV pkg convention, that says you can default the definitions with use of "? ? ?", to accept whatever permissions on a file or directory are there already.
+This convention should only be used for directories that are expected to exist already, and are outside of both <code>/opt/csw</code> and <code>/etc/opt/csw</code>, such as <code>/etc/init.d</code>.  For all  directories under a "csw" tree, the standard of "0755 root bin" should be used.
+
+Exceptions to this are if there is a specific need to have other ownership/group settings, or if the directory is guaranteed to already be created by another package it depends on (such as CSWcommon). In which case, the line for the directory in the prototype file may be omitted altogether.
+<h2>Package control files</h2>
+<h3>pkginfo definitions</h3>
+At minimum, your pkginfo file should contain the following information:
+<pre>PKG=CSWxxxx
+NAME=shortname - Long name after dash
+ARCH=("sparc", "i386", or "all")
+CATEGORY=("application" or "system")
+VERSION=x.y.z
+VENDOR=url://where.you.got.source packaged for CSW by Your Name
+HOTLINE=http://www.opencsw.org/bugtrack/
+EMAIL=yourlogin@opencsw.org
+DESC=[Optional extra info about software. Omit this line if you wish]</pre>
+These fields are used by scripts to generate catalogs and things, so it is VERY IMPORTANT that you stick to the above format.
+<strong>shortname</strong> must be all lowercase, with only "_" allowed as punctuation, and not being longer than 20 chars total.
+<strong>PKG</strong> name, must be "CSW" followed by lowecase letters, not being longer than 20 chars in total. "-" is allowed but most packages do not use it  even when there is "_" in shortname.
+Also be sure that what you pick for PKG is going to last forever, because changing it is a very messy thing.When splitting up a "large" package, into more user-friendly pieces, such as one package for shared libraries, one package for documentation, and one package for developer resources, the following naming conventions should be followed:
+<table border="1" bgcolor="white">
+<tbody>
+<tr>
+<th>PKGname</th>
+<th>shortname</th>
+</tr>
+<tr>
+<td>CSWlibsoft0</td>
+<td>libsoft0</td>
+</tr>
+<tr>
+<td>CSWsoft-dev</td>
+<td>soft_dev</td>
+</tr>
+<tr>
+<td>CSWsoft-doc</td>
+<td>soft_doc</td>
+</tr>
+</tbody>
+</table>
+Note that you do not have to set ARCH in the pkginfo file itself:   You can set it on the command line when you create the package, with "pkgmk -a". [or, the "createpkg" utility will do it automatically for you]. See the examples lower down for details.
+
+Please note that whatever you put in the DESC field, will be exactly how the package is listed in the <a href="http://www.opencsw.org/packages.php">packages listing</a>. If you do not wish to provide a customized value, it will fall back to  whatever you have as the "long name" in the NAME field.
+
+Final note: Please do not use any apostrophe in the fields. (It makes putting  the info in a database trickier). Especially do not use "GNU's xyz". Typical usage; "GNU emacs", not "GNU's emacs".
+<h3>depend definitions</h3>
+If your package depends on certain shared libraries being installed,  it should have a 'depend' file specified. "man depend" for format of the  file. You will almost always need a depend file.  Generally speaking, it will have entries like the following:
+<pre>P      CSWgtk  GTK - The GIMP Toolkit
+P      CSWglib GLIB - Library of useful routines for C programming</pre>
+If any packages in the depend file do not begin with "CSW", or "SUNW",   go and read the "Build standards" section of this document.<strong>EVERY SINGLE DYNAMICALLY LINKED LIBRARY</strong> used by your package, must  have an appropriate entry in your depend file.
+
+Generally speaking, it is best to use Solaris standard libraries and  utilities. Unless there is an overriding reason, use the Sun ones.  For example, unless there is a real benefit to using ncurses over curses,  use the system standard curses library.
+
+Many GNU programs use GNU gettext, and refuse to use Solaris standard  gettext. Therefore, you should probably install CSWggettext, and declare  a dependancy on it, for many programs, due to linkage of  <code>/opt/csw/lib/libintl.so.2</code>
+<h4>Declaring a conflict in the depend file</h4>
+In very very very VERY rare circumstances, a package will declare   a 'conflict' with another package.  This is only done in circumstances   where it is neccessary to automatically "clean up" an old, obsolete,   "bad" package, that has a obsolete PKGname that is not 'upgrade'able.   There should never be conflicts between two "current" packages.
+Unlike the traditional pkgadd/pkgrm usage, (where   a conflict may mean that you should decide whether you want one, or   the other of the two packages), a conflict definition from a opencsw   package, means that the older "conflicted" package should always   be removed. Because of this, package tools will, when installing a new package, automatically   attempt to remove any other package that the new package has declared   a conflict with.
+<h3>copyright file</h3>
+Every package should have a basic copyright file detailing the author's  intents.
+<h2>Boot scripts</h2>
+Some packages need boot scripts (auto-start scripts in <code>/etc/rc*.d/</code> ). Some may only sometimes need boot scripts. It it up to the packager to decide  whether the software is important enough to merit <em>always</em> starting it at boot-time or not. You should carefully consider which one is correct for your package.Two opposite examples, are apache and rsync. Apache's sole purpose in life is to be a webserver. It makes no sense to install it, if you do not want it running as a demon. rsync, on the other hand, is commonly run manually,  and only in certain cases is it desirable to run it as a demon. Correspondingly, CSWapache directly installs scripts in <code>/etc/*</code>, whereas CSWrsync does not.
+
+If you choose to not to always start a demon at boot time, you should probably provide a sample boot-time script, in either the <code>/opt/csw/share/progname/</code>, or the <code>/opt/csw/share/doc/progname/</code> directory.
+
+If you do want to always start a demon, you will most likely want to create boot-time scripts the same way, whether you decide to create a relocatable package, or an absolute path package (see lower down for details). Here is an example of how you would do that, taken from CSWapache.
+
+The following assumes that you have a '<code>pkgs</code>' directory tree in your home directory where you keep pkginfo files, and other files relating to each package.
+<pre>f none /etc/init.d/cswapache=/export/home/phil/pkgs/apache/cswapache 0744 root sys
+s none /etc/rc3.d/S50cswapache=../init.d/cswapache
+s none /etc/rc0.d/K16cswapache=../init.d/cswapache
+s none /etc/rc1.d/K16cswapache=../init.d/cswapache
+s none /etc/rc2.d/K16cswapache=../init.d/cswapache
+s none /etc/rcS.d/K16cswapache=../init.d/cswapache</pre>
+Note that there are links for both 'S' and 'K' names, which means the script must handle both 'start' <span style="text-decoration: underline;">and</span> 'stop' arguments.Nice start scripts will check for the presence of a config file, and not  start the demon if it is not present.
+<h2>Install/Remove scripts</h2>
+Packages that need scripts to run when pkgadd or pkgrm are called,  are the most complex to  put together. They are also a potential security risk. Some people  feel uncomfortable about pkgadding third party stuff that requires  an anonymous script running as root. So if possible, it is best to avoid  install scripts, if you can still stick with the   "deliver a fully functional package" motto.When they are required, however, very strict guidelines need to be  followed.
+
+For example, scripts should be written to be paranoid about the state of  config files. A package may be in a partially installed state ; your script may   be running for the second time on the same machine.
+
+Additionally, when packaging demons, be aware of the fact that the demon may  STILL BE RUNNING. Do not do anything that could potentially break services.
+<h3>preinstall/postinstall scripts</h3>
+Custom preinstall/postinstall scripts (and any other pkg scripts!) should be  aware of altered root locations. There are two reasons why the "root"  directory may have been changed:
+<ol>
+	<li> You have made a relocatable package, and the BASEDIR has been changed by the installer</li>
+	<li> The package is being installed with "pkgadd -R /somepath" (most commonly     as part of jumpstart, or possibly a "live upgrade")</li>
+</ol>
+Sometimes, both can be in effect.
+For the "-R /somepath" case, you only need to prefix all your file access  with $PKG_INSTALL_ROOT. Example:
+<pre>grep username /etc/passwd
+# becomes
+grep username $PKG_INSTALL_ROOT/etc/passwd
+#  (except you should probably use "getent passwd username" instead! )</pre>
+If you have a relocatable package (one that has relative paths, without   a leading '/', in your prototype file), then you should instead use  the $BASEDIR variable. Interestingly, this variable gets automatically  adjusted for use of -R.  Thus, if the normal "base" for your package  files is /opt/csw, but the user is installing in a jumpstart environment,  AND they've decided to override the base to be /opt/csw-altdir, you dont  have to worry about the -R usage. You can just use the normal  BASEDIR style handling, and it will be taken care of either way, as follows:
+<pre># command-line, but inappropriate usage:
+# cp /opt/csw/etc/yourprog.CSW  /opt/csw/etc/global.conf.file
+# jumpstart-clean usage:
+cp $BASEDIR/etc/yourprog.CSW  $BASEDIR/etc/global.conf.file</pre>
+<h3>preinstall/postinstall scripts, and ZONES/jumpstart</h3>
+Sometimes, the package will be added with the equivalent of  <code>pkgadd -R /somepath</code>.   This can happen both for jumpstart type  installs, and also with zones.For zones, packages will most commonly get added "normally", if the  zone happens to be active(running). However, if the zone is NOT  running, it will be automatically started up in "administrative state".  This means that no demons will be running, and its filesystems will  be mounted under /a, rather than / .  Thus, proper use of $PKG_INSTALL_ROOT or $BASEDIR, is important  for zones as well as jumpstart installs.
+
+This can also be a good way to test out if your package works cleanly   for jumpstarts, even if you dont have a jumpstart server! Create   a zone, make sure it runs properly, then <code>zoneadm -z zone halt</code>,   and try to pkgadd it to the global zone. The system should automatically   do its special magic and add it to the other zone as well, via   booting the zone in "administrative mode"
+<h2>How to create the package file</h2>
+AFTER you have created pkginfo, depend, and copyright files, you have to  generate the "normal" part of the prototype file. You can do this by running a normal "install" of the software, then using the 'pkgproto' utility in one of the following ways:
+<h3>Absolute-path package</h3>
+<pre>touch /tmp/timestamp
+##[make install]
+
+(echo "i pkginfo"; echo "i depend" ;
+ echo "i copyright";
+ find /opt/csw -newer /tmp/timestamp
+)  |pkgproto &gt; prototype
+
+strip /opt/csw/bin/*
+pkgmk -r / -a `uname -p`
+filename=software-ver-SunOS`uname -r`-`uname -p`-CSW.pkg
+pkgtrans -s /var/spool/pkg /tmp/$filename CSWyourpkg
+rm -r /var/spool/pkg/CSWyourpkg</pre>
+<h3>Relocatable-path package</h3>
+<pre>touch /tmp/timestamp
+##[make install]
+
+(echo "i pkginfo"; echo "i depend" ;
+ echo "i copyright";
+ cd /opt/csw ;
+ find . -newer /tmp/timestamp
+) &gt; |pkgproto &gt; prototype
+
+strip /opt/csw/bin/*
+pkgmk -b /opt/csw -a `uname -p` BASEDIR=/opt/csw
+filename=software-ver-SunOS`uname -r`-`uname -p`-CSW.pkg
+pkgtrans -s /var/spool/pkg /tmp/$filename CSWyourpkg
+rm -r /var/spool/pkg/CSWyourpkg</pre>
+Use the Absolute-path way, if your executables have compiled in paths to  /opt/csw/something. Otherwise, you may want to use the  Relocatable-path version.
+
+If your package does not have any dependancies, you should remove the  "i depend" part.
+
+<strong>Note</strong>: You should look through the prototype file, and verify that everything is owned by "root bin", not "root other", or some other uid local to your system. The <strong>STANDARD</strong> UID/GID combination is root:bin, unless there is a special need (eg: things owned by 'nobody' for security reasons, etc)
+
+You should now have a shiney new package file to submit. But you need to build TWO packages:  one for Solaris 8 x86, and one for Solaris 8 sparc. The good news is, you can just copy over the pkginfo, prototype, etc. files to the other machine after you have installed the binaries,  rather than having to hand-edit that stuff again.
+<h2>How to create the package file without root access</h2>
+If you are on a system where you do not have root access (like the   shared sparc build machine), and dont have a custom   prototype file to build a package straight from the build tree, there   are a few different ways you could still make a package:
+<ol>
+	<li> A hand-built prototype file that translates build dir files        to final destinations.</li>
+	<li> An install as a non-root user, but hand-tweak the prototype file to        have correct ownerships of files</li>
+	<li> Use a tool to make your shell think it can do root type operations        like chown and chmod, even though it cant realy.</li>
+</ol>
+Both #2 and #3 require that the software allow itself to be   temporarily installed to an offset location. eg:
+<code>/tmp/destdir/opt/csw/bin</code> instead of <code>/opt/csw/bin</code>
+<h3>"direct from build tree" method</h3>
+If you have a relatively simple program structure to install,   it isnt so bad to make the prototype file by hand. This essentially   replaces the normal "make install" process, by writing your own   virtual install process to "install" to a package tree.   A really simple example is the "links" program.   A sample prototype file would look like the following:
+<pre>i pkginfo
+i depend
+i copyright
+d none /opt/csw/bin 0755 root bin
+f none /opt/csw/bin/links=links 0755 root bin
+d none /opt/csw/share/man 0755 root bin
+d none /opt/csw/share/man/man1 0755 root bin
+f none /opt/csw/share/man/man1/links.1=links.1 0644 root bin</pre>
+To take advantage of this, once you have your pkginfo, depend, and    copyright files all in the current directory, (and have 'strip'ped the   executables) you just have to run
+<pre>pkgmk -b /build/directory/path
+pkgtrans -s /var/spool/pkg `pwd`/links-xxxx.pkg CSWlinks
+rm -r /var/spool/pkg/CSWlinks</pre>
+<h3>fakeroot method</h3>
+This method can also potentially work even without fakeroot,    (assuming the software allows non-root installs). It just means that     you have to adjust the permissions in the prototype file by hand.To have this work correctly, the software <strong>MUST HAVE</strong> an   "install" target that respects a root directory offset. For some reason,   a common name for a variable to do this is <code>DESTDIR</code> [A possible alternative is INSTALL_PREFIX] .   The  example assumes that DESTDIR is in effect.
+
+Other assumptions:
+<ul>
+	<li> You have the 'fakeroot' software package installed.</li>
+	<li> You have a pre-written pkginfo file sitting somewhere like          ~/pkgs/pkginfo.xx</li>
+	<li> You actually WANT to make a relocatable pkg (with the BASEDIR stuff)</li>
+	<li> You start in the top-level build directory for the software you         are packaging.</li>
+	<li> You have already run "./configure --prefix=/opt/csw" or whatever        is appropriate.</li>
+</ul>
+<pre>$ mkdir -p /tmp/destdir/opt/csw                  #This may not be neccessary
+$ fakeroot /bin/ksh                   #Or choose another shell if you prefer
+# make DESTDIR=/tmp/destdir install   #
+# cd /tmp/destdir/opt/csw
+# (echo 'i pkginfo' ; echo 'i copyright'; pkgproto . )&gt;prototype
+####  You may have to add other stuff like a 'depend' file to the prototype
+# exit
+$ cd /tmp/destdir/opt/csw
+$ cp {SOURCEDIR}/LICENSE copyright
+$ cp ~/pkgs/pkginfo.xx pkginfo
+$ strip *bin/*
+$ pkgmk -b /tmp/destdir/opt/csw BASEDIR=/opt/csw
+$ filename=yoursoftware-version-SunOS`uname -r`-`uname -p`-CSW.pkg
+$ pkgtrans -s /var/spool/pkg /tmp/$filename CSWwhatever
+$ rm -r /var/spool/pkg/CSWwhatever</pre>
+How this works, is that the "fakeroot" pretends to let you do   chown and chmod things like root would do, and stores the new fake   ownership values until you exit the fakeroot shell.   It will NOT let you do things like modify <code>/etc/passwd</code> or <code>/etc/shadow</code>. BTW: If you do NOT want a relocatable package, you should use the   following proceedure instead
+<pre>$ mkdir /tmp/destdir                 #This may not be neccessary
+$ fakeroot /bin/ksh                  #Or choose another shell if you prefer
+# make DESTDIR=/tmp/destdir install  #or gmake
+# cd /tmp/destdir
+# (echo 'i pkginfo' ; echo 'i copyright'; pkgproto .) |
+     sed 's: none : none /:' &gt;prototype
+# exit
+[cp copyright and pkginfo files into current directory, then]
+$ strip opt/csw/*bin/*
+$ pkgmk -r /tmp/destdir
+$ filename=yoursoftware-version-SunOS`uname -r`-`uname -p`-CSW.pkg
+$ pkgtrans -s /var/spool/pkg /tmp/$filename CSWwhatever
+$ rm -r /var/spool/pkg/CSWwhatever</pre>
+<h2>Resources</h2>
+For full details on the finer points of pkg creation, you can try "man prototype", "man -s4 pkginfo", or go to Sun's  <strong> <a href="http://docs.sun.com/app/docs/doc/805-6338"> Application Packaging Developer's Guide</a> </strong> pages
+
+It is suggested that you keep around your pkginfo and depend files, and any build notes you may have, so that when it comes time to upgrade the package, you have an easier time of it.
+<h3>opencsw standards</h3>
+Please note: this page is fairly generic for SYSV packaging. If you are  interested in more of the CSW specific stuff, you should really  look at our full <a href="http://www.opencsw.org/standards/pkg-walkthrough">packaging walkthrough page</a>
+<h3>Template archive</h3>
+A "shortcut", if you will, can be taken by using  <a href="http://www.opencsw.org/standards/template.tar">Phil's template tarfile</a>. This will extract an assortment of files to a 'template' directory. You should make your own directory to hold pkginfo type files, then copy the template files, and adjust as needed. [Although this tarfile may be a smidge out of date now]
+
+After the first time you make a package, recreating it on the opposite CPU architecture will be  trivial. Also, creating an updated package when new software comes out, will be similarly easy, as long as you keep around the directory with these  files.
+<h3>Signing up</h3>
+Still up to the task? Then please  <a href="http://www.opencsw.org/maintainer-signup">let us know!</a>
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/build-standards/shared-libraries/
+
+<h3>Upgrading, with dependencies</h3>
+
+Our wiki contains <a href="http://wiki.opencsw.org/packaging-shared-libraries">shared library packaging guidelines</a>.
+
+
+
+
+
+<blockquote>
+<strong>This section is out of date.</strong>
+
+One pitfall that package maintainers must be aware of, when creating  packages of shared libraries, is the dependancy problem. Unlike simple  "provide an executable" packages, your package has other packages that  may depend on a specific version of the bits in your library package.  If only your own packages depend on your shared library package, you  can probably manage things yourself. But when you maintain something  used by 10 other peoples' packages... how can you safely release  an update?
+
+Sometimes, no changes are necessary. This happens when the newer version  of the library is completely compatible, and also the "SONAME" matches.  You can find the SONAME, by doing the following:
+
+<pre>dump -Lv libXXXX.so|grep SONAME</pre>
+
+Unfortunately, you will eventually have to deal with the case where the newer version of the library has a different SONAME than the older one.
+
+If there are only a handful of package, it is often possible to  work with the other maintainers, and temporarily install the newer  version of a library on our build machines, so that the other maintainers  can recompile. Your library package, and their dependant packages, should  then be released together.
+
+For more than that, it is usually necessary to include older versions  of a library, in your package. So, if you are releasing  <code>libfoo.so.1.3</code>, it is appropriate to copy in the older <code>libfoo.so.1.2</code> into your package.  In this manner, you can provide an updated version for people to compile  against, while also not breaking existing packages, until their maintainers  have time to recompile.
+
+How can you know, when everything has safely been recompiled, and you  no longer need to include the older shared library?
+
+Put the "SONAME" of the library, into our  <a href="http://opencsw.org/filesearch/">search page</a>. For example, currently,  putting in "libssl.so.0.9.7" will give you a fairly long list of  packages that depend on that specific library provided by our  openssl package.</blockquote>
+
+<h3>Optimized libraries</h3>
+If there are speed benefits for compiling a library for a more recent cpu/architecture than our defaults, you may choose to provide both generic, and highly optimized versions of shared libraries.  Usually, you can then ship both versions of the library in a single package,  by taking advantage of the <strong>ISALIST</strong> feature of the dynamic linker. Properly compiled programs will then automatically take advantage of the  "best" library to use, on the current machine.
+
+See our page on <a href="http://opencsw.org/standards/isaexec">isaexec</a> for more details .
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/build-standards/smf/
+
+<h2>Overview:</h2>
+
+This page describes the method used to add Service Management Facility (SMF) capabilities to CSW packages for a single instance of a service.
+
+This page presumes you want to "do it all yourself", in your own package. However, if you would rather take advantage of sharing a CSW-wide common SMF routine, you should take a look at our cswclassutils package,  which has pre-written SMF handling, and some other neat tricks. See <a href="http://wiki.opencsw.org/cswclassutils-package">the wiki</a><a> for more details on that method. </a>
+
+<h2>Components:</h2>
+
+<a>1) </a><a href="http://www.opencsw.org/standards/smf#prototype">prototype</a> - includes sections for legacy scripts and SMF files.  The section for legacy scripts is assigned to class smfno.  The section for SMF files is assigned to class smfyes.
+
+2) <a href="http://www.opencsw.org/standards/smf#pkginfo">pkginfo</a> - not changed.  It still uses CLASSES=none by default.
+
+3) <a href="http://www.opencsw.org/standards/smf#checkinstall">checkinstall</a> - this script is added to choose either class smfyes or smfno, depending on the availability of SMF binaries, and adds that class to the package installation.
+
+4) <a href="http://www.opencsw.org/standards/smf#class_install_files">class install files</a> for class not equal none - Every class that is not a value of 'none' needs a script to install the files for that class.  The script name must be i.&lt;class&gt;.  For example, there is a i.smfyes and i.smfno script.
+
+5) <a href="http://www.opencsw.org/standards/smf#postinstall">postinstall</a> - Set variable smf to no for a default. If the SMF binaries are available, set variable smf to yes. For SMF installations, configure the service. For packages that start the service in postinstall: enable the service when variable smf is yes or run the rc script when variable smf is no. Note that the command used with chroot needs the full pathname.
+
+6) <a href="http://www.opencsw.org/standards/smf#space">space</a> - This is not really required, but it does suppress a warning on package build.  The space file is used to inform the system of additional space required for files added manually.  Since the prototype contains both classes, the net effect on space is that it is actually reduced.  I have not done anything with this file, except to provide a blank file.
+
+7) <a href="http://www.opencsw.org/standards/smf#service_manifest">service manifest</a> - This defines the service to SMF.  Study your dependency requirements carefully.  I also use the Solaris service manifests for samples.
+
+8) <a href="http://www.opencsw.org/standards/smf#service_method_file">service method file</a> - This is the script used by SMF to control the service.  It can be the same as the older rc script with the addition of line(s) to include some SMF functions.
+
+9) <a href="http://www.opencsw.org/standards/smf#preremove">preremove</a> - Handles stopping the service for both smfyes and smfno and unregisters the service from SMF for smfyes.
+
+<h2>Sample Code:</h2>
+
+NOTE: Package pathnames in these examples are absolute pathnames.  $BASEDIR needs to be added for relocatable packages.
+
+1) <a name="prototype"></a>prototype - Here is a sample from CSWmsyql5.  Some entries are removed since they do not pertain to this discussion.  The entries that are needed are the type i entries and the entries for class smfno and class smfyes.  Permissions on the smf directories and files are the same as similar objects in the Solaris installation.
+<pre>
+i pkginfo
+i copyright
+i depend
+i checkinstall
+i preremove
+i postinstall
+i i.smfno
+i i.smfyes
+i space
+... (mysql specific files are here)
+f smfno /etc/init.d/cswmysql5=cswmysql5 0755 root bin
+l smfno /etc/rc0.d/K15cswmysql5=/etc/init.d/cswmysql5
+l smfno /etc/rc1.d/K15cswmysql5=/etc/init.d/cswmysql5
+l smfno /etc/rc2.d/K15cswmysql5=/etc/init.d/cswmysql5
+l smfno /etc/rc3.d/S40cswmysql5=/etc/init.d/cswmysql5
+l smfno /etc/rcS.d/K15cswmysql5=/etc/init.d/cswmysql5
+d smfyes /opt/csw/var/svc 0755 root bin
+d smfyes /opt/csw/var/svc/manifest 0755 root bin
+d smfyes /opt/csw/var/svc/manifest/network 0755 root bin
+f smfyes /opt/csw/var/svc/manifest/network/mysql5.xml=/mysql5.xml 0644 root bin
+d smfyes /opt/csw/lib/svc 0755 root bin
+d smfyes /opt/csw/lib/svc/method 0755 root bin
+f smfyes /opt/csw/lib/svc/method/svc-mysql5=svc-mysql5 0755 root bin
+</pre>
+
+2) <a name="pkginfo"></a>pkginfo - Unchanged.  The default is to install class &lt;none&gt;.  The checkinstall script adds either the smfyes or smfno class.
+
+3) <a name="checkinstall"></a>checkinstall sample:  Adds the appropriate class to the CLASSES environment variable.
+<pre>
+# mysql5 - checkinstall script
+#
+trap `exit 3` 15
+
+# Assign Solaris release class to install release specific files
+smf=no
+if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ; then smf=yes ; fi
+if [ $smf = yes ]
+then
+CLASSES='none smfyes'
+else
+CLASSES='none smfno'
+fi
+
+# Make env variables available to other packaging scripts
+
+cat &gt;$1 &lt;&lt;!
+CLASSES='$CLASSES'
+!
+
+exit 0
+</pre>
+
+4) <a name="class_install_files"></a>class install files:
+For <code>i.smfyes</code>:
+<pre>
+# mysql5 - i.smfyes script
+#
+# Copy the SMF specific files to the base directory.
+# The files specific to SMF are:
+# /opt/csw/var/svc
+# /opt/csw/var/svc/manifest
+# /opt/csw/var/svc/manifest/network
+# /opt/csw/var/svc/manifest/network/mysql5.xml=/mysql5.xml
+# /opt/csw/lib/svc
+# /opt/csw/lib/svc/method
+# /opt/csw/lib/svc/method/svc-mysql5
+#
+echo "Installing class &lt;smfyes&gt;."
+while read src dest
+do
+# Do copy
+/usr/bin/cp $src $dest || exit 2
+echo $dest
+done
+exit 0
+</pre>
+
+For <code>i.smfno</code>:
+<pre>
+# mysql5 - i.smfno script
+#
+# Copy the non-SMF specific files to the base directory.
+# The files to copy are:
+# /etc/init.d/cswmysql5=cswmysql5
+# /etc/rc0.d/K15cswmysql5=/etc/init.d/cswmysql5
+# /etc/rc1.d/K15cswmysql5=/etc/init.d/cswmysql5
+# /etc/rc2.d/K15cswmysql5=/etc/init.d/cswmysql5
+# /etc/rc3.d/S40cswmysql5=/etc/init.d/cswmysql5
+# /etc/rcS.d/K15cswmysql5=/etc/init.d/cswmysql5
+#
+echo "Installing class &lt;smfno&gt;."
+while read src dest
+do
+# Do copy
+/usr/bin/cp $src $dest || exit 2
+echo $dest
+done
+exit 0
+</pre>
+
+5) <a name="postinstall"></a>postinstall sample - Set a variable named smf to either yes or no, depending on whether or not SMF binaries are available.
+
+<pre>
+# mysql5 - postinstall script
+# 2006-01-02 Add SMF capability
+# 2007-08-18 Fix PKG_INSTALL_ROOT usage.  Remove PKG_INSTALL_DIR.
+#
+# daemons are started by default
+enable_daemon=yes
+
+# Source csw.conf, if it exists
+if [ -f $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+. $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -f $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+. $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# If defined, autoenable for the specific daemon name takes precedence
+if [ "$autoenable_mysql5" = "no" ] ; then
+enable_daemon=no
+elif [ "$autoenable_daemons" = "no" -a ! -n "$autoenable_mysql5" ] ; then
+enable_daemon=no
+fi
+
+# Set variable smf depending on the availability of SMF binaries
+smf=no
+if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ]
+then
+smf=yes
+fi
+
+#
+
+... (mysql specific lines removed)
+
+# If needed, configure SMF
+if [ $smf = yes ]
+then
+# Register with SMF
+echo "Configuring service in SMF"
+/usr/sbin/svccfg import /opt/csw/var/svc/manifest/network/mysql5.xml &gt;/dev/null 2&gt;&amp;1
+/usr/sbin/svcadm disable svc:/network/cswmysql5 &gt;/dev/null 2&gt;&amp;1
+echo "MySQL 5 is using Service Management Facility.  The FMRI is:"
+echo "  svc:/network/cswmysql5:default"
+fi
+
+# If enabled, start the daemon
+if [ "$enable_daemon" = "yes" ] ; then
+echo "Starting mysql5"
+if [ $smf = no ]
+then
+/etc/init.d/cswmysql5 start
+else
+/usr/sbin/svcadm enable svc:/network/cswmysql5
+fi
+fi
+
+exit 0
+</pre>
+
+6) <a name="space"></a>space - sample
+
+# No additional space is actually needed.
+# In fact, only one set of the Solaris release specific files are installed.
+# So the space required for this package is less than what is in pkgmap.
+
+7) <a name="service_manifest"></a>service manifest - For me, this is the biggest reason for using SMF.  Define your dependencies as needed.  I do not know any more about this subject than what I see in the Solaris service manifests and the sample on BigAdmin for mysql.  Note that the '&lt;service name=' section defines the FMRI.  Please name the service with the service type plus '/csw' plus the application name. For example, the mysql5 daemon is given a service name of network/cswmysql5.
+
+<pre>
+&lt;?xml version='1.0'?&gt;
+&lt;!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'&gt;
+&lt;!--
+    William Pool (Puddle) 02/05
+    Service manifest for MySQL
+    E-mail:
+    Modified for CSWmysql5 by Alex Moore 01/06
+--&gt;
+
+&lt;service_bundle type='manifest' name='mysql:mysql'&gt;
+&lt;service
+    name='network/cswmysql5'
+    type='service'
+    version='1'&gt;
+    &lt;create_default_instance enabled='false' /&gt;
+    &lt;single_instance /&gt;
+        &lt;dependency name='fs'
+            grouping='require_all'
+            restart_on='none'
+            type='service'&gt;
+            &lt;service_fmri value='svc:/system/filesystem/local' /&gt;
+        &lt;/dependency&gt;
+        &lt;dependency name='net'
+            grouping='require_all'
+            restart_on='none'
+            type='service'&gt;
+            &lt;service_fmri value='svc:/network/loopback' /&gt;
+        &lt;/dependency&gt;
+        &lt;exec_method
+            type='method'
+            name='start'
+            exec='/opt/csw/lib/svc/method/svc-mysql5 start'
+            timeout_seconds='-1'&gt;
+                &lt;method_context&gt;
+                &lt;method_credential user='mysql' group='mysql' /&gt;
+            &lt;/method_context&gt;
+        &lt;/exec_method&gt;
+        &lt;exec_method
+            type='method'
+            name='stop'
+            exec=':kill'
+            timeout_seconds='-1'&gt;
+        &lt;/exec_method&gt;
+        &lt;exec_method
+            type='method'
+            name='restart'
+            exec='/opt/csw/lib/svc/method/svc-mysql5 restart'
+            timeout_seconds='-1'&gt;
+        &lt;/exec_method&gt;
+&lt;/service&gt;
+&lt;/service_bundle&gt;</pre>
+
+8) <a name="service_method_file"></a>service method file sample - The line <code>. /lib/svc/share/smf_include.sh</code> is all that is different from the previous version of the cswmysql5 rc script.  This line is not a requirement; but it does have some useful functions and defines.  This line is located near the top of the script.  See /lib/svc/share/README for details on include scripts for SMF.  The following text is the beginning of the rc script file, which is all that is important for the topic.  The added line is <span style="font-weight: bold;">bold.</span>
+
+<pre>
+#!/usr/bin/sh
+#
+#    William Pool (Puddle) 01/05
+#    SMF Method file for MySQL
+#    E-mail:
+#    Modified for CSWmysql5 by Alex Moore 01/06
+#
+# This uses the CSW MySQL packages
+# CSWmysql5 CSWmysql5client CSWmysql5rt
+#
+# NOTE: Make sure DB_DIR is owned BY the mysql user and group and chmod
+#  700.
+#
+# Startup options may be overriden by creating and editing either
+#  /opt/csw/mysql5/etc/mysql5rc or /etc/opt/csw/mysql5rc.  The template
+#  for mysql5rc is in /opt/csw/mysql5/share/mysql.  You must use
+#  this template.
+#
+# For example,
+#  mkdir -p /etc/opt/csw
+#  cp /opt/csw/mysql5/share/mysql/mysql5rc /etc/opt/csw/
+#
+# If no mysql5rc file is available, the daemon starts with defaults.
+#
+
+<span style="font-weight: bold;">. /lib/svc/share/smf_include.sh</span>
+
+#
+# ... the rest of the original rc file continues ...
+</pre>
+
+9) <a name="preremove"></a>preremove sample - See man svcadm (1M) and man svccfg (1M).  I had to use the -s option for 'svcadm disable' to allow the service to completely stop before running 'svccfg delete'.  Otherwise, svccfg would not delete the service definition.
+
+<pre>
+# mysql5 - preremove script
+#
+
+# If removing from a filesystem that is not running the OS, exit this script.
+if [ ! x"$PKG_INSTALL_ROOT" = x"" ] ; then exit 0 ; fi
+
+# Stop mysqld if it is running.
+# If removing from a non-global zone, the service may still be
+# installed/running.  Errors are ignored if nothing is done.
+smf=no
+if [ -f /usr/sbin/svccfg -a -f /usr/sbin/svcadm ] ;
+then smf=yes ;
+fi
+if [ $smf = yes ]
+then
+    # Disable service
+    /usr/sbin/svcadm disable -s svc:network/cswmysql5:default &gt;/dev/null 2&gt;&amp;1
+else
+    /etc/init.d/cswmysql5 stop &gt;/dev/null 2&gt;&amp;1
+fi
+
+if [ $smf = yes ] ; then
+    # Unregister with SMF
+    /usr/sbin/svccfg delete svc:network/cswmysql5:default &gt;/dev/null 2&gt;&amp;1
+fi
+
+exit 0
+</pre>
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/configuration-file/
+
+We are starting to promote the idea of a global configuration file for certain options for CSW packages. This configuration file is not meant to be a  catch-all for any and all configuration; but rather, to determine high-level  package preferences for a site, or a specific machine.
+
+The concept is that packages that have a postinstall to potentially  autoconfigure daemons, should first read in the config file to determine if they should autoenable  or not.
+
+Conf File locations:
+<pre>/opt/csw/etc/csw.conf
+/etc/opt/csw/csw.conf</pre>
+Files should be checked in that specific order. This is to allow a global configuration file in <code>/opt/csw/etc</code>, but then also allow for machine-specific overrides in <code>/etc/opt/csw</code>. Since postinstall scripts are always <code>/bin/sh</code> scripts, these files should be used in some manner similar to the following <code>/bin/sh</code> code:
+<pre># in postinstall
+if [ -x $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf ] ; then
+    . $PKG_INSTALL_ROOT/opt/csw/etc/csw.conf
+fi
+if [ -x $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+    . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi</pre>
+<h2>Standard variables</h2>
+Right now, there are two officially recognized variables that you may set:
+<ul>
+	<li> autoenable_demons</li>
+	<li> use_smf</li>
+</ul>
+<h3>autoenable_daemons</h3>
+<pre>autoenable_daemons=[yes,no]</pre>
+The default is "yes", as implied at the top of this page. Any postinstall scripts that enable daemons, should first check for <code>if [ "$autoenable_daemons" = "no" ]</code> and skip enabling the demon to run at boot time, if it is so. (similarly, they should not start the demon "right now", if this variable is set to no)
+
+It is also be allowable, to give site administrators the option of having  a demon-specific "(enable/do not enable) daemon" flag as above, if that package chooses to support it. In this case, the syntax in the csw.conf file would look something like:
+<pre>autoenable_daemons=no</pre>
+<pre>autoenable_specificdaemonname=yes</pre>
+The only "mandatory" variable for postinstall scripts to check, however, is the global one.
+
+Please note that this variable is for package installation time only;  ie: by <code>postinstall</code> specifically.
+"normal" boot time scripts, such as <code>/etc/init.d/cswyourprog</code>,  should not check it. They should use their own "normal" way of enabling/disabling the demon. If there is no "normal" way,  it is suggested that boot scripts check for the existance of the  normal config file for the software, and not start the  demon if none is present.
+
+In that way, postinstall scripts can create a default config file, so long as <code>autoenable_daemons=yes</code> or not present. That way, the user has the option to manually create the config file later on, and thus "manually" enable the  demon at boot time (as opposed to "autoenable").
+<h3>use_smf</h3>
+<pre>use_smf=[yes,no]</pre>
+Some installations like to keep things EXACTLY the same across all their Solaris 8, 9, and 10 machines.  This means that they do not wish to use SMF to configure demons, even if it is available.
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/howto-build-a-csw-pkg/
+
+[needs review]
+
+This page gives a step-by-step case study of building a package for opencsw,  on our build machines. It shows how to use the pre-packaged CSW maintainer scripts that are part of the cswutils package. It does not show what to do if you hit difficulties, or need fancy package optimizations.
+
+Nor does it demonstrate how to build packages using the GAR build system. If you are using GAR, you should ignore most things on this page, and jump to the <a href="http://gar.opencsw.org">GAR documentation wiki</a> instead.
+
+<h4>Alternative method</h4>
+The instructions on this page will work for builds "anywhere, by anyone", for pretty much any kind of package. Alternatively if you are already a maintainer, you will  probably wish to use our GAR build system to build packages. That way,  what you do, will be publically viewable, and version-controlled.  See the the <a href="http://gar.opencsw.org">GAR documentation wiki</a> for information.
+
+If you need to see how to handle adversity, take a look at the <a href="http://www.opencsw.org/standards/pkg-reloc-fakeroot">GNU grep pkg case study</a>. In contrast, this walkthrough will package the GNU textutils software.
+
+Note: Due to a bug in the solx86 port of fakeroot somewhere, it will make your prototype file come out better if you start your package building on sparc, and do the build on x86 second.
+
+<h2>Home directory layout</h2>
+The following is a <span style="text-decoration: underline;">suggested</span> directory structure that you can use for building packages. You dont have to use it, but this walkthrough assumes  you are.
+
+<h3>Directory tree</h3>
+<pre>
+$HOME/pkgs/                # maintainer info about software
+$HOME/pkgs/textutils/      # maintainer info about specific package
+$HOME/src/                 # convenient place to keep downloaded tarballs
+$HOME/build-sparc	   #  These two match
+$HOME/build-i386	   #   build-`uname -p`
+$HOME/build/textutils-2.1/ # where you will do 'make's of textutils
+$HOME/build/textutils-2.1/cswstage  # automatically created directory
+</pre>
+
+<h3>pkginfo - basic package information</h3>
+Start by making a directory that will hold the long term, persistent information about the package.  You will always have to create creating "pkginfo" and "copyright" files.
+
+<pre>
+mkdir ~/pkgs/textutils
+cd  ~/pkgs/textutils
+[create pkginfo, as follows:]
+ PKG=CSWtextutils
+ NAME=textutils - GNU text utilities
+ VERSION=2.1,REV=YYYY.MM.DD
+ CATEGORY=application
+ VENDOR=http://ftp.gnu.org/pub/gnu/textutils/  packaged for CSW by Philip Brown
+ HOTLINE=http://www.opencsw.org/bugtrack/
+ EMAIL=[yourlogin@opencsw.org]
+cd ~/build
+gtar zxvf ~/src/textutils-2.1.tar.gz
+cd textutils-2.1
+cp COPYING ~/pkgs/textutils/copyright
+</pre>
+
+Next, build the sucker. Make sure you do not have <code>LD_LIBRARY_PATH</code> defined  from here on in. The <code>LD_OPTIONS</code> line is something that will probably work well for all programs. But if you prefer to do it the  "Old fashioned way", and the program's build script supports it, you can set the same thing with <code>LDFLAGS</code> instead
+
+<pre>
+export LD_OPTIONS='-R/opt/csw/lib/$ISALIST -R/opt/csw/lib -L/opt/csw/lib'
+./configure --prefix=/opt/csw --program-prefix=g
+# --program-prefix only needed for GNU stuff that conflicts with system stuff
+gmake
+</pre>
+
+You now need to "install" the executables. Without root permissions, you'll  need to install them into a "staging area". The easy way to do this is to use the "stagepkg" script, which will also strip the binaries for you, and generate an initial 'prototype' file for you (which determines where binaries get installed to, under <code>/opt/csw</code>). Happily, this is a very  simple step:
+
+<pre>
+stagepkg
+#
+# This will do, amoung other things,
+#    "make DESTDIR=$PWD/cswstage install"
+#
+</pre>
+
+Some software packages require using a different variable name instead of <code>DESTDIR</code>. Some of them also require use of gmake, to install. If, for example, the Makefile used <code>INSTALL_ROOT</code>, you can adjust your  invocation of stagepkg as follows:
+
+<pre>MAKE=gmake stagepkg INSTALL_ROOT=$PWD/cswstage install</pre>
+
+Whatever variable is needed instead of <code>DESTDIR</code>, make sure that you specify the <strong>full path</strong> to  (hence the "$PWD" given to <code>INSTALL_ROOT</code>, above)
+
+<h3>prototype file - location of files</h3>
+You're almost done! You need to copy the prototype file generated in the above steps, and edit it to clean it up, then put together the final package, as follows:
+
+<pre>
+cd cswstage
+ [edit ./prototype, fix ownerships to normally be "root bin",
+   and anything else that needs cleanup]
+cp prototype ~/pkgs/textutils # comparing with any old one first
+cd ~/pkgs/textutils
+
+[Then, depending on whether stagepkg said to use -r or -b, do]
+createpkg -r ~/build/textutils-2.1/cswstage
+[OR]
+createpkg -b ~/build/textutils-2.1/cswstage/opt/csw
+</pre>
+
+It so happens that the output from <code>checkpkg</code>, which gets called by <code>createkpg</code>, shows that some of the executables depend on <code>/opt/csw/lib/libintl.so.2</code>, but we do not have a depend file. Since <code>/opt/csw/lib/libintl.so.2</code> clearly belongs to another CSW package, we need to create a depend file to mention it.
+
+If you do not already know what package a file belongs to, you can use the following command:
+
+<pre>pkgchk -l -p  /opt/csw/lib/libintl.so.2</pre>
+
+This tells us it is part of CSWggettext, so create a depend file, with the line
+
+<pre>P	CSWggettext</pre>
+
+Now edit the prototype file, and add the line:
+
+<pre>i depend</pre>
+
+A finished prototype file generally looks something like the following:
+
+<pre>
+i pkginfo
+i depend
+i copyright
+d none /opt/csw/bin
+f none /opt/csw/bin/someprog
+ ....
+</pre>
+
+Now we can run createpkg again:
+
+<pre>createpkg -r ~/build/textutils-2.1/cswstage</pre>
+
+This time, there are no surprises. We are done creating the package... on this cpu type.
+
+<h4>Don't forget the "other" architecture(s) !</h4>
+Now you get to do it <span style="text-decoration: underline;">ALL OVER AGAIN</span>, on the other build machine! Copy over the contents of your ~/pkgs/textutils directory to the other machine, and start building.The good news is, you can normally use the prototype file you just copied over, rather than re-editing the new prototype file generated by stagepkg.
+
+<h4>Package submission</h4>
+If you want some additional semi-public testing before release, you can put it on the <a href="http://www.opencsw.org/standards/build_farm">main build farm</a> nfs filesystem, in <code>/home/experimental</code>, and it will be visible at <a href="http://buildfarm.opencsw.org/experimental.html">http://buildfarm.opencsw.org/experimental.html</a>.
+
+You can then announce to maintainers, or the general public, that the package may be tested from there.
+
+You can use pkgutil to install packages from there (after a few minutes for the auto-indexer to pick them up), with:
+
+<pre>pkgutil -t http://buildfarm.opencsw.org/opencsw/experimental/projectname -i softwarename</pre>
+
+When you're satisfied that the package is worthy of public release, copy your finished packages to <code>/home/newpkgs</code>  on bender.opencsw.org and let Phil know they are ready. The modern way to do this, is to email our "pkgsubmissions" mailing list.
+
+Note that Phil will <strong>remove</strong> them from <code>newpkgs</code>, when they are accepted, but not before. Please remove old or rejected packages yourself.
+
+Note #2: If you need to resubmit a package to fix some kind of bug, but it is the same release number as a prior one; you need to differentiate it with an additional ",REV=yyyy.mm.dd" type string, as mentioned in our <a href="http://www.opencsw.org/standards/build">software build guide</a>.
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/relocatable-package/
+
+<h1>HOWTO: build relocatable pkg using fakeroot</h1>
+
+This page gives a step-by-step case study of building a package for opencsw,  on our build machines. In this particular case, we are building a "relocatable" package, of GNU grep.
+
+A certain amount of this stuff is done "by hand". But Phil will be writing  some tools to go in the cswutils package, that will automate SOME of this stuff for folks.
+
+First, we lay the groundwork for our package: Extract the source code, and then put together the package information.
+
+<pre>
+gtar zxvf grep-2.5.tar.gz
+mkdir ~/pkgs/grep
+cd  ~/pkgs/grep
+cp ~/grep-2.5/COPYING copyright
+[create pkginfo, as follows:]
+ PKG=CSWggrep
+ NAME=ggrep - GNU grep
+ VERSION=2.5
+ CATEGORY=application
+ VENDOR=http://ftp.gnu.org/pub/gnu/grep/  packaged for CSW by Philip Brown
+ HOTLINE=http://www.opencsw.org/bugtrack/
+ EMAIL=[yourlogin@opencsw.org]
+</pre>
+
+Next, build the sucker.
+
+<pre>
+cd ~/grep-2.5
+export LD_OPTIONS='-R/opt/csw/lib/$ISALIST -R/opt/csw/lib -L/opt/csw/lib'
+./configure --prefix=/opt/csw --program-prefix=g
+#program-prefix only needed for GNU stuff that conflicts with system stuff
+gmake
+</pre>
+
+Now, prepare the destination environment. You'll probably want to make a  script for this bit. This stuff is so that programs that dont use  <code>/opt/csw/<strong>share</strong>/xyz</code>, get tricked into installing to it.
+
+<pre>
+mkdir -p ~/dest/opt/csw/share/doc
+mkdir ~/dest/opt/csw/share/man ~/dest/opt/csw/share/info
+cd ~/dest/opt/csw
+ln -s share/man man
+ln -s share/info info
+ln -s share/doc doc
+</pre>
+
+And now, the install and cleanup of binaries, to our virtual target tree. Note that you must not have <code>LD_LIBRARY_PATH</code> defined.
+
+<pre>
+fakeroot /bin/ksh
+cd ~/grep-2.5
+gmake DESTDIR=$HOME/dest install
+exit
+strip $HOME/dest/opt/csw/*bin/*
+</pre>
+
+Then notice that GNU grep does not follow proper automake standards. Only the Makefile under <code>src/</code> respects <code>$(DESTDIR)</code>, and only on HALF its damn install targets. So, fix the Makefiles. Specifically, <code>src/Makefile</code> has <code>ln -s</code> lines that need fixing. <code>po/Makefile</code> also needs fixing.. a WHOLE LOT of fixing, anywhere there is a raw <code>$(datadir)</code> or <code>$(xyzdir)</code> in the "install:" target that doesnt have <code>$(DESTDIR)</code> prefixed to it.
+
+Make a patchfile of my changes to submit to GNU maintainers, and also to keep around in  <code>~/pkgs/grep</code> [wont get into that here, <a href="http://opencsw.org/standards/patching.php">it's complicated</a>]. Then once again, do
+
+<pre>
+gmake DESTDIR=$HOME/dest install
+strip $HOME/dest/opt/csw/*bin/*
+</pre>
+
+The next step is to generate a prototype file, and clean it up.
+
+<pre>
+cd ~/dest/opt/csw
+rm *  #  This gets rid of the soft links at the top level,
+      # so that we will have a nice clean prototype file
+pkgproto . | sed 's/phil staff/root bin/' &gt;~/pkgs/grep/prototype
+exit  # to get out of 'fakeroot'
+cd ~/pkgs/grep
+</pre>
+
+We now have a *base* prototype file. We still need to add the following lines at the top:
+
+<pre>
+i pkginfo
+i copyright
+# and sometimes, "i depend", but we dont need a depend file for this pkg
+</pre>
+
+Finally, we can create the package "spool", then transfer it to a pkgfile, and clean up after ourselves in the spool dir:
+
+<pre>
+cd $HOME/pkgs/grep
+pkgmk -b $HOME/dest/opt/csw -a `uname -p` BASEDIR=/opt/csw
+filename=ggrep-2.5-SunOS`uname -r`-`uname -p`-CSW.pkg
+pkgtrans -s /var/spool/pkg $PWD/$filename CSWggrep
+rm -r /var/spool/pkg/CSWggrep
+gzip $PWD/$filename
+</pre>
+
+<strong>But...</strong> Did we REALLY make a valid package? Lets make sure:
+
+<pre>checkpkg  ggrep-2.5-SunOS5.8-i386-CSW.pkg.gz</pre>
+
+Oops.. nope. checkpkg says "No dependancy file in package". But it also shows that we used <code>/opt/csw/lib/libintl.so.2</code> as a library
+
+<pre>pkgchk -l -p  /opt/csw/lib/libintl.so.2 </pre>
+
+tells us that it is part of CSWggettext. So, create a 'depend' file with
+
+<pre>P	CSWggettext</pre>
+
+and add "i depend" to the prototype file. Then go back to the <code>pkgmk</code> step above  and trickle down to here again
+
+Made it back here, with no checkpkg errors? Great! Document what had to be  done, in <code>$HOME/pkgs/grep/BUILD.NOTES</code>
+
+There, wasnt that easy?  <span style="font-size: x-small;">Har..</span>har ...     <span>har... <span>har</span>...</span>
+
+Now you get to do it <span style="text-decoration: underline;">ALL OVER AGAIN</span>, on the other build machine!
+
+The good news is, at least you can skip the "make a prototype" step, and  just copy over the prior pkginfo, depend, and prototype files directly.
+
+<h4>Package submission</h4>
+[This section needs to be rewritten....]
+
+OLD LINK: http://www.opencsw.org/extend-it/contribute-packages/maintainer-welcome/
+
+[needs review]
+
+<h1>Welcome to the CSW project!</h1>
+Here are a few things that you will hopefully find useful.
+
+<h2>opencsw.org email address</h2>
+Now that you are one of us, you will be automatically equipped with a <code>&lt;username&gt;@opencsw.org</code> email address. Please setup a <code>.forward</code> file on <code>mail.opencsw.org</code> to have mails forwarded to your canonical email address. When communicating with other maintainers or when sending emails to the OpenCSW mailing lists, please make sure to use your opencsw.org email address as sender address.
+
+<h2>Creating packages</h2>
+This is what it's all about!
+
+You'll probably want to follow the <a href="http://www.opencsw.org/standards/pkg-walkthrough">walkthrough</a> carefully, and use the CSW package creation wrappers. Trying to do everything manually, is more headache than neccessary, since there are quite a few things that need to be done in order to maintain consistency across all the CSW packages.
+
+You'll need to make sure your package installs things according to the <a href="http://www.opencsw.org/standards/layout">filesystem layout guidelines</a>. And of course, dont forget to revisit the general <a href="http://www.opencsw.org/standards/">standards page</a>,  which also mentions what to do with finished packages.
+
+<h2>Build machines</h2>
+We have a set of build machines, for those folks who dont happen to have solaris 8 machines laying about. More are on the way. Information about what we have so far, is on our <a href="http://www.opencsw.org/standards/build_farm">build machines page</a>
+
+<h2>Maintainer self info page</h2>
+You may want to customize your own maintainer web page. You can do this by creating <code>$HOME/public_html/bio.html</code> on the webserver. The file can contain just a plain paragraph of text, or it can use full HTML markup. You can also create <code>photo.png</code>. Please make it 50x80 pixels, or at least have it look good when scaled to that resolution. (the HTML code will tell the browser to scale the image to that res)
+
+If you go on vacation,<strong> please note this</strong> in your page, in case some kind of critical bug comes up in your package while you are away.
+
+<h2>Package maintainers mailing list</h2>
+You will automatically be added to the package maintainers mailing list. Any time you have a question about making a package, or a suggestion for package creation in general, send it to the list.
+
+Once you find out what the address is, do not publicise it. We like to stay spam-free.
+
+<h2>Ideas for new packages</h2>
+Interesting in helping out even more? Dont forget to check out the <a href="http://www.opencsw.org/pkgreq">package request page</a>. There is a mail alias for that, if you would like immediate notification when someone requests a new package.
+
+<h2>Packages that need help</h2>
+We also have a page that lists existing packages that "need help". Some packages have a high bug count. Some packages have been "orphaned". Some have both.  If you are willing to help a package that needs fixin, please dont be shy about contacting the maintainer, and asking politely, "Hi! Are you still working on this package? Would you mind if I took  it over?"
+<a href="http://www.opencsw.org/buglist/buglist.cgi">Buglist Page</a>
+
+
