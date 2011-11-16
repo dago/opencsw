@@ -88,7 +88,7 @@ BUILD_OVERRIDE_VARS = CDEF
 BUILD_OVERRIDE_VAR_CDEF = $(CFLAGS)
 
 PROTOTYPE_MODIFIERS = lsof
-PROTOTYPE_FILES_lsof = $(bindir)/lsof
+PROTOTYPE_FILES_lsof = $(call baseisadirs,$(bindir),lsof)
 PROTOTYPE_GROUP_lsof = sys
 PROTOTYPE_PERMS_lsof = 2755
 
