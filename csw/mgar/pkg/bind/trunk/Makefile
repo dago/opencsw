@@ -6,11 +6,11 @@ VERSION = 9.8.1
 CATEGORIES = net
 
 # Enable these for Px-releases
-#RELEASE = P4
-#DISTVERSION = $(VERSION)-$(RELEASE)
-#SPKG_VERSION = $(VERSION)$(RELEASE)
-#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-#WORKSRC = $(WORKDIR)/$(DISTNAME)
+RELEASE = P1
+DISTVERSION = $(VERSION)-$(RELEASE)
+SPKG_VERSION = $(VERSION)$(RELEASE)
+DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 
 DESCRIPTION = ISC BIND DNS reference implementation
 define BLURB
@@ -21,12 +21,12 @@ define BLURB
 endef
 
 # Enable these for Px-releases
-#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
-#DISTFILES  = $(DISTNAME).tar.gz
+MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)-$(RELEASE)/
+DISTFILES  = $(DISTNAME).tar.gz
 
 # Disable these for Px-releases
-MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+#MASTER_SITES = http://ftp.isc.org/isc/bind9/$(VERSION)/
+#DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 DISTFILES += CSWbindchroot.postinstall
 
@@ -35,22 +35,35 @@ LICENSE = COPYRIGHT
 PACKAGES += CSWbind
 CATALOGNAME_CSWbind = bind
 SPKG_DESC_CSWbind = ISC BIND DNS main package
-RUNTIME_DEP_PKGS_CSWbind = CSWlibbind CSWbindutils CSWosslrt CSWlibz1 CSWlibxml2-2 CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWbind  = CSWlibbind
+RUNTIME_DEP_PKGS_CSWbind += CSWbindutils
+RUNTIME_DEP_PKGS_CSWbind += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbind += CSWlibz1
+RUNTIME_DEP_PKGS_CSWbind += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWbind += CSWlibiconv2
 
 PACKAGES += CSWbind-dev
 CATALOGNAME_CSWbind-dev = bind_dev
 SPKG_DESC_CSWbind-dev = ISC BIND DNS development package
-RUNTIME_DEP_PKGS_CSWbind-dev = CSWbind CSWlibbind
+RUNTIME_DEP_PKGS_CSWbind-dev  = CSWbind
+RUNTIME_DEP_PKGS_CSWbind-dev += CSWlibbind
 
 PACKAGES += CSWlibbind
 CATALOGNAME_CSWlibbind = libbind
 SPKG_DESC_CSWlibbind = ISC BIND DNS library package
-RUNTIME_DEP_PKGS_CSWlibbind = CSWlibiconv2 CSWosslrt CSWlibz1 CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibbind  = CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibbind += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibbind += CSWlibxml2-2
 
 PACKAGES += CSWbindutils
 CATALOGNAME_CSWbindutils = bind_utils
 SPKG_DESC_CSWbindutils = ISC BIND DNS utilities package
-RUNTIME_DEP_PKGS_CSWbindutils = CSWlibbind CSWlibiconv2 CSWosslrt CSWlibz1 CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWbindutils  = CSWlibbind
+RUNTIME_DEP_PKGS_CSWbindutils += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWbindutils += CSWosslrt
+RUNTIME_DEP_PKGS_CSWbindutils += CSWlibz1
+RUNTIME_DEP_PKGS_CSWbindutils += CSWlibxml2-2
 
 PACKAGES += CSWbindchroot
 CATALOGNAME_CSWbindchroot = bind_chroot
