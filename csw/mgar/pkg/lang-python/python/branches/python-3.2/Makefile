@@ -39,6 +39,7 @@ DISTFILES  = $(DISTNAME).tar.bz2
 PATCHFILES += makesetup.diff
 PATCHFILES += modules.diff
 PATCHFILES += multiprocess.diff
+PATCHFILES += 0004-Use-PY_CPPFLAGS-in-Modules-makesetup.patch
 
 # The test for sunaudiodev fails.  Not that it's a good practice to skip
 # tests.
@@ -179,5 +180,7 @@ EXTRA_PAX_ARGS += -s ',^\.$(bindir)/pydoc,$(bindir)/pydoc-$(VER),'
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/2to3,$(bindir)/2to3-$(VER),'
 EXTRA_PAX_ARGS += -s ',^\.$(bindir)/python-config,$(bindir)/python-config-$(VER),'
 EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/python
+
+GARCOMPILER = GNU
 
 include gar/category.mk
