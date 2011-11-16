@@ -433,9 +433,12 @@ $(foreach SPEC,$(_PKG_SPECS),$(if $(PROTOTYPE_FILTER),$(eval _PROTOTYPE_FILTER_$
 # PROTOTYPE_USER_mytweaks = somebody
 # PROTOTYPE_GROUP_mytweaks = somegroup
 
+_empty :=
+_space = $(_empty) $(_empty)
+
 _PROTOTYPE_MODIFIERS = | perl -ane '\
 		$(foreach M,$(PROTOTYPE_MODIFIERS),\
-			$(if $(PROTOTYPE_FILES_$M),if( $$F[2] =~ m(^$(firstword $(PROTOTYPE_FILES_$M))$(foreach F,$(wordlist 2,$(words $(PROTOTYPE_FILES_$M)),$(PROTOTYPE_FILES_$M)),|$F)$$) ) {)\
+			$(if $(PROTOTYPE_FILES_$M),if( $$F[2] =~ m(^$(firstword $(PROTOTYPE_FILES_$M))$(subst $(_space),,$(foreach F,$(wordlist 2,$(words $(PROTOTYPE_FILES_$M)),$(PROTOTYPE_FILES_$M)),|$F))$$) ) {)\
 				$(if $(PROTOTYPE_FTYPE_$M),$$F[0] = "$(PROTOTYPE_FTYPE_$M)";)\
 				$(if $(PROTOTYPE_CLASS_$M),$$F[1] = "$(PROTOTYPE_CLASS_$M)";)\
 				$(if $(PROTOTYPE_PERMS_$M),$$F[3] = "$(PROTOTYPE_PERMS_$M)";)\
