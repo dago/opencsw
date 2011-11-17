@@ -1,3 +1,7 @@
+# TBD:
+# - smb.conf is searched in /opt/csw/lib/64/smb.conf instead of /etc/opt/csw/samba/smb.conf
+# - secrets.tdb is searched in /opt/csw/private/secrets.tdb instead of /etc/opt/csw/samba/private/secrets.tdb
+
 NAME = samba
 VERSION = 3.6.1
 CATEGORIES = apps
@@ -113,6 +117,8 @@ ISAEXEC = 1
 CONFIGURE_SCRIPTS = $(WORKSRC)/source3/configure
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --enable-socket-wrapper
+CONFIGURE_ARGS += --with-privatedir=$(sysconfdir)/samba/private
+CONFIGURE_ARGS += --with-configdir=$(sysconfdir)/samba
 
 CONFIGURE_ARGS-64 +=  --disable-cups
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
@@ -126,6 +132,8 @@ TEST_TARGET = test
 SKIPTEST ?= 1
 
 INSTALL_SCRIPTS = $(WORKSRC)/source3/Makefile
+
+INITSMF = /etc/opt/csw/init.d/cswsamba
 
 include gar/category.mk
 
@@ -141,3 +149,6 @@ post-extract-modulated:
 	-perl -pi -e 's!/\@INCLUDE_des\@//!,-I$(includedir),,!' \
 		$(WORKSRC)/source3/configure
 
+post-merge:
+	ginstall -d $(PKGROOT)/etc/opt/csw/init.d
+	ginstall $(WORKDIR)/cswsamba $(PKGROOT)/etc/opt/csw/init.d/cswsamba
