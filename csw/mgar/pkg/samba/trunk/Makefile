@@ -13,6 +13,14 @@ endef
 
 MASTER_SITES = http://samba.org/samba/ftp/stable/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += cswsamba
+EXPANDVARS += cswsamba
+
+# From http://www.reallylinux.com/docs/smb.conf
+DISTFILES += smb.conf
+
+# This is taken from the old Samba package
+DISTFILES += cswkrb5.conf
 
 #What needs to be fixed:
 # Split libs and packages
@@ -39,21 +47,30 @@ RUNTIME_DEP_PKGS_CSWsamba += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWsamba += CSWoldaprt
 
 # Make one unified package for now
-OBSOLETED_BY_CSWsamba += CSWsambaclient
 OBSOLETED_BY_CSWsamba += CSWsambacommon
 OBSOLETED_BY_CSWsamba += CSWsambadoc
-OBSOLETED_BY_CSWsamba += CSWsambalib
 
-#PACKAGES += CSWsambaclient
-SPKG_DESC_CSWsambaclient = Client binaries for samba
-RUNTIME_DEP_PKGS_CSWsambaclient += CSWsasl 
-RUNTIME_DEP_PKGS_CSWsambaclient += CSWsambacommon
-RUNTIME_DEP_PKGS_CSWsambaclient += CSWreadline
-RUNTIME_DEP_PKGS_CSWsambaclient += CSWlibpopt
-RUNTIME_DEP_PKGS_CSWsambaclient += CSWlibnet
-RUNTIME_DEP_PKGS_CSWsambaclient += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWsambaclient += CSWiconv
-RUNTIME_DEP_PKGS_CSWsambaclient += CSWggettext
+PACKAGES += CSWsamba-client
+SPKG_DESC_CSWsamba-client = Client binaries for samba
+SMB_CLIENT_TOOLS = rpcclient smbcacls smbclient smbcquotas smbget smbspool smbtar smbtree
+PKGFILES_CSWsamba-client += $(foreach T,$(SMB_CLIENT_TOOLS),$(call baseisadirs,$(bindir),$T) $(mandir)/man1/$T\.1)
+PKGFILES_CSWsamba-client += $(mandir)/man5/smbgetrc\.5
+PKGFILES_CSWsamba-client += $(mandir)/man8/smbspool\.8
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibpopt0
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibz1
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibtalloc2
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWsamba-client += CSWsamba
+OBSOLETED_BY_CSWsamba-client += CSWsambaclient
+CATALOGNAME_CSWsambaclient = samba_client_stub
 
 #PACKAGES += CSWsambacommon
 SPKG_DESC_CSWsambacommon = Shared support files for samba
@@ -69,16 +86,56 @@ RUNTIME_DEP_PKGS_CSWsambacommon += CSWggettext
 SPKG_DESC_CSWsambadoc = Samba documentation
 ARCHALL_CSWsambadoc = 1
 
-#PACKAGES += CSWsambalib
-SPKG_DESC_CSWsambalib = Samba shared libraries
-RUNTIME_DEP_PKGS_CSWsambalib += CSWsasl
-RUNTIME_DEP_PKGS_CSWsambalib += CSWlibnet
-RUNTIME_DEP_PKGS_CSWsambalib += CSWkrb5lib
-RUNTIME_DEP_PKGS_CSWsambalib += CSWiconv
+PACKAGES += CSWlibsmbclient0
+SPKG_DESC_CSWlibsmbclient0 = Samba client library, libsmbclient.so.0
+PKGFILES_CSWlibsmbclient0 += $(call pkgfiles_lib,libsmbclient.so.0)
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibtalloc2
+RUNTIME_DEP_PKGS_CSWlibsmbclient0 += CSWlibk5crypto3
+OBSOLETED_BY_CSWlibsmclient0 += CSWsambalib
+CATALOGNAME_CSWsambalib = samba_lib_stub
+
+PACKAGES += CSWlibnetapi0
+PKGFILES_CSWlibnetapi0 += $(call pkgfiles_lib,libnetapi.so.0)
+SPKG_DESC_CSWlibnetapi0 += Samba client library, libnetapi.so.0
+RUNTIME_DEP_PKGS_CSWsamba += CSWlibnetapi0
+
+PACKAGES += CSWlibsmbsharemodes0
+PKGFILES_CSWlibsmbsharemodes0 += $(call pkgfiles_lib,libsmbsharemodes.so.0)
+SPKG_DESC_CSWlibsmbsharemodes0 += Samba client library, libsmbsharemodes.so.0
+RUNTIME_DEP_PKGS_CSWsamba += CSWlibsmbsharemodes0
+
+PACKAGES += CSWlibtdb1
+PKGFILES_CSWlibtdb1 += $(call pkgfiles_lib,libtdb.so.1)
+SPKG_DESC_CSWlibtdb1 += Samba client library, libtdb.so.1
+RUNTIME_DEP_PKGS_CSWsamba += CSWlibtdb1
+
+PACKAGES += CSWlibwbclient0
+PKGFILES_CSWlibwbclient0 += $(call pkgfiles_lib,libwbclient.so.0)
+SPKG_DESC_CSWlibwbclient0 += Samba client library, libwbclient.so.0
+
+PACKAGES += CSWlibnetapi0
+PKGFILES_CSWlibnetapi0 += $(call pkgfiles_lib,libnetapi.so.0)
+SPKG_DESC_CSWlibnetapi0 += Samba client library, libnetapi.so.0
+
+PACKAGES += CSWlibsmbsharemodes0
+PKGFILES_CSWlibsmbsharemodes0 += $(call pkgfiles_lib,libsmbsharemodes.so.0)
+SPKG_DESC_CSWlibsmbsharemodes0 += Samba client library, libsmbsharemodes.so.0
+
+PACKAGES += CSWlibtdb1
+PKGFILES_CSWlibtdb1 += $(call pkgfiles_lib,libtdb.so.1)
+SPKG_DESC_CSWlibtdb1 += Samba client library, libtdb.so.1
 
 PACKAGES += CSWsamba-dev
-SPKG_DESC_CSWsamba-dev = Development files for the samba libraries
+SPKG_DESC_CSWsamba-dev = Development files for Samba, libsmbclient.so.0
 PKGFILES_CSWsamba-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWsamba-dev += CSWlibsmbclient0
 RUNTIME_DEP_PKGS_CSWsamba-dev += CSWsamba
 OBSOLETED_BY_CSWsamba-dev += CSWsambalibdev
 CATALOGNAME_CSWsambalibdev = samba_libdev_stub
@@ -133,7 +190,10 @@ SKIPTEST ?= 1
 
 INSTALL_SCRIPTS = $(WORKSRC)/source3/Makefile
 
-INITSMF = /etc/opt/csw/init.d/cswsamba
+INITSMF += /etc/opt/csw/init.d/cswsamba
+
+MIGRATE_FILES += samba
+PRESERVECONF += $(sysconfdir)/samba/smb.conf
 
 include gar/category.mk
 
@@ -152,3 +212,5 @@ post-extract-modulated:
 post-merge:
 	ginstall -d $(PKGROOT)/etc/opt/csw/init.d
 	ginstall $(WORKDIR)/cswsamba $(PKGROOT)/etc/opt/csw/init.d/cswsamba
+	ginstall -d $(PKGROOT)/etc/opt/csw/samba
+	ginstall $(WORKDIR)/smb.conf $(PKGROOT)/etc/opt/csw/samba/smb.conf
