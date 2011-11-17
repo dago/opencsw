@@ -25,7 +25,8 @@ PATCHFILES += 0002-libintl-for-kproplog.patch
 # PATCHFILES += 0003-local-libraries-first-when-linking.patch
 PATCHFILES += 0004-libkdb_ldap-isblank-define.patch
 PATCHFILES += 0005-Add-strings.h-to-setenv.c-for-strlen-and-other-stuff.patch
-PATCHFILES += krb5-1.9.2-krb5_set_password_using_ccache.patch
+# PATCHFILES += krb5-1.9.2-krb5_set_password_using_ccache.patch
+PATCHFILES += 0005-krb5_set_password_using_ccache.patch
 
 BUILD_DEP_PKGS = CSWtcl
 
