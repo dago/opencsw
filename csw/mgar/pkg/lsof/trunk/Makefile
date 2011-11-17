@@ -1,8 +1,7 @@
 # TBD:
-# - Probably VxFS bindings
 
 NAME = lsof
-VERSION = 4.84
+VERSION = 4.85
 CATEGORIES = utils
 
 DESCRIPTION = List open files
@@ -17,9 +16,6 @@ MASTER_SITES = ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof/
 DISTNAME = $(NAME)_$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += lsof-license
-
-# This seems to be necessary as the above comment says
-PATCHFILES += 0001-Use-lgrp.h.patch
 
 # Do not automatically use VxFS
 PATCHFILES += 0002-Disable-VxFS-autodetect.patch
@@ -63,6 +59,8 @@ CONFIGURE_EXPORTS = LSOF_CFGF SOLARIS_CCDIR SOLARIS_INSTR SOLARIS_KERNBITS SOLAR
 SOLARIS_CCDIR = $(CC_HOME)/bin
 SOLARIS_INSTR = $(ISA)
 SOLARIS_KERNBITS = $(MEMORYMODEL)
+
+BUILD_DEP_PKGS += VRTSfssdk
 
 # The Veritas Filesystem library libvxfsutil.a is sparcv8+, make sure to build that
 # specific ISA and not link when building sparcv8
