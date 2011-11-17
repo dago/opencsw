@@ -1,17 +1,17 @@
-From 3becdff778a4fab025b344b733e4767395e54216 Mon Sep 17 00:00:00 2001
+From 0893bb063ff9fddd3bff4308d52d5a42d47a066d Mon Sep 17 00:00:00 2001
 From: Dagobert Michelsen <dam@opencsw.org>
-Date: Wed, 13 Jul 2011 12:05:30 +0200
+Date: Thu, 17 Nov 2011 10:45:01 +0100
 Subject: [PATCH] Disable VxFS autodetect
 
 ---
- lsof_4.84_src/Configure |    8 --------
+ lsof_4.85_src/Configure |    8 --------
  1 files changed, 0 insertions(+), 8 deletions(-)
 
-diff --git a/lsof_4.84_src/Configure b/lsof_4.84_src/Configure
-index 6ebc7be..c413f5d 100755
---- a/lsof_4.84_src/Configure
-+++ b/lsof_4.84_src/Configure
-@@ -4810,14 +4810,6 @@ return(0); }
+diff --git a/lsof_4.85_src/Configure b/lsof_4.85_src/Configure
+index a5514e6..d754244 100755
+--- a/lsof_4.85_src/Configure
++++ b/lsof_4.85_src/Configure
+@@ -4892,14 +4892,6 @@ return(0); }
      # environment, establish their likely locations.
  
      LSOF_TMP2=$SOLARIS_VXFSINCL
@@ -27,5 +27,5 @@ index 6ebc7be..c413f5d 100755
      for i in $LSOF_TMP2	# {
      do
 -- 
-1.7.6
+1.7.5.4
 
