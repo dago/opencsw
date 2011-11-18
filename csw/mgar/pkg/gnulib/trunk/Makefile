@@ -29,6 +29,7 @@ INSTALL_SCRIPTS = custom
 MERGE_EXCLUDE_STATICLIBS =
 CHECKPKG_OVERRIDES_CSWlibgnu-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libgnu.a
 CHECKPKG_OVERRIDES_CSWlibgnu-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv9/libgnu.a
+CHECKPKG_OVERRIDES_CSWlibgnu-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libgnu.a
 
 include gar/category.mk
 
