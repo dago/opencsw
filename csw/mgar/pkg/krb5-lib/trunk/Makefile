@@ -164,6 +164,15 @@ CHECKPKG_OVERRIDES_CSWlibkrb5-dev += surplus-dependency|CSWkrb5lib
 CHECKPKG_OVERRIDES_CSWkrb5lib += catalogname-does-not-match-pkgname
 CATALOGNAME_CSWkrb5lib = krb5_lib_stub
 
+# A temporary override
+CHECKPKG_OVERRIDES_CSWlibcom-err3 += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWlibgssapi-krb5-2 += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWlibk5crypto3 += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWlibkrb5-3 += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWlibkrb5-dev += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWlibkrb5-priv += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWlibkrb5support0 += binary-architecture-does-not-match-placement
+
 include gar/category.mk
 
 post-extract-modulated:
