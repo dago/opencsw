@@ -54,7 +54,7 @@ PROTOTYPE_FILTER  = awk '\
 TEST_SCRIPTS	=
 
 # Override some paths for configure
-sysconfdir=/etc/opt/csw/dovecot
+sysconfdir=/etc/opt/csw
 localstatedir=/var/opt/csw
 
 CONFIGURE_ARGS  = $(DIRPATHS)
