@@ -54,7 +54,7 @@ PROTOTYPE_FILTER  = awk '\
 TEST_SCRIPTS	=
 
 # Override some paths for configure
-sysconfdir=/etc/opt/csw
+sysconfdir=/etc/opt/csw/dovecot
 localstatedir=/var/opt/csw
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -75,7 +75,7 @@ EXTRA_INC = /opt/csw/include/mysql /opt/csw/postgresql/include
 STRIP_DIRS  = $(DESTDIR)$(libexecdir)/dovecot
 
 # cswclassutils integration
-INITSMF    = $(sysconfdir)/init.d/cswdovecot
+INITSMF    = /etc/opt/csw/init.d/cswdovecot
 USERGROUP = /etc/opt/csw/pkg/CSWdovecot/cswusergroup
 SAMPLECONF = .*/dovecot.pem $(sysconfdir)/dovecot.conf
 MIGRATE_FILES = dovecot.conf
