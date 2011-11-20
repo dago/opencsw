@@ -1,5 +1,5 @@
 NAME = dcc
-VERSION = 1.3.139
+VERSION = 1.3.140
 CATEGORIES = net
 
 DESCRIPTION = E-mail greylisting and a cooperative, distributed system to identify spam
@@ -27,7 +27,8 @@ CONFIGURE_ARGS += --with-uid=bonivart
 #CONFIGURE_ARGS += --with-cgibin=/var/opt/csw/dcc/cgi-bin
 CONFIGURE_ARGS += --with-cgibin=/opt/csw/dcc/cgi-bin
 CONFIGURE_ARGS += --with-rundir=/var/opt/csw/dcc/run
-CONFIGURE_ARGS += --with-sendmail=/home/bonivart/tmp/sendmail-8.14.2/include/libmilter
+# This obviously needs a better solution
+CONFIGURE_ARGS += --with-sendmail=/home/bonivart/tmp/sendmail-8.14.5/include/libmilter
 
 GARCOMPILER = GNU
 
