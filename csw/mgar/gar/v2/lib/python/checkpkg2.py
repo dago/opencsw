@@ -13,6 +13,7 @@ import configuration
 import datetime
 import database
 
+import common_constants
 import package_stats
 import struct_util
 import checkpkg
@@ -37,6 +38,7 @@ UNAPPLIED_OVERRIDES = """WARNING: Some overrides did not match any errors.
 They can be removed, as they don't take any effect anyway.  If you're getting
 errors at the same time, maybe you didn't specify the overrides correctly."""
 
+cc = common_constants
 
 class Error(Exception):
   """Generic error."""
@@ -93,6 +95,10 @@ def main():
     err_msg_list.append("Please specify --os-releases.")
   if not options.arch:
     err_msg_list.append("Please specify --architecture.")
+  if options.arch not in cc.PHYSICAL_ARCHITECTURES:
+    err_msg_list.append(
+        "Valid --architecture values are: %s, you passed: %r"
+        % (cc.PHYSICAL_ARCHITECTURES, options.arch))
   if err_msg_list:
     raise UsageError(" ".join(err_msg_list))
 
