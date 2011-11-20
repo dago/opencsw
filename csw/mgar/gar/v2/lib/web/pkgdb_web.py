@@ -413,7 +413,8 @@ web.webapi.internalerror = web.debugerror
 
 # app = web.application(urls, globals())
 # web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
-app = web.application(urls, globals(), autoreload=False)
+# app = web.application(urls, globals(), autoreload=False)
+app = web.application(urls, globals())
 main = app.wsgifunc()
 
 
