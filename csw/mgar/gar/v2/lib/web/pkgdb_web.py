@@ -13,7 +13,7 @@ from lib.python import checkpkg_lib
 import datetime
 from sqlobject import sqlbuilder
 
-urls = (
+urls_html = (
   r'/', 'index',
   r'/srv4/', 'Srv4List',
   r'/srv4/([0-9a-f]{32})/', 'Srv4Detail',
@@ -27,6 +27,8 @@ urls = (
   r'/error-tags/([^/]+)/', 'ErrorTagDetail',
   r'/catalognames/', 'CatalognameList',
   r'/catalognames/([^/]+)/', 'Catalogname',
+)
+urls_rest = (
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/', 'Catalogs',
   r'/rest/catalogs/([^/]+)/(sparc|i386)/(SunOS[^/]+)/pkgname-by-filename',
       'PkgnameByFilename',
@@ -37,6 +39,7 @@ urls = (
   r'/rest/srv4/([0-9a-f]{32})/files/', 'RestSrv4DetailFiles',
   r'/rest/srv4/([0-9a-f]{32})/pkg-stats/', 'RestSrv4FullStats',
 )
+urls = urls_html + urls_rest
 
 # render = web.template.render('templates/')
 # render = web.template.render('/home/maciej/src/pkgdb_web/templates/')
