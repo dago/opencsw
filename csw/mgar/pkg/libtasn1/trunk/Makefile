@@ -1,5 +1,5 @@
 NAME = libtasn1
-VERSION = 2.10
+VERSION = 2.11
 CATEGORIES = lib
 
 DESCRIPTION = GNU ASN1 Library
@@ -10,6 +10,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
+MASTER_SITES += http://daily.josefsson.org/libtasn1/
 DISTFILES  = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.gnu.org/software/gnutls/
