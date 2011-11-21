@@ -2,7 +2,7 @@
 # - SSL certs to /etc/opt/csw/ssl?
 # - /var/run/dovecot instead of /var/opt/csw/run?
 NAME = dovecot
-VERSION = 2.0.15
+VERSION = 2.0.16
 CATEGORIES = server
 
 DESCRIPTION = Secure IMAP server
@@ -52,10 +52,6 @@ PROTOTYPE_FILTER  = awk '\
 
 # No test suite for Dovecot available
 TEST_SCRIPTS	=
-
-# Override some paths for configure
-sysconfdir=/etc/opt/csw
-localstatedir=/var/opt/csw
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += MYSQL_LIBS="-L/opt/csw/mysql5/lib -L/opt/csw/lib  -L/opt/csw/mysql5/lib/mysql -lmysqlclient -L/opt/csw/lib -lz -lposix4 -lresolv -lc -lgen -lsocket -lnsl -lm"
