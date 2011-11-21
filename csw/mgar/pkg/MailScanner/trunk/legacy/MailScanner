@@ -9,5 +9,5 @@
 #export http_proxy
 
 # Used by the update_spamassassin script
-# Example: "--channelfile /opt/csw/etc/spamassassin/sa.update.txt --gpgkey 123456"
+# Example: "--channelfile /etc/opt/csw/spamassassin/sa.update.txt --gpgkey 123456"
 #SAUPDATEARGS=""

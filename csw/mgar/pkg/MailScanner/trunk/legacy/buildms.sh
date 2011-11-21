@@ -45,6 +45,7 @@
 #            from /opt/csw/etc/spamassassin to /etc/opt/csw/spamassassin
 # 2010-07-02 Lowercase license filename. Make conffiles 0400 to protect it
 # 2010-07-03 Use /tmp/clamd.socket for ClamAV socket
+# 2010-09-01 Fixed update_spamassassin.cron, switch to 5.9
 
 # todo: 
 
@@ -52,7 +53,7 @@
 
 set -e
 
-BSVER=2.10
+BSVER=2.22
 SLTYPE=udp
 
 PATHPREFIX1=/home/bonivart
@@ -237,10 +238,18 @@ cd ../..
 
 cd mailscanner/bin
 echo "-> Modifying update_spamassassin for use with CSW ..." | tee -a $LOG
-# set replace /usr with /opt/csw, replace /etc/init.d with /opt/csw/bin, replace /etc/mail with /opt/csw/etc, replace /etc/sysconfig with /opt/csw/mailscanner/etc, insert PATH
-sed 's/\/usr/\/opt\/csw/;s/^\/etc\/init.d\/MailScanner/\/opt\/csw\/bin\/cswmailscanner/;s/\/etc\/mail/\/opt\/csw\/etc/;s/\/etc\/sysconfig/\/opt\/csw\/mailscanner\/etc/;s/^SAUPDATEARGS/PATH=\/opt\/csw\/bin:\/usr\/bin ; export PATH ; SAUPDATEARGS/' update_spamassassin > update_spamassassin.tmp
+# sed replace /usr with /opt/csw, replace /etc/init.d with /opt/csw/bin, replace /etc/mail with /opt/csw/etc, replace /etc/sysconfig with /opt/csw/mailscanner/etc, insert PATH, SA conf file
+sed 's/\/usr/\/opt\/csw/;s/^\/etc\/init.d\/MailScanner/\/opt\/csw\/bin\/cswmailscanner/;s/\/etc\/mail/\/opt\/csw\/etc/;s/\/etc\/sysconfig/\/opt\/csw\/mailscanner\/etc/;s/^SAUPDATEARGS/PATH=\/opt\/csw\/bin:\/usr\/bin ; export PATH ; SAUPDATEARGS/;s/\/opt\/csw\/mailscanner\/etc\/update_spamassassin/\/opt\/csw\/mailscanner\/etc\/MailScanner/;s/\/opt\/csw\/etc\/spamassassin/\/etc\/opt\/csw\/spamassassin/' update_spamassassin > update_spamassassin.tmp
 mv update_spamassassin.tmp update_spamassassin
 cd ../..
+
+# fix update_spamassassin.cron
+
+cd mailscanner/bin/cron
+echo "-> Modifying update_spamassassin.cron for use with CSW ..." | tee -a $LOG
+sed 's/\/etc\/sysconfig\/update_spamassassin/\/opt\/csw\/mailscanner\/etc\/MailScanner/' update_spamassassin.cron > update_spamassassin.cron.tmp
+mv update_spamassassin.cron.tmp update_spamassassin.cron
+cd ../../..
 
 # fix check_MailScanner.cron
 
@@ -406,7 +415,7 @@ pkgmk -r `pwd` 2>> $LOG
 
 echo "-> Translating package ..." | tee -a $LOG
 cd /var/spool/pkg
-pkg=mailscanner-$version.$rev$cswrev-SunOS5.8-all-CSW.pkg
+pkg=mailscanner-$version.$rev$cswrev-SunOS5.9-all-CSW.pkg
 pkgtrans -s `pwd` $LOGDIR/$pkg CSWmailscanner 2>> $LOG
 
 # gzip
@@ -415,9 +424,9 @@ echo "-> Compressing package ..." | tee -a $LOG
 cd $LOGDIR
 gzip $pkg
 
-# copy to experimental/bonivart
+# copy to /home/experimental/bonivart
 
-echo "-> Copying package to /experimental/bonivart ..." | tee -a $LOG
+echo "-> Copying package to /home/experimental/bonivart ..." | tee -a $LOG
 cp $pkg.gz $TESTDIR/
 
 # cleaning up

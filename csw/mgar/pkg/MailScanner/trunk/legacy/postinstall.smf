@@ -1,0 +1,92 @@
+#!/bin/sh
+
+# postinstall with SMF support for MailScanner
+# 2007-09-13 Peter Bonivart
+
+CHMOD=/usr/bin/chmod
+CHOWN=/usr/bin/chown
+CHROOT=/usr/sbin/chroot
+CP=/usr/bin/cp
+ECHO=/usr/bin/echo
+LN=/usr/bin/ln
+MKDIR=/usr/bin/mkdir
+SVCADM=/usr/sbin/svcadm
+SVCCFG=/usr/sbin/svccfg
+
+CONFFILES=$BASEDIR/share/doc/mailscanner/conffiles
+INSTALLDIR=$BASEDIR/mailscanner
+ETC=$INSTALLDIR/etc
+MSDIR=$PKG_INSTALL_ROOT/var/spool/MailScanner
+SADIR=$BASEDIR/etc/spamassassin
+
+# check csw.conf
+if [ -x $BASEDIR/etc/csw.conf ] ; then
+  . $BASEDIR/etc/csw.conf
+fi
+if [ -x $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf ] ; then
+  . $PKG_INSTALL_ROOT/etc/opt/csw/csw.conf
+fi
+
+# create mailscanner dir
+$ECHO "Creating $MSDIR directory."
+if [ -h "$MSDIR" -o -f "$MSDIR" -o -d "$MSDIR" ]; then
+  $ECHO "! $MSDIR already exists. Could not create directory."
+else
+  $MKDIR -m 755 "$MSDIR"
+  $CHOWN root:bin "$MSDIR"
+fi
+
+# create symlink to spam.assassin.prefs.conf
+if [ -d "$SADIR" -a ! -h "$SADIR/mailscanner.cf" ]; then
+  $ECHO "Creating symlink to spam.assassin.prefs.conf."
+  $LN -s $ETC/spam.assassin.prefs.conf $SADIR/mailscanner.cf
+fi
+
+# copying x.CSW to x
+$ECHO "Copying `wc -l $CONFFILES | awk '{print $1}'` CSW-configuration files to default files."
+for i in `cat $CONFFILES`
+do
+  if [ ! -f "$ETC/$i" ]; then
+    if [ "$i" = "./MailScanner.conf" -a "$autoenable_daemons" = "no" ]; then
+      $ECHO "\nMailScanner.conf not created due to csw.conf setting."
+    else
+      $CP $ETC/${i}.CSW $ETC/$i
+      $CHOWN root:bin $ETC/$i
+      $CHMOD 644 $ETC/$i
+      $ECHO ".\c"
+    fi
+  else
+    $ECHO "\n$i already present. Not copied."
+  fi
+done
+$ECHO
+
+# SMF
+smf=no
+if [ -f $PKG_INSTALL_ROOT/usr/sbin/svccfg -a -f $PKG_INSTALL_ROOT/usr/sbin/svcadm ]; then
+  smf=yes
+fi
+
+if [ "$smf" = "yes" ]; then
+  $ECHO "Configuring service in SMF"
+  $CHROOT $PKG_INSTALL_ROOT $SVCCFG import /opt/csw/var/svc/manifest/network/smtp/mailscanner.xml >/dev/null 2>&1
+  $CHROOT $PKG_INSTALL_ROOT $SVCADM disable svc:/network/smtp/cswmailscanner >/dev/null 2>&1
+  $ECHO "MailScanner is using SMF. The FMRI is: svc:/network/smtp/cswmailscanner:default"
+fi
+
+# If enabled, start the daemon
+#if [ "$enable_daemon" = "yes" -a x"$PKG_INSTALL_ROOT" = x"" ]; then
+#  $ECHO "Starting MailScanner"
+#  if [ "$smf" = "no" ]; then
+#    /etc/init.d/cswmailscanner start
+#  else
+#    $SVCADM enable svc:/network/smtp/cswmailscanner
+#  fi
+#fi
+
+# info
+$ECHO
+$ECHO ">>> Please read /opt/csw/share/doc/mailscanner/README.CSW <<<"
+$ECHO
+
+exit 0

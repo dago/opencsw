@@ -1,0 +1,18 @@
+--- check_mailscanner.orig	Wed Aug 15 11:09:25 2007
++++ check_mailscanner	Wed Aug 15 11:20:29 2007
+@@ -54,4 +54,5 @@
+ FGREP=fgrep
+ EGREP=egrep
++PGREP=pgrep
+ PS=ps
+ UNAME='uname -a'
+@@ -71,8 +72,5 @@
+ if $UNAME | $FGREP "SunOS" >/dev/null ; then
+     # Version for Solaris/SysV systems:
+-    pid=`/usr/ucb/ps auxww |
+-         egrep $msbindir/$process'|'$process'[:]' |
+-         grep -v grep |
+-         awk '{print $2}'`
++    pid=`$PGREP $process`
+ elif $UNAME | $FGREP "HP" >/dev/null ; then
+     # Version for HP-UX

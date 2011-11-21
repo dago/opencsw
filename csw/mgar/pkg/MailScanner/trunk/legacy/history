@@ -1,3 +1,13 @@
+2010-09-06 4.81.4-1,REV=2010.09.06
+----------
+- no news related to the package itself.
+
+2010-09-03 4.79.11-1,REV=2010.09.03
+----------
+- removed dependency to pm_podescapes.
+- added dependencies Sys::SigAction and Compress::Raw::Zlib.
+- fixed paths in update_spamassassin and update_spamassassin.cron.
+
 2010-07-03 4.79.11-1,REV=2010.07.03
 ----------
 - changed SA path from /opt/csw/etc/spamassassin to
