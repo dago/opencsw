@@ -49,35 +49,35 @@ SPKG_DESC_CSWlibformw5 += A free software emulation of curses, libformw.so.5
 RUNTIME_DEP_PKGS_CSWlibformw5 += CSWlibncursesw5
 
 PACKAGES += CSWlibmenu5
-CATALOGNAME_CSWlibmenu5 = libmenu5
 PKGFILES_CSWlibmenu5 += $(call pkgfiles_lib,libmenu.so.5)
 SPKG_DESC_CSWlibmenu5 += A free software emulation of curses, libmenu.so.5
 RUNTIME_DEP_PKGS_CSWlibmenu5 += CSWlibncurses5
 
 PACKAGES += CSWlibmenuw5
-CATALOGNAME_CSWlibmenuw5 = libmenuw5
 PKGFILES_CSWlibmenuw5 += $(call pkgfiles_lib,libmenuw.so.5)
 SPKG_DESC_CSWlibmenuw5 += A free software emulation of curses, libmenuw.so.5
 RUNTIME_DEP_PKGS_CSWlibmenuw5 += CSWlibncursesw5
 
 PACKAGES += CSWlibncurses5
-CATALOGNAME_CSWlibncurses5 = libncurses5
 PKGFILES_CSWlibncurses5 += $(call pkgfiles_lib,libncurses.so.5)
 SPKG_DESC_CSWlibncurses5 += A free software emulation of curses, libncurses.so.5
+# If we access via libncurses we also need the terminal definitions (undetected by checkpkg)
+RUNTIME_DEP_PKGS_CSWlibncurses5 += CSWterminfo
+CHECKPKG_OVERRIDES_CSWlibncurses5 += surplus-dependency|CSWterminfo
 
 PACKAGES += CSWlibncursesw5
-CATALOGNAME_CSWlibncursesw5 = libncursesw5
 PKGFILES_CSWlibncursesw5 += $(call pkgfiles_lib,libncursesw.so.5)
 SPKG_DESC_CSWlibncursesw5 += A free software emulation of curses, libncursesw.so.5
+# If we access via libncursesw we also need the terminal definitions (undetected by checkpkg)
+RUNTIME_DEP_PKGS_CSWlibncursesw5 += CSWterminfo
+CHECKPKG_OVERRIDES_CSWlibncursesw5 += surplus-dependency|CSWterminfo
 
 PACKAGES += CSWlibpanel5
-CATALOGNAME_CSWlibpanel5 = libpanel5
 PKGFILES_CSWlibpanel5 += $(call pkgfiles_lib,libpanel.so.5)
 SPKG_DESC_CSWlibpanel5 += A free software emulation of curses, libpanel.so.5
 RUNTIME_DEP_PKGS_CSWlibpanel5 += CSWlibncurses5
 
 PACKAGES += CSWlibpanelw5
-CATALOGNAME_CSWlibpanelw5 = libpanelw5
 PKGFILES_CSWlibpanelw5 += $(call pkgfiles_lib,libpanelw.so.5)
 SPKG_DESC_CSWlibpanelw5 += A free software emulation of curses, libpanelw.so.5
 RUNTIME_DEP_PKGS_CSWlibpanelw5 += CSWlibncursesw5
