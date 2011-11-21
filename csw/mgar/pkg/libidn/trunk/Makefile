@@ -1,5 +1,5 @@
 NAME = libidn
-VERSION = 1.22
+VERSION = 1.23
 CATEGORIES = lib
 
 DESCRIPTION = GNU IDN Library
@@ -12,6 +12,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
+MASTER_SITES += http://daily.josefsson.org/libidn/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 VENDOR_URL = http://www.gnu.org/software/libidn/
