@@ -1,0 +1,33 @@
+### NOT USED AT THE MOMENT 070710 ###
+
+#!/bin/sh
+
+# postremove for MailScanner
+# 2006-05-12 Peter Bonivart
+
+ECHO=/usr/bin/echo
+READ=/usr/bin/read
+
+$ECHO "Removing symlink from /opt to /opt/csw"
+/usr/bin/rm -s /opt/mailscanner
+
+$ECHO "Removing start script"
+
+$ECHO "The Sendmail start script seems to be disabled,"
+$ECHO "do you want to enable it? [y] \c"
+$READ a
+if [ "$a" = "n" -o "$a" = "N" ]; then
+  $ECHO "Sendmail is still disabled"
+else
+  $ECHO "Enabled Sendmail start script by renaming"
+  $ECHO "/etc/init.d/cswsendmail.disabled to cswsendmail"
+fi
+
+$ECHO "Queue directories prefix? [/var/spool] \c"
+$READ a
+
+$ECHO "Creating incoming queue directory"
+
+$ECHO "Removing MailScanner work directory"
+
+exit 0

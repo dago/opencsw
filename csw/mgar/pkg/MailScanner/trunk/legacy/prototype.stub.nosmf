@@ -1,0 +1,25 @@
+i pkginfo
+i depend
+i copyright
+i postinstall=./postinstall
+i preremove=./preremove
+d none share 0755 root bin
+d none share/doc 0755 root bin
+d none share/doc/mailscanner 0755 root bin
+f none share/doc/mailscanner/ChangeLog 0644 root bin
+f none share/doc/mailscanner/README.CSW 0644 root bin
+f none share/doc/mailscanner/README 0644 root bin
+f none share/doc/mailscanner/conffiles 0644 root bin
+f none share/doc/mailscanner/copyright 0644 root bin
+f none share/doc/mailscanner/history 0644 root bin
+f none /etc/init.d/cswmailscanner=share/doc/mailscanner/cswmailscanner 0744 root bin
+f none /etc/init.d/cswmailscanner.sendmail=share/doc/mailscanner/cswmailscanner.sendmail 0744 root bin
+s none /etc/rc2.d/K28cswmailscanner=/etc/init.d/cswmailscanner
+s none /etc/rc3.d/S28cswmailscanner=/etc/init.d/cswmailscanner
+s none /etc/rc2.d/K78cswmailscanner.sendmail=/etc/init.d/cswmailscanner.sendmail
+s none /etc/rc3.d/S78cswmailscanner.sendmail=/etc/init.d/cswmailscanner.sendmail
+s none bin/MailScanner=../mailscanner/bin/MailScanner
+s none bin/analyze_SpamAssassin_cache=../mailscanner/bin/analyze_SpamAssassin_cache
+s none bin/upgrade_MailScanner_conf=../mailscanner/bin/upgrade_MailScanner_conf
+s none bin/upgrade_languages_conf=../mailscanner/bin/upgrade_languages_conf
+s none bin/cswmailscanner=/etc/init.d/cswmailscanner

@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# preremove for MailScanner
+# 2007-08-21 Peter Bonivart
+
+ECHO=/usr/bin/echo
+RM=/usr/bin/rm
+RMDIR=/usr/bin/rmdir
+
+CONFFILES=$BASEDIR/share/doc/mailscanner/conffiles
+ETC=$BASEDIR/mailscanner/etc
+MSDIR=$PKG_INSTALL_ROOT/var/spool/MailScanner
+SADIR=$BASEDIR/etc/spamassassin
+
+# killing mailscanner
+/etc/init.d/cswmailscanner stop
+
+# remove mailscanner dir
+$ECHO "Removing $MSDIR directory."
+if [ -d "$MSDIR" ]; then
+  dirs=`find $MSDIR -type d | wc -l | awk '{print $1}'` 
+  test -f "$MSDIR/incoming/SpamAssassin.cache.db"
+  sacache=$?
+  if [ "$dirs" -le "3" -a "$sacache" -ne "0" ]; then
+    $RM -rf $MSDIR
+  else
+    $ECHO "! $MSDIR does not seem empty. Not removing."
+  fi
+else
+  $ECHO "! No directory found."
+fi
+
+# remove symlink to spam.assassin.prefs.conf
+if [ -h "$SADIR/mailscanner.cf" ]; then
+  $ECHO "Removing symlink to spam.assassin.prefs.conf."
+  $RM $SADIR/mailscanner.cf
+fi
+
+# remove x conf file if same as x.CSW
+$ECHO "Removing configuration files that have not been modified."
+for i in `cat $CONFFILES`
+do
+  cmp -s "$ETC/$i" "$ETC/${i}.CSW"
+  if [ "x$?" = "x1" ]; then
+    $ECHO
+    echo "! $i modified, will not remove it."
+  else
+    $ECHO ".\c"
+    $RM -f $ETC/$i
+  fi
+done
+$ECHO
+
+exit 0

@@ -1,0 +1,91 @@
+Edited 060424, 060425, 060512, 060515, 060516, 070705, 070711, 070717, 070721,
+       081218
+
+Todo
+----
+# if csw.conf is enabled, try to get up and running immediately
+# - stop/disable sun sendmail and csw sendmail (note: smf on sol10)
+# - start cswmailscanner.sendmail and cswmailscanner
+# -- maybe not such a good idea after upgrades?
+# -- stop/disable can be done but start?
+
+Build script
+------------
+- menu based
++ fix ownership/permissions
++ add csw-directory
++ ask for version
++ add pstamp
++ create prototype
++ pkgmk
++ pkgtrans
++ gzip
++ copy to testing
+
+Misc
+----
++ Add CSW specific things (start scripts...) in csw-directory
++ Add CSW readme, history and so on in csw-directory
++ SMF support
+
+Postinstall
+----------
++ symlink /opt/MailScanner to /opt/csw/mailscanner
+++ detect if link already present
+- ask if to disable CSWsendmail/SUNWsendmail (rename init.d file or remove K/S
+  symlinks?)
++ install start script (cswmailscanner) with K/S symlinks
+- start script should support general MTA operation (start/stop)
++ start script should support Sendmail
+- ask for queue folders (default: /var/spool)
++ create queue folders and MailScanner folder
++ support S10 svc feature
++ copy .CSW config files to non .CSW
+
+Postremove
+----------
++ remove symlink /opt/MailScanner
++ diff config files against originals, if modified copy to other name
+++ should package only contain config files named x.CSW to avoid above issue?
++++ yes!
+
+Modifications
+-------------
++ #!/usr/bin/perl -> #!/opt/csw/bin/perl
+- /opt in bin/MailScanner
+- /var in bin/update_virus_scanners
+- /etc in bin/cron/check_MailScanner.cron
+          bin/cron/update_phishing_sites.cron
+          bin/cron/update_virus_scanners.cron
+          bin/check_mailscanner
+          bin/update_phishing_sites
+          lib/ConfigDefs.pl
+          lib/CustomConfig.pm
+          etc/MailScanner.conf
+          etc/virus.scanners.conf
+
+New pkgs
+--------
+
+- Net::IP (needed for Net::DNS 0.60)
+
+MTA
+---
+Support only Sendmail and how? Replace/disable CSWsendmail's start script?
+
+Dependencies
+------------
+common
+perl
+pm_archivezip
+pm_convertbinhex
+pm_dbdsqlite
+pm_dbi
+pm_filesysdf
+pm_htmlparser
+pm_mimebase64 (probably not needed, seems included in perl 5.8.8)
+pm_mimetools
+pm_netcidr
+tnef
+
+:EOF
