@@ -1,5 +1,5 @@
 NAME = gss
-VERSION = 0.1.0
+VERSION = 1.0.2
 CATEGORIES = lib
 
 DESCRIPTION = GNU Generic Security Service
@@ -8,23 +8,29 @@ endef
 
 # Strangely enough, gss is not on $(GNU_MIRROR)
 MASTER_SITES = ftp://alpha.gnu.org/gnu/gss/
-#MASTER_SITES = http://daily.josefsson.org/gss/
+MASTER_SITES = http://daily.josefsson.org/gss/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTNAME = $(NAME)-0.1.0
+# DISTNAME = $(NAME)-0.1.0
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://www.gnu.org/software/$(GNU_PROJ)
 
-PACKAGES = CSWlibgss
+PACKAGES += CSWlibgss3
+SPKG_DESC_CSWlibgss3 = GNU Generic Security Service, libgss.so.3
+PKGFILES_CSWlibgss3 += $(call pkgfiles_lib,libgss.so.3)
+RUNTIME_DEP_PKGS_CSWlibgss3 += CSWlibintl8
 
-BUILD_DEP_PKGS = 
-RUNTIME_DEP_PKGS = CSWggettextrt
+PACKAGES += CSWlibgss-dev
+SPKG_DESC_CSWlibgss-dev = Development files for libgss.so.3
+PKGFILES_CSWlibgss-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibgss-dev += CSWlibgss3
 
-SPKG_SOURCEURL = http://www.gnu.org/software/$(GNU_PROJ)
+PACKAGES += CSWgss
+SPKG_DESC_CSWgss = GNU Generic Security Service
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWgss += CSWlibgss3
+RUNTIME_DEP_PKGS_CSWgss += CSWlibintl8
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
+BUILD64 = 1
 
 include gar/category.mk
 
