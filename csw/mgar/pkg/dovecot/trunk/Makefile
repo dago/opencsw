@@ -107,7 +107,9 @@ post-install-modulated:
 	ginstall -d $(DESTDIR)$(localstatedir)/lib
 
 	cp $(DESTDIR)/opt/csw/share/doc/dovecot/example-config/dovecot.conf \
-		$(DESTDIR)$(sysconfdir)/dovecot.conf
+		$(DESTDIR)$(sysconfdir)/dovecot/dovecot.conf
+	cp -r $(DESTDIR)/opt/csw/share/doc/dovecot/example-config/conf.d \
+		$(DESTDIR)$(sysconfdir)/dovecot
 
 	# Create self-signed sample cert
 	ginstall -d $(SSLDIR)/certs
