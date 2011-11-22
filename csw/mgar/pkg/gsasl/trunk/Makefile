@@ -1,5 +1,5 @@
 NAME = gsasl
-VERSION = 1.6.1
+VERSION = 1.6.2
 CATEGORIES = apps
 
 DESCRIPTION = GNU SASL binary
@@ -12,6 +12,7 @@ endef
 
 GNU_PROJ = gsasl
 MASTER_SITES = $(GNU_MIRROR)
+MASTER_SITES += http://daily.josefsson.org/gsasl/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 VENDOR_URL = http://www.gnu.org/software/$(GNU_PROJ)
@@ -65,11 +66,6 @@ EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
 
 # Disable 64 bit until krb5 is available in 64 bit
 BUILD64 = 1
-
-# One test inside GNULib fails, reported upstream. This is most
-# probably harmless. Disable testsuite unless this is fixed:
-#   http://lists.gnu.org/archive/html/help-gsasl/2009-03/msg00005.html
-SKIPTEST ?= 1
 
 EXTRA_MERGE_EXCLUDE_FILES = $(libdir)/charset.alias
 
