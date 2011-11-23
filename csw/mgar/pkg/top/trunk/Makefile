@@ -10,6 +10,14 @@ SF_PROJ = unixtop
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
+# Location for browsing these patches is
+#   http://src.opensolaris.org/source/xref/userland/src/components/top/patches/
+# For safety they have also been put in files/
+MASTER_SITES += http://src.opensolaris.org/source/raw/userland/src/components/top/patches/
+PATCHFILES += 01.cmds.patch
+PATCHFILES += 02.hash-c.patch
+PATCHFILES += 03.sunos5.patch
+
 VENDOR_URL = http://www.unixtop.org/
 
 LICENSE = LICENSE
