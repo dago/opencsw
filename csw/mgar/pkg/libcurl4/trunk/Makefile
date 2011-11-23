@@ -3,7 +3,7 @@
 # - Link against new librtmp0
 
 NAME = curl
-VERSION = 7.22.0
+VERSION = 7.23.1
 CATEGORIES = net
 
 DESCRIPTION = Command line tool and library for client-side URL transfers
