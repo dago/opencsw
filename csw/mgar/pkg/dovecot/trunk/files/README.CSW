@@ -1,42 +1,36 @@
-Configuration file migration
-----------------------------
-
-The default configuration path has been migrated to /etc/opt/csw/dovecot.conf.  During package installation the cswmigrateconf script (part of the class action utilities) migrates the dovecot.conf file to the new location.
+Dovecot 2.0 README.CSW
+----------------------
 
 
 Configuration file
 ------------------
 
-The default configuration path is /etc/opt/csw/dovecot.conf CSWdovecot
-brings with it a sample configuration (suffixed with .CSW) that will be
-installed when dovecot.conf doesn't exist yet. This sample configuration
-provides IMAP/POP3 and IMAPS/POP3S services to system users and uses a
-self-signed certificate that comes with the package.
+Dovecot 1.2.x configuration file:
 
-When you adjust dovecot.conf, package upgrades will preserve your
-configuration and just install the sample configuration as dovecot.conf.CSW.
+  /etc/opt/csw/dovecot.conf
 
+Dovecot 2.0 configuration file(s):
 
-Machine-local configuration in shared /opt setups
--------------------------------------------------
+  /etc/opt/csw/dovecot/dovecot.conf
+  /etc/opt/csw/dovecot/conf.d/*
 
-If you share /opt among several machines (via NFS for example) you can use
-/etc/opt/csw/dovecot.conf as machine-local configuration. The dovecot
-startup script will then use it instead of the default configuration.
+Previously, Dovecot versions 1.2.x used /etc/opt/csw/dovecot.conf
+as the default configuration file.
 
+Starting with Dovecot 2.0 the default configuration file is located at
+/etc/opt/csw/dovecot/dovecot.conf please note the addition of "dovecot"
+directory in the path.  For more information please see:
+
+  http://wiki2.dovecot.org/QuickConfiguration
 
 User accounts
 -------------
 
-On installation CSWdovecot will create a user named dovecot in case no user
-account by this name exists. This user account is required for the Dovecot
-login service (and nothing else).
+On installation CSWdovecot will create 2 user accounts named dovecot and
+dovenull in case no user accounts by these names exist. These user accounts
+are required for the Dovecot login service (and nothing else).
 
-If you want to use Dovecot for virtual users, you need to create another
-user account (!= dovecot). For background information, see
-
-  http://wiki.dovecot.org/UserIds
-
+  http://wiki2.dovecot.org/UserIds
 
 Upgrading
 ---------
@@ -44,23 +38,9 @@ Upgrading
 For upgrading information from other IMAP servers or previous Dovecot
 versions, see
 
-  http://wiki.dovecot.org/UpgradingDovecot
-
+  http://wiki2.dovecot.org/UpgradingDovecot
 
 Sieve plugin
 ------------
 
-UPDATE!!  CSWdovecot_sieve package is depreciated.
-
-Sieve support (via the cmusieve plugin) is now contained in the CSWdovecot
-package.
-
-To use sieve add 
-
-  mail_plugins = cmusieve
-
-to the "protocol lda" section in dovecot.conf. This requires that you use
-Dovecot's deliver as LDA of course. See the following URLs for details
-
-  http://wiki.dovecot.org/LDA
-  http://wiki.dovecot.org/LDA/Sieve#CMUSieve_Plugin
+Starting with CSWdovecot 2.0 the sieve plugin is in a separate package (TODO)

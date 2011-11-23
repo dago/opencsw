@@ -3,6 +3,7 @@
 #
 # Taken from http://wiki.dovecot.org/DovecotInit
 # Modified for CSW by Sebastian Kayser
+# Modified by Jake Goerzen
 #
 #FMRI network
 
@@ -11,9 +12,7 @@ DAEMON=/opt/csw/sbin/dovecot
 test -x $DAEMON || exit 1
 set -e
 
-CONF=/opt/csw/etc/dovecot.conf
-CONF_LOCAL=/etc/opt/csw/dovecot.conf
-[ -r $CONF_LOCAL ] && CONF=$CONF_LOCAL
+CONF=/etc/opt/csw/dovecot/dovecot.conf
 
 [ "`ulimit -n`" -lt 1024 ] && ulimit -n 1024
 
