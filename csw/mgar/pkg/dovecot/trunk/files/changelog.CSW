@@ -16,3 +16,11 @@ dovecot (1.2.16,REV=2011.01.15)
     been included in the CSWdovecot package
 
  -- Jake Goerzen <jgoerzen@opencsw.org>  Sat, 15 Jan 2011 17:35:54 +0100
+
+dovecot (2.0.16)
+
+  * package updated to 2.0.16
+  * Dovecot 2.0 configuration is /etc/opt/csw/dovecot/dovecot.conf
+  * sieve package going back into its own package (TODO)
+
+ -- Jake Goerzen <jgoerzen@opencsw.org> Tue Nov 22 22:31:26 CET 2011
