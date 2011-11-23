@@ -1,6 +1,5 @@
 NAME = orca
-VERSION = snapshot-r535
-SPKG_VERSION = snapshot_r535
+VERSION = csw-1.0
 CATEGORIES = utils
 
 DESCRIPTION = A system performance monitoring tool
@@ -26,82 +25,127 @@ define BLURB
 
 endef
 
-MASTER_SITES = http://www.orcaware.com/orca/pub/snapshots/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = https://github.com/blair/orca/tarball/master
+# DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += csworcallator csworcallator.xml svc-csworcallator
 DISTFILES += csworca_services
 DISTFILES += csworca
-PATCHFILES  = $(NAME)-$(VERSION)-se-3.5.0.patch
+PATCHFILES  = orca-snapshot-r535-se-3.5.0.patch
 PATCHFILES += fix-start-orcallator.patch
+PATCHFILES += 0001-Skip-unversioned-SVN-as-we-are-now-in-GITland.patch
 
-PACKAGES = CSWorca CSWorcaweb
+GIT_REPOS  = git://github.com/dago/orca.git
+GIT_TREEISH_orca.git = $(VERSION)
 
-CATALOGNAME_CSWorca    = orca
-CATALOGNAME_CSWorcaweb = orca_web
+VENDOR_URL = http://www.orcaware.com/orca
 
-SPKG_DESC_CSWorca = Performance Data Collector
-SPKG_DESC_CSWorcaweb = Performance Data Viewer
+BUILD_DEP_PKGS += CSWperl
+BUILD_DEP_PKGS += CSWpmtimedate
+BUILD_DEP_PKGS += CSWpmmathinterpolate
+BUILD_DEP_PKGS += CSWpm-rrdtool
+BUILD_DEP_PKGS += CSWgawk
+BUILD_DEP_PKGS += CSWbzip2
+BUILD_DEP_PKGS += CSWsetoolkit
 
-SPKG_SOURCEURL = http://www.orcaware.com/orca
+PACKAGES += CSWorcallator
+SPKG_DESC_CSWorcallator = Orcallator performance data collector
+PKGFILES_CSWorcallator += /etc/opt/csw/init.d/csworcallator
+PKGFILES_CSWorcallator += $(bindir)/.*orcallator.*
+PKGFILES_CSWorcallator += $(libdir)/orca/orcallator.se
+ARCHALL_CSWorcallator = 1
+RUNTIME_DEP_PKGS_CSWorcallator += CSWsetoolkit
+RUNTIME_DEP_PKGS_CSWorcallator += CSWgawk
+RUNTIME_DEP_PKGS_CSWorcallator += CSWbzip2
+# Checkpkg can't track these
+CHECKPKG_OVERRIDES_CSWorcallator += surplus-dependency|CSWsetoolkit
+CHECKPKG_OVERRIDES_CSWorcallator += surplus-dependency|CSWgawk
+CHECKPKG_OVERRIDES_CSWorcallator += surplus-dependency|CSWbzip2
+OBSOLETED_BY_CSWorcallator += CSWorca
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+PACKAGES += CSWorca-services-collector
+SPKG_DESC_CSWorca-services-collector = Orca services data collector
+PKGFILES_CSWorca-services-collector += /etc/opt/csw/init.d/csworca_services
+PKGFILES_CSWorca-services-collector += $(bindir)/.*orca_services.*
+PKGFILES_CSWorca-services-collector += $(libexecdir)/orca_services
+ARCHALL_CSWorca-services-collector = 1
+OBSOLETED_BY_CSWorca-services-collector += CSWorca
 
-BUILD_DEP_PKGS = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2 CSWsetoolkit
+PACKAGES += CSWorca-web
+SPKG_DESC_CSWorca-web = Performance Data Viewer
+ARCHALL_CSWorca-web = 1
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWorca-web += CSWperl
+RUNTIME_DEP_PKGS_CSWorca-web += CSWpmtimedate
+RUNTIME_DEP_PKGS_CSWorca-web += CSWpmmathinterpolate
+RUNTIME_DEP_PKGS_CSWorca-web += CSWrrd
+RUNTIME_DEP_PKGS_CSWorca-web += CSWapache2
+# Checkpkg can't track Perl dependencies
+CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWperl
+CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWpmtimedate
+CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWpmmathinterpolate
+CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWrrd
+CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWapache2
+OBSOLETED_BY_CSWorca-web += CSWorcaweb
+CATALOGNAME_CSWorcaweb = orca_web_stub
 
-RUNTIME_DEP_PKGS_CSWorca     = CSWsetoolkit CSWperl CSWpmtimedate
-RUNTIME_DEP_PKGS_CSWorca    += CSWpmmathinterpolate CSWrrd CSWgawk CSWbzip2
-RUNTIME_DEP_PKGS_CSWorcaweb  = CSWperl CSWpmtimedate CSWpmmathinterpolate CSWrrd CSWapache2
+# TBD: Adjust to OpenCSW radius location
+REINPLACEMENTS += radiuslog
+REINPLACE_MATCH_radiuslog = /usr/local/etc/raddb/logfile
+REINPLACE_WITH_radiuslog = /var/opt/csw/radius.log
+REINPLACE_FILES_radiuslog = data_gatherers/orca_services/orca_services.pl.in
 
-sysconfdir    = /etc/opt/csw
-localstatedir = /var/opt/csw
+REINPLACEMENTS += radiusauth
+REINPLACE_MATCH_radiusauth = /usr/local/lib/orca_services.DB.
+REINPLACE_WITH_radiusauth = $(libexecdir)/orca_services.DB.
+REINPLACE_FILES_radiusauth = data_gatherers/orca_services/orca_services.pl.in
 
-COMMON_EXPORTS += perlcswlib
+# TBD: Adjust to OpenCSW pop logfile location
+REINPLACEMENTS += pop
+REINPLACE_MATCH_pop = /var/log/ipop3d.log
+REINPLACE_WITH_pop = /var/opt/csw/ipop3d.log
+REINPLACE_FILES_pop = data_gatherers/orca_services/orca_services.pl.in
 
-CONFIGURE_ARGS = $(DIRPATHS) \
-	--with-html-dir=$(sharedstatedir)/www/orca \
-	--disable-librrdtool
+# TBD: Adjust to OpenCSW named logfiles location
+REINPLACEMENTS += dns
+REINPLACE_MATCH_dns = /var/log/named
+REINPLACE_WITH_dns = /var/opt/csw/named/named.log
+REINPLACE_FILES_dns = data_gatherers/orca_services/orca_services.pl.in
+
+
+
+EXTRA_COMMON_EXPORTS += perlcswlib
+
+CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS += --with-html-dir=$(sharedstatedir)/www/orca
+CONFIGURE_ARGS += --disable-librrdtool
 
 # Exclude se-libraries for old SE Toolkit versions. We depend on 3.5.0 which
 # includes all needed se-libraries.
 EXTRA_MERGE_EXCLUDE_FILES = /opt/csw/lib/SE/.*
+
+# This is for A/IX only
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/orca-aix-stat
+
+# This is for HP only
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/orca-hp-stat
+
+# This is for Linux /proc only
+EXTRA_MERGE_EXCLUDE_FILES += $(bindir)/procallator
 
 PRESERVECONF = /etc/opt/csw/orcallator.cfg
 PRESERVECONF += /etc/opt/csw/winallator.cfg
 PRESERVECONF += /etc/opt/csw/procallator.cfg
 PRESERVECONF += /etc/opt/csw/orca_services.cfg
 
-INITSMF = /etc/opt/csw/init.d/csworca
+INITSMF += /etc/opt/csw/init.d/csworca
 INITSMF += /etc/opt/csw/init.d/csworcallator
-
-ARCHALL = 1
-
-PKGFILES_CSWorcaweb  = $(prefix)/apache2/.*
-PKGFILES_CSWorcaweb += $(sharedstatedir)/www/orca/.*
-PKGFILES_CSWorcaweb += $(bindir)/orca
-PKGFILES_CSWorcaweb += $(sysconfdir)/.*\.cfg
-PKGFILES_CSWorcaweb += $(libdir)/perl/.*
-PKGFILES_CSWorcaweb += $(mandir)/man1/orca\.1
-PKGFILES_CSWorcaweb += /var/opt/csw/.*
-PKGFILES_CSWorcaweb += /etc/opt/csw/init.d/csworca
-
-# This one is purely optional
-CHECKPKG_OVERRIDES_CSWorca += init-file-missing-cswinitsmf-class|/etc/opt/csw/init.d/csworca_services|class=none
-
-# Checkpkg can't track Perl dependencies
-CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWperl
-CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWgawk
-CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWrrd
-CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWpmtimedate
-CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWpmmathinterpolate
-CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWbzip2
-CHECKPKG_OVERRIDES_CSWorca += surplus-dependency|CSWsetoolkit
-CHECKPKG_OVERRIDES_CSWorcaweb += surplus-dependency|CSWrrd
-CHECKPKG_OVERRIDES_CSWorcaweb += surplus-dependency|CSWapache2
-CHECKPKG_OVERRIDES_CSWorcaweb += surplus-dependency|CSWpmtimedate
-CHECKPKG_OVERRIDES_CSWorcaweb += surplus-dependency|CSWpmmathinterpolate
+INITSMF += /etc/opt/csw/init.d/csworca_services
 
 include gar/category.mk
+
+post-extract-modulated:
+	-cd $(WORKSRC) && ./autogen.sh
+	@$(MAKECOOKIE)
 
 post-install-modulated:
 	@ginstall -d $(DESTDIR)$(sysconfdir)/init.d
@@ -113,7 +157,3 @@ post-install-modulated:
 
 post-merge:
 	@ginstall -d $(PKGROOT)/var/opt/csw/orca/rrd/orcallator
-	@ginstall -d $(PKGROOT)$(prefix)/share/www/orca/orcallator
-	@ginstall -d $(PKGROOT)$(prefix)/apache2/share/htdocs
-	@ln -s $(prefix)/share/www/orca $(PKGROOT)$(prefix)/apache2/share/htdocs/orca
-	@$(MAKECOOKIE)

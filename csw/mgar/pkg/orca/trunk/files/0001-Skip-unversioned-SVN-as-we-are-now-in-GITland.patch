@@ -1,0 +1,24 @@
+From a271f9acd7dd49064eddc4aa66477d551e60b071 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Wed, 23 Nov 2011 21:28:07 +0100
+Subject: [PATCH] Skip unversioned SVN as we are now in GITland
+
+---
+ lib/Makefile.in |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/lib/Makefile.in b/lib/Makefile.in
+index b5f1ff1..f5ae744 100644
+--- a/lib/Makefile.in
++++ b/lib/Makefile.in
+@@ -51,6 +51,7 @@ install-orca: all
+ 	@current_rev="`cd ..; sh -c 'svnversion .' 2>/dev/null || true`"; \
+ 	echo "Subversion reversion of Orca is: $$current_rev"; \
+ 	if test "$$current_rev" != "" && \
++	  test "$$current_rev" != "Unversioned directory" && \
+ 	  test "$$current_rev" != "exported"; then \
+ 	  echo Fixing svn revision number in $(DESTDIR)$(libdir)/perl/csw/Orca/Constants.pm; \
+ 	  echo $(PERL) -w -p -i \
+-- 
+1.7.6.1
+
