@@ -2,6 +2,8 @@ NAME = ganglia
 VERSION = 3.1.7
 CATEGORIES = utils
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 # How should we set this?
 # There is a release number in configure.in, maybe use that?
 # RELVER =
@@ -42,7 +44,7 @@ SPKG_DESC_CSWgangliadevel	= Ganglia headers for metric module development
 SPKG_DESC_CSWgangliagmetad	= Ganglia gmetad
 SPKG_DESC_CSWgangliaweb		= Ganglia web
 
-BUILD_DEP_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-devel CSWrrd CSWpcre
+BUILD_DEP_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-dev CSWrrdtool CSWpcre
 
 RUNTIME_DEP_PKGS_CSWgangliart = CSWexpat CSWlibconfuse CSWapache2rt
 RUNTIME_DEP_PKGS_CSWgangliart += CSWpcrert
@@ -52,10 +54,10 @@ RUNTIME_DEP_PKGS_CSWgangliamodpython = CSWlibconfuse CSWapache2rt CSWgangliart
 RUNTIME_DEP_PKGS_CSWgangliamodpython += CSWgangliaagent
 RUNTIME_DEP_PKGS_CSWgangliadevel = CSWexpat CSWlibconfuse CSWapache2rt
 RUNTIME_DEP_PKGS_CSWgangliagmetad = CSWexpat CSWlibconfuse CSWapache2rt
-RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWgangliart CSWgangliaagent CSWrrd
+RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWgangliart CSWgangliaagent CSWrrdtool
 RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWpcrert
 RUNTIME_DEP_PKGS_CSWgangliaweb = CSWgangliagmetad 
-RUNTIME_DEP_PKGS_CSWgangliaweb += CSWapache2 CSWphp5 CSWap2modphp5 CSWrrd
+RUNTIME_DEP_PKGS_CSWgangliaweb += CSWapache2 CSWphp5 CSWap2modphp5 CSWrrdtool
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=43021
