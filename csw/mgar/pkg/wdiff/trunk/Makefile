@@ -1,6 +1,6 @@
 # : Makefile 9089 2010-03-11 08:34:46Z wahwah $
 NAME = wdiff
-VERSION = 1.0.1
+VERSION = 1.1.0
 CATEGORIES = utils
 
 DESCRIPTION = A front end to diff for comparing files on a word per word basis
@@ -8,11 +8,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-
-# Use patch until this is fixed:
-#   http://lists.gnu.org/archive/html/wdiff-bugs/2011-09/msg00006.html
-PATCHFILES += wdiff-1.0.1-testsuite.patch
+DISTFILES = $(DISTNAME).tar.gz
 
 VENDOR_URL = http://www.gnu.org/software/wdiff/
 
