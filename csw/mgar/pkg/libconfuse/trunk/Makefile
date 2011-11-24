@@ -1,4 +1,4 @@
-NAME = libconfuse
+NAME = libconfuse0
 VERSION = 2.7
 CATEGORIES = lib
 
