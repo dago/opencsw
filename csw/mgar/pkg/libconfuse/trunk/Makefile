@@ -2,18 +2,7 @@ NAME = libconfuse
 VERSION = 2.7
 CATEGORIES = lib
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
-
-# For libConfuse 2.7, the test suite doesn't compile cleanly on Solaris,
-# so we skip it.  This should be re-assessed with each new release
-# from upstream.  Proposed fixes for the test suite to be submitted
-# upstream.
-ifeq ($(VERSION),2.7)
-#TEST_TARGET = check
-TEST_SCRIPTS = 
-endif
-
-DESCRIPTION = a configuration file parser library
+DESCRIPTION = A configuration file parser library
 define BLURB
   libConfuse is a configuration file parser library, licensed under
   the terms of the ISC license, and written in C. It supports sections
@@ -24,32 +13,34 @@ define BLURB
   to a program using a simple API.
 endef
 
-#MASTER_SITES = http://bzero.se/confuse/
 MASTER_SITES = http://savannah.nongnu.org/download/confuse/
-PATCHFILES = 
-DISTFILES  = confuse-$(VERSION).tar.gz
-DISTFILES += $(PATCHFILES)
 DISTNAME = confuse-$(VERSION)
+DISTFILES += $(DISTNAME).tar.gz
 
-EXTRA_DOCS = $(PATCHFILES)
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-PACKAGES += CSWlibconfuse0-1
-SPKG_DESC_CSWlibconfuse0-1 = a configuration file parser library
+LICENSE = AUTHORS
 
-PACKAGES += CSWlibconfuse0-dev
-SPKG_DESC_CSWlibconfuse0-dev = Development files for libconfuse
-RUNTIME_DEP_PKGS_CSWlibconfuse0-dev = CSWlibconfuse0-1
+PACKAGES += CSWlibconfuse0
+SPKG_DESC_CSWlibconfuse0 = A configuration file parser library, libconfuse.so.0
+PKGFILES_CSWlibconfuse0 += $(call pkgfiles_lib,libconfuse.so.0)
+OBSOLETED_BY_CSWlibconfuse0 += CSWlibconfuse
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+PACKAGES += CSWlibconfuse-dev
+SPKG_DESC_CSWlibconfuse-dev = Development files for libconfuse.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibconfuse-dev += CSWlibconfuse0
 
 BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-nls
+
+# For libConfuse 2.7, the test suite doesn't compile cleanly on Solaris,
+# so we skip it.  This should be re-assessed with each new release
+# from upstream.  Proposed fixes for the test suite to be submitted
+# upstream.
+SKIPTEST-2.7 = 1
+SKIPTEST = $(SKIPTEST-$(VERSION))
 
 include gar/category.mk
