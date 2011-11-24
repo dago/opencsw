@@ -85,7 +85,7 @@ CONFIGURE_ARGS += --disable-nls
 CONFIGURE_ARGS += --with-libapr=/opt/csw/apache2/bin/apr-1-config
 
 # Use rrd from CSWlibrrd4
-CONFIGURE_ARGS += --with-librrd=/opt/csw/lib
+CONFIGURE_ARGS += --with-librrd=/opt/csw
 
 # Include the status module
 CONFIGURE_ARGS += --with-status
