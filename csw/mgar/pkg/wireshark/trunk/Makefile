@@ -12,7 +12,11 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-PATCHFILES = 0001-Solaris-9-doesn-t-have-stdint.h.patch
+PATCHFILES += 0001-Solaris-9-doesn-t-have-stdint.h.patch
+
+# Use patch until this is fixed:
+#   https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6615
+PATCHFILES += 0002-Don-t-return-value-in-void-functions.patch
 
 VENDOR_URL = http://www.wireshark.org/
 
