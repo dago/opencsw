@@ -1,5 +1,5 @@
 NAME = mbuffer
-VERSION = 20100526
+VERSION = 20110724
 CATEGORIES = utils
 
 DESCRIPTION = A tool for buffering data streams
@@ -12,10 +12,10 @@ define BLURB
   if used correctly and speed up the whole backup process.
 endef
 
-MASTER_SITES   = http://www.maier-komor.de/software/mbuffer/
-DISTFILES      = $(NAME)-$(VERSION).tgz
-UFILES_REGEX   = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-SPKG_SOURCEURL = http://www.maier-komor.de/mbuffer.html
+MASTER_SITES = http://www.maier-komor.de/software/mbuffer/
+DISTFILES = $(DISTNAME).tgz
+
+VENDOR_URL = http://www.maier-komor.de/mbuffer.html
 
 LICENSE = LICENSE
 
@@ -28,20 +28,13 @@ RUNTIME_DEP_PKGS = CSWlibmhash
 # 64-bit build enables buffers >= 2GB (see README).
 BUILD64 = 1
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
-
 # Required for updated libmhash (mbuffer builds against it) which allows for
 # flexible const/non-const definitions.  There should be a more intelligent 
 # way to do this than to just put it into every build recipe which requires
 # libmhash though ...
 EXTRA_CPPFLAGS = -D__const=const
 
-# current9x doesn't know about libm.so.2 from the 64-bit modulated build
-CHECKPKG_OVERRIDES_CSWmbuffer += soname-not-found|libm.so.2
-
-EXTRA_PAX_ARGS = '-s,ChangeLog$$,changelog,p'
+EXTRA_PAX_ARGS = -s ,ChangeLog$$,changelog,p
 
 include gar/category.mk
 
