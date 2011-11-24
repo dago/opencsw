@@ -25,7 +25,7 @@ define BLURB
   design, it is remarkably easy to extend and add functionality. 
 endef
 
-SF_PROJ = ganglia
+SF_PROJ = sqsh
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(PATCHFILES)
