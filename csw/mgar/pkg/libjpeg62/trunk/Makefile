@@ -19,8 +19,16 @@ PKGFILES_CSWlibjpeg62 = $(call pkgfiles_lib,libjpeg.so.62)
 
 BUILD64 = 1
 
+# Ok, here comes a good one: a dynamic library is only generated when warnings are suppressed.
+# This is because in ltconfig the test to look if -KPIC actually works detects if there are
+# any warnings printed because some braindead compilers generate an .o even though -KPIC is
+# ignored. As the test tries to compile an empty file Sun Studio just prints a warning line
+# leading to disabling of the detection. Turning warnings off therefore leads to turning
+# shared libs on.
+EXTRA_CFLAGS += -w
+
 CONFIGURE_ARGS += --enable-shared=yes
-#CONFIGURE_ARGS += $(DIRPATHS)
+CONFIGURE_ARGS += $(DIRPATHS)
 
 INSTALL_OVERRIDE_DIRS += prefix
 INSTALL_OVERRIDE_DIRS += exec_prefix
