@@ -27,9 +27,9 @@ endef
 #MASTER_SITES = http://bzero.se/confuse/
 MASTER_SITES = http://savannah.nongnu.org/download/confuse/
 PATCHFILES = 
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES  = confuse-$(VERSION).tar.gz
 DISTFILES += $(PATCHFILES)
-DISTNAME = $(NAME)-$(VERSION)
+DISTNAME = confuse-$(VERSION)
 
 EXTRA_DOCS = $(PATCHFILES)
 
