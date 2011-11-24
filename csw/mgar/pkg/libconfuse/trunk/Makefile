@@ -2,6 +2,8 @@ NAME = libconfuse
 VERSION = 2.7
 CATEGORIES = lib
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 # For libConfuse 2.7, the test suite doesn't compile cleanly on Solaris,
 # so we skip it.  This should be re-assessed with each new release
 # from upstream.  Proposed fixes for the test suite to be submitted
