@@ -1,6 +1,6 @@
 NAME = sqsh
 VERSION = 2.1.7
-CATEGORIES = database
+CATEGORIES = utils
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
