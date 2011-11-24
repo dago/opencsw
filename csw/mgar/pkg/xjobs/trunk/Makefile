@@ -1,5 +1,5 @@
 NAME = xjobs
-VERSION = 20110724
+VERSION = 20110730
 CATEGORIES = utils
 
 DESCRIPTION = Executes jobs in parallel similar to xargs
@@ -21,7 +21,5 @@ VENDOR_URL = http://www.maier-komor.de/xjobs.html
 
 # No tests available
 TEST_SCRIPTS =
-
-INSTALL_OVERRIDE_DIRS = bindir mandir
 
 include gar/category.mk
