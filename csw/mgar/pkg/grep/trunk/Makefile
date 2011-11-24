@@ -1,5 +1,5 @@
 NAME = grep
-VERSION = 2.9.79-e340
+VERSION = 2.10
 CATEGORIES = utils
 
 DESCRIPTION = GNU grep
@@ -15,7 +15,7 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNU_MIRROR)
-MASTER_SITES += http://meyering.net/grep/
+# MASTER_SITES += http://meyering.net/grep/
 DISTFILES = $(DISTNAME).tar.xz
 
 PACKAGES = CSWggrep
