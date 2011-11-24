@@ -27,8 +27,10 @@ MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 
 LIBOBJC = 3
 
-PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS  = solaris9-sparc
+PACKAGING_PLATFORMS += solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc
+PACKAGING_PLATFORMS += solaris10-i386
 
 # GIT init takes a long time, disable for now, reenable if build works
 NOGITPATCH ?= 1
@@ -36,6 +38,12 @@ NOGITPATCH ?= 1
 ## Source URLs
 VENDOR_URL = http://gcc.gnu.org
 
+GCC4_CC_HOME = /opt/csw/gcc4
+GCC4_CC = $(GCC4_CC_HOME)/bin/gcc
+GCC4_CXX = $(GCC4_CC_HOME)/bin/g++
+prefix = $(HOME)/usr-$(GARCH)-$(GAROSREL)
+EXTRA_INC = $(prefix)/include
+EXTRA_INC += $(BUILD_PREFIX)/include
 ## Copyright File
 LICENSE = COPYING3
 
@@ -46,12 +54,12 @@ LICENSE = COPYING3
 # CONFIGURE_ARGS += --libdir=$(libdir)
 # CONFIGURE_ARGS += --exec-prefix=$(BUILD_PREFIX)/$(PKG_VERSION_TOKEN)
 
-BUILD_DEP_PKGS += CSWlibz-dev
+# BUILD_DEP_PKGS += CSWlibz-dev
 BUILD_DEP_PKGS += CSWlibgmp-dev
 BUILD_DEP_PKGS += CSWlibmpc-dev
 BUILD_DEP_PKGS += CSWlibmpfr-dev
-BUILD_DEP_PKGS += CSWlibppl-dev
-BUILD_DEP_PKGS += CSWcloog-dev
+# BUILD_DEP_PKGS += CSWlibppl-dev
+# BUILD_DEP_PKGS += CSWcloog-dev
 
 ## build options
 # http://gcc.gnu.org/install/configure.html
@@ -70,7 +78,7 @@ CONFIGURE_ARGS += --with-included-gettext
 CONFIGURE_ARGS += --with-libiconv-prefix=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-x
 CONFIGURE_ARGS += --with-mpfr=$(BUILD_PREFIX)
-CONFIGURE_ARGS += --with-gmp=$(BUILD_PREFIX)
+CONFIGURE_ARGS += --with-gmp=$(prefix)
 # To be enabled when PPL is built
 CONFIGURE_ARGS += --with-ppl=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-cloog=$(BUILD_PREFIX)
@@ -80,10 +88,26 @@ CONFIGURE_ARGS += --enable-java-awt=xlib
 CONFIGURE_ARGS += --enable-libssp
 CONFIGURE_ARGS += --enable-objc-gc
 CONFIGURE_ARGS += --enable-threads=posix 
-# We'll build ada later. It requires the PPL library.
-# CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
-CONFIGURE_ARGS += --enable-languages=c,c++,fortran,java,objc
 CONFIGURE_ARGS += --with-system-zlib=/opt/csw
+
+# We cannot currently build ada on Solaris 10 x86.
+# The Solaris 10 build fails with:
+#
+# Undefined                       first referenced
+#  symbol                             in file
+# operand_equal_p                     libbackend.a(builtins.o)
+# fold                                libbackend.a(convert.o)
+# ggc_print_common_statistics         libbackend.a(ggc-page.o)
+# fold_build1_stat_loc                libbackend.a(builtins.o)
+
+# Skipping Ada on Solaris 10 x86
+CONFIGURE_ARGS = --enable-languages=ada,c,c++,fortran,java,objc
+# CONFIGURE_ARGS_sparc_5.9 = --enable-languages=ada,c,c++,fortran,java,objc
+# CONFIGURE_ARGS_sparc_5.10 = --enable-languages=ada,c,c++,fortran,java,objc
+# CONFIGURE_ARGS_i386_5.9 = --enable-languages=ada,c,c++,fortran,java,objc
+# CONFIGURE_ARGS_i386_5.10 = --enable-languages=c,c++,fortran,java,objc
+# CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH)_$(GAROSREL))
+
 
 # there could be some abstractions in gar.conf.mk, but at the moment there
 # aren't so let's specify architectures by hand.
@@ -106,20 +130,20 @@ OBJDIR          = $(abspath $(WORKDIR)/objdir)
 
 # These flags are passed when gcc is built with gcc.
 # Needed to remove FLAVOR_FLAGS, because they were Sun Studio specific.
-CFLAGS_FOR_TARGET_sparc = -O2 $(ARCHFLAGS_GCC4_$(ISA)) $(EXTRA_GCC4_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
-CXXFLAGS_FOR_TARGET_sparc = -O2 $(ARCHFLAGS_GCC4_$(ISA)) $(EXTRA_GCC4_CXX_FLAGS) $(EXTRA_GCC_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
-CFLAGS_FOR_TARGET = $(CFLAGS_FOR_TARGET_$(GARCH))
-CXXFLAGS_FOR_TARGET = $(CXXFLAGS_FOR_TARGET_$(GARCH))
-EXTRA_EXPORTS += CFLAGS_FOR_TARGET
-EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
+# CFLAGS_FOR_TARGET_sparc = -O2 $(ARCHFLAGS_GCC4_$(ISA)) $(EXTRA_GCC4_CC_FLAGS) $(EXTRA_GCC_CC_FLAGS) $(EXTRA_CC_FLAGS)
+# CXXFLAGS_FOR_TARGET_sparc = -O2 $(ARCHFLAGS_GCC4_$(ISA)) $(EXTRA_GCC4_CXX_FLAGS) $(EXTRA_GCC_CXX_FLAGS) $(EXTRA_CXX_FLAGS)
+# CFLAGS_FOR_TARGET = $(CFLAGS_FOR_TARGET_$(GARCH))
+# CXXFLAGS_FOR_TARGET = $(CXXFLAGS_FOR_TARGET_$(GARCH))
+# EXTRA_EXPORTS += CFLAGS_FOR_TARGET
+# EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
 
 # The theory goes that the CFLAGS and CXXFLAGS cause problems with the
 # multilib builds where 64-bit binaries are built.  This is triggered by the
 # gcc build; the compiler binaries are 32-bit only, but since the compiler can
 # generate 32-bit and 64-bit binaries, the libraries have to be built for both
 # architectures.
-CFLAGS =
-CXXFLAGS =
+CFLAGS = -I$(includedir)
+CXXFLAGS = -I$(includedir)
 
 # Might be necessary, but CFLAGS_FOR_TARGET seem to be enough for now.
 # BOOT_CFLAGS = $(CFLAGS_FOR_TARGET)
@@ -549,10 +573,10 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 # We need GNU find as find
-PATH := /opt/csw/gnu:$(PATH)
+PATH := $(prefix)/bin:/opt/csw/gcc4/bin:/opt/csw/gnu:$(PATH)
 
 # This override sets the right RPATH on libstdc++ and other libraries.
-LD_OPTIONS := -R/opt/csw/lib -R/opt/csw/lib/\$$ISALIST
+LD_OPTIONS := -R/opt/csw/lib -R/opt/csw/lib/\$$ISALIST -R$(prefix)/lib -R$(prefix)/lib/\$$ISALIST
 CONFIGURE_ENV := PATH=$(PATH) CC=$(CC) LD_OPTIONS="$(LD_OPTIONS)"
 BUILD_ENV := PATH=$(PATH) LD_OPTIONS="$(LD_OPTIONS)"
 INSTALL_ENV := PATH=$(PATH)
