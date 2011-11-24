@@ -1,4 +1,4 @@
-NAME = libconfuse0
+NAME = libconfuse
 VERSION = 2.7
 CATEGORIES = lib
 
@@ -27,11 +27,18 @@ endef
 #MASTER_SITES = http://bzero.se/confuse/
 MASTER_SITES = http://savannah.nongnu.org/download/confuse/
 PATCHFILES = 
-DISTFILES  = confuse-$(VERSION).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += $(PATCHFILES)
-DISTNAME = confuse-$(VERSION)
+DISTNAME = $(NAME)-$(VERSION)
 
 EXTRA_DOCS = $(PATCHFILES)
+
+PACKAGES += CSWlibconfuse0-1
+SPKG_DESC_CSWlibconfuse0-1 = a configuration file parser library
+
+PACKAGES += CSWlibconfuse0-dev
+SPKG_DESC_CSWlibconfuse0-dev = Development files for libconfuse
+RUNTIME_DEP_PKGS_CSWlibconfuse0-dev = CSWlibconfuse0-1
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
