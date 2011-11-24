@@ -44,7 +44,8 @@ SPKG_DESC_CSWgangliadevel	= Ganglia headers for metric module development
 SPKG_DESC_CSWgangliagmetad	= Ganglia gmetad
 SPKG_DESC_CSWgangliaweb		= Ganglia web
 
-BUILD_DEP_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-dev CSWrrdtool CSWpcre
+BUILD_DEP_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-dev CSWpcre
+BUILD_DEP_PKGS += CSWrrdtool CSWrrdtool-dev
 
 RUNTIME_DEP_PKGS_CSWgangliart = CSWexpat CSWlibconfuse CSWapache2rt
 RUNTIME_DEP_PKGS_CSWgangliart += CSWpcrert
