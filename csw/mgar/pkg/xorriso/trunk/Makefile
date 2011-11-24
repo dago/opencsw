@@ -1,6 +1,6 @@
 # $Id$
 NAME = xorriso
-VERSION = 1.1.4
+VERSION = 1.1.8
 CATEGORIES = utils
 
 DESCRIPTION = ISO 9660 Rock Ridge Filesystem Manipulator
@@ -18,7 +18,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 BUILD_DEP_PKGS += CSWlibreadline-dev
 
 RUNTIME_DEP_PKGS_CSWxorriso += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSWxorriso += CSWbzip2
+RUNTIME_DEP_PKGS_CSWxorriso += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWxorriso += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWxorriso += CSWlibz1
 
