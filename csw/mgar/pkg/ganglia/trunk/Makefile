@@ -70,7 +70,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 
 # Uncomment this if we want to build both 32 bit and 64 bit binaries
 # By default, only 32 bit binaries are built
-#BUILD64 = 1
+BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
@@ -83,6 +83,9 @@ CONFIGURE_ARGS += --disable-nls
 
 # Use apr from CSWapache2rt
 CONFIGURE_ARGS += --with-libapr=/opt/csw/apache2/bin/apr-1-config
+
+# Use rrd from CSWlibrrd4
+CONFIGURE_ARGS += --with-librrd=/opt/csw/lib
 
 # Include the status module
 CONFIGURE_ARGS += --with-status
