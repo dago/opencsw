@@ -2,7 +2,7 @@ NAME = ganglia
 VERSION = 3.1.7
 CATEGORIES = utils
 
-#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 # How should we set this?
 # There is a release number in configure.in, maybe use that?
@@ -71,7 +71,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 
 # Uncomment this if we want to build both 32 bit and 64 bit binaries
 # By default, only 32 bit binaries are built
-#BUILD64 = 1
+BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
