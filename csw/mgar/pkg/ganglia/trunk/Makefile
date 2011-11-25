@@ -26,10 +26,10 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWgangliaweb.postinstall CSWgangliaweb.preremove
 DISTFILES += httpd-ganglia.conf.CSW cswgmond cswgmetad
 
-PACKAGES = CSWgangliart CSWgangliaagent CSWgangliadevel CSWgangliagmetad CSWgangliaweb CSWgangliamodpython
+PACKAGES = CSWlibganglia0 CSWgangliaagent CSWgangliadevel CSWgangliagmetad CSWgangliaweb CSWgangliamodpython
 
 CATALOGNAME_CSWganglia		= ganglia
-CATALOGNAME_CSWgangliart	= ganglia_rt
+CATALOGNAME_CSWlibganglia0	= libganglia0
 CATALOGNAME_CSWgangliaagent	= ganglia_agent
 CATALOGNAME_CSWgangliamodpython	= ganglia_modpython
 CATALOGNAME_CSWgangliadevel	= ganglia_devel
@@ -37,7 +37,7 @@ CATALOGNAME_CSWgangliagmetad	= ganglia_gmetad
 CATALOGNAME_CSWgangliaweb	= ganglia_web
 
 SPKG_DESC_CSWganglia		= Dummy package
-SPKG_DESC_CSWgangliart		= Ganglia runtime libraries
+SPKG_DESC_CSWlibganglia0		= Ganglia runtime libraries
 SPKG_DESC_CSWgangliaagent	= Ganglia performance monitoring agent gmond
 SPKG_DESC_CSWgangliamodpython	= Ganglia agent module for Python metrics
 SPKG_DESC_CSWgangliadevel	= Ganglia headers for metric module development
@@ -47,18 +47,18 @@ SPKG_DESC_CSWgangliaweb		= Ganglia web
 BUILD_DEP_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-dev CSWpcre
 BUILD_DEP_PKGS += CSWrrdtool CSWrrdtool-dev
 
-RUNTIME_DEP_PKGS_CSWgangliart = CSWexpat CSWlibconfuse CSWapache2rt
-RUNTIME_DEP_PKGS_CSWgangliart += CSWpcrert
-RUNTIME_DEP_PKGS_CSWgangliaagent = CSWexpat CSWlibconfuse CSWapache2rt
-RUNTIME_DEP_PKGS_CSWgangliaagent += CSWgangliart CSWpcrert
-RUNTIME_DEP_PKGS_CSWgangliamodpython = CSWlibconfuse CSWapache2rt CSWgangliart
+RUNTIME_DEP_PKGS_CSWlibganglia0 = CSWlibexpat1 CSWlibconfuse CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWlibganglia0 += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWgangliaagent = CSWlibexpat1 CSWlibconfuse CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWgangliaagent += CSWlibganglia0 CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWgangliamodpython = CSWlibconfuse CSWlibapr1-0 CSWlibganglia0
 RUNTIME_DEP_PKGS_CSWgangliamodpython += CSWgangliaagent
-RUNTIME_DEP_PKGS_CSWgangliadevel = CSWexpat CSWlibconfuse CSWapache2rt
-RUNTIME_DEP_PKGS_CSWgangliagmetad = CSWexpat CSWlibconfuse CSWapache2rt
-RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWgangliart CSWgangliaagent CSWrrdtool
-RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWpcrert
+RUNTIME_DEP_PKGS_CSWgangliadevel = CSWlibexpat0 CSWlibconfuse CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWgangliagmetad = CSWlibexpat1 CSWlibconfuse CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWlibganglia0 CSWgangliaagent CSWrrdtool
+RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWlibrrd4 CSWlibpcre0
 RUNTIME_DEP_PKGS_CSWgangliaweb = CSWgangliagmetad 
-RUNTIME_DEP_PKGS_CSWgangliaweb += CSWapache2 CSWphp5 CSWap2modphp5 CSWrrdtool
+RUNTIME_DEP_PKGS_CSWgangliaweb += CSWapache2 CSWphp5 CSWap2-modphp5 CSWrrdtool
 
 # We define upstream file regex so we can be notifed of new upstream software release
 UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=43021
@@ -133,10 +133,10 @@ sysconfdir = /etc/opt/csw/ganglia
 ETCGANGLIA = $(sysconfdir)
 
 PKGFILES_CSWganglia = 
-PKGFILES_CSWgangliart = $(libdir)/libganglia.*
+PKGFILES_CSWlibganglia0 = $(libdir)/libganglia.so.*
 PKGFILES_CSWgangliamodpython = .*python.*
-PKGFILES_CSWgangliadevel = .*/include/.*.h .*/bin/ganglia-config
-PKGFILES_CSWgangliagmetad = .*/gmetad.* /opt/csw/var/ganglia/rrds /etc/opt/csw/init.d/cswgmetad
+PKGFILES_CSWgangliadevel = .*/include/.*.h .*/bin/ganglia-config $(libdir)/libganglia.so
+PKGFILES_CSWgangliagmetad = .*/gmetad.* /var/opt/csw/ganglia/rrds /etc/opt/csw/init.d/cswgmetad
 PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.* /opt/csw/apache2/etc/extra/.*
 
 PRESERVECONF = /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
@@ -152,12 +152,13 @@ INITSMF = /etc/opt/csw/init.d/cswgmond
 INITSMF += /etc/opt/csw/init.d/cswgmetad
 
 PROTOTYPE_FILTER_CSWgangliagmetad = awk '\
-$$$$3 ~ /\/opt\/csw\/var\/ganglia\/rrds/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
+$$$$3 ~ /\/var\/opt\/csw\/ganglia\/rrds/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
 { print }'
 
 
 #ARCHALL_CSWgangliadevel = 1
-#ARCHALL_CSWgangliaweb = 1
+ARCHALL_CSWgangliaweb = 1
+ARCHALL_CSWgangliamodpython = 1
 
 include gar/category.mk
 
@@ -191,7 +192,7 @@ install-custom:
 ifeq ($(VERSION),3.1.2)
 	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/modgstatus.conf.CSW
 endif
-	@ginstall -d $(DESTDIR)/opt/csw/var/ganglia/rrds
+	@ginstall -d $(DESTDIR)/var/opt/csw/ganglia/rrds
 	
 
 
