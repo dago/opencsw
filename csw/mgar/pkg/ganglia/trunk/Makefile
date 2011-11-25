@@ -32,7 +32,7 @@ CATALOGNAME_CSWganglia		= ganglia
 CATALOGNAME_CSWlibganglia0	= libganglia0
 CATALOGNAME_CSWgangliaagent	= gangliaagent
 CATALOGNAME_CSWgangliamodpython	= gangliamodpython
-CATALOGNAME_CSWganglia-dev	= ganglia-dev
+CATALOGNAME_CSWganglia-dev	= ganglia_dev
 CATALOGNAME_CSWgangliagmetad	= gangliagmetad
 CATALOGNAME_CSWgangliaweb	= gangliaweb
 
@@ -52,10 +52,12 @@ RUNTIME_DEP_PKGS_CSWlibganglia0 += CSWlibpcre0
 RUNTIME_DEP_PKGS_CSWgangliaagent = CSWlibexpat1 CSWlibconfuse CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWgangliaagent += CSWlibganglia0 CSWlibpcre0
 RUNTIME_DEP_PKGS_CSWgangliamodpython = CSWgangliaagent
+CHECKPKG_OVERRIDES_CSWgangliamodpython += surplus-dependency|CSWgangliaagent
 RUNTIME_DEP_PKGS_CSWganglia-dev = CSWlibganglia0
 RUNTIME_DEP_PKGS_CSWgangliagmetad = CSWlibexpat1 CSWlibconfuse CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWlibganglia0 CSWgangliaagent CSWrrdtool
 RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWlibrrd4 CSWlibpcre0
+CHECKPKG_OVERRIDES_CSWgangliagmetad += surplus-dependency|CSWgangliaagent
 CHECKPKG_OVERRIDES_CSWgangliagmetad += surplus-dependency|CSWrrdtool
 RUNTIME_DEP_PKGS_CSWgangliaweb = CSWgangliagmetad 
 RUNTIME_DEP_PKGS_CSWgangliaweb += CSWapache2 CSWphp5 CSWap2-modphp5 CSWrrdtool
@@ -137,7 +139,8 @@ ETCGANGLIA = $(sysconfdir)
 
 PKGFILES_CSWganglia = 
 PKGFILES_CSWgangliaagent = .*/bin/gmond .*/bin/gmetric
-PKGFILES_CSWlibganglia0 = $(call pkgfiles_lib,libganglia-3.1.7.so.0)
+PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0\.0\.0)
+PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0(\.\d+)*)
 CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.1.7.so.0.0.0|soname=libganglia-3.1.7.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-1-7-0
 PKGFILES_CSWgangliamodpython = .*python.*
 PKGFILES_CSWganglia-dev = .*/include/.*.h .*/bin/ganglia-config $(libdir)/libganglia.so
