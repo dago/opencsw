@@ -44,17 +44,17 @@ SPKG_DESC_CSWganglia-dev	= Ganglia headers for metric module development
 SPKG_DESC_CSWgangliagmetad	= Ganglia gmetad
 SPKG_DESC_CSWgangliaweb		= Ganglia web
 
-BUILD_DEP_PKGS = CSWexpat CSWlibconfuse CSWapache2rt CSWapache2-dev CSWpcre
+BUILD_DEP_PKGS = CSWexpat CSWlibconfuse-dev CSWapache2rt CSWapache2-dev CSWpcre
 BUILD_DEP_PKGS += CSWrrdtool CSWrrdtool-dev
 
-RUNTIME_DEP_PKGS_CSWlibganglia0 = CSWlibexpat1 CSWlibconfuse CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWlibganglia0 = CSWlibexpat1 CSWlibconfuse0 CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWlibganglia0 += CSWlibpcre0
-RUNTIME_DEP_PKGS_CSWgangliaagent = CSWlibexpat1 CSWlibconfuse CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWgangliaagent = CSWlibexpat1 CSWlibconfuse0 CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWgangliaagent += CSWlibganglia0 CSWlibpcre0
 RUNTIME_DEP_PKGS_CSWgangliamodpython = CSWgangliaagent
 CHECKPKG_OVERRIDES_CSWgangliamodpython += surplus-dependency|CSWgangliaagent
 RUNTIME_DEP_PKGS_CSWganglia-dev = CSWlibganglia0
-RUNTIME_DEP_PKGS_CSWgangliagmetad = CSWlibexpat1 CSWlibconfuse CSWlibapr1-0
+RUNTIME_DEP_PKGS_CSWgangliagmetad = CSWlibexpat1 CSWlibconfuse0 CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWlibganglia0 CSWgangliaagent CSWrrdtool
 RUNTIME_DEP_PKGS_CSWgangliagmetad += CSWlibrrd4 CSWlibpcre0
 CHECKPKG_OVERRIDES_CSWgangliagmetad += surplus-dependency|CSWgangliaagent
@@ -96,7 +96,7 @@ CONFIGURE_ARGS += --with-libapr=/opt/csw/apache2/bin/apr-1-config
 # Use rrd from CSWlibrrd4
 CONFIGURE_ARGS += --with-librrd=/opt/csw
 
-# Use confuse from CSWlibconfuse
+# Use confuse from CSWlibconfuse0
 CONFIGURE_ARGS += --with-libconfuse=/opt/csw
 
 # Include the status module
