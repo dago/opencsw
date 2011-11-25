@@ -15,6 +15,8 @@ DISTFILES += $(NAME)-$(VERSION).tar.bz2
 #   https://bugzilla.gnome.org/show_bug.cgi?id=664800
 PATCHFILES += 0001-Use-inttypes.h-if-stdint.h-is-not-available.patch
 
+VENDOR_URL = http://gegl.org/babl/
+
 PACKAGES += CSWlibbabl0-1-0
 SPKG_DESC_CSWlibbabl0-1-0 = A dynamic, any to any, pixel format translation library, libbabl-0.1.so.0
 PKGFILES_CSWlibbabl0-1-0 += $(call pkgfiles_lib,libbabl-0.1.so.0)
