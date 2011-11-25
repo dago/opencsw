@@ -171,7 +171,7 @@ ARCHALL_CSWgangliamodpython = 1
 include gar/category.mk
 
 install-custom:
-	@rm $(DESTDIR)/opt/csw/bin/gstat
+	-@rm $(DESTDIR)/opt/csw/bin/gstat
 	@ginstall -D $(DOWNLOADDIR)/cswgmond \
 		$(PKGROOT)/etc/opt/csw/init.d/cswgmond
 	@ginstall -D $(DOWNLOADDIR)/cswgmetad \
