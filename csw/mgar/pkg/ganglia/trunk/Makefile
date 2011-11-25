@@ -164,7 +164,7 @@ $$$$3 ~ /\/var\/opt\/csw\/ganglia\/rrds/ { $$$$5 = "nobody"; $$$$6 = "nogroup" }
 { print }'
 
 
-ARCHALL_CSWganglia-dev = 1
+#ARCHALL_CSWganglia-dev = 1
 ARCHALL_CSWgangliaweb = 1
 ARCHALL_CSWgangliamodpython = 1
 
