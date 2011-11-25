@@ -15,17 +15,22 @@ PATCHFILES = 0001-Fix-nasm-options.patch
 
 VENDOR_URL = http://www.libsdl.org/
 
-PACKAGES += CSWlibsdl
-SPKG_DESC_CSWlibsdl = Simple DirectMedia Layer library
-RUNTIME_DEP_PKGS_CSWlibsdl += CSWiconv
+PACKAGES += CSWlibsdl1-2-0
+SPKG_DESC_CSWlibsdl1-2-0 = Simple DirectMedia Layer library, libsdl-1.2.so.0
+PKGFILES_CSWlibsdl1-2-0 += $(call pkgfiles_lib,libSDL-1.2.so.0)
+RUNTIME_DEP_PKGS_CSWlibsdl1-2-0 += CSWlibiconv2
+OBSOLETED_BY_CSWlibsdl1-2-0 += CSWlibsdl
 
-PACKAGES += CSWlibsdldevel
-SPKG_DESC_CSWlibsdldevel  = Simple DirectMedia Layer library development files
-PKGFILES_CSWlibsdldevel = $(PKGFILES_DEVEL)
-RUNTIME_DEP_PKGS += CSWlibsdl
+PACKAGES += CSWlibsdl-dev
+SPKG_DESC_CSWlibsdl-dev  = Simple DirectMedia Layer library development files for libsdl-1.2.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS += CSWlibsdl1-2-0
+OBSOLETED_BY_CSWlibsdl-dev += CSWlibsdldevel
 CATALOGNAME_CSWlibsdldevel = libsdl_devel
 
 BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS) --disable-static
+
+TEST_TARGET = test
 
 include gar/category.mk
