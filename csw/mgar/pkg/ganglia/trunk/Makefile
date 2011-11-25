@@ -75,6 +75,9 @@ BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
+# For compatibility on Solaris 10
+CONFIGURE_ARGS += CFLAGS="-xc99"
+
 # Don't build gmetad (not tested yet on Solaris, more deps required to build)
 #CONFIGURE_ARGS += --without-gmetad
 CONFIGURE_ARGS += --with-gmetad
