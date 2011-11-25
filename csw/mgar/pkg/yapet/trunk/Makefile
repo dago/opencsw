@@ -2,12 +2,13 @@
 #
 NAME = yapet
 VERSION = 0.8pre2
-GARTYPE = v2
 CATEGORIES = apps
 
-DESCRIPTION = Brief description
+DESCRIPTION = Text-based Password Manager
 define BLURB
-  Long description
+	YAPET is a text based password manager using the Blowfish encryption
+	algorithm. Because of its small footprint and very few library dependencies,
+	it is suited for installing on desktop and server systems alike.
 endef
 
 MASTER_SITES = http://www.guengel.ch/myapps/yapet/downloads/
@@ -25,10 +26,7 @@ DISTFILES += README.CSW
 
 RUNTIME_DEP_PKGS  = CSWosslrt
 RUNTIME_DEP_PKGS += CSWlibncurses5
-RUNTIME_DEP_PKGS += CSWggettextrt
-
-BUILD64 = 1
-ISAEXEC = 1
+RUNTIME_DEP_PKGS += CSWlibintl8
 
 BUILD_DEP_PKGS  = CSWossldevel
 BUILD_DEP_PKGS += CSWlibncurses-dev
@@ -37,6 +35,15 @@ BUILD_DEP_PKGS += CSWggettext-dev
 EXTRA_INC = /opt/csw/include/ncurses
 
 CONFIGURE_ARGS = $(DIRPATHS)
+
+CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/lib|opt/csw/bin/csv2yapet
+CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/csv2yapet
+CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/csv2yapet
+CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bin/csv2yapet
+CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/lib|opt/csw/bin/yapet
+CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/yapet
+CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/yapet
+CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bin/yapet
 
 include gar/category.mk
 
