@@ -1,40 +1,37 @@
 NAME = babl
-VERSION = 0.1.2
+VERSION = 0.1.6
 CATEGORIES = gnome
 
-DESCRIPTION = babl is a dynamic, any to any, pixel format translation library
+DESCRIPTION = A dynamic, any to any, pixel format translation library
 define BLURB
   babl is a library for dynamically handling pixel formats and managing
   conversions between them.  It is being used by GEGL.
 endef
 
-MASTER_SITES = http://ftp.gnome.org/pub/gimp/babl/0.1/
-DISTFILES  = $(NAME)-$(VERSION).tar.bz2
+MASTER_SITES = http://ftp.gtk.org/pub/babl/$(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')/
+DISTFILES += $(NAME)-$(VERSION).tar.bz2
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+PATCHFILES += 0001-Use-inttypes.h-if-stdint.h-is-not-available.patch
 
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+PACKAGES += CSWlibbabl0-1-0
+SPKG_DESC_CSWlibbabl0-1-0 = A dynamic, any to any, pixel format translation library, libbabl-0.1.so.0
+PKGFILES_CSWlibbabl0-1-0 += $(call pkgfiles_lib,libbabl-0.1.so.0)
+PKGFILES_CSWlibbabl0-1-0 += $(call baseisadirs,$(libdir),babl-0.1/.*)
+OBSOLETED_BY_CSWlibbabl0-1-0 += CSWlibbabl
 
-CONFIGURE_ARGS = $(DIRPATHS)
+PACKAGES += CSWlibbabl-dev
+SPKG_DESC_CSWlibbabl-dev = Development files for libbabl-0.1.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibbabl-dev += CSWlibbabl0-1-0
 
-# STRIP_LIBTOOL = 1
-PATCHFILES += patch-xml_insert.sh
+BUILD64 = 1
 
-CHECKPKG_OVERRIDES_CSWbabl += symbol-not-found|CIE.so
-CHECKPKG_OVERRIDES_CSWbabl += symbol-not-found|gimp-8bit.so
-CHECKPKG_OVERRIDES_CSWbabl += symbol-not-found|gegl-fixups.so
-CHECKPKG_OVERRIDES_CSWbabl += symbol-not-found|gggl.so
-CHECKPKG_OVERRIDES_CSWbabl += symbol-not-found|gggl-lies.so
-CHECKPKG_OVERRIDES_CSWbabl += symbol-not-found|naive-CMYK.so
+REINPLACEMENTS += pthread
+REINPLACE_MATCH_pthread = -pthread
+REINPLACE_WITH_pthread = -lpthread
+REINPLACE_FILES_pthread = tests/Makefile.in
 
-TEST_SCRIPTS =
+# There is currently one test failing, upstream has been notified, disable for now.
+SKIPTEST ?= 1
 
 include gar/category.mk
-
-post-configure-modulated:
-	gfind $(WORKSRC) -name \*.c | xargs perl -pi \
-		-e 's/stdint.h/limits.h/'
-	perl -pi -e 's/-pthread/-lpthread/' $(WORKSRC)/tests/Makefile
