@@ -39,6 +39,9 @@ SPKG_DESC_CSWlibrsvg-dev = Development files for librsvg-2.so.2
 PKGFILES_CSWlibrsvg-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibrsvg-dev += $(sharedstatedir)/gtk-doc/.*
 RUNTIME_DEP_PKGS_CSWlibrsvg-dev += CSWlibrsvg2-2
+RUNTIME_DEP_PKGS_CSWlibrsvg-dev += CSWlibglib2-dev
+RUNTIME_DEP_PKGS_CSWlibrsvg-dev += CSWgtk2devel
+RUNTIME_DEP_PKGS_CSWlibrsvg-dev += CSWlibcairo-dev
 
 PACKAGES += CSWrsvg
 SPKG_DESC_CSWrsvg += SVG to raster image conversion utility
