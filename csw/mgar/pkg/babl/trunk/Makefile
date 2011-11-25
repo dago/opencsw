@@ -11,6 +11,8 @@ endef
 MASTER_SITES = http://ftp.gtk.org/pub/babl/$(shell echo $(VERSION) | awk -F. '{print $$1"."$$2}')/
 DISTFILES += $(NAME)-$(VERSION).tar.bz2
 
+# Use patch until this is fixed:
+#   https://bugzilla.gnome.org/show_bug.cgi?id=664800
 PATCHFILES += 0001-Use-inttypes.h-if-stdint.h-is-not-available.patch
 
 PACKAGES += CSWlibbabl0-1-0
@@ -26,12 +28,15 @@ RUNTIME_DEP_PKGS_CSWlibbabl-dev += CSWlibbabl0-1-0
 
 BUILD64 = 1
 
+# Replace manually until this is fixed:
+#   https://bugzilla.gnome.org/show_bug.cgi?id=664800
 REINPLACEMENTS += pthread
 REINPLACE_MATCH_pthread = -pthread
 REINPLACE_WITH_pthread = -lpthread
 REINPLACE_FILES_pthread = tests/Makefile.in
 
-# There is currently one test failing, upstream has been notified, disable for now.
+# There is currently one test failing, upstream has been notified, disable for now until this is fixed:
+#   https://bugzilla.gnome.org/show_bug.cgi?id=664800
 SKIPTEST ?= 1
 
 include gar/category.mk
