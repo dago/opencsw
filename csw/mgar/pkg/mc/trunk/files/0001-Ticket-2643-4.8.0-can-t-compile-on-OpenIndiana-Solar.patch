@@ -1,0 +1,28 @@
+From 27041586cabe71426cf12095f76a0a8621e4894a Mon Sep 17 00:00:00 2001
+From: Andrew Borodin <aborodin@vmail.ru>
+Date: Sun, 23 Oct 2011 14:52:39 +0400
+Subject: [PATCH] Ticket #2643: 4.8.0 can't compile on OpenIndiana (Solaris)
+
+lib/vfs/parse_ls_vga.c: added #include "lib/unixcompat.h" where makedev
+macro is defined.
+
+Signed-off-by: Andrew Borodin <aborodin@vmail.ru>
+---
+ lib/vfs/parse_ls_vga.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/lib/vfs/parse_ls_vga.c b/lib/vfs/parse_ls_vga.c
+index 8091c14..994c744 100644
+--- a/lib/vfs/parse_ls_vga.c
++++ b/lib/vfs/parse_ls_vga.c
+@@ -41,6 +41,7 @@
+ #include <stdlib.h>
+ 
+ #include "lib/global.h"
++#include "lib/unixcompat.h"     /* makedev */
+ #include "lib/widget.h"         /* message() */
+ 
+ #include "utilvfs.h"
+-- 
+1.7.3.5
+
