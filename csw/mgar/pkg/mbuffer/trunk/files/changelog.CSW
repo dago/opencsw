@@ -1,3 +1,9 @@
+mbuffer (20110724,REV=2011.11.27)
+
+  * Version update to 20110724 (Closes #4665).
+
+ -- Sebastian Kayser <skayser@opencsw.org>  Sun, 27 Nov 2011 00:01:05 +0100
+
 mbuffer (20100526,REV=2010.07.28)
 
   * Version update to 20100526 (Closes #4407).
