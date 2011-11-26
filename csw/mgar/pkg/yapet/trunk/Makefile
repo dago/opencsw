@@ -33,17 +33,9 @@ BUILD_DEP_PKGS += CSWlibncurses-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 
 EXTRA_INC = /opt/csw/include/ncurses
+EXTRA_CXXFLAGS += -norunpath
 
 CONFIGURE_ARGS = $(DIRPATHS)
-
-CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/lib|opt/csw/bin/csv2yapet
-CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/csv2yapet
-CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/csv2yapet
-CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bin/csv2yapet
-CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/lib|opt/csw/bin/yapet
-CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/bin/yapet
-CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/bin/yapet
-CHECKPKG_OVERRIDES_CSWyapet += bad-rpath-entry|/opt/SUNWspro/lib/v8|opt/csw/bin/yapet
 
 include gar/category.mk
 
