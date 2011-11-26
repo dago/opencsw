@@ -138,13 +138,13 @@ sysconfdir = /etc/opt/csw/ganglia
 ETCGANGLIA = $(sysconfdir)
 
 PKGFILES_CSWganglia = 
-PKGFILES_CSWgangliaagent = .*/bin/gmond .*/bin/gmetric
+PKGFILES_CSWgangliaagent = .*/sbin/gmond .*/bin/gmetric
 PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0\.0\.0)
 PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0(\.\d+)*)
 CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.1.7.so.0.0.0|soname=libganglia-3.1.7.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-1-7-0
 PKGFILES_CSWgangliamodpython = .*python.*
 PKGFILES_CSWganglia-dev = .*/include/.*.h .*/bin/ganglia-config $(libdir)/libganglia.so
-PKGFILES_CSWgangliagmetad = .*/bin/gmetad .*/gmetad.* /var/opt/csw/ganglia/rrds /etc/opt/csw/init.d/cswgmetad
+PKGFILES_CSWgangliagmetad = .*/sbin/gmetad .*/gmetad.* /var/opt/csw/ganglia/rrds /etc/opt/csw/init.d/cswgmetad
 PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.* /opt/csw/apache2/etc/extra/.*
 
 PRESERVECONF = /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
