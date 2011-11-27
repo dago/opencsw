@@ -138,7 +138,8 @@ sysconfdir = /etc/opt/csw/ganglia
 ETCGANGLIA = $(sysconfdir)
 
 PKGFILES_CSWganglia = 
-PKGFILES_CSWgangliaagent = .*/gmond.conf.CSW etc/opt/csw/ganglia/conf.d/modgstatus.conf.CSW .*/sbin/gmond .*/bin/gmetric $(call baseisadirs,$(libdir),ganglia/mod*\.so) /etc/opt/csw/init.d/cswgmond
+PKGFILES_CSWgangliaagent = .*/gmond.conf.CSW .*/modgstatus.conf.CSW .*/sbin/gmond .*/bin/gmetric /etc/opt/csw/init.d/cswgmond
+PKGFILES_CSWgangliaagent += .*/modsys.so .*/modcpu.so .*/modnet.so .*/modmulticpu.so .*/modmem.so .*/modload.so .*/moddisk.so .*/modproc.so
 PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0\.0\.0)
 PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0(\.\d+)*)
 CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.1.7.so.0.0.0|soname=libganglia-3.1.7.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-1-7-0
@@ -177,15 +178,13 @@ post-install-modulated:
 	@ginstall -D $(DOWNLOADDIR)/cswgmetad \
 		$(PKGROOT)/etc/opt/csw/init.d/cswgmetad
 	@ginstall -d $(DESTDIR)$(WWWGANGLIA)
-	@ginstall -d $(DESTDIR)$(sysconfdir)/ganglia
-	@ginstall -d $(DESTDIR)$(sysconfdir)/ganglia/conf.d
 	@cd $(WORKSRC)/web; \
 		cp -R * $(DESTDIR)$(WWWGANGLIA)
 	@rm -rf $(DESTDIR)$(WWWGANGLIA)/conf.php
 	@ginstall -D $(FILEDIR)/conf.php \
 		$(DESTDIR)$(WWWGANGLIA)/conf.php.CSW
 	@rm -rf $(DESTDIR)$(WWWGANGLIA)/*.in
-	@ginstall -D $(FILEDIR)/httpd-ganglia.conf.CSW \
+	@ginstall -D $(FILEDIR)/httpd-ganglia.conf \
 		$(DESTDIR)/opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
 	@ginstall -d $(DESTDIR)$(ETCGANGLIA)/conf.d
 	@$(WORKSRC)/gmond/gmond -t | grep -v "^include" \
@@ -196,7 +195,7 @@ post-install-modulated:
 		$(DESTDIR)$(ETCGANGLIA)/gmetad.conf
 	@cd $(WORKSRC)/gmond/modules/conf.d; \
 		for CONF_FILE in *.conf ; \
-		do cp -R "$${CONF_FILE}" $(DESTDIR)$(ETCGANGLIA)/conf.d/"$${CONF_FILE}" ; done
+		do cp -R "$${CONF_FILE}" $(DESTDIR)$(ETCGANGLIA)/conf.d/"$${CONF_FILE}.CSW" ; done
 	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/example.conf.CSW \
 		$(DESTDIR)$(ETCGANGLIA)/conf.d/multicpu.conf.CSW
 ifeq ($(VERSION),3.1.2)
