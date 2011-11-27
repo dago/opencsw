@@ -1,0 +1,25 @@
+From f039874b42e63d070dc3e4f45b31aee7a9e013a4 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Sun, 27 Nov 2011 13:59:33 +0100
+Subject: [PATCH] Comment out problematic definition of AtkTextRange
+
+---
+ atk/atktext.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/atk/atktext.c b/atk/atktext.c
+index a1e90de..638f4e6 100755
+--- a/atk/atktext.c
++++ b/atk/atktext.c
+@@ -1429,6 +1429,7 @@ atk_text_range_free (AtkTextRange *range)
+   g_free (range->content);
+   g_free (range);
+ }
+-
++/*
+ G_DEFINE_BOXED_TYPE (AtkTextRange, atk_text_range, atk_text_range_copy,
+                      atk_text_range_free)
++*/
+-- 
+1.7.6.1
+
