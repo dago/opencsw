@@ -19,6 +19,7 @@ PATCHFILES += 0001-Comment-out-problematic-definition-of-AtkTextRange.patch
 PACKAGES += CSWlibatk1-0-0
 SPKG_DESC_CSWlibatk1-0-0 = An accessibility toolkit for GNOME, libatk-1.0.so.0
 PKGFILES_CSWlibatk1-0-0 += $(call pkgfiles_lib,libatk-1.0.so.0)
+PKGFILES_CSWlibatk1-0-0 += $(sharedstatedir)/locale/.*
 RUNTIME_DEP_PKGS_CSWlibatk1-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibatk1-0-0 += CSWglib2
 OBSOLETED_BY_CSWlibatk1-0-0 += CSWlibatk
