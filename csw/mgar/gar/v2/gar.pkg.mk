@@ -1052,13 +1052,10 @@ platformenv:
 		)\
 	)
 
-submitpkg: submitpkg-default
-
-submitpkg-%: _PKGURL=$(shell svn info .. | $(GAWK) '$$1 == "URL:" { print $$2 }')
-submitpkg-%:
-	@$(if $(filter $(call _REVISION),UNCOMMITTED NOTVERSIONED NOSVN),\
-		$(error You have local files not in the repository. Please commit everything before submitting a package))
-	$(SVN) -m "$(NAME): Tag as release $(SPKG_VERSION),$(SPKG_REVSTAMP)$(if $(filter default,$*),, for project '$*')" cp $(_PKGURL)/trunk $(_PKGURL)/tags/$(if $(filter default,$*),,$*_)$(NAME)-$(SPKG_VERSION),$(SPKG_REVSTAMP)
+submitpkg:
+	@echo "The 'submitpkg' target has been removed."
+	@echo "Subversion information is now part of the package,"
+	@echo "as the OPENCSW_REPOSITORY entry in pkginfo."
 
 # dependb - update the dependency database
 #
