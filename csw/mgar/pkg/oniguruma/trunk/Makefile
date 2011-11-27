@@ -14,14 +14,18 @@ MASTER_SITES = http://www.geocities.jp/kosako3/oniguruma/archive/
 DISTNAME = onig-$(VERSION)
 DISTFILES  = $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://www.geocities.jp/kosako3/oniguruma/
 
-SPKG_SOURCEURL = http://www.geocities.jp/kosako3/oniguruma/
+PACKAGES += CSWlibonig2
+SPKG_DESC_CSWlibonig2 = Oniguruma is a regular expression library, libonig.so.2
+PKGFILES_CSWlibonig2 += $(call pkgfiles_lib,libonig.so.2)
+OBSOLETED_BY_CSWlibonig2 += CSWoniguruma
+
+PACKAGES += CSWlibonig-dev
+SPKG_DESC_CSWlibonig-dev = Development files for libonig.so.2
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibonig-dev += CSWlibonig2
 
 BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
 
 include gar/category.mk
