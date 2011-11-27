@@ -141,14 +141,14 @@ sysconfdir = /etc/opt/csw/ganglia
 ETCGANGLIA = $(sysconfdir)
 
 PKGFILES_CSWganglia = 
-PKGFILES_CSWgangliaagent = .*/gmond.conf.CSW .*/modgstatus.conf.CSW .*/sbin/gmond .*/bin/gmetric /etc/opt/csw/init.d/cswgmond
+PKGFILES_CSWgangliaagent = .*/gmond.conf.CSW .*/modgstatus.conf.CSW .*/sbin/gmond .*/bin/gmetric /etc/opt/csw/init.d/cswgmond .*/gmond.1 .*/gmetric.1 .*/gmond.conf.5
 PKGFILES_CSWgangliaagent += .*/modsys.so .*/modcpu.so .*/modnet.so .*/modmulticpu.so .*/modmem.so .*/modload.so .*/moddisk.so .*/modproc.so .*/modgstatus.so
 PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0\.0\.0)
 PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0(\.\d+)*)
 CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.1.7.so.0.0.0|soname=libganglia-3.1.7.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-1-7-0
 PKGFILES_CSWgangliamodpython = .*python.*
 PKGFILES_CSWganglia-dev = .*/include/.*.h .*/bin/ganglia-config $(libdir)/libganglia.so
-PKGFILES_CSWgangliagmetad = .*/sbin/gmetad .*/gmetad.conf.CSW /var/opt/csw/ganglia/rrds /etc/opt/csw/init.d/cswgmetad
+PKGFILES_CSWgangliagmetad = .*/sbin/gmetad .*/gmetad.conf.CSW /var/opt/csw/ganglia/rrds /etc/opt/csw/init.d/cswgmetad .*/gmetad.1
 PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.* /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
 
 PRESERVECONF = /opt/csw/apache2/etc/extra/httpd-ganglia.conf
@@ -208,6 +208,12 @@ ifeq ($(VERSION),3.1.2)
 	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/modgstatus.conf.CSW
 endif
 	@ginstall -d $(DESTDIR)/var/opt/csw/ganglia/rrds
+	@ginstall -d $(DESTDIR)/opt/csw/man/man1
+	@ginstall -d $(DESTDIR)/opt/csw/man/man5
+	@ginstall -D $(WORKSRC)/gmond/gmond.conf.5 $(DESTDIR)/opt/csw/man/man5/gmond.conf.5
+	@ginstall -D $(WORKSRC)/mans/gmetad.1 $(DESTDIR)/opt/csw/man/man1/gmetad.1
+	@ginstall -D $(WORKSRC)/mans/gmond.1 $(DESTDIR)/opt/csw/man/man1/gmond.1
+	@ginstall -D $(WORKSRC)/mans/gmetric.1 $(DESTDIR)/opt/csw/man/man1/gmetric.1
 	
 
 
