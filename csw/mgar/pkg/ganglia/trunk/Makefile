@@ -110,6 +110,9 @@ CONFIGURE_ARGS += --with-status
 CONFIGURE_ARGS += --disable-python
 #CONFIGURE_ARGS += --with-python=/opt/csw
 
+# modgstatus - for Ganglia version and internal status metrics
+CONFIGURE_ARGS += --enable-status
+
 # For Ganglia 3.1.2, the test suite doesn't compile cleanly on Solaris,
 # so we skip it.  This should be re-assessed with each new release
 # from upstream.  Proposed fixes for the test suite to be submitted
@@ -139,7 +142,7 @@ ETCGANGLIA = $(sysconfdir)
 
 PKGFILES_CSWganglia = 
 PKGFILES_CSWgangliaagent = .*/gmond.conf.CSW .*/modgstatus.conf.CSW .*/sbin/gmond .*/bin/gmetric /etc/opt/csw/init.d/cswgmond
-PKGFILES_CSWgangliaagent += .*/modsys.so .*/modcpu.so .*/modnet.so .*/modmulticpu.so .*/modmem.so .*/modload.so .*/moddisk.so .*/modproc.so
+PKGFILES_CSWgangliaagent += .*/modsys.so .*/modcpu.so .*/modnet.so .*/modmulticpu.so .*/modmem.so .*/modload.so .*/moddisk.so .*/modproc.so .*/modgstatus.so
 PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0\.0\.0)
 PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0(\.\d+)*)
 CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.1.7.so.0.0.0|soname=libganglia-3.1.7.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-1-7-0
@@ -193,7 +196,10 @@ post-install-modulated:
 		>> $(DESTDIR)$(ETCGANGLIA)/gmond.conf.CSW
 	@ginstall -D $(FILEDIR)/gmetad.conf \
 		$(DESTDIR)$(ETCGANGLIA)/gmetad.conf
-	@cd $(WORKSRC)/gmond/modules/conf.d; \
+	@cd $(WORKSRC)/gmond/modules/conf.d ; \
+		for CONF_FILE in *.conf ; \
+		do cp -R "$${CONF_FILE}" $(DESTDIR)$(ETCGANGLIA)/conf.d/"$${CONF_FILE}.CSW" ; done
+	@cd $(FILEDIR)/conf.d ; \
 		for CONF_FILE in *.conf ; \
 		do cp -R "$${CONF_FILE}" $(DESTDIR)$(ETCGANGLIA)/conf.d/"$${CONF_FILE}.CSW" ; done
 	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/example.conf.CSW \
