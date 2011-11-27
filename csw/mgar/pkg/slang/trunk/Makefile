@@ -1,5 +1,7 @@
+# $Id$
+
 NAME = slang
-VERSION = 2.2.2
+VERSION = 2.2.4
 CATEGORIES = lib
 
 EXTRA_MODULATORS = VERSION
@@ -18,10 +20,7 @@ SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VERSION), $(NAME)-$(VERSION).tar.g
 DISTFILES = $(SOURCEFILES)
 NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz,$(SOURCEFILES))
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-RUNTIME_DEP_PKGS = CSWiconv CSWpcrert CSWpng CSWzlib CSWoniguruma
+# RUNTIME_DEP_PKGS = CSWiconv CSWpcrert CSWpng CSWzlib CSWoniguruma
 
 SPKG_SOURCEURL = http://www.s-lang.org/
 
@@ -29,10 +28,7 @@ SPKG_SOURCEURL = http://www.s-lang.org/
 # definitions if the installed lib is older than the newly built one.
 LINKER_FLAGS =
 
-sysconfdir = /etc/opt/csw
-
-NOISAEXEC = 1
-BUILD64 = 1
+UILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET_VERSION-1.4.9 =
@@ -59,4 +55,3 @@ MERGE_SCRIPTS_isa-default64-garversion-2.2.2 = copy-relocated-only
 MERGE_DIRS_isa-default64-garversion-2.2.2 = $(libdir)
 
 include gar/category.mk
-
