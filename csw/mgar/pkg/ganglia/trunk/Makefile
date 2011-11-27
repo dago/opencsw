@@ -208,12 +208,10 @@ ifeq ($(VERSION),3.1.2)
 	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/modgstatus.conf.CSW
 endif
 	@ginstall -d $(DESTDIR)/var/opt/csw/ganglia/rrds
-	@ginstall -d $(DESTDIR)/opt/csw/man/man1
-	@ginstall -d $(DESTDIR)/opt/csw/man/man5
-	@ginstall -D $(WORKSRC)/gmond/gmond.conf.5 $(DESTDIR)/opt/csw/man/man5/gmond.conf.5
-	@ginstall -D $(WORKSRC)/mans/gmetad.1 $(DESTDIR)/opt/csw/man/man1/gmetad.1
-	@ginstall -D $(WORKSRC)/mans/gmond.1 $(DESTDIR)/opt/csw/man/man1/gmond.1
-	@ginstall -D $(WORKSRC)/mans/gmetric.1 $(DESTDIR)/opt/csw/man/man1/gmetric.1
+	@ginstall -D $(WORKSRC)/gmond/gmond.conf.5 $(DESTDIR)$(mandir)/man5/gmond.conf.5
+	@ginstall -D $(WORKSRC)/mans/gmetad.1 $(DESTDIR)$(mandir)/man1/gmetad.1
+	@ginstall -D $(WORKSRC)/mans/gmond.1 $(DESTDIR)$(mandir)/man1/gmond.1
+	@ginstall -D $(WORKSRC)/mans/gmetric.1 $(DESTDIR)$(mandir)/man1/gmetric.1
 	
 
 
