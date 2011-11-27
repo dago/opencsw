@@ -28,7 +28,7 @@ SPKG_SOURCEURL = http://www.s-lang.org/
 # definitions if the installed lib is older than the newly built one.
 LINKER_FLAGS =
 
-UILD64 = 1
+BUILD64 = 1
 CONFIGURE_ARGS = $(DIRPATHS)
 
 TEST_TARGET_VERSION-1.4.9 =
