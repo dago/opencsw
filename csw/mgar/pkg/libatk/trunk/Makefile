@@ -1,5 +1,5 @@
 NAME = atk
-VERSION = 2.0.1
+VERSION = 2.2.0
 CATEGORIES = lib
 
 DESCRIPTION = An accessibility toolkit for GNOME
@@ -14,22 +14,26 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES = $(DISTNAME).tar.xz
 
-PACKAGES += CSWlibatk
-CATALOGNAME_CSWlibatk = libatk
-SPKG_DESC_CSWlibatk = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWlibatk = CSWggettextrt CSWglib2
+PATCHFILES += 0001-Comment-out-problematic-definition-of-AtkTextRange.patch
 
-PACKAGES += CSWlibatkdevel
-CATALOGNAME_CSWlibatkdevel = libatk_devel
-SPKG_DESC_CSWlibatkdevel = Developer files for libatk
-RUNTIME_DEP_PKGS_CSWlibatkdevel = CSWlibatk CSWglib2devel
+PACKAGES += CSWlibatk1-0-0
+SPKG_DESC_CSWlibatk1-0-0 = An accessibility toolkit for GNOME, libatk-1.0.so.0
+PKGFILES_CSWlibatk1-0-0 += $(call pkgfiles_lib,libatk-1.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibatk1-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibatk1-0-0 += CSWglib2
+OBSOLETED_BY_CSWlibatk1-0-0 += CSWlibatk
+
+PACKAGES += CSWlibatk-dev
+SPKG_DESC_CSWlibatk-dev = Development files for libatk-1.0.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibatk-dev += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibatk-dev += CSWglib2devel
+OBSOLETED_BY_CSWlibatk-dev = CSWlibatkdevel
+CATALOGNAME_CSWlibatkdevel = libatk_devel_stub
 
 BUILD64 = 1
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-debug=yes
-
-PKGFILES_CSWlibatkdevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibatkdevel += $(sharedstatedir)/gtk-doc/.*
 
 include gar/category.mk
