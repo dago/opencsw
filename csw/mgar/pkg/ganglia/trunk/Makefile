@@ -24,7 +24,7 @@ SF_PROJ = ganglia
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += CSWgangliaweb.postinstall CSWgangliaweb.preremove
-DISTFILES += httpd-ganglia.conf.CSW cswgmond cswgmetad
+DISTFILES += httpd-ganglia.conf cswgmond cswgmetad
 
 PACKAGES = CSWlibganglia0 CSWgangliaagent CSWganglia-dev CSWgangliagmetad CSWgangliaweb CSWgangliamodpython
 
