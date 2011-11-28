@@ -48,6 +48,6 @@ CHECKPKG_OVERRIDES_CSWsetoolkit += soname-equals-filename|file=/opt/csw/lib/spar
 CHECKPKG_OVERRIDES_CSWsetoolkit += soname-equals-filename|file=/opt/csw/lib/sparcv9/libsenet.so
 CHECKPKG_OVERRIDES_CSWsetoolkit += file-with-bad-content|/usr/local|root/opt/csw/share/doc/setoolkit/INSTALL
 CHECKPKG_OVERRIDES_CSWsetoolkit += file-with-bad-content|/usr/local|root/opt/csw/share/setoolkit/examples/limits.se
-CHECKPKG_OVERRIDES_CSWsetoolkit += shared-lib-pkgname-mismatch|sonames=libsegui.so,libsenet.so|pkgname=CSWsetoolkit|expected=CSWlibse|
+CHECKPKG_OVERRIDES_CSWsetoolkit += shared-lib-pkgname-mismatch
 
 include gar/category.mk
