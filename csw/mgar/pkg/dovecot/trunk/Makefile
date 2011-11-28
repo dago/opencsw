@@ -73,7 +73,7 @@ STRIP_DIRS  = $(DESTDIR)$(libexecdir)/dovecot
 # cswclassutils integration
 INITSMF    = /etc/opt/csw/init.d/cswdovecot
 USERGROUP = /etc/opt/csw/pkg/CSWdovecot/cswusergroup
-SAMPLECONF = .*/dovecot.pem
+SAMPLECONF = .*/dovecot.pem $(sysconfdir)/dovecot/dovecot.conf
 MIGRATE_FILES = dovecot.conf
 
 include gar/category.mk
@@ -105,6 +105,9 @@ post-install-modulated:
 	# with root:root ownership, which conflicts with other pkg's
 	ginstall -d $(DESTDIR)$(localstatedir)/run 
 	ginstall -d $(DESTDIR)$(localstatedir)/lib
+
+	cp $(DESTDIR)/opt/csw/share/doc/dovecot/example-config/dovecot.conf \
+		$(DESTDIR)$(sysconfdir)/dovecot/dovecot.conf
 
 	# Create self-signed sample cert
 	ginstall -d $(SSLDIR)/certs
