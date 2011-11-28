@@ -1,5 +1,5 @@
 NAME = orca
-VERSION = csw-1.0
+VERSION = ef85fa3541
 CATEGORIES = utils
 
 DESCRIPTION = A system performance monitoring tool
@@ -34,10 +34,10 @@ PATCHFILES  = orca-snapshot-r535-se-3.5.0.patch
 PATCHFILES += fix-start-orcallator.patch
 PATCHFILES += 0001-Skip-unversioned-SVN-as-we-are-now-in-GITland.patch
 
-GIT_REPOS  = git://github.com/dago/orca.git
+GIT_REPOS  = git://github.com/blair/orca.git
 GIT_TREEISH_orca.git = $(VERSION)
 
-VENDOR_URL = http://www.orcaware.com/orca
+VENDOR_URL = https://github.com/blair/orca
 
 BUILD_DEP_PKGS += CSWperl
 BUILD_DEP_PKGS += CSWpmtimedate
@@ -77,13 +77,13 @@ ARCHALL_CSWorca-web = 1
 RUNTIME_DEP_PKGS_CSWorca-web += CSWperl
 RUNTIME_DEP_PKGS_CSWorca-web += CSWpmtimedate
 RUNTIME_DEP_PKGS_CSWorca-web += CSWpmmathinterpolate
-RUNTIME_DEP_PKGS_CSWorca-web += CSWrrd
+RUNTIME_DEP_PKGS_CSWorca-web += CSWpm-rrdtool
 RUNTIME_DEP_PKGS_CSWorca-web += CSWapache2
 # Checkpkg can't track Perl dependencies
 CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWperl
 CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWpmtimedate
 CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWpmmathinterpolate
-CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWrrd
+CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWpm-rrdtool
 CHECKPKG_OVERRIDES_CSWorca-web += surplus-dependency|CSWapache2
 OBSOLETED_BY_CSWorca-web += CSWorcaweb
 CATALOGNAME_CSWorcaweb = orca_web_stub
