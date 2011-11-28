@@ -17,11 +17,6 @@ SF_PROJ = setoolkit
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(DISTNAME).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=189279
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = SE.Toolkit.(\d+(?:\.\d+)*)
-
 BUILD_DEP_PKGS = CSWpydocutils
 
 BUILD64 = 1
@@ -40,13 +35,19 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = $(bindir)/se
 SKIPTEST = 1
 
 CHECKPKG_OVERRIDES_CSWsetoolkit += missing-dependency|CSWemacscommon
-CHECKPKG_OVERRIDES_CSWsetoolkit += linked-against-discouraged-library|libsegui.so|libX11.so.4
-CHECKPKG_OVERRIDES_CSWsetoolkit += linked-against-discouraged-library|libsegui.so|libX11.so.4
 CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/mon_cm|class=none
 CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/monlog|class=none
 CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/percol|class=none
 CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/va_monitor|class=none
 CHECKPKG_OVERRIDES_CSWsetoolkit += init-file-missing-cswinitsmf-class|/opt/csw/share/setoolkit/etc/init.d/vader|class=none
-CHECKPKG_OVERRIDES_CSWsetoolkit += soname-not-found|libm.so.2
+CHECKPKG_OVERRIDES_CSWsetoolkit += soname-equals-filename|file=/opt/csw/lib/libsegui.so
+CHECKPKG_OVERRIDES_CSWsetoolkit += soname-equals-filename|file=/opt/csw/lib/libsenet.so
+CHECKPKG_OVERRIDES_CSWsetoolkit += soname-equals-filename|file=/opt/csw/lib/amd64/libsegui.so
+CHECKPKG_OVERRIDES_CSWsetoolkit += soname-equals-filename|file=/opt/csw/lib/amd64/libsenet.so
+CHECKPKG_OVERRIDES_CSWsetoolkit += soname-equals-filename|file=/opt/csw/lib/sparcv9/libsegui.so
+CHECKPKG_OVERRIDES_CSWsetoolkit += soname-equals-filename|file=/opt/csw/lib/sparcv9/libsenet.so
+CHECKPKG_OVERRIDES_CSWsetoolkit += file-with-bad-content|/usr/local|root/opt/csw/share/doc/setoolkit/INSTALL
+CHECKPKG_OVERRIDES_CSWsetoolkit += file-with-bad-content|/usr/local|root/opt/csw/share/setoolkit/examples/limits.se
+CHECKPKG_OVERRIDES_CSWsetoolkit += shared-lib-pkgname-mismatch|sonames=libsegui.so,libsenet.so|pkgname=CSWsetoolkit|expected=CSWlibse|
 
 include gar/category.mk
