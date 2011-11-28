@@ -1,5 +1,5 @@
 NAME = msmtp
-VERSION = 1.4.25
+VERSION = 1.4.26
 CATEGORIES = net
 
 DESCRIPTION = SMTP client
@@ -26,7 +26,6 @@ MASTER_SITES = $(SF_MIRRORS)
 DISTFILES = $(NAME)-$(VERSION).tar.bz2
 
 PACKAGES += CSWmsmtp
-CATALOGNAME_CSWmsmtp = msmtp
 SPKG_DESC_CSWmsmtp = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibgsasl7
 RUNTIME_DEP_PKGS_CSWmsmtp += CSWlibintl8
@@ -44,7 +43,7 @@ EXTRA_LINKER_FLAGS = $(EXTRA_LINKER_FLAGS_$(GAROSREL))
 VENDOR_URL = http://msmtp.sourceforge.net/
 
 BUILD_DEP_PKGS += CSWlibgnutls-dev
-BUILD_DEP_PKGS += CSWlibgsasldevel
+BUILD_DEP_PKGS += CSWlibgsasl-dev
 BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWgnomekeyring-dev
 
