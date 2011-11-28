@@ -1,5 +1,5 @@
 NAME = libpcap
-VERSION = 1.1.1
+VERSION = 1.2.0
 CATEGORIES = lib
 
 DESCRIPTION = System-independent interface for user-level packet capture
