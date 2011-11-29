@@ -1,5 +1,5 @@
 NAME = ganglia
-VERSION = 3.1.7
+VERSION = 3.2.0
 CATEGORIES = utils
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
@@ -135,6 +135,9 @@ endif
 ifeq ($(VERSION),3.1.7)
 TEST_SCRIPTS =
 endif
+ifeq ($(VERSION),3.2.0)
+TEST_SCRIPTS =
+endif
 
 #INSTALL_SCRIPTS = $(WORKSRC)/Makefile custom
 
@@ -162,9 +165,9 @@ PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/moddisk.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modproc.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modgstatus.so
 
-PKGFILES_CSWlibganglia0 += $(call pkgfiles_lib,libganglia-3.1.7.so.0)
+PKGFILES_CSWlibganglia0 += $(call pkgfiles_lib,libganglia-3.2.0.so.0)
 
-CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.1.7.so.0.0.0|soname=libganglia-3.1.7.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-1-7-0
+CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.2.0.so.0.0.0|soname=libganglia-3.2.0.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-2-0-0
 
 PKGFILES_CSWgangliamodpython = .*python.*
 PKGFILES_CSWganglia-dev = .*/include/.*.h .*/bin/ganglia-config $(libdir)/libganglia.so
