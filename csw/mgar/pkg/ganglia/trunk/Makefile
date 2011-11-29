@@ -144,11 +144,28 @@ sysconfdir = /etc/opt/csw/ganglia
 ETCGANGLIA = $(sysconfdir)
 
 PKGFILES_CSWganglia = 
-PKGFILES_CSWgangliaagent = .*/gmond.conf.CSW .*/modgstatus.conf.CSW .*/sbin/gmond .*/bin/gmetric /etc/opt/csw/init.d/cswgmond .*/gmond.1 .*/gmetric.1 .*/gmond.conf.5
-PKGFILES_CSWgangliaagent += .*/modsys.so .*/modcpu.so .*/modnet.so .*/modmulticpu.so .*/modmem.so .*/modload.so .*/moddisk.so .*/modproc.so .*/modgstatus.so
-PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0\.0\.0)
-PKGFILES_CSWlibganglia0 += $(call baseisadirs,$(libdir),libganglia-3\.1\.7\.so\.0(\.\d+)*)
+PKGFILES_CSWgangliaagent  = /etc/opt/csw/ganglia/gmond.conf.CSW
+PKGFILES_CSWgangliaagent += /etc/opt/csw/ganglia/modgstatus.conf.CSW
+PKGFILES_CSWgangliaagent += /opt/csw/sbin/gmond
+PKGFILES_CSWgangliaagent += /opt/csw/bin/gmetric
+PKGFILES_CSWgangliaagent += /etc/opt/csw/init.d/cswgmond
+PKGFILES_CSWgangliaagent += /opt/csw/share/man/man1/gmond.1
+PKGFILES_CSWgangliaagent += /opt/csw/share/man/man1/gmetric.1
+PKGFILES_CSWgangliaagent += /opt/csw/share/man/man5/gmond.conf.5
+PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modsys.so
+PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modcpu.so
+PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modnet.so
+PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modmulticpu.so
+PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modmem.so
+PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modload.so
+PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/moddisk.so
+PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modproc.so
+PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modgstatus.so
+
+PKGFILES_CSWlibganglia0 += $(call pkgfiles_lib,libganglia-3.1.7.so.0)
+
 CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.1.7.so.0.0.0|soname=libganglia-3.1.7.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-1-7-0
+
 PKGFILES_CSWgangliamodpython = .*python.*
 PKGFILES_CSWganglia-dev = .*/include/.*.h .*/bin/ganglia-config $(libdir)/libganglia.so
 PKGFILES_CSWgangliagmetad = .*/sbin/gmetad .*/gmetad.conf.CSW /var/opt/csw/ganglia/rrds /etc/opt/csw/init.d/cswgmetad .*/gmetad.1
