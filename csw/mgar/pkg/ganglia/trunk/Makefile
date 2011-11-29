@@ -204,6 +204,7 @@ post-install-modulated:
 	@ginstall -D $(DOWNLOADDIR)/cswgmetad \
 		$(PKGROOT)/etc/opt/csw/init.d/cswgmetad
 	@ginstall -d $(DESTDIR)$(WWWGANGLIA)
+	@find $(WORKSRC)/web -name .gitignore -exec rm '{}' \;
 	@cd $(WORKSRC)/web; \
 		cp -R * $(DESTDIR)$(WWWGANGLIA)
 	@rm -rf $(DESTDIR)$(WWWGANGLIA)/conf.php
