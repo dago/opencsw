@@ -30,11 +30,14 @@ PACKAGES = CSWlibganglia0 CSWgangliaagent CSWganglia-dev CSWgangliagmetad CSWgan
 
 CATALOGNAME_CSWganglia		= ganglia
 CATALOGNAME_CSWlibganglia0	= libganglia0
+CATALOGNAME_CSWgangliart	= ganglia_rt_stub
 CATALOGNAME_CSWgangliaagent	= gangliaagent
 CATALOGNAME_CSWgangliamodpython	= gangliamodpython
 CATALOGNAME_CSWganglia-dev	= ganglia_dev
 CATALOGNAME_CSWgangliagmetad	= gangliagmetad
 CATALOGNAME_CSWgangliaweb	= gangliaweb
+
+OBSOLETED_BY_CSWlibganglia0	+= CSWgangliart
 
 SPKG_DESC_CSWganglia		= Dummy package
 SPKG_DESC_CSWlibganglia0		= Ganglia runtime libraries
