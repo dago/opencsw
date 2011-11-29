@@ -84,7 +84,7 @@ UFILES_REGEX = (\d+(?:\.\d+)*)
 CONFIGURE_ARGS = $(DIRPATHS)
 
 # For compatibility on Solaris 10
-CONFIGURE_ARGS += CFLAGS="-xc99"
+#CONFIGURE_ARGS += CFLAGS="-xc99"
 
 # Don't build gmetad (not tested yet on Solaris, more deps required to build)
 #CONFIGURE_ARGS += --without-gmetad
@@ -165,9 +165,9 @@ PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/moddisk.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modproc.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modgstatus.so
 
-PKGFILES_CSWlibganglia0 += $(call pkgfiles_lib,libganglia-3.2.0.so.0)
+PKGFILES_CSWlibganglia0 += $(call pkgfiles_lib,libganglia-3.2.0.0.so.0)
 
-CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.2.0.so.0.0.0|soname=libganglia-3.2.0.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-2-0-0
+CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.2.0.0.so.0.0.0|soname=libganglia-3.2.0.0.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-2-0-0-0
 
 PKGFILES_CSWgangliamodpython = .*python.*
 PKGFILES_CSWganglia-dev = .*/include/.*.h .*/bin/ganglia-config $(libdir)/libganglia.so
