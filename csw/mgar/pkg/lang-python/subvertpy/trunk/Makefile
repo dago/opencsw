@@ -12,7 +12,7 @@ DISTFILES  = $(DISTNAME).tar.gz
 UPSTREAM_MASTER_SITES = http://launchpad.net/subvertpy/trunk
 LICENSE = COPYING
 
-RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWapr
+RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWlibpython2-6-1-0
 RUNTIME_DEP_PKGS_CSWpy-subvertpy += CSWsvn
 
