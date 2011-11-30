@@ -1,5 +1,5 @@
 NAME = openldap
-VERSION = 2.4.26
+VERSION = 2.4.28
 GARTYPE = v2
 CATEGORIES = server
 
