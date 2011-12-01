@@ -170,9 +170,25 @@ PKGFILES_CSWlibganglia0 += $(call pkgfiles_lib,libganglia-3.2.0.0.so.0)
 CHECKPKG_OVERRIDES_CSWlibganglia0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libganglia-3.2.0.0.so.0.0.0|soname=libganglia-3.2.0.0.so.0|pkgname=CSWlibganglia0|expected=CSWlibganglia3-2-0-0-0
 
 PKGFILES_CSWgangliamodpython = .*python.*
-PKGFILES_CSWganglia-dev = .*/include/.*.h .*/bin/ganglia-config $(libdir)/libganglia.so
-PKGFILES_CSWgangliagmetad = .*/sbin/gmetad .*/gmetad.conf.CSW /var/opt/csw/ganglia/rrds /etc/opt/csw/init.d/cswgmetad .*/gmetad.1
-PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.* /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
+
+PKGFILES_CSWganglia-dev = /opt/csw/include/ganglia.h
+PKGFILES_CSWganglia-dev += /opt/csw/include/ganglia_gexec.h
+PKGFILES_CSWganglia-dev += /opt/csw/include/gm_metric.h
+PKGFILES_CSWganglia-dev += /opt/csw/include/gm_mmn.h
+PKGFILES_CSWganglia-dev += /opt/csw/include/gm_msg.h
+PKGFILES_CSWganglia-dev += /opt/csw/include/gm_protocol.h
+PKGFILES_CSWganglia-dev += /opt/csw/include/gm_value.h
+PKGFILES_CSWganglia-dev += /opt/csw/bin/ganglia-config
+PKGFILES_CSWganglia-dev += $(libdir)/libganglia.so
+
+PKGFILES_CSWgangliagmetad = /opt/csw/sbin/gmetad
+PKGFILES_CSWgangliagmetad += /etc/opt/csw/ganglia/gmetad.conf.CSW
+PKGFILES_CSWgangliagmetad += /etc/opt/csw/init.d/cswgmetad
+PKGFILES_CSWgangliagmetad += /var/opt/csw/ganglia/rrds
+PKGFILES_CSWgangliagmetad += /opt/csw/share/man/man1/gmetad.1
+
+PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.*
+PKGFILES_CSWgangliaweb += /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
 
 PRESERVECONF = /opt/csw/apache2/etc/extra/httpd-ganglia.conf
 PRESERVECONF += /etc/opt/csw/ganglia/gmond.conf
