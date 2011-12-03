@@ -132,9 +132,9 @@ PATCHFILES = more_configure_targets.patch
 # Update openssl.cnf path in man page to follow opencsw standard
 PATCHFILES += opencsw_paths.patch
 
-# Let's always block the compromised DigiNotar CA, whatever the CA configured
-# (patch taken from Debian Package)
-PATCHFILES += block_diginotar.patch
+# Let's always block some compromised CA, whatever the CA configured
+# (patchs taken from Debian Package)
+PATCHFILES += block_bad_certificates.patch
 
 LICENSE=LICENSE
 
