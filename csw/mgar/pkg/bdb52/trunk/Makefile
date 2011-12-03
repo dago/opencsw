@@ -1,8 +1,8 @@
 NAME = db
-VERSION = 5.1.29
+VERSION = 5.2.36
 CATEGORIES = lib
 
-DESCRIPTION = Berkeley DB 5.1
+DESCRIPTION = Berkeley DB 5.2
 define BLURB
   Berkeley DB (libdb) is a programmatic toolkit that provides embedded database
   support for both traditional and client/server applications. It includes
@@ -30,7 +30,7 @@ BUILD64 = 1
 
 CONFIGURE_SCRIPTS = dist
 
-prefix = $(BUILD_PREFIX)/bdb51
+prefix = $(BUILD_PREFIX)/bdb52
 docdir = $(BUILD_PREFIX)/share/doc
 
 CONFIGURE_ARGS  = $(DIRPATHS)
@@ -48,28 +48,28 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-mm-$(MEMORYMODEL))
 # bdb tests are *very* time consuming
 TEST_SCRIPTS =
 
-PACKAGES = CSWbdb51 CSWbdb51devel CSWbdb51doc
+PACKAGES = CSWbdb52 CSWbdb52dev CSWbdb52doc
 
-CATALOGNAME_CSWbdb51      = berkeleydb51
-SPKG_DESC_CSWbdb51        = BerkeleyDB 5.1 embedded database libraries and utilities
-RUNTIME_DEP_PKGS_CSWbdb51 += CSWbdb51devel
+CATALOGNAME_CSWbdb52      = berkeleydb52
+SPKG_DESC_CSWbdb52        = BerkeleyDB 5.2 embedded database libraries and utilities
+RUNTIME_DEP_PKGS_CSWbdb52 += CSWbdb52dev
 
-CATALOGNAME_CSWbdb51devel = berkeleydb51_devel
-SPKG_DESC_CSWbdb51devel   = BerkeleyDB 5.1 development support
-PKGFILES_CSWbdb51devel    = $(PKGFILES_DEVEL)
+CATALOGNAME_CSWbdb52dev   = berkeleydb52_dev
+SPKG_DESC_CSWbdb52dev     = BerkeleyDB 5.2 development support
+PKGFILES_CSWbdb52dev      = $(PKGFILES_DEVEL)
 
-CATALOGNAME_CSWbdb51doc   = berkeleydb51_doc
-SPKG_DESC_CSWbdb51doc     = BerkeleyDB 5.1 documentation
-PKGFILES_CSWbdb51doc      = $(PKGFILES_DOC)
+CATALOGNAME_CSWbdb52doc   = berkeleydb52_doc
+SPKG_DESC_CSWbdb52doc     = BerkeleyDB 5.2 documentation
+PKGFILES_CSWbdb52doc      = $(PKGFILES_DOC)
 
-ARCHALL_CSWbdb51doc = 1
+ARCHALL_CSWbdb52doc = 1
 
 
 SPKG_SOURCEURL = http://www.oracle.com/technology/software/products/berkeley-db/db/index.html
 
 LICENSE = LICENSE
 
-EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb51),'
+EXTRA_PAX_ARGS += -s ',^\.$(prefix)/docs,.$(BUILD_PREFIX)/share/doc/$(CATALOGNAME_CSWbdb52),'
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv9 = .*/docs.* $(libdir)/db.jar
 EXTRA_MERGE_EXCLUDE_FILES_isa-amd64 = .*/docs.* $(libdir)/db.jar
 
