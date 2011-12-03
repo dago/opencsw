@@ -24,6 +24,13 @@ RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibjpeg62
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWglib2
 
+BUILD_DEP_PKGS  = CSWggettext-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev
+BUILD_DEP_PKGS += CSWtiff
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWlibjpeg-dev
+BUILD_DEP_PKGS += CSWlibglib2-dev
+
 BUILD64 = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
