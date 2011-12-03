@@ -85,19 +85,21 @@ while (my $line = <STDIN>) {
 	
 	if ($line =~ /^\s*$/) {
 
-		if (exists($certdata_object->{"SERIAL_NUMBER"})) {
-			my $serial_number = $certdata_object->{"SERIAL_NUMBER"};
-			if (exists ($certificates_list->{$serial_number})) {
-				my $certificate = $certificates_list->{$serial_number};
+		if (exists ($certdata_object->{"ISSUER"}) and exists ($certdata_object->{"SERIAL_NUMBER"})) {
 
-				if ($certificate->{"ISSUER"} eq $certdata_object->{"ISSUER"}) {
-					@{$certificate}{ keys (%{$certdata_object}) } = values (%{$certdata_object});
-				}
+			my $serial_number = $certdata_object->{"SERIAL_NUMBER"};
+			my $issuer = $certdata_object->{"ISSUER"};
+
+			$certificates_list->{$issuer} = {} if (not exists ($certificates_list->{$issuer}));
+
+			if (exists ($certificates_list->{$issuer}->{$serial_number})) {
+
+				my $certificate = $certificates_list->{$issuer}->{$serial_number};
+				@{$certificate}{ keys (%{$certdata_object}) } = values (%{$certdata_object});
 
 			} else {
-				$certificates_list->{$serial_number} = $certdata_object;
+				$certificates_list->{$issuer}->{$serial_number} = $certdata_object;
 			}
-
 		}
 		$certdata_object = {};
 		next;
@@ -124,29 +126,33 @@ while (my $line = <STDIN>) {
 }
 
 
-foreach my $certificate (values(%{$certificates_list})) {
-	my $trusted = 1;
-	foreach my $trust ("TRUST_SERVER_AUTH", 
-		           "TRUST_EMAIL_PROTECTION",
-			   "TRUST_CODE_SIGNING") {
-	   	if ($certificate->{$trust} eq "CKT_NSS_NOT_TRUSTED") {
-			$trusted = 0;
+foreach my $certificates_by_issuer (values (%{$certificates_list})) {
+
+	foreach my $certificate (values (%{$certificates_by_issuer})) {
+
+		my $trusted = 1;
+		foreach my $trust ("TRUST_SERVER_AUTH", 
+				   "TRUST_EMAIL_PROTECTION",
+				   "TRUST_CODE_SIGNING") {
+			if ($certificate->{$trust} eq "CKT_NSS_NOT_TRUSTED") {
+				$trusted = 0;
+			}
 		}
-	}
-	if ($trusted) {
+		if ($trusted) {
 
-		my $filename = label_to_filename ($certificate->{"LABEL"});
+			my $filename = label_to_filename ($certificate->{"LABEL"});
 
-		open (FH, "> $filename");
-		print FH "-----BEGIN CERTIFICATE-----\n";
-		print FH encode_base64 ($certificate->{"VALUE"});
-		print FH "-----END CERTIFICATE-----\n";
-		close (FH);
-		print "Created $filename certificate\n";
+			open (FH, "> $filename");
+			print FH "-----BEGIN CERTIFICATE-----\n";
+			print FH encode_base64 ($certificate->{"VALUE"});
+			print FH "-----END CERTIFICATE-----\n";
+			close (FH);
+			print "Created $filename certificate\n";
 
-	} else {
+		} else {
 
-		print "Certificate " . $certificate->{"LABEL"} . " Not trusted\n";
+			print "Certificate " . $certificate->{"LABEL"} . " Not trusted\n";
+		}
 	}
 }
 
