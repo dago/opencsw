@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# We will call gdk-pixbuf-query-loaders for all ISAs
+
+GDKPBQUERY=gdk-pixbuf-query-loaders
+GDKPBQUERY_OPTS="--update-cache"
+
+echo "** Updating GDK pixbuf loaders"
+
+# But first, do the obvious
+/usr/bin/printf "- Default ISA... "
+@prefix@/bin/${GDKPBQUERY} ${GDKPBQUERY_OPTS} >/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+    echo "Error"
+else
+    echo "OK"
+fi
+
+# Now, do all other
+for i in @BUILD_ISAS@
+do
+    queryloader=@prefix@/bin/$i/gdk-pixbuf-query-loaders
+    if [ -x "${queryloader}" ]
+    then
+	/usr/bin/printf "- $i ISA... "
+	"${queryloader}" ${GDKPBQUERY_OPTS} >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+	    echo "Error"
+	else
+	    echo "OK"
+	fi
+    fi
+done
+
+echo "** Done updating GDK pixbuf loaders"
