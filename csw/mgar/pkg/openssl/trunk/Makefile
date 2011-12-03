@@ -33,6 +33,7 @@ SPKG_DESC_CSWopenssl = Openssl meta package
 CATALOGNAME_CSWopenssl = openssl
 RUNTIME_DEP_PKGS_CSWopenssl = CSWlibssl-dev CSWopenssl-utils CSWlibssl0-9-8
 ARCHALL_CSWopenssl = 1
+OBSOLETED_BY_CSWopenssl = CSWossl
 
 SPKG_DESC_CSWlibssl0-9-8 = Openssl runtime libraries
 CATALOGNAME_CSWlibssl0-9-8 = libssl0_9_8
@@ -43,6 +44,7 @@ SPKG_DESC_CSWlibssl-dev = Openssl development libraries and headers
 CATALOGNAME_CSWlibssl-dev = libssl_dev
 RUNTIME_DEP_PKGS_CSWlibssl-dev = CSWlibssl0-9-8
 OBSOLETED_BY_CSWlibssl-dev = CSWossldevel
+CHECKPKG_OVERRIDES_CSWossldevel += archall-devel-package
 
 SPKG_DESC_CSWopenssl-utils = Openssl binaries and related tools 
 CATALOGNAME_CSWopenssl-utils = openssl_utils
@@ -60,7 +62,7 @@ CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
 
 #CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += surplus-dependency|CSWcacertificates
 
-# this package doesn't yet obey the new shared libraries standard
+# this package contains several libraries files and we will not split
 CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += non-uniform-lib-versions-in-package|sonames=libcrypto.so.0.9.7,libcrypto.so.0.9.8,libssl.so.0.9.7,libssl.so.0.9.8
 
 # we will not recompile old 0.9.7 version for now
@@ -97,12 +99,13 @@ CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt
 CHECKPKG_OVERRIDES_CSWopenssl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/INSTALL
 CHECKPKG_OVERRIDES_CSWopenssl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/CHANGES
 CHECKPKG_OVERRIDES_CSWopenssl += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl/FAQ
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/FAQ
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/INSTALL
-CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_rt/CHANGES
-CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/CHANGES
-CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/INSTALL
-CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_devel/FAQ
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl0_9_8/INSTALL
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl0_9_8/FAQ
+CHECKPKG_OVERRIDES_CSWlibssl0-9-8 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl0_9_8/CHANGES
+CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/CHANGES
+CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/FAQ
+CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/INSTALL
+
 
 
 ###### Upstream and opencsw files information #######
