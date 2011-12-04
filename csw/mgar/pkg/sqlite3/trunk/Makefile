@@ -1,5 +1,5 @@
 NAME = sqlite3
-VERSION = 3070800
+VERSION = 3070900
 CATEGORIES = lib
 
 DESCRIPTION  = An embeddable SQL engine in a C library
