@@ -28,7 +28,15 @@ PGINIT=@bindir@/initdb-@BASE_VERSION_NODOT@
 [ -z "${PGDATA}" ] && PGDATA=@PGDATA@
 [ -z "${PGDATA}" ] && SHUTDOWNMODE=fast
 
-[ -n "${SERVEROPTS}" ] && SERVEROPTS="-o ${SERVEROPTS}"
+if [ -n "${SERVEROPTS}" ]
+then
+    # Make sure, SERVEROPTS start with -o
+    echo "${SERVEROPTS}" | grep '^-o' >/dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+	SERVEROPTS="-o ${SERVEROPTS}"
+    fi
+fi
 
 
 # Exit if postgres user hasn't been created.
@@ -51,7 +59,7 @@ start)
       if [ -d ${PGDATA} -a `ls -l ${PGDATA} 2> /dev/null | wc -l` -gt 1 ]; then
          # PostgreSQL data directory exists and is populated
          echo "Starting PostgreSQL..."
-         su postgres -c "${PGCTL} start -D ${PGDATA} -l ${PGDATA}/postgresql.log "${SERVEROPTS}""
+         su postgres -c "${PGCTL} start -D ${PGDATA} -l ${PGDATA}/postgresql.log ${SERVEROPTS}"
       fi
       ;;
 
@@ -63,7 +71,7 @@ stop)
 
 restart)
      echo "Restarting PostgreSQL database..."
-     su postgres -c "${PGCTL} restart -D ${PGDATA} -l ${PGDATA}/postgresql.log "${SERVEROPTS}" -m ${SHUTDOWNMODE}"
+     su postgres -c "${PGCTL} restart -D ${PGDATA} -l ${PGDATA}/postgresql.log -m ${SHUTDOWNMODE} ${SERVEROPTS}"
      ;;
 
 reload)
