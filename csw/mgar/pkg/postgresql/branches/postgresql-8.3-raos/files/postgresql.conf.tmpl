@@ -10,13 +10,25 @@
 # Default : @PGDATA@
 PGDATA=@PGDATA@
 
+# The shutdown mode used
+#
+# Shutdown modes are:
+#  smart       quit after all clients have disconnected
+#  fast        quit directly, with proper shutdown
+#  immediate   quit without complete shutdown; will lead to recovery on restart
+#
+# Default: fast
+SHUTDOWNMODE=fast
+
 # Additional options to pass to postmaster.
 # 
 # These options will be passed to the postmaster program. The most common use
 # of these is to allow network access to PostgreSQL from other hosts over
-# TCP/IP.  This is done by using the flags "-o -i", as in the example below.
+# TCP/IP.  This is done by using the flags "-i", as in the example below.
 # Uncomment this line to enable network access to PostgreSQL.  Note that you
 # will still need to configure authentication in the pg_hba.conf in your data
 # directory.
+#
+# Please note: it is no longer necessary to pass the '-o' option.
 # 
-# SERVEROPTS="-o -i"
+# SERVEROPTS="-i"
