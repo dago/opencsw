@@ -48,7 +48,6 @@ RUNTIME_DEP_PKGS_CSWgtk2devel += CSWlibcairodevel CSWlibxrenderdevel CSWpangodev
 
 SPKG_SOURCEURL = http://www.gtk.org/
 
-NOISAEXEC = 1
 NOISALIST = 1
 BUILD64 = 1
 
