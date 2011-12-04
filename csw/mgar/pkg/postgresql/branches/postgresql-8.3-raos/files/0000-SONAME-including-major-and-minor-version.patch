@@ -1,0 +1,25 @@
+From 0783c2280989e9175f1bdb91a0035822275eebc4 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sun, 4 Dec 2011 23:39:42 +0100
+Subject: [PATCH] SONAME including major and minor version
+
+---
+ src/Makefile.shlib |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/Makefile.shlib b/src/Makefile.shlib
+index 84fc918..15594cf 100644
+--- a/src/Makefile.shlib
++++ b/src/Makefile.shlib
+@@ -93,7 +93,7 @@ shlib_bare	= lib$(NAME)$(DLSUFFIX)
+ 
+ override CFLAGS += $(CFLAGS_SL)
+ 
+-soname = lib$(NAME)$(DLSUFFIX).$(SO_MAJOR_VERSION)
++soname = $(shlib)
+ 
+ ifeq ($(PORTNAME), aix)
+   shlib			= lib$(NAME)$(DLSUFFIX).$(SO_MAJOR_VERSION)
+-- 
+1.7.6.1
+
