@@ -97,15 +97,13 @@ endef
 # variables.
 include pgconf.mk
 
-EXPANDVARS  = CSWpostgresql-$(BASE_VERSION_NODOT).postinstall
-EXPANDVARS += $(INITSCRIPTFILETMPL)
-EXPANDVARS += $(USERGROUPFILETMPL)
-EXPANDVARS += $(CSWPGSQLCONFFILETMPL)
-
 MASTER_SITES = http://ftp.postgresql.org/pub/source/v$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += README-CSW.txt
-DISTFILES += $(EXPANDVARS)
+DISTFILES += CSWpostgresql-server.postinstall.tmpl
+DISTFILES += $(INITSCRIPTFILETMPL)
+DISTFILES += $(USERGROUPFILETMPL)
+DISTFILES += $(CSWPGSQLCONFFILETMPL)
 
 INITSMF = $(sysconfdir)/init\.d/$(INITSCRIPTFILE_VERSIONED)
 USERGROUP = $(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
@@ -137,7 +135,7 @@ PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-server
 CATALOGNAME_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(NAME)$(BASE_VERSION_NODOT)_server
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-server = PostgreSQL $(VERSION), Server
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server  = $(foreach n,$(BIN_NAMES_SERVER),.*$(n)$$)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += $(foreach n,$(BIN_NAMES_SERVER),.*/man1/$(n)\.1$$)
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += $(foreach n,$(BIN_NAMES_SERVER),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += $(foreach n,$(SO_NAMES_SERVER),.*/$(NAME)/$(BASE_VERSION_NODOT)/*$(n)$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += $(MISC_NAMES_SERVER)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*/$(NAME)/$(BASE_VERSION_NODOT)/timezone(sets|)/.*
@@ -158,12 +156,11 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWalternatives
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibpq5-1
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach i,$(BUILD_ISAS), server_$(i))
 
-
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-client
 CATALOGNAME_CSW$(NAME)$(BASE_VERSION_NODOT)-client = $(NAME)$(BASE_VERSION_NODOT)_client
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-client = PostgreSQL $(VERSION), Client
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client = $(foreach n,$(BIN_NAMES_CLIENT),.*$(n)$$)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += $(foreach n,$(BIN_NAMES_CLIENT),.*/man1/$(n)\.1$$)
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += $(foreach n,$(BIN_NAMES_CLIENT),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += $(MISC_NAMES_CLIENT)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_client.*
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client  = CSWlibiconv2
@@ -177,16 +174,22 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibpq5-1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWalternatives
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-client = $(foreach i,$(BUILD_ISAS), client_$(i))
 
-
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-contrib
 CATALOGNAME_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(NAME)$(BASE_VERSION_NODOT)_contrib
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = PostgreSQL $(VERSION), Contrib
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach n,$(BIN_NAMES_CONTRIB),.*$(n)$$)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += $(foreach n,$(BIN_NAMES_CONTRIB),.*/man1/$(n)\.1$$)
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += $(foreach n,$(BIN_NAMES_CONTRIB),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += $(foreach n,$(SO_NAMES_CONTRIB),.*/$(NAME)/$(BASE_VERSION_NODOT)/*$(n)$$)
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*/$(NAME)/$(BASE_VERSION_NODOT)/contrib.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_contrib.*
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib  = CSWlibiconv2
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxml2
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxslt
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWosslrt
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibz1
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibpq5-1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWalternatives
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach i,$(BUILD_ISAS), contrib_$(i))
-
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-devel
 CATALOGNAME_CSW$(NAME)$(BASE_VERSION_NODOT)-devel = $(NAME)$(BASE_VERSION_NODOT)_devel
@@ -194,7 +197,7 @@ SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-devel = PostgreSQL $(VERSION), Develop
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel  = .*/pgxs/.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += $(PKGFILES_DEVEL)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += $(foreach n,$(BIN_NAMES_DEVEL),.*$(n)$$)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)\.1$$)
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += .*/man5/.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_devel.*
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += CSWalternatives
@@ -378,19 +381,19 @@ alt_priority = 20
 # This will generate the ALTERNATIVEs for the binaries in $(libexecdir)/postgresql/XY.
 # I consider this bad voodoo.
 ## Server
-$(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 10)) $(eval ALTERNATIVE_server_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_SERVER)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst server_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) $(eval ALTERNATIVE_server_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_SERVER)),$(BIN_NAMES_SERVER)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst server_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) )
+$(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 10)) $(eval ALTERNATIVE_server_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_SERVER)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-server $(libexecdir)/$(subst server_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) $(eval ALTERNATIVE_server_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_SERVER)),$(BIN_NAMES_SERVER)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst server_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) )
 ## Client
 # reset priority
 alt_priority = 20
-$(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 10)) $(eval ALTERNATIVE_client_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_SERVER)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst client_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) $(eval ALTERNATIVE_client_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_SERVER)),$(BIN_NAMES_SERVER)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst client_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) )
+$(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 10)) $(eval ALTERNATIVE_client_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_CLIENT)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-client $(libexecdir)/$(subst client_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) $(eval ALTERNATIVE_client_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_CLIENT)),$(BIN_NAMES_CLIENT)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst client_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) )
 ## Contrib
 # reset priority
 alt_priority = 20
-$(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 10)) $(eval ALTERNATIVE_contrib_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_SERVER)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst contrib_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) $(eval ALTERNATIVE_contrib_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_SERVER)),$(BIN_NAMES_SERVER)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst contrib_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) )
+$(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 10)) $(eval ALTERNATIVE_contrib_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_CONTRIB)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-contrib $(libexecdir)/$(subst contrib_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) $(eval ALTERNATIVE_contrib_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_CONTRIB)),$(BIN_NAMES_CONTRIB)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst contrib_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) )
 ## Devel
 # reset priority
 alt_priority = 20
-$(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 10)) $(eval ALTERNATIVE_devel_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_SERVER)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst devel_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) $(eval ALTERNATIVE_devel_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_SERVER)),$(BIN_NAMES_SERVER)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst devel_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) )
+$(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 10)) $(eval ALTERNATIVE_devel_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_DEVEL)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-devel $(libexecdir)/$(subst devel_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) $(eval ALTERNATIVE_devel_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_DEVEL)),$(BIN_NAMES_DEVEL)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst devel_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) )
 
 # We adjust the $(pkglibdir) found in $(WORKSRC)/src/Makefile.global.in, so
 # that it should be possible to install 8.x and 8.y concurrently
@@ -404,77 +407,33 @@ post-build-modulated:
 	$(BUILD_ENV) gmake -C $(WORKSRC)/contrib all
 	@$(MAKECOOKIE)
 
-#post-install-modulated:
-# 	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
-# 	ginstall -d -m 755 $(DESTDIR)$(prefix)/bin
-# 	[ -r $(DESTDIR)$(bindir)/pg_config ] && \
-# 	gmv -v $(DESTDIR)$(bindir)/pg_config $(DESTDIR)$(prefix)/bin || true
-# 	@$(MAKECOOKIE)
+post-install-modulated:
+	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
+	ginstall -d -m 755 $(DESTDIR)$(prefix)/bin
+	[ -r $(DESTDIR)$(bindir)/pg_config ] && \
+	gmv -v $(DESTDIR)$(bindir)/pg_config $(DESTDIR)$(prefix)/bin || true
+	@$(MAKECOOKIE)
 
 post-merge:
+# Create my alternatives files
+	$(foreach a,$(myALTERNATIVES), $(foreach i,$(BUILD_ISAS), $(shell ginstall -d $(PKGROOT)$(sharedstatedir)/alternatives ; echo "$(ALTERNATIVE_$(a)_$(i))" > $(PKGROOT)$(sharedstatedir)/alternatives/$(NAME)$(BASE_VERSION_NODOT)_$(a)_$(i))))
 # Create the PGDATA directory
 	ginstall -d $(PKGROOT)$(PGDATA)
 # The usergroup file
 	ginstall -d $(PKGROOT)$(USERGROUPDIR)
-	ginstall $(WORKDIR)/$(USERGROUPFILETMPL) $(PKGROOT)$(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
+	$(mySED) $(FILEDIR)/$(USERGROUPFILETMPL) > $(PKGROOT)$(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
 # The init script
 	ginstall -d $(PKGROOT)$(sysconfdir)/init.d
-	ginstall $(WORKDIR)/$(INITSCRIPTFILETMPL) $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
+	$(mySED) $(FILEDIR)/$(INITSCRIPTFILETMPL) > $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
+	chmod 0755 $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
 # The init script config
-	ginstall $(WORKDIR)/$(CSWPGSQLCONFFILETMPL) $(PKGROOT)$(sysconfdir)/$(CSWPGSQLCONFFILE_VERSIONED).CSW
-# Create my alternatives files
-	$(foreach a,$(myALTERNATIVES), $(foreach i,$(BUILD_ISAS), $(shell ginstall -d $(PKGROOT)$(sharedstatedir)/alternatives ; echo "$(ALTERNATIVE_$(a)_$(i))" > $(PKGROOT)$(sharedstatedir)/alternatives/$(NAME)$(BASE_VERSION_NODOT)_$(a)_$(i))))
-
-# Create the directory for the usergroup file and install it
-#	gsed -e 's|@PGLOCALSTATEDIR_BASE@|$(PGLOCALSTATEDIR_BASE)|g' $(FILEDIR)/$(USERGROUPFILETMPL) > $(PKGROOT)$(USERGROUPDIR)/$(USERGROUPFILE)-$(BASE_VERSION_NODOT)
-# 	ginstall -d $(PKGROOT)/etc$(prefix)/init.d
-# 	ginstall \
-# 		$(WORKDIR)/cswpostgres.tmpl \
-# 		$(PKGROOT)/etc$(prefix)/init.d/$(initscript_base_name)
-# 	ginstall -d $(PKGROOT)/etc$(prefix)/pkg/$(NAME)
-# 	gsed -e 's+@PGDATA@+$(PGDATA)+g' \
-# 		< $(FILEDIR)/cswusergroup.tmpl \
-# 		> $(WORKDIR)/cswusergroup
-# 	ginstall $(WORKDIR)/cswusergroup \
-# 		$(PKGROOT)/etc$(prefix)/pkg/$(NAME)/cswusergroup_$(VERSION_NODOT)
-# 	ginstall -d $(PKGROOT)$(sysconfdir)
-# 	gsed -e 's+@PGDATA@+$(PGDATA)+g' \
-# 		< $(FILEDIR)/postgresql.conf.tmpl \
-# 		> $(WORKDIR)/postgresql.conf
-# 	ginstall $(WORKDIR)/postgresql.conf \
-# 		$(PKGROOT)$(sysconfdir)
-# 	ginstall -d $(PKGROOT)$(docdir)
-# 	# ginstall $(WORKDIR)/README-CSW.txt $(PKGROOT)$(docdir)
-# 	ginstall -m 755 -d $(PKGROOT)$(prefix)/bin
-# 	# for b in $(BIN_NAMES); do \
-# 	#   gln -s ..$(version_dependent)/bin/$${b} $(PKGROOT)$(prefix)/bin/$${b}; \
-# 	# done
-# 	ginstall -d $(PKGROOT)$(PGDATA)
-# 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(libdir)/64
-# 	mkdir -p $(PKGROOT)$(prefix)/lib
-# 	mkdir -p $(PKGROOT)$(prefix)/lib/$(ISA_DEFAULT64)
-# 	for libname in libpq libecpg libecpg_compat libpgtypes; do \
-# 		mv $(PKGROOT)$(libdir)/$${libname}.so $(PKGROOT)$(prefix)/lib; \
-# 		mv $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/$${libname}.so $(PKGROOT)$(prefix)/lib/$(ISA_DEFAULT64); \
-# 		mv $(PKGROOT)$(libdir)/$${libname}.so.* $(PKGROOT)$(prefix)/lib; \
-# 		mv $(PKGROOT)$(libdir)/$(ISA_DEFAULT64)/$${libname}.so.* $(PKGROOT)$(prefix)/lib/$(ISA_DEFAULT64); \
-# 	done
-# 	$(FILEDIR)/merge_legacy_libs.sh $(GARCH) $(FILEDIR) $(PKGROOT)/$(prefix)/lib
-
-# 	# Backward compatibility provided by CSWlibpq
-# 	mkdir -p $(PKGROOT)$(prefix)/postgresql/lib
-# 	mkdir -p $(PKGROOT)$(prefix)/postgresql/lib/$(ISA_DEFAULT64)
-# 	gln -s . $(PKGROOT)$(prefix)/postgresql/lib/$(ISA_DEFAULT)
-# 	gln -s $(ISA_DEFAULT64) $(PKGROOT)$(prefix)/postgresql/lib/64
-# 	gln -s $(ISA_DEFAULT) $(PKGROOT)$(prefix)/postgresql/lib/32
-# 	for f in $(PKGROOT)$(prefix)/lib/*.so.*; do \
-# 		ln -s \
-# 			../../lib/`basename $${f}` \
-# 			$(PKGROOT)$(prefix)/postgresql/lib; \
-# 	done
-# 	for f in $(PKGROOT)$(prefix)/lib/$(ISA_DEFAULT64)/lib*.so.*; do \
-# 		ln -s \
-# 			../../lib/$(ISA_DEFAULT64)/`basename $${f}` \
-# 			$(PKGROOT)$(prefix)/postgresql/lib/$(ISA_DEFAULT64); \
-# 	done
+	$(mySED) $(FILEDIR)/$(CSWPGSQLCONFFILETMPL) > $(PKGROOT)$(sysconfdir)/$(CSWPGSQLCONFFILE_VERSIONED).CSW
+# Adjust the man page names for man1
+	for f in $(PKGROOT)$(datadir)/man/man1/* ; do \
+		f_no_suffix="`echo $$f | sed -e 's/.1$$//'`" ; \
+		mv $$f $${f_no_suffix}-$(BASE_VERSION_NODOT).1 ; \
+	done
 	@$(MAKECOOKIE)
+
+pre-package:
+	$(mySED) $(FILEDIR)/CSWpostgresql-server.postinstall.tmpl > $(WORKDIR)/CSW$(NAME)$(BASE_VERSION_NODOT)-server.postinstall
