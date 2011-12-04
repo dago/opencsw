@@ -34,11 +34,13 @@ CATALOGNAME_CSWopenssl = openssl
 RUNTIME_DEP_PKGS_CSWopenssl = CSWlibssl-dev CSWopenssl-utils CSWlibssl0-9-8
 ARCHALL_CSWopenssl = 1
 OBSOLETED_BY_CSWopenssl = CSWossl
+CHECKPKG_OVERRIDES_CSWossl += surplus-dependency|CSWopenssl
 
 SPKG_DESC_CSWlibssl0-9-8 = Openssl runtime libraries
 CATALOGNAME_CSWlibssl0-9-8 = libssl0_9_8
 RUNTIME_DEP_PKGS_CSWlibssl0-9-8 = CSWcacertificates
 OBSOLETED_BY_CSWlibssl0-9-8 = CSWosslrt
+CHECKPKG_OVERRIDES_CSWosslrt += surplus-dependency|CSWlibssl0-9-8
 
 SPKG_DESC_CSWlibssl-dev = Openssl development libraries and headers
 CATALOGNAME_CSWlibssl-dev = libssl_dev
@@ -51,6 +53,7 @@ CATALOGNAME_CSWopenssl-utils = openssl_utils
 RUNTIME_DEP_PKGS_CSWopenssl-utils = CSWlibssl0-9-8
 SPKG_CLASSES_CSWopenssl-utils = none cswpreserveconf
 OBSOLETED_BY_CSWopenssl-utils = CSWosslutils
+CHECKPKG_OVERRIDES_CSWosslutils += surplus-dependency|CSWopenssl-utils
 
 # openssl is a meta-package
 CHECKPKG_OVERRIDES_CSWopenssl += surplus-dependency|CSWopenssl-utils
