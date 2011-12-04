@@ -57,11 +57,29 @@
 #
 # 1. Adjust BASE_VERSION and/or PATCHLEVEL.
 #
-# 2. `mgar merge`
+# 2. Make sure the SONAME patch for
+#    $(WORKDIR)/postgresql-x.y.z/src/Makefile.shlib still works
 #
-# 3. If step 2 succeeded, check the prototype of
+# 3. Comment out 'post-install-modulated:'. So we can identify changes in the
+#    server/client environment.
+#
+# 4. `mgar package`
+#
+# 5. If step 4 succeeded, check the prototype of
 #    CSW$(NAME)$(BASE_VERSION_NODOT) for files that have slipped by and put
 #    them in the proper place.
+#
+# 6. Uncomment 'post-install-modulated:'. This will shed light on changes in
+#    the contrib environment.
+#
+# 7. `mgar spotless package`
+#
+# 8. If step 6 succeeded, check the prototype of
+#    CSW$(NAME)$(BASE_VERSION_NODOT) for files that have slipped by and put
+#    them in the proper place.
+#
+# 9. Make sure the proper version numbers are used for the library packages.
+
 
 # This BUILD is NOT READY!  It needs work before it's usable.
 
@@ -104,6 +122,13 @@ DISTFILES += CSWpostgresql-server.postinstall.tmpl
 DISTFILES += $(INITSCRIPTFILETMPL)
 DISTFILES += $(USERGROUPFILETMPL)
 DISTFILES += $(CSWPGSQLCONFFILETMPL)
+
+# This patch will make the SONAME of the libraries to contain the major and
+# minor version. This is important when having multiple installations of
+# PostgreSQL where the library versions differ only in the minor part, such as
+# with PostgreSQL 8.3 and PostgreSQL 8.4.
+#
+PATCHFILES += 0000-SONAME-including-major-and-minor-version.patch
 
 INITSMF = $(sysconfdir)/init\.d/$(INITSCRIPTFILE_VERSIONED)
 USERGROUP = $(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
