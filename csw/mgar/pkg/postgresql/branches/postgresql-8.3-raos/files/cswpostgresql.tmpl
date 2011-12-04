@@ -16,15 +16,16 @@
 # - bindir
 # - sysconfdir
 
+USERCONF=postgresql-@BASE_VERSION_NODOT@.conf
+PGCTL=@bindir@/pg_ctl-@BASE_VERSION_NODOT@
+PGINIT=@bindir@/initdb-@BASE_VERSION_NODOT@
 
 # Read in the user configuration file
-[ -s /opt/csw/etc/postgresql.conf ] && . /opt/csw/etc/postgresql.conf
-[ -s @sysconfdir@/postgresql.conf ] && . @sysconfdir@/postgresql.conf
+[ -s /opt/csw/etc/${USERCONF} ] && . /opt/csw/etc/${USERCONF}
+[ -s @sysconfdir@/${USERCONF} ] && . @sysconfdir@/${USERCONF}
 
 # Defaults
 [ -z "${PGDATA}" ] && PGDATA=@PGDATA@
-[ -z "${PGCTL}" ] && PGCTL=@bindir@/pg_ctl
-[ -z "${PGINIT}" ] && PGINIT=@bindir@/initdb
 
 
 # Exit if postgres user hasn't been created.
@@ -38,9 +39,9 @@ else
   fi
 fi
 
-# Change to /var/tmp, as pgctl etc. need to be started from
+# Change to ${PGDATA}, as pgctl etc. need to be started from
 # a directory that they can read
-cd /var/tmp
+cd "${PGDATA}"
 
 case "$1" in
 start)
