@@ -78,7 +78,11 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWsvn += CSWosslrt
-
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibgnome-keyring0
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWsvn += CSWglib2
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWsvn += CSWglib2
 
 PACKAGES += CSWsvn-devel
 SPKG_DESC_CSWsvn-devel     = Subversion Development Support
@@ -276,11 +280,12 @@ CONFIGURE_ARGS += --enable-javahl
 CONFIGURE_ARGS += --with-apr=$(bindir)/apr-1-config
 CONFIGURE_ARGS += --with-apr-util=$(bindir)/apu-1-config
 CONFIGURE_ARGS += --with-apxs=$(prefix)/apache2/sbin/apxs
+CONFIGURE_ARGS += --with-gnome-keyring=$(prefix)
 CONFIGURE_ARGS += --with-jdk=$(JAVA_HOME)
 CONFIGURE_ARGS += --with-sasl=$(prefix)
+CONFIGURE_ARGS += --with-serf=$(prefix)
 CONFIGURE_ARGS += --with-ssl=$(prefix)
 CONFIGURE_ARGS += --with-zlib=$(prefix)
-CONFIGURE_ARGS += --with-serf=$(prefix)
 
 # Once you have verified that a new upstream release passes the tests, you can use
 # "SKIPTEST=1 gmake <target>" to skip the tests for simple repackaging tasks.
