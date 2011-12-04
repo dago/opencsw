@@ -16,7 +16,7 @@
 # - bindir
 # - sysconfdir
 
-USERCONF=postgresql-@BASE_VERSION_NODOT@.conf
+USERCONF=@CSWPGSQLCONFFILE_VERSIONED@
 PGCTL=@bindir@/pg_ctl-@BASE_VERSION_NODOT@
 PGINIT=@bindir@/initdb-@BASE_VERSION_NODOT@
 
@@ -26,6 +26,9 @@ PGINIT=@bindir@/initdb-@BASE_VERSION_NODOT@
 
 # Defaults
 [ -z "${PGDATA}" ] && PGDATA=@PGDATA@
+[ -z "${PGDATA}" ] && SHUTDOWNMODE=fast
+
+[ -n "${SERVEROPTS}" ] && SERVEROPTS="-o ${SERVEROPTS}"
 
 
 # Exit if postgres user hasn't been created.
@@ -48,28 +51,28 @@ start)
       if [ -d ${PGDATA} -a `ls -l ${PGDATA} 2> /dev/null | wc -l` -gt 1 ]; then
          # PostgreSQL data directory exists and is populated
          echo "Starting PostgreSQL..."
-         su postgres -c "${PGCTL} -D ${PGDATA} -l ${PGDATA}/postgresql.log start ${SERVEROPTS}"
+         su postgres -c "${PGCTL} start -D ${PGDATA} -l ${PGDATA}/postgresql.log "${SERVEROPTS}""
       fi
       ;;
 
 stop)
      echo "Stopping PostgreSQL database..."
-     su postgres -c "${PGCTL} -D ${PGDATA} -l ${PGDATA}/postgresql.log stop"
+     su postgres -c "${PGCTL} stop -D ${PGDATA} -l ${PGDATA}/postgresql.log -m ${SHUTDOWNMODE}"
      true  # The previous command fails when there's no .pid file
      ;;
 
 restart)
      echo "Restarting PostgreSQL database..."
-     su postgres -c "${PGCTL} -D ${PGDATA} -l ${PGDATA}/postgresql.log restart ${SERVEROPTS}"
+     su postgres -c "${PGCTL} restart -D ${PGDATA} -l ${PGDATA}/postgresql.log "${SERVEROPTS}" -m ${SHUTDOWNMODE}"
      ;;
 
 reload)
      echo "Reloading PostgreSQL database..."
-     su postgres -c "${PGCTL} -D ${PGDATA} -l ${PGDATA}/postgresql.log reload ${SERVEROPTS}"
+     su postgres -c "${PGCTL} reload -D ${PGDATA} -l ${PGDATA}/postgresql.log"
      ;;
 
 status)
-     su postgres -c "${PGCTL} -D ${PGDATA} status"
+     su postgres -c "${PGCTL} status -D ${PGDATA}"
      ;;
 
 init)
@@ -80,7 +83,7 @@ init)
      chown postgres "${PGDATA}"
      chmod 0700 "${PGDATA}"
      echo "Initialising PostgreSQL database..."
-     su postgres -c "\"${PGINIT}\" -D \"${PGDATA}\" -E utf-8"
+     su postgres -c "\"${PGINIT}\" -D \"${PGDATA}\" -E UTF8"
      ;;
 
 *)
