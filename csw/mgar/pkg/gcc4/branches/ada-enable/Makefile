@@ -509,29 +509,26 @@ PKGFILES_$(PKG_BASENAME)ada += $(prefix)/.*/adainclude/.*
 PKGFILES_$(PKG_BASENAME)ada += $(prefix)/info/.*gnat.*
 PKGFILES_$(PKG_BASENAME)ada += $(prefix)/bin/gnat(?!ive).*
 # There are static libraries, .a files in the ada package. Let them be.
-CHECKPKG_OVERRIDES_CSWgcc4ada += discouraged-path-in-pkgmap
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += discouraged-path-in-pkgmap
 # It needs the core compiler.
-CHECKPKG_OVERRIDES_CSWgcc4ada += surplus-dependency|CSWgcc4core
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += surplus-dependency|$(PKG_BASENAME)core
+CHECKPKG_OVERRIDES_CSWgcc4ada += file-with-bad-content
 
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibppl-c4
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibmpfr4
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibpwl5
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibmpc2
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibgmpxx4
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibisl7
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibgmp10
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibcloog-isl2
-RUNTIME_DEP_PKGS_CSWgcc4ada += CSWlibppl9
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibiconv2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibppl-c4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibz1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpfr4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibpwl5
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpc2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgmpxx4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibisl7
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgmp10
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibcloog-isl2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibppl9
 
-PACKAGES += $(PKG_BASENAME)adart
-SPKG_DESC_$(PKG_BASENAME)adart = A deprecated package
-PKGFILES_$(PKG_BASENAME)adart  = flying-spaghetti-monster
-RUNTIME_DEP_PKGS_CSWgcc4adart += CSWlibgcc-s1
-PKGFILES_$(PKG_BASENAME)adart  = $(prefix)/lib/.*libgnat.*\.so.*
-PKGFILES_$(PKG_BASENAME)adart += $(prefix)/lib/.*libgnarl.*\.so.*
+# Not sure about the shared libraries.
+OBSOLETED_BY_RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada = $(PKG_BASENAME)adart
 
 # Maybe it's unnecessary.
 # # Solaris 10 on i386 specific:
