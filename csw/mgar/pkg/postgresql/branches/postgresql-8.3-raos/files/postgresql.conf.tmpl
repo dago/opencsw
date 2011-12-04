@@ -3,26 +3,12 @@
 # Provided by the OpenCSW package of PostgreSQL.  This file is read by the
 # /etc/opt/csw/init.d/cswpostgres startup script, and can be used to override
 # the defaults.
+#
+# Please use alternatives to choose between 32/64bit version of the server.
 
 # The location of the data directory.
-# Default : /opt/csw/var/pgdata
+# Default : @PGDATA@
 PGDATA=@PGDATA@
-
-# Which binaries to use, 32- or 64-bit.  Only use the 64-bit server if you're
-# sure you need it.  Make sure you have read
-# /opt/csw/postgresql/share/doc/README-CSW.txt before changing these, as your
-# databases may not work without a 'dump and restore' cycle!
-
-# 32-bit server - default, and fine for most uses
-# 
-# PGCTL=/opt/csw/postgresql/bin/sparcv8/pg_ctl
-# PGINIT=/opt/csw/postgresql/bin/sparcv8/initdb
-
-# 64-bit server - uncomment these lines only if you really need them.
-# 
-# PGCTL=/opt/csw/postgresql/bin/sparcv9/pg_ctl
-# PGINIT=/opt/csw/postgresql/bin/sparcv9/initdb
-
 
 # Additional options to pass to postmaster.
 # 
@@ -34,4 +20,3 @@ PGDATA=@PGDATA@
 # directory.
 # 
 # SERVEROPTS="-o -i"
-
