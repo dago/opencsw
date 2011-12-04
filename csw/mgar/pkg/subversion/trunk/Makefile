@@ -35,8 +35,8 @@ define BLURB
 endef
 
 VENDOR_URL   = http://subversion.apache.org/
-#MASTER_SITES = http://archive.apache.org/dist/subversion/
-MASTER_SITES = http://people.apache.org/~hwright/svn/1.7.2/
+MASTER_SITES = http://archive.apache.org/dist/subversion/
+#MASTER_SITES = http://people.apache.org/~hwright/svn/1.7.2/
 DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 
 BUILD_DEP_PKGS += CSWlibexpat-dev
