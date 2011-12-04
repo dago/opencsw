@@ -23,6 +23,14 @@ SO_NAMES_SERVER		+= utf8_and_ascii.so utf8_and_big5.so utf8_and_cyrillic.so utf8
 SO_NAMES_SERVER		+= utf8_and_euc_jis_2004.so utf8_and_euc_jp.so utf8_and_euc_kr.so utf8_and_euc_tw.so
 SO_NAMES_SERVER		+= utf8_and_gb18030.so utf8_and_gbk.so utf8_and_iso8859.so utf8_and_iso8859_1.so
 SO_NAMES_SERVER		+= utf8_and_johab.so utf8_and_shift_jis_2004.so utf8_and_sjis.so utf8_and_uhc.so utf8_and_win.so
+# These are shared object used by contrib. Please note, the server installs
+# also shared object in the same place, so make sure you don't mix up things
+SO_NAMES_CONTRIB 	 = _int.so adminpack.so autoinc.so btree_gist.so chkpass.so
+SO_NAMES_CONTRIB	+= cube.so dblink.so dict_int.so dict_xsyn.so earthdistance.so
+SO_NAMES_CONTRIB	+= fuzzystrmatch.so hstore.so insert_username.so int_aggregate.so 
+SO_NAMES_CONTRIB	+= isn.so lo.so ltree.so moddatetime.so pageinspect.so pg_buffercache.so
+SO_NAMES_CONTRIB	+= pg_freespacemap.so pg_trgm.so pgcrypto.so pgrowlocks.so pgstattuple.so
+SO_NAMES_CONTRIB	+= pgxml.so refint.so seg.so sslinfo.so tablefunc.so test_parser.so timetravel.so tsearch2.so
 # Miscellaneous files
 MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/conversion_create.sql
 MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/information_schema.sql
@@ -60,5 +68,19 @@ INITSCRIPTFILE		= cswpostgresql
 INITSCRIPTFILETMPL	= $(INITSCRIPTFILE).tmpl
 INITSCRIPTFILE_VERSIONED = $(INITSCRIPTFILE)-$(BASE_VERSION_NODOT)
 
-# These are the alternatives provided for the packages.
+# These are the alternatives provided for the packages.  I use them in the
+# recipe to iterate over all possible alternatives (see 'post-merge:')
 myALTERNATIVES= server client devel contrib
+
+# My sed, since EXPANDVARS has proven unreliable to me
+mySED = gsed -e 's|@USERGROUPFILE_VERSIONED@|$(USERGROUPFILE_VERSIONED)|g' \
+	-e 's|@CSWPGSQLCONFFILE_VERSIONED@|$(CSWPGSQLCONFFILE_VERSIONED)|g' \
+	-e 's|@INITSCRIPTFILE_VERSIONED@|$(INITSCRIPTFILE_VERSIONED)|g' \
+	-e 's|@NAME@|$(NAME)|g' \
+	-e 's|@VERSION@|$(VERSION)|g' \
+	-e 's|@BASE_VERSION_NODOT@|$(BASE_VERSION_NODOT)|g' \
+	-e 's|@PGLOCALSTATEDIR_BASE@|$(PGLOCALSTATEDIR_BASE)|g' \
+	-e 's|@PGDATA@|$(PGDATA)|g' \
+	-e 's|@sysconfdir@|$(sysconfdir)|g' \
+	-e 's|@bindir@|$(bindir)|g'
+
