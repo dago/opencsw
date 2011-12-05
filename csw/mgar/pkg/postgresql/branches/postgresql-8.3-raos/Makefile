@@ -83,15 +83,6 @@
 
 # This BUILD is NOT READY!  It needs work before it's usable.
 
-# TODO: Initialize the database cluster during installation if not already
-# there.
-#
-# TODO: Migration plan from 8.3: Installing 8.3 and 8.4 at the same time, and
-# migrating
-#
-# TODO: The isaexec part in GAR doesn't work very well.  Let's write a minimal
-# example of it.   (gmake repackage may produce the right output)
-
 NAME = postgresql
 BASE_VERSION = 8.3
 VERSION_NODOT = $(subst .,_,$(BASE_VERSION))
@@ -108,12 +99,90 @@ VENDOR_URL = http://www.postgresql.org/
 define BLURB
 endef
 
-# Here we will fetch various variables that are used in this recipe. I decided
-# to place those in a separate file for the sake of uncluttering this recipe.
 #
-# Many of the varibles defined in pgconf.mk depend on the various $(VERSION*)
-# variables.
-include pgconf.mk
+# These variables control many aspects of the build
+#
+PGBINDIR		= $(libexecdir)/$(NAME)/$(BASE_VERSION_NODOT)
+PGSBINDIR		= $(libexecdir)/$(NAME)/$(BASE_VERSION_NODOT)
+PGDATADIR		= $(datadir)/$(NAME)/$(BASE_VERSION_NODOT)
+PGDOCDIR		= $(datadir)/doc/$(NAME)/$(BASE_VERSION_NODOT)
+PGLOCALSTATEDIR_BASE	= $(localstatedir)/$(NAME)
+PGDATA			= $(PGLOCALSTATEDIR_BASE)/$(BASE_VERSION_NODOT)
+# Those BIN_NAMES_* are used both, for package creation and alternatives
+BIN_NAMES_SERVER	= initdb ipcclean pg_controldata pg_ctl pg_resetxlog postmaster postgres
+BIN_NAMES_DEVEL		= ecpg pg_config
+BIN_NAMES_CLIENT	= clusterdb createdb createlang createuser dropdb droplang dropuser pg_dump pg_dumpall pg_restore psql reindexdb vacuumdb
+BIN_NAMES_CONTRIB	= oid2name pgbench pg_standby vacuumlo
+# These are shared objects used by the server. Please note, contrib installs
+# also shared object in the same place, so make sure you don't mix up things
+SO_NAMES_SERVER		 = ascii_and_mic.so cyrillic_and_mic.so dict_snowball.so euc_cn_and_mic.so
+SO_NAMES_SERVER 	+= euc_jis_2004_and_shift_jis_2004.so euc_jp_and_sjis.so euc_kr_and_mic.so
+SO_NAMES_SERVER		+= euc_tw_and_big5.so latin2_and_win1250.so latin_and_mic.so plpgsql.so
+SO_NAMES_SERVER		+= utf8_and_ascii.so utf8_and_big5.so utf8_and_cyrillic.so utf8_and_euc_cn.so
+SO_NAMES_SERVER		+= utf8_and_euc_jis_2004.so utf8_and_euc_jp.so utf8_and_euc_kr.so utf8_and_euc_tw.so
+SO_NAMES_SERVER		+= utf8_and_gb18030.so utf8_and_gbk.so utf8_and_iso8859.so utf8_and_iso8859_1.so
+SO_NAMES_SERVER		+= utf8_and_johab.so utf8_and_shift_jis_2004.so utf8_and_sjis.so utf8_and_uhc.so utf8_and_win.so
+# These are shared object used by contrib. Please note, the server installs
+# also shared object in the same place, so make sure you don't mix up things
+SO_NAMES_CONTRIB 	 = _int.so adminpack.so autoinc.so btree_gist.so chkpass.so
+SO_NAMES_CONTRIB	+= cube.so dblink.so dict_int.so dict_xsyn.so earthdistance.so
+SO_NAMES_CONTRIB	+= fuzzystrmatch.so hstore.so insert_username.so int_aggregate.so 
+SO_NAMES_CONTRIB	+= isn.so lo.so ltree.so moddatetime.so pageinspect.so pg_buffercache.so
+SO_NAMES_CONTRIB	+= pg_freespacemap.so pg_trgm.so pgcrypto.so pgrowlocks.so pgstattuple.so
+SO_NAMES_CONTRIB	+= pgxml.so refint.so seg.so sslinfo.so tablefunc.so test_parser.so timetravel.so tsearch2.so
+# Miscellaneous files
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/conversion_create.sql
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/information_schema.sql
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/pg_hba.conf.sample
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/pg_ident.conf.sample
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/pg_service.conf.sample
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/postgres.bki
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/postgres.description
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/postgres.shdescription
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/postgresql.conf.sample
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/recovery.conf.sample
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/snowball_create.sql
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/sql_features.txt
+MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/system_views.sql
+MISC_NAMES_CLIENT	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/psqlrc.sample
+
+# Used for the PostgreSQL user. Please note, although the file does not feature
+# a version number here, it will be installed with $(BASE_VERSION_NODOT)
+# appended.
+USERGROUPDIR		= $(sysconfdir)/pkg/$(NAME)
+USERGROUPFILE		= cswusergroup
+USERGROUPFILETMPL	= $(USERGROUPFILE).tmpl
+USERGROUPFILE_VERSIONED = $(USERGROUPFILE)-$(BASE_VERSION_NODOT)
+
+# The configuration file for the init.d script. Please note, although the file
+# does not feature a version number here, it will be installed with
+# $(BASE_VERSION_NODOT) inserted.
+CSWPGSQLCONFFILE	= postgresql.conf
+CSWPGSQLCONFFILETMPL    = $(CSWPGSQLCONFFILE).tmpl
+CSWPGSQLCONFFILE_VERSIONED = $(subst $(suffix $(CSWPGSQLCONFFILE)),,$(CSWPGSQLCONFFILE))-$(BASE_VERSION_NODOT).conf
+
+# The initscript. Please note, although the file does not feature a version
+# number here, it will be installed with $(BASE_VERSION_NODOT) appended
+INITSCRIPTFILE		= cswpostgresql
+INITSCRIPTFILETMPL	= $(INITSCRIPTFILE).tmpl
+INITSCRIPTFILE_VERSIONED = $(INITSCRIPTFILE)-$(BASE_VERSION_NODOT)
+
+# These are the alternatives provided for the packages.  I use them in the
+# recipe to iterate over all possible alternatives (see 'post-merge:')
+myALTERNATIVES= server client devel contrib
+
+# My sed, since EXPANDVARS has proven unreliable to me
+mySED = gsed -e 's|@USERGROUPFILE_VERSIONED@|$(USERGROUPFILE_VERSIONED)|g' \
+	-e 's|@CSWPGSQLCONFFILE_VERSIONED@|$(CSWPGSQLCONFFILE_VERSIONED)|g' \
+	-e 's|@INITSCRIPTFILE_VERSIONED@|$(INITSCRIPTFILE_VERSIONED)|g' \
+	-e 's|@NAME@|$(NAME)|g' \
+	-e 's|@VERSION@|$(VERSION)|g' \
+	-e 's|@BASE_VERSION_NODOT@|$(BASE_VERSION_NODOT)|g' \
+	-e 's|@PGLOCALSTATEDIR_BASE@|$(PGLOCALSTATEDIR_BASE)|g' \
+	-e 's|@PGDATA@|$(PGDATA)|g' \
+	-e 's|@sysconfdir@|$(sysconfdir)|g' \
+	-e 's|@bindir@|$(bindir)|g'
+
 
 MASTER_SITES = http://ftp.postgresql.org/pub/source/v$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
@@ -157,7 +226,6 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT) += CSW$(NAME)$(BASE_VERSION_NOD
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT) += CSW$(NAME)$(BASE_VERSION_NODOT)-devel
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-server
-CATALOGNAME_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(NAME)$(BASE_VERSION_NODOT)_server
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-server = PostgreSQL $(VERSION), Server
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server  = $(foreach n,$(BIN_NAMES_SERVER),.*$(n)$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += $(foreach n,$(BIN_NAMES_SERVER),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
@@ -177,12 +245,10 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxml2
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxslt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWalternatives
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibpq5-1
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach i,$(BUILD_ISAS), server_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-client
-CATALOGNAME_CSW$(NAME)$(BASE_VERSION_NODOT)-client = $(NAME)$(BASE_VERSION_NODOT)_client
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-client = PostgreSQL $(VERSION), Client
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client = $(foreach n,$(BIN_NAMES_CLIENT),.*$(n)$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += $(foreach n,$(BIN_NAMES_CLIENT),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
@@ -196,11 +262,9 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibxslt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibpq5-1
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWalternatives
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-client = $(foreach i,$(BUILD_ISAS), client_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-contrib
-CATALOGNAME_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(NAME)$(BASE_VERSION_NODOT)_contrib
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = PostgreSQL $(VERSION), Contrib
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach n,$(BIN_NAMES_CONTRIB),.*$(n)$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += $(foreach n,$(BIN_NAMES_CONTRIB),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
@@ -213,11 +277,9 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxslt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibpq5-1
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWalternatives
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach i,$(BUILD_ISAS), contrib_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-devel
-CATALOGNAME_CSW$(NAME)$(BASE_VERSION_NODOT)-devel = $(NAME)$(BASE_VERSION_NODOT)_devel
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-devel = PostgreSQL $(VERSION), Development Files
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel  = .*/pgxs/.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += $(PKGFILES_DEVEL)
@@ -225,17 +287,18 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += $(foreach n,$(BIN_NAMES_DEVEL)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += .*/man5/.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_devel.*
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += CSWalternatives
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += CSWlibecpg_compat3-0
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += CSWlibecpg6-0
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += CSWlibpq5-1
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += CSWlibpgtypes3-0
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel = $(foreach i,$(BUILD_ISAS), devel_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-doc
 ARCHALL_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = 1
-CATALOGNAME_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = $(NAME)$(BASE_VERSION_NODOT)_doc
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = PostgreSQL $(VERSION), Documentation Files
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-doc  =  .*/doc/$(NAME)/$(BASE_VERSION_NODOT)/.*
 
 PACKAGES += CSWlibecpg_compat3-0
-CATALOGNAME_CSWlibecpg_compat3-0 = libecpg_compat3_0
 SPKG_DESC_CSWlibecpg_compat3-0 = PostgreSQL $(VERSION), libecpg_compat
 PKGFILES_CSWlibecpg_compat3-0  = $(call pkgfiles_lib,libecpg_compat.so.3)
 RUNTIME_DEP_PKGS_CSWlibecpg_compat3-0  = CSWlibecpg6-0
@@ -243,14 +306,12 @@ RUNTIME_DEP_PKGS_CSWlibecpg_compat3-0 += CSWlibpgtypes3-0
 RUNTIME_DEP_PKGS_CSWlibecpg_compat3-0 += CSWlibpq5-1
 
 PACKAGES += CSWlibecpg6-0
-CATALOGNAME_CSWlibecpg6-0 = libecpg6_0
 SPKG_DESC_CSWlibecpg6-0 = PostgreSQL $(VERSION), libecpg
 PKGFILES_CSWlibecpg6-0  = $(call pkgfiles_lib,libecpg.so.6)
 RUNTIME_DEP_PKGS_CSWlibecpg6-0 += CSWlibpgtypes3-0
 RUNTIME_DEP_PKGS_CSWlibecpg6-0 += CSWlibpq5-1
 
 PACKAGES += CSWlibpgtypes3-0
-CATALOGNAME_CSWlibpgtypes3-0 = libpgtypes3_0
 SPKG_DESC_CSWlibpgtypes3-0 = PostgreSQL $(VERSION), libpgtypes
 PKGFILES_CSWlibpgtypes3-0  = $(call pkgfiles_lib,libpgtypes.so.3)
 
@@ -293,8 +354,8 @@ CONFIGURE_ARGS += --sbindir=$(PGSBINDIR)
 
 CONFIGURE_ARGS += --datadir=$(PGDATADIR)
 CONFIGURE_ARGS += --localstatedir=$(PGDATA)
-CONFIGURE_ARGS += --with-includes=/opt/csw/include
-CONFIGURE_ARGS += --with-libraries=$(abspath /opt/csw/lib/$(MM_LIBDIR))
+CONFIGURE_ARGS += --with-includes=$(includedir)
+CONFIGURE_ARGS += --with-libraries=$(libdir)
 CONFIGURE_ARGS += --with-docdir=$(PGDOCDIR)
 # configure complains that we are not thread-safe, wtf? --raos
 #CONFIGURE_ARGS += --enable-thread-safety
@@ -306,99 +367,12 @@ CONFIGURE_ARGS += --with-libxml
 CONFIGURE_ARGS += --with-libxslt
 CONFIGURE_ARGS += --without-krb5
 CONFIGURE_ARGS += --without-bonjour
-CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(MODULATION))
 
 # Skipping tests to save time during packaging, and to enable x86 builds.
 #
 # IMHO, tests are essential, especially on Solaris, and I do not experience
 # build troubles on x86 having them enabled --raos
 SKIPTEST ?= 1
-TEST_TARGET = check
-
-# PACKAGES += CSWlibpq-dev
-# CATALOGNAME_CSWlibpq-dev = libpq_dev
-# SPKG_DESC_CSWlibpq-dev = PostgreSQL C client headers (built from $(BASE_VERSION).x sources)
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibgnugetopt0
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibgssapi-krb5-2
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibreadline6
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibxml2-2
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibxslt1
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibz1
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWosslrt
-# PKGFILES_CSWlibpq-dev += $(prefix)/include/postgresql.*
-# PKGFILES_CSWlibpq-dev += $(prefix)/lib/.*libpq.so
-# PKGFILES_CSWlibpq-dev += $(prefix)/lib/.*libecpg.so
-# PKGFILES_CSWlibpq-dev += $(prefix)/lib/.*libecpg_compat.so
-# PKGFILES_CSWlibpq-dev += $(prefix)/lib/.*libpgtypes.so
-# PKGFILES_CSWlibpq-dev += $(prefix)/bin/.*pg_config.*
-# PKGFILES_CSWlibpq-dev += $(prefix)/share/postgresql/8.4/man/man1/pg_config.1
-# PKGFILES_CSWlibpq-dev += $(prefix)/share/locale/*/LC_MESSAGES/pg_config.*\.mo
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibpq5
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibecpg6
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibecpg-compat3
-# RUNTIME_DEP_PKGS_CSWlibpq-dev += CSWlibpgtypes3
-
-# # Legacy libraries
-# PACKAGES += CSWlibpq3
-# CATALOGNAME_CSWlibpq3 = libpq3
-# PKGFILES_CSWlibpq3 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.3(\.\d+)*)
-# SPKG_DESC_CSWlibpq3 += PostgreSQL C client library, libpq.so.3
-# RUNTIME_DEP_PKGS_CSWlibpq3 += CSWosslrt
-
-# PACKAGES += CSWlibpq4
-# CATALOGNAME_CSWlibpq4 = libpq4
-# PKGFILES_CSWlibpq4 += $(call baseisadirs,$(prefix)/lib,libpq\.so\.4(\.\d+)*)
-# SPKG_DESC_CSWlibpq4 += PostgreSQL C client library, libpq.so.4
-# RUNTIME_DEP_PKGS_CSWlibpq4 += CSWosslrt
-
-# PACKAGES += CSWlibpgtypes1
-# CATALOGNAME_CSWlibpgtypes1 = libpgtypes1
-# PKGFILES_CSWlibpgtypes1 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.1(\.\d+)*)
-# SPKG_DESC_CSWlibpgtypes1 += Used by programs built with ecpg (Embedded PostgreSQL for C), libpgtypes.so.1
-
-# PACKAGES += CSWlibpgtypes2
-# CATALOGNAME_CSWlibpgtypes2 = libpgtypes2
-# PKGFILES_CSWlibpgtypes2 += $(call baseisadirs,$(prefix)/lib,libpgtypes\.so\.2(\.\d+)*)
-# SPKG_DESC_CSWlibpgtypes2 += Used by programs built with ecpg (Embedded PostgreSQL for C), libpgtypes.so.2
-
-# PACKAGES += CSWlibecpg4
-# CATALOGNAME_CSWlibecpg4 = libecpg4
-# PKGFILES_CSWlibecpg4 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.4(\.\d+)*)
-# SPKG_DESC_CSWlibecpg4 += Embedded PostgreSQL for C library, libecpg.so.4
-# RUNTIME_DEP_PKGS_CSWlibecpg4 += CSWlibpgtypes1
-# RUNTIME_DEP_PKGS_CSWlibecpg4 += CSWosslrt
-# RUNTIME_DEP_PKGS_CSWlibecpg4 += CSWlibpq3
-
-# PACKAGES += CSWlibecpg5
-# CATALOGNAME_CSWlibecpg5 = libecpg5
-# PKGFILES_CSWlibecpg5 += $(call baseisadirs,$(prefix)/lib,libecpg\.so\.5(\.\d+)*)
-# SPKG_DESC_CSWlibecpg5 += Embedded PostgreSQL for C library, libecpg.so.5
-# RUNTIME_DEP_PKGS_CSWlibecpg5 += CSWlibpgtypes2
-# RUNTIME_DEP_PKGS_CSWlibecpg5 += CSWlibpq5
-
-# PACKAGES += CSWlibecpg-compat2
-# CATALOGNAME_CSWlibecpg-compat2 = libecpg_compat2
-# PKGFILES_CSWlibecpg-compat2 += $(call baseisadirs,$(prefix)/lib,libecpg_compat\.so\.2(\.\d+)*)
-# SPKG_DESC_CSWlibecpg-compat2 += Older version of run-time library for ECPG programs, libecpg_compat.so.2
-# RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibpgtypes2
-# RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibecpg5
-# RUNTIME_DEP_PKGS_CSWlibecpg-compat2 += CSWlibpq5
-
-# # The horrible transitional package
-# PACKAGES += CSWlibpq
-# PKGFILES_CSWlibpq += $(prefix)/postgresql.*
-# SPKG_DESC_CSWlibpq = Transitional package for PostgreSQL shared libraries
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibecpg-compat2
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibecpg-compat3
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibecpg4
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibecpg5
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibecpg6
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibpgtypes1
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibpgtypes2
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibpgtypes3
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibpq3
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibpq4
-# RUNTIME_DEP_PKGS_CSWlibpq += CSWlibpq5
 
 include gar/category.mk
 # This variable will be increased in the course of the following foreach loops
