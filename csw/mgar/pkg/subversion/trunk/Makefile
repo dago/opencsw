@@ -82,16 +82,18 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWsvn += CSWglib2
 
-PACKAGES += CSWsvn-devel
-SPKG_DESC_CSWsvn-devel     = Subversion Development Support
-CATALOGNAME_CSWsvn-devel   = subversion_devel
-ARCHALL_CSWsvn-devel       = 1
-PKGFILES_CSWsvn-devel      = $(PKGFILES_DEVEL)
-PKGFILES_CSWsvn-devel     += $(docdir)/$(CATALOGNAME_CSWsvn-devel)/changelog.CSW
-CHECKPKG_OVERRIDES_CSWsvn-devel += archall-devel-package
-CHECKPKG_OVERRIDES_CSWsvn-devel += catalogname-does-not-match-pkgname|pkgname=CSWsvn-devel|catalogname=subversion_devel|expected-catalogname=svn_devel
-CHECKPKG_OVERRIDES_CSWsvn-devel += license-missing|/opt/csw/share/doc/subversion_devel/license
+PACKAGES += CSWsvn-dev
+SPKG_DESC_CSWsvn-dev       = Subversion Development Support
+OBSOLETED_BY_CSWsvn-dev    = CSWsvn-devel
+ARCHALL_CSWsvn-dev         = 1
+PKGFILES_CSWsvn-dev        = $(PKGFILES_DEVEL)
+PKGFILES_CSWsvn-dev       += $(docdir)/$(CATALOGNAME_CSWsvn-dev)/changelog.CSW
+CHECKPKG_OVERRIDES_CSWsvn-dev += archall-devel-package
+CHECKPKG_OVERRIDES_CSWsvn-dev += license-missing|/opt/csw/share/doc/subversion_dev/license
 
+# Note: This is just to prevent a catalog name change for a stub
+# package.  We made the real package have matching names.
+CATALOGNAME_CSWsvn-devel   = subversion_devel
 
 PACKAGES += CSWsvn-contrib
 SPKG_DESC_CSWsvn-contrib   = Contributed subversion scripts
