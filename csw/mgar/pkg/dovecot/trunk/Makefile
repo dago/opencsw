@@ -87,6 +87,15 @@ pre-install-modulated:
 		s| /usr/lib/dovecot| /opt/csw/lib/dovecot|; \
 		s| /usr/local| /opt/csw|;' \
 		$(WORKSRC)/doc/example-config/dovecot.conf
+	perl -pi -e '\
+		s|/etc/ssl|/opt/csw/ssl|; \
+		s|/usr/local|/opt/csw|;' \
+		$(WORKSRC)/doc/example-config/conf.d/*
+	perl -pi -e '\
+		s|/etc/ssl|/opt/csw/ssl|; \
+		s|/usr/local|/opt/csw|; \
+		s|/usr/share|/opt/csw/share|;' \
+		$(WORKSRC)/doc/wiki/*
 	@$(MAKECOOKIE)
 
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
@@ -94,19 +103,13 @@ post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
 post-install-modulated: CSWDOCS=README.CSW changelog.CSW
 post-install-modulated: SSLDIR = $(DESTDIR)/opt/csw/ssl
 post-install-modulated:
-	perl -pi -e 's/usr\/local/opt\/csw/g' \
-		$(DESTDIR)/opt/csw/share/doc/dovecot/wiki/*
-	perl -pi -e 's/usr\/share/opt\/csw\/share/g' \
-		$(DESTDIR)/opt/csw/share/doc/dovecot/wiki/*
-	perl -pi -e 's/usr\/local/opt\/csw/g' \
-		$(DESTDIR)/opt/csw/share/doc/dovecot/example-config/conf.d/*
 
 	# Include these in the pkg. dovecot will create them otherwise
 	# with root:root ownership, which conflicts with other pkg's
 	ginstall -d $(DESTDIR)$(localstatedir)/run 
 	ginstall -d $(DESTDIR)$(localstatedir)/lib
 
-	cp $(DESTDIR)/opt/csw/share/doc/dovecot/example-config/dovecot.conf \
+	cp $(FILEDIR)/dovecot-minimal.conf \
 		$(DESTDIR)$(sysconfdir)/dovecot/dovecot.conf
 
 	# Create self-signed sample cert
