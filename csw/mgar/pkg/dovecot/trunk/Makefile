@@ -91,11 +91,6 @@ pre-install-modulated:
 		s|/etc/ssl|/opt/csw/ssl|; \
 		s|/usr/local|/opt/csw|;' \
 		$(WORKSRC)/doc/example-config/conf.d/*
-	perl -pi -e '\
-		s|/etc/ssl|/opt/csw/ssl|; \
-		s|/usr/local|/opt/csw|; \
-		s|/usr/share|/opt/csw/share|;' \
-		$(WORKSRC)/doc/wiki/*
 	@$(MAKECOOKIE)
 
 post-install-modulated: DOCDEST = $(DESTDIR)$(docdir)/$(NAME)
@@ -103,6 +98,12 @@ post-install-modulated: DOCS = NEWS AUTHORS COPYING.LGPL COPYING.MIT
 post-install-modulated: CSWDOCS=README.CSW changelog.CSW
 post-install-modulated: SSLDIR = $(DESTDIR)/opt/csw/ssl
 post-install-modulated:
+
+	perl -pi -e '\
+		s|/etc/ssl|/opt/csw/ssl|; \
+		s|/usr/local|/opt/csw|; \
+		s|/usr/share|/opt/csw/share|;' \
+		$(DESTDIR)/opt/csw/share/doc/dovecot/wiki/*
 
 	# Include these in the pkg. dovecot will create them otherwise
 	# with root:root ownership, which conflicts with other pkg's
