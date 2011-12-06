@@ -76,6 +76,13 @@ USERGROUP = /etc/opt/csw/pkg/CSWdovecot/cswusergroup
 SAMPLECONF = .*/dovecot.pem $(sysconfdir)/dovecot/dovecot.conf
 MIGRATE_FILES = dovecot.conf
 
+# the perl search and replace is missing this.  Need to rework the below perl
+# lines.  For now overriding since the file(s) are only documentation.
+
+CHECKPKG_OVERRIDES_CSWdovecot = file-with-bad-content|/usr/local|root/opt/csw/share/doc/dovecot/wiki/CompilingSource.txt
+CHECKPKG_OVERRIDES_CSWdovecot += file-with-bad-content|/usr/local|root/opt/csw/share/doc/dovecot/wiki/HowTo.PopBSMTPAndDovecot.txt
+CHECKPKG_OVERRIDES_CSWdovecot += file-with-bad-content|/usr/local|root/opt/csw/share/doc/dovecot/wiki/LDA.Sendmail.txt
+
 include gar/category.mk
 
 pre-install-modulated:
