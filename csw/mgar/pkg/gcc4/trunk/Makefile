@@ -24,22 +24,14 @@ LIBOBJC = 3
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
-# GIT init takes a long time, disable for now, reenable if build works
+# GIT init takes a long time.
 NOGITPATCH ?= 1
 
 ## Source URLs
 VENDOR_URL = http://gcc.gnu.org
 
-GCC4_CC_HOME = $(HOME)/usr-$(GARCH)-$(GAROSREL)
 ## Copyright File
 LICENSE = COPYING3
-
-# prefix = $(BUILD_PREFIX)/$(PKG_VERSION_TOKEN)
-# libdir_install = $(BUILD_PREFIX)/lib
-# libdir = $(abspath $(BUILD_PREFIX)/lib/$(MM_LIBDIR))
-# CONFIGURE_ARGS += --prefix=$(prefix)
-# CONFIGURE_ARGS += --libdir=$(libdir)
-# CONFIGURE_ARGS += --exec-prefix=$(BUILD_PREFIX)/$(PKG_VERSION_TOKEN)
 
 BUILD_DEP_PKGS += CSWlibz-dev
 BUILD_DEP_PKGS += CSWlibgmp-dev
@@ -48,13 +40,13 @@ BUILD_DEP_PKGS += CSWlibmpfr-dev
 BUILD_DEP_PKGS += CSWlibppl-dev
 BUILD_DEP_PKGS += CSWcloog-dev
 
+# Could be used to break out of the /opt/csw/$(PKG_VERSION_TOKEN) prefix
+PROGRAM_SUFFIX = -$(BASE_VERSION)
+
 ## build options
 # http://gcc.gnu.org/install/configure.html
 
-# Could be used to break out of the /opt/csw/$(PKG_VERSION_TOKEN) prefix
-PROGRAM_SUFFIX = -$(BASE_VERSION)
 CONFIGURE_ARGS += --program-suffix=$(PROGRAM_SUFFIX)
-
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --with-gnu-as
 CONFIGURE_ARGS += --with-as=/opt/csw/bin/gas
@@ -66,7 +58,6 @@ CONFIGURE_ARGS += --with-libiconv-prefix=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-x
 CONFIGURE_ARGS += --with-mpfr=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-gmp=$(BUILD_PREFIX)
-# To be enabled when PPL is built
 CONFIGURE_ARGS += --with-ppl=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-cloog=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --enable-cloog-backend=isl
@@ -88,9 +79,6 @@ CPU_i386_32 = i386
 CPU_i386_64 = x86-64
 
 CONFIGURE_ARGS_sparc += --with-cpu=$(CPU_$(GARCH)_32)
-# These two should not be defined, otherwise the Intel build breaks.
-# CONFIGURE_ARGS_i386 += --with-cpu-32=$(CPU_$(GARCH)_32)
-# CONFIGURE_ARGS_i386 += --with-cpu-64=$(CPU_$(GARCH)_64)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARCH))
 
 # GCC can't be built in the same directory with the sources.
@@ -106,29 +94,13 @@ CXXFLAGS_FOR_TARGET = $(CXXFLAGS_FOR_TARGET_$(GARCH))
 EXTRA_EXPORTS += CFLAGS_FOR_TARGET
 EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
 
-# The theory goes that the CFLAGS and CXXFLAGS cause problems with the
-# multilib builds where 64-bit binaries are built.  This is triggered by the
-# gcc build; the compiler binaries are 32-bit only, but since the compiler can
-# generate 32-bit and 64-bit binaries, the libraries have to be built for both
-# architectures.
-# CFLAGS = -D_RESTRICT_KYWD=
-
-# CXXFLAGS = -D_RESTRICT_KYWD=
-
-# Might be necessary, but CFLAGS_FOR_TARGET seem to be enough for now.
-# BOOT_CFLAGS = $(CFLAGS_FOR_TARGET)
-# EXTRA_EXPORTS += BOOT_FLAGS
+EXTRA_CONFIGURE_EXPORTS += CFLAGS_FOR_TARGET
+EXTRA_CONFIGURE_EXPORTS += CXXFLAGS_FOR_TARGET
 
 # bash must be used, otherwise:
 # http://fixunix.com/solaris/490396-gcc-build-fails-cannot-compute-suffix-object-files.html
 CONFIG_SHELL = /opt/csw/bin/bash
 EXTRA_EXPORTS += CONFIG_SHELL
-
-EXTRA_CONFIGURE_EXPORTS += CFLAGS_FOR_TARGET
-EXTRA_CONFIGURE_EXPORTS += CXXFLAGS_FOR_TARGET
-
-# Only required for Sun Studio bootstrapping
-# PATCHFILES += 0001-clear-AM_CFLAGS-in-lto-plugin.patch
 
 # Bootstrapping with Sun Studio has issues
 # http://gcc.gnu.org/ml/gcc-help/2011-08/msg00191.html
@@ -530,29 +502,6 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibppl9
 # Not sure about the shared libraries.
 OBSOLETED_BY_RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada = $(PKG_BASENAME)adart
 
-# Maybe it's unnecessary.
-# # Solaris 10 on i386 specific:
-# RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_i386_5.10 += CSWlibiconv2
-# RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++_i386_5.10 += CSWlibiconv2
-# RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran_i386_5.10 += CSWlibiconv2
-# RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc_i386_5.10 += CSWlibiconv2
-# RUNTIME_DEP_PKGS_$(PKG_BASENAME)java_i386_5.10 += CSWlibiconv2
-# RUNTIME_DEP_PKGS_$(PKG_BASENAME)core += $(RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_$(GARCH)_$(GAROSREL))
-# RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++ += $(RUNTIME_DEP_PKGS_$(PKG_BASENAME)g++_$(GARCH)_$(GAROSREL))
-# RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += $(RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran_$(GARCH)_$(GAROSREL))
-# RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += $(RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc_$(GARCH)_$(GAROSREL))
-# RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += $(RUNTIME_DEP_PKGS_$(PKG_BASENAME)java_$(GARCH)_$(GAROSREL))
-
-# Not needed even on i386/5.10?
-#
-# # These dependencies seem to exist only in the i386 packages on 5.10
-# RUNTIME_DEP_PKGS_CSWlibgcj$(JAVA_LIB_VERSION)_i386_5.10 = CSWlibz1
-# RUNTIME_DEP_PKGS_CSWlibgcj$(JAVA_LIB_VERSION) += $(RUNTIME_DEP_PKGS_CSWlibgcj$(JAVA_LIB_VERSION)_$(GARCH)_$(GAROSREL))
-# RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION)_i386_5.10 = CSWlibz1
-# RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION) += $(RUNTIME_DEP_PKGS_CSWlibgij$(JAVA_LIB_VERSION)_$(GARCH)_$(GAROSREL))
-# RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION)_i386_5.10 += CSWlibz1
-# RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION) += $(RUNTIME_DEP_PKGS_CSWlibgcj-tools$(JAVA_LIB_VERSION)_$(GARCH)_$(GAROSREL))
-
 PACKAGES += $(PACKAGES_$(GARCH))
 CORE_BINARIES = cpp gcc gcov
 CXX_BINARIES = g\+\+ c\+\+
@@ -575,8 +524,7 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 # We need GNU find as find
-# PATH := /opt/csw/gnu:$(PATH)
-PATH := $(GCC4_CC_HOME)/bin:/opt/csw/gnu:$(PATH)
+PATH := /opt/csw/gnu:$(PATH)
 
 # This override sets the right RPATH on libstdc++ and other libraries.
 LD_OPTIONS := -R/opt/csw/lib -R/opt/csw/lib/\$$ISALIST
