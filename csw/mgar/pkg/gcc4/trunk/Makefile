@@ -1,10 +1,4 @@
 # $Id$
-#
-# ! Ada is not built yet, it requires PPL which isn't built yet.
-#
-# amd64 compilation fails
-# potentially related bug:
-# http://gcc.gnu.org/bugzilla/show_bug.cgi?id=39048
 
 NAME      = gcc
 VERSION   = 4.6.2
@@ -36,6 +30,7 @@ NOGITPATCH ?= 1
 ## Source URLs
 VENDOR_URL = http://gcc.gnu.org
 
+GCC4_CC_HOME = $(HOME)/usr-$(GARCH)-$(GAROSREL)
 ## Copyright File
 LICENSE = COPYING3
 
@@ -76,13 +71,11 @@ CONFIGURE_ARGS += --with-ppl=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --with-cloog=$(BUILD_PREFIX)
 CONFIGURE_ARGS += --enable-cloog-backend=isl
 CONFIGURE_ARGS += --enable-java-awt=xlib
-# CONFIGURE_ARGS += --enable-libada
+CONFIGURE_ARGS += --enable-libada
 CONFIGURE_ARGS += --enable-libssp
 CONFIGURE_ARGS += --enable-objc-gc
 CONFIGURE_ARGS += --enable-threads=posix 
-# We'll build ada later. It requires the PPL library.
-# CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
-CONFIGURE_ARGS += --enable-languages=c,c++,fortran,java,objc
+CONFIGURE_ARGS += --enable-languages=ada,c,c++,fortran,java,objc
 CONFIGURE_ARGS += --with-system-zlib=/opt/csw
 
 # there could be some abstractions in gar.conf.mk, but at the moment there
@@ -118,8 +111,9 @@ EXTRA_EXPORTS += CXXFLAGS_FOR_TARGET
 # gcc build; the compiler binaries are 32-bit only, but since the compiler can
 # generate 32-bit and 64-bit binaries, the libraries have to be built for both
 # architectures.
-CFLAGS =
-CXXFLAGS =
+# CFLAGS = -D_RESTRICT_KYWD=
+
+# CXXFLAGS = -D_RESTRICT_KYWD=
 
 # Might be necessary, but CFLAGS_FOR_TARGET seem to be enough for now.
 # BOOT_CFLAGS = $(CFLAGS_FOR_TARGET)
@@ -504,6 +498,38 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)gfortran += CSWlibiconv2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)java += CSWlibiconv2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)objc += CSWlibiconv2
 
+PACKAGES += $(PKG_BASENAME)ada
+SPKG_DESC_$(PKG_BASENAME)ada       = GCC Ada compiler (GNAT)
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada         = $(PKG_BASENAME)core
+PKGFILES_$(PKG_BASENAME)ada  = $(prefix)/libexec/.*gnat1
+PKGFILES_$(PKG_BASENAME)ada += $(prefix)/lib/.*libgnat.*a
+PKGFILES_$(PKG_BASENAME)ada += $(prefix)/lib/.*libgnarl.*a
+PKGFILES_$(PKG_BASENAME)ada += $(prefix)/.*/adalib/.*
+PKGFILES_$(PKG_BASENAME)ada += $(prefix)/.*/adainclude/.*
+PKGFILES_$(PKG_BASENAME)ada += $(prefix)/info/.*gnat.*
+PKGFILES_$(PKG_BASENAME)ada += $(prefix)/bin/gnat(?!ive).*
+# There are static libraries, .a files in the ada package. Let them be.
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += discouraged-path-in-pkgmap
+# It needs the core compiler.
+CHECKPKG_OVERRIDES_$(PKG_BASENAME)ada += surplus-dependency|$(PKG_BASENAME)core
+CHECKPKG_OVERRIDES_CSWgcc4ada += file-with-bad-content
+
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibiconv2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibppl-c4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibz1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpfr4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibpwl5
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibmpc2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgmpxx4
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibisl7
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgmp10
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibcloog-isl2
+RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibppl9
+
+# Not sure about the shared libraries.
+OBSOLETED_BY_RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada = $(PKG_BASENAME)adart
+
 # Maybe it's unnecessary.
 # # Solaris 10 on i386 specific:
 # RUNTIME_DEP_PKGS_$(PKG_BASENAME)core_i386_5.10 += CSWlibiconv2
@@ -549,7 +575,8 @@ post-install-modulated:
 	@$(MAKECOOKIE)
 
 # We need GNU find as find
-PATH := /opt/csw/gnu:$(PATH)
+# PATH := /opt/csw/gnu:$(PATH)
+PATH := $(GCC4_CC_HOME)/bin:/opt/csw/gnu:$(PATH)
 
 # This override sets the right RPATH on libstdc++ and other libraries.
 LD_OPTIONS := -R/opt/csw/lib -R/opt/csw/lib/\$$ISALIST
