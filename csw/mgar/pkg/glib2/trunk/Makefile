@@ -55,9 +55,7 @@ PATCHFILES += 0023-Disable-failing-gsettings-tests.patch
 # SPARCv9 Specific Patches
 PATCHFILES_isa-sparcv9 += 0023-Disable-run-assert-msg-test.sh.patch
 
-PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386
-# Make special build for Solaris 10 to use dtrace
-PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 
 PACKAGES += CSWglib2
