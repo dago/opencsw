@@ -499,8 +499,8 @@ RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibgmp10
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibcloog-isl2
 RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada += CSWlibppl9
 
-# Not sure about the shared libraries.
-OBSOLETED_BY_RUNTIME_DEP_PKGS_$(PKG_BASENAME)ada = $(PKG_BASENAME)adart
+# This is an obsolete package. Nothing depends on it, so we can remove it.
+INCOMPATIBLE_PKGS_$(PKG_BASENAME)ada = $(PKG_BASENAME)adart
 
 PACKAGES += $(PACKAGES_$(GARCH))
 CORE_BINARIES = cpp gcc gcov
