@@ -29,7 +29,7 @@ LICENSE = COPYING.LIB
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-dynamic-loading
 CONFIGURE_ARGS += --with-included-algos=cast-128,gost,rijndael-128,twofish,arcfour,cast-256,loki97,rijndael-192,saferplus,wake,blowfish-compat,des,rijndael-256,serpent,xtea,blowfish,enigma,rc2,tripledes
-# CONFIGURE_ARGS += --disable-dynamic-loading
+CONFIGURE_ARGS += --enable-dynamic-loading
 
 PACKAGES += CSWlibmcrypt4
 CATALOGNAME_CSWlibmcrypt4 = libmcrypt4
