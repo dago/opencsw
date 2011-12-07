@@ -66,7 +66,10 @@ RUNTIME_DEP_PKGS_CSWglib2 += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWglib2 += CSWgamin
+# The dependency on CSWgamin creates a dependency loop.  Whatever the current
+# solution is, we need to cut the loop somewhere, and we'll cut the loop here
+# for the time being.
+# RUNTIME_DEP_PKGS_CSWglib2 += CSWgamin
 # Did not see any runtime dependency
 #RUNTIME_DEP_PKGS_CSWglib2 += CSWpython
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgobject2-0-0
