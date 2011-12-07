@@ -1,5 +1,6 @@
 # $Id$
 # TODO (release-critical prefixed with !, non release-critical with *)
+# ! Integrate stuff from http://tom.blog.in-ulm.de/node/10
 #
 NAME = pkg-gate
 VERSION = 2589
@@ -38,6 +39,8 @@ RUNTIME_DEP_PKGS_CSWips-pkg-server += CSWpython
 RUNTIME_DEP_PKGS_CSWips-pkg-server += CSWpy-openssl
 RUNTIME_DEP_PKGS_CSWips-pkg-server += CSWcherrypy
 RUNTIME_DEP_PKGS_CSWips-pkg-server += CSWpy-simplejson
+RUNTIME_DEP_PKGS_CSWips-pkg-server += CSWpy-curl
+RUNTIME_DEP_PKGS_CSWips-pkg-server += CSWpy-ply
 
 # With all the replacements and the large repo this takes forever
 NOGITPATCH = 1
