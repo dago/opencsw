@@ -1,5 +1,5 @@
 NAME = trafshow
-VERSION = 5.2.1
+VERSION = 5.2.3
 CATEGORIES = net
 
 DESCRIPTION = Network traffic monitoring utility
@@ -12,27 +12,20 @@ define BLURB
   so you can inspect a required part of network traffic.
 endef
 
-MASTER_SITES  = ftp://ftp.planix.com/pub/mirror/
-MASTER_SITES += ftp://ftp.eenet.ee/pub/gentoo/distfiles/
-MASTER_SITES += ftp://ftp.mgts.by/pub/FreeBSD/ports/distfiles/
-DISTFILES  = $(NAME)-$(VERSION).tgz
+MASTER_SITES += http://fossies.org/linux/misc/
+DISTFILES += $(DISTNAME).tgz
+PATCHFILES += Makefile.patch
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+LICENSE = README
 
-# we require
-RUNTIME_DEP_PKGS = CSWlibpcap CSWslang
+RUNTIME_DEP_PKGS_CSWtrafshow += CSWlibpcap1
+RUNTIME_DEP_PKGS_CSWtrafshow += CSWlibslang2
 
-# patch away GNUishm
-PATCHFILES  = Makefile.patch
+EXTRA_CFLAGS += $(CPPFLAGS)
 
-# configure args
-CONFIGURE_ARGS  = $(DIRPATHS)
-
-# no testscript
+# No testscript
 TEST_SCRIPTS =
 
-# use a custom install
 INSTALL_SCRIPTS = custom
 
 include gar/category.mk
