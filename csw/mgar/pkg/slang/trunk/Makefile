@@ -36,8 +36,10 @@ OBSOLETED_BY_CSWlibslang2 += CSWslang
 # due to our reinplacement
 CHECKPKG_OVERRIDES_CSWlibslang2 += file-with-bad-content|/usr/local|root/opt/csw/lib/libslang.so.2.2.4
 CHECKPKG_OVERRIDES_CSWlibslang2 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libslang.so.2.2.4
+CHECKPKG_OVERRIDES_CSWlibslang2 += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/libslang.so.2.2.4
 CHECKPKG_OVERRIDES_CSWlibslang2 += file-with-bad-content|/usr/share|root/opt/csw/lib/libslang.so.2.2.4
 CHECKPKG_OVERRIDES_CSWlibslang2 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libslang.so.2.2.4
+CHECKPKG_OVERRIDES_CSWlibslang2 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libslang.so.2.2.4
 
 PACKAGES += CSWlibslang-dev
 SPKG_DESC_CSWlibslang-dev = Development for libslang.so.2
