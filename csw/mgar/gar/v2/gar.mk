@@ -420,7 +420,6 @@ POSTEXTRACT_REINPLACEMENTS = $(filter-out $(POSTINSTALL_REINPLACEMENTS),$(_ALL_R
 $(foreach REINPLACEMENT,$(_ALL_REINPLACEMENTS),\
   $(if $(REINPLACE_FILES_$(REINPLACEMENT)),,$(error Reinplacement '$(REINPLACEMENT)' has been set but REINPLACE_FILES_$(REINPLACEMENT) is empty))\
   $(if $(REINPLACE_MATCH_$(REINPLACEMENT)),,$(error Reinplacement '$(REINPLACEMENT)' has been set but REINPLACE_MATCH_$(REINPLACEMENT) is empty))\
-  $(if $(REINPLACE_WITH_$(REINPLACEMENT)),,$(error Reinplacement '$(REINPLACEMENT)' has been set but REINPLACE_WITH_$(REINPLACEMENT) is empty))\
 )
 
 # We call an additional extract-modulated without resetting any variables so
@@ -487,7 +486,7 @@ expandvars-%:
 	@$(MAKECOOKIE)
 
 post-extract-reinplace-%:
-	-perl -p -i$(REINPLACE_BACKUP_$*) -e "s($(REINPLACE_MATCH_$*))($(REINPLACE_WITH_$*))g" \
+	-perl -p -i$(REINPLACE_BACKUP_$*) -e 's{$(REINPLACE_MATCH_$*)}{$(REINPLACE_WITH_$*)}g' \
 		$(addprefix $(WORKSRC)/,$(REINPLACE_FILES_$*))
 	@( if [ -d "$(PATCHDIR)/.git" ]; then \
 		echo "Committing reinplacements..."; \
