@@ -4,54 +4,80 @@ NAME = slang
 VERSION = 2.2.4
 CATEGORIES = lib
 
-EXTRA_MODULATORS = VERSION
-MODULATIONS_VERSION = 1.4.9 2.2.4
-
-# The old package didn't contain 64 bit, so don't bother building it for compat
-SKIP_MODULATIONS  = isa-sparcv9-version-1.4.9
-SKIP_MODULATIONS += isa-amd64-version-1.4.9
-
 DESCRIPTION = Library primarily to provide an alternative to libcurses
 define BLURB
 endef
 
-MASTER_SITES = $(foreach V,$(MODULATIONS_VERSION),ftp://space.mit.edu/pub/davis/slang/v$(shell echo $V | perl -ne 'print /(\d+\.\d+)/')/)
-SOURCEFILES = $(foreach VERSION,$(MODULATIONS_VERSION), $(NAME)-$(VERSION).tar.bz2)
-DISTFILES = $(SOURCEFILES)
-NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.bz2,$(SOURCEFILES))
-
-# RUNTIME_DEP_PKGS = CSWiconv CSWpcrert CSWpng CSWzlib CSWoniguruma
+MASTER_SITES = ftp://space.mit.edu/pub/davis/slang/v$(shell echo $V | perl -ne 'print /(\d+\.\d+)/')
+DISTFILES = $(DISTNAME).tar.bz2
 
 VENDOR_URL = http://www.s-lang.org/
+
+BUILD_DEP_PKGS += CSWlibpcre-dev
+BUILD_DEP_PKGS += CSWlibonig-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibiconv-dev
+
+FOREIGN_PACKAGES += CSWlibslang1
+OBSOLETED_BY_CSWlibslang1 += CSWslang
+
+PACKAGES += CSWlibslang2
+SPKG_DESC_CSWlibslang2 = Library primarily to provide an alternative to libcurses, libslang.so.2
+PKGFILES_CSWlibslang2 += $(call pkgfiles_lib,libslang.so.2)
+PKGFILES_CSWlibslang2 += $(call baseisadirs,$(libdir),slang/.*)
+RUNTIME_DEP_PKGS_CSWlibslang2 += CSWlibpcre0
+RUNTIME_DEP_PKGS_CSWlibslang2 += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibslang2 += CSWlibonig2
+RUNTIME_DEP_PKGS_CSWlibslang2 += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWlibslang2 += CSWlibz1
+OBSOLETED_BY_CSWlibslang2 += CSWslang
+# These are locations of fallback terminfo/ directories, /opt/csw/share/terminfo comes first
+# due to our reinplacement
+CHECKPKG_OVERRIDES_CSWlibslang2 += file-with-bad-content|/usr/local|root/opt/csw/lib/libslang.so.2.2.4
+CHECKPKG_OVERRIDES_CSWlibslang2 += file-with-bad-content|/usr/local|root/opt/csw/lib/sparcv9/libslang.so.2.2.4
+CHECKPKG_OVERRIDES_CSWlibslang2 += file-with-bad-content|/usr/share|root/opt/csw/lib/libslang.so.2.2.4
+CHECKPKG_OVERRIDES_CSWlibslang2 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libslang.so.2.2.4
+
+PACKAGES += CSWlibslang-dev
+SPKG_DESC_CSWlibslang-dev = Development for libslang.so.2
+PKGFILES_CSWlibslang-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibslang-dev += $(docdir)/slang/.*
+RUNTIME_DEP_PKGS_CSWlibslang-dev += CSWlibslang2
+# These are docs only
+CHECKPKG_OVERRIDES_CSWlibslang-dev += file-with-bad-content
+
+PACKAGES += CSWslsh
+SPKG_DESC_CSWslsh = SLANG shell, a shell using slang for terminal control
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWslsh += CSWlibslang2
+
+# These are examples on√ly
+CHECKPKG_OVERRIDES_CSWslsh += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/slsh.1
+CHECKPKG_OVERRIDES_CSWslsh += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/slsh.1
+
+# This is funny, the slsh.rc is placed in the correct location, but the search path
+# is hardwired to something different
+REINPLACEMENTS += slshrc
+REINPLACE_MATCH_slshrc = define DEFAULT_CONF_PATH.*
+REINPLACE_WITH_slshrc = define DEFAULT_CONF_PATH "/etc/opt/csw:/opt/csw/etc"
+REINPLACE_FILES_slshrc = slsh/slsh.c
+
+REINPLACEMENTS += slshrc_man
+REINPLACE_MATCH_slshrc_man = \$$\(prefix\)/etc
+REINPLACE_WITH_slshrc_man = /etc/opt/csw/:/opt/csw/etc/
+REINPLACE_FILES_slshrc_man = slsh/doc/man/slsh.1
+
+# Replace all the other default pathes with nothing
+REINPLACEMENTS += slshrc_man_skip
+REINPLACE_MATCH_slshrc_man_skip = \\fI(/usr/local/etc/|/usr/local/etc/slsh/|/etc/|/etc/slsh/)\\fR
+REINPLACE_WITH_slshrc_man_skip = 
+REINPLACE_FILES_slshrc_man_skip = slsh/doc/man/slsh.1
 
 # Setting -L$(libdir) before the newly built lib confuses function
 # definitions if the installed lib is older than the newly built one.
 LINKER_FLAGS =
 
 BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET_VERSION-1.4.9 =
-TEST_TARGET_VERSION-2.2.4 = check
-TEST_TARGET = $(TEST_TARGET_VERSION-$(VERSION))
-
-INSTALL_ARGS_VERSION-1.4.9 = install-elf install-links
-INSTALL_ARGS = $(INSTALL_ARGS_VERSION-$(VERSION))
-
-BUILD_ARGS_VERSION-1.4.9 = elf
-BUILD_ARGS = $(BUILD_ARGS_VERSION-$(VERSION))
-
-BUILD_OVERRIDE_VARS_VERSION-1.4.9 = ELF_CFLAGS
-BUILD_OVERRIDE_VARS = $(BUILD_OVERRIDE_VARS_VERSION-$(VERSION))
-BUILD_OVERRIDE_VAR_ELF_CFLAGS = -K pic $(CFLAGS)
-
-MERGE_SCRIPTS_isa-default-version-1.4.9 = copy-only
-MERGE_DIRS_isa-default-version-1.4.9 = $(libdir)
-MERGE_SCRIPTS_isa-default64-version-1.4.9 = copy-relocated-only
-MERGE_DIRS_isa-default64-version-1.4.9 = $(libdir)
-
-MERGE_SCRIPTS_isa-default-version-2.2.4 = copy-all
-MERGE_SCRIPTS_isa-default64-version-2.2.4 = copy-relocated-only
-MERGE_DIRS_isa-default64-version-2.2.4 = $(libdir)
 
 include gar/category.mk
