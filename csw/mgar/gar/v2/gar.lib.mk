@@ -624,7 +624,7 @@ zip-extract-%:
 cp-extract-%:
 	@echo " ==> Copying $(DOWNLOADDIR)/$*"
 	@# Make sure to keep symlinks and don't traverse recursive ones
-	@(cd $(DOWNLOADDIR); tar cf - $*) | (cd $(WORKDIR); tar xf -)
+	@(cd $(DOWNLOADDIR); gtar cf - $*) | (cd $(WORKDIR); gtar xf -)
 	@$(MAKECOOKIE)
 
 #gets the meat of a .deb into $(WORKSRC)
