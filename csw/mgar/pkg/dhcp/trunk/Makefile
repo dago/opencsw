@@ -1,10 +1,10 @@
 NAME = dhcp
 VERSION = 4.2.3
-#RELEASE = P1
-#DISTVERSION = $(VERSION)-$(RELEASE)
-#SPKG_VERSION = $(VERSION)$(RELEASE)
-#DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
-#WORKSRC = $(WORKDIR)/$(DISTNAME)
+RELEASE = P1
+DISTVERSION = $(VERSION)-$(RELEASE)
+SPKG_VERSION = $(VERSION)$(RELEASE)
+DISTNAME = $(NAME)-$(VERSION)-$(RELEASE)
+WORKSRC = $(WORKDIR)/$(DISTNAME)
 CATEGORIES = net
 
 DESCRIPTION = ISC DHCP reference implementation
@@ -15,8 +15,8 @@ define BLURB
   suitable for use in high-volume and high-reliability applications. 
 endef
 
-#MASTER_SITES = http://ftp.isc.org/isc/dhcp/
-MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(VERSION)/
+#MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(VERSION)/
+MASTER_SITES = http://ftp.isc.org/isc/dhcp/$(DISTVERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES  = $(DISTNAME).tar.gz
 
