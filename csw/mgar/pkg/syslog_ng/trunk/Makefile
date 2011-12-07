@@ -1,7 +1,7 @@
 # $Id$
 
 NAME = syslog-ng
-VERSION = 3.2.4
+VERSION = 3.3.3
 CATEGORIES = server
 
 DESCRIPTION = A powerful syslogd replacement
@@ -67,6 +67,9 @@ CHECKPKG_OVERRIDES_CSWsyslogng += file-with-bad-content|/usr/share|root/opt/csw/
 # to syslog's shared objects.
 CHECKPKG_OVERRIDES_CSWsyslogng += shared-lib-package-contains-so-symlink
 CHECKPKG_OVERRIDES_CSWsyslogng += shared-lib-pkgname-mismatch
+
+# Missing TLS symbols
+EXTRA_LINKER_FLAGS = -lgnutls
 
 post-install-modulated:
 	ginstall -d $(DESTDIR)/etc/opt/csw
