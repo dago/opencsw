@@ -1,3 +1,5 @@
+# $Id$
+
 NAME = gamin
 VERSION = 0.1.10
 CATEGORIES = server
