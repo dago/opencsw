@@ -56,7 +56,7 @@ PACKAGES += CSWgamin
 SPKG_DESC_CSWgamin = GAMIN file alteration monitor daemon (compatible to FAM)
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWgamin += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgamin += CSWglib2
+RUNTIME_DEP_PKGS_CSWgamin += CSWlibglib2-0-0
 OBSOLETED_BY_CSWgamin += CSWfam
 
 # For socket, recvmsg, connect
