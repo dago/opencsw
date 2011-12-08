@@ -60,7 +60,8 @@ RUNTIME_DEP_PKGS_CSWgamin += CSWlibglib2-0-0
 OBSOLETED_BY_CSWgamin += CSWfam
 
 # For socket, recvmsg, connect
-EXTRA_LINKER_FLAGS = -lsocket -lnsl
+# Overwrite existing -L/opt/csw/lib or installed libs will be picked up first
+LINKER_FLAGS = -lsocket -lnsl
 
 BUILD64 = 1
 
