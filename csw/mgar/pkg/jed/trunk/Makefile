@@ -18,6 +18,9 @@ DISTFILES += $(DISTNAME).tar.bz2
 
 VENDOR_URL = http://www.jedsoft.org/jed/
 
+BUILD_DEP_PKGS += CSWlibslang-dev
+BUILD_DEP_PKGS += CSWlibxft2devel
+
 PACKAGES += CSWjed
 SPKG_DESC_CSWjed = Editor based on slang
 # PKGFILES is catchall
