@@ -40,5 +40,6 @@ EXTRA_COMMON_EXPORTS = CPP CXXCPP
 BUILD64 = 1
 
 EXTRA_MERGE_INCLUDE_FILES  = $(libdir)/libname-server-2.a
+EXTRA_MERGE_DIRS_isa-extra = $(bindir)
 
 include gar/category.mk
