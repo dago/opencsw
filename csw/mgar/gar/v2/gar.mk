@@ -820,7 +820,7 @@ _MERGE_EXCLUDE_FILES += $(EXTRA_MERGE_EXCLUDE_FILES) $(EXTRA_MERGE_EXCLUDE_FILES
 
 # This variable contains parameter for pax to honor global file inclusion/exclusion
 # Make sure include overrides are processed first
-_INC_EXT_RULE = $(foreach F,$(EXTRA_MERGE_INCLUDE_FILES) $(EXTRA_MERGE_INCLUDE_FILES_$(MODULATION)),-s ",^\(\.$F\)$$,\1,")
+_INC_EXT_RULE = $(foreach F,$(EXTRA_MERGE_INCLUDE_FILES) $(EXTRA_MERGE_INCLUDE_FILES_$(MODULATION)),-i "^\.$F$$")
 # Exclude by replacing files with the empty string
 _INC_EXT_RULE += $(foreach F,$(_MERGE_EXCLUDE_FILES),-s ',^\.$F$$,,')
 # Replace files by itself terminating on first match
@@ -945,7 +945,7 @@ merge-copy-relocated-only: $(PKGROOT) $(INSTALLISADIR)
 
 # Copy 
 merge-copy-config-only:
-	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pcopy $(_PAX_ARGS) \
+	$(_DBG_MERGE)(cd $(INSTALLISADIR)$(if $(ALLOW_RELOCATE),$(RELOCATE_PREFIX)); umask 022 && pcopy \
 		-m -s ",^\(\.$(bindir)/.*-config\)\$$,\1,p" \
 		. $(PKGROOT) \
 	)

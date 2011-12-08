@@ -12,8 +12,9 @@ use Getopt::Long;
 
 use Data::Dumper;
 
-# pcopy [-s <regex> ]* [--paxargs <arg>]* <src> <target>
+# pcopy [-i <path>] [-s <regex> ]* [--paxargs <arg>]* <src> <target>
 #   Regex: -s 's,(/opt/csw/lib)/(.*\.so),\1/bdb33/\2,'
+#   -i  Make sure to include this path, later exclusions or replacements to the empty name are ignored
 # Objectives:
 # - Copy directory trees verbatim
 # - exclude entries
@@ -26,10 +27,11 @@ my $man = 0;
 my $help = 0;
 my $verbose = 0;
 my $matchonly = 0;	# Copy only files that match at least one regex
-my @subst;
+my (@subst,@incl);
 
 GetOptions(
 	's=s' => \@subst,
+	'i=s' => \@incl,
 	'm|matchonly' => \$matchonly,
 	'v' => \$verbose,
 	'help|?' => \$help,
@@ -70,6 +72,11 @@ sub docopy {
   my $target = $File::Find::name;
   my @matches = ($target);
   my $didmatch = 0;
+
+  my $keepfile = 0;
+  foreach my $i (@incl) {
+    $keepfile = 1 if( $target =~ /$i/ );
+  }
   foreach my $s (@subst) {
     my $t = $target;
     $s =~ s/p$//;
@@ -77,6 +84,13 @@ sub docopy {
     $s =~ s/\\\)/)/;
     # print "Regex: $s\n";
     eval( '$didmatch = 1 if( $target =~ s' . $s . ')');
+
+    # Undo deletions if we want to keep this file
+    if( $keepfile && $target eq '' ) {
+      $target = $t;
+      $keepfile = 2;
+    }
+
     if( $t ne $target ) {
       push @matches, $target;
       #$didmatch = 1;
@@ -87,7 +101,11 @@ sub docopy {
     return;
   }
 
-  print join( " >> ", @matches ), "\n" if( $matches[-1] ne '' );
+  if( $matches[-1] ne '' ) {
+    print join( " >> ", @matches );
+    print " (kept)" if( $keepfile == 2 );
+    print "\n";
+  }
 
   if( $target eq '' ) {
     return;
