@@ -39,8 +39,8 @@ BUILD_DEP_PKGS = CSWlibapr1-0 CSWganglia-dev
 
 RUNTIME_DEP_PKGS = CSWlibapr1-0 CSWgangliaagent CSWlibganglia0
 
-PKGFILES = /opt/csw/lib/ganglia/mod_io.so
-PKGFILES += /opt/csw/lib/ganglia/mod_multicpu.so
+PKGFILES = /opt/csw/lib/ganglia/modio.so
+PKGFILES += /opt/csw/lib/ganglia/modmulticpu.so
 PKGFILES += /etc/opt/csw/ganglia/conf.d/mod_io.conf.CSW
 PKGFILES += /etc/opt/csw/ganglia/conf.d/mod_multicpu.conf.CSW
 
