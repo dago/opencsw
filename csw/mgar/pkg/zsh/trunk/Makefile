@@ -1,5 +1,5 @@
 NAME = zsh
-VERSION = 4.3.12
+VERSION = 4.3.14
 CATEGORIES = devel
 
 DESCRIPTION = Powerful UNIX shell
