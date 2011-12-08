@@ -13,12 +13,19 @@ DISTFILES = $(DISTNAME).tar.bz2
 
 PATCHFILES += 0001-Make-test-non-interactive-on-Solaris.patch
 
-PACKAGES = CSWorbit2
-CATALOGNAME = orbit2
+# New glib is only Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-RUNTIME_DEP_PKGS += CSWlibintl8
-RUNTIME_DEP_PKGS += CSWglib2
-RUNTIME_DEP_PKGS += CSWlibidl
+BUILD_DEP_PKGS += CSWlibidl-dev
+
+PACKAGES = CSWorbit2
+SPKG_DESC_CSWorbit2 = ORBit 2.x CORBA tools and libs
+RUNTIME_DEP_PKGS_CSWorbit2 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWorbit2 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWorbit2 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWorbit2 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWorbit2 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWorbit2 += CSWlibidl2-0
 
 # No package split yet
 CHECKPKG_OVERRIDES_CSWorbit2 += shared-lib-pkgname-mismatch
@@ -29,8 +36,6 @@ VENDOR_URL = http://projects.gnome.org/ORBit2/
 CPP = /usr/lib/cpp
 CXXCPP = /usr/lib/cpp
 EXTRA_COMMON_EXPORTS = CPP CXXCPP
-
-STRIP_LIBTOOL = 1
 
 BUILD64 = 1
 
