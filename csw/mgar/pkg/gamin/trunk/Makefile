@@ -19,6 +19,8 @@ DISTFILES  = $(DISTNAME).tar.gz
 # As taken from
 #   http://src.opensolaris.org/source/xref/jds/spec-files/trunk/base-specs/gamin.spec
 
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 MASTER_SITES += http://src.opensolaris.org/source/raw/jds/spec-files/branches/opensolaris-2010-03/patches/
 PATCHDIRLEVEL = 0
 PATCHFILES += gamin-01-all.diff
