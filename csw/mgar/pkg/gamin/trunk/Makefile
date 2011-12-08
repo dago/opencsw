@@ -77,6 +77,7 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 PYCOMPILE = 1
 EXTRA_MERGE_EXCLUDE_FILES += .*\.pyo .*\.pyc
 EXTRA_PAX_ARGS += -s ,$(libdir)/python2.6/site-packages,$(libdir)/site-packages,
+EXTRA_PAX_ARGS += -s ,$(libdir)/python2.4/site-packages,$(libdir)/site-packages,
 
 include gar/category.mk
 
