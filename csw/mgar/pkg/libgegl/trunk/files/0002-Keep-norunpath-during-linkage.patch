@@ -1,0 +1,25 @@
+From 6e9141101cbe79f728e2a93c315fb5e5b63cf8dd Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 8 Dec 2011 18:34:01 +0100
+Subject: [PATCH] Keep -norunpath during linkage
+
+---
+ ltmain.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/ltmain.sh b/ltmain.sh
+index c7d06c3..4e4e214 100644
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -5853,7 +5853,7 @@ func_mode_link ()
+       # -O*, -flto*, -fwhopr*, -fuse-linker-plugin GCC link-time optimization
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+       -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|--sysroot=*| \
+-      -O*|-flto*|-fwhopr*|-fuse-linker-plugin)
++      -O*|-flto*|-fwhopr*|-fuse-linker-plugin|-norunpath)
+         func_quote_for_eval "$arg"
+ 	arg="$func_quote_for_eval_result"
+         func_append compile_command " $arg"
+-- 
+1.7.6.1
+
