@@ -143,6 +143,7 @@ RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgthread2-0-0
 PKGFILES_CSWlibglib2-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWlibglib2-dev += .*/glib-2.0/include/.*
 OBSOLETED_BY_CSWlibglib2-dev = CSWglib2devel
 CATALOGNAME_CSWglib2devel = glib2_devel_stub
 
