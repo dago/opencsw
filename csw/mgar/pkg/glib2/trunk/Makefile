@@ -73,6 +73,7 @@ RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgobject2-0-0
 #RUNTIME_DEP_PKGS_CSWglib2 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWglib2 += CSWgio-fam-backend
 ## No package split yet
 #CHECKPKG_OVERRIDES_CSWglib2 += non-uniform-lib-versions-in-package
 
