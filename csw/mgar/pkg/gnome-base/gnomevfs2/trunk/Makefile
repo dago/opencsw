@@ -1,6 +1,6 @@
 NAME = gnomevfs2
 GNOME_PROJ = gnome-vfs
-VERSION = 2.24.2
+VERSION = 2.24.4
 CATEGORIES = gnome
 
 DESCRIPTION = GnomeVFS - Filesystem Abstraction library
@@ -11,55 +11,68 @@ MASTER_SITES =  $(GNOME_MIRROR)
 DISTNAME = $(GNOME_PROJ)-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
-PACKAGES = CSWgnomevfs2 CSWgnomevfs2devel CSWgnomevfs2doc
-CATALOGNAME_CSWgnomevfs2 = gnomevfs2
-CATALOGNAME_CSWgnomevfs2devel = gnomevfs2_devel
-CATALOGNAME_CSWgnomevfs2doc = gnomevfs2_doc
+# New glib only available on Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
+VENDOR_URL = http://projects.gnome.org/gnome-vfs/
+
+# Many more missing
+BUILD_DEP_PKGS += CSWlibgamin-dev
+
+PACKAGES += CSWgnomevfs2
 SPKG_DESC_CSWgnomevfs2 += $(DESCRIPTION)
-SPKG_DESC_CSWgnomevfs2devel += $(DESCRIPTION) - developer package
-SPKG_DESC_CSWgnomevfs2doc += $(DESCRIPTION) - documentation
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWsambalib
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibfam0
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibgconf2-4
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibkrb5-3
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibdbus-glib1-2
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibcom-err3
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWosslrt
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibk5crypto3
+RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibdbus1-3
 
-RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWfconfig CSWftype2 CSWggettextrt CSWglib2
-RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWgtk2 CSWlibatk CSWlibcairo CSWlibx11
-RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWdbusglib CSWlibdbus CSWlibxext CSWpango
-RUNTIME_DEP_PKGS_CSWgnomevfs2devel += CSWgnomevfs2
-RUNTIME_DEP_PKGS_CSWgnomevfs2doc += CSWgnomevfs2
+# This is an explicit fallback *after* /opt/csw/share, see xdg-reinplacement below
+CHECKPKG_OVERRIDES_CSWgnomevfs2 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgnomevfs-2.so.0.2400.4
+CHECKPKG_OVERRIDES_CSWgnomevfs2 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libgnomevfs-2.so.0.2400.4
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+# No real package split done yet
+CHECKPKG_OVERRIDES_CSWgnomevfs2 += shared-lib-pkgname-mismatch
 
-SPKG_SOURCEURL = http://projects.gnome.org/gnome-vfs/
+PACKAGES += CSWgnomevfs2-dev
+SPKG_DESC_CSWgnomevfs2-dev += Development files for GNOME vfs
+PKGFILES_CSWgnomevfs2-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWgnomevfs2-dev += $(sharedstatedir)/gtk-doc/.*
+RUNTIME_DEP_PKGS_CSWgnomevfs2-dev += CSWgnomevfs2
+OBSOLETED_BY_CSWgnomevfs2-dev = CSWgnomevfs2devel
+CATALOGNAME_CSWgnomevfs2devel = gnomevfs2_devel_stub
+OBSOLETED_BY_CSWgnomevfs2-dev = CSWgnomevfs2doc
+CATALOGNAME_CSWgnomevfs2doc = gnomevfs2_doc_stub
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+REINPLACEMENTS += xdg
+REINPLACE_MATCH_xdg = /usr/local/share
+REINPLACE_WITH_xdg = $(sharedstatedir)
+REINPLACE_FILES_xdg = libgnomevfs/xdgmime.c
 
-NOISAEXEC = 1
-#NOISALIST = 1
-# libdbus not 64-bit yet
+NOISALIST = 1
 BUILD64 = 1
 
-PKGFILES_CSWgnomevfs2devel = $(PKGFILES_DEVEL)
-PKGFILES_CSWgnomevfs2doc = $(sharedstatedir)/gtk-doc/.*
-
-ARCHALL_CSWgnomevfs2doc = 1
-
-LIBS = -lsocket -lnsl
-export LIBS
-
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-EXTRA_SOS_LD_FLAGS = -L$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-
-STRIP_LIBTOOL = 1
+# STRIP_LIBTOOL = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
-
-TEST_TARGET = check
 
 include gar/category.mk
+
+# For GNU gettext
+PATH := /opt/csw/gnu:$(PATH)
