@@ -10,7 +10,7 @@
 #
 # TODO: This file should be integrated with CSWmysql5.postinstall file.
 
-prefix=/opt/csw/mysql5
+prefix=/opt/csw
 MYSQL_HOME=${prefix}
 MYSQL_VAR=/var${prefix}
 sysconfdir=/etc${prefix}
@@ -118,7 +118,7 @@ chown -R mysql:mysql $MYSQLD_DATADIR
 #
 # Update --datadir in the cnf file with the correct value if file was copied
 if [ x"$CNFCOPIED" = xyes ]; then
-    sed -e "s|/var/opt/csw/mysql5|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
+    sed -e "s|/var/opt/csw|$MYSQLD_DATADIR|g" $DEFAULTS_FILE >$DEFAULTS_FILE.new
     mv $DEFAULTS_FILE.new $DEFAULTS_FILE
 fi
 
@@ -126,7 +126,7 @@ fi
 # Ending message
 echo
 echo "###  The following messages are from quick_start-csw."
-echo "See /opt/csw/mysql5/share/mysql/doc/README.CSW for packaging changes."
+echo "See /opt/csw/share/mysql/doc/README.CSW for packaging changes."
 echo "Please ignore references to starting mysqld_safe in the messages above."
 echo "  These messages are from mysql_install_db.  See the following"
 echo "  for starting CSWmysql5."
