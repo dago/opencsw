@@ -15,6 +15,9 @@ DISTFILES += libgsf-1.so.1.9.1.sparc
 DISTFILES += libgsf-gnome-1.so.1.9.1.i386
 DISTFILES += libgsf-gnome-1.so.1.9.1.sparc
 
+# The updated libgsf is only released for Solaris 10 due to new glib only on Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 VENDOR_URL = http://ftp.gnome.org/pub/GNOME/sources/libgsf/
 
 PACKAGES += CSWlibgsf
@@ -25,10 +28,13 @@ RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibbz2-1-0
 RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibz-dev
 RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibintl3
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWbonobo2
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibbonobo2
 RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibgsf += CSWgnomevfs2
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWglib2
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgmodule2-0-0
 
 # This is old crud, just override
 CHECKPKG_OVERRIDES_CSWlibgsf += license-missing|/opt/csw/share/doc/libgsf/license
