@@ -14,6 +14,9 @@ endef
 MASTER_SITES = http://freedesktop.org/~hadess/
 DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 
+# This is because CSWlibglib2-0-0 is only available on Solaris 10+
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 # We define upstream file regex so we can be notifed of new upstream software release
 UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
 
