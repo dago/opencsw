@@ -57,28 +57,25 @@
 #
 # 1. Adjust BASE_VERSION and/or PATCHLEVEL.
 #
-# 2. Make sure the SONAME patch for
-#    $(WORKDIR)/postgresql-x.y.z/src/Makefile.shlib still works
-#
-# 3. Comment out 'post-install-modulated:'. So we can identify changes in the
+# 2. Comment out 'post-install-modulated:'. So we can identify changes in the
 #    server/client environment.
 #
-# 4. `mgar package`
+# 3. `mgar package`
 #
-# 5. If step 4 succeeded, check the prototype of
+# 4. If step 3 succeeded, check the prototype of
 #    CSW$(NAME)$(BASE_VERSION_NODOT) for files that have slipped by and put
 #    them in the proper place.
 #
-# 6. Uncomment 'post-install-modulated:'. This will shed light on changes in
+# 5. Uncomment 'post-install-modulated:'. This will shed light on changes in
 #    the contrib environment.
 #
-# 7. `mgar spotless package`
+# 6. `mgar spotless package`
 #
-# 8. If step 6 succeeded, check the prototype of
+# 7. If step 6 succeeded, check the prototype of
 #    CSW$(NAME)$(BASE_VERSION_NODOT) for files that have slipped by and put
 #    them in the proper place.
 #
-# 9. Make sure the proper version numbers are used for the library packages.
+# 8. Make sure the proper version numbers are used for the library packages.
 
 
 # This BUILD is NOT READY!  It needs work before it's usable.
@@ -97,6 +94,10 @@ CATEGORIES = apps
 VENDOR_URL = http://www.postgresql.org/
 
 define BLURB
+	PostgreSQL is a powerful, open source object-relational database system.
+	It has more than 15 years of active development and a proven architecture
+	that has earned it a strong reputation for reliability, data integrity,
+	and correctness.
 endef
 
 #
@@ -126,7 +127,7 @@ SO_NAMES_SERVER		+= utf8_and_johab.so utf8_and_shift_jis_2004.so utf8_and_sjis.s
 # also shared object in the same place, so make sure you don't mix up things
 SO_NAMES_CONTRIB 	 = _int.so adminpack.so autoinc.so btree_gist.so chkpass.so
 SO_NAMES_CONTRIB	+= cube.so dblink.so dict_int.so dict_xsyn.so earthdistance.so
-SO_NAMES_CONTRIB	+= fuzzystrmatch.so hstore.so insert_username.so int_aggregate.so 
+SO_NAMES_CONTRIB	+= fuzzystrmatch.so hstore.so insert_username.so int_aggregate.so
 SO_NAMES_CONTRIB	+= isn.so lo.so ltree.so moddatetime.so pageinspect.so pg_buffercache.so
 SO_NAMES_CONTRIB	+= pg_freespacemap.so pg_trgm.so pgcrypto.so pgrowlocks.so pgstattuple.so
 SO_NAMES_CONTRIB	+= pgxml.so refint.so seg.so sslinfo.so tablefunc.so test_parser.so timetravel.so tsearch2.so
@@ -169,7 +170,7 @@ INITSCRIPTFILE_VERSIONED = $(INITSCRIPTFILE)-$(BASE_VERSION_NODOT)
 
 # These are the alternatives provided for the packages.  I use them in the
 # recipe to iterate over all possible alternatives (see 'post-merge:')
-myALTERNATIVES= server client devel contrib
+myALTERNATIVES= server client dev contrib
 
 # My sed, since EXPANDVARS has proven unreliable to me
 mySED = gsed -e 's|@USERGROUPFILE_VERSIONED@|$(USERGROUPFILE_VERSIONED)|g' \
@@ -192,12 +193,9 @@ DISTFILES += $(INITSCRIPTFILETMPL)
 DISTFILES += $(USERGROUPFILETMPL)
 DISTFILES += $(CSWPGSQLCONFFILETMPL)
 
-# This patch will make the SONAME of the libraries to contain the major and
-# minor version. This is important when having multiple installations of
-# PostgreSQL where the library versions differ only in the minor part, such as
-# with PostgreSQL 8.3 and PostgreSQL 8.4.
-#
-PATCHFILES += 0000-SONAME-including-major-and-minor-version.patch
+# This patch will replace /usr/local/include by /opt/csw/include in
+# ecpg.c and thus silence a checkpkg error.
+PATCHFILES += 0001-ecpg-usr-local-include-replacement.patch
 
 INITSMF = $(sysconfdir)/init\.d/$(INITSCRIPTFILE_VERSIONED)
 USERGROUP = $(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
@@ -205,13 +203,14 @@ PRESERVECONF = $(sysconfdir)/$(CSWPGSQLCONFFILE_VERSIONED)
 
 LICENSE = COPYRIGHT
 
+# The alternatives modifier should stay in place, until I figured out
+# how to properly employ the ALTERNATIVES system in this build.
 PROTOTYPE_MODIFIERS = pgdata alternatives
 PROTOTYPE_FILES_pgdata = $(PGLOCALSTATEDIR_BASE).*
 PROTOTYPE_USER_pgdata = postgres
 PROTOTYPE_GROUP_pgdata = sys
 PROTOTYPE_PERMS_pgdata = 0700
 PROTOTYPE_CLASS_pgdata = ugfiles
-
 PROTOTYPE_FILES_alternatives = .*/alternatives/$(NAME)$(BASE_VERSION_NODOT).*
 PROTOTYPE_CLASS_alternatives = cswalternatives
 
@@ -220,10 +219,13 @@ PROTOTYPE_CLASS_alternatives = cswalternatives
 # package to make sure there are no files slipped by.
 PACKAGES = CSW$(NAME)$(BASE_VERSION_NODOT)
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT) = PostgreSQL $(VERSION), Meta Package
+ARCHALL_CSW$(NAME)$(BASE_VERSION_NODOT) = 1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)  = CSW$(NAME)$(BASE_VERSION_NODOT)-server
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT) += CSW$(NAME)$(BASE_VERSION_NODOT)-client
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT) += CSW$(NAME)$(BASE_VERSION_NODOT)-contrib
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT) += CSW$(NAME)$(BASE_VERSION_NODOT)-devel
+CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT) += surplus-dependency|CSW$(NAME)$(BASE_VERSION_NODOT)-client
+CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT) += surplus-dependency|CSW$(NAME)$(BASE_VERSION_NODOT)-server
+CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT) += surplus-dependency|CSW$(NAME)$(BASE_VERSION_NODOT)-contrib
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-server
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-server = PostgreSQL $(VERSION), Server
@@ -238,14 +240,17 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*$(USERGROUP)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*$(sysconfdir)/init\.d/.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*$(sysconfdir)/$(CSWPGSQLCONFFILE_VERSIONED).CSW
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_server.*
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server  = CSWlibiconv2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxml2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxslt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibpq5-1
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibpq5
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibgssapi-krb5-2
+CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach n,$(SO_NAMES_SERVER), soname-not-part-of-filename|soname=lib$(n).0|filename=$(n) )
+# This one isn't covered by the above.
+CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += soname-not-part-of-filename|soname=libplpgsql.so.1|filename=plpgsql.so
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach i,$(BUILD_ISAS), server_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-client
@@ -254,14 +259,14 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client = $(foreach n,$(BIN_NAMES_CLIENT
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += $(foreach n,$(BIN_NAMES_CLIENT),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += $(MISC_NAMES_CLIENT)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-client += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_client.*
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client  = CSWlibiconv2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibncurses5
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibxml2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibxslt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibpq5-1
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibpq5
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-client += CSWlibgssapi-krb5-2
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-client = $(foreach i,$(BUILD_ISAS), client_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-contrib
@@ -271,55 +276,68 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += $(foreach n,$(BIN_NAMES_CONT
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += $(foreach n,$(SO_NAMES_CONTRIB),.*/$(NAME)/$(BASE_VERSION_NODOT)/*$(n)$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*/$(NAME)/$(BASE_VERSION_NODOT)/contrib.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_contrib.*
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib  = CSWlibiconv2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxml2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxslt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWosslrt
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibpq5-1
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibpq5
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibreadline6
+# This will produce some 'unused overrides'.
+CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach n,$(SO_NAMES_CONTRIB), soname-not-part-of-filename|soname=lib$(n).0|filename=$(n) )
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach i,$(BUILD_ISAS), contrib_$(i))
 
-PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-devel
-SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-devel = PostgreSQL $(VERSION), Development Files
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel  = .*/pgxs/.*
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += $(PKGFILES_DEVEL)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += $(foreach n,$(BIN_NAMES_DEVEL),.*$(n)$$)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += .*/man5/.*
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_devel.*
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += CSWlibecpg_compat3-0
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += CSWlibecpg6-0
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += CSWlibpq5-1
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-devel += CSWlibpgtypes3-0
-#ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-devel = $(foreach i,$(BUILD_ISAS), devel_$(i))
+PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-dev
+SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-dev = PostgreSQL $(VERSION), Development Files
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev  = .*/pgxs/.*
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*$(n)$$)
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += .*/man5/.*
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_dev.*
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibecpg-compat3
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibecpg6
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibpq5
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibpgtypes3
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibz1
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWosslrt
+# Those '/usr/local' are ok, they are in a HPUX section of the file
+CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += $(foreach i,$(BUILD_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/local|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib) )
+#ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev = $(foreach i,$(BUILD_ISAS), dev_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-doc
 ARCHALL_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = 1
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = PostgreSQL $(VERSION), Documentation Files
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-doc  =  .*/doc/$(NAME)/$(BASE_VERSION_NODOT)/.*
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-doc  =  .*/doc/$(NAME)/$(BASE_VERSION_NODOT)/.*\.html
 
-PACKAGES += CSWlibecpg_compat3-0
-SPKG_DESC_CSWlibecpg_compat3-0 = PostgreSQL $(VERSION), libecpg_compat
-PKGFILES_CSWlibecpg_compat3-0  = $(call pkgfiles_lib,libecpg_compat.so.3)
-RUNTIME_DEP_PKGS_CSWlibecpg_compat3-0  = CSWlibecpg6-0
-RUNTIME_DEP_PKGS_CSWlibecpg_compat3-0 += CSWlibpgtypes3-0
-RUNTIME_DEP_PKGS_CSWlibecpg_compat3-0 += CSWlibpq5-1
+PACKAGES += CSWlibecpg-compat3
+SPKG_DESC_CSWlibecpg-compat3 = PostgreSQL $(VERSION), libecpg_compat
+PKGFILES_CSWlibecpg-compat3  = $(call pkgfiles_lib,libecpg_compat.so.3)
+RUNTIME_DEP_PKGS_CSWlibecpg-compat3  = CSWlibecpg6
+RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibpgtypes3
+RUNTIME_DEP_PKGS_CSWlibecpg-compat3 += CSWlibpq5
 
-PACKAGES += CSWlibecpg6-0
-SPKG_DESC_CSWlibecpg6-0 = PostgreSQL $(VERSION), libecpg
-PKGFILES_CSWlibecpg6-0  = $(call pkgfiles_lib,libecpg.so.6)
-RUNTIME_DEP_PKGS_CSWlibecpg6-0 += CSWlibpgtypes3-0
-RUNTIME_DEP_PKGS_CSWlibecpg6-0 += CSWlibpq5-1
+PACKAGES += CSWlibecpg6
+SPKG_DESC_CSWlibecpg6 = PostgreSQL $(VERSION), libecpg
+PKGFILES_CSWlibecpg6  = $(call pkgfiles_lib,libecpg.so.6)
+RUNTIME_DEP_PKGS_CSWlibecpg6 += CSWlibpgtypes3
+RUNTIME_DEP_PKGS_CSWlibecpg6 += CSWlibpq5
 
-PACKAGES += CSWlibpgtypes3-0
-SPKG_DESC_CSWlibpgtypes3-0 = PostgreSQL $(VERSION), libpgtypes
-PKGFILES_CSWlibpgtypes3-0  = $(call pkgfiles_lib,libpgtypes.so.3)
+PACKAGES += CSWlibpgtypes3
+SPKG_DESC_CSWlibpgtypes3 = PostgreSQL $(VERSION), libpgtypes
+PKGFILES_CSWlibpgtypes3  = $(call pkgfiles_lib,libpgtypes.so.3)
 
-PACKAGES += CSWlibpq5-1
-CATALOGNAME_CSWlibpq5-1 = libpq5_1
-SPKG_DESC_CSWlibpq5-1 = PostgreSQL $(VERSION), libpq
-PKGFILES_CSWlibpq5-1  = $(call pkgfiles_lib,libpq.so.5)
-RUNTIME_DEP_PKGS_CSWlibpq5-1  = CSWosslrt
+PACKAGES += CSWlibpq5
+SPKG_DESC_CSWlibpq5 = PostgreSQL $(VERSION), libpq
+PKGFILES_CSWlibpq5  = $(call pkgfiles_lib,libpq.so.5)
+RUNTIME_DEP_PKGS_CSWlibpq5  = CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibpq5 += CSWlibgssapi-krb5-2
 
 BUILD_DEP_PKGS  = CSWlibxml2-dev
 BUILD_DEP_PKGS += CSWlibxslt-dev
@@ -329,6 +347,7 @@ BUILD_DEP_PKGS += CSWossldevel
 BUILD_DEP_PKGS += CSWlibreadline-dev
 BUILD_DEP_PKGS += CSWgsed # gsed is used in this recipe
 BUILD_DEP_PKGS += CSWlibz-dev
+BUILD_DEP_PKGS += CSWlibgnugetopt-dev
 
 EXTRA_LD_OPTIONS  = -R$(prefix)/lib/\$$ISALIST
 
@@ -372,7 +391,7 @@ CONFIGURE_ARGS += --without-bonjour
 #
 # IMHO, tests are essential, especially on Solaris, and I do not experience
 # build troubles on x86 having them enabled --raos
-SKIPTEST ?= 1
+#SKIPTEST ?= 1
 
 include gar/category.mk
 # This variable will be increased in the course of the following foreach loops
@@ -392,7 +411,7 @@ $(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 
 ## Devel
 # reset priority
 alt_priority = 20
-$(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 10)) $(eval ALTERNATIVE_devel_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_DEVEL)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-devel $(libexecdir)/$(subst devel_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) $(eval ALTERNATIVE_devel_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_DEVEL)),$(BIN_NAMES_DEVEL)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst devel_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) )
+$(foreach alt,$(BUILD_ISAS), $(eval alt_priority=$(shell expr $(alt_priority) + 10)) $(eval ALTERNATIVE_dev_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_DEVEL)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-dev $(libexecdir)/$(subst dev_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) $(eval ALTERNATIVE_dev_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_DEVEL)),$(BIN_NAMES_DEVEL)),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT) $(libexecdir)/$(subst dev_,,$(alt))/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) )
 
 # We adjust the $(pkglibdir) found in $(WORKSRC)/src/Makefile.global.in, so
 # that it should be possible to install 8.x and 8.y concurrently
@@ -431,6 +450,13 @@ post-merge:
 	for f in $(PKGROOT)$(datadir)/man/man1/* ; do \
 		f_no_suffix="`echo $$f | sed -e 's/.1$$//'`" ; \
 		mv $$f $${f_no_suffix}-$(BASE_VERSION_NODOT).1 ; \
+	done
+# Change path names in documentation
+	for f in $(PKGROOT)$(docdir)/$(NAME)/$(BASE_VERSION_NODOT)/html/*.html $(PKGROOT)$(mandir)/man1/*.1 $(PKGROOT)$(datadir)/$(NAME)/$(BASE_VERSION_NODOT)/*.sample ; do \
+		gsed -i -e 's|/usr/local/pgsql/data|$(localstatedir)/$(NAME)/$(BASE_VERSION_NODOT)|g' \
+			-e 's|/usr/local/pgsql/|$(prefix)/|g' \
+			-e 's|/usr/local|$(prefix)|g' \
+			-e 's|/usr/share|$(datadir)|g' $$f ; \
 	done
 	@$(MAKECOOKIE)
 
