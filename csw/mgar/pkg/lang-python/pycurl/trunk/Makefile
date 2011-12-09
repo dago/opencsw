@@ -11,8 +11,12 @@ define BLURB
 endef
 
 MASTER_SITES = http://pycurl.sourceforge.net/download/
+MASTER_SITES += http://src.opensolaris.org/source/raw/userland/src/components/python/pycurl/patches/
 DISTFILES += $(DISTNAME).tar.gz
-PATCHFILES += remove-static-libs.patch
+
+# Taken from http://src.opensolaris.org/source/xref/userland/src/components/python/pycurl/patches/pycurl-mondo.patch
+PATCHFILES += pycurl-mondo.patch
+PATCHDIRLEVEL = 0
 
 VENDOR_URL = http://pycurl.sourceforge.net/
 
