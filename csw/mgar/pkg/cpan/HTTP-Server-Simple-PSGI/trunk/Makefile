@@ -11,8 +11,6 @@ PACKAGES += CSWpm-http-server-simple-psgi
 CATALOGNAME_CSWpm-http-server-simple-psgi = pm_http_server_simple_psgi
 ARCHALL_CSWpm-http-server-simple-psgi = 1
 RUNTIME_DEP_PKGS_CSWpm-http-server-simple-psgi = CSWpmhttpsvrsimp
-
-# License is really unknown
-CHECKPKG_OVERRIDES_CSWpm-http-server-simple-psgi += license-missing|/opt/csw/share/doc/pm_http_server_simple_psgi/license
+DISTFILES += COPYING
 
 include gar/category.mk
