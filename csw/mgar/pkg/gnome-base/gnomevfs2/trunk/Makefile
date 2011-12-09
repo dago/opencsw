@@ -44,6 +44,7 @@ RUNTIME_DEP_PKGS_CSWgnomevfs2 += CSWlibdbus1-3
 # This is an explicit fallback *after* /opt/csw/share, see xdg-reinplacement below
 CHECKPKG_OVERRIDES_CSWgnomevfs2 += file-with-bad-content|/usr/share|root/opt/csw/lib/libgnomevfs-2.so.0.2400.4
 CHECKPKG_OVERRIDES_CSWgnomevfs2 += file-with-bad-content|/usr/share|root/opt/csw/lib/sparcv9/libgnomevfs-2.so.0.2400.4
+CHECKPKG_OVERRIDES_CSWgnomevfs2 += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/libgnomevfs-2.so.0.2400.4
 
 # No real package split done yet
 CHECKPKG_OVERRIDES_CSWgnomevfs2 += shared-lib-pkgname-mismatch
