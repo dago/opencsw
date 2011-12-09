@@ -235,3 +235,10 @@ pre-install-modulated:
 			done ; \
 		fi ; \
 	done
+
+post-merge:
+	if [ -d $(PKGROOT)$(prefix)/bash_completion.d ] ; \
+	then \
+		ginstall -d $(PKGROOT)$(sysconfdir) ;\
+		mv $(PKGROOT)$(prefix)/bash_completion.d $(PKGROOT)$(sysconfdir)/ ;\
+	fi
