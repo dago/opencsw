@@ -32,7 +32,6 @@ RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWgtk2
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibcroco
-RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibgsf
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibrsvg2-2 += CSWlibpng12-0
@@ -72,8 +71,8 @@ RUNTIME_DEP_PKGS_CSWrsvg += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWrsvg += CSWlibgio2-0-0
 
 PACKAGES += CSWlibrsvg-gnome
-PKGFILES_CSWlibrsvg-gnome = $(libdir)/gtk-2.0/.*
 SPKG_DESC_CSWlibrsvg-gnome += Scalable Vector Graphics library - Gnome module
+PKGFILES_CSWlibrsvg-gnome += $(call baseisadirs,$(libdir),gtk-2.0/.*)
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibrsvg2-2
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWpango
 RUNTIME_DEP_PKGS_CSWlibrsvg-gnome += CSWlibintl8
@@ -100,5 +99,7 @@ BUILD64 = 1
 ISAEXEC = 1
 
 STRIP_LIBTOOL = 1
+
+EXTRA_MERGE_DIRS_isa-extra = $(bindir)
 
 include gar/category.mk
