@@ -131,7 +131,6 @@ SPKG_DESC_CSWlibglib2-dev = Development files for libglib-2.0.so.0 and assorted 
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibintl8
 # Is this really a runtime dep? No ref found to this lib.
 #RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibffi5
-RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWgamin
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWglib2
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWiconv
 # Did not see any runtime dependency
@@ -142,6 +141,7 @@ RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWgio-fam-backend
 PKGFILES_CSWlibglib2-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibglib2-dev += .*/glib-2.0/include/.*
 OBSOLETED_BY_CSWlibglib2-dev = CSWglib2devel
@@ -217,31 +217,33 @@ CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWiconv
 CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWlibintl8
 CHECKPKG_OVERRIDES_CSWlibglib2-dev += surplus-dependency|CSWzlib
 
-# That's ok, too. /usr/local appears in an example text.
-CHECKPKG_OVERRIDES_CSWglib2 += file-with-bad-content|/usr/local|root/opt/csw/share/gtk-doc/html/glib/glib-Miscellaneous-Utility-Functions.html
-
 include gar/category.mk
 
 # We need /opt/csw/gnu/gettext, /usr/bin/gettext bails out
 PATH := /opt/csw/gnu:$(PATH)
 
-# This is in place to fix paths that make checkpkg complain
-pre-install-modulated:
-	@echo "=== Fixing paths in documentation ==="
-	for d in gio glib gobject ; do \
-		DOCBASEDIR="$(WORKSRC)/docs/reference/$$d/" ; \
-		if [ -d "$$DOCBASEDIR" ] ; then \
-			for f in $$DOCBASEDIR/html/*.html $$DOCBASEDIR/*.[123456789] ; do \
-				echo "Adjusting path in $$f" ; \
-				/opt/csw/bin/gsed -e "s|/usr/share/|$(prefix)/share/|g" -e "s|/usr/local/|$(prefix)/|g" $$f > $$f.tmp ; \
-				mv $$f.tmp $$f ; \
-			done ; \
-		fi ; \
-	done
-
 post-merge:
+	@echo "=== Cleanup stray bash_completion.d ==="
 	if [ -d $(PKGROOT)$(prefix)/bash_completion.d ] ; \
 	then \
 		ginstall -d $(PKGROOT)$(sysconfdir) ;\
 		mv $(PKGROOT)$(prefix)/bash_completion.d $(PKGROOT)$(sysconfdir)/ ;\
 	fi
+
+# This is in place to fix paths that make checkpkg complain
+	@echo "=== Fixing paths in documentation ==="
+	for d in gio glib gobject ; do \
+		DOCBASEDIR="$(PKGROOT)/$(datadir)/gtk-doc/html/$$d/" ; \
+		if [ -d "$$DOCBASEDIR" ] ; then \
+			for f in $$DOCBASEDIR/*.html ; do \
+				echo "Adjusting path in $$f" ; \
+				/opt/csw/bin/gsed -e "s|/usr/share|$(datadir)|g" -e "s|/usr/local|$(prefix)|g" $$f > $$f.tmp ; \
+				mv $$f.tmp $$f ; \
+			done ; \
+		fi ; \
+	done
+	for f in $(PKGROOT)$(mandir)/man[123456789]/* ; do \
+		echo "Adjusting path in $$f" ; \
+		/opt/csw/bin/gsed -e "s|/usr/share|$(datadir)|g" -e "s|/usr/local|$(prefix)|g" $$f > $$f.tmp ; \
+		mv $$f.tmp $$f ; \
+	done ; \
