@@ -24,7 +24,7 @@ CATALOGNAME = shared_mime_info
 
 SPKG_SOURCEURL = http://freedesktop.org/Software/shared-mime-info
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWglib2 CSWlibxml2
+RUNTIME_DEP_PKGS = CSWggettextrt CSWlibxml2 CSWlibglib2-0-0
 
 CONFIGURE_ARGS = $(DIRPATHS)
 
