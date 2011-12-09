@@ -1,0 +1,22 @@
+From b151728acbb4c8eb10e6158554da5448b49817e5 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Thu, 8 Dec 2011 18:49:10 +0100
+Subject: [PATCH] Use bash on test
+
+---
+ tests/test-activation/test.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/tests/test-activation/test.sh b/tests/test-activation/test.sh
+index 4d1cb45..8d91086 100755
+--- a/tests/test-activation/test.sh
++++ b/tests/test-activation/test.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ 
+ # This is a generic script for firing up a server, waiting for it to write
+ # its stringified IOR to a file, then firing up a server
+-- 
+1.7.6.1
+
