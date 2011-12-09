@@ -21,21 +21,51 @@ BUILD_DEP_PKGS += CSWgtk-doc
 BUILD_DEP_PKGS += CSWglib2devel
 BUILD_DEP_PKGS += CSWlibxml2devel
 
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibbz2-1-0
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWgtk2
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibbonobo2
-RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgio2-0-0
+PACKAGES += CSWlibgsf1-114
+SPKG_DESC_CSWlibgsf1-114 = GNOME structured file library, libgsf-1.so.114
+PKGFILES_CSWlibgsf1-114 += $(call pkgfiles_lib,libgsf-1.so.114)
+PKGFILES_CSWlibgsf1-114 += $(sharedstatedir)/locale/.*\.mo
+RUNTIME_DEP_PKGS_CSWlibgsf1-114 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf1-114 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibgsf1-114 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf1-114 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgsf1-114 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgsf1-114 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf1-114 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf1-114 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibgsf1-114 += CSWlibgio2-0-0
 
-# No package split yet
-CHECKPKG_OVERRIDES_CSWlibgsf += shared-lib-package-contains-so-symlink
-CHECKPKG_OVERRIDES_CSWlibgsf += shared-lib-pkgname-mismatch
+PACKAGES += CSWlibgsf-gnome1-114
+SPKG_DESC_CSWlibgsf-gnome1-114 = GNOME structured file library, libgsf-gnome1.so.114
+PKGFILES_CSWlibgsf-gnome1-114 += $(call pkgfiles_lib,libgsf-gnome-1.so.114)
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWorbit2
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibgsf1-114
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibbonobo2
+RUNTIME_DEP_PKGS_CSWlibgsf-gnome1-114 += CSWlibgio2-0-0
+
+PACKAGES += CSWlibgsf-dev
+SPKG_DESC_CSWlibgsf-dev = Development files for libgsf-1.so.114 and libgsf-gnome1.so.114
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibgsf1-114
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibgsf-gnome1-114
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibgsf-dev += CSWlibgio2-0-0
 
 # The -L/opt/csw/lib is too early and disturbs the build with the installed libgsf
 LINKER_FLAGS =
@@ -54,11 +84,3 @@ STRIP_LIBTOOL = 1
 include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
-
-post-install-isa-sparcv8plus:
-	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
-	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
-
-post-install-isa-pentium_pro:
-	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
-	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
