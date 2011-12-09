@@ -1,5 +1,5 @@
 NAME = libgsf
-VERSION = 1.14.11
+VERSION = 1.14.21
 CATEGORIES = gnome
 
 DESCRIPTION = GNOME Structured File Library
@@ -11,27 +11,43 @@ define BLURB
 endef
 
 MASTER_SITES = $(GNOME_MIRROR)
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
 
-BUILD_DEP_PKGS += CSWgnulinks CSWgtk-doc CSWglib2devel CSWlibxml2devel
+# New glib is Solaris 10 only
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-RUNTIME_DEP_PKGS += CSWbonobo2 CSWbzip2 CSWgconf2 CSWggettextrt CSWglib2
-RUNTIME_DEP_PKGS += CSWgnomevfs2 CSWlibxml2 CSWorbit2 CSWzlib
+BUILD_DEP_PKGS += CSWgnulinks
+BUILD_DEP_PKGS += CSWgtk-doc
+BUILD_DEP_PKGS += CSWglib2devel
+BUILD_DEP_PKGS += CSWlibxml2devel
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibbz2-1-0
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibbonobo2
+RUNTIME_DEP_PKGS_CSWlibgsf += CSWlibgio2-0-0
 
-EXTRA_LD_OPTIONS = -L../gsf/.libs -L../../gsf/.libs
+# No package split yet
+CHECKPKG_OVERRIDES_CSWlibgsf += shared-lib-package-contains-so-symlink
+CHECKPKG_OVERRIDES_CSWlibgsf += shared-lib-pkgname-mismatch
 
-CONFIGURE_ARGS = $(DIRPATHS)
-#CONFIGURE_ARGS = "PATH=$(NPATH)" $(DIRPATHS)
-#CONFIGURE_ARGS += --enable-gtk-doc=no
-#CONFIGURE_ARGS += --disable-man-gtk-doc
+# The -L/opt/csw/lib is too early and disturbs the build with the installed libgsf
+LINKER_FLAGS =
 
-TEST_TARGET = check
+CONFIGURE_ARGS += $(DIRPATHS)
+
+# There are link errors on newly built gnomemodule.la, disable for now
+CONFIGURE_ARGS += --without-python
 
 # Missing 64-bit libs:
 # libgnomevfs-2.so libgconf-2.so libbonobo-2.so libbonobo-activation.so
-#BUILD64 = 1
+BUILD64 = 1
 
 STRIP_LIBTOOL = 1
 
@@ -39,10 +55,10 @@ include gar/category.mk
 
 PATH := /opt/csw/gnu:$(PATH)
 
-post-install-isa-sparcv8:
+post-install-isa-sparcv8plus:
 	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
 	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.s $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
 
-post-install-isa-i386:
+post-install-isa-pentium_pro:
 	@cp -p $(FILEDIR)/libgsf-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-1.so.1
 	@cp -p $(FILEDIR)/libgsf-gnome-1.so.1.9.1.i $(INSTALLISADIR)$(libdir)/libgsf-gnome-1.so.1
