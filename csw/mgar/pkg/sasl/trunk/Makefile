@@ -34,14 +34,12 @@ PATCHFILES += ltmain.diff
 VENDOR_URL = http://asg.web.cmu.edu/sasl/
 
 PACKAGES += CSWsasl
-CATALOGNAME_CSWsasl = sasl
 SPKG_DESC_CSWsasl = Cyrus Simple Authentication and Security Layer
 RUNTIME_DEP_PKGS_CSWsasl = CSWosslrt
 RUNTIME_DEP_PKGS_CSWsasl += CSWbdb47
 RUNTIME_DEP_PKGS_CSWsasl += CSWlibsasl2-2
 
 PACKAGES += CSWsaslauthd
-CATALOGNAME_CSWsaslauthd = saslauthd
 SPKG_DESC_CSWsaslauthd = Cyrus Simple Authentication and Security Layer Authentication Daemon
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWsasl
 RUNTIME_DEP_PKGS_CSWsaslauthd += CSWosslrt
@@ -99,8 +97,8 @@ PKGFILES_CSWsasl-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWsasl-dev += CSWlibsasl2-2
 
 PACKAGES += CSWsaslsample
-SPKG_DESC_CSWsaslsample = Cyrus Simple Authentication and Security Layer sample client/server
 CATALOGNAME_CSWsaslsample = sasl_sample
+SPKG_DESC_CSWsaslsample = Cyrus Simple Authentication and Security Layer sample client/server
 RUNTIME_DEP_PKGS_CSWsaslsample = CSWsasl
 RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibsasl2-2
 RUNTIME_DEP_PKGS_CSWsaslsample += CSWlibcom-err3
