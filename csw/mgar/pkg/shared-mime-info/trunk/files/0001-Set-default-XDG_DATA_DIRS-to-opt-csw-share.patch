@@ -1,0 +1,25 @@
+From 132f3284d0dc791c72af10063524915de5e17a8d Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Fri, 9 Dec 2011 13:43:45 +0100
+Subject: [PATCH] Set default XDG_DATA_DIRS to /opt/csw/share
+
+---
+ update-mime-database.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/update-mime-database.c b/update-mime-database.c
+index d195594..9339b06 100644
+--- a/update-mime-database.c
++++ b/update-mime-database.c
+@@ -2077,7 +2077,7 @@ static void check_in_path_xdg_data(const char *mime_path)
+ 
+ 	env = getenv("XDG_DATA_DIRS");
+ 	if (!env)
+-		env = "/usr/local/share/"PATH_SEPARATOR"/usr/share/";
++		env = "/opt/csw/share/"PATH_SEPARATOR"/usr/share/";
+ 	dirs = g_strsplit(env, PATH_SEPARATOR, 0);
+ 	g_return_if_fail(dirs != NULL);
+ 	for (n = 0; dirs[n]; n++)
+-- 
+1.7.6.1
+
