@@ -61,26 +61,26 @@ PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 PACKAGES += CSWglib2
 SPKG_DESC_CSWglib2 = Low level core compatibility library for GTK+ and GNOME
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibintl8
-# Did not see any runtime dependency
-#RUNTIME_DEP_PKGS_CSWglib2 += CSWpython
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgobject2-0-0
-# Is this really a runtime dep? No ref found to this lib.
-#RUNTIME_DEP_PKGS_CSWglib2 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWgio-fam-backend
-## No package split yet
-#CHECKPKG_OVERRIDES_CSWglib2 += non-uniform-lib-versions-in-package
+
 
 PACKAGES += CSWgio-fam-backend
 SPKG_DESC_CSWgio-fam-backend = $(DESCRIPTION), GIO FAM backend
 PKGFILES_CSWgio-fam-backend = .*/libgiofam.so
 RUNTIME_DEP_PKGS_CSWgio-fam-backend = CSWlibfam0
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgthread2-0-0
 
 PACKAGES += CSWlibgio2-0-0
 SPKG_DESC_CSWlibgio2-0-0 += $(DESCRIPTION), libgio-2.0.so.0
@@ -91,8 +91,6 @@ RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibgobject2-0-0
-# Is this really a runtime dep? No ref found to this lib.
-#RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibgio2-0-0 += CSWsharedmimeinfo
 
@@ -115,8 +113,6 @@ SPKG_DESC_CSWlibgobject2-0-0 += $(DESCRIPTION), libgobject-2.0.so.0
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibiconv2
-# Is this really a runtime dep? No ref found to this lib.
-#RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWlibgobject2-0-0 += CSWlibglib2-0-0
 
 PACKAGES += CSWlibgthread2-0-0
@@ -129,12 +125,8 @@ RUNTIME_DEP_PKGS_CSWlibgthread2-0-0 += CSWlibglib2-0-0
 PACKAGES += CSWlibglib2-dev
 SPKG_DESC_CSWlibglib2-dev = Development files for libglib-2.0.so.0 and assorted libglib, libgmodule, libgobject and libgthread
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibintl8
-# Is this really a runtime dep? No ref found to this lib.
-#RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibffi5
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWglib2
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWiconv
-# Did not see any runtime dependency
-#RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWpython
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWzlib
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibglib2-0-0
