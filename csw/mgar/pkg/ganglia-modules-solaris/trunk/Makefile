@@ -54,7 +54,7 @@ CONFIGURE_ARGS += --enable-shared --disable-nls
 include gar/category.mk
 
 post-install-modulated:
-	@ginstall -d $(DESTDIR)/etc/opt/csw/ganglia
-	cp $(WORKSRC)/conf.d/mod_io.conf $(DESTDIR)/etc/opt/csw/ganglia/mod_io.conf.CSW
-	cp $(WORKSRC)/conf.d/mod_multicpu.conf $(DESTDIR)/etc/opt/csw/ganglia/mod_multicpu.conf.CSW
+	@ginstall -d $(DESTDIR)/etc/opt/csw/ganglia/conf.d
+	cp $(WORKSRC)/conf.d/mod_io.conf $(DESTDIR)/etc/opt/csw/ganglia/conf.d/mod_io.conf.CSW
+	cp $(WORKSRC)/conf.d/mod_multicpu.conf $(DESTDIR)/etc/opt/csw/ganglia/conf.d/mod_multicpu.conf.CSW
 
