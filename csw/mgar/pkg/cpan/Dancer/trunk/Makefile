@@ -16,10 +16,7 @@ RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-http-server-simple-psgi
 RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmuri
 RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-http-body
 RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmmimetypes
-RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpmlibwww
-
-# Problems with t/00_base/14_changelog.t, all others pass
-TEST_SCRIPTS =
+RUNTIME_DEP_PKGS_CSWpm-dancer += CSWpm-libwww-perl
 
 include gar/category.mk
 
