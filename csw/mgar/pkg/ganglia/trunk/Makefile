@@ -158,7 +158,9 @@ PKGFILES_CSWgangliaagent += /opt/csw/share/man/man5/gmond.conf.5
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modsys.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modcpu.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modnet.so
-PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modmulticpu.so
+# this version is only for Linux users, get the package
+# ganglia-modules-solaris for the Solaris modmulticpu.so
+#PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modmulticpu.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modmem.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/modload.so
 PKGFILES_CSWgangliaagent += /opt/csw/lib/ganglia/moddisk.so
