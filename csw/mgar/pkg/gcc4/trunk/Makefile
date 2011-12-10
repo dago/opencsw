@@ -21,6 +21,9 @@ MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 
 LIBOBJC = 3
 
+# Add default RPATH
+PATCHFILES = 0002-default-rpath.diff
+
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
