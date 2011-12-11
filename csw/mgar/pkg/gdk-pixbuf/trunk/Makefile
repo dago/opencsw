@@ -60,6 +60,13 @@ CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf2-0-0 += file-collision|/opt/csw/lib/sparcv9/
 CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf2-0-0 += file-collision|/opt/csw/lib/libgdk_pixbuf-2.0.so.0|CSWgtk2|CSWlibgdk-pixbuf2-0-0
 CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-xlib2-0-0 += file-collision|/opt/csw/lib/libgdk_pixbuf_xlib-2.0.so.0|CSWgtk2|CSWlibgdk-pixbuf-xlib2-0-0
 CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-xlib2-0-0 += file-collision|/opt/csw/lib/sparcv9/libgdk_pixbuf_xlib-2.0.so.0|CSWgtk2|CSWlibgdk-pixbuf-xlib2-0-0
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf2-0-0 += file-collision|/opt/csw/lib/amd64/libgdk_pixbuf-2.0.so.0|CSWgtk2|CSWlibgdk-pixbuf2-0-0
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-xlib2-0-0 += file-collision|/opt/csw/lib/amd64/libgdk_pixbuf_xlib-2.0.so.0|CSWgtk2|CSWlibgdk-pixbuf-xlib2-0-0
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/amd64/libgdk_pixbuf-2.0.so|CSWgtk2|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/amd64/pkgconfig/gdk-pixbuf-2.0.pc|CSWgtk2devel|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/amd64/libgdk_pixbuf_xlib-2.0.so|CSWgtk2|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/amd64/pkgconfig/gdk-pixbuf-xlib-2.0.pc|CSWgtk2devel|CSWlibgdk-pixbuf-dev
+
 
 DESCRIPTION = GNOME tools for pixmap manupulation
 define BLURB
