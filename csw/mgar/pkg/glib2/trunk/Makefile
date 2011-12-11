@@ -70,6 +70,7 @@ RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWglib2 += CSWgio-fam-backend
+CHECKPKG_OVERRIDES_CSWglib2 += surplus-dependency|CSWgio-fam-backend
 
 
 PACKAGES += CSWgio-fam-backend
@@ -81,6 +82,9 @@ RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgmodule2-0-0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWgio-fam-backend += CSWlibz1
 
 PACKAGES += CSWlibgio2-0-0
 SPKG_DESC_CSWlibgio2-0-0 += $(DESCRIPTION), libgio-2.0.so.0
@@ -128,16 +132,16 @@ RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWglib2
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWiconv
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWzlib
-RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWgio-fam-backend
+RUNTIME_DEP_PKGS_CSWlibglib2-dev += CSWlibgio2-0-0
 PKGFILES_CSWlibglib2-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWlibglib2-dev += .*/glib-2.0/include/.*
 OBSOLETED_BY_CSWlibglib2-dev = CSWglib2devel
 CATALOGNAME_CSWglib2devel = glib2_devel_stub
+
 
 BUILD_DEP_PKGS = CSWggettext CSWlibpcre-dev CSWlibiconv-dev CSWlibffi5
 # To make the tests working
