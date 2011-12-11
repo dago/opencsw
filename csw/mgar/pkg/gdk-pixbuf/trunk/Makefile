@@ -35,6 +35,11 @@ RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibpng12-0
 CHECKPKG_OVERRIDES_CSWgdkpixbuf += surplus-dependency|CSWlibgdk-pixbuf-xlib2-0-0
 CHECKPKG_OVERRIDES_CSWgdkpixbuf += surplus-dependency|CSWgdkpixbuf-loaders
 
+PACKAGES += CSWgdkpixbuf-doc
+SPKG_DESC_CSWgdkpixbuf-doc = $(DESCRIPTION), Documentation
+ARCHALL_CSWgdkpixbuf-doc = 1
+PKGFILES_CSWgdkpixbuf-doc = .*/gtk-doc/.*
+
 PACKAGES += CSWlibgdk-pixbuf2-0-0
 SPKG_DESC_CSWlibgdk-pixbuf2-0-0 = $(DESCRIPTION), libgdk_pixbuf-2.0.so.0
 PKGFILES_CSWlibgdk-pixbuf2-0-0 = $(call pkgfiles_lib,libgdk_pixbuf-2.0.so.0)
