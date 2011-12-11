@@ -1,0 +1,25 @@
+From 11d563a5e79f88b3564d2dce5d5c5c12ab52d788 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sun, 11 Dec 2011 10:50:20 +0100
+Subject: [PATCH] Use absolute path to Xvfb
+
+---
+ gtk/tests/Makefile.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/gtk/tests/Makefile.in b/gtk/tests/Makefile.in
+index 4f8c6e3..6de5031 100644
+--- a/gtk/tests/Makefile.in
++++ b/gtk/tests/Makefile.in
+@@ -391,7 +391,7 @@ TEST_PROGS = testing liststore treestore treeview treeview-scrolling \
+ ### testing rules
+ 
+ # Xvfb based test rules
+-XVFB = Xvfb -ac -noreset -screen 0 800x600x16
++XVFB = /usr/X11/bin/Xvfb -ac -noreset -screen 0 800x600x16
+ XIDS = 101 102 103 104 105 106 107 197 199 211 223 227 293 307 308 309 310 311 \
+    491 492 493 494 495 496 497 498 499 500 501 502 503 504 505 506 507 508 509 \
+    991 992 993 994 995 996 997 998 999 1000 1001 1002 1003 1004 1005 1006 1007 \
+-- 
+1.7.6.1
+

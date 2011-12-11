@@ -1,8 +1,10 @@
 #!/bin/sh
+#
+# We will call gtk-query-immodules-2.0 for all ISAs
 
 umask 0022
 
-BIN=gtk-update-icon-cache
+BIN=gtk-query-immodules-2.0
 BIN_OPTS="--update-cache"
 
 echo "** Querying IM Modules"
@@ -35,4 +37,3 @@ do
 done
 
 echo "** Done querying IM Modules"
-
