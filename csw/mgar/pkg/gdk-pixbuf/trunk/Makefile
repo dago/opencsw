@@ -6,6 +6,61 @@ VERSION = 2.24.0
 GARTYPE = v2
 CATEGORIES = gnome
 
+# Those overrides must be removed after gtk 2.24 has been released.
+#
+# Somewhere between the 2.18 and 2.24 release of gtk, the gtk guys
+# decided to spin off gdk-pixbuf.
+#
+# So in the transition phase of 2.18 to 2.24 we have to face
+# collisions, since 2.18 brings its own gdk-pixbuf, whereas 2.24 uses
+# this package
+#
+# A simple test with emacs-gtk and gftp does not indicate that
+# installing gdk-pixbuf over an existing gtk 2.18 installation does
+# break anything.
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-loaders += file-collision|/opt/csw/bin/gdk-pixbuf-query-loaders|CSWgdkpixbuf-loaders|CSWgtk2
+CHECKPKG_OVERRIDES_CSWgdkpixbuf += file-collision|/opt/csw/bin/gdk-pixbuf-csource|CSWgdkpixbuf|CSWgtk2
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/gdk-pixbuf-query-loaders.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/GdkPixbufLoader.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/gdk-pixbuf-csource.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/api-index-2-4.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/left.png|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/right.png|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/gdk-pixbuf-gdk-pixbuf-rendering.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/rn02.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/gdk-pixbuf-gdk-pixbuf-from-drawables.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/license.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/api-index-2-6.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/api-index-2-10.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/style.css|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/composite.png|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/rn01.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/gdk-pixbuf.devhelp2|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/gdk-pixbuf-Versioning.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/api-index-full.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/index.sgml|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/api-index-2-8.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/home.png|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/index.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/up.png|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/api-index-deprecated.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/api-index-2-12.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/api-index-2-14.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/api-index-2-2.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/gdk-pixbuf-Module-Interface.html|CSWgdkpixbuf-doc|CSWgtk2doc
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/sparcv9/libgdk_pixbuf-2.0.so|CSWgtk2|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/libgdk_pixbuf_xlib-2.0.so|CSWgtk2|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/pkgconfig/gdk-pixbuf-xlib-2.0.pc|CSWgtk2devel|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/sparcv9/pkgconfig/gdk-pixbuf-2.0.pc|CSWgtk2devel|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/sparcv9/libgdk_pixbuf_xlib-2.0.so|CSWgtk2|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/pkgconfig/gdk-pixbuf-2.0.pc|CSWgtk2devel|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/sparcv9/pkgconfig/gdk-pixbuf-xlib-2.0.pc|CSWgtk2devel|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-dev += file-collision|/opt/csw/lib/libgdk_pixbuf-2.0.so|CSWgtk2|CSWlibgdk-pixbuf-dev
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf2-0-0 += file-collision|/opt/csw/lib/sparcv9/libgdk_pixbuf-2.0.so.0|CSWgtk2|CSWlibgdk-pixbuf2-0-0
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf2-0-0 += file-collision|/opt/csw/lib/libgdk_pixbuf-2.0.so.0|CSWgtk2|CSWlibgdk-pixbuf2-0-0
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-xlib2-0-0 += file-collision|/opt/csw/lib/libgdk_pixbuf_xlib-2.0.so.0|CSWgtk2|CSWlibgdk-pixbuf-xlib2-0-0
+CHECKPKG_OVERRIDES_CSWlibgdk-pixbuf-xlib2-0-0 += file-collision|/opt/csw/lib/sparcv9/libgdk_pixbuf_xlib-2.0.so.0|CSWgtk2|CSWlibgdk-pixbuf-xlib2-0-0
+
 DESCRIPTION = GNOME tools for pixmap manupulation
 define BLURB
 endef
