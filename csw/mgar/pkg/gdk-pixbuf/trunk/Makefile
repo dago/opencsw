@@ -81,6 +81,8 @@ EXPANDVARS = CSWgdkpixbuf-loaders.postinstall
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 PACKAGES += CSWgdkpixbuf
+# To retain backwards compatibility with gdk pixbuf package 0.22
+CATALOGNAME_CSWgdkpixbuf = gdk_pixbuf
 SPKG_DESC_CSWgdkpixbuf = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWgdkpixbuf  = CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgdk-pixbuf-xlib2-0-0
@@ -96,11 +98,15 @@ RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibpng12-0
 # except -dev
 CHECKPKG_OVERRIDES_CSWgdkpixbuf += surplus-dependency|CSWlibgdk-pixbuf-xlib2-0-0
 CHECKPKG_OVERRIDES_CSWgdkpixbuf += surplus-dependency|CSWgdkpixbuf-loaders
+CHECKPKG_OVERRIDES_CSWgdkpixbuf += catalogname-does-not-match-pkgname|pkgname=CSWgdkpixbuf|catalogname=gdk_pixbuf|expected-catalogname=gdkpixbuf
 
 PACKAGES += CSWgdkpixbuf-doc
+# To retain backwards compatibility with gdk pixbuf package 0.22
+CATALOGNAME_CSWgdkpixbuf-doc = gdk_pixbuf_doc
 SPKG_DESC_CSWgdkpixbuf-doc = $(DESCRIPTION), Documentation
 ARCHALL_CSWgdkpixbuf-doc = 1
 PKGFILES_CSWgdkpixbuf-doc = .*/gtk-doc/.*
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += catalogname-does-not-match-pkgname|pkgname=CSWgdkpixbuf-doc|catalogname=gdk_pixbuf_doc|expected-catalogname=gdkpixbuf_doc
 
 PACKAGES += CSWlibgdk-pixbuf2-0-0
 SPKG_DESC_CSWlibgdk-pixbuf2-0-0 = $(DESCRIPTION), libgdk_pixbuf-2.0.so.0
@@ -126,6 +132,8 @@ RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibpng12-0
 
 PACKAGES += CSWgdkpixbuf-loaders
+# To retain backwards compatibility with gdk pixbuf package 0.22
+CATALOGNAME_CSWgdkpixbuf-loaders = gdk_pixbuf_loaders
 SPKG_DESC_CSWgdkpixbuf-loaders = $(DESCRIPTION), loader modules
 PKGFILES_CSWgdkpixbuf-loaders  = .*/loaders/.*\.so
 PKGFILES_CSWgdkpixbuf-loaders += .*/gdk-pixbuf-query-loaders
@@ -139,6 +147,7 @@ RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWtiff
+CHECKPKG_OVERRIDES_CSWgdkpixbuf-loaders += catalogname-does-not-match-pkgname|pkgname=CSWgdkpixbuf-loaders|catalogname=gdk_pixbuf_loaders|expected-catalogname=gdkpixbuf_loaders
 
 PACKAGES += CSWlibgdk-pixbuf-dev
 SPKG_DESC_CSWlibgdk-pixbuf-dev = Developtment files $(DESCRIPTION)
