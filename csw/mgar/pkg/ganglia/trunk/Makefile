@@ -187,11 +187,11 @@ PKGFILES_CSWgangliagmetad = /opt/csw/sbin/gmetad
 PKGFILES_CSWgangliagmetad += /etc/opt/csw/ganglia/gmetad.conf.CSW
 PKGFILES_CSWgangliagmetad += /etc/opt/csw/init.d/cswgmetad
 PKGFILES_CSWgangliagmetad += /var/opt/csw/ganglia/rrds
-PKGFILES_CSWgangliagmetad += /var/opt/csw/ganglia/dwoo
 PKGFILES_CSWgangliagmetad += /opt/csw/share/man/man1/gmetad.1
 
 PKGFILES_CSWgangliaweb = $(WWWGANGLIA)/.*
 PKGFILES_CSWgangliaweb += /opt/csw/apache2/etc/extra/httpd-ganglia.conf.CSW
+PKGFILES_CSWgangliaweb += /var/opt/csw/ganglia/dwoo
 
 PRESERVECONF = /opt/csw/apache2/etc/extra/httpd-ganglia.conf
 PRESERVECONF += /etc/opt/csw/ganglia/gmond.conf
@@ -207,9 +207,11 @@ INITSMF += /etc/opt/csw/init.d/cswgmetad
 
 PROTOTYPE_FILTER_CSWgangliagmetad = awk '\
 $$$$3 ~ /\/var\/opt\/csw\/ganglia\/rrds/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
-$$$$3 ~ /\/var\/opt\/csw\/ganglia\/dwoo/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
 { print }'
 
+PROTOTYPE_FILTER_CSWgangliaweb = awk '\
+$$$$3 ~ /\/var\/opt\/csw\/ganglia\/dwoo/ { $$$$5 = "nobody"; $$$$6 = "nogroup" } \
+{ print }'
 
 #ARCHALL_CSWganglia-dev = 1
 ARCHALL_CSWgangliaweb = 1
@@ -252,6 +254,7 @@ ifeq ($(VERSION),3.1.2)
 	@rm -rf $(DESTDIR)$(ETCGANGLIA)/conf.d/modgstatus.conf.CSW
 endif
 	@ginstall -d $(DESTDIR)/var/opt/csw/ganglia/rrds
+	@ginstall -d $(DESTDIR)/var/opt/csw/ganglia/dwoo
 	@ginstall -D $(WORKSRC)/gmond/gmond.conf.5 $(DESTDIR)$(mandir)/man5/gmond.conf.5
 	@ginstall -D $(WORKSRC)/mans/gmetad.1 $(DESTDIR)$(mandir)/man1/gmetad.1
 	@ginstall -D $(WORKSRC)/mans/gmond.1 $(DESTDIR)$(mandir)/man1/gmond.1
