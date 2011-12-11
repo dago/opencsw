@@ -21,6 +21,13 @@ $template_name = "default";
 $gmetad_root = "/var/opt/csw/ganglia";
 $rrds = "$gmetad_root/rrds";
 
+# Where Dwoo (PHP templating engine) store compiled templates
+$dwoo_compiled_dir = "$gmetad_root/dwoo";
+
+# Where to find filter configuration files, if not set filtering
+# will be disabled
+#$filter_dir = "$gmetad_root/filters";
+
 # Leave this alone if rrdtool is installed in $gmetad_root,
 # otherwise, change it if it is installed elsewhere (like /usr/bin)
 define("RRDTOOL", "/opt/csw/bin/rrdtool");
@@ -35,6 +42,9 @@ $rrdcached_socket = "";
 
 # Location for modular-graph files.
 $graphdir='./graph.d';
+
+# Display statistical values on RRD graphs; i.e.: average, min, max
+$graphreport_stats = true;
 
 #
 # If you want to grab data from a different ganglia source specify it here.
