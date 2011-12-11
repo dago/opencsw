@@ -2,25 +2,37 @@
 
 umask 0022
 
-if [ "$PKG_ROOT_DIR" = "" ] ; then PKG_ROOT_DIR=/ ; fi
+BIN=gtk-update-icon-cache
+BIN_OPTS="--update-cache"
 
-echo 'Updating gdk-pixbuf.loaders...'
-test -x ${PKG_ROOT_DIR}/opt/csw/bin/gdk-pixbuf-query-loaders && \
-	mkdir -p "${PKG_ROOT_DIR}"/opt/csw/etc/gtk-2.0 &&
-	chroot "${PKG_ROOT_DIR}" /opt/csw/bin/gdk-pixbuf-query-loaders >"${PKG_ROOT_DIR}"/opt/csw/etc/gtk-2.0/gdk-pixbuf.loaders &&
-	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWgtk2 /opt/csw/etc/gtk-2.0/gdk-pixbuf.loaders f 0644 root bin
-test -x ${PKG_ROOT_DIR}/opt/csw/bin/sparcv9/gdk-pixbuf-query-loaders && \
-test -x /usr/bin/isainfo && [ "`/usr/bin/isainfo -b`" = 64 ] &&
-	mkdir -p "${PKG_ROOT_DIR}"/opt/csw/etc/64/gtk-2.0 &&
-	chroot "${PKG_ROOT_DIR}" /opt/csw/bin/sparcv9/gdk-pixbuf-query-loaders >"${PKG_ROOT_DIR}"/opt/csw/etc/64/gtk-2.0/gdk-pixbuf.loaders &&
-	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWgtk2 /opt/csw/etc/64/gtk-2.0 d 0755 root bin &&
-	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWgtk2 /opt/csw/etc/64/gtk-2.0/gdk-pixbuf.loaders f 0644 root bin
-test -x ${PKG_ROOT_DIR}/opt/csw/bin/amd64/gdk-pixbuf-query-loaders && \
-test -x /usr/bin/isainfo && [ "`/usr/bin/isainfo -b`" = 64 ] &&
-	mkdir -p "${PKG_ROOT_DIR}"/opt/csw/etc/64/gtk-2.0 &&
-	chroot "${PKG_ROOT_DIR}" /opt/csw/bin/amd64/gdk-pixbuf-query-loaders >"${PKG_ROOT_DIR}"/opt/csw/etc/64/gtk-2.0/gdk-pixbuf.loaders &&
-	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWgtk2 /opt/csw/etc/64/gtk-2.0 d 0755 root bin &&
-	chroot "${PKG_ROOT_DIR}" /usr/sbin/installf CSWgtk2 /opt/csw/etc/64/gtk-2.0/gdk-pixbuf.loaders f 0644 root bin
+echo "** Querying IM Modules"
 
-chroot "${PKG_ROOT_DIR}" /usr/sbin/installf -f CSWgtk2
-/bin/true
+# But first, do the obvious
+/usr/bin/printf "- Default ISA... "
+@prefix@/bin/${BIN} ${BIN_OPTS} >/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+    echo "Error"
+else
+    echo "OK"
+fi
+
+# Now, do all other
+for i in @BUILD_ISAS@
+do
+    queryloader=@prefix@/bin/$i/${BIN}
+    if [ -x "${queryloader}" ]
+    then
+	/usr/bin/printf "- $i ISA... "
+	"${queryloader}" ${BIN_OPTS} >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+	    echo "Error"
+	else
+	    echo "OK"
+	fi
+    fi
+done
+
+echo "** Done querying IM Modules"
+
