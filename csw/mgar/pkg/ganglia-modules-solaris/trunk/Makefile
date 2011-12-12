@@ -39,6 +39,9 @@ BUILD64 = 1
 BUILD_DEP_PKGS = CSWlibapr1-0 CSWganglia-dev
 
 RUNTIME_DEP_PKGS = CSWlibapr1-0 CSWgangliaagent CSWlibganglia0
+CHECKPKG_OVERRIDES_CSWganglia-modules-solaris += surplus-dependency|CSWlibganglia0
+CHECKPKG_OVERRIDES_CSWganglia-modules-solaris += surplus-dependency|CSWgangliaagent
+CHECKPKG_OVERRIDES_CSWganglia-modules-solaris += surplus-dependency|CSWlibapr1-0
 
 PKGFILES = /opt/csw/lib/ganglia/modio.so
 PKGFILES += /opt/csw/lib/ganglia/modmulticpu.so
