@@ -76,6 +76,14 @@
 #    them in the proper place.
 #
 # 8. Make sure the proper version numbers are used for the library packages.
+#
+#
+# Note 5: Development package
+# ------
+#
+# The development package is not versioned, i.e. named CSW$(NAME)-dev,
+# since we can only support one set of header files with a reasonable
+# amount of effort.
 
 
 # This BUILD is NOT READY!  It needs work before it's usable.
@@ -196,6 +204,9 @@ DISTFILES += $(CSWPGSQLCONFFILETMPL)
 # This patch will replace /usr/local/include by /opt/csw/include in
 # ecpg.c and thus silence a checkpkg error.
 PATCHFILES += 0001-ecpg-usr-local-include-replacement.patch
+# Test running on a NFS may fail. Thus we let the test run in
+# /var/tmp/pgsql/tmp_check
+PATCHFILES += 0002-Run-tests-in-var-tmp-pgsql-tmp_check.patch
 
 INITSMF = $(sysconfdir)/init\.d/$(INITSCRIPTFILE_VERSIONED)
 USERGROUP = $(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
@@ -288,28 +299,28 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibreadline6
 CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach n,$(SO_NAMES_CONTRIB), soname-not-part-of-filename|soname=lib$(n).0|filename=$(n) )
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach i,$(BUILD_ISAS), contrib_$(i))
 
-PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-dev
-SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-dev = PostgreSQL $(VERSION), Development Files
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev  = .*/pgxs/.*
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += $(PKGFILES_DEVEL)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*$(n)$$)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += .*/man5/.*
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_dev.*
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibecpg-compat3
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibecpg6
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibpq5
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibpgtypes3
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibz1
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibgssapi-krb5-2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibgnugetopt0
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibxslt1
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibxml2-2
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWlibreadline6
-RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += CSWosslrt
+PACKAGES += CSW$(NAME)-dev
+SPKG_DESC_CSW$(NAME)-dev = PostgreSQL $(VERSION), Development Files
+PKGFILES_CSW$(NAME)-dev  = .*/pgxs/.*
+PKGFILES_CSW$(NAME)-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSW$(NAME)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*$(n)$$)
+PKGFILES_CSW$(NAME)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
+PKGFILES_CSW$(NAME)-dev += .*/man5/.*
+PKGFILES_CSW$(NAME)-dev += .*/alternatives/$(NAME)$(BASE_VERSION_NODOT)_dev.*
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibecpg-compat3
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibecpg6
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibpq5
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibpgtypes3
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibz1
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibgssapi-krb5-2
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibgnugetopt0
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibxslt1
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibxml2-2
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWosslrt
 # Those '/usr/local' are ok, they are in a HPUX section of the file
-CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev += $(foreach i,$(BUILD_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/local|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib) )
-#ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-dev = $(foreach i,$(BUILD_ISAS), dev_$(i))
+CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(BUILD_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/local|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib) )
+#ALTERNATIVES_CSW$(NAME)-dev = $(foreach i,$(BUILD_ISAS), dev_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-doc
 ARCHALL_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = 1
