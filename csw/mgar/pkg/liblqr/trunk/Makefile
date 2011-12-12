@@ -6,38 +6,30 @@ DESCRIPTION = A seam-carving C/C++ library called Liquid Rescale.
 define BLURB
 endef
 
-MASTER_SITES = http://liblqr.wikidot.com/local--files/en:download-page/
+MASTER_SITES = http://liblqr.wikidot.com/local--files/en%3Adownload-page/
 DISTNAME = $(NAME)-1-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
-PACKAGES = CSWliblqr CSWliblqrdevel
-CATALOGNAME_CSWliblqr = liblqr
-CATALOGNAME_CSWliblqrdevel = liblqr_devel
+# The compilation succeeds on Solaris 9 without any of these, disable for now.
+#PATCHFILES += inline.diff
+#PATCHFILES += examples.diff
+#PATCHFILES += lqr_carver.c.diff
 
-SPKG_DESC_CSWliblqr += $(DESCRIPTION)
-SPKG_DESC_CSWliblqrdevel += $(DESCRIPTION) - developer package
+VENDOR_URL = http://liblqr.wikidot.com/
 
-RUNTIME_DEP_PKGS_CSWliblqr += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWliblqr += CSWglib2
-RUNTIME_DEP_PKGS_CSWliblqrdevel += CSWliblqr
+PACKAGES += CSWliblqr1-0
+SPKG_DESC_CSWliblqr1-0 = A seam-carving C/C++ library called Liquid Rescale, liblqr-1.so.0
+PKGFILES_CSWliblqr1-0 += $(call pkgfiles_lib,liblqr-1.so.0)
+RUNTIME_DEP_PKGS_CSWliblqr1-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWliblqr1-0 += CSWglib2
+OBSOLETED_BY_CSWliblqr1-0 += CSWliblqr
 
-PKGFILES_CSWliblqrdevel = $(PKGFILES_DEVEL)
-
-SPKG_SOURCEURL = http://liblqr.wikidot.com/
-
-DOCFILES = AUTHORS BUGS COPYING COPYING.LESSER ChangeLog NEWS README TODO
-
-UFILES_REGEX = $(NAME)-((\d+(?:\.\d+)*)-(\d+)?).tar.bz2
-
-PATCHFILES += inline.diff
-PATCHFILES += examples.diff
-PATCHFILES += lqr_carver.c.diff
-
-CONFIGURE_ARGS  = $(DIRPATHS)
-
-STRIP_LIBTOOL=1
-
-TEST_TARGET = check
+PACKAGES += CSWliblqr-dev
+SPKG_DESC_CSWliblqr-dev += Development files for liblqr-1.so.0
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWliblqr-dev += CSWliblqr1-0
+OBSOLETED_BY_CSWliblqr-dev += CSWliblqrdevel
+CATALOGNAME_CSWliblqrdevel = liblqr_devel_stub
 
 BUILD64 = 1
 
