@@ -10,8 +10,10 @@ MASTER_SITES = http://liblqr.wikidot.com/local--files/en%3Adownload-page/
 DISTNAME = $(NAME)-1-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 
+# Otherwise the inline functions are not exported and are missing during linkage
+PATCHFILES += inline.diff
+
 # The compilation succeeds on Solaris 9 without any of these, disable for now.
-#PATCHFILES += inline.diff
 #PATCHFILES += examples.diff
 #PATCHFILES += lqr_carver.c.diff
 
