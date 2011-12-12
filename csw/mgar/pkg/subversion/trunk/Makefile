@@ -39,6 +39,8 @@ MASTER_SITES = http://archive.apache.org/dist/subversion/
 #MASTER_SITES = http://people.apache.org/~hwright/svn/1.7.2/
 DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 
+LICENSE = LICENSE
+
 BUILD_DEP_PKGS += CSWlibexpat-dev
 BUILD_DEP_PKGS += CSWlibserf-dev
 BUILD_DEP_PKGS += CSWlibsqlite3-dev
@@ -89,7 +91,6 @@ ARCHALL_CSWsvn-dev         = 1
 PKGFILES_CSWsvn-dev        = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-dev       += $(docdir)/$(CATALOGNAME_CSWsvn-dev)/changelog.CSW
 CHECKPKG_OVERRIDES_CSWsvn-dev += archall-devel-package
-CHECKPKG_OVERRIDES_CSWsvn-dev += license-missing|/opt/csw/share/doc/subversion_dev/license
 
 # Note: This is just to prevent a catalog name change for a stub
 # package.  We made the real package have matching names.
@@ -102,7 +103,6 @@ PKGFILES_CSWsvn-contrib    = $(docdir)/subversion/contrib.*
 ARCHALL_CSWsvn-contrib     = 1
 CHECKPKG_OVERRIDES_CSWsvn-contrib += action-class-only-in-pkginfo|none
 CHECKPKG_OVERRIDES_CSWsvn-contrib += catalogname-does-not-match-pkgname|pkgname=CSWsvn-contrib|catalogname=subversion_contrib|expected-catalogname=svn_contrib
-CHECKPKG_OVERRIDES_CSWsvn-contrib += license-missing|/opt/csw/share/doc/subversion_contrib/license
 
 
 PACKAGES += CSWsvn-tools
@@ -112,7 +112,6 @@ PKGFILES_CSWsvn-tools      = $(docdir)/subversion/tools.*
 ARCHALL_CSWsvn-tools       = 1
 CHECKPKG_OVERRIDES_CSWsvn-tools += action-class-only-in-pkginfo|none
 CHECKPKG_OVERRIDES_CSWsvn-tools += catalogname-does-not-match-pkgname|pkgname=CSWsvn-tools|catalogname=subversion_tools|expected-catalogname=svn_tools
-CHECKPKG_OVERRIDES_CSWsvn-tools += license-missing|/opt/csw/share/doc/subversion_tools/license
 
 
 PACKAGES += CSWap2svn
@@ -131,7 +130,6 @@ RUNTIME_DEP_PKGS_CSWap2svn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWap2svn += CSWbdb48
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWap2svn += CSWlibaprutil1-0
-CHECKPKG_OVERRIDES_CSWap2svn += license-missing|/opt/csw/share/doc/ap2_subversion/license
 CHECKPKG_OVERRIDES_CSWap2svn += catalogname-does-not-match-pkgname|pkgname=CSWap2svn|catalogname=ap2_subversion|expected-catalogname=ap2svn
 
 
@@ -153,7 +151,6 @@ RUNTIME_DEP_PKGS_CSWjavasvn += CSWlibz1
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWosslrt
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWsasl
 RUNTIME_DEP_PKGS_CSWjavasvn += CSWsvn
-CHECKPKG_OVERRIDES_CSWjavasvn += license-missing|/opt/csw/share/doc/javasvn/license
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
 CHECKPKG_OVERRIDES_CSWjavasvn += bad-rpath-entry|/opt/SUNWspro/lib/rw7|opt/csw/lib/svn/libsvnjavahl-1.so.0.0.0
@@ -177,7 +174,6 @@ RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibapr1-0
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibaprutil1-0
 RUNTIME_DEP_PKGS_CSWpmsvn += CSWlibsqlite3-0
-CHECKPKG_OVERRIDES_CSWpmsvn += license-missing|/opt/csw/share/doc/pm_subversion/license
 CHECKPKG_OVERRIDES_CSWpmsvn += catalogname-does-not-match-pkgname|pkgname=CSWpmsvn|catalogname=pm_subversion|expected-catalogname=pmsvn
 
 
@@ -187,7 +183,6 @@ CATALOGNAME_CSWrbsvn       = rbsvn
 PKGFILES_CSWrbsvn          = $(libdir)/ruby.*
 PKGFILES_CSWrbsvn         += $(SVNLIB)/.*swig_ruby.*
 PKGFILES_CSWrbsvn         += $(docdir)/$(CATALOGNAME_CSWrbsvn)/changelog.CSW
-CHECKPKG_OVERRIDES_CSWrbsvn += license-missing|/opt/csw/share/doc/rbsvn/license
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWsvn
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWruby
 RUNTIME_DEP_PKGS_CSWrbsvn += CSWbdb48
@@ -211,7 +206,6 @@ CATALOGNAME_CSWpythonsvn         = pythonsvn
 PKGFILES_CSWpythonsvn            = $(libdir)/python.*
 PKGFILES_CSWpythonsvn           += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn           += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
-CHECKPKG_OVERRIDES_CSWpythonsvn += license-missing|/opt/csw/share/doc/pythonsvn/license
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibmagic1
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibexpat1
