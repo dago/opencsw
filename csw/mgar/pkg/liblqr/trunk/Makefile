@@ -21,7 +21,7 @@ PACKAGES += CSWliblqr1-0
 SPKG_DESC_CSWliblqr1-0 = A seam-carving C/C++ library called Liquid Rescale, liblqr-1.so.0
 PKGFILES_CSWliblqr1-0 += $(call pkgfiles_lib,liblqr-1.so.0)
 RUNTIME_DEP_PKGS_CSWliblqr1-0 += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWliblqr1-0 += CSWglib2
+RUNTIME_DEP_PKGS_CSWliblqr1-0 += CSWlibglib2-0-0
 OBSOLETED_BY_CSWliblqr1-0 += CSWliblqr
 
 PACKAGES += CSWliblqr-dev
