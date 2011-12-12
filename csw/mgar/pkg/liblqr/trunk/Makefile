@@ -15,6 +15,9 @@ DISTFILES = $(DISTNAME).tar.bz2
 #PATCHFILES += examples.diff
 #PATCHFILES += lqr_carver.c.diff
 
+# New glib2 is only available on Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
 VENDOR_URL = http://liblqr.wikidot.com/
 
 PACKAGES += CSWliblqr1-0
