@@ -1,5 +1,5 @@
 NAME = tiff
-VERSION = 3.9.2
+VERSION = 3.9.5
 CATEGORIES = lib
 
 DESCRIPTION = Lib and tools for Tag Image File Format
@@ -7,107 +7,69 @@ define BLURB
 endef
 
 MASTER_SITES =  http://download.osgeo.org/libtiff/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTNAME  = $(NAME)-$(VERSION)
+DISTFILES += $(DISTNAME).tar.gz
 
-PACKAGES = CSWtiff CSWtiffrt CSWtiffdevel CSWtiffdoc
-CATALOGNAME_CSWtiff = tiff
-CATALOGNAME_CSWtiffrt = tiff_rt
-CATALOGNAME_CSWtiffdevel = tiff_devel
-CATALOGNAME_CSWtiffdoc = tiff_doc
+PATCHFILES += 0001-Keep-norunpath-during-linkage.patch
 
-SPKG_DESC_CSWtiff += $(DESCRIPTION)
-SPKG_DESC_CSWtiffrt +=  $(DESCRIPTION) - runtime package
-SPKG_DESC_CSWtiffdevel += $(DESCRIPTION) - developer package
-SPKG_DESC_CSWtiffdoc += $(DESCRIPTION) - documentation
-
-RUNTIME_DEP_PKGS_CSWtiff += CSWtiffrt CSWjbigkit CSWjpeg CSWzlib
-RUNTIME_DEP_PKGS_CSWtiffrt += CSWjbigkit CSWjpeg CSWzlib
-RUNTIME_DEP_PKGS_CSWtiffdevel += CSWtiffrt
-RUNTIME_DEP_PKGS_CSWtiffdoc += 
-
-PKGFILES_CSWtiffrt = $(PKGFILES_RT)
-PKGFILES_CSWtiffdevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWtiffdoc = $(sharedstatedir)/doc/.*
-
-ARCHALL_CSWtiffdoc = 1
-
-CHECKPKG_OVERRIDES_CSWtiffdevel += missing-dependency|CSWtiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffcmp
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|pal2rgb
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|fax2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffcp
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|ppm2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffmedian
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|raw2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|thumbnail
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiff2ps
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|bmp2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|ras2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|rgb2ycbcr
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiff2bw
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffcrop
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffset
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|fax2ps
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffinfo
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffdump
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiff2rgba
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|gif2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffdither
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffsplit
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffinfo
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiff2bw
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffdump
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffset
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffcp
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|gif2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffcrop
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|thumbnail
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffmedian
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|ppm2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|pal2rgb
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffcmp
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|rgb2ycbcr
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|raw2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|bmp2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|ras2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffdither
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|fax2ps
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|fax2tiff
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiff2ps
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiffsplit
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiff2rgba
-CHECKPKG_OVERRIDES_CSWtiff += symbol-not-found|tiff2pdf
+VENDOR_URL = http://www.remotesensing.org/libtiff/
 
 LICENSE = COPYRIGHT
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
+PACKAGES = CSWtiff
+SPKG_DESC_CSWtiff += Tools for Tag Image File Format manipulation
+PKGFILES_CSWtiff += $(bindir)/.*
+PKGFILES_CSWtiff += $(mandir)/man1/.*
+RUNTIME_DEP_PKGS_CSWtiff += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWtiff += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWtiff += CSWjbigkit
+RUNTIME_DEP_PKGS_CSWtiff += CSWfreeglut
+RUNTIME_DEP_PKGS_CSWtiff += CSWmesa
+RUNTIME_DEP_PKGS_CSWtiff += CSWlibz1
 
-SPKG_SOURCEURL = http://www.remotesensing.org/libtiff/
+# There are legacy packages dependencing on CSWtiff who have not a SONAME binding and
+# require libtiff.so to be available
+RUNTIME_DEP_PKGS_CSWtiff += CSWlibtiff-dev
+CHECKPKG_OVERRIDES_CSWtiff += surplus-dependency|CSWlibtiff-dev
 
-# Patches from upstream (found via src.opensolaris.org), not applied for now
-#PATCHFILES += libtiff-mantypo.patch
-#PATCHFILES += libtiff-scanlinesize.patch
-#PATCHFILES += libtiff-jpeg-scanline.patch
-#PATCHFILES += libtiff-CVE-2009-2347.patch
+PACKAGES += CSWlibtiff3
+SPKG_DESC_CSWlibtiff3 = Tag Image File Format library for C, libtiff.so.3
+PKGFILES_CSWlibtiff3 += $(call pkgfiles_lib,libtiff.so.3)
+RUNTIME_DEP_PKGS_CSWlibtiff3 += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWlibtiff3 += CSWjbigkit
+RUNTIME_DEP_PKGS_CSWlibtiff3 += CSWlibz1
+
+PACKAGES += CSWlibtiffxx3
+SPKG_DESC_CSWlibtiffxx3 = Tag Image File Format library for C++, libtiffcxx.so.3
+PKGFILES_CSWlibtiffxx3 += $(call pkgfiles_lib,libtiffxx.so.3)
+RUNTIME_DEP_PKGS_CSWlibtiffxx3 += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWlibtiffxx3 += CSWjbigkit
+RUNTIME_DEP_PKGS_CSWlibtiffxx3 += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibtiffxx3 += CSWlibtiff3
+
+PACKAGES += CSWlibtiff-dev
+SPKG_DESC_CSWlibtiff-dev += Development files for libtiff.so.3 and libtiffxx.so.3
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibtiff-dev += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWlibtiff-dev += CSWlibtiffxx3
+
+# There are docs only
+CHECKPKG_OVERRIDES_CSWlibtiff-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/tiff/ChangeLog
+CHECKPKG_OVERRIDES_CSWlibtiff-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/tiff/html/build.html
+
+EXTRA_LINKER_FLAGS += -norunpath
 
 BUILD64 = 1
-
-STRIP_LIBTOOL = 1
-
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
+ISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-docdir=$(docdir)/tiff
 CONFIGURE_ARGS += --disable-static
 CONFIGURE_ARGS += --enable-cxx
-CONFIGURE_ARGS += --with-zlib-include-dir=/opt/csw/include
-CONFIGURE_ARGS += --with-zlib-lib-dir=/opt/csw/lib
-CONFIGURE_ARGS += --with-jpeg-include-dir=/opt/csw/include
-CONFIGURE_ARGS += --with-jpeg-lib-dir=/opt/csw/lib
-CONFIGURE_ARGS += --with-jbig-include-dir=/opt/csw/include
-CONFIGURE_ARGS += --with-jbig-lib-dir=/opt/csw/lib
+CONFIGURE_ARGS += --with-zlib-include-dir=$(includedir)
+CONFIGURE_ARGS += --with-zlib-lib-dir=$(libdir)
+CONFIGURE_ARGS += --with-jpeg-include-dir=$(includedir)
+CONFIGURE_ARGS += --with-jpeg-lib-dir=$(libdir)
+CONFIGURE_ARGS += --with-jbig-include-dir=$(includedir)
+CONFIGURE_ARGS += --with-jbig-lib-dir=$(libdir)
 
 include gar/category.mk
