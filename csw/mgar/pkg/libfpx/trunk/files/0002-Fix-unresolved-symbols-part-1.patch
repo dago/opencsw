@@ -1,0 +1,30 @@
+From bad4e83495a98fdf000e92a6d485968d54ef35ae Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Tue, 13 Dec 2011 20:28:05 +0100
+Subject: [PATCH] Fix unresolved symbols part 1
+
+diff --git a/ole/olehstrm.cpp b/ole/olehstrm.cpp
+index 5669734..7118ba7 100644
+--- a/ole/olehstrm.cpp
++++ b/ole/olehstrm.cpp
+@@ -167,12 +167,14 @@ Boolean OLEHeaderStream::WriteHeader( )
+ // CAUTION: the Seek(), GetEndOfFile() and SetSize() functions take the stream offset into account
+ // and call the parent stream function.
+ // Set the stream pointer to desired position. The default mode is from the begining
+-Boolean OLEHeaderStream::Seek( long offset, const unsigned long mode )
++Boolean OLEHeaderStream::Seek( const long offset, const unsigned long mode )
+ {
++  long tmp = offset;
++
+   // If the mode is from the begining of the stream, include the header length
+   if ( mode == STREAM_SEEK_SET )
+-    offset += streamStartPos;
+-  return OLEStream::Seek(offset,mode);
++    tmp += streamStartPos;
++  return OLEStream::Seek(tmp,mode);
+ }
+ 
+ // Get the end pointer of the stream, excluding the header length
+-- 
+1.7.6.1
+

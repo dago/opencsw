@@ -1,0 +1,27 @@
+From ed235e0b84bec580bd135d78b07a521f5c20a269 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Tue, 13 Dec 2011 21:10:54 +0100
+Subject: [PATCH] Fix unresolved symbols part 2
+
+---
+ oless/ascii.cxx |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/oless/ascii.cxx b/oless/ascii.cxx
+index 4eaa836..4b935ba 100644
+--- a/oless/ascii.cxx
++++ b/oless/ascii.cxx
+@@ -335,8 +335,8 @@ EH_Err:
+ //
+ //---------------------------------------------------------------
+ 
+-STDMETHODIMP CExposedDocFile::RenameElement(char const *pszOldName,
+-                                            char const *pszNewName)
++STDMETHODIMP CExposedDocFile::RenameElement(TCHAR const *pszOldName,
++                                            TCHAR const *pszNewName)
+ {
+     SCODE sc;
+     WCHAR wcsOldName[CWCSTORAGENAME], wcsNewName[CWCSTORAGENAME];
+-- 
+1.7.6.1
+
