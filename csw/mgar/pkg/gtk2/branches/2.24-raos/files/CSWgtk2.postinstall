@@ -3,28 +3,16 @@
 umask 0022
 
 BIN=gtk-update-icon-cache
-BIN_OPTS="--update-cache"
 
-echo "** Querying IM Modules"
 
-# But first, do the obvious
-/usr/bin/printf "- Default ISA... "
-@prefix@/bin/${BIN} ${BIN_OPTS} >/dev/null 2>&1
-if [ $? -ne 0 ]
-then
-    echo "Error"
-else
-    echo "OK"
-fi
+echo "** Updating Icon cache"
 
-# Now, do all other
-for i in @BUILD_ISAS@
+for i in @datadir@/icons/*
 do
-    queryloader=@prefix@/bin/$i/${BIN}
-    if [ -x "${queryloader}" ]
+    if [ -d "${i}" ]
     then
-	/usr/bin/printf "- $i ISA... "
-	"${queryloader}" ${BIN_OPTS} >/dev/null 2>&1
+	/usr/bin/printf "- ${i}... "
+	@bindir@/${BIN} ${i} >/dev/null 2>&1
 	if [ $? -ne 0 ]
 	then
 	    echo "Error"
@@ -34,5 +22,5 @@ do
     fi
 done
 
-echo "** Done querying IM Modules"
+echo "** Done Updating Icon cache"
 
