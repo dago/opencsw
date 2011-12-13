@@ -1,5 +1,5 @@
 NAME = libfpx
-VERSION = 1.3.0
+VERSION = 1.3.1
 CATEGORIES = lib
 
 DESCRIPTION = FlashPIX library
@@ -10,7 +10,9 @@ MASTER_SITES = ftp://ftp.imagemagick.org/pub/ImageMagick/delegates/
 DISTFILES  = $(DISTNAME).tar.xz
 
 PATCHFILES += olecomm.h.patch
-PATCHFILES += tchar.patch
+# PATCHFILES += tchar.patch
+
+# PATCHFILES += 0001-Force-one-signature-for-CExposedDocFile-RenameElemen.patch
 
 VENDOR_URL = http://www.imagemagick.org
 LICENSE = flashpix.h
@@ -35,9 +37,13 @@ DOCFILES += README
 # Fix for problem introduced between 12101[7-8]-17 and 12101[7-8]-20
 EXTRA_CPPFLAGS += -D_RWSTD_NO_WSTR=1
 
-BUILD64 = 1
+# Make sure to include path or we link against libCrun.a
+EXTRA_LINKER_FLAGS += -L/opt/SUNWspro/lib -lCrun
 
-STRIP_LIBTOOL = 1
+# For sqrt, atan2, pow
+EXTRA_LINKER_FLAGS += -lm
+
+BUILD64 = 1
 
 include gar/category.mk
 

@@ -1,0 +1,69 @@
+From b8d8f4b228dd59d60d11a2f99573383fdb198ef3 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Mon, 12 Dec 2011 23:55:35 +0100
+Subject: [PATCH] Force one signature for CExposedDocFile::RenameElement(const
+ char*,const char*)
+
+---
+ oless/ascii.cxx |    2 +-
+ oless/expdf.cxx |    8 ++++----
+ oless/expdf.hxx |    4 ++--
+ 3 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/oless/ascii.cxx b/oless/ascii.cxx
+index 4eaa836..f90b612 100644
+--- a/oless/ascii.cxx
++++ b/oless/ascii.cxx
+@@ -345,7 +345,7 @@ STDMETHODIMP CExposedDocFile::RenameElement(char const *pszOldName,
+     olChk(CheckAName(pszNewName));
+     _tbstowcs(wcsOldName, pszOldName, CWCSTORAGENAME);
+     _tbstowcs(wcsNewName, pszNewName, CWCSTORAGENAME);
+-    sc = RenameElement(wcsOldName, wcsNewName);
++    sc = RenameElement((char const *) wcsOldName, (char const *) wcsNewName);
+     // Fall through
+ EH_Err:
+     return ResultFromScode(sc);
+diff --git a/oless/expdf.cxx b/oless/expdf.cxx
+index 3f21dd6..8e3d61a 100644
+--- a/oless/expdf.cxx
++++ b/oless/expdf.cxx
+@@ -1021,8 +1021,8 @@ EH_Err:
+ //---------------------------------------------------------------
+ 
+ 
+-TSTDMETHODIMP CExposedDocFile::RenameElement(WCHAR const *pwcsName,
+-                                             WCHAR const *pwcsNewName)
++TSTDMETHODIMP CExposedDocFile::RenameElement(const char *pwcsName,
++                                             const char *pwcsNewName)
+ {
+     SCODE sc;
+     CDfName dfnOld, dfnNew;
+@@ -1035,8 +1035,8 @@ TSTDMETHODIMP CExposedDocFile::RenameElement(WCHAR const *pwcsName,
+     olChk(Validate());
+     olChk(CheckWName(pwcsName));
+     olChk(CheckWName(pwcsNewName));
+-    dfnOld.Set(pwcsName);
+-    dfnNew.Set(pwcsNewName);
++    dfnOld.Set((WCHAR const *)pwcsName);
++    dfnNew.Set((WCHAR const *)pwcsNewName);
+     olChk(RenameEntry(&dfnOld, &dfnNew));
+ 
+     olDebugOut((DEB_ITRACE, "Out CExposedDocFile::RenameElement\n"));
+diff --git a/oless/expdf.hxx b/oless/expdf.hxx
+index 737f259..9f31d4d 100644
+--- a/oless/expdf.hxx
++++ b/oless/expdf.hxx
+@@ -133,8 +133,8 @@ public:
+                              TCHAR const *lpszNewName,
+                              DWORD grfFlags);
+     STDMETHOD(DestroyElement)(TCHAR const *pwcsName);
+-    STDMETHOD(RenameElement)(TCHAR const *pwcsOldName,
+-                             TCHAR const *pwcsNewName);
++    STDMETHOD(RenameElement)(const char *pwcsOldName,
++                             const char *pwcsNewName);
+     STDMETHOD(SetElementTimes)(const TCHAR *lpszName,
+                                FILETIME const *pctime,
+                                FILETIME const *patime,
+-- 
+1.7.6.1
+
