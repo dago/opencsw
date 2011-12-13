@@ -1,5 +1,5 @@
 NAME = rsyslog
-VERSION = 4.7.1
+VERSION = 5.8.6
 CATEGORIES = server
 
 DESCRIPTION = Enhanced multi-threaded syslogd with a focus on security and reliability
@@ -7,20 +7,19 @@ define BLURB
   Enhanced multi-threaded syslogd with a focus on security and reliability
 endef
 
-MASTER_SITES = http://download.rsyslog.com/rsyslog/
+MASTER_SITES = http://rsyslog.com/files/download/rsyslog/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-RUNTIME_DEP_PKGS_CSWrsyslog += CSWzlib
-RUNTIME_DEP_PKGS_CSWrsyslog += CSWgcc4corert
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSWrsyslog += CSWlibz1
 
 GARCOMPILER = GNU
 
-TEST_SCRIPTS = 
-TEST_TARGET = check
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
-CONFIGURE_ARGS = $(DIRPATHS)
+CONFIGURE_ARGS  = $(DIRPATHS)
+CONFIGURE_ARGS += --enable-imsolaris
+
+CHECKPKG_OVERRIDES_CSWrsyslog += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/rsyslogd.8
 
 include gar/category.mk
