@@ -1,0 +1,35 @@
+From d7e51a17837834806952718835254927669e55e6 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Mon, 12 Dec 2011 20:10:28 +0100
+Subject: [PATCH] Use distinct files for gtk.immodules on 32/64bit libs
+
+---
+ gtk/gtkrc.c |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
+
+diff --git a/gtk/gtkrc.c b/gtk/gtkrc.c
+index 82a6470..38b0176 100644
+--- a/gtk/gtkrc.c
++++ b/gtk/gtkrc.c
+@@ -450,7 +450,18 @@ gtk_rc_get_im_module_file (void)
+       if (im_module_file)
+ 	result = g_strdup (im_module_file);
+       else
++	/*
++	 * Because we install 32/64 bit libraries concurrently, we
++	 * need to have a separate gtk.immodules files.
++	 *
++	 * - gtk.immodules is for 32bit libs
++	 * - gtk.immodules-64 is for 64bit libs
++	 */
++#if defined(__sparcv9) || defined(__amd64)
++	result = g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", "gtk.immodules-64", NULL);
++#else
+ 	result = g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", "gtk.immodules", NULL);
++#endif
+     }
+ 
+   return result;
+-- 
+1.7.6.1
+
