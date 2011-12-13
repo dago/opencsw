@@ -42,7 +42,7 @@ RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibdbus1-3
 RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibatk1-0-0
 
 PACKAGES += CSWlibunique-dev
-SPKG_DESC_CSWlibunique-dev = Development files for lib
+SPKG_DESC_CSWlibunique-dev = Development files for libunique-1.0.so.0
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibunique1-0-0
 RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibglib2-dev
