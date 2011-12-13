@@ -16,46 +16,49 @@ endef
 MASTER_SITES =  $(GNOME_MIRROR)
 DISTFILES  = $(DISTNAME).tar.bz2
 
-PACKAGES += CSWlibunique
-SPKG_DESC_CSWlibunique += Library for writing single instance application
-RUNTIME_DEP_PKGS_CSWlibunique += CSWfconfig
-RUNTIME_DEP_PKGS_CSWlibunique += CSWftype2
-RUNTIME_DEP_PKGS_CSWlibunique += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWlibunique += CSWglib2
-RUNTIME_DEP_PKGS_CSWlibunique += CSWgtk2
-RUNTIME_DEP_PKGS_CSWlibunique += CSWlibatk
-RUNTIME_DEP_PKGS_CSWlibunique += CSWlibcairo
-RUNTIME_DEP_PKGS_CSWlibunique += CSWpango
-RUNTIME_DEP_PKGS_CSWlibunique += CSWdbusglib
-RUNTIME_DEP_PKGS_CSWlibunique += CSWlibdbus
+# New glib2 is Solaris 10 only
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+VENDOR_URL = http://live.gnome.org/LibUnique
+
+BUILD_DEP_PKGS += CSWlibdbus-glib-dev
+
+PACKAGES += CSWlibunique1-0-0
+SPKG_DESC_CSWlibunique1-0-0 += Library for writing single instance application
+PKGFILES_CSWlibunique1-0-0 += $(call pkgfiles_lib,libunique-1.0.so.0)
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWpango
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibdbus-glib1-2
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibdbus1-3
+RUNTIME_DEP_PKGS_CSWlibunique1-0-0 += CSWlibatk1-0-0
 
 PACKAGES += CSWlibunique-dev
 SPKG_DESC_CSWlibunique-dev = Development files for lib
-PKGFILES_CSWlibunique-dev += $(PKGFILES_DEVEL)
-PKGFILES_CSWlibunique-dev += $(sharedstatedir)/gtk-doc/.*
-RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibunique
-RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWglib2devel
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibunique1-0-0
+RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibglib2-dev
 RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWgtk2devel
-RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibatkdevel
-RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibcairodevel
+RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibatk-dev
+RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWlibcairo-dev
 RUNTIME_DEP_PKGS_CSWlibunique-dev += CSWpangodevel
-
-BUILD_DEP_PKGS += CSWdbusglibdev
-
-VENDOR_URL = http://live.gnome.org/LibUnique
 
 BUILD64 = 1
 NOISALIST = 1
 
 EXTRA_LINKER_FLAGS = -lsocket -lnsl
 
-STRIP_LIBTOOL = 1
-
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-static=no
 CONFIGURE_ARGS += --enable-gtk-doc
-# This needs a newer GTK, 2.18.x does not have it, reenable when GTK has been updated
-CONFIGURE_ARGS += --enable-introspection=no
 
 include gar/category.mk
 
