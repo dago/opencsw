@@ -1,11 +1,16 @@
 #!/bin/sh
 #
 # We will call gtk-query-immodules-2.0 for all ISAs
+#
+# Attention: the OpenCSW gtk-query-immodules-2.0 has been patched to
+# support a command line option `--update-modules' to create the
+# gtk.immodules (32bit executable) and gtk.immodules-64 (64bit
+# executable) file.
 
 umask 0022
 
 BIN=gtk-query-immodules-2.0
-BIN_OPTS="--update-cache"
+BIN_OPTS="--update-modules"
 
 echo "** Querying IM Modules"
 
@@ -22,11 +27,11 @@ fi
 # Now, do all other
 for i in @BUILD_ISAS@
 do
-    queryloader=@prefix@/bin/$i/${BIN}
-    if [ -x "${queryloader}" ]
+    ISABIN=@prefix@/bin/$i/${BIN}
+    if [ -x "${ISABIN}" ]
     then
 	/usr/bin/printf "- $i ISA... "
-	"${queryloader}" ${BIN_OPTS} >/dev/null 2>&1
+	"${ISABIN}" ${BIN_OPTS} >/dev/null 2>&1
 	if [ $? -ne 0 ]
 	then
 	    echo "Error"
