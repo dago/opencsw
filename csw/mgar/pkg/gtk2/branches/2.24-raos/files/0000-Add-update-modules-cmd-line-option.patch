@@ -1,0 +1,76 @@
+From 780bf4b7fe81f5ecb94858e43fe07c4374a1f441 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Mon, 12 Dec 2011 22:00:33 +0100
+Subject: [PATCH] Add --update-modules cmd line option
+
+---
+ gtk/queryimmodules.c |   36 +++++++++++++++++++++++++++++++++++-
+ 1 files changed, 35 insertions(+), 1 deletions(-)
+
+diff --git a/gtk/queryimmodules.c b/gtk/queryimmodules.c
+index 5369c7f..21611e4 100644
+--- a/gtk/queryimmodules.c
++++ b/gtk/queryimmodules.c
+@@ -23,6 +23,7 @@
+ 
+ #include <glib.h>
+ #include <glib/gprintf.h>
++#include <glib/gstdio.h>
+ #include <gmodule.h>
+ 
+ #include <errno.h>
+@@ -30,6 +31,8 @@
+ #ifdef HAVE_UNISTD_H
+ #include <unistd.h>
+ #endif
++#include <fcntl.h>
++#include <stdlib.h>
+ 
+ #ifdef USE_LA_MODULES
+ #define SOEXT ".la"
+@@ -164,10 +167,41 @@ query_module (const char *dir, const char *name)
+ int main (int argc, char **argv)
+ {
+   char *cwd;
+-  int i;
++  int i, fd, retval;
+   char *path;
++  char *gtk_immodules;
+   gboolean error = FALSE;
+ 
++  /*
++   * Quick an dirty hack
++   */
++  if ( argc == 2 && strcmp("--update-modules", argv[1]) == 0 )
++    {
++#if defined(__amd64) || defined(__sparcv9)
++      gtk_immodules = g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", "gtk.immodules-64", NULL);
++#else
++      gtk_immodules = g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", "gtk.immodules", NULL);
++#endif
++      fd = g_open(gtk_immodules, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
++      if ( fd == -1 )
++	{
++	  g_fprintf(stderr, "Cannot open %s.\n", gtk_immodules);
++	  exit(1);
++	}
++
++      if ( dup2(fd, STDOUT_FILENO) == -1 )
++	{
++	  g_fprintf(stderr, "Unable to redirect STDOUT.\n");
++	  exit(1);
++	}
++
++      /*
++       * cheat, to make it think there are no arguments given
++       */
++      argc = 1;
++    }
++      
++
+   g_printf ("# GTK+ Input Method Modules file\n"
+ 	    "# Automatically generated file, do not edit\n"
+ 	    "# Created by %s from gtk+-%d.%d.%d\n"
+-- 
+1.7.6.1
+
