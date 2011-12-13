@@ -1,0 +1,25 @@
+From 7968df55fadd7ce6601d2a43581ff74dddc7fab6 Mon Sep 17 00:00:00 2001
+From: Jake Goerzen <jgoerzen@opencsw.org>
+Date: Tue, 13 Dec 2011 22:54:14 +0100
+Subject: [PATCH] use finite instead of isfinite
+
+---
+ client/cityrepdata.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/client/cityrepdata.c b/client/cityrepdata.c
+index bcc0d28..a58c741 100644
+--- a/client/cityrepdata.c
++++ b/client/cityrepdata.c
+@@ -795,7 +795,7 @@ static void split_string(struct datum_vector *data, const char *str)
+     float value;
+ 
+     value = strtof(str, &endptr);
+-    if(endptr == str || !isfinite(value)) {
++    if(endptr == str || !finite(value)) {
+       /* that wasn't a sensible number; go on */
+       str++;
+     } else {
+-- 
+1.7.6.1
+
