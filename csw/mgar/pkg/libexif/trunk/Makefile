@@ -1,5 +1,5 @@
 NAME = libexif
-VERSION = 0.6.19
+VERSION = 0.6.20
 CATEGORIES = lib
 
 DESCRIPTION = EXIF Tag Parsing Library
@@ -12,35 +12,23 @@ endef
 MASTER_SITES = $(SF_MIRRORS)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-SPKG_SOURCEURL = http://libexif.sourceforge.net
-
-PACKAGES = CSWlibexif CSWlibexifdevel CSWlibexifdoc
-CATALOGNAME_CSWlibexif = libexif
-CATALOGNAME_CSWlibexifdevel = libexif_devel
-CATALOGNAME_CSWlibexifdoc = libexif_doc
-SPKG_DESC_CSWlibexif = $(DESCRIPTION)
-SPKG_DESC_CSWlibexifdevel = $(DESCRIPTION) - developer package
-SPKG_DESC_CSWlibexifdoc = $(DESCRIPTION) - API documentation package
-
-PKGFILES_CSWlibexifdevel = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibexifdoc = $(sharedstatedir)/doc/libexif/libexif-api.html/.*
-
-RUNTIME_DEP_PKGS_CSWlibexif += CSWggettextrt
-RUNTIME_DEP_PKGS_CSWlibexifdevel += CSWlibexif
-RUNTIME_DEP_PKGS_CSWlibexifdoc += CSWlibexif
-
-ARCHALL_CSWlibexifdoc = 1
-
-LICENSE = COPYING
-
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=12272
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
-
 # Compatibility for Solaris find/tar
 PATCHFILES = Makefile.patch
-# 
 PATCHFILES += exif-tag.patch
+
+VENDOR_URL = http://libexif.sourceforge.net
+
+PACKAGES += CSWlibexif12
+SPKG_DESC_CSWlibexif12 = EXIF tag parsing library, libexif.so.12
+PKGFILES_CSWlibexif12 += $(call pkgfiles_lib,libexif.so.12)
+PKGFILES_CSWlibexif12 += $(sharedstatedir)/locale/.*/libexif-12\.mo
+RUNTIME_DEP_PKGS_CSWlibexif12 += CSWlibintl8
+OBSOLETED_BY_CSWlibexif12 += CSWlibexif
+
+PACKAGES += CSWlibexif-dev
+SPKG_DESC_CSWlibexif-dev = Development files for libexif.so.12
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibexif-dev += CSWlibexif12
 
 BUILD64 = 1
 
