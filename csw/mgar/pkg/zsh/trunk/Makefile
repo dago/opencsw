@@ -18,7 +18,7 @@ CATALOGNAME_CSWzsh = zsh
 
 LICENSE = LICENCE
 
-RUNTIME_DEP_PKGS = CSWiconv CSWlibncursesw5 CSWlibpcre0 CSWlibgdbm3 CSWcas-etcshells
+RUNTIME_DEP_PKGS = CSWlibiconv2 CSWlibncursesw5 CSWlibpcre0 CSWlibgdbm4
 BUILD_DEP_PKGS = CSWpcre
 
 SPKG_SOURCEURL = http://www.zsh.org
@@ -29,6 +29,7 @@ CONFIGURE_ARGS += --enable-maildir-support
 CONFIGURE_ARGS += --enable-fndir=$(sharedstatedir)/$(NAME)/functions
 CONFIGURE_ARGS += --enable-pcre
 
+CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/bin/zsh
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/share/zsh/functions/_units
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/share/zsh/functions/_hg
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/share/zsh/functions/_loadkeys
@@ -55,7 +56,6 @@ CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share/zsh/functions/compaudit
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/share/zsh/functions/mere
 
-SPKG_CLASSES = none cswetcshells
 ETCSHELLS = /opt/csw/bin/zsh
 
 include gar/category.mk
