@@ -1,5 +1,5 @@
 NAME = doxygen
-VERSION = 1.7.5.1
+VERSION = 1.7.6.1
 CATEGORIES = utils
 
 DESCRIPTION = A documentation system for programming languages
@@ -39,6 +39,21 @@ VENDOR_URL = http://www.stack.nl/~dimitri/doxygen/
 
 BUILD_DEP_PKGS = CSWgraphviz
 
+REINPLACEMENTS += cflags
+REINPLACE_MATCH_cflags = (TMAKE_CFLAGS_RELEASE\s*=\s*).*
+REINPLACE_WITH_cflags = \1$(CFLAGS)
+REINPLACE_FILES_cflags += tmake/lib/solaris-cc/tmake.conf
+
+REINPLACEMENTS += cxxflags
+REINPLACE_MATCH_cxxflags = (TMAKE_CXXFLAGS_RELEASE\s*=\s*).*
+REINPLACE_WITH_cxxflags = \1$(CXXFLAGS)
+REINPLACE_FILES_cxxflags += tmake/lib/solaris-cc/tmake.conf
+
+REINPLACEMENTS += ldflags
+REINPLACE_MATCH_ldflags = (TMAKE_LFLAGS_RELEASE\s*=).*
+REINPLACE_WITH_ldflags = \1 $(LDFLAGS)
+REINPLACE_FILES_ldflags += tmake/lib/solaris-cc/tmake.conf
+
 EXTRA_CXXFLAGS += -features=tmplrefstatic
 EXTRA_CXXFLAGS += -features=extensions -D__FUNCTION__=__func__
 EXTRA_LINKER_FLAGS = -norunpath
@@ -64,10 +79,3 @@ EXTRA_MERGE_EXCLUDE_FILES = .*/core
 # some time...
 
 include gar/category.mk
-
-post-extract-modulated:
-	perl -pi -e 's,(TMAKE_CFLAGS_RELEASE\s*=\s*)(.*),\1$(CFLAGS),;' \
-		-e 's,(TMAKE_CXXFLAGS_RELEASE\s*=\s*)(.*),\1$(CXXFLAGS),;' \
-		-e 's,(TMAKE_LFLAGS_RELEASE\s*=)(.*),\1$(LDFLAGS),;' \
-		$(WORKSRC)/tmake/lib/solaris-cc/tmake.conf
-	@$(MAKECOOKIE)
