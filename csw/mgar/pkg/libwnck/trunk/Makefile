@@ -14,43 +14,44 @@ endef
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.bz2
-
-PACKAGES = CSWlibwnck CSWlibwnckdevel
-
-CATALOGNAME_CSWlibwnck = libwnck
-CATALOGNAME_CSWlibwnckdevel = libwnck_devel
-
-SPKG_DESC_CSWlibwnck = $(DESCRIPTION)
-SPKG_DESC_CSWlibwnckdevel = Developer files for libwnck
+# New glib2 is only available on Solaris 10
+PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
 VENDOR_URL = http://ftp.gnome.org/pub/GNOME/sources/libwnck/
 
-BUILD_DEP_PKGS = CSWgtk2devel CSWglib2devel
+BUILD_DEP_PKGS += CSWglib2devel
+BUILD_DEP_PKGS += CSWgtk2devel
 
-RUNTIME_DEP_PKGS_CSWlibwnck  = CSWfconfig CSWftype2 CSWggettextrt CSWglib2 CSWgtk2
-RUNTIME_DEP_PKGS_CSWlibwnck += CSWlibatk CSWlibcairo CSWpango CSWstartupnotif
-RUNTIME_DEP_PKGS_CSWlibwnckdevel = CSWlibwnck $(BUILD_DEP_PKGS)
+PACKAGES += CSWlibwnck1-18
+SPKG_DESC_CSWlibwnck1-18 = Library used for writing pagers and tasks lists, libwnck-1.so.18
+PKGFILES_CSWlibwnck1-18 += $(call pkgfiles_lib,libwnck-1.so.18)
+PKGFILES_CSWlibwnck1-18 += $(sharedstatedir)/locale/.*/libwnck\.mo
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWgtk2
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWstartupnotif
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibwnck1-18 += CSWpango
+OBSOLETED_BY_CSWlibwnck1-18 += CSWlibwnck
+
+PACKAGES += CSWlibwnck-dev
+SPKG_DESC_CSWlibwnck-dev = Development files for libwnck-1.so.18
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWlibwnck-dev += CSWlibwnck1-18
+RUNTIME_DEP_PKGS_CSWlibwnck-dev += CSWglib2devel
+RUNTIME_DEP_PKGS_CSWlibwnck-dev += CSWgtk2devel
 
 # For cos(3m)
 EXTRA_LINKER_FLAGS = -lm 
 
-NOISAEXEC = 1
 BUILD64 = 1
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
-
-MERGE_DIRS_isa-extra = $(libdir)
-
-PKGFILES_CSWlibwnckdevel  = $(PKGFILES_DEVEL)
-PKGFILES_CSWlibwnckdevel += $(sharedstatedir)/gtk-doc/.*
-
-# This is okay
-CHECKPKG_OVERRIDES_CSWlibwnckdevel += surplus-dependency|CSWlibwnck
-CHECKPKG_OVERRIDES_CSWlibwnckdevel += surplus-dependency|CSWglib2devel
-CHECKPKG_OVERRIDES_CSWlibwnckdevel += surplus-dependency|CSWgtk2devel
 
 include gar/category.mk
 
