@@ -1,5 +1,5 @@
 NAME = pcre
-VERSION = 8.20
+VERSION = 8.21
 CATEGORIES = lib
 
 DESCRIPTION = Perl-compatible regular expression tools
@@ -62,6 +62,9 @@ PKGFILES_CSWlibpcreposix0 += $(call pkgfiles_lib,libpcreposix.so.0)
 RUNTIME_DEP_PKGS_CSWlibpcreposix0 += CSWlibpcre0
 OBSOLETED_BY_CSWlibpcreposix0 += CSWpcrert
 
+REINPLACE_USRLOCAL += doc/pcre-config.1
+REINPLACE_USRLOCAL += doc/pcresample.3
+
 BUILD64 = 1
 
 EXTRA_LINKER_FLAGS = -norunpath
@@ -80,8 +83,3 @@ include gar/category.mk
 # The testcases need 'diff -u' which Solaris 8 diff does not have,
 # but we need Solaris strip, otherwise pcregrep is broken and 200m in size...
 PATH := /usr/ccs/bin:/opt/csw/gnu:$(PATH)
-
-post-install-modulated:
-	perl -pi -e 's,/usr/local,$(prefix),g' \
-		$(DESTDIR)$(mandir)/man3/pcresample.3 \
-		$(DESTDIR)$(mandir)/man1/pcre-config.1
