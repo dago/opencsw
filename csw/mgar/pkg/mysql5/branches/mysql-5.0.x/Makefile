@@ -36,6 +36,8 @@ datadir = $(prefix)/share/mysql/$(BASE_VERSION)
 
 MYSQL_LIB_VER = 15
 
+MERGE_DIRS_isa-extra = $(bindir) $(libdir) $(sbindir) $(libexecdir)
+
 PACKAGES += CSWmysql-dev
 SPKG_DESC_CSWmysql-dev = MySQL development files
 PKGFILES_CSWmysql-dev = $(PKGFILES_DEVEL)
