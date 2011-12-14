@@ -415,8 +415,10 @@ BUILD_DEP_PKGS += CSWggettext-dev
 BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWggettext
 
-ISAEXEC = 0
 BUILD64 = 1
+
+# We need the binaries to query 64 bit modules
+MERGE_DIRS_isa-extra = $(bindir) $(libdir)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shm
