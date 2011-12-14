@@ -59,11 +59,17 @@ RUNTIME_DEP_PKGS_CSWgamin += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgamin += CSWlibglib2-0-0
 OBSOLETED_BY_CSWgamin += CSWfam
 
+BUILD_DEP_PKGS  = CSWlibtool
+BUILD_DEP_PKGS += CSWlibglib2-dev
+BUILD_DEP_PKGS += CSWautoconf
+BUILD_DEP_PKGS += CSWautomake
+
 # For socket, recvmsg, connect
 # Overwrite existing -L/opt/csw/lib or installed libs will be picked up first
 LINKER_FLAGS = -lsocket -lnsl
 
 BUILD64 = 1
+MERGE_DIRS_isa-extra = $(bindir) $(libdir) $(libexecdir)
 
 # This is not passed to configure, although it is defined (but wrong) in configure.in
 EXTRA_CONFIGURE_EXPORTS += ENV_CFLAGS
