@@ -87,10 +87,8 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWglib2
 PACKAGES += CSWsvn-dev
 SPKG_DESC_CSWsvn-dev       = Subversion Development Support
 OBSOLETED_BY_CSWsvn-dev    = CSWsvn-devel
-ARCHALL_CSWsvn-dev         = 1
 PKGFILES_CSWsvn-dev        = $(PKGFILES_DEVEL)
 PKGFILES_CSWsvn-dev       += $(docdir)/$(CATALOGNAME_CSWsvn-dev)/changelog.CSW
-CHECKPKG_OVERRIDES_CSWsvn-dev += archall-devel-package
 
 # Note: This is just to prevent a catalog name change for a stub
 # package.  We made the real package have matching names.
