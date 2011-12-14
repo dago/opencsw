@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = facter
-VERSION = 1.6.0
+VERSION = 1.6.4
 CATEGORIES = apps
 
 DESCRIPTION = A system fact gatherer
@@ -26,7 +26,7 @@ LICENSE        = LICENSE
 RUNTIME_DEP_PKGS = CSWruby18
 BUILD_DEP_PKGS  = $(RUNTIME_DEP_PKGS)
 
-PATCHFILES += 0001-puppetlabs-bug-7038-prtdiag.patch
+# PATCHFILES += 0001-puppetlabs-bug-7038-prtdiag.patch
 
 ARCHALL = 1
 CONFIGURE_SCRIPTS =
