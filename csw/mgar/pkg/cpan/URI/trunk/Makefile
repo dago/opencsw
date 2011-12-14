@@ -1,5 +1,5 @@
 NAME = URI
-VERSION = 1.38
+VERSION = 1.59
 CATEGORIES = cpan
 AUTHOR = GAAS
 
@@ -10,9 +10,15 @@ define BLURB
   updated by RFC 2732).
 endef
 
-PACKAGES = CSWpmuri
-CATALOGNAME = pm_uri
+DISTFILES += COPYING
+
+PACKAGES               = CSWpm-uri
+SPKG_DESC_CSWpm-uri    = $(DESCRIPTION)
+OBSOLETED_BY_CSWpm-uri = CSWpmuri
+CATALOGNAME_CSWpmuri   = pm_uri_stub
 
 ARCHALL = 1
+
+RUNTIME_DEP_PKGS += CSWpm-mime-base64
 
 include gar/category.mk
