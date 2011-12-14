@@ -41,8 +41,8 @@ DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += CSWgtk2.postinstall
 DISTFILES += CSWgtk2-immodules.postinstall
 
-EXPANDVARS = CSWgtk2-immodules.postinstall
-EXPANDVARS = CSWgtk2.postinstall
+EXPANDVARS  = CSWgtk2-immodules.postinstall
+EXPANDVARS += CSWgtk2.postinstall
 
 # This makes the tests work in the first place
 PATCHFILES += 0000-Use-absolute-path-to-Xvfb.patch
