@@ -363,18 +363,8 @@ BUILD_DEP_PKGS += CSWlibgnugetopt-dev
 EXTRA_LD_OPTIONS  = -R$(prefix)/lib/\$$ISALIST
 
 BUILD64 = 1
-# There was a discussion about whether to use ISAEXEC by default.  The argument
-# is that enabling 64-bit by default where possible (using isaexec) is a waste.
-# I'm not completely convinced.  Leaving this line commented out for future
-# consideration.
-#
-# References:
-# - http://lists.opencsw.org/pipermail/maintainers/2009-November/004903.html
-#
-# I'd like to get some hard data though.  What is the difference in the memory
-# footprint, and what is the difference in execution speed between 32 and
-# 64-bit versions?
-ISAEXEC = 0
+#ISAEXEC = 0
+MERGE_DIRS_isa-extra = $(bindir) $(libdir) $(libexecdir)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 # This is one of the quirks mentioned at the beginning: --program-suffix is not
