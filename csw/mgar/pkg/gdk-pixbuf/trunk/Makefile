@@ -146,7 +146,7 @@ RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibjpeg7
 RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWtiff
+RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibtiff3
 CHECKPKG_OVERRIDES_CSWgdkpixbuf-loaders += catalogname-does-not-match-pkgname|pkgname=CSWgdkpixbuf-loaders|catalogname=gdk_pixbuf_loaders|expected-catalogname=gdkpixbuf_loaders
 
 PACKAGES += CSWlibgdk-pixbuf-dev
