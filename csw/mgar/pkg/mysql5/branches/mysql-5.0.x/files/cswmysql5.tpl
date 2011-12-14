@@ -26,7 +26,7 @@ BASE_VERSION="@BASE_VERSION@"
 MYSQLD_DATADIR=$MYSQL_VAR
 MYSQLD_PID_FILE=$MYSQL_VAR/mysql.pid
 CONFFILE=${sysconfdir}/my.cnf
-MYSQLD_PROG=${MYSQLD_PROG:-/opt/csw/libexec/mysqld-${BASE_VERSION}}
+MYSQLD_PROG=${MYSQLD_PROG:-mysqld-${BASE_VERSION}}
 
 # Source the configuration
 [ -r /opt/csw/mysql5/etc/mysql5rc ] && . /opt/csw/mysql5/etc/mysql5rc
