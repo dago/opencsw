@@ -16,7 +16,7 @@ index cca6244..1cdaa0d 100644
    if test "$cross_bootstrap" -eq 0
    then
 -    pkgdatadir=`find_in_basedir --dir fill_help_tables.sql share share/mysql`
-+    pkgdatadir=`find_in_basedir --dir fill_help_tables.sql share share/mysql share/mysql/5.1/mysql`
++    pkgdatadir=`find_in_basedir --dir fill_help_tables.sql share share/mysql share/mysql/5.0/mysql`
      if test -z "$pkgdatadir"
      then
        missing_in_basedir fill_help_tables.sql
