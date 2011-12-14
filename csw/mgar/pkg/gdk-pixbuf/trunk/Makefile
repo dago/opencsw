@@ -165,8 +165,10 @@ BUILD_DEP_PKGS += CSWlibjpeg-dev
 BUILD_DEP_PKGS += CSWlibpng-dev
 BUILD_DEP_PKGS += CSWtiff
 
-ISAEXEC = 0
 BUILD64 = 1
+
+# We need the binaries to query 64 bit modules
+MERGE_DIRS_isa-extra = $(bindir) $(libdir)
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS += --with-libiconv-prefix
