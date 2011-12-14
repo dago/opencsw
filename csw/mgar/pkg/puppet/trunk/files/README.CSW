@@ -6,7 +6,7 @@ directories - this does not fit with the OpenCSW paths, so in /etc/puppet you
 will find an example skeleton puppet.conf that is designed to make the product
 confirm to our paths. To use the daemon with CSW paths, put the puppet.conf
 examples in /etc/puppet and /etc/opt/csw/puppet into place and start the
-daemon.
+daemon with --confdir=/etc/opt/csw/puppet.
 
 Naturally you're free to discard the examples and use the product's own
 preferred paths. If no puppet.conf is present in /etc/puppet this is how the

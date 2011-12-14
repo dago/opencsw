@@ -149,7 +149,11 @@ Puppet::Type.type(:package).provide :pkgutil, :parent => :sun, :source => :sun d
     # Allow source to be one or more URLs pointing to a repository that all
     # get passed to pkgutil via one or more -t options
     if resource[:source]
-      pkguti *[resource[:source].map{|src| [ "-t", src ]}, *args].flatten
+      sources = resource[:source]
+      sources = sources.split($/) if sources.is_a?(String)
+      sources = sources.flatten
+
+      pkguti *[sources.map{|src| [ "-t", src ]}, *args].flatten
     else
       pkguti *args.flatten
     end

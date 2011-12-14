@@ -7,7 +7,7 @@
 # [1] http://garylaw.net/packages/puppet-build.sh
 
 NAME = puppet
-VERSION = 2.6.12
+VERSION = 2.7.9
 CATEGORIES = apps
 
 define BLURB
@@ -28,7 +28,7 @@ DISTFILES += cswusergroup
 DISTFILES += CSWpuppet.postinstall
 # pkgutil.rb is from https://raw.github.com/domcleal/puppet/tickets/master/8011/lib/puppet/provider/package/pkgutil.rb
 # Should be headed into 2.7 code - supports -t REPO
-# Still not in 2.7.3 as of 9/9/11
+# Still not in 2.7.6 as of 29/11/11
 DISTFILES += pkgutil.rb
 DISTFILES += README.CSW
 DISTFILES += puppet.conf.example-CSW
@@ -71,7 +71,7 @@ BUILD_SCRIPTS     =
 TEST_SCRIPTS      =
 INSTALL_SCRIPTS   = puppet
 
-PATCHFILES = 0003-Use-opt-csw-share-puppet-modules-as-default.patch
+# PATCHFILES = 0003-Use-opt-csw-share-puppet-modules-as-default.patch
 
 CHECKPKG_OVERRIDES_CSWpuppetmaster  = surplus-dependency|CSWruby18
 CHECKPKG_OVERRIDES_CSWpuppet        = surplus-dependency|CSWfacter
