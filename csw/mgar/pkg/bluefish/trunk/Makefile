@@ -40,6 +40,16 @@ EXTRA_MERGE_EXCLUDE_FILES += .*types.*
 EXTRA_MERGE_EXCLUDE_FILES += .*XMLnamespaces.*
 EXTRA_MERGE_EXCLUDE_FILES += .*icons.*
 
+# these packages have not been installed/updated on the buildfarm yet
+# but they are in the unstable catalog.  Temporarily overriding until
+# buildfarm is updated.
+CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibglib2-0-0
+CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibgio2-0-0
+CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibgobject2-0-0
+CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibgthread2-0-0
+CHECKPKG_OVERRIDES_CSWbluefish += missing-dependency|CSWlibgmodule2-0-0
+CHECKPKG_OVERRIDES_CSWbluefish += surplus-dependency|CSWglib2
+
 include gar/category.mk
 
 # ./configure needs this to find ggettext
