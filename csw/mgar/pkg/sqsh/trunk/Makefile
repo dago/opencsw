@@ -10,6 +10,11 @@ PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 # under CSW:
 #
 #    http://sourceforge.net/apps/trac/gar/browser/csw/mgar/pkg/cpan/DBD-Sybase/trunk/Makefile
+#
+# To bo done:
+# - Solaris 9 i386 build
+# - Solaris 10 i386 and amd64 build
+# - PRESERVECONF somehow does not work yet, interaction with alternatives?
 
 DESCRIPTION = Powerful SQL shell with advanced scripting ability for Sybase
 define BLURB
@@ -95,9 +100,9 @@ MERGE_SCRIPTS_isa-default-dbdriver-freetds = copy-only
 MERGE_DIRS_isa-default-dbdriver-freetds = $(DBDSYBASEDIR)
 
 EXTRA_PAX_ARGS  = -s ",/sqsh$$,/sqsh-$(DBDRIVER),p"
-EXTRA_PAX_ARGS += -s ",/sqshrc$$,/sqshrc-$(DBDRIVER),p"
+EXTRA_PAX_ARGS += -s ",/sqshrc$$,/sqshrc-$(DBDRIVER).CSW,p"
 
-PRESERVECONF += $(foreach D,$(MODULATIONS_DBDRIVER),$(sysconfdir)/sqshrc-$D)
+PRESERVECONF += $(foreach D,$(MODULATIONS_DBDRIVER),$(sysconfdir)/sqshrc-$D.CSW)
 
 ALTERNATIVES_CSWsqsh-ocs = ocs
 ALTERNATIVES_CSWsqsh-freetds = freetds
