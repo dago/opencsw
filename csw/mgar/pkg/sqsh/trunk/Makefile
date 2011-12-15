@@ -84,6 +84,13 @@ EXTRA_TEST_EXPORTS = LD_LIBRARY_PATH
 
 PKGFILES_CSWsqsh-ocs = /opt/csw/bin/sqsh-ocs
 
+ALTERNATIVES_CSWsqsh-ocs = ocs
+ALTERNATIVES_CSWsqsh-freetds = freetds
+ALTERNATIVE_ocs  = /opt/csw/bin/sqsh sqsh /opt/csw/bin/sqsh-ocs 200
+#ALTERNATIVE_ocs += EDIR)/Sybase.bs bs $(DBDSYBASEDIR)/Sybase-ocs.bs
+ALTERNATIVE_freetds  = /opt/csw/bin/sqsh sqsh /opt/csw/bin/sqsh-freetds 100
+#ALTERNATIVE_freetds += $(DBDSYBASEDIR)/Sybase.bs bs $(DBDSYBASEDIR)/Sybase-freetds.bs
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-nls
 
