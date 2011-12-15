@@ -92,7 +92,7 @@ ALTERNATIVE_freetds  = /opt/csw/bin/sqsh sqsh /opt/csw/bin/sqsh-freetds 100
 #ALTERNATIVE_freetds += $(DBDSYBASEDIR)/Sybase.bs bs $(DBDSYBASEDIR)/Sybase-freetds.bs
 
 CONFIGURE_ARGS = $(DIRPATHS)
-CONFIGURE_ARGS += --enable-shared --disable-nls
+CONFIGURE_ARGS += --enable-shared --disable-nls --with-readline
 
 # These are provided by the Sybase OCS libraries
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcs.so|is|needed|by|opt/csw/lib/perl/site_perl/auto/DBD/Sybase/Sybase-ocs.so
