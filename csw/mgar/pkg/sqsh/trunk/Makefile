@@ -2,7 +2,14 @@ NAME = sqsh
 VERSION = 2.1.7
 CATEGORIES = utils
 
-PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+#PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
+
+# using this recipe as a reference for how to work with Sybase OCS
+# under CSW:
+#
+#    http://sourceforge.net/apps/trac/gar/browser/csw/mgar/pkg/cpan/DBD-Sybase/trunk/Makefile
+#
+#
 
 # Hardwired to skip the tests
 ifeq ($(VERSION),2.1.7)
@@ -42,7 +49,48 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 
 BUILD64 = 1
 
+EXTRA_MODULATORS = DBDRIVER
+MODULATIONS_DBDRIVER = ocs freetds
+
+SKIP_MODULATIONS = isa-i386-dbdriver-ocs
+
+PACKAGES = CSWsqsh-ocs CSWsqsh-freetds
+
+CATALOGNAME_CSWsqsh-ocs = sqsh_ocs
+CATALOGNAME_CSWsqsh-freetds = sqsh_freetds
+
+SPKG_DESC_CSWsqsh-ocs = $(DESCRIPTION) (Linked against Sybase OCS)
+SPKG_DESC_CSWsqsh-freetds = $(DESCRIPTION) (Linked against FreeTDS)
+
+RUNTIME_DEP_PKGS_CSWsqsh-freetds += CSWfreetds
+RUNTIME_DEP_PKGS_CSWsqsh-freetds += CSWggettextrt
+RUNTIME_DEP_PKGS_CSWsqsh-ocs += CSWsqsh-freetds
+
+SYBASE_ocs = /opt/csw/sybase/OCS-12_5
+SYBASE_freetds = /opt/csw
+SYBASE = $(SYBASE_$(DBDRIVER))
+
+LD_LIBRARY_PATH = $(SYBASE)/lib
+	
+NOISALIST = 1
+EXTRA_LIB = $(SYBASE)/lib
+	
+LD_OPTIONS =
+EXTRA_LINKER_FLAGS = $(RUNPATH_LINKER_FLAGS)
+
+EXTRA_CONFIGURE_EXPORTS = SYBASE LD_LIBRARY_PATH
+
+EXTRA_TEST_EXPORTS = LD_LIBRARY_PATH
+
+PKGFILES_CSWsqsh-ocs = /opt/csw/bin/sqsh-ocs
+
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-nls
+
+# These are provided by the Sybase OCS libraries
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcs.so|is|needed|by|opt/csw/lib/perl/site_perl/auto/DBD/Sybase/Sybase-ocs.so
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcomn.so|is|needed|by|opt/csw/lib/perl/site_perl/auto/DBD/Sybase/Sybase-ocs.so
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libtcl.so|is|needed|by|opt/csw/lib/perl/site_perl/auto/DBD/Sybase/Sybase-ocs.so
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libct.so|is|needed|by|opt/csw/lib/perl/site_perl/auto/DBD/Sybase/Sybase-ocs.so
 
 include gar/category.mk
