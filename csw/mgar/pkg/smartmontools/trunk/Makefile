@@ -17,10 +17,8 @@ endef
 MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
-# If the url used to check for software update is different of MASTER_SITES,
-# then uncomment the next line. Otherwise it is set by default to the value of
-# MASTER_SITES
-# UPSTREAM_MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/smartmontools/
+PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(NAME)
@@ -34,7 +32,7 @@ EXTRA_CXXFLAGS = -norunpath
 
 include gar/category.mk
 
-# moving configuration file
+# Moving the configuration file.
 post-install-modulated:
 	(cd $(DESTDIR)$(sysconfdir); \
 	for i in smartd.conf; do \
@@ -49,4 +47,5 @@ post-install-modulated:
 		fi \
 	done)
 
+# The 5.42 version needs GNU sed going by 'sed'.
 PATH := /opt/csw/gnu:$(PATH)
