@@ -1,5 +1,5 @@
 NAME = pkgutil
-VERSION = 2.5.1
+VERSION = 2.6b1
 CATEGORIES = utils
 
 DESCRIPTION = Installs Solaris packages easily
