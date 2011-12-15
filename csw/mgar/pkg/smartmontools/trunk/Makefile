@@ -1,6 +1,8 @@
+# $Id$
+
 NAME = smartmontools
-VERSION = 5.38
-GARTYPE = v1
+VERSION = 5.42
+GARTYPE = v2
 CATEGORIES = utils
 
 DESCRIPTION = S.M.A.R.T. disk monitoring tools
@@ -12,38 +14,39 @@ define BLURB
   support for ATA/ATAPI-5 disks.
 endef
 
-MASTER_SITES = http://smartmontools.sourceforge.net/
+MASTER_SITES = $(SF_MIRROR)
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-DISTFILES += $(call admfiles,CSWsmartmontools, postinstall depend prototype)
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-UPSTREAM_MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/smartmontools/
+# If the url used to check for software update is different of MASTER_SITES,
+# then uncomment the next line. Otherwise it is set by default to the value of
+# MASTER_SITES
+# UPSTREAM_MASTER_SITES = http://surfnet.dl.sourceforge.net/sourceforge/smartmontools/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-docdir=$(sharedstatedir)/doc/$(NAME)
 CONFIGURE_ARGS += --with-initscriptdir=/etc/opt/csw/init.d
 
-TEST_TARGET = check
+INITSMF = $(sysconfdir)/init.d/cswsmartd
 
-# moving configuration file
-post-install:
-	(cd $(DESTDIR)$(prefix)/etc; \
-	for i in smartd.conf; do \
-		if [ -r "$$i" ]; then \
-			echo "$$i -> $$i.CSW"; \
-			mv "$$i" "$$i.CSW";     \
-		fi \
-	done)
-	(cd $(DESTDIR)/etc/opt/csw/init.d; \
-	for i in smartd; do \
-		if [ -r "$$i" ]; then \
-			echo "$$i -> csw$$i"; \
-			mv "$$i" "csw$$i";     \
-		fi \
-	done)
+CHECKPKG_OVERRIDES_CSWsmartmontools += file-with-bad-content
+EXTRA_CFLAGS = -xnorunpath
+EXTRA_CXXFLAGS = -norunpath
 
 include gar/category.mk
+
+# moving configuration file
+post-install-modulated:
+	(cd $(DESTDIR)$(sysconfdir); \
+	for i in smartd.conf; do \
+		if [ -r "$$i" ]; then \
+			gmv -v "$$i" "$$i.CSW";     \
+		fi \
+	done)
+	(cd $(DESTDIR)$(sysconfdir)/init.d; \
+	for i in smartd; do \
+		if [ -r "$$i" ]; then \
+			gmv -v "$$i" "csw$$i";     \
+		fi \
+	done)
+
+PATH := /opt/csw/gnu:$(PATH)
