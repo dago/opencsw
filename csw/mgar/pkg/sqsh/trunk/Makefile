@@ -52,7 +52,7 @@ UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
 EXTRA_MODULATORS = DBDRIVER
 MODULATIONS_DBDRIVER = ocs 
 # uncomment below to build for FreeTDS too
-#MODULATIONS_DBDRIVER += freetds
+MODULATIONS_DBDRIVER += freetds
 
 SKIP_MODULATIONS = isa-i386-dbdriver-ocs
 
