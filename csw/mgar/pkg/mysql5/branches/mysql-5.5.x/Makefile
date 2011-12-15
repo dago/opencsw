@@ -1,6 +1,10 @@
 # Copyright 2009 OpenCSW
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+#
+# If you are involved in packaging MySQL, consider subscribing to the
+# packagers mailing list:
+# http://lists.mysql.com/packagers
 
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)55
@@ -15,6 +19,11 @@ CATEGORIES = server
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
+# There is v9-specific assembler, and I don't see an easy way to switch it
+# off.
+SKIP_MODULATIONS = isa-sparcv8
+# The alternative is to ship sparcv8+ binaries.
+
 DISTNAME = mysql-$(VERSION)
 SPKG_SOURCEURL = http://www.mysql.com/
 
@@ -28,7 +37,7 @@ endef
 # cg error (as) : ".../mysql-5.5.16/mysys/my_timer_cycles.il (template for
 # my_timer_cycles_il_sparc32)", line 27 : cannot use SPARC v9 instructions
 # with this target architecture
-GARCOMPILER = GNU
+# GARCOMPILER = GNU
 
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
@@ -64,7 +73,8 @@ ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_program
 # PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
 # PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
 # PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
-PATCHFILES += 0002-stop-cmake-from-messing-with-cflags.patch
+# The configuration phase failed (?)
+# PATCHFILES += 0002-stop-cmake-from-messing-with-cflags.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -205,6 +215,23 @@ CMAKE_ARGS += -DWITH_ZLIB=system
 CMAKE_ARGS += -DDEFAULT_CHARSET=utf8
 CMAKE_ARGS += -DDEFAULT_COLLATION=utf8_general_ci
 CMAKE_ARGS += -DWITH_COMMENT='OpenCSW'
+CMAKE_ARGS += -DCMAKE_C_FLAGS="$(CFLAGS)" -DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
+CMAKE_ARGS += -DBUILD_CONFIG=mysql_release
+# CMAKE_ARGS += -DOPENSSL_INCLUDE_DIR="$(includedir)"
+# CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
+# CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
+CMAKE_ARGS += -DOPENSSL_ROOT_DIR=$(prefix)
+
+# CMAKE_LIBRARY_PATH = $(libdir)
+# EXTRA_CONFIGURE_EXPORTS += CMAKE_LIBRARY_PATH
+# CMAKE_INCLUDE_PATH = $(includedir)
+# EXTRA_CONFIGURE_EXPORTS += CMAKE_INCLUDE_PATH
+# CMAKE_PREFIX_PATH = $(prefix)
+# EXTRA_CONFIGURE_EXPORTS += CMAKE_PREFIX_PATH
+# OPENSSL_INCLUDE_DIR = $(includedir)
+# EXTRA_CONFIGURE_EXPORTS += OPENSSL_INCLUDE_DIR
+# OPENSSL_ROOT_DIR = $(prefix)
+# EXTRA_CONFIGURE_EXPORTS += OPENSSL_ROOT_DIR
 
 # TODO: Make the tests pass. They don't at the moment.
 SKIPTEST ?= 1
@@ -291,6 +318,8 @@ CHECKPKG_OVERRIDES_CSWmysql51 += file-collision|/opt/csw/share/info/mysql.info|C
 
 CONFIGURE_SCRIPTS = custom
 
+EXTRA_PKG_CONFIG_DIRS = $(FILEDIR)/64
+
 include gar/category.mk
 
 # CFLAGS := $(filter-out -I%,$(CFLAGS))
@@ -311,10 +340,13 @@ pre-configure-modulated:
 	@$(MAKECOOKIE)
 
 configure-custom:
+	#		--debug-output \
+	#		--debug-trycompile \
 	(cd $(WORKSRC) && \
 	 	/usr/bin/env -i \
 		  $(CONFIGURE_ENV) \
-			cmake . \
+			cmake \
+			. \
 			$(CMAKE_ARGS))
 	@$(MAKECOOKIE)
 
