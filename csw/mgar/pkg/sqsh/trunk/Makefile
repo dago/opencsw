@@ -97,7 +97,7 @@ ALTERNATIVE_freetds  = /opt/csw/bin/sqsh sqsh /opt/csw/bin/sqsh-freetds 100
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-nls
 # this should be enabled if available on build machine
-#CONFIGURE_ARGS += --with-readline
+CONFIGURE_ARGS += --with-readline
 
 # These are provided by the Sybase OCS libraries
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcs.so|is|needed|by|opt/csw/lib/perl/site_perl/auto/DBD/Sybase/Sybase-ocs.so
