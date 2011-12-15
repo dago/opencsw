@@ -320,6 +320,11 @@ RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWosslrt
 # Those '/usr/local' are ok, they are in a HPUX section of the file
 CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(BUILD_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/local|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib) )
+# The above did not get rid of these, so, until I figure out how to
+# merge them with the above, they stay here
+CHECKPKG_OVERRIDES_CSW$(NAME)-dev += file-with-bad-content|/usr/local|root/opt/csw/lib/amd64/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib
+# This happens only on amd64
+CHECKPKG_OVERRIDES_CSW$(NAME)-dev += file-with-bad-content|/usr/share|root/opt/csw/lib/amd64/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.global
 #ALTERNATIVES_CSW$(NAME)-dev = $(foreach i,$(BUILD_ISAS), dev_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-doc
