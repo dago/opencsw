@@ -8,7 +8,7 @@ if [ -x /opt/csw/bin/ssh-keygen ]; then
 	for ALGO in rsa dsa ecdsa; do
 		if [ ! -f "$KEYDIR/ssh_host_${ALGO}_key" ]; then
 			echo "Creating new ${ALGO} public/private host key pair"
-			ssh-keygen -f $KEYDIR/ssh_host_${ALGO}_key -t rsa -N ''
+			ssh-keygen -f $KEYDIR/ssh_host_${ALGO}_key -t ${ALGO} -N ''
 		fi
 	done
 fi
