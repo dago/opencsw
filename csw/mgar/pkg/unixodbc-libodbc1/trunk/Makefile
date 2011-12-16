@@ -15,7 +15,8 @@ MASTER_SITES = http://www.unixodbc.org/
 DISTNAME = unixODBC-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
-PACKAGES += CSWunixodbc
+# This is now taken from 2.3.1 resulting in *.so.2 libs
+#PACKAGES += CSWunixodbc
 SPKG_DESC_CSWunixodbc = $(DESCRIPTION)
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibiconv2
@@ -24,6 +25,7 @@ RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbcinst1
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbc1
 
+# This is now taken from 2.3.1
 PACKAGES += CSWunixodbc-dev
 CATALOGNAME_CSWunixodbc-dev = unixodbc_dev
 SPKG_DESC_CSWunixodbc-dev = Development files for libodbc*.so.1
