@@ -38,7 +38,7 @@ RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbcinst1
 PACKAGES += CSWlibodbc1
 SPKG_DESC_CSWlibodbc1 = $(DESCRIPTION), libodbc.so.1
 PKGFILES_CSWlibodbc1 += $(call pkgfiles_lib,libodbc.so.1)
-PKGFILES_CSWlibodbc1 += $(sysconfdir)/.*
+#PKGFILES_CSWlibodbc1 += $(sysconfdir)/.*
 RUNTIME_DEP_PKGS_CSWlibodbc1 += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWlibodbc1 += CSWlibiconv2
 
