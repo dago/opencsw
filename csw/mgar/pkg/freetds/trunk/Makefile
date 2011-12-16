@@ -1,6 +1,6 @@
 # $Id$
 NAME = freetds
-VERSION = 0.82
+VERSION = 0.91
 CATEGORIES = lib
 
 DESCRIPTION = Implementation of the TDS protocol used by MS SQL Server and Sybase
@@ -9,41 +9,59 @@ define BLURB
   to natively talk to Microsoft SQL Server and Sybase databases.
 endef
 
-MASTER_SITES = http://ftp.ibiblio.org/pub/Linux/ALPHA/freetds/stable/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+MASTER_SITES += http://ftp.ibiblio.org/pub/Linux/ALPHA/freetds/stable/
+DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
+VENDOR_URL = http://www.freetds.org/
 
-PACKAGES = CSWfreetds CSWfreetdsdoc
+BUILD_DEP_PKGS += CSWlibreadline-dev
+BUILD_DEP_PKGS += CSWlibncurses-dev
+BUILD_DEP_PKGS += CSWunixodbc-dev
 
-CATALOGNAME_CSWfreetds    = freetds
-CATALOGNAME_CSWfreetdsdoc = freetds_doc
-
+PACKAGES = CSWfreetds
 SPKG_DESC_CSWfreetds = $(DESCRIPTION)
-SPKG_DESC_CSWfreetdsdoc = Documentation for freetds
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWfreetds += CSWlibodbc2
+RUNTIME_DEP_PKGS_CSWfreetds += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWfreetds += CSWlibncurses5
+RUNTIME_DEP_PKGS_CSWfreetds += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWfreetds += CSWlibsybdb5
+# This is just an example
+CHECKPKG_OVERRIDES_CSWfreetds += file-with-bad-content|/usr/local|root/opt/csw/bin/osql
 
-RUNTIME_DEP_PKGS_CSWfreetds = CSWunixodbc CSWiconv CSWreadline CSWncurses
-BUILD_DEP_PKGS = $(RUNTIME_DEP_PKGS_CSWfreetds)
+PACKAGES += CSWlibct4
+SPKG_DESC_CSWlibct4 = FreeTDS library, libct.so.4
+PKGFILES_CSWlibct4 += $(call pkgfiles_lib,libct.so.4)
 
-sysconfdir = /etc/opt/csw
+PACKAGES += CSWlibsybdb5
+SPKG_DESC_CSWlibsybdb5 += FreeTDS library, libsybdb.so.5
+PKGFILES_CSWlibsybdb5 += $(call pkgfiles_lib,libsybdb.so.5)
+
+PACKAGES += CSWlibtdsodbc0
+SPKG_DESC_CSWlibtdsodbc0 = FreeTDS library, libtdsodbc.so.0
+PKGFILES_CSWlibtdsodbc0 += $(call pkgfiles_lib,libtdsodbc.so.0)
+RUNTIME_DEP_PKGS_CSWlibtdsodbc0 += CSWlibodbcinst2
+
+PACKAGES += CSWfreetds-dev
+SPKG_DESC_CSWfreetds-dev = Development files for libct.so.4, libsybdb.so.5 and libtdsodbc.so.0
+PKGFILES_CSWfreetds-dev += $(PKGFILES_DEVEL)
+PKGFILES_CSWfreetds-dev += $(docdir)/.*
+RUNTIME_DEP_PKGS_CSWfreetds-dev += CSWlibsybdb5
+RUNTIME_DEP_PKGS_CSWfreetds-dev += CSWlibct4
+RUNTIME_DEP_PKGS_CSWfreetds-dev += CSWlibtdsodbc0
+OBSOLETED_BY_CSWfreetds-dev += CSWfreetdsdoc
+CATALOGNAME_CSWfreetdsdoc = freetds_doc_stub
+# There are lots of examples which would need careful adjustment, contributions welcome!
+CHECKPKG_OVERRIDES_CSWfreetds-dev += file-with-bad-content
 
 BUILD64 = 1
-NOISAEXEC = 1
-CONFIGURE_ARGS = $(DIRPATHS)
 
-MERGE_DIRS_isa-extra = $(libdir)
+# Testsuite needs a running Sybase/SQLServer database
+SKIPTEST ?= 1
 
-EXTRA_PAX_ARGS = '-s,.*{}$$,,p' '-s,/doc/$(NAME)-$(VERSION),/doc/$(NAME),p'
+EXTRA_PAX_ARGS = -s ',.*{}$$,,p' -s ',/doc/$(NAME)-$(VERSION),/doc/$(NAME),p'
 
 PRESERVECONF = $(addprefix $(sysconfdir)/,freetds.conf locales.conf pool.conf)
 MIGRATE_FILES_CSWfreetds = freetds.conf locales.conf pool.conf
 
-ARCHALL_CSWfreetdsdoc = 1
-PKGFILES_CSWfreetdsdoc = $(PKGFILES_DOC)
-
 include gar/category.mk
-
-post-configure-modulated:
-	@# Use latest libtool, the one shipped is too old
-	cp $(bindir_install)/libtool $(WORKSRC)/libtool
-	@$(MAKECOOKIE)
