@@ -26,8 +26,8 @@ RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbcinst1
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbc1
 
 # This is now taken from 2.3.1
-PACKAGES += CSWunixodbc-dev
-#CATALOGNAME_CSWunixodbc-dev = unixodbc_dev
+#PACKAGES += CSWunixodbc-dev
+CATALOGNAME_CSWunixodbc-dev = unixodbc_dev
 SPKG_DESC_CSWunixodbc-dev = Development files for libodbc*.so.1
 PKGFILES_CSWunixodbc-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWunixodbc-dev += $(call baseisadirs,$(bindir),odbc_config)
