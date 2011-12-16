@@ -3,7 +3,7 @@
 # $Id$
 
 NAME = unixodbc
-VERSION = 2.3.0
+VERSION = 2.3.1
 CATEGORIES = lib
 
 DESCRIPTION = ODBC drivers for Unix systems
@@ -15,39 +15,50 @@ MASTER_SITES = http://www.unixodbc.org/
 DISTNAME = unixODBC-$(VERSION)
 DISTFILES = $(DISTNAME).tar.gz
 
+FOREIGN_PACKAGES += CSWlibodbc1
+FOREIGN_PACKAGES += CSWlibodbccr1
+FOREIGN_PACKAGES += CSWlibodbcinst1
+
 PACKAGES += CSWunixodbc
 SPKG_DESC_CSWunixodbc = $(DESCRIPTION)
 # PKGFILES is catchall
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbcinst1
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbcinst2
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbc2
+# These are legacy dependencies for packages depending on CSWunixodbc and expecting *.so.1 libraries
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbc1
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbccr1
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbcinst1
+CHECKPKG_OVERRIDES_CSWunixodbc += surplus-dependency|CSWlibodbcinst1
+CHECKPKG_OVERRIDES_CSWunixodbc += surplus-dependency|CSWlibodbccr1
+CHECKPKG_OVERRIDES_CSWunixodbc += surplus-dependency|CSWlibodbc1
 
 PACKAGES += CSWunixodbc-dev
 CATALOGNAME_CSWunixodbc-dev = unixodbc_dev
-SPKG_DESC_CSWunixodbc-dev = Development files for libodbc*.so.1
+SPKG_DESC_CSWunixodbc-dev = Development files for libodbc*.so.2
 PKGFILES_CSWunixodbc-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSWunixodbc-dev += $(call baseisadirs,$(bindir),odbc_config)
-RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbc1
-RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbccr1
-RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbcinst1
+RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbc2
+RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbccr2
+RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbcinst2
 
-PACKAGES += CSWlibodbc1
-SPKG_DESC_CSWlibodbc1 = $(DESCRIPTION), libodbc.so.1
-PKGFILES_CSWlibodbc1 += $(call pkgfiles_lib,libodbc.so.1)
-PKGFILES_CSWlibodbc1 += $(sysconfdir)/.*
-RUNTIME_DEP_PKGS_CSWlibodbc1 += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibodbc1 += CSWlibiconv2
+PACKAGES += CSWlibodbc2
+SPKG_DESC_CSWlibodbc2 = $(DESCRIPTION), libodbc.so.2
+PKGFILES_CSWlibodbc2 += $(call pkgfiles_lib,libodbc.so.2)
+PKGFILES_CSWlibodbc2 += $(sysconfdir)/.*
+RUNTIME_DEP_PKGS_CSWlibodbc2 += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWlibodbc2 += CSWlibiconv2
 
-PACKAGES += CSWlibodbccr1
-SPKG_DESC_CSWlibodbccr1 = $(DESCRIPTION), libodbccr.so.1
-PKGFILES_CSWlibodbccr1 += $(call pkgfiles_lib,libodbccr.so.1)
+PACKAGES += CSWlibodbccr2
+SPKG_DESC_CSWlibodbccr2 = $(DESCRIPTION), libodbccr.so.2
+PKGFILES_CSWlibodbccr2 += $(call pkgfiles_lib,libodbccr.so.2)
 
-PACKAGES += CSWlibodbcinst1
-SPKG_DESC_CSWlibodbcinst1 = $(DESCRIPTION), libodbcinst.so.1
-PKGFILES_CSWlibodbcinst1 += $(call pkgfiles_lib,libodbcinst.so.1)
-RUNTIME_DEP_PKGS_CSWlibodbcinst1 += CSWlibltdl7
+PACKAGES += CSWlibodbcinst2
+SPKG_DESC_CSWlibodbcinst2 = $(DESCRIPTION), libodbcinst.so.2
+PKGFILES_CSWlibodbcinst2 += $(call pkgfiles_lib,libodbcinst.so.2)
+RUNTIME_DEP_PKGS_CSWlibodbcinst2 += CSWlibltdl7
 
 BUILD64 = 1
 CONFIGURE_ARGS += $(DIRPATHS)
