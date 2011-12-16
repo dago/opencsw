@@ -17,7 +17,8 @@ DISTFILES = $(DISTNAME).tar.gz
 
 PACKAGES += CSWunixodbc
 SPKG_DESC_CSWunixodbc = $(DESCRIPTION)
-RUNTIME_DEP_PKGS_CSWunixodbc += CSWiconv
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibltdl7
 RUNTIME_DEP_PKGS_CSWunixodbc += CSWlibodbcinst1
@@ -34,24 +35,22 @@ RUNTIME_DEP_PKGS_CSWunixodbc-dev += CSWlibodbcinst1
 
 PACKAGES += CSWlibodbc1
 SPKG_DESC_CSWlibodbc1 = $(DESCRIPTION), libodbc.so.1
-PKGFILES_CSWlibodbc1 = $(call pkgfiles_lib,libodbc.so.1)
+PKGFILES_CSWlibodbc1 += $(call pkgfiles_lib,libodbc.so.1)
+PKGFILES_CSWlibodbc1 += $(sysconfdir)/.*
 RUNTIME_DEP_PKGS_CSWlibodbc1 += CSWlibltdl7
-RUNTIME_DEP_PKGS_CSWlibodbc1 += CSWiconv
+RUNTIME_DEP_PKGS_CSWlibodbc1 += CSWlibiconv2
 
 PACKAGES += CSWlibodbccr1
 SPKG_DESC_CSWlibodbccr1 = $(DESCRIPTION), libodbccr.so.1
-PKGFILES_CSWlibodbccr1 = $(call pkgfiles_lib,libodbccr.so.1)
+PKGFILES_CSWlibodbccr1 += $(call pkgfiles_lib,libodbccr.so.1)
 
 PACKAGES += CSWlibodbcinst1
 SPKG_DESC_CSWlibodbcinst1 = $(DESCRIPTION), libodbcinst.so.1
-PKGFILES_CSWlibodbcinst1 = $(call pkgfiles_lib,libodbcinst.so.1)
+PKGFILES_CSWlibodbcinst1 += $(call pkgfiles_lib,libodbcinst.so.1)
 RUNTIME_DEP_PKGS_CSWlibodbcinst1 += CSWlibltdl7
 
 BUILD64 = 1
 CONFIGURE_ARGS += $(DIRPATHS)
-CONFIGURE_ARGS += --enable-gui=no
-
-# TEST_SCRIPTS =
 
 PRESERVECONF += $(sysconfdir)/odbc.ini
 PRESERVECONF += $(sysconfdir)/odbcinst.ini
