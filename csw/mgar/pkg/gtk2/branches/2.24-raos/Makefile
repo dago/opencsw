@@ -54,8 +54,6 @@ PATCHFILES += 0000-Disable-gtk_test_create_widget-g_type_from_name-GtkT.patch
 # This patch adds a command line option `--update-modules` to
 # gtk-query-immodules-2.0 which has the default location of
 # gtk.immodules hardcoded and takes 32/64bit ISAs into account.
-#
-# It goes together with the above patch.
 PATCHFILES += 0000-Add-update-modules-cmd-line-option.patch
 
 PATCHFILES += 0000-Adjust-hardcoded-path-to-opt-csw-share.patch
@@ -275,35 +273,37 @@ RUNTIME_DEP_PKGS_CSWlibgtk-x112-0-0 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibgtk-x112-0-0 += CSWpango
 
 
-PACKAGES += CSWgtk2-dev
-SPKG_DESC_CSWgtk2-dev = $(DESCRIPTION), Development files
-PKGFILES_CSWgtk2-dev  = $(PKGFILES_DEVEL)
-PKGFILES_CSWgtk2-dev += .*/share/gtk-2.0/demo/.*
+PACKAGES += CSWlibgtk2-dev
+SPKG_DESC_CSWlibgtk2-dev = $(DESCRIPTION), Development files
+PKGFILES_CSWlibgtk2-dev  = $(PKGFILES_DEVEL)
+PKGFILES_CSWlibgtk2-dev += .*/share/gtk-2.0/demo/.*
 # Use this to pick up files in lib/gtk-2.0/include
-PKGFILES_CSWgtk2-dev += .*/include/.*\.h
-PKGFILES_CSWgtk2-dev += .*/gtk-demo
-PKGFILES_CSWgtk2-dev += .*/gtk-builder-convert
-RUNTIME_DEP_PKGS_CSWgtk2-dev  = CSWlibgdk-x112-0-0
+PKGFILES_CSWlibgtk2-dev += .*/include/.*\.h
+PKGFILES_CSWlibgtk2-dev += .*/gtk-demo
+PKGFILES_CSWlibgtk2-dev += .*/gtk-builder-convert
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev  = CSWlibgdk-x112-0-0
 # I pull the whole gdk pixbuf to make sure gdk-pixbuf-query-loaders
 # will be called as well
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWgdkpixbuf
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWfconfig
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWftype2
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibpixman1-0
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgtk2-dev += CSWpango
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWgdkpixbuf
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWfconfig
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWftype2
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibatk1-0-0
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibcairo2
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibexpat1
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgio2-0-0
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgmodule2-0-0
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgobject2-0-0
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgthread2-0-0
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibiconv2
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibpixman1-0
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibxrender
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibz1
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWpango
+OBSOLETED_BY_CSWlibgtk2-dev = CSWgtk2devel
+CATALOGNAME_CSWgtk2devel = gtk2_devel_sub
 
 
 PACKAGES += CSWgtk2-doc
