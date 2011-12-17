@@ -4,19 +4,35 @@ umask 0022
 
 BIN=gtk-update-icon-cache
 
+if [ "${PKG_ROOT_DIR}" = "" ]
+then
+    PKG_ROOT_DIR=/
+fi
+
+if [ -z "${PKGINST}" ]
+then
+    PKGINST=CSWgtk2
+fi
 
 echo "** Updating Icon cache"
 
-for i in @datadir@/icons/*
+for i in ${PKG_ROOT_DIR}@datadir@/icons/*
 do
     if [ -d "${i}" ]
     then
 	/usr/bin/printf "- ${i}... "
-	@bindir@/${BIN} ${i} >/dev/null 2>&1
+	/usr/sbin/chroot "${PKG_ROOT_DIR}" @bindir@/${BIN} ${i} >/dev/null 2>&1
 	if [ $? -ne 0 ]
 	then
 	    echo "Error"
 	else
+	    # Directories with no icons in them do not raise an error,
+	    # so we have to check whether the file has been actually
+	    # created.
+	    if [ -f "${i}/icon-theme.cache" ]
+	    then
+		/usr/sbin/chroot "${PKG_ROOT_DIR}" /usr/sbin/installf ${PKGINST} ${i}/icon-theme.cache f 0644 root bin
+	    fi
 	    echo "OK"
 	fi
     fi
@@ -29,31 +45,36 @@ BIN_OPTS="--update-modules"
 
 echo "** Querying IM Modules"
 
-# But first, do the obvious
-/usr/bin/printf "- Default ISA... "
-@prefix@/bin/${BIN} ${BIN_OPTS} >/dev/null 2>&1
-if [ $? -ne 0 ]
-then
-    echo "Error"
-else
-    echo "OK"
-fi
-
 # Now, do all other
 for i in @NEEDED_ISAS@
 do
-    ISABIN=@prefix@/bin/$i/${BIN}
+    # The default ISA is removed
+    isa="`echo $i | /usr/bin/sed -e 's|@ISA_DEFAULT@||g'`"
+    ISABIN=@prefix@/bin/${isa}/${BIN}
     if [ -x "${ISABIN}" ]
     then
-	/usr/bin/printf "- $i ISA... "
-	"${ISABIN}" ${BIN_OPTS} >/dev/null 2>&1
+	if [ -z "${isa}" ]
+        then
+            /usr/bin/printf "- Default ISA... "
+        else
+            /usr/bin/printf "- ${isa} ISA... "
+        fi
+
+	# Figure out the default file path (binary has to be patched for this)
+	gtk_immodules="`${ISABIN} | /usr/bin/awk '/DefaultFile =/ { print $4 }`"
+
+
+	/usr/sbin/chroot "${PKG_ROOT_DIR}" "${ISABIN}" ${BIN_OPTS} >/dev/null 2>&1
 	if [ $? -ne 0 ]
 	then
 	    echo "Error"
 	else
+	    /usr/sbin/chroot "${PKG_ROOT_DIR}" /usr/sbin/installf ${PKGINST} ${gtk_immodules} f 0644 root bin
 	    echo "OK"
 	fi
     fi
 done
+
+/usr/sbin/chroot "${PKG_ROOT_DIR}" /usr/sbin/installf -f ${PKGINST}
 
 echo "** Done querying IM Modules"

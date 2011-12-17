@@ -1,14 +1,14 @@
-From c6d567e18c04b779d3d7b587b903c2cbf4d392e5 Mon Sep 17 00:00:00 2001
+From 1ae7e710bce003ff900de41947f8ae5e57fc6409 Mon Sep 17 00:00:00 2001
 From: Rafael Ostertag <rafisol@opencsw.org>
-Date: Sat, 17 Dec 2011 10:12:38 +0100
+Date: Sat, 17 Dec 2011 16:54:29 +0100
 Subject: [PATCH] Add --update-modules cmd line option
 
 ---
- gtk/queryimmodules.c |   42 +++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 41 insertions(+), 1 deletions(-)
+ gtk/queryimmodules.c |   53 ++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 49 insertions(+), 4 deletions(-)
 
 diff --git a/gtk/queryimmodules.c b/gtk/queryimmodules.c
-index 5369c7f..8287790 100644
+index 5369c7f..223e8ee 100644
 --- a/gtk/queryimmodules.c
 +++ b/gtk/queryimmodules.c
 @@ -23,6 +23,7 @@
@@ -28,7 +28,7 @@ index 5369c7f..8287790 100644
  
  #ifdef USE_LA_MODULES
  #define SOEXT ".la"
-@@ -164,10 +167,47 @@ query_module (const char *dir, const char *name)
+@@ -164,16 +167,58 @@ query_module (const char *dir, const char *name)
  int main (int argc, char **argv)
  {
    char *cwd;
@@ -76,7 +76,21 @@ index 5369c7f..8287790 100644
 +
    g_printf ("# GTK+ Input Method Modules file\n"
  	    "# Automatically generated file, do not edit\n"
- 	    "# Created by %s from gtk+-%d.%d.%d\n"
+-	    "# Created by %s from gtk+-%d.%d.%d\n"
+-	    "#\n",
++	    "# Created by %s from gtk+-%d.%d.%d (OpenCSW Patch)\n"
++	    "#\n"
++	    "#\n"
++	    "# DefaultFile = %s\n"
++	    "# DefaultDir = %s\n",
+ 	    argv[0],
+-	    GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION);
++	    GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION,
++	    g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", "gtk.immodules", NULL),
++	    g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", NULL));
+ 
+ 
+   if (argc == 1)		/* No arguments given */
 -- 
 1.7.6.1
 
