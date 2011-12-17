@@ -1,3 +1,5 @@
+# $Id$
+#
 # Note 1: 32/64bit builds
 # ------
 #
@@ -353,6 +355,8 @@ CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 include gar/category.mk
 
 post-merge:
+	ginstall -d $(PKGROOT)$(sysconfdir)/64/gtk-2.0
+	ginstall $(PKGROOT)$(sysconfdir)/gtk-2.0/im-multipress.conf $(PKGROOT)$(sysconfdir)/64/gtk-2.0/
 	gsed -i -e 's|/usr/share/|$(sharedstatedir)/|g' \
 		-e 's|/usr/lib|$(libdir)|g' \
 		-e 's|/usr/include|$(includedir)|g' `find $(PKGROOT)$(sharedstatedir)/gtk-doc -type f`
