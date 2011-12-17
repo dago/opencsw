@@ -40,31 +40,54 @@ MODULATIONS_DBDRIVER = ocs
 MODULATIONS_DBDRIVER += freetds
 
 # I just don't have Sybase i386 32 bit
-SKIP_MODULATIONS = isa-i386-dbdriver-ocs
+SKIP_MODULATIONS += isa-i386-dbdriver-ocs
+SKIP_MODULATIONS += isa-pentium_pro-dbdriver-ocs
 
 PACKAGES += CSWsqsh-ocs
 SPKG_DESC_CSWsqsh-ocs = $(DESCRIPTION) (Linked against Sybase OCS)
 PKGFILES_CSWsqsh-ocs += $(call baseisadirs,$(bindir),sqsh-ocs)
 PKGFILES_CSWsqsh-ocs += $(sysconfdir)/.*-ocs.*
-RUNTIME_DEP_PKGS_CSWsqsh-ocs += CSWfreetds
 RUNTIME_DEP_PKGS_CSWsqsh-ocs += CSWlibreadline6
 # This is for libintl.so which is provided by Sybase and should be used from there,
 # it is not to be taken from the development package CSWggettext-dev
 CHECKPKG_OVERRIDES_CSWsqsh-ocs += missing-dependency|CSWggettext-dev
 # The Sybase package can not be released due to license restrictions
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcomn.so|is|needed|by|opt/csw/bin/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libtcl.so|is|needed|by|opt/csw/bin/sqsh-ocs
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libcs.so|is|needed|by|opt/csw/bin/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcomn64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcs64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybintl64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybtcl64.so|is|needed|by|opt/csw/bin/amd64/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcomn64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybtcl64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybtcl.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcs64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcs.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybct.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybblk.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybcomn.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybintl.so|is|needed|by|opt/csw/bin/sparcv8plus/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += soname-not-found|libsybintl64.so|is|needed|by|opt/csw/bin/sparcv9/sqsh-ocs
 # This is for /usr/local/lib/sqsh/help, this is not in the distribution, don't know where to find that, ignore for now.
-CHECKPKG_OVERRIDES_CSWsqsh-ocs += file-with-bad-content|/usr/local|root/opt/csw/bin/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/sqsh-ocs
+CHECKPKG_OVERRIDES_CSWsqsh-ocs += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/sqsh-ocs
 
 PACKAGES += CSWsqsh-freetds
 SPKG_DESC_CSWsqsh-freetds = $(DESCRIPTION) (Linked against FreeTDS)
 # PKGFILES is catchall
-RUNTIME_DEP_PKGS_CSWsqsh-freetds += CSWfreetds
+RUNTIME_DEP_PKGS_CSWsqsh-freetds += CSWlibct4
 RUNTIME_DEP_PKGS_CSWsqsh-freetds += CSWlibreadline6
-# This is for /usr/local/lib/sqsh/help, this is not in the distribution, don't know where to find that, ignore for now.
-CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/sqsh-freetds
+# This is for /usr/local/lib/sqsh/help in sqsh, this is not in the distribution, don't know where to find that, ignore for now.
+CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/amd64/sqsh-freetds
+CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/pentium_pro/sqsh-freetds
+CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv9/sqsh-freetds
+CHECKPKG_OVERRIDES_CSWsqsh-freetds += file-with-bad-content|/usr/local|root/opt/csw/bin/sparcv8plus/sqsh-freetds
+
+ARGS-32 =
+ARGS-64 = -m64
 
 # Only the staticlibtds is searched by default, change to shared lib
 REINPLACEMENTS += libtds-a
@@ -77,9 +100,20 @@ REINPLACE_MATCH_libtds-l = -ltds
 REINPLACE_WITH_libtds-l = -lct
 REINPLACE_FILES_libtds-l += configure
 
-SYBASE_ocs = /opt/csw/sybase/OCS-12_5
-SYBASE_freetds = /opt/csw
-SYBASE = $(SYBASE_$(DBDRIVER))
+REINPLACEMENTS += linker
+REINPLACE_MATCH_linker = LDFLAGS\s*=\s*(.*)
+REINPLACE_WITH_linker = LDFLAGS = $(LDFLAGS) $$1
+REINPLACE_FILES_linker = src/Makefile.in
+
+SYBASE_ocs-5.9-32 = /opt/csw/sybase/OCS-12_5
+SYBASE_ocs-5.9-64 = 
+SYBASE_ocs-5.10-32 = /opt/csw/sybase/OCS-15_0
+SYBASE_ocs-5.10-64 = /opt/csw/sybase64/OCS-15_0
+SYBASE_freetds-5.9-32 = /opt/csw
+SYBASE_freetds-5.9-64 = /opt/csw
+SYBASE_freetds-5.10-32 = /opt/csw
+SYBASE_freetds-5.10-64 = /opt/csw
+SYBASE = $(SYBASE_$(DBDRIVER)-$(GAROSREL)-$(MEMORYMODEL))
 
 NOISALIST = 1
 EXTRA_LIB = $(SYBASE)/lib
@@ -87,6 +121,10 @@ EXTRA_LIB = $(SYBASE)/lib
 EXTRA_CONFIGURE_EXPORTS = SYBASE INCDIRS LIBDIRS
 CONFIGURE_ENV_INCDIRS = $(includedir)
 CONFIGURE_ENV_LIBDIRS = $(SYBASE)/lib:$(libdir)
+
+BUILD64-5.10 = 1
+BUILD64 = $(BUILD64-$(GAROSREL))
+ISAEXEC = 1
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --enable-shared --disable-nls
@@ -96,8 +134,12 @@ CONFIGURE_ARGS += --with-readline
 TEST_SCRIPTS =
 
 MERGE_SCRIPTS_isa-default-dbdriver-ocs = copy-all
-MERGE_SCRIPTS_isa-default-dbdriver-freetds = copy-only
-MERGE_DIRS_isa-default-dbdriver-freetds = $(DBDSYBASEDIR)
+MERGE_SCRIPTS_isa-extra-dbdriver-ocs = copy-relocated-only
+MERGE_DIRS_isa-extra-dbdriver-ocs = $(bindir)
+MERGE_SCRIPTS_isa-default-dbdriver-freetds = copy-relocated-only
+MERGE_DIRS_isa-default-dbdriver-freetds = $(bindir)
+MERGE_SCRIPTS_isa-extra-dbdriver-freetds = copy-relocated-only
+MERGE_DIRS_isa-extra-dbdriver-freetds = $(bindir)
 
 EXTRA_PAX_ARGS  = -s ",/sqsh$$,/sqsh-$(DBDRIVER),p"
 EXTRA_PAX_ARGS += -s ",/sqshrc$$,/sqshrc-$(DBDRIVER).CSW,p"
