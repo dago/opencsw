@@ -2,36 +2,55 @@
 #
 # We will call gdk-pixbuf-query-loaders for all ISAs
 
+umask 0022
+
+
 GDKPBQUERY=gdk-pixbuf-query-loaders
 GDKPBQUERY_OPTS="--update-cache"
 
-echo "** Updating GDK pixbuf loaders"
-
-# But first, do the obvious
-/usr/bin/printf "- Default ISA... "
-@prefix@/bin/${GDKPBQUERY} ${GDKPBQUERY_OPTS} >/dev/null 2>&1
-if [ $? -ne 0 ]
+if [ "${PKG_ROOT_DIR}" = "" ]
 then
-    echo "Error"
-else
-    echo "OK"
+    PKG_ROOT_DIR=/
 fi
 
-# Now, do all other
-for i in @BUILD_ISAS@
+if [ -z "${PKGINST}" ]
+then
+    PKGINST=CSWgdkpixbuf-loaders
+fi
+
+echo "** Updating GDK pixbuf loaders"
+
+for i in @NEEDED_ISAS@
 do
-    queryloader=@prefix@/bin/$i/gdk-pixbuf-query-loaders
-    if [ -x "${queryloader}" ]
+    # The default ISA is removed
+    isa="`echo $i | /usr/bin/sed -e 's|@ISA_DEFAULT@||g'`"
+    queryloader=@prefix@/bin/${isa}/gdk-pixbuf-query-loaders
+    if [ -x "${PKG_ROOT_DIR}${queryloader}" ]
     then
-	/usr/bin/printf "- $i ISA... "
-	"${queryloader}" ${GDKPBQUERY_OPTS} >/dev/null 2>&1
+	if [ -z "${isa}" ]
+	then
+	    /usr/bin/printf "- Default ISA... "
+	else
+	    /usr/bin/printf "- ${isa} ISA... "
+	fi
+
+        # Figure out the directory where loaders.cache is stored
+	loaders_dir="`${queryloader} | /usr/bin/awk '/LoaderDir/ { print $4 }'`"
+	loaders_cache_dir="`/usr/bin/dirname "${loaders_dir}
+	# Now we got the file
+	loaders_cache_file="${loaders_cache_dir}/loaders.cache"
+
+	/usr/sbin/chroot "${PKG_ROOT_DIR}" "${queryloader}" ${GDKPBQUERY_OPTS} >/dev/null 2>&1
 	if [ $? -ne 0 ]
 	then
 	    echo "Error"
 	else
+	    /usr/sbin/chroot "${PKG_ROOT_DIR}" /usr/sbin/installf ${PKGINST} ${loaders_cache_file} f 0644 root bin
 	    echo "OK"
 	fi
     fi
 done
+
+/usr/sbin/chroot "${PKG_ROOT_DIR}" /usr/sbin/installf -f ${PKGINST}
 
 echo "** Done updating GDK pixbuf loaders"
