@@ -18,7 +18,7 @@ CATEGORIES = gnome
 # A simple test with emacs-gtk and gftp does not indicate that
 # installing gdk-pixbuf over an existing gtk 2.18 installation does
 # break anything.
-CHECKPKG_OVERRIDES_CSWgdkpixbuf-loaders += file-collision|/opt/csw/bin/gdk-pixbuf-query-loaders|CSWgdkpixbuf-loaders|CSWgtk2
+CHECKPKG_OVERRIDES_CSWgdkpixbuf += file-collision|/opt/csw/bin/gdk-pixbuf-query-loaders|CSWgdkpixbuf|CSWgtk2
 CHECKPKG_OVERRIDES_CSWgdkpixbuf += file-collision|/opt/csw/bin/gdk-pixbuf-csource|CSWgdkpixbuf|CSWgtk2
 CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/gdk-pixbuf-query-loaders.html|CSWgdkpixbuf-doc|CSWgtk2doc
 CHECKPKG_OVERRIDES_CSWgdkpixbuf-doc += file-collision|/opt/csw/share/gtk-doc/html/gdk-pixbuf/GdkPixbufLoader.html|CSWgdkpixbuf-doc|CSWgtk2doc
@@ -74,9 +74,9 @@ endef
 
 MASTER_SITES = $(GNOME_MIRROR)
 DISTFILES  = $(DISTNAME).tar.xz
-DISTFILES += CSWgdkpixbuf-loaders.postinstall
+DISTFILES += CSWgdkpixbuf.postinstall
 
-EXPANDVARS = CSWgdkpixbuf-loaders.postinstall
+EXPANDVARS = CSWgdkpixbuf.postinstall
 
 PACKAGING_PLATFORMS = solaris10-sparc solaris10-i386
 
@@ -86,7 +86,6 @@ CATALOGNAME_CSWgdkpixbuf = gdk_pixbuf
 SPKG_DESC_CSWgdkpixbuf = $(DESCRIPTION)
 RUNTIME_DEP_PKGS_CSWgdkpixbuf  = CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgdk-pixbuf-xlib2-0-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWgdkpixbuf-loaders
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgio2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibglib2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgmodule2-0-0
@@ -94,10 +93,11 @@ RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgobject2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibpng12-0
+RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWgdkpixbuf += CSWlibtiff3
 # I assume if one installs CSWgdkpixbuf, one wants all the stuff
 # except -dev
 CHECKPKG_OVERRIDES_CSWgdkpixbuf += surplus-dependency|CSWlibgdk-pixbuf-xlib2-0-0
-CHECKPKG_OVERRIDES_CSWgdkpixbuf += surplus-dependency|CSWgdkpixbuf-loaders
 CHECKPKG_OVERRIDES_CSWgdkpixbuf += catalogname-does-not-match-pkgname|pkgname=CSWgdkpixbuf|catalogname=gdk_pixbuf|expected-catalogname=gdkpixbuf
 
 PACKAGES += CSWgdkpixbuf-doc
@@ -131,30 +131,14 @@ RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibgthread2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-xlib2-0-0 += CSWlibpng12-0
 
-PACKAGES += CSWgdkpixbuf-loaders
-# To retain backwards compatibility with gdk pixbuf package 0.22
-CATALOGNAME_CSWgdkpixbuf-loaders = gdk_pixbuf_loaders
-SPKG_DESC_CSWgdkpixbuf-loaders = $(DESCRIPTION), loader modules
-PKGFILES_CSWgdkpixbuf-loaders  = .*/loaders/.*\.so
-PKGFILES_CSWgdkpixbuf-loaders += .*/gdk-pixbuf-query-loaders
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders  = CSWlibgdk-pixbuf2-0-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibjpeg7
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWgdkpixbuf-loaders += CSWlibtiff3
-CHECKPKG_OVERRIDES_CSWgdkpixbuf-loaders += catalogname-does-not-match-pkgname|pkgname=CSWgdkpixbuf-loaders|catalogname=gdk_pixbuf_loaders|expected-catalogname=gdkpixbuf_loaders
-
 PACKAGES += CSWlibgdk-pixbuf-dev
 SPKG_DESC_CSWlibgdk-pixbuf-dev = Developtment files $(DESCRIPTION)
 PKGFILES_CSWlibgdk-pixbuf-dev = $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-dev = CSWgdkpixbuf
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-dev += CSWlibgdk-pixbuf2-0-0
 RUNTIME_DEP_PKGS_CSWlibgdk-pixbuf-dev += CSWlibgdk-pixbuf-xlib2-0-0
+
+
 
 BUILD_DEP_PKGS  = CSWggettext-dev
 BUILD_DEP_PKGS += CSWjbigkit
