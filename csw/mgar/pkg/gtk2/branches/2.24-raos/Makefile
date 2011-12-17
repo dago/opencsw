@@ -404,9 +404,13 @@ BUILD_DEP_PKGS += CSWlibcairo-dev
 BUILD_DEP_PKGS += CSWlibgdk-pixbuf-dev
 BUILD_DEP_PKGS += CSWsunx11devel
 BUILD_DEP_PKGS += CSWggettext-dev
-# Because of cups depends on krb
+# Because cups depends on krb
 BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWggettext
+BUILD_DEP_PKGS += CSWlibpixman-dev
+BUILD_DEP_PKGS += CSWlibpng-dev
+# Needed to make a test work
+BUILD_DEP_PKGS += CSWgamin
 
 BUILD64 = 1
 
