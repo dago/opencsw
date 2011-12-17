@@ -1,0 +1,25 @@
+From f84f9b4ba14c5d02547e80853da005cd97001d12 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sat, 17 Dec 2011 12:41:47 +0100
+Subject: [PATCH] Adjust hardcoded path to /opt/csw/share
+
+---
+ demos/testpixbuf-color.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/demos/testpixbuf-color.c b/demos/testpixbuf-color.c
+index 003f333..851a15b 100644
+--- a/demos/testpixbuf-color.c
++++ b/demos/testpixbuf-color.c
+@@ -6,7 +6,7 @@
+ 
+ #include <gtk/gtk.h>
+ 
+-#define ICC_PROFILE             "/usr/share/color/icc/bluish.icc"
++#define ICC_PROFILE             "/opt/csw/share/color/icc/bluish.icc"
+ #define ICC_PROFILE_SIZE        3966
+ 
+ static gboolean
+-- 
+1.7.6.1
+

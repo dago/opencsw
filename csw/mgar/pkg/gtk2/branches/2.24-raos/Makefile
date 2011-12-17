@@ -39,10 +39,9 @@ MASTER_SITES = $(GNOME_MIRROR)
 DISTNAME = gtk+-$(VERSION)
 DISTFILES = $(DISTNAME).tar.bz2
 DISTFILES += CSWgtk2.postinstall
-DISTFILES += CSWgtk2-immodules.postinstall
+DISTFILES += README.CSW
 
-EXPANDVARS  = CSWgtk2-immodules.postinstall
-EXPANDVARS += CSWgtk2.postinstall
+EXPANDVARS = CSWgtk2.postinstall
 
 # This makes the tests work in the first place
 PATCHFILES += 0000-Use-absolute-path-to-Xvfb.patch
@@ -57,6 +56,8 @@ PATCHFILES += 0000-Disable-gtk_test_create_widget-g_type_from_name-GtkT.patch
 # It goes together with the above patch.
 PATCHFILES += 0000-Add-update-modules-cmd-line-option.patch
 
+PATCHFILES += 0000-Adjust-hardcoded-path-to-opt-csw-share.patch
+
 PACKAGES += CSWgtk2
 SPKG_DESC_CSWgtk2 = $(DESCRIPTION)
 # Catchall
@@ -67,8 +68,6 @@ RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-modules
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-engines
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-printbackends-papi
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-printbackends-file
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-printbackends-cups
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-printbackends-lpr
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgailutil18
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgtk-x112-0-0
 # I pull the whole gdk pixbuf to make sure gdk-pixbuf-query-loaders will
@@ -91,86 +90,6 @@ RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibpng12-0
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibz1
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWpango
-
-PACKAGES += CSWgtk2-immodules
-SPKG_DESC_CSWgtk2-immodules = $(DESCRIPTION), IM Modules
-PKGFILES_CSWgtk2-immodules  = .*/immodules/.*
-PKGFILES_CSWgtk2-immodules += .*/gtk-2.0/im-multipress.conf
-PKGFILES_CSWgtk2-immodules += .*/gtk-query-immodules-2.0
-RUNTIME_DEP_PKGS_CSWgtk2-immodules  = CSWlibgdk-x112-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibgtk-x112-0-0
-# I pull the whole gdk pixbuf to make sure gdk-pixbuf-query-loaders will be
-# called as well
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWgdkpixbuf
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWfconfig
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWftype2
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibpixman1-0
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgtk2-immodules += CSWpango
-
-PACKAGES += CSWgtk2-modules
-SPKG_DESC_CSWgtk2-modules = $(DESCRIPTION), Modules
-PKGFILES_CSWgtk2-modules  = .*/modules/.*
-RUNTIME_DEP_PKGS_CSWgtk2-modules  = CSWlibgdk-x112-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibgtk-x112-0-0
-# I pull the whole gdk pixbuf to make sure gdk-pixbuf-query-loaders will be
-# called as well
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWgdkpixbuf
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWfconfig
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWftype2
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibpixman1-0
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgtk2-modules += CSWpango
-
-PACKAGES += CSWgtk2-engines
-SPKG_DESC_CSWgtk2-engines = $(DESCRIPTION), Engines
-PKGFILES_CSWgtk2-engines = .*/engines/.*
-RUNTIME_DEP_PKGS_CSWgtk2-engines  = CSWlibgdk-x112-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibgtk-x112-0-0
-# I pull the whole gdk pixbuf to make sure gdk-pixbuf-query-loaders will be
-# called as well
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWgdkpixbuf
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWfconfig
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWftype2
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibatk1-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibcairo2
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibexpat1
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibgio2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibgmodule2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibgobject2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibgthread2-0-0
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibiconv2
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibintl8
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibpixman1-0
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibpng12-0
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibxrender
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWlibz1
-RUNTIME_DEP_PKGS_CSWgtk2-engines += CSWpango
 
 PACKAGES += CSWgtk2-printbackends-papi
 SPKG_DESC_CSWgtk2-printbackends-papi = $(DESCRIPTION), Print Backend
@@ -411,6 +330,8 @@ BUILD_DEP_PKGS += CSWlibpixman-dev
 BUILD_DEP_PKGS += CSWlibpng-dev
 # Needed to make a test work
 BUILD_DEP_PKGS += CSWgamin
+# Used to adjust documentation
+BUILD_DEP_PKGS += CSWgsed
 
 BUILD64 = 1
 
@@ -433,3 +354,9 @@ CONFIGURE_ARGS-64 += --disable-cups
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
 
 include gar/category.mk
+
+post-merge:
+	gsed -i -e 's|/usr/share/|$(sharedstatedir)/|g' \
+		-e 's|/usr/lib|$(libdir)|g' \
+		-e 's|/usr/include|$(includedir)|g' `find $(PKGROOT)$(sharedstatedir)/gtk-doc -type f`
+	@$(MAKECOOKIE)

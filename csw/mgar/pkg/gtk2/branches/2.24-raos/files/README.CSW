@@ -1,0 +1,26 @@
+GTK+ 2
+======
+
+
+Printer Backends
+----------------
+
+By default, only the file printer backend will be installed. If
+support for CUPS is required, the package `gtk2_printbackends_cups`
+has to be installed by calling
+
+ /opt/csw/bin/pkgutil -i gtk2_printbackends_cups
+
+Support for the LPR printer backend can be enabled by installing
+`gtk2_printbackends_lpr`:
+
+ /opt/csw/bin/pkgutil -i gtk2_printbackends_lpr
+
+
+gtk-query-immodules-2.0
+-----------------------
+
+The gtk-query-immodules-2.0 that comes with OpenCSW's GTK+ 2 has a
+command line argument `--update-modules' which is not found in the
+upstream release of GTK+ 2. It will update the file gtk.immodules in
+the default location using the standard IM Modules search path.
