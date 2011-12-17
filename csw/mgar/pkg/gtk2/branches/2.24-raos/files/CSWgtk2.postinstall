@@ -24,3 +24,36 @@ done
 
 echo "** Done Updating Icon cache"
 
+BIN=gtk-query-immodules-2.0
+BIN_OPTS="--update-modules"
+
+echo "** Querying IM Modules"
+
+# But first, do the obvious
+/usr/bin/printf "- Default ISA... "
+@prefix@/bin/${BIN} ${BIN_OPTS} >/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+    echo "Error"
+else
+    echo "OK"
+fi
+
+# Now, do all other
+for i in @NEEDED_ISAS@
+do
+    ISABIN=@prefix@/bin/$i/${BIN}
+    if [ -x "${ISABIN}" ]
+    then
+	/usr/bin/printf "- $i ISA... "
+	"${ISABIN}" ${BIN_OPTS} >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+	    echo "Error"
+	else
+	    echo "OK"
+	fi
+    fi
+done
+
+echo "** Done querying IM Modules"
