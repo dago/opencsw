@@ -1,14 +1,14 @@
-From 780bf4b7fe81f5ecb94858e43fe07c4374a1f441 Mon Sep 17 00:00:00 2001
+From c6d567e18c04b779d3d7b587b903c2cbf4d392e5 Mon Sep 17 00:00:00 2001
 From: Rafael Ostertag <rafisol@opencsw.org>
-Date: Mon, 12 Dec 2011 22:00:33 +0100
+Date: Sat, 17 Dec 2011 10:12:38 +0100
 Subject: [PATCH] Add --update-modules cmd line option
 
 ---
- gtk/queryimmodules.c |   36 +++++++++++++++++++++++++++++++++++-
- 1 files changed, 35 insertions(+), 1 deletions(-)
+ gtk/queryimmodules.c |   42 +++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 41 insertions(+), 1 deletions(-)
 
 diff --git a/gtk/queryimmodules.c b/gtk/queryimmodules.c
-index 5369c7f..21611e4 100644
+index 5369c7f..8287790 100644
 --- a/gtk/queryimmodules.c
 +++ b/gtk/queryimmodules.c
 @@ -23,6 +23,7 @@
@@ -28,7 +28,7 @@ index 5369c7f..21611e4 100644
  
  #ifdef USE_LA_MODULES
  #define SOEXT ".la"
-@@ -164,10 +167,41 @@ query_module (const char *dir, const char *name)
+@@ -164,10 +167,47 @@ query_module (const char *dir, const char *name)
  int main (int argc, char **argv)
  {
    char *cwd;
@@ -39,15 +39,21 @@ index 5369c7f..21611e4 100644
    gboolean error = FALSE;
  
 +  /*
-+   * Quick an dirty hack
++   * Quick an dirty hack.
++   *
++   * This will allow us to create the gtk.immodules in the default
++   * place by providing `--update-modules' as cmd line argument,
++   * without worrying where this might be when calling
++   * gtk-query-immodules-2.0 from a postinstall script.
++   *
++   * The basic idea is to redirect STDOUT to the default file and then
++   * let the normal flow of the program continue like there was no cmd
++   * line argument. Be aware, that this only works when no other cmd
++   * line options were passed.
 +   */
 +  if ( argc == 2 && strcmp("--update-modules", argv[1]) == 0 )
 +    {
-+#if defined(__amd64) || defined(__sparcv9)
-+      gtk_immodules = g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", "gtk.immodules-64", NULL);
-+#else
 +      gtk_immodules = g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", "gtk.immodules", NULL);
-+#endif
 +      fd = g_open(gtk_immodules, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 +      if ( fd == -1 )
 +	{

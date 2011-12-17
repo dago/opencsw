@@ -50,13 +50,6 @@ PATCHFILES += 0000-Use-absolute-path-to-Xvfb.patch
 # This disables a check that I wasn't able to fix
 PATCHFILES += 0000-Disable-gtk_test_create_widget-g_type_from_name-GtkT.patch
 
-# This patch makes gtk look for
-#
-# - gtk.immodules-64 on 64bit ISAs
-#
-# - gtk.immodules on 32bit ISAs
-PATCHFILES += 0000-Use-distinct-files-for-gtk.immodules-on-32-64bit-lib.patch
-
 # This patch adds a command line option `--update-modules` to
 # gtk-query-immodules-2.0 which has the default location of
 # gtk.immodules hardcoded and takes 32/64bit ISAs into account.
@@ -416,6 +409,13 @@ BUILD_DEP_PKGS += CSWlibkrb5-dev
 BUILD_DEP_PKGS += CSWggettext
 
 BUILD64 = 1
+
+# This is because gtk.immodules resides in $(sysconfdir)/gtk-2.0. If
+# we don't take the memory model into account, 32/64 bit libs would
+# get the wrong IM Modules list in gtk.immodules (see also the pango
+# recipe).
+sysconfdir-suffix-64 = /64
+sysconfdir = /etc/opt/csw$(sysconfdir-suffix-$(MEMORYMODEL))
 
 # We need the binaries to query 64 bit modules
 MERGE_DIRS_isa-extra = $(bindir) $(libdir)
