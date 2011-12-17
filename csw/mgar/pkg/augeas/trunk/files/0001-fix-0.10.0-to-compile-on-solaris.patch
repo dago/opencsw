@@ -1,0 +1,25 @@
+From 025a79fcbf0c7bcb8a99e7c0444d1e4aac439200 Mon Sep 17 00:00:00 2001
+From: Mark Phillips <none@none>
+Date: Fri, 16 Dec 2011 14:15:23 +0100
+Subject: [PATCH] fix 0.10.0 to compile on solaris
+
+---
+ src/regexp.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/regexp.c b/src/regexp.c
+index cf0ea5d..811087d 100644
+--- a/src/regexp.c
++++ b/src/regexp.c
+@@ -50,7 +50,7 @@ char *regexp_escape(const struct regexp *r) {
+     ret = fa_restrict_alphabet(r->pattern->str, strlen(r->pattern->str),
+                                &nre, &nre_len, 2, 1);
+     if (ret == 0) {
+-        pat = escape(nre, nre_len);
++        pat = escape(nre, nre_len, RX_ESCAPES);
+         free(nre);
+     }
+ #endif
+-- 
+1.7.6.1
+

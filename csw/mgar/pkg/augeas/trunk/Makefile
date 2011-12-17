@@ -1,5 +1,5 @@
 NAME = augeas
-VERSION = 0.8.1
+VERSION = 0.10.0
 CATEGORIES = lib
 
 DESCRIPTION = A configuration editing tool
@@ -14,11 +14,13 @@ MASTER_SITES = http://augeas.net/download/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL = http://augeas.net
 
+BUILD_DEP_PKGS    = CSWlibxml2-2 CSWlibxml2-dev
 RUNTIME_DEP_PKGS  = CSWgcc4corert CSWlibgnugetopt
-RUNTIME_DEP_PKGS += CSWlibreadline6
+RUNTIME_DEP_PKGS += CSWlibreadline6 CSWlibxml2-2
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
-PATCHFILES += 0001-add-csw-paths-for-sudoers.patch
+PATCHFILES += 0001-fix-0.10.0-to-compile-on-solaris.patch
+PATCHFILES += 0002-second-aattempt-at-getting-it-to-build-on-solaris.patch
 
 # Building on Solaris 10 doesn't work as it support C99 and the above fixes are
 # not necessary there.
