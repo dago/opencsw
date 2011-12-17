@@ -32,15 +32,18 @@ CHECKPKG_OVERRIDES_CSWfreetds += file-with-bad-content|/usr/local|root/opt/csw/b
 PACKAGES += CSWlibct4
 SPKG_DESC_CSWlibct4 = FreeTDS library, libct.so.4
 PKGFILES_CSWlibct4 += $(call pkgfiles_lib,libct.so.4)
+RUNTIME_DEP_PKGS_CSWlibct4 += CSWlibiconv2
 
 PACKAGES += CSWlibsybdb5
 SPKG_DESC_CSWlibsybdb5 += FreeTDS library, libsybdb.so.5
 PKGFILES_CSWlibsybdb5 += $(call pkgfiles_lib,libsybdb.so.5)
+RUNTIME_DEP_PKGS_CSWlibsybdb5 += CSWlibiconv2
 
 PACKAGES += CSWlibtdsodbc0
 SPKG_DESC_CSWlibtdsodbc0 = FreeTDS library, libtdsodbc.so.0
 PKGFILES_CSWlibtdsodbc0 += $(call pkgfiles_lib,libtdsodbc.so.0)
 RUNTIME_DEP_PKGS_CSWlibtdsodbc0 += CSWlibodbcinst2
+RUNTIME_DEP_PKGS_CSWlibtdsodbc0 += CSWlibiconv2
 
 PACKAGES += CSWfreetds-dev
 SPKG_DESC_CSWfreetds-dev = Development files for libct.so.4, libsybdb.so.5 and libtdsodbc.so.0
@@ -53,6 +56,9 @@ OBSOLETED_BY_CSWfreetds-dev += CSWfreetdsdoc
 CATALOGNAME_CSWfreetdsdoc = freetds_doc_stub
 # There are lots of examples which would need careful adjustment, contributions welcome!
 CHECKPKG_OVERRIDES_CSWfreetds-dev += file-with-bad-content
+
+# Make sure library is self-sufficient
+EXTRA_LINKER_FLAGS = -liconv
 
 BUILD64 = 1
 
