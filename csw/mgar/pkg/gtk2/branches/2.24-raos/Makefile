@@ -63,9 +63,6 @@ SPKG_DESC_CSWgtk2 = $(DESCRIPTION)
 # Catchall
 RUNTIME_DEP_PKGS_CSWgtk2  = CSWlibgdk-x112-0-0
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWhicoloricontheme
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-immodules
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-modules
-RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-engines
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-printbackends-papi
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWgtk2-printbackends-file
 RUNTIME_DEP_PKGS_CSWgtk2 += CSWlibgailutil18
