@@ -12,6 +12,8 @@ endef
 PHP_PREFIX = $(prefix)/php5
 PHP_BIN = $(PHP_PREFIX)/bin
 
+PHP5_EXT = 1
+
 PHP5ROOT    = $(DESTDIR)/$(PHP_PREFIX)
 STRIP_DIRS += $(PHP5ROOT)/lib/php/extensions/*/
 STRIP_DIRS += $(PHP5ROOT)/bin
