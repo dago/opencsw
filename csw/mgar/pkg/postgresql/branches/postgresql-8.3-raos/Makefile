@@ -323,7 +323,7 @@ RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWosslrt
 # Those '/usr/local' are ok, they are in a HPUX section of the file
 CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(NEEDED_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/local|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib) )
 # That's ok too, it's docbook stuff which we don't use in this build
-CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(NEEDED_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/share|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib) )
+CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(NEEDED_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/share|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.global) )
 #ALTERNATIVES_CSW$(NAME)-dev = $(foreach i,$(NEEDED_ISAS), dev_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-doc
