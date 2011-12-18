@@ -51,6 +51,14 @@ CHECKPKG_OVERRIDES_CSWphp5-apc += surplus-dependency|CSWphp5
 
 include gar/category.mk
 
+# these are after the include so GARCH is set.
+# attempting to get a usable build on sparc:
+# https://bugs.php.net/bug.php?id=59100
+ifeq ($(GARCH),sparc)
+EXTRA_CFLAGS = -xmemalign=1i
+endif
+
+
 post-extract-isa-$(ISA_DEFAULT_$(GARCH)):
 	@( cd $(WORKSRC) ; $(PHP_BIN)/phpize )
 	@$(MAKECOOKIE)
