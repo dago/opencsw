@@ -1,23 +1,4 @@
 # $Id$
-#
-# Note 1: 32/64bit builds
-# ------
-#
-# The IM Modules stuff expects a file listing all the available
-# modules which is created by gtk-query-immodules-2.0. By default this
-# file is located at $(sysconfdir)/gtk-2.0/gtk.immodules. Since we
-# provide 32/64bit libraries we cannot simply go with the default.
-#
-# This recipe has two patches which take care of the above mentioned
-# problem. The first patch makes 64bit libraries look for
-# $(sysconfdir)/gtk-2.0/gtk.immodules-64. 32bit libraries still use
-# $(sysconfdir)/gtk-2.0/gtk.immodules.
-#
-# The second patch modifies gtk-query-immodules-2.0, so that it
-# accepts a command line option '--update-modules' which will create
-# the proper file in $(sysconfdir)/gtk-2.0/ depending on the ISA,
-# i.e. gtk.immodules-64 on 64bit ISAs and gtk.immodules on 32bit
-# ISAs. This helps to greatly simplify the postinstall script.
 
 NAME = gtk2
 VERSION = 2.24.8
@@ -285,6 +266,7 @@ RUNTIME_DEP_PKGS_CSWlibgtk2-dev  = CSWlibgdk-x112-0-0
 # I pull the whole gdk pixbuf to make sure gdk-pixbuf-query-loaders
 # will be called as well
 RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWgdkpixbuf
+RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibgdk-pixbuf-dev
 RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWfconfig
 RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWftype2
 RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibatk1-0-0
