@@ -1,0 +1,25 @@
+From dc1c663085dff97adb890534a5d6bd7ede0bf542 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <raos@opencsw.org>
+Date: Fri, 9 Dec 2011 18:09:58 +0100
+Subject: [PATCH] ecpg /usr/local/include replacement
+
+---
+ src/interfaces/ecpg/preproc/ecpg.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/interfaces/ecpg/preproc/ecpg.c b/src/interfaces/ecpg/preproc/ecpg.c
+index e42d443..ac19813 100644
+--- a/src/interfaces/ecpg/preproc/ecpg.c
++++ b/src/interfaces/ecpg/preproc/ecpg.c
+@@ -255,7 +255,7 @@ main(int argc, char *const argv[])
+ 	}
+ 
+ 	add_include_path(".");
+-	add_include_path("/usr/local/include");
++	add_include_path("/opt/csw/include");
+ 	get_include_path(my_exec_path, include_path);
+ 	add_include_path(include_path);
+ 	add_include_path("/usr/include");
+-- 
+1.7.6.1
+
