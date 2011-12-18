@@ -9,16 +9,12 @@
 #   - Style changes
 #              
 #
-# This files is a template.  The following variables need to be substituted
-# before it can be run:
-#
-# - PGDATA
-# - bindir
-# - sysconfdir
+
+VERSION=@BASE_VERSION_NODOT@
 
 USERCONF=@CSWPGSQLCONFFILE_VERSIONED@
-PGCTL=@bindir@/pg_ctl-@BASE_VERSION_NODOT@
-PGINIT=@bindir@/initdb-@BASE_VERSION_NODOT@
+PGCTL=@bindir@/pg_ctl-${VERSION}
+PGINIT=@bindir@/initdb-${VERSION}
 
 # Read in the user configuration file
 [ -s /opt/csw/etc/${USERCONF} ] && . /opt/csw/etc/${USERCONF}

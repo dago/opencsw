@@ -92,7 +92,7 @@ NAME = postgresql
 BASE_VERSION = 8.3
 VERSION_NODOT = $(subst .,_,$(BASE_VERSION))
 BASE_VERSION_NODOT = $(subst .,,$(BASE_VERSION))
-PATCHLEVEL = 16
+PATCHLEVEL = 17
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 
@@ -176,6 +176,10 @@ INITSCRIPTFILE		= cswpostgresql
 INITSCRIPTFILETMPL	= $(INITSCRIPTFILE).tmpl
 INITSCRIPTFILE_VERSIONED = $(INITSCRIPTFILE)-$(BASE_VERSION_NODOT)
 
+# The postinstall script for the postgreSQL server
+SERVERPOSTINSTTMPL  = CSWpostgresql-server.postinstall.tmpl
+SERVERPOSTINST_VERSIONED = CSW$(NAME)$(BASE_VERSION_NODOT)-server.postinstall
+
 
 # These are the alternatives provided for the packages.  I use them in the
 # recipe to iterate over all possible alternatives (see 'post-merge:')
@@ -183,30 +187,21 @@ myALTERNATIVES= server client dev contrib
 
 POSTMSG = $(foreach n,$(myALTERNATIVES),$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_$(n)/CSW$(NAME)$(BASE_VERSION_NODOT)-$(n).postmsg)
 
-
-# My sed, since EXPANDVARS has proven unreliable to me
-mySED = gsed -e 's|@USERGROUPFILE_VERSIONED@|$(USERGROUPFILE_VERSIONED)|g' \
-	-e 's|@CSWPGSQLCONFFILE_VERSIONED@|$(CSWPGSQLCONFFILE_VERSIONED)|g' \
-	-e 's|@INITSCRIPTFILE_VERSIONED@|$(INITSCRIPTFILE_VERSIONED)|g' \
-	-e 's|@NAME@|$(NAME)|g' \
-	-e 's|@VERSION@|$(VERSION)|g' \
-	-e 's|@BASE_VERSION_NODOT@|$(BASE_VERSION_NODOT)|g' \
-	-e 's|@PGLOCALSTATEDIR_BASE@|$(PGLOCALSTATEDIR_BASE)|g' \
-	-e 's|@PGDATA@|$(PGDATA)|g' \
-	-e 's|@sysconfdir@|$(sysconfdir)|g' \
-	-e 's|@bindir@|$(bindir)|g'
-
-
 MASTER_SITES = http://ftp.postgresql.org/pub/source/v$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 DISTFILES += README-CSW.txt
-DISTFILES += CSWpostgresql-server.postinstall.tmpl
+DISTFILES += $(SERVERPOSTINSTTMPL)
 DISTFILES += $(INITSCRIPTFILETMPL)
 DISTFILES += $(USERGROUPFILETMPL)
 DISTFILES += $(CSWPGSQLCONFFILETMPL)
 DISTFILES += $(notdir $(POSTMSG))
 NOCHECKSUM = $(notdir $(POSTMSG))
 
+EXPANDVARS  = $(CSWPGSQLCONFFILETMPL)
+EXPANDVARS += $(INITSCRIPTFILETMPL)
+EXPANDVARS += $(CSWPGSQLCONFFILETMPL)
+EXPANDVARS += $(SERVERPOSTINSTTMPL)
+EXPANDVARS += $(USERGROUPFILETMPL)
 
 # This patch will replace /usr/local/include by /opt/csw/include in
 # ecpg.c and thus silence a checkpkg error.
@@ -327,6 +322,8 @@ RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibreadline6
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWosslrt
 # Those '/usr/local' are ok, they are in a HPUX section of the file
 CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(NEEDED_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/local|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib) )
+# That's ok too, it's docbook stuff which we don't use in this build
+CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(NEEDED_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/share|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib) )
 #ALTERNATIVES_CSW$(NAME)-dev = $(foreach i,$(NEEDED_ISAS), dev_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-doc
@@ -441,15 +438,6 @@ post-merge:
 	$(foreach a,$(myALTERNATIVES), $(foreach i,$(NEEDED_ISAS), $(shell ginstall -d $(PKGROOT)$(sharedstatedir)/alternatives ; echo "$(ALTERNATIVE_$(a)_$(i))" > $(PKGROOT)$(sharedstatedir)/alternatives/$(NAME)$(BASE_VERSION_NODOT)_$(a)_$(i))))
 # Create the PGDATA directory
 	ginstall -d $(PKGROOT)$(PGDATA)
-# The usergroup file
-	ginstall -d $(PKGROOT)$(USERGROUPDIR)
-	$(mySED) $(FILEDIR)/$(USERGROUPFILETMPL) > $(PKGROOT)$(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
-# The init script
-	ginstall -d $(PKGROOT)$(sysconfdir)/init.d
-	$(mySED) $(FILEDIR)/$(INITSCRIPTFILETMPL) > $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
-	chmod 0755 $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
-# The init script config
-	$(mySED) $(FILEDIR)/$(CSWPGSQLCONFFILETMPL) > $(PKGROOT)$(sysconfdir)/$(CSWPGSQLCONFFILE_VERSIONED).CSW
 # Adjust the man page names for man1
 	for f in $(PKGROOT)$(datadir)/man/man1/* ; do \
 		f_no_suffix="`echo $$f | sed -e 's/.1$$//'`" ; \
@@ -465,8 +453,21 @@ post-merge:
 	$(foreach n,$(POSTMSG), $(shell ginstall -d $(PKGROOT)$(dir $(n))) $(shell ginstall $(WORKDIR)/$(notdir $(n)) $(PKGROOT)$(n)))
 	@$(MAKECOOKIE)
 
+
 pre-package:
-	$(mySED) $(FILEDIR)/CSWpostgresql-server.postinstall.tmpl > $(WORKDIR)/CSW$(NAME)$(BASE_VERSION_NODOT)-server.postinstall
+# The postinstall for the server package
+	ginstall $(WORKDIR)/$(SERVERPOSTINSTTMPL) $(WORKDIR)/$(SERVERPOSTINST_VERSIONED)
+# The usergroup file
+	ginstall -d $(PKGROOT)$(USERGROUPDIR)
+	ginstall $(WORKDIR)/$(USERGROUPFILETMPL) $(PKGROOT)$(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
+# The init script
+	ginstall -d $(PKGROOT)$(sysconfdir)/init.d
+	ginstall $(WORKDIR)/$(INITSCRIPTFILETMPL) $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
+	chmod 0755 $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
+# The init script config
+	ginstall $(WORKDIR)/$(CSWPGSQLCONFFILETMPL) $(PKGROOT)$(sysconfdir)/$(CSWPGSQLCONFFILE_VERSIONED).CSW
+	@$(MAKECOOKIE)
+	@$(MAKECOOKIE)
 
 $(foreach n,$(POSTMSG),$(DOWNLOADDIR)/$(notdir $(n))):
 	@echo " ==> Generating $(notdir $@)"
