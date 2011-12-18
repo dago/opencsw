@@ -1,45 +1,42 @@
-From bcfc4c25ea42d70719bc62a9674b2832b106f466 Mon Sep 17 00:00:00 2001
+From 8ea189fd88c2e2fb0c0d5df0e9addcd07b7a637d Mon Sep 17 00:00:00 2001
 From: Rafael Ostertag <raos@opencsw.org>
-Date: Sat, 10 Dec 2011 16:41:08 +0100
+Date: Sun, 18 Dec 2011 22:09:16 +0100
 Subject: [PATCH] Run tests in /var/tmp/pgsql/tmp_check
 
 ---
- src/test/regress/GNUmakefile |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
+ src/test/regress/GNUmakefile |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/src/test/regress/GNUmakefile b/src/test/regress/GNUmakefile
-index da117dc..471cef8 100644
+index 83b02cb..85884ee 100644
 --- a/src/test/regress/GNUmakefile
 +++ b/src/test/regress/GNUmakefile
 @@ -141,7 +141,8 @@ tablespace-setup:
- ##
+ pg_regress_call = ./pg_regress --inputdir=$(srcdir) --dlpath=. --multibyte=$(MULTIBYTE) --load-language=plpgsql $(NOLOCALE)
  
  check: all
--	./pg_regress --temp-install=./tmp_check --top-builddir=$(top_builddir) --srcdir="$(abs_srcdir)" --temp-port=$(TEMP_PORT) --schedule="$(srcdir)"/parallel_schedule --multibyte=$(MULTIBYTE) --load-language=plpgsql $(MAXCONNOPT) $(NOLOCALE) $(TEMP_CONF)
+-	$(pg_regress_call) --temp-install=./tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(TEMP_CONF)
 +	install -d /var/tmp/pgsql/tmp_check
-+	./pg_regress --temp-install=/var/tmp/pgsql/tmp_check --top-builddir=$(top_builddir) --srcdir="$(abs_srcdir)" --temp-port=$(TEMP_PORT) --schedule="$(srcdir)"/parallel_schedule --multibyte=$(MULTIBYTE) --load-language=plpgsql $(MAXCONNOPT) $(NOLOCALE) $(TEMP_CONF)
++	$(pg_regress_call) --temp-install=/var/tmp/pgsql/tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(TEMP_CONF)
  
  installcheck: all
- 	./pg_regress --psqldir="$(PSQLDIR)" --schedule="$(srcdir)"/serial_schedule --srcdir="$(abs_srcdir)" --multibyte=$(MULTIBYTE) --load-language=plpgsql $(NOLOCALE)
-@@ -160,7 +161,8 @@ bigtest: all
- 	./pg_regress --psqldir="$(PSQLDIR)" --schedule="$(srcdir)"/serial_schedule --srcdir="$(abs_srcdir)" --multibyte=$(MULTIBYTE) --load-language=plpgsql $(NOLOCALE) numeric_big 
+ 	$(pg_regress_call) --psqldir="$(PSQLDIR)" --schedule=$(srcdir)/serial_schedule
+@@ -160,7 +161,7 @@ bigtest: all
+ 	$(pg_regress_call) --psqldir="$(PSQLDIR)" --schedule=$(srcdir)/serial_schedule numeric_big 
  
  bigcheck: all
--	./pg_regress --temp-install=./tmp_check --top-builddir=$(top_builddir) --srcdir="$(abs_srcdir)" --temp-port=$(TEMP_PORT) --schedule="$(srcdir)"/parallel_schedule --multibyte=$(MULTIBYTE) --load-language=plpgsql $(MAXCONNOPT) $(NOLOCALE) numeric_big
-+	install -d /var/tmp/pgsql/tmp_check
-+	./pg_regress --temp-install=/var/tmp/pgsql/tmp_check --top-builddir=$(top_builddir) --srcdir="$(abs_srcdir)" --temp-port=$(TEMP_PORT) --schedule="$(srcdir)"/parallel_schedule --multibyte=$(MULTIBYTE) --load-language=plpgsql $(MAXCONNOPT) $(NOLOCALE) numeric_big
+-	$(pg_regress_call) --temp-install=./tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) numeric_big
++	$(pg_regress_call) --temp-install=/var/tmp/pgsql/tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) numeric_big
  
  
  ##
-@@ -174,7 +176,7 @@ clean distclean maintainer-clean: clean-lib
- 	rm -f $(output_files) $(input_files) pg_regress_main.o pg_regress.o pg_regress$(X)
+@@ -173,5 +174,5 @@ clean distclean maintainer-clean: clean-lib
  # things created by various check targets
+ 	rm -f $(output_files) $(input_files)
  	rm -rf testtablespace
 -	rm -rf results tmp_check log
 +	rm -rf results /var/tmp/pgsql/tmp_check log
  	rm -f regression.diffs regression.out regress.out run_check.out
- ifeq ($(PORTNAME), cygwin)
- 	rm -f regress.def
 -- 
 1.7.6.1
 
