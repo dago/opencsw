@@ -1,0 +1,44 @@
+#!/bin/sh
+# vim:set ft=sh:
+#
+# $Id$
+#
+# Initialize the database cluster if it hasn't been initialized before.
+
+USERCONF=@CSWPGSQLCONFFILE_VERSIONED@
+PGCTL=@bindir@/pg_ctl-@BASE_VERSION_NODOT@
+PGINIT=@bindir@/initdb-@BASE_VERSION_NODOT@
+
+# Read in the user configuration file
+[ -s /opt/csw/etc/${USERCONF} ] && . /opt/csw/etc/${USERCONF}
+[ -s @sysconfdir@/${USERCONF} ] && . @sysconfdir@/${USERCONF}
+
+initialize_cluster() {
+	chown postgres "${PGDATA}"
+	chmod 0700 "${PGDATA}"
+	echo "Initializing PostgreSQL database..."
+	su postgres -c "\"${PGINIT}\" -D \"${PGDATA}\" -E UTF8"
+}
+
+if [ `ls -l ${PGDATA} 2>/dev/null | wc -l` -eq 1 ]; then
+	initialize_cluster
+else
+	echo "The database cluster seems to be initialized already."
+fi
+
+# FIXME: We assume that every Sol 10 user is using SMF, whereas it is possible
+# to use CSW on Sol 10 without SMF
+if [ -x /usr/sbin/svcadm ]; then
+	fmri="cswpostgresql-@BASE_VERSION_NODOT@"
+	echo "Enabling the ${fmri} service in SMF"
+	# Let things settle a little bit
+	sleep 4
+	svcadm clear "${fmri}"
+	svcadm enable "${fmri}"
+else
+	initscript="/etc/opt/csw/init.d/cswpostgresql-@BASE_VERSION_NODOT@"
+	echo "Issuing ${initscript} start"
+	"${initscript}" start
+fi
+
+exit 0
