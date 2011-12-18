@@ -1,5 +1,5 @@
 NAME = pigz
-VERSION = 2.1.6
+VERSION = 2.1.7
 CATEGORIES = utils
 
 DESCRIPTION = A parallel implementation of gzip
@@ -12,21 +12,19 @@ endef
 
 MASTER_SITES = http://www.zlib.net/pigz/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTNAME = $(NAME)
 DISTFILES += pigz-wrapper
 DISTFILES += unpigz-wrapper
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
-
-SPKG_SOURCEURL = http://www.zlib.net/pigz/
+VENDOR_URL = http://www.zlib.net/pigz/
 
 LICENSE = README
 
-RUNTIME_DEP_PKGS = CSWzlib
+PACKAGES += CSWpigz
+SPKG_DESC_CSWpigz = A parallel implementation of gzip
+RUNTIME_DEP_PKGS_CSWpigz += CSWlibz1
+# This is just the license
+CHECKPKG_OVERRIDES_CSWpigz += file-with-bad-content|/usr/local|root/opt/csw/share/doc/pigz/license
 
 # Optimization show effects < 5%
 #REQUESTED_ISAS = $(ISALIST_$(GARCOMPILER))
