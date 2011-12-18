@@ -237,7 +237,7 @@ RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWlibxrender
 RUNTIME_DEP_PKGS_CSWlibgtk2-dev += CSWpango
 OBSOLETED_BY_CSWlibgtk2-dev = CSWgtk2devel
-CATALOGNAME_CSWgtk2devel = gtk2_devel_sub
+CATALOGNAME_CSWgtk2devel = gtk2_devel_stub
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWgdkpixbuf
 CHECKPKG_OVERRIDES_CSWlibgtk2-dev += surplus-dependency|CSWlibgdk-pixbuf-dev
 # Covered by CSWgdkpixbuf
