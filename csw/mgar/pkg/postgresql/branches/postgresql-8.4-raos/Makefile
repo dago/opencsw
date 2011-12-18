@@ -89,10 +89,10 @@
 # This BUILD is NOT READY!  It needs work before it's usable.
 
 NAME = postgresql
-BASE_VERSION = 8.3
+BASE_VERSION = 8.4
 VERSION_NODOT = $(subst .,_,$(BASE_VERSION))
 BASE_VERSION_NODOT = $(subst .,,$(BASE_VERSION))
-PATCHLEVEL = 17
+PATCHLEVEL = 10
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = apps
 
@@ -329,7 +329,7 @@ CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(NEEDED_ISAS), $(subst $(ISA_D
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-doc
 ARCHALL_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = 1
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = PostgreSQL $(VERSION), Documentation Files
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-doc  =  .*/doc/$(NAME)/$(BASE_VERSION_NODOT)/.*\.html
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-doc  =  .*/doc/$(NAME)/$(BASE_VERSION_NODOT)/.*\.(html|css)
 
 PACKAGES += CSWlibecpg-compat3
 SPKG_DESC_CSWlibecpg-compat3 = PostgreSQL $(VERSION), libecpg_compat
@@ -380,7 +380,7 @@ CONFIGURE_ARGS += --datadir=$(PGDATADIR)
 CONFIGURE_ARGS += --localstatedir=$(PGDATA)
 CONFIGURE_ARGS += --with-includes=$(includedir)
 CONFIGURE_ARGS += --with-libraries=$(libdir)
-CONFIGURE_ARGS += --with-docdir=$(PGDOCDIR)
+CONFIGURE_ARGS += --docdir=$(PGDOCDIR)
 # configure complains that we are not thread-safe, wtf? --raos
 #CONFIGURE_ARGS += --enable-thread-safety
 
@@ -422,16 +422,13 @@ pre-configure-modulated:
 	fi
 	@$(MAKECOOKIE)
 
-post-build-modulated:
-	$(BUILD_ENV) gmake -C $(WORKSRC)/contrib all
-	@$(MAKECOOKIE)
+# post-build-modulated:
+# 	$(BUILD_ENV) gmake -C $(WORKSRC)/contrib all
+# 	@$(MAKECOOKIE)
 
-post-install-modulated:
-	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
-	ginstall -d -m 755 $(DESTDIR)$(prefix)/bin
-	[ -r $(DESTDIR)$(bindir)/pg_config ] && \
-	gmv -v $(DESTDIR)$(bindir)/pg_config $(DESTDIR)$(prefix)/bin || true
-	@$(MAKECOOKIE)
+# post-install-modulated:
+# 	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
+# 	@$(MAKECOOKIE)
 
 post-merge:
 # Create my alternatives files
