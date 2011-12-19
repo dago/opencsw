@@ -1,0 +1,96 @@
+From 1ae7e710bce003ff900de41947f8ae5e57fc6409 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sat, 17 Dec 2011 16:54:29 +0100
+Subject: [PATCH] Add --update-modules cmd line option
+
+---
+ gtk/queryimmodules.c |   53 ++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 49 insertions(+), 4 deletions(-)
+
+diff --git a/gtk/queryimmodules.c b/gtk/queryimmodules.c
+index 5369c7f..223e8ee 100644
+--- a/gtk/queryimmodules.c
++++ b/gtk/queryimmodules.c
+@@ -23,6 +23,7 @@
+ 
+ #include <glib.h>
+ #include <glib/gprintf.h>
++#include <glib/gstdio.h>
+ #include <gmodule.h>
+ 
+ #include <errno.h>
+@@ -30,6 +31,8 @@
+ #ifdef HAVE_UNISTD_H
+ #include <unistd.h>
+ #endif
++#include <fcntl.h>
++#include <stdlib.h>
+ 
+ #ifdef USE_LA_MODULES
+ #define SOEXT ".la"
+@@ -164,16 +167,58 @@ query_module (const char *dir, const char *name)
+ int main (int argc, char **argv)
+ {
+   char *cwd;
+-  int i;
++  int i, fd, retval;
+   char *path;
++  char *gtk_immodules;
+   gboolean error = FALSE;
+ 
++  /*
++   * Quick an dirty hack.
++   *
++   * This will allow us to create the gtk.immodules in the default
++   * place by providing `--update-modules' as cmd line argument,
++   * without worrying where this might be when calling
++   * gtk-query-immodules-2.0 from a postinstall script.
++   *
++   * The basic idea is to redirect STDOUT to the default file and then
++   * let the normal flow of the program continue like there was no cmd
++   * line argument. Be aware, that this only works when no other cmd
++   * line options were passed.
++   */
++  if ( argc == 2 && strcmp("--update-modules", argv[1]) == 0 )
++    {
++      gtk_immodules = g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", "gtk.immodules", NULL);
++      fd = g_open(gtk_immodules, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
++      if ( fd == -1 )
++	{
++	  g_fprintf(stderr, "Cannot open %s.\n", gtk_immodules);
++	  exit(1);
++	}
++
++      if ( dup2(fd, STDOUT_FILENO) == -1 )
++	{
++	  g_fprintf(stderr, "Unable to redirect STDOUT.\n");
++	  exit(1);
++	}
++
++      /*
++       * cheat, to make it think there are no arguments given
++       */
++      argc = 1;
++    }
++      
++
+   g_printf ("# GTK+ Input Method Modules file\n"
+ 	    "# Automatically generated file, do not edit\n"
+-	    "# Created by %s from gtk+-%d.%d.%d\n"
+-	    "#\n",
++	    "# Created by %s from gtk+-%d.%d.%d (OpenCSW Patch)\n"
++	    "#\n"
++	    "#\n"
++	    "# DefaultFile = %s\n"
++	    "# DefaultDir = %s\n",
+ 	    argv[0],
+-	    GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION);
++	    GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION,
++	    g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", "gtk.immodules", NULL),
++	    g_build_filename (GTK_SYSCONFDIR, "gtk-2.0", NULL));
+ 
+ 
+   if (argc == 1)		/* No arguments given */
+-- 
+1.7.6.1
+
