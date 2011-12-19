@@ -139,6 +139,7 @@ SO_NAMES_CONTRIB	+= fuzzystrmatch.so hstore.so insert_username.so int_aggregate.
 SO_NAMES_CONTRIB	+= isn.so lo.so ltree.so moddatetime.so pageinspect.so pg_buffercache.so
 SO_NAMES_CONTRIB	+= pg_freespacemap.so pg_trgm.so pgcrypto.so pgrowlocks.so pgstattuple.so
 SO_NAMES_CONTRIB	+= pgxml.so refint.so seg.so sslinfo.so tablefunc.so test_parser.so timetravel.so tsearch2.so
+SO_NAMES_CONTRIB	+= auto_explain.so btree_gin.so citext.so pg_stat_statements.so
 # Miscellaneous files
 MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/conversion_create.sql
 MISC_NAMES_SERVER	+= .*/share/$(NAME)/$(BASE_VERSION_NODOT)/information_schema.sql
@@ -171,7 +172,7 @@ CSWPGSQLCONFFILETMPL    = $(CSWPGSQLCONFFILE).tmpl
 CSWPGSQLCONFFILE_VERSIONED = $(subst $(suffix $(CSWPGSQLCONFFILE)),,$(CSWPGSQLCONFFILE))-$(BASE_VERSION_NODOT).conf
 
 # The initscript. Please note, although the file does not feature a version
-# number here, it will be installed with $(BASE_VERSION_NODOT) appended
+# number here, it will Be Installed With $(BASE_VERSION_NODOT) appended
 INITSCRIPTFILE		= cswpostgresql
 INITSCRIPTFILETMPL	= $(INITSCRIPTFILE).tmpl
 INITSCRIPTFILE_VERSIONED = $(INITSCRIPTFILE)-$(BASE_VERSION_NODOT)
@@ -422,13 +423,13 @@ pre-configure-modulated:
 	fi
 	@$(MAKECOOKIE)
 
-# post-build-modulated:
-# 	$(BUILD_ENV) gmake -C $(WORKSRC)/contrib all
-# 	@$(MAKECOOKIE)
+post-build-modulated:
+	$(BUILD_ENV) gmake -C $(WORKSRC)/contrib all
+	@$(MAKECOOKIE)
 
-# post-install-modulated:
-# 	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
-# 	@$(MAKECOOKIE)
+post-install-modulated:
+	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
+	@$(MAKECOOKIE)
 
 post-merge:
 # Create my alternatives files
