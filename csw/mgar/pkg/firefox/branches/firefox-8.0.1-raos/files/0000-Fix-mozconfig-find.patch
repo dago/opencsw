@@ -1,0 +1,40 @@
+From 3640f5a93c75126e4d3bcee465af95360f0f3a86 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Sun, 18 Dec 2011 12:15:00 +0100
+Subject: [PATCH] Fix mozconfig-find
+
+---
+ build/autoconf/mozconfig-find |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/build/autoconf/mozconfig-find b/build/autoconf/mozconfig-find
+index 2018f0a..37ed59e 100755
+--- a/build/autoconf/mozconfig-find
++++ b/build/autoconf/mozconfig-find
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ #
+ # ***** BEGIN LICENSE BLOCK *****
+ # Version: MPL 1.1/GPL 2.0/LGPL 2.1
+@@ -47,7 +47,7 @@
+ topsrcdir=$1
+ 
+ abspath() {
+-  if uname -s | grep -q MINGW; then
++  if uname -s | ggrep -q MINGW; then
+     # We have no way to figure out whether we're in gmake or pymake right
+     # now. gmake gives us Unix-style paths while pymake gives us Windows-style
+     # paths, so attempt to handle both.
+@@ -57,7 +57,7 @@ abspath() {
+   fi
+ 
+   for regex in $regexes; do
+-    if echo $1 | grep -q $regex; then
++    if echo $1 | ggrep -q $regex; then
+       echo $1
+       exit 0
+     fi
+-- 
+1.7.6.1
+

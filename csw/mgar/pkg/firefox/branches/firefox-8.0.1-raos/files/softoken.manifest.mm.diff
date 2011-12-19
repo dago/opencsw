@@ -1,0 +1,10 @@
+--- firefox.orig/security/nss/lib/softoken/manifest.mm  2009-09-12 16:29:35.109858462 +0200
++++ firefox/security/nss/lib/softoken/manifest.mn	    2009-09-12 16:39:33.257884547 +0200
+@@ -49,6 +49,7 @@
+ 
+ ifdef MOZILLA_CLIENT
+ INCLUDES += -I$(DIST)/include/sqlite3
++INCLUDES += -I/opt/csw/include
+ endif
+ 
+ EXPORTS = \

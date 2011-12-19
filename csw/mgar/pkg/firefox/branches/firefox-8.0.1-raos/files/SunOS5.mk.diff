@@ -1,0 +1,11 @@
+--- firefox.orig/security/coreconf/SunOS5.mk	2009-08-29 23:08:08.804586828 +0200
++++ firefox/security/coreconf/SunOS5.mk		2009-08-29 23:08:32.556961245 +0200
+@@ -104,7 +104,7 @@
+ 	endif
+ endif
+ 
+-INCLUDES   += -I/usr/dt/include -I/usr/openwin/include
++INCLUDES   += -I/usr/dt/include -I/opt/csw/X11/include
+ 
+ RANLIB      = echo
+ CPU_ARCH    = sparc
