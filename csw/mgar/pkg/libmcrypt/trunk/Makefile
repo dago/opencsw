@@ -32,18 +32,23 @@ CONFIGURE_ARGS += --with-included-algos=cast-128,gost,rijndael-128,twofish,arcfo
 CONFIGURE_ARGS += --enable-dynamic-loading
 
 PACKAGES += CSWlibmcrypt4
-CATALOGNAME_CSWlibmcrypt4 = libmcrypt4
 PKGFILES_CSWlibmcrypt4 += $(call baseisadirs,$(libdir),libmcrypt\.so\.4\.4\.8)
 PKGFILES_CSWlibmcrypt4 += $(call baseisadirs,$(libdir),libmcrypt\.so\.4(\.\d+)*)
 SPKG_DESC_CSWlibmcrypt4 += $(DESCRIPTION), libmcrypt.so.4
 RUNTIME_DEP_PKGS_CSWlibmcrypt += CSWlibmcrypt4
 RUNTIME_DEP_PKGS_CSWlibmcrypt4 += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSWlibmcrypt4 += CSWlibltdl7
+RUNTIME_DEP_PKGS_CSWlibmcrypt4 += CSWlibmcrypt-modules
 OBSOLETED_BY_CSWlibmcrypt4 = CSWlibmcrypt
+CHECKPKG_OVERRIDES_CSWlibmcrypt4 += surplus-dependency|CSWlibmcrypt-modules
+
+PACKAGES += CSWlibmcrypt-modules
+SPKG_DESC_CSWlibmcrypt-modules = $(DESCRIPTION), cipher modules
+PKGFILES_CSWlibmcrypt-modules += $(call baseisadirs,$(libdir),libmcrypt/.*\.so)
+RUNTIME_DEP_PKGS_CSWlibmcrypt-modules += CSWlibgcc-s1
 
 PACKAGES += CSWmcrypt-dev
 SPKG_DESC_CSWmcrypt-dev += $(DESCRIPTION), development files
-PKGFILES_CSWmcrypt-dev += $(PKGFILES_DEVEL)
 OBSOLETED_BY_CSWmcrypt-dev = CSWlibmcrypt
 RUNTIME_DEP_PKGS_CSWmcrypt-dev += CSWlibmcrypt4
 
