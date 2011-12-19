@@ -1,0 +1,19 @@
+# $Id$
+#
+# Mozilla configuration.
+#
+# See https://developer.mozilla.org/en/Configuring_Build_Options
+. @MOZCONFIG@.static
+ac_add_options --prefix=@prefix@
+ac_add_options --exec-prefix=@exec_prefix@
+ac_add_options --bindir=@bindir@
+ac_add_options --sbindir=@sbindir@
+ac_add_options --libexecdir=@libexecdir@
+ac_add_options --datadir=@datadir@
+ac_add_options --sysconfdir=@sysconfdir@
+ac_add_options --sharedstatedir=@sharedstatedir@
+ac_add_options --localstatedir=@localstatedir@
+ac_add_options --libdir=@libdir@
+ac_add_options --includedir=@includedir@
+ac_add_options --infodir=@infodir@
+ac_add_options --mandir=@mandir@

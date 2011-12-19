@@ -1,0 +1,8 @@
+. $topsrcdir/browser/config/mozconfig
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-@CONFIG_GUESS@
+mk_add_options MOZ_MAKE_FLAGS="-j4"
+ac_add_options --enable-application=browser
+ac_add_options --enable-libxul
+ac_add_options --disable-gnomevfs
+ac_add_options --disable-libnotify
+ac_add_options --enable-official-branding
