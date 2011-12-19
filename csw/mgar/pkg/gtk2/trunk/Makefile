@@ -30,6 +30,9 @@ EXPANDVARS = CSWgtk2.postinstall
 PATCHFILES += 0000-Use-absolute-path-to-Xvfb.patch
 
 # This disables a check that I wasn't able to fix
+#
+# This bug has already been reported by Tim Mooney
+#  https://bugzilla.gnome.org/show_bug.cgi?id=643338
 PATCHFILES += 0000-Disable-gtk_test_create_widget-g_type_from_name-GtkT.patch
 
 # This patch adds a command line option `--update-modules` to
