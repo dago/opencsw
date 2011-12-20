@@ -1,5 +1,5 @@
 NAME = tkcvs
-VERSION = 8.2.2
+VERSION = 8.2.3
 CATEGORIES = apps
 
 DESCRIPTION = A graphical front-end to CVS and Subversion
@@ -11,24 +11,25 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.twobarleycorns.net/
-DISTNAME = $(NAME)_$(subst .,_,$(VERSION))
-DISTFILES  = $(NAME)_$(subst .,_,$(VERSION)).tar.gz
+DISTFILES  = $(NAME)-$(VERSION).tar.gz
 
 UPSTREAM_MASTER_SITES = $(MASTER_SITES)/tkcvs.html
-UFILES_REGEX = $(NAME)_(\d+(?:_\d+)*).tar.gz
+UFILES_REGEX = $(NAME)-(\d+(?:.\d+)*).tar.gz
 
 CONFIGURE_SCRIPTS =
 BUILD_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
 
-LICENSE = COPYING
+LICENSE = LICENSE.txt
 ARCHALL = 1
 RUNTIME_DEP_PKGS = CSWtcl CSWtk CSWtkdiff
 
 CHECKPKG_OVERRIDES_CSWtkcvs += surplus-dependency|CSWtcl
 CHECKPKG_OVERRIDES_CSWtkcvs += surplus-dependency|CSWtkdiff
 CHECKPKG_OVERRIDES_CSWtkcvs += surplus-dependency|CSWtk
+CHECKPKG_OVERRIDES_CSWtkcvs += file-with-bad-content|/usr/local|root/opt/csw/lib/tkcvs/help.tcl
+CHECKPKG_OVERRIDES_CSWtkcvs += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/tkcvs.1
 
 include gar/category.mk
 
