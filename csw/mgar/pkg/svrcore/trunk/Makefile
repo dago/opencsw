@@ -15,14 +15,8 @@ endef
 MASTER_SITES = http://ftp.mozilla.org/pub/directory/svrcore/releases/4.0.4/src/
 DISTFILES  = $(NAME)-$(VERSION).tar.bz2
 
-# File name regex to get notifications about upstream software releases
-# NOTE: Use this only if the automatic regex creation
-#       does not work for your package
-# UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-# If the url used to check for software update is different of MASTER_SITES, then 
-# uncomment the next line. Otherwise it is set by default to the value of MASTER_SITES
-# UPSTREAM_MASTER_SITES = 
+PACKAGING_PLATFORMS += solaris10-sparc
+PACKAGING_PLATFORMS += solaris10-i386
 
 PACKAGES += CSWlibsvrcore0
 CATALOGNAME_CSWlibsvrcore0 = libsvrcore0
@@ -32,8 +26,6 @@ RUNTIME_DEP_PKGS_CSWlibsvrcore0 += CSWlibnspr4
 RUNTIME_DEP_PKGS_CSWlibsvrcore0 += CSWlibnss3
 RUNTIME_DEP_PKGS_CSWlibsvrcore0 += CSWlibplc4
 RUNTIME_DEP_PKGS_CSWlibsvrcore0 += CSWlibplds4
-PACKAGING_PLATFORMS += solaris10-sparc
-PACKAGING_PLATFORMS += solaris10-i386
 
 PACKAGES += CSWlibsvrcore0-dev
 CATALOGNAME_CSWlibsvrcore0-dev = libsvrcore0_dev
@@ -42,10 +34,11 @@ PKGFILES_CSWlibsvrcore0-dev = $(PKGFILES_DEVEL)
 PKGFILES_CSWlibsvrcore0-dev += /opt/csw/lib/libsvrcore.so
 PKGFILES_CSWlibsvrcore0-dev += /opt/csw/lib/sparcv9/libsvrcore.so
 ARCHALL_CSWgnutlsdevel = 1
+RUNTIME_DEP_PKGS_CSWlibsvrcore0-dev += CSWlibsvrcore0
 
 # Move the include files to include/nspr to prevent polluting the main
 # header file namespace.
-includedir = $(prefix)/include/nspr
+# includedir = $(prefix)/include/nspr
 
 CONFIGURE_ARGS  = $(DIRPATHS)
 CONFIGURE_ARGS_isa-sparcv9 = --enable-64bit
@@ -56,17 +49,13 @@ CONFIGURE_ARGS_OPT += --disable-debug
 CONFIGURE_ARGS_OPT += --enable-strip
 CONFIGURE_ARGS_DBG += --enable-debug
 CONFIGURE_ARGS_DBG += --disable-strip
-CONFIGURE_ARGS_OPT += --with-nss-inc=/opt/csw/include/nss
-CONFIGURE_ARGS_OPT += --with-nss-lib=/opt/csw/lib
-CONFIGURE_ARGS_OPT += --with-nspr-inc=/opt/csw/include/nspr
-CONFIGURE_ARGS_OPT += --with-nspr-lib=/opt/csw/lib
+CONFIGURE_ARGS_OPT += --with-nss-inc=$(includedir)/nss
+CONFIGURE_ARGS_OPT += --with-nss-lib=$(libdir)
+CONFIGURE_ARGS_OPT += --with-nspr-inc=$(includedir)/nspr
+CONFIGURE_ARGS_OPT += --with-nspr-lib=/$(libdir)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
-
-
-RUNTIME_DEP_PKGS_CSWlibsvrcore0-dev += CSWlibsvrcore0
 
 BUILD64 = 1
 
 include gar/category.mk
-
 
