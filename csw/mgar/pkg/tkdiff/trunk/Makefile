@@ -1,5 +1,5 @@
 NAME = tkdiff
-VERSION = 4.1.4
+VERSION = 4.2
 CATEGORIES = utils
 
 DESCRIPTION = A graphical diff tool
@@ -7,23 +7,26 @@ define BLURB
 endef
 
 MASTER_SITES = $(SF_MIRROR)
-DISTNAME = $(NAME)-$(VERSION)-unix
-DISTFILES  = $(DISTNAME).tar.gz
-PATCHFILES = force-csw-wish.patch
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*)-unix.tar.gz
-
-DEP_PKGS = CSWtk
+DISTFILES += $(NAME)-$(VERSION).tar.gz
+DISTNAME = tkdiff-unix
+PATCHFILES += force-csw-wish.patch
 
 VENDOR_URL = http://tkdiff.sourceforge.net/
+
+LICENSE = LICENSE.txt
+
+PACKAGES += CSWtkdiff
+SPKG_DESC_CSWtkdiff = A graphical diff tool
+# PKGFILES is catchall
+ARCHALL_CSWtkdiff = 1
+# We need "wish" from CSWtk which is not detected by checkpkg
+RUNTIME_DEP_PKGS_CSWtkdiff += CSWtk
+CHECKPKG_OVERRIDES_CSWtkdiff += surplus-dependency|CSWtk
 
 BUILD_SCRIPTS =
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 INSTALL_SCRIPTS = custom
-
-ARCHALL = 1
 
 include gar/category.mk
 
