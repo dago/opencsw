@@ -1,5 +1,5 @@
 NAME = djvulibre
-VERSION = 3.5.22
+VERSION = 3.5.24
 CATEGORIES = apps
 
 DESCRIPTION = DjVu standalone viewer, browser plug-in, command line tools
@@ -9,69 +9,56 @@ endef
 SF_PROJ = djvu
 MASTER_SITES = $(SF_MIRRORS)/DjVuLibre/$(VERSION)/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
-
-PACKAGES = CSWdjvulibre CSWdjvulibrert CSWdjvulibredevel
-CATALOGNAME_CSWdjvulibre = djvulibre
-CATALOGNAME_CSWdjvulibrert = djvulibre_rt
-CATALOGNAME_CSWdjvulibredevel = djvulibre_devel
-
-SPKG_DESC_CSWdjvulibre += DjVu standalone viewer, browser plug-in, command linetools
-SPKG_DESC_CSWdjvulibrert += DjVu standalone viewer, browser plug-in, command line tools - runtime package
-SPKG_DESC_CSWdjvulibredevel += DjVu standalone viewer, browser plug-in, commandline tools - developer package
-
-RUNTIME_DEP_PKGS_CSWdjvulibre += CSWdjvulibrert CSWjpeg
-RUNTIME_DEP_PKGS_CSWdjvulibre += CSWtiff
-RUNTIME_DEP_PKGS_CSWdjvulibrert += CSWjpeg
-RUNTIME_DEP_PKGS_CSWdjvulibrert += CSWiconv
-RUNTIME_DEP_PKGS_CSWdjvulibredevel += CSWdjvulibrert
-
-PKGFILES_CSWdjvulibrert = $(PKGFILES_RT)
-PKGFILES_CSWdjvulibredevel = $(PKGFILES_DEVEL)
-
-
-CHECKPKG_OVERRIDES_CSWdjvulibredevel += missing-dependency|CSWdjvulibre
-
-SPKG_SOURCEURL = http://djvu.sourceforge.net/
-
-LICENSE = COPYING
-
 PATCHFILES += ddjvu.cpp.patch
 
-UPSTREAM_MASTER_SITES = $(SF_PROJECT_SHOWFILE)=32953
-UPSTREAM_USE_SF = 1
-UFILES_REGEX = (\d+(?:\.\d+)*)
+VENDOR_URL = http://djvu.sourceforge.net/
 
-OPTS='-DNDEBUG'
-EXTRA_COMMON_EXPORTS += OPTS
+FOREIGN_PKGS += CSWlibdjvulibre15
 
+PACKAGES += CSWdjvulibre
+CATALOGNAME_CSWdjvulibre = djvulibre
+SPKG_DESC_CSWdjvulibre += DjVu standalone viewer and ommandline tools
+# PKGFILES is catchall
+RUNTIME_DEP_PKGS_CSWdjvulibre += CSWlibjpeg7
+RUNTIME_DEP_PKGS_CSWdjvulibre += CSWlibtiff3
+RUNTIME_DEP_PKGS_CSWdjvulibre += CSWlibdjvulibre21
+# This is for legacy package expecting to find libdjvulibre.so.15 when pulling in CSWdjvulibre
+RUNTIME_DEP_PKGS_CSWdjvulibre += CSWlibdjvulibre15
+CHECKPKG_OVERRIDES_CSWdjvulibre += surplus-dependency|CSWlibdjvulibre15
+
+# What is this for?
+CHECKPKG_OVERRIDES_CSWdjvulibre += file-with-bad-content|/usr/share|root/opt/csw/share/djvu/osi/desktop/register-djvu-mime
+CHECKPKG_OVERRIDES_CSWdjvulibre += file-with-bad-content|/usr/local|root/opt/csw/share/djvu/osi/desktop/register-djvu-mime
+
+PACKAGES += CSWlibdjvulibre21
+SPKG_DESC_CSWlibdjvulibre21 += DjVu library, libdjvulibre.so.21
+PKGFILES_CSWlibdjvulibre21 += $(call pkgfiles_lib,libdjvulibre.so.21)
+OBSOLETED_BY_CSWlibdjvulibre21 += CSWdjvulibrert
+CATALOGNAME_CSWdjvulibrert = djvulibre_rt_stub
+RUNTIME_DEP_PKGS_CSWlibdjvulibre21 += CSWlibjpeg7
+
+PACKAGES += CSWlibdjvulibre-dev
+SPKG_DESC_CSWlibdjvulibre-dev += Development files for libdjvulibre.so.21
+PKGFILES_CSWlibdjvulibre-dev += $(PKGFILES_DEVEL)
+RUNTIME_DEP_PKGS_CSWlibdjvulibre-dev += CSWlibdjvulibre21
+OBSOLETED_BY_CSWlibdjvulibre-dev += CSWdjvulibredevel
+CATALOGNAME_CSWdjvulibredevel = djvulibre_devel_stub
+
+OPTS = '-DNDEBUG'
 PTHREAD_LIBS = -lpthread
 PTHREAD_CFLAGS = -D_REENTRANT
+EXTRA_COMMON_EXPORTS += OPTS
 EXTRA_COMMON_EXPORTS += PTHREAD_LIBS
 EXTRA_COMMON_EXPORTS += PTHREAD_CFLAGS
 
-EXTRA_INC = $(prefix)/X11/include
-EXTRA_LIB = $(prefix)/X11/lib
-EXTRA_PKG_CONFIG_DIRS = $(prefix)/X11/lib
-
-X_CFLAGS = -I$(prefix)/X11/include
-X_LIBS = -L$(prefix)/X11/lib -R$(prefix)/X11/lib
-EXTRA_COMMON_EXPORTS += X_CFLAGS 
-EXTRA_COMMON_EXPORTS += X_LIBS 
-
-CONFIGURE_ARGS  = $(DIRPATHS)
-CONFIGURE_ARGS += --x-includes=$(prefix)/X11/include
-CONFIGURE_ARGS += --x-libraries=$(abspath $(prefix)/X11/lib/$(MM_LIBDIR))
+EXTRA_CXXFLAGS += -norunpath
+REINPLACE_MATCH = (\|-xarch=)
+REINPLACE_WITH = |-norunpath$$1
+REINPLACE_FILES += config/ltmain.sh
 
 BUILD64 = 1
 
-TEST_TARGET =
+# There is no testsuite
+TEST_SCRIPTS =
 
 include gar/category.mk
-
-post-install-isa-sparcv8:
-	@cp $(FILEDIR)/libdjvulibre.so.15.s $(INSTALLISADIR)$(libdir)/libdjvulibre.so.15
-	$(MAKECOOKIE)
-
-post-install-isa-i386:
-	@cp $(FILEDIR)/libdjvulibre.so.15.i $(INSTALLISADIR)$(libdir)/libdjvulibre.so.15
-	$(MAKECOOKIE)
