@@ -1,0 +1,24 @@
+--- ilmbase-1.0.1.orig/ltmain.sh	2006-12-16 00:23:48.000000000 +0100
++++ ilmbase-1.0.1/ltmain.sh	2010-01-04 03:01:58.123927193 +0100
+@@ -1553,9 +1553,10 @@
+ 	esac
+         compile_command="$compile_command $arg"
+         finalize_command="$finalize_command $arg"
+-        if test "$with_gcc" = "yes" ; then
++# Fix for 64-bit CC
++#        if test "$with_gcc" = "yes" ; then
+           compiler_flags="$compiler_flags $arg"
+-        fi
++#        fi
+         continue
+         ;;
+ 
+@@ -4015,7 +4016,7 @@
+ 	save_ifs="$IFS"; IFS='~'
+ 	for cmd in $cmds; do
+ 	  IFS="$save_ifs"
+-	  eval cmd=\"$cmd\"
++	  eval cmd=\"$cmd -norunpath\"
+ 	  $show "$cmd"
+ 	  $run eval "$cmd" || exit $?
+ 	done

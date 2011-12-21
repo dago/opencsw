@@ -1,0 +1,9 @@
+6873969f50e5d1c43ec93a90a65d85bd  ImathMath.patch
+f76f094e69a6079b0beb93d97e2a217e  ilmbase-1.0.1.tar.gz
+b7daafc6a6c92a3cf9dfb47e24fa630f  libHalf.so.2.0.2.i
+cdce2f2b1c7d00dc76124ecb5418b9a2  libHalf.so.2.0.2.s
+1b589f5b747846688c27f55de9b1ec7a  libIex.so.2.0.2.i
+ddf913c9000dc4580ad330b9dd938826  libIex.so.2.0.2.s
+756523f803ce1be3e125b6ce63e3183c  libImath.so.2.0.2.i
+ce47a211381deadfc38722f5abda54d7  libImath.so.2.0.2.s
+f1016498bff3cce0c722108f4603e6c5  ltmain.sh.patch
