@@ -57,6 +57,7 @@ REINPLACE_WITH = |-norunpath$$1
 REINPLACE_FILES += config/ltmain.sh
 
 BUILD64 = 1
+ISAEXEC = 1
 
 # There is no testsuite
 TEST_SCRIPTS =
