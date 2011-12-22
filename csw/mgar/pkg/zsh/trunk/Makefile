@@ -41,7 +41,6 @@ CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/share
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/share/zsh/functions/_setxkbmap
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share/zsh/functions/_units
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/bin/zsh-$(VERSION)
-CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/bin/zsh
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/zshcontrib.1
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share/zsh/functions/_gcc
 CHECKPKG_OVERRIDES_CSWzsh += file-with-bad-content|/usr/local|root/opt/csw/share/zsh/functions/_urls
@@ -64,5 +63,6 @@ include gar/category.mk
 #   http://www.zsh.org/mla/workers/2007/msg01236.html
 CPPFLAGS := -I$(includedir)/ncursesw $(CPPFLAGS)
 
-post-install:
+post-install-modulated:
 	cp -p $(WORKDIR)/_pkgutil $(WORKDIR)/_mgar $(DESTDIR)$(sharedstatedir)/$(NAME)/functions
+	@$(MAKECOOKIE)
