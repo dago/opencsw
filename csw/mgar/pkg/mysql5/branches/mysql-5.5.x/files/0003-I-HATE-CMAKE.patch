@@ -1,0 +1,36 @@
+From da58cb8a9a33720c3c187fcebfd28cefc3886c26 Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Thu, 22 Dec 2011 17:05:40 +0100
+Subject: [PATCH] I HATE CMAKE
+
+For being so opaque.
+
+Fix stolen from:
+http://bugs.mysql.com/bug.php?id=61619
+---
+ cmake/ssl.cmake |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/cmake/ssl.cmake b/cmake/ssl.cmake
+index 9b16bf0..97dc7d2 100644
+--- a/cmake/ssl.cmake
++++ b/cmake/ssl.cmake
+@@ -64,11 +64,14 @@ MACRO (MYSQL_CHECK_SSL)
+     MYSQL_USE_BUNDLED_SSL()
+   ELSEIF(WITH_SSL STREQUAL "system" OR WITH_SSL STREQUAL "yes")
+     # Check for system library
+-    SET(OPENSSL_FIND_QUIETLY TRUE)
++    # SET(OPENSSL_FIND_QUIETLY TRUE)
+     INCLUDE(FindOpenSSL)
++    MESSAGE(STATUS "OPENSSL_INCLUDE_DIR = ${OPENSSL_INCLUDE_DIR}")
++    MESSAGE(STATUS "OPENSSL_LIBRARIES = ${OPENSSL_LIBRARIES}")
+     FIND_LIBRARY(CRYPTO_LIBRARY crypto)
+     MARK_AS_ADVANCED(CRYPTO_LIBRARY)
+     INCLUDE(CheckSymbolExists)
++    SET(CMAKE_REQUIRED_INCLUDES ${OPENSSL_INCLUDE_DIR})
+     CHECK_SYMBOL_EXISTS(SHA512_DIGEST_LENGTH "openssl/sha.h" 
+                         HAVE_SHA512_DIGEST_LENGTH)
+     IF(OPENSSL_FOUND AND CRYPTO_LIBRARY AND HAVE_SHA512_DIGEST_LENGTH)
+-- 
+1.7.6.1
+
