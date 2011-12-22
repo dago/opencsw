@@ -75,6 +75,8 @@ ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_program
 # PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
 # The configuration phase failed (?)
 # PATCHFILES += 0002-stop-cmake-from-messing-with-cflags.patch
+# PATCHFILES += 0005-I-HATE-CMAKE.patch
+PATCHFILES += 0003-I-HATE-CMAKE.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -160,6 +162,12 @@ BUILD64 = 1
 # EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 # EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
 
+# A workaround for OpenSSL
+# http://www.cmake.org/pipermail/cmake/2011-December/048220.html
+# EXTRA_CFLAGS = -I$(includedir)
+# EXTRA_CXXFLAGS = -I$(includedir)
+# It doesn't work. cmake filters them out or something.
+
 MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(VERSION).tar.gz
 DISTFILES += csw$(NAME).tpl
@@ -222,6 +230,10 @@ CMAKE_ARGS += -DBUILD_CONFIG=mysql_release
 # CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
 # CMAKE_ARGS += -DCMAKE_PREFIX_PATH="$(prefix)"
 CMAKE_ARGS += -DOPENSSL_ROOT_DIR=$(prefix)
+# CMAKE_ARGS += -DOPENSSL_SSL_LIBRARIES=$(libdir)/$(MM_LIBDIR)/libssl.so
+# CMAKE_ARGS += -DOPENSSL_CRYPTO_LIBRARIES=$(libdir)/$(MM_LIBDIR)/libcrypto.so
+CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
+CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
 
 # CMAKE_LIBRARY_PATH = $(libdir)
 # EXTRA_CONFIGURE_EXPORTS += CMAKE_LIBRARY_PATH
@@ -319,7 +331,7 @@ CHECKPKG_OVERRIDES_CSWmysql51 += file-collision|/opt/csw/share/info/mysql.info|C
 
 CONFIGURE_SCRIPTS = custom
 
-EXTRA_PKG_CONFIG_DIRS = $(FILEDIR)/64
+# EXTRA_PKG_CONFIG_DIRS = $(FILEDIR)/64
 
 include gar/category.mk
 
