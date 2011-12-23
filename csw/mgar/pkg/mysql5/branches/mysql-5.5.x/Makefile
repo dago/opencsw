@@ -14,15 +14,12 @@ ALTS_PRIO = 55
 VERSION = $(BASE_VERSION).$(PATCHLEVEL)
 CATEGORIES = server
 
-# PACKAGING_PLATFORMS = solaris9-sparc solaris10-sparc
-
 # Useful when making a series of builds on the same day
 # GARFLAVOR ?= DBG
 
-# There is v9-specific assembler, and I don't see an easy way to switch it
-# off.
-SKIP_MODULATIONS = isa-sparcv8
-# The alternative is to ship sparcv8+ binaries.
+# There is some assembler code, which doesn't work on sparcv8, and I don't see
+# an easy way to switch it off.
+ISA_DEFAULT_sparc-5.9 = sparcv8plus
 
 DISTNAME = mysql-$(VERSION)
 SPKG_SOURCEURL = http://www.mysql.com/
@@ -33,11 +30,8 @@ define BLURB
   (Structured Query Language) database server.
 endef
 
-# Compilation with Solaris Studio fails:
-# cg error (as) : ".../mysql-5.5.16/mysys/my_timer_cycles.il (template for
-# my_timer_cycles_il_sparc32)", line 27 : cannot use SPARC v9 instructions
-# with this target architecture
-# GARCOMPILER = GNU
+# There are problems with the build using Sun Studio.
+GARCOMPILER = GNU
 
 INITSMF = $(sysconfdir)/init\.d/csw$(NAME)
 
@@ -69,13 +63,6 @@ ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_program
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
 	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)$(PROGRAM_SUFFIX).1)
 
-# PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
-# PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
-# PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
-# PATCHFILES += 0004-var-opt-csw-mysql51-for-datadir-in-my-.cnf.patch
-# The configuration phase failed (?)
-# PATCHFILES += 0002-stop-cmake-from-messing-with-cflags.patch
-# PATCHFILES += 0005-I-HATE-CMAKE.patch
 PATCHFILES += 0003-I-HATE-CMAKE.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
@@ -83,12 +70,12 @@ PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmy
 SPKG_DESC_CSWlibmysqlclient$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient.so.$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWlibz1
 RUNTIME_DEP_PKGS_CSWlibmysqlclient$(MYSQL_LIB_VER) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibmysqlclient18 += CSWlibgcc-s1
 
 PACKAGES += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient_r\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
 SPKG_DESC_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += MySQL $(BASE_VERSION) client library, libmysqlclient_r.so.$(MYSQL_LIB_VER)
-RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWlibz1
-RUNTIME_DEP_PKGS_CSWlibmysqlclient-r$(MYSQL_LIB_VER) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWlibmysqlclient-r18 += CSWlibmysqlclient18
 
 # Defining the client programs, which are going to pick up the 32- and 64-bit
 # binaries, symbolic links, isaexec stuff and man pages.
@@ -131,42 +118,17 @@ RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWosslrt
+RUNTIME_DEP_PKGS_CSWmysql55 += CSWlibgcc-s1
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/mysql-test.*
 EXTRA_MERGE_EXCLUDE_FILES += $(prefix)/sql-bench.*
 
-# PATCHFILES  = 0001-Use-libc-not-libcrypt.patch
 PATCHFILES += 0002-cast-user_info-pw_gid-to-gid_t.patch
-# PATCHFILES += 0003-OpenCSW-perl-for-tests.patch
-# PATCHFILES += 0004-basedir-and-datadir-in-the-cnf-files.patch
-# PATCHFILES += 0004-looking-for-ps-use-basename-0.patch
-# Perhaps using sed would be better, but we have a patch for now.
-# PATCHFILES += 0006-Use-my_print_defaults$(PROGRAM_SUFFIX).patch
-# PATCHFILES += 0007-versioned-mysqld-during-db-init-5.1.patch
-# PATCHFILES += 0008-versioned-datadir-in-mysql_install_db-5.1.patch
 
 # Enable 64 bits build
 BUILD64 = 1
-
-# EXTRA_CFLAGS = $(EXTRA_CFLAGS_$(GARCH))
-# EXTRA_CFLAGS_sparc = -xO4 -xstrconst $(COMMON_CFLAGS)
-# EXTRA_CFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_CFLAGS)
-# EXTRA_CXXFLAGS = $(EXTRA_CXXFLAGS_$(GARCH))
-# EXTRA_CXXFLAGS_sparc = -xO4 $(COMMON_CFLAGS)
-# EXTRA_CXXFLAGS_i386 = -xO3 -nofstore -xregs=no%frameptr $(COMMON_CFLAGS)
-# COMMON_CFLAGS = -mt -fsimple=1 -ftrap=%none -xbuiltin=%all -xlibmil -xlibmopt
-
-# These flags don't work with GCC
-# EXTRA_CFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-# EXTRA_CXXFLAGS = -mt -D_POSIX_C_SOURCE=199506L -D__EXTENSIONS__
-
-# A workaround for OpenSSL
-# http://www.cmake.org/pipermail/cmake/2011-December/048220.html
-# EXTRA_CFLAGS = -I$(includedir)
-# EXTRA_CXXFLAGS = -I$(includedir)
-# It doesn't work. cmake filters them out or something.
 
 MASTER_SITES = http://ftp.heanet.ie/mirrors/www.mysql.com/Downloads/MySQL-$(BASE_VERSION)/
 DISTFILES  = mysql-$(VERSION).tar.gz
@@ -234,17 +196,6 @@ CMAKE_ARGS += -DOPENSSL_ROOT_DIR=$(prefix)
 # CMAKE_ARGS += -DOPENSSL_CRYPTO_LIBRARIES=$(libdir)/$(MM_LIBDIR)/libcrypto.so
 CMAKE_ARGS += -DCMAKE_INCLUDE_PATH="$(includedir)"
 CMAKE_ARGS += -DCMAKE_LIBRARY_PATH="$(libdir)"
-
-# CMAKE_LIBRARY_PATH = $(libdir)
-# EXTRA_CONFIGURE_EXPORTS += CMAKE_LIBRARY_PATH
-# CMAKE_INCLUDE_PATH = $(includedir)
-# EXTRA_CONFIGURE_EXPORTS += CMAKE_INCLUDE_PATH
-# CMAKE_PREFIX_PATH = $(prefix)
-# EXTRA_CONFIGURE_EXPORTS += CMAKE_PREFIX_PATH
-# OPENSSL_INCLUDE_DIR = $(includedir)
-# EXTRA_CONFIGURE_EXPORTS += OPENSSL_INCLUDE_DIR
-# OPENSSL_ROOT_DIR = $(prefix)
-# EXTRA_CONFIGURE_EXPORTS += OPENSSL_ROOT_DIR
 
 # TODO: Make the tests pass. They don't at the moment.
 SKIPTEST ?= 1
@@ -331,26 +282,13 @@ CHECKPKG_OVERRIDES_CSWmysql51 += file-collision|/opt/csw/share/info/mysql.info|C
 
 CONFIGURE_SCRIPTS = custom
 
-# EXTRA_PKG_CONFIG_DIRS = $(FILEDIR)/64
-
 include gar/category.mk
-
-# CFLAGS := $(filter-out -I%,$(CFLAGS))
 
 test-custom:
 	alias sh=/usr/bin/bash;                           \
 		cd $(WORKSRC)/mysql-test;                       \
 		perl mysql-test-run.pl --mem --big-test --force \
 		--skip-test=archive-big --skip-test=/gis/
-
-pre-configure-modulated:
-	# To work around the following libtool version mismatch problem:
-	# libtool: Version mismatch error.  This is libtool 2.2.6, but the
-	# libtool: definition of this LT_INIT comes from libtool 2.2.6b.
-	# libtool: You should recreate aclocal.m4 with macros from libtool 2.2.6
-	# http://lists.opencsw.org/pipermail/maintainers/2009-December/005066.html
-	# cd $(WORKSRC) && autoreconf --force --install --symlink
-	@$(MAKECOOKIE)
 
 configure-custom:
 	#		--debug-output \
@@ -384,13 +322,17 @@ post-install-modulated:
 		gmv -v "$(DESTDIR)$(bindir)/$${f}" \
 		       "$(DESTDIR)$(bindir)/$${f}$(PROGRAM_SUFFIX)"; \
 	done
+	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18; \
+		ln -s libmysqlclient.so.18 libmysqlclient_r.so.18)
+	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18.0.0; \
+		ln -s libmysqlclient.so.18.0.0 libmysqlclient_r.so.18.0.0)
 	@$(MAKECOOKIE)
 
 post-merge:
 	ginstall -m 755 -d $(PKGROOT)$(localstatedir)
 	ginstall -m 755 -d $(PKGROOT)$(datadir)/$(NAME)/doc
-	ginstall -m 644 $(FILEDIR)/ChangeLog $(PKGROOT)$(datadir)/$(NAME)/doc
-	ginstall -m 644 $(FILEDIR)/README.CSW $(PKGROOT)$(datadir)/$(NAME)/doc
+	ginstall -m 644 $(FILEDIR)/ChangeLog $(PKGROOT)$(datadir)/$(NAME)/doc/ChangeLog-$(BASE_VERSION)
+	ginstall -m 644 $(FILEDIR)/README.CSW $(PKGROOT)$(datadir)/$(NAME)/doc/README-$(BASE_VERSION).CSW
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/$(NAME)/doc
 	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README.CSW \
 		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README.CSW
@@ -398,14 +340,6 @@ post-merge:
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
 		        $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
-	# Create symlinks to binaries
-	# ginstall -m 755 -d $(PKGROOT)$(bindir)
-	#for f in $(PKGROOT)$(bindir)/*; do \
-	#	if echo $$f | grep amd64$$; then continue; fi; \
-	#	if echo $$f | grep sparcv9$$; then continue; fi; \
-	#	ln -s ../$(NAME)/bin/`basename $$f` \
-	#	      $(PKGROOT)$(bindir)/`basename $$f`; \
-	#done
 	# http://www.opencsw.org/bugtrack/view.php?id=4149
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)
 	@$(MAKECOOKIE)
