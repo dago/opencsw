@@ -1,0 +1,28 @@
+From 5d40e65ac43b6b57f53d60a3e2db22a2981dc9ed Mon Sep 17 00:00:00 2001
+From: Maciej Blizinski <maciej@opencsw.org>
+Date: Fri, 23 Dec 2011 20:29:18 +0100
+Subject: [PATCH] WHY IS CMAKE TRYING TO BE SMARTER THAN ME?!
+
+When I set -R/opt/csw/lib in CPPFLAGS, I do mean -R/opt/csw/lib, how hard is
+it to understand?
+---
+ configure.cmake |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/configure.cmake b/configure.cmake
+index c3cc787..15d75dc 100644
+--- a/configure.cmake
++++ b/configure.cmake
+@@ -53,6 +53,9 @@ IF(NOT SYSTEM_TYPE)
+   ENDIF()
+ ENDIF()
+ 
++# Don't strip runpath as it breaks the binaries that need libraries in
++# /opt/csw/lib.
++set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+ 
+ # Always enable -Wall for gnu C/C++
+ IF(CMAKE_COMPILER_IS_GNUCXX)
+-- 
+1.7.6.1
+

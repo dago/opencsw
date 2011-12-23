@@ -64,6 +64,7 @@ ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_program
 	$(mandir)/man1/$(C).1 $C $(mandir)/man1/$(C)$(PROGRAM_SUFFIX).1)
 
 PATCHFILES += 0003-I-HATE-CMAKE.patch
+PATCHFILES += 0003-WHY-IS-CMAKE-TRYING-TO-BE-SMARTER-THAN-ME.patch
 
 PACKAGES += CSWlibmysqlclient$(MYSQL_LIB_VER)
 PKGFILES_CSWlibmysqlclient$(MYSQL_LIB_VER) += $(call baseisadirs,$(libdir),libmysqlclient\.so\.$(MYSQL_LIB_VER)(\.\d+)*)
@@ -103,22 +104,28 @@ PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(call baseis
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(mandir)/man1/$(bin_name)$(PROGRAM_SUFFIX)\.1)
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/bin/$(bin_name)$(PROGRAM_SUFFIX))
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/sbin/$(bin_name)$(PROGRAM_SUFFIX))
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
+RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
 CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
+# It's intentional. There's a sparcv8-incompatible assembler code there.
+CHECKPKG_OVERRIDES_CSW$(NAME)client_isa-sparcv8plus += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSW$(NAME)client += CHECKPKG_OVERRIDES_CSW$(NAME)client_$(ISA)
 
 PACKAGES += CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient$(MYSQL_LIB_VER)
 SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
+RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWosslrt
-RUNTIME_DEP_PKGS_CSWmysql55 += CSWlibgcc-s1
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
 CHECKPKG_OVERRIDES_CSW$(NAME) += file-with-bad-content
 
