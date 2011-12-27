@@ -21,9 +21,6 @@ MASTER_SITES = $(GNU_MIRROR)/$(NAME)-$(VERSION)/
 
 LIBOBJC = 3
 
-# Add default RPATH
-PATCHFILES = 0002-default-rpath.diff
-
 PACKAGING_PLATFORMS = solaris9-sparc solaris9-i386
 PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
 
@@ -521,9 +518,10 @@ post-install-modulated:
 	ginstall -d -m 755 $(DESTDIR)$(prefix)/$(PKG_VERSION_TOKEN)/bin
 	for b in $(CORE_BINARIES) $(CXX_BINARIES) \
 		$(FORTRAN_BINARIES) $(JAVA_BINARIES); do \
-		gln -v -s ../../bin/$${b}$(PROGRAM_SUFFIX) \
+		gln -v -s -f ../../bin/$${b}$(PROGRAM_SUFFIX) \
 		$(DESTDIR)$(prefix)/$(PKG_VERSION_TOKEN)/bin/$${b}; \
 	done
+	bash $(FILEDIR)/customize_specs.sh $(DESTDIR) $(PROGRAM_SUFFIX) $(VERSION)
 	@$(MAKECOOKIE)
 
 # We need GNU find as find
