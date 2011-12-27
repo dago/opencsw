@@ -5,6 +5,10 @@
 # If you are involved in packaging MySQL, consider subscribing to the
 # packagers mailing list:
 # http://lists.mysql.com/packagers
+#
+# About building MySQL with cmake:
+# http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide
+
 
 PROJ_NAME = mysql
 NAME = $(PROJ_NAME)55
@@ -56,6 +60,7 @@ PKGFILES_CSWmysql-dev  += $(mandir)/man1/mysql_config.*
 PKGFILES_CSWmysql-dev  += $(prefix)/include.*
 PKGFILES_CSWmysql-dev  += /opt/csw/include/mysql
 CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config$(PROGRAM_SUFFIX).1
+CHECKPKG_OVERRIDES_CSWmysql-dev += file-with-bad-content|/usr/local|root$(mandir)/man1/mysql_config.1
 ALTERNATIVES_CSWmysql-dev = mysql_dev
 ALTERNATIVE_mysql_dev = $(bindir)/$(firstword $(CSWmysql-dev_programs)) mysql_dev $(bindir)/$(firstword $(CSWmysql-dev_programs)) $(ALTS_PRIO)
 ALTERNATIVE_mysql_dev += $(foreach C,$(wordlist 2,$(words $(CSWmysql-dev_programs)),$(CSWmysql-dev_programs)),\
@@ -112,9 +117,12 @@ RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
 CHECKPKG_OVERRIDES_CSW$(NAME)client += bad-rpath-entry
-# It's intentional. There's a sparcv8-incompatible assembler code there.
-CHECKPKG_OVERRIDES_CSW$(NAME)client_isa-sparcv8plus += binary-architecture-does-not-match-placement
-CHECKPKG_OVERRIDES_CSW$(NAME)client += CHECKPKG_OVERRIDES_CSW$(NAME)client_$(ISA)
+
+# It's intentional. There's a sparcv8-incompatible assembler code there, so we
+# must build for sparcv8+ on Solaris 9.
+CHECKPKG_OVERRIDES_CSW$(NAME)client += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSW$(NAME) += binary-architecture-does-not-match-placement
+CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += binary-architecture-does-not-match-placement
 
 PACKAGES += CSW$(NAME)
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
@@ -333,6 +341,7 @@ post-install-modulated:
 		ln -s libmysqlclient.so.18 libmysqlclient_r.so.18)
 	(cd $(DESTDIR)$(libdir); rm libmysqlclient_r.so.18.0.0; \
 		ln -s libmysqlclient.so.18.0.0 libmysqlclient_r.so.18.0.0)
+	# gmv -vf $(DESTDIR)$(mandir)/man1/mysql_config.1
 	@$(MAKECOOKIE)
 
 post-merge:
