@@ -13,7 +13,7 @@
 ###### Package information #######
 
 NAME = openssl
-VERSION = 1.0.0d
+VERSION = 1.0.0e
 CATEGORIES = lib
 SONAME=$(shell echo $(VERSION) | tr -d '[a-z]')
 
@@ -25,60 +25,62 @@ define BLURB
   as a full-strength general-purpose cryptography library.
 endef
 
-PACKAGES = CSWlibssl1-0-0 CSWlibssl1-0-0-devel CSWopenssl1-utils
+PACKAGES = CSWlibssl1-0-0 CSWlibssl-dev CSWopenssl-utils
 
 SPKG_DESC_CSWlibssl1-0-0 = Openssl 1.0 runtime libraries
 PKGFILES_CSWlibssl1-0-0 = $(libdir).*\.so(\.\d+)*
 PKGFILES_CSWlibssl1-0-0 += $(prefix)/etc/ssl/private $(prefix)/etc/ssl/certs 
 PKGFILES_CSWlibssl1-0-0 += $(docdir)/libssl1_0_0/.* 
 
-RUNTIME_DEP_PKGS_CSWlibssl1-0-0-devel = CSWlibssl1-0-0
-SPKG_DESC_CSWlibssl1-0-0-devel = Openssl 1.0 development support files
-PKGFILES_CSWlibssl1-0-0-devel = $(PKGFILES_DEVEL) 
-PKGFILES_CSWlibssl1-0-0-devel += $(docdir)/libssl1_0_0_devel/.*
+RUNTIME_DEP_PKGS_CSWlibssl-dev = CSWlibssl1-0-0
+SPKG_DESC_CSWlibssl-dev = Openssl 1.0 development support files
+PKGFILES_CSWlibssl-dev = $(PKGFILES_DEVEL) 
+PKGFILES_CSWlibssl-dev += $(docdir)/libssl_dev/.*
 
-RUNTIME_DEP_PKGS_CSWopenssl1-utils = CSWlibssl1-0-0
-SPKG_DESC_CSWopenssl1-utils = Openssl 1.0 binaries and related tools
-PKGFILES_CSWopenssl1-utils = $(bindir)/[^/]* $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.* 
-PKGFILES_CSWopenssl1-utils += $(prefix)/ssl/misc/.* 
-PKGFILES_CSWopenssl1-utils += $(prefix)/etc/ssl/openssl\.cnf.*
-PKGFILES_CSWopenssl1-utils += $(docdir)/openssl1_utils/.*
+RUNTIME_DEP_PKGS_CSWopenssl-utils = CSWlibssl1-0-0
+SPKG_DESC_CSWopenssl-utils = Openssl 1.0 binaries and related tools
+PKGFILES_CSWopenssl-utils = $(bindir)/[^/]* $(mandir)/man1/.* $(mandir)/man5/.* $(mandir)/man7/.* 
+PKGFILES_CSWopenssl-utils += $(prefix)/ssl/misc/.* 
+PKGFILES_CSWopenssl-utils += $(prefix)/etc/ssl/openssl\.cnf.*
+PKGFILES_CSWopenssl-utils += $(docdir)/openssl_utils/.*
 
 PRESERVECONF = $(prefix)/etc/ssl/openssl.cnf
 
 # We use SUN perl, not the opencsw one
-CHECKPKG_OVERRIDES_CSWopenssl1-utils += missing-dependency|CSWperl
+#CHECKPKG_OVERRIDES_CSWopenssl-utils += missing-dependency|CSWperl
 
 # We ship the .a files in the devel package
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libssl.a
 ifeq ($(GARCH),sparc)
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/sparcv8plus+vis/libssl.a
 else
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/pentium_pro/libssl.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libcrypto.a
+CHECKPKG_OVERRIDES_CSWlibssl-dev += discouraged-path-in-pkgmap|/opt/csw/lib/amd64/libssl.a
 endif
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += surplus-dependency|CSWlibssl1-0-0
+#CHECKPKG_OVERRIDES_CSWlibssl-dev += surplus-dependency|CSWlibssl1-0-0
 
 # We do ship libcrypto in libssl package
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/pentium_pro/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
+#CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/pentium_pro/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += shared-lib-pkgname-mismatch|file=opt/csw/lib/amd64/libcrypto.so.1.0.0|soname=libcrypto.so.1.0.0|pkgname=CSWlibssl1-0-0|expected=CSWlibcrypto1-0-0
 
+
 # References to default path in documentation files, can be safely ignored
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0_devel/INSTALL
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0_devel/CHANGES
-CHECKPKG_OVERRIDES_CSWlibssl1-0-0-devel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0_devel/FAQ
+CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/INSTALL
+CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/CHANGES
+CHECKPKG_OVERRIDES_CSWlibssl-dev += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl_dev/FAQ
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0/INSTALL
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0/FAQ
 CHECKPKG_OVERRIDES_CSWlibssl1-0-0 += file-with-bad-content|/usr/local|root/opt/csw/share/doc/libssl1_0_0/CHANGES
-CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/CHANGES
-CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/FAQ
-CHECKPKG_OVERRIDES_CSWopenssl1-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl1_utils/INSTALL
+CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/CHANGES
+CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/FAQ
+CHECKPKG_OVERRIDES_CSWopenssl-utils += file-with-bad-content|/usr/local|root/opt/csw/share/doc/openssl_utils/INSTALL
 
+# We have a lot of collision until libssl1.0.0 will replace libssl0.9.8
 include checkpkg.overrides
 
 ###### Upstream and opencsw files information #######
@@ -104,6 +106,10 @@ PATCHFILES += 0003-make-engines-directory-soname-dependant.patch
 
 # Update openssl.cnf path in man page to follow opencsw standard
 PATCHFILES += opencsw_paths.patch
+#
+# Let's always block some compromised CA, whatever the CA configured
+# (patchs taken from Debian Package)
+PATCHFILES += block_bad_certificates.patch
 
 LICENSE = LICENSE
 
@@ -157,6 +163,15 @@ pre-configure-modulated:
 	cd $(WORKSRC) && ln -nf Configure configure
 	@$(MAKECOOKIE)
 
+fix-paths:
+	gsed -i -e 's,/usr/local/ssl/lib,/opt/csw/etc/ssl,' $(PKGROOT)$(mandir)/man1/ca.1
+	gsed -i -e 's,/usr/local/ssl,/opt/csw/ssl,' $(PKGROOT)$(bindir)/c_rehash
+	@$(MAKECOOKIE)
+
+install-certs: 
+	[ ! -f $(PKGROOT)$(prefix)/ssl/openssl.cnf ] || \
+		ginstall -D $(PKGROOT)$(prefix)/ssl/openssl.cnf $(PKGROOT)$(sysconfdir)/ssl/openssl.cnf.CSW
+
 merge-doc:
 	for CATALOGNAME in $(foreach PKG, $(PACKAGES), $(call catalogname,$(PKG))); do \
 		ginstall -d $(PKGROOT)/$(docdir)/$$CATALOGNAME; \
@@ -165,4 +180,4 @@ merge-doc:
 	done
 	@$(MAKECOOKIE)
 
-post-merge: merge-doc 
+post-merge: merge-doc install-certs fix-paths
