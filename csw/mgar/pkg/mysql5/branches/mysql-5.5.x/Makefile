@@ -110,9 +110,9 @@ PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),$(mandir)/man
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/bin/$(bin_name)$(PROGRAM_SUFFIX))
 PKGFILES_CSW$(NAME)client += $(foreach bin_name,$(client_programs),/opt/csw/sbin/$(bin_name)$(PROGRAM_SUFFIX))
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibgcc-s1
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
-RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
+# RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient$(MYSQL_LIB_VER)
+# RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
+# RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibncursesw5
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibstdc++6
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME)client += CSWosslrt
@@ -125,13 +125,13 @@ CHECKPKG_OVERRIDES_CSW$(NAME) += binary-architecture-does-not-match-placement
 CHECKPKG_OVERRIDES_CSWlibmysqlclient18 += binary-architecture-does-not-match-placement
 
 PACKAGES += CSW$(NAME)
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient$(MYSQL_LIB_VER)
+# RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient-r$(MYSQL_LIB_VER)
+# RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibmysqlclient$(MYSQL_LIB_VER)
 SPKG_DESC_CSW$(NAME) = Multithreaded SQL database
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSW$(NAME)client
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibgcc-s1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibstdc++6
-RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
+# RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibwrap1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWlibz1
 RUNTIME_DEP_PKGS_CSW$(NAME) += CSWosslrt
 CHECKPKG_OVERRIDES_CSW$(NAME) += bad-rpath-entry
@@ -291,8 +291,6 @@ ALTERNATIVE_mysql$(BASE_VERSION)_client += $(foreach C,$(wordlist 2,$(words $(cl
 
 # These are harmless, although it would be nice to clean them up eventually.
 # Help appreciated?
-CHECKPKG_OVERRIDES_CSWmysql51 += file-collision|/opt/csw/share/doc/mysql5devel_stub/README.CSW|CSWmysql5|CSWmysql51
-CHECKPKG_OVERRIDES_CSWmysql51 += file-collision|/opt/csw/share/doc/mysql_dev/README.CSW|CSWmysql5|CSWmysql51
 CHECKPKG_OVERRIDES_CSWmysql51 += file-collision|/opt/csw/share/info/mysql.info|CSWmysql5|CSWmysql51
 
 CONFIGURE_SCRIPTS = custom
@@ -350,8 +348,8 @@ post-merge:
 	ginstall -m 644 $(FILEDIR)/ChangeLog $(PKGROOT)$(datadir)/$(NAME)/doc/ChangeLog-$(BASE_VERSION)
 	ginstall -m 644 $(FILEDIR)/README.CSW $(PKGROOT)$(datadir)/$(NAME)/doc/README-$(BASE_VERSION).CSW
 	ginstall -m 755 -d $(PKGROOT)/opt/csw/share/$(NAME)/doc
-	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README.CSW \
-		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README.CSW
+	gln -sf ../../../$(NAME)/share/$(NAME)/doc/README-$(BASE_VERSION).CSW \
+		$(PKGROOT)/opt/csw/share/$(NAME)/doc/README-$(BASE_VERSION).CSW
 	ginstall -m 755 $(FILEDIR)/quick_start-csw $(PKGROOT)$(datadir)/mysql
 	ginstall -m 755 -d $(PKGROOT)$(sysconfdir)/pkg/CSW$(NAME)
 	ginstall -m 644 $(FILEDIR)/cswusergroup \
