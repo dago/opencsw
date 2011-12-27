@@ -1,3 +1,5 @@
+This doesn't quite work the way we want it. We need something that works on
+Solaris 9 and 10, for both sparc and intel.
 --- gcc-4.6.2/gcc/config/i386/sol2-10.h	2011-12-11 00:34:08.341738656 +0100
 +++ gcc-4.6.2/gcc/config/i386/sol2-10.h.mod	2011-12-11 00:32:27.545153224 +0100
 @@ -131,6 +131,11 @@
