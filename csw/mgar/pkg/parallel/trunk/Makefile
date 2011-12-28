@@ -1,6 +1,6 @@
 # $Id$
 NAME = parallel
-VERSION = 20111022
+VERSION = 20111222
 CATEGORIES = utils
 
 DESCRIPTION = Shell tool for executing jobs in parallel
@@ -22,6 +22,13 @@ VENDOR_URL = http://www.gnu.org/software/parallel/
 
 ARCHALL = 1
 
+REINPLACE_MATCH = \#!/usr/bin/perl
+REINPLACE_WITH = \#!/opt/csw/bin/perl
+REINPLACE_FILES += src/niceload
+REINPLACE_FILES += src/parallel
+REINPLACE_FILES += src/sem
+REINPLACE_FILES += src/sql
+
 EXTRA_COMMON_EXPORTS = HOME
 
 # Some idioms are used that the system Perl doesn't have
@@ -31,9 +38,6 @@ CHECKPKG_OVERRIDES_CSWparallel += surplus-dependency|CSWperl
 
 # This references a special ssh like /usr/local/bin/myssh
 CHECKPKG_OVERRIDES_CSWparallel += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/parallel.1
+CHECKPKG_OVERRIDES_CSWparallel += file-with-bad-content|/usr/local|root/opt/csw/share/doc/parallel/parallel.html
 
 include gar/category.mk
-
-post-extract-modulated:
-	-cd $(WORKSRC)/src && perl -pi -e 's,#!/usr/bin/perl,#!/opt/csw/bin/perl,' niceload parallel sem sql
-	@$(MAKECOOKIE)
