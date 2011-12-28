@@ -28,6 +28,17 @@ VENDOR_URL = http://haproxy.1wt.eu/
 
 LICENSE = LICENSE
 
+# Don't care for now, investigate later!
+CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/haproxy.1
+CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/haproxy.1
+CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/build.cfg
+CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/haproxy.cfg
+CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/haproxy-1.1.21-flx.1.pkg
+
+# This is in fact ok for libcrypt.so
+CHECKPKG_OVERRIDES_CSWhaproxy += bad-rpath-entry|/usr/lib/$$ISALIST|opt/csw/sbin/sparcv9/haproxy
+CHECKPKG_OVERRIDES_CSWhaproxy += bad-rpath-entry|/usr/lib/$$ISALIST|opt/csw/sbin/amd64/haproxy
+
 # Heavily optimized, supported for gcc, didn't dare to touch
 GARCOMPILER = GCC4
 
@@ -35,6 +46,9 @@ BUILD64 = 1
 ISAEXEC = 1
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
+
+# We specifically need /usr/lib/64
+EXTRA_LIB += /usr/lib
 
 BUILD_ARGS = \
 	TARGET=solaris \
@@ -46,13 +60,6 @@ INSTALL_ARGS = \
 	PREFIX=$(prefix) \
 	SBINDIR=$(sbindir) \
 	DOCDIR=$(docdir)/$(NAME)
-
-# Don't care for now, investigate later!
-CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/man/man1/haproxy.1
-CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/haproxy.1
-CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/build.cfg
-CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/haproxy.cfg
-CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/haproxy-1.1.21-flx.1.pkg
 
 include gar/category.mk
 
