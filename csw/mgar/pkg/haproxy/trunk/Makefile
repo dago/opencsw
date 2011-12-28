@@ -6,7 +6,7 @@
 # * Use the shipped Makefile optimization flags
 #
 NAME = haproxy
-VERSION = 1.4.15
+VERSION = 1.4.18
 CATEGORIES = apps
 
 DESCRIPTION = Reliable, high performance TCP/HTTP load balancer
@@ -22,15 +22,17 @@ define BLURB
 endef
 
 MASTER_SITES = http://haproxy.1wt.eu/download/1.4/src/
-DISTFILES    = $(DISTNAME).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
 
-VENDOR_URL   = http://haproxy.1wt.eu/
+VENDOR_URL = http://haproxy.1wt.eu/
 
 LICENSE = LICENSE
 
 # Heavily optimized, supported for gcc, didn't dare to touch
 GARCOMPILER = GCC4
 
+BUILD64 = 1
+ISAEXEC = 1
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
 
@@ -42,6 +44,7 @@ BUILD_ARGS = \
 
 INSTALL_ARGS = \
 	PREFIX=$(prefix) \
+	SBINDIR=$(sbindir) \
 	DOCDIR=$(docdir)/$(NAME)
 
 # Don't care for now, investigate later!
