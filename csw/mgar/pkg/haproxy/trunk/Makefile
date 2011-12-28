@@ -4,6 +4,9 @@
 # ! Include init script
 # ! Include default configuration
 # * Use the shipped Makefile optimization flags
+# * For some obscure reason this link is missing on unstable10x:
+#     lrwxrwxrwx   1 root     root          13 Dec 28 23:53 /usr/lib/64/libcrypt.so -> libcrypt_d.so
+#   I added this link manually for now, investigate later!
 #
 NAME = haproxy
 VERSION = 1.4.18
@@ -35,9 +38,9 @@ CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/s
 CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/haproxy.cfg
 CHECKPKG_OVERRIDES_CSWhaproxy += file-with-bad-content|/usr/share|root/opt/csw/share/doc/haproxy/examples/haproxy-1.1.21-flx.1.pkg
 
-# This is in fact ok for libcrypt.so
-CHECKPKG_OVERRIDES_CSWhaproxy += bad-rpath-entry|/usr/lib/$$ISALIST|opt/csw/sbin/sparcv9/haproxy
-CHECKPKG_OVERRIDES_CSWhaproxy += bad-rpath-entry|/usr/lib/$$ISALIST|opt/csw/sbin/amd64/haproxy
+# This is cross-linked, but not correctly added to the package database
+#   /usr/lib/abi/abi_libcrypt_d.so.1 f none 0755 root bin 37708 45322 1036400527 SUNWcstl
+CHECKPKG_OVERRIDES_CSWhaproxy += soname-not-found|libcrypt_d.so.1|is|needed|by|opt/csw/sbin/amd64/haproxy
 
 # Heavily optimized, supported for gcc, didn't dare to touch
 GARCOMPILER = GCC4
@@ -46,9 +49,6 @@ BUILD64 = 1
 ISAEXEC = 1
 CONFIGURE_SCRIPTS =
 TEST_SCRIPTS =
-
-# We specifically need /usr/lib/64
-EXTRA_LIB += /usr/lib
 
 BUILD_ARGS = \
 	TARGET=solaris \
