@@ -81,8 +81,11 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWsvn += CSWosslrt
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibdbus1-3
-RUNTIME_DEP_PKGS_CSWsvn += CSWlibglib2-0-0
-
+# as long as we build for solaris9 and 10, consider differing glib versions
+PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
+RUNTIME_DEP_PKGS_CSWsvn-5.9 += CSWglib2
+RUNTIME_DEP_PKGS_CSWsvn-5.10 += CSWlibglib2-0-0
+RUNTIME_DEP_PKGS_CSWsvn += $(RUNTIME_DEP_PKGS_CSWsvn-$(GAROSREL))
 
 PACKAGES += CSWsvn-dev
 SPKG_DESC_CSWsvn-dev       = Subversion Development Support
