@@ -22,7 +22,7 @@ INSTALL_SCRIPTS = custom
 PACKAGES = CSWpkgget
 
 CATALOGNAME_CSWpkgget = pkg_get_stub
-SPKG_DESC_CSWpkgget = A deprecated package delivery tool (User notice version)
+SPKG_DESC_CSWpkgget = A deprecated package delivery tool
 RUNTIME_DEP_PKGS_CSWpkgget = CSWpkgutil
 ARCHALL_CSWpkgget = 1
 CHECKPKG_OVERRIDES_CSWpkgget += surplus-dependency|CSWpkgutil
