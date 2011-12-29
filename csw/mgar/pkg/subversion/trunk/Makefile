@@ -49,7 +49,6 @@ PACKAGES  = CSWsvn
 SPKG_DESC_CSWsvn           = Version control rethought
 CATALOGNAME_CSWsvn         = subversion
 CHECKPKG_OVERRIDES_CSWsvn += catalogname-does-not-match-pkgname|pkgname=CSWsvn|catalogname=subversion|expected-catalogname=svn
-CHECKPKG_OVERRIDES_CSWsvn += license-missing|/opt/csw/share/doc/subversion/license
 CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/repos.pyc
 CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/svn/wc.pyc
 CHECKPKG_OVERRIDES_CSWsvn += discouraged-path-in-pkgmap|/opt/csw/lib/svn/python/site-packages/libsvn/__init__.pyc
@@ -82,7 +81,8 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWsvn += CSWosslrt
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibdbus1-3
-RUNTIME_DEP_PKGS_CSWsvn += CSWglib2
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibglib2-0-0
+
 
 PACKAGES += CSWsvn-dev
 SPKG_DESC_CSWsvn-dev       = Subversion Development Support
@@ -99,7 +99,6 @@ SPKG_DESC_CSWsvn-contrib   = Contributed subversion scripts
 CATALOGNAME_CSWsvn-contrib = subversion_contrib
 PKGFILES_CSWsvn-contrib    = $(docdir)/subversion/contrib.*
 ARCHALL_CSWsvn-contrib     = 1
-CHECKPKG_OVERRIDES_CSWsvn-contrib += action-class-only-in-pkginfo|none
 CHECKPKG_OVERRIDES_CSWsvn-contrib += catalogname-does-not-match-pkgname|pkgname=CSWsvn-contrib|catalogname=subversion_contrib|expected-catalogname=svn_contrib
 
 
@@ -108,7 +107,6 @@ SPKG_DESC_CSWsvn-tools     = Additional subversion tools
 CATALOGNAME_CSWsvn-tools   = subversion_tools
 PKGFILES_CSWsvn-tools      = $(docdir)/subversion/tools.*
 ARCHALL_CSWsvn-tools       = 1
-CHECKPKG_OVERRIDES_CSWsvn-tools += action-class-only-in-pkginfo|none
 CHECKPKG_OVERRIDES_CSWsvn-tools += catalogname-does-not-match-pkgname|pkgname=CSWsvn-tools|catalogname=subversion_tools|expected-catalogname=svn_tools
 
 
