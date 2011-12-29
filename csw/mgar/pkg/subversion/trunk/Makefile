@@ -41,6 +41,9 @@ DISTFILES    = $(NAME)-$(VERSION).tar.bz2
 
 LICENSE = LICENSE
 
+# solaris9 does not have the newest glib2 any more
+PACKAGING_PLATFORMS += solaris10-sparc solaris10-i386
+
 BUILD_DEP_PKGS += CSWlibexpat-dev
 BUILD_DEP_PKGS += CSWlibserf-dev
 BUILD_DEP_PKGS += CSWlibsqlite3-dev
@@ -81,11 +84,7 @@ RUNTIME_DEP_PKGS_CSWsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWsvn += CSWosslrt
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibgnome-keyring0
 RUNTIME_DEP_PKGS_CSWsvn += CSWlibdbus1-3
-# as long as we build for solaris9 and 10, consider differing glib versions
-PACKAGING_PLATFORMS += solaris9-sparc solaris9-i386 solaris10-sparc solaris10-i386
-RUNTIME_DEP_PKGS_CSWsvn-5.9 += CSWglib2
-RUNTIME_DEP_PKGS_CSWsvn-5.10 += CSWlibglib2-0-0
-RUNTIME_DEP_PKGS_CSWsvn += $(RUNTIME_DEP_PKGS_CSWsvn-$(GAROSREL))
+RUNTIME_DEP_PKGS_CSWsvn += CSWlibglib2-0-0
 
 PACKAGES += CSWsvn-dev
 SPKG_DESC_CSWsvn-dev       = Subversion Development Support
