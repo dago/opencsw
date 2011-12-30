@@ -1,0 +1,120 @@
+OpenCSW PostgreSQL
+==================
+
+
+Parallel Installations
+----------------------
+
+OpenCSW's PostgreSQL allows for parallel installation of different
+PostgreSQL versions. Therefore, the binaries have appended the
+PostgreSQL version, e.g. PostgreSQL's @VERSION@ `psql' is named
+`psql-@BASE_VERSION_NODOT@'. The same holds for manpages.
+
+The notable exception to this are development files. Development files
+are only available for the latest PostgreSQL version provided by
+OpenCSW and have no version appended.
+
+Please see also `Starting the PostgreSQL Server' below for caveat on
+running multiple PostgreSQL servers in parallel.
+
+
+32/64-bit Binaries
+------------------
+
+It can be chosen between 32-bit or 64-bit binaries using the
+alternatives mechanism (see the alternative's README.user). By
+default, PostgreSQL will use 64-bit binaries.
+
+Alternatives are provided for server, client, contrib, and dev
+binaries separately. This makes it possible to select different memory
+models for those binaries independently.
+
+In order to list the alternatives provided, issue
+
+ /opt/csw/sbin/alternatives --list
+
+on the command line.
+
+Please note, that a database cluster initialized by the 32-bit server
+binaries cannot be used by the 64-bit versions and vice versa. If you
+want to switch the memory model of the server, you have to
+
+ 1. dump the entire database cluster
+ 2. switch the memory model of the server binaries
+ 3. remove the database cluster
+ 4. re-initialize the database cluster using `initdb-@BASE_VERSION_NODOT@'
+    (see also `Initializing the Database Cluster' below)
+ 5. start the server and restore the database cluster from the dump
+    created in step 1.
+
+
+Starting the PostgreSQL Server
+------------------------------
+
+When installing the PostgreSQL server for the first time, only the
+database cluster will be initialized using default values provided by
+
+ @sysconfdir@/postgresql-@BASE_VERSION_NODOT@.conf
+
+and the database server will not be started, allowing for
+post-installation customization.
+
+In order to start the PostgreSQL server you can either use
+
+ svcadm enable cswpostgresql-@BASE_VERSION_NODOT@    # Solaris 10+ only
+
+or
+
+ @sysconfdir@/init.d/cswpostgresql-@BASE_VERSION_NODOT@ start
+
+Please note, that when installing multiple PostgreSQL server versions
+in parallel, the above method will work for the first database server
+started only. Subsequent servers starts will fail unless the listening
+port is set to distinct values using the `SERVEROPTS' in
+
+ @sysconfdir@/postgresql-XY.conf
+
+like
+
+ SERVEROPTS="-p <portnum>"
+
+where `<portnum>' is the port number the server has to listen on,
+which is by default 5432. So, one could configure the servers, for
+instance, to make the first server listen on 5432, the second on 5433,
+and so on.
+
+Alternatively, one can use the `postgresql.conf' file in the database
+cluster directory to provide a different listening port.
+
+
+User Configuration of Server Options
+------------------------------------
+
+Configuration of the server start-up options is done through a
+user-configuration file, `@sysconfdir@/postgresql-@BASE_VERSION_NODOT@.conf'.
+A sample template has been provided for you at `/etc/opt/csw/postgresql-@BASE_VERSION_NODOT@.conf.CSW'.
+
+This file also defines the location of the PostgreSQL database
+cluster in `PGDATA', which is by default `/var/opt/csw/postgresql/@BASE_VERSION_NODOT@'.
+
+
+Initializing the Database Cluster
+---------------------------------
+
+The startup script `/etc/opt/csw/init.d/cswpostgresql-@BASE_VERSION_NODOT@' allows to
+initialize the database cluster by providing the argument `init' as such
+
+ /etc/opt/csw/init.d/cswpostgresql-@BASE_VERSION_NODOT@ init
+
+This will initialize the database cluster at the location specified in
+the `PGDATA' variable defined in `/etc/opt/csw/postgresql-@BASE_VERSION_NODOT@.conf'.
+
+When installing PostgreSQL for the first time, the database cluster
+will be initialized using default values.
+
+
+--
+That's all folks.
+
+Rafael Ostertag
+raos@opencsw.org
