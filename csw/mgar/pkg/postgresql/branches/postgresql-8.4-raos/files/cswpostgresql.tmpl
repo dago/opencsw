@@ -2,13 +2,20 @@
 # $Id$
 #
 # PostgreSQL startup script - part of the CSWpostgresql package
-# mark@blastwave.org
-# 
+#
 # 2009-11-29  Maciej Blizinski (maciej@opencsw.org)
 #   - Parametrized file locations
 #   - Style changes
-#              
 #
+#
+#RC_KNUM 20         # Number used for kill script symlink, e.g. K20cswfoo
+#RC_SNUM 80         # Number used for start script symlink, e.g. S80cswfoo
+#RC_KLEV 0,1,2,S    # Run levels that should have a kill script symlink
+#RC_SLEV 3          # Run levels that should have a start script symlink
+#AUTOENABLE no      # If set to no will not enable service regardless of
+#                     local csw.conf, use when a package needs setup before
+#                     being useful, would otherwise leave service in
+#                     maintenance mode
 
 VERSION=@BASE_VERSION_NODOT@
 
@@ -22,16 +29,18 @@ PGINIT=@bindir@/initdb-${VERSION}
 
 # Defaults
 [ -z "${PGDATA}" ] && PGDATA=@PGDATA@
-[ -z "${PGDATA}" ] && SHUTDOWNMODE=fast
+[ -z "${SHUTDOWNMODE}" ] && SHUTDOWNMODE=fast
+[ -z "${PGENCODING}" ] && PGENCODING=UTF8
+[ -z "${PGSUPERUSER}" ] && PGSUPERUSER=postgres
 
 if [ -n "${SERVEROPTS}" ]
 then
-    # Make sure, SERVEROPTS start with -o
-    echo "${SERVEROPTS}" | grep '^-o' >/dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
-	SERVEROPTS="-o ${SERVEROPTS}"
-    fi
+    # Remove the -o option, we provide it later on
+    SERVEROPTS=`echo "${SERVEROPTS}" | sed 's/^-o[ ]*//'`
+fi
+if [ -n "${PGLOCALE}" ]
+then
+    PGLOCALE="--locale=${PGLOCALE}"
 fi
 
 
@@ -42,20 +51,23 @@ if grep '^postgres:' /etc/passwd >/dev/null; then
 else
   getent passwd postgres >/dev/null
   if [ $? -ne 0 ] ; then
-         exit 0
+	 exit 0
   fi
 fi
 
-# Change to ${PGDATA}, as pgctl etc. need to be started from
-# a directory that they can read
-cd "${PGDATA}"
+cd /
 
 case "$1" in
 start)
       if [ -d ${PGDATA} -a `ls -l ${PGDATA} 2> /dev/null | wc -l` -gt 1 ]; then
-         # PostgreSQL data directory exists and is populated
-         echo "Starting PostgreSQL..."
-         su postgres -c "${PGCTL} start -D ${PGDATA} -l ${PGDATA}/postgresql.log ${SERVEROPTS}"
+	 # PostgreSQL data directory exists and is populated
+	 echo "Starting PostgreSQL..."
+	 if [ -n "${SERVEROPTS}" ]
+	 then
+	     su postgres -c "${PGCTL} start -D ${PGDATA} -l ${PGDATA}/postgresql.log -o '${SERVEROPTS}'"
+	 else
+	     su postgres -c "${PGCTL} start -D ${PGDATA} -l ${PGDATA}/postgresql.log"
+	 fi
       fi
       ;;
 
@@ -67,7 +79,12 @@ stop)
 
 restart)
      echo "Restarting PostgreSQL database..."
-     su postgres -c "${PGCTL} restart -D ${PGDATA} -l ${PGDATA}/postgresql.log -m ${SHUTDOWNMODE} ${SERVEROPTS}"
+     if [ -n "${SERVEROPTS}" ]
+     then
+	 su postgres -c "${PGCTL} restart -D ${PGDATA} -l ${PGDATA}/postgresql.log -m ${SHUTDOWNMODE} -o '${SERVEROPTS}'"
+     else
+	 su postgres -c "${PGCTL} restart -D ${PGDATA} -l ${PGDATA}/postgresql.log -m ${SHUTDOWNMODE}"
+     fi
      ;;
 
 reload)
@@ -87,7 +104,7 @@ init)
      chown postgres "${PGDATA}"
      chmod 0700 "${PGDATA}"
      echo "Initialising PostgreSQL database..."
-     su postgres -c "\"${PGINIT}\" -D \"${PGDATA}\" -E UTF8"
+     su postgres -c "\"${PGINIT}\" -D \"${PGDATA}\" -E ${PGENCODING} -U ${PGSUPERUSER} ${PGLOCALE}"
      ;;
 
 *)
