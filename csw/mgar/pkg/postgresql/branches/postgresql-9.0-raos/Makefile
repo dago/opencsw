@@ -1,5 +1,3 @@
-# Copyright 2009 OpenCSW
-# Distributed under the terms of the GNU General Public License v2
 # $Id$
 #
 # Note 1
@@ -274,9 +272,6 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibgnugetopt0
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-server += CSWlibgssapi-krb5-2
-CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach n,$(SO_NAMES_SERVER), soname-not-part-of-filename|soname=lib$(n).0|filename=$(n) )
-# This one isn't covered by the above.
-CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-server += soname-not-part-of-filename|soname=libplpgsql.so.1|filename=plpgsql.so
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-server = $(foreach i,$(NEEDED_ISAS), server_$(i))
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-client
@@ -314,8 +309,6 @@ RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxslt1
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibxml2-2
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += CSWlibreadline6
-# This will produce some 'unused overrides'.
-CHECKPKG_OVERRIDES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach n,$(SO_NAMES_CONTRIB), soname-not-part-of-filename|soname=lib$(n).0|filename=$(n) )
 #ALTERNATIVES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach i,$(NEEDED_ISAS), contrib_$(i))
 
 PACKAGES += CSW$(NAME)-dev
