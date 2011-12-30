@@ -13,32 +13,52 @@ PGINIT=@bindir@/initdb-@BASE_VERSION_NODOT@
 [ -s /opt/csw/etc/${USERCONF} ] && . /opt/csw/etc/${USERCONF}
 [ -s @sysconfdir@/${USERCONF} ] && . @sysconfdir@/${USERCONF}
 
-initialize_cluster() {
-	chown postgres "${PGDATA}"
-	chmod 0700 "${PGDATA}"
-	echo "Initializing PostgreSQL database..."
-	su postgres -c "\"${PGINIT}\" -D \"${PGDATA}\" -E UTF8"
-}
+if [ ! -d "${PGDATA}" -o `ls -l ${PGDATA} 2>/dev/null | wc -l` -eq 1 ]; then
+    @sysconfdir@/init.d/cswpostgresql-@BASE_VERSION_NODOT@ init
+    cat <<EOF
+---
 
-if [ `ls -l ${PGDATA} 2>/dev/null | wc -l` -eq 1 ]; then
-	initialize_cluster
+The database cluster has been initialized in ${PGDATA}.
+
+Some customizations to the initialization can be made by editing the file
+
+ @sysconfdir@/${USERCONF}
+
+In order to re-initialize the database cluster, remove the directory
+
+ ${PGDATA}
+
+and call cswpostgresql-@BASE_VERSION_NODOT@ as such
+
+ @sysconfdir@/init.d/cswpostgresql-@BASE_VERSION_NODOT@ init
+
+PLEASE NOTE: by doing so, all data will be LOST. Thus this procedure
+             is only recommended for pristine installations.
+
+
+In order to start the PostgreSQL server you can either use
+
+ svcadm enable cswpostgresql-@BASE_VERSION_NODOT@    # Solaris 10+ only
+
+or
+
+ @sysconfdir@/init.d/cswpostgresql-@BASE_VERSION_NODOT@ start
+
+---
+EOF
 else
-	echo "The database cluster seems to be initialized already."
+    cat <<EOF
+---
+
+The database cluster seems to be initialized already.
+
+---
+EOF
 fi
 
-# FIXME: We assume that every Sol 10 user is using SMF, whereas it is possible
-# to use CSW on Sol 10 without SMF
-if [ -x /usr/sbin/svcadm ]; then
-	fmri="cswpostgresql-@BASE_VERSION_NODOT@"
-	echo "Enabling the ${fmri} service in SMF"
-	# Let things settle a little bit
-	sleep 4
-	svcadm clear "${fmri}"
-	svcadm enable "${fmri}"
-else
-	initscript="/etc/opt/csw/init.d/cswpostgresql-@BASE_VERSION_NODOT@"
-	echo "Issuing ${initscript} start"
-	"${initscript}" start
-fi
+# The database server will not be started, in case the user wants to
+# do some customization to the database cluster. However, the database
+# cluster is initialized and the user simply have to start the server
+# if the defaults suits him.
 
 exit 0
