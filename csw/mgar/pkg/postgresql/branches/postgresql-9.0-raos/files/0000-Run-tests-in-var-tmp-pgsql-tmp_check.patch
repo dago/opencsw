@@ -1,0 +1,43 @@
+From 6087958b802424f91462b3a98cf75bc0d3471e09 Mon Sep 17 00:00:00 2001
+From: Rafael Ostertag <rafisol@opencsw.org>
+Date: Fri, 30 Dec 2011 16:33:54 +0100
+Subject: [PATCH] Run tests in /var/tmp/pgsql/tmp_check
+
+---
+ src/test/regress/GNUmakefile |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/src/test/regress/GNUmakefile b/src/test/regress/GNUmakefile
+index 31762b8..ffe0667 100644
+--- a/src/test/regress/GNUmakefile
++++ b/src/test/regress/GNUmakefile
+@@ -141,7 +141,8 @@ tablespace-setup:
+ pg_regress_call = ./pg_regress --inputdir=$(srcdir) --dlpath=. --multibyte=$(MULTIBYTE) $(NOLOCALE)
+ 
+ check: all
+-	$(pg_regress_call) --temp-install=./tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(TEMP_CONF)
++	install -d /var/tmp/pgsql/tmp_check
++	$(pg_regress_call) --temp-install=/var/tmp/pgsql/tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) $(TEMP_CONF)
+ 
+ installcheck: all
+ 	$(pg_regress_call) --psqldir="$(PSQLDIR)" --schedule=$(srcdir)/serial_schedule
+@@ -162,7 +163,8 @@ bigtest: all
+ 	$(pg_regress_call) --psqldir="$(PSQLDIR)" --schedule=$(srcdir)/serial_schedule numeric_big 
+ 
+ bigcheck: all
+-	$(pg_regress_call) --temp-install=./tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) numeric_big
++	install -d /var/tmp/pgsql/tmp_check
++	$(pg_regress_call) --temp-install=/var/tmp/pgsql/tmp_check --top-builddir=$(top_builddir) --schedule=$(srcdir)/parallel_schedule $(MAXCONNOPT) numeric_big
+ 
+ 
+ ##
+@@ -175,5 +177,5 @@ clean distclean maintainer-clean: clean-lib
+ # things created by various check targets
+ 	rm -f $(output_files) $(input_files)
+ 	rm -rf testtablespace
+-	rm -rf results tmp_check log
++	rm -rf results /var/tmp/pgsql/tmp_check log
+ 	rm -f regression.diffs regression.out regress.out run_check.out
+-- 
+1.7.6.1
+
