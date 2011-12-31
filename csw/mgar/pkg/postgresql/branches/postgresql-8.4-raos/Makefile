@@ -321,8 +321,7 @@ SPKG_DESC_CSW$(NAME)-dev = PostgreSQL $(VERSION), Development Files
 PKGFILES_CSW$(NAME)-dev  = .*/pgxs/.*
 PKGFILES_CSW$(NAME)-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSW$(NAME)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*$(n)$$)
-PKGFILES_CSW$(NAME)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
-PKGFILES_CSW$(NAME)-dev += .*/man5/.*
+PKGFILES_CSW$(NAME)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)\.1$$)
 # Alternatives for -dev have no version appended
 PKGFILES_CSW$(NAME)-dev += .*/alternatives/$(NAME)_dev.*
 PKGFILES_CSW$(NAME)-dev += .*/CSW$(NAME)-dev.postmsg
@@ -348,6 +347,7 @@ PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-doc
 ARCHALL_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = 1
 SPKG_DESC_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = PostgreSQL $(VERSION), Documentation Files
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-doc  =  .*/doc/$(NAME)/$(BASE_VERSION_NODOT)/.*\.(html|css)
+PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-doc += .*/man5/.*
 
 PACKAGES += CSWlibecpg-compat3
 SPKG_DESC_CSWlibecpg-compat3 = PostgreSQL $(VERSION), libecpg_compat
@@ -483,10 +483,22 @@ post-merge:  $(foreach n,$(POSTMSG),$(PKGROOT)/$(n)) test-installation
 	$(foreach a,$(myALTERNATIVES), $(foreach i,$(NEEDED_ISAS), $(shell ginstall -d $(PKGROOT)$(sharedstatedir)/alternatives ; echo "$(ALTERNATIVE_$(a)_$(i))" > $(if $(subst dev,,$(a)),$(PKGROOT)$(sharedstatedir)/alternatives/$(NAME)$(BASE_VERSION_NODOT)_$(a)_$(i),$(PKGROOT)$(sharedstatedir)/alternatives/$(NAME)_$(a)_$(i)) ) ) )
 # Create the PGDATA directory
 	ginstall -d $(PKGROOT)$(PGDATA)
-# Adjust the man page names for man1
-	for f in $(PKGROOT)$(datadir)/man/man1/* ; do \
-		f_no_suffix="`echo $$f | sed -e 's/.1$$//'`" ; \
-		mv $$f $${f_no_suffix}-$(BASE_VERSION_NODOT).1 ; \
+# Adjust the man page names.
+	for i in 1 5 ; do \
+		test -d $(PKGROOT)$(datadir)/man/man$$i || continue ; \
+		for f in $(PKGROOT)$(datadir)/man/man$$i/* ; do \
+			suffix="`echo $$f | awk 'BEGIN { FS="." } { print $$NF }'`" ; \
+			f_no_suffix="`echo $$f | sed -e "s/\.$${suffix}$$//"`" ; \
+			dont_move=0 ; \
+			for d in $(BIN_NAMES_DEVEL) ; do \
+				bname="`basename $${f_no_suffix}`" ; \
+				if test "$${bname}" = "$$d" ; then \
+					dont_move=1 ; \
+					break ; \
+				fi ; \
+			done ; \
+			test $${dont_move} -eq 0 && mv $$f $${f_no_suffix}-$(BASE_VERSION_NODOT).$${suffix} ; \
+		done ;\
 	done
 # Change path names in documentation
 	for f in $(PKGROOT)$(docdir)/$(NAME)/$(BASE_VERSION_NODOT)/html/*.html $(PKGROOT)$(mandir)/man1/*.1 $(PKGROOT)$(datadir)/$(NAME)/$(BASE_VERSION_NODOT)/*.sample ; do \
