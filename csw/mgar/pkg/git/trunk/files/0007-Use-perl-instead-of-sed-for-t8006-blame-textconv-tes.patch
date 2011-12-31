@@ -1,0 +1,39 @@
+From 146a5f084306992e70bc31d93d110fa2b9192160 Mon Sep 17 00:00:00 2001
+From: Ben Walton <bwalton@opencsw.org>
+Date: Sat, 31 Dec 2011 05:02:05 +0100
+Subject: [PATCH] Use perl instead of sed for t8006-blame-textconv test
+
+In test 'blame --textconv with local changes' of t8006-blame-textconv,
+using /usr/xpg4/bin/sed (as set by SANE_TOOL_PATH), an additional newline
+was added to the output from the 'helper' script.
+
+This was noted by sed with a message such as:
+sed: Missing newline at end of file zero.bin.
+
+In turn, this was triggering a fatal error from git blame:
+fatal: unable to read files to diff
+
+To work around this difference in sed behaviour, use perl -p instead of
+sed -e as it will not insert the newline.
+
+Signed-off-by: Ben Walton <bwalton@opencsw.org>
+---
+ t/t8006-blame-textconv.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/t8006-blame-textconv.sh b/t/t8006-blame-textconv.sh
+index 4ee42f1..c3c22f7 100755
+--- a/t/t8006-blame-textconv.sh
++++ b/t/t8006-blame-textconv.sh
+@@ -10,7 +10,7 @@ find_blame() {
+ cat >helper <<'EOF'
+ #!/bin/sh
+ grep -q '^bin: ' "$1" || { echo "E: $1 is not \"binary\" file" 1>&2; exit 1; }
+-sed 's/^bin: /converted: /' "$1"
++perl -p -e 's/^bin: /converted: /' "$1"
+ EOF
+ chmod +x helper
+ 
+-- 
+1.7.6.1
+
