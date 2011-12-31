@@ -347,7 +347,6 @@ PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib = $(foreach n,$(BIN_NAMES_CONTR
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += $(foreach n,$(BIN_NAMES_CONTRIB),.*/man1/$(n)-$(BASE_VERSION_NODOT)\.1$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += $(foreach n,$(SO_NAMES_CONTRIB),.*/$(NAME)/$(BASE_VERSION_NODOT)/*$(n)$$)
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += $(foreach n,$(EXT_NAMES_CONTRIB),.*/$(NAME)/$(BASE_VERSION_NODOT)/extension/$(n)$$)
-PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*$(sharedstatedir)/$(NAME)/$(BASE_VERSION_NODOT)/extension/.*
 PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*$(docdir)/$(NAME)/$(BASE_VERSION_NODOT)/extension/.*
 # This has been removed as of 9.1
 #PKGFILES_CSW$(NAME)$(BASE_VERSION_NODOT)-contrib += .*/$(NAME)/$(BASE_VERSION_NODOT)/contrib.*
