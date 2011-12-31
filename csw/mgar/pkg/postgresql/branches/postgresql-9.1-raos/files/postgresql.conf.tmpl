@@ -1,0 +1,61 @@
+# Example PostgreSQL server configuration file.
+# 
+# Provided by the OpenCSW package of PostgreSQL.  This file is read by the
+# /etc/opt/csw/init.d/cswpostgres startup script, and can be used to override
+# the defaults.
+#
+# Please use alternatives to choose between 32/64bit version of the
+# server (See also @docdir@/@NAME@@BASE_VERSION_NODOT@_server/README.CSW)
+
+# The location of the data directory.
+# Default: @PGDATA@
+PGDATA=@PGDATA@
+
+# The shutdown mode used
+#
+# Shutdown modes are:
+#  smart       quit after all clients have disconnected
+#  fast        quit directly, with proper shutdown
+#  immediate   quit without complete shutdown; will lead to recovery on restart
+#
+# Default: fast
+SHUTDOWNMODE=fast
+
+# Additional options to pass to postmaster.
+#
+# Please note: it is no longer necessary to pass the '-o' option.
+#
+# SERVEROPTS="-i"
+
+
+##
+## The following options are used by initdb when initializing the
+## database cluster
+##
+
+# The PostgreSQL encoding of the database cluster. This is used when
+# initializing the database cluster using the init script.
+#
+# For a complete list of character sets supported, go to
+#
+#  http://www.postgresql.org/docs/@BASE_VERSION@/static/multibyte.html#MULTIBYTE-CHARSET-SUPPORTED
+#
+# Default: UTF8
+PGENCODING=UTF8
+
+# The locale used to initialize the database cluster.
+#
+# If none is specified, the locale is inherited from the environment
+# that initdb runs in.
+#
+# Default: <empty>
+#PGLOCALE=en_US.UTF-8
+
+# Selects the user name of the database superuser. This defaults to
+# the name of the effective user running initdb. It is really not
+# important what the superuser's name is, but one might choose to keep
+# the customary name postgres, even if the operating system user's
+# name is different.
+#
+# Default: postgres
+PGSUPERUSER=postgres
