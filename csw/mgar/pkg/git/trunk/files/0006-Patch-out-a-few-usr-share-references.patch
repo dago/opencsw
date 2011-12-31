@@ -1,4 +1,4 @@
-From d2bae3e1637a0bf412c0223272bf402f66931f0b Mon Sep 17 00:00:00 2001
+From 2d0a70590d9f311dab3fbc47c98958a394daa561 Mon Sep 17 00:00:00 2001
 From: Ben Walton <bwalton@opencsw.org>
 Date: Mon, 31 Oct 2011 03:51:55 +0100
 Subject: [PATCH] Patch out a few usr/share references
@@ -8,9 +8,46 @@ these for OpenCSW.
 
 Signed-off-by: Ben Walton <bwalton@opencsw.org>
 ---
+ Documentation/gitweb.txt         |   14 +++++++-------
  contrib/hooks/post-receive-email |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
+diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+index 605a085..dc90dce 100644
+--- a/Documentation/gitweb.txt
++++ b/Documentation/gitweb.txt
+@@ -231,8 +231,8 @@ Unnamed repository; edit this file to name it for gitweb.
+ -------------------------------------------------------------------------------
+ +
+ from the template during repository creation, usually installed in
+-'/usr/share/git-core/templates/'.  You can use the `gitweb.description` repo
+-configuration variable, but the file takes precedence.
++'/opt/csw/share/git-core/templates/'.  You can use the `gitweb.description`
++repo configuration variable, but the file takes precedence.
+ 
+ category (or `gitweb.category`)::
+ 	Singe line category of a project, used to group projects if
+@@ -456,15 +456,15 @@ Apache with FastCGI
+ ~~~~~~~~~~~~~~~~~~~
+ Gitweb works with Apache and FastCGI.  First you need to rename, copy
+ or symlink gitweb.cgi to gitweb.fcgi.  Let's assume that gitweb is
+-installed in '/usr/share/gitweb' directory.  The following Apache
++installed in '/opt/csw/share/gitweb' directory.  The following Apache
+ configuration is suitable (UNTESTED!)
+ 
+ -----------------------------------------------------------------------
+-FastCgiServer /usr/share/gitweb/gitweb.cgi
+-ScriptAlias /gitweb /usr/share/gitweb/gitweb.cgi
++FastCgiServer /opt/csw/share/gitweb/gitweb.cgi
++ScriptAlias /gitweb /opt/csw/share/gitweb/gitweb.cgi
+ 
+-Alias /gitweb/static /usr/share/gitweb/static
+-<Directory /usr/share/gitweb/static>
++Alias /gitweb/static /opt/csw/share/gitweb/static
++<Directory /opt/csw/share/gitweb/static>
+     SetHandler default-handler
+ </Directory>
+ -----------------------------------------------------------------------
 diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
 index e459cc3..0849265 100755
 --- a/contrib/hooks/post-receive-email
