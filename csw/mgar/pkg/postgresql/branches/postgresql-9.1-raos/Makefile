@@ -266,6 +266,9 @@ PATCHFILES += 0000-ecpg-usr-local-include-replacement.patch
 # Test running on a NFS may fail. Thus we let the test run in
 # /var/tmp/pgsql/tmp_check
 PATCHFILES += 0000-Run-tests-in-var-tmp-pgsql-tmp_check.patch
+# By default, src/makefiles/Makefile.solaris uses -Wl,-R'$(rpathdir)'
+# which isn't properly digested by Sun's ld
+PATCHFILES += 0000-Use-plain-rpath.patch
 
 INITSMF = $(sysconfdir)/init\.d/$(INITSCRIPTFILE_VERSIONED)
 USERGROUP = $(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
@@ -373,6 +376,8 @@ PKGFILES_CSW$(NAME)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)\.1$$)
 PKGFILES_CSW$(NAME)-dev += .*/alternatives/$(NAME)_dev.*
 PKGFILES_CSW$(NAME)-dev += .*/CSW$(NAME)-dev.postmsg
 PKGFILES_CSW$(NAME)-dev += .*$(docdir)/$(NAME)_dev/README.CSW
+# See `post-merge-modulated:'
+PKGFILES_CSW$(NAME)-dev += .*/libpgport\.a$
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibecpg-compat3
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibecpg6
 RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWlibpq5
@@ -536,6 +541,16 @@ post-install-modulated:
 	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
 	$(INSTALL_ENV) gmake -C $(WORKSRC) DESTDIR=$(DESTDIR) install-docs
 	@$(MAKECOOKIE)
+
+# We suck in the libpgport.a since pg_config is emitting
+# -lpgport. Unfortunately, there is no shared lib version, and I'm too
+# lazzy to adjust the build system to generate one...
+post-merge-modulated:
+ifeq ($(ISA),$(ISA_DEFAULT64))
+	ginstall $(WORKSRC)/src/port/libpgport.a $(PKGROOT)/$(libpath_install)/$(ISA_DEFAULT64)/
+else
+	ginstall $(WORKSRC)/src/port/libpgport.a $(PKGROOT)/$(libdir)/
+endif
 
 post-merge:  $(foreach n,$(POSTMSG),$(PKGROOT)/$(n)) test-installation
 # Create my alternatives files. Development alternatives have stripped
