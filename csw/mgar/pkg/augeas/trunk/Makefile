@@ -19,8 +19,7 @@ RUNTIME_DEP_PKGS  = CSWgcc4corert CSWlibgnugetopt
 RUNTIME_DEP_PKGS += CSWlibreadline6 CSWlibxml2-2
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
-PATCHFILES += 0001-fix-0.10.0-to-compile-on-solaris.patch
-PATCHFILES += 0002-second-aattempt-at-getting-it-to-build-on-solaris.patch
+PATCHFILES += 0001-fix-compiling-on-solaris.patch
 
 # Building on Solaris 10 doesn't work as it support C99 and the above fixes are
 # not necessary there.

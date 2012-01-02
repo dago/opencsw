@@ -1,30 +1,35 @@
-From c418d070025c9ac5de6d12a0473d0e65ba9d8b67 Mon Sep 17 00:00:00 2001
+From b0f9124974aacc33de9a86950ab148135c6bb78d Mon Sep 17 00:00:00 2001
 From: Mark Phillips <none@none>
-Date: Fri, 16 Dec 2011 15:56:54 +0100
-Subject: [PATCH] second aattempt at getting it to build on solaris
+Date: Mon, 2 Jan 2012 18:22:44 +0100
+Subject: [PATCH] fix compiling on solaris
 
 ---
- ChangeLog                    |  596 ++++++++++++++++--------------
- Makefile.in                  |    2 +
- aclocal.m4                   |  452 +----------------------
- build/aux/config.guess       |  858 +++++++++++++++++++++++-------------------
- build/aux/config.sub         |  347 ++++++++++++++----
- config.h.in                  |   12 +
- configure                    |  181 +++++++++-
- doc/Makefile.in              |    2 +
- doc/naturaldocs/Makefile.in  |    2 +
- examples/Makefile.in         |    2 +
- gnulib/lib/Makefile.am       |   20 +-
- gnulib/lib/Makefile.in       |   27 +-
- gnulib/m4/gnulib-comp.m4     |   22 ++
- gnulib/tests/Makefile.am     |   16 +
- gnulib/tests/Makefile.in     |  118 ++++---
- gnulib/tests/test-readlink.h |    2 +-
- man/Makefile.in              |    2 +
- man/augparse.1               |    2 +-
- src/Makefile.in              |    2 +
- tests/Makefile.in            |    2 +
- 20 files changed, 1418 insertions(+), 1249 deletions(-)
+ ChangeLog                              |  596 ++++++++++++----------
+ Makefile.in                            |    2 +
+ aclocal.m4                             |  452 +-----------------
+ build/aux/config.guess                 |  858 ++++++++++++++++++--------------
+ build/aux/config.sub                   |  347 ++++++++++---
+ config.h.in                            |   12 +
+ configure                              |  181 +++++++-
+ doc/Makefile.in                        |    2 +
+ doc/naturaldocs/Makefile.in            |    2 +
+ examples/Makefile.in                   |    2 +
+ gnulib/lib/Makefile.am                 |   20 +-
+ gnulib/lib/Makefile.in                 |   27 +-
+ gnulib/m4/gnulib-comp.m4               |   22 +
+ gnulib/tests/Makefile.am               |   16 +
+ gnulib/tests/Makefile.in               |  118 +++--
+ gnulib/tests/test-readlink.h           |    2 +-
+ man/Makefile.in                        |    2 +
+ man/augparse.1                         |    2 +-
+ src/Makefile.in                        |    2 +
+ src/regexp.c                           |    2 +-
+ tests/Makefile.in                      |    2 +
+ tests/root/etc/crontab                 |    2 -
+ tests/root/etc/squirrelmail/config.php |    2 -
+ 23 files changed, 1419 insertions(+), 1254 deletions(-)
+ delete mode 100644 tests/root/etc/crontab
+ delete mode 100644 tests/root/etc/squirrelmail/config.php
 
 diff --git a/ChangeLog b/ChangeLog
 index a7764d4..e93e7a5 100644
@@ -6110,6 +6115,19 @@ index e55e0e2..d355525 100644
  	$(top_srcdir)/gnulib/m4/string_h.m4 \
  	$(top_srcdir)/gnulib/m4/strndup.m4 \
  	$(top_srcdir)/gnulib/m4/strnlen.m4 \
+diff --git a/src/regexp.c b/src/regexp.c
+index cf0ea5d..811087d 100644
+--- a/src/regexp.c
++++ b/src/regexp.c
+@@ -50,7 +50,7 @@ char *regexp_escape(const struct regexp *r) {
+     ret = fa_restrict_alphabet(r->pattern->str, strlen(r->pattern->str),
+                                &nre, &nre_len, 2, 1);
+     if (ret == 0) {
+-        pat = escape(nre, nre_len);
++        pat = escape(nre, nre_len, RX_ESCAPES);
+         free(nre);
+     }
+ #endif
 diff --git a/tests/Makefile.in b/tests/Makefile.in
 index a78da2c..f8b34a0 100644
 --- a/tests/Makefile.in
@@ -6130,6 +6148,22 @@ index a78da2c..f8b34a0 100644
  	$(top_srcdir)/gnulib/m4/string_h.m4 \
  	$(top_srcdir)/gnulib/m4/strndup.m4 \
  	$(top_srcdir)/gnulib/m4/strnlen.m4 \
+diff --git a/tests/root/etc/crontab b/tests/root/etc/crontab
+deleted file mode 100644
+index 1ac6d26..0000000
+--- a/tests/root/etc/crontab
++++ /dev/null
+@@ -1,2 +0,0 @@
+-0 0 * * * root echo hello
+-1 0 * * * root echo hi
+diff --git a/tests/root/etc/squirrelmail/config.php b/tests/root/etc/squirrelmail/config.php
+deleted file mode 100644
+index acb6c35..0000000
+--- a/tests/root/etc/squirrelmail/config.php
++++ /dev/null
+@@ -1,2 +0,0 @@
+-<?php
+-?>
 -- 
 1.7.6.1
 
