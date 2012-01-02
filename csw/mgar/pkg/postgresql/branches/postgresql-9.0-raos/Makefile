@@ -74,8 +74,6 @@
 #    CSW$(NAME)$(BASE_VERSION_NODOT) for files that have slipped by and put
 #    them in the proper place.
 #
-# 8. Make sure the proper version numbers are used for the library packages.
-#
 #
 # Note 5: Development package
 # ------
@@ -83,7 +81,10 @@
 # The development package is not versioned, i.e. named CSW$(NAME)-dev,
 # since we can only support one set of header files with a reasonable
 # amount of effort.
-
+#
+# Further, it does not use alternatives and puts binaries in $(bindir)
+# (see 'post-merge-modulated:'). This will make it easier for
+# maintainers to use `pg_config'.
 
 NAME = postgresql
 BASE_VERSION = 9.0
@@ -108,6 +109,9 @@ endef
 #
 # These variables control many aspects of the build
 #
+sysconfdir-suffix-64	= /64
+sysconfdir		= /etc/opt/csw$(sysconfdir-suffix-$(MEMORYMODEL))
+PGSYSCONFDIR		= $(sysconfdir)/$(NAME)/$(BASE_VERSION_NODOT)
 PGBINDIR		= $(libexecdir)/$(NAME)/$(BASE_VERSION_NODOT)
 PGSBINDIR		= $(libexecdir)/$(NAME)/$(BASE_VERSION_NODOT)
 PGDATADIR		= $(datadir)/$(NAME)/$(BASE_VERSION_NODOT)
@@ -185,14 +189,11 @@ SERVERPOSTINST_VERSIONED = CSW$(NAME)$(BASE_VERSION_NODOT)-server.postinstall
 # These are the alternatives provided for the packages.  I use them in the
 # recipe to iterate over all possible alternatives (see 'post-merge:')
 #
-# Please note that these should correspond to the package suffices.
-myALTERNATIVES = server client dev contrib
+# Please note that these should correspond to the package suffixes.
+myALTERNATIVES = server client contrib
 
 POSTMSG = $(foreach n,$(myALTERNATIVES),\
-	$(if $(subst dev,,$(n)),\
-		$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_$(n)/CSW$(NAME)$(BASE_VERSION_NODOT)-$(n).postmsg,\
-		$(docdir)/$(NAME)_$(n)/CSW$(NAME)-$(n).postmsg \
-	)\
+	$(docdir)/$(NAME)$(BASE_VERSION_NODOT)_$(n)/CSW$(NAME)$(BASE_VERSION_NODOT)-$(n).postmsg\
 )
 
 MASTER_SITES = http://ftp.postgresql.org/pub/source/v$(VERSION)/
@@ -320,8 +321,6 @@ PKGFILES_CSW$(NAME)-dev  = .*/pgxs/.*
 PKGFILES_CSW$(NAME)-dev += $(PKGFILES_DEVEL)
 PKGFILES_CSW$(NAME)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*$(n)$$)
 PKGFILES_CSW$(NAME)-dev += $(foreach n,$(BIN_NAMES_DEVEL),.*/man1/$(n)\.1$$)
-# Alternatives for -dev have no version appended
-PKGFILES_CSW$(NAME)-dev += .*/alternatives/$(NAME)_dev.*
 PKGFILES_CSW$(NAME)-dev += .*/CSW$(NAME)-dev.postmsg
 PKGFILES_CSW$(NAME)-dev += .*$(docdir)/$(NAME)_dev/README.CSW
 # See `post-merge-modulated:'
@@ -341,7 +340,9 @@ RUNTIME_DEP_PKGS_CSW$(NAME)-dev += CSWosslrt
 CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(NEEDED_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/local|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.shlib) )
 # That's ok too, it's docbook stuff which we don't use in this build
 CHECKPKG_OVERRIDES_CSW$(NAME)-dev += $(foreach i,$(NEEDED_ISAS), $(subst $(ISA_DEFAULT)/,,file-with-bad-content|/usr/share|root$(libdir)/$(i)/$(NAME)/$(BASE_VERSION_NODOT)/pgxs/src/Makefile.global) )
-#ALTERNATIVES_CSW$(NAME)-dev = $(foreach i,$(NEEDED_ISAS), dev_$(i))
+# See `post-merge-modulated:' for those overrides
+CHECKPKG_OVERRIDES_CSWpostgresql-dev += discouraged-path-in-pkgmap|/opt/csw/lib/libpgport.a
+CHECKPKG_OVERRIDES_CSWpostgresql-dev += discouraged-path-in-pkgmap|/opt/csw/lib/$(ISA_DEFAULT64)/libpgport.a
 
 PACKAGES += CSW$(NAME)$(BASE_VERSION_NODOT)-doc
 ARCHALL_CSW$(NAME)$(BASE_VERSION_NODOT)-doc = 1
@@ -396,7 +397,7 @@ CONFIGURE_ARGS  = $(DIRPATHS)
 # supported, so IMHO, binaries should go to --libexecdir
 CONFIGURE_ARGS += --bindir=$(PGBINDIR)
 CONFIGURE_ARGS += --sbindir=$(PGSBINDIR)
-
+CONFIGURE_ARGS += --sysconfdir=$(PGSYSCONFDIR)
 CONFIGURE_ARGS += --datadir=$(PGDATADIR)
 CONFIGURE_ARGS += --localstatedir=$(PGDATA)
 CONFIGURE_ARGS += --with-includes=$(includedir)
@@ -420,8 +421,6 @@ include gar/category.mk
 # The uppercase_* variables are used to translate the lowercase
 # $(myALTERNATIVES) to uppercase.
 #
-# -dev is handled separately further below
-#
 # How it does create the alternatives:
 #
 # for pkg in $(myALTERNATIVES)
@@ -435,17 +434,13 @@ include gar/category.mk
 #   end alt
 # end pkg
 #
-# The same approach is used for -dev, but the enclosing outer loop is
-# not used, and the alternatives are not having the BASE_VERSION_NODOT
-# to their file names appended.
-#
 # In the post-merge target, the alternatives are written to their
 # respective files
 
 uppercase_server = SERVER
 uppercase_client = CLIENT
 uppercase_contrib = CONTRIB
-$(foreach pkg,$(filter-out dev,$(myALTERNATIVES)),\
+$(foreach pkg,$(myALTERNATIVES),\
 	$(eval alt_priority = 20) \
 	$(foreach alt,$(NEEDED_ISAS), \
 		$(eval alt_priority=$(shell expr $(alt_priority) + 10)) \
@@ -453,28 +448,23 @@ $(foreach pkg,$(filter-out dev,$(myALTERNATIVES)),\
 		$(eval ALTERNATIVE_$(pkg)_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_$(uppercase_$(pkg)))),$(BIN_NAMES_$(uppercase_$(pkg)))),$(bindir)/$(n)-$(BASE_VERSION_NODOT) $(NAME)$(BASE_VERSION_NODOT)-$(pkg) $(libexecdir)/$(alt)/$(NAME)/$(BASE_VERSION_NODOT)/$(n)))) \
 	)\
 )
-# Devel is handled separately, since it does not use
-# $(BASE_VERSION_NODOT)
-alt_priority = 20
-$(foreach alt,$(NEEDED_ISAS),\
-	$(eval alt_priority=$(shell expr $(alt_priority) + 10)) \
-	$(eval ALTERNATIVE_dev_$(alt) = $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(firstword $(BIN_NAMES_DEVEL)),$(bindir)/$(n) $(NAME)-dev $(libexecdir)/$(alt)/$(NAME)/$(BASE_VERSION_NODOT)/$(n))) $(alt_priority)) \
-	$(eval ALTERNATIVE_dev_$(alt) += $(subst /$(ISA_DEFAULT)/,/,$(foreach n,$(wordlist 2,$(words $(BIN_NAMES_DEVEL)),$(BIN_NAMES_DEVEL)),$(bindir)/$(n) $(NAME)-dev $(libexecdir)/$(alt)/$(NAME)/$(BASE_VERSION_NODOT)/$(n))))\
-)
 
 # We adjust the $(pkglibdir) found in $(WORKSRC)/src/Makefile.global.in, so
 # that it should be possible to install 8.x and 8.y concurrently
 pre-configure-modulated:
-	if [ -r $(WORKSRC)/src/Makefile.global.in ] ; then \
+	@echo " ===> Adjusting pkglibdir in $(WORKSRC)/src/Makefile.global.in"
+	@if [ -r $(WORKSRC)/src/Makefile.global.in ] ; then \
 		gsed -i -r -e 's|^(pkglibdir[[:space:]]*=[[:space:]]*)\$$\(libdir\).*$$|\1$$(libdir)/postgresql/$(BASE_VERSION_NODOT)|' $(WORKSRC)/src/Makefile.global.in ; \
 	fi
 	@$(MAKECOOKIE)
 
 post-build-modulated:
+	@echo " ===> Building contrib stuff"
 	$(BUILD_ENV) gmake -C $(WORKSRC)/contrib all
 	@$(MAKECOOKIE)
 
 post-install-modulated:
+	@echo " ===> Installing contrib stuff"
 	$(INSTALL_ENV) gmake -C $(WORKSRC)/contrib DESTDIR=$(DESTDIR) install
 	$(INSTALL_ENV) gmake -C $(WORKSRC) DESTDIR=$(DESTDIR) install-docs
 	@$(MAKECOOKIE)
@@ -484,19 +474,25 @@ post-install-modulated:
 # lazzy to adjust the build system to generate one...
 post-merge-modulated:
 ifeq ($(ISA),$(ISA_DEFAULT64))
-	ginstall $(WORKSRC)/src/port/libpgport.a $(PKGROOT)/$(libpath_install)/$(ISA_DEFAULT64)/
+	ginstall $(WORKSRC)/src/port/libpgport.a $(PKGROOT)$(libpath_install)/$(ISA_DEFAULT64)/
 else
-	ginstall $(WORKSRC)/src/port/libpgport.a $(PKGROOT)/$(libdir)/
+	ginstall $(WORKSRC)/src/port/libpgport.a $(PKGROOT)$(libdir)/
 endif
+# Move the development binaries to the standard location
+	ginstall -d $(PKGROOT)$(bindir)/
+	for f in $(BIN_NAMES_DEVEL) ; do \
+		gmv -v $(PKGROOT)$(libexecdir)/$(NAME)/$(BASE_VERSION_NODOT)/$$f $(PKGROOT)$(bindir)/ ; \
+	done
 
 post-merge:  $(foreach n,$(POSTMSG),$(PKGROOT)/$(n)) test-installation
-# Create my alternatives files. Development alternatives have stripped
-# off the version
-	$(foreach a,$(myALTERNATIVES), $(foreach i,$(NEEDED_ISAS), $(shell ginstall -d $(PKGROOT)$(sharedstatedir)/alternatives ; echo "$(ALTERNATIVE_$(a)_$(i))" > $(if $(subst dev,,$(a)),$(PKGROOT)$(sharedstatedir)/alternatives/$(NAME)$(BASE_VERSION_NODOT)_$(a)_$(i),$(PKGROOT)$(sharedstatedir)/alternatives/$(NAME)_$(a)_$(i)) ) ) )
+# Create my alternatives files.
+	$(foreach a,$(myALTERNATIVES), $(foreach i,$(NEEDED_ISAS), $(info ===> Create alternative $(i) $(a)) $(shell ginstall -d $(PKGROOT)$(sharedstatedir)/alternatives ; echo "$(ALTERNATIVE_$(a)_$(i))" > $(PKGROOT)$(sharedstatedir)/alternatives/$(NAME)$(BASE_VERSION_NODOT)_$(a)_$(i) ) ) )
 # Create the PGDATA directory
-	ginstall -d $(PKGROOT)$(PGDATA)
+	@echo " ===> Create pgdata directory"
+	@ginstall -d $(PKGROOT)$(PGDATA)
 # Adjust the man page names.
-	for i in 1 5 ; do \
+	@echo " ===> Adjusting man page file names"
+	@for i in 1 5 ; do \
 		test -d $(PKGROOT)$(datadir)/man/man$$i || continue ; \
 		for f in $(PKGROOT)$(datadir)/man/man$$i/* ; do \
 			suffix="`echo $$f | awk 'BEGIN { FS="." } { print $$NF }'`" ; \
@@ -513,64 +509,73 @@ post-merge:  $(foreach n,$(POSTMSG),$(PKGROOT)/$(n)) test-installation
 		done ;\
 	done
 # Change path names in documentation
-	for f in $(PKGROOT)$(docdir)/$(NAME)/$(BASE_VERSION_NODOT)/html/*.html $(PKGROOT)$(mandir)/man1/*.1 $(PKGROOT)$(datadir)/$(NAME)/$(BASE_VERSION_NODOT)/*.sample ; do \
+	@echo " ===> Adjust path names in documentation"
+	@for f in $(PKGROOT)$(docdir)/$(NAME)/$(BASE_VERSION_NODOT)/html/*.html $(PKGROOT)$(mandir)/man1/*.1 $(PKGROOT)$(datadir)/$(NAME)/$(BASE_VERSION_NODOT)/*.sample ; do \
 		gsed -i -e 's|/usr/local/pgsql/data|$(localstatedir)/$(NAME)/$(BASE_VERSION_NODOT)|g' \
 			-e 's|/usr/local/pgsql/|$(prefix)/|g' \
 			-e 's|/usr/local|$(prefix)|g' \
 			-e 's|/usr/share|$(datadir)|g' $$f ; \
 	done
+	@echo " ===> Install postmsg"
 	$(foreach n,$(POSTMSG), $(shell ginstall -d $(PKGROOT)$(dir $(n))) $(shell ginstall $(WORKDIR)/$(notdir $(n)) $(PKGROOT)$(n)))
 	@$(MAKECOOKIE)
 
 pre-package:
 # The postinstall for the server package
-	ginstall $(WORKDIR)/$(SERVERPOSTINSTTMPL) $(WORKDIR)/$(SERVERPOSTINST_VERSIONED)
+	@echo " ===> Install postinstall script"
+	@ginstall $(WORKDIR)/$(SERVERPOSTINSTTMPL) $(WORKDIR)/$(SERVERPOSTINST_VERSIONED)
 # The usergroup file
-	ginstall -d $(PKGROOT)$(USERGROUPDIR)
-	ginstall $(WORKDIR)/$(USERGROUPFILETMPL) $(PKGROOT)$(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
+	@echo " ===> Install usergroup file"
+	@ginstall -d $(PKGROOT)$(USERGROUPDIR)
+	@ginstall $(WORKDIR)/$(USERGROUPFILETMPL) $(PKGROOT)$(USERGROUPDIR)/$(USERGROUPFILE_VERSIONED)
 # The init script
-	ginstall -d $(PKGROOT)$(sysconfdir)/init.d
-	ginstall $(WORKDIR)/$(INITSCRIPTFILETMPL) $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
-	chmod 0755 $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
+	@echo " ===> Install init script"
+	@ginstall -d $(PKGROOT)$(sysconfdir)/init.d
+	@ginstall $(WORKDIR)/$(INITSCRIPTFILETMPL) $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
+	@chmod 0755 $(PKGROOT)$(sysconfdir)/init.d/$(INITSCRIPTFILE_VERSIONED)
 # The init script config
-	ginstall $(WORKDIR)/$(CSWPGSQLCONFFILETMPL) $(PKGROOT)$(sysconfdir)/$(CSWPGSQLCONFFILE_VERSIONED).CSW
+	@echo " ===> Install init script config"
+	@ginstall $(WORKDIR)/$(CSWPGSQLCONFFILETMPL) $(PKGROOT)$(sysconfdir)/$(CSWPGSQLCONFFILE_VERSIONED).CSW
 # Remove all the README.CSW, since they have not expanded the
 # variables, and copy only the one's we're interested in
-	for f in $(PKGROOT)$(docdir)/*/README.CSW ; do \
+	@echo " ===> Remove all README.CSW"
+	@for f in $(PKGROOT)$(docdir)/*/README.CSW ; do \
 		rm $$f ; \
 	done
-	for d in $(foreach n,$(subst dev,,$(myALTERNATIVES)),$(NAME)$(BASE_VERSION_NODOT)_$(n)) $(NAME)$(BASE_VERSION_NODOT) ; do \
+	@echo " ==> Install variable expanded README.CSW"
+	@for d in $(foreach n,$(myALTERNATIVES),$(NAME)$(BASE_VERSION_NODOT)_$(n)) $(NAME)$(BASE_VERSION_NODOT) ; do \
 		ginstall $(WORKDIR)/README.CSW $(PKGROOT)$(docdir)/$$d/ ; \
 	done
 	@$(MAKECOOKIE)
 
 $(foreach n,$(POSTMSG),$(PKGROOT)/$(n)):
-	ginstall -d $(dir $@)
-	@echo "Linking Post Messages"
-	ln $(DOWNLOADDIR)/$(notdir $@) $@
+	@echo " ===> Linking Post Messages"
+	@ginstall -d $(dir $@)
+	@ln $(DOWNLOADDIR)/$(notdir $@) $@
 
 $(foreach n,$(POSTMSG),$(DOWNLOADDIR)/$(notdir $(n))):
-	@echo " ==> Generating $(notdir $@)"
-	echo "" > $@
-	echo "---" >> $@
-	echo "" >> $@
-	echo "There are 32bit and 64bit versions of $(NAME) $(VERSION) binaries on the system installed:" >> $@
-	echo "" >> $@
-	echo "You can easily select between the versions with the alternatives(8)" >> $@
-	echo "system by executing" >> $@
-	echo "" >> $@
-	echo "  /opt/csw/sbin/alternatives --config $(subst .postmsg,,$(subst CSW,,$(notdir $@)))" >> $@
-	echo "" >> $@
-	echo "See http://www.opencsw.org/packages/alternatives for details." >> $@
-	echo "" >> $@
-	echo "---" >> $@
-	echo "" >> $@
+	@echo " ===> Generating $(notdir $@)"
+	@echo "" > $@
+	@echo "---" >> $@
+	@echo "" >> $@
+	@echo "There are 32bit and 64bit versions of $(NAME) $(VERSION) binaries on the system installed:" >> $@
+	@echo "" >> $@
+	@echo "You can easily select between the versions with the alternatives(8)" >> $@
+	@echo "system by executing" >> $@
+	@echo "" >> $@
+	@echo "  /opt/csw/sbin/alternatives --config $(subst .postmsg,,$(subst CSW,,$(notdir $@)))" >> $@
+	@echo "" >> $@
+	@echo "See http://www.opencsw.org/packages/alternatives for details." >> $@
+	@echo "" >> $@
+	@echo "---" >> $@
+	@echo "" >> $@
 	@$(MAKECOOKIE)
 
 test-installation:
 # Check if all binaries and libraries defined in the variables
 # BIN_NAMES_* and SO_NAMES_* are there
-	for n in $(BIN_NAMES_SERVER) $(BIN_NAMES_DEVEL) $(BIN_NAMES_CLIENT) $(BIN_NAMES_CONTRIB) ; do \
+	@echo " ===> Checking for extra binaries in BIN_NAMES_*"
+	@for n in $(BIN_NAMES_SERVER) $(BIN_NAMES_CLIENT) $(BIN_NAMES_CONTRIB) ; do \
 		if [ -f $(PKGROOT)$(PGBINDIR)/$$n ] ; then\
 			: ; \
 		else \
@@ -578,7 +583,8 @@ test-installation:
 			exit 1 ; \
 		fi ; \
 	done
-	for n in $(SO_NAMES_SERVER) $(SO_NAMES_CONTRIB) ; do \
+	@echo " ===> Checking for extra libraries in SO_NAMES_*"
+	@for n in $(SO_NAMES_SERVER) $(SO_NAMES_CONTRIB) ; do \
 		if [ -f $(PKGROOT)$(libdir)/$(NAME)/$(BASE_VERSION_NODOT)/$$n ] ; then\
 			: ; \
 		else \
@@ -588,8 +594,9 @@ test-installation:
 	done
 # Check if all binaries and libraries in the pkgroot are contained in
 # the respective recipe variables.
-	for n in `gfind $(PKGROOT)$(PGBINDIR) -maxdepth 1 -type f` ; do \
-		echo "$(BIN_NAMES_SERVER) $(BIN_NAMES_DEVEL) $(BIN_NAMES_CLIENT) $(BIN_NAMES_CONTRIB)" | grep `basename $$n` >/dev/null 2>&1 ; \
+	@echo " ===> Checking for missing binaries in BIN_NAMES_*"
+	@for n in `gfind $(PKGROOT)$(PGBINDIR) -maxdepth 1 -type f` ; do \
+		echo "$(BIN_NAMES_SERVER) $(BIN_NAMES_CLIENT) $(BIN_NAMES_CONTRIB)" | grep `basename $$n` >/dev/null 2>&1 ; \
 		if [ $$? -eq 0 ] ; then \
 			: ; \
 		else \
@@ -597,7 +604,8 @@ test-installation:
 			exit 1 ; \
 		fi ; \
 	done
-	for n in `gfind $(PKGROOT)$(libdir)/$(NAME)/$(BASE_VERSION_NODOT) -maxdepth 1 -type f` ; do \
+	@echo " ===> Checking for missing binaries in SO_NAMES_*"
+	@for n in `gfind $(PKGROOT)$(libdir)/$(NAME)/$(BASE_VERSION_NODOT) -maxdepth 1 -type f` ; do \
 		echo "$(SO_NAMES_SERVER) $(SO_NAMES_CONTRIB)" | grep `basename $$n` >/dev/null 2>&1 ; \
 		if [ $$? -eq 0 ] ; then \
 			: ; \
