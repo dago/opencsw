@@ -32,6 +32,7 @@ PGINIT=@bindir@/initdb-${VERSION}
 [ -z "${SHUTDOWNMODE}" ] && SHUTDOWNMODE=fast
 [ -z "${PGENCODING}" ] && PGENCODING=UTF8
 [ -z "${PGSUPERUSER}" ] && PGSUPERUSER=postgres
+[ -z "${PGLOGOUTPUT}" ] && PGLOGOUTPUT=${PGDATA}/postgresql.log
 
 if [ -n "${SERVEROPTS}" ]
 then
@@ -64,16 +65,16 @@ start)
 	 echo "Starting PostgreSQL..."
 	 if [ -n "${SERVEROPTS}" ]
 	 then
-	     su postgres -c "${PGCTL} start -D ${PGDATA} -l ${PGDATA}/postgresql.log -o '${SERVEROPTS}'"
+	     su postgres -c "${PGCTL} start -D ${PGDATA} -l ${PGLOGOUTPUT} -o '${SERVEROPTS}'"
 	 else
-	     su postgres -c "${PGCTL} start -D ${PGDATA} -l ${PGDATA}/postgresql.log"
+	     su postgres -c "${PGCTL} start -D ${PGDATA} -l ${PGLOGOUTPUT}"
 	 fi
       fi
       ;;
 
 stop)
      echo "Stopping PostgreSQL database..."
-     su postgres -c "${PGCTL} stop -D ${PGDATA} -l ${PGDATA}/postgresql.log -m ${SHUTDOWNMODE}"
+     su postgres -c "${PGCTL} stop -D ${PGDATA} -l ${PGLOGOUTPUT} -m ${SHUTDOWNMODE}"
      true  # The previous command fails when there's no .pid file
      ;;
 
@@ -81,15 +82,15 @@ restart)
      echo "Restarting PostgreSQL database..."
      if [ -n "${SERVEROPTS}" ]
      then
-	 su postgres -c "${PGCTL} restart -D ${PGDATA} -l ${PGDATA}/postgresql.log -m ${SHUTDOWNMODE} -o '${SERVEROPTS}'"
+	 su postgres -c "${PGCTL} restart -D ${PGDATA} -l ${PGLOGOUTPUT} -m ${SHUTDOWNMODE} -o '${SERVEROPTS}'"
      else
-	 su postgres -c "${PGCTL} restart -D ${PGDATA} -l ${PGDATA}/postgresql.log -m ${SHUTDOWNMODE}"
+	 su postgres -c "${PGCTL} restart -D ${PGDATA} -l ${PGLOGOUTPUT} -m ${SHUTDOWNMODE}"
      fi
      ;;
 
 reload)
      echo "Reloading PostgreSQL database..."
-     su postgres -c "${PGCTL} reload -D ${PGDATA} -l ${PGDATA}/postgresql.log"
+     su postgres -c "${PGCTL} reload -D ${PGDATA} -l ${PGLOGOUTPUT}"
      ;;
 
 status)

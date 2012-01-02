@@ -7,15 +7,33 @@ Parallel Installations
 
 OpenCSW's PostgreSQL allows for parallel installation of different
 PostgreSQL versions. Therefore, the binaries have appended the
-PostgreSQL version, e.g. PostgreSQL's @VERSION@ `psql' is named
+PostgreSQL version number, e.g. PostgreSQL's @VERSION@ `psql' is named
 `psql-@BASE_VERSION_NODOT@'. The same holds for manpages.
 
 The notable exception to this are development files. Development files
 are only available for the latest PostgreSQL version provided by
-OpenCSW and have no version appended.
+OpenCSW and have no version number appended.
 
 Please see also `Starting the PostgreSQL Server' below for caveat on
 running multiple PostgreSQL servers in parallel.
+
+
+Migrating from CSWpostgresql
+----------------------------
+
+CSWpostgresql has been superseeded by CSW@NAME@@BASE_VERSION_NODOT@.
+It is possible to have CSWpostgresql and CSW@NAME@@BASE_VERSION_NODOT@
+installed on the same system, though. Please refer to `Starting the
+PostgreSQL Server' below for more information on how to run multiple
+PostgreSQL instances on the same system.
+
+In order to migrate from CSWpostgresql to CSW@NAME@@BASE_VERSION_NODOT@,
+create a full dump of the CSWpostgresql database cluster as
+described in
+
+ http://www.postgresql.org/docs/@BASE_VERSION@/static/upgrading.html
+
+and transfer it to the CSW@NAME@@BASE_VERSION_NODOT@ database cluster.
 
 
 32/64-bit Binaries
@@ -56,7 +74,7 @@ database cluster will be initialized using default values provided by
 
  @sysconfdir@/postgresql-@BASE_VERSION_NODOT@.conf
 
-and the database server will not be started, allowing for
+and the database server will not be started, thus allowing for
 post-installation customization.
 
 In order to start the PostgreSQL server you can either use
@@ -91,11 +109,13 @@ User Configuration of Server Options
 ------------------------------------
 
 Configuration of the server start-up options is done through a
-user-configuration file, `@sysconfdir@/postgresql-@BASE_VERSION_NODOT@.conf'.
-A sample template has been provided for you at `/etc/opt/csw/postgresql-@BASE_VERSION_NODOT@.conf.CSW'.
+user-configuration file, `@sysconfdir@/postgresql-@BASE_VERSION_NODOT@.conf', regardless of
+whether Solaris SMF or System V-style initialization is used.
 
-This file also defines the location of the PostgreSQL database
-cluster in `PGDATA', which is by default `/var/opt/csw/postgresql/@BASE_VERSION_NODOT@'.
+This file also defines the location of the PostgreSQL database cluster
+in `PGDATA', which is by default
+
+ /var/opt/csw/postgresql/@BASE_VERSION_NODOT@
 
 
 Initializing the Database Cluster
@@ -111,6 +131,11 @@ the `PGDATA' variable defined in `/etc/opt/csw/postgresql-@BASE_VERSION_NODOT@.c
 
 When installing PostgreSQL for the first time, the database cluster
 will be initialized using default values.
+
+Please note, that when changing the memory model of the server
+binaries, i.e. from 32-bit to 64-bit or vice versa, you have to
+re-initialize the database cluster (see also `32/64-bit Binaries'
+above).
 
 
 --

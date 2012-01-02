@@ -118,6 +118,10 @@ PGDATADIR		= $(datadir)/$(NAME)/$(BASE_VERSION_NODOT)
 PGDOCDIR		= $(datadir)/doc/$(NAME)/$(BASE_VERSION_NODOT)
 PGLOCALSTATEDIR_BASE	= $(localstatedir)/$(NAME)
 PGDATA			= $(PGLOCALSTATEDIR_BASE)/$(BASE_VERSION_NODOT)
+# This variable has been introduced for using in EXPANDVARS files
+PGNAMEVERSIONED		= $(NAME)$(BASE_VERSION_NODOT)
+# This variable has been introduced for using in EXPANDVARS files
+PGNAME_VERSIONED	= $(NAME)-$(BASE_VERSION_NODOT)
 # Those BIN_NAMES_* are used both, for package creation and alternatives.
 # 8.4 has removed ipcclean
 BIN_NAMES_SERVER	= initdb pg_controldata pg_ctl pg_resetxlog postmaster postgres
