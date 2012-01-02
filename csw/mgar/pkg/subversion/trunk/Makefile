@@ -202,6 +202,7 @@ PACKAGES += CSWpythonsvn
 SPKG_DESC_CSWpythonsvn           = Subversion Python Language Binding
 CATALOGNAME_CSWpythonsvn         = pythonsvn
 PKGFILES_CSWpythonsvn            = $(libdir)/python.*
+PKGFILES_CSWpythonsvn            = $(SVNLIB)/python.*
 PKGFILES_CSWpythonsvn           += $(SVNLIB)/.*swig_py.*
 PKGFILES_CSWpythonsvn           += $(docdir)/$(CATALOGNAME_CSWpythonsvn)/changelog.CSW
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibmagic1
