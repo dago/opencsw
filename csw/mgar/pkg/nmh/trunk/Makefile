@@ -17,7 +17,7 @@ DISTFILES  = nmh-$(VERSION).tar.gz
 SPKG_SOURCEURL = http://www.nongnu.org/nmh/
 UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 
-RUNTIME_DEP_PKGS += CSWiconv
+RUNTIME_DEP_PKGS += CSWlibiconv2
 PATCHFILES += 0000-skip-chgrp-of-inc.patch
 LICENSE = COPYRIGHT
 PRESERVECONF = /opt/csw/etc/nmh/mts.conf
