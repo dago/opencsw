@@ -1,6 +1,6 @@
 # $Id$
 NAME = nmh
-VERSION = 1.3
+VERSION = 1.4
 CATEGORIES = apps
 
 DESCRIPTION = Powerful electronic mail handling system
@@ -20,6 +20,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS += CSWiconv
 PATCHFILES += 0000-skip-chgrp-of-inc.patch
 LICENSE = COPYRIGHT
+PRESERVECONF = /opt/csw/etc/nmh/mts.conf
 
 CONFIGURE_ARGS = --enable-pop --enable-masquerade='' --with-mts=sendmail \
   --prefix=$(prefix) --mandir=$(mandir) --datadir=$(datadir)/nmh \
