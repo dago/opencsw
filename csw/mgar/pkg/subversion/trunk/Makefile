@@ -217,8 +217,7 @@ RUNTIME_DEP_PKGS_CSWpythonsvn += CSWsasl
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibneon27
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWlibsqlite3-0
 RUNTIME_DEP_PKGS_CSWpythonsvn += CSWosslrt
-RUNTIME_DEP_PKGS_CSWsvn += CSWpythonsvn
-RUNTIME_DEP_PKGS_CSWsvn += CSWpython
+RUNTIME_DEP_PKGS_CSWpythonsvn += CSWpython
 
 
 DISTFILES += CSWsvn.checkinstall
