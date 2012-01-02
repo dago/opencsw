@@ -23,6 +23,7 @@ DISTFILES += COPYING
 
 PACKAGING_PLATFORMS += solaris10-sparc
 # PACKAGING_PLATFORMS += solaris10-i386
+GARCOMPILER = SOS12U2
 
 PACKAGES += CSWlibldap60
 CATALOGNAME_CSWlibldap60 = libldap60
@@ -120,13 +121,16 @@ CONFIGURE_ARGS_OPT += --with-system-svrcore
 CONFIGURE_ARGS_OPT += --enable-optimize="-xO3"
 CONFIGURE_ARGS_OPT += --disable-debug
 CONFIGURE_ARGS_OPT += --enable-strip
-CONFIGURE_ARGS_OPT += --with-nss-inc=$(includedir)/nss
+CONFIGURE_ARGS_OPT += --with-nss-inc=$(prefix)/include/nss
 CONFIGURE_ARGS_OPT += --with-nss-lib=$(libdir)
-CONFIGURE_ARGS_OPT += --with-nspr-inc=$(includedir)/nspr
+CONFIGURE_ARGS_OPT += --with-nspr-inc=$(prefix)/include/nspr
 CONFIGURE_ARGS_OPT += --with-nspr-lib=$(libdir)
-CONFIGURE_ARGS_OPT += --with-svrcore-inc=$(includedir)/nspr
+CONFIGURE_ARGS_OPT += --with-svrcore-inc=$(prefix)/include/nspr
 CONFIGURE_ARGS_OPT += --with-svrcore-lib=$(libdir)
 CONFIGURE_ARGS += $(CONFIGURE_ARGS_$(GARFLAVOR))
+CONFIGURE_ARGS_OPT += --includedir=$(prefix)/include/ldap
+
+CPPFLAGS=
 
 CONFIGURE_SCRIPTS = c-sdk
 BUILD_SCRIPTS = c-sdk
