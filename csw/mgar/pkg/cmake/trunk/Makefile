@@ -24,9 +24,10 @@ PACKAGES = CSWcmake
 CATALOGNAME_CSWcmake = cmake
 SPKG_DESC_CSWcmake = $(DESCRIPTION)
 
-RUNTIME_DEP_PKGS_CSWcmake  = CSWlibcurl4
+RUNTIME_DEP_PKGS_CSWcmake += CSWlibcurl4
 RUNTIME_DEP_PKGS_CSWcmake += CSWlibexpat1
 RUNTIME_DEP_PKGS_CSWcmake += CSWlibz1
+RUNTIME_DEP_PKGS_CSWcmake += CSWosslrt
 
 datadir = /share/$(NAME)-$(VERSION)
 sharedstatedir = /share
