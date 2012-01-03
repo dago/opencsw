@@ -20,7 +20,7 @@ UFILES_REGEX = -(\d+(?:\.\d+)*).tar.gz
 RUNTIME_DEP_PKGS += CSWlibiconv2
 PATCHFILES += 0000-skip-chgrp-of-inc.patch
 LICENSE = COPYRIGHT
-PRESERVECONF = /opt/csw/etc/nmh/mts.conf
+PRESERVECONF = /etc/opt/csw/nmh/mts.conf
 
 CONFIGURE_ARGS = --enable-pop --enable-masquerade='' --with-mts=sendmail \
   --prefix=$(prefix) --mandir=$(mandir) --datadir=$(datadir)/nmh \
