@@ -10,24 +10,24 @@ define BLURB
 endef
 
 MASTER_SITES = http://www.lichteblau.com/download/
-DISTFILES  = $(NAME)-$(VERSION).tar.gz
+DISTFILES += $(DISTNAME).tar.gz
+PATCHFILES += 0001-Use-putenv-instead-of-setenv.patch
 
-RUNTIME_DEP_PKGS = CSWggettextrt CSWreadline CSWglib2 CSWlibpopt
-RUNTIME_DEP_PKGS += CSWosslrt CSWsasl CSWoldaprt
-
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tar.gz
-
-PATCHFILES = patch-putenv.diff
+VENDOR_URL = http://www.lichteblau.com/ldapvi/
 
 BUILD_DEP_PKGS = CSWoldapdevel
 
-RUNPATHQUOTE = 1
-CONFIGURE_ARGS = $(DIRPATHS)
+PACKAGES += CSWldapvi
+SPKG_DESC_CSWldapvi = Interactive LDAP client for Unix terminals
+RUNTIME_DEP_PKGS_CSWldapvi += CSWlibpopt0
+RUNTIME_DEP_PKGS_CSWldapvi += CSWlibintl8
+RUNTIME_DEP_PKGS_CSWldapvi += CSWlibreadline6
+RUNTIME_DEP_PKGS_CSWldapvi += CSWosslrt
+RUNTIME_DEP_PKGS_CSWldapvi += CSWoldaprt
+RUNTIME_DEP_PKGS_CSWldapvi += CSWglib2
 
+TEST_TARGET = test
 INSTALL_SCRIPTS = custom
-
-SPKG_SOURCEURL = http://www.lichteblau.com/ldapvi/
 
 include gar/category.mk
 
