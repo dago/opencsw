@@ -1,0 +1,25 @@
+From bd2e3e5b16548900f07cea4a775fbef255639961 Mon Sep 17 00:00:00 2001
+From: Dagobert Michelsen <dam@opencsw.org>
+Date: Tue, 3 Jan 2012 17:19:38 +0100
+Subject: [PATCH] Use direct unistd for close()
+
+---
+ src/cpp/test/server_abyss.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/cpp/test/server_abyss.cpp b/src/cpp/test/server_abyss.cpp
+index 4b236ef..a60cdbb 100644
+--- a/src/cpp/test/server_abyss.cpp
++++ b/src/cpp/test/server_abyss.cpp
+@@ -14,7 +14,7 @@
+ #ifdef WIN32
+   #include <winsock.h>
+ #else
+-  #include <sys/unistd.h>
++  #include <unistd.h>
+   #include <sys/socket.h>
+   #include <arpa/inet.h>
+ #endif
+-- 
+1.7.6.1
+
