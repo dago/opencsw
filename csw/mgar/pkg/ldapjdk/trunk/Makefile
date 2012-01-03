@@ -6,10 +6,11 @@ VERSION = 20020819
 GARTYPE = v2
 CATEGORIES = java
 
-DESCRIPTION = 389 Directory Server - Management Console
+DESCRIPTION = Mozilla LDAP SDK for Java
 define BLURB
-A Java based remote management console used for managing 389
-Administration Server and 389 Directory Server.
+The source code for the Directory SDK for Java consists of the Java classes that implement the LDAP API. These include classes and methods that can establish sessions with LDAP servers, create and send LDAP requests to the servers, and retrieve responses from the servers. The SDK also includes classes for getting and editing schema information for the LDAP server.
+
+In the LDAP protocol, requests and responses are encoded using the Basic Encoding Rules (BER). The SDK source code include classes for encoding and decoding data, according to these rules.
 endef
 
 # MASTER_SITES = http://ftp.mozilla.org/pub/mozilla.org/directory/java-sdk
