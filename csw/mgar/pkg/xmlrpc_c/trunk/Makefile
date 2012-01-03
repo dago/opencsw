@@ -1,9 +1,8 @@
 NAME = xmlrpc-c
-VERSION = 1.16.13
-SVN_REVISION = 1679
+VERSION = 1.16.39
 CATEGORIES = lib
 
-DESCRIPTION = A lightweight RPC library based on XML and HTTP.
+DESCRIPTION = A lightweight RPC library based on XML and HTTP
 define BLURB
 	It's a spec and a set of implementations that allow software 
 	running on disparate operating systems, running in different 
@@ -14,34 +13,29 @@ define BLURB
 	processed and returned.
 endef
 
-MASTER_SITES  = svn-http://xmlrpc-c.svn.sourceforge.net/svnroot/xmlrpc-c/
-DISTFILES = stable
-DISTNAME = stable
-NOCHECKSUM = stable
-SVNHTTP_CO_ARGS = -r $(SVN_REVISION) --no-auth-cache --username guest --password guest
+MASTER_SITES  = $(SF_MIRROR)
+DISTFILES += $(DISTNAME).tgz
+PATCHFILES += 0001-Remove-inclusion-of-curl-types.h.patch
+PATCHFILES += 0002-Use-direct-unistd-for-close.patch
 
 LICENSE = doc/COPYING
 DOCFILES += CREDITS DEVELOPING HISTORY INSTALL SECURITY TESTING TODO
 
-SPKG_SOURCEURL = http://xmlrpc-c.sourceforge.net
+VENDOR_URL = http://xmlrpc-c.sourceforge.net
 
-PACKAGES = CSWxmlrpc-c
-CATALOGNAME_CSWxmlrpc-c = xmlrpc_c
+PACKAGES += CSWxmlrpc-c
 SPKG_DESC_CSWxmlrpc-c = $(DESCRIPTION)
-
-PATCHFILES = mainpatch
 
 RUNTIME_DEP_PKGS_CSWxmlrpc-c  = CSWcurlrt CSWlibidn CSWoldaprt CSWosslrt CSWzlib
 
-# We define upstream file regex so we can be notifed of 
-# new upstream software release
-#UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
+EXTRA_CPPFLAGS += -D__EXTENSIONS__
 
-#BUILD64 = 1
-#NOISAEXEC = 1
+BUILD_OVERRIDE_VARS += CFLAGS_PERSONAL
+BUILD_OVERRIDE_VAR_CFLAGS_PERSONAL = $(CFLAGS) $(CPPFLAGS)
 
-CONFIGURE_ARGS  = $(DIRPATHS)
+TEST_OVERRIDE_VARS += LADD
+TEST_OVERRIDE_VAR_LADD = $(LDFLAGS) -lm
 
-TEST_TARGET = check 
+BUILD64 = 1
 
 include gar/category.mk
