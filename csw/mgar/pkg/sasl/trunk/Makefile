@@ -21,6 +21,11 @@ DISTFILES += saslauthd.init.CSW
 DISTFILES += saslauthd.conf.CSW
 DISTFILES += README.sasl
 DISTFILES += README.saslauthd
+DISTFILES += changelog.CSW
+DISTFILES += CSWsaslauthd.postmsg
+
+EXPANDVARS = CSWsaslauthd.postmsg
+POSTMSG = $(docdir)/saslauthd/CSWsaslauthd.postmsg
 
 # For some reason or another, plugins are installed in
 # $(prefix)/lib/sasl2, regardless of what --with-plugindir is set
@@ -59,6 +64,7 @@ PKGFILES_CSWsaslauthd += $(mandir)/.*/saslauthd\.8
 PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/LDAP_SASLAUTHD
 PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/README.saslauthd
 PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/README.CSW
+PKGFILES_CSWsaslauthd += $(docdir)/saslauthd/CSWsaslauthd.postmsg
 PKGFILES_CSWsaslauthd += /var/opt/csw/saslauthd
 
 PACKAGES += CSWsaslgssapi
@@ -126,8 +132,8 @@ EXTRA_CFLAGS = -D__EXTENSIONS__
 
 EXTRA_BUILD_ENV = _REENTRANT=1
 
-EXTRA_INC  = /opt/csw/include/gssapi
-EXTRA_INC += /opt/csw/include/mysql
+EXTRA_INC  = $(includedir)/gssapi
+EXTRA_INC += $(includedir)/mysql
 EXTRA_INC += /opt/csw/postgresql/include
 
 # Do not use LD_OPTIONS as it breaks tests by using the installed libraries
@@ -189,7 +195,10 @@ EGREP=/usr/bin/egrep
 max_cmd_line=65535
 SED_USR_LOCAL= sed -e 's|/usr/local|/opt/csw|g'
 
-MIGRATECONF = saslauthd.conf sasldb2
+MIGRATE_FILES_CSWsasl      = "sasldb2"
+MIGRATE_FILES_CSWsaslauthd = "saslauthd.conf"
+MIGRATE_SOURCE_DIR	   = /opt/csw/etc
+MIGRATE_DEST_DIR	   = $(sysconfdir)
 PRESERVECONF = /etc/opt/csw/saslauthd.conf /etc/opt/csw/saslauthd.init
 
 INITSMF = /etc/opt/csw/init.d/cswsaslauthd
@@ -206,10 +215,11 @@ post-build-modulated:
 
 
 post-install-modulated: install-doc fix-path-manpages install-sample
-	ginstall -d $(DESTDIR)/etc/opt/csw/init.d/
-	ginstall $(WORKDIR)/saslauthd.init.CSW $(DESTDIR)/etc/opt/csw/
-	ginstall $(WORKDIR)/saslauthd.conf.CSW $(DESTDIR)/etc/opt/csw/
-	ginstall $(WORKDIR)/cswsaslauthd.init $(DESTDIR)/etc/opt/csw/init.d/cswsaslauthd
+	ginstall -d $(DESTDIR)$(sysconfdir)/init.d/
+	ginstall $(WORKDIR)/saslauthd.init.CSW $(DESTDIR)$(sysconfdir)
+	ginstall $(WORKDIR)/saslauthd.conf.CSW $(DESTDIR)$(sysconfdir)
+	ginstall $(WORKDIR)/cswsaslauthd.init $(DESTDIR)$(sysconfdir)/init.d/cswsaslauthd
+	ginstall $(WORKDIR)/CSWsaslauthd.postmsg $(DESTDIR)$(docdir)/saslauthd/
 	@$(MAKECOOKIE)
 
 # The names 'client' and 'server' are a little generic, so we change

@@ -1,0 +1,70 @@
+sasl (2.1.25,REV=2012.01.04)
+
+  * README.sasl, README.saslauthd: moved changelog entries to
+    changelog.csw.
+
+  * README.saslauthd: improved documentation.
+
+  * sasldb2: file will be migrated from /opt/csw/etc/ to /etc/opt/csw.  
+
+ -- Rafael Ostertag <raos@opencsw.org>  Wed, 04 Jan 2012 19:41:27 +0100
+
+
+sasl (2.1.25,REV=2011.11.06)
+
+  * Included pluginviewer, sasl-sample-client, and sasl-sample-server
+    to ease testing of sasl setup.
+
+  * SASL application configuration files (e.g. Sendmail.conf) go into
+    /opt/csw/lib/sasl2 or /opt/csw/lib/64/sasl2 for 64-bit binaries.
+
+ -- Rafael Ostertag <raos@opencsw.org>  Wed, 04 Jan 2012 19:41:27 +0100
+
+
+sasl (2.1.22,REV=2007.06.10)
+
+  * sasl updated to 2.1.22
+
+  * runpath was not applied for libraries [#1566][#1637][#1934][#2268]
+
+  * saslauthd: sasl was built with invalid list of search directories for
+    libraries [#2103]
+
+  * saslauthd: man page was in postscript format [#2261]
+
+
+sasl (2.1.21,REV=2006.03.09)
+
+  * /opt/csw/etc/sasldb2 is a directory [#1393]
+
+  * preinstall script is using PKG_INSTALL_ROOT variable instead of
+    PKG_ROOT_DIR
+
+  * saslauthd: Communication with SASL is done with unix sockets because ipc
+    doors mechanism is unreliable [#1222] [#1225] [#1227]
+
+  * sasluthd: Authentification mechanism should be configureable without editing
+    init.d script [#1221]
+
+  * saslauthd: postinstall script is using PKG_INSTALL_ROOT variable instead of
+    PKG_ROOT_DIR
+
+
+sasl (2.1.21,REV=2005.09.07)
+
+  * upgraded to version 2.1.21
+
+  * included unsupported LOGIN SASL mechanism, because I received
+    several requests for this mechanism. Some mail clients (e.g. MS
+    Outlook) only support LOGIN mechanism.
+
+  * included auxprop plugins for MySQL, PostreSQL and SQLLite
+
+  * included kerberos mechanisms (GSSAPI)
+
+  * CSWsasl creates a group 'sasl'. Any process which is not running
+    as root, must belong to this group to perform authentiaction
+    against SASLdb or via saslauthd.
+
+  * saslauthd: /etc/init.d/CSWsaslauthd renamed to /etc/init.d/cswsaslauthd to be
+    consistent with other blastwave packages
