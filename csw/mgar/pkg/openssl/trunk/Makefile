@@ -16,7 +16,7 @@
 ###### Package information #######
 
 NAME = openssl
-VERSION = 0.9.8r
+VERSION = 0.9.8s
 CATEGORIES = lib
 
 DESCRIPTION = The Open Source toolkit for SSL and TLS

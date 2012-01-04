@@ -1,3 +1,9 @@
+openssl (0.9.8s,REV=2012.02.04) unstable
+
+  * New upstream release.
+  
+   -- Yann Rouillard <yann@opencsw.org>  Wed, 04 Jan 2012 22:06:46 +0100
+
 openssl (0.9.8r,REV=2011.09.19) unstable
 
   * Added patch block_diginotar.patch, taken from Debian, to always blocks 
