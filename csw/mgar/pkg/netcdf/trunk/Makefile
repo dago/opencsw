@@ -78,7 +78,6 @@ PKGFILES_CSWnetcdf-dev += $(call baseisadirs,$(libdir),libnetcdff\.so)
 PKGFILES_CSWnetcdf-dev += $(PKGFILES_DEVEL)
 RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdf6
 RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdff5
-RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdf-c++5
 RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdf7
 RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWlibnetcdf-c++4
 RUNTIME_DEP_PKGS_CSWnetcdf-dev += CSWnetcdf
