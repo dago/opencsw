@@ -15,6 +15,7 @@ MASTER_SITES = http://samba.org/samba/ftp/stable/
 DISTFILES  = $(NAME)-$(VERSION).tar.gz
 DISTFILES += cswsamba
 EXPANDVARS += cswsamba
+EXPANDVARS += smb.conf
 
 # From http://www.reallylinux.com/docs/smb.conf
 DISTFILES += smb.conf
@@ -278,18 +279,23 @@ BUILD64 = 1
 ISAEXEC = 1
 
 SMBLOCKDIR = $(localstatedir)/samba/locks
+SMBLOGDIR = $(localstatedir)/samba/log
+SMBPRIVATEDIR = $(sysconfdir)/samba/private
+SMBCONFIGDIR = $(sysconfdir)/samba
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/source3/configure
 CONFIGURE_ARGS += $(DIRPATHS)
 CONFIGURE_ARGS += --enable-socket-wrapper
 CONFIGURE_ARGS += --enable-nss-wrapper
-CONFIGURE_ARGS += --with-privatedir=$(sysconfdir)/samba/private
-CONFIGURE_ARGS += --with-configdir=$(sysconfdir)/samba
+CONFIGURE_ARGS += --with-privatedir=$(SMBPRIVATEDIR)
+CONFIGURE_ARGS += --with-configdir=$(SMBCONFIGDIR)
 
 CONFIGURE_ARGS += --with-lockdir=$(SMBLOCKDIR)
 CONFIGURE_ARGS += --with-statedir=$(SMBLOCKDIR)
 CONFIGURE_ARGS += --with-cachedir=$(SMBLOCKDIR)
 CONFIGURE_ARGS += --with-piddir=$(SMBLOCKDIR)
+
+CONFIGURE_ARGS += --with-logfilebase=$(SMBLOGDIR)
 
 CONFIGURE_ARGS-64 +=  --disable-cups
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
