@@ -15,7 +15,7 @@ DISTFILES  = $(NAME)-$(VERSION).tar.gz
 VENDOR_URL = http://augeas.net
 
 BUILD_DEP_PKGS    = CSWlibxml2-2 CSWlibxml2-dev
-RUNTIME_DEP_PKGS  = CSWgcc4corert CSWlibgnugetopt
+RUNTIME_DEP_PKGS  = CSWlibgnugetopt0 CSWlibgcc-s1
 RUNTIME_DEP_PKGS += CSWlibreadline6 CSWlibxml2-2
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
