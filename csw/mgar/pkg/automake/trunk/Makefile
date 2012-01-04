@@ -1,9 +1,9 @@
 NAME = automake
-VERSION = 1.11.1
+VERSION = 1.11.2
 CATEGORIES = devel
 
 EXTRA_MODULATORS = VERSION
-MODULATIONS_VERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.1
+MODULATIONS_VERSION = 1.6.3 1.7.9 1.8.5 1.9.6 1.10.3 1.11.2
 
 DESCRIPTION = A tool for automatically generating Makefiles.
 define BLURB
@@ -26,13 +26,28 @@ DISTFILES += $(notdir $(POSTMSG))
 NOCHECKSUM = $(notdir $(POSTMSG))
 NOEXTRACT = $(filter-out $(NAME)-$(VERSION).tar.gz, $(SOURCEFILES))
 
-SPKG_SOURCEURL = http://www.gnu.org/software/automake/
+VENDOR_URL = http://www.gnu.org/software/automake/
 
 RUNTIME_DEP_PKGS = CSWperl
 
-CONFIGURE_ARGS = $(DIRPATHS)
-
-TEST_TARGET = check
+# These are comments only
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/bin/aclocal-1.10
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/bin/aclocal-1.11
+# These are just docs, override for now
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.9/py-compile
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.10/py-compile
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/info/automake.info-1
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/share|root/opt/csw/share/automake-1.11/py-compile
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.9/INSTALL
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.10/texinfo.tex
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.10/INSTALL
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.7/INSTALL
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/info/automake.info-2
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/info/automake.info-1
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.8/INSTALL
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.11/texinfo.tex
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.11/INSTALL
+CHECKPKG_OVERRIDES_CSWautomake += file-with-bad-content|/usr/local|root/opt/csw/share/automake-1.6/INSTALL
 
 # Lots of test fail on Solaris, but they are safe to ignore for now:
 #   <http://lists.gnu.org/archive/html/bug-automake/2009-07/msg00001.html>
@@ -40,7 +55,7 @@ SKIPTEST ?= 1
 
 ARCHALL = 1
 
-$(foreach VERSION,$(MODULATIONS_VERSION),$(eval MERGE_SCRIPTS_isa-$(ISA)-garversion-$(VERSION) = copy-all))
+$(foreach VERSION,$(MODULATIONS_VERSION),$(eval MERGE_SCRIPTS_isa-$(ISA)-version-$(VERSION) = copy-all))
 
 # These are hardlinks to the versioned versions and will confuse the merging
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.6.3 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
@@ -48,6 +63,7 @@ EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.7.9 = $(bindir)/automake $(bi
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.8.5 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.9.6 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.10.3 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
+EXTRA_MERGE_EXCLUDE_FILES_isa-sparcv8-garversion-1.11.2 = $(bindir)/automake $(bindir)/aclocal $(infodir)/.*
 
 #     alternatives [options] --install link name path priority  [-
 #     -slave link name path]...  [--initscript service]
