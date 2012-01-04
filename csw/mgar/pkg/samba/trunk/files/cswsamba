@@ -29,8 +29,8 @@ case "$1" in
 	;;
 	stop)
 		echo "Stopping Samba..."
-		kill "`cat @localstatedir@/locks/smbd.pid`"
-		kill "`cat @localstatedir@/locks/nmbd.pid`"
+		kill "`cat @SMBLOCKDIR@/smbd.pid`"
+		kill "`cat @SMBLOCKDIR@/nmbd.pid`"
 		if [ -f $KRBCONF ]; then
 		    echo "Stopping Winbind..."
 		fi    
