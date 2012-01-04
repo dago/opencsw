@@ -19,7 +19,10 @@ RUNTIME_DEP_PKGS  = CSWgcc4corert CSWlibgnugetopt
 RUNTIME_DEP_PKGS += CSWlibreadline6 CSWlibxml2-2
 GARCOMPILER = GCC4
 EXTRA_LDFLAGS = -lgnugetopt
-PATCHFILES += 0001-fix-compiling-on-solaris.patch
+PATCHFILES += 0001-fix-compiling-on-solaris.patch \
+  0002-regexp-escape.patch \
+  0003-Remove-Linux-isms-so-tests-can-run-on-Solaris.patch \
+  0004-pkg-config-Augeas-requires-libxml2.patch
 
 # Building on Solaris 10 doesn't work as it support C99 and the above fixes are
 # not necessary there.
@@ -41,8 +44,3 @@ include gar/category.mk
 
 # Local bin/ for readlink, /opt/csw/gnu for GNU tail, diff
 PATH := $(abspath ./bin):/opt/csw/gnu:$(PATH)
-
-post-extract-modulated:
-	@# Tests are written in bash
-	-cd $(WORKSRC)/tests && perl -e 's,#! /bin/sh,#! /bin/bash,' -pi *.sh
-	@$(MAKECOOKIE)
