@@ -1,5 +1,5 @@
 NAME = diffstat
-VERSION = 1.54
+VERSION = 1.55
 CATEGORIES = utils
 
 DESCRIPTION = A utility which provides statistics based on the output of diff
@@ -7,17 +7,12 @@ define BLURB
 endef
 
 MASTER_SITES = ftp://invisible-island.net/diffstat/
-DISTFILES  = $(NAME)-$(VERSION).tgz
+DISTFILES += $(DISTNAME).tgz
 
-# We define upstream file regex so we can be notifed of new upstream software release
-UFILES_REGEX = $(NAME)-(\d+(?:\.\d+)*).tgz
-
-SPKG_SOURCEURL = http://invisible-island.net/diffstat/
+VENDOR_URL = http://invisible-island.net/diffstat/
 
 CONFIGURE_ARGS = $(DIRPATHS)
 CONFIGURE_ARGS += --with-install-prefix=$(DESTDIR)
-
-TEST_TARGET = check
 
 include gar/category.mk
 
