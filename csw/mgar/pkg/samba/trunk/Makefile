@@ -36,7 +36,7 @@ RUNTIME_DEP_PKGS_CSWsamba += CSWlibiconv2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibz1
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibintl8
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibncurses5
-RUNTIME_DEP_PKGS_CSWsamba += CSWgamin
+RUNTIME_DEP_PKGS_CSWsamba += CSWlibfam0
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibgssapi-krb5-2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibkrb5-3
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibcom-err3
@@ -46,6 +46,16 @@ RUNTIME_DEP_PKGS_CSWsamba += CSWlibtalloc2
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibk5crypto3
 RUNTIME_DEP_PKGS_CSWsamba += CSWoldaprt
 RUNTIME_DEP_PKGS_CSWsamba += CSWlibwbclient0
+
+# Just docs override for now
+CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/lmhosts.5
+CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man5/smb.conf.5
+CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/nmbd.8
+CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/smbd.8
+CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/tdbbackup.8
+CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/idmap_tdb2.8
+CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/net.8
+CHECKPKG_OVERRIDES_CSWsamba += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/swat.8
 
 # Make one unified package for now
 OBSOLETED_BY_CSWsamba += CSWsambacommon
@@ -73,6 +83,9 @@ RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibwbclient0
 RUNTIME_DEP_PKGS_CSWsamba-client += CSWlibtdb1
 OBSOLETED_BY_CSWsamba-client += CSWsambaclient
 CATALOGNAME_CSWsambaclient = samba_client_stub
+
+# Just docs, override for now
+CHECKPKG_OVERRIDES_CSWsamba-client += file-with-bad-content|/usr/local|root/opt/csw/share/man/man1/smbclient.1
 
 #PACKAGES += CSWsambacommon
 SPKG_DESC_CSWsambacommon = Shared support files for samba
@@ -186,6 +199,51 @@ RUNTIME_DEP_PKGS_CSWsamba-swat += CSWlibtdb1
 OBSOLETED_BY_CSWsamba-swat = CSWsambaswat
 CATALOGNAME_CSWsambaswat = samba_swat_stub
 
+# Just docs, override for now
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-ByExample/ix01.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-ByExample/appendix.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-ByExample/upgrades.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-ByExample/secure.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-ByExample/nw4migration.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-Developers-Guide/pwencrypt.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/classicalprinting.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/bugreport.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/VFS.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/compiling.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/NetworkBrowsing.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/domain-member.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/SWAT.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/locking.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/ix01.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/samba-pdc.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/install.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/diagnosis.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/FastStart.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/pam.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/winbind.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/Samba3-HOWTO/AccessControls.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/manpages/swat.8.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/manpages/lmhosts.5.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/manpages/nmbd.8.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/manpages/idmap_tdb2.8.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/manpages/smb.conf.5.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/manpages/winbindd.8.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/manpages/smbd.8.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/manpages/net.8.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/manpages/tdbbackup.8.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/local|root/opt/csw/swat/help/manpages/smbclient.1.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/export/home|root/opt/csw/swat/help/Samba3-HOWTO/msdfs.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-ByExample/ix01.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-ByExample/appendix.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-ByExample/upgrades.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-ByExample/happy.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-HOWTO/VFS.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-HOWTO/CUPS-printing.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-HOWTO/SWAT.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-HOWTO/ix01.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-HOWTO/FastStart.html
+CHECKPKG_OVERRIDES_CSWsamba-swat += file-with-bad-content|/usr/share|root/opt/csw/swat/help/Samba3-HOWTO/ch-ldap-tls.html
+
 PACKAGES += CSWsamba-winbind
 SPKG_DESC_CSWsamba-winbind = Tools to authenticate users from active directory using winbind
 PKGFILES_CSWsamba-winbind += $(call baseisadirs,$(libdir),security/pam_winbind\.so)
@@ -210,11 +268,16 @@ RUNTIME_DEP_PKGS_CSWsamba-winbind += CSWoldaprt
 OBSOLETED_BY_CSWsamba-winbind += CSWsambawb
 CATALOGNAME_CSWsambawb = samba_wb_stub
 
+# Just docs, override for now
+CHECKPKG_OVERRIDES_CSWsamba-winbind += file-with-bad-content|/usr/local|root/opt/csw/share/man/man8/winbindd.8
+
 EXTRA_CFLAGS = -lintl
 EXTRA_LDFLAGS = -lintl
 
 BUILD64 = 1
 ISAEXEC = 1
+
+SMBLOCKDIR = $(localstatedir)/samba/locks
 
 CONFIGURE_SCRIPTS = $(WORKSRC)/source3/configure
 CONFIGURE_ARGS += $(DIRPATHS)
@@ -222,6 +285,11 @@ CONFIGURE_ARGS += --enable-socket-wrapper
 CONFIGURE_ARGS += --enable-nss-wrapper
 CONFIGURE_ARGS += --with-privatedir=$(sysconfdir)/samba/private
 CONFIGURE_ARGS += --with-configdir=$(sysconfdir)/samba
+
+CONFIGURE_ARGS += --with-lockdir=$(SMBLOCKDIR)
+CONFIGURE_ARGS += --with-statedir=$(SMBLOCKDIR)
+CONFIGURE_ARGS += --with-cachedir=$(SMBLOCKDIR)
+CONFIGURE_ARGS += --with-piddir=$(SMBLOCKDIR)
 
 CONFIGURE_ARGS-64 +=  --disable-cups
 CONFIGURE_ARGS += $(CONFIGURE_ARGS-$(MEMORYMODEL))
