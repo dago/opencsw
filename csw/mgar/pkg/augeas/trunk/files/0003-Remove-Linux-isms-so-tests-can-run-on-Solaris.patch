@@ -1,0 +1,95 @@
+From 92b355588c88a09282a8a9bc255c1b24817ff64a Mon Sep 17 00:00:00 2001
+From: Dominic Cleal <dcleal@redhat.com>
+Date: Sat, 31 Dec 2011 00:10:37 +0000
+Subject: [PATCH 1/2] Remove Linux-isms so tests can run on Solaris
+
+* tests/test-augtool-modify-root.sh: /bin/sh -> /bin/bash
+* tests/test-augtool.sh: /bin/sh -> /bin/bash, use 'gsed' if available (GNU sed
+  is required)
+* tests/test-load.c: don't use GNU sed in-place extension
+* tests/test-preserve.sh: handle Solaris `ls -il` output
+
+(also include upstream d3c86096)
+---
+ tests/test-augtool-modify-root.sh |    2 +-
+ tests/test-augtool.sh             |    9 ++++++---
+ tests/test-load.c                 |    3 ++-
+ tests/test-preserve.sh            |    2 +-
+ 4 files changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/tests/test-augtool-modify-root.sh b/tests/test-augtool-modify-root.sh
+index b102965..4c92c83 100755
+--- a/tests/test-augtool-modify-root.sh
++++ b/tests/test-augtool-modify-root.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ 
+ # Make sure changing the value of root works
+ 
+diff --git a/tests/test-augtool.sh b/tests/test-augtool.sh
+index a0d11f3..88fd779 100755
+--- a/tests/test-augtool.sh
++++ b/tests/test-augtool.sh
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ 
+ TOP_DIR=$(cd $(dirname $0)/.. && pwd)
+ TOP_BUILDDIR="$abs_top_builddir"
+@@ -13,6 +13,9 @@ export PATH="$TOP_BUILDDIR/src:${PATH}"
+ export AUGEAS_ROOT="$TOP_BUILDDIR/build/test-augtool"
+ export AUGEAS_LENS_LIB="$TOP_SRCDIR/lenses"
+ 
++GSED=sed
++type gsed >/dev/null 2>&1 && GSED=gsed
++
+ fail() {
+     [ -z "$failed" ] && echo FAIL
+     failed=yes
+@@ -67,13 +70,13 @@ quit"
+         fail "Expected file $file.augnew"
+     else
+         act=$(diff -u "$abs_file" "${abs_file}.augnew" \
+-            | sed -r -e "s/^ $//;s!^(---|\+\+\+) ${AUGEAS_ROOT}($file(\.augnew)?)(.*)\$!\1 \2!;s/\\t/\\\\t/g")
++            | $GSED -r -e "s/^ $//;s!^(---|\+\+\+) ${AUGEAS_ROOT}($file(\.augnew)?)(.*)\$!\1 \2!;s/\\t/\\\\t/g")
+ 
+         if [ "$act" != "$diff" ] ; then
+             fail "$act"
+         fi
+     fi
+-    other_files=$(find "$AUGEAS_ROOT" -name \*.augnew -not -path "$abs_file.augnew")
++    other_files=$(find "$AUGEAS_ROOT" -name \*.augnew | grep -v "$abs_file.augnew")
+     [ -n "$other_files" ] && fail "Unexpected file(s) $other_files"
+     [ -z "$failed" ] && echo OK
+ done
+diff --git a/tests/test-load.c b/tests/test-load.c
+index b1018e1..f3c7cda 100644
+--- a/tests/test-load.c
++++ b/tests/test-load.c
+@@ -437,7 +437,8 @@ static void testReloadExternalMod(CuTest *tc) {
+     r = aug_get(aug, "/augeas/root", &aug_root);
+     CuAssertIntEquals(tc, 1, r);
+ 
+-    run(tc, "sed -i -e '1,2d' %setc/hosts", aug_root);
++    run(tc, "sed -e '1,2d' %setc/hosts > %setc/hosts.new", aug_root, aug_root);
++    run(tc, "mv %setc/hosts.new %setc/hosts", aug_root, aug_root);
+ 
+     /* Reload and save again */
+     r = aug_load(aug);
+diff --git a/tests/test-preserve.sh b/tests/test-preserve.sh
+index daafea3..042dab9 100755
+--- a/tests/test-preserve.sh
++++ b/tests/test-preserve.sh
+@@ -13,7 +13,7 @@ mkdir -p $(dirname $hosts)
+ }
+ 
+ stat_inode() {
+-ls -il $1 | cut -d ' ' -f 1
++ls -il $1 | awk '{ print $1 }'
+ }
+ 
+ AUGTOOL="augtool --nostdinc -r $root -I $abs_top_srcdir/lenses"
+-- 
+1.7.7.4
+
